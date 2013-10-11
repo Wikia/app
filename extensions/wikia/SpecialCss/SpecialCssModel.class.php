@@ -30,21 +30,21 @@ class SpecialCssModel extends WikiaModel {
 	 *
 	 * @see SpecialCssModel::filterRevisionsData()
 	 */
-	const WIKITEXT_HEADLINE_PATTERN = '/<h3>.*%s.*<\/h3>/m';
+	const UPDATE_HEADLINE_PATTERN = '/<h3>.*%s.*<\/h3>/m';
 
 	/**
 	 * @desc Regex pattern used to extract "CSS Updates" section
 	 *
 	 * @see SpecialCssModel::getCssUpdateSection()
 	 */
-	const WIKITEXT_SECTION_PATTERN = '/<h3>.*%s.*<\/h3>[^$]*/m';
+	const UPDATE_SECTION_PATTERN = '/<h3>.*%s.*<\/h3>[^$]*/m';
 
 	/**
 	 * @desc Regex pattern used to extract H1-H3 headlines
 	 *
 	 * @see SpecialCssModel::getCssUpdateSection()
 	 */
-	const WIKITEXT_H3_TO_H1_PATTERN = '/<\/h3>(.*?)(<h[1-3]{1}>|$)/s';
+	const UPDATE_H3_TO_H1_PATTERN = '/<\/h3>(.*?)(<h[1-3]{1}>|$)/s';
 
 	/**
 	 * @desc Regex pattern to replace link to community page (pages which link starts with '/' after parse)
@@ -270,8 +270,8 @@ class SpecialCssModel extends WikiaModel {
 				$cssUpdatesPostsData = $this->getCssPostsApiData($postsParams);
 
 				if ( !empty( $cssUpdatesPostsData ) ) {
-					foreach ( $cssUpdatesPostsData as $cssUpadtePostData ) {
-						$cssRevisionsData += $this->getCssRevisionsApiData( $cssUpadtePostData['pageid'], $revisionsParams );
+					foreach ( $cssUpdatesPostsData as $cssUpdatePostData ) {
+						$cssRevisionsData += $this->getCssRevisionsApiData( $cssUpdatePostData['pageid'], $revisionsParams );
 					}
 					$filteredRevisionData = $this->filterRevisionsData( $cssRevisionsData );
 					$cssUpdatesPosts = array_map( [ $this, 'prepareCssUpdateData' ], $filteredRevisionData );
@@ -366,7 +366,7 @@ class SpecialCssModel extends WikiaModel {
 
 	private function isCssHeadlineIn( $wikitext ) {
 		$headline = $this->getCssUpdateHeadline();
-		$pattern = sprintf( self::WIKITEXT_HEADLINE_PATTERN, $headline );
+		$pattern = sprintf( self::UPDATE_HEADLINE_PATTERN, $headline );
 
 		return preg_match( $pattern, $wikitext );
 	}
@@ -395,11 +395,11 @@ class SpecialCssModel extends WikiaModel {
 	private function getCssUpdateSection( $blogPostWikitext ) {
 		wfProfileIn( __METHOD__ );
 		$output = '';
-		$pattern = sprintf( self::WIKITEXT_SECTION_PATTERN, $this->getCssUpdateHeadline() );
+		$pattern = sprintf( self::UPDATE_SECTION_PATTERN, $this->getCssUpdateHeadline() );
 		preg_match( $pattern, $blogPostWikitext, $matches );
 
 		if (!empty($matches)) {
-			preg_match( self::WIKITEXT_H3_TO_H1_PATTERN, $matches[0], $matches );
+			preg_match( self::UPDATE_H3_TO_H1_PATTERN, $matches[0], $matches );
 			if (isset($matches[1])) {
 				$output = $matches[1];
 				$output = trim($output);
@@ -421,7 +421,7 @@ class SpecialCssModel extends WikiaModel {
 	private function truncateAndParseLinks( $title, $wikitext ) {
 		$userLang = $this->wg->Lang;
 
-		$wikitext = $this->changeLocalLinks( $wikitext );
+		$wikitext = $this->convertLocalToInterwikiLinks( $wikitext );
 
 		$wikitext = $userLang->truncateHTML( $wikitext, self::SNIPPET_CHAR_LIMIT, wfMessage( 'ellipsis' )->text() );
 
@@ -463,7 +463,7 @@ class SpecialCssModel extends WikiaModel {
 	 *
 	 * @return String
 	 */
-	private function changeLocalLinks($wikitext) {
+	private function convertLocalToInterwikiLinks($wikitext) {
 		$communityUrl = $this->getCommunityUrl();
 
 		$wikitext = preg_replace( self::COMMUNITY_LINK_PATTERN, 'href="' . $communityUrl . '$1"', $wikitext);

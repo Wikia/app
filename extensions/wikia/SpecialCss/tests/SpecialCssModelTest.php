@@ -466,15 +466,15 @@ Paragraph text, text, sample text.'
 	}
 
 	/**
-	 * @dataProvider testChangeLocalLinksDataProvider
+	 * @dataProvider testConvertLocalToInterwikiLinksDataProvider
 	 *
 	 * @param String $wikitext
 	 * @param String $expected
 	 */
-	public function testChangeLocalLinks($wikitext, $communityUrl, $expected) {
+	public function testConvertLocalToInterwikiLinks($wikitext, $communityUrl, $expected) {
 		$this->mockGlobalVariable( 'wgCssUpdatesLangMap', $this->wgCssUpdatesLangMapMock );
 
-		$changeLocalLinks = new ReflectionMethod('SpecialCssModel', 'changeLocalLinks');
+		$changeLocalLinks = new ReflectionMethod('SpecialCssModel', 'convertLocalToInterwikiLinks');
 		$changeLocalLinks->setAccessible(true);
 
 		$communityUrlMock = $this->getMock( 'SpecialCssModel', ['getCommunityUrl'] );
@@ -486,7 +486,7 @@ Paragraph text, text, sample text.'
 		$this->assertEquals( $expected, $changeLocalLinks->invoke( $communityUrlMock, $wikitext ) );
 	}
 
-	public function testChangeLocalLinksDataProvider() {
+	public function testConvertLocalToInterwikiLinksDataProvider() {
 		return [
 			[
 				'wikitext' => 'The structure of the <a href="/Help:Galleries, Slideshows, and Sliders">sliders<a/> has changed slightly. We have converted the sliders <a href="http://wikia.com/Guidelines">Guidelines</a> <a href="/About">About Us</a> files over to <a href="http://sass-lang.com/">SCSS</a>.',
