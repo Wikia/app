@@ -11,6 +11,10 @@ $modal-secondary-color: darken( $color-page, 10% );
 	$modal-secondary-color: lighten( $color-page, 3% );
 }
 
+.modal-shown {
+	overflow: hidden;
+}
+
 .modal,
 .blackout {
 	@include transition-shorthand( all 0.2s ease-in-out );

@@ -3,7 +3,7 @@ define( 'wikia.ui.modal', [ 'jquery' ], function( $ ) {
 
 	var BLACKOUT_CLASS = 'blackout',
 		CLOSE_CLASS = 'close',
-		$body = $('body');
+		$html = $('html');
 
 	function Modal( id ) {
 		var that = this;
@@ -34,6 +34,7 @@ define( 'wikia.ui.modal', [ 'jquery' ], function( $ ) {
 	}
 
 	Modal.prototype.show = function() {
+		$html.addClass( 'modal-shown' );
 		this.$element.addClass( 'shown' );
 		this.$blackout.addClass( 'visible' );
 	};
@@ -41,6 +42,7 @@ define( 'wikia.ui.modal', [ 'jquery' ], function( $ ) {
 	Modal.prototype.hide = function() {
 		this.$element.removeClass( 'shown' );
 		this.$blackout.removeClass( 'visible' );
+		$html.removeClass( 'modal-shown' );
 	};
 
 	Modal.prototype.isShown = function() {
