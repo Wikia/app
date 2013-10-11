@@ -20,4 +20,6 @@ $messages['en'] = array(
 	'example-form-not-an-integer' => 'This value is not an integer',
 	'example-forms-radio-buttons' => 'Radio buttons test field',
 	'example-form-submit' => 'Submit this form',
+	'example-form-render-whole' => 'Render the whole form at once',
+	'example-form-render-fields' => 'Render form field by field',
 );
