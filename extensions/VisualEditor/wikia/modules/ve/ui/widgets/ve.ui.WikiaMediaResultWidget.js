@@ -45,7 +45,7 @@ ve.ui.WikiaMediaResultWidget = function VeUiWikiaMediaResultWidget( data, config
 	this.setLabel( this.mwTitle );
 	this.$overlay.addClass( 've-ui-mwMediaResultWidget-overlay' );
 	this.$
-		.addClass( 've-ui-mwMediaResultWidget ve-ui-texture-pending' )
+		.addClass( 've-ui-mwMediaResultWidget ve-ui-texture-pending ' + data.type )
 		.css( { 'width': this.size, 'height': this.size } )
 		.prepend( this.$thumb, this.$overlay );
 };
