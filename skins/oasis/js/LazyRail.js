@@ -8,7 +8,7 @@ $(function() {
 			controller: 'RailController',
 			method: (window.wgUserName) ? 'lazy' : 'lazyForAnons',
 			data: {
-				'title': window.wgTitle,
+				'articleTitle': window.wgTitle,
 				'namespace': window.wgNamespaceNumber,
 				'cb': window.wgStyleVersion
 			},

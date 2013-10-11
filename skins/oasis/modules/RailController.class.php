@@ -58,34 +58,37 @@ class RailController extends WikiaController {
 	 */
 	protected function getLazyRail() {
 		wfProfileIn(__METHOD__);
-		global $wgUseSiteJs, $wgAllowUserJs;
+		global $wgUseSiteJs, $wgAllowUserJs, $wgTitle;
+		$title = Title::newFromText($this->request->getVal('articleTitle', null), $this->request->getInt('namespace', null));
 
-		$railModules = $this->filterModules((new BodyController)->getRailModuleList(), self::FILTER_LAZY_MODULES);
-		$this->railLazyContent = '';
-		krsort($railModules);
-		foreach ($railModules as $railModule) {
-			$this->railLazyContent .= $this->app->renderView(
-				$railModule[0], /* Controller */
-				$railModule[1], /* Method */
-				$railModule[2] /* array of params */
-			);
+		if ($title instanceof Title) {
+			$wgTitle = $title;
+			$railModules = $this->filterModules((new BodyController)->getRailModuleList(), self::FILTER_LAZY_MODULES);
+			$this->railLazyContent = '';
+			krsort($railModules);
+			foreach ($railModules as $railModule) {
+				$this->railLazyContent .= $this->app->renderView(
+					$railModule[0], /* Controller */
+					$railModule[1], /* Method */
+					$railModule[2] /* array of params */
+				);
+			}
+
+			$this->railLazyContent .= Html::element('div', ['id' => 'WikiaAdInContentPlaceHolder']);
+
+			$this->css = array_keys($this->app->wg->Out->styles);
+
+			// Do not load user and site jses as they are already loaded and can break page
+			$oldWgUseSiteJs = $wgUseSiteJs;
+			$oldWgAllowUserJs = $wgAllowUserJs;
+			$wgUseSiteJs = false;
+			$wgAllowUserJs = false;
+
+			$this->js = $this->app->wg->Out->getBottomScripts();
+
+			$wgUseSiteJs = $oldWgUseSiteJs;
+			$wgAllowUserJs = $oldWgAllowUserJs;
 		}
-
-		$this->railLazyContent .= Html::element('div', ['id' => 'WikiaAdInContentPlaceHolder']);
-
-		$this->css = array_keys($this->app->wg->Out->styles);
-
-		// Do not load user and site jses as they are already loaded and can break page
-		$oldWgUseSiteJs = $wgUseSiteJs;
-		$oldWgAllowUserJs = $wgAllowUserJs;
-		$wgUseSiteJs = false;
-		$wgAllowUserJs = false;
-
-		$this->js = $this->app->wg->Out->getBottomScripts();
-
-		$wgUseSiteJs = $oldWgUseSiteJs;
-		$wgAllowUserJs = $oldWgAllowUserJs;
-
 
 		wfProfileOut(__METHOD__);
 	}
