@@ -30,6 +30,13 @@ class FSCKVideos extends Maintenance {
 		$this->test    = $this->hasOption('test');
 		$this->verbose = $this->hasOption('verbose');
 
+		$stats = ['checked'     => 0,
+				  'ok'          => 0,
+				  'failed'      => 0,
+				  'fail_action' => [],
+				  'error'       => 0,
+				 ];
+
 		if ( $this->test ) {
 			echo "== TEST MODE ==\n";
 		}
@@ -45,23 +52,36 @@ class FSCKVideos extends Maintenance {
 		$helper = new VideoHandlerHelper();
 
 		foreach ( $videos as $title ) {
+			$stats['checked']++;
+
 			$status = $helper->fcskVideoThumbnail( $title, $fix );
 			if ( $status->isGood() ) {
 				$result = $status->value;
 				if ( $result['check']  == 'ok' ) {
+					$stats['ok']++;
 					$this->debug("File '$title' ... ok\n");
 				} else {
+					$stats['failed']++;
+					$stats['fail_action'][$result['action']]++;
 					echo "File '$title' ... failed\n";
 					echo "\tACTION: ".$result['action']."\n";
 				}
 			} else {
 				echo "File '$title' ... ERROR\n";
+				$stats['error']++;
 				foreach ( $status->errors as $err ) {
 					echo "\tERR: ".$err['message']."\n";
 				}
 			}
 		}
 
+		echo "Checked ".$stats['checked']." video(s):\n";
+		echo "\t".$stats['ok']." ok\n";
+		echo "\t".$stats['failed']." failed\n";
+		foreach ( $stats['fail_action'] as $action => $count ) {
+			echo "\t\t$count $action\n";
+		}
+		echo "\t".$stats['error']." error\n";
 		$delta = F::app()->wg->lang->formatTimePeriod( time() - $startTime );
 		echo "Finished after $delta\n";
 	}
