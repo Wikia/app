@@ -20,21 +20,22 @@ var doTrackImpression = function (label) {
 
 var hookRightRailImpression = function (label) {
 	var elem = document.getElementById('WikiaRail');
-
-	// if element is already being visible, we don't need slothjs
-	// and we can count impression right away.
-	if ( checkElementVisibility(elem) ) {
-		doTrackImpression(label);
-	} else {
-		require(['sloth'], function(sloth) {
-			sloth( {
-				on: elem,
-				threshold: 0,
-				callback: function(element) {
-					doTrackImpression(label);
-				}
+	if ( elem ) {
+		// if element is already being visible, we don't need slothjs
+		// and we can count impression right away.
+		if ( checkElementVisibility(elem) ) {
+			doTrackImpression(label);
+		} else {
+			require(['sloth'], function(sloth) {
+				sloth( {
+					on: elem,
+					threshold: 0,
+					callback: function(element) {
+						doTrackImpression(label);
+					}
+				});
 			});
-		});
+		}
 	}
 }
 
