@@ -9,7 +9,6 @@ $dir = dirname( __FILE__ ) . '/';
 global $wgSpecialPages, $wgAutoloadClasses, $wgExtensionMessagesFiles;
 
 $wgAutoloadClasses['ExampleForm'] = $dir . 'ExampleForm.class.php';
-$wgAutoloadClasses['ExampleForm2'] = $dir . 'ExampleForm2.class.php';
 $wgAutoloadClasses['ExampleFormController'] = $dir . 'ExampleFormController.class.php';
 
 $wgSpecialPages['ExampleForm'] =  'ExampleFormController';

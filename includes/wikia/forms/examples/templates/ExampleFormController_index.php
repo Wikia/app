@@ -18,5 +18,3 @@
 
 <?= $form->renderFieldRow('contactFormSubmit', ['class' => 'alternative']) ?>
 <?= $form->renderEnd() ?>
-
-<?= $form2->render() ?>

@@ -9,8 +9,6 @@ class ExampleFormController extends WikiaSpecialPageController {
 		// create form instance and pass it into view
 		$this->form = new ExampleForm();
 
-		$this->form2 = new ExampleForm2();
-
 		$vals = [
 			'contactFormSubject' => 'Example subject',
 			'contactFormMessage' => 'Example message',
