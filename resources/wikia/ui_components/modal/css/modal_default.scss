@@ -12,9 +12,10 @@ $modal-secondary-color: darken( $color-page, 10% );
 }
 
 .modal,
-#blackout {
+.blackout {
 	@include transition-shorthand( all 0.2s ease-in-out );
 	opacity: 0;
+	z-index: -1;
 }
 
 .modal {
@@ -106,7 +107,7 @@ $modal-secondary-color: darken( $color-page, 10% );
 	}
 }
 
-#blackout {
+.blackout {
 	@include blackout();
 }
 

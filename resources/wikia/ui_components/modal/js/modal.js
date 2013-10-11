@@ -1,7 +1,7 @@
 define( 'wikia.ui.modal', [ 'jquery' ], function( $ ) {
 	"use strict";
 
-	var BLACKOUT_ID = 'blackout',
+	var BLACKOUT_CLASS = 'blackout',
 		CLOSE_CLASS = 'close',
 		$body = $('body');
 
@@ -18,12 +18,8 @@ define( 'wikia.ui.modal', [ 'jquery' ], function( $ ) {
 		}, that ) );
 
 		function getBlackout() {
-			var $blackout = $('#' + BLACKOUT_ID );
-
-			if( !$blackout.exists() ) {
-				$blackout = $('<div id="' + BLACKOUT_ID + '" />');
-				$body.append( $blackout );
-			}
+			var blackoutId = BLACKOUT_CLASS + '_' + id,
+				$blackout = $('#' + blackoutId );
 
 			$blackout.click( $.proxy(function( event ) {
 				event.preventDefault();
