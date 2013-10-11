@@ -71,12 +71,6 @@ class ExampleForm extends BaseForm {
 		// hidden input field
 		$this->addField( 'contactFormSessionId', new InputField( [ 'type' => 'hidden' ] ) );
 
-		$this->addField( 'contactFormSubmit', new InputField(
-			[
-				'type' => 'submit',
-				'value' => wfMessage( 'example-form-submit' )->text()
-			]
-		) );
 
 		//////////////////
 		// OTHER EXAMPLES
@@ -106,5 +100,11 @@ class ExampleForm extends BaseForm {
 			'value' => [1]
 		] ) );
 
+		$this->addField( 'contactFormSubmit', new InputField(
+			[
+				'type' => 'submit',
+				'value' => wfMessage( 'example-form-submit' )->text()
+			]
+		) );
 	}
 }
