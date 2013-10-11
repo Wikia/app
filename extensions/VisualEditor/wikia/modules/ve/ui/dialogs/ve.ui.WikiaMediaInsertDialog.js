@@ -293,10 +293,9 @@ ve.ui.WikiaMediaInsertDialog.prototype.getImageInfo = function ( titles, width )
  * @param {JSON} data Response from API
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onGetImageInfoSuccess = function ( deferred, data ) {
-	var results = [];
-
+	var results = [], item;
 	for ( i = 0; i < data.query.pageids.length; i++ ) {
-		var item = data.query.pages[ data.query.pageids[i] ];
+		item = data.query.pages[ data.query.pageids[i] ];
 		results.push( {
 			'title': item.title,
 			'height': item.imageinfo[0].thumbheight,
@@ -304,7 +303,6 @@ ve.ui.WikiaMediaInsertDialog.prototype.onGetImageInfoSuccess = function ( deferr
 			'url': item.imageinfo[0].thumburl
 		} )
 	}
-
 	deferred.resolve( results );
 }
 

@@ -1,11 +1,11 @@
 /* global require */
 
 ve.ui.WikiaCartItemWidget = function VeUiWikiaCartItemWidget( model, config ) {
+	var size = 60, $image;
 	this.model = model;
 	ve.ui.OptionWidget.call( this, this.model.title, config );
 
-	var size = 60;
-	var $image = this.$$( '<img>' )
+	$image = this.$$( '<img>' )
 		.attr( {
 			'height': size,
 			'width': size

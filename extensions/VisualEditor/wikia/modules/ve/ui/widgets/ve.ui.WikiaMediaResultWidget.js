@@ -59,8 +59,9 @@ ve.inheritClass( ve.ui.WikiaMediaResultWidget, ve.ui.OptionWidget );
 ve.ui.WikiaMediaResultWidget.prototype.loadThumbnail = function () {
 	require( ['wikia.thumbnailer'], ve.bind( function ( thumbnailer ) {
 		this.image.src = thumbnailer.getThumbURL( this.data.url, 'image', this.size, this.size );
-		this.$thumb.addClass( 've-ui-mwMediaResultWidget-thumbnail' );
-		this.$thumb.addClass( 've-ui-WikiaMediaResultWidget-thumbnail' );
+		this.$thumb.addClass(
+			've-ui-mwMediaResultWidget-thumbnail ve-ui-WikiaMediaResultWidget-thumbnail'
+		);
 		this.$thumb.last().css( 'background-image', 'url(' + this.image.src + ')' );
 	}, this ) );
 };

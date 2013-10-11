@@ -77,16 +77,16 @@ ve.ui.WikiaMediaSearchWidget.prototype.queryMedia = function () {
 };
 
 ve.ui.WikiaMediaSearchWidget.prototype.onQueryMediaDone = function ( data ) {
-	var media = data.response.results.mixed.items,
-		items = [],
-		i;
+	var media, items = [], i;
 
 	if ( !data.response || !data.response.results ) {
 		return;
 	}
 
+	media = data.response.results.mixed.items
+
 	if ( data.response.batch < data.response.results.mixed.batches ) {
-		this.batch++;
+		this.batch = data.response.batch; // was this.batch++;
 	}
 
 	for( i = 0; i < media.length; i++ ) {
