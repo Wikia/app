@@ -75,8 +75,16 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 };
 
 ve.ui.WikiaMediaInsertDialog.prototype.onSearchSelect = function ( item ) {
+	var cartItems, i;
 	if ( item === null ) {
 		return;
+	}
+	debugger;
+	cartItems = ve.copy( this.cartModel.getItems() );
+	for ( i = 0; i < cartItems.length; i++ ) {
+		if ( cartItems[i].title === item.title ) {
+			this.cartModel.removeItems( [ cartItems[i] ] );
+		}
 	}
 	this.cartModel.addItems( [
 		new ve.dm.WikiaCartItem( item.title, item.url, item.type )
