@@ -541,8 +541,6 @@ class SpecialCssModel extends WikiaModel {
 		$params = array_merge($defaultParams, $params);
 		$revisions = $this->getApiData($params);
 
-		//var_dump( $revisions['query']['pages']);
-
 		return isset( $revisions['query']['pages'] ) ? $revisions['query']['pages'] : [];
 	}
 
