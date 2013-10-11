@@ -100,7 +100,7 @@
 
 			// error - empty username
 			$reqParams1 = array(
-				'username' => '',
+				'userloginext01' => '',
 			);
 			$mockUserParams1 = null;
 			$mockUserLoginForm1 = null;
@@ -109,7 +109,7 @@
 
 			// error - username exists in temp user
 			$reqParams2 = array(
-				'username' => self::TEST_USERNAME,
+				'userloginext01' => self::TEST_USERNAME,
 			);
 			$mockUserParams2 = array(
 				'load' => null,
@@ -134,37 +134,37 @@
 
 			// error - username length exceed limit
 			$reqParams3 = array(
-				'username' => 'test123456789test123456789test123456789test123456789test123456789',
+				'userloginext01' => 'test123456789test123456789test123456789test123456789test123456789',
 			);
 			$mockUserParams3 = false;
 			$expMsg3 = wfMessage( 'usersignup-error-username-length', $wgWikiaMaxNameChars )->escaped();
 
 			// error - invalid user name ( getCanonicalName() = false for creatable )
 			$reqParams4 = array(
-				'username' => '#'.self::TEST_USERNAME.'#',
+				'userloginext01' => '#'.self::TEST_USERNAME.'#',
 			);
 			$expMsg4 = wfMessage( 'usersignup-error-symbols-in-username' )->escaped();
 
 			// error - empty password
 			$reqParams5 = array(
-				'username' => self::TEST_DNE_USER,
+				'userloginext01' => self::TEST_DNE_USER,
 				'email' => self::TEST_EMAIL,
-				'password' => '',
+				'userloginext02' => '',
 			);
 			$expMsg5 = wfMessage( 'userlogin-error-wrongpasswordempty' )->escaped();
 			$expErrParam2 = 'password';
 
 			// error - password length exceed limit
 			$reqParams6 = array(
-				'username' => self::TEST_DNE_USER,
+				'userloginext01' => self::TEST_DNE_USER,
 				'email' => self::TEST_EMAIL,
-				'password' => 'testPasswordtestPasswordtestPasswordtestPasswordtestPasswordtestPassword',
+				'userloginext02' => 'testPasswordtestPasswordtestPasswordtestPasswordtestPasswordtestPassword',
 			);
 			$expMsg6 = wfMessage( 'usersignup-error-password-length' )->escaped();
 
 			// error - empty email
 			$reqParams7 = array(
-				'username' => self::TEST_DNE_USER,
+				'userloginext01' => self::TEST_DNE_USER,
 				'email' => '',
 			);
 			$expMsg7 = wfMessage( 'usersignup-error-empty-email' )->escaped();
@@ -172,15 +172,15 @@
 
 			// error - invalid email ( isValidEmailAddr() = false )
 			$reqParams8 = array(
-				'username' => self::TEST_DNE_USER,
+				'userloginext01' => self::TEST_DNE_USER,
 				'email' => 'testEmail',
 			);
 			$expMsg8 = wfMessage( 'userlogin-error-invalidemailaddress' )->escaped();
 
 			// error - birthdate not select
 			$reqParams9 = array(
-				'username' => self::TEST_DNE_USER,
-				'password' => 'testPassword',
+				'userloginext01' => self::TEST_DNE_USER,
+				'userloginext02' => 'testPassword',
 				'email' => self::TEST_EMAIL,
 				'birthyear' => -1,
 				'birthmonth' => -1,
@@ -191,8 +191,8 @@
 
 			// error - birthday not select
 			$reqParams10 = array(
-				'username' => self::TEST_DNE_USER,
-				'password' => 'testPassword',
+				'userloginext01' => self::TEST_DNE_USER,
+				'userloginext02' => 'testPassword',
 				'email' => self::TEST_EMAIL,
 				'birthyear' => 2012,
 				'birthmonth' => 11,
@@ -201,8 +201,8 @@
 
 			// error - birthmonth not select
 			$reqParams11 = array(
-				'username' => self::TEST_DNE_USER,
-				'password' => 'testPassword',
+				'userloginext01' => self::TEST_DNE_USER,
+				'userloginext02' => 'testPassword',
 				'email' => self::TEST_EMAIL,
 				'birthyear' => 2012,
 				'birthmonth' => -1,
@@ -211,8 +211,8 @@
 
 			// error - birthyear not select
 			$reqParams12 = array(
-				'username' => self::TEST_DNE_USER,
-				'password' => 'testPassword',
+				'userloginext01' => self::TEST_DNE_USER,
+				'userloginext02' => 'testPassword',
 				'email' => self::TEST_EMAIL,
 				'birthyear' => -1,
 				'birthmonth' => 11,
@@ -221,8 +221,8 @@
 
 			// error - invalid age
 			$reqParams13 = array(
-				'username' => self::TEST_DNE_USER,
-				'password' => 'testPassword',
+				'userloginext01' => self::TEST_DNE_USER,
+				'userloginext02' => 'testPassword',
 				'email' => self::TEST_EMAIL,
 				'birthyear' => 2011,
 				'birthmonth' => 11,
@@ -232,8 +232,8 @@
 
 			// not pass byemail -- call addNewAccount()
 			$reqParams14 = array(
-				'username' => self::TEST_DNE_USER,
-				'password' => 'testPassword',
+				'userloginext01' => self::TEST_DNE_USER,
+				'userloginext02' => 'testPassword',
 				'email' => self::TEST_EMAIL,
 				'birthyear' => 1999,
 				'birthmonth' => 11,
@@ -253,8 +253,8 @@
 
 			// pass byemail -- call addNewAccountMailPassword()
 			$reqParams15 = array(
-				'username' => self::TEST_DNE_USER,
-				'password' => 'testPassword',
+				'userloginext01' => self::TEST_DNE_USER,
+				'userloginext02' => 'testPassword',
 				'email' => self::TEST_EMAIL,
 				'birthyear' => 1999,
 				'birthmonth' => 11,
@@ -271,6 +271,18 @@
 					'mockExpTimes' => 1,
 					'mockExpValues' => null,
 				),
+			);
+
+			//error - not empty fake username
+			$reqParams16 = array(
+				'username' => '123',
+			);
+			$expMsg16 = null;
+			$expErrParam16 = null;
+
+			//error - not empty fake username
+			$reqParams17 = array(
+				'password' => '123',
 			);
 
 			return array(
@@ -304,6 +316,10 @@
 				array( $reqParams14, $mockUserParams3, $mockUserLoginForm14, 'ok', '', '' ),
 				'pass byemail -- call addNewAccountMailPassword() ONCE' =>
 				array( $reqParams15, $mockUserParams3, $mockUserLoginForm15, 'ok', '', '' ),
+				'error - not empty fake username' =>
+				array( $reqParams16, $mockUserParams1, $mockUserLoginForm1, 'error', $expMsg16, $expErrParam16 ),
+				'error - not empty fake password' =>
+				array( $reqParams17, $mockUserParams1, $mockUserLoginForm1, 'error', $expMsg16, $expErrParam16 ),
 			);
 		}
 

@@ -366,6 +366,8 @@ $messages['ia'] = array(
  */
 $messages['id'] = array(
 	'cloakcheck-form-username' => 'Nama pengguna:',
+	'cloakcheck-form-check' => 'Periksa nama pengguna',
+	'cloakcheck-process-empty' => 'Nama pengguna tidak boleh kosong.',
 	'cloakcheck-process-notexist' => 'Nama pengguna tidak ada.',
 	'cloakcheck-process-edits-yes' => 'Pengguna memiliki suntingan cukup.',
 	'cloakcheck-process-edits-no' => 'Pengguna tidak memiliki cukup suntingan.',
@@ -594,7 +596,7 @@ $messages['pms'] = array(
 $messages['ps'] = array(
 	'cloakcheck-form-username' => 'کارن-نوم:',
 	'cloakcheck-process-username' => 'کارن-نوم: $1',
-	'cloakcheck-process-accountage-no' => 'ګڼون لا تر اوسه نوی دی.',
+	'cloakcheck-process-accountage-no' => 'گڼون لا تر اوسه نوی دی.',
 );
 
 /** Portuguese (português)

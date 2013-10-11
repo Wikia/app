@@ -760,6 +760,7 @@ $messages['id'] = array(
 <li>Bagikan kegiatan Anda di Wikia dengan teman-teman Anda di Facebook</li>
 <li>Kendali penuh akan apa yang dipublikasikan</li>
 </ul>',
+	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>Masuk log dengan Facebook Connect</h1>',
 	'comboajaxlogin-connectmarketing-oasis' => '<h1>Hubungkan akun Wikia Anda dengan Facebook</h1>
 <ul>
 <li>Menjaga nama pengguna saat ini, riwayat, suntingan... tidak ada yang berubah kecuali cara Anda masuk log</li>
@@ -767,6 +768,9 @@ $messages['id'] = array(
 </ul>',
 	'comboajaxlogin-connectmarketing-back' => '&laquo; Kembali',
 	'comboajaxlogin-connectmarketing-forward' => 'Persiapan &raquo;',
+	'comboajaxlogin-connectdirections' => 'Masukkan nama pengguna dan kata sandi Wikia Anda - kami akan dengan ajaib menghubungkan akun Wikia dan Facebook Anda di belakangnya.
+
+Sekali Anda selesai, Anda dapat masuk log dengan mudah menggunakan tombol Facebook Connect apapun.',
 	'comboajaxlogin-post-not-understood' => 'Ada kesalahan dalam cara formulir ini dibangun.
 Silakan coba lagi atau [[Special:Contact|laporkan ini]].',
 	'comboajaxlogin-readonlytext' => '<h2>Maaf!</h2>
@@ -863,7 +867,7 @@ $messages['ko'] = array(
 	'comboajaxlogin-ajaxerror' => '위키아가 응답하지 않습니다. 네트워크 연결을 확인하세요.',
 );
 
-/** Kirghiz (Кыргызча)
+/** Kyrgyz (Кыргызча)
  * @author Growingup
  */
 $messages['ky'] = array(
@@ -1208,7 +1212,7 @@ Për piasì, ch'a preuva torna o [[Special:Contact|ch'a lo signala]].",
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
-	'comboajaxlogin-createlog' => 'ننوتل او يا يو ګڼون جوړول',
+	'comboajaxlogin-createlog' => 'ننوتل او يا يو گڼون جوړول',
 	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>د فېسبوک له لارې ننوتل</h1>',
 	'comboajaxlogin-connectmarketing-back' => '&laquo; پر شا کېدل',
 	'comboajaxlogin-connectmarketing-forward' => 'پيلول &raquo;',

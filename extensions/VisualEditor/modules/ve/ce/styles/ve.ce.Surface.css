@@ -1,7 +1,7 @@
-/**
- * VisualEditor content editable Surface styles.
+/*!
+ * VisualEditor ContentEditable Surface styles.
  *
- * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -13,7 +13,6 @@
 .ve-ce-surface-textarea {
 	position: absolute;
 	z-index: -1;
-	filter: alpha(opacity=0);
 	opacity: 0;
 	color: white;
 	background-color: #fff;
@@ -34,26 +33,26 @@
 	display: none;
 }
 
-.ve-ce-phantoms {
-	cursor: not-allowed;
+/* @noflip */
+.ve-ce-surface-phantoms {
 	left: 0;
-	opacity: .85;
+	opacity: 0.75;
 	position: absolute;
 	top: 0;
 }
 
-.ve-ce-phantom {
-	background-image: -webkit-repeating-linear-gradient(-45deg, white 0px, white 5px, #C3E59A 5px, #C3E59A 10px );
-	background-image: -moz-repeating-linear-gradient(-45deg, white 0px, white 5px, #C3E59A 5px, #C3E59A 10px);
-	background-size: 14px 14px;
+/* @noflip */
+.ve-ce-surface-highlights {
+	left: 0;
+	opacity: 0.5;
+	pointer-events: none;
 	position: absolute;
+	top: 0;
 }
 
-#paste {
-	display: none;
+.ve-ce-surface-paste {
 	height: 1px;
 	left: 0;
-	filter: alpha(opacity=0);
 	opacity: 0;
 	overflow: hidden;
 	position: fixed;
@@ -61,7 +60,21 @@
 	width: 1px;
 }
 
-#paste * {
+.ve-ce-surface-paste * {
 	height: 1px !important;
 	width: 1px !important;
+}
+
+/* MediaWiki PHP Parser does not wrap text inside image captions in <p> but we do (cause we have to).
+ * Let's make those <p> looks like they are not there by proper CSS styling.
+ */
+/*csslint overqualified-elements:false */
+.ve-ce-surface .thumbcaption p.ve-ce-generated-wrapper {
+	display: inline;
+	padding: 0;
+	line-height: inherit;
+}
+
+.ve-ce-surface .thumbcaption .ve-ce-branchNode-slug {
+	display: none;
 }

@@ -12,7 +12,7 @@ require( [ 'sloth', 'wikia.window', 'jquery' ], function( sloth, w, $ ){
 			$placeholder = $( '#WikiaArticleFooter' );
 			break;
 		case 'monobook':
-			$placeholder = $( '#mw-data-after-content' )
+			$placeholder = $( '#mw-data-after-content' );
 			break;
 	}
 
@@ -57,7 +57,7 @@ require( [ 'sloth', 'wikia.window', 'jquery' ], function( sloth, w, $ ){
 			on: element,
 			threshold: 200,
 			callback: function() {
-				require(['wikia.mustache', 'JSMessages', 'wikia.nirvana'], function(mustache, msg, nirvana){
+				require([ 'wikia.mustache', 'JSMessages', 'wikia.nirvana', 'wikia.tracker' ], function( mustache, msg, nirvana, tracker ) {
 					$.when(
 						nirvana.getJson(
 							'RelatedPagesApi',
@@ -92,6 +92,19 @@ require( [ 'sloth', 'wikia.window', 'jquery' ], function( sloth, w, $ ){
 							};
 
 							$placeholder.prepend( mustache.render( template, mustacheData ) );
+							$placeholder.on( 'mousedown', '.RelatedPagesModule a', function( event ) {
+								// Primary mouse button only
+								if( event.type === 'mousedown' && event.which !== 1 ) {
+									return;
+								}
+
+								tracker.track({
+									action: Wikia.Tracker.ACTIONS.CLICK,
+									trackingMethod: 'ga',
+									category: 'article',
+									label: 'related-pages'
+								});
+							})
 						}
 					});
 				});

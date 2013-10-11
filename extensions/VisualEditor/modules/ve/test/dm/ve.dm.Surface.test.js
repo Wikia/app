@@ -1,7 +1,7 @@
-/**
- * VisualEditor data model Surface tests.
+/*!
+ * VisualEditor DataModel Surface tests.
  *
- * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -51,64 +51,32 @@ QUnit.test( 'change', 3, function ( assert ) {
 		events.change++;
 	} );
 	surface.change( tx );
-	assert.deepEqual( events, { 'transact': 1, 'select': 0, 'change': 1 } );
-	surface.change( null, new ve.Range( 1, 1 ) );
-	assert.deepEqual( events, { 'transact': 1, 'select': 1, 'change': 2 } );
-	surface.change( tx, new ve.Range( 2, 2 ) );
-	assert.deepEqual( events, { 'transact': 2, 'select': 2, 'change': 3 } );
+	assert.deepEqual( events, { 'transact': 1, 'select': 0, 'change': 1 }, 'transaction without selection' );
+	surface.change( null, new ve.Range( 2, 2 ) );
+	assert.deepEqual( events, { 'transact': 1, 'select': 1, 'change': 2 }, 'selection without transaction' );
+	surface.change( tx, new ve.Range( 3, 3 ) );
+	assert.deepEqual( events, { 'transact': 2, 'select': 2, 'change': 3 }, 'transaction and selection' );
 } );
 
-QUnit.test( 'annotate', 1, function ( assert ) {
-	var i,
-		surface,
-		cases = [
-		{
-			'msg': 'Set Bold',
-			'data': [
-				'b', 'o', 'l', 'd'
-			],
-			'expected':
-			[
-				[
-					'b',
-						[
-							ve.dm.example.bold
-						]
-				],
-				[
-					'o',
-						[
-							ve.dm.example.bold
-						]
-				],
-				[
-					'l',
-						[
-							ve.dm.example.bold
-						]
-				],
-				[
-					'd',
-						[
-							ve.dm.example.bold
-						]
-				]
-			],
-			'annotate': {
-				'method': 'set',
-				'annotation': ve.dm.example.bold
-			}
-		}
-	];
+QUnit.test( 'breakpoint', 7, function ( assert ) {
+	var surface = new ve.dm.SurfaceStub(),
+		tx = new ve.dm.Transaction.newFromInsertion( surface.dm, 1, ['x'] ),
+		selection = new ve.Range( 1, 1 );
 
-	QUnit.expect( cases.length );
-	for ( i = 0; i < cases.length; i++ ) {
-		ve.dm.example.preprocessAnnotations( cases[i].data );
-		ve.dm.example.preprocessAnnotations( cases[i].expected );
-		surface = new ve.dm.SurfaceStub( cases[i].data );
-		surface.change( null, new ve.Range( 0, surface.getDocument().getData().length ) );
-		surface.annotate( cases[i].annotate.method,
-			ve.dm.example.createAnnotation( cases[i].annotate.annotation ) );
-		assert.deepEqual( surface.getDocument().getData(), cases[i].expected, cases[i].msg );
-	}
+	assert.equal( surface.breakpoint(), false, 'Returns false if no transactions applied' );
+
+	surface.change( tx, selection );
+	assert.deepEqual( surface.bigStack, [], 'Big stack data matches before breakpoint' );
+	assert.deepEqual( surface.smallStack, [tx], 'Small stack data matches before breakpoint' );
+
+	assert.equal( surface.breakpoint(), true, 'Returns true after transaction applied' );
+	assert.equal( surface.breakpoint(), false, 'Returns false if no transactions applied since last breakpoint' );
+
+	assert.deepEqual( surface.bigStack, [ {
+			'stack': [tx],
+			'selection': selection
+		} ],
+		'Big stack data matches after breakpoint'
+	);
+	assert.deepEqual( surface.smallStack, [], 'Small stack data matches after breakpoint' );
 } );

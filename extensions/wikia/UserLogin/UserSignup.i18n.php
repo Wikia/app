@@ -2813,6 +2813,7 @@ Vil du kontrollere hva slags e-post du får? Gå til: {{fullurl:{{ns:special}}:P
 
 /** Dutch (Nederlands)
  * @author AvatarTeam
+ * @author HanV
  * @author SPQRobin
  * @author Siebrand
  */
@@ -2826,7 +2827,7 @@ $messages['nl'] = array(
 	'usersignup-error-empty-email' => 'Geef een e-mailadres op.',
 	'usersignup-error-empty-username' => 'Geef een gebruikersnaam op.',
 	'usersignup-error-already-confirmed' => 'U hebt dit e-mailadres al bevestigd.',
-	'usersignup-error-throttled-email' => 'U hebt vandaag te vaak een bevestigingse-mail aangevraagd. Wat even voor het opnieuw te proberen.',
+	'usersignup-error-throttled-email' => 'U hebt vandaag te vaak een bevestiging aangevraagd. Wacht even voor u het opnieuw doet.',
 	'usersignup-error-too-many-changes' => 'U mag uw e-mailadres vandaag niet meer wijzigen. Probeer het later opnieuw.',
 	'usersignup-error-password-length' => 'Uw wachtwoord is te lang. Kies een wachtwoord dat uit minder dan 50 tekens bestaat.',
 	'usersignup-error-confirmed-user' => 'Het lijkt erop dat u al een bevestigd e-mailadres hebt voor $1. Controleer uw [$2 gebruikersprofiel].',
@@ -2836,8 +2837,8 @@ $messages['nl'] = array(
 	'usersignup-facebook-have-an-account-heading' => 'Hebt u al een gebruiker?',
 	'usersignup-facebook-have-an-account' => 'Uw huidige Wikigebruiker met Facebook koppelen.',
 	'usersignup-facebook-proxy-email' => 'Anonieme e-mailadres van Facebook',
-	'usersignup-user-pref-emailconfirmlink' => 'Nieuwe bevestigingse-mail laten verzenden',
-	'usersignup-user-pref-confirmemail_send' => 'Mijn bevestigingse-mail opnieuw verzenden',
+	'usersignup-user-pref-emailconfirmlink' => 'Nieuwe bevestiging laten e-mailen',
+	'usersignup-user-pref-confirmemail_send' => 'Mijn bevestiging opnieuw verzenden',
 	'usersignup-user-pref-emailauthenticated' => 'Bedankt. Uw e-mailadres is bevestigd op $2 om $3.',
 	'usersignup-user-pref-emailnotauthenticated' => 'Controleer uw e-mail en klik op de koppeling voor bevestiging om uw e-mailadres te wijzigen naar $1',
 	'usersignup-user-pref-unconfirmed-emailnotauthenticated' => 'Uw e-mailadres is nog niet bevestigd. E-mailfuncties werken niet totdat u uw e-mailadres hebt bevestigd.',
@@ -2846,12 +2847,12 @@ $messages['nl'] = array(
 	'usersignup-confirm-email-unconfirmed-emailnotauthenticated' => 'Uw e-mailadres is nog niet bevestigd. Er is een e-mail naar u verzonden. Klik op de koppeling in die e-mail om uw e-mailadres te bevestigen.',
 	'usersignup-user-pref-confirmemail_noemail' => 'U hebt nog geen e-mailadres opgegeven. Ga naar [[Special:Preferences|uw voorkeuren]] om een e-mailadres in te stellen.',
 	'usersignup-confirm-page-title' => 'Uw e-mailadres bevestigen',
-	'usersignup-confirm-email-resend-email' => 'Stuur me nog een bevestigingse-mail',
+	'usersignup-confirm-email-resend-email' => 'Stuur me per e-mail nog een bevestiging',
 	'usersignup-confirm-email-change-email-content' => 'Ik wil een ander e-mailadres gebruiken.',
 	'usersignup-confirm-email-change-email' => 'Mijn e-mailadres wijzigen',
 	'usersignup-confirm-email-new-email-label' => 'Nieuw e-mailadres',
 	'usersignup-confirm-email-update' => 'Bijwerken',
-	'usersignup-confirm-email-tooltip' => 'Hebt u een e-mailadres opgegeven dat u niet kunt bevestigen of wilt u een ander e-mailadres opgeven? Maak u geen zorgen, en gebruik de koppeling hieronder om uw e-mailadres te wijzigen en een nieuwe bevestigingse-mail te ontvangen.',
+	'usersignup-confirm-email-tooltip' => 'Hebt u een e-mailadres opgegeven dat u niet kunt bevestigen of wilt u een ander e-mailadres gebruiken? Gebruik dan de koppeling hieronder om uw e-mailadres te wijzigen, u ontvangt een nieuwe bevestiging per e-mail.',
 	'usersignup-resend-email-heading-success' => 'Nieuwe e-mail verzonden',
 	'usersignup-resend-email-heading-failure' => 'De e-mail is niet opnieuw verzonden',
 	'usersignup-confirm-page-heading-confirmed-user' => 'Gefeliciteerd!',
@@ -3439,17 +3440,17 @@ Veul-lo controlé che mëssagi a arsèiv? Ch'a vada su: {{fullurl:{{ns:special}}
 $messages['ps'] = array(
 	'usersignup-page-title' => 'ويکيا سره يوځای شی',
 	'usersignup-page-captcha-label' => 'تته ويکه',
-	'usersignup-facebook-create-account' => 'ګڼون جوړول',
+	'usersignup-facebook-create-account' => 'گڼون جوړول',
 	'usersignup-confirm-email-change-email' => 'زما برېښليک پته بدله کړه',
 	'usersignup-confirm-email-new-email-label' => 'نوی برېښليک',
 	'usersignup-confirm-email-update' => 'اوسمهالول',
 	'usersignup-resend-email-heading-success' => 'نوی برېښليک ولېږل شو',
 	'usersignup-confirm-page-heading-confirmed-user' => 'بختور مو شه!',
 	'usersignup-confirmation-heading-email-resent' => 'نوی برېښليک ولېږل شو',
-	'usersignup-confirmation-subheading' => 'خپل برېښليک وګورۍ',
+	'usersignup-confirmation-subheading' => 'خپل برېښليک وگورۍ',
 	'usersignup-confirmation-email-signature' => 'د ويکيا ډله',
 	'usersignup-reconfirmation-email-signature' => 'د ويکيا ډله',
-	'usersignup-welcome-email-explore-wiki-content' => 'په ويکيا کې په زرګونو ويکي ګانې شته، نورې هغه ويکي ګانې چې تاسې يې لېواله ياست، زموږ زېرمتون ته په ورتللو سره موندلی شی: <a style="color:#2C85D5;" href="http://www.wikia.com/Video_Games">ويډيويي لوبې</a>، <a style="color:#2C85D5;" href="http://www.wikia.com/Entertainment">تفريحي</a>، يا <a style="color:#2C85D5;" href="http://www.wikia.com/Lifestyle">ژوند توګه</a>.',
+	'usersignup-welcome-email-explore-wiki-content' => 'په ويکيا کې په زرگونو ويکي گانې شته، نورې هغه ويکي گانې چې تاسې يې لېواله ياست، زموږ زېرمتون ته په ورتللو سره موندلی شی: <a style="color:#2C85D5;" href="http://www.wikia.com/Video_Games">ويډيويي لوبې</a>، <a style="color:#2C85D5;" href="http://www.wikia.com/Entertainment">تفريحي</a>، يا <a style="color:#2C85D5;" href="http://www.wikia.com/Lifestyle">ژوندتوگه</a>.',
 	'usersignup-welcome-email-signature' => 'د ويکيا ډله',
 	'usersignup-heading' => 'ويکيا سره همدا نن يوځای شۍ',
 	'usersignup-marketing-global-heading' => 'جوړول',

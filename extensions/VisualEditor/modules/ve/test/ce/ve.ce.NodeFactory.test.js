@@ -1,7 +1,7 @@
-/**
- * VisualEditor content editable NodeFactory tests.
+/*!
+ * VisualEditor ContentEditable NodeFactory tests.
  *
- * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -14,9 +14,9 @@ ve.ce.NodeFactoryNodeStub = function VeCeNodeFactoryNodeStub( a, b ) {
 	this.b = b;
 };
 
-ve.ce.NodeFactoryNodeStub.rules = {
-	'canBeSplit': false
-};
+ve.inheritClass( ve.ce.NodeFactoryNodeStub, ve.ce.LeafNode );
+
+ve.ce.NodeFactoryNodeStub.static.name = 'node-factory-node-stub';
 
 /* Tests */
 
@@ -29,7 +29,7 @@ QUnit.test( 'canNodeBeSplit', 2, function ( assert ) {
 		Error,
 		'throws an exception when getting split rules for a node of an unregistered type'
 	);
-	factory.register( 'node-factory-node-stub', ve.ce.NodeFactoryNodeStub );
+	factory.register( ve.ce.NodeFactoryNodeStub );
 
 	assert.strictEqual(
 		factory.canNodeBeSplit( 'node-factory-node-stub' ),

@@ -1,99 +1,159 @@
-/**
- * VisualEditor user interface Inspector class.
+/*!
+ * VisualEditor UserInterface Inspector class.
  *
- * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
 /**
- * Creates an ve.ui.Inspector object.
+ * UserInterface inspector.
  *
  * @class
+ * @abstract
+ * @extends ve.ui.Window
+ *
  * @constructor
- * @extends {ve.EventEmitter}
- * @param {ve.ui.Context} context
+ * @param {ve.ui.Surface} surface
+ * @param {Object} [config] Configuration options
  */
-ve.ui.Inspector = function VeUiInspector( context ) {
-	// Inheritance
-	ve.EventEmitter.call( this );
-
-	if ( !context ) {
-		return;
-	}
+ve.ui.Inspector = function VeUiInspector( surface, config ) {
+	// Parent constructor
+	ve.ui.Window.call( this, surface, config );
 
 	// Properties
-	this.context = context;
-	this.$ = $( '<div class="ve-ui-inspector"></div>', context.frameView.doc );
-	this.$closeButton = $(
-		'<div class="ve-ui-inspector-button ve-ui-inspector-closeButton ve-ui-icon-close"></div>',
-		context.frameView.doc
-	);
-	this.$form = $( '<form>', context.frameView.doc );
+	this.initialSelection = null;
 
-	// DOM Changes
-	this.$.append(
-		this.$closeButton,
-		$( '<div class="ve-ui-inspector-icon ve-ui-icon-' + this.constructor.static.icon + '"></div>' ),
-		this.$form
-	);
-
-	// Events
-	this.$closeButton.on( {
-		'click': function () {
-			// Close inspector with save.
-			context.closeInspector( true );
-		}
-	} );
-	this.$form.on( {
-		'submit': ve.bind( this.onSubmit, this ),
-		'keydown': ve.bind( this.onKeyDown, this )
-	} );
+	// Initialization
+	this.$.addClass( 've-ui-inspector' );
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.ui.Inspector, ve.EventEmitter );
+ve.inheritClass( ve.ui.Inspector, ve.ui.Window );
 
-ve.ui.Inspector.static.icon = 'button';
+/* Static Properties */
+
+ve.ui.Inspector.static.titleMessage = 've-ui-inspector-title';
+
+/**
+ * Symbolic name of dialog.
+ *
+ * @abstract
+ * @static
+ * @property {string}
+ * @inheritable
+ */
+ve.ui.Inspector.static.name = '';
+
+/**
+ * The inspector comes with a remove button
+
+ * @static
+ * @inheritable
+ * @property {boolean}
+ */
+ve.ui.Inspector.static.removeable = true;
 
 /* Methods */
 
-ve.ui.Inspector.prototype.onSubmit = function ( e ) {
-	e.preventDefault();
-	if ( this.$.hasClass( 've-ui-inspector-disabled' ) ) {
-		return;
+/**
+ * Handle frame ready events.
+ *
+ * @method
+ */
+ve.ui.Inspector.prototype.initialize = function () {
+	// Parent method
+	ve.ui.Window.prototype.initialize.call( this );
+
+	// Initialization
+	this.frame.$content.addClass( 've-ui-inspector-content' );
+	this.$form = this.$$( '<form>' );
+	this.closeButton = new ve.ui.IconButtonWidget( {
+		'$$': this.$$, 'icon': 'previous', 'title': ve.msg( 'visualeditor-inspector-close-tooltip' )
+	} );
+	if ( this.constructor.static.removeable ) {
+		this.removeButton = new ve.ui.IconButtonWidget( {
+			'$$': this.$$, 'icon': 'remove', 'title': ve.msg( 'visualeditor-inspector-remove-tooltip' )
+		} );
 	}
-	this.context.closeInspector( true );
+
+	// Events
+	this.$form.on( {
+		'submit': ve.bind( this.onFormSubmit, this ),
+		'keydown': ve.bind( this.onFormKeyDown, this )
+	} );
+	this.closeButton.connect( this, { 'click': 'onCloseButtonClick' } );
+	if ( this.constructor.static.removeable ) {
+		this.removeButton.connect( this, { 'click': 'onRemoveButtonClick' } );
+	}
+
+	// Initialization
+	this.closeButton.$.addClass( 've-ui-inspector-closeButton' );
+	this.$head.prepend( this.closeButton.$ );
+	if ( this.constructor.static.removeable ) {
+		this.removeButton.$.addClass( 've-ui-inspector-removeButton' );
+		this.$head.append( this.removeButton.$ );
+	}
+	this.$body.append( this.$form );
+};
+
+/**
+ * Handle close button click events.
+ *
+ * @method
+ */
+ve.ui.Inspector.prototype.onCloseButtonClick = function () {
+	this.close( 'back' );
+};
+
+/**
+ * Handle remove button click events.
+ *
+ * @method
+ */
+ve.ui.Inspector.prototype.onRemoveButtonClick = function () {
+	this.close( 'remove' );
+};
+
+/**
+ * Handle form submission events.
+ *
+ * @method
+ * @param {jQuery.Event} e Form submit event
+ */
+ve.ui.Inspector.prototype.onFormSubmit = function () {
+	this.close( 'apply' );
 	return false;
 };
 
-ve.ui.Inspector.prototype.onKeyDown = function ( e ) {
+/**
+ * Handle form keydown events.
+ *
+ * @method
+ * @param {jQuery.Event} e Key down event
+ */
+ve.ui.Inspector.prototype.onFormKeyDown = function ( e ) {
 	// Escape
-	if ( e.which === 27 ) {
-		this.context.closeInspector( false );
-		e.preventDefault();
+	if ( e.which === ve.Keys.ESCAPE ) {
+		this.close( 'back' );
 		return false;
 	}
 };
 
-ve.ui.Inspector.prototype.open = function () {
-	// Prepare to open
-	if ( this.prepareOpen ) {
-		this.prepareOpen();
-	}
-	// Show
-	this.$.show();
-	// Open
-	if ( this.onOpen ) {
-		this.onOpen();
-	}
-	this.emit( 'open' );
+/**
+ * Handle inspector setup events.
+ *
+ * @method
+ */
+ve.ui.Inspector.prototype.onSetup = function () {
+	this.previousSelection = this.surface.getModel().getSelection();
 };
 
-ve.ui.Inspector.prototype.close = function ( accept ) {
-	this.$.hide();
-	if ( this.onClose ) {
-		this.onClose( accept );
-	}
-	this.emit( 'close' );
+/**
+ * Handle inspector open events.
+ *
+ * @method
+ */
+ve.ui.Inspector.prototype.onOpen = function () {
+	this.initialSelection = this.surface.getModel().getSelection();
 };

@@ -310,6 +310,7 @@ $messages['br'] = array(
 	'phalanx-tab-main' => 'Merañ ar siloù',
 	'phalanx-tab-secondary' => 'Amprouiñ ar siloù',
 	'phalanx-test-submit' => 'Amprouiñ',
+	'phalanx-test-results-legend' => "Disoc'hoù an amprouad",
 	'phalanx-display-row-blocks' => 'stankadennoù : $1',
 	'phalanx-display-row-created' => "krouet gant '''$1''' war $2",
 	'phalanx-link-unblock' => 'distankañ',
@@ -319,6 +320,7 @@ $messages['br'] = array(
 	'phalanx-legend-input' => 'Krouiñ pe gemmañ ur sil',
 	'phalanx-legend-listing' => 'Siloù implijet evit bremañ',
 	'phalanx-unblock-message' => "Lamet eo bet ar bloc'h ID #$1",
+	'phalanx-stats-title' => 'Stadegoù Phalanx',
 	'phalanx-stats-table-id' => 'Stankañ an ID',
 	'phalanx-stats-table-user' => 'Ouzhpennet gant',
 	'phalanx-stats-table-type' => 'Seurt',
@@ -327,6 +329,11 @@ $messages['br'] = array(
 	'phalanx-stats-table-language' => 'Yezh',
 	'phalanx-stats-table-text' => 'Testenn',
 	'phalanx-stats-table-reason' => 'Abeg',
+	'phalanx-rule-log-name' => 'Marilh ar reolennoù Phalanx',
+	'phalanx-rule-log-header' => "Hemañ zo ur marilh eus ar c'hemmoù e reolennoù Phalanx.",
+	'phalanx-rule-log-add' => 'Reolenn Phalanx ouzhpennet : $1',
+	'phalanx-rule-log-edit' => 'Reolenn Phalanx aozet : $1',
+	'phalanx-rule-log-delete' => 'Reolenn Phalanx dilamet : $1',
 	'phalanx-rule-log-details' => 'Sil : "$1", seurt : "$2", abeg : "$3"',
 	'phalanx-stats-table-wiki-id' => 'ID ar wiki',
 	'phalanx-stats-table-wiki-name' => 'Anv ar wiki',
@@ -336,6 +343,7 @@ $messages['br'] = array(
 
 /** Catalan (català)
  * @author Alvaro Vidal-Abarca
+ * @author Light of Cosmos
  * @author Roxas Nobody 15
  */
 $messages['ca'] = array(
@@ -410,8 +418,8 @@ Si us plau [[especial: Contact|contact Wikia]] sobre el problema.", # Fuzzy
 	'phalanx-user-block-new-account' => "Nom d'usuari no està disponible per a la matrícula. Si us plau, escolliu un altre.",
 	'phalanx-user-block-withreason-ip' => 'Aquesta adreça IP és impedir edició a través de tota la xarxa Wikia per vandalisme o altre interrupció per vostè o algú que comparteix la seva adreça IP.
 Si vostè creu que això és error, si us plau [[Wikia especials: Contact|contact]].<br>El blocker també va donar aquesta raó addicional:  $1 .', # Fuzzy
-	'phalanx-user-block-withreason-exact' => 'Aquest nom d\'usuari o adreça IP és impedir l\'edició de tota la Wikia de la xarxa a causa del vandalisme o altres molèsties.
-Si vostè creu que això és un error, si us plau, [[Special:Contacte|contact Wikia]].<br />El bloquejador també va donar aquesta raó addicional: <span class="notranslate" traduir="no">$1</span>.', # Fuzzy
+	'phalanx-user-block-withreason-exact' => 'Aquest usuari o adreça IP han estat bloquejats per editar en tota Wikia degut a vandalisme o altres molèsties causades. 
+Si vostè creu que es tracta d\'un error, si us plau, [[Special:Contact|contacti amb Wikia]].<br />Raó addicional de bloqueig: <span class="notranslate" traduir="no">$1</span>.',
 	'phalanx-user-block-withreason-similar' => "Aquest nom d'usuari te impedida  l´edició a través de tota la xarxa Wikia per vandalisme o altre interrupció per un usuari amb un nom semblant.
 Si us plau [[especial: Contact|contact Wikia]] sobre el problema.<br>El blocker també va donar aquesta raó addicional:  $1 .", # Fuzzy
 	'phalanx-title-move-summary' => 'La raó que heu introduït contenia una frase bloquejat.',
@@ -2228,7 +2236,7 @@ $messages['ps'] = array(
 	'phalanx-type-user' => 'کارن',
 	'phalanx-type-user-email' => 'برېښليک',
 	'phalanx-type-answers-question-title' => 'د پوښتنې سرليک',
-	'phalanx-label-filter' => 'چاڼګر:',
+	'phalanx-label-filter' => 'چاڼگر:',
 	'phalanx-label-reason' => 'سبب:',
 	'phalanx-label-type' => 'ډول:',
 	'phalanx-label-lang' => 'ژبه:',

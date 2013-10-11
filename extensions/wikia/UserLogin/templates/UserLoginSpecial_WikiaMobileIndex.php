@@ -28,6 +28,9 @@ if ( !empty( $result ) ) {
 	<form method=post action="<?= $formPostAction ?>">
 		<input type=hidden name=loginToken value='<?= $loginToken ?>'>
 		<input type=hidden name=keeploggedin value=true>
+		<? if ( !empty( $returnto ) ): ?>
+			<input type=hidden name=returnto value="<?= $returnto; ?>">
+		<? endif; ?>
 		<input type=text name=username class=wkInp
 		       placeholder='<?= wfMessage( 'yourname' )->escaped()?>'<?= ( $username ) ? ' value="' . htmlspecialchars($username) . '"' : ''?><?= ( $userErr ) ? ' class=inpErr' : ''?>>
 		<? if ( $userErr ) : ?>

@@ -52,7 +52,7 @@ class Wikia {
 	const VARNISH_STAGING_HEADER = 'X-Staging';
 	const VARNISH_STAGING_PREVIEW = 'preview';
 	const VARNISH_STAGING_VERIFY = 'verify';
-	const HEX_CHARS = '0123456789abcdef';
+	const REQUIRED_CHARS = '0123456789abcdefG';
 
 	private static $vars = array();
 	private static $cachedLinker;
@@ -1890,7 +1890,7 @@ class Wikia {
 		if ( $request->getVal('title','') === '' ) {
 			$title = Title::newMainPage();
 		} else {
-			$title = Title::newFromText($request->getVal('title', 'AJAX'));
+			$title = Title::newFromText($request->getVal('title', 'AJAX'), $request->getInt('namespace', NS_MAIN));
 			if (!$title instanceof Title) {
 				$title = Title::makeTitle( NS_MAIN, 'AJAX' );
 			}
@@ -2079,7 +2079,7 @@ class Wikia {
 
 		if ( $disabled ) {
 			$user->setEmail( '' );
-			$user->setPassword( wfGenerateToken() . self::HEX_CHARS );
+			$user->setPassword( wfGenerateToken() . self::REQUIRED_CHARS );
 			$user->setOption( 'disabled', 1 );
 			$user->setOption( 'disabled_date', wfTimestamp( TS_DB ) );
 			$user->mToken = null;

@@ -547,6 +547,7 @@ $messages['pt'] = array(
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
+ * @author Cainamarques
  * @author Giro720
  * @author Luckas Blade
  * @author 555
@@ -562,6 +563,7 @@ $messages['pt-br'] = array(
 	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|página|páginas}})',
 	'tagsreportpagesfound' => '{{PLURAL:$1|Foi encontrada <strong>$1</strong> página que contém|Foram encontradas <strong>$1</strong> páginas que contêm}} um elemento especial (DPL, YouTube, etc.)',
 	'tagsreportgenerated' => 'Gerado a $1 às $2',
+	'tagsreportpageremoved' => 'A página #$1 foi removida',
 );
 
 /** tarandíne (tarandíne)
@@ -584,6 +586,7 @@ $messages['roa-tara'] = array(
 /** Russian (русский)
  * @author DCamer
  * @author Lockal
+ * @author Okras
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
@@ -597,6 +600,7 @@ $messages['ru'] = array(
 	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|страница|страницы|страниц}})',
 	'tagsreportpagesfound' => 'Найдено <strong>$1</strong> {{PLURAL:$1|страницы|страниц}}, содержащих указанную метку (DPL, YouTube, и т. д.)',
 	'tagsreportgenerated' => 'Создана $1 в $2',
+	'tagsreportpageremoved' => 'Страница #$1 была удалена',
 );
 
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)
@@ -706,10 +710,13 @@ $messages['vep'] = array(
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Hydra
+ * @author Hzy980512
  */
 $messages['zh-hans'] = array(
 	'tagsreportgo' => '显示',
 	'tagsreportmainnspace' => '主要',
+	'tagsreportpagesfound' => '找到$1个含特殊标签（DPL、YouTube等）的页面。',
+	'tagsreportpageremoved' => '页面#$1已被移除',
 );
 
 /** Traditional Chinese (中文（繁體）‎)

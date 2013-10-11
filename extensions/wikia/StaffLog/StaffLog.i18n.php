@@ -471,7 +471,7 @@ $messages['pms'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
-	'stafflog-filter-label' => 'چاڼګر',
+	'stafflog-filter-label' => 'چاڼگر',
 	'stafflog-filter-user' => 'کارن:',
 	'stafflog-filter-type-block' => 'بنديزونه',
 	'stafflog-filter-type-wikifactory' => 'ويکي دريځ',
@@ -542,6 +542,7 @@ $messages['roa-tara'] = array(
  * @author DCamer
  * @author Eleferen
  * @author Kuzura
+ * @author Okras
  */
 $messages['ru'] = array(
 	'stafflog-desc' => 'Централизованное ведение журнала для сотрудников',
@@ -559,6 +560,7 @@ $messages['ru'] = array(
 	'stafflog-filter-type-piggyback' => 'Вход',
 	'stafflog-filter-type-renameuser' => 'Переименование участника',
 	'stafflog-filter-type-wikifactory' => 'Статус вики',
+	'action-stafflog' => 'посмотреть централизованный штатный журнал',
 );
 
 /** Swedish (svenska)

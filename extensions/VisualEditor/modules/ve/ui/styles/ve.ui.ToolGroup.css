@@ -1,0 +1,279 @@
+/*!
+ * VisualEditor UserInterface ToolGroup styles.
+ *
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @license The MIT License (MIT); see LICENSE.txt
+ */
+
+/* ve.ui.ToolGroup */
+
+.ve-ui-toolGroup {
+	display: inline-block;
+	margin: 0.3em;
+	vertical-align: middle;
+	border-radius: 0.25em;
+	border: solid 1px transparent;
+	-webkit-transition: border-color 300ms;
+	-moz-transition: border-color 300ms;
+	-ms-transition: border-color 300ms;
+	-o-transition: border-color 300ms;
+	transition: border-color 300ms;
+}
+
+.ve-ui-toolGroup:hover {
+	border-color: rgba(0,0,0,0.1);
+}
+
+.ve-ui-toolGroup-empty {
+	display: none;
+}
+
+.ve-ui-toolGroup .ve-ui-tool .ve-ui-labeledElement-label {
+	color: #000;
+}
+
+.ve-ui-toolGroup .ve-ui-tool .ve-ui-iconedElement-icon {
+	background-position: center center;
+	background-repeat: no-repeat;
+}
+
+/* ve.ui.BarToolGroup */
+
+.ve-ui-barToolGroup > .ve-ui-iconedElement-icon,
+.ve-ui-barToolGroup > .ve-ui-iconedElement-label {
+	display: none;
+}
+
+.ve-ui-barToolGroup .ve-ui-tool {
+	display: inline-block;
+	position: relative;
+	vertical-align: top;
+	height: 1.5em;
+	padding: 0.25em;
+	margin: -1px 0 -1px -1px;
+	border: solid 1px transparent;
+	cursor: pointer;
+}
+
+.ve-ui-barToolGroup
+	.ve-ui-tool-active:not(.ve-ui-widget-disabled) +
+	.ve-ui-tool-active:not(.ve-ui-widget-disabled)
+{
+	border-left-color: rgba(0,0,0,0.1);
+}
+
+.ve-ui-barToolGroup .ve-ui-tool:first-child {
+	border-top-left-radius: 0.25em;
+	border-bottom-left-radius: 0.25em;
+}
+
+.ve-ui-barToolGroup .ve-ui-tool:last-child {
+	margin-right: -1px;
+	border-top-right-radius: 0.25em;
+	border-bottom-right-radius: 0.25em;
+}
+
+.ve-ui-barToolGroup .ve-ui-tool:hover:not(.ve-ui-widget-disabled) {
+	border-color: rgba(0,0,0,0.2);
+}
+
+.ve-ui-barToolGroup .ve-ui-tool-active:not(.ve-ui-widget-disabled) {
+	border-color: rgba(0,0,0,0.2);
+}
+
+.ve-ui-barToolGroup .ve-ui-tool .ve-ui-iconedElement-icon {
+	display: block;
+	height: 1.5em;
+	width: 1.5em;
+	opacity: 0.8;
+}
+
+.ve-ui-barToolGroup .ve-ui-tool .ve-ui-labeledElement-label {
+	display: none;
+}
+
+.ve-ui-barToolGroup .ve-ui-tool.ve-ui-widget-disabled {
+	cursor: default;
+}
+
+.ve-ui-barToolGroup .ve-ui-tool.ve-ui-widget-disabled .ve-ui-iconedElement-icon {
+	opacity: 0.2;
+}
+
+.ve-ui-barToolGroup .ve-ui-tool:not(.ve-ui-widget-disabled) .ve-ui-iconedElement-icon {
+	opacity: 0.8;
+}
+
+.ve-ui-barToolGroup .ve-ui-tool:hover:not(.ve-ui-widget-disabled) .ve-ui-iconedElement-icon {
+	opacity: 1;
+}
+
+/* ve.ui.PopupToolGroup */
+
+.ve-ui-popupToolGroup {
+	position: relative;
+	height: 2em;
+	min-width: 2em;
+}
+
+.ve-ui-popupToolGroup-handle {
+	display: block;
+	cursor: pointer;
+}
+
+.ve-ui-popupToolGroup-handle .ve-ui-iconedElement-icon {
+	position: absolute;
+	top: 0;
+	right: 0;
+	height: 2em;
+	width: 2em;
+	background-position: center center;
+	background-repeat: no-repeat;
+	opacity: 0.8;
+}
+
+.ve-ui-popupToolGroup-handle .ve-ui-labeledElement-label {
+	line-height: 2.6em;
+	font-size: 0.8em;
+	margin: 0 2.25em 0 1em;
+}
+
+.ve-ui-popupToolGroup .ve-ui-toolGroup-tools {
+	display: none;
+	position: absolute;
+	top: 2em;
+	left: -1px;
+	z-index: 4;
+	border: solid 1px #ccc;
+	background-color: white;
+	box-shadow: 0 0.25em 1em rgba(0,0,0,0.25);
+}
+
+.ve-ui-popupToolGroup .ve-ui-toolGroup-tools .ve-ui-iconedElement-icon {
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+
+.ve-ui-popupToolGroup-active:not(.ve-ui-widget-disabled) > .ve-ui-toolGroup-tools {
+	display: block;
+}
+
+.ve-ui-popupToolGroup-active:not(.ve-ui-widget-disabled) {
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 0;
+}
+
+.ve-ui-popupToolGroup .ve-ui-tool .ve-ui-iconedElement-icon {
+	display: inline-block;
+	vertical-align: middle;
+	height: 2em;
+	width: 2em;
+	margin-right: 0.5em;
+}
+
+.ve-ui-popupToolGroup .ve-ui-tool .ve-ui-labeledElement-label {
+	display: inline-block;
+	vertical-align: middle;
+	line-height: 2em;
+	font-size: 0.8em;
+}
+
+/* ve.ui.ListToolGroup */
+
+.ve-ui-listToolGroup .ve-ui-toolGroup-tools {
+	padding: 0.5em;
+}
+
+.ve-ui-listToolGroup .ve-ui-tool {
+	display: block;
+	cursor: pointer;
+	white-space: nowrap;
+	border: solid 1px transparent;
+	margin: -1px 0 -1px -1px;
+	padding-right: 0.5em;
+}
+
+.ve-ui-listToolGroup.ve-ui-popupToolGroup-active {
+	border-color: rgba(0,0,0,0.2);
+}
+
+.ve-ui-listToolGroup
+	.ve-ui-tool-active:not(.ve-ui-widget-disabled) +
+	.ve-ui-tool-active:not(.ve-ui-widget-disabled)
+{
+	border-top-color: rgba(0,0,0,0.1);
+}
+
+.ve-ui-listToolGroup .ve-ui-tool:hover:not(.ve-ui-widget-disabled) {
+	border-color: rgba(0,0,0,0.2);
+}
+
+.ve-ui-listToolGroup .ve-ui-tool-active:not(.ve-ui-widget-disabled) {
+	border-color: rgba(0,0,0,0.2);
+}
+
+.ve-ui-listToolGroup .ve-ui-tool.ve-ui-widget-disabled {
+	cursor: default;
+}
+
+.ve-ui-listToolGroup .ve-ui-tool.ve-ui-widget-disabled .ve-ui-iconedElement-icon {
+	opacity: 0.2;
+}
+
+.ve-ui-listToolGroup .ve-ui-tool:not(.ve-ui-widget-disabled) .ve-ui-iconedElement-icon {
+	opacity: 0.8;
+}
+
+.ve-ui-listToolGroup .ve-ui-tool:hover:not(.ve-ui-widget-disabled) .ve-ui-iconedElement-icon {
+	opacity: 1;
+}
+
+/* ve.ui.MenuToolGroup */
+
+.ve-ui-menuToolGroup {
+	border-color: rgba(0,0,0,0.1);
+}
+
+.ve-ui-menuToolGroup:hover {
+	border-color: rgba(0,0,0,0.2);
+}
+
+.ve-ui-menuToolGroup.ve-ui-popupToolGroup-active {
+	border-color: rgba(0,0,0,0.25);
+}
+
+.ve-ui-menuToolGroup .ve-ui-popupToolGroup-handle {
+	min-width: 8em;
+}
+
+.ve-ui-menuToolGroup .ve-ui-tool {
+	display: block;
+	cursor: pointer;
+	white-space: nowrap;
+	padding: 0.25em 1em 0.25em 0.25em;
+}
+
+.ve-ui-menuToolGroup .ve-ui-tool .ve-ui-iconedElement-icon {
+	background-image: none;
+}
+
+.ve-ui-menuToolGroup .ve-ui-tool-active .ve-ui-iconedElement-icon {
+	/* @embed */
+	background-image: url(images/icons/check.png);
+}
+
+.ve-ui-menuToolGroup .ve-ui-tool:hover {
+	background-color: #e1f3ff;
+}
+
+/* Common */
+
+.ve-ui-barToolGroup .ve-ui-tool-active:not(.ve-ui-widget-disabled),
+.ve-ui-listToolGroup .ve-ui-tool-active:not(.ve-ui-widget-disabled),
+.ve-ui-popupToolGroup-active:not(.ve-ui-widget-disabled) {
+	/* @embed */
+	background-image: url(images/fade-down.png);
+	background-position: left top;
+	background-repeat: repeat-x;
+	box-shadow: inset 0 0.07em 0.07em 0 rgba(0, 0, 0, 0.07);
+}

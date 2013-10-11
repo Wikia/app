@@ -31,6 +31,7 @@ var WikiaBar = {
 		this.wikiaBarCollapseWrapperObj.click($.proxy(this.clickTrackingHandler, this));
 	},
 	init: function () {
+		this.$window = $(window);
 		this.wikiaBarWrapperObj = $('#WikiaBarWrapper');
 		this.wikiaBarCollapseWrapperObj = $('.WikiaBarCollapseWrapper');
 		this.bindTracking();
@@ -55,6 +56,8 @@ var WikiaBar = {
 			placement: "wikiaBar",
 			content: wikiaBarWrapperArrow.data('tooltipshow')
 		});
+
+		this.$window.triggerHandler( 'WikiaBarReady' );
 
 		return true;
 	},
@@ -207,6 +210,8 @@ var WikiaBar = {
 		} else {
 			this.changeLoggedInUserStateBar();
 		}
+
+		this.$window.triggerHandler( 'WikiaBarStateChanged' );
 	},
 	changeAnonBarStateData: function () {
 		var isHidden = this.hasAnonHiddenWikiaBar();

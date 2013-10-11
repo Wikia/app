@@ -602,12 +602,35 @@ Mitte 'a descrizione aqquà.",
 
 /** Russian (русский)
  * @author Lunacy1911
+ * @author Okras
  */
 $messages['ru'] = array(
+	'filepage-desc' => 'Модификация стандартной файловой страницы MediaWiki для поддержки видео',
+	'video-page-file-list-header' => 'Присутствует на этих страницах',
+	'video-page-global-file-list-header' => 'Появляется в следующих проектах',
+	'video-page-from-provider' => 'Из $1',
+	'video-page-expires' => 'Содержимое истекает $1',
+	'video-page-views' => '$1 {{PLURAL:$1|просмотр|просмотров}}',
+	'video-page-see-more-info' => 'Показать подробнее',
+	'video-page-see-less-info' => 'Показать меньше',
+	'video-page-description-heading' => 'Описание',
+	'video-page-description-zero-state' => 'Описание пока отсутствует.',
+	'video-page-add-description-link-text' => 'Добавить описание.',
+	'video-page-default-description-header-and-text' => '== Описание ==
+Введите описание здесь.',
+	'video-page-file-list-pagination' => '$1 из $2',
 	'file-page-replace-button' => 'Заменить',
 	'file-page-tab-about' => 'О приложении',
 	'file-page-tab-history' => 'Посмотреть историю',
+	'file-page-tab-metadata' => 'Метаданные',
 	'file-page-more-links' => 'Просмотреть полный список',
+);
+
+/** Slovenian (slovenščina)
+ * @author Eleassar
+ */
+$messages['sl'] = array(
+	'video-page-add-description-link-text' => 'Dodajte opis.',
 );
 
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)
@@ -716,11 +739,14 @@ $messages['ur'] = array(
 );
 
 /** Simplified Chinese (中文（简体）‎)
+ * @author Hzy980512
  * @author Kuailong
  * @author Liuxinyu970226
  * @author Qiyue2001
  */
 $messages['zh-hans'] = array(
+	'filepage-desc' => '为了支持视频而修改标准MediaWiki文件页面',
+	'video-page-file-list-header' => '出现在这些页面上',
 	'video-page-from-provider' => '来自$1',
 	'video-page-views' => '$1次浏览',
 	'video-page-see-more-info' => '显示更多信息',
