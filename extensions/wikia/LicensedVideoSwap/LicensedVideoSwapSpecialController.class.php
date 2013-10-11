@@ -244,8 +244,8 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$helper->deletePageStatus( $articleId );
 
 		// add to log
-		$reason = wfMessage( 'lvs-log-swap', $file->getTitle()->getText(), $newFile->getTitle()->getText() )->text();
-		$helper->addLog( $file->getTitle(), 'licensedvideoswap_swap', $reason );
+		$reason = wfMessage( 'lvs-log-summary', $file->getTitle()->getText(), $newFile->getTitle()->getText() )->text();
+		$helper->addLog( $file->getTitle(), wfMessage( 'lvs-log-description' )->text(), $reason );
 
 		// TODO: send request for tracking
 
