@@ -1,4 +1,5 @@
-require( [ "jquery", "client" ], function( $, client ) {
+require( [ "jquery", "client", "wikia.log" ], function( $, client, log ) {
+	log("New search suggestions loading...", log.levels.info, "suggestions");
 	$(function() {
 		var SuggestionsViewModel = function() {};
 		SuggestionsViewModel.prototype = {
@@ -49,7 +50,7 @@ require( [ "jquery", "client" ], function( $, client ) {
 					try {
 						handlers[i](value);
 					} catch(ex) {
-//						log(ex, log.levels.info);
+						log(ex, log.levels.info, "suggestions");
 					}
 				}
 			}
@@ -109,8 +110,9 @@ require( [ "jquery", "client" ], function( $, client ) {
 			updateWiki();
 		};
 		window.Wikia.newSearchSuggestions = new SuggestionsView( new SuggestionsViewModel(), $('input[name="search"]'), $('ul.search-suggest'), wgCityId );
-		if ( window.Wikia.ac && window.Wikia.ac.search ) {
-			window.Wikia.ac.search.inUse = false;
+		log("New search suggestions loaded!", log.levels.info, "suggestions");
+		if ( window.Wikia.autocomplete && window.Wikia.autocomplete.search ) {
+			window.Wikia.autocomplete.search.inUse = false;
 		}
 	});
 });

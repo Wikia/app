@@ -12,12 +12,11 @@
 
 	$.fn.autocomplete = function(options) {
 		return this.each(function() {
-
-			if(!window.Wikia.ac) {
-				window.Wikia.ac = {};
+			if(!window.Wikia.autocomplete) {
+				window.Wikia.autocomplete = {};
 			}
-			window.Wikia.ac[this.name] = new Autocomplete(this, options);
-			return window.Wikia.ac[this.name];
+			window.Wikia.autocomplete[this.name] = new Autocomplete(this, options);
+			return window.Wikia.autocomplete[this.name];
 		});
 	};
 

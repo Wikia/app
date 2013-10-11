@@ -1490,5 +1490,6 @@ $config['suggestions_js'] = array(
 	'assets' => array(
 		'//extensions/wikia/Suggestions/js/Suggestions.js',
 		'//extensions/wikia/Suggestions/js/Client.js',
+		'//extensions/wikia/Suggestions/js/Matcher.js',
 	)
 );
