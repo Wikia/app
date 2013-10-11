@@ -40,6 +40,7 @@ ve.ui.WikiaMediaSearchWidget = function VeUiWikiaMediaSearchWidget( config ) {
 		.append( this.suggestions.$ );
 	this.$.prepend( this.pagesPanel.$ );
 
+	this.query.setValue( mw.config.get( 'wgRelevantPageName' ) );
 	this.queryMedia();
 };
 
@@ -83,7 +84,7 @@ ve.ui.WikiaMediaSearchWidget.prototype.onQueryMediaDone = function ( data ) {
 		return;
 	}
 
-	media = data.response.results.mixed.items
+	media = data.response.results.mixed.items;
 
 	if ( data.response.batch < data.response.results.mixed.batches ) {
 		this.batch = data.response.batch; // was this.batch++;

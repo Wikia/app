@@ -2,6 +2,8 @@
  * VisualEditor user interface WikiaMediaInsertDialog class.
  */
 
+/*global mw*/
+
 /**
  * Dialog for inserting MediaWiki media objects.
  *
@@ -90,7 +92,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.onSearchSelect = function ( item ) {
 	] );
 };
 
-ve.ui.WikiaMediaInsertDialog.prototype.onCartSelect = function ( item ) {
+ve.ui.WikiaMediaInsertDialog.prototype.onCartSelect = function () {
 	if ( this.pagesPanel.getPageName() === 'search' ) {
 		this.pagesPanel.setPage( 'remove' );
 	} else {
@@ -99,11 +101,11 @@ ve.ui.WikiaMediaInsertDialog.prototype.onCartSelect = function ( item ) {
 };
 
 ve.ui.WikiaMediaInsertDialog.prototype.onRemoveButtonClick = function () {
-	this.cartModel.removeItems( [ this.cart.getSelectedItem().getModel() ] )
+	this.cartModel.removeItems( [ this.cart.getSelectedItem().getModel() ] );
 	this.pagesPanel.setPage( 'search' );
 };
 
-ve.ui.WikiaMediaInsertDialog.prototype.onOpen = function ( page ) {
+ve.ui.WikiaMediaInsertDialog.prototype.onOpen = function () {
 	ve.ui.MWDialog.prototype.onOpen.call( this );
 	this.pagesPanel.setPage( 'search' );
 };
@@ -131,7 +133,8 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertMedia = function ( cartItems ) {
 			'video': []
 		},
 		cartItem,
-		i;
+		i,
+		title;
 
 	// Populates attributes, items.video and items.photo
 	for ( i = 0; i < cartItems.length; i++ ) {
@@ -143,13 +146,13 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertMedia = function ( cartItems ) {
 		items[ cartItem.type ].push( cartItem.title );
 	}
 
-	function updateAttributes( results ) {
+	function updateImageinfo( results ) {
 		var i, result;
 		for ( i = 0; i < results.length; i++ ) {
 			result = results[i];
-			attributes[result.title]['height'] = result.height;
-			attributes[result.title]['width'] = result.width;
-			attributes[result.title]['url'] = result.url;
+			attributes[result.title].height = result.height;
+			attributes[result.title].width = result.width;
+			attributes[result.title].url = result.url;
 		}
 	}
 
@@ -157,7 +160,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertMedia = function ( cartItems ) {
 	if ( items.photo.length ) {
 		promises.push(
 			this.getImageInfo( items.photo, 220 ).done(
-				ve.bind( updateAttributes, this )
+				ve.bind( updateImageinfo, this )
 			)
 		);
 	}
@@ -166,19 +169,21 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertMedia = function ( cartItems ) {
 	if ( items.video.length ) {
 		promises.push(
 			this.getImageInfo( items.video, 330 ).done(
-				ve.bind( updateAttributes, this )
+				ve.bind( updateImageinfo, this )
 			)
 		);
+	}
+
+	function updateAvatar( result ) {
+		attributes[result.title].avatar = result.avatar;
+		attributes[result.title].username = result.username;
 	}
 
 	// Attribution request
 	for ( title in attributes ) {
 		promises.push(
 			this.getPhotoAttribution( title ).done(
-				ve.bind( function( result) {
-					attributes[result.title]['avatar'] = result.avatar;
-					attributes[result.title]['username'] = result.username;
-				}, this )
+				ve.bind( updateAvatar, this )
 			)
 		);
 	}
@@ -199,9 +204,9 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertMediaCallback = function ( attribut
 	var title, type, item, items = [];
 	for ( title in attributes ) {
 		item = attributes[title];
-		if ( item.type == 'photo' ) {
+		if ( item.type === 'photo' ) {
 			type = 'wikiaBlockImage';
-		} else if ( item.type == 'video' ) {
+		} else if ( item.type === 'video' ) {
 			type = 'wikiaBlockVideo';
 		}
 		items.push(
@@ -286,7 +291,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.getImageInfo = function ( titles, width )
  * @param {JSON} data Response from API
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onGetImageInfoSuccess = function ( deferred, data ) {
-	var results = [], item;
+	var results = [], item, i;
 	for ( i = 0; i < data.query.pageids.length; i++ ) {
 		item = data.query.pages[ data.query.pageids[i] ];
 		results.push( {
@@ -294,10 +299,10 @@ ve.ui.WikiaMediaInsertDialog.prototype.onGetImageInfoSuccess = function ( deferr
 			'height': item.imageinfo[0].thumbheight,
 			'width': item.imageinfo[0].thumbwidth,
 			'url': item.imageinfo[0].thumburl
-		} )
+		} );
 	}
 	deferred.resolve( results );
-}
+};
 
 /* Registration */
 

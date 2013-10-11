@@ -17,7 +17,7 @@ ve.ui.WikiaCartItemWidget = function VeUiWikiaCartItemWidget( model, config ) {
 		} );
 
 	require( ['wikia.thumbnailer'], ve.bind( function ( thumbnailer ) {
-		$image.attr( 'src', thumbnailer.getThumbURL( this.model.url, 'image', size, size ) )
+		$image.attr( 'src', thumbnailer.getThumbURL( this.model.url, 'image', size, size ) );
 	}, this ) );
 };
 
