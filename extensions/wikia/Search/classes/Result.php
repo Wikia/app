@@ -121,6 +121,15 @@ class Result extends ReadWrite {
 	}
 
 	/**
+	 * Returns escaped Url for "a" tag
+	 * @return string
+	 */
+	public function getEscapedUrl()
+	{
+		return htmlentities($this->getUrl(),ENT_QUOTES | ENT_IGNORE, 'UTF-8',false);
+	}
+
+	/**
 	 * Returns the view-readable URL
 	 * @see    WikiaSearchResult::testUrlMethods
 	 * @return string
