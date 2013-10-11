@@ -15,7 +15,7 @@ class ExampleForm extends BaseForm {
 		//////////////////////////////
 
 		// subject input field with label and validation
-		$this->addField( 'contactFormSubject', new TextField(
+		$this->addField( 'contactFormSubject', new InputField(
 			[
 				'label' => new Label( wfMessage( 'example-form-subject' ) ),
 				'validator' => new WikiaValidatorString()

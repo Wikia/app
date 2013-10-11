@@ -1,4 +1,5 @@
 <?php
+
 class InputField extends BaseField {
 
 	/**
@@ -23,21 +24,11 @@ class InputField extends BaseField {
 			$this->setProperty( self::PROPERTY_TYPE, $options['type'] );
 		}
 
-		// mostly for submit, checkbox, radio button types
-		// TODO: should we allow that?
-		if( isset( $options['value'] ) ) {
-			$this->setProperty( self::PROPERTY_VALUE, $options['value'] );
-		}
-
 		// mostly for checkbox and radio buttons
 		if( isset( $options['checked'] ) ) {
 			$this->setProperty( self::PROPERTY_CHECKED, $options['checked'] );
 		}
 
-		// mostly for checkbox and radio buttons
-		if( isset( $options['choices'] ) ) {
-			$this->setProperty( self::PROPERTY_CHOICES, $options['choices'] );
-		}
 	}
 
 	protected function getType() {

@@ -366,7 +366,6 @@ $wgAutoloadClasses['CollectionTextField'] = $IP . '/includes/wikia/forms/fields/
 $wgAutoloadClasses['RadioField'] = $IP . '/includes/wikia/forms/fields/RadioField.class.php';
 $wgAutoloadClasses['SelectField'] = $IP . '/includes/wikia/forms/fields/SelectField.class.php';
 $wgAutoloadClasses['TextareaField'] = $IP . '/includes/wikia/forms/fields/TextareaField.class.php';
-$wgAutoloadClasses['TextField'] = $IP . '/includes/wikia/forms/fields/TextField.class.php';
 $wgAutoloadClasses['FormInputField'] = $IP . '/includes/wikia/forms/fields/FormInputField.class.php';
 
 $wgAutoloadClasses['Label'] = $IP . '/includes/wikia/forms/labels/Label.class.php';
