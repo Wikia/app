@@ -12,7 +12,6 @@ $messages['en'] = array(
 	'example-form-no' => 'No',
 	'example-form-send-me-a-copy' => 'Send me a copy',
 	'example-form-password' => 'Password',
-	'example-form-radio-button' => 'Radio button example',
 	'example-form-A' => 'Option A',
 	'example-form-B' => 'Option B',
 	'example-form-C' => 'Option C',

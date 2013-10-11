@@ -85,7 +85,6 @@ class ExampleForm extends BaseForm {
 		// Add default field - it's TextField
 		$this->addField( 'defaultField' );
 
-		$this->addField( 'fieldName8', new RadioField( ['label' => new Label( wfMessage( 'example-form-radio-button' ) ) ] ) );
 		$this->addField( 'fieldName9', new RadioField( [
 			'label' => new Label( wfMessage('example-forms-radio-buttons') ),
 			'choices' => [
