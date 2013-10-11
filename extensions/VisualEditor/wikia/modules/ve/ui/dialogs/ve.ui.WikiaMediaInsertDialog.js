@@ -119,13 +119,6 @@ ve.ui.WikiaMediaInsertDialog.prototype.onClose = function ( action ) {
 	this.cartModel.clearItems();
 };
 
-
-
-
-
-
-
-
 /**
  * @method
  * @param {ve.dm.WikiaCartItem[]} cartItems Items to add
