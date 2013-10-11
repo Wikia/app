@@ -60,6 +60,7 @@ $messages['en'] = array(
 	'themedesigner-wodmark-preview' => 'Preview',
 	'themedesigner-wordmark-preview-error' => 'Oops! The name of the wiki can\'t be blank,
 please enter the name of the wiki to save.',
+	'themedesigner-favicon-help-link' => 'http://community.wikia.com/wiki/Help:Favicon',
 );
 
 /** Message documentation (Message documentation)
@@ -97,6 +98,7 @@ $messages['qqq'] = array(
 * $2 is the author name',
 	'themedesigner-wodmark-preview' => '{{Identical|Preview}}',
 	'themedesigner-wordmark-preview-error' => 'Validation error on attempt to save empty text wordmark',
+	'themedesigner-favicon-help-link' => 'Link to a help page about favicons', 
 );
 
 /** Afrikaans (Afrikaans)
@@ -1530,6 +1532,7 @@ $messages['pl'] = array(
 	'themedesigner-favicon-heading' => 'Favicon',
 	'themedesigner-wodmark-preview' => 'Podgląd',
 	'themedesigner-wordmark-preview-error' => 'Błąd – nazwa wiki nie może być pusta, wprowadź nazwę wiki, aby zapisać.',
+	'themedesigner-favicon-help-link' => 'http://spolecznosc.wikia.com/wiki/Pomoc:Favikona', 
 );
 
 /** Piedmontese (Piemontèis)
