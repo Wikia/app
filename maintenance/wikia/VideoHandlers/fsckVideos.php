@@ -62,6 +62,9 @@ class FSCKVideos extends Maintenance {
 					$this->debug("File '$title' ... ok\n");
 				} else {
 					$stats['failed']++;
+					if ( empty ($stats['fail_action'][$result['action']]) ) {
+						$stats['fail_action'][$result['action']] = 0;
+					}
 					$stats['fail_action'][$result['action']]++;
 					echo "File '$title' ... failed\n";
 					echo "\tACTION: ".$result['action']."\n";
