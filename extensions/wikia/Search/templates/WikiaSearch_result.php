@@ -41,7 +41,7 @@
 	
 	<?php if(empty($inGroup)): ?>
 		<ul>
-			<li><a href="<?= $result->getUrl(); ?>" <?=$trackingData;?> ><?=Language::factory($wg->ContentLanguage)->truncate($result->getTextUrl(), 90);?></a></li>
+			<li><a href="<?= $result->getEscapedUrl(); ?>" <?=$trackingData;?> ><?=Language::factory($wg->ContentLanguage)->truncate($result->getTextUrl(), 90);?></a></li>
 		</ul>
 	<?php endif; ?>
 	
