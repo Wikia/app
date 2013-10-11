@@ -2,125 +2,163 @@
 
 class ApiMediaSearch extends ApiBase {
 
-	const THUMB_SIZE = 150;
+	const LIMIT = 50;
+
+	/* Main API Method */
 
 	public function execute() {
 
+		// Extract params from request
 		$params = $this->extractRequestParams();
 
-		// What are we looking for?
-		$query = $params['query'];
+		// Query
+		$query = $this->getQuery( $params );
 
-		// Which batch?
-		$batch = ( $params['batch'] ) ? $params['batch'] : 1;
+		// Batch
+		$batch = $this->getBatch( $params );
 
-		// What type of media are we looking for?
-		$mediaTypeArray = explode( '|', $params['mediaType'] );
-		$video = in_array( 'video', $mediaTypeArray );
-		$photo = in_array( 'photo', $mediaTypeArray );
+		// Limit
+		$limit = $this->getLimit( $params );
 
-		if ( $video && $photo ) {
-			if ( isset( $params['separate'] ) && $params['separate'] == 'true' ) {
-				// video and photo separate
-				$response = $this->formatResponse( [
-					$this->makeRequest( $query, $batch, true, false ),
-					$this->makeRequest( $query, $batch, false, true )
-				] );
-			} else {
-				// video and photo combined
-				$response = $this->formatResponse( [
-					$this->makeRequest( $query, $batch, false, false )
-				] );
-			}
-		} else {
-			// either photo or video
-			$response = $this->formatResponse( [
-				$this->makeRequest( $query, $batch, $video, $photo )
-			] );
-		}
+		// Mixed
+		$mixed = $this->getMixed( $params );
+
+		// Type
+		$video = $this->getVideo( $params );
+		$photo = $this->getPhoto( $params );
+
+		// Get results, not well-structured
+		$results = $this->getResults( $query, $limit, $batch, $video, $photo, $mixed );
+
+		// Properly format results
+		$response = $this->formatResults( $results, $limit, $batch );
 
 		// Return response
 		$this->getResult()->addValue( null, 'response', $response );
 		return true;
 	}
 
-	private function formatResponse( $raw ) {
-		$response = [];
-
-		if ( count( $raw ) == 1 ) {
-			$response = [
-				'batches' => $raw[0]['batches'],
-				'currentBatch' => $raw[0]['currentBatch'],
-				'items' => $this->formatItems( $raw[0] )
-			];
-		} else if ( count( $raw ) == 2 ) {
-			$response = [
-				'videos' => [
-					'batches' => $raw[0]['batches'],
-					'currentBatch' => $raw[0]['currentBatch'],
-					'items' => $this->formatItems( $raw[0] )
-				],
-				'photos' => [
-					'batches' => $raw[1]['batches'],
-					'currentBatch' => $raw[1]['currentBatch'],
-					'items' => $this->formatItems( $raw[1] )
-				]
-			];
-		}
-
-		return $response;
-
+	public function getQuery( $params ) {
+		return $params['query'];
 	}
 
-	private function makeRequest( $query, $batch, $videoOnly, $imageOnly ) {
+	public function getBatch( $params ) {
+		return isset( $params['batch'] ) ? $params['batch'] : 1;
+	}
+
+	public function getLimit( $params ) {
+		return isset( $params['limit'] ) ? $params['limit'] : self::LIMIT;
+	}
+
+	public function getMixed( $params ) {
+		return filter_var( $params['mixed'], FILTER_VALIDATE_BOOLEAN ) ? true : false;
+	}
+
+	public function getVideo( $params ) {
+		$typeArray = explode( '|', $params['type'] );
+		return in_array( 'video', $typeArray );
+	}
+
+	public function getPhoto( $params ) {
+		$typeArray = explode( '|', $params['type'] );
+		return in_array( 'photo', $typeArray );
+	}
+
+	protected function getType( $title ) {
+		$fileTitle = Title::newFromText( $title, NS_FILE );
+		$image = wfFindFile( $fileTitle );
+
+		$mediaTypes = [
+			'BITMAP' => 'photo',
+			'VIDEO' => 'video'
+		];
+
+		return $mediaTypes[ $image->getMediaType() ];
+	}
+
+	protected function getUrl( $title ) {
+		$fileTitle = Title::newFromText( $title, NS_FILE );
+		$image = wfFindFile( $fileTitle );
+		return $image->getFullUrl();
+	}
+
+	public function getResults( $query, $limit, $batch, $video, $photo, $mixed ) {
+		$results = [];
+		if ( $video && $photo ) {
+			if ( $mixed ) {
+				// video and photo mixed
+				$results['mixed'] = $this->getSearchResults( $query, $limit, $batch, false, false );
+			} else {
+				// video and photo separate
+				$results['video'] = $this->getSearchResults( $query, $limit, $batch, true, false );
+				$results['photo'] = $this->getSearchResults( $query, $limit, $batch, false, true );
+			}
+		} else {
+			// either photo or video
+			$items = $this->getSearchResults( $query, $limit, $batch, $video, $photo );
+			if ( $mixed ) {
+				$key = 'mixed';
+			} else {
+				$key = $video ? 'video' : 'photo';
+			}
+			$results[$key] = $items;
+		}
+		return $results;
+	}
+
+	protected function getSearchResults( $query, $limit, $batch, $videoOnly, $imageOnly ) {
 		$searchConfig = (new Wikia\Search\Config())
 			->setQuery( $query )
-			->setLimit( 10 )
+			->setLimit( $limit )
 			->setPage( $batch )
 			->setCombinedMediaSearch( true )
 			->setCombinedMediaSearchIsVideoOnly( $videoOnly )
 			->setCombinedMediaSearchIsImageOnly( $imageOnly );
-		$results = (new Wikia\Search\QueryService\Factory)
+		$searchResults = (new Wikia\Search\QueryService\Factory)
 			->getFromConfig( $searchConfig )
-			->searchAsApi( [ 'url', 'id', 'pageid', 'wid', 'title' ], true );
+			->searchAsApi( [ 'title' ], true );
+
+		return $searchResults;
+	}
+
+	public function formatResults( $raw, $limit, $batch ) {
+		$results = [
+			'limit' => $limit,
+			'batch' => $batch
+		];
+		$keys = array_keys( $raw );
+
+		for ( $i = 0; $i < count( $raw ); $i++ ) {
+			$key = $keys[$i];
+			$results['results'][$key] = [
+				'batches' => $raw[$key]['batches'],
+				'items' => $this->formatItems( $raw[$key] )
+			];
+		}
 
 		return $results;
 	}
 
-	private function formatItems( $raw ) {
+	public function formatItems( $raw ) {
 		$items = [];
 
 		foreach( $raw['items'] as $rawItem ) {
 			$item = [
 				'title' => $rawItem['title'],
-				'thumbnail' => $this->getThumbnail( $rawItem['title'] )
+				'type' => $this->getType( $rawItem['title'] ),
+				'url' => $this->getUrl( $rawItem['title'] )
 			];
 			array_push( $items, $item );
 		}
 
-		$this->getResult()->setIndexedTagName($items, 'item');
+		$this->setItemTagName( $items );
 
 		return $items;
 	}
 
-	private function getThumbnail( $title ) {
-		// Borrowed from WikiaQuizElement.class.php
-		$imageSrc = '';
-		$fileTitle = Title::newFromText( $title, NS_FILE );
-		$image = wfFindFile( $fileTitle );
-		if ( !is_object( $image ) || $image->height == 0 || $image->width == 0 ){
-			return $imageSrc;
-		} else {
-			$thumbDim = ($image->height > $image->width) ? $image->width : $image->height;
-			$imageServing = new ImageServing( array( $fileTitle->getArticleID() ), self::THUMB_SIZE, array( "w" => $thumbDim, "h" => $thumbDim ) );
-			$imageSrc = wfReplaceImageServer(
-				$image->getThumbUrl(
-					$imageServing->getCut( $thumbDim, $thumbDim )
-				)
-			);
-		}
-
-		return $imageSrc;
+	/* Helper for proper XML formatting */
+	protected function setItemTagName( &$items ) {
+		$this->getResult()->setIndexedTagName( $items, 'item');
 	}
 
 	public function getAllowedParams() {
@@ -129,15 +167,19 @@ class ApiMediaSearch extends ApiBase {
 				ApiBase::PARAM_TYPE => 'string',
 				ApiBase::PARAM_REQUIRED => true
 			),
-			'mediaType' => array (
+			'type' => array (
 				ApiBase::PARAM_TYPE => 'string',
 				ApiBase::PARAM_REQUIRED => true
 			),
-			'separate' => array (
+			'mixed' => array (
 				ApiBase::PARAM_TYPE => 'string',
 				ApiBase::PARAM_REQUIRED => false
 			),
 			'batch' => array (
+				ApiBase::PARAM_TYPE => 'integer',
+				ApiBase::PARAM_REQUIRED => false
+			),
+			'limit' => array (
 				ApiBase::PARAM_TYPE => 'integer',
 				ApiBase::PARAM_REQUIRED => false
 			),
