@@ -349,7 +349,7 @@ class SpecialCssModel extends WikiaModel {
 			// which is called before this method
 			$sectionText = $postData['revisions'][0]['*'];
 
-			$cssUpdateText = $this->truncateAndParseLinks( $blogTitle, $this->getCssUpdateSection( $sectionText ) );
+			$cssUpdateText = $this->truncateAndParseLinks( $this->getCssUpdateSection( $sectionText ) );
 			$cssUpdatePost = [
 				'title' => $this->getAfterLastSlashText( $blogTitleText ),
 				'url' => $this->appendHeadlineAnchor( $blogTitle->getFullURL() ),
@@ -418,7 +418,7 @@ class SpecialCssModel extends WikiaModel {
 	 *
 	 * @return String
 	 */
-	private function truncateAndParseLinks( $title, $wikitext ) {
+	private function truncateAndParseLinks( $wikitext ) {
 		$userLang = $this->wg->Lang;
 
 		$wikitext = $this->convertLocalToInterwikiLinks( $wikitext );
