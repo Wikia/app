@@ -79,7 +79,7 @@ class FSCKVideos extends Maintenance {
 		printf("\t%4d ok\n", $stats['ok']);
 		printf("\t%4d failed\n", $stats['failed']);
 		foreach ( $stats['fail_action'] as $action => $count ) {
-			printf("\t\t%4d %s\n", $count, $action);
+			printf("\t\t( %4d %s )\n", $count, $action);
 		}
 		printf("\t%4d error\n", $stats['error']);
 		$delta = F::app()->wg->lang->formatTimePeriod( time() - $startTime );
