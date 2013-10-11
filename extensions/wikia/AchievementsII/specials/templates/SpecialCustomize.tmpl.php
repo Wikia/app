@@ -162,7 +162,7 @@ foreach($config->getNotInTrackStatic() as $badgeTypeId => $badgeData) {
 </div>
 <form method="POST">
     <input type="hidden" name="json-data" class="c-messages" />
-    <input type="submit" value="<?= wfMsg('achievements-save') ?>" onclick="Achievements.AchPrepareData(false, '');"/>
+    <input type="submit" value="<?= wfMessage( 'achievements-save' )->escaped() ?>" onclick="Achievements.AchPrepareData(false, '');"/>
 </form>
 <?if($scrollTo):?>
 	<script type="<?= $wgJsMimeType; ?>">
