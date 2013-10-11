@@ -1,19 +1,36 @@
-define("client", ["jquery", "suggest_matcher", "wikia.log" ], function($, matcher, log) {
+define("client", ["jquery", "suggest_matcher", "wikia.log"], function($, matcher, log) {
 	log("Building client", log.levels.info, "suggestions");
+	var cache = {},
+		pending = {};
 	return {
 		getSuggestions: function( wiki, query, cb ) {
-			if ( !wiki || !query || query == '' ) cb( [], false );
-			$.getJSON( "http://db-sds-s1:13000/api/wiki/" + wiki + "/suggest/" + query, function( response ) {
-				for ( var i = 0; i<response.length; i++ ) {
-					var suggestion = response[i];
-					var matchResult = matcher.matchSuggestion( suggestion, query );
-					if ( !matchResult ) {
-						log( "match failed for " + suggestion.title + " " + query, log.levels.info, "suggestions" );
-					}
-					suggestion.match = matchResult;
+			var cacheKey = wiki + "_" + query;
+			if ( cache[cacheKey] ) {
+				log( cacheKey + "from cache", log.levels.info, "suggestions" );
+				cb( cache[cacheKey] );
+			} else {
+				if ( !wiki || !query || query == '' ) {
+					cb( [] );
+					return;
 				}
-				cb(response, false);
-			} )
+				if ( pending[cacheKey] ) return;
+				pending[cacheKey] = true;
+				$.getJSON( "http://db-sds-s1:13000/api/wiki/" + wiki + "/suggest/" + query, function( response ) {
+					for ( var i = 0; i<response.length; i++ ) {
+						var suggestion = response[i];
+						var matchResult = matcher.matchSuggestion( suggestion, query );
+						if ( !matchResult ) {
+							log( "match failed for " + suggestion.title + " " + query, log.levels.info, "suggestions" );
+						}
+						suggestion.match = matchResult;
+					}
+					cache[cacheKey] = response;
+					cb(response);
+				}).always( function() {
+					log("Not pending anymore: " + query, log.levels.info, "suggestions");
+					pending[cacheKey] = false;
+				});
+			}
 		}
 	};
 });

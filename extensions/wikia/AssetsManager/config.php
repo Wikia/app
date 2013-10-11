@@ -1488,8 +1488,8 @@ $config['api_docs_scss'] = array(
 $config['suggestions_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
-		'//extensions/wikia/Suggestions/js/Suggestions.js',
-		'//extensions/wikia/Suggestions/js/Client.js',
 		'//extensions/wikia/Suggestions/js/Matcher.js',
+		'//extensions/wikia/Suggestions/js/Client.js',
+		'//extensions/wikia/Suggestions/js/Suggestions.js',
 	)
 );

@@ -78,7 +78,7 @@ WikiaSearchApp = (function() {
 					skipBadQueries: true // BugId:4625 - always send the request even if previous one returned no suggestions
 				});
 				if ( window.Wikia.newSearchSuggestions ) {
-					window.Wikia.autocomplete.search.inUse = false;
+					window.Wikia.newSearchSuggestions.setAsMainSuggestions('search');
 				}
 			}, this));
 	};

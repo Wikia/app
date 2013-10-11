@@ -4,7 +4,7 @@ require( [ "jquery", "client", "wikia.log" ], function( $, client, log ) {
 		var SuggestionsViewModel = function() {};
 		SuggestionsViewModel.prototype = {
 			setQuery: function( query ) {
-				if ( this.query === query ) return;
+				if ( !query && this.query === query ) return;
 				this.query = query;
 				this.sendQuery();
 				this.trigger( "query changed", query );
@@ -18,15 +18,20 @@ require( [ "jquery", "client", "wikia.log" ], function( $, client, log ) {
 
 			sendQuery: function() {
 				var self = this;
+				var sentQuery = this.query;
 				client.getSuggestions( this.wiki, this.query, function(res) {
-					self.setResults(res);
+					self.setResults(res, sentQuery);
 				} );
 			},
 
-			setResults: function( results ) {
-				this.results = results;
-				this.setDisplayResults( results );
-				this.trigger( "results changed", results );
+			setResults: function( results, sentQuery ) {
+				//trigger only for the last sent query
+				if ( sentQuery == this.query ) {
+					log("result set for: " + sentQuery, log.levels.info, "suggestions");
+					this.results = results;
+					this.setDisplayResults( results );
+					this.trigger( "results changed", results );
+				}
 			},
 
 
@@ -74,6 +79,12 @@ require( [ "jquery", "client", "wikia.log" ], function( $, client, log ) {
 				}
 			}
 
+			self.setAsMainSuggestions = function( name ) {
+				if ( window.Wikia.autocomplete && window.Wikia.autocomplete[name] ) {
+					window.Wikia.autocomplete[name].inUse = false;
+				}
+			}
+
 			viewModel.on( "displayResults changed", function() {
 				var results = viewModel.getDisplayResults();
 				dropdown.empty();
@@ -111,8 +122,6 @@ require( [ "jquery", "client", "wikia.log" ], function( $, client, log ) {
 		};
 		window.Wikia.newSearchSuggestions = new SuggestionsView( new SuggestionsViewModel(), $('input[name="search"]'), $('ul.search-suggest'), wgCityId );
 		log("New search suggestions loaded!", log.levels.info, "suggestions");
-		if ( window.Wikia.autocomplete && window.Wikia.autocomplete.search ) {
-			window.Wikia.autocomplete.search.inUse = false;
-		}
+		window.Wikia.newSearchSuggestions.setAsMainSuggestions( 'search' );
 	});
 });
