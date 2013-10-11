@@ -78,7 +78,7 @@ class FSCKVideos extends Maintenance {
 			}
 		}
 
-		echo "Checked ".$stats['checked']." video(s):\n";
+		echo "Checked  ".$stats['checked']." video(s):\n";
 		printf("\t%5d ok\n", $stats['ok']);
 		printf("\t%5d failed\n", $stats['failed']);
 		foreach ( $stats['fail_action'] as $action => $count ) {
