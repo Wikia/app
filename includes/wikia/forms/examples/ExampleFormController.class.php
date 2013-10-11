@@ -17,8 +17,11 @@ class ExampleFormController extends WikiaSpecialPageController {
 		];
 
 		// validate form values (they can be taken from $_POST or $_GET or other source)
-		if ($this->request->wasPosted() && $this->form->validate($vals)) {
-			//save data && redirect
+		if ( $this->request->wasPosted() ) {
+			$vals = $_POST;
+			if ( $this->form->validate($vals) ) {
+				//save data && redirect
+			}
 		}
 		// else render form with error messages
 
