@@ -22,7 +22,7 @@ class WikisApiController extends WikiaApiController {
 	const DEFAULT_WIDTH = 250;
 	const DEFAULT_HEIGHT = null;
 	const DEFAULT_SNIPPET_LENGTH = null;
-	const CACHE_VERSION = 1;
+	const CACHE_VERSION = 2;
 	const WORDMARK = 'Wiki-wordmark.png';
 	private static $flagsBlacklist = array( 'blocked', 'promoted' );
 
