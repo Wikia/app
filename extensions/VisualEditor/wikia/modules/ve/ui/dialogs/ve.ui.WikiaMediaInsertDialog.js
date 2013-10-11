@@ -288,7 +288,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.getImageInfo = function ( titles, width )
  *
  * @method
  * @param {jQuery.Deferred} deferred
- * @param {JSON} data Response from API
+ * @param {Object} data Response from API
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onGetImageInfoSuccess = function ( deferred, data ) {
 	var results = [], item, i;
