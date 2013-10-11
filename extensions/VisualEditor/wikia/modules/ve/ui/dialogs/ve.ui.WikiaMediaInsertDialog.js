@@ -79,7 +79,6 @@ ve.ui.WikiaMediaInsertDialog.prototype.onSearchSelect = function ( item ) {
 	if ( item === null ) {
 		return;
 	}
-	debugger;
 	cartItems = ve.copy( this.cartModel.getItems() );
 	for ( i = 0; i < cartItems.length; i++ ) {
 		if ( cartItems[i].title === item.title ) {
