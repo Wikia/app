@@ -119,94 +119,101 @@ ve.ui.WikiaMediaInsertDialog.prototype.onClose = function ( action ) {
 	this.cartModel.clearItems();
 };
 
+
+
+
+
+
+
+
 /**
- * Collects extra data about cart items before inserting
- *
  * @method
- * @param {Object} [cartItems] Items to insert
+ * @param {ve.dm.WikiaCartItem[]} cartItems Items to add
  */
 ve.ui.WikiaMediaInsertDialog.prototype.insertMedia = function ( cartItems ) {
-	var i,
-		cartPhotos = [],
-		cartVideos = [],
-		deferreds = [];
+	var attributes = {},
+		promises = [],
+		items = {
+			'photo': [],
+			'video': []
+		},
+		cartItem,
+		i;
 
-	// Populate insertionDetails, cartPhotos and cartVideos
+	// Populates attributes, items.video and items.photo
 	for ( i = 0; i < cartItems.length; i++ ) {
-		var item = cartItems[i];
-
-		this.insertionDetails[ item.title ] = {
-			'title': item.title,
-			'type': item.type
+		cartItem = cartItems[i];
+		attributes[ cartItem.title ] = {
+			'title': cartItem.title,
+			'type': cartItem.type
 		};
-
-		if ( cartItems[i].type == 'photo' ) {
-			cartPhotos.push( cartItems[i].title );
-		} else if (cartItems[i].type == 'video' ) {
-			cartVideos.push( cartItems[i].title );
-		}
+		items[ cartItem.type ].push( cartItem.title );
 	}
 
-	function updateDetails( results ) {
+	function updateAttributes( results ) {
+		var i, result;
 		for ( i = 0; i < results.length; i++ ) {
-			var result = results[i];
-			this.insertionDetails[result.title]['height'] = result.height;
-			this.insertionDetails[result.title]['width'] = result.width;
-			this.insertionDetails[result.title]['url'] = result.url;
+			result = results[i];
+			attributes[result.title]['height'] = result.height;
+			attributes[result.title]['width'] = result.width;
+			attributes[result.title]['url'] = result.url;
 		}
-	};
+	}
 
-	// Photo request
-	if ( cartPhotos.length ) {
-		var photosPromise = this.getImageInfo( cartPhotos, 220 );
-		photosPromise.done( ve.bind( updateDetails, this ) );
-		deferreds.push( photosPromise );
+	// Imageinfo for photos request
+	if ( items.photo.length ) {
+		promises.push(
+			this.getImageInfo( items.photo, 220 ).done(
+				ve.bind( updateAttributes, this )
+			)
+		);
 	}
-	// Video request
-	if ( cartVideos.length ) {
-		var videosPromise = this.getImageInfo( cartVideos, 330 );
-		videosPromise.done( ve.bind( updateDetails, this ) );
-		deferreds.push( videosPromise );
+
+	// Imageinfo for videos request
+	if ( items.video.length ) {
+		promises.push(
+			this.getImageInfo( items.video, 330 ).done(
+				ve.bind( updateAttributes, this )
+			)
+		);
 	}
+
 	// Attribution request
-	for ( title in this.insertionDetails ) {
-		var attributionPromise = this.getPhotoAttribution( title );
-		attributionPromise.done( ve.bind( function( result) {
-			this.insertionDetails[result.title]['avatar'] = result.avatar;
-			this.insertionDetails[result.title]['username'] = result.username;
-		}, this ) );
-		deferreds.push( attributionPromise );
+	for ( title in attributes ) {
+		promises.push(
+			this.getPhotoAttribution( title ).done(
+				ve.bind( function( result) {
+					attributes[result.title]['avatar'] = result.avatar;
+					attributes[result.title]['username'] = result.username;
+				}, this )
+			)
+		);
 	}
 
 	// When all ajax requests are finished, insert media
-	$.when.apply( $, deferreds ).done(
-		ve.bind( this.insertMediaCallback, this, cartItems )
+	$.when.apply( $, promises ).done(
+		ve.bind( this.insertMediaCallback, this, attributes )
 	);
 };
 
 /**
- * Inserts media items from cart into the document
+ * Inserts media items into the document
  *
  * @method
- * @param {Object} [cartItems] Items to insert
+ * @param {Object} attributes Items to insert
  */
-ve.ui.WikiaMediaInsertDialog.prototype.insertMediaCallback = function ( cartItems ) {
-	var items = [],
-		item,
-		insertionType;
-
-	for ( i = 0; i < cartItems.length; i++ ) {
-		item = this.insertionDetails[ cartItems[i].title ];
-
+ve.ui.WikiaMediaInsertDialog.prototype.insertMediaCallback = function ( attributes ) {
+	var title, type, item, items = [];
+	for ( title in attributes ) {
+		item = attributes[title];
 		if ( item.type == 'photo' ) {
-			insertionType = 'wikiaBlockImage';
+			type = 'wikiaBlockImage';
 		} else if ( item.type == 'video' ) {
-			insertionType = 'wikiaBlockVideo';
+			type = 'wikiaBlockVideo';
 		}
-
 		items.push(
 			{
-				'type': insertionType,
+				'type': type,
 				'attributes': {
 					'type': 'thumb',
 					'align': 'default',
@@ -223,10 +230,9 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertMediaCallback = function ( cartItem
 			},
 			{ 'type': 'wikiaMediaCaption' },
 			{ 'type': '/wikiaMediaCaption' },
-			{ 'type': '/' + insertionType }
-		)
+			{ 'type': '/' + type }
+		);
 	}
-
 	this.surface.getModel().getFragment().collapseRangeToEnd().insertContent( items );
 };
 
@@ -246,20 +252,11 @@ ve.ui.WikiaMediaInsertDialog.prototype.getPhotoAttribution = function ( title ) 
 			'format': 'json',
 			'file': title
 		},
-		'success': ve.bind( this.onGetPhotoAttributionSuccess, this, deferred )
+		'success': function( data ) {
+			deferred.resolve( data );
+		}
 	} );
 	return deferred.promise();
-};
-
-/**
- * Responds to getPhotoAttribution success
- *
- * @method
- * @param {jQuery.Deferred} deferred
- * @param {JSON} data Response from API
- */
-ve.ui.WikiaMediaInsertDialog.prototype.onGetPhotoAttributionSuccess = function ( deferred, data ) {
-	deferred.resolve( data );
 };
 
 /**
