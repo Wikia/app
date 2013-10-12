@@ -64,7 +64,7 @@ $slotZIndex: 4000;
 	}
 }
 
-#wkAdInContent {
+.ad-in-content {
 	visibility: hidden;
 
 	&.show {
@@ -79,6 +79,10 @@ $slotZIndex: 4000;
 
 		border-top: 1px solid $border-color;
 	}
+}
+
+#wkAdBeforeFooter {
+	margin-top: 10px;
 }
 
 .wkAdWrapper {

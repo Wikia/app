@@ -4,55 +4,34 @@ class ApiMediaSearch extends ApiBase {
 
 	const LIMIT = 50;
 
-	private $query;
-	private $batch;
-	private $limit;
-	private $mixed = false;
+	/* Main API Method */
 
 	public function execute() {
 
+		// Extract params from request
 		$params = $this->extractRequestParams();
 
-		// What are we looking for?
-		$this->query = $params['query'];
+		// Query
+		$query = $this->getQuery( $params );
 
-		// Which batch?
-		$this->batch = $params['batch'] ? $params['batch'] : 1;
+		// Batch
+		$batch = $this->getBatch( $params );
 
-		// How many?
-		$this->limit = $params['limit'] ? $params['limit'] : self::LIMIT;
+		// Limit
+		$limit = $this->getLimit( $params );
 
-		// What type of media are we looking for?
-		$typeArray = explode( '|', $params['type'] );
-		$video = in_array( 'video', $typeArray );
-		$photo = in_array( 'photo', $typeArray );
+		// Mixed
+		$mixed = $this->getMixed( $params );
 
-		// Mixed?
-		if ( isset( $params['mixed'] ) && $params['mixed'] == 'true' ) {
-			$this->mixed = true;
-		}
+		// Type
+		$video = $this->getVideo( $params );
+		$photo = $this->getPhoto( $params );
 
-		// Get results
-		$results = [];
-		if ( $video && $photo ) {
-			if ( $this->mixed ) {
-				// video and photo mixed
-				$results['mixed'] = $this->getResults( false, false );
-			} else {
-				// video and photo separate
-				$results['video'] = $this->getResults( true, false );
-				$results['photo'] = $this->getResults( false, true );
-			}
-		} else {
-			// either photo or video
-			$items = $this->getResults( $video, $photo );
-			if ( $this->mixed ) {
-				$key = 'mixed';
-			} else {
-				$key = $video ? 'video' : 'photo';
-			}
-			$results[$key] = $items;
-		}
+		// Get results, not well-structured
+		$results = $this->getResults( $query, $limit, $batch, $video, $photo, $mixed );
+
+		// Properly format results
+		$response = $this->formatResults( $results, $limit, $batch );
 
 		// Format results
 		$response = $this->formatResults( $results );
@@ -62,10 +41,93 @@ class ApiMediaSearch extends ApiBase {
 		return true;
 	}
 
-	private function formatResults( $raw ) {
+	public function getQuery( $params ) {
+		return $params['query'];
+	}
+
+	public function getBatch( $params ) {
+		return isset( $params['batch'] ) ? $params['batch'] : 1;
+	}
+
+	public function getLimit( $params ) {
+		return isset( $params['limit'] ) ? $params['limit'] : self::LIMIT;
+	}
+
+	public function getMixed( $params ) {
+		return filter_var( $params['mixed'], FILTER_VALIDATE_BOOLEAN ) ? true : false;
+	}
+
+	public function getVideo( $params ) {
+		$typeArray = explode( '|', $params['type'] );
+		return in_array( 'video', $typeArray );
+	}
+
+	public function getPhoto( $params ) {
+		$typeArray = explode( '|', $params['type'] );
+		return in_array( 'photo', $typeArray );
+	}
+
+	protected function getType( $title ) {
+		$fileTitle = Title::newFromText( $title, NS_FILE );
+		$image = wfFindFile( $fileTitle );
+
+		$mediaTypes = [
+			'BITMAP' => 'photo',
+			'VIDEO' => 'video'
+		];
+
+		return $mediaTypes[ $image->getMediaType() ];
+	}
+
+	protected function getUrl( $title ) {
+		$fileTitle = Title::newFromText( $title, NS_FILE );
+		$image = wfFindFile( $fileTitle );
+		return $image->getFullUrl();
+	}
+
+	public function getResults( $query, $limit, $batch, $video, $photo, $mixed ) {
+		$results = [];
+		if ( $video && $photo ) {
+			if ( $mixed ) {
+				// video and photo mixed
+				$results['mixed'] = $this->getSearchResults( $query, $limit, $batch, false, false );
+			} else {
+				// video and photo separate
+				$results['video'] = $this->getSearchResults( $query, $limit, $batch, true, false );
+				$results['photo'] = $this->getSearchResults( $query, $limit, $batch, false, true );
+			}
+		} else {
+			// either photo or video
+			$items = $this->getSearchResults( $query, $limit, $batch, $video, $photo );
+			if ( $mixed ) {
+				$key = 'mixed';
+			} else {
+				$key = $video ? 'video' : 'photo';
+			}
+			$results[$key] = $items;
+		}
+		return $results;
+	}
+
+	protected function getSearchResults( $query, $limit, $batch, $videoOnly, $imageOnly ) {
+		$searchConfig = (new Wikia\Search\Config())
+			->setQuery( $query )
+			->setLimit( $limit )
+			->setPage( $batch )
+			->setCombinedMediaSearch( true )
+			->setCombinedMediaSearchIsVideoOnly( $videoOnly )
+			->setCombinedMediaSearchIsImageOnly( $imageOnly );
+		$searchResults = (new Wikia\Search\QueryService\Factory)
+			->getFromConfig( $searchConfig )
+			->searchAsApi( [ 'title' ], true );
+
+		return $searchResults;
+	}
+
+	public function formatResults( $raw, $limit, $batch ) {
 		$results = [
-			'limit' => $this->limit,
-			'batch' => $this->batch
+			'limit' => $limit,
+			'batch' => $batch
 		];
 		$keys = array_keys( $raw );
 
@@ -80,22 +142,7 @@ class ApiMediaSearch extends ApiBase {
 		return $results;
 	}
 
-	private function getResults( $videoOnly, $imageOnly ) {
-		$searchConfig = (new Wikia\Search\Config())
-			->setQuery( $this->query )
-			->setLimit( $this->limit )
-			->setPage( $this->batch )
-			->setCombinedMediaSearch( true )
-			->setCombinedMediaSearchIsVideoOnly( $videoOnly )
-			->setCombinedMediaSearchIsImageOnly( $imageOnly );
-		$results = (new Wikia\Search\QueryService\Factory)
-			->getFromConfig( $searchConfig )
-			->searchAsApi( [ 'title' ], true );
-
-		return $results;
-	}
-
-	private function formatItems( $raw ) {
+	public function formatItems( $raw ) {
 		$items = [];
 
 		foreach( $raw['items'] as $rawItem ) {
@@ -107,27 +154,14 @@ class ApiMediaSearch extends ApiBase {
 			array_push( $items, $item );
 		}
 
-		$this->getResult()->setIndexedTagName($items, 'item');
+		$this->setItemTagName( $items );
 
 		return $items;
 	}
 
-	private function getType( $title ) {
-		$fileTitle = Title::newFromText( $title, NS_FILE );
-		$image = wfFindFile( $fileTitle );
-
-		$mediaTypes = [
-			'BITMAP' => 'photo',
-			'VIDEO' => 'video'
-		];
-
-		return $mediaTypes[ $image->getMediaType() ];
-	}
-
-	private function getUrl( $title ) {
-		$fileTitle = Title::newFromText( $title, NS_FILE );
-		$image = wfFindFile( $fileTitle );
-		return $image->getFullUrl();
+	/* Helper for proper XML formatting */
+	protected function setItemTagName( &$items ) {
+		$this->getResult()->setIndexedTagName( $items, 'item');
 	}
 
 	public function getAllowedParams() {
