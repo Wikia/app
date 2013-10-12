@@ -33,9 +33,6 @@ class ApiMediaSearch extends ApiBase {
 		// Properly format results
 		$response = $this->formatResults( $results, $limit, $batch );
 
-		// Format results
-		$response = $this->formatResults( $results );
-
 		// Return response
 		$this->getResult()->addValue( null, 'response', $response );
 		return true;
