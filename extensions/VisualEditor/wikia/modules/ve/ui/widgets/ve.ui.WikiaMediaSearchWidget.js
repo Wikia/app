@@ -86,9 +86,7 @@ ve.ui.WikiaMediaSearchWidget.prototype.onQueryMediaDone = function ( data ) {
 
 	media = data.response.results.mixed.items;
 
-	if ( data.response.batch < data.response.results.mixed.batches ) {
-		this.batch = data.response.batch; // was this.batch++;
-	}
+	this.batch++;
 
 	for( i = 0; i < media.length; i++ ) {
 		items.push(
@@ -120,6 +118,7 @@ ve.ui.WikiaMediaSearchWidget.prototype.onQueryChange = function () {
 	}
 };
 
+// TODO/FIXME: queryMedia is called too often
 ve.ui.WikiaMediaSearchWidget.prototype.onResultsScroll = function () {
 	var position = this.$results.scrollTop() + this.$results.outerHeight(),
 		threshold = this.results.$.outerHeight() - this.size;
