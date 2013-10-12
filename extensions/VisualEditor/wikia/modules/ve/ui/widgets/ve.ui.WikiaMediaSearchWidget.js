@@ -40,7 +40,7 @@ ve.ui.WikiaMediaSearchWidget = function VeUiWikiaMediaSearchWidget( config ) {
 		.append( this.suggestions.$ );
 	this.$.prepend( this.pagesPanel.$ );
 
-	this.query.setValue( mw.config.get( 'wgRelevantPageName' ) );
+	this.query.setValue( mw.config.get( 'wgTitle' ) );
 	this.queryMedia();
 };
 
