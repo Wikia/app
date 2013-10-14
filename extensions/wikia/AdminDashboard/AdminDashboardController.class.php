@@ -6,9 +6,6 @@ class AdminDashboardController extends WikiaController {
 	public function executeChrome () {
 		global $wgRequest, $wgTitle;
 
-		$adminDashboardTitle = SpecialPage::getTitleFor( 'AdminDashboard' );
-		$this->isAdminDashboard = $wgTitle->getText() == $adminDashboardTitle->getText();
-
 		$this->tab = $wgRequest->getVal("tab", "");
 		if(empty($this->tab) && $this->isAdminDashboard) {
 			$this->tab = 'general';
@@ -24,6 +21,15 @@ class AdminDashboardController extends WikiaController {
 		$this->adminDashboardUrl = Title::newFromText('AdminDashboard', NS_SPECIAL)->getFullURL("tab=$this->tab");
 		$this->adminDashboardUrlGeneral = Title::newFromText('AdminDashboard', NS_SPECIAL)->getFullURL("tab=general");
 		$this->adminDashboardUrlAdvanced = Title::newFromText('AdminDashboard', NS_SPECIAL)->getFullURL("tab=advanced");
+	}
+
+	public function executeRail () {
+		global $wgTitle;
+		$adminDashboardTitle = SpecialPage::getTitleFor( 'AdminDashboard' );
+		$isAdminDashboard = $wgTitle->getText() == $adminDashboardTitle->getText();
+		if (!$isAdminDashboard) {
+			$this->skipRendering();
+		}
 	}
 
 }
