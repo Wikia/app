@@ -62,6 +62,7 @@ class RailController extends WikiaController {
 		$title = Title::newFromText($this->request->getVal('articleTitle', null), $this->request->getInt('namespace', null));
 
 		if ($title instanceof Title) {
+			$oldWgTitle = $wgTitle;
 			$wgTitle = $title;
 			$railModules = $this->filterModules((new BodyController)->getRailModuleList(), self::FILTER_LAZY_MODULES);
 			$this->railLazyContent = '';
@@ -88,6 +89,7 @@ class RailController extends WikiaController {
 
 			$wgUseSiteJs = $oldWgUseSiteJs;
 			$wgAllowUserJs = $oldWgAllowUserJs;
+			$wgTitle = $oldWgTitle;
 		}
 
 		wfProfileOut(__METHOD__);
