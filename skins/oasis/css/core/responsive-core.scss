@@ -234,4 +234,19 @@
 		}
 	// ABTesting: DAR-1859: END
 	}
+
+	@media screen and (min-width: $breakpoint-fluid) {
+		.WikiaHeader .page-width-container,
+		.WikiaPage {
+			margin: 0 $width-adskin;
+			width: auto;
+		}
+	}
+
+	@media screen and (min-width: $breakpoint-max) {
+		.WikiaHeader .page-width-container,
+		.WikiaPage {
+			margin: 0 auto;
+		}
+	}
 }

@@ -185,22 +185,11 @@
 		@if ( $background-is-dynamic ) {
 			@include background-fluid;
 		}
-
-		.WikiaHeader .page-width-container,
-		.WikiaPage {
-			margin: 0 $width-adskin;
-			width: auto;
-		}
 	}
 
 	@media screen and (min-width: $breakpoint-max) {
 		@if ( $background-is-dynamic ) {
 			@include background-max;
-		}
-
-		.WikiaHeader .page-width-container,
-		.WikiaPage {
-			margin: 0 auto;
 		}
 	}
 }
