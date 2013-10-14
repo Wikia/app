@@ -1,10 +1,12 @@
-@import "../../../../skins/oasis/css/core/color.scss";
-@import "../../../../skins/oasis/css/mixins/box-shadow.scss";
-@import "../../../../skins/oasis/css/mixins/border-radius";
+@import "skins/oasis/css/core/color";
+@import "skins/oasis/css/core/layout";
+@import "skins/oasis/css/core/responsive";
+@import "skins/oasis/css/mixins/box-shadow";
+@import "skins/oasis/css/mixins/border-radius";
 
 .WikiaArticle {
 	&.SpecialPromoteArticle {
-	    border-bottom: none;
+		border-bottom: none;
 	}
 	.UploadTool {
 		margin: 0 15px 150px 15px;
@@ -27,6 +29,7 @@
 			}
 			.input-group {
 				padding: 5px;
+				width: 100%;
 			}
 			label {
 				display: block;
@@ -77,17 +80,13 @@
 				color: mix($color-page, $color-text, 30%);
 				float: left;
 				line-height: 1.4em;
-				margin: 25px 0 0 30px;
+				margin: 0 0 0 30px;
 				padding: 1px 3px 3px 3px;
 				width: 310px;
+				width: -webkit-calc(100% - 620px);
+				width: calc(100% - 620px);
 			}
-            .main-image .explanatory-copy {
-                margin-top: 0;
-            }
-            .more-images .explanatory-copy {
-                margin-top: 0;
-            }
-            .error label, .error .headline-character-counter, .error .character-counter {
+			.error label, .error .headline-character-counter, .error .character-counter {
 				@if $is-dark-wiki {
 					color: mix(#ff0000, #2b2b2b, 60%);
 				} @else {
@@ -106,10 +105,10 @@
 			float: left;
 			width: 560px;
 			@if $is-dark-wiki {
-			 background-color: mix($color-page, #ffffff, 85%);
-		 	} @else {
-				 background-color: mix($color-page, #000000, 95%);
-		 	}
+				background-color: mix($color-page, #ffffff, 85%);
+			} @else {
+				background-color: mix($color-page, #000000, 95%);
+			}
 			height: 374px;
 			padding: 10px;
 			position: relative;
@@ -267,3 +266,29 @@
 		}
 	}
 }
+
+// RESPONSIVE START
+@if ( $responsive-layout-enabled ) {
+	@media screen and (max-width: $width-outside) {
+		.WikiaArticle .UploadTool {
+			fieldset
+			{
+				.explanatory-copy {
+					clear: both;
+					margin: 0 0 30px 0;
+					width: 580px;
+				}
+				.main-image .explanatory-copy, .more-images .explanatory-copy {
+					margin-top: 30px;
+				}
+				.description-wrapper {
+					margin-bottom: 0;
+				}
+			}
+			.submits .button.big {
+				margin-top: 0;
+			}
+		}
+	}
+}
+// RESPONSIVE END

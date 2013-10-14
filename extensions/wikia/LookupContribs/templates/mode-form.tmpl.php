@@ -14,6 +14,7 @@ $(document).ready(function() {
 	}
 
 	var oTable = $('#lc-table').dataTable( {
+		bAutoWidth: false,
 		"oLanguage": {
 			"sLengthMenu": "<?=wfMsg('table_pager_limit', '_MENU_');?>",
 			"sZeroRecords": "<?=wfMsg('table_pager_empty');?>",

@@ -17,7 +17,7 @@ class CrossWikiCore extends AbstractWikiService
 	 * Reusing the current wiki ID
 	 * @var int
 	 */
-	protected $wikId;
+	protected $wikiId;
 	
 	/**
 	 * Returns the field values for this wiki document
@@ -200,12 +200,9 @@ class CrossWikiCore extends AbstractWikiService
 	protected function getLicenseInformation( ) {
 
 		$licensedWikiService = $this->getLicensedWikisService();
-
-		if( $licensedWikiService->isCommercialUseAllowedById( $this->getWikiId() ) ) {
-			return [
-				"commercial_use_allowed_b" =>  false,
-			];
-		} else { return []; }
+		return [
+			"commercial_use_allowed_b" =>  $licensedWikiService->isCommercialUseAllowedById( $this->getWikiId() ) === true
+		];
 	}
 	
 	/**

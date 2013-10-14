@@ -91,7 +91,7 @@ class AccountNavigationController extends WikiaController {
 
 			$this->personal_urls['register'] = array(
 				'text' => wfMsg('oasis-signup'),
-				'href' => Skin::makeSpecialUrl('UserSignup', $returnto),
+				'href' => Skin::makeSpecialUrl('UserSignup'),
 				'class' => 'ajaxRegister'
 			);
 		}
