@@ -3,6 +3,7 @@
 @import "skins/oasis/css/core/responsive";
 @import "skins/oasis/css/mixins/box-shadow";
 @import "skins/oasis/css/mixins/border-radius";
+@import "skins/oasis/css/mixins/calc";
 
 .WikiaArticle {
 	&.SpecialPromoteArticle {
@@ -83,8 +84,7 @@
 				margin: 0 0 0 30px;
 				padding: 1px 3px 3px 3px;
 				width: 310px;
-				width: -webkit-calc(100% - 620px);
-				width: calc(100% - 620px);
+				@include calc-shorthand('100% - 620px');
 			}
 			.error label, .error .headline-character-counter, .error .character-counter {
 				@if $is-dark-wiki {
