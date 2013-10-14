@@ -125,7 +125,6 @@ class MatchTest extends BaseTest {
 		$created = '30 days ago';
 		$touched = 'now';
 		$snippet = "This be my long snippet";
-
 		$highlighted = 'This be my <span class="searchmatch">long</span> snippet&hellip;';
 
 		$fieldsArray = array(
