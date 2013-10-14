@@ -151,7 +151,7 @@
 		},
 
 		onKeyPress: function(e) {
-			if (!this.enabled) { return; }
+			if (!this.enabled || !this.inUse) { return; }
 			// return will exit the function
 			// and event will not fire
 			switch (e.keyCode) {
@@ -184,6 +184,7 @@
 		},
 
 		onKeyUp: function(e) {
+			if (!this.inUse) { return; }
 			switch (e.keyCode) {
 				case 38: //Event.KEY_UP:
 				case 40: //Event.KEY_DOWN:
