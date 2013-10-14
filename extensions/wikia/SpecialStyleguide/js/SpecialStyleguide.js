@@ -76,11 +76,25 @@ require(['jquery'], function($) {
 		});
 
 		require( [ 'wikia.ui.modal' ], function( modal ) {
+			// opening a small modal example
+			$( "#showSmallModalExample" ).click(function() {
+				var id = "smallModalExample";
+				showModal( id, modal );
+			} );
+
+			// opening a medium modal example
+			$( "#showMediumModalExample" ).click(function() {
+				var id = "mediumModalExample";
+				showModal( id, modal );
+			} );
+
+			// opening a large modal example
 			$( "#showLargeModalExample" ).click(function() {
 				var id = "largeModalExample";
 				showModal( id, modal );
 			} );
 
+			// opening a small modal example over large modal
 			$( '#largeModalAltLink' ).click( function(event) {
 				var id = "smallModalExampleOverLarge";
 				event.preventDefault();

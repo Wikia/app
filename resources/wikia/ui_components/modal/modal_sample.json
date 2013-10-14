@@ -1,5 +1,69 @@
 [
 	{
+		"description": "styleguide-example-modal-small-description",
+		"params": {
+			"type": "default",
+			"vars": {
+				"id": "smallModalExample",
+				"size": "small",
+				"content": "This is a small modal example.",
+				"class": "styleguide-example-small",
+				"title": "Small modal example.",
+				"closeButton": true,
+				"closeText": "Close"
+			}
+		},
+		"helpers": {
+			"components": [
+				{
+					"name": "button",
+					"params": {
+						"type": "link",
+						"vars": {
+							"id": "showSmallModalExample",
+							"href": "#",
+							"classes": [ "primary" ],
+							"title": "Show small modal example",
+							"value": "Small modal"
+						}
+					}
+				}
+			]
+		}
+	},
+	{
+		"description": "styleguide-example-modal-medium-description",
+		"params": {
+			"type": "default",
+			"vars": {
+				"id": "mediumModalExample",
+				"size": "medium",
+				"content": "This is a medium modal example.",
+				"class": "styleguide-example-medium",
+				"title": "Medium modal example.",
+				"closeButton": true,
+				"closeText": "Close"
+			}
+		},
+		"helpers": {
+			"components": [
+				{
+					"name": "button",
+					"params": {
+						"type": "link",
+						"vars": {
+							"id": "showMediumModalExample",
+							"href": "#",
+							"classes": [ "primary" ],
+							"title": "Show medium modal example",
+							"value": "Medium modal"
+						}
+					}
+				}
+			]
+		}
+	},
+	{
 		"description": "styleguide-example-modal-large-description",
 		"params": {
 			"type": "default",
