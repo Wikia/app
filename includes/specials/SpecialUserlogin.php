@@ -1067,7 +1067,7 @@ class LoginForm extends SpecialPage {
 		}
 		/* Wikia change begin - @author: Marooned */
 		/* HTML e-mails functionality */
-		$priority = 1;  // Password emails are higher than default priority of 0
+		$priority = 2;  // Password emails are higher than default priority of 0 and confirmation emails priority of 1
 		if (empty($wgEnableRichEmails)) {
 			$userLanguage = $u->getOption( 'language' );
 			$m = $this->msg( $emailText, $ip, $u->getName(), $np, $wgServer . $wgScript,
