@@ -26,6 +26,11 @@ define("client", ["jquery", "suggest_matcher", "wikia.log"], function($, matcher
 					}
 					cache[cacheKey] = response;
 					cb(response);
+				}).fail( function() {
+					log("New search suggestions failed, returning to old ones!", log.levels.info, "suggestions");
+					if ( window.Wikia.newSearchSuggestions ) {
+						window.Wikia.newSearchSuggestions.setOldSuggestionsOn( 'search' );
+					}
 				}).always( function() {
 					log("Not pending anymore: " + query, log.levels.info, "suggestions");
 					pending[cacheKey] = false;

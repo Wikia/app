@@ -3,8 +3,13 @@ require( [ "jquery", "client", "wikia.log" ], function( $, client, log ) {
 	$(function() {
 		var SuggestionsViewModel = function() {};
 		SuggestionsViewModel.prototype = {
+			inUse: true,
+			setUse: function( inUse ) {
+				this.inUse = inUse;
+			},
+
 			setQuery: function( query ) {
-				if ( !query && this.query === query ) return;
+				if (!query && this.query === query || !this.inUse) { return; }
 				this.query = query;
 				this.sendQuery();
 				this.trigger( "query changed", query );
@@ -83,6 +88,15 @@ require( [ "jquery", "client", "wikia.log" ], function( $, client, log ) {
 				if ( window.Wikia.autocomplete && window.Wikia.autocomplete[name] ) {
 					window.Wikia.autocomplete[name].inUse = false;
 				}
+			}
+
+			self.setOldSuggestionsOn = function( name ) {
+				if ( window.Wikia.autocomplete && window.Wikia.autocomplete[name] ) {
+					window.Wikia.autocomplete[name].inUse = true;
+				}
+				window.Wikia.newSearchSuggestions = false;
+				dropdown.empty();
+				viewModel.setUse( false );
 			}
 
 			viewModel.on( "displayResults changed", function() {
