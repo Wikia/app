@@ -89,7 +89,7 @@ $dark-wiki: 1;
 		border: 10px solid $color-body;
 		height: $panel-height - 20px;
 		position: absolute;
-		width: $panel-width - 20px;
+		width: calc(100% - 20px);
 		z-index: 0;
 	}
 	.title-image {
@@ -129,7 +129,7 @@ $dark-wiki: 1;
 		width: $panel-width;
 		.title {
 			bottom: 125px;
-			left: ($panel-width - $visual-width) / 2;
+			left: calc((100% - #{$visual-width})/2);
 			width: $title-screen-width;
 			z-index: $base-z;
 			&:after {
@@ -182,7 +182,7 @@ $dark-wiki: 1;
 				$bubble-width: $bubble-visual-width - (20 * 2);
 				bottom: 175px; //360px shifted
 				height: 122px;
-				left: ($panel-width - $bubble-visual-width) / 2;
+				left: calc((100% - #{$bubble-visual-width}) / 2);
 				line-height: 32px;
 				padding: 50px 20px 0;
 				width: $bubble-width;
@@ -202,7 +202,7 @@ $dark-wiki: 1;
 				color: white;
 				font-size: 12px;
 				height: $height;
-				left: $panel-width/2 - $question-label-width/2;
+				left: calc(50% - (#{$question-label-width}/2));
 				padding-top: $padding-top;
 				position: absolute;
 				text-align: center;
@@ -237,7 +237,7 @@ $dark-wiki: 1;
 				color: white;
 				font-size: 450px;
 				height: $height;
-				left: $panel-width/2 - $question-number-width/2;
+				left: calc(50% - (#{$question-number-width}/2));
 				line-height: 450px;
 				padding-top: $padding-top;
 				position: absolute;
@@ -651,14 +651,8 @@ $dark-wiki: 1;
 	@media screen and (max-width: $panel-width + 34px) {
 		.WikiaQuiz {
 			width: $panel-responsive-width;
-			.quiz-frame {
-				width: $panel-responsive-width - 20px;
-			}
 			.title-screen {
 				width: $panel-responsive-width;
-				.title {
-					left: ($panel-responsive-width - $visual-width) / 2;
-				}
 			}
 			.title-image {
 				&.image1 {
@@ -678,15 +672,6 @@ $dark-wiki: 1;
 				left: $panel-responsive-width;
 				.question-set {
 					width: $panel-responsive-width;
-					.question-bubble {
-						left: ($panel-responsive-width - $bubble-visual-width) / 2;
-					}
-					.question-label {
-						left: $panel-responsive-width/2 - $question-label-width/2;
-					}
-					.question-number {
-						left: $panel-responsive-width/2 - $question-number-width/2;
-					}
 					.answers {
 						margin-left: -360px;
 						.answer {
