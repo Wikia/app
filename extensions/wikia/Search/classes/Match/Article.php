@@ -12,16 +12,16 @@ use \Wikia\Search\Result as Result;
  */
 class Article extends AbstractMatch
 {
+	/**
+	 * @var string Search string
+	 */
 	protected $term;
-
 
 	public function  __construct( $id,  $service, $term = '' )
 	{
 		$this->term = $term;
 		parent::__construct($id, $service);
-
 	}
-
 
 	/**
 	 * Creates a result instance.
