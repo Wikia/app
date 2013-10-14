@@ -308,10 +308,21 @@ SQL;
 		$playButton = WikiaFileHelper::videoPlayButtonOverlay( self::THUMBNAIL_WIDTH, self::THUMBNAIL_HEIGHT );
 
 		// get videos that have been suggested (kept videos)
-		$suggestedList = $this->getSuggestedVideosFromStatus( $articleId );
+		$historicalSuggestions = array_flip( $this->getHistoricalSuggestions( $articleId ) );
 
 		// get current suggestions
-		list( $suggestions, $suggestTitles ) = $this->getCurrentSuggestions( $articleId );
+		$suggestTitles = array();
+		$suggestions = wfGetWikiaPageProp( WPP_LVS_SUGGEST, $articleId );
+		if ( empty( $suggestions ) ) {
+			$suggestions = array();
+		} else {
+			foreach ( $suggestions as $video ) {
+				$suggestTitles[$video['title']] = 1;
+			}
+		}
+
+		// flag for kept video
+		$isKeptVideo = $this->isKept( $articleId );
 
 		$videos = array();
 		$count = 0;
@@ -329,8 +340,8 @@ SQL;
 			$videoTitle = preg_replace( '/.+File:/', '', urldecode( $videoInfo['url'] ) );
 
 			// skip if the video has already been suggested (from kept videos)
-			if ( $this->isKept( $articleId ) ) {
-				if ( in_array( $videoTitle, $suggestedList ) ) {
+			if ( $isKeptVideo ) {
+				if ( array_key_exists( $videoTitle, $historicalSuggestions ) ) {
 					continue;
 				} else {
 					$isNewKeep = true;
@@ -338,7 +349,7 @@ SQL;
 			}
 
 			// skip if the video exists in the current suggestions
-			if ( in_array( $videoTitle, $suggestTitles ) ) {
+			if ( array_key_exists( $videoTitle, $suggestTitles ) ) {
 				continue;
 			} else if ( !$isNewKeep ) {
 				$isNewSwappable = true;
@@ -867,34 +878,15 @@ SQL;
 	}
 
 	/**
-	 * Get suggested videos from page status (WPP_LVS_STATUS_INFO)
+	 * Get historical suggested videos from page status (WPP_LVS_STATUS_INFO)
 	 * @param integer $articleId
 	 * @return array $suggestedVideos
 	 */
-	public function getSuggestedVideosFromStatus( $articleId ) {
+	public function getHistoricalSuggestions( $articleId ) {
 		$pageStatus = $this->getPageStatusInfo( $articleId );
 		$suggestedVideos = empty( $pageStatus['suggested'] ) ? array() : $pageStatus['suggested'];
 
 		return $suggestedVideos;
-	}
-
-	/**
-	 * Get current suggestions
-	 * @param integer $articleId
-	 * @return array
-	 */
-	public function getCurrentSuggestions( $articleId ) {
-		$suggestions = wfGetWikiaPageProp( WPP_LVS_SUGGEST, $articleId );
-		$suggestTitles = array();
-		if ( empty( $suggestions ) ) {
-			$suggestions = array();
-		} else {
-			foreach ( $suggestions as $video ) {
-				$suggestTitles[] = $video['title'];
-			}
-		}
-
-		return array( $suggestions, $suggestTitles );
 	}
 
 	/**

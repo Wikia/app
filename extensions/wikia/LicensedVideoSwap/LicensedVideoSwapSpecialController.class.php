@@ -322,10 +322,10 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$suggestTitles = $helper->getValidVideos( $suggestions );
 
 		// get videos that have been suggested (kept videos)
-		$suggestedList = $helper->getSuggestedVideosFromStatus( $articleId );
+		$historicalSuggestions = $helper->getHistoricalSuggestions( $articleId );
 
 		// combine suggested videos and current suggestions
-		$value['suggested'] = array_unique( array_merge( $suggestedList, $suggestTitles ) );
+		$value['suggested'] = array_unique( array_merge( $historicalSuggestions, $suggestTitles ) );
 
 		// set keep status
 		$value['status'] = ( $forever == 'true' ) ? LicensedVideoSwapHelper::STATUS_KEEP_FOREVER : LicensedVideoSwapHelper::STATUS_KEEP;
