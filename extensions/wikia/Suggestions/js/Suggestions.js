@@ -121,6 +121,10 @@ require( [ "jquery", "client", "wikia.log" ], function( $, client, log ) {
 					$(html).appendTo(dropdown);
 				}
 			});
+			searchInput.on( "focusout", function() {
+				dropdown.empty();
+				searchInput.trigger( 'suggestHide' );
+			});
 			searchInput.on( "change", function () {
 				var value = searchInput.val();
 				viewModel.setQuery( value );
