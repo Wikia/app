@@ -1,0 +1,80 @@
+.search-suggest {
+	-webkit-box-shadow: 0px 0px 6px 0px #b3d4fc;
+	box-shadow: 0px 0px 6px 0px #b3d4fc;
+
+	background-color: #ffffff;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	position: absolute;
+	top: 35px;
+	width: 515px;
+}
+
+.search-suggest > li,
+.search-suggest > li > a {
+	clear: both;
+	display: block;
+}
+
+.search-suggest > li > a {
+	color: #136CB2;
+	cursor: pointer;
+	height: 50px;
+	padding: 5px 8px;
+	position: relative;
+	text-decoration: none;
+}
+
+.search-suggest > li > a:hover {
+	background: #136CB2;
+	color: white;
+}
+
+.search-suggest-image {
+	float: left;
+	margin-right: 6px;
+	width: 50px;
+	height: 50px;
+}
+
+.search-suggest .title {
+	display: block;
+	font-weight: bold;
+	height: 20px;
+	overflow: hidden;
+}
+
+.search-suggest .match {
+	font-weight: bold;
+	color: black;
+}
+
+.search-suggest .redirect {
+	-webkit-box-shadow: -5px 0px 5px #ffffff;
+	-moz-box-shadow: -5px 0px 5px #ffffff;
+	box-shadow: -5px 0px 5px #ffffff;
+
+	color: #bbb;
+	background-color: white;
+	font-size: 0.8em;
+	position: absolute;
+	padding-right: 10px;
+	padding-top: 5px;
+	right: 0;
+	top: 3px;
+}
+.search-suggest a:hover .redirect {
+	-webkit-box-shadow: -5px 0px 5px #136CB2;
+	-moz-box-shadow: -5px 0px 5px #136CB2;
+	box-shadow: -5px 0px 5px #136CB2;
+
+	color: #bbb;
+	background-color: #136CB2;
+}
+
+.search-suggest .abstract {
+	display: block;
+	font-size: 10px;
+	overflow: hidden;
+}
