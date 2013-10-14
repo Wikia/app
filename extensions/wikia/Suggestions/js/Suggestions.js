@@ -71,7 +71,8 @@ require( [ "jquery", "client", "wikia.log" ], function( $, client, log ) {
 		};
 
 		var SuggestionsView = function( viewModel, searchInput, dropdown, wikiId ) {
-			var self = this;
+			var ads = $("[id$='TOP_RIGHT_BOXAD']"),
+				self = this;
 			self.buildTitleMarkup = function( result ) {
 				if ( result.match && ( result.match.type === 'title' ) ) {
 					return result.match.prefix + '<b class="match">' + result.match.match + '</b>' + result.match.suffix;
@@ -99,20 +100,27 @@ require( [ "jquery", "client", "wikia.log" ], function( $, client, log ) {
 					window.Wikia.autocomplete[name].inUse = true;
 				}
 				window.Wikia.newSearchSuggestions = false;
-				searchInput.trigger( 'suggestHide' );
+				self.showAds();
 				dropdown.empty();
 				viewModel.setUse( false );
+			}
+
+			self.hideAds = function() {
+				ads.each(function() {
+					$(this).children().css('margin-left', '-9999px');
+				});
+			}
+
+			self.showAds = function() {
+				ads.each(function() {
+					$(this).children().css('margin-left', 'auto');
+				});
 			}
 
 			viewModel.on( "displayResults changed", function() {
 				var results = viewModel.getDisplayResults();
 				dropdown.empty();
 				if ( !viewModel.getUse() ) { return; }
-				if( results.length ) {
-					searchInput.trigger( 'suggestShow' );
-				} else {
-					searchInput.trigger( 'suggestHide' );
-				}
 				for( var i in results ) {
 					var res = results[i];
 					var html = '<li>' +
@@ -125,14 +133,17 @@ require( [ "jquery", "client", "wikia.log" ], function( $, client, log ) {
 						'</li>';
 					$(html).appendTo(dropdown);
 				}
+				if ( results.length ) {
+					self.hideAds();
+				} else {
+					self.showAds();
+				}
 			});
-			searchInput.on( "focusout", function() {
-				dropdown.empty();
-				searchInput.trigger( 'suggestHide' );
-			});
-			searchInput.on( "change", function () {
-				var value = searchInput.val();
-				viewModel.setQuery( value );
+			searchInput.on( "blur", function() {
+				setTimeout( function() {
+					self.showAds();
+					dropdown.empty();
+				}, 100 );
 			});
 			searchInput.on( "keypress", function () {
 				window.setTimeout(function() {
