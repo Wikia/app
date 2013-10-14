@@ -15,7 +15,15 @@ define("client", ["jquery", "suggest_matcher", "wikia.log"], function($, matcher
 				}
 				if ( pending[cacheKey] ) return;
 				pending[cacheKey] = true;
-				$.getJSON( "http://db-sds-s1:13000/api/wiki/" + wiki + "/suggest/" + query, function( response ) {
+				$.getJSON( "http://db-sds-s1/web/api/search-suggest",
+					{
+						q: query,
+						wikiId: wiki,
+						bid: window.beacon_id,
+						user: wgUserName,
+						page: wgPageName
+					},
+					function( response ) {
 					for ( var i = 0; i<response.length; i++ ) {
 						var suggestion = response[i];
 						var matchResult = matcher.matchSuggestion( suggestion, query );

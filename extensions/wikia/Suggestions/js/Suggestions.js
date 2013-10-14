@@ -8,6 +8,10 @@ require( [ "jquery", "client", "wikia.log" ], function( $, client, log ) {
 				this.inUse = inUse;
 			},
 
+			getUse: function() {
+				return this.inUse;
+			},
+
 			setQuery: function( query ) {
 				if (!query && this.query === query || !this.inUse) { return; }
 				this.query = query;
@@ -103,6 +107,7 @@ require( [ "jquery", "client", "wikia.log" ], function( $, client, log ) {
 			viewModel.on( "displayResults changed", function() {
 				var results = viewModel.getDisplayResults();
 				dropdown.empty();
+				if ( !viewModel.getUse() ) { return; }
 				if( results.length ) {
 					searchInput.trigger( 'suggestShow' );
 				} else {
@@ -111,7 +116,7 @@ require( [ "jquery", "client", "wikia.log" ], function( $, client, log ) {
 				for( var i in results ) {
 					var res = results[i];
 					var html = '<li>' +
-						'<a href="' + results[i].url + '">' +
+						'<a href="' + res.path + '">' +
 						'<img class="search-suggest-image" src="' + res.thumbnail + '" />' +
 						'<span class="title">' + self.buildTitleMarkup( res ) + '</span>' +
 						self.buildRedirectMarkup( res ) +
