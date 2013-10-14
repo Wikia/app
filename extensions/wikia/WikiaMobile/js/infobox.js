@@ -16,7 +16,7 @@ require(['jquery'], function($){
 					$this = $(this);
 
 				if(!$target.is('a') && $this.toggleClass(SHORT_CLASS).hasClass(SHORT_CLASS)) {
-					$this.find('.infobox-expand')[0].scrollIntoView();
+					$this.find('.infobox-expand')[0].scrollIntoViewIfNeeded();
 				}
 			});
 	}

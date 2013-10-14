@@ -5,7 +5,7 @@ table[class*="infobox"] {
 	border-spacing: 0;
 	border-collapse: collapse;
 	font-size: 0.9rem;
-	margin: 0 auto;
+	margin: 20px auto;
 	max-width: 100%;
 	width: 100%;
 
@@ -29,9 +29,7 @@ table[class*="infobox"] {
 	th, td {
 		padding: 5px;
 		line-height: 1.25rem;
-	}
 
-	td {
 		&[colspan='2']{
 			text-align: center;
 			padding: 0;
@@ -40,6 +38,11 @@ table[class*="infobox"] {
 				display: inline-block;
 				margin: 5px;
 			}
+		}
+
+		p {
+			//Some wikis have p inside td. ie. Firefly
+			margin: 0;
 		}
 	}
 

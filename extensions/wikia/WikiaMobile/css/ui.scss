@@ -155,6 +155,7 @@ body {
 }
 
 .wikitable, .sortable{
+	border-collapse: collapse;
 	border:1px solid $border-color;
 
 	th{
