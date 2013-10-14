@@ -12,6 +12,17 @@ use \Wikia\Search\Result as Result;
  */
 class Article extends AbstractMatch
 {
+	protected $term;
+
+
+	public function  __construct( $id,  $service, $term = '' )
+	{
+		$this->term = $term;
+		parent::__construct($id, $service);
+
+	}
+
+
 	/**
 	 * Creates a result instance.
 	 * @see \Wikia\Search\Match\AbstractMatch::createResult()
@@ -33,12 +44,32 @@ class Article extends AbstractMatch
 				'touched'       => $this->service->getLastRevisionTimestampForPageId( $this->id ),
 			);
 		$result = new Result( $fieldsArray );
-		$result->setText( $this->service->getSnippetForPageId( $this->id ) );
+
+		$snippet =  $this->service->getSnippetForPageId( $this->id );
+
+		$result->setText($this->matchFoundText($snippet) );
 		if ( $this->hasRedirect() ) {
 			$result->setVar( 'redirectTitle', $this->service->getNonCanonicalTitleStringFromPageId( $this->id ) );
 			$result->setVar( 'redirectUrl', $this->service->getNonCanonicalUrlFromPageId( $this->id ) );
 		}
 		return $result;
+	}
+
+	protected function matchFoundText( $text ) {
+
+		$list = preg_replace( '/[[:punct:]]/', ' ', $this->term );
+		$list = preg_replace( '/\s+/', '|', trim( $list ) );
+
+		$text = preg_replace_callback(
+			'/' . $list . '/i',
+			function ( $matches ) {
+
+				return '<span class="searchmatch">' . $matches[ 0 ] . '</span>';
+			},
+			$text
+		);
+
+		return $text;
 	}
 	
 	/**

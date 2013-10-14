@@ -527,7 +527,6 @@ class Config
 	 * @return Wikia\Search\Match\Article|Wikia\Search\Match\Wiki|false
 	 */
 	public function getMatch() {
-		var_dump($this->articleMatch); die();
 		return $this->getArticleMatch() ?: $this->getWikiMatch();
 	}
 	

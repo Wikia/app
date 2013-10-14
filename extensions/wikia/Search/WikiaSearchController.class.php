@@ -101,14 +101,12 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->handleLayoutAbTest( $this->getVal( 'ab', null ), $searchConfig->getNamespaces() );
 		if ( $searchConfig->getQuery()->hasTerms() ) {
 			$search = $this->queryServiceFactory->getFromConfig( $searchConfig);
-			// explicity called to accommodate go-search
-			echo '<pre>';
 			/* @var $search Wikia\Search\QueryService\Select\Dismax\OnWiki */
 			$search->getMatch();
-			//print_r($search);
+
 			$this->handleArticleMatchTracking( $searchConfig );
 			$search->search();
-			die();
+
 		}
 
 		$this->setPageTitle( $searchConfig );
@@ -494,13 +492,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 		$isMonobook = $this->app->checkSkin( 'monobook') ;
 
-		$res =  $searchConfig->getResults();
-		foreach($res as $v)
-		{
-			print_r($v);
-			echo '-------------------------------';
-
-		}
 		$this->setVal( 'results',               $searchConfig->getResults() );
 		$this->setVal( 'resultsFound',          $searchConfig->getResultsFound() );
 		$this->setVal( 'resultsFoundTruncated', $searchConfig->getTruncatedResultsNum( true ) );
