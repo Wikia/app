@@ -1,8 +1,6 @@
 <li class="thread" data-id="<?= $id ?>">
 	<div class="thread-left">
-		<div class="title-wrap">
-			<h4><a href="<?= $fullpageurl ?>"><?= $feedtitle ?></a></h4>
-		</div>
+		<h4><a href="<?= $fullpageurl ?>"><?= $feedtitle ?></a></h4>
 		<p class="last-post">
 			<a href="<?= $user_author_url ?>"><?= AvatarService::renderAvatar( $username, 30 ) ?></a>
 			<?= wfMsg('forum-specialpage-board-lastpostby') ?> <a href="<?= $user_author_url ?>"><?= $displayname ?></a>
