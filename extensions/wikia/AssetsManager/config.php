@@ -1026,6 +1026,11 @@ $config['videohomepage_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'//resources/wikia/libraries/jquery/bxslider/jquery.bxslider.js',
+
+		// Lodash is an underscore.js rewrite and a prereq for Backbone
+		'//extensions/wikia/VideoPageTool/js/lib/lodash/dist/lodash.underscore.js',
+		'//extensions/wikia/VideoPageTool/js/lib/backbone/backbone.js',
+
 		'//extensions/wikia/VideoPageTool/js/models/videohomepage.featured.js',
 		'//extensions/wikia/VideoPageTool/js/views/videohomepage.featured.js',
 		'//extensions/wikia/VideoPageTool/js/views/videohomepage.search.js',
