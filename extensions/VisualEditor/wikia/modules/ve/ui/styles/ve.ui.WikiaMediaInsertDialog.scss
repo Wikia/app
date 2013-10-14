@@ -1,0 +1,42 @@
+@import "skins/oasis/css/core/layout";
+@import "skins/oasis/css/mixins/box-sizing";
+
+$width-cart: 100px;
+
+/* Panels */
+.ve-ui-wikiaMediaInsertDialog-content {
+	.ve-ui-pagedLayout-pagesPanel {
+		margin-right: $width-cart;
+		padding: $width-gutter;
+	}
+
+	.ve-ui-window-body {
+		margin-right: -( $width-cart + $width-gutter );
+		padding: 0;
+		width: 100%;
+	}
+}
+
+/* Cart */
+.ve-ui-wikiaCartWidget-wrapper {
+	@include box-sizing( border-box );
+	border-left: #DDD 1px solid;
+	bottom: 0;
+	overflow: auto;
+	padding: $width-gutter;
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: $width-cart;
+
+	.ve-ui-wikiaCartImage {
+		display: block;
+	}
+	.ve-ui-optionWidget {
+		padding: 0;
+		margin-bottom: 10px;
+	}
+	.ve-ui-labeledElement-label {
+		display: none;
+	}
+}

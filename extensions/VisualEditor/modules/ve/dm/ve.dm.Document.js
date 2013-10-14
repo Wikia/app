@@ -181,7 +181,6 @@ ve.inheritClass( ve.dm.Document, ve.Document );
 /**
  * @event transact
  * @param {ve.dm.Transaction} tx Transaction that was just processed
- * @param {boolean} reversed Whether the transaction was processed in reverse
  */
 
 /* Static methods */
@@ -222,26 +221,6 @@ ve.dm.Document.addAnnotationsToData = function ( data, annotationSet ) {
 /* Methods */
 
 /**
- * Reverse a transaction's effects on the content data.
- *
- * @method
- * @param {ve.dm.Transaction} transaction Transaction to roll back
- * @emits transact
- * @throws {Error} Cannot roll back a transaction that has not been committed
- */
-ve.dm.Document.prototype.rollback = function ( transaction ) {
-	if ( !transaction.hasBeenApplied() ) {
-		throw new Error( 'Cannot roll back a transaction that has not been committed' );
-	}
-	new ve.dm.TransactionProcessor( this, transaction, true ).process();
-	this.completeHistory.push( {
-		'undo': true,
-		'transaction': transaction
-	} );
-	this.emit( 'transact', transaction, true );
-};
-
-/**
  * Apply a transaction's effects on the content data.
  *
  * @method
@@ -253,12 +232,9 @@ ve.dm.Document.prototype.commit = function ( transaction ) {
 	if ( transaction.hasBeenApplied() ) {
 		throw new Error( 'Cannot commit a transaction that has already been committed' );
 	}
-	new ve.dm.TransactionProcessor( this, transaction, false ).process();
-	this.completeHistory.push( {
-		'undo': false,
-		'transaction': transaction
-	} );
-	this.emit( 'transact', transaction, false );
+	new ve.dm.TransactionProcessor( this, transaction ).process();
+	this.completeHistory.push( transaction );
+	this.emit( 'transact', transaction );
 };
 
 /**
@@ -304,24 +280,17 @@ ve.dm.Document.prototype.getInternalList = function () {
 };
 
 /**
- * Get a document from a slice of this document. The new document's store and internal list will be
+ * Clone a sub-document from a range in this document. The new document's store and internal list will be
  * clones of the ones in this document.
  *
- * @param {ve.Range|ve.dm.Node} rangeOrNode Range of data to clone, or node whose contents should be cloned
+ * @param {ve.Range} range Range of data to clone
  * @returns {ve.dm.Document} New document
- * @throws {Error} rangeOrNode must be a ve.Range or a ve.dm.Node
  */
-ve.dm.Document.prototype.getDocumentSlice = function ( rangeOrNode ) {
-	var data, range, newDoc,
+ve.dm.Document.prototype.cloneFromRange = function ( range ) {
+	var data, newDoc,
 		store = this.store.clone(),
 		listRange = this.internalList.getListNode().getOuterRange();
-	if ( rangeOrNode instanceof ve.dm.Node ) {
-		range = rangeOrNode.getRange();
-	} else if ( rangeOrNode instanceof ve.Range ) {
-		range = rangeOrNode;
-	} else {
-		throw new Error( 'rangeOrNode must be a ve.Range or a ve.dm.Node' );
-	}
+
 	data = ve.copy( this.getFullData( range, true ) );
 	if ( range.start > listRange.start || range.end < listRange.end ) {
 		// The range does not include the entire internal list, so add it
@@ -831,24 +800,24 @@ ve.dm.Document.prototype.fixupInsertion = function ( data, offset ) {
 /**
  * Get the document data for a range.
  *
- * Data will be fixed up so that unopened closings and unclosed openings in the document data slice
- * are balanced.
+ * Data will be fixed up so that unopened closings and unclosed openings in the
+ * linear data slice are balanced.
  *
  * @param {ve.Range} range Range to get contents of
- * @returns {ve.dm.DocumentSlice} Balanced slice of linear model data
+ * @returns {ve.dm.ElementLinearDataSlice} Balanced slice of linear model data
  */
-ve.dm.Document.prototype.getSlice = function ( range ) {
+ve.dm.Document.prototype.getSlicedLinearData = function ( range ) {
 	var first, last, firstNode, lastNode,
 		node = this.getNodeFromOffset( range.start ),
 		selection = this.selectNodes( range, 'siblings' ),
 		addOpenings = [],
 		addClosings = [];
 	if ( selection.length === 0 ) {
-		return new ve.dm.DocumentSlice( [] );
+		return new ve.dm.ElementLinearDataSlice( this.getStore(), [] );
 	}
 	if ( selection.length === 1 && selection[0].range && selection[0].range.equalsSelection( range ) ) {
 		// Nothing to fix up
-		return new ve.dm.DocumentSlice( this.data.slice( range.start, range.end ) );
+		return new ve.dm.ElementLinearDataSlice( this.getStore(), this.data.slice( range.start, range.end ) );
 	}
 
 	first = selection[0];
@@ -889,7 +858,8 @@ ve.dm.Document.prototype.getSlice = function ( range ) {
 		}
 	}
 
-	return new ve.dm.DocumentSlice(
+	return new ve.dm.ElementLinearDataSlice(
+		this.getStore(),
 		addOpenings.reverse()
 			.concat( this.data.slice( range.start, range.end ) )
 			.concat( addClosings ),

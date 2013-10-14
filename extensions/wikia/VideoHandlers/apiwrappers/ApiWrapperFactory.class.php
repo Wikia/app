@@ -74,5 +74,4 @@ class ApiWrapperFactory {
 		wfProfileOut( __METHOD__ );
 		return null;
 	}
-
 }

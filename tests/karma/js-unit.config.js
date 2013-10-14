@@ -63,9 +63,9 @@ files = [
 	'extensions/wikia/AdEngine/js/AdLogicPageLevelParams.js',
 	'extensions/wikia/AdEngine/js/AdLogicPageLevelParamsLegacy.js',
 	'extensions/wikia/AdEngine/js/AdLogicPageDimensions.js',
-	'extensions/wikia/AdEngine/js/AdProviderAdDriver2.js',
 	'extensions/wikia/AdEngine/js/AdProviderEvolve.js',
 	'extensions/wikia/AdEngine/js/AdProviderGamePro.js',
+	'extensions/wikia/AdEngine/js/AdProviderGpt.js',
 	'extensions/wikia/AdEngine/js/AdProviderLater.js',
 	'extensions/wikia/AdEngine/js/AdProviderLiftium2Dom.js',
 	'extensions/wikia/AdEngine/js/AdProviderNull.js',
@@ -90,7 +90,7 @@ files = [
 	'extensions/wikia/Search/js/spec/*.spec.js',
 
 	// Video
-	'extensions/wikia/VideoPageTool/js/views/switcher.js',
+	'extensions/wikia/VideoPageTool/js/views/jquery.switcher.js',
 	'extensions/wikia/VideoPageTool/js/spec/*.spec.js'
 ];
 

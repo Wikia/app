@@ -113,6 +113,121 @@ QUnit.test( 'handleDelete', function ( assert ) {
 	}
 } );
 
+QUnit.test( 'onContentChange', function ( assert ) {
+	var i,
+		cases = [
+			{
+				'prevHtml': '<p></p>',
+				'prevRange': new ve.Range( 1 ),
+				'nextHtml': '<p>A</p>',
+				'nextRange': new ve.Range( 2 ),
+				'expectedOps': [
+					[
+						{ 'type': 'retain', 'length': 1 },
+						{
+							'type': 'replace',
+							'insert': [ 'A' ],
+							'remove': []
+						},
+						{ 'type': 'retain', 'length': 3 }
+					]
+				],
+				'msg': 'Simple insertion into empty paragraph'
+			},
+			{
+				'prevHtml': '<p>A</p>',
+				'prevRange': new ve.Range( 1, 2 ),
+				'nextHtml': '<p>B</p>',
+				'nextRange': new ve.Range( 2 ),
+				'expectedOps': [
+					[
+						{ 'type': 'retain', 'length': 1 },
+						{
+							'type': 'replace',
+							'insert': [ 'B' ],
+							'remove': []
+						},
+						{ 'type': 'retain', 'length': 4 }
+					],
+					[
+						{ 'type': 'retain', 'length': 2 },
+						{
+							'type': 'replace',
+							'insert': [],
+							'remove': [ 'A' ]
+						},
+						{ 'type': 'retain', 'length': 3 }
+					]
+				],
+				'msg': 'Simple replace'
+			},
+			{
+				'prevHtml': '<p><a href="Foo">A</a><a href="Bar">FooX?</a></p>',
+				'prevRange': new ve.Range( 5, 6 ),
+				'nextHtml': '<p><a href="Foo">A</a><a href="Bar">FooB?</a></p>',
+				'nextRange': new ve.Range( 6 ),
+				'expectedOps': [
+					[
+						{ 'type': 'retain', 'length': 5 },
+						{
+							'type': 'replace',
+							'insert': [ ['B', [1]] ],
+							'remove': []
+						},
+						{ 'type': 'retain', 'length': 5 }
+					],
+					[
+						{ 'type': 'retain', 'length': 6 },
+						{
+							'type': 'replace',
+							'insert': [],
+							'remove': [ ['X', [1]] ]
+						},
+						{ 'type': 'retain', 'length': 4 }
+					]
+				],
+				'msg': 'Replace into non-zero annotation next to word break'
+			}
+		];
+
+	QUnit.expect( cases.length * 2 );
+
+	function testRunner( prevHtml, prevRange, nextHtml, nextRange, expectedOps, expectedRange, msg ) {
+		var txs, i, ops,
+			surface = ve.test.utils.createSurfaceFromHtml( prevHtml ),
+			view = surface.getView().getDocument().getDocumentNode().children[0],
+			prevNode = $( prevHtml )[0],
+			nextNode = $( nextHtml )[0],
+			prev = {
+				'text': ve.ce.getDomText( prevNode ),
+				'hash': ve.ce.getDomHash( prevNode ),
+				'range': prevRange
+			},
+			next = {
+				'text': ve.ce.getDomText( nextNode ),
+				'hash': ve.ce.getDomHash( nextNode ),
+				'range': nextRange
+			};
+
+		surface.getView().onContentChange( view, prev, next );
+		txs = surface.getModel().getHistory()[0].stack;
+		ops = [];
+		for ( i = 0; i < txs.length; i++ ) {
+			ops.push( txs[i].getOperations() );
+		}
+		assert.deepEqual( ops, expectedOps, msg + ': operations' );
+		assert.deepEqual( surface.getModel().getSelection(), expectedRange, msg + ': range' );
+	}
+
+	for ( i = 0; i < cases.length; i++ ) {
+		testRunner(
+			cases[i].prevHtml, cases[i].prevRange, cases[i].nextHtml, cases[i].nextRange,
+			cases[i].expectedOps, cases[i].expectedRange || cases[i].nextRange, cases[i].msg
+		);
+	}
+
+} );
+
 /* Methods with return values */
 // TODO: ve.ce.Surface.static.getClipboardHash
 // TODO: ve.ce.Surface#hasSlugAtOffset
@@ -152,7 +267,6 @@ QUnit.test( 'handleDelete', function ( assert ) {
 // TODO: ve.ce.Surface#onDocumentCompositionEnd
 // TODO: ve.ce.Surface#onChange
 // TODO: ve.ce.Surface#onSelectionChange
-// TODO: ve.ce.Surface#onContentChange
 // TODO: ve.ce.Surface#onLock
 // TODO: ve.ce.Surface#onUnlock
 // TODO: ve.ce.Surface#startRelocation
