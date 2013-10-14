@@ -2,9 +2,9 @@
 
 //base colors
 $page-background-color: #FFF;
-$page-text-color: #333;
+$page-text-color: rgb(51,51,51);
 $page-text-alternate-color: #8F8F8F;
-$link-color: #0d4d89;
+$link-color: rgb(5,76,139);
 $link-color-wikia: get_command_line_param("color-links", #006CB0);
 $section-text-color: $link-color;
 $shadow-color: #DDD;

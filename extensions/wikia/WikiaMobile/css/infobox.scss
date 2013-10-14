@@ -1,16 +1,16 @@
 @import "variables.scss";
-//mixins
-@import "mixins/box-shadow.scss";
 
 table[class*="infobox"] {
 	border: 1px solid $border-color;
-	border-top: none;
-	max-width: 100%;
-	margin: 0 auto;
 	border-spacing: 0;
+	border-collapse: collapse;
+	font-size: 0.9rem;
+	margin: 0 auto;
+	max-width: 100%;
+	width: 100%;
 
 	figure {
-		margin: 0 0 10px 0;
+		margin: 0 auto;
 	}
 
 	img {
@@ -18,28 +18,46 @@ table[class*="infobox"] {
 		height: auto;
 	}
 
+	tr {
+		border-top: 1px solid $border-color;
+	}
+
 	th {
 		text-align: left;
 	}
 
 	th, td {
-		border-top: 1px solid #E3E3E3;
 		padding: 5px;
+		line-height: 1.25rem;
 	}
 
-	td{
-		padding: 0 6px;
-
+	td {
 		&[colspan='2']{
 			text-align: center;
 			padding: 0;
 
-			b{
-				display: block;
-				width: 100%;
-				margin: 12px 0 15px;
-				border-bottom: 1px solid $border-color;
+			b {
+				display: inline-block;
+				margin: 5px;
 			}
 		}
+	}
+
+	.short tr:nth-of-type(n+11):not(.infobox-expand) {
+		display: none;
+	}
+}
+
+.infobox-expand {
+	span {
+		color: $border-color;
+		display: inline-block;
+		font-size: 1.5rem;
+		line-height: 50px;
+		-webkit-transform: scale(3,.6) rotate(180deg);
+	}
+
+	.short & span {
+		-webkit-transform: scale(3,.6);
 	}
 }

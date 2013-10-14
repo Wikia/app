@@ -9,13 +9,6 @@
 	box-sizing: border-box;
 }
 
-html, body {
-	overflow-x: hidden;
-
-	margin: 0;
-	padding: 0;
-}
-
 html {
 	//avoid webkit's automatic text adjustment
 	//ie. make text bigger when in landscape
@@ -31,7 +24,10 @@ html {
 }
 
 body {
+	background-color: $footerBackground;
 	color: $page-text-color;
+	margin: 0;
+
 }
 
 // Error Box
