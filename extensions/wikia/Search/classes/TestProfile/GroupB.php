@@ -9,18 +9,5 @@ namespace Wikia\Search\TestProfile;
  */
 class GroupB extends Base
 {
-	/**
-	 * Used to be in the config.
-	 * Allows us to configure boosts for the provided fields.
-	 * Use the non-translated version.
-	 * @var array
-	 */
-	protected $queryFieldsToBoosts = [
-			'title'             => 100,
-			'html'              => 5,
-			'redirect_titles'   => 50,
-			'categories'        => 25,
-			'nolang_txt'        => 10,
-			'headings'          => 50
-			];
+	protected $tieParams = [ 'default' => 0.5 ];
 }

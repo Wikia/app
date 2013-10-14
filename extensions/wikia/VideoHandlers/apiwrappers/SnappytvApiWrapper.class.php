@@ -69,7 +69,7 @@ class SnappytvApiWrapper extends ApiWrapper {
 		return '';
 	}
 
-	protected function getVideoKeywords(){
+	protected function getVideoName() {
 		if ( !empty($this->interfaceObj['event_episode_title']) ) {
 			 return $this->interfaceObj['event_episode_title'];
 		}
@@ -89,7 +89,7 @@ class SnappytvApiWrapper extends ApiWrapper {
 		return '';
 	}
 
-	protected function getVideoTags() {
+	protected function getVideoKeywords() {
 		if ( !empty($this->interfaceObj['tags']) ) {
 			$tags = array();
 			foreach( $this->interfaceObj['tags'] as $tag ) {
@@ -176,11 +176,9 @@ class SnappytvApiWrapper extends ApiWrapper {
 			throw new WikiaException( wfMessage("videohandler-error-restricted-video")->text() );
 		}
 
-		if ( !isset($metadata['uniqueName']) ) {
-			$metadata['uniqueName'] = $this->getUniqueName();
+		if ( !isset( $this->metadata['uniqueName'] ) ) {
+			$this->metadata['uniqueName'] = $this->getUniqueName();
 		}
-
-		$this->metadata = array_merge( $this->metadata, $metadata );
 	}
 
 	public static function getRedirectUrl( $url ) {

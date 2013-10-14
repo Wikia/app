@@ -56,7 +56,9 @@ class ThemeSettings {
 
 		// background
 		$this->defaultSettings['background-image'] = false;
+		$this->defaultSettings['background-image-height'] = null;
 		$this->defaultSettings['background-image-name'] = '';
+		$this->defaultSettings['background-image-width'] = null;
 		$this->defaultSettings['background-image-revision'] = false; //what is this?
 		$this->defaultSettings['background-tiled'] = false;
 		$this->defaultSettings['background-fixed'] = false;
@@ -68,7 +70,7 @@ class ThemeSettings {
 		if(!empty($GLOBALS[self::WikiFactorySettings])) {
 			$settings = array_merge($settings, $GLOBALS[self::WikiFactorySettings]);
 			$colorKeys = array( "color-body", "color-page", "color-buttons", "color-links", "color-header" );
-			
+
 			// if any of the user set colors are invalid, use default
 			foreach ($colorKeys as $colorKey) {
 				if (!ThemeDesignerHelper::isValidColor($settings[$colorKey])) {
@@ -76,7 +78,7 @@ class ThemeSettings {
 					break;
 				}
 			}
-			
+
 			// add variables that might not be saved already in WF
 			if(!isset($settings['background-fixed'])) {
 				$settings['background-fixed'] = false;
@@ -85,10 +87,10 @@ class ThemeSettings {
 				$settings['page-opacity'] = 100;
 			}
 		}
-		
+
 		return $settings;
 	}
-	
+
 	public function getFreshURL($name, $definedName) {
 		$title = Title::newFromText($definedName, NS_FILE);
 		if( $definedName != $name ) {
@@ -109,18 +111,18 @@ class ThemeSettings {
 		} else {
 			$history = array();
 		}
-		
+
 		foreach($history as $key => $val) {
 			$history[$key]['settings']['background-image'] = $this->getFreshURL($val['settings']['background-image-name'], ThemeSettings::BackgroundImageName);
 		}
-				
+
 		return $history;
 	}
 
 	public function saveSettings($settings, $cityId = null) {
 		global $wgCityId, $wgUser;
 		$cityId = empty($cityId) ? $wgCityId : $cityId;
-		
+
 		if(isset($settings['favicon-image-name']) && strpos($settings['favicon-image-name'], 'Temp_file_') === 0) {
 			$temp_file = new LocalFile(Title::newFromText($settings['favicon-image-name'], 6), RepoGroup::singleton()->getLocalRepo());
 			$file = new LocalFile(Title::newFromText(self::FaviconImageName, 6), RepoGroup::singleton()->getLocalRepo());
@@ -129,7 +131,7 @@ class ThemeSettings {
 
 			$settings['favicon-image-url'] = $file->getURL();
 			$settings['favicon-image-name'] = $file->getName();
-			
+
 			$file->repo->forceMaster();
 			$history = $file->getHistory(1);
 			if(count($history) == 1) {
@@ -145,7 +147,7 @@ class ThemeSettings {
 
 			$settings['wordmark-image-url'] = $file->getURL();
 			$settings['wordmark-image-name'] = $file->getName();
-			
+
 			$file->repo->forceMaster();
 			$history = $file->getHistory(1);
 			if(count($history) == 1) {
@@ -161,11 +163,13 @@ class ThemeSettings {
 
 			$settings['background-image'] = $file->getURL();
 			$settings['background-image-name'] = $file->getName();
+			$settings['background-image-width'] = $file->getWidth();
+			$settings['background-image-height'] = $file->getHeight();
 
 			$imageServing = new ImageServing(null, 120, array("w"=>"120", "h"=>"100"));
 			$settings['user-background-image'] = $file->getURL();
 			$settings['user-background-image-thumb'] = wfReplaceImageServer($file->getThumbUrl( $imageServing->getCut($file->getWidth(), $file->getHeight(), "origin")."-".$file->getName()));
-			
+
  			$file->repo->forceMaster();
 			$history = $file->getHistory(1);
 			if(count($history) == 1) {
@@ -229,8 +233,8 @@ class ThemeSettings {
 				}
 			}
 		}
-		
-		
+
+
 		WikiFactory::setVarByName(self::WikiFactoryHistory, $cityId, $history, $reason);
 
 	}

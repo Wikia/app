@@ -16,13 +16,13 @@ use Solarium_Query_Select, Wikia\Search\Traits\ArrayConfigurableTrait;
 class Config
 {
 	use ArrayConfigurableTrait;
-	
+
 	/**
-	 * Default number of results per page. Usually overwritten. 
+	 * Default number of results per page. Usually overwritten.
 	 * @var int
 	 */
 	const RESULTS_PER_PAGE = 10;
-	
+
 	/**
 	 * Constants for public filter queries
 	 *
@@ -33,7 +33,7 @@ class Config
 	const FILTER_CAT_VIDEOGAMES     = 'cat_videogames';
 	const FILTER_CAT_ENTERTAINMENT  = 'cat_entertainment';
 	const FILTER_CAT_LIFESTYLE      = 'cat_lifestyle';
-	
+
 	/**
 	 * Constants for string names for rank-to-sort resolution
 	 */
@@ -53,25 +53,25 @@ class Config
 	 * @var int
 	 */
 	protected $page = 1;
-	
+
 	/**
 	 * Any namespace matching the query prefix
 	 * @var int
 	 */
 	protected $queryNamespace;
-	
+
 	/**
 	 * An array of the int values of each  namespace to be searched.
 	 * @var array
 	 */
 	protected $namespaces = [];
-	
+
 	/**
 	 * Default number of results per page
 	 * @var int
 	 */
 	protected $limit = self::RESULTS_PER_PAGE;
-	
+
 	/**
 	 * Refers to the wiki we're on
 	 * @var int
@@ -83,7 +83,7 @@ class Config
 	 * @var int
 	 */
 	protected $start = 0;
-	
+
 	/**
 	 * This value is used to restrain results by the number of matching clauses.
 	 * For more info check out http://wiki.apache.org/solr/DisMaxQParserPlugin#mm_.28Minimum_.27Should.27_Match.29
@@ -96,13 +96,13 @@ class Config
 	 * @var bool
 	 */
 	protected $advanced = false;
-	
+
 	/**
 	 * If we're doing a hub search, the hub we're on
 	 * @var string
 	 */
 	protected $hub;
-	
+
 	/**
 	 * Here is where we store the user's query
 	 * @var Wikia\Search\Query\Select
@@ -114,76 +114,50 @@ class Config
 	 * @var string
 	 */
 	protected $languageCode;
-	
+
 	/**
 	 * The search profile for A/B testing
 	 * @var Wikia\Search\TestProfile\Base
 	 */
 	protected $testProfile;
-	
+
 	/**
 	 * The letter value of the test group.
 	 * Null means we aren't participating in a test.
 	 * @var string
 	 */
 	protected $ABTestGroup;
-	
+
 	/**
-	 * The usual requested fields
-	 * @var array
+	 * Storage for client-configured requested fields
+	 * @array
 	 */
-	protected $requestedFields = [
-			'id',
-			'pageid',
-			'wikiarticles',
-			'wikititle',
-			'url',
-			'wid',
-			'canonical',
-			'host',
-			'ns',
-			'indexed',
-			'backlinks',
-			'title',
-			'score',
-			'created',
-			'views',
-			'categories',
-			'hub',
-			'lang',
-	];
-	
-	/**
-	 * Allows us to configure boosts for the provided fields.
-	 * Use the non-translated version.
-	 * @var array
-	 */
-	protected $queryFieldsToBoosts = [];
-	
-	/**
-	 * Tells us whether or not we have imported query fields from the test profile yet.
-	 * @var bool
-	 */
-	protected $queryFieldsWereImported = false;
+	protected $requestedFields = [];
 
 	/**
 	 * Stores field and direction as a two-value array
 	 * @var array
 	 */
 	protected $sort = [ 'score', Solarium_Query_Select::SORT_DESC ];
-	
+
 	/**
-	 * The single-value string key we are using to handle client-facing sorting 
+	 * The single-value string key we are using to handle client-facing sorting
 	 * @var string
 	 */
 	protected $rank = self::RANK_DEFAULT;
-	
+
 	/**
 	 * The resultset returned from a successful search
 	 * @var Wikia\Search\ResultSet\AbstractResultSet
 	 */
 	protected $results;
-	
+
+	/**
+	 * Set true if we need to apply some special treatment for commercial clients i.e. filter wikis with non-commercial license
+	 * @var bool
+	 */
+	protected $commercialUse;
+
 	/**
 	 * This array allows us to associate sort arguments from the request with the appropriate sorting format
 	 * @var array
@@ -213,7 +187,7 @@ class Config
 			self::FILTER_CAT_ENTERTAINMENT,
 			self::FILTER_CAT_LIFESTYLE,
 	];
-	
+
 	/**
 	 * Associates short key names with filter queries.
 	 * This approach doesn't support on-the-fly language fields.
@@ -225,70 +199,83 @@ class Config
 			self::FILTER_IMAGE => '(is_image:true AND -is_video:true)',
 			self::FILTER_HD    => 'video_hd_b:true',
 	];
-	
+
 	/**
 	 * This is used to keep non-keyed filter queries unique in Solarium
 	 * @var int
 	 */
 	public static $filterQueryIncrement = 0;
-	
+
 	/**
 	 * Filter queries stored by "key"
 	 * Separate from traditional storage because the requirements are a bit more complex
 	 * @var array
 	 */
 	protected $filterQueries = [];
-	
+
 	/**
 	 * If a query matches an article, it may be stored here.
 	 * @var Wikia\Search\Match\Article
 	 */
 	protected $articleMatch;
-	
+
 	/**
 	 * If a query matches a wiki, it may be stored here.
 	 * @var Wikia\Search\Match\Wiki
 	 */
 	protected $wikiMatch;
-	
+
 	/**
 	 * If an error occurred during search, we store it here.
 	 * @var Exception
 	 */
 	protected $error;
-	
+
 	/**
 	 * When set to true, we don't use boost functions in our query
 	 * @var bool
 	 */
 	protected $skipBoostFunctions = false;
-	
+
 	/**
 	 * Allows us to tell the factory which service we want
 	 * @var string
 	 */
 	protected $queryService;
-	
+
 	/**
 	 * Used to shift all MediaWiki logic elsewhere.
 	 * @var MediaWikiService
 	 */
 	protected $service;
-	
+
+	/**
+	 * Allows us to specify the use case for Wikia\Search\QueryService\Select\Dismax\CombinedMedia
+	 * By default, it's video-only. We can include images by changing this value to false.
+	 * @var bool
+	 */
+	protected $combinedMediaSearchIsVideoOnly = true;
+
+	/**
+	 * Allows us to specify the use case for Wikia\Search\QueryService\Select\Dismax\CombinedMedia
+	 * @var bool
+	 */
+	protected $combinedMediaSearchIsImageOnly = false;
+
 	/**
 	 * Constructor method
 	 * @param array $params
 	 */
 	public function __construct( array $params = [] ) {
-		
+
 		$dynamicFilterCodes = [
 				self::FILTER_CAT_VIDEOGAMES    => Utilities::valueForField( 'categories', 'Video Games', [ 'quote'=>'"' ] ),
 				self::FILTER_CAT_ENTERTAINMENT => Utilities::valueForField( 'categories', 'Entertainment' ),
 				self::FILTER_CAT_LIFESTYLE     => Utilities::valueForField( 'categories', 'Lifestyle'),
 				];
-		
+
 		$this->filterCodes = array_merge( $this->filterCodes, $dynamicFilterCodes );
-		
+
 		$this->configureByArray( $params );
 	}
 
@@ -301,7 +288,7 @@ class Config
 		$this->start = $start;
 		return $this;
 	}
-	
+
 	/**
 	 * Returns the starting offset
 	 * @return int
@@ -309,7 +296,7 @@ class Config
 	public function getStart() {
 		return $this->start;
 	}
-	
+
 	/**
 	 * Sets the minimum match value
 	 * @param string $mm
@@ -319,7 +306,7 @@ class Config
 		$this->minimumMatch = $mm;
 		return $this;
 	}
-	
+
 	/**
 	 * Returns the minimum match value
 	 * @return string
@@ -327,7 +314,7 @@ class Config
 	public function getMinimumMatch() {
 		return $this->minimumMatch;
 	}
-	
+
 	/**
 	 * Provides the appropriate search result length based on whether we have an article match or not.
 	 * We use this because Solr has a concept of "length" but not limit, so we're passing the appropriate value to Solr.
@@ -335,11 +322,11 @@ class Config
 	 * @return integer
 	 */
 	public function getLength() {
-		return ( $this->hasMatch() && $this->getStart() === 0 ) 
-			? $this->limit - 1 
+		return ( $this->hasMatch() && $this->getStart() === 0 )
+			? $this->limit - 1
 			: $this->limit;
 	}
-	
+
 
 	/**
 	 * Allows us to set the number of documents returned.
@@ -351,20 +338,20 @@ class Config
 		$this->limit = $limit;
 		return $this;
 	}
-	
+
 	/**
 	 * Receives a possibly dirty user input string and stores it in an
 	 * instance of Wikia\Search\Query\Select.
-	 * Uses the methods within that class to determine if we need to 
+	 * Uses the methods within that class to determine if we need to
 	 * record a specific namespace associated with that query.
-	 * 
+	 *
 	 * @param  string $query
 	 * @return Wikia\Search\Config provides fluent interface
 	 */
 	public function setQuery( $query ) {
-		
+
 		$this->query = new Query( $query );
-		
+
 		$namespace = $this->query->getNamespaceId();
 		if ( $namespace !== null ) {
 			$namespaces = $this->getNamespaces();
@@ -374,7 +361,7 @@ class Config
 		}
 		return $this;
 	}
-	
+
 	/**
 	 * Returns the query we've stored.
 	 * @return Wikia\Search\Query\Select
@@ -382,7 +369,7 @@ class Config
 	public function getQuery() {
 		return $this->query;
 	}
-	
+
 	/**
 	 * Allows us to specify what namespaces we want to search against.
 	 * @param array $namespaces
@@ -392,7 +379,7 @@ class Config
 		$this->namespaces = $namespaces;
 		return $this;
 	}
-	
+
 	/**
 	 * Returns the namespaces that were set if they have been set.
 	 * If they haven't been set, lazy-loads default namespaces.
@@ -408,7 +395,7 @@ class Config
 		}
 		return $this->namespaces;
 	}
-	
+
 	/**
 	 * Sets how we sort our results by a single string value, "rank"
 	 * @param string $rank
@@ -422,7 +409,7 @@ class Config
 		}
 		return $this;
 	}
-	
+
 	/**
 	 * Returns the currently registered rank
 	 * @return string
@@ -430,15 +417,15 @@ class Config
 	public function getRank() {
 		return $this->rank;
 	}
-	
+
 	/**
 	 * Provides the appropriate values for Solarium sorting based on our sort names
 	 * @return array where index 0 is the field name and index 1 is the constant used for ASC or DESC in solarium
 	 */
 	public function getSort() {
-		return $this->sort; 
+		return $this->sort;
 	}
-	
+
 	/**
 	 * Stores sort field and direction in a two-value array.
 	 * This is protected to prevent weird sorting. You should use the "rank" functionality instead.
@@ -450,7 +437,7 @@ class Config
 		$this->sort = [ $field, $direction ];
 		return $this;
 	}
-	
+
 	/**
 	 * Determines whether an article match has been set
 	 * @return boolean
@@ -458,7 +445,7 @@ class Config
 	public function hasArticleMatch() {
 		return $this->articleMatch !== null;
 	}
-	
+
 	/**
 	 * Determines whether a wiki match has been set
 	 * @return boolean
@@ -466,7 +453,7 @@ class Config
 	public function hasWikiMatch() {
 		return $this->wikiMatch !== null;
 	}
-	
+
 	/**
 	 * Stores the current article match ONLY IF IT PASSES OUR ESTABLISHED FILTERS
 	 * @param  \Wikia\Search\Match\Article $articleMatch
@@ -478,7 +465,7 @@ class Config
 		}
 		return $this;
 	}
-	
+
 	/**
 	 * Here, we're checking for conditions that should preclude a match, given our current environment settings.
 	 * We're using DeMorgan's theorem here. So write FOR the condition you're trying to filter out.
@@ -492,34 +479,30 @@ class Config
 		return ! (
 				( // We have a file that is video, but we only want images.
 						$result['ns'] == NS_FILE
-						&& 
+						&&
 						in_array( \Wikia\Search\Config::FILTER_IMAGE, $filterKeys )
 						&&
 						$isVideoFile
-				) 
-				||
-				( // We have a file that is not a video, but we only want videos.
+				) || ( // We have a file that is not a video, but we only want videos.
 						$result['ns'] == NS_FILE
-						&& 
+						&&
 						in_array( \Wikia\Search\Config::FILTER_VIDEO, $filterKeys )
 						&&
 						!$isVideoFile
 				)
 		);
 	}
-	
+
 	/**
 	 * Overloading __set to type hint
 	 * @param  \Wikia\Search\Match\Wiki $wikiMatch
 	 * @return \Wikia\Search\Config provides fluent interface
 	 */
 	public function setWikiMatch( Match\Wiki $wikiMatch ) {
-		if ( $this->getLanguageCode() === $this->getService()->getGlobalForWiki( 'wgLanguageCode', $wikiMatch->getId() ) ) {
-			$this->wikiMatch = $wikiMatch;
-		}
+		$this->wikiMatch = $wikiMatch;
 		return $this;
 	}
-	
+
 	/**
 	 * Returns the article match, if registered.
 	 * @return Wikia\Search\Match\Article
@@ -527,7 +510,7 @@ class Config
 	public function getArticleMatch() {
 		return $this->articleMatch;
 	}
-	
+
 	/**
 	 * Returns the wiki match, if registered.
 	 * @return Wikia\Search\Match\Wiki
@@ -535,8 +518,8 @@ class Config
 	public function getWikiMatch() {
 		return $this->wikiMatch;
 	}
-	
-	
+
+
 	/**
 	 * Agnostic match verifier
 	 * @return boolean
@@ -544,7 +527,7 @@ class Config
 	public function hasMatch() {
 		return $this->hasArticleMatch() || $this->hasWikiMatch();
 	}
-	
+
 	/**
 	 * Agnostic match accessor
 	 * @return Wikia\Search\Match\Article|Wikia\Search\Match\Wiki|false
@@ -552,7 +535,7 @@ class Config
 	public function getMatch() {
 		return $this->getArticleMatch() ?: $this->getWikiMatch();
 	}
-	
+
 	/**
 	 * Returns desired number of results WITHOUT consideration for article match
 	 * @return int
@@ -561,32 +544,11 @@ class Config
 	{
 		return $this->limit;
 	}
-	
-	/**
-	 * Provides the requested fields with respect to dynamic language fields
-	 * @return array
-	 */
-	public function getRequestedFields()
-	{
-		$fieldsPrepped = array();
-		foreach ( $this->requestedFields as $field ) {
-			$fieldsPrepped[] = Utilities::field( $field );
-		}
-		
-		if (! ( in_array( 'id', $fieldsPrepped ) || in_array( '*', $fieldsPrepped ) ) ) {
-			$fieldsPrepped[] = 'id';
-		} 
-		if ( $this->getQueryService() == '\\Wikia\Search\\QueryService\\Select\\Video' ) {
-			$fieldsPrepped[] = 'title_en'; 
-		}
-		
-		return $fieldsPrepped;
-	}
-	
+
 	/**
 	 * Allows us to set the fields we want to get back from Solr for each document.
 	 * You can provide either dynamic fields or base fields that are then language-ified.
-	 * 
+	 *
 	 * @param array $fields
 	 * @return Wikia\Search\Config
 	 */
@@ -594,7 +556,15 @@ class Config
 		$this->requestedFields = $fields;
 		return $this;
 	}
-	
+
+	/**
+	 * Returns the requested fields, usually to the query service, to _append_ to default requested fields.
+	 * @return array
+	 */
+	public function getRequestedFields() {
+		return $this->requestedFields;
+	}
+
 	/**
 	 * Sets what hub we're on
 	 * @param string $hub
@@ -604,7 +574,7 @@ class Config
 		$this->hub = $hub;
 		return $this;
 	}
-	
+
 	/**
 	 * Returns hub value
 	 * @return string|null
@@ -612,7 +582,7 @@ class Config
 	public function getHub() {
 		return $this->hub;
 	}
-	
+
 	/**
 	 * Sets whether we're in an 'advanced search' context
 	 * @param bool $bool
@@ -622,7 +592,7 @@ class Config
 		$this->advanced = $bool;
 		return $this;
 	}
-	
+
 	/**
 	 * Whether we're in advanced search
 	 * @return bool
@@ -630,7 +600,7 @@ class Config
 	public function getAdvanced() {
 		return $this->advanced;
 	}
-	
+
 	/**
 	 * We set any exceptions called during Wikia\Search\QueryService\Select\AbstractSelect::search here
 	 * @param Exception $error
@@ -640,7 +610,7 @@ class Config
 		$this->error = $error;
 		return $this;
 	}
-	
+
 	/**
 	 * Returns the currently stored error.
 	 * @return null|Exception
@@ -648,7 +618,7 @@ class Config
 	public function getError() {
 		return $this->error;
 	}
-	
+
 	/**
 	 * Tells query service not to use boost functions
 	 * @param bool $bool
@@ -658,7 +628,7 @@ class Config
 		$this->skipBoostFunctions = $bool;
 		return $this;
 	}
-	
+
 	/**
 	 * Returns the skipBoostFunctions flag
 	 * @return bool
@@ -666,12 +636,12 @@ class Config
 	public function getSkipBoostFunctions() {
 		return $this->skipBoostFunctions;
 	}
-	
+
 	/**
 	 * Allows us to abstract how we handle query service configuration
 	 * @param string $service the query service without \\Wikia\\Search\\QueryService\\
 	 * @param bool $apply if set to false, we unset the queryservice if it's that value
-	 * @return Wikia\Search\Config 
+	 * @return Wikia\Search\Config
 	 */
 	protected function setQueryService( $service, $apply ) {
 		if (! class_exists( '\\Wikia\\Search\\QueryService\\'.$service ) ) {
@@ -684,22 +654,22 @@ class Config
 		}
 		return $this;
 	}
-	
+
 	/**
 	 * Allows us to inject logic for lazy-loading query service based on other config settings
 	 * @return string
 	 */
 	protected function bootstrapQueryService() {
-		$service = 'Select\\OnWiki';
-		if ( $this->getWikiId() == \Wikia\Search\QueryService\Select\Video::VIDEO_WIKI_ID ) {
-			$service = 'Select\\Video';
+		$service = 'Select\\Dismax\\OnWiki';
+		if ( $this->getWikiId() == \Wikia\Search\QueryService\Select\Dismax\Video::VIDEO_WIKI_ID ) {
+			$service = 'Select\\Dismax\\Video';
 		}
-		if ( $this->getService()->getGlobal( 'EnableWikiaHomePageExt' ) ) { 
-			$service = 'Select\\InterWiki';
+		if ( $this->getService()->getGlobal( 'EnableWikiaHomePageExt' ) ) {
+			$service = 'Select\\Dismax\\InterWiki';
 		}
 		return $service;
 	}
-	
+
 	/**
 	 * Used by the factory to create a query service.
 	 * We lazy-load the default value using bootstrapQueryService
@@ -718,25 +688,25 @@ class Config
 		if ( $this->queryService === null ) {
 			$this->queryService = $this->bootstrapQueryService();
 		}
-		return $this->queryService == 'Select\\InterWiki';
+		return $this->queryService == 'Select\\Dismax\\InterWiki';
 	}
-	
+
 	/**
 	 * Synonym function for backward compatbility
 	 * @param  boolean $apply
 	 * @return Wikia\Search\Config provides fluent interface
 	 */
 	public function setInterWiki( $apply ) {
-		return $this->setQueryService( 'Select\\InterWiki', $apply );
+		return $this->setQueryService( 'Select\\Dismax\\InterWiki', $apply );
 	}
-	
+
 	/**
 	 * Sets (or unsets) video search as query service
 	 * @param bool $apply
 	 * @return Wikia\Search\Config
 	 */
 	public function setVideoSearch( $apply ) {
-		return $this->setQueryService( 'Select\\Video', $apply );
+		return $this->setQueryService( 'Select\\Dismax\\Video', $apply );
 	}
 
 	/**
@@ -745,27 +715,45 @@ class Config
 	 * @param Wikia\Search\Config
      */
 	public function setVideoEmbedToolSearch( $apply ) {
-		return $this->setQueryService( 'Select\\VideoEmbedTool', $apply );
+		return $this->setQueryService( 'Select\\Dismax\\VideoEmbedTool', $apply );
 	}
-	
+
 	/**
 	 * Sets or unsets Lucene as our query service
 	 * @param bool $apply
 	 * @return Wikia\Search\Config
 	 */
-	public function setDirectLuceneQuery( $value ) {
-		return $this->setQueryService( 'Select\\Lucene', $value );
+	public function setDirectLuceneQuery( $apply ) {
+		return $this->setQueryService( 'Select\\Lucene\\Lucene', $apply );
 	}
-	
+
+	/**
+	 * Sets or unsets combined media search as our query service
+	 * @param bool $apply
+	 * @return Wikia\Search\Config
+	 */
+	public function setCombinedMediaSearch( $apply ) {
+		return $this->setQueryService( 'Select\\Dismax\\CombinedMedia', $apply );
+	}
+
+	/**
+	 * Sets or unsets crosswiki lucene query as the query service
+	 * @param bool $apply
+	 * @return Wikia\Search\Config
+	 */
+	public function setCrossWikiLuceneQuery( $apply ) {
+		return $this->setQueryService( 'Select\\Lucene\\CrossWikiLucene', $apply );
+	}
+
 	/**
 	 * Sets or unsets VideoTitle as our query service
 	 * @param bool $apply
 	 * @return Wikia\Search\Config
 	 */
-	public function setVideoTitleSearch( $value ) {
-		return $this->setQueryService( 'Select\\VideoTitle', $value );
+	public function setVideoTitleSearch( $apply ) {
+		return $this->setQueryService( 'Select\\Dismax\\VideoTitle', $apply );
 	}
-	
+
 	/**
 	 * Returns results number based on a truncated heuristic
 	 * @param boolean $formatted whether we should also format the number
@@ -774,21 +762,21 @@ class Config
 	public function getTruncatedResultsNum( $formatted = false )
 	{
 		$resultsNum = $this->getResultsFound();
-		
+
 		$result = $resultsNum;
-	
+
 		$digits = strlen( $resultsNum );
 		if( $digits > 1 ) {
 			$zeros = ( $digits > 3 ) ? ( $digits - 1 ) : $digits;
 			$result = round( $resultsNum, ( 0 - ( $zeros - 1 ) ) );
 		}
-		
+
 		if ( $formatted ) {
-			$result = $this->getService()->formatNumber( $result ); 
+			$result = $this->getService()->formatNumber( $result );
 		}
 		return $result;
 	}
-	
+
 	/**
 	 * These search profiles are used to figure out what tab we're on and how we should be searching based on that
 	 * While kind of a view concern, moved here so it can play nicely with the namespaces value
@@ -827,13 +815,13 @@ class Config
 	                    'parameters' => array( 'advanced' => 1 ),
 	            )
 	    );
-	    
+
 	    $this->getService()->invokeHook( 'SpecialSearchProfiles', array( &$profiles ) );
 
 	    foreach( $profiles as $key => &$data ) {
 	        sort( $data['namespaces'] );
 	    }
-	
+
 	    return $profiles;
 	}
 
@@ -842,36 +830,36 @@ class Config
 	 * @return string
 	 */
 	public function getActiveTab() {
-		
+
 		if( $this->getAdvanced() ) {
 		    return SEARCH_PROFILE_ADVANCED;
 		}
 		// $nsVals should always have a value at this point
 		$nsVals = $this->getNamespaces();
-		
+
 		// we will always return at least SEARCH_PROFILE_ADVANCED, because it is identical to the return value of getNamespaces
 		$searchProfile = SEARCH_PROFILE_ADVANCED;
 		foreach( $this->getSearchProfiles() as $name => $profile ) {
-			if (   ( count( array_diff( $nsVals, $profile['namespaces'] ) ) == 0 ) 
+			if (   ( count( array_diff( $nsVals, $profile['namespaces'] ) ) == 0 )
 				&& ( count( array_diff($profile['namespaces'], $nsVals ) ) == 0 ) ) {
 				$searchProfile = $name !== SEARCH_PROFILE_ADVANCED ? $name : $searchProfile;
 			}
 		}
 		return $searchProfile;
 	}
-	
+
 	/**
 	 * Determines the number of pages based on the desired number of results per page
-	 * @return integer 
+	 * @return integer
 	 */
 	public function getNumPages() {
 		return $this->getResultsFound() ? ceil( $this->getResultsFound() / $this->getLimit() ) : 0;
 	}
-	
+
 	/**
 	 * Returns the wiki ID to search against.
 	 * Lazy-loads current wiki ID if not set.
-	 * 
+	 *
 	 * @return int
 	 */
 	public function getWikiId() {
@@ -880,7 +868,7 @@ class Config
 		}
 		return $this->wikiId;
 	}
-	
+
 	/**
 	 * Sets the wiki we should be searching against, if used for that query service.
 	 * @param  int $id
@@ -898,7 +886,7 @@ class Config
 	public function getCityId() {
 		return $this->getWikiId();
 	}
-	
+
 	/**
 	 * Backwards compatibility
 	 * @param  int $value
@@ -907,7 +895,7 @@ class Config
 	public function setCityId( $value ) {
 		return $this->setWikiId( $value );
 	}
-	
+
 	/**
 	 * Sets the page, which is a shortcut for offset/limit handling
 	 * @param int value
@@ -917,7 +905,7 @@ class Config
 		$this->page = $value;
 		return $this;
 	}
-	
+
 	/**
 	 * Returns the page we're on.
 	 * @return int
@@ -925,7 +913,7 @@ class Config
 	public function getPage() {
 		return $this->page;
 	}
-	
+
 	/**
 	 * Sets the result set
 	 * @param \Wikia\Search\ResultSet\AbstractResultSet $results
@@ -935,7 +923,7 @@ class Config
 		$this->results = $results;
 		return $this;
 	}
-	
+
 	/**
 	 * Returns our results set
 	 * @return \Wikia\Search\ResultSet\AbstractResultSet|null
@@ -943,15 +931,16 @@ class Config
 	public function getResults() {
 		return $this->results;
 	}
-	
+
 	/**
 	 * Returns the number of results found from the result set, or 0 if not set.
 	 * @return int
 	 */
 	public function getResultsFound() {
-		return $this->getResults() === null ? 0 : $this->results->getResultsFound();
+		$results = $this->getResults();
+		return $results === null ? 0 : $results->getResultsFound();
 	}
-	
+
 	/**
 	 * Adds a filter query based on the optional key, or automatically incremented key
 	 * Note that if you provide a key that already exists, you are overwriting that filter query.
@@ -961,13 +950,13 @@ class Config
 	 */
 	public function setFilterQuery( $queryString, $key = null ) {
 		$key = $key ?: sprintf( 'fq%d', ++self::$filterQueryIncrement );
-		$this->filterQueries[$key] = array( 
-				'key' => $key, 
-				'query' => $queryString 
+		$this->filterQueries[$key] = array(
+				'key' => $key,
+				'query' => $queryString
 		);
 		return $this;
 	}
-	
+
 	/**
 	 * Allows you to set all filter queries wholesale.
 	 * Pass an empty array if you want to reinitialize this property.
@@ -983,11 +972,11 @@ class Config
 				$this->setFilterQuery( $filterQuery['query'], ( isset( $filterQuery['key'] ) ? $filterQuery['key'] : null ) );
 			} else if ( is_string( $filterQuery ) ) {
 				$this->setFilterQuery( $filterQuery );
-			} 
+			}
 		}
 		return $this;
 	}
-	
+
 	/**
 	 * Returns filter query associative array
 	 * @return array
@@ -1005,7 +994,7 @@ class Config
 		$filterKeys = array_keys( $this->filterQueries );
 		return array_filter( $filterKeys, function ( $key ) use ( $publicKeys ) { return in_array($key, $publicKeys); } );
 	}
-	
+
 	/**
 	 * Returns true or false depending on whether we've got filter queries set
 	 * @return bool
@@ -1013,7 +1002,7 @@ class Config
 	public function hasFilterQueries() {
 		return !empty( $this->filterQueries );
 	}
-	
+
 	/**
 	 * Uses pre-determined filter queries that can be set by the controller (e.g. video filtering)
 	 * @param  string $code
@@ -1025,7 +1014,7 @@ class Config
 		}
 		return $this;
 	}
-	
+
 	/**
 	 * Allows us to use pass array of codes in the controller to the search config
 	 * @param  array $codes
@@ -1037,7 +1026,7 @@ class Config
 		}
 		return $this;
 	}
-	
+
 	/**
 	 * Allows you to specify group by letter (e.g. A, B, C)
 	 * @param string $group
@@ -1047,7 +1036,7 @@ class Config
 		$this->ABTestGroup = $group;
 		return $this;
 	}
-	
+
 	/**
 	 * Tells you which test group is currently registred.
 	 * Null means that we aren't performing an A/B test right now.
@@ -1056,9 +1045,9 @@ class Config
 	public function getABTestGroup() {
 		return $this->ABTestGroup;
 	}
-	
+
 	/**
-	 * Loads the appropriate test profile. 
+	 * Loads the appropriate test profile.
 	 * Always at least returns the base profile, in case the group passed doesn't exist.
 	 * @return Wikia\Search\Config
 	 */
@@ -1072,7 +1061,7 @@ class Config
 		$this->testProfile = new $class();
 		return $this;
 	}
-	
+
 	/**
 	 * Lazy-loads the default test profile.
 	 * @return Wikia\Search\TestProfile\Base
@@ -1083,73 +1072,21 @@ class Config
 		}
 		return $this->testProfile;
 	}
-	
-	/**
-	 * Allows us to add additional query fields, with a given boost.
-	 * @param string $field
-	 * @param int $boost
-	 * @return Wikia\Search\Config
-	 */
-	public function setQueryField( $field, $boost = 1 ) {
-		$this->importQueryFieldBoosts();
-		$this->queryFieldsToBoosts[$field] = $boost;
-		return $this;
-	}
-	
-	/**
-	 * Lets us add multiple fields. Can handle both associative with boosts as value and flat.
-	 * @param array $fields
-	 * @return Wikia\Search\Config
-	 */
-	public function addQueryFields( array $fields ) {
-		if ( array_values( $fields ) === $fields ) {
-			foreach ( $fields as $field ) {
-				$this->setQueryField( $field );
-			}
-		} else {
-			foreach ( $fields as $field => $boost ) {
-				$this->setQueryField( $field, $boost );
-			}
-		}
-		return $this;
-	}
-	
+
 	/**
 	 * Returns the associative array of query fields to boosts.
 	 * @return array
 	 */
 	public function getQueryFieldsToBoosts() {
-		$this->importQueryFieldBoosts();
-		return $this->queryFieldsToBoosts;
+		return $this->getTestProfile()->getQueryFieldsToBoosts( $this->getQueryService() );
 	}
-	
-	/**
-	 * Allows us to manually set query fields externally. Supports flat and associative.
-	 * @param array $fields
-	 * @return Wikia\Search\Config
-	 */
-	public function setQueryFields( array $fields ) {
-		$this->importQueryFieldBoosts();
-		if ( array_values( $fields ) === $fields ) {
-			$this->queryFieldsToBoosts = array();
-			foreach ( $fields as $field ) {
-				$this->setQueryField( $field );
-			}
-		} else {
-			foreach ( $fields as $field => $boost ) {
-				$this->setQueryField( $field, $boost ); 
-			}
-		}
-		return $this;
-	}
-	
+
 	/**
 	 * Lets us grab just the query fields.
 	 * @return array
 	 */
 	public function getQueryFields() {
-		$this->importQueryFieldBoosts();
-		return array_keys( $this->queryFieldsToBoosts );
+		return array_keys( $this->getQueryFieldsToBoosts() );
 	}
 
 	/**
@@ -1173,20 +1110,15 @@ class Config
 		}
 		return $this->languageCode;
 	}
-	
+
 	/**
-	 * Imports defaults for query fields to boosts from search profile.
-	 * Lazily run on first mutate or access of query fields.
-	 * @return Wikia\Search\Config
+	 * Returns the tie param as configured with our AB testing plugin
+	 * @return int
 	 */
-	protected function importQueryFieldBoosts() {
-		if (! $this->queryFieldsWereImported ) {
-			$this->queryFieldsToBoosts = $this->getTestProfile()->getQueryFieldsToBoosts();
-			$this->queryFieldsWereImported = true;
-		}
-		return $this;
+	public function getTie() {
+		return $this->getTestProfile()->getTieParam( $this->getQueryService() );
 	}
-	
+
 	/**
 	 * Dependency lazy-loading.
 	 * @return Wikia\Search\MediaWikiService
@@ -1196,5 +1128,58 @@ class Config
 			$this->service = (new \Wikia\Search\ProfiledClassFactory)->get( 'Wikia\Search\MediaWikiService' );
 		}
 		return $this->service;
+	}
+
+	/**
+	 * Flag for whether to include images in combined media search query service
+	 * @return bool
+	 */
+	public function getCombinedMediaSearchIsVideoOnly() {
+		return $this->combinedMediaSearchIsVideoOnly;
+	}
+
+	/**
+	 * Flag for whether to include videos in combined media search query service
+	 * @return bool
+	 */
+	public function getCombinedMediaSearchIsImageOnly() {
+		return $this->combinedMediaSearchIsImageOnly;
+	}
+
+	/**
+	 * Lets us tell the combined media search service whether or not to include images
+	 * @param bool $bool
+	 * @return Wikia\Search\Config
+	 */
+	public function setCombinedMediaSearchIsVideoOnly( $bool ) {
+		$this->combinedMediaSearchIsVideoOnly = $bool;
+		return $this;
+	}
+
+	/**
+	 * Lets us tell the combined media search service whether or not to include videos
+	 * @param bool $bool
+	 * @return Wikia\Search\Config
+	 */
+	public function setCombinedMediaSearchIsImageOnly( $bool ) {
+		$this->combinedMediaSearchIsImageOnly = $bool;
+		return $this;
+	}
+
+	/**
+	 * Set true if we need to apply some special treatment for commercial clients i.e. filter wikis with non-commercial license
+	 * @param boolean $commercialUse
+	 */
+	public function setCommercialUse($commercialUse) {
+		$this->commercialUse = $commercialUse;
+		return $this;
+	}
+
+	/**
+	 * Set true if we need to apply some special treatment for commercial clients i.e. filter wikis with non-commercial license
+	 * @return boolean
+	 */
+	public function getCommercialUse() {
+		return $this->commercialUse;
 	}
 }

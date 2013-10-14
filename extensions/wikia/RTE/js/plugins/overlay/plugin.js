@@ -14,7 +14,10 @@ CKEDITOR.plugins.add('rte-overlay',
 
 		// add node in which overlays will be stored
 		editor.on('instanceReady', function() {
-			self.overlays = $('<div>', {id : 'RTEMediaOverlays'}).appendTo(RTE.overlayNode);
+			self.overlays = $('<div>', {
+				id : 'RTEMediaOverlays',
+				'class' : 'rte-media-overlays'
+			}).appendTo(RTE.overlayNode);
 		});
 
 		// clean overlays when switching from source to wysiwyg mode
@@ -251,6 +254,17 @@ RTE.overlay = {
 	// add overlay menu and block CKeditor context menu
 	add: function(node, items) {
 		var self = this.plugin;
+
+		/*
+		 * If admin-only video upload/edit is enabled for this wiki,
+		 * then we don't show overlay for video items in the visual editor,
+		 * preventing non-admins from editing video descriptions
+		 *
+		 * window.showAddVideoBtn comes from EditPageLayout/EditPageLayoutHooks.class.php
+		 */
+		if ( node.hasClass('video') && !window.showAddVideoBtn ) {
+			return;
+		}
 
 		// store items
 		node.data('items', items);

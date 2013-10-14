@@ -31,6 +31,7 @@ var WikiaBar = {
 		this.wikiaBarCollapseWrapperObj.click($.proxy(this.clickTrackingHandler, this));
 	},
 	init: function () {
+		this.$window = $(window);
 		this.wikiaBarWrapperObj = $('#WikiaBarWrapper');
 		this.wikiaBarCollapseWrapperObj = $('.WikiaBarCollapseWrapper');
 		this.bindTracking();
@@ -55,6 +56,8 @@ var WikiaBar = {
 			placement: "wikiaBar",
 			content: wikiaBarWrapperArrow.data('tooltipshow')
 		});
+
+		this.$window.triggerHandler( 'WikiaBarReady' );
 
 		return true;
 	},
@@ -207,6 +210,8 @@ var WikiaBar = {
 		} else {
 			this.changeLoggedInUserStateBar();
 		}
+
+		this.$window.triggerHandler( 'WikiaBarStateChanged' );
 	},
 	changeAnonBarStateData: function () {
 		var isHidden = this.hasAnonHiddenWikiaBar();
@@ -321,17 +326,18 @@ var WikiaBar = {
 	setLocalStorageData: function (state) {
 		$.storage.set(this.getLocalStorageDataKey(), state);
 	},
-	getAnonData: function () {
+    // defaultState - default state for anon's bar (hidden|shown); if null, it's dynamic
+	getAnonData: function ( defaultState ) {
 		var key = this.getCookieKey(),
 			data = $.cookie(key),
 			hidden = null;
 
 		if (data === null && !this.isMainWikiaBarLang()) {
 			//first time and data storage is empty let's hide the bar if it IS NOT a main language wiki
-			hidden = true;
+			hidden = (typeof defaultState !== 'undefined') ? defaultState : true ;
 		} else if (data === null && this.isMainWikiaBarLang()) {
 			//first time and data storage is empty let's hide the bar if it IS a main language wiki
-			hidden = false;
+            hidden = (typeof defaultState !== 'undefined') ? defaultState : false ;
 		} else {
 			hidden = (data === 'true'); //all data in cookies is saved as strings
 		}
@@ -416,6 +422,27 @@ var WikiaBar = {
 if (window.wgEnableWikiaBarExt) {
 	$(function () {
 		WikiaBar.init();
+
+		// ABTEST: DAR_GlobalNavigationFixed
+		// Determine what group we're in for experiment DAR_GlobalNavigationFixed
+		group = window.Wikia.AbTest
+			? Wikia.AbTest.getGroup( "DAR_GLOBALNAVIGATIONFIXED" )
+			: null ;
+
+		switch (group) {
+        case "HIDE_WIKIA_BAR":
+            // collapse as the default state for anons
+            if (WikiaBar && WikiaBar.isUserAnon() && WikiaBar.getAnonData(false) === false) {
+                WikiaBar.hide();
+            }
+            // no break intended: for this group we should have global nav fixed too
+            // break;
+        case "SHOW_WIKIA_BAR":
+            $('body').addClass('global-header-fixed-at-top');
+            break;
+        default:
+            // no changes in behaviour
+		}
 	});
 }
 

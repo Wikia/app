@@ -8,7 +8,6 @@ class ForumHooksHelper {
 		$app = F::App();
 		if ( $title->getNamespace() == NS_WIKIA_FORUM_BOARD_THREAD ) {
 			$app->wg->Out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/Forum/css/ForumThread.scss' ) );
-			$app->wg->IsForum = true;
 		}
 		return true;
 	}
@@ -209,7 +208,16 @@ class ForumHooksHelper {
 			$parentPageId = $commentsIndex->getParentPageId();
 
 			$board = ForumBoard::newFromId( $parentPageId );
-			$board->clearCacheBoardInfo();
+			if ( $board instanceof ForumBoard ) {
+				$board->clearCacheBoardInfo();
+			} else {
+				Wikia::log(
+					__METHOD__,
+					'',
+					'Board doesn\'t exist: PageId: ' . $parentPageId .
+					' Title: ' . $title->getText()
+				);
+			}
 		}
 
 		return true;

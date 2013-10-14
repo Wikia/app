@@ -62,5 +62,17 @@ require(['jquery', 'mw', 'phalanx'], function($, mw, phalanx) {
 				fail(function() {
 					buttonNode.attr('disabled', false);
 				});
-		});
+		}).
+
+        // handle custom expire field
+        on('change', '#wpPhalanxExpire', function(ev) {
+            var customExpireField = $('#wpPhalanxExpireCustom'),
+                selectedOption = $(this).find(':selected');
+
+            if (selectedOption.data('is-custom')) {
+                customExpireField.show().focus();
+            } else {
+                customExpireField.hide();
+            }
+        });
 });

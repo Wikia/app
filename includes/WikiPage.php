@@ -1291,6 +1291,12 @@ class WikiPage extends Page {
 			$summary = self::getAutosummary( $oldtext, $text, $flags );
 		}
 
+		// <Wikia>
+		if ( is_string( $user ) ) {
+			error_log( "MOLI: " . __METHOD__ . ": invalid User : " . print_r( $user, true ) );
+			Wikia::debugBacktrace( "MOLI: invalid User:" );
+		}
+		// </Wikia>
 		$editInfo = $this->prepareTextForEdit( $text, null, $user );
 		$text = $editInfo->pst;
 		$newsize = strlen( $text );
@@ -1342,6 +1348,10 @@ class WikiPage extends Page {
 				# before this function is called. A previous function used a separate query, this
 				# creates a window where concurrent edits can cause an ignored edit conflict.
 				$ok = $this->updateRevisionOn( $dbw, $revision, $oldid, $oldIsRedirect );
+
+				// wikia changes begin
+				wfRunHooks( 'ArticleDoEdit', array( $dbw, $this->mTitle, $revision, $flags ) );
+				// wikia changes end
 
 				if ( !$ok ) {
 					/* Belated edit conflict! Run away!! */
@@ -1435,6 +1445,10 @@ class WikiPage extends Page {
 
 			# Update the page record with revision data
 			$this->updateRevisionOn( $dbw, $revision, 0 );
+
+			// wikia changes begin
+			wfRunHooks( 'ArticleDoEdit', array( $dbw, $this->mTitle, $revision, $flags ) );
+			// wikia changes end
 
 			wfRunHooks( 'NewRevisionFromEditComplete', array( $this, $revision, false, $user ) );
 
@@ -2117,6 +2131,10 @@ class WikiPage extends Page {
 
 		# Clear the cached article id so the interface doesn't act like we exist
 		$this->mTitle->resetArticleID( 0 );
+		
+		# Wikia change here
+		$this->setCachedLastEditTime( wfTimestampNow() );
+		# Wikia 
 	}
 
 	/**

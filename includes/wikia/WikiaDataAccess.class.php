@@ -14,6 +14,7 @@ class WikiaDataAccess {
 	 **********************************/
 
 	const LOCK_TIMEOUT = 60; // lock for at most 60s
+	const CACHE_TIME_FACTOR_FOR_LOCK = 2; // How many times longer cache should be valid when using cacheWithLock
 
 	/**
 	 * WikiaDataAccess::USE_CACHE - does not have to be passed to cache or cacheWithLock [default]
@@ -93,7 +94,7 @@ class WikiaDataAccess {
 	 */
 	static private function setCache( $key, $result, $cacheTime, $command = self::USE_CACHE ) {
 		if ( $command == self::USE_CACHE || $command == self::REFRESH_CACHE ) {
-			F::app()->wg->Memc->set( $key, $result, $cacheTime * 2 );
+			F::app()->wg->Memc->set( $key, $result, $cacheTime );
 		}
 
 		if ( $command == self::REFRESH_CACHE ) {
@@ -124,15 +125,7 @@ class WikiaDataAccess {
 		$keyLock = $key . ':lock';
 		$key .= '-withDate';
 
-		$tryCache = function( $key ) use ( $app ) {
-			$result = $app->wg->Memc->get( $key );
-			if( !is_array($result) || $result === false || !isset($result['data']) || !isset($result['time'])) {
-				$result = null;
-			}
-			return $result;
-		};
-
-		$result = ($command == self::USE_CACHE) ? $tryCache($key) : null;
+		$result = ($command == self::USE_CACHE) ? static::getDataAndVerify($app, $key) : null;
 
 		if ( is_null( $result ) ) {
 
@@ -141,7 +134,7 @@ class WikiaDataAccess {
 			if( $wasLocked && $gotLock ) {
 				self::unlock( $keyLock );
 				$gotLock = false;
-				$result = ($command == self::USE_CACHE) ? $tryCache($key) : null;
+				$result = ($command == self::USE_CACHE) ? static::getDataAndVerify($app, $key) : null;
 			}
 
 			if( is_null( $result ) ) {
@@ -149,7 +142,7 @@ class WikiaDataAccess {
 					'data' => $getData(),
 					'time' => wfTimestamp( TS_UNIX )
 				);
-				self::setCache( $key, $result, $cacheTime * 2, $command );
+				self::setCache( $key, $result, $cacheTime * self::CACHE_TIME_FACTOR_FOR_LOCK, $command );
 			}
 
 			if( $gotLock ) self::unlock( $keyLock );
@@ -162,7 +155,7 @@ class WikiaDataAccess {
 				// we could use the data, but maybe we should regenerate
 				list($gotLock, $wasLocked) = self::lock( $keyLock, false );
 
-				if( !$wasLocked && $gotLock ) {
+				if( $gotLock && !$wasLocked ) {
 					// we are the first thread to find that data older than $cacheTime but fresher than $oldCacheTime
 					// let's try to get new data
 					// because we hold the lock other threads won't try to generate it in the same time
@@ -170,11 +163,13 @@ class WikiaDataAccess {
 						'data' => $getData(),
 						'time' => wfTimestamp( TS_UNIX )
 					);
-					self::setCache( $key, $result, $cacheTime * 2, $command );
-					self::unlock( $keyLock );
+					self::setCache( $key, $result, $cacheTime * self::CACHE_TIME_FACTOR_FOR_LOCK, $command );
 				} else {
 					// what we already have in $result is good enough
 					// and another thread is generating that data anyway for future requests
+				}
+				if( $gotLock ) {
+					self::unlock( $keyLock );
 				}
 			}
 		}
@@ -216,6 +211,17 @@ class WikiaDataAccess {
 
 	static private function unlock( $key ) {
 		F::app()->wg->Memc->delete( $key );
+	}
+
+	/*
+	 * Internal use by cacheWithLock code-path
+	 */
+	static private function getDataAndVerify( $app, $key ) {
+		$result = $app->wg->Memc->get( $key );
+		if( !is_array($result) || $result === false || !isset($result['data']) || !isset($result['time'])) {
+			$result = null;
+		}
+		return $result;
 	}
 
 }

@@ -9,26 +9,23 @@ class FilePageHooks extends WikiaObject{
 	 *
 	 * @param Title $oTitle
 	 * @param Article $oArticle
+	 * @return bool true
 	 */
 	static public function onArticleFromTitle( &$oTitle, &$oArticle ){
-		global $wgEnableVideoPageRedesign;
-
 		if ( ( $oTitle instanceof Title ) && ( $oTitle->getNamespace() == NS_FILE ) ){
-
-			if ( F::app()->checkSkin( 'oasis' ) &&  !empty( $wgEnableVideoPageRedesign ) ) {
-				$oArticle = new FilePageTabbed( $oTitle );
-			} else {
-				$oArticle = new FilePageFlat( $oTitle );
-			}
+			$oArticle = WikiaFileHelper::getMediaPage( $oTitle );
 		}
 
 		return true;
 	}
 
 
-
 	/**
-	 * Add JS and CSS to File Page
+	 * Add JS and CSS to File Page (except mobile skin - see onWikiaMobileAssetsPackages)
+	 *
+	 * @param OutputPage $out
+	 * @param $skin
+	 * @return bool
 	 */
 	static public function onBeforePageDisplay( OutputPage $out, $skin ) {
 		global $wgEnableVideoPageRedesign;
@@ -62,6 +59,22 @@ class FilePageHooks extends WikiaObject{
 		return true;
 	}
 
+	/**
+	 * Add assets to mobile file page
+	 *
+	 * @param array $jsHeadPackages
+	 * @param array $jsBodyPackages
+	 * @param array $scssPackages
+	 * @return bool
+	 */
+	static public function onWikiaMobileAssetsPackages( Array &$jsStaticPackages, Array &$jsExtensionPackages, Array &$scssPackages ){
+		if( F::app()->wg->Title->getNamespace() == NS_FILE ) {
+			$jsExtensionPackages[] = 'filepage_js_wikiamobile';
+			$scssPackages[] = 'filepage_scss_wikiamobile';
+		}
+
+		return true;
+	}
 
 	/*
 	 * Add "replace" button to File pages
@@ -119,7 +132,7 @@ class FilePageHooks extends WikiaObject{
 	 * @param array $item
 	 * @param string $page
 	 * @param string|false $link
-	 * @return true
+	 * @return bool true
 	 */
 	static public function onGlobalUsageFormatItemWikiLink( $item, $page, &$link ) {
 		$link = WikiFactory::DBtoUrl( $item['wiki'] );
@@ -134,7 +147,7 @@ class FilePageHooks extends WikiaObject{
 	/**
 	 * Hook: get wiki link for GlobalUsage
 	 * @param string $wikiName
-	 * @return true
+	 * @return bool true
 	 */
 	static public function onGlobalUsageImagePageWikiLink( &$wikiName ) {
 		$wiki = WikiFactory::getWikiByDB( $wikiName );
@@ -148,7 +161,7 @@ class FilePageHooks extends WikiaObject{
 	/**
 	 * Hook: check for video files
 	 * @param array $images
-	 * @return true
+	 * @return bool true
 	 */
 	static public function onGlobalUsageLinksUpdateComplete( &$images ) {
 		$videoFiles = array();

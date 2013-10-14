@@ -16,8 +16,8 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 		$this->wg->Out->setPageTitle( wfMsg('phalanx-stats-title') );
 
 		if ( !$this->userCanExecute( $this->wg->User ) ) {
-			$this->displayRestrictionError();
 			wfProfileOut( __METHOD__ );
+			$this->displayRestrictionError();
 			return;
 		}
 
@@ -49,7 +49,6 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 		}
 
 		$data['author_id'] = User::newFromId($data['author_id'])->getName();
-		$data['type'] = implode( ', ', Phalanx::getTypeNames( $data['type'] ) );
 		$data['timestamp'] = $this->wg->Lang->timeanddate( $data['timestamp'] );
 
 		if ( $data['expire'] == null ) {
@@ -63,11 +62,12 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 		$data['exact'] = $data['exact'] ? 'Yes' : 'No';
 		$data['lang'] = empty( $data['lang'] ) ? 'All' : $data['lang'];
 
-		/* pull these out of the array, so they dont get used in the top rows */
 		if ( $data['type'] & Phalanx::TYPE_EMAIL && !$this->wg->User->isAllowed( 'phalanxemailblock' ) ) {
 			/* hide email from non-privildged users */
 			$data['text'] = wfMsg( 'phalanx-email-filter-hidden' );
 		}
+
+		$data['type'] = implode( ', ', Phalanx::getTypeNames( $data['type'] ) );
 
 		/* stats table */
 		$headers = array(
@@ -87,15 +87,26 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 			'width' => '100%',
 		);
 
+		/* pull these out of the array, so they dont get used in the top rows */
 		$row = $data->toArray();
 		unset($row['text']);
 		unset($row['reason']);
+		unset($row['comment']);
 		unset($row['ip_hex']);
+
+		// parse block comment
+		if ($data['comment'] != '') {
+			$comment = ParserPool::parse($data['comment'], $this->wg->Title, new ParserOptions())->getText();
+		}
+		else {
+			$comment = '';
+		}
 
 		$table  = Xml::buildTable( array( $row ), $tableAttribs, $headers );
 		$table  = str_replace("</table>", "", $table);
 		$table .= "<tr><th>" . wfMsg('phalanx-stats-table-text') . "</th><td colspan='8'>" . htmlspecialchars( $data['text'] ) . "</td></tr>";
 		$table .= "<tr><th>" . wfMsg('phalanx-stats-table-reason')  ."</th><td colspan='8'>{$data['reason']}</td></tr>";
+		$table .= "<tr><th>" . wfMsg('phalanx-stats-table-comment')  ."</th><td colspan='8'>{$comment}</td></tr>";
 		$table .= "</table>";
 
 		$this->setVal('table', $table);
@@ -152,6 +163,11 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 	}
 
 	public function help() {
+		if ( !$this->userCanExecute( $this->wg->User ) ) {
+			$this->displayRestrictionError();
+			return;
+		}
+
 		$this->setVal( 'action', $this->title->getFullURL() );
 	}
 }

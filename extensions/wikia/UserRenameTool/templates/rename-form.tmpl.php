@@ -22,6 +22,7 @@
 				<td class='mw-input'>
 					<input type="text" name="newusername" size="20" tabindex="2" value="<?=$newusername_hsc;?>"<?=($warnings) ? ' disabled' : null;?>/>
 					<?if($warnings):?><input type="hidden" name="newusername" value="<?=$newusername_hsc;?>"/><?endif?>
+					<span id="newUsernameEncoded"><?=wfMessage( 'userrenametool-encoded' )->escaped()?> <strong></strong></span>
 				</td>
 			</tr>
 			<tr>
@@ -73,7 +74,15 @@
 					</td>
 				</tr>
 			<?endif;?>
-			
+			<tr id="mw-warnings-row" style="display: none;">
+				<td class="mw-label"><?= wfMessage( 'userrenametool-warnings' )->inContentLanguage()->escaped(); ?></td>
+				<td class="mw-input">
+					<ul id="mw-warnings-list">
+						<li style="display: none;" id="mw-warnings-list-characters"><?= wfMessage( 'userrenametool-warnings-characters' )->inContentLanguage()->escaped(); ?></li>
+						<li style="display: none;" id="mw-warnings-list-maxlength"><?= wfMessage( 'userrenametool-warnings-maxlength' )->inContentLanguage()->escaped(); ?></li>
+					</ul>
+				</td>
+			</tr>
 		</table>
 	</fieldset>
 </form>

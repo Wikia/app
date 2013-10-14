@@ -73,7 +73,7 @@ var LightboxLoader = {
 					parent,
 					isVideo;
 
-				if( $this.hasClass('link-internal') || $this.hasClass('link-external') || $thumb.attr('data-shared-help') ) {
+				if( $this.hasClass('link-internal') || $this.hasClass('link-external') || $thumb.attr('data-shared-help') || $this.hasClass( 'no-lightbox' ) ) {
 					return;
 				}
 
@@ -150,8 +150,8 @@ var LightboxLoader = {
 		LightboxLoader.pageAds.css('visibility','hidden');
 
 		// Display modal with default dimensions
-		var openModal = $("<div>").makeModal(LightboxLoader.defaults);
-		openModal.find(".modalContent").startThrobbing();
+		var openModal = $('<div>').makeModal(LightboxLoader.defaults);
+		openModal.find('.modalContent').startThrobbing();
 
 		var lightboxParams = {
 			key: mediaTitle,
@@ -306,7 +306,7 @@ var LightboxLoader = {
 	handleOldDom: function(type) {
 		if(LightboxLoader.isOldDom === null) {
 			$().log("Send old DOM tracking", "Lightbox");
-			LightboxTracker.track(Wikia.Tracker.ACTIONS.VIEW, 'old-dom', type, null, 'ga');
+			LightboxTracker.track(Wikia.Tracker.ACTIONS.VIEW, 'old-dom', type, null, 'internal');
 		}
 		LightboxLoader.isOldDom = true;
 	}
@@ -337,7 +337,8 @@ LightboxTracker = {
 		LB: 'lightbox',
 		SHARE: 'share',
 		HUBS: 'hubs',
-		OTHER: 'other'
+		OTHER: 'other',
+		TOUCHSTORM: 'touchStorm'
 	}
 };
 

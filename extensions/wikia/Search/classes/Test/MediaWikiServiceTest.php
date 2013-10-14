@@ -1721,7 +1721,7 @@ class MediaWikiServiceTest extends BaseTest
 		    ->staticExpects( $this->at( 0 ) )
 		    ->method       ( 'getNearMatch' )
 		    ->with         ( $term )
-		    ->will         ( $this->returnValue( null ) ) 
+		    ->will         ( $this->returnValue( null ) )
 		;
 		$this->mockClass( 'SearchEngine', $mockEngine );
 		$this->mockClass( 'Wikia\Search\Match\Article', $mockMatch );
@@ -1760,102 +1760,227 @@ class MediaWikiServiceTest extends BaseTest
 	/**
 	 * @covers Wikia\Search\MediaWikiService::getWikiMatchByHost
 	 */
-	public function testGetWikiMatchByHost() {
-		$service = $this->service->setMethods( array( 'getWikiIdByHost', 'getLanguageCode', 'getGlobalForWiki' ) )->getMock();
-		$mockMatch = $this->getMockBuilder( 'Wikia\Search\Match\Wiki' )
-		                  ->disableOriginalConstructor()
-		                  ->getMock();
-		$service
-			->expects( $this->at( 0 ) )
-			->method ( 'getLanguageCode' )
-			->will   ( $this->returnValue( 'en' ) )
+	public function testGetWikiMatchByHostWithNoDomain() {
+		$mws = $this->getMock( 'Wikia\Search\MediaWikiService', [ 'getLanguageCode' ] );
+		$mws
+		    ->expects( $this->never() )
+		    ->method ( 'getLanguageCode' )
 		;
-		$service
-		    ->expects( $this->at( 1 ) )
-		    ->method ( 'getWikiIdByHost' )
-		    ->with   ( 'foo.wikia.com' )
-		    ->will   ( $this->returnValue( 123 ) )
-		;
-		$service
-			->expects( $this->at( 2 ) )
-			->method( 'getGlobalForWiki' )
-			->with( 'wgLanguageCode', 123 )
-			->will ( $this->returnValue( 'en' ) )
-		;
-
-		$this->mockClass( 'Wikia\Search\Match\Wiki', $mockMatch );
-		$this->assertEquals(
-				$service->getWikiMatchByHost( 'foo' ),
-				$mockMatch
-		);
-
-		$service
-			->expects( $this->at( 0 ) )
-			->method ( 'getLanguageCode' )
-			->will   ( $this->returnValue( 'pl' ) )
-		;
-
-		$service
-			->expects( $this->at( 1 ) )
-			->method ( 'getWikiIdByHost' )
-			->with   ( 'pl.foo.wikia.com' )
-			->will   ( $this->returnValue( 123 ) )
-		;
-		$this->assertEmpty(
-			$service->getWikiMatchByHost( 'foo' )
-		);
-
-		$service
-			->expects( $this->at( 0 ) )
-			->method ( 'getLanguageCode' )
-			->will   ( $this->returnValue( 'pl' ) )
-		;
-
-		$service
-			->expects( $this->at( 1 ) )
-			->method ( 'getWikiIdByHost' )
-			->with   ( 'pl.foo.wikia.com' )
-			->will   ( $this->returnValue( null ) )
-		;
-
-		$service
-			->expects( $this->at( 2 ) )
-			->method ( 'getWikiIdByHost' )
-			->with   ( 'foo.pl' )
-			->will   ( $this->returnValue( 123 ) )
-		;
-
-		$service
-			->expects( $this->at( 3 ) )
-			->method( 'getGlobalForWiki' )
-			->will ( $this->returnValue( 'pl' ) )
-		;
-
-		$this->mockClass( 'Wikia\Search\Match\Wiki', $mockMatch );
-		$this->assertEquals(
-			$service->getWikiMatchByHost( 'foo' ),
-			$mockMatch
+		$this->assertNull( 
+				$mws->getWikiMatchByHost( '' ),
+				"Empty domain should return null" 
 		);
 	}
 	
 	/**
 	 * @covers Wikia\Search\MediaWikiService::getWikiMatchByHost
 	 */
-	public function testGetWikiMatchByHostWithNoDomain() {
-		$service = $this->service->setMethods( array( 'getWikiIdByHost' ) )->getMock();
-		$mockMatch = $this->getMockBuilder( 'Wikia\Search\Match\Wiki' )
-		                  ->disableOriginalConstructor()
-		                  ->getMock();
-		
-		$service
-		    ->expects( $this->never() )
+	public function testGetWikiMatchByHostNoWikiIdFound() {
+		$mws = $this->getMock( 'Wikia\Search\MediaWikiService', [ 'getLanguageCode', 'getWikiIdByHost', 'getWikiFromWikiId' ] );
+		$host = 'foo';
+		$mws
+		    ->expects( $this->once() )
+		    ->method ( "getLanguageCode" )
+		    ->will   ( $this->returnValue( \Wikia\Search\MediaWikiService::WIKI_DEFAULT_LANG_CODE ) )
+		;
+		$mws
+		    ->expects( $this->once() )
 		    ->method ( 'getWikiIdByHost' )
+		    ->with   ( 'foo.wikia.com' )
+		    ->will   ( $this->returnValue( null ) )
+		;
+		$mws
+		    ->expects( $this->never() )
+		    ->method ( 'getWikiFromWikiId' )
 		;
 		$this->assertNull(
-				$service->getWikiMatchByHost( '' )
+				$mws->getWikiMatchByHost( $host ),
+				'If no wiki ID is found for a host, no match is returned'
+		);
+	}
+
+	/**
+	 * @covers Wikia\Search\MediaWikiService::getWikiMatchByHost
+	 */
+	public function testGetWikiMatchByHostWorksDefaultLanguage() {
+		$mws = $this->getMock( 'Wikia\Search\MediaWikiService', [ 'getLanguageCode', 'getWikiIdByHost', 'getWikiFromWikiId' ] );
+		$host = 'foo';
+		$wiki = (object) [ 'city_public' => 1, 'city_lang' => 'en' ];
+		$mws
+		    ->expects( $this->once() )
+		    ->method ( "getLanguageCode" )
+		    ->will   ( $this->returnValue( \Wikia\Search\MediaWikiService::WIKI_DEFAULT_LANG_CODE ) )
+		;
+		$mws
+		    ->expects( $this->once() )
+		    ->method ( 'getWikiIdByHost' )
+		    ->with   ( 'foo.wikia.com' )
+		    ->will   ( $this->returnValue( 123 ) )
+		;
+		$mws
+		    ->expects( $this->once() )
+		    ->method ( 'getWikiFromWikiId' )
+		    ->with   ( 123 )
+		    ->will   ( $this->returnValue( $wiki ) )
+		;
+		$this->assertInstanceOf(
+				'Wikia\Search\Match\Wiki',
+				$mws->getWikiMatchByHost( $host ),
+				'A host that corresponds to a public wiki matching the current language should return a match'
 		);
 	}
 	
+	/**
+	 * @covers Wikia\Search\MediaWikiService::getWikiMatchByHost
+	 */
+	public function testGetWikiMatchByHostWorksForeignLanguage() {
+		$mws = $this->getMock( 'Wikia\Search\MediaWikiService', [ 'getLanguageCode', 'getWikiIdByHost', 'getWikiFromWikiId' ] );
+		$host = 'foo';
+		$wiki = (object) [ 'city_public' => 1, 'city_lang' => 'pl' ];
+		$mws
+		    ->expects( $this->at( 0 ) )
+		    ->method ( "getLanguageCode" )
+		    ->will   ( $this->returnValue( 'pl' ) )
+		;
+		$mws
+		    ->expects( $this->at( 1 ) )
+		    ->method ( 'getWikiIdByHost' )
+		    ->with   ( 'pl.foo.wikia.com' )
+		    ->will   ( $this->returnValue( 123 ) )
+		;
+		$mws
+		    ->expects( $this->at( 2 ) )
+		    ->method ( 'getWikiFromWikiId' )
+		    ->with   ( 123 )
+		    ->will   ( $this->returnValue( $wiki ) )
+		;
+		$this->assertInstanceOf(
+				'Wikia\Search\Match\Wiki',
+				$mws->getWikiMatchByHost( $host ),
+				'A host that corresponds to a public wiki matching the current language should return a match'
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\MediaWikiService::getWikiMatchByHost
+	 */
+	public function testGetWikiMatchByHostForeignLanguageTld() {
+		$mws = $this->getMock( 'Wikia\Search\MediaWikiService', [ 'getLanguageCode', 'getWikiIdByHost', 'getWikiFromWikiId' ] );
+		$host = 'foo';
+		$wiki = (object) [ 'city_public' => 1, 'city_lang' => 'pl' ];
+		$mws
+		    ->expects( $this->at( 0 ) )
+		    ->method ( "getLanguageCode" )
+		    ->will   ( $this->returnValue( 'pl' ) )
+		;
+		$mws
+		    ->expects( $this->at( 1 ) )
+		    ->method ( 'getWikiIdByHost' )
+		    ->with   ( 'pl.foo.wikia.com' )
+		    ->will   ( $this->returnValue( null ) )
+		;
+		$mws
+		    ->expects( $this->at( 2 ) )
+		    ->method ( 'getWikiIdByHost' )
+		    ->with   ( 'foo.pl' )
+		    ->will   ( $this->returnValue( 123 ) )
+		;
+		$mws
+		    ->expects( $this->at( 3 ) )
+		    ->method ( 'getWikiFromWikiId' )
+		    ->with   ( 123 )
+		    ->will   ( $this->returnValue( $wiki ) )
+		;
+		$this->assertInstanceOf(
+				'Wikia\Search\Match\Wiki',
+				$mws->getWikiMatchByHost( $host ),
+				'A host that corresponds to a public wiki matching the current language should return a match'
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\MediaWikiService::getWikiMatchByHost
+	 */
+	public function testGetWikiMatchByHostClosedWiki() {
+		$mws = $this->getMock( 'Wikia\Search\MediaWikiService', [ 'getLanguageCode', 'getWikiIdByHost', 'getWikiFromWikiId' ] );
+		$host = 'foo';
+		$wiki = (object) [ 'city_public' => 0, 'city_lang' => 'en' ];
+		$mws
+		    ->expects( $this->once() )
+		    ->method ( "getLanguageCode" )
+		    ->will   ( $this->returnValue( \Wikia\Search\MediaWikiService::WIKI_DEFAULT_LANG_CODE ) )
+		;
+		$mws
+		    ->expects( $this->once() )
+		    ->method ( 'getWikiIdByHost' )
+		    ->with   ( 'foo.wikia.com' )
+		    ->will   ( $this->returnValue( 123 ) )
+		;
+		$mws
+		    ->expects( $this->once() )
+		    ->method ( 'getWikiFromWikiId' )
+		    ->with   ( 123 )
+		    ->will   ( $this->returnValue( $wiki ) )
+		;
+		$this->assertNull(
+				$mws->getWikiMatchByHost( $host ),
+				'We should not return a wiki match for a wiki that is closed'
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\MediaWikiService::getWikiMatchByHost
+	 */
+	public function testGetWikiMatchByHostLanguageMismatch() {
+		$mws = $this->getMock( 'Wikia\Search\MediaWikiService', [ 'getLanguageCode', 'getWikiIdByHost', 'getWikiFromWikiId' ] );
+		$host = 'foo';
+		$wiki = (object) [ 'city_public' => 1, 'city_lang' => 'de' ];
+		$mws
+		    ->expects( $this->once() )
+		    ->method ( "getLanguageCode" )
+		    ->will   ( $this->returnValue( \Wikia\Search\MediaWikiService::WIKI_DEFAULT_LANG_CODE ) )
+		;
+		$mws
+		    ->expects( $this->once() )
+		    ->method ( 'getWikiIdByHost' )
+		    ->with   ( 'foo.wikia.com' )
+		    ->will   ( $this->returnValue( 123 ) )
+		;
+		$mws
+		    ->expects( $this->once() )
+		    ->method ( 'getWikiFromWikiId' )
+		    ->with   ( 123 )
+		    ->will   ( $this->returnValue( $wiki ) )
+		;
+		$this->assertNull(
+				$mws->getWikiMatchByHost( $host ),
+				'We should not return a wiki match for a non language-matching wiki'
+		);
+	}
+	
+	
+	/**
+	 * @covers Wikia\Search\MediaWikiService::getWikiFromWikiId
+	 */
+	public function testGetWikiFromWikiId() {
+		$mockWf = $this->getMock( 'WikiFactory', [ 'getWikiById' ] );
+		$wiki = (object) [ 'foo' => 'bar' ]; #values don't matter here
+		$mws = new \Wikia\Search\MediaWikiService;
+		$mockWf
+		    ->staticExpects( $this->once() )
+		    ->method       ( 'getWikiById' )
+		    ->with         ( 123 )
+		    ->will         ( $this->returnValue( $wiki ) )
+		;
+		$this->proxyClass( 'WikiFactory', $mockWf );
+		$refl = new ReflectionMethod( $mws, 'getWikiFromWikiId' );
+		$refl->setAccessible( true );
+		$this->assertEquals(
+				$wiki,
+				$refl->invoke( $mws, 123 )
+		);
+	}
+
 	/**
 	 * @covers Wikia\Search\MediaWikiService::getMainPageUrlForWikiId
 	 */
@@ -2010,42 +2135,241 @@ class MediaWikiServiceTest extends BaseTest
 				$service->searchSupportsCurrentLanguage()
 		);
 	}
-	
+
 	/**
-	 * @covers Wikia\Search\MediaWikiService::getThumbnailHtmlForPageId
+	 * @covers Wikia\Search\MediaWikiService::getThumbnailUrl
 	 */
-	public function testGetThumbnailHtmlForPageId() {
-		$service = $this->service->setMethods( array( 'getFileForPageId' ) )->getMock();
-		$mockFile = $this->getMockBuilder( 'File' )
-		                 ->disableOriginalConstructor()
-		                 ->setMethods( array( 'transform' ) )
-		                 ->getMock();
-		$mockTransform = $this->getMockBuilder( 'MediaTransformOutput' )
-		                      ->disableOriginalConstructor()
-		                      ->setMethods( array( 'toHtml' ) )
-		                      ->getMock();
-		$html = 'this value does not matter';
+	public function testGetThumbnailUrl() {
+		$mockImgServing = $this->getMockBuilder( 'ImageServing' )
+			->disableOriginalConstructor()
+			->setMethods( array( 'getImages' ) )
+			->getMock();
+
+		$url = 'http://some.test.url';
+		$service = $this->service->setMethods( array( 'getImageServing' ) )->getMock();
+		$mockImgServing
+			->expects( $this->any() )
+			->method ( 'getImages' )
+			->will	 ( $this->returnValue( array( 0 => array( 0 => array( 'url' => 'http://some.test.url' ) ) ) ) )
+		;
+
 		$service
-		    ->expects( $this->once() )
-		    ->method ( 'getFileForPageId' )
-		    ->with   ( $this->pageId )
-		    ->will   ( $this->returnValue( $mockFile ) )
+			->expects( $this->at( 0 ) )
+			->method ( 'getImageServing' )
+			->with	 ( 0, 100, 100 )
+			->will	 ( $this->returnValue( $mockImgServing ) )
 		;
-		$mockFile
-		    ->expects( $this->once() )
-		    ->method ( 'transform' )
-		    ->with   ( array( 'width' => 160 ) )
-		    ->will   ( $this->returnValue( $mockTransform ) )
+
+		$this->assertEquals(
+			$url,
+			$service->getThumbnailUrl( 0, array( 'width' => 100, 'height' => 100 ) )
+		);
+
+		$service
+			->expects( $this->at( 0 ) )
+			->method ( 'getImageServing' )
+			->with	 ( 0, 100, MediaWikiService::THUMB_DEFAULT_HEIGHT )
+			->will	 ( $this->returnValue( $mockImgServing ) )
 		;
-		$mockTransform
-		    ->expects( $this->once() )
-		    ->method ( 'toHtml' )
-		    ->with   ( array('desc-link'=>true, 'img-class'=>'thumbimage', 'duration'=>true) )
-		    ->will   ( $this->returnValue( $html ) )
+
+		$this->assertEquals(
+			$url,
+			$service->getThumbnailUrl( 0, array( 'width' => 100 ) )
+		);
+
+		$service
+			->expects( $this->at( 0 ) )
+			->method ( 'getImageServing' )
+			->with	 ( 0, MediaWikiService::THUMB_DEFAULT_WIDTH, 100 )
+			->will	 ( $this->returnValue( $mockImgServing ) )
+		;
+
+		$this->assertEquals(
+			$url,
+			$service->getThumbnailUrl( 0, array( 'height' => 100 ) )
+		);
+
+		$service
+			->expects( $this->at( 0 ) )
+			->method ( 'getImageServing' )
+			->with	 ( 0, MediaWikiService::THUMB_DEFAULT_WIDTH, MediaWikiService::THUMB_DEFAULT_HEIGHT )
+			->will	 ( $this->returnValue( $mockImgServing ) )
+		;
+
+		$this->assertEquals(
+			$url,
+			$service->getThumbnailUrl( 0 )
+		);
+	}
+
+	/**
+	 * @covers Wikia\Search\MediaWikiService::getThumbnailUrl
+	 */
+	public function testGetThumbnailUrlNoResults() {
+		$mockImgServing = $this->getMockBuilder( 'ImageServing' )
+			->disableOriginalConstructor()
+			->setMethods( array( 'getImages' ) )
+			->getMock();
+		$service = $this->service->setMethods( array( 'getImageServing' ) )->getMock();
+
+		$service
+			->expects( $this->once() )
+			->method ( 'getImageServing' )
+			->with	 ( 0, MediaWikiService::THUMB_DEFAULT_WIDTH, MediaWikiService::THUMB_DEFAULT_HEIGHT )
+			->will	 ( $this->returnValue( $mockImgServing ) )
+		;
+
+		$mockImgServing
+			->expects( $this->once() )
+			->method ( 'getImages' )
+			->will	 ( $this->returnValue( false ) )
+		;
+
+		$this->assertEquals(
+			false,
+			$service->getThumbnailUrl( 0 )
+		);
+	}
+
+	/**
+	 * @covers Wikia\Search\MediaWikiService::getThumbnailHtml
+	 */
+	public function testGetThumbnailHtml() {
+		$service = $this->service->setMethods( array( 'getImageServing', 'getFileForPageId' ) )->getMock();
+		$imgObj = $this->getMockBuilder( 'WikiaLocalFile' )
+			->disableOriginalConstructor()
+			->setMethods( array( 'transform' ) )
+			->getMock();
+		//	ThumbnailImage
+		$thumbObj = $this->getMockBuilder( 'ThumbnailVideo' )
+			->disableOriginalConstructor()
+			->setMethods( array( 'toHtml' ) )
+			->getMock();
+		//default value return ''
+		$service
+			->expects	( $this->at( 0 ) )
+			->method	( 'getFileForPageId' )
+			->with		( 0 )
+			->will		( $this->returnValue( false ) )
+		;
+		$this->assertEmpty(
+			$service->getThumbnailHtml( 0 )
+		);
+		//something returned
+		$service
+			->expects	( $this->at( 0 ) )
+			->method	( 'getFileForPageId' )
+			->with		( 0 )
+			->will		( $this->returnValue( $imgObj ) )
+		;
+		$imgObj
+			->expects	( $this->at( 0 ) )
+			->method	( 'transform' )
+			->with		( array( 'width' => MediaWikiService::THUMB_DEFAULT_WIDTH, 'height' => MediaWikiService::THUMB_DEFAULT_HEIGHT ) )
+			->will		( $this->returnValue( $thumbObj ) )
+		;
+		$thumbObj
+			->expects	( $this->at( 0 ) )
+			->method	( 'toHtml' )
+			->with		( array('desc-link'=>true, 'img-class'=>'thumbimage', 'duration'=>true) )
+			->will		( $this->returnValue( '<html></html>' ) )
 		;
 		$this->assertEquals(
-				$html,
-				$service->getThumbnailHtmlForPageId( $this->pageId )
+			'<html></html>',
+			$service->getThumbnailHtml( 0 )
+		);
+
+		$service
+			->expects	( $this->at( 0 ) )
+			->method	( 'getFileForPageId' )
+			->with		( 0 )
+			->will		( $this->returnValue( $imgObj ) )
+		;
+		$imgObj
+			->expects	( $this->at( 0 ) )
+			->method	( 'transform' )
+			->with		( array( 'width' => MediaWikiService::THUMB_DEFAULT_WIDTH, 'height' => 100 ) )
+			->will		( $this->returnValue( $thumbObj ) )
+		;
+		$thumbObj
+			->expects	( $this->at( 0 ) )
+			->method	( 'toHtml' )
+			->with		( array('desc-link'=>true, 'img-class'=>'thumbimage', 'duration'=>true) )
+			->will		( $this->returnValue( '<html></html>' ) )
+		;
+		$this->assertEquals(
+			'<html></html>',
+			$service->getThumbnailHtml( 0, array( 'height' => 100 ) )
+		);
+
+		$service
+			->expects	( $this->at( 0 ) )
+			->method	( 'getFileForPageId' )
+			->with		( 0 )
+			->will		( $this->returnValue( $imgObj ) )
+		;
+		$imgObj
+			->expects	( $this->at( 0 ) )
+			->method	( 'transform' )
+			->with		( array( 'width' => 100, 'height' => MediaWikiService::THUMB_DEFAULT_HEIGHT ) )
+			->will		( $this->returnValue( $thumbObj ) )
+		;
+		$thumbObj
+			->expects	( $this->at( 0 ) )
+			->method	( 'toHtml' )
+			->with		( array('desc-link'=>true, 'img-class'=>'thumbimage', 'duration'=>true) )
+			->will		( $this->returnValue( '<html></html>' ) )
+		;
+		$this->assertEquals(
+			'<html></html>',
+			$service->getThumbnailHtml( 0, array( 'width' => 100 ) )
+		);
+
+		$service
+			->expects	( $this->at( 0 ) )
+			->method	( 'getFileForPageId' )
+			->with		( 0 )
+			->will		( $this->returnValue( $imgObj ) )
+		;
+		$imgObj
+			->expects	( $this->at( 0 ) )
+			->method	( 'transform' )
+			->with		( array( 'width' => 1, 'height' => 1 ) )
+			->will		( $this->returnValue( $thumbObj ) )
+		;
+		$thumbObj
+			->expects	( $this->at( 0 ) )
+			->method	( 'toHtml' )
+			->with		( array('desc-link'=>true, 'img-class'=>'thumbimage', 'duration'=>true) )
+			->will		( $this->returnValue( '<html></html>' ) )
+		;
+		$this->assertEquals(
+			'<html></html>',
+			$service->getThumbnailHtml( 0, array( 'width' => 1, 'height' => 1 ) )
+		);
+	}
+	/**
+	 * @covers Wikia\Search\MediaWikiService::getThumbnailHtmlFromFileTitle
+	 */
+	public function testGetThumbnailHtmlFromFileTitle() {
+		$service = $this->service->setMethods( null )->getMock();
+		$title = $this->getMock( 'Title' );
+
+		$this->getStaticMethodMock( 'Title', 'newFromText' )
+			->expects( $this->once() )
+			->method( 'newFromText' )
+			->with( 'x', NS_FILE )
+			->will( $this->returnValue($title) );
+
+		$this->getStaticMethodMock( 'WikiaFileHelper', 'getVideoThumbnailHtml' )
+			->expects( $this->once() )
+			->method( 'getVideoThumbnailHtml' )
+			->with( $title, 12, 13, false )
+			->will( $this->returnValue( 'bar' ) );
+
+		$this->assertEquals(
+			'bar',
+			$service->getThumbnailHtmlFromFileTitle( 'x', array( 'width' => 12, 'height' => 13 ) )
 		);
 	}
 	
@@ -2554,6 +2878,61 @@ class MediaWikiServiceTest extends BaseTest
 		$this->assertEquals(
 				'bar whatever',
 				$service->getSimpleMessage( 'foo', $params )
+		);
+	}
+	
+	/**
+	 * @covers Wikia\Search\MediaWikiService::getDomainsForWikiId
+	 */
+	public function testGetDomainsForWikiId() {
+		$mws = $this->getMock( 'Wikia\Search\MediaWikiService', [ 'getGlobal', 'getWikiId' ] ); 
+		
+		$mockDbr = $this->getMockBuilder( '\DatabaseMysql' )
+		                ->disableOriginalConstructor()
+		                ->setMethods( array( 'select', 'fetchObject' ) )
+		                ->getMock();
+		
+		$mockGetDB = $this->getGlobalFunctionMock( 'wfGetDB' );
+		
+		$mockResult = $this->getMockBuilder( '\ResultWrapper' )
+		                   ->disableOriginalConstructor()
+		                   ->getMock();
+		
+		$mockObject = (object) [ 'city_domain' => 'foo.wikia.com' ];
+		
+		$mws
+		    ->expects( $this->once() )
+		    ->method ( 'getGlobal' )
+		    ->with   ( 'ExternalSharedDB' )
+		    ->will   ( $this->returnValue( true ) )
+		;
+		$mockGetDB
+		    ->expects( $this->once() )
+		    ->method ( 'wfGetDB' )
+		    ->with   ( DB_SLAVE, [], true )
+		    ->will   ( $this->returnValue( $mockDbr ) )
+		;
+		$mockDbr
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'select' )
+		    ->with   ( [ 'city_domains' ], [ '*' ], [ 'city_id' => 123 ] )
+		    ->will   ( $this->returnValue( $mockResult ) )
+		;
+		$mockDbr
+		    ->expects( $this->at( 1 ) )
+		    ->method ( 'fetchObject' )
+		    ->with   ( $mockResult )
+		    ->will   ( $this->returnValue( $mockObject ) )
+		;
+		$mockDbr
+		    ->expects( $this->at( 2 ) )
+		    ->method ( 'fetchObject' )
+		    ->with   ( $mockResult )
+		    ->will   ( $this->returnValue( null ) )
+		;
+		$this->assertEquals(
+				[ 'foo.wikia.com' ],
+				$mws->getDomainsForWikiId( 123 )
 		);
 	}
 }

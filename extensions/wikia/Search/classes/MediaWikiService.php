@@ -9,7 +9,7 @@ namespace Wikia\Search;
  * This will allow us to abstract our behavior away from MediaWiki if we want.
  * Public functions should not return instances of classes defined in MediaWiki core.
  * @author relwell
- * @package Search 
+ * @package Search
  */
 class MediaWikiService
 {
@@ -18,6 +18,12 @@ class MediaWikiService
 	 * Wiki default lang
 	 */
 	const WIKI_DEFAULT_LANG_CODE = 'en';
+
+	/**
+	 * Thumbnails default size, used for getting article images
+	 */
+	const THUMB_DEFAULT_WIDTH = 160;
+	const THUMB_DEFAULT_HEIGHT = 100;
 
 	/**
 	 * Application interface
@@ -475,21 +481,45 @@ class MediaWikiService
 	 * @param string $domain
 	 * @return \Wikia\Search\Match\Wiki|NULL
 	 */
-	public function getWikiMatchByHost( $domain ) {
+	public function getWikiMatchByHost( $domain, $lang = null ) {
 		$match = null;
 		if ( $domain !== '' ) {
-		$langCode = $this->getLanguageCode();
-            if ( $langCode === static::WIKI_DEFAULT_LANG_CODE ) {
-                $wikiId = $this->getWikiIdByHost( $domain . '.wikia.com' );
-            } else {
-                $wikiId = ( $interWikiComId = $this->getWikiIdByHost( "{$langCode}.{$domain}.wikia.com" ) ) !== null ? $interWikiComId : $this->getWikiIdByHost( "{$domain}.{$langCode}" );
-            }
-            //exclude wikis which lang does not match current one
-            if ( isset( $wikiId ) && $langCode === $this->getGlobalForWiki( 'wgLanguageCode', $wikiId ) ) {
-                $match = new \Wikia\Search\Match\Wiki( $wikiId, $this );
-            }
+			$langCode = ( $lang !== null ) ? $lang : $this->getLanguageCode();
+			if ( $langCode === static::WIKI_DEFAULT_LANG_CODE ) {
+				$wikiId = $this->getWikiIdByHost( $domain . '.wikia.com' );
+			} else {
+				$wikiId = ( $interWikiComId = $this->getWikiIdByHost( "{$langCode}.{$domain}.wikia.com" ) ) !== null ? $interWikiComId : $this->getWikiIdByHost( "{$domain}.{$langCode}" );
+			}
+			
+			if ( isset( $wikiId ) ) {
+				$wiki = $this->getWikiFromWikiId( $wikiId );
+				//exclude wikis which lang does not match current one, and wikis that are closed
+				if ( (! empty( $wiki ) ) && ( $wiki->city_public == 1 ) && $langCode === $wiki->city_lang ) {
+					$match = new \Wikia\Search\Match\Wiki( $wikiId, $this );
+				}
+			}
 		}
 		return $match;
+	}
+	
+	/**
+	 * For a given wiki ID, get all values in the city_domain table.
+	 * @param int $wikiId
+	 * @return array
+	 */
+	public function getDomainsForWikiId( $wikiId ) {
+		$dbw = wfGetDB( DB_SLAVE, [], $this->getGlobal( 'ExternalSharedDB' ) );
+		$dbResult = $dbw->select(
+			array( "city_domains" ),
+			array( "*" ),
+			array( "city_id" => $wikiId ),
+			__METHOD__
+		);
+		$result = [];
+		while( $row = $dbw->fetchObject( $dbResult ) ) {
+			$result[] = $row->city_domain;
+		}
+		return $result;
 	}
 	
 	/**
@@ -636,28 +666,63 @@ class MediaWikiService
 	public function searchSupportsLanguageCode( $languageCode ) {
 		return in_array( $languageCode, $this->getGlobal( 'WikiaSearchSupportedLanguages' ) );
 	}
-	
+
+	public function getThumbnailUrl( $pageId, $dimensions = null ) {
+		$width = (isset( $dimensions[ 'width' ] ) ) ? $dimensions[ 'width' ] : static::THUMB_DEFAULT_WIDTH;
+		$height = (isset( $dimensions[ 'height' ] ) ) ? $dimensions[ 'height' ] : static::THUMB_DEFAULT_HEIGHT;
+		$imgSource = $this->getImageServing( $pageId, $width, $height );
+		//get one image only
+		$img = $imgSource->getImages( 1 );
+		if ( !empty( $img ) ) {
+			return $img[ $pageId ][ 0 ][ 'url' ];
+		}
+		return false;
+	}
+
 	/**
-	 * Returns the HTML needed to get a thumbnail provided a page ID
-	 * @param int $pageId
-	 * @param array $transformParams
-	 * @param array $htmlParams
-	 * @return string
+	 * Gets image serving for page, moved to external method for easier testing
+	 * @param $pageId
+	 * @param $width
+	 * @param $height
+	 * @return \ImageServing
 	 */
-	public function getThumbnailHtmlForPageId(
-			$pageId, 
-			$transformParams = array( 'width' => 160 ), // WikiaGrid 1 column width
-			$htmlParams = array('desc-link'=>true, 'img-class'=>'thumbimage', 'duration'=>true)
-			) {
+	protected function getImageServing( $pageId, $width, $height ) {
+		return new \ImageServing( array( $pageId ), $width, $height );
+	}
+
+	public function getThumbnailHtml( $pageId, $transformParams = null, /* WikiaGrid 1 column width */ $htmlParams = array( 'desc-link'=>true, 'img-class'=>'thumbimage', 'duration'=>true ) ) {
 		$html = '';
 		$img = $this->getFileForPageId( $pageId );
 		if (! empty( $img ) ) {
+			$transformParams[ 'width' ] = (isset( $transformParams[ 'width' ] ) ) ? $transformParams[ 'width' ] : static::THUMB_DEFAULT_WIDTH;
+			$transformParams[ 'height' ] = (isset( $transformParams[ 'height' ] ) ) ? $transformParams[ 'height' ] : static::THUMB_DEFAULT_HEIGHT;
 			$thumb = $img->transform( $transformParams );
 			$html = $thumb->toHtml( $htmlParams );
 		}
 		return $html;
 	}
-	
+
+	/**
+	 * @param string $pageTitle
+	 * @param array|null $transformParams
+	 * @return string|null - html of thumbnail with play button
+	 */
+	public function getThumbnailHtmlFromFileTitle( $pageTitle, $transformParams = null ) {
+		$file = null;
+		try {
+			$title = \Title::newFromText( $pageTitle, NS_FILE );
+
+			$transformParams[ 'width' ] = (isset( $transformParams[ 'width' ] ) ) ? $transformParams[ 'width' ] : static::THUMB_DEFAULT_WIDTH;
+			$transformParams[ 'height' ] = (isset( $transformParams[ 'height' ] ) ) ? $transformParams[ 'height' ] : static::THUMB_DEFAULT_HEIGHT;
+
+			return \WikiaFileHelper::getVideoThumbnailHtml( $title, $transformParams['width'], $transformParams['height'], false );
+		} catch ( \Exception $ex ) {
+			// we have some isses on dev box (no starter database).
+			// swallow the exception for now. Should we log this event ?
+			return '';
+		}
+	}
+
 	/**
 	 * Returns the number of video views for a page ID.
 	 * @param int $pageId
@@ -820,6 +885,15 @@ class MediaWikiService
 	protected function getTitleKeyFromPageId( $pageId ) {
 		return $this->getTitleFromPageId( $pageId )->getDbKey();
 	}
+
+	/**
+	 * Returns an instance of stdClass with attributes corresponding to rows in the city_list table 
+	 * @param int $wikiId
+	 * @return stdClass
+	 */
+	protected function getWikiFromWikiId( $wikiId ) {
+		return (new \WikiFactory)->getWikiById( $wikiId );
+	}
 	
 	/**
 	 * Give a page id, provide a file
@@ -837,7 +911,7 @@ class MediaWikiService
 	 * Standard interface for this class's services to access a page
 	 * @param int $pageId
 	 * @return Article
-	 * @throws Exception
+	 * @throws \Exception
 	 */
 	protected function getPageFromPageId( $pageId ) {
 		wfProfileIn( __METHOD__ );

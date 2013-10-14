@@ -886,4 +886,21 @@ class UserIdentityBox {
 		}
 	}
 
+	/**
+	 * Blanks user profile data
+	 * @author grunny
+	 */
+	public function resetUserProfile() {
+		foreach ( $this->optionsArray as $option ) {
+			if ( $option === 'gender' || $option === 'birthday' ) {
+				$option = self::USER_PROPERTIES_PREFIX . $option;
+			}
+			$this->user->setOption( $option, null );
+
+			$this->user->saveSettings();
+			$this->app->wg->Memc->delete( $this->getMemcUserIdentityDataKey() );
+			Wikia::invalidateUser( $this->user );
+		}
+	}
+
 }

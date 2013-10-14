@@ -69,6 +69,13 @@ $messages['ca'] = array(
 	'wikiaconfirmemail-username' => "Nom d'usuari",
 );
 
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'wikiaconfirmemail-username' => 'Декъашхочун цӀе',
+);
+
 /** Czech (česky)
  * @author Jezevec
  */
@@ -115,6 +122,31 @@ $messages['es'] = array(
 	'wikiaconfirmemail-heading' => '¡Ya casi!',
 	'wikiaconfirmemail-subheading' => 'Inicia sesión con tu nombre de usuario y la contraseña para saber que has recibido el correo electrónico.',
 	'wikiaconfirmemail-username' => 'Nombre de usuario',
+);
+
+/** Persian (فارسی)
+ * @author Omidh
+ */
+$messages['fa'] = array(
+	'wikiaconfirmemail-error-empty-code' => 'کد تایید را وارد نکرده اید',
+	'wikiaconfirmemail-error-invalid-code' => 'کد تایید نامعتبر است',
+	'wikiaconfirmemail-error-user-not-match' => 'اوه, این لینک تایید با نام کاربری مطابقت ندارد. مطمئن شوید که نام کاربری خود را درست وارد کرده اید. اگر می خواهید با یک حساب کاربری دیگر وارد شوید, <a href="{{fullurl:{{ns:special}}:UserLogin}}">کلیک کنید</a>',
+	'wikiaconfirmemail-login-button' => 'تایید کنید و وارد شوید',
+	'wikiaconfirmemail-heading' => 'تقریبا تمام شد!',
+	'wikiaconfirmemail-subheading' => 'با نام کاربری و رمز عبور خود وارد سیستم شوید بنابراین ما می فهمیم که شما ایمیل را دریافت کرده اید.',
+	'wikiaconfirmemail-username' => 'نام کاربری',
+);
+
+/** Faroese (føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'wikiaconfirmemail-error-empty-code' => 'Tón váttanarkota',
+	'wikiaconfirmemail-error-invalid-code' => 'Ógyldug váttanarkota',
+	'wikiaconfirmemail-login-button' => 'Vátta og rita inn',
+	'wikiaconfirmemail-heading' => 'Næstan klárt!',
+	'wikiaconfirmemail-subheading' => 'Rita inn við tínum brúkaranavni og loyniorði, so vit vita, at tú hevur móttikið teldubrævið.',
+	'wikiaconfirmemail-username' => 'Brúkaranavn',
 );
 
 /** French (français)
@@ -349,12 +381,15 @@ $messages['tl'] = array(
 );
 
 /** Ukrainian (українська)
+ * @author Andriykopanytsia
  * @author Steve.rusyn
+ * @author SteveR
  * @author Ua2004
  */
 $messages['uk'] = array(
 	'wikiaconfirmemail-error-empty-code' => 'Порожній код підтвердження',
 	'wikiaconfirmemail-error-invalid-code' => 'Код підтвердження невірний',
+	'wikiaconfirmemail-error-user-not-match' => 'Це посилання для підтвердження не відповідає імені учасника, яке ви ввели. Переконайтеся, що ви правильно ввели ім\'я учасника. Якщо ви хочете увійти в систему з іншого облікового запису, натисніть <a href="{{fullurl:{{ns:special}}:UserLogin}}">тут</a>',
 	'wikiaconfirmemail-login-button' => 'Підтвердити й увійти',
 	'wikiaconfirmemail-heading' => 'Майже готово',
 	'wikiaconfirmemail-subheading' => "Увійдіть до системи, використовуючи ваше ім'я користувача і пароль, щоб ми знали, що ви отримали електронну пошту.",

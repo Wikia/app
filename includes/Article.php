@@ -1344,6 +1344,11 @@ class Article extends Page {
 
 		# Check permissions
 		$permission_errors = $title->getUserPermissionsErrors( 'delete', $user );
+
+		# Wikia change @author nAndy (DAR-1133)
+		wfRunHooks( 'BeforeDeletePermissionErrors', [ &$this, &$title, &$user, &$permission_errors ] );
+		# End of Wikia change
+
 		if ( count( $permission_errors ) ) {
 			throw new PermissionsError( 'delete', $permission_errors );
 		}

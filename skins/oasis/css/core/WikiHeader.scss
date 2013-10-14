@@ -8,27 +8,27 @@
 @import "../mixins/opacity";
 @import "../mixins/wordmark";
 
+$color-level-3rd: mix($color-buttons, $color-page, 20%);
+@if $is-dark-wiki {
+	$color-level-3rd: lighten($color-level-3rd, 8%);
+}
+
+$WikiNavWidth: $width-outside - 271px;
+
 .WikiHeader {
-
-	$color-level-3rd: mix($color-buttons, $color-page, 20%);
-	@if $is-dark-wiki {
-		$color-level-3rd: lighten($color-level-3rd, 8%);
-	}
-
-	$WikiNavWidth: $width-outside - 271px;
-
 	min-height: 69px;
 	margin: 0 0 3px;
-	padding: 25px 10px 1px;
+	padding: 20px 10px 1px;
 	position: relative;
 	z-index: 1000; // BugId:2516
 
-	.accent{
-		background-color:$color-buttons;
+	.accent {
+		background-color: $color-buttons;
 		a {
 			color: $color-button-text;
 		}
 	}
+
 	.wordmark {
 		@include wordmark;
 		color: $color-links;
@@ -48,37 +48,41 @@
 	> nav {
 		left: 275px;
 		position: absolute;
-		top: 25px;
+		top: 20px;
 		width: $WikiNavWidth - 155px /* 155px is a spacing for contribute button (BugId:12490) */;
 		z-index: 3;
+
 		>h1 {
 			display: none;
 		}
+
 		>ul {
+			@include clearfix;
 			position: relative;
 			z-index: 1;
-
 		}
+
 		// BugId: 44309
 		ul, li {
 			margin: 0;
 		}
+
 		li {
 			line-height: 31px;
 			display: inline-block;
 			float: left;
 			font-size: 15px;
 			border-bottom: 1px solid $color-buttons;
+			vertical-align: bottom;
 
 			&:first-child {
 				border-left: none;
 			}
 
-			vertical-align: bottom;
-
 			&:first-child a {
 				border-left: 1px solid transparent;
 			}
+
 			> a {
 				border-left: 1px solid mix($color-text, $color-page, 20%);
 				border-top: 1px solid transparent;
@@ -94,15 +98,18 @@
 				@include border-radius-ne( 3px );
 				@include border-radius-nw( 3px );
 				background-color: $color-buttons;
+
 				> a {
 					margin: 1px 3px;
 					padding: 0px 12px;
 					border-top: 1px solid $color-button-highlight;
 					border-left: 1px solid transparent;
 					color: $color-button-text;
+
 					&:hover {
 						text-decoration: underline;
 					}
+
 					// BugId:15189
 					&[href="#"] {
 						cursor: default;
@@ -111,14 +118,17 @@
 						}
 					}
 				}
+
 				.subnav-2 {
 					>li a:hover {
 						text-decoration: underline;
 					}
+
 					.marked2 a:hover {
 						text-decoration: none;
 					}
 				}
+
 				& + li a {
 					border-left: 1px solid transparent;
 				}
@@ -132,27 +142,31 @@
 			padding: 5px 1px;
 			top: -9999px;
 			z-index: $zTop;
+
 			li {
-				*float: none;
-				*width: auto;
 				padding: 0;
+
 				a {
 					border: 0;
 					padding: 8px 4px;
 					white-space: nowrap;
 					font-size: 13px;
 				}
+
 				&:first-child {
 					border-top: 0;
 				}
 			}
+
 			.edit-menu {
 				text-align: right;
+
 				a {
 					font-size: 0.7em;
 				}
 			}
 		}
+
 		.subnav-2 {
 			display: none;
 			left: 0;
@@ -171,12 +185,14 @@
 				font-size: 13px;
 				line-height: 28px;
 				padding: 0px;
+
 				.subnav-2a {
 					z-index: 100;
 					display: block;
 					border: 1px solid transparent;
 					margin: 2px 0px 0px 3px;
 					height: 25px;
+
 					> .chevron {
 						@include opacity(50);
 						border-top-color: $color-button-text;
@@ -185,21 +201,24 @@
 						vertical-align: bottom;
 					}
 				}
+
 				// level two item with submenu
 				&.marked2 {
 					.subnav-2a {
+						@include border-radius( 0px );
+						@include border-radius-ne( 3px );
+						@include border-radius-nw( 3px );
 						margin: 2px 0px 0px 3px;
 						background: $color-page;
 						border: 1px solid $color-button-highlight;
 						border-bottom: 1px solid $color-page;
 						color: $color-text;
-						@include border-radius( 0px );
-						@include border-radius-ne( 3px );
-						@include border-radius-nw( 3px );
+
 						> .chevron {
 							@include opacity(100);
 							border-top-color: $color-text;
 						}
+
 						&:hover {
 							background: $color-level-3rd;
 							color: $color-text;
@@ -208,30 +227,34 @@
 				}
 			}
 		}
+
 		.subnav-3 {
+			@include box-shadow( 1px, 2px, 12px, darken($color-page,80%));
 			z-index: 90;
 			display: none;
-			top: 25;
+			top: 25px;
 			margin-left:4px;
 			min-width: 150px;
 			border: 1px solid $color-button-highlight;
 			margin-left: 3px;
-			@include box-shadow( 1px, 2px, 12px, darken($color-page,80%));
+
 			li {
 				background: $color-page;
 				color: $color-text;
 				float: none;
 				padding: 0px;
 				margin: 0px;
+
 				a {
-					border: 0px solid $color-button-highlight;
 					@include border-radius( 0px );
+					border: 0px solid $color-button-highlight;
 					font-size: 12px;
 					line-height: 25px;
 					display: block;
 					margin: 0px;
 					padding: 5px 9px;
 					color: $color-text;
+
 					&:hover {
 						background: $color-level-3rd;
 						color: $color-text;
@@ -244,6 +267,7 @@
 			border: 0;
 		}
 	}
+
 	.navbackground {
 		background-color: $color-buttons;
 		height: 32px;
@@ -252,21 +276,21 @@
 		position: absolute;
 		top: 32px;
 		width: $WikiNavWidth;
+
 		div {
 			background-color: $color-button-highlight;
 			height: 1px;
 			margin-top: 1px;
 			width: 100%;
 		}
+
 		img {
 			border-color: darken( $color-buttons, 10% ) transparent transparent darken( $color-buttons, 10% );
 			border-width: 2px;
-			float:right;
-			margin-top:30px;
+			float: right;
+			margin-top: 30px;
 		}
 	}
-
-
 
 	.buttons {
 		right: 10px;
@@ -274,7 +298,7 @@
 		text-align: right;
 		width: 270px;
 		height: 10px;
-		top: 27px;
+		top: 22px;
 		z-index: 4;
 
 		.wikia-button,
@@ -295,27 +319,32 @@
 		.contribute {
 			padding-top: 1px;
 			vertical-align: middle;
+
 			> img {
 				height: 18px;
 				margin-bottom: 4px;
 			}
+
 			>li {
 				padding: 2px 0 0 5px;
 			}
+
 			&.active >li {
 				background-color: $color-page;
 			}
+
 			ul {
+				@include box-shadow(1px, 8px, 12px, darken($color-page,80%));
 				border: 1px solid $color-page-border;
 				border-top: 0;
 				padding: 1px;
 				width: 150px;
-				@include box-shadow(1px, 8px, 12px, darken($color-page,80%));
 
 				li {
 					a {
 						line-height: 25px;
 					}
+
 					a:hover {
 						$color-contribute: mix($color-buttons, $color-page, 20%);
 						@if lightness($color-page) < 50 {
@@ -326,36 +355,42 @@
 					}
 				}
 			}
+
 			> .drop > .chevron {
 				height: 4px;
 				vertical-align: bottom;
 			}
+
 			> .drop:hover {
 				background: none;
 			}
 		}
+
 		> .contribute:hover {
-			background: none;
 			@include linear-gradient(darken($color-secondary-button, 4%), top, darken($color-secondary-button-highlight, 4%), 35%, darken($color-secondary-button, 4%), 65%);
+			background: none;
 		}
 
 		.share-button {
 			padding: 1px 18px 0 9px;
 			position: relative;
+
 			.share-dot {
+				@include border-radius(7px);
+				@include box-shadow(0px, 0px, 4px, $color-buttons);
 				display: block;
 				height: 7px;
 				position: absolute;
 				right: 7px;
 				top: 7px;
 				width: 7px;
-				@include border-radius(7px);
-				@include box-shadow(0px, 0px, 4px, $color-buttons);
 			}
+
 			&.share-enabled {
 				.share-dot {
 					background-color: $color-buttons;
 				}
+
 				.share-pixel {
 					background-color: mix($color-buttons, #fff, 70%);
 					display: block;
@@ -370,18 +405,9 @@
 	}
 }
 
-.oasis-split-skin .WikiHeader {
-	padding-top: 20px;
-	>nav {
-		top: 20px;
-	}
-	.buttons {
-		top: 22px;
-	}
-}
-
 .adm-dash-search {
 	@include clearfix;
+
 	.WikiaSearch {
 		float: right;
 		margin-right: 10px;
@@ -391,6 +417,7 @@
 
 #shareEmailModal .buttons {
 	float: right;
+
 	.cancel-button {
 		margin-right: 5px;
 	}
@@ -400,10 +427,9 @@
 .WikiHeaderPreview {
 	> nav {
 		left: 0;
-		> .navbackground {
-			> .chevron {
-				display: none;
-			}
+
+		> .navbackground > .chevron {
+			display: none;
 		}
 	}
 }

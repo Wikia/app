@@ -38,7 +38,7 @@ class EditAccount extends SpecialPage {
 	 * @param $par Mixed: parameter passed to the page or null
 	 */
 	public function execute( $par ) {
-		global $wgOut, $wgUser, $wgRequest, $wgEnableUserLoginExt, $wgExternalAuthType;
+		global $wgOut, $wgUser, $wgRequest, $wgEnableUserLoginExt, $wgExternalAuthType, $wgTitle;
 
 		// Set page title and other stuff
 		$this->setHeaders();
@@ -90,8 +90,11 @@ class EditAccount extends SpecialPage {
 				$oUser = User::newFromName( $userName );
 				wfRunHooks( 'UserNameLoadFromId', array( $userName, &$oUser, true ) );
 
+				$id = 0;
 				$this->mUser = $oUser;
-				$id = $this->mUser->getId();
+				if ( !empty( $this->mUser ) ) {
+					$id = $this->mUser->getId();
+				}
 
 				if( empty($action) ) {
 					$action = 'displayuser';
@@ -99,6 +102,7 @@ class EditAccount extends SpecialPage {
 
 				if ( empty( $id ) ) {
 					if ( !empty($wgEnableUserLoginExt) ) {
+						//@TODO remove all mTempUser occuracnes TempUser will be globally disabled
 						$this->mTempUser = TempUser::getTempUserFromName( $userName );
 					}
 					if ( $this->mTempUser ) {
@@ -140,7 +144,7 @@ class EditAccount extends SpecialPage {
 				$this->mStatusMsg = $this->mStatus ? wfMsg( 'editaccount-requested' ) : wfMsg( 'editaccount-not-requested' );
 				break;
 			case 'closeaccountconfirm':
-				$this->mStatus = $this->closeAccount( $changeReason );
+				$this->mStatus = $this->closeAccount( $this->mUser, $changeReason, $this->mStatusMsg, $this->mStatusMsg2 );
 				$template = $this->mStatus ? 'selectuser' : 'displayuser';
 				break;
 			case 'clearunsub':
@@ -231,6 +235,7 @@ class EditAccount extends SpecialPage {
 	 * @return Boolean: true on success, false on failure (i.e. if we were given an invalid email address)
 	 */
 	function setEmail( $email, $changeReason = '' ) {
+		global $wgEnableUserLoginExt;
 		$oldEmail = $this->mUser->getEmail();
 		if ( Sanitizer::validateEmail( $email ) || $email == '' ) {
 			if ( $this->mTempUser ) {
@@ -247,9 +252,18 @@ class EditAccount extends SpecialPage {
 			} else {
 				$this->mUser->setEmail( $email );
 				if ( $email != '' ) {
+					if ( !empty( $wgEnableUserLoginExt ) ) {//Clear not confirmed signup flag
+						UserLoginHelper::removeNotConfirmedFlag( $this->mUser );
+					}
 					$this->mUser->confirmEmail();
 					$this->mUser->setOption( 'new_email', null );
 				} else {
+					if ( !empty( $wgEnableUserLoginExt ) && $this->mUser->getOption( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) ) {
+						//User not confirmed on signup can't has empty email
+						//@TODO introduce new message since usecase here is same as temp user empty email but it's not temp user anymore
+						$this->mStatusMsg = wfMsg( 'editaccount-error-tempuser-email' );
+						return false;
+					}
 					$this->mUser->invalidateEmail();
 				}
 				$this->mUser->saveSettings();
@@ -285,31 +299,50 @@ class EditAccount extends SpecialPage {
 	 * @return Boolean: true on success, false on failure
 	 */
 	function setPassword( $pass, $changeReason = '' ) {
-		if ( $this->mUser->setPassword( $pass ) ) {
-			global $wgUser, $wgTitle;
+		try {
+			// wrap in try/catch in case of PasswordException
 
-			// Save the new settings
-			if ( $this->mTempUser ) {
-				$this->mTempUser->setPassword( $this->mUser->mPassword );
-				$this->mTempUser->updateData();
-				$this->mTempUser->saveSettingsTempUserToUser( $this->mUser );
-				$this->mUser->mName = $this->mTempUser->getName();
+			if ( $this->mUser->setPassword( $pass ) ) {
+				global $wgUser, $wgTitle;
+
+				// Save the new settings
+				if ( $this->mTempUser ) {
+					$this->mTempUser->setPassword( $this->mUser->mPassword );
+					$this->mTempUser->updateData();
+					$this->mTempUser->saveSettingsTempUserToUser( $this->mUser );
+					$this->mUser->mName = $this->mTempUser->getName();
+				} else {
+					$this->mUser->saveSettings();
+				}
+
+				// Log what was done
+				$log = new LogPage( 'editaccnt' );
+				$log->addEntry( 'passchange', $wgTitle, $changeReason, array( $this->mUser->getUserPage() ) );
+
+				// And finally, inform the user that everything went as planned
+				$this->mStatusMsg = wfMsg( 'editaccount-success-pass', $this->mUser->mName );
+				return true;
 			} else {
-				$this->mUser->saveSettings();
+				// We have errors, let's inform the user about those
+				$this->mStatusMsg = wfMsg( 'editaccount-error-pass', $this->mUser->mName );
+				return false;
 			}
 
-			// Log what was done
-			$log = new LogPage( 'editaccnt' );
-			$log->addEntry( 'passchange', $wgTitle, $changeReason, array( $this->mUser->getUserPage() ) );
+		} catch ( PasswordError $err ) {
 
-			// And finally, inform the user that everything went as planned
-			$this->mStatusMsg = wfMsg( 'editaccount-success-pass', $this->mUser->mName );
-			return true;
-		} else {
-			// We have errors, let's inform the user about those
-			$this->mStatusMsg = wfMsg( 'editaccount-error-pass', $this->mUser->mName );
+			// recreating logic from User->setPassword here, would rather not but best solution atm
+			global $wgMinimalPasswordLength;
+			$valid = $this->mUser->getPasswordValidity( $pass );
+			if ( is_array( $valid ) ) {
+				$message = array_shift( $valid );
+				$params = $valid;
+			} else {
+				$message = $valid;
+				$params = array( $wgMinimalPasswordLength );
+			}
+			$this->mStatusMsg = wfMsgExt( $message, array( 'parsemag' ), $params );
 			return false;
-		}
+	 }
 	}
 
 	/**
@@ -343,74 +376,55 @@ class EditAccount extends SpecialPage {
 	/**
 	 * Scrambles the user's password, sets an empty e-mail and marks as disabled
 	 *
-	 * @param $changeReason String: reason for change
+	 * @param $user User User account to close
+	 * @param $changeReason String reason for change
+	 * @param $mStatusMsg String Main error message
+	 * @param $mStatusMsg2 String Secondary (non-critical) error message
 	 * @return Boolean: true on success, false on failure
 	 */
-	function closeAccount( $changeReason = '' ) {
-		global $wgExternalAuthType;
+	public static function closeAccount( $user = '', $changeReason = '', &$mStatusMsg = '', &$mStatusMsg2 = '' ) {
+		if ( empty( $user ) ) {
+			throw new Exception( 'User object is invalid.' );
+		}
+
+		$id = $user->getId();
+
 		# Set flag for Special:Contributions
 		# NOTE: requires FlagClosedAccounts.php to be included separately
 		if ( defined( 'CLOSED_ACCOUNT_FLAG' ) ) {
-			$this->mUser->setRealName( CLOSED_ACCOUNT_FLAG );
+			$user->setRealName( CLOSED_ACCOUNT_FLAG );
 		} else {
 			# magic value not found, so lets at least blank it
-			$this->mUser->setRealName( '' );
+			$user->setRealName( '' );
 		}
 
 		// remove users avatar
 		if ( class_exists( 'Masthead' ) ) {
-			$avatar = Masthead::newFromUser( $this->mUser );
+			$avatar = Masthead::newFromUser( $user );
 			if ( !$avatar->isDefault() ) {
 				if( !$avatar->removeFile( false ) ) {
 					# dont quit here, since the avatar is a non-critical part of closing, but flag for later
-					$this->mStatusMsg2 = wfMsgExt( 'editaccount-remove-avatar-fail' );
+					$mStatusMsg2 = wfMessage( 'editaccount-remove-avatar-fail' )->plain();
 				}
 			}
 		}
 
-		// Remove e-mail address and passwor
-		$this->mUser->setEmail( '' );
-		$this->mUser->setPassword( $newpass = $this->generateRandomScrambledPassword() );
-		// Save the new settings
-		$this->mUser->saveSettings();
+		# close account and invalidate cache + cluster data
+		Wikia::invalidateUser( $user, true, true );
 
-		$id = $this->mUser->getId();
-
-		// Reload user
-		$this->mUser = User::newFromId( $id );
-
-		if ( $this->mUser->getEmail() == ''  ) {
-			global $wgUser, $wgTitle;
-			// Mark as disabled in a more real way, that doesnt depend on the real_name text
-			$this->mUser->setOption( 'disabled', 1 );
-			$this->mUser->setOption( 'disabled_date', wfTimestamp( TS_DB ) );
-			// BugId:18085 - setting a new token causes the user to be logged out.
-			$this->mUser->setToken( md5( microtime() . mt_rand( 0, 0x7fffffff ) ) );
-
-			// BugID:95369 This forces saveSettings() to commit the transaction
-			// FIXME: this is a total hack, we should add a commit=true flag to saveSettings
-			global $wgRequest;
-			$wgRequest->setVal('action', 'ajax');
-
-			// Need to save these additional changes
-			$this->mUser->saveSettings();
-
-
+		if ( $user->getEmail() == ''  ) {
+			$title = Title::newFromText( 'EditAccount', NS_SPECIAL );
 			// Log what was done
 			$log = new LogPage( 'editaccnt' );
-			$log->addEntry( 'closeaccnt', $wgTitle, $changeReason, array( $this->mUser->getUserPage() ) );
-
-			// delete the record from all the secondary clusters
-			if ( $wgExternalAuthType == 'ExternalUser_Wikia' ) {
-				ExternalUser_Wikia::removeFromSecondaryClusters( $id );
-			}
+			$log->addEntry( 'closeaccnt', $title, $changeReason, array( $user->getUserPage() ) );
 
 			// All clear!
-			$this->mStatusMsg = wfMsg( 'editaccount-success-close', $this->mUser->mName );
+			$mStatusMsg = wfMessage( 'editaccount-success-close', $user->mName )->plain();
 			return true;
+
 		} else {
 			// There were errors...inform the user about those
-			$this->mStatusMsg = wfMsg( 'editaccount-error-close', $this->mUser->mName );
+			$mStatusMsg = wfMessage( 'editaccount-error-close', $user->mName )->plain();
 			return false;
 		}
 	}
@@ -464,7 +478,7 @@ class EditAccount extends SpecialPage {
 	 * Returns a random password which conforms to our password requirements and is
 	 * not easily guessable.
 	 */
-	function generateRandomScrambledPassword() {
+	public static function generateRandomScrambledPassword() {
 		// Password requirements need a captial letter, a digit, and a lowercase letter.
 		// wfGenerateToken() returns a 32 char hex string, which will almost always satisfy the digit/letter but not always.
 		// This suffix shouldn't reduce the entropy of the intentionally scrambled password.

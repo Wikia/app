@@ -47,6 +47,7 @@ $messages['qqq'] = array(
 	'multilookupnext' => '{{Identical|Next}}',
 	'multilookupprevious' => '{{Identical|Previous}}',
 	'multilookupwiki' => '{{Identical|Wiki}}',
+	'multilookupwikiurl' => '{{Identical|URL}}',
 	'multilookupwikititle' => '{{Identical|Title}}',
 	'right-multilookup' => '{{doc-right|multilookup|ns=Wikia}}',
 	'action-multilookup' => '{{doc-action|multilookup}}',
@@ -190,17 +191,24 @@ $messages['bs'] = array(
 );
 
 /** Catalan (català)
+ * @author Light of Cosmos
  * @author SMP
  */
 $messages['ca'] = array(
+	'multilookup' => 'Revisió múltiple',
+	'multilookupstitle' => 'Revisió múltiple',
+	'multilookupselectuser' => 'Cerca de comptes amb la mateixa IP entre múltiples wikis',
 	'right-multilookup' => "Cercar informació d'usuaris en múltiples wikis",
 );
 
 /** Chechen (нохчийн)
  * @author Sasan700
+ * @author Умар
  */
 $messages['ce'] = array(
+	'multilookupnoresultfound' => 'ХӀума ца карийна',
 	'multilookuplink' => 'Къинхьегаме хьажориг',
+	'multilookupwikititle' => 'Корта',
 );
 
 /** Czech (česky)
@@ -1015,20 +1023,37 @@ $messages['ttt'] = array(
 );
 
 /** Ukrainian (українська)
+ * @author Andriykopanytsia
  * @author Steve.rusyn
+ * @author SteveR
  * @author Тест
  */
 $messages['uk'] = array(
+	'specialmultiplelookup-desc' => 'Забезпечує пошук інформації про користувачів з декількох вікі',
+	'multilookup' => 'Множинний пошук',
+	'multilookupstitle' => 'Множинний пошук',
+	'multilookupselectuser' => 'Шукати облікові записи за цією IP-адресу на декількох вікі',
 	'multilookupgo' => 'Перейти',
+	'multilookupnotspecify' => 'Ви ще не вказали IP-адресу.',
 	'multilookupnext' => 'наступні',
 	'multilookupprevious' => 'попередні',
 	'multilookupnbrresult' => 'Кількість результатів:',
+	'multilookupinvalidresults' => 'Неприпустимі результати!',
 	'multilookupnoresultfound' => 'Нічого не знайдено!',
 	'multilookupwiki' => 'Вікі',
+	'multilookuplink' => 'Посилання на внески',
+	'multilookupdetails' => 'Докладніше див.',
+	'multilookuplistwikiainfo' => 'Перелік вікі, де сторінки змінено користувачами з IP-адресами<b>$1</b>',
+	'multilookupinvaliduser' => '<p class="error">IP „<b>$1</b>“ не існує. Перевірте вказану IP на можливі одруківки.</p>',
+	'multilookuplastedit' => 'Останнє редагування з цієї IP-адреси:',
+	'multilookupwikidbname' => 'Назва БД',
 	'multilookupwikiurl' => 'URL',
 	'multilookupwikititle' => 'Назва',
 	'multilookupwikioptions' => 'Параметри',
 	'multilookuplastedithdr' => 'Останнє редагування',
+	'multilookuprecordspager' => "Показано від '''$1''' до '''$2''' із '''$3''' записів.",
+	'right-multilookup' => 'Переглянути відомості про користувачів в декількох вікі',
+	'action-multilookup' => 'перегляд відомостей про користувачів в декількох вікі',
 );
 
 /** Yiddish (ייִדיש)
@@ -1040,15 +1065,19 @@ $messages['yi'] = array(
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Hydra
+ * @author Hzy980512
  * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
 	'specialmultiplelookup-desc' => '在多个wiki上提供用户信息查阅',
 	'multilookupgo' => '去',
+	'multilookupnotspecify' => '您尚未指定IP地址。',
 	'multilookupnext' => '下一步',
 	'multilookupprevious' => '前一步',
+	'multilookupnoresultfound' => '找不到结果！',
 	'multilookupwiki' => '维基',
 	'multilookupdetails' => '查看资讯',
+	'multilookupwikiurl' => 'URL',
 	'multilookupwikititle' => '标题',
 	'multilookupwikioptions' => '选择',
 );

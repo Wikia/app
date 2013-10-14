@@ -8,6 +8,7 @@ $color-borders: #CECECE;
 @import "../../../../skins/oasis/css/core/color";
 @import "../../../../skins/oasis/css/core/layout";
 
+@import "../../UserLogin/mixins/tooltip-icon";
 @import "../../ThemeDesigner/css/ThemeTab";
 
 .WikiaPage {
@@ -19,10 +20,6 @@ $color-borders: #CECECE;
 
 .CorporateFooter {
 	display: none;
-}
-
-.WikiaHeader {
-	width: $width-outside + 8px;
 }
 
 .WikiaFooter {
@@ -154,7 +151,11 @@ $color-borders: #CECECE;
 }
 
 #NameWiki {
-	width: 500px;
+	@if ( $responsive-layout-enabled ) {
+		width: auto;
+	} @else {
+		width: 500px;
+	}
 	form {
 		font-size: 17px;
 		label {
@@ -177,7 +178,11 @@ $color-borders: #CECECE;
 
 #Auth {
 	display: none;
-	width: 700px;
+	@if ( $responsive-layout-enabled ) {
+		width: auto;
+	} @else {
+		width: 700px;
+	}
 	.login-msg {
 		display: none;
 		text-align: right;
@@ -281,7 +286,11 @@ div#userloginErrorBox3 {
 #UserAuth {
 	@include clearfix;
 	display: none;
-	width: 600px;
+	@if ( $responsive-layout-enabled ) {
+		min-width: 590px;
+	} @else {
+		width: 600px;
+	}
 	.UserLoginModal {
 		border-right: 1px solid $color-borders;
 		margin: 0 0 15px 0;
@@ -305,14 +314,24 @@ div#userloginErrorBox3 {
 
 #DescWiki {
 	display: none;
-	width: 700px;
+	@if ( $responsive-layout-enabled ) {
+		width: auto;
+	} @else {
+		width: 700px;
+	}
 	ol {
-		left: 515px;
 		margin: 0;
 		padding: 0;
-		position: absolute;
-		top: 100px;
-		width: 265px;
+
+		@if ( $responsive-layout-enabled ) {
+
+		} @else {
+			left: 515px;
+			position: absolute;
+			top: 100px;
+			width: 265px;
+		}
+
 		li {
 			@include linear-gradient(#0255a1, top, #0255a1, 50%, #2b84d6, 100%);
 			@include border-radius(10px);
@@ -323,6 +342,12 @@ div#userloginErrorBox3 {
 			list-style: none;
 			margin-bottom: 10px;
 			padding:10px;
+			@if ( $responsive-layout-enabled ) {
+				display: inline-block;
+				float: left;
+				width: 27%;
+				margin-left: 1%;
+			}
 			.tip-creative {
 				font-size: 14px;
 				font-weight: normal;
@@ -331,23 +356,46 @@ div#userloginErrorBox3 {
 	}
 	textarea {
 		font-size: 17px;
-		height: 220px;
+		height: 170px;
 		padding: 0;
 		resize: none;
-		width: 425px;
+		@if ( $responsive-layout-enabled ) {
+			width: 510px;
+		} @else{
+			width: 425px;
+		}
 		&.placeholder {
 			color: #aaa;
 		}
+	}
+	select {
+		margin-bottom:15px;
 	}
 	label {
 		margin-top: 10px;
 		display: block;
 	}
+	.checkbox {
+		input {
+			vertical-align:middle;
+		}
+	}
+	.tooltip-icon-wrapper {
+		position: relative;
+		.tooltip-icon {
+			@include tooltip-icon;
+			right: -16px;
+		}
+	}
 }
 
 #ThemeWiki {
 	display: none;
-	width: 650px;
+	@if ( $responsive-layout-enabled ) {
+		width: auto;
+	} @else {
+		width: 650px;
+	}
 	.ThemeTab {
 		height: 150px;
 		left: 45px;
@@ -356,7 +404,11 @@ div#userloginErrorBox3 {
 		.slider {
 			height: 106px;
 			top: 0;
-			width: 608px;
+			@if ( $responsive-layout-enabled ) {
+				width: 500px;
+			} @else {
+				width: 608px;
+			}
 			ul {
 				list-style: none;
 				margin: 0;
@@ -372,7 +424,11 @@ div#userloginErrorBox3 {
 		.chevron {
 			top: 37px;
 			&.next {
-				left: 645px;
+				@if ( $responsive-layout-enabled ) {
+					left: 540px;
+				} @else {
+					left: 645px;
+				}
 			}
 		}
 	}
@@ -383,7 +439,11 @@ div#userloginErrorBox3 {
 
 #UpgradeWiki {
 	display: none;
-	width: 625px;
+	@if ( $responsive-layout-enabled ) {
+		width: auto;
+	} @else {
+		width: 625px;
+	}
 	.marketing {
 		font-size: 17px;
 		position: relative;

@@ -1,7 +1,8 @@
 /**
  * This file is used for styling the edit area of CKeditor
  */
-@import "../../../../skins/oasis/css/oasis";
+@import "skins/oasis/css/oasis";
+@import "skins/oasis/css/core/responsive-font-sizing";
 
 head {
 	// fb#5654 Editor reskin: Firefox loading effect issue
@@ -15,19 +16,24 @@ head {
 	background: $color-page;
 	color: $color-text;
 	padding-left: 6px;
-	overflow-y: auto;
+
+	@if ( $responsive-layout-enabled ) {
+		padding: 0 10px;
+	}
+
+	overflow: auto;
 	margin-bottom: 35px;
-	
+
 	a {
 		color: $color-links;
 	}
-	
+
 	// Add verticle dotted lines to tables when selected
 	table.article-table.article-table-selected {
 		th, td {
 			border-right: 1px $color-page-border dashed;
 		}
-		th:first-child, td:first-child {	
+		th:first-child, td:first-child {
 			border-left: 1px $color-page-border dashed;
 		}
 	}
@@ -159,7 +165,7 @@ img.image-gallery {
 
 img.image-gallery-slider {
 	background-image: url(/extensions/wikia/WikiaPhotoGallery/images/slider-placeholder.png);/* $wgCdnStylePath */
-	display: block;
+	display: inline;
 }
 
 img.image-slideshow {

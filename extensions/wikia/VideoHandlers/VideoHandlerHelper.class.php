@@ -30,7 +30,7 @@ class VideoHandlerHelper extends WikiaModel {
 			$content = '[['.WikiaFileHelper::getVideosCategory().']]';
 
 			$article = new Article( $title );
-			$status = $article->doEdit( $content, 'created video', $flags, false, $user );
+			$status = $article->doEdit( $content, wfMessage('videohandler-log-add-video')->inContentLanguage()->plain(), $flags, false, $user );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -109,7 +109,7 @@ class VideoHandlerHelper extends WikiaModel {
 		// Insert description header
 		$text = $this->replaceDescriptionSection( $text, $description );
 
-		$summary = 'Adding video description';
+		$summary = wfMessage('videohandler-log-add-description')->inContentLanguage()->plain();
 		$status = $page->doEdit( $text, $summary );
 
 		if ( $status->isOK() ) {
@@ -132,7 +132,7 @@ class VideoHandlerHelper extends WikiaModel {
 		preg_match("/^==\s*$headerText\s*==\n*(.+)/sim", $content, $matches);
 
 		$newContent = '';
-		if (!empty($matches[1])) {
+		if ( !empty($matches[1]) ) {
 			// Get rid of any H2 headings after the description
 			$newContent = preg_replace('/^==[^=]+==.*/sm', '', $matches[1]);
 		}
@@ -152,7 +152,7 @@ class VideoHandlerHelper extends WikiaModel {
 
 		// Don't include the description section if there's no description text
 		$descSection = '';
-		if (trim($descText) != '') {
+		if ( trim($descText) != '' ) {
 			$descSection = "== $headerText ==\n".$descText;
 		}
 
@@ -160,19 +160,19 @@ class VideoHandlerHelper extends WikiaModel {
 		$section = 1;
 		$sectionFound = 0;
 		$sectionText = '';
-		while (1) {
+		while ( 1 ) {
 			// Get section $section to see if its the description
 			$sectionText = $this->wg->Parser->getSection( $content, $section );
 
 			// If we find a description header here, exit the loop.  Check for English
 			// and the wiki's language
-			if (preg_match("/^== *(Description|$headerText)/mi", $sectionText)) {
+			if ( preg_match("/^== *(Description|$headerText)/mi", $sectionText) ) {
 				$sectionFound = 1;
 				break;
 			}
 
 			// If there are no more sections to check, exit the loop
-			if (trim($sectionText) == '') {
+			if ( trim($sectionText) == '' ) {
 				break;
 			}
 
@@ -180,7 +180,7 @@ class VideoHandlerHelper extends WikiaModel {
 		}
 
 		// If we found a description section, replace it here
-		if ($sectionFound) {
+		if ( $sectionFound ) {
 			// If there were any categories in the original section, put them back in
 			$catText = $this->extractCategories($sectionText);
 
@@ -220,5 +220,177 @@ class VideoHandlerHelper extends WikiaModel {
 		$newContent = '=='.wfMessage( 'videohandler-description' ).'=='."\n".$content;
 
 		return $newContent;
+	}
+
+	/**
+	 * get video detail
+	 * @param array $videoInfo [ array( 'title' => title, 'addedAt' => addedAt , 'addedBy' => addedBy ) ]
+	 * @param integer $thumbWidth
+	 * @param integer $thumbHeight
+	 * @param integer $postedInArticles
+	 * @return array $videoDetail
+	 */
+	public function getVideoDetail( $videoInfo, $thumbWidth, $thumbHeight, $postedInArticles ) {
+		wfProfileIn( __METHOD__ );
+
+		$videoDetail = array();
+		$title = $videoInfo['title'];
+		$file = WikiaFileHelper::getVideoFileFromTitle( $title );
+
+		if ( $file ) {
+			// get thumbnail
+			$thumb = $file->transform( array( 'width' => $thumbWidth, 'height' => $thumbHeight ) );
+			$thumbUrl = $thumb->getUrl();
+			// get user
+			if ( !empty($videoInfo['addedBy']) ) {
+				$user = User::newFromId( $videoInfo['addedBy'] );
+				$userName = ( User::isIP($user->getName()) ) ? wfMessage( 'oasis-anon-user' )->text() : $user->getName();
+				$userUrl = $user->getUserPage()->getFullURL();
+			} else {
+				$userName = '';
+				$userUrl = '';
+			}
+
+			// get article list
+			$mediaQuery = new ArticlesUsingMediaQuery( $title );
+			$articleList = $mediaQuery->getArticleList();
+			list( $truncatedList, $isTruncated ) = WikiaFileHelper::truncateArticleList( $articleList, $postedInArticles );
+
+			// video details
+			$videoDetail = array(
+				'title' => $title->getDBKey(),
+				'fileTitle' => $title->getText(),
+				'description' => $this->getVideoDescription($file), // The description from the File page
+				'fileUrl' => $title->getFullURL(),
+				'thumbUrl' => $thumbUrl,
+				'userName' => $userName,
+				'userUrl' => $userUrl,
+				'truncatedList' => $truncatedList,
+				'isTruncated' => $isTruncated,
+				'timestamp' => empty($videoInfo['addedAt']) ? '' : $videoInfo['addedAt'],
+				'duration' => $file->getMetadataDuration(),
+				'viewsTotal' => empty($videoInfo['viewsTotal']) ? 0 : $videoInfo['viewsTotal'],
+				'provider' => $file->getProviderName(),
+				'embedUrl' => $file->getHandler()->getEmbedUrl(),
+			);
+		} else {
+			Wikia::Log(__METHOD__, false, "No file found for '".$videoInfo['title']."'");
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $videoDetail;
+	}
+
+	/**
+	 * Same as 'VideoHandlerHelper::getVideoDetail' but retrieves information from an external wiki
+	 * Typically used to get premium video info from video.wikia.com when on another wiki.
+	 * @param $dbName - The DB name of the wiki that should be used to find video details
+	 * @param $title - The title of the video to get details for
+	 * @param $thumbWidth - The width of the thumbnail to return
+	 * @param $thumbHeight - The height of the thumbnail to return
+	 * @param $postedInArticles - Cap on number of "posted in" article details to return
+	 * @return null|array - As associative array of video information
+	 */
+	public function getVideoDetailFromWiki( $dbName, $title, $thumbWidth, $thumbHeight, $postedInArticles ) {
+		$params = array('controller'   => 'VideoHandler',
+						'method'       => 'getVideoDetail',
+						'fileTitle'    => $title,
+						'thumbWidth'   => $thumbWidth,
+						'thumbHeight'  => $thumbHeight,
+						'articleLimit' => $postedInArticles,
+		);
+
+		$response = ApiService::foreignCall( $dbName, $params, ApiService::WIKIA );
+		if ( !empty($response['detail']) ) {
+			return $response['detail'];
+		} else {
+			return null;
+		}
+	}
+
+	/**
+	 * get list of sorting options
+	 * @return array $options
+	 */
+	public function getSortOptions() {
+		$options = array(
+			'recent' => wfMessage( 'specialvideos-sort-latest' )->text(),
+			'popular' => wfMessage( 'specialvideos-sort-most-popular' )->text(),
+			'trend' => wfMessage( 'specialvideos-sort-trending' )->text(),
+		);
+
+		return $options;
+	}
+
+	/**
+	 * get select options for template
+	 * @param array $options
+	 * @param string $selected
+	 * @return array $opts
+	 */
+	public function getTemplateSelectOptions( $options, $selected ) {
+		$opts = array();
+		foreach ( $options as $key => $value ) {
+			$opts[] = array(
+				'label' => $value,
+				'value' => $key,
+				'selected' => ( $key == $selected ),
+			);
+		}
+
+		return $opts;
+	}
+
+	/**
+	 * Checks to see if the video title passed in has a thumbnail on disk or not.
+	 *
+	 * @param string|Title $title The video title to check
+	 * @param bool|$fixit Whether to fix the problem or ignore it
+	 * @return Status
+	 */
+	public function fcskVideoThumbnail( $title, $fixit = true ) {
+		$file = WikiaFileHelper::getVideoFileFromTitle( $title );
+
+		// See if a file exists for this title
+		if ( empty($file) ) {
+			return Status::newFatal( 'File object not found' );
+		}
+
+		// See if the thumbnail exists for this title
+		if ( file_exists($file->getLocalRefPath()) ) {
+			return Status::newGood( ['check' => 'ok'] );
+		} else {
+			// Determine if we should fix this problem or leave it be
+			if ( $fixit ) {
+				$status = $this->resetVideoThumb( $file );
+				if ( $status->isGood() ) {
+					return Status::newGood( ['check' => 'failed', 'action' => 'fixed'] );
+				} else {
+					return $status;
+				}
+			} else {
+				return Status::newGood( ['check' => 'failed', 'action' => 'ignored'] );
+			}
+		}
+	}
+
+	/**
+	 * Reset the video thumbnail to its original image as defined by the video provider
+	 *
+	 * @param File $file The video file to reset
+	 * @return FileRepoStatus The status of the publish operation
+	 */
+	public function resetVideoThumb( File $file ) {
+		$mime = $file->getMimeType();
+		list(, $provider) = explode('/', $mime);
+		$videoId = $file->getVideoId();
+		$title = $file->getTitle();
+
+		$oUploader = new VideoFileUploader();
+		$oUploader->setProvider( $provider );
+		$oUploader->setVideoId( $videoId );
+		$oUploader->setTargetTitle( $title->getDBkey() );
+		return $oUploader->resetThumbnail( $file );
 	}
 }

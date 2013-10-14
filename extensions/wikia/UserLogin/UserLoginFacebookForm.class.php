@@ -51,8 +51,8 @@ class UserLoginFacebookForm extends UserLoginForm {
 		return $ret;
 	}
 
-	public function initUser( User $user, $autocreate, $createTempUser = true ) {
-		$user = parent::initUser($user, $autocreate, false /* $createTempUser */ );
+	public function initUser( User $user, $autocreate ) {
+		$user = parent::initUser($user, $autocreate, true );
 
 		if ($user instanceof User) {
 			$user->confirmEmail();

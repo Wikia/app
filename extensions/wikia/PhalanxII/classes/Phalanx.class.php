@@ -113,6 +113,7 @@ class Phalanx implements arrayaccess {
 				'regex'     => $row->p_regex,
 				'case'      => $row->p_case,
 				'reason'    => $row->p_reason,
+				'comment'   => $row->p_comment,
 				'lang'      => $row->p_lang,
 				'ip_hex'    => $row->p_ip_hex
 			);

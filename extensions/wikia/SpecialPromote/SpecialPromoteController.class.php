@@ -47,7 +47,6 @@ class SpecialPromoteController extends WikiaSpecialPageController {
 
 		JSMessages::enqueuePackage('SpecialPromote', JSMessages::EXTERNAL);
 
-		$this->helper->loadWikiInfo();
 		$this->minHeaderLength = $this->helper->getMinHeaderLength();
 		$this->maxHeaderLength = $this->helper->getMaxHeaderLength();
 		$this->minDescriptionLength = $this->helper->getMinDescriptionLength();
@@ -58,6 +57,9 @@ class SpecialPromoteController extends WikiaSpecialPageController {
 		$this->mainImage = $this->helper->getMainImage();
 		$this->additionalImages = $this->helper->getAdditionalImages();
 		$this->wikiStatus = $this->helper->getWikiStatusMessage($this->wg->CityId, $this->wg->contLang->getCode());
+
+		$cityVisualization = new CityVisualization();
+		$this->isCorpLang = $cityVisualization->isCorporateLang($this->wg->contLang->getCode());
 	}
 
 	protected function checkAccess() {
@@ -98,7 +100,7 @@ class SpecialPromoteController extends WikiaSpecialPageController {
 		$result = array();
 
 		if ($status['status'] === 'uploadattempted' && $status['isGood']) {
-			$file = $upload->getLocalFile();
+			$file = $status['file'];
 			$result['uploadType'] = $this->request->getVal('uploadType');
 			$result['imageIndex'] = $this->request->getVal('imageIndex',null);
 
@@ -110,8 +112,8 @@ class SpecialPromoteController extends WikiaSpecialPageController {
 				$height = SpecialPromoteHelper::LARGE_IMAGE_HEIGHT;
 			}
 
-			$result['fileUrl'] = $this->helper->getImageUrl($file->getName(), $width, $height);
-			$result['fileName'] = $file->getName();
+			$result['fileUrl'] = $this->helper->getImageUrl($file, $width, $height);
+			$result['fileName'] = $file->getFileKey();
 
 			if ($result['fileUrl'] == null || $result['fileName'] == null) {
 				$result['errorMessages'] = array(wfMsg('promote-error-unknown-upload-error'));

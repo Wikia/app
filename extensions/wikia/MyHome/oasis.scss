@@ -82,10 +82,16 @@
 			a {
 				cursor: pointer;
 				display: table-cell;
-				height: 160px;
 				text-align: center;
 				vertical-align: middle;
 				width: 160px;
+				padding: 5px 0;
+
+				// anchors that lead to images have a set height
+				&[data-image-link] {
+					height: 160px;
+					padding: 0;
+				}
 			}
 		}
 	}

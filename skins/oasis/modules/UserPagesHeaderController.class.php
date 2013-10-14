@@ -290,7 +290,7 @@ class UserPagesHeaderController extends WikiaController {
 	 * @param bool $arg Users has granted access (true or false)*
 	 */
 	public function executeFacebookConnect($arg) {
-		global $wgRequest, $wgCityId, $wgFacebookSyncAppID, $wgFacebookSyncAppSecret, $IP, $wgTitle;
+		global $wgRequest, $wgFacebookSyncAppID, $wgFacebookSyncAppSecret, $IP, $wgTitle, $wgSitename;
 		wfProfileIn(__METHOD__);
 
 		if ($arg['fbAccess'] == true) {
@@ -319,9 +319,7 @@ class UserPagesHeaderController extends WikiaController {
 			$this->fbUserInterests = $interests;
 			$this->fbAccess = true;
 
-			$wikiName = WikiFactory::getVarValueByName( 'wgSitename', $wgCityId );
-			$this->fbUserNameWiki = $this->getUserURL() . "|Wiki:'" .$wikiName ."'";
-
+			$this->fbUserNameWiki = $this->getUserURL() . "|Wiki:'" .$wgSitename ."'";
 		}
 		else {
 			// error message - no access granted

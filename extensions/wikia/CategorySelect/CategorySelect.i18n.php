@@ -177,7 +177,20 @@ $messages['bg'] = array(
 	'categoryselect-button-add' => 'Добавяне на категория',
 	'categoryselect-button-cancel' => 'Отказване',
 	'categoryselect-button-save' => 'Съхраняване',
+	'categoryselect-category-add' => 'Добавяне на категория...',
 	'categoryselect-edit-summary' => 'Добавяне на категории',
+);
+
+/** Bengali (বাংলা)
+ * @author Aftab1995
+ */
+$messages['bn'] = array(
+	'categoryselect-button-add' => 'বিষয়শ্রেণী যোগ',
+	'categoryselect-button-cancel' => 'বাতিল',
+	'categoryselect-button-save' => 'সংরক্ষণ',
+	'categoryselect-category-add' => 'বিষয়শ্রেণী যোগ...',
+	'categoryselect-category-edit' => 'বিষয়শ্রেণী সম্পাদনা',
+	'categoryselect-category-remove' => 'বিষয়শ্রেণী অপসারণ',
 );
 
 /** Breton (brezhoneg)
@@ -318,16 +331,24 @@ $messages['diq'] = array(
 /** Greek (Ελληνικά)
  * @author Crazymadlover
  * @author Glavkos
+ * @author Nikosguard
  */
 $messages['el'] = array(
 	'categoryselect-button-add' => 'Προσθήκη κατηγορίας',
 	'categoryselect-button-cancel' => 'Ακύρωση',
 	'categoryselect-button-save' => 'Αποθήκευση',
-	'categoryselect-category-add' => 'Προσθήκη μιας κατηγορίας', # Fuzzy
-	'categoryselect-category-edit' => 'Επιλογές κατηγορίας', # Fuzzy
+	'categoryselect-category-add' => 'Προσθήκη κατηγορίας...',
+	'categoryselect-category-edit' => 'Επεξεργασία κατηγορίας',
 	'categoryselect-error-db-locked' => 'Η βάση δεδομένων είναι κλειδωμένη',
-	'categoryselect-modal-category-name' => 'Δώστε το όνομα της κατηγορίας:', # Fuzzy
-	'categoryselect-tooltip-add' => 'Πατήστε Enter όταν γίνει', # Fuzzy
+	'categoryselect-modal-category-name' => 'Δώστε όνομα στην κατηγορία:',
+	'categoryselect-tooltip-add' => 'Πιέστε το πλήκτρο Enter ή Return όταν γίνεται.',
+);
+
+/** British English (British English)
+ * @author Shirayuki
+ */
+$messages['en-gb'] = array(
+	'categoryselect-modal-category-sortkey' => 'Optionally, you may alphabetise this page on the "$1" category page under the name:',
 );
 
 /** Spanish (español)
@@ -408,6 +429,24 @@ $messages['fi'] = array(
 	'categoryselect-tooltip-add' => 'Paina Enter, kun olet valmis.',
 	'tog-disablecategoryselect' => 'Poista luokkamoduuli käytöstä (koskee vain, jos visuaalisessa tilassa muokkaaminen on poistettu käytöstä)',
 	'tog-disablecategoryselect-v2' => 'Poista luokkamoduuli käytöstä (koskee vain jos visuaalinen muokkaus on poistettu käytöstä)',
+);
+
+/** Faroese (føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'categoryselect-desc' => 'Veitir eitt markamót (interface) til stýring av bólkum á einari síðu, uttan at rætta eina heila síðu',
+	'categoryselect-button-add' => 'Legg afturat ein bólk',
+	'categoryselect-button-cancel' => 'Angra',
+	'categoryselect-button-save' => 'Goym',
+	'categoryselect-category-add' => 'Legg afturat bólk...',
+	'categoryselect-category-edit' => 'Rætta bólk',
+	'categoryselect-category-remove' => 'Tak burtur bólk',
+	'categoryselect-edit-summary' => 'Legg bólkar afturat',
+	'categoryselect-error-article-doesnt-exist' => 'Síðan [id=$1] er ikki til.',
+	'categoryselect-error-category-name-length' => 'Maksimala longdin fyri eitt bólkanavn er nádd.',
+	'categoryselect-error-db-locked' => 'Dátagrunnurin er stongdur.',
+	'categoryselect-error-duplicate-category-name' => 'Bólkurin "$1" er longu til.',
 );
 
 /** French (français)
@@ -541,7 +580,7 @@ $messages['id'] = array(
 	'categoryselect-button-cancel' => 'Batalkan',
 	'categoryselect-button-save' => 'Simpan',
 	'categoryselect-category-add' => 'Menambahkan kategori', # Fuzzy
-	'categoryselect-category-edit' => 'Pilihan kategori', # Fuzzy
+	'categoryselect-category-edit' => 'Sunting kategori',
 	'categoryselect-category-remove' => 'Menghapus kategori',
 	'categoryselect-edit-summary' => 'Menambahkan kategori',
 	'categoryselect-error-article-doesnt-exist' => 'Halaman [id=$1] tidak ada.',
@@ -550,9 +589,9 @@ $messages['id'] = array(
 	'categoryselect-error-edit-abort' => 'Perubahan yang coba Anda lakukan dibatalkan oleh suatu ekstensi kaitan.', # Fuzzy
 	'categoryselect-error-empty-category-name' => 'Silakan berikan nama kategori.',
 	'categoryselect-error-user-rights' => 'Pengguna tidak memiliki izin untuk melakukan aksi ini.',
-	'categoryselect-modal-category-name' => 'Memberikan nama kategori:', # Fuzzy
+	'categoryselect-modal-category-name' => 'Menyediakan nama kategori:',
 	'categoryselect-modal-category-sortkey' => 'Penyusunan artikel ini menurut abjad pada kategori "$1" dengan nama:', # Fuzzy
-	'categoryselect-tooltip-add' => 'Tekan Enter jika sudah selesai', # Fuzzy
+	'categoryselect-tooltip-add' => 'Tekan tombol Masuk atau Kembali ketika sudah selesai.',
 	'tog-disablecategoryselect' => 'Nonaktifkan Kategori Tagging( hanya berlaku jika modus visual telah dinonaktifkan)',
 );
 
@@ -568,6 +607,7 @@ $messages['ig'] = array(
  * @author Beta16
  * @author Leviathan 89
  * @author Minerva Titani
+ * @author RickyB98
  * @author Ximo17
  */
 $messages['it'] = array(
@@ -575,17 +615,20 @@ $messages['it'] = array(
 	'categoryselect-button-add' => 'Aggiungi categoria',
 	'categoryselect-button-cancel' => 'Annulla',
 	'categoryselect-button-save' => 'Salva',
-	'categoryselect-category-add' => 'Aggiungi una categoria', # Fuzzy
-	'categoryselect-category-edit' => 'Opzioni categoria', # Fuzzy
+	'categoryselect-category-add' => 'Aggiungi una categoria...',
+	'categoryselect-category-edit' => 'Modifica categoria',
+	'categoryselect-category-remove' => 'Elimina categoria',
 	'categoryselect-edit-summary' => 'Categorie aggiunte',
-	'categoryselect-error-article-doesnt-exist' => "L'articolo [id=$1] non esiste.", # Fuzzy
+	'categoryselect-error-article-doesnt-exist' => "L'articolo [id=$1] non esiste.",
+	'categoryselect-error-category-name-length' => 'È stato raggiunto il limite di lunghezza per il nome di una categoria.',
 	'categoryselect-error-db-locked' => 'Database bloccato.',
-	'categoryselect-error-edit-abort' => "La modifica che si sta tentando di fare è stata interrotta da un problema dell'estensione", # Fuzzy
-	'categoryselect-error-empty-category-name' => 'Fornire il nome della categoria (parte prima di |)', # Fuzzy
-	'categoryselect-error-user-rights' => "Errore nei diritti dell'utente.", # Fuzzy
-	'categoryselect-modal-category-name' => 'Fornire il nome della categoria:', # Fuzzy
+	'categoryselect-error-duplicate-category-name' => 'La categoria "$1" esiste già.',
+	'categoryselect-error-edit-abort' => "La modifica che si sta tentando di fare è stata interrotta da un problema dell'estensione",
+	'categoryselect-error-empty-category-name' => 'Fornire il nome della categoria (parte prima di |)',
+	'categoryselect-error-user-rights' => "Errore nei diritti dell'utente.",
+	'categoryselect-modal-category-name' => 'Fornire il nome della categoria:',
 	'categoryselect-modal-category-sortkey' => 'Alfabetizzare questo articolo nella categoria "$1" sotto il nome:', # Fuzzy
-	'categoryselect-tooltip-add' => 'Premi INVIO quando hai fatto', # Fuzzy
+	'categoryselect-tooltip-add' => 'Premi INVIO quando hai fatto',
 	'tog-disablecategoryselect' => 'Disabilita il modulo Categoria (si applica solo se la modifica in modalità visuale è stata disabilitata)',
 	'tog-disablecategoryselect-v2' => 'Disabilita il modulo Categoria (si applica solo se la modifica in modalità visuale è disabilitata)',
 );
@@ -615,6 +658,13 @@ $messages['ja'] = array(
 	'tog-disablecategoryselect-v2' => 'カテゴリモジュールを無効にする（ビジュアルモードでの編集を無効にしている場合にのみ適用）',
 );
 
+/** Georgian (ქართული)
+ * @author DevaMK
+ */
+$messages['ka'] = array(
+	'categoryselect-button-add' => 'დაამატე კატეგორია',
+);
+
 /** Kannada (ಕನ್ನಡ)
  * @author Nayvik
  */
@@ -639,7 +689,7 @@ $messages['ko'] = array(
 	'categoryselect-error-article-doesnt-exist' => '[id=$1] 문서가 존재하지 않습니다.',
 	'categoryselect-error-category-name-length' => '분류 이름에 대한 최대 길이에 도달했습니다.',
 	'categoryselect-error-db-locked' => '데이터베이스가 잠겨 있습니다.',
-	'categoryselect-error-duplicate-category-name' => '"$1" 분류는 이미 존재합니다.',
+	'categoryselect-error-duplicate-category-name' => '"$1" 분류가 이미 존재합니다.',
 	'categoryselect-error-edit-abort' => '수정하려고 한 것이 확장 기능 훅에 의해 중지되었습니다.',
 	'categoryselect-error-empty-category-name' => '분류 이름을 제공하세요.',
 	'categoryselect-error-user-rights' => '사용자는 이 작업을 수행할 권한이 없습니다.',
@@ -900,12 +950,12 @@ $messages['pms'] = array(
  */
 $messages['ps'] = array(
 	'categoryselect-button-add' => 'وېشنيزه ورګډول',
-	'categoryselect-button-cancel' => 'ناګارل',
+	'categoryselect-button-cancel' => 'ناگارل',
 	'categoryselect-button-save' => 'خوندي کول',
-	'categoryselect-category-add' => 'وېشنيزه ورګډول...',
+	'categoryselect-category-add' => 'وېشنيزه ورگډول...',
 	'categoryselect-category-edit' => 'وېشنيزه سمول',
 	'categoryselect-category-remove' => 'وېشنيزه غورځول',
-	'categoryselect-edit-summary' => 'وېشنيزې ورګډول',
+	'categoryselect-edit-summary' => 'وېشنيزې ورگډول',
 	'categoryselect-error-article-doesnt-exist' => 'د [id=$1] ليکنه نشته.',
 	'categoryselect-error-db-locked' => 'توکبنسټ تړل شوی.',
 	'categoryselect-error-duplicate-category-name' => 'د "$1" وېشنيزه له پخوا څخه شته.',
@@ -924,7 +974,7 @@ $messages['pt'] = array(
 	'categoryselect-desc' => 'Fornece uma interface de gestão das categorias de um artigo sem editar o artigo completo.',
 	'categoryselect-button-add' => 'Adicionar categoria',
 	'categoryselect-button-cancel' => 'Cancelar',
-	'categoryselect-button-save' => 'Gravar',
+	'categoryselect-button-save' => 'Salvar',
 	'categoryselect-category-add' => 'Adicionar categoria...',
 	'categoryselect-category-edit' => 'Editar categoria',
 	'categoryselect-category-remove' => 'Remover categoria',
@@ -1047,13 +1097,14 @@ $messages['sl'] = array(
 );
 
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)
+ * @author Milicevic01
  * @author Rancher
  * @author Verlor
  */
 $messages['sr-ec'] = array(
 	'categoryselect-button-cancel' => 'Откажи',
 	'categoryselect-button-save' => 'Сачувај',
-	'categoryselect-category-edit' => 'Поставке категорије', # Fuzzy
+	'categoryselect-category-edit' => 'Уреди категорију',
 	'categoryselect-edit-summary' => 'Додавање категорија',
 	'categoryselect-error-db-locked' => 'База података је закључана.',
 	'categoryselect-error-user-rights' => 'Грешка у корисничким правима.', # Fuzzy

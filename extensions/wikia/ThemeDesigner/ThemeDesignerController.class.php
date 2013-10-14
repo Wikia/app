@@ -6,6 +6,8 @@ class ThemeDesignerController extends WikiaController {
 		$this->backgroundImageUrl = null;
 		$this->backgroundImageAlign = null;
 		$this->backgroundImageThumb = null;
+		$this->backgroundImageWidth = null;
+		$this->backgroundImageHeight = null;
 		$this->wordmarkImageName = null;
 		$this->wordmarkImageUrl = null;
 		$this->errors = array();
@@ -247,6 +249,8 @@ class ThemeDesignerController extends WikiaController {
 			$this->backgroundImageUrl = wfReplaceImageServer( $file->getUrl() );
 			$this->backgroundImageName = $file->getName();
 			$this->backgroundImageAlign = $upload->getImageAlign();
+			$this->backgroundImageHeight = $file->getHeight();
+			$this->backgroundImageWidth = $file->getWidth();
 
 			//get cropped URL
 			$is = new ImageServing( null, 120, array( "w"=>"120", "h"=>"100" ) );
@@ -260,7 +264,6 @@ class ThemeDesignerController extends WikiaController {
 		} else if ($status['status'] === 'error') {
 			$this->errors = $status['errors'];
 		}
-
 	}
 
 	/**

@@ -1,10 +1,7 @@
 <section class="Search 'this-wiki WikiaGrid clearfix">
-	<form class="WikiaSearch" id="search-v2-form" action="<?=$pageUrl;?>">
+	<form class="WikiaSearch" id="search-v2-form" action="<?=$specialSearchUrl;?>">
 
 		<div class="SearchInput">
-			<?php foreach($namespaces as $ns): ?>
-			<input type="hidden" class="default-tab-value" name="ns<?=$ns;?>" value="1" />
-			<?php endforeach; ?>
 
 			<p><?= wfMsg('wikiasearch2-global-search-headline') ?></p>
 
@@ -43,19 +40,14 @@
 					<?php $pos = 0; ?>
 					<?php foreach( $results as $result ): ?>
 					<?php
-						if($result instanceof \Wikia\Search\ResultSet\Grouping ) {
-							$header = $result->getHeader();
-							if ( !empty( $header ) ) {
-								$pos++;
-								echo $app->getView( 'WikiaSearch', 'CrossWiki_result', array(
-									'resultSet' => $result,
-									'pos' => $pos + (($currentPage - 1) * $resultsPerPage),
-									'query' => $query,
-									'hub' => $hub,
-									'wgExtensionsPath' => $wgExtensionsPath
-								));
-							}
-						}
+						$pos++;
+						echo $app->getView( 'WikiaSearch', 'CrossWiki_result', array(
+							'result' => $result,
+							'pos' => $pos + (($currentPage - 1) * $resultsPerPage),
+							'query' => $query,
+							'hub' => $hub,
+							'wgExtensionsPath' => $wgExtensionsPath
+						));
 					?>
 					<?php endforeach; ?>
 				</ul>

@@ -1,6 +1,6 @@
 /*global WikiaFooterApp*/
 
-/* 
+/*
  * GlobalNotification.show()
  * @param string content - message to be displayed
  * @param string type - 'notify' (blue), 'confirm' (green), 'error' (red), 'warn' (yellow)
@@ -13,6 +13,13 @@ var GlobalNotification = {
 		if(GlobalNotification.dom.length) {
 			GlobalNotification.setUpClose();
 		}
+	},
+	// This is only for introspection in the browser
+	options: {
+		'notify': 'blue',
+		'confirm': 'green',
+		'error': 'red',
+		'warn': 'yellow'
 	},
 	createDom: function(element) {
 		// create and store dom
@@ -68,12 +75,12 @@ var GlobalNotification = {
 				GlobalNotification.dom.remove();
 				GlobalNotification.dom = [];
 				if( jQuery.isFunction( callback ) ) {
-					callback();			
+					callback();
 				}
 			});
 		} else {
 			if( jQuery.isFunction( callback ) ) {
-				callback();			
+				callback();
 			}
 		}
 	},
@@ -87,7 +94,7 @@ var GlobalNotification = {
 	setUpClose: function() {
 		GlobalNotification.dom.find( '.close' ).click(GlobalNotification.hide);
 	},
-	// Float notification (BugId:33365) 
+	// Float notification (BugId:33365)
 	wikiaHeaderHeight: $('#WikiaHeader').height(),
 	// Called from WikiaFooter.js
 	onScroll: function(scrollTop) {
@@ -96,9 +103,9 @@ var GlobalNotification = {
 			if(scrollTop > minTop) {
 				GlobalNotification.dom.addClass('float');
 			} else {
-				GlobalNotification.dom.removeClass('float');						
+				GlobalNotification.dom.removeClass('float');
 			}
-			
+
 		}
 	}
 };

@@ -2007,6 +2007,25 @@ class Title {
 				$blockExpiry = $wgLang->timeanddate( wfTimestamp( TS_MW, $blockExpiry ), true );
 			}
 
+			# Wikia change - begin
+			# @author macbre (BAC-535)
+			$blocker = $block->getBlocker();
+			if ($blocker instanceof User) {
+				// user groups to be displayed instead of user name
+				$groups = [
+					'staff',
+					'vstf',
+				];
+				$blockerGroups = $blocker->getEffectiveGroups();
+
+				foreach($groups as $group) {
+					if (in_array($group, $blockerGroups)) {
+						$link = wfMessage("group-$group")->plain();
+					}
+				}
+			}
+			# Wikia change - end
+
 			$intended = strval( $user->mBlock->getTarget() );
 
 			$errors[] = array( ( $block->mAuto ? 'autoblockedtext' : 'blockedtext' ), $link, $reason, $ip, $name,
@@ -3900,18 +3919,23 @@ class Title {
 	 * @return Array of parents in the form:
 	 *	  $parent => $currentarticle
 	 */
-	public function getParentCategories() {
+	/* Wikia changes start */
+	/* Wikia added possibility to use master */
+	public function getParentCategories( $useMaster = false ) {
+	/* Wikia changes end */
 		global $wgContLang;
 
 		$data = array();
 
 		$titleKey = $this->getArticleId();
-
+		
 		if ( $titleKey === 0 ) {
 			return $data;
 		}
 
-		$dbr = wfGetDB( DB_SLAVE );
+		/* Wikia changes start */
+		$dbr = $useMaster === false ? wfGetDB( DB_SLAVE ) : wfGetDB( DB_MASTER );
+		/* Wikia changes end */
 
 		$res = $dbr->select( 'categorylinks', '*',
 			array(
@@ -4278,7 +4302,9 @@ class Title {
 		}
 
 		list( $name, $lang ) = MessageCache::singleton()->figureMessage( $wgContLang->lcfirst( $this->getText() ) );
-		$message = wfMessage( $name )->inLanguage( $lang )->useDatabase( false );
+		/* Wikia change - skip fixing whitespaces, want to preserve nbsp's */
+		$message = wfMessage( $name )->inLanguage( $lang )->useDatabase( false )->fixWhitespace( false );
+		/* Wikia change end */
 
 		if ( $message->exists() ) {
 			return $message->plain();
@@ -4528,7 +4554,7 @@ class Title {
 	 * $wgLang (such as special pages, which are in the user language).
 	 *
 	 * @since 1.18
-	 * @return object Language
+	 * @return Language
 	 */
 	public function getPageLanguage() {
 		global $wgLang;

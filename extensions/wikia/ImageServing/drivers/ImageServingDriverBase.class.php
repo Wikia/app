@@ -14,13 +14,28 @@ abstract class ImageServingDriverBase {
 	 */
 	var $db;
 
+	protected $imagesList;
+	protected $articleCountList;
+	protected $filterdOut;
+
+	protected $minWidth;
+	protected $minHeight;
+
+	/**
+	 * @param $db
+	 * @param $imageServing ImageServing
+	 * @param $proportion
+	 */
 	function __construct($db, $imageServing, $proportion) {
 		$this->app = F::app();
 		$this->db = $db;
 		$this->proportion = $proportion;
 		//TODO: remove it
 		$this->imageServing = $imageServing;
-		$this->memc =  $this->app->getGlobal( 'wgMemc' );
+		$this->memc =  $this->app->wg->Memc;
+
+		$this->minHeight = $this->imageServing->getRequestedHeight();
+		$this->minWidth = $this->imageServing->getRequestedWidth();
 	}
 
 	abstract protected function getImagesFromDB($articles = array());
@@ -122,24 +137,49 @@ abstract class ImageServingDriverBase {
 		return array( 'data' => $out, 'rest' => $articlesRest ) ;
 	}
 
-	function formatResult($imageList ,$dbOut, $limit) {
+	protected function formatResult($imageList ,$dbOut, $limit) {
 		wfProfileIn( __METHOD__ );
 
-		$out = array();
-		foreach( $imageList as $key => $value  ) {
-			if( isset($dbOut[ $key ]) ) {
-				foreach($value as $key2 => $value2) {
-					if (empty($out[$key2]) || count($out[$key2]) < $limit) {
-						$out[$key2][] = array(
-							"name" => $key,
-							"url" => $this->imageServing->getUrl($key, $dbOut[$key]['img_width'], $dbOut[$key]['img_height']));
+		$out = [ ];
+		$pageOrderedImages = [ ];
+		foreach ( $imageList as $imageName => $pageData ) {
+			if ( isset( $dbOut[ $imageName ] ) ) {
+				foreach ( $pageData as $pageId => $pageImageOrder ) {
+					// unit tests say that this can be an array. I don't see how, but maybe there's case I'm not aware of
+					if (is_array($pageImageOrder)) {
+						$pageImageOrder = $pageImageOrder[0];
 					}
+
+					// insert into an array so we can ensure the $order is respected
+					$pageOrderedImages[ $pageId ][ $pageImageOrder ] = $imageName;
 				}
+			}
+		}
+
+		foreach ( $pageOrderedImages as $pageId => $pageImageList ) {
+			ksort( $pageImageList );
+			$useImages = $limit == 0 ? $pageImageList : array_slice( $pageImageList, 0, $limit );
+			foreach ( $useImages as $imageName ) {
+				$img = $this->getImageFile( $imageName );
+				$out[ $pageId ][ ] = [
+					"name" => $imageName,
+					"original_dimensions" => [
+						"width" => !empty( $img ) ? $img->getWidth() : 0,
+						"height" => !empty( $img ) ? $img->getHeight() : 0
+					],
+					"url" => !empty( $img ) ? $this->imageServing->getUrl( $img, $dbOut[ $imageName ][ 'img_width' ], $dbOut[ $imageName ][ 'img_height' ] ) : ''
+				];
 			}
 		}
 
 		wfProfileOut( __METHOD__ );
 		return $out;
+	}
+
+	protected function getImageFile( $text ) {
+		$file_title = Title::newFromText( $text, NS_FILE );
+		$img = wfFindFile( $file_title );
+		return $img;
 	}
 
 	protected function storeInCache($dbOut) {
@@ -158,6 +198,6 @@ abstract class ImageServingDriverBase {
 	 * @author Federico "Lox" Lucignano
 	 */
 	protected function makeKey( $key  ) {
-		return wfMemcKey("imageserving-images-data", $key, $this->proportion);
+		return wfMemcKey("imageserving-images-data", $key, $this->minWidth, $this->minHeight);
 	}
 }

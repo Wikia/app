@@ -6,6 +6,9 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 }
 
 class CheckUser extends SpecialPage {
+
+	const LIMIT = 1000;
+
 	/**
 	 * Constructor -- set up the new special page
 	 */
@@ -404,7 +407,7 @@ class CheckUser extends SpecialPage {
 			array(
 				'ORDER BY' => 'last DESC',
 				'GROUP BY' => 'cuc_ip,cuc_ip_hex',
-				'LIMIT' => 5001,
+				'LIMIT' => self::LIMIT + 1,
 				'USE INDEX' => 'cuc_user_ip_time',
 			)
 		);
@@ -416,7 +419,7 @@ class CheckUser extends SpecialPage {
 			$ips_edits = array();
 			$counter = 0;
 			foreach ( $ret as $row ) {
-				if ( $counter >= 5000 ) {
+				if ( $counter >= self::LIMIT ) {
 					// FIXME: addWikiMSG
 					$wgOut->addHTML( wfMsgExt( 'checkuser-limited', array( 'parse' ) ) );
 					break;
@@ -537,7 +540,7 @@ class CheckUser extends SpecialPage {
 		$time_conds = $this->getTimeConds( $period );
 		# Ordered in descent by timestamp. Can cause large filesorts on range scans.
 		# Check how many rows will need sorting ahead of time to see if this is too big.
-		# Also, if we only show 5000, too many will be ignored as well.
+		# Also, if we only show self::LIMIT, too many will be ignored as well.
 		$index = $xfor ? 'cuc_xff_hex_time' : 'cuc_ip_hex_time';
 		if ( strpos( $ip, '/' ) !== false ) {
 			# Quick index check only OK if no time constraint
@@ -559,15 +562,15 @@ class CheckUser extends SpecialPage {
 		}
 		$counter = 0;
 		# See what is best to do after testing the waters...
-		if ( isset( $rangecount ) && $rangecount > 5000 ) {
+		if ( isset( $rangecount ) && $rangecount > self::LIMIT ) {
 			$ret = $dbr->select( 'cu_changes',
 				array( 'cuc_ip_hex', 'COUNT(*) AS count', 'MIN(cuc_timestamp) AS first', 'MAX(cuc_timestamp) AS last' ),
 				array( $ip_conds, $time_conds ),
-				__METHOD___,
+				__METHOD__,
 				array(
 					'GROUP BY' => 'cuc_ip_hex',
 					'ORDER BY' => 'cuc_ip_hex',
-					'LIMIT' => 5001,
+					'LIMIT' => self::LIMIT + 1,
 					'USE INDEX' => $index,
 				)
 			);
@@ -575,7 +578,7 @@ class CheckUser extends SpecialPage {
 			$s = wfMsgExt( 'checkuser-too-many', array( 'parse' ) );
 			$s .= '<ol>';
 			foreach ( $ret as $row ) {
-				if ( $counter >= 5000 ) {
+				if ( $counter >= self::LIMIT ) {
 					// FIXME: addWikiMsg
 					$wgOut->addHTML( wfMsgExt( 'checkuser-limited', array( 'parse' ) ) );
 					break;
@@ -622,7 +625,7 @@ class CheckUser extends SpecialPage {
 			__METHOD__,
 			array(
 				'ORDER BY' => 'cuc_timestamp DESC',
-				'LIMIT' => 5001,
+				'LIMIT' => self::LIMIT + 1,
 				'USE INDEX' => $index,
 			)
 		);
@@ -645,7 +648,7 @@ class CheckUser extends SpecialPage {
 			# List out the edits
 			$s = '<div id="checkuserresults">';
 			foreach ( $ret as $row ) {
-				if ( $counter >= 5000 ) {
+				if ( $counter >= self::LIMIT ) {
 					// FIXME: addWikiMsg
 					$wgOut->addHTML( wfMsgExt( 'checkuser-limited', array( 'parse' ) ) );
 					break;
@@ -712,7 +715,7 @@ class CheckUser extends SpecialPage {
 		# Cache common messages
 		$this->preCacheMessages();
 		# See what is best to do after testing the waters...
-		if ( $count > 5000 ) {
+		if ( $count > self::LIMIT ) {
 			$wgOut->addHTML( wfMsgExt( 'checkuser-limited', array( 'parse' ) ) );
 
 			$ret = $dbr->select(
@@ -722,7 +725,7 @@ class CheckUser extends SpecialPage {
 				__METHOD__,
 				array(
 					'ORDER BY' => 'cuc_ip ASC, cuc_timestamp DESC',
-					'LIMIT' => 5000,
+					'LIMIT' => self::LIMIT,
 					'USE INDEX' => 'cuc_user_ip_time'
 				)
 			);
@@ -767,7 +770,7 @@ class CheckUser extends SpecialPage {
 			__METHOD__,
 			array(
 				'ORDER BY' => 'cuc_timestamp DESC',
-				'LIMIT' => 5000,
+				'LIMIT' => self::LIMIT,
 				'USE INDEX' => 'cuc_user_ip_time'
 			)
 		);
@@ -858,7 +861,7 @@ class CheckUser extends SpecialPage {
 				array(
 					'GROUP BY' => 'cuc_ip_hex',
 					'ORDER BY' => 'cuc_ip_hex',
-					'LIMIT' => 5001,
+					'LIMIT' => self::LIMIT + 1,
 					'USE INDEX' => $index,
 				)
 			);
@@ -867,7 +870,7 @@ class CheckUser extends SpecialPage {
 			$s .= '<ol>';
 			$counter = 0;
 			foreach ( $ret as $row ) {
-				if ( $counter >= 5000 ) {
+				if ( $counter >= self::LIMIT ) {
 					$wgOut->addHTML( wfMsgExt( 'checkuser-limited', array( 'parse' ) ) );
 					break;
 				}
@@ -1010,7 +1013,7 @@ class CheckUser extends SpecialPage {
 					# XFF string, link to /xff search
 					if ( $set[1] ) {
 						# Flag our trusted proxies
-						list( $client, $trusted ) = CheckUserHooks::getClientIPfromXFF( $set[1], $set[0] );
+						list( $client, $trusted ) = IP::getClientIPfromXFF( $set[1], $set[0] );
 						$c = $trusted ? '#F0FFF0' : '#FFFFCC';
 						$s .= '&#160;&#160;&#160;<span style="background-color: ' . $c . '"><strong>XFF</strong>: ';
 						$s .= $this->sk->makeKnownLinkObj( $this->getTitle(),
@@ -1153,7 +1156,7 @@ class CheckUser extends SpecialPage {
 		# XFF
 		if ( $row->cuc_xff != null ) {
 			# Flag our trusted proxies
-			list( $client, $trusted ) = CheckUserHooks::getClientIPfromXFF( $row->cuc_xff, $row->cuc_ip );
+			list( $client, $trusted ) = IP::getClientIPfromXFF( $row->cuc_xff, $row->cuc_ip );
 			$c = $trusted ? '#F0FFF0' : '#FFFFCC';
 			$line .= '&#160;&#160;&#160;<span class="mw-checkuser-xff" style="background-color: ' . $c . '">' .
 				'<strong>XFF</strong>: ';

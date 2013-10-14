@@ -11,6 +11,13 @@ MiniEditor.Wall.NewMessageForm = $.createClass(Wall.settings.classBindings.newMe
 
 		this.messageBody.add(this.messageTitle).focus(function(event) {
 			self.initEditor(event);
+
+		}).one( 'editorAfterActivated', function( event, wikiaEditor ) {
+			if (!MiniEditor.ckeditorEnabled) {
+				self.messageBody.autoResize({
+					min: 200
+				});
+			}
 		});
 
 		this.messageTitle.autoResize({
@@ -48,20 +55,13 @@ MiniEditor.Wall.NewMessageForm = $.createClass(Wall.settings.classBindings.newMe
 							}
 						});
 					}
-				},
-				editorAfterActivated: function( event, wikiaEditor ) {
-					if (!MiniEditor.ckeditorEnabled) {
-						self.messageBody.autoResize({
-							min: 200
-						});
-					}
 				}
 			}
 		}, event);
 	},
 
 	getMessageBody: function() {
-		return this.messageBody.data('wikiaEditor').getContent().trim();
+		return $.trim(this.messageBody.data('wikiaEditor').getContent());
 	},
 
 	// Return an empty string if we don't need to convert,
@@ -99,7 +99,7 @@ MiniEditor.Wall.NewMessageForm = $.createClass(Wall.settings.classBindings.newMe
 		var title = this.messageTitle.val();
 
 		if (title.length > 0) {
-			this.messageTitle.val(title.trim());
+			this.messageTitle.val($.trim(title));
 		}
 	}
 });

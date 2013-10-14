@@ -1,4 +1,6 @@
-@import "../../../skins/oasis/css/core/color";
+@import "skins/oasis/css/core/color";
+@import "skins/oasis/css/core/layout";
+
 .errorbox, .successbox {
 font-size: larger;
 border: 2px solid;
@@ -59,8 +61,14 @@ img.contactCaptch {
 	width: 520px;
 }
 
-#picker_grid {
-	width: 600px;
+.special-contact-picker {
+	width: 675px;
+}
+
+@if ( $responsive-layout-enabled ) {
+	.special-contact-picker {
+		width: 100%;
+	}
 }
 
 #picker_grid td {

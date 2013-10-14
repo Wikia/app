@@ -116,9 +116,11 @@ ___________________________________________
         "autocreatewiki-welcometalk-wall" => "Hello, We're excited to have {{subst:SITENAME}} as part of the Wikia community!
 
 There's still a lot to do; here are some helpful tips and links to get your wiki going:
-*Check out [[Special:WikiFeatures|Wiki Features]] to see which features you can enable on your wiki, including Chat, Achievements and much more.
-*Stop by [[w:c:community|Community Central]] to stay informed through our [[w:c:community:Blog:Wikia_Staff_Blog|staff blog]], ask questions on our [[w:c:community:Special:Forum|community forum]], participate in our [[w:c:community:Help:Webinars|webinar series]], or chat live with fellow Wikians.
-*Lastly, visit our [[Help:Contents|help pages]] to learn the ins and outs of using Wikia.
+*Check out [[Special:WikiFeatures|Wiki Features]] to see which features you can enable on your wiki, including Chat, Achievements and many more.
+*Customize your wiki's look by visiting the [[Special:ThemeDesigner|Theme Designer]], where you can add color and style to your background and wordmark.
+*Stop by [[w:c:community|Community Central]] to stay informed through our [[w:c:community:Blog:Wikia_Staff_Blog|staff blog]], ask questions on our [[w:c:community:Special:Forum|community forum]], participate in our [[w:c:community:Help:Webinars|webinar series]], or [[w:c:community:Special:Chat|chat live]] with fellow Wikians.
+*Lastly, visit our [[Help:Contents|help pages]] to learn the ins and outs of using Wikia, including [[Help:New page|how to add a new page to your wiki]], [[Help:Attracting contributors|how to attract contributors]], and [[Help:User access levels|how to add other admins]].
+* You can also use all of these tools by visiting your Admin Dashboard, which can by found by clicking \"Admin\" on the bottom toolbar.
 
 All of the above links are a great place to start exploring, and have fun!",
 

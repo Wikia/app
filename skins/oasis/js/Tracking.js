@@ -124,10 +124,7 @@ jQuery(function($){
 					label: label
 				});
 			}
-		}).on('mousedown', '.RelatedPagesModule a', {
-			category: category,
-			label: 'related-pages'
-		}, trackWithEventData).on('mousedown', '.editsection a', {
+		}).on('mousedown', '.editsection a', {
 			category: category,
 			label: 'section-edit'
 		}, trackWithEventData);
@@ -156,13 +153,6 @@ jQuery(function($){
 			label: 'category-item'
 		}, trackWithEventData);
 	})();
-
-	/** chat-module **/
-
-	$wikiaRail.find('.ChatModule').on('mousedown', '.chat-join', {
-		category: 'chat-module',
-		label: 'chat-join'
-	}, trackWithEventData);
 
 	/** contribute **/
 
@@ -212,34 +202,6 @@ jQuery(function($){
 		}
 	});
 
-	/** photos-module **/
-
-	$wikiaRail.find('.LatestPhotosModule').on('mousedown', 'a', function(e) {
-		var label,
-			el = $(e.target);
-
-		// Primary mouse button only
-		if (e.which !== 1) {
-			return;
-		}
-
-		if (el.hasClass('thumbimage')) {
-			label = 'photos-module-thumbnail';
-		} else if (el.hasClass('upphotos')) {
-			label = 'photos-module-add';
-		} else if (el.hasClass('more')) {
-			label = 'photos-module-more';
-		}
-
-		if (label !== undefined) {
-			track({
-				browserEvent: e,
-				category: 'photos-module',
-				label: label
-			});
-		}
-	});
-
 	/** recent-changes **/
 
 	if ($body.hasClass('page-Special_RecentChanges')) {
@@ -273,45 +235,13 @@ jQuery(function($){
 		});
 	}
 
-	/** recent-wiki-activity **/
-
-	$wikiaRail.find('.WikiaActivityModule').on('mousedown', 'a', function(e) {
-		var label,
-			el = $(e.target);
-
-		// Primary mouse button only
-		if (e.which !== 1) {
-			return;
-		}
-
-		if (el.hasClass('more')) {
-			label = 'activity-more';
-		} else if(el.closest('.edited-by').length > 0) {
-			label = 'activity-username';
-		} else if(el.closest('em').length > 0) {
-			label = 'activity-title';
-		}
-
-		if (label !== undefined) {
-			track({
-				browserEvent: e,
-				category: 'recent-wiki-activity',
-				label: label
-			});
-		}
-	});
-
-	/** related-videos-module **/
-
-	$wikiaRail.find('.RelatedVideosModule').on('mousedown', 'a', {
-		category: 'related-videos-module',
-		label: 'video-thumbnail'
-	}, trackWithEventData);
-
 	/** search **/
 
 	(function() {
 		var category = 'search',
+			suggestionShowed = false,
+			$topModule = $('.top-wiki-articles'),
+			$categoryModule = $('.category-articles'),
 			$wikiaSearch = $('.WikiaSearch');
 
 		$wikiaSearch.on('mousedown', '.autocomplete', {
@@ -320,16 +250,18 @@ jQuery(function($){
 		}, trackWithEventData).on('mousedown', '.wikia-button', function(e) {
 			// Prevent tracking 'fake' form submission clicks
 			if (e.which === 1 && e.clientX > 0) {
+				var label = !suggestionShowed ? 'search-button' : 'search-after-suggest-button';
 				track({
 					category: category,
-					label: 'search-button'
+					label: label
 				});
 			}
 		}).on('keypress', '[name=search]', function(e) {
 			if ( e.which === 13 && $(this).is(':focus') ) {
+				var label = !suggestionShowed ? 'search-enter' : 'search-after-suggest-enter';
 				track({
 					category: category,
-					label: 'search-enter'
+					label: label
 				});
 			}
 		}).on('suggestEnter', {
@@ -339,7 +271,11 @@ jQuery(function($){
 			action: Wikia.Tracker.ACTIONS.VIEW,
 			category: category,
 			label: 'search-suggest-show'
-		}, trackWithEventData);
+		}, function(e) {
+				suggestionShowed = true;
+				trackWithEventData(e);
+			}
+		);
 
 		if ($body.hasClass('page-Special_Search')) {
 			category = 'special-' + category;
@@ -366,11 +302,61 @@ jQuery(function($){
 					label: 'result-item-' + el.data('pos') + '-image' + (el.data('event') === 'search_click_wiki-no-thumb' ? '-placeholder' : ''),
 					trackingMethod: 'both'
 				});
-			}).on('mousedown', '.image', function(e) {
+			}).on('mousedown', '.thumb-tracking', function(e){
+				var el = $(e.currentTarget);
 				track({
 					browserEvent: e,
 					category: category,
-					label: 'result-' + ($(e.currentTarget).hasClass('video') ? 'video' : 'photo')
+					label: 'result-item-' + 'image-' + (el.data('event') === 'search_click_match' ? 'push-top' : el.data('pos') ),
+					trackingMethod: 'both'
+				});
+			}).on('mousedown', '.image', function(e) {
+				var $currentTarget = $(e.currentTarget);
+				track({
+					browserEvent: e,
+					category: category,
+					label: 'result-' + ($currentTarget.hasClass('video') ? 'video' : 'photo')
+						+ ( ( $currentTarget.parents('.video-addon-results').length > 0 ) ? '-video-addon' : '' ) // video addon ab tests
+				});
+			}).on('mousedown', '.video-addon-seach-video', function(e) {
+				track({
+					browserEvent: e,
+					category: category,
+					label: 'video-addon-results-header'
+				});
+			});
+		}
+		if ( $topModule.length ) {
+			$topModule.on('mousedown', '.top-wiki-article-thumbnail a', function(e){
+				var el = $(e.currentTarget);
+				track({
+					browserEvent: e,
+					category: category,
+					label: 'top-module-thumb-' + el.data('pos')
+				});
+			}).on('mousedown', '.top-wiki-article-text a', function(e) {
+				var el = $(e.currentTarget);
+				track({
+					browserEvent: e,
+					category: category,
+					label: 'top-module-title-' + el.data('pos')
+				});
+			});
+		}
+		if ( $categoryModule.length ) {
+			$categoryModule.on('mousedown', '.category-articles-thumb a', function(e){
+				var el = $(e.currentTarget);
+				track({
+					browserEvent: e,
+					category: category,
+					label: 'category-module-thumb-' + el.data('pos')
+				});
+			}).on('mousedown', '.category-articles-text a', function(e){
+				var el = $(e.currentTarget);
+				track({
+					browserEvent: e,
+					category: category,
+					label: 'category-module-title-' + el.data('pos')
 				});
 			});
 		}
@@ -565,7 +551,7 @@ jQuery(function($){
 				el.hasClass('real-name') ||
 				parent.hasClass('wall-owner') ||
 				parent.hasClass('subtle')
-				) {
+			) {
 				label = 'username';
 			} else if (parent.hasClass('activityfeed-diff')) {
 				label = 'diff';
@@ -643,6 +629,79 @@ jQuery(function($){
 		}
 	});
 
+	function initRailTracking() {
+		/** chat-module **/
+
+		$wikiaRail.find('.ChatModule').on('mousedown', '.chat-join', {
+			category: 'chat-module',
+			label: 'chat-join'
+		}, trackWithEventData);
+
+		/** photos-module **/
+
+		$wikiaRail.find('.LatestPhotosModule').on('mousedown', 'a', function(e) {
+			var label,
+				el = $(e.target);
+
+			// Primary mouse button only
+			if (e.which !== 1) {
+				return;
+			}
+
+			if (el.hasClass('thumbimage')) {
+				label = 'photos-module-thumbnail';
+			} else if (el.hasClass('upphotos')) {
+				label = 'photos-module-add';
+			} else if (el.hasClass('more')) {
+				label = 'photos-module-more';
+			}
+
+			if (label !== undefined) {
+				track({
+					browserEvent: e,
+					category: 'photos-module',
+					label: label
+				});
+			}
+		});
+
+		/** recent-wiki-activity **/
+
+		$wikiaRail.find('.WikiaActivityModule').on('mousedown', 'a', function(e) {
+			var label,
+				el = $(e.target);
+
+			// Primary mouse button only
+			if (e.which !== 1) {
+				return;
+			}
+
+			if (el.hasClass('more')) {
+				label = 'activity-more';
+			} else if(el.closest('.edited-by').length > 0) {
+				label = 'activity-username';
+			} else if(el.closest('em').length > 0) {
+				label = 'activity-title';
+			}
+
+			if (label !== undefined) {
+				track({
+					browserEvent: e,
+					category: 'recent-wiki-activity',
+					label: label
+				});
+			}
+		});
+
+		/** related-videos-module **/
+
+		$wikiaRail.find('.RelatedVideosModule').on('mousedown', 'a', {
+			category: 'related-videos-module',
+			label: 'video-thumbnail'
+		}, trackWithEventData);
+	}
+
 	// Exports
 	Wikia.trackEditorComponent = trackEditorComponent;
+	Wikia.initRailTracking = initRailTracking;
 });

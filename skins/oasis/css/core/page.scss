@@ -6,11 +6,8 @@
 @import "../mixins/opacity";
 
 .WikiaPage {
-	border-bottom: 1px solid $color-page-border;
-	border-left: 1px solid $color-page-border;
-	border-right: 1px solid $color-page-border;
-	margin: -59px auto -39px;
-	padding-top: 59px;
+	border: 1px solid $color-page-border;
+	margin: 0 auto;
 	/* temp grid transition code - integrate into main, then remove after grid is fully rolled out */
 	&.WikiaGrid {
 		.WikiaSearchHeader {
@@ -25,10 +22,6 @@
 		}
 	}
 	/* end temp grid transition code */
-	&.V2 {
-		padding-top: 0;
-		margin: 0px auto -39px;
-	}
 	position: relative;
 	width: $width-outside;
 	z-index: 1;
@@ -48,18 +41,6 @@
 	.WikiaPageContentWrapper {
 		@include clearfix;
 		position: relative;
-	}
-}
-
-/**
- * IMPORTANT (21-Aug-2012, FB:45031): Integrate this code into base css above after transition.
- * This is currently an override depending on skin switch.
- */
-.oasis-split-skin {
-	.WikiaPage {
-		border-top: 1px solid $color-page-border;
-		margin: 0 auto 0px;
-		padding-top: 0;
 	}
 }
 
@@ -112,14 +93,6 @@
 }
 /* end temp transistion code */
 
-#PREFOOTER_LEFT_BOXAD {
-	float: left;
-	margin: 0 15px;
-}
-#PREFOOTER_RIGHT_BOXAD {
-	margin: 0 15px;
-}
-
 .WikiaRail {
 	float: right;
 	padding: 0 $width-gutter;
@@ -127,6 +100,13 @@
 	&.grid-2 {
 		padding: 0;
 	}
+	.loading {
+		background: url(/skins/common/images/ajax.gif) no-repeat 50% 50%; /* $wgCdnStylePath */
+		height: 48px;
+		margin: 10px;
+		padding-top: 10px;
+	}
+
 	.module {
 		@include clearfix;
 		background: $color-page;
@@ -185,13 +165,12 @@
 		h2 {
 			@extend h1;
 			clear: both;
+			padding-top: 15px;
 
 			margin: {
 				top: 0;
 				bottom: 10px;
 			}
-			padding-top: 15px;
-			/*border-top: 1px solid $color-page-border;*/
 		}
 
 		b {
@@ -208,12 +187,6 @@
 		.chevron {
 			border-top-color: $color-text;
 		}
-	}
-}
-
-#TOP_BOXAD {
-	img {
-		display: block;
 	}
 }
 
@@ -314,113 +287,6 @@
 		margin-bottom: 10px;
 		text-align: center;
 	}
-}
-
-#WikiaSpotlightsModule {
-	display: none;
-	padding: 8px 8px 8px 15px;
-	header {
-		background-color: $color-header;
-		height: 36px;
-		left: -2px;
-		padding: 3px 0 0 0;
-		position: absolute;
-		width: auto;
-		h1 {
-			@include linear-gradient($color-header, left, $color-header-alt, 0, $color-header, 100%);
-			border-bottom: 2px solid $color-page;
-			border-top: 1px solid $color-page;
-			color: $color-header-text;
-			display: block;
-			font-size: 15px;
-			font-weight: normal;
-			height: 33px;
-			margin: 0;
-			padding: 0 11px;
-			.logo {
-				filter:progid:DXImageTransform.Microsoft.Matrix(Dx=0, Dy=0, M11=0.7, M12=0, M21=0, M22=0.7);
-				-moz-transform: matrix(0.7, 0, 0, 0.7, -16px, -3px);
-				-webkit-transform: matrix(0.7, 0, 0, 0.7, -15, -2);
-				left: 8px;
-				position: relative;
-				top: 7px;
-			}
-		}
-		.banner-corner-left {
-			border: 1px solid transparent;
-			border-color: $color-header $color-header transparent transparent;
-			bottom: 0;
-			width: 0;
-		}
-		.banner-corner-right {
-			border: 19px solid transparent;
-			border-right-width: 20px;
-			border-right-color: $color-module-background;
-			position: absolute;
-			right: 0px;
-			top: 0px;
-		}
-	}
-	ul {
-		margin-top: 65px;
-		list-style: none;
-		li {
-			@include clearfix;
-			height: 95px;
-			margin-bottom: 30px;
-			.highlight {
-				float: left;
-				margin-right: 10px;
-				img {
-					border: 1px solid $color-page-border;
-					height: 95px;
-					width: 95px;
-				}
-			}
-			em {
-				display: block;
-				font-weight: bold;
-				margin-bottom: 2px;
-			}
-			.seemore {
-				display: block;
-				font-size: 12px;
-				font-weight: normal;
-				margin-top: 2px;
-			}
-		}
-		/* remove placeholder later */
-		.placeholder {
-			background-color: red;
-		}
-	}
-	.WikiaSpotlight {
-		background-color: transparent;
-		display: block;
-		margin: 30px 0;
-		img {
-			display: block;
-		}
-	}
-	.wikia-button {
-		margin: 0 12px 12px 0;
-		padding: 0 7px;
-	}
-}
-
-#RIGHT_SKYSCRAPER {
-	@extend .module;
-	text-align: center;
-	img {
-		margin: 40px auto;
-	}
-}
-
-.WikiaSpotlight {
-	background-color: $color-page;
-	color: $color-text;
-	display: inline-block;
-	width: 270px;
 }
 
 #contentSub {

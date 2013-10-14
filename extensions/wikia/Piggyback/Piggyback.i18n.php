@@ -20,8 +20,10 @@ Check your spelling.',
 );
 
 /** Message documentation (Message documentation)
+ * @author Shirayuki
  */
 $messages['qqq'] = array(
+	'action-piggyback' => '{{doc-action|piggyback}}',
 	'log-name-piggyback' => '{{doc-logpage}}',
 	'log-description-piggyback' => 'Appears on top of Special:Log/piggyback.',
 );
@@ -57,10 +59,12 @@ $messages['ar'] = array(
 );
 
 /** Breton (brezhoneg)
+ * @author Fohanno
  */
 $messages['br'] = array(
 	'piggyback-otherusername' => 'Anv implijer all',
 	'piggyback-wronguser' => "N'eo ket $1 ho anv implijer",
+	'piggyback-loginprompt' => "Adebarzhit hoc'h anv implijer hag ho ker-tremen, mar plij.",
 );
 
 /** Czech (česky)
@@ -199,6 +203,15 @@ Verifica le orthographia.',
 	'action-piggyback' => 'aperir session como un altere usator',
 	'log-name-piggyback' => 'Registro del Portacontos',
 	'log-description-piggyback' => 'Iste registro es un historia de personificationes autorisate per le Portacontos.',
+);
+
+/** Indonesian (Bahasa Indonesia)
+ * @author C5st4wr6ch
+ */
+$messages['id'] = array(
+	'piggyback-nosuchuser' => 'Tidak ada pengguna dengan nama "$1".
+Nama pengguna adalah case sensitive.
+Periksa ejaan Anda.',
 );
 
 /** Italian (italiano)
@@ -343,6 +356,26 @@ Controleer je schrijfwijze.',
 	'piggyback-issysopto' => 'Je kunt piggyback niet gebruiken om aan te melden als een andere gebruiker met het recht piggyback.',
 );
 
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'piggybac-desc' => 'Permet de s’identificar amb lo compte d’un autre utilizaire',
+	'piggyback' => 'Accès superpausat',
+	'piggyback-otherusername' => 'Autre nom d’utilizaire :',
+	'piggyback-nosuchuser' => "Existís pas cap d’utilizaire nomenat « $1 ».
+Los noms d’utilizaire son sensibles a la cassa.
+Verificatz l'ortografia.",
+	'piggyback-wronguser' => "$1 es pas vòstre nom d'utilizaire",
+	'piggyback-loginprompt' => 'Tornatz picar vòstres nom d’utilizaire e senhal.',
+	'piggyback-firstlogout' => "D'en primièr desconnectatz-vos de vòstre compte.",
+	'piggyback-itisyou' => "Vos podètz pas connectar d'un biais superpausat sus vòstre pròpri compte.",
+	'piggyback-issysopto' => "Vos podètz pas connectar d'un biais superpausat sul compted'un utilizaire qu'a el meteis aquel drech.",
+	'action-piggyback' => "se connectar jos un autre compte d'utilizaire",
+	'log-name-piggyback' => 'Jornal d’accès superpausat',
+	'log-description-piggyback' => 'Aqueste jornal es una lista dels accèsses superpausats a de comptes.',
+);
+
 /** Polish (polski)
  * @author BeginaFelicysym
  * @author Sovq
@@ -443,6 +476,7 @@ $messages['roa-tara'] = array(
 
 /** Russian (русский)
  * @author DCamer
+ * @author Kaganer
  * @author Kuzura
  * @author MaxSem
  */
@@ -454,7 +488,7 @@ $messages['ru'] = array(
 Имя участника чувствительно к регистру символов.
 Проверьте написание.',
 	'piggyback-wronguser' => '$1 — не ваше имя пользователя.',
-	'piggyback-loginprompt' => 'Введите своё имя пользователя и пароль.',
+	'piggyback-loginprompt' => 'Пожалуйста, повторно введите свои имя пользователя и пароль.',
 	'piggyback-firstlogout' => 'Сначала войдите в свою учётную запись.',
 	'piggyback-itisyou' => 'Вы не можете использоватьpiggyback на себе.',
 	'piggyback-issysopto' => 'Вы не можете использовать piggyback на участниках с доступом к piggyback.',
@@ -512,6 +546,7 @@ Suriin ang iyong pagbabaybay.',
 );
 
 /** Ukrainian (українська)
+ * @author Andriykopanytsia
  * @author Wildream
  */
 $messages['uk'] = array(
@@ -523,12 +558,24 @@ $messages['uk'] = array(
 Перевірте правильність написання.',
 	'piggyback-wronguser' => "$1Це не ваше ім'я користувача",
 	'piggyback-loginprompt' => "Будь ласка, повторно введіть ім'я користувача та пароль.",
+	'piggyback-firstlogout' => 'Спочатку вийдіть з поверненням у свій обліковий запис.',
+	'piggyback-itisyou' => 'Ви не можете підключитися до самого себе.',
+	'piggyback-issysopto' => 'Ви не можете підключитися під користувача з правом на piggyback (підключення до інших).',
+	'action-piggyback' => 'увійти до системи як інший користувач',
+	'log-name-piggyback' => 'Журнал Piggyback',
+	'log-description-piggyback' => 'Цей журнал містить записи входів через облікові записи piggyback.',
 );
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Hydra
+ * @author Hzy980512
  */
 $messages['zh-hans'] = array(
+	'piggyback' => '转接',
 	'piggyback-otherusername' => '其他用户名：',
+	'piggyback-nosuchuser' => '没有名为“$1”的用户。用户名区分大小写，请再检查一遍。',
 	'piggyback-wronguser' => '$1 不是您的用户名',
+	'piggyback-loginprompt' => '请再输入一次您的用户名和密码。',
+	'piggyback-itisyou' => '您不能转接自己。',
+	'action-piggyback' => '用其他账户登录',
 );

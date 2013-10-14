@@ -227,6 +227,15 @@ class LocalFile extends File {
 			}
 		}
 
+		/* Wikia change begin */
+		// If there's no timestamp with this file don't cache it, its a soon
+		// to be uploaded file that hasn't been fully saved yet.
+		if ( empty($cache['timestamp']) ) {
+			$wgMemc->delete( $key );
+			return;
+		}
+		/* Wikia change end */
+
 		$wgMemc->set( $key, $cache, 60 * 60 * 24 * 7 ); // A week
 	}
 
@@ -278,7 +287,8 @@ class LocalFile extends File {
 			$this->loadFromRow( $row );
 		} else {
 			/* Wikia Change Start @author garthwebb */
-			$info = 'URI: '.$_SERVER["REQUEST_URI"].' - REF: '.$_SERVER['HTTP_REFERER'];
+			$info = 'URI: '.(empty($_SERVER["REQUEST_URI"]) ? 'N/A' : $_SERVER["REQUEST_URI"]).
+				 ' - REF: '.(empty($_SERVER['HTTP_REFERER']) ? 'N/A' : $_SERVER['HTTP_REFERER']);
 			Wikia::Log(__METHOD__, false, "[$info] Setting fileExists to false for '".$this->getName()."'");
 			/* Wikia Change End */
 			$this->fileExists = false;
@@ -471,7 +481,8 @@ class LocalFile extends File {
 			/* Wikia Change Start @author marzjan */
 			$fileExists = $this->repo->fileExists( $this->getVirtualUrl(), FileRepo::FILES_ONLY );
 
-			$info = 'URI: '.$_SERVER["REQUEST_URI"].' - REF: '.$_SERVER['HTTP_REFERER'];
+			$info = 'URI: '.(empty($_SERVER["REQUEST_URI"]) ? 'N/A' : $_SERVER["REQUEST_URI"]).
+				 ' - REF: '.(empty($_SERVER['HTTP_REFERER']) ? 'N/A' : $_SERVER['HTTP_REFERER']);
 			Wikia::Log(__METHOD__, false, "[$info] Setting fileExists to ".($fileExists ? 'true' : 'false')." for '".$this->getVirtualUrl()."'");
 			/* Wikia Change End */
 			$this->missing = !$fileExists;
@@ -1104,10 +1115,6 @@ class LocalFile extends File {
 		$descTitle = $this->getTitle();
 		$wikiPage = new WikiFilePage( $descTitle );
 		$wikiPage->setFile( $this );
-
-		# start wikia code
-		wfRunHooks( 'Image::RecordUpload:article', array( &$article, $descTitle ) ) ;
-		# end wikia code
 
 		# Add the log entry
 		$log = new LogPage( 'upload' );
@@ -1883,6 +1890,14 @@ class LocalFileRestoreBatch {
 				$status->failCount++;
 				continue;
 			}
+
+			// Wikia change - begin
+			// @author macbre (BAC-526)
+			// check whether the file was deleted with "suppress" flag (and obey it)
+			if( !$this->unsuppress && ( $row->fa_deleted & Revision::DELETED_TEXT ) ) {
+				return Status::newFatal('undelete-error');
+			}
+			// Wikia change - end
 
 			$deletedRel = $this->file->repo->getDeletedHashPath( $row->fa_storage_key ) . $row->fa_storage_key;
 			$deletedUrl = $this->file->repo->getVirtualUrl() . '/deleted/' . $deletedRel;

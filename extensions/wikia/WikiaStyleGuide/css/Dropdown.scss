@@ -29,7 +29,7 @@ $ddHeight: 20px;
 		top: $ddHeight+1;
 		z-index: $zTop;
 	}
-	
+
 	&.disable {
 		@include opacity(50);
 	}
@@ -44,7 +44,7 @@ $ddHeight: 20px;
 		display: block;
 		line-height: $ddHeight;
 		margin: 0;
-		
+
 		label {
 			cursor: pointer;
 			display: block;

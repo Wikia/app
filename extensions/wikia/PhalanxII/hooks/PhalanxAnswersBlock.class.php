@@ -10,10 +10,7 @@
  */
 
 class PhalanxAnswersBlock extends WikiaObject {
-	function __construct() {
-		parent::__construct();
-	}
-	
+
 	/**
 	 * Hook handler for CreateDefaultQuestionPageFilter hook
 	 * @see extensions/wikia/Answers/PrefilledDefaultQuestion.php#L15
@@ -30,9 +27,9 @@ class PhalanxAnswersBlock extends WikiaObject {
 
 		$language = RequestContext::getMain()->getLanguage();
 
-		$phalanxModel = new PhalanxContentModel( $title, $language );
+		$phalanxModel = new PhalanxContentModel( $title, $language->getCode() );
 		$ret = $phalanxModel->match_question_title();
-		
+
 		wfProfileOut( __METHOD__ );
 		return $ret;
 	}

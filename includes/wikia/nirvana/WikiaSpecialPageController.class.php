@@ -42,6 +42,9 @@ class WikiaSpecialPageController extends WikiaController {
 
 		if( $response->getFormat() == WikiaResponse::FORMAT_HTML ) {
 			try {
+				if ( $response->isCaching() ) {
+					Wikia::log( __METHOD__, false, $this->specialPage->getName() . ' is an HTML-formatted special page with caching set through the response. Use WikiaSpecialPageController::setVarnishCacheTime instead.' );
+				}
 				$this->wg->Out->addHTML( $response->toString() );
 			} catch( Exception $exception ) {
 				// in case of exception thrown by WikiaView, just render standard error controller response
@@ -55,6 +58,15 @@ class WikiaSpecialPageController extends WikiaController {
 			$response->render();
 			exit;
 		}
+	}
+
+	/**
+	 * This method is used to manually set varnish caching on special pages.
+	 * Special pages are sent through OutputPage, and headers set in the request are ignored.
+	 * @param int $seconds
+	 */
+	protected function setVarnishCacheTime( $seconds ) {
+		$this->wg->Out->mSquidMaxage = $seconds;
 	}
 
 	/**

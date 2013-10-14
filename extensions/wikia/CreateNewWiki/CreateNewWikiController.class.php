@@ -2,6 +2,7 @@
 class CreateNewWikiController extends WikiaController {
 
 	const DAILY_USER_LIMIT = 2;
+	const WF_WDAC_REVIEW_FLAG_NAME = 'wgWikiDirectedAtChildrenByFounder';
 
 	public function index() {
 		global $wgSuppressWikiHeader, $wgSuppressPageHeader, $wgSuppressFooter, $wgSuppressAds, $wgSuppressToolbar, $fbOnLoginJsOverride, $wgRequest, $wgUser;
@@ -194,6 +195,9 @@ class CreateNewWikiController extends WikiaController {
 				$this->statusHeader = wfMsg('cnw-error-general-heading');
 				trigger_error("Failed to create new wiki: $error_code " . $params['wName'] . " " . $params['wLanguage'] . " " . $wgRequest->getIP(), E_USER_WARNING);
 			} else {
+				if ( isset($params['wAllAges']) && !empty( $params['wAllAges'] ) ) {
+					WikiFactory::setVarByName( self::WF_WDAC_REVIEW_FLAG_NAME, $cityId, true, __METHOD__ );
+				}
 				$this->status = 'ok';
 				$this->siteName = $createWiki->getWikiInfo('sitename');
 				$this->cityId = $cityId;

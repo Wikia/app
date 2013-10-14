@@ -4,13 +4,17 @@
  *
  * @author Jakub "Student" Olek
  */
-define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require.optional('popover'), 'track', require.optional('share'), require.optional('wikia.cache'), 'wikia.loader', 'wikia.nirvana', 'wikia.videoBootstrap', 'wikia.media.class'],
-	function(msg, modal, throbber, qs, popover, track, share, cache, loader, nirvana, VideoBootstrap, Media){
+define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require.optional('popover'), 'track', require.optional('share'), require.optional('wikia.cache'), 'wikia.loader', 'wikia.nirvana', 'wikia.videoBootstrap', 'wikia.media.class', 'toast'],
+	function(msg, modal, throbber, QueryString, popover, track, share, cache, loader, nirvana, VideoBootstrap, Media, toast){
 	'use strict';
 	/** @private **/
 
 	var	transform = (function(style, undef){
-			return style.transform != undef ? 'transform' : style.webkitTransform != undef ? 'webkitTransform' : style.oTransform != undef ? 'oTransform' : style.mozTransform != undef ? 'mozTransform' : 'msTransform';
+			return style.transform !== undef ? 'transform' :
+				style.webkitTransform !== undef ? 'webkitTransform' :
+				style.oTransform !== undef ? 'oTransform' :
+				style.mozTransform !== undef ? 'mozTransform' :
+				'msTransform';
 		})(document.createElement('div').style),
 		images = [],
 		elements,
@@ -22,7 +26,10 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 		currentWrapper,
 		currentWrapperStyle,
 		wkMdlImages,
-		shrImg = qs().getVal('file'),
+		qs = new QueryString(),
+		shrImg = qs.getVal('file'),
+		// index of shared file in array of videos/images on page
+		shrImgIdx = -1,
 		shareBtn,
 		clickEvent = 'click',
 		sharePopOver,
@@ -52,8 +59,8 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 		startD,
 		galleryInited = false,
 		inited,
-		// Video view click source tracking. Possible values are "embed" and "lightbox" for consistancy with Oasis
-		clickSource,
+		// Video view click source tracking. Default, before lightbox is opened, is 'embed'.  Other possible values are 'share' and 'lightbox'.
+		clickSource = 'embed',
 		videoInstance,
 		events = {},
 		skip = [];
@@ -92,7 +99,9 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 				while(imageData = data[j++]){
 					name = imageData.name;
 
-					if (name === shrImg) {shrImg = imagesLength;}
+					if (name === shrImg) {
+							shrImgIdx = imagesLength;
+					}
 
 					images[imagesLength] = new Media({
 						element: element,
@@ -127,23 +136,38 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 
 		elements = elementList;
 
-		//if url contains image=imageName - setup and find the image
+		//if url contains file=fileName - setup and find the image/video
 		if(shrImg) {
-			setTimeout(function(){
-				!inited && setup();
-				openModal(shrImg);
-			}, 2000);
+			!inited && setup();
+			if ( shrImgIdx > -1 ) {
+				// file specified in querystring exists on the page - show it in a modal
+				// after a short delay so the user will know they are on an article page
+				setTimeout(function(){
+					clickSource = 'share';
+					openModal(shrImgIdx);
+				}, 2000);
+			} else {
+				// file specified in querystring doesn't exist on the page
+				toast.show( msg('wikiamobile-shared-file-not-available') );
+				if(!Features.gameguides){
+					qs.removeVal( 'file' ).replaceState();
+				}
+			}
 		}
 
 		document.body.addEventListener(clickEvent, function(event){
 			var t = event.target,
-				className = t.className;
+				className = t.className,
+				isSmall = (className.indexOf('small') > -1),
+				isMedia = (className.indexOf('media') > -1);
 
-			//if this image is a linked image don't open modal
-			if(className.indexOf('media') > -1){
+			if(isSmall || isMedia) {
 				event.preventDefault();
 				event.stopPropagation();
+			}
 
+			//if this image is a linked image don't open modal
+			if(isMedia){
 				!inited && setup();
 
 				if(className.indexOf('Wikia-video-thumb') > -1) {track.event('video', track.CLICK, {label: 'article'});}
@@ -162,14 +186,19 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 		currentWrapper.className += ' imgPlcHld';
 	}
 
-	function embedVideo(image, data) {
-		videoInstance = new VideoBootstrap(image, data, clickSource);
+	function embedVideo(image, data, cs) {
+		videoInstance = new VideoBootstrap(image, data, cs);
 		// Future video/image views will come from modal
 		clickSource = 'lightbox';
 	}
 
 	function setupImage(){
-		var video;
+		var video,
+			imgTitle = currentMedia.name,
+			// cache value for clickSource to prevent race conditions
+			cs = clickSource,
+			// grab the querystring for the current url
+			currQS = QueryString();
 
 		throbber.remove(currentWrapper);
 
@@ -180,13 +209,11 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 			videoInstance.clearTimeoutTrack();
 		}
 
-		if(currentMedia.type == Media.types.VIDEO) {
-			var imgTitle = currentMedia.name;
-
+		if(currentMedia.type === Media.types.VIDEO) {
 			zoomable = false;
 
 			if(videoCache[imgTitle]){
-				embedVideo(currentMedia, videoCache[imgTitle]);
+				embedVideo(currentWrapper, videoCache[imgTitle], cs);
 			}else{
 				if(currentMedia.supported) {
 					currentWrapper.innerHTML = '';
@@ -213,19 +240,19 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 								var videoData = data.embedCode;
 
 								if(videoData.html) {
-									videoData.html = "<div class=player>" + videoData.html + "</div>";
+									videoData.html = '<div class=player>' + videoData.html + '</div>';
 								}
 
 								videoCache[imgTitle] = videoData;
 
-								embedVideo(currentWrapper, videoData);
+								embedVideo(currentWrapper, videoData, cs);
 							}
 						}
 					);
 				} else {
-					var html = "<div class=not-supported><span>" +
-						msg('wikiamobile-video-not-friendly-header') + "</span>" +
-						currentWrapper.innerHTML + "<span>" +
+					var html = '<div class=not-supported><span>' +
+						msg('wikiamobile-video-not-friendly-header') + '</span>' +
+						currentWrapper.innerHTML + '<span>' +
 						msg('wikiamobile-video-not-friendly') +
 						'</span></div>';
 
@@ -235,6 +262,11 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 
 					currentWrapper.innerHTML = html;
 				}
+			}
+
+			// update url for sharing
+			if(!Features.gameguides){
+				currQS.setVal( 'file', imgTitle, true ).replaceState();
 			}
 		}else if(currentMedia.type == Media.types.IMAGE){
 			var img = new Image();
@@ -272,6 +304,10 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 				origH = img.height;
 			}
 
+			// update url for sharing
+			if(!Features.gameguides){
+				currQS.setVal( 'file', imgTitle, true ).replaceState();
+			}
 		} else if(currentMedia.type){//custom
 			var data = {
 					currentNum: currentNum,
@@ -285,6 +321,11 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 			//change it in media module as well
 			if(data.zoomable != zoomable){
 				zoomable = data.zoomable
+			}
+
+			// We're showing an ad or other custom media type.  Don't support sharing.
+			if(!Features.gameguides){
+				currQS.removeVal( 'file' ).replaceState();
 			}
 		}
 
@@ -479,14 +520,21 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 	}
 
 	function toggleGallery(show){
-		document.getElementById('wkGalTgl').style.display = show ? 'block' : 'none';
+		var gallery = document.getElementById('wkGalTgl');
+
+		if(gallery) {
+			gallery.style.display = show ? 'block' : 'none';
+		}
 	}
 
 	function refresh(){
 		currentWrapper = wkMdlImages.getElementsByClassName('current')[0];
 		currentWrapperStyle = currentWrapper.style;
 
-		shareBtn.style.display = 'block';
+		// GameGuides has no share button
+		if( shareBtn ) {
+			shareBtn.style.display = 'block';
+		}
 		toggleGallery(true);
 		setupImage();
 	}
@@ -519,9 +567,6 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 			galleryData,
 			ttl = 604800; //7days
 
-		// Video/image view was initiated from article
-		clickSource = "embed";
-
 		currentNum = getMediaNumber(~~num);
 		currentMedia = images[currentNum];
 
@@ -532,6 +577,13 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 			onClose: function(){
 				pager.cleanup();
 				removeZoom();
+
+				// remove file=title from URL
+				if(!Features.gameguides){
+					qs.removeVal( 'file' ).replaceState();
+				}
+				// reset tracking clickSource
+				clickSource = 'embed';
 			},
 			onResize: function(ev){
 				resetZoom();

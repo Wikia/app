@@ -133,7 +133,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 
 		$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/js/EditHub.js');
 		$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/js/EditHubNavigation.js');
-		$this->response->addAsset('/resources/jquery/jquery.validate.js');
+		$this->response->addAsset('resources/jquery/jquery.validate.js');
 		$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/js/jquery.MetaData.js');
 
 		$selectedModuleValues = $modulesData['moduleList'][$this->selectedModuleId]['data'];
@@ -369,7 +369,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 
 		$fileName = $this->getVal('fileHandler', false);
 		if ($fileName) {
-			$imageData = ImagesService::getLocalFileThumbUrlAndSizes($fileName, $this->toolboxModel->getThumbnailSize());
+			$imageData = ImagesService::getLocalFileThumbUrlAndSizes($fileName, $this->toolboxModel->getThumbnailSize(), ImagesService::EXT_JPG);
 			$this->fileUrl = $imageData->url;
 			$this->imageWidth = $imageData->width;
 			$this->imageHeight = $imageData->height;

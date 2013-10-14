@@ -10,7 +10,7 @@
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'WDAC Review',
 	'descriptionmsg' => 'wdacreview-tool-description',
-	'authors' => array(
+	'author' => array(
 		"[http://community.wikia.com/wiki/User:R-Frank Kamil 'R-Frank' Koterba]"
 	),
 );

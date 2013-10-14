@@ -4,7 +4,7 @@
  */
 
 class SassUtil {
-	
+
 	const DEFAULT_OASIS_THEME = 'oasis';
 
 	/**
@@ -20,7 +20,7 @@ class SassUtil {
 
 		return $params;
 	}
-	
+
 	/**
 	 * Returns a set of sass parameters set by the webapp that should not be saved to wiki themesettings
 	 * For example, skin width is an webapp, application, setting.  It is not user controllable.
@@ -29,22 +29,23 @@ class SassUtil {
 	 *            Non-settable settings should be driven programmatically.
 	 */
 	public static function getApplicationThemeSettings() {
-		global $wgOasisHD, $wgOasisFluid, $wgOasisGrid;
-		
+		global $wgOasisGrid, $wgOasisHD, $wgOasisResponsive;
+
 		$params = array();
 
 		if ( $wgOasisHD ) {
 			$params['widthType'] = 1;
 		}
 
-		if ( $wgOasisFluid ) {
-			$params['widthType'] = 2;
-		}
-		
 		if ( $wgOasisGrid ) {
 			$params['widthType'] = 3;
 		}
-		
+
+		// Should be last so it can override wgOasisGrid
+		if ( class_exists( 'BodyController' ) && BodyController::isResponsiveLayoutEnabled() ) {
+			$params['widthType'] = 2;
+		}
+
 		return $params;
 	}
 
@@ -59,42 +60,59 @@ class SassUtil {
 
 		// Load the 5 deafult colors by theme here (eg: in case the wiki has an override but the user doesn't have overrides).
 		static $oasisSettings = array();
-		
+
 		if (empty($oasisSettings)) {
 			$themeSettings = new ThemeSettings();
 			$settings = $themeSettings->getSettings();
-	
+
 			$oasisSettings["color-body"] = self::sanitizeColor($settings["color-body"]);
 			$oasisSettings["color-page"] = self::sanitizeColor($settings["color-page"]);
 			$oasisSettings["color-buttons"] = self::sanitizeColor($settings["color-buttons"]);
 			$oasisSettings["color-links"] = self::sanitizeColor($settings["color-links"]);
 			$oasisSettings["color-header"] = self::sanitizeColor($settings["color-header"]);
 			$oasisSettings["background-image"] = wfReplaceImageServer($settings['background-image'], self::getCacheBuster());
+
+			// sending width and height of background image to SASS
+			if ( !empty($settings["background-image-width"]) && !empty($settings["background-image-height"]) ) {
+				// strip 'px' from previously cached settings since we removed 'px' (sanity check)
+				$oasisSettings["background-image-width"] = str_replace( 'px', '', $settings["background-image-width"] );
+				$oasisSettings["background-image-height"] = str_replace( 'px', '', $settings["background-image-height"] );
+			} else {
+				// if not cached in theme settings
+				$bgImage = wfFindFile(ThemeSettings::BackgroundImageName);
+				if ( !empty($bgImage) ) {
+					$settings["background-image-width"] = $oasisSettings["background-image-width"] = $bgImage->getWidth();
+					$settings["background-image-height"] = $oasisSettings["background-image-height"] = $bgImage->getHeight();
+
+					$themeSettings->saveSettings($settings);
+				}
+			}
+
 			$oasisSettings["background-align"] = $settings["background-align"];
 			$oasisSettings["background-tiled"] = $settings["background-tiled"];
 			$oasisSettings["background-fixed"] = $settings["background-fixed"];
 			$oasisSettings["page-opacity"] = $settings["page-opacity"];
-			if (isset($settings["wordmark-font"]) && $settings["wordmark-font"] != "default") {
+			if (!empty($settings["wordmark-font"]) && $settings["wordmark-font"] != "default") {
 				$oasisSettings["wordmark-font"] = $settings["wordmark-font"];
 			}
-	
+
 			// RTL
 			if($wgContLang && $wgContLang->isRTL()){
 				$oasisSettings['rtl'] = 'true';
 			}
-		}
 
-		// RT:70673
-		foreach ($oasisSettings as $key => $val) {
-			if(!empty($val)) {
-				$oasisSettings[$key] = trim($val);
+			// RT:70673
+			foreach ($oasisSettings as $key => $val) {
+				if(!empty($val)) {
+					$oasisSettings[$key] = trim($val);
+				}
 			}
 		}
 
 		wfDebug(__METHOD__ . ': ' . json_encode($oasisSettings) . "\n");
 
 		wfProfileOut(__METHOD__);
-		
+
 		return $oasisSettings;
 	}
 
@@ -161,7 +179,7 @@ class SassUtil {
 				$oasisSettings = self::getDefaultOasisSettings();
 			}
 		}
-		
+
 		$backgroundColor = $oasisSettings['color-page'];
 
 		// convert RGB to HSL
@@ -174,7 +192,7 @@ class SassUtil {
 		wfProfileOut(__METHOD__);
 		return $isDark;
 	}
-	
+
 	/**
 	 * Convert RGB colors array into HSL array
 	 *

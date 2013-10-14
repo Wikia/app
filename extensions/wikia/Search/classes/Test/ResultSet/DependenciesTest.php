@@ -19,7 +19,7 @@ class DependenciesTest extends Wikia\Search\Test\BaseTest {
 		
 		$mockDc = $this->getMockBuilder( 'Wikia\Search\ResultSet\DependencyContainer' )
 		               ->disableOriginalConstructor()
-		               ->setMethods( array( 'getConfig', 'getParent', 'getMetaposition', 'getResult', 'getWikiMatch', 'getService', 'setWikiMatch' ) )
+		               ->setMethods( array( 'getConfig', 'getResult', 'getService' ) )
 		               ->getMock();
 		
 		$mockService = $this->getMock( 'Wikia\Search\MediaWikiService', array( 'getWikiMatchByHost' ) );
@@ -36,9 +36,9 @@ class DependenciesTest extends Wikia\Search\Test\BaseTest {
 		                  ->disableOriginalConstructor()
 		                  ->getMock();
 		
-		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getInterWiki' ) );
+		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getInterWiki', 'getQueryService' ) );
 		$pcf = $this->getMock( 'Wikia\Search\ProfiledClassFactory', [ 'get' ] );
-		$setMockStrings = array( 'Base', 'Grouping', 'GroupingSet', 'EmptySet', 'MatchGrouping' );
+		$setMockStrings = array( 'Base', 'EmptySet' );
 		$setMocks = array();
 		foreach ( $setMockStrings as $name ) {
 			$fullName = 'Wikia\Search\ResultSet\\'.$name;
@@ -68,22 +68,27 @@ class DependenciesTest extends Wikia\Search\Test\BaseTest {
 		;
 		$mockDc
 		    ->expects( $this->at( 1 ) )
-		    ->method ( 'getParent' )
-		    ->will   ( $this->returnValue( null ) )
-		;
-		$mockDc
-		    ->expects( $this->at( 2 ) )
-		    ->method ( 'getMetaposition' )
-		    ->will   ( $this->returnValue( null ) )
-		;
-		$mockDc
-		    ->expects( $this->at( 3 ) )
 		    ->method ( 'getResult' )
 		    ->will   ( $this->returnValue( $mockEmptyResult ) )
 		;
+		$pcf
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'get' )
+		    ->with   ( 'Wikia\Search\ResultSet\EmptySet', [ $mockDc ] )
+		    ->will   ( $this->returnValue( $setMocks['EmptySet'] ) )
+		;
+		$this->assertEquals(
+				$setMocks['EmptySet'],
+				$factory->get( $mockDc )
+		);
 		$mockDc
-		    ->expects( $this->at( 4 ) )
-		    ->method ( 'getWikiMatch' )
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'getConfig' )
+		    ->will   ( $this->returnValue( $mockConfig ) )
+		;
+		$mockDc
+		    ->expects( $this->at( 1 ) )
+		    ->method ( 'getResult' )
 		    ->will   ( $this->returnValue( null ) )
 		;
 		$pcf
@@ -103,173 +108,13 @@ class DependenciesTest extends Wikia\Search\Test\BaseTest {
 		;
 		$mockDc
 		    ->expects( $this->at( 1 ) )
-		    ->method ( 'getParent' )
-		    ->will   ( $this->returnValue( null ) )
-		;
-		$mockDc
-		    ->expects( $this->at( 2 ) )
-		    ->method ( 'getMetaposition' )
-		    ->will   ( $this->returnValue( null ) )
-		;
-		$mockDc
-		    ->expects( $this->at( 3 ) )
-		    ->method ( 'getResult' )
-		    ->will   ( $this->returnValue( null ) )
-		;
-		$mockDc
-		    ->expects( $this->at( 4 ) )
-		    ->method ( 'getWikiMatch' )
-		    ->will   ( $this->returnValue( null ) )
-		;
-		$pcf
-		    ->expects( $this->at( 0 ) )
-		    ->method ( 'get' )
-		    ->with   ( 'Wikia\Search\ResultSet\EmptySet', [ $mockDc ] )
-		    ->will   ( $this->returnValue( $setMocks['EmptySet'] ) )
-		;
-		$this->assertEquals(
-				$setMocks['EmptySet'],
-				$factory->get( $mockDc )
-		);
-		$mockDc
-		    ->expects( $this->at( 0 ) )
-		    ->method ( 'getConfig' )
-		    ->will   ( $this->returnValue( $mockConfig ) )
-		;
-		$mockDc
-		    ->expects( $this->at( 1 ) )
-		    ->method ( 'getParent' )
-		    ->will   ( $this->returnValue( null ) )
-		;
-		$mockDc
-		    ->expects( $this->at( 2 ) )
-		    ->method ( 'getMetaposition' )
-		    ->will   ( $this->returnValue( null ) )
-		;
-		$mockDc
-		    ->expects( $this->at( 3 ) )
 		    ->method ( 'getResult' )
 		    ->will   ( $this->returnValue( $mockResult ) )
-		;
-		$mockDc
-		    ->expects( $this->at( 4 ) )
-		    ->method ( 'getWikiMatch' )
-		    ->will   ( $this->returnValue( null ) )
 		;
 		$mockConfig
-		    ->expects( $this->at( 0 ) )
-		    ->method ( 'getInterWiki' )
-		    ->will   ( $this->returnValue( true ) )
-		;
-		$pcf
-		    ->expects( $this->at( 0 ) )
-		    ->method ( 'get' )
-		    ->with   ( 'Wikia\Search\ResultSet\GroupingSet', [ $mockDc ] )
-		    ->will   ( $this->returnValue( $setMocks['GroupingSet'] ) )
-		;
-		$this->assertEquals(
-				$setMocks['GroupingSet'],
-				$factory->get( $mockDc )
-		);
-		$mockDc
-		    ->expects( $this->at( 0 ) )
-		    ->method ( 'getConfig' )
-		    ->will   ( $this->returnValue( $mockConfig ) )
-		;
-		$mockDc
-		    ->expects( $this->at( 1 ) )
-		    ->method ( 'getParent' )
-		    ->will   ( $this->returnValue( $setMocks['GroupingSet'] ) )
-		;
-		$mockDc
-		    ->expects( $this->at( 2 ) )
-		    ->method ( 'getMetaposition' )
-		    ->will   ( $this->returnValue( 2 ) )
-		;
-		$mockDc
-		    ->expects( $this->at( 3 ) )
-		    ->method ( 'getResult' )
-		    ->will   ( $this->returnValue( $mockResult ) )
-		;
-		$mockDc
-		    ->expects( $this->at( 4 ) )
-		    ->method ( 'getWikiMatch' )
-		    ->will   ( $this->returnValue( null ) )
-		;
-		$pcf
-		    ->expects( $this->at( 0 ) )
-		    ->method ( 'get' )
-		    ->with   ( 'Wikia\Search\ResultSet\Grouping', [ $mockDc ] )
-		    ->will   ( $this->returnValue( $setMocks['Grouping'] ) )
-		;
-		$this->assertEquals(
-				$setMocks['Grouping'],
-				$factory->get( $mockDc )
-		);
-		$mockDc
-		    ->expects( $this->at( 0 ) )
-		    ->method ( 'getConfig' )
-		    ->will   ( $this->returnValue( $mockConfig ) )
-		;
-		$mockDc
-		    ->expects( $this->at( 1 ) )
-		    ->method ( 'getParent' )
-		    ->will   ( $this->returnValue( $setMocks['GroupingSet'] ) )
-		;
-		$mockDc
-		    ->expects( $this->at( 2 ) )
-		    ->method ( 'getMetaposition' )
-		    ->will   ( $this->returnValue( null ) )
-		;
-		$mockDc
-		    ->expects( $this->at( 3 ) )
-		    ->method ( 'getResult' )
-		    ->will   ( $this->returnValue( $mockResult ) )
-		;
-		$mockDc
-		    ->expects( $this->at( 4 ) )
-		    ->method ( 'getWikiMatch' )
-		    ->will   ( $this->returnValue( $mockMatch ) )
-		;
-		$pcf
-		    ->expects( $this->at( 0 ) )
-		    ->method ( 'get' )
-		    ->with   ( 'Wikia\Search\ResultSet\MatchGrouping', [ $mockDc ] )
-		    ->will   ( $this->returnValue( $setMocks['MatchGrouping'] ) )
-		;
-		$this->assertEquals(
-				$setMocks['MatchGrouping'],
-				$factory->get( $mockDc )
-		);
-		$mockDc
-		    ->expects( $this->at( 0 ) )
-		    ->method ( 'getConfig' )
-		    ->will   ( $this->returnValue( $mockConfig ) )
-		;
-		$mockDc
-		    ->expects( $this->at( 1 ) )
-		    ->method ( 'getParent' )
-		    ->will   ( $this->returnValue( null ) )
-		;
-		$mockDc
-		    ->expects( $this->at( 2 ) )
-		    ->method ( 'getMetaposition' )
-		    ->will   ( $this->returnValue( null ) )
-		;
-		$mockDc
-		    ->expects( $this->at( 3 ) )
-		    ->method ( 'getResult' )
-		    ->will   ( $this->returnValue( $mockResult ) )
-		;
-		$mockDc
-		    ->expects( $this->at( 4 ) )
-		    ->method ( 'getWikiMatch' )
-		    ->will   ( $this->returnValue( null ) )
-		;
-		$mockConfig
-		    ->expects( $this->at( 0 ) )
-		    ->method ( 'getGroupResults' )
-		    ->will   ( $this->returnValue( false ) )
+		    ->expects( $this->once() )
+		    ->method ( 'getQueryService' )
+		    ->will   ( $this->returnValue( '\\Wikia\\Search\\QueryService\\Select\\Dismax\\InterWiki' ) )
 		;
 		$pcf
 		    ->expects( $this->at( 0 ) )
@@ -291,22 +136,14 @@ class DependenciesTest extends Wikia\Search\Test\BaseTest {
 	 * @covers Wikia\Search\ResultSet\DependencyContainer::setResult
 	 * @covers Wikia\Search\ResultSet\DependencyContainer::getService
 	 * @covers Wikia\Search\ResultSet\DependencyContainer::setService
-	 * @covers Wikia\Search\ResultSet\DependencyContainer::getMetaposition
-	 * @covers Wikia\Search\ResultSet\DependencyContainer::setMetaposition
-	 * @covers Wikia\Search\ResultSet\DependencyContainer::getParent
-	 * @covers Wikia\Search\ResultSet\DependencyContainer::setParent
-	 * @covers Wikia\Search\ResultSet\DependencyContainer::getWikiMatch
-	 * @covers Wikia\Search\ResultSet\DependencyContainer::setWikiMatch
 	 */
 	public function testDependencyContainer() {
 		$namesToClasses = array(
 				'config' => 'Wikia\Search\Config',
 				'result' => '\Solarium_Result_Select',
 				'service' => 'Wikia\Search\MediaWikiService',
-				'parent' => 'Wikia\Search\ResultSet\GroupingSet',
-				'wikiMatch' => 'Wikia\Search\Match\Wiki'
 				);
-		$namesToMocks = array( 'metaposition' => 1 );
+		$namesToMocks = [];
 		foreach ( $namesToClasses as $name => $class ) {
 			$namesToMocks[$name] = $this->getMockBuilder( $class )->disableOriginalConstructor()->getMock();
 		}

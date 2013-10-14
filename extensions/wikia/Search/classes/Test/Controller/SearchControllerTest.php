@@ -26,13 +26,14 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 	public function testIndex() {
 		
 		$methods = array( 'handleSkinSettings', 'getSearchConfigFromRequest', 
-				'handleArticleMatchTracking', 'setPageTitle', 'setResponseValuesFromConfig' );
+				'handleArticleMatchTracking', 'setPageTitle', 'setResponseValuesFromConfig',
+				'getVal', 'handleLayoutAbTest' );
 		$mockController = $this->searchController->setMethods( $methods )->getMock();
 		
 		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getQuery' ) );
 		$mockQuery = $this->getMock( 'Wikia\Search\Query\Select', array( 'hasTerms' ), array( 'foo' ) );
 		
-		$mockSearch = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\OnWiki' )
+		$mockSearch = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\Dismax\OnWiki' )
 		                   ->setMethods( array( 'search', 'getMatch' ) )
 		                   ->disableOriginalConstructor()
 		                   ->getMock();
@@ -45,6 +46,14 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		$mockController
 		    ->expects( $this->once() )
 		    ->method ( 'handleSkinSettings' )
+		;
+		$mockController
+			->expects( $this->once() )
+			->method ( 'getVal' )
+		;
+		$mockController
+			->expects( $this->once() )
+			->method ( 'handleLayoutAbTest' )
 		;
 		$mockController
 		    ->expects( $this->once() )
@@ -113,6 +122,50 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		
 	}
 
+	public function testHandleLayoutAbTest() {
+		$mockController = $this->searchController->setMethods( array( 'templateExists', 'setVal' ) )->getMock();
+
+		$method = new ReflectionMethod( 'WikiaSearchController', 'handleLayoutAbTest' );
+		$method->setAccessible( true );
+
+		$this->assertTrue(
+			$method->invoke( $mockController, null )
+		);
+
+		$mockController
+			->expects( $this->at( 0 ) )
+			->method ( 'templateExists' )
+			->will	 ( $this->returnValue( false ) )
+		;
+
+		$mockController
+			->expects( $this->at( 1 ) )
+			->method ( 'setVal' )
+			->with	 ( 'resultView', WikiaSearchController::WIKIA_DEFAULT_RESULT )
+		;
+
+		$this->assertTrue(
+			$method->invoke( $mockController, 'Atest' )
+		);
+
+		$mockController
+			->expects( $this->at( 0 ) )
+			->method ( 'templateExists' )
+			->will	 ( $this->returnValue( true ) )
+		;
+
+		$mockController
+			->expects( $this->at( 1 ) )
+			->method ( 'setVal' )
+			->with	 ( 'resultView', 'Btest' )
+		;
+
+		$this->assertTrue(
+			$method->invoke( $mockController, 'Btest' )
+		);
+
+	}
+
 	/**
 	 * @covers WikiaSearchController::handleArticleMatchTracking
 	 */
@@ -133,7 +186,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		                    ->disableOriginalConstructor()
 		                    ->setMethods( array( 'getTitle' ) )
 		                    ->getMock();
-		$mockTrack = $this->getMock( 'Track', array( 'event' ) );
 		$mockRunHooks = $this->getGlobalFunctionMock( 'wfRunHooks' );
 
 		$originalQuery = 'foo';
@@ -185,11 +237,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		    ->method ( 'wfRunHooks' )
 		    ->with   ( 'SpecialSearchIsgomatch', array( $mockTitle, $originalQuery ) )
 		;
-		$mockTrack
-		    ->staticExpects( $this->once() )
-		    ->method ( 'event' )
-		    ->with   ( 'search_start_gomatch', array( 'sterm' => $originalQuery, 'rver' => 0 ) )
-		;
 		$mockTitle
 			->expects	( $this->any() )
 			->method	( 'getFullURL' )
@@ -208,8 +255,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 
 		$this->mockClass( 'Article', $mockArticle );
 		$this->mockClass( 'Article', $mockArticle, 'newFromID' );
-		$this->mockClass( 'Track', $mockTrack );
-		$this->mockClass( 'Track', $mockTrack );
 
 		$method = new ReflectionMethod( 'WikiaSearchController', 'handleArticleMatchTracking' );
 		$method->setAccessible( true );
@@ -301,7 +346,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		                    ->setMethods( array( 'getTitle' ) )
 		                    ->getMock();
 		$mockResponse = $this->getMock( 'WikiaResponse', array( 'redirect' ), array( 'html' ) );
-		$mockTrack = $this->getMock( 'Track', array( 'event' ) );
 		$mockWrapper = $this->getMockBuilder( 'WikiaFunctionWrapper' )
 		                    ->disableOriginalConstructor()
 		                    ->setMethods( array( 'RunHooks' ) )
@@ -351,11 +395,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 			->with		( 'fulltext', '0' )
 			->will		( $this->returnValue( 'search' ) )
 		;
-		$mockTrack
-		    ->staticExpects( $this->once() )
-		    ->method ( 'event' )
-		    ->with   ( 'search_start_match', array( 'sterm' => $originalQuery, 'rver' => 0 ) )
-		;
 
 		$responserefl = new ReflectionProperty( 'WikiaSearchController', 'response' );
 		$responserefl->setAccessible( true );
@@ -366,13 +405,12 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		$wfrefl->setValue( $mockController, $mockWrapper );
 
 		$this->mockClass( 'Article', $mockArticle, 'newFromID' );
-		$this->mockClass( 'Track', $mockTrack );
 
 		$method = new ReflectionMethod( 'WikiaSearchController', 'handleArticleMatchTracking' );
 		$method->setAccessible( true );
 
 		$this->assertTrue(
-				$method->invoke( $mockController, $searchConfig, $mockTrack ),
+				$method->invoke( $mockController, $searchConfig ),
 				'WikiaSearchController::handleArticleMatchTracking should return true.'
 		);
 	}
@@ -542,6 +580,10 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		$mockWgRefl->setAccessible( true );
 		$mockWgRefl->setValue( $mockController, (object) array( 'Title' => $mockTitle ) );
 
+		$this->getStaticMethodMock( 'SpecialPage', 'getTitleFor' )->expects( $this->any() )
+				->method( 'getTitleFor' )
+				->will( $this->returnValue( $mockTitle ) );
+
 		$mockController
 			->expects	( $this->at( 0 ) )
 			->method	( 'getVal' )
@@ -596,11 +638,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		;
 		$mockConfig
 			->expects	( $this->at( $incr++ ) )
-			->method	( 'getAdvanced' )
-			->will		( $this->returnValue( false ) )
-		;
-		$mockConfig
-			->expects	( $this->at( $incr++ ) )
 			->method	( 'getLimit' )
 			->will		( $this->returnValue( 20 ) )
 		;
@@ -608,11 +645,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 			->expects	( $this->at( $incr++ ) )
 			->method	( 'getPublicFilterKeys' )
 			->will		( $this->returnValue( array( 'is_image' ) ) )
-		;
-		$mockConfig
-			->expects	( $this->at( $incr++ ) )
-			->method	( 'getRank' )
-			->will		( $this->returnValue( 'default' ) )
 		;
 		$incr2 = 1;
 		$mockController
@@ -663,11 +695,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		$mockController
 			->expects	( $this->at( $incr2++ ) )
 			->method	( 'setVal' )
-			->with		( 'advanced', false )
-		;
-		$mockController
-			->expects	( $this->at( $incr2++ ) )
-			->method	( 'setVal' )
 			->with		( 'limit', 20 )
 		;
 		$mockController
@@ -677,21 +704,10 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		;
 		$mockController
 			->expects	( $this->at( $incr2++ ) )
-			->method	( 'setVal' )
-			->with		( 'rank', 'default' )
-		;
-		$mockController
-			->expects	( $this->at( $incr2++ ) )
 			->method	( 'getVal' )
 			->with		( 'by_category', false )
 			->will		( $this->returnValue( false ) )
 		;
-		$mockController
-			->expects	( $this->at( $incr2++ ) )
-			->method	( 'setVal' )
-			->with		( 'by_category', false )
-		;
-
 
 		$mockController->pagination();
 	}
@@ -951,7 +967,7 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 
 		$incr = 0;
 
-		$wg = (object) array( 'CityId' => Wikia\Search\QueryService\Select\Video::VIDEO_WIKI_ID );
+		$wg = (object) array( 'CityId' => Wikia\Search\QueryService\Select\Dismax\Video::VIDEO_WIKI_ID );
 
 		$mockController
 			->expects	( $this->at( $incr++ ) )
@@ -1122,20 +1138,10 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 			->method	( 'setVal' )
 			->with		( 'searchableNamespaces', $searchableNamespaces )
 		;
-		$mockController
-			->expects	( $this->at( 3 ) )
-			->method	( 'setVal' )
-			->with		( 'advanced', true )
-		;
 		$mockSearchConfig
 			->expects	( $this->any() )
 			->method	( 'getNamespaces' )
 			->will		( $this->returnValue( array( 0, 14) ) )
-		;
-		$mockSearchConfig
-			->expects	( $this->any() )
-			->method	( 'getAdvanced' )
-			->will		( $this->returnValue( true ) )
 		;
 
 		$this->mockClass( 'SearchEngine', $mockSearchEngine );
@@ -1420,7 +1426,7 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 	public function testVideoSearch() {
 		$mockConfig		=	$this->getMock( 'Wikia\Search\Config', array( 'setCityId', 'setQuery', 'setNamespaces', 'setVideoSearch', 'getResults' ) );
 		$mockController	=	$this->searchController->setMethods( array( 'getResponse', 'getVal' ) )->getMock();
-		$mockSearch		=	$this->getMockBuilder( 'Wikia\Search\QueryService\Select\Video' )
+		$mockSearch		=	$this->getMockBuilder( 'Wikia\Search\QueryService\Select\Dismax\Video' )
 								->setMethods( array( 'search' ) )
 								->disableOriginalConstructor()
 								->getMock();
@@ -1523,7 +1529,7 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 	public function testSearchVideosByTitle() {
 		$mockConfig		=	$this->getMock( 'Wikia\Search\Config', array( 'setVideoTitleSearch', 'setQuery' ) );
 		$mockController	=	$this->searchController->setMethods( array( 'getResponse', 'getVal' ) )->getMock();
-		$mockSearch		=	$this->getMockBuilder( 'Wikia\Search\QueryService\Select\VideoTitle' )
+		$mockSearch		=	$this->getMockBuilder( 'Wikia\Search\QueryService\Select\Dismax\VideoTitle' )
 								->setMethods( array( 'searchAsApi' ) )
 								->disableOriginalConstructor()
 								->getMock();
@@ -2406,7 +2412,7 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		                       ->disableOriginalConstructor()
 		                       ->setMethods( array( 'getResponse', 'setVal', 'getVal', 'sendSelfRequest', 'isCorporateWiki' ) )
 		                       ->getMock();
-		
+
 		$mockResponse = $this->getMockBuilder( 'WikiaResponse' )
 		                     ->disableOriginalConstructor()
 		                     ->setMethods( array( 'getFormat', 'setData' ) )
@@ -2427,20 +2433,31 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		                    ->disableOriginalConstructor()
 		                    ->setMethods( array( 'toArray' ) )
 		                    ->getMock();
-		
+
+		$mockApp = $this->getMockBuilder('\WikiaApp')
+						->disableOriginalConstructor()
+						->setMethods(array('checkSkin','setVal'))
+						->getMock();
+
 		
 		$mockTitle = $this->getMockBuilder( 'Title' )
 		                  ->disableOriginalConstructor()
 		                  ->setMethods( array( 'getFullUrl' ) )
 		                  ->getMock();
-		
+
 		$mockUser = $this->getMockBuilder( 'User' )
 		                 ->disableOriginalConstructor()
 		                 ->setMethods( array( 'getSkin' ) )
 		                 ->getMock();
-		
-		$mockWg = (object) array( 'Title' => $mockTitle, 'User' => $mockUser );
-		
+
+		$mockMediaResponse = $this->getMockBuilder( 'WikiaResponse' )
+			->disableOriginalConstructor()
+			->setMethods( array('getData') )
+			->getMock();
+		$mockMediaData = array( 'foo' => 'bar' );
+		$mockWgOut = (object) array( 'mSquidMaxage' => 123 );
+		$mockWg = (object) array( 'Title' => $mockTitle, 'User' => $mockUser, 'Out' => $mockWgOut, 'ExtensionsPath' => 'foo_ext_path' );
+
 		$controllerIncr = 0;
 		$tabsArgs = array( 'config' => $mockConfig, 'by_category' => false, 'filters' => array() );
 		
@@ -2593,7 +2610,7 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		$mockController
 		    ->expects( $this->at( $controllerIncr++ ) )
 		    ->method ( 'setVal' )
-		    ->with   ( 'pageUrl', 'foo.wikia.com/wiki/search' )
+		    ->with   ( 'specialSearchUrl', 'foo.wikia.com/wiki/search' )
 		;
 		$mockController
 		    ->expects( $this->at( $controllerIncr++ ) )
@@ -2630,11 +2647,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		    ->method ( 'setVal' )
 		    ->with   ( 'hasArticleMatch', false )
 		;
-		$mockUser
-		    ->expects( $this->once() )
-		    ->method ( 'getSkin' )
-		    ->will   ( $this->returnValue( null ) ) // screw it
-		;
 		$mockController
 		    ->expects( $this->at( $controllerIncr++ ) )
 		    ->method ( 'setVal' )
@@ -2646,11 +2658,48 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		    ->will   ( $this->returnValue( false ) )
 		;
 		$mockController
-		    ->expects( $this->at( $controllerIncr++ ) )
-		    ->method ( 'setVal' )
-		    ->with   ( 'isCorporateWiki', false )
+			->expects( $this->at( $controllerIncr++ ) )
+			->method ( 'setVal' )
+			->with   ( 'isCorporateWiki', false )
 		;
-		
+		$mockController
+			->expects( $this->at( $controllerIncr++ ) )
+			->method ( 'setVal' )
+			->with   ( 'wgExtensionsPath', $mockWg->ExtensionsPath )
+		;
+		$this->getStaticMethodMock("BodyController", "isGridLayoutEnabled")
+			->expects( $this->once() )
+			->method( 'isGridLayoutEnabled' )
+			->will( $this->returnValue( true ) )
+		;
+		$mockController
+			->expects( $this->at( $controllerIncr++ ) )
+			->method ( 'setVal' )
+			->with   ( 'isGridLayoutEnabled', true )
+		;
+		$mockController
+			->expects( $this->at( $controllerIncr++ ) )
+			->method ( 'sendSelfRequest' )
+			->will   ( $this->returnValue( $mockMediaResponse ) )
+		;
+		$mockMediaResponse
+			->expects( $this->once() )
+			->method ( 'getData' )
+			->will   ( $this->returnValue( $mockMediaData ) )
+		;
+		$this->mockStaticMethod('WikiaDataAccess', 'cache', 'foo');
+		$mockController
+			->expects( $this->at( $controllerIncr++ ) )
+			->method ( 'setVal' )
+			->with   ( 'topWikiArticles', 'foo' )
+		;
+
+		$mockApp->expects($this->any())
+			->method('checkSkin')
+			->will( $this->returnValue(false) );
+
+		$mockController->app = $mockApp;
+
 		$reflWg = new ReflectionProperty( 'WikiaSearchController', 'wg' );
 		$reflWg->setAccessible( true );
 		$reflWg->setValue( $mockController, $mockWg );
@@ -2658,5 +2707,112 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		$reflSet = new ReflectionMethod( 'WikiaSearchController', 'setResponseValuesFromConfig' );
 		$reflSet->setAccessible( true );
 		$reflSet->invoke( $mockController, $mockConfig );
+	}
+
+	/**
+	 * @covers WikiaSearchController::processArticleItem
+	 * @dataProvider articleItemProvider
+	 */
+	public function testProcessArticleItem( $item, $len, $abstract ) {
+		$mockController = $this->getMockBuilder( 'WikiaSearchController' )
+			->disableOriginalConstructor()
+			->getMock();
+
+		$method = new ReflectionMethod( 'WikiaSearchController', 'processArticleItem' );
+		$method->setAccessible( true );
+		$result = $method->invoke( $mockController, $item, $len );
+
+		$this->assertEquals( $abstract, $result[ 'abstract' ] );
+	}
+
+	public function articleItemProvider() {
+		return [
+			//item, expected abstract
+			[
+				[ 'title' => '', 'abstract' => '' ],
+				150,
+				''
+			],
+			[
+				[ 'title' => 'Jakis title', 'abstract' => 'Jakis titl bla bla bla' ],
+				150,
+				' - Jakis titl bla bla bla'
+			],
+			[
+				[ 'title' => 'ABC', 'abstract' => 'ABCś l bla bla bla' ],
+				150,
+				' - ABCś l bla bla bla'
+			],
+			[
+				[ 'title' => 'Ian (Fallout)', 'abstract' => 'Ian is short' ],
+				150,
+				' is short'
+			],
+			[
+				[ 'title' => 'Followers of the Apocalypse', 'abstract' => 'Reputation image from Fallout: New Vegas. The Followers of the Apocalypse, or simply the Followers...' ],
+				150,
+				' - Reputation image from Fallout: New Vegas. The Followers of the Apocalypse, or simply the Followers...'
+			],
+			[
+				[ 'title' => 'Lancaster (film)', 'abstract' => 'Lancaster was set to appear as a location in the cancelled Fallout film. It was going to be...' ],
+				150,
+				' was set to appear as a location in the cancelled Fallout film. It was going to be...'
+			],
+			[
+				[ 'title' => 'Assault rifle', 'abstract' => '  ...  An assault rifle is a selective fire rifle that uses an intermediate cartridge and a...' ],
+				150,
+				' is a selective fire rifle that uses an intermediate cartridge and a...'
+			],
+			[
+				[ 'title' => 'Dart gun', 'abstract' => '   The dart gun is a constructable small gun in Fallout 3. Characteristics The dart gun is a...' ],
+				150,
+				' is a constructable small gun in Fallout 3. Characteristics The dart gun is a...'
+			],
+			[
+				[ 'title' => '9mm', 'abstract' => '   9mm is an ammunition type in Fallout, Fallout 2, Fallout: New Vegas, Fallout Tactics...' ],
+				150,
+				' is an ammunition type in Fallout, Fallout 2, Fallout: New Vegas, Fallout Tactics...'
+			],
+			[
+				[ 'title' => 'Raseleanne', 'abstract' => '   Paladin Raseleanne was a Paladin sent out to scout Nellis Air Force Base. She was killed and...' ],
+				150,
+				' was a Paladin sent out to scout Nellis Air Force Base. She was killed and...'
+			],
+			[
+				[ 'title' => 'Nathan Drake', 'abstract' => ' Nathan \"Nate\" Drake is a treasure hunter and fortune seeker, as well as a deep-sea salvage...' ],
+				150,
+				' - Nathan \"Nate\" Drake is a treasure hunter and fortune seeker, as well as a deep-sea salvage...'
+			],
+			[
+				[ 'title' => 'Gonzo', 'abstract' => ' Gonzo, formally known as \"The Great Gonzo\" or \"Gonzo the Great,\" is the resident daredevil...' ],
+				150,
+				', formally known as \"The Great Gonzo\" or \"Gonzo the Great,\" is the resident daredevil...'
+			],
+			[
+				[ 'title' => 'Character', 'abstract' => ' ...  Characters are the representations of persons in works of art. In the Fallout series, the...' ],
+				150,
+				' - Characters are the representations of persons in works of art. In the Fallout series, the...'
+			],
+			[
+				[ 'title' => 'Tranquility Lane', 'abstract' => '   “ Just who are you? ”— The Lone Wanderer when asking who Betty actually is. Tranquility Lane theme “ 同志站开，我们正在处理这些帝国主义走狗。 (Pinyin: Tóngzhì...' ],
+				150,
+				' - “ Just who are you? ”— The Lone Wanderer when asking who Betty actually is. Tranquility Lane theme “ 同志站开，我们正在处理这些帝国主义走狗。...'
+			],
+			[
+				[ 'title' => 'Origins', 'abstract' => ' "Every story has a beginning...and an end." — "Origins" trailer "Unleashed after the Germans unearthed the mysterious Element 115, this next chapter in the Zombies legacy will explore the saga’s...'],
+				150,
+				' - "Every story has a beginning...and an end." — "Origins" trailer "Unleashed after the Germans unearthed the mysterious Element 115, this...'
+			],
+			[
+				[ 'title' => 'x', 'abstract' => 'a b ...'],
+				11,
+				' - a b ...'
+			],
+			[
+				[ 'title' => 'x', 'abstract' => 'a b c d e f ...'],
+				11,
+				' - a b...'
+			],
+		];
 	}
 }

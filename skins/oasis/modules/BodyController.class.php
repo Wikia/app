@@ -50,6 +50,11 @@ class BodyController extends WikiaController {
 	public static function isGridLayoutEnabled() {
 		$app = F::app();
 
+		// Don't enable when responsive layout is enabled
+		if ( self::isResponsiveLayoutEnabled() ) {
+			return false;
+		}
+
 		if( !empty($app->wg->OasisGrid) ) {
 			return true;
 		}
@@ -65,6 +70,19 @@ class BodyController extends WikiaController {
 		}
 
 		return false;
+	}
+
+	/**
+	 * Decide on which pages responsive / liquid layout should be turned on.
+	 * @return Boolean
+	 */
+	public static function isResponsiveLayoutEnabled() {
+		$app = F::app();
+		return !empty( $app->wg->OasisResponsive ) &&
+				// Prevent the responsive layout from being enabled on the
+				// corporate wiki as it will break styling on it.
+				// TODO: remove this check when it's safe to enable there.
+				empty( $app->wg->EnableWikiaHomePageExt );
 	}
 
 	/**
@@ -116,8 +134,8 @@ class BodyController extends WikiaController {
 		global $wgTitle, $wgUser, $wgEnableAchievementsExt, $wgContentNamespaces,
 			$wgExtraNamespaces, $wgExtraNamespacesLocal,
 			$wgEnableWikiAnswers, $wgEnableHuluVideoPanel,
-			$wgEnableGamingCalendarExt, $wgEnableWallEngine, $wgRequest,
-			$wgEnableForumExt, $wgIsForum;
+			$wgEnableWallEngine, $wgRequest,
+			$wgEnableForumExt;
 
 		$namespace = $wgTitle->getNamespace();
 		$subjectNamespace = MWNamespace::getSubject($namespace);
@@ -129,7 +147,7 @@ class BodyController extends WikiaController {
 		$huluVideoPanelKey = $wgUser->isAnon() ? 1390 : 1280;
 
 		// Forum Extension
-		if ($wgEnableForumExt && $wgIsForum) {
+		if ($wgEnableForumExt && ForumHelper::isForum()) {
 			$railModuleList = array (
 				1500 => array('Search', 'Index', null),
 				1002 => array('Forum', 'forumRelatedThreads', null),
@@ -272,19 +290,6 @@ class BodyController extends WikiaController {
 		$railModuleList[1291] = array('Ad', 'Index', array('slotname' => 'MIDDLE_RIGHT_BOXAD'));
 		$railModuleList[1100] = array('Ad', 'Index', array('slotname' => 'LEFT_SKYSCRAPER_2'));
 
-		/**
-		 * Michał Roszka <michal@wikia-inc.com>
-		 *
-		 * SSW Gaming Calendar
-		 *
-		 * This is most likely going to be replaced with something similar to:
-		 *
-		 * $railModuleList[1260] = array( 'Ad', 'Index', array( 'slotname' => 'GAMING_CALENDAR_RAIL' ) );
-		 */
-		if ( !empty( $wgEnableGamingCalendarExt ) ) {
-			$railModuleList[1430] = array( 'GamingCalendarRail', 'Index', array( ) );
-		}
-
 		unset($railModuleList[1450]);
 
 		wfRunHooks( 'GetRailModuleList', array( &$railModuleList ) );
@@ -348,7 +353,7 @@ class BodyController extends WikiaController {
 		// show corporate header on this page?
 		} else if( HubService::isCorporatePage() ) {
 			$this->headerModuleName = 'PageHeader';
-			
+
 			if( self::isEditPage() ) {
 				$this->headerModuleAction = 'EditPage';
 			} else {
@@ -370,13 +375,30 @@ class BodyController extends WikiaController {
 			}
 		}
 
+		// Display Control Center Header on certain special pages
+		if (!empty($wgEnableAdminDashboardExt) && AdminDashboardLogic::displayAdminDashboard($this->app, $wgTitle)) {
+			$this->headerModuleName = null;
+			$this->wgSuppressAds = true;
+			$this->displayAdminDashboard = true;
+			$this->displayAdminDashboardChromedArticle = ($wgTitle->getText() != SpecialPage::getTitleFor( 'AdminDashboard' )->getText());
+		} else {
+			$this->displayAdminDashboard = false;
+			$this->displayAdminDashboardChromedArticle = false;
+		}
+
 		$this->railModulesExist = true;
 
 		// use one column layout for pages with no right rail modules
 		if( count($this->railModuleList ) == 0 || !empty($this->wg->SuppressRail) ) {
-			OasisController::addBodyClass('oasis-one-column');
+			// Special:AdminDashboard doesn't need this class, but pages chromed with it do
+			if ( !$this->displayAdminDashboard || $this->displayAdminDashboardChromedArticle ) {
+				OasisController::addBodyClass('oasis-one-column');
+			}
+
 			$this->headerModuleParams = array ('showSearchBox' => true);
 			$this->railModulesExist = false;
+		} else {
+			$this->response->addAsset('skins/oasis/js/LazyRail.js');
 		}
 
 		// determine if WikiaGridLayout needs to be enabled
@@ -417,19 +439,8 @@ class BodyController extends WikiaController {
 			$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('skins/oasis/css/modules/SpecialAllpages.scss'));
 		}
 
-		// Display Control Center Header on certain special pages
-		if (!empty($wgEnableAdminDashboardExt) && AdminDashboardLogic::displayAdminDashboard($this->app, $wgTitle)) {
-			$this->headerModuleName = null;
-			$this->wgSuppressAds = true;
-			$this->displayAdminDashboard = true;
-			$this->displayAdminDashboardChromedArticle = ($wgTitle->getText() != SpecialPage::getTitleFor( 'AdminDashboard' )->getText());
-		} else {
-			$this->displayAdminDashboard = false;
-			$this->displayAdminDashboardChromedArticle = false;
-		}
-
 		// Forum Extension
-		if (!empty($this->wg->EnableForumExt) && !empty($this->wg->IsForum)) {
+		if (!empty($this->wg->EnableForumExt) && ForumHelper::isForum()) {
 			$this->wg->SuppressPageHeader = true;
 		}
 

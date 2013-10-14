@@ -4,21 +4,21 @@ describe('AdConfig2', function(){
 		var adProviderNullMock = {name: 'NullMock'}
 			, adProviderGameProMock = {name: 'GameProMock', canHandleSlot: function() {return false;}}
 			, adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function() {return false;}}
-			, adProviderAdDriver2Mock = {name: 'AdDriver2Mock', canHandleSlot: function() {return false;}}
+			, adProviderGptMock = {name:'GptMock', canHandleSlot: function() {return false;}}
 			, adProviderLaterMock = {name: 'LaterMock'}
 			, geoMock = {getCountryCode:function() {}}
 			, logMock = function() {}
 			, windowMock = {}
 			, documentMock = {}
-			, adLogicShortPageMock = {isPageTooShortForSlot: function() {return false;}}
+			, adLogicPageDimensionsMock = {isApplicable: function() {return false;}}
 			, abTestMock = {inGroup: function() {return false;}}
 			, adConfig;
 
 		adConfig = AdConfig2(
-			logMock, windowMock, documentMock, geoMock, adLogicShortPageMock, abTestMock
+			logMock, windowMock, documentMock, geoMock, adLogicPageDimensionsMock, abTestMock
 
 			// AdProviders
-			, adProviderAdDriver2Mock
+			, adProviderGptMock
 			, adProviderEvolveMock
 			, adProviderGameProMock
 			, adProviderLaterMock
@@ -28,27 +28,27 @@ describe('AdConfig2', function(){
 		expect(adConfig.getProvider(['foo'])).toBe(adProviderLaterMock, 'adProviderLaterMock');
 	});
 
-	it('getProvider use AdDriver2 for high value slots', function() {
+	it('getProvider use GPT for high value slots', function() {
 		var adProviderNullMock = {name: 'NullMock'}
 			, adProviderGameProMock = {name: 'GameProMock', canHandleSlot: function() {return false;}}
 			, adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function() {return false;}}
-			, adProviderAdDriver2Mock = {name: 'AdDriver2Mock', canHandleSlot: function() {return true;}}
-			, adProviderLaterMock = {name: 'LaterMock'}
+			, adProviderGptMock = {name:'GptMock', canHandleSlot: function() {return true;}}
+			, adProviderLaterMock = {name: 'LaterMock', canHandleSlot: function() {return true;}}
 			, geoMock = {getCountryCode: function() {return 'hi-value-country'}}
 			, logMock = function() {}
 			, windowMock = {wgHighValueCountries: {'hi-value-country': true, 'another-hi-value-country': true}}
 			, documentMock = {}
-			, adLogicShortPageMock = {isPageTooShortForSlot: function() {return false;}}
+			, adLogicPageDimensionsMock = {isApplicable: function() {return false;}}
 			, abTestMock = {inGroup: function() {return false;}}
 			, adConfig
 			, highValueSlot = 'TOP_LEADERBOARD'
 			;
 
 		adConfig = AdConfig2(
-			logMock, windowMock, documentMock, geoMock, adLogicShortPageMock, abTestMock
+			logMock, windowMock, documentMock, geoMock, adLogicPageDimensionsMock, abTestMock
 
 			// AdProviders
-			, adProviderAdDriver2Mock
+			, adProviderGptMock
 			, adProviderEvolveMock
 			, adProviderGameProMock
 			, adProviderLaterMock
@@ -56,7 +56,7 @@ describe('AdConfig2', function(){
 		);
 
 		expect(adConfig.getProvider(['foo'])).toBe(adProviderLaterMock, 'adProviderLaterMock');
-		expect(adConfig.getProvider([highValueSlot])).toBe(adProviderAdDriver2Mock, 'adProviderAdDriver2Mock');
+		expect(adConfig.getProvider([highValueSlot])).toBe(adProviderGptMock, 'adProviderGptMock');
 	});
 
 	it('getProvider use Evolve for NZ (only if provider accepts)', function() {
@@ -64,21 +64,21 @@ describe('AdConfig2', function(){
 			, adProviderGameProMock = {name: 'GameProMock', canHandleSlot: function() {return false;}}
 			, adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function() {return false;}}
 			, adProviderEvolveMockHandling = {name: 'EvolveMock', canHandleSlot: function() {return true;}}
-			, adProviderAdDriver2Mock = {name: 'AdDriver2Mock'}
+			, adProviderGptMock = {name:'GptMock'}
 			, adProviderLaterMock = {name: 'LaterMock'}
 			, geoMockAU = {getCountryCode:function() {return 'NZ';}}
 			, logMock = function() {}
 			, windowMock = {}
 			, documentMock = {}
-			, adLogicShortPageMock = {isPageTooShortForSlot: function() {return false;}}
+			, adLogicPageDimensionsMock = {isApplicable: function() {return false;}}
 			, abTestMock = {inGroup: function() {return false;}}
 			, adConfig;
 
 		adConfig = AdConfig2(
-			logMock, windowMock, documentMock, geoMockAU, adLogicShortPageMock, abTestMock
+			logMock, windowMock, documentMock, geoMockAU, adLogicPageDimensionsMock, abTestMock
 
 			// AdProviders
-			, adProviderAdDriver2Mock
+			, adProviderGptMock
 			, adProviderEvolveMockHandling
 			, adProviderGameProMock
 			, adProviderLaterMock
@@ -92,21 +92,21 @@ describe('AdConfig2', function(){
 		var adProviderNullMock = {name: 'NullMock'}
 			, adProviderGameProMock = {name: 'GameProMock', canHandleSlot: function() {return false;}}
 			, adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function() {return true;}}
-			, adProviderAdDriver2Mock = {name: 'AdDriver2Mock', canHandleSlot: function() {return true;}}
+			, adProviderGptMock = {name:'GptMock'}
 			, adProviderLaterMock = {name: 'LaterMock'}
 			, geoMock = {getCountryCode:function() {return 'PL';}}
 			, logMock = function() {}
 			, windowMock = {}
 			, documentMock = {}
-			, adLogicShortPageMock = {isPageTooShortForSlot: function() {return false;}}
+			, adLogicPageDimensionsMock = {isApplicable: function() {return false;}}
 			, abTestMock = {inGroup: function() {return false;}}
 			, adConfig;
 
 		adConfig = AdConfig2(
-			logMock, windowMock, documentMock, geoMock, adLogicShortPageMock, abTestMock
+			logMock, windowMock, documentMock, geoMock, adLogicPageDimensionsMock, abTestMock
 
 			// AdProviders
-			, adProviderAdDriver2Mock
+			, adProviderGptMock
 			, adProviderEvolveMock
 			, adProviderGameProMock
 			, adProviderLaterMock
@@ -120,21 +120,21 @@ describe('AdConfig2', function(){
 		var adProviderNullMock = {name: 'NullMock'}
 			, adProviderGameProMock = {name: 'GameProMock', canHandleSlot: function() {return false;}}
 			, adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function() {return false;}}
-			, adProviderAdDriver2Mock = {name: 'AdDriver2Mock', canHandleSlot: function() {return true;}}
+			, adProviderGptMock = {name:'GptMock'}
 			, adProviderLaterMock = {name: 'LaterMock'}
 			, geoMock = {getCountryCode:function() {return 'NZ';}}
 			, logMock = function() {}
 			, windowMock = {}
 			, documentMock = {}
-			, adLogicShortPageMock = {isPageTooShortForSlot: function() {return false;}}
+			, adLogicPageDimensionsMock = {isApplicable: function() {return false;}}
 			, abTestMock = {inGroup: function() {return false;}}
 			, adConfig;
 
 		adConfig = AdConfig2(
-			logMock, windowMock, documentMock, geoMock, adLogicShortPageMock, abTestMock
+			logMock, windowMock, documentMock, geoMock, adLogicPageDimensionsMock, abTestMock
 
 			// AdProviders
-			, adProviderAdDriver2Mock
+			, adProviderGptMock
 			, adProviderEvolveMock
 			, adProviderGameProMock
 			, adProviderLaterMock
@@ -148,21 +148,21 @@ describe('AdConfig2', function(){
 		var adProviderNullMock = {name: 'NullMock'}
 			, adProviderGameProMock = {name: 'GameProMock', canHandleSlot: function() {return true;}}
 			, adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function() {return false;}}
-			, adProviderAdDriver2Mock = {name: 'AdDriver2Mock', canHandleSlot: function() {return false;}}
+			, adProviderGptMock = {name:'GptMock'}
 			, adProviderLaterMock = {name: 'LaterMock'}
 			, geoMock = {getCountryCode:function() {}}
 			, logMock = function() {}
 			, windowMock = {wgContentLanguage: 'de'}
 			, documentMock = {}
-			, adLogicShortPageMock = {isPageTooShortForSlot: function() {return false;}}
+			, adLogicPageDimensionsMock = {isApplicable: function() {return false;}}
 			, abTestMock = {inGroup: function() {return false;}}
 			, adConfig;
 
 		adConfig = AdConfig2(
-			logMock, windowMock, documentMock, geoMock, adLogicShortPageMock, abTestMock
+			logMock, windowMock, documentMock, geoMock, adLogicPageDimensionsMock, abTestMock
 
 			// AdProviders
-			, adProviderAdDriver2Mock
+			, adProviderGptMock
 			, adProviderEvolveMock
 			, adProviderGameProMock
 			, adProviderLaterMock
@@ -178,22 +178,22 @@ describe('AdConfig2', function(){
 			, adProviderGameProMockRejecting = {name: 'GameProMock', canHandleSlot: function() {return false;}}
 			, adProviderGameProMock = {name: 'GameProMock', canHandleSlot: function() {return true;}}
 			, adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function() {return true;}}
-			, adProviderAdDriver2Mock = {name: 'AdDriver2Mock', canHandleSlot: function() {return false;}}
+			, adProviderGptMock = {name:'GptMock'}
 			, adProviderLaterMock = {name: 'LaterMock'}
 			, geoMock = {getCountryCode:function() {return 'NZ';}}
 			, logMock = function() {}
 			, windowMock = {wgContentLanguage: 'de'}
 			, documentMock = {}
-			, adLogicShortPageMock = {isPageTooShortForSlot: function() {return false;}}
+			, adLogicPageDimensionsMock = {isApplicable: function() {return false;}}
 			, abTestMock = {inGroup: function() {return false;}}
 			, adConfig;
 
 		// First see if evolve is used for given configuration when GamePro refuses
 		adConfig = AdConfig2(
-			logMock, windowMock, documentMock, geoMock, adLogicShortPageMock, abTestMock
+			logMock, windowMock, documentMock, geoMock, adLogicPageDimensionsMock, abTestMock
 
 			// AdProviders
-			, adProviderAdDriver2Mock
+			, adProviderGptMock
 			, adProviderEvolveMock
 			, adProviderGameProMockRejecting
 			, adProviderLaterMock
@@ -202,10 +202,10 @@ describe('AdConfig2', function(){
 		expect(adConfig.getProvider(['TOP_LEADERBOARD'])).toBe(adProviderEvolveMock, 'adProviderEvolveMock TOP_LEADERBOARD');
 
 		adConfig = AdConfig2(
-			logMock, windowMock, documentMock, geoMock, adLogicShortPageMock, abTestMock
+			logMock, windowMock, documentMock, geoMock, adLogicPageDimensionsMock, abTestMock
 
 			// AdProviders
-			, adProviderAdDriver2Mock
+			, adProviderGptMock
 			, adProviderEvolveMock
 			, adProviderGameProMock
 			, adProviderLaterMock
@@ -214,26 +214,26 @@ describe('AdConfig2', function(){
 		expect(adConfig.getProvider(['TOP_LEADERBOARD'])).toBe(adProviderGameProMock, 'adProviderGameProMock TOP_LEADERBOARD');
 	});
 
-	it('getProvider calls adLogicShortPageMock.isPageTooShortForSlot with proper slot name', function() {
+	it('getProvider calls adLogicPageDimensionsMock.isApplicable with proper slot name', function() {
 		var adProviderNullMock = {name: 'NullMock'}
 			, adProviderGameProMock = {name: 'GameProMock', canHandleSlot: function() {return true;}}
 			, adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function() {return false;}}
-			, adProviderAdDriver2Mock = {name: 'AdDriver2Mock', canHandleSlot: function() {return false;}}
+			, adProviderGptMock = {name:'GptMock'}
 			, adProviderLaterMock = {name: 'LaterMock'}
 			, geoMock = {getCountryCode:function() {}}
 			, logMock = function() {}
 			, windowMock = {}
 			, documentMock = {}
-			, adLogicShortPageCalledWithSlot
-			, adLogicShortPageMock = {isPageTooShortForSlot: function(slot) {adLogicShortPageCalledWithSlot = slot;}}
+			, adLogicPageDimensionsCalledWithSlot
+			, adLogicPageDimensionsMock = {isApplicable: function(slot) {adLogicPageDimensionsCalledWithSlot = slot;}}
 			, abTestMock = {inGroup: function() {return false;}}
 			, adConfig;
 
 		adConfig = AdConfig2(
-			logMock, windowMock, documentMock, geoMock, adLogicShortPageMock, abTestMock
+			logMock, windowMock, documentMock, geoMock, adLogicPageDimensionsMock, abTestMock
 
 			// AdProviders
-			, adProviderAdDriver2Mock
+			, adProviderGptMock
 			, adProviderEvolveMock
 			, adProviderGameProMock
 			, adProviderLaterMock
@@ -241,34 +241,35 @@ describe('AdConfig2', function(){
 		);
 
 		adConfig.getProvider(['foo']);
-		expect(adLogicShortPageCalledWithSlot).toBe('foo');
+		expect(adLogicPageDimensionsCalledWithSlot).toEqual(['foo']);
 	});
 
-	it('getProvider returns Null on short page', function() {
+	it('getProvider returns WindowSizeProviderProxy if AdLogicPageDimensions say so', function() {
 		var adProviderNullMock = {name: 'NullMock'}
+			, adProviderProxyMock = {name: 'WindowSizeProviderProxyMock'}
 			, adProviderGameProMock = {name: 'GameProMock', canHandleSlot: function() {return true;}}
 			, adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function() {return false;}}
-			, adProviderAdDriver2Mock = {name: 'AdDriver2Mock', canHandleSlot: function() {return false;}}
+			, adProviderGptMock = {name:'GptMock'}
 			, adProviderLaterMock = {name: 'LaterMock'}
 			, geoMock = {getCountryCode:function() {}}
 			, logMock = function() {}
 			, windowMock = {}
 			, documentMock = {}
-			, adLogicShortPageMock = {isPageTooShortForSlot: function() {return true;}}
+			, adLogicPageDimensionsMock = {isApplicable: function() {return true;}, getProxy: function() {return adProviderProxyMock;}}
 			, abTestMock = {inGroup: function() {return false;}}
 			, adConfig;
 
 		adConfig = AdConfig2(
-			logMock, windowMock, documentMock, geoMock, adLogicShortPageMock, abTestMock
+			logMock, windowMock, documentMock, geoMock, adLogicPageDimensionsMock, abTestMock
 
 			// AdProviders
-			, adProviderAdDriver2Mock
+			, adProviderGptMock
 			, adProviderEvolveMock
 			, adProviderGameProMock
 			, adProviderLaterMock
 			, adProviderNullMock
 		);
 
-		expect(adConfig.getProvider(['foo'])).toBe(adProviderNullMock);
+		expect(adConfig.getProvider(['foo'])).toBe(adProviderProxyMock);
 	});
 });

@@ -9,9 +9,10 @@ class PhalanxStatsWikiaPager extends PhalanxStatsPager {
 	}
 	
 	function formatRow( $row ) {
-		$type = implode( Phalanx::getTypeNames( $row->ps_blocker_type ) );
+		$type = implode( ", ", Phalanx::getTypeNames( ( isset( $row->ps_blocker_hit ) ) ? $row->ps_blocker_hit : $row->ps_blocker_type ) );
 		$username = $row->ps_blocked_user;
 		$timestamp = $this->app->wg->Lang->timeanddate( $row->ps_timestamp );
+		$url = $row->ps_referrer;
 		$blockId = (int) $row->ps_blocker_id;
 		# block
 		$phalanxUrl = $this->mSkin->makeLinkObj( $this->mTitle, $blockId, 'id=' . $blockId );
@@ -19,7 +20,7 @@ class PhalanxStatsWikiaPager extends PhalanxStatsPager {
 		$statsUrl = $this->mSkin->makeLinkObj( $this->mTitleStats, wfMsg('phalanx-link-stats'), 'blockId=' . $blockId );
 
 		$html  = Html::openElement( 'li' );
-		$html .= wfMsgExt( 'phalanx-stats-row-per-wiki', array('parseinline', 'replaceafter'), $type, $username, $phalanxUrl, $timestamp, $statsUrl );
+		$html .= wfMsgExt( 'phalanx-stats-row-per-wiki', array('parseinline', 'replaceafter'), $type, $username, $phalanxUrl, $timestamp, $statsUrl, $url );
 		$html .= Html::closeElement( 'li' );
 
 		return $html;

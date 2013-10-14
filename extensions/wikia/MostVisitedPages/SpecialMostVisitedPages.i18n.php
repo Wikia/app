@@ -18,9 +18,11 @@ $messages['en'] = array(
 );
 
 /** Message documentation (Message documentation)
+ * @author Shirayuki
  * @author Siebrand
  */
 $messages['qqq'] = array(
+	'mostvisitedpagessearchbtn' => '{{Identical|Search}}',
 	'mostvisitedpageslatest' => '',
 );
 
@@ -108,6 +110,13 @@ $messages['ca'] = array(
 	'mostvisitedpagesalllink' => 'Veure les pàgines més visitades',
 );
 
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'mostvisitedpagessearchbtn' => 'лаха',
+);
+
 /** Czech (česky)
  * @author Dontlietome7
  * @author Reaperman
@@ -179,6 +188,18 @@ $messages['fi'] = array(
 	'mostvisitedpageslatest' => 'viimeisessä $1 minuutissa',
 	'mostvisitedpageslatestlink' => 'Katso viimeksi vierailtuja sivuja',
 	'mostvisitedpagesalllink' => 'Katso useimmin vierailtuja sivuja',
+);
+
+/** Faroese (føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'mostvisitedpages' => 'Mest vitjaðu síður',
+	'mostvisitedpagessearchtext' => 'Heitið á grein:',
+	'mostvisitedpagessearchbtn' => 'leita',
+	'mostvisitedpageslatest' => '$1 {{PLURAL:$1|seinasta minuttin|seinastu minuttirnar}}',
+	'mostvisitedpageslatestlink' => 'Sí seinast vitjaðu síðurnar',
+	'mostvisitedpagesalllink' => 'Sí mest vitjaðu síðurnar',
 );
 
 /** French (français)
@@ -289,6 +310,18 @@ $messages['ja'] = array(
 	'mostvisitedpageslatest' => '直近$1分間',
 	'mostvisitedpageslatestlink' => '最新の結果を見る',
 	'mostvisitedpagesalllink' => '全期間の結果を見る',
+);
+
+/** Kazakh (Cyrillic script) (қазақша (кирил)‎)
+ * @author Arystanbek
+ */
+$messages['kk-cyrl'] = array(
+	'mostvisitedpages' => 'Ең көп қаралған беттер',
+	'mostvisitedpagessearchtext' => 'Мақала атауы',
+	'mostvisitedpagessearchbtn' => 'іздеу',
+	'mostvisitedpageslatest' => 'соңғы $1 {{PLURAL:$1|минут|минут}}',
+	'mostvisitedpageslatestlink' => 'Соңғы қаралған беттерді қарау',
+	'mostvisitedpagesalllink' => 'Ең көп қаралған беттерді қарау',
 );
 
 /** Khmer (ភាសាខ្មែរ)

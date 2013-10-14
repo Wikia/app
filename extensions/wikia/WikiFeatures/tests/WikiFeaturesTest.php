@@ -39,7 +39,7 @@
 			$mock_log = $this->getMock('LogPage', array('addEntry'), array(), '', false);
 			$mock_log->expects($this->any())
 						->method('addEntry');
-			F::setInstance('LogPage', $mock_log);
+			$this->mockClass('LogPage', $mock_log);
 
 			$mock_user = $this->getMock('User', array('isAllowed'));
 			$mock_user->expects($this->any())
@@ -54,7 +54,6 @@
 			global $wgWikicitiesReadOnly;
 
 			$wgWikicitiesReadOnly = $this->wgWikicitiesReadOnly_org;
-			F::unsetInstance('LogPage');
 		}
 
 		protected function setUpGetFeature($feature_type, $wg_wiki_features) {

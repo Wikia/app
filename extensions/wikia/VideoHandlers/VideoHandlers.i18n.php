@@ -25,7 +25,9 @@ $messages['en'] = array(
 	'videohandler-remove-video-modal-ok' => 'Remove',
 	'videohandler-remove-video-modal-success' => 'File:$1 has been removed from this wiki',
 	'videohandler-remove-video-modal-cancel' => 'Cancel',
-	'videohandler-remove-error-unknow' => 'We are sorry, but something went wrong with the deletion.',
+	'videohandler-remove-error-unknown' => 'We are sorry, but something went wrong with the deletion.',
+	'videohandler-log-add-description' => 'Adding video description',
+	'videohandler-log-add-video' => 'created video',
 	'videos-error-empty-title' => 'Empty title.',
 	'videos-error-blocked-user' => 'Blocked user.',
 	'videos-error-readonly' => 'Read only mode.',
@@ -45,6 +47,7 @@ $messages['en'] = array(
 	'videos-error-unknown' => 'An unknown error occurred. Code: $1.',
 	'videos-error-old-type-video' => 'Old type of videos no longer supported (VideoPage)',
 	'videos-error-while-loading' => 'Error occurred while loading data. Please recheck your connection and refesh the page.',
+	'videos-error-admin-only' => 'Sorry, only admins of this wiki are permitted to add videos',
 	'videos-initial-upload-edit-summary' => 'created video',
 );
 
@@ -62,6 +65,8 @@ $messages['qqq'] = array(
 	'videohandler-remove-video-modal-ok' => 'This is the button text to confirm removing a video from a wiki',
 	'videohandler-remove-video-modal-success' => 'This is the confirmation message that a video has been removed from a wiki',
 	'videohandler-remove-video-modal-cancel' => 'This is the button text to cancel removal of a video from a wiki',
+	'videohandler-log-add-description' => 'Notification message that shows up in recent changes when a video description is added',
+	'videohandler-log-add-video' => 'Notification message that shows up in recent changes when a video has been added',
 
 	'videos-add-video' => 'Button text to click to add a video to the wiki',
 	'videos-add-video-to-this-wiki' => 'Tooltip text for the button to add a video to this wiki',
@@ -76,6 +81,7 @@ $messages['qqq'] = array(
 	'videos-error-unknown' => 'Error message when an unknown error occurred',
 	'videos-error-old-type-video' => 'Error message when user tries to add a video of a type that is no longer supported.',
 	'videos-error-while-loading' => 'Error message when failing to add a video.',
+	'videos-error-admin-only' => 'Error message that shows up when the wgAllVideosAdminOnly is set to true and a non-admin attempts to upload a video'
 );
 
 /** Afrikaans (Afrikaans)

@@ -171,7 +171,7 @@ class AbstractServiceTest extends BaseTest
 		    ->will   ( $this->returnValue( true ) )
 		;
 		$service
-		    ->expects( $this->once() )
+		    ->expects( $this->any() )
 		    ->method ( 'getCurrentDocumentId' )
 		    ->will   ( $this->returnValue( 456 ) )
 		;
@@ -191,7 +191,7 @@ class AbstractServiceTest extends BaseTest
 				$actualResponse
 		);
 	}
-	
+
     /**
 	 * @covers \Wikia\Search\IndexService\AbstractService::getResponseForPageIds
 	 */

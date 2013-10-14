@@ -9,21 +9,16 @@
 <?= $afterBodyHtml ?>
 
 <div id="ad-skin" class="wikia-ad noprint"></div>
+
 <?= $app->renderView('GlobalHeader', 'Index') ?>
-
-<?= empty($wg->GlobalHeaderFullWidth) ? '' : $app->renderView('Notifications', 'Confirmation') ?>
-
-<?= empty($wg->GlobalHeaderFullWidth) ? '' : $app->renderView('Ad', 'Top') ?>
+<?= $app->renderView('Notifications', 'Confirmation') ?>
+<?= $app->renderView('Ad', 'Top') ?>
 
 <?= empty($wg->WikiaSeasonsPencilUnit) ? '' : $app->renderView('WikiaSeasons', 'pencilUnit', array()); ?>
 
 <section id="WikiaPage" class="WikiaPage<?= empty( $wg->OasisNavV2 ) ? '' : ' V2' ?><?= !empty($isGridLayoutEnabled) ? ' WikiaGrid' : '' ?>">
 	<div id="WikiaPageBackground" class="WikiaPageBackground"></div>
 	<div class="WikiaPageContentWrapper">
-		<?= empty($wg->GlobalHeaderFullWidth) ? $app->renderView('Notifications', 'Confirmation') : '' ?>
-
-		<?= empty($wg->GlobalHeaderFullWidth) ? $app->renderView('Ad', 'Top') : '' ?>
-
 		<?php
 			if ( empty( $wg->SuppressWikiHeader ) ) {
 				echo $app->renderView( 'WikiHeader', 'Index' );
@@ -56,80 +51,81 @@
 		?>
 
 		<article id="WikiaMainContent" class="WikiaMainContent<?= !empty($isGridLayoutEnabled) ? $railModulesExist ? ' grid-4' : ' grid-6' : '' ?>">
-			<?php
-				if (!empty($wg->EnableForumExt) && !empty($wg->IsForum)) {
-					echo $app->renderView( 'ForumController', 'header' );
-				}
-
-				// render UserPagesHeader or PageHeader or nothing...
-				if (empty($wg->SuppressPageHeader) && $headerModuleName) {
-					if ($headerModuleName == 'UserPagesHeader') {
-						if ($headerModuleAction == 'BlogPost' || $headerModuleAction == 'BlogListing') {
-							// Show blog post header
-							echo $app->renderView( $headerModuleName, $headerModuleAction, $headerModuleParams );
-						} else {
-							// Show just the edit button
-							echo $app->renderView( 'UserProfilePage', 'renderActionButton', array() );
-						}
-					} else {
-						echo $app->renderView($headerModuleName, $headerModuleAction, $headerModuleParams);
-					}
-				}
-			?>
-
-
-			<?php if ($subtitle != '' && $headerModuleName == 'UserPagesHeader' ) { ?>
-				<div id="contentSub"><?= $subtitle ?></div>
-			<?php } ?>
-
-			<div id="WikiaArticle" class="WikiaArticle<?= $displayAdminDashboardChromedArticle ? ' AdminDashboardChromedArticle' : '' ?>"<?= $body_ondblclick ? ' ondblclick="' . htmlspecialchars($body_ondblclick) . '"' : '' ?>>
-				<? if($displayAdminDashboardChromedArticle) { ?>
-					<?= (string)$app->sendRequest( 'AdminDashboardSpecialPage', 'chromedArticleHeader', array('headerText' => $wg->Title->getText() )) ?>
-				<? } ?>
-				
-				<div class="home-top-right-ads">
+			<div id="WikiaMainContentContainer" class="WikiaMainContentContainer">
 				<?php
-					if (!$wg->EnableWikiaHomePageExt && WikiaPageType::isMainPage()) {
-						echo $app->renderView('Ad', 'Index', array('slotname' => 'HOME_TOP_RIGHT_BOXAD'));
+					if (!empty($wg->EnableForumExt) && ForumHelper::isForum()) {
+						echo $app->renderView( 'ForumController', 'header' );
+					}
+
+					// render UserPagesHeader or PageHeader or nothing...
+					if (empty($wg->SuppressPageHeader) && $headerModuleName) {
+						if ($headerModuleName == 'UserPagesHeader') {
+							if ($headerModuleAction == 'BlogPost' || $headerModuleAction == 'BlogListing') {
+								// Show blog post header
+								echo $app->renderView( $headerModuleName, $headerModuleAction, $headerModuleParams );
+							} else {
+								// Show just the edit button
+								echo $app->renderView( 'UserProfilePage', 'renderActionButton', array() );
+							}
+						} else {
+							echo $app->renderView($headerModuleName, $headerModuleAction, $headerModuleParams);
+						}
 					}
 				?>
+
+
+				<?php if ($subtitle != '' && $headerModuleName == 'UserPagesHeader' ) { ?>
+					<div id="contentSub"><?= $subtitle ?></div>
+				<?php } ?>
+
+				<div id="WikiaArticle" class="WikiaArticle<?= $displayAdminDashboardChromedArticle ? ' AdminDashboardChromedArticle' : '' ?>"<?= $body_ondblclick ? ' ondblclick="' . htmlspecialchars($body_ondblclick) . '"' : '' ?>>
+					<? if($displayAdminDashboardChromedArticle) { ?>
+						<?= (string)$app->sendRequest( 'AdminDashboardSpecialPage', 'chromedArticleHeader', array('headerText' => $wg->Title->getText() )) ?>
+					<? } ?>
+
+					<div class="home-top-right-ads">
+					<?php
+						if ( !$wg->EnableWikiaHomePageExt && !$wg->EnableVideoPageToolExt && WikiaPageType::isMainPage() ) {
+							echo $app->renderView('Ad', 'Index', array('slotname' => 'HOME_TOP_RIGHT_BOXAD'));
+						}
+					?>
+					</div>
+
+					<?php
+					// for InfoBox-Testing
+					if ($wg->EnableInfoBoxTest) {
+						echo $app->renderView('ArticleInfoBox', 'Index');
+					} ?>
+
+					<?= $bodytext ?>
+
 				</div>
+
+				<? if ( empty( $wg->SuppressArticleCategories ) ): ?>
+					<? if ( !empty( $wg->EnableCategorySelectExt ) && CategorySelectHelper::isEnabled() ): ?>
+						<?= $app->renderView( 'CategorySelect', 'articlePage' ) ?>
+					<? else: ?>
+						<?= $app->renderView( 'ArticleCategories', 'Index' ) ?>
+					<? endif ?>
+				<? endif ?>
 
 				<?php
-				// for InfoBox-Testing
-				if ($wg->EnableInfoBoxTest) {
-					echo $app->renderView('ArticleInfoBox', 'Index');
-				} ?>
+				if (empty( $wg->InterlangOnTop ) ) {
+					 echo $app->renderView('ArticleInterlang', 'Index');
+				}
+				?>
 
-				<?= $bodytext ?>
+				<?php if (!empty($afterContentHookText)) { ?>
+					<div id="WikiaArticleFooter" class="WikiaArticleFooter">
+						<?= $afterContentHookText ?>
+					</div>
+				<?php } ?>
 
-			</div>
-
-			<? if ( empty( $wg->SuppressArticleCategories ) ): ?>
-				<? if ( !empty( $wg->EnableCategorySelectExt ) && CategorySelect::isEnabled() ): ?>
-					<?= $app->renderView( 'CategorySelect', 'articlePage' ) ?>
-				<? else: ?>
-					<?= $app->renderView( 'ArticleCategories', 'Index' ) ?>
-				<? endif ?>
-			<? endif ?>
-
-			<?php
-			if (empty( $wg->InterlangOnTop ) ) {
-				 echo $app->renderView('ArticleInterlang', 'Index');
-			}
-			?>
-
-			<?php if (!empty($afterContentHookText)) { ?>
-				<div id="WikiaArticleFooter" class="WikiaArticleFooter">
-					<?= $afterContentHookText ?>
+				<div id="WikiaArticleBottomAd" class="noprint">
+					<?= $app->renderView('Ad', 'Index', array('slotname' => 'PREFOOTER_LEFT_BOXAD')) ?>
+					<?= $app->renderView('Ad', 'Index', array('slotname' => 'PREFOOTER_RIGHT_BOXAD')) ?>
 				</div>
-			<?php } ?>
-
-			<div id="WikiaArticleBottomAd" class="noprint">
-				<?= $app->renderView('Ad', 'Index', array('slotname' => 'PREFOOTER_LEFT_BOXAD')) ?>
-				<?= $app->renderView('Ad', 'Index', array('slotname' => 'PREFOOTER_RIGHT_BOXAD')) ?>
 			</div>
-
 		</article><!-- WikiaMainContent -->
 
 		<?php if( $railModulesExist ): ?>

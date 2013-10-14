@@ -194,6 +194,8 @@ $messages['ja'] = array(
 $messages['ksh'] = array(
 	'sharedhelp-desc' => 'Nimmb Sigge us däm <i lang="en">[[w:c:Help|Help Wikia]]</i> un deiht se en et {{ns:help}}-Appachtemang en heh däm Wikis erin.',
 	'sharedhelp-autotalkcreate-summary' => 'Klaafsigg automattesch aanjelaat',
+	'sharedhelp-searchprofile' => 'Hölpsigge',
+	'sharedhelp-searchprofile-tooltip' => 'En de Hölpsigge söhke',
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
@@ -251,6 +253,16 @@ $messages['nl'] = array(
 	'sharedhelp-searchprofile-tooltip' => "Hulppagina's zoeken",
 );
 
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'sharedhelp-desc' => "Pren de paginas de [[w:c:Help|l’ajuda de Wikia]] e las inserís dins l’espaci de nom {{ns:help}} d'aqueste wiki",
+	'sharedhelp-autotalkcreate-summary' => 'Pagina de discussion creada automaticament',
+	'sharedhelp-searchprofile' => "Paginas d'ajuda",
+	'sharedhelp-searchprofile-tooltip' => "Recercar dins las paginas d'ajuda",
+);
+
 /** Polish (polski)
  * @author Sovq
  * @author Sp5uhe
@@ -277,7 +289,7 @@ $messages['pms'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
-	'sharedhelp-autotalkcreate-summary' => 'د خبرو اترو مخ په خپلکاره توګه جوړ شو',
+	'sharedhelp-autotalkcreate-summary' => 'د خبرو اترو مخ په خپلکاره توگه جوړ شو',
 );
 
 /** Portuguese (português)
@@ -344,6 +356,7 @@ $messages['tl'] = array(
 
 /** Ukrainian (українська)
  * @author Steve.rusyn
+ * @author SteveR
  * @author Ua2004
  * @author Тест
  */

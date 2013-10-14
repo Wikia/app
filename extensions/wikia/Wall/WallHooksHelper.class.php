@@ -15,8 +15,8 @@ class WallHooksHelper {
 	static public function onUserIsBlockedFrom($user, $title, &$blocked, &$allowUsertalk) {
 
 		if ( !$user->mHideName && $allowUsertalk && $title->getNamespace() == NS_USER_WALL_MESSAGE ) {
-			$wm =  WallMessage::newFromTitle($title);
-			if($wm->getWallOwner()->getName() === $user->getName()){
+			// wall owner is in it's name
+			if ( $title->getBaseText() === $user->getName() ) {
 				$blocked = false;
 				wfDebug( __METHOD__ . ": self-user wall page, ignoring any blocks\n" );
 			}
@@ -893,8 +893,11 @@ class WallHooksHelper {
 				$class = '';
 
 				$articleLink = ' <a href="'.$link.'" class="'.$class.'" >'.$title.'</a> '.wfMsg(static::getMessagePrefix($rc->getAttribute('rc_namespace')) . '-new-message', array($wallUrl, $wallOwner));
+
 				# Bolden pages watched by this user
-				if( $watched ) {
+				# Check if the user is following the thread or the board
+				$user = $app->wg->User;
+				if ( $wm->isWatched( $user ) || $wm->isWallWatched( $user ) ) {
 					$articleLink = '<strong class="mw-watched">'.$articleLink.'</strong>';
 				}
 			}
@@ -1979,15 +1982,24 @@ class WallHooksHelper {
 		return true;
 	}
 
+	/**
+	 * @param $title Title
+	 * @param $unused
+	 * @param $output
+	 * @param $user
+	 * @param $request
+	 * @param $mediawiki
+	 * @return bool
+	 */
 	static public function onBeforeInitialize( $title, $unused, $output, $user, $request, $mediawiki ) {
 		global $wgHooks;
 		if( !empty($title) && $title->isSpecial('Allpages') ) {
-			$wgHooks['AfterLanguageGetNamespaces'][] = 'WallHooksHelper::onAfterLanguageGetNamespaces';
+			$wgHooks['LanguageGetNamespaces'][] = 'WallHooksHelper::onLanguageGetNamespaces';
 		}
 		return true;
 	}
 
-	static public function onAfterLanguageGetNamespaces( &$namespaces ) {
+	static public function onLanguageGetNamespaces( &$namespaces ) {
 		wfProfileIn(__METHOD__);
 		$app = F::App();
 		$title = $app->wg->Title;

@@ -1,19 +1,26 @@
 @import "color";
 @import "layout";
 @import "../mixins/clearfix";
+@import "../mixins/gradient";
 
 /** Hide 1x1 iframes **/
 .wikia-ad iframe[width="1"][height="1"] {
 	display: none;
 }
 
+.wikia-ad.hidden {
+	display: none !important;
+}
+
 /** Leaderboards **/
 
 .WikiaTopAds {
 	font-size: 0;
+	margin: 0 auto;
 	position: relative;
-	padding-top: 10px;
+	padding: 10px 0;
 	text-align: center;
+	width: $width-outside;
 	z-index: 0;
 	.WikiaTopAdsInner {
 		@include clearfix;
@@ -24,6 +31,11 @@
 	}
 	.standard-leaderboard {
 		max-width: 728px;
+	}
+	.wikia-ad {
+		>img {
+			float: right;	/* invisible tracking pixel is taking up height for some reason.  taking it out of the flow for now */
+		}
 	}
 }
 
@@ -44,27 +56,12 @@
 	}
 }
 
-/**
- * IMPORTANT (21-Aug-2012, FB:45031): Integrate this code into base css above after transition.
- * This is currently an override depending on skin switch.
- */
-.oasis-split-skin {
-	.WikiaTopAds {
-		margin: 0 auto;
-		padding: 10px 0;
-		width: $width-outside;
-	}
-	.wikia-ad {
-		>img {
-			float: right;	/* invisible tracking pixel is taking up height for some reason.  taking it out of the flow for now */
-		}
-	}
-}
-
 /** Skyscrapers **/
 #LEFT_SKYSCRAPER_2 {
+	// FIXME: this is bad. Is it necessary?
 	@extend section;
 }
+
 #LEFT_SKYSCRAPER_3 {
 	clear: both;
 	position: absolute;
@@ -72,6 +69,14 @@
 	top: -640px;
 }
 
+#RIGHT_SKYSCRAPER {
+	// FIXME: this is bad. Is it necessary?
+	@extend .module;
+	text-align: center;
+	img {
+		margin: 40px auto;
+	}
+}
 
 /** Box ads **/
 .home-top-right-ads {
@@ -97,16 +102,33 @@
 		margin-bottom: 0;
 		padding: 15px;
 	}
-} 
+}
 /* end transistion temp code */
+
+#TOP_BOXAD {
+	img {
+		display: block;
+	}
+}
 
 #TOP_RIGHT_BOXAD, #CORP_TOP_RIGHT_BOXAD {
 	margin-bottom: 10px;
 	z-index: 100;
 }
+
 #CORP_TOP_RIGHT_BOXAD.default-height, #HOME_TOP_RIGHT_BOXAD.default-height, #TOP_RIGHT_BOXAD.default-height {
 	height: 250px;
 }
+
+#PREFOOTER_LEFT_BOXAD {
+	float: left;
+	margin: 0 15px;
+}
+
+#PREFOOTER_RIGHT_BOXAD {
+	margin: 0 15px;
+}
+
 #PREFOOTER_LEFT_BOXAD.default-height, #PREFOOTER_RIGHT_BOXAD.default-height {
 	height: 250px;
 }
@@ -115,12 +137,13 @@
 #SPOTLIGHT_GLOBALNAV_1, #SPOTLIGHT_GLOBALNAV_2, #SPOTLIGHT_GLOBALNAV_3 {
 	width: 269px;
 	&.SPOTLIGHT_GLOBALNAV {
-		width: 255px;	
+		width: 255px;
 	}
 }
+
 // changes for $wgEnableSpotlightsV2
-.GlobalNavigation { 
-	.subnav { 
+.GlobalNavigation {
+	.subnav {
 		.SPOTLIGHT_GLOBALNAV {
 			left: 10px;
 			margin-top: 17px;
@@ -128,14 +151,39 @@
 		}
 	}
 }
-.WikiaFooter { 
-	section {
-		.SPOTLIGHT_FOOTER {
-			padding: 0px 28px 33px;
-			.WikiaSpotlight {
-				height: 123px;
-				width: 255px;
-			}
+
+.WikiaSpotlight {
+	background-color: $color-page;
+	color: $color-text;
+	display: inline-block;
+	width: 270px;
+}
+
+#SPOTLIGHT_FOOTER {
+	@include clearfix;
+	@include linear-gradient(false, top, rgba($color-module-shadow, 0), 50%, $color-module-shadow, 100%);
+	border: none;
+	list-style: none;
+	margin: 0;
+	padding: 0px 20px 33px;
+	text-align: center;
+
+	.item-1 {
+		float: left;
+	}
+
+	.item-2 {
+		float: right;
+	}
+
+	.WikiaSpotlight {
+		max-height: 123px;
+		max-width: 255px;
+		width: 30%;
+
+		img {
+			height: auto;
+			width: 100%;
 		}
 	}
 }
@@ -194,12 +242,24 @@ body >a >img[src$="noad.gif"] {
 }
 
 // Right rail ads centering
-#LEFT_SKYSCRAPER_2, #INCONTENT_BOXAD_1 {
+#LEFT_SKYSCRAPER_2 {
 	font-size: 0;
-	margin-left: 15px;
-	margin-right: 15px;
 	text-align: center;
 	> div, > iframe {
 		display: inline-block;
+	}
+}
+
+// Floating medrec
+#WikiaAdInContentPlaceHolder {
+	position: absolute;
+	#INCONTENT_BOXAD_1 {
+		height: 250px;
+		width: 300px;
+		position: relative;
+		@if ( not $responsive-layout-enabled ) {
+			margin-left: 15px;
+			margin-right: 15px;
+		}
 	}
 }

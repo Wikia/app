@@ -105,7 +105,7 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	 * 	$this->mockClass('Article', $mockArticle);
 	 *  $this->mockClass('Title', $mockTitle, 'newFromText');
 	 * @param $className String
-	 * @param $mock Object instance of Mock
+	 * @param $mock PHPUnit_Framework_MockObject_MockObject instance of Mock
 	 * @param $functionName String name of static constructor
 	 * @return void
 	 */
@@ -134,7 +134,7 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	 * @see WikiaBaseTest::$alternativeConstructors
 	 *
 	 * @param $className string Class name
-	 * @param $mock object Mocked object
+	 * @param $mock PHPUnit_Framework_MockObject_MockObject Mocked object
 	 */
 	protected function mockClassEx( $className, $mock ) {
 		$alternativeConstructors = isset( self::$alternativeConstructors[$className] )
@@ -149,7 +149,7 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	 * @param string $className name of the class to be mocked
 	 * @param array $methods list of methods and values they should return
 	 * @param string $staticConstructor name of the "static" class constructor (e.g. Title::newFromText) that will return mocked object
-	 * @return object mocked object
+	 * @return PHPUnit_Framework_MockObject_MockObject mocked object
 	 */
 	protected function getMockWithMethods($className, Array $methods = array()) {
 		$mock = $this->getMock($className, array_keys($methods));

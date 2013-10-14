@@ -1,5 +1,5 @@
 .editpage-visualwidemode {
-	#EditPageRail {
+	.EditPageRail {
 		position: absolute;
 		top: 0;
 		right: 0;
@@ -18,10 +18,10 @@
 			padding-bottom: 10px;
 		}
 	}
-	#EditPageMain {
+	.EditPageMain {
 		width: $width-outside;
 	}
-	#EditPageToolbar {
+	.EditPageToolbar {
 		padding-right: 15px + $width-rail-epl  - 10;
 		.cke_toolbar_expand {
 			> a {
@@ -32,7 +32,7 @@
 }
 
 .editpage-sourcewidemode.mode-source {
-	#EditPageEditorWrapper {
+	.EditPageEditorWrapper {
 		padding-right: 10px;
 	}
 
@@ -77,13 +77,13 @@
 			display: none;
 		}
 		label[for="wpSummary"] {
-			display: none !important; // Yeah, this is lame, but the #EditPage selectors need to be refactored to .EditPage as to not clobber specificity.
+			display: none;
 		}
 	}
 
 	/* right rail adjustments */
 	&.editpage-sourcewidemode-on {
-		#EditPageRail {
+		.EditPageRail {
 			@include clear-box-shadow;
 			background-color: transparent;
 			border-left: 0;
@@ -101,10 +101,10 @@
 				background-image: none;
 			}
 		}
-		#EditPageMain {
+		.EditPageMain {
 			width: $width-outside;// - 10;
 		}
-		#EditPageToolbar {
+		.EditPageToolbar {
 			margin-right: -6px;
 			padding-right: 15px + $width-rail-epl  - 10;
 		}
@@ -121,7 +121,7 @@
 		.cke_toolbar_source {
 			width: $width-outside - $page-controls-wide-width - 65;
 		}
-		#EditPageRail {
+		.EditPageRail {
 			width: auto;
 			.module_page_controls {
 				// resetting module styling - start
@@ -169,27 +169,12 @@
 
 /* CreateBlogPost specific fixes (BugId:9852) */
 .mw-special-CreateBlogPage .editpage-sourcewidemode.mode-source {
-	 #EditPageRail .module_page_controls {
+	 .EditPageRail .module_page_controls {
 		.wpIsCommentingEnabled {
 			top: 2px;
 		}
 		.wpMinoredit {
 			top: 18px;
 		}
-	}
-}
-
-/* IE7 only fixes */
-/* BugId:6349 */
-#EditPage.editpage-visualwidemode {
-	#EditPageToolbar {
-		*background-color: transparent;
-		*z-index: 2;
-	}
-	.cke_modulebutton.cke_opened {
-		*z-index: 3;
-	}
-	.cke_panel_dropdown {
-		*z-index: 2;
 	}
 }

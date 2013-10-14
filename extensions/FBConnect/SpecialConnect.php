@@ -464,7 +464,7 @@ class SpecialConnect extends SpecialPage {
 			// This must be done up here so that the data is in the database before copy-to-local is done for sharded setups.
 			FBConnectDB::addFacebookID($user, $fb_id);
 
-			wfRunHooks( 'AddNewAccount', array( $user ) );
+			wfRunHooks( 'AddNewAccount', array( $user, false ) );
 
 			// Mark that the user is a Facebook user
 			$user->addGroup('fb-user');
@@ -606,6 +606,16 @@ class SpecialConnect extends SpecialPage {
 		FBConnectDB::addFacebookID($user, $fb_user);
 		// Update the user with settings from Facebook
 		$user->updateFromFacebook();
+
+		// Wikia changes start
+		// Setup the session
+		global $wgSessionStarted;
+		if (!$wgSessionStarted) {
+			wfSetupSession();
+		}
+		$user->setCookies();
+		// Wikia changes end
+
 		// Store the user in the global user object
 		$wgUser = $user;
 
@@ -635,7 +645,7 @@ class SpecialConnect extends SpecialPage {
 			}
 			++$i;
 		}
-		return $prefix;
+		return $this->userNamePrefix;
 	}
 
 	/**
@@ -804,7 +814,7 @@ class SpecialConnect extends SpecialPage {
 			$wgOut->readOnlyPage();
 			return false;
 		} elseif ( $wgUser->isBlockedFromCreateAccount() ) {
-			LoginForm::userBlockedMessage(); //this is not an explicitly static method but doesn't use $this and can be called like static (fixes RT#75589)
+			LoginForm::userBlockedMessage($wgUser->getBlock()); //this is not an explicitly static method but doesn't use $this and can be called like static (fixes RT#75589)
 			return false;
 		} elseif ( count( $permErrors = $titleObj->getUserPermissionsErrors( 'createaccount', $wgUser, true ) )>0 ) {
 			$wgOut->showPermissionsErrorPage( $permErrors, 'createaccount' );
@@ -911,7 +921,8 @@ class SpecialConnect extends SpecialPage {
 			// Outputs the canonical name of the special page at the top of the page
 			$this->outputHeader();
 
-			$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/FBConnect/facebook.js\"></script>\n");
+			// mech: I don't think this file ever existed in this extension, commenting this out
+			//$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/FBConnect/facebook.js\"></script>\n");
 
 			// Render a humble Facebook Connect button
 			$wgOut->addHTML('<div>'.wfMsgExt( 'fbconnect-intro', array('parse', 'content')) . '<br/>' . wfMsg( 'fbconnect-click-to-login', $wgSitename ) .'
@@ -935,7 +946,7 @@ class SpecialConnect extends SpecialPage {
 
 		$fb = new FBConnectAPI();
 
-		$user = $fb->verifyAccountReclamation( $sRequest );
+		$user = $fb->verifyAccountReclamation();
 
 		if (!($user === false)) {
 			$result = FBConnect::coreDisconnectFromFB($user);

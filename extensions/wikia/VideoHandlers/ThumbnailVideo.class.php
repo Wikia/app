@@ -7,7 +7,7 @@
 
 class ThumbnailVideo extends ThumbnailImage {
 
-//	function ThumbnailVideo( $file, $url, $width, $height, $path = false, $page = false ){
+//	function ThumbnailVideo( $file, $url, $width, $height, $path = false, $page = false ) {
 //
 //		$this->file = $file;
 //
@@ -26,34 +26,34 @@ class ThumbnailVideo extends ThumbnailImage {
 //		$this->page = $page;
 //	}
 
-	function getFile() {
+	function getFile( ) {
 		return $this->file;
 	}
 
-	function getUrl() {
+	function getUrl( ) {
 		return $this->url;
 	}
 
-	function getPath() {
+	function getPath( ) {
 		return $this->path;
 	}
 
-	function getPage() {
+	function getPage( ) {
 		return $this->page;
 	}
 
-	function getWidth() {
+	function getWidth( ) {
 		return $this->width;
 	}
 
-	function getHeight() {
+	function getHeight( ) {
 		return $this->height;
 	}
 
 	/*
 	 * Render video thumbnail as image thumbnail
 	 */
-	function renderAsThumbnailImage($options) {
+	function renderAsThumbnailImage( $options ) {
 
 		$thumb = new ThumbnailImage(
 				$this->getFile(),
@@ -123,7 +123,7 @@ class ThumbnailVideo extends ThumbnailImage {
 			'href' => $videoTitle->getLocalURL(),
 		);
 
-		if ( !empty( $options['id'] ) ){
+		if ( !empty( $options['id'] ) ) {
 			$linkAttribs['id'] = $options['id'];
 		}
 
@@ -139,7 +139,7 @@ class ThumbnailVideo extends ThumbnailImage {
 		}
 
 		$extraClasses = 'video';
-		if( empty($options['noLightbox']) ) {
+		if ( empty($options['noLightbox']) ) {
 			$extraClasses .= ' image lightbox';
 		}
 		$linkAttribs['class'] = empty($linkAttribs['class']) ? $extraClasses : $linkAttribs['class'] . ' ' . $extraClasses;
@@ -177,7 +177,7 @@ class ThumbnailVideo extends ThumbnailImage {
 			$attribs['class'] .= ' ' . $options['img-class'];
 		}
 
-		if ($this->file instanceof WikiaLocalFile || $this->file instanceof WikiaForeignDBFile) {
+		if ( $this->file instanceof WikiaLocalFile || $this->file instanceof WikiaForeignDBFile ) {
 			$extraBorder = $this->file->addExtraBorder( $this->width );
 		}
 		if ( !empty( $extraBorder ) ) {
@@ -191,7 +191,7 @@ class ThumbnailVideo extends ThumbnailImage {
 		}
 
 		if ( isset( $options['duration'] ) && $options['duration'] == true ) {
-			$duration = $this->file->getHandler()->getFormattedDuration();
+			$duration = WikiaFileHelper::formatDuration( $this->file->getMetadataDuration() );
 		}
 
 		if ( isset($options['constHeight']) ) {
@@ -213,7 +213,7 @@ class ThumbnailVideo extends ThumbnailImage {
 		$html .= Xml::element( 'img', $attribs, '', true );
 
 
-		if( empty( $options['hideOverlay'] ) ) {
+		if ( empty( $options['hideOverlay'] ) ) {
 			$html .= WikiaFileHelper::videoInfoOverlay( $this->width, $videoTitle );
 		}
 
@@ -226,7 +226,7 @@ class ThumbnailVideo extends ThumbnailImage {
 		return $html;
 	}
 
-	private function appendHtmlCrop( &$linkAttribs, $options) {
+	private function appendHtmlCrop( &$linkAttribs, $options ) {
 
 		if ( !isset( $linkAttribs['style'] ) ) $linkAttribs['style'] = '';
 

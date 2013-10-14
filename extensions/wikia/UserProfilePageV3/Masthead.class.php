@@ -274,15 +274,7 @@ class Masthead {
 			$url = $this->getUrl( '/thumb/' );
 		}
 
-		/**
-		 * returned url is virtual base for thumbnail, so
-		 *
-		 * - get last part of path
-		 * - add it as thumbnail file prefixed with widthpx
-		 */
-		$parts = explode( "/", $url );
-		$file = array_pop( $parts );
-		return sprintf( "%s/%dpx-%s", $url, $width, $file );
+		return ImagesService::getThumbUrlFromFileUrl($url, $width);
 	}
 
 	/**
@@ -711,6 +703,7 @@ class Masthead {
 
 	static public function getUserStatsData( $userName, $useMasterDb = false ) {
 		global $wgLang, $wgCityId, $wgExternalDatawareDB;
+		wfProfileIn( __METHOD__ );
 
 		$result = array( 'editCount' => 0, 'firstDate' => 0 );
 
@@ -735,6 +728,7 @@ class Masthead {
 				if(empty($mastheadDataEditCount) || empty($mastheadDataEditDate)) {
 					$dbr = wfGetDB( $useMasterDb ? DB_MASTER : DB_SLAVE );
 
+					/* @TODO FIXME: respect your DB resources, never count on MASTER */
 					$dbResult = $dbr->select(
 						'revision',
 						array('min(rev_timestamp) AS date, count(*) AS edits'),
@@ -759,6 +753,7 @@ class Masthead {
 			$result['editCount'] = $editCount;
 			$result['firstDate'] = $firstDate;
 		}
+		wfProfileOut( __METHOD__ );
 		return $result;
 	}
 
