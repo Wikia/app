@@ -2,6 +2,8 @@
 @import "responsive-variables";
 @import "responsive-background";
 
+@import "../mixins/box-sizing";
+
 @if ( $responsive-layout-enabled ) {
 
 	body.skin-oasis > .global-notification,
@@ -244,6 +246,10 @@
 	}
 
 	@media screen and (min-width: $breakpoint-max) {
+		@if ( $background-is-dynamic ) {
+			@include background-max;
+		}
+
 		.WikiaHeader .page-width-container,
 		.WikiaPage {
 			margin: 0 auto;
