@@ -206,7 +206,8 @@
 		list-style: none;
 		margin: 0;
 
-		h4 {
+		h4 a {
+			display: block;
 			font-weight: normal;
 			height: 22px;
 			margin: 0 0 5px;
@@ -214,6 +215,7 @@
 			text-overflow: ellipsis;
 			white-space: nowrap;
 			width: 100%;
+			word-wrap: normal;
 		}
 
 		.activity {
@@ -326,6 +328,7 @@
 		display: inherit;
 		overflow: hidden;
 		text-overflow: ellipsis;
+		word-wrap: normal;
 		a {
 			white-space: nowrap;
 		}
