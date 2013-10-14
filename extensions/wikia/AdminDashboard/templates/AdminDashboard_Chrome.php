@@ -9,3 +9,9 @@
 		<a href="<?= $adminDashboardUrlGeneral ?>" class="tab <?= $tab == 'general' ? 'active' : '' ?>" data-section="general" data-tracking="header/general"><?= wfMsg('admindashboard-tab-general') ?></a>
 	</nav>
 </header>
+<? if($isAdminDashboard) { ?>
+	<aside class="AdminDashboardRail" id="AdminDashboardRail">
+		<?= $wg->EnableFounderProgressBarExt ? $app->renderView( 'FounderProgressBar', 'widget' ) : '' ?>
+		<?= $app->renderView( 'QuickStats', 'getStats') ?>
+	</aside>
+<? } ?>
