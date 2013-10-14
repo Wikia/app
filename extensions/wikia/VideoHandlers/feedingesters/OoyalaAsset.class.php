@@ -204,6 +204,9 @@ class OoyalaAsset extends WikiaModel {
 			$metadata['pagecategories'] = $data['pageCategories'];
 		}
 
+		// filter empty value
+		$this->filterEmptyValue( $metadata );
+
 		return $metadata;
 	}
 
@@ -474,6 +477,19 @@ class OoyalaAsset extends WikiaModel {
 		$resp = $this->sendRequest( $method, $reqPath );
 
 		return $resp;
+	}
+
+	/**
+	 * Filter empty value
+	 * @param array $metadata
+	 * @return array $metadata
+	 */
+	public function filterEmptyValue( &$metadata ) {
+		foreach ( $metadata as $key => $value ) {
+			if ( empty( $value ) ) {
+				unset( $metadata[$key] );
+			}
+		}
 	}
 
 }
