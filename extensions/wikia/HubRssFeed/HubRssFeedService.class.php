@@ -9,7 +9,7 @@
 
 class HubRssFeedService {
 
-	const DATE_FORMAT = 'D, m M Y H:i:s e';
+	const DATE_FORMAT = 'D, d M Y H:i:s e';
 
 	protected $descriptions = [
 		WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT =>
