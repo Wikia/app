@@ -13,6 +13,7 @@ $modal-secondary-color: darken( $color-page, 10% );
 
 .modal-shown {
 	overflow: hidden;
+	height: 100%;
 }
 
 .modal,
@@ -26,6 +27,9 @@ $modal-secondary-color: darken( $color-page, 10% );
 	background-color: $color-page;
 	display: none;
 	left: 50%;
+	margin: 0;
+	overflow: hidden;
+	padding: 0;
 	position: fixed;
 	top: 50%;
 	@include transform-translate( -50%, -50% );
@@ -38,14 +42,7 @@ $modal-secondary-color: darken( $color-page, 10% );
 	header,
 	section,
 	footer {
-		left: 0;
-		position: absolute;
-		right: 0;
 		padding: 20px;
-	}
-
-	header {
-		top: 0;
 	}
 
 	header h3 {
@@ -67,16 +64,11 @@ $modal-secondary-color: darken( $color-page, 10% );
 		width: 24px;
 	}
 
-	section {
-		bottom: 62px;
-		position: absolute;
-		overflow: hidden;
-		overflow-y: auto;
-		top: 63px;
-	}
-
 	footer {
 		bottom: 0;
+		left: 0;
+		position: absolute;
+		right: 0;
 	}
 
 	footer .button {
@@ -89,7 +81,6 @@ $modal-secondary-color: darken( $color-page, 10% );
 
 	&.small {
 		width: 400px;
-		margin: auto;
 	}
 
 	&.medium {
@@ -99,7 +90,8 @@ $modal-secondary-color: darken( $color-page, 10% );
 	/** TODO: this make modals tall when they shouldn't be... **/
 	&.small,
 	&.medium {
-		height: 90%;
+		max-height: 90%;
+		min-height: 200px;
 	}
 
 	&.large {
@@ -109,7 +101,10 @@ $modal-secondary-color: darken( $color-page, 10% );
 
 	&.shown {
 		display: block;
+		margin: 0;
+		padding: 0;
 		opacity: 1;
+		overflow: hidden;
 		z-index: $zTop;
 	}
 }
