@@ -54,26 +54,46 @@ class RailController extends WikiaController {
 	}
 
 	/**
-	 *
+	 * Get lazy right rail modules
 	 */
 	protected function getLazyRail() {
 		wfProfileIn(__METHOD__);
+		global $wgUseSiteJs, $wgAllowUserJs, $wgTitle;
+		$title = Title::newFromText($this->request->getVal('articleTitle', null), $this->request->getInt('namespace', null));
 
-		$railModules = $this->filterModules((new BodyController)->getRailModuleList(), self::FILTER_LAZY_MODULES);
-		$this->railLazyContent = '';
-		krsort($railModules);
-		foreach ($railModules as $railModule) {
-			$this->railLazyContent .= $this->app->renderView(
-				$railModule[0], /* Controller */
-				$railModule[1], /* Method */
-				$railModule[2] /* array of params */
-			);
+		if ($title instanceof Title) {
+			// override original wgTitle from title given in parameters
+			// we cannot use wgTitle that is created on by API because it's broken on wikis without '/wiki' in URL
+			// https://wikia-inc.atlassian.net/browse/BAC-906
+			$oldWgTitle = $wgTitle;
+			$wgTitle = $title;
+			$railModules = $this->filterModules((new BodyController)->getRailModuleList(), self::FILTER_LAZY_MODULES);
+			$this->railLazyContent = '';
+			krsort($railModules);
+			foreach ($railModules as $railModule) {
+				$this->railLazyContent .= $this->app->renderView(
+					$railModule[0], /* Controller */
+					$railModule[1], /* Method */
+					$railModule[2] /* array of params */
+				);
+			}
+
+			$this->railLazyContent .= Html::element('div', ['id' => 'WikiaAdInContentPlaceHolder']);
+
+			$this->css = array_keys($this->app->wg->Out->styles);
+
+			// Do not load user and site jses as they are already loaded and can break page
+			$oldWgUseSiteJs = $wgUseSiteJs;
+			$oldWgAllowUserJs = $wgAllowUserJs;
+			$wgUseSiteJs = false;
+			$wgAllowUserJs = false;
+
+			$this->js = $this->app->wg->Out->getBottomScripts();
+
+			$wgUseSiteJs = $oldWgUseSiteJs;
+			$wgAllowUserJs = $oldWgAllowUserJs;
+			$wgTitle = $oldWgTitle;
 		}
-
-		$this->railLazyContent .= Html::element('div', ['id' => 'WikiaAdInContentPlaceHolder']);
-
-		$this->css = array_keys($this->app->wg->Out->styles);
-		$this->js = $this->app->wg->Out->getBottomScripts();
 
 		wfProfileOut(__METHOD__);
 	}

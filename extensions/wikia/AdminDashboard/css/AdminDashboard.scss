@@ -191,6 +191,7 @@ $color-highlight-column: rgba($color-page, 0);
 						display: block;
 						height: 50px;
 						margin: 0 auto 5px;
+						position: relative;
 						width: 50px;
 						.icon {
 							background-image: url(/extensions/wikia/AdminDashboard/images/icons.png); // $wgCdnStylePath
@@ -226,7 +227,7 @@ $color-highlight-column: rgba($color-page, 0);
 								background-position: -300px 0;
 							}
 							&.specialcsstool {
-								background-position: -900px 0;
+								background-position: -892px 0;
 							}
 
 							&.communitycorner {
@@ -256,6 +257,11 @@ $color-highlight-column: rgba($color-page, 0);
 							&.licensedvideoswap {
 								background-position: -950px 0;
 							}
+						}
+						.alert-badge {
+							position: absolute;
+							right: -.75em;
+							top: -.75em;
 						}
 					}
 					&:hover {

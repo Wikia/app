@@ -171,6 +171,8 @@ ve.wikiaTest = ( function () {
 			documentView = surface.getView().getDocument();
 			nodeView = callback( documentView.getDocumentNode() );
 
+			nodeView.setFocused( false );
+
 			assert.equalDomStructure(
 				nodeView.$,
 				getHtml( current ),
@@ -225,6 +227,8 @@ ve.wikiaTest = ( function () {
 		documentModel = surfaceModel.getDocument();
 		documentView = surface.getView().getDocument();
 		nodeView = callback( documentView.getDocumentNode() );
+
+		nodeView.setFocused( false );
 
 		assert.equalDomStructure(
 			nodeView.$,

@@ -102,8 +102,7 @@ class SolrDocumentService
 	 */
 	public function getWikiId() {
 		if ( $this->wikiId === null ) {
-			global $wgCityId;
-			$this->wikiId = $wgCityId;
+			$this->wikiId = $this->getConfig()->getWikiId();
 		}
 		return $this->wikiId;
 	}

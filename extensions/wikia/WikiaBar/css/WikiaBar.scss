@@ -1,10 +1,10 @@
-@import "../../../../skins/oasis/css/core/color";
-@import "../../../../skins/oasis/css/core/layout";
-@import "../../../../skins/oasis/css/mixins/menus";
-@import "../../../../skins/oasis/css/mixins/box-shadow";
-@import "../../../../skins/oasis/css/mixins/gradient";
-@import "../../../../skins/oasis/css/mixins/transition";
-@import "../../../../skins/oasis/css/mixins/transform";
+@import "skins/oasis/css/core/color";
+@import "skins/oasis/css/core/layout";
+@import "skins/oasis/css/mixins/menus";
+@import "skins/oasis/css/mixins/box-shadow";
+@import "skins/oasis/css/mixins/gradient";
+@import "skins/oasis/css/mixins/transition";
+@import "skins/oasis/css/mixins/transform";
 
 $animationSpeed: 200ms;
 
@@ -216,7 +216,11 @@ $animationSpeed: 200ms;
 		padding: 3px 0 0 0;
 		position: relative;
 		text-align: left;
-		width: $width-outside;
+		@if ( $responsive-layout-enabled ) {
+			width: 100%;
+		} @else {
+			width: $width-outside;
+		}
 	}
 	.arrow {
 		background-image: url(/extensions/wikia/WikiaBar/images/arrowDown.png); /* base64 */
