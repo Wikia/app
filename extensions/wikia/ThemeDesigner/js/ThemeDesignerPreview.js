@@ -23,8 +23,8 @@ var ThemeDesignerPreview = {
 		var sassUrl = $.getSassCommonURL('/skins/oasis/css/oasis.scss', settings);
 		$("#clickmask").animate({"opacity": 0.65}, "fast", function() {
 			$.getCSS(sassUrl, function(link) {
-				$(ThemeDesigner.link).remove();
-				ThemeDesigner.link = link;
+				$(ThemeDesignerPreview.link).remove();
+				ThemeDesignerPreview.link = link;
 				$("#clickmask").animate({"opacity": 0}, "fast");
 			});
 		});
