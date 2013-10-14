@@ -58,7 +58,11 @@ class Article extends AbstractMatch
 	protected function matchFoundText( $text ) {
 
 		$list = preg_replace( '/[[:punct:]]/', ' ', $this->term );
-		$list = preg_replace( '/\s+/', '|', trim( $list ) );
+		$list = trim( $list );
+		if ( "" === $list ) {
+			return $text;
+		}
+		$list = preg_replace( '/\s+/', '|', $list );
 
 		$text = preg_replace_callback(
 			'/' . $list . '/i',
