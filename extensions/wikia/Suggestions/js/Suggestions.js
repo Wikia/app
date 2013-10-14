@@ -95,6 +95,7 @@ require( [ "jquery", "client", "wikia.log" ], function( $, client, log ) {
 					window.Wikia.autocomplete[name].inUse = true;
 				}
 				window.Wikia.newSearchSuggestions = false;
+				searchInput.trigger( 'suggestHide' );
 				dropdown.empty();
 				viewModel.setUse( false );
 			}
@@ -102,6 +103,11 @@ require( [ "jquery", "client", "wikia.log" ], function( $, client, log ) {
 			viewModel.on( "displayResults changed", function() {
 				var results = viewModel.getDisplayResults();
 				dropdown.empty();
+				if( results.length ) {
+					searchInput.trigger( 'suggestShow' );
+				} else {
+					searchInput.trigger( 'suggestHide' );
+				}
 				for( var i in results ) {
 					var res = results[i];
 					var html = '<li>' +
