@@ -12,8 +12,8 @@ class Suggestions {
 			$out->addScriptFile( $file );
 		}
 
-		foreach( AssetsManager::getInstance()->getGroupFullURL( 'suggestions_scss' ) as $file ) {
-			$out->addExtensionStyle( $file );
+		foreach( AssetsManager::getInstance()->getURL( 'suggestions_scss' ) as $file ) {
+			$out->addStyle( $file );
 		}
 		return true;
 	}
