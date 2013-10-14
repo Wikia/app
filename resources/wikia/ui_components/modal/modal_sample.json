@@ -1,5 +1,41 @@
 [
 	{
-		"description": "styleguide-example-description"
+		"description": "styleguide-example-modal-large-description",
+		"params": {
+			"type": "default",
+			"vars": {
+				"id": "largeModalExample",
+				"size": "large",
+				"content": "This is a large modal example.",
+				"class": "styleguide-example-large",
+				"title": "Large modal example.",
+				"closeButton": true,
+				"closeText": "Close",
+				"altLink": {
+					"id": "largeModalAltLink",
+					"href": "#",
+					"text": "Open small modal"
+				},
+				"secondBtn": "",
+				"primaryBtn": ""
+			}
+		},
+		"helpers": {
+			"components": [
+				{
+					"name": "button",
+					"params": {
+						"type": "link",
+						"vars": {
+							"id": "showLargeModalExample",
+							"href": "#",
+							"classes": [ "primary" ],
+							"title": "Show large modal example",
+							"value": "Large modal"
+						}
+					}
+				}
+			]
+		}
 	}
 ]

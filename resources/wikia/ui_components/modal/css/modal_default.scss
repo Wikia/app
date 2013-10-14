@@ -50,7 +50,10 @@ $modal-secondary-color: darken( $color-page, 10% );
 
 	header h3 {
 		color: $color-text;
+		font-size: 21px;
 		font-weight: bold;
+		margin: 0;
+		padding: 0;
 	}
 
 	header .close {

@@ -16,13 +16,7 @@ $messages['en'] = [
 	'styleguide-description-modal-primary-button' => "OPTIONAL primary button in a modal's footer; result of UIComponent->render() method (HTML markup)",
 
 	// examples
-	'styleguide-example-description' => 'There are three different sizes of modal:',
-	'styleguide-example-modal-small-modal' => 'Small modal',
-	'styleguide-example-modal-medium-modal' => 'Medium modal',
-	'styleguide-example-modal-large-modal' => 'Large modal',
-	'styleguide-example-modal-close-button-text' => 'Close',
-	'styleguide-example-modal-secondary-button' => 'Cancel',
-	'styleguide-example-modal-primary-button' => 'OK',
-	'styleguide-example-modal-alt-link' => 'Another way to close this modal',
-	'styleguide-example-modal-large-alt-link' => 'Open small modal',
+	'styleguide-example-modal-large-description' => "A large modal coverts almost all view port. It should be use for rendering... As all modals please remember the title will have only one line.",
+	'styleguide-example-modal-small-over-large-title' => "Small modal",
+	'styleguide-example-modal-small-over-large-message' => "Small modal over large one example",
 ];

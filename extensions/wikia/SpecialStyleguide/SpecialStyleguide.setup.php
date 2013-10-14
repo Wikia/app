@@ -38,6 +38,7 @@ $wgExtensionMessagesFiles['SpecialStyleguide'] = $dir . 'SpecialStyleguide.i18n.
 JSMessages::registerPackage( 'SpecialStyleguide', [
 	'styleguide-show-parameters',
 	'styleguide-hide-parameters',
+	'styleguide-example-modal-*',
 ] );
 
 $wgHooks['BeforeExtensionMessagesRecache'][] = 'StyleguideComponents::onBeforeExtensionMessagesRecache';
