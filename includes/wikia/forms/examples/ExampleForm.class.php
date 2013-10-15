@@ -1,21 +1,23 @@
 <?php
 class ExampleForm extends BaseForm {
 	// define form attributes
-	protected $action = 'test/action.php';
+
 	protected $id = 'testId';
 	protected $method = 'post';
 
 	public function __construct() {
 		parent::__construct();
 
+		$this->action = Title::newFromText('ExampleForm', NS_SPECIAL)->getFullUrl();
+
 		//////////////////////////////
 		// An example of contact form
 		//////////////////////////////
 
 		// subject input field with label and validation
-		$this->addField( 'contactFormSubject', new TextField(
+		$this->addField( 'contactFormSubject', new InputField(
 			[
-				'label' => new Label( wfMessage( 'subject' ) ),
+				'label' => new Label( wfMessage( 'example-form-subject' ) ),
 				'validator' => new WikiaValidatorString()
 			]
 		) );
@@ -23,17 +25,17 @@ class ExampleForm extends BaseForm {
 		// message textarea with label and validation
 		$this->addField( 'contactFormMessage', new TextareaField(
 			[
-				'label' => new Label( wfMessage( 'message' ) ),
+				'label' => new Label( wfMessage( 'example-form-message' ) ),
 				'validator' => new WikiaValidatorString(),
 			]
 		) );
 
 		// format of e-mail body
 		$this->addField( 'contactFormMailFormat', new SelectField( [
-			'label' => new Label( wfMessage('mail-format') ),
+			'label' => new Label( wfMessage('example-form-mail-format') ),
 			'choices' => [
-				[ 'value' => '1', 'option' => wfMessage( 'plain-text' ) ],
-				[ 'value' => '2', 'option' => wfMessage( 'html' ) ]
+				[ 'value' => '1', 'option' => wfMessage( 'example-form-plain-text' ) ],
+				[ 'value' => '2', 'option' => wfMessage( 'example-form-html' ) ]
 			]
 		] ) );
 
@@ -41,10 +43,10 @@ class ExampleForm extends BaseForm {
 		$this->addField( 'contactFormTermsOfUse', new RadioField(
 			[
 				'type' => 'radio',
-				'label' => new Label( wfMessage( 'did-read-terms' ) ),
+				'label' => new Label( wfMessage( 'example-form-did-read-terms' ) ),
 				'choices' => [
-					[ 'label' => new Label( wfMessage('yes') ), 'value' => '1' ],
-					[ 'label' => new Label( wfMessage('no') ), 'value' => '0' ],
+					[ 'label' => new Label( wfMessage('example-form-yes') ), 'value' => '1' ],
+					[ 'label' => new Label( wfMessage('example-form-no') ), 'value' => '0' ],
 				]
 			]
 		) );
@@ -54,7 +56,7 @@ class ExampleForm extends BaseForm {
 			[
 				'type' => 'checkbox',
 				'checked' => 'checked',
-				'label' => new Label( wfMessage( 'send-me-a-copy' ) )
+				'label' => new Label( wfMessage( 'example-form-send-me-a-copy' ) )
 			]
 		) );
 
@@ -62,18 +64,13 @@ class ExampleForm extends BaseForm {
 		$this->addField( 'contactFormPassword', new InputField(
 			[
 				'type' => 'password',
-				'label' => new Label( wfMessage( 'password' ) )
+				'label' => new Label( wfMessage( 'example-form-password' ) )
 			]
 		) );
 
 		// hidden input field
 		$this->addField( 'contactFormSessionId', new InputField( [ 'type' => 'hidden' ] ) );
 
-		$this->addField( 'contactFormSubmit', new InputField(
-			[
-				'type' => 'submit'
-			]
-		) );
 
 		//////////////////
 		// OTHER EXAMPLES
@@ -82,31 +79,32 @@ class ExampleForm extends BaseForm {
 		// Add default field - it's TextField
 		$this->addField( 'defaultField' );
 
-		$this->addField( 'fieldName7', new RadioField() );
-		$this->addField( 'fieldName8', new RadioField( ['label' => new Label( wfMessage( 'radio-button' ) ) ] ) );
 		$this->addField( 'fieldName9', new RadioField( [
-			'label' => new Label( wfMessage('radio-buttons') ),
+			'label' => new Label( wfMessage('example-forms-radio-buttons') ),
 			'choices' => [
-				[ 'label' => new Label( wfMessage('A') ), 'value' => 'Option 1' ],
-				[ 'label' => new Label( wfMessage('B') ), 'value' => 'Option 2' ],
-				[ 'value' => 'Option 3' ],
+				[ 'label' => new Label( wfMessage('example-form-A') ), 'value' => 'Option 1' ],
+				[ 'label' => new Label( wfMessage('example-form-B') ), 'value' => 'Option 2' ],
+				[ 'label' => new Label( wfMessage('example-form-C') ), 'value' => 'Option 3' ],
 			],
 		] ) );
 
 		// add collection type field with validators
 		$this->addField( 'collectionField', new CollectionTextField( [
-			'label' => new Label( wfMessage( 'aaa' ) ),
+			'label' => new Label( wfMessage( 'example-form-collection' ) ),
 			'validator' => new WikiaValidatorListValue( [
 				'validator' => new WikiaValidatorInteger(
 					[ 'required' => true ],
-					[ 'not_int' => 'message key here' ]
+					[ 'not_int' => 'example-form-not-an-integer' ]
 				)
-			] )
+			] ),
+			'value' => [1]
 		] ) );
 
-		// add submit
-		$this->addField('submitButton', new SubmitButton([
-			'value' => wfMessage('some-key-here')->text()
-		]));
+		$this->addField( 'contactFormSubmit', new InputField(
+			[
+				'type' => 'submit',
+				'value' => wfMessage( 'example-form-submit' )->text()
+			]
+		) );
 	}
 }

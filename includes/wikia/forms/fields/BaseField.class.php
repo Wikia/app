@@ -37,6 +37,17 @@ abstract class BaseField extends FormElement {
 			$this->setValidator($options['validator']);
 		}
 
+		// mostly for submit, checkbox, radio button types
+		// TODO: should we allow that?
+		if( isset( $options['value'] ) ) {
+			$this->setProperty( self::PROPERTY_VALUE, $options['value'] );
+		}
+
+		// mostly for checkbox and radio buttons
+		if( isset( $options['choices'] ) ) {
+			$this->setProperty( self::PROPERTY_CHOICES, $options['choices'] );
+		}
+
 		parent::__construct();
 	}
 

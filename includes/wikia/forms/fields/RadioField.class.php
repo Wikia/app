@@ -2,16 +2,6 @@
 
 class RadioField extends BaseField
 {
-	/**
-	 * @see BaseField::_construct()
-	 */
-	public function __construct($options = []) {
-		parent::__construct($options);
-
-		if( isset($options['choices']) ) {
-			$this->setProperty(self::PROPERTY_CHOICES, $options['choices']);
-		}
-	}
 
 	/**
 	 * @see BaseField::render()

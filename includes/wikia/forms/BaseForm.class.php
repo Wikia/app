@@ -197,7 +197,7 @@ abstract class BaseForm extends FormElement {
 	 */
 	protected function addField($fieldName, BaseField $field = null) {
 		if (is_null($field)) {
-			$field = new TextField();
+			$field = new InputField();
 		}
 		$field->setName($fieldName);
 		$field->setId($fieldName);
