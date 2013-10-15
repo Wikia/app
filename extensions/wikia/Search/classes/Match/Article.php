@@ -18,7 +18,7 @@ class Article extends AbstractMatch
 	 * @return Result
 	 */
 	public function createResult() {
-
+		NS_BLOG;
 		/**@var $this->service Wikia\Search\MediaWikiService*/
 		$wikiId = $this->service->getWikiId();
 		$pageId = $this->service->getCanonicalPageIdFromPageId( $this->id );
@@ -27,7 +27,7 @@ class Article extends AbstractMatch
 				'pageid'        => $pageId,
 				'wid'           => $wikiId,
 				'title'         => $this->service->getTitleStringFromPageId( $this->id ),
-				'url'           =>  $this->service->getUrlFromPageId( $this->id ) ,
+				'url'           => $this->service->getUrlFromPageId( $this->id ) ,
 				'score'         => 'PTT',
 				'isArticleMatch'=> true,
 				'ns'            => $this->service->getNamespaceFromPageId( $this->id ),
