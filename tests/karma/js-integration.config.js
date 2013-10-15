@@ -26,7 +26,7 @@ files = [
 	//Chat Tests
 	'extensions/wikia/Chat2/js/spec/integration/views.mocks.js',
 	'extensions/wikia/Chat2/js/views/views.js',
-	'extensions/wikia/Chat2/js/spec/integration/ChatController.spec.js',
+	'extensions/wikia/Chat2/js/spec/integration/ChatController.config.spec.js',
 
 	//WikiaMobile
 	'extensions/wikia/WikiaMobile/js/autocomplete.js',
@@ -50,6 +50,7 @@ files = [
 	'extensions/wikia/WikiaMobile/js/features.js',
 	'extensions/wikia/WikiaMobile/js/spec/integration/*.spec.js',
 
+
 	//core modules
 	'resources/wikia/modules/window.js',
 	'resources/wikia/modules/aim.js',
@@ -65,12 +66,12 @@ files = [
 	'resources/wikia/modules/stringhelper.js',
 	'resources/wikia/modules/thumbnailer.js',
 	'resources/wikia/modules/uniqueId.js',
-	'resources/wikia/modules/spec/integration/*.spec.js',
+	'resources/wikia/modules/spec/integration/*.config.spec.js',
 
 	//SpecialPromote
 	'extensions/wikia/SpecialPromote/js/spec/integration/SpecialPromote.mocks.js',
 	'extensions/wikia/SpecialPromote/js/SpecialPromote.js',
-	'extensions/wikia/SpecialPromote/js/spec/integration/SpecialPromote.spec.js',
+	'extensions/wikia/SpecialPromote/js/spec/integration/SpecialPromote.config.spec.js',
 ];
 
 // list of files to exclude
@@ -102,7 +103,7 @@ autoWatch = true;
 
 // Start these browsers, to run tests:
 browsers = [
-	'PhantomJS',
+	//'PhantomJS',
 	//'Chrome',
 	//'ChromeCanary',
 	//'Firefox',
