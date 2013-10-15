@@ -150,7 +150,7 @@ class RunOnCluster extends Maintenance {
 			try {
 				$result = $this->db->query("use $dbname");
 			} catch ( Exception $e ) {
-				echo "ERROR: ".$e->getMessage()."\n";
+				error_log("ERROR: ".$e->getMessage()."\n");
 			}
 			if ( empty($result) ) {
 				continue;
@@ -160,11 +160,16 @@ class RunOnCluster extends Maintenance {
 			// Call our method passing the connected DB handle and test flag
 			$class = $this->class;
 			$method = $this->method;
-			$class::$method( $this->db, $dbname, $this->test );
+
+			try {
+				$class::$method( $this->db, $dbname, $this->test );
+			} catch ( Exception $e ) {
+				error_log("Could not run $class::$method for $dbname: ".$e->getMessage()."\n");
+			}
 		}
 
 		$delta = F::app()->wg->lang->formatTimePeriod( time() - $startTime );
-		echo "Finished in $delta\n";
+		error_log("Finished in $delta\n");
 	}
 
 	/**
