@@ -251,6 +251,46 @@ class AssetsManager {
 		return $this->getSassURL( $scssFilePath, '', $minify, $params );
 	}
 
+	/**
+	 * attempts to turn a url (http://something.wikia.com/__am/etc/etc/path/to/file.scss) to a local filepath
+	 * (path/to/file.scss)
+	 *
+	 * @param string|array $urls the url to try and convert
+	 * @return string|array the resulting filepaths or the original url if filepath can't be determined
+	 */
+	public function getSassFilePath($urls) {
+		if (!is_array($urls)) {
+			$urls = [$urls];
+		}
+
+		$dummy = $this->getSassCommonURL('');
+		$dummyLength = strlen($dummy);
+		$result = [];
+		foreach ($urls as $url) {
+			$position = strpos($url, $dummy);
+			if ($position === 0) {
+				$result[] = substr($url, $dummyLength);
+			} else {
+				$result[] = $url;
+			}
+		}
+
+		return count($result) > 1 ? $result : $result[0];
+	}
+
+	public function isSassUrl($url) {
+		// todo: this needs to account for using urls that are NOT of the form __am/.../...
+		return strpos($url, '/sass/') !== false;
+	}
+
+	public function getSassesUrl($sassList) {
+		if (!is_array($sassList)) {
+			$sassList = [$sassList];
+		}
+
+		return str_replace('/sass/', '/sasses/', $this->getSassCommonURL(implode(',', $sassList)));
+	}
+
 	private function getSassGroupURL( $groupName, $prefix, $combine = null, $minify = null ) {
 		wfProfileIn( __METHOD__ );
 

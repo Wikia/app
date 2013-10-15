@@ -181,7 +181,8 @@ class OasisController extends WikiaController {
 			'skins/oasis/css/oasis.scss'
 		];
 
-		foreach ( $skin->getStyles() as $s ) {
+		$styles = $skin->getStyles();
+		foreach ( $styles as $s ) {
 			if ( !empty($s['url']) ) {
 				$tag = $s['tag'];
 				if ( !empty( $wgAllInOne ) ) {
@@ -194,15 +195,10 @@ class OasisController extends WikiaController {
 				// Print styles will be loaded separately at the bottom of the page
 				if ( stripos($tag, 'media="print"') !== false ) {
 					$this->cssPrintLinks .= $tag;
-
+				} elseif ($this->assetsManager->isSassUrl($s['url'])) {
+					$sassFiles[] = $s['url'];
 				} else {
-					if (strpos($s['url'], '/sass/') !== false) {
-						$parts = explode('/', $s['url'], 8);
-						$sassFiles[] = end($parts);
-					}
-					else {
-						$this->cssLinks .= $tag;
-					}
+					$this->cssLinks .= $tag;
 				}
 			} else {
 				$this->cssLinks .= $s['tag'];
@@ -210,10 +206,11 @@ class OasisController extends WikiaController {
 		}
 
 		if (!empty($sassFiles)) {
-			$sassFilesUrl = $this->assetsManager->getSassCommonURL(implode(',', $sassFiles));
-			$sassFilesUrl = str_replace('/sass/', '/sasses/', $sassFilesUrl);
+			$sassFiles = $this->assetsManager->getSassFilePath($sassFiles);
+			$sassFilesUrl = $this->assetsManager->getSassesUrl($sassFiles);
 
 			$this->cssLinks = Html::linkedStyle($sassFilesUrl) . $this->cssLinks;
+			$this->bottomScripts .= Html::inlineScript("var wgSassLoadedScss = JSON.parse('".json_encode($sassFiles)."');");;
 		}
 
 		$this->headLinks = $wgOut->getHeadLinks();

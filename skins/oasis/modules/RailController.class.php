@@ -67,6 +67,7 @@ class RailController extends WikiaController {
 			// https://wikia-inc.atlassian.net/browse/BAC-906
 			$oldWgTitle = $wgTitle;
 			$wgTitle = $title;
+			$assetManager = AssetsManager::getInstance();
 			$railModules = $this->filterModules((new BodyController)->getRailModuleList(), self::FILTER_LAZY_MODULES);
 			$this->railLazyContent = '';
 			krsort($railModules);
@@ -80,7 +81,19 @@ class RailController extends WikiaController {
 
 			$this->railLazyContent .= Html::element('div', ['id' => 'WikiaAdInContentPlaceHolder']);
 
-			$this->css = array_keys($this->app->wg->Out->styles);
+			$this->css = $sassFiles = [];
+			foreach (array_keys($this->app->wg->Out->styles) as $style) {
+				if ($assetManager->isSassUrl($style)) {
+					$sassFiles[] = $style;
+				} else {
+					$this->css[] = $style;
+				}
+			}
+
+			if (!empty($sassFiles)) {
+				$excludeScss = $this->getRequest()->getVal('excludeScss', []);
+				$this->css[] = $assetManager->getSassesUrl(array_diff($assetManager->getSassFilePath($sassFiles), $excludeScss));
+			}
 
 			// Do not load user and site jses as they are already loaded and can break page
 			$oldWgUseSiteJs = $wgUseSiteJs;
