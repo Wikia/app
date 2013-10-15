@@ -1258,6 +1258,33 @@ class MWMemcached {
 // }}}
 
 class MemCachedClientforWiki extends MWMemcached {
+	/**
+	 * @var bool
+	 * this is test code so we can profile time spent in gets/sets in current implementation of memcache against moxi.
+	 * whichever way we decide to go, this code should be removed!
+	 */
+	private $measureTimes = false;
+
+	function get($key) {
+		if ($this->measureTimes && mt_rand(1, 100) < 20) { // get 20% of gets
+			return Wikia\Measurements\Time::run(get_class($this).'/'.__FUNCTION__, function() use ($key) {
+				return parent::get($key);
+			});
+		} else {
+			return parent::get($key);
+		}
+	}
+
+	function set($key, $value, $exp=0) {
+		if ($this->measureTimes && mt_rand(1, 100) < 20) { // get 20% of sets
+			return Wikia\Measurements\Time::run(get_class($this).'/'.__FUNCTION__, function() use ($key, $value, $exp) {
+				return parent::set($key, $value, $exp);
+			});
+		} else {
+			return parent::set($key, $value, $exp);
+		}
+	}
+
 	function _debugprint( $text ) {
 		wfDebug( "memcached: $text" );
 	}
