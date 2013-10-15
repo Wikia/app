@@ -10,7 +10,7 @@ $(function() {
 			'cb': window.wgStyleVersion
 		};
 
-		if (wgSassLoadedScss) {
+		if (typeof wgSassLoadedScss != 'undefined') {
 			params.excludeScss = wgSassLoadedScss;
 		}
 

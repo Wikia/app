@@ -58,7 +58,7 @@ class RailController extends WikiaController {
 	 */
 	protected function getLazyRail() {
 		wfProfileIn(__METHOD__);
-		global $wgUseSiteJs, $wgAllowUserJs, $wgTitle;
+		global $wgUseSiteJs, $wgAllowUserJs, $wgTitle, $wgAllInOne;
 		$title = Title::newFromText($this->request->getVal('articleTitle', null), $this->request->getInt('namespace', null));
 
 		if ($title instanceof Title) {
@@ -83,7 +83,7 @@ class RailController extends WikiaController {
 
 			$this->css = $sassFiles = [];
 			foreach (array_keys($this->app->wg->Out->styles) as $style) {
-				if ($assetManager->isSassUrl($style)) {
+				if ($wgAllInOne && $assetManager->isSassUrl($style)) {
 					$sassFiles[] = $style;
 				} else {
 					$this->css[] = $style;
@@ -92,6 +92,10 @@ class RailController extends WikiaController {
 
 			if (!empty($sassFiles)) {
 				$excludeScss = $this->getRequest()->getVal('excludeScss', []);
+				if (!is_array($excludeScss)) {
+					$excludeScss = [$excludeScss];
+				}
+
 				$this->css[] = $assetManager->getSassesUrl(array_diff($assetManager->getSassFilePath($sassFiles), $excludeScss));
 			}
 

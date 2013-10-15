@@ -176,13 +176,8 @@ class OasisController extends WikiaController {
 		$this->cssLinks = '';
 		$this->cssPrintLinks = '';
 
-		// macbre: get the list of SASS files - they will be fetched with a single request
-		$sassFiles = [
-			'skins/oasis/css/oasis.scss'
-		];
-
-		$styles = $skin->getStyles();
-		foreach ( $styles as $s ) {
+		$sassFiles = [];
+		foreach ( $skin->getStyles() as $s ) {
 			if ( !empty($s['url']) ) {
 				$tag = $s['tag'];
 				if ( !empty( $wgAllInOne ) ) {
@@ -195,7 +190,7 @@ class OasisController extends WikiaController {
 				// Print styles will be loaded separately at the bottom of the page
 				if ( stripos($tag, 'media="print"') !== false ) {
 					$this->cssPrintLinks .= $tag;
-				} elseif ($this->assetsManager->isSassUrl($s['url'])) {
+				} elseif ($wgAllInOne && $this->assetsManager->isSassUrl($s['url'])) {
 					$sassFiles[] = $s['url'];
 				} else {
 					$this->cssLinks .= $tag;
@@ -205,12 +200,16 @@ class OasisController extends WikiaController {
 			}
 		}
 
+		$mainSassFile = 'skins/oasis/css/oasis.scss';
 		if (!empty($sassFiles)) {
+			$sassFiles[] = $mainSassFile;
 			$sassFiles = $this->assetsManager->getSassFilePath($sassFiles);
 			$sassFilesUrl = $this->assetsManager->getSassesUrl($sassFiles);
 
 			$this->cssLinks = Html::linkedStyle($sassFilesUrl) . $this->cssLinks;
 			$this->bottomScripts .= Html::inlineScript("var wgSassLoadedScss = JSON.parse('".json_encode($sassFiles)."');");;
+		} else {
+			$this->cssLinks = Html::linkedStyle($this->assetsManager->getSassCommonURL($mainSassFile)) . $this->cssLinks;
 		}
 
 		$this->headLinks = $wgOut->getHeadLinks();
@@ -269,7 +268,6 @@ class OasisController extends WikiaController {
 			$this->amazonDirectTargetedBuy = AnalyticsEngine::track('AmazonDirectTargetedBuy', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->dynamicYield = AnalyticsEngine::track('DynamicYield', AnalyticsEngine::EVENT_PAGEVIEW);
 		}
-
 
 		if (!empty($wgEnableAdminDashboardExt) && AdminDashboardLogic::displayAdminDashboard($this->app, $wgTitle)) {
 			$this->displayAdminDashboard = true;
