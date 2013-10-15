@@ -18,6 +18,8 @@ class Article extends AbstractMatch
 	 * @return Result
 	 */
 	public function createResult() {
+
+		/**@var $this->service Wikia\Search\MediaWikiService*/
 		$wikiId = $this->service->getWikiId();
 		$pageId = $this->service->getCanonicalPageIdFromPageId( $this->id );
 		$fieldsArray = array(
@@ -25,7 +27,7 @@ class Article extends AbstractMatch
 				'pageid'        => $pageId,
 				'wid'           => $wikiId,
 				'title'         => $this->service->getTitleStringFromPageId( $this->id ),
-				'url'           => urldecode( $this->service->getUrlFromPageId( $this->id ) ),
+				'url'           =>  $this->service->getUrlFromPageId( $this->id ) ,
 				'score'         => 'PTT',
 				'isArticleMatch'=> true,
 				'ns'            => $this->service->getNamespaceFromPageId( $this->id ),
