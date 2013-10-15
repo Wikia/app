@@ -29,6 +29,7 @@ table[class*="infobox"] {
 	th, td {
 		padding: 5px;
 		line-height: 1.25rem;
+		vertical-align: top;
 
 		&[colspan='2']{
 			text-align: center;
@@ -53,14 +54,32 @@ table[class*="infobox"] {
 
 .infobox-expand {
 	span {
-		color: $border-color;
+		border-color: transparent transparent $border-color transparent;
+		border-style: solid;
+		border-width: 15px;
 		display: inline-block;
-		font-size: 1.5rem;
-		line-height: 50px;
-		-webkit-transform: scale(3,.6) rotate(180deg);
+		margin: -5px 0 5px 0;
+		position: relative;
+		pointer-events: none;
+
+		&:after {
+			content: '';
+			border-style: solid;
+			border-width: 12px;
+			border-color: transparent transparent white transparent;
+			bottom: -15px;
+			left: -12px;
+			position: absolute;
+		}
 	}
 
 	.short & span {
-		-webkit-transform: scale(3,.6);
+		border-color: $border-color transparent transparent transparent;
+		margin: 10px 0 -10px 0;
+
+		&:after {
+			border-color: white transparent transparent transparent;
+			bottom: -8px;
+		}
 	}
 }
