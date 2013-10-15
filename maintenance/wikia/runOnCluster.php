@@ -164,7 +164,7 @@ class RunOnCluster extends Maintenance {
 			try {
 				$class::$method( $this->db, $dbname, $this->test );
 			} catch ( Exception $e ) {
-				error_log("Could not run $class::$method for $dbname: ".$e->getMessage()."\n");
+				fwrite(STDERR, "Could not run $class::$method for $dbname: ".$e->getMessage()."\n");
 			}
 		}
 
