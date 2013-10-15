@@ -3,6 +3,7 @@
 @import "skins/oasis/css/mixins/transform.scss";
 @import "skins/oasis/css/mixins/transition.scss";
 @import "skins/oasis/css/mixins/blackout.scss";
+@import "skins/oasis/css/mixins/box-sizing-border-box.scss";
 
 $close-image: '/resources/wikia/ui_components/modal/images/close-dark.svg';
 $modal-secondary-color: darken( $color-page, 10% );
@@ -25,6 +26,7 @@ $modal-secondary-color: darken( $color-page, 10% );
 
 .modal {
 	background-color: $color-page;
+	border-radius: 2px;
 	display: none;
 	left: 50%;
 	margin: 0;
@@ -43,6 +45,7 @@ $modal-secondary-color: darken( $color-page, 10% );
 	section,
 	footer {
 		padding: 20px;
+		@include box-sizing-border-box;
 	}
 
 	header h3 {
@@ -64,13 +67,6 @@ $modal-secondary-color: darken( $color-page, 10% );
 		width: 24px;
 	}
 
-	footer {
-		bottom: 0;
-		left: 0;
-		position: absolute;
-		right: 0;
-	}
-
 	footer .button {
 		float: right;
 	}
@@ -81,17 +77,22 @@ $modal-secondary-color: darken( $color-page, 10% );
 
 	&.small {
 		width: 400px;
+
+		section {
+			height: 250px;
+		}
 	}
 
 	&.medium {
 		width: 700px;
+
+		section {
+			height: 500px;
+		}
 	}
 
 	&.small,
 	&.medium {
-		max-height: 90%;
-		min-height: 200px;
-
 		section {
 			overflow: hidden;
 			overflow-y: auto;
@@ -101,6 +102,13 @@ $modal-secondary-color: darken( $color-page, 10% );
 	&.large {
 		height: calc( 100% - 50px );
 		width: calc( 100% - 50px );
+
+		footer {
+			bottom: 0;
+			left: 0;
+			position: absolute;
+			right: 0;
+		}
 	}
 
 	&.shown {
