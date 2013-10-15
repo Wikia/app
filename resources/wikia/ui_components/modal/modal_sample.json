@@ -10,7 +10,9 @@
 				"class": "styleguide-example-small",
 				"title": "Small modal example.",
 				"closeButton": true,
-				"closeText": "Close"
+				"closeText": "Close",
+				"primaryBtn": "<a href=\"#\" id=\"smallModalPrimaryBtn\" class=\"button primary\" title=\"small modal primary button\">Submit</a>",
+				"secondBtn": "<a href=\"#\" id=\"smallModalSecondaryBtn\" class=\"button secondary\" title=\"small modal secondary button\">Cancel</a>"
 			}
 		},
 		"helpers": {
@@ -42,7 +44,9 @@
 				"class": "styleguide-example-medium",
 				"title": "Medium modal example.",
 				"closeButton": true,
-				"closeText": "Close"
+				"closeText": "Close",
+				"primaryBtn": "<a href=\"#\" id=\"mediumModalPrimaryBtn\" class=\"button primary\" title=\"medium modal primary button\">Submit</a>",
+				"secondBtn": "<a href=\"#\" id=\"mediumModalSecondaryBtn\" class=\"button secondary\" title=\"medium modal secondary button\">Cancel</a>"
 			}
 		},
 		"helpers": {
@@ -80,8 +84,8 @@
 					"href": "#",
 					"text": "Open small modal"
 				},
-				"secondBtn": "",
-				"primaryBtn": ""
+				"primaryBtn": "<a href=\"#\" id=\"largeModalPrimaryBtn\" class=\"button primary\" title=\"large modal primary button\">Submit</a>",
+				"secondBtn": "<a href=\"#\" id=\"largeModalSecondaryBtn\" class=\"button secondary\" title=\"large modal secondary button\">Cancel</a>"
 			}
 		},
 		"helpers": {

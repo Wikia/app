@@ -39,6 +39,7 @@ $modal-secondary-color: darken( $color-page, 10% );
 	header,
 	footer {
 		background-color: $modal-secondary-color;
+		height: 60px;
 	}
 
 	header,
@@ -109,6 +110,13 @@ $modal-secondary-color: darken( $color-page, 10% );
 			position: absolute;
 			right: 0;
 		}
+	}
+
+	.buttons {
+		bottom: 15px;
+		display: inline-block;
+		position: absolute;
+		right: 20px;
 	}
 
 	&.shown {
