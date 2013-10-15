@@ -13,11 +13,8 @@ class FastStats {
 
 		// Get number of matching videos and total number of matches
 		$sql = 'SELECT props
-				FROM video_info v, page p, page_wikia_props wp
-				WHERE video_title=page_title
-				  AND p.page_id = wp.page_id
-				  AND wp.propname = 19
-				  AND premium = 0';
+				FROM page_wikia_props
+				WHERE propname = 19';
 		$result = $db->query( $sql );
 
 		$num_matching = 0;
