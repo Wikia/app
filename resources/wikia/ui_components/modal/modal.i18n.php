@@ -16,8 +16,8 @@ $messages['en'] = [
 	'styleguide-description-modal-primary-button' => "OPTIONAL primary button in a modal's footer; result of UIComponent->render() method (HTML markup)",
 
 	// examples
-	'styleguide-example-modal-small-description' => "A small modal height is flexible but no higher than 90% of view port and it has fixed width (400px). It should be use for rendering... As all modals please remember the title will have only one line.",
-	'styleguide-example-modal-medium-description' => "A medium modal height is flexible but no higher than 90% of view port it's width is fixed but depends on screen size (500 or 700px). It should be use for rendering... As all modals please remember the title will have only one line.",
+	'styleguide-example-modal-small-description' => "A small modal is centered horizontally and vertically. Its height equals 250px and width 400px. It should be use for rendering... As all modals please remember the title will have only one line.",
+	'styleguide-example-modal-medium-description' => "A medium modal is centered horizontally and vertically. Its height equals 400px and width is fixed but depends on screen size (500 or 700px). It should be use for rendering... As all modals please remember the title will have only one line.",
 	'styleguide-example-modal-large-description' => "A large modal covers almost all view port. It should be use for rendering... As all modals please remember the title will have only one line.",
 	'styleguide-example-modal-small-over-large-title' => "Small modal",
 	'styleguide-example-modal-small-over-large-message' => "Small modal over large one example",
