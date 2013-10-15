@@ -995,7 +995,7 @@ if( !isset( $wgUseMedusa ) ) {
  * Memcached class name
  */
 $wgMemCachedClass = 'MemCachedClientforWiki';
-
+$wgMemCachedClass = 'MemcacheClientShadower';
 /**
  * Extra configuration options for memcached when using libmemcached/pecl-memcached
  */
