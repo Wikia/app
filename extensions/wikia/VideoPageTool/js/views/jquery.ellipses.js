@@ -8,7 +8,6 @@
 
 			Ellipses.prototype = {
 				render: function() {
-					console.log(this.$el);
 					var oText = this.$el.text(),
 						words = oText.split( ' ' ),
 						len = words.length,
@@ -58,7 +57,6 @@
 			};
 
 			$.fn.ellipses = function() {
-
 				return this.each(function() {
 						var $this = $( this );
 						$this.data( 'ellipses', new Ellipses( $this ));
