@@ -1,6 +1,6 @@
 <?php
 /**
- * This includes a few Wikia Forms usage examples, include this file in your devbox setting in order to enable them
+ * This includes a Wikia Forms usage example, include this file in your devbox setting in order to enable it
  *
  */
 
