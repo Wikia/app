@@ -182,6 +182,7 @@ class RunOnCluster extends Maintenance {
 		$sql = 'SELECT city_dbname
 		 		FROM city_list
 		 		WHERE city_cluster = "c'.$this->cluster.'"
+		 		  AND city_public = 1
 		 		ORDER BY city_dbname';
 		$result = $db->query($sql);
 
