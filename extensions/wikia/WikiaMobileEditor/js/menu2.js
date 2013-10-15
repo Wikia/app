@@ -5,7 +5,7 @@
  * @author Bartłomiej Kowalczyk
  */
 
-define( 'menu', ['editor', 'wikia.loader', 'wikia.mustache'], function( editor ){
+define( 'menu', ['editor', 'jquery'], function( editor, $ ){
 
     //objects storing data for menus
     var menuLeft, menuRight;
@@ -60,7 +60,6 @@ define( 'menu', ['editor', 'wikia.loader', 'wikia.mustache'], function( editor )
 
         menu.primary.expanded = true;
         menu.primary.ul.classList.toggle( 'minified' );
-        return;
     }
 
     //refreshes menu elements and attaches new tags if present
@@ -164,6 +163,7 @@ define( 'menu', ['editor', 'wikia.loader', 'wikia.mustache'], function( editor )
     //handles updating position of menu buttons on the page although textBox focus / blur
     function posChange(){
 
+        //set position of the menus to absolute and
         function setAbs(){
 
             var top;
@@ -188,6 +188,7 @@ define( 'menu', ['editor', 'wikia.loader', 'wikia.mustache'], function( editor )
             menuRight.wrapper.style.webkitTransform = style;
         }
 
+        //clear style objects and return to position: fixed
         function setFix(){
 
             menuLeft.wrapper.setAttribute("style", "");
@@ -242,13 +243,15 @@ define( 'menu', ['editor', 'wikia.loader', 'wikia.mustache'], function( editor )
         }
     }
 
+    //highlight hovered menu item
     function lightOn( item ){
 
         if( !item.classList.contains( 'lightOn' ) ) item.classList.add( 'lightOn' );
     }
 
+    //hide highlight when hover off
     function lightOff( item ){
-        debugger;
+
         if( item.classList.contains( 'lightOn' ) ) item.classList.remove( 'lightOn' );
     }
 
@@ -257,15 +260,13 @@ define( 'menu', ['editor', 'wikia.loader', 'wikia.mustache'], function( editor )
 
         evt.preventDefault();
 
+        //extract object related to touched menu
         var menu = ( this.id === 'menuLeft' ) ? menuLeft : menuRight;
+
+        //find potentially touched menu item
         var item = getItem( evt.changedTouches[0].clientX, evt.changedTouches[0].clientY );
-        if( item ){
-
-            insert( item );
-        }else{
-
-            activeItem = null;
-        }
+        if( item ) insert( item );
+        activeItem = null;
         this.removeEventListener( 'touchmove', onTouchmove );
         this.removeEventListener( 'touchend', onTouchend );
         hide( menu );
@@ -280,8 +281,10 @@ define( 'menu', ['editor', 'wikia.loader', 'wikia.mustache'], function( editor )
         menuLeft.other = menuRight;
         menuRight.other = menuLeft;
 
+        //function switching between custom scroll and position fixed (fix for iOS keyboard-on feature)
         posChange();
 
+        //when one of the master button touched, perform further actions
         document.addEventListener( 'touchstart', function( evt ){
 
             var master, menu;

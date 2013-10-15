@@ -9,12 +9,13 @@ define( 'config', ['menu', 'editor', 'wikia.mustache', 'wikia.loader', 'toast'],
 
     'use strict';
 
-    var wrapper = document.getElementsByClassName( 'tagListWrapper' )[0];
+    var wrapper = document.getElementsByClassName( 'tagListWrapper' )[0],
 
     //list of tags currently in the menu
-    var active = [];
+    active = [],
 
-    var taglist = {
+    //list of all tags
+    taglist = {
 
         tags: [
 
@@ -52,9 +53,35 @@ define( 'config', ['menu', 'editor', 'wikia.mustache', 'wikia.loader', 'toast'],
                     },
 
                     {
+                        name: "S",
+                        short: "s",
+                        tag: "<s>_$</s>"
+                    },
+
+                    {
                         name: "Level 2 Headline",
                         short: "h2",
                         tag: "==_$=="
+                    },
+
+                    {
+                        name: "Bulleted List",
+                        short: "ul",
+                        tag: "#",
+                        extensions: function( limit ){
+
+                            limit = Number( limit );
+
+                            var result = '';
+                            if( limit && typeof limit === 'number'){
+
+                                for (var i = 0; i < limit - 1; i++){
+
+                                    result +='\n#';
+                                }
+                            }
+                            return result;
+                        }
                     },
 
                     {
@@ -72,7 +99,14 @@ define( 'config', ['menu', 'editor', 'wikia.mustache', 'wikia.loader', 'toast'],
                     {
                         name: "Link (external)",
                         short: "ex",
-                        tag: "[http://_$]"
+                        tag: "[http://_$]",
+                        extensions: function( url, title ){
+
+                                var result = '';
+                                if( url ) result += url.replace( 'http://', '' );
+                                if( title ) result += ' ' + title;
+                                return result;
+                            }
                     },
 
                     {
@@ -84,7 +118,17 @@ define( 'config', ['menu', 'editor', 'wikia.mustache', 'wikia.loader', 'toast'],
                     {
                         name: "File",
                         short: "f",
-                        tag: "[[File:_$]]"
+                        tag: "[[File:_$]]",
+                        extensions: function( path ){
+
+                            var result = '';
+
+                            if( path ) {
+                                path += '';
+                                result += path.replace( 'http://', '' );
+                            }
+                            return result;
+                        }
                     },
 
                     {
@@ -109,6 +153,12 @@ define( 'config', ['menu', 'editor', 'wikia.mustache', 'wikia.loader', 'toast'],
                         name: "Math Formula",
                         short: "mth",
                         tag: "<math>_$</math>"
+                    },
+
+                    {
+                        name: "Code",
+                        short: "cod",
+                        tag: "<code>_$</code>"
                     },
 
                     {
@@ -174,7 +224,7 @@ define( 'config', ['menu', 'editor', 'wikia.mustache', 'wikia.loader', 'toast'],
             }
 
         ]
-    }
+    };
 
     //toast message handler
     function alarm( type, data ){
@@ -197,7 +247,8 @@ define( 'config', ['menu', 'editor', 'wikia.mustache', 'wikia.loader', 'toast'],
                 toast.show( 'Tag "' + ( ( data.short ) ? data.short + '" ' : '' ) + ' is not in the menu.' ); break;
 
             case 'start-message' :
-                toast.show( 'Use checkboxes in tag lists below to add items to the animated menu. You can ' +
+                toast.show( 'You are currently editing article <b>' + wgTitle + '</b>. ' +
+                    'Use checkboxes in tag lists below to add items to the animated menu. You can ' +
                     'also define custom tags.' ); break;
 
             default: break;
@@ -221,11 +272,11 @@ define( 'config', ['menu', 'editor', 'wikia.mustache', 'wikia.loader', 'toast'],
     }
 
     //removes tag from the animated menu
-    function remove( short ){
+    function remove( tagShort ){
 
         for( var i = 0; i < active.length; i++ ){
 
-            if( active[i].short === short ){
+            if( active[i].short === tagShort ){
 
                 active.splice(i, 1);
                 menu.update( active );
@@ -312,13 +363,13 @@ define( 'config', ['menu', 'editor', 'wikia.mustache', 'wikia.loader', 'toast'],
     }
 
     //finds tag object in the dictionary
-    function findTag ( short ){
+    function findTag ( tagShort ){
 
         for( var i = 0; i < taglist.tags.length; i++ ){
 
             for( var j = 0; j < taglist.tags[i].tags.length; j++ ){
 
-                if( taglist.tags[i].tags[j].short === short ){
+                if( taglist.tags[i].tags[j].short === tagShort ){
 
                     return taglist.tags[i].tags[j];
                 }
@@ -340,30 +391,56 @@ define( 'config', ['menu', 'editor', 'wikia.mustache', 'wikia.loader', 'toast'],
     }
 
     //check if user possible wrote snippet <special_char><tag_shortcut><special_char>
-    function handleSnippets( textBox, patterns, insert ){
+    function handleSnippets( textBox, patterns, insert){
 
         //ignore if anything else than snippet pattern given
         if( textBox.value[textBox.selectionStart-1] != patterns.snippetChar ) return;
         var endPos = textBox.selectionStart - 1;
 
-        //if there is no special snippet char within 6 last items (max snippet length = 5)
-        if( !textBox.value.substring( endPos - 5, endPos - 1 ).match( patterns.snippetChar ) ) return;
+        //look if there is a snippet opener
+        if( !textBox.value.substring( 0, endPos - 1 ).match( patterns.snippetChar ) ) return;
         var startPos = textBox.value.substring( 0, endPos).lastIndexOf( patterns.snippetChar );
 
         var phrase = textBox.value.substring( startPos+1, endPos );
         if( phrase.match( patterns.snippetBreakers ) ) return;
 
-        var tag = findTag( phrase);
+        var isExt = false;
+        var tag;
+
+        if( phrase.indexOf( patterns.extChar ) != -1 ){
+
+            tag = findTag( phrase.substring( 0, phrase.indexOf( patterns.extChar ) ) );
+            isExt = true;
+        }else{
+
+            tag = findTag( phrase );
+        }
 
         if( tag ){
+
+            var ext = '',
+                phr = tag.tag,
+                phrTab,
+                extTab;
+
+            if( isExt && phr.indexOf( patterns.caret ) ){
+
+                phrTab = phr.split( patterns.caret );
+                extTab = phrase.split( patterns.extChar );
+                extTab.splice( 0, 1 );
+                ext = ( tag.extensions ) ? tag.extensions.apply( tag, extTab ) : ext;
+            }
 
             var sel = textBox.selectionStart;
             textBox.value = textBox.value.substring( 0, startPos ) +
                 textBox.value.substring( endPos + 1 );
 
             textBox.selectionStart = textBox.selectionEnd  = sel - ( endPos + 1 - startPos );
-
-            insert( tag.tag );
+            if( phrTab && isExt) {
+                var ending = ( phrTab[1] ) ? phrTab[1] : '';
+                insert( phrTab[0] + ext + ending );
+            }
+            else insert( phr + ext);
         }
     }
     
@@ -380,9 +457,8 @@ define( 'config', ['menu', 'editor', 'wikia.mustache', 'wikia.loader', 'toast'],
             }
         }).done(function(resp){
 
-                var markup = mustache.render(resp.mustache[0], taglist);
-                wrapper.innerHTML = markup;
-                debugger;
+                wrapper.innerHTML = mustache.render(resp.mustache[0], taglist);
+
                 //menu initializing tags from lS or default ones
                 active = [
                         taglist.tags[1].tags[13],
@@ -404,8 +480,8 @@ define( 'config', ['menu', 'editor', 'wikia.mustache', 'wikia.loader', 'toast'],
                         taglist.tags[1].tags[9],
                         taglist.tags[1].tags[10],
                         taglist.tags[1].tags[11],
-                        taglist.tags[1].tags[12],
-                ]
+                        taglist.tags[1].tags[12]
+                ];
 
                 markTags( active );
 
@@ -422,7 +498,7 @@ define( 'config', ['menu', 'editor', 'wikia.mustache', 'wikia.loader', 'toast'],
                     if( evt.srcElement.tagName === 'INPUT' && evt.target.id ){
 
                         onCheck( evt.srcElement );
-                    };
+                    }
                 } );
             });
 

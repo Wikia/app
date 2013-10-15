@@ -29,13 +29,16 @@ define( 'editor', ['wikia.nirvana'], function( nirvana ){
             caret : /_\$/,
 
             //characters breaking snippet sniffing
-            snippetBreakers : /[^a-zA-Z0-9]/,
+            snippetBreakers : /[^a-zA-Z0-9\.\:]/,
 
             //character indicating the beginning and the end of a snippet
             snippetChar : '!',
 
             //characters breaking a suggestion
-            suggestionBreakers : /[\[\]\t\n]/
+            suggestionBreakers : /[\[\]\t\n]/,
+
+            //char separating extensions of a snippet
+            extChar : ':'
         }
 
     //inserts a phrase into textBox
@@ -72,6 +75,7 @@ define( 'editor', ['wikia.nirvana'], function( nirvana ){
         textBox.selectionStart = textBox.selectionEnd = caretShift;
         textBox.focus();
     }
+
 
     //controlling possible events related to user keyboard input
     function watch( handleSnippets ){
@@ -240,6 +244,8 @@ define( 'editor', ['wikia.nirvana'], function( nirvana ){
     //module initializer
     function init( handleSnippets ){
 
+        textBox.scrollIntoView();
+
         initSuggestionBox();
 
         //init of user interaction watcher
@@ -252,7 +258,9 @@ define( 'editor', ['wikia.nirvana'], function( nirvana ){
 
         init : init,
 
-        insert : insert
+        insert : insert,
+
+        patterns: patterns
     }
 
 } );

@@ -35,44 +35,44 @@ ul{
 }
 
 .artSec li{
-    padding: 2.5% 0 2.5% 0;
-    line-height:2em;
-    vertical-align:middle;
-    font-size: 0.8em;
-    width:100%;
-    display:inline-block;
-    border-bottom: 1px solid #f0f0f0;
+  padding: 2.5% 0 2.5% 0;
+  line-height:2em;
+  vertical-align:middle;
+  font-size: 0.8em;
+  width:100%;
+  display:inline-block;
+  border-bottom: 1px solid #f0f0f0;
 }
 
 .tagSection small{
-    color: #c4c4c4;
-    margin-left: 10px;
-    font-size: 1.2em;
+  color: #c4c4c4;
+  margin-left: 10px;
+  font-size: 1.2em;
 }
 
 .tagSection>ul a{
-    padding:8px 16px;
+  padding:8px 16px;
 
-    width:auto;
-    min-width:20px;
-    min-height:20px;
+  width:auto;
+  min-width:20px;
+  min-height:20px;
 
-    float:right;
-    display:inline-block;
-    background-color:#fff;
-    text-decoration:none;
-    color: #006cb0;
-    border: 1px solid #c4c4c4;
-    border-radius:5px;
+  float:right;
+  display:inline-block;
+  background-color:#fff;
+  text-decoration:none;
+  color: #006cb0;
+  border: 1px solid #c4c4c4;
+  border-radius:5px;
 }
 
 .tagSection input[type='text']{
-    padding:10px 0 10px 10px;
+  padding:10px 0 10px 10px;
 
-    width:45%;
+  width:45%;
 
-    border: 1px solid #cccccc;
-    border-radius:5px;
+  border: 1px solid #cccccc;
+  border-radius:5px;
 }
 
 .tagListWrapper{
@@ -80,58 +80,58 @@ ul{
 }
 
 #tagListWrapper > input{
-    padding-left:130px;
+  padding-left:130px;
 
-    text-align:center;
+  text-align:center;
 }
 
 .warning{
-    display:none;
-    color:darkred;
+  display:none;
+  color:darkred;
 }
 
 .warningOn{
-    display:inline-block;
+  display:inline-block;
 }
 
 #topBar{
-    height:30%;
-    min-height:40px;
+  height:30%;
+  min-height:40px;
 
-    background-color:#222;
-    background-image: -webkit-linear-gradient(#222222,#4e4e4e);
-    color:#fff;
-    font-weight:bold;
+  background-color:#222;
+  background-image: -webkit-linear-gradient(#222222,#4e4e4e);
+  color:#fff;
+  font-weight:bold;
 }
 
 #topBar p{
-    margin:0px;
-    padding:10px 0 0 2.5%;
+  margin:0px;
+  padding:10px 0 0 2.5%;
 }
 
 #artTitle{
-    padding:2.5%;
-    font-weight:bold;
-    font-size:20px;
+  padding:2.5%;
+  font-weight:bold;
+  font-size:20px;
 }
 
 
 #editArea{
-    width:95%;
-    margin-left:2.5%;
-    z-index:10;
+  width:95%;
+  margin-left:2.5%;
+  z-index:10;
 }
 
 #pageActions{
-    padding-left:2.5%;
+  padding-left:2.5%;
 }
 
 .off{
-    display:none;
+  display:none;
 }
 
 .on{
-    display:block;
+  display:block;
 }
 
 *{
@@ -179,14 +179,12 @@ table .diff-lineno{
 }
 
 .menuItem.highlight{
-    background-color:#fff;
-    color:#000;
+  background-color:#fff;
+  color:#000;
 }
 
 /*
 * * * MENU STYLES
-* * * fancy -> menu drawn on a circle, with transitions
-* * * static -> simpliest inline-block brick menu
 * * *
 */
 
