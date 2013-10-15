@@ -148,7 +148,9 @@ class RunOnCluster extends Maintenance {
 		foreach ( $clusterWikis as $dbname ) {
 			// Catch connection errors and log them
 			try {
-				$result = $this->db->query("use $dbname");
+				// Use 'doQuery' here since 'query' injects /* comments */ that don't work
+				// well with client commands like this
+				$result = $this->db->doQuery("use $dbname");
 			} catch ( Exception $e ) {
 				fwrite(STDERR, "ERROR: ".$e->getMessage()."\n");
 			}
