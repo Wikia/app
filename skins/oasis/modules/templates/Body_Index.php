@@ -132,6 +132,12 @@
 			<?= $app->renderView('Rail', 'Index', array('railModuleList' => $railModuleList)); ?>
 		<?php endif; ?>
 
+		<?php
+		if ($displayAdminDashboard) {
+			echo $app->renderView('AdminDashboard', 'Rail');
+		}
+		?>
+
 		<?= empty($wg->SuppressFooter) ? $app->renderView('Footer', 'Index') : '' ?>
 		<? if(!empty($wg->EnableWikiaHomePageExt)) echo $app->renderView('WikiaHomePage', 'footer') ?>
 		<?= $app->renderView('CorporateFooter', 'Index') ?>
