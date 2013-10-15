@@ -18,7 +18,7 @@ $modal-secondary-color: darken( $color-page, 10% );
 
 .modal,
 .blackout {
-	@include transition-shorthand( all 0.2s ease-in-out );
+	@include transition-shorthand( display 0.2s ease-in-out );
 	opacity: 0;
 	z-index: -1;
 }
@@ -87,11 +87,15 @@ $modal-secondary-color: darken( $color-page, 10% );
 		width: 700px;
 	}
 
-	/** TODO: this make modals tall when they shouldn't be... **/
 	&.small,
 	&.medium {
 		max-height: 90%;
 		min-height: 200px;
+
+		section {
+			overflow: hidden;
+			overflow-y: auto;
+		}
 	}
 
 	&.large {
