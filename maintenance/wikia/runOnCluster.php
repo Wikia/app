@@ -148,9 +148,7 @@ class RunOnCluster extends Maintenance {
 		foreach ( $clusterWikis as $dbname ) {
 			// Catch connection errors and log them
 			try {
-				// Use 'doQuery' here since 'query' injects /* comments */ that don't work
-				// well with client commands like this
-				$result = $this->db->doQuery("use $dbname");
+				$result = $this->db->query("use $dbname");
 			} catch ( Exception $e ) {
 				fwrite(STDERR, "ERROR: ".$e->getMessage()."\n");
 			}
@@ -205,7 +203,18 @@ class RunOnCluster extends Maintenance {
 		$name = 'wikicities_c'.$this->cluster;
 		$this->db = wfGetDB( DB_SLAVE, array(), $name );
 
-		return $this->db ? true : false;
+		if ( $this->db ) {
+			// There is some weirdness around "use db" for the first time
+			// after opening the connection.  It seems to have something to
+			// do with the /* comments */ added by db->query.  Do a dummy DB
+			// switch here so the subsequent switches do not fail.
+			try   { $this->db->query("use foobar"); }
+			catch ( Exception $e ) {}
+
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	/**
