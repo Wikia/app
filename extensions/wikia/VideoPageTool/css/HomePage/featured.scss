@@ -33,6 +33,7 @@ $play-button-overlay-fade-duration: 400ms;
 }
 
 .featured-video {
+display: none; // TODO: remove this when done developing category content
 	@include clearfix;
 	background: black;
 	margin: 0 -10px;

@@ -91,11 +91,22 @@ class ThumbnailVideo extends ThumbnailImage {
 	 * @throws MWException
 	 */
 	function toHtml( $options = array() ) {
+		$app = F::app();
+
+		// Migrate to new system which uses a template instead of this toHtml method
+		if( !empty( $options[ 'useTemplate' ] ) ) {
+			return $app->renderView( 'VideoHandler', 'thumbnail', [
+				'options' => $options,
+				'file' => $this->file
+			] );
+		}
+
 		if ( count( func_get_args() ) == 2 ) {
 			throw new MWException( __METHOD__ .' called in the old style' );
 		}
 
-		if ( !empty( F::app()->wg->RTEParserEnabled ) ) {
+		// Check if the editor is requesting, if so, render image thumbnail instead
+		if ( !empty( $app->wg->RTEParserEnabled ) ) {
 			return $this->renderAsThumbnailImage($options);
 		}
 
@@ -157,10 +168,12 @@ class ThumbnailVideo extends ThumbnailImage {
 			$attribs['itemprop'] = 'thumbnail';
 		}
 
-        if ( !empty($options['usePreloading']) ) {
+        // lazy loading
+		if ( !empty($options['usePreloading']) ) {
             $attribs['data-src'] = $this->url;
         }
 
+		// this is used for video thumbnails on file page history tables to insure you see the older version of a file when thumbnail is clicked.
 		if ( $this->file instanceof OldLocalFile ) {
 			$archive_name = $this->file->getArchiveName();
 			if ( !empty( $archive_name ) ) {

@@ -311,7 +311,8 @@ class VideoPageToolHelper extends WikiaModel {
 	public function renderAssetsBySection( $program, $section ) {
 		$data = array();
 		if ( $program instanceof VideoPageToolProgram ) {
-			$thumbOptions = array( 'noLightbox' => true );
+			// Added migration flag 'useTemplate' to use template instead of toHtml method
+			$thumbOptions = array( 'noLightbox' => true, 'useTemplate' => true );
 			$assets = $program->getAssetsBySection( $section );
 			foreach ( $assets as $asset ) {
 				$data[] = $asset->getAssetData( $thumbOptions );
