@@ -412,6 +412,10 @@
 	.inline-video {
 		display: inline-block;
 	}
+	ul[class*="block-grid-"] {
+		margin: 0;
+		padding: 0;
+	}
 }
 
 // Exceptions to the rule (MAIN-939)

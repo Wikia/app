@@ -1,5 +1,9 @@
-<h1>This is the 'category' display handler</h1>
-
-<? foreach ( $assets as $videoData ): ?>
-	<?= $videoData[ 'videoThumb' ] ?>
-<? endforeach; ?>
+<div class="row">
+	<ul class="small-block-grid-4 large-block-grid-5">
+		<? foreach ( $assets as $videoData ): ?>
+			<li>
+				<?= $videoData[ 'videoThumb' ] ?>
+			</li>
+		<? endforeach; ?>
+	</ul>
+</div>

@@ -60,10 +60,12 @@ class VideoHandlerController extends WikiaController {
 		$rdf = empty( $options[ 'disableRDF' ] );
 
 		// set link attributes
+		$this->linkHref = $videoTitle->getLocalURL();
 
 		// set image attributes
 		$this->videoKey = htmlspecialchars( urlencode( $videoTitle->getDBKey() ) );
-		$this->videoTitle = htmlspecialchars( urlencode( $videoTitle->getText() ) );
+		$this->videoName = htmlspecialchars( urlencode( $videoTitle->getText() ) );
+		$this->imgSrc = $this->getVal( 'url' );
 
 		// set duration
 
@@ -105,7 +107,32 @@ class VideoHandlerController extends WikiaController {
 		 *  - not always called
 		 *  - sometimes includes caption
 		 * Lazy loading (if enabled)
+		 *
+		 *
+		 * New  redesign logic that isn't handled in toHtml
+		 *
+		 * Responsive flag
+		 * Play button posistioning flag (centered or bottom left)
+		 * Show play button always or only on hover flag
 		 */
+	}
+
+	/*
+	 * FIXME: Mustache doesn't handle key/value pairs very well, so this is one way we can handle image and link attributes.
+	 * Just messing around for now.
+	 */
+	public function thumbnailAttrs() {
+		$attrs = $this->getVal( 'attrs' );
+		$resp = [];
+
+		foreach( $attrs as $key => $val ) {
+			$curr = [];
+			$curr[ 'property' ] = $key;
+			$curr[ 'value' ] = $val;
+			$resp[] = $curr;
+		}
+
+		$this->attrs = $resp;
 	}
 
 	/**

@@ -97,7 +97,8 @@ class ThumbnailVideo extends ThumbnailImage {
 		if( !empty( $options[ 'useTemplate' ] ) ) {
 			return $app->renderView( 'VideoHandler', 'thumbnail', [
 				'options' => $options,
-				'file' => $this->file
+				'file' => $this->file,
+				'url' => $this->url,
 			] );
 		}
 

@@ -1,0 +1,29 @@
+/* VideoThumbnails.scss */
+
+/**
+  * This css styles the refactored video thumbnails and allows for responsive and non-responsive thumbnails.
+  * Note: This is just a prototype for nows
+  */
+
+.video-from-template {
+	display: inline-block;
+	width: 100%;
+	position: relative;
+
+	img {
+		width: 100%;
+	}
+
+	// TODO: actually create the play button in css
+	&:before {
+		background: white;
+		color: black;
+		content: "play button";
+		display: inline-block;
+		left: 50%;
+		margin-top: -.5em;
+		margin-left: -3em;
+		position: absolute;
+		top: 50%;
+	}
+}
