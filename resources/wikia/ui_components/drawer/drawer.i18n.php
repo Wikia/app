@@ -10,7 +10,5 @@ $messages['en'] = [
 	'styleguide-description-drawer-class' => 'Optional parameter - Drawer HTML container class',
 
 	// examples
-	'styleguide-example-description' => "Two examples of drawer can be viewed after clicking one or both of these buttons:",
-	'styleguide-example-left' => 'Left drawer example',
-	'styleguide-example-right' => 'Right drawer example',
+	'styleguide-example-description-drawer-unavailable' => "This component's examples are unavailable"
 ];
