@@ -278,9 +278,13 @@ class AssetsManager {
 		return count($result) > 1 ? $result : $result[0];
 	}
 
+	/**
+	 * determines whether a given url is for a sass resource. They tend to end in .scss
+	 * @param string $url the url to check
+	 * @return bool true if the url is a sass resource, false otherwise
+	 */
 	public function isSassUrl($url) {
-		// todo: this needs to account for using urls that are NOT of the form __am/.../...
-		return strpos($url, '/sass/') !== false;
+		return substr($url, -5) == '.scss';
 	}
 
 	public function getSassesUrl($sassList) {
@@ -288,7 +292,10 @@ class AssetsManager {
 			$sassList = [$sassList];
 		}
 
-		return str_replace('/sass/', '/sasses/', $this->getSassCommonURL(implode(',', $sassList)));
+		$url = $this->getSassCommonURL(implode(',', $sassList));
+		$url =  str_replace(['/sass/', 'type=sass'], ['/sasses/', 'type=sasses'], $url);
+
+		return $url;
 	}
 
 	private function getSassGroupURL( $groupName, $prefix, $combine = null, $minify = null ) {
