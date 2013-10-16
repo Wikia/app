@@ -1,10 +1,17 @@
 @import "layout";
 @import "responsive-variables";
-@import "responsive-background";
+@import "background";
 
 @import "../mixins/box-sizing";
 
 @if ( $responsive-layout-enabled ) {
+	html {
+		overflow-y: auto;
+	}
+
+	body.skin-oasis {
+		min-width: $width-outside-min;
+	}
 
 	body.skin-oasis > .global-notification,
 	.WikiaHeader .page-width-container,
@@ -164,6 +171,7 @@
 					position: absolute;
 					right: 53px;
 					width: auto;
+					width: -webkit-calc(100% - 53px); // <-- CSS3!
 					width: calc(100% - 53px); // <-- CSS3!
 				}
 
@@ -255,4 +263,14 @@
 			margin: 0 auto;
 		}
 	}
+
+// ABTesting: DAR-1859: START
+	html.keep-rail-on-right {
+		overflow-x: scroll;
+
+		body {
+			min-width: 1058px;
+		}
+	}
+// ABTesting: DAR-1859: END
 }
