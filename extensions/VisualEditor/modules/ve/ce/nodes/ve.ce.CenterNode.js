@@ -1,40 +1,34 @@
-/**
- * VisualEditor content editable CenterNode class.
+/*!
+ * VisualEditor ContentEditable CenterNode class.
  *
- * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
 /**
- * ContentEditable node for a center tag.
+ * ContentEditable center node.
  *
  * @class
+ * @extends ve.ce.BranchNode
  * @constructor
- * @extends {ve.ce.BranchNode}
  * @param {ve.dm.CenterNode} model Model to observe
+ * @param {Object} [config] Configuration options
  */
-ve.ce.CenterNode = function VeCeCenterNode( model ) {
+ve.ce.CenterNode = function VeCeCenterNode( model, config ) {
 	// Parent constructor
-	ve.ce.BranchNode.call( this, 'center', model, $( '<center>') );
+	ve.ce.BranchNode.call( this, model, config );
 };
 
 /* Inheritance */
 
 ve.inheritClass( ve.ce.CenterNode, ve.ce.BranchNode );
 
-/* Static Members */
+/* Static Properties */
 
-/**
- * Node rules.
- *
- * @see ve.ce.NodeFactory
- * @static
- * @member
- */
-ve.ce.CenterNode.rules = {
-	'canBeSplit': false
-};
+ve.ce.CenterNode.static.name = 'center';
+
+ve.ce.CenterNode.static.tagName = 'center';
 
 /* Registration */
 
-ve.ce.nodeFactory.register( 'center', ve.ce.CenterNode );
+ve.ce.nodeFactory.register( ve.ce.CenterNode );

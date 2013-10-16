@@ -113,19 +113,23 @@ $messages['bg'] = array(
 );
 
 /** Breton (brezhoneg)
+ * @author Fohanno
  * @author Y-M D
  */
 $messages['br'] = array(
 	'contact' => 'Mont e darempred gant Wikia',
 	'specialcontact-wikia' => 'Mont e darempred gant Wikia',
 	'specialcontact-pagetitle' => 'Mont e darempred gant Wikia',
-	'specialcontact-username' => 'Anv implijer', # Fuzzy
+	'specialcontact-username' => "Hoc'h anv implijer",
 	'specialcontact-wikiname' => 'Peseurt wiki',
 	'specialcontact-realname' => "Hoc'h anv",
 	'specialcontact-yourmail' => "Chomlec'h postel",
 	'specialcontact-problem' => 'Danvez',
 	'specialcontact-problemdesc' => 'Kemennadenn',
 	'specialcontact-mail' => 'Kas da Wikia',
+	'specialcontact-ccme' => 'Kas un eilenn eus ar gemennadenn-mañ din',
+	'specialcontact-captchainfo' => 'Ebarzhit an destenn er skeudenn, mar plij.',
+	'specialcontact-nomessage' => 'Skrivit ur gemennadenn, mar plij',
 );
 
 /** Catalan (català)

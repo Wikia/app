@@ -145,7 +145,7 @@ var WikiHeader = {
 		var node = $(event.target);
 		if (node.is('a') && node.attr('data-canonical') == 'chat') {
 			event.preventDefault();
-			ChatEntryPoint.onClickChatButton(wgUserName !== null, node.attr('href'));
+			ChatEntryPoint.onClickChatButton(node.attr('href'));
 		}
 	},
 

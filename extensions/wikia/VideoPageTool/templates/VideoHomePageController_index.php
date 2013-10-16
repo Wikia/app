@@ -1,13 +1,8 @@
-Publish date: <?= $curProgram->getPublishDate() ?>
+<?= $app->renderPartial(
+	'VideoHomePageController',
+	'header'
+); ?>
 
-<? if ( $haveCurrentProgram ): ?>
+<? if ( $haveProgram ): ?>
 	<?= $featuredContent ?>
-
-	<?= $categoryContent ?>
-
-	<?= $fanContent ?>
-
-	<?= $popularContent ?>
-<? else: ?>
-	<h1>No current program</h1>
 <? endif; ?>

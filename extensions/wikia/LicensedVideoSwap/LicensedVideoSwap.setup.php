@@ -20,6 +20,9 @@ $wgAutoloadClasses['LicensedVideoSwapHooksHelper'] = $dir.'LicensedVideoSwapHook
 // i18n mapping
 $wgExtensionMessagesFiles['LicensedVideoSwap'] = $dir.'LicensedVideoSwap.i18n.php';
 
+// Aliases
+$wgExtensionMessagesFiles['LicensedVideoSwapAliases'] = __DIR__ . '/LicensedVideoSwap.aliases.php';
+
 // special pages
 $wgSpecialPages['LicensedVideoSwap'] = 'LicensedVideoSwapSpecialController';
 
@@ -42,4 +45,6 @@ JSMessages::registerPackage('LVS', array(
 	'lvs-confirm-undo-swap-message',
 	'lvs-confirm-undo-keep-title',
 	'lvs-confirm-undo-keep-message',
+	'lvs-button-yes',
+	'lvs-button-no'
 ));

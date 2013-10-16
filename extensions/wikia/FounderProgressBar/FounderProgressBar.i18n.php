@@ -105,6 +105,7 @@ $messages['qqq'] = array(
 
 /** Arabic (العربية)
  * @author Achraf94
+ * @author Kuwaity26
  */
 $messages['ar'] = array(
 	'founderprogressbar-credits' => 'محور مهام و دليل لمؤسسي الويكي الجدد',
@@ -128,9 +129,11 @@ $messages['ar'] = array(
 	'founderprogressbar-page-add10-label' => 'الوصول إلى $1 {{PLURAL:$1|صفحة|صفحات}}',
 	'founderprogressbar-themedesigner-visit-label' => 'تخصيص مظهرك',
 	'founderprogressbar-mainpage-edit-label' => 'ملء الصفحة الرئيسية الخاصة بك',
+	'founderprogressbar-photo-add10-label' => 'ابلغ {{PLURAL:$1|صورة|صور}}',
 	'founderprogressbar-commcentral-visit-label' => 'زيارة مركز المؤسسين والإداريين',
 	'founderprogressbar-wikiactivity-visit-label' => 'زيارة نشاط الويكي',
 	'founderprogressbar-profile-edit-label' => 'ملء صفحتك الشخصية',
+	'founderprogressbar-photo-add20-label' => 'ابلغ {{PLURAL:$1|صورة|صور}}',
 	'founderprogressbar-total-edit75-label' => 'الوصول إلى 75 تعديلا',
 	'founderprogressbar-category-edit-label' => 'تعديل صفحة تصنيف',
 	'founderprogressbar-wikialabs-visit-label' => 'زيارة مختبرات ويكيا',
@@ -148,6 +151,7 @@ $messages['ar'] = array(
 	'founderprogressbar-blogpost-add-label' => 'إضافة مشاركة في المدونة',
 	'founderprogressbar-fb-likes3-label' => 'الوصول إلى $1 إعجاب في الفيسبوك',
 	'founderprogressbar-uncategorized-visit-label' => 'انظر الصفحات الغير مصنفة',
+	'founderprogressbar-total-edit300-label' => 'ابلغ {{PLURAL:$1|$1 تعديل|$1 تعديلات}}',
 	'founderprogressbar-bonus-photo-add10-label' => 'أضف $1 من الصور',
 	'founderprogressbar-browse-page-name' => 'تصفّح',
 );
@@ -172,6 +176,7 @@ $messages['br'] = array(
 	'founderprogressbar-list-bonus-task-label' => 'Trevelloù ouzhpenn',
 	'founderprogressbar-list-bonus-task-desc' => 'Echuit roll an trevelloù evit diskolhañ trevelloù ouzhpenn',
 	'founderprogressbar-task-call-to-action' => "Mont d'an trevell",
+	'founderprogressbar-completion-message' => "Gourc'hemennoù ! Ul labour sebezus ho peus graet ha graet ho peus ar pezh a oa d'ober penn-da-benn. Warn an hent mat emañ ho wiki evit ober berzh, pe berzh a ra dija. Kendalc'hit evel-se !",
 	'founderprogressbar-page-add10-label' => 'Tizhout $1 {{PLURAL:$1|pajenn}}',
 	'founderprogressbar-themedesigner-visit-label' => 'Personelaat ho tem.',
 	'founderprogressbar-mainpage-edit-label' => 'Leuniañ ho pajenn bennañ',
@@ -197,6 +202,7 @@ $messages['br'] = array(
 	'founderprogressbar-recentchanges-visit-label' => 'Gweladenniñ Kemmoù Diwezhañ',
 	'founderprogressbar-wordmark-edit-label' => 'Enporzhiañ ul logo',
 	'founderprogressbar-mostvisited-visit-label' => 'Gwelet ar pajennoù bet gweladennet ar muiañ',
+	'founderprogressbar-toptenlist-add-label' => 'Ouzhpennañ ur roll eus an dek kentañ',
 	'founderprogressbar-blogpost-add-label' => 'Skrivit ur gemennadenn blog',
 	'founderprogressbar-uncategorized-visit-label' => 'Gwelet ar pajennoù dirumm',
 	'founderprogressbar-total-edit300-label' => "Tizhout {{PLURAL:$1|ur c'hemm|$1 kemm}}",
@@ -977,9 +983,11 @@ $messages['id'] = array(
 	'founderprogressbar-mainpage-edit-description' => 'Ketika orang mengunjungi wikii Anda halaman utama adalah hal pertama yang akan mereka lihat. Pastikan ini memberi tahu mereka tentang apa wiki Anda, cara mereka dapat membantu, dan menyorot beberapa konten terbaik wiki.',
 	'founderprogressbar-category-add3-description' => 'Kategori adalah satu dari cara terbaik untuk mengatur wiki Anda dan membantu orang menemukan halaman-halaman yang mereka cari. Namun jagalah tetap sederhana, terlalu banyak kategori dapat membuat hal membingungkan.',
 	'founderprogressbar-commcentral-visit-description' => 'Anda tidak sendiri! Pendiri dan Pusat Pengurus adalah tempat komunitas pengurus Wikia berkumpul bersama untuk berbagi tips dan saran, Anda juga akan menemukan halaman bantuan, pedoman dan cara untuk menghubungi pegawai Wikia di sini.',
+	'founderprogressbar-wikiactivity-visit-description' => 'Kegiatan Wiki memungkinkan Anda untuk melihat segala hal yang telah terjadi pada wiki Anda. Ini menunjukkan kepada Anda pengguna yang mana yang membuat suntingan dan memungkinkan Anda dengan mudah pergi ke halaman yang telah diubah.',
 	'founderprogressbar-photo-add20-description' => 'Sudahkah Anda menambahkan paling sedikit satu foto ke tiap halaman? Orang menyukai foto, mereka sungguh-sungguh membantu membuat wiki Anda menyembul!',
 	'founderprogressbar-category-edit-label' => 'Sunting halaman kategori',
 	'founderprogressbar-wikialabs-visit-label' => 'Kunjungi Lab Wikia',
+	'founderprogressbar-wikialabs-visit-description' => 'Lab Wikia memungkinkan Anda untuk mengaktifkan fitur-fitur terbaru dari Wikia di wiki Anda. Fitur-fitur ini seluruhnya dalam versi beta, namun ini adalah cara yang baik untuk melihat apa yang datang dari Wikia dan mencobanya sendiri.',
 	'founderprogressbar-category-add5-description' => 'Kini setelah Anda menambahkan lebih banyak halaman ke wiki Anda, Anda mungkin akan memerlukan lebih banyak kategori untuk menjaga semuanya terorganisasi.',
 	'founderprogressbar-gallery-add-description' => 'Galeri foto adalah cara yang bagus untuk memamerkan beberapa foto dalam satu wilayah halaman. Tambahan, ini seru untuk mencampur cara Anda menampilkan foto pada wiki Anda untuk menjaganya tetap menarik bagi orang yang berkunjung.',
 	'founderprogressbar-mainpage-addslider-description' => "''Slider'' halaman utama adalah cara yang indah untuk membuat halaman utama Anda terlihat profesional dan menambah beberapa foto yang tampak besar. Masing-masing foto dapat terhubung ke sebuah halaman jadi ini juga sebuah cara yang bagus untuk menyorot halaman wiki yang paling Anda banggakan. Lihatlah <a href=\"http://community.wikia.com/wiki/User_blog:Susan_Taylor/Tips_to_spruce_up_your_main_page\">kiriman blog Susan Taylor</a> jika Anda membutuhkan bantuan dalam mengubah ukuran gambar untuk slider.",
@@ -1539,9 +1547,9 @@ $messages['ps'] = array(
 	'founderprogressbar-photo-add10-label' => '$1 {{PLURAL:$1|انځور|انځورونو}} ته يې ورسوۍ',
 	'founderprogressbar-photo-add20-label' => '$1 {{PLURAL:$1|انځور|انځورونو}} ته يې ورسوۍ',
 	'founderprogressbar-fb-connect-label' => 'فېسبوک سره يوځای کول',
-	'founderprogressbar-gallery-add-label' => 'يو انځورتون ورګډول',
-	'founderprogressbar-video-add-label' => 'يوه ويډيو ورګډول',
-	'founderprogressbar-bonus-photo-add10-label' => '$1 نور انځورونه ورګډول',
+	'founderprogressbar-gallery-add-label' => 'يو انځورتون ورگډول',
+	'founderprogressbar-video-add-label' => 'يوه ويډيو ورگډول',
+	'founderprogressbar-bonus-photo-add10-label' => '$1 نور انځورونه ورگډول',
 	'founderprogressbar-browse-page-name' => 'سپړل',
 );
 
@@ -2041,6 +2049,7 @@ $messages['zh-hans'] = array(
 	'founderprogressbar-photo-add10-label' => '达到$1{{PLURAL:$1|照片|照片}}',
 	'founderprogressbar-category-add3-label' => '达到$1{{PLURAL:$1|类别|类别}}',
 	'founderprogressbar-commcentral-visit-label' => '访问创立者与管理人员在红心',
+	'founderprogressbar-commcentral-visit-description' => '你不是一个人！创始人和管理员中心是Wikia分享建议和技巧的社区，您在那里可以找到帮助页面，指导和Wikia员工的联系方式。',
 	'founderprogressbar-wikiactivity-visit-label' => '访问维基动态',
 	'founderprogressbar-profile-edit-label' => '填写您的档案页',
 	'founderprogressbar-photo-add20-label' => '达到$1{{PLURAL:$1|照片|照片}}',

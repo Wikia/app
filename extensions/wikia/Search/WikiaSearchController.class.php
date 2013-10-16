@@ -11,6 +11,8 @@
  */
 class WikiaSearchController extends WikiaSpecialPageController {
 
+	use Wikia\Search\Traits\NamespaceConfigurable;
+
 	/**
 	 * Default results per page for intra wiki search
 	 * @var int
@@ -53,6 +55,18 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * @var string
 	 */
 	const TOP_ARTICLES_CACHE = 1;
+
+	/**
+	 * Dimensions for hot article image in Top Wiki Articles module
+	 */
+	const HOT_ARTICLE_IMAGE_WIDTH = 300;
+	const HOT_ARTICLE_IMAGE_HEIGHT = 150;
+
+	/**
+	 * Dimensions for hot article image in Top Wiki Articles module in fluid layout
+	 */
+	const HOT_ARTICLE_IMAGE_WIDTH_FLUID = 270;
+	const HOT_ARTICLE_IMAGE_HEIGHT_FLUID = 135;
 
 	/**
 	 * Responsible for instantiating query services based on config.
@@ -115,12 +129,13 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			if (! empty( $ids ) ) {
 				$params = [ 'ids' => implode( ',', $ids ), 'height' => 80, 'width' => 80, 'abstract' => 120 ];
 				$detailResponse = $this->app->sendRequest( 'ArticlesApiController', 'getDetails', $params )->getData();
+				$dimensions = $this->getHotArticleImageDimensions();
 				foreach ( $detailResponse['items'] as $id => $item ) {
 					if (! empty( $item['thumbnail'] ) ) {
 						$item['thumbnailSize'] = "small";
 						//get the first one image from imageServing as it needs other size
 						if ( empty( $pages ) ) {
-							$is = new ImageServing( [ $id ], 300, 150 );
+							$is = new ImageServing( [ $id ], $dimensions['width'], $dimensions['height'] );
 							$result = $is->getImages( 1 );
 							if(! empty( $result[ $id ][ 0 ][ 'url' ] ) ) {
 								$item[ 'thumbnail' ] = $result[ $id ][ 0 ][ 'url' ];
@@ -136,6 +151,22 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			}
 		} catch ( Exception $e ) { } // ignoring API exceptions for gracefulness
 		$this->setVal( 'pages', $pages );
+	}
+
+	private function getHotArticleImageDimensions() {
+		if ( BodyController::isGridLayoutEnabled() ) {
+			$dimensions = [
+				'width' => self::HOT_ARTICLE_IMAGE_WIDTH,
+				'height' => self::HOT_ARTICLE_IMAGE_HEIGHT
+			];
+		} else {
+			$dimensions = [
+				'width' => self::HOT_ARTICLE_IMAGE_WIDTH_FLUID,
+				'height' => self::HOT_ARTICLE_IMAGE_HEIGHT_FLUID
+			];
+		}
+
+		return $dimensions;
 	}
 
 	/**
@@ -165,7 +196,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 	    $stParams = array_merge( array( 'search' => $term ), $opt );
 
-	    $title = SpecialPage::getTitleFor( 'WikiaSearch' );
+	    $title = SpecialPage::getTitleFor( 'Search' );
 
 	    $this->setVal( 'class',     str_replace( ' ', '-', strtolower( $label ) ) );
 	    $this->setVal( 'href',      $title->getLocalURL( $stParams ) );
@@ -244,7 +275,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	public function combinedMediaSearch() {
 		$request = $this->getRequest();
 		$query = $request->getVal( 'q' );
-		if ( empty( $query ) ) {
+		if ( strlen( $query ) == 0) {
 			throw new Exception( "Please include a query value for parameter 'q'" );
 		}
 		$config = new Wikia\Search\Config;
@@ -415,7 +446,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			->setLimit                   ( $this->getVal( 'limit', $resultsPerPage ) )
 			->setPage                    ( $this->getVal( 'page', 1) )
 			->setRank                    ( $this->getVal( 'rank', 'default' ) )
-			->setAdvanced                ( $this->getRequest()->getBool( 'advanced', false ) )
 			->setHub                     ( $this->getVal( 'hub', false ) )
 			->setInterWiki               ( $this->isCorporateWiki() )
 			->setVideoSearch             ( $this->getVal( 'videoSearch', false ) )
@@ -447,11 +477,17 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		if(! $searchConfig->getInterWiki() ) {
 			$this->setVal( 'advancedSearchBox', $this->sendSelfRequest( 'advancedBox', array( 'config' => $searchConfig ) ) );
 		}
+
+		$isGridLayoutEnabled = BodyController::isGridLayoutEnabled();
+
 		$tabsArgs = array(
 				'config'		=> $searchConfig,
 				'by_category'	=> $this->getVal( 'by_category', false ),
 				'filters'       => $this->getVal( 'filters', array() ),
 				);
+
+		$isMonobook = $this->app->checkSkin( 'monobook') ;
+
 		$this->setVal( 'results',               $searchConfig->getResults() );
 		$this->setVal( 'resultsFound',          $searchConfig->getResultsFound() );
 		$this->setVal( 'resultsFoundTruncated', $searchConfig->getTruncatedResultsNum( true ) );
@@ -467,12 +503,14 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'namespaces',            $searchConfig->getNamespaces() );
 		$this->setVal( 'hub',                   $searchConfig->getHub() );
 		$this->setVal( 'hasArticleMatch',       $searchConfig->hasArticleMatch() );
-		$this->setVal( 'isMonobook',            ( $this->wg->User->getSkin() instanceof SkinMonobook ) );
+		$this->setVal( 'isMonobook',            $isMonobook );
 		$this->setVal( 'isCorporateWiki',       $this->isCorporateWiki() );
 		$this->setVal( 'wgExtensionsPath',      $this->wg->ExtensionsPath);
-		if ( in_array( 0, $searchConfig->getNamespaces() ) && !in_array( 6, $searchConfig->getNamespaces() ) ) {
+		$this->setVal( 'isGridLayoutEnabled',   $isGridLayoutEnabled);
+		$sanitizedQuery = $searchConfig->getQuery()->getSanitizedQuery();
+		if ( strlen($sanitizedQuery)>0 && in_array( 0, $searchConfig->getNamespaces() ) && !in_array( 6, $searchConfig->getNamespaces() ) ) {
 			$combinedMediaResult = $this->sendSelfRequest( 'combinedMediaSearch',
-				array( 'q' => $searchConfig->getQuery()->getSanitizedQuery(), 'videoOnly' => true ) )->getData();
+				array( 'q' => $sanitizedQuery, 'videoOnly' => true ) )->getData();
 			if ( isset($combinedMediaResult) && sizeof($combinedMediaResult['items']) == 4 ) {
 				$this->setVal( 'mediaData', $combinedMediaResult );
 			}
@@ -483,14 +521,23 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$this->registerWikiMatch( $searchConfig );
 		}
 		$topWikiArticlesHtml = '';
-		if (! $searchConfig->getInterWiki() && $wgLanguageCode == 'en' ) {
+
+		if (! $searchConfig->getInterWiki() && $wgLanguageCode == 'en'
+			&& !$isMonobook) {
 			$dbname = $this->wg->DBName;
-			$cacheKey = wfMemcKey( __CLASS__, 'WikiaSearch', 'topWikiArticles', $this->wg->CityId, static::TOP_ARTICLES_CACHE );
+			$cacheKey = wfMemcKey(
+				__CLASS__,
+				'WikiaSearch',
+				'topWikiArticles',
+				$this->wg->CityId,
+				static::TOP_ARTICLES_CACHE,
+				$isGridLayoutEnabled
+			);
 			$topWikiArticlesHtml = WikiaDataAccess::cache(
 				$cacheKey,
 				86400 * 5, // 5 days, one business week
 				function () {
-					return F::app()->renderView( 'WikiaSearchController', 'topWikiArticles' );
+					return $this->app->renderView( 'WikiaSearchController', 'topWikiArticles' );
 				}
 			);
 		}
@@ -530,38 +577,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 													array($this->wg->Sitename) )  );
 			}
 		}
-	}
-
-	/**
-	 * Called in index action. Sets the SearchConfigs namespaces based on MW-core NS request style.
-	 * @see    WikiSearchControllerTest::testSetNamespacesFromRequest
-	 * @param  Wikia\Search\Config $searchConfig
-	 * @param  User $user
-	 * @return boolean true
-	 */
-	protected function setNamespacesFromRequest( $searchConfig, User $user ) {
-		$searchEngine = (new SearchEngine);
-		$searchableNamespaces = $searchEngine->searchableNamespaces();
-		$namespaces = array();
-		foreach( $searchableNamespaces as $i => $name ) {
-		    if ( $this->getVal( 'ns'.$i, false ) ) {
-		        $namespaces[] = $i;
-		    }
-		}
-		if ( empty($namespaces) ) {
-		    if ( $user->getOption( 'searchAllNamespaces' ) ) {
-			    $namespaces = array_keys($searchableNamespaces);
-		    } else {
-		    	$profiles = $searchConfig->getSearchProfiles();
-		    	// this is mostly needed for unit testing
-		    	$defaultProfile = !empty( $this->wg->DefaultSearchProfile ) ? $this->wg->DefaultSearchProfile : 'default';
-		    	$namespaces = $profiles[$defaultProfile]['namespaces'];
-		    }
-
-		}
-		$searchConfig->setNamespaces( $namespaces );
-
-		return true;
 	}
 
 	/**
@@ -655,7 +670,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 		$this->setVal( 'namespaces', 			$config->getNamespaces() );
 		$this->setVal( 'searchableNamespaces', 	$searchableNamespaces );
-		$this->setVal( 'advanced', 				$config->getAdvanced() );
 	}
 
 	/**
@@ -727,20 +741,21 @@ class WikiaSearchController extends WikiaSpecialPageController {
 						? ( $page + self::PAGES_PER_WINDOW )
 						: $config->getNumPages() ) ;
 
+		$pageTitle = SpecialPage::getTitleFor( 'Search' );
+
 		$this->setVal( 'query', 			$config->getQuery()->getSanitizedQuery() );
 		$this->setVal( 'pagesNum', 			$config->getNumPages() );
 		$this->setVal( 'currentPage', 		$page );
 		$this->setVal( 'windowFirstPage', 	$windowFirstPage );
 		$this->setVal( 'windowLastPage', 	$windowLastPage );
-		$this->setVal( 'pageTitle', 		$this->wg->Title );
+		$this->setVal( 'pageTitle', 		$pageTitle );
 		$this->setVal( 'crossWikia', 		$config->getInterWiki() );
 		$this->setVal( 'resultsCount', 		$config->getResultsFound() );
 		$this->setVal( 'namespaces', 		$config->getNamespaces() );
-		$this->setVal( 'advanced', 			$config->getAdvanced() );
 		$this->setVal( 'limit', 			$config->getLimit() );
 		$this->setVal( 'filters',			$config->getPublicFilterKeys() );
-		$this->setVal( 'rank', 				$config->getRank() );
 		$this->setVal( 'by_category', 		$this->getVal('by_category', false) );
 
 	}
 }
+ 

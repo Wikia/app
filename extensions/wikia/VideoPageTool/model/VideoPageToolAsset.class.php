@@ -527,9 +527,10 @@ class VideoPageToolAsset extends WikiaModel {
 
 	/**
 	 * Get asset data (used in template)
+	 * @param array $thumbOptions
 	 * @return array $assetData
 	 */
-	public function getAssetData() {
+	public function getAssetData( $thumbOptions = array() ) {
 		$user = User::newFromId( $this->updatedBy );
 		$assetData['updatedBy'] = $user->getName();
 		$assetData['updatedAt'] = $this->getFormattedUpdatedAt();

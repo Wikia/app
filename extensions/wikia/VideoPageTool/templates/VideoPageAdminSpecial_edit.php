@@ -1,4 +1,15 @@
 <noscript>This page is not supported with Javascript turned off.</noscript>
+
+<?= $app->renderView(
+	'VideoPageAdminSpecial',
+	'Header',
+	array(
+		'publishDate' => $publishDate,
+		'section' => $section,
+		'language' => $language,
+	)
+) ?>
+
 <div class="WikiaGrid VPTForms">
 	<div class="grid-2 alpha">
 		<?= $app->renderView('LeftMenu',
@@ -17,6 +28,8 @@
 		<?= $moduleView ?>
 	</div>
 	<div class="publish">
-		<button class="big"><?= wfMessage( 'videopagetool-publish-button' )->text() ?></button>
+		<form class="WikiaForm" method="post" action="<?= $publishUrl ?>">
+			<button type="submit" class="big" name="action" value="publish" <?= $publishButton ?>><?= wfMessage( 'videopagetool-publish-button' )->text() ?></button>
+		</form>
 	</div>
 </div>

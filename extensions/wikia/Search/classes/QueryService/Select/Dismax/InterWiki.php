@@ -116,6 +116,9 @@ class InterWiki extends AbstractDismax
 	protected function getFilterQueryString() {
 		$wid = $this->getService()->getWikiId();
 		$filterQueries = [ 'articles_i:[50 TO *]', "-id:{$wid}" ];
+		if( $this->getConfig()->getCommercialUse() ) {
+			$filterQueries[] = "-( commercial_use_allowed_b:false )";
+		}
 		$hub = $this->getConfig()->getHub();
 		if (! empty( $hub ) ) {
 			$filterQueries[] = Utilities::valueForField( 'hub_s', $hub );

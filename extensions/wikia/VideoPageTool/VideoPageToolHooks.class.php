@@ -11,7 +11,7 @@ class VideoPageToolHooks {
 		wfProfileIn(__METHOD__);
 		$app = F::app();
 
-		if ( $title->isMainPage() ) {
+		if ( $title->isMainPage() && $app->checkSkin( 'oasis' ) ) {
 			$app->wg->SuppressPageHeader = true;
 			$app->wg->SuppressWikiHeader = true;
 			$app->wg->SuppressRail = true;

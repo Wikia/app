@@ -1,4 +1,5 @@
 <?php
+
 	/**
 	 * Controller to fetch various stats info about the current wiki
 	 *

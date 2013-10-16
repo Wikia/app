@@ -7,9 +7,12 @@
 
 .WikiaArticle {
 	@include bodytext;
+	// Prevent content from escaping the article area
+	overflow: hidden;
 	padding: 0 $width-gutter;
 	position: relative;
 	min-height: 250px;
+	word-wrap: break-word;
 	z-index: 1;
 
 	//whatever article has we should clear it so it won't collapse into comments or other features underneeth it
@@ -226,6 +229,7 @@
 		line-height: 14px;
 		overflow: auto;
 		padding: 12px;
+		word-wrap: normal;
 	}
 	.printfooter {
 		display: none;
@@ -410,6 +414,17 @@
 	}
 }
 
+// Exceptions to the rule (MAIN-939)
+// Wall and Forum have dropdowns that escape the article area. This prevents
+// them from getting chopped off with the downside that large tables won't be
+// controlled properly until the JavaScript loads.
+.ns-1200,
+.ns-1201,
+.ns-2000 {
+	.WikiaArticle {
+		overflow: visible;
+	}
+}
 
 /**
  * FB#24380 - Make wikia-infobox styling work in RTE popup previews (out of .WikiaArticle)
@@ -473,41 +488,6 @@
 		font-size: 12px;
 		text-align: center;
 	}
-
-	.wikia-infobox-caption { padding-bottom /*\**/: 10px\9 } // /** dirty IE hack, affects all versions till 8**/
-}
-
-// RT #70017: wikitable class for skinning normal tables
-table.wikitable {
-	background: darken($color-page, 2%);
-	border-collapse: collapse;
-	border: 1px $color-page-border solid;
-	color: $color-text;
-	margin: 1em 1em 1em 0;
-
-	th, td {
-		border: 1px darken($color-page, 35%) solid;
-		padding: 0.2em;
-	}
-	td {
-		b, strong {
-			font-weight: bold;
-		}
-		i, em {
-			font-style: italic;
-		}
-	}
-	> tr > th,  > * > tr > th {
-		background: darken($color-page, 5%);
-		text-align: center;
-	}
-	caption {
-		font-weight: bold;
-	}
-}
-
-.article-table { // This parallels WikiaTable in _table.scss
-	@extend .WikiaTable;
 }
 
 // /** Interlang Links **/
@@ -535,9 +515,6 @@ table.wikitable {
 				border: none;
 				padding-left: 0px;
 			}
-			/*&:last-child {
-				border: none;
-			}*/
 			&.more-link {
 				border: none;
 			}
@@ -548,30 +525,9 @@ table.wikitable {
 	}
 }
 
+
 .TOC_hide #toctitle + ul {
 	display: none;
-}
-
-// /** WikiaWideTables **/
-.WikiaWideTablesWrapper {
-	position: relative;
-	&.border {
-		border-right: 1px dashed $color-page-border;
-	}
-	>.table {
-		overflow: hidden;
-	}
-	>.popout {
-		cursor: pointer;
-		position: absolute;
-		right: -12px;
-		top: 0;
-		&.float {
-			position: fixed;
-			left: 50%;
-			right: auto;
-		}
-	}
 }
 
 // Needed for article comments lazy loading

@@ -22,6 +22,7 @@ class WikiaResponse {
 	const RESPONSE_CODE_OK = 200;
 	const RESPONSE_CODE_ERROR = 501;
 	const RESPONSE_CODE_FORBIDDEN = 403;
+	const RESPONSE_CODE_NOT_FOUND = 404;
 
 	/**
 	 * Output formats

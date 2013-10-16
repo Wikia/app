@@ -7,6 +7,7 @@ class VideoPageToolProgram extends WikiaModel {
 
 	const OBJECT_CACHE_TTL = 604800; // One week
 	const DATE_CACHE_TTL = 86400;    // One day
+	const CACHE_VERSION = 1;
 
 	protected $programId = 0;
 	protected $language = 'en';
@@ -49,7 +50,7 @@ class VideoPageToolProgram extends WikiaModel {
 	 * @return string
 	 */
 	public function getFormattedPublishDate() {
-		return $this->wg->lang->timeanddate( $this->publishDate, true );
+		return $this->wg->lang->date( $this->publishDate );
 	}
 
 	/**
@@ -101,21 +102,25 @@ class VideoPageToolProgram extends WikiaModel {
 	}
 
 	/**
-	 * Given a language, finds the program object nearest (or equal to) to today's date
-	 * @param $lang
-	 * @return object
+	 * Given a language, finds the program object nearest (or equal to) to the date (default = today's date)
+	 * @param string $lang
+	 * @param string $date [timestamp]
+	 * @return object|null $program
 	 */
-	public static function newProgramNearestToday( $lang ) {
+	public static function newProgramNearestToday( $lang, $date = '' ) {
 		wfProfileIn( __METHOD__ );
 
 		// Figure out what the nearest date to today is
-		$nearestDate = self::loadNearestDate( $lang );
+		$nearestDate = self::getNearestDate( $lang, $date );
+		if ($nearestDate) {
+			// Load the program with this nearest date
+			$program = self::newProgram( $lang, $nearestDate );
 
-		// Load the program with this nearest date
-		$program = self::newProgram( $lang, $nearestDate );
-
-		wfProfileOut( __METHOD__ );
-		return $program;
+			wfProfileOut( __METHOD__ );
+			return $program;
+		} else {
+			return null;
+		}
 	}
 
 	/**
@@ -208,17 +213,23 @@ class VideoPageToolProgram extends WikiaModel {
 	}
 
 	/**
-	 * Returns the nearest program date to today for a given language
-	 * @param $language
+	 * Returns the nearest program date to the date for a given language (default = today's date)
+	 * @param string $language
+	 * @param string $timestamp
 	 * @return null|string
 	 */
-	protected function loadNearestDate( $language ) {
+	protected static function getNearestDate( $language, $timestamp = '' ) {
 		wfProfileIn( __METHOD__ );
 
-		$date = date('Y-m-d');
-		$nearestKey = wfMemcKey( 'videopagetool', 'nearest-date', $language, $date );
-		$nearestDate = F::app()->wg->Memc->get( $nearestKey );
+		$app = F::app();
 
+		if ( empty( $timestamp ) ) {
+			$timestamp = time();
+		}
+		$date = date( 'Y-m-d', $timestamp );
+
+		$nearestKey = self::getMemcKeyNearestDate( $language, $date );
+		$nearestDate = $app->wg->Memc->get( $nearestKey );
 		if ( !$nearestDate ) {
 			$db = wfGetDB( DB_SLAVE );
 
@@ -227,22 +238,37 @@ class VideoPageToolProgram extends WikiaModel {
 				array( 'unix_timestamp(publish_date) as publish_date' ),
 				array(
 					'language' => $language,
-					'publish_date <= '.$db->addQuotes(date( 'Y-m-d' )),
+					'publish_date <= '.$db->addQuotes( $date ),
 				),
-				__METHOD__
+				__METHOD__,
+				array( 'ORDER BY' => 'publish_date DESC' )
 			);
 
 			if ( $row ) {
 				$nearestDate = $row->publish_date;
 
 				// Cache this for at most one day
-				F::app()->wg->Memc->set( $nearestKey, $nearestDate, self::DATE_CACHE_TTL );
+				$app->wg->Memc->set( $nearestKey, $nearestDate, self::DATE_CACHE_TTL );
 			}
 		}
 
 		wfProfileOut( __METHOD__ );
 
 		return $nearestDate;
+	}
+
+	/**
+	 * Get the memcached key for storing the nearest published date
+	 * @param string $lang - Look for published content dates in this language
+	 * @param string $date [yyyy-mm-dd]
+	 * @return string - A string to use as the memcached string
+	 */
+	protected static function getMemcKeyNearestDate( $lang, $date = '' ) {
+		if ( empty( $date ) ) {
+			$date = date( 'Y-m-d' );
+		}
+
+		return wfMemcKey( 'videopagetool', 'nearest-date', $lang, $date );
 	}
 
 	/**
@@ -267,7 +293,7 @@ class VideoPageToolProgram extends WikiaModel {
 				'program_id' => $programId,
 				'language' => $this->language,
 				'publish_date' => $db->timestamp( $this->publishDate ),
-				'is_published' => $this->isPublish,
+				'is_published' => $this->isPublished,
 			),
 			__METHOD__,
 			'IGNORE'
@@ -338,37 +364,55 @@ class VideoPageToolProgram extends WikiaModel {
 	 * Clear cache
 	 */
 	protected function invalidateCache() {
+		$this->invalidateCacheCompletedSections();
+		$this->invalidateCachePrograms( $this->language );
 		$this->wg->Memc->delete( $this->getMemcKey() );
+		$this->wg->Memc->delete( $this->getMemcKeyNearestDate( $this->language ) );
 	}
 
 	/**
 	 * Publish program
-	 * @return boolean
+	 * @return Status $status
 	 */
 	public function publishProgram() {
 		$this->setIsPublished( true );
 
-		return $this->updateToDatabase();
+		$db = wfGetDB( DB_MASTER );
+		$status = $this->updateToDatabase();
+		$db->commit();
+
+		if ( $status->isGood() && $status->value > 0 ) {
+			$this->invalidateCache();
+		}
+
+		return $status;
 	}
 
 	/**
 	 * Unpublish program
-	 * @return boolean
+	 * @return Status $status
 	 */
 	public function unpublishProgram() {
 		$this->setIsPublished( false );
 
-		return $this->updateToDatabase();
+		$db = wfGetDB( DB_MASTER );
+		$status = $this->updateToDatabase();
+		$db->commit();
+
+		if ( $status->isGood() && $status->value > 0 ) {
+			$this->invalidateCache();
+		}
+
+		return $status;
 	}
 
 	/**
-	 * get list of programs
+	 * Get the list of programs for the month starting at $startDate
 	 * @param string $language
 	 * @param string $startDate [yyyy-mm-dd]
-	 * @param string $endDate [yyyy-mm-dd]
 	 * @return array $programs [array( date => status ); date = yyyy-mm-dd; status = 0 (not published)/ 1 (published)]
 	 */
-	public static function getPrograms( $language, $startDate, $endDate ) {
+	public static function getProgramsForMonth( $language, $startDate ) {
 		wfProfileIn( __METHOD__ );
 
 		$app = F::app();
@@ -384,14 +428,14 @@ class VideoPageToolProgram extends WikiaModel {
 				array(
 					'language' => $language,
 					"publish_date >= '$startDate'",
-					"publish_date < '$endDate'",
+					"publish_date < '$startDate' + INTERVAL 1 MONTH",
 				),
 				__METHOD__,
 				array( 'ORDER BY' => 'publish_date' )
 			);
 
 			$programs = array();
-			while ( $row = $db->fetchObject($result) ) {
+			while ( $row = $db->fetchObject( $result ) ) {
 				$programs[$row->publish_date] = $row->is_published;
 			}
 
@@ -404,17 +448,17 @@ class VideoPageToolProgram extends WikiaModel {
 	}
 
 	/**
-	 * get memcache key for programs
+	 * Get memcache key for programs
 	 * @param string $language
 	 * @param string $startDate [yyyy-mm-dd]
 	 * @return string
 	 */
-	public static function getMemcKeyPrograms( $language, $startDate ) {
+	protected static function getMemcKeyPrograms( $language, $startDate ) {
 		return wfMemcKey( 'videopagetool', 'programs', $language, $startDate );
 	}
 
 	/**
-	 * clear cache for programs
+	 * Clear cache for programs
 	 * @param string $language
 	 * @param string $startDate [yyyy-mm-dd]
 	 */
@@ -497,7 +541,8 @@ class VideoPageToolProgram extends WikiaModel {
 
 		// save cache
 		$this->saveToCache();
-		$this->invalidateCachePrograms( $section );
+		$this->invalidateCachePrograms( $this->language );
+		$this->invalidateCacheCompletedSections();
 
 		foreach ( $assetList as $assetObj ) {
 			$assetObj->saveToCache();
@@ -521,6 +566,69 @@ class VideoPageToolProgram extends WikiaModel {
 		$data = $className::formatFormData( $requiredRows, $formValues, $errMsg );
 
 		return $data;
+	}
+
+	/**
+	 * Check if the program is ready to be published
+	 * @param array $sections - required sections
+	 * @return boolean
+	 */
+	public function isPublishable( $sections ) {
+		sort( $sections );
+		return ( $sections == $this->getCompletedSections( $sections ) );
+	}
+
+	/**
+	 * Get list of completed sections
+	 * @param array $sections - required sections
+	 * @return array $list - completed sections
+	 */
+	public function getCompletedSections( $sections ) {
+		wfProfileIn( __METHOD__ );
+
+		$memcKey = $this->getMemcKeyCompletedSections();
+		$list = $this->wg->Memc->get( $memcKey );
+		if ( !is_array( $list ) ) {
+			$db = wfGetDB( DB_SLAVE );
+
+			$result = $db->select(
+				array( 'vpt_program', 'vpt_asset' ),
+				array( 'distinct section' ),
+				array(
+					'vpt_program.program_id' => $this->programId,
+					'vpt_asset.section' => $sections,
+				),
+				__METHOD__,
+				array( 'ORDER BY' => 'section' ),
+				array( 'vpt_asset' => array( 'JOIN', 'vpt_asset.program_id = vpt_program.program_id' ) )
+			);
+
+			$list = array();
+			while ( $row = $db->fetchObject( $result ) ) {
+				$list[] = $row->section;
+			}
+
+			$this->wg->Memc->set( $memcKey, $list, 60*60*24 );
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $list;
+	}
+
+	/**
+	 * Get memcache key for completed sections
+	 * @return string
+	 */
+	protected function getMemcKeyCompletedSections() {
+		return wfMemcKey( 'videopagetool', 'completed_sections', self::CACHE_VERSION, $this->programId );
+	}
+
+	/**
+	 * Clear cache for completed sections
+	 */
+	protected function invalidateCacheCompletedSections() {
+		$this->wg->Memc->delete( $this->getMemcKeyCompletedSections() );
 	}
 
 }

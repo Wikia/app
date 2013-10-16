@@ -1,5 +1,5 @@
 <div class="UserLoginModal">
-	<h1><?= wfMsg('userlogin-login-heading') ?></h1>
+	<h1><?= wfMessage('userlogin-login-heading')->escaped() ?></h1>
 <?php
 	$tabIndex = 5;
 	$specialSignupLink = SpecialPage::getTitleFor('UserSignup')->getLocalURL();
@@ -20,7 +20,7 @@
 				'type' => 'text',
 				'name' => 'username',
 				'isRequired' => true,
-				'label' => wfMsg('yourname'),
+				'label' => wfMessage('yourname')->escaped(),
 				'tabindex' => ++$tabIndex,
 			),
 			array(
@@ -28,30 +28,30 @@
 				'name' => 'password',
 				'class' => 'password-input',
 				'isRequired' => true,
-				'label' => wfMsg('yourpassword'),
+				'label' => wfMessage('yourpassword')->escaped(),
 				'tabindex' => ++$tabIndex,
 			),
 			array(
 				'type' => 'custom',
-				'output' => '<a href="#" class="forgot-password" tabindex="0">'.wfMsg('userlogin-forgot-password').'</a>',
+				'output' => '<a href="#" class="forgot-password" tabindex="0">'.wfMessage('userlogin-forgot-password')->escaped().'</a>',
 			),
 			array(
 				'type' => 'checkbox',
 				'name' => 'keeploggedin',
 				'value' => '1',
-				'label' => wfMsg('userlogin-remembermypassword'),
+				'label' => wfMessage('userlogin-remembermypassword')->escaped(),
 				'class' => 'keep-logged-in',
 				'tabindex' => ++$tabIndex,
 			),
 			array(
 				'type' => 'submit',
-				'value' => wfMsg('login'),
+				'value' => wfMessage('login')->escaped(),
 				'class' => 'login-button big',
 				'tabindex' => ++$tabIndex,
 			),
 			array(
 				'type' => 'custom',
-				'output' => wfMsgExt('userlogin-get-account', 'content', array($specialSignupLink, ++$tabIndex)),
+				'output' => wfMessage('userlogin-get-account', array($specialSignupLink, ++$tabIndex))->inContentLanguage()->text(),
 				'class' => 'get-account',
 				'tabindex' => ++$tabIndex,
 			)

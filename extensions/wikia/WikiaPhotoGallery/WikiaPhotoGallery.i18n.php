@@ -1672,6 +1672,15 @@ $messages['el'] = array(
 	'wikiaPhotoGallery-upload-selectbutton' => 'Επιλογή',
 );
 
+/** British English (British English)
+ * @author Shirayuki
+ */
+$messages['en-gb'] = array(
+	'wikiaPhotoGallery-preview-captioncolor' => 'Caption colour',
+	'wikiaPhotoGallery-preview-bordercolor' => 'Photo border colour',
+	'wikiaPhotoGallery-preview-colorpicker-title' => 'Colour picker',
+);
+
 /** Esperanto (Esperanto)
  * @author Tradukisto
  */
@@ -3386,6 +3395,7 @@ $messages['la'] = array(
 
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
+ * @author Soued031
  */
 $messages['lb'] = array(
 	'wikiaPhotoGallery-back' => 'Zréck',
@@ -3419,7 +3429,7 @@ $messages['lb'] = array(
 	'wikiaPhotoGallery-preview-position-right' => 'Riets',
 	'wikiaPhotoGallery-preview-spacing-small' => 'Kleng',
 	'wikiaPhotoGallery-preview-spacing-large' => 'Grouss',
-	'wikiaPhotoGallery-preview-captionposition-below' => 'Ënnert der Photo',
+	'wikiaPhotoGallery-preview-captionposition-below' => 'Ënner der Foto',
 	'wikiaPhotoGallery-preview-captionalignment-left' => 'Lenks',
 	'wikiaPhotoGallery-preview-captionalignment-center' => 'Zentréiert',
 	'wikiaPhotoGallery-preview-captionalignment-right' => 'Riets',
@@ -4747,7 +4757,7 @@ $messages['ps'] = array(
 	'wikiaPhotoGallery-back' => 'پر شا کېدل',
 	'wikiaPhotoGallery-finish' => 'پای',
 	'wikiaPhotoGallery-lightbox-caption' => 'د $1 له لارې',
-	'wikiaPhotoGallery-viewmode-addphoto' => 'دې انځورتون کې يو انځور ورګډول',
+	'wikiaPhotoGallery-viewmode-addphoto' => 'دې انځورتون کې يو انځور ورگډول',
 	'wikiaPhotoGallery-edit-summary' => 'يو انځورتون سمول',
 	'wikiaPhotoGallery-error-caption' => 'ستونزه',
 	'wikiaPhotoGallery-upload-title' => 'انځور موندل او پورته کول',
@@ -4767,12 +4777,12 @@ $messages['ps'] = array(
 	'wikiaPhotoGallery-photooptions-done' => 'ترسره شو',
 	'wikiaPhotoGallery-preview-title' => 'انځورتون جوړونکی',
 	'wikiaPhotoGallery-preview-hover-modify' => 'بدلول',
-	'wikiaPhotoGallery-preview-hover-delete' => 'ړنګول',
+	'wikiaPhotoGallery-preview-hover-delete' => 'ړنگول',
 	'wikiaPhotoGallery-preview-previewtitle' => 'د انځورتون مخليدنه',
-	'wikiaPhotoGallery-preview-add-photo' => 'يو انځور ورګډول',
-	'wikiaPhotoGallery-preview-add-caption' => 'يو انځورمتن ورګډول',
-	'wikiaPhotoGallery-preview-add-description' => 'يوه څرګندونه ورګډول',
-	'wikiaPhotoGallery-preview-add-link' => 'يوه تړنه ورګډول',
+	'wikiaPhotoGallery-preview-add-photo' => 'يو انځور ورگډول',
+	'wikiaPhotoGallery-preview-add-caption' => 'يو انځورمتن ورگډول',
+	'wikiaPhotoGallery-preview-add-description' => 'يوه څرگندونه ورگډول',
+	'wikiaPhotoGallery-preview-add-link' => 'يوه تړنه ورگډول',
 	'wikiaPhotoGallery-preview-tab-layout' => 'ليدنمخ',
 	'wikiaPhotoGallery-preview-position-left' => 'کيڼ',
 	'wikiaPhotoGallery-preview-position-center' => 'منځ',
@@ -4800,15 +4810,15 @@ $messages['ps'] = array(
 	'wikiaPhotoGallery-preview-delete-title' => 'دا انځور ليرې کوۍ؟',
 	'wikiaPhotoGallery-preview-saving-title' => 'د خوندي کېدلو په حال کې',
 	'wikiaPhotoGallery-quit-savequit' => 'خوندي کول او بندول',
-	'wikiaPhotoGallery-slideshow-view-addphoto' => 'انځور ورګډول',
+	'wikiaPhotoGallery-slideshow-view-addphoto' => 'انځور ورگډول',
 	'wikiaPhotoGallery-slideshow-view-next-tooltip' => 'بل انځور',
 	'wikiaPhotoGallery-slideshow-view-prev-tooltip' => 'تېر انځور',
 	'wikiaPhotoGallery-slideshow-view-link-overlay' => '$1 ته ورځه',
 	'wikiaPhotoGallery-choice-gallery' => 'انځورتون جوړول',
-	'wikiaPhotoGallery-slideshowpreview-addphoto' => 'يو انځور ورګډول',
+	'wikiaPhotoGallery-slideshowpreview-addphoto' => 'يو انځور ورگډول',
 	'wikiaPhotoGallery-slideshowpreview-position-left' => 'کيڼ',
 	'wikiaPhotoGallery-slideshowpreview-position-right' => 'ښي',
-	'wikiaPhotoGallery-sliderpreview-addphoto' => 'يو انځور ورګډول',
+	'wikiaPhotoGallery-sliderpreview-addphoto' => 'يو انځور ورگډول',
 	'wikiaPhotoGallery-upload-uploadtitle' => 'پورته کول',
 	'wikiaPhotoGallery-upload-uploadbutton' => 'انځور پورته کول',
 	'wikiaPhotoGallery-upload-existingtext-onarticle' => 'همدا مخ',
@@ -6571,6 +6581,7 @@ $messages['zh-hans'] = array(
 	'wikiaPhotoGallery-preview-saving-intro' => '请等待到图库保存完毕',
 	'wikiaPhotoGallery-quit-savequit' => '保存并退出',
 	'wikiaPhotoGallery-quit-quitonly' => '放弃更改并退出',
+	'wikiaPhotoGallery-slideshow-view-popout-tooltip' => '展开幻灯片',
 	'wikiaPhotoGallery-slideshow-view-addphoto' => '添加照片',
 	'wikiaPhotoGallery-slideshow-view-next-tooltip' => '下个照片',
 	'wikiaPhotoGallery-slideshow-view-prev-tooltip' => '上个照片',
@@ -6580,6 +6591,7 @@ $messages['zh-hans'] = array(
 	'wikiaPhotoGallery-slideshow-view-stopslideshow' => '停止幻灯片',
 	'wikiaPhotoGallery-slideshow-view-details-tooltip' => '查看图片细节',
 	'wikiaPhotoGallery-slideshow-view-link-overlay' => '到达$1',
+	'wikiaPhotoGallery-choice-slideshow' => '制作幻灯片',
 	'wikiaPhotoGallery-choice-gallery' => '新建图库',
 	'wikiaPhotoGallery-slideshowpreview-title' => '幻灯片创建器',
 	'wikiaPhotoGallery-slideshowpreview-optionstitle' => '幻灯片设置',
@@ -6600,6 +6612,7 @@ $messages['zh-hans'] = array(
 	'wikiaPhotoGallery-photooptions-description' => '图像的详细信息。',
 	'wikiaPhotoGallery-search-tooltip' => '在该维基搜索图片',
 	'wikiaPhotoGallery-upload-image-size' => '图片尺寸必须为长670px宽360px或更大',
+	'wikiaPhotoGallery-not-displayed' => '无法显示',
 	'galery-slider-read-more' => '了解更多 >',
 );
 

@@ -1,97 +1,155 @@
-/**
- * VisualEditor user interface Toolbar class.
+/*!
+ * VisualEditor UserInterface Toolbar class.
  *
- * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
 /**
- * Editing toolbar.
+ * UserInterface toolbar.
  *
  * @class
+ * @extends ve.Element
+ * @mixins ve.EventEmitter
+ * @mixins ve.ui.GroupElement
+ *
  * @constructor
- * @extends {ve.EventEmitter}
- * @param {jQuery} $container
- * @param {ve.Surface} surface
- * @param {Array} config
+ * @param {ve.Factory} toolFactory Factory for creating tools
+ * @param {Object} [options] Configuration options
+ * @cfg {boolean} [actions] Add an actions section opposite to the tools
+ * @cfg {boolean} [shadow] Add a shadow below the toolbar
  */
-ve.ui.Toolbar = function VeUiToolbar( $container, surface, config ) {
+ve.ui.Toolbar = function VeUiToolbar( toolFactory, options ) {
+	// Configuration initialization
+	options = options || {};
+
 	// Parent constructor
+	ve.Element.call( this, options );
+
+	// Mixin constructors
 	ve.EventEmitter.call( this );
+	ve.ui.GroupElement.call( this, this.$$( '<div>' ) );
 
 	// Properties
-	this.surface = surface;
-	this.$ = $container;
-	this.$groups = $( '<div class="ve-ui-toolbarGroups"></div>' );
-	this.config = config || {};
+	this.toolFactory = toolFactory;
+	this.groups = [];
+	this.tools = {};
+	this.$bar = this.$$( '<div>' );
+	this.$actions = this.$$( '<div>' );
+	this.initialized = false;
 
 	// Events
-	this.surface.getModel().on( 'annotationChange', ve.bind( this.onAnnotationChange, this ) );
+	this.$
+		.add( this.$bar ).add( this.$group ).add( this.$actions )
+		.on( 'mousedown', false );
 
 	// Initialization
-	this.$.prepend( this.$groups );
-	this.setup();
+	this.$group.addClass( 've-ui-toolbar-tools' );
+	this.$bar.addClass( 've-ui-toolbar-bar' ).append( this.$group );
+	if ( options.actions ) {
+		this.$actions.addClass( 've-ui-toolbar-actions' );
+		this.$bar.append( this.$actions );
+	}
+	this.$bar.append( '<div style="clear:both"></div>' );
+	if ( options.shadow ) {
+		this.$bar.append( '<div class="ve-ui-toolbar-shadow"></div>' );
+	}
+	this.$.addClass( 've-ui-toolbar' ).append( this.$bar );
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.ui.Toolbar, ve.EventEmitter );
+ve.inheritClass( ve.ui.Toolbar, ve.Element );
+
+ve.mixinClass( ve.ui.Toolbar, ve.EventEmitter );
+ve.mixinClass( ve.ui.Toolbar, ve.ui.GroupElement );
 
 /* Methods */
 
 /**
- * Gets the surface the toolbar controls.
+ * Get the tool factory.
  *
  * @method
- * @returns {ve.Surface} Surface being controlled
+ * @returns {ve.Factory} Tool factory
  */
-ve.ui.Toolbar.prototype.getSurface = function () {
-	return this.surface;
+ve.ui.Toolbar.prototype.getToolFactory = function () {
+	return this.toolFactory;
 };
 
 /**
- * Responds to annotation changes on the surface.
- *
- * @method
- * @emits "updateState" (nodes, full, partial)
- * @emits "clearState"
+ * Sets up handles and preloads required information for the toolbar to work.
+ * This must be called immediately after it is attached to a visible document.
  */
-ve.ui.Toolbar.prototype.onAnnotationChange = function () {
-	var i, len, leafNodes,
-		fragment = this.surface.getModel().getFragment(),
-		nodes = [];
-
-	leafNodes = fragment.getLeafNodes();
-	for ( i = 0, len = leafNodes.length; i < len; i++ ) {
-		nodes.push( leafNodes[i].node );
-	}
-	this.emit( 'updateState', nodes, fragment.getAnnotations(), fragment.getAnnotations( true ) );
+ve.ui.Toolbar.prototype.initialize = function () {
+	this.initialized = true;
 };
 
 /**
- * Initializes all tools and groups.
+ * Setup toolbar.
+ *
+ * Tools can be specified in the following ways:
+ *  - A specific tool: `{ 'name': 'tool-name' }` or `'tool-name'`
+ *  - All tools in a group: `{ 'group': 'group-name' }`
+ *  - All tools: `'*'` - Using this will make the group a list with a "More" label by default
  *
  * @method
+ * @param {Object.<string,Array>} groups List of tool group configurations
+ * @param {Array|string} [groups.include] Tools to include
+ * @param {Array|string} [groups.exclude] Tools to exclude
+ * @param {Array|string} [groups.promote] Tools to promote to the beginning
+ * @param {Array|string} [groups.demote] Tools to demote to the end
  */
-ve.ui.Toolbar.prototype.setup = function () {
-	var i, j, group, $group, tool;
-	for ( i = 0; i < this.config.length; i++ ) {
-		group = this.config[i];
-		// Create group
-		$group = $( '<div class="ve-ui-toolbarGroup"></div>' )
-			.addClass( 've-ui-toolbarGroup-' + group.name );
-		if ( group.label ) {
-			$group.append( $( '<div class="ve-ui-toolbarLabel"></div>' ).html( group.label ) );
-		}
-		// Add tools
-		for ( j = 0; j < group.items.length; j++ ) {
-			tool = ve.ui.toolFactory.create( group.items[j], this );
-			if ( !tool ) {
-				throw new Error( 'Unknown tool: ' + group.items[j] );
+ve.ui.Toolbar.prototype.setup = function ( groups ) {
+	var i, len, type, group,
+		items = [],
+		// TODO: Use a registry instead
+		defaultType = 'bar',
+		constructors = {
+			'bar': ve.ui.BarToolGroup,
+			'list': ve.ui.ListToolGroup,
+			'menu': ve.ui.MenuToolGroup
+		};
+
+	for ( i = 0, len = groups.length; i < len; i++ ) {
+		group = groups[i];
+		if ( group.include === '*' ) {
+			// Apply defaults to catch-all groups
+			if ( !group.type ) {
+				group.type = 'list';
 			}
-			$group.append( tool.$ );
+			if ( !group.label ) {
+				group.label = 'visualeditor-toolbar-more';
+			}
 		}
-		// Append group
-		this.$groups.append( $group );
+		type = constructors[group.type] ? group.type : defaultType;
+		items.push( new constructors[type]( this, ve.extendObject( { '$$': this.$$ }, group ) ) );
 	}
+	this.addItems( items );
+};
+
+/**
+ * Destroys toolbar, removing event handlers and DOM elements.
+ *
+ * Call this whenever you are done using a toolbar.
+ */
+ve.ui.Toolbar.prototype.destroy = function () {
+	var i, len;
+
+	this.clearItems();
+	for ( i = 0, len = this.items.length; i < len; i++ ) {
+		this.items[i].destroy();
+	}
+	this.$.remove();
+};
+
+ve.ui.Toolbar.prototype.isToolAvailable = function ( name ) {
+	return !this.tools[name];
+};
+
+ve.ui.Toolbar.prototype.reserveTool = function ( name ) {
+	this.tools[name] = true;
+};
+
+ve.ui.Toolbar.prototype.releaseTool = function ( name ) {
+	delete this.tools[name];
 };

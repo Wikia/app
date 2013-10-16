@@ -16,21 +16,32 @@ define( 'lvs.swapkeep', [
 		$row,
 		$button,
 		$container,
+		$keepButton,
 		isSwap,
 		currTitle,
 		newTitle;
 
-	function doRequest(){
+	function doRequest( params ){
+		var qs,
+				data,
+				trackingLabel;
+
 		// Add loading graphic
 		commonAjax.startLoadingGraphic();
 
-		var qs = new QueryString(),
-			data = {
-				videoTitle: currTitle,
-				sort: qs.getVal( 'sort', 'recent' ),
-				currentPage: qs.getVal( 'currentPage', 1 )
-			},
-			trackingLabel = tracker.labels.KEEP;
+		qs = new QueryString();
+		data = {
+			videoTitle: currTitle,
+			sort: qs.getVal( 'sort', 'recent' ),
+			currentPage: qs.getVal( 'currentPage', 1 )
+		};
+
+		// if @params are explicitly passed through, extend our object with them
+		if ( params ) {
+			$.extend(data, params);
+		}
+
+		trackingLabel = tracker.labels.KEEP;
 
 		if ( isSwap ) {
 			data.newTitle = newTitle;
@@ -52,17 +63,42 @@ define( 'lvs.swapkeep', [
 
 	function confirmModal() {
 		videoControls.reset();
-		var currTitleText =  currTitle.replace(/_/g, ' ' );
+		var currTitleText,
+				request,
+				suggestions;
+
+		request = {};
+		suggestions = _getSuggestions();
+
+		if ( suggestions.length ) {
+			request.suggestions = suggestions;
+		}
+
+		currTitleText =  currTitle.replace(/_/g, ' ' );
+
 		// Show confirmation modal only on "Keep"
 		$.confirm({
+			cancelMsg: $.msg( 'lvs-button-yes' ),
+			okMsg: $.msg( 'lvs-button-no' ),
 			title: $.msg( 'lvs-confirm-keep-title' ),
 			content: $.msg( 'lvs-confirm-keep-message', currTitleText ),
 			onOk: function() {
-				doRequest();
-				// Track click on okay button
+				request.forever = true;
+				doRequest( request );
+				// Track click on 'no' button
 				tracker.track({
 					action: tracker.actions.CONFIRM,
-					label: isSwap ? tracker.labels.SWAP : tracker.labels.KEEP
+					label: tracker.labels.KEEP
+				});
+			},
+			onCancel: function() {
+				request.forever = false;
+				doRequest( request );
+
+				// track click on 'yes'
+				tracker.track({
+					action: tracker.actions.CONFIRM,
+					label: tracker.labels.KEEP
 				});
 			},
 			width: 700
@@ -79,6 +115,7 @@ define( 'lvs.swapkeep', [
 			$parent = $button.parent();
 			$overlay = $parent.siblings( '.swap-arrow' );
 			$row = $button.closest( '.row' );
+			$keepButton = $row.find( '.keep-button' );
 			isSwap = $button.is( '.swap-button' );
 
 			if ( isSwap ) {
@@ -91,7 +128,7 @@ define( 'lvs.swapkeep', [
 				} else if ( e.type === 'click' ) {
 					// Get both titles - current/non-premium video and video to swap it out with
 					newTitle = decodeURIComponent( $button.attr( 'data-video-swap' ) );
-					currTitle = decodeURIComponent( $row.find( '.keep-button' ).attr( 'data-video-keep' ) );
+					currTitle = decodeURIComponent( $keepButton.attr( 'data-video-keep' ) );
 					doRequest();
 
 					// Track click action
@@ -102,18 +139,49 @@ define( 'lvs.swapkeep', [
 				}
 				// Keep button clicked
 			} else if ( e.type === 'click' ) {
-				currTitle = decodeURIComponent( $row.find( '.keep-button' ).attr( 'data-video-keep' ) );
-				// no new title b/c we're keeping the current video
-				newTitle = '';
-				confirmModal();
 
-				// Track click action
+				// Track click actions
 				tracker.track({
 					action: tracker.actions.CLICK,
 					label: tracker.labels.KEEP
 				});
+
+				currTitle = decodeURIComponent( $keepButton.attr( 'data-video-keep' ) );
+				// no new title b/c we're keeping the current video
+				newTitle = '';
+				
+				if ( $keepButton.data( 'subsequent-keep' ) ) {
+
+					confirmModal();
+
+				} else {
+
+					doRequest();
+
+					videoControls.reset();
+
+					tracker.track({
+						action: tracker.actions.CONFIRM,
+						label: tracker.labels.KEEP
+					});
+				}
 			}
 		});
+	}
+
+	function _getSuggestions() {
+		var arr,
+				$suggestions;
+
+		arr = [];
+		$suggestions = $row.find( '.more-videos .thumbimage' );
+		if ( $suggestions.length ) {
+			$suggestions.each(function( idx, elem ) {
+					arr.push( $( elem ).data().videoKey );
+			});
+		}
+
+		return arr;
 	}
 
 	return {
