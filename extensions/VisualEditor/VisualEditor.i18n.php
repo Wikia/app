@@ -17,6 +17,9 @@ $messages = array();
  * @author Amir E. Aharoni
  */
 $messages['en'] = array(
+        'visualeditor-wikiamediainsertbuttontool-label' => 'Add Media',
+        'visualeditor-wikiapreference-enable' => 'Enable beta VisualEditor',
+
 	'accesskey-ca-editsource' => 'e',
 	'accesskey-ca-ve-edit' => 'v',
 	'tag-visualeditor' => '[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]',
