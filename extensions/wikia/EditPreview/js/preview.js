@@ -29,23 +29,12 @@ define( 'wikia.preview', [
 		// TODO: when we will redesign preview to meet darwin design directions - this should be done differently and refactored
 		articleMargin = fluidlayout.getWidthPadding() + fluidlayout.getArticleBorderWidth(),
 		// values for min and max are Darwin minimum and maximum supported article width.
-		previewTypes = {
-			current: {
-				name: 'current',
-				value: null
-			},
-			min: {
-				name: 'min',
-				value: fluidlayout.getMinArticleWidth() - 2 * articleMargin
-			},
-			max: {
-				name:'max',
-				value: fluidlayout.getMaxArticleWidth() - 2 * articleMargin
-			}
-		},
+		rightRailWidth = fluidlayout.getRightRailWidth(),
 		isRailDropped = false,
+		isWidePage = false,
 		articleWrapperWidth, // width of article wrapper needed as reference for preview scaling
-		FIT_SMALL_SCREEN = 80; // pixels to be removed from modal width to fit modal on small screens, won't be needed when new modals will be introduced
+		FIT_SMALL_SCREEN = 80, // pixels to be removed from modal width to fit modal on small screens, won't be needed when new modals will be introduced
+		previewTypes = null;
 
 	// show dialog for preview / show changes and scale it to fit viewport's height
 	function renderDialog(title, options, callback) {
@@ -99,6 +88,8 @@ define( 'wikia.preview', [
 	 */
 	function renderPreview(options) {
 		isRailDropped = (options.isRailDropped) ? true : false;
+		isWidePage = (options.isWidePage) ? true : false;
+		previewTypes = getPreviewTypes( isWidePage );
 
 		var dialogOptions = {
 			buttons: [
@@ -123,11 +114,11 @@ define( 'wikia.preview', [
 				$(window).trigger('EditPagePreviewClosed');
 			}
 		};
+
 		// allow extension to modify the preview dialog
 		$(window).trigger('EditPageRenderPreview', [dialogOptions]);
 
 		renderDialog(msg('preview'), dialogOptions, function(contentNode) {
-
 			// cache selector for other functions in this module
 			$article = contentNode;
 
@@ -255,6 +246,7 @@ define( 'wikia.preview', [
 			scaleRatio = initialPreviewWidth / selectedPreviewWidth,
 			cssTransform = cssPropHelper.getSupportedProp('transform'),
 			cssTransformOrigin = cssPropHelper.getSupportedProp('transform-origin');
+
 		if (selectedPreviewWidth > initialPreviewWidth) {
 			var scaleVar = 'scale(' + scaleRatio + ')';
 			$article.css(cssTransformOrigin, 'left top');
@@ -269,6 +261,50 @@ define( 'wikia.preview', [
 
 		// we have a wrapper with overflow: hidden not to show white space after CSS scaling
 		$article.parent().height( newHeight );
+	}
+
+	/**
+	 * Returns previewTypes object which depends on the type of previewing page
+	 *
+	 * @param {boolean} isWidePage - type of previewing article page is it mainpage/a page without right rail or not (DAR-2366)
+	 */
+
+	function getPreviewTypes( isWidePage ) {
+		var previewTypes = null;
+
+		if( isWidePage ) {
+			previewTypes = {
+				current: {
+					name: 'current',
+					value: null
+				},
+				min: {
+					name: 'min',
+					value: fluidlayout.getMinArticleWidth() - articleMargin + rightRailWidth
+				},
+				max: {
+					name:'max',
+					value: fluidlayout.getMaxArticleWidth() - articleMargin + rightRailWidth
+				}
+			};
+		} else {
+			previewTypes = {
+				current: {
+					name: 'current',
+					value: null
+				},
+				min: {
+					name: 'min',
+					value: fluidlayout.getMinArticleWidth() - 2 * articleMargin
+				},
+				max: {
+					name:'max',
+					value: fluidlayout.getMaxArticleWidth() - 2 * articleMargin
+				}
+			}
+		}
+
+		return previewTypes;
 	}
 
 	/** @public **/
