@@ -1,12 +1,13 @@
-@import "../../../../skins/oasis/css/mixins/border-radius";
-@import "../../../../skins/oasis/css/mixins/box-shadow";
-@import "../../../../skins/oasis/css/mixins/clearfix";
-@import "../../../../skins/oasis/css/mixins/gradient";
-@import "../../../../skins/oasis/css/mixins/opacity";
-@import "../../../../skins/oasis/css/mixins/transform";
-@import "../../../../skins/oasis/css/mixins/transition";
-@import "../../../../skins/oasis/css/core/color";
-@import "../../../../skins/oasis/css/core/layout";
+@import "skins/oasis/css/mixins/border-radius";
+@import "skins/oasis/css/mixins/box-shadow";
+@import "skins/oasis/css/mixins/clearfix";
+@import "skins/oasis/css/mixins/gradient";
+@import "skins/oasis/css/mixins/opacity";
+@import "skins/oasis/css/mixins/transform";
+@import "skins/oasis/css/mixins/transition";
+@import "skins/oasis/css/core/color";
+@import "skins/oasis/css/core/responsive";
+@import "skins/oasis/css/core/layout";
 
 
 $base-z: 5;
@@ -26,6 +27,12 @@ $panel-height: 580px;
  */
 $bubble-padding: 50px;
 $bubble-color-alt: $color-header-alt;
+$bubble-visual-width: 630px;
+$question-label-width: 116px;
+$question-number-width: 510px;
+$title-screen-width: 415px;
+$visual-width: $title-screen-width + ($bubble-padding * 2);
+
 @if lightness($bubble-color-alt) < 25 {
 	$bubble-color-alt: mix($color-header-alt, #fff, 60%);
 }
@@ -82,7 +89,7 @@ $dark-wiki: 1;
 		border: 10px solid $color-body;
 		height: $panel-height - 20px;
 		position: absolute;
-		width: $panel-width - 20px;
+		width: calc(100% - 20px);
 		z-index: 0;
 	}
 	.title-image {
@@ -113,6 +120,7 @@ $dark-wiki: 1;
 			z-index: $floor-z;
 		}
 	}
+
 	.title-screen {
 		@include box-shadow(0, 0, 25px, #000, true, 5px);
 		background: mix($color-body, #fff, 90%);
@@ -120,11 +128,9 @@ $dark-wiki: 1;
 		height: $panel-height;
 		width: $panel-width;
 		.title {
-			$width: 415px;
-			$visual-width: $width + ($bubble-padding * 2);
 			bottom: 125px;
-			left: ($panel-width - $visual-width) / 2;
-			width: $width;
+			left: calc((100% - #{$visual-width})/2);
+			width: $title-screen-width;
 			z-index: $base-z;
 			&:after {
 				left: ($visual-width - $bubble-padding)/2;
@@ -173,11 +179,10 @@ $dark-wiki: 1;
 			position: relative;
 			width: $panel-width;
 			.question-bubble {
-				$bubble-visual-width: 630px;
 				$bubble-width: $bubble-visual-width - (20 * 2);
 				bottom: 175px; //360px shifted
 				height: 122px;
-				left: ($panel-width - $bubble-visual-width) / 2;
+				left: calc((100% - #{$bubble-visual-width}) / 2);
 				line-height: 32px;
 				padding: 50px 20px 0;
 				width: $bubble-width;
@@ -192,18 +197,17 @@ $dark-wiki: 1;
 				$border-radius: $logical-height/2;
 				$padding-top: 25px;
 				$height: $logical-height - $padding-top;
-				$width: 116px;
 				@include border-radius($border-radius);
 				background-color: $color-body;
 				color: white;
 				font-size: 12px;
 				height: $height;
-				left: $panel-width/2 - $width/2;
+				left: calc(50% - (#{$question-label-width}/2));
 				padding-top: $padding-top;
 				position: absolute;
 				text-align: center;
 				top: 60px;
-				width: $width;
+				width: $question-label-width;
 				z-index: $base-z;
 				.number {
 					display: block;
@@ -227,20 +231,19 @@ $dark-wiki: 1;
 				$border-radius: $logical-height/2;
 				$padding-top: 25px;
 				$height: $logical-height - $padding-top;
-				$width: 510px;
 				@include border-radius($border-radius);
 				@include opacity(10);
 				background-color: #999;
 				color: white;
 				font-size: 450px;
 				height: $height;
-				left: $panel-width/2 - $width/2;
+				left: calc(50% - (#{$question-number-width}/2));
 				line-height: 450px;
 				padding-top: $padding-top;
 				position: absolute;
 				text-align: center;
 				top: -50px;
-				width: $width;
+				width: $question-number-width;
 				z-index: $floor-z;
 			}
 			.answers {
@@ -638,8 +641,55 @@ $dark-wiki: 1;
 		position: absolute;
 		right: 0;
 		top: 5px;
+		width: 530px;
 	}
 }
+
+// Responsive Quiz Start
+@if ( $responsive-layout-enabled ) {
+	$panel-responsive-width: $breakpoint-min - 20px;
+	@media screen and (max-width: $panel-width + 34px) {
+		.WikiaQuiz {
+			width: $panel-responsive-width;
+			.title-screen {
+				width: $panel-responsive-width;
+			}
+			.title-image {
+				&.image1 {
+					left: 10px;
+				}
+				&.image2 {
+					left: 240px;
+				}
+				&.image3 {
+					left: 510px;
+				}
+			}
+			.count-down {
+				width: $panel-responsive-width;
+			}
+			.questions {
+				left: $panel-responsive-width;
+				.question-set {
+					width: $panel-responsive-width;
+					.answers {
+						margin-left: -360px;
+						.answer {
+							margin-left: 20px;
+						}
+					}
+				}
+			}
+		}
+		.QuizStatus {
+			width: $panel-responsive-width + 14px;
+		}
+		.fblike {
+			width: 458px;
+		}
+	}
+}
+// Responsive Quiz End
 
 /* Overwrites */
 .WikiaPageHeader h2,.commentslikes,.wikia-menu-button {

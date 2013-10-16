@@ -221,4 +221,12 @@ class WikiaRequest {
 	public function setSessionData( $key, $data ) {
 		$_SESSION[$key] = $data;
 	}
+	
+	/*
+	 * Get data from $_SERVER['SCRIPT_URL'], which is original path of the request, before mod_rewrite changed it.
+	 * Please be aware how our URL rewrites work before you think about using this.
+	 */
+	public function getScriptUrl() {
+		return $_SERVER['SCRIPT_URL'];
+	}	
 }

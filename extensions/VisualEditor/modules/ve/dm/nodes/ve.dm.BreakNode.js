@@ -1,63 +1,44 @@
-/**
- * VisualEditor data model BreakNode class.
+/*!
+ * VisualEditor DataModel BreakNode class.
  *
- * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
 /**
- * DataModel node for a line break.
+ * DataModel break node.
  *
  * @class
+ * @extends ve.dm.LeafNode
  * @constructor
- * @extends {ve.dm.LeafNode}
- * @param {Number} [length] Length of content data in document
- * @param {Object} [attributes] Reference to map of attribute key/value pairs
+ * @param {number} [length] Length of content data in document
+ * @param {Object} [element] Reference to element in linear model
  */
-ve.dm.BreakNode = function VeDmBreakNode( length, attributes ) {
+ve.dm.BreakNode = function VeDmBreakNode( length, element ) {
 	// Parent constructor
-	ve.dm.LeafNode.call( this, 'break', 0, attributes );
+	ve.dm.LeafNode.call( this, 0, element );
 };
 
 /* Inheritance */
 
 ve.inheritClass( ve.dm.BreakNode, ve.dm.LeafNode );
 
-/* Static Members */
+/* Static Properties */
 
-/**
- * Node rules.
- *
- * @see ve.dm.NodeFactory
- * @static
- * @member
- */
-ve.dm.BreakNode.rules = {
-	'isWrapped': true,
-	'isContent': true,
-	'canContainContent': false,
-	'hasSignificantWhitespace': false,
-	'childNodeTypes': [],
-	'parentNodeTypes': null
+ve.dm.BreakNode.static.name = 'break';
+
+ve.dm.BreakNode.static.isContent = true;
+
+ve.dm.BreakNode.static.matchTagNames = [ 'br' ];
+
+ve.dm.BreakNode.static.toDataElement = function () {
+	return { 'type': 'break' };
 };
 
-/**
- * Node converters.
- *
- * @see {ve.dm.Converter}
- * @static
- * @member
- */
-ve.dm.BreakNode.converters = {
-	'domElementTypes': ['br'],
-	'toDomElement': function () {
-		return document.createElement( 'br' );
-	},
-	'toDataElement': function () {
-		return { 'type': 'break' };
-	}
+ve.dm.BreakNode.static.toDomElements = function ( dataElement, doc ) {
+	return [ doc.createElement( 'br' ) ];
 };
 
 /* Registration */
 
-ve.dm.nodeFactory.register( 'break', ve.dm.BreakNode );
+ve.dm.modelRegistry.register( ve.dm.BreakNode );

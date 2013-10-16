@@ -14,7 +14,7 @@ class MediaQueryService extends WikiaService {
 	 *  - are used on pages (in content namespaces) matching given query
 	 *  - match given query
 	 */
-	public static function search($query, $limit = 50) {
+	public static function search( $query, $limit = 50 ) {
 		global $wgContentNamespaces;
 		wfProfileIn(__METHOD__);
 
@@ -32,23 +32,23 @@ class MediaQueryService extends WikiaService {
 			'srsearch' => $query,
 		));
 
-		if (!empty($data['query']['search'])) {
+		if ( !empty($data['query']['search']) ) {
 			$dbr = wfGetDB(DB_SLAVE);
 			$query_arr = array();
 
 			// get images used on pages returned by API query
-			foreach ($data['query']['search'] as $aResult) {
+			foreach ( $data['query']['search'] as $aResult ) {
 				$query_arr[] = sprintf($query_select, $dbr->strencode(str_replace(' ', '_', $aResult['title'])), $aResult['ns']);
 			}
 
 			$query_sql = implode($query_glue, $query_arr);
 			$res = $dbr->query($query_sql, __METHOD__);
 
-			if($res->numRows() > 0) {
-				while( $row = $res->fetchObject() ) {
+			if ( $res->numRows() > 0 ) {
+				while ( $row = $res->fetchObject() ) {
 					if ( ! WikiaFileHelper::isTitleVideo( $row->il_to, false ) ) {
 						$images[] = $row->il_to;
-						if (count($images) == $limit) {
+						if ( count($images) == $limit ) {
 							break;
 						}
 					}
@@ -91,7 +91,7 @@ class MediaQueryService extends WikiaService {
 				"OFFSET" => ($page*$limit-$limit) )
 		);
 
-		while($row = $dbr->fetchObject($res)) {
+		while ( $row = $dbr->fetchObject($res) ) {
 			$results['images'][] = array('title' => $row->img_name);
 		}
 
@@ -143,7 +143,7 @@ class MediaQueryService extends WikiaService {
 		return wfMemcKey( 'media', 'total_images', $name );
 	}
 
-	protected function getArticleMediaMemcKey(Title $title) {
+	protected function getArticleMediaMemcKey( Title $title ) {
 		return wfMemcKey( 'MQSArticleMedia', '1.4', $title->getDBkey() );
 	}
 
@@ -178,13 +178,13 @@ class MediaQueryService extends WikiaService {
 	private function getMediaDataFromCache( Title $media, $length = 256 ) {
 		wfProfileIn(__METHOD__);
 
-		if( !isset($this->mediaCache[ $media->getDBKey() ] ) ) {
+		if ( !isset($this->mediaCache[ $media->getDBKey() ] ) ) {
 			$file = wfFindFile( $media );
-			if( !empty( $file ) && $file->canRender() ) {
+			if ( !empty( $file ) && $file->canRender() ) {
 				$articleService = new ArticleService( $media );
 
 				$isVideo = WikiaFileHelper::isFileTypeVideo( $file );
-				if( $isVideo ) {
+				if ( $isVideo ) {
 					/** @var $videoHandler VideoHandler */
 					$videoHandler = $file->getHandler();
 					$thumb = $file->transform( array('width'=> 320), 0 );
@@ -209,7 +209,7 @@ class MediaQueryService extends WikiaService {
 		return $this->mediaCache[ $media->getDBKey() ];
 	}
 
-	public function getMediaFromArticle(Title $title, $type = null, $limit = null) {
+	public function getMediaFromArticle( Title $title, $type = null, $limit = null ) {
 		wfProfileIn(__METHOD__);
 
 		$memcKey = $this->getArticleMediaMemcKey( $title );
@@ -228,11 +228,11 @@ class MediaQueryService extends WikiaService {
 
 					$titles = array();
 
-					while ($row = $db->fetchObject( $result ) ) {
+					while ( $row = $db->fetchObject( $result ) ) {
 						$media = Title::newFromText($row->il_to, NS_FILE);
 
 						$mediaData = $this->getMediaDataFromCache( $media );
-						if( $mediaData !== false ) {
+						if ( $mediaData !== false ) {
 							$titles[] = $mediaData;
 						}
 					}
@@ -260,7 +260,7 @@ class MediaQueryService extends WikiaService {
 	 *
 	 * @return Title[]
 	 */
-	public static function getRecentlyUploaded($limit) {
+	public static function getRecentlyUploaded( $limit ) {
 		global $wgEnableAchievementsExt;
 		wfProfileIn(__METHOD__);
 
@@ -276,14 +276,14 @@ class MediaQueryService extends WikiaService {
 			'lelimit' => $limit * 2,
 		));
 
-		if (!empty($res['query']['logevents'])) {
-			foreach($res['query']['logevents'] as $entry) {
+		if ( !empty($res['query']['logevents']) ) {
+			foreach ( $res['query']['logevents'] as $entry ) {
 				// ignore Video:foo entries from VideoEmbedTool
-				if( $entry['ns'] == NS_IMAGE && !WikiaFileHelper::isTitleVideo($entry['title']) ) {
+				if ( $entry['ns'] == NS_IMAGE && !WikiaFileHelper::isTitleVideo($entry['title']) ) {
 					$image = Title::newFromText($entry['title']);
-					if (!empty($image)) {
+					if ( !empty($image) ) {
 						// skip badges upload (RT #90607)
-						if (!empty($wgEnableAchievementsExt) && Ach_isBadgeImage($image->getText())) {
+						if ( !empty($wgEnableAchievementsExt) && Ach_isBadgeImage($image->getText()) ) {
 							continue;
 						}
 
@@ -291,7 +291,7 @@ class MediaQueryService extends WikiaService {
 						$images[$image->getDBkey()] = $image;
 
 						// limit number of results
-						if (count($images) == $limit) {
+						if ( count($images) == $limit ) {
 							break;
 						}
 					}
@@ -299,7 +299,7 @@ class MediaQueryService extends WikiaService {
 			}
 
 			// use numeric keys
-			if (is_array($images)) {
+			if ( is_array($images) ) {
 				$images = array_values($images);
 			}
 		}
@@ -311,13 +311,13 @@ class MediaQueryService extends WikiaService {
 	/**
 	 * adaptor for getRecentlyUploaded to format as mediaTable
 	 */
-	public static function getRecentlyUploadedAsMediaTable($limit) {
+	public static function getRecentlyUploadedAsMediaTable( $limit ) {
 		$output = array();
 		$list = static::getRecentlyUploaded($limit);
-		if(empty($list)) {
+		if ( empty($list) ) {
 			return $output;
 		}
-		foreach( $list as $title ) {
+		foreach ( $list as $title ) {
 			$output[] = array(
 				'title' => $title,
 				'type'  => WikiaFileHelper::isTitleVideo( $title ) ? self::MEDIA_TYPE_VIDEO : self::MEDIA_TYPE_IMAGE
@@ -333,15 +333,23 @@ class MediaQueryService extends WikiaService {
 	 * @param string $filter [all/premium]
 	 * @param integer $limit
 	 * @param integer $page
+	 * @param array $providers
 	 * @return array $videoList
 	 */
-	public function getVideoList( $sort = 'recent', $filter = 'all', $limit = 0, $page = 1 ) {
+	public function getVideoList( $sort = 'recent', $filter = 'all', $limit = 0, $page = 1, $providers = array() ) {
 		wfProfileIn( __METHOD__ );
 
 		$db = wfGetDB( DB_SLAVE );
 
+		$sqlTables = array( 'video_info' );
 		$sqlWhere = array( 'removed' => 0 );
 		$sqlOptions = array();
+
+		// Check for providers
+		if ( $providers ) {
+			// This will become an IN clause from the $providers array
+			$sqlWhere['provider'] = $providers;
+		}
 
 		// check for filter
 		if ( $filter == 'premium' ) {
@@ -367,18 +375,21 @@ class MediaQueryService extends WikiaService {
 
 		$result = $db->select(
 			array( 'video_info' ),
-			array( 'video_title, added_at, added_by' ),
+			array( 'video_title, provider, added_at, added_by, duration, views_total' ),
 			$sqlWhere,
 			__METHOD__,
 			$sqlOptions
 		);
 
 		$videoList = array();
-		while( $row = $db->fetchObject($result) ) {
+		while ( $row = $db->fetchObject($result) ) {
 			$videoList[] = array(
-				'title' => $row->video_title,
-				'addedAt' => $row->added_at,
-				'addedBy' => $row->added_by,
+				'title'      => $row->video_title,
+				'provider'   => $row->provider,
+				'addedAt'    => $row->added_at,
+				'addedBy'    => $row->added_by,
+				'duration'   => $row->duration,
+				'viewsTotal' => $row->views_total,
 			);
 		}
 
@@ -520,7 +531,7 @@ SQL;
 		$videoList = $app->wg->Memc->get( $memKeyBase.'-'.$memKeyBucket );
 		if ( !is_array($videoList) ) {
 			$videoListTotal = VideoInfoHelper::getTotalViewsFromDB();
-			foreach( $videoListTotal as $memKeyBucket => $list ) {
+			foreach ( $videoListTotal as $memKeyBucket => $list ) {
 				$app->wg->Memc->set( $memKeyBase.'-'.$memKeyBucket, $list, 60*60*2 );
 			}
 

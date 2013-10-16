@@ -845,6 +845,7 @@ checkbox on Special:Block',
 
 /** Arabic (العربية)
  * @author Achraf94
+ * @author زكريا
  */
 $messages['ar'] = array(
 	'wall-no-title' => 'لا يوجد عنوان',
@@ -880,14 +881,14 @@ $messages['ar'] = array(
 	'wall-placeholder-message-anon' => 'نشر رسالة جديدة على هذا الجدار',
 	'wall-placeholder-reply' => 'أرسل ردًا',
 	'wall-button-to-preview-comment' => 'عرض مسبق',
-	'wall-button-to-cancel-preview' => 'تعديل',
+	'wall-button-to-cancel-preview' => 'عدل',
 	'wall-button-to-submit-comment' => 'إرسال',
 	'wall-button-to-submit-reply' => 'رد',
 	'wall-button-to-submit-comment-no-topic' => 'إرسال بدون عنوان',
 	'wall-button-save-changes' => 'احفظ التغييرات',
 	'wall-button-cancel-changes' => 'إلغاء',
 	'wall-button-done-source' => 'تم',
-	'wall-message-edit' => 'تعديل',
+	'wall-message-edit' => 'عدل',
 	'wall-message-more' => 'المزيد',
 	'wall-message-delete' => 'حذف',
 	'wall-message-close-thread' => 'إغلاق هذا الموضوع',
@@ -6075,30 +6076,30 @@ $messages['ps'] = array(
 	'wall-message-notify' => 'پازوال خبرول',
 	'wall-message-remove' => 'غورځول',
 	'wall-message-elseswall' => 'د $1 دېوال',
-	'wall-thread-deleted' => 'ړنګ شو',
+	'wall-thread-deleted' => 'ړنگ شو',
 	'wall-placeholder-topic' => 'دا د څه په اړه دی؟',
 	'wall-placeholder-reply' => 'يو ځواب ورکول',
 	'wall-button-to-preview-comment' => 'مخليدنه',
 	'wall-button-to-cancel-preview' => 'سمول',
 	'wall-button-to-submit-reply' => 'ځوابول',
 	'wall-button-save-changes' => 'بدلونونه خوندي کول',
-	'wall-button-cancel-changes' => 'ناګارل',
+	'wall-button-cancel-changes' => 'ناگارل',
 	'wall-button-done-source' => 'ترسره شو',
 	'wall-message-edit' => 'سمول',
 	'wall-message-more' => 'نور',
-	'wall-message-delete' => 'ړنګول',
-	'wall-action-all-confirm-cancel' => 'ناګارل',
+	'wall-message-delete' => 'ړنگول',
+	'wall-action-all-confirm-cancel' => 'ناگارل',
 	'wall-action-all-confirm-notify' => 'يو پازوال خبرول',
 	'wall-delete-error-title' => 'تېروتنه',
 	'wall-action-remove-confirm-ok' => 'غورځول',
-	'wall-action-admin-reply-title' => 'دا ځواب ړنګول',
-	'wall-action-admin-confirm-ok' => 'ړنګول',
+	'wall-action-admin-reply-title' => 'دا ځواب ړنگول',
+	'wall-action-admin-confirm-ok' => 'ړنگول',
 	'wall-action-restore-confirm-ok' => 'بيازېرمل',
-	'wall-action-rev-confirm-ok' => 'هو، ړنګ دې شي',
+	'wall-action-rev-confirm-ok' => 'هو، ړنگ دې شي',
 	'wall-notifications' => 'يادګيرنې',
 	'wall-notifications-all' => 'ټولې يادګيرنې',
 	'wall-notifications-markasread' => 'ټول لوستی په نخښه کول',
-	'wall-notifications-markasread-all-wikis' => 'ټولې ويکي ګانې',
+	'wall-notifications-markasread-all-wikis' => 'ټولې ويکي گانې',
 	'wall-notifications-markasread-this-wiki' => 'همدا ويکي',
 	'wall-sorting-newest-replies' => 'نوي ځوابونه',
 	'wall-sorting-most-active' => 'تر ټولو ډېر فعال',
@@ -6114,7 +6115,7 @@ $messages['ps'] = array(
 	'wall-history-summary-label' => 'لنډيز',
 	'wall-history-rail-wall' => 'دېوال',
 	'wall-history-rail-contribs' => 'ونډې',
-	'wall-history-rail-block' => 'بنديز لګول',
+	'wall-history-rail-block' => 'بنديز لگول',
 	'wall-history-action-view' => 'کتل',
 	'wall-history-action-restore' => 'بيازېرمل',
 	'mail-notification-html-greeting' => 'سلامونه $1،',
@@ -6126,7 +6127,7 @@ $messages['ps'] = array(
 	'wall-preview-modal-button-back' => 'پر شا',
 	'wall-preview-modal-button-publish' => 'خپرول',
 	'wall-topic-edit-save' => 'خوندي کول',
-	'wall-topic-edit-cancel' => 'ناګارل',
+	'wall-topic-edit-cancel' => 'ناگارل',
 );
 
 /** Portuguese (português)
@@ -6547,6 +6548,7 @@ $messages['roa-tara'] = array(
  * @author Eleferen
  * @author Express2000
  * @author Kuzura
+ * @author Okras
  */
 $messages['ru'] = array(
 	'wall-no-title' => 'Без названия',
@@ -6601,6 +6603,7 @@ $messages['ru'] = array(
 	'wall-message-removed-reply-because' => '$1 удалил этот ответ, причина:',
 	'wall-message-deleted-reply-because' => '$1 удалил этот ответ, причина:',
 	'wall-message-closed-by' => '[[$2|$1]] закрыл эту тему',
+	'wall-message-closed-by-because' => '$1 {{GENDER:$1|закрыл|закрыла}} эту тему по причине:',
 	'wall-message-restore-reply' => 'Восстановить ответ',
 	'wall-delete-reason' => 'Действия участника/администратора',
 	'wall-user-talk-page-archive-anchor' => 'Просмотреть заархивированные страницы обсуждения',
@@ -6624,6 +6627,10 @@ $messages['ru'] = array(
 	'wall-action-remove-thread-confirm-info' => 'Эта тема и ваш комментарий останутся в истории вики.',
 	'wall-action-remove-reply-confirm-info' => 'Этот ответ и ваш комментарий останутся в истории вики.',
 	'wall-action-remove-confirm-ok' => 'Удалить',
+	'wall-action-close-thread-title' => 'Закрыть эту тему',
+	'wall-action-close-confirm' => 'Пожалуйста, укажите, почему вы хотите закрыть её:',
+	'wall-action-close-thread-confirm-info' => 'Эта тема будет всё ещё видимой.',
+	'wall-action-close-confirm-ok' => 'Закрыть',
 	'wall-action-admin-thread-title' => 'Удалить эту тему',
 	'wall-action-admin-reply-title' => 'Удалить этот ответ',
 	'wall-action-admin-confirm' => 'Пожалуйста, укажите, почему вы хотите удалить это:',
@@ -6711,6 +6718,7 @@ $messages['ru'] = array(
 	'wall-recentchanges-closed-thread' => 'закрыта тема "[[$1|$2]]" на [[$3|стене $4]]',
 	'wall-recentchanges-reopened-thread' => 'открыта тема "[[$1|$2]]" на [[$3|стене $4]]',
 	'wall-recentchanges-deleted-reply-title' => 'Ответ на стене обсуждения',
+	'wall-recentchanges-wall-created-title' => 'Стена для сообщений создана',
 	'wall-recentchanges-namespace-selector-message-wall' => 'Стена обсуждения',
 	'wall-recentchanges-thread-group' => 'Тема $1 на <a href="$2">стене $3</a>',
 	'wall-recentchanges-history-link' => 'История обсуждения',
@@ -6828,11 +6836,11 @@ ___________________________________________<br />
 	'wall-notifications-notifyeveryone' => '$1 сообщил об этом',
 	'wall-message-notifyeveryone' => 'Сообщить всем об этой теме',
 	'wall-message-unnotifyeveryone' => 'Отменить сообщение об этой теме',
-	'wall-message-notifyeveryone-tooltip' => 'Все участники (кроме анонимов) будут уведомлены об этой теме', # Fuzzy
+	'wall-message-notifyeveryone-tooltip' => 'Все зарегистрированные участники будут уведомлены об этой теме при следующем визите проекта',
 	'wall-votes-modal-showmore' => 'Посмотреть, кто ещё добавил "Мне нравится"',
 	'wall-votes-modal-title' => 'Мне нравится',
 	'wall-votes-modal-title-desc' => '{{PLURAL:$1|Один участник|$1 участника|$1 участников}} добавили "Мне нравится" к этому сообщению',
-	'wall-votes-number' => '$1 {{PLURAL:$1|мне нравится|мне нравится}}', # Fuzzy
+	'wall-votes-number' => '$1 {{PLURAL:$1|«мне нравится»}}',
 	'wall-votes-number-tooltip' => 'Посмотреть, кто добавил "Мне нравится"',
 	'wall-votes-vote-tooltip' => 'Мне нравится это сообщение',
 	'wall-votes-voted-tooltip' => 'Вам понравилось это сообщение!',

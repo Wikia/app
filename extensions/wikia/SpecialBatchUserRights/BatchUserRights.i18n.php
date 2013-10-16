@@ -605,10 +605,13 @@ $messages['uk'] = array(
  * @author Anakmalaysia
  * @author Dimension
  * @author Hydra
+ * @author Hzy980512
  */
 $messages['zh-hans'] = array(
 	'batchuserrights' => '批处理的用户权限',
 	'batchuserrights-desc' => '允许在一次操作中将一个或多个用户添加到一个组',
 	'batchuserrights-names' => '添加至该组的用户（每行一个）：',
+	'batchuserrights-single-progress-update' => '已添加$1个用户组到<strong>$2</strong>。',
+	'batchuserrights-add-groups' => '正在添加$1个用户到下面$2个组：<strong>$3</strong>。',
 	'batchuserrights-userload-error' => "无法加载用户\"'''\$1'''\"。",
 );

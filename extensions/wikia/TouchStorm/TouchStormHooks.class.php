@@ -1,30 +1,7 @@
 <?php
 
 class TouchStormHooks extends WikiaObject {
-
-	static public function onBeforePageDisplay( OutputPage $out, $skin ) {
-		wfProfileIn(__METHOD__);
-
-		if ( self::canDisplay() ) {
-			$assetsManager = AssetsManager::getInstance();
-
-			// Load CSS
-			$scssPackage = 'touchstorm_scss';
-			foreach ( $assetsManager->getURL( $scssPackage ) as $url ) {
-				$out->addStyle( $url );
-			}
-
-			// Load JS (when it becomes necessary for this module)
-			//$jsPackage = 'touchstorm_js';
-			//foreach ( $assetsManager->getURL( $jsPackage ) as $url ) {
-			//	$out->addScript( "<script src=\"{$url}\"></script>" );
-			//}
-		}
-
-		wfProfileOut(__METHOD__);
-		return true;
-	}
-
+	
 	/**
 	 * Add modules to the right rail if necessary
 	 * @param $modules

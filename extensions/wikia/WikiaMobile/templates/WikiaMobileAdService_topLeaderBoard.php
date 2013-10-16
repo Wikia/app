@@ -1,5 +1,5 @@
 <div id=wkAdTopLeader></div><script>window.addEventListener('load', function () {
-	if(Wikia.AbTest && ['A', 'B', 'D'].indexOf(Wikia.AbTest.getGroup("WIKIAMOBILEADSLOTS")) != -1){
+	if(Wikia.AbTest && ['A', 'B', 'D', 'F'].indexOf(Wikia.AbTest.getGroup("WIKIAMOBILEADSLOTS")) != -1){
 			require(['ads'], function (ads) {
 				var adWrapper = document.getElementById('wkAdTopLeader');
 

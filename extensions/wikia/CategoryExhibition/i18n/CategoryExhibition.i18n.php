@@ -41,15 +41,16 @@ $messages['af'] = array(
 /** Arabic (العربية)
  * @author Achraf94
  * @author Mutarjem horr
+ * @author زكريا
  */
 $messages['ar'] = array(
 	'category-exhibition-sorttype' => 'نوع الفرز:',
 	'category-exhibition-alphabetical' => 'أبجديأّ',
 	'category-exhibition-mostvisited' => 'الأكثر مشاهدة',
 	'category-exhibition-recentedits' => 'تحرير مؤخراّ',
-	'category-exhibition-page-header' => 'الصفحات في التصنيف " $1 "',
+	'category-exhibition-page-header' => 'صفحات تصنيف "$1"',
 	'category-exhibition-subcategories-header' => 'التصنيفات الفرعية',
-	'category-exhibition-media-header' => 'الميديا في تصنيف "$1"',
+	'category-exhibition-media-header' => 'ملفات تصنيف "$1"',
 	'category-exhibition-blogs-header' => 'المشاركات في المدونة',
 	'category-exhibition-display-old' => 'عرض قائمة التصنيف',
 	'category-exhibition-display-new' => 'عرض معرض التصنيف',
@@ -616,7 +617,7 @@ $messages['sv'] = array(
 	'category-exhibition-recentedits' => 'Nyligen ändrade',
 	'category-exhibition-page-header' => 'Sidor i kategori "$1"',
 	'category-exhibition-subcategories-header' => 'Underkategorier',
-	'category-exhibition-media-header' => 'Media i kategori "$1"',
+	'category-exhibition-media-header' => 'Media i kategorin "$1"',
 	'category-exhibition-blogs-header' => 'Blogg-inlägg',
 	'category-exhibition-display-old' => 'Kategori-listvyn',
 	'category-exhibition-display-new' => 'Visning av kategoriutställning',

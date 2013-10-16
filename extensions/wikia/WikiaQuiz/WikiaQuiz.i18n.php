@@ -1351,6 +1351,7 @@ $messages['nb'] = array(
 );
 
 /** Dutch (Nederlands)
+ * @author HanV
  * @author SPQRobin
  * @author Siebrand
  */
@@ -1411,7 +1412,7 @@ $messages['nl'] = array(
 	'wikiaquiz-game-email-valid-please' => 'Geef een geldig e-mailadres op.',
 	'wikiaquiz-game-email-token-mismatch' => 'Het token komt niet overeen',
 	'wikiaquiz-game-email-subject' => 'Dank u wel voor uw inzending!',
-	'wikiaquiz-game-email-body' => 'Dit is een bevestigingse-mail. We hebben uw inzending ontvangen en stellen u op de hoogte als u gewonnen hebt!',
+	'wikiaquiz-game-email-body' => 'We hebben uw inzending ontvangen en stellen u op de hoogte als u gewonnen hebt!',
 	'wikiaquiz-game-email-error' => 'Er is een fout opgetreden tijdens het verzenden van deze e-mail: $1',
 	'wikiaquiz-game-challenge' => 'Daag uw vrienden uit om deel te nemen!',
 	'wikiaquiz-game-mute' => 'Dempen',
@@ -1562,7 +1563,7 @@ $messages['ps'] = array(
 	'wikiaquiz-answers-label' => 'ځوابونه',
 	'wikiaquiz-answer-label' => 'ځواب',
 	'wikiaquiz-correct-label' => 'سم؟',
-	'wikiaquiz-cancel-label' => 'ناګارل',
+	'wikiaquiz-cancel-label' => 'ناگارل',
 	'wikiaquiz-publish-label' => 'خپرول',
 	'wikiaquiz-game-start-button' => 'لوبه پيلول',
 	'wikiaquiz-game-cadence-3' => 'چمتو شه',
@@ -1719,6 +1720,7 @@ $messages['roa-tara'] = array(
 
 /** Russian (русский)
  * @author DCamer
+ * @author Kaganer
  * @author Kuzura
  */
 $messages['ru'] = array(
@@ -1772,7 +1774,7 @@ $messages['ru'] = array(
 	'wikiaquiz-game-your-score' => 'ВАШ БАЛЛ',
 	'wikiaquiz-game-continue-button' => 'Продолжить',
 	'wikiaquiz-game-thanks' => 'Спасибо за игру!',
-	'wikiaquiz-game-provide-email' => 'Пожалуйста, введите ваш адрес электронной почты',
+	'wikiaquiz-game-provide-email' => 'Пожалуйста, введите свой адрес электронной почты',
 	'wikiaquiz-game-email-placeholder' => 'vasya@pupkin.ru',
 	'wikiaquiz-game-email-button' => 'Выслать мне свободный материал',
 	'wikiaquiz-game-email-valid-please' => 'Пожалуйста введите действительный адрес электронной почты.',

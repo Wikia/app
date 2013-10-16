@@ -738,16 +738,8 @@ class ArticleComment {
 		}
 
 		$bot = $user->isAllowed('bot');
-			//this function calls Article::onArticleCreate which clears cache for article and it's talk page - TODO: is this comment still valid? Does it refer to the line above or to something that got deleted?
-		$retval = $editPage->internalAttemptSave( $result, $bot );
 
-		if( $retval->value == EditPage::AS_SUCCESS_UPDATE ) {
-			$commentsIndex = CommentsIndex::newFromId( $article->getID() );
-			if ( $commentsIndex instanceof CommentsIndex ) {
-				$commentsIndex->updateLastRevId( $article->getTitle()->getLatestRevID(Title::GAID_FOR_UPDATE) );
-			}
-		}
-		return $retval;
+		return $editPage->internalAttemptSave( $result, $bot );
 	}
 
 	/**
@@ -843,45 +835,14 @@ class ArticleComment {
 		 */
 
 		$article  = new Article( $commentTitle, 0 );
+
+		CommentsIndex::addCommentInfo($commentTitleText, $title, $parentId);
+
 		$retval = self::doSaveAsArticle($text, $article, $user, $metadata);
 
-		// add comment to database
 		if ( $retval->value == EditPage::AS_SUCCESS_NEW_ARTICLE ) {
-			if ( !empty($parentId) ) {
-				Wikia::log( __METHOD__, false, "ArticleComment::doPost (reply to " . $parentId . ") - saved an article " .
-					$commentTitleText . ', commentId is ' . $article->getID(), true );
-			}
-			$revId = $article->getRevIdFetched();
-			$data = array(
-				'namespace' => $title->getNamespace(),
-				'parentPageId' => $title->getArticleID(),
-				'commentId' => $article->getID(),
-				'parentCommentId' => intval($parentId),
-				'firstRevId' => $revId,
-				'lastRevId' => $revId,
-			);
-
-			$commentsIndex = new CommentsIndex( $data );
-			$commentsIndex->addToDatabase();
-			if ( !empty($parentId) ) {
-				Wikia::log( __METHOD__, false, "ArticleComment::doPost (reply to " . $parentId . ") - added comments index to DB for " .
-					$commentTitleText . ', commentId is ' . $article->getID(), true );
-			}
-
-			// set last child comment id
-			$commentsIndex->updateParentLastCommentId( $data['commentId'] );
-
-			if ( !empty($parentId) ) {
-				Wikia::log( __METHOD__, false, "ArticleComment::doPost (reply to " . $parentId . ") - updated parent for " .
-					$commentTitleText . ', commentId is ' . $article->getID(), true );
-			}
-
-			wfRunHooks( 'EditCommentsIndex', array($article->getTitle(), $commentsIndex) );
-		} else {
-			if ( !empty($parentId) ) {
-				Wikia::log( __METHOD__, false, "ArticleComment::doPost (reply to " . $parentId .
-					") - failed to save reply article with title " . $commentTitleText, true );
-			}
+			$commentsIndex = CommentsIndex::newFromId( $article->getID() );
+			wfRunHooks( 'EditCommentsIndex', [ $article->getTitle(), $commentsIndex ] );
 		}
 
 		$res = ArticleComment::doAfterPost( $retval, $article, $parentId );

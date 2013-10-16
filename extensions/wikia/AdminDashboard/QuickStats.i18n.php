@@ -24,6 +24,7 @@ $messages['en'] = array(
 
 /** Message documentation (Message documentation)
  * @author Shirayuki
+ * @author 아라
  */
 $messages['qqq'] = array(
 	'quickstats-header-date' => '{{Identical|Date}}',
@@ -33,7 +34,9 @@ $messages['qqq'] = array(
 	'quickstats-header-likes' => '{{Identical|Like}}',
 	'quickstats-date-format' => 'Follow this guide: http://php.net/manual/en/function.date.php.',
 	'quickstats-totals-label' => '{{Identical|Total}}',
-	'quickstats-number-shortening' => 'This is a shortend number abbreviation shown in a stats table. Number larger than 10.000 are rendered using this message (as thousands rounded up to the first decimal fraction). K stands for thousands (1.000)',
+	'quickstats-number-shortening' => 'This is a shortend number abbreviation shown in a stats table. Number larger than 10.000 are rendered using this message (as thousands rounded up to the first decimal fraction). K stands for thousands (1.000)
+
+{{Identical|$1k}}',
 	'quickstats-number-shortening-millions' => 'This is a shortend number abbreviation shown in a stats table. Number between 1.000.000 and 999.999.999.999 are rendered using this message (as millions rounded up to the first decimal fraction). M stands for millions (1.000.000)',
 	'quickstats-number-shortening-billions' => 'This is a shortend number abbreviation shown in a stats table. Number larger than 1.000.000.000 are rendered using this message (as billions rounded up to the first decimal fraction). B stands for billions (1.000.000.000)',
 );
@@ -615,6 +618,7 @@ $messages['ja'] = array(
 
 /** Korean (한국어)
  * @author Excalibur777
+ * @author Hym411
  * @author 아라
  * @author 한글화담당
  */
@@ -627,6 +631,7 @@ $messages['ko'] = array(
 	'quickstats-header-likes' => '좋아요',
 	'quickstats-totals-label' => '합계',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|더 많은 통계 보기]]',
+	'quickstats-number-shortening' => '$1천',
 );
 
 /** Colognian (Ripoarisch)
@@ -647,7 +652,7 @@ $messages['ku-latn'] = array(
 	'quickstats-totals-label' => 'Hemû',
 );
 
-/** Kirghiz (Кыргызча)
+/** Kyrgyz (Кыргызча)
  * @author Growingup
  */
 $messages['ky'] = array(

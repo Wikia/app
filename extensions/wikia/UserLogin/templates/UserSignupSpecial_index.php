@@ -28,9 +28,15 @@
 				'name' => 'signupToken',
 				'value' => $signupToken
 			),
-			array(
-				'type' => 'text',
+			array( //fake username field (not in use)
+				'type' => 'hidden',
 				'name' => 'username',
+				'value' => '',
+				'label' => wfMessage('yourname')->text(),
+			),
+			array( //actual username field
+				'type' => 'text',
+				'name' => 'userloginext01',
 				'value' => htmlspecialchars($username),
 				'label' => wfMessage('yourname')->text(),
 				'isRequired' => true,
@@ -46,9 +52,15 @@
 				'isInvalid' => (!empty($errParam) && $errParam === 'email'),
 				'errorMsg' => (!empty($msg) ? $msg : '')
 			),
-			array(
-				'type' => 'password',
+			array( //fake password field (not in use)
+				'type' => 'hidden',
 				'name' => 'password',
+				'value' => '',
+				'label' => wfMessage('yourpassword')->text(),
+			),
+			array( //actual password field
+				'type' => 'password',
+				'name' => 'userloginext02',
 				'value' => '',
 				'label' => wfMessage('yourpassword')->text(),
 				'isRequired' => true,

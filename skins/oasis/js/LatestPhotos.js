@@ -7,7 +7,7 @@ var UploadPhotos = {
 	libinit: false,
 	init: function() {
 		// Special:NewFiles and LatestPhotos module
-		$(".upphotos").click($.proxy(this.loginBeforeShowDialog, this));
+		$(".upphotos").on('click.uploadPhotos', $.proxy(this.loginBeforeShowDialog, this));
 		// LatestPhotos module only
 		$('#LatestPhotosModule').find('.upphotos, .upphotoslogin').tooltip({
 			delay: { show: 500, hide: 100 }

@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<!-- Generator: Adobe Illustrator 15.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" id="Layer_1" opacity="0.75" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-	 x="0px" y="0px" width="24px" height="24px" viewBox="0 0 24 24" style="enable-background:new 0 0 24 24;" xml:space="preserve">
-<g id="number-list-ltr">
-	<polygon id="_x33_" points="3,16 3,17 4.993,17 5.023,18 4,18 4,19 5,19 5,20 3,20 3,21 5.023,21 6,19.998 6,18.998 5.044,18.467 
-		6,17.967 6,16.998 4.993,16 	"/>
-	<polygon id="_x32_" points="3,9 3,10 5.116,10 3,12.187 3,13.998 6,13.936 6,13 3.881,13 6,10.812 6,9.78 5.331,9 	"/>
-	<polygon id="_x31_" points="4.993,2 4.344,2 3.017,3.391 3.048,4 4.074,4 4.005,6 3,6 3,7 6,7 6,6 4.962,6 	"/>
-	<path id="bottom_line_1_" d="M20.001,17H8.999C8.447,17,8,17.447,8,18v1c0,0.553,0.447,1,0.999,1h11.002C20.553,20,21,19.553,21,19
-		v-1C21,17.447,20.553,17,20.001,17z"/>
-	<path id="middle_line_1_" d="M20.001,10H8.999C8.447,10,8,10.447,8,11v1c0,0.553,0.447,1,0.999,1h11.002C20.553,13,21,12.553,21,12
-		v-1C21,10.447,20.553,10,20.001,10z"/>
-	<path id="top_line_1_" d="M20.001,3H8.999C8.447,3,8,3.447,8,4v1c0,0.553,0.447,1,0.999,1h11.002C20.553,6,21,5.553,21,5V4
-		C21,3.447,20.553,3,20.001,3z"/>
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="24px"
+	 height="24px" viewBox="0 0 24 24" style="enable-background:new 0 0 24 24;" xml:space="preserve">
+<g id="number-list-ltr" style="opacity:0.75;">
+	<polygon id="bottom_dot" points="3,16 3,17 4.993,17 5.023,18 4,18 4,19 5,19 5,20 3,20 3,21 5.023,21 6,19.998 6,18.998 5.045,18.467
+		6,17.967 6,16.998 4.993,16 		"/>
+	<polygon id="middle_dot" points="3,9 3,10 5.117,10 3,12.187 3,13.998 6,13.936 6,13 3.882,13 6,10.812 6,9.78 5.332,9 		"/>
+	<polygon id="top_dot" points="4.993,2 4.345,2 3.018,3.391 3.049,4 4.074,4 4.006,6 3,6 3,7 6,7 6,6 4.963,6 		"/>
+	<path id="bottom_line" d="M20.002,17H9c-0.553,0-1,0.447-1,1v1c0,0.553,0.447,1,1,1h11.002C20.553,20,21,19.553,21,19v-1
+		C21,17.447,20.553,17,20.002,17z"/>
+	<path id="middle_line" d="M20.002,10H9c-0.553,0-1,0.447-1,1v1c0,0.553,0.447,1,1,1h11.002C20.553,13,21,12.553,21,12v-1
+		C21,10.447,20.553,10,20.002,10z"/>
+	<path id="top_line" d="M20.002,3H9C8.447,3,8,3.447,8,4v1c0,0.553,0.447,1,1,1h11.002C20.553,6,21,5.553,21,5V4
+		C21,3.447,20.553,3,20.002,3z"/>
 </g>
 </svg>

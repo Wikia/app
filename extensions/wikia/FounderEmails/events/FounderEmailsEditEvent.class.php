@@ -325,6 +325,10 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 			'registeredUserFirstEdit' => $isRegisteredUserFirstEdit,
 			'myHomeUrl' => Title::newFromText( 'WikiActivity', NS_SPECIAL )->getFullUrl()
 		);
-		return $eventData;
+
+		FounderEmails::getInstance()->registerEvent( new FounderEmailsEditEvent( $eventData ) );
+
+		wfProfileOut( __METHOD__ );
+		return true;
 	}
 }

@@ -20,6 +20,15 @@ $messages['qqq'] = array(
 	'adengine-exitstitial-button' => 'Text of the link/button that you can close the box with and get directly to the link target',
 );
 
+/** Arabic (العربية)
+ * @author Kuwaity26
+ */
+$messages['ar'] = array(
+	'adengine-exitstitial-title-template' => 'أنت تغادر $1...',
+	'adengine-exitstitial-go-back' => 'أتريد أن تعود؟',
+	'adengine-exitstitial-button' => 'تخطَّ هذا الإعلان',
+);
+
 /** Bikol Central (Bikol Central)
  * @author Geopoet
  */
@@ -152,9 +161,12 @@ $messages['id'] = array(
 );
 
 /** Korean (한국어)
+ * @author 아라
  * @author 한글화담당
  */
 $messages['ko'] = array(
+	'adengine-exitstitial-title-template' => '$1(으)로 떠나는 중…',
+	'adengine-exitstitial-redirecting' => '브라우저가 몇 초 뒤에 요청한 페이지로 넘어갑니다.',
 	'adengine-exitstitial-go-back' => '돌아가시겠습니까?',
 	'adengine-exitstitial-button' => '광고 건너뛰기',
 );
@@ -294,6 +306,16 @@ $messages['roa-tara'] = array(
 	'adengine-exitstitial-redirecting' => "'U browser te adda mannà a 'a pàgene ca è cercate jndr'à quacche seconde.",
 	'adengine-exitstitial-go-back' => 'Vue ccù tuèrne rrete?',
 	'adengine-exitstitial-button' => 'Zumbe sta pubblecetà',
+);
+
+/** Russian (русский)
+ * @author Okras
+ */
+$messages['ru'] = array(
+	'adengine-exitstitial-title-template' => 'Вы покидаете $1…',
+	'adengine-exitstitial-redirecting' => 'Ваш браузер перенаправит вас на запрошенную страницу через несколько секунд.',
+	'adengine-exitstitial-go-back' => 'Хотите вернуться?',
+	'adengine-exitstitial-button' => 'Пропустить это объявление',
 );
 
 /** Swedish (svenska)

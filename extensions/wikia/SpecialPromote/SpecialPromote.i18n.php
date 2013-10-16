@@ -13,8 +13,10 @@ $messages['en'] = array(
 
 	'promote-title' => 'Promote',
 	'promote-introduction-header' => 'Promote your wiki on wikia.com',
+	'promote-nocorp-introduction-header' => 'Promote $1',
 
 	'promote-introduction-copy' => "This page allows you to promote your wiki by making it eligible to appear on [http://www.wikia.com wikia.com]! Add images and a summary to introduce your wiki to visitors on Wikia's main page. Find more tips [http://help.wikia.com/wiki/Help:Promote here].",
+	'promote-nocorp-introduction-copy' => "Add images and a summary to let visitors know what this wiki is all about and encourage them to visit. We'll use this information to promote your wiki in search results, Wikia mobile apps, and more. Find more tips on how to use this tool [http://community.wikia.com/wiki/Help:Promote here].",
 
 	'promote-description' => 'Description',
 	'promote-description-header' => 'Headline',
@@ -25,13 +27,13 @@ $messages['en'] = array(
 
 	'promote-upload' => 'Add Images',
 	'promote-upload-main-photo-header' => 'Main Image',
-	'promote-upload-main-photo-explanation' => "This image defines your wiki.  It will be the main image we use to represent your wiki on wikia.com so make sure it's a great one! Don't forget, you can always update this image so it's current and most represents your wiki.",
+	'promote-upload-main-photo-explanation' => "This image defines your wiki. It will be the main image we use to represent your wiki on wikia.com so make sure it's a great one! Don't forget, you can always update this image so it's current and most represents your wiki.",
+	'promote-nocorp-upload-main-photo-explanation' => "This will be the main image we use to represent your wiki, so make sure it's a great one! This image can always be updated later so it stays current.",
 	'promote-upload-additional-photos-header' => 'Additional Images',
 	'promote-upload-additional-photos-explanation' => 'Adding more images makes your wiki look more interesting and engaging to potential visitors.You can add up to nine images here, and we strongly recommend you hit the limit!',
 
 	'promote-publish' => 'Publish',
 
-	'promote-upload-tool' => 'Admin Upload Tool',
 	'promote-add-photo' => 'Add a photo',
 	'promote-remove-photo' => 'Remove',
 	'promote-modify-photo' => 'Modify',
@@ -57,7 +59,7 @@ $messages['en'] = array(
 	'promote-manual-upload-error' => 'This file cannot be uploaded manually. Please use Admin Upload Tool.',
 	'promote-wrong-rights' => "Darn, looks like you don't have permission to access this page. Make sure you're logged in!",
 
-	 'promote-image-rejected' => 'Rejected',
+	'promote-image-rejected' => 'Rejected',
 	'promote-image-accepted' => 'Accepted',
 	'promote-image-in-review' => 'In review',
 
@@ -65,6 +67,7 @@ $messages['en'] = array(
 	'promote-statusbar-inreview' => 'Some of your images are currently in review and will appear on [http://www.wikia.com wikia.com] after they\'re approved.  This can take 2-4 business days, so we\'ll update you here when we\'re done.',
 	'promote-statusbar-approved' => 'Woohoo! $1 is promoted on [http://www.wikia.com wikia.com]!',
 	'promote-statusbar-rejected' => 'One or more of your images was not approved. [[Special:Contact|Find out why]]',
+	'promote-statusbar-auto-approved' => 'Woohoo! $1 is being promoted!',
 
 	'promote-error-oasis-only' => 'This page is not supported under your skin. Please [[Special:Preferences|switch to the Wikia skin]] to access this feature.',
 
@@ -95,7 +98,6 @@ $messages['de'] = array(
 
 	'promote-publish' => 'Veröffentlichen',
 
-	'promote-upload-tool' => 'Admin-Upload',
 	'promote-add-photo' => 'Bild hinzufügen',
 	'promote-remove-photo' => 'Entfernen',
 	'promote-modify-photo' => 'Ändern',
@@ -157,7 +159,6 @@ $messages['fr'] = array(
 
 	'promote-publish' => 'Publier',
 
-	'promote-upload-tool' => 'Outil d\'importation administrateur',
 	'promote-add-photo' => 'Ajouter une photo',
 	'promote-remove-photo' => 'Retirer',
 	'promote-modify-photo' => 'Modifier',
@@ -221,7 +222,6 @@ $messages['es'] = array(
 
 	'promote-publish' => 'Publicar',
 
-	'promote-upload-tool' => 'Herramienta de subida para administradores',
 	'promote-add-photo' => 'Añadir una imagen',
 	'promote-remove-photo' => 'Borrar',
 	'promote-modify-photo' => 'Modificar',
@@ -283,7 +283,6 @@ $messages['es'] = array(
 
 	'promote-publish' => 'Publicar',
 
-	'promote-upload-tool' => 'Herramienta de subida para administradores',
 	'promote-add-photo' => 'Añadir una imagen',
 	'promote-remove-photo' => 'Borrar',
 	'promote-modify-photo' => 'Modificar',
@@ -318,13 +317,64 @@ $messages['es'] = array(
 	'promote-statusbar-approved' => '¡Yuju! $1 se está promocionando en [http://es.wikia.com es.wikia.com]!',
 	'promote-statusbar-rejected' => 'Una o más de tus imágenes no fue aprobada. [[Special:Contact|Pregunta por qué]].',
 );
+$messages['pl'] = array(
+	'promote' => 'Promocja',
+	'promote-title' => 'Promocja',
+	'promote-introduction-header' => 'Wypromuj swoją wiki na pl.wikia.com',
+	'promote-nocorp-introduction-header' => 'Wypromuj $1',
+	'promote-introduction-copy' => 'Wypromuj swoją wiki na [http://www.pl.wikia.com pl.wikia.com] uzupełniając dane na tej stronie. Dodaj obrazy i opis, aby przedstawić swoją wiki odwiedzającym. Więcej wskazówek znajdziesz [http://spolecznosc.wikia.com/wiki/Pomoc:Specjalna:Promocja tutaj]. ',
+	'promote-nocorp-introduction-copy' => 'Dodaj obrazy i opis, aby przedstawić swoją wiki odwiedzającym. Podanych przez Ciebie informacji użyjemy, aby wypromować Twoją wiki w wynikach wyszukiwania, aplikacjach mobilnych i innych. Więcej wskazówek jak najefektywniej użyć narzędzia znajdziesz [http://spolecznosc.wikia.com/wiki/Pomoc:Specjalna:Promocja tutaj].',
+	'promote-description' => 'Opis',
+	'promote-description-header' => 'Nagłówek',
+	'promote-description-header-explanation' => 'Idealne będzie coś tak nieskomplikowanego jak np. "Dowiedz się więcej o Bacon Wiki" bądź "Witaj na Bacon Wiki"!',
+	'promote-description-about' => 'O czym jest Twoja wiki?',
+	'promote-description-about-explanation' => 'Napisz na jaki temat jest Twoja wiki. Nie bój się szczegółowych opisów! Chodzi przecież o to, aby zainteresować użytkowników Twoją wiki i aby mieć pewność, że dokładnie wiedzą o czym ona jest.',
+	'promote-upload' => 'Dodaj obrazy',
+	'promote-upload-main-photo-header' => 'Obraz główny',
+	'promote-upload-main-photo-explanation' => 'Ten obraz opisuje Twoją wiki, jest jej wizytówką. Będzie reprezentował Twoją wiki na pl.wikia.com, więc postaraj się, aby był wyjątkowy! Pamiętaj, że w każdej chwili możesz zmienić ten obraz, tak aby zawsze oddawał charakter Twojej wiki.',
+	'promote-nocorp-upload-main-photo-explanation' => 'Ten obraz opisuje Twoją wiki, jest jej wizytówką. Będzie reprezentował Twoją wiki w wynikach wyszukiwania, aplikacjach mobilnych i innych, więc postaraj się aby był wyjątkowy! Pamiętaj, że w każdej chwili możesz go zmienić.',
+	'promote-upload-additional-photos-header' => 'Dodatkowe obrazy',
+	'promote-upload-additional-photos-explanation' => 'Im więcej obrazów dodasz do swojej wikii, tym będzie bardziej interesująca dla innych użytkowników. Maksymalna ilość zdjęć, którą możesz dodać to 9. Gorąco zachęcamy do wyczerpywania limitów!',
+	'promote-upload-form-modal-cancel' => 'Anuluj',
+	'promote-publish' => 'Publikuj',
+	'promote-add-photo' => 'Dodaj obraz',
+	'promote-remove-photo' => 'Usuń',
+	'promote-modify-photo' => 'Modyfikuj',
+	'promote-upload-main-image-form-modal-title' => 'Obraz główny',
+	'promote-upload-main-image-form-modal-copy' => 'Dodaj obraz, który najlepiej reprezentuje Twoją wiki. Dozwolony format pliku to ".png", a minimalne wymiary to 480x320px.',
+	'promote-upload-additional-image-form-modal-title' => 'Więcej obrazów',
+	'promote-upload-additional-image-form-modal-copy' => 'Dodaj więcej obrazów, aby bardziej szczegółowo opowiedzieć o swojej wiki. Dozwolony format pliku to ".png", a minimalna wielkość to 480x320px.',
+	'promote-upload-submit-button' => 'Prześlij',
+	'promote-error-less-characters-than-minimum' => 'Ups! Wpisany tekst musi mieć minimum $2 znaków.',
+	'promote-error-more-characters-than-maximum' => 'Ups! Wpisany tekst musi mieć maksimum $2 znaków',
+	'promote-error-upload-unknown-error' => 'Nieznany błąd podczas przesyłania pliku',
+	'promote-error-upload-filetype-error' => 'Wymagany format pliku to ".png"',
+	'promote-error-upload-dimensions-error' => 'Niepoprawne wymiary pliku - obraz musi być nie mniejszy niż 480x320px',
+	'promote-error-too-many-images' => 'Ups! Dodałeś już 9 obrazów. Jeśli chcesz dodać ten obraz, usuń któryś z dotychczas dodanych',
+	'promote-error-upload-type' => 'Ups! Niepoprawny typ wysyłania pliku',
+	'promote-error-upload-form' => 'Niepoprawny typ wysyłania pliku w getUploadForm',
+	'promote-manual-file-size-error' => 'Minimalne wymiary obrazu głównego to 480x320px',
+	'promote-manual-upload-error' => 'Ten plik nie może zostać dodany ręcznie. W tym celu użyj narzędzia dla administratorów do wysyłania plików',
+	'promote-wrong-rights' => 'Wygląda na to, że nie masz praw aby wejść na tę stronę. Upewnij się, że jesteś zalogowany',
+	'promote-image-rejected' => 'Odrzucone',
+	'promote-image-accepted' => 'Zaakceptowane',
+	'promote-image-in-review' => 'Rozpatrywane',
+	'promote-statusbar-auto-approved' => 'Woohoo! $1 jest promowana!',
+	'promote-statusbar-icon' => 'Status',
+	'promote-statusbar-inreview' => 'Niektóre z przesłanych obrazów są w trakcie przeglądania i zostaną opublikowane na [http://pl.www.wikia.com pl.wikia.com], kiedy przejdą pomyślnie weryfikację. Może to zająć od 2 do 4 dni roboczych. Poinformujemy Cię kiedy proces zostanie zakończony.',
+	'promote-statusbar-approved' => 'Woohoo! $1 jest już promowana na [http://pl.www.wikia.com pl.wikia.com]!',
+	'promote-statusbar-rejected' => 'Jeden lub więcej dodanych przez Ciebie obrazów nie przeszło weryfikacji pomyślnie. [[Special:Contact|Dowiedz się dlaczego]]',
+	'promote-error-oasis-only' => 'Ta strona nie jest dostępna w wybranej skórce. Zmień ją [[Special:Preferences|na skórkę "Wikia" w preferencjach,]] aby uzyskać dostęp.',
+);
 
 $messages['qqq'] = array(
 	'promote' => 'Promote page heading',
 
 	'promote-title' => 'Promote page title',
-	'promote-introduction-header' => 'Promote page header inviting admin to promote his/her wiki',
-	'promote-introduction-copy' => 'Promote page explanatory copy and invitation to fill in wiki data',
+	'promote-introduction-header' => 'Promote page header inviting admin to promote his/her wiki on corporate wiki',
+	'promote-nocorp-introduction-header' => 'Promote page header inviting admin to promote his/her wiki [not on corporate wikis]. This message is displayed when there is no corp wiki in wikis content lang.',
+	'promote-introduction-copy' => 'Promote page explanatory copy and invitation to fill in wiki data that will be used to promote wiki on corporate wiki',
+	'promote-nocorp-introduction-copy' => 'Promote page explanatory copy and invitation to fill in wiki data that will be used to promote wiki [not on corporate wikis]. This message is displayed when there is no corp wiki in wikis content lang.',
 
 	'promote-description' => 'Title inviting to describe the wiki',
 	'promote-description-header' => 'Label for wiki headline input field',
@@ -335,14 +385,14 @@ $messages['qqq'] = array(
 
 	'promote-upload' => 'Title inviting to add images',
 	'promote-upload-main-photo-header' => 'Label for main wiki image',
-	'promote-upload-main-photo-explanation' => 'Explanatory text for main wiki image',
+	'promote-upload-main-photo-explanation' => 'Explanatory text for main wiki image.',
+	'promote-nocorp-upload-main-photo-explanation' => 'Explanatory text for main wiki image. This message is displayed when there is no corp wiki in wikis content lang.',
 	'promote-upload-additional-photos-header' => 'Label for additional images section',
 	'promote-upload-additional-photos-explanation' => 'Explanatory text for additional optional images section',
 	'promote-upload-form-modal-cancel' => 'Cancel (close) image upload modal',
 
 	'promote-publish' => 'Label for publish button',
 
-	'promote-upload-tool' => 'Admin Upload Tool name',
 	'promote-add-photo' => 'Label for add a photo button',
 	'promote-remove-photo' => 'Label for image removal',
 	'promote-modify-photo' => 'Label for image modification',
@@ -362,6 +412,7 @@ $messages['qqq'] = array(
 	'promote-error-too-many-images' => 'Information about exceeding maxim number of additional images',
 	'promote-error-upload-type' => 'Information about wrong file upload type passed to form (internal error)',
 	'promote-error-upload-form' => 'Information about wrong file upload type passed in upload request (internal error)',
+	'promote-error-oasis-only' => 'Message that informs user that Promote tool is only available on oasis skin',
 
 	'promote-manual-file-size-error' => 'Information about minimum main image size',
 	'promote-manual-upload-error' => 'Information about the restriction to upload visualization images by means other than Admin Upload Tool',
@@ -370,6 +421,7 @@ $messages['qqq'] = array(
 	'promote-image-rejected' => 'Information about image rejection',
 	'promote-image-accepted' => 'Information about image approval',
 	'promote-image-in-review' => 'Information about image being in review',
+	'promote-statusbar-auto-approved' => 'Information about image auto approval - when there is no corporate wiki in that language',
 
 	'promote-statusbar-icon' => 'Text on the status icon at the top of the special:promote page',
 	'promote-statusbar-inreview' => 'Status information when wiki is in review',

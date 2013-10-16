@@ -164,7 +164,9 @@ abstract class WikiaHttpException extends WikiaBaseException {
 	function __construct( $details = null, Exception $previous = null ) {
 		parent::__construct( $this->message, $this->code, $previous );
 		wfDebug(get_class($this). " raised from " . wfGetAllCallers(2) . "\n");
-		$this->details = $details;
+		if (!empty($details)) {
+			$this->details = $details;
+		}
 	}
 
 	public function getDetails() {
@@ -205,4 +207,16 @@ abstract class NotImplementedException extends WikiaHttpException {
 abstract class InvalidDataException extends WikiaHttpException {
 	protected $code = 555;//custom HTTP status, 500 cannot be used as it makes us fallback to IOWA
 	protected $message = 'Invalid data';
+}
+
+class ControllerNotFoundException extends NotFoundException {
+	function __construct($name) {
+		parent::__construct("Controller not found: $name");
+	}	
+}
+
+class MethodNotFoundException extends NotFoundException {
+	function __construct($name) {
+		parent::__construct("Method not found: $name");
+	}	
 }

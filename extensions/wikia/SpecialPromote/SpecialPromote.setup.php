@@ -22,6 +22,7 @@ $promoteImageReviewExtDir = dirname(dirname(__FILE__)) . '/ImageReview/modules/P
 // classes
 $wgAutoloadClasses['SpecialPromoteController'] =  $dir . 'SpecialPromoteController.class.php';
 $wgAutoloadClasses['SpecialPromoteHelper'] =  $dir . 'SpecialPromoteHelper.class.php';
+$wgAutoloadClasses['SpecialPromoteHooks'] =  $dir . 'SpecialPromoteHooks.class.php';
 $wgAutoloadClasses['UploadVisualizationImageFromFile'] =  $dir . 'UploadVisualizationImageFromFile.class.php';
 
 // needed task
@@ -30,6 +31,7 @@ $wgAutoloadClasses['PromoteImageReviewTask'] = $promoteImageReviewExtDir  . 'Pro
 // hooks
 $wgHooks['UploadVerification'][] = 'UploadVisualizationImageFromFile::UploadVerification';
 $wgHooks['CityVisualization::wikiDataInserted'][] = 'CityVisualization::onWikiDataUpdated';
+$wgHooks['FileDeleteComplete'][] = 'SpecialPromoteHooks::onFileDeleteComplete';
 
 // i18n mapping
 $wgExtensionMessagesFiles['SpecialPromote'] = $dir.'SpecialPromote.i18n.php';

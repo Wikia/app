@@ -20,7 +20,7 @@ class FounderEmailsEditEventTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * first edit, no throttle placed:
+	 * first edit
 	 * both $isRegisteredUser and $isRegisteredUserFirstEdit should be set to true
 	 * FIRST_EDIT_NOTIFICATION_SENT_PROP_NAME should be set to true
 	 */

@@ -40,8 +40,10 @@ $messages['ar'] = array(
  * @author Fohanno
  */
 $messages['br'] = array(
+	'minieditor-specialpage-title' => 'Pakenn diskouez MiniEditor',
 	'minieditor-new-heading' => 'Krouiñ ur gemennadenn nevez',
 	'minieditor-placeholder-new' => 'Skrivit ho kemennadenn amañ',
+	'minieditor-message-edit' => 'Homañ zo ur gemennadenn a zo anezhi dija',
 	'minieditor-reply' => 'Respont',
 	'minieditor-placeholder-reply' => "Respont d'ar gemennadenn amañ",
 );

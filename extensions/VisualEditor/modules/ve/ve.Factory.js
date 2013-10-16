@@ -1,24 +1,23 @@
-/**
+/*!
  * VisualEditor Factory class.
  *
- * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
 /**
  * Generic object factory.
  *
- * @class
  * @abstract
+ * @extends ve.Registry
  * @constructor
- * @extends {ve.Registry}
  */
 ve.Factory = function VeFactory() {
 	// Parent constructor
 	ve.Registry.call( this );
 
 	// Properties
-	this.registry = [];
+	this.entries = [];
 };
 
 /* Inheritance */
@@ -30,15 +29,31 @@ ve.inheritClass( ve.Factory, ve.Registry );
 /**
  * Register a constructor with the factory.
  *
+ * Classes must have a static `name` property to be registered.
+ *
+ *     @example
+ *     function MyClass() {};
+ *     // Adds a static property to the class defining a symbolic name
+ *     MyClass.static = { 'name': 'mine' };
+ *     // Registers class with factory, available via symbolic name 'mine'
+ *     factory.register( MyClass );
+ *
  * @method
- * @param {String|String[]} name Symbolic name or list of symbolic names
  * @param {Function} constructor Constructor to use when creating object
- * @throws 'constructor must be a function'
+ * @throws {Error} Name must be a string and must not be empty
+ * @throws {Error} Constructor must be a function
  */
-ve.Factory.prototype.register = function ( name, constructor ) {
+ve.Factory.prototype.register = function ( constructor ) {
+	var name;
+
 	if ( typeof constructor !== 'function' ) {
 		throw new Error( 'constructor must be a function, cannot be a ' + typeof constructor );
 	}
+	name = constructor.static && constructor.static.name;
+	if ( typeof name !== 'string' || name === '' ) {
+		throw new Error( 'Name must be a string and must not be empty' );
+	}
+	this.entries.push( name );
 	ve.Registry.prototype.register.call( this, name, constructor );
 };
 
@@ -49,15 +64,15 @@ ve.Factory.prototype.register = function ( name, constructor ) {
  * constructor directly, so leaving one out will pass an undefined to the constructor.
  *
  * @method
- * @param {string} name Object name.
- * @param {mixed} [...] Arguments to pass to the constructor.
- * @returns {Object} The new object.
- * @throws 'Unknown object name'
+ * @param {string} name Object name
+ * @param {Mixed...} [args] Arguments to pass to the constructor
+ * @returns {Object} The new object
+ * @throws {Error} Unknown object name
  */
 ve.Factory.prototype.create = function ( name ) {
-	var args, obj,
-		constructor = this.registry[name];
+	var args, obj, constructor;
 
+	constructor = this.registry[name];
 	if ( constructor === undefined ) {
 		throw new Error( 'No class registered by that name: ' + name );
 	}

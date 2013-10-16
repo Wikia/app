@@ -1,0 +1,16 @@
+{{{userForm}}}
+
+{{#validUser}}
+<h2>{{formHeading}}</h2>
+<div id="CoppaStepOne" data-username="{{userName}}">
+	<ol>
+		{{#buttons}}
+		<li class="action-button" data-action="{{buttonAction}}">
+			<img class="{{#done}}sprite ok{{/done}}" src="{{blankImgUrl}}" alt="result" />
+			{{{buttonLink}}}
+			<span class="result"></span>
+		</li>
+		{{/buttons}}
+	</ol>
+</div>
+{{/validUser}}

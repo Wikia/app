@@ -1285,6 +1285,22 @@ $messages['it'] = array(
 	'wikiadoption-pref-label' => 'Il cambio di queste preferenze si ripercuoterà solo sulle email da $1.',
 );
 
+/** Korean (한국어)
+ * @author Hym411
+ */
+$messages['ko'] = array(
+	'wikiadoption' => '자동 위키 합치기',
+	'wikiadoption-desc' => '미디어위키를 위한 자동 위키 합치기 확장기능',
+	'wikiadoption-header' => '이 위키 합치기',
+	'wikiadoption-button-adopt' => '네, {{SITENAME}}을 합칩니다',
+	'wikiadoption-adopt-inquiry' => '자세히 찾기',
+	'wikiadoption-know-more-header' => '더 알고 싶나요?',
+	'wikiadoption-know-more-description' => '자세한 내용은 이 링크를 확인하십시오. 당연히, 질문이 있다면 자유롭게 저희에게 연락하십시오!',
+	'wikiadoption-adoption-successed' => '축하합니다! 당신은 이제 이 위키의 관리자입니다!',
+	'wikiadoption-adoption-failed' => '죄송합니다. 저희는 당신을 관리자로 만들기 위해 노력했지만, 불가능했습니다. [http://community.wikia.com/Special:Contact 저희에게 연락]해 주시면 도와드리겠습니다.',
+	'wikiadoption-not-allowed' => '죄송합니다. 당신은 현재 이 위키를 합칠 수 없습니다.',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
@@ -2752,13 +2768,21 @@ $messages['uk'] = array(
  * @author Anakmalaysia
  * @author Dimension
  * @author Hydra
+ * @author User670839245
  */
 $messages['zh-hans'] = array(
-	'wikiadoption' => '制动维基领养',
+	'wikiadoption' => '自动维基领养',
 	'wikiadoption-desc' => '供MediaWiki使用的“自动维基认领”扩展程序',
 	'wikiadoption-header' => '领养这个维基',
 	'wikiadoption-button-adopt' => '是，我想要领养{{SITENAME}}！',
 	'wikiadoption-adopt-inquiry' => '了解更多！',
+	'wikiadoption-description' => '$1，准备好认领 {{SITENAME}} 了吗？
+<br /><br />
+在 {{SITENAME}} 上有一段时间没有活跃的管理员了，我们在为这个维基找一个新的领导者并帮助其内容和社区发展！作为 {{SITENAME}} 曾经的一位贡献者，我们很好奇您是否愿意接受这项工作。
+<br /><br />
+认领此维基可以让您成为此维基的管理员和行政员，并可以使用我们为您提供的管理工具来管理这个维基。您也可以赋予其他用户管理权限以帮助、删除、回退、移动和保护页面。
+<br /><br />
+您准备好认领 {{SITENAME}} 的下一步了吗？',
 	'wikiadoption-know-more-header' => '想知道更多吗？',
 	'wikiadoption-know-more-description' => '查询这些链接获取更多信息。当然，如果您遇到任何问题，请随时和我们联系！',
 	'wikiadoption-adoption-successed' => '恭喜！您现在是这个维基的管理员！',
@@ -2780,8 +2804,24 @@ Wikia小组
 
 您可以退订本列表的改动，点击这里：$3',
 	'wikiadoption-mail-adoption-subject' => '#WIKINAME已被认领',
+	'tog-adoptionmails' => '当$1可以被其他用户认领时邮件通知我',
 	'wikiadoption-pref-label' => '变更首选项只会影响来自$1的邮件。',
 	'wikiadoption-welcome-header' => '恭喜！你已认领了{{SITENAME}}！',
+	'wikiadoption-welcome-body' => '您现在是本维基的行政员。利用这一新身份，您可以使用所有工具协助管理{{SITENAME}}。
+<br /><br />
+帮助{{SITENAME}}成长最重要的事就是保持编辑。
+<br /><br />
+如果一个维基没有活跃的管理员，它将交由他人认领。所以请务必经常查阅本维基。
+<br /><br />
+实用链接:
+<br /><br />
+[[Special:ThemeDesigner|主题设计器]]
+<br />
+[[Special:LayoutBuilder|页面布局生成器]]
+<br />
+[[Special:ListUsers|用户列表]]
+<br />
+[[Special:UserRights|管理权限]]',
 );
 
 /** Traditional Chinese (中文（繁體）‎)

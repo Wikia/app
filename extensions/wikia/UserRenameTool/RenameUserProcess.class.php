@@ -72,6 +72,21 @@ class RenameUserProcess {
 //		array( 'table' => '...', 'userid_column' => '...', 'username_column' => '...' ),
 	);
 
+	/**
+	 * Stores the predefined tasks to do for every local wiki database for IP addresses.
+	 * Here should be mentioned all core tables not connected to any extension.
+	 *
+	 * @var $mLocalIpDefaults array
+	 */
+	static private $mLocalIpDefaults = [
+		[ 'table' => 'archive', 'userid_column' => 'ar_user', 'username_column' => 'ar_user_text' ],
+		[ 'table' => 'filearchive', 'userid_column' => 'fa_user', 'username_column' => 'fa_user_text' ],
+		[ 'table' => 'ipblocks', 'userid_column' => 'ipb_user', 'username_column' => 'ipb_address' ],
+		[ 'table' => 'recentchanges', 'userid_column' => 'rc_user', 'username_column' => 'rc_user_text' ],
+		[ 'table' => 'revision', 'userid_column' => 'rev_user', 'username_column' => 'rev_user_text' ],
+		[ 'table' => 'abuse_filter_log', 'userid_column' => 'afl_user', 'username_column' => 'afl_user_text' ],
+	];
+
 	private $mRequestData = null;
 	private $mActionConfirmed = false;
 
@@ -84,6 +99,7 @@ class RenameUserProcess {
 	private $mRequestorId = 0;
 	private $mRequestorName = '';
 	private $mReason = null;
+	private $mRenameIP = false;
 
 	private $mErrors = array();
 	private $mWarnings = array();
@@ -252,6 +268,17 @@ class RenameUserProcess {
 		$nun = is_object($newTitle) ? $newTitle->getText() : '';
 
 		$this->addInternalLog("title: old={$oun} new={$nun}");
+
+		//AntiSpoof test
+
+		if ( class_exists( 'SpoofUser' ) ) {
+			$oNewSpoofUser = new SpoofUser( $nun );
+			if ( !$oNewSpoofUser -> isLegal() ) {
+				$this->addWarning( wfMessage( 'userrenametool-error-antispoof-conflict', $nun ) );
+			}
+		} else {
+			$this->addError( wfMessage( 'userrenametool-error-antispoof-notinstalled' ) );
+		}
 
 		//Invalid old user name entered
 		if(!$oun){
@@ -472,10 +499,10 @@ class RenameUserProcess {
 				'rename_old_name' => $this->mOldUsername,
 				'rename_new_name' => $this->mNewUsername,
 				'reason' => $this->mReason,
-                                'tasks' => array()
+				'tasks' => array()
 			),
 			TASK_STARTED,
-			BatchTask::PRIORITY_HIGH	
+			BatchTask::PRIORITY_HIGH
 		);
 
 		$this->addLogDestination(self::LOG_BATCH_TASK, $this->mGlobalTask);
@@ -544,7 +571,7 @@ class RenameUserProcess {
 
 		// delete the record from all the secondary clusters
 		if ( class_exists( 'ExternalUser_Wikia' ) ) {
-			ExternalUser_Wikia::removeFromSecondaryClusters( $this->mUserId );	
+			ExternalUser_Wikia::removeFromSecondaryClusters( $this->mUserId );
 		}
 
 		// rename the user on the shared cluster
@@ -569,18 +596,18 @@ class RenameUserProcess {
 			global $wgAuth, $wgExternalAuthType;
 
 			$fakeUser = User::newFromName( $this->mOldUsername, 'creatable' );
-			
+
 			if ( !is_object( $fakeUser ) ) {
 				$this->addLog("Cannot create fake user: {$this->mOldUsername}");
 				wfProfileOut(__METHOD__);
 				return false;
-			} 
+			}
 
 			$fakeUser->setPassword( null );
 			$fakeUser->setEmail( null );
 			$fakeUser->setRealName( '' );
 			$fakeUser->setName( $this->mOldUsername );
-			
+
 			if ( $wgExternalAuthType ) {
 				$fakeUser = ExternalUser_Wikia::addUser( $fakeUser, '', '', '' );
 			} else {
@@ -616,7 +643,7 @@ class RenameUserProcess {
 				'lang'        => null,
 				'type'        => Phalanx::TYPE_USER
 			);
-			
+
 			wfRunHooks( "EditPhalanxBlock", array( &$data ) );
 			$this->mPhalanxBlockId = $data['id'];
 			if(!$this->mPhalanxBlockId) {
@@ -720,8 +747,6 @@ class RenameUserProcess {
 	 * Processes specific local wiki database and makes all needed changes
 	 *
 	 * Important: should only be run within maintenace script (bound to specified wiki)
-	 *
-	 * @param $cityId int Wiki ID
 	 */
 	public function updateLocal(){
 		global $wgCityId, $wgUser;
@@ -831,6 +856,56 @@ class RenameUserProcess {
 		$wgUser = $wgOldUser;
 
 		wfProfileOut(__METHOD__);
+	}
+
+	/**
+	 * Processes specific local wiki database and makes all needed changes for an IP address
+	 *
+	 * Important: should only be run within maintenace script (bound to specified wiki)
+	 */
+	public function updateLocalIP() {
+		global $wgCityId, $wgUser;
+
+		wfProfileIn( __METHOD__ );
+
+		if ( $this->mUserId !== 0 || !IP::isIPAddress( $this->mOldUsername ) || !IP::isIPAddress( $this->mNewUsername ) ) {
+			$this->addError( wfMessage( 'userrenametool-error-invalid-ip' )->escaped() );
+			return;
+		}
+
+		$wgOldUser = $wgUser;
+		$wgUser = User::newFromName( 'Wikia' );
+
+		$cityDb = WikiFactory::IDtoDB( $wgCityId );
+		$this->addLog( "Processing wiki database: {$cityDb}." );
+
+		$dbw = wfGetDB(DB_MASTER);
+		$dbw->begin();
+		$tasks = self::$mLocalIpDefaults;
+
+		$hookName = 'UserRename::LocalIP';
+		$this->addLog( "Broadcasting hook: {$hookName}" );
+		wfRunHooks( $hookName, [ $dbw, $this->mUserId, $this->mOldUsername, $this->mNewUsername, $this, $wgCityId, &$tasks ] );
+
+		foreach ( $tasks as $task ) {
+			$this->addLog( "Updating wiki \"{$cityDb}\": {$task['table']}:{$task['username_column']}" );
+			$this->renameInTable( $dbw, $task['table'], $this->mUserId, $this->mOldUsername, $this->mNewUsername, $task );
+		}
+
+		$hookName = 'UserRename::AfterLocalIP';
+		$this->addLog( "Broadcasting hook: {$hookName}" );
+		wfRunHooks( $hookName, [ $dbw, $this->mUserId, $this->mOldUsername, $this->mNewUsername, $this, $wgCityId, &$tasks ] );
+
+		$dbw->commit();
+
+		$this->addLog( "Finished updating wiki database: {$cityDb}" );
+
+		$this->addMainLog( "log", RenameUserLogFormatter::wiki( $this->mRequestorName, $this->mOldUsername, $this->mNewUsername, $wgCityId, $this->mReason,
+			!empty( $this->warnings ) || !empty( $this->errors ) ) );
+
+		$wgUser = $wgOldUser;
+
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**
@@ -974,24 +1049,24 @@ class RenameUserProcess {
 	 * @param $arg1 mixed Multiple format parameters
 	 */
 	public function addMainLog( $action, $text, $arg1 = null ) {
-            /*
-             * BugId:1030
-             * Michał Roszka (Mix) <michal@wikia-inc.com>
-             *
-             * $text is HTML and may contain % which are not vsptintf's conversion specification marks,
-             * e.g. username f"oo"bar results with <a href="http://community.wikia.com/wiki/User:F%22oo%22baz">F&quot;oo&quot;baz</a>
-             * which breaks vsprintf.
-             *
-             * There are 4 calls of this method, none of them passing any vsprintf's conversion specification marks.
-             * vsprintf seems unnecessary, let's just pass $text to StaffLogger::log()
+		/*
+		 * BugId:1030
+		 * Michał Roszka (Mix) <michal@wikia-inc.com>
+		 *
+		 * $text is HTML and may contain % which are not vsptintf's conversion specification marks,
+		 * e.g. username f"oo"bar results with <a href="http://community.wikia.com/wiki/User:F%22oo%22baz">F&quot;oo&quot;baz</a>
+		 * which breaks vsprintf.
+		 *
+		 * There are 4 calls of this method, none of them passing any vsprintf's conversion specification marks.
+		 * vsprintf seems unnecessary, let's just pass $text to StaffLogger::log()
 
-                if (func_num_args() > 1) {
+		if (func_num_args() > 1) {
 			$args = func_get_args();
 			$args = array_slice($args,1);
-                        $text = vsprintf($text,$args);
+			$text = vsprintf($text,$args);
 		}
-             */
-            StaffLogger::log("renameuser", $action, $this->mRequestorId, $this->mRequestorName, $this->mUserId, $this->mNewUsername, $text);
+		 */
+		StaffLogger::log("renameuser", $action, $this->mRequestorId, $this->mRequestorName, $this->mUserId, $this->mNewUsername, $text);
 	}
 
 	/**
@@ -1042,44 +1117,44 @@ class RenameUserProcess {
 	public function getInternalLog() {
 		return $this->mInternalLog;
 	}
-        
-        /**
-         * Checks self::$mLocalDefaults against the current database layout and lists fields, that no longer exist.
-         * 
-         * @author Michał Roszka (Mix) <michal@wikia-inc.com>
-         * @static
-         * @access public
-         * @return string
-         */
-        static public function checkDatabaseLayout() {
-            $oDB = wfGetDB( DB_SLAVE );
-            $sOut = '';
-            
-            foreach ( self::$mLocalDefaults as $aEntry ) {
-                // table.userid_column
-                if ( !empty( $aEntry['userid_column'] ) && !$oDB->fieldInfo( $aEntry['table'], $aEntry['userid_column'] ) ) {
-                    $sOut .= sprintf( "The %s.%s column does not exist in the current database layout.\n", $aEntry['table'], $aEntry['userid_column'] );
-                }
-                // table.username_column
-                if ( !empty( $aEntry['username_column'] ) && !$oDB->fieldInfo( $aEntry['table'], $aEntry['username_column'] ) ) {
-                    $sOut .= sprintf( "The %s.%s column does not exist in the current database layout.\n", $aEntry['table'], $aEntry['username_column'] );
-                }
-                // table.[columns in conditions]
-                if ( isset( $aEntry['conds'] ) ) {
-                    foreach ( $aEntry['conds'] as $key => $value ) {
-                        if ( !$oDB->fieldInfo( $aEntry['table'], $key ) ) {
-                            $sOut .= sprintf( "The %s.%s column does not exist in the current database layout.\n", $aEntry['table'], $aEntry['username_column'] );
-                        }
-                    }
-                }
-            }
-            
-            if ( empty( $sOut ) ) {
-                $sOut = 'There are no missing columns in the current database layout';
-            }
-            
-            return trim( $sOut );
-        }
+
+	/**
+	* Checks self::$mLocalDefaults against the current database layout and lists fields, that no longer exist.
+	*
+	* @author Michał Roszka (Mix) <michal@wikia-inc.com>
+	* @static
+	* @access public
+	* @return string
+	*/
+	static public function checkDatabaseLayout() {
+		$oDB = wfGetDB( DB_SLAVE );
+		$sOut = '';
+
+		foreach ( self::$mLocalDefaults as $aEntry ) {
+			// table.userid_column
+			if ( !empty( $aEntry['userid_column'] ) && !$oDB->fieldInfo( $aEntry['table'], $aEntry['userid_column'] ) ) {
+				$sOut .= sprintf( "The %s.%s column does not exist in the current database layout.\n", $aEntry['table'], $aEntry['userid_column'] );
+			}
+			// table.username_column
+			if ( !empty( $aEntry['username_column'] ) && !$oDB->fieldInfo( $aEntry['table'], $aEntry['username_column'] ) ) {
+				$sOut .= sprintf( "The %s.%s column does not exist in the current database layout.\n", $aEntry['table'], $aEntry['username_column'] );
+			}
+			// table.[columns in conditions]
+			if ( isset( $aEntry['conds'] ) ) {
+				foreach ( $aEntry['conds'] as $key => $value ) {
+					if ( !$oDB->fieldInfo( $aEntry['table'], $key ) ) {
+						$sOut .= sprintf( "The %s.%s column does not exist in the current database layout.\n", $aEntry['table'], $aEntry['username_column'] );
+					}
+				}
+			}
+		}
+
+		if ( empty( $sOut ) ) {
+			$sOut = 'There are no missing columns in the current database layout';
+		}
+
+		return trim( $sOut );
+	}
 
 	static public function newFromData( $data ) {
 		wfProfileIn(__METHOD__);
@@ -1096,6 +1171,7 @@ class RenameUserProcess {
 			'mPhalanxBlockId' => 'phalanx_block_id',
 			'mReason' => 'reason',
 			'mLogTask' => 'local_task',
+			'mRenameIP' => 'rename_ip',
 		);
 
 		foreach ($mapping as $property => $key) {
