@@ -8,13 +8,7 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 	const FIRST_EDIT_NOTIFICATION_SENT_PROP_NAME = 'founderemails-first-edit-notification-sent';
 
 	/**
-	 * Name of memcache prefix for the key that holds information about throttling of emails
-	 * from a given user for a period of time
-	 */
-	const USER_EMAILS_THROTTLED_PREFIX = 'founderemails-edit-emails-throttle-';
-
-	/**
-	 * Period describing how long to throttle of emails
+	 * Period describing how long to throttle of emails; default of 1 hour
 	 */
 	const USER_EMAILS_THROTTLE_EXPIRY_TIME = 3600;
 
@@ -153,8 +147,8 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 					$mailKey = 'anon-edit';
 				}
 
-				// Set flag so this user won't generate edit notifications for 1 hour
-				$wgMemc->set($memcKey, "1", 3600);
+				// Set flag so this user won't generate edit notifications for given period of time
+				$wgMemc->set($memcKey, "1", self::USER_EMAILS_THROTTLE_EXPIRY_TIME);
 
 				// Increment counter for daily notification limit
 				$aWikiCounter[1] = ( $aWikiCounter[1] === 15 ) ? 'full' : $aWikiCounter[1] + 1;
@@ -303,51 +297,11 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 			return true;
 		}
 
-		if(	!static::isThrottled($editor) ) {
-			$eventData = static::getEventData( $editor, $oRecentChange, $isRegisteredUser, $isRegisteredUserFirstEdit );
-			FounderEmails::getInstance()->registerEvent( new FounderEmailsEditEvent( $eventData ) );
-
-			static::setThrottle($editor);
-		}
+		$eventData = static::getEventData( $editor, $oRecentChange, $isRegisteredUser, $isRegisteredUserFirstEdit );
+		FounderEmails::getInstance()->registerEvent( new FounderEmailsEditEvent( $eventData ) );
 
 		wfProfileOut( __METHOD__ );
 		return true;
-	}
-
-	/**
-	 * Checks if editor's edits are throttled not to be sent to founder
-	 *
-	 * @param $editor User
-	 * @return bool
-	 */
-	public static function isThrottled( $editor ) {
-		if ( F::app()->wg->memc->get( static::getThrottleMemcKey( $editor->getName() ) ) === 1 ) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	/**
-	 * Places a periodic throttle on $editor to prevent spamming founder with that person's edit notifications
-	 *
-	 * @param $editor
-	 */
-	public static function setThrottle( $editor ) {
-		F::app()->wg->memc->set(
-			static::getThrottleMemcKey( $editor->getName() ),
-			1,
-			static::USER_EMAILS_THROTTLE_EXPIRY_TIME );
-	}
-
-	/**
-	 * Helper method returning memcache key for storing throttle
-	 *
-	 * @param $userName
-	 * @return String
-	 */
-	public static function getThrottleMemcKey( $userName ) {
-		return wfMemcKey( static::USER_EMAILS_THROTTLED_PREFIX . $userName );
 	}
 
 	/**

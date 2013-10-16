@@ -40,13 +40,10 @@ class FounderEmailsEditEventTest extends WikiaBaseTest {
 			'getUserEditsStatus',
 			'process',
 			'getEventData',
-			'isThrottled'
 		] );
 		$mockFounderEmailsEditEvent::staticExpects($this->any())
 			->method('getUserEditsStatus')
 			->will($this->returnValue(FounderEmailsEditEvent::FIRST_EDIT));
-		$mockFounderEmailsEditEvent::staticExpects($this->any())
-			->method('isThrottled')->will($this->returnValue(false));
 		$mockFounderEmailsEditEvent::staticExpects($this->once())
 			->method('getEventData')
 			->with($this->anything(), $this->anything(), true, true);
@@ -82,59 +79,15 @@ class FounderEmailsEditEventTest extends WikiaBaseTest {
 			'getUserEditsStatus',
 			'process',
 			'getEventData',
-			'isThrottled'
 		] );
 		$mockFounderEmailsEditEvent::staticExpects($this->any())
 			->method('getUserEditsStatus')
 			->will($this->returnValue(FounderEmailsEditEvent::MULTIPLE_EDITS));
-		$mockFounderEmailsEditEvent::staticExpects($this->any())
-			->method('isThrottled')->will($this->returnValue(false));
 		$mockFounderEmailsEditEvent::staticExpects($this->once())
 			->method('getEventData')
 			->with($this->anything(), $this->anything(), true, false);
 		$mockFounderEmailsEditEvent->expects($this->any())->method('process')
 			->will($this->returnValue(null));
-		$this->mockClass('FounderEmailsEditEvent', $mockFounderEmailsEditEvent);
-
-		$mockRecentChange = $this->getMockRecentChange();
-
-		// Test execution
-		$mockFounderEmailsEditEvent::register($mockRecentChange);
-	}
-
-	/**
-	 * edit after first, throttle placed:
-	 * founder email event should not be created;
-	 * FIRST_EDIT_NOTIFICATION_SENT_PROP_NAME should be set
-	 */
-	public function testRegisterForMultipleEditsThrottled() {
-		// Test setup
-		global $wgUser;
-		$mockUser = $this->getMockUser();
-		$mockUser->expects( $this->any() )->method( 'getOption' )->will( $this->returnValue(0) );
-		$mockUser->expects( $this->once() )->method( 'setOption' )->with(
-			$this->stringStartsWith(FounderEmailsEditEvent::FIRST_EDIT_NOTIFICATION_SENT_PROP_NAME),
-			true
-		)->will( $this->returnValue( 0 ) );
-
-		$wgUser = $mockUser;
-
-		$mockFounderEmailsEditEvent = $this->getMock('FounderEmailsEditEvent', [
-			'__construct',
-			'getUserEditsStatus',
-			'process',
-			'getEventData',
-			'isThrottled'
-		] );
-		$mockFounderEmailsEditEvent::staticExpects($this->any())
-			->method('getUserEditsStatus')
-			->will($this->returnValue(FounderEmailsEditEvent::MULTIPLE_EDITS));
-		$mockFounderEmailsEditEvent::staticExpects($this->any())
-			->method('isThrottled')->will($this->returnValue(true));
-		$mockFounderEmailsEditEvent::staticExpects($this->never())
-			->method('getEventData');
-		$mockFounderEmailsEditEvent->expects($this->never())
-			->method('process');
 		$this->mockClass('FounderEmailsEditEvent', $mockFounderEmailsEditEvent);
 
 		$mockRecentChange = $this->getMockRecentChange();
@@ -161,13 +114,10 @@ class FounderEmailsEditEventTest extends WikiaBaseTest {
 			'getUserEditsStatus',
 			'process',
 			'getEventData',
-			'isThrottled'
 		] );
 		$mockFounderEmailsEditEvent::staticExpects($this->any())
 			->method('getUserEditsStatus')
 			->will($this->returnValue(FounderEmailsEditEvent::NO_EDITS));
-		$mockFounderEmailsEditEvent::staticExpects($this->any())
-			->method('isThrottled')->will($this->returnValue(false));
 		$mockFounderEmailsEditEvent->expects($this->any())->method('process')
 			->will($this->returnValue(null));
 		$mockFounderEmailsEditEvent::staticExpects($this->never())
@@ -199,14 +149,11 @@ class FounderEmailsEditEventTest extends WikiaBaseTest {
 			'getUserEditsStatus',
 			'process',
 			'getEventData',
-			'isThrottled'
 		] );
 
 		$mockFounderEmailsEditEvent::staticExpects($this->any())
 			->method('getUserEditsStatus')
 			->will($this->returnValue(FounderEmailsEditEvent::NO_EDITS));
-		$mockFounderEmailsEditEvent::staticExpects($this->any())
-			->method('isThrottled')->will($this->returnValue(false));
 		$mockFounderEmailsEditEvent->expects($this->any())->method('process')
 			->will($this->returnValue(null));
 		$mockFounderEmailsEditEvent::staticExpects($this->once())
