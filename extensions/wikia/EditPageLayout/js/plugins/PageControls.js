@@ -395,83 +395,87 @@
 		// of any widthType/gridLayout settings when the responsive layout goes out
 		// for a global release.
 		renderPreview: function(extraData) {
-			var self = this,
-				previewPadding = 22, // + 2px for borders
-				articleWidth = mw.config.values.sassParams.widthType == 1 ? 850 : 660,
-				width = articleWidth + (this.isGridLayout ? 30 : 0),
-				config = this.editor.config;
+			var self = this;
 
-			if (config.isWidePage) {
-				// 980 px of content width on main pages / pages without right rail
-				width += 320 + (this.isGridLayout ? 20 : 0);
-			}
+			require( [ 'wikia.fluidlayout' ], function( fluidlayout ) {
+				var previewPadding = 22, // + 2px for borders
+					articleWidth = mw.config.values.sassParams.widthType == 1 ? 850 : 660,
+					width = articleWidth + (self.isGridLayout ? 30 : 0),
+					railBreakPoint = fluidlayout.getBreakpointSmall(),
+					config = self.editor.config;
 
-			if (config.extraPageWidth) {
-				// wide wikis
-				width += config.extraPageWidth;
-			}
-
-			if ( wgOasisResponsive ) {
-				require( [ 'wikia.fluidlayout' ], function( fluidlayout ) {
-					var pageWidth = $('#WikiaPage').width(),
-						widthArticlePadding = fluidlayout.getWidthGutter(),
-						railWidth = 310,
-						railBreakPoint = fluidlayout.getBreakpointSmall(),
-						minWidth = fluidlayout.getMinArticleWidth();
-
-					// don't go below minimum width
-					if (pageWidth <= minWidth) {
-						pageWidth = minWidth;
-					}
-
-					// subtract rail width only in certain criteria
-					width = (config.isWidePage || pageWidth <= railBreakPoint) ? pageWidth : pageWidth - railWidth;
-
-					width -= widthArticlePadding;
-
-					// For Webkit browsers, when the responsive layout kicks in
-					// we have to subtract the width of the scrollbar. For more
-					// information, read: http://bit.ly/hhJpJg
-					// PS: this doesn't work between 1370-1384px because at that point
-					// the article page has a scrollbar and the edit page doesn't.
-					// Luckily, those screen resolutions are kind of an edge case.
-					// PSS: fuck scrollbars.
-					// TODO: we should have access to breakpoints and such in JavaScript
-					// as variables instead of hardcoded values.
-					if( isWebkit && pageWidth >= 1370 || pageWidth <= railBreakPoint ) {
-						width -= this.scrollbarWidth;
-					}
-
-					// pass info about dropped rail to preview module
-					if( pageWidth <= railBreakPoint ) {
-						previewOptions.isRailDropped = true;
-					}
-				} );
-			}
-
-			// add article preview padding width
-			width += previewPadding;
-
-			// add width of scrollbar (BugId:35767)
-			width += this.scrollbarWidth;
-
-			var previewOptions = {
-				width: width,
-				scrollbarWidth: this.scrollbarWidth,
-				onPublishButton: function() {
-					$('#wpSave').click();
-				},
-				getPreviewContent: function(callback) {
-					self.getContent(function(content) {
-						self.getPreviewContent(content, extraData, callback);
-					});
+				if (config.isWidePage) {
+					// 980 px of content width on main pages / pages without right rail
+					width += 320 + (self.isGridLayout ? 20 : 0);
 				}
-			};
 
-			require(['wikia.preview'], function(preview) {
-				preview.renderPreview(previewOptions);
+				if (config.extraPageWidth) {
+					// wide wikis
+					width += config.extraPageWidth;
+				}
+
+				if ( wgOasisResponsive ) {
+						var pageWidth = $('#WikiaPage').width(),
+							widthArticlePadding = fluidlayout.getWidthGutter(),
+							railWidth = fluidlayout.getRightRailWidth(),
+							minWidth = fluidlayout.getMinArticleWidth();
+
+						// don't go below minimum width
+						if (pageWidth <= minWidth) {
+							pageWidth = minWidth;
+						}
+
+						// subtract rail width only in certain criteria
+						width = (config.isWidePage || pageWidth <= railBreakPoint) ? pageWidth : pageWidth - railWidth;
+
+						width -= widthArticlePadding;
+
+						// For Webkit browsers, when the responsive layout kicks in
+						// we have to subtract the width of the scrollbar. For more
+						// information, read: http://bit.ly/hhJpJg
+						// PS: this doesn't work between 1370-1384px because at that point
+						// the article page has a scrollbar and the edit page doesn't.
+						// Luckily, those screen resolutions are kind of an edge case.
+						// PSS: fuck scrollbars.
+						// TODO: we should have access to breakpoints and such in JavaScript
+						// as variables instead of hardcoded values.
+						if( isWebkit && pageWidth >= 1370 || pageWidth <= railBreakPoint ) {
+							width -= self.scrollbarWidth;
+						}
+				}
+
+				// add article preview padding width
+				width += previewPadding;
+
+				// add width of scrollbar (BugId:35767)
+				width += self.scrollbarWidth;
+
+				var previewOptions = {
+					width: width,
+					scrollbarWidth: self.scrollbarWidth,
+					onPublishButton: function() {
+						$('#wpSave').click();
+					},
+					getPreviewContent: function(callback) {
+						self.getContent(function(content) {
+							self.getPreviewContent(content, extraData, callback);
+						});
+					}
+				};
+
+				// pass info about dropped rail to preview module
+				if( pageWidth <= railBreakPoint ) {
+				// if it's a small screen or wide page pass to preview a flag to drop rail
+					previewOptions.isRailDropped = true;
+				}
+
+				// pass info about if it's a wide page (main page or page without right rail)
+				previewOptions.isWidePage = config.isWidePage;
+
+				require(['wikia.preview'], function(preview) {
+					preview.renderPreview(previewOptions);
+				});
 			});
-
 		},
 
 		// render "show diff" modal
