@@ -98,7 +98,6 @@ define( 'wikia.preview', [
 	 * @param options object containing dialog options, see method description for details
 	 */
 	function renderPreview(options) {
-
 		isRailDropped = (options.isRailDropped) ? true : false;
 
 		var dialogOptions = {
