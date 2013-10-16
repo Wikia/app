@@ -1419,7 +1419,11 @@ $config['ui_repo_api_js'] = array(
 		'//resources/wikia/modules/nirvana.js',
 		'//resources/wikia/modules/uifactory.js',
 		'//resources/wikia/libraries/mustache/mustache.js',
-		'//resources/wikia/modules/uicomponent.js'
+		'//resources/wikia/modules/uicomponent.js',
+
+		// examples of components
+		// TODO: move it probably to modal_sample.json to load additional assets on Special:Styleguide
+		'//resources/wikia/ui_components/modal/js/modal.sample.js',
 	)
 );
 
