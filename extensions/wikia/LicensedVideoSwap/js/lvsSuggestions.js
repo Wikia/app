@@ -3,7 +3,7 @@
  * thumbnails that are additional possible matches for the non-premium
  * video
  */
-define( 'lvs.suggestions', [ 'lvs.tracker' ], function( tracker ) {
+define( 'lvs.suggestions', [], function() {
 
 	"use strict";
 
@@ -21,10 +21,6 @@ define( 'lvs.suggestions', [ 'lvs.tracker' ], function( tracker ) {
 			} else {
 				$this.addClass( 'collapsed' );
 				$toggleDiv.slideUp();
-				tracker.track({
-					action: tracker.actions.CLICK,
-					label: tracker.labels.SUGGESTIONS
-				});
 			}
 
 		});
