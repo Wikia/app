@@ -13,14 +13,14 @@ define( 'lvs.suggestions', [ 'lvs.tracker' ], function( tracker ) {
 			var $this = $( this ),
 				$toggleDiv = $this.parent().next( '.more-videos' );
 
-			// Hide suggestions
-			if ( $this.hasClass( 'expanded' ) ) {
-				$this.removeClass( 'expanded' );
-				$toggleDiv.slideUp();
 			// Show suggestions
-			} else {
-				$this.addClass( 'expanded' );
+			if ( $this.hasClass( 'collapsed' ) ) {
+				$this.removeClass( 'collapsed' );
 				$toggleDiv.slideDown();
+			// Hide suggestions
+			} else {
+				$this.addClass( 'collapsed' );
+				$toggleDiv.slideUp();
 				tracker.track({
 					action: tracker.actions.CLICK,
 					label: tracker.labels.SUGGESTIONS
