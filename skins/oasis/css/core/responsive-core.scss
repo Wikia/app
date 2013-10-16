@@ -3,6 +3,7 @@
 @import "background";
 
 @import "../mixins/box-sizing";
+@import "../mixins/calc";
 
 @if ( $responsive-layout-enabled ) {
 	html {
@@ -171,8 +172,7 @@
 					position: absolute;
 					right: 53px;
 					width: auto;
-					width: -webkit-calc(100% - 53px); // <-- CSS3!
-					width: calc(100% - 53px); // <-- CSS3!
+					@include calc-shorthand('100% - 53px');
 				}
 
 				.wikia-button {
