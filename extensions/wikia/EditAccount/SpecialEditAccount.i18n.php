@@ -1744,11 +1744,11 @@ $messages['pms'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
-	'editaccount' => 'ګڼون سمول',
-	'editaccount-frame-manage' => 'يو ګڼون سمول',
+	'editaccount' => 'گڼون سمول',
+	'editaccount-frame-manage' => 'يو گڼون سمول',
 	'editaccount-frame-usage' => 'يادښت',
-	'editaccount-label-select' => 'يو کارن ګڼون وټاکۍ',
-	'editaccount-submit-account' => 'ګڼون مهارول',
+	'editaccount-label-select' => 'يو کارن گڼون وټاکۍ',
+	'editaccount-submit-account' => 'گڼون مهارول',
 	'editaccount-label-email' => 'نوې برېښليک پته ټاکل',
 	'editaccount-label-pass' => 'نوی پټنوم ټاکل',
 	'editaccount-label-realname' => 'نوی اصلي نوم ټاکل',
@@ -1759,8 +1759,8 @@ $messages['ps'] = array(
 	'editaccount-submit-close' => 'کارن حساب تړل',
 	'editaccount-submit-button' => 'خوندي کول',
 	'editaccount-status' => 'د پيغام دريځ',
-	'editaccount-nouser' => 'د "$1" ګڼون نشته!',
-	'editaccount-labal-account-status' => 'د ګڼون دريځ',
+	'editaccount-nouser' => 'د "$1" گڼون نشته!',
+	'editaccount-labal-account-status' => 'د گڼون دريځ',
 	'editaccount-labal-email-status' => 'د برېښليک دريځ',
 	'editaccount-status-tempuser' => 'لنډمهاله کارن',
 );

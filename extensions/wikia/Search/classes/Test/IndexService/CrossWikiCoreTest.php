@@ -29,7 +29,7 @@ class CrossWikiCoreTest extends BaseTest
 		$cats = [ 'cat' => 'meow' ];
 		$viz = [ 'viz' => 'graph' ];
 		$articles = [ 'art' => 'vandelay' ];
-		$licence  = ['commercial_use_allowed_b'=>false];
+		$licence  = ['commercial_use_allowed_b'=>true];
 
 		$service
 		    ->expects( $this->once() )
@@ -402,12 +402,12 @@ class CrossWikiCoreTest extends BaseTest
 		$res = $get->invoke( $service);
 
 		$this->assertTrue(is_array($res));
-		$this->assertFalse($res['commercial_use_allowed_b']);
+		$this->assertTrue($res['commercial_use_allowed_b']);
 
 		$res = $get->invoke( $service);
 
 		$this->assertTrue(is_array($res));
-		$this->assertFalse(array_key_exists('commercial_use_allowed_b',$res));
+		$this->assertFalse($res['commercial_use_allowed_b']);
 
 	}
 

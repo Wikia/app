@@ -51,6 +51,7 @@ files = [
 	//UI Repo JS API
 	'resources/wikia/modules/uicomponent.js',
 	'resources/wikia/modules/uifactory.js',
+	'resources/wikia/modules/csspropshelper.js',
 	'resources/wikia/modules/spec/*.spec.js',
 
 	//Advertisment
@@ -62,9 +63,9 @@ files = [
 	'extensions/wikia/AdEngine/js/AdLogicPageLevelParams.js',
 	'extensions/wikia/AdEngine/js/AdLogicPageLevelParamsLegacy.js',
 	'extensions/wikia/AdEngine/js/AdLogicPageDimensions.js',
-	'extensions/wikia/AdEngine/js/AdProviderAdDriver2.js',
 	'extensions/wikia/AdEngine/js/AdProviderEvolve.js',
 	'extensions/wikia/AdEngine/js/AdProviderGamePro.js',
+	'extensions/wikia/AdEngine/js/AdProviderGpt.js',
 	'extensions/wikia/AdEngine/js/AdProviderLater.js',
 	'extensions/wikia/AdEngine/js/AdProviderLiftium2Dom.js',
 	'extensions/wikia/AdEngine/js/AdProviderNull.js',
@@ -93,7 +94,7 @@ files = [
 	'extensions/wikia/TOC/js/modules/spec/toc.spec.js'
 
 	// Video
-	'extensions/wikia/VideoPageTool/js/views/switcher.js',
+	'extensions/wikia/VideoPageTool/js/views/jquery.switcher.js',
 	'extensions/wikia/VideoPageTool/js/spec/*.spec.js'
 ];
 

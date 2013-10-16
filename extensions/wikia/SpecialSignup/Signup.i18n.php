@@ -276,11 +276,12 @@ $messages['shi'] = array(
 );
 
 /** Swedish (svenska)
+ * @author Jopparn
  * @author Tobulos1
  */
 $messages['sv'] = array(
 	'signup-desc' => 'Lägger till alias [[{{#Special:Signup}}]] för [[{{#Special:UserLogin}}/signup]]',
-	'signup' => 'Registrera',
+	'signup' => 'Skapa ett konto',
 );
 
 /** Tamil (தமிழ்)

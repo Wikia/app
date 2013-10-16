@@ -53,7 +53,7 @@ ve.ui.ToolGroup = function VeUiToolGroup( toolbar, config ) {
 		'mouseover': ve.bind( this.onMouseOver, this ),
 		'mouseout': ve.bind( this.onMouseOut, this )
 	} );
-	ve.ui.toolFactory.connect( this, { 'register': 'onToolFactoryRegister' } );
+	this.toolbar.getToolFactory().connect( this, { 'register': 'onToolFactoryRegister' } );
 	ve.ui.triggerRegistry.connect( this, { 'register': 'onTriggerRegistryRegister' } );
 
 	// Initialization
@@ -267,7 +267,9 @@ ve.ui.ToolGroup.prototype.populate = function () {
 		names = {},
 		add = [],
 		remove = [],
-		list = ve.ui.toolFactory.getTools( this.include, this.exclude, this.promote, this.demote );
+		list = this.toolbar.getToolFactory().getTools(
+			this.include, this.exclude, this.promote, this.demote
+		);
 
 	// Build a list of needed tools
 	for ( i = 0, len = list.length; i < len; i++ ) {
@@ -276,7 +278,8 @@ ve.ui.ToolGroup.prototype.populate = function () {
 			tool = this.tools[name];
 			if ( !tool ) {
 				// Auto-initialize tools on first use
-				this.tools[name] = tool = ve.ui.toolFactory.create( name, this.toolbar );
+				this.tools[name] = tool =
+					this.toolbar.getToolFactory().create( name, this.toolbar );
 				this.updateToolTitle( name );
 			}
 			this.toolbar.reserveTool( name );
@@ -315,7 +318,7 @@ ve.ui.ToolGroup.prototype.destroy = function () {
 	var name;
 
 	this.clearItems();
-	ve.ui.toolFactory.disconnect( this );
+	this.toolbar.getToolFactory().disconnect( this );
 	for ( name in this.tools ) {
 		this.toolbar.releaseTool( name );
 		this.tools[name].disconnect( this ).destroy();

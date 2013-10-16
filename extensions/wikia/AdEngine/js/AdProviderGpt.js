@@ -1,6 +1,6 @@
 // TODO: move Wikia.Tracker outside
 
-var AdProviderGpt = function (tracker, log, window, Geo, slotTweaker, cacheStorage, adLogicHighValueCountry, wikiaGptRefresh) {
+var AdProviderGpt = function (tracker, log, window, Geo, slotTweaker, cacheStorage, adLogicHighValueCountry, wikiaGpt) {
 	'use strict';
 
 	var logGroup = 'AdProviderGpt',
@@ -55,7 +55,7 @@ var AdProviderGpt = function (tracker, log, window, Geo, slotTweaker, cacheStora
 		GPT_FLUSH: 'flushonly'
 	};
 
-	wikiaGptRefresh.init(slotMap);
+	wikiaGpt.init(slotMap);
 
 	// Private methods
 
@@ -107,7 +107,7 @@ var AdProviderGpt = function (tracker, log, window, Geo, slotTweaker, cacheStora
 		log('flushGpt', 5, logGroup);
 
 		gptFlushed = true;
-		wikiaGptRefresh.flushAds();
+		wikiaGpt.flushAds();
 	}
 
 	function fillInSlot(slot) {
@@ -226,7 +226,7 @@ var AdProviderGpt = function (tracker, log, window, Geo, slotTweaker, cacheStora
 
 		log('Use the new GPT library for ' + slotname, 5, logGroup);
 
-		wikiaGptRefresh.pushAd(slotname, success, error);
+		wikiaGpt.pushAd(slotname, success, error);
 
 		if (gptConfig[slotname] === 'flush' || gptFlushed) {
 			flushGpt();
