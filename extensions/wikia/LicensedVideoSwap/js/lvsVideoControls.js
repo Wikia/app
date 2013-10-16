@@ -2,8 +2,14 @@
  * Handle clicks on play buttons so they play the video
  */
 
-define( 'lvs.videocontrols', [ 'wikia.videoBootstrap', 'wikia.nirvana', 'jquery', 'lvs.tracker' ], function( VideoBootstrap, nirvana, $, tracker ) {
-	"use strict";
+define( 'lvs.videocontrols', [
+		'wikia.videoBootstrap',
+		'wikia.nirvana',
+		'jquery',
+		'lvs.tracker'
+	], function( VideoBootstrap, nirvana, $, tracker ) {
+
+	'use strict';
 
 	/* @var videoInstances
 	 * Keeps track of player instances on the page.  The element containing the
@@ -37,6 +43,16 @@ define( 'lvs.videocontrols', [ 'wikia.videoBootstrap', 'wikia.nirvana', 'jquery'
 		*/
 	}
 
+	function _syncVideoInteraction( title ) {
+		nirvana.sendRequest({
+			controller: 'LicensedVideoSwapSpecialController',
+			method: 'playVideo',
+			data: {
+				videoTitle: title
+			}
+		});
+	}
+
 	function init( $container ) {
 		var videoWidth = $container.find( '.grid-3' ).width();
 
@@ -52,6 +68,15 @@ define( 'lvs.videocontrols', [ 'wikia.videoBootstrap', 'wikia.nirvana', 'jquery'
 				$wrapper,
 				trackingRank = 0,
 				isPremium = 1;
+
+			/*
+			 * For all premium video plays that are 'new' to user, including plays from the 'more suggestions' thumbs
+			 * send a call to backend to persist and track user interaction, then hide 'New' flag
+			 */
+			if ( !$this.closest( '.non-premium' ).length && $row.find( '.new' ).is( ':visible' ) ) {
+				_syncVideoInteraction( fileTitle );
+				$row.find( '.new' ).fadeOut();
+			}
 
 			$row.find( '.swap-button' ).attr( 'data-video-swap', fileTitle );
 
@@ -147,5 +172,5 @@ define( 'lvs.videocontrols', [ 'wikia.videoBootstrap', 'wikia.nirvana', 'jquery'
 	return {
 		init: init,
 		reset: reset
-	}
+	};
 });

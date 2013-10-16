@@ -36,7 +36,7 @@ foreach ($videoList as $video):
 		<p><?= wfMessage('lvs-best-match-label')->plain() ?></p>
 		<? if ( !empty($best) ): ?>
 			<div class="video-wrapper">
-				<!-- <div class="new">New</div> -->
+				<div class="new">New</div>
 				<a href="<?= $best['fileUrl'] ?>" class="image video no-lightbox">
 					<?= $best['videoPlayButton'] ?>
 					<img alt="<?= $best['fileTitle'] ?>" src="<?= $best['thumbUrl'] ?>" width="<?= $thumbWidth ?>" height="<?= $thumbHeight ?>" data-video-name="<?= htmlspecialchars($best['fileTitle']) ?>" data-video-key="<?= htmlspecialchars(urlencode($best['title'])) ?>" class="Wikia-video-thumb thumbimage">
