@@ -72,7 +72,7 @@ $wgResourceModules += array(
 		),
 		'messages' => array(
 			'oasis-content-picture-added-by',
-			'visualeditor-wikiamediainsertbuttontool-label',
+			'visualeditor-wikia-mediainsertbuttontool-label',
 			'videohandler-video-views'
 		),
 		'dependencies' => array(

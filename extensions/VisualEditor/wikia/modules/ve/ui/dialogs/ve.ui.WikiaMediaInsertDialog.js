@@ -52,7 +52,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	this.removeButton.$.appendTo( this.$removePage );
 	this.insertButton = new ve.ui.ButtonWidget( {
 		'$$': this.$$,
-		'label': ve.msg( 'visualeditor-wikiamediainsertbuttontool-label' ),
+		'label': ve.msg( 'visualeditor-wikia-mediainsertbuttontool-label' ),
 		'flags': ['primary']
 	} );
 	this.insertionDetails = {};

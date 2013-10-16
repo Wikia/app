@@ -29,7 +29,7 @@ ve.ui.WikiaMediaInsertButtonTool.static.group = 'object';
 
 ve.ui.WikiaMediaInsertButtonTool.static.icon = 'media';
 
-ve.ui.WikiaMediaInsertButtonTool.static.titleMessage = 'visualeditor-wikiamediainsertbuttontool-label';
+ve.ui.WikiaMediaInsertButtonTool.static.titleMessage = 'visualeditor-wikia-mediainsertbuttontool-label';
 
 ve.ui.WikiaMediaInsertButtonTool.static.dialog = 'wikiaMediaInsert';
 
