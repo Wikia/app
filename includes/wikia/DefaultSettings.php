@@ -1158,7 +1158,6 @@ $wgEnableAdEngineExt = true;
 $wgAdDriverUseSevenOneMedia = false;
 
 /**
->>>>>>> ADEN-575 New wg variable: wgAdDriverUseSevenOneMedia
  * @name $wgAdVideoTargeting
  * Enables page-level video ad targeting
  */

@@ -83,6 +83,7 @@ var AdConfig2 = function (
 		}
 
 		if (useSevenOne) {
+			// All SevenOne Media ads are handled in the Later queue
 			return adProviderLater;
 		}
 
