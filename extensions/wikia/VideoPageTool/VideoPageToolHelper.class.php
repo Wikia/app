@@ -29,7 +29,7 @@ class VideoPageToolHelper extends WikiaModel {
 	public function getSections() {
 		$sections = array(
 			'featured' => wfMessage( 'videopagetool-section-featured' )->plain(),
-//			'category' => wfMessage( 'videopagetool-section-category' )->plain(),
+			'category' => wfMessage( 'videopagetool-section-category' )->plain(),
 //			'fan' => wfMessage( 'videopagetool-section-fan' )->plain(),
 		);
 
