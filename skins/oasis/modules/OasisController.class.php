@@ -207,7 +207,7 @@ class OasisController extends WikiaController {
 			$sassFilesUrl = $this->assetsManager->getSassesUrl($sassFiles);
 
 			$this->cssLinks = Html::linkedStyle($sassFilesUrl) . $this->cssLinks;
-			$this->bottomScripts .= Html::inlineScript("var wgSassLoadedScss = JSON.parse('".json_encode($sassFiles)."');");;
+			$this->bottomScripts .= Html::inlineScript("var wgSassLoadedScss = ".json_encode($sassFiles).";");
 		} else {
 			$this->cssLinks = Html::linkedStyle($this->assetsManager->getSassCommonURL($mainSassFile)) . $this->cssLinks;
 		}
