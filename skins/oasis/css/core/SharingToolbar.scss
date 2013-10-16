@@ -1,5 +1,6 @@
 @import "color";
 @import "layout";
+@import "responsive-variables";
 @import "../mixins/border-radius";
 
 $share-background-color: transparentize($color-page, 0.65);
@@ -7,22 +8,23 @@ $share-background-color: transparentize($color-page, 0.65);
 	$share-background-color: transparentize($color-page, 0.7);
 }
 
+$toolbar-width: 55px;
+$toolbar-padding: 3px;
+
 .SharingToolbar {
 	@include border-radius(5px);
 	background-color: $share-background-color;
-	padding: 3px;
+	padding: $toolbar-padding;
 	position: absolute;
-	left: $width-outside + 8px;
+	right: -($toolbar-width + 2 * $toolbar-padding + 8px); //width + padding + margin
 	top: 10px;
-	min-width: 55px;
+	min-width: $toolbar-width;
 	&.fixed {
-		left: 50%;
 		position: fixed;
-		margin-left: ($width-outside/2) + 7px;
 	}
 	&.hidden {
 		visibility: hidden;
-		left: 0px;
+		right: 0px;
 	}
 	&.loading {
 		background: $share-background-color url(/skins/common/images/ajax.gif) no-repeat 50% 50%; /* $wgCdnStylePath */
@@ -54,17 +56,42 @@ $share-background-color: transparentize($color-page, 0.65);
 
 @if ( $responsive-layout-enabled ) {
 	// Move the sharing toolbar when it's not enough space for it on the right page margin
-	@media screen and (max-width: 1185px) {
-		.SharingToolbar {
-			right: 8px;
-			left: initial;
+
+	.SharingToolbar {
+		@media screen and (max-width: 1185px) {
+			right: 7px;
 			top: 52px;
 			z-index: 3;
-			width: 56px;
+			width: $toolbar-width;
 			background-color: rgba(255,255,255,0.7);
 
 			@media screen and (max-width: 1023px) {
 				top: 116px;
+			}
+			&.fixed {
+				top: 50px;
+			}
+		}
+
+		&.fixed {
+			@media screen and (min-width: 1023px) {
+				left: 50%;
+				right: initial;
+			}
+			@media screen and (max-width: 1185px) {
+				margin-left: ( $width-outside / 2 ) - $toolbar-width - (2 * $toolbar-padding) - 7px;
+			}
+			@media screen and (min-width: 1186px) and (max-width: $breakpoint-fluid) {
+				margin-left: ( $width-outside / 2 ) + 7px;
+			}
+			@media screen and (min-width: $breakpoint-max) {
+				margin-left: ( $width-outside-max / 2 ) + 7px;
+			}
+
+			@media screen and (min-width: $breakpoint-fluid) and (max-width: $breakpoint-max) {
+				left: initial;
+				margin-left: 0;
+				right: ($width-adskins / 2) - $toolbar-width - 13px;
 			}
 		}
 	}
