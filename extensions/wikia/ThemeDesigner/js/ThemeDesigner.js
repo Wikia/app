@@ -22,7 +22,7 @@ var ThemeDesigner = {
 		// themes
 		this.themes = window.themes;
 
-		//$().log(ThemeDesigner, 'ThemeDesigner')'
+		//$().log(ThemeDesigner, 'ThemeDesigner');
 
 		// handle navigation clicks - switching between tabs
 		$("#Navigation a").click(that.navigationClick);
