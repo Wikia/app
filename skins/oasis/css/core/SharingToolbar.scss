@@ -85,7 +85,6 @@ $toolbar-placing-breakpoint: 1185px;
 			}
 			@media screen and (max-width: $toolbar-placing-breakpoint) {
 				margin-left: ( $width-outside / 2 ) - $toolbar-width - (2 * $toolbar-padding) - 7px;
-				//margin-left: ($width-outside / 2) - $toolbar-width - 37px;
 			}
 			@media screen and (min-width: $breakpoint-max) {
 				margin-left: ( $width-outside-max / 2 ) + 7px;

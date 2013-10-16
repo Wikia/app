@@ -5,16 +5,18 @@ var $window = $( window ),
 	Wikia = window.Wikia || {};
 
 var SharingToolbar = {
+	buttonHeight: 0,
 	init: function( options ) {
 		this.$button = options.button;
 		this.$toolbar = options.toolbar;
+		this.buttonHeight = this.$button.height();
 
 		// Bind events
 		this.$button.bind('click', $.proxy(this.toggleToolbar, this));
 		this.$toolbar.find('.email-link').bind('click', this.onEmailClick);
 	},
 	onScroll: function() {
-		var fixed = $window.scrollTop() >= this.$button.offset().top - 20;
+		var fixed = $window.scrollTop() >= this.$button.offset().top - this.buttonHeight;
 		this.$toolbar.toggleClass('fixed', fixed);
 	},
 	onEmailClick: function(ev) {
