@@ -91,7 +91,7 @@ files = [
 
 	//TOC
 	'extensions/wikia/TOC/js/modules/toc.js',
-	'extensions/wikia/TOC/js/modules/spec/toc.spec.js'
+	'extensions/wikia/TOC/js/modules/spec/toc.spec.js',
 
 	// Video
 	'extensions/wikia/VideoPageTool/js/views/jquery.switcher.js',
