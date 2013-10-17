@@ -124,7 +124,7 @@ $background-is-wide-backward-compatible: if( $background-width > $breakpoint-flu
 			left: 50%;
 			margin-left: $background-margin;
 		}
-	
+
 		.background-image-gradient {
 			&:after {
 				margin-right: $gradient-offset;
