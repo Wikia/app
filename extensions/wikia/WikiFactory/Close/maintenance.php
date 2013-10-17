@@ -140,7 +140,7 @@ class CloseWikiMaintenance {
 				if( $dbname && $folder ) {
 					$source = $this->tarFiles( $folder, $dbname, $cityid );
 					if( $source ) {
-                        $retval = DumpsOnDemand::putToAmazonS3( $source, !$hide );
+                        $retval = DumpsOnDemand::putToAmazonS3( $source, !$hide,  MimeMagic::singleton()->guessMimeType( $source ) );
 						if( $retval > 0 ) {
 							$this->log( "putToAmazonS3 command failed." );
 							echo "Can't copy images to remote host. Please, fix that and rerun";
