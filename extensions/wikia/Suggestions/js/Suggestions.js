@@ -1,7 +1,9 @@
-require( [ "jquery", "client", "wikia.log" ], function( $, client, log ) {
-	log("New search suggestions loading...", log.levels.info, "suggestions");
+require( [ 'jquery', 'client', 'wikia.log' ], function( $, client, log ) {
+	'use strict';
+	log('New search suggestions loading...', log.levels.info, 'suggestions');
 	$(function() {
-		var SuggestionsViewModel = function() {};
+		var SuggestionsViewModel = function() {},
+			SuggestionsView;
 		SuggestionsViewModel.prototype = {
 			inUse: true,
 			setUse: function( inUse ) {
@@ -16,18 +18,18 @@ require( [ "jquery", "client", "wikia.log" ], function( $, client, log ) {
 				if (!query && this.query === query || !this.inUse) { return; }
 				this.query = query;
 				this.sendQuery();
-				this.trigger( "query changed", query );
+				this.trigger( 'query changed', query );
 			},
 
 			setWiki: function( wiki ) {
 				this.wiki = wiki;
 				this.sendQuery();
-				this.trigger( "wiki changed", wiki );
+				this.trigger( 'wiki changed', wiki );
 			},
 
 			sendQuery: function() {
-				var self = this;
-				var sentQuery = this.query;
+				var self = this,
+					sentQuery = this.query;
 				client.getSuggestions( this.wiki, this.query, function(res) {
 					self.setResults(res, sentQuery);
 				} );
@@ -35,18 +37,18 @@ require( [ "jquery", "client", "wikia.log" ], function( $, client, log ) {
 
 			setResults: function( results, sentQuery ) {
 				//trigger only for the last sent query
-				if ( sentQuery == this.query ) {
-					log("result set for: " + sentQuery, log.levels.info, "suggestions");
+				if ( sentQuery === this.query ) {
+					log('result set for: ' + sentQuery, log.levels.info, 'suggestions');
 					this.results = results;
 					this.setDisplayResults( results );
-					this.trigger( "results changed", results );
+					this.trigger( 'results changed', results );
 				}
 			},
 
 
 			setDisplayResults: function( results ) {
 				this.displayResults = (results || []).slice(0, 8);
-				this.trigger( "displayResults changed", results );
+				this.trigger( 'displayResults changed', results );
 			},
 			getDisplayResults: function( ) {
 				return this.displayResults;
@@ -59,41 +61,45 @@ require( [ "jquery", "client", "wikia.log" ], function( $, client, log ) {
 				this._ev[event].push( cb );
 			},
 			trigger: function( ev, value ) {
-				var handlers = this._ev[ev] || {};
-				for( var i in handlers ) {
+				var handlers = this._ev[ev] || {},
+					i;
+				for( i in handlers ) {
 					try {
 						handlers[i](value);
 					} catch(ex) {
-						log(ex, log.levels.info, "suggestions");
+						log(ex, log.levels.info, 'suggestions');
 					}
 				}
 			}
 		};
 
-		var SuggestionsView = function( viewModel, searchInput, dropdown, wikiId ) {
-			var ads = $("[id$='TOP_RIGHT_BOXAD']"),
+		SuggestionsView = function( viewModel, searchInput, dropdown, wikiId ) {
+			var ads = $('[id$=\'TOP_RIGHT_BOXAD\']'),
 				self = this;
 			self.buildTitleMarkup = function( result ) {
 				if ( result.match && ( result.match.type === 'title' ) ) {
-					return result.match.prefix + '<b class="match">' + result.match.match + '</b>' + result.match.suffix;
+					return result.match.prefix + '<b class="match">' +result.match.match + '</b>' +
+						result.match.suffix;
 				} else {
 					return result.title;
 				}
-			}
+			};
 
 			self.buildRedirectMarkup = function( result ) {
 				if ( result.match && ( result.match.type === 'redirect' ) ) {
-					return '<span class="redirect"><span class="redirect-from">Redirect from:</span>' + result.match.prefix + '<b class="match">' + result.match.match + '</b>' + result.match.suffix + "</span>";
+					return '<span class="redirect"><span class="redirect-from">Redirect from: </span>' +
+						result.match.prefix + '<b class="match">' + result.match.match + '</b>' +
+						result.match.suffix + '</span>';
 				} else {
 					return '';
 				}
-			}
+			};
 
 			self.setAsMainSuggestions = function( name ) {
 				if ( window.Wikia.autocomplete && window.Wikia.autocomplete[name] ) {
 					window.Wikia.autocomplete[name].inUse = false;
 				}
-			}
+			};
 
 			self.setOldSuggestionsOn = function( name ) {
 				if ( window.Wikia.autocomplete && window.Wikia.autocomplete[name] ) {
@@ -103,32 +109,36 @@ require( [ "jquery", "client", "wikia.log" ], function( $, client, log ) {
 				self.showAds();
 				dropdown.empty();
 				viewModel.setUse( false );
-			}
+			};
 
 			self.hideAds = function() {
 				ads.each(function() {
 					$(this).children().css('margin-left', '-9999px');
 				});
-			}
+			};
 
 			self.showAds = function() {
 				ads.each(function() {
 					$(this).children().css('margin-left', 'auto');
 				});
-			}
+			};
 
-			viewModel.on( "displayResults changed", function() {
-				var results = viewModel.getDisplayResults();
+			viewModel.on( 'displayResults changed', function() {
+				var results = viewModel.getDisplayResults(),
+					html, res, i;
 				dropdown.empty();
 				if ( !viewModel.getUse() ) { return; }
-				for( var i in results ) {
-					var res = results[i];
-					var html = '<li>' +
+				for( i in results ) {
+					res = results[i];
+					html = '<li>' +
 						'<a href="' + res.path + '">' +
 						'<img class="search-suggest-image" src="' + res.thumbnail + '" />' +
+						'<div class="wraper">' +
+						'<div class="block">' +
 						'<span class="title">' + self.buildTitleMarkup( res ) + '</span>' +
 						self.buildRedirectMarkup( res ) +
-						'<span class="abstract">' + res.summary + '</span>' +
+						'</div>' +
+						'</div>' +
 						'</a>' +
 						'</li>';
 					$(html).appendTo(dropdown);
@@ -139,19 +149,19 @@ require( [ "jquery", "client", "wikia.log" ], function( $, client, log ) {
 					self.showAds();
 				}
 			});
-			searchInput.on( "blur", function() {
+			searchInput.on( 'blur', function() {
 				setTimeout( function() {
 					self.showAds();
 					dropdown.empty();
 				}, 100 );
 			});
-			searchInput.on( "keypress", function () {
+			searchInput.on( 'keypress', function () {
 				window.setTimeout(function() {
 					var value = searchInput.val();
 					viewModel.setQuery( value );
 				}, 0);
 			});
-			searchInput.on( "keyup", function () {
+			searchInput.on( 'keyup', function () {
 				var value = searchInput.val();
 				viewModel.setQuery( value );
 			});
@@ -160,8 +170,13 @@ require( [ "jquery", "client", "wikia.log" ], function( $, client, log ) {
 			}
 			updateWiki();
 		};
-		window.Wikia.newSearchSuggestions = new SuggestionsView( new SuggestionsViewModel(), $('input[name="search"]'), $('ul.search-suggest'), wgCityId );
-		log("New search suggestions loaded!", log.levels.info, "suggestions");
+		window.Wikia.newSearchSuggestions = new SuggestionsView(
+			new SuggestionsViewModel(),
+			$('input[name="search"]'),
+			$('ul.search-suggest'),
+			wgCityId
+		);
+		log('New search suggestions loaded!', log.levels.info, 'suggestions');
 		window.Wikia.newSearchSuggestions.setAsMainSuggestions( 'search' );
 	});
 });
