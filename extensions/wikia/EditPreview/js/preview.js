@@ -247,10 +247,13 @@ define( 'wikia.preview', [
 			cssTransformOrigin = cssPropHelper.getSupportedProp('transform-origin'),
 			scaleVar = 'scale(' + scaleRatio + ')';
 
-		if( isWidePage && type === 'min' ) {
-			$article.addClass( 'minWidthPreview' );
-		} else if( isWidePage && type !== 'min' ) {
-			$article.removeClass( 'minWidthPreview' );
+		if( isWidePage ) {
+		// DAR-2506 make the preview works like correctly for main pages
+			 if( type === 'min' ) {
+				$article.addClass( 'minWidthPreview' );
+			 } else {
+				$article.removeClass( 'minWidthPreview' );
+			 }
 		}
 
 		if (selectedPreviewWidth > articleWrapperWidth) {
