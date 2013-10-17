@@ -1,7 +1,8 @@
-define("suggest_matcher", [], function() {
+define('suggest_matcher', [], function() {
+	'use strict';
 	function testChar( character ) {
 		// todo change regex to match solr logic
-		return character.match(/[_\-)(*&^%$#@!\s:"<>(){}\[\]?\/"']+/) != null;
+		return character.match(/[_\-)(*&^%$#@!\s:"<>(){}\[\]?\/"']+/) !== null;
 	}
 	function getChar( character ) {
 		return testChar( character ) ? '' : character.toLocaleLowerCase();
@@ -13,20 +14,24 @@ define("suggest_matcher", [], function() {
 			if( title.length <= from+len ) {
 				return null;
 			}
-			if( getChar(title[from+len]) !== getChar(pattern[patternPos]) ) return null;
-			if( testChar(title[from+len]) )
+			if( getChar(title[from+len]) !== getChar(pattern[patternPos]) ) { return null; }
+			if( testChar(title[from+len]) ) {
 				do { len++; } while( from+len < title.length && testChar(title[from+len]) );
-			else len++;
-			if( testChar(pattern[patternPos]) )
+			} else {
+				len++;
+			}
+			if( testChar(pattern[patternPos]) ) {
 				do { patternPos++; } while( patternPos < pattern.length && testChar(pattern[patternPos]) );
-			else patternPos++;
+			} else {
+				patternPos++;
+			}
 		}
 
 		return {
 			prefix: title.substr(0, from),
 			match: title.substr(from, len),
 			suffix: title.substr(from + len)
-		}
+		};
 	}
 	return {
 		/**
@@ -35,13 +40,14 @@ define("suggest_matcher", [], function() {
 		 * @return {*}
 		 */
 		match: function( title, pattern ) {
-			var prevTest = true;
-			for( var position = 0; position < title.length; position++ ) {
+			var prevTest = true,
+				match, position;
+			for( position = 0; position < title.length; position++ ) {
 				if( testChar( title[position] ) ) {
 					prevTest = true;
 				} else {
 					if ( prevTest ) {
-						var match = matchStartingFrom( title, pattern, position );
+						match = matchStartingFrom( title, pattern, position );
 						if ( match ) {
 							return match;
 						}
@@ -59,18 +65,18 @@ define("suggest_matcher", [], function() {
 		 * @return {*}
 		 */
 		matchSuggestion: function( suggestion, pattern ) {
-			var matchResult;
+			var redirects = suggestion.redirects || [],
+				matchResult, i;
 			if ( ( matchResult = this.match( suggestion.title, pattern ) ) ) {
-				matchResult.type = "title";
+				matchResult.type = 'title';
 				return matchResult;
 			}
-			var redirects = suggestion.redirects || [];
-			for ( var i = 0; i< redirects.length; i++ ) {
+			for ( i = 0; i< redirects.length; i++ ) {
 				if ( ( matchResult = this.match( redirects[i], pattern ) ) ) {
-					matchResult.type = "redirect";
+					matchResult.type = 'redirect';
 					return matchResult;
 				}
 			}
 		}
-	}
+	};
 });
