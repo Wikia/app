@@ -81,6 +81,7 @@ class RunOnCluster extends Maintenance {
 	protected $class;
 	protected $method;
 	protected $db;
+	protected $master;
 
 	/**
 	 * Define available options
@@ -90,6 +91,7 @@ class RunOnCluster extends Maintenance {
 		$this->mDescription = "Run generic code on a single cluster from on PHP process";
 		$this->addOption( 'test', 'Test mode; make no changes', false, false, 't' );
 		$this->addOption( 'verbose', 'Show extra debugging output', false, false, 'v' );
+		$this->addOption( 'master' , 'Connect to the master DB rather than the slave', false, false, 'a' );
 		$this->addOption( 'cluster', 'Which cluster to run on', false, true, 'c' );
 		$this->addOption( 'class', 'The class with code to run', false, true, 'l' );
 		$this->addOption( 'method', 'Which method to run', false, true, 'm' );
@@ -103,6 +105,7 @@ class RunOnCluster extends Maintenance {
 		// Collect options
 		$this->test    = $this->hasOption('test') ? true : false;
 		$this->verbose = $this->hasOption('verbose') ? true : false;
+		$this->master  = $this->hasOption('master') ? true : false;
 		$this->cluster = $this->getOption('cluster', '1');
 		$this->class   = $this->getOption('class', 'ClusterTestClass');
 		$this->method  = $this->getOption('method', 'testCode');
@@ -114,6 +117,10 @@ class RunOnCluster extends Maintenance {
 			echo "== TEST MODE ==\n";
 		}
 		$this->debug("(debugging output enabled)\n");
+
+		if ( $this->master ) {
+			echo "-- RUNNING ON MASTER --\n";
+		}
 
 		// If there's an include file, make sure it exists
 		if ( $file ) {
@@ -200,8 +207,10 @@ class RunOnCluster extends Maintenance {
 	 * @return bool
 	 */
 	private function initDBHandle() {
+		$target = $this->master ? DB_MASTER : DB_SLAVE;
+
 		$name = 'wikicities_c'.$this->cluster;
-		$this->db = wfGetDB( DB_SLAVE, array(), $name );
+		$this->db = wfGetDB( $target, array(), $name );
 
 		return $this->db ? true : false;
 	}
