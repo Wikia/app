@@ -241,13 +241,12 @@ define( 'wikia.preview', [
 	 */
 
 	function scalePreview(type) {
-		var	initialPreviewWidth = articleWrapperWidth,
-			selectedPreviewWidth = previewTypes[type].value,
-			scaleRatio = initialPreviewWidth / selectedPreviewWidth,
+		var selectedPreviewWidth = previewTypes[type].value,
+			scaleRatio = articleWrapperWidth / selectedPreviewWidth,
 			cssTransform = cssPropHelper.getSupportedProp('transform'),
 			cssTransformOrigin = cssPropHelper.getSupportedProp('transform-origin');
 
-		if (selectedPreviewWidth > initialPreviewWidth) {
+		if (selectedPreviewWidth > articleWrapperWidth) {
 			var scaleVar = 'scale(' + scaleRatio + ')';
 			$article.css(cssTransformOrigin, 'left top');
 			$article.css(cssTransform , scaleVar);
