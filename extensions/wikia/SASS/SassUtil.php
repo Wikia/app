@@ -76,7 +76,8 @@ class SassUtil {
 							__LINE__,
 							'$settings',
 							str_replace( "\n", '\n', var_export( $settings, true ) )
-						)
+						),
+						true
 					);
 				}
 			}
@@ -109,7 +110,8 @@ class SassUtil {
 								__LINE__,
 								'$settings',
 								str_replace( "\n", '\n', var_export( $settings, true ) )
-							)
+							),
+							true
 						);
 					}
 
