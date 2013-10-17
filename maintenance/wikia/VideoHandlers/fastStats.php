@@ -19,6 +19,7 @@ class FastStats {
 
 		$num_matching = 0;
 		$total_matches = 0;
+		$countedPages = array();
 		while ( $row = $db->fetchObject($result) ) {
 			$info = unserialize( $row->props );
 			$num_matching++;
