@@ -78,7 +78,7 @@
 				height: 210px;
 			}
 			.explanatory-copy {
-				@include calc-shorthand('100% - 620px');
+				@include width-calc('100% - 620px');
 				color: mix($color-page, $color-text, 30%);
 				float: left;
 				line-height: 1.4em;
