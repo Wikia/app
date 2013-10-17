@@ -185,7 +185,8 @@ class CF_Http
 
         if (in_array((strtolower (substr(PHP_OS, 0,3))), $OS_CAFILE_NONUPDATED))
             $this->ssl_use_cabundle();
-        
+
+		wfDebug(__METHOD__ . ": connected\n"); // Wikia change
     }
 
     function ssl_use_cabundle($path=NULL)
@@ -1421,7 +1422,6 @@ class CF_Http
             throw new ConnectionNotOpenException (
                 "Connection is not open."
                 );
-        
         switch ($method) {
         case "COPY":
             curl_setopt($this->connections[$conn_type],
@@ -1498,10 +1498,12 @@ class CF_Http
     
     function close()
     {
-        foreach ($this->connections as $cnx) {
+		wfDebug(__METHOD__ . "\n"); // Wikia change
+
+        foreach ($this->connections as $type => $cnx) {
             if (isset($cnx)) {
                 curl_close($cnx);
-                $this->connections[$cnx] = NULL;
+                $this->connections[$type] = NULL;
             }
         }
     }
