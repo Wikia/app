@@ -8,6 +8,6 @@ $messages['en'] = array(
 		'wikia-nlp-desc' => 'Extension for interacting with natural language data.'
 );
 
-$messages['qq'] = array(
+$messages['qqq'] = array(
 		'wikia-nlp-desc' => 'Extension description'
 );
