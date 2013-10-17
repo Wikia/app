@@ -1,80 +1,143 @@
-.search-suggest {
-	-webkit-box-shadow: 0px 0px 6px 0px #b3d4fc;
-	box-shadow: 0px 0px 6px 0px #b3d4fc;
-
-	background-color: #ffffff;
-	list-style: none;
-	margin: 0;
-	padding: 0;
-	position: absolute;
-	top: 35px;
-	width: 515px;
-}
-
-.search-suggest > li,
-.search-suggest > li > a {
-	clear: both;
-	display: block;
-}
-
-.search-suggest > li > a {
-	color: #136CB2;
-	cursor: pointer;
-	height: 50px;
-	padding: 5px 8px;
-	position: relative;
-	text-decoration: none;
-}
-
-.search-suggest > li > a:hover {
-	background: #136CB2;
-	color: white;
-}
+@import "skins/oasis/css/core/color";
 
 .search-suggest-image {
 	float: left;
-	margin-right: 6px;
-	width: 50px;
 	height: 50px;
+	margin: 10px;
+	width: 50px;
 }
 
-.search-suggest .title {
-	display: block;
-	font-weight: bold;
-	height: 20px;
-	overflow: hidden;
+.search-suggest {
+	background-color: $color-module-background;
+	border-bottom-left-radius: 2px;
+	border-bottom-right-radius: 2px;
+	box-shadow: 1px 1px 10px white;
+	left: -60px;
+	margin-top: 13px;
+	position: relative;
+	width: 385px;
+	a {
+		color: $color-text;
+	}
+	li {
+		border: 1px solid;
+		border-top: none;
+		display: block;
+		height: 70px;
+	}
+	li:first-child {
+		border-top: 1px solid;
+	}
+	li:first-child:before, li:first-child:after {
+		border-bottom: 10px solid #ffffff;
+		border-left: 10px solid transparent;
+		border-right: 10px solid transparent;
+		color: transparent;
+		content: "";
+		height: 0;
+		left: 193px;
+		position: absolute;
+		top: -10px;
+		width: 0;
+	}
+	li:first-child:after {
+		border-bottom:  11px solid $color-module-background;
+		border-left: 11px solid transparent;
+		border-right: 11px solid transparent;
+		left: 192px;
+		top: -8px;
+	}
+	li:hover {
+		background-color: lightgray;
+	}
+	li:first-child:hover:after {
+		border-bottom:  11px solid lightgray;
+		border-left: 11px solid transparent;
+		border-right: 11px solid transparent;
+		left: 192px;
+		top: -8px;
+	}
+	.all {
+		a {
+			display: block;
+		}
+		border-bottom-left-radius: 2px;
+		border-bottom-right-radius: 2px;
+		font-size: 14px;
+		font-weight: bold;
+		height: 30px;
+		line-height: 30px;
+		text-align: center;
+	}
+	.block {
+		bottom: 0;
+		height: 50%;
+		margin: auto;
+		position: absolute;
+		top: 0;
+	}
+	.match {
+		color: $color-links;
+		font-weight: bold;
+	}
+	.redirect {
+		display: block;
+		font-size: 12px;
+		height: 14px;
+		margin-top: 7px;
+		overflow: hidden;
+	}
+	.title {
+		display: block;
+		font-size: 14px;
+		font-weight: bold;
+	}
+	.wraper {
+		float: right;
+		height: 70px;
+		position: relative;
+		width: 313px;
+	}
 }
 
-.search-suggest .match {
-	font-weight: bold;
-	color: black;
-}
-
-.search-suggest .redirect {
-	-webkit-box-shadow: -5px 0px 5px #ffffff;
-	-moz-box-shadow: -5px 0px 5px #ffffff;
-	box-shadow: -5px 0px 5px #ffffff;
-
-	color: #bbb;
-	background-color: white;
-	font-size: 0.8em;
+.wraper:before, .wraper:after {
+	border-bottom: 8px solid transparent;
+	border-left: 8px solid #ffffff;
+	border-top: 8px solid transparent;
+	color: transparent;
+	content: "";
+	height: 0;
+	left: 295px;
 	position: absolute;
-	padding-right: 10px;
-	padding-top: 5px;
-	right: 0;
-	top: 3px;
-}
-.search-suggest a:hover .redirect {
-	-webkit-box-shadow: -5px 0px 5px #136CB2;
-	-moz-box-shadow: -5px 0px 5px #136CB2;
-	box-shadow: -5px 0px 5px #136CB2;
-
-	color: #bbb;
-	background-color: #136CB2;
+	top: 27px;
+	width: 0;
 }
 
-.search-suggest .abstract {
-	display: block;
-	font-size: 10px;
-	overflow: hidden;
+.wraper:after {
+	border-bottom: 6px solid transparent;
+	border-left: 6px solid $color-module-background;
+	border-top: 6px solid transparent;
+	left: 293px;
+	top: 29px;
+}
+
+.wraper:hover:before, .wraper:hover:after {
+	border-bottom: 8px solid transparent;
+	border-left: 8px solid black;
+	border-top: 8px solid transparent;
+	color: transparent;
+	content: "";
+	height: 0;
+	left: 295px;
+	position: absolute;
+	top: 27px;
+	width: 0;
+}
+
+.wraper:hover:after {
+	border-bottom: 6px solid transparent;
+	border-left: 6px solid lightgray;
+	border-top: 6px solid transparent;
+	left: 293px;
+	top: 29px;
 }
