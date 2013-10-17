@@ -48,5 +48,6 @@ jQuery(function( $ ) {
 
 	$( window )
 		.on( 'resize', $.debounce( 50, scan ) )
-		.on( 'WikiaBarStateChanged WikiaBarReady', updateFloatingScrollbar );
+		.on( 'wikiaTabClicked WideTablesScan', scan )
+		.on( 'WikiaBarStateChanged WikiaBarReady UpdateFloatingScrollbar', updateFloatingScrollbar );
 });
