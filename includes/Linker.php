@@ -1675,11 +1675,21 @@ class Linker {
 	 */
 	public static function tocList( $toc, $lang = false ) {
 		$title = wfMsgExt( 'toc', array( 'language' => $lang, 'escape' ) );
-		return
-		   '<table id="toc" class="toc"><tr><td>'
-		 . '<div id="toctitle"><h2>' . $title . "</h2></div>\n"
-		 . $toc
-		 . "</ul>\n</td></tr></table>\n";
+
+		/* Wikia change begin - @author: nAndy/Rafal */
+
+		$toc = '<table id="toc" class="toc"><tr><td>'
+			. '<div id="toctitle"><h2>' . $title . "</h2></div>\n"
+			. $toc
+			. "</ul>\n</td></tr></table>\n";
+
+		/* Create new entry point for JS generated TOC */
+		wfRunHooks('Linker::overwriteTOC', [ &$title, &$toc ]);
+
+		return $toc;
+
+		/* Wikia change end */
+
 	}
 
 	/**
