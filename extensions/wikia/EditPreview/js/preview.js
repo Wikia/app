@@ -247,6 +247,12 @@ define( 'wikia.preview', [
 			cssTransformOrigin = cssPropHelper.getSupportedProp('transform-origin'),
 			scaleVar = 'scale(' + scaleRatio + ')';
 
+		if( isWidePage && type === 'min' ) {
+			$article.addClass( 'minWidthPreview' );
+		} else if( isWidePage && type !== 'min' ) {
+			$article.removeClass( 'minWidthPreview' );
+		}
+
 		if (selectedPreviewWidth > articleWrapperWidth) {
 			$article.css(cssTransformOrigin, 'left top');
 			$article.css(cssTransform , scaleVar);
@@ -289,7 +295,7 @@ define( 'wikia.preview', [
 					value: articleMaxWidth - 2 * articleMargin + rightRailWidth
 				}
 			};
-		} else {
+		 } else {
 			previewTypes = {
 				current: {
 					name: 'current',
