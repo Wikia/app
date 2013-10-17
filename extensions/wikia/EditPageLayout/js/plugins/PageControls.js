@@ -54,8 +54,7 @@
 
 		// init page controls widget
 		init: function() {
-			var pageControls = $('#EditPageRail .module_page_controls'),
-				menu = pageControls.find('nav');
+			var pageControls = $('#EditPageRail .module_page_controls');
 
 			this.categories = $('#categories');
 			this.textarea = pageControls.find('textarea');
@@ -103,7 +102,7 @@
 				$('#EditPageTitle').
 					// show it only when hovering over #EditPageHeader
 					addClass('enabled').
-					bind('click', this.proxy(function(ev) {
+					bind('click', this.proxy(function() {
 						this.renderHiddenFieldsDialog();
 					}));
 
@@ -206,8 +205,7 @@
 
 		// send AJAX request
 		ajax: function(method, params, callback) {
-			var editor = typeof RTE == 'object'? RTE.getInstance() : false,
-				mode = editor ? editor.mode : 'mw';
+			var editor = typeof RTE == 'object'? RTE.getInstance() : false;
 
 			params = $.extend({
 				page: wgEditPageClass ? wgEditPageClass:"",
