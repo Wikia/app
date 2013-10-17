@@ -91,12 +91,13 @@ class RailController extends WikiaController {
 			}
 
 			if (!empty($sassFiles)) {
-				$excludeScss = $this->getRequest()->getVal('excludeScss', []);
-				if (!is_array($excludeScss)) {
-					$excludeScss = [$excludeScss];
-				}
+				$excludeScss = (array) $this->getRequest()->getVal('excludeScss', []);
+				$sassFilePath = (array) $assetManager->getSassFilePath($sassFiles);
+				$includeScss = array_diff($sassFilePath, $excludeScss);
 
-				$this->css[] = $assetManager->getSassesUrl(array_diff($assetManager->getSassFilePath($sassFiles), $excludeScss));
+				if (!empty($includeScss)) {
+					$this->css[] = $assetManager->getSassesUrl($includeScss);
+				}
 			}
 
 			// Do not load user and site jses as they are already loaded and can break page
