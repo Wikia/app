@@ -158,15 +158,15 @@ $button-icon-color: white;
 		padding-right: 10px;
 
 		&:before {
-			@include arrow(5px, $color-text, 'down');
+			@include arrow(5px, $color-text, 'up');
 			content: "";
 			display: block;
 			float: right;
 			margin-top: 6px;
 			margin-left: 5px;
 		}
-		&.expanded:before {
-			@include arrow(5px, $color-text, 'up');
+		&.collapsed:before {
+			@include arrow(5px, $color-text, 'down');
 		}
 	}
 	.grid-3 {
@@ -182,7 +182,6 @@ $button-icon-color: white;
 	.more-videos {
 		@include clearfix;
 		clear:both;
-		display: none;
 		padding-top: 20px;
 		width: 100%; // needed for smooth jQuery animation
 		&:before {
