@@ -270,7 +270,10 @@ define( 'wikia.preview', [
 	 */
 
 	function getPreviewTypes( isWidePage ) {
-		var previewTypes = null;
+		var previewTypes = null,
+			articleMinWidth = fluidlayout.getMinArticleWidth(),
+			articleMaxWidth = fluidlayout.getMaxArticleWidth(),
+			widthPadding = fluidlayout.getWidthPadding();
 
 		if( isWidePage ) {
 			previewTypes = {
@@ -280,11 +283,11 @@ define( 'wikia.preview', [
 				},
 				min: {
 					name: 'min',
-					value: fluidlayout.getMinArticleWidth() - articleMargin + rightRailWidth
+					value: articleMinWidth - 2 * articleMargin + rightRailWidth
 				},
 				max: {
 					name:'max',
-					value: fluidlayout.getMaxArticleWidth() - articleMargin + rightRailWidth
+					value: articleMaxWidth - 2 * articleMargin + rightRailWidth
 				}
 			};
 		} else {
@@ -295,11 +298,11 @@ define( 'wikia.preview', [
 				},
 				min: {
 					name: 'min',
-					value: fluidlayout.getMinArticleWidth() - 2 * articleMargin
+					value: articleMinWidth - 2 * widthPadding
 				},
 				max: {
 					name:'max',
-					value: fluidlayout.getMaxArticleWidth() - 2 * articleMargin
+					value: articleMaxWidth - 2 * widthPadding
 				}
 			}
 		}
