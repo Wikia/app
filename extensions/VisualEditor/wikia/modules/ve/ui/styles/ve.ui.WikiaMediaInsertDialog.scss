@@ -1,3 +1,4 @@
+@import "skins/oasis/css/core/color";
 @import "skins/oasis/css/core/layout";
 @import "skins/oasis/css/mixins/box-sizing";
 
@@ -20,7 +21,7 @@ $width-cart: 100px;
 /* Cart */
 .ve-ui-wikiaCartWidget-wrapper {
 	@include box-sizing( border-box );
-	border-left: #DDD 1px solid;
+	border-left: $color-page-border 1px solid;
 	bottom: 0;
 	overflow: auto;
 	padding: $width-gutter;
