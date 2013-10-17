@@ -56,6 +56,7 @@ class SassUtil {
 	 */
 	public static function getOasisSettings() {
 		global $wgOasisThemes, $wgContLang;
+		global $wgEnableSassUtilLogging;
 		wfProfileIn(__METHOD__);
 
 		// Load the 5 deafult colors by theme here (eg: in case the wiki has an override but the user doesn't have overrides).
@@ -64,6 +65,22 @@ class SassUtil {
 		if (empty($oasisSettings)) {
 			$themeSettings = new ThemeSettings();
 			$settings = $themeSettings->getSettings();
+
+			if ( !empty( $wgEnableSassUtilLogging ) ) {
+				if ( empty( $settings["background-image-width"] ) || empty( $settings["background-image-height"] ) ) {
+					Wikia::log(
+						__METHOD__,
+						false,
+						sprintf( "In %s@%s, %s has value %s",
+							__CLASS__,
+							__LINE__,
+							'$settings',
+							str_replace( "\n", '\n', var_export( $settings, true ) )
+						),
+						true
+					);
+				}
+			}
 
 			$oasisSettings["color-body"] = self::sanitizeColor($settings["color-body"]);
 			$oasisSettings["color-page"] = self::sanitizeColor($settings["color-page"]);
@@ -83,6 +100,20 @@ class SassUtil {
 				if ( !empty($bgImage) ) {
 					$settings["background-image-width"] = $oasisSettings["background-image-width"] = $bgImage->getWidth();
 					$settings["background-image-height"] = $oasisSettings["background-image-height"] = $bgImage->getHeight();
+
+					if ( !empty( $wgEnableSassUtilLogging ) ) {
+						Wikia::log(
+							__METHOD__,
+							false,
+							sprintf( "In %s@%s (to be set), %s has value %s",
+								__CLASS__,
+								__LINE__,
+								'$settings',
+								str_replace( "\n", '\n', var_export( $settings, true ) )
+							),
+							true
+						);
+					}
 
 					$themeSettings->saveSettings($settings);
 				}
