@@ -77,12 +77,12 @@ var AdProviderSevenOneMedia = function (adLogicPageLevelParams, scriptWriter, lo
 		log(['shiftQueue', slotname], 'info', logGroup);
 
 		scriptWriter.injectScriptByText(
-			slotname + '-postponed',
+			slotname,
 			'myAd.insertAd(' + JSON.stringify(deSlotname) + ');',
 			function () {
 				setTimeout(function () {
 					log(['finish Ad', deSlotname], 'info', logGroup);
-					myAd.finishAd(deSlotname, 'move');
+					myAd.finishAd(deSlotname);
 					log(['finish Ad', deSlotname, 'done'], 'info', logGroup);
 
 					// Start TOP_BUTTON_WIDE if leaderboard is of standard size
@@ -128,7 +128,6 @@ var AdProviderSevenOneMedia = function (adLogicPageLevelParams, scriptWriter, lo
 		}
 
 		// Markup updates
-		$('body').append('<div id="ads-postponed"></div>');
 		$('#TOP_BUTTON_WIDE').remove();
 		$('#ad-popup1').after('<div id="TOP_BUTTON_WIDE"></div>');
 
@@ -255,9 +254,6 @@ var AdProviderSevenOneMedia = function (adLogicPageLevelParams, scriptWriter, lo
 
 		// Add slot-dependent vars
 		setVars(slotMap[slotname].vars);
-
-		// Add postponed container
-		$('#ads-postponed').append($('<div class="ad-wrapper"></div>').attr('id', slotname + '-postponed'));
 
 		// Queue for filling in
 		slotsQueue.push(slotname);
