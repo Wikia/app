@@ -244,10 +244,10 @@ define( 'wikia.preview', [
 		var selectedPreviewWidth = previewTypes[type].value,
 			scaleRatio = articleWrapperWidth / selectedPreviewWidth,
 			cssTransform = cssPropHelper.getSupportedProp('transform'),
-			cssTransformOrigin = cssPropHelper.getSupportedProp('transform-origin');
+			cssTransformOrigin = cssPropHelper.getSupportedProp('transform-origin'),
+			scaleVar = 'scale(' + scaleRatio + ')';
 
 		if (selectedPreviewWidth > articleWrapperWidth) {
-			var scaleVar = 'scale(' + scaleRatio + ')';
 			$article.css(cssTransformOrigin, 'left top');
 			$article.css(cssTransform , scaleVar);
 		} else {
@@ -303,7 +303,7 @@ define( 'wikia.preview', [
 					name:'max',
 					value: articleMaxWidth - 2 * widthPadding
 				}
-			}
+			};
 		}
 
 		return previewTypes;
