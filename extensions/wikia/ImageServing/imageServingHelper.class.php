@@ -15,18 +15,11 @@ class ImageServingHelper {
 	 */
 	public static function onLinksUpdateComplete( $linksUpdate ) {
 		wfProfileIn(__METHOD__);
-		$images = $linksUpdate->getImages();
+
 		$articleId = $linksUpdate->getTitle()->getArticleID();
+		$images = array_keys($linksUpdate->getImages());
+		self::buildIndex( $articleId, $images);
 
-		if(count($images) === 1) {
-			$images = array_keys($images);
-			self::buildIndex( $articleId, $images);
-			wfProfileOut(__METHOD__);
-			return true;
-		}
-
-		$article = new Article($linksUpdate->getTitle());
-		self::buildAndGetIndex( $article );
 		wfProfileOut(__METHOD__);
 		return true;
 	}
