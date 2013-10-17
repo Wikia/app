@@ -78,7 +78,7 @@ require( [ 'jquery', 'client', 'wikia.log' ], function( $, client, log ) {
 				self = this;
 			self.buildTitleMarkup = function( result ) {
 				if ( result.match && ( result.match.type === 'title' ) ) {
-					return result.match.prefix + '<b class="match">' +result.match.match + '</b>' +
+					return result.match.prefix + '<span class="match">' +result.match.match + '</span>' +
 						result.match.suffix;
 				} else {
 					return result.title;
@@ -88,11 +88,15 @@ require( [ 'jquery', 'client', 'wikia.log' ], function( $, client, log ) {
 			self.buildRedirectMarkup = function( result ) {
 				if ( result.match && ( result.match.type === 'redirect' ) ) {
 					return '<span class="redirect"><span class="redirect-from">Redirect from: </span>' +
-						result.match.prefix + '<b class="match">' + result.match.match + '</b>' +
+						result.match.prefix + '<span class="match">' + result.match.match + '</span>' +
 						result.match.suffix + '</span>';
 				} else {
 					return '';
 				}
+			};
+
+			self.buildSeeAllResultsMarkup = function() {
+				return '<li class="all"><a href="#"><span>See all results</span></a></li>';
 			};
 
 			self.setAsMainSuggestions = function( name ) {
@@ -125,7 +129,7 @@ require( [ 'jquery', 'client', 'wikia.log' ], function( $, client, log ) {
 
 			viewModel.on( 'displayResults changed', function() {
 				var results = viewModel.getDisplayResults(),
-					html, res, i;
+					html, res, i, $el;
 				dropdown.empty();
 				if ( !viewModel.getUse() ) { return; }
 				for( i in results ) {
@@ -144,6 +148,9 @@ require( [ 'jquery', 'client', 'wikia.log' ], function( $, client, log ) {
 					$(html).appendTo(dropdown);
 				}
 				if ( results.length ) {
+					html = self.buildSeeAllResultsMarkup();
+					$el = $(html).appendTo(dropdown);
+					$el.click( function() { $('#WikiaSearch').submit(); } );
 					self.hideAds();
 				} else {
 					self.showAds();

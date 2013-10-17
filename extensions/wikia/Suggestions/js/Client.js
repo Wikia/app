@@ -5,19 +5,42 @@ define('client', ['jquery', 'suggest_matcher', 'wikia.log'], function($, matcher
 		pending = {},
 		errors = 0,
 		uid = new Date().getTime();
+
+	function writeToCache(key, data) {
+		cache[ key ] = data;
+	}
+	function getFromCache(key) {
+		if(cache[key]) {
+			log( key + 'from cache: ', log.levels.info, 'suggestions' );
+			return cache[key];
+		} else {
+			return false;
+		}
+	}
+	function isPending(key) {
+		if (pending[key]) {
+			return true;
+		} else {
+			pending[key] = true;
+			return false;
+		}
+	}
+	function notPending(key) {
+		pending[key] = false;
+	}
+
 	return {
 		getSuggestions: function( wiki, query, cb ) {
-			var cacheKey = wiki + '_' + query;
-			if ( cache[cacheKey] ) {
-				log( cacheKey + 'from cache: ', log.levels.info, 'suggestions' );
-				cb( cache[cacheKey] );
+			var cacheKey = wiki + '_' + query,
+				data;
+			if( (data = getFromCache(cacheKey)) ) {
+				cb( data );
 			} else {
 				if ( !wiki || !query || query === '' ) {
 					cb( [] );
 					return;
 				}
-				if ( pending[cacheKey] ) return;
-				pending[cacheKey] = true;
+				if ( isPending(cacheKey) ) { return; }
 				$.getJSON( 'http://db-sds-s1/web/api/search-suggest',
 					{
 						q: query,
@@ -37,7 +60,7 @@ define('client', ['jquery', 'suggest_matcher', 'wikia.log'], function($, matcher
 							}
 							suggestion.match = matchResult;
 						}
-						cache[cacheKey] = response;
+						writeToCache(cacheKey, response);
 						cb(response);
 					}).fail( function() {
 						//wait for at least two errors, before switching to old suggestions
@@ -47,7 +70,7 @@ define('client', ['jquery', 'suggest_matcher', 'wikia.log'], function($, matcher
 						}
 					}).always( function() {
 						log('Not pending anymore: ' + query, log.levels.info, 'suggestions');
-						pending[cacheKey] = false;
+						notPending(cacheKey);
 					});
 			}
 		}
