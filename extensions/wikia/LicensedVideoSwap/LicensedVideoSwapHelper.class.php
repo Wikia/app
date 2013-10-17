@@ -10,13 +10,12 @@ use NlpTools\Tokenizers\WhitespaceAndPunctuationTokenizer, NlpTools\Stemmers\Por
  */
 class LicensedVideoSwapHelper extends WikiaModel {
 
-	const STATUS_KEEP = 1;
-	const STATUS_SWAP_NORM = 2;
-	const STATUS_SWAP_EXACT = 3;
-	const STATUS_KEEP_FOREVER = 4;
-	const STATUS_SWAPPABLE = 5;
-	const STATUS_NEW_KEEP = 6;          // kept videos with new suggestions
-	const STATUS_NEW_SWAPPABLE = 7;     // swappable videos with new suggestions
+	const STATUS_KEEP = 1;            // set bit to 1 = kept video
+	const STATUS_SWAP = 2;            // set bit to 1 = swapped video
+	const STATUS_EXACT = 4;           // set bit to 0 = normal swap, 1 = swap with an exact match
+	const STATUS_SWAPPABLE = 8;       // set bit to 1 = video with suggestions
+	const STATUS_NEW = 16;            // set bit to 1 = video with new suggestions
+	const STATUS_FOREVER = 32;        // set bit to 1 = no more matches
 
 	/**
 	 * Duration variation in seconds
@@ -60,11 +59,6 @@ class LicensedVideoSwapHelper extends WikiaModel {
 	 */
 	protected $jaccard;
 
-	// list of status that can be displayed in Special:LicensedVideoSwap page
-	protected static $displayList = array(
-		self::STATUS_SWAPPABLE, self::STATUS_NEW_KEEP, self::STATUS_NEW_SWAPPABLE,
-	);
-
 	/**
 	 * Gets a list of videos that have not yet been swapped (e.g., no decision to keep or not keep the
 	 * original video has been made)
@@ -88,7 +82,11 @@ class LicensedVideoSwapHelper extends WikiaModel {
 		// in the video_swap table
 		$statusProp = WPP_LVS_STATUS;
 		$pageNS = NS_FILE;
-		$swappableStatus = implode( ',', self::$displayList );
+		$statusSwappable = self::STATUS_SWAPPABLE;
+		$statusSwap = self::STATUS_SWAP;
+		$statusForever = self::STATUS_FOREVER;
+		$statusKeep = self::STATUS_KEEP;
+		$statusNew = self::STATUS_NEW;
 		$offset = ( $page - 1 ) * $limit;
 
 		// Get the right sorting
@@ -105,7 +103,9 @@ class LicensedVideoSwapHelper extends WikiaModel {
 			FROM video_info
 			JOIN page ON video_title = page_title AND page_namespace = $pageNS
 			LEFT JOIN page_wikia_props ON page.page_id = page_wikia_props.page_id
-				AND propname = $statusProp AND props in ($swappableStatus)
+				AND propname = $statusProp AND (props & $statusSwappable != 0)
+				AND (props & $statusSwap = 0) AND (props & $statusForever = 0)
+				AND !((props & $statusKeep != 0) AND (props & $statusNew = 0))
 			WHERE removed = 0 AND premium = 0 AND page_wikia_props.page_id is not null
 			ORDER BY $order
 			LIMIT $limit
@@ -145,14 +145,20 @@ SQL;
 		// in the video_swap table
 		$statusProp = WPP_LVS_STATUS;
 		$pageNS = NS_FILE;
-		$swappableStatus = implode( ',', self::$displayList );
+		$statusSwappable = self::STATUS_SWAPPABLE;
+		$statusSwap = self::STATUS_SWAP;
+		$statusForever = self::STATUS_FOREVER;
+		$statusKeep = self::STATUS_KEEP;
+		$statusNew = self::STATUS_NEW;
 
 		$sql = <<<SQL
 			SELECT count(*) as total
 			FROM video_info
 			JOIN page ON video_title = page_title AND page_namespace = $pageNS
 			LEFT JOIN page_wikia_props ON page.page_id = page_wikia_props.page_id
-				AND propname = $statusProp AND props in ($swappableStatus)
+				AND propname = $statusProp AND (props & $statusSwappable != 0)
+				AND (props & $statusSwap = 0) AND (props & $statusForever = 0)
+				AND !((props & $statusKeep != 0) AND (props & $statusNew = 0))
 			WHERE removed = 0 AND premium = 0 AND page_wikia_props.page_id is not null
 SQL;
 
@@ -215,7 +221,7 @@ SQL;
 
 				$videoDetail['seeMoreLink'] = $seeMoreLink;
 
-				$videoDetail['confirmKeep'] = ( $videoInfo['status'] == self::STATUS_NEW_KEEP );
+				$videoDetail['confirmKeep'] = ( $this->isStatusKeep( $videoInfo['status'] ) && $this->isStatusNew( $videoInfo['status'] ) );
 
 				$videos[] = $videoDetail;
 			} else {
@@ -322,12 +328,11 @@ SQL;
 		}
 
 		// flag for kept video
-		$isKeptVideo = $this->isKept( $articleId );
+		$pageStatus = $this->getPageStatus( $articleId );
 
 		$videos = array();
 		$count = 0;
-		$isNewKeep = false;
-		$isNewSwappable = false;
+		$isNew = false;
 
 		$titleTokenized = $this->getNormalizedTokens( $readableTitle );
 
@@ -340,19 +345,19 @@ SQL;
 			$videoTitle = preg_replace( '/.+File:/', '', urldecode( $videoInfo['url'] ) );
 
 			// skip if the video has already been suggested (from kept videos)
-			if ( $isKeptVideo ) {
+			if ( $this->isStatusKeep( $pageStatus ) ) {
 				if ( array_key_exists( $videoTitle, $historicalSuggestions ) ) {
 					continue;
 				} else {
-					$isNewKeep = true;
+					$isNew = true;
 				}
 			}
 
 			// skip if the video exists in the current suggestions
 			if ( array_key_exists( $videoTitle, $suggestTitles ) ) {
 				continue;
-			} else if ( !$isNewKeep ) {
-				$isNewSwappable = true;
+			} else {
+				$isNew = true;
 			}
 
 			// get video detail
@@ -393,12 +398,8 @@ SQL;
 				wfSetWikiaPageProp( WPP_LVS_SUGGEST, $articleId, $videos );
 
 				// set page status
-				if ( !$this->isSwapped( $articleId ) && !$this->isKeptForever( $articleId ) ) {
-					if ( $isNewKeep ) {
-						$this->setPageStatusNewKeep( $articleId );
-					} else if ( $isNewSwappable ) {
-						$this->setPageStatusNewSwappable( $articleId );
-					}
+				if ( !$this->isStatusSwap( $pageStatus ) && !$this->isStatusForever( $pageStatus ) && $isNew ) {
+					$this->setPageStatusNew( $articleId );
 				}
 			}
 		}
@@ -435,90 +436,219 @@ SQL;
 	}
 
 	/**
-	 * Set the LVS status info of this file page to swapped
+	 * Set flag in status
+	 * @param integer $status
+	 * @param integer $flag
+	 */
+	protected function setFlag( &$status, $flag ) {
+		$status |= $flag;
+	}
+
+	/**
+	 * Clear flag in status
+	 * @param integer $status
+	 * @param integer $flag
+	 */
+	protected function clearFlag( &$status, $flag ) {
+		$status &= ~$flag;
+	}
+
+	/**
+	 * Check if the flag is set in status
+	 * @param integer $status
+	 * @param integer $flag
+	 * @return boolean
+	 */
+	protected function isFlagSet( $status, $flag ) {
+		return ( $status & $flag );
+	}
+
+	/**
+	 * Set the LVS status of the file page
+	 * @param integer $articleId - The ID of a video's file page
+	 * @param integer $value
+	 */
+	public function setPageStatus( $articleId, $value = 0 ) {
+		wfSetWikiaPageProp( WPP_LVS_STATUS, $articleId, $value );
+	}
+
+	/**
+	 * Set the LVS status info of the file page
+	 * @param integer $articleId - The ID of a video's file page
+	 * @param array $value
+	 */
+	public function setPageStatusInfo( $articleId, $value = array() ) {
+		wfSetWikiaPageProp( WPP_LVS_STATUS_INFO, $articleId, $value );
+	}
+
+	/**
+	 * Get normal swap status
+	 * @return integer
+	 */
+	public function getStatusSwapNorm() {
+		return ( self::STATUS_SWAP & ~self::STATUS_EXACT );
+	}
+
+	/**
+	 * Get swap with exact match status
+	 * @return integer
+	 */
+	public function getStatusSwapExact() {
+		return ( self::STATUS_SWAP | self::STATUS_EXACT );
+	}
+
+	/**
+	 * Get keep status
+	 * @return integer $status
+	 */
+	public function getStatusKeep( $isForever = false ) {
+		$status = self::STATUS_KEEP;
+		if ( $isForever ) {
+			$status |= self::STATUS_FOREVER;
+		}
+		return $status;
+	}
+
+	/**
+	 * Set the LVS status info of the file page to swapped
 	 * @param integer $articleId - The ID of a video's file page
 	 * @param array $value
 	 */
 	public function setPageStatusInfoSwap( $articleId, $value = array() ) {
-		wfSetWikiaPageProp( WPP_LVS_STATUS_INFO, $articleId, $value );
+		$value['status'] = $this->getStatusSwapNorm();
+		$value['created'] = time();
+		$value['userid'] = $this->wg->User->getId();
+		$this->setPageStatusInfo( $articleId, $value );
 	}
 
 	/**
-	 * Set the LVS status of this file page to swapped
+	 * Set the LVS status info of the file page to swapped with an exact match
 	 * @param integer $articleId - The ID of a video's file page
 	 * @param array $value
 	 */
-	public function setPageStatusSwap( $articleId, $value = array() ) {
-		$value['status'] =  self::STATUS_SWAP_NORM;
+	public function setPageStatusInfoSwapExact( $articleId, $value = array() ) {
+		$value['status'] = $this->getStatusSwapExact();
 		$value['created'] = time();
 		$value['userid'] = $this->wg->User->getId();
-		wfSetWikiaPageProp( WPP_LVS_STATUS_INFO, $articleId, $value );
-		wfSetWikiaPageProp( WPP_LVS_STATUS, $articleId, $value['status'] );
+		$this->setPageStatusInfo( $articleId, $value );
 	}
 
 	/**
-	 * Set the LVS status of this file page to swapped with an exact match
+	 * Set the LVS status info of the file page to kept
 	 * @param integer $articleId - The ID of a video's file page
 	 * @param array $value
+	 * @param boolean $isForever
 	 */
-	public function setPageStatusSwapExact( $articleId, $value = array() ) {
-		$value['status'] =  self::STATUS_SWAP_EXACT;
+	public function setPageStatusInfoKeep( $articleId, $value = array(), $isForever = false ) {
+		// set status info
+		$value['status'] = $this->getStatusKeep( $isForever );
 		$value['created'] = time();
 		$value['userid'] = $this->wg->User->getId();
-		wfSetWikiaPageProp( WPP_LVS_STATUS_INFO, $articleId, $value );
-		wfSetWikiaPageProp( WPP_LVS_STATUS, $articleId, $value['status'] );
+		$this->setPageStatusInfo( $articleId, $value );
 	}
 
 	/**
-	 * Set the LVS status of this file page to kept
+	 * Set the LVS status of the file page to swapped
+	 * @param integer $newArticleId - The ID of the new video's file page
 	 * @param integer $articleId - The ID of a video's file page
-	 * @param array $value
 	 */
-	public function setPageStatusKeep( $articleId, $value = array() ) {
-		$value['created'] = time();
-		$value['userid'] = $this->wg->User->getId();
-		wfSetWikiaPageProp( WPP_LVS_STATUS_INFO, $articleId, $value );
-		wfSetWikiaPageProp( WPP_LVS_STATUS, $articleId, $value['status'] );
+	public function setPageStatusSwap( $newArticleId, $articleId ) {
+		$status = $this->getPageStatus( $articleId );
+		$this->setFlag( $status, $this->getStatusSwapNorm() );
+		$this->clearFlag( $status, self::STATUS_KEEP );
+		$this->clearFlag( $status, self::STATUS_EXACT );
+		$this->clearFlag( $status, self::STATUS_NEW );
+		$this->clearFlag( $status, self::STATUS_FOREVER );
+		$this->setPageStatus( $newArticleId, $status );
 	}
 
 	/**
-	 * Set the LVS status of this file page to swappable
+	 * Set the LVS status of the file page to swapped with an exact match
+	 * @param integer $newArticleId - The ID of the new video's file page
+	 * @param integer $articleId - The ID of a video's file page
+	 */
+	public function setPageStatusSwapExact( $newArticleId, $articleId ) {
+		$status = $this->getPageStatus( $articleId );
+		$this->setFlag( $status, $this->getStatusSwapExact() );
+		$this->clearFlag( $status, self::STATUS_KEEP );
+		$this->clearFlag( $status, self::STATUS_NEW );
+		$this->clearFlag( $status, self::STATUS_FOREVER );
+		$this->setPageStatus( $newArticleId, $status );
+	}
+
+	/**
+	 * Set the LVS status of the file page to kept
+	 * @param integer $articleId - The ID of a video's file page
+	 * @param boolean $isForever
+	 */
+	public function setPageStatusKeep( $articleId, $isForever = false ) {
+		$status = $this->getPageStatus( $articleId );
+		$this->setFlag( $status, $this->getStatusKeep( $isForever ) );
+		$this->clearFlag( $status, self::STATUS_SWAP );
+		$this->clearFlag( $status, self::STATUS_EXACT );
+		$this->clearFlag( $status, self::STATUS_NEW );
+		if ( !$isForever ) {
+			$this->clearFlag( $status, self::STATUS_FOREVER );
+		}
+		$this->setPageStatus( $articleId, $status );
+	}
+
+	/**
+	 * Set the LVS status of the file page to swappable
 	 * @param integer $articleId - The ID of a video's file page
 	 * @param array $value
 	 */
 	public function setPageStatusSwappable( $articleId ) {
-		wfSetWikiaPageProp( WPP_LVS_STATUS, $articleId, self::STATUS_SWAPPABLE );
+		$status = $this->getPageStatus( $articleId );
+		$this->setFlag( $status, self::STATUS_SWAPPABLE );
+		$this->setPageStatus( $articleId, $status );
 	}
 
 	/**
-	 * Set the LVS status of this file page to new for kept videos
+	 * Set the LVS status of the file page to new for kept videos
 	 * @param integer $articleId - The ID of a video's file page
 	 * @param array $value
 	 */
-	public function setPageStatusNewKeep( $articleId ) {
-		wfSetWikiaPageProp( WPP_LVS_STATUS, $articleId, self::STATUS_NEW_KEEP );
+	public function setPageStatusNew( $articleId ) {
+		$status = $this->getPageStatus( $articleId );
+		$this->setFlag( $status, self::STATUS_NEW );
+		$this->setPageStatus( $articleId, $status );
 	}
 
 	/**
-	 * Set the LVS status of this file page to new for swappable videos
-	 * @param integer $articleId - The ID of a video's file page
-	 * @param array $value
+	 * Clear new status for the LVS status of the file page
+	 * @param type $articleId
 	 */
-	public function setPageStatusNewSwappable( $articleId ) {
-		wfSetWikiaPageProp( WPP_LVS_STATUS, $articleId, self::STATUS_NEW_SWAPPABLE );
+	public function clearPageStatusNew( $articleId ) {
+		$status = $this->getPageStatus( $articleId );
+		$this->clearFlag( $status, self::STATUS_NEW );
+		$this->setPageStatus( $articleId, $status );
 	}
 
 	/**
-	 * delete the LVS status and status info of this file page
+	 * Clear the LVS status of the file page - Status: keep, swap, exact, new, forever status
+	 * @param integer $articleId
+	 */
+	public function clearPageStatus( $articleId ) {
+		$status = $this->getPageStatus( $articleId );
+		$this->clearFlag( $status, self::STATUS_KEEP );
+		$this->clearFlag( $status, self::STATUS_SWAP );
+		$this->clearFlag( $status, self::STATUS_EXACT );
+		$this->clearFlag( $status, self::STATUS_NEW );
+		$this->clearFlag( $status, self::STATUS_FOREVER );
+		$this->setPageStatus( $articleId, $status );
+	}
+
+	/**
+	 * delete the LVS status of the file page
 	 * @param type $articleId
 	 */
 	public function deletePageStatus( $articleId ) {
 		wfDeleteWikiaPageProp( WPP_LVS_STATUS, $articleId );
-		wfDeleteWikiaPageProp( WPP_LVS_STATUS_INFO, $articleId );
 	}
 
 	/**
-	 * Delete the LVS status info of this file page
+	 * Delete the LVS status info of the file page
 	 * @param type $articleId
 	 */
 	public function deletePageStatusInfo( $articleId ) {
@@ -526,21 +656,130 @@ SQL;
 	}
 
 	/**
-	 * Get the status of this file page
+	 * Get the status of the file page
 	 * @param integer $articleId
-	 * @return array|null
+	 * @return integer|null
 	 */
 	public function getPageStatus( $articleId ) {
-		return  wfGetWikiaPageProp( WPP_LVS_STATUS, $articleId );
+		return wfGetWikiaPageProp( WPP_LVS_STATUS, $articleId );
 	}
 
 	/**
-	 * Get the LVS status info of this file page [STATUS_KEEP, STATUS_SWAP_EXACT, STATUS_SWAP_NORM]
+	 * Get the LVS status info of the file page
 	 * @param integer $articleId
 	 * @return array|null
 	 */
 	public function getPageStatusInfo( $articleId ) {
 		return  wfGetWikiaPageProp( WPP_LVS_STATUS_INFO, $articleId );
+	}
+
+	/**
+	 * Check if the video is swapped from status info
+	 * @param integer $articleId
+	 * @return boolean $status
+	 */
+	public function isSwapped( $articleId ) {
+		$pageStatus = $this->getPageStatusInfo( $articleId );
+		$status = ( !empty( $pageStatus['status'] ) && $this->isStatusSwap( $pageStatus['status'] ) );
+
+		return $status;
+	}
+
+	/**
+	 * Check if the video is kept from status info
+	 * @param integer $articleId
+	 * @return boolean $status
+	 */
+	public function isKept( $articleId ) {
+		$pageStatus = $this->getPageStatusInfo( $articleId );
+		$status = ( !empty( $pageStatus['status'] ) && $this->isStatusKeep( $pageStatus['status'] ) );
+
+		return $status;
+	}
+
+	/**
+	 * Check if the video is kept forever from status info
+	 * @param integer $articleId
+	 * @return boolean $status
+	 */
+	public function isKeptForever( $articleId ) {
+		$pageStatus = $this->getPageStatusInfo( $articleId );
+		$status = ( !empty( $pageStatus['status'] )
+					&& $this->isStatusKeep( $pageStatus['status'] ) && $this->isStatusForever( $pageStatus['status'] ) );
+
+		return $status;
+	}
+
+	/**
+	 * Check if the status is kept
+	 * @param integer $status
+	 * @return boolean
+	 */
+	public function isStatusKeep( $status ) {
+		return $this->isFlagSet( $status, self::STATUS_KEEP );
+	}
+
+	/**
+	 * Check if the status is swap
+	 * @param integer $status
+	 * @return boolean
+	 */
+	public function isStatusSwap( $status ) {
+		return $this->isFlagSet( $status, self::STATUS_SWAP );
+	}
+
+	/**
+	 * Check if the status is exact match
+	 * @param integer $status
+	 * @return boolean
+	 */
+	public function isStatusExact( $status ) {
+		return $this->isFlagSet( $status, self::STATUS_EXACT );
+	}
+
+	/**
+	 * Check if the status is swap and not exact match
+	 * @param integer $status
+	 * @return boolean
+	 */
+	public function isStatusSwapNorm( $status ) {
+		return ( $this->isStatusSwap( $status ) && !$this->isStatusExact( $status ) );
+	}
+
+	/**
+	 * Check if the status is swap and exact match
+	 * @param integer $status
+	 * @return boolean
+	 */
+	public function isStatusSwapExact( $status ) {
+		return ( $this->isStatusSwap( $status ) && $this->isStatusExact( $status ) );
+	}
+
+	/**
+	 * Check if the status is swappable (the video has suggestions)
+	 * @param integer $status
+	 * @return boolean
+	 */
+	public function isStatusSwappable( $status ) {
+		return $this->isFlagSet( $status, self::STATUS_SWAPPABLE );
+	}
+
+	/**
+	 * Check if the status is new (the video has new suggestions)
+	 * @param integer $status
+	 * @return boolean
+	 */
+	public function isStatusNew( $status ) {
+		return $this->isFlagSet( $status, self::STATUS_NEW );
+	}
+
+	/**
+	 * Check if the status is forever
+	 * @param integer $status
+	 * @return boolean
+	 */
+	public function isStatusForever( $status ) {
+		return $this->isFlagSet( $status, self::STATUS_FOREVER );
 	}
 
 	/**
@@ -576,54 +815,6 @@ SQL;
 	public function addLog( $title, $action, $reason = '' ) {
 		$user = $this->wg->User;
 		RecentChange::notifyLog( wfTimestampNow(), $title, $user, '', '', RC_EDIT, $action, $title, $reason, '' );
-	}
-
-	/**
-	 * Check if the video is swapped
-	 * @param integer $articleId
-	 * @return boolean $status
-	 */
-	public function isSwapped( $articleId ) {
-		$pageStatus = $this->getPageStatus( $articleId );
-		$status = ( !empty( $pageStatus ) && ( $pageStatus == self::STATUS_SWAP_EXACT || $pageStatus == self::STATUS_SWAP_NORM ) );
-
-		return $status;
-	}
-
-	/**
-	 * Check if the video is kept
-	 * @param integer $articleId
-	 * @return boolean $status
-	 */
-	public function isKept( $articleId ) {
-		$pageStatus = $this->getPageStatus( $articleId );
-		$status = ( !empty( $pageStatus ) && ( $pageStatus == self::STATUS_KEEP || $pageStatus == self::STATUS_NEW_KEEP ) );
-
-		return $status;
-	}
-
-	/**
-	 * Check if the video is kept forever
-	 * @param integer $articleId
-	 * @return boolean $status
-	 */
-	public function isKeptForever( $articleId ) {
-		$pageStatus = $this->getPageStatus( $articleId );
-		$status = ( !empty( $pageStatus ) && $pageStatus == self::STATUS_KEEP_FOREVER );
-
-		return $status;
-	}
-
-	/**
-	 * Check if the video has new suggestions
-	 * @param integer $articleId
-	 * @return boolean $status
-	 */
-	public function isNew( $articleId ) {
-		$pageStatus = $this->getPageStatus( $articleId );
-		$status = ( !empty( $pageStatus ) && ( $pageStatus == self::STATUS_NEW_KEEP || $pageStatus == self::STATUS_NEW_SWAPPABLE ) );
-
-		return $status;
 	}
 
 	/**
@@ -833,8 +1024,8 @@ SQL;
 			$undoText  = wfMessage('lvs-undo-swap')->plain();
 
 			// Generate the proper log message and undo link for the swap/keep type
-			switch ( $props['status'] ) {
-				case self::STATUS_SWAP_NORM:
+			switch ( true ) {
+				case ( $this->isStatusSwapNorm( $props['status'] ) ):
 					$newTitleLink = $newDbKey = '';
 					$redirect = $article->getRedirectTarget();
 					if ( !empty($redirect) ) {
@@ -846,12 +1037,11 @@ SQL;
 					$undoLink  .= "&newTitle=".$newDbKey;
 					break;
 
-				case self::STATUS_SWAP_EXACT:
+				case ( $this->isStatusSwapExact( $props['status'] ) ):
 					$logMessage = wfMessage( 'lvs-history-swapped-exact', $titleLink )->plain();
 					break;
 
-				case self::STATUS_KEEP:
-				case self::STATUS_KEEP_FOREVER:
+				case ( $this->isStatusKeep( $props['status'] ) ):
 				default:
 					$logMessage = wfMessage( 'lvs-history-kept', $titleLink )->plain();
 					$undoText   = wfMessage( 'lvs-undo-keep' )->plain();
@@ -883,8 +1073,8 @@ SQL;
 	 * @return array $suggestedVideos
 	 */
 	public function getHistoricalSuggestions( $articleId ) {
-		$pageStatus = $this->getPageStatusInfo( $articleId );
-		$suggestedVideos = empty( $pageStatus['suggested'] ) ? array() : $pageStatus['suggested'];
+		$pageStatusInfo = $this->getPageStatusInfo( $articleId );
+		$suggestedVideos = empty( $pageStatusInfo['suggested'] ) ? array() : $pageStatusInfo['suggested'];
 
 		return $suggestedVideos;
 	}

@@ -174,7 +174,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		}
 
 		// set swap status
-		$helper->setPageStatusInfoSwap( $articleId );
+		$helper->setPageStatusInfo( $articleId );
 
 		// check if the new file exists
 		$params = array(
@@ -234,14 +234,18 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 			}
 
 			// set swap status
-			$helper->setPageStatusSwap( $title->getArticleID(), $swapValue );
+			$helper->setPageStatusSwap( $title->getArticleID(), $articleId );
+			$helper->setPageStatusInfoSwap( $title->getArticleID(), $swapValue );
+
 		} else {
 			// set swap status
-			$helper->setPageStatusSwapExact( $title->getArticleID(), $swapValue );
+			$helper->setPageStatusSwapExact( $title->getArticleID(), $articleId );
+			$helper->setPageStatusInfoSwapExact( $title->getArticleID(), $swapValue );
 		}
 
 		// remove old page status
 		$helper->deletePageStatus( $articleId );
+		$helper->deletePageStatusInfo( $articleId );
 
 		// move suggestion data to new article
 		$helper->moveSuggestionData( $articleId, $title->getArticleID() );
@@ -317,6 +321,12 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 
 		// set the LVS status of this file page
 		$articleId = $file->getTitle()->getArticleID();
+		if ( $helper->isKeptForever( $articleId ) ) {
+			$this->html = '';
+			$this->result = 'error';
+			$this->msg = wfMessage( 'lvs-error-already-kept-forever' )->text();
+			return;
+		}
 
 		// get valid suggestions
 		$suggestTitles = $helper->getValidVideos( $suggestions );
@@ -328,9 +338,9 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$value['suggested'] = array_unique( array_merge( $historicalSuggestions, $suggestTitles ) );
 
 		// set keep status
-		$value['status'] = ( $forever == 'true' ) ? LicensedVideoSwapHelper::STATUS_KEEP_FOREVER : LicensedVideoSwapHelper::STATUS_KEEP;
-
-		$helper->setPageStatusKeep( $articleId, $value );
+		$isForever = ( $forever == 'true' );
+		$helper->setPageStatusKeep( $articleId, $isForever );
+		$helper->setPageStatusInfoKeep( $articleId, $value, $isForever );
 
 		$currentPage = $this->getVal( 'currentPage', 1 );
 
@@ -393,17 +403,17 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 
 		// get the LVS status of this file page
 		$articleId = $title->getArticleID();
-		$pageStatus = $helper->getPageStatusInfo( $articleId );
-		if ( empty( $pageStatus ) ) {
+		$pageStatusInfo = $helper->getPageStatusInfo( $articleId );
+		if ( empty( $pageStatusInfo['status'] ) ) {
 			$this->html = '';
 			$this->result = 'error';
 			$this->msg = wfMessage( 'lvs-error-invalid-page-status' )->text();
 			return;
 		}
 
-		if ( $pageStatus['status'] == LicensedVideoSwapHelper::STATUS_SWAP_EXACT ) {
+		if ( $helper->isStatusSwapExact( $pageStatusInfo['status'] ) ) {
 			$status = $helper->undeletePage( $title, true );
-		} else if ( $pageStatus['status'] == LicensedVideoSwapHelper::STATUS_SWAP_NORM ) {
+		} else if ( $helper->isStatusSwapNorm( $pageStatusInfo['status'] ) ) {
 			$newTitle = $this->request->getVal( 'newTitle', '' );
 
 			$article = Article::newFromID( $title->getArticleID() );
@@ -427,14 +437,14 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 			}
 		}
 
-		// delete the LVS status of this file page
-		$helper->deletePageStatus( $articleId );
+		// clear the LVS status of this file page
+		$helper->clearPageStatus( $articleId );
 
-		// set the LVS status to swappable
-		$helper->setPageStatusSwappable( $articleId );
+		// delete the LVS status info of this file page
+		$helper->deletePageStatusInfo( $articleId );
 
 		// add log for undo swapping video only
-		if ( $pageStatus['status'] != LicensedVideoSwapHelper::STATUS_KEEP ) {
+		if ( !$helper->isStatusKeep( $pageStatusInfo['status'] ) ) {
 			$reason = wfMessage( 'lvs-log-restore', $file->getTitle()->getText() )->text();
 			$helper->addLog( $file->getTitle(), 'licensedvideoswap_restore', $reason );
 		}
