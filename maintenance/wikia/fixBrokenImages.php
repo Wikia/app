@@ -18,6 +18,7 @@ require_once( dirname( __FILE__ ) . '/../Maintenance.php' );
 class FixBrokenImages extends Maintenance {
 
 	const REASON = 'Removing broken images';
+	const USER = 'WikiaBot';
 
 	/* @var $repo LocalRepo */
 	private $repo;
@@ -45,14 +46,20 @@ class FixBrokenImages extends Maintenance {
 			$this->error( sprintf("%s caught: %s", get_class($ex), $ex->getMessage()) );
 		}
 
-		if (!$exists) {
-			$this->output( sprintf("'%s' doesn't exist (%s)\n", $file->getTitle(), $file->getPath()) );
+		// file is fine, continue...
+		if ($exists) {
+			return true;
 		}
+
+		$this->output( sprintf("'%s' doesn't exist (%s)\n", $file->getTitle(), $file->getPath()) );
 
 		return $exists;
 	}
 
 	public function execute() {
+		global $wgUser;
+		$wgUser = User::newFromName(self::USER);
+
 		$this->repo = RepoGroup::singleton()->getLocalRepo();
 
 		#$this->isDryRun = $this->hasOption( 'dry-run' );
@@ -77,7 +84,7 @@ class FixBrokenImages extends Maintenance {
 			}
 
 			// progress
-			if (++$images % 20) {
+			if (++$images % 100) {
 				$this->output( sprintf("%d%%\r", ($images / $count) * 100) );
 			}
 		}
