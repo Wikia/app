@@ -93,7 +93,7 @@ $toolbar-placing-breakpoint: 1185px;
 
 			@media screen and (min-width: $breakpoint-fluid) and (max-width: $breakpoint-max) {
 				left: 100%;
-				margin-left: -$width-adskin + (2 * $toolbar-padding);
+				margin-left: -$width-adskin + $toolbox-margin - 1; // -1 is connected to left:100% positioning and moving element back to the left
 			}
 		}
 	}
