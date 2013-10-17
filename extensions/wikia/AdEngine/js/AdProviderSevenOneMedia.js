@@ -80,24 +80,26 @@ var AdProviderSevenOneMedia = function (adLogicPageLevelParams, scriptWriter, lo
 			slotname + '-postponed',
 			'myAd.insertAd(' + JSON.stringify(deSlotname) + ');',
 			function () {
-				log(['finish Ad', deSlotname], 'info', logGroup);
-				myAd.finishAd(deSlotname, 'move');
-				log(['finish Ad', deSlotname, 'done'], 'info', logGroup);
+				setTimeout(function () {
+					log(['finish Ad', deSlotname], 'info', logGroup);
+					myAd.finishAd(deSlotname, 'move');
+					log(['finish Ad', deSlotname, 'done'], 'info', logGroup);
 
-				// Start TOP_BUTTON_WIDE if leaderboard is of standard size
-				if (deSlotname === 'fullbanner2' && !myAd.isSpecialAd('fullbanner2')) {
-					log('fullbanner2 not a special ad', 'debug', logGroup);
-					var $slot = $('#ad-fullbanner2'),
-						height = $slot.height(),
-						width = $slot.width();
+					// Start TOP_BUTTON_WIDE if leaderboard is of standard size
+					if (deSlotname === 'fullbanner2' && !myAd.isSpecialAd('fullbanner2')) {
+						log('fullbanner2 not a special ad', 'debug', logGroup);
+						var $slot = $('#ad-fullbanner2'),
+							height = $slot.height(),
+							width = $slot.width();
 
-					if (height >= 90 && height <= 95 && width === 728) {
-						log('fullbanner2 has standard size, enabling TOP_BUTTON_WIDE', 'debug', logGroup);
-						window.adslots2.push(['TOP_BUTTON_WIDE.force']);
+						if (height >= 90 && height <= 95 && width === 728) {
+							log('fullbanner2 has standard size, enabling TOP_BUTTON_WIDE', 'debug', logGroup);
+							window.adslots2.push(['TOP_BUTTON_WIDE.force']);
+						}
 					}
-				}
 
-				shiftQueue();
+					setTimeout(shiftQueue, 0);
+				}, 0);
 			}
 		);
 	}
