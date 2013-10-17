@@ -209,19 +209,35 @@ define( 'wikia.preview', [
 					$(this).appendTo($(this).next());
 				});
 
-				// add summary
-				if (typeof summary != 'undefined') {
-					$('<div>', {id: "EditPagePreviewEditSummary"}).
-						width(options.width - 150).
-						appendTo(contentNode.parent()).
-						html(summary);
-				}
+				addEditSummary( contentNode, options.width, summary );
 
 				// fire an event once preview is rendered
 				$(window).trigger('EditPageAfterRenderPreview', [contentNode]);
 
 			});
 		});
+	}
+
+	/**
+	 * If summary parameter's type isn't undefined adds summary (new DOM element) and change height of article preview
+	 *
+	 * @param {object} contentNode article's wrapper
+	 * @param {int} width
+	 * @param {string} summary Summary text in HTML (parsed wikitext)
+	 */
+
+	function addEditSummary( contentNode, width, summary ) {
+		if (typeof summary !== 'undefined') {
+			var $editPagePreviewEditSummary = $('<div>', {id: "EditPagePreviewEditSummary"}),
+				$articlePreview = contentNode.closest(".ArticlePreview");
+
+			$editPagePreviewEditSummary .
+				width( width ) .
+				appendTo( $articlePreview.parent() ) .
+				html(summary);
+
+			$articlePreview.height( $editPagePreviewEditSummary.height() );
+		}
 	}
 
 	/**
