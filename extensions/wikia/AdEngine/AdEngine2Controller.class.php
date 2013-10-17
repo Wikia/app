@@ -121,7 +121,9 @@ class AdEngine2Controller extends WikiaController {
 			return self::AD_LEVEL_CORPORATE;
 		}
 
-		if (preg_match('/TOP_LEADERBOARD|TOP_RIGHT_BOXAD|GPT_FLUSH/', $slotname)) {
+		if (preg_match('/TOP_LEADERBOARD|TOP_RIGHT_BOXAD|GPT_FLUSH/', $slotname) ||
+			preg_match('/ad-popup1|ad-skyscraper1|ad-fullbanner2|SEVENONEMEDIA_FLUSH/', $slotname) // SevenOne Media slots
+		) {
 			return self::AD_LEVEL_LIMITED;
 		}
 		return self::AD_LEVEL_ALL;

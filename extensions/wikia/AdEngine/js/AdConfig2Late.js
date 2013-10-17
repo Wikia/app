@@ -13,7 +13,13 @@ var AdConfig2Late = function (
 
 	var logGroup = 'AdConfig2',
 		cityLang = window.wgContentLanguage,
-		deProvider = window.wgAdDriverUseSevenOneMedia ? adProviderSevenOneMedia : adProviderGamePro;
+		deProvider = window.wgAdDriverUseSevenOneMedia ? adProviderSevenOneMedia : adProviderGamePro,
+		liftiumSlotsToShowWithSevenOneMedia = {
+			'WIKIA_BAR_BOXAD_1': true,
+			'TOP_BUTTON_WIDE': true,
+			'TOP_BUTTON_WIDE.force': true
+		},
+		tryLiftium;
 
 	function getProvider(slot) {
 		var slotname = slot[0];
@@ -39,7 +45,13 @@ var AdConfig2Late = function (
 			}
 		}
 
-		if (!window.wgAdDriverUseSevenOneMedia && adProviderLiftium2Dom.canHandleSlot(slot)) {
+		if (window.wgAdDriverUseSevenOneMedia) {
+			tryLiftium = liftiumSlotsToShowWithSevenOneMedia[slot[0]];
+		} else {
+			tryLiftium = true;
+		}
+
+		if (tryLiftium && adProviderLiftium2Dom.canHandleSlot(slot)) {
 			return adProviderLiftium2Dom;
 		}
 

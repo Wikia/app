@@ -83,6 +83,20 @@ var AdProviderSevenOneMedia = function (adLogicPageLevelParams, scriptWriter, lo
 				log(['finish Ad', deSlotname], 'info', logGroup);
 				myAd.finishAd(deSlotname, 'move');
 				log(['finish Ad', deSlotname, 'done'], 'info', logGroup);
+
+				// Start TOP_BUTTON_WIDE if leaderboard is of standard size
+				if (deSlotname === 'fullbanner2' && !myAd.isSpecialAd('fullbanner2')) {
+					log('fullbanner2 not a special ad', 'debug', logGroup);
+					var $slot = $('#ad-fullbanner2'),
+						height = $slot.height(),
+						width = $slot.width();
+
+					if (height >= 90 && height <= 95 && width === 728) {
+						log('fullbanner2 has standard size, enabling TOP_BUTTON_WIDE', 'debug', logGroup);
+						window.adslots2.push(['TOP_BUTTON_WIDE.force']);
+					}
+				}
+
 				shiftQueue();
 			}
 		);
@@ -111,7 +125,10 @@ var AdProviderSevenOneMedia = function (adLogicPageLevelParams, scriptWriter, lo
 			s0 = 'videospiele';
 		}
 
+		// Markup updates
 		$('body').append('<div id="ads-postponed"></div>');
+		$('#TOP_BUTTON_WIDE').remove();
+		$('#ad-popup1').after('<div id="TOP_BUTTON_WIDE"></div>');
 
 		log(['initialize'], 'debug', logGroup);
 
