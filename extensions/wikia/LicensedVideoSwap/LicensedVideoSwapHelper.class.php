@@ -222,6 +222,7 @@ SQL;
 				$videoDetail['seeMoreLink'] = $seeMoreLink;
 
 				$videoDetail['confirmKeep'] = ( $this->isStatusKeep( $videoInfo['status'] ) && $this->isStatusNew( $videoInfo['status'] ) );
+				$videoDetail['isNew'] = $this->isStatusNew( $videoInfo['status'] );
 
 				$videos[] = $videoDetail;
 			} else {
