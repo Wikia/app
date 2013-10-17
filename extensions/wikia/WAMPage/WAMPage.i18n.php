@@ -13,9 +13,9 @@ $messages['en'] = array(
 	'wam-Lifestyle' => 'Lifestyle',
 	'wampage-header-faq' => 'Faq',
 	'wampage-header-wam' => 'What is WAM Score?',
-	'wampage-content' => 'Wikia Activity Monitor (WAM) is an indicator of a Wiki’s health and vitality. WAM is a custom measurement developed by Wikia to capture a number of independent indicators into one overall index, like the Billboard or Parker score.
+	'wampage-content' => 'Wikia Activity Monitor (WAM) is an indicator of a wikia’s health and vitality. WAM is a custom measurement developed by Wikia to capture a number of independent indicators into one overall index, like the Billboard or Parker score.
 
-The WAM is calculated daily for the top 5,000 Wikis and includes an overall and vertical rank as well as a score from 0 to 100. The WAM rankings are sensitive to real-world events and change frequently, so be sure to check back regularly to see the latest trends. The WAM can also be viewed daily on each of our [[Video Games]], [[Entertainment]] and [[Lifestyle]] hub pages.
+The WAM is calculated daily for the top 5,000 Wikia sites and includes an overall and vertical rank as well as a score from 0 to 100. The WAM rankings are sensitive to real-world events and change frequently, so be sure to check back regularly to see the latest trends. The WAM can also be viewed daily on each of our [[Video Games]], [[Entertainment]] and [[Lifestyle]] hub pages.
 
 [[$1|Frequently Asked Questions]]',
 	'wampage-faq' => '__NOTOC____NOEDITSECTION__===How is the WAM calculated?===
@@ -74,9 +74,9 @@ $messages['fr'] = array(
 	'wam-Lifestyle' => 'Mode de vie',
 	'wampage-header-wam' => 'Qu\'est-ce que le classement WAM ?',
 	'wampage-header-faq' => 'FAQ',
-	'wampage-content' => 'Le Moniteur d\'Activité Wikia (WAM) est un indicateur de la santé et de la vitalité d\'un wiki. WAM est un outil de mesure développé par Wikia pour rassembler un certains nombre d\'indicateurs en un seul index, comme le classement Billboard ou Parker. Il est basé sur un algorithme pondérant le nombre d\'utilisateurs uniques, de pages vues de l\'élan, du contenu multimédia et plus.
+	'wampage-content' => 'Le Moniteur d\'Activité Wikia (WAM) est un indicateur de la santé et de la vitalité d\'un wikia. WAM est un outil de mesure développé par Wikia pour rassembler un certains nombre d\'indicateurs en un seul index, comme le classement Billboard ou Parker.
 
-	Le WAM est calculé chaque jour pour les 5000 wikis plus gros wikis et inclut un classement global et trié ainsi qu\'une note comprise entre 0 et 100. Les classements WAM sont sensibles aux événements du monde réel et varient souvent, aussi revenez régulièrement pour voir les dernières tendances. Le WAM peut aussi être consulté tous les jours sur nos pages de thème [[w:c:fr:Jeux vidéo|Jeux vidéo]], [[w:c:fr:Divertissement|Divertissement]] et [[w:c:fr:Mode de vie|Mode de vie]].
+	Le WAM est calculé chaque jour pour les 5000 plus gros sites de Wikia et inclut un classement global et par thème ainsi qu\'une note comprise entre 0 et 100. Les classements WAM sont sensibles aux événements du monde réel et varient souvent, aussi revenez régulièrement pour voir les dernières tendances. Le WAM peut aussi être consulté tous les jours sur nos pages de thème [[w:c:fr:Jeux vidéo|Jeux vidéo]], [[w:c:fr:Divertissement|Divertissement]] et [[w:c:fr:Mode de vie|Mode de vie]].
 
 [[$1|Foire Aux Questions]]',
 	'wampage-faq' => '__NOTOC____NOEDITSECTION__===Comment le WAM est-il calculé ?===
@@ -183,9 +183,9 @@ $messages['es'] = array(
 	'wam-Lifestyle' => 'Estilo de vida',
 	'wampage-header-wam' => '¿Qué es la puntuación WAM?',
 	'wampage-header-faq' => 'FAQ',
-	'wampage-content' => 'El Monitor de Actividad de Wikia (WAM) es un indicador de la salud y vitalidad de los wikis. El WAM es una herramienta desarrollada por Wikia capaz de obtener diferentes indicadores independientes y dar una puntuación global, como las estrellas de los hoteles.
+	'wampage-content' => 'El Monitor de Actividad de Wikia (WAM) es un indicador de la salud y vitalidad de las comunidades. El WAM es una herramienta desarrollada por Wikia capaz de obtener diferentes indicadores independientes y dar una puntuación global, como las estrellas de los hoteles.
 
-El WAM calcula diariamente las puntuaciones para los 5.000 wikis más visitados y hace una clasificación general y vertical con puntuaciones del 0 al 100. La clasificación del WAM es sensible a los eventos del mundo real y cambia frecuentemente, aseguraros de comprobar regularmente los resultados de las últimas tendencias. El WAM se puede ver diariamente desde nuestras páginas globales de [[w:c:es:Videojuegos|videojuegos]], [[w:c:es:Entretenimiento|entretenimiento]] y [[w:c:es:Estilo_de_vida|estilo de vida]].
+El WAM calcula diariamente las puntuaciones para las 5.000 comunidades de Wikia más visitados y hace una clasificación general y vertical con puntuaciones del 0 al 100. La clasificación del WAM es sensible a los eventos del mundo real y cambia frecuentemente, aseguraros de comprobar regularmente los resultados de las últimas tendencias. El WAM se puede ver diariamente desde nuestras páginas globales de [[w:c:es:Videojuegos|videojuegos]], [[w:c:es:Entretenimiento|entretenimiento]] y [[w:c:es:Estilo_de_vida|estilo de vida]].
 
 [[$1|Preguntas frecuentes]]',
 	'wampage-faq' => '__NOTOC____NOEDITSECTION__
@@ -235,9 +235,9 @@ $messages['pl'] = array(
 	'wam-Lifestyle' => 'Lifestyle',
 	'wampage-header-wam' => 'Co to jest WAM?',
 	'wampage-header-faq' => 'FAQ',
-	'wampage-content' => 'Wikia Activity Monitor (WAM) to wskaźnik stanu wiki. Został stworzony przez Wikię aby uchwycić szereg niezależnych informacji dotyczących danej wiki w jednym indeksie.
+	'wampage-content' => 'Wikia Activity Monitor (WAM) to wskaźnik stanu wikii. Został stworzony przez Wikię aby uchwycić szereg niezależnych informacji dotyczących danej wikii w jednym indeksie.
 
-WAM aktualizowany jest codziennie, a 5000 najwyżej ocenionych wiki dodawanych jest do rankingu ogólnego i rankingów dla odrębnych kategorii. Pozycja w rankingu zależy od wielu czynników, które nieustannie się zmieniają, więc aby być na bieżąco z aktualnymi trendami, należy regularnie śledzić ranking. Odwiedź 3 huby - [[Gry]], [[Rozrywka]] i [[Lifestyle]] - aby dowiedzieć się więcej o wiki z poszczególnych kategorii.
+WAM aktualizowany jest codziennie, a 5000 najwyżej ocenionych społeczności Wikii dodawanych jest do rankingu ogólnego i rankingów dla odrębnych kategorii i otrzymuje punktację od 0 do 100. Pozycja w rankingu zależy od wielu czynników, które nieustannie się zmieniają, więc aby być na bieżąco z aktualnymi trendami, regularnie odwiedzaj ranking. WAM może być także odwiedzany bezpośrednio z 3 hubów - [[Gry]], [[Rozrywka]] i [[Lifestyle]].
 
 [[$1|FAQ]]',
 	'wampage-faq' => '__NOTOC____NOEDITSECTION__===Jak liczony jest WAM?===

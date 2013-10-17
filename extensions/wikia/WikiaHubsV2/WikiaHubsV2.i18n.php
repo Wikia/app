@@ -32,7 +32,7 @@ $messages['en'] = array(
 	'wikiahubs-wam-top-wikis-headline' => 'Top $1 Wikis',
 	'wikiahubs-wam-rank' => 'Rank',
 	'wikiahubs-wam-score' => 'WAM Score',
-	'wikiahubs-wam-wiki-url' => "Wiki's Name",
+	'wikiahubs-wam-wiki-url' => "Name",
 	
 	// from the community
 	'wikiahubs-from-community-promoted' => 'Get Promoted',
@@ -135,7 +135,7 @@ $messages['fr'] = array(
 	//WAM
 	'wikiahubs-wam-header' => 'Score WAM',
 	'wikiahubs-wam-see-full-wam-ranking' => 'En lire plus sur WAM',
-	'wikiahubs-wam-top-wikis-headline' => 'Wikis - Top $1',
+	'wikiahubs-wam-top-wikis-headline' => 'Top des communautés Wikia de $1',
 	'wikiahubs-wam-rank' => 'Classement',
 	'wikiahubs-wam-score' => 'Score WAM',
 	'wikiahubs-wam-wiki-url' => "Nom du wiki",
@@ -191,7 +191,7 @@ $messages['es'] = array(
 	//WAM
 	'wikiahubs-wam-header' => 'Puntuación en el WAM',
 	'wikiahubs-wam-see-full-wam-ranking' => 'Leer más acerca del WAM',
-	'wikiahubs-wam-top-wikis-headline' => 'Wikis - Top $1',
+	'wikiahubs-wam-top-wikis-headline' => 'Comunidades de Wikia - Top $1',
 	'wikiahubs-wam-rank' => 'Clasificación',
 	'wikiahubs-wam-score' => 'Puntuación en el WAM',
 	'wikiahubs-wam-wiki-url' => "Nombre del wiki",
@@ -249,10 +249,10 @@ $messages['pl'] = [
 	//WAM
 	'wikiahubs-wam-header' => 'Punktacja WAM',
 	'wikiahubs-wam-see-full-wam-ranking' => 'Dowiedz się więcej o WAM',
-	'wikiahubs-wam-top-wikis-headline' => 'Najpopularniejsze wiki w kategorii $1',
+	'wikiahubs-wam-top-wikis-headline' => 'Społeczności Wikii - $1',
 	'wikiahubs-wam-rank' => 'Pozycja',
 	'wikiahubs-wam-score' => 'Punktacja WAM',
-	'wikiahubs-wam-wiki-url' => 'Nazwa wiki',
+	'wikiahubs-wam-wiki-url' => 'Nazwa',
 
 	// from the community
 	'wikiahubs-from-community-promoted' => 'Wypromuj wiki',

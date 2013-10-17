@@ -14,7 +14,7 @@ $messages['en'] = array(
 	'wikiahome-page-header-create-wiki-button-destination' => 'http://www.wikia.com/Special:CreateWiki',
 
 	'wikiahome-visualisation-remix-mixitup' => 'Mix it up!',
-	'wikiahome-visualisation-remix-mixituptext' => 'Thousands of wikis are at your fingertips. Remix to explore even more wikis.',
+	'wikiahome-visualisation-remix-mixituptext' => 'Thousands of communities at your fingertips. Remix to explore Wikia.',
 	'wikiahome-visualisation-remix-button' => 'Remix',
 
 	'wikiahome-stats-heading' => 'Collaboration in action',
@@ -245,7 +245,7 @@ $messages['es'] = array(
 	'wikiahome-page-header-create-wiki-button-destination' => 'http://www.wikia.com/Special:CreateWiki?uselang=es',
 
 	'wikiahome-visualisation-remix-mixitup' => '¡Mézclalos!',
-	'wikiahome-visualisation-remix-mixituptext' => 'Miles de wikis están a tu alcance. Remuévelos de nuevo para explorar más wikis.',
+	'wikiahome-visualisation-remix-mixituptext' => 'Miles de comunidades están a tu alcance. Mueve la caja de comunidades para explorar Wikia.',
 	'wikiahome-visualisation-remix-button' => 'Mover',
 
 	'wikiahome-stats-heading' => 'La colaboración en acción',
@@ -366,8 +366,8 @@ $messages['fr'] = array(
 	'wikiahome-page-header-subheading' => 'Partagez ce que vous savez et aimez.',
 	'wikiahome-page-header-create-wiki-button' => 'Commencer un wiki',
 	'wikiahome-page-header-create-wiki-button-destination' => 'http://www.wikia.com/Special:CreateWiki?uselang=fr',
-	'wikiahome-visualisation-remix-mixitup' => 'Mélangez&nbsp;!',
-	'wikiahome-visualisation-remix-mixituptext' => 'Des centaines de wikis à votre portée. Mélangez pour explorer encore plus de wikis.',
+	'wikiahome-visualisation-remix-mixitup' => 'Mixez&nbsp;!',
+	'wikiahome-visualisation-remix-mixituptext' => 'Des centaines de communautés à votre portée. Mixez pour explorer Wikia.',
 	'wikiahome-visualisation-remix-button' => 'Mixer',
 
 	'wikiahome-stats-heading' => 'La collaboration en action',
@@ -467,8 +467,8 @@ $messages['pl'] = array(
 	'wikiahome-page-header-create-wiki-button' => 'Utwórz wiki',
 	'wikiahome-page-header-create-wiki-button-destination' => 'http://www.wikia.com/Special:CreateWiki?uselang=pl',
 
-	'wikiahome-visualisation-remix-mixitup' => 'Miksuj wiki!',
-	'wikiahome-visualisation-remix-mixituptext' => 'Tysiące wiki na wyciągnięcie ręki. Kliknij, aby zobaczyć więcej.',
+	'wikiahome-visualisation-remix-mixitup' => 'Miksuj!',
+	'wikiahome-visualisation-remix-mixituptext' => 'Tysiące społeczności na wyciągnięcie ręki. Miksuj i odkrywaj Wikię.',
 	'wikiahome-visualisation-remix-button' => 'Miksuj',
 
 	'wikiahome-stats-heading' => 'Współpraca w akcji',
