@@ -121,7 +121,7 @@ var AdProviderSevenOneMedia = function (adLogicPageLevelParams, scriptWriter, lo
 	function initialize() {
 		var vars,
 			s0 = pageLevelParams.s0,
-			s1 = pageLevelParams.s1;
+			s1 = pageLevelParams.s1.replace('_', '');
 
 		initialized = true;
 
