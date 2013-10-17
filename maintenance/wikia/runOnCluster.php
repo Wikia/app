@@ -96,6 +96,7 @@ class RunOnCluster extends Maintenance {
 		$this->addOption( 'class', 'The class with code to run', false, true, 'l' );
 		$this->addOption( 'method', 'Which method to run', false, true, 'm' );
 		$this->addOption( 'file' , 'File containing code to run', false, true, 'f' );
+		$this->addOption( 'dbname' , 'File containing code to run', false, true, 'i' );
 	}
 
 	/**
@@ -109,6 +110,7 @@ class RunOnCluster extends Maintenance {
 		$this->cluster = $this->getOption('cluster', '1');
 		$this->class   = $this->getOption('class', 'ClusterTestClass');
 		$this->method  = $this->getOption('method', 'testCode');
+		$singleDBname  = $this->getOption('dbname');
 		$file = $this->getOption('file');
 
 		$startTime = time();
@@ -144,7 +146,11 @@ class RunOnCluster extends Maintenance {
 		}
 
 		// Get all the wiki's on the current cluster
-		$clusterWikis = $this->getClusterWikis();
+		if ( $singleDBname ) {
+			$clusterWikis[] = $singleDBname;
+		} else {
+			$clusterWikis = $this->getClusterWikis();
+		}
 
 		// Connect to the cluster we will operate on and set $this->db
 		if ( !$this->initDBHandle() ) {
