@@ -202,8 +202,7 @@ class CF_Authentication
     function authenticate($version=DEFAULT_CF_API_VERSION)
     {
         list($status,$reason,$surl,$curl,$atoken) = 
-                $this->cfs_http->authenticate($this->username, $this->api_key,
-                $this->account_name, $this->auth_host);
+                $this->cfs_http->authenticate($this->username, $this->api_key, $this->auth_host);
 
         if ($status == 401) {
             throw new AuthenticationException("Invalid username or access key.");
@@ -222,34 +221,32 @@ class CF_Authentication
         $this->auth_token = $atoken;
         return True;
     }
+
 	/**
 	 * Use Cached Token and Storage URL's rather then grabbing from the Auth System
-         *
-         * Example:
- 	 * <code>
-         * #Create an Auth instance
-         * $auth = new CF_Authentication();
-         * #Pass Cached URL's and Token as Args
+	 *
+	 * Example:
+	 * <code>
+	 * #Create an Auth instance
+	 * $auth = new CF_Authentication();
+	 * #Pass Cached URL's and Token as Args
 	 * $auth->load_cached_credentials("auth_token", "storage_url", "cdn_management_url");
-         * </code>
-	 * 
+	 * </code>
+	 *
 	 * @param string $auth_token A Cloud Files Auth Token (Required)
-         * @param string $storage_url The Cloud Files Storage URL (Required)
-         * @param string $cdnm_url CDN Management URL (Required)
-         * @return boolean <kbd>True</kbd> if successful 
+	 * @param string $storage_url The Cloud Files Storage URL (Required)
+	 * @param string $cdnm_url CDN Management URL (Required)
+	 * @return boolean <kbd>True</kbd> if successful
 	 * @throws SyntaxException If any of the Required Arguments are missing
-         */
+	 */
 	function load_cached_credentials($auth_token, $storage_url, $cdnm_url)
     {
-        if(!$storage_url || !$cdnm_url)
-        {
-                throw new SyntaxException("Missing Required Interface URL's!");
-                return False;
-        }
-        if(!$auth_token)
-        {
-                throw new SyntaxException("Missing Auth Token!");
-                return False;
+        if ( !$storage_url && !$cdnm_url ) {
+			throw new SyntaxException("Missing Required Interface URL's!");
+			return false;
+        } elseif( !$auth_token ) {
+			throw new SyntaxException("Missing Auth Token!");
+			return false;
         }
 
         $this->storage_url = $storage_url;
@@ -257,19 +254,20 @@ class CF_Authentication
         $this->auth_token  = $auth_token;
         return True;
     }
+
 	/**
-         * Grab Cloud Files info to be Cached for later use with the load_cached_credentials method.
-         *
+	 * Grab Cloud Files info to be Cached for later use with the load_cached_credentials method.
+	 *
 	 * Example:
-         * <code>
-         * #Create an Auth instance
-         * $auth = new CF_Authentication("UserName","API_Key");
-         * $auth->authenticate();
-         * $array = $auth->export_credentials();
-         * </code>
-         * 
+	 * <code>
+	 * #Create an Auth instance
+	 * $auth = new CF_Authentication("UserName","API_Key");
+	 * $auth->authenticate();
+	 * $array = $auth->export_credentials();
+	 * </code>
+	 *
 	 * @return array of url's and an auth token.
-         */
+	 */
     function export_credentials()
     {
         $arr = array();
@@ -373,7 +371,7 @@ class CF_Connection
      * If the environement variable RACKSPACE_SERVICENET is defined it will
      * force to connect via the servicenet.
      *
-     * @param obj $cfs_auth previously authenticated CF_Authentication instance
+     * @param CF_Authentication $cfs_auth previously authenticated CF_Authentication instance
      * @param boolean $servicenet enable/disable access via Rackspace servicenet.
      * @throws AuthenticationException not authenticated
      */
@@ -525,7 +523,7 @@ class CF_Connection
      * $conn->delete_container("my photos");
      * </code>
      *
-     * @param string|obj $container container name or instance
+     * @param string|CF_Container $container container name or instance
      * @return boolean <kbd>True</kbd> if successfully deleted
      * @throws SyntaxException missing proper argument
      * @throws InvalidResponseException invalid response
@@ -590,7 +588,7 @@ class CF_Connection
      * </code>
      *
      * @param string $container_name name of the remote Container
-     * @return container CF_Container instance
+     * @return CF_Container instance
      * @throws NoSuchContainerException thrown if no remote Container
      * @throws InvalidResponseException unexpected response
      */
@@ -936,8 +934,8 @@ class CF_Container
      *
      * Constructor for Container
      *
-     * @param obj $cfs_auth CF_Authentication instance
-     * @param obj $cfs_http HTTP connection manager
+     * @param CF_Authentication $cfs_auth instance
+     * @param CF_Http $cfs_http HTTP connection manager
      * @param string $name name of Container
      * @param int $count number of Objects stored in this Container
      * @param int $bytes number of bytes stored in this Container
@@ -1278,7 +1276,7 @@ class CF_Container
         $this->cdn_ttl = NULL;
         $this->cdn_uri = NULL;
         $this->cdn_ssl_uri = NULL;
-        $this->cdn_streaming_uri - NULL;
+        $this->cdn_streaming_uri = NULL;
         $this->cdn_log_retention = NULL;
         $this->cdn_acl_user_agent = NULL;
         $this->cdn_acl_referrer = NULL;
@@ -1333,7 +1331,7 @@ class CF_Container
      *
      * @param string $obj_name name of storage Object
      * @param array $hdrs user-defined headers (X-Newest: true, etc.)
-     * @return obj CF_Object instance
+     * @return CF_Object instance
      */
     function create_object($obj_name=NULL, $hdrs=array())
     {
@@ -1363,7 +1361,7 @@ class CF_Container
      *
      * @param string $obj_name name of storage Object
      * @param array $hdrs user-defined headers (X-Newest: true, etc.)
-     * @return obj CF_Object instance
+     * @return CF_Object instance
      */
     function get_object($obj_name=NULL, $hdrs=array())
     {
@@ -1516,8 +1514,8 @@ class CF_Container
      * $images->copy_object_to("disco_dancing.jpg","container_target");
      * </code>
      *
-     * @param obj $obj name or instance of Object to copy
-     * @param obj $container_target name or instance of target Container
+     * @param CF_Object|string $obj name or instance of Object to copy
+     * @param CF_Container|string $container_target name or instance of target Container
      * @param string $dest_obj_name name of target object (optional - uses source name if omitted)
      * @param array $metadata metadata array for new object (optional)
      * @param array $headers header fields array for the new object (optional)
@@ -1590,8 +1588,8 @@ class CF_Container
      * $images->copy_object_from("disco_dancing.jpg","container_source");
      * </code>
      *
-     * @param obj $obj name or instance of Object to copy
-     * @param obj $container_source name or instance of source Container
+     * @param CF_Object|string $obj name or instance of Object to copy
+     * @param CF_Container|string $container_source name or instance of source Container
      * @param string $dest_obj_name name of target object (optional - uses source name if omitted)
      * @param array $metadata metadata array for new object (optional)
      * @param array $headers header fields array for the new object (optional)
@@ -1665,8 +1663,8 @@ class CF_Container
      * $images->move_object_to("disco_dancing.jpg","container_target");
      * </code>
      *
-     * @param obj $obj name or instance of Object to move
-     * @param obj $container_target name or instance of target Container
+     * @param CF_Object $obj name or instance of Object to move
+     * @param CF_Container $container_target name or instance of target Container
      * @param string $dest_obj_name name of target object (optional - uses source name if omitted)
      * @param array $metadata metadata array for new object (optional)
      * @param array $headers header fields array for the new object (optional)
@@ -1705,8 +1703,8 @@ class CF_Container
      * $images->move_object_from("disco_dancing.jpg","container_target");
      * </code>
      *
-     * @param obj $obj name or instance of Object to move
-     * @param obj $container_source name or instance of target Container
+     * @param CF_Object $obj name or instance of Object to move
+     * @param CF_Container $container_source name or instance of target Container
      * @param string $dest_obj_name name of target object (optional - uses source name if omitted)
      * @param array $metadata metadata array for new object (optional)
      * @param array $headers header fields array for the new object (optional)
@@ -1745,8 +1743,8 @@ class CF_Container
      * $images->delete_object("disco_dancing.jpg");
      * </code>
      *
-     * @param obj $obj name or instance of Object to delete
-     * @param obj $container name or instance of Container in which the object resides (optional)
+     * @param CF_Object|string $obj name or instance of Object to delete
+     * @param CF_Container $container name or instance of Container in which the object resides (optional)
      * @return boolean <kbd>True</kbd> if successfully removed
      * @throws SyntaxException invalid Object name
      * @throws NoSuchObjectException remote Object does not exist
@@ -1897,7 +1895,7 @@ class CF_Object
     /**
      * Class constructor
      *
-     * @param obj $container CF_Container instance
+     * @param CF_Container $container CF_Container instance
      * @param string $name name of Object
      * @param boolean $force_exists if set, throw an error if Object doesn't exist
      * @param boolean $dohead if set, do a HEAD request to get object metadata
@@ -2508,6 +2506,31 @@ class CF_Object
     {
         return $this->etag;
     }
+    
+	/**
+	 * Get the value for a given metadata key
+	 *
+	 * @param string Metadata key (case-insensitive)
+	 * @return string|null Metadata value or null if not defined
+	 */
+	public function getMetadataValue( $key ) {
+		# Match the casing per https://bugs.launchpad.net/swift/+bug/939982
+		$key = ucfirst( strtolower( $key ) );
+		return isset( $this->metadata[$key] ) ? $this->metadata[$key] : null;
+	}
+
+	/**
+	 * Set metadata key/value pairs, overriding any previous conflicting ones
+	 *
+	 * @param Array $pairs Map of key names (case-insensitive) to values
+	 * @return void
+	 */
+	public function setMetadataValues( array $pairs ) {
+		foreach ( $pairs as $key => $value ) {
+			# Match the casing per https://bugs.launchpad.net/swift/+bug/939982
+			$this->metadata[ucfirst( strtolower( $key ) )] = $value;
+		}
+	}
 
     /**
      * Compute the MD5 checksum
@@ -2550,12 +2573,14 @@ class CF_Object
         list($status, $reason, $etag, $last_modified, $content_type,
             $content_length, $metadata, $manifest, $headers) =
                 $this->container->cfs_http->head_object($this,$hdrs);
+
         #if ($status == 401 && $this->_re_auth()) {
         #    return $this->_initialize();
         #}
         if ($status == 404) {
             return False;
         }
+
         if ($status < 200 || $status > 299) {
             throw new InvalidResponseException("Invalid response (".$status."): "
                 . $this->container->cfs_http->get_error());
@@ -2564,7 +2589,7 @@ class CF_Object
         $this->last_modified = $last_modified;
         $this->content_type = $content_type;
         $this->content_length = $content_length;
-        $this->metadata = $metadata;
+        $this->setMetadataValues($metadata); // Wikia change
         $this->headers = $headers;
         $this->manifest = $manifest;
         return True;
@@ -2593,4 +2618,3 @@ class CF_Object
  * c-hanging-comment-ender-p: nil
  * End:
  */
-?>
