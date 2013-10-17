@@ -16,7 +16,8 @@ $breakpoint-min: $width-outside-min;
 $breakpoint-small: 1023px;
 
 // Background
-$background-classes: get_command_line_param("background-classes", false);
+//$background-classes: get_command_line_param("background-classes", false);
+$background-classes: true;
 
 // TODO: we might want to consider pre-calculating all of the background
 // positioning stuff in PHP and then passing it in here, it would be much

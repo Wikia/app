@@ -1,67 +1,64 @@
 @import "layout";
 @import "responsive-variables";
 
-@if ( $background-classes ) {
+// set up background-specific-vars
+// TODO: This logic has to be moved to Theme Designer
+// Determines whether or not to apply the dynamic background. Only applies if:
+// - background is not tiled
+// - background image height is greather than zero
+// - background image width is wider than the width of the skin (visible in the ad skin margins)
+// $background-is-dynamic: if( not $background-tiled and $background-height > 0 and $background-width > $width-outside, true, false );
 
-	// set up background-specific-vars
-	$background-position: if( $background-fixed, fixed, absolute );
 
-	// Determines whether or not to apply the dynamic background. Only applies if:
-	// - background is not tiled
-	// - background image height is greather than zero
-	// - background image width is wider than the width of the skin (visible in the ad skin margins)
-	$background-is-dynamic: if( not $background-tiled and $background-height > 0 and $background-width > $width-outside, true, false );
+// The background image is considered to be "wide" if it bleeds off the screen
+// at the size of the fluid breakpoint. This is important because it will determine
+// how the two slices of background images need to be positioned below.
+$background-is-wide: if( $background-width > $breakpoint-fluid, true, false );
 
-	// The background image is considered to be "wide" if it bleeds off the screen
-	// at the size of the fluid breakpoint. This is important because it will determine
-	// how the two slices of background images need to be positioned below.
-	$background-is-wide: if( $background-width > $breakpoint-fluid, true, false );
+// This mixin positions the background images and gradients while the skin is
+// in fluid width mode. Positioning is based on the left and right edges of
+// the viewport.
+@mixin background-fluid() {
+// This calculates the width from the edge of each background image slice
+// to the point where it is visible inside the viewpoint at the time the
+// fluid breakpoint is reached. This will be used as an offset to keep
+// the image positioned in the same place when the browser is being resized.
+	$background-offset: ( $breakpoint-fluid - $background-width ) / 2;
+	$background-offset-left: 0;
+	$background-offset-right: 0;
+	$background-position-after: -$background-width-half;
+	$background-position-before: 0;
+	$background-width-both: $background-width-half;
 
-	// This mixin positions the background images and gradients while the skin is
-	// in fluid width mode. Positioning is based on the left and right edges of
-	// the viewport.
-	@mixin background-fluid() {
-	// This calculates the width from the edge of each background image slice
-	// to the point where it is visible inside the viewpoint at the time the
-	// fluid breakpoint is reached. This will be used as an offset to keep
-	// the image positioned in the same place when the browser is being resized.
-		$background-offset: ( $breakpoint-fluid - $background-width ) / 2;
-		$background-offset-left: 0;
-		$background-offset-right: 0;
-		$background-position-after: -$background-width-half;
-		$background-position-before: 0;
-		$background-width-both: $background-width-half;
+// The gradient is positioned on the outer edge of the background image
+// slices, overlapping by the width of the gradient itself.
+	$gradient-offset: ( $background-width-half + $background-offset ) - $width-gradient;
 
-	// The gradient is positioned on the outer edge of the background image
-	// slices, overlapping by the width of the gradient itself.
-		$gradient-offset: ( $background-width-half + $background-offset ) - $width-gradient;
+	@if ( $background-is-wide ) {
+		$background-width-both: $background-width-half + $background-offset;
+		$background-position-before: $background-offset;
 
-		@if ( $background-is-wide ) {
-			$background-width-both: $background-width-half + $background-offset;
-			$background-position-before: $background-offset;
+	} @else {
+		$background-offset-left: $background-offset;
+		$background-offset-right: $background-offset;
+	}
 
-		} @else {
-			$background-offset-left: $background-offset;
-			$background-offset-right: $background-offset;
+	body.background-dynamic.skin-oasis {
+		&:after,
+		&:before {
+			width: $background-width-both;
 		}
 
-		body.skin-oasis {
-			&:after,
-			&:before {
-				width: $background-width-both;
-			}
+		&:after {
+			background-position: $background-position-after 0;
+			margin-right: 0;
+			right: $background-offset-right;
+		}
 
-			&:after {
-				background-position: $background-position-after 0;
-				margin-right: 0;
-				right: $background-offset-right;
-			}
-
-			&:before {
-				background-position: $background-position-before 0;
-				margin-left: 0;
-				left: $background-offset-left;
-			}
+		&:before {
+			background-position: $background-position-before 0;
+			margin-left: 0;
+			left: $background-offset-left;
 		}
 
 		.background-image-gradient {
@@ -92,38 +89,38 @@
 			}
 		}
 	}
+}
 
-	// This mixin positions the background images and gradients once the max width
-	// has been hit and the skin goes back into static mode. Positioning is done
-	// relative to the center of the viewport.
-	@mixin background-max() {
-	// This margin correctly aligns the background image slices from the center
-	// of the viewport. It's basically the difference between where the image sat
-	// before the layout became fluid, and where it sits once max width is reached.
-		$background-margin: $width-outside-half - ( $width-outside-max-half + $background-width-half );
-		$background-position-after: -$background-width-half;
+// This mixin positions the background images and gradients once the max width
+// has been hit and the skin goes back into static mode. Positioning is done
+// relative to the center of the viewport.
+@mixin background-max() {
+// This margin correctly aligns the background image slices from the center
+// of the viewport. It's basically the difference between where the image sat
+// before the layout became fluid, and where it sits once max width is reached.
+	$background-margin: $width-outside-half - ( $width-outside-max-half + $background-width-half );
+	$background-position-after: -$background-width-half;
 
-	// The gradient is still positioned on the outer edge of the background image
-	// slices, overlapping by the width of the gradient itself.
-		$gradient-offset: $background-margin + ( $background-width-half - $width-gradient );
+// The gradient is still positioned on the outer edge of the background image
+// slices, overlapping by the width of the gradient itself.
+	$gradient-offset: $background-margin + ( $background-width-half - $width-gradient );
 
-		body.skin-oasis {
-			&:after,
-			&:before {
-				width: $background-width-half;
-			}
+	body.background-dynamic.skin-oasis {
+		&:after,
+		&:before {
+			width: $background-width-half;
+		}
 
-			&:after {
-				background-position: $background-position-after 0;
-				right: 50%;
-				margin-right: $background-margin;
-			}
+		&:after {
+			background-position: $background-position-after 0;
+			right: 50%;
+			margin-right: $background-margin;
+		}
 
-			&:before {
-				background-position: 0;
-				left: 50%;
-				margin-left: $background-margin;
-			}
+		&:before {
+			background-position: 0;
+			left: 50%;
+			margin-left: $background-margin;
 		}
 
 		.background-image-gradient {
@@ -138,37 +135,25 @@
 			}
 		}
 	}
+}
 
-	// standard logic
+@if ( $background-classes ) {
+// standard logic
 	body {
 		background: $color-body url($background-image) top $background-align repeat; /* $wgCdnStylePath */
 	}
 
-	@if ( $background-classes ) {
-		body.background-not-tiled {
-			background-repeat: no-repeat;
-		}
-		body.background-fixed {
-			background-attachment: fixed;
-		}
-	} @else {
-		@if ( $background-tiled == false ) {
-			body {
-				background-repeat: no-repeat;
-			}
-		}
-
-		@if ( $background-fixed == true ) {
-			body {
-				background-attachment: fixed;
-			}
-		}
+	body.background-not-tiled {
+		background-repeat: no-repeat;
 	}
 
+	body.background-fixed {
+		background-attachment: fixed;
+	}
 
-	// responive layout logic
-	@if ( $responsive-layout-enabled and $background-is-dynamic ) {
-		body.skin-oasis {
+// responive layout logic
+	@if ( $responsive-layout-enabled ) {
+		body.background-dynamic.skin-oasis {
 			background: $color-body;
 			overflow: hidden;
 			position: relative;
@@ -179,10 +164,15 @@
 				background-repeat: no-repeat;
 				content: "";
 				height: $background-height;
-				position: $background-position;
+				position: absolute;
 				top: 0;
 				width: $background-width-half;
 				z-index: -2;
+			}
+			&.background-fixed:after,
+			&.background-fixed:before
+			{
+				position: fixed;
 			}
 
 			&:after {
@@ -199,7 +189,7 @@
 		}
 
 		@media screen and (max-width: $breakpoint-content) {
-			body.skin-oasis {
+			body.background-dynamic.skin-oasis {
 				&:after,
 				&:before {
 					display: none;
@@ -208,15 +198,11 @@
 		}
 
 		@media screen and (min-width: $breakpoint-fluid) {
-			@if ( $background-is-dynamic ) {
-				@include background-fluid;
-			}
+			@include background-fluid;
 		}
 
 		@media screen and (min-width: $breakpoint-max) {
-			@if ( $background-is-dynamic ) {
-				@include background-max;
-			}
+			@include background-max;
 		}
 	}
 }
