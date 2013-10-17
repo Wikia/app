@@ -1,8 +1,7 @@
 @import "layout";
 @import "responsive-variables";
 
-@if ( $background-classes ) {
-
+@if ( $background-classes == false ) {
 	// set up background-specific-vars
 	$background-position: if( $background-fixed, fixed, absolute );
 
@@ -144,27 +143,17 @@
 		background: $color-body url($background-image) top $background-align repeat; /* $wgCdnStylePath */
 	}
 
-	@if ( $background-classes ) {
-		body.background-not-tiled {
+	@if ( $background-tiled == false ) {
+		body {
 			background-repeat: no-repeat;
-		}
-		body.background-fixed {
-			background-attachment: fixed;
-		}
-	} @else {
-		@if ( $background-tiled == false ) {
-			body {
-				background-repeat: no-repeat;
-			}
-		}
-
-		@if ( $background-fixed == true ) {
-			body {
-				background-attachment: fixed;
-			}
 		}
 	}
 
+	@if ( $background-fixed == true ) {
+		body {
+			background-attachment: fixed;
+		}
+	}
 
 	// responive layout logic
 	@if ( $responsive-layout-enabled and $background-is-dynamic ) {

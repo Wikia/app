@@ -1,6 +1,5 @@
 @import "layout";
 @import "responsive-variables";
-@import "background";
 
 @import "../mixins/box-sizing";
 @import "../mixins/calc";
@@ -254,10 +253,6 @@
 	}
 
 	@media screen and (min-width: $breakpoint-max) {
-		@if ( $background-is-dynamic ) {
-			@include background-max;
-		}
-
 		.WikiaHeader .page-width-container,
 		.WikiaPage {
 			margin: 0 auto;
