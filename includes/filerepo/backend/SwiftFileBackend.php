@@ -24,12 +24,18 @@ class SwiftFileBackend extends FileBackendStore {
 	protected $auth; // Swift authentication handler
 	protected $authTTL; // integer seconds
 	protected $swiftAnonUser; // string; username to handle unauthenticated requests
+	protected $swiftTimeout; // integer; number of seconds timeout consistent with php-cloudfiles
 	protected $maxContCacheSize = 100; // integer; max containers with entries
 
 	/** @var CF_Connection */
 	protected $conn; // Swift connection handle
 	protected $connStarted = 0; // integer UNIX timestamp
 	protected $connContainers = array(); // container object cache
+	
+	protected $objCache = array();
+
+	/** @var BagOStuff */
+	protected $srvCache;
 
 	/**
 	 * @see FileBackendStore::__construct()
@@ -42,18 +48,27 @@ class SwiftFileBackend extends FileBackendStore {
 	 *    shardViaHashLevels : Map of container names to sharding config with:
 	 *                         'base'   : base of hash characters, 16 or 36
 	 *                         'levels' : the number of hash levels (and digits)
-	 *                         'repeat' : hash subdirectories are prefixed with all the 
+	 *                         'repeat' : hash subdirectories are prefixed with all the
 	 *                                    parent hash directory names (e.g. "a/ab/abc")
+	 *	  swiftTimeout       : number of seconds timeout consistent with php-cloudfiles. Default: 10
 	 */
 	public function __construct( array $config ) {
 		parent::__construct( $config );
 		// Required settings
 		$this->auth = new CF_Authentication(
-			$config['swiftUser'], 
-			$config['swiftKey'], 
+			$config['swiftUser'],
+			$config['swiftKey'],
 			null, // account; unused
-			$config['swiftAuthUrl'] 
+			$config['swiftAuthUrl']
 		);
+		/* <Wikia> */
+		if ( !empty( $config['debug'] ) ) {
+			$this->auth->setDebug( $config['debug'] );
+		}
+		$this->swiftTimeout = isset ( $config['swiftTimeout'] )
+			? intval( $config['swiftTimeout'] )
+			: 10;
+		/* </Wikia> */
 		// Optional settings
 		$this->authTTL = isset( $config['swiftAuthTTL'] )
 			? $config['swiftAuthTTL']
@@ -64,13 +79,22 @@ class SwiftFileBackend extends FileBackendStore {
 		$this->shardViaHashLevels = isset( $config['shardViaHashLevels'] )
 			? $config['shardViaHashLevels']
 			: '';
+		/* <Wikia> */
+		// caching credentials
+		if ( !empty( $config['cacheAuthInfo'] ) && $config['cacheAuthInfo'] === true ) {
+			$this->srvCache = wfGetMainCache();
+		}
+		$this->srvCache = $this->srvCache ? $this->srvCache : new EmptyBagOStuff();
+		/* </Wikia> */
 	}
 
 	/**
 	 * @see FileBackendStore::resolveContainerPath()
 	 */
 	protected function resolveContainerPath( $container, $relStoragePath ) {
-		if ( strlen( urlencode( $relStoragePath ) ) > 1024 ) {
+		if ( !mb_check_encoding( $relStoragePath, 'UTF-8' ) ) { // mb_string required by CF
+			return null; // not UTF-8, makes it hard to use CF and the swift HTTP API
+		} elseif ( strlen( urlencode( $relStoragePath ) ) > 1024 ) {
 			return null; // too long for Swift
 		}
 		return $relStoragePath;
@@ -89,7 +113,9 @@ class SwiftFileBackend extends FileBackendStore {
 			$this->getContainer( $container );
 			return true; // container exists
 		} catch ( NoSuchContainerException $e ) {
+			$this->logException( $e, __METHOD__, array( 'path' => $storagePath ) );
 		} catch ( InvalidResponseException $e ) {
+			$this->logException( $e, __METHOD__, array( 'path' => $storagePath ) );
 		} catch ( Exception $e ) { // some other exception?
 			$this->logException( $e, __METHOD__, array( 'path' => $storagePath ) );
 		}
@@ -111,18 +137,21 @@ class SwiftFileBackend extends FileBackendStore {
 
 		// (a) Check the destination container and object
 		try {
+			unset( $this->objCache[ $params['dst'] ] );
 			$dContObj = $this->getContainer( $dstCont );
 			if ( empty( $params['overwrite'] ) &&
-				$this->fileExists( array( 'src' => $params['dst'], 'latest' => 1 ) ) ) 
+				$this->fileExists( array( 'src' => $params['dst'], 'latest' => 1 ) ) )
 			{
 				$status->fatal( 'backend-fail-alreadyexists', $params['dst'] );
 				return $status;
 			}
 		} catch ( NoSuchContainerException $e ) {
 			$status->fatal( 'backend-fail-create', $params['dst'] );
+			$this->logException( $e, __METHOD__, $params );
 			return $status;
 		} catch ( InvalidResponseException $e ) {
 			$status->fatal( 'backend-fail-connect', $this->name );
+			$this->logException( $e, __METHOD__, $params );
 			return $status;
 		} catch ( Exception $e ) { // some other exception?
 			$status->fatal( 'backend-fail-internal', $this->name );
@@ -149,8 +178,10 @@ class SwiftFileBackend extends FileBackendStore {
 			$obj->write( $params['content'] );
 		} catch ( BadContentTypeException $e ) {
 			$status->fatal( 'backend-fail-contenttype', $params['dst'] );
+			$this->logException( $e, __METHOD__, $params );
 		} catch ( InvalidResponseException $e ) {
 			$status->fatal( 'backend-fail-connect', $this->name );
+			$this->logException( $e, __METHOD__, $params );
 		} catch ( Exception $e ) { // some other exception?
 			$status->fatal( 'backend-fail-internal', $this->name );
 			$this->logException( $e, __METHOD__, $params );
@@ -173,18 +204,21 @@ class SwiftFileBackend extends FileBackendStore {
 
 		// (a) Check the destination container and object
 		try {
+			unset( $this->objCache[ $params['dst'] ] );
 			$dContObj = $this->getContainer( $dstCont );
 			if ( empty( $params['overwrite'] ) &&
-				$this->fileExists( array( 'src' => $params['dst'], 'latest' => 1 ) ) ) 
+				$this->fileExists( array( 'src' => $params['dst'], 'latest' => 1 ) ) )
 			{
 				$status->fatal( 'backend-fail-alreadyexists', $params['dst'] );
 				return $status;
 			}
 		} catch ( NoSuchContainerException $e ) {
 			$status->fatal( 'backend-fail-copy', $params['src'], $params['dst'] );
+			$this->logException( $e, __METHOD__, $params );
 			return $status;
 		} catch ( InvalidResponseException $e ) {
 			$status->fatal( 'backend-fail-connect', $this->name );
+			$this->logException( $e, __METHOD__, $params );
 			return $status;
 		} catch ( Exception $e ) { // some other exception?
 			$status->fatal( 'backend-fail-internal', $this->name );
@@ -215,14 +249,19 @@ class SwiftFileBackend extends FileBackendStore {
 			$obj->load_from_filename( $params['src'], True ); // calls $obj->write()
 		} catch ( BadContentTypeException $e ) {
 			$status->fatal( 'backend-fail-contenttype', $params['dst'] );
+			$this->logException( $e, __METHOD__, $params );
 		} catch ( IOException $e ) {
 			$status->fatal( 'backend-fail-copy', $params['src'], $params['dst'] );
+			$this->logException( $e, __METHOD__, $params );
 		} catch ( InvalidResponseException $e ) {
 			$status->fatal( 'backend-fail-connect', $this->name );
+			$this->logException( $e, __METHOD__, $params );
 		} catch ( Exception $e ) { // some other exception?
 			$status->fatal( 'backend-fail-internal', $this->name );
 			$this->logException( $e, __METHOD__, $params );
 		}
+
+		wfRunHooks( 'SwiftFileBackend::doStoreInternal', array( $params, &$status ) );
 
 		return $status;
 	}
@@ -247,10 +286,12 @@ class SwiftFileBackend extends FileBackendStore {
 
 		// (a) Check the source/destination containers and destination object
 		try {
+			unset( $this->objCache[ $params['src'] ] );
+			unset( $this->objCache[ $params['dst'] ] );
 			$sContObj = $this->getContainer( $srcCont );
 			$dContObj = $this->getContainer( $dstCont );
 			if ( empty( $params['overwrite'] ) &&
-				$this->fileExists( array( 'src' => $params['dst'], 'latest' => 1 ) ) ) 
+				$this->fileExists( array( 'src' => $params['dst'], 'latest' => 1 ) ) )
 			{
 				$status->fatal( 'backend-fail-alreadyexists', $params['dst'] );
 				return $status;
@@ -272,12 +313,16 @@ class SwiftFileBackend extends FileBackendStore {
 			$sContObj->copy_object_to( $srcRel, $dContObj, $dstRel );
 		} catch ( NoSuchObjectException $e ) { // source object does not exist
 			$status->fatal( 'backend-fail-copy', $params['src'], $params['dst'] );
+			$this->logException( $e, __METHOD__, $params );
 		} catch ( InvalidResponseException $e ) {
 			$status->fatal( 'backend-fail-connect', $this->name );
+			$this->logException( $e, __METHOD__, $params );
 		} catch ( Exception $e ) { // some other exception?
 			$status->fatal( 'backend-fail-internal', $this->name );
 			$this->logException( $e, __METHOD__, $params );
 		}
+		
+		wfRunHooks( 'SwiftFileBackend::doCopyInternal', array( $params, &$status ) );
 
 		return $status;
 	}
@@ -295,21 +340,27 @@ class SwiftFileBackend extends FileBackendStore {
 		}
 
 		try {
+			unset( $this->objCache[ $params['src'] ] );
 			$sContObj = $this->getContainer( $srcCont );
 			$sContObj->delete_object( $srcRel );
 		} catch ( NoSuchContainerException $e ) {
 			$status->fatal( 'backend-fail-delete', $params['src'] );
+			$this->logException( $e, __METHOD__, $params );
 		} catch ( NoSuchObjectException $e ) {
 			if ( empty( $params['ignoreMissingSource'] ) ) {
 				$status->fatal( 'backend-fail-delete', $params['src'] );
+				$this->logException( $e, __METHOD__, $params );
 			}
 		} catch ( InvalidResponseException $e ) {
 			$status->fatal( 'backend-fail-connect', $this->name );
+			$this->logException( $e, __METHOD__, $params );
 		} catch ( Exception $e ) { // some other exception?
 			$status->fatal( 'backend-fail-internal', $this->name );
 			$this->logException( $e, __METHOD__, $params );
 		}
 
+		wfRunHooks( 'SwiftFileBackend::doDeleteInternal', array( $params, &$status ) );
+		
 		return $status;
 	}
 
@@ -323,11 +374,19 @@ class SwiftFileBackend extends FileBackendStore {
 		try {
 			$contObj = $this->getContainer( $fullCont );
 			// NoSuchContainerException not thrown: container must exist
+
+			$status->merge( $this->setContainerAccess(
+				$contObj,
+				array( '.r:*' ), // read
+				array( $this->auth->username, $this->swiftAnonUser ) // write
+			) );
+
 			return $status; // already exists
 		} catch ( NoSuchContainerException $e ) {
 			// NoSuchContainerException thrown: container does not exist
 		} catch ( InvalidResponseException $e ) {
 			$status->fatal( 'backend-fail-connect', $this->name );
+			$this->logException( $e, __METHOD__, $params );
 			return $status;
 		} catch ( Exception $e ) { // some other exception?
 			$status->fatal( 'backend-fail-internal', $this->name );
@@ -338,16 +397,23 @@ class SwiftFileBackend extends FileBackendStore {
 		// (b) Create container as needed
 		try {
 			$contObj = $this->createContainer( $fullCont );
+			// Make container public to end-users...
 			if ( $this->swiftAnonUser != '' ) {
-				// Make container public to end-users...
 				$status->merge( $this->setContainerAccess(
 					$contObj,
 					array( $this->auth->username, $this->swiftAnonUser ), // read
+					array( $this->auth->username, $this->swiftAnonUser ) // write
+				) );
+			} else {
+				$status->merge( $this->setContainerAccess(
+					$contObj,
+					array( '.r:*' ), // read
 					array( $this->auth->username ) // write
 				) );
 			}
 		} catch ( InvalidResponseException $e ) {
 			$status->fatal( 'backend-fail-connect', $this->name );
+			$this->logException( $e, __METHOD__, $params );
 			return $status;
 		} catch ( Exception $e ) { // some other exception?
 			$status->fatal( 'backend-fail-internal', $this->name );
@@ -358,39 +424,39 @@ class SwiftFileBackend extends FileBackendStore {
 		return $status;
 	}
 
+	// Wikia change - begin (@author macbre)
+	// this method is called when storage file / directory is deleted
+	// and restricts access to ALL files in the current container (BAC-849)
 	/**
 	 * @see FileBackendStore::doSecureInternal()
-	 */
+	 *
 	protected function doSecureInternal( $fullCont, $dir, array $params ) {
 		$status = Status::newGood();
 
-		if ( $this->swiftAnonUser != '' ) {
-			// Restrict container from end-users...
-			try {
-				// doPrepareInternal() should have been called,
-				// so the Swift container should already exist...
-				$contObj = $this->getContainer( $fullCont ); // normally a cache hit
-				// NoSuchContainerException not thrown: container must exist
-				if ( !isset( $contObj->mw_wasSecured ) ) {
-					$status->merge( $this->setContainerAccess(
-						$contObj,
-						array( $this->auth->username ), // read
-						array( $this->auth->username ) // write
-					) );
-					// @TODO: when php-cloudfiles supports container
-					// metadata, we can make use of that to avoid RTTs
-					$contObj->mw_wasSecured = true; // avoid useless RTTs
-				}
-			} catch ( InvalidResponseException $e ) {
-				$status->fatal( 'backend-fail-connect', $this->name );
-			} catch ( Exception $e ) { // some other exception?
-				$status->fatal( 'backend-fail-internal', $this->name );
-				$this->logException( $e, __METHOD__, $params );
-			}
+		try {
+			// doPrepareInternal() should have been called,
+			// so the Swift container should already exist...
+			$contObj = $this->getContainer( $fullCont ); // normally a cache hit
+			// NoSuchContainerException not thrown: container must exist
+
+			// Make container private to end-users...
+			$status->merge( $this->setContainerAccess(
+				$contObj,
+				array( $this->auth->username ), // read
+				array( $this->auth->username ) // write
+			) );
+		} catch ( InvalidResponseException $e ) {
+			$status->fatal( 'backend-fail-connect', $this->name );
+			$this->logException( $e, __METHOD__, $params );
+		} catch ( Exception $e ) { // some other exception?
+			$status->fatal( 'backend-fail-internal', $this->name );
+			$this->logException( $e, __METHOD__, $params );
 		}
 
 		return $status;
 	}
+	**/
+	// Wikia change - end
 
 	/**
 	 * @see FileBackendStore::doCleanInternal()
@@ -410,6 +476,7 @@ class SwiftFileBackend extends FileBackendStore {
 			return $status; // ok, nothing to do
 		} catch ( InvalidResponseException $e ) {
 			$status->fatal( 'backend-fail-connect', $this->name );
+			$this->logException( $e, __METHOD__, $params );
 			return $status;
 		} catch ( Exception $e ) { // some other exception?
 			$status->fatal( 'backend-fail-internal', $this->name );
@@ -425,6 +492,7 @@ class SwiftFileBackend extends FileBackendStore {
 				return $status; // race?
 			} catch ( InvalidResponseException $e ) {
 				$status->fatal( 'backend-fail-connect', $this->name );
+				$this->logException( $e, __METHOD__, $params );
 				return $status;
 			} catch ( Exception $e ) { // some other exception?
 				$status->fatal( 'backend-fail-internal', $this->name );
@@ -445,41 +513,53 @@ class SwiftFileBackend extends FileBackendStore {
 			return false; // invalid storage path
 		}
 
+		# <Wikia>
+		if ( isset( $this->objCache[ $params['src'] ] ) ) {
+			return $this->objCache[ $params['src'] ];
+		}
+		
+		if ( empty( $params['latest'] ) ) {
+			$params['latest'] = 1;
+		}
+		# </Wikia>
+
 		$stat = false;
 		try {
 			$contObj = $this->getContainer( $srcCont );
 			$srcObj = $contObj->get_object( $srcRel, $this->headersFromParams( $params ) );
-			$this->addMissingMetadata( $srcObj, $params['src'] );
+			// macbre - causes infinite loop / sha1 is stored in doStoreInternal() ?
+			$this->addMissingMetadata( $srcObj, $params['src'] ); 
 			$stat = array(
 				// Convert dates like "Tue, 03 Jan 2012 22:01:04 GMT" to TS_MW
 				'mtime' => wfTimestamp( TS_MW, $srcObj->last_modified ),
-				'size'  => $srcObj->content_length,
-				'sha1'  => $srcObj->metadata['Sha1base36']
+				'size' => (int)$srcObj->content_length,
+				'sha1' => $srcObj->getMetadataValue( 'Sha1base36' )
 			);
 		} catch ( NoSuchContainerException $e ) {
+			$this->logException( $e, __METHOD__, $params );
 		} catch ( NoSuchObjectException $e ) {
-		} catch ( InvalidResponseException $e ) {
-			$stat = null;
-		} catch ( Exception $e ) { // some other exception?
-			$stat = null;
 			$this->logException( $e, __METHOD__, $params );
 		}
 
+		$this->objCache[ $params['src'] ] = $stat;
+			
 		return $stat;
 	}
 
 	/**
 	 * Fill in any missing object metadata and save it to Swift
-	 * 
+	 *
 	 * @param $obj CF_Object
 	 * @param $path string Storage path to object
 	 * @return bool Success
 	 * @throws Exception cloudfiles exceptions
 	 */
 	protected function addMissingMetadata( CF_Object $obj, $path ) {
-		if ( isset( $obj->metadata['Sha1base36'] ) ) {
+		if ( $obj->getMetadataValue( 'Sha1base36' ) !== null ) {
 			return true; // nothing to do
 		}
+		wfProfileIn( __METHOD__ );
+		trigger_error( "$path was not stored with SHA-1 metadata.", E_USER_WARNING );
 		$status = Status::newGood();
 		$scopeLockS = $this->getScopedFileLocks( array( $path ), LockManager::LOCK_UW, $status );
 		if ( $status->isOK() ) {
@@ -487,13 +567,16 @@ class SwiftFileBackend extends FileBackendStore {
 			if ( $tmpFile ) {
 				$hash = $tmpFile->getSha1Base36();
 				if ( $hash !== false ) {
-					$obj->metadata['Sha1base36'] = $hash;
+					$obj->setMetadataValues( array( 'Sha1base36' => $hash ) );
 					$obj->sync_metadata(); // save to Swift
+					wfProfileOut( __METHOD__ );
 					return true; // success
 				}
 			}
 		}
-		$obj->metadata['Sha1base36'] = false;
+		trigger_error( "Unable to set SHA-1 metadata for $path", E_USER_WARNING );
+		$obj->setMetadataValues( array( 'Sha1base36' => false ) );
+		wfProfileOut( __METHOD__ );
 		return false; // failed
 	}
 
@@ -501,12 +584,19 @@ class SwiftFileBackend extends FileBackendStore {
 	 * @see FileBackend::getFileContents()
 	 */
 	public function getFileContents( array $params ) {
+		static $existsCache = [];
+
 		list( $srcCont, $srcRel ) = $this->resolveStoragePathReal( $params['src'] );
 		if ( $srcRel === null ) {
 			return false; // invalid storage path
 		}
 
+		if ( isset( $existsCache[ $params['src'] ] ) ) {
+			return $existsCache[ $params['src'] ];
+		}
+
 		if ( !$this->fileExists( $params ) ) {
+			$existsCache[ $params['src'] ] = null;
 			return null;
 		}
 
@@ -517,6 +607,7 @@ class SwiftFileBackend extends FileBackendStore {
 			$data = $obj->read( $this->headersFromParams( $params ) );
 		} catch ( NoSuchContainerException $e ) {
 		} catch ( InvalidResponseException $e ) {
+			$this->logException( $e, __METHOD__, $params );
 		} catch ( Exception $e ) { // some other exception?
 			$this->logException( $e, __METHOD__, $params );
 		}
@@ -533,7 +624,7 @@ class SwiftFileBackend extends FileBackendStore {
 
 	/**
 	 * Do not call this function outside of SwiftFileBackendFileList
-	 * 
+	 *
 	 * @param $fullCont string Resolved container name
 	 * @param $dir string Resolved storage directory with no trailing slash
 	 * @param $after string Storage path of file to list items after
@@ -550,6 +641,7 @@ class SwiftFileBackend extends FileBackendStore {
 		} catch ( NoSuchContainerException $e ) {
 		} catch ( NoSuchObjectException $e ) {
 		} catch ( InvalidResponseException $e ) {
+			$this->logException( $e, __METHOD__, array( 'cont' => $fullCont, 'dir' => $dir ) );
 		} catch ( Exception $e ) { // some other exception?
 			$this->logException( $e, __METHOD__, array( 'cont' => $fullCont, 'dir' => $dir ) );
 		}
@@ -587,6 +679,7 @@ class SwiftFileBackend extends FileBackendStore {
 			return $status;
 		} catch ( InvalidResponseException $e ) {
 			$status->fatal( 'backend-fail-connect', $this->name );
+			$this->logException( $e, __METHOD__, $params );
 			return $status;
 		} catch ( Exception $e ) { // some other exception?
 			$status->fatal( 'backend-fail-stream', $params['src'] );
@@ -600,6 +693,7 @@ class SwiftFileBackend extends FileBackendStore {
 			$obj->stream( $output, $this->headersFromParams( $params ) );
 		} catch ( InvalidResponseException $e ) { // 404? connection problem?
 			$status->fatal( 'backend-fail-stream', $params['src'] );
+			$this->logException( $e, __METHOD__, $params );
 		} catch ( Exception $e ) { // some other exception?
 			$status->fatal( 'backend-fail-stream', $params['src'] );
 			$this->logException( $e, __METHOD__, $params );
@@ -617,9 +711,9 @@ class SwiftFileBackend extends FileBackendStore {
 			return null;
 		}
 
-		if ( !$this->fileExists( $params ) ) {
+		/*if ( !$this->fileExists( $params ) ) {
 			return null;
-		}
+		}*/
 
 		$tmpFile = null;
 		try {
@@ -640,8 +734,13 @@ class SwiftFileBackend extends FileBackendStore {
 			}
 		} catch ( NoSuchContainerException $e ) {
 			$tmpFile = null;
+			$this->logException( $e, __METHOD__, $params );
+		} catch ( NoSuchObjectException $e ) {
+			$tmpFile = null;
+			$this->logException( $e, __METHOD__, $params );
 		} catch ( InvalidResponseException $e ) {
 			$tmpFile = null;
+			$this->logException( $e, __METHOD__, $params );
 		} catch ( Exception $e ) { // some other exception?
 			$tmpFile = null;
 			$this->logException( $e, __METHOD__, $params );
@@ -652,11 +751,11 @@ class SwiftFileBackend extends FileBackendStore {
 
 	/**
 	 * Get headers to send to Swift when reading a file based
-	 * on a FileBackend params array, e.g. that of getLocalCopy(). 
+	 * on a FileBackend params array, e.g. that of getLocalCopy().
 	 * $params is currently only checked for a 'latest' flag.
-	 * 
+	 *
 	 * @param $params Array
-	 * @return Array 
+	 * @return Array
 	 */
 	protected function headersFromParams( array $params ) {
 		$hdrs = array();
@@ -677,12 +776,33 @@ class SwiftFileBackend extends FileBackendStore {
 	protected function setContainerAccess(
 		CF_Container $contObj, array $readGrps, array $writeGrps
 	) {
-		$creds = $contObj->cfs_auth->export_credentials();
+		// Wikia change - begin
+		// don't send multiple ACL requests for the same container over and over again (BAC-872)
+		static $reqSent = [];
 
+		$key = $contObj->name;
+		$entry = implode( ',', $readGrps ) . '::' . implode( ',', $writeGrps );
+
+		if (isset($reqSent[$key]) && $reqSent[$key] === $entry) {
+			wfDebug( __METHOD__ . ": ACL already set\n" );
+			return Status::newGood();
+		}
+
+		$reqSent[$key] = $entry;
+		// Wikia change - end
+
+		$creds = $contObj->cfs_auth->export_credentials();
 		$url = $creds['storage_url'] . '/' . rawurlencode( $contObj->name );
 
+		wfDebug( sprintf( "%s: %s (ACL - read: '%s', write: '%s')\n",
+			__METHOD__,
+			$url,
+			implode( ',', $readGrps ),
+			implode( ',', $writeGrps )
+		)); // Wikia change
+
 		// Note: 10 second timeout consistent with php-cloudfiles
-		$req = new CurlHttpRequest( $url, array( 'method' => 'POST', 'timeout' => 10 ) );
+		$req = MWHttpRequest::factory( $url, array( 'method' => 'POST', 'timeout' => $this->swiftTimeout, 'noProxy' => true ) );
 		$req->setHeader( 'X-Auth-Token', $creds['auth_token'] );
 		$req->setHeader( 'X-Container-Read', implode( ',', $readGrps ) );
 		$req->setHeader( 'X-Container-Write', implode( ',', $writeGrps ) );
@@ -702,22 +822,34 @@ class SwiftFileBackend extends FileBackendStore {
 		}
 		// Session keys expire after a while, so we renew them periodically
 		if ( $this->conn && ( time() - $this->connStarted ) > $this->authTTL ) {
-			$this->conn->close(); // close active cURL connections
-			$this->conn = null;
+			$this->closeConnection();
 		}
 		// Authenticate with proxy and get a session key...
 		if ( $this->conn === null ) {
-			$this->connContainers = array();
-			try {
-				$this->auth->authenticate();
-				$this->conn = new CF_Connection( $this->auth );
-				$this->connStarted = time();
-			} catch ( AuthenticationException $e ) {
-				$this->conn = false; // don't keep re-trying
-			} catch ( InvalidResponseException $e ) {
-				$this->conn = false; // don't keep re-trying
+			$cacheKey = $this->getCredsCacheKey( $this->auth->username );
+			$creds = $this->srvCache->get( $cacheKey ); // credentials
+
+			if ( is_array( $creds ) ) { // cache hit
+				$this->auth->load_cached_credentials( $creds['auth_token'], $creds['storage_url'], $creds['cdnm_url'] );
+				$this->connStarted = time() - ceil( $this->authTTL / 2 ); // skew for worst case
+			} else { // cache miss
+				try {
+					$this->auth->authenticate();
+					$creds = $this->auth->export_credentials();
+					$this->srvCache->set( $cacheKey, $creds, ceil( $this->authTTL / 2 ) ); // cache
+					$this->connStarted = time();
+				} catch ( AuthenticationException $e ) {
+					$this->conn = false; // don't keep re-trying
+					$this->logException( $e, __METHOD__, $creds );
+				} catch ( InvalidResponseException $e ) {
+					$this->conn = false; // don't keep re-trying
+					$this->logException( $e, __METHOD__, $creds );
+				}
 			}
+
+			$this->conn = new CF_Connection( $this->auth );
 		}
+
 		if ( !$this->conn ) {
 			throw new InvalidResponseException; // auth/connection problem
 		}
@@ -728,7 +860,18 @@ class SwiftFileBackend extends FileBackendStore {
 	 * @see FileBackendStore::doClearCache()
 	 */
 	protected function doClearCache( array $paths = null ) {
-		$this->connContainers = array(); // clear container object cache
+		// macbre: commented this out to reduce number of HEAD requests checking the existance of containers
+		# $this->connContainers = array(); // clear container object cache
+	}
+
+	/**
+	 * Get the cache key for a container
+	 *
+	 * @param string $username
+	 * @return string
+	 */
+	private function getCredsCacheKey( $username ) {
+		return wfMemcKey( 'backend', $this->getName(), 'usercreds', $username );
 	}
 
 	/**
@@ -783,21 +926,46 @@ class SwiftFileBackend extends FileBackendStore {
 	}
 
 	/**
+	 * Close the connection to the Swift proxy
+	 *
+	 * @return void
+	 */
+	protected function closeConnection() {
+		if ( $this->conn ) {
+			$this->srvCache->delete( $this->getCredsCacheKey( $this->auth->username ) );
+			$this->conn->close(); // close active cURL handles in CF_Http object
+			$this->conn = null;
+			$this->connStarted = 0;
+		}
+	}
+
+	/**
 	 * Log an unexpected exception for this backend
-	 * 
+	 *
 	 * @param $e Exception
 	 * @param $func string
 	 * @param $params Array
 	 * @return void
 	 */
 	protected function logException( Exception $e, $func, array $params ) {
-		wfDebugLog( 'SwiftBackend',
+		// Wikia change - begin
+		if ( $e instanceof InvalidResponseException ) { // possibly a stale token
+			$this->closeConnection(); // force a re-connect and re-auth next time
+		}
+
+		if ( $e instanceof NoSuchObjectException ) {
+			return;
+		}
+
+		\Wikia\SwiftStorage::log(
+			__CLASS__ . '::exception',
 			get_class( $e ) . " in '{$func}' (given '" . serialize( $params ) . "')" .
-			( $e instanceof InvalidResponseException
-				? ": {$e->getMessage()}"
-				: ""
-			)
+				( $e instanceof InvalidResponseException
+					? ": {$e->getMessage()}"
+					: ""
+				)
 		);
+		// Wikia change - end
 	}
 }
 
@@ -815,7 +983,7 @@ class SwiftFileBackendFileList implements Iterator {
 	protected $pos = 0; // integer
 
 	/** @var SwiftFileBackend */
-	protected $backend; 
+	protected $backend;
 	protected $container; //
 	protected $dir; // string storage directory
 	protected $suffixStart; // integer

@@ -85,6 +85,10 @@ function wfRenderTimeline( $timelinesrc ) {
 	// Storage destination path (excluding file extension)
 	$fname = 'mwstore://' . $backend->getName() . "/timeline-render/$hash";
 
+	// Wikia change - begin
+	wfRunHooks( 'BeforeRenderTimeline', [ &$backend, &$fname, $hash ] );
+	// Wikia change - end
+
 	$previouslyFailed = $backend->fileExists( array( 'src' => "{$fname}.err" ) );
 	$previouslyRendered = $backend->fileExists( array( 'src' => "{$fname}.png" ) );
 	if ( $previouslyRendered ) {
@@ -135,7 +139,14 @@ function wfRenderTimeline( $timelinesrc ) {
 		}
 	}
 
-	$err = $backend->getFileContents( array( 'src' => "{$fname}.err" ) );
+	// Wikia change - begin
+	if ( $backend->fileExists( array( 'src' => "{$fname}.err", 'latest' => true /* omit cache */ ) ) ) {
+		$err = $backend->getFileContents( array( 'src' => "{$fname}.err" ) );
+	}
+	else {
+		$err = '';
+	}
+	// Wikia change - end
 
 	if ( $err != "" ) {
 		// Convert the error from poorly-sanitized HTML to plain text
@@ -152,13 +163,25 @@ function wfRenderTimeline( $timelinesrc ) {
 		$encErr = nl2br( htmlspecialchars( $err ) );
 		$txt = "<div id=\"toc\" dir=\"ltr\"><tt>$encErr</tt></div>";
 	} else {
-		$map = $backend->getFileContents( array( 'src' => "{$fname}.map" ) );
+		// Wikia change - begin
+		if ( $backend->fileExists( array( 'src' => "{$fname}.map", 'latest' => true /* omit cache */ ) ) ) {
+			$map = $backend->getFileContents( array( 'src' => "{$fname}.map" ) );
+		}
+		else {
+			$map = '';
+		}
+		// Wikia change - end
 
 		$map = str_replace( ' >', ' />', $map );
 		$map = "<map name=\"timeline_" . htmlspecialchars( $hash ) . "\">{$map}</map>";
 		$map = easyTimelineFixMap( $map );
 
 		$url = "{$wgUploadPath}/timeline/{$hash}.png";
+
+		// Wikia change - begin
+		$url = wfReplaceImageServer($url);
+		// Wikia change - end
+
 		$txt = $map .
 			"<img usemap=\"#timeline_" . htmlspecialchars( $hash ) . "\" " . 
 			"src=\"" . htmlspecialchars( $url ) . "\">";
