@@ -43,7 +43,7 @@ define( 'lvs.videocontrols', [
 		*/
 	}
 
-	function _syncVideoInteraction( title ) {
+	function syncVideoInteraction( title ) {
 		nirvana.sendRequest({
 			controller: 'LicensedVideoSwapSpecialController',
 			method: 'playVideo',
@@ -66,16 +66,18 @@ define( 'lvs.videocontrols', [
 				$row = $this.closest( '.row' ),
 				$parent = $this.parent(),
 				$wrapper,
+				$newFlag,
 				trackingRank = 0,
 				isPremium = 1;
 
+			$newFlag = $row.find( '.new' );
 			/*
 			 * For all premium video plays that are 'new' to user, including plays from the 'more suggestions' thumbs
 			 * send a call to backend to persist and track user interaction, then hide 'New' flag
 			 */
-			if ( !$this.closest( '.non-premium' ).length && $row.find( '.new' ).is( ':visible' ) ) {
-				_syncVideoInteraction( fileTitle );
-				$row.find( '.new' ).fadeOut();
+			if ( !$this.closest( '.non-premium' ).length && $newFlag.is( ':visible' ) ) {
+				syncVideoInteraction( fileTitle );
+				$newFlag.fadeOut();
 			}
 
 			$row.find( '.swap-button' ).attr( 'data-video-swap', fileTitle );
