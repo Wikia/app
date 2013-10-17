@@ -995,10 +995,7 @@ if( !isset( $wgUseMedusa ) ) {
  * Memcached class name
  */
 $wgMemCachedClass = 'MemCachedClientforWiki';
-
-if (gethostname() == 'ap-s44') { // TODO: remove this once we decide what memcached client to use
-	$wgMemCachedClass = 'MemcacheClientShadower';
-}
+$wgMoxiTestNodes = ['ap-s44'];
 
 /**
  * Extra configuration options for memcached when using libmemcached/pecl-memcached
