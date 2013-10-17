@@ -24,7 +24,9 @@ class WikiEntitiesService
 		$mwService = $this->getMwService();
 		$entityList = $this->getEntityList();
 		if ( count( $entityList ) ) {
-			array_walk( $entityList, function( &$val ) { $val = substr( $val, 0, 20 ); } );
+			foreach ( $entityList as &$entity ) {
+				$entity = substr( $entity, 0, 20 );
+			}
 			$keyValues = $mwService->getGlobalWithDefault( 'wgDartCustomKeyValues', '' )
 			           . '&'
 			           . http_build_query( [ 'wikientities' => $entityList ] );
