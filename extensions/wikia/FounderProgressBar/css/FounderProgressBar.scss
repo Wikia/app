@@ -4,6 +4,7 @@
 @import "../../../../skins/oasis/css/mixins/gradient";
 @import "../../../../skins/oasis/css/mixins/opacity";
 @import "../../../../skins/oasis/css/mixins/transform";
+@import "../../../../skins/oasis/css/core/responsive";
 @import "../../../../skins/oasis/css/core/layout";
 @import "../../../../skins/oasis/css/core/color";
 
@@ -375,4 +376,15 @@ $color-founder-progress-list-border-shadow: #e2e2e2;
 
 .ControlCenterRail {
 	position: relative;
+}
+
+@if ( $responsive-layout-enabled ) {
+	@media screen and (max-width: $breakpoint-small) {
+		.FounderProgressList {
+			width: 100%;
+			.tail {
+				display: none;
+			}
+		}
+	}
 }

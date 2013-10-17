@@ -9,7 +9,8 @@ define( 'wikia.preview', [
 	'wikia.mustache',
 	'JSMessages',
 	'wikia.tracker',
-	'wikia.csspropshelper'
+	'wikia.csspropshelper',
+	'wikia.fluidlayout'
 ], function(
 	window,
 	nirvana,
@@ -18,16 +19,16 @@ define( 'wikia.preview', [
 	mustache,
 	msg,
 	tracker,
-	cssPropHelper
+	cssPropHelper,
+	fluidlayout
 ) {
 	'use strict';
 
 	var	$article,
 		// current design of preview has this margins to emulate page margins
 		// TODO: when we will redesign preview to meet darwin design directions - this should be done differently and refactored
-		articleMargin = 11, // 10px margin + 1px border
+		articleMargin = fluidlayout.getWidthPadding() + fluidlayout.getArticleBorderWidth(),
 		// values for min and max are Darwin minimum and maximum supported article width.
-		// This should be abstracted and stored in one place so it's available both for SASS and JS
 		previewTypes = {
 			current: {
 				name: 'current',
@@ -35,11 +36,11 @@ define( 'wikia.preview', [
 			},
 			min: {
 				name: 'min',
-				value: 768 - articleMargin * 2
+				value: fluidlayout.getMinArticleWidth() - 2 * articleMargin
 			},
 			max: {
 				name:'max',
-				value: 1300 - articleMargin * 2
+				value: fluidlayout.getMaxArticleWidth() - 2 * articleMargin
 			}
 		},
 		isRailDropped = false,

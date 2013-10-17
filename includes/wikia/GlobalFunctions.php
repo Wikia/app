@@ -143,6 +143,7 @@ function wfReplaceImageServer( $url, $timestamp = false ) {
 				// This will cause Akamai to only cache for 30 seconds.
 				$timestamp = "";
 			}
+
 			// Add Akamai versions, but only if there is some sort of caching number.
 			if($timestamp != ""){
 				$timestamp += $wgAkamaiGlobalVersion + $wgAkamaiLocalVersion;
@@ -150,7 +151,11 @@ function wfReplaceImageServer( $url, $timestamp = false ) {
 
 			// NOTE: This should be the only use of the cache-buster which does not use $wgCdnStylePath.
 			// RT#98969 if the url already has a cb value, don't add another one...
-			$cb = ($timestamp!='' && strpos($url, "__cb") === false) ? "__cb{$timestamp}/" : '';
+			if ( !empty( $wgDevBoxImageServerOverride ) ) {
+				$cb = '';
+			} else {
+				$cb = ($timestamp!='' && strpos($url, "__cb") === false) ? "__cb{$timestamp}/" : '';
+			}
 
 			if (!empty($wgDevBoxImageServerOverride)) {
 				// Dev boxes

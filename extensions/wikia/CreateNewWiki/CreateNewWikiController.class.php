@@ -89,9 +89,8 @@ class CreateNewWikiController extends WikiaController {
 
 		$name = $wgRequest->getVal('name');
 		$lang = $wgRequest->getVal('lang');
-		$type  = $wgRequest->getVal('type');
 
-		$this->res = AutoCreateWiki::checkDomainIsCorrect($name, $lang, $type);
+		$this->res = AutoCreateWiki::checkDomainIsCorrect($name, $lang);
 
 		wfProfileOut(__METHOD__);
 	}

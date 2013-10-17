@@ -1,6 +1,7 @@
 @import "../../../../skins/oasis/css/core/color";
 @import "../../../../skins/oasis/css/core/layout";
 @import "../../../../skins/oasis/css/mixins/curation-elements";
+@import "../../../../skins/oasis/css/mixins/calc";
 @import "../../../../skins/oasis/css/mixins/clearfix";
 
 .slots-setup {
@@ -35,10 +36,8 @@
 	padding-left: 10px;
 
 	@if ( $responsive-layout-enabled ) {
+		@include width-calc('100% - 280px');
 		width: auto;
-
-		width: -webkit-calc(100% - 280px);
-		width: calc(100% - 280px);
 
 		@media screen and (max-width: 1030px) {
 			border: none;
