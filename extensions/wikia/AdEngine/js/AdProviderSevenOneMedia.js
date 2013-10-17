@@ -92,6 +92,8 @@ var AdProviderSevenOneMedia = function (adLogicPageLevelParams, scriptWriter, lo
 							height = $slot.height(),
 							width = $slot.width();
 
+						$slot.removeClass('default-height');
+
 						if (height >= 90 && height <= 95 && width === 728) {
 							log('fullbanner2 has standard size, enabling TOP_BUTTON_WIDE', 'debug', logGroup);
 							window.adslots2.push(['TOP_BUTTON_WIDE.force']);
