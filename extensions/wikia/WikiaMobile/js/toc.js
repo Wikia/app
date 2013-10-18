@@ -74,16 +74,22 @@ define('toc', ['track', 'sections', 'wikia.window', 'jquery', 'wikia.mustache'],
 				section = {
 					id: header.id,
 					name: header.textContent,
-					level: level +1
+					level: level + 1,
+					firstLevel: level + 1 === 1
 				};
 
 				while(level < lastLevel) {
 					childrenLevel = tmp[lastLevel];
 					childrenUpLevel = tmp[lastLevel-1];
+					if (childrenUpLevel.length) {
+						childrenUpLevel[childrenUpLevel.length-1].children = childrenLevel.slice();
 
-					childrenUpLevel[childrenUpLevel.length-1].children = childrenLevel.slice();
+						childrenLevel.length = 0;
+					} else {
+						//that means there is something like h2 > h4. Fix it by moving it one level up
+						tmp[lastLevel-1] = childrenLevel.slice();
+					}
 
-					childrenLevel.length = 0;
 					lastLevel--;
 				}
 
@@ -101,12 +107,12 @@ define('toc', ['track', 'sections', 'wikia.window', 'jquery', 'wikia.mustache'],
 	var tocc =  {
 			level: 0,
 			children: get()
-		};
+		},
+		ol = "<ol class='toc-list level{{level}}'>{{#children}}{{> lis}}{{/children}}</ol>",
+		lis = "{{#.}}<li {{#children.length}}class=has-children{{/children.length}}><a href='#{{id}}'>{{name}}</a>{{#firstLevel}}{{#children.length}}<span class='chevron right'></span>{{/children.length}}{{/firstLevel}}{{#children.length}}{{> ol}}{{/children.length}}</li>{{/.}}",
+		$ol;
 
-	var ol = "<ol class='toc-list level{{level}}'>{{#children}}{{> lis}}{{/children}}</ol>",
-		lis = "{{#.}}<li {{#children.length}}class=has-children{{/children.length}}><a href='#{{id}}'>{{name}}</a>{{#children.length}}{{#level}}<span class='chevron right'></span>{{/level}}{{/children.length}}{{#children.length}}{{> ol}}{{/children.length}}</li>{{/.}}";
-
-	$('#wkTOC')
+	$ol = $('#wkTOC')
 		.append(mustache.render(ol, tocc, {
 			ol: ol,
 			lis: lis
@@ -122,8 +128,9 @@ define('toc', ['track', 'sections', 'wikia.window', 'jquery', 'wikia.mustache'],
 
 			if($li.is('.has-children')) {
 				$li.toggleClass('open');
+				$ol.scrollTop(this.offsetTop - 45);
 			}
-		});
+		}).find('.level0');
 
 	return {
 		init: init,

@@ -31,7 +31,7 @@ $toc-background: #F8F8F8;
 
 	z-index: 101;
 
-	counter-reset: level, level1, level2;
+	counter-reset: level1, level2, level3;
 
 	-border-right:1px solid $border-color;
 
@@ -98,6 +98,7 @@ $toc-background: #F8F8F8;
 
 	a {
 		color: $page-text-color;
+		display: inline-block;
 
 		&:before {
 			padding-right: 10px;
@@ -111,49 +112,61 @@ $toc-background: #F8F8F8;
 	height: 100%;
 
 	> li {
-		//border-left: 5px solid $toc-background;
-		//border-bottom: 1px solid #D8D8D8;
-
-		border-bottom: 1px solid #D8D8D8;;
+		border-bottom: 1px solid #D8D8D8;
+		counter-increment: level1;
 
 		> a {
-			counter-increment: level;
+			border-left: 5px solid $toc-background;
+
 			font-size: 1.15rem;
 			padding-left: 15px;
 
+			-webkit-transition: border-left .2s;
+
 			&:before {
-				content: counter(level);
+				content: counter(level1);
 			}
+		}
+
+		> .current {
+			border-left: 5px solid $nice-blue;
 		}
 	}
 
-	> .current {
-		border-left: 5px solid $nice-blue;
-	}
+
 }
 
 .level1 {
 	border-top: 1px solid #D8D8D8;
 
-	> li > a {
-		counter-increment: level1;
-		padding-left: 15px;
+	> li {
+		counter-increment: level2;
 
-		&:before {
-			content: counter(level) '.' counter(level1);
+		> a {
+
+			padding-left: 20px;
+
+			&:before {
+				content: counter(level1) '.' counter(level2);
+			}
 		}
 	}
+
+
 }
 
 .level2 {
 	border-top: 1px solid #F0F0F0;
 
-	> li > a {
-		counter-increment: level2;
-		padding-left: 25px;
+	> li {
+		counter-increment: level3;
 
-		&:before {
-			content: counter(level) '.' counter(level1) '.' counter(level2);
+		> a {
+			padding-left: 25px;
+
+			&:before {
+				content: counter(level1) '.' counter(level2) '.' counter(level3);
+			}
 		}
 	}
 }
@@ -171,8 +184,9 @@ $toc-background: #F8F8F8;
 	li:not(:last-of-type) {
 		border-bottom: 1px solid #F0F0F0;
 	}
-	> .current {
-		color: blue;
+
+	.current {
+		color: $nice-blue;
 	}
 }
 

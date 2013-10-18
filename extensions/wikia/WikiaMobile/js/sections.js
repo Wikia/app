@@ -12,7 +12,6 @@ define('sections', ['JSMessages', 'jquery'], function(msg, $){
 
 	var d = document,
 		OPENCLASS = 'open',
-		goBck = '<span class=goBck>&uarr; ' + msg('wikiamobile-hide-section') + '</span>',
 		sections = $('h2[id],h3[id],h4[id]', document.getElementById('mw-content-text'));
 
 	function init(wrap){
@@ -129,13 +128,6 @@ define('sections', ['JSMessages', 'jquery'], function(msg, $){
 
 		if(!h2.hasClass(OPENCLASS)) {
 			next = h2.addClass(OPENCLASS).next().addClass(OPENCLASS);
-
-			if(!h2[0].goBackAdded && next.hasClass('artSec')) {
-				next.append(goBck);
-				h2[0].goBackAdded = true;
-			}
-
-			$.event.trigger('sections:open', [next]);
 		}
 
 		if(scroll && headers[1]){
@@ -143,16 +135,6 @@ define('sections', ['JSMessages', 'jquery'], function(msg, $){
 		}
 	}
 
-	function close(id) {
-		var h2 = find(id)[0],
-			next;
-
-		if(h2.hasClass('open')) {
-			next = h2.removeClass(OPENCLASS).next().removeClass(OPENCLASS);
-
-			$.event.trigger('sections:close', [next]);
-		}
-	}
 
 	function current(){
 		var top = window.scrollY,
@@ -176,7 +158,7 @@ define('sections', ['JSMessages', 'jquery'], function(msg, $){
 
 		if(currentSection && !currentSection.is(lastSection)) {
 			console.log(currentSection)
-			$('#TOCList li').removeClass('current').filter('li[data-id="'+currentSection.attr('id')+'"]').addClass('current');
+			$('#wkTOC a').removeClass('current').filter('a[href="#'+currentSection.attr('id')+'"]').addClass('current');
 			//document.getElementById('TOCSection').innerHTML = currentSection.attr('id');
 			lastSection = currentSection;
 		}
