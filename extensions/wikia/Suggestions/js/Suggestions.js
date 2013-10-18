@@ -144,8 +144,10 @@ require( [ 'jquery', 'suggestions_client', 'wikia.log' ], function( $, client, l
 				if ( key === 13 ) {
 					href = $(active).children('a').attr('href');
 					if ( href && href !== '#' ) {
+						self.emitEvent('newSuggestionsEnter');
 						window.location.pathname = href;
 					} else {
+						self.emitEvent('newSuggestionsSearchEnter');
 						searchInput[0].form.submit();
 					}
 					return;
@@ -175,11 +177,16 @@ require( [ 'jquery', 'suggestions_client', 'wikia.log' ], function( $, client, l
 
 			self.blurDropdown = function() {
 				setTimeout( function() {
-					if ( document.activeElement.parentNode !== dropdown[0] && document.activeElement !== searchInput[0] ) {
+					if ( document.activeElement.parentNode !== dropdown[0] &&
+						document.activeElement !== searchInput[0] ) {
 						self.showAds();
 						dropdown.empty();
 					}
 				}, 0);
+			};
+
+			self.emitEvent = function( eventName ) {
+				dropdown.trigger( eventName );
 			};
 
 			viewModel.on( 'displayResults changed', function() {
@@ -207,8 +214,12 @@ require( [ 'jquery', 'suggestions_client', 'wikia.log' ], function( $, client, l
 				if ( results.length ) {
 					html = self.buildSeeAllResultsMarkup(i);
 					$el = $(html).appendTo(dropdown);
-					$el.click( function() { searchInput[0].form.submit(); } );
+					$el.click( function() {
+						self.emitEvent('newSuggestionsSearchClick');
+						searchInput[0].form.submit();
+					});
 					self.hideAds();
+					self.emitEvent('newSuggestionsShow');
 				} else {
 					self.showAds();
 				}
@@ -229,13 +240,17 @@ require( [ 'jquery', 'suggestions_client', 'wikia.log' ], function( $, client, l
 				}
 			});
 			searchInput.on( 'keydown', function (e) {
-				if ( keyCodes.indexOf(e.keyCode) !== -1 ) {
+				if ( keyCodes.indexOf(e.keyCode) !== -1 &&
+					e.keyCode !== 13 &&
+					document.activeElement !== searchInput[0]) {
 					self.handleNavigation(e.keyCode);
 					return false;
 				}
 			});
 			dropdown.on( 'keydown', function (e) {
-				if ( keyCodes.indexOf(e.keyCode) !== -1 ) {
+				if ( keyCodes.indexOf(e.keyCode) !== -1 &&
+					e.keyCode !== 13 &&
+					document.activeElement !== searchInput[0]) {
 					self.handleNavigation(e.keyCode);
 					return false;
 				}
