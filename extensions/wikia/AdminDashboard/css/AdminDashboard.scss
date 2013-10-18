@@ -503,7 +503,7 @@ $color-highlight-column: rgba($color-page, 0);
 			right: 10px;
 		}
 		.AdminDashboardRail {
-			@include calc-shorthand('100% - 30px');
+			@include width-calc('100% - 30px');
 			float: none;
 			margin: 20px 15px 0;
 		}
