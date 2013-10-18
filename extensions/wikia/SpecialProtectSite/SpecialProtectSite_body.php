@@ -186,7 +186,6 @@ class ProtectsiteForm extends SpecialPage
 					"<br />" : '') .
 					"<br />\n" .
 					$this->textbox('ucomment') .
-					$noLogCheck .
 					'<br />' .
 					Xml::Element('input', array(
 						'type'	=> 'submit',
