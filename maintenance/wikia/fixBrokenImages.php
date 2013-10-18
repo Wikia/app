@@ -47,8 +47,8 @@ class FixBrokenImages extends Maintenance {
 	 * @param $method string method
 	 * @param $msg string message to log
 	 */
-	public static function log($method, $msg) {
-		Wikia::log(self::LOG_GROUP . '-WIKIA', false, $method . ': ' . $msg, true /* $force */);
+	public static function log( $method, $msg ) {
+		Wikia::log( self::LOG_GROUP . '-WIKIA', false, $method . ': ' . $msg, true /* $force */ );
 	}
 
 	/**
@@ -59,7 +59,7 @@ class FixBrokenImages extends Maintenance {
 	 * @param LocalFile $file
 	 * @return Title[] array of titles
 	 */
-	private function getCandidates($file) {
+	private function getCandidates( $file ) {
 		$titles = [];
 
 		// select page_title from redirect join page on page_id = rd_from where rd_namespace = 6 AND rd_title = "PRO_006_Breaker.png";
@@ -77,8 +77,8 @@ class FixBrokenImages extends Maintenance {
 			]
 		);
 
-		while($row = $res->fetchRow()) {
-			$titles[] = Title::newFromText($row['page_title'], NS_FILE);
+		while ( $row = $res->fetchRow() ) {
+			$titles[] = Title::newFromText( $row['page_title'], NS_FILE );
 		}
 
 		return $titles;
@@ -88,71 +88,71 @@ class FixBrokenImages extends Maintenance {
 	 * @param LocalFile $file file to process
 	 * @return int RESULT_* flag
 	 */
-	private function processFile(File $file) {
+	private function processFile( File $file ) {
 		global $wgUploadDirectory, $wgCityId;
 
 		try {
 			$exists = $this->repo->fileExists( $file->getPath() );
 		}
-		catch(Exception $ex) {
+		catch ( Exception $ex ) {
 			$exists = true;
-			$this->error( sprintf("%s caught: %s", get_class($ex), $ex->getMessage()) );
+			$this->error( sprintf( "%s caught: %s", get_class( $ex ), $ex->getMessage() ) );
 		}
 
 		// file is fine, continue...
-		if ($exists) {
+		if ( $exists ) {
 			return self::RESULT_EXISTS;
 		}
 
 		$restored = false;
 
-		$this->output( sprintf("'%s' doesn't exist (%s)\n", $file->getTitle(), $file->getUrlRel()) );
+		$this->output( sprintf( "'%s' doesn't exist (%s)\n", $file->getTitle(), $file->getUrlRel() ) );
 
 		// let's assume that given file was moved from A
 		// let's get all possible A's and try to find images for them
-		$candidates = $this->getCandidates($file);
+		$candidates = $this->getCandidates( $file );
 
-		if (!empty($candidates)) {
-			$this->output( sprintf("  %d candidate(s) found...\n", count($candidates)) );
+		if ( !empty( $candidates ) ) {
+			$this->output( sprintf( "  %d candidate(s) found...\n", count( $candidates ) ) );
 
-			foreach($candidates as $candidate) {
-				$srcFile = LocalFile::newFromTitle($candidate, $this->repo);
+			foreach ( $candidates as $candidate ) {
+				$srcFile = LocalFile::newFromTitle( $candidate, $this->repo );
 				$srcPath = $wgUploadDirectory . '/' . $srcFile->getUrlRel();
 
 				// check on FS storage
-				$foundOnFS = file_exists($srcPath);
+				$foundOnFS = file_exists( $srcPath );
 
-				$this->output( sprintf("    '%s' -> <%s> [%s]\n", $srcFile->getName(), $srcPath, $foundOnFS ? 'found' : 'not found') );
+				$this->output( sprintf( "    '%s' -> <%s> [%s]\n", $srcFile->getName(), $srcPath, $foundOnFS ? 'found' : 'not found' ) );
 
 				// check the next candidate (or if --dry-run)
-				if (!$foundOnFS || $this->isDryRun) {
+				if ( !$foundOnFS || $this->isDryRun ) {
 					continue;
 				}
 
 				// upload found image to Swift
-				$swift = \Wikia\SwiftStorage::newFromWiki($wgCityId);
+				$swift = \Wikia\SwiftStorage::newFromWiki( $wgCityId );
 
 				$metadata = [
 					'Sha1Base36' => $file->getSha1()
 				];
-				$status = $swift->store($srcPath, $file->getUrlRel(), $metadata, $file->getMimeType());
+				$status = $swift->store( $srcPath, $file->getUrlRel(), $metadata, $file->getMimeType() );
 
-				if ($status->isOK()) {
-					self::log('restored', $file->getName());
+				if ( $status->isOK() ) {
+					self::log( 'restored', $file->getName() );
 					$restored = true;
 					break;
 				}
 			}
 
-			$this->output("\n");
+			$this->output( "\n" );
 		}
 
 		// remove an image if it can't be restored
-		if (!$restored && !$this->isDryRun) {
-			$file->delete(self::REASON);
+		if ( !$restored && !$this->isDryRun ) {
+			$file->delete( self::REASON );
 
-			$this->output( sprintf("  Removed '%s'!\n", $file->getName()) );
-			self::log('removed', $file->getName());
+			$this->output( sprintf( "  Removed '%s'!\n", $file->getName() ) );
+			self::log( 'removed', $file->getName() );
 		}
 
 		return $restored ? self::RESULT_RESTORED : self::RESULT_NOT_RESTORED;
@@ -160,7 +160,7 @@ class FixBrokenImages extends Maintenance {
 
 	public function execute() {
 		global $wgUser;
-		$wgUser = User::newFromName(self::USER);
+		$wgUser = User::newFromName( self::USER );
 
 		$this->isDryRun = $this->hasOption( 'dry-run' );
 
@@ -174,13 +174,13 @@ class FixBrokenImages extends Maintenance {
 		$res = $this->dbr->select( 'image', LocalFile::selectFields(), '', __METHOD__ );
 		$count = $res->numRows();
 
-		$this->output( sprintf("Checking all images (%d images)%s...\n\n", $count, ($this->isDryRun ? ' in dry run mode' : '')) );
+		$this->output( sprintf( "Checking all images (%d images)%s...\n\n", $count, ( $this->isDryRun ? ' in dry run mode' : '' ) ) );
 
 		while ( $row = $res->fetchObject() ) {
-			$file = LocalFile::newFromRow($row, $this->repo);
-			$result = $this->processFile($file);
+			$file = LocalFile::newFromRow( $row, $this->repo );
+			$result = $this->processFile( $file );
 
-			switch($result) {
+			switch( $result ) {
 				case self::RESULT_RESTORED:
 					$imagesFixed++;
 					$imagesMissing++;
@@ -192,13 +192,13 @@ class FixBrokenImages extends Maintenance {
 			}
 
 			// progress
-			if (++$images % 100) {
-				$this->output( sprintf("%d%%\r", ($images / $count) * 100) );
+			if ( ++$images % 100 ) {
+				$this->output( sprintf( "%d%%\r", ( $images / $count ) * 100 ) );
 			}
 		}
 
 		// summary
-		$this->output( sprintf("Detected %d missing images (%.2f%% of %d images) and fixed %d images\n\n", $imagesMissing, ($imagesMissing / $count) * 100 , $count, $imagesFixed) );
+		$this->output( sprintf( "Detected %d missing images (%.2f%% of %d images) and fixed %d images\n\n", $imagesMissing, ( $imagesMissing / $count ) * 100 , $count, $imagesFixed ) );
 	}
 }
 
