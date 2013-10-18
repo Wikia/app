@@ -3,8 +3,8 @@
 
 $width-cart: 100px;
 
-/* Panels */
 .ve-ui-wikiaMediaInsertDialog-content {
+	/* Panels */
 	.ve-ui-pagedLayout-pagesPanel {
 		margin-right: $width-cart;
 		padding: $width-gutter;
@@ -14,6 +14,28 @@ $width-cart: 100px;
 		margin-right: -( $width-cart + $width-gutter );
 		padding: 0;
 		width: 100%;
+	}
+
+	/* Search Results */
+	.ve-ui-mwMediaResultWidget {
+		.ve-ui-labeledElement-label {
+			background-position: 7px 50%;
+			background-repeat: no-repeat;
+			height: 1.125em;
+			line-height: 1.4em;
+		}
+		&.photo {
+			.ve-ui-labeledElement-label {
+				background-image: url(/extensions/VisualEditor/wikia/modules/ve/ui/styles/images/icons/photo.svg); /* $wgCdnStylePath */
+				padding-left: 29px;
+			}
+		}
+		&.video {
+			.ve-ui-labeledElement-label {
+				background-image: url(/extensions/VisualEditor/wikia/modules/ve/ui/styles/images/icons/video.svg); /* $wgCdnStylePath */
+				padding-left: 22px;
+			}
+		}
 	}
 }
 
