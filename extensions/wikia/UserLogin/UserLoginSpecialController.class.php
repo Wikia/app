@@ -211,6 +211,10 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 				$this->returnto = Title::newMainPage()->getPartialURL();
 			}
 			unset($query['title']);
+			if ( isset( $query['password'] ) ) {
+				// remove the password from the params to prevent exposiong in into the URL
+				unset($query['password']);
+			}
 		} else {
 			$this->returnto = Title::newMainPage()->getPartialURL();
 		}
