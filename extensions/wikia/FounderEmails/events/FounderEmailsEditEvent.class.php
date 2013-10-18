@@ -3,9 +3,9 @@
 class FounderEmailsEditEvent extends FounderEmailsEvent {
 
 	/**
-	 * Name of user property that holds information about whether first edit notification was sent
+	 * Prefix for memcache key storing information about whether first edit notification was sent
 	 */
-	const FIRST_EDIT_NOTIFICATION_SENT_PROP_NAME = 'founderemails-first-edit-notification-sent';
+	const FIRST_EDIT_NOTIFICATION_SENT_MEMC_PREFIX = 'founderemails-first-edit-notification-sent';
 
 	/**
 	 * Period describing how long to throttle of emails; default of 1 hour
@@ -254,29 +254,26 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 			$isRegisteredUser = true;
 
 			// if first edit email was already sent this is an additional edit
-			$firstEditNotificationSentPropKey = self::FIRST_EDIT_NOTIFICATION_SENT_PROP_NAME . '-' . $wgCityId;
-			$wasNotificationSent = $editor->getOption( $firstEditNotificationSentPropKey );
+			$wasNotificationSent = ( static::getFirstEmailSentFlag( $editor->getName() ) === true ) ;
 
-			if ( empty( $wasNotificationSent ) ) {
+			if ( !$wasNotificationSent ) {
 				$userEditStatus = static::getUserEditsStatus( $editor, true );
 				/*
 					If there is at least one edit, flag that we should not send this email anymore;
 					either first email is sent out as a result of this request,
 					or there was more than 1 edit so we will never need to send it again
 				 */
-				switch($userEditStatus) {
+				switch ( $userEditStatus ) {
 					case self::NO_EDITS:
-						wfProfileOut(__METHOD__);
+						wfProfileOut( __METHOD__ );
 						return true;
 						break;
 					case self::FIRST_EDIT:
 						$isRegisteredUserFirstEdit = true;
-						$editor->setOption( $firstEditNotificationSentPropKey, true );
-						$editor->saveSettings();
+						static::setFirstEmailSentFlag( $editor->getName() );
 						break;
 					case self::MULTIPLE_EDITS:
-						$editor->setOption( $firstEditNotificationSentPropKey, true );
-						$editor->saveSettings();
+						static::setFirstEmailSentFlag( $editor->getName() );
 				}
 			}
 		} else {
@@ -305,6 +302,31 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 	}
 
 	/**
+	 * @desc Sets flag that founder received first edit notification for a given user
+	 *
+	 * @param $userName
+	 */
+	public static function setFirstEmailSentFlag( $userName ) {
+		global $wgMemc;
+		$wgMemc->set( static::getFirstEmailSentFlagMemcKey( $userName ), true );
+	}
+
+	public static function getFirstEmailSentFlag( $userName ) {
+		global $wgMemc;
+		return $wgMemc->get( static::getFirstEmailSentFlagMemcKey( $userName ) );
+	}
+
+	/**
+	 * @desc Returns memecache key for storing email sent flag
+	 *
+	 * @param $userName
+	 * @return String
+	 */
+	public static function getFirstEmailSentFlagMemcKey( $userName ) {
+		return wfMemcKey( self::FIRST_EDIT_NOTIFICATION_SENT_MEMC_PREFIX, $userName );
+	}
+
+	/**
 	 * Generates and returns data for edit event to be processed
 	 *
 	 * @param $editor User
@@ -314,6 +336,8 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 	 * @return array
 	 */
 	public static function getEventData( $editor, $oRecentChange, $isRegisteredUser, $isRegisteredUserFirstEdit ) {
+		wfProfileIn(__METHOD__);
+
 		$oTitle = Title::makeTitle( $oRecentChange->getAttribute( 'rc_namespace' ), $oRecentChange->getAttribute( 'rc_title' ) );
 		$eventData = array(
 			'titleText' => $oTitle->getText(),
@@ -326,9 +350,7 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 			'myHomeUrl' => Title::newFromText( 'WikiActivity', NS_SPECIAL )->getFullUrl()
 		);
 
-		FounderEmails::getInstance()->registerEvent( new FounderEmailsEditEvent( $eventData ) );
-
 		wfProfileOut( __METHOD__ );
-		return true;
+		return $eventData;
 	}
 }
