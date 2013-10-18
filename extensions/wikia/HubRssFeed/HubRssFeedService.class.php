@@ -8,7 +8,8 @@
  */
 
 class HubRssFeedService {
-	const DATE_FORMAT = DateTime::RFC822;
+	/** This is DateTime::RFC822 with one small change. We use 4 digits year after recommendation from feedvalidator.org */
+	const DATE_FORMAT = "D, d M Y H:i:s O";
 
 	protected $descriptions = [
 		WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT =>
@@ -43,7 +44,8 @@ class HubRssFeedService {
 
 		self::appendTextNode( $doc, $channel, 'title', $this->descriptions[ $verticalId ][ 't' ] );
 		self::appendTextNode( $doc, $channel, 'description', $this->descriptions[ $verticalId ][ 'd' ] );
-		self::appendTextNode( $doc, $channel, 'link', $this->url, ["rel" => "self"]);
+		self::appendAtomLink( $doc, $channel, $this->url );
+		self::appendTextNode( $doc, $channel, 'link', $this->url);
 		self::appendTextNode( $doc, $channel, 'language', $this->lang );
 		self::appendTextNode( $doc, $channel, 'generator', 'MediaWiki 1.19.7' );
 
@@ -60,6 +62,7 @@ class HubRssFeedService {
 			self::appendCDATA( $doc, $itemNode, 'title', $item[ 'title' ] );
 			self::appendCDATA( $doc, $itemNode, 'description', '<img src="' . $item[ 'img' ] . '"/><p>' . $item[ 'description' ] . '</p>' );
 			self::appendTextNode( $doc, $itemNode, 'link', $url);
+			self::appendTextNode( $doc, $itemNode, 'guid', $url);
 			$itemNode->appendChild( new DOMElement('pubDate', date( self::DATE_FORMAT, $item[ 'timestamp' ] )) );
 			$itemNode->appendChild( new DOMElement('creator', 'Wikia', 'http://purl.org/dc/elements/1.1/') );
 		}
@@ -74,13 +77,16 @@ class HubRssFeedService {
 	}
 
 
-	private static function appendTextNode( DOMDocument $doc, DOMElement $node, $name, $data = '', $attributes = [] ) {
+	private static function appendTextNode( DOMDocument $doc, DOMElement $node, $name, $data = '' ) {
 		$cdata = $doc->createTextNode( $data );
-		$newElement = $doc->createElement($name);
-		foreach ( $attributes as $k => $v ) {
-			$newElement->setAttribute($k, $v);
-		}
-		$element = $node->appendChild( $newElement );
+		$element = $node->appendChild( new DOMElement( $name ) );
 		$element->appendChild( $cdata );
+	}
+
+	private static function  appendAtomLink( DOMDocument $doc, DOMElement $parentElement, $href ) {
+		$link = $doc->createElementNS( "http://www.w3.org/2005/Atom", "link" );
+		$link->setAttribute( "href", $href );
+		$link->setAttribute( "rel", "self" );
+		$parentElement->appendChild( $link );
 	}
 }

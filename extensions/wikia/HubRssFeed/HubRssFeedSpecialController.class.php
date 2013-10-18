@@ -12,7 +12,7 @@ class HubRssFeedSpecialController extends WikiaSpecialPageController {
 	const CACHE_KEY = 'HubRssFeed';
 	const CACHE_TIME = 3600;
 	/** Use it after release to generate new memcache keys. */
-	const CACHE_BUST = 1;
+	const CACHE_BUST = 7;
 
 	protected $hubs = [
 		'gaming' => WikiFactoryHub::CATEGORY_ID_GAMING,
