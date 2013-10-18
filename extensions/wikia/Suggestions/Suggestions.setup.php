@@ -5,3 +5,8 @@ $dir = dirname(__FILE__) . '/';
 $wgAutoloadClasses['Suggestions'] =  $dir . 'Suggestions.class.php';
 
 $wgHooks['BeforePageDisplay'][] = 'Suggestions::loadAssets';
+
+//message files
+$wgExtensionMessagesFiles['Suggestions'] = $dir . 'Suggestions.i18n.php';
+JSMessages::registerPackage('Suggestions', array('suggestions-*'));
+JSMessages::enqueuePackage('Suggestions', JSMessages::EXTERNAL);
