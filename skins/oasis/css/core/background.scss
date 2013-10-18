@@ -1,3 +1,4 @@
+@import "color";
 @import "layout";
 @import "responsive-variables";
 
@@ -62,6 +63,16 @@ $background-is-wide: if( $background-width > $breakpoint-fluid, true, false );
 		}
 
 		.background-image-gradient {
+			content: "";
+			height: 100%;
+			left: 50%;
+			position: fixed;
+			top: 0;
+			z-index: -1;
+			background: $color-middle-body;
+			width: calc(100% - 1370px); // WIP
+			margin-left: calc(685px - 50%); // $background-width-both
+
 			&:after,
 			&:before {
 				content: "";
@@ -74,17 +85,17 @@ $background-is-wide: if( $background-width > $breakpoint-fluid, true, false );
 
 			&:after {
 				// TODO: replace this with a proper linear-gradient mixin
-				background-color: rgba( $color-body, 0 );
-				background-image: -webkit-linear-gradient(right, rgba( $color-body, 0 ) 0%, $color-body 100%);
-				background-image: linear-gradient(to left, rgba( $color-body, 0 ) 0%, $color-body 100%);
+				background-color: rgba( $color-middle-body, 0 );
+				background-image: -webkit-linear-gradient(right, rgba( $color-middle-body, 0 ) 0%, $color-middle-body 100%);
+				background-image: linear-gradient(to left, rgba( $color-middle-body, 0 ) 0%, $color-middle-body 100%);
 				right: $gradient-offset;
 			}
 
 			&:before {
 				// TODO: replace this with a proper linear-gradient mixin
-				background-color: rgba( $color-body, 0 );
-				background-image: -webkit-linear-gradient(left, rgba( $color-body, 0 ) 0%, $color-body 100%);
-				background-image: linear-gradient(to right, rgba( $color-body, 0 ) 0%, $color-body 100%);
+				background-color: rgba( $color-middle-body, 0 );
+				background-image: -webkit-linear-gradient(left, rgba( $color-middle-body, 0 ) 0%, $color-middle-body 100%);
+				background-image: linear-gradient(to right, rgba( $color-middle-body, 0 ) 0%, $color-middle-body 100%);
 				left: $gradient-offset;
 			}
 		}
