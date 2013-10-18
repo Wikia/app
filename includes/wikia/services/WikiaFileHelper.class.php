@@ -146,8 +146,6 @@ class WikiaFileHelper extends Service {
 	 * @return string
 	 */
 	public static function videoPlayButtonOverlay( $width, $height ) {
-		global $wgBlankImgUrl;
-
 		$sizeClass = '';
 		if ( $width <= 170 ) {
 			$sizeClass = 'small';
@@ -163,7 +161,7 @@ class WikiaFileHelper extends Service {
 
 		$html .= Xml::element( 'img', array(
 			'class' => 'sprite play ' . $sizeClass,
-			'src' => $wgBlankImgUrl,
+			'src' => F::app()->wg->BlankImgUrl,
 		));
 
 		$html .= Xml::closeElement( 'div' );
@@ -262,12 +260,10 @@ class WikiaFileHelper extends Service {
 	 * @return string
 	 */
 	public static function videoOverlayViews( $views ) {
-		$app = F::app();
-
 		$attribs = array(
 			'class' => 'info-overlay-views',
 		);
-		$views = wfMsgExt( 'videohandler-video-views', array( 'parsemag' ), $app->wg->Lang->formatNum($views) );
+		$views = wfMessage( 'videohandler-video-views', F::app()->wg->Lang->formatNum( $views ) )->text();
 
 		return Xml::element( 'span', $attribs, $views, false );
 	}
@@ -594,7 +590,7 @@ class WikiaFileHelper extends Service {
 	 */
 	public static function getVideosCategory() {
 		$cat = F::app()->wg->ContLang->getFormattedNsText( NS_CATEGORY );
-		return ucfirst( $cat ) . ':' . wfMsgForContent( 'videohandler-category' );
+		return ucfirst( $cat ) . ':' . wfMessage( 'videohandler-category' )->inContentLanguage()->text();
 	}
 
 	/**
