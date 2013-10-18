@@ -9,7 +9,7 @@
 
 class HubRssFeedService {
 
-	const DATE_FORMAT = 'D, d M Y H:i:s e';
+	const DATE_FORMAT = DateTime::RFC822;
 
 	protected $descriptions = [
 		WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT =>
@@ -55,7 +55,7 @@ class HubRssFeedService {
 			$itemNode = $channel->appendChild( new DOMElement('item') );
 			self::appendCDATA( $doc, $itemNode, 'title', $item[ 'title' ] );
 			self::appendCDATA( $doc, $itemNode, 'description', '<img src="' . $item[ 'img' ] . '"/><p>' . $item[ 'description' ] . '</p>' );
-			self::appendCDATA( $doc, $itemNode, 'url', $url );
+			self::appendCDATA( $doc, $itemNode, 'link', $url );
 			//var_dump($item[ 'timestamp' ], date( self::DATE_FORMAT, $item[ 'timestamp' ] ) );
 			$itemNode->appendChild( new DOMElement('pubDate', date( self::DATE_FORMAT, $item[ 'timestamp' ] )) ); //date('c') ?
 			$itemNode->appendChild( new DOMElement('creator', 'Wikia', 'http://purl.org/dc/elements/1.1/') );
