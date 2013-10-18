@@ -247,14 +247,7 @@ define( 'wikia.preview', [
 			cssTransformOrigin = cssPropHelper.getSupportedProp('transform-origin'),
 			scaleVar = 'scale(' + scaleRatio + ')';
 
-		if( isWidePage ) {
-		// DAR-2506 make the preview works like correctly for main pages
-			 if( type === 'min' ) {
-				$article.addClass( 'minWidthPreview' );
-			 } else {
-				$article.removeClass( 'minWidthPreview' );
-			 }
-		}
+		setClassesForWidePage( type, $article );
 
 		if (selectedPreviewWidth > articleWrapperWidth) {
 			$article.css(cssTransformOrigin, 'left top');
@@ -269,6 +262,26 @@ define( 'wikia.preview', [
 
 		// we have a wrapper with overflow: hidden not to show white space after CSS scaling
 		$article.parent().height( newHeight );
+	}
+
+	/**
+	 * Adds/removes id to article preview according to selected type if it's a wide page
+	 *
+	 * @param {string} type type of
+	 * @param {jQuery} $article
+	 */
+
+	function setClassesForWidePage( type, $article ) {
+	// DAR-2506 make the preview works like correctly for main pages
+		if( isWidePage ) {
+			if( type === 'min' ) {
+				$article.attr( 'id', 'minWidthPreview' );
+			} else if( type === 'max' ) {
+				$article.attr( 'id', 'maxWidthPreview' );
+			} else {
+				$article.attr( 'id', '' );
+			}
+		}
 	}
 
 	/**
