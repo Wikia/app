@@ -57,7 +57,7 @@ SQL;
 
 				while ( $row = $db->fetchObject( $result ) ) {
 					$pageId = $row->page_id;
-					echo "\tPage $pageId [$cnt of $pages]: ";
+					echo "\tPage ID $pageId [$cnt of $pages]: ";
 
 					$flags = array();
 					$statusList = array();
@@ -110,9 +110,9 @@ SQL;
 
 					echo "$affected affected.\n";
 					$totalAffected += $affected;
+					$cnt++;
 				}
 
-				$cnt++;
 			} while ( $pages == $limit );
 			echo "\n";
 		}
