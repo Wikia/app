@@ -1,73 +1,106 @@
 @import "skins/oasis/css/core/color";
 
-.search-suggest-image {
-	float: left;
-	height: 50px;
-	margin: 10px;
-	width: 50px;
+//prepare colors
+$color-suggestions-border-normal: mix($color-page-border, #fff, 50%);
+@if $is-dark-wiki {
+	$color-suggestions-border-normal: mix($color-page-border, #000, 85%);
+}
+$color-suggestions-border-hover: mix($color-page-border, #000, 50%);
+@if $is-dark-wiki {
+	$color-suggestions-border-hover: mix($color-page-border, #fff, 85%);
+}
+$color-suggestions-element-hover: mix($color-page-border, #fff, 20%);
+@if $is-dark-wiki {
+	$color-suggestions-element-hover: mix($color-page-border, #000, 50%);
+}
+$color-suggestions-light-text: mix($color-page-border, #000, 90%);
+@if $is-dark-wiki {
+	$color-suggestions-light-text: mix($color-page-border, #fff, 40%);
+}
+$color-suggestions-lighter-text: mix($color-text, #fff, 75%);
+@if $is-dark-wiki {
+	$color-suggestions-lighter-text: mix($color-text, #fff, 77%);
+}
+$color-suggestions-lighter: mix($color-page, #fff, 30%);
+@if $is-dark-wiki {
+	$color-suggestions-lighter: mix($color-page, #fff, 80%);
 }
 
 .search-suggest {
-	background-color: $color-module-background;
+	background-color: $color-suggestions-lighter;
 	border-bottom-left-radius: 2px;
 	border-bottom-right-radius: 2px;
-	box-shadow: 1px 1px 10px white;
+	box-shadow: 2px 3px 11px #333;
+	font-weight: bold;
 	left: -60px;
 	margin-top: 13px;
-	position: relative;
+	position: absolute;
+	top: -10px;
 	width: 385px;
+	z-index: 1;
 	a {
 		color: $color-text;
 	}
 	li {
-		border: 1px solid;
+		border: 1px solid $color-page-border;
 		border-top: none;
 		display: block;
 		height: 70px;
 	}
 	li:first-child {
-		border-top: 1px solid;
+		border-top: 1px solid $color-page-border;
 	}
 	li:first-child:before, li:first-child:after {
-		border-bottom: 10px solid #ffffff;
-		border-left: 10px solid transparent;
-		border-right: 10px solid transparent;
+		border-bottom: 9px solid $color-page-border;
+		border-left: 9px solid transparent;
+		border-right: 9px solid transparent;
 		color: transparent;
 		content: "";
 		height: 0;
 		left: 193px;
 		position: absolute;
-		top: -10px;
+		top: -9px;
 		width: 0;
 	}
 	li:first-child:after {
-		border-bottom:  11px solid $color-module-background;
-		border-left: 11px solid transparent;
-		border-right: 11px solid transparent;
-		left: 192px;
+		border-bottom: 9px solid $color-suggestions-lighter;
+		border-left: 9px solid transparent;
+		border-right: 9px solid transparent;
+		left: 193px;
 		top: -8px;
 	}
-	li:hover {
-		background-color: lightgray;
+	li:hover, li:focus {
+		background-color: $color-suggestions-element-hover;
+		outline: 0;
+		.stroke {
+			stroke: $color-suggestions-border-hover;
+		}
 	}
-	li:first-child:hover:after {
-		border-bottom:  11px solid lightgray;
-		border-left: 11px solid transparent;
-		border-right: 11px solid transparent;
-		left: 192px;
+	li:first-child:hover:after, li:first-child:focus:after {
+		border-bottom: 9px solid $color-suggestions-element-hover;
+		border-left: 9px solid transparent;
+		border-right: 9px solid transparent;
+		left: 193px;
 		top: -8px;
 	}
 	.all {
-		a {
-			display: block;
-		}
+		background-color: $color-suggestions-border-normal;
 		border-bottom-left-radius: 2px;
 		border-bottom-right-radius: 2px;
 		font-size: 14px;
-		font-weight: bold;
 		height: 30px;
 		line-height: 30px;
 		text-align: center;
+		a {
+			display: block;
+		}
+	}
+	.all:hover, .all:focus {
+		background-color: $color-buttons;
+		a {
+			color: $color-button-text;
+			text-decoration: none;
+		}
 	}
 	.block {
 		bottom: 0;
@@ -75,69 +108,56 @@
 		margin: auto;
 		position: absolute;
 		top: 0;
+		width: 313px;
 	}
 	.match {
 		color: $color-links;
-		font-weight: bold;
 	}
 	.redirect {
+		color: $color-suggestions-border-hover;
 		display: block;
+		float: left;
 		font-size: 12px;
 		height: 14px;
 		margin-top: 7px;
 		overflow: hidden;
+		width: 295px;
+	}
+	.redirect-from {
+		color: $color-suggestions-light-text;
+		font-weight: normal;
+	}
+	.search-suggest-chevron {
+		height: 35px;
+		width: 10px;
+	}
+	.search-suggest-image {
+		height: 50px;
+		margin: 10px;
+		position: absolute;
+		width: 50px;
+	}
+	.stroke {
+		fill:none;
+		stroke: $color-suggestions-border-normal;
+		stroke-width:3;
+		stroke-miterlimit:10;
 	}
 	.title {
 		display: block;
+		float: left;
 		font-size: 14px;
-		font-weight: bold;
+		width: 295px;
 	}
 	.wraper {
 		float: right;
 		height: 70px;
+		padding-left: 70px;
 		position: relative;
 		width: 313px;
 	}
 }
 
-.wraper:before, .wraper:after {
-	border-bottom: 8px solid transparent;
-	border-left: 8px solid #ffffff;
-	border-top: 8px solid transparent;
-	color: transparent;
-	content: "";
-	height: 0;
-	left: 295px;
-	position: absolute;
-	top: 27px;
-	width: 0;
-}
-
-.wraper:after {
-	border-bottom: 6px solid transparent;
-	border-left: 6px solid $color-module-background;
-	border-top: 6px solid transparent;
-	left: 293px;
-	top: 29px;
-}
-
-.wraper:hover:before, .wraper:hover:after {
-	border-bottom: 8px solid transparent;
-	border-left: 8px solid black;
-	border-top: 8px solid transparent;
-	color: transparent;
-	content: "";
-	height: 0;
-	left: 295px;
-	position: absolute;
-	top: 27px;
-	width: 0;
-}
-
-.wraper:hover:after {
-	border-bottom: 6px solid transparent;
-	border-left: 6px solid lightgray;
-	border-top: 6px solid transparent;
-	left: 293px;
-	top: 29px;
+.search-suggest-wrapper {
+	position: relative;
 }
