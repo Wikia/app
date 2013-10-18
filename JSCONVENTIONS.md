@@ -4,7 +4,7 @@
 >As a developer I want a clear and well documented guide dealing with coding conventions, patterns and best practices for JavaScript development at Wikia along with tools to help me in making my code compliant.
 
 This styleguide defines the JavaScript coding conventions at Wikia. It's managed by the JS StyleGuide team but is here to serve all JS developers at Wikia and in our community.  If you'd like to propose a change to the style guide, simply create a pull request and tag [@wikia-frontenders](https://github.com/wikia-frontenders).
-
+We also have our [JSHint Config](https://github.com/Wikia/app/blob/dev/.jshintrc) and [EditorConfig](https://github.com/Wikia/app/blob/dev/.editorconfig) files, which should be followed in order to pass code review. 
 
 ## TOC
 * [Language Rules](#language-rules)
