@@ -1,4 +1,4 @@
-<form class="WikiaForm vpt-form" method="post">
+<form id="LatestVideos" class="WikiaForm vpt-form" method="post">
 
 	<? for( $x = 1; $x <= count($categories); $x++ ): ?>
 
@@ -10,7 +10,7 @@
 			<span class="count"><?= $x ?>.</span>
 			<div class="input-group video-key-group">
 				<label for="display-title-<?= $x ?>"><?= wfMessage( 'videopagetool-category-label-name' )->plain() ?></label>
-				<input class="category-name" id="category-name-<?= $x ?>" type="text" name="categoryName[]" value="<?= $category[ 'categoryName' ] ?>">
+				<input class="category-name" data-autocomplete id="category-name-<?= $x ?>" type="text" name="categoryName[]" placeholder="<?= wfMessage( 'videopagetool-category-placeholder' )->plain() ?>">
 				<button><?= wfMessage( 'videopagetool-button-search' )->plain() ?></button>
 			</div>
 			<div class="input-group border">
