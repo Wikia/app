@@ -347,7 +347,24 @@ We use JSDoc style comments above function declarations and at the top of files 
 ###Naming Convensions###
 
 ####Variables###
-Use lazyCamelCase for all variables with the exception of constructers, which should use UpperCamelCase. 
+Use lazyCamelCase for all variables with the exception of constructers, which should use UpperCamelCase. Declare all variables using one `var` keyword at the top of their scope context. Declaration and assignment on the same line are allowed. Examples follow below:
+
+```javascript
+// bad
+var foo;
+var bar;
+var falcor;
+
+// good
+var foo,
+		bar,
+		falcor;
+
+// also acceptable
+var foo = 'kyle',
+		bar = 'wears',
+		falcor = 'shorts';
+```
 
 Constants don't exist in JS so don't use all caps to denote constants.
 
