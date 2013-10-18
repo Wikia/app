@@ -75,7 +75,9 @@ require( [ 'jquery', 'suggestions_client', 'wikia.log' ], function( $, client, l
 
 		SuggestionsView = function( viewModel, searchInput, dropdown, wikiId ) {
 			var ads = $('[id$=\'TOP_RIGHT_BOXAD\']'),
-				self = this;
+				self = this,
+				keyCodes = [ 13 /*enter*/, 38 /*up*/, 40 /*down*/ ],
+				keyEventsActive = true;
 			self.buildTitleMarkup = function( result ) {
 				if ( result.match && ( result.match.type === 'title' ) ) {
 					return result.match.prefix + '<span class="match">' +result.match.match + '</span>' +
@@ -87,16 +89,24 @@ require( [ 'jquery', 'suggestions_client', 'wikia.log' ], function( $, client, l
 
 			self.buildRedirectMarkup = function( result ) {
 				if ( result.match && ( result.match.type === 'redirect' ) ) {
-					return '<span class="redirect"><span class="redirect-from">Redirect from: </span>' +
-						result.match.prefix + '<span class="match">' + result.match.match + '</span>' +
-						result.match.suffix + '</span>';
+					return '<span class="redirect"><span class="redirect-from">' +
+						$.msg('suggestions-redirect-from') + ': </span>' + result.match.prefix +
+							'<span class="match">' + result.match.match + '</span>' + result.match.suffix + '</span>';
 				} else {
 					return '';
 				}
 			};
 
-			self.buildSeeAllResultsMarkup = function() {
-				return '<li class="all"><a href="#"><span>See all results</span></a></li>';
+			self.buildSeeAllResultsMarkup = function( i ) {
+				++i;
+				return '<li class="all" tabindex="' + i + '"><a href="#"><span>' + $.msg('suggestions-see-all') +
+					'</span></a></li>';
+			};
+
+			self.buildChevronMarkup = function() {
+				return '<svg xmlns="http://www.w3.org/2000/svg" class="search-suggest-chevron">' +
+					'<g><polyline class="stroke" points="1.5,9 7.5,15 1.5,21"/></g>' +
+					'</svg>';
 			};
 
 			self.setAsMainSuggestions = function( name ) {
@@ -127,6 +137,46 @@ require( [ 'jquery', 'suggestions_client', 'wikia.log' ], function( $, client, l
 				});
 			};
 
+			self.handleNavigation = function(key) {
+				var active = document.activeElement,
+					next;
+				if ( !keyEventsActive ) { return; }
+				if ( key === 13 ) {
+					window.location.pathname = $(active).children('a').attr('href');
+					return;
+				}
+				//we are in input, go to list
+				if( active.form &&
+					active.form.id === 'WikiaSearch' &&
+					key === 40 &&
+					dropdown.children().length ) {
+					dropdown.children()[0].focus();
+				} else if( active.parentNode === dropdown[0] ) {
+					if( key === 40 ) {
+						//down
+						next = $(active).next();
+					} else if ( key === 38 ) {
+						//up
+						next = $(active).prev();
+					}
+					if ( next && next.length ) {
+						next[0].focus();
+					} else {
+						//if went to end, focus input
+						searchInput[0].focus();
+					}
+				}
+			};
+
+			self.blurDropdown = function() {
+				setTimeout( function() {
+					if ( document.activeElement.parentNode !== dropdown[0] && document.activeElement !== searchInput[0] ) {
+						self.showAds();
+						dropdown.empty();
+					}
+				}, 0);
+			};
+
 			viewModel.on( 'displayResults changed', function() {
 				var results = viewModel.getDisplayResults(),
 					html, res, i, $el;
@@ -134,21 +184,23 @@ require( [ 'jquery', 'suggestions_client', 'wikia.log' ], function( $, client, l
 				if ( !viewModel.getUse() ) { return; }
 				for( i in results ) {
 					res = results[i];
-					html = '<li>' +
+					html = '<li tabindex="' + i + '">' +
 						'<a href="' + res.path + '">' +
 						'<img class="search-suggest-image" src="' + res.thumbnail + '" />' +
 						'<div class="wraper">' +
 						'<div class="block">' +
 						'<span class="title">' + self.buildTitleMarkup( res ) + '</span>' +
 						self.buildRedirectMarkup( res ) +
+						self.buildChevronMarkup() +
 						'</div>' +
 						'</div>' +
 						'</a>' +
 						'</li>';
-					$(html).appendTo(dropdown);
+					$el = $(html).appendTo(dropdown);
+					$el.blur( self.blurDropdown );
 				}
 				if ( results.length ) {
-					html = self.buildSeeAllResultsMarkup();
+					html = self.buildSeeAllResultsMarkup(i);
 					$el = $(html).appendTo(dropdown);
 					$el.click( function() { $('#WikiaSearch').submit(); } );
 					self.hideAds();
@@ -156,21 +208,41 @@ require( [ 'jquery', 'suggestions_client', 'wikia.log' ], function( $, client, l
 					self.showAds();
 				}
 			});
-			searchInput.on( 'blur', function() {
-				setTimeout( function() {
-					self.showAds();
-					dropdown.empty();
-				}, 100 );
+			searchInput.on( 'blur', self.blurDropdown );
+			searchInput.on( 'keypress', function (e) {
+				if ( keyCodes.indexOf(e.keyCode) === -1 ) {
+					window.setTimeout(function() {
+						var value = searchInput.val();
+						viewModel.setQuery( value );
+					}, 0);
+				}
 			});
-			searchInput.on( 'keypress', function () {
-				window.setTimeout(function() {
+			searchInput.on( 'keyup', function (e) {
+				if ( keyCodes.indexOf(e.keyCode) === -1 ) {
 					var value = searchInput.val();
 					viewModel.setQuery( value );
-				}, 0);
+				}
 			});
-			searchInput.on( 'keyup', function () {
-				var value = searchInput.val();
-				viewModel.setQuery( value );
+			searchInput.on( 'keydown', function (e) {
+				if ( keyCodes.indexOf(e.keyCode) !== -1 ) {
+					self.handleNavigation(e.keyCode);
+					return false;
+				}
+			});
+			dropdown.on( 'keydown', function (e) {
+				if ( keyCodes.indexOf(e.keyCode) !== -1 ) {
+					self.handleNavigation(e.keyCode);
+					return false;
+				}
+			});
+			dropdown.on( 'mouseenter', function () {
+				//switch off keyboard events
+				keyEventsActive = false;
+				searchInput[0].focus();
+			});
+			dropdown.on( 'mouseleave', function () {
+				//switch on keyboard events
+				keyEventsActive = true;
 			});
 			function updateWiki() {
 				viewModel.setWiki( wikiId );
