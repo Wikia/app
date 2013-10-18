@@ -1,5 +1,5 @@
 # Wikia JavaScript Coding Conventions
-![Wikia](http://i.imgur.com/tVxkjhG.gif)
+
 ## Our Mission ##
 >As a developer I want a clear and well documented guide dealing with coding conventions, patterns and best practices for JavaScript development at Wikia along with tools to help me in making my code compliant.
 
@@ -435,3 +435,6 @@ All JS should be written as AMD modules so see [above](#amd-modules) for matchin
 
 ## To Do
 * Submit for feedback to engineering team
+
+![Wikia](http://i.imgur.com/tVxkjhG.gif) 
+
