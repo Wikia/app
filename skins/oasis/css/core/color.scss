@@ -9,8 +9,7 @@ $background-align: get_command_line_param("background-align", center);
 $background-tiled: get_command_line_param("background-tiled", true);
 $background-fixed: get_command_line_param("background-fixed", false);
 $page-opacity: get_command_line_param("page-opacity", 100);	// default: 100
-$color-middle-body: get_command_line_param("color-middle-body", $color-page); // default: same as color-body
-
+$color-middle-body: get_command_line_param("color-middle-body", $color-body); // default: same as color-body
 
 // Verticals colors
 $color-wikiahome-videogames: #8ca038;

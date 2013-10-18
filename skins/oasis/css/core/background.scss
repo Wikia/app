@@ -63,6 +63,16 @@ $background-is-wide: if( $background-width > $breakpoint-fluid, true, false );
 		}
 
 		.background-image-gradient {
+			content: "";
+			height: 100%;
+			left: 50%;
+			position: fixed;
+			top: 0;
+			z-index: -1;
+			background: $color-middle-body;
+
+			width: calc(100% - #{2 * $background-width-both});
+			margin-left: calc(#{$background-width-both} - 50%);
 
 			&:after,
 			&:before {
@@ -107,6 +117,9 @@ $background-is-wide: if( $background-width > $breakpoint-fluid, true, false );
 // slices, overlapping by the width of the gradient itself.
 	$gradient-offset: $background-margin + ( $background-width-half - $width-gradient );
 
+	$middle-body-width: ($breakpoint-max - $background-width-half) / 2;
+	$middle-body-margin: (-$middle-body-width) / 2;
+
 	body.background-dynamic.skin-oasis {
 		&:after,
 		&:before {
@@ -126,6 +139,16 @@ $background-is-wide: if( $background-width > $breakpoint-fluid, true, false );
 		}
 
 		.background-image-gradient {
+			content: "";
+			height: 100%;
+			left: 50%;
+			position: fixed;
+			top: 0;
+			z-index: -1;
+			background: $color-middle-body;
+			width: $middle-body-width;
+			margin-left: $middle-body-margin;
+
 			&:after {
 				margin-right: $gradient-offset;
 				right: 50%;
