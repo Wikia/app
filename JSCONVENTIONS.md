@@ -17,6 +17,9 @@
 * [Still to be defined](#still-to-be-defined)
 
 ## Language Rules
+
+Language rules refer to rules that can have an impact on the functionality.  They are chosen based on performance implications as well as their tendencies to reduce bugs.
+
 ### Early returns
 Try to avoid early returns.  It makes the code easier to read. 
 ```javascript
@@ -120,6 +123,8 @@ Also, jQuery code works on the assumption that no built in object prototypes are
 
 
 ## Style Rules
+
+Style rules help us write easy to read, well documented, and consistant code.  
 
 ### White space guidelines
 We are basing our white space rules off of jQuery's, which can be found [here](http://contribute.jquery.org/style-guide/js/). The are copied below so we can make changes to them as we see fit. 
@@ -378,10 +383,9 @@ For clarity and future-proofness, all javascript files should go into a 'scripts
 #### Files ####
 All JS should be written as AMD modules so see [above](#amd-modules) for matching files names to module names.
 
+## Sources ##
+* [Google's Style Guide](http://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml)
+* [jQuery's Style Gude](https://github.com/jquery/contribute.jquery.org/blob/master/pages/style-guide/js.md)
+
 ## Still to be defined
-* Naming convensions for: 
-  * files
-* Error handling and custom exception handling (handle this later)
-* Structure
-* AMD
 * Short descriptions for Style Rules and Language rules to be placed under each heading.  Also a short description for the page at the very top. 
