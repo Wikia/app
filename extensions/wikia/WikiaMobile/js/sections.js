@@ -175,7 +175,9 @@ define('sections', ['JSMessages', 'jquery'], function(msg, $){
 		var currentSection = current();
 
 		if(currentSection && !currentSection.is(lastSection)) {
-			console.log(currentSection);
+			console.log(currentSection)
+			$('#TOCList li').removeClass('current').filter('li[data-id="'+currentSection.attr('id')+'"]').addClass('current');
+			//document.getElementById('TOCSection').innerHTML = currentSection.attr('id');
 			lastSection = currentSection;
 		}
 	});

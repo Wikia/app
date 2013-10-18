@@ -12,7 +12,7 @@ require(['jquery', 'wikia.window'], function($, window){
 				return this.rows.length > 10;
 			})
 			.addClass(SHORT_CLASS)
-			.append('<tr class=infobox-expand><td colspan=2><span></span></td></tr>')
+			.append('<tr class=infobox-expand><td colspan=2><span class=chevron></span></td></tr>')
 			.on('click', function(event){
 				var $target = $(event.target),
 					$this = $(this);

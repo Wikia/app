@@ -1,31 +1,26 @@
 /*global define */
 
 //init toc
-define('toc', ['track', 'sections', 'wikia.window', 'jquery'], function toc(track, sections, w, $){
+define('toc', ['track', 'sections', 'wikia.window', 'jquery', 'wikia.mustache'], function toc(track, sections, w, $, mustache){
 	'use strict';
 
 	//private
 	var d = w.document,
 		$body = $(d.body),
 		table = [],
-		conStyle;
+		conStyle,
+		tocCache;
+
+	$('#wkTOCHandle').on('click', function(){
+		$body.toggleClass('TOCOpen hidden');
+	})
 
 	function open(){
-		if(table.length){
-			table.addClass('open');
-			$body.addClass('hidden');
-			track.event('toc', track.CLICK, {label: 'open'});
-			conStyle.minHeight = (table.height() - 40) + 'px';
-		}
+		$body.addClass('TOCOpen hidden');
 	}
 
-	function close(a){
-		if(table.length && table.hasClass('open')){
-			table.removeClass('open');
-			$body.removeClass('hidden');
-			if(!a) {track.event('toc', track.CLICK, {label: 'close'});}
-			conStyle.minHeight = '0';
-		}
+	function close(){
+		$body.removeClass('TOCOpen hidden ');
 	}
 
 	function init(){
@@ -55,61 +50,85 @@ define('toc', ['track', 'sections', 'wikia.window', 'jquery'], function toc(trac
 		}
 	}
 
-	function getToc(list) {
-		var toc = [],
-			section,
-			a,
-			id,
-			ul,
-			parent,
-			text,
-			i = 0,
-			l = list.length;
+	function get() {
+		if(!tocCache){
+			var headers = document.querySelectorAll('h2,h3,h4'),
+				tmp = [],
+				i = 0,
+				l = headers.length,
+				lastLevel = 0,
+				header,
+				level,
+				section,
+				childrenLevel,
+				childrenUpLevel;
 
-		for(; i < l; i++){
-			section = list[i];
-			a = section.children[0];
-			id = a.hash.slice(1);
-			ul = section.children[1];
-			text = a.getElementsByClassName('toctext')[0];
+			for(;i < l;i++) {
+				header = headers[i];
+				level = parseInt(header.nodeName.slice(1), 10) - 2;
 
-			parent = {
-				id: id,
-				name: (text.textContent || text.innerText).trim()
-			};
+				if(!tmp[level]) {
+					tmp[level] = [];
+				}
 
-			ul && (parent.children = getToc(ul.children));
+				section = {
+					id: header.id,
+					name: header.textContent,
+					level: level +1
+				};
 
-			toc.push(parent);
+				while(level < lastLevel) {
+					childrenLevel = tmp[lastLevel];
+					childrenUpLevel = tmp[lastLevel-1];
+
+					childrenUpLevel[childrenUpLevel.length-1].children = childrenLevel.slice();
+
+					childrenLevel.length = 0;
+					lastLevel--;
+				}
+
+				tmp[level].push(section);
+
+				lastLevel = level;
+			}
+
+			tocCache = tmp[0];
 		}
 
-		return toc;
+		return tocCache;
 	}
+
+	var tocc =  {
+			level: 0,
+			children: get()
+		};
+
+	var ol = "<ol class='toc-list level{{level}}'>{{#children}}{{> lis}}{{/children}}</ol>",
+		lis = "{{#.}}<li {{#children.length}}class=has-children{{/children.length}}><a href='#{{id}}'>{{name}}</a>{{#children.length}}{{#level}}<span class='chevron right'></span>{{/level}}{{/children.length}}{{#children.length}}{{> ol}}{{/children.length}}</li>{{/.}}";
+
+	$('#wkTOC')
+		.append(mustache.render(ol, tocc, {
+			ol: ol,
+			lis: lis
+		}))
+		.on('click','li', function(event){
+			var $li = $(this),
+				$a = $li.find('a').first();
+
+			event.stopPropagation();
+			event.preventDefault();
+
+			sections.open($a.attr('href').slice(1), true);
+
+			if($li.is('.has-children')) {
+				$li.toggleClass('open');
+			}
+		});
 
 	return {
 		init: init,
 		open: open,
 		close: close,
-		get: function(){
-			var toc = [];
-
-			if(table.length || (table = $(d.getElementById('toc')))){
-				toc = getToc(table.find('.toclevel-1'));
-			}else{
-				//fallback if there is no toc on a page
-				var h2s = d.querySelectorAll('#mw-content-text h2[id]'),
-					h2,
-					i = 0;
-
-				while(h2 = h2s[i++]){
-					toc.push({
-						id: h2.id,
-						name: (h2.textContent || h2.innerText).trim()
-					});
-				}
-			}
-
-			return toc;
-		}
+		get: get
 	};
 });

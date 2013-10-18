@@ -29,6 +29,8 @@ class WikiaMobileHooks {
 			$matches = array();
 			$translatedNs = self::getLocalizedMediaNsString();
 
+			$text .= '__NOTOC__';
+
 			//capture all the clusters (more than one consecuteive item) of wikitext media tags
 			//and convert them to gallery tags (i.e. media grouping)
 			if (

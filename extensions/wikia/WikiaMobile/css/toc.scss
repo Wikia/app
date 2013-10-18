@@ -1,88 +1,201 @@
-@import 'mixins/box-shadow.scss';
 @import 'variables.scss';
 
-#toc.toc {
-	-webkit-tap-highlight-color: rgba(0,0,0,0);
-	background: white;
-	width: 100%;
-	border: 1px solid $border-color;
-	border-radius: 0 0 5px 5px;
-	@include box-shadow(0 7px 15px -5px $shadow-color);
+body {
+}
+//add display none when not visible
+body.TOCOpen {
 
-	.chev{
-		width: 100%;
-		height: 30px;
-		display: block;
-		background-size: 15px;
+	#wkPage {
 	}
 
-	h2{
-		color: $link-color;
-		font-weight: 100;
-		font-size: 1.3em;
-		padding-left: 10px;
-		margin: 5px 0;
-	}
-
-	ul{
-		overflow: hidden;
-		padding-left: 17px;
-		margin: 0;
-		list-style: none;
-	}
-
-	a{
-		min-height: 35px;
-		line-height: 2em;
-		width: 100%;
-		display: inline-block;
+	#wkTopNav {
 	}
 }
 
-.toclevel-1 > a {
-	font-weight: 800;
+$header-height: 44px;
+$nice-blue: rgb(0,77,141);
+$toc-background: #F8F8F8;
+
+#wkTOC {
+	position: fixed;
+	left: 0;
+	top: 0;
+	bottom:0;
+	height: 100%;
+	width: 80%;
+	max-width: 260px;
+	background: $toc-background;
+	z-index: 0;
+	-webkit-transition: -webkit-transform .1s ease-out;
+	-webkit-transform: translate(-100%);
+
+	z-index: 101;
+
+	counter-reset: level, level1, level2;
+
+	-border-right:1px solid $border-color;
+
+	.TOCOpen & {
+		box-shadow: 0 0 10px rgb(0, 0, 0);
+		-webkit-transform: translate(0);
+	}
+
+	header {
+		border-bottom: 1px solid $border-color;
+		text-transform: uppercase;
+		line-height: $header-height;
+		padding-left: 20px;
+		font-weight: 600;
+	}
+
 }
 
-//move it to the top and hide UL if js is enabled
-.js #toc.toc {
+#wkTOCHandle {
 	position: absolute;
-	top: -41px;
+	right: -48px;
+	bottom: 75px;
+	border-radius: 0 3px 3px 0;
+	background-size: 80%;
+}
 
-	ul{
-		height: 0;
+.menu-stripe {
+	width: 48px;
+	height: 48px;
+	background: rgb(0,77,141);
+}
+
+.menu-stripe:before, .menu-stripe:after {
+	background: white;
+	content: "";
+	position: absolute;
+	height: 3px;
+	top: 12px;
+	box-shadow: 0 10px white, 0 20px white;
+}
+
+.menu-stripe:before {
+	width: 3px;
+	left: 12px;
+}
+
+.menu-stripe:after {
+	width: 18px;
+	left: 18px;
+}
+
+.toc-list {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+
+	li {
+		line-height: 44px;
+
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
 	}
 
-	h2{
-		display: none;
-	}
+	a {
+		color: $page-text-color;
 
-	&.open {
-		border-radius: 5px;
-		@include box-shadow(none);
-		z-index: 101;
-
-		td > ul {
-			margin-bottom: 10px;
+		&:before {
+			padding-right: 10px;
 		}
-
-		ul{
-			height: auto;
-		}
-
-		h2{
-			display: block;
-		}
-	}
-
-	//this helps me with normalizing clicks in toc.js
-	span, b {
-		pointer-events: none;
 	}
 }
 
-.hasToc {
-	#wkMainCnt{
-		margin-top: 40px;
-		position: relative;
+.level0 {
+	padding: 0 0 $header-height 0;
+	overflow: auto;
+	height: 100%;
+
+	> li {
+		//border-left: 5px solid $toc-background;
+		//border-bottom: 1px solid #D8D8D8;
+
+		border-bottom: 1px solid #D8D8D8;;
+
+		> a {
+			counter-increment: level;
+			font-size: 1.15rem;
+			padding-left: 15px;
+
+			&:before {
+				content: counter(level);
+			}
+		}
+	}
+
+	> .current {
+		border-left: 5px solid $nice-blue;
 	}
 }
+
+.level1 {
+	border-top: 1px solid #D8D8D8;
+
+	> li > a {
+		counter-increment: level1;
+		padding-left: 15px;
+
+		&:before {
+			content: counter(level) '.' counter(level1);
+		}
+	}
+}
+
+.level2 {
+	border-top: 1px solid #F0F0F0;
+
+	> li > a {
+		counter-increment: level2;
+		padding-left: 25px;
+
+		&:before {
+			content: counter(level) '.' counter(level1) '.' counter(level2);
+		}
+	}
+}
+
+.level1 {
+	display:none;
+
+	.open & {
+		display: block;
+	}
+}
+
+.level1, level2 {
+
+	li:not(:last-of-type) {
+		border-bottom: 1px solid #F0F0F0;
+	}
+	> .current {
+		color: blue;
+	}
+}
+
+.has-children {
+	background-color: transparent;
+
+	.chevron {
+		border-left-color: #C0C0C0;
+		border-width: 7px;
+		float: right;
+		margin: 15px;
+
+		-webkit-transform-origin: 3px 7px;
+
+		&:after {
+			border-left-color: $toc-background;
+		}
+	}
+
+	&.open .chevron {
+		-webkit-transform: rotate(90deg);
+	}
+
+}
+
+

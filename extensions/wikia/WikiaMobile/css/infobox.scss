@@ -52,8 +52,6 @@ table[class*="infobox"] {
 	}
 }
 
-$chevron-size: 12px;
-
 .infobox-expand {
 	td {
 		height: $chevron-size * 3;
@@ -61,33 +59,14 @@ $chevron-size: 12px;
 		vertical-align: middle;
 	}
 
-	span {
-		border-color: transparent transparent $border-color transparent;
-		border-style: solid;
-		border-width: $chevron-size;
-		display: inline-block;
-		position: relative;
-		pointer-events: none;
-
-		&:after {
-			content: '';
-			border-style: solid;
-			border-width: 10px;
-			border-color: transparent transparent white transparent;
-			bottom: -$chevron-size;
-			left: -9px;
-			position: absolute;
-		}
-	}
-
 	.short & {
-		span {
+		.chevron {
 			border-color: $border-color transparent transparent transparent;
 			margin-top: 15px;
 
 			&:after {
 				border-color: white transparent transparent transparent;
-				bottom: -$chevron-size/2;
+				bottom: -$chevron-size/2 - 1;
 			}
 		}
 	}
