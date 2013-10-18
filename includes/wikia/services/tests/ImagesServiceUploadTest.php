@@ -27,6 +27,10 @@ class ImagesServiceUploadTest extends WikiaBaseTest {
 		// get a hash of external file
 		$this->fileHash = md5( Http::get( self::URL, 'default', ['noProxy' => true] ) );
 
+		// use Swift domain
+		global $wgDevelEnvironmentName;
+		$this->mockGlobalVariable('wgDevBoxImageServerOverride', "d.{$wgDevelEnvironmentName}.wikia-dev.com");
+
 		// debug
 		global $wgLocalFileRepo;
 		echo "Files repository in use: '{$wgLocalFileRepo['backend']}'\n"; // local-backend / swift-backend
@@ -67,11 +71,7 @@ class ImagesServiceUploadTest extends WikiaBaseTest {
 			'Path should end with file name'
 		);
 
-		# TODO: thumbnailer doesn't work currently - URL "rewrite"
-		global $wgFSSwiftServer;
-		$thumb = str_replace($wgFSSwiftServer, 'dev-moli:46664', $thumb);
-
-		#$this->assertTrue(Http::get($thumb, 'default', ['noProxy' => true]) !== false, 'Thumbnail should return HTTP 200 - ' . $thumb);
+		$this->assertTrue(Http::get($thumb, 'default', ['noProxy' => true]) !== false, 'Thumbnail should return HTTP 200 - ' . $thumb);
 	}
 
 	// check cropped file (provided by ImageServing)
@@ -85,11 +85,7 @@ class ImagesServiceUploadTest extends WikiaBaseTest {
 			'Cropped URL is correct'
 		);
 
-		# TODO: thumbnailer doesn't work currently - URL "rewrite"
-		global $wgFSSwiftServer;
-		$crop = str_replace($wgFSSwiftServer, 'dev-moli:46664', $crop);
-
-		#$this->assertTrue(Http::get($crop, 'default', ['noProxy' => true]) !== false, 'Crop should return HTTP 200 - ' . $crop);
+		$this->assertTrue(Http::get($crop, 'default', ['noProxy' => true]) !== false, 'Crop should return HTTP 200 - ' . $crop);
 	}
 
 	private function assertReturns404( $url, $msg ) {

@@ -481,10 +481,10 @@ class MediaWikiService
 	 * @param string $domain
 	 * @return \Wikia\Search\Match\Wiki|NULL
 	 */
-	public function getWikiMatchByHost( $domain ) {
+	public function getWikiMatchByHost( $domain, $lang = null ) {
 		$match = null;
 		if ( $domain !== '' ) {
-			$langCode = $this->getLanguageCode();
+			$langCode = ( $lang !== null ) ? $lang : $this->getLanguageCode();
 			if ( $langCode === static::WIKI_DEFAULT_LANG_CODE ) {
 				$wikiId = $this->getWikiIdByHost( $domain . '.wikia.com' );
 			} else {

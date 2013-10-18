@@ -19,12 +19,16 @@ class VisualEditorWikiaHooks {
 				// dm
 				've/test/dm/ve.dm.wikiaExample.js',
 				've/test/dm/ve.dm.WikiaConverter.test.js',
+				've/test/dm/ve.dm.WikiaCart.test.js',
 
 				// ce
 				've/test/ce/ve.ce.wikiaExample.js',
 				've/test/ce/ve.ce.WikiaBlockImageNode.test.js',
 				've/test/ce/ve.ce.WikiaBlockVideoNode.test.js',
 				've/test/ce/ve.ce.WikiaInlineVideoNode.test.js',
+
+				// ui
+				've/test/ui/ve.ui.PagedLayout.test.js',
 			),
 			'dependencies' => array(
 				'ext.visualEditor.test',

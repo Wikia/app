@@ -151,13 +151,8 @@ function wfReplaceImageServer( $url, $timestamp = false ) {
 
 			// NOTE: This should be the only use of the cache-buster which does not use $wg->CdnStylePath.
 			// RT#98969 if the url already has a cb value, don't add another one...
-			if ( !empty( $wg->DevBoxImageServerOverride ) ) {
-				$cb = '';
-			} else {
-				$cb = ($timestamp!='' && strpos($url, "__cb") === false) ? "__cb{$timestamp}/" : '';
-			}
+			$cb = ($timestamp!='' && strpos($url, "__cb") === false) ? "__cb{$timestamp}/" : '';
 
-			// TODO: support __cb on devboxes
 			// TODO: support domain sharding on devboxes
 			if (!empty($wg->DevBoxImageServerOverride)) {
 				// Dev boxes

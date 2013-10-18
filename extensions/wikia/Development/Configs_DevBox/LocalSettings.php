@@ -162,11 +162,13 @@ $wgLocalisationCacheConf[ "manualRecache" ] = !array_key_exists( 'rebuildmessage
 $wgRC2UDPEnabled = false;
 
 // static assets host
-if ( empty( $wgCdnRootUrl ) ) $wgCdnRootUrl = "http://{$wgDevelEnvironmentName}.wikia-dev.com";
-if ( empty( $wgDevBoxImageServerOverride ) ) $wgDevBoxImageServerOverride ="images.{$wgDevelEnvironmentName}.wikia-dev.com";
+$wgCdnRootUrl = "http://{$wgDevelEnvironmentName}.wikia-dev.com";
 
 if (!empty($wgEnableSwiftFileBackend)) {
-	$wgDevBoxImageServerOverride = 's3.dev-dfs-p1';
+	$wgDevBoxImageServerOverride ="d.{$wgDevelEnvironmentName}.wikia-dev.com";
+}
+else {
+	$wgDevBoxImageServerOverride ="images.{$wgDevelEnvironmentName}.wikia-dev.com";
 }
 
 $wgWikiaVideoImageHost = false; // don't rewrite URLs for shared video thumbnails
