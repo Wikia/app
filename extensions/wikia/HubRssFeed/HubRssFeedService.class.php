@@ -8,7 +8,6 @@
  */
 
 class HubRssFeedService {
-
 	const DATE_FORMAT = DateTime::RFC822;
 
 	protected $descriptions = [
