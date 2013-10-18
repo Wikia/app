@@ -55,8 +55,8 @@ class WikiEntitiesServiceTest extends WikiaBaseTest
 		$entitiesTruncated = $entities;
 		$entities[] = str_pad('', 22, 'a' );
 		$entitiesTruncated[] = substr( end( $entities ), 0, 20 );
-		
-		$kvs = 'foo=bar&baz=qux';
+
+		$kvs = 'foo=bar;baz=qux';
 		
 		$service
 		    ->expects( $this->once() )
@@ -77,7 +77,7 @@ class WikiEntitiesServiceTest extends WikiaBaseTest
 		$mwService
 		    ->expects( $this->once() )
 		    ->method ( 'setGlobal' )
-		    ->with   ( 'wgDartCustomKeyValues', $kvs . '&' . http_build_query( [ 'wikientities' => $entitiesTruncated ] ) )
+		    ->with   ( 'wgDartCustomKeyValues', $kvs . ';wikientities=foo;wikientities=bar;wikientities=baz;wikientities=' . end($entitiesTruncated) )
 		;
 		$this->assertTrue( $service->registerEntitiesWithDFP() );
 	}

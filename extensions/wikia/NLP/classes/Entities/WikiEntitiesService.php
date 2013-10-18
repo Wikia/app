@@ -24,13 +24,11 @@ class WikiEntitiesService
 		$mwService = $this->getMwService();
 		$entityList = $this->getEntityList();
 		if ( count( $entityList ) ) {
+			$keyValues = explode( ';', $mwService->getGlobalWithDefault( 'wgDartCustomKeyValues', '' ) );
 			foreach ( $entityList as &$entity ) {
-				$entity = substr( $entity, 0, 20 );
+				$entity = sprintf( 'wikientities=%s', substr( $entity, 0, 20 ) );
 			}
-			$keyValues = $mwService->getGlobalWithDefault( 'wgDartCustomKeyValues', '' )
-			           . '&'
-			           . http_build_query( [ 'wikientities' => $entityList ] );
-			$mwService->setGlobal( 'wgDartCustomKeyValues', $keyValues );
+			$mwService->setGlobal( 'wgDartCustomKeyValues', implode( ';', array_merge( $keyValues, $entityList ) ) );
 		}
 		return true;
 	}

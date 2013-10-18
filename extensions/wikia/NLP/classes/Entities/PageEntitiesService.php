@@ -39,10 +39,11 @@ class PageEntitiesService
 		$mwService = $this->getMwService();
 		$entityList = $this->getEntitiesForPage( $mwService->getGlobal( 'ArticleId' ) );
 		if ( count( $entityList ) ) {
-			array_walk( $entityList, function( &$val ) { return substr( $val, 0, 20 ); } );
-			$keyValues = $mwService->getGlobalWithDefault( 'wgDartCustomKeyValues', '' )
-			           . http_build_query( [ 'pageentities' => $entityList ] );
-			$mwService->setGlobal( 'wgDartCustomKeyValues', $keyValues );
+			$keyValues = explode( ';', $mwService->getGlobalWithDefault( 'wgDartCustomKeyValues', '' ) );
+			foreach ( $entityList as &$val ) {
+				$val = sprintf( 'pageentities=%s', substr( $val, 0, 20 ) );
+			}
+			$mwService->setGlobal( 'wgDartCustomKeyValues', implode( ';', array_merge( $keyValues, $entityList ) ) );
 		}
 		return true;
 	}
