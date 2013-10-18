@@ -58,11 +58,11 @@
 		margin-right: -( $width-rail + $width-gutter );
 	}
 
-	#minWidthPreview {
+	.ArticlePreviewInner[data-size="min"] {
 		@include minMainPageTags();
 	}
 
-	#maxWidthPreview {
+	.ArticlePreviewInner[data-size="max"] {
 		@include maxMainPageTags();
 	}
 

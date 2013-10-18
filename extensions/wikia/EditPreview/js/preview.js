@@ -275,11 +275,11 @@ define( 'wikia.preview', [
 	// DAR-2506 make the preview works like correctly for main pages
 		if( isWidePage ) {
 			if( type === 'min' ) {
-				$article.attr( 'id', 'minWidthPreview' );
+				$article.attr( 'data-size', 'min' );
 			} else if( type === 'max' ) {
-				$article.attr( 'id', 'maxWidthPreview' );
+				$article.attr( 'data-size', 'max' );
 			} else {
-				$article.attr( 'id', '' );
+				$article.attr( 'data-size', '' );
 			}
 		}
 	}
