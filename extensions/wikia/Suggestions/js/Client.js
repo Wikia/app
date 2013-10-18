@@ -4,7 +4,8 @@ define('client', ['jquery', 'suggest_matcher', 'wikia.log'], function($, matcher
 	var cache = {},
 		pending = {},
 		errors = 0,
-		uid = new Date().getTime();
+		uid = new Date().getTime(),
+		endpointUrl = 'http://search-suggest.wikia.net/web/api/search-suggest';
 
 	function writeToCache(key, data) {
 		cache[ key ] = data;
@@ -41,7 +42,7 @@ define('client', ['jquery', 'suggest_matcher', 'wikia.log'], function($, matcher
 					return;
 				}
 				if ( isPending(cacheKey) ) { return; }
-				$.getJSON( 'http://db-sds-s1/web/api/search-suggest',
+				$.getJSON( endpointUrl,
 					{
 						q: query,
 						wikiId: wiki,

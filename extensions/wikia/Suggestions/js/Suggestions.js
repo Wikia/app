@@ -179,7 +179,7 @@ require( [ 'jquery', 'client', 'wikia.log' ], function( $, client, log ) {
 		};
 		window.Wikia.newSearchSuggestions = new SuggestionsView(
 			new SuggestionsViewModel(),
-			$('input[name="search"]'),
+			$('#WikiaSearch input[name="search"]'),
 			$('ul.search-suggest'),
 			wgCityId
 		);
