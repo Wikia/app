@@ -178,8 +178,10 @@ class DumpsOnDemand {
 	 * Puts the specified file to Amazon S3 storage
 	 *
 	 * if $bPublic, the file will be available for all users
+     * if $sMimeType is set then the specified mime tipe is set, otherwise
+     *      let AmazonS3 decide on mime type.
 	 */
-	static public function putToAmazonS3( $sPath, $bPublic = true ) {
+	static public function putToAmazonS3( $sPath, $bPublic = true, $sMimeType = null ) {
 		$time = wfTime();
 		$sDestination = wfEscapeShellArg(
 			's3://wikia_xml_dumps/'
@@ -187,6 +189,10 @@ class DumpsOnDemand {
 		);
 		$sPath = wfEscapeShellArg( $sPath );
 		$sCmd = 'sudo /usr/bin/s3cmd -c /root/.s3cfg --add-header=Content-Disposition:attachment';
+		if ( !is_null( $sMimeType ) ) {
+			$sMimeType = wfEscapeShellArg( $sMimeType );
+			$sCmd .= " --mime-type={$sMimeType}";
+		}
 		$sCmd .= ($bPublic)? ' --acl-public' : '';
 		$sCmd .= " put {$sPath} {$sDestination}";
 		wfShellExec( $sCmd, $iStatus );

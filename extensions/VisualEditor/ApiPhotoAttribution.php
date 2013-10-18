@@ -6,12 +6,16 @@ class ApiPhotoAttribution extends ApiBase {
 		$params = $this->extractRequestParams();
 
 		// Username
-		$username = wfFindFile( $params['file'] )->getUser();
+		$fileTitle = Title::newFromText( $params['file'], NS_FILE );
+		$username = wfFindFile( $fileTitle )->getUser();
 		$this->getResult()->addValue( null, 'username', $username );
 
 		// Avatar
 		$avatarUrl = AvatarService::getAvatarUrl( $username, 16 );
 		$this->getResult()->addValue( null, 'avatar', $avatarUrl );
+
+		// Title
+		$this->getResult()->addValue( null, 'title', $params['file'] );
 
 		return true;
 	}

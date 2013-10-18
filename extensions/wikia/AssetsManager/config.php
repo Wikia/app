@@ -126,6 +126,8 @@ $config['oasis_noads_extensions_js'] = array(
 		'//extensions/wikia/AdEngine/js/Krux.run.js',
 		// WikiaBar is enabled sitewide
 		'//extensions/wikia/WikiaBar/js/WikiaBar.js',
+		// Chat is enabled sitewide
+		'//extensions/wikia/Chat2/js/ChatEntryPoint.js',
 		// Related Forum Discussion is on all article pages
 		'//extensions/wikia/Forum/js/RelatedForumDiscussion.js',
 		'//extensions/wikia/VideoEmbedTool/js/VET_Loader.js',
@@ -214,6 +216,8 @@ $config['oasis_jquery'] = array(
 
 		// Darwin A/B testing
 		'//skins/oasis/js/DarwinAbTesting.js',
+		// Fixed global nav ABTesting
+		'//skins/oasis/js/GlobalHeader.js',
 	)
 );
 
@@ -273,6 +277,7 @@ $config['oasis_nojquery_shared_js'] = array(
 		'//extensions/wikia/CategorySelect/js/CategorySelect.view.js',
 		'//extensions/wikia/WikiaStyleGuide/js/Form.js',
 		'//resources/wikia/modules/csspropshelper.js',
+		'//resources/wikia/modules/fluidlayout.js',
 		'//extensions/wikia/EditPreview/js/preview.js',
 
 		// oasis specific files
@@ -1416,7 +1421,11 @@ $config['ui_repo_api_js'] = array(
 		'//resources/wikia/modules/nirvana.js',
 		'//resources/wikia/modules/uifactory.js',
 		'//resources/wikia/libraries/mustache/mustache.js',
-		'//resources/wikia/modules/uicomponent.js'
+		'//resources/wikia/modules/uicomponent.js',
+
+		// examples of components
+		// TODO: move it probably to modal_sample.json to load additional assets on Special:Styleguide
+		'//resources/wikia/ui_components/modal/js/modal.sample.js',
 	)
 );
 
@@ -1426,13 +1435,22 @@ $config['touchstorm_scss'] = array(
 		'//extensions/wikia/TouchStorm/css/TouchStorm.scss'
 	)
 );
+
 $config['touchstorm_js'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		'//extensions/wikia/TouchStorm/js/TouchStorm.js'
-	)
+        'type' => AssetsManager::TYPE_JS,
+        'assets' => array(
+                '//extensions/wikia/TouchStorm/js/TouchStorm.js'
+        )
 );
 
+$config['toc_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//resources/wikia/libraries/mustache/mustache.js',
+		'//extensions/wikia/TOC/js/modules/toc.js',
+		'//extensions/wikia/TOC/js/tocWikiaArticle.js'
+	)
+);
 
 // FIXME: paths to dist
 $config['api_docs_js'] = array(
@@ -1482,3 +1500,4 @@ $config['api_docs_scss'] = array(
 		'//extensions/wikia/ApiDocs/css/ApiDocs.scss',
 	)
 );
+

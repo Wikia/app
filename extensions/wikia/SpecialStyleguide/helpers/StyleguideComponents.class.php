@@ -270,6 +270,15 @@ class StyleguideComponents {
 				$sample->markup = $component->render( $sampleArray['params'] );
 			}
 
+			if( !empty( $sampleArray['helpers']['components'] ) ) {
+				$helperComponents = $sampleArray['helpers']['components'];
+				foreach( $helperComponents as $helperComponentData ) {
+					/** @var \Wikia\UI\Component $helperComponent */
+					$helperComponent = \Wikia\UI\Factory::getInstance()->init( $helperComponentData['name'] );
+					$sample->markup .= $helperComponent->render( $helperComponentData['params'] );
+				}
+			}
+
 			$result[] = $sample;
 		}
 

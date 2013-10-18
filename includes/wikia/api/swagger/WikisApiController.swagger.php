@@ -214,6 +214,18 @@ use Swagger\Annotations as SWG;
  * 		required="true",
  * 		description="Object containing original image dimensions"
  * 	)
+ * 	@SWG\Property(
+ * 		name="wordmark",
+ * 		type="string",
+ * 		required="true",
+ * 		description="Wiki wordmark image URL, might be empty"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="wam_score",
+ * 		type="float",
+ * 		required="true",
+ * 		description="Wiki WAM score"
+ * 	)
  * 
  * @SWG\Model( id="WikiaStats" )
  * 	@SWG\Property(

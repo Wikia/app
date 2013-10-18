@@ -118,6 +118,9 @@ $wgAutoloadClasses['ForbiddenException'] = "{$IP}/includes/wikia/nirvana/WikiaEx
 $wgAutoloadClasses['NotFoundException'] = "{$IP}/includes/wikia/nirvana/WikiaException.php";
 $wgAutoloadClasses['MethodNotAllowedException'] = "{$IP}/includes/wikia/nirvana/WikiaException.php";
 $wgAutoloadClasses['NotImplementedException'] = "{$IP}/includes/wikia/nirvana/WikiaException.php";
+$wgAutoloadClasses['ControllerNotFoundException'] = "{$IP}/includes/wikia/nirvana/WikiaException.php";
+$wgAutoloadClasses['MethodNotFoundException'] = "{$IP}/includes/wikia/nirvana/WikiaException.php";
+
 
 $wgAutoloadClasses['AssetsManager'] = $IP . '/extensions/wikia/AssetsManager/AssetsManager.class.php';
 $wgAutoloadClasses['AssetsConfig'] = $IP . '/extensions/wikia/AssetsManager/AssetsConfig.class.php';
@@ -211,7 +214,6 @@ $wgAutoloadClasses[ 'EasyTemplate' ] = "{$IP}/includes/wikia/EasyTemplate.php";
 $wgAutoloadClasses[ "GlobalTitle"                     ] = "$IP/includes/wikia/GlobalTitle.php";
 $wgAutoloadClasses[ "GlobalFile"                      ] = "$IP/includes/wikia/GlobalFile.class.php";
 $wgAutoloadClasses[ "WikiFactory"                     ] = "$IP/extensions/wikia/WikiFactory/WikiFactory.php";
-$wgAutoloadClasses[ "WikiMover"                       ] = "$IP/extensions/wikia/WikiFactory/Mover/WikiMover.php";
 $wgAutoloadClasses[ "WikiFactoryHub"                  ] = "$IP/extensions/wikia/WikiFactory/Hubs/WikiFactoryHub.php";
 $wgAutoloadClasses[ 'SimplePie'                       ] = "$IP/lib/vendor/SimplePie/simplepie.inc";
 $wgAutoloadClasses[ 'MustachePHP'                     ] = "$IP/lib/vendor/mustache.php/Mustache.php";
@@ -249,6 +251,7 @@ $wgAutoloadClasses[ 'Wikia\\Measurements\\DummyDriver'    ] = "$IP/includes/wiki
 $wgAutoloadClasses[ 'Wikia\\Measurements\\Time'       ] = "$IP/includes/wikia/measurements/Time.class.php";
 $wgAutoloadClasses[ 'MemcacheMoxiCluster'             ] = "{$IP}/includes/wikia/MemcacheMoxiCluster.class.php";
 $wgAutoloadClasses[ 'MemcacheClientShadower'          ] = "{$IP}/includes/wikia/MemcacheClientShadower.class.php";
+$wgAutoloadClasses[ 'Wikia\\SwiftStorage'             ] = "$IP/includes/wikia/SwiftStorage.class.php";
 
 /**
  * Resource Loader enhancements
@@ -665,6 +668,7 @@ $wgDatamartDB = 'statsdb_mart';
 $wgDWStatsDB = 'statsdb';
 $wgStatsDBEnabled = true;
 $wgExternalWikiaStatsDB = 'wikiastats';
+$wgSpecialsDB = 'specials';
 $wgSharedKeyPrefix = "wikicities"; // default value for shared key prefix, @see wfSharedMemcKey
 
 $wgAutoloadClasses['LBFactory_Wikia'] = "$IP/includes/wikia/LBFactory_Wikia.php";

@@ -56,6 +56,7 @@ class SassUtil {
 	 */
 	public static function getOasisSettings() {
 		global $wgOasisThemes, $wgContLang;
+		global $wgEnableSassUtilLogging;
 		wfProfileIn(__METHOD__);
 
 		// Load the 5 deafult colors by theme here (eg: in case the wiki has an override but the user doesn't have overrides).
@@ -65,6 +66,22 @@ class SassUtil {
 			$themeSettings = new ThemeSettings();
 			$settings = $themeSettings->getSettings();
 
+			if ( !empty( $wgEnableSassUtilLogging ) ) {
+				if ( empty( $settings["background-image-width"] ) || empty( $settings["background-image-height"] ) ) {
+					Wikia::log(
+						__METHOD__,
+						false,
+						sprintf( "In %s@%s, %s has value %s",
+							__CLASS__,
+							__LINE__,
+							'$settings',
+							str_replace( "\n", '\n', var_export( $settings, true ) )
+						),
+						true
+					);
+				}
+			}
+
 			$oasisSettings["color-body"] = self::sanitizeColor($settings["color-body"]);
 			$oasisSettings["color-page"] = self::sanitizeColor($settings["color-page"]);
 			$oasisSettings["color-buttons"] = self::sanitizeColor($settings["color-buttons"]);
@@ -73,7 +90,7 @@ class SassUtil {
 			$oasisSettings["background-image"] = wfReplaceImageServer($settings['background-image'], self::getCacheBuster());
 
 			// sending width and height of background image to SASS
-			if ( isset($settings["background-image-width"]) && isset($settings["background-image-height"]) ) {
+			if ( !empty($settings["background-image-width"]) && !empty($settings["background-image-height"]) ) {
 				// strip 'px' from previously cached settings since we removed 'px' (sanity check)
 				$oasisSettings["background-image-width"] = str_replace( 'px', '', $settings["background-image-width"] );
 				$oasisSettings["background-image-height"] = str_replace( 'px', '', $settings["background-image-height"] );
@@ -81,10 +98,25 @@ class SassUtil {
 				// if not cached in theme settings
 				$bgImage = wfFindFile(ThemeSettings::BackgroundImageName);
 				if ( !empty($bgImage) ) {
-					$oasisSettings["background-image-width"] = $bgImage->getWidth();
-					$oasisSettings["background-image-height"] = $bgImage->getHeight();
-				}
+					$settings["background-image-width"] = $oasisSettings["background-image-width"] = $bgImage->getWidth();
+					$settings["background-image-height"] = $oasisSettings["background-image-height"] = $bgImage->getHeight();
 
+					if ( !empty( $wgEnableSassUtilLogging ) ) {
+						Wikia::log(
+							__METHOD__,
+							false,
+							sprintf( "In %s@%s (to be set), %s has value %s",
+								__CLASS__,
+								__LINE__,
+								'$settings',
+								str_replace( "\n", '\n', var_export( $settings, true ) )
+							),
+							true
+						);
+					}
+
+					$themeSettings->saveSettings($settings);
+				}
 			}
 
 			$oasisSettings["background-align"] = $settings["background-align"];
