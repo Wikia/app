@@ -76,7 +76,7 @@ class HubRssFeedService {
 
 	private static function appendTextNode( DOMDocument $doc, DOMElement $node, $name, $data = '', $attributes = [] ) {
 		$cdata = $doc->createTextNode( $data );
-		$newElement = new DOMElement($name);
+		$newElement = $doc->createElement($name);
 		foreach ( $attributes as $k => $v ) {
 			$newElement->setAttribute($k, $v);
 		}
