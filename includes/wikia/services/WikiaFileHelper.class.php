@@ -598,16 +598,21 @@ class WikiaFileHelper extends Service {
 	}
 
 	/**
-	 * Get file from title
+	 * Get file from title (Please be careful when using $force)
 	 * @param Title|string $title
 	 * @return File|null $file
 	 */
-	public static function getFileFromTitle( &$title ) {
+	public static function getFileFromTitle( &$title, $force = false ) {
 		if ( is_string( $title ) ) {
 			$title = Title::newFromText( $title, NS_FILE );
 		}
 
 		if ( $title instanceof Title ) {
+			// clear cache for file object
+			if ( $force ) {
+				RepoGroup::singleton()->clearCache( $title );
+			}
+
 			$file = wfFindFile( $title );
 			if ( $file instanceof File && $file->exists() ) {
 				return $file;
@@ -618,12 +623,12 @@ class WikiaFileHelper extends Service {
 	}
 
 	/**
-	 * Get video file from title
+	 * Get video file from title (Please be careful when using $force)
 	 * @param Title|string $title
 	 * @return File|null $file
 	 */
-	public static function getVideoFileFromTitle( &$title ) {
-		$file = self::getFileFromTitle( $title );
+	public static function getVideoFileFromTitle( &$title, $force = false ) {
+		$file = self::getFileFromTitle( $title, $force );
 		if ( !empty( $file ) && self::isFileTypeVideo( $file ) ) {
 			return $file;
 		}

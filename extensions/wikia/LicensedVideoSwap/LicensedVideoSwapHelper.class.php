@@ -412,31 +412,6 @@ SQL;
 	}
 
 	/**
-	 * Get file object (video only)
-	 * @param string $videoTitle
-	 * @param boolean $force
-	 * @return File|null $result
-	 */
-	public function getVideoFile( $videoTitle, $force = false ) {
-		$result = null;
-
-		$title = Title::newFromText( $videoTitle,  NS_FILE );
-		if ( $title instanceof Title ) {
-			// clear cache for file object
-			if ( $force ) {
-				RepoGroup::singleton()->clearCache( $title );
-			}
-
-			$file = wfFindFile( $title );
-			if ( $file instanceof File && $file->exists() && WikiaFileHelper::isFileTypeVideo( $file ) ) {
-				$result = $file;
-			}
-		}
-
-		return $result;
-	}
-
-	/**
 	 * Set flag in status
 	 * @param integer $status
 	 * @param integer $flag
@@ -1088,7 +1063,8 @@ SQL;
 	public function getValidVideos( $videos ) {
 		$validVideos = array();
 		foreach ( $videos as $videoTitle ) {
-			$file = $this->getVideoFile( urldecode( $videoTitle ) );
+			$title = urldecode( $videoTitle );
+			$file = WikiaFileHelper::getVideoFileFromTitle( $title );
 			if ( !empty( $file ) ) {
 				$validVideos[] = $file->getTitle()->getDBKey();
 			}
