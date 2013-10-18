@@ -111,9 +111,35 @@ for ( var i = 0; i < 10; i++ ) {
 The usage of `switch` statements is generally discouraged, but can be useful when there are a large number of cases - especially when multiple cases can be handled by the same block, or fall-through logic (the `default` case) can be leveraged.
 
 When using `switch` statements:
+ - Use `break`, `return` or `throw` for each case other than `default`.
+ - The `default` case should always be last.
 
-- Use a `break` for each case other than `default`.
-- Align `case` statements with the `switch`.
+```javascript
+// bad
+switch( foo ) {
+    default:
+        z();
+    case 'bar':
+    case 'foobar':
+        x();
+        break;
+    case 'baz':
+        y();
+}
+
+// good
+switch( foo ) {
+    case 'bar':
+    case 'foobar':
+        x();
+        break;
+    case 'baz':
+        y();
+        break;
+    default:
+        z();
+}
+```
 
 ###Delete Operator###
 Try to avoid using the delete operator.  Contrary to what you might think, the delete operator doesn't actually clean up memory.  Instead, removing properties actually changes the shape of objects and is bad for performance. It is better to set the property to null some other falsey value.
@@ -361,7 +387,6 @@ We use JSDoc style comments above function declarations and at the top of files 
 ###Naming conventions###
 
 ####Variables###
-
 Use lazyCamelCase for all variables with the exception of constructers, which should use UpperCamelCase. Declare all variables using one `var` keyword at the top of their scope context. Declaration and assignment on the same line are allowed. Examples follow below:
 
 ```javascript
@@ -437,5 +462,5 @@ All JS should be written as AMD modules so see [above](#amd-modules) for matchin
 ## To Do
 * Submit for feedback to engineering team
 
-![Wikia](http://i.imgur.com/tVxkjhG.gif) 
+![Wikia](http://i.imgur.com/tVxkjhG.gif)
 
