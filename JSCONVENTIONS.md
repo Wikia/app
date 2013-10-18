@@ -12,7 +12,7 @@ This styleguide defines the JavaScript coding conventions at Wikia. It's managed
   * [Semi-colons](#semi-colons)
   * [Function-declarations within blocks](#function-declarations-within-blocks)
   * [Try/catch blocks](#trycatch-blocks)
-  * [Switch statements](#swtich-statements)
+  * [Switch statements](#switch-statements)
   * [Delete Operator](#delete-operator)
   * [Modifying prototypes of built-in objects](#modifying-prototypes-of-built-in-objects)
 * [Style Rules](#style-rules)
