@@ -1,4 +1,4 @@
-require( [ 'jquery', 'client', 'wikia.log' ], function( $, client, log ) {
+require( [ 'jquery', 'suggestions_client', 'wikia.log' ], function( $, client, log ) {
 	'use strict';
 	log('New search suggestions loading...', log.levels.info, 'suggestions');
 	$(function() {

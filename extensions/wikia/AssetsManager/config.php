@@ -1489,7 +1489,7 @@ $config['suggestions_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'//extensions/wikia/Suggestions/js/Matcher.js',
-		'//extensions/wikia/Suggestions/js/Client.js',
+		'//extensions/wikia/Suggestions/js/SuggestionsClient.js',
 		'//extensions/wikia/Suggestions/js/Suggestions.js',
 	)
 );
