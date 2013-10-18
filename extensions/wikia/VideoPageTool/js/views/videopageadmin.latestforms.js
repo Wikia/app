@@ -12,12 +12,15 @@ define( 'views.videopageadmin.latestforms', [
 			handleKeyUp: function( evt ) {
 				evt.preventDefault();
 				var $tar,
+						$val
 						keyCode;
 
 				$tar = $( evt.target );
 				keyCode = evt.keyCode;
+				$val = $tar.val();
 
 				if ( $tar.val().length > 2 ) {
+					// collection fetch
 				}
 			}
 	});

@@ -1000,6 +1000,9 @@ $config['videopageadmin_js'] = array(
 		'//extensions/wikia/VideoPageTool/js/views/videopageadmin.index.js',
 		'//extensions/wikia/VideoPageTool/js/views/videopageadmin.thumbnailupload.js',
 		'//extensions/wikia/VideoPageTool/js/views/videopageadmin.edit.js',
+
+		'//extensions/wikia/VideoPageTool/js/models/videopageadmin.category.js',
+		'//extensions/wikia/VideoPageTool/js/collections/videopageadmin.category.js',
 		'//extensions/wikia/VideoPageTool/js/views/videopageadmin.latestforms.js',
 		'//extensions/wikia/VideoPageTool/js/views/videopageadmin.latest.js',
 	)
