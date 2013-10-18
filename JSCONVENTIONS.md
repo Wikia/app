@@ -19,7 +19,7 @@ This styleguide defines the JavaScript coding conventions at Wikia. It's managed
   * [White space guidelines](#white-space-guidelines)
   * [Prefixing jQuery objects](#prefixing-jquery-objects)
   * [Comments](#comments)
-  * [Naming Convensions](#naming-convensions)
+  * [Naming conventions](#naming-conventions)
 * [Sources](#sources)
 * [To Do](#to-do)
 
@@ -344,7 +344,7 @@ We use JSDoc style comments above function declarations and at the top of files 
 * @author (at the top of a file)
 * @see (for links to documentation)
 
-###Naming Convensions###
+###Naming conventions###
 
 ####Variables###
 Use lazyCamelCase for all variables with the exception of constructers, which should use UpperCamelCase. Declare all variables using one `var` keyword at the top of their scope context. Declaration and assignment on the same line are allowed. Examples follow below:
@@ -357,13 +357,13 @@ var falcor;
 
 // good
 var foo,
-		bar,
-		falcor;
+	bar,
+	falcor;
 
 // also acceptable
 var foo = 'kyle',
-		bar = 'wears',
-		falcor = 'shorts';
+	bar = 'wears',
+	falcor = 'shorts';
 ```
 
 Constants don't exist in JS so don't use all caps to denote constants.
