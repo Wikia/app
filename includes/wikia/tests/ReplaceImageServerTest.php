@@ -64,22 +64,22 @@ class ReplaceImageServerTest extends WikiaBaseTest {
 
 	public function devboxDataProvider() {
 		return [
-			// cachebuster are not added on devboxes
+			// cachebuster should be added on devboxes as well
 			[
 				'url' => 'http://images.wikia.com/poznan/pl/images/0/06/Gzik.jpg',
 				'timestamp' => '20111213221641',
-				'expected' => 'http://images.hakarl.wikia-dev.com/poznan/pl/images/0/06/Gzik.jpg',
+				'expected' => 'http://images.hakarl.wikia-dev.com/__cb20111213221641/poznan/pl/images/0/06/Gzik.jpg',
 			],
 			[
 				'url' => 'http://images.wikia.com/poznan/pl/images/5/57/Ratusz_uj%C4%99cie_od_do%C5%82u.jpg',
 				'timestamp' => '20110917091718',
-				'expected' => 'http://images.hakarl.wikia-dev.com/poznan/pl/images/5/57/Ratusz_uj%C4%99cie_od_do%C5%82u.jpg',
+				'expected' => 'http://images.hakarl.wikia-dev.com/__cb20110917091718/poznan/pl/images/5/57/Ratusz_uj%C4%99cie_od_do%C5%82u.jpg',
 			],
 			// no timestamp provided, use cache buster value from wgCdnStylePath (i.e. wgStyleVersion)
 			[
 				'url' => 'http://images.wikia.com/poznan/pl/images/5/57/Ratusz_uj%C4%99cie_od_do%C5%82u.jpg',
 				'timestamp' => false,
-				'expected' => 'http://images.hakarl.wikia-dev.com/poznan/pl/images/5/57/Ratusz_uj%C4%99cie_od_do%C5%82u.jpg',
+				'expected' => 'http://images.hakarl.wikia-dev.com/__cb' . self::DEFAULT_CB . '/poznan/pl/images/5/57/Ratusz_uj%C4%99cie_od_do%C5%82u.jpg',
 			],
 			// ogg files should be served from devbox images domain
 			[
