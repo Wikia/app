@@ -4,7 +4,7 @@
 >As a developer I want a clear and well documented guide dealing with coding conventions, patterns and best practices for JavaScript development at Wikia along with tools to help me in making my code compliant.
 
 This styleguide defines the JavaScript coding conventions at Wikia. It's managed by the JS StyleGuide team but is here to serve all JS developers at Wikia and in our community.  If you'd like to propose a change to the style guide, simply create a pull request and tag [@wikia-frontenders](https://github.com/wikia-frontenders).
- 
+
 
 ## TOC
 * [Language Rules](#language-rules)
@@ -28,7 +28,7 @@ This styleguide defines the JavaScript coding conventions at Wikia. It's managed
 Language rules refer to rules that can have an impact on the functionality.  They are chosen based on performance implications as well as their tendencies to reduce bugs.
 
 ### Early returns
-Try to avoid early returns.  It makes the code easier to read. 
+Try to avoid early returns.  It makes the code easier to read.
 ```javascript
 // not best practice
 function() {
@@ -64,12 +64,12 @@ myFunc();
 ```
 
 ### Function declarations within blocks
-Don't declare functions within blocks like loops and conditionals as this will often lead to unintended consequences. 
+Don't declare functions within blocks like loops and conditionals as this will often lead to unintended consequences.
 ```javascript
-// bad: 
+// bad:
 if ( someBool ) {
     function myFunc() {
-        // code 
+        // code
     }
 }
 
@@ -118,11 +118,24 @@ When using `switch` statements:
 ###Delete Operator###
 Try to avoid using the delete operator.  Contrary to what you might think, the delete operator doesn't actually clean up memory.  Instead, removing properties actually changes the shape of objects and is bad for performance. It is better to set the property to null some other falsey value.
 
-Quoted from google's style guide: 
+Quoted from google's style guide:
 > "In modern JavaScript engines, changing the number of properties on an object is much slower than reassigning the values. The delete keyword should be avoided except when it is necessary to remove a property from an object's iterated list of keys, or to change the result of if (key in obj)."
 
+```javascript
+var myObj = {
+  hello: 'hi',
+  goodBye: 'bye'
+}
+
+// bad
+delete myObj.goodBye;
+
+// good
+myObj.goodBye = false; // or null or '' etc.
+```
+
 ###Modifying prototypes of built-in objects###
-This is heavily discouraged.  We'll follow Google's style guidelines here: 
+This is heavily discouraged.  We'll follow Google's style guidelines here:
 >"Modifying builtins like Object.prototype and Array.prototype are strictly forbidden. Modifying other builtins like Function.prototype is less dangerous but still leads to hard to debug issues in production and should be avoided."
 
 Also, jQuery code works on the assumption that no built in object prototypes are modified.
@@ -131,10 +144,10 @@ Also, jQuery code works on the assumption that no built in object prototypes are
 
 ## Style Rules
 
-Style rules help us write easy to read, well documented, and consistant code.  
+Style rules help us write easy to read, well documented, and consistant code.
 
 ### White space guidelines
-We are basing our white space rules off of jQuery's, which can be found [here](http://contribute.jquery.org/style-guide/js/). The are copied below so we can make changes to them as we see fit. 
+We are basing our white space rules off of jQuery's, which can be found [here](http://contribute.jquery.org/style-guide/js/). The are copied below so we can make changes to them as we see fit.
 
 In general, the jQuery style guide encourages liberal spacing for improved human readability. The minification process creates a file that is optimized for browsers to read and process.
 
@@ -313,7 +326,7 @@ var $div = $( 'div' );
 ### Comments
 Comment early and often!
 
-For comments inside functions, use inline comments.  For comments about functions and documents, use JSDoc style block comments. 
+For comments inside functions, use inline comments.  For comments about functions and documents, use JSDoc style block comments.
 
 ```javascript
 /* @desc This function bakes cookies
@@ -326,7 +339,7 @@ function makeCookies( flavor ) {
         type: flavor,
         tastiness: 'delicious'
     }
-    
+
     // do more stuff annotated by inline comments ...
 
     return cookie;
@@ -340,13 +353,14 @@ We use JSDoc style comments above function declarations and at the top of files 
 * @param
 * @return
 
-##### Recommended JSDoc Anotations 
+##### Recommended JSDoc Anotations
 * @author (at the top of a file)
 * @see (for links to documentation)
 
 ###Naming conventions###
 
 ####Variables###
+
 Use lazyCamelCase for all variables with the exception of constructers, which should use UpperCamelCase. Declare all variables using one `var` keyword at the top of their scope context. Declaration and assignment on the same line are allowed. Examples follow below:
 
 ```javascript
@@ -372,18 +386,20 @@ var myVariable;
 function MyConstructor() { ... }
 ```
 
+Use lazyCamelCase for all variables with the exception of constructers, which should use UpperCamelCase.
+
 Constants don't exist in JS so don't use all caps to denote constants.
 
 Try to avoid acronyms in variable names and be explicit so it is clear to anyone reading your code what the variable does. Since we don't have an uglifier that reduces variable size yet, do this within reason.
 
 #### AMD Modules ####
-AMD modules should be all lowercase. If the code is exension-specific, namespace with the extension. 
+AMD modules should be all lowercase. If the code is exension-specific, namespace with the extension.
 ```javascript
 define( 'myextension.mypage' ... )
 ```
 If there's a folder structure within the extension's scripts directory, the module's namespace should match the folder structure.
 
-For example, if the tree looks like this: 
+For example, if the tree looks like this:
 
     |-- Search
     | |-- scripts
@@ -401,14 +417,14 @@ define( 'search.views.form' ... );
 define( 'search.models.results' ... );
 ```
 
-If the code is meant to be used site wide or by multiple different extensions, namespace with 'wikia'.  
+If the code is meant to be used site wide or by multiple different extensions, namespace with 'wikia'.
 ```javascript
 define( 'wikia.mymodule' )
 ```
 Hint: If it's in the modules folder, it should be namespace with 'wikia'.
 
 #### Folders ####
-For clarity and future-proofness, all javascript files should go into a 'scripts' folder and all stylesheet files should go into a 'styles' folder.  This is different from what we've done in the past, which was putting all scripts into a 'js' folder and all stylesheets into a 'css' folder. 
+For clarity and future-proofness, all javascript files should go into a 'scripts' folder and all stylesheet files should go into a 'styles' folder.  This is different from what we've done in the past, which was putting all scripts into a 'js' folder and all stylesheets into a 'css' folder.
 
 #### Files ####
 All JS should be written as AMD modules so see [above](#amd-modules) for matching files names to module names.
