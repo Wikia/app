@@ -5,6 +5,7 @@
  *
  * - image was uploaded but file cannot be found on the filesystem (delete image through normal MW methods)
  * - image was uploaded and then moved, the file exists under the old name (fix file position)
+ * - image has size set to zero (get file's size from FS and correct database entry)
  *
  * @author Macbre
  * @ingroup Maintenance
@@ -85,10 +86,55 @@ class FixBrokenImages extends Maintenance {
 	}
 
 	/**
-	 * @param LocalFile $file file to process
-	 * @return int RESULT_* flag
+	 * @param File $file file to check
+	 * @see BAC-773
 	 */
-	private function processFile( File $file ) {
+	private function checkFileSize( File $file ) {
+		global $wgUploadDirectory;
+		$size = $file->getSize();
+
+		// we're fine
+		if ( $size > 0 ) return;
+
+		$path = $wgUploadDirectory . '/' . $file->getUrlRel();
+
+		if ( file_exists( $path )  && ( $size = filesize( $path ) ) ) {
+			if ( !$this->isDryRun ) {
+				$dbw = wfGetDB( DB_MASTER );
+				$dbw->update(
+					'image',
+					[
+						'img_size' => $size
+					],
+					[
+						'img_name' => $file->getName()
+					],
+					__METHOD__
+				);
+			}
+
+			$res = true;
+		}
+		else {
+			$res = false;
+		}
+
+		$this->output(
+			sprintf(
+				"'%s' has img_size = 0 (checking <%s>) - [%s]\n",
+				$file->getTitle(),
+				$path,
+				$res ? ( 'done - set to ' . $size ) : 'err'
+			)
+		);
+	}
+
+	/**
+	 * @param LocalFile $file file to check
+	 * @return int RESULT_* flag
+	 * @see BAC-731
+	 */
+	private function processMissingFile( File $file ) {
 		global $wgUploadDirectory, $wgCityId;
 
 		try {
@@ -178,7 +224,12 @@ class FixBrokenImages extends Maintenance {
 
 		while ( $row = $res->fetchObject() ) {
 			$file = LocalFile::newFromRow( $row, $this->repo );
-			$result = $this->processFile( $file );
+
+			// 1. check file size (img_size = 0 in image table)
+			$this->checkFileSize( $file );
+
+			// 2. check for missing files on FS / Swift storage
+			$result = $this->processMissingFile( $file );
 
 			switch( $result ) {
 				case self::RESULT_RESTORED:
