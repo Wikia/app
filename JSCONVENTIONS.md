@@ -364,6 +364,12 @@ var foo,
 var foo = 'kyle',
 	bar = 'wears',
 	falcor = 'shorts';
+
+// normal variable casing
+var myVariable;
+
+// variable casing for constructors
+function MyConstructor() { ... }
 ```
 
 Constants don't exist in JS so don't use all caps to denote constants.
