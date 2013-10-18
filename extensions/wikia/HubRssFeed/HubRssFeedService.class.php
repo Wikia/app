@@ -44,28 +44,26 @@ class HubRssFeedService {
 
 		self::appendTextNode( $doc, $channel, 'title', $this->descriptions[ $verticalId ][ 't' ] );
 		self::appendTextNode( $doc, $channel, 'description', $this->descriptions[ $verticalId ][ 'd' ] );
-
-		self::appendTextNode( $doc, $channel, 'link', $this->url );
+		self::appendTextNode( $doc, $channel, 'link', $this->url, ["rel" => "self"]);
 		self::appendTextNode( $doc, $channel, 'language', $this->lang );
 		self::appendTextNode( $doc, $channel, 'generator', 'MediaWiki 1.19.7' );
 
 		$maxTimestamp = 0;
+		foreach ( $data as $url => $item ) {
+			if($item[ 'timestamp' ]  > $maxTimestamp ){
+				$maxTimestamp = $item[ 'timestamp' ]  ;
+			}
+		}
+		self::appendTextNode( $doc, $channel, 'lastBuildDate',  date( self::DATE_FORMAT,$maxTimestamp ) );
 
 		foreach ( $data as $url => $item ) {
 			$itemNode = $channel->appendChild( new DOMElement('item') );
 			self::appendCDATA( $doc, $itemNode, 'title', $item[ 'title' ] );
 			self::appendCDATA( $doc, $itemNode, 'description', '<img src="' . $item[ 'img' ] . '"/><p>' . $item[ 'description' ] . '</p>' );
-			self::appendCDATA( $doc, $itemNode, 'link', $url );
-			//var_dump($item[ 'timestamp' ], date( self::DATE_FORMAT, $item[ 'timestamp' ] ) );
-			$itemNode->appendChild( new DOMElement('pubDate', date( self::DATE_FORMAT, $item[ 'timestamp' ] )) ); //date('c') ?
+			self::appendTextNode( $doc, $itemNode, 'link', $url);
+			$itemNode->appendChild( new DOMElement('pubDate', date( self::DATE_FORMAT, $item[ 'timestamp' ] )) );
 			$itemNode->appendChild( new DOMElement('creator', 'Wikia', 'http://purl.org/dc/elements/1.1/') );
-
-			if($item[ 'timestamp' ]  > $maxTimestamp ){
-				$maxTimestamp = $item[ 'timestamp' ]  ;
-			}
 		}
-
-		self::appendTextNode( $doc, $channel, 'lastBuildDate',  date( self::DATE_FORMAT,$maxTimestamp ) );
 		return $doc->saveXML();
 	}
 
@@ -77,9 +75,13 @@ class HubRssFeedService {
 	}
 
 
-	private static function appendTextNode( DOMDocument $doc, DOMElement $node, $name, $data = '' ) {
+	private static function appendTextNode( DOMDocument $doc, DOMElement $node, $name, $data = '', $attributes = [] ) {
 		$cdata = $doc->createTextNode( $data );
-		$element = $node->appendChild( new DOMElement($name) );
+		$newElement = new DOMElement($name);
+		foreach ( $attributes as $k => $v ) {
+			$newElement->setAttribute($k, $v);
+		}
+		$element = $node->appendChild( $newElement );
 		$element->appendChild( $cdata );
 	}
 }
