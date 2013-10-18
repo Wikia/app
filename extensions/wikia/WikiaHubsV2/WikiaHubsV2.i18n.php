@@ -29,7 +29,7 @@ $messages['en'] = array(
 	//WAM
 	'wikiahubs-wam-header' => 'WAM Score',
 	'wikiahubs-wam-see-full-wam-ranking' => 'Read more about WAM',
-	'wikiahubs-wam-top-wikis-headline' => 'Top $1 Wikis',
+	'wikiahubs-wam-top-wikis-headline' => 'Top Wikia $1 Communities',
 	'wikiahubs-wam-rank' => 'Rank',
 	'wikiahubs-wam-score' => 'WAM Score',
 	'wikiahubs-wam-wiki-url' => "Name",
@@ -79,10 +79,10 @@ $messages['de'] = array(
 	//WAM
 	'wikiahubs-wam-header' => 'WAM-Punktzahl',
 	'wikiahubs-wam-see-full-wam-ranking' => 'Mehr über WAM',
-	'wikiahubs-wam-top-wikis-headline' => 'Top $1 Wikis',
+	'wikiahubs-wam-top-wikis-headline' => 'Top in $1',
 	'wikiahubs-wam-rank' => 'Rang',
 	'wikiahubs-wam-score' => 'WAM-Punktzahl',
-	'wikiahubs-wam-wiki-url' => "Wikiname",
+	'wikiahubs-wam-wiki-url' => "Name",
 
 	// wikia hubs
 	'wikiahubs-vertical-video-games' => 'Videospiele',
@@ -138,7 +138,7 @@ $messages['fr'] = array(
 	'wikiahubs-wam-top-wikis-headline' => 'Top des communautés Wikia de $1',
 	'wikiahubs-wam-rank' => 'Classement',
 	'wikiahubs-wam-score' => 'Score WAM',
-	'wikiahubs-wam-wiki-url' => "Nom du wiki",
+	'wikiahubs-wam-wiki-url' => "Nom",
 
 	// wikia hubs
 	'wikiahubs-vertical-VideoGames' => 'Jeux vidéo',
@@ -194,7 +194,7 @@ $messages['es'] = array(
 	'wikiahubs-wam-top-wikis-headline' => 'Comunidades de Wikia - Top $1',
 	'wikiahubs-wam-rank' => 'Clasificación',
 	'wikiahubs-wam-score' => 'Puntuación en el WAM',
-	'wikiahubs-wam-wiki-url' => "Nombre del wiki",
+	'wikiahubs-wam-wiki-url' => "Nombre",
 
 	// wikia hubs
 	'wikiahubs-vertical-VideoGames' => 'Videojuegos',

@@ -125,9 +125,9 @@ $messages['de'] = array(
 	'wam-Lifestyle' => 'Lifestyle',
 	'wampage-header-wam' => 'Was ist der WAM-Wert?',
 	'wampage-header-faq' => 'FAQ',
-	'wampage-content' => 'Der Wikia Aktivitätsmonitor (WAM) zeigt an, wie es um dein Wiki steht, und wie bekannt dein Wiki ist. WAM wurde von Wikia entwickelt, um durch den Vergleich mehrerer Daten eine Wiki-Rangliste erstellen zu können, ähnlich der Billboard- oder Parker-Punktzahl.
+	'wampage-content' => 'Der Wikia Aktivitätsmonitor (WAM) zeigt an, wie es um die Aktivität und Bekanntheit deiner Community steht. WAM wurde von Wikia entwickelt, um durch den Vergleich mehrerer Daten eine Rangliste erstellen zu können, ähnlich der Billboard- oder Parker-Punktzahl.
 
-	Die WAM-Punktzahl wird täglich für die 5.000 Top-Wikis berechnet und beinhaltet einmal eine Platzierung innerhalb aller Top-Wikis, innerhalb der zugehörigen Wiki-Kategorie (Videospiele, Entertainment, Lifestyle) und eine Punktzahl von 0 bis 100. Die WAM-Punktzahl reagiert auf aktuelle Themen und ändert sich oft, also stelle sicher, dass dein Wiki immer auf dem aktuellsten Stand ist. Die WAM-Platzierung kann ebenfalls in jedem unserer Hubs ([[Videospiele]], [[Entertainment]], [[Lifestyle]]) eingesehen werden.
+	Die WAM-Punktzahl wird täglich für die 5.000 Top-Wikia-Communitys berechnet und beinhaltet einmal eine Platzierung innerhalb aller Top-Wikis, innerhalb der zugehörigen Kategorie (Videospiele, Entertainment, Lifestyle) und eine Punktzahl von 0 bis 100. Die WAM-Punktzahl reagiert auf aktuelle Themen und ändert sich oft, also stelle sicher, dass dein Wiki immer auf dem aktuellsten Stand ist. Die WAM-Platzierung kann ebenfalls in jedem unserer Hubs ([[w:c:de:Videospiele|Videospiele]], [[w:c:de:Entertainment|Entertainment]], [[w:c:de:Lifestyle|Lifestyle]]) eingesehen werden.
 
 	[[$1|Häufig gestellte Fragen]]',
 

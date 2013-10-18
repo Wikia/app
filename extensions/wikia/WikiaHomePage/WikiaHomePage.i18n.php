@@ -137,7 +137,7 @@ $messages['de'] = array(
 	'wikiahome-page-header-create-wiki-button' => 'Starte ein Wiki',
 	'wikiahome-page-header-create-wiki-button-destination' => 'http://www.wikia.com/Special:CreateWiki?uselang=de',
 	'wikiahome-visualisation-remix-mixitup' => 'Tauche ein!',
-	'wikiahome-visualisation-remix-mixituptext' => 'Tausende von Wikis auf einen Klick. Drücke auf Remix, um noch viel mehr Wikis zu erkunden.',
+	'wikiahome-visualisation-remix-mixituptext' => 'Tausende von Wikis auf einen Klick. Drücke auf Remix, um noch mehr von Wikia zu erkunden.',
 	'wikiahome-visualisation-remix-button' => 'Remix',
 
 	'wikiahome-stats-heading' => 'Interaktive Zusammenarbeit',
