@@ -229,14 +229,21 @@ define( 'wikia.preview', [
 	function addEditSummary( contentNode, width, summary ) {
 		if (typeof summary !== 'undefined') {
 			var $editPagePreviewEditSummary = $('<div>', {id: "EditPagePreviewEditSummary"}),
-				$articlePreview = contentNode.closest(".ArticlePreview");
+				$articlePreview = contentNode.closest(".ArticlePreview"),
+				articleHeight = $articlePreview.height(),
+				minArticleHeight = 200;
 
 			$editPagePreviewEditSummary .
 				width( width ) .
 				appendTo( $articlePreview.parent() ) .
 				html(summary);
 
-			$articlePreview.height( $editPagePreviewEditSummary.height() );
+			var editSummaryHeight = $editPagePreviewEditSummary.height(),
+				newArticleHeight = articleHeight - editSummaryHeight;
+
+			if( newArticleHeight > minArticleHeight ) {
+				$articlePreview.height( newArticleHeight );
+			}
 		}
 	}
 
