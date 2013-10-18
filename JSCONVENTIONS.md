@@ -1,5 +1,10 @@
 # Wikia JavaScript Coding Conventions
 
+## Our Mission ##
+>As a developer I want a clear and well documented guide dealing with coding conventions, patterns and best practices for JavaScript development at Wikia along with tools to help me in making my code compliant.
+This styleguide defines the JavaScript coding conventions at Wikia. It's managed by the JS StyleGuide team but is here to serve all JS developers at Wikia and in our community.  If you'd like to propose a change to the style guide, simply create a pull request and assign it to @wikia-frontenders.
+ 
+
 ## TOC
 * [Language Rules](#language-rules)
   * [Early returns](#early-returns)
@@ -14,7 +19,8 @@
   * [Prefixing jQuery objects](#prefixing-jquery-objects)
   * [Comments](#comments)
   * [Naming Convensions](#naming-convensions)
-* [Still to be defined](#still-to-be-defined)
+* [Sources](#sources)
+* [To Do](#to-do)
 
 ## Language Rules
 
@@ -387,5 +393,5 @@ All JS should be written as AMD modules so see [above](#amd-modules) for matchin
 * [Google's Style Guide](http://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml)
 * [jQuery's Style Gude](https://github.com/jquery/contribute.jquery.org/blob/master/pages/style-guide/js.md)
 
-## Still to be defined
-* Short descriptions for Style Rules and Language rules to be placed under each heading.  Also a short description for the page at the very top. 
+## To Do
+* Submit for feedback to engineering team
