@@ -980,6 +980,10 @@ $config['videopageadmin_js'] = array(
 	'skin' => array( 'oasis' ),
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
+		// Lodash is an underscore.js rewrite and a prereq for Backbone
+		'//extensions/wikia/VideoPageTool/js/lib/lodash/dist/lodash.underscore.js',
+		'//extensions/wikia/VideoPageTool/js/lib/backbone/backbone.js',
+
 		// Library Dependencies
 		'//resources/jquery.ui/jquery.ui.core.js',
 		'//resources/jquery.ui/jquery.ui.datepicker.js',
@@ -996,6 +1000,8 @@ $config['videopageadmin_js'] = array(
 		'//extensions/wikia/VideoPageTool/js/views/videopageadmin.index.js',
 		'//extensions/wikia/VideoPageTool/js/views/videopageadmin.thumbnailupload.js',
 		'//extensions/wikia/VideoPageTool/js/views/videopageadmin.edit.js',
+		'//extensions/wikia/VideoPageTool/js/views/videopageadmin.latestforms.js',
+		'//extensions/wikia/VideoPageTool/js/views/videopageadmin.latest.js',
 	)
 );
 
