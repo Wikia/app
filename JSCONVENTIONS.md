@@ -2,7 +2,8 @@
 
 ## Our Mission ##
 >As a developer I want a clear and well documented guide dealing with coding conventions, patterns and best practices for JavaScript development at Wikia along with tools to help me in making my code compliant.
-This styleguide defines the JavaScript coding conventions at Wikia. It's managed by the JS StyleGuide team but is here to serve all JS developers at Wikia and in our community.  If you'd like to propose a change to the style guide, simply create a pull request and assign it to @wikia-frontenders.
+
+This styleguide defines the JavaScript coding conventions at Wikia. It's managed by the JS StyleGuide team but is here to serve all JS developers at Wikia and in our community.  If you'd like to propose a change to the style guide, simply create a pull request and assign it to [@wikia-frontenders](https://github.com/wikia-frontenders).
  
 
 ## TOC
