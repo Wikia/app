@@ -73,8 +73,9 @@ $label-padding: 10px 10px 10px 0px;
 	}
 	.input-group {
 		@include box-sizing-border-box;
+		clear: none;
 		padding: 5px 0;
-		width: 100%;
+		width: 68%;
 		&.border {
 			border-bottom: 1px solid $color-page-border-subtle;
 		}
@@ -138,10 +139,6 @@ $label-padding: 10px 10px 10px 0px;
 
 	// Featured video form styles
 	.featured-video {
-		.input-group {
-			clear: none;
-			width: 68%;
-		}
 		.media-btn {
 			float: left;
 			height: 25px;
@@ -180,6 +177,13 @@ $label-padding: 10px 10px 10px 0px;
 		}
 		.video-key-group label.error {
 			float: none;
+		}
+	}
+
+	// Latest video form styles
+	.latest-video {
+		.search-button {
+			
 		}
 	}
 }
