@@ -139,10 +139,15 @@ require( [ 'jquery', 'suggestions_client', 'wikia.log' ], function( $, client, l
 
 			self.handleNavigation = function(key) {
 				var active = document.activeElement,
-					next;
+					next, href;
 				if ( !keyEventsActive ) { return; }
 				if ( key === 13 ) {
-					window.location.pathname = $(active).children('a').attr('href');
+					href = $(active).children('a').attr('href');
+					if ( href && href !== '#' ) {
+						window.location.pathname = href;
+					} else {
+						searchInput[0].form.submit();
+					}
 					return;
 				}
 				//we are in input, go to list
@@ -202,7 +207,7 @@ require( [ 'jquery', 'suggestions_client', 'wikia.log' ], function( $, client, l
 				if ( results.length ) {
 					html = self.buildSeeAllResultsMarkup(i);
 					$el = $(html).appendTo(dropdown);
-					$el.click( function() { $('#WikiaSearch').submit(); } );
+					$el.click( function() { searchInput[0].form.submit(); } );
 					self.hideAds();
 				} else {
 					self.showAds();
