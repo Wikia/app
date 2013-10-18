@@ -322,6 +322,40 @@
 				array( $reqParams17, $mockUserParams1, $mockUserLoginForm1, 'error', $expMsg16, $expErrParam16 ),
 			);
 		}
+
+		/**
+		 * @dataProvider changeUnconfirmedUserEmailDataProvider
+		 */
+		public function testChangeUnconfirmedUserEmail( $params, $mockUserParams, $mockSessionParams, $mockCacheParams, $expResult, $expMsg, $expErrParam ) {
+			// setup
+			$this->setUpMockObject( 'User', $mockUserParams, true );
+
+			$this->setUpSession( $mockSessionParams );
+
+			if ( is_int($mockCacheParams) ) {
+				$mockCacheParams = array(
+					'get' => UserLoginHelper::LIMIT_EMAIL_CHANGES + $mockCacheParams,
+				);
+			}
+			$this->setUpMock( $mockCacheParams );
+
+			// test
+			$response = $this->app->sendRequest( 'UserSignupSpecial', 'changeUnconfirmedUserEmail', $params );
+
+			$responseData = $response->getVal( 'result' );
+			$this->assertEquals( $expResult, $responseData, 'result' );
+
+			$responseData = $response->getVal( 'msg' );
+			$this->assertEquals( $expMsg, $responseData, 'msg' );
+
+			$responseData = $response->getVal( 'errParam' );
+			$this->assertEquals( $expErrParam, $responseData, 'errParam' );
+
+			// tear down
+			$this->tearDownSession( $mockSessionParams );
+		}
+
+
 		public function changeUnconfirmedUserEmailDataProvider() {
 			// error - empty email
 			$params1 = array(
