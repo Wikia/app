@@ -65,6 +65,7 @@ class VideoInfoHelper extends WikiaModel {
 				$premium = ( $file->isLocal() ) ? 0 : 1 ;
 				$video = array(
 					'videoTitle' => $file->getName(),
+					'provider' => $file->minor_mime,
 					'addedAt' => $addedAt,
 					'addedBy' => $userId,
 					'duration' => $duration,
@@ -267,5 +268,25 @@ class VideoInfoHelper extends WikiaModel {
 		}
 
 		return $wgVideoInfoExists;
+	}
+
+	/**
+	 * Fetch the list of local (e.g. non-premium) videos from this wiki
+	 *
+	 * @return array
+	 */
+	public static function getLocalVideoTitles() {
+		$sql = "SELECT video_title FROM video_info WHERE premium = 0";
+		$dbh = wfGetDB(DB_SLAVE);
+
+		$res = $dbh->query($sql);
+
+		$titles = array();
+		while ($row = $dbh->fetchObject($res)) {
+			$titles[] = $row->video_title;
+		}
+		$dbh->freeResult($res);
+
+		return $titles;
 	}
 }

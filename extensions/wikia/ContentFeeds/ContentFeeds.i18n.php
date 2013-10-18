@@ -92,6 +92,13 @@ $messages['ca'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Error: El cos de la pàgina és necessari',
 );
 
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'contentfeeds-firstfewarticles-tag-next' => 'Кхин дӀа',
+);
+
 /** Czech (česky)
  * @author Dontlietome7
  */
@@ -244,6 +251,7 @@ $messages['ia'] = array(
  * @author C5st4wr6ch
  */
 $messages['id'] = array(
+	'contentfeeds-desc' => 'Menyediakan informasi yang kaya dan mutakhir melalui berbagai tag atau "umpan balik"',
 	'contentfeeds-firstfewarticles-tag-title' => 'Judul',
 	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Kesalahan: Judul halaman disyaratkan',
 );
@@ -363,6 +371,20 @@ $messages['nl'] = array(
  */
 $messages['nl-informal'] = array(
 	'contentfeeds-firstfewarticles-tag-header' => "Maak je eerste pagina's aan!",
+);
+
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'contentfeeds-desc' => 'Provesís d’informacion rica e a jorn gràcias a de balisas nombrosas o « fluxes ».',
+	'contentfeeds-newimages-rss-title' => 'Flux RSS per {{#Special:NewFiles}}',
+	'contentfeeds-newimages-rss-desc' => 'Flux de $1',
+	'contentfeeds-firstfewarticles-tag-header' => 'Creatz vòstras primièras paginas !',
+	'contentfeeds-firstfewarticles-tag-title' => 'Títol',
+	'contentfeeds-firstfewarticles-tag-next' => 'Seguent',
+	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Error : lo títol de la pagina es necessari',
+	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Error : lo còs de la pagina es necessari',
 );
 
 /** Pälzisch (Pälzisch)

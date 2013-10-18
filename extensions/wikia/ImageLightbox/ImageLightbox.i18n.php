@@ -122,8 +122,8 @@ $1
 	'lightbox-share-email-ok-caption' => 'Kadarnadur',
 	'lightbox-share-email-ok-content' => 'Kaset eo bet ar postel{{PLURAL:$1||où}}.',
 	'lightbox-share-email-error-caption' => 'Fazi',
-	'lightbox-share-email-error-content' => 'Fazi o kas {{PLURAL:$1|postel|postel}}.
-Munudoù : $2', # Fuzzy
+	'lightbox-share-email-error-content' => 'Fazi o kas {{PLURAL:$1|postel|posteloù}}.
+Munudoù : $2',
 	'lightbox-share-email-error-login' => 'Ezhomm ho peus da gevreañ evit kas posteloù',
 	'lightbox-share-email-error-noaddress' => "N'eus bet lakaet chomlec'h ebet.",
 	'lightbox-visit-the-wiki' => 'Gweladenniñ ar wiki :',
@@ -830,8 +830,8 @@ $messages['ps'] = array(
 	'lightbox-send' => 'لېږل',
 	'lightbox-share-button-email' => 'برېښليک',
 	'lightbox-share-button-www' => 'شريکول',
-	'lightbox-share-email-label' => 'دا انځور يو ملګري ته برېښليکول',
-	'lightbox-share-email-page-label' => 'دا مخ يو ملګري ته برېښليکول',
+	'lightbox-share-email-label' => 'دا انځور يو ملگري ته برېښليکول',
+	'lightbox-share-email-page-label' => 'دا مخ يو ملگري ته برېښليکول',
 	'lightbox-share-email-page-label-address' => 'برېښليک پته',
 	'lightbox-share-email-error-caption' => 'تېروتنه',
 );

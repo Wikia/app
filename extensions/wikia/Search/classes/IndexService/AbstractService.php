@@ -83,22 +83,33 @@ abstract class AbstractService
 	 */
 	public function getResponseForPageIds() {
 		wfProfileIn(__METHOD__);
-		
+
 		$result = array( 'contents' => '', 'errors' => array() );
 		$documents = array();
-		
+
 		foreach ( $this->pageIds as $pageId ) {
 			$this->currentPageId = $pageId;
+			$currId = $this->getCurrentDocumentId();
+			$actId = $this->getCurrentDocumentId(false);
 		    if (! $this->getService()->pageIdExists( $pageId ) ) {
-				$documents[] = array( "delete" => array( "id" => $this->getCurrentDocumentId() ) );
+				$documents[] = array( "delete" => array( "id" =>$currId ) );
 				continue;
 			}
-			if ( in_array( $this->getCurrentDocumentId(), $this->processedDocIds ) ) {
+
+			if( $currId!=$actId)
+			{
+				$documents[] = array( "delete" => array( "id" => $actId ) );
 				continue;
 			}
+
+			if ( in_array( $currId, $this->processedDocIds ) ) {
+				continue;
+			}
+
 			try {
 				$response = $this->getResponse();
-				$this->processedDocIds[] = $this->getCurrentDocumentId();
+
+				$this->processedDocIds[] = $actId;
 				if (! empty( $response ) ) {
 				    $documents[] = $this->getJsonDocumentFromResponse( $response );
 				}
@@ -106,6 +117,7 @@ abstract class AbstractService
 				$result['errors'][] = $pageId;
 			}
 		}
+
 		$result['contents'] = $documents;
 		wfProfileOut(__METHOD__);
 		return $result;
@@ -113,12 +125,13 @@ abstract class AbstractService
 	
 	/**
 	 * Generates a unique ID based on wiki ID and page ID
+	 * @param bool $resolveRedirect
 	 * @return string
 	 */
-	public function getCurrentDocumentId() {
-		return sprintf( '%s_%s', $this->getService()->getWikiId(), $this->getService()->getCanonicalPageIdFromPageId( $this->currentPageId ) );
+	public function getCurrentDocumentId($resolveRedirect = true) {
+		return sprintf( '%s_%s', $this->getService()->getWikiId(), $resolveRedirect ? $this->getService()->getCanonicalPageIdFromPageId( $this->currentPageId ) :  $this->currentPageId );
 	}
-	
+
 	/**
 	 * Returns an array formatted for the JSON response
 	 * @param array $response

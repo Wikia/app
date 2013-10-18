@@ -1099,7 +1099,6 @@ class FileRepo {
 	 */
 	public function deleteBatch( $sourceDestPairs ) {
 		$backend = $this->backend; // convenience
-
 		// Try creating directories
 		$status = $this->initZones( array( 'public', 'deleted' ) );
 		if ( !$status->isOK() ) {

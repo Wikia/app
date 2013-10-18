@@ -1,0 +1,49 @@
+@import "skins/oasis/css/core/layout.scss";
+@import "skins/oasis/css/core/color.scss";
+@import "skins/oasis/css/mixins/transition.scss";
+@import "skins/oasis/css/mixins/box-shadow.scss";
+@import "skins/oasis/css/mixins/blackout.scss";
+
+$drawer-width: 300px;
+$drawer-shadow-size: 30px;
+
+.drawer,
+.drawerBackground {
+	@include transition-shorthand(all 0.2s ease-in-out);
+	bottom: 0;
+	opacity: 0;
+	position: fixed;
+	top: $wikiaglobal-nav-height;
+}
+
+.drawer {
+	@include box-shadow(0px, 0px, $drawer-shadow-size, $color-page-shadow);
+	background: $color-page;
+	color: $color-text;
+	padding: 0;
+	width: $drawer-width;
+
+	&.open {
+		opacity: 1;
+		z-index: $zTop;
+	}
+
+	&.left {
+		left: -$drawer-width - $drawer-shadow-size;
+
+		&.open {
+			left: 0;
+		}
+	}
+	&.right {
+		right: -$drawer-width - $drawer-shadow-size;
+
+		&.open {
+			right: 0;
+		}
+	}
+}
+
+.drawerBackground {
+	@include blackout();
+}

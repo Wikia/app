@@ -161,6 +161,14 @@ $messages['ja'] = array(
 	'signup' => 'Signup',
 );
 
+/** Colognian (Ripoarisch)
+ * @author Purodha
+ */
+$messages['ksh'] = array(
+	'signup-desc' => 'Deiht dä zohsäzlejje Name [[{{#Special:Signup}}]] för [[{{#Special:UserLogin}}/signup]] en et Wiki.',
+	'signup' => 'Aanmälde',
+);
+
 /** Macedonian (македонски)
  */
 $messages['mk'] = array(
@@ -188,6 +196,14 @@ $messages['nb'] = array(
 $messages['nl'] = array(
 	'signup-desc' => 'Voegt de alias [[{{#Special:Signup}}]] toe voor [[{{#Special:UserLogin}}/signup]]',
 	'signup' => 'Registreren',
+);
+
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'signup-desc' => 'Apond l’aliàs [[{{#Special:Signup}}]] per [[{{#Special:UserLogin}}/signup]]',
+	'signup' => 'Connexion',
 );
 
 /** Oriya (ଓଡ଼ିଆ)
@@ -260,11 +276,12 @@ $messages['shi'] = array(
 );
 
 /** Swedish (svenska)
+ * @author Jopparn
  * @author Tobulos1
  */
 $messages['sv'] = array(
 	'signup-desc' => 'Lägger till alias [[{{#Special:Signup}}]] för [[{{#Special:UserLogin}}/signup]]',
-	'signup' => 'Registrera',
+	'signup' => 'Skapa ett konto',
 );
 
 /** Tamil (தமிழ்)

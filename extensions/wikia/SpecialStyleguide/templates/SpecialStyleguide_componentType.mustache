@@ -1,0 +1,32 @@
+<h4>{{typeName}} <a href="#" class="toggleParameters">{{showParametersLink}}</a></h4>
+<table class="wikitable styleguide-component-params hidden">
+	<thead>
+		<tr>
+			<th>{{paramCellHeadline}}</th>
+			<th>{{templateVarCellHeadline}}</th>
+			<th>{{typeCellHeadline}}</th>
+			<th>{{valueObjectCellHeadline}}</th>
+			<th>{{descCellHeadline}}</th>
+		</tr>
+	</thead>
+	<tbody>
+		{{#typeParams}}
+			<tr>
+				<td>{{templateVar}}</td>
+				<td>{{templateVar}}</td>
+				<td>{{type}}</td>
+				<td>
+					<table class="wikitable">
+						{{#object}}
+							{{>SpecialStyleguide_componentParamObject}}
+						{{/object}}
+						{{#value}}
+							{{>SpecialStyleguide_componentParamValue}}
+						{{/value}}
+					</table>
+				</td>
+				<td>{{description}}</td>
+			</tr>
+		{{/typeParams}}
+	</tbody>
+</table>

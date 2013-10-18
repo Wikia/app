@@ -32,6 +32,7 @@ $messages['en'] = array(
 );
 
 /** Message documentation (Message documentation)
+ * @author Shirayuki
  */
 $messages['qqq'] = array(
 	'places-in-category' => '$1 is a category name',
@@ -40,6 +41,7 @@ $messages['qqq'] = array(
 	'places-editor-search' => 'Label for submit button that handles a search string. {{Identical|Search}}',
 	'places-editor-title-create-new' => 'Title of places editor modal when creating a new geotag',
 	'places-editor-title-edit' => 'Title of places editor modal when editing an existing geotag',
+	'places-geolocation-modal-error-title' => '{{Identical|Error}}',
 );
 
 /** Arabic (العربية)
@@ -71,13 +73,16 @@ $messages['ar'] = array(
  * @author Y-M D
  */
 $messages['br'] = array(
+	'places' => 'Lakaat war ar wiki-mañ',
 	'places-in-category' => "Lec'hioù er rummad $1",
 	'places-on-map' => '{{PLURAL:$1|$1 plas|$1 plas}} war ar gartenn-mañ', # Fuzzy
 	'places-editor-search' => 'Klask',
+	'places-editor-show-my-location' => "Ma c'has da'm lec'h",
 	'places-editor-geoposition' => "Geolec'hiadur a-vremañ :",
 	'places-geolocation-button-label' => "Ouzhpennañ ul lec'hiadur",
 	'places-geolocation-modal-add-title' => "Ouzhpennañ ul lec'hiadur",
 	'places-geolocation-modal-error-title' => 'Fazi',
+	'places-geolocation-modal-error' => "Ur fazi zo bet pa oad o klask gouzout pelec'h emaoc'h : <br />$1",
 	'places-error-no-article' => "Ret eo deoc'h diferiñ ur bajenn",
 );
 
@@ -530,8 +535,8 @@ $messages['pms'] = array(
  */
 $messages['ps'] = array(
 	'places-editor-search' => 'پلټل',
-	'places-geolocation-button-label' => 'ځای ورګډول',
-	'places-geolocation-modal-add-title' => 'ځای ورګډول',
+	'places-geolocation-button-label' => 'ځای ورگډول',
+	'places-geolocation-modal-add-title' => 'ځای ورگډول',
 	'places-geolocation-modal-error-title' => 'تېروتنه',
 );
 

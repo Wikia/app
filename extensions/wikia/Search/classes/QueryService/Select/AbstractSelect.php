@@ -422,8 +422,9 @@ abstract class AbstractSelect
 			strtolower( $query ) 
 		);
 		$service = $this->getService();
-		$wikiMatch = $service->getWikiMatchByHost( $domain );
-		if (! empty( $wikiMatch ) && ( $wikiMatch->getId() !== $service->getWikiId() ) ) {
+		$wikiMatch = $service->getWikiMatchByHost( $domain, $config->getLanguageCode() );
+		if (! empty( $wikiMatch ) && ( $wikiMatch->getId() !== $service->getWikiId() ) &&
+			( !( $config->getCommercialUse() ) ||  (new \LicensedWikisService)->isCommercialUseAllowedById($wikiMatch->getId()) ) ) {
 			$result = $wikiMatch->getResult();
 			if ( $result['articles_i'] >= 50 ) {
 				$config->setWikiMatch( $wikiMatch );

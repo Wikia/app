@@ -658,6 +658,13 @@ $messages['ja'] = array(
 	'tog-disablecategoryselect-v2' => 'カテゴリモジュールを無効にする（ビジュアルモードでの編集を無効にしている場合にのみ適用）',
 );
 
+/** Georgian (ქართული)
+ * @author DevaMK
+ */
+$messages['ka'] = array(
+	'categoryselect-button-add' => 'დაამატე კატეგორია',
+);
+
 /** Kannada (ಕನ್ನಡ)
  * @author Nayvik
  */
@@ -682,7 +689,7 @@ $messages['ko'] = array(
 	'categoryselect-error-article-doesnt-exist' => '[id=$1] 문서가 존재하지 않습니다.',
 	'categoryselect-error-category-name-length' => '분류 이름에 대한 최대 길이에 도달했습니다.',
 	'categoryselect-error-db-locked' => '데이터베이스가 잠겨 있습니다.',
-	'categoryselect-error-duplicate-category-name' => '"$1" 분류는 이미 존재합니다.',
+	'categoryselect-error-duplicate-category-name' => '"$1" 분류가 이미 존재합니다.',
 	'categoryselect-error-edit-abort' => '수정하려고 한 것이 확장 기능 훅에 의해 중지되었습니다.',
 	'categoryselect-error-empty-category-name' => '분류 이름을 제공하세요.',
 	'categoryselect-error-user-rights' => '사용자는 이 작업을 수행할 권한이 없습니다.',
@@ -943,12 +950,12 @@ $messages['pms'] = array(
  */
 $messages['ps'] = array(
 	'categoryselect-button-add' => 'وېشنيزه ورګډول',
-	'categoryselect-button-cancel' => 'ناګارل',
+	'categoryselect-button-cancel' => 'ناگارل',
 	'categoryselect-button-save' => 'خوندي کول',
-	'categoryselect-category-add' => 'وېشنيزه ورګډول...',
+	'categoryselect-category-add' => 'وېشنيزه ورگډول...',
 	'categoryselect-category-edit' => 'وېشنيزه سمول',
 	'categoryselect-category-remove' => 'وېشنيزه غورځول',
-	'categoryselect-edit-summary' => 'وېشنيزې ورګډول',
+	'categoryselect-edit-summary' => 'وېشنيزې ورگډول',
 	'categoryselect-error-article-doesnt-exist' => 'د [id=$1] ليکنه نشته.',
 	'categoryselect-error-db-locked' => 'توکبنسټ تړل شوی.',
 	'categoryselect-error-duplicate-category-name' => 'د "$1" وېشنيزه له پخوا څخه شته.',

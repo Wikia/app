@@ -1,7 +1,9 @@
 <?php
 
 /**
- * File Page
+ * TouchStorm module
+ *
+ * TouchStorm is a 3rd party video recommendation module that uses our video library
  *
  * @author Garth Webb, Ken Kouot, Liz Lee, Saipetch Kongkatong
  *
@@ -30,5 +32,4 @@ $wgAutoloadClasses[ 'TouchStormController' ] = $dir . 'TouchStormController.clas
 $wgExtensionMessagesFiles['TouchStorm'] = $dir . 'TouchStorm.i18n.php' ;
 
 // hooks
-$wgHooks['BeforePageDisplay'][] = 'TouchStormHooks::onBeforePageDisplay';
 $wgHooks['GetRailModuleList'][] = 'TouchStormHooks::onGetRailModuleList';

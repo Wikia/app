@@ -100,6 +100,7 @@ $messages['br'] = array(
 );
 
 /** Catalan (català)
+ * @author Alvaro Vidal-Abarca
  * @author Roxas Nobody 15
  */
 $messages['ca'] = array(
@@ -122,6 +123,7 @@ $messages['ca'] = array(
 	'feed-title-hot-content' => 'Contenido Novedós - $1',
 	'feed-title-blogcomments' => 'Comentaris - $1',
 	'feed-title-recentchanges' => 'Canvis Recents',
+	'partner-feed-error-no-blogpost-found' => "<b>Error:</b> L'entrada de bloc $1 no existeix.",
 );
 
 /** Chechen (нохчийн)
@@ -205,6 +207,7 @@ $messages['es'] = array(
 	'feed-title-hot-content' => 'Contenido Novedoso - $1',
 	'feed-title-blogcomments' => 'Comentarios de $1',
 	'feed-title-recentchanges' => 'Cambios recientes',
+	'partner-feed-error-no-blogpost-found' => '<b>Error:</b> La entrada de blog $1 no existe.',
 );
 
 /** Persian (فارسی)
@@ -231,6 +234,7 @@ $messages['fi'] = array(
 );
 
 /** French (français)
+ * @author Jean-Frédéric
  * @author Peter17
  * @author Verdy p
  * @author Wyz
@@ -255,6 +259,7 @@ $messages['fr'] = array(
 	'feed-title-hot-content' => 'Contenu à l’actualité — $1',
 	'feed-title-blogcomments' => 'Commentaires à $1',
 	'feed-title-recentchanges' => 'Modifications récentes',
+	'partner-feed-error-no-blogpost-found' => '<b>Erreur :</b> le billet de blog $1 n’existe pas.',
 );
 
 /** Galician (galego)
@@ -281,6 +286,7 @@ $messages['gl'] = array(
 	'feed-title-hot-content' => 'Contido popular - $1',
 	'feed-title-blogcomments' => 'Comentario sobre $1',
 	'feed-title-recentchanges' => 'Cambios recentes',
+	'partner-feed-error-no-blogpost-found' => '<b>Erro:</b> A entrada de blogue "$1" non existe.',
 );
 
 /** Hungarian (magyar)
@@ -379,6 +385,7 @@ $messages['mk'] = array(
 	'feed-title-hot-content' => 'Актуелна содржина - $1',
 	'feed-title-blogcomments' => 'Коментари на $1',
 	'feed-title-recentchanges' => 'Скорешни промени',
+	'partner-feed-error-no-blogpost-found' => '<b>Грешка:</b> Блоговскиот запис $1 не постои.',
 );
 
 /** Malayalam (മലയാളം)
@@ -413,6 +420,7 @@ $messages['ms'] = array(
 	'feed-title-hot-content' => 'Kandungan hangat - $1',
 	'feed-title-blogcomments' => 'Ulasan pada $1',
 	'feed-title-recentchanges' => 'Perubahan terkini',
+	'partner-feed-error-no-blogpost-found' => '<b>Ralat:</b> Catatan blog $1 tidak wujud.',
 );
 
 /** Mazanderani (مازِرونی)
@@ -472,6 +480,7 @@ $messages['nl'] = array(
 	'feed-title-hot-content' => 'Populaire inhoud - $1',
 	'feed-title-blogcomments' => 'Opmerkingen bij $1',
 	'feed-title-recentchanges' => 'Recente wijzigingen',
+	'partner-feed-error-no-blogpost-found' => '<b>Fout:</b> Blogbericht $1 bestaat niet.',
 );
 
 /** Polish (polski)
@@ -603,6 +612,7 @@ $messages['roa-tara'] = array(
  * @author DCamer
  * @author Eleferen
  * @author Kuzura
+ * @author Okras
  */
 $messages['ru'] = array(
 	'partner-feed-achievements-leaderboard' => 'Лидеры по наградам на вики',
@@ -624,6 +634,7 @@ $messages['ru'] = array(
 	'feed-title-hot-content' => 'Топ контент - $1',
 	'feed-title-blogcomments' => 'Комментарии к $1',
 	'feed-title-recentchanges' => 'Свежие правки',
+	'partner-feed-error-no-blogpost-found' => '<b>Ошибка:</b> Сообщение $1 в блоге не существует.',
 );
 
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)
@@ -659,6 +670,7 @@ $messages['sv'] = array(
 	'feed-title-hot-content' => 'Hett innehåll - $1',
 	'feed-title-blogcomments' => 'Kommentarer till $1',
 	'feed-title-recentchanges' => 'Senaste ändringar',
+	'partner-feed-error-no-blogpost-found' => '<b>Fel:</b> Blogginlägget $1 finns inte.',
 );
 
 /** Tamil (தமிழ்)

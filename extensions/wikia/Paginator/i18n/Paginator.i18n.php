@@ -55,6 +55,13 @@ $messages['ca'] = array(
 	'paginator-back' => 'Enrere',
 );
 
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'paginator-next' => 'Кхин дӀа',
+);
+
 /** Czech (česky)
  * @author Dontlietome7
  */
@@ -208,6 +215,14 @@ $messages['ne'] = array(
 $messages['nl'] = array(
 	'paginator-next' => 'Volgende',
 	'paginator-back' => 'Vorige',
+);
+
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'paginator-next' => 'Seguent',
+	'paginator-back' => 'Precedent',
 );
 
 /** Pälzisch (Pälzisch)

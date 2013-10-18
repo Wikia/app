@@ -4,7 +4,7 @@
 class WallNotificationsEveryone extends WallNotifications {
 	const queueTimeout = 30;
 	public function __construct() {
-		$this->app = F::App();
+		$this->app = F::app();
 		$this->cityId = $this->app->wg->CityId;
 	}
 
@@ -92,7 +92,7 @@ class WallNotificationsEveryone extends WallNotifications {
 		wfProfileIn(__METHOD__);
 		$cacheKey = $this->getGlobalCacheBusterKey();
 		$val = time();
-		$this->app->getGlobal('wgMemc')->set($cacheKey, $val);
+		$this->app->wg->memc->set($cacheKey, $val);
 		wfProfileOut(__METHOD__);
 		return $val;
 	}
@@ -100,7 +100,7 @@ class WallNotificationsEveryone extends WallNotifications {
 	public function getGlobalCacheBuster() {
 		wfProfileIn(__METHOD__);
 		$cacheKey = $this->getGlobalCacheBusterKey();
-		$val = $this->app->getGlobal('wgMemc')->get($cacheKey);
+		$val = $this->app->wg->memc->get($cacheKey);
 		if (empty($val)) {
 			wfProfileOut(__METHOD__);
 			return $this->setGlobalCacheBuster();
@@ -114,7 +114,7 @@ class WallNotificationsEveryone extends WallNotifications {
 		wfProfileIn(__METHOD__);
 
 		$cacheKey = $this->getEntityProcessedCacheKey($userId, $entityKey);
-		$this->app->getGlobal('wgMemc')->set($cacheKey, true);
+		$this->app->wg->memc->set($cacheKey, true);
 
 		$this->getDB(true)->insert('wall_notification_queue_processed', array(
 			'user_id' => $userId,
@@ -127,7 +127,7 @@ class WallNotificationsEveryone extends WallNotifications {
 	public function getEntityProcessed($userId, $entityKey) {
 		wfProfileIn(__METHOD__);
 		$cacheKey = $this->getEntityProcessedCacheKey($userId, $entityKey);
-		$val = $this->app->getGlobal('wgMemc')->get($cacheKey);
+		$val = $this->app->wg->memc->get($cacheKey);
 
 		if ($val == true) {
 			wfProfileOut(__METHOD__);
@@ -157,7 +157,7 @@ class WallNotificationsEveryone extends WallNotifications {
 		wfProfileIn(__METHOD__);
 
 		$cacheKey = $this->getQueueProcessedCacheKey($userId);
-		$this->app->getGlobal('wgMemc')->set($cacheKey, true);
+		$this->app->wg->memc->set($cacheKey, true);
 
 		wfProfileOut(__METHOD__);
 	}
@@ -166,7 +166,7 @@ class WallNotificationsEveryone extends WallNotifications {
 		wfProfileIn(__METHOD__);
 
 		$cacheKey = $this->getQueueProcessedCacheKey($userId);
-		$out = $this->app->getGlobal('wgMemc')->get($cacheKey);
+		$out = $this->app->wg->memc->get($cacheKey);
 
 		if ($out == true) {
 			wfProfileOut(__METHOD__);

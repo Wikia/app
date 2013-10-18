@@ -110,6 +110,14 @@ $messages['ca'] = array(
 	'timeago-second-from-now' => "un minut des d'ara",
 );
 
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'timeago-month' => '$1 {{PLURAL:$1|бутт}} хьалха',
+	'timeago-month-from-now' => '$1 {{PLURAL:$1|бутт}} хьалха',
+);
+
 /** Czech (česky)
  * @author Darth Daron
  * @author Dontlietome7
@@ -396,6 +404,24 @@ $messages['nl'] = array(
 	'timeago-second-from-now' => 'over een minuut',
 );
 
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'timeagomessaging-desc' => 'Supòrt del i18n pel plugin jquery.timeago.js',
+	'timeago-year' => 'i a {{PLURAL:$1|un an|$1 ans}}',
+	'timeago-month' => 'i a {{PLURAL:$1|un mes|$1 meses}}',
+	'timeago-day' => '{{PLURAL:$1|la velha|i a $1 jorns}}',
+	'timeago-hour' => 'i a {{PLURAL:$1|una ora|$1 oras}}',
+	'timeago-minute' => 'i a {{PLURAL:$1|una minuta|$1 minutas}}',
+	'timeago-second' => 'i a una minuta',
+	'timeago-day-from-now' => "{{PLURAL:$1|un jorn|$1 jorns}} a partir d'ara",
+	'timeago-hour-from-now' => "{{PLURAL:$1|una ora|$1 oras}} a partir d'ara",
+	'timeago-minute-from-now' => "{{PLURAL:$1|una minuta|$1 minutas}} a partir d'ara",
+	'timeago-month-from-now' => "{{PLURAL:$1|un mes|$1 meses}} a partir d'ara",
+	'timeago-second-from-now' => "una minuta a partir d'ara",
+);
+
 /** Polish (polski)
  * @author Sovq
  */
@@ -467,13 +493,21 @@ $messages['pt'] = array(
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
+ * @author 555
  */
 $messages['pt-br'] = array(
 	'timeagomessaging-desc' => 'Fornece a internacionalização do plugin jquery.timeago.js',
-	'timeago-day' => 'há {{PLURAL:$1|um dia|$1 dias}}',
-	'timeago-hour' => 'há {{PLURAL:$1|uma hora|$1 horas}}',
-	'timeago-minute' => 'há {{PLURAL:$1|um minuto|$1 minutos}}',
-	'timeago-second' => 'há um minuto',
+	'timeago-year' => '{{PLURAL:$1|um ano|$1 anos}} atrás',
+	'timeago-month' => '{{PLURAL:$1|um mês|$1 meses}} atrás',
+	'timeago-day' => '{{PLURAL:$1|um dia|$1 dias}} atrás',
+	'timeago-hour' => '{{PLURAL:$1|uma hora|$1 horas}} atrás',
+	'timeago-minute' => '{{PLURAL:$1|um minuto|$1 minutos}} atrás',
+	'timeago-second' => 'um minuto atrás',
+	'timeago-day-from-now' => 'daqui a {{PLURAL:$1|um dia|$1 dias}}',
+	'timeago-hour-from-now' => 'daqui a {{PLURAL:$1|uma hora|$1 horas}}',
+	'timeago-minute-from-now' => 'daqui a {{PLURAL:$1|um minuto|$1 minutos}}',
+	'timeago-month-from-now' => 'daqui a {{PLURAL:$1|um mês|$1 meses}}',
+	'timeago-second-from-now' => 'daqui a um minuto',
 );
 
 /** Romanian (română)

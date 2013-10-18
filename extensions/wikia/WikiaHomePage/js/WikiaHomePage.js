@@ -1,7 +1,47 @@
-var WikiaHomePageRemix = function (params) {
-	this.NUMBEROFSLOTS = 17;
-	this.PRELOADTIMEOUT = 200;
-	this.WIKISETSTACKOFFSET = 3;
+// From https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/keys
+if (!Object.keys) {
+	Object.keys = (function () {
+		'use strict';
+		var hasOwnProperty = Object.prototype.hasOwnProperty,
+			hasDontEnumBug = !({toString: null}).propertyIsEnumerable('toString'),
+			dontEnums = [
+				'toString',
+				'toLocaleString',
+				'valueOf',
+				'hasOwnProperty',
+				'isPrototypeOf',
+				'propertyIsEnumerable',
+				'constructor'
+			],
+			dontEnumsLength = dontEnums.length;
+
+		return function (obj) {
+			if (typeof obj !== 'object' && (typeof obj !== 'function' || obj === null)) {
+				throw new TypeError('Object.keys called on non-object');
+			}
+
+			var result = [], prop, i;
+
+			for (prop in obj) {
+				if (hasOwnProperty.call(obj, prop)) {
+					result.push(prop);
+				}
+			}
+
+			if (hasDontEnumBug) {
+				for (i = 0; i < dontEnumsLength; i++) {
+					if (hasOwnProperty.call(obj, dontEnums[i])) {
+						result.push(dontEnums[i]);
+					}
+				}
+			}
+			return result;
+		};
+	}());
+}
+
+var WikiaHomePageRemix = function () {
+	this.WIKISETSTACKOFFSET = 2;
 	this.NUMBEROFBATCHESTODOWNLOAD = 5;
 
 	this.COLLECTIONS_LS_KEY = 'WHP_collections';
@@ -314,12 +354,14 @@ WikiaHomePageRemix.prototype = {
 		}
 	},
 	preload: function () {
-		var allWikisInBatch = this.wikiSetStack[this.wikiSetStackIndex].mediumslots;
-		allWikisInBatch = allWikisInBatch.concat(this.wikiSetStack[this.wikiSetStackIndex].smallslots);
-		allWikisInBatch = allWikisInBatch.concat(this.wikiSetStack[this.wikiSetStackIndex].bigslots);
-		for (var i in allWikisInBatch) {
-			var image = new Image();
-			image.src = allWikisInBatch[i].image;
+		if (typeof this.wikiSetStack[this.wikiSetStackIndex] != 'undefined') {
+			var allWikisInBatch = this.wikiSetStack[this.wikiSetStackIndex].mediumslots;
+			allWikisInBatch = allWikisInBatch.concat(this.wikiSetStack[this.wikiSetStackIndex].smallslots);
+			allWikisInBatch = allWikisInBatch.concat(this.wikiSetStack[this.wikiSetStackIndex].bigslots);
+			for (var i in allWikisInBatch) {
+				var image = new Image();
+				image.src = allWikisInBatch[i].image;
+			}
 		}
 	},
 	updateVisualisation: function () {
@@ -430,7 +472,9 @@ WikiaHomePageRemix.prototype = {
 		this.remixCount = 0;
 		this.shownCollections = {};
 		for (collectionId in this.collectionsWikisStack) {
-			this.shownCollections[collectionId] = false;
+			if (this.collectionsWikisStack.hasOwnProperty(collectionId)) {
+				this.shownCollections[collectionId] = false;
+			}
 		}
 
 		var lsData = $.storage.get(this.COLLECTIONS_LS_KEY);
@@ -493,7 +537,7 @@ WikiaHomePageRemix.prototype = {
 		var out;
 
 		for (collectionId in this.shownCollections) {
-			if (!this.shownCollections[collectionId]) {
+			if (this.shownCollections.hasOwnProperty(collectionId) && !this.shownCollections[collectionId]) {
 				nextCollectionId = collectionId;
 				break;
 			}

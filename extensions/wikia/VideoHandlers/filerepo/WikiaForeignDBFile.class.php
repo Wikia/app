@@ -20,6 +20,8 @@ class WikiaForeignDBFile extends ForeignDBFile {
 	 * Create a WikiaForeignDBFile from a title
 	 * Do not call this except from inside a repo class.
 	 *
+	 * @param object $row A result row object
+	 * @param string $repo The repository name
 	 * @return WikiaForeignDBFile
 	 */
 	static function newFromRow( $row, $repo ) {

@@ -93,6 +93,17 @@ $messages['br'] = array(
 	'unsubscribe-working-done' => 'Graet.',
 );
 
+/** Catalan (català)
+ * @author Light of Cosmos
+ */
+$messages['ca'] = array(
+	'unsubscribe-nousers' => "No s'han trobat usuaris amb aquesta adreça electrònica.",
+	'unsubscribe-noconfusers' => "No s'han trobat usuaris confirmats amb aquesta adreça electrònica.",
+	'unsubscribe-confirm-legend' => 'Confirmar',
+	'unsubscribe-confirm-button' => "Sí, n'estic segur.",
+	'unsubscribe-working-done' => 'Complet.',
+);
+
 /** Czech (česky)
  * @author Dontlietome7
  */
@@ -448,6 +459,27 @@ $messages['nl'] = array(
  */
 $messages['nl-informal'] = array(
 	'unsubscribe-badaccess' => 'Deze pagina kan niet direct benaderd worden. Volg de koppeling in je e-mail.',
+);
+
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'unsubscribe' => 'Se desabonar',
+	'unsubscribe-badaccess' => 'O planhèm, aquesta pagina pòt pas èsser utilizada dirèctament. Seguissètz lo ligam que se tròba dins vòstre corrièr electronic.',
+	'unsubscribe-badtoken' => 'O planhèm, i a agut un problèma amb lo geton de seguretat.',
+	'unsubscribe-bademail' => 'O planhèm, i a agut un problèma amb lo corrièr electronic.',
+	'unsubscribe-badtime' => 'O planhèm, lo ligam a expirat. Utilizatz un ligam que data de mens de 7 jorns.',
+	'unsubscribe-nousers' => "Cap d'utilizaire pas trobat a aquela adreça de messatjariá.",
+	'unsubscribe-noconfusers' => "Cap d'utilizaire confirmat pas trobat a aquela adreça de messatjariá.",
+	'unsubscribe-confirm-legend' => 'Confirmar',
+	'unsubscribe-confirm-text' => 'Desabonar totes los comptes amb <code>$1</code> ?',
+	'unsubscribe-confirm-button' => 'Òc, ne soi segur(a).',
+	'unsubscribe-working' => 'Desabonament de $1 {{PLURAL:$1|compte|comptes}} per $2',
+	'unsubscribe-working-problem' => 'problèma al cargament de las informacions de l’utilizaire : $1',
+	'unsubscribe-working-done' => 'Acabat.',
+	'unsubscribe-preferences-toggle' => 'Se desabonar de totes los corrièrs electronics de Wikia (desmarcatz aquò per accedir a las opcions çaijós)',
+	'unsubscribe-preferences-notice' => "Los corrièrs electronics son estats desactivats per vòstre compte. Anar sus l’onglet de perfil d'utilizaire per los reactivar.",
 );
 
 /** Polish (polski)

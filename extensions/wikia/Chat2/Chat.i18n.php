@@ -460,6 +460,7 @@ $messages['br'] = array(
 	'chat-ban-modal-button-ok' => 'Forbannañ an implijer-mañ',
 	'chat-ban-modal-button-cancel' => 'Nullañ',
 	'chat-ban-modal-change-ban-label' => 'Kemmañ e',
+	'chat-ban-modal-end-ban' => 'Lemel ar forbanerezh',
 	'chat-log-reason-banchange' => "N'eus bet roet abeg ebet",
 	'chat-log-reason-banremove' => "N'eus bet roet abeg ebet",
 	'chat-ban-cant-ban-moderator' => "N'hallit ket skarzhañ/stankañ ur merour all eus ar flap.",
@@ -1569,7 +1570,9 @@ $messages['id'] = array(
 	'chat-user-menu-talk-page' => 'Halaman Pembicaraan',
 	'group-bannedfromchat' => 'Disekat dari chat',
 	'chat-ban-option-list' => '2 jam:2 jam, 1 hari:1 hari, 3 hari:3 hari, 2 minggu:2 minggu, 1 bulan:1 bulan, 3 bulan:3 bulan, 6 bulan:6 bulan, 1 tahun:1 tahun, tak terbatas:tak terbatas',
+	'chat-chatconnect-log' => 'Log koneksi chat',
 	'chat-contributions-ban-notice' => '{{GENDER:$1|Pengguna ini}} saat ini disekat dari chat. Entri log sekat chat terakhir disediakan di bawah ini untuk referensi:',
+	'chat-checkuser-join-action' => 'Bergabung dengan Chat',
 );
 
 /** Italian (italiano)
@@ -1790,7 +1793,7 @@ $messages['ko'] = array(
 	'chat-user-menu-message-wall' => '메시지 담벼락',
 );
 
-/** Kirghiz (Кыргызча)
+/** Kyrgyz (Кыргызча)
  * @author Growingup
  */
 $messages['ky'] = array(
@@ -1807,7 +1810,11 @@ $messages['ky'] = array(
  */
 $messages['lb'] = array(
 	'chat' => 'Chat',
+	'chat-desc' => '[[Special:Chat|Live chat]]',
+	'chat-no-login' => 'Dir musst ageloggt si fir ze chatten.',
+	'chat-no-login-text' => 'Loggt Iech w.e.g. a fir ze chatten.',
 	'chat-default-topic' => 'Wëllkomm am $1-Chat',
+	'chat-welcome-message' => 'Wëllkomm am $1-Chat',
 	'chat-private-messages' => 'Privat Messagen',
 	'chat-user-blocked' => '$1 huet $2 gespaart.',
 	'chat-user-allow' => '$1 huet $2 erlaabt.',
@@ -1826,6 +1833,8 @@ $messages['lb'] = array(
 	'chat-user-menu-private' => 'Private Message',
 	'chat-user-menu-private-block' => 'Privat Message spären',
 	'chat-user-menu-private-allow' => 'Privat Messagen erlaben',
+	'chat-ban-option-list' => '2 Stonnen:2 hours,1 Dag:1 day,3 Deeg:3 days,1 Woch:1 week,2 Wochen:2 weeks,1 Mount:1 month,3 Méint:3 months,6 Méint:6 months,1 Joer:1 year,onbegrenzt:infinite',
+	'chat-status-away' => 'Net do',
 );
 
 /** Lithuanian (lietuvių)
@@ -2482,7 +2491,7 @@ $messages['ps'] = array(
 	'chat-no-login-text' => 'د بانډار لپاره غونډال ته ورننوځۍ.',
 	'chat-default-topic' => 'د $1 بانډار ته ښه راغلۍ',
 	'chat-welcome-message' => 'د $1 بانډار ته ښه راغلۍ',
-	'chat-user-joined' => '$1 بانډار کې ورګډ شو.',
+	'chat-user-joined' => '$1 بانډار کې ورگډ شو.',
 	'chat-private-messages' => 'شخصي پيغامونه',
 	'chat-user-parted' => '$1 له بانډاره وواته.',
 	'chat-user-blocked' => '$1 په $2 بنديز ولګاوه.',
@@ -2491,9 +2500,9 @@ $messages['ps'] = array(
 	'chat-ban-modal-label-reason' => 'سبب',
 	'chat-log-reason-undo' => 'ناکړل',
 	'chat-ban-undolink' => 'ناکړ',
-	'chat-ban-modal-button-ok' => 'پر دې کارن بنديز لګول',
+	'chat-ban-modal-button-ok' => 'پر دې کارن بنديز لگول',
 	'chat-ban-modal-button-change-ban' => 'بنديز بدلول',
-	'chat-ban-modal-button-cancel' => 'ناګارل',
+	'chat-ban-modal-button-cancel' => 'ناگارل',
 	'chat-ban-modal-change-ban-heading' => 'د دې کارن د بانډار بنديز بدلول',
 	'chat-log-reason-banchange' => 'هېڅ سبب نه دی ورکړ شوی',
 	'chat-log-reason-banremove' => 'هېڅ سبب نه دی ورکړ شوی',
@@ -2507,12 +2516,12 @@ $messages['ps'] = array(
 	'chat-user-menu-contribs' => 'ونډې',
 	'chat-user-menu-private' => 'شخصي پيغام',
 	'chat-user-menu-kick' => 'شړل',
-	'chat-user-menu-ban' => 'بنديز لګول',
+	'chat-user-menu-ban' => 'بنديز لگول',
 	'chat-user-menu-private-block' => 'شخصي پيغامونه بندول',
 	'chat-user-menu-private-allow' => 'شخصي پيغامونه پرېښودل',
 	'chat-user-menu-private-close' => 'شخصي کوټه بندول',
 	'chat-private-headline' => 'د $1 سره شخصي بانډار',
-	'chat-checkuser-join-action' => 'بانډار کې ورګډ شو',
+	'chat-checkuser-join-action' => 'بانډار کې ورگډ شو',
 	'chat-status-away' => 'ليرې دی',
 );
 
@@ -2604,7 +2613,7 @@ $messages['pt'] = array(
 	'chat-chatbanadd-log-entry' => 'banido $1 do chat por $2, terminando em $3',
 	'chat-chatbanremove-log-entry' => 'desbanido $1 do chat',
 	'chat-chatbanchange-log-entry' => 'mudou o ban de $1 por $2, terminando em $3',
-	'chat-contributions-ban-notice' => 'Este utilizador está atualmente banido do chat. A última entrada no registo do banimento do chat é providenciada abaixo para referência:', # Fuzzy
+	'chat-contributions-ban-notice' => '{{GENDER:$1|Este utilizador|Esta utilizadora}} está atualmente {{GENDER:$1|banido|banida}} do chat. A última entrada no registo do banimento do chat é providenciada abaixo para referência:',
 	'chat-browser-is-notsupported' => 'O seu navegador não é suportado. Para uma melhor experiência, use um <a href="http://community.wikia.com/wiki/Help:Supported_browsers">navegador mais recente</a>.',
 	'chat-checkuser-join-action' => 'Entrou no chat',
 	'chat-status-away' => 'Ausente',
@@ -2756,6 +2765,7 @@ $messages['roa-tara'] = array(
 /** Russian (русский)
  * @author DCamer
  * @author Kuzura
+ * @author Okras
  */
 $messages['ru'] = array(
 	'chat' => 'Чат',
@@ -2839,7 +2849,7 @@ $messages['ru'] = array(
 	'chat-chatbanadd-log-entry' => '$1 забанен в чате на $2, оканчивается $3',
 	'chat-chatbanremove-log-entry' => '$1 разбанен в чате',
 	'chat-chatbanchange-log-entry' => 'изменены настройки бана для $1 на срок $2, заканчивается $3',
-	'chat-contributions-ban-notice' => '{{GENDER:$1|Этот участник}} в данный момент забанен в чате. Ниже приведена последняя запись из журнала банов в чате:',
+	'chat-contributions-ban-notice' => '{{GENDER:$1|Этот участник|Эта участница}} в данный момент {{GENDER:$1|забанен|забанена}} в чате. Ниже для справки приведена последняя запись из журнала банов в чате:',
 	'chat-browser-is-notsupported' => 'Ваш браузер не поддерживается. Используйте <a href="http://community.wikia.com/wiki/Help:Supported_browsers">другой браузер или другую версию браузера</a>.',
 	'chat-checkuser-join-action' => 'Присоединиться',
 	'chat-status-away' => 'Отсутствует',

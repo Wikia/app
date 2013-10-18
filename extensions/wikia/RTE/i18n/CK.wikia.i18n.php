@@ -549,6 +549,7 @@ $messages['br'] = array(
 	'rte-ck-mut-add' => 'Ouzhpennañ ur video (beta)',
 	'rte-ck-mut-mut' => 'Video (beta)',
 	'rte-ck-widescreen-toggle' => 'Gweredekaat/diweredekaat ar skramm leun',
+	'rte-ck-poll-confirmDelete' => "Ha sur oc'h e fell deoc'h tennañ ar sontadeg eus ar bajenn-mañ ?",
 	'rte-ck-poll-confirmDeleteTitle' => 'Lemel kuit ar sontadeg-mañ ?',
 	'rte-ck-spellchecker-moreSuggestions' => "Muioc'h a ginnigoù",
 	'rte-ck-pasteText-title' => 'Pegañ ho testenn',
@@ -2525,6 +2526,48 @@ $messages['nl-informal'] = array(
 	'rte-ck-poll-confirmDelete' => 'Weet je zeker dat je de peiling van deze pagina wilt verwijderen?',
 );
 
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'rte-ck-bucket-textAppearance' => 'Aparéncia del tèxte',
+	'rte-ck-bucket-insert' => 'Inserir',
+	'rte-ck-bucket-controls' => 'Contraròtles',
+	'rte-ck-commentEditor-title' => 'Editor de comentaris',
+	'rte-ck-errorPopupTitle' => 'Error !',
+	'rte-ck-hoverPreview-codedElement-intro' => 'Passatz en mòde font per modificar !',
+	'rte-ck-hoverPreview-codedElement-title' => 'Element encodat',
+	'rte-ck-hoverPreview-comment-intro' => 'Aquò pòt pas èsser vist que pendent la modificacion.',
+	'rte-ck-hoverPreview-comment-title' => 'Comentari',
+	'rte-ck-hoverPreview-confirmDelete' => "Sètz segur que volètz suprimir aqueste element d'aquesta pagina ?",
+	'rte-ck-hoverPreview-delete' => 'suprimir',
+	'rte-ck-hoverPreview-edit' => 'modificar',
+	'rte-ck-hoverPreview-media-notExisting' => 'Aqueste imatge o aqueste fichièr existís pas !',
+	'rte-ck-hoverPreview-template-intro' => "Aquò's un modèl.",
+	'rte-ck-hoverPreview-template-notExisting' => 'Aqueste modèl existís pas !',
+	'rte-ck-hoverPreview-video-notExisting' => 'Aquesta vidèo existís pas !',
+	'rte-ck-image-add' => 'Apondre un imatge',
+	'rte-ck-image-photo' => 'Fòto',
+	'rte-ck-image-confirmDelete' => "Sètz segur que volètz suprimir l'imatge d'aquesta pagina ?",
+	'rte-ck-image-confirmDeleteTitle' => 'Suprimir aqueste imatge ?',
+	'rte-ck-link-error-title' => 'Error',
+	'rte-ck-link-external-linkText' => 'Tèxte del ligam',
+	'rte-ck-link-external-tab' => 'Ligam extèrne',
+	'rte-ck-link-external-url' => 'URL',
+	'rte-ck-link-internal-linkText' => 'Tèxte del ligam',
+	'rte-ck-link-internal-pageName' => 'Nom de la pagina',
+	'rte-ck-link-internal-tab' => 'Ligam intèrne',
+	'rte-ck-media-delete' => 'suprimir',
+	'rte-ck-media-edit' => 'modificar',
+	'rte-ck-modeSwitch-toSource' => 'Font',
+	'rte-ck-modeSwitch-toWysiwyg' => 'Visual',
+	'rte-ck-modeSwitch-toSourceTooltip' => 'Passar en mòde font',
+	'rte-ck-modeSwitch-toWysiwygTooltip' => 'Passar en mòde visual',
+	'rte-ck-photoGallery-gallery' => 'Galariá',
+	'rte-ck-photoGallery-slideshow' => 'Diaporama',
+	'rte-ck-photoGallery-slider' => 'Diapositiva',
+);
+
 /** Deitsch (Deitsch)
  * @author Xqt
  */
@@ -2789,12 +2832,12 @@ $messages['pms'] = array(
 $messages['ps'] = array(
 	'rte-ck-bucket-insert' => 'ورټومبل',
 	'rte-ck-hoverPreview-comment-title' => 'تبصره',
-	'rte-ck-hoverPreview-delete' => 'ړنګول',
+	'rte-ck-hoverPreview-delete' => 'ړنگول',
 	'rte-ck-hoverPreview-edit' => 'سمول',
 	'rte-ck-hoverPreview-video-notExisting' => 'دا ويډيو نشته!',
-	'rte-ck-image-add' => 'يو انځور ورګډول',
+	'rte-ck-image-add' => 'يو انځور ورگډول',
 	'rte-ck-image-photo' => 'انځور',
-	'rte-ck-link-add' => 'تړنه ورګډول',
+	'rte-ck-link-add' => 'تړنه ورگډول',
 	'rte-ck-link-error-title' => 'تېروتنه',
 	'rte-ck-link-external-tab' => 'باندنۍ تړنه',
 	'rte-ck-link-internal-pageName' => 'د مخ نوم',
@@ -2804,19 +2847,19 @@ $messages['ps'] = array(
 	'rte-ck-media-edit' => 'بدلول',
 	'rte-ck-modeSwitch-toSource' => 'سرچينه',
 	'rte-ck-photoGallery-gallery' => 'انځورتون',
-	'rte-ck-photoGallery-addGallery' => 'يو انځورتون ورګډول',
+	'rte-ck-photoGallery-addGallery' => 'يو انځورتون ورگډول',
 	'rte-ck-photoGallery-confirmDeleteTitle' => 'دا انځورتون ليرې کوۍ؟',
 	'rte-ck-photoGallery-tooltip' => 'دا يو انځورتون دی.',
-	'rte-ck-signature-add' => 'خپل لاسليک ورګډول',
+	'rte-ck-signature-add' => 'خپل لاسليک ورگډول',
 	'rte-ck-signature-label' => 'لاسليک',
-	'rte-ck-table-toolbarTooltip' => 'لښتيال ورګډول',
+	'rte-ck-table-toolbarTooltip' => 'لښتيال ورگډول',
 	'rte-ck-templateDropDown-label' => 'کينډۍ',
 	'rte-ck-templateDropDown-title' => 'يوه کينډۍ ټاکل',
 	'rte-ck-templateEditor-dialog-insert' => 'ورټومبل',
 	'rte-ck-templateEditor-dialog-magicWords' => 'کوډګريز وييونه',
 	'rte-ck-templateEditor-editor-previewButton' => 'مخليدنه',
 	'rte-ck-templateEditor-editor-previewTitle' => 'مخليدنه',
-	'rte-ck-video-add' => 'يوه ويډيو ورګډول',
+	'rte-ck-video-add' => 'يوه ويډيو ورگډول',
 	'rte-ck-video-video' => 'ويډيو',
 	'rte-ck-mut-mut' => 'ويډيو (بيټا)',
 	'rte-ck-format-tag_p' => 'نورماله متن',
@@ -3889,6 +3932,7 @@ $messages['vi'] = array(
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Hydra
+ * @author Liuxinyu970226
  * @author Sam Wang
  */
 $messages['zh-hans'] = array(
@@ -3996,6 +4040,7 @@ $messages['zh-hans'] = array(
 	'rte-ck-poll-confirmDeleteTitle' => '删除此投票吗？',
 	'rte-ck-spellchecker-moreSuggestions' => '更多建议',
 	'rte-ck-pasteText-title' => '粘贴文本',
+	'rte-ck-clipboard-pasteMsg' => "基于安全原因，您不能在编辑器中直接复制粘贴。请通过键盘快捷键（Ctrl/Commond+V）粘贴至下面的方框中并点击'OK'。<br /><br />注意：您的文本将被格式化以防止复杂的维基文本无故消失。",
 	'rte-ck-format-tag_p' => '普通文本',
 	'rte-ck-format-tag_pre' => '代码（预先设好格式文本）',
 	'rte-ck-format-tag_h2' => '标题2',

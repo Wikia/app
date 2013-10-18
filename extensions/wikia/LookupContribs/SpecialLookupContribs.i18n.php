@@ -78,6 +78,7 @@ $messages['qqq'] = array(
 	'right-lookupcontribs' => '{{doc-right|lookupcontribs|ns=Wikia}}',
 	'lookupcontribsshowpages' => '',
 	'lookupcontribscontent' => '{{Identical|Content}}',
+	'lookupcontribsnormal' => '{{Identical|Recent}}',
 	'lookupcontribsall' => '{{Identical|All}}',
 	'action-lookupcontribs' => '{{doc-action|lookupcontribs}}',
 );
@@ -1393,7 +1394,7 @@ $messages['pms'] = array(
 $messages['ps'] = array(
 	'lookupcontribsselectuser' => 'کارن ټاکل:',
 	'lookupcontribsgo' => 'ورځه',
-	'lookupcontribsselectwikis' => 'ويکي ګانې ټاکل:',
+	'lookupcontribsselectwikis' => 'ويکي گانې ټاکل:',
 	'lookupcontribswiki' => 'ويکي',
 	'lookupcontribswikititle' => 'سرليک',
 	'lookupcontribswikioptions' => 'خوښنې',

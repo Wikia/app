@@ -405,6 +405,24 @@ Nu wordt er niets uitgevoerd.
 De rest van de pagina kan uitgevoerd worden zodat je eenvoudig kunt zien of een van de gebruikersnamen niet geladen kon worden.',
 );
 
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'batchuserrights' => 'Dreches d’utilizaires per lòts',
+	'batchuserrights-desc' => 'Permet d’apondre un o mantun utilizaire a un grop en una sola accion',
+	'batchuserrights-names' => "Noms d’utilizaires d'apondre a aqueste grop (un per linha) :",
+	'batchuserrights-intro' => "Aquesta pagina permet d’apondre un grop de mantun utilizaire a l'encòp.
+Per de rasons de seguretat, la lista dels gropes utilizables es definida dins la configuracion de l’extension e pòt pas èsser cambiada dempuèi l’interfàcia del wiki.
+Se volètz autorizar l’apondon per lòts per de gropes mai, demandatz lor apondon a un administrator del sistèma.",
+	'batchuserrights-single-progress-update' => '{{PLURAL:$1|grop apondut|gropes aponduts}} a <strong>$2</strong>.',
+	'batchuserrights-add-groups' => 'Apondon {{PLURAL:$1|d’un utilizaire|de $1 utilizaires}} {{PLURAL:$2|al grop seguent|als gropes seguents}} : <strong>$3</strong>.',
+	'batchuserrights-userload-error' => "Impossible de cargar l’utilizaire « '''$1''' ».",
+	'batchuserrights-no-groups' => "Avètz pas causit cap de grop.
+Cap d'accion serà pas efectuada.
+La rèsta de la pagina se cargarà normalament çò que vos permetrà de veire se certans noms d’utilizaires pòdon pas èsser cargats.",
+);
+
 /** Polish (polski)
  * @author BeginaFelicysym
  * @author Sovq
@@ -587,10 +605,13 @@ $messages['uk'] = array(
  * @author Anakmalaysia
  * @author Dimension
  * @author Hydra
+ * @author Hzy980512
  */
 $messages['zh-hans'] = array(
 	'batchuserrights' => '批处理的用户权限',
 	'batchuserrights-desc' => '允许在一次操作中将一个或多个用户添加到一个组',
 	'batchuserrights-names' => '添加至该组的用户（每行一个）：',
+	'batchuserrights-single-progress-update' => '已添加$1个用户组到<strong>$2</strong>。',
+	'batchuserrights-add-groups' => '正在添加$1个用户到下面$2个组：<strong>$3</strong>。',
 	'batchuserrights-userload-error' => "无法加载用户\"'''\$1'''\"。",
 );

@@ -48,6 +48,10 @@ files = [
 	'resources/wikia/modules/stringhelper.js',
 	'resources/wikia/modules/thumbnailer.js',
 	'resources/wikia/modules/uniqueId.js',
+	//UI Repo JS API
+	'resources/wikia/modules/uicomponent.js',
+	'resources/wikia/modules/uifactory.js',
+	'resources/wikia/modules/csspropshelper.js',
 	'resources/wikia/modules/spec/*.spec.js',
 
 	//Advertisment
@@ -58,10 +62,10 @@ files = [
 	'extensions/wikia/AdEngine/js/AdLogicHighValueCountry.js',
 	'extensions/wikia/AdEngine/js/AdLogicPageLevelParams.js',
 	'extensions/wikia/AdEngine/js/AdLogicPageLevelParamsLegacy.js',
-	'extensions/wikia/AdEngine/js/AdLogicShortPage.js',
-	'extensions/wikia/AdEngine/js/AdProviderAdDriver2.js',
+	'extensions/wikia/AdEngine/js/AdLogicPageDimensions.js',
 	'extensions/wikia/AdEngine/js/AdProviderEvolve.js',
 	'extensions/wikia/AdEngine/js/AdProviderGamePro.js',
+	'extensions/wikia/AdEngine/js/AdProviderGpt.js',
 	'extensions/wikia/AdEngine/js/AdProviderLater.js',
 	'extensions/wikia/AdEngine/js/AdProviderLiftium2Dom.js',
 	'extensions/wikia/AdEngine/js/AdProviderNull.js',
@@ -83,7 +87,15 @@ files = [
 	//Search
 	'extensions/wikia/Search/js/SearchAbTest.js',
 	'extensions/wikia/Search/js/SearchAbTest.*.js',
-	'extensions/wikia/Search/js/spec/*.spec.js'
+	'extensions/wikia/Search/js/spec/*.spec.js',
+
+	//TOC
+	'extensions/wikia/TOC/js/modules/toc.js',
+	'extensions/wikia/TOC/js/modules/spec/toc.spec.js',
+
+	// Video
+	'extensions/wikia/VideoPageTool/js/views/jquery.switcher.js',
+	'extensions/wikia/VideoPageTool/js/spec/*.spec.js'
 ];
 
 notCovered = [

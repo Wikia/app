@@ -180,6 +180,14 @@ $messages['nl'] = array(
 	'globalnotification-general-ajax-failure' => 'De browser kon geen verbinding maken met de Wikia. Probeer het later nog opnieuw.',
 );
 
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'globalnotification-desc' => "Extension del sistèma de notificacion de Wikia. Aficha de notificacions del sistèma per d'eveniments tals coma los problèmas de foncionament AJAX",
+	'globalnotification-general-ajax-failure' => 'Lo navigador a pas pogut se connectar a Wikia. Ensajatz tornarmai pus tard.',
+);
+
 /** Polish (polski)
  * @author Sovq
  */

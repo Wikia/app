@@ -118,6 +118,15 @@ $messages['nl'] = array(
 	'wikiastyleguide-dropdown-selected-items-list' => '$1 en nog $2',
 );
 
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'wikiastyleguide-dropdown-all' => 'Totes',
+	'wikiastyleguide-dropdown-select-all' => 'Seleccionar tot',
+	'wikiastyleguide-dropdown-selected-items-list' => '$1 e $2 que demòran',
+);
+
 /** Polish (polski)
  * @author Sovq
  */
@@ -134,6 +143,15 @@ $messages['roa-tara'] = array(
 	'wikiastyleguide-dropdown-all' => 'Tutte',
 	'wikiastyleguide-dropdown-select-all' => 'Scacchie Tutte',
 	'wikiastyleguide-dropdown-selected-items-list' => '$1 e $2 e de cchiù',
+);
+
+/** Russian (русский)
+ * @author Okras
+ */
+$messages['ru'] = array(
+	'wikiastyleguide-dropdown-all' => 'Все',
+	'wikiastyleguide-dropdown-select-all' => 'Выбрать все',
+	'wikiastyleguide-dropdown-selected-items-list' => '$1 и ещё $2',
 );
 
 /** Swedish (svenska)
