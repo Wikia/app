@@ -27,7 +27,7 @@ $(function() {
 				if( LAZY_LOADING_SAMPLING_RATIO >= Math.floor( (Math.random() * 100 + 1) ) ) {
 					var lazyLoadingTime = ( new Date() ) - ( window.wgNow || 0 );
 					Wikia.Tracker.track({
-						action: Wikia.Tracker.IMPRESSION,
+						action: Wikia.Tracker.ACTIONS.IMPRESSION,
 						category: 'right-rail',
 						label: 'lazy-loaded',
 						trackingMethod: 'ga',
