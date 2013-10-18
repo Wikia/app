@@ -30,6 +30,8 @@ class FSCKVideos extends Maintenance {
 		$this->test    = $this->hasOption('test');
 		$this->verbose = $this->hasOption('verbose');
 
+		echo "Checking ".F::app()->wg->Server."\n";
+
 		$stats = ['checked'     => 0,
 				  'ok'          => 0,
 				  'failed'      => 0,
