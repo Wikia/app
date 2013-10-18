@@ -17,12 +17,12 @@ This styleguide defines the JavaScript coding conventions at Wikia. It's managed
   * [Modifying prototypes of built-in objects](#modifying-prototypes-of-built-in-objects)
 * [Style Rules](#style-rules)
   * [White space guidelines](#white-space-guidelines)
-    * [Bad examples](#bad-examples)
-    * [Good examples](#good-examples)
-    * [Objects](#objects)
-    * [Arrays and Function Calls](#arrays-and-function-calls)
-    * [Multi-line Statements](#multi-line-statements)
-    * [Chained Method Calls](#chained-method-calls)
+     * [Bad examples](#bad-examples)
+     * [Good examples](#good-examples)
+     * [Objects](#objects)
+     * [Arrays and Function Calls](#arrays-and-function-calls)
+     * [Multi-line Statements](#multi-line-statements)
+     * [Chained Method Calls](#chained-method-calls)
   * [Prefixing jQuery objects](#prefixing-jquery-objects)
   * [Comments](#comments)
   * [Naming conventions](#naming-conventions)
@@ -153,7 +153,7 @@ Try to avoid using the delete operator.  Contrary to what you might think, the d
 Quoted from google's style guide:
 > "In modern JavaScript engines, changing the number of properties on an object is much slower than reassigning the values. The delete keyword should be avoided except when it is necessary to remove a property from an object's iterated list of keys, or to change the result of if (key in obj)."
 
-**Example:**
+__Example:__
 ```javascript
 var myObj = {
   hello: 'hi',
@@ -469,6 +469,7 @@ All JS should be written as AMD modules so see [above](#amd-modules) for matchin
 
 ## To Do
 * Submit for feedback to engineering team
+* Add more pics!
 
 ![Wikia](http://i.imgur.com/tVxkjhG.gif)
 
