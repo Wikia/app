@@ -45,7 +45,7 @@ class MemcachedPhpBagOStuff extends BagOStuff {
 			$params['connect_timeout'] = 0.1;
 		}
 
-		if (in_array(gethostname(), $wgMoxiTestNodes)) {
+		if (false && in_array(gethostname(), $wgMoxiTestNodes)) {
 			$wgMemCachedClass = 'MemcacheClientShadower'; // TODO: remove this once we decide which client to use
 		}
 
