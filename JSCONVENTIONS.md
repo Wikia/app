@@ -1,5 +1,5 @@
 # Wikia JavaScript Coding Conventions
-![Wikia](http://images.wikia.com/icarly/images/c/c1/Walter_the_wikian.jpg)
+![Wikia](http://i.imgur.com/tVxkjhG.gif)
 ## Our Mission ##
 >As a developer I want a clear and well documented guide dealing with coding conventions, patterns and best practices for JavaScript development at Wikia along with tools to help me in making my code compliant.
 
