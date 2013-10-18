@@ -456,8 +456,10 @@ For clarity and future-proofness, all javascript files should go into a 'scripts
 All JS should be written as AMD modules so see [above](#amd-modules) for matching files names to module names.
 
 ## Sources ##
-* [Google's Style Guide](http://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml)
-* [jQuery's Style Gude](https://github.com/jquery/contribute.jquery.org/blob/master/pages/style-guide/js.md)
+* [Google's JS Style Guide](http://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml)
+* [jQuery's JS Style Gude](https://github.com/jquery/contribute.jquery.org/blob/master/pages/style-guide/js.md)
+* [Douglas Crockford's Code Conventions for the JavaScript Programming Language](http://javascript.crockford.com/code.html)
+* [AirBnb's JS Style Guide](https://github.com/airbnb/javascript)
 
 ## To Do
 * Submit for feedback to engineering team
