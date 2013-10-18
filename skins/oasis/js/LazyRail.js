@@ -35,7 +35,7 @@ $(function() {
 					});
 				}
 
-				if ( window.ChatEntryPoint ) {
+				if ( window.ChatEntryPoint && typeof window.wgWikiaChatUsers !== 'undefined' ) {
 					window.ChatEntryPoint.init();
 				}
 
