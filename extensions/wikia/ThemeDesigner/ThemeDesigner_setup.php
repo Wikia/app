@@ -15,6 +15,8 @@ $wgAutoloadClasses[ 'UploadWordmarkFromFile' ] = "{$dir}/UploadWordmarkFromFile.
 $wgAutoloadClasses['ThemeDesignerController'] = "$dir/ThemeDesignerController.class.php";
 $wgAutoloadClasses['SpecialThemeDesigner'] = "$dir/SpecialThemeDesigner.class.php";
 $wgAutoloadClasses['SpecialThemeDesignerPreview'] = "$dir/SpecialThemeDesignerPreview.class.php";
+$wgAutoloadClasses['Theme'] = "$dir/SpecialThemeDesignerPreview.class.php";
+$wgAutoloadClasses['ThemeDesignerHooks'] = "$dir/ThemeDesignerHooks.class.php";
 
 // special pages
 $wgSpecialPages['ThemeDesigner'] = 'SpecialThemeDesigner';
@@ -33,3 +35,6 @@ $wgGroupPermissions['staff']['themedesigner'] = true;
 JSMessages::registerPackage('ThemeDesigner', array(
 	'themedesigner-wordmark-preview-error'
 ));
+
+$wgHooks['RevisionInsertComplete'][] = 'ThemeDesignerHooks::onRevisionInsertComplete';
+$wgHooks['ArticleDeleteComplete'][] = 'ThemeDesignerHooks::onArticleDeleteComplete';
