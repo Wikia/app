@@ -1,8 +1,9 @@
-@import "../../../../skins/oasis/css/core/color";
-@import "../../../../skins/oasis/css/core/layout";
-@import "../../../../skins/oasis/css/mixins/curation-elements";
-@import "../../../../skins/oasis/css/mixins/calc";
-@import "../../../../skins/oasis/css/mixins/clearfix";
+@import "skins/oasis/css/core/color";
+@import "skins/oasis/css/core/layout";
+@import "skins/oasis/css/core/responsive-variables";
+@import "skins/oasis/css/mixins/curation-elements";
+@import "skins/oasis/css/mixins/calc";
+@import "skins/oasis/css/mixins/clearfix";
 
 .slots-setup {
 	width: 250px;
