@@ -299,7 +299,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		switch ( $loginCase ) {
 			case LoginForm::SUCCESS:
 				// first check if user has confirmed email after sign up
-				if ( !UserLoginHelper::isTempUser( $loginForm->mUsername ) && $this->wg->User->getOption( self::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) == true ) {//@TODO remove isTempUser from condition when TempUser will be globally disabled
+				if (  $this->wg->User->getOption( self::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) == true ) {
 					//User not confirmed on signup
 					LoginForm::clearLoginToken();
 					$this->userLoginHelper->setNotConfirmedUserSession( $this->wg->User->getId() );
@@ -320,11 +320,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 					}
 					$this->wg->User->setCookies();
 					LoginForm::clearLoginToken();
-					if ( !UserLoginHelper::isTempUser( $loginForm->mUsername ) ) {//@TODO get rid of isTempUser check when TempUser will be globally disabled
-						UserLoginHelper::clearNotConfirmedUserSession();
-					} else {
-						TempUser::clearTempUserSession();
-					}
+					UserLoginHelper::clearNotConfirmedUserSession();
 					$this->userLoginHelper->clearPasswordThrottle( $loginForm->mUsername );
 					$this->username = $loginForm->mUsername;
 					$this->result = 'ok';
@@ -347,40 +343,9 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 				$this->errParam = 'username';
 				break;
 			case LoginForm::NOT_EXISTS:
-				if ( UserLoginHelper::isTempUser( $loginForm->mUsername ) ) {//@TODO get rid of isTempUser check when TempUser will be globally disabled
-					//TempUser case
-					if ( $this->userLoginHelper->isPasswordThrottled($loginForm->mUsername) ) {
-						$this->result = 'error';
-						$this->msg = wfMessage( 'userlogin-error-login-throttled' )->escaped();
-					} else {
-						$tempUser = TempUser::getTempUserFromName($loginForm->mUsername);
-						$user = $tempUser->mapTempUserToUser( false );
-						if ( $user->checkPassword($loginForm->mPassword) ) {
-							LoginForm::clearLoginToken();
-							$tempUser->setTempUserSession();
-							$this->userLoginHelper->clearPasswordThrottle( $loginForm->mUsername );
-
-							// set lang for unconfirmed user
-							$langCode = $user->getOption('language');
-							if ( $this->wg->User->getOption('language') != $langCode ) {
-								$this->wg->User->setOption( 'language', $langCode );
-							}
-
-							$this->result = 'unconfirm';
-							$this->msg = wfMessage( 'usersignup-confirmation-email-sent', $tempUser->getEmail() )->parse();
-						} else if ( $user->checkTemporaryPassword($loginForm->mPassword) ) {
-							$this->result = 'resetpass';
-						} else {
-							$this->result = 'error';
-							$this->msg = wfMessage( 'userlogin-error-wrongpassword' )->escaped();
-							$this->errParam = 'password';
-						}
-					}
-				} else {
-					$this->result = 'error';
-					$this->msg = wfMessage( 'userlogin-error-nosuchuser' )->escaped();
-					$this->errParam = 'username';
-				}
+				$this->result = 'error';
+				$this->msg = wfMessage( 'userlogin-error-nosuchuser' )->escaped();
+				$this->errParam = 'username';
 				break;
 			case LoginForm::WRONG_PLUGIN_PASS:
 				$this->result = 'error';
@@ -454,13 +419,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 			$this->result = 'error';
 			$this->msg = wfMessage('userlogin-error-blocked-mailpassword')->escaped();
 		} else {
-			$tempUser = TempUser::getTempUserFromName($loginForm->mUsername);
-			if ( $tempUser ) {
-				$user = $tempUser->mapTempUserToUser( false );
-			} else {
-				$user = User::newFromName($loginForm->mUsername);
-			}
-
+			$user = User::newFromName($loginForm->mUsername);
 			if ( !$user instanceof User ) {
 				$this->result = 'error';
 				$this->msg = wfMessage('userlogin-error-noname')->escaped();
@@ -526,14 +485,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 			}
 
 			if( $this->wg->User->matchEditToken( $this->editToken ) ) {
-				//@TODO get rid of TempUser check when TempUser will be globally disabled
-				$tempUser = TempUser::getTempUserFromName( $this->username );
-				if ( $tempUser ) {
-					$user = $tempUser->mapTempUserToUser( false );
-					$tempUser->activateUser($user);
-				} else {
-					$user =  User::newFromName( $this->username );
-				}
+				$user =  User::newFromName( $this->username );
 
 				if( !$user || $user->isAnon() ) {
 					$this->result = 'error';

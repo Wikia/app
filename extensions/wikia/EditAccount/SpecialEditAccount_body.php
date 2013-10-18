@@ -23,7 +23,6 @@ class EditAccount extends SpecialPage {
 	var $mStatus = null;
 	var $mStatusMsg;
 	var $mStatusMsg2 = null;
-	var $mTempUser = null;
 
 	/**
 	 * Constructor
@@ -81,10 +80,7 @@ class EditAccount extends SpecialPage {
 				//
 				// In order to prevent that we have to do the following two steps:
 				//
-				// 1) invalidate temp user cache
-				if ( !empty( $wgEnableUserLoginExt ) ) {
-					TempUser::invalidateTempUserCache( $userName );
-				}
+				// 1) REMOVED: invalidate temp user cache
 				//
 				// 2) and copy the data from the shared to the local database
 				$oUser = User::newFromName( $userName );
@@ -101,18 +97,9 @@ class EditAccount extends SpecialPage {
 				}
 
 				if ( empty( $id ) ) {
-					if ( !empty($wgEnableUserLoginExt) ) {
-						//@TODO remove all mTempUser occuracnes TempUser will be globally disabled
-						$this->mTempUser = TempUser::getTempUserFromName( $userName );
-					}
-					if ( $this->mTempUser ) {
-						$id = $this->mTempUser->getId();
-						$this->mUser = User::newFromId( $id );
-					} else {
-						$this->mUser = null;
-						$this->mStatus = false;
-						$this->mStatusMsg = wfMsg( 'editaccount-nouser', $userName );
-					}
+					$this->mUser = null;
+					$this->mStatus = false;
+					$this->mStatusMsg = wfMsg( 'editaccount-nouser', $userName );
 				}
 			}
 		}
@@ -195,13 +182,7 @@ class EditAccount extends SpecialPage {
 			) );
 
 		if( is_object( $this->mUser ) ) {
-			if ( $this->mTempUser ) {
-				$this->mUser = $this->mTempUser->mapTempUserToUser( false );
-				$userStatus = wfMsg('editaccount-status-tempuser');
-				$oTmpl->set_Vars( array('disabled' => 'disabled="disabled"') );
-			} else {
-				$userStatus = wfMsg('editaccount-status-realuser');
-			}
+			$userStatus = wfMsg('editaccount-status-realuser');
 			$this->mUser->load();
 
 			// get new email (unconfirmed)
@@ -238,36 +219,23 @@ class EditAccount extends SpecialPage {
 		global $wgEnableUserLoginExt;
 		$oldEmail = $this->mUser->getEmail();
 		if ( Sanitizer::validateEmail( $email ) || $email == '' ) {
-			if ( $this->mTempUser ) {
-				if ( $email == '' ) {
+			$this->mUser->setEmail( $email );
+			if ( $email != '' ) {
+				if ( !empty( $wgEnableUserLoginExt ) ) {//Clear not confirmed signup flag
+					UserLoginHelper::removeNotConfirmedFlag( $this->mUser );
+				}
+				$this->mUser->confirmEmail();
+				$this->mUser->setOption( 'new_email', null );
+			} else {
+				if ( !empty( $wgEnableUserLoginExt ) && $this->mUser->getOption( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) ) {
+					//User not confirmed on signup can't has empty email
+					//@TODO introduce new message since usecase here is same as temp user empty email but it's not temp user anymore
 					$this->mStatusMsg = wfMsg( 'editaccount-error-tempuser-email' );
 					return false;
-				} else {
-					$this->mTempUser->setEmail( $email );
-					$this->mUser = $this->mTempUser->activateUser( $this->mUser );
-
-					// reset temp user after activating the user
-					$this->mTempUser = null;
 				}
-			} else {
-				$this->mUser->setEmail( $email );
-				if ( $email != '' ) {
-					if ( !empty( $wgEnableUserLoginExt ) ) {//Clear not confirmed signup flag
-						UserLoginHelper::removeNotConfirmedFlag( $this->mUser );
-					}
-					$this->mUser->confirmEmail();
-					$this->mUser->setOption( 'new_email', null );
-				} else {
-					if ( !empty( $wgEnableUserLoginExt ) && $this->mUser->getOption( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) ) {
-						//User not confirmed on signup can't has empty email
-						//@TODO introduce new message since usecase here is same as temp user empty email but it's not temp user anymore
-						$this->mStatusMsg = wfMsg( 'editaccount-error-tempuser-email' );
-						return false;
-					}
-					$this->mUser->invalidateEmail();
-				}
-				$this->mUser->saveSettings();
+				$this->mUser->invalidateEmail();
 			}
+			$this->mUser->saveSettings();
 
 			// Check if everything went through OK, just in case
 			if ( $this->mUser->getEmail() == $email ) {
@@ -306,14 +274,7 @@ class EditAccount extends SpecialPage {
 				global $wgUser, $wgTitle;
 
 				// Save the new settings
-				if ( $this->mTempUser ) {
-					$this->mTempUser->setPassword( $this->mUser->mPassword );
-					$this->mTempUser->updateData();
-					$this->mTempUser->saveSettingsTempUserToUser( $this->mUser );
-					$this->mUser->mName = $this->mTempUser->getName();
-				} else {
-					$this->mUser->saveSettings();
-				}
+				$this->mUser->saveSettings();
 
 				// Log what was done
 				$log = new LogPage( 'editaccnt' );
