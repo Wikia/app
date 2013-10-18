@@ -1,12 +1,12 @@
-@import "../../../../skins/oasis/css/mixins/border-radius";
-@import "../../../../skins/oasis/css/mixins/box-shadow";
-@import "../../../../skins/oasis/css/mixins/clearfix";
-@import "../../../../skins/oasis/css/mixins/gradient";
-@import "../../../../skins/oasis/css/mixins/opacity";
-@import "../../../../skins/oasis/css/mixins/transform";
-@import "../../../../skins/oasis/css/core/responsive-variables";
-@import "../../../../skins/oasis/css/core/layout";
-@import "../../../../skins/oasis/css/core/color";
+@import "skins/oasis/css/mixins/border-radius";
+@import "skins/oasis/css/mixins/box-shadow";
+@import "skins/oasis/css/mixins/clearfix";
+@import "skins/oasis/css/mixins/gradient";
+@import "skins/oasis/css/mixins/opacity";
+@import "skins/oasis/css/mixins/transform";
+@import "skins/oasis/css/core/color";
+@import "skins/oasis/css/core/layout";
+@import "skins/oasis/css/core/responsive-variables";
 
 $color-founder-progress-preview-top: $color-page;
 $color-founder-progress-preview-bottom: darken($color-page, 4%);
