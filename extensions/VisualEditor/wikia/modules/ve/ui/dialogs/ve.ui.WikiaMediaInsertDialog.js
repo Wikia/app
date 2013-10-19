@@ -40,40 +40,90 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	// Properties
 	this.cartModel = new ve.dm.WikiaCart();
 	this.cart = new ve.ui.WikiaCartWidget( this.cartModel );
-	this.$cart = this.$$( '<div>' );
-	this.search = new ve.ui.WikiaMediaSearchWidget( { '$$': this.frame.$$ } );
-	this.pagesPanel = new ve.ui.PagedLayout( { '$$': this.frame.$$, 'attachPagesPanel': true } );
-	this.$removePage = this.$$( '<div>' );
-	this.removeButton = new ve.ui.ButtonWidget( {
-		'$$': this.frame.$$,
-		'label': 'Remove from the cart', //TODO: i18n
-		'flags': ['destructive']
-	} );
-	this.removeButton.$.appendTo( this.$removePage );
 	this.insertButton = new ve.ui.ButtonWidget( {
 		'$$': this.$$,
 		'label': ve.msg( 'visualeditor-wikiamediainsertbuttontool-label' ),
 		'flags': ['primary']
 	} );
 	this.insertionDetails = {};
+	this.pagesPanel = new ve.ui.PagedLayout( { '$$': this.frame.$$, 'attachPagesPanel': true } );
+	this.query = new ve.ui.WikiaMediaQueryWidget( {
+		'$$': this.frame.$$,
+		'value': mw.config.get( 'wgTitle' )
+	} );
+	this.removeButton = new ve.ui.ButtonWidget( {
+		'$$': this.frame.$$,
+		'label': 'Remove from the cart', //TODO: i18n
+		'flags': ['destructive']
+	} );
+	this.search = new ve.ui.WikiaMediaResultsWidget( { '$$': this.frame.$$ } );
+	this.searchResults = this.search.getResults();
+	this.searchQueryParams = { 'batch': 1 };
+
+	this.$cart = this.$$( '<div>' );
+	this.$removePage = this.$$( '<div>' );
 
 	// Events
-	this.search.connect( this, { 'select': 'onSearchSelect' } );
 	this.cart.connect( this, { 'select': 'onCartSelect' } );
+	this.query.connect( this, {
+		'change': 'onQueryChange',
+		'enter': 'onQueryEnter',
+		'requestDone': 'onQueryRequestDone',
+		'requestReady': 'onQueryRequestReady'
+	} );
+	this.search.connect( this, { 'select': 'onSearchSelect' } );
 	this.pagesPanel.connect( this, { 'set': 'onPagesPanelSet' } );
 	this.removeButton.connect( this, { 'click': 'onRemoveButtonClick' } );
 	this.insertButton.connect( this, { 'click': [ 'close', 'insert' ] } );
 
 	// Initialization
-	// TODO: Rename to "remove" to details" when start working seriously on it.
+	this.removeButton.$.appendTo( this.$removePage );
+	// TODO: Remove this when file information pages are built
 	this.pagesPanel.addPage( 'remove', { '$content': this.$removePage } );
+	// TODO: Make suggestions widget and remove this placeholder div
+	this.pagesPanel.addPage( 'suggestions', { '$content': $( '<div>' ).text( 'suggestions' ) } );
 	this.pagesPanel.addPage( 'search', { '$content': this.search.$ } );
+
 	this.$cart
 		.addClass( 've-ui-wikiaCartWidget-wrapper' )
 		.append( this.cart.$ );
-	this.$body.append( this.$cart, this.pagesPanel.$ );
+	this.$body
+		.prepend( this.query.$ )
+		.append( this.$cart, this.pagesPanel.$ );
+
 	this.frame.$content.addClass( 've-ui-wikiaMediaInsertDialog-content' );
 	this.$foot.append( this.insertButton.$ );
+};
+
+ve.ui.WikiaMediaInsertDialog.prototype.onQueryChange = function ( value ) {
+	this.searchQueryParams.batch = 1;
+	this.searchResults.clearItems();
+
+	if ( value.trim().length === 0 ) {
+		this.pagesPanel.setPage( 'suggestions' );
+	}
+};
+
+ve.ui.WikiaMediaInsertDialog.prototype.onQueryEnter = function () {
+	this.searchResults.selectItem( this.searchResults.getHighlightedItem() );
+};
+
+ve.ui.WikiaMediaInsertDialog.prototype.onQueryRequestDone = function ( data ) {
+	if ( !data.response || !data.response.results ) {
+		return;
+	}
+
+	this.searchQueryParams.batch++;
+	this.search.addResults( data.response.results.mixed.items );
+	this.pagesPanel.setPage( 'search' );
+};
+
+ve.ui.WikiaMediaInsertDialog.prototype.onQueryRequestReady = function ( value ) {
+	if ( value.trim().length === 0 ) {
+		this.pagesPanel.setPage( 'suggestions' );
+	} else {
+		this.query.requestMedia( this.searchQueryParams );
+	}
 };
 
 ve.ui.WikiaMediaInsertDialog.prototype.onSearchSelect = function ( item ) {
