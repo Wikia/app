@@ -82,11 +82,11 @@ class LicensedVideoSwapHelper extends WikiaModel {
 		// in the video_swap table
 		$statusProp = WPP_LVS_STATUS;
 		$pageNS = NS_FILE;
-		$statusSwappable = self::STATUS_SWAPPABLE;
-		$statusSwap = self::STATUS_SWAP;
-		$statusForever = self::STATUS_FOREVER;
-		$statusKeep = self::STATUS_KEEP;
-		$statusNew = self::STATUS_NEW;
+		$swappable = '(props & '.self::STATUS_SWAPPABLE.' != 0)';
+		$notSwapped = '(props & '.self::STATUS_SWAP.' = 0)';
+		$notForever = '(props & '.self::STATUS_FOREVER.' = 0)';
+		$notKept = '(props & '.self::STATUS_KEEP.' = 0)';
+		$new = '(props & '.self::STATUS_NEW.' != 0)';
 		$offset = ( $page - 1 ) * $limit;
 
 		// Get the right sorting
@@ -103,9 +103,8 @@ class LicensedVideoSwapHelper extends WikiaModel {
 			FROM video_info
 			JOIN page ON video_title = page_title AND page_namespace = $pageNS
 			LEFT JOIN page_wikia_props ON page.page_id = page_wikia_props.page_id
-				AND propname = $statusProp AND (props & $statusSwappable != 0)
-				AND (props & $statusSwap = 0) AND (props & $statusForever = 0)
-				AND !((props & $statusKeep != 0) AND (props & $statusNew = 0))
+				AND propname = $statusProp AND $swappable
+				AND $notSwapped AND $notForever AND ($notKept OR $new)
 			WHERE removed = 0 AND premium = 0 AND page_wikia_props.page_id is not null
 			ORDER BY $order
 			LIMIT $limit
@@ -145,20 +144,19 @@ SQL;
 		// in the video_swap table
 		$statusProp = WPP_LVS_STATUS;
 		$pageNS = NS_FILE;
-		$statusSwappable = self::STATUS_SWAPPABLE;
-		$statusSwap = self::STATUS_SWAP;
-		$statusForever = self::STATUS_FOREVER;
-		$statusKeep = self::STATUS_KEEP;
-		$statusNew = self::STATUS_NEW;
+		$swappable = '(props & '.self::STATUS_SWAPPABLE.' != 0)';
+		$notSwapped = '(props & '.self::STATUS_SWAP.' = 0)';
+		$notForever = '(props & '.self::STATUS_FOREVER.' = 0)';
+		$notKept = '(props & '.self::STATUS_KEEP.' = 0)';
+		$new = '(props & '.self::STATUS_NEW.' != 0)';
 
 		$sql = <<<SQL
 			SELECT count(*) as total
 			FROM video_info
 			JOIN page ON video_title = page_title AND page_namespace = $pageNS
 			LEFT JOIN page_wikia_props ON page.page_id = page_wikia_props.page_id
-				AND propname = $statusProp AND (props & $statusSwappable != 0)
-				AND (props & $statusSwap = 0) AND (props & $statusForever = 0)
-				AND !((props & $statusKeep != 0) AND (props & $statusNew = 0))
+				AND propname = $statusProp AND $swappable
+				AND $notSwapped AND $notForever AND ($notKept OR $new)
 			WHERE removed = 0 AND premium = 0 AND page_wikia_props.page_id is not null
 SQL;
 
