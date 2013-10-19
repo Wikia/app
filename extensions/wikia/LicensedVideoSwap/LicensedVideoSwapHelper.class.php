@@ -529,10 +529,7 @@ SQL;
 	public function setPageStatusSwap( $newArticleId, $articleId ) {
 		$status = $this->getPageStatus( $articleId );
 		$this->setFlag( $status, $this->getStatusSwapNorm() );
-		$this->clearFlag( $status, self::STATUS_KEEP );
-		$this->clearFlag( $status, self::STATUS_EXACT );
-		$this->clearFlag( $status, self::STATUS_NEW );
-		$this->clearFlag( $status, self::STATUS_FOREVER );
+		$this->clearFlag( $status, self::STATUS_KEEP | self::STATUS_EXACT | self::STATUS_NEW | self::STATUS_FOREVER );
 		$this->setPageStatus( $newArticleId, $status );
 	}
 
@@ -544,9 +541,7 @@ SQL;
 	public function setPageStatusSwapExact( $newArticleId, $articleId ) {
 		$status = $this->getPageStatus( $articleId );
 		$this->setFlag( $status, $this->getStatusSwapExact() );
-		$this->clearFlag( $status, self::STATUS_KEEP );
-		$this->clearFlag( $status, self::STATUS_NEW );
-		$this->clearFlag( $status, self::STATUS_FOREVER );
+		$this->clearFlag( $status, self::STATUS_KEEP | self::STATUS_NEW | self::STATUS_FOREVER );
 		$this->setPageStatus( $newArticleId, $status );
 	}
 
@@ -558,9 +553,7 @@ SQL;
 	public function setPageStatusKeep( $articleId, $isForever = false ) {
 		$status = $this->getPageStatus( $articleId );
 		$this->setFlag( $status, $this->getStatusKeep( $isForever ) );
-		$this->clearFlag( $status, self::STATUS_SWAP );
-		$this->clearFlag( $status, self::STATUS_EXACT );
-		$this->clearFlag( $status, self::STATUS_NEW );
+		$this->clearFlag( $status, self::STATUS_SWAP | self::STATUS_EXACT | self::STATUS_NEW );
 		if ( !$isForever ) {
 			$this->clearFlag( $status, self::STATUS_FOREVER );
 		}
@@ -605,11 +598,7 @@ SQL;
 	 */
 	public function clearPageStatus( $articleId ) {
 		$status = $this->getPageStatus( $articleId );
-		$this->clearFlag( $status, self::STATUS_KEEP );
-		$this->clearFlag( $status, self::STATUS_SWAP );
-		$this->clearFlag( $status, self::STATUS_EXACT );
-		$this->clearFlag( $status, self::STATUS_NEW );
-		$this->clearFlag( $status, self::STATUS_FOREVER );
+		$this->clearFlag( $status, self::STATUS_KEEP | self::STATUS_SWAP | self::STATUS_EXACT | self::STATUS_NEW | self::STATUS_FOREVER );
 		$this->setPageStatus( $articleId, $status );
 	}
 
@@ -960,7 +949,7 @@ SQL;
 		);
 
 		$videoList = array();
-		while( $row = $db->fetchObject($result) ) {
+		while( $row = $db->fetchObject( $result ) ) {
 			// Don't continue if we can't load the article
 			$article = Article::newFromID( $row->page_id );
 			if ( empty( $article ) ) {
@@ -989,37 +978,31 @@ SQL;
 
 			// Get a few versions of the title text
 			$titleObj = $article->getTitle();
-			$dbKey    = urlencode( $titleObj->getDBKey() );
+			$dbKey = urlencode( $titleObj->getDBKey() );
 			$titleURL = $titleObj->getLocalURL();
 
 			// Create some links needed for linking to the file page and undoing swaps
 			$titleLink = '<a href="'.$titleURL.'">'.$titleObj->getText().'</a>';
-			$undoLink  = $this->wg->Server."/wikia.php?controller=LicensedVideoSwapSpecial&method=restoreVideo&format=json&videoTitle={$dbKey}";
-			$undoText  = wfMessage('lvs-undo-swap')->plain();
+			$undoLink = $this->wg->Server."/wikia.php?controller=LicensedVideoSwapSpecial&method=restoreVideo&format=json&videoTitle={$dbKey}";
+			$undoText = wfMessage('lvs-undo-swap')->plain();
 
 			// Generate the proper log message and undo link for the swap/keep type
-			switch ( true ) {
-				case ( $this->isStatusSwapNorm( $props['status'] ) ):
-					$newTitleLink = $newDbKey = '';
-					$redirect = $article->getRedirectTarget();
-					if ( !empty($redirect) ) {
-						$newDbKey = urlencode( $redirect->getDBKey() );
-						$redirectURL = $redirect->getLocalURL();
-						$newTitleLink = '<a href="'.$redirectURL.'">'.$redirect->getText().'</a>';
-					}
-					$logMessage = wfMessage( 'lvs-history-swapped', $titleLink, $newTitleLink )->plain();
-					$undoLink  .= "&newTitle=".$newDbKey;
-					break;
-
-				case ( $this->isStatusSwapExact( $props['status'] ) ):
-					$logMessage = wfMessage( 'lvs-history-swapped-exact', $titleLink )->plain();
-					break;
-
-				case ( $this->isStatusKeep( $props['status'] ) ):
-				default:
-					$logMessage = wfMessage( 'lvs-history-kept', $titleLink )->plain();
-					$undoText   = wfMessage( 'lvs-undo-keep' )->plain();
-					break;
+			if ( $this->isStatusSwapNorm( $props['status'] ) ) {
+				$newTitleLink = '';
+				$newDbKey = '';
+				$redirect = $article->getRedirectTarget();
+				if ( !empty( $redirect ) ) {
+					$newDbKey = urlencode( $redirect->getDBKey() );
+					$redirectURL = $redirect->getLocalURL();
+					$newTitleLink = '<a href="'.$redirectURL.'">'.$redirect->getText().'</a>';
+				}
+				$logMessage = wfMessage( 'lvs-history-swapped', $titleLink, $newTitleLink )->plain();
+				$undoLink .= "&newTitle=".$newDbKey;
+			} else if ( $this->isStatusSwapExact( $props['status'] ) ) {
+				$logMessage = wfMessage( 'lvs-history-swapped-exact', $titleLink )->plain();
+			} else {
+				$logMessage = wfMessage( 'lvs-history-kept', $titleLink )->plain();
+				$undoText = wfMessage( 'lvs-undo-keep' )->plain();
 			}
 
 			$video = array(
