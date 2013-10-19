@@ -165,6 +165,7 @@ Parameters:
 	'create-blog-listing-sortby' => '{{Identical|Sort by}}',
 	'create-blog-listing-sortby-author' => '{{Identical|Author}}',
 	'blog-defaulttitle' => '{{Identical|Blog}}',
+	'blog-readfullpost' => '{{Identical|Read more}}',
 	'blog-added' => 'This is the possible value of $CHANGEDORCREATED in {{msg-mw|enotif_subject}} and {{msg-mw|enotif_body|notext=1}}.',
 	'blog-edited' => 'This is a possible value of $CHANGEDORCREATED in {{msg-mw|enotif_subject}} and {{msg-mw|enotif_body|notext=1}}.',
 	'blog-page' => '{{Identical|Blog}}',
@@ -628,6 +629,7 @@ $messages['bg'] = array(
 	'blog-comment-history' => 'история',
 	'blog-comment-edit' => 'редактиране',
 	'blog-avatar-preferences-title' => 'Аватар',
+	'blog-page-rate' => 'Оценяване на статията:',
 	'blog-refresh-label' => 'Опресняване',
 	'blog-userblog' => 'Блогът на $1',
 	'blog-fromsitename' => 'От $1',
@@ -1594,7 +1596,7 @@ $messages['fa'] = array(
 	'right-blog-articles-edit' => 'ویرایش مطالب وبلاگ',
 	'right-blog-articles-move' => 'جابجاکردن مقاله‌های وبلاگ',
 	'blogs-recent-url-text' => 'پست‌های اخیر وبلاگ',
-	'blog-movepage-badtitle' => 'عنوان پست وبلاگ نامعتبر می‌باشد',
+	'blog-movepage-badtitle' => 'عنوان پست وبلاگ نامعتبر است',
 	'blog-comment-sending' => 'در حال ارسال...',
 	'blog-by' => '$1 توسط $2',
 	'blogs-searchprofile' => 'وبلاگ‌ها',
@@ -4037,6 +4039,7 @@ $messages['ps'] = array(
  * @author Luckas
  * @author Luckas Blade
  * @author McDutchie
+ * @author Polyethylen
  * @author Rhaijin
  * @author SandroHc
  * @author Waldir
@@ -4053,7 +4056,7 @@ $messages['pt'] = array(
 	'create-blog-post-recent-listing-title' => 'Entradas recentes',
 	'create-blog-post-recent-listing-log' => 'Criou artigo para as entradas de blogue recentes',
 	'create-blog-post-title' => 'Criar uma entrada nova num blogue',
-	'create-blog-post-title-edit' => 'Editar uma entrada de blog',
+	'create-blog-post-title-edit' => 'Editar uma entrada de blogue',
 	'create-blog-form-title' => 'O que é uma entrada de um blogue?',
 	'create-blog-form-post-text' => 'Texto do blogue',
 	'create-blog-form-info' => 'As entradas num blogue são uma ótima forma de partilhar novidades, opiniões, e obras criativas com a comunidade.',
@@ -4068,7 +4071,7 @@ $messages['pt'] = array(
 	'create-blog-categories-title' => 'Adicionar esta entrada do blogue a estas categorias (clique para selecionar)',
 	'create-blog-categories-textinput' => 'Adicionar uma categoria nova',
 	'create-blog-categories-submit' => 'Enviar',
-	'create-blog-save' => 'Salvar página',
+	'create-blog-save' => 'Gravar página',
 	'create-blog-preview' => 'Mostrar antevisão',
 	'create-blog-updated' => 'A entrada foi criada ou atualizada.',
 	'create-blog-permission-denied' => 'Erro ao gravar a página de blogue: Permissão negada',
@@ -5256,6 +5259,7 @@ $messages['vep'] = array(
 );
 
 /** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
  * @author Minh Nguyen
  * @author Xiao Qiao
  */
@@ -5371,6 +5375,9 @@ Tạo trang danh sách blog cho thể loại chẳng hạn như "Fan tưởng t�
 	'blog-movepage-badtitle' => 'Tiêu đề blog đăng không hợp lệ.',
 	'blog-comment-sending' => 'Đang gửi...',
 	'blog-by' => '$1 bởi $2',
+	'blogs-searchprofile' => 'Blog',
+	'blogs-searchprofile-tooltip' => 'Tìm kiếm trong danh sách Blog và bài viết Blog',
+	'user-blog-url-link' => 'Thành viên blog:$1',
 );
 
 /** Walloon (walon)

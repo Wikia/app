@@ -344,11 +344,13 @@ $messages['bs'] = array(
  * @author BroOk
  * @author CuBaN VeRcEttI
  * @author Marcmpujol
+ * @author Pintor Smeargle
  */
 $messages['ca'] = array(
+	'action-themedesigner' => 'accedir al Dissenyador de Temes',
 	'themedesigner-or' => 'o',
 	'themedesigner-desc' => 'Permet als administradors del wiki dissenyar un tema per a un wiki',
-	'themedesigner-title' => 'Wikia Theme Designer',
+	'themedesigner-title' => 'Dissenyador de Temes de Wikia',
 	'themedesigner-background' => 'Fons',
 	'themedesigner-page' => 'Pàgina',
 	'themedesigner-color' => 'color',
@@ -595,6 +597,7 @@ $messages['en-gb'] = array(
 
 /** Spanish (español)
  * @author Absay
+ * @author Benfutbol10
  * @author Bola
  * @author Ciencia Al Poder
  * @author CuBaN VeRcEttI
@@ -605,6 +608,7 @@ $messages['en-gb'] = array(
  * @author VegaDark
  */
 $messages['es'] = array(
+	'action-themedesigner' => 'acceder al Diseñador de Temas',
 	'themedesigner-or' => 'o',
 	'themedesigner-desc' => 'Permitir a los administradores del wiki poder diseñar un tema propio para el wiki',
 	'themedesigner-title' => 'Diseñador del tema visual de Wikia',

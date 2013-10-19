@@ -101,10 +101,19 @@ $messages['be-tarask'] = array(
 );
 
 /** Bulgarian (български)
+ * @author Aquilax
  * @author DCLXVI
  */
 $messages['bg'] = array(
-	'our404handler' => 'Грешка 404: Страницата не беше намерена!',
+	'our404handler' => 'Грешка 404: Страницата не беше открита!',
+	'our404handler-oops' => 'Това не са страниците, които търсите. Продължавайте.',
+	'message404' => '"\'Много съжаляваме, но поради някаква причина, страницата, която заявихте, не съществува."\'
+
+Статия „$1“ не може да бъде открита.
+
+* Можете да опитате със статия [[$2]].
+* Можете да се възползвате от полето за търсене в лявата част на страницата.
+* За да преминете към началната страница на този сайт, щракнете тук: [{{SERVER}} {{SITENAME}}].',
 );
 
 /** Breton (brezhoneg)
@@ -292,6 +301,21 @@ Non se puido atopar o artigo \"'''\$1'''\".
 * Pode intentalo co artigo \"[[\$2]]\"
 * Pode usar a caixa de buscas do lado esquerdo da páxina
 * Para ir á páxina principal deste sitio web, prema na ligazón: [{{SERVER}} {{SITENAME}}]",
+);
+
+/** Goan Konkani (Latin script) (Konknni)
+ * @author The Discoverer
+ */
+$messages['gom-latn'] = array(
+	'our404handler' => '404: Pan mellunk-nam!',
+	'our404handler-oops' => 'Tum sodtai tim panam him nhoi. Fuddem sor.',
+	'message404' => "\"Tun sodtai tem pan kai karonak lagon astitvant na\"
+
+'''\$1''' hem pan mellunk-nam.
+
+* Tuven hem pan polleunk zata: [[\$2]]
+* Tuven hea panache dhaveak 'Sod' uzar korunk zata
+* Mukhel panar vochpak, hanga click kor: [{{SERVER}} {{SITENAME}}]",
 );
 
 /** Hebrew (עברית)
