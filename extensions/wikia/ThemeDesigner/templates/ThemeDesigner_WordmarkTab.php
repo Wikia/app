@@ -63,7 +63,7 @@
 		<h1><?= wfMsg('themedesigner-favicon-heading') ?></h1>
 		<h2>
 			<?= wfMsg('themedesigner-upload-a-graphic') ?>
-			<span class="form-questionmark" rel="tooltip" title="<?= wfMessage('themedesigner-rules-favicon')->escaped(); ?> &lt;a href='<?= wfMessage('themedesigner-favicon-help-link')->escaped(); ?>' &gt; <?= wfMessage('themedesigner-rules-favicon-learn-more-link')->escaped(); ?>&lt;/a&gt;"></span>
+			<span class="form-questionmark" rel="tooltip" title="<?= htmlspecialchars( wfMessage( 'themedesigner-rules-favicon' )->parse() ) ?>"></span>
 		</h2>
 		<form id="FaviconUploadForm" action="<?= $wg->ScriptPath ?>/wikia.php?controller=ThemeDesigner&method=FaviconUpload&format=html" method="POST" enctype="multipart/form-data">
 			<input id="FaviconUploadFile" name="wpUploadFile" type="file" />
