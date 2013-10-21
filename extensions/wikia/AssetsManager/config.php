@@ -807,6 +807,7 @@ $config['chat_js2'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'#group_oasis_jquery',
+		'#group_ui_repo_api_js',
 
 		// shared libraries
 		'//extensions/wikia/AssetsManager/js/AssetsManager.js',
@@ -1425,7 +1426,7 @@ $config['ui_repo_api_js'] = array(
 
 		// examples of components
 		// TODO: move it probably to modal_sample.json to load additional assets on Special:Styleguide
-		'//resources/wikia/ui_components/modal/js/modal.sample.js',
+		// '//resources/wikia/ui_components/modal/js/modal.sample.js',
 	)
 );
 
