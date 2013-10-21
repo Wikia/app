@@ -10,12 +10,24 @@
 			<span class="count"><?= $x ?>.</span>
 			<div class="input-group border">
 				<label for="category-name-<?= $x ?>"><?= wfMessage( 'videopagetool-category-label-name' )->plain() ?></label>
-				<input class="category-name" id="category-name-<?= $x ?>" type="text" name="categoryName[]" value="<?= $category[ 'categoryName' ] ?>">
+				<input
+					class="category-name"
+					id="category-name-<?= $x ?>"
+					type="text"
+					name="categoryName[]"
+					placeholder="<?= wfMessage( 'videopagetool-category-name-placeholder' )->plain() ?>"
+					value="<?= $category[ 'categoryName' ] ?>">
 				<button class="search-button"><?= wfMessage( 'videopagetool-button-search' )->plain() ?></button>
 			</div>
 			<div class="input-group">
 				<label for="display-title-<?= $x ?>"><?= wfMessage( 'videopagetool-category-label-display-title' )->plain() ?></label>
-				<input class="display-title" id="display-title-<?= $x ?>" type="text" name="displayTitle[]" value="<?= $category[ 'displayTitle' ] ?>">
+				<input
+					class="display-title"
+					id="display-title-<?= $x ?>"
+					type="text"
+					name="displayTitle[]"
+					placeholder="<?= wfMessage( 'videopagetool-category-display-title-placeholder' )->plain() ?>"
+					value="<?= $category[ 'displayTitle' ] ?>">
 			</div>
 			<button class="secondary navigation nav-up">
 				<img class="chevron chevron-up" src="<?= $wg->BlankImgUrl ?>">
