@@ -50,10 +50,14 @@ $messages['en'] = array(
 	'videopagetool-success-save' => 'Your changes have been saved',
 	'videopagetool-success-publish' => 'Your changes have been published',
 	'videopagetool-hint-description-maxlength' => '$1 characters max',
+
+	// Latest Video (category) form
 	'videopagetool-category-label-name' => 'Category',
 	'videopagetool-category-label-display-title' => 'Title',
 	'videopagetool-category-name-placeholder' => 'Type in words to bring in videos',
 	'videopagetool-category-display-title-placeholder' => 'Category title',
+	'videopagetool-category-preview' => 'preview',
+
 	'videopagetool-hint-required-dimensions' => 'Image dimensions must be 1024 x 461',
 	'videopagetool-formerror-altthumb' => 'Please add an image',
 	'videopagetool-date-header' => 'Editing for date: $1',
@@ -112,10 +116,14 @@ $messages['qqq'] = array(
 	'videopagetool-tooltip-in-progress' => 'In Progress',
 	'videopagetool-header-dashboard' => 'Title for dashboard page',
 	'videopagetool-success-save' => 'This text appears if your changes have been saved successfully',
-	'videopagetool-category-label-name' => '',
-	'videopagetool-category-label-display-title' => '',
-	'videopagetool-category-name' => '',
-	'videopagetool-category-display-title' => '',
+
+	// Latest Video (category) form
+	'videopagetool-category-label-name' => 'label for the form input to enter a category',
+	'videopagetool-category-label-display-title' => 'label for the form input to enter a display title for a given video',
+	'videopagetool-category-name-placeholder' => 'form input placeholder text to enter a category',
+	'videopagetool-category-preview' => 'link to view a preview of the different videos in a category',
+	'videopagetool-category-display-title-placeholder' => 'form input placeholder text to enter the title that will be displayed for a given video',
+
 	'videopagetool-success-publish' => 'This text appears if your changes have been published successfully',
 	'videopagetool-hint-required-dimensions' => 'Message describing exact dimensions required for custom image upload (1024 x 461)',
 	'videopagetool-formerror-altthumb' => 'Error message for required custom image to be added',

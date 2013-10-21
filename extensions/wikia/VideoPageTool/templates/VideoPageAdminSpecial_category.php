@@ -1,4 +1,4 @@
-<form class="WikiaForm vpt-form" method="post">
+<form class="WikiaForm vpt-form latest-video-form" method="post">
 
 	<? for( $x = 1; $x <= count($categories); $x++ ): ?>
 
@@ -36,6 +36,7 @@
 				<img class="chevron chevron-down" src="<?= $wg->BlankImgUrl ?>">
 			</button>
 		</div>
+		<a class="preview" href="#"><?= wfMessage( 'videopagetool-category-preview' )->plain() ?></a>
 
 	<? endfor; ?>
 
