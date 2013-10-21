@@ -27,6 +27,15 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 			return false;
 		}
 
+		// set last visit date
+		$user->setOption( LicensedVideoSwapHelper::USER_VISITED_DATE, wfTimestamp() );
+		$user->saveSettings();
+
+		$helper = new LicensedVideoSwapHelper();
+
+		// clear cache for total new videos for the user
+		$helper->invalidateCacheTotalNewVideos( $user->getId() );
+
 		// Add assets to both LVS and LVS/History
 		// TODO: move this to Assets Manager once we release this
 		$this->response->addAsset( 'licensed_video_swap_js' );
@@ -57,9 +66,6 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$this->getContext()->getOutput()->setPageTitle( wfMessage('lvs-page-title')->plain() );
 
 		$currentPage = $this->getVal( 'currentPage', 1 );
-
-		// list of videos
-		$helper = new LicensedVideoSwapHelper();
 
 		// Get the list of videos that have suggestions
 		$this->videoList = $helper->getRegularVideoList( 'recent', $currentPage );
@@ -254,6 +260,9 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$reason = wfMessage( 'lvs-log-swap', $file->getTitle()->getText(), $newFile->getTitle()->getText() )->text();
 		$helper->addLog( $file->getTitle(), 'licensedvideoswap_swap', $reason );
 
+		// clear cache for total new videos
+		$helper->invalidateCacheTotalNewVideos();
+
 		// TODO: send request for tracking
 
 		$currentPage = $this->getVal( 'currentPage', 1 );
@@ -291,6 +300,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$videoTitle = $this->request->getVal( 'videoTitle', '' );
 		$forever = $this->request->getVal( 'forever', '' );
 		$suggestions = $this->request->getVal( 'suggestions', array() );
+		$currentPage = $this->getVal( 'currentPage', 1 );
 
 		// validate action
 		$response = $this->sendRequest( 'LicensedVideoSwapSpecial', 'validateAction', array( 'videoTitle' => $videoTitle ) );
@@ -343,7 +353,8 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$helper->setPageStatusKeep( $articleId, $isForever );
 		$helper->setPageStatusInfoKeep( $articleId, $value, $isForever );
 
-		$currentPage = $this->getVal( 'currentPage', 1 );
+		// clear cache for total new videos
+		$helper->invalidateCacheTotalNewVideos();
 
 		// Get list video of non-premium videos available to swap
 		$use_master = true;
