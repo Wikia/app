@@ -15,6 +15,9 @@ $color-suggestions-shadow-box: mix($color-page, #000, 85%);
 	$color-suggestions-shadow-box: mix($color-page, #000, 65%);
 }
 $color-suggestions-background-hover: lighten($color-page, 10%);
+@if ( $color-suggestions-background-hover == $color-suggestions-background ) {
+	$color-suggestions-background-hover: darken($color-page, 5%);
+}
 $color-suggestions-all-background: mix($color-page-border, #fff, 60%);
 @if $is-dark-wiki {
 	$color-suggestions-all-background: mix($color-suggestions-background, #000, 75%);
