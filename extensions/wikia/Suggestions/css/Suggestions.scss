@@ -26,6 +26,7 @@ $color-suggestions-all-text: mix($color-text, #fff, 75%);
 @if $is-dark-wiki {
 	$color-suggestions-all-text: mix($color-suggestions-all-background, #fff, 70%);
 }
+$color-suggestions-match: lighten($color-links, 10%);
 
 $element-height: 50px;
 $element-width: 355px;
@@ -112,7 +113,7 @@ $image-width: 55px;
 		top: 0;
 	}
 	.match {
-		color: $color-links;
+		color: $color-suggestions-match;
 	}
 	.redirect {
 		color: $color-suggestions-redirect;
