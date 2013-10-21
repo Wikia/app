@@ -58,7 +58,9 @@
 		"mediaWiki": false,
 		"Wikia": false,
 		"define": false,
-		"require": false
+		"require": false,
+		"Backbone": false,
+		"_": false
 	},
 	"jquery": true,
 	"node": true,

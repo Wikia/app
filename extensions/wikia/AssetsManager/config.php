@@ -992,6 +992,7 @@ $config['videopageadmin_js'] = array(
 		'//extensions/wikia/WikiaMiniUpload/js/WMU.js',
 		// TODO: probably move this jQuery plugin to /resources at some point
 		'//extensions/wikia/VideoPageTool/js/views/jquery.switcher.js',
+		'//extensions/wikia/VideoPageTool/js/services/underscore.templatecache.js',
 
 		'//extensions/wikia/VideoPageTool/js/models/videopageadmin.datepicker.js',
 		'//extensions/wikia/VideoPageTool/js/models/videopageadmin.thumbnail.js',
@@ -1003,6 +1004,7 @@ $config['videopageadmin_js'] = array(
 
 		'//extensions/wikia/VideoPageTool/js/models/videopageadmin.category.js',
 		'//extensions/wikia/VideoPageTool/js/collections/videopageadmin.category.js',
+		'//extensions/wikia/VideoPageTool/js/views/videopageadmin.autocompleteitem.js',
 		'//extensions/wikia/VideoPageTool/js/views/videopageadmin.latestforms.js',
 		'//extensions/wikia/VideoPageTool/js/views/videopageadmin.latest.js',
 	)
