@@ -91,7 +91,11 @@ files = [
 
 	// Video
 	'extensions/wikia/VideoPageTool/js/views/jquery.switcher.js',
-	'extensions/wikia/VideoPageTool/js/spec/*.spec.js'
+	'extensions/wikia/VideoPageTool/js/spec/*.spec.js',
+
+	//Suggestions
+	'extensions/wikia/Suggestions/js/Matcher.js',
+	'extensions/wikia/Suggestions/js/spec/*.spec.js'
 ];
 
 notCovered = [
