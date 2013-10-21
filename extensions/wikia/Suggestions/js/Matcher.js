@@ -69,14 +69,18 @@ define('suggest_matcher', [], function() {
 		matchSuggestion: function( suggestion, pattern ) {
 			var redirects = suggestion.redirects || [],
 				matchResult, i;
-			if ( ( matchResult = this.match( suggestion.title, pattern ) ) ) {
-				matchResult.type = 'title';
-				return matchResult;
-			}
-			for ( i = 0; i< redirects.length; i++ ) {
-				if ( ( matchResult = this.match( redirects[i], pattern ) ) ) {
-					matchResult.type = 'redirect';
+			if ( suggestion.title && suggestion.title.length ) {
+				if ( ( matchResult = this.match( suggestion.title, pattern ) ) ) {
+					matchResult.type = 'title';
 					return matchResult;
+				}
+			}
+			if ( redirects && redirects.length ) {
+				for ( i = 0; i< redirects.length; i++ ) {
+					if ( ( matchResult = this.match( redirects[i], pattern ) ) ) {
+						matchResult.type = 'redirect';
+						return matchResult;
+					}
 				}
 			}
 		}
