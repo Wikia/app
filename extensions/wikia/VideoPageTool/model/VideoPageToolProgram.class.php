@@ -235,7 +235,7 @@ class VideoPageToolProgram extends WikiaModel {
 
 			$row = $db->selectRow(
 				array( 'vpt_program' ),
-				array( 'unix_timestamp(publish_date) as publish_date' ),
+				array( 'unix_timestamp(publish_date) as unix_time' ),
 				array(
 					'language' => $language,
 					'publish_date <= '.$db->addQuotes( $date ),
@@ -245,7 +245,7 @@ class VideoPageToolProgram extends WikiaModel {
 			);
 
 			if ( $row ) {
-				$nearestDate = $row->publish_date;
+				$nearestDate = $row->unix_time;
 
 				// Cache this for at most one day
 				$app->wg->Memc->set( $nearestKey, $nearestDate, self::DATE_CACHE_TTL );
@@ -592,15 +592,14 @@ class VideoPageToolProgram extends WikiaModel {
 			$db = wfGetDB( DB_SLAVE );
 
 			$result = $db->select(
-				array( 'vpt_program', 'vpt_asset' ),
+				array( 'vpt_asset' ),
 				array( 'distinct section' ),
 				array(
-					'vpt_program.program_id' => $this->programId,
+					'vpt_asset.program_id' => $this->programId,
 					'vpt_asset.section' => $sections,
 				),
 				__METHOD__,
-				array( 'ORDER BY' => 'section' ),
-				array( 'vpt_asset' => array( 'JOIN', 'vpt_asset.program_id = vpt_program.program_id' ) )
+				array( 'ORDER BY' => 'section' )
 			);
 
 			$list = array();

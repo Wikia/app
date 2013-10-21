@@ -46,8 +46,8 @@ class VideoPageToolAssetCategory extends VideoPageToolAsset {
 	 */
 	public static function getDefaultAssetData() {
 		$data = array(
-			'categoryName' => wfMessage( 'videopagetool-category-name' )->plain(),
-			'displayTitle' => wfMessage( 'videopagetool-category-display-title' )->plain(),
+			'categoryName' => '',
+			'displayTitle' => '',
 		);
 		$defaultData = array_merge( $data, parent::getDefaultAssetData() );
 
