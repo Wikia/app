@@ -1,4 +1,4 @@
-define('suggestions_client', ['jquery', 'suggest_matcher', 'wikia.log'], function($, matcher, log) {
+define('SuggestionsClient', ['jquery', 'SuggestionsMatcher', 'wikia.log'], function($, matcher, log) {
 	'use strict';
 	log('Building client', log.levels.info, 'suggestions');
 	var cache = {},

@@ -1488,15 +1488,17 @@ $config['api_docs_scss'] = array(
 $config['suggestions_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
-		'//extensions/wikia/Suggestions/js/Matcher.js',
-		'//extensions/wikia/Suggestions/js/SuggestionsClient.js',
 		'//extensions/wikia/Suggestions/js/Suggestions.js',
+		'//extensions/wikia/Suggestions/js/SuggestionsClient.js',
+		'//extensions/wikia/Suggestions/js/SuggestionsMatcher.js',
+		'//extensions/wikia/Suggestions/js/SuggestionsView.js',
+		'//extensions/wikia/Suggestions/js/SuggestionsViewModel.js',
 	)
 );
 
 $config['suggestions_scss'] = array(
 	'type' => AssetsManager::TYPE_SCSS,
 	'assets' => array(
-		'//extensions/wikia/Suggestions/css/Suggestions.scss',
+		'//extensions/wikia/Suggestions/css/Suggestions_n.scss',
 	)
 );

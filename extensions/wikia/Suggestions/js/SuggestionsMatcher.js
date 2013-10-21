@@ -1,4 +1,4 @@
-define('suggest_matcher', [], function() {
+define('SuggestionsMatcher', [], function() {
 	'use strict';
 	function testChar( character ) {
 		// todo change regex to match solr logic

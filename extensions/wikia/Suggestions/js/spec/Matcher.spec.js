@@ -1,6 +1,6 @@
 describe('Test matcher', function() {
 	'use strict';
-	var matcher = modules.suggest_matcher();
+	var matcher = modules.SuggestionsMatcher();
 
 	it('is defined', function() {
 		expect(matcher).toBeDefined();
