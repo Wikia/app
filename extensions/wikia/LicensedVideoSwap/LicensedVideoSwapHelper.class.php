@@ -1088,13 +1088,18 @@ SQL;
 			$statusNew = self::STATUS_NEW;
 			$pageStatus = WPP_LVS_STATUS;
 			$visitedDate = $this->wg->User->getOption( self::USER_VISITED_DATE );
+			if ( empty( $visitedDate ) ) {
+				$sqlJoin = '';
+			} else {
+				$sqlJoin = "AND p2.props > $visitedDate";
+			}
 
 			$db = wfGetDB( DB_SLAVE );
 
 			$sql = <<<SQL
 				SELECT count(*) total
 				FROM page_wikia_props p1
-				LEFT JOIN page_wikia_props p2 ON p1.page_id = p2.page_id AND p2.propname = 20 AND p2.props > $visitedDate
+				LEFT JOIN page_wikia_props p2 ON p1.page_id = p2.page_id AND p2.propname = 20 $sqlJoin
 				WHERE p1.propname = $pageStatus AND (p1.props & $statusNew != 0) AND p2.page_id is not null
 SQL;
 
