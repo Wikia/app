@@ -22,7 +22,7 @@
 
     <target name="phpunit">
 		<mkdir dir="${basedir}/build/logs" />
-        <exec executable="php" dir="${basedir}" failonerror="true">
+        <exec executable="php" dir="${basedir}" failonerror="true" spawn="true">
             <env key="SERVER_DBNAME" value="${dbname}" />
             <arg line="run-test.php
                        --log-junit ${basedir}/build/logs/phpunit.xml
