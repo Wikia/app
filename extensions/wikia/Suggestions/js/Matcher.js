@@ -42,17 +42,19 @@ define('suggest_matcher', [], function() {
 		match: function( title, pattern ) {
 			var prevTest = true,
 				match, position;
-			for( position = 0; position < title.length; position++ ) {
-				if( testChar( title[position] ) ) {
-					prevTest = true;
-				} else {
-					if ( prevTest ) {
-						match = matchStartingFrom( title, pattern, position );
-						if ( match ) {
-							return match;
+			if ( title && title.length ) {
+				for( position = 0; position < title.length; position++ ) {
+					if( testChar( title[position] ) ) {
+						prevTest = true;
+					} else {
+						if ( prevTest ) {
+							match = matchStartingFrom( title, pattern, position );
+							if ( match ) {
+								return match;
+							}
 						}
+						prevTest = false;
 					}
-					prevTest = false;
 				}
 			}
 			return null;
