@@ -2,7 +2,7 @@
 /**
  * Integration test for file uploads and removals
  *
- * @group Integration
+ * @group Broken
  * @author macbre
  */
 class ImagesServiceUploadTest extends WikiaBaseTest {
