@@ -243,6 +243,8 @@ OO.plugin("AgeGateModule", function (OO, _, $, W) {
         onWillPlayAds: function(funcLabel, data) {
             this.currentPlaybackType = 'ad';
 
+            this.onPlay();
+
             this.consoleLog("EVENT: onWillPlayAds");
         },
 
@@ -253,7 +255,9 @@ OO.plugin("AgeGateModule", function (OO, _, $, W) {
         },
 
         onPlay: function () {
-            if(this.ageRequired && !this.ageVerified && this.currentPlaybackType == 'content') {
+            this.consoleLog("EVENT: onPlay");
+
+            if(this.ageRequired && !this.ageVerified) {
                 var action = this.readCookies();
 
                 if(action != 'pass') {
@@ -283,8 +287,6 @@ OO.plugin("AgeGateModule", function (OO, _, $, W) {
             }
 
             this.playing = true;
-
-            this.consoleLog("EVENT: onPlay");
         },
 
         onPause: function () {

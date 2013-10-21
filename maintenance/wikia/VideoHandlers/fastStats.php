@@ -12,23 +12,22 @@ class FastStats {
 		}
 
 		// Get number of matching videos and total number of matches
-		$sql = 'SELECT props
-				FROM video_info v, page p, page_wikia_props wp
-				WHERE video_title=page_title
-				  AND p.page_id = wp.page_id
-				  AND wp.propname = 19
-				  AND premium = 0';
+		$sql = 'SELECT page_id, props
+				FROM page_wikia_props
+				WHERE propname = 19';
 		$result = $db->query( $sql );
 
 		$num_matching = 0;
 		$total_matches = 0;
+		$countedPages = array();
 		while ( $row = $db->fetchObject($result) ) {
 			$info = unserialize( $row->props );
 			$num_matching++;
 			$total_matches += count($info);
+			$countedPages[$row->page_id] = 1;
 		}
 
-		$sql = 'SELECT props
+		$sql = 'SELECT page_id, props
 				FROM page_wikia_props
 				WHERE propname = 18';
 		$result = $db->query( $sql );
@@ -41,6 +40,13 @@ class FastStats {
 				$num_keeps++;
 			} else {
 				$num_swaps++;
+			}
+
+			// If this page wasn't counted above as having or more suggestions,
+			// count it here.  This can happen if the suggestions get cleared out
+			// after the video has been kept/swapped
+			if ( !array_key_exists( $row->page_id, $countedPages) ) {
+				$num_matching++;
 			}
 		}
 
