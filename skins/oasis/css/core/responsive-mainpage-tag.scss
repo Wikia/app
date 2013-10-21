@@ -1,0 +1,39 @@
+@import "layout";
+@import "responsive-variables";
+
+@if ( $responsive-layout-enabled ) {
+	.lcs-container {
+		margin-right: $width-rail + $width-padding;
+	}
+
+	.main-page-tag-lcs-exploded {
+		margin-right: -( $width-rail + $width-gutter );
+	}
+
+	@media screen and (max-width: $breakpoint-small) {
+	// ABTesting: DAR-1859: START
+		html:not(.keep-rail-on-right) {
+			// ABTesting: DAR-1859: END
+
+			// START - main page tag fixes
+			.home-top-right-ads {
+				display: none;
+			}
+
+			.lcs-container {
+				margin-right: 0;
+			}
+
+			.main-page-tag-lcs {
+				float: none;
+				margin-right: 0;
+			}
+
+			.main-page-tag-rcs {
+				float: none;
+				width: auto;
+			}
+			// END - main page tag fixes
+		}
+	}
+}

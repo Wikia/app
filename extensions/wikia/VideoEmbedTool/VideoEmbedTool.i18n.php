@@ -58,6 +58,7 @@ $messages['en'] = array(
 	'vet-warn2' => 'Please supply URL of the video you like to add',
 	'vet-warn3' => 'Please supply name of the video you like to add',
 	'vet-width' => 'Width',
+	'vet-uploaddisabled' => 'Video uploads are disabled on this wiki',
 );
 
 
@@ -1911,6 +1912,7 @@ Podaj nazwę tego filmu. Może to być np. opis jego zawartości.',
 	'vet-right' => 'Prawo',
 	'vet-gallery' => 'Galeria',
 	'vet-protected' => 'Ten film jest zabezpieczony.',
+	'vet-uploaddisabled' => 'Przesyłanie filmów zostało na tej wiki wyłączone.',
 );
 
 /** Piedmontese (Piemontèis)

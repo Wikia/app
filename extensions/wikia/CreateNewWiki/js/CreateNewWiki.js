@@ -295,8 +295,7 @@ var WikiBuilder = {
 				method: 'CheckDomain',
 				data: {
 					name: wd,
-					lang: lang,
-					type: ''
+					lang: lang
 				},
 				callback: function(res) {
 					if(res) {

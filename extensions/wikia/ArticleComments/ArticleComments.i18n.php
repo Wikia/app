@@ -430,11 +430,15 @@ $messages['bg'] = array(
 	'article-comments-delete' => 'изтриване',
 	'article-comments-edit' => 'редактиране',
 	'article-comments-history' => 'история',
+	'article-comments-error' => 'Коментарът не може да бъде съхранен',
 	'article-comments-toc-item' => 'Коментари',
 	'article-comments-reply' => 'Отговор',
 	'article-comments-show-all' => 'Показване на всички коментари',
+	'article-comments-page-spacer' => '&#160...&#160',
 	'wikiamobile-article-comments-none' => 'Няма коментари',
+	'wikiamobile-article-comments-placeholder' => 'Публикуване на коментар',
 	'wikiamobile-article-comments-show' => 'Показване',
+	'wikiamobile-article-comments-post-fail' => 'Неуспех при съхраняването на коментара, опитайте отново по-късно',
 );
 
 /** Bengali (বাংলা)
@@ -2694,6 +2698,7 @@ $messages['ps'] = array(
 	'article-comments-prev-page' => 'پخوانی',
 	'article-comments-next-page' => 'راتلونکی',
 	'article-comments-page-spacer' => '&#160...&#160',
+	'wikiamobile-article-comments-header' => 'تبصرې <span class=cnt id=wkArtCnt>$1</span>',
 	'wikiamobile-article-comments-none' => 'بې تبصرې',
 	'wikiamobile-article-comments-view' => 'ځوابونه کتل',
 	'wikiamobile-article-comments-replies' => 'ځوابونه',

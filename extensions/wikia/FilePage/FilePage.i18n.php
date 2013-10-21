@@ -536,6 +536,7 @@ $messages['ps'] = array(
 );
 
 /** Portuguese (português)
+ * @author Hamilton Abreu
  * @author Luckas
  */
 $messages['pt'] = array(
@@ -544,7 +545,7 @@ $messages['pt'] = array(
 	'video-page-file-list-pagination' => '$1 de $2',
 	'file-page-replace-button' => 'Substituir',
 	'file-page-tab-about' => 'Sobre',
-	'file-page-tab-history' => 'Histórico do arquivo',
+	'file-page-tab-history' => 'Histórico do ficheiro',
 	'file-page-tab-metadata' => 'Metadados',
 	'file-page-more-links' => 'Ver lista completa',
 );

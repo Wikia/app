@@ -149,7 +149,9 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 			} else {
 				// file specified in querystring doesn't exist on the page
 				toast.show( msg('wikiamobile-shared-file-not-available') );
-				qs.removeVal('file' ).replaceState();
+				if(!Features.gameguides){
+					qs.removeVal( 'file' ).replaceState();
+				}
 			}
 		}
 
@@ -261,8 +263,11 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 					currentWrapper.innerHTML = html;
 				}
 			}
+
 			// update url for sharing
-			currQS.setVal( 'file', imgTitle, true ).replaceState();
+			if(!Features.gameguides){
+				currQS.setVal( 'file', imgTitle, true ).replaceState();
+			}
 		}else if(currentMedia.type == Media.types.IMAGE){
 			var img = new Image();
 			img.src = currentMedia.url;
@@ -298,8 +303,11 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 				origW = img.width;
 				origH = img.height;
 			}
+
 			// update url for sharing
-			currQS.setVal( 'file', imgTitle, true ).replaceState();
+			if(!Features.gameguides){
+				currQS.setVal( 'file', imgTitle, true ).replaceState();
+			}
 		} else if(currentMedia.type){//custom
 			var data = {
 					currentNum: currentNum,
@@ -314,8 +322,11 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 			if(data.zoomable != zoomable){
 				zoomable = data.zoomable
 			}
+
 			// We're showing an ad or other custom media type.  Don't support sharing.
-			currQS.removeVal( 'file' ).replaceState();
+			if(!Features.gameguides){
+				currQS.removeVal( 'file' ).replaceState();
+			}
 		}
 
 		// Future video/image views will come from modal
@@ -566,8 +577,11 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 			onClose: function(){
 				pager.cleanup();
 				removeZoom();
+
 				// remove file=title from URL
-				qs.removeVal('file' ).replaceState();
+				if(!Features.gameguides){
+					qs.removeVal( 'file' ).replaceState();
+				}
 				// reset tracking clickSource
 				clickSource = 'embed';
 			},
