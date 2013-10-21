@@ -80,7 +80,7 @@ define('SuggestionsView', ['SuggestionsViewModel'], function( viewModel ) {
 				showAds();
 				dropdown.empty();
 			}
-		}, 0);
+		}, 100);
 	}
 	function emitEvent( eventName ) {
 		dropdown.trigger( eventName );
