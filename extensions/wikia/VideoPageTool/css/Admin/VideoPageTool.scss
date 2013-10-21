@@ -1,4 +1,5 @@
 @import "skins/oasis/css/core/color";
+@import "skins/oasis/css/mixins/arrow-hollow";
 @import "skins/oasis/css/mixins/border-radius";
 @import "skins/oasis/css/mixins/box-sizing-border-box";
 @import "skins/oasis/css/mixins/clearfix";
@@ -73,8 +74,9 @@ $label-padding: 10px 10px 10px 0px;
 	}
 	.input-group {
 		@include box-sizing-border-box;
+		clear: none;
 		padding: 5px 0;
-		width: 100%;
+		width: 68%;
 		&.border {
 			border-bottom: 1px solid $color-page-border-subtle;
 		}
@@ -138,10 +140,6 @@ $label-padding: 10px 10px 10px 0px;
 
 	// Featured video form styles
 	.featured-video {
-		.input-group {
-			clear: none;
-			width: 68%;
-		}
 		.media-btn {
 			float: left;
 			height: 25px;
@@ -180,6 +178,43 @@ $label-padding: 10px 10px 10px 0px;
 		}
 		.video-key-group label.error {
 			float: none;
+		}
+	}
+
+	// Latest video form styles
+	.latest-video-form {
+		.form-box {
+			padding-top: 10px;
+		}
+		.search-button {
+			float: right;
+			margin: -21px -70px 0 0;
+		}
+		.preview {
+			@include box-sizing-border-box;
+			border: 1px solid $color-page-border-subtle;
+			border-top-width: 0;
+			clear: both;
+			color: $color-alternate-text;
+			display: block;
+			margin-top: $module-box-margin-bottom * -1;
+			margin-bottom: $module-box-margin-bottom;
+			padding: 5px 10px;
+			text-align: center;
+			width: 100%;
+			span {
+				@include arrow-hollow( 10px, 3px, #CCC, white, 'down' );
+				float: right;
+				right: 45px;
+				top: 7px;
+				&:first-child {
+					float: left;
+					right: 0px;
+				}
+				&.up {
+					@include arrow-hollow( 10px, 3px, #666, white, 'up' );
+				}
+			}
 		}
 	}
 }
