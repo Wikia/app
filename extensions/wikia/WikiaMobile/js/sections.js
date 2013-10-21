@@ -7,168 +7,69 @@
  * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
  */
 
-define('sections', ['JSMessages', 'jquery'], function(msg, $){
+define('sections', ['jquery'], function($){
 	'use strict';
 
 	var d = document,
-		OPENCLASS = 'open',
-		sections = $('h2[id],h3[id],h4[id]', document.getElementById('mw-content-text'));
-
-	function init(wrap){
-		var fragment,
-			article,
-			chevron,
-			$d;
-
-		if(wrap){
-			article = d.getElementById('mw-content-text');
-			fragment = d.createDocumentFragment();
-			chevron = '<span class=chev></span>';
-			$d = $(d);
-
-			//avoid running if there are no sections which are direct children of the article section
-			if(d.querySelector('#mw-content-text > h2')){
-				var contents = article.childNodes,
-					root = fragment,
-					x,
-					y = contents.length,
-					currentSection = false,
-					node,
-					nodeName,
-					isH2;
-
-				for (x=0; x < y; x++) {
-					node = $(contents[x]);
-					nodeName = node[0].nodeName;
-					isH2 = (nodeName === 'H2');
-
-					if (nodeName !== '#comment' && nodeName !== 'SCRIPT') {
-						if(node[0].id === 'WkMainCntFtr' || node[0].className === 'printfooter' || node.hasClass('noWrap')){
-							//do not wrap these elements
-							root = fragment;
-						}else if (isH2){
-							node = node
-								.clone(true)
-								.addClass('collSec')
-								//append chevron
-								.append(chevron);
-
-							fragment.appendChild(node[0]);
-
-							currentSection = $(d.createElement('section')).addClass('artSec').attr('data-index', x)[0];
-							fragment.appendChild(currentSection);
-
-							root = currentSection;
-							continue;
-						}
-
-						root.appendChild(node.clone(true)[0]);
-					}
-				}
-
-				article.innerHTML = '';
-				article.appendChild( fragment );
-			}
-
-			//this has to run even if we don't find any sections on a page for ie. Category Pages, pages without any sections but with readmore and stuff
-			$('#wkPage').on('click', '.collSec', function(){
-				toggle(this);
-			}).on('click', '.goBck', function(){
-				var parent = $(this.parentElement);
-
-				parent.removeClass(OPENCLASS).prev().removeClass(OPENCLASS)[0].scrollIntoView();
-
-				$d.trigger('sections:close', [parent]);
-			});
-		}
-	}
-
-	function toggle(h2, scroll){
-		h2 = $(typeof h2 === 'string' ? document.getElementById(h2) : h2);
-
-		if(h2.length){
-			if(h2.hasClass(OPENCLASS)){
-				close(h2);
-			}else{
-				open(h2, scroll);
-			}
-		}
-	}
-
-	function find(heading){
-		var h2;
-
-		if(typeof heading === 'string') {
-			heading = $(d.getElementById(heading.replace(/ /g, '_')));
-		}
-
-		//find in what section is the header
-		if(heading.length && !heading.is('h1,h2')) h2 = heading.parent('.artSec').prev();
-
-		return [h2 || $(heading), heading];
-	}
+		sections = $('h2[id],h3[id],h4[id]', document.getElementById('mw-content-text')).toArray(),
+		l = sections.length,
+		lastSection,
+		timeout;
 
 	function scrollTo(header){
-		var top =  header.offset().top;
-		//scroll header into view
-		//if the page is long that is the way I found it reliable
-		//without calling it like that
-		//android sometimes did not scroll at all
-		//and iOS sometimes scrolled to a wrong place
-		window.scrollTo(0, top);
-		setTimeout(function(){
-			window.scrollTo(0, top);
-		}, 50);
+		header[0].scrollIntoView();
 	}
-
-	function open(id, scroll) {
-		var headers = find(id),
-			h2 = headers[0],
-			next;
-
-		if(!h2.hasClass(OPENCLASS)) {
-			next = h2.addClass(OPENCLASS).next().addClass(OPENCLASS);
-		}
-
-		if(scroll && headers[1]){
-			scrollTo(headers[1]);
-		}
-	}
-
 
 	function current(){
 		var top = window.scrollY,
-			section;
+			section,
+			last,
+			i = 0;
 
-		sections.each(function(){
-			if($(this).offset().top <= top) {
-				section = $(this);
-			}else{
-				return false;
+		for(;i < l;i++) {
+			if(sections[i].offsetTop - 5 > top) {
+				break;
 			}
-		});
+		}
 
-		return section;
+		return $(sections[i-1]);
 	}
 
-	var lastSection = current();
+	lastSection = current();
 
-	window.addEventListener('scroll', function(){
+	function onScroll(){
 		var currentSection = current();
 
 		if(currentSection && !currentSection.is(lastSection)) {
-			console.log(currentSection)
-			$('#wkTOC a').removeClass('current').filter('a[href="#'+currentSection.attr('id')+'"]').addClass('current');
-			//document.getElementById('TOCSection').innerHTML = currentSection.attr('id');
+			$(d).trigger('section:changed', {
+				section: currentSection,
+				id: currentSection.length ? currentSection[0].id : undefined
+			});
+
 			lastSection = currentSection;
+		}
+
+		timeout = null;
+	}
+
+	window.addEventListener('scroll', function(){
+		if(!timeout) {
+			timeout = setTimeout(onScroll, 100);
 		}
 	});
 
+	function enableTracking() {
+
+	}
+
+	function disableTracking() {
+
+	}
+
 	return {
-		init: init,
-		toggle: toggle,
-		open: open,
-		close: close,
+		enableTracking: enableTracking,
+		disableTracking: disableTracking,
+		init: function(){},
 		scrollTo: scrollTo,
 		current: current
 	};

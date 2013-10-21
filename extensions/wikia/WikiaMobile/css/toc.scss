@@ -27,25 +27,26 @@ $toc-background: #F8F8F8;
 	background: $toc-background;
 	z-index: 0;
 	-webkit-transition: -webkit-transform .1s ease-out;
-	-webkit-transform: translate(-100%);
+	-webkit-transform: translate3d(-100%,0,0);
 
 	z-index: 101;
 
 	counter-reset: level1, level2, level3;
 
-	-border-right:1px solid $border-color;
-
 	.TOCOpen & {
-		box-shadow: 0 0 10px rgb(0, 0, 0);
-		-webkit-transform: translate(0);
+		//box-shadow: 0 0 10px rgb(0, 0, 0);
+		-webkit-transform: translate3d(0,0,0);
 	}
 
 	header {
+		background: $toc-background;
 		border-bottom: 1px solid $border-color;
 		text-transform: uppercase;
 		line-height: $header-height;
 		padding-left: 20px;
+		position: relative;
 		font-weight: 600;
+		z-index: 1;
 	}
 
 }
@@ -99,6 +100,7 @@ $toc-background: #F8F8F8;
 	a {
 		color: $page-text-color;
 		display: inline-block;
+		width: 100%;
 
 		&:before {
 			padding-right: 10px;
@@ -106,20 +108,24 @@ $toc-background: #F8F8F8;
 	}
 }
 
+$level0-padding: 20px;
+$level0-border-left-width: 3px;
+
 .level0 {
 	padding: 0 0 $header-height 0;
 	overflow: auto;
 	height: 100%;
 
 	> li {
-		border-bottom: 1px solid #D8D8D8;
 		counter-increment: level1;
 
 		> a {
-			border-left: 5px solid $toc-background;
+			border-left: $level0-border-left-width solid $toc-background;
+
+			border-bottom: 1px solid #D8D8D8;
 
 			font-size: 1.15rem;
-			padding-left: 15px;
+			padding-left: $level0-padding - $level0-border-left-width;
 
 			-webkit-transition: border-left .2s;
 
@@ -129,7 +135,7 @@ $toc-background: #F8F8F8;
 		}
 
 		> .current {
-			border-left: 5px solid $nice-blue;
+			border-left: $level0-border-left-width solid $nice-blue;
 		}
 	}
 
@@ -137,8 +143,6 @@ $toc-background: #F8F8F8;
 }
 
 .level1 {
-	border-top: 1px solid #D8D8D8;
-
 	> li {
 		counter-increment: level2;
 
@@ -187,6 +191,8 @@ $toc-background: #F8F8F8;
 
 	.current {
 		color: $nice-blue;
+		color: green;
+		font-weight: 600;
 	}
 }
 
@@ -206,8 +212,33 @@ $toc-background: #F8F8F8;
 		}
 	}
 
-	&.open .chevron {
-		-webkit-transform: rotate(90deg);
+	&.open {
+		.chevron {
+			-webkit-transform: rotate(90deg);
+		}
+	}
+
+	&.fixed {
+		padding-top: 45px;
+
+		> a {
+			position: fixed;
+			top: 45px;
+			width: 100%;
+			background: $toc-background;
+		}
+	}
+
+	&.bottom {
+		padding-top: 45px;
+		position: relative;
+
+		> a {
+			position: absolute;
+			bottom: 0;
+			top: inherit;
+			background: $toc-background;
+		}
 	}
 
 }

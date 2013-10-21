@@ -9,11 +9,10 @@ define('toc', ['track', 'sections', 'wikia.window', 'jquery', 'wikia.mustache'],
 		$body = $(d.body),
 		table = [],
 		conStyle,
-		tocCache;
-
-	$('#wkTOCHandle').on('click', function(){
-		$body.toggleClass('TOCOpen hidden');
-	})
+		tocCache,
+		$anchors,
+		timer,
+		$openOl;
 
 	function open(){
 		$body.addClass('TOCOpen hidden');
@@ -109,7 +108,7 @@ define('toc', ['track', 'sections', 'wikia.window', 'jquery', 'wikia.mustache'],
 			children: get()
 		},
 		ol = "<ol class='toc-list level{{level}}'>{{#children}}{{> lis}}{{/children}}</ol>",
-		lis = "{{#.}}<li {{#children.length}}class=has-children{{/children.length}}><a href='#{{id}}'>{{name}}</a>{{#firstLevel}}{{#children.length}}<span class='chevron right'></span>{{/children.length}}{{/firstLevel}}{{#children.length}}{{> ol}}{{/children.length}}</li>{{/.}}",
+		lis = "{{#.}}<li {{#children.length}}class=has-children{{/children.length}}><a href='#{{id}}'>{{name}}{{#firstLevel}}{{#children.length}}<span class='chevron right'></span>{{/children.length}}{{/firstLevel}}</a>{{#children.length}}{{> ol}}{{/children.length}}</li>{{/.}}",
 		$ol;
 
 	$ol = $('#wkTOC')
@@ -117,6 +116,9 @@ define('toc', ['track', 'sections', 'wikia.window', 'jquery', 'wikia.mustache'],
 			ol: ol,
 			lis: lis
 		}))
+		.on('click', 'header', function(){
+			window.scrollTo(0,0);
+		})
 		.on('click','li', function(event){
 			var $li = $(this),
 				$a = $li.find('a').first();
@@ -124,13 +126,83 @@ define('toc', ['track', 'sections', 'wikia.window', 'jquery', 'wikia.mustache'],
 			event.stopPropagation();
 			event.preventDefault();
 
-			sections.open($a.attr('href').slice(1), true);
+			//() and . have to be escaped before passed to querySelector
+			sections.scrollTo($($a.attr('href').replace(/[()\.]/g, '\\$&')));
 
-			if($li.is('.has-children')) {
-				$li.toggleClass('open');
+			if($li.is('.has-children') && $li.parent().is('.level0')) {
+				$li.toggleClass('fixed open').siblings().removeClass('fixed open');
 				$ol.scrollTop(this.offsetTop - 45);
+
+				if($li.hasClass('open')) {
+					$openOl = $li.find('ol').first();
+				}else {
+					$openOl = null;
+				}
 			}
-		}).find('.level0');
+		})
+		.find('.level0')
+		.on('scroll', function(event){
+			var self = this;
+			if(!timer) {
+				timer = setTimeout(function(){
+					timer = null;
+
+					var $active,
+						scrollTop,
+						offsetTop,
+						$parent;
+
+					if($openOl) {
+						scrollTop = self.scrollTop + 90;
+						offsetTop = $openOl[0].offsetTop;
+						$parent = $openOl.parent();
+
+						if(scrollTop < offsetTop) {
+							$parent.removeClass('fixed');
+						} else if (scrollTop >= offsetTop) {
+							var x = 0;
+
+							if($parent.hasClass('bottom')) {
+								x = 45;
+							}
+
+							if(offsetTop + $openOl[0].offsetHeight - scrollTop+ x >= 0){
+								$parent.removeClass('bottom').addClass('fixed');
+							} else {
+								$parent.removeClass('fixed').addClass('bottom');
+							}
+						}
+					}
+				}, 50);
+			}
+
+		});
+
+	$anchors = $ol.find('li > a');
+
+	$(d).on('section:changed', function(event, data) {
+		if(data.id) {
+			var $currentAchor = $anchors
+				.removeClass('current')
+				.filter('a[href="#' + data.id + '"]')
+				.addClass('current');
+
+			$currentAchor
+				.parents('li')
+				.last()
+				.find('a')
+				.first()
+				.addClass('current');
+
+			//$ol.scrollTop($currentAchor.offset().top - 45);
+
+		}
+
+	});
+
+	$('#wkTOCHandle').on('click', function(){
+		$body.toggleClass('TOCOpen hidden');
+	});
 
 	return {
 		init: init,

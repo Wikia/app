@@ -2,17 +2,11 @@ require(['wikia.querystring', require.optional('topbar'), require.optional('toc'
 	function (qs, topbar, toc, share, popover, cookies, track, VideoBootstrap, window, $) {
 		'use strict';
 
-		var d = document,
-			clickEvent = 'click',
-			//used to add sharing menu to a page
-			wkShrPag = d.getElementById('wkShrPag');
+		var d = window.document,
+			clickEvent = 'click';
 
 		//add chevrons to elements that need it
 		$(d.getElementsByClassName('addChev')).append('<span class=chev></span>');
-
-//		if(toc) {
-//			toc.init();
-//		}
 
 		//used to handle close tracking on Read More section
 		$(d.getElementById('wkRelPag')).on('click', '.open', function(){
@@ -44,25 +38,6 @@ require(['wikia.querystring', require.optional('topbar'), require.optional('toc'
 			toc.close();
 			topbar.close();
 		});
-
-		if (wkShrPag) {
-			popover({
-				on: wkShrPag,
-				create: function(cnt){
-					cnt.addEventListener(clickEvent, function(){
-						track.event('share', track.CLICK, 'page');
-					}, true);
-					return share()(cnt);
-				},
-				open: function () {
-					track.event('share', track.CLICK, {label: 'open'});
-				},
-				close: function (ev) {
-					if(ev.target.tagName !== 'A') {track.event('share', track.CLICK, {label: 'close'});}
-				},
-				style: 'right:0;'
-			});
-		}
 
 		$(d.getElementById('wkFtr')).on('click' , 'a', function(event){
 			track.event('footer', track.TEXT_LINK, {
