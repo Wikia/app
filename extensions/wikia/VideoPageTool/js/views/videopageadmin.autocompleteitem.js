@@ -11,6 +11,7 @@ define( 'views.videopageadmin.autocompleteitem', [
 				className: 'autocomplete-item',
 				template: TemplateCache.get( '#autocomplete-item' ),
 				render: function() {
+					console.log( this.template );
 					var html = this.template( this.model.toJSON() );
 					this.$el.html( html );
 					return this;

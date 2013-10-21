@@ -1,8 +1,7 @@
 define( 'views.videopageadmin.latest', [
 		'jquery',
-		'collections.videopageadmin.category',
 		'views.videopageadmin.latestforms'
-	], function( $, CategoryCollection, FormGroupView ) {
+	], function( $, FormGroupView ) {
 	'use strict';
 
 	var LatestVideosView = Backbone.View.extend({
@@ -10,8 +9,7 @@ define( 'views.videopageadmin.latest', [
 				this.$formGroups = this.$el.find('.form-box');
 				this.formSubViews = _.map( this.$formGroups, function( e ) {
 						return new FormGroupView({
-								el: e,
-								collection: new CategoryCollection()
+								el: e
 						});
 				});
 			},

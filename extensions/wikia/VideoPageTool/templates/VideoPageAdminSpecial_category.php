@@ -10,6 +10,9 @@
 		?>
 
 		<div class="form-box latest-video with-nav">
+			<div class="autocomplete-w1">
+				<!-- empty element to be used for autocomplete -->
+			</div>
 			<span class="count"><?= $x ?>.</span>
 			<div class="input-group border">
 				<label for="category-name-<?= $x ?>"><?= wfMessage( 'videopagetool-category-label-name' )->plain() ?></label>
