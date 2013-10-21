@@ -238,6 +238,7 @@ class ChatAjax {
 	function BanModal( ) {
 		global $wgRequest, $wgCityId, $wgLang;
 		wfProfileIn( __METHOD__ );
+		$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
 
 		$userId = $wgRequest->getVal('userId', 0);
 
@@ -245,16 +246,15 @@ class ChatAjax {
 		$isoTime = "";
 		$fmtTime = "";
 
-		if( !empty( $userId ) && $user = User::newFromID( $userId ) ) {
-			$ban = Chat::getBanInformation( $wgCityId, $user );
-			if( $ban !== false ) {
-				$isChangeBan = true;
-				$isoTime = wfTimestamp( TS_ISO_8601, $ban->end_date );
+		if(!empty($userId) && $user = User::newFromID($userId)) {
+			 $ban = Chat::getBanInformation($wgCityId, $user);
+			 if($ban !== false)  {
+			 	$isChangeBan = true;
+			 	$isoTime = wfTimestamp( TS_ISO_8601, $ban->end_date );
 				$fmtTime = $wgLang->timeanddate( wfTimestamp( TS_MW, $ban->end_date ), true );
-			}
+			 }
 		}
 
-		/*
 		$tmpl->set_vars(array(
 				'options' => Chat::GetBanOptions(),
 				'isChangeBan' => $isChangeBan,
@@ -262,42 +262,9 @@ class ChatAjax {
 				'fmtTime' => $fmtTime
 			)
 		);
-		*/
-
 		$retVal = array();
-		$uiFactory = \Wikia\UI\Factory::getInstance();
-		$retVal['template'] = $uiFactory->init( 'modal' )->render([
-			'type' => 'default',
-			'vars' => [
-				'id' => 'chatBanModal',
-				'size' => 'small',
-				'content' => 'Test',
-				'title' => 'Test',
-				'closeButton' => true,
-				'primaryBtn' => $uiFactory->init( 'button' )->render([
-					'type' => 'link',
-					'vars' => [
-						'id' => 'chatBanModalCancelBtn',
-						'classes' => [ 'secondary' ],
-						'href' => '#',
-						'title' => 'cancel',
-						'value' => 'cancel',
-					],
-				]),
-				'secondBtn' => $uiFactory->init( 'button' )->render([
-					'type' => 'link',
-					'vars' => [
-						'id' => 'chatBanModalSubmitBtn',
-						'classes' => [ 'primary' ],
-						'href' => '#',
-						'title' => 'submit',
-						'value' => 'submit',
-					],
-				])
-			],
-		]);
+		$retVal['template'] = $tmpl->render("banModal");
 		$retVal['isChangeBan'] = $isChangeBan;
-
 		wfProfileOut( __METHOD__ );
 		return $retVal;
 	}
