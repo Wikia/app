@@ -182,12 +182,36 @@ var ChatEntryPoint = {
 	onJoinChatFormLoaded: function(html) {
 		UserLoginModal.dialog.stopThrobbing();
 		UserLoginModal.dialog.closeModal();
-		ChatEntryPoint.chatLaunchModal = $(html).makeModal({
-			width: 450,
-			onClose: ChatEntryPoint.reloadPage
-		});
-		ChatEntryPoint.chatLaunchModal.bind('click',ChatEntryPoint.launchChatWindow);
 
+		require( [ 'wikia.ui.factory' ], function( uiFactory ) {
+			uiFactory.init( 'modal' ).then( function( uiModal ) {
+				var modalId = "JoinChatModal";
+				require( [ 'wikia.ui.modal' ], function( modal ) {
+					var joinModal = uiModal.render( {
+						type: "default",
+						vars: {
+							"id": modalId,
+							"size": 'small',
+							"content": html,
+							"title": $.msg( "chat-start-a-chat" ),
+							"closeButton": true,
+							"closeText": $.msg( "close" )
+						}
+					} );
+
+					$( 'body' ).append( joinModal );
+					ChatEntryPoint.chatLaunchModal = modal.init( modalId );
+					ChatEntryPoint.chatLaunchModal.show();
+					// TODO: ask PO if this "commented feature" below is right
+					// ChatEntryPoint.chatLaunchModal.$element.bind( 'click', ChatEntryPoint.launchChatWindow );
+					$( "#modal-join-chat-button" ).bind( 'click', ChatEntryPoint.launchChatWindow );
+					ChatEntryPoint.chatLaunchModal.onClose = function() {
+						this.hide();
+						ChatEntryPoint.reloadPage();
+					};
+				} );
+			} );
+		} );
 	},
 
 	reloadPage: function() {
@@ -198,7 +222,7 @@ var ChatEntryPoint = {
 		var pageLink = $('#modal-join-chat-button').data('chat-page');
 		window.open(pageLink, 'wikiachat', window.wgWikiaChatWindowFeatures);
 		if(ChatEntryPoint.chatLaunchModal) {
-			ChatEntryPoint.chatLaunchModal.closeModal();
+			ChatEntryPoint.chatLaunchModal.close();
 		}
 		ChatEntryPoint.reloadPage();
 	}

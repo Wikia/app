@@ -16,7 +16,8 @@ $config['oasis_extensions_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'#group_oasis_ads_js',
-		'#group_oasis_noads_extensions_js'
+		'#group_oasis_noads_extensions_js',
+		'#group_ui_repo_api_js',
 	)
 );
 

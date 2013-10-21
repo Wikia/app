@@ -14,7 +14,7 @@ define( 'wikia.ui.modal', [ 'jquery' ], function( $ ) {
 
 		this.$close.click( $.proxy( function( event ) {
 			event.preventDefault();
-			this.hide();
+			this.close();
 		}, that ) );
 
 		function getBlackout() {
@@ -50,8 +50,13 @@ define( 'wikia.ui.modal', [ 'jquery' ], function( $ ) {
 	};
 
 	Modal.prototype.close = function() {
+		this.onClose();
 		$(this).remove();
 	};
+
+	Modal.prototype.onClose = function() {
+	// "hook"
+	}
 
 	/** Public API */
 	return {
