@@ -169,7 +169,7 @@ class FounderEmailsEditEventTest extends WikiaBaseTest {
 			->with( $this->anything(), $this->anything(), true, false );
 		$mockFounderEmailsEditEvent::staticExpects( $this->any() )
 			->method( 'getFirstEmailSentFlag' )
-			->will( $this->returnValue( true ) );
+			->will( $this->returnValue( '1' ) );
 		$mockFounderEmailsEditEvent::staticExpects( $this->never() )
 			->method( 'setFirstEmailSentFlag' );
 		$this->mockClass( 'FounderEmailsEditEvent', $mockFounderEmailsEditEvent );

@@ -254,7 +254,7 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 			$isRegisteredUser = true;
 
 			// if first edit email was already sent this is an additional edit
-			$wasNotificationSent = ( static::getFirstEmailSentFlag( $editor->getName() ) === true ) ;
+			$wasNotificationSent = ( static::getFirstEmailSentFlag( $editor->getName() ) == true ) ;
 
 			if ( !$wasNotificationSent ) {
 				$userEditStatus = static::getUserEditsStatus( $editor, true );
@@ -308,7 +308,7 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 	 */
 	public static function setFirstEmailSentFlag( $userName ) {
 		global $wgMemc;
-		$wgMemc->set( static::getFirstEmailSentFlagMemcKey( $userName ), true );
+		$wgMemc->set( static::getFirstEmailSentFlagMemcKey( $userName ), '1' );
 	}
 
 	public static function getFirstEmailSentFlag( $userName ) {
