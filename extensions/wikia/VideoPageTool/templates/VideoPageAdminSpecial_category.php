@@ -1,4 +1,4 @@
-<form class="WikiaForm vpt-form latest-video-form" method="post">
+<form class="WikiaForm vpt-form latest-video-form" id="latest-videos-form" method="post">
 
 	<? for( $x = 1; $x <= count($categories); $x++ ): ?>
 

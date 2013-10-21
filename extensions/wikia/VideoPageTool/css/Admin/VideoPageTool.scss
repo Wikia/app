@@ -202,17 +202,27 @@ $label-padding: 10px 10px 10px 0px;
 			padding: 5px 10px;
 			text-align: center;
 			width: 100%;
+
 			span {
-				@include arrow-hollow( 10px, 3px, #CCC, white, 'down' );
+				@include arrow-hollow( 6px, 3px, #CCC, white, 'down' );
 				float: right;
-				right: 45px;
-				top: 7px;
-				&:first-child {
+				right: 40px;
+				top: 9px;
+
+					&:first-child {
 					float: left;
-					right: 0px;
+					right: -10px;
 				}
+
+				&.active {
+					@include arrow-hollow( 6px, 3px, #666, white, 'down' );
+				}
+
 				&.up {
-					@include arrow-hollow( 10px, 3px, #666, white, 'up' );
+					@include arrow-hollow( 6px, 3px, #CCC, white, 'up' );
+					&.active {
+						@include arrow-hollow( 6px, 3px, #666, white, 'up' );
+					}
 				}
 			}
 		}
