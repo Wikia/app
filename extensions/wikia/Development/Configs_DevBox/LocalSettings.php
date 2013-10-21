@@ -190,7 +190,7 @@ $wgRC2UDPEnabled = false;
 $wgCdnRootUrl = "http://{$wgDevelEnvironmentName}.wikia-dev.com";
 
 if (!empty($wgEnableSwiftFileBackend)) {
-	$wgDevBoxImageServerOverride ="d.{$wgDevelEnvironmentName}.wikia-dev.com";
+	$wgDevBoxImageServerOverride ="static.{$wgDevelEnvironmentName}.wikia-dev.com";
 }
 else {
 	$wgDevBoxImageServerOverride ="images.{$wgDevelEnvironmentName}.wikia-dev.com";
