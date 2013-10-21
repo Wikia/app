@@ -6175,6 +6175,8 @@ $messages['ps'] = array(
 	'founderemails-email-complete-digest-subject' => 'په $WIKINAME باندې تازه فعاليتونه',
 	'founderemails-email-complete-digest-greeting' => 'سلامونه $USERNAME،',
 	'founderemails-email-complete-digest-signature' => 'د ويکيا ډله',
+	'founderemails-pref-joins-v2' => '...يو څوک زموږ سره راگډېږي',
+	'founderemails-pref-edits-v2' => '...يو څوک سمونونه ترسره کوي',
 );
 
 /** Portuguese (português)
@@ -8521,6 +8523,7 @@ Wikia团队',
 看来注册用户$EDITORNAME已经在你的维基上做出首次编辑了！何不踩踩他们的讨论页($EDITORTALKPAGEURL)，和他们打个招呼呢？
 
 -- Wikia团队',
+	'founderemails-answers-email-page-edited-reg-user-subject' => '注册用户更改了您的网站！',
 	'founderemails-answers-email-page-edited-reg-user-body' => '嘿！$USERNAME，
 
 看来$EDITORNAME已经在你的维基上做出编辑了！何不踩踩他们的讨论页($EDITORTALKPAGEURL)，和他们打个招呼呢？

@@ -110,28 +110,28 @@ function print_pre($param, $return = 0)
  * @return String -- new url
  */
 function wfReplaceImageServer( $url, $timestamp = false ) {
-	global $wgImagesServers, $wgAkamaiLocalVersion,  $wgAkamaiGlobalVersion, $wgDevBoxImageServerOverride, $wgDBname;
+	$wg = F::app()->wg;
 
 	// Override image server location for Wikia development environment
 	// This setting should be images.developerName.wikia-dev.com or perhaps "localhost"
-	if (!empty($wgDevBoxImageServerOverride)) {
-		$url = preg_replace("/\/\/(.*?)wikia-dev\.com\/(.*)/", "//$wgDevBoxImageServerOverride/$2", $url);
+	if (!empty($wg->DevBoxImageServerOverride)) {
+		$url = preg_replace("/\/\/(.*?)wikia-dev\.com\/(.*)/", "//{$wg->DevBoxImageServerOverride}/$2", $url);
 	}
 
 	wfDebug( __METHOD__ . ": requested url $url\n" );
-	if(substr(strtolower($url), -4) != '.ogg' && isset($wgImagesServers) && is_int($wgImagesServers)) {
+	if(substr(strtolower($url), -4) != '.ogg' && isset($wg->ImagesServers) && is_int($wg->ImagesServers)) {
 		if(strlen($url) > 7 && substr($url,0,7) == 'http://') {
 			$hash = sha1($url);
 			$inthash = ord ($hash);
 
-			$serverNo = $inthash%($wgImagesServers-1);
+			$serverNo = $inthash%($wg->ImagesServers-1);
 			$serverNo++;
 
 			// If there is no timestamp, use the cache-busting number from wgCdnStylePath.
 			if($timestamp == ""){
-				global $wgCdnStylePath;
 				$matches = array();
-				if(0 < preg_match("/\/__cb([0-9]+)/i", $wgCdnStylePath, $matches)){
+				// @TODO: consider using wgStyleVersion
+				if(0 < preg_match("/\/__cb([0-9]+)/i", $wg->CdnStylePath, $matches)){
 					$timestamp = $matches[1];
 				} else {
 					// This results in no caching of the image.  Bad bad bad, but the best way to fail.
@@ -146,27 +146,24 @@ function wfReplaceImageServer( $url, $timestamp = false ) {
 
 			// Add Akamai versions, but only if there is some sort of caching number.
 			if($timestamp != ""){
-				$timestamp += $wgAkamaiGlobalVersion + $wgAkamaiLocalVersion;
+				$timestamp += $wg->AkamaiGlobalVersion + $wg->AkamaiLocalVersion;
 			}
 
-			// NOTE: This should be the only use of the cache-buster which does not use $wgCdnStylePath.
+			// NOTE: This should be the only use of the cache-buster which does not use $wg->CdnStylePath.
 			// RT#98969 if the url already has a cb value, don't add another one...
-			if ( !empty( $wgDevBoxImageServerOverride ) ) {
-				$cb = '';
-			} else {
-				$cb = ($timestamp!='' && strpos($url, "__cb") === false) ? "__cb{$timestamp}/" : '';
-			}
+			$cb = ($timestamp!='' && strpos($url, "__cb") === false) ? "__cb{$timestamp}/" : '';
 
-			if (!empty($wgDevBoxImageServerOverride)) {
+			// TODO: support domain sharding on devboxes
+			if (!empty($wg->DevBoxImageServerOverride)) {
 				// Dev boxes
-				$url = str_replace('http://images.wikia.com/', sprintf("http://$wgDevBoxImageServerOverride/%s", $cb), $url);
+				$url = str_replace('http://images.wikia.com/', sprintf("http://{$wg->DevBoxImageServerOverride}/%s", $cb), $url);
 			} else {
 				// Production
 				$url = str_replace('http://images.wikia.com/', sprintf("http://images%s.wikia.nocookie.net/%s",$serverNo, $cb), $url);
 			}
 		}
-	} else if (!empty($wgDevBoxImageServerOverride)) {
-		$url = str_replace('http://images.wikia.com/', "http://$wgDevBoxImageServerOverride/", $url);
+	} else if (!empty($wg->DevBoxImageServerOverride)) {
+		$url = str_replace('http://images.wikia.com/', "http://{$wg->DevBoxImageServerOverride}/", $url);
 	}
 
 	return $url;

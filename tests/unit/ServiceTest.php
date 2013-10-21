@@ -13,6 +13,8 @@ class ServiceTest extends WikiaBaseTest {
 		$anonName = '10.10.10.10';
 		$userName = 'WikiaBot';
 
+		$this->mockGlobalVariable('wgDevBoxImageServerOverride', 'images.foo.wikia-dev.com');
+
 		// users
 		$this->assertRegExp('/width="32"/', AvatarService::render($userName, 32));
 		$this->assertRegExp('/\/20px-/', AvatarService::render($userName, 16));

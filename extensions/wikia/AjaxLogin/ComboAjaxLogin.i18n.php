@@ -154,12 +154,29 @@ Pakiprubar giraray o [[Special:Contact|ireport ini]].',
 );
 
 /** Bulgarian (български)
+ * @author Aquilax
  * @author DCLXVI
  */
 $messages['bg'] = array(
+	'comboajaxlogin-desc' => 'Динамично поле, чрез което потребителите могат да влязат, да възстановят паролата си или да се регистрират',
 	'comboajaxlogin-createlog' => 'Влизане или регистриране на нова сметка',
+	'comboajaxlogin-actionmsg' => 'За извършването на тази операция е необходимо влизане или създаване на сметка в системата',
+	'comboajaxlogin-actionmsg-protected' => 'Да извършването на това действие е необходимо влизане или регистриране на сметка.',
+	'comboajaxlogin-connectmarketing' => '<h1>Свързване на потребителски сметки</h1>
+<ul>
+<li>Запазване на текущото потребителско име, история, редакции... нищо няма да бъде променено, единствено начинът за влизане</li>
+<li>Споделяне на активността в Wikia с приятелите от Facebook</li>
+<li>Пълен контрол над това, което се публикува</li>
+</ul>',
 	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>Влизане чрез Facebook Connect</h1>',
+	'comboajaxlogin-connectmarketing-oasis' => '<h1>Свързване на сметката от Wikia с Facebook</h1>
+<ul>
+<li>Запазване на текущото потребителско име, история, редакции... нищо няма да бъде променено, единствено начинът за влизане</li>
+<li>Споделяне на активността в Wikia с приятелите от Facebook при пълен контрол над това, което се публикува</li>
+</ul>',
 	'comboajaxlogin-connectmarketing-back' => '&laquo; Връщане',
+	'comboajaxlogin-connectmarketing-forward' => 'Първи стъпки »',
+	'comboajaxlogin-ajaxerror' => 'Wikia не отговаря. Проверете свързаността с мрежата.',
 );
 
 /** Bhojpuri (भोजपुरी)

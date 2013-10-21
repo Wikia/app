@@ -140,6 +140,8 @@ $modal-secondary-color: darken( $color-page, 10% );
 	@include blackout();
 }
 
+
+
 @media screen and (max-width: $breakpoint-min) {
 	.modal.medium {
 		width: 500px;
