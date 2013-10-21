@@ -121,6 +121,9 @@ class LVSUpdateSuggestions extends Maintenance {
 			}
 		}
 
+		// clear cache for total new videos
+		$lvsHelper->invalidateCacheTotalNewVideos();
+
 		wfProfileOut( __METHOD__ );
 
 		return array('vidsFound'           => $vidsFound,

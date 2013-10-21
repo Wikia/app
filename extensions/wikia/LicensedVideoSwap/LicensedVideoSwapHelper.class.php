@@ -34,6 +34,7 @@ class LicensedVideoSwapHelper extends WikiaModel {
 	const THUMBNAIL_HEIGHT = 309;
 	const POSTED_IN_ARTICLES = 100;
 	const NUM_SUGGESTIONS = 5;
+	const USER_VISITED_DATE = 'LicensedVideoSwap_visitedDate';
 
 	/**
 	 * TTL of 604800 is 7 days.  Expire suggestion cache after this
@@ -1071,6 +1072,90 @@ SQL;
 		}
 
 		return $validVideos;
+	}
+
+	/**
+	 * Get total number of new videos for the user
+	 * @return integer $total[$userId]
+	 */
+	public function getTotalNewVideos() {
+		wfProfileIn( __METHOD__ );
+
+		$userId = $this->wg->User->getId();
+		$memcKey = $this->getMemcKeyTotalNewVideos();
+		$total = $this->wg->Memc->get( $memcKey );
+		if ( !is_array( $total ) || !array_key_exists( $userId, $total ) ) {
+			$statusNew = self::STATUS_NEW;
+			$pageStatus = WPP_LVS_STATUS;
+			$visitedDate = $this->wg->User->getOption( self::USER_VISITED_DATE );
+
+			$db = wfGetDB( DB_SLAVE );
+
+			$sql = <<<SQL
+				SELECT count(*) total
+				FROM page_wikia_props p1
+				LEFT JOIN page_wikia_props p2 ON p1.page_id = p2.page_id AND p2.propname = 20 AND p2.props > $visitedDate
+				WHERE p1.propname = $pageStatus AND (p1.props & $statusNew != 0) AND p2.page_id is not null
+SQL;
+
+			$result = $db->query( $sql, __METHOD__ );
+
+			$total[$userId] = 0;
+			while ( $row = $db->fetchObject( $result ) ) {
+				$total[$userId] = $row->total;
+				break;
+			}
+
+			$this->wg->Memc->set( $memcKey, $total, 60*60*24 );
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $total[$userId];
+
+	}
+
+	/**
+	 * Get memcache key for total new videos
+	 * @return string
+	 */
+	public function getMemcKeyTotalNewVideos() {
+		return wfMemcKey( 'licensedvideoswap', 'total_new_videos' );
+	}
+
+	/**
+	 * Clear cache for total new videos
+	 * @param integer|null $userId - if userId is null, delete whole cache value
+	 */
+	public function invalidateCacheTotalNewVideos( $userId = null ) {
+		if ( empty( $userId ) ) {
+			$this->wg->Memc->delete( $this->getMemcKeyTotalNewVideos() );
+		} else {
+			$memcKey = $this->getMemcKeyTotalNewVideos();
+			$total = $this->wg->Memc->get( $memcKey );
+			if ( is_array( $total ) && array_key_exists( $userId, $total ) ) {
+				unset( $total[$userId] );
+				$this->wg->Memc->set( $memcKey, $total, 60*60*24 );
+			}
+		}
+	}
+
+	/**
+	 * Get alert badge for AdminDashboard extension
+	 * @return string
+	 */
+	public function getAlertBadge() {
+		$badge = '';
+		$newVideos = $this->getTotalNewVideos();
+		if ( !empty( $newVideos ) ) {
+			$badgeParams = array(
+				'type' => 'default',
+				'vars' => array( 'number' => $newVideos ),
+			);
+			$badge = \Wikia\UI\Factory::getInstance()->init( 'alert_badge' )->render( $badgeParams );
+		}
+
+		return $badge;
 	}
 
 }
