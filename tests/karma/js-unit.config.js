@@ -94,7 +94,7 @@ files = [
 	'extensions/wikia/VideoPageTool/js/spec/*.spec.js',
 
 	//Suggestions
-	'extensions/wikia/Suggestions/js/Matcher.js',
+	'extensions/wikia/Suggestions/js/SuggestionsMatcher.js',
 	'extensions/wikia/Suggestions/js/spec/*.spec.js'
 ];
 
