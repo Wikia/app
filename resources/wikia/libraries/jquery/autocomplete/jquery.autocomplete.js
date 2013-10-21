@@ -12,6 +12,7 @@
 
 	$.fn.autocomplete = function(options) {
 		return this.each(function() {
+			/* Wikia changes - reach autocomplete instance */
 			if(!window.Wikia.autocomplete) {
 				window.Wikia.autocomplete = {};
 			}
@@ -44,6 +45,7 @@
 		this.ignoreValueChange = false;
 		this.serviceUrl = options.serviceUrl;
 		this.isLocal = false;
+		/* Wikia changes */
 		this.inUse = true;
 		this.options = {
 			autoSubmit: false,
@@ -151,6 +153,7 @@
 		},
 
 		onKeyPress: function(e) {
+			/* Wikia changes */
 			if (!this.enabled || !this.inUse) { return; }
 			// return will exit the function
 			// and event will not fire
@@ -184,6 +187,7 @@
 		},
 
 		onKeyUp: function(e) {
+			/* Wikia changes */
 			if (!this.inUse) { return; }
 			switch (e.keyCode) {
 				case 38: //Event.KEY_UP:
@@ -242,6 +246,7 @@
 		},
 
 		getSuggestions: function(q) {
+			/* Wikia changes */
 			if (!this.inUse) { return; }
 			var cr, me, ls;
 			cr = this.isLocal ? this.getSuggestionsLocal(q) : this.cachedResponse[q];
