@@ -17,8 +17,9 @@
 					name="categoryName[]"
 					placeholder="<?= wfMessage( 'videopagetool-category-name-placeholder' )->plain() ?>"
 					value="<?= $category[ 'categoryName' ] ?>">
-				<button class="search-button"><?= wfMessage( 'videopagetool-button-search' )->plain() ?></button>
 			</div>
+			<button class="search-button"><?= wfMessage( 'videopagetool-button-search' )->plain() ?></button>
+
 			<div class="input-group">
 				<label for="display-title-<?= $x ?>"><?= wfMessage( 'videopagetool-category-label-display-title' )->plain() ?></label>
 				<input
