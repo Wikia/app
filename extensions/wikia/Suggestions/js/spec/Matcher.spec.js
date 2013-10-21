@@ -1,4 +1,4 @@
-ddescribe('Test matcher', function() {
+describe('Test matcher', function() {
 	'use strict';
 	var matcher = modules.suggest_matcher();
 
