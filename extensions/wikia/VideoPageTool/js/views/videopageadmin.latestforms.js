@@ -44,7 +44,8 @@ define( 'views.videopageadmin.latestforms', [
 				var $ul,
 						view;
 
-				$ul = $( '<ul>' );
+				this.$el.find( '.autocomplete-results' ).remove();
+				$ul = $( '<ul>' ).addClass( 'autocomplete-results' );
 				this.collection.each( function( model ) {
 						view = new CategorySingleResultView({
 								model: model
