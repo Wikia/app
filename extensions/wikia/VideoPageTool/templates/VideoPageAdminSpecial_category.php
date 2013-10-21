@@ -1,4 +1,7 @@
-<form class="WikiaForm vpt-form latest-video-form" method="post">
+<script type="text/template" id="autocomplete-item">
+	<span><%= name %></span>
+</script>
+<form id="LatestVideos" class="WikiaForm vpt-form latest-video-form" method="post">
 
 	<? for( $x = 1; $x <= count($categories); $x++ ): ?>
 
@@ -7,10 +10,15 @@
 		?>
 
 		<div class="form-box latest-video with-nav">
+			<div class="autocomplete-w1">
+				<!-- empty element to be used for autocomplete -->
+			</div>
 			<span class="count"><?= $x ?>.</span>
 			<div class="input-group border">
 				<label for="category-name-<?= $x ?>"><?= wfMessage( 'videopagetool-category-label-name' )->plain() ?></label>
 				<input
+					data-autocomplete
+					autocomplete="off"
 					class="category-name"
 					id="category-name-<?= $x ?>"
 					type="text"
