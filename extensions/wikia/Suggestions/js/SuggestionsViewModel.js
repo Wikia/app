@@ -20,7 +20,7 @@ define('SuggestionsViewModel', ['jquery', 'SuggestionsMatcher', 'wikia.log', 'Su
 	}
 	function setDisplayResults( results ) {
 		results = results || [];
-		displayResults = results.slice(0, 8);
+		displayResults = results.slice(0, 5);
 		trigger( 'displayResults changed', results );
 	}
 	function trigger( ev, value ) {

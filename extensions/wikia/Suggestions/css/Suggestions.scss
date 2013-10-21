@@ -1,42 +1,50 @@
 @import "skins/oasis/css/core/color";
 
 //prepare colors
-$color-suggestions-border-normal: mix($color-page-border, #fff, 50%);
-@if $is-dark-wiki {
-	$color-suggestions-border-normal: mix($color-page-border, #000, 85%);
-}
 $color-suggestions-border-hover: mix($color-page-border, #000, 50%);
 @if $is-dark-wiki {
-	$color-suggestions-border-hover: mix($color-page-border, #fff, 85%);
+	$color-suggestions-border-hover: mix($color-page-border, #000, 50%);
 }
-$color-suggestions-element-hover: mix($color-page-border, #fff, 20%);
+$color-suggestions-light-text: mix($color-page-border, #000, 50%);
 @if $is-dark-wiki {
-	$color-suggestions-element-hover: mix($color-page-border, #000, 50%);
+	$color-suggestions-light-text: mix($color-page-border, #000, 50%);
 }
-$color-suggestions-light-text: mix($color-page-border, #000, 90%);
+$color-suggestions-lighter: mix($color-page, #fff, 65%);
 @if $is-dark-wiki {
-	$color-suggestions-light-text: mix($color-page-border, #fff, 40%);
+	//$color-suggestions-lighter: mix($color-page, #fff, 95%);
+	$color-suggestions-lighter: lighten($color-page, 5%);
+}
+$color-suggestions-shadow-box: mix($color-page, #000, 85%);
+@if $is-dark-wiki {
+	$color-suggestions-shadow-box: mix($color-page, #000, 65%);
+}
+$color-suggestions-element-hover: mix($color-suggestions-lighter, #000, 95%);
+@if $is-dark-wiki {
+	$color-suggestions-element-hover: mix($color-suggestions-lighter, #000, 90%);
+}
+$color-suggestions-border-normal: mix($color-page-border, #fff, 60%);
+@if $is-dark-wiki {
+	$color-suggestions-border-normal: mix($color-suggestions-lighter, #000, 75%);
 }
 $color-suggestions-lighter-text: mix($color-text, #fff, 75%);
 @if $is-dark-wiki {
-	$color-suggestions-lighter-text: mix($color-text, #fff, 77%);
+	$color-suggestions-lighter-text: mix($color-suggestions-border-normal, #fff, 70%);
 }
-$color-suggestions-lighter: mix($color-page, #fff, 30%);
-@if $is-dark-wiki {
-	$color-suggestions-lighter: mix($color-page, #fff, 80%);
-}
+
+$element-height: 50px;
+$element-width: 355px;
+$image-width: 55px;
 
 .search-suggest {
 	background-color: $color-suggestions-lighter;
 	border-bottom-left-radius: 2px;
 	border-bottom-right-radius: 2px;
-	box-shadow: 2px 3px 11px #333;
+	box-shadow: 2px 3px 11px $color-suggestions-shadow-box;
 	font-weight: bold;
-	left: -60px;
-	margin-top: 13px;
+	left: -25px;
+	margin-top: 12px;
 	position: absolute;
-	top: -10px;
-	width: 385px;
+	width: $element-width;
 	z-index: 1;
 	a {
 		color: $color-text;
@@ -45,7 +53,7 @@ $color-suggestions-lighter: mix($color-page, #fff, 30%);
 		border: 1px solid $color-page-border;
 		border-top: none;
 		display: block;
-		height: 70px;
+		height: $element-height;
 	}
 	li:first-child {
 		border-top: 1px solid $color-page-border;
@@ -57,7 +65,7 @@ $color-suggestions-lighter: mix($color-page, #fff, 30%);
 		color: transparent;
 		content: "";
 		height: 0;
-		left: 193px;
+		left: $element-width / 2 - 4.5px;
 		position: absolute;
 		top: -9px;
 		width: 0;
@@ -66,21 +74,18 @@ $color-suggestions-lighter: mix($color-page, #fff, 30%);
 		border-bottom: 9px solid $color-suggestions-lighter;
 		border-left: 9px solid transparent;
 		border-right: 9px solid transparent;
-		left: 193px;
+		left: $element-width / 2 - 4.5px;
 		top: -8px;
 	}
 	li:hover, li:focus {
 		background-color: $color-suggestions-element-hover;
 		outline: 0;
-		.stroke {
-			stroke: $color-suggestions-border-hover;
-		}
 	}
 	li:first-child:hover:after, li:first-child:focus:after {
 		border-bottom: 9px solid $color-suggestions-element-hover;
 		border-left: 9px solid transparent;
 		border-right: 9px solid transparent;
-		left: 193px;
+		left: $element-width / 2 - 4.5px;
 		top: -8px;
 	}
 	.all {
@@ -92,6 +97,7 @@ $color-suggestions-lighter: mix($color-page, #fff, 30%);
 		line-height: 30px;
 		text-align: center;
 		a {
+			color: $color-suggestions-lighter-text;
 			display: block;
 		}
 	}
@@ -104,11 +110,10 @@ $color-suggestions-lighter: mix($color-page, #fff, 30%);
 	}
 	.block {
 		bottom: 0;
-		height: 50%;
+		height: 70%;
 		margin: auto;
 		position: absolute;
 		top: 0;
-		width: 313px;
 	}
 	.match {
 		color: $color-links;
@@ -119,7 +124,7 @@ $color-suggestions-lighter: mix($color-page, #fff, 30%);
 		float: left;
 		font-size: 12px;
 		height: 14px;
-		margin-top: 7px;
+		margin-top: 2px;
 		overflow: hidden;
 		width: 295px;
 	}
@@ -127,21 +132,12 @@ $color-suggestions-lighter: mix($color-page, #fff, 30%);
 		color: $color-suggestions-light-text;
 		font-weight: normal;
 	}
-	.search-suggest-chevron {
-		height: 35px;
-		width: 10px;
-	}
 	.search-suggest-image {
-		height: 50px;
-		margin: 10px;
+		height: 40px;
+		margin: 5px;
+		margin-right: 10px;
 		position: absolute;
-		width: 50px;
-	}
-	.stroke {
-		fill:none;
-		stroke: $color-suggestions-border-normal;
-		stroke-width:3;
-		stroke-miterlimit:10;
+		width: 40px;
 	}
 	.title {
 		display: block;
@@ -151,10 +147,10 @@ $color-suggestions-lighter: mix($color-page, #fff, 30%);
 	}
 	.wraper {
 		float: right;
-		height: 70px;
-		padding-left: 70px;
+		height: $element-height;
+		padding-left: 55px;
 		position: relative;
-		width: 313px;
+		width: $element-width - $image-width - 2px;
 	}
 }
 

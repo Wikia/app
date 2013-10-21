@@ -26,11 +26,6 @@ define('SuggestionsView', ['SuggestionsViewModel'], function( viewModel ) {
 		return '<li class="all" tabindex="' + i + '"><a href="#"><span>' + $.msg('suggestions-see-all') +
 			'</span></a></li>';
 	}
-	function buildChevronMarkup() {
-		return '<svg xmlns="http://www.w3.org/2000/svg" class="search-suggest-chevron">' +
-			'<g><polyline class="stroke" points="1.5,9 7.5,15 1.5,21"/></g>' +
-			'</svg>';
-	}
 	function hideAds() {
 		ads.each(function() {
 			$(this).children().css('margin-left', '-9999px');
@@ -105,7 +100,6 @@ define('SuggestionsView', ['SuggestionsViewModel'], function( viewModel ) {
 					'<div class="block">' +
 					'<span class="title">' + buildTitleMarkup( res ) + '</span>' +
 					buildRedirectMarkup( res ) +
-					buildChevronMarkup() +
 					'</div>' +
 					'</div>' +
 					'</a>' +
