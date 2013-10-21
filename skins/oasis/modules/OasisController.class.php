@@ -169,6 +169,10 @@ class OasisController extends WikiaController {
 			$bodyClasses[] = 'background-not-tiled';
 		}
 
+		if ( filter_var($this->wg->OasisThemeSettings['background-dynamic'], FILTER_VALIDATE_BOOLEAN) ) {
+			$bodyClasses[] = 'background-dynamic';
+		}
+
 		$this->bodyClasses = $bodyClasses;
 
 		if (is_array($scssPackages)) {

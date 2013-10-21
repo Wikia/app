@@ -62,6 +62,7 @@ class ThemeSettings {
 		$this->defaultSettings['background-image-revision'] = false; //what is this?
 		$this->defaultSettings['background-tiled'] = false;
 		$this->defaultSettings['background-fixed'] = false;
+		$this->defaultSettings['background-dynamic'] = false;
 		$this->defaultSettings['background-align'] = "center";
 	}
 

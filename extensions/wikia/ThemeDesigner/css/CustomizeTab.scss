@@ -5,6 +5,9 @@
 	li {
 		float: left;
 		margin-right: 30px;
+		&.background {
+			max-width: 310px;
+		}
 		img {
 			border: 1px solid $color-borders;
 			cursor: pointer;
