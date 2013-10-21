@@ -41,7 +41,7 @@ ve.ui.WikiaMediaQueryWidget = function VeUiWikiaMediaQueryWidget( config ) {
 
 	// Initialization
 	this.$
-		.addClass( 've-ui-WikiaMediaQueryWidget' )
+		.addClass( 've-ui-wikiaMediaQueryWidget' )
 		.append( this.input.$ );
 };
 

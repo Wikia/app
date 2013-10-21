@@ -3,18 +3,20 @@
 
 $width-cart: 100px;
 
-/* Panels */
-.ve-ui-wikiaMediaInsertDialog-content {
-	.ve-ui-pagedLayout-pagesPanel {
-		margin-right: $width-cart;
-		padding: $width-gutter;
-	}
+/* Layout */
+.ve-ui-wikiaMediaInsertDialog .ve-ui-window-body {
+	margin-right: -( $width-cart + $width-gutter );
+	padding: 0;
+	width: 100%;
+}
 
-	.ve-ui-window-body {
-		margin-right: -( $width-cart + $width-gutter );
-		padding: 0;
-		width: 100%;
-	}
+.ve-ui-wikiaMediaInsertDialog-content {
+	bottom: 0;
+	left: 0;
+	padding: $width-gutter;
+	position: absolute;
+	top: 0;
+	right: $width-cart;
 }
 
 /* Cart */
