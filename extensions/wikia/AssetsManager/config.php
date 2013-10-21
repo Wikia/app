@@ -1499,6 +1499,6 @@ $config['suggestions_js'] = array(
 $config['suggestions_scss'] = array(
 	'type' => AssetsManager::TYPE_SCSS,
 	'assets' => array(
-		'//extensions/wikia/Suggestions/css/Suggestions_n.scss',
+		'//extensions/wikia/Suggestions/css/Suggestions.scss',
 	)
 );
