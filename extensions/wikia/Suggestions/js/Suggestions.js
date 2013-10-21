@@ -241,16 +241,14 @@ require( [ 'jquery', 'suggestions_client', 'wikia.log' ], function( $, client, l
 			});
 			searchInput.on( 'keydown', function (e) {
 				if ( keyCodes.indexOf(e.keyCode) !== -1 &&
-					e.keyCode !== 13 &&
-					document.activeElement !== searchInput[0]) {
+					( e.keyCode !== 13 || document.activeElement !== searchInput[0] ) ) {
 					self.handleNavigation(e.keyCode);
 					return false;
 				}
 			});
 			dropdown.on( 'keydown', function (e) {
 				if ( keyCodes.indexOf(e.keyCode) !== -1 &&
-					e.keyCode !== 13 &&
-					document.activeElement !== searchInput[0]) {
+					( e.keyCode !== 13 || document.activeElement !== searchInput[0] ) ) {
 					self.handleNavigation(e.keyCode);
 					return false;
 				}
