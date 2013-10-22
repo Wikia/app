@@ -60,6 +60,7 @@ $messages['en'] = array(
 	'themedesigner-wodmark-preview' => 'Preview',
 	'themedesigner-wordmark-preview-error' => 'Oops! The name of the wiki can\'t be blank,
 please enter the name of the wiki to save.',
+	'themedesigner-upload-disabled' => 'Sorry, we\'ve temporarily disabled uploads. Check back shortly to make changes',
 );
 
 /** Message documentation (Message documentation)
@@ -97,6 +98,7 @@ $messages['qqq'] = array(
 * $2 is the author name',
 	'themedesigner-wodmark-preview' => '{{Identical|Preview}}',
 	'themedesigner-wordmark-preview-error' => 'Validation error on attempt to save empty text wordmark',
+	'themedesigner-upload-disabled' => 'Message shown when file uploads are disabled',
 );
 
 /** Afrikaans (Afrikaans)

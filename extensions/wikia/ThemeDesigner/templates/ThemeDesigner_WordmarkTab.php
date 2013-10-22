@@ -45,12 +45,16 @@
 	<fieldset class="graphic">
 		<h1><?= wfMsg('themedesigner-graphic-wordmark') ?></h1>
 		<h2><?= wfMsg('themedesigner-upload-a-graphic') ?> <span class="form-questionmark" rel="tooltip" title="<?= wfMsg('themedesigner-rules-wordmark') ?>"></span></h2>
+		<?php if ( empty( $wg->EnableUploads ) ) { ?>
+			<p><?= wfMessage( 'themedesigner-upload-disabled' )->plain(); ?></p>
+		<?php } else { ?>
+			<form id="WordMarkUploadForm" action="<?= $wg->ScriptPath ?>/wikia.php?controller=ThemeDesigner&method=WordmarkUpload&format=html" method="POST" enctype="multipart/form-data">
+				<input id="WordMarkUploadFile" name="wpUploadFile" type="file" />
+				<br />
+				<input type="submit" value="<?= wfMsg( 'themedesigner-button-upload-wordmark' ) ?>" onclick="return ThemeDesigner.wordmarkUpload(event);"/>
+			</form>
+		<?php } ?>
 
-		<form id="WordMarkUploadForm" action="<?= $wg->ScriptPath ?>/wikia.php?controller=ThemeDesigner&method=WordmarkUpload&format=html" method="POST" enctype="multipart/form-data">
-			<input id="WordMarkUploadFile" name="wpUploadFile" type="file" />
-			<br />
-			<input type="submit" value="<?= wfMsg( 'themedesigner-button-upload-wordmark' ) ?>" onclick="return ThemeDesigner.wordmarkUpload(event);"/>
-		</form>
 
 		<div class="preview">
 			<span><?= wfMsg( 'themedesigner-wodmark-preview' ) ?></span>
@@ -65,10 +69,14 @@
 			<?= wfMsg('themedesigner-upload-a-graphic') ?>
 			<span class="form-questionmark" rel="tooltip" title="<?= wfMsg('themedesigner-rules-favicon') ?> &lt;a href='http://community.wikia.com/wiki/Help:Favicon' &gt; <?= wfMsg('themedesigner-rules-favicon-learn-more-link') ?>&lt;/a&gt;"></span>
 		</h2>
-		<form id="FaviconUploadForm" action="<?= $wg->ScriptPath ?>/wikia.php?controller=ThemeDesigner&method=FaviconUpload&format=html" method="POST" enctype="multipart/form-data">
-			<input id="FaviconUploadFile" name="wpUploadFile" type="file" />
-			<input type="submit" value="<?= wfMsg( 'themedesigner-button-upload-wordmark' ) ?>" />
-		</form>
+		<?php if ( empty( $wg->EnableUploads ) ) { ?>
+			<p><?= wfMessage( 'themedesigner-upload-disabled' )->plain(); ?></p>
+		<?php } else { ?>
+			<form id="FaviconUploadForm" action="<?= $wg->ScriptPath ?>/wikia.php?controller=ThemeDesigner&method=FaviconUpload&format=html" method="POST" enctype="multipart/form-data">
+				<input id="FaviconUploadFile" name="wpUploadFile" type="file" />
+				<input type="submit" value="<?= wfMsg( 'themedesigner-button-upload-wordmark' ) ?>" />
+			</form>
+		<?php } ?>
 
 		<div class="preview">
 			<span><?= wfMsg('themedesigner-wodmark-preview') ?></span>
