@@ -13,29 +13,7 @@ namespace Wikia\SwiftSync;
 class Hooks {
 	/* @String repoName - repo name */
 	static private $repoName = 'local';
-	
-	/* @Int WikiId - Wiki ID */
-	private $city_id;
-	/* @String action - action name */
-	private $action = '';
-	/* @String dst - destination file */
-	private $dst = '';
-	/* @String table - sync files table */
-	private $table = 'image_sync';
-	/* @String db - sync files db */
-	private $db = 'swift_sync';
-	
-	/*
-	 * constructor
-	 */
-	private function __construct( $action, $dst ) {
-		global $wgCityId;
 
-		$this->action  = $action;
-		$this->dst     = $dst;
-		$this->city_id = $wgCityId;
-	}
-	
 	/*
 	 * init config for FSFileBackend class
 	 */
@@ -59,23 +37,7 @@ class Hooks {
 
 		return new $class( $config );
 	}
-	
-	/*
-	 * new from params
-	 */
-	private static function newFromParams( $params ) {
-		wfProfileIn( __METHOD__ );
-		
-		if ( empty( $params['dst'] ) ) {
-			$params['dst'];
-		}
-		
-		$obj = new self( $params['op'], $params['dst'] );
-		
-		wfProfileOut( __METHOD__ );
-		return $obj; 
-	}
-	
+
 	/* replace swith-backend with local-backend */
 	private static function replaceBackend( $path ) {
 		$path = preg_replace( 
@@ -87,36 +49,12 @@ class Hooks {
 		return $path;
 	}
 	
-	/* save information about uploaded image in database */ 
-	private function addToQueue() {
-		global $wgSpecialsDB;
-		
-		if ( empty( $this->dst ) || empty( $this->action ) ) {
-			return false;
-		}
-		
-		$dbw = wfGetDB( DB_MASTER, array(), $wgSpecialsDB );
-		$dbw->begin();
-		$dbw->insert(
-			"`{$this->db}`.`{$this->table}`", 
-			[
-				'city_id'    => $this->city_id,
-				'img_action' => $this->action,
-				'img_dest'   => $this->dst,
-				'img_added'  => wfTimestamp( TS_DB ),
-			], 
-			__METHOD__ 
-		);
-		$dbw->commit();
-		
-		return true;
-	}
-	
 	/* save image into local repo */
 	public static function doStoreInternal( $params, $status ) {
 		global $wgEnableSwithSyncToLocalFS;
 		
 		wfProfileIn( __METHOD__ );
+		$fsParams = $params;
 		
 		if ( !empty( $wgEnableSwithSyncToLocalFS ) ) {
 			if ( !empty( $params['dst'] ) && !empty( $params['src'] ) ) {
@@ -138,15 +76,15 @@ class Hooks {
 				} 
 				
 				if ( !$status->isOK() ) {
-					\SwiftStorage::log( __METHOD__, 'Cannot save image on local storage' );
+					\Wikia\SwiftStorage::log( __METHOD__, 'Cannot save image on local storage' );
 				}
 			} else {
-				\SwiftStorage::log( __METHOD__, 'Destination not defined' );
+				\Wikia\SwiftStorage::log( __METHOD__, 'Destination not defined' );
 				$status->fatal( 'backend-fail-store', $params['dst'] );
 			}
 		}
 		
-		self::newFromParams( $params )->addToQueue();
+		Queue::newFromParams( $fsParams )->add();
 		
 		wfProfileOut( __METHOD__ );
 		
@@ -157,6 +95,7 @@ class Hooks {
 		global $wgEnableSwithSyncToLocalFS;
 		
 		wfProfileIn( __METHOD__ );
+		$fsParams = $params;
 		
 		if ( !empty( $wgEnableSwithSyncToLocalFS ) ) {
 			if ( !empty( $params['dst'] ) && !empty( $params['src'] ) ) {
@@ -185,18 +124,18 @@ class Hooks {
 				if ( $status->isOK() ) {
 					$status = $fsBackend->copyInternal( $params );		
 				} else {
-					\SwiftStorage::log( __METHOD__, 'Cannot create directory for copied file' );
+					\Wikia\SwiftStorage::log( __METHOD__, 'Cannot create directory for copied file' );
 				}
 				
 				if ( !$status->isOK() ) {	
-					\SwiftStorage::log( __METHOD__, 'Cannot copy image to ' .$params['dst'] );
+					\Wikia\SwiftStorage::log( __METHOD__, 'Cannot copy image to ' .$params['dst'] );
 				}		
 			} else {
 				$status->fatal( 'backend-fail-store', ( empty( $params['dst'] ) ) ? $params['dst'] : $params['src'] );
 			}
 		}
 		
-		self::newFromParams( $params )->addToQueue();
+		Queue::newFromParams( $fsParams )->add();
 		
 		wfProfileOut( __METHOD__ );
 		
@@ -207,11 +146,12 @@ class Hooks {
 		global $wgEnableSwithSyncToLocalFS;
 		
 		wfProfileIn( __METHOD__ );
-				
+		
 		if ( empty( $params['op']  ) ) {
 			$params['op'] = 'delete';
 		}
-		
+		$fsParams = $params;
+				
 		if ( !empty( $wgEnableSwithSyncToLocalFS ) ) {
 			if ( !empty( $params['src'] ) ) {
 				# replace swift-backend storage URL with local-backend ... 
@@ -224,15 +164,15 @@ class Hooks {
 				$status = $fsBackend->deleteInternal( $params );	
 				
 				if ( !$status->isOK() ) {	
-					\SwiftStorage::log( __METHOD__, 'Cannot remove image ' .$params['src'] );
+					\Wikia\SwiftStorage::log( __METHOD__, 'Cannot remove image ' .$params['src'] );
 				}	
 			} else {
 				$status->fatal( 'backend-fail-delete', $params['src'] );
-				\SwiftStorage::log( __METHOD__, 'Invalid source path' );
+				\Wikia\SwiftStorage::log( __METHOD__, 'Invalid source path' );
 			}
 		}
 		
-		self::newFromParams( $params )->addToQueue();
+		Queue::newFromParams( $fsParams )->add();
 		
 		wfProfileOut( __METHOD__ );
 		

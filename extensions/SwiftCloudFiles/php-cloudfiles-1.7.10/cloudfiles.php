@@ -1976,7 +1976,7 @@ class CF_Object
                 
             if ($finfo) {
 
-                if (is_file((string)$handle))
+                if ( @is_file((string)$handle) )
                     $ct = @finfo_file($finfo, $handle);
                 else 
                     $ct = @finfo_buffer($finfo, $handle);
@@ -1997,7 +1997,7 @@ class CF_Object
             }
         }
 
-        if (!$this->content_type && (string)is_file($handle) && function_exists("mime_content_type")) {
+        if (!$this->content_type && (string)@is_file($handle) && function_exists("mime_content_type")) {
             $this->content_type = @mime_content_type($handle);
         }
 
@@ -2332,6 +2332,7 @@ class CF_Object
             $this->content_length = $bytes;
             $fp = $data;
             $ct_data = fread($data, 64);
+            $close_fh = true;
             rewind($data);
         }
 
