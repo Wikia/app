@@ -11,7 +11,7 @@ var SpecialPromote = function (params) {
 			minChars: 0,
 			maxChars: 0
 		}
-	}
+	};
 
 	this.original = {
 		headline: null,
@@ -158,12 +158,10 @@ SpecialPromote.prototype = {
 	},
 	checkMainImage: function() {
 		var image = $('.large-photo img#curMainImageName').data('filename');
-		if(typeof image == 'undefined') {
-			this.status.mainPhoto = false;
-		} else if (image == '' || image == null) {
+		if(typeof image == 'undefined' ) {
 			this.status.mainPhoto = false;
 		} else {
-			this.status.mainPhoto = true;
+			this.status.mainPhoto = !(image == '' || image == null);
 		}
 	},
 	checkPublishButton: function() {
