@@ -359,7 +359,16 @@ var ThemeDesigner = {
 				if ($(this).attr("class") == "no-image") {
 					ThemeDesigner.set("background-image", "");
 				} else {
-					ThemeDesigner.set("background-image", $(this).children("img").attr("data-image"));
+					var img = new Image();
+					var imgUrl = $(this).children("img").attr("data-image");
+					img.onload = function() {
+						if (img.width && img.height) {
+							ThemeDesigner.set("background-image-width", img.width);
+							ThemeDesigner.set("background-image-height", img.height);
+							ThemeDesigner.set("background-image", imgUrl);
+						}
+					}
+					img.src = imgUrl;
 				}
 
 				ThemeDesigner.hidePicker();
