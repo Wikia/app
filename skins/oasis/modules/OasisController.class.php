@@ -161,15 +161,21 @@ class OasisController extends WikiaController {
 		}
 
 		// sets background settings by adding classes to <body>
-		if ( filter_var($this->wg->OasisThemeSettings['background-fixed'], FILTER_VALIDATE_BOOLEAN) ) {
+		if ( isset($this->wg->OasisThemeSettings['background-fixed'])
+			&& filter_var($this->wg->OasisThemeSettings['background-fixed'], FILTER_VALIDATE_BOOLEAN) )
+		{
 			$bodyClasses[] = 'background-fixed';
 		}
 
-		if ( !filter_var($this->wg->OasisThemeSettings['background-tiled'], FILTER_VALIDATE_BOOLEAN) ) {
+		if ( isset($this->wg->OasisThemeSettings['background-tiled'])
+			&& !filter_var($this->wg->OasisThemeSettings['background-tiled'], FILTER_VALIDATE_BOOLEAN) )
+		{
 			$bodyClasses[] = 'background-not-tiled';
 		}
 
-		if ( filter_var($this->wg->OasisThemeSettings['background-dynamic'], FILTER_VALIDATE_BOOLEAN) ) {
+		if ( isset($this->wg->OasisThemeSettings['background-dynamic'])
+			&& filter_var($this->wg->OasisThemeSettings['background-dynamic'], FILTER_VALIDATE_BOOLEAN) )
+		{
 			$bodyClasses[] = 'background-dynamic';
 		}
 
