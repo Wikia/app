@@ -109,9 +109,10 @@ define('toc', ['track', 'sections', 'wikia.window', 'jquery', 'wikia.mustache'],
 		},
 		ol = "<ol class='toc-list level{{level}}'>{{#children}}{{> lis}}{{/children}}</ol>",
 		lis = "{{#.}}<li {{#children.length}}class=has-children{{/children.length}}><a href='#{{id}}'>{{name}}{{#firstLevel}}{{#children.length}}<span class='chevron right'></span>{{/children.length}}{{/firstLevel}}</a>{{#children.length}}{{> ol}}{{/children.length}}</li>{{/.}}",
+		$toc,
 		$ol;
 
-	$ol = $('#wkTOC')
+	$toc = $('#wkTOC')
 		.append(mustache.render(ol, tocc, {
 			ol: ol,
 			lis: lis
@@ -130,52 +131,59 @@ define('toc', ['track', 'sections', 'wikia.window', 'jquery', 'wikia.mustache'],
 			sections.scrollTo($($a.attr('href').replace(/[()\.]/g, '\\$&')));
 
 			if($li.is('.has-children') && $li.parent().is('.level0')) {
-				$li.toggleClass('fixed open').siblings().removeClass('fixed open');
+				$li.siblings().removeClass('fixed bottom open');
+
+				if($li.toggleClass('open').hasClass('open')) {
+					state = 'fixed';
+					$li.addClass('fixed');
+				}else {
+					state = null;
+					$li.removeClass('fixed bottom');
+				}
+
 				$ol.scrollTop(this.offsetTop - 45);
 
 				if($li.hasClass('open')) {
 					$openOl = $li.find('ol').first();
+					offsetTop = $openOl[0].offsetTop;
+					$parent = $openOl.parent();
 				}else {
 					$openOl = null;
 				}
 			}
-		})
-		.find('.level0')
-		.on('scroll', function(event){
-			var self = this;
-			if(!timer) {
+		});
+
+	var state,
+		offsetTop = 0,
+		$parent;
+
+	$ol = $toc.find('.level0')
+		.on('scroll', function(){
+			var scrollTop,
+				self = this;
+
+			if(!timer && $openOl) {
 				timer = setTimeout(function(){
 					timer = null;
 
-					var $active,
-						scrollTop,
-						offsetTop,
-						$parent;
+					scrollTop = self.scrollTop + 90;
 
-					if($openOl) {
-						scrollTop = self.scrollTop + 90;
-						offsetTop = $openOl[0].offsetTop;
-						$parent = $openOl.parent();
-
-						if(scrollTop < offsetTop) {
-							$parent.removeClass('fixed');
-						} else if (scrollTop >= offsetTop) {
-							var x = 0;
-
-							if($parent.hasClass('bottom')) {
-								x = 45;
-							}
-
-							if(offsetTop + $openOl[0].offsetHeight - scrollTop+ x >= 0){
+					if(state !== 'disabled' && scrollTop < offsetTop) {
+						state = 'disabled';
+						$parent.removeClass('fixed');
+					} else if (scrollTop >= offsetTop) {
+						if(offsetTop + $openOl[0].offsetHeight - scrollTop >= 0) {
+							if(state !== 'fixed') {
+								state = 'fixed';
 								$parent.removeClass('bottom').addClass('fixed');
-							} else {
-								$parent.removeClass('fixed').addClass('bottom');
 							}
+						} else if (state !== 'bottom') {
+							state = 'bottom';
+							$parent.addClass('bottom');
 						}
 					}
 				}, 50);
 			}
-
 		});
 
 	$anchors = $ol.find('li > a');
@@ -198,13 +206,14 @@ define('toc', ['track', 'sections', 'wikia.window', 'jquery', 'wikia.mustache'],
 
 		}
 
+	}).on('curtain:hide', function(){
+		$toc.removeClass('active');
+		$.event.trigger('ads:unfix');
 	});
 
 	$('#wkTOCHandle').on('click', function(){
-		$(this).parent().toggleClass('open');
-//		setTimeout(function(){
-//			$body.toggleClass('hidden');
-//		}, 50);
+		$toc.toggleClass('active');
+		$.event.trigger('curtain:toggle');
 	});
 
 	return {

@@ -21,20 +21,26 @@ $toc-background: #F8F8F8;
 	left: 0;
 	top: 0;
 	bottom:0;
-	height: 100%;
-	width: 80%;
-	max-width: 260px;
+	//width: 80%;
+
+	width: 260px;
 	background: $toc-background;
 	-webkit-transition: -webkit-transform .1s ease-out;
-	-webkit-transform: translate3d(-100%,0,0);
+	//-webkit-transform: translateZ(0);
+	-webkit-transform: translate(-100%);
+	//-webkit-transform: translate3d(-260px,0,0);
+	//-moz-transform: translate3d(-100%,0,0);
+	//transform: translate3d(-100%,0,0);
 
 	z-index: 101;
 
 	counter-reset: level1, level2, level3;
 
-	&.open {
-		box-shadow: 0 0 0 99999px rgba(0, 0, 0, 0.4);
-		-webkit-transform: translate3d(0,0,0);
+	&.active {
+		//box-shadow: 0 0 0 99999px rgba(0, 0, 0, 0.4);
+		-webkit-transform: translate(0);
+		//left: 0;
+		//-webkit-transform: translate3d(0,0,0);
 	}
 
 	header {
@@ -88,18 +94,16 @@ $toc-background: #F8F8F8;
 	padding: 0;
 	list-style: none;
 
-	li {
+	a {
 		line-height: 44px;
-
+		color: $page-text-color;
+		display: block;
+		width: 100%;
+		padding-right: 25px;
+		position: relative;
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
-	}
-
-	a {
-		color: $page-text-color;
-		display: inline-block;
-		width: 100%;
 
 		&:before {
 			padding-right: 10px;
@@ -112,7 +116,10 @@ $level0-border-left-width: 3px;
 
 .level0 {
 	padding: 0 0 $header-height 0;
-	overflow: auto;
+	overflow-x: hidden;
+	overflow-y: scroll;
+	//-webkit-overflow-scrolling: touch;
+
 	height: 100%;
 
 	> li {
@@ -201,8 +208,10 @@ $level0-border-left-width: 3px;
 	.chevron {
 		border-left-color: #C0C0C0;
 		border-width: 7px;
-		float: right;
 		margin: 15px;
+
+		position: absolute;
+		right: -10px;
 
 		-webkit-transform-origin: 3px 7px;
 
@@ -221,22 +230,20 @@ $level0-border-left-width: 3px;
 		padding-top: 45px;
 
 		> a {
-			position: fixed;
+			position: absolute;
 			top: 45px;
-			width: 100%;
 			background: $toc-background;
+			z-index: 1;
 		}
 	}
 
 	&.bottom {
-		padding-top: 45px;
 		position: relative;
 
 		> a {
 			position: absolute;
 			bottom: 0;
 			top: inherit;
-			background: $toc-background;
 		}
 	}
 

@@ -3,7 +3,8 @@ require(['wikia.querystring', require.optional('topbar'), require.optional('toc'
 		'use strict';
 
 		var d = window.document,
-			clickEvent = 'click';
+			clickEvent = 'click',
+			$curtain;
 
 		//add chevrons to elements that need it
 		$(d.getElementsByClassName('addChev')).append('<span class=chev></span>');
@@ -34,9 +35,21 @@ require(['wikia.querystring', require.optional('topbar'), require.optional('toc'
 		});
 
 		//close toc and topbar when 'curtain' is clicked
-		d.getElementById('wkCurtain').addEventListener(clickEvent, function(){
-			toc.close();
-			topbar.close();
+		$curtain = $('#wkCurtain').on(clickEvent, function(){
+			$.event.trigger('curtain:hide');
+			$curtain.removeClass('active');
+			$.event.trigger('ads:fix');
+		});
+
+		$(d).on('curtain:show', function(){
+			$curtain.addClass('active');
+			$.event.trigger('ads:unfix');
+		}).on('curtain:toggle', function(){
+			if($curtain.toggleClass('active').hasClass('active')){
+				$.event.trigger('ads:unfix');
+			}else{
+				$.event.trigger('ads:fix');
+			}
 		});
 
 		$(d.getElementById('wkFtr')).on('click' , 'a', function(event){
