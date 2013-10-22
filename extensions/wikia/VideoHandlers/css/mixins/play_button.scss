@@ -1,0 +1,54 @@
+﻿@import "skins/oasis/css/mixins/opacity";
+@import "skins/oasis/css/mixins/arrow";
+
+@mixin play-button {
+	.play-button {
+
+		// Background circle
+		.circle {
+			@include opacity( 50 );
+			background: black;
+			border: 1px solid #FFF;
+			border-radius: 50px;
+			display: block;
+			height: 50px;
+			margin: -25px 0 0 -25px;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			width: 50px;
+		}
+
+		// Arrow container
+		.arrow {
+			height: 30px;
+			display: block;
+			left: 50%;
+			margin: -11px 0 0 -4px;
+			overflow: hidden;
+			position: absolute;
+			top: 50%;
+			width: 25px;
+		}
+
+		// Arrow is a rotated square that's cut in half
+		.arrow:after {
+			background: white;
+			border-radius: 2px;
+			content: "";
+			display: block;
+			height: 20px;
+			margin: 2px 0 0 -10px;
+			width: 20px;
+			-webkit-transform: rotate( 35deg ) skewX( -15deg );  /* Safari and Chrome */
+			-ms-transform: rotate( 35deg ) skewX( -15deg ); /* IE 9 */
+			-o-transform: rotate( 35deg ) skewX( -15deg ); /* Opera */
+			-moz-transform: rotate( 35deg ) skewX( -15deg ); /* Firefox */
+		}
+	}
+	&:hover {
+		.circle {
+			@include opacity( 70 );
+		}
+	}
+}
