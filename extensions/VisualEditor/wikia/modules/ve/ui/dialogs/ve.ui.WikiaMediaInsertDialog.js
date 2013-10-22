@@ -31,6 +31,8 @@ ve.ui.WikiaMediaInsertDialog.static.titleMessage = 'visualeditor-dialog-media-in
 
 ve.ui.WikiaMediaInsertDialog.static.icon = 'media';
 
+ve.ui.WikiaMediaInsertDialog.static.pages = [ 'search', 'suggestions' ];
+
 /* Methods */
 
 /**
@@ -54,19 +56,13 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	this.pages = new ve.ui.PagedLayout( { '$$': this.frame.$$, 'attachPagesPanel': true } );
 	this.query = new ve.ui.WikiaMediaQueryWidget( { '$$': this.frame.$$ } );
 	this.queryInput = this.query.getInput();
-	this.removeButton = new ve.ui.ButtonWidget( {
-		'$$': this.frame.$$,
-		'label': 'Remove from the cart', //TODO: i18n
-		'flags': ['destructive']
-	} );
 	this.search = new ve.ui.WikiaMediaResultsWidget( { '$$': this.frame.$$ } );
 	this.searchResults = this.search.getResults();
+	this.uploadButton = new ve.ui.WikiaUploadWidget( { '$$': this.frame.$$ } );
 
 	this.$cart = this.$$( '<div>' );
 	this.$content = this.$$( '<div>' );
-	this.$removePage = this.$$( '<div>' );
 	this.$mainPage = this.$$( '<div>' );
-	this.uploadButton = new ve.ui.WikiaUploadWidget( { '$$': this.frame.$$ } );
 
 	// Events
 	this.cart.connect( this, { 'select': 'onCartSelect' } );
@@ -78,18 +74,14 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 		'enter': 'onQueryInputEnter'
 	} );
 	this.queryInput.$input.on( 'keydown', ve.bind( this.onQueryInputKeydown, this ) );
-	this.removeButton.connect( this, { 'click': 'onRemoveButtonClick' } );
 	this.search.connect( this, {
 		'nearingEnd': 'onSearchNearingEnd',
 		'select': 'onSearchSelect'
 	} );
 
 	// Initialization
-	this.removeButton.$.appendTo( this.$removePage );
 	this.uploadButton.$.appendTo( this.$mainPage );
-	// TODO: Remove this when file information pages are built
-	this.pages.addPage( 'remove', { '$content': this.$removePage } );
-	// TODO: Make suggestions widget and remove this placeholder div
+
 	this.pages.addPage( 'main', { '$content': this.$mainPage } );
 	this.pages.addPage( 'search', { '$content': this.search.$ } );
 
@@ -174,7 +166,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.onSearchNearingEnd = function () {
  * Handle clicking on search result items.
  *
  * @method
- * @param {ve.ui.OptionWidget} item The search result item model
+ * @param {ve.ui.OptionWidget} item The search result item
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onSearchSelect = function ( item ) {
 	var cartItems, i;
@@ -190,18 +182,55 @@ ve.ui.WikiaMediaInsertDialog.prototype.onSearchSelect = function ( item ) {
 	this.cartModel.addItems( [
 		new ve.dm.WikiaCartItem( item.title, item.url, item.type )
 	] );
+	this.pages.addPage( item.title, { '$content': this.createFilePage( item ) } );
+};
+
+/**
+ * Create the file details page for a media item.
+ *
+ * @method
+ * @param {ve.ui.OptionWidget}
+ */
+ve.ui.WikiaMediaInsertDialog.prototype.createFilePage = function ( item ) {
+	var $page, $removeButton;
+
+	// Properties
+	$page = this.$$( '<div>' );
+	$removeButton = new ve.ui.ButtonWidget( {
+		'$$': this.frame.$$,
+		'label': 'Remove from the cart', //TODO: i18n
+		'flags': ['destructive']
+	} );
+
+	// Events
+	$removeButton.connect( this, { 'click': 'onRemoveButtonClick' } );
+
+	// Initialize
+	$page.text( item.title ).append( $removeButton );
+
+	return $page;
 };
 
 /**
  * Handle clicking on cart items.
  *
  * @method
+ * @param {ve.ui.WikiaCartItemWidget} item The cart item.
  */
-ve.ui.WikiaMediaInsertDialog.prototype.onCartSelect = function () {
-	if ( this.pages.getPageName() === 'search' ) {
-		this.pages.setPage( 'remove' );
+ve.ui.WikiaMediaInsertDialog.prototype.onCartSelect = function ( item ) {
+	this.setPage( item.getModel().title );
+};
+
+ve.ui.WikiaMediaInsertDialog.prototype.setPage = function ( name ) {
+	if ( this.pages.getPageName() === name ) {
+		// Toggle cart item
+		if ( ve.indexOf( name, ve.ui.WikiaMediaInsertDialog.static.pages ) === -1 ) {
+			this.pages.setPage(
+				this.queryInput.getValue().trim().length === 0 ? 'suggestions' : 'search'
+			);
+		}
 	} else {
-		this.pages.setPage( 'search' );
+		this.pages.setPage( name );
 	}
 };
 
