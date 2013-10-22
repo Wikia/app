@@ -704,6 +704,32 @@ $messages['kn'] = array(
 	'wikiamobile-footer-link-entertainment' => '[[w:c:www:Entertainment|ಮನರಂಜನೆ]]',
 );
 
+/** Korean (한국어)
+ * @author Hym411
+ * @author Jytim
+ */
+$messages['ko'] = array(
+	'wikiamobile-search' => '찾기',
+	'wikiamobile-search-this-wiki' => '이 위키 찾기',
+	'wikiamobile-search-wiki' => '위키',
+	'wikiamobile-search-wikia' => '위키아',
+	'wikiamobile-login' => '로그인',
+	'wikiamobile-password' => '비밀 번호',
+	'wikiamobile-login-submit' => '로그인',
+	'wikiamobile-menu' => '메뉴',
+	'wikiamobile-article-categories' => '분류',
+	'wikiamobile-feedback' => '의견',
+	'wikiamobile-back' => '뒤로',
+	'wikiamobile-hide-section' => '숨기기',
+	'wikiamobile-profile' => '프로필',
+	'wikiamobile-category-items-more' => '더 보기',
+	'wikiamobile-category-items-prev' => '이전 문서 보기',
+	'wikiamobile-categories-expand' => '모두 보기',
+	'wikiamobile-categories-collapse' => '모두 숨기기',
+	'wikiamobile-sharing-media-image' => '사진',
+	'wikiamobile-sharing-page-text' => '$1 - $2',
+);
+
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
  * @author Gomada
  */

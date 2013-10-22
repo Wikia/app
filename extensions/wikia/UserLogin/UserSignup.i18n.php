@@ -462,6 +462,13 @@ $messages['azb'] = array(
 	'usersignup-confirmation-reminder-email-greeting' => 'سلام $USERNAME,',
 );
 
+/** Bulgarian (български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'usersignup-confirmation-reminder-email-signature' => 'Екипът на Wikia',
+);
+
 /** Breton (brezhoneg)
  * @author Fohanno
  * @author Y-M D
@@ -724,6 +731,7 @@ Vols controlar els correus que reps? Vés a: {{fullurl: {{ns:special}}:Preferèn
  */
 $messages['ce'] = array(
 	'usersignup-confirm-email-update' => 'Карлаяккха',
+	'usersignup-reconfirmation-email_subject' => 'Бакъде электрони почтан адрес хуьйцуш хилар Вики чохь',
 );
 
 /** Czech (česky)

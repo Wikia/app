@@ -1768,6 +1768,7 @@ $messages['ps'] = array(
 /** Portuguese (português)
  * @author Hamilton Abreu
  * @author Luckas
+ * @author Polyethylen
  * @author Pttraduc
  * @author SandroHc
  */
@@ -1793,7 +1794,7 @@ $messages['pt'] = array(
 	'editaccount-submit-clearunsub' => 'Limpar indicação de não subscrito',
 	'editaccount-submit-cleardisable' => 'Limpar marca de desativação',
 	'editaccount-submit-close' => 'Fechar Conta',
-	'editaccount-submit-button' => 'Salvar',
+	'editaccount-submit-button' => 'Guardar',
 	'editaccount-usage-close' => 'Também pode desativar uma conta de utilizador misturando a palavra-chave e removendo o endereço eletrónico. Note que estes dados serão perdidos e não podem ser recuperados.',
 	'editaccount-warning-close' => '<b>Cuidado!</b> Está prestes a desativar definitivamente a conta do utilizador <b>$1</b>. Esta operação não pode ser desfeita. Tem a certeza de que pretende fazê-lo?',
 	'editaccount-status' => 'Estado',
@@ -1810,7 +1811,7 @@ $messages['pt'] = array(
 	'editaccount-error-close' => 'Ocorreu um problema ao fechar a conta. Tente novamente ou contacte o Suporte Técnico.',
 	'editaccount-invalid-email' => '"$1" não é um endereço electrónico válido!',
 	'editaccount-nouser' => 'A conta "$1" não existe!',
-	'editaccount-requested' => 'Nota: O usuário solicitou um encerramento de conta',
+	'editaccount-requested' => 'Nota: O utilizador solicitou o encerramento da conta',
 	'editaccount-labal-account-status' => 'Estado da Conta',
 	'editaccount-labal-email-status' => 'Estado do E-mail',
 	'editaccount-status-confirmed' => 'Confirmado',
@@ -2386,6 +2387,7 @@ $messages['uk'] = array(
 );
 
 /** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
  * @author Minh Nguyen
  * @author Xiao Qiao
  */
@@ -2395,6 +2397,7 @@ $messages['vi'] = array(
 	'editaccount-title' => 'Đặc biệt:EditAccount',
 	'editaccount-frame-manage' => 'Sửa đổi tài khoản',
 	'editaccount-frame-usage' => 'Lưu ý',
+	'editaccount-usage' => 'Dữ liệu người dùng được lưu trữ một cách riêng biệt cho mỗi wiki. Khi bạn đặt lại mật khẩu hoặc email, bộ nhớ cache sẽ chỉ được bắt quả tang cho wiki này. Xin vui lòng trực tiếp người dùng wiki này để đăng nhập với mật khẩu mới được thiết lập để tránh vấn đề bộ nhớ cache.',
 	'editaccount-label-select' => 'Chọn một tài khoản người dùng',
 	'editaccount-submit-account' => 'Quản lý tài khoản',
 	'editaccount-frame-account' => 'Sửa đổi tài khoản người dùng: $1',
@@ -2403,11 +2406,17 @@ $messages['vi'] = array(
 	'editaccount-label-pass' => 'Thiết lập mật khẩu mới',
 	'editaccount-label-realname' => 'Cung cấp tên thật',
 	'editaccount-label-clearunsub' => 'Hủy đăng ký',
+	'editaccount-label-toggleadopt' => 'Thay đổi trạng thái adopter (cho AutomaticWikiAdopt):',
+	'editaccount-label-toggleadopt-prevent' => 'Ngăn chặn nhận con nuôi tự động',
+	'editaccount-label-toggleadopt-allow' => 'Cho phép tự động nhận con nuôi',
+	'editaccount-label-reason' => 'Lý do:',
 	'editaccount-submit-email' => 'Lưu địa chỉ e-mail',
 	'editaccount-submit-pass' => 'Lưu mật khẩu',
 	'editaccount-submit-realname' => 'Lưu tên thật',
 	'editaccount-submit-clearunsub' => 'Xoá bỏ đăng ký',
+	'editaccount-submit-cleardisable' => 'Tẩy trống vô hiệu hóa cờ',
 	'editaccount-submit-close' => 'Đóng tài khoản',
+	'editaccount-submit-button' => 'Lưu',
 	'editaccount-usage-close' => 'Bạn cũng có thể vô hiệu hóa một tài khoản người dùng bằng cách xáo trộn mật khẩu và loại bỏ các địa chỉ e-mail. Lưu ý rằng dữ liệu này bị mất và sẽ không được khôi phục.',
 	'editaccount-warning-close' => '<b>Thận trọng!</b> Bạn đang định vô hiệu hóa vĩnh viễn tài khoản của người dùng <b>$1</b>. Điều này không thể quay trở lại được. Bạn có chắc chắn đó là những gì bạn muốn làm?',
 	'editaccount-status' => 'Thông điệp trạng thái',
@@ -2416,6 +2425,8 @@ $messages['vi'] = array(
 	'editaccount-success-pass' => 'Thay đổi thành công mật khẩu cho tài khoản $1 .',
 	'editaccount-success-realname' => 'Thay đổi thành công tên thật cho tài khoản $1 .',
 	'editaccount-success-unsub' => 'Thành công hủy bỏ nhỏ đăng ký cho tài khoản $1 .',
+	'editaccount-success-disable' => 'Hủy bỏ nhỏ đăng ký cho tài khoản $1 đã thành công.',
+	'editaccount-success-toggleadopt' => 'Thành công bật trạng thái đủ điều kiện nhận con rối cho tài khoản $1 .',
 	'editaccount-success-close' => 'Thành công vô hiệu hóa tài khoản $1 .',
 	'editaccount-error-email' => 'E-mail không được thay đổi. Thử lại hoặc liên hệ với đội ngũ công nghệ cao.',
 	'editaccount-error-pass' => 'Mật khẩu không được thay đổi. Thử lại hoặc liên hệ với đội ngũ công nghệ cao.',
@@ -2423,6 +2434,16 @@ $messages['vi'] = array(
 	'editaccount-error-close' => 'Một vấn đề xảy ra khi đóng tài khoản. Thử lại hoặc liên hệ với đội ngũ công nghệ cao.',
 	'editaccount-invalid-email' => '"$1" không phải là một địa chỉ thư điện tử hợp lệ!',
 	'editaccount-nouser' => 'Tài khoản "$1" không tồn tại!',
+	'editaccount-not-loaded' => 'Lỗi: Dữ liệu người dùng không thể tải đúng, hãy thử tải lại trang.',
+	'editaccount-remove-avatar-fail' => 'Vấn đề tự động loại bỏ avatar.',
+	'editaccount-requested' => 'Lưu ý: Người dùng đã yêu cầu một đóng tài khoản',
+	'editaccount-not-requested' => 'CHÚ Ý: Người dùng đã không yêu cầu một đóng tài khoản',
+	'editaccount-labal-account-status' => 'Trạng thái tài khoản',
+	'editaccount-labal-email-status' => 'Trạng thái thư điện tử:',
+	'editaccount-status-confirmed' => 'Xác nhận',
+	'editaccount-status-unconfirmed' => 'Chưa được xác nhận',
+	'editaccount-status-realuser' => 'Người sử dụng thực tế',
+	'editaccount-status-tempuser' => 'Người sử dụng tạm thời',
 	'editaccount-log' => 'Nhật trình Tài khoản người dùng',
 	'editaccount-log-header' => 'Trang này liệt kê những thay đổi thông tin người dùng được thực hiện bởi Nhân viên Wikia',
 	'editaccount-log-entry-email' => 'thư điện tử đã thay đổi cho người dùng $2',

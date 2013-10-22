@@ -239,7 +239,9 @@ class HAWelcomeJob extends Job {
 				// The id of the user to be welcome (0 if anon).
 				'iUserId' => $oRevision->getRawUser(),
 				// The name of the user to be welcome (IP if anon).
-				'sUserName' => $oRevision->getRawUserText()
+				'sUserName' => $oRevision->getRawUserText(),
+				// The time when the job has been scheduled (as UNIX timestamp).
+				'iTimestamp' => time()
 			);
 			if ( !empty( $wgHAWelcomeNotices ) ) {
 				trigger_error( sprintf( '%s Scheduling a job.', __METHOD__ ) , E_USER_NOTICE );
@@ -276,6 +278,7 @@ class HAWelcomeJob extends Job {
 		// Convert params to object properties (easier access).
 		$this->iRecipientId = $aParams['iUserId'];
 		$this->sRecipientName = $aParams['sUserName'];
+		$this->iTimestamp = ( isset( $aParams['iTimestamp'] ) ) ? $aParams['iTimestamp'] : 0;
 		/** @global Boolean Show PHP Notices. Set via WikiFactory. */
 		global $wgHAWelcomeNotices;
 		$this->bShowNotices = !empty( $wgHAWelcomeNotices );
@@ -294,6 +297,11 @@ class HAWelcomeJob extends Job {
 	 */
 	public function run() {
 		wfProfileIn( __METHOD__ );
+		if ( 0 < $this->iTimestamp ) {
+			global $wgCityId;
+			$iSecondsToExecute = time() - $this->iTimestamp;
+			error_log( "HAWelcome-WIKIA: CityId:{$wgCityId},JobId:{$this->id},SecondsToExecute:{$iSecondsToExecute}" );
+		}
 		/** @type Interget Store the original error reporting level. */
 		$iErrorReporting = error_reporting();
 		error_reporting( E_ALL );

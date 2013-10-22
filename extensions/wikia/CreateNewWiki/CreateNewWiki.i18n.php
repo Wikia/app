@@ -2897,6 +2897,7 @@ $messages['vep'] = array(
 );
 
 /** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
  * @author Xiao Qiao
  * @author XiaoQiaoGrace
  */
@@ -2927,7 +2928,7 @@ $messages['vi'] = array(
 	'cnw-userauth-headline' => 'Đã có tài khoản?',
 	'cnw-userauth-creative' => 'Đăng nhập',
 	'cnw-userauth-marketing-heading' => 'Chưa có tài khoản?',
-	'cnw-userauth-marketing-body' => 'Bạn cần một tài khoản để tạo ra một wiki trên Wikia.  Nó chỉ mất một phút để đăng ký!', # Fuzzy
+	'cnw-userauth-marketing-body' => 'Bạn cần một tài khoản để tạo ra một wiki trên Wikia.  Nó chỉ mất một phút để đăng ký!',
 	'cnw-userauth-signup-button' => 'Đăng ký',
 	'cnw-desc-headline' => 'Wiki của bạn đề cập về?',
 	'cnw-desc-creative' => 'Mô tả chủ đề của bạn',
@@ -2940,6 +2941,8 @@ $messages['vi'] = array(
 	'cnw-desc-tip3-creative' => 'Hãy để mọi người biết họ có thể giúp wiki của bạn phát triển bằng cách sửa đổi và tạo các trang',
 	'cnw-desc-choose' => 'Chọn một thể loại',
 	'cnw-desc-select-one' => 'Chọn một',
+	'cnw-desc-all-ages' => 'Mọi lứa tuổi',
+	'cnw-desc-tip-all-ages' => 'Là wiki này về một chủ đề mà trẻ em quan tâm? Để giúp chúng tôi tuân thủ luật pháp Hoa Kỳ, chúng tôi theo dõi các wiki về chủ đề mà kháng cáo trực tiếp cho trẻ em 12 và dưới.',
 	'cnw-desc-default-lang' => 'Wiki của bạn sẽ đặt tại $1',
 	'cnw-desc-change-lang' => 'thay đổi',
 	'cnw-desc-lang' => 'Ngôn ngữ',
@@ -2951,8 +2954,8 @@ $messages['vi'] = array(
 	'cnw-welcome-instruction1' => 'Nhấn vào nút dưới đây để bắt đầu thêm các trang cho wiki của bạn.',
 	'cnw-welcome-instruction2' => 'Bạn sẽ thấy nút này trong suốt wiki của bạn, sử dụng nó bất cứ lúc nào bạn muốn thêm một trang mới.',
 	'cnw-welcome-help' => 'Tìm câu trả lời, lời khuyên và nhiều hơn trên <a href="http://vi.wikia.com/wiki/Trang_Chính">Wikia Tiếng Việt</a>.',
-	'cnw-error-general' => 'Một cái gì đó đã xảy ra trong khi tạo ra wiki của bạn. Xin vui lòng thử lại sau.', # Fuzzy
-	'cnw-error-general-heading' => 'Lỗi tạo Wiki mới', # Fuzzy
+	'cnw-error-general' => 'Một cái gì đó đã xảy ra trong khi tạo ra wiki của bạn. Xin vui lòng thử lại sau.',
+	'cnw-error-general-heading' => 'Lỗi tạo Wiki mới',
 	'cnw-badword-header' => 'Whoa có rồi',
 	'cnw-badword-msg' => 'Chào bạn, xin vui lòng tránh sử dụng những từ ngữ xấu hoặc từ bị cấm trong các mô tả Wiki: $1',
 	'cnw-error-wiki-limit-header' => 'Wiki đã đạt đến giới hạn',

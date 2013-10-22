@@ -1,0 +1,2 @@
+#!/bin/sh
+ant -f build-wikia.xml  -Dunittest=../includes/wikia/services phpunit-single

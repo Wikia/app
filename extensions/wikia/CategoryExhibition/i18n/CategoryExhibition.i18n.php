@@ -670,6 +670,22 @@ $messages['uk'] = array(
 	'category-exhibition-display-new' => 'Подання категорії піктограмами',
 );
 
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'category-exhibition-sorttype' => 'Phân loại các loại:',
+	'category-exhibition-alphabetical' => 'Bảng chữ cái',
+	'category-exhibition-mostvisited' => 'Truy cập nhiều nhất',
+	'category-exhibition-recentedits' => 'Biên tập, sửa đổi gần đây',
+	'category-exhibition-page-header' => 'Các trang trong thể loại “$1”',
+	'category-exhibition-subcategories-header' => 'Thể loại con',
+	'category-exhibition-media-header' => 'Các tập tin trong thể loại “$1”',
+	'category-exhibition-blogs-header' => 'Bài đăng trên blog',
+	'category-exhibition-display-old' => 'Xem danh sách thể loại',
+	'category-exhibition-display-new' => 'Danh mục triển lãm xem',
+);
+
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Hzy980512
