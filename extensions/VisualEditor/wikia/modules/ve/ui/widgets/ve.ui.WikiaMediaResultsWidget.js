@@ -35,9 +35,21 @@ ve.ui.WikiaMediaResultsWidget = function VeUiWikiaMediaResultsWidget( config ) {
 
 ve.inheritClass( ve.ui.WikiaMediaResultsWidget, ve.ui.Widget );
 
+/* Events */
+
+/**
+ * @event nearingEnd
+ */
+
 /* Methods */
 
-ve.ui.WikiaMediaResultsWidget.prototype.addResults = function ( items ) {
+/**
+ * Add items to the results.
+ *
+ * @method
+ * @param {Array} items An array of items to add.
+ */
+ve.ui.WikiaMediaResultsWidget.prototype.addItems = function ( items ) {
 	var i,
 		results = [];
 
@@ -50,20 +62,44 @@ ve.ui.WikiaMediaResultsWidget.prototype.addResults = function ( items ) {
 	this.results.addItems( results );
 };
 
+/**
+ * Get the results.
+ *
+ * @method
+ * @returns {ve.ui.SelectWidget} The results widget.
+ */
 ve.ui.WikiaMediaResultsWidget.prototype.getResults = function () {
 	return this.results;
 };
 
+/**
+ * Handle scrolling the results.
+ *
+ * @method
+ * @fires nearingEnd
+ */
 ve.ui.WikiaMediaResultsWidget.prototype.onResultsScroll = function () {
 	var position = this.$.scrollTop() + this.$.outerHeight(),
 		threshold = this.results.$.outerHeight() - this.size;
 	if ( position > threshold ) {
-		this.emit( 'end' );
+		this.emit( 'nearingEnd' );
 	}
 };
 
+/**
+ * Handle highlighting results.
+ *
+ * @method
+ * @see {@link ve.ui.SearchWidget.prototype.onResultsHighlight}
+ */
 ve.ui.WikiaMediaResultsWidget.prototype.onResultsHighlight =
 	ve.ui.SearchWidget.prototype.onResultsHighlight;
 
+/**
+ * Handle selecting results.
+ *
+ * @method
+ * @see {@link ve.ui.SearchWidget.prototype.onResultsSelect}
+ */
 ve.ui.WikiaMediaResultsWidget.prototype.onResultsSelect =
 	ve.ui.SearchWidget.prototype.onResultsSelect;

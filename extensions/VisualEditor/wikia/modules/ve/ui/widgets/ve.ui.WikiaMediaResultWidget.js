@@ -54,6 +54,7 @@ ve.inheritClass( ve.ui.WikiaMediaResultWidget, ve.ui.OptionWidget );
 
 /* Methods */
 
+/** */
 ve.ui.WikiaMediaResultWidget.prototype.loadThumbnail = function () {
 	require( ['wikia.thumbnailer'], ve.bind( function ( thumbnailer ) {
 		this.image.src = thumbnailer.getThumbURL( this.data.url, 'image', this.size, this.size );
@@ -64,6 +65,7 @@ ve.ui.WikiaMediaResultWidget.prototype.loadThumbnail = function () {
 	}, this ) );
 };
 
+/** */
 ve.ui.WikiaMediaResultWidget.prototype.onThumbnailLoad = function () {
 	this.$thumb.first().addClass( 've-ui-texture-transparency' );
 	this.$
@@ -84,5 +86,7 @@ ve.ui.WikiaMediaResultWidget.prototype.onThumbnailLoad = function () {
 		} );
 	}
 };
+
+/** */
 ve.ui.WikiaMediaResultWidget.prototype.onThumbnailError =
 	ve.ui.MWMediaResultWidget.prototype.onThumbnailError;

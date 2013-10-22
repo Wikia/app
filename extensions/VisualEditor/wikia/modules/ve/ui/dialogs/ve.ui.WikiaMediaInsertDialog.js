@@ -78,7 +78,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	this.queryInput.$input.on( 'keydown', ve.bind( this.onQueryInputKeydown, this ) );
 	this.removeButton.connect( this, { 'click': 'onRemoveButtonClick' } );
 	this.search.connect( this, {
-		'end': 'onSearchEnd',
+		'nearingEnd': 'onSearchNearingEnd',
 		'select': 'onSearchSelect'
 	} );
 
@@ -154,7 +154,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.onQueryInputKeydown = function ( e ) {
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onQueryMedia = function ( data ) {
 	// TODO: handle filtering search results to show what's in the cart already
-	this.search.addResults( data.response.results.mixed.items );
+	this.search.addItems( data.response.results.mixed.items );
 	this.pages.setPage( 'search' );
 };
 
@@ -163,7 +163,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.onQueryMedia = function ( data ) {
  *
  * @method
  */
-ve.ui.WikiaMediaInsertDialog.prototype.onSearchEnd = function () {
+ve.ui.WikiaMediaInsertDialog.prototype.onSearchNearingEnd = function () {
 	this.query.requestMedia();
 };
 

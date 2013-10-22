@@ -45,6 +45,18 @@ ve.ui.WikiaMediaQueryWidget = function VeUiWikiaMediaQueryWidget( config ) {
 
 ve.inheritClass( ve.ui.WikiaMediaQueryWidget, ve.ui.Widget );
 
+/* Events */
+
+/**
+ * @event requestMedia
+ * @param {string} value The query input value.
+ */
+
+/**
+ * @event requestMediaDone
+ * @param {Object} data The response Object from the server.
+ */
+
 /* Methods */
 
 /**
@@ -57,6 +69,12 @@ ve.ui.WikiaMediaQueryWidget.prototype.getInput = function () {
 	return this.input;
 };
 
+/**
+ * Request media from the server.
+ *
+ * @method
+ * @fires requestMedia
+ */
 ve.ui.WikiaMediaQueryWidget.prototype.requestMedia = function () {
 	var value;
 
@@ -88,9 +106,14 @@ ve.ui.WikiaMediaQueryWidget.prototype.requestMedia = function () {
 			.done( ve.bind( this.onRequestMediaDone, this ) );
 	}
 
-	this.emit( 'request', value, this.request );
+	this.emit( 'requestMedia', value, this.request );
 };
 
+/**
+ * Handle query input changes.
+ *
+ * @method
+ */
 ve.ui.WikiaMediaQueryWidget.prototype.onInputChange = function () {
 	var value = this.input.getValue();
 
@@ -103,16 +126,28 @@ ve.ui.WikiaMediaQueryWidget.prototype.onInputChange = function () {
 	}
 };
 
+/**
+ * Handle media request promise.always
+ *
+ * @method
+ */
 ve.ui.WikiaMediaQueryWidget.prototype.onRequestMediaAlways = function () {
 	this.request = null;
 	this.input.popPending();
 };
 
+/**
+ * Handle media request promise.done
+ *
+ * @method
+ * @param {Object} data The response Object from the server.
+ * @fires requestMediaDone
+ */
 ve.ui.WikiaMediaQueryWidget.prototype.onRequestMediaDone = function ( data ) {
 	if ( !data.response || !data.response.results || this.input.getValue().trim().length === 0 ) {
 		return;
 	}
 
 	this.batch++;
-	this.emit( 'media', data );
+	this.emit( 'requestMediaDone', data );
 };
