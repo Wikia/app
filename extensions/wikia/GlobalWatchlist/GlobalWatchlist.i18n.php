@@ -117,6 +117,37 @@ Wikia
 	'globalwatchlist-no-blog-page-found' => "N'eo bet kavet pajenn blog ebet.",
 );
 
+/** Catalan (català)
+ * @author Alvaro Vidal-Abarca
+ * @author Roxas Nobody 15
+ */
+$messages['ca'] = array(
+	'globalwatchlist-desc' => 'Envia setmanalment digerir e-mails amb watchlisted pàgines en tots els wikis',
+	'tog-watchlistdigest' => 'Envieu-me per correu electrònic un Butlletí Setmanal de la cistella de Seguiment',
+	'tog-watchlistdigestclear' => 'Marcar totes les pàgines de la meva llista de seguiment Setmanal com a visitades',
+	'globalwatchlist-see-more' => 'Si us plau, comprovi la llista de canvis locals per a més canvis',
+	'globalwatchlist-digest-email-subject' => 'Recull Setmanal',
+	'globalwatchlist-digest-email-body' => 'Benvolgut / da $1,
+
+Aquest és un llistat de les pàgines de la vostra llista de seguiment de Wikia que han estat editades des de la darrera visita.
+
+$2
+
+Aquest és un llistat de les pàgines de blocs incloses la vostra llista de seguiment Wikia que han estat editades o en les que s\'ha comentat des de l\'última vegada que les vas visitar.
+
+$3
+
+Si us plau visita-les i edita-les freqüentment ...
+
+Wikia
+
+* Per canviar les preferències de notificacions de la vostra llista de seguiment, per favor, visita http://www.wikia.com/wiki/Special:Preferences
+* Per tenir les pàgines d\'aquest Butlletí Setmanal com visitades vegeu a la pestanya de "Seguiment" en les vostres Preferències',
+	'globalwatchlist-blog-page-title-comment' => '$1( $2  {{PLURAL:$2| comment|comments}})',
+	'globalwatchlist-no-page-found' => 'Cap pàgina trobada.',
+	'globalwatchlist-no-blog-page-found' => "No s'ha trobat el fitxer del registre.",
+);
+
 /** Czech (česky)
  * @author Dontlietome7
  */
@@ -275,6 +306,18 @@ Wikia
 	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|kommentti|kommenttia}})',
 	'globalwatchlist-no-page-found' => 'Sivua ei löytynyt.',
 	'globalwatchlist-no-blog-page-found' => 'Blogisivua ei löytynyt.',
+);
+
+/** Faroese (føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'globalwatchlist-desc' => 'Sendir t-post samandráttir einaferð um vikuna við eftirlitssíðum á øllum wikium',
+	'tog-watchlistdigest' => 'Send mær ein Vikuligan eftirlitssamandrátt (Weekly Watchlist Digest)',
+	'tog-watchlistdigestclear' => 'Merk allar síður frá mínum viku-eftirlits-samandrátti sum vitjaðar',
+	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|viðmerking|viðmerkingar}})',
+	'globalwatchlist-no-page-found' => 'Ongin síða funnin.',
+	'globalwatchlist-no-blog-page-found' => 'Ongin bloggsíða funnin.',
 );
 
 /** French (français)
@@ -807,7 +850,30 @@ $messages['ro'] = array(
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'globalwatchlist-desc' => "manne ogne sumane 'nu riepiloghe cu l'email cu le pàggene da condrollà sus a tutte le uicchi",
+	'tog-watchlistdigest' => "Manname 'na mail cu 'nu riepiloghe d'a sumane de le pàggene condrollate",
+	'tog-watchlistdigestclear' => "Signe tutte le pàggene da 'u Riepiloghe d'a sumàne de le pàggene condrollate cumme visitate",
+	'globalwatchlist-see-more' => 'Pe piacere verifiche le pàggene condrollate locale tune pe cchiù cangiaminde',
 	'globalwatchlist-digest-email-subject' => "Riepiloghe d'a sumane",
+	'globalwatchlist-digest-email-body' => "Care \$1,
+
+Queste jè 'n'elenghe de pàggene sus 'a le pàggene condrollate d'a Uicchia toje ca onne state cangiate da quanne tu l'è viste l'urtema vote.
+
+\$2
+
+Quiste jè 'n'elenghe de pàggene d'u blog sus 'a le pàggene condrollate d'a Uicchia toje ca onne state cangiate da quanne tu l'è viste l'urtema vote.
+
+\$3
+
+Pe piacere visitale e cangiale spesse...
+
+Uicchia
+
+* Pe cangià le preferenze tune sus a le notifiche de le pàggene condrollate, pe piacere visite  http://www.wikia.com/wiki/Special:Preferences
+* Pe signà tutte le pàggene de stu riepiloghe sumanale cumme visitate, 'ndruche l'opzione jndr'à schede \"Pàggene condrollate\" d'a pàgene de le Preferenze tune",
+	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|commende}})',
+	'globalwatchlist-no-page-found' => 'Nisciuna pàgene acchiate.',
+	'globalwatchlist-no-blog-page-found' => 'Nisciuna pàgene de blog acchiate.',
 );
 
 /** Russian (русский)

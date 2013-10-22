@@ -24,6 +24,8 @@ class MemcachedPhpBagOStuff extends BagOStuff {
 	 * @param $params array
 	 */
 	function __construct( $params ) {
+		global $wgMemCachedClass, $wgMoxiTestNodes;
+
 		if ( !isset( $params['servers'] ) ) {
 			$params['servers'] = $GLOBALS['wgMemCachedServers'];
 		}
@@ -43,9 +45,15 @@ class MemcachedPhpBagOStuff extends BagOStuff {
 			$params['connect_timeout'] = 0.1;
 		}
 
-		$this->client = new MemCachedClientforWiki( $params );
-		$this->client->set_servers( $params['servers'] );
-		$this->client->set_debug( $params['debug'] );
+		if (false && in_array(gethostname(), $wgMoxiTestNodes)) {
+			$wgMemCachedClass = 'MemcacheClientShadower'; // TODO: remove this once we decide which client to use
+		}
+
+		if (empty($wgMemCachedClass) || !class_exists($wgMemCachedClass)) {
+			$wgMemCachedClass = 'MemCachedClientforWiki';
+		}
+
+		$this->client = new $wgMemCachedClass( $params );
 	}
 
 	/**

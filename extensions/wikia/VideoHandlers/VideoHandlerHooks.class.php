@@ -41,7 +41,6 @@ class VideoHandlerHooks {
 		return $result;
 	}
 
-
 	/**
 	 * Preserves video mime types. Needed to fix MW 1.16 bug
 	 *
@@ -86,17 +85,16 @@ class VideoHandlerHooks {
 			'class' => 'WikiaLocalRepo',
 			'name' => 'local',
 			'directory' => $wgUploadDirectory,
-			//'scriptDirUrl' => $wgScriptPath,
-			//'scriptExtension' => $wgScriptExtension,
 			'url' => $wgUploadBaseUrl ? $wgUploadBaseUrl . $wgUploadPath : $wgUploadPath,
 			'hashLevels' => $wgHashedUploadDirectory ? 2 : 0,
 			'thumbScriptUrl' => $wgThumbnailScriptPath,
 			'transformVia404' => !$wgGenerateThumbnailOnParse,
 			'deletedDir' => $wgDeletedDirectory, // TODO: check me
 			'deletedHashLevels' => $wgLocalFileRepo['deletedHashLevels'], // TODO: check me,
-			'backend' => 'local-backend'
+			'backend' => 'local-backend',
 		);
 
+		wfRunHooks( 'AfterSetupLocalFileRepo', [&$wgLocalFileRepo] );
 		return true;
 	}
 

@@ -113,19 +113,23 @@ $messages['bg'] = array(
 );
 
 /** Breton (brezhoneg)
+ * @author Fohanno
  * @author Y-M D
  */
 $messages['br'] = array(
 	'contact' => 'Mont e darempred gant Wikia',
 	'specialcontact-wikia' => 'Mont e darempred gant Wikia',
 	'specialcontact-pagetitle' => 'Mont e darempred gant Wikia',
-	'specialcontact-username' => 'Anv implijer', # Fuzzy
+	'specialcontact-username' => "Hoc'h anv implijer",
 	'specialcontact-wikiname' => 'Peseurt wiki',
 	'specialcontact-realname' => "Hoc'h anv",
 	'specialcontact-yourmail' => "Chomlec'h postel",
 	'specialcontact-problem' => 'Danvez',
 	'specialcontact-problemdesc' => 'Kemennadenn',
 	'specialcontact-mail' => 'Kas da Wikia',
+	'specialcontact-ccme' => 'Kas un eilenn eus ar gemennadenn-mañ din',
+	'specialcontact-captchainfo' => 'Ebarzhit an destenn er skeudenn, mar plij.',
+	'specialcontact-nomessage' => 'Skrivit ur gemennadenn, mar plij',
 );
 
 /** Catalan (català)
@@ -884,6 +888,31 @@ $messages['roa-tara'] = array(
 	'contact' => 'Condatte Uicchia',
 	'specialcontact-wikia' => 'Condatte Uicchia',
 	'specialcontact-pagetitle' => 'Condatte Uicchia',
+	'specialcontact-intro' => "Tu puè condattà 'u [[w:project:Staff|Staffe de Uicchia]] ausanne stu module. Le amministrature de sta uicchi ponne essere acchiate [[Special:ListAdmins|aqquà]].
+
+	'Mbormaziune aggiundive sus a cumme segnalà le probbleme a Uicchi ponne essere acchiate [[w:project:Report_a_problem|aqquà]], o tu puè mannà 'nu messàgge sus a 'u [[w:Forum:Index|Forum d'a comunitate de Uicchia]] pe supporte da otre utinde.
+
+Ce tu preferisce ausà email regolare o mettere allegate, tu puè condattarne sus a [mailto:community@wikia.com community@wikia.com].",
+	'specialcontact-username' => "'U nome utende tune",
+	'specialcontact-wikiname' => 'Ce uicchi',
+	'specialcontact-realname' => "'U nome tune",
+	'specialcontact-yourmail' => 'Indirizze email',
+	'specialcontact-problem' => 'Suggette',
+	'specialcontact-problemdesc' => 'Messàgge',
+	'specialcontact-mail' => 'Manne a Uicchia',
+	'specialcontact-filledin' => "Sta 'mbormazione ha state anghiute da le preferenze d'u cunde tune",
+	'specialcontact-ccme' => "manname 'na copie de stu messàgge",
+	'specialcontact-ccdisabled' => "Disabbilitate: Pe piacere valide 'u 'ndirizze email tune pe ausà sta funzione",
+	'specialcontact-notyou' => 'No sì tu?',
+	'specialcontact-captchainfo' => "Pe piacere mitte 'u teste jndr'à l'immaggine.",
+	'specialcontact-captchatitle' => 'Parole sfocate',
+	'specialcontact-formtitle' => "Condatte 'u staff de supporte de Uicchia",
+	'specialcontact-nomessage' => "Pe piacere inghie 'u messàgge",
+	'specialcontact-captchafail' => 'Codece de conferme non corrette o mangande.',
+	'specialcontact-mailsub' => 'Mail de condatte de Uicchia',
+	'specialcontact-mailsubcc' => "Copie 'da mail de condatte a Uicchia",
+	'specialcontact-ccheader' => "Queste jè 'na copie d'u messàgge tune ca ha state mannate a 'u supporte de Uicchia",
+	'specialcontact-submitcomplete' => 'Grazie pe avè condattate Uicchia.',
 );
 
 /** Russian (русский)
@@ -1038,17 +1067,24 @@ $messages['tly'] = array(
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(
-	'specialcontact-username' => 'Кулланучы исеме', # Fuzzy
+	'specialcontact-username' => 'Сезнең кулланучы исеме',
 );
 
 /** Ukrainian (українська)
+ * @author Andriykopanytsia
  * @author Steve.rusyn
+ * @author SteveR
  * @author Ua2004
  */
 $messages['uk'] = array(
 	'contact' => "Зв'язатися з Wikia",
 	'specialcontact-wikia' => "Зв'язатися з Wikia",
 	'specialcontact-pagetitle' => "Зв'язатися з Wikia",
+	'specialcontact-intro' => "Ви можете зв'язатися з [[w:project:Staff|співроюітниками Вікії]], використовуючи цю форму. Адміністраторів цієї вікі можна знайти на [[Special:ListAdmins|цій сторінці]].
+
+Додаткову інформацію про те, як саме повідомити про проблеми на Вікії можна знайти [[w:project:Report_a_problem|тут]] або звернутися на [[w:Forum:Index|Форуми спільноти вікії]] за підтримкою інших учасників.
+
+Якщо ви віддаєте перевагу регулярному використанню електронної пошти або маєте вкладення, то можете зв'язатися з нами через [mailto:community@wikia.com community@wikia.com].",
 	'specialcontact-username' => "Ваше ім'я користувача",
 	'specialcontact-wikiname' => 'Назва вікі',
 	'specialcontact-realname' => "Ваше ім'я",

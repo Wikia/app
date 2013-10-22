@@ -21,6 +21,11 @@ class ThemeDesignerController extends WikiaController {
 		wfProfileIn( __METHOD__ );
 		global $wgLang, $wgOut;
 
+		// check rights
+		if ( !ThemeDesignerHelper::checkAccess() ) {
+			$this->displayRestrictionError( __METHOD__ );
+		}
+
 		$themeSettings = new ThemeSettings();
 
 		// current settings
@@ -197,6 +202,11 @@ class ThemeDesignerController extends WikiaController {
 	}
 
 	public function executeWordmarkUpload() {
+		// check rights
+		if ( !ThemeDesignerHelper::checkAccess() ) {
+			$this->displayRestrictionError( __METHOD__ );
+		}
+
 		$upload = new UploadWordmarkFromFile();
 
 		$status = $this->uploadImage($upload);
@@ -219,6 +229,11 @@ class ThemeDesignerController extends WikiaController {
 	}
 
 	public function executeFaviconUpload() {
+		// check rights
+		if ( !ThemeDesignerHelper::checkAccess() ) {
+			$this->displayRestrictionError( __METHOD__ );
+		}
+
 		$upload = new UploadFaviconFromFile();
 
 		$this->faviconImageName = '';
@@ -240,6 +255,11 @@ class ThemeDesignerController extends WikiaController {
 	}
 
 	public function executeBackgroundImageUpload() {
+		// check rights
+		if ( !ThemeDesignerHelper::checkAccess() ) {
+			$this->displayRestrictionError( __METHOD__ );
+		}
+
 		$upload = new UploadBackgroundFromFile();
 
 		$status = $this->uploadImage($upload);
@@ -304,9 +324,14 @@ class ThemeDesignerController extends WikiaController {
 	}
 
 	public function executeSaveSettings() {
+		wfProfileIn( __METHOD__ );
 		global $wgRequest;
 
-		wfProfileIn( __METHOD__ );
+		// check rights
+		if ( !ThemeDesignerHelper::checkAccess() ) {
+			$this->displayRestrictionError( __METHOD__ );
+		}
+
 
 		$data = $wgRequest->getArray( 'settings' );
 
@@ -316,4 +341,8 @@ class ThemeDesignerController extends WikiaController {
 		wfProfileOut( __METHOD__ );
 	}
 
+
+	private function displayRestrictionError( $method ) {
+		throw new MethodNotFoundException( $method );
+	}
 }

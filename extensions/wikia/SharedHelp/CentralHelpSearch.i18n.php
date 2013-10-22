@@ -85,12 +85,21 @@ $messages['fi'] = array(
 	'centralhelpsearch-placeholder' => 'Etsi ohjeita...',
 );
 
+/** Faroese (føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'centralhelpsearch-desc' => 'Loyv innlimanina av einum formulari fyri at leita í Community Central Help',
+	'centralhelpsearch-placeholder' => 'Leita í Help...',
+);
+
 /** French (français)
  * @author Gomoko
+ * @author Wyz
  */
 $messages['fr'] = array(
 	'centralhelpsearch-desc' => "Permet l'inclusion d'un formulaire pour rechercher dans l'Aide centrale de la communauté",
-	'centralhelpsearch-placeholder' => "Rechercher dans l'aide&hellip;",
+	'centralhelpsearch-placeholder' => "Rechercher dans l'aide...",
 );
 
 /** Galician (galego)
@@ -179,6 +188,14 @@ $messages['nl'] = array(
 	'centralhelpsearch-placeholder' => 'Zoek in Help &hellip;',
 );
 
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'centralhelpsearch-desc' => "Permet l'inclusion d'un formulari per recercar dins l'Ajuda centrala de la comunautat",
+	'centralhelpsearch-placeholder' => "Recercar dins l'ajuda&hellip;",
+);
+
 /** Polish (polski)
  * @author BeginaFelicysym
  * @author Sovq
@@ -259,6 +276,14 @@ $messages['tt-cyrl'] = array(
 $messages['uk'] = array(
 	'centralhelpsearch-desc' => 'Дозволити включення форми для пошуку довідки',
 	'centralhelpsearch-placeholder' => 'Пошук довідки...',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'centralhelpsearch-desc' => 'Cho phép bao gồm một hình thức tìm kiếm cộng đồng Trung tâm trợ giúp',
+	'centralhelpsearch-placeholder' => 'Tìm kiếm trợ giúp...',
 );
 
 /** Simplified Chinese (中文（简体）‎)

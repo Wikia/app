@@ -2,6 +2,11 @@ var ThemeDesigner = {
 	slideByDefaultWidth: 760,
 	slideByItems: 5,
 	isSliding: false,
+	// basePageOpacity used in calculating page-opacity setting
+	basePageOpacity: 70,
+	maxPageOpacity: 100,
+	minSliderValue: 0,
+	$slider: null,
 
 	init: function() {
 
@@ -12,21 +17,21 @@ var ThemeDesigner = {
 		// settings history
 		this.history = window.themeHistory;
 
-		$().log(this.history);
+		//$().log(this.history);
 
 		// themes
 		this.themes = window.themes;
 
 		//$().log(ThemeDesigner, 'ThemeDesigner');
 
-
 		// handle navigation clicks - switching between tabs
 		$("#Navigation a").click(that.navigationClick);
 
 		// handle "Save" and "Cancel" button clicks
-		$('#Toolbar').find(".save").click(that.saveClick)
-                    .end()
-                    .find(".cancel").click(that.cancelClick);
+		$('#Toolbar')
+			.find(".save").click(that.saveClick)
+			.end()
+			.find(".cancel").click(that.cancelClick);
 
 		// init tabs
 		this.themeTabInit();
@@ -129,13 +134,12 @@ var ThemeDesigner = {
 
 		// click handler for themes thumbnails
 		$("#ThemeTab").find(".slider").find("li").click(function() {
-
 			var targetObject = $(this);
 
 			// highlight selected theme
 			targetObject.parent().find(".selected").removeClass("selected").end().end().addClass("selected");
-
 			ThemeDesigner.set("theme", targetObject.attr("data-theme"));
+			ThemeDesigner.resetPageOpacity();
 		});
 
 		// select current theme
@@ -166,12 +170,13 @@ var ThemeDesigner = {
 		});
 
 		var currentVal = ThemeDesigner.settings["page-opacity"];
-		var base = 70;
-		$("#OpacitySlider").slider({
-			value: 100 - ((base - currentVal) * (100 / (base - 100)) ),
+		var base = ThemeDesigner.basePageOpacity;
+		var max = ThemeDesigner.maxPageOpacity;
+		ThemeDesigner.$slider = $("#OpacitySlider").slider({
+			value: max - ((base - currentVal) * (max / (base - max)) ),
 			stop: function(e, ui) {
 				var val = ui.value;
-				var wikiaNormalized = 100 - Math.round((val/100) * (100 - base));
+				var wikiaNormalized = max - Math.round((val/max) * (max - base));
 				ThemeDesigner.set("page-opacity", wikiaNormalized);
 			}
 		});
@@ -189,7 +194,15 @@ var ThemeDesigner = {
 		// handle wordmark editing
 		$("#wordmark-edit").find("button").click(function(event) {
 			event.preventDefault();
-			ThemeDesigner.set("wordmark-text", $("#wordmark-edit").find('input[type="text"]').val());
+			var value = $("#wordmark-edit").find('input[type="text"]').val().trim();
+			if (value.length > 0) {
+				ThemeDesigner.set("wordmark-text", value);
+			} else {
+				$.getMessages('ThemeDesigner', function() {
+					alert($.msg('themedesigner-wordmark-preview-error'));
+				});
+			}
+
 		});
 
 		//graphic wordmark clicking
@@ -671,13 +684,15 @@ var ThemeDesigner = {
 
 
 		if (ThemeDesigner.settings["wordmark-type"] == "graphic") {
-			$("#WordmarkTab").find(".graphic")
-                                .find(".preview").addClass("active")
+			$("#WordmarkTab")
+				.find(".graphic")
+				.find(".preview").addClass("active")
 				.find(".wordmark").addClass("selected");
 			ThemeDesigner.wordmarkShield();
 		} else {
-			$("#WordmarkTab").find(".graphic")
-                                .find(".preview").removeClass("active")
+			$("#WordmarkTab")
+				.find(".graphic")
+				.find(".preview").removeClass("active")
 				.find(".wordmark").removeClass("selected");
 			ThemeDesigner.wordmarkShield();
 		}
@@ -721,8 +736,8 @@ var ThemeDesigner = {
 						.append('<img src="' + ThemeDesigner.settings["wordmark-image-url"] + '">');
 			}
 
-			this.previewFrame.contents().find('#WikiaPageBackground').css("opacity", ThemeDesigner.settings["page-opacity"]/100);
-			ThemeDesigner.settings["page-opacity"] < 100 ? this.previewFrame.contents().find("#WikiHeader .shadow-mask").hide() : this.previewFrame.contents().find("#WikiHeader .shadow-mask").show();
+			this.previewFrame.contents().find('#WikiaPageBackground').css("opacity", ThemeDesigner.settings["page-opacity"]/ThemeDesigner.maxPageOpacity);
+			ThemeDesigner.settings["page-opacity"] < ThemeDesigner.maxPageOpacity ? this.previewFrame.contents().find("#WikiHeader .shadow-mask").hide() : this.previewFrame.contents().find("#WikiHeader .shadow-mask").show();
 		}
 	},
 
@@ -891,6 +906,19 @@ var ThemeDesigner = {
 			"580062",
 			"808080"
 		)
+	},
+
+	/**
+	 * @desc Sets ThemeDesigner page-opacity option to ThemeDesigner.maxPageOpacity and jQuery UI slider value to 0
+	 */
+	resetPageOpacity: function() {
+		var value = ThemeDesigner.maxPageOpacity;
+		ThemeDesigner.set( "page-opacity", value );
+
+		if( ThemeDesigner.$slider !== null ) {
+		// Special:CreateNewWiki uses ThemeDesigner without slider (DAR-2532)
+			ThemeDesigner.$slider.slider( "value", ThemeDesigner.minSliderValue );
+		}
 	}
 
 };

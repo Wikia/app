@@ -42,6 +42,10 @@ $wgHooks['UploadVerifyFile']         [] = 'Wikia::onUploadVerifyFile';
 $wgHooks['UserNameLoadFromId']       [] = "Wikia::onUserNameLoadFromId";
 $wgHooks['UserLoadFromDatabase']     [] = "Wikia::onUserLoadFromDatabase";
 
+# Swift file backend
+$wgHooks['AfterSetupLocalFileRepo']  [] = "Wikia::onAfterSetupLocalFileRepo";
+$wgHooks['BeforeRenderTimeline']     [] = "Wikia::onBeforeRenderTimeline";
+
 /**
  * This class have only static methods so they can be used anywhere
  *
@@ -52,7 +56,7 @@ class Wikia {
 	const VARNISH_STAGING_HEADER = 'X-Staging';
 	const VARNISH_STAGING_PREVIEW = 'preview';
 	const VARNISH_STAGING_VERIFY = 'verify';
-	const HEX_CHARS = '0123456789abcdef';
+	const REQUIRED_CHARS = '0123456789abcdefG';
 
 	private static $vars = array();
 	private static $cachedLinker;
@@ -451,7 +455,7 @@ class Wikia {
 	 * @example Wikia::debugBacktrace(__METHOD__);
 	 * @author Piotr Molski <moli@wikia-inc.com>
 	 *
-	 * @param String $method - use __METHOD__
+	 * @param String $method - use __METHOD__ as default
 	 */
 	static public function debugBacktrace($method) {
 		$backtrace = wfDebugBacktrace();
@@ -480,7 +484,7 @@ class Wikia {
 		$msg = "***** END *****";
 		Wikia::log($method, false, $msg, true /* $force */);
 	}
-
+	
 	/**
 	 * get staff person responsible for language
 	 *
@@ -1026,7 +1030,7 @@ class Wikia {
 	 * add entries to software info
 	 */
 	static public function softwareInfo( &$software ) {
-		global $wgCityId, $wgDBcluster, $wgWikiaDatacenter;
+		global $wgCityId, $wgDBcluster, $wgWikiaDatacenter, $wgLocalFileRepo;
 
 		if( !empty( $wgCityId ) ) {
 			$info = "city_id: {$wgCityId}";
@@ -1040,6 +1044,7 @@ class Wikia {
 		if( !empty( $wgWikiaDatacenter ) ) {
 			$info .= ", dc: $wgWikiaDatacenter";
 		}
+		$info .= ", file_repo: {$wgLocalFileRepo['backend']}";
 
 		$software[ "Internals" ] = $info;
 
@@ -1890,7 +1895,7 @@ class Wikia {
 		if ( $request->getVal('title','') === '' ) {
 			$title = Title::newMainPage();
 		} else {
-			$title = Title::newFromText($request->getVal('title', 'AJAX'));
+			$title = Title::newFromText($request->getVal('title', 'AJAX'), $request->getInt('namespace', NS_MAIN));
 			if (!$title instanceof Title) {
 				$title = Title::makeTitle( NS_MAIN, 'AJAX' );
 			}
@@ -2036,6 +2041,42 @@ class Wikia {
 	}
 
 	/**
+	 * @desc Adds assets to OutputPage depending on asset type
+	 *
+	 * @param mixed $assetName the name of a configured package or path to an asset file or an array of them
+	 * @param bool $local [OPTIONAL] whether to fetch per-wiki local URLs,
+	 * (false by default, i.e. the method returns a shared host URL's for our network);
+	 * please note that this parameter has no effect on SASS assets, those will always produce shared host URL's.
+	 *
+	 * @example Wikia::addAssetsToOutput('path/to/asset/file/assetName.scss')
+	 * @example Wikia::addAssetsToOutput('assetName')
+	 * (assetName should be set in includes/wikia/AssetsManager/config.php)
+	 * @example Wikia::addAssetsToOutput([
+	 * 'path/to/asset/file/assetName.scss',
+	 * 'path/to/other/asset/file/assetJS.js'
+	 * ])
+	 */
+	public static function addAssetsToOutput( $assetName, $local = false ) {
+		$app = F::app();
+
+		$type = false;
+
+		$sources = AssetsManager::getInstance()->getURL( $assetName, $type, $local );
+
+		foreach($sources as $src){
+			switch ( $type ) {
+				case AssetsManager::TYPE_CSS:
+				case AssetsManager::TYPE_SCSS:
+					$app->wg->Out->addStyle( $src );
+					break;
+				case AssetsManager::TYPE_JS:
+					$app->wg->Out->addScript( "<script src=\"{$src}\"></script>" );
+					break;
+			}
+		}
+	}
+
+	/**
 	 * @param $user User
 	 */
 	public static function invalidateUser( $user, $disabled = false, $ajax = false ) {
@@ -2043,7 +2084,7 @@ class Wikia {
 
 		if ( $disabled ) {
 			$user->setEmail( '' );
-			$user->setPassword( wfGenerateToken() . self::HEX_CHARS );
+			$user->setPassword( wfGenerateToken() . self::REQUIRED_CHARS );
 			$user->setOption( 'disabled', 1 );
 			$user->setOption( 'disabled_date', wfTimestamp( TS_DB ) );
 			$user->mToken = null;
@@ -2060,6 +2101,54 @@ class Wikia {
 			ExternalUser_Wikia::removeFromSecondaryClusters( $id );
 		}
 		$user->invalidateCache();
+
+		return true;
+	}
+
+	/**
+	 * Register Swift file backend
+	 *
+	 * @author macbre
+	 * @param array $repo $wgLocalFileRepo
+	 * @return bool true - it's a hook
+	 */
+	static function onAfterSetupLocalFileRepo(Array &$repo) {
+		// $wgUploadPath: http://images.wikia.com/poznan/pl/images
+		// $wgFSSwiftContainer: poznan/pl
+		global $wgFSSwiftContainer, $wgFSSwiftServer, $wgEnableSwiftFileBackend, $wgUploadPath;
+
+		$path = trim( parse_url( $wgUploadPath, PHP_URL_PATH ), '/' );
+		$wgFSSwiftContainer = substr( $path, 0, -7 );
+
+		if ( !empty( $wgEnableSwiftFileBackend ) ) {
+			$repo['backend'] = 'swift-backend';
+			$repo['zones'] = array (
+				'public' => array( 'container' => $wgFSSwiftContainer, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images' ),
+				'temp'   => array( 'container' => $wgFSSwiftContainer, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images/temp' ),
+				'thumb'  => array( 'container' => $wgFSSwiftContainer, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images/thumb' ),
+				'deleted'=> array( 'container' => $wgFSSwiftContainer, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images/deleted' ),
+				'archive'=> array( 'container' => $wgFSSwiftContainer, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images/archive' )
+			);
+		}
+
+		return true;
+	}
+
+	/**
+	 * Modify timeline extension to use Swift storage (BAC-893)
+	 *
+	 * @param FileBackend $backend
+	 * @param string $fname mwstore abstract path
+	 * @param string $hash file hash
+	 * @return bool true - it's a hook
+	 */
+	static function onBeforeRenderTimeline(&$backend, &$fname, $hash) {
+		global $wgEnableSwiftFileBackend, $wgFSSwiftContainer;
+
+		if ( !empty( $wgEnableSwiftFileBackend ) ) {
+			$backend = FileBackendGroup::singleton()->get( 'swift-backend' );
+			$fname = 'mwstore://' . $backend->getName() . "/$wgFSSwiftContainer/images/timeline/$hash";
+		}
 
 		return true;
 	}

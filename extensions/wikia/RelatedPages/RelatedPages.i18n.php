@@ -8,10 +8,12 @@ $messages['en'] = array(
 );
 
 /** Message documentation (Message documentation)
+ * @author Shirayuki
  * @author The Evil IP address
  */
 $messages['qqq'] = array(
 	'wikiarelatedpages-desc' => '{{desc}}',
+	'wikiarelatedpages-heading' => '{{Identical|Read more}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -45,6 +47,15 @@ $messages['az'] = array(
 $messages['be-tarask'] = array(
 	'wikiarelatedpages-desc' => 'Дадае на старонкі сьпіс зьвязаных старонак',
 	'wikiarelatedpages-heading' => 'Даведацца болей',
+);
+
+/** Bulgarian (български)
+ * @author Aquilax
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'wikiarelatedpages-desc' => 'Добавя в страниците списък със свързани страници',
+	'wikiarelatedpages-heading' => 'Прочетете повече',
 );
 
 /** Breton (brezhoneg)
@@ -231,6 +242,14 @@ $messages['nl'] = array(
 	'wikiarelatedpages-heading' => 'Meer lezen',
 );
 
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'wikiarelatedpages-desc' => 'Apond una lista de paginas ligadas a d’autras paginas',
+	'wikiarelatedpages-heading' => 'Per ne saber mai',
+);
+
 /** Polish (polski)
  * @author Sovq
  * @author Sp5uhe
@@ -254,7 +273,7 @@ $messages['pms'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
-	'wikiarelatedpages-desc' => 'د اړونده مخونو يو لړليک په مخونو کې ورګډوي',
+	'wikiarelatedpages-desc' => 'د اړونده مخونو يو لړليک په مخونو کې ورگډوي',
 	'wikiarelatedpages-heading' => 'نور لوستل',
 );
 

@@ -9,7 +9,7 @@ namespace Wikia\Search;
  * This will allow us to abstract our behavior away from MediaWiki if we want.
  * Public functions should not return instances of classes defined in MediaWiki core.
  * @author relwell
- * @package Search 
+ * @package Search
  */
 class MediaWikiService
 {
@@ -471,7 +471,7 @@ class MediaWikiService
 		$articleId = ( $title !== null ) ? $title->getArticleId() : 0;
 		if( ( $articleId > 0 ) && ( in_array( $title->getNamespace(), $namespaces ) ) ) {
 			$this->getPageFromPageId( $articleId );
-			$articleMatch = new \Wikia\Search\Match\Article( $title->getArticleId(), $this );
+			$articleMatch = new \Wikia\Search\Match\Article( $title->getArticleId(), $this ,$term);
 		}
 		return $articleMatch;
 	}
@@ -481,10 +481,10 @@ class MediaWikiService
 	 * @param string $domain
 	 * @return \Wikia\Search\Match\Wiki|NULL
 	 */
-	public function getWikiMatchByHost( $domain ) {
+	public function getWikiMatchByHost( $domain, $lang = null ) {
 		$match = null;
 		if ( $domain !== '' ) {
-			$langCode = $this->getLanguageCode();
+			$langCode = ( $lang !== null ) ? $lang : $this->getLanguageCode();
 			if ( $langCode === static::WIKI_DEFAULT_LANG_CODE ) {
 				$wikiId = $this->getWikiIdByHost( $domain . '.wikia.com' );
 			} else {
@@ -703,6 +703,27 @@ class MediaWikiService
 	}
 
 	/**
+	 * @param string $pageTitle
+	 * @param array|null $transformParams
+	 * @return string|null - html of thumbnail with play button
+	 */
+	public function getThumbnailHtmlFromFileTitle( $pageTitle, $transformParams = null ) {
+		$file = null;
+		try {
+			$title = \Title::newFromText( $pageTitle, NS_FILE );
+
+			$transformParams[ 'width' ] = (isset( $transformParams[ 'width' ] ) ) ? $transformParams[ 'width' ] : static::THUMB_DEFAULT_WIDTH;
+			$transformParams[ 'height' ] = (isset( $transformParams[ 'height' ] ) ) ? $transformParams[ 'height' ] : static::THUMB_DEFAULT_HEIGHT;
+
+			return \WikiaFileHelper::getVideoThumbnailHtml( $title, $transformParams['width'], $transformParams['height'], false );
+		} catch ( \Exception $ex ) {
+			// we have some isses on dev box (no starter database).
+			// swallow the exception for now. Should we log this event ?
+			return '';
+		}
+	}
+
+	/**
 	 * Returns the number of video views for a page ID.
 	 * @param int $pageId
 	 * @return string
@@ -864,7 +885,7 @@ class MediaWikiService
 	protected function getTitleKeyFromPageId( $pageId ) {
 		return $this->getTitleFromPageId( $pageId )->getDbKey();
 	}
-	
+
 	/**
 	 * Returns an instance of stdClass with attributes corresponding to rows in the city_list table 
 	 * @param int $wikiId
@@ -890,7 +911,7 @@ class MediaWikiService
 	 * Standard interface for this class's services to access a page
 	 * @param int $pageId
 	 * @return Article
-	 * @throws Exception
+	 * @throws \Exception
 	 */
 	protected function getPageFromPageId( $pageId ) {
 		wfProfileIn( __METHOD__ );

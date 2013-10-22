@@ -32,7 +32,7 @@
 	adProviderNull = AdProviderNull(log, slotTweaker);
 
 	adProviderGamePro = AdProviderGamePro(adLogicPageLevelParamsLegacy, scriptWriter, tracker, log, window, slotTweaker);
-	adProviderLiftium2Dom = AdProviderLiftium2Dom(tracker, log, document, slotTweaker, fakeLiftium, scriptWriter);
+	adProviderLiftium2Dom = AdProviderLiftium2Dom(tracker, log, document, slotTweaker, fakeLiftium, scriptWriter, window);
 
 	adConfig = AdConfig2Late(
 		log, window

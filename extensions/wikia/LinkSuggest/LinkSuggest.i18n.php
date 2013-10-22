@@ -40,10 +40,13 @@ $messages['be-tarask'] = array(
 );
 
 /** Breton (brezhoneg)
+ * @author Fohanno
  * @author Gwenn-Ael
  */
 $messages['br'] = array(
-	'tog-disablelinksuggest' => 'Chomp hep diskouez al liammoù kinniget', # Fuzzy
+	'linksuggest-desc' => "Kinnig a ra liammoù d'ar skridaozerien, er prenestr skridaozañ.",
+	'tog-disablelinksuggest' => 'Chomp hep diskouez al liammoù kinniget er mod tarzh',
+	'tog-redirected-from' => '&ndash; adkaset adalek $1',
 );
 
 /** Catalan (català)
@@ -201,7 +204,7 @@ $messages['ksh'] = array(
 	'tog-redirected-from' => '&ndash; ömjeleidt vun $1',
 );
 
-/** Kirghiz (Кыргызча)
+/** Kyrgyz (Кыргызча)
  * @author Growingup
  */
 $messages['ky'] = array(
@@ -222,10 +225,11 @@ $messages['lb'] = array(
 );
 
 /** Latvian (latviešu)
+ * @author Papuass
  * @author Xil
  */
 $messages['lv'] = array(
-	'tog-disablelinksuggest' => 'Neradīt saišu ieteikumus', # Fuzzy
+	'tog-disablelinksuggest' => 'Neradīt saišu ieteikumus izejas koda režīmā',
 );
 
 /** Macedonian (македонски)
@@ -277,7 +281,9 @@ $messages['nn'] = array(
  * @author Cedric31
  */
 $messages['oc'] = array(
-	'tog-disablelinksuggest' => 'Far pas veire los ligams suggerits', # Fuzzy
+	'linksuggest-desc' => 'Prepausa de ligams als contributors en edicion',
+	'tog-disablelinksuggest' => 'Afichar pas la suggestion de ligam en mòde font',
+	'tog-redirected-from' => '&ndash; Redirigit dempuèi $1',
 );
 
 /** Polish (polski)

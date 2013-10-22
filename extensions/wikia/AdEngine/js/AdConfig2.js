@@ -1,22 +1,26 @@
 var AdConfig2 = function (
 	// regular dependencies
-	log, window, document, Geo, adLogicShortPage, abTest
+	log,
+	window,
+	document,
+	Geo,
+	adLogicPageDimensions,
+	abTest,
 
 	// adProviders
-	, adProviderAdDriver2
-	, adProviderEvolve
-	, adProviderGamePro
-	, adProviderLater
-	, adProviderNull
+	adProviderGpt,
+	adProviderEvolve,
+	adProviderGamePro,
+	adProviderLater,
+	adProviderNull
 ) {
 	'use strict';
 
-	var log_group = 'AdConfig2'
-		, city_lang = window.wgContentLanguage
-		, country = Geo.getCountryCode()
-		, defaultHighValueSlots, highValueSlots
-		, slotsOnlyOnLongPages
-		, getProvider;
+	var log_group = 'AdConfig2',
+		city_lang = window.wgContentLanguage,
+		country = Geo.getCountryCode(),
+		defaultHighValueSlots,
+		highValueSlots;
 
 	defaultHighValueSlots = {
 		'CORP_TOP_LEADERBOARD':true,
@@ -42,29 +46,13 @@ var AdConfig2 = function (
 		'GPT_FLUSH':true
 	};
 
-	// Map of slots present only on long pages
-	// key: slot name
-	// value: minimal height needed to show the ad (in pixels)
-	slotsOnlyOnLongPages = {
-		LEFT_SKYSCRAPER_2: 2400,
-		LEFT_SKYSCRAPER_3: 4000,
-		PREFOOTER_LEFT_BOXAD: 2400,
-		PREFOOTER_RIGHT_BOXAD: 2400
-	};
-
 	highValueSlots = defaultHighValueSlots;
 
-	getProvider = function(slot) {
+	function getBackEndProvider(slot) {
 		var slotname = slot[0];
 
 		log('getProvider', 5, log_group);
 		log(slot, 5, log_group);
-
-		// Check if page is too short for that slot
-		if (adLogicShortPage.isPageTooShortForSlot(slotname)) {
-			log('#' + slotname + ' disabled. Page too short', 7, log_group);
-			return adProviderNull;
-		}
 
 		// Force providers:
 		if (slot[2] === 'GamePro') {
@@ -74,10 +62,10 @@ var AdConfig2 = function (
 			return adProviderEvolve;
 		}
 		if (slot[2] === 'AdDriver2') {
-			return adProviderAdDriver2;
+			return adProviderGpt;
 		}
 		if (slot[2] === 'AdDriver') {
-			return adProviderAdDriver2;
+			return adProviderGpt;
 		}
 		if (slot[2] === 'Liftium2') {
 			return adProviderLater;
@@ -111,12 +99,23 @@ var AdConfig2 = function (
 		}
 
 		// Non-high-value slots goes to ad provider Later, so GamePro can grab them later
-		if (highValueSlots[slotname] && adProviderAdDriver2.canHandleSlot(slot)) {
-			return adProviderAdDriver2;
+		if (highValueSlots[slotname] && adProviderGpt.canHandleSlot(slot)) {
+			return adProviderGpt;
 		}
 
 		return adProviderLater;
-	};
+	}
+
+	function getProvider(slot) {
+		var provider = getBackEndProvider(slot);
+
+		// Check if we should apply page length checking for that slot
+		if (adLogicPageDimensions.isApplicable(slot)) {
+			return adLogicPageDimensions.getProxy(provider);
+		}
+
+		return provider;
+	}
 
 	return {
 		getProvider: getProvider

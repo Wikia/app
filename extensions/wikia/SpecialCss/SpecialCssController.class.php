@@ -107,7 +107,7 @@ class SpecialCssController extends WikiaSpecialPageController {
 		$aceUrlParts = parse_url($aceUrl);
 		$this->response->setJsVar('aceScriptsPath', $aceUrlParts['path']);
 
-		(new JSMessages())->enqueuePackage('SpecialCss', JSMessages::EXTERNAL);
+		JSMessages::enqueuePackage('SpecialCss', JSMessages::EXTERNAL);
 	}
 
 	/**

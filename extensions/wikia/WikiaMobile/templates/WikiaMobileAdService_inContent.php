@@ -1,30 +1,43 @@
 <script>window.addEventListener('load', function () {
-if(Wikia.AbTest && ['A', 'C', 'D'].indexOf(Wikia.AbTest.getGroup("WIKIAMOBILEADSLOTS")) != -1){
-	require(['ads', 'sloth', 'wikia.utils', 'JSMessages'], function (ads, sloth, $, msg) {
-		var MIN_ZEROTH_SECTION_LENGTH = 1000,
-			firstSection = document.getElementsByClassName('collSec')[0];
+var MIN_ZEROTH_SECTION_LENGTH = 700,
+	MIN_PAGE_LENGTH = 2000;
 
-		if(firstSection && $.findPos(firstSection) > MIN_ZEROTH_SECTION_LENGTH){
-
-			firstSection.insertAdjacentHTML('beforebegin', '<div id=wkAdInContent><label class="wkAdLabel inContent">' + msg('wikiamobile-ad-label') + '<label></div>');
-
+require(['ads', 'sloth', 'jquery', 'JSMessages'], function (ads, sloth, $, msg) {
+	var $firstSection = $('.collSec').first(),
+		$footer = $('#wkMainCntFtr'),
+		firstSectionTop = ($firstSection.length && $firstSection.offset().top) || 0,
+		showInContent = firstSectionTop > MIN_ZEROTH_SECTION_LENGTH,
+		showBeforeFooter = document.height > MIN_PAGE_LENGTH || firstSectionTop < MIN_ZEROTH_SECTION_LENGTH,
+		lazyLoadAd = function(elem, slotName){
 			sloth({
-				on: document.getElementById('wkAdInContent'),
+				on: elem,
 				threshold: 500,
-				callback: function(adWrapper){
+				callback: function onEnter(adWrapper){
 					ads.setupSlot({
-						name: 'MOBILE_IN_CONTENT',
+						name: slotName,
 						size: '300x250',
 						wrapper: adWrapper,
-						init: function(found){
+						init: function onInit(found){
 							if(found) {
-								adWrapper.className = 'show';
+								adWrapper.innerHTML += '<label class="wkAdLabel inContent">' + msg('wikiamobile-ad-label') + '<label>';
+								adWrapper.className += ' show';
 							}
 						}
 					});
 				}
 			})
-		}
-	});
-}
+		};
+
+	if(showInContent && Wikia.AbTest && ['A', 'C', 'D', 'F'].indexOf(Wikia.AbTest.getGroup("WIKIAMOBILEADSLOTS")) != -1){
+		$firstSection.before('<div id=wkAdInContent class=ad-in-content />');
+		lazyLoadAd(document.getElementById('wkAdInContent'), 'MOBILE_IN_CONTENT');
+	}
+
+	if(showBeforeFooter && Wikia.AbTest && ['F'].indexOf(Wikia.AbTest.getGroup("WIKIAMOBILEADSLOTS")) != -1){
+		$footer.after('<div id=wkAdBeforeFooter class=ad-in-content />');
+		lazyLoadAd(document.getElementById('wkAdBeforeFooter'), 'MOBILE_PREFOOTER');
+	}
+
+	sloth();
+});
 });</script>

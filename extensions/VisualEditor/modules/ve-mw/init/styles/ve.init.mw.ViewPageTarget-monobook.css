@@ -1,0 +1,29 @@
+/*!
+ * VisualEditor MediaWiki Initialization ViewPageTarget Monobook skin high-definition styles.
+ *
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @license The MIT License (MIT); see LICENSE.txt
+ */
+
+.ve-init-mw-viewPageTarget-toolbar {
+	margin: -0.6em -0.8em 1em -0.8em;
+}
+
+.ve-ui-context-frame-overlay {
+	font-size: 1.25em;
+}
+
+.ve-ui-context,
+.ve-ui-toolbar {
+	font-size: 1.25em;
+	line-height: 1.5em;
+}
+
+/* Monobook sets font-size: x-small; on the body. Undo this in frames and overlays */
+.ve-ui-frame-body, body .ve-ui-surface-overlay {
+	font-size: medium;
+}
+
+.ve-ui-surface-overlay-global {
+	z-index: 4;
+}

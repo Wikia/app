@@ -155,21 +155,18 @@ class OoyalaApiWrapper extends ApiWrapper {
 	protected function loadMetadata( array $overrideFields = array() ) {
 		parent::loadMetadata( $overrideFields );
 
-		$metadata = array();
-		if ( !isset( $metadata['source'] ) ) {
-			$metadata['source'] = $this->getSource();
+		if ( !isset( $this->metadata['source'] ) ) {
+			$this->metadata['source'] = $this->getSource();
 		}
-		if ( !isset( $metadata['sourceId'] ) ) {
-			$metadata['sourceId'] = $this->getSourceId();
+		if ( !isset( $this->metadata['sourceId'] ) ) {
+			$this->metadata['sourceId'] = $this->getSourceId();
 		}
-		if ( !isset($metadata['startDate'] ) ) {
-			$metadata['startDate'] = $this->getVideoStartDate();
+		if ( !isset( $this->metadata['startDate'] ) ) {
+			$this->metadata['startDate'] = $this->getVideoStartDate();
 		}
-		if ( !isset( $metadata['pageCategories'] ) ) {
-			$metadata['pageCategories'] = $this->getPageCategories();
+		if ( !isset( $this->metadata['pageCategories'] ) ) {
+			$this->metadata['pageCategories'] = $this->getPageCategories();
 		}
-
-		$this->metadata = array_merge( $this->metadata, $metadata );
 	}
 
 	protected function getOriginalDescription() {
@@ -289,11 +286,11 @@ class OoyalaApiWrapper extends ApiWrapper {
 	}
 
 	protected function isAgeGate() {
-		if ( !empty( $this->metadata['ageGate'] ) ) {
+		if ( !empty( $this->metadata['ageGate'] ) || !empty( $this->metadata['ageRequired'] ) ) {
 			return true;
 		}
 
-		if ( !empty($this->interfaceObj['metadata']['agegate']) ) {
+		if ( !empty( $this->interfaceObj['metadata']['agegate'] ) || !empty( $this->interfaceObj['metadata']['age_required'] )  ) {
 			return true;
 		}
 

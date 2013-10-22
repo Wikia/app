@@ -1,0 +1,10 @@
+/*!
+ * VisualEditor MediaWiki Initialization ViewPageTarget Vector skin high-definition styles.
+ *
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @license The MIT License (MIT); see LICENSE.txt
+ */
+
+.ve-init-mw-viewPageTarget-toolbar {
+	margin: -1.25em -1.5em 1.25em -1.5em;
+}

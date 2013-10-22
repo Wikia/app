@@ -22,10 +22,13 @@ class Time {
 	private $startTime;
 
 	/**
-	 * @param $measurementName
+	 * @param string|string[] $measurementName
 	 * @return Time
 	 */
 	public static function start( $measurementName ) {
+		if ( is_array( $measurementName ) ) {
+			$measurementName = implode( '/', $measurementName );
+		}
 		return new Time( $measurementName, Drivers::get() );
 	}
 
@@ -35,7 +38,10 @@ class Time {
 	 */
 	public static function run( $measurementName, $callable ) {
 		$measurement = self::start( $measurementName );
-		return $callable();
+		$result = $callable();
+		$measurement->stop();
+
+		return $result;
 	}
 
 	/**

@@ -101,10 +101,19 @@ $messages['be-tarask'] = array(
 );
 
 /** Bulgarian (български)
+ * @author Aquilax
  * @author DCLXVI
  */
 $messages['bg'] = array(
-	'our404handler' => 'Грешка 404: Страницата не беше намерена!',
+	'our404handler' => 'Грешка 404: Страницата не беше открита!',
+	'our404handler-oops' => 'Това не са страниците, които търсите. Продължавайте.',
+	'message404' => '"\'Много съжаляваме, но поради някаква причина, страницата, която заявихте, не съществува."\'
+
+Статия „$1“ не може да бъде открита.
+
+* Можете да опитате със статия [[$2]].
+* Можете да се възползвате от полето за търсене в лявата част на страницата.
+* За да преминете към началната страница на този сайт, щракнете тук: [{{SERVER}} {{SITENAME}}].',
 );
 
 /** Breton (brezhoneg)
@@ -255,6 +264,14 @@ Artikkelia '''$1''' ei löytynyt.
 * Mennäksesi tämän sivuston etusivulle, napsauta linkkiä: [{{SERVER}} {{SITENAME}}]",
 );
 
+/** Faroese (føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'our404handler' => 'Feilur 404: Síðan varð ikki funnin!',
+	'our404handler-oops' => 'Hetta eru ikki síðurnar, ið tú leitar eftir. Vinarliga far víðari.',
+);
+
 /** French (français)
  * @author Peter17
  * @author Polytherion
@@ -284,6 +301,21 @@ Non se puido atopar o artigo \"'''\$1'''\".
 * Pode intentalo co artigo \"[[\$2]]\"
 * Pode usar a caixa de buscas do lado esquerdo da páxina
 * Para ir á páxina principal deste sitio web, prema na ligazón: [{{SERVER}} {{SITENAME}}]",
+);
+
+/** Goan Konkani (Latin script) (Konknni)
+ * @author The Discoverer
+ */
+$messages['gom-latn'] = array(
+	'our404handler' => '404: Pan mellunk-nam!',
+	'our404handler-oops' => 'Tum sodtai tim panam him nhoi. Fuddem sor.',
+	'message404' => "\"Tun sodtai tem pan kai karonak lagon astitvant na\"
+
+'''\$1''' hem pan mellunk-nam.
+
+* Tuven hem pan polleunk zata: [[\$2]]
+* Tuven hea panache dhaveak 'Sod' uzar korunk zata
+* Mukhel panar vochpak, hanga click kor: [{{SERVER}} {{SITENAME}}]",
 );
 
 /** Hebrew (עברית)
@@ -511,6 +543,14 @@ Rencana '''$1''' tidak dapat dijumpai.
 * Anda boleh mencuba rencana [[$2]]
 * Anda boleh menggunakan ruangan carian di sebelah kiri laman
 * Untuk ke laman utama tapak ini, klik pautan ini: [{{SERVER}} {{SITENAME}}]",
+);
+
+/** Neapolitan (Napulitano)
+ * @author Chelin
+ */
+$messages['nap'] = array(
+	'our404handler' => 'Errore 404: Paggena nun truovata!',
+	'our404handler-oops' => "Chiste nun song 'e paggene cca stavi circando. Prosegue, ppe favore.",
 );
 
 /** Norwegian Bokmål (norsk bokmål)
@@ -839,6 +879,7 @@ Bài viết '''$1''' không tìm thấy.
 );
 
 /** Simplified Chinese (中文（简体）‎)
+ * @author Liuxinyu970226
  * @author Wilsonmess
  */
 $messages['zh-hans'] = array(
@@ -848,7 +889,7 @@ $messages['zh-hans'] = array(
 
 找不到名为'''$1'''的页面。
 
-*或许这些页面会对您有所帮助：[[$2]]；
+*您可以尝试标题[[$2]]
 *或许您可以使用左上方的搜索框进行搜索；
 *若您想访问本站主页，点击这个链接：[{{SERVER}} {{SITENAME}}]",
 );

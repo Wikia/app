@@ -56,7 +56,9 @@
 	"devel": false,
 	"globals": {
 		"mediaWiki": false,
-		"Wikia": false
+		"Wikia": false,
+		"define": false,
+		"require": false
 	},
 	"jquery": true,
 	"node": true,

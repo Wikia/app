@@ -17,9 +17,11 @@ class CrossWikiCoreTest extends BaseTest
 	public function testExecute() {
 		$service = $this->getMockBuilder( 'Wikia\Search\IndexService\CrossWikiCore' )
 		                ->disableOriginalConstructor()
-		                ->setMethods( [ 'getWikiBasics', 'getWikiStats', 'getWikiViews', 'getWam', 'getCategories', 'getVisualizationInfo', 'getTopArticles' ] )
+		                ->setMethods( [ 'getWikiBasics', 'getWikiStats', 'getWikiViews', 'getWam', 'getCategories', 'getVisualizationInfo', 'getTopArticles' , 'getLicenseInformation'] )
 		                ->getMock();
-		
+
+
+
 		$basics = [ 'foo' => 'bar' ];
 		$stats = [ 'baz' => 'qux' ];
 		$views = [ 'blah' => 'buh' ];
@@ -27,7 +29,8 @@ class CrossWikiCoreTest extends BaseTest
 		$cats = [ 'cat' => 'meow' ];
 		$viz = [ 'viz' => 'graph' ];
 		$articles = [ 'art' => 'vandelay' ];
-		
+		$licence  = ['commercial_use_allowed_b'=>true];
+
 		$service
 		    ->expects( $this->once() )
 		    ->method ( 'getWikiBasics' )
@@ -63,8 +66,15 @@ class CrossWikiCoreTest extends BaseTest
 		    ->method ( 'getTopArticles' )
 		    ->will   ( $this->returnValue( $articles ) )
 		;
+
+		$service
+			->expects( $this->once() )
+			->method ( 'getLicenseInformation' )
+			->will   ( $this->returnValue( $licence ) )
+		;
+
 		$this->assertEquals(
-				array_merge( $basics, $stats, $views, $wam, $cats, $viz, $articles ),
+				array_merge( $basics, $stats, $views, $wam, $cats, $viz, $articles, $licence),
 				$service->execute()
 		);
 	}
@@ -331,6 +341,74 @@ class CrossWikiCoreTest extends BaseTest
 				$get->invoke( $service )
 		);
 	}
-	
-	
+
+
+	/**
+	 * @covers  Wikia\Search\IndexService\CrossWikiCore::getLicenseInformation
+	 */
+	public function testGetLicensedWikisService(){
+
+		$service = $this->getMockBuilder( 'Wikia\Search\IndexService\CrossWikiCore' )
+			->disableOriginalConstructor()
+			->getMock();
+		$get = new ReflectionMethod( $service, 'getLicensedWikisService' );
+		$get->setAccessible( true );
+		$this->assertInstanceOf( 'LicensedWikisService', $get->invoke($service) );
+	}
+
+
+
+	/**
+     * @covers  Wikia\Search\IndexService\CrossWikiCore::getLicenseInformation
+	 */
+	public function testGetLicenseInformation(){
+
+		$lwService =  $this->getMockBuilder('\LicensedWikisService')
+			->disableOriginalConstructor()
+			->setMethods(['isCommercialUseAllowedById'])
+			->getMock();
+
+
+		$lwService->expects($this->any())
+			->method('isCommercialUseAllowedById')
+			->will ( $this->returnValueMap([  [ 123 , true ],
+											  [ 321 , false ] ] ) );
+
+
+		//var_dump($lwService->isCommercialUseAllowedById(123));
+
+		$service = $this->getMockBuilder( 'Wikia\Search\IndexService\CrossWikiCore' )
+				->disableOriginalConstructor()
+				->setMethods( ['getWikiId','getLicensedWikisService'] )
+				->getMock();
+
+
+
+		$service->expects($this->at(1))
+				->method('getWikiId')
+				->will($this->returnValue(123));
+
+		$service->expects($this->at(2))
+			->method('getWikiId')
+			->will($this->returnValue(321));
+
+		$service->expects($this->any())
+			->method('getLicensedWikisService')
+			->will($this->returnValue($lwService));
+
+
+		$get = new ReflectionMethod( $service, 'getLicenseInformation' );
+		$get->setAccessible( true );
+		$res = $get->invoke( $service);
+
+		$this->assertTrue(is_array($res));
+		$this->assertTrue($res['commercial_use_allowed_b']);
+
+		$res = $get->invoke( $service);
+
+		$this->assertTrue(is_array($res));
+		$this->assertFalse($res['commercial_use_allowed_b']);
+
+	}
+
 }

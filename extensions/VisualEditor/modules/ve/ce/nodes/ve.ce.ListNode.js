@@ -1,90 +1,99 @@
-/**
- * VisualEditor content editable ListNode class.
+/*!
+ * VisualEditor ContentEditable ListNode class.
  *
- * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
 /**
- * ContentEditable node for a list.
+ * ContentEditable list node.
  *
  * @class
+ * @extends ve.ce.BranchNode
  * @constructor
- * @extends {ve.ce.BranchNode}
  * @param {ve.dm.ListNode} model Model to observe
+ * @param {Object} [config] Configuration options
  */
-ve.ce.ListNode = function VeCeListNode( model ) {
+ve.ce.ListNode = function VeCeListNode( model, config ) {
 	// Parent constructor
-	ve.ce.BranchNode.call( this, 'list', model, ve.ce.BranchNode.getDomWrapper( model, 'style' ) );
+	ve.ce.BranchNode.call( this, model, config );
 
 	// Events
-	this.model.addListenerMethod( this, 'update', 'onUpdate' );
+	this.model.connect( this, { 'update': 'onUpdate' } );
 };
 
 /* Inheritance */
 
 ve.inheritClass( ve.ce.ListNode, ve.ce.BranchNode );
 
-/* Static Members */
+/* Static Properties */
 
-/**
- * Node rules.
- *
- * @see ve.ce.NodeFactory
- * @static
- * @member
- */
-ve.ce.ListNode.rules = {
-	'canBeSplit': false
-};
-
-/**
- * Mapping of list style values and DOM wrapper element types.
- *
- * @static
- * @member
- */
-ve.ce.ListNode.domWrapperElementTypes = {
-	'bullet': 'ul',
-	'number': 'ol'
-};
+ve.ce.ListNode.static.name = 'list';
 
 /* Methods */
 
 /**
- * Responds to model update events.
+ * Get the HTML tag name.
+ *
+ * Tag name is selected based on the model's style attribute.
+ *
+ * @returns {string} HTML tag name
+ * @throws {Error} If style is invalid
+ */
+ve.ce.ListNode.prototype.getTagName = function () {
+	var style = this.model.getAttribute( 'style' ),
+		types = { 'bullet': 'ul', 'number': 'ol' };
+
+	if ( !( style in types ) ) {
+		throw new Error( 'Invalid style' );
+	}
+	return types[style];
+};
+
+/**
+ * Handle model update events.
  *
  * If the style changed since last update the DOM wrapper will be replaced with an appropriate one.
  *
  * @method
  */
 ve.ce.ListNode.prototype.onUpdate = function () {
-	this.updateDomWrapper( 'style' );
+	this.updateTagName();
 };
 
 /**
- * Supplement onSplice() to work around a rendering bug in Firefox
+ * Handle splice events.
+ *
+ * This is used to solve a rendering bug in Firefox.
+ * @see ve.ce.BranchNode#onSplice
+ *
+ * @method
  */
 ve.ce.ListNode.prototype.onSplice = function () {
-	// Call ve.ce.BranchNode's implementation
-	var args = Array.prototype.slice.call( arguments, 0 );
-	ve.ce.BranchNode.prototype.onSplice.apply( this, args );
+	// Parent method
+	ve.ce.BranchNode.prototype.onSplice.apply( this, arguments );
 
 	// There's a bug in Firefox where numbered lists aren't renumbered after in/outdenting
 	// list items. Force renumbering by requesting the height, which causes a reflow
 	this.$.css( 'height' );
 };
 
+/**
+ * Check if a slug be placed after the node.
+ *
+ * @method
+ * @returns {boolean} A slug can be placed after the node
+ */
 ve.ce.ListNode.prototype.canHaveSlugAfter = function () {
 	if ( this.getParent().getType() === 'listItem' ) {
 		// Nested lists should not have slugs after them
 		return false;
 	} else {
-		// Call the parent's implementation
+		// Parent method
 		return ve.ce.BranchNode.prototype.canHaveSlugAfter.call( this );
 	}
 };
 
 /* Registration */
 
-ve.ce.nodeFactory.register( 'list', ve.ce.ListNode );
+ve.ce.nodeFactory.register( ve.ce.ListNode );

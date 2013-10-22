@@ -54,6 +54,13 @@ $messages['be-tarask'] = array(
 	'mostpopularcategories' => 'Найпапулярнейшыя катэгорыі',
 );
 
+/** Bulgarian (български)
+ * @author Aquilax
+ */
+$messages['bg'] = array(
+	'mostpopularcategories' => 'Най-популярни категории',
+);
+
 /** Breton (brezhoneg)
  * @author Y-M D
  */
@@ -127,6 +134,13 @@ $messages['fa'] = array(
  */
 $messages['fi'] = array(
 	'mostpopularcategories' => 'Suosituimmat luokat',
+);
+
+/** Faroese (føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'mostpopularcategories' => 'Best dámdu bólkar',
 );
 
 /** French (français)
