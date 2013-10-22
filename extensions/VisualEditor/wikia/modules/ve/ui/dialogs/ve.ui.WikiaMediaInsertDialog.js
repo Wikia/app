@@ -48,6 +48,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	this.insertionDetails = {};
 	this.pages = new ve.ui.PagedLayout( { '$$': this.frame.$$, 'attachPagesPanel': true } );
 	this.query = new ve.ui.WikiaMediaQueryWidget( { '$$': this.frame.$$ } );
+	this.queryInput = this.query.getInput();
 	this.removeButton = new ve.ui.ButtonWidget( {
 		'$$': this.frame.$$,
 		'label': 'Remove from the cart', //TODO: i18n
@@ -55,7 +56,6 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	} );
 	this.search = new ve.ui.WikiaMediaResultsWidget( { '$$': this.frame.$$ } );
 	this.searchResults = this.search.getResults();
-	this.searchQueryParams = { 'batch': 1 };
 
 	this.$cart = this.$$( '<div>' );
 	this.$content = this.$$( '<div>' );
@@ -63,18 +63,19 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 
 	// Events
 	this.cart.connect( this, { 'select': 'onCartSelect' } );
-	this.query.connect( this, {
-		'change': 'onQueryChange',
-		'enter': 'onQueryEnter',
-		'media': 'onQueryMedia'
+	this.insertButton.connect( this, { 'click': [ 'close', 'insert' ] } );
+	this.pages.connect( this, { 'set': 'onPageSet' } );
+	this.query.connect( this, { 'media': 'onQueryMedia' } );
+	this.queryInput.connect( this, {
+		'change': 'onQueryInputChange',
+		'enter': 'onQueryInputEnter'
 	} );
+	this.queryInput.$input.on( 'keydown', ve.bind( this.onQueryInputKeydown, this ) );
+	this.removeButton.connect( this, { 'click': 'onRemoveButtonClick' } );
 	this.search.connect( this, {
 		'end': 'onSearchEnd',
 		'select': 'onSearchSelect'
 	} );
-	this.pages.connect( this, { 'set': 'onPageSet' } );
-	this.removeButton.connect( this, { 'click': 'onRemoveButtonClick' } );
-	this.insertButton.connect( this, { 'click': [ 'close', 'insert' ] } );
 
 	// Initialization
 	this.removeButton.$.appendTo( this.$removePage );
@@ -97,31 +98,40 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	this.$foot.append( this.insertButton.$ );
 };
 
-ve.ui.WikiaMediaInsertDialog.prototype.onQueryChange = function ( value ) {
-	this.searchQueryParams.batch = 1;
+ve.ui.WikiaMediaInsertDialog.prototype.onQueryInputChange = function ( value ) {
 	this.searchResults.clearItems();
-
 	if ( value.trim().length === 0 ) {
 		this.pages.setPage( 'suggestions' );
 	}
 };
 
-ve.ui.WikiaMediaInsertDialog.prototype.onQueryEnter = function () {
+ve.ui.WikiaMediaInsertDialog.prototype.onQueryInputEnter = function () {
 	this.searchResults.selectItem( this.searchResults.getHighlightedItem() );
 };
 
-ve.ui.WikiaMediaInsertDialog.prototype.onQueryMedia = function ( data ) {
-	if ( !data.response || !data.response.results ) {
-		return;
-	}
+// Copied from ve.ui.SearchWidget.js
+ve.ui.WikiaMediaInsertDialog.prototype.onQueryInputKeydown = function ( e ) {
+	var highlightedItem, nextItem,
+		dir = e.which === ve.Keys.DOWN ? 1 : ( e.which === ve.Keys.UP ? -1 : 0 );
 
-	this.searchQueryParams.batch++;
+	if ( dir ) {
+		highlightedItem = this.searchResults.getHighlightedItem();
+		if ( !highlightedItem ) {
+			highlightedItem = this.searchResults.getSelectedItem();
+		}
+		nextItem = this.searchResults.getRelativeSelectableItem( highlightedItem, dir );
+		this.searchResults.highlightItem( nextItem );
+		nextItem.scrollElementIntoView();
+	}
+};
+
+ve.ui.WikiaMediaInsertDialog.prototype.onQueryMedia = function ( data ) {
 	this.search.addResults( data.response.results.mixed.items );
 	this.pages.setPage( 'search' );
 };
 
 ve.ui.WikiaMediaInsertDialog.prototype.onSearchEnd = function () {
-	this.query.requestMedia( this.searchQueryParams );
+	this.query.requestMedia();
 };
 
 ve.ui.WikiaMediaInsertDialog.prototype.onSearchSelect = function ( item ) {
@@ -155,11 +165,12 @@ ve.ui.WikiaMediaInsertDialog.prototype.onRemoveButtonClick = function () {
 
 ve.ui.WikiaMediaInsertDialog.prototype.onOpen = function () {
 	ve.ui.MWDialog.prototype.onOpen.call( this );
+	//this.queryInput.setValue( '' );
 	this.pages.setPage( 'suggestions' );
 };
 
-ve.ui.WikiaMediaInsertDialog.prototype.onPageSet = function ( page ) {
-	this.query.focus();
+ve.ui.WikiaMediaInsertDialog.prototype.onPageSet = function () {
+	this.queryInput.$input.focus();
 };
 
 ve.ui.WikiaMediaInsertDialog.prototype.onClose = function ( action ) {

@@ -23,6 +23,7 @@ ve.ui.WikiaMediaQueryWidget = function VeUiWikiaMediaQueryWidget( config ) {
 	ve.ui.Widget.call( this, config );
 
 	// Properties
+	this.batch = 1;
 	this.input = new ve.ui.TextInputWidget( {
 		'$$': this.$$,
 		'icon': 'search',
@@ -34,10 +35,7 @@ ve.ui.WikiaMediaQueryWidget = function VeUiWikiaMediaQueryWidget( config ) {
 	this.timeout = null;
 
 	// Events
-	this.input.connect( this, {
-		'change': 'onInputChange',
-		//'enter': 'onInputEnter'
-	} );
+	this.input.connect( this, { 'change': 'onInputChange' } );
 
 	// Initialization
 	this.$
@@ -51,10 +49,6 @@ ve.inheritClass( ve.ui.WikiaMediaQueryWidget, ve.ui.Widget );
 
 /* Methods */
 
-ve.ui.WikiaMediaQueryWidget.prototype.focus = function () {
-	this.input.$input.focus();
-};
-
 /**
  * Get the query input.
  *
@@ -65,7 +59,7 @@ ve.ui.WikiaMediaQueryWidget.prototype.getInput = function () {
 	return this.input;
 };
 
-ve.ui.WikiaMediaQueryWidget.prototype.requestMedia = function ( data ) {
+ve.ui.WikiaMediaQueryWidget.prototype.requestMedia = function () {
 	var value;
 
 	if ( this.input.isPending() ) {
@@ -82,14 +76,15 @@ ve.ui.WikiaMediaQueryWidget.prototype.requestMedia = function ( data ) {
 		this.input.pushPending();
 		this.request = $.ajax( {
 			'url': mw.util.wikiScript( 'api' ),
-			'data': ve.extendObject( {
+			'data': {
 				'format': 'json',
 				'action': 'apimediasearch',
 				'query': value,
 				'type': 'photo|video',
 				'mixed': true,
+				'batch': this.batch,
 				'limit': 16
-			}, data )
+			}
 		} )
 			.always( ve.bind( this.onRequestMediaAlways, this ) )
 			.done( ve.bind( this.onRequestMediaDone, this ) );
@@ -101,13 +96,13 @@ ve.ui.WikiaMediaQueryWidget.prototype.requestMedia = function ( data ) {
 ve.ui.WikiaMediaQueryWidget.prototype.onInputChange = function () {
 	var value = this.input.getValue();
 
+	this.batch = 1;
 	clearTimeout( this.timeout );
 
 	if ( value.trim().length !== 0 ) {
-		this.timeout = setTimeout( this.requestMediaCallback, 250 );
+		// TODO/FIXME: requestMedia is called too often
+		this.timeout = setTimeout( this.requestMediaCallback, 100 );
 	}
-
-	this.emit( 'change', value );
 };
 
 ve.ui.WikiaMediaQueryWidget.prototype.onRequestMediaAlways = function () {
@@ -116,5 +111,10 @@ ve.ui.WikiaMediaQueryWidget.prototype.onRequestMediaAlways = function () {
 };
 
 ve.ui.WikiaMediaQueryWidget.prototype.onRequestMediaDone = function ( data ) {
+	if ( !data.response || !data.response.results || this.input.getValue().trim().length === 0 ) {
+		return;
+	}
+
+	this.batch++;
 	this.emit( 'media', data );
 };
