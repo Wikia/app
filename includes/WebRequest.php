@@ -209,9 +209,11 @@ class WebRequest {
 		global $wgUsePathInfo;
 
 		// bug 16019: title interpolation on API queries is useless and sometimes harmful
+		// wikia change start - allow separate define DONT_INTERPOLATE_TITLE to guard against this specific functionality
 		if ( defined( 'MW_API' ) || defined( 'DONT_INTERPOLATE_TITLE' ) ) {
 			return;
 		}
+		// wikia change end
 
 		if ( $wgUsePathInfo ) {
 			$matches = self::getPathInfo( 'title' );
