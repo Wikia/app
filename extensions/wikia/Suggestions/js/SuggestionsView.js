@@ -23,7 +23,7 @@ define('SuggestionsView', ['SuggestionsViewModel'], function( viewModel ) {
 	}
 	function buildSeeAllResultsMarkup( i ) {
 		++i;
-		return '<li class="all" tabindex="' + i + '"><a href="#"><span>' + $.msg('suggestions-see-all') +
+		return '<li class="all" tabindex="' + i + '"><a><span>' + $.msg('suggestions-see-all') +
 			'</span></a></li>';
 	}
 	function hideAds() {
@@ -80,7 +80,7 @@ define('SuggestionsView', ['SuggestionsViewModel'], function( viewModel ) {
 				showAds();
 				dropdown.empty();
 			}
-		}, 100);
+		}, 0);
 	}
 	function emitEvent( eventName ) {
 		dropdown.trigger( eventName );
