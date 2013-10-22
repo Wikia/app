@@ -150,14 +150,13 @@ var ThemeDesigner = {
 			ThemeDesigner.showPicker(event, "image");
 		});
 		$("#tile-background").change(function() {
-			if ($(this).attr("checked")) {
-				ThemeDesigner.set("background-tiled", "true");
-			} else {
-				ThemeDesigner.set("background-tiled", "false");
-			}
+			ThemeDesigner.set("background-tiled", $(this).attr("checked") ? "true" : "false");
 		});
 		$("#fix-background").change(function() {
 			ThemeDesigner.set("background-fixed", $(this).attr("checked") ? "true" : "false");
+		});
+		$("#dynamic-background").change(function() {
+			ThemeDesigner.set("background-dynamic", $(this).attr("checked") ? "true" : "false");
 		});
 
 		// submit handler for uploading custom background image
@@ -408,23 +407,25 @@ var ThemeDesigner = {
 
 		if (setting == "background-tiled") {
 			if (newValue == "true") {
-				//all tiled images are centered
-				ThemeDesigner.set("background-align", "center");
-			} else if (ThemeDesigner.settings["background-align"] == "center" && ThemeDesigner.settings["background-image"].indexOf("images/themes") < 0 && ThemeDesigner.settings["user-background-align"] == "left" && ThemeDesigner.settings["background-fixed"] == "false") {
-				//align is currently center, background image is user-specified, and user background image should be aligned left
-				//only reset if background is not fixed
-				ThemeDesigner.set("background-align", "left");
+				ThemeDesigner.previewFrame.contents().find("body").removeClass("background-not-tiled");
+			} else {
+				ThemeDesigner.previewFrame.contents().find("body").addClass("background-not-tiled");
 			}
 		}
 
 		if (setting == "background-fixed") {
 			if (newValue == "true") {
-				//all fixed images are centered
-				ThemeDesigner.set("background-align", "center");
-			} else if (ThemeDesigner.settings["background-align"] == "center" && ThemeDesigner.settings["background-image"].indexOf("images/themes") < 0 && ThemeDesigner.settings["user-background-align"] == "left" && ThemeDesigner.settings["background-tiled"] == "false") {
-				//align is currently center, background image is user-specified, and user background image should be aligned left
-				//only reset if background is not tiled
-				ThemeDesigner.set("background-align", "left");
+				ThemeDesigner.previewFrame.contents().find("body").addClass("background-fixed");
+			} else {
+				ThemeDesigner.previewFrame.contents().find("body").removeClass("background-fixed");
+			}
+		}
+
+		if (setting == "background-dynamic") {
+			if (newValue == "true") {
+				ThemeDesigner.previewFrame.contents().find("body").addClass("background-dynamic");
+			} else {
+				ThemeDesigner.previewFrame.contents().find("body").removeClass("background-dynamic");
 			}
 		}
 
@@ -436,7 +437,7 @@ var ThemeDesigner = {
 			reloadCSS = true;
 		}
 
-		if(setting == "color-body" || setting == "color-page" || setting == "color-buttons" || setting == "color-links" || setting == "background-image" || setting == "background-tiled" || setting == "color-header" || setting == "wordmark-font" || setting == "background-fixed") {
+		if(setting == "color-body" || setting == "color-page" || setting == "color-buttons" || setting == "color-links" || setting == "background-image" || setting == "color-header" || setting == "wordmark-font") {
 			reloadCSS = true;
 		}
 
@@ -653,13 +654,9 @@ var ThemeDesigner = {
 			$("#swatch-image-background").attr("src", ThemeDesigner.settings["user-background-image-thumb"]);
 		}
 
-		if (ThemeDesigner.settings["background-tiled"] == "true") {
-			$("#tile-background").attr("checked", true);
-		} else {
-			$("#tile-background").attr("checked", false);
-		}
-
+		$("#tile-background").attr("checked", ThemeDesigner.settings["background-tiled"] == "true");
 		$("#fix-background").attr("checked", ThemeDesigner.settings["background-fixed"] == "true");
+		$("#dynamic-background").attr("checked", ThemeDesigner.settings["background-dynamic"] == "true");
 
 		/*** Wordmark Tab ***/
 		// style wordmark preview
