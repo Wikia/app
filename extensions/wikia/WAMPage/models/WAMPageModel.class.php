@@ -28,11 +28,11 @@ class WAMPageModel extends WikiaModel {
 	protected $pagesMap = null;
 	
 	static protected $failoverTabsNames = [
-		self::TAB_INDEX_TOP_WIKIS => 'Top wikis',
+		self::TAB_INDEX_TOP_WIKIS => 'Top wikias',
 		self::TAB_INDEX_BIGGEST_GAINERS => 'The biggest gainers',
-		self::TAB_INDEX_GAMING => 'Top video games wikis',
-		self::TAB_INDEX_ENTERTAINMENT => 'Top entertainment wikis',
-		self::TAB_INDEX_LIFESTYLE => 'Top lifestyle wikis'
+		self::TAB_INDEX_GAMING => 'Top video games wikias',
+		self::TAB_INDEX_ENTERTAINMENT => 'Top entertainment wikias',
+		self::TAB_INDEX_LIFESTYLE => 'Top lifestyle wikias'
 	];
 
 	static protected $verticalIds = [
@@ -396,6 +396,38 @@ class WAMPageModel extends WikiaModel {
 		
 		wfProfileOut(__METHOD__);
 		return in_array($dbKey, array_keys($this->getWamPagesDbKeysMap()));
+	}
+
+	public function getWAMRedirect($title) {
+		wfProfileIn(__METHOD__);
+		$newTabTitle = null;
+
+		if( $title instanceof Title && $title->isSubpage() ) {
+			$titleText = mb_strtolower( $title->getSubpageText() );
+
+			$wamRedirects = $this->getWAMRedirectsList();
+			if ( isset( $wamRedirects[$titleText] ) ) {
+				$newTabTitle = $this->getTitleFromText($this->getWAMMainPageName() . '/' . $wamRedirects[$titleText]);
+			}
+		}
+
+		wfProfileOut(__METHOD__);
+		return $newTabTitle;
+	}
+
+	protected function getWAMRedirectsList() {
+		wfProfileIn(__METHOD__);
+		global $wgWAMRedirects;
+
+		$out = [];
+		if ( is_array( $wgWAMRedirects ) ) {
+			foreach ( $wgWAMRedirects as $oldTitle => $newTitle ) {
+				$out[mb_strtolower( $oldTitle )] = $newTitle;
+			}
+		}
+
+		wfProfileOut(__METHOD__);
+		return $out;
 	}
 
 	/**

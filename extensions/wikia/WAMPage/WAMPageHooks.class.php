@@ -42,6 +42,12 @@ class WAMPageHooks {
 			self::$app->wg->SuppressRail = true;
 			self::$app->wg->SuppressFooter = true;
 			$article = new WAMPageArticle($title);
+		} else {
+			$newTabTitle = self::$model->getWAMRedirect($title);
+			if ($newTabTitle instanceof Title) {
+				global $wgOut;
+				$wgOut->redirect($newTabTitle->getLocalURL(), 301);
+			}
 		}
 
 		wfProfileOut(__METHOD__);
