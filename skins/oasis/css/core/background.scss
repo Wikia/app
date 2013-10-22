@@ -44,6 +44,10 @@ $background-is-wide: if( $background-width > $breakpoint-fluid, true, false );
 		$background-offset-right: $background-offset;
 	}
 
+	// Space in the middle sizes
+	$width-middle-subtrahend: $background-width + 2 * $background-offset;
+	$margin-middle-base: $width-middle-subtrahend / 2;
+
 	body.background-dynamic.skin-oasis {
 		&:after,
 		&:before {
@@ -71,8 +75,8 @@ $background-is-wide: if( $background-width > $breakpoint-fluid, true, false );
 			z-index: -1;
 			background: $color-middle-body;
 
-			width: calc(100% - #{2 * $background-width-both});
-			margin-left: calc(#{$background-width-both} - 50%);
+			width: calc(100% - #{$width-middle-subtrahend});
+			margin-left: calc(#{$margin-middle-base} - 50%);
 
 			&:after,
 			&:before {
