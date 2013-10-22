@@ -157,7 +157,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.onRemoveButtonClick = function () {
 
 ve.ui.WikiaMediaInsertDialog.prototype.onOpen = function () {
 	ve.ui.MWDialog.prototype.onOpen.call( this );
-	this.pages.setPage( 'search' );
+	this.pages.setPage( 'suggestions' );
 };
 
 ve.ui.WikiaMediaInsertDialog.prototype.onPageSet = function ( page ) {
