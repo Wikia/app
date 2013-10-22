@@ -63,8 +63,18 @@ class AssetsManagerServer {
 		try {
 			$content = $builder->getContent();
 		} catch(Exception $e) {
+			// return HTTP 503 in case of SASS processing error (BAC-592)
+			// Varnish will cache such response for 5 seconds
 			header('HTTP/1.1 503');
-			$content = $e->getMessage();
+			$headers['Content-Type'] = 'text/plain';
+
+			// log exception messages
+			$msg = $e->getMessage();
+			Wikia::log(__METHOD__, $type, str_replace("\n", ' ', $msg), true);
+
+			// emit full message on devboxes only
+			global $wgDevelEnvironment;
+			$content = !empty($wgDevelEnvironment) ? $msg : '/* SASS processing failed! */';
 		}
 
 		if($cacheDuration > 0) {
