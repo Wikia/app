@@ -1,5 +1,5 @@
 <script type="text/template" id="autocomplete-item">
-	<span><%= name %></span>
+	<strong><%= name %></strong>
 </script>
 <form id="LatestVideos" class="WikiaForm vpt-form latest-video-form" method="post">
 
@@ -10,7 +10,7 @@
 		?>
 
 		<div class="form-box latest-video with-nav">
-			<div class="autocomplete-w1">
+			<div class="autocomplete">
 				<!-- empty element to be used for autocomplete -->
 			</div>
 			<span class="count"><?= $x ?>.</span>

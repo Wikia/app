@@ -27,6 +27,7 @@ define( 'views.videopageadmin.autocomplete', [
 				} else if ( keyCode === 27 ) {
 					// if user presses ESC, clear field
 					$tar.val( '' );
+					this.clearResults();
 				} else if ( keyCode === 13 ) {
 					// if user presses RET, select highlighted
 					this.collection.reset([{ name: 'foo' }, { name: 'bar' }, { name: 'baz' }, { name: 'qux' }]);
@@ -40,20 +41,32 @@ define( 'views.videopageadmin.autocomplete', [
 					return false;
 				}
 			},
-			renderResults: function() {
-				var $ul,
-						view;
-
-				this.$el.find( '.autocomplete-results' ).remove();
-				$ul = $( '<ul>' ).addClass( 'autocomplete-results' );
-				this.collection.each( function( model ) {
-						view = new CategorySingleResultView({
-								model: model
-						});
-						$ul.append( view.render().$el );
+			clearResults: function() {
+				this.results.map(function( subView ) {
+						return subView.remove();
 				});
 
-				this.$el.append( $ul );
+				this.$results.html( '' ).hide();
+			},
+			renderResults: function() {
+				var that,
+						view;
+
+				that = this;
+
+				this.$results = this.$( '.autocomplete' );
+				this.$results.html( '' ).show();
+
+				this.results = [];
+
+				this.collection.each( function( model ) {
+						view = new CategorySingleResultView({
+								model: model,
+								parentView: that
+						});
+						that.results.push( view );
+						that.$results.append( view.render().$el );
+				});
 
 				return this;
 			},
@@ -74,7 +87,7 @@ define( 'views.videopageadmin.autocomplete', [
 				if ( key === 38 ) {
 
 					if ( idx === 0 ) {
-						$selected.removeClass( 'selected' ).css( 'color', 'black' );
+						$selected.removeClass( 'selected' );
 					} else {
 						$newSelection = $selected.prev();
 					}
@@ -90,13 +103,8 @@ define( 'views.videopageadmin.autocomplete', [
 				}
 
 				if ( $newSelection ) {
-					$newSelection
-						.css( 'color', 'salmon' )
-						.addClass( 'selected' )
-						.siblings()
-						.css( 'color', 'black' )
-						.removeClass( 'selected' );
-					}
+					$newSelection.addClass( 'selected' ).siblings().removeClass( 'selected' );
+				}
 			}
 	});
 

@@ -4,7 +4,10 @@ define( 'collections.videopageadmin.category', [
 		'use strict';
 
 		var CategoryCollection = Backbone.Collection.extend({
-				model: CategoryModel
+				model: CategoryModel,
+				setCategory: function( category ) {
+					console.log( category );
+				}
 		});
 
 		return CategoryCollection;
