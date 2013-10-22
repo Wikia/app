@@ -29,7 +29,7 @@ class ImagesServiceUploadTest extends WikiaBaseTest {
 
 		// use Swift domain
 		global $wgDevelEnvironmentName;
-		$this->mockGlobalVariable('wgDevBoxImageServerOverride', "d.{$wgDevelEnvironmentName}.wikia-dev.com");
+		$this->mockGlobalVariable('wgDevBoxImageServerOverride', "static.{$wgDevelEnvironmentName}.wikia-dev.com");
 
 		// debug
 		global $wgLocalFileRepo;
