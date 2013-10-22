@@ -73,6 +73,8 @@ $messages['en'] = array(
 
 	//message included in auto-uploaded image's description fb#45624
 	'wikiahome-image-auto-uploaded-comment' => 'Auto-generated image to be used on http://wikia.com/ – stay tuned for more info on the Staff Blog: http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog',
+
+	'promote-upload-uploads-disabled' => 'File uploads are currently disabled on your wiki. Please try again later',
 );
 
 $messages['de'] = array(
@@ -365,6 +367,8 @@ $messages['pl'] = array(
 	'promote-statusbar-approved' => 'Woohoo! $1 jest już promowana na [http://pl.www.wikia.com pl.wikia.com]!',
 	'promote-statusbar-rejected' => 'Jeden lub więcej dodanych przez Ciebie obrazów nie przeszło weryfikacji pomyślnie. [[Special:Contact|Dowiedz się dlaczego]]',
 	'promote-error-oasis-only' => 'Ta strona nie jest dostępna w wybranej skórce. Zmień ją [[Special:Preferences|na skórkę "Wikia" w preferencjach,]] aby uzyskać dostęp.',
+
+	'promote-upload-uploads-disabled' => 'Dodawanie obrazów jest czasowo wyłączone na Twojej wiki. Spróbój ponownie za jakiś czas.',
 );
 
 $messages['qqq'] = array(
@@ -427,4 +431,6 @@ $messages['qqq'] = array(
 	'promote-statusbar-inreview' => 'Status information when wiki is in review',
 	'promote-statusbar-approved' => 'Status information when wiki is in approved',
 	'promote-statusbar-rejected' => 'Status information when wiki is in rejected',
+
+	'promote-upload-uploads-disabled' => 'Information to the user that file uploading is temporarily disabled',
 );
