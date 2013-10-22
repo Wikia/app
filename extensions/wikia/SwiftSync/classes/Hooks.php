@@ -51,7 +51,7 @@ class Hooks {
 	
 	/* save image into local repo */
 	public static function doStoreInternal( $params, $status ) {
-		global $wgEnableSwithSyncToLocalFS;
+		global $wgEnableSwithSyncToLocalFS, $wgDevelEnvironment;
 		
 		wfProfileIn( __METHOD__ );
 		$fsParams = $params;
@@ -84,7 +84,9 @@ class Hooks {
 			}
 		}
 		
-		Queue::newFromParams( $fsParams )->add();
+		if ( empty( $wgDevelEnvironment ) ) { 
+			Queue::newFromParams( $fsParams )->add();
+		}
 		
 		wfProfileOut( __METHOD__ );
 		
@@ -92,7 +94,7 @@ class Hooks {
 	}
 	
 	public static function doCopyInternal( $params, $status ) {
-		global $wgEnableSwithSyncToLocalFS;
+		global $wgEnableSwithSyncToLocalFS, $wgDevelEnvironment;
 		
 		wfProfileIn( __METHOD__ );
 		$fsParams = $params;
@@ -135,7 +137,9 @@ class Hooks {
 			}
 		}
 		
-		Queue::newFromParams( $fsParams )->add();
+		if ( empty( $wgDevelEnvironment ) ) { 
+			Queue::newFromParams( $fsParams )->add();
+		}
 		
 		wfProfileOut( __METHOD__ );
 		
@@ -143,7 +147,7 @@ class Hooks {
 	}
 	
 	public static function doDeleteInternal( $params, $status ) {
-		global $wgEnableSwithSyncToLocalFS;
+		global $wgEnableSwithSyncToLocalFS, $wgDevelEnvironment;
 		
 		wfProfileIn( __METHOD__ );
 		
@@ -172,7 +176,9 @@ class Hooks {
 			}
 		}
 		
-		Queue::newFromParams( $fsParams )->add();
+		if ( empty( $wgDevelEnvironment ) ) { 
+			Queue::newFromParams( $fsParams )->add();
+		}
 		
 		wfProfileOut( __METHOD__ );
 		
