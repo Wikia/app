@@ -5,10 +5,15 @@ define( 'wikia.ui.modal', [ 'jquery' ], function( $ ) {
 		CLOSE_CLASS = 'close',
 		$html = $('html');
 
-	function Modal( id ) {
+	function Modal( id, modalMarkup ) {
 		var that = this;
 
 		this.$element = $( '#' + id );
+		if( !this.$element.exists() && typeof( modalMarkup ) !== 'undefined' ) {
+			$( 'body' ).append( modalMarkup );
+			this.$element = $( '#' + id );
+		}
+
 		this.$blackout = getBlackout();
 		this.$close = this.$element.find( '.' + CLOSE_CLASS );
 
@@ -25,7 +30,7 @@ define( 'wikia.ui.modal', [ 'jquery' ], function( $ ) {
 				event.preventDefault();
 
 				if( this.isShown() ) {
-					this.hide();
+					this.close();
 				}
 			}, that) );
 
@@ -39,7 +44,8 @@ define( 'wikia.ui.modal', [ 'jquery' ], function( $ ) {
 		this.$blackout.addClass( 'visible' );
 	};
 
-	Modal.prototype.hide = function() {
+	Modal.prototype.close = function() {
+		this.onClose();
 		this.$element.removeClass( 'shown' );
 		this.$blackout.removeClass( 'visible' );
 		$html.removeClass( 'modal-shown' );
@@ -49,19 +55,14 @@ define( 'wikia.ui.modal', [ 'jquery' ], function( $ ) {
 		return this.$element.hasClass( 'shown' );
 	};
 
-	Modal.prototype.close = function() {
-		this.onClose();
-		$(this).remove();
-	};
-
 	Modal.prototype.onClose = function() {
 	// "hook"
 	}
 
 	/** Public API */
 	return {
-		init: function( id ) {
-			return new Modal( id );
+		init: function( id, modalMarkup ) {
+			return new Modal( id, modalMarkup );
 		}
 	}
 });

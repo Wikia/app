@@ -52,8 +52,7 @@ var ChatBanModal = function(title, okCallback, options) {
 							}
 						} );
 
-						$( 'body' ).append( banModal );
-						banModal = modal.init( modalId );
+						banModal = modal.init( modalId, banModal );
 						banModal.show();
 					} );
 				} );

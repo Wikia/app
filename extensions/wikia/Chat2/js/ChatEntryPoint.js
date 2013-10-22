@@ -199,8 +199,7 @@ var ChatEntryPoint = {
 						}
 					} );
 
-					$( 'body' ).append( joinModal );
-					ChatEntryPoint.chatLaunchModal = modal.init( modalId );
+					ChatEntryPoint.chatLaunchModal = modal.init( modalId, joinModal );
 					ChatEntryPoint.chatLaunchModal.show();
 					$( "#modal-join-chat-button" ).bind( 'click', ChatEntryPoint.launchChatWindow );
 					ChatEntryPoint.chatLaunchModal.onClose = function() {
