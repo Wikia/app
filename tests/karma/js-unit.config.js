@@ -89,6 +89,10 @@ files = [
 	'extensions/wikia/Search/js/SearchAbTest.*.js',
 	'extensions/wikia/Search/js/spec/*.spec.js',
 
+	//TOC
+	'extensions/wikia/TOC/js/modules/toc.js',
+	'extensions/wikia/TOC/js/modules/spec/toc.spec.js',
+
 	// Video
 	'extensions/wikia/VideoPageTool/js/views/jquery.switcher.js',
 	'extensions/wikia/VideoPageTool/js/spec/*.spec.js'

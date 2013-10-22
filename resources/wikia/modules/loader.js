@@ -172,9 +172,9 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 		 *
 		 * @example:
 		 * loader({
-			 * 		type: loader.LIBRARY,
-			 * 		resources: ['facebook', 'googlemaps']
-			 * });
+		 *   type: loader.LIBRARY,
+		 *   resources: ['facebook', 'googlemaps']
+		 * });
 		 */
 		getLibrary = function(libs, callback, failure) {
 			if(!isArray(libs)) {

@@ -38,8 +38,11 @@ class CreateWikiLocalJob extends Job {
 	const REMINDER_URL   = "http://theschwartz/function/TheSchwartz::Worker::URL";
 	const REMINDER_DELAY =  172800; # 48h
 
+	/* @var User */
 	private
-		$mFounder;
+		$mFounder,
+		$wikiaName,
+		$wikiaLang;
 
 	/**
 	 * constructor
@@ -58,7 +61,7 @@ class CreateWikiLocalJob extends Job {
 	 */
 	public function run() {
 
-		global $wgUser, $wgErrorLog, $wgExtensionMessagesFiles, $wgDebugLogFile,
+		global $wgUser, $wgErrorLog, $wgDebugLogFile,
 			$wgServer, $wgInternalServer;
 
 		wfProfileIn( __METHOD__ );
@@ -138,15 +141,6 @@ class CreateWikiLocalJob extends Job {
 		}
 		$this->sendRevisionToScribe();
 
-		/**
-		 * different things for different types
-		 */
-		switch( $this->mParams->type ) {
-			case "answers":
-				$this->copyDefaultAvatars();
-				break;
-		}
-
 		$params = array(
 			'title' => $this->mParams->sitename,
 			'url'	=> $this->mParams->url,
@@ -172,8 +166,7 @@ class CreateWikiLocalJob extends Job {
 	 * @param string  $database target database name
 	 */
 	public function WFinsert( $city_id, $database = false ) {
-
-		global $wgDBname, $wgErrorLog;
+		global $wgErrorLog;
 
 		/**
 		 * we can take local database from city_id in params array
@@ -248,7 +241,7 @@ class CreateWikiLocalJob extends Job {
 		if( !empty($wgEnableWallExt) ) {
 			$msg = "autocreatewiki-welcometalk-wall";
 		} else {
-                        $msg = "autocreatewiki-welcometalk";
+			$msg = "autocreatewiki-welcometalk";
 		}
 
 		$talkBody = false;
@@ -301,7 +294,7 @@ class CreateWikiLocalJob extends Job {
 	 * move main page to SEO-friendly name
 	 */
 	private function moveMainPage() {
-		global $wgSitename, $wgUser, $parserMemc, $wgContLanguageCode;
+		global $wgSitename, $parserMemc, $wgContLanguageCode;
 
 		$source = wfMsgForContent('Mainpage');
 		$target = $wgSitename;
@@ -460,7 +453,7 @@ class CreateWikiLocalJob extends Job {
 	 * @return boolean status
 	 */
 	private function sendWelcomeMail() {
-		global $wgUser, $wgPasswordSender, $wgWikiaEnableFounderEmailsExt;
+		global $wgPasswordSender, $wgWikiaEnableFounderEmailsExt;
 
 		if(!empty($wgWikiaEnableFounderEmailsExt)) {
 			// skip this step when FounderEmails extension is enabled
@@ -487,8 +480,6 @@ class CreateWikiLocalJob extends Job {
 			htmlspecialchars( $oStaffUser->getTitleKey() ),
 			htmlspecialchars( $oReceiver->getTalkPage()->getFullURL() ),
 		);
-
-		$sBody = $sBodyHTML = $sSubject = null;
 
 		$language = @empty($this->mParams->language) ? 'en' : $this->mParams->language;
 		list($sBody, $sBodyHTML) = wfMsgHTMLwithLanguage('autocreatewiki-welcomebody', $language, array(), $aBodyParams);
@@ -607,34 +598,6 @@ class CreateWikiLocalJob extends Job {
 	}
 
 	/**
-	 * some wikis have social tools enabled, they demand default avatars
-	 *
-	 * TODO: Fixme... the NY Social Tools have been deleted.  This function and any calls
-	 * to it can _PROBABLY_ be deleted.  UserMasthead or something might need default avatars though.
-	 *
-	 * @access private
-	 */
-	private function copyDefaultAvatars() {
-		global $wgUploadDirectory;
-
-		wfProfileIn( __METHOD__ );
-
-		/**
-		 * avatars folder
-		 */
-		$target = "{$wgUploadDirectory}/avatars";
-		wfMkdirParents( $target );
-		if( is_dir( $target ) ) {
-			wfShellExec("/bin/cp -af /images/a/answers/images/avatars/default* {$target}/");
-			Wikia::log( __METHOD__, "info", "copy default avatars to {$target}" );
-		}
-		else {
-			Wikia::log( __METHOD__, "error", "Cannot create {$target} folder" );
-		}
-		wfProfileOut( __METHOD__ );
-	}
-
-	/**
 	 * send pages from starters to scribe
 	 *
 	 * @access private
@@ -680,7 +643,7 @@ class CreateWikiLocalJob extends Job {
 				# call function
 				$archive = 0;
 
-				$res = ScribeProducer::saveComplete( $oArticle, $oUser, null, null, null, $archive, null, $flags, $oRevision, $status, 0 );
+				ScribeProducer::saveComplete( $oArticle, $oUser, null, null, null, $archive, null, $flags, $oRevision, $status, 0 );
 			}
 
 			$pages[$oRow->page_id] = $oRow->rev_id;
@@ -691,5 +654,4 @@ class CreateWikiLocalJob extends Job {
 
 		wfProfileOut( __METHOD__ );
 	}
-
 }

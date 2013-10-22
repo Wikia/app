@@ -1003,6 +1003,7 @@ $messages['ps'] = array(
 );
 
 /** Portuguese (português)
+ * @author Hamilton Abreu
  * @author Luckas
  * @author Malafaya
  * @author SandroHc
@@ -1018,7 +1019,7 @@ $messages['pt'] = array(
 	'app-nonetwork-dialog-close-button' => 'OK',
 	'search-go' => 'Ir!',
 	'search-hint-text' => "p.ex. 'John Lennon:Imagine'",
-	'login-username-hint' => 'Nome de usuário',
+	'login-username-hint' => 'Nome de utilizador',
 	'login-password-hint' => 'Senha',
 	'about-heading' => 'LyricWiki',
 	'about-credits' => 'por %s',
