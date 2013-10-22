@@ -1,3 +1,18 @@
+/**
+ * @name AutocompleteView
+ * @description Backbone subview/module for generic autocomplete
+ * 
+ * @example
+ * var autocomplete = new AutocompleteView({
+ *		el: '.my-el', // This el is the closest parent element containing the form and the results container
+ *		collection: new CategoryCollection() // Instatiated collection is available inside the view
+ * });
+ *
+ * @requires 
+ * Supplied parent element must contain a DOM structure that includes:
+ * div.autocomplete, 
+ * input[data-autocomplete]
+ */
 define( 'views.videopageadmin.autocomplete', [
 		'jquery',
 		'views.videopageadmin.autocompleteitem'
@@ -7,17 +22,20 @@ define( 'views.videopageadmin.autocomplete', [
 			initialize: function() {
 				var that = this;
 
+				// this view requires an input with attr data-autocomplete present
 				this.$input = this.$( 'input[ data-autocomplete ]' );
 
+				// bind all the function contexts
 				_.bindAll( this, 'clearResults', 'renderResults', 'setValue' );
 
-				// hide menu when clicked outside
+				// hide results menu when clicked outside
 				$( 'body' ).click(function() {
 						if ( that.results && that.results.length ) {
 							that.trigger( 'results:hide' );
 						}
 				});
 
+				// bind events
 				this.on( 'results:hide', this.clearResults );
 				this.collection.on( 'reset', this.renderResults );
 				this.collection.on( 'category:chosen', this.setValue );
@@ -28,14 +46,20 @@ define( 'views.videopageadmin.autocomplete', [
 				'keydown input[data-autocomplete]': 'preventKeybinds'
 			},
 			absorbEvent: function( evt ) {
+				// used to absorb click events on input while results menu is open
 				evt.stopPropagation();
 			},
 			preventKeybinds: function( evt ) {
+				// use to prevent premature interaction with form
 				var key = evt.keyCode;
 				if ( key === 13 || key === 10 ) {
 					return false;
 				}
 			},
+
+			/**
+			 * @description Handles varied user inputs with conditonal branching
+			 */
 			handleKeyUp: function( evt ) {
 				evt.preventDefault();
 				var $tar,
@@ -47,6 +71,7 @@ define( 'views.videopageadmin.autocomplete', [
 				$val = $tar.val();
 
 				if ( keyCode === 38 || keyCode === 40 ) {
+					// Handle graphical traversal of the list if up/down keys are pressed
 					this.selectListItem( keyCode );
 				} else if ( keyCode === 27 ) {
 					// if user presses ESC, clear field
@@ -73,6 +98,7 @@ define( 'views.videopageadmin.autocomplete', [
 				}
 			},
 			getSelection: function() {
+				// safe early exit condition, prevents trying to get selection before first results have been set
 				if ( !this.$results ) { return false; }
 
 				var category = this.$results.find( '.selected' ).text();
@@ -84,17 +110,23 @@ define( 'views.videopageadmin.autocomplete', [
 				// trigger Search button now, or collection fetch
 			},
 			setValue: function( categoryName ) {
+				// setValue of input[data-autocomplete]
 				this.$input.val( categoryName );
 				this.clearResults();
 			},
 			clearResults: function() {
 				this.results.map(function( subView ) {
+						// use Backbone's native view removal
 						return subView.remove();
 				});
 
 				this.results = [];
 				this.$results.html( '' ).hide();
 			},
+
+			/*
+			 * This function fires on each collection reset
+			 */
 			renderResults: function() {
 				var that,
 						view;
