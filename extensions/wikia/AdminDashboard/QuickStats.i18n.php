@@ -77,6 +77,7 @@ $messages['as'] = array(
 );
 
 /** Azerbaijani (azərbaycanca)
+ * @author Andriykopanytsia
  * @author Cekli829
  * @author Melikov Memmed
  * @author Vago
@@ -87,7 +88,7 @@ $messages['az'] = array(
 	'quickstats-header-edits' => 'Redaktələr',
 	'quickstats-header-photos' => 'Şəkillər',
 	'quickstats-totals-label' => 'Yekunu',
-	'quickstats-number-shortening' => '$1K',
+	'quickstats-number-shortening' => '$1 тис.',
 );
 
 /** South Azerbaijani (تورکجه)
@@ -102,6 +103,7 @@ $messages['azb'] = array(
 );
 
 /** Bashkir (башҡортса)
+ * @author Рустам Нурыев
  * @author ҒатаУлла
  */
 $messages['ba'] = array(
@@ -144,13 +146,19 @@ $messages['bcl'] = array(
 );
 
 /** Bulgarian (български)
+ * @author Aquilax
  * @author DCLXVI
  */
 $messages['bg'] = array(
+	'quickstats-header-label' => 'Бърза статистика',
 	'quickstats-header-date' => 'Дата',
+	'quickstats-header-views' => 'Преглеждания',
 	'quickstats-header-edits' => 'Редакции',
 	'quickstats-header-photos' => 'Снимки',
-	'quickstats-number-shortening' => '$1K',
+	'quickstats-header-likes' => 'Харесвания',
+	'quickstats-totals-label' => 'Общо',
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Още статистики]]',
+	'quickstats-number-shortening' => '$1 хил.',
 	'quickstats-number-shortening-millions' => '$1M',
 	'quickstats-number-shortening-billions' => '$1B',
 );
@@ -193,6 +201,7 @@ $messages['bo'] = array(
 );
 
 /** Breton (brezhoneg)
+ * @author Andriykopanytsia
  * @author Fulup
  * @author Y-M D
  */
@@ -205,12 +214,13 @@ $messages['br'] = array(
 	'quickstats-header-likes' => 'Plijout a ra din',
 	'quickstats-totals-label' => 'Hollad',
 	'quickstats-see-more-stats-link' => "[[Special:WikiStats|Gwelet muioc'h a stadegoù]]",
-	'quickstats-number-shortening' => '$1K',
+	'quickstats-number-shortening' => '$1 тис.',
 	'quickstats-number-shortening-millions' => '$1M',
 	'quickstats-number-shortening-billions' => '$1Mrd',
 );
 
 /** Catalan (català)
+ * @author Andriykopanytsia
  * @author CuBaN VeRcEttI
  * @author Solde
  */
@@ -223,7 +233,7 @@ $messages['ca'] = array(
 	'quickstats-header-likes' => 'Gustos',
 	'quickstats-totals-label' => 'Totals',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Veure més estadístiques]]',
-	'quickstats-number-shortening' => '$1K',
+	'quickstats-number-shortening' => '$1 тис.',
 	'quickstats-number-shortening-millions' => '$1M',
 	'quickstats-number-shortening-billions' => '
 $1B',
@@ -242,6 +252,7 @@ $messages['ckb'] = array(
 );
 
 /** Czech (česky)
+ * @author Andriykopanytsia
  * @author Chmee2
  * @author Darth Daron
  */
@@ -254,7 +265,7 @@ $messages['cs'] = array(
 	'quickstats-header-likes' => 'To se mi líbí',
 	'quickstats-totals-label' => 'Celkem',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Další statistiky]]',
-	'quickstats-number-shortening' => '$1K',
+	'quickstats-number-shortening' => '$1 тис.',
 	'quickstats-number-shortening-millions' => '$1M',
 	'quickstats-number-shortening-billions' => '$1B',
 );
@@ -1206,6 +1217,7 @@ $messages['tzm'] = array(
 
 /** Ukrainian (українська)
  * @author A1
+ * @author Andriykopanytsia
  * @author Ua2004
  * @author Vox
  */
@@ -1218,7 +1230,7 @@ $messages['uk'] = array(
 	'quickstats-header-likes' => 'Подобається',
 	'quickstats-totals-label' => 'Загалом',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Більше статистики]]',
-	'quickstats-number-shortening' => '$1K',
+	'quickstats-number-shortening' => '$1 тис.',
 	'quickstats-number-shortening-millions' => '$1 млн',
 	'quickstats-number-shortening-billions' => '$1 млрд',
 );

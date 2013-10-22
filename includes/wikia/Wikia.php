@@ -42,6 +42,10 @@ $wgHooks['UploadVerifyFile']         [] = 'Wikia::onUploadVerifyFile';
 $wgHooks['UserNameLoadFromId']       [] = "Wikia::onUserNameLoadFromId";
 $wgHooks['UserLoadFromDatabase']     [] = "Wikia::onUserLoadFromDatabase";
 
+# Swift file backend
+$wgHooks['AfterSetupLocalFileRepo']  [] = "Wikia::onAfterSetupLocalFileRepo";
+$wgHooks['BeforeRenderTimeline']     [] = "Wikia::onBeforeRenderTimeline";
+
 /**
  * This class have only static methods so they can be used anywhere
  *
@@ -1026,7 +1030,7 @@ class Wikia {
 	 * add entries to software info
 	 */
 	static public function softwareInfo( &$software ) {
-		global $wgCityId, $wgDBcluster, $wgWikiaDatacenter;
+		global $wgCityId, $wgDBcluster, $wgWikiaDatacenter, $wgLocalFileRepo;
 
 		if( !empty( $wgCityId ) ) {
 			$info = "city_id: {$wgCityId}";
@@ -1040,6 +1044,7 @@ class Wikia {
 		if( !empty( $wgWikiaDatacenter ) ) {
 			$info .= ", dc: $wgWikiaDatacenter";
 		}
+		$info .= ", file_repo: {$wgLocalFileRepo['backend']}";
 
 		$software[ "Internals" ] = $info;
 
@@ -2096,6 +2101,54 @@ class Wikia {
 			ExternalUser_Wikia::removeFromSecondaryClusters( $id );
 		}
 		$user->invalidateCache();
+
+		return true;
+	}
+
+	/**
+	 * Register Swift file backend
+	 *
+	 * @author macbre
+	 * @param array $repo $wgLocalFileRepo
+	 * @return bool true - it's a hook
+	 */
+	static function onAfterSetupLocalFileRepo(Array &$repo) {
+		// $wgUploadPath: http://images.wikia.com/poznan/pl/images
+		// $wgFSSwiftContainer: poznan/pl
+		global $wgFSSwiftContainer, $wgFSSwiftServer, $wgEnableSwiftFileBackend, $wgUploadPath;
+
+		$path = trim( parse_url( $wgUploadPath, PHP_URL_PATH ), '/' );
+		$wgFSSwiftContainer = substr( $path, 0, -7 );
+
+		if ( !empty( $wgEnableSwiftFileBackend ) ) {
+			$repo['backend'] = 'swift-backend';
+			$repo['zones'] = array (
+				'public' => array( 'container' => $wgFSSwiftContainer, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images' ),
+				'temp'   => array( 'container' => $wgFSSwiftContainer, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images/temp' ),
+				'thumb'  => array( 'container' => $wgFSSwiftContainer, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images/thumb' ),
+				'deleted'=> array( 'container' => $wgFSSwiftContainer, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images/deleted' ),
+				'archive'=> array( 'container' => $wgFSSwiftContainer, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images/archive' )
+			);
+		}
+
+		return true;
+	}
+
+	/**
+	 * Modify timeline extension to use Swift storage (BAC-893)
+	 *
+	 * @param FileBackend $backend
+	 * @param string $fname mwstore abstract path
+	 * @param string $hash file hash
+	 * @return bool true - it's a hook
+	 */
+	static function onBeforeRenderTimeline(&$backend, &$fname, $hash) {
+		global $wgEnableSwiftFileBackend, $wgFSSwiftContainer;
+
+		if ( !empty( $wgEnableSwiftFileBackend ) ) {
+			$backend = FileBackendGroup::singleton()->get( 'swift-backend' );
+			$fname = 'mwstore://' . $backend->getName() . "/$wgFSSwiftContainer/images/timeline/$hash";
+		}
 
 		return true;
 	}

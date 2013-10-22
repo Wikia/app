@@ -513,7 +513,7 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 			return false;
 		}
 
-		// check if allow
+		// check if user is allowed
 		if ( !$this->wg->User->isAllowed( 'videopagetool' ) ) {
 			$errMsg = wfMessage( 'videopagetool-error-permission' )->plain();
 			return false;

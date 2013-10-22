@@ -1,11 +1,14 @@
 <?php
-	global $wgStylePath, $wgUser, $wgScript, $wgExtensionsPath;
+	global $wgStylePath, $wgUser, $wgScript, $wgExtensionsPath, $wgEnableUploads;
 ?>
 
 <h1 id="VideoEmbedTitle"><?= wfMsg( 'vet-title' ) ?></h1>
 <section>
 	<form action="<?= $wgScript ?>?action=ajax&rs=VET&method=insertVideo" id="VideoEmbedForm" class="WikiaForm" method="POST">
-	<?php if( !$wgUser->isAllowed( 'upload' ) ) {
+	<?php
+	if (empty($wgEnableUploads)) {
+		echo wfMessage( 'vet-uploaddisabled' )->text();
+	} else if ( !$wgUser->isAllowed( 'upload' ) ) {
 		if( !$wgUser->isLoggedIn() ) {
 			echo '<a id="VideoEmbedLoginMsg">' .wfMsg( 'vet-notlogged' ) . '</a>';
 		} else {
@@ -22,8 +25,8 @@
 				<input id="VideoEmbedUrl" class="VideoEmbedUrl" name="wpVideoEmbedUrl" type="text" />
 			</div>
 		</div>
-	<?php } ?>
 		<a id="VideoEmbedUrlSubmit" class="wikia-button VideoEmbedUrlSubmit" style="display: block; "><?= wfMsg('vet-upload-btn') ?></a>
+	<?php } ?>
 	</form>
 	<form action="" class="WikiaForm VET-search" id="VET-search-form">
 		<div class="input-group">

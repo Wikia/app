@@ -12,11 +12,11 @@ define( 'models.videopageadmin.thumbnail', [
 			var that = this;
 
 			return $.nirvana.sendRequest({
-					controller: 'VideoPageAdminSpecial',
-					method: 'getImageData',
-					data: {
-						imageTitle: that.imgTitle
-					},
+				controller: 'VideoPageAdminSpecial',
+				method: 'getImageData',
+				data: {
+					imageTitle: that.imgTitle
+				}
 			});
 		}
 	};

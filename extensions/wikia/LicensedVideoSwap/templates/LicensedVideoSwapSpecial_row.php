@@ -3,6 +3,7 @@ foreach ($videoList as $video):
 	$suggestions = $video['videoSuggestions'];
 	$best = count($suggestions) > 0 ? $suggestions[0] : null;
 	$numMoreSuggestions = count($suggestions) - 1; // Text is "x more suggestions" so remove selected suggestion for that count
+	$confirmKeep = empty( $video['confirmKeep'] ) ? '' : 'data-subsequent-keep="true"';
 ?>
 <div class="row">
 	<span class="swap-arrow lvs-sprite"></span>
@@ -29,12 +30,15 @@ foreach ($videoList as $video):
 				<?= $video['videoOverlay'] ?>
 			</a>
 		</div>
-		<button class="keep-button secondary" data-video-keep="<?= htmlspecialchars($video['title']) ?>"><?= wfMessage('lvs-button-keep')->plain() ?></button>
+		<button class="keep-button secondary" <?= $confirmKeep ?> data-video-keep="<?= htmlspecialchars($video['title']) ?>"><?= wfMessage('lvs-button-keep')->plain() ?></button>
 	</div>
 	<div class="grid-3 premium">
 		<p><?= wfMessage('lvs-best-match-label')->plain() ?></p>
 		<? if ( !empty($best) ): ?>
 			<div class="video-wrapper">
+				<? if ( $video['isNew'] ): ?>
+					<div class="new">New</div>
+				<? endif; ?>
 				<a href="<?= $best['fileUrl'] ?>" class="image video no-lightbox">
 					<?= $best['videoPlayButton'] ?>
 					<img alt="<?= $best['fileTitle'] ?>" src="<?= $best['thumbUrl'] ?>" width="<?= $thumbWidth ?>" height="<?= $thumbHeight ?>" data-video-name="<?= htmlspecialchars($best['fileTitle']) ?>" data-video-key="<?= htmlspecialchars(urlencode($best['title'])) ?>" class="Wikia-video-thumb thumbimage">

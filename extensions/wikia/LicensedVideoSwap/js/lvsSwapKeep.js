@@ -46,6 +46,8 @@ define( 'lvs.swapkeep', [
 		if ( isSwap ) {
 			data.newTitle = newTitle;
 			trackingLabel = tracker.labels.SWAP;
+		} else {
+			data.suggestions = _getSuggestions();
 		}
 
 		nirvana.sendRequest({
@@ -64,16 +66,9 @@ define( 'lvs.swapkeep', [
 	function confirmModal() {
 		videoControls.reset();
 		var currTitleText,
-				request,
-				suggestions;
+				request;
 
 		request = {};
-		suggestions = _getSuggestions();
-
-		if ( suggestions.length ) {
-			request.suggestions = suggestions;
-		}
-
 		currTitleText =  currTitle.replace(/_/g, ' ' );
 
 		// Show confirmation modal only on "Keep"
@@ -175,10 +170,17 @@ define( 'lvs.swapkeep', [
 
 		arr = [];
 		$suggestions = $row.find( '.more-videos .thumbimage' );
+
 		if ( $suggestions.length ) {
 			$suggestions.each(function( idx, elem ) {
 					arr.push( $( elem ).data().videoKey );
 			});
+		} else {
+			arr.push(
+				$row
+					.find( '.premium .video-wrapper .thumbimage' )
+					.data().videoKey
+			);
 		}
 
 		return arr;

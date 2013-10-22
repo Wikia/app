@@ -327,6 +327,7 @@ $messages['ce'] = array(
 	'lookupcontribswikioptions' => 'Параметраш',
 	'lookupcontribscontribslink' => 'Къинхьегаме хьажориг',
 	'lookupcontribscontribs' => 'къинхьегам',
+	'lookupcontribsall' => 'массо',
 );
 
 /** Czech (česky)
@@ -1406,7 +1407,7 @@ $messages['ps'] = array(
 	'lookupcontribshist' => 'پېښليک',
 	'lookupcontribsdiff' => 'توپير',
 	'lookupcontribsshowpages' => 'ټول مخونه ($1 نومتشيالونه)',
-	'lookupcontribscontent' => 'منځپانګه',
+	'lookupcontribscontent' => 'منځپانگه',
 	'lookupcontribscontribtitleforuser' => 'د کارن لپاره ونډې:',
 	'lookupcontribsall' => 'ټول',
 );

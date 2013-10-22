@@ -110,12 +110,13 @@ For example, you could:
  */
 $messages['qqq'] = array(
 	'myhome-activity-feed' => 'This the title of the list/summary of recent activity in "My home page" in Wikia. "Feed" here does not refer to an RSS/Atom-type feed.',
-	'myhome-watchlist-feed' => '{{Identical|My watchlist}}',
+	'myhome-watchlist-feed' => '{{Identical|Watchlist}}',
 	'myhome-user-contributions-feed' => '{{Identical|Contribution}}',
 	'tog-userlandingpage' => 'Label next to selectbox when user can choose her landing page will be one of: Main Page, WikiActivity, RecentChanges',
 	'myhome-feed-newpage' => '{{Identical|New page}}',
 	'myhome-feed-edit' => '{{Identical|Edit}}',
 	'myhome-feed-delete' => '{{Identical|Deleted}}',
+	'myhome-feed-added-by' => '{{Identical|Added by}}',
 	'myhome-feed-new-page-details' => '{{Identical|New page}}',
 	'myhome-feed-summary-details' => '{{Identical|Summary}}',
 	'myhome-feed-new-blog-comment-details' => '{{Identical|Comment}}',
@@ -583,9 +584,11 @@ Per exemple, pots:
 
 /** Chechen (нохчийн)
  * @author Sasan700
+ * @author Умар
  */
 $messages['ce'] = array(
 	'myhome-user-contributions-feed' => 'Къинхьегам',
+	'myhome-feed-edit' => 'нисдар',
 );
 
 /** Czech (česky)

@@ -39,6 +39,17 @@ $messages['bcl'] = array(
 	'adengine-exitstitial-button' => 'Likwasan ining Ad',
 );
 
+/** Bulgarian (български)
+ * @author Aquilax
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'adengine-exitstitial-title-template' => 'Напускате $1...',
+	'adengine-exitstitial-redirecting' => 'След няколко секунди браузърът ще ви пренасочи към страницата, която пожелахте.',
+	'adengine-exitstitial-go-back' => 'Желаете ли да се върнете?',
+	'adengine-exitstitial-button' => 'Пропускане на рекламата',
+);
+
 /** Bhojpuri (भोजपुरी)
  * @author Nepaboy
  */
