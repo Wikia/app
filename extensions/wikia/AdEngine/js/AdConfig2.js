@@ -12,7 +12,8 @@ var AdConfig2 = function (
 	adProviderEvolve,
 	adProviderGamePro,
 	adProviderLater,
-	adProviderNull
+	adProviderNull,
+	adProviderSevenOneMedia
 ) {
 	'use strict';
 
@@ -20,7 +21,8 @@ var AdConfig2 = function (
 		city_lang = window.wgContentLanguage,
 		country = Geo.getCountryCode(),
 		defaultHighValueSlots,
-		highValueSlots;
+		highValueSlots,
+		useSevenOneMedia = window.wgAdDriverUseSevenOneMedia && abTest.inGroup('SEVENONEMEDIA_ADS', 'ENABLED');
 
 	defaultHighValueSlots = {
 		'CORP_TOP_LEADERBOARD':true,
@@ -79,6 +81,10 @@ var AdConfig2 = function (
 		) {
 			log('AB experiment PERFORMANCE_V_PREFOOTERS, group PREFOOTERS_DISABLED: ' + slotname + ' disabled', 5, log_group);
 			return adProviderNull;
+		}
+
+		if (useSevenOneMedia && adProviderSevenOneMedia.canHandleSlot(slot)) {
+			return adProviderSevenOneMedia;
 		}
 
 		// TODO refactor highValueSlots check to the top of the whole config

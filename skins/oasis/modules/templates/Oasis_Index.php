@@ -127,6 +127,17 @@ if ( window.Wikia.AbTest && (Wikia.AbTest.getGroup( "DAR_RIGHTRAILPOSITION" ) ==
 <?= $bottomScripts ?>
 <?= $cssPrintLinks ?>
 
+<? if ( $wg->AdDriverUseSevenOneMedia ): ?>
+	<script src="<?= htmlspecialchars(AssetsManager::getInstance()->getOneCommonURL('extensions/wikia/AdEngine/SevenOneMedia/my_ad_integration.js')); ?>"></script>
+	<script src="<?= htmlspecialchars(AssetsManager::getInstance()->getOneCommonURL('extensions/wikia/AdEngine/SevenOneMedia/allinone.js')); ?>"></script>
+	<script>
+		Wikia.SevenOneMediaIntegration.loadStyle(<?= json_encode(AssetsManager::getInstance()->getOneCommonURL('extensions/wikia/AdEngine/SevenOneMedia/my_ad_integration.css')); ?>);
+	</script>
+	<script>
+		Wikia.SevenOneMediaIntegration.start();
+	</script>
+<? endif ?>
+
 </body>
 
 <?= wfReportTime() . "\n" ?>
