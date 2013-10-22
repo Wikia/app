@@ -191,7 +191,74 @@ class SwiftStorage {
 
 			// upload it
 			$object->write( $fp, $size );
-			fclose( $fp );
+			
+			if ( is_resource( $fp ) ) {
+				fclose( $fp );
+			}
+		}
+		catch ( \Exception $ex ) {
+			self::log( __METHOD__ . '::exception',  $localFile . ' - ' . $ex->getMessage() );
+			return \Status::newFatal( $ex->getMessage() );
+		}
+
+		$time = round( ( microtime( true ) - $time ) * 1000 );
+		wfDebug( __METHOD__ . ": {$localFile} uploaded in {$time} ms\n" );
+
+		return $res;
+	}
+	
+	/**
+	 * Copy remote storage Object to a target Container
+	 * 
+	 * @param $srcFile string remote source file name
+	 * @param $dstFile string remote destination file name
+	 * @return \Status result
+	 */
+	public function copy( $srcFile, $dstFile ) {
+		$res = \Status::newGood();
+
+		$remotePath = $this->getRemotePath( $remoteFile );
+		$file = ( is_resource( $localFile ) ) ? get_resource_type( $localFile ) : $localFile; 
+		
+		wfDebug( __METHOD__ . ": {$file} -> {$remotePath}\n" );
+
+		$time = microtime( true );
+
+		try {
+			if ( !is_resource( $localFile )  ) {
+				$fp = @fopen( $localFile, 'r' );
+				if ( !$fp ) {
+					self::log( __METHOD__ . '::fopen', "<{$localFile}> doesn't exist" );
+					return \Status::newFatal( "{$localFile} doesn't exist" );
+				}
+			} else {
+				$fp = $localFile;
+			}
+
+			// check file size - sending empty file results in "HTTP 411 MissingContentLengh"
+			$size = (float)fstat( $fp )['size'];
+			if ( $size === 0 ) {
+				self::log( __METHOD__ . '::fstat', "<{$file}> is empty" );
+				return \Status::newFatal( "{$file} is empty" );
+			}
+
+			$object = $this->container->create_object( $remotePath );
+
+			// metadata
+			if ( is_string( $mimeType ) ) {
+				$object->content_type = $mimeType;
+			}
+
+			if (!empty($metadata)) {
+				$object->setMetadataValues($metadata);
+			}
+
+			// upload it
+			$object->write( $fp, $size );
+			
+			if ( is_resource( $fp ) ) {
+				fclose( $fp );
+			}
 		}
 		catch ( \Exception $ex ) {
 			self::log( __METHOD__ . '::exception',  $localFile . ' - ' . $ex->getMessage() );
@@ -226,7 +293,31 @@ class SwiftStorage {
 
 		return $res;
 	}
-
+	
+	/**
+	 * Read remote file to string
+	 *
+	 * @param $remoteFile string remote file name
+	 * @return String $content
+	 */
+	public function read( $remoteFile ) {
+		$content = '';
+		try {
+			$remoteFile = $this->getRemotePath( $remoteFile );
+			$object = $this->container->get_object( $remoteFile );
+			$content = $object->read();
+		}
+		catch ( \InvalidResponseException $e ) {
+			self::log( __METHOD__ . '::exception', $remoteFile . ' - ' . $e->getMessage() );
+			return null;
+		}
+		catch ( \NoSuchObjectException $e ) {
+			return null;
+		}
+		
+		return $content;
+	}
+	 
 	/**
 	 * Check if given remote file exists
 	 *
