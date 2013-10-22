@@ -43,7 +43,7 @@ Wikia.SevenOneMediaIntegration = {
 		window.SOI_RT1 = true;
 		window.SOI_HP  = true;
 
-		$('#TOP_RIGHT_BOXAD').html(
+		$('#TOP_RIGHT_BOXAD, #HOME_TOP_RIGHT_BOXAD').html(
 			'<div id="ad-rectangle1-outer">' +
 				'<div id="ad-rectangle1" class="ad-wrapper" style="display:none;"></div>' +
 			'</div>'
@@ -146,6 +146,7 @@ Wikia.SevenOneMediaIntegration = {
 				'</div>' +
 				'</td></tr></table>' +
 				'<scr' + 'ipt type="text/javascript">' +
+					'$("#TOP_RIGHT_BOXAD, #HOME_TOP_RIGHT_BOXAD").removeClass("default-height");' +
 					'myAd.finishAd("rectangle1", "move");' +
 				'</scr' + 'ipt>' +
 			'</div>' +
