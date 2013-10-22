@@ -42,34 +42,42 @@ if ($script == $file) {
 class WikiaTask {
 
 	/**
-	 * Do the work of this script given a wiki ID
+	 * This method is expected by the wikia-maintenance script
 	 *
-	 * @param int $wiki_id A wiki ID
+	 * @param int $wiki_id
+	 * @param bool $dryRun
+	 * @param bool $verbose
+	 * @throws Exception
 	 */
-	public static function work ( $wiki_id ) {
+	public static function work ( $wiki_id, $dryRun = false, $verbose = false ) {
 		$app = F::app();
 		if ( wfReadOnly() ) {
-			echo "Error: In read only mode.";
-			return;
+			throw new Exception( "Error: In read only mode." );
 		}
 
-		echo "Wiki $wiki_id\n";
+		if ( $verbose ) {
+			echo "Wiki $wiki_id\n";
+		}
 
 		$db = wfGetDB( DB_MASTER );
 
 		$tableExists = $db->tableExists( 'video_info' );
 		if ( !$tableExists ) {
-			echo "Error: Table does NOT exist.\n";
-			return;
+			throw new Exception( "Error: Table does NOT exist.\n" );
 		}
 
 		$memKeyBase = MediaQueryService::getMemKeyTotalVideoViews();
 		$videoListTotal = VideoInfoHelper::getTotalViewsFromDB();
 		foreach( $videoListTotal as $memKeyBucket => $list ) {
-			$app->wg->Memc->set( $memKeyBase.'-'.$memKeyBucket, $list, 60*60*2 );
-			//echo "\tCache Key: $memKeyBucket (".count($list).")\n";
+			if ( $dryRun ) {
+				echo "SET $memKeyBase.'-'.$memKeyBucket (".count($list).")\n";
+			} else {
+				$app->wg->Memc->set( $memKeyBase.'-'.$memKeyBucket, $list, 60*60*2 );
+			}
 		}
 
-		echo "Cached video views....DONE\n";
+		if ( $verbose ) {
+			echo "Cached video views....DONE\n";
+		}
 	}
 }
