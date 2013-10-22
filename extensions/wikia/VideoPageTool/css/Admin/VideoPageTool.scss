@@ -66,7 +66,7 @@ $label-padding: 10px 10px 10px 0px;
 	.form-box {
 		@include clearfix;
 		@include module-box;
-		padding: 0 10px;
+		padding: 0 20px;
 		position: relative;
 		&.with-nav {
 			padding-right: 37px; // width of nav buttons + 5px padding
@@ -107,7 +107,7 @@ $label-padding: 10px 10px 10px 0px;
 		display: block;
 		float: left;
 		font-size: 18px;
-		margin: 15px 0 0 -35px;
+		margin: 15px 0 0 -45px;
 	}
 
 	// Page level styles
@@ -187,8 +187,8 @@ $label-padding: 10px 10px 10px 0px;
 			padding-top: 10px;
 		}
 		.search-button {
-			float: right;
-			margin: -21px -70px 0 0;
+			float: left;
+			margin: 17px 0 0 10px;
 		}
 		.preview {
 			@include box-sizing-border-box;
@@ -202,17 +202,27 @@ $label-padding: 10px 10px 10px 0px;
 			padding: 5px 10px;
 			text-align: center;
 			width: 100%;
+
 			span {
-				@include arrow-hollow( 10px, 3px, #CCC, white, 'down' );
+				@include arrow-hollow( 6px, 3px, #CCC, white, 'down' );
 				float: right;
-				right: 45px;
-				top: 7px;
-				&:first-child {
+				right: 40px;
+				top: 9px;
+
+					&:first-child {
 					float: left;
-					right: 0px;
+					right: -10px;
 				}
+
+				&.active {
+					@include arrow-hollow( 6px, 3px, #666, white, 'down' );
+				}
+
 				&.up {
-					@include arrow-hollow( 10px, 3px, #666, white, 'up' );
+					@include arrow-hollow( 6px, 3px, #CCC, white, 'up' );
+					&.active {
+						@include arrow-hollow( 6px, 3px, #666, white, 'up' );
+					}
 				}
 			}
 		}

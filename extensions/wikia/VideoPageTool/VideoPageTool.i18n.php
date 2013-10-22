@@ -56,7 +56,7 @@ $messages['en'] = array(
 	'videopagetool-category-label-display-title' => 'Title',
 	'videopagetool-category-name-placeholder' => 'Type in words to bring in videos',
 	'videopagetool-category-display-title-placeholder' => 'Category title',
-	'videopagetool-category-preview' => 'preview',
+	'videopagetool-category-preview' => 'Preview',
 
 	'videopagetool-hint-required-dimensions' => 'Image dimensions must be 1024 x 461',
 	'videopagetool-formerror-altthumb' => 'Please add an image',
