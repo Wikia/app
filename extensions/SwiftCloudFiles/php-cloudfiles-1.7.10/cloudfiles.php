@@ -2410,7 +2410,9 @@ class CF_Object
         $this->_guess_content_type($filename);
         
         $this->write($fp, $size, $verify);
-        fclose($fp);
+        #<Wikia> - fclose moved to write method
+        #fclose($fp);
+        #</Wikia>
         return True;
     }
 
