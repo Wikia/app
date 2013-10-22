@@ -5,8 +5,11 @@ define( 'collections.videopageadmin.category', [
 
 		var CategoryCollection = Backbone.Collection.extend({
 				model: CategoryModel,
+				initialize: function() {
+					_.bindAll( this, 'setCategory' );
+				},
 				setCategory: function( category ) {
-					console.log( category );
+					this.trigger( 'category:chosen', category );
 				}
 		});
 

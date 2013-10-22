@@ -10,7 +10,7 @@ define( 'views.videopageadmin.latestforms', [
 							el: this.el,
 							collection: new CategoryCollection()
 					});
-				}
+				},
 		});
 
 		return FormGroupView;
