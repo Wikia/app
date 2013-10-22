@@ -34,7 +34,7 @@ class LicensedVideoSwapHelper extends WikiaModel {
 	const THUMBNAIL_HEIGHT = 309;
 	const POSTED_IN_ARTICLES = 100;
 	const NUM_SUGGESTIONS = 5;
-	const USER_VISITED_DATE = 'LicensedVideoSwap_visitedDate';
+	const USER_VISITED_DATE = 'LicensedVideoSwap_visitedDate';    // last visited date (store in user properties)
 
 	/**
 	 * TTL of 604800 is 7 days.  Expire suggestion cache after this
@@ -67,13 +67,13 @@ class LicensedVideoSwapHelper extends WikiaModel {
 	 * @param string $sort - The sort order for the video list (options: recent, popular, trend)
 	 * @param int $limit - The number of videos to return
 	 * @param int $page - Which page of video to return
-	 * @param bool $use_master - Whether to use the master DB to do this query
+	 * @param boolean $useMaster - Whether to use the master DB to do this query
 	 * @return array - An array of video metadata
 	 */
-	public function getUnswappedVideoList ( $sort = 'popular', $limit = 10, $page = 1, $use_master = false ) {
+	public function getUnswappedVideoList( $sort = 'popular', $limit = 10, $page = 1, $useMaster = false ) {
 		wfProfileIn( __METHOD__ );
 
-		if ( $use_master ) {
+		if ( $useMaster ) {
 			$db = wfGetDB( DB_MASTER );
 		} else {
 			$db = wfGetDB( DB_SLAVE );
@@ -134,15 +134,20 @@ SQL;
 
 	/**
 	 * Get the total number of unswapped videos
+	 * @param boolean $useMaster - Whether to use the master DB to do this query
 	 * @return int - The number of unswapped videos
 	 */
-	public function getUnswappedVideoTotal ( ) {
+	public function getUnswappedVideoTotal( $useMaster = false ) {
 		wfProfileIn( __METHOD__ );
 
 		$memcKey = $this->getMemcKeyTotalVideos();
 		$total = $this->wg->Memc->get( $memcKey );
 		if ( !is_numeric( $total ) ) {
-			$db = wfGetDB( DB_SLAVE );
+			if ( $useMaster ) {
+				$db = wfGetDB( DB_MASTER );
+			} else {
+				$db = wfGetDB( DB_SLAVE );
+			}
 
 			// We want to make sure the video hasn't been removed, is not premium and does not exist
 			// in the video_swap table
@@ -203,18 +208,18 @@ SQL;
 	 * Get a list of non-premium video that is available to swap
 	 *
 	 * @param string $sort - The sort order for the video list (options: recent, popular, trend)
-	 * @param int $page - Which page to display. Each page contains self::VIDEOS_PER_PAGE videos
-	 * @param bool $use_master
+	 * @param integer $page - Which page to display. Each page contains self::VIDEOS_PER_PAGE videos
+	 * @param boolean $useMaster
 	 * @return array - Returns a list of video metadata
 	 */
-	public function getRegularVideoList ( $sort, $page, $use_master = false ) {
+	public function getRegularVideoList( $sort, $page, $useMaster = false ) {
 		wfProfileIn( __METHOD__ );
 
 		// Get the play button image to overlay on the video
 		$playButton = WikiaFileHelper::videoPlayButtonOverlay( self::THUMBNAIL_WIDTH, self::THUMBNAIL_HEIGHT );
 
 		// Get the list of videos that haven't been swapped yet
-		$videoList = $this->getUnswappedVideoList( $sort, self::VIDEOS_PER_PAGE, $page, $use_master );
+		$videoList = $this->getUnswappedVideoList( $sort, self::VIDEOS_PER_PAGE, $page, $useMaster );
 
 		// Reuse code from VideoHandlerHelper
 		$helper = new VideoHandlerHelper();
@@ -896,13 +901,13 @@ SQL;
 
 	/**
 	 * Get pagination
+	 * @param integer $totalVideos
 	 * @param integer $currentPage
 	 * @param string $selectedSort
 	 * @return string $pagination
 	 */
-	public function getPagination( $currentPage, $selectedSort ) {
+	public function getPagination( $totalVideos, $currentPage, $selectedSort ) {
 		$pagination = '';
-		$totalVideos = $this->getUnswappedVideoTotal();
 		if ( $totalVideos > self::VIDEOS_PER_PAGE ) {
 			$pages = Paginator::newFromArray( array_fill( 0, $totalVideos, '' ), self::VIDEOS_PER_PAGE );
 			$pages->setActivePage( $currentPage - 1 );

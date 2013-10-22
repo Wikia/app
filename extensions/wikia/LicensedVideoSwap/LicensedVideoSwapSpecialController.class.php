@@ -81,7 +81,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$this->totalVideos = $helper->getUnswappedVideoTotal();
 
 		// Set up pagination
-		$this->pagination = $helper->getPagination( $currentPage, $sort );
+		$this->pagination = $helper->getPagination( $this->totalVideos, $currentPage, $sort );
 	}
 
 	/**
@@ -275,11 +275,11 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$use_master = true;
 		$videoList = $helper->getRegularVideoList( $sort, $currentPage, $use_master );
 
-		$this->html = $this->app->renderView( 'LicensedVideoSwapSpecial', 'row', array( 'videoList' => $videoList ) );
-		$this->html .= $helper->getPagination( $currentPage, $sort );
-
 		// get total videos with suggestions
-		$this->totalVideos = $helper->getUnswappedVideoTotal();
+		$this->totalVideos = $helper->getUnswappedVideoTotal( true );
+
+		$this->html = $this->app->renderView( 'LicensedVideoSwapSpecial', 'row', array( 'videoList' => $videoList ) );
+		$this->html .= $helper->getPagination( $this->totalVideos, $currentPage, $sort );
 
 		$this->result = 'ok';
 
@@ -368,11 +368,11 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$use_master = true;
 		$videoList = $helper->getRegularVideoList( $sort, $currentPage, $use_master );
 
-		$this->html = $this->app->renderView( 'LicensedVideoSwapSpecial', 'row', array( 'videoList' => $videoList ) );
-		$this->html .= $helper->getPagination( $currentPage, $sort );
-
 		// get total videos with suggestions
-		$this->totalVideos = $helper->getUnswappedVideoTotal();
+		$this->totalVideos = $helper->getUnswappedVideoTotal( true );
+
+		$this->html = $this->app->renderView( 'LicensedVideoSwapSpecial', 'row', array( 'videoList' => $videoList ) );
+		$this->html .= $helper->getPagination( $this->totalVideos, $currentPage, $sort );
 
 		$this->result = 'ok';
 
@@ -478,11 +478,11 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$use_master = true;
 		$videoList = $helper->getRegularVideoList( $sort, $currentPage, $use_master );
 
-		$this->html = $this->app->renderView( 'LicensedVideoSwapSpecial', 'row', array( 'videoList' => $videoList ) );
-		$this->html .= $helper->getPagination( $currentPage, $sort );
-
 		// get total videos with suggestions
-		$this->totalVideos = $helper->getUnswappedVideoTotal();
+		$this->totalVideos = $helper->getUnswappedVideoTotal( true );
+
+		$this->html = $this->app->renderView( 'LicensedVideoSwapSpecial', 'row', array( 'videoList' => $videoList ) );
+		$this->html .= $helper->getPagination( $this->totalVideos, $currentPage, $sort );
 
 		$this->result = 'ok';
 		$this->msg = wfMessage( 'lvs-restore-video-success' )->text();
