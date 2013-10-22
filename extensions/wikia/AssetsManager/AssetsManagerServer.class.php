@@ -65,10 +65,6 @@ class AssetsManagerServer {
 		} catch(Exception $e) {
 			header('HTTP/1.1 503');
 			$content = $e->getMessage();
-			$cacheDuration = [
-				'server' => 10,
-				'client' => 0,
-			];
 		}
 
 		if($cacheDuration > 0) {
