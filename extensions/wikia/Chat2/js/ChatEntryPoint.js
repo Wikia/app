@@ -203,7 +203,6 @@ var ChatEntryPoint = {
 					ChatEntryPoint.chatLaunchModal.show();
 					$( "#modal-join-chat-button" ).bind( 'click', ChatEntryPoint.launchChatWindow );
 					ChatEntryPoint.chatLaunchModal.onClose = function() {
-						this.hide();
 						ChatEntryPoint.reloadPage();
 					};
 				} );

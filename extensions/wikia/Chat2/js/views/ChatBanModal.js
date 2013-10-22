@@ -53,54 +53,37 @@ var ChatBanModal = function(title, okCallback, options) {
 						} );
 
 						banModal = modal.init( modalId, banModal );
+						banModal.$element.find( '#cancel' ).click( function( event ) {
+							event.preventDefault();
+							banModal.close();
+							banModal.$element.remove();
+						} );
+
+						var banModalOkBtn = banModal.$element.find( '#ok' );
+						banModalOkBtn.click( function( event ) {
+							event.preventDefault();
+
+							var reasonInput = banModal.$element.find("input[name=reason]"),
+								reason = reasonInput.val(),
+								expires = banModal.$element.find("select[name=expires]").val();
+
+							reasonInput.placeholder().keydown( function( e ) {
+								if( e.which == 13 ) {
+								// Submit when 'enter' key is pressed (BugId:28101).
+									e.preventDefault();
+									banModalOkBtn.click();
+								}
+							} );
+
+							okCallback( expires, reason );
+
+							banModal.close();
+							banModal.$element.remove();
+						} );
 						banModal.show();
 					} );
 				} );
 			} );
 		} );
-		/*
-		TODO: remove code below once DAR-2415 is finished
-		$.showCustomModal(title, data.template, {
-			id: "ChatBanModal",
-			width: 404,
-			buttons: [
-				{
-					id: 'cancel',
-					message: $.msg('chat-ban-modal-button-cancel'),
-					handler: function(){
-						var dialog = $('#ChatBanModal');
-						dialog.closeModal();
-					}
-				},
-				{
-					id: 'ok',
-					defaultButton: true,
-					message: data.isChangeBan ? $.msg('chat-ban-modal-button-change-ban') : $.msg('chat-ban-modal-button-ok'),
-					handler: function() {
-						var reason = self.reasonInput.val(),
-							expires = self.expiresInput.val();
-
-						okCallback(expires, reason);
-
-						self.dialog.closeModal();
-					}
-				}
-			],
-			callback: function() {
-				var dialog, reasonInput, expiresInput;
-
-				self.dialog = dialog = $('#ChatBanModal');
-				self.reasonInput = reasonInput = dialog.find("input[name=reason]");
-				self.expiresInput = expiresInput = dialog.find("select[name=expires]");
-				reasonInput.placeholder().keydown(function(e) {
-					// Submit when 'enter' key is pressed (BugId:28101).
-					if (e.which == 13) {
-						e.preventDefault();
-						$('#ok').click();
-					}
-				});
-			}
-		});
-		*/
 	} );
 };
