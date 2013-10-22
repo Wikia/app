@@ -52,7 +52,7 @@ define( 'views.videopageadmin.autocomplete', [
 			preventKeybinds: function( evt ) {
 				// use to prevent premature interaction with form
 				var key = evt.keyCode;
-				if ( key === 13 || key === 10 ) {
+				if ( key === 13 || key === 10 || key === 27 ) {
 					return false;
 				}
 			},
