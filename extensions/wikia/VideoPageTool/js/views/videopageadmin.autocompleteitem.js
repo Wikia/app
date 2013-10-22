@@ -1,6 +1,5 @@
 define( 'views.videopageadmin.autocompleteitem', [
 		'jquery',
-		'underscore.templatecache'
 	], function( $, TemplateCache ) {
 		'use strict';
 
