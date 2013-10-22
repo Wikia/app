@@ -183,9 +183,23 @@ $label-padding: 10px 10px 10px 0px;
 
 	// Latest video form styles
 	.latest-video-form {
+
 		.form-box {
 			padding-top: 10px;
 		}
+
+		input[data-autocomplete] {
+			outline: 0 none;
+		}
+
+		.autocomplete {
+			position: absolute;
+			left: 133px;
+			top: 46px;
+			max-height: 300px;
+			overflow-y: scroll;
+		}
+
 		.search-button {
 			float: left;
 			margin: 17px 0 0 10px;
