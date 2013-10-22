@@ -75,12 +75,12 @@ define('SuggestionsView', ['SuggestionsViewModel'], function( viewModel ) {
 	}
 	function blurDropdown() {
 		setTimeout( function() {
-			if ( document.activeElement.parentNode !== dropdown[0] &&
+			if ( !dropdown.find(document.activeElement).length &&
 				document.activeElement !== searchInput[0] ) {
 				showAds();
 				dropdown.empty();
 			}
-		}, 0);
+		}, 100);
 	}
 	function showImage(e) {
 		e.currentTarget.style.display = 'block';
