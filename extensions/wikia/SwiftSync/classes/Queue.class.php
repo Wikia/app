@@ -11,6 +11,8 @@ namespace Wikia\SwiftSync;
  * @package SwiftSync
  */
 class Queue {
+	/* @Int Record ID */
+	public $id;
 	/* @Int WikiId - Wiki ID */
 	public $city_id;
 	/* @String action - action name */
@@ -19,9 +21,13 @@ class Queue {
 	public $dst = '';
 	/* @String src - source file */
 	public $src = ''; 
+	/* @Int error - error code */
+	private $error =  0;
 	
 	/* sync files table */
 	const SYNC_TABLE = 'image_sync';
+	/* archive sync files table */
+	const SYNC_ARCH_TABLE = 'image_sync_done';
 	/* sync files db */
 	const SYNC_DB = 'swift_sync';
 	
@@ -36,13 +42,26 @@ class Queue {
 	}
 	
 	/*
+	 * set id
+	 */
+	public function setID( $id ) {
+		$this->id = $id;
+	}
+	
+	/*
+	 * set error code 
+	 */
+	public function setError( $error ) {
+		$this->error = $error;
+	}
+	
+	/*
 	 * @param Array $params (op, city_id, dst)
 	 * @return \Queue object
 	 */
 	static public function newFromParams( $params ) {
 		global $wgCityId;
 		wfProfileIn( __METHOD__ );
-error_log( __METHOD__ . ": params = " . print_r( $params, true ), 3, "/tmp/moli.log" );
 		
 		if ( !isset( $params[ 'dst' ] ) ) {
 			if ( !empty( $params[ 'op' ] ) && ( $params[ 'op' ] == 'delete' ) ) {
@@ -88,6 +107,10 @@ error_log( __METHOD__ . ": params = " . print_r( $params, true ), 3, "/tmp/moli.
 		
 		$obj = new Queue( $row->city_id, $row->img_action, $row->img_dest, $row->img_src );
 		
+		if ( $obj ) {
+			$obj->setID( $row->id );
+		}
+		
 		wfProfileOut( __METHOD__ );
 		return $obj; 
 	}
@@ -96,10 +119,21 @@ error_log( __METHOD__ . ": params = " . print_r( $params, true ), 3, "/tmp/moli.
 		return sprintf( "`%s`.`%s`", self::SYNC_DB, self::SYNC_TABLE );
 	}
 	
+	static public function getArchTable() {
+		return sprintf( "`%s`.`%s`", self::SYNC_DB, self::SYNC_ARCH_TABLE );
+	}
+	
 	static public function getDB( $master = false ) {
 		global $wgSpecialsDB;
 		
 		return wfGetDB( ( empty( $master ) ) ? DB_SLAVE : DB_MASTER, array(), $wgSpecialsDB );
+	}
+	
+	/*
+	 * Return list of columns in self::SYNC_TABLE 
+	 */
+	private function tableColumns() {
+		
 	}
 	
 	/* 
@@ -132,6 +166,38 @@ error_log( __METHOD__ . ": params = " . print_r( $params, true ), 3, "/tmp/moli.
 			], 
 			__METHOD__ 
 		);
+		$dbw->commit();
+		
+		wfProfileOut( __METHOD__ );
+		return true;
+	}
+	
+	/* 
+	 * Move parsed image to archive table 
+	 * @return Boolean True/False
+	 */ 
+	public function moveToArchive() {
+		wfProfileIn( __METHOD__ );
+		
+		if ( wfReadOnly() ) {
+			wfProfileOut( __METHOD__ );
+			return false;
+		}
+		
+		if ( empty( $this->id ) ) {
+			wfProfileOut( __METHOD__ );
+			return false;
+		}
+		
+		$dbw = self::getDB( true );
+		$dbw->begin();
+		$query = "INSERT INTO %s (id, city_id, img_action, img_src, img_dest, img_added, img_sync, img_error) ";
+		$query .= "SELECT id, city_id, img_action, img_src, img_dest, img_added, img_sync, %s FROM %s WHERE id = %d ";
+		$dbw->query( 
+			sprintf( $query, self::getArchTable(), $this->error, self::getTable(), $this->id ),
+			__METHOD__ 
+		);
+		$dbw->delete( self::getTable(), [ 'id' => $this->id ], __METHOD__ );
 		$dbw->commit();
 		
 		wfProfileOut( __METHOD__ );

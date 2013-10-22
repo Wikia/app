@@ -209,7 +209,6 @@ class SwiftStorage {
 			}
 
 			// upload it
-			echo "resource {$fp} : $size \n";
 			$object->write( $fp, $size );
 			
 			if ( is_resource( $fp ) ) {
@@ -274,7 +273,6 @@ class SwiftStorage {
 			}
 
 			// upload it
-			echo "resource {$fp} : $size \n";
 			$object->write( $fp, $size );
 			
 			if ( is_resource( $fp ) ) {
@@ -324,19 +322,15 @@ class SwiftStorage {
 	public function read( $remoteFile ) {
 		$content = '';
 		try {
-			echo __METHOD__ . ": remoteFile: $remoteFile \n";
 			$remoteFile = $this->getRemotePath( $remoteFile );
-			echo __METHOD__ . ": remoteFile(2): $remoteFile \n";
 			$object = $this->container->get_object( $remoteFile );
 			$content = $object->read();
 		}
 		catch ( \InvalidResponseException $e ) {
-			echo __METHOD__ . ": " . $remoteFile . ' - ' . $e->getMessage() . "\n";
 			self::log( __METHOD__ . '::exception', $remoteFile . ' - ' . $e->getMessage() );
 			return null;
 		}
 		catch ( \NoSuchObjectException $e ) {
-			echo __METHOD__ . ": " . $remoteFile . ' - ' . $e->getMessage() . "\n";
 			return null;
 		}
 		

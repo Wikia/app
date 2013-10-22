@@ -76,10 +76,10 @@ class Hooks {
 				} 
 				
 				if ( !$status->isOK() ) {
-					\SwiftStorage::log( __METHOD__, 'Cannot save image on local storage' );
+					\Wikia\SwiftStorage::log( __METHOD__, 'Cannot save image on local storage' );
 				}
 			} else {
-				\SwiftStorage::log( __METHOD__, 'Destination not defined' );
+				\Wikia\SwiftStorage::log( __METHOD__, 'Destination not defined' );
 				$status->fatal( 'backend-fail-store', $params['dst'] );
 			}
 		}
@@ -124,11 +124,11 @@ class Hooks {
 				if ( $status->isOK() ) {
 					$status = $fsBackend->copyInternal( $params );		
 				} else {
-					\SwiftStorage::log( __METHOD__, 'Cannot create directory for copied file' );
+					\Wikia\SwiftStorage::log( __METHOD__, 'Cannot create directory for copied file' );
 				}
 				
 				if ( !$status->isOK() ) {	
-					\SwiftStorage::log( __METHOD__, 'Cannot copy image to ' .$params['dst'] );
+					\Wikia\SwiftStorage::log( __METHOD__, 'Cannot copy image to ' .$params['dst'] );
 				}		
 			} else {
 				$status->fatal( 'backend-fail-store', ( empty( $params['dst'] ) ) ? $params['dst'] : $params['src'] );
@@ -146,12 +146,12 @@ class Hooks {
 		global $wgEnableSwithSyncToLocalFS;
 		
 		wfProfileIn( __METHOD__ );
-		$fsParams = $params;
 		
 		if ( empty( $params['op']  ) ) {
 			$params['op'] = 'delete';
 		}
-		
+		$fsParams = $params;
+				
 		if ( !empty( $wgEnableSwithSyncToLocalFS ) ) {
 			if ( !empty( $params['src'] ) ) {
 				# replace swift-backend storage URL with local-backend ... 
@@ -164,11 +164,11 @@ class Hooks {
 				$status = $fsBackend->deleteInternal( $params );	
 				
 				if ( !$status->isOK() ) {	
-					\SwiftStorage::log( __METHOD__, 'Cannot remove image ' .$params['src'] );
+					\Wikia\SwiftStorage::log( __METHOD__, 'Cannot remove image ' .$params['src'] );
 				}	
 			} else {
 				$status->fatal( 'backend-fail-delete', $params['src'] );
-				\SwiftStorage::log( __METHOD__, 'Invalid source path' );
+				\Wikia\SwiftStorage::log( __METHOD__, 'Invalid source path' );
 			}
 		}
 		
