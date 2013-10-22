@@ -43,12 +43,13 @@ define( 'lvs.videocontrols', [
 		*/
 	}
 
-	function syncVideoInteraction( title ) {
+	function syncVideoInteraction( title, premiumTitle ) {
 		nirvana.sendRequest({
 			controller: 'LicensedVideoSwapSpecialController',
 			method: 'playVideo',
 			data: {
-				videoTitle: title
+				videoTitle: title,
+				premiumTitle: premiumTitle
 			}
 		});
 	}
@@ -68,15 +69,17 @@ define( 'lvs.videocontrols', [
 				$wrapper,
 				$newFlag,
 				trackingRank = 0,
-				isPremium = 1;
+				isPremium = 1,
+				nonPremiumTitle;
 
 			$newFlag = $row.find( '.new' );
+			nonPremiumTitle = $row.find( '.non-premium img[data-video-key]' ).data().videoKey;
 			/*
 			 * For all premium video plays that are 'new' to user, including plays from the 'more suggestions' thumbs
 			 * send a call to backend to persist and track user interaction, then hide 'New' flag
 			 */
 			if ( !$this.closest( '.non-premium' ).length && $newFlag.is( ':visible' ) ) {
-				syncVideoInteraction( fileTitle );
+				syncVideoInteraction( nonPremiumTitle, fileTitle );
 				$newFlag.fadeOut();
 			}
 
