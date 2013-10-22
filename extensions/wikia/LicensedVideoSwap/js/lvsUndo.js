@@ -22,7 +22,7 @@ define( 'lvs.undo', [ 'wikia.querystring', 'lvs.commonajax', 'wikia.window', 'lv
 				videoTitle: videoTitle,
 				newTitle: newTitle,
 				sort: sort,
-				page: page
+				currentPage: page
 			},
 			callback: function( data ) {
 				// send info to common success method: response data and tracking label

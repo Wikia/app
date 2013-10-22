@@ -19,6 +19,10 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 	 * @responseParam integer currentPage
 	 * @responseParam integer pages
 	 * @responseParam array videoList
+	 * @responseParam integer thumbWidth
+	 * @responseParam integer thumbHeight
+	 * @responseParam integer totalVideos
+	 * @responseParam string pagination
 	 */
 	public function index() {
 		$user = $this->getUser();
@@ -66,14 +70,18 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$this->getContext()->getOutput()->setPageTitle( wfMessage('lvs-page-title')->plain() );
 
 		$currentPage = $this->getVal( 'currentPage', 1 );
+		$sort = 'recent';
 
 		// Get the list of videos that have suggestions
-		$this->videoList = $helper->getRegularVideoList( 'recent', $currentPage );
+		$this->videoList = $helper->getRegularVideoList( $sort, $currentPage );
 		$this->thumbWidth = LicensedVideoSwapHelper::THUMBNAIL_WIDTH;
 		$this->thumbHeight = LicensedVideoSwapHelper::THUMBNAIL_HEIGHT;
 
+		// get total videos with suggestions
+		$this->totalVideos = $helper->getUnswappedVideoTotal();
+
 		// Set up pagination
-		$this->pagination = ''; //$helper->getPagination( $currentPage, 'recent' );
+		$this->pagination = $helper->getPagination( $currentPage, $sort );
 	}
 
 	/**
@@ -128,10 +136,15 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 	 * @responseParam string result [ok/error]
 	 * @responseParam string msg - result message
 	 * @responseParam string html
+	 * @responseParam integer totalVideos
 	 */
 	public function swapVideo() {
 		$videoTitle = $this->request->getVal( 'videoTitle', '' );
 		$newTitle = $this->request->getVal( 'newTitle', '' );
+		$currentPage = $this->getVal( 'currentPage', 1 );
+		$sort = 'recent';
+
+		$this->totalVideos = 0;
 
 		// validate action
 		$validAction = $this->sendRequest( 'LicensedVideoSwapSpecial', 'validateAction', array( 'videoTitle' => $videoTitle ) );
@@ -140,14 +153,6 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 			$this->html = '';
 			$this->result = 'error';
 			$this->msg = $msg;
-			return;
-		}
-
-		// check user permission
-		if ( !$this->wg->User->isAllowed( 'deletedtext' ) ) {
-			$this->html = '';
-			$this->result = 'error';
-			$this->msg = wfMessage( 'lvs-error-permission' )->text();
 			return;
 		}
 
@@ -260,19 +265,22 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$reason = wfMessage( 'lvs-log-swap', $file->getTitle()->getText(), $newFile->getTitle()->getText() )->text();
 		$helper->addLog( $file->getTitle(), 'licensedvideoswap_swap', $reason );
 
+		// clear cache for total videos
+		$helper->invalidateCacheTotalVideos();
+
 		// clear cache for total new videos
 		$helper->invalidateCacheTotalNewVideos();
 
-		// TODO: send request for tracking
-
-		$currentPage = $this->getVal( 'currentPage', 1 );
-
 		// get video list
 		$use_master = true;
-		$videoList = $helper->getRegularVideoList( 'recent', $currentPage, $use_master );
+		$videoList = $helper->getRegularVideoList( $sort, $currentPage, $use_master );
 
 		$this->html = $this->app->renderView( 'LicensedVideoSwapSpecial', 'row', array( 'videoList' => $videoList ) );
-		//$this->html .= $helper->getPagination( $currentPage, 'recent' );
+		$this->html .= $helper->getPagination( $currentPage, $sort );
+
+		// get total videos with suggestions
+		$this->totalVideos = $helper->getUnswappedVideoTotal();
+
 		$this->result = 'ok';
 
 		$undoOptions = array(
@@ -295,12 +303,16 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 	 * @responseParam string result [ok/error]
 	 * @responseParam string msg - result message
 	 * @responseParam string html
+	 * @responseParam integer totalVideos
 	 */
 	public function keepVideo() {
 		$videoTitle = $this->request->getVal( 'videoTitle', '' );
 		$forever = $this->request->getVal( 'forever', '' );
 		$suggestions = $this->request->getVal( 'suggestions', array() );
 		$currentPage = $this->getVal( 'currentPage', 1 );
+		$sort = 'recent';
+
+		$this->totalVideos = 0;
 
 		// validate action
 		$response = $this->sendRequest( 'LicensedVideoSwapSpecial', 'validateAction', array( 'videoTitle' => $videoTitle ) );
@@ -309,13 +321,6 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 			$this->html = '';
 			$this->result = 'error';
 			$this->msg = $msg;
-		}
-
-		// check user permission
-		if ( !$this->wg->User->isAllowed( 'undelete' ) || !$this->wg->User->isAllowed( 'deletedtext' ) ) {
-			$this->html = '';
-			$this->result = 'error';
-			$this->msg = wfMessage( 'lvs-error-permission' )->text();
 		}
 
 		$file = WikiaFileHelper::getVideoFileFromTitle( $videoTitle );
@@ -353,15 +358,22 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$helper->setPageStatusKeep( $articleId, $isForever );
 		$helper->setPageStatusInfoKeep( $articleId, $value, $isForever );
 
+		// clear cache for total videos
+		$helper->invalidateCacheTotalVideos();
+
 		// clear cache for total new videos
 		$helper->invalidateCacheTotalNewVideos();
 
 		// Get list video of non-premium videos available to swap
 		$use_master = true;
-		$videoList = $helper->getRegularVideoList( 'recent', $currentPage, $use_master );
+		$videoList = $helper->getRegularVideoList( $sort, $currentPage, $use_master );
 
 		$this->html = $this->app->renderView( 'LicensedVideoSwapSpecial', 'row', array( 'videoList' => $videoList ) );
-		//$this->html .= $helper->getPagination( $currentPage, 'recent' );
+		$this->html .= $helper->getPagination( $currentPage, $sort );
+
+		// get total videos with suggestions
+		$this->totalVideos = $helper->getUnswappedVideoTotal();
+
 		$this->result = 'ok';
 
 		$undoOptions = array(
@@ -381,9 +393,14 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 	 * @responseParam string result [ok/error]
 	 * @responseParam string msg - result message
 	 * @responseParam string html
+	 * @responseParam integer totalVideos
 	 */
 	public function restoreVideo() {
 		$videoTitle = $this->request->getVal( 'videoTitle', '' );
+		$currentPage = $this->getVal( 'currentPage', 1 );
+		$sort = 'recent';
+
+		$this->totalVideos = 0;
 
 		// validate action
 		$response = $this->sendRequest( 'LicensedVideoSwapSpecial', 'validateAction', array( 'videoTitle' => $videoTitle ) );
@@ -454,14 +471,19 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 			$helper->addLog( $file->getTitle(), 'licensedvideoswap_restore', $reason );
 		}
 
-		$currentPage = $this->getVal( 'currentPage', 1 );
+		// clear cache for total videos
+		$helper->invalidateCacheTotalVideos();
 
 		// get video list
 		$use_master = true;
-		$videoList = $helper->getRegularVideoList( 'recent', $currentPage, $use_master );
+		$videoList = $helper->getRegularVideoList( $sort, $currentPage, $use_master );
 
 		$this->html = $this->app->renderView( 'LicensedVideoSwapSpecial', 'row', array( 'videoList' => $videoList ) );
-		//$this->html .= $helper->getPagination( $currentPage, 'recent' );
+		$this->html .= $helper->getPagination( $currentPage, $sort );
+
+		// get total videos with suggestions
+		$this->totalVideos = $helper->getUnswappedVideoTotal();
+
 		$this->result = 'ok';
 		$this->msg = wfMessage( 'lvs-restore-video-success' )->text();
 	}
@@ -489,6 +511,13 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		// check if user is allowed
 		if ( !$this->wg->User->isAllowed( 'licensedvideoswap' ) ) {
 			$this->msg = wfMessage( 'lvs-error-permission-access' )->plain();
+			return;
+		}
+
+		// check user permission
+		if ( !$this->wg->User->isAllowed( 'delete' ) || !$this->wg->User->isAllowed( 'undelete' )
+			|| !$this->wg->User->isAllowed( 'deletedtext' ) ) {
+			$this->msg = wfMessage( 'lvs-error-permission' )->plain();
 			return;
 		}
 

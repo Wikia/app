@@ -139,42 +139,64 @@ SQL;
 	public function getUnswappedVideoTotal ( ) {
 		wfProfileIn( __METHOD__ );
 
-		$db = wfGetDB( DB_SLAVE );
+		$memcKey = $this->getMemcKeyTotalVideos();
+		$total = $this->wg->Memc->get( $memcKey );
+		if ( !is_numeric( $total ) ) {
+			$db = wfGetDB( DB_SLAVE );
 
-		// We want to make sure the video hasn't been removed, is not premium and does not exist
-		// in the video_swap table
-		$statusProp = WPP_LVS_STATUS;
-		$pageNS = NS_FILE;
-		$swappable = '(props & '.self::STATUS_SWAPPABLE.' != 0)';
-		$notSwapped = '(props & '.self::STATUS_SWAP.' = 0)';
-		$notForever = '(props & '.self::STATUS_FOREVER.' = 0)';
-		$notKept = '(props & '.self::STATUS_KEEP.' = 0)';
-		$new = '(props & '.self::STATUS_NEW.' != 0)';
+			// We want to make sure the video hasn't been removed, is not premium and does not exist
+			// in the video_swap table
+			$statusProp = WPP_LVS_STATUS;
+			$pageNS = NS_FILE;
+			$swappable = '(props & '.self::STATUS_SWAPPABLE.' != 0)';
+			$notSwapped = '(props & '.self::STATUS_SWAP.' = 0)';
+			$notForever = '(props & '.self::STATUS_FOREVER.' = 0)';
+			$notKept = '(props & '.self::STATUS_KEEP.' = 0)';
+			$new = '(props & '.self::STATUS_NEW.' != 0)';
 
-		$sql = <<<SQL
-			SELECT count(*) as total
-			FROM video_info
-			JOIN page ON video_title = page_title AND page_namespace = $pageNS
-			LEFT JOIN page_wikia_props ON page.page_id = page_wikia_props.page_id
-				AND propname = $statusProp AND $swappable
-				AND $notSwapped AND $notForever AND ($notKept OR $new)
-			WHERE removed = 0 AND premium = 0 AND page_wikia_props.page_id is not null
+			$sql = <<<SQL
+				SELECT count(*) as total
+				FROM video_info
+				JOIN page ON video_title = page_title AND page_namespace = $pageNS
+				LEFT JOIN page_wikia_props ON page.page_id = page_wikia_props.page_id
+					AND propname = $statusProp AND $swappable
+					AND $notSwapped AND $notForever AND ($notKept OR $new)
+				WHERE removed = 0 AND premium = 0 AND page_wikia_props.page_id is not null
 SQL;
 
-		// Select video info making sure to skip videos that have entries in the video_swap table
-		$result = $db->query( $sql, __METHOD__ );
+			// Select video info making sure to skip videos that have entries in the video_swap table
+			$result = $db->query( $sql, __METHOD__ );
 
-		// Get the total count of relavent videos
-		while ( $row = $db->fetchObject( $result ) ) {
-			$total = $row->total;
+			// Get the total count of relavent videos
+			$total = 0;
+			while ( $row = $db->fetchObject( $result ) ) {
+				$total = $row->total;
 
-			// Should only be one result
-			break;
+				// Should only be one result
+				break;
+			}
+
+			$this->wg->Memc->set( $memcKey, $total, 60*60*24 );
 		}
 
 		wfProfileOut( __METHOD__ );
 
 		return $total;
+	}
+
+	/**
+	 * Get memcache key for total videos
+	 * @return string
+	 */
+	public function getMemcKeyTotalVideos() {
+		return wfMemcKey( 'licensedvideoswap', 'total_videos' );
+	}
+
+	/**
+	 * Clear cache for total videos
+	 */
+	public function invalidateCacheTotalVideos() {
+		$this->wg->Memc->delete( $this->getMemcKeyTotalVideos() );
 	}
 
 	/**
