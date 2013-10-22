@@ -215,7 +215,6 @@ ve.ui.WikiaMediaInsertDialog.prototype.onRemoveButtonClick = function () {
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onOpen = function () {
 	ve.ui.MWDialog.prototype.onOpen.call( this );
-	//this.queryInput.setValue( '' );
 	this.pages.setPage( 'suggestions' );
 };
 
@@ -239,6 +238,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.onClose = function ( action ) {
 		this.insertMedia( ve.copy( this.cartModel.getItems() ) );
 	}
 	this.cartModel.clearItems();
+	this.queryInput.setValue( '' );
 };
 
 /**
