@@ -202,8 +202,6 @@ var ChatEntryPoint = {
 					$( 'body' ).append( joinModal );
 					ChatEntryPoint.chatLaunchModal = modal.init( modalId );
 					ChatEntryPoint.chatLaunchModal.show();
-					// TODO: ask PO if this "commented feature" below is right
-					// ChatEntryPoint.chatLaunchModal.$element.bind( 'click', ChatEntryPoint.launchChatWindow );
 					$( "#modal-join-chat-button" ).bind( 'click', ChatEntryPoint.launchChatWindow );
 					ChatEntryPoint.chatLaunchModal.onClose = function() {
 						this.hide();
