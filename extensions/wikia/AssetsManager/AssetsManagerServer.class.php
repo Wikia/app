@@ -66,7 +66,6 @@ class AssetsManagerServer {
 			// return HTTP 503 in case of SASS processing error (BAC-592)
 			// Varnish will cache such response for 5 seconds
 			header('HTTP/1.1 503');
-			$headers['Content-Type'] = 'text/plain';
 
 			// log exception messages
 			$msg = $e->getMessage();
