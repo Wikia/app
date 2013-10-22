@@ -25,11 +25,11 @@ ve.ui.WikiaMediaResultsWidget = function VeUiWikiaMediaResultsWidget( config ) {
 		'highlight': 'onResultsHighlight',
 		'select': 'onResultsSelect'
 	} );
-	this.results.$.on( 'scroll', ve.bind( this.onResultsScroll, this ) );
+	this.$.on( 'scroll', ve.bind( this.onResultsScroll, this ) );
 
 	// Initialization
 	this.$
-		.addClass( 've-ui-WikiaMediaResultsWidget' )
+		.addClass( 've-ui-wikiaMediaResultsWidget' )
 		.append( this.results.$ );
 };
 
@@ -56,13 +56,11 @@ ve.ui.WikiaMediaResultsWidget.prototype.getResults = function () {
 	return this.results;
 };
 
-// TODO/FIXME: 'update' is emitted too often
 ve.ui.WikiaMediaResultsWidget.prototype.onResultsScroll = function () {
-	var position = this.$results.scrollTop() + this.$results.outerHeight(),
+	var position = this.$.scrollTop() + this.$.outerHeight(),
 		threshold = this.results.$.outerHeight() - this.size;
 	if ( position > threshold ) {
 		this.emit( 'end' );
-		//this.queryMedia();
 	}
 };
 

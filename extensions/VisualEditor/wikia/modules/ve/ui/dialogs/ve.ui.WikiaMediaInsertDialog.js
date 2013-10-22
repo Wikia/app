@@ -66,10 +66,12 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	this.query.connect( this, {
 		'change': 'onQueryChange',
 		'enter': 'onQueryEnter',
-		'requestDone': 'onQueryRequestDone',
-		'requestReady': 'onQueryRequestReady'
+		'media': 'onQueryMedia'
 	} );
-	this.search.connect( this, { 'select': 'onSearchSelect' } );
+	this.search.connect( this, {
+		'end': 'onSearchEnd',
+		'select': 'onSearchSelect'
+	} );
 	this.pages.connect( this, { 'set': 'onPageSet' } );
 	this.removeButton.connect( this, { 'click': 'onRemoveButtonClick' } );
 	this.insertButton.connect( this, { 'click': [ 'close', 'insert' ] } );
@@ -108,7 +110,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.onQueryEnter = function () {
 	this.searchResults.selectItem( this.searchResults.getHighlightedItem() );
 };
 
-ve.ui.WikiaMediaInsertDialog.prototype.onQueryRequestDone = function ( data ) {
+ve.ui.WikiaMediaInsertDialog.prototype.onQueryMedia = function ( data ) {
 	if ( !data.response || !data.response.results ) {
 		return;
 	}
@@ -118,12 +120,8 @@ ve.ui.WikiaMediaInsertDialog.prototype.onQueryRequestDone = function ( data ) {
 	this.pages.setPage( 'search' );
 };
 
-ve.ui.WikiaMediaInsertDialog.prototype.onQueryRequestReady = function ( value ) {
-	if ( value.trim().length === 0 ) {
-		this.pages.setPage( 'suggestions' );
-	} else {
-		this.query.requestMedia( this.searchQueryParams );
-	}
+ve.ui.WikiaMediaInsertDialog.prototype.onSearchEnd = function () {
+	this.query.requestMedia( this.searchQueryParams );
 };
 
 ve.ui.WikiaMediaInsertDialog.prototype.onSearchSelect = function ( item ) {
@@ -161,7 +159,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.onOpen = function () {
 };
 
 ve.ui.WikiaMediaInsertDialog.prototype.onPageSet = function ( page ) {
-	page.$.find( ':input:first' ).focus();
+	this.query.focus();
 };
 
 ve.ui.WikiaMediaInsertDialog.prototype.onClose = function ( action ) {

@@ -29,8 +29,8 @@ ve.ui.WikiaMediaQueryWidget = function VeUiWikiaMediaQueryWidget( config ) {
 		'placeholder': config.placeholder,
 		'value': config.value
 	} );
-	this.onRequestReadyCallback = ve.bind( this.onRequestReady, this );
 	this.request = null;
+	this.requestMediaCallback = ve.bind( this.requestMedia, this );
 	this.timeout = null;
 
 	// Events
@@ -51,6 +51,10 @@ ve.inheritClass( ve.ui.WikiaMediaQueryWidget, ve.ui.Widget );
 
 /* Methods */
 
+ve.ui.WikiaMediaQueryWidget.prototype.focus = function () {
+	this.input.$input.focus();
+};
+
 /**
  * Get the query input.
  *
@@ -62,26 +66,34 @@ ve.ui.WikiaMediaQueryWidget.prototype.getInput = function () {
 };
 
 ve.ui.WikiaMediaQueryWidget.prototype.requestMedia = function ( data ) {
-	var value = this.input.getValue();
+	var value;
+
+	if ( this.input.isPending() ) {
+		return;
+	}
+
+	value = this.input.getValue();
 
 	if ( this.request ) {
 		this.request.abort();
 	}
 
-	this.input.pushPending();
-	this.request = $.ajax( {
-		'url': mw.util.wikiScript( 'api' ),
-		'data': ve.extendObject( {
-			'format': 'json',
-			'action': 'apimediasearch',
-			'query': value,
-			'type': 'photo|video',
-			'mixed': true,
-			'limit': 16
-		}, data )
-	} )
-		.always( ve.bind( this.onRequestAlways, this ) )
-		.done( this.onQueryMediaDoneCallback );
+	if ( value.trim().length !== 0 ) {
+		this.input.pushPending();
+		this.request = $.ajax( {
+			'url': mw.util.wikiScript( 'api' ),
+			'data': ve.extendObject( {
+				'format': 'json',
+				'action': 'apimediasearch',
+				'query': value,
+				'type': 'photo|video',
+				'mixed': true,
+				'limit': 16
+			}, data )
+		} )
+			.always( ve.bind( this.onRequestMediaAlways, this ) )
+			.done( ve.bind( this.onRequestMediaDone, this ) );
+	}
 
 	this.emit( 'request', value, this.request );
 };
@@ -92,39 +104,17 @@ ve.ui.WikiaMediaQueryWidget.prototype.onInputChange = function () {
 	clearTimeout( this.timeout );
 
 	if ( value.trim().length !== 0 ) {
-		this.timeout = setTimeout( this.onRequestReadyCallback, 100 );
+		this.timeout = setTimeout( this.requestMediaCallback, 250 );
 	}
 
 	this.emit( 'change', value );
 };
 
-ve.ui.WikiaMediaQueryWidget.prototype.onRequestAlways = function () {
+ve.ui.WikiaMediaQueryWidget.prototype.onRequestMediaAlways = function () {
 	this.request = null;
 	this.input.popPending();
-	this.emit( 'requestAlways' );
 };
 
-ve.ui.WikiaMediaQueryWidget.prototype.onRequestDone = function ( data ) {
-/*
-	var media;
-
-	if ( !data.response || !data.response.results ) {
-		return;
-	}
-
-	media = data.response.results.mixed.items;
-
-	this.batch++;
-*/
-
-	this.emit( 'requestDone', data );
-
-	//this.results.addItems( items );
-	//this.pagesPanel.setPage( 'results' );
-};
-
-ve.ui.WikiaMediaQueryWidget.prototype.onRequestReady = function () {
-	if ( !this.input.isPending() ) {
-		this.emit( 'requestReady', this.input.getValue() );
-	}
+ve.ui.WikiaMediaQueryWidget.prototype.onRequestMediaDone = function ( data ) {
+	this.emit( 'media', data );
 };
