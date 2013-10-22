@@ -66,6 +66,7 @@ class SassUtil {
 			$settings = $themeSettings->getSettings();
 
 			$oasisSettings["color-body"] = self::sanitizeColor($settings["color-body"]);
+			$oasisSettings["color-body-middle"] = self::sanitizeColor($settings["color-body-middle"]);
 			$oasisSettings["color-page"] = self::sanitizeColor($settings["color-page"]);
 			$oasisSettings["color-buttons"] = self::sanitizeColor($settings["color-buttons"]);
 			$oasisSettings["color-links"] = self::sanitizeColor($settings["color-links"]);

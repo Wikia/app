@@ -417,8 +417,10 @@ var ThemeDesigner = {
 		if (setting == "background-tiled") {
 			if (newValue == "true") {
 				ThemeDesigner.previewFrame.contents().find("body").removeClass("background-not-tiled");
+				$('#dynamic-background').attr('disabled', true);
 			} else {
 				ThemeDesigner.previewFrame.contents().find("body").addClass("background-not-tiled");
+				$('#dynamic-background').attr('disabled', false);
 			}
 		}
 
@@ -433,8 +435,12 @@ var ThemeDesigner = {
 		if (setting == "background-dynamic") {
 			if (newValue == "true") {
 				ThemeDesigner.previewFrame.contents().find("body").addClass("background-dynamic");
+				$('#tile-background').attr('disabled', true);
+				$('#CustomizeTab').find('.wrap-middle-color').css('display', 'block');
 			} else {
 				ThemeDesigner.previewFrame.contents().find("body").removeClass("background-dynamic");
+				$('#tile-background').attr('disabled', false);
+				$('#CustomizeTab').find('.wrap-middle-color').css('display', 'none');
 			}
 		}
 
@@ -446,7 +452,7 @@ var ThemeDesigner = {
 			reloadCSS = true;
 		}
 
-		if(setting == "color-body" || setting == "color-page" || setting == "color-buttons" || setting == "color-links" || setting == "background-image" || setting == "color-header" || setting == "wordmark-font") {
+		if(setting == "color-body" || setting == "color-body-middle" || setting == "color-page" || setting == "color-buttons" || setting == "color-links" || setting == "background-image" || setting == "color-header" || setting == "wordmark-font") {
 			reloadCSS = true;
 		}
 
@@ -645,6 +651,7 @@ var ThemeDesigner = {
 		/*** Customize Tab ***/
 		// color swatches
 		$("#swatch-color-background").css("background-color", ThemeDesigner.settings["color-body"]);
+		$("#swatch-color-background-middle").css("background-color", ThemeDesigner.settings["color-body-middle"]);
 		$("#swatch-color-buttons").css("background-color", ThemeDesigner.settings["color-buttons"]);
 		$("#swatch-color-links").css("background-color", ThemeDesigner.settings["color-links"]);
 		$("#swatch-color-page").css("background-color", ThemeDesigner.settings["color-page"]);
@@ -666,6 +673,16 @@ var ThemeDesigner = {
 		$("#tile-background").attr("checked", ThemeDesigner.settings["background-tiled"] == "true");
 		$("#fix-background").attr("checked", ThemeDesigner.settings["background-fixed"] == "true");
 		$("#dynamic-background").attr("checked", ThemeDesigner.settings["background-dynamic"] == "true");
+
+		if (ThemeDesigner.settings["background-tiled"] == "true") {
+			$("#dynamic-background").attr("disabled", true);
+		} else if (ThemeDesigner.settings["background-dynamic"] == "true") {
+			$("#tiled-background").attr("disabled", true);
+		}
+
+		if (ThemeDesigner.settings["background-dynamic"] == "false") {
+			$('#CustomizeTab').find('.wrap-middle-color').css('display', 'none');
+		}
 
 		/*** Wordmark Tab ***/
 		// style wordmark preview
@@ -782,6 +799,56 @@ var ThemeDesigner = {
 
 	swatches: {
 		"color-body": Array(
+			"f9ebc3",
+			"ede5dd",
+			"f7e1d3",
+			"dfdbc3",
+			"fbe300",
+			"ffbf99",
+			"ffbf99",
+			"fdc355",
+			"cdbd89",
+			"d5a593",
+			"a37719",
+			"836d35",
+			"776b41",
+			"f14700",
+			"dd3509",
+			"a34111",
+			"7b3b09",
+			"4f4341",
+			"454545",
+			"611d03",
+			"891100",
+			"71130f",
+			"ebfffb",
+			"ebf1f5",
+			"f5ebf5",
+			"e7f3d1",
+			"bde9fd",
+			"dfbddd",
+			"c3d167",
+			"a5b5c5",
+			"6599ff",
+			"6b93b1",
+			"978f33",
+			"53835d",
+			"7f6f9f",
+			"d335f7",
+			"337700",
+			"006baf",
+			"2b53b5",
+			"2d2b17",
+			"003715",
+			"012d59",
+			"6f017b",
+			"790145",
+			"ffffff",
+			"f1f1f1",
+			"ebebeb",
+			"000000"
+		),
+		"color-body-middle": Array(
 			"f9ebc3",
 			"ede5dd",
 			"f7e1d3",

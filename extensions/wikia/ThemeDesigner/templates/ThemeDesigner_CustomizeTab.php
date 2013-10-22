@@ -5,6 +5,10 @@
 			<li>
 				<h2><?= wfMsg('themedesigner-color') ?></h2>
 				<img src="<?= $wg->BlankImgUrl ?>" class="color-body" id="swatch-color-background">
+                <div class="wrap-middle-color">
+					<h2>middle color</h2>
+					<img src="<?= $wg->BlankImgUrl ?>" class="color-body-middle" id="swatch-color-background-middle">
+				</div>
 			</li>
 			<li class="background">
 				<h2><?= wfMessage('themedesigner-graphic')->plain() ?></h2>
