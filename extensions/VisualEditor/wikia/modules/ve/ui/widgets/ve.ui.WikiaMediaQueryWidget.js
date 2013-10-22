@@ -5,8 +5,6 @@
 /* global mw */
 
 /**
- * Creates a ve.ui.WikiaMediaQueryWidget Object.
- *
  * @class
  * @extends ve.ui.Widget
  *

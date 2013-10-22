@@ -3,8 +3,6 @@
  */
 
 /**
- * Creates a ve.ui.WikiaMediaResultsWidget object.
- *
  * @class
  * @extends ve.ui.Widget
  *

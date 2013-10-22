@@ -33,6 +33,11 @@ ve.ui.WikiaMediaInsertDialog.static.icon = 'media';
 
 /* Methods */
 
+/**
+ * Initialize the dialog.
+ *
+ * @method
+ */
 ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	// Parent method
 	ve.ui.MWDialog.prototype.initialize.call( this );
@@ -91,13 +96,18 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	this.$content
 		.addClass( 've-ui-wikiaMediaInsertDialog-content' )
 		.append( this.query.$, this.pages.$ );
-	this.$body
-		.append( this.$content, this.$cart );
 
+	this.$body.append( this.$content, this.$cart );
 	this.frame.$content.addClass( 've-ui-wikiaMediaInsertDialog' );
 	this.$foot.append( this.insertButton.$ );
 };
 
+/**
+ * Handle query input changes.
+ *
+ * @method
+ * @param {string} value The query input value
+ */
 ve.ui.WikiaMediaInsertDialog.prototype.onQueryInputChange = function ( value ) {
 	this.searchResults.clearItems();
 	if ( value.trim().length === 0 ) {
@@ -105,11 +115,22 @@ ve.ui.WikiaMediaInsertDialog.prototype.onQueryInputChange = function ( value ) {
 	}
 };
 
+/**
+ * Handle pressing the enter key inside the query input.
+ *
+ * @method
+ */
 ve.ui.WikiaMediaInsertDialog.prototype.onQueryInputEnter = function () {
 	this.searchResults.selectItem( this.searchResults.getHighlightedItem() );
 };
 
-// Copied from ve.ui.SearchWidget.js
+/**
+ * Handle key up/down for selecting result items.
+ * Copied from ve.ui.SearchWidget.js
+ *
+ * @method
+ * @param {jQuery.Event} e The jQuery event Object.
+ */
 ve.ui.WikiaMediaInsertDialog.prototype.onQueryInputKeydown = function ( e ) {
 	var highlightedItem, nextItem,
 		dir = e.which === ve.Keys.DOWN ? 1 : ( e.which === ve.Keys.UP ? -1 : 0 );
@@ -125,15 +146,33 @@ ve.ui.WikiaMediaInsertDialog.prototype.onQueryInputKeydown = function ( e ) {
 	}
 };
 
+/**
+ * Handle the resulting data from a query media request.
+ *
+ * @method
+ * @param {Object} data The Object containing the query media response data
+ */
 ve.ui.WikiaMediaInsertDialog.prototype.onQueryMedia = function ( data ) {
+	// TODO: handle filtering search results to show what's in the cart already
 	this.search.addResults( data.response.results.mixed.items );
 	this.pages.setPage( 'search' );
 };
 
+/**
+ * Handle nearing the end of search results.
+ *
+ * @method
+ */
 ve.ui.WikiaMediaInsertDialog.prototype.onSearchEnd = function () {
 	this.query.requestMedia();
 };
 
+/**
+ * Handle clicking on search result items.
+ *
+ * @method
+ * @param {ve.ui.OptionWidget} item The search result item model
+ */
 ve.ui.WikiaMediaInsertDialog.prototype.onSearchSelect = function ( item ) {
 	var cartItems, i;
 	if ( item === null ) {
@@ -150,6 +189,11 @@ ve.ui.WikiaMediaInsertDialog.prototype.onSearchSelect = function ( item ) {
 	] );
 };
 
+/**
+ * Handle clicking on cart items.
+ *
+ * @method
+ */
 ve.ui.WikiaMediaInsertDialog.prototype.onCartSelect = function () {
 	if ( this.pages.getPageName() === 'search' ) {
 		this.pages.setPage( 'remove' );
@@ -158,21 +202,38 @@ ve.ui.WikiaMediaInsertDialog.prototype.onCartSelect = function () {
 	}
 };
 
+/** */
 ve.ui.WikiaMediaInsertDialog.prototype.onRemoveButtonClick = function () {
 	this.cartModel.removeItems( [ this.cart.getSelectedItem().getModel() ] );
 	this.pages.setPage( 'search' );
 };
 
+/**
+ * Handle opening the dialog.
+ *
+ * @method
+ */
 ve.ui.WikiaMediaInsertDialog.prototype.onOpen = function () {
 	ve.ui.MWDialog.prototype.onOpen.call( this );
 	//this.queryInput.setValue( '' );
 	this.pages.setPage( 'suggestions' );
 };
 
+/**
+ * Handle when a page is set.
+ *
+ * @method
+ */
 ve.ui.WikiaMediaInsertDialog.prototype.onPageSet = function () {
 	this.queryInput.$input.focus();
 };
 
+/**
+ * Handle closing the dialog.
+ *
+ * @method
+ * @param {string} action Which action is being performed on close.
+ */
 ve.ui.WikiaMediaInsertDialog.prototype.onClose = function ( action ) {
 	if ( action === 'insert' ) {
 		this.insertMedia( ve.copy( this.cartModel.getItems() ) );

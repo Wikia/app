@@ -8,8 +8,6 @@
 /* global require,mw */
 
 /**
- * Creates an ve.ui.WikiaMediaResultWidget object.
- *
  * @class
  * @extends ve.ui.OptionWidget
  *
