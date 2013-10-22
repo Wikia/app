@@ -48,7 +48,7 @@ define( 'lvs.undo', [ 'wikia.querystring', 'lvs.commonajax', 'wikia.window', 'lv
 			newTitle = $this.attr( 'data-new-title' ) || '';
 			qs = new QueryString();
 			sort = qs.getVal ( 'sort', 'recent' );
-			page = qs.getVal ( 'page', 1 );
+			page = qs.getVal ( 'currentPage', 1 );
 			wasSwap = !!newTitle;
 
 			if ( wasSwap ) {
