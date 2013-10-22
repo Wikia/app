@@ -70,7 +70,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	this.cart.connect( this, { 'select': 'onCartSelect' } );
 	this.insertButton.connect( this, { 'click': [ 'close', 'insert' ] } );
 	this.pages.connect( this, { 'set': 'onPageSet' } );
-	this.query.connect( this, { 'media': 'onQueryMedia' } );
+	this.query.connect( this, { 'requestMediaDone': 'onQueryRequestMediaDone' } );
 	this.queryInput.connect( this, {
 		'change': 'onQueryInputChange',
 		'enter': 'onQueryInputEnter'
@@ -152,7 +152,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.onQueryInputKeydown = function ( e ) {
  * @method
  * @param {Object} data The Object containing the query media response data
  */
-ve.ui.WikiaMediaInsertDialog.prototype.onQueryMedia = function ( data ) {
+ve.ui.WikiaMediaInsertDialog.prototype.onQueryRequestMediaDone = function ( data ) {
 	// TODO: handle filtering search results to show what's in the cart already
 	this.search.addItems( data.response.results.mixed.items );
 	this.pages.setPage( 'search' );
