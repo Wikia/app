@@ -1,6 +1,6 @@
 define( 'views.videopageadmin.autocompleteitem', [
 		'jquery',
-	], function( $, TemplateCache ) {
+	], function( $ ) {
 		'use strict';
 
 		var CategorySingleResultView = Backbone.View.extend({
