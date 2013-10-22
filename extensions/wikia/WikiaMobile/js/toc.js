@@ -201,7 +201,10 @@ define('toc', ['track', 'sections', 'wikia.window', 'jquery', 'wikia.mustache'],
 	});
 
 	$('#wkTOCHandle').on('click', function(){
-		$body.toggleClass('TOCOpen hidden');
+		$(this).parent().toggleClass('open');
+//		setTimeout(function(){
+//			$body.toggleClass('hidden');
+//		}, 50);
 	});
 
 	return {

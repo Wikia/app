@@ -44,11 +44,11 @@
 	height: 100%;
 	width: 100%;
 
-	position: absolute;
+	position: fixed;
 	left: 0;
 	top: 0;
 
-	background-color: rgba(0,0,0,.4);
+	background-color: rgba(0,0,0,1);
 
 	z-index: 100;
 
@@ -56,8 +56,6 @@
 }
 
 .hidden {
-	position: relative;
-
 	#wkCurtain {
 		display: block;
 	}
