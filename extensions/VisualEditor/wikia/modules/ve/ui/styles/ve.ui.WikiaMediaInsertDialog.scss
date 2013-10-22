@@ -3,7 +3,6 @@
 
 $width-cart: 100px;
 
-/* Layout */
 .ve-ui-wikiaMediaInsertDialog .ve-ui-window-body {
 	margin-right: -( $width-cart + $width-gutter );
 	padding: 0;
@@ -41,4 +40,14 @@ $width-cart: 100px;
 	.ve-ui-labeledElement-label {
 		display: none;
 	}
+}
+
+/* Pages */
+.ve-ui-pagedLayout {
+	position: relative;
+}
+
+/* Query */
+.ve-ui-wikiaMediaQueryWidget {
+	margin-bottom: $width-gutter;
 }

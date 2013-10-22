@@ -46,12 +46,8 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 		'flags': ['primary']
 	} );
 	this.insertionDetails = {};
-	this.pages = new ve.ui.PagedLayout( { '$$': this.frame.$$, 'attachpages': true } );
-	this.query = new ve.ui.WikiaMediaQueryWidget( {
-		'$$': this.frame.$$,
-		// TODO: remove this later when we have a search suggestions panel
-		'value': mw.config.get( 'wgTitle' )
-	} );
+	this.pages = new ve.ui.PagedLayout( { '$$': this.frame.$$, 'attachPagesPanel': true } );
+	this.query = new ve.ui.WikiaMediaQueryWidget( { '$$': this.frame.$$ } );
 	this.removeButton = new ve.ui.ButtonWidget( {
 		'$$': this.frame.$$,
 		'label': 'Remove from the cart', //TODO: i18n
@@ -74,7 +70,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 		'requestReady': 'onQueryRequestReady'
 	} );
 	this.search.connect( this, { 'select': 'onSearchSelect' } );
-	this.pages.connect( this, { 'set': 'onpagesSet' } );
+	this.pages.connect( this, { 'set': 'onPageSet' } );
 	this.removeButton.connect( this, { 'click': 'onRemoveButtonClick' } );
 	this.insertButton.connect( this, { 'click': [ 'close', 'insert' ] } );
 
@@ -164,7 +160,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.onOpen = function () {
 	this.pages.setPage( 'search' );
 };
 
-ve.ui.WikiaMediaInsertDialog.prototype.onpagesSet = function ( page ) {
+ve.ui.WikiaMediaInsertDialog.prototype.onPageSet = function ( page ) {
 	page.$.find( ':input:first' ).focus();
 };
 
