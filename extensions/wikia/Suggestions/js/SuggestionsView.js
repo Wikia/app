@@ -82,6 +82,9 @@ define('SuggestionsView', ['SuggestionsViewModel'], function( viewModel ) {
 			}
 		}, 0);
 	}
+	function showImage(e) {
+		e.currentTarget.style.display = 'block';
+	}
 	function emitEvent( eventName ) {
 		dropdown.trigger( eventName );
 	}
@@ -95,7 +98,9 @@ define('SuggestionsView', ['SuggestionsViewModel'], function( viewModel ) {
 				res = results[i];
 				html = '<li tabindex="' + i + '">' +
 					'<a href="' + res.path + '">' +
+					'<div class="search-suggest-img-wrapper">' +
 					'<img class="search-suggest-image" src="' + res.thumbnail + '" />' +
+					'</div>' +
 					'<div class="wraper">' +
 					'<div class="block">' +
 					'<span class="title">' + buildTitleMarkup( res ) + '</span>' +
@@ -106,6 +111,7 @@ define('SuggestionsView', ['SuggestionsViewModel'], function( viewModel ) {
 					'</li>';
 				$el = $(html).appendTo(dropdown);
 				$el.blur( blurDropdown );
+				$el.find('.search-suggest-image').load( showImage );
 			}
 			if ( results.length ) {
 				html = buildSeeAllResultsMarkup(i);

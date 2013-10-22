@@ -28,6 +28,12 @@ $color-suggestions-all-text: mix($color-text, #fff, 75%);
 }
 $color-suggestions-match: lighten($color-links, 10%);
 
+//placholder images
+$suggestions-placeholder-image: url('/extensions/wikia/Suggestions/images/wiki_image_placeholder.png'); /* wgCdnStylePath */
+@if $is-dark-wiki {
+	$suggestions-placeholder-image: url('/extensions/wikia/Suggestions/images/wiki_image_placeholder_dark.png'); /* wgCdnStylePath */
+}
+
 $element-height: 50px;
 $element-width: 355px;
 $image-width: 55px;
@@ -131,6 +137,13 @@ $image-width: 55px;
 		font-weight: normal;
 	}
 	.search-suggest-image {
+		display: none;
+		height: 40px;
+		width: 40px;
+	}
+	.search-suggest-img-wrapper {
+		background-image: $suggestions-placeholder-image;
+		background-size: 40px 40px;
 		height: 40px;
 		margin: 5px;
 		margin-right: 10px;
