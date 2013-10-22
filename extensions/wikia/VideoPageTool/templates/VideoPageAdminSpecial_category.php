@@ -1,5 +1,5 @@
 <script type="text/template" id="autocomplete-item">
-	<strong><%= name %></strong>
+	<strong>{{ name }}</strong>
 </script>
 <form id="LatestVideos" class="WikiaForm vpt-form latest-video-form" method="post">
 

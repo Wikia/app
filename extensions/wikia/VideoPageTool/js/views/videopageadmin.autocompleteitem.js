@@ -10,7 +10,7 @@ define( 'views.videopageadmin.autocompleteitem', [
 				},
 				tagName: 'div',
 				className: 'autocomplete-item',
-				template: TemplateCache.get( '#autocomplete-item' ),
+				template: Mustache.compile( $( '#autocomplete-item' ).html() ),
 				events: {
 					'hover': 'onHover',
 					'click': 'select'

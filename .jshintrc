@@ -60,6 +60,7 @@
 		"define": false,
 		"require": false,
 		"Backbone": false,
+		"Mustache": false,
 		"_": false
 	},
 	"jquery": true,
