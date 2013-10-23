@@ -172,9 +172,10 @@ var ThemeDesigner = {
 				$('#color-body-middle').attr("checked", true);
 				$('#CustomizeTab').find('.color-body-middle').css('display', 'block');
 			}
-
 			$("#swatch-color-background-middle").css("background-color", ThemeDesigner.settings["color-body-middle"]);
 
+			// If background middle color is checked we are setting color from picker
+			// otherwise we are setting color from background color
 			$("#color-body-middle").change(function() {
 				if ($(this).attr("checked")) {
 					ThemeDesigner.set(
@@ -187,7 +188,6 @@ var ThemeDesigner = {
 					$('#CustomizeTab').find('.color-body-middle').css('display', 'none');
 				}
 			});
-
 		}
 
 		// submit handler for uploading custom background image
