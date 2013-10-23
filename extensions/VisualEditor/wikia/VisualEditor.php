@@ -70,11 +70,14 @@ $wgResourceModules += array(
 			've/ui/widgets/ve.ui.WikiaMediaResultWidget.js',
 			've/ui/widgets/ve.ui.WikiaMediaResultsWidget.js',
 			've/ui/widgets/ve.ui.WikiaMediaQueryWidget.js',
+			've/ui/widgets/ve.ui.WikiaUploadWidget.js',
 		),
 		'messages' => array(
 			'oasis-content-picture-added-by',
 			'visualeditor-wikiamediainsertbuttontool-label',
-			'videohandler-video-views'
+			'videohandler-video-views',
+			'visualeditor-wikiauploadwidget-label',
+			'visualeditor-wikiauploadwidget-button',
 		),
 		'dependencies' => array(
 			'ext.visualEditor.core'

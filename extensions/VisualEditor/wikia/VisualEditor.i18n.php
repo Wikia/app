@@ -7,6 +7,8 @@ $messages = array();
 $messages['en'] = array(
 	'visualeditor-wikiamediainsertbuttontool-label' => 'Add Media',
 	'visualeditor-wikiapreference-enable' => 'Enable beta VisualEditor',
+	'visualeditor-wikiauploadwidget-label' => 'Upload new images to this Wikia',
+	'visualeditor-wikiauploadwidget-button' => 'Click to Upload',
 );
 
 $messages['qqq'] = array(
