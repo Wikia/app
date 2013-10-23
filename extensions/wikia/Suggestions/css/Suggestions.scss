@@ -10,7 +10,7 @@ $color-suggestions-redirect-from: mix($color-page-border, #000, 50%);
 	$color-suggestions-redirect-from: mix($color-page-border, #fff, 50%);
 }
 $color-suggestions-background: lighten($color-page, 5%);
-$color-suggestions-shadow-box: mix($color-page, #000, 85%);
+$color-suggestions-shadow-box: mix($color-page, #000, 70%);
 @if $is-dark-wiki {
 	$color-suggestions-shadow-box: mix($color-page, #000, 65%);
 }
@@ -42,7 +42,7 @@ $image-width: 55px;
 	background-color: $color-suggestions-background;
 	border-bottom-left-radius: 2px;
 	border-bottom-right-radius: 2px;
-	box-shadow: 2px 3px 11px $color-suggestions-shadow-box;
+	box-shadow: 1px 8px 12px 0px $color-suggestions-shadow-box;
 	font-weight: bold;
 	left: -25px;
 	margin-top: 12px;
@@ -154,7 +154,12 @@ $image-width: 55px;
 		display: block;
 		float: left;
 		font-size: 14px;
+		overflow: hidden;
+		text-overflow: ellipsis;
 		width: 295px;
+	}
+	.titleShort {
+		height: 16px;
 	}
 	.wraper {
 		float: right;

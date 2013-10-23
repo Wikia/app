@@ -47,8 +47,8 @@ define('SuggestionsView', ['SuggestionsViewModel'], function( viewModel ) {
 	}
 	/* helpers */
 	function blurDropdown() {
-		showAds();
-		dropdown.empty();
+//		showAds();
+//		dropdown.empty();
 	}
 	function emitEvent( eventName ) {
 		dropdown.trigger( eventName );
@@ -125,7 +125,7 @@ define('SuggestionsView', ['SuggestionsViewModel'], function( viewModel ) {
 	function bindEvents() {
 		viewModel.on( 'displayResults changed', function() {
 			var results = viewModel.getDisplayResults(),
-				html, res, i, $el;
+				html, res, i, $el, $title;
 			dropdown.empty();
 			if ( !viewModel.getUse() ) { return; }
 			for( i in results ) {
@@ -133,6 +133,9 @@ define('SuggestionsView', ['SuggestionsViewModel'], function( viewModel ) {
 				html = buildSuggestionMarkup ( res );
 				$el = $(html).appendTo(dropdown);
 				$el.find('.search-suggest-image').load( showImage );
+				if($el.find('.redirect').length) {
+					$el.find('.title').addClass('titleShort');
+				}
 				bindSuggestionEvents( $el );
 			}
 			if ( results.length ) {
@@ -182,10 +185,16 @@ define('SuggestionsView', ['SuggestionsViewModel'], function( viewModel ) {
 
 	return {
 		init: function( input, target, wikiId ) {
+			var value;
 			searchInput = input;
 			dropdown = target;
 			viewModel.setWiki( wikiId );
 			bindEvents();
+			value = searchInput.val();
+			if ( value ) {
+				//send first request after loading if input not empty
+				viewModel.setQuery( value );
+			}
 			return this;
 		},
 		setAsMainSuggestions: function( name ) {
