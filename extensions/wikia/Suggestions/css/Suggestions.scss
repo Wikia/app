@@ -26,7 +26,7 @@ $color-suggestions-all-text: mix($color-text, #fff, 75%);
 @if $is-dark-wiki {
 	$color-suggestions-all-text: mix($color-suggestions-all-background, #fff, 70%);
 }
-$color-suggestions-match: lighten($color-links, 10%);
+$color-suggestions-match: lighten($color-buttons, 10%);
 
 //placholder images
 $suggestions-placeholder-image: url('/extensions/wikia/Suggestions/images/wiki_image_placeholder.png'); /* wgCdnStylePath */
@@ -45,7 +45,7 @@ $image-width: 55px;
 	box-shadow: 1px 8px 12px 0px $color-suggestions-shadow-box;
 	font-weight: bold;
 	left: -25px;
-	margin-top: 12px;
+	margin-top: 38px;
 	position: absolute;
 	width: $element-width;
 	z-index: 1;
@@ -168,8 +168,4 @@ $image-width: 55px;
 		position: relative;
 		width: $element-width - $image-width - 2px;
 	}
-}
-
-.search-suggest-wrapper {
-	position: relative;
 }

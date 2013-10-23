@@ -9,10 +9,8 @@
 	<?php endforeach; ?>
 	<input type="submit">
 	<button class="wikia-button"><img src="<?= $wg->BlankImgUrl ?>" class="sprite search" height="17" width="21"></button>
-</form>
-<div class="search-suggest-wrapper">
 	<ul class="search-suggest"></ul>
-</div>
+</form>
 <?php
 if ((!$wg->WikiaSearchIsDefault) && $wg->Title->isSpecial('Search')) {
 	if( $isCrossWikiaSearch ) {
