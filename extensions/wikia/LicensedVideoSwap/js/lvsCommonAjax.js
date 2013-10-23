@@ -36,17 +36,17 @@ define( 'lvs.commonajax', ['wikia.window', 'lvs.tracker'], function( window, tra
 			$container.html( data.html ).trigger( 'contentReset' );
 			$( '.lvs-match-stats' ).find( '.count' ).text( data.totalVideos || 0 );
 
-			// redirect if user swaps last video on page
-			if ( data.redirect.length ) {
-				window.location = data.redirect;
-			}
-
 			stopLoadingGraphic();
 
 			tracker.track({
 				action: tracker.actions.SUCCESS,
 				label: trackingLabel
 			});
+
+			// redirect if user swaps last video on page
+			if ( data.redirect.length ) {
+				window.location = data.redirect;
+			}
 		}
 	}
 
