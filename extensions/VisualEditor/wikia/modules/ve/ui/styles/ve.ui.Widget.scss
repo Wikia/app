@@ -1,0 +1,20 @@
+@import "skins/oasis/css/core/color";
+
+.ve-ui-popupWidget-body {
+	border-color: $color-page-border;
+}
+
+.ve-ui-outlineItemWidget {
+	&.ve-ui-optionWidget-selected {
+		background: $color-ve-hover;
+	}
+}
+
+.ve-ui-mwCategoryItemButton {
+	background: $color-ve-hover;
+	border-color: $color-page-border;
+
+	span {
+		color: $color-text;
+	}
+}

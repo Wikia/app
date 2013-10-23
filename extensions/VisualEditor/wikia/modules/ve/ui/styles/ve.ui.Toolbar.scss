@@ -1,0 +1,4 @@
+// Toolbar
+.ve-ui-toolbar-bar {
+	@include linear-gradient($color-ve-gradient, top, $color-ve-gradient-light, 50%, $color-ve-gradient-dark, 100%);
+}
