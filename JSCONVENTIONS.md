@@ -26,7 +26,10 @@ We also have our [JSHint Config](https://github.com/Wikia/app/blob/dev/.jshintrc
   * [Prefixing jQuery objects](#prefixing-jquery-objects)
   * [Comments](#comments)
   * [Naming conventions](#naming-conventions)
-* [Sources](#sources)
+     * [Variables](#variables)
+     * [Folders](#folders)
+     * [Files](#files)
+* [Resources](#resources)
 * [To Do](#to-do)
 
 ## Language Rules
@@ -461,7 +464,7 @@ For clarity and future-proofness, all javascript files should go into a 'scripts
 #### Files ####
 All JS should be written as AMD modules so see [above](#amd-modules) for matching files names to module names.
 
-## Sources ##
+## Resources ##
 * [Google's JS Style Guide](http://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml)
 * [jQuery's JS Style Gude](https://github.com/jquery/contribute.jquery.org/blob/master/pages/style-guide/js.md)
 * [Douglas Crockford's Code Conventions for the JavaScript Programming Language](http://javascript.crockford.com/code.html)
