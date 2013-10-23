@@ -82,6 +82,12 @@
 .ve-ui-icon-previous {
 	@include ve-icon(move-rtl, ve);
 }
+.ve-init-mw-viewPageTarget-saveDialog-prevButton {
+	@include ve-icon(move-rtl, ve);
+}
+.ve-init-mw-viewPageTarget-saveDialog-closeButton {
+	@include ve-icon(collapse, ve);
+}
 
 // Down arrow for menus
 .ve-ui-icon-down {

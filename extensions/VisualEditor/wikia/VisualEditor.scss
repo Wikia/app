@@ -58,3 +58,30 @@
 	background: $color-page;
 	border-color: $color-page-border;
 }
+
+/*
+ * Save panel
+ */
+.ve-init-mw-viewPageTarget-saveDialog {
+	background: $color-page;
+	color: $color-text;
+
+	// Copied from Oasis article.scss
+	td.diff-context {
+		background-color: $color-diff-context;
+	}
+	td.diff-deletedline,
+	td.diff-addedline {
+		color: #000;
+	}
+	table.diff, td.diff-otitle, td.diff-ntitle {
+		background-color: $color-page;
+	}
+
+}
+.ve-init-mw-viewPageTarget-saveDialog-title {
+	color: $color-text;
+}
+.ve-init-mw-viewPageTarget-saveDialog-options {
+	background: $color-ve-page-secondary;
+}
