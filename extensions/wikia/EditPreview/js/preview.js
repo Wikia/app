@@ -108,7 +108,7 @@ define( 'wikia.preview', [
 				}
 			],
 			// set modal width based on screen size
-			width: (isRailDropped === false) ? options.width : options.width - FIT_SMALL_SCREEN,
+			width: ( isRailDropped === false && isWidePage === false ) ? options.width : options.width - FIT_SMALL_SCREEN,
 			className: 'preview',
 			onClose: function() {
 				$(window).trigger('EditPagePreviewClosed');
@@ -129,7 +129,7 @@ define( 'wikia.preview', [
 				if (window.wgOasisResponsive) {
 
 					// set proper preview width for shrinken modal
-					if (isRailDropped) {
+					if (isRailDropped || isWidePage) {
 						contentNode.width(options.width - articleMargin * 2);
 					}
 
