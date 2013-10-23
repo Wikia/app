@@ -153,11 +153,11 @@ ve.ui.WikiaMediaInsertDialog.prototype.onQueryInputKeydown = function ( e ) {
  * Handle the resulting data from a query media request.
  *
  * @method
- * @param {Object} data The Object containing the query media response data
+ * @param {Object} items An object containing items to add to the search results
  */
-ve.ui.WikiaMediaInsertDialog.prototype.onQueryRequestMediaDone = function ( data ) {
+ve.ui.WikiaMediaInsertDialog.prototype.onQueryRequestMediaDone = function ( items ) {
 	// TODO: handle filtering search results to show what's in the cart already
-	this.search.addItems( data.response.results.mixed.items );
+	this.search.addItems( items );
 	this.pages.setPage( 'search' );
 };
 

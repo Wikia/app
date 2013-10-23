@@ -144,10 +144,15 @@ ve.ui.WikiaMediaQueryWidget.prototype.onRequestMediaAlways = function () {
  * @fires requestMediaDone
  */
 ve.ui.WikiaMediaQueryWidget.prototype.onRequestMediaDone = function ( data ) {
+	var items;
+
 	if ( !data.response || !data.response.results || this.input.getValue().trim().length === 0 ) {
 		return;
 	}
 
+	// TODO: this logic will need to change when we have different types of results to display.
+	items = data.response.results.mixed.items;
+
 	this.batch++;
-	this.emit( 'requestMediaDone', data );
+	this.emit( 'requestMediaDone', items );
 };
