@@ -62,6 +62,7 @@ class VideoHandlerController extends WikiaController {
 		// set link attributes
 		$this->linkHref = $videoTitle->getLocalURL();
 		$this->linkClasses = [];
+		$this->size = "medium";
 
 		/*
 		 * TODO: map thumbnail width to play button size:
@@ -81,8 +82,10 @@ class VideoHandlerController extends WikiaController {
 		$this->imgSrc = $this->getVal( 'url' );
 
 		// If responsive flag is not specified, set the width and height of the image
+		// This is not related to wgOasisResponsiv
 		$options[ 'responsive' ] = 1; // just for now
 		if( empty( $options[ 'responsive' ] ) ) {
+			// hard coded width and height - get this from toHtml
 			$this->imgWidth = '300px';
 			$this->imgHeight = '200px';
 		} else {
@@ -90,6 +93,7 @@ class VideoHandlerController extends WikiaController {
 		}
 
 		// set duration
+		// TODO: hard coded for now
 		$this->duration = '3:46';
 
 		/*
