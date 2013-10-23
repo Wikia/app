@@ -7,7 +7,7 @@
 		<input type="hidden" name="add_edit_plus_category_track" value="1"/>
 		<input type="hidden" name="json-data" class="c-messages-ec" />
 		<h2><?=wfMessage('achievements-create-edit-plus-category-title')->escaped();?></h2>
-		<?=wfMessage( 'achievements-create-edit-plus-category-content' )->escaped();?>
+		<?=wfMessage( 'achievements-create-edit-plus-category-content' )->parse();?>
 		<p class="input">
 			<label><?=wfMessage('achievements-customize-new-category-track')->escaped();?></label><input name="edit_plus_category_name" type="text"/>
 			<button type="submit"><?=wfMessage('achievements-create-edit-plus-category')->escaped();?></button>
@@ -161,7 +161,7 @@ foreach($config->getNotInTrackStatic() as $badgeTypeId => $badgeData) {
 <?endforeach;?>
 	<form method="POST" class="save-all">
 		<input type="hidden" name="json-data" class="c-messages" />
-		<input type="submit"  value="<?= wfMessage( 'achievements-save' )->parse() ?>" onclick="Achievements.AchPrepareData(false, '');"/>
+		<input type="submit"  value="<?= wfMessage( 'achievements-save' )->escaped() ?>" onclick="Achievements.AchPrepareData(false, '');"/>
 	</form>
 </div>
 <?if($scrollTo):?>
