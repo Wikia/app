@@ -1,19 +1,7 @@
 @import 'variables.scss';
 
-body {
-}
-//add display none when not visible
-body.TOCOpen {
-
-	#wkPage {
-	}
-
-	#wkTopNav {
-	}
-}
-
 $header-height: 44px;
-$nice-blue: rgb(0,77,141);
+$nice-blue: rgb(0, 77, 141);
 $toc-background: #F8F8F8;
 
 #wkTOC {
@@ -21,26 +9,22 @@ $toc-background: #F8F8F8;
 	left: 0;
 	top: 0;
 	bottom:0;
-	//width: 80%;
-
-	width: 260px;
+	width: 80%;
+	max-width: 260px;
 	background: $toc-background;
 	-webkit-transition: -webkit-transform .1s ease-out;
-	//-webkit-transform: translateZ(0);
 	-webkit-transform: translate(-100%);
-	//-webkit-transform: translate3d(-260px,0,0);
-	//-moz-transform: translate3d(-100%,0,0);
-	//transform: translate3d(-100%,0,0);
+	-moz-transform: translate(-100%);
+	transform: translate(-100%);
 
 	z-index: 101;
 
 	counter-reset: level1, level2, level3;
 
 	&.active {
-		//box-shadow: 0 0 0 99999px rgba(0, 0, 0, 0.4);
 		-webkit-transform: translate(0);
-		//left: 0;
-		//-webkit-transform: translate3d(0,0,0);
+		-moz-transform: translate(0);
+		transform: translate(0);
 	}
 
 	header {
@@ -189,15 +173,14 @@ $level0-border-left-width: 3px;
 	}
 }
 
-.level1, level2 {
+.level1, .level2 {
 
-	li:not(:last-of-type) {
+	li {
 		border-bottom: 1px solid #F0F0F0;
 	}
 
 	.current {
 		color: $nice-blue;
-		color: green;
 		font-weight: 600;
 	}
 }
