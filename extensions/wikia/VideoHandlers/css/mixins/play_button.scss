@@ -1,8 +1,11 @@
 ﻿@import "skins/oasis/css/mixins/opacity";
 
-@mixin play-button {
+/*
+ * Adds a play button to a video thumbnail
+ * If no size class is defined, the default case is .medium
+ */
 
-	// Default case is .medium
+@mixin play-button {
 
 	// Background circle
 	.play-circle {
@@ -56,19 +59,24 @@
 	// they are also positioned 10px from the left and bottom instead of center
 	&.small {
 		.play-circle{
+			// sizing
 			height: 35px;
+			width: 35px;
+
+			// positioning
 			bottom: 10px;
 			left: 34px;
-			//margin: -17.5px 0 0 -17.5px;
 			top: auto;
-			width: 35px;
 		}
 		.play-arrow {
-			bottom: 16px;
+			// sizing
 			height: 21px;
+			width: 17.5px;
+
+			// positioning
+			bottom: 16px;
 			left: 28px;
 			top: auto;
-			width: 17.5px;
 		}
 		.play-arrow:after {
 			height: 14px;
