@@ -1171,4 +1171,24 @@ SQL;
 		return $badge;
 	}
 
+	/**
+	 * Get redirect url - when user swap or keep last video of the page
+	 * @param integer $currentPage
+	 * @param string $sort
+	 * @return string $url
+	 */
+	public function getRedirectUrl( $currentPage, $sort ) {
+		if ( $currentPage > 1 ) {
+			$currentPage--;
+		}
+
+		$params = array(
+			'currentPage' => $currentPage,
+			'sort' => $sort,
+		);
+		$url = SpecialPage::getTitleFor( 'LicensedVideoSwap' )->getFullURL( $params );
+
+		return $url;
+	}
+
 }
