@@ -155,9 +155,12 @@ var ThemeDesigner = {
 		$("#fix-background").change(function() {
 			ThemeDesigner.set("background-fixed", $(this).attr("checked") ? "true" : "false");
 		});
-		$("#dynamic-background").change(function() {
-			ThemeDesigner.set("background-dynamic", $(this).attr("checked") ? "true" : "false");
-		});
+		// TODO: Remove IF statement after fluid layout global release
+		if (window.wgOasisResponsive) {
+			$("#dynamic-background").change(function() {
+				ThemeDesigner.set("background-dynamic", $(this).attr("checked") ? "true" : "false");
+			});
+		}
 
 		// submit handler for uploading custom background image
 		$('#BackgroundImageForm').submit(function(){
@@ -672,16 +675,20 @@ var ThemeDesigner = {
 
 		$("#tile-background").attr("checked", ThemeDesigner.settings["background-tiled"] == "true");
 		$("#fix-background").attr("checked", ThemeDesigner.settings["background-fixed"] == "true");
-		$("#dynamic-background").attr("checked", ThemeDesigner.settings["background-dynamic"] == "true");
 
-		if (ThemeDesigner.settings["background-tiled"] == "true") {
-			$("#dynamic-background").attr("disabled", true);
-		} else if (ThemeDesigner.settings["background-dynamic"] == "true") {
-			$("#tiled-background").attr("disabled", true);
-		}
+		// TODO: Remove IF statement after fluid layout global release
+		if (window.wgOasisResponsive) {
+			$("#dynamic-background").attr("checked", ThemeDesigner.settings["background-dynamic"] == "true");
 
-		if (ThemeDesigner.settings["background-dynamic"] == "false") {
-			$('#CustomizeTab').find('.wrap-middle-color').css('display', 'none');
+			if (ThemeDesigner.settings["background-tiled"] == "true") {
+				$("#dynamic-background").attr("disabled", true);
+			} else if (ThemeDesigner.settings["background-dynamic"] == "true") {
+				$("#tiled-background").attr("disabled", true);
+			}
+
+			if (ThemeDesigner.settings["background-dynamic"] == "false") {
+				$('#CustomizeTab').find('.wrap-middle-color').css('display', 'none');
+			}
 		}
 
 		/*** Wordmark Tab ***/
