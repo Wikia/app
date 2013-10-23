@@ -73,7 +73,7 @@ $background-is-wide: if( $background-width > $breakpoint-fluid, true, false );
 			position: fixed;
 			top: 0;
 			z-index: -1;
-			background: $color-middle-body;
+			background: $color-body-middle;
 
 			width: calc(100% - #{$width-middle-subtrahend});
 			margin-left: calc(#{$margin-middle-base} - 50%);
@@ -90,17 +90,17 @@ $background-is-wide: if( $background-width > $breakpoint-fluid, true, false );
 
 			&:after {
 				// TODO: replace this with a proper linear-gradient mixin
-				background-color: rgba( $color-middle-body, 0 );
-				background-image: -webkit-linear-gradient(right, rgba( $color-middle-body, 0 ) 0%, $color-middle-body 100%);
-				background-image: linear-gradient(to left, rgba( $color-middle-body, 0 ) 0%, $color-middle-body 100%);
+				background-color: rgba( $color-body-middle, 0 );
+				background-image: -webkit-linear-gradient(right, rgba( $color-body-middle, 0 ) 0%, $color-body-middle 100%);
+				background-image: linear-gradient(to left, rgba( $color-body-middle, 0 ) 0%, $color-body-middle 100%);
 				right: $gradient-offset;
 			}
 
 			&:before {
 				// TODO: replace this with a proper linear-gradient mixin
-				background-color: rgba( $color-middle-body, 0 );
-				background-image: -webkit-linear-gradient(left, rgba( $color-middle-body, 0 ) 0%, $color-middle-body 100%);
-				background-image: linear-gradient(to right, rgba( $color-middle-body, 0 ) 0%, $color-middle-body 100%);
+				background-color: rgba( $color-body-middle, 0 );
+				background-image: -webkit-linear-gradient(left, rgba( $color-body-middle, 0 ) 0%, $color-body-middle 100%);
+				background-image: linear-gradient(to right, rgba( $color-body-middle, 0 ) 0%, $color-body-middle 100%);
 				left: $gradient-offset;
 			}
 		}
@@ -149,7 +149,7 @@ $background-is-wide: if( $background-width > $breakpoint-fluid, true, false );
 			position: fixed;
 			top: 0;
 			z-index: -1;
-			background: $color-middle-body;
+			background: $color-body-middle;
 			width: $middle-body-width;
 			margin-left: $middle-body-margin;
 
