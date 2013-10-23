@@ -65,6 +65,8 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	this.$cart = this.$$( '<div>' );
 	this.$content = this.$$( '<div>' );
 	this.$removePage = this.$$( '<div>' );
+	this.$mainPage = this.$$( '<div>' );
+	this.uploadButton = new ve.ui.WikiaUploadWidget( { '$$': this.frame.$$ } );
 
 	// Events
 	this.cart.connect( this, { 'select': 'onCartSelect' } );
@@ -84,10 +86,11 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 
 	// Initialization
 	this.removeButton.$.appendTo( this.$removePage );
+	this.uploadButton.$.appendTo( this.$mainPage );
 	// TODO: Remove this when file information pages are built
 	this.pages.addPage( 'remove', { '$content': this.$removePage } );
 	// TODO: Make suggestions widget and remove this placeholder div
-	this.pages.addPage( 'suggestions', { '$content': $( '<div>' ).text( 'suggestions' ) } );
+	this.pages.addPage( 'main', { '$content': this.$mainPage } );
 	this.pages.addPage( 'search', { '$content': this.search.$ } );
 
 	this.$cart
@@ -111,7 +114,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 ve.ui.WikiaMediaInsertDialog.prototype.onQueryInputChange = function ( value ) {
 	this.searchResults.clearItems();
 	if ( value.trim().length === 0 ) {
-		this.pages.setPage( 'suggestions' );
+		this.pages.setPage( 'main' );
 	}
 };
 
@@ -215,7 +218,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.onRemoveButtonClick = function () {
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onOpen = function () {
 	ve.ui.MWDialog.prototype.onOpen.call( this );
-	this.pages.setPage( 'suggestions' );
+	this.pages.setPage( 'main' );
 };
 
 /**
