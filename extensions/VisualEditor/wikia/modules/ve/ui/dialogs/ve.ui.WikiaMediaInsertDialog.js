@@ -72,7 +72,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	this.cart.connect( this, { 'select': 'onCartSelect' } );
 	this.insertButton.connect( this, { 'click': [ 'close', 'insert' ] } );
 	this.pages.connect( this, { 'set': 'onPageSet' } );
-	this.query.connect( this, { 'media': 'onQueryMedia' } );
+	this.query.connect( this, { 'requestMediaDone': 'onQueryRequestMediaDone' } );
 	this.queryInput.connect( this, {
 		'change': 'onQueryInputChange',
 		'enter': 'onQueryInputEnter'
@@ -80,7 +80,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	this.queryInput.$input.on( 'keydown', ve.bind( this.onQueryInputKeydown, this ) );
 	this.removeButton.connect( this, { 'click': 'onRemoveButtonClick' } );
 	this.search.connect( this, {
-		'end': 'onSearchEnd',
+		'nearingEnd': 'onSearchNearingEnd',
 		'select': 'onSearchSelect'
 	} );
 
@@ -155,9 +155,9 @@ ve.ui.WikiaMediaInsertDialog.prototype.onQueryInputKeydown = function ( e ) {
  * @method
  * @param {Object} data The Object containing the query media response data
  */
-ve.ui.WikiaMediaInsertDialog.prototype.onQueryMedia = function ( data ) {
+ve.ui.WikiaMediaInsertDialog.prototype.onQueryRequestMediaDone = function ( data ) {
 	// TODO: handle filtering search results to show what's in the cart already
-	this.search.addResults( data.response.results.mixed.items );
+	this.search.addItems( data.response.results.mixed.items );
 	this.pages.setPage( 'search' );
 };
 
@@ -166,7 +166,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.onQueryMedia = function ( data ) {
  *
  * @method
  */
-ve.ui.WikiaMediaInsertDialog.prototype.onSearchEnd = function () {
+ve.ui.WikiaMediaInsertDialog.prototype.onSearchNearingEnd = function () {
 	this.query.requestMedia();
 };
 
@@ -218,7 +218,6 @@ ve.ui.WikiaMediaInsertDialog.prototype.onRemoveButtonClick = function () {
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onOpen = function () {
 	ve.ui.MWDialog.prototype.onOpen.call( this );
-	//this.queryInput.setValue( '' );
 	this.pages.setPage( 'main' );
 };
 
@@ -242,6 +241,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.onClose = function ( action ) {
 		this.insertMedia( ve.copy( this.cartModel.getItems() ) );
 	}
 	this.cartModel.clearItems();
+	this.queryInput.setValue( '' );
 };
 
 /**
