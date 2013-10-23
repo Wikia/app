@@ -342,8 +342,8 @@ SpecialPromote.prototype = {
                 submitBtn.attr('disabled', 'disabled');
             }, this),
             onComplete: $.proxy(function (response) {
-                var errorContainer = $('.modalWrapper .error'), unknownErrorMsg =
-                    $.msg('promote-error-upload-unknown-error');
+                var errorContainer = $('.modalWrapper .error'),
+                    unknownErrorMsg = $.msg('promote-error-upload-unknown-error');
 
                 try {
                     response = JSON.parse(response);
@@ -521,13 +521,18 @@ SpecialPromote.prototype = {
     removeTempImage: function (imagename) {
         'use strict';
 
+        var result = {
+                removed: true
+            },
+            handlerFunction = $.proxy(function () {
+                return result.removed;
+            }, result);
+
+
         if (!imagename) {
             throw this.ERROR_REMOVE_TEMP_IMAGE;
         }
 
-        var result = {
-            removed: true
-        };
 
         return $.nirvana.sendRequest({
             type: 'post',
@@ -540,14 +545,7 @@ SpecialPromote.prototype = {
             onErrorCallback: $.proxy(function () {
                 this.removed = false;
             }, result)
-        }).then(
-                $.proxy(function () {
-                    return result.removed;
-                }, result),
-                $.proxy(function () {
-                    return result.removed;
-                }, result)
-            );
+        }).then(handlerFunction, handlerFunction);
     },
     modifyRemoveHandler: function (e) {
         'use strict';
