@@ -413,33 +413,33 @@
 				}
 
 				if ( wgOasisResponsive ) {
-						var pageWidth = $('#WikiaPage').width(),
-							widthArticlePadding = fluidlayout.getWidthGutter(),
-							railWidth = fluidlayout.getRightRailWidth(),
-							minWidth = fluidlayout.getMinArticleWidth();
+					var pageWidth = $('#WikiaPage').width(),
+						widthArticlePadding = fluidlayout.getWidthGutter(),
+						railWidth = fluidlayout.getRightRailWidth() + fluidlayout.getWidthPadding(),
+						minWidth = fluidlayout.getMinArticleWidth();
 
-						// don't go below minimum width
-						if (pageWidth <= minWidth) {
-							pageWidth = minWidth;
-						}
+					// don't go below minimum width
+					if (pageWidth <= minWidth) {
+						pageWidth = minWidth;
+					}
 
-						// subtract rail width only in certain criteria
-						width = (config.isWidePage || pageWidth <= railBreakPoint) ? pageWidth : pageWidth - railWidth;
+					// subtract rail width only in certain criteria
+					width = (config.isWidePage || pageWidth <= railBreakPoint) ? pageWidth : pageWidth - railWidth;
 
-						width -= widthArticlePadding;
+					width -= widthArticlePadding;
 
-						// For Webkit browsers, when the responsive layout kicks in
-						// we have to subtract the width of the scrollbar. For more
-						// information, read: http://bit.ly/hhJpJg
-						// PS: this doesn't work between 1370-1384px because at that point
-						// the article page has a scrollbar and the edit page doesn't.
-						// Luckily, those screen resolutions are kind of an edge case.
-						// PSS: fuck scrollbars.
-						// TODO: we should have access to breakpoints and such in JavaScript
-						// as variables instead of hardcoded values.
-						if( isWebkit && pageWidth >= 1370 || pageWidth <= railBreakPoint ) {
-							width -= self.scrollbarWidth;
-						}
+					// For Webkit browsers, when the responsive layout kicks in
+					// we have to subtract the width of the scrollbar. For more
+					// information, read: http://bit.ly/hhJpJg
+					// PS: this doesn't work between 1370-1384px because at that point
+					// the article page has a scrollbar and the edit page doesn't.
+					// Luckily, those screen resolutions are kind of an edge case.
+					// PSS: fuck scrollbars.
+					// TODO: we should have access to breakpoints and such in JavaScript
+					// as variables instead of hardcoded values.
+					if( isWebkit && pageWidth >= 1370 || pageWidth <= railBreakPoint ) {
+						width -= self.scrollbarWidth;
+					}
 				}
 
 				// add article preview padding width
