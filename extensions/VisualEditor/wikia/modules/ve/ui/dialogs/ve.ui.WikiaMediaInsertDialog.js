@@ -166,78 +166,81 @@ ve.ui.WikiaMediaInsertDialog.prototype.onSearchNearingEnd = function () {
  * Handle clicking on search result items.
  *
  * @method
- * @param {ve.ui.OptionWidget} item The search result item
+ * @param {Object} item The search result item data.
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onSearchSelect = function ( item ) {
-	var cartItems, i;
+	var cartItemModel, cartItems, i, page;
 	if ( item === null ) {
 		return;
 	}
+
+	// Remove item from cart if it already exists
+	// TODO: why is this necessary? Can't we just not add?
 	cartItems = ve.copy( this.cartModel.getItems() );
 	for ( i = 0; i < cartItems.length; i++ ) {
 		if ( cartItems[i].title === item.title ) {
 			this.cartModel.removeItems( [ cartItems[i] ] );
 		}
 	}
-	this.cartModel.addItems( [
-		new ve.dm.WikiaCartItem( item.title, item.url, item.type )
-	] );
-	this.pages.addPage( item.title, { '$content': this.createFilePage( item ) } );
-};
 
-/**
- * Create the file details page for a media item.
- *
- * @method
- * @param {ve.ui.OptionWidget}
- */
-ve.ui.WikiaMediaInsertDialog.prototype.createFilePage = function ( item ) {
-	var $page, $removeButton;
+	// Add item to cart
+	cartItemModel = new ve.dm.WikiaCartItem( item.title, item.url, item.type );
+	this.cartModel.addItems( [ cartItemModel ] );
 
-	// Properties
-	$page = this.$$( '<div>' );
-	$removeButton = new ve.ui.ButtonWidget( {
-		'$$': this.frame.$$,
-		'label': 'Remove from the cart', //TODO: i18n
-		'flags': ['destructive']
-	} );
-
-	// Events
-	$removeButton.connect( this, { 'click': 'onRemoveButtonClick' } );
-
-	// Initialize
-	$page.text( item.title ).append( $removeButton );
-
-	return $page;
+	// Add item media page
+	page = new ve.ui.WikiaMediaPageWidget( cartItemModel, { '$$': this.frame.$$ } );
+	page.connect( this, { 'remove': 'onMediaPageRemove' } );
+	this.pages.addPage( item.title, { '$content': page.$ } );
 };
 
 /**
  * Handle clicking on cart items.
  *
  * @method
- * @param {ve.ui.WikiaCartItemWidget} item The cart item.
+ * @param {ve.ui.WikiaCartItemWidget|null} item The selected cart item, or `null` if none are
+ * selected.
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onCartSelect = function ( item ) {
-	this.setPage( item.getModel().title );
+	if ( item !== null ) {
+		this.setPage( item.getModel().title );
+	}
 };
 
+/**
+ * Set which page should be visible.
+ *
+ * @method
+ * @param {string} name The name of the page to set as the current page.
+ */
 ve.ui.WikiaMediaInsertDialog.prototype.setPage = function ( name ) {
 	if ( this.pages.getPageName() === name ) {
 		// Toggle cart item
 		if ( ve.indexOf( name, ve.ui.WikiaMediaInsertDialog.static.pages ) === -1 ) {
-			this.pages.setPage(
-				this.queryInput.getValue().trim().length === 0 ? 'suggestions' : 'search'
-			);
+			this.pages.setPage( this.getDefaultPage() );
 		}
 	} else {
 		this.pages.setPage( name );
 	}
 };
 
-/** */
-ve.ui.WikiaMediaInsertDialog.prototype.onRemoveButtonClick = function () {
-	this.cartModel.removeItems( [ this.cart.getSelectedItem().getModel() ] );
-	this.pages.setPage( 'search' );
+/**
+ * Gets the page to use as default when a cart item is not selected.
+ *
+ * @method
+ */
+ve.ui.WikiaMediaInsertDialog.prototype.getDefaultPage = function () {
+	return this.queryInput.getValue().trim().length === 0 ? 'suggestions' : 'search';
+};
+
+/**
+ * Handle clicks on the file page remove item button.
+ *
+ * @method
+ * @param {ve.dm.WikiaCartItem} item The cart item model
+ */
+ve.ui.WikiaMediaInsertDialog.prototype.onMediaPageRemove = function ( item ) {
+	this.cartModel.removeItems( [ item ] );
+	this.setPage( this.getDefaultPage() );
 };
 
 /**
