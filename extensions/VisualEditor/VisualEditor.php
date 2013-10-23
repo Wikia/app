@@ -39,17 +39,11 @@ $wgAutoloadClasses['ApiVisualEditor'] = $dir . 'ApiVisualEditor.php';
 $wgAutoloadClasses['ApiVisualEditorEdit'] = $dir . 'ApiVisualEditorEdit.php';
 $wgAutoloadClasses['VisualEditorHooks'] = $dir . 'VisualEditor.hooks.php';
 $wgAutoloadClasses['VisualEditorDataModule'] = $dir . 'VisualEditorDataModule.php';
-$wgAutoloadClasses['ApiPhotoAttribution'] = $dir . 'ApiPhotoAttribution.php';
-$wgAutoloadClasses['ApiMediaSearch'] = $dir . 'ApiMediaSearch.php';
-$wgAutoloadClasses['ApiTempUpload'] = $dir . 'ApiTempUpload.php';
 $wgExtensionMessagesFiles['VisualEditor'] = $dir . 'VisualEditor.i18n.php';
 
 // Register API modules
 $wgAPIModules['visualeditor'] = 'ApiVisualEditor';
 $wgAPIModules['visualeditoredit'] = 'ApiVisualEditorEdit';
-$wgAPIModules['apiphotoattribution'] = 'ApiPhotoAttribution';
-$wgAPIModules['apimediasearch'] = 'ApiMediaSearch';
-$wgAPIModules['apitempupload'] = 'ApiTempUpload';
 
 // Register Hooks
 $wgHooks['BeforePageDisplay'][] = 'VisualEditorHooks::onBeforePageDisplay';

@@ -9,12 +9,18 @@ $wgExtensionCredits['other'][] = array(
 
 $dir = dirname( __FILE__ ) . '/';
 
-/* Classes */
-
+// Register files
 $wgAutoloadClasses['VisualEditorWikiaHooks'] = $dir . 'VisualEditor.hooks.php';
+$wgAutoloadClasses['ApiTempUpload'] = $dir . 'ApiTempUpload.php';
+$wgAutoloadClasses['ApiMediaSearch'] = $dir . 'ApiMediaSearch.php';
+$wgAutoloadClasses['ApiPhotoAttribution'] = $dir . 'ApiPhotoAttribution.php';
 
-/* ResourceLoader Modules */
+// Register API modules
+$wgAPIModules['apitempupload'] = 'ApiTempUpload';
+$wgAPIModules['apimediasearch'] = 'ApiMediaSearch';
+$wgAPIModules['apiphotoattribution'] = 'ApiPhotoAttribution';
 
+// Register resource modules
 $wgVisualEditorWikiaResourceTemplate = array(
 	'localBasePath' => $dir . 'modules',
 	'remoteExtPath' => 'VisualEditor/wikia/modules',

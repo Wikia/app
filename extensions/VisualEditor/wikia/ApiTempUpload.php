@@ -93,9 +93,7 @@ class ApiTempUpload extends ApiBase {
 	 */
 	protected function checkPermissions( $user ) {
 		// Check whether the user has the appropriate permissions to upload anyway
-		$permission = $this->mUpload->isAllowed( $user );
-
-		if ( $permission !== true ) {
+		if ( $this->mUpload->isAllowed( $user ) !== true ) {
 			if ( !$user->isLoggedIn() ) {
 				$this->dieUsageMsg( array( 'mustbeloggedin', 'upload' ) );
 			} else {
