@@ -169,7 +169,12 @@ if ( window.Wikia.AbTest && (Wikia.AbTest.getGroup( "DAR_RIGHTRAILPOSITION" ) ==
 				<script>Wikia.SevenOneMediaIntegration.enabled && myAd.insertAd("rectangle1");</script>
 			</div>
 		</td></tr></table>
-		<script>Wikia.SevenOneMediaIntegration.enabled && myAd.finishAd("rectangle1", "move");</script>
+		<script>
+			if (Wikia.SevenOneMediaIntegration.enabled) {
+				$("#TOP_RIGHT_BOXAD, #HOME_TOP_RIGHT_BOXAD").removeClass("default-height");
+				myAd.finishAd("rectangle1", "move");
+			}
+		</script>
 	</div>
 	<script>Wikia.SevenOneMediaIntegration.track("ads");</script>
 <? endif ?>
