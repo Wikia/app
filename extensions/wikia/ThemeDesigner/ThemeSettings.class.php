@@ -71,7 +71,7 @@ class ThemeSettings {
 		$settings = $this->defaultSettings;
 		if(!empty($GLOBALS[self::WikiFactorySettings])) {
 			$settings = array_merge($settings, $GLOBALS[self::WikiFactorySettings]);
-			$colorKeys = array( "color-body", "color-page", "color-buttons", "color-links", "color-header" );
+			$colorKeys = array( "color-body", "color-body-middle", "color-page", "color-buttons", "color-links", "color-header" );
 
 			// if any of the user set colors are invalid, use default
 			foreach ($colorKeys as $colorKey) {

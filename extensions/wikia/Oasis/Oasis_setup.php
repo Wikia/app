@@ -107,6 +107,7 @@ global $wgCdnStylePath;
 $wgOasisThemes = array(
 	'oasis' => array(
 		"color-body" => "#BACDD8",
+		"color-body-middle" => "#BACDD8",
 		"color-page" => "#FFFFFF",
 		"color-buttons" => "#006CB0",
 		"color-links" => "#006CB0",
