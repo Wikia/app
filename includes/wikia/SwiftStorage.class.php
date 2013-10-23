@@ -10,6 +10,7 @@ namespace Wikia;
  * Uses SwiftCloudFiles extension
  *
  * @author macbre
+ * @author moli
  *
  * @see $wgFSSwiftServer
  * @see $wgFSSwiftConfig
@@ -29,20 +30,24 @@ class SwiftStorage {
 	private $authToken;     // e.g. "AUTH_xxxx"
 	private $containerName; // e.g. "poznan"
 	private $pathPrefix;    // e.g. "/pl/images" - must start with /
+	
+	private $swiftConfig;   // default $wgFSSwiftConfig
+	private $swiftServer;   // default $wgFSSwiftServer
 
 	/**
 	 * Get storage instance to access uploaded files for a given wiki
 	 *
 	 * @param $cityId number|string city ID or wiki name
+	 * @param $dataCenter string|null name of datacenter (res, iowa ... )
 	 * @return SwiftStorage storage instance
 	 */
-	public static function newFromWiki( $cityId ) {
+	public static function newFromWiki( $cityId, $dataCenter = null ) {
 		$wgUploadPath = \WikiFactory::getVarValueByName( 'wgUploadPath', $cityId );
 		$path = trim( parse_url( $wgUploadPath, PHP_URL_PATH ), '/' ); ;
 
 		list( $containerName, $prefix ) = explode( '/', $path, 2 );
 
-		return new self( $containerName, '/' . $prefix );
+		return new self( $containerName, '/' . $prefix, $dataCenter );
 	}
 
 	/**
@@ -67,12 +72,20 @@ class SwiftStorage {
 	 *
 	 * @param $containerName string container (aka bucket) name
 	 * @param $pathPrefix string prefix to be prepended to remote names
+	 * @param $dataCenter string|null name of DC (res, iowa ... )
 	 * @throws \Exception
 	 */
-	private function __construct( $containerName, $pathPrefix = '' ) {
+	private function __construct( $containerName, $pathPrefix = '', $dataCenter = null ) {
 		$this->wg = \F::app()->wg;
 
-		$this->connect( $this->wg->FSSwiftConfig );
+		if ( !is_null( $dataCenter )  ) {
+			$this->swiftConfig = $this->wg->FSSwiftDC[ $dataCenter ][ 'config' ];
+			$this->swiftServer = $this->wg->FSSwiftDC[ $dataCenter ][ 'server' ]; 
+		} else {
+			$this->swiftConfig = $this->wg->FSSwiftConfig;
+			$this->swiftServer = $this->wg->FSSwiftServer;
+		}
+		$this->connect( $this->swiftConfig );
 
 		$this->container = $this->getContainer( $containerName );
 		$this->containerName = $containerName;
@@ -115,7 +128,7 @@ class SwiftStorage {
 		}
 
 		// set public ACL
-		$url = sprintf( 'http://%s/swift/v1/%s', $this->wg->FSSwiftServer, $containerName );
+		$url = sprintf( 'http://%s/swift/v1/%s', $this->swiftServer, $containerName );
 
 		wfDebug( sprintf( "%s: %s (ACL - read: '.r:*')\n",
 			__METHOD__,
@@ -150,71 +163,13 @@ class SwiftStorage {
 	/**
 	 * Uploads given local file to Swift storage
 	 *
-	 * @param $localFile string local file name
+	 * @param $localFile string|resource local file name or handler to content stream
 	 * @param $remoteFile string remote file name
 	 * @param array $metadata optional metadata
 	 * @param bool $mimeType
 	 * @return \Status result
 	 */
 	public function store( $localFile, $remoteFile, Array $metadata = array(), $mimeType = false ) {
-		$res = \Status::newGood();
-
-		$remotePath = $this->getRemotePath( $remoteFile );
-		wfDebug( __METHOD__ . ": {$localFile} -> {$remotePath}\n" );
-
-		$time = microtime( true );
-
-		try {
-			$fp = @fopen( $localFile, 'r' );
-			if ( !$fp ) {
-				self::log( __METHOD__ . '::fopen', "<{$localFile}> doesn't exist" );
-				return \Status::newFatal( "{$localFile} doesn't exist" );
-			}
-
-			// check file size - sending empty file results in "HTTP 411 MissingContentLengh"
-			$size = fstat( $fp )['size'];
-			if ( $size === 0 ) {
-				self::log( __METHOD__ . '::fstat', "<{$localFile}> is empty" );
-				return \Status::newFatal( "{$localFile} is empty" );
-			}
-
-			$object = $this->container->create_object( $remotePath );
-
-			// metadata
-			if ( is_string( $mimeType ) ) {
-				$object->content_type = $mimeType;
-			}
-
-			if (!empty($metadata)) {
-				$object->setMetadataValues($metadata);
-			}
-
-			// upload it
-			$object->write( $fp, $size );
-			
-			if ( is_resource( $fp ) ) {
-				fclose( $fp );
-			}
-		}
-		catch ( \Exception $ex ) {
-			self::log( __METHOD__ . '::exception',  $localFile . ' - ' . $ex->getMessage() );
-			return \Status::newFatal( $ex->getMessage() );
-		}
-
-		$time = round( ( microtime( true ) - $time ) * 1000 );
-		wfDebug( __METHOD__ . ": {$localFile} uploaded in {$time} ms\n" );
-
-		return $res;
-	}
-	
-	/**
-	 * Copy remote storage Object to a target Container
-	 * 
-	 * @param $srcFile string remote source file name
-	 * @param $dstFile string remote destination file name
-	 * @return \Status result
-	 */
-	public function copy( $srcFile, $dstFile ) {
 		$res = \Status::newGood();
 
 		$remotePath = $this->getRemotePath( $remoteFile );
@@ -343,7 +298,7 @@ class SwiftStorage {
 	 */
 	public function getUrl( $remoteFile ) {
 		return sprintf( 'http://%s/%s%s/%s',
-			$this->wg->FSSwiftServer,
+			$this->swiftServer,
 			$this->containerName,
 			$this->pathPrefix,
 			ltrim( $remoteFile, '/' )

@@ -13,29 +13,7 @@ namespace Wikia\SwiftSync;
 class Hooks {
 	/* @String repoName - repo name */
 	static private $repoName = 'local';
-	
-	/* @Int WikiId - Wiki ID */
-	private $city_id;
-	/* @String action - action name */
-	private $action = '';
-	/* @String dst - destination file */
-	private $dst = '';
-	/* @String table - sync files table */
-	private $table = 'image_sync';
-	/* @String db - sync files db */
-	private $db = 'swift_sync';
-	
-	/*
-	 * constructor
-	 */
-	private function __construct( $action, $dst ) {
-		global $wgCityId;
 
-		$this->action  = $action;
-		$this->dst     = $dst;
-		$this->city_id = $wgCityId;
-	}
-	
 	/*
 	 * init config for FSFileBackend class
 	 */
@@ -59,23 +37,7 @@ class Hooks {
 
 		return new $class( $config );
 	}
-	
-	/*
-	 * new from params
-	 */
-	private static function newFromParams( $params ) {
-		wfProfileIn( __METHOD__ );
-		
-		if ( empty( $params['dst'] ) ) {
-			$params['dst'];
-		}
-		
-		$obj = new self( $params['op'], $params['dst'] );
-		
-		wfProfileOut( __METHOD__ );
-		return $obj; 
-	}
-	
+
 	/* replace swith-backend with local-backend */
 	private static function replaceBackend( $path ) {
 		$path = preg_replace( 
@@ -87,36 +49,12 @@ class Hooks {
 		return $path;
 	}
 	
-	/* save information about uploaded image in database */ 
-	private function addToQueue() {
-		global $wgSpecialsDB;
-		
-		if ( empty( $this->dst ) || empty( $this->action ) ) {
-			return false;
-		}
-		
-		$dbw = wfGetDB( DB_MASTER, array(), $wgSpecialsDB );
-		$dbw->begin();
-		$dbw->insert(
-			"`{$this->db}`.`{$this->table}`", 
-			[
-				'city_id'    => $this->city_id,
-				'img_action' => $this->action,
-				'img_dest'   => $this->dst,
-				'img_added'  => wfTimestamp( TS_DB ),
-			], 
-			__METHOD__ 
-		);
-		$dbw->commit();
-		
-		return true;
-	}
-	
 	/* save image into local repo */
 	public static function doStoreInternal( $params, $status ) {
 		global $wgEnableSwithSyncToLocalFS, $wgDevelEnvironment;
 		
 		wfProfileIn( __METHOD__ );
+		$fsParams = $params;
 		
 		if ( !empty( $wgEnableSwithSyncToLocalFS ) ) {
 			if ( !empty( $params['dst'] ) && !empty( $params['src'] ) ) {
@@ -159,6 +97,7 @@ class Hooks {
 		global $wgEnableSwithSyncToLocalFS, $wgDevelEnvironment;
 		
 		wfProfileIn( __METHOD__ );
+		$fsParams = $params;
 		
 		if ( !empty( $wgEnableSwithSyncToLocalFS ) ) {
 			if ( !empty( $params['dst'] ) && !empty( $params['src'] ) ) {
@@ -211,6 +150,7 @@ class Hooks {
 		global $wgEnableSwithSyncToLocalFS, $wgDevelEnvironment;
 		
 		wfProfileIn( __METHOD__ );
+		
 		if ( empty( $params['op']  ) ) {
 			$params['op'] = 'delete';
 		}
