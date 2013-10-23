@@ -306,7 +306,6 @@ SpecialPromote.prototype = {
             removalPromise = this.removeTempImage(selectedByName);
 
             removalPromise.done($.proxy(function (success) {
-                console.log('success = ' + success);
                 if (success) {
                     var imagesNamesIndex = this.current.additionalImagesNames.indexOf(selectedByName);
                     this.current.additionalImagesNames.splice(imagesNamesIndex, 1);
