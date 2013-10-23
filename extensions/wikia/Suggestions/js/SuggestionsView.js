@@ -27,10 +27,14 @@ define('SuggestionsView', ['SuggestionsViewModel'], function( viewModel ) {
 			'</span></a></li>';
 	}
 	function buildSuggestionMarkup( result ) {
+		var img = '';
+		if ( result.thumbnail !== null ){
+			img = '<img class="search-suggest-image" src="' + result.thumbnail + '" />';
+		}
 		return '<li>' +
 			'<a href="' + result.path + '">' +
 			'<div class="search-suggest-img-wrapper">' +
-			'<img class="search-suggest-image" src="' + result.thumbnail + '" />' +
+			img +
 			'</div>' +
 			'<div class="wraper">' +
 			'<div class="block">' +
