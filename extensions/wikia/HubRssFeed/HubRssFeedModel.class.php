@@ -9,6 +9,7 @@
 
 class HubRssFeedModel extends WikiaModel {
 
+	const THUMB_MIN_SIZE = 200;
 
 	const MAX_DATE_LOOP = 8;
 
@@ -140,16 +141,46 @@ class HubRssFeedModel extends WikiaModel {
 					//removing duplicates
 					$url = isset($item[ 'articleUrl' ]) ? $item[ 'articleUrl' ] : $item[ 'url' ];
 
+					if ( isset($out[ $url ]) ) {
+						continue;
+					}
+
 					$out[ $url ] = [
 						'title' => isset($item[ 'shortDesc' ]) ? $item[ 'shortDesc' ] : $item[ 'articleTitle' ],
 						'description' => isset($item[ 'longDesc' ]) ? $item[ 'longDesc' ] : $item[ 'quote' ],
-						'img' => isset($item[ 'photoUrl' ]) ? $item[ 'photoUrl' ] : $item[ 'imageUrl' ],
 					];
+
+					if ( !empty($item[ 'photoName' ]) ) {
+						$img = self::getThumbData( $item[ 'photoName' ] );
+						if ( !empty($img->url) ) {
+
+							$width = $img->width;
+							$height = $img->height;
+
+
+							if ( $width < self::THUMB_MIN_SIZE ) {
+								$height = round( ($img->height * $width) / $width, 0 );
+								$width = self::THUMB_MIN_SIZE;
+							}
+
+							$out[ $url ][ 'img' ] = [
+								'url' => $img->url,
+								'width' => $width,
+								'height' => $height
+							];
+						}
+					}
 				}
 			}
 		}
 
 		return $out;
+	}
+
+
+	public static function getThumbData( $image ) {
+		return ImagesService::getLocalFileThumbUrlAndSizes($image, 0, ImagesService::EXT_JPG);
+
 	}
 
 }

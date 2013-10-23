@@ -91,7 +91,7 @@ class HubRssFeedSpecialController extends WikiaSpecialPageController {
 
 		$this->response->setFormat( WikiaResponse::FORMAT_RAW );
 		$this->response->setBody( $xml );
-		$this->response->setContentType( 'application/rss+xml' );
+		$this->response->setContentType( 'text/xml' );
 	}
 
 
