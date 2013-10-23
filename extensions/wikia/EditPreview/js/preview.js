@@ -68,7 +68,7 @@ define( 'wikia.preview', [
 		}, options);
 
 		// use loading indicator before real content will be fetched
-		var content = '<div class="ArticlePreview"><div class="ArticlePreviewInnerWrapper"><div class="ArticlePreviewInner"><img src="' + stylepath + '/common/images/ajax.gif" class="loading"></div></div></div>';
+		var content = '<div class="ArticlePreview"><div class="ArticlePreviewInner"><img src="' + stylepath + '/common/images/ajax.gif" class="loading"></div></div>';
 
 		$.showCustomModal(title, content, options);
 	}
@@ -256,13 +256,6 @@ define( 'wikia.preview', [
 		} else {
 			$article.css(cssTransform, '');
 		}
-
-		// DAR-2182
-		var newHeight = $article[0].getBoundingClientRect().height;
-		newHeight += articleMargin;
-
-		// we have a wrapper with overflow: hidden not to show white space after CSS scaling
-		$article.parent().height( newHeight );
 	}
 
 	/**
