@@ -221,6 +221,7 @@ define( 'wikia.preview', [
 	 */
 
 	function switchPreview(type) {
+		console.log(previewTypes[type].value);
 		$article.width(previewTypes[type].value);
 
 		tracker.track({
@@ -272,16 +273,21 @@ define( 'wikia.preview', [
 	 */
 
 	function setClassesForWidePage( type, $article ) {
-	// DAR-2506 make the preview works like correctly for main pages
-		if( isWidePage ) {
-			if( type === 'min' ) {
-				$article.attr( 'data-size', 'min' );
-			} else if( type === 'max' ) {
-				$article.attr( 'data-size', 'max' );
-			} else {
-				$article.attr( 'data-size', '' );
-			}
+		var dataSize;
+
+		// DAR-2506 make the preview works like correctly for main pages
+		switch ( type ) {
+			case 'min':
+				dataSize = 'min';
+				break;
+			case 'max':
+				dataSize = 'max';
+				break;
+			default:
+				dataSize = '';
 		}
+
+		$article.attr( 'data-size', dataSize );
 	}
 
 	/**
@@ -291,41 +297,25 @@ define( 'wikia.preview', [
 	 */
 
 	function getPreviewTypes( isWidePage ) {
-		var previewTypes = null,
-			articleMinWidth = fluidlayout.getMinArticleWidth(),
+		var articleMinWidth = fluidlayout.getMinArticleWidth(),
 			articleMaxWidth = fluidlayout.getMaxArticleWidth(),
-			widthPadding = fluidlayout.getWidthPadding();
+			previewTypes = {
+			current: {
+				name: 'current',
+				value: null
+			},
+			min: {
+				name: 'min',
+				value: articleMinWidth - 2 * articleMargin
+			},
+			max: {
+				name:'max',
+				value: articleMaxWidth - 2 * articleMargin
+			}
+		};
 
 		if( isWidePage ) {
-			previewTypes = {
-				current: {
-					name: 'current',
-					value: null
-				},
-				min: {
-					name: 'min',
-					value: articleMinWidth - 2 * articleMargin + rightRailWidth
-				},
-				max: {
-					name:'max',
-					value: articleMaxWidth - 2 * articleMargin + rightRailWidth
-				}
-			};
-		 } else {
-			previewTypes = {
-				current: {
-					name: 'current',
-					value: null
-				},
-				min: {
-					name: 'min',
-					value: articleMinWidth - 2 * widthPadding
-				},
-				max: {
-					name:'max',
-					value: articleMaxWidth - 2 * widthPadding
-				}
-			};
+			previewTypes.max.value += rightRailWidth;
 		}
 
 		return previewTypes;
