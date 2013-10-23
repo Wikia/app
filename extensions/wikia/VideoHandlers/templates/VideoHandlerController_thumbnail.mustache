@@ -1,6 +1,19 @@
-<a href="{{ linkHref }}" class="video video-from-template small {{#linkClasses}}{{.}} {{/linkClasses}}" {{#linkAttrs}}{{.}} {{/linkAttrs}}>
+<a
+	href="{{ linkHref }}"
+	class="video video-from-template {{ size }} {{# linkClasses }}{{ . }} {{/ linkClasses }}"
+	{{# linkAttrs }}{{ . }} {{/ linkAttrs }}>
+
 	<span class="play-circle"></span>
 	<span class="play-arrow"></span>
-	<img src="{{imgSrc}}" class="wikia-video-thumb {{#imgClasses}}{{.}} {{/imgClasses}}" data-video-key="{{videoKey}}" data-video-name="{{videoName}}" {{#imgAttrs}}{{.}} {{/imgAttrs}}>
-	<span class="duration">{{duration}}</span>
+
+	<img
+		src="{{ imgSrc }}"
+		class="wikia-video-thumb {{# imgClasses }}{{ . }} {{/ imgClasses }}"
+		data-video-key="{{ videoKey }}"
+		data-video-name="{{ videoName }}"
+		{{# imgWidth }} width="{{ imgWidth }}" {{/ imgWidth}}
+		{{# imgHeight }} height="{{ imgHeight }}" {{/ imgHeight}}
+		{{# imgAttrs }}{{ . }} {{/ imgAttrs }}>
+
+	<span class="duration">{{ duration }}</span>
 </a>

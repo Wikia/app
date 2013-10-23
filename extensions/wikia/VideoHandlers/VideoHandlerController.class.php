@@ -50,7 +50,7 @@ class VideoHandlerController extends WikiaController {
 
 	public function thumbnail() {
 		// use mustache for template
-		$this->response->setTemplateEngine(WikiaResponse::TEMPLATE_ENGINE_MUSTACHE);
+		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 
 		$options = $this->getVal( 'options' );
 		$file = $this->getVal( 'file' );
@@ -62,14 +62,32 @@ class VideoHandlerController extends WikiaController {
 		// set link attributes
 		$this->linkHref = $videoTitle->getLocalURL();
 
+		/*
+		 * TODO: map thumbnail width to play button size:
+		 *
+		 * 200-270 = "small"
+		 * 271-470 = "medium"
+		 * 471-720 = "large"
+		 * > 720 = "xlarge"
+		 *
+		 * ex: $this->size = "medium";
+		 * note: default is medium if no size is specified in template
+		 */
+
 		// set image attributes
 		$this->videoKey = htmlspecialchars( urlencode( $videoTitle->getDBKey() ) );
 		$this->videoName = htmlspecialchars( urlencode( $videoTitle->getText() ) );
 		$this->imgSrc = $this->getVal( 'url' );
 
-		// set duration
+		// If responsive flag is not specified, set the width and height of the image
+		$options[ 'responsive' ] = 1; // just for now
+		if( empty( $options[ 'responsive' ] ) ) {
+			$this->imgWidth = '300px';
+			$this->imgHeight = '200px';
+		}
 
-		//
+		// set duration
+		$this->duration = '3:46';
 
 		/*
 		 * List of logic that needs to be performed here (was done in ThumbnailVideo:toHtml)
@@ -79,7 +97,12 @@ class VideoHandlerController extends WikiaController {
 		 * Link attributes:
 		 *  - href
 		 *  - id
-		 *  - classes: 'video' (always), 'lightbox' (unless disabled), anything that is passed by extension
+		 *  - classes:
+		 *      - 'video' (always)
+		 *      - 'lightbox' (unless disabled)
+		 *      - 'hide-play' (if on a video special page, play button will only show on hover)
+		 *      - size string (see above)
+		 *      - anything that is passed by extension
 		 *  - itemprop = 'video' (if RDF)
 		 *  - itemscope = '' (if RDF)
 		 *  - itemtype = 'http://schema.org/VideoObject' (if RDF)
@@ -109,11 +132,7 @@ class VideoHandlerController extends WikiaController {
 		 * Lazy loading (if enabled)
 		 *
 		 *
-		 * New  redesign logic that isn't handled in toHtml
-		 *
 		 * Responsive flag
-		 * Play button posistioning flag (centered or bottom left)
-		 * Show play button always or only on hover flag
 		 */
 	}
 
