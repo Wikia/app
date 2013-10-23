@@ -21,7 +21,8 @@ class ApiTempUpload extends ApiBase {
 		if ( $this->mParams['type'] === 'temporary' ) {
 			$this->executeTemporary();
 		} else if ( $this->mParams['type'] === 'permanent' ) {
-			$this->executePermanent();
+			//$this->executePermanent();
+			$this->dieUsageMsg( 'Not implemented yet' );
 		} else {
 			$this->dieUsageMsg( 'The type parameter must be set to temporary or permanent' );
 		}
@@ -58,8 +59,8 @@ class ApiTempUpload extends ApiBase {
 			if ( !$apiwrapper ) {
 				$this->dieUsageMsg( 'Incorrect video URL' );
 			}
-			$upload = new UploadFromUrl();
-			$upload->initializeFromRequest( new FauxRequest(
+			$this->mUpload = new UploadFromUrl();
+			$this->mUpload->initializeFromRequest( new FauxRequest(
 				array(
 					'wpUpload' => 1,
 					'wpSourceType' => 'web',
@@ -67,8 +68,14 @@ class ApiTempUpload extends ApiBase {
 				),
 				true
 			) );
-			$upload->fetchFile();
-			$temporaryFile = $this->createTemporaryFile( $upload->getTempPath() );
+			// First check permission to upload
+			$this->checkPermissions( $this->mUser );
+			$status = $this->mUpload->fetchFile();
+			if ( !$status->isGood() ) {
+				$this->dieUsage( 'Error fetching file from remote source' );
+			}
+			$this->verifyUpload();
+			$temporaryFile = $this->createTemporaryFile( $this->mUpload->getTempPath() );
 			$result['title'] = $apiwrapper->getTitle();
 			$result['provider'] = $apiwrapper->getProvider();
 			$result['videoId'] = $apiwrapper->getVideoId();
