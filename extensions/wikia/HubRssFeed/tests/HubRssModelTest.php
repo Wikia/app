@@ -128,7 +128,7 @@ class HubRssModelTest extends WikiaBaseTest {
 
 		$mock = $this->getMockBuilder( 'HubRssFeedModel' )
 			->disableOriginalConstructor()
-			->setMethods( ['getServices','getThumbData'] )
+			->setMethods( ['getServices', 'getThumbData'] )
 			->getMock();
 
 		$mock->expects( $this->any() )
@@ -136,35 +136,35 @@ class HubRssModelTest extends WikiaBaseTest {
 			->will( $this->returnValue( ['slider' => $mockSlider, 'community' => $mockCommunity] ) );
 
 		$tmp = new StdClass();
-		$tmp->url='xx';
-		$tmp->width=500;
-		$tmp->height=500;
+		$tmp->url = 'xx';
+		$tmp->width = 500;
+		$tmp->height = 500;
 		$mock->expects( $this->any() )
 			->method( 'getThumbData' )
-			->will( $this->returnValue($tmp) );
+			->will( $this->returnValue( $tmp ) );
 
 
 		$refl = new \ReflectionObject($mock);
 		$methodGDFM = $refl->getMethod( 'getDataFromModules' );
 		$methodGDFM->setAccessible( true );
 
- 		$res = $methodGDFM->invoke( $mock, [null] );
+		$res = $methodGDFM->invoke( $mock, [null] );
 
 		$this->assertArrayHasKey( 'a4', $res );
 		$this->assertEquals( $res[ 'a4' ][ 'title' ], 'a1' );
 		$this->assertEquals( $res[ 'a4' ][ 'description' ], 'a2' );
-		$this->assertArrayHasKey( 'img' , $res['a4']);
-		$this->assertEquals( $res[ 'a4' ][ 'img' ]['url'], 'xx' );
-		$this->assertEquals( $res[ 'a4' ][ 'img' ]['width'], 500 );
-		$this->assertEquals( $res[ 'a4' ][ 'img' ]['height'], 500 );
+		$this->assertArrayHasKey( 'img', $res[ 'a4' ] );
+		$this->assertEquals( $res[ 'a4' ][ 'img' ][ 'url' ], 'xx' );
+		$this->assertEquals( $res[ 'a4' ][ 'img' ][ 'width' ], 500 );
+		$this->assertEquals( $res[ 'a4' ][ 'img' ][ 'height' ], 500 );
 
 		$this->assertArrayHasKey( 'b4', $res );
 		$this->assertEquals( $res[ 'b4' ][ 'title' ], 'b1' );
 		$this->assertEquals( $res[ 'b4' ][ 'description' ], 'b2' );
-		$this->assertArrayHasKey( 'img', $res['b4'] );
-		$this->assertEquals( $res[ 'b4' ][ 'img' ]['url'], 'xx' );
-		$this->assertEquals( $res[ 'b4' ][ 'img' ]['width'], 500 );
-		$this->assertEquals( $res[ 'b4' ][ 'img' ]['height'], 500 );
+		$this->assertArrayHasKey( 'img', $res[ 'b4' ] );
+		$this->assertEquals( $res[ 'b4' ][ 'img' ][ 'url' ], 'xx' );
+		$this->assertEquals( $res[ 'b4' ][ 'img' ][ 'width' ], 500 );
+		$this->assertEquals( $res[ 'b4' ][ 'img' ][ 'height' ], 500 );
 
 
 	}
@@ -208,11 +208,11 @@ class HubRssModelTest extends WikiaBaseTest {
 		$this->assertArrayHasKey( 'url_4', $res );
 		$this->assertEquals( 991, $res[ 'url_4' ][ 'timestamp' ] );
 
-		$item1 = array_shift($res);
-		$item2 = array_shift($res);
-		$item3 = array_shift($res);
+		$item1 = array_shift( $res );
+		$item2 = array_shift( $res );
+		$item3 = array_shift( $res );
 
-		$this->assertTrue( $item1['timestamp' ]>=$item2['timestamp'] && $item2['timestamp'] >= $item3['timestamp']);
+		$this->assertTrue( $item1[ 'timestamp' ] >= $item2[ 'timestamp' ] && $item2[ 'timestamp' ] >= $item3[ 'timestamp' ] );
 
 	}
 

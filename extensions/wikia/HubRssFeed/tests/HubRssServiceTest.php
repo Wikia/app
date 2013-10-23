@@ -34,8 +34,8 @@ class HubRssServiceTest extends WikiaBaseTest {
 		$date2 = strtotime( '2011-01-01' );
 
 		$inputData = [
-			['title' => 'title1', 'img' => ['url'=> 'img1', 'width'=> 111, 'height'=>222] , 'timestamp' => $date1, 'description' => 'description1'], //2010-01-01
-			['title' => 'title2', 'img' => ['url'=> 'img1', 'width'=> 333, 'height'=>444], 'timestamp' => $date2, 'description' => 'description2'] //2011-01-01
+			['title' => 'title1', 'img' => ['url' => 'img1', 'width' => 111, 'height' => 222], 'timestamp' => $date1, 'description' => 'description1'], //2010-01-01
+			['title' => 'title2', 'img' => ['url' => 'img1', 'width' => 333, 'height' => 444], 'timestamp' => $date2, 'description' => 'description2'] //2011-01-01
 		];
 
 		$xml = $service->dataToXml( $inputData, $hub );
@@ -79,14 +79,14 @@ class HubRssServiceTest extends WikiaBaseTest {
 			$this->assertEquals( 1, $xpath->query( 'title[.="' . $data[ 'title' ] . '"]', $item )->length );
 			$this->assertEquals( 1, $xpath->query( 'pubDate[.="' . date( HubRssFeedService::DATE_FORMAT, $data[ 'timestamp' ] ) . '"]', $item )->length );
 			$this->assertEquals( 1, $xpath->query( 'dc:creator[.="Wikia"]', $item )->length );
-			$this->assertEquals( 1, $xpath->query( 'description[.="'.$data[ 'description' ].'"]', $item )->length );
+			$this->assertEquals( 1, $xpath->query( 'description[.="' . $data[ 'description' ] . '"]', $item )->length );
 			$imgList = $xpath->query( 'media:content', $item );
 			$this->assertEquals( 1, $imgList->length );
-			$img = $imgList->item(0);
-			$this->assertEquals( 'image/jpeg', $img->attributes->getNamedItem('type')->nodeValue);
-			$this->assertEquals( $data['img']['url'], $img->attributes->getNamedItem('url')->nodeValue);
-			$this->assertEquals( $data['img']['width'], $img->attributes->getNamedItem('width')->nodeValue);
-			$this->assertEquals( $data['img']['height'], $img->attributes->getNamedItem('height')->nodeValue);
+			$img = $imgList->item( 0 );
+			$this->assertEquals( 'image/jpeg', $img->attributes->getNamedItem( 'type' )->nodeValue );
+			$this->assertEquals( $data[ 'img' ][ 'url' ], $img->attributes->getNamedItem( 'url' )->nodeValue );
+			$this->assertEquals( $data[ 'img' ][ 'width' ], $img->attributes->getNamedItem( 'width' )->nodeValue );
+			$this->assertEquals( $data[ 'img' ][ 'height' ], $img->attributes->getNamedItem( 'height' )->nodeValue );
 
 
 		}
