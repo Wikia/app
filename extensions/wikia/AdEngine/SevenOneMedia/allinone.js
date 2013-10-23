@@ -12,6 +12,9 @@ Wikia.SevenOneMediaIntegration = {
 		}
 	},
 	track: function (stage) {
+		if (!Wikia.SevenOneMediaIntegration.enabled) {
+			return;
+		}
 		Wikia.Tracker && Wikia.Tracker.track({
 			eventName: 'liftium.71m',
 			ga_category: '71m',
@@ -19,13 +22,14 @@ Wikia.SevenOneMediaIntegration = {
 			trackingMethod: 'ad'
 		});
 	},
-	start: function () {
+	initVars: function () {
 		if (!Wikia.SevenOneMediaIntegration.enabled) {
 			return;
 		}
 		$('#TOP_BUTTON_WIDE').remove();
 		$('#WikiaTopAds').hide().after(
 			'<div id="ads-outer">' +
+				'<div id="ad-popup1" class="ad-wrapper"></div>' +
 				'<div id="TOP_BUTTON_WIDE"></div>' +
 				'<div id="ad-fullbanner2-outer">' +
 					'<div id="ad-fullbanner2" class="ad-wrapper" style="visibility:hidden;"></div>' +
@@ -92,65 +96,5 @@ Wikia.SevenOneMediaIntegration = {
 		window.SOI_VA4 = false; // overlay
 		window.SOI_VA5 = false; // sponsor
 		window.SOI_AUTOPLAY = ''; // on|off
-
-		if (!window.myAd) {
-			window.myAd = {};
-			myAd.loadScript = myAd.insertAd = myAd.finishAd = myAd.exists = function(){};
-			myAd.getVideoAdRequest = function(){return '';}
-		}
-
-		document.write(
-			'<scr' + 'ipt>Wikia.SevenOneMediaIntegration.track("init");</scr' + 'ipt>' +
-			'<scr' + 'ipt>myAd.loadScript("site");</scr' + 'ipt>' +
-			'<scr' + 'ipt>myAd.loadScript("global");</scr' + 'ipt>' +
-			'<scr' + 'ipt>Wikia.SevenOneMediaIntegration.track("scripts");</scr' + 'ipt>' +
-			'<div id="ads-postponed" style="display:none">' +
-				'<table><tr><td>'  +
-					'<div id="ad-popup1-postponed" class="ad-wrapper">' +
-						'<scr' + 'ipt type="text/javascript">' +
-							'myAd.insertAd("popup1");' +
-						'</scr' + 'ipt>' +
-					'</div>' +
-				'</td></tr></table>' +
-				'<scr' + 'ipt type="text/javascript">' +
-					'myAd.finishAd("popup1", "move");' +
-				'</scr' + 'ipt>' +
-				'<table><tr><td>' +
-					'<div id="ad-fullbanner2-postponed" class="ad-wrapper">' +
-						'<scr' + 'ipt type="text/javascript">' +
-							'myAd.insertAd("fullbanner2");' +
-						'</scr' + 'ipt>' +
-					'</div>' +
-				'</td></tr></table>' +
-				'<scr' + 'ipt type="text/javascript">' +
-					'myAd.finishAd("fullbanner2", "move");' +
-					'if (!myAd.isSpecialAd("fullbanner2")) {' +
-						'window.adslots2.push(["TOP_BUTTON_WIDE.force"]);' +
-					'}' +
-				'</scr' + 'ipt>' +
-				'<table><tr><td>' +
-					'<div id="ad-skyscraper1-postponed" class="ad-wrapper">' +
-						'<scr' + 'ipt type="text/javascript">' +
-							'myAd.insertAd("skyscraper1");' +
-						'</scr' + 'ipt>' +
-					'</div>' +
-				'</td></tr></table>' +
-				'<scr' + 'ipt type="text/javascript">' +
-					'myAd.finishAd("skyscraper1", "move");' +
-				'</scr' + 'ipt>' +
-				'<table><tr><td>' +
-					'<div id="ad-rectangle1-postponed" class="ad-wrapper">' +
-						'<scr' + 'ipt type="text/javascript">' +
-							'myAd.insertAd("rectangle1");' +
-					'</scr' + 'ipt>' +
-				'</div>' +
-				'</td></tr></table>' +
-				'<scr' + 'ipt type="text/javascript">' +
-					'$("#TOP_RIGHT_BOXAD, #HOME_TOP_RIGHT_BOXAD").removeClass("default-height");' +
-					'myAd.finishAd("rectangle1", "move");' +
-				'</scr' + 'ipt>' +
-			'</div>' +
-			'<scr' + 'ipt>Wikia.SevenOneMediaIntegration.track("ads");</scr' + 'ipt>'
-		);
 	}
 };

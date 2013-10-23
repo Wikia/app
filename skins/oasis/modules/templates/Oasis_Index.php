@@ -133,9 +133,45 @@ if ( window.Wikia.AbTest && (Wikia.AbTest.getGroup( "DAR_RIGHTRAILPOSITION" ) ==
 	<script>
 		Wikia.SevenOneMediaIntegration.loadStyle(<?= json_encode(AssetsManager::getInstance()->getOneCommonURL('extensions/wikia/AdEngine/SevenOneMedia/my_ad_integration.css')); ?>);
 	</script>
-	<script>
-		Wikia.SevenOneMediaIntegration.start();
-	</script>
+	<script>Wikia.SevenOneMediaIntegration.initVars();</script>
+	<script>Wikia.SevenOneMediaIntegration.track("init");</script>
+	<script>Wikia.SevenOneMediaIntegration.enabled && myAd.loadScript("site");</script>
+	<script>Wikia.SevenOneMediaIntegration.enabled && myAd.loadScript("global");</script>
+	<script>Wikia.SevenOneMediaIntegration.track("scripts");</script>
+	<div id="ads-postponed" style="display: none">
+		<table><tr><td>
+			<div id="ad-popup1-postponed" class="ad-wrapper">
+				<script>Wikia.SevenOneMediaIntegration.enabled && myAd.insertAd("popup1");</script>
+			</div>
+		</td></tr></table>
+		<script>Wikia.SevenOneMediaIntegration.enabled && myAd.finishAd("popup1", "move");</script>
+		<table><tr><td>
+			<div id="ad-fullbanner2-postponed" class="ad-wrapper">
+				<script>Wikia.SevenOneMediaIntegration.enabled && myAd.insertAd("fullbanner2");</script>
+			</div>
+		</td></tr></table>
+		<script>
+			if (Wikia.SevenOneMediaIntegration.enabled) {
+				myAd.finishAd("fullbanner2", "move");
+				if (!myAd.isSpecialAd("fullbanner2")) {
+					window.adslots2.push(["TOP_BUTTON_WIDE.force"]);
+				}
+			}
+		</script>
+		<table><tr><td>
+			<div id="ad-skyscraper1-postponed" class="ad-wrapper">
+				<script>Wikia.SevenOneMediaIntegration.enabled && myAd.insertAd("skyscraper1");</script>
+			</div>
+		</td></tr></table>
+		<script>Wikia.SevenOneMediaIntegration.enabled && myAd.finishAd("skyscraper1", "move");</script>
+		<table><tr><td>
+			<div id="ad-rectangle1-postponed" class="ad-wrapper">
+				<script>Wikia.SevenOneMediaIntegration.enabled && myAd.insertAd("rectangle1");</script>
+			</div>
+		</td></tr></table>
+		<script>Wikia.SevenOneMediaIntegration.enabled && myAd.finishAd("rectangle1", "move");</script>
+	</div>
+	<script>Wikia.SevenOneMediaIntegration.track("ads");</script>
 <? endif ?>
 
 </body>
