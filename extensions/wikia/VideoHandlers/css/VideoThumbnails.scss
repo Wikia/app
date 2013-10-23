@@ -1,4 +1,4 @@
-/* VideoThumbnails.scss */
+@import "skins/oasis/css/mixins/background-opacity";
 @import "extensions/wikia/VideoHandlers/css/mixins/play_button";
 
 /**
@@ -12,7 +12,19 @@
 	width: 100%;
 	position: relative;
 
-	img {
+	&.responsive .wikia-video-thumb {
 		width: 100%;
+	}
+
+	.duration {
+		@include background-opacity(#000, 70);
+		border-radius: 1px 0 0 0;
+		bottom: 0;
+		color: white;
+		font-size: 12px;
+		line-height: 17px;
+		padding: 0px 6px;
+		position: absolute;
+		right: 0;
 	}
 }

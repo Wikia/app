@@ -61,6 +61,7 @@ class VideoHandlerController extends WikiaController {
 
 		// set link attributes
 		$this->linkHref = $videoTitle->getLocalURL();
+		$this->linkClasses = [];
 
 		/*
 		 * TODO: map thumbnail width to play button size:
@@ -84,6 +85,8 @@ class VideoHandlerController extends WikiaController {
 		if( empty( $options[ 'responsive' ] ) ) {
 			$this->imgWidth = '300px';
 			$this->imgHeight = '200px';
+		} else {
+			$this->linkClasses[] = 'responsive';
 		}
 
 		// set duration
