@@ -1,4 +1,6 @@
-var SpecialPromote = function (params) {
+var SpecialPromote = function () {
+    'use strict';
+
     this.headlineNode = null;
     this.descriptionNode = null;
 
@@ -48,6 +50,8 @@ var SpecialPromote = function (params) {
 
 SpecialPromote.prototype = {
     init: function () {
+        'use strict';
+
         this.disablePublish();
         this.headlineNode = $('input[name=title]');
         this.descriptionNode = $('textarea[name=description]');
@@ -56,7 +60,8 @@ SpecialPromote.prototype = {
 
         this.current.headline = this.original.headline = this.headlineNode.val();
         this.current.description = this.original.description = this.descriptionNode.val();
-        this.current.mainImageName = this.original.mainImageName = $('.large-photo img#curMainImageName').data('filename');
+        this.current.mainImageName = this.original.mainImageName = $('.large-photo img#curMainImageName')
+            .data('filename');
 
         $('.small-photos img.additionalImage').each($.proxy(function (i, img) {
             var fileName = $(img).data('filename');
@@ -89,18 +94,23 @@ SpecialPromote.prototype = {
         $().log('SpecialPromote.init finished');
     },
     initInput: function (targetObject) {
+        'use strict';
+
         var fieldName = targetObject.attr('name');
         this.initInputParams(targetObject, fieldName);
         this.initValidate(targetObject, fieldName);
     },
     initValidate: function (targetObject, fieldName) {
+        'use strict';
+
         var characterCount = targetObject.val().length;
 
-        if (typeof this.inputParams[fieldName].minChars != 'undefined'
-            && typeof this.inputParams[fieldName].maxChars != 'undefined'
+        if (
+                typeof this.inputParams[fieldName].minChars !== 'undefined' &&
+                typeof this.inputParams[fieldName].maxChars !== 'undefined'
             ) {
-            this.inputParams[fieldName].minChars = parseInt(this.inputParams[fieldName].minChars);
-            this.inputParams[fieldName].maxChars = parseInt(this.inputParams[fieldName].maxChars);
+            this.inputParams[fieldName].minChars = parseInt(this.inputParams[fieldName].minChars, 10);
+            this.inputParams[fieldName].maxChars = parseInt(this.inputParams[fieldName].maxChars, 10);
 
             if (this.inputParams[fieldName].minChars > characterCount) {
                 if (characterCount) {
@@ -119,13 +129,17 @@ SpecialPromote.prototype = {
         }
     },
     initInputParams: function (targetObject, fieldName) {
+        'use strict';
+
         this.inputParams[fieldName].minChars = targetObject.data('min');
         this.inputParams[fieldName].maxChars = targetObject.data('max');
     },
     onKeyUp: function (event) {
-        var targetObject = $(event.target);
-        var fieldName = targetObject.attr('name');
-        var characterCount = targetObject.val().length;
+        'use strict';
+
+        var targetObject = $(event.target),
+            fieldName = targetObject.attr('name'),
+            characterCount = targetObject.val().length;
 
         if (this.inputParams[fieldName].minChars > characterCount) {
             this.addTooLittleCharsError(targetObject, characterCount, this.inputParams[fieldName].minChars);
@@ -139,10 +153,10 @@ SpecialPromote.prototype = {
             this.status[fieldName] = true;
         }
 
-        if (fieldName == 'description') {
+        if (fieldName === 'description') {
             this.characterCounter.text(characterCount);
         }
-        else if (fieldName == 'title') {
+        else if (fieldName === 'title') {
             this.characterCounterHeadline.text(characterCount);
         }
 
@@ -152,26 +166,34 @@ SpecialPromote.prototype = {
         this.checkPublishButton();
     },
     addTooLittleCharsError: function (targetObject, characterCount, minChars) {
+        'use strict';
+
         targetObject.closest('div').parent().addClass('error');
         targetObject.closest('div').parent().find('.error').text(
             $.msg('promote-error-less-characters-than-minimum', characterCount, minChars)
         );
     },
     addTooManyCharsError: function (targetObject, characterCount, maxChars) {
+        'use strict';
+
         targetObject.closest('div').parent().addClass('error');
         targetObject.closest('div').parent().find('.error').text(
             $.msg('promote-error-more-characters-than-maximum', characterCount, maxChars)
         );
     },
     checkMainImage: function () {
+        'use strict';
+
         var image = $('.large-photo img#curMainImageName').data('filename');
-        if (typeof image == 'undefined') {
+        if (typeof image === 'undefined') {
             this.status.mainPhoto = false;
         } else {
-            this.status.mainPhoto = !(image == '' || image == null);
+            this.status.mainPhoto = !(image === '' || image === null);
         }
     },
     checkPublishButton: function () {
+        'use strict';
+
         this.checkMainImage();
         if (this.validateData()) {
             this.enablePublish();
@@ -180,6 +202,8 @@ SpecialPromote.prototype = {
         }
     },
     getUploadForm: function (data) {
+        'use strict';
+
         if (!data.uploadType) {
             throw this.ERROR_GET_UPLOAD_FORM_ERROR;
         }
@@ -194,16 +218,23 @@ SpecialPromote.prototype = {
         return true;
     },
     showImageModal: function (html) {
+        'use strict';
+
         $().log('making modal: ' + this.IMAGE_MODAL_WIDTH);
         $(html).makeModal({width: this.IMAGE_MODAL_WIDTH});
     },
     onAddPhotoBtnClick: function (e) {
-        e.preventDefault();
-        var addPhotoBtn = $(e.currentTarget);
-        var uploadType = addPhotoBtn.data('image-type');
-        var errorContainer = addPhotoBtn.parent().find('.error');
+        'use strict';
 
-        if (uploadType === this.UPLOAD_TYPE_ADDITIONAL && this.current.additionalImagesNames.length >= this.ADDITIONAL_IMAGES_LIMIT) {
+        e.preventDefault();
+        var addPhotoBtn = $(e.currentTarget),
+            uploadType = addPhotoBtn.data('image-type'),
+            errorContainer = addPhotoBtn.parent().find('.error');
+
+        if (
+            uploadType === this.UPLOAD_TYPE_ADDITIONAL &&
+            this.current.additionalImagesNames.length >= this.ADDITIONAL_IMAGES_LIMIT
+        ) {
             addPhotoBtn.parent().addClass('error');
             errorContainer.text($.msg('promote-error-too-many-images'));
             return;
@@ -221,9 +252,12 @@ SpecialPromote.prototype = {
         }
     },
     onChangePhotoClick: function (e) {
+        'use strict';
+
         e.preventDefault();
-        var parentNode = $(e.target).parent().parent();
-        var target = parentNode.find('img#curMainImageName');
+        var parentNode = $(e.target).parent().parent(),
+            target = parentNode.find('img#curMainImageName');
+
         if ($.isEmptyObject(target[0])) {
             target = parentNode.find('img.additionalImage');
         }
@@ -241,6 +275,8 @@ SpecialPromote.prototype = {
         return true;
     },
     onDeletePhotoClick: function (e) {
+        'use strict';
+
         e.preventDefault();
 
         var target = $(e.target).parent().parent().find('img.additionalImage');
@@ -254,16 +290,20 @@ SpecialPromote.prototype = {
         }
     },
     removeImage: function (params) {
-        if (params.uploadType == 'additional') {
-            var selectedByName;
+        'use strict';
+
+        if (params.uploadType === 'additional') {
+            var selectedByName,
+                removalPromise;
+
             $.each($('.small-photos img.additionalImage'), function (i, element) {
                 var elementObject = $(element);
-                if (elementObject.data('image-index') == params.imageIndex) {
+                if (elementObject.data('image-index') === params.imageIndex) {
                     selectedByName = elementObject.data('filename');
                 }
             });
 
-            var removalPromise = this.removeTempImage(selectedByName);
+            removalPromise = this.removeTempImage(selectedByName);
 
             removalPromise.done($.proxy(function (success) {
                 console.log('success = ' + success);
@@ -273,7 +313,7 @@ SpecialPromote.prototype = {
 
                     $.each($('.small-photos img.additionalImage'), function (i, domElement) {
                         var domElementObject = $(domElement);
-                        if (domElementObject.data('image-index') == params.imageIndex) {
+                        if (domElementObject.data('image-index') === params.imageIndex) {
                             domElementObject.parent().remove();
                         }
                     });
@@ -292,26 +332,30 @@ SpecialPromote.prototype = {
         this.checkPublishButton();
         return true;
     },
-    saveAvatarAIM: function (event) {
-        var form = $('#ImageUploadForm');
-        var submitBtn = form.find('#submit-button');
+    saveAvatarAIM: function () {
+        'use strict';
+
+        var form = $('#ImageUploadForm'),
+            submitBtn = form.find('#submit-button');
 
         $.AIM.submit(form, {
             onStart: $.proxy(function () {
                 submitBtn.attr('disabled', 'disabled');
             }, this),
             onComplete: $.proxy(function (response) {
-                var errorContainer = $('.modalWrapper .error'), unknownErrorMsg = $.msg('promote-error-upload-unknown-error');
+                var errorContainer = $('.modalWrapper .error'), unknownErrorMsg =
+                    $.msg('promote-error-upload-unknown-error');
+
                 try {
                     response = JSON.parse(response);
                     if (typeof(response.fileName) !== 'undefined' && typeof(response.fileUrl) !== 'undefined') {
                         this.setTempFile(response);
                         $('.modalWrapper').closeModal();
                     } else {
-                        if (typeof response.errorMessages[0] == 'undefined') {
+                        if (typeof response.errorMessages[0] === 'undefined') {
                             errorContainer.text(unknownErrorMsg);
                         } else {
-                            errorContainer.text(response.errorMessages.join("\n"));
+                            errorContainer.text(response.errorMessages.join('\n'));
                         }
                     }
                 } catch (e) {
@@ -323,6 +367,8 @@ SpecialPromote.prototype = {
         });
     },
     setTempFile: function (file) {
+        'use strict';
+
         switch (file.uploadType) {
             case this.UPLOAD_TYPE_MAIN:
                 this.setMainImage(file);
@@ -336,17 +382,21 @@ SpecialPromote.prototype = {
         }
     },
     setMainImage: function (file) {
+        'use strict';
+
         this.current.mainImageName = file.fileName;
 
-        var mainImgDiv = $('.large-photo');
-        var imageNode = mainImgDiv.find('img#curMainImageName').get(0);
+        var mainImgDiv = $('.large-photo'),
+            imageNode = mainImgDiv.find('img#curMainImageName').get(0),
+            image;
+
         if (typeof(imageNode) !== 'undefined') {
             $(imageNode)
                 .attr('src', file.fileUrl)
                 .data('filename', file.fileName)
                 .data('image-type', 'main');
         } else {
-            var image = new Image();
+            image = new Image();
             mainImgDiv.append(
                 $(image)
                     .attr('src', file.fileUrl)
@@ -359,12 +409,18 @@ SpecialPromote.prototype = {
         this.checkPublishButton();
     },
     addAdditionalImage: function (file) {
-        var image;
+        'use strict';
+
+        var image,
+            imagesContainer,
+            smallPhotosWrapper,
+            modifyRemoveNode;
+
         if (file.imageIndex) {
             this.current.additionalImagesNames[file.imageIndex] = file.fileName;
             $('.small-photos img').each(function (key, value) {
                 var valueObject = $(value);
-                if (valueObject.data('image-index') == file.imageIndex) {
+                if (valueObject.data('image-index') === file.imageIndex) {
                     image = valueObject;
                 }
             });
@@ -372,13 +428,15 @@ SpecialPromote.prototype = {
             image.data('filename', file.fileName);
         } else {
             this.current.additionalImagesNames.push(file.fileName);
-            var imagesContainer = $('.small-photos');
+
+            imagesContainer = $('.small-photos');
             image = new Image();
-            var smallPhotosWrapper = $('<div class="small-photos-wrapper"></div>');
-            var modifyRemoveNode = $('<div class="modify-remove"><a class="modify" href="#">'
-                + $.msg('promote-modify-photo')
-                + '</a> <a class="remove" href="#">'
-                + $.msg('promote-remove-photo') + '</a></div>');
+            smallPhotosWrapper = $('<div class="small-photos-wrapper"></div>');
+            modifyRemoveNode = $('<div class="modify-remove"><a class="modify" href="#">' +
+                $.msg('promote-modify-photo') +
+                '</a> <a class="remove" href="#">' +
+                $.msg('promote-remove-photo') + '</a></div>');
+
             smallPhotosWrapper
                 .append(modifyRemoveNode)
                 .append(
@@ -395,10 +453,12 @@ SpecialPromote.prototype = {
         this.checkPublishButton();
     },
     validateData: function () {
+        'use strict';
+
         var result = {valid: true};
 
         $.each(this.status, $.proxy(function (key, value) {
-            if (value == false) {
+            if (value === false) {
                 this.valid = false;
             }
         }, result));
@@ -406,12 +466,18 @@ SpecialPromote.prototype = {
         return result.valid;
     },
     disablePublish: function () {
+        'use strict';
+
         $('.button').attr('disabled', 'disabled');
     },
     enablePublish: function () {
+        'use strict';
+
         $('.button').removeAttr('disabled');
     },
     onUploadFormSubmit: function (e) {
+        'use strict';
+
         e.preventDefault();
         $('.UploadTool').startThrobbing();
         if (!this.validateData()) {
@@ -420,8 +486,8 @@ SpecialPromote.prototype = {
         }
         var doSave = false;
 
-        $.each(this.current, $.proxy(function (key, value) {
-            if (this.current[key] != this.original[key]) {
+        $.each(this.current, $.proxy(function (key) {
+            if (this.current[key] !== this.original[key]) {
                 doSave = true;
             }
         }, this));
@@ -431,6 +497,8 @@ SpecialPromote.prototype = {
         }
     },
     saveWikiPromoData: function (data) {
+        'use strict';
+
         $.nirvana.sendRequest({
             type: 'post',
             format: 'json',
@@ -452,6 +520,8 @@ SpecialPromote.prototype = {
         });
     },
     removeTempImage: function (imagename) {
+        'use strict';
+
         if (!imagename) {
             throw this.ERROR_REMOVE_TEMP_IMAGE;
         }
@@ -468,8 +538,7 @@ SpecialPromote.prototype = {
             data: {
                 fileName: imagename
             },
-            onErrorCallback: $.proxy(function (response) {
-                removed = false;
+            onErrorCallback: $.proxy(function () {
                 this.removed = false;
             }, result)
         }).then(
@@ -482,12 +551,16 @@ SpecialPromote.prototype = {
             );
     },
     modifyRemoveHandler: function (e) {
+        'use strict';
+
         var targetObject = $(e.currentTarget);
         if (targetObject.find('img').length > 0) {
             targetObject.find('.modify-remove').toggleClass('show');
         }
     },
     errorHandler: function (error) {
+        'use strict';
+
         var msg;
 
         switch (error) {
@@ -522,6 +595,8 @@ SpecialPromote.prototype = {
 };
 
 $(function () {
+    'use strict';
+
     $.loadJQueryAIM().done(function () {
         var SpecialPromoteInstance = new SpecialPromote();
         SpecialPromoteInstance.init();
