@@ -33,6 +33,11 @@ ve.ui.WikiaMediaInsertDialog.static.icon = 'media';
 
 /* Methods */
 
+/**
+ * Initialize the dialog.
+ *
+ * @method
+ */
 ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	// Parent method
 	ve.ui.MWDialog.prototype.initialize.call( this );
@@ -40,42 +45,137 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	// Properties
 	this.cartModel = new ve.dm.WikiaCart();
 	this.cart = new ve.ui.WikiaCartWidget( this.cartModel );
-	this.$cart = this.$$( '<div>' );
-	this.search = new ve.ui.WikiaMediaSearchWidget( { '$$': this.frame.$$ } );
-	this.pagesPanel = new ve.ui.PagedLayout( { '$$': this.frame.$$, 'attachPagesPanel': true } );
-	this.$removePage = this.$$( '<div>' );
-	this.removeButton = new ve.ui.ButtonWidget( {
-		'$$': this.frame.$$,
-		'label': 'Remove from the cart', //TODO: i18n
-		'flags': ['destructive']
-	} );
-	this.removeButton.$.appendTo( this.$removePage );
 	this.insertButton = new ve.ui.ButtonWidget( {
 		'$$': this.$$,
 		'label': ve.msg( 'visualeditor-wikiamediainsertbuttontool-label' ),
 		'flags': ['primary']
 	} );
 	this.insertionDetails = {};
+	this.pages = new ve.ui.PagedLayout( { '$$': this.frame.$$, 'attachPagesPanel': true } );
+	this.query = new ve.ui.WikiaMediaQueryWidget( { '$$': this.frame.$$ } );
+	this.queryInput = this.query.getInput();
+	this.removeButton = new ve.ui.ButtonWidget( {
+		'$$': this.frame.$$,
+		'label': 'Remove from the cart', //TODO: i18n
+		'flags': ['destructive']
+	} );
+	this.search = new ve.ui.WikiaMediaResultsWidget( { '$$': this.frame.$$ } );
+	this.searchResults = this.search.getResults();
+
+	this.$cart = this.$$( '<div>' );
+	this.$content = this.$$( '<div>' );
+	this.$removePage = this.$$( '<div>' );
+	this.$mainPage = this.$$( '<div>' );
+	this.uploadButton = new ve.ui.WikiaUploadWidget( { '$$': this.frame.$$ } );
 
 	// Events
-	this.search.connect( this, { 'select': 'onSearchSelect' } );
 	this.cart.connect( this, { 'select': 'onCartSelect' } );
-	this.pagesPanel.connect( this, { 'set': 'onPagesPanelSet' } );
-	this.removeButton.connect( this, { 'click': 'onRemoveButtonClick' } );
 	this.insertButton.connect( this, { 'click': [ 'close', 'insert' ] } );
+	this.pages.connect( this, { 'set': 'onPageSet' } );
+	this.query.connect( this, { 'requestMediaDone': 'onQueryRequestMediaDone' } );
+	this.queryInput.connect( this, {
+		'change': 'onQueryInputChange',
+		'enter': 'onQueryInputEnter'
+	} );
+	this.queryInput.$input.on( 'keydown', ve.bind( this.onQueryInputKeydown, this ) );
+	this.removeButton.connect( this, { 'click': 'onRemoveButtonClick' } );
+	this.search.connect( this, {
+		'nearingEnd': 'onSearchNearingEnd',
+		'select': 'onSearchSelect'
+	} );
 
 	// Initialization
-	// TODO: Rename to "remove" to details" when start working seriously on it.
-	this.pagesPanel.addPage( 'remove', { '$content': this.$removePage } );
-	this.pagesPanel.addPage( 'search', { '$content': this.search.$ } );
+	this.removeButton.$.appendTo( this.$removePage );
+	this.uploadButton.$.appendTo( this.$mainPage );
+	// TODO: Remove this when file information pages are built
+	this.pages.addPage( 'remove', { '$content': this.$removePage } );
+	// TODO: Make suggestions widget and remove this placeholder div
+	this.pages.addPage( 'main', { '$content': this.$mainPage } );
+	this.pages.addPage( 'search', { '$content': this.search.$ } );
+
 	this.$cart
 		.addClass( 've-ui-wikiaCartWidget-wrapper' )
 		.append( this.cart.$ );
-	this.$body.append( this.$cart, this.pagesPanel.$ );
-	this.frame.$content.addClass( 've-ui-wikiaMediaInsertDialog-content' );
+	this.$content
+		.addClass( 've-ui-wikiaMediaInsertDialog-content' )
+		.append( this.query.$, this.pages.$ );
+
+	this.$body.append( this.$content, this.$cart );
+	this.frame.$content.addClass( 've-ui-wikiaMediaInsertDialog' );
 	this.$foot.append( this.insertButton.$ );
 };
 
+/**
+ * Handle query input changes.
+ *
+ * @method
+ * @param {string} value The query input value
+ */
+ve.ui.WikiaMediaInsertDialog.prototype.onQueryInputChange = function ( value ) {
+	this.searchResults.clearItems();
+	if ( value.trim().length === 0 ) {
+		this.pages.setPage( 'main' );
+	}
+};
+
+/**
+ * Handle pressing the enter key inside the query input.
+ *
+ * @method
+ */
+ve.ui.WikiaMediaInsertDialog.prototype.onQueryInputEnter = function () {
+	this.searchResults.selectItem( this.searchResults.getHighlightedItem() );
+};
+
+/**
+ * Handle key up/down for selecting result items.
+ * Copied from ve.ui.SearchWidget.js
+ *
+ * @method
+ * @param {jQuery.Event} e The jQuery event Object.
+ */
+ve.ui.WikiaMediaInsertDialog.prototype.onQueryInputKeydown = function ( e ) {
+	var highlightedItem, nextItem,
+		dir = e.which === ve.Keys.DOWN ? 1 : ( e.which === ve.Keys.UP ? -1 : 0 );
+
+	if ( dir ) {
+		highlightedItem = this.searchResults.getHighlightedItem();
+		if ( !highlightedItem ) {
+			highlightedItem = this.searchResults.getSelectedItem();
+		}
+		nextItem = this.searchResults.getRelativeSelectableItem( highlightedItem, dir );
+		this.searchResults.highlightItem( nextItem );
+		nextItem.scrollElementIntoView();
+	}
+};
+
+/**
+ * Handle the resulting data from a query media request.
+ *
+ * @method
+ * @param {Object} items An object containing items to add to the search results
+ */
+ve.ui.WikiaMediaInsertDialog.prototype.onQueryRequestMediaDone = function ( items ) {
+	// TODO: handle filtering search results to show what's in the cart already
+	this.search.addItems( items );
+	this.pages.setPage( 'search' );
+};
+
+/**
+ * Handle nearing the end of search results.
+ *
+ * @method
+ */
+ve.ui.WikiaMediaInsertDialog.prototype.onSearchNearingEnd = function () {
+	this.query.requestMedia();
+};
+
+/**
+ * Handle clicking on search result items.
+ *
+ * @method
+ * @param {ve.ui.OptionWidget} item The search result item model
+ */
 ve.ui.WikiaMediaInsertDialog.prototype.onSearchSelect = function ( item ) {
 	var cartItems, i;
 	if ( item === null ) {
@@ -92,33 +192,56 @@ ve.ui.WikiaMediaInsertDialog.prototype.onSearchSelect = function ( item ) {
 	] );
 };
 
+/**
+ * Handle clicking on cart items.
+ *
+ * @method
+ */
 ve.ui.WikiaMediaInsertDialog.prototype.onCartSelect = function () {
-	if ( this.pagesPanel.getPageName() === 'search' ) {
-		this.pagesPanel.setPage( 'remove' );
+	if ( this.pages.getPageName() === 'search' ) {
+		this.pages.setPage( 'remove' );
 	} else {
-		this.pagesPanel.setPage( 'search' );
+		this.pages.setPage( 'search' );
 	}
 };
 
+/** */
 ve.ui.WikiaMediaInsertDialog.prototype.onRemoveButtonClick = function () {
 	this.cartModel.removeItems( [ this.cart.getSelectedItem().getModel() ] );
-	this.pagesPanel.setPage( 'search' );
+	this.pages.setPage( 'search' );
 };
 
+/**
+ * Handle opening the dialog.
+ *
+ * @method
+ */
 ve.ui.WikiaMediaInsertDialog.prototype.onOpen = function () {
 	ve.ui.MWDialog.prototype.onOpen.call( this );
-	this.pagesPanel.setPage( 'search' );
+	this.pages.setPage( 'main' );
 };
 
-ve.ui.WikiaMediaInsertDialog.prototype.onPagesPanelSet = function ( page ) {
-	page.$.find( ':input:first' ).focus();
+/**
+ * Handle when a page is set.
+ *
+ * @method
+ */
+ve.ui.WikiaMediaInsertDialog.prototype.onPageSet = function () {
+	this.queryInput.$input.focus();
 };
 
+/**
+ * Handle closing the dialog.
+ *
+ * @method
+ * @param {string} action Which action is being performed on close.
+ */
 ve.ui.WikiaMediaInsertDialog.prototype.onClose = function ( action ) {
 	if ( action === 'insert' ) {
 		this.insertMedia( ve.copy( this.cartModel.getItems() ) );
 	}
 	this.cartModel.clearItems();
+	this.queryInput.setValue( '' );
 };
 
 /**

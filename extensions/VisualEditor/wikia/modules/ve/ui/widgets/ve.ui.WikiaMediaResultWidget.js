@@ -8,8 +8,6 @@
 /* global require,mw */
 
 /**
- * Creates an ve.ui.WikiaMediaResultWidget object.
- *
  * @class
  * @extends ve.ui.OptionWidget
  *
@@ -56,6 +54,11 @@ ve.inheritClass( ve.ui.WikiaMediaResultWidget, ve.ui.OptionWidget );
 
 /* Methods */
 
+/**
+ * Load image thumbnails.
+ *
+ * @method
+ */
 ve.ui.WikiaMediaResultWidget.prototype.loadThumbnail = function () {
 	require( ['wikia.thumbnailer'], ve.bind( function ( thumbnailer ) {
 		this.image.src = thumbnailer.getThumbURL( this.data.url, 'image', this.size, this.size );
@@ -66,6 +69,11 @@ ve.ui.WikiaMediaResultWidget.prototype.loadThumbnail = function () {
 	}, this ) );
 };
 
+/**
+ * Handle when thumbnails are loaded.
+ *
+ * @method
+ */
 ve.ui.WikiaMediaResultWidget.prototype.onThumbnailLoad = function () {
 	this.$thumb.first().addClass( 've-ui-texture-transparency' );
 	this.$
@@ -86,5 +94,12 @@ ve.ui.WikiaMediaResultWidget.prototype.onThumbnailLoad = function () {
 		} );
 	}
 };
+
+/**
+ * Handle thumbnail loading errors.
+ *
+ * @method
+ * @see {@link ve.ui.MWMediaResultWidget.prototype.onThumbnailError}
+ */
 ve.ui.WikiaMediaResultWidget.prototype.onThumbnailError =
 	ve.ui.MWMediaResultWidget.prototype.onThumbnailError;
