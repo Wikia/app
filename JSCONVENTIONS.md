@@ -462,6 +462,8 @@ Hint: If it's in the modules folder, it should be namespace with 'wikia'.
 #### Folders ####
 For clarity and future-proofness, all javascript files should go into a 'scripts' folder and all stylesheet files should go into a 'styles' folder.  This is different from what we've done in the past, which was putting all scripts into a 'js' folder and all stylesheets into a 'css' folder.
 
+All library files should go inside "lib" folders.  This will make it easier for JSHint to ignore library code.
+
 #### JS Files ####
 All JS should be written as AMD modules so see [above](#amd-modules) for matching files names to module names.
 
