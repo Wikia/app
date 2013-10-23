@@ -161,8 +161,16 @@ var ThemeDesigner = {
 				ThemeDesigner.set("background-dynamic", $(this).attr("checked") ? "true" : "false");
 			});
 
+			// Background cannot be tiled and dynamic at once
+			if (ThemeDesigner.settings["background-tiled"] == "true") {
+				$("#dynamic-background").attr("disabled", true);
+			} else if (ThemeDesigner.settings["background-dynamic"] == "true") {
+				$("#tile-background").attr("disabled", true);
+			}
+
 			if (ThemeDesigner.settings["color-body"] != ThemeDesigner.settings["color-body-middle"]) {
 				$('#color-body-middle').attr("checked", true);
+				$('#CustomizeTab').find('.color-body-middle').css('display', 'block');
 			}
 
 			$("#swatch-color-background-middle").css("background-color", ThemeDesigner.settings["color-body-middle"]);
@@ -173,8 +181,10 @@ var ThemeDesigner = {
 							"color-body-middle",
 							ThemeDesigner.rgb2hex($("#swatch-color-background-middle").css("background-color"))
 					);
+					$('#CustomizeTab').find('.color-body-middle').css('display', 'block');
 				} else {
 					ThemeDesigner.set("color-body-middle", ThemeDesigner.settings["color-body"]);
+					$('#CustomizeTab').find('.color-body-middle').css('display', 'none');
 				}
 			});
 
@@ -316,10 +326,12 @@ var ThemeDesigner = {
 
 			// handle swatch clicking
 			swatches.find("li").click(function() {
+				ThemeDesigner.hidePicker();
 				if (swatchName == "color-body-middle") {
 					$("#color-body-middle").attr("checked", true);
+				} else if (swatchName == "color-body" && !$("#color-body-middle").attr("checked")) {
+					ThemeDesigner.set("color-body-middle", ThemeDesigner.rgb2hex($(this).css("background-color")));
 				}
-				ThemeDesigner.hidePicker();
 				ThemeDesigner.set(swatchName, ThemeDesigner.rgb2hex($(this).css("background-color")));
 				ThemeDesigner.set("theme", "custom");
 			});
@@ -702,12 +714,6 @@ var ThemeDesigner = {
 
 			if ($('#color-body-middle').attr("checked")) {
 				$("#swatch-color-background-middle").css("background-color", ThemeDesigner.settings["color-body-middle"]);
-			}
-
-			if (ThemeDesigner.settings["background-tiled"] == "true") {
-				$("#dynamic-background").attr("disabled", true);
-			} else if (ThemeDesigner.settings["background-dynamic"] == "true") {
-				$("#tiled-background").attr("disabled", true);
 			}
 
 			if (ThemeDesigner.settings["background-dynamic"] == "false") {
