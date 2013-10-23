@@ -1,6 +1,8 @@
 <?php
 
-use NlpTools\Tokenizers\WhitespaceAndPunctuationTokenizer, NlpTools\Stemmers\PorterStemmer, NlpTools\Similarity\JaccardIndex;
+use NlpTools\Tokenizers\WhitespaceAndPunctuationTokenizer,
+	NlpTools\Stemmers\PorterStemmer,
+	NlpTools\Similarity\JaccardIndex;
 
 /**
  * LicensedVideoSwap Helper
@@ -35,6 +37,7 @@ class LicensedVideoSwapHelper extends WikiaModel {
 	const POSTED_IN_ARTICLES = 100;
 	const NUM_SUGGESTIONS = 5;
 	const USER_VISITED_DATE = 'LicensedVideoSwap_visitedDate';
+	const USER_VISITED_LIST = 'LicensedVideoSwap_visitedList';
 
 	/**
 	 * TTL of 604800 is 7 days.  Expire suggestion cache after this
@@ -81,13 +84,8 @@ class LicensedVideoSwapHelper extends WikiaModel {
 
 		// We want to make sure the video hasn't been removed, is not premium and does not exist
 		// in the video_swap table
-		$statusProp = WPP_LVS_STATUS;
 		$pageNS = NS_FILE;
-		$swappable = '(props & '.self::STATUS_SWAPPABLE.' != 0)';
-		$notSwapped = '(props & '.self::STATUS_SWAP.' = 0)';
-		$notForever = '(props & '.self::STATUS_FOREVER.' = 0)';
-		$notKept = '(props & '.self::STATUS_KEEP.' = 0)';
-		$new = '(props & '.self::STATUS_NEW.' != 0)';
+		$canSwapProps = $this->canSwapPropLogic();
 		$offset = ( $page - 1 ) * $limit;
 
 		// Get the right sorting
@@ -104,8 +102,7 @@ class LicensedVideoSwapHelper extends WikiaModel {
 			FROM video_info
 			JOIN page ON video_title = page_title AND page_namespace = $pageNS
 			LEFT JOIN page_wikia_props ON page.page_id = page_wikia_props.page_id
-				AND propname = $statusProp AND $swappable
-				AND $notSwapped AND $notForever AND ($notKept OR $new)
+				AND $canSwapProps
 			WHERE removed = 0 AND premium = 0 AND page_wikia_props.page_id is not null
 			ORDER BY $order
 			LIMIT $limit
@@ -143,21 +140,15 @@ SQL;
 
 		// We want to make sure the video hasn't been removed, is not premium and does not exist
 		// in the video_swap table
-		$statusProp = WPP_LVS_STATUS;
 		$pageNS = NS_FILE;
-		$swappable = '(props & '.self::STATUS_SWAPPABLE.' != 0)';
-		$notSwapped = '(props & '.self::STATUS_SWAP.' = 0)';
-		$notForever = '(props & '.self::STATUS_FOREVER.' = 0)';
-		$notKept = '(props & '.self::STATUS_KEEP.' = 0)';
-		$new = '(props & '.self::STATUS_NEW.' != 0)';
+		$canSwapProps = $this->canSwapPropLogic();
 
 		$sql = <<<SQL
 			SELECT count(*) as total
 			FROM video_info
 			JOIN page ON video_title = page_title AND page_namespace = $pageNS
 			LEFT JOIN page_wikia_props ON page.page_id = page_wikia_props.page_id
-				AND propname = $statusProp AND $swappable
-				AND $notSwapped AND $notForever AND ($notKept OR $new)
+				AND $canSwapProps
 			WHERE removed = 0 AND premium = 0 AND page_wikia_props.page_id is not null
 SQL;
 
@@ -178,7 +169,73 @@ SQL;
 	}
 
 	/**
-	 * Get a list of non-premium video that is available to swap
+	 * Find the intersection between a list of video titles passed in and the current list of
+	 * unswapped videos on the LVS page.
+	 *
+	 * @param array $videoList A list of video title strings
+	 * @return array The list of video titles from $videoList that were still unswapped/kept
+	 */
+	public function intersectUnswappedVideo ( $videoList = array() ) {
+		wfProfileIn( __METHOD__ );
+
+		$db = wfGetDB( DB_SLAVE );
+
+		// We want to make sure the video hasn't been removed, is not premium and does not exist
+		// in the video_swap table
+		$pageNS = NS_FILE;
+		$canSwapProps = $this->canSwapPropLogic();
+
+		$videoListString = implode(',', array_map( function($v) use ($db) {
+														return $db->addQuotes($v);
+												   },
+												   $videoList )
+								  );
+
+		$sql = <<<SQL
+			SELECT video_title
+			FROM video_info
+			JOIN page ON video_title = page_title AND page_namespace = $pageNS
+			LEFT JOIN page_wikia_props ON page.page_id = page_wikia_props.page_id
+				AND $canSwapProps
+			WHERE removed = 0
+			  AND premium = 0
+			  AND page_wikia_props.page_id is not null
+			  AND video_title IN ($videoListString)
+SQL;
+
+		// Select video info making sure to skip videos that have entries in the video_swap table
+		$result = $db->query( $sql, __METHOD__ );
+
+		$intersection = [];
+		// Get the total count of relavent videos
+		while ( $row = $db->fetchObject( $result ) ) {
+			$intersection[] = $row->video_title;
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $intersection;
+	}
+
+	/**
+	 * SQL logic for determining if a video should be visible and available, based on its
+	 * page props.
+	 *
+	 * @return string
+	 */
+	private function canSwapPropLogic() {
+		$statusProp = WPP_LVS_STATUS;
+		$swappable  = '(props & '.self::STATUS_SWAPPABLE.' != 0)';
+		$notSwapped = '(props & '.self::STATUS_SWAP.' = 0)';
+		$notForever = '(props & '.self::STATUS_FOREVER.' = 0)';
+		$notKept    = '(props & '.self::STATUS_KEEP.' = 0)';
+		$new        = '(props & '.self::STATUS_NEW.' != 0)';
+
+		return "propname = $statusProp AND $swappable AND $notSwapped AND $notForever AND ($notKept OR $new)";
+	}
+
+	/**
+	 * Get a list of non-premium videos that are available to swap
 	 *
 	 * @param string $sort - The sort order for the video list (options: recent, popular, trend)
 	 * @param int $page - Which page to display. Each page contains self::VIDEOS_PER_PAGE videos
@@ -196,6 +253,9 @@ SQL;
 
 		// Reuse code from VideoHandlerHelper
 		$helper = new VideoHandlerHelper();
+
+		// Get a list of what videos the user has already looked at
+		$visitedList = unserialize($this->wg->User->getOption( LicensedVideoSwapHelper::USER_VISITED_LIST ));
 
 		// Go through each video and add additional detail needed to display the video
 		$videos = array();
@@ -222,6 +282,11 @@ SQL;
 
 				$videoDetail['confirmKeep'] = ( $this->isStatusKeep( $videoInfo['status'] ) && $this->isStatusNew( $videoInfo['status'] ) );
 				$videoDetail['isNew'] = $this->isStatusNew( $videoInfo['status'] );
+
+				// Unset the isNew flag if this user has already played this video
+				if ( isset($visitedList[$videoInfo['title']]) ) {
+					$videoDetail['isNew'] = false;
+				}
 
 				$videos[] = $videoDetail;
 			} else {
@@ -474,6 +539,7 @@ SQL;
 
 	/**
 	 * Get keep status
+	 * @param bool $isForever
 	 * @return integer $status
 	 */
 	public function getStatusKeep( $isForever = false ) {
@@ -564,7 +630,6 @@ SQL;
 	/**
 	 * Set the LVS status of the file page to swappable
 	 * @param integer $articleId - The ID of a video's file page
-	 * @param array $value
 	 */
 	public function setPageStatusSwappable( $articleId ) {
 		$status = $this->getPageStatus( $articleId );
@@ -575,7 +640,6 @@ SQL;
 	/**
 	 * Set the LVS status of the file page to new for kept videos
 	 * @param integer $articleId - The ID of a video's file page
-	 * @param array $value
 	 */
 	public function setPageStatusNew( $articleId ) {
 		$status = $this->getPageStatus( $articleId );
@@ -585,7 +649,7 @@ SQL;
 
 	/**
 	 * Clear new status for the LVS status of the file page
-	 * @param type $articleId
+	 * @param integer $articleId
 	 */
 	public function clearPageStatusNew( $articleId ) {
 		$status = $this->getPageStatus( $articleId );
@@ -605,7 +669,7 @@ SQL;
 
 	/**
 	 * delete the LVS status of the file page
-	 * @param type $articleId
+	 * @param integer $articleId
 	 */
 	public function deletePageStatus( $articleId ) {
 		wfDeleteWikiaPageProp( WPP_LVS_STATUS, $articleId );
@@ -613,7 +677,7 @@ SQL;
 
 	/**
 	 * Delete the LVS status info of the file page
-	 * @param type $articleId
+	 * @param integer $articleId
 	 */
 	public function deletePageStatusInfo( $articleId ) {
 		wfDeleteWikiaPageProp( WPP_LVS_STATUS_INFO, $articleId );
@@ -634,7 +698,7 @@ SQL;
 	 * @return array|null
 	 */
 	public function getPageStatusInfo( $articleId ) {
-		return  wfGetWikiaPageProp( WPP_LVS_STATUS_INFO, $articleId );
+		return wfGetWikiaPageProp( WPP_LVS_STATUS_INFO, $articleId );
 	}
 
 	/**
