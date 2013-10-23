@@ -8,7 +8,8 @@
 				<!-- TODO: Remove IF statement after fluid layout global release -->
 				<? if ($wg->OasisResponsive) : ?>
 					<div class="wrap-middle-color">
-						<h2>middle color</h2>
+						<input type="checkbox" id="color-body-middle" />
+						<label for="color-body-middle"><?= wfMessage('themedesigner-color-middle')->plain() ?></label>
 						<img src="<?= $wg->BlankImgUrl ?>" class="color-body-middle" id="swatch-color-background-middle">
 					</div>
 				<? endif ?>

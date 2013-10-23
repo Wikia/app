@@ -160,6 +160,24 @@ var ThemeDesigner = {
 			$("#dynamic-background").change(function() {
 				ThemeDesigner.set("background-dynamic", $(this).attr("checked") ? "true" : "false");
 			});
+
+			if (ThemeDesigner.settings["color-body"] != ThemeDesigner.settings["color-body-middle"]) {
+				$('#color-body-middle').attr("checked", true);
+			}
+
+			$("#swatch-color-background-middle").css("background-color", ThemeDesigner.settings["color-body-middle"]);
+
+			$("#color-body-middle").change(function() {
+				if ($(this).attr("checked")) {
+					ThemeDesigner.set(
+							"color-body-middle",
+							ThemeDesigner.rgb2hex($("#swatch-color-background-middle").css("background-color"))
+					);
+				} else {
+					ThemeDesigner.set("color-body-middle", ThemeDesigner.settings["color-body"]);
+				}
+			});
+
 		}
 
 		// submit handler for uploading custom background image
@@ -298,8 +316,11 @@ var ThemeDesigner = {
 
 			// handle swatch clicking
 			swatches.find("li").click(function() {
+				if (swatchName == "color-body-middle") {
+					$("#color-body-middle").attr("checked", true);
+				}
 				ThemeDesigner.hidePicker();
-				ThemeDesigner.set(swatch.attr("class"), ThemeDesigner.rgb2hex($(this).css("background-color")));
+				ThemeDesigner.set(swatchName, ThemeDesigner.rgb2hex($(this).css("background-color")));
 				ThemeDesigner.set("theme", "custom");
 			});
 
@@ -336,7 +357,7 @@ var ThemeDesigner = {
 				$("#ColorTester").remove();
 
 				ThemeDesigner.hidePicker();
-				ThemeDesigner.set(swatch.attr("class"), ThemeDesigner.rgb2hex(color));
+				ThemeDesigner.set(swatchName, ThemeDesigner.rgb2hex(color));
 				ThemeDesigner.set("theme", "custom");
 			});
 
@@ -654,7 +675,6 @@ var ThemeDesigner = {
 		/*** Customize Tab ***/
 		// color swatches
 		$("#swatch-color-background").css("background-color", ThemeDesigner.settings["color-body"]);
-		$("#swatch-color-background-middle").css("background-color", ThemeDesigner.settings["color-body-middle"]);
 		$("#swatch-color-buttons").css("background-color", ThemeDesigner.settings["color-buttons"]);
 		$("#swatch-color-links").css("background-color", ThemeDesigner.settings["color-links"]);
 		$("#swatch-color-page").css("background-color", ThemeDesigner.settings["color-page"]);
@@ -679,6 +699,10 @@ var ThemeDesigner = {
 		// TODO: Remove IF statement after fluid layout global release
 		if (window.wgOasisResponsive) {
 			$("#dynamic-background").attr("checked", ThemeDesigner.settings["background-dynamic"] == "true");
+
+			if ($('#color-body-middle').attr("checked")) {
+				$("#swatch-color-background-middle").css("background-color", ThemeDesigner.settings["color-body-middle"]);
+			}
 
 			if (ThemeDesigner.settings["background-tiled"] == "true") {
 				$("#dynamic-background").attr("disabled", true);
