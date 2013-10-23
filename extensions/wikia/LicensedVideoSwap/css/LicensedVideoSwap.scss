@@ -10,6 +10,12 @@
 @import "skins/oasis/css/core/color";
 @import "mixins/_sprite-LicensedVideoSwap";
 
+body.page-Special_LicensedVideoSwap {
+	// begin hack to prevent overscrolling of browsers
+	height: 100%;
+	overflow: hidden;
+}
+
 $alt-bg-color: mix($color-page-opposite, $color-page, 10%);
 $thumb-img-width: 184px;
 $thumb-img-height: 103px;
