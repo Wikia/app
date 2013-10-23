@@ -91,7 +91,6 @@ class SassUtil {
 
 			$oasisSettings["background-align"] = $settings["background-align"];
 			$oasisSettings["background-dynamic"] = $settings["background-dynamic"];
-			$oasisSettings["background-classes"] = $settings["background-classes"];
 			$oasisSettings["page-opacity"] = $settings["page-opacity"];
 			if (!empty($settings["wordmark-font"]) && $settings["wordmark-font"] != "default") {
 				$oasisSettings["wordmark-font"] = $settings["wordmark-font"];
