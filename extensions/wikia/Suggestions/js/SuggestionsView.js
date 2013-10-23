@@ -2,8 +2,9 @@ define('SuggestionsView', ['SuggestionsViewModel'], function( viewModel ) {
 	'use strict';
 	var ads = $('[id$=\'TOP_RIGHT_BOXAD\']'),
 		keyCodes = [ 13 /*enter*/, 38 /*up*/, 40 /*down*/ ],
-		keyEventsActive = true,
 		searchInput, dropdown;
+
+	/* html markups */
 	function buildTitleMarkup( result ) {
 		if ( result.match && ( result.match.type === 'title' ) ) {
 			return result.match.prefix + '<span class="match">' +result.match.match + '</span>' +
@@ -21,11 +22,50 @@ define('SuggestionsView', ['SuggestionsViewModel'], function( viewModel ) {
 			return '';
 		}
 	}
-	function buildSeeAllResultsMarkup( i ) {
-		++i;
-		return '<li class="all" tabindex="' + i + '"><a><span>' + $.msg('suggestions-see-all') +
+	function buildSeeAllResultsMarkup() {
+		return '<li class="all"><a><span>' + $.msg('suggestions-see-all') +
 			'</span></a></li>';
 	}
+	function buildSuggestionMarkup( result ) {
+		return '<li>' +
+			'<a href="' + result.path + '">' +
+			'<div class="search-suggest-img-wrapper">' +
+			'<img class="search-suggest-image" src="' + result.thumbnail + '" />' +
+			'</div>' +
+			'<div class="wraper">' +
+			'<div class="block">' +
+			'<span class="title">' + buildTitleMarkup( result ) + '</span>' +
+			buildRedirectMarkup( result ) +
+			'</div>' +
+			'</div>' +
+			'</a>' +
+			'</li>';
+	}
+	/* helpers */
+	function blurDropdown() {
+		showAds();
+		dropdown.empty();
+	}
+	function emitEvent( eventName ) {
+		dropdown.trigger( eventName );
+	}
+	function showImage(e) {
+		e.currentTarget.style.display = 'block';
+	}
+	function select( e ) {
+		removeSelect();
+		$(e.currentTarget).addClass('highlight');
+	}
+	function removeSelect() {
+		var active = dropdown.find('.highlight');
+		if ( active.length ) {
+			active.removeClass('highlight');
+		}
+	}
+	function stopPropagation() {
+		return false;
+	}
+	/* ads handling */
 	function hideAds() {
 		ads.each(function() {
 			$(this).children().css('margin-left', '-9999px');
@@ -36,12 +76,39 @@ define('SuggestionsView', ['SuggestionsViewModel'], function( viewModel ) {
 			$(this).children().css('margin-left', 'auto');
 		});
 	}
+	/* events handling */
 	function handleNavigation(key) {
-		var active = document.activeElement,
+		var active = dropdown.find('.highlight'),
 			next, href;
-		if ( !keyEventsActive ) { return; }
+		if( dropdown.children().length ) {
+			if( key === 40 ) {
+				//down
+				if(!active.length) {
+					//nothing highlighted, go to first
+					select( { currentTarget: dropdown.children()[0] } );
+				} else {
+					next = active.next();
+				}
+			} else if ( key === 38 ) {
+				//up
+				if(active.length) {
+					next = active.prev();
+				}
+				if(next && !next.length) {
+					//remove selection, we are at the top
+					removeSelect();
+				}
+			}
+			if ( next && next.length ) {
+				select( { currentTarget: next[0] } );
+			}
+		}
+		//press enter key
 		if ( key === 13 ) {
-			href = $(active).children('a').attr('href');
+			if( active.length ) {
+				//something is highlighted, go to that
+				href = active.find('a').attr('href');
+			}
 			if ( href && href !== '#' ) {
 				emitEvent('newSuggestionsEnter');
 				window.location.pathname = href;
@@ -49,44 +116,7 @@ define('SuggestionsView', ['SuggestionsViewModel'], function( viewModel ) {
 				emitEvent('newSuggestionsSearchEnter');
 				searchInput[0].form.submit();
 			}
-			return;
 		}
-		//we are in input, go to list
-		if( active.form &&
-			active.form.id === 'WikiaSearch' &&
-			key === 40 &&
-			dropdown.children().length ) {
-			dropdown.children()[0].focus();
-		} else if( active.parentNode === dropdown[0] ) {
-			if( key === 40 ) {
-				//down
-				next = $(active).next();
-			} else if ( key === 38 ) {
-				//up
-				next = $(active).prev();
-			}
-			if ( next && next.length ) {
-				next[0].focus();
-			} else {
-				//if went to end, focus input
-				searchInput[0].focus();
-			}
-		}
-	}
-	function blurDropdown() {
-		setTimeout( function() {
-			if ( !dropdown.find(document.activeElement).length &&
-				document.activeElement !== searchInput[0] ) {
-				showAds();
-				dropdown.empty();
-			}
-		}, 100);
-	}
-	function showImage(e) {
-		e.currentTarget.style.display = 'block';
-	}
-	function emitEvent( eventName ) {
-		dropdown.trigger( eventName );
 	}
 	function bindEvents() {
 		viewModel.on( 'displayResults changed', function() {
@@ -96,22 +126,10 @@ define('SuggestionsView', ['SuggestionsViewModel'], function( viewModel ) {
 			if ( !viewModel.getUse() ) { return; }
 			for( i in results ) {
 				res = results[i];
-				html = '<li tabindex="' + i + '">' +
-					'<a href="' + res.path + '">' +
-					'<div class="search-suggest-img-wrapper">' +
-					'<img class="search-suggest-image" src="' + res.thumbnail + '" />' +
-					'</div>' +
-					'<div class="wraper">' +
-					'<div class="block">' +
-					'<span class="title">' + buildTitleMarkup( res ) + '</span>' +
-					buildRedirectMarkup( res ) +
-					'</div>' +
-					'</div>' +
-					'</a>' +
-					'</li>';
+				html = buildSuggestionMarkup ( res );
 				$el = $(html).appendTo(dropdown);
-				$el.blur( blurDropdown );
 				$el.find('.search-suggest-image').load( showImage );
+				bindSuggestionEvents( $el );
 			}
 			if ( results.length ) {
 				html = buildSeeAllResultsMarkup(i);
@@ -120,8 +138,9 @@ define('SuggestionsView', ['SuggestionsViewModel'], function( viewModel ) {
 					emitEvent('newSuggestionsSearchClick');
 					searchInput[0].form.submit();
 				});
-				hideAds();
+				bindSuggestionEvents( $el );
 				emitEvent('newSuggestionsShow');
+				hideAds();
 			} else {
 				showAds();
 			}
@@ -142,29 +161,21 @@ define('SuggestionsView', ['SuggestionsViewModel'], function( viewModel ) {
 			}
 		});
 		searchInput.on( 'keydown', function (e) {
-			if ( keyCodes.indexOf(e.keyCode) !== -1 &&
-				( e.keyCode !== 13 || document.activeElement !== searchInput[0] ) ) {
+			if ( keyCodes.indexOf(e.keyCode) !== -1 ) {
 				handleNavigation(e.keyCode);
 				return false;
 			}
-		});
-		dropdown.on( 'keydown', function (e) {
-			if ( keyCodes.indexOf(e.keyCode) !== -1 &&
-				( e.keyCode !== 13 || document.activeElement !== searchInput[0] ) ) {
-				handleNavigation(e.keyCode);
-				return false;
-			}
-		});
-		dropdown.on( 'mouseenter', function () {
-			//switch off keyboard events
-			keyEventsActive = false;
-			searchInput[0].focus();
-		});
-		dropdown.on( 'mouseleave', function () {
-			//switch on keyboard events
-			keyEventsActive = true;
 		});
 	}
+	function bindSuggestionEvents( element ) {
+		//we dont need to focus those
+		element.mousedown( stopPropagation );
+		//add highlight on hover
+		element.mouseenter( select );
+		//remove highlight when leaving
+		element.mouseleave( removeSelect );
+	}
+
 	return {
 		init: function( input, target, wikiId ) {
 			searchInput = input;
@@ -183,8 +194,7 @@ define('SuggestionsView', ['SuggestionsViewModel'], function( viewModel ) {
 				window.Wikia.autocomplete[name].inUse = true;
 			}
 			window.Wikia.newSearchSuggestions = false;
-			showAds();
-			dropdown.empty();
+			blurDropdown();
 			viewModel.setUse( false );
 		}
 	};

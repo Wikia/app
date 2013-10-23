@@ -80,11 +80,10 @@ $image-width: 55px;
 		left: $element-width / 2 - 4.5px;
 		top: -8px;
 	}
-	li:hover, li:focus {
+	.highlight {
 		background-color: $color-suggestions-background-hover;
-		outline: 0;
 	}
-	li:first-child:hover:after, li:first-child:focus:after {
+	li.highlight:first-child:after {
 		border-bottom: 9px solid $color-suggestions-background-hover;
 		border-left: 9px solid transparent;
 		border-right: 9px solid transparent;
@@ -104,7 +103,7 @@ $image-width: 55px;
 			display: block;
 		}
 	}
-	.all:hover, .all:focus {
+	.all.highlight {
 		background-color: $color-buttons;
 		a {
 			color: $color-button-text;
