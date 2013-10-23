@@ -368,7 +368,7 @@ $messages['pl'] = array(
 	'promote-statusbar-rejected' => 'Jeden lub więcej dodanych przez Ciebie obrazów nie przeszło weryfikacji pomyślnie. [[Special:Contact|Dowiedz się dlaczego]]',
 	'promote-error-oasis-only' => 'Ta strona nie jest dostępna w wybranej skórce. Zmień ją [[Special:Preferences|na skórkę "Wikia" w preferencjach,]] aby uzyskać dostęp.',
 
-	'promote-upload-image-uploads-disabled' => 'Dodawanie obrazów jest czasowo wyłączone na Twojej wiki. Spróbuj ponownie za jakiś czas.',
+	'promote-upload-image-uploads-disabled' => 'Dodawanie plików jest czasowo wyłączone na Twojej wiki. Spróbuj ponownie za jakiś czas.',
 );
 
 $messages['qqq'] = array(
