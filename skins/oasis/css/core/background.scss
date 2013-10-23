@@ -166,72 +166,70 @@ $background-is-wide: if( $background-width > $breakpoint-fluid, true, false );
 	}
 }
 
-@if ( $background-classes ) {
 // standard logic
-	body {
-		background: $color-body url($background-image) top $background-align repeat; /* $wgCdnStylePath */
-	}
+body {
+	background: $color-body url($background-image) top $background-align repeat; /* $wgCdnStylePath */
+}
 
-	body.background-not-tiled {
-		background-repeat: no-repeat;
-	}
+body.background-not-tiled {
+	background-repeat: no-repeat;
+}
 
-	body.background-fixed {
-		background-attachment: fixed;
-	}
+body.background-fixed {
+	background-attachment: fixed;
+}
 
 // responive layout logic
-	@if ( $responsive-layout-enabled ) {
-		body.background-dynamic.skin-oasis {
-			background: $color-body;
-			overflow: hidden;
-			position: relative;
+@if ( $responsive-layout-enabled ) {
+	body.background-dynamic.skin-oasis {
+		background: $color-body;
+		overflow: hidden;
+		position: relative;
 
+		&:after,
+		&:before {
+			background-image: url( $background-image ); /* $wgCdnStylePath */
+			background-repeat: no-repeat;
+			content: "";
+			height: $background-height;
+			position: absolute;
+			top: 0;
+			width: $background-width-half;
+			z-index: -2;
+		}
+		&.background-fixed:after,
+		&.background-fixed:before
+		{
+			position: fixed;
+		}
+
+		&:after {
+			background-position: -$background-width-half 0;
+			right: 50%;
+			margin-right: -$background-width-half;
+		}
+
+		&:before {
+			// The extra 0.1% fixes sub-pixel rendering issues in Safari (DAR-1052)
+			left: 50.1%;
+			margin-left: -$background-width-half;
+		}
+	}
+
+	@media screen and (max-width: $breakpoint-content) {
+		body.background-dynamic.skin-oasis {
 			&:after,
 			&:before {
-				background-image: url( $background-image ); /* $wgCdnStylePath */
-				background-repeat: no-repeat;
-				content: "";
-				height: $background-height;
-				position: absolute;
-				top: 0;
-				width: $background-width-half;
-				z-index: -2;
-			}
-			&.background-fixed:after,
-			&.background-fixed:before
-			{
-				position: fixed;
-			}
-
-			&:after {
-				background-position: -$background-width-half 0;
-				right: 50%;
-				margin-right: -$background-width-half;
-			}
-
-			&:before {
-				// The extra 0.1% fixes sub-pixel rendering issues in Safari (DAR-1052)
-				left: 50.1%;
-				margin-left: -$background-width-half;
+				display: none;
 			}
 		}
+	}
 
-		@media screen and (max-width: $breakpoint-content) {
-			body.background-dynamic.skin-oasis {
-				&:after,
-				&:before {
-					display: none;
-				}
-			}
-		}
+	@media screen and (min-width: $breakpoint-fluid) {
+		@include background-fluid;
+	}
 
-		@media screen and (min-width: $breakpoint-fluid) {
-			@include background-fluid;
-		}
-
-		@media screen and (min-width: $breakpoint-max) {
-			@include background-max;
-		}
+	@media screen and (min-width: $breakpoint-max) {
+		@include background-max;
 	}
 }
