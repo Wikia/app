@@ -119,39 +119,53 @@ class HubRssModelTest extends WikiaBaseTest {
 
 		$mockSlider->expects( $this->any() )
 			->method( 'loadData' )
-			->will( $this->returnValue( ['a' => [['shortDesc' => 'a1', 'longDesc' => 'a2', 'photoUrl' => 'a3', 'articleUrl' => 'a4']]] ) );
+			->will( $this->returnValue( ['a' => [['shortDesc' => 'a1', 'longDesc' => 'a2', 'photoName' => 'a3', 'articleUrl' => 'a4']]] ) );
 
 		$mockCommunity->expects( $this->any() )
 			->method( 'loadData' )
-			->will( $this->returnValue( ['a' => [['articleTitle' => 'b1', 'quote' => 'b2', 'imageUrl' => 'b3', 'url' => 'b4']]] ) );
+			->will( $this->returnValue( ['a' => [['articleTitle' => 'b1', 'quote' => 'b2', 'photoName' => 'b3', 'url' => 'b4']]] ) );
 
 
 		$mock = $this->getMockBuilder( 'HubRssFeedModel' )
 			->disableOriginalConstructor()
-			->setMethods( ['getServices'] )
+			->setMethods( ['getServices','getThumbData'] )
 			->getMock();
 
 		$mock->expects( $this->any() )
 			->method( 'getServices' )
 			->will( $this->returnValue( ['slider' => $mockSlider, 'community' => $mockCommunity] ) );
 
+		$tmp = new StdClass();
+		$tmp->url='xx';
+		$tmp->width=500;
+		$tmp->height=500;
+		$mock->expects( $this->any() )
+			->method( 'getThumbData' )
+			->will( $this->returnValue($tmp) );
+
 
 		$refl = new \ReflectionObject($mock);
 		$methodGDFM = $refl->getMethod( 'getDataFromModules' );
 		$methodGDFM->setAccessible( true );
 
-
-		$res = $methodGDFM->invoke( $mock, [null] );
+ 		$res = $methodGDFM->invoke( $mock, [null] );
 
 		$this->assertArrayHasKey( 'a4', $res );
 		$this->assertEquals( $res[ 'a4' ][ 'title' ], 'a1' );
 		$this->assertEquals( $res[ 'a4' ][ 'description' ], 'a2' );
-		$this->assertEquals( $res[ 'a4' ][ 'img' ], 'a3' );
+		$this->assertArrayHasKey( 'img' , $res['a4']);
+		$this->assertEquals( $res[ 'a4' ][ 'img' ]['url'], 'xx' );
+		$this->assertEquals( $res[ 'a4' ][ 'img' ]['width'], 500 );
+		$this->assertEquals( $res[ 'a4' ][ 'img' ]['height'], 500 );
 
 		$this->assertArrayHasKey( 'b4', $res );
 		$this->assertEquals( $res[ 'b4' ][ 'title' ], 'b1' );
 		$this->assertEquals( $res[ 'b4' ][ 'description' ], 'b2' );
-		$this->assertEquals( $res[ 'b4' ][ 'img' ], 'b3' );
+		$this->assertArrayHasKey( 'img', $res['b4'] );
+		$this->assertEquals( $res[ 'b4' ][ 'img' ]['url'], 'xx' );
+		$this->assertEquals( $res[ 'b4' ][ 'img' ]['width'], 500 );
+		$this->assertEquals( $res[ 'b4' ][ 'img' ]['height'], 500 );
+
 
 	}
 

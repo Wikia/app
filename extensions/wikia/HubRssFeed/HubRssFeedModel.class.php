@@ -151,12 +151,12 @@ class HubRssFeedModel extends WikiaModel {
 					];
 
 					if ( !empty($item[ 'photoName' ]) ) {
-						$img = self::getThumbData( $item[ 'photoName' ] );
+						$img = $this->getThumbData( $item[ 'photoName' ] );
+
 						if ( !empty($img->url) ) {
 
 							$width = $img->width;
 							$height = $img->height;
-
 
 							if ( $width < self::THUMB_MIN_SIZE ) {
 								$height = round( ($img->height * $width) / $width, 0 );
@@ -178,7 +178,7 @@ class HubRssFeedModel extends WikiaModel {
 	}
 
 
-	public static function getThumbData( $image ) {
+	public function getThumbData( $image ) {
 		return ImagesService::getLocalFileThumbUrlAndSizes($image, 0, ImagesService::EXT_JPG);
 
 	}

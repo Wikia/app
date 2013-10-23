@@ -71,7 +71,7 @@ class HubRssFeedService {
 				$img->setAttribute( 'type', 'image/jpeg' );
 				$img->setAttribute( 'url', $item[ 'img' ][ 'url' ] );
 				$img->setAttribute( 'width', $item[ 'img' ][ 'width' ] );
-				$img->setAttribute( 'height', $item[ 'img' ][ 'width' ] );
+				$img->setAttribute( 'height', $item[ 'img' ][ 'height' ] );
 				$itemNode->appendChild( $img );
 			}
 
