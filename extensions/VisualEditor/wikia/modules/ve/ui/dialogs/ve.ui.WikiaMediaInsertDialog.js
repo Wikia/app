@@ -167,7 +167,9 @@ ve.ui.WikiaMediaInsertDialog.prototype.onQueryRequestMediaDone = function ( item
  * @method
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onSearchNearingEnd = function () {
-	this.query.requestMedia();
+	if ( !this.queryInput.isPending() ) {
+		this.query.requestMedia();
+	}
 };
 
 /**
