@@ -368,7 +368,7 @@ class MediaQueryService extends WikiaService {
 		if ( $sort == 'popular' ) {
 			$sqlOptions['ORDER BY'] = 'views_total DESC';
 		} else if ( $sort == 'trend' ) {
-			$sqlOptions['ORDER BY'] = 'views_30day DESC';
+			$sqlOptions['ORDER BY'] = 'views_7day DESC';
 		} else {
 			$sqlOptions['ORDER BY'] = 'added_at DESC';
 		}

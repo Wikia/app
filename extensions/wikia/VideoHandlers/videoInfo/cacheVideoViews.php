@@ -15,7 +15,7 @@ $script = preg_replace('!^.*/!', '', $argv[0]);
 $file   = preg_replace('!^.*/!', '', __FILE__);
 
 // If we're being run directly from the command line, do some setup
-if ($script == $file) {
+if ( $script == $file ) {
 	ini_set( "include_path", dirname( __FILE__ )."/../../../../maintenance/" );
 	ini_set('display_errors', 'stderr');
 
