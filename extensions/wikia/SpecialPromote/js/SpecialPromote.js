@@ -419,11 +419,9 @@ SpecialPromote.prototype = {
         if (file.imageIndex) {
             this.current.additionalImagesNames[file.imageIndex] = file.fileName;
             $('.small-photos img').each(function (key, value) {
-                var valueObject = $(value),
-                    fileIndex = parseInt(file.imageIndex, 10),
-                    slotIndex = parseInt(valueObject.data('image-index'), 10);
+                var valueObject = $(value);
 
-                if (fileIndex === slotIndex) {
+                if ( parseInt( file.imageIndex, 10 ) === parseInt( valueObject.data( 'image-index' ), 10 ) ) {
                     image = valueObject;
                 }
             });
