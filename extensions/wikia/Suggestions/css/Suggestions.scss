@@ -115,7 +115,6 @@ $image-width: 55px;
 		bottom: 0;
 		height: 70%;
 		margin: auto;
-		overflow: hidden;
 		position: absolute;
 		top: 0;
 	}
@@ -154,6 +153,7 @@ $image-width: 55px;
 		display: block;
 		float: left;
 		font-size: 14px;
+		height: 40px;
 		overflow: hidden;
 		width: 295px;
 	}
