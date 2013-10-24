@@ -185,8 +185,8 @@ var ChatEntryPoint = {
 
 		require( [ 'wikia.ui.factory' ], function( uiFactory ) {
 			uiFactory.init( 'modal' ).then( function( uiModal ) {
-				var modalId = 'JoinChatModal';
-				var joinModal = uiModal.render( {
+				var modalId = 'JoinChatModal',
+					joinModal = uiModal.render( {
 					type: 'default',
 					vars: {
 						id: modalId,
