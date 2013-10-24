@@ -89,7 +89,7 @@ ve.ui.WikiaUploadWidget.prototype.onFileChange = function () {
 		'processData': false,
 		'data': formData,
 		'success': ve.bind( this.onUploadSuccess, this ),
-        'error': ve.bind( this.onUploadError, this )
+		'error': ve.bind( this.onUploadError, this )
 	} );
 	this.showUploadAnimation();
 	this.$file.attr( 'value', '' );
