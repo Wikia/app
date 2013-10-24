@@ -29,7 +29,7 @@ $button-icon-color: white;
 }
 
 .new {
-	@include ribbon( $color-button-text, $color-buttons, 14px, 10px, 3px 8px 3px 6px);
+	@include ribbon( $color-button-text, $color-buttons, 12px, 10px, 3px 8px 3px 6px);
 	position: absolute;
 	left: 0px;
 	top: 0px;
