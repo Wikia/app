@@ -4,14 +4,20 @@
  * This file doesn't require jQuery
  */
 
-define( 'wikia.videoBootstrap', [ 'wikia.loader', 'wikia.nirvana', 'wikia.log', 'wikia.tracker' ], function videoBootstrap( loader, nirvana, log, tracker ) {
+define( 'wikia.videoBootstrap', [
+	'wikia.loader',
+	'wikia.nirvana',
+	'wikia.log',
+	'wikia.tracker'
+], function videoBootstrap( loader, nirvana, log, tracker ) {
+	'use strict';
+
 	var trackingTimeout = 0;
 
-
 	/**
-	 *  @param {Element} element DOM element that is the wrapper for the video code
-	 *  @param {Object} json Key/value pair of data sent from a VideoHandler that provides info for video bootstrap
-	 *  @param {String} clickSource For analytics; it's the location on the site where the video was initiated.  Example: lightbox
+	 *  @param {element} element DOM element that is the wrapper for the video code
+	 *  @param {object} json Key/value pair of data sent from a VideoHandler that provides info for video bootstrap
+	 *  @param {string} clickSource For analytics; the place on the site where the video was initiated. ex: lightbox
 	 */
 	function VideoBootstrap ( element, json, clickSource ) {
 
@@ -25,7 +31,6 @@ define( 'wikia.videoBootstrap', [ 'wikia.loader', 'wikia.nirvana', 'wikia.log', 
 		this.clickSource = clickSource;
 		this.title = json.title;
 		this.provider = json.provider;
-		this.thumbnailHtml = false;
 
 		// Insert html if it hasn't been inserted already
 		function insertHtml() {
@@ -83,8 +88,7 @@ define( 'wikia.videoBootstrap', [ 'wikia.loader', 'wikia.nirvana', 'wikia.log', 
 		 * tracked. Not sure it's worth fixing at this time b/c it's edge-casey.
 		 */
 		reload: function( title, width, autoplay, clickSource ) {
-			var undef,
-				element = this.element,
+			var element = this.element,
 				fileTitle = title || this.title,
 				fileClickSource = clickSource || this.clickSource;
 
@@ -99,7 +103,7 @@ define( 'wikia.videoBootstrap', [ 'wikia.loader', 'wikia.nirvana', 'wikia.log', 
 					autoplay: autoplay ? 1 : 0 // backend needs an integer
 				}
 			).done( function( data ) {
-				new VideoBootstrap( element, data.embedCode, fileClickSource );
+				return new VideoBootstrap( element, data.embedCode, fileClickSource );
 			});
 		},
 		track: function( action ) {
@@ -145,7 +149,7 @@ define( 'wikia.videoBootstrap', [ 'wikia.loader', 'wikia.nirvana', 'wikia.log', 
 			return newId;
 		},
 		destroy: function() {
-			this.element.innerHTML = "";
+			this.element.innerHTML = '';
 		}
 	};
 
