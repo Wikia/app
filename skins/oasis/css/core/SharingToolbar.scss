@@ -1,5 +1,6 @@
 @import "color";
 @import "layout";
+@import "responsive-variables";
 @import "../mixins/border-radius";
 
 $share-background-color: transparentize($color-page, 0.65);
@@ -7,22 +8,27 @@ $share-background-color: transparentize($color-page, 0.65);
 	$share-background-color: transparentize($color-page, 0.7);
 }
 
+$toolbar-width: 55px;
+$toolbar-padding: 3px;
+$toolbox-margin: 7px;
+// on small screen sizes sharing toolbar is going under share button
+$toolbar-placing-breakpoint: 1185px;
+
 .SharingToolbar {
 	@include border-radius(5px);
 	background-color: $share-background-color;
-	padding: 3px;
+	left: 100%;
+	margin-left: $toolbox-margin;
+	min-width: $toolbar-width;
+	padding: $toolbar-padding;
 	position: absolute;
-	left: $width-outside + 8px;
 	top: 10px;
-	min-width: 55px;
 	&.fixed {
-		left: 50%;
 		position: fixed;
-		margin-left: ($width-outside/2) + 7px;
 	}
 	&.hidden {
-		visibility: hidden;
 		left: 0px;
+		visibility: hidden;
 	}
 	&.loading {
 		background: $share-background-color url(/skins/common/images/ajax.gif) no-repeat 50% 50%; /* $wgCdnStylePath */
@@ -54,17 +60,40 @@ $share-background-color: transparentize($color-page, 0.65);
 
 @if ( $responsive-layout-enabled ) {
 	// Move the sharing toolbar when it's not enough space for it on the right page margin
-	@media screen and (max-width: 1185px) {
-		.SharingToolbar {
-			right: 8px;
-			left: initial;
+
+	.SharingToolbar {
+		@media screen and (max-width: $toolbar-placing-breakpoint) {
+			background-color: rgba(255,255,255,0.7);
+			margin-left: -$toolbar-width - (2 * $toolbar-padding) - $toolbox-margin;
+			min-width: $toolbar-width;
 			top: 52px;
 			z-index: 3;
-			width: 56px;
-			background-color: rgba(255,255,255,0.7);
 
-			@media screen and (max-width: 1023px) {
+			@media screen and (max-width: $breakpoint-small) {
 				top: 116px;
+			}
+			&.fixed {
+				top: 50px;
+			}
+		}
+
+		&.fixed {
+			@media screen and (min-width: $breakpoint-small) {
+				left: 50%;
+			}
+			@media screen and (min-width: $breakpoint-small) and (max-width: $toolbar-placing-breakpoint) {
+				margin-left: ( $width-outside / 2 ) - $toolbar-width - (2 * $toolbar-padding) - $toolbox-margin;
+			}
+			@media screen and (min-width: $toolbar-placing-breakpoint) and (max-width: $breakpoint-fluid) {
+				margin-left: ( $width-outside / 2 ) + $toolbox-margin;
+			}
+			@media screen and (min-width: $breakpoint-max) {
+				margin-left: ( $width-outside-max / 2 ) + $toolbox-margin;
+			}
+
+			@media screen and (min-width: $breakpoint-fluid) and (max-width: $breakpoint-max) {
+				left: 100%;
+				margin-left: -$width-adskin + $toolbox-margin - 1; // -1 is connected to left:100% positioning and moving element back to the left
 			}
 		}
 	}

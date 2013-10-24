@@ -535,14 +535,14 @@ class SwiftFileBackend extends FileBackendStore {
 				'size' => (int)$srcObj->content_length,
 				'sha1' => $srcObj->getMetadataValue( 'Sha1base36' )
 			);
+
+			$this->objCache[ $params['src'] ] = $stat; // Wikia change
 		} catch ( NoSuchContainerException $e ) {
 			$this->logException( $e, __METHOD__, $params );
 		} catch ( NoSuchObjectException $e ) {
 			$this->logException( $e, __METHOD__, $params );
 		}
 
-		$this->objCache[ $params['src'] ] = $stat;
-			
 		return $stat;
 	}
 
