@@ -15,18 +15,23 @@ ve.ui.WikiaUploadWidget = function VeUiWikiaUploadWidget( config ) {
 	// Parent constructor
 	ve.ui.Widget.call( this, config );
 
+	var uploadButtonConfig = {
+		'$$': this.$$,
+		'label': ve.msg( 'visualeditor-wikiauploadwidget-button' ),
+		'flags': ['constructive'],
+	};
+	if ( !config.hideIcon ) {
+		ve.extendObject( uploadButtonConfig, { 'icon': 'upload-small' } );
+	}
+
 	// Properties
 	this.$uploadIcon = this.$$( '<span>' )
-		.addClass( 've-ui-iconedElement-icon ve-ui-icon-upload' );
+		.addClass( 've-ui-icon-upload' );
 
 	this.$uploadLabel = this.$$( '<span>' )
 		.text( ve.msg( 'visualeditor-wikiauploadwidget-label' ) );
 
-	this.uploadButton = new ve.ui.ButtonWidget( {
-		'$$': this.$$,
-		'label': ve.msg( 'visualeditor-wikiauploadwidget-button' ),
-		'flags': ['constructive']
-	} );
+	this.uploadButton = new ve.ui.ButtonWidget( uploadButtonConfig );
 
 	this.$form = this.$$( '<form>' );
 	this.$file = this.$$( '<input>' ).attr( {
@@ -35,6 +40,10 @@ ve.ui.WikiaUploadWidget = function VeUiWikiaUploadWidget( config ) {
 		} );
 
 	// Events
+	this.$.on( 'click', ve.bind( this.onClick, this ) );
+	this.uploadButton.connect( this, {
+		'click': this.onClick
+	} );
 	this.$file.on( 'change', ve.bind( this.onFileChange, this ) );
 
 	// Initialization
@@ -52,6 +61,15 @@ ve.ui.WikiaUploadWidget = function VeUiWikiaUploadWidget( config ) {
 ve.inheritClass( ve.ui.WikiaUploadWidget, ve.ui.Widget );
 
 /* Methods */
+
+/**
+ * Handle click event
+ *
+ * @method
+ */
+ve.ui.WikiaUploadWidget.prototype.onClick = function () {
+	this.$file[0].click();
+};
 
 /**
  * Handle input file change event
@@ -94,7 +112,7 @@ ve.ui.WikiaUploadWidget.prototype.onUploadSuccess = function ( data ) {
 	}
 
 	// Success
-	this.emit( 'success', data.apitempupload );
+	this.emit( 'upload', data.apitempupload );
 };
 
 /**
