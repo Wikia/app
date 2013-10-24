@@ -15,7 +15,7 @@ class TOCHooksHelper {
         $app = F::app();
 
 		if ( !empty( $toc ) && !$app->checkSkin( 'wikiamobile' ) ) {
-			$toc = $app->renderView( 'TOCCOntroller', 'index' );
+			$toc = $app->renderView( 'TOCController', 'index' );
 		}
 
 		return true;
