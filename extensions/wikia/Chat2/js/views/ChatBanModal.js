@@ -36,21 +36,21 @@ var ChatBanModal = function(title, okCallback, options) {
 					} );
 
 				uiFactory.init( 'modal' ).then( function( uiModal ) {
-					var modalId = "ChatBanModal";
+					var modalId = 'ChatBanModal',
+						banModal = uiModal.render( {
+						type: 'default',
+						vars: {
+							id: modalId,
+							size: 'small',
+							content: data.template,
+							title: title,
+							closeButton: true,
+							closeText: $.msg( 'close' ),
+							primaryBtn: modalPrimaryBtn,
+							secondBtn: modalSecondaryBtn
+						}
+					} );
 					require( [ 'wikia.ui.modal' ], function( modal ) {
-						var banModal = uiModal.render( {
-							type: "default",
-							vars: {
-								"id": modalId,
-								"size": 'small',
-								"content": data.template,
-								"title": title,
-								"closeButton": true,
-								"closeText": $.msg( "close" ),
-								"primaryBtn": modalPrimaryBtn,
-								"secondBtn": modalSecondaryBtn
-							}
-						} );
 
 						banModal = modal.init( modalId, banModal );
 						banModal.$element.find( '#cancel' ).click( function( event ) {
@@ -59,21 +59,22 @@ var ChatBanModal = function(title, okCallback, options) {
 							banModal.$element.remove();
 						} );
 
-						var banModalOkBtn = banModal.$element.find( '#ok' );
+						var banModalOkBtn = banModal.$element.find( '#ok'),
+							reasonInput = banModal.$element.find( 'input[name=reason]' );
+
+						reasonInput.placeholder().keydown( function( e ) {
+							if( e.which === 13 ) {
+								// Submit when 'enter' key is pressed (BugId:28101).
+								e.preventDefault();
+								banModalOkBtn.click();
+							}
+						} );
+
 						banModalOkBtn.click( function( event ) {
 							event.preventDefault();
 
-							var reasonInput = banModal.$element.find("input[name=reason]"),
-								reason = reasonInput.val(),
-								expires = banModal.$element.find("select[name=expires]").val();
-
-							reasonInput.placeholder().keydown( function( e ) {
-								if( e.which == 13 ) {
-								// Submit when 'enter' key is pressed (BugId:28101).
-									e.preventDefault();
-									banModalOkBtn.click();
-								}
-							} );
+							var reason = reasonInput.val(),
+								expires = banModal.$element.find( 'select[name=expires]' ).val();
 
 							okCallback( expires, reason );
 

@@ -185,23 +185,23 @@ var ChatEntryPoint = {
 
 		require( [ 'wikia.ui.factory' ], function( uiFactory ) {
 			uiFactory.init( 'modal' ).then( function( uiModal ) {
-				var modalId = "JoinChatModal";
-				require( [ 'wikia.ui.modal' ], function( modal ) {
-					var joinModal = uiModal.render( {
-						type: "default",
-						vars: {
-							"id": modalId,
-							"size": 'small',
-							"content": html,
-							"title": $.msg( "chat-start-a-chat" ),
-							"closeButton": true,
-							"closeText": $.msg( "close" )
-						}
-					} );
+				var modalId = 'JoinChatModal';
+				var joinModal = uiModal.render( {
+					type: 'default',
+					vars: {
+						id: modalId,
+						size: 'small',
+						content: html,
+						title: $.msg( 'chat-start-a-chat' ),
+						closeButton: true,
+						closeText: $.msg( 'close' )
+					}
+				} );
 
+				require( [ 'wikia.ui.modal' ], function( modal ) {
 					ChatEntryPoint.chatLaunchModal = modal.init( modalId, joinModal );
 					ChatEntryPoint.chatLaunchModal.show();
-					$( "#modal-join-chat-button" ).bind( 'click', ChatEntryPoint.launchChatWindow );
+					$( '#modal-join-chat-button' ).bind( 'click', ChatEntryPoint.launchChatWindow );
 					ChatEntryPoint.chatLaunchModal.onClose = function() {
 						ChatEntryPoint.reloadPage();
 					};
