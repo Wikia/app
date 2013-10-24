@@ -435,14 +435,18 @@ var ThemeDesigner = {
 
 	checkBgIsDynamic: function(width) {
 		if ( width < ThemeDesigner.minWidthforDynamicBg ) {
-			if ( $('#dynamic-background').attr('checked') ) {
-				$('#dynamic-background').attr('checked', false);
-				ThemeDesigner.set("background-dynamic", false);
-			}
-			$('#dynamic-background').attr('disabled', true);
+			ThemeDesigner.disableDynamicBg();
 		} else {
 			$('#dynamic-background').attr('disabled', false);
 		}
+	},
+
+	disableDynamicBg: function() {
+		if ( $('#dynamic-background').attr('checked') ) {
+			$('#dynamic-background').attr('checked', false);
+			ThemeDesigner.set("background-dynamic", false);
+		}
+		$('#dynamic-background').attr('disabled', true);
 	},
 
 	/**
@@ -702,6 +706,7 @@ var ThemeDesigner = {
 		if (ThemeDesigner.settings["background-image"] == "") {
 			//no background image
 			$("#swatch-image-background").attr("src", wgBlankImgUrl);
+			ThemeDesigner.disableDynamicBg();
 		} else if (ThemeDesigner.settings["background-image"].indexOf("images/themes") > 0) {
 			//wikia background image
 			var file = ThemeDesigner.settings["background-image"].substring(ThemeDesigner.settings["background-image"].lastIndexOf("/") + 1);
