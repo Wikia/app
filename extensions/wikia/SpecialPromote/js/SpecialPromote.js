@@ -42,10 +42,11 @@ var SpecialPromote = function () {
     this.UPLOAD_TYPE_ADDITIONAL = 'additional';
     this.IMAGE_MODAL_WIDTH = 600;
 
-    this.ERROR_REMOVE_TEMP_IMAGE = '1';
-    this.ERROR_UNKNOWN_UPLOAD_TYPE = '2';
-    this.ERROR_GET_UPLOAD_FORM_ERROR = '4';
-    this.ERROR_FILE_UPLOADS_DISABLED = '8';
+    this.ERROR_REMOVE_TEMP_IMAGE = 'temp image removal failed';
+    this.ERROR_UNKNOWN_UPLOAD_TYPE = 'unknown upload form';
+    this.ERROR_GET_UPLOAD_FORM_ERROR = 'get upload form error';
+    this.ERROR_FILE_UPLOADS_DISABLED = 'file uploads disabled';
+    this.ERROR_UNKNOWN_ERROR = 'unknown error';
 };
 
 SpecialPromote.prototype = {
@@ -418,13 +419,21 @@ SpecialPromote.prototype = {
         if (file.imageIndex) {
             this.current.additionalImagesNames[file.imageIndex] = file.fileName;
             $('.small-photos img').each(function (key, value) {
-                var valueObject = $(value);
-                if (valueObject.data('image-index') === file.imageIndex) {
+                var valueObject = $(value),
+                    fileIndex = parseInt(file.imageIndex, 10),
+                    slotIndex = parseInt(valueObject.data('image-index'), 10);
+
+                if (fileIndex === slotIndex) {
                     image = valueObject;
                 }
             });
-            image.attr('src', file.fileUrl);
-            image.data('filename', file.fileName);
+            if(image) {
+                image.attr('src', file.fileUrl);
+                image.data('filename', file.fileName);
+                image.parent().find('.status').remove();
+            } else {
+                throw this.ERROR_UNKNOWN_ERROR;
+            }
         } else {
             this.current.additionalImagesNames.push(file.fileName);
 
