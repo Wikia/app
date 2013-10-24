@@ -384,13 +384,6 @@ var ThemeDesigner = {
 			// click handling
 			this.themeDesignerPicker.children(".image").find(".swatches").find("li").click(function() {
 
-				//set correct alignment
-				if ($(this).attr("class") == "user") {
-					ThemeDesigner.set("background-align", ThemeDesigner.settings["user-background-align"]);
-				} else {
-					ThemeDesigner.set("background-align", "center");
-				}
-
 				//set correct image
 				if ($(this).attr("class") == "no-image") {
 					ThemeDesigner.set("background-image", "");
@@ -492,7 +485,7 @@ var ThemeDesigner = {
 			reloadCSS = true;
 		}
 
-		if(setting == "wordmark-font-size" || setting == "wordmark-text" || setting == "wordmark-type" || setting == "background-align" || setting == "page-opacity") {
+		if(setting == "wordmark-font-size" || setting == "wordmark-text" || setting == "wordmark-type" || setting == "page-opacity") {
 			updateSkinPreview = true;
 		}
 
@@ -577,10 +570,8 @@ var ThemeDesigner = {
 
 				ThemeDesigner.set("user-background-image", response.backgroundImageUrl);
 				ThemeDesigner.set("user-background-image-thumb", response.backgroundImageThumb);
-				ThemeDesigner.set("user-background-align", response.backgroundImageAlign);
 
 				ThemeDesigner.set("theme", "custom");
-				ThemeDesigner.set("background-align", response.backgroundImageAlign);
 				ThemeDesigner.set("background-image-name", response.backgroundImageName);
 				ThemeDesigner.set("background-image-width", response.backgroundImageWidth);
 				ThemeDesigner.set("background-image-height", response.backgroundImageHeight);
