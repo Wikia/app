@@ -340,22 +340,27 @@ SQL;
 		// Get the play button image to overlay on the video
 		$playButton = WikiaFileHelper::videoPlayButtonOverlay( self::THUMBNAIL_WIDTH, self::THUMBNAIL_HEIGHT );
 
+		// flag for kept video
+		$pageStatus = $this->getPageStatus( $articleId );
+		$isKeptVideo = $this->isStatusKeep( $pageStatus );
+
 		// get videos that have been suggested (kept videos)
 		$historicalSuggestions = array_flip( $this->getHistoricalSuggestions( $articleId ) );
 
 		// get current suggestions
 		$suggestTitles = array();
-		$suggestions = wfGetWikiaPageProp( WPP_LVS_SUGGEST, $articleId );
-		if ( empty( $suggestions ) ) {
-			$suggestions = array();
-		} else {
-			foreach ( $suggestions as $video ) {
+		$suggest = wfGetWikiaPageProp( WPP_LVS_SUGGEST, $articleId );
+		$suggestions = array();
+		if ( !empty( $suggest ) ) {
+			foreach ( $suggest as $video ) {
 				$suggestTitles[$video['title']] = 1;
+				if ( $isKeptVideo && array_key_exists( $video['title'], $historicalSuggestions ) ) {
+					continue;
+				}
+
+				$suggestions[] = $video;
 			}
 		}
-
-		// flag for kept video
-		$pageStatus = $this->getPageStatus( $articleId );
 
 		$videos = array();
 		$count = 0;
@@ -372,7 +377,7 @@ SQL;
 			$videoTitle = preg_replace( '/.+File:/', '', urldecode( $videoInfo['url'] ) );
 
 			// skip if the video has already been suggested (from kept videos)
-			if ( $this->isStatusKeep( $pageStatus ) ) {
+			if ( $isKeptVideo ) {
 				if ( array_key_exists( $videoTitle, $historicalSuggestions ) ) {
 					continue;
 				} else {
