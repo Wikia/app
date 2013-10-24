@@ -8,10 +8,12 @@ $messages['en'] = array(
 );
 
 /** Message documentation (Message documentation)
+ * @author Shirayuki
  * @author The Evil IP address
  */
 $messages['qqq'] = array(
 	'wikiarelatedpages-desc' => '{{desc}}',
+	'wikiarelatedpages-heading' => '{{Identical|Read more}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -45,6 +47,15 @@ $messages['az'] = array(
 $messages['be-tarask'] = array(
 	'wikiarelatedpages-desc' => 'Дадае на старонкі сьпіс зьвязаных старонак',
 	'wikiarelatedpages-heading' => 'Даведацца болей',
+);
+
+/** Bulgarian (български)
+ * @author Aquilax
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'wikiarelatedpages-desc' => 'Добавя в страниците списък със свързани страници',
+	'wikiarelatedpages-heading' => 'Прочетете повече',
 );
 
 /** Breton (brezhoneg)

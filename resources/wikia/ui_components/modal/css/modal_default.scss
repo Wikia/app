@@ -1,0 +1,142 @@
+@import "skins/oasis/css/core/color.scss";
+@import "skins/oasis/css/core/responsive-variables.scss";
+@import "skins/oasis/css/mixins/transform.scss";
+@import "skins/oasis/css/mixins/transition.scss";
+@import "skins/oasis/css/mixins/blackout.scss";
+@import "skins/oasis/css/mixins/box-sizing-border-box.scss";
+
+$close-image: '/resources/wikia/ui_components/modal/images/close-dark.svg';
+$modal-secondary-color: darken( $color-page, 10% );
+@if( $is-dark-wiki ) {
+	$close-image: '/resources/wikia/ui_components/modal/images/close-light.svg';
+	$modal-secondary-color: lighten( $color-page, 3% );
+}
+
+.modal-shown {
+	overflow: hidden;
+	height: 100%;
+}
+
+.modal,
+.blackout {
+	@include transition-shorthand( display 0.2s ease-in-out );
+	opacity: 0;
+	z-index: -1;
+}
+
+.modal {
+	background-color: $color-page;
+	border-radius: 2px;
+	display: none;
+	left: 50%;
+	margin: 0;
+	overflow: hidden;
+	padding: 0;
+	position: fixed;
+	top: 50%;
+	@include transform-translate( -50%, -50% );
+
+	header,
+	footer {
+		background-color: $modal-secondary-color;
+		height: 60px;
+	}
+
+	header,
+	section,
+	footer {
+		padding: 20px;
+		@include box-sizing-border-box;
+	}
+
+	header h3 {
+		color: $color-text;
+		font-size: 21px;
+		font-weight: bold;
+		margin: 0;
+		padding: 0;
+	}
+
+	header .close {
+		background: url( $close-image );
+		background-size: 24px 24px;
+		display: block;
+		float: right;
+		height: 24px;
+		outline: none;
+		text-indent: -9999px;
+		width: 24px;
+	}
+
+	footer .button {
+		float: right;
+	}
+
+	footer .button:last-child {
+		margin: 0 20px;
+	}
+
+	&.small {
+		width: 400px;
+
+		section {
+			height: 100px;
+		}
+	}
+
+	&.medium {
+		width: 700px;
+
+		section {
+			height: 400px;
+		}
+	}
+
+	&.small,
+	&.medium {
+		section {
+			overflow: hidden;
+			overflow-y: auto;
+		}
+	}
+
+	&.large {
+		height: calc( 100% - 50px );
+		width: calc( 100% - 50px );
+
+		footer {
+			bottom: 0;
+			left: 0;
+			position: absolute;
+			right: 0;
+		}
+	}
+
+	.buttons {
+		bottom: 15px;
+		display: inline-block;
+		position: absolute;
+		right: 20px;
+	}
+
+	&.shown {
+		display: block;
+		margin: 0;
+		padding: 0;
+		opacity: 1;
+		overflow: hidden;
+		z-index: $zTop;
+	}
+}
+
+.blackout {
+	@include blackout();
+}
+
+
+
+@media screen and (max-width: $breakpoint-min) {
+	.modal.medium {
+		width: 500px;
+	}
+}

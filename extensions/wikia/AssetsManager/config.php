@@ -126,6 +126,8 @@ $config['oasis_noads_extensions_js'] = array(
 		'//extensions/wikia/AdEngine/js/Krux.run.js',
 		// WikiaBar is enabled sitewide
 		'//extensions/wikia/WikiaBar/js/WikiaBar.js',
+		// Chat is enabled sitewide
+		'//extensions/wikia/Chat2/js/ChatEntryPoint.js',
 		// Related Forum Discussion is on all article pages
 		'//extensions/wikia/Forum/js/RelatedForumDiscussion.js',
 		'//extensions/wikia/VideoEmbedTool/js/VET_Loader.js',
@@ -1419,7 +1421,11 @@ $config['ui_repo_api_js'] = array(
 		'//resources/wikia/modules/nirvana.js',
 		'//resources/wikia/modules/uifactory.js',
 		'//resources/wikia/libraries/mustache/mustache.js',
-		'//resources/wikia/modules/uicomponent.js'
+		'//resources/wikia/modules/uicomponent.js',
+
+		// examples of components
+		// TODO: move it probably to modal_sample.json to load additional assets on Special:Styleguide
+		'//resources/wikia/ui_components/modal/js/modal.sample.js',
 	)
 );
 

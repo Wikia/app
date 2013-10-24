@@ -83,22 +83,22 @@ class UserPreferencesV2 {
 			$defaultPreferences = self::moveToEndOfArray($defaultPreferences, 'skin');
 		}
 		if (isset($defaultPreferences[self::LANDING_PAGE_PROP_NAME])) {
-			$redirectOptions[wfMsg('preferences-v2-redirect-main-page')] = self::LANDING_PAGE_MAIN_PAGE;
-			$redirectOptions[wfMsg('preferences-v2-redirect-wiki-activity')] = self::LANDING_PAGE_WIKI_ACTIVITY;
-			$redirectOptions[wfMsg('preferences-v2-redirect-recent-changes')] = self::LANDING_PAGE_RECENT_CHANGES;
+			$redirectOptions[wfMessage( 'preferences-v2-redirect-main-page' )->plain()] = self::LANDING_PAGE_MAIN_PAGE;
+			$redirectOptions[wfMessage( 'preferences-v2-redirect-wiki-activity' )->plain()] = self::LANDING_PAGE_WIKI_ACTIVITY;
+			$redirectOptions[wfMessage( 'preferences-v2-redirect-recent-changes' )->plain()] = self::LANDING_PAGE_RECENT_CHANGES;
 			$defaultPreferences[self::LANDING_PAGE_PROP_NAME]['type'] = 'select';
 			$defaultPreferences[self::LANDING_PAGE_PROP_NAME]['options'] = $redirectOptions;
 			$defaultPreferences[self::LANDING_PAGE_PROP_NAME]['label-message'] = 'preferences-v2-user-landing-page';
 			$defaultPreferences[self::LANDING_PAGE_PROP_NAME]['section'] = 'personal/appearance';
-			$defaultPreferences[self::LANDING_PAGE_PROP_NAME]['help'] = wfMsg('preferences-v2-redirect-explanation', parse_url( $wgServer, PHP_URL_HOST ) );
+			$defaultPreferences[self::LANDING_PAGE_PROP_NAME]['help'] = wfMessage( 'preferences-v2-redirect-explanation', parse_url( $wgServer, PHP_URL_HOST ) )->plain();
 			$defaultPreferences = self::moveToEndOfArray($defaultPreferences, self::LANDING_PAGE_PROP_NAME);
 		}
 		if (isset($defaultPreferences['showAds'])) {
 			$defaultPreferences['showAds']['section'] = 'personal/appearance';
 			$defaultPreferences['showAds']['label-message'] = 'tog-showAdsv2';
 			$defaultPreferences['showAds']['type'] = 'select';
-			$adOptions[wfMsg('preferences-v2-showads-disable')] = 0;
-			$adOptions[wfMsg('preferences-v2-showads-enable')] = 1;
+			$adOptions[wfMessage( 'preferences-v2-showads-disable' )->plain()] = 0;
+			$adOptions[wfMessage( 'preferences-v2-showads-enable' )->plain()] = 1;
 			$defaultPreferences['showAds']['options'] = $adOptions;
 			$defaultPreferences = self::moveToEndOfArray($defaultPreferences, 'showAds');
 		}
@@ -439,7 +439,7 @@ class UserPreferencesV2 {
 	// check if email is valid
 	static public function onSavePreferences( &$formData, &$error ) {
 		if ( array_key_exists('emailaddress', $formData) && !Sanitizer::validateEmail($formData['emailaddress']) ) {
-			$error = wfMsg( 'invalidemailaddress' );
+			$error = wfMessage( 'invalidemailaddress' )->escaped();
 			return false;
 		}
 

@@ -1,4 +1,4 @@
-@mixin calc-shorthand($formula) {
+@mixin width-calc($formula) {
 	width: -webkit-calc(#{$formula});
 	width: calc(#{$formula});
 }

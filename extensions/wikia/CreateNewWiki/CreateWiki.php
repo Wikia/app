@@ -15,10 +15,10 @@
 class CreateWiki {
 
 	/* @var $mDBw DatabaseMysql */
-	private $mName, $mDomain, $mLanguage, $mHub, $mType, $mStarters, $mIP,
+	private $mName, $mDomain, $mLanguage, $mHub, $mStarters, $mIP,
 		$mPHPbin, $mMYSQLbin, $mMYSQLdump, $mNewWiki, $mFounder,
 		$mLangSubdomain, $mDBw, $mWFSettingVars, $mWFVars,
-		$mDefaultTables, $mAdditionalTables, $mTypeTables,
+		$mDefaultTables, $mAdditionalTables,
 		$mStarterTables, $sDbStarter, $mFounderIp,
 		$mCurrTime;
 
@@ -40,8 +40,8 @@ class CreateWiki {
 
 	const IMGROOT              = "/images/";
 	const IMAGEURL             = "http://images.wikia.com/";
-	const CREATEWIKI_LOGO      = "/images/c/central/images/2/22/Wiki_Logo_Template.png";
-	const CREATEWIKI_ICON      = "/images/c/central/images/6/64/Favicon.ico";
+	const CREATEWIKI_LOGO      = "http://images.wikia.com/central/images/2/22/Wiki_Logo_Template.png";
+	const CREATEWIKI_ICON      = "http://images.wikia.com/central/images/6/64/Favicon.ico";
 	const DEFAULT_STAFF        = "Angela";
 	const DEFAULT_USER         = 'Default';
 	const DEFAULT_DOMAIN       = "wikia.com";
@@ -60,11 +60,9 @@ class CreateWiki {
 	 * @param string $domain - domain part without '.wikia.com'
 	 * @param string $language - language code
 	 * @param integer $hub - category/hub which should be set for created wiki
-	 * @param mixed $type - type of wiki, currently 'answers' for answers or false for others
-	 * @param mixed $founder - creator of wiki, by default false which means $wgUser
 	 */
-	public function __construct( $name, $domain, $language, $hub, $type = self::DEFAULT_WIKI_TYPE, $founder = false ) {
-		global $wgUser, $IP, $wgJobClasses, $wgAutoloadClasses, $wgRequest;
+	public function __construct( $name, $domain, $language, $hub ) {
+		global $wgUser, $IP, $wgAutoloadClasses, $wgRequest;
 
 		// wiki containter
 		$this->mNewWiki = new stdClass();
@@ -73,23 +71,10 @@ class CreateWiki {
 		$this->mName = $name;
 		$this->mLanguage = $language;
 		$this->mHub = $hub;
-		$this->mType = $type;
 		$this->mIP = $IP;
 
 		// founder of wiki
-		wfDebugLog( "createwiki", "founder: " . print_r($founder, true) . "\n", true );
-		if( $founder === false ) {
-			$this->mFounder = $wgUser;
-		}
-		else {
-			if( ! $founder instanceof User ) {
-				throw new MWException( "Founder in constructor is not instance of User class" );
-			}
-			else {
-				$this->mFounder = $founder;
-			}
-		}
-
+		$this->mFounder = $wgUser;
 		$this->mFounderIp = $wgRequest->getIP();
 
 		wfDebugLog( "createwiki", "founder: " . print_r($this->mFounder, true) . "\n", true );
@@ -97,7 +82,6 @@ class CreateWiki {
 		 * starters map: langcode => database name
 		 *
 		 * "*" is default
-		 * "answers" when $mType = "answers"
 		 */
 		$this->mStarters = array(
 			"*" => array(
@@ -110,16 +94,6 @@ class CreateWiki {
 				"es" => "esstarter",
 				"pl" => "plstarter",
 				"ru" => "rustarter",
-			),
-			"answers" => array(
-				"*"  => "genericstarteranswers",
-				"en" => "newstarteranswers",
-				"de" => "deuanswers",
-				"es" => "esstarteranswers",
-				"fr" => "frstarteranswers",
-				"he" => "hestarteranswers",
-				"ar" => "arstarteranswers",
-				"nl" => "nlstarteranswers",
 			)
 		);
 
@@ -133,9 +107,6 @@ class CreateWiki {
 				'revision',
 				'templatelinks',
 				'text'
-			),
-			"answers" => array(
-				'user_profile'
 			)
 		);
 
@@ -165,15 +136,6 @@ class CreateWiki {
 			"{$this->mIP}/extensions/wikia/AjaxPoll/patch-create-poll_info.sql",
 			"{$this->mIP}/extensions/wikia/AjaxPoll/patch-create-poll_vote.sql",
 			"{$this->mIP}/extensions/wikia/ImageServing/sql/table.sql",
-		);
-
-		/**
-		 * additional tables per type
-		 */
-		$this->mTypeTables = array(
-			'answers' => array(
-				"{$this->mIP}/maintenance/answers-additional-tables.sql",
-			)
 		);
 
 		/**
@@ -297,27 +259,29 @@ class CreateWiki {
 		/**
 		 * create image folder
 		 */
-		wfMkdirParents( "{$this->mNewWiki->images_dir}" );
-		wfDebugLog( "createwiki", __METHOD__ . ": Folder {$this->mNewWiki->images_dir} created\n", true );
+		global $wgEnableSwiftFileBackend;
+		if (empty($wgEnableSwiftFileBackend)) {
+			wfMkdirParents( "{$this->mNewWiki->images_dir}" );
+			wfDebugLog( "createwiki", __METHOD__ . ": Folder {$this->mNewWiki->images_dir} created\n", true );
+		}
 
 		/**
 		 * copy default logo & favicon
 		 */
-		wfMkdirParents( "{$this->mNewWiki->images_logo}" );
-		wfMkdirParents( "{$this->mNewWiki->images_icon}" );
+		$uploader = User::newFromName( 'CreateWiki script' );
 
-		if ( file_exists( self::CREATEWIKI_LOGO ) ) {
-			copy( self::CREATEWIKI_LOGO, "{$this->mNewWiki->images_logo}/Wiki.png" );
-			wfDebugLog( "createwiki", __METHOD__ . ": Default logo has been copied\n", true );
+		$res = ImagesService::uploadImageFromUrl( self::CREATEWIKI_LOGO, (object) ['name' => 'Wiki.png'], $uploader );
+		if ( $res['status'] === true ) {
+			wfDebugLog( "createwiki", __METHOD__ . ": Default logo has been uploaded\n", true );
 		} else {
-			wfDebugLog( "createwiki", __METHOD__ . ": Default logo has not been copied\n", true );
+			wfDebugLog( "createwiki", __METHOD__ . ": Default logo has not been uploaded - " . print_r($res['errors'], true) . "\n", true );
 		}
 
-		if ( file_exists( self::CREATEWIKI_ICON ) ) {
-			copy( self::CREATEWIKI_ICON, "{$this->mNewWiki->images_icon}/Favicon.ico" );
-			wfDebugLog( "createwiki", __METHOD__ . ": Default favicon has been copied\n", true );
+		$res = ImagesService::uploadImageFromUrl( self::CREATEWIKI_ICON, (object) ['name' => 'Favicon.ico'], $uploader );
+		if (  $res['status'] == true  ) {
+			wfDebugLog( "createwiki", __METHOD__ . ": Default favicon has been uploaded\n", true );
 		} else {
-			wfDebugLog( "createwiki", __METHOD__ . ": Default favicon has not been copied\n", true );
+			wfDebugLog( "createwiki", __METHOD__ . ": Default favicon has not been uploaded - " . print_r($res['errors'], true) . "\n", true );
 		}
 
 		/**
@@ -401,7 +365,7 @@ class CreateWiki {
 		/**
 		 * define wiki type
 		 */
-		$wiki_type = ( !empty($this->mType) ) ? $this->mType : 'default';
+		$wiki_type = 'default';
 
 		/**
 		 * modify variables
@@ -570,7 +534,7 @@ class CreateWiki {
 			$status = self::ERROR_DOMAIN_POLICY_VIOLATIONS;
 		}
 		else {
-			if( AutoCreateWiki::domainExists( $this->mDomain, $this->mLanguage, $this->mType ) ) {
+			if( AutoCreateWiki::domainExists( $this->mDomain, $this->mLanguage ) ) {
 				$status = self::ERROR_DOMAIN_NAME_TAKEN;
 			}
 		}
@@ -595,7 +559,7 @@ class CreateWiki {
 
 		wfProfileIn( __METHOD__ );
 
-		$this->fixSubdomains( $this->mLanguage );
+		$this->fixSubdomains();
 
 		// sitename
 		$fixedTitle = trim( $this->mName );
@@ -618,12 +582,6 @@ class CreateWiki {
 		// umbrella
 		$this->mNewWiki->umbrella = $this->mNewWiki->name;
 
-		switch( $this->mType ) {
-			case "answers":
-				$this->mNewWiki->sitename = $fixedTitle . " " . $this->mDefSitename;
-				break;
-		}
-
 		$this->mNewWiki->language  = $this->mLanguage;
 		$this->mNewWiki->subdomain = $this->mNewWiki->name;
 		$this->mNewWiki->redirect  = $this->mNewWiki->name;
@@ -642,17 +600,8 @@ class CreateWiki {
 			$this->mNewWiki->images_dir .= "/" . strtolower( $this->mNewWiki->language );
 		}
 
-		switch( $this->mType ) {
-			case "answers":
-				$this->mNewWiki->images_url .= "/" . $this->mType;
-				$this->mNewWiki->images_dir .= "/" . $this->mType;
-				break;
-		}
-
 		$this->mNewWiki->images_dir = self::IMGROOT  . $this->mNewWiki->images_dir . "/images";
 		$this->mNewWiki->images_url = self::IMAGEURL . $this->mNewWiki->images_url . "/images";
-		$this->mNewWiki->images_logo = sprintf("%s/%s", $this->mNewWiki->images_dir, "b/bc" );
-		$this->mNewWiki->images_icon = sprintf("%s/%s", $this->mNewWiki->images_dir, "6/64" );
 		$this->mNewWiki->domain = sprintf("%s.%s", $this->mNewWiki->subdomain, $this->mDefSubdomain);
 		$this->mNewWiki->url = sprintf( "http://%s.%s/", $this->mNewWiki->subdomain, $this->mDefSubdomain );
 		$this->mNewWiki->dbname = $this->prepareDatabaseName( $this->mNewWiki->name, $this->mLanguage );
@@ -660,7 +609,6 @@ class CreateWiki {
 		$this->mNewWiki->founderEmail = $this->mFounder->getEmail();
 		$this->mNewWiki->founderId = $this->mFounder->getId();
 		$this->mNewWiki->founderIp = $this->mFounderIp;
-		$this->mNewWiki->type = $this->mType;
 
 		wfProfileOut( __METHOD__ );
 
@@ -676,44 +624,12 @@ class CreateWiki {
 	 *
 	 * @return
 	 */
-	private function fixSubdomains( $lang ) {
-
-		global $wgContLang;
-
-		wfProfileIn( __METHOD__ );
-		switch( $this->mType ) {
-			case "answers":
-				$this->mDomains = Wikia::getAnswersDomains();
-				print_r( $this->mDomains );
-				$this->mSitenames = Wikia::getAnswersSitenames();
-				if( isset($this->mDomains[ $lang ] ) && !empty( $this->mDomains[ $lang ] ) ) {
-					$this->mDefSubdomain = sprintf( "%s.%s", $this->mDomains[$lang], self::DEFAULT_DOMAIN );
-					$this->mLangSubdomain = false;
-				}
-				else {
-					$this->mDefSubdomain = sprintf( "%s.%s", $this->mDomains[ "default"], self::DEFAULT_DOMAIN );
-					$this->mLangSubdomain = true;
-				}
-
-				if( isset( $this->mSitenames[ $lang ] ) ) {
-					$this->mDefSitename = $this->mSitenames[ $lang ];
-				}
-				elseif ( isset( $this->mDomains[ $lang ] ) && !empty( $this->mDomains[ $lang ] ) ) {
-					$this->mDefSitename = $wgContLang->ucfirst( $this->mDomains[ $lang ] );
-				}
-				else {
-					$this->mDefSitename = $wgContLang->ucfirst( $this->mDomains[ 'default' ] );
-				}
-				break;
-
-			default:
-				$this->mDefSubdomain = self::DEFAULT_DOMAIN;
-				$this->mDefSitename = self::DEFAULT_NAME;
-				$this->mDomains = array('default' => '');
-				$this->mSitenames = array();
-				$this->mLangSubdomain = true;
-		}
-		wfProfileOut( __METHOD__ );
+	private function fixSubdomains() {
+		$this->mDefSubdomain = self::DEFAULT_DOMAIN;
+		$this->mDefSitename = self::DEFAULT_NAME;
+		$this->mDomains = array('default' => '');
+		$this->mSitenames = array();
+		$this->mLangSubdomain = true;
 	}
 
 	/**
@@ -737,13 +653,7 @@ class CreateWiki {
 				: "";
 
 		while ( $isExist == false ) {
-			switch( $this->mType ) {
-				case "answers":
-					$dirName = self::IMGROOT . $prefix . "/" . $dir_base . $suffix . $dir_lang . "/answers/images";
-					break;
-				default:
-					$dirName = self::IMGROOT . $prefix . "/" . $dir_base . $suffix . $dir_lang . "/images";
-			}
+			$dirName = self::IMGROOT . $prefix . "/" . $dir_base . $suffix . $dir_lang . "/images";
 
 			if ( file_exists( $dirName ) ) {
 				$suffix = rand(1, 9999);
@@ -774,19 +684,12 @@ class CreateWiki {
 	 * @return string: fixed name of DB
 	 */
 	private function prepareDatabaseName( $dbname, $lang ) {
-
 		wfProfileIn( __METHOD__ );
 
 		$dbwf = WikiFactory::db( DB_SLAVE );
 		$dbr  = wfGetDB( DB_MASTER );
 
-		wfDebugLog( "createwiki", __METHOD__, ": checking database name for dbname=$dbname, language={$lang} type={$this->mType}\n", true );
-		/**
-		 * for other types add type name in database
-		 */
-		if( $this->mType ) {
-			$dbname = $dbname . $this->mType;
-		}
+		wfDebugLog( "createwiki", __METHOD__, ": checking database name for dbname=$dbname, language={$lang}\n", true );
 
 		if( $lang !== "en" ) {
 			$dbname = $lang . $dbname;
@@ -966,17 +869,6 @@ class CreateWiki {
 			}
 		}
 
-		/**
-		 * additional tables per type
-		 */
-		if ( !empty( $this->mTypeTables ) && isset( $this->mTypeTables[ $this->mType ] ) ) {
-			foreach ( $this->mTypeTables[ $this->mType ] as $file ) {
-				if( is_readable( $file ) ) {
-					$mSqlFiles[] = $file ;
-				}
-			}
-		}
-
 		foreach( $mSqlFiles as $file ) {
 			wfDebugLog( "createwiki", __METHOD__ . ": Populating database with {$file}\n", true );
 
@@ -1022,38 +914,6 @@ class CreateWiki {
 
 		if ( self::ACTIVE_CLUSTER ) {
 			wfGetLBFactory()->sectionsByDB[ $this->mNewWiki->dbname ] = $this->mWFSettingVars['wgDBcluster'] = self::ACTIVE_CLUSTER;
-		}
-
-		switch( $this->mType ) {
-			case "answers":
-				$this->mWFSettingVars['wgRateLimits'] = array (
-					'move' => array (
-						'ip'     => array ( 0 => 1, 1 => 300 ),
-						'newbie' => array ( 0 => 6, 1 => 300 ),
-						'user'   => array ( 0 => 15,1 => 300 ),
-					)
-				);
-				$this->mWFSettingVars['wgGroupPermissionsLocal']         = '*|move|1,*|createaccount|1,user|createaccount|0,sysop|createaccount|0';
-				$this->mWFSettingVars['wgDefaultTheme']                  = 'sapphire';
-				$this->mWFSettingVars['wgEnableAnswers']                 = true;
-				$this->mWFSettingVars['wgEnableCategoryBlueLinks']       = true;
-				$this->mWFSettingVars['AutoFriendOnRegisterUsername']    = $this->mNewWiki->founderName;
-				$this->mWFSettingVars['wgEnableRandomInCategoryExt']     = true;
-				$this->mWFSettingVars['wgEnableMagicAnswer']             = false;
-				$this->mWFSettingVars['wgUseNewAnswersSkin']             = true;
-				$this->mWFSettingVars['wgAdslot_LEFT_NAV_205x400']       = "Null";
-				$this->mWFSettingVars['wgEnableAnswersMonacoWidget']     = false;
-				$this->mWFSettingVars['wgEnableMagicAnswer']             = false;
-				$this->mWFSettingVars['wgEnableCategoryHubsExt']         = false;
-				$this->mWFSettingVars['wgEnableEditingTipsExt']          = false;
-
-				$mapArray = array( "ar" => true, "he" => true, "ja" => true, "th" => true, "zh" => true );
-				if ( Wikia::langToSomethingMap( $mapArray, $this->mNewWiki->language, false ) ) {
-					$this->mWFSettingVars['wgDisableAnswersShortQuestionsRedirect'] = true;
-				}
-				break;
-			default:
-				break;
 		}
 
 		$oRes = $this->mDBw->select(
@@ -1108,16 +968,9 @@ class CreateWiki {
 	private function importStarter() {
 		global $wgDBadminuser, $wgDBadminpassword, $wgWikiaLocalSettingsPath;
 
-		if ( $this->mType && isset( $this->mStarters[$this->mType] ) ) {
-			$dbStarter =
-				( isset( $this->mStarters[ $this->mType ][ $this->mNewWiki->language ] ) )
-					? $this->mStarters[ $this->mType ][ $this->mNewWiki->language ]
-					: $this->mStarters[ $this->mType ][ "*" ];
-		} else {
-			$dbStarter = ( isset( $this->mStarters[ "*" ][ $this->mNewWiki->language ] ) )
-						? $this->mStarters[ "*" ][ $this->mNewWiki->language ]
-						: $this->mStarters[ "*" ][ "*" ];
-		}
+		$dbStarter = ( isset( $this->mStarters[ "*" ][ $this->mNewWiki->language ] ) )
+					? $this->mStarters[ "*" ][ $this->mNewWiki->language ]
+					: $this->mStarters[ "*" ][ "*" ];
 
 		/**
 		 * determine if exists
@@ -1149,10 +1002,6 @@ class CreateWiki {
 
 		if ( $starter ) {
 			$tables = $this->mStarterTables[ "*" ];
-
-			if ( $this->mType && isset( $this->mStarterTables[ $this->mType ] ) ) {
-				$tables = array_merge( $tables, $this->mStarterTables[ $this->mType ] ) ;
-			}
 
 			$cmd = sprintf(
 				"%s -h%s -u%s -p%s %s %s | %s -h%s -u%s -p%s %s",

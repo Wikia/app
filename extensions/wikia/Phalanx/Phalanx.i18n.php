@@ -150,6 +150,7 @@ $messages['qqq'] = array(
 	'phalanx-test-submit' => '{{Identical|Test}}',
 	'phalanx-link-unblock' => '{{Identical|Unblock}}',
 	'phalanx-unblock-message' => '$1 is the ID of the block removed.',
+	'phalanx-stats-table-user' => '{{Identical|Added by}}',
 	'phalanx-stats-table-create' => '{{Identical|Created}}',
 	'phalanx-stats-table-expire' => '{{Identical|Expire}}',
 	'phalanx-stats-table-regex' => '{{Identical|Regex}}',
@@ -2230,7 +2231,7 @@ Për piasì [[Special:Contact|ch'a contata Wikia]] për parlé dël problema.<br
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
-	'phalanx-type-content' => 'د مخ منځپانګه',
+	'phalanx-type-content' => 'د مخ منځپانگه',
 	'phalanx-type-summary' => 'د مخ لنډيز',
 	'phalanx-type-title' => 'مخ سرليک',
 	'phalanx-type-user' => 'کارن',

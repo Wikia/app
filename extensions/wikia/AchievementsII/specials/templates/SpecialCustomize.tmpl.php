@@ -1,16 +1,16 @@
 
 <div class="article-sidebar">
-	<h2 class="first"><?= wfMsg('achievements-about-title') ?></h2>
-	<?= wfMsgExt( 'achievements-about-content', 'parse' ) ?>
+	<h2 class="first"><?= wfMessage('achievements-about-title')->escaped() ?></h2>
+	<?= wfMessage( 'achievements-about-content' )->parse() ?>
 
 	<form method="POST" class="customize-edit-plus-category" onsubmit="Achievements.AchPrepareData(true);">
 		<input type="hidden" name="add_edit_plus_category_track" value="1"/>
 		<input type="hidden" name="json-data" class="c-messages-ec" />
-		<h2><?=wfMsg('achievements-create-edit-plus-category-title');?></h2>
-		<?=wfMsgExt( 'achievements-create-edit-plus-category-content', 'parse' );?>
+		<h2><?=wfMessage('achievements-create-edit-plus-category-title')->escaped();?></h2>
+		<?=wfMessage( 'achievements-create-edit-plus-category-content' )->parse();?>
 		<p class="input">
-			<label><?=wfMsg('achievements-customize-new-category-track');?></label><input name="edit_plus_category_name" type="text"/>
-			<button type="submit"><?=wfMsg('achievements-create-edit-plus-category');?></button>
+			<label><?=wfMessage('achievements-customize-new-category-track')->escaped();?></label><input name="edit_plus_category_name" type="text"/>
+			<button type="submit"><?=wfMessage('achievements-create-edit-plus-category')->escaped();?></button>
 		</p>
 	</form>
 </div>
@@ -53,7 +53,7 @@ foreach($config->getInTrackStatic() as $badgeTypeId => $trackData){
 			</span>
 			<form method="POST" class="save-all">
 				<input type="hidden" name="json-data" class="c-messages" />
-				<input type="submit" value="<?= wfMsg('achievements-save') ?>" onclick="Achievements.AchPrepareData(false, '<?= $badgeTypeId; ?>');"/>
+				<input type="submit" value="<?= wfMessage('achievements-save')->escaped() ?>" onclick="Achievements.AchPrepareData(false, '<?= $badgeTypeId; ?>');"/>
 			</form>
 		</div>
 		<h2><?=wfMsg($config->getTrackNameKey($badgeTypeId), (isset($trackData['category']) ? $trackData['category'] : null));?></h2>
@@ -159,6 +159,10 @@ foreach($config->getNotInTrackStatic() as $badgeTypeId => $badgeData) {
 		</ul>
 	</div>
 <?endforeach;?>
+	<form method="POST" class="save-all">
+		<input type="hidden" name="json-data" class="c-messages" />
+		<input type="submit"  value="<?= wfMessage( 'achievements-save' )->escaped() ?>" onclick="Achievements.AchPrepareData(false, '');"/>
+	</form>
 </div>
 <?if($scrollTo):?>
 	<script type="<?= $wgJsMimeType; ?>">

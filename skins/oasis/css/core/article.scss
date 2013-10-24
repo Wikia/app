@@ -412,6 +412,12 @@
 	.inline-video {
 		display: inline-block;
 	}
+
+	// foundation block-grid ul's should not have normal ul padding when used in articles
+	ul[class*="block-grid-"] {
+		margin: 0;
+		padding: 0;
+	}
 }
 
 // Exceptions to the rule (MAIN-939)

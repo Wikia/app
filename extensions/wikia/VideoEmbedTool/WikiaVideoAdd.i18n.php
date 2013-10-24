@@ -211,16 +211,17 @@ $messages['eo'] = array(
 );
 
 /** Spanish (español)
+ * @author Benfutbol10
  * @author Danke7
  * @author Translationista
  * @author VegaDark
  */
 $messages['es'] = array(
-	'wva-success' => 'La página del vídeo $1 fue añadida satisfactoriamente.', # Fuzzy
-	'wva-success-replaced' => 'La página del vídeo $1 fue reemplazada satisfactoriamente.', # Fuzzy
+	'wva-success' => 'La página del vídeo [[:$1]] fue añadida satisfactoriamente.',
+	'wva-success-replaced' => 'La página del vídeo [[:$1]] fue reemplazada satisfactoriamente.',
 	'wva-failure' => 'Por favor, pon parámetros válidos.',
-	'wva-name' => 'Introduce el nombre:', # Fuzzy
-	'wva-url' => 'Introducir la URL:', # Fuzzy
+	'wva-name' => 'Nombre del video:',
+	'wva-url' => 'URL del video:',
 	'wva-add' => 'Añadir',
 	'wva-title' => 'Añadir vídeo de forma rápida desde una URL',
 	'wva-notlogged' => 'Necesitas acceder o registrarte para insertar videos.',
@@ -464,6 +465,13 @@ $messages['kn'] = array(
 	'wva-add' => 'ಸೇರಿಸು',
 );
 
+/** Korean (한국어)
+ * @author Hym411
+ */
+$messages['ko'] = array(
+	'wva-url' => '동영상 URL:',
+);
+
 /** Karachay-Balkar (къарачай-малкъар)
  * @author Къарачайлы
  */
@@ -483,8 +491,9 @@ $messages['krc'] = array(
  * @author Robby
  */
 $messages['lb'] = array(
-	'wva-name' => 'Gitt w.e.g. den Numm un:', # Fuzzy
-	'wva-url' => "Gitt w.e.g. d'URL an:", # Fuzzy
+	'wva-success' => 'Videosäit [[:$1]] gouf derbäigesat.',
+	'wva-name' => 'Numm vum Video:',
+	'wva-url' => 'URL vum Video:',
 	'wva-add' => 'Derbäisetzen',
 	'wva-protected' => 'Dëse Video ass gespaart.',
 );

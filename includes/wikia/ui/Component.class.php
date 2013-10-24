@@ -14,7 +14,7 @@ class Component {
 	 * @desc default type of a component i.e. buttons have three types: input, button and link
 	 */
 	const COMPONENT_DEFAULT_TYPE = 'default';
-	
+
 	/**
 	 * @var $templateEngine \Wikia\Template\Engine
 	 */
@@ -146,7 +146,7 @@ class Component {
 	public function setBaseTemplatePath( $path ) {
 		return $this->templateBasePath = $path;
 	}
-	
+
 	/**
 	 * @param String $template "sub template" name of the component (i.e. a button component can have three
 	 * "sub templates": button_input.mustache, button_link.mustache and button_button.mustache the part between _ and .
@@ -160,7 +160,7 @@ class Component {
 		if ( $this->fileExists( $mustacheTplPath ) ) {
 			$this->templatePath = $mustacheTplPath;
 		} else {
-			throw new TemplateException();
+			throw new TemplateException( TemplateException::EXCEPTION_MSG_INVALID_TEMPLATE . ' (' . $mustacheTplPath . ')' );
 		}
 	}
 
@@ -193,8 +193,8 @@ class Component {
 
 	/**
 	 * @desc Sets template variables and their values
-	 * 
-	 * @param array $varsArray an array with key=>value structure; 
+	 *
+	 * @param array $varsArray an array with key=>value structure;
 	 * key is the template variable name and the second is its value
 	 */
 	public function setVarsValues( Array $varsArray ) {
@@ -203,7 +203,7 @@ class Component {
 
 	/**
 	 * @desc Gets template variables and their values
-	 * 
+	 *
 	 * @return Array
 	 */
 	public function getVarsValues() {
@@ -212,7 +212,7 @@ class Component {
 
 	/**
 	 * @desc Checks if all required variables are set; throws an exception if not
-	 * 
+	 *
 	 * @throws DataException
 	 */
 	private function validateTemplateVars() {
@@ -240,7 +240,7 @@ class Component {
 
 	/**
 	 * @desc Method using built-in PHP function; created because of unit tests
-	 * 
+	 *
 	 * @param string $file path to a file
 	 * @return bool
 	 */

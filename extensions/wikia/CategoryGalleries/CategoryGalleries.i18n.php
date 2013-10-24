@@ -51,6 +51,13 @@ $messages['bar'] = array(
 	'categorygalleries-desc' => "Zoagt da'raa Seiten-Galarie auf Kategorieseiten",
 );
 
+/** Bulgarian (български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'categorygalleries-desc' => 'Показване на галерия със страници в страниците на категориите',
+);
+
 /** Breton (brezhoneg)
  * @author Fohanno
  */

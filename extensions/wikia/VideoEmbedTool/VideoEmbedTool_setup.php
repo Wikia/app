@@ -95,9 +95,6 @@ $wgAjaxExportList[] = 'VET';
 function VET() {
 	global $wgRequest;
 
-	$dir = dirname(__FILE__).'/';
-	require_once($dir.'VideoEmbedTool_body.php');
-
 	$method = $wgRequest->getVal('method');
 	$vet = new VideoEmbedTool();
 
@@ -106,5 +103,7 @@ function VET() {
 	if(!empty($domain)) {
 		$html .= '<script type="text/javascript">document.domain = "' . $domain  . '"</script>';
 	}
-	return new AjaxResponse($html);
+	$resp = new AjaxResponse( $html );
+	$resp->setContentType( 'text/html' );
+	return $resp;
 }
