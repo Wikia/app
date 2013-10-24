@@ -2,21 +2,63 @@
 		var showPoliciesModal = function() {
 			require( [ 'wikia.ui.factory' ], function( uiFactory ) {
 				uiFactory.init( [ 'button', 'modal' ] ).then( function( uiComponents ) {
-					var button = uiComponents[0],
+					var uiButton = uiComponents[0],
 						uiModal = uiComponents[1],
-						modalId = 'ForumPoliciesModal',
+						backBtnMsg = $.msg( 'back' ),
+						backBtn = uiButton.render( {
+							"type": "link",
+							"vars": {
+								"id": "close",
+								"href": "#",
+								"classes": [ "normal", "secondary" ],
+								"value": backBtnMsg,
+								"title": backBtnMsg
+							}
+						}),
+						editBtn = null;
+					if ( false && window.wgCanEditPolicies) {
+						var editBtnMsg = $.msg('forum-specialpage-policies-edit');
+						editBtn = uiButton.render( {
+							"type": "link",
+							"vars": {
+								"id": "edit",
+								"href": "#",
+								"classes": [ "normal", "secondary" ],
+								"value": editBtnMsg,
+								"title": editBtnMsg
+							}
+						} );
+					}
+
+
+					var modalId = 'ForumPoliciesModal',
 						policiesModal = uiModal.render( {
 							type: 'default',
 							vars: {
 								id: modalId,
 								size: 'medium',
 								content: '<div class="ForumPolicies"><div class="WikiaArticle"></div></div>',
-								title: $.msg('forum-specialpage-policies')
+								title: $.msg('forum-specialpage-policies'),
+								closeButton: true,
+								closeText: $.msg( 'close' ),
+								primaryBtn: editBtn,
+								secondBtn: backBtn
 							}
 						} );
 
 					require( [ 'wikia.ui.modal' ], function( modal ) {
 						policiesModal = modal.init( modalId, policiesModal );
+						policiesModal.$element.find( '#close' ).click( function( event ) {
+							event.preventDefault(); //?
+
+							policiesModal.close();
+							policiesModal.$element.remove(); //?
+						} );
+						policiesModal.$element.find( '#edit' ).click( function( ) {
+							window.location = window.wgPoliciesEditURL;
+						} );
+
+
 						policiesModal.show();
 						policiesModal.$element.find( '.ForumPolicies' ).startThrobbing();
 						$.nirvana.sendRequest({
@@ -35,58 +77,10 @@
 					} );
 				} );
 			} );
-			return;
-			var buttons = [];
-			
-			buttons.push({
-				id: 'close',
-				message:  $.msg('back'),
-				handler: function() {
-					modal.closeModal();
-				}
-			});
-			
-			if(wgCanEditPolicies) {
-				buttons.push({
-					id: 'edit',
-					message:  $.msg('forum-specialpage-policies-edit'),
-					handler: function() {
-						window.location = wgPoliciesEditURL;
-					}
-				});		
-			}
-			
-			var modal;
-			var options = {
-				buttons: buttons,
-				width: 'auto',
-				className: 'policies',
-				callback: function() {
-					$.nirvana.sendRequest({
-						controller: 'ForumExternalController',
-						type: 'GET',
-						method: 'policies',
-						format: 'json',
-						data: {
-							'rev': wgPoliciesRev
-						},
-						callback: function(data) {
-							$('.ForumPolicies').stopThrobbing();
-							$('.ForumPolicies .WikiaArticle').html(data.body);
-						}
-					});
-				}
-			};
-			
-			// use loading indicator before real content will be fetched	
-			var content = $('<div class="ForumPolicies"><div class="WikiaArticle"></div></div>');
-			content.find('.WikiaArticle').css('width', 800);
-			var modal = $.showCustomModal($.msg('forum-specialpage-policies'), content, options);
-			$('.ForumPolicies').startThrobbing();
 			return false;
 		};
 		
-	$(function() { 
+	$(function() {
 		$('.policies-link').click(showPoliciesModal);
 	});
 // Just the namespace, for now.
