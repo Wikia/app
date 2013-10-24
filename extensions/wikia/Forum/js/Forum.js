@@ -1,5 +1,41 @@
 (function(window, $) {
 		var showPoliciesModal = function() {
+			require( [ 'wikia.ui.factory' ], function( uiFactory ) {
+				uiFactory.init( [ 'button', 'modal' ] ).then( function( uiComponents ) {
+					var button = uiComponents[0],
+						uiModal = uiComponents[1],
+						modalId = 'ForumPoliciesModal',
+						policiesModal = uiModal.render( {
+							type: 'default',
+							vars: {
+								id: modalId,
+								size: 'medium',
+								content: '<div class="ForumPolicies"><div class="WikiaArticle"></div></div>',
+								title: $.msg('forum-specialpage-policies')
+							}
+						} );
+
+					require( [ 'wikia.ui.modal' ], function( modal ) {
+						policiesModal = modal.init( modalId, policiesModal );
+						policiesModal.show();
+						policiesModal.$element.find( '.ForumPolicies' ).startThrobbing();
+						$.nirvana.sendRequest({
+							controller: 'ForumExternalController',
+							type: 'GET',
+							method: 'policies',
+							format: 'json',
+							data: {
+								'rev': wgPoliciesRev
+							},
+							callback: function(data) {
+								policiesModal.$element.find( '.ForumPolicies' ).stopThrobbing();
+								policiesModal.$element.find( '.ForumPolicies .WikiaArticle' ).html(data.body);
+							}
+						});
+					} );
+				} );
+			} );
+			return;
 			var buttons = [];
 			
 			buttons.push({
