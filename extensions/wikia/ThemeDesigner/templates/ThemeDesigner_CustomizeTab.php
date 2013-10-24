@@ -22,6 +22,7 @@
                 <!-- TODO: Remove IF statement after fluid layout global release -->
 				<? if ($wg->OasisResponsive) : ?>
 					<input type="checkbox" id="dynamic-background"> <label for="dynamic-background"><?= wfMessage('themedesigner-dynamic-background')->plain() ?></label>
+					<span class="form-questionmark" rel="tooltip" title="<?= wfMessage('themedesigner-rules-dynamic-background')->plain() ?>"></span>
 				<? endif ?>
 			</li>
 		</ul>
