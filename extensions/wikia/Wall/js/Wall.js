@@ -456,6 +456,54 @@ var Wall = $.createClass(Object, {
 			}
 		}
 
+		require( [ 'wikia.ui.factory' ], function( uiFactory ) {
+			uiFactory.init( [ 'button', 'modal' ] ).then( function( uiComponents ) {
+				var uiButton = uiComponents[0],
+					uiModal = uiComponents[1],
+					modalId = 'WallConfirm',
+					modalPrimaryBtn = uiButton.render( {
+						'type': 'link',
+						'vars': {
+							'id': 'ok',
+							'href': '#',
+							'classes': [ 'normal', 'primary' ],
+							'value': okmsg,
+							'title': okmsg
+						}
+					} ),
+					modalSecondaryBtn = uiButton.render( {
+						'type': 'link',
+						'vars': {
+							'id': 'cancel',
+							'href': '#',
+							'classes': [ 'normal', 'secondary' ],
+							'value': cancelmsg,
+							'title': cancelmsg
+						}
+					}),
+					confirmModal = uiModal.render( {
+						type: 'default',
+						vars: {
+							id: modalId,
+							size: 'medium',
+							content: msg,
+							title: title,
+							closeButton: true,
+							closeText: $.msg( 'close' ),
+							primaryBtn: modalPrimaryBtn,
+							secondBtn: modalSecondaryBtn
+						}
+					} );
+
+				require( [ 'wikia.ui.modal' ], function( modal ) {
+					confirmModal = modal.init( modalId, confirmModal );
+					confirmModal.show();
+				} );
+			} );
+		} );
+
+		// TODO: Remove comment below once the implementation of "Remove message/thread" modal is finished
+		/*
 		$.confirm({
 			title: title,
 			content: msg,
@@ -467,6 +515,7 @@ var Wall = $.createClass(Object, {
 				this.doAction(id, mode, wallMsg, target, formdata );
 			})
 		});
+		*/
 
 		if(mode != 'rev') {
 			$('#WikiaConfirmOk').attr('disabled', 'disabled');
