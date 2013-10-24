@@ -175,7 +175,7 @@ ve.ui.WikiaMediaQueryWidget.prototype.onRequestMediaDone = function ( data ) {
  */
 ve.ui.WikiaMediaQueryWidget.prototype.showUploadWrapper = function () {
 	this.$uploadWrapper.show();
-}
+};
 
 /**
  * Hide upload wrapper
@@ -184,4 +184,4 @@ ve.ui.WikiaMediaQueryWidget.prototype.showUploadWrapper = function () {
  */
 ve.ui.WikiaMediaQueryWidget.prototype.hideUploadWrapper = function () {
 	this.$uploadWrapper.hide();
-}
+};

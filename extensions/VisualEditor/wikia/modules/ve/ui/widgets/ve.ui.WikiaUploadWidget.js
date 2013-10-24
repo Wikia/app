@@ -107,7 +107,7 @@ ve.ui.WikiaUploadWidget.prototype.onUploadSuccess = function ( data ) {
 
 	// Error response
 	if ( data.error ) {
-		alert( data.error.info );
+		window.alert( data.error.info );
 		return;
 	}
 
@@ -122,7 +122,7 @@ ve.ui.WikiaUploadWidget.prototype.onUploadSuccess = function ( data ) {
  */
 ve.ui.WikiaUploadWidget.prototype.onUploadError = function () {
 	this.hideUploadAnimation();
-	alert( ve.msg( 'visualeditor-wikiauploaderror' ) );
+	window.alert( ve.msg( 'visualeditor-wikiauploaderror' ) );
 };
 
 

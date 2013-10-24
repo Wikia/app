@@ -235,7 +235,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.onOpen = function () {
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onPageSet = function () {
 	this.queryInput.$input.focus();
-	if ( this.pages.getPageName() == 'main' ) {
+	if ( this.pages.getPageName() === 'main' ) {
 		this.query.hideUploadWrapper();
 	} else {
 		this.query.showUploadWrapper();
@@ -449,7 +449,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.onUploadSuccess = function ( data ) {
 	this.cartModel.addItems( [
 		new ve.dm.WikiaCartItem( data.title, data.temporaryThumbUrl, 'photo', data.temporaryFileName )
 	] );
-}
+};
 
 /* Registration */
 
