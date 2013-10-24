@@ -223,7 +223,7 @@ class DataMartService extends Service {
 	 * @param integer $periodId The interval of time to take into consideration, one of PERIOD_ID_WEEKLY,
 	 * PERIOD_ID_MONTHLY or PERIOD_ID_QUARTERLY
 	 * @param integer $limit The maximum number of results, defaults to 200
-	 * @param array $langs
+	 * @param array $langs (optional) The language code to use as a filter (e.g. en for English), null for all (default)
 	 * @param string $hub (optional) The vertical name to use as a filter (e.g. Gaming), null for all (default)
 	 * @param integer $public (optional) Filter results by public status, one of 0, 1 or null (for both, default)
 	 * @return array $topWikis [ array( wikiId => pageviews ) ]
