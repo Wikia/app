@@ -76,37 +76,23 @@ ve.ui.WikiaMediaQueryWidget.prototype.getInput = function () {
  * @fires requestMedia
  */
 ve.ui.WikiaMediaQueryWidget.prototype.requestMedia = function () {
-	var value;
+	this.input.pushPending();
+	this.request = $.ajax( {
+		'url': mw.util.wikiScript( 'api' ),
+		'data': {
+			'format': 'json',
+			'action': 'apimediasearch',
+			'query': this.value,
+			'type': 'photo|video',
+			'mixed': true,
+			'batch': this.batch,
+			'limit': 16
+		}
+	} )
+		.always( ve.bind( this.onRequestMediaAlways, this ) )
+		.done( ve.bind( this.onRequestMediaDone, this ) );
 
-	if ( this.input.isPending() ) {
-		return;
-	}
-
-	value = this.input.getValue();
-
-	if ( this.request ) {
-		this.request.abort();
-	}
-
-	if ( value.trim().length !== 0 ) {
-		this.input.pushPending();
-		this.request = $.ajax( {
-			'url': mw.util.wikiScript( 'api' ),
-			'data': {
-				'format': 'json',
-				'action': 'apimediasearch',
-				'query': value,
-				'type': 'photo|video',
-				'mixed': true,
-				'batch': this.batch,
-				'limit': 16
-			}
-		} )
-			.always( ve.bind( this.onRequestMediaAlways, this ) )
-			.done( ve.bind( this.onRequestMediaDone, this ) );
-	}
-
-	this.emit( 'requestMedia', value, this.request );
+	this.emit( 'requestMedia', this.value, this.request );
 };
 
 /**
@@ -115,13 +101,13 @@ ve.ui.WikiaMediaQueryWidget.prototype.requestMedia = function () {
  * @method
  */
 ve.ui.WikiaMediaQueryWidget.prototype.onInputChange = function () {
-	var value = this.input.getValue();
-
-	this.batch = 1;
+	if ( this.request ) {
+		this.request.abort();
+	}
 	clearTimeout( this.timeout );
-
-	if ( value.trim().length !== 0 ) {
-		// TODO/FIXME: requestMedia is called too often
+	this.batch = 1;
+	this.value = this.input.getValue();
+	if ( this.value.trim().length !== 0 ) {
 		this.timeout = setTimeout( this.requestMediaCallback, 100 );
 	}
 };
@@ -146,7 +132,7 @@ ve.ui.WikiaMediaQueryWidget.prototype.onRequestMediaAlways = function () {
 ve.ui.WikiaMediaQueryWidget.prototype.onRequestMediaDone = function ( data ) {
 	var items;
 
-	if ( !data.response || !data.response.results || this.input.getValue().trim().length === 0 ) {
+	if ( !data.response || !data.response.results ) {
 		return;
 	}
 
