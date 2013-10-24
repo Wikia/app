@@ -25,7 +25,7 @@
 							method: 'policies',
 							format: 'json',
 							data: {
-								'rev': wgPoliciesRev
+								'rev': window.wgPoliciesRev
 							},
 							callback: function(data) {
 								policiesModal.$element.find( '.ForumPolicies' ).stopThrobbing();
