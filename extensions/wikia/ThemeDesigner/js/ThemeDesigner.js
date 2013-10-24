@@ -2,6 +2,7 @@ var ThemeDesigner = {
 	slideByDefaultWidth: 760,
 	slideByItems: 5,
 	isSliding: false,
+	minWidthforDynamicBg: 1050,
 
 	init: function() {
 
@@ -395,6 +396,7 @@ var ThemeDesigner = {
 							ThemeDesigner.set("background-image-width", img.width);
 							ThemeDesigner.set("background-image-height", img.height);
 							ThemeDesigner.set("background-image", imgUrl);
+							ThemeDesigner.checkBgIsDynamic(img.width);
 						}
 					}
 					img.src = imgUrl;
@@ -429,6 +431,18 @@ var ThemeDesigner = {
 			.find(".color li").remove().end()
 			.find(".image li").unbind("click");
 		$("#color-name").val("").blur();
+	},
+
+	checkBgIsDynamic: function(width) {
+		if ( width < ThemeDesigner.minWidthforDynamicBg ) {
+			if ( $('#dynamic-background').attr('checked') ) {
+				$('#dynamic-background').attr('checked', false);
+				ThemeDesigner.set("background-dynamic", false);
+			}
+			$('#dynamic-background').attr('disabled', true);
+		} else {
+			$('#dynamic-background').attr('disabled', false);
+		}
 	},
 
 	/**
@@ -575,6 +589,8 @@ var ThemeDesigner = {
 				ThemeDesigner.set("background-image-name", response.backgroundImageName);
 				ThemeDesigner.set("background-image-width", response.backgroundImageWidth);
 				ThemeDesigner.set("background-image-height", response.backgroundImageHeight);
+
+				ThemeDesigner.checkBgIsDynamic( response.backgroundImageWidth );
 
 				// This should be last, it triggers a CSS reload
 				ThemeDesigner.set("background-image", response.backgroundImageUrl);
