@@ -54,6 +54,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	this.pages = new ve.ui.PagedLayout( { '$$': this.frame.$$, 'attachPagesPanel': true } );
 	this.query = new ve.ui.WikiaMediaQueryWidget( { '$$': this.frame.$$ } );
 	this.queryInput = this.query.getInput();
+	this.queryUpload = this.query.getUpload();
 	this.removeButton = new ve.ui.ButtonWidget( {
 		'$$': this.frame.$$,
 		'label': 'Remove from the cart', //TODO: i18n
@@ -66,7 +67,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	this.$content = this.$$( '<div>' );
 	this.$removePage = this.$$( '<div>' );
 	this.$mainPage = this.$$( '<div>' );
-	this.uploadButton = new ve.ui.WikiaUploadWidget( { '$$': this.frame.$$ } );
+	this.upload = new ve.ui.WikiaUploadWidget( { '$$': this.frame.$$, 'hideIcon': true } );
 
 	// Events
 	this.cart.connect( this, { 'select': 'onCartSelect' } );
@@ -83,10 +84,12 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 		'nearingEnd': 'onSearchNearingEnd',
 		'select': 'onSearchSelect'
 	} );
+	this.queryUpload.on( 'upload', ve.bind( this.onUploadSuccess, this ) );
+	this.upload.on( 'upload', ve.bind( this.onUploadSuccess, this ) );
 
 	// Initialization
 	this.removeButton.$.appendTo( this.$removePage );
-	this.uploadButton.$.appendTo( this.$mainPage );
+	this.upload.$.appendTo( this.$mainPage );
 	// TODO: Remove this when file information pages are built
 	this.pages.addPage( 'remove', { '$content': this.$removePage } );
 	// TODO: Make suggestions widget and remove this placeholder div
@@ -230,6 +233,11 @@ ve.ui.WikiaMediaInsertDialog.prototype.onOpen = function () {
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onPageSet = function () {
 	this.queryInput.$input.focus();
+	if ( this.pages.getPageName() === 'main' ) {
+		this.query.hideUpload();
+	} else {
+		this.query.showUpload();
+	}
 };
 
 /**
@@ -427,6 +435,18 @@ ve.ui.WikiaMediaInsertDialog.prototype.onGetImageInfoSuccess = function ( deferr
 		} );
 	}
 	deferred.resolve( results );
+};
+
+/**
+ * Handle successful file uploads.
+ *
+ * @method
+ * @param {Object} data The uploaded file information
+ */
+ve.ui.WikiaMediaInsertDialog.prototype.onUploadSuccess = function ( data ) {
+	this.cartModel.addItems( [
+		new ve.dm.WikiaCartItem( data.title, data.temporaryThumbUrl, 'photo', data.temporaryFileName )
+	] );
 };
 
 /* Registration */

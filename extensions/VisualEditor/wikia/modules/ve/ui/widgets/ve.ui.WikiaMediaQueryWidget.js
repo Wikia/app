@@ -31,14 +31,27 @@ ve.ui.WikiaMediaQueryWidget = function VeUiWikiaMediaQueryWidget( config ) {
 	this.request = null;
 	this.requestMediaCallback = ve.bind( this.requestMedia, this );
 	this.timeout = null;
+	this.upload = new ve.ui.WikiaUploadWidget( { '$$': this.$$ } );
+	this.$outerWrapper = this.$$( '<div>' );
+	this.$inputWrapper = this.$$( '<div>' );
+	this.$uploadWrapper = this.$$( '<div>' );
 
 	// Events
 	this.input.connect( this, { 'change': 'onInputChange' } );
 
 	// Initialization
+	this.$inputWrapper
+		.addClass( 've-ui-wikiaMediaQueryWidget-queryWrapper' )
+		.append( this.input.$ );
+	this.$uploadWrapper
+		.addClass( 've-ui-wikiaMediaQueryWidget-uploadWrapper' )
+		.append( this.upload.$ );
+	this.$outerWrapper
+		.addClass( 've-ui-wikiaMediaQueryWidget-wrapper' )
+		.append( this.$inputWrapper, this.$uploadWrapper );
 	this.$
 		.addClass( 've-ui-wikiaMediaQueryWidget' )
-		.append( this.input.$ );
+		.append( this.$outerWrapper );
 };
 
 /* Inheritance */
@@ -67,6 +80,10 @@ ve.inheritClass( ve.ui.WikiaMediaQueryWidget, ve.ui.Widget );
  */
 ve.ui.WikiaMediaQueryWidget.prototype.getInput = function () {
 	return this.input;
+};
+
+ve.ui.WikiaMediaQueryWidget.prototype.getUpload = function () {
+	return this.upload;
 };
 
 /**
@@ -141,4 +158,22 @@ ve.ui.WikiaMediaQueryWidget.prototype.onRequestMediaDone = function ( data ) {
 
 	this.batch++;
 	this.emit( 'requestMediaDone', items );
+};
+
+/**
+ * Show upload wrapper
+ *
+ * @method
+ */
+ve.ui.WikiaMediaQueryWidget.prototype.showUpload = function () {
+	this.$uploadWrapper.show();
+};
+
+/**
+ * Hide upload wrapper
+ *
+ * @method
+ */
+ve.ui.WikiaMediaQueryWidget.prototype.hideUpload = function () {
+	this.$uploadWrapper.hide();
 };
