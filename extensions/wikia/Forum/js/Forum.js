@@ -6,45 +6,46 @@
 						uiModal = uiComponents[1],
 						backBtnMsg = $.msg( 'back' ),
 						backBtn = uiButton.render( {
-							"type": "link",
-							"vars": {
-								"id": "close",
-								"href": "#",
-								"classes": [ "normal", "secondary" ],
-								"value": backBtnMsg,
-								"title": backBtnMsg
+							type: 'link',
+							vars: {
+								id: 'close',
+								href: '#',
+								classes: [ 'normal', 'secondary' ],
+								value: backBtnMsg,
+								title: backBtnMsg
 							}
 						}),
-						editBtn = null;
-					if ( false && window.wgCanEditPolicies) {
-						var editBtnMsg = $.msg('forum-specialpage-policies-edit');
+						modalId = 'ForumPoliciesModal',
+						editBtn, policiesModal, editBtnMsg;
+
+					if ( window.wgCanEditPolicies ) {
+						editBtnMsg = $.msg( 'forum-specialpage-policies-edit' );
 						editBtn = uiButton.render( {
-							"type": "link",
-							"vars": {
-								"id": "edit",
-								"href": "#",
-								"classes": [ "normal", "secondary" ],
-								"value": editBtnMsg,
-								"title": editBtnMsg
+							type: 'link',
+							vars: {
+								id: 'edit',
+								href: '#',
+								classes: [ 'normal', 'secondary' ],
+								value: editBtnMsg,
+								title: editBtnMsg
 							}
 						} );
 					}
 
 
-					var modalId = 'ForumPoliciesModal',
-						policiesModal = uiModal.render( {
-							type: 'default',
-							vars: {
-								id: modalId,
-								size: 'medium',
-								content: '<div class="ForumPolicies"><div class="WikiaArticle"></div></div>',
-								title: $.msg('forum-specialpage-policies'),
-								closeButton: true,
-								closeText: $.msg( 'close' ),
-								primaryBtn: editBtn,
-								secondBtn: backBtn
-							}
-						} );
+					policiesModal = uiModal.render( {
+						type: 'default',
+						vars: {
+							id: modalId,
+							size: 'medium',
+							content: '<div class="ForumPolicies"><div class="WikiaArticle"></div></div>',
+							title: $.msg( 'forum-specialpage-policies' ),
+							closeButton: true,
+							closeText: $.msg( 'close' ),
+							primaryBtn: editBtn,
+							secondBtn: backBtn
+						}
+					} );
 
 					require( [ 'wikia.ui.modal' ], function( modal ) {
 						policiesModal = modal.init( modalId, policiesModal );
@@ -81,7 +82,7 @@
 		};
 		
 	$(function() {
-		$('.policies-link').click(showPoliciesModal);
+		$( '.policies-link' ).click( showPoliciesModal );
 	});
 // Just the namespace, for now.
 window.Forum = {};
