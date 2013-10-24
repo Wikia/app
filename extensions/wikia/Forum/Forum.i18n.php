@@ -258,11 +258,17 @@ $messages['qqq'] = array(
 	'forum-specialpage-policies' => 'Button label for forum policies',
 	'forum-policies-and-faq' => 'Default policies and faq',
 	'forum-notification-user1-reply-to-your' => 'Notification when someone replies on your thread. Parameters:
-* $1 is a username (GENDER is supported in this message).',
+* $1 is the username of the user that left the message (GENDER is supported in this message).
+* $3 is the name of the board that the reply was left on.
+* $4 is the username of the registered user seeing this message (for GENDER support).',
 	'forum-notification-user2-reply-to-your' => "Notification when 2 users reply on the logged in user's thread. Parameters:
-* $1 and $2 are names of users that replied (GENDER is supported in this message).",
+* $1 and $2 are names of users that replied (GENDER is supported in this message).
+* $3 is the name of the board that the reply was left on.
+* $4 is the username of the registered user seeing this message (for GENDER support).",
 	'forum-notification-user3-reply-to-your' => "Notification when 3 or more users reply on the logged in user's thread. Parameters:
-* $1 is the first user who replied (GENDER is supported in this message).",
+* $1 is the first user who replied (GENDER is supported in this message).
+* $3 is the name of the board that the reply was left on.
+* $4 is the username of the registered user seeing this message (for GENDER support).",
 	'forum-activity-module-heading' => 'Forum Activity right rail module heading',
 	'forum-activity-module-posted' => '$1 is username, $2 is url to user page, $3 is a translated time statement such as "20 seconds ago" or "20 hours ago" or "20 days ago"',
 	'forum-participation-module-heading' => 'Forum Participation right rail module heading.  Informal, and state "there are these people here"',
