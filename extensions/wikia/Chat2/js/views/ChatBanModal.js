@@ -1,37 +1,39 @@
 var ChatBanModal = function(title, okCallback, options) {
-	var self = this,
-		data = {};
+	'use strict';
+
+	var data = {};
 
 	if (options) {
 		data = {
-			userId: options.userId || ""
-		}
+			userId: options.userId || ''
+		};
 	}
 
 	// TODO: Remove isChangeBan - back end will check for this
-	$.get( wgScript + '?action=ajax&rs=ChatAjax&method=BanModal', data, function( data ) {
+	$.get( window.wgScript + '?action=ajax&rs=ChatAjax&method=BanModal', data, function( data ) {
 		require( [ 'wikia.ui.factory' ], function( uiFactory ) {
 			uiFactory.init( 'button' ).then( function( uiButton ) {
-				var primaryBtnMsg = data.isChangeBan ? $.msg('chat-ban-modal-button-change-ban') : $.msg('chat-ban-modal-button-ok'),
+				var primaryBtnMsg = data.isChangeBan ?
+						$.msg('chat-ban-modal-button-change-ban') : $.msg('chat-ban-modal-button-ok'),
 					modalPrimaryBtn = uiButton.render( {
-						"type": "link",
-						"vars": {
-							"id": "ok",
-							"href": "#",
-							"classes": [ "normal", "primary" ],
-							"value": primaryBtnMsg,
-							"title": primaryBtnMsg
+						'type': 'link',
+						'vars': {
+							'id': 'ok',
+							'href': '#',
+							'classes': [ 'normal', 'primary' ],
+							'value': primaryBtnMsg,
+							'title': primaryBtnMsg
 						}
 					} ),
 					secondaryBtnMsg = $.msg( 'chat-ban-modal-button-cancel' ),
 					modalSecondaryBtn = uiButton.render( {
-						"type": "link",
-						"vars": {
-							"id": "cancel",
-							"href": "#",
-							"classes": [ "normal", "secondary" ],
-							"value": secondaryBtnMsg,
-							"title": secondaryBtnMsg
+						'type': 'link',
+						'vars': {
+							'id': 'cancel',
+							'href': '#',
+							'classes': [ 'normal', 'secondary' ],
+							'value': secondaryBtnMsg,
+							'title': secondaryBtnMsg
 						}
 					} );
 
