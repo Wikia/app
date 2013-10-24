@@ -60,6 +60,55 @@ class LicensedVideoSwapHelper extends WikiaModel {
 	 */
 	protected $jaccard;
 
+	public function getVideoDebugInfo() {
+		$db = wfGetDB( DB_SLAVE );
+
+		$sql = "SELECT video_title AS title,
+					   provider AS provider,
+					   p.propname AS prop,
+					   p.props AS val
+				FROM video_info, page, page_wikia_props p
+				WHERE video_title=page_title
+				  AND page.page_id=p.page_id
+				  AND propname IN (18,19,20,22)
+				  AND page.page_id NOT IN (
+						SELECT e.page_id
+						FROM page_wikia_props e
+						WHERE e.propname = 21
+						  AND e.props = 1
+				  )";
+
+		$result = $db->query( $sql, __METHOD__ );
+
+		// Build the return array
+		$debugInfo = [];
+		while ( $row = $db->fetchObject( $result ) ) {
+			$debugInfo[ $row->title ]['provider'] = $row->provider;
+
+			// Get the prop val
+			$val = $row->val;
+			// If this propname isn't in the list of already unserialized data, unserialize it.
+			if ( !in_array( $row->prop, $this->wg->WPPNotSerialized ) ) {
+				$val = unserialize($val);
+			}
+
+			$name = 'unknown';
+			// Convert the prop name
+			switch ($row->prop) {
+				case 18: $name = 'Status Info'; break;
+				case 19: $name = 'Suggestions'; break;
+				case 20: $name = 'Suggestions Updated'; break;
+				case 21: $name = 'No suggestions'; break;
+				case 22: $name = 'Status Flags';
+					break;
+			}
+
+			$debugInfo[ $row->title ]['props'][$name] = $val;
+		}
+
+		return $debugInfo;
+	}
+
 	/**
 	 * Gets a list of videos that have not yet been swapped (e.g., no decision to keep or not keep the
 	 * original video has been made)
@@ -394,9 +443,13 @@ SQL;
 			if ( empty( $videos ) ) {
 				wfSetWikiaPageProp( WPP_LVS_EMPTY_SUGGEST, $articleId, 1 );
 			} else {
+gbug("TITLE: $title");
+gbug("Removing empty flag, setting suggetions for ".count($videos)." videos");
 				wfDeleteWikiaPageProp( WPP_LVS_EMPTY_SUGGEST, $articleId );
 				wfSetWikiaPageProp( WPP_LVS_SUGGEST, $articleId, $videos );
 
+gbug("Sleeping ...");
+sleep(20);
 				// set page status
 				if ( !$this->isStatusSwap( $pageStatus ) && !$this->isStatusForever( $pageStatus ) && $isNew ) {
 					$this->setPageStatusNew( $articleId );

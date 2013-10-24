@@ -98,6 +98,14 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$this->videos = $helper->getUndoList( $this->getContext() );
 	}
 
+	public function debugStatus() {
+		$helper = new LicensedVideoSwapHelper();
+
+		$info = $helper->getVideoDebugInfo();
+
+		$this->debugInfo = $info;
+	}
+
 	/**
 	 * See if a subpage is requested and return its name, otherwise return null
 	 * @return null|string
@@ -110,6 +118,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 
 		if ( !empty($path_parts[0]) ) {
 			$subpage = strtolower( $path_parts[0] );
+
 			if ( method_exists($this, $subpage) ) {
 				wfProfileOut(__METHOD__);
 				return $subpage;
