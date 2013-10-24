@@ -115,6 +115,11 @@ var AdConfig2 = function (
 	function getProvider(slot) {
 		var provider = getBackEndProvider(slot);
 
+		// No page length checking logic for Null/SevenOneMedia providers
+		if (provider === adProviderNull || provider === adProviderSevenOneMedia) {
+			return provider;
+		}
+
 		// Check if we should apply page length checking for that slot
 		if (adLogicPageDimensions.isApplicable(slot)) {
 			return adLogicPageDimensions.getProxy(provider);
