@@ -404,31 +404,30 @@ var Wall = $.createClass(Object, {
 
 	confirmAction: function(e) {
 		e.preventDefault();
-		var target = $(e.target);
 
-		var isreply = target.closest('.SpeechBubble').attr('data-is-reply');
-		var wallMsg = target.closest('li.message, .message-restore');
-		var id = wallMsg.attr('data-id');
+		var target = $( e.target ),
+			isreply = target.closest('.SpeechBubble').attr('data-is-reply'),
+			wallMsg = target.closest('li.message, .message-restore'),
+			id = wallMsg.attr('data-id'),
+			type = isreply ? 'reply':'thread',
+			mode = target.attr('data-mode').split('-'),
+			submode = '',
+			formdata = {},
+			msg,
+			title,
+			cancelmsg,
+			okmsg,
+			form = $( '<form>' );
 
-		var type = isreply ? 'reply':'thread';
-		var mode = target.attr('data-mode').split('-');
-
-		var submode = '';
-		if(mode[1]) {
+		if( mode[1] ) {
 			submode = mode[1];
 		}
 
 		mode = mode[0];
-		if(submode == 'fast' || mode == 'fastadmin' ) {
-			var formdata = {};
+		if( submode === 'fast' || mode === 'fastadmin' ) {
 			this.doAction(id, mode, wallMsg, target, formdata );
 			return true;
 		}
-
-		var msg;
-		var title;
-		var cancelmsg;
-		var okmsg;
 
 		title = $.msg('wall-action-' + mode + '-' + type + '-title');
 		okmsg = $.msg('wall-action-' + mode + '-confirm-ok');
@@ -436,7 +435,6 @@ var Wall = $.createClass(Object, {
 
 		//delete && remove
 		msg = $.msg('wall-action-'+mode+'-confirm');
-		var form = $('<form>');
 		form.append( $('<textarea>').attr({'class':'wall-action-reason','name':'reason','id':'reason'}) );
 		if(mode != 'restore') {
 			form.append( $('<div>').text( $.msg('wall-action-'+mode+'-'+ type +'-confirm-info') ).addClass('subtle') );
@@ -447,7 +445,7 @@ var Wall = $.createClass(Object, {
 		}
 		msg += '<form>'+form.html()+'</form>';
 
-		if( mode == 'rev' ) {
+		if( mode === 'rev' ) {
 		//rev delete
 			if(isreply) {
 				msg = $.msg('wall-action-rev-reply-confirm');
@@ -517,11 +515,11 @@ var Wall = $.createClass(Object, {
 		});
 		*/
 
-		if(mode != 'rev') {
+		if(mode !== 'rev') {
 			$('#WikiaConfirmOk').attr('disabled', 'disabled');
 		}
 
- 		$('textarea.wall-action-reason').bind('keydown keyup change', function(e) {
+		$('textarea.wall-action-reason').bind('keydown keyup change', function(e) {
 			var target = $(e.target);
 			if(target.val().length > 0) {
 				$('#WikiaConfirmOk').removeAttr('disabled');
