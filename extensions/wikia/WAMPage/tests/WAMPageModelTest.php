@@ -1,5 +1,6 @@
 <?php
 class WAMPageModelTest extends WikiaBaseTest {
+	private $wamRedirects;
 
 	static protected $failoverTabsNames = [
 		'Top wikis',
@@ -14,6 +15,7 @@ class WAMPageModelTest extends WikiaBaseTest {
 		'wam/a_subpage' => 'WAM/A_Subpage',
 		'wam' => 'WAM'
 	];
+
 	
 	public function setUp() {
 		include_once __DIR__ . DIRECTORY_SEPARATOR
@@ -278,6 +280,100 @@ class WAMPageModelTest extends WikiaBaseTest {
 					['wiki_id' => 7, 'index' => 7],
 				]
 			],
+		];
+	}
+	/**
+	 * @dataProvider getWAMRedirectsDataProvider
+	 */
+	public function testGetWAMRedirect($title, $expectedTitle, $wamRedirects) {
+		$this->mockWgWAMRedirects($wamRedirects);
+
+		$wamModel = new WAMPageModel();
+		$newTitle = $wamModel->getWAMRedirect($title);
+
+		$this->assertEquals($expectedTitle, $newTitle);
+
+		$this->unmockWgWAMRedirects();
+	}
+
+	private function mockWgWAMRedirects($wamRedirects) {
+		global $wgWAMRedirects;
+		$this->wamRedirects = $wgWAMRedirects;
+		$wgWAMRedirects = $wamRedirects;
+	}
+
+	private function unmockWgWAMRedirects() {
+		global $wgWAMRedirects;
+		$wgWAMRedirects = $this->wamRedirects;
+	}
+
+	public function getWAMRedirectsDataProvider() {
+		return [
+			[
+				Title::newFromText('WAM/Old tab name'),
+				Title::newFromText('WAM/New tab name'),
+				[
+					'Old tab name'	=> 'New tab name',
+					'a' 			=> 'b',
+					'test tab name' => 'new test tab name'
+				]
+			],
+			[
+				Title::newFromText('WAM/Old tab name'),
+				Title::newFromText('WAM/New tab name'),
+				[
+					'OLD TAB NAME'	=> 'New tab name',
+					'a' 			=> 'b',
+					'test tab name' => 'new test tab name'
+				]
+			],
+			[
+				Title::newFromText('WAM/Old tab namę'),
+				Title::newFromText('WAM/New tab name'),
+				[
+					'OLD TAB NAMĘ'	=> 'New tab name',
+					'a' 			=> 'b',
+					'test tab name' => 'new test tab name'
+				]
+			],
+			[
+				Title::newFromText('WAM/a'),
+				Title::newFromText('WAM/b'),
+				[
+					'OLD TAB NAMę'	=> 'New tab name',
+					'a' 			=> 'b',
+					'test tab name' => 'new test tab name'
+				]
+			],
+			[
+				Title::newFromText('WAM/Not existing redirect'),
+				null,
+				[
+					'OLD TAB NAMę'	=> 'New tab name',
+					'a' 			=> 'b',
+					'test tab name' => 'new test tab name'
+				]
+			],
+			[
+				null,
+				null,
+				[
+					'OLD TAB NAMę'	=> 'New tab name',
+					'a' 			=> 'b',
+					'test tab name' => 'new test tab name'
+				]
+			],
+			[
+				Title::newFromText('WAM/Not existing redirect'),
+				null,
+				[]
+			],
+			[
+				Title::newFromText('WAM/Not existing redirect'),
+				null,
+				null
+			],
+
 		];
 	}
 }
