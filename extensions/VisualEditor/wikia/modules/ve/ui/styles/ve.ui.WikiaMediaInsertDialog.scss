@@ -1,5 +1,6 @@
 @import "skins/oasis/css/core/layout";
 @import "skins/oasis/css/mixins/box-sizing";
+@import "skins/oasis/css/mixins/clearfix";
 
 $width-cart: 100px;
 
@@ -46,15 +47,25 @@ $width-cart: 100px;
 
 	/* Page */
 	.ve-ui-wikiaMediaPageWidget {
+		@include clearfix;
+
 		.ve-ui-fieldsetLayout,
-		.ve-ui-wikiaMediaPage-item {
+		.ve-ui-wikiaMediaPageWidget-item {
 			float: left;
 		}
 
-		.ve-ui-wikiaMediaPage-item {
-			height: 365px;
-			margin-left: $width-gutter;
-			width: 326px;
+		.ve-ui-fieldsetLayout {
+			width: 275px;
+		}
+
+		.ve-ui-wikiaMediaPageWidget-item {
+			height: 325px;
+			margin-right: $width-gutter;
+			width: 365px;
+		}
+
+		.ve-ui-textInputWidget {
+			margin-bottom: $width-gutter;
 		}
 	}
 

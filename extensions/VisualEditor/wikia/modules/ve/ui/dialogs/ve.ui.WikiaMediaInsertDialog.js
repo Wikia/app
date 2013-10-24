@@ -188,7 +188,10 @@ ve.ui.WikiaMediaInsertDialog.prototype.onSearchSelect = function ( item ) {
 	this.cartModel.addItems( [ cartItemModel ] );
 
 	// Add item media page
-	page = new ve.ui.WikiaMediaPageWidget( cartItemModel, { '$$': this.frame.$$ } );
+	page = new ve.ui.WikiaMediaPageWidget( cartItemModel, {
+		'$$': this.frame.$$,
+		'editable': false
+	} );
 	page.connect( this, { 'remove': 'onMediaPageRemove' } );
 	this.pages.addPage( item.title, { '$content': page.$ } );
 };
