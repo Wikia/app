@@ -71,7 +71,7 @@ define( 'wikia.videohandler.ooyala', [ 'wikia.window', require.optional( 'ext.wi
 			};
 		}
 
-		// log any errors from failed script loading
+		// log any errors from failed script loading (VID-976)
 		function loadFail( data ) {
 			var message = data.error + ':';
 
@@ -90,15 +90,19 @@ define( 'wikia.videohandler.ooyala', [ 'wikia.window', require.optional( 'ext.wi
 		 */
 		delete window.OO;
 
+		log( 'Begin getting Ooyala assets', log.levels.info, 'VideoBootstrap' );
+
 		/* the second file depends on the first file */
 		loader({
 			type: loader.JS,
 			resources: params.jsFile[ 0 ]
 		}).done(function() {
+			log( 'First set of Ooyala assets loaded', log.levels.info, 'VideoBootstrap' );
 			loader({
 				type: loader.JS,
 				resources: params.jsFile[ 1 ]
 			}).done(function() {
+				log( 'All Ooyala assets loaded', log.levels.info, 'VideoBootstrap' );
 				window.OO.Player.create( containerId, params.videoId, createParams );
 			}).fail( loadFail );
 		}).fail( loadFail );
