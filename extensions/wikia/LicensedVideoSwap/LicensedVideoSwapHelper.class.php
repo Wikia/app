@@ -209,7 +209,7 @@ SQL;
 		$intersection = [];
 		// Get the total count of relavent videos
 		while ( $row = $db->fetchObject( $result ) ) {
-			$intersection[] = $row->video_title;
+			$intersection[$row->video_title] = 1;
 		}
 
 		wfProfileOut( __METHOD__ );

@@ -563,7 +563,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 
 		// Remove any videos that don't exist for swapping anymore
 		$helper = new LicensedVideoSwapHelper();
-		$intersection = array_flip( $helper->intersectUnswappedVideo( $visitedTitles ) );
+		$intersection = $helper->intersectUnswappedVideo( $visitedTitles );
 
 		// Go through each title in this user's list of played videos.  We're looking for the
 		// video titles that don't appear in the intersection.  These titles no longer
