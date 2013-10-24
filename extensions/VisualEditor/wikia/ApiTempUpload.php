@@ -55,9 +55,13 @@ class ApiTempUpload extends ApiBase {
 		} else {
 			// video
 			$awf = ApiWrapperFactory::getInstance();
-			$apiwrapper = $awf->getApiWrapper( $this->mParams['url'] );
-			if ( !$apiwrapper ) {
+			try {
+				$apiwrapper = $awf->getApiWrapper( $this->mParams['url'] );
+			} catch ( Exception $e ) {
 				$this->dieUsageMsg( 'Incorrect video URL' );
+			}	
+			if ( !$apiwrapper ) {
+				$this->dieUsageMsg( 'Not a video URL' );
 			}
 			$this->mUpload = new UploadFromUrl();
 			$this->mUpload->initializeFromRequest( new FauxRequest(
