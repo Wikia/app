@@ -1,5 +1,5 @@
 define( 'wikia.ui.modal', [ 'jquery' ], function( $ ) {
-	"use strict";
+	'use strict';
 
 	var BLACKOUT_CLASS = 'blackout',
 		CLOSE_CLASS = 'close',
@@ -13,14 +13,6 @@ define( 'wikia.ui.modal', [ 'jquery' ], function( $ ) {
 			$( 'body' ).append( modalMarkup );
 			this.$element = $( '#' + id );
 		}
-
-		this.$blackout = getBlackout();
-		this.$close = this.$element.find( '.' + CLOSE_CLASS );
-
-		this.$close.click( $.proxy( function( event ) {
-			event.preventDefault();
-			this.close();
-		}, that ) );
 
 		function getBlackout() {
 			var blackoutId = BLACKOUT_CLASS + '_' + id,
@@ -36,6 +28,14 @@ define( 'wikia.ui.modal', [ 'jquery' ], function( $ ) {
 
 			return $blackout;
 		}
+
+		this.$blackout = getBlackout();
+		this.$close = this.$element.find( '.' + CLOSE_CLASS );
+
+		this.$close.click( $.proxy( function( event ) {
+			event.preventDefault();
+			this.close();
+		}, that ) );
 	}
 
 	Modal.prototype.show = function() {
@@ -57,12 +57,12 @@ define( 'wikia.ui.modal', [ 'jquery' ], function( $ ) {
 
 	Modal.prototype.onClose = function() {
 	// "hook"
-	}
+	};
 
 	/** Public API */
 	return {
 		init: function( id, modalMarkup ) {
 			return new Modal( id, modalMarkup );
 		}
-	}
+	};
 });
