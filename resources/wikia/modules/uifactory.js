@@ -109,9 +109,7 @@ define('wikia.ui.factory', [
 			components = [];
 
 		if (!(componentName instanceof Array)) {
-			var a = [];
-			a.push(componentName);
-			componentName = a;
+			componentName = [ componentName ];
 		}
 
 		getComponentsConfig(componentName).done(function(data) {
