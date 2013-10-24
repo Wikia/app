@@ -434,10 +434,13 @@ var ThemeDesigner = {
 	},
 
 	checkBgIsDynamic: function(width) {
-		if ( width < ThemeDesigner.minWidthforDynamicBg ) {
-			ThemeDesigner.disableDynamicBg();
-		} else {
-			$('#dynamic-background').attr('disabled', false);
+		// TODO: Remove IF statement after fluid layout global release
+		if ( window.wgOasisResponsive ) {
+			if ( width < ThemeDesigner.minWidthforDynamicBg ) {
+				ThemeDesigner.disableDynamicBg();
+			} else {
+				$('#dynamic-background').attr('disabled', false);
+			}
 		}
 	},
 
@@ -594,10 +597,9 @@ var ThemeDesigner = {
 				ThemeDesigner.set("background-image-width", response.backgroundImageWidth);
 				ThemeDesigner.set("background-image-height", response.backgroundImageHeight);
 
-				ThemeDesigner.checkBgIsDynamic( response.backgroundImageWidth );
-
 				// This should be last, it triggers a CSS reload
 				ThemeDesigner.set("background-image", response.backgroundImageUrl);
+				ThemeDesigner.checkBgIsDynamic( response.backgroundImageWidth );
 			}
 		}
 	},
@@ -706,7 +708,10 @@ var ThemeDesigner = {
 		if (ThemeDesigner.settings["background-image"] == "") {
 			//no background image
 			$("#swatch-image-background").attr("src", wgBlankImgUrl);
-			ThemeDesigner.disableDynamicBg();
+			// TODO: Remove IF statement after fluid layout global release
+			if ( window.wgOasisResponsive ) {
+				ThemeDesigner.disableDynamicBg();
+			}
 		} else if (ThemeDesigner.settings["background-image"].indexOf("images/themes") > 0) {
 			//wikia background image
 			var file = ThemeDesigner.settings["background-image"].substring(ThemeDesigner.settings["background-image"].lastIndexOf("/") + 1);
