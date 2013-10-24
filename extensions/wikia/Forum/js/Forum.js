@@ -49,13 +49,11 @@
 
 					require( [ 'wikia.ui.modal' ], function( modal ) {
 						policiesModal = modal.init( modalId, policiesModal );
-						policiesModal.$element.find( '#close' ).click( function( event ) {
-							event.preventDefault(); //?
-
+						policiesModal.$element.find( '#close' ).click( function() {
 							policiesModal.close();
-							policiesModal.$element.remove(); //?
+							policiesModal.$element.remove(); //@todo - fix it
 						} );
-						policiesModal.$element.find( '#edit' ).click( function( ) {
+						policiesModal.$element.find( '#edit' ).click( function() {
 							window.location = window.wgPoliciesEditURL;
 						} );
 
