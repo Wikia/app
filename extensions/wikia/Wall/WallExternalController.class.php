@@ -113,7 +113,7 @@ class WallExternalController extends WikiaController {
 	}
 
 	public function votersListItems() {
-		//TODO: imaplmant load more button
+		//TODO: implement load more button
 
 		/**
 		 * @var $mw WallMessage
