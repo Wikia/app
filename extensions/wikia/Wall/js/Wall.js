@@ -455,10 +455,8 @@ var Wall = $.createClass(Object, {
 		}
 
 		require( [ 'wikia.ui.factory' ], function( uiFactory ) {
-			uiFactory.init( [ 'button', 'modal' ] ).then( function( uiComponents ) {
-				var uiButton = uiComponents[0],
-					uiModal = uiComponents[1],
-					modalId = 'WallConfirm',
+			uiFactory.init( [ 'button', 'modal' ] ).then( function( uiButton, uiModal ) {
+				var modalId = 'WallConfirm',
 					modalPrimaryBtn = uiButton.render( {
 						'type': 'link',
 						'vars': {

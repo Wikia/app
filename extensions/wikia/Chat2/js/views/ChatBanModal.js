@@ -12,11 +12,9 @@ var ChatBanModal = function(title, okCallback, options) {
 	// TODO: Remove isChangeBan - back end will check for this
 	$.get( window.wgScript + '?action=ajax&rs=ChatAjax&method=BanModal', data, function( data ) {
 		require( [ 'wikia.ui.factory' ], function( uiFactory ) {
-			uiFactory.init( [ 'button', 'modal' ] ).then( function( uiComponents ) {
+			uiFactory.init( [ 'button', 'modal' ] ).then( function( uiButton, uiModal ) {
 				var primaryBtnMsg = data.isChangeBan ?
 						$.msg('chat-ban-modal-button-change-ban') : $.msg('chat-ban-modal-button-ok'),
-					uiButton = uiComponents[0],
-					uiModal = uiComponents[1],
 					modalPrimaryBtn = uiButton.render( {
 						'type': 'link',
 						'vars': {

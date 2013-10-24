@@ -2,10 +2,8 @@
 	'use strict';
 	var showPoliciesModal = function() {
 		require( [ 'wikia.ui.factory' ], function( uiFactory ) {
-			uiFactory.init( [ 'button', 'modal' ] ).then( function( uiComponents ) {
-				var uiButton = uiComponents[0],
-					uiModal = uiComponents[1],
-					backBtnMsg = $.msg( 'back' ),
+			uiFactory.init( [ 'button', 'modal' ] ).then( function( uiButton, uiModal ) {
+				var backBtnMsg = $.msg( 'back' ),
 					backBtn = uiButton.render( {
 						type: 'link',
 						vars: {
