@@ -12,16 +12,18 @@
  * @param {Object} [config] Configuration options
  */
 ve.ui.WikiaUploadWidget = function VeUiWikiaUploadWidget( config ) {
+	var uploadButtonConfig;
+
 	// Parent constructor
 	ve.ui.Widget.call( this, config );
 
-	var uploadButtonConfig = {
+	uploadButtonConfig = {
 		'$$': this.$$,
 		'label': ve.msg( 'visualeditor-wikiauploadwidget-button' ),
 		'flags': ['constructive'],
 	};
 	if ( !config.hideIcon ) {
-		ve.extendObject( uploadButtonConfig, { 'icon': 'upload-small' } );
+		uploadButtonConfig.icon = 'upload-small';
 	}
 
 	// Properties
@@ -41,9 +43,7 @@ ve.ui.WikiaUploadWidget = function VeUiWikiaUploadWidget( config ) {
 
 	// Events
 	this.$.on( 'click', ve.bind( this.onClick, this ) );
-	this.uploadButton.connect( this, {
-		'click': this.onClick
-	} );
+	this.uploadButton.on( 'click', ve.bind( this.onClick, this ) );
 	this.$file.on( 'change', ve.bind( this.onFileChange, this ) );
 
 	// Initialization

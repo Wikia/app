@@ -236,9 +236,9 @@ ve.ui.WikiaMediaInsertDialog.prototype.onOpen = function () {
 ve.ui.WikiaMediaInsertDialog.prototype.onPageSet = function () {
 	this.queryInput.$input.focus();
 	if ( this.pages.getPageName() === 'main' ) {
-		this.query.hideUploadWrapper();
+		this.query.hideUpload();
 	} else {
-		this.query.showUploadWrapper();
+		this.query.showUpload();
 	}
 };
 

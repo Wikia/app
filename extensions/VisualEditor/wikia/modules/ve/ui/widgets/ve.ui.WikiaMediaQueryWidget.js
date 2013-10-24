@@ -32,17 +32,23 @@ ve.ui.WikiaMediaQueryWidget = function VeUiWikiaMediaQueryWidget( config ) {
 	this.requestMediaCallback = ve.bind( this.requestMedia, this );
 	this.timeout = null;
 	this.upload = new ve.ui.WikiaUploadWidget( { '$$': this.$$ } );
-	this.$outerWrapper = this.$$( '<div>' ).addClass( 've-ui-wikiaMediaQueryWidget-wrapper' );
-	this.$inputWrapper = this.$$( '<div>' ).addClass( 've-ui-wikiaMediaQueryWidget-queryWrapper' );
-	this.$uploadWrapper = this.$$( '<div>' ).addClass( 've-ui-wikiaMediaQueryWidget-uploadWrapper' );
+	this.$outerWrapper = this.$$( '<div>' );
+	this.$inputWrapper = this.$$( '<div>' );
+	this.$uploadWrapper = this.$$( '<div>' );
 
 	// Events
 	this.input.connect( this, { 'change': 'onInputChange' } );
 
 	// Initialization
-	this.$inputWrapper.append( this.input.$ );
-	this.$uploadWrapper.append( this.upload.$ );
-	this.$outerWrapper.append( this.$inputWrapper ).append( this.$uploadWrapper );
+	this.$inputWrapper
+		.addClass( 've-ui-wikiaMediaQueryWidget-queryWrapper' )
+		.append( this.input.$ );
+	this.$uploadWrapper
+		.addClass( 've-ui-wikiaMediaQueryWidget-uploadWrapper' )
+		.append( this.upload.$ );
+	this.$outerWrapper
+		.addClass( 've-ui-wikiaMediaQueryWidget-wrapper' )
+		.append( this.$inputWrapper, this.$uploadWrapper );
 	this.$
 		.addClass( 've-ui-wikiaMediaQueryWidget' )
 		.append( this.$outerWrapper );
@@ -173,7 +179,7 @@ ve.ui.WikiaMediaQueryWidget.prototype.onRequestMediaDone = function ( data ) {
  *
  * @method
  */
-ve.ui.WikiaMediaQueryWidget.prototype.showUploadWrapper = function () {
+ve.ui.WikiaMediaQueryWidget.prototype.showUpload = function () {
 	this.$uploadWrapper.show();
 };
 
@@ -182,6 +188,6 @@ ve.ui.WikiaMediaQueryWidget.prototype.showUploadWrapper = function () {
  *
  * @method
  */
-ve.ui.WikiaMediaQueryWidget.prototype.hideUploadWrapper = function () {
+ve.ui.WikiaMediaQueryWidget.prototype.hideUpload = function () {
 	this.$uploadWrapper.hide();
 };
