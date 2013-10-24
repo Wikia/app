@@ -56,11 +56,6 @@ var ChatBanModal = function(title, okCallback, options) {
 				require( [ 'wikia.ui.modal' ], function( modal ) {
 					banModal = modal.init( modalId, banModal );
 
-					banModal.onClose = function() {
-						banModal.$blackout.remove();
-						banModal.$element.remove();
-					};
-
 					banModal.$element.find( '#cancel' ).click( function( event ) {
 						event.preventDefault();
 						banModal.close();

@@ -3,7 +3,8 @@ define( 'wikia.ui.modal', [ 'jquery' ], function( $ ) {
 
 	var BLACKOUT_CLASS = 'blackout',
 		CLOSE_CLASS = 'close',
-		$html = $('html');
+		$html = $('html'),
+		destroyOnClose = true;
 
 	function Modal( id, modalMarkup ) {
 		var that = this;
@@ -36,6 +37,8 @@ define( 'wikia.ui.modal', [ 'jquery' ], function( $ ) {
 			event.preventDefault();
 			this.close();
 		}, that ) );
+
+		destroyOnClose = this.$element.data( 'destroy-on-close' ) || true;
 	}
 
 	Modal.prototype.show = function() {
@@ -45,18 +48,19 @@ define( 'wikia.ui.modal', [ 'jquery' ], function( $ ) {
 	};
 
 	Modal.prototype.close = function() {
-		this.onClose();
-		this.$element.removeClass( 'shown' );
-		this.$blackout.removeClass( 'visible' );
+		if( destroyOnClose ) {
+			this.$element.removeClass( 'shown' );
+			this.$blackout.removeClass( 'visible' );
+		}
+
+		this.$element.remove();
+		this.$blackout.remove();
+
 		$html.removeClass( 'modal-shown' );
 	};
 
 	Modal.prototype.isShown = function() {
 		return this.$element.hasClass( 'shown' );
-	};
-
-	Modal.prototype.onClose = function() {
-	// "hook"
 	};
 
 	/** Public API */
