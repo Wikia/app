@@ -9,6 +9,7 @@ $messages['en'] = array(
 	'visualeditor-wikiapreference-enable' => 'Enable beta VisualEditor',
 	'visualeditor-wikiauploadwidget-label' => 'Upload new images to this Wikia',
 	'visualeditor-wikiauploadwidget-button' => 'Click to Upload',
+	'visualeditor-wikiauploaderror' => 'Error uploading file',
 );
 
 $messages['qqq'] = array(
@@ -16,4 +17,5 @@ $messages['qqq'] = array(
 	'visualeditor-wikiapreference-enable' => 'The description next to the checkbox to enable or disable VisualEditor in Preferences',
 	'visualeditor-wikiauploadwidget-label' => 'The large call-to-action in the Add Media dialog upload box',
 	'visualeditor-wikiauploadwidget-button' => 'The button in the Add Media dialog upload box',
+	'visualeditor-wikiauploaderror' => 'Message that is shown when an upload error occurs',
 );

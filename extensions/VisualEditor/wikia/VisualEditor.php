@@ -84,6 +84,7 @@ $wgResourceModules += array(
 			'videohandler-video-views',
 			'visualeditor-wikiauploadwidget-label',
 			'visualeditor-wikiauploadwidget-button',
+			'visualeditor-wikiauploaderror',
 		),
 		'dependencies' => array(
 			'ext.visualEditor.core'
