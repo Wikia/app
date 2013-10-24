@@ -250,10 +250,18 @@ class SpecialPromoteHelper extends WikiaObject {
 			throw new Exception('promote-upload-image-uploads-disabled');
 		}
 
-		$file = RepoGroup::singleton()->getLocalRepo()->getUploadStash()->getFile( $imageName );
-		if ( $file instanceof File ) {
-			$file->remove();
+		try {
+			$file = RepoGroup::singleton()->getLocalRepo()->getUploadStash()->getFile( $imageName );
+
+			if ( $file instanceof File ) {
+				$file->remove();
+				return true;
+			}
+		} catch ( Exception $e ) {
+			return false;
 		}
+
+		return false;
 	}
 
 	public function removeImage($imageName) {
