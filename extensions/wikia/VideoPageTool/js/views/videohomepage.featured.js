@@ -217,7 +217,7 @@ define( 'views.videohomepage.featured', [
 			},
 
 			/*
-			 * @desc When an arrow is clicked, if it's already a video slider, 
+			 * @desc When an arrow is clicked, if it's already a video slider,
 			 * play the next video. Otherwise, do nothing,
 			 * just let the slider switch to the next image.
 			 */
@@ -262,7 +262,7 @@ define( 'views.videohomepage.featured', [
 			},
 
 			/*
-			 * @desc Get video data if we don't have it already or if the window 
+			 * @desc Get video data if we don't have it already or if the window
 			 * has resized and we want to get the embed
 			 * code at a different size.
 			 */
@@ -315,7 +315,7 @@ define( 'views.videohomepage.featured', [
 				this.isVideoSlider = true;
 
 				// don't let the slider start autoHover again
-				this.$bxSlider.off( '.autohover' );
+				this.$el.off( '.autohover' );
 
 				// Stop slider autoscroll because we're watching videos now
 				this.$bxSlider.stopAuto();
