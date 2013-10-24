@@ -328,10 +328,10 @@ var Wall = $.createClass(Object, {
 	showVotersModal: function(e) {
 		var target = $(e.target),
 			id = target.closest('li.message').data('id'),
-			votes = parseInt(target.closest('.votes').data('votes'));
+			votes = parseInt( target.closest('.votes').data('votes'), 10);
 
 		if(votes > 0) {
-			$.nirvana.sendRequest({
+			$.nirvana.sendRequest( {
 				controller: 'WallExternalController',
 				method: 'votersModal',
 				format: 'html',
@@ -339,14 +339,32 @@ var Wall = $.createClass(Object, {
 					id: id
 				},
 				callback: function(data) {
-					$(data).makeModal({
-						'width': 300
-					});
-				}
-			});
-		}
+					require( [ 'wikia.ui.factory' ], function( uiFactory ) {
+						uiFactory.init( 'modal' ).then( function( uiModal ) {
+							var modalId = 'WallVotersModalWrapper',
+								votersModal = uiModal.render( {
+									type: 'default',
+									vars: {
+										id: modalId,
+										size: 'small',
+										content: data,
+										title: $.msg( 'wall-votes-modal-title' ),
+										closeButton: true,
+										closeText: $.msg( 'close' )
+									}
+								} );
 
-		$.getResources([$.getSassCommonURL('/extensions/wikia/Wall/css/WallVoters.scss')]);
+							require( [ 'wikia.ui.modal' ], function( modal ) {
+								votersModal = modal.init( modalId, votersModal );
+								votersModal.show();
+							} );
+						} );
+					} );
+				}
+			} );
+
+			$.getResources([$.getSassCommonURL('/extensions/wikia/Wall/css/WallVoters.scss')]);
+		}
 	},
 
 	undoRemoveOrAdminDelete: function(e) {
