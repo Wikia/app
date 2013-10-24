@@ -532,24 +532,24 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 	 * @return bool Whether the controller was successful or not
 	 */
 	public function playVideo() {
-
-		/** @var User $user */
-		$user = $this->getUser();
-		if ( !$user->isAllowed( 'licensedvideoswap' ) ) {
-			$this->displayRestrictionError();
-			return false;
-		}
-
 		// Get the non-premium title
 		$videoTitle = $this->getVal( 'videoTitle' );
 		if ( empty($videoTitle) ) {
 			return false;
 		}
 
-		// The premium title is available but not needed at this point
-		// $premiumTitle = $this->getVal( 'premiumTitle' );
+		// validate action
+		$response = $this->sendRequest( 'LicensedVideoSwapSpecial', 'validateAction', array( 'videoTitle' => $videoTitle ) );
+		$msg = $response->getVal( 'msg', '' );
+		if ( !empty( $msg ) ) {
+			$this->html = '';
+			$this->result = 'error';
+			$this->msg = $msg;
+		}
 
 		// Get the list of videos already played
+		/** @var User $user */
+		$user = $this->getUser();
 		$visitedList = $user->getOption( LicensedVideoSwapHelper::USER_VISITED_LIST );
 		if ( $visitedList ) {
 			$visitedList = unserialize( $visitedList );
