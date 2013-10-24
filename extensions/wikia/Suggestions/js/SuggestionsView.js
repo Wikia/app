@@ -47,8 +47,8 @@ define('SuggestionsView', ['SuggestionsViewModel'], function( viewModel ) {
 	}
 	/* helpers */
 	function blurDropdown() {
-		showAds();
-		dropdown.empty();
+//		showAds();
+//		dropdown.empty();
 	}
 	function emitEvent( eventName ) {
 		dropdown.trigger( eventName );
