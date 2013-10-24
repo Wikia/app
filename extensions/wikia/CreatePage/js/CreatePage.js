@@ -165,11 +165,15 @@ var CreatePage = {
 
 				// make sure we're inside createbox and not inputbox (RT #40959)
 				if(form.attr('class') == 'createboxForm') {
+					var prefix = form.children("input[name|='prefix']").val();
+					if (typeof prefix == undefined) {
+						prefix = '';
+					}
 					var field = form.children('.createboxInput');
 					var preloadField = form.children("input[name='preload']");
 
 					if((typeof preloadField.val() == undefined) || (preloadField.val() == '')) {
-						CreatePage.openDialog(e, field.val());
+						CreatePage.openDialog(e, prefix + field.val());
 					}
 					else {
 						return true;
