@@ -6,8 +6,6 @@ $color-buttons: get_command_line_param("color-buttons", #006CB0); // default: bl
 $color-links: get_command_line_param("color-links", #006CB0); // default: blue
 $color-header: get_command_line_param("color-header", #3A5766); // default: blue
 $background-image: get_command_line_param("background-image", "http://images1.wikia.nocookie.net/__cb21710/common/skins/oasis/images/themes/oasis.png"); // TODO: USE THE wgCdnStylePath VAR INSTEAD OF HARDCODING.
-$background-tiled: get_command_line_param("background-tiled", true);
-$background-fixed: get_command_line_param("background-fixed", false);
 $page-opacity: get_command_line_param("page-opacity", 100);	// default: 100
 
 // Verticals colors
