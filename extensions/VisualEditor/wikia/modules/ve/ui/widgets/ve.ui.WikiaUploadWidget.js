@@ -20,7 +20,7 @@ ve.ui.WikiaUploadWidget = function VeUiWikiaUploadWidget( config ) {
 	uploadButtonConfig = {
 		'$$': this.$$,
 		'label': ve.msg( 'visualeditor-wikiauploadwidget-button' ),
-		'flags': ['constructive'],
+		'flags': ['constructive']
 	};
 	if ( !config.hideIcon ) {
 		uploadButtonConfig.icon = 'upload-small';

@@ -84,12 +84,8 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 		'nearingEnd': 'onSearchNearingEnd',
 		'select': 'onSearchSelect'
 	} );
-	this.queryUpload.connect( this, {
-		'upload': 'onUploadSuccess'
-	} );
-	this.upload.connect( this, {
-		'upload': 'onUploadSuccess'
-	} );
+	this.queryUpload.on( 'upload', ve.bind( this.onUploadSuccess, this ) );
+	this.upload.on( 'upload', ve.bind( this.onUploadSuccess, this ) );
 
 	// Initialization
 	this.removeButton.$.appendTo( this.$removePage );
