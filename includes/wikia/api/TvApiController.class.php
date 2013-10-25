@@ -16,7 +16,7 @@ class TvApiController extends WikiaApiController {
 			'method' => 'getCrossWiki',
 			'lang' => $request->getVal( 'lang', 'en' ),
 			'limit' => $request->getInt( 'limit', 1 ),
-			'query' => $request->getVal( 'query', null )
+			'query' => $request->getVal( 'seriesName', null )
 		];
 
 		$request = new WikiaRequest( $params );
@@ -25,7 +25,9 @@ class TvApiController extends WikiaApiController {
 		$app = $this->getApp();
 		$response = $app->getDispatcher()->dispatch( $app, $request );
 		$results = $response->getData();
-
+		if (! count( $results['items']) ) {
+			throw new InvalidParameterApiException( 'seriesName' );
+		}
 		return isset( $results['items'][0] ) ? $results['items'][0]['id'] : null;
 
 	}
@@ -37,9 +39,10 @@ class TvApiController extends WikiaApiController {
 	protected function getConfigFromRequest() {
 		$request = $this->getRequest();
 		$searchConfig = new Wikia\Search\Config;
-		$searchConfig->setQuery( $request->getVal( 'query', null ) )
+		$searchConfig->setQuery( $request->getVal( 'episodeName', null ) )
 			->setLimit( $request->getInt( 'limit', 1 ) )
 			->setPage( $request->getVal( 'batch', 1 ) )
+			->setLanguageCode($request->getVal( 'lang', 'en' ))
 			->setRank( $request->getVal( 'rank', 'default' ) )
 			->setWikiId($this->getWikiId())
 			->setVideoSearch( false  )
@@ -72,7 +75,7 @@ class TvApiController extends WikiaApiController {
 
 	protected function setResponseFromConfig( Wikia\Search\Config $searchConfig ) {
 		if (! $searchConfig->getQuery()->hasTerms() ) {
-			throw new InvalidParameterApiException( 'query' );
+			throw new InvalidParameterApiException( 'episodeName' );
 		}
 
 		//Standard Wikia API response with pagination values
