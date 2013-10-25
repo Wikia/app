@@ -43,6 +43,8 @@ class TvApiController extends WikiaApiController {
 			->setRank( $request->getVal( 'rank', 'default' ) )
 			->setWikiId($this->getWikiId())
 			->setVideoSearch( false  )
+			->setOnWiki(true)
+			->setNamespaces([0,14]);
 		;
 		return $this->validateNamespacesForConfig( $searchConfig );
 	}
