@@ -71,6 +71,7 @@
 @import "extensions/wikia/WikiaSeasons/css/WikiaSeasonsBar";
 @import "extensions/wikia/UserLogin/css/UserLoginDropdown";
 @import "extensions/wikia/Forum/css/RelatedForumDiscussion";	// on every article page
+@import "extensions/wikia/TOC/css/toc.scss";
 
 // CSS (needs leading slash and file extension)
 @import "/extensions/wikia/CreatePage/css/CreatePage.css";
@@ -82,7 +83,6 @@
 	@import "print";
 }
 
-
 // load all responsive layout files
 
 // These files should always be loaded after everything else in oasis.scss because
@@ -91,3 +91,4 @@
 @import "core/responsive-font-sizing";
 @import "core/responsive-core";
 @import "core/responsive-mainpage-tag";
+

@@ -4351,6 +4351,11 @@ class Parser {
 			$enoughToc = true;
 		}
 
+		/* Wikia change begin - @author: nAndy/Rafal */
+		/* Allow extensions to force not generating mediawiki TOC */
+		wfRunHooks('Parser::disableMWTOC', [ &$this, &$enoughToc ]);
+		/* Wikia change end */
+
 		# headline counter
 		$headlineCount = 0;
 		$numVisible = 0;

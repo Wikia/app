@@ -4,14 +4,20 @@ $(function() {
 	LAZY_LOADING_SAMPLING_RATIO = 10; // integer (0-100): 0 - no tracking, 100 - track everything */
 
 	if (rail.find('.loading').exists()) {
+		var params = {
+			'articleTitle': window.wgTitle,
+			'namespace': window.wgNamespaceNumber,
+			'cb': window.wgStyleVersion
+		};
+
+		if (typeof wgSassLoadedScss != 'undefined') {
+			params.excludeScss = wgSassLoadedScss;
+		}
+
 		$.nirvana.sendRequest({
 			controller: 'RailController',
 			method: (window.wgUserName) ? 'lazy' : 'lazyForAnons',
-			data: {
-				'articleTitle': window.wgTitle,
-				'namespace': window.wgNamespaceNumber,
-				'cb': window.wgStyleVersion
-			},
+			data: params,
 			type: 'get',
 			format: 'json',
 			callback: function(data) {
@@ -27,7 +33,7 @@ $(function() {
 				if( LAZY_LOADING_SAMPLING_RATIO >= Math.floor( (Math.random() * 100 + 1) ) ) {
 					var lazyLoadingTime = ( new Date() ) - ( window.wgNow || 0 );
 					Wikia.Tracker.track({
-						action: Wikia.Tracker.IMPRESSION,
+						action: Wikia.Tracker.ACTIONS.IMPRESSION,
 						category: 'right-rail',
 						label: 'lazy-loaded',
 						trackingMethod: 'ga',
@@ -35,7 +41,7 @@ $(function() {
 					});
 				}
 
-				if ( window.ChatEntryPoint ) {
+				if ( window.ChatEntryPoint && typeof window.wgWikiaChatUsers !== 'undefined' ) {
 					window.ChatEntryPoint.init();
 				}
 

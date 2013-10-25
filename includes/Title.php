@@ -1944,8 +1944,8 @@ class Title {
 	 * @return Array list of errors
 	 */
 	private function checkUploadDisabledRestrictions( $action, $user, $errors, $doExpensiveQueries, $short ) {
-		global $wgDisableUploads, $wgEnableUploads;
-		if( $action == "move" && $this->getNamespace() == NS_FILE && ($wgDisableUploads || !$wgEnableUploads) ) {
+		global $wgEnableUploads;
+		if( $action == "move" && $this->getNamespace() == NS_FILE && !$wgEnableUploads ) {
 			$errors[] = array( 'movenotallowedfile' );
 		}
 		return $errors;

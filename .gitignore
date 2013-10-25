@@ -1,9 +1,8 @@
 /.komodotools
-/mediawiki-1.19.komodoproject
+*.komodoproject
 /nbproject
 /.project
 /.settings
-/wikia-trunk.komodoproject
 /Wikia (trunk).esproj
 /.tags
 /.tags_sorted_by_file
@@ -11,6 +10,7 @@
 /mysql-connector-license.txt
 .idea
 .DS_Store
+Thumbs.db
 .buildpath
 sftp-config.json
 *.iml

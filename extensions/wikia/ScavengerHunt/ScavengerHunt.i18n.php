@@ -2257,7 +2257,7 @@ $messages['pt'] = array(
 	'scavengerhunt-label-progress-bar' => 'Barra de progresso',
 	'scavengerhunt-quit-game-button-quit' => 'Sair',
 	'scavengerhunt-quit-game-button-cancel' => 'Cancelar',
-	'scavengerhunt-label-entry-form-username' => 'Nome de usuário',
+	'scavengerhunt-label-entry-form-username' => 'Nome de utilizador',
 	'scavengerhunt-label-clue-color' => 'Cor da fonte',
 	'scavengerhunt-label-clue-size' => 'Tamanho da fonte',
 );

@@ -191,6 +191,7 @@ class OasisController extends WikiaController {
 		$this->cssLinks = '';
 		$this->cssPrintLinks = '';
 
+		$sassFiles = [];
 		foreach ( $skin->getStyles() as $s ) {
 			if ( !empty($s['url']) ) {
 				$tag = $s['tag'];
@@ -204,13 +205,26 @@ class OasisController extends WikiaController {
 				// Print styles will be loaded separately at the bottom of the page
 				if ( stripos($tag, 'media="print"') !== false ) {
 					$this->cssPrintLinks .= $tag;
-
+				} elseif ($wgAllInOne && $this->assetsManager->isSassUrl($s['url'])) {
+					$sassFiles[] = $s['url'];
 				} else {
 					$this->cssLinks .= $tag;
 				}
 			} else {
 				$this->cssLinks .= $s['tag'];
 			}
+		}
+
+		$mainSassFile = 'skins/oasis/css/oasis.scss';
+		if (!empty($sassFiles)) {
+			$sassFiles[] = $mainSassFile;
+			$sassFiles = $this->assetsManager->getSassFilePath($sassFiles);
+			$sassFilesUrl = $this->assetsManager->getSassesUrl($sassFiles);
+
+			$this->cssLinks = Html::linkedStyle($sassFilesUrl) . $this->cssLinks;
+			$this->bottomScripts .= Html::inlineScript("var wgSassLoadedScss = ".json_encode($sassFiles).";");
+		} else {
+			$this->cssLinks = Html::linkedStyle($this->assetsManager->getSassCommonURL($mainSassFile)) . $this->cssLinks;
 		}
 
 		$this->headLinks = $wgOut->getHeadLinks();
@@ -269,8 +283,6 @@ class OasisController extends WikiaController {
 			$this->amazonDirectTargetedBuy = AnalyticsEngine::track('AmazonDirectTargetedBuy', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->dynamicYield = AnalyticsEngine::track('DynamicYield', AnalyticsEngine::EVENT_PAGEVIEW);
 		}
-
-		$this->mainSassFile = 'skins/oasis/css/oasis.scss';
 
 		if (!empty($wgEnableAdminDashboardExt) && AdminDashboardLogic::displayAdminDashboard($this->app, $wgTitle)) {
 			$this->displayAdminDashboard = true;

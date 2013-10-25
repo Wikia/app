@@ -460,6 +460,7 @@ $messages['bg'] = array(
 	'wmu-gallery-btn1' => 'Добавяне на друго изображение',
 	'wmu-gallery-btn2' => 'Добавяне на галерия в страницата',
 	'wmu-alignment' => 'Подравняване',
+	'wmu-file-not-found' => 'Файлът не беше намерен',
 );
 
 /** Banjar (Bahasa Banjar)
@@ -1008,6 +1009,7 @@ $messages['eo'] = array(
 
 /** Spanish (español)
  * @author Armando-Martin
+ * @author Benfutbol10
  * @author Crazymadlover
  * @author McDutchie
  * @author Peter17
@@ -1087,6 +1089,11 @@ $messages['es'] = array(
 	'wmu-alignment' => 'Alineación',
 	'wmu-file-protected' => 'Esta imagen está protegida',
 	'wmu-file-error' => 'Hubo un error durante el proceso de carga. Inténtelo de nuevo.',
+	'wmu-file-not-found' => 'Archivo no encontrado',
+	'wmu-error-exact-height' => 'La altura de la imagen debe ser exactamente de $1 px (es de $2 px)',
+	'wmu-error-exact-width' => 'El ancho de la imagen debe ser exactamente de $1 px (es de $2 px)',
+	'wmu-error-exact-width-height' => 'El ancho y la altura de la imagen deben ser exactamente de $1 x $3 px (es de $2 x $4 px)',
+	'wmu-error-bad-aspect-ratio' => 'La relación de aspecto es incorrecta ($1 x $2 px)',
 );
 
 /** Basque (euskara)
@@ -1825,6 +1832,7 @@ $messages['lb'] = array(
 	'wmu-fewer-options' => 'Manner Optiounen',
 	'wmu-file-protected' => 'Dëst Bild ass gespaart',
 	'wmu-file-not-found' => 'Fichier gouf net fonnt',
+	'wmu-error-exact-width' => "D'Breet vum Bild muss genee $1 Pixel sinn ($1 Pixel kritt)", # Fuzzy
 );
 
 /** Latvian (latviešu)
@@ -1910,6 +1918,11 @@ $messages['mk'] = array(
 	'wmu-alignment' => 'Порамнување',
 	'wmu-file-protected' => 'Оваа слика е заштитена',
 	'wmu-file-error' => 'Се појави грешка при подигањето. Обидете се повторно.',
+	'wmu-file-not-found' => 'Податотеката не е пронајдена',
+	'wmu-error-exact-height' => 'Сликата мора да биде висока точно $1 px (добив $2 px)',
+	'wmu-error-exact-width' => 'Сликата мора да биде широка точно $1 px (добив $2 px)',
+	'wmu-error-exact-width-height' => 'Сликата мора да биде со ширина и висина од точно $1 x $3 px (добив $2 x $4 px)',
+	'wmu-error-bad-aspect-ratio' => 'Сразмерот е неисправен ($1 x $2 px)',
 );
 
 /** Malay (Bahasa Melayu)

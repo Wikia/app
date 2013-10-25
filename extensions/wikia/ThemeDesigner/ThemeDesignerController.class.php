@@ -20,6 +20,11 @@ class ThemeDesignerController extends WikiaController {
 		wfProfileIn( __METHOD__ );
 		global $wgLang, $wgOut;
 
+		// check rights
+		if ( !ThemeDesignerHelper::checkAccess() ) {
+			$this->displayRestrictionError( __METHOD__ );
+		}
+
 		$themeSettings = new ThemeSettings();
 
 		// current settings
@@ -196,6 +201,11 @@ class ThemeDesignerController extends WikiaController {
 	}
 
 	public function executeWordmarkUpload() {
+		// check rights
+		if ( !ThemeDesignerHelper::checkAccess() ) {
+			$this->displayRestrictionError( __METHOD__ );
+		}
+
 		$upload = new UploadWordmarkFromFile();
 
 		$status = $this->uploadImage($upload);
@@ -218,6 +228,11 @@ class ThemeDesignerController extends WikiaController {
 	}
 
 	public function executeFaviconUpload() {
+		// check rights
+		if ( !ThemeDesignerHelper::checkAccess() ) {
+			$this->displayRestrictionError( __METHOD__ );
+		}
+
 		$upload = new UploadFaviconFromFile();
 
 		$this->faviconImageName = '';
@@ -239,6 +254,11 @@ class ThemeDesignerController extends WikiaController {
 	}
 
 	public function executeBackgroundImageUpload() {
+		// check rights
+		if ( !ThemeDesignerHelper::checkAccess() ) {
+			$this->displayRestrictionError( __METHOD__ );
+		}
+
 		$upload = new UploadBackgroundFromFile();
 
 		$status = $this->uploadImage($upload);
@@ -269,31 +289,35 @@ class ThemeDesignerController extends WikiaController {
 	 * @return array
 	 */
 	private function uploadImage($upload) {
-		global $wgRequest, $wgUser;
+		global $wgRequest, $wgUser, $wgEnableUploads;
 
 		$uploadStatus = array("status" => "error");
 
-		$upload->initializeFromRequest( $wgRequest );
-		$permErrors = $upload->verifyPermissions( $wgUser );
-
-		if ( $permErrors !== true ) {
-			$uploadStatus["errors"] = array( wfMsg( 'badaccess' ) );
+		if ( empty( $wgEnableUploads )) {
+			$uploadStatus["errors"] = [ wfMessage( 'themedesigner-upload-disabled' )->plain() ];
 		} else {
-			$details = $upload->verifyUpload();
+			$upload->initializeFromRequest( $wgRequest );
+			$permErrors = $upload->verifyPermissions( $wgUser );
 
-			if ( $details[ 'status' ] != UploadBase::OK ) {
-				$uploadStatus["errors"] = array( $this->getUploadErrorMessage( $details ) );
+			if ( $permErrors !== true ) {
+				$uploadStatus["errors"] = array( wfMsg( 'badaccess' ) );
 			} else {
-				$warnings = $upload->checkWarnings();
+				$details = $upload->verifyUpload();
 
-				if ( !empty( $warnings ) ) {
-					$uploadStatus["errors"] = $this->getUploadWarningMessages( $warnings );
+				if ( $details[ 'status' ] != UploadBase::OK ) {
+					$uploadStatus["errors"] = array( $this->getUploadErrorMessage( $details ) );
 				} else {
-					//save temp file
-					$status = $upload->performUpload();
+					$warnings = $upload->checkWarnings();
 
-					$uploadStatus["status"] = "uploadattempted";
-					$uploadStatus["isGood"] = $status->isGood();
+					if ( !empty( $warnings ) ) {
+						$uploadStatus["errors"] = $this->getUploadWarningMessages( $warnings );
+					} else {
+						//save temp file
+						$status = $upload->performUpload();
+
+						$uploadStatus["status"] = "uploadattempted";
+						$uploadStatus["isGood"] = $status->isGood();
+					}
 				}
 			}
 		}
@@ -302,9 +326,14 @@ class ThemeDesignerController extends WikiaController {
 	}
 
 	public function executeSaveSettings() {
+		wfProfileIn( __METHOD__ );
 		global $wgRequest;
 
-		wfProfileIn( __METHOD__ );
+		// check rights
+		if ( !ThemeDesignerHelper::checkAccess() ) {
+			$this->displayRestrictionError( __METHOD__ );
+		}
+
 
 		$data = $wgRequest->getArray( 'settings' );
 
@@ -314,4 +343,8 @@ class ThemeDesignerController extends WikiaController {
 		wfProfileOut( __METHOD__ );
 	}
 
+
+	private function displayRestrictionError( $method ) {
+		throw new MethodNotFoundException( $method );
+	}
 }
