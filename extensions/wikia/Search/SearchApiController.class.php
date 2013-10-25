@@ -96,18 +96,20 @@ class SearchApiController extends WikiaApiController {
 				->setRank( 'default' )
 				->setInterWiki( true )
 				->setCommercialUse( $this->hideNonCommercialContent() )
-				->setLanguageCode( $lang );
+				->setLanguageCode( $lang )
+				->setVideoSearch             ( $this->getVal( 'videoSearch', false ) )
+				->setFilterQueriesFromCodes  ( $this->getVal( 'filters', array() ) );
 			if ( !empty($hubs) ) {
 				$searchConfig->setHubs( $hubs );
 			}
 			$resultSet = (new Factory)->getFromConfig( $searchConfig )->search();
-			$currentResults = $resultSet->toArray( ["sitename_txt", "url", "id", "description_txt", "lang_s"] );
+			$currentResults = $resultSet->toArray( ["sitename_txt", "url", "id", "description_txt", "lang_s", "score", "description_txt"] );
 			$wikis = array_merge( $wikis, $currentResults );
 			if ( sizeof( $wikis) >= 3 ) {
 				break;
 			}
 		}
-		$wikis = array_slice( $wikis, 0, 30 );
+		$wikis = array_slice( $wikis, 0, 3 );
 
 		$articles = [];
 		foreach ( $wikis as $wiki ) {
@@ -115,10 +117,11 @@ class SearchApiController extends WikiaApiController {
 			$searchConfig->setQuery( $request->getVal( 'query', $query ) )
 				->setLimit( 2 )
 				->setPage( 1 )
+				->setWikiId( $wiki['id'] )
 				->setRank( 'default' );
 
 			$resultSet = (new Factory)->getFromConfig( $searchConfig )->search();
-			$currentResults = $resultSet->toArray( ["title", "url", "id", "description_txt"] );
+			$currentResults = $resultSet->toArray( ["title", "url", "id", "description_txt", "score"] );
 			$articles = array_merge( $articles, $currentResults );
 		}
 		$this->getResponse()->setVal( "wikias", $wikis );
