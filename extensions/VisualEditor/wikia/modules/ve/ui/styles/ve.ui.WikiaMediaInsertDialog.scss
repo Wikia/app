@@ -2,6 +2,7 @@
 @import "skins/oasis/css/mixins/box-sizing";
 @import "skins/oasis/css/mixins/clearfix";
 
+$width-media-item-max: 365px;
 $width-cart: 100px;
 
 .ve-ui-wikiaMediaInsertDialog {
@@ -80,20 +81,14 @@ $width-cart: 100px;
 .ve-ui-wikiaMediaPageWidget {
 	@include clearfix;
 
-	.ve-ui-fieldsetLayout,
+	.ve-ui-fieldsetLayout {
+		margin-left: $width-media-item-max + $width-gutter;
+	}
+
 	.ve-ui-wikiaMediaPageWidget-item {
 		float: left;
-	}
-
-	.ve-ui-fieldsetLayout {
-		width: 275px;
-	}
-
-	.ve-ui-wikiaMediaPageWidget-item {
-		height: 325px;
-		margin-right: $width-gutter;
 		text-align: center;
-		width: 365px;
+		width: $width-media-item-max;
 	}
 
 	.ve-ui-wikiaMediaPageWidget-item-extension {
