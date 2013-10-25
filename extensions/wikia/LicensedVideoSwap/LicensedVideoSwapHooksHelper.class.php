@@ -39,4 +39,22 @@ class LicensedVideoSwapHooksHelper {
 
 		return true;
 	}
+
+	/**
+	 * Hook: reset confirmation message in global notification when file page is deleted
+	 * @param Title $title
+	 * @param string $message
+	 * @return true
+	 */
+	public static function onOasisAddPageDeletedConfirmationMessage( &$title, &$message ) {
+		$app = F::app();
+		$controller = $app->wg->Request->getVal( 'controller', '' );
+		$method = $app->wg->Request->getVal( 'method', '' );
+		if ( $title instanceof Title && $title->getNamespace() == NS_FILE && $controller == 'LicensedVideoSwapSpecial' && $method == 'swapVideo' ) {
+			$message = '';
+		}
+
+		return true;
+	}
+
 }
