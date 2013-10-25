@@ -87,13 +87,44 @@ ve.ui.WikiaMediaQueryWidget.prototype.getUpload = function () {
 };
 
 /**
- * Request media from the server.
- *
  * @method
- * @fires requestMedia
  */
 ve.ui.WikiaMediaQueryWidget.prototype.requestMedia = function () {
 	this.input.pushPending();
+
+	// Check if the value in the input could be possibly an a URL to video
+	if (
+		this.value.length >= 10 &&
+		this.value.indexOf( '.' ) !== -1 &&
+		this.value.lastIndexOf( '/' ) > this.value.indexOf( '.' )
+	) {
+		this.requestVideo();
+	} else {
+		this.requestSearch();
+	}
+};
+
+/**
+ * @method
+ */
+ve.ui.WikiaMediaQueryWidget.prototype.requestVideo = function () {
+	this.request = $.ajax( {
+		'url': mw.util.wikiScript( 'api' ),
+		'data': {
+			'format': 'json',
+			'action': 'apitempupload',
+			'type': 'temporary',
+			'url': this.value
+		}
+	} )
+		.always( ve.bind( this.onRequestVideoAlways, this ) )
+		.done( ve.bind( this.onRequestVideoDone, this ) );
+};
+
+/**
+ * @method
+ */
+ve.ui.WikiaMediaQueryWidget.prototype.requestSearch = function () {
 	this.request = $.ajax( {
 		'url': mw.util.wikiScript( 'api' ),
 		'data': {
@@ -106,10 +137,8 @@ ve.ui.WikiaMediaQueryWidget.prototype.requestMedia = function () {
 			'limit': 16
 		}
 	} )
-		.always( ve.bind( this.onRequestMediaAlways, this ) )
-		.done( ve.bind( this.onRequestMediaDone, this ) );
-
-	this.emit( 'requestMedia', this.value, this.request );
+		.always( ve.bind( this.onRequestSearchAlways, this ) )
+		.done( ve.bind( this.onRequestSearchDone, this ) );
 };
 
 /**
@@ -130,23 +159,23 @@ ve.ui.WikiaMediaQueryWidget.prototype.onInputChange = function () {
 };
 
 /**
- * Handle media request promise.always
+ * Handle search request promise.always
  *
  * @method
  */
-ve.ui.WikiaMediaQueryWidget.prototype.onRequestMediaAlways = function () {
+ve.ui.WikiaMediaQueryWidget.prototype.onRequestSearchAlways = function () {
 	this.request = null;
 	this.input.popPending();
 };
 
 /**
- * Handle media request promise.done
+ * Handle search request promise.done
  *
  * @method
  * @param {Object} data The response Object from the server.
- * @fires requestMediaDone
+ * @fires requestSearchDone
  */
-ve.ui.WikiaMediaQueryWidget.prototype.onRequestMediaDone = function ( data ) {
+ve.ui.WikiaMediaQueryWidget.prototype.onRequestSearchDone = function ( data ) {
 	var items;
 
 	if ( !data.response || !data.response.results ) {
@@ -157,7 +186,33 @@ ve.ui.WikiaMediaQueryWidget.prototype.onRequestMediaDone = function ( data ) {
 	items = data.response.results.mixed.items;
 
 	this.batch++;
-	this.emit( 'requestMediaDone', items );
+	this.emit( 'requestSearchDone', items );
+};
+
+/**
+ * Handle video request promise.always
+ *
+ * @method
+ */
+ve.ui.WikiaMediaQueryWidget.prototype.onRequestVideoAlways = function () {
+	this.request = null;
+	this.input.popPending();
+};
+
+/**
+ * Handle video request promise.done
+ *
+ * @method
+ * @param {Object} data The response Object from the server.
+ * @fires requestVideoDone
+ */
+ve.ui.WikiaMediaQueryWidget.prototype.onRequestVideoDone = function ( data ) {
+	if ( data.error ) {
+		// TODO: Maybe special handling for some errors? At least for "mustbeloggedin"
+		this.requestSearch();
+	} else {
+		this.emit( 'requestVideoDone', data.apitempupload );
+	}
 };
 
 /**
