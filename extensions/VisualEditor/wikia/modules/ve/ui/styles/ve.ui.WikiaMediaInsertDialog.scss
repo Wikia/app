@@ -1,9 +1,18 @@
 @import "skins/oasis/css/core/layout";
 @import "skins/oasis/css/mixins/box-sizing";
+@import "skins/oasis/css/mixins/clearfix";
 
 $width-cart: 100px;
 
 .ve-ui-wikiaMediaInsertDialog {
+	.ve-ui-pagedLayout {
+		bottom: 0;
+		left: 0;
+		position: absolute;
+		top: 75px;
+		right: 0;
+	}
+
 	.ve-ui-window-body {
 		margin-right: -( $width-cart + $width-gutter );
 		padding: 0;
@@ -31,14 +40,14 @@ $width-cart: 100px;
 			}
 		}
 	}
-}
 
-.ve-ui-wikiaMediaInsertDialog-content {
-	bottom: 0;
-	left: 0;
-	position: absolute;
-	top: 0;
-	right: $width-cart;
+	.ve-ui-wikiaMediaInsertDialog-content {
+		bottom: 0;
+		left: 0;
+		position: absolute;
+		top: 0;
+		right: $width-cart;
+	}
 }
 
 /* Cart */
@@ -56,22 +65,54 @@ $width-cart: 100px;
 	.ve-ui-wikiaCartImage {
 		display: block;
 	}
+
 	.ve-ui-optionWidget {
 		padding: 0;
 		margin-bottom: 10px;
 	}
+
 	.ve-ui-labeledElement-label {
 		display: none;
 	}
 }
 
-/* Pages */
-.ve-ui-pagedLayout {
-	bottom: 0;
-	left: 0;
-	position: absolute;
-	top: 75px;
-	right: 0;
+/* Media Page */
+.ve-ui-wikiaMediaPageWidget {
+	@include clearfix;
+
+	.ve-ui-fieldsetLayout,
+	.ve-ui-wikiaMediaPageWidget-item {
+		float: left;
+	}
+
+	.ve-ui-fieldsetLayout {
+		width: 275px;
+	}
+
+	.ve-ui-wikiaMediaPageWidget-item {
+		height: 325px;
+		margin-right: $width-gutter;
+		text-align: center;
+		width: 365px;
+	}
+
+	.ve-ui-wikiaMediaPageWidget-item-extension {
+		margin-left: $width-gutter / 4;
+		vertical-align: middle;
+	}
+
+	.ve-ui-textInputWidget {
+		margin-bottom: $width-gutter;
+		width: 100%;
+	}
+
+	&.photo .ve-ui-textInputWidget input {
+		width: 85%;
+	}
+
+	&.video .ve-ui-wikiaMediaPageWidget-item-extension {
+		display: none;
+	}
 }
 
 /* Query */
@@ -85,7 +126,8 @@ $width-cart: 100px;
 		padding: 0;
 		width: auto;
 
-		> span, .ve-ui-icon-upload {
+		> span,
+		.ve-ui-icon-upload {
 			display: none;
 		}
 	}
@@ -97,6 +139,7 @@ $width-cart: 100px;
 		}
 	}
 }
+
 .ve-ui-wikiaMediaQueryWidget-wrapper {
 	display: table;
 	width: 100%;
@@ -105,9 +148,11 @@ $width-cart: 100px;
 		vertical-align: middle;
 	}
 }
+
 .ve-ui-wikiaMediaQueryWidget-queryWrapper {
 	width: 100%;
 }
+
 .ve-ui-wikiaMediaQueryWidget-uploadWrapper {
 	padding-left: 20px;
 }
