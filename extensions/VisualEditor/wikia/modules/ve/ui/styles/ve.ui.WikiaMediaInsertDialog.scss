@@ -3,7 +3,7 @@
 @import "skins/oasis/css/mixins/clearfix";
 
 $width-media-item-max: 365px;
-$width-cart: 100px;
+$width-cart: 101px;
 
 .ve-ui-wikiaMediaInsertDialog {
 	.ve-ui-pagedLayout {
@@ -65,11 +65,28 @@ $width-cart: 100px;
 
 	.ve-ui-wikiaCartImage {
 		display: block;
+		opacity: 0.75;
 	}
 
 	.ve-ui-optionWidget {
 		padding: 0;
 		margin-bottom: 10px;
+
+		&.ve-ui-optionWidget-selected {
+			&:before {
+				border: $color-buttons 4px solid;
+				bottom: 0;
+				content: '';
+				left: 0;
+				position: absolute;
+				right: 0;
+				top: 0;
+			}
+
+			.ve-ui-wikiaCartImage {
+				opacity: 1;
+			}
+		}
 	}
 
 	.ve-ui-labeledElement-label {

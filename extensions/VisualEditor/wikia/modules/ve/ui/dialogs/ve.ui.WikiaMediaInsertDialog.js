@@ -221,6 +221,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.setPage = function ( name ) {
 	if ( this.pages.getPageName() === name ) {
 		// Toggle cart item
 		if ( ve.indexOf( name, ve.ui.WikiaMediaInsertDialog.static.pages ) === -1 ) {
+			this.cart.selectItem( null );
 			this.pages.setPage( this.getDefaultPage() );
 		}
 	} else {
