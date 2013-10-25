@@ -3,10 +3,11 @@
 @import "skins/oasis/css/mixins/box-sizing-border-box";
 @import "skins/oasis/css/mixins/box-shadow";
 @import "skins/oasis/css/mixins/clearfix";
+@import "skins/oasis/css/mixins/opacity";
+@import "skins/oasis/css/mixins/transform";
 @import "skins/oasis/css/mixins/ribbon";
 @import "skins/oasis/css/core/layout";
 @import "skins/oasis/css/core/color";
-@import "skins/oasis/css/mixins/opacity";
 @import "mixins/_sprite-LicensedVideoSwap";
 
 $alt-bg-color: mix($color-page-opposite, $color-page, 10%);
@@ -26,6 +27,27 @@ $button-icon-color: white;
 // button that leads to history undo swap/keep page
 .lvs-history-btn {
 	vertical-align: 5px;
+}
+
+.lvs-match-stats {
+	@include clearfix;
+	border-top: 1px solid $color-page-border-subtle;
+	border-bottom: 1px solid $color-page-border-subtle;
+	margin: 10px 0 30px 0;
+	padding: 18px 10px;
+
+	div {
+		float: left;
+	}
+	&>div:first-child {
+		font-size: 30px;
+		margin-right: 7px;
+	}
+
+	&>div:last-child {
+		font-size: 10px;
+		line-height: 11px;
+	}
 }
 
 .new {
@@ -119,7 +141,6 @@ $button-icon-color: white;
 
 .LVSGrid {
 	position: relative;
-	border-top: 1px solid $color-page-border;
 	.lvs-sprite:before {
 		@include sprite-LicensedVideoSwap-base;
 	}

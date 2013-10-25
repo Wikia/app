@@ -121,6 +121,9 @@ class LVSUpdateSuggestions extends Maintenance {
 			}
 		}
 
+		// clear cache for total videos
+		$lvsHelper->invalidateCacheTotalVideos();
+
 		// clear cache for total new videos
 		$lvsHelper->invalidateCacheTotalNewVideos();
 
