@@ -1,0 +1,11 @@
+{
+	"templateVars": {
+		"default": {
+			"required": [ "number" ],
+			"optional": [ "id" ]
+		}
+	},
+	"dependencies": {
+		"css": [ "resources/wikia/ui_components/alert_badge/css/alert_badge_default.scss" ]
+	}
+}

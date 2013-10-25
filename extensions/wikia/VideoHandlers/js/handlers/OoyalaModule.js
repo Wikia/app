@@ -23,6 +23,7 @@ OO.plugin("AgeGateModule", function (OO, _, $, W) {
         this.isMobile = false;
         this.rootElement = NaN;
         this.embedIdentifier = NaN;
+        this.currentPlaybackType = 'content';
         this.content = NaN;
         this.ageRequired = NaN;
         this.ageGateHTML =  '<style> \
@@ -131,10 +132,10 @@ OO.plugin("AgeGateModule", function (OO, _, $, W) {
                             </div>';
 
         if(!window.ooyalaAgeGateModule) {
-            window.ooyalaAgeGateModule = {};
+            window.ooyalaAgeGateModule = [];
         }
 
-        window.ooyalaAgeGateModule[this.identifier] = this;
+        window.ooyalaAgeGateModule.push(this);
 
         this.init(); // subscribe to relevant events
     };
@@ -145,14 +146,19 @@ OO.plugin("AgeGateModule", function (OO, _, $, W) {
             // subscribe to relevant player events
             this.mb.subscribe(OO.EVENTS.PLAYER_CREATED, 'customerUi',
             _.bind(this.onPlayerCreate, this));
-            this.mb.subscribe(OO.EVENTS.PLAYHEAD_TIME_CHANGED,
-                'customerUi', _.bind(this.onTimeUpdate, this));
+            /*this.mb.subscribe(OO.EVENTS.PLAYHEAD_TIME_CHANGED,
+                'customerUi', _.bind(this.onTimeUpdate, this));*/
             this.mb.subscribe(OO.EVENTS.CONTENT_TREE_FETCHED,
                 'customerUi', _.bind(this.onContentReady, this));
             this.mb.subscribe(OO.EVENTS.PLAYING,
                 'customerUi', _.bind(this.onPlay, this));
             this.mb.subscribe(OO.EVENTS.METADATA_FETCHED,
                 'customerUi', _.bind(this.onMetadataFetched, this));
+            this.mb.subscribe(OO.EVENTS.WILL_PLAY_ADS,
+                'customerUi', _.bind(this.onWillPlayAds, this));
+            this.mb.subscribe(OO.EVENTS.ADS_PLAYED,
+                'customerUi', _.bind(this.onAdsPlayed, this));
+
         },
 
         consoleLog: function (what) {
@@ -225,16 +231,32 @@ OO.plugin("AgeGateModule", function (OO, _, $, W) {
 
         // Handles PLAYHEAD_TIME_CHANGED event
         // In this example, we use it to move the slider as content is played
-        onTimeUpdate: function (event, time, duration, buffer) {
+        /*onTimeUpdate: function (event, time, duration, buffer) {
             // update scrubber bar.
             if (duration > 0) {
                 this.duration = duration;
             }
 
             this.consoleLog("EVENT: onTimeUpdate (" + this.duration + ")");
+        },*/
+
+        onWillPlayAds: function(funcLabel, data) {
+            this.currentPlaybackType = 'ad';
+
+            this.onPlay();
+
+            this.consoleLog("EVENT: onWillPlayAds");
+        },
+
+        onAdsPlayed: function(funcLabel, data) {
+            this.currentPlaybackType = 'content';
+
+            this.consoleLog("EVENT: onAdsPlayed");
         },
 
         onPlay: function () {
+            this.consoleLog("EVENT: onPlay");
+
             if(this.ageRequired && !this.ageVerified) {
                 var action = this.readCookies();
 
@@ -265,8 +287,6 @@ OO.plugin("AgeGateModule", function (OO, _, $, W) {
             }
 
             this.playing = true;
-
-            this.consoleLog("EVENT: onPlay");
         },
 
         onPause: function () {
@@ -277,8 +297,16 @@ OO.plugin("AgeGateModule", function (OO, _, $, W) {
         },
 
         onMetadataFetched: function (funcLabel, data) {
+            this.consoleLog('EVENT: onMetadataFetched');
             this.metaData = data;
             this.ageRequired = data.base.age_required;
+
+            // Look at the content's modules, to see if an ad manager is loaded
+            for(var m in data.modules) {
+                if(m.indexOf('ads') > -1) {
+                    this.currentPlaybackType = 'ad';
+                }
+            }
 
             this.ageGateRoot.find('.ageRequirement').html(this.ageRequired);
         },
