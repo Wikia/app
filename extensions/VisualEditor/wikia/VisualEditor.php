@@ -74,6 +74,7 @@ $wgResourceModules += array(
 			've/ui/widgets/ve.ui.WikiaCartWidget.js',
 			've/ui/widgets/ve.ui.WikiaCartItemWidget.js',
 			've/ui/widgets/ve.ui.WikiaMediaPageWidget.js',
+			've/ui/widgets/ve.ui.WikiaMediaResultsSelectWidget.js',
 			've/ui/widgets/ve.ui.WikiaMediaResultWidget.js',
 			've/ui/widgets/ve.ui.WikiaMediaResultsWidget.js',
 			've/ui/widgets/ve.ui.WikiaMediaQueryWidget.js',

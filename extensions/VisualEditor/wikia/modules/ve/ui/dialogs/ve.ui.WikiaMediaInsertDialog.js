@@ -76,7 +76,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	this.queryInput.$input.on( 'keydown', ve.bind( this.onQueryInputKeydown, this ) );
 	this.search.connect( this, {
 		'nearingEnd': 'onSearchNearingEnd',
-		'select': 'onSearchSelect'
+		'cartState': 'onSearchSelect'
 	} );
 	this.upload.on( 'upload', ve.bind( this.onUploadSuccess, this ) );
 

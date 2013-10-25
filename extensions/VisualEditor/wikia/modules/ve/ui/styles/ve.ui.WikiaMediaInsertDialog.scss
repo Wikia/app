@@ -166,6 +166,15 @@ $width-cart: 100px;
 	position: absolute;
 	top: 0;
 	right: 0;
+
+	.ve-ui-wikiaMediaResultWidget-cartState {
+		background-color: red;
+		height: 2em;
+		position: absolute;
+		right: 0;
+		top: 0;
+		width: 2em;
+	}
 }
 
 /* Upload - TODO: Move to Widget.scss when Sass work is merged */

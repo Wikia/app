@@ -32,6 +32,7 @@ ve.ui.WikiaMediaResultWidget = function VeUiWikiaMediaResultWidget( data, config
 	this.$front = this.$$( '<div>' );
 	this.$thumb = this.$back.add( this.$front );
 	this.$overlay = this.$$( '<div>' );
+	this.cartState = new ve.ui.IconButtonWidget( { 'icon': 'bold-b' } );
 
 	// Events
 	this.$image
@@ -42,10 +43,11 @@ ve.ui.WikiaMediaResultWidget = function VeUiWikiaMediaResultWidget( data, config
 	this.loadThumbnail();
 	this.setLabel( this.mwTitle );
 	this.$overlay.addClass( 've-ui-mwMediaResultWidget-overlay' );
+	this.cartState.$.addClass( 've-ui-wikiaMediaResultWidget-cartState' );
 	this.$
 		.addClass( 've-ui-mwMediaResultWidget ve-ui-texture-pending ' + data.type )
 		.css( { 'width': this.size, 'height': this.size } )
-		.prepend( this.$thumb, this.$overlay );
+		.prepend( this.$thumb, this.cartState.$ );
 };
 
 /* Inheritance */

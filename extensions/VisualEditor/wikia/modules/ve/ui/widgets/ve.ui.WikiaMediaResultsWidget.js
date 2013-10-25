@@ -15,13 +15,14 @@ ve.ui.WikiaMediaResultsWidget = function VeUiWikiaMediaResultsWidget( config ) {
 	ve.ui.Widget.call( this, config );
 
 	// Properties
-	this.results = new ve.ui.SelectWidget( { '$$': this.$$ } );
+	this.results = new ve.ui.WikiaMediaResultsSelectWidget( { '$$': this.$$ } );
 	this.size = config.size || 160;
 
 	// Events
 	this.results.connect( this, {
 		'highlight': 'onResultsHighlight',
-		'select': 'onResultsSelect'
+		'select': 'onResultsSelect',
+		'cartState': 'onCartState'
 	} );
 	this.$.on( 'scroll', ve.bind( this.onResultsScroll, this ) );
 
@@ -42,6 +43,10 @@ ve.inheritClass( ve.ui.WikiaMediaResultsWidget, ve.ui.Widget );
  */
 
 /* Methods */
+
+ve.ui.WikiaMediaResultsWidget.prototype.onCartState = function ( item ) {
+	this.emit( 'cartState', item.getData() );
+}
 
 /**
  * Add items to the results.
