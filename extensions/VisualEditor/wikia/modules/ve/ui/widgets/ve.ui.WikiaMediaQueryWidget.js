@@ -88,11 +88,11 @@ ve.ui.WikiaMediaQueryWidget.prototype.getUpload = function () {
 
 /**
  * @method
- * @fires requestMedia
  */
 ve.ui.WikiaMediaQueryWidget.prototype.requestMedia = function () {
 	this.input.pushPending();
 
+	// Check if the value in the input could be possibly an a URL to video
 	if (
 		this.value.length >= 10 &&
 		this.value.indexOf( '.' ) !== -1 &&
@@ -106,7 +106,6 @@ ve.ui.WikiaMediaQueryWidget.prototype.requestMedia = function () {
 
 /**
  * @method
- * @fires requestMedia
  */
 ve.ui.WikiaMediaQueryWidget.prototype.requestVideo = function () {
 	this.request = $.ajax( {
@@ -124,7 +123,6 @@ ve.ui.WikiaMediaQueryWidget.prototype.requestVideo = function () {
 
 /**
  * @method
- * @fires requestMedia
  */
 ve.ui.WikiaMediaQueryWidget.prototype.requestSearch = function () {
 	this.request = $.ajax( {
