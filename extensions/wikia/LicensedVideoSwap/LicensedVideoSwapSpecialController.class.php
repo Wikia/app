@@ -25,6 +25,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 	 * @responseParam string pagination
 	 */
 	public function index() {
+		/** @var User $user */
 		$user = $this->getUser();
 		if ( !$user->isAllowed( 'licensedvideoswap' ) ) {
 			$this->displayRestrictionError();
@@ -432,9 +433,16 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 
 		if ( $helper->isStatusSwapExact( $pageStatusInfo['status'] ) ) {
 			$status = $helper->undeletePage( $videoTitle, true );
+			if ( !$status->isOK() ) {
+				$this->html = '';
+				$this->result = 'error';
+				$this->msg = $status->getMessage();
+				return;
+			}
 		} else if ( $helper->isStatusSwapNorm( $pageStatusInfo['status'] ) ) {
 			$newTitle = $this->request->getVal( 'newTitle', '' );
 
+			/** @var WikiPage $article */
 			$article = Article::newFromID( $videoTitle->getArticleID() );
 			$redirect = $article->getRedirectTarget();
 			if ( $article->isRedirect() && !empty( $redirect ) && $redirect->getDBKey() == $newTitle ) {
@@ -556,6 +564,67 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$this->html = '';
 		$this->totalVideos = 0;
 		$this->redirect = '';
+	}
+
+	/**
+	 * Controller that is called when a user plays a video on the LVS.  Note that we mostly
+	 * care about the non-premium video that could be swapped rather than the premium video that
+	 * was played.  This is because all the metadata is stored against the non-premium video.
+	 *
+	 * @requestParam string videoTitle The title of the non-premium video that could be swapped
+	 * @requestParam string premiumTitle The title of the video that was played
+	 * @return bool Whether the controller was successful or not
+	 */
+	public function playVideo() {
+		// Get the non-premium title
+		$videoTitle = $this->getVal( 'videoTitle' );
+		if ( empty($videoTitle) ) {
+			return false;
+		}
+
+		// validate action
+		$response = $this->sendRequest( 'LicensedVideoSwapSpecial', 'validateAction', array( 'videoTitle' => $videoTitle ) );
+		$msg = $response->getVal( 'msg', '' );
+		if ( !empty( $msg ) ) {
+			$this->html = '';
+			$this->result = 'error';
+			$this->msg = $msg;
+		}
+
+		// Get the list of videos already played
+		/** @var User $user */
+		$user = $this->getUser();
+		$visitedList = $user->getOption( LicensedVideoSwapHelper::USER_VISITED_LIST );
+		if ( $visitedList ) {
+			$visitedList = unserialize( $visitedList );
+		} else {
+			$visitedList = [];
+		}
+
+		// Update the list of played videos
+		$visitedList[$videoTitle] = 1;
+		$visitedTitles = array_keys($visitedList);
+
+		// Remove any videos that don't exist for swapping anymore
+		$helper = new LicensedVideoSwapHelper();
+		$intersection = $helper->intersectUnswappedVideo( $visitedTitles );
+
+		// Go through each title in this user's list of played videos.  We're looking for the
+		// video titles that don't appear in the intersection.  These titles no longer
+		// need to be saved in this user property.
+		foreach ( $visitedTitles as $title ) {
+			// If this title doesn't appear in the intersection, remove it from the list
+			if ( !isset($intersection[$title]) ) {
+
+				unset($visitedList[$title]);
+			}
+		}
+
+		// set last visit date
+		$user->setOption( LicensedVideoSwapHelper::USER_VISITED_LIST, serialize($visitedList) );
+		$user->saveSettings();
+
+		return true;
 	}
 
 }
