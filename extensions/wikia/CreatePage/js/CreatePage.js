@@ -165,10 +165,7 @@ var CreatePage = {
 
 				// make sure we're inside createbox and not inputbox (RT #40959)
 				if(form.attr('class') == 'createboxForm') {
-					var prefix = form.children("input[name|='prefix']").val();
-					if (typeof prefix == undefined) {
-						prefix = '';
-					}
+					var prefix = form.children("input[name|='prefix']").val() || '';
 					var field = form.children('.createboxInput');
 					var preloadField = form.children("input[name='preload']");
 
