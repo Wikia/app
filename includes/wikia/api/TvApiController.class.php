@@ -2,22 +2,43 @@
 use Wikia\Search\Config, Wikia\Search\QueryService\Factory, Wikia\Search\QueryService\DependencyContainer;
 class TvApiController extends WikiaApiController {
 
-	//const PARAMETER_NAMESPACES = 'namespaces';
+	const API_URL = 'wikia.php?controller=JsonFormatApi&method=getJsonFormatAsText&article=';
+
+	/**
+	 * @var wikiId
+	 */
+	private $wikiId;
+
+	/**
+	 * @var url for wikiId
+	 */
+	private $url;
 
 	public function getArticle() {
-		$this->setResponseFromConfig( $this->getConfigFromRequest() );
+
+		$this->setWikiVariables();
+
+		$config = $this->getConfigFromRequest();
+		$this->setResponseFromConfig( $config);
 	}
 
-	protected function getWikiId(){
+
+	protected function setWikiVariables(){
 		$config = $this->getConfigCrossWiki();
 		$resultSet = (new Factory)->getFromConfig( $config )->search();
 
 		foreach( $resultSet->getResults() as $result ) {
-			if ( $result['id'] ) {
-				return $result['id'];
+			if ( $result['id'] && $result['url'] ) {
+				$this->wikiId = $result['id'];
+				$this->url = $result['url'];
+				return ;
 			}
 		}
+
+		throw new InvalidParameterApiException( 'seriesName' );
+
 	}
+
 
 	protected function getConfigCrossWiki() {
 		$request = $this->getRequest();
@@ -39,6 +60,7 @@ class TvApiController extends WikiaApiController {
 	 * @return Wikia\Search\Config
 	 */
 	protected function getConfigFromRequest() {
+
 		$request = $this->getRequest();
 		$searchConfig = new Wikia\Search\Config;
 		$searchConfig->setQuery( $request->getVal( 'episodeName', null ) )
@@ -46,35 +68,14 @@ class TvApiController extends WikiaApiController {
 			->setPage( $request->getVal( 'batch', 1 ) )
 			->setLanguageCode($request->getVal( 'lang', 'en' ))
 			->setRank( $request->getVal( 'rank', 'default' ) )
-			->setWikiId($this->getWikiId())
+			->setWikiId($this->wikiId)
 			->setVideoSearch( false  )
 			->setOnWiki(true)
 			->setNamespaces([0,14]);
 		;
-		//return $this->validateNamespacesForConfig( $searchConfig );
+
 		return $searchConfig;
 	}
-
-
-	/**
-	 * Validates user-provided namespaces.
-	 * @param Wikia\Search\Config $searchConfig
-	 * @throws InvalidParameterApiException
-	 * @return Wikia\Search\Config
-	 */
-	/*protected function validateNamespacesForConfig( $searchConfig ) {
-		$namespaces = $this->getRequest()->getArray( 'namespaces', [] );
-		if (! empty( $namespaces ) ) {
-			foreach ( $namespaces as &$n ) {
-				if (! is_numeric( $n ) ) {
-					throw new InvalidParameterApiException( self::PARAMETER_NAMESPACES );
-				}
-			}
-
-			$searchConfig->setNamespaces( $namespaces );
-		}
-		return $searchConfig;
-	}*/
 
 	protected function setResponseFromConfig( Wikia\Search\Config $searchConfig ) {
 		if (! $searchConfig->getQuery()->hasTerms() ) {
@@ -86,6 +87,11 @@ class TvApiController extends WikiaApiController {
 
 		if ( empty( $responseValues['items'] ) ) {
 			throw new NotFoundApiException();
+		}
+
+		foreach($responseValues['items'] as &$item)
+		{
+			$item['contentUrl'] = $this->url.self::API_URL.$item['pageid'];
 		}
 
 		$response = $this->getResponse();
@@ -100,6 +106,4 @@ class TvApiController extends WikiaApiController {
 			)
 		);
 	}
-
-
 }
