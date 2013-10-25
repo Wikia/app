@@ -1,3 +1,9 @@
+/**
+ * @description Simple AMD friendly jquery plugin to make 2 line ellipses
+ * @author Liz
+ * @author Ken (refactor for modularity)
+ * TODO: Allow user to pass config to plugin that allows ellipsifying of arbitary # of lines
+ */
 (function( exports ) {
 		'use strict';
 		var factory = function( $ ) {
