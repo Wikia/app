@@ -17,20 +17,33 @@ class WikiEntitiesService
 	protected $mwService;
 	
 	/**
-	 * Prepares entities for dart key-value pairs and stores it in the appropriate global variable 
+	 * The top 5 topics for this wiki as determined by running latent dirichlet analysis
+	 * against 5000 wikis with 999 topics. Each topic is a max of 3 characters (integers)
+	 * @todo should we refactor these into a higher-radix integer (e.g. hex) to compress length even more?
 	 * @return bool
 	 */
-	public function registerEntitiesWithDFP() {
+	public function registerLdaTopicsWithDFP() {
 		$mwService = $this->getMwService();
-		$entityList = $this->getEntityList();
-		if ( count( $entityList ) ) {
+		$topics = $this->getLdaTopics();
+		if ( count( $topics ) ) {
 			$keyValues = explode( ';', $mwService->getGlobalWithDefault( 'wgDartCustomKeyValues', '' ) );
-			foreach ( $entityList as &$entity ) {
-				$entity = sprintf( 'wikientities=%s', substr( $entity, 0, 20 ) );
+			foreach ( $topics as &$topic ) {
+				$topic = 'wtpx='.$topic;
 			}
-			$mwService->setGlobal( 'wgDartCustomKeyValues', implode( ';', array_merge( $keyValues, $entityList ) ) );
+			$mwService->setGlobal( 'wgDartCustomKeyValues', implode( ';', array_merge( $keyValues, array_slice( $topics, 0, 5 ) ) ) );
 		}
 		return true;
+	}
+	
+	/**
+	 * Returns on average 18 different topics, numbered 1-999.
+	 * These were extracted using latent dirichlet analysis against the top 5k WAM wikis
+	 * We asked for 999 unsupervised topics, and this is what we got.
+	 * They are ordered by a weight value randing from 0 to 1, descending
+	 * @return array
+	 */
+	public function getLdaTopics() {
+		return $this->getMwService()->getGlobalWithDefault( 'WikiLdaTopics', [] );
 	}
 	
 	

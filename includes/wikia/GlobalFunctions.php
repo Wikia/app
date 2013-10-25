@@ -153,13 +153,13 @@ function wfReplaceImageServer( $url, $timestamp = false ) {
 			// RT#98969 if the url already has a cb value, don't add another one...
 			$cb = ($timestamp!='' && strpos($url, "__cb") === false) ? "__cb{$timestamp}/" : '';
 
-			// TODO: support domain sharding on devboxes
 			if (!empty($wg->DevBoxImageServerOverride)) {
 				// Dev boxes
+				// TODO: support domains sharding on devboxes
 				$url = str_replace('http://images.wikia.com/', sprintf("http://{$wg->DevBoxImageServerOverride}/%s", $cb), $url);
 			} else {
 				// Production
-				$url = str_replace('http://images.wikia.com/', sprintf("http://images%s.wikia.nocookie.net/%s",$serverNo, $cb), $url);
+				$url = str_replace('http://images.wikia.com/', sprintf("http://{$wg->ImagesDomainSharding}/%s",$serverNo, $cb), $url);
 			}
 		}
 	} else if (!empty($wg->DevBoxImageServerOverride)) {

@@ -471,7 +471,7 @@ class MediaWikiService
 		$articleId = ( $title !== null ) ? $title->getArticleId() : 0;
 		if( ( $articleId > 0 ) && ( in_array( $title->getNamespace(), $namespaces ) ) ) {
 			$this->getPageFromPageId( $articleId );
-			$articleMatch = new \Wikia\Search\Match\Article( $title->getArticleId(), $this );
+			$articleMatch = new \Wikia\Search\Match\Article( $title->getArticleId(), $this ,$term);
 		}
 		return $articleMatch;
 	}

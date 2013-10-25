@@ -772,6 +772,8 @@ class CurlHttpRequest extends MWHttpRequest {
 		$this->parseHeader();
 		$this->setStatus();
 
+		wfDebug(__METHOD__ . ' - ' . json_encode([$this->method, $this->url, $this->reqHeaders, "HTTP {$this->respStatus}"]) . "\n"); // Wikia change
+
 		return $this->status;
 	}
 

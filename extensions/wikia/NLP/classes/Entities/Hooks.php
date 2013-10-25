@@ -18,7 +18,7 @@ class Hooks
 	 * @return boolean
 	 */
 	public static function onArticleViewHeader( &$article, &$outputDone, &$pcache ) {
-		return (new WikiEntitiesService)->registerEntitiesWithDFP();
+		return (new WikiEntitiesService)->registerLdaTopicsWithDFP();
 	}
 	
 }
