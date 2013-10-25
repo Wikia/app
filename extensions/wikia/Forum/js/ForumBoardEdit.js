@@ -161,16 +161,14 @@
 	function handleRemoveBoardButtonClick(e) {
 		var boardItem = $(e.target).closest('.board');
 		var boardId = boardItem.data('id');
-		$.when(makeBoardModal('removeBoardModal', {boardId: boardId}, 'removeBoard', function() {
+		$.when(makeBoardModal('removeBoardModal', {boardId: boardId}, 'removeBoard', function( boardModal ) {
 			return {
 				boardId: boardId,
-				// this global currentDialog is just plain wrong
-				// but we can use a callback parameter here... :)
-				destinationBoardId: currentDialog.find('.destinationBoardId option:selected').val()
+				destinationBoardId: boardModal.$element.find('.destinationBoardId option:selected').val()
 			};
-		})).done(function(dialog) {
+		} ) ).done( function( dialog ) {
 			// done
-		});
+		} );
 	};
 	
 	/* Board edit event bindings */

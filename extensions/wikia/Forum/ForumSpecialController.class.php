@@ -114,7 +114,7 @@ class ForumSpecialController extends WikiaSpecialPageController {
 					'type' => 'text',
 					'name' => 'boardTitle',
 					'isRequired' => true,
-					'label' => wfMsg('forum-admin-create-new-board-title'),
+					'label' => wfMessage('forum-admin-create-new-board-title')->plain(),
 					'attributes' => array(
 						'maxlength' => '40'
 					),
@@ -123,7 +123,7 @@ class ForumSpecialController extends WikiaSpecialPageController {
 					'type' => 'text',
 					'name' => 'boardDescription',
 					'isRequired' => true,
-					'label' => wfMsg('forum-admin-create-new-board-description'),
+					'label' => wfMessage('forum-admin-create-new-board-description')->plain(),
 					'attributes' => array(
 						'maxlength' => '255'
 					),
@@ -132,7 +132,7 @@ class ForumSpecialController extends WikiaSpecialPageController {
 			'method' => 'post',
 			'action' => '',
 		);
-		$this->response->setVal( 'html', $this->app->renderView( 'WikiaStyleGuideForm', 'index', array( 'form' => $form ) ) );
+		$this->setVal( 'html', $this->app->renderView( 'WikiaStyleGuideForm', 'index', array( 'form' => $form ) ) );
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -150,11 +150,40 @@ class ForumSpecialController extends WikiaSpecialPageController {
 		$this->boardId = $this->getVal( 'boardId', -1 );
 
 		$board = ForumBoard::newFromId( $this->boardId );
+		$boardTitle = $board->getTitle()->getText();
+		$boardDescription = $board->getRawDescription();
 
-		/* backend magic here */
+		$this->setVal( 'title', wfMessage( 'forum-admin-edit-board-modal-heading', $boardTitle )->plain() );
+		$this->setVal( 'submitLabel', wfMessage('save' )->plain() );
 
-		$this->boardTitle = $board->getTitle()->getText();
-		$this->boardDescription = $board->getRawDescription();
+		$form = array(
+			'inputs' => array(
+				array(
+					'type' => 'text',
+					'name' => 'boardTitle',
+					'value' => htmlspecialchars( $boardTitle ),
+					'isRequired' => true,
+					'label' => wfMessage('forum-admin-edit-board-title')->plain(),
+					'attributes' => array(
+						'maxlength' => '40'
+					),
+				),
+				array(
+					'type' => 'text',
+					'name' => 'boardDescription',
+					'value' => htmlspecialchars( $boardDescription ),
+					'isRequired' => true,
+					'label' => wfMessage('forum-admin-edit-board-description')->plain(),
+					'attributes' => array(
+						'maxlength' => '255'
+					),
+				),
+			),
+			'method' => 'post',
+			'action' => '',
+		);
+
+		$this->setVal( 'html', $this->app->renderView( 'WikiaStyleGuideForm', 'index', array( 'form' => $form ) ) );
 
 		wfProfileOut( __METHOD__ );
 	}
