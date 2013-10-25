@@ -46,7 +46,7 @@ $messages['en'] = array(
 	'lvs-posted-in-more' => 'more',
 	'lvs-confirm-keep-title' => 'Keep Video',
 	// confirm-keep-message ultimately goes to $.msg which does not support wiki text so we hardcode the markup
-	'lvs-confirm-keep-message' => 'We are continuously adding new licensed videos to <a href="http://video.wikia.com/">Wikia Video</a>. Would you like to see new matches for this video as they become available?',
+	'lvs-confirm-keep-message' => 'We are continuously adding new licensed videos to <a href="http://video.wikia.com/" target="_blank">Wikia Video</a>. Would you like to see new matches for this video as they become available?',
 	'lvs-confirm-undo-swap-title' => 'Confirm Undo',
 	'lvs-confirm-undo-swap-message' => 'Are you sure you want to restore the original video?',
 	'lvs-confirm-undo-keep-title' => 'Confirm Undo',
