@@ -14,10 +14,30 @@
 			format: 'json',
 			data: modalData,
 			callback: function( jsonResponse ) {
-				//jsonResponse.submitLabel;
 				require( [ 'wikia.ui.factory' ], function( uiFactory ) {
 					uiFactory.init( [ 'button', 'modal' ] ).then( function( uiButton, uiModal ) {
-						var modalId = 'BoardModal',
+						var cancelBtnMsg = $.msg( 'cancel' ),
+							cancelBtn = uiButton.render( {
+								type: 'link',
+								vars: {
+									id: 'cancel',
+									href: '#',
+									classes: [ 'normal', 'secondary' ],
+									value: cancelBtnMsg,
+									title: cancelBtnMsg
+								}
+							}),
+							submitBtn = uiButton.render( {
+								type: 'link',
+								vars: {
+									id: 'submit',
+									href: '#',
+									classes: [ 'normal', 'primary' ],
+									value: jsonResponse.submitLabel,
+									title: jsonResponse.submitLabel
+								}
+							}),
+							modalId = 'BoardModal',
 							forumModal = uiModal.render( {
 							type: 'default',
 							vars: {
@@ -26,7 +46,9 @@
 								content: jsonResponse.html,
 								title: jsonResponse.title,
 								closeButton: true,
-								closeText: $.msg( 'close' )
+								closeText: $.msg( 'close' ),
+								primaryBtn: submitBtn,
+								secondBtn: cancelBtn
 							}
 						} );
 						require( [ 'wikia.ui.modal' ], function( modal ) {
