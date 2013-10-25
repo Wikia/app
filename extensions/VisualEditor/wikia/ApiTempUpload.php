@@ -56,6 +56,7 @@ class ApiTempUpload extends ApiBase {
 			// video
 			$awf = ApiWrapperFactory::getInstance();
 			$url = $this->mParams['url'];
+			// ApiWrapperFactory->getApiWrapper(...) require whole URL to be passed in (including protocol)
 			if ( !preg_match( '/^https?:\/\//', $url ) ) {
 				$url = 'http://' . $url;
 			}

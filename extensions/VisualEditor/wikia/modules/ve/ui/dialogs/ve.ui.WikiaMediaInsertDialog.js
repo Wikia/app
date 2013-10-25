@@ -66,10 +66,10 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	this.$mainPage = this.$$( '<div>' );
 
 	// Events
-	this.cartModel.connect( this, { 'add': 'onCartAdd' } );
-	this.cart.connect( this, { 'select': 'onCartSelect' } );
+	this.cartModel.on( 'add', ve.bind( this.onCartAdd, this ) );
+	this.cart.on( 'select', ve.bind( this.onCartSelect, this ) );
 	this.insertButton.connect( this, { 'click': [ 'close', 'insert' ] } );
-	this.pages.connect( this, { 'set': 'onPageSet' } );
+	this.pages.on( 'set', ve.bind( this.onPageSet, this ) );
 	this.query.connect( this, {
 		'requestSearchDone': 'onQueryRequestSearchDone',
 		'requestVideoDone': 'onQueryRequestVideoDone'
