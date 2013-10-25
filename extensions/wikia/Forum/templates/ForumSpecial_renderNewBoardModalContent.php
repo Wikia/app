@@ -1,4 +1,4 @@
-<section id="EditBoardModal" class="EditBoardModal">
+<div id="EditBoardModal" class="EditBoardModal">
 <?
 	$form = array(
 		'inputs' => array(

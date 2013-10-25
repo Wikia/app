@@ -42,7 +42,7 @@
 							type: 'default',
 							vars: {
 								id: modalId,
-								size: 'medium',
+								size: 'small',
 								content: jsonResponse.html,
 								title: jsonResponse.title,
 								closeButton: true,
