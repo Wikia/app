@@ -56,6 +56,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	this.pages = new ve.ui.PagedLayout( { '$$': this.frame.$$, 'attachPagesPanel': true } );
 	this.query = new ve.ui.WikiaMediaQueryWidget( { '$$': this.frame.$$ } );
 	this.queryInput = this.query.getInput();
+	this.queryUpload = this.query.getUpload();
 	this.search = new ve.ui.WikiaMediaResultsWidget( { '$$': this.frame.$$ } );
 	this.searchResults = this.search.getResults();
 	this.upload = new ve.ui.WikiaUploadWidget( { '$$': this.frame.$$, 'hideIcon': true } );
@@ -65,10 +66,14 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	this.$mainPage = this.$$( '<div>' );
 
 	// Events
+	this.cartModel.connect( this, { 'add': 'onCartAdd' } );
 	this.cart.connect( this, { 'select': 'onCartSelect' } );
 	this.insertButton.connect( this, { 'click': [ 'close', 'insert' ] } );
 	this.pages.connect( this, { 'set': 'onPageSet' } );
-	this.query.connect( this, { 'requestMediaDone': 'onQueryRequestMediaDone' } );
+	this.query.connect( this, {
+		'requestSearchDone': 'onQueryRequestSearchDone',
+		'requestVideoDone': 'onQueryRequestVideoDone'
+	} );
 	this.queryInput.connect( this, {
 		'change': 'onQueryInputChange',
 		'enter': 'onQueryInputEnter'
@@ -79,6 +84,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 		'select': 'onSearchSelect'
 	} );
 	this.upload.on( 'upload', ve.bind( this.onUploadSuccess, this ) );
+	this.queryUpload.on( 'upload', ve.bind( this.onUploadSuccess, this ) );
 
 	// Initialization
 	this.upload.$.appendTo( this.$mainPage );
@@ -147,10 +153,17 @@ ve.ui.WikiaMediaInsertDialog.prototype.onQueryInputKeydown = function ( e ) {
  * @method
  * @param {Object} items An object containing items to add to the search results
  */
-ve.ui.WikiaMediaInsertDialog.prototype.onQueryRequestMediaDone = function ( items ) {
+ve.ui.WikiaMediaInsertDialog.prototype.onQueryRequestSearchDone = function ( items ) {
 	// TODO: handle filtering search results to show what's in the cart already
 	this.search.addItems( items );
 	this.pages.setPage( 'search' );
+};
+
+ve.ui.WikiaMediaInsertDialog.prototype.onQueryRequestVideoDone = function ( data ) {
+	this.queryInput.setValue( '' );
+	this.cartModel.addItems( [
+		new ve.dm.WikiaCartItem( data.title, data.temporaryThumbUrl, 'video', data.temporaryFileName )
+	] );
 };
 
 /**
@@ -188,14 +201,6 @@ ve.ui.WikiaMediaInsertDialog.prototype.onSearchSelect = function ( item ) {
 	// Add item to cart
 	cartItemModel = new ve.dm.WikiaCartItem( item.title, item.url, item.type );
 	this.cartModel.addItems( [ cartItemModel ] );
-
-	// Add item media page
-	page = new ve.ui.WikiaMediaPageWidget( cartItemModel, {
-		'$$': this.frame.$$,
-		'editable': false
-	} );
-	page.connect( this, { 'remove': 'onMediaPageRemove' } );
-	this.pages.addPage( item.title, { '$content': page.$ } );
 };
 
 /**
@@ -208,6 +213,26 @@ ve.ui.WikiaMediaInsertDialog.prototype.onSearchSelect = function ( item ) {
 ve.ui.WikiaMediaInsertDialog.prototype.onCartSelect = function ( item ) {
 	if ( item !== null ) {
 		this.setPage( item.getModel().title );
+	}
+};
+
+/**
+ * @method
+ * @param {ve.dm.WikiaCartItem|null} items
+ */
+ve.ui.WikiaMediaInsertDialog.prototype.onCartAdd = function ( items ) {
+	var i, page
+	for ( i = 0; i < items.length; i++ ) {
+		// Add item media page
+		page = new ve.ui.WikiaMediaPageWidget( items[i], {
+			'$$': this.frame.$$,
+			'editable': false
+		} );
+		page.connect( this, { 'remove': 'onMediaPageRemove' } );
+		this.pages.addPage( items[i].title, { '$content': page.$ } );
+	}
+	if ( items.length > 0 ) {
+		this.setPage( items[0].title );
 	}
 };
 
@@ -234,7 +259,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.setPage = function ( name ) {
  * @method
  */
 ve.ui.WikiaMediaInsertDialog.prototype.getDefaultPage = function () {
-	return this.queryInput.getValue().trim().length === 0 ? 'suggestions' : 'search';
+	return this.queryInput.getValue().trim().length === 0 ? 'main' : 'search';
 };
 
 /**
