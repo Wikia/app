@@ -73,8 +73,6 @@ switch($wgWikiaDatacenter) {
 			1 => "10.14.30.143:11000", # dev-memcached-p2
 		);
 
-		$wgEnableSwiftFileBackend = true; // enable globally for all devboxes once SJC is set up
-
 		require_once( "$IP/extensions/wikia/Development/ExternalStoreDBFetchBlobHook.php" );
 		break;
 }
@@ -103,6 +101,7 @@ $wgFSSwiftDC = [
 
 $wgFSSwiftServer = $wgFSSwiftDC[ $wgWikiaDatacenter ][ 'server' ];
 $wgFSSwiftConfig = $wgFSSwiftDC[ $wgWikiaDatacenter ][ 'config' ];
+$wgEnableSwiftFileBackend = true; // enable globally on all devboxes
 
 $wgDevboxDefaultWikiDomain = 'www.wikia.com';
 #$wgDevboxSkipWikiFactoryVariables = true; // uncomment to skip loading of wiki-specific setup from WikiFactory
