@@ -5,7 +5,6 @@
 			<li>
 				<h2><?= wfMsg('themedesigner-color') ?></h2>
 				<img src="<?= $wg->BlankImgUrl ?>" class="color-body" id="swatch-color-background">
-				<!-- TODO: Remove IF statement after fluid layout global release -->
 				<? if ($wg->OasisResponsive) : ?>
 					<div class="wrap-middle-color">
 						<input type="checkbox" id="color-body-middle" />
@@ -19,7 +18,6 @@
 				<img src="<?= $wg->BlankImgUrl ?>" class="background-image" id="swatch-image-background">
 				<input type="checkbox" id="tile-background"> <label for="tile-background"><?= wfMessage('themedesigner-tile-background')->plain() ?></label>
 				<input type="checkbox" id="fix-background"> <label for="fix-background"><?= wfMessage('themedesigner-fix-background')->plain() ?></label>
-                <!-- TODO: Remove IF statement after fluid layout global release -->
 				<? if ($wg->OasisResponsive) : ?>
 					<input type="checkbox" id="dynamic-background"> <label for="dynamic-background"><?= wfMessage('themedesigner-dynamic-background')->plain() ?></label>
 					<span class="form-questionmark" rel="tooltip" title="<?= wfMessage('themedesigner-rules-dynamic-background')->plain() ?>"></span>
