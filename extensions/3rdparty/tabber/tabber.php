@@ -62,7 +62,7 @@ function buildTab($tab, $parser){
 
 	$arr = explode("=",$tab);
 	$tabName = array_shift( $arr );
-	// Wikia Change Start @aquthor aquilax
+	// Wikia Change Start @author aquilax
 	$tabName = trim( $tabName );
 	// Wikia Change End
 	$tabBody = $parser->recursiveTagParse( implode("=",$arr) );
