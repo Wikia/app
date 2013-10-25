@@ -146,18 +146,18 @@ SQL;
 				$db = wfGetDB( DB_SLAVE );
 			}
 
-		// We want to make sure the video hasn't been removed, is not premium and does not exist
-		// in the video_swap table
-		$pageNS = NS_FILE;
-		$canSwapProps = $this->canSwapPropLogic();
+			// We want to make sure the video hasn't been removed, is not premium and does not exist
+			// in the video_swap table
+			$pageNS = NS_FILE;
+			$canSwapProps = $this->canSwapPropLogic();
 
-		$sql = <<<SQL
-			SELECT count(*) as total
-			FROM video_info
-			JOIN page ON video_title = page_title AND page_namespace = $pageNS
-			LEFT JOIN page_wikia_props ON page.page_id = page_wikia_props.page_id
-				AND $canSwapProps
-			WHERE removed = 0 AND premium = 0 AND page_wikia_props.page_id is not null
+			$sql = <<<SQL
+				SELECT count(*) as total
+				FROM video_info
+				JOIN page ON video_title = page_title AND page_namespace = $pageNS
+				LEFT JOIN page_wikia_props ON page.page_id = page_wikia_props.page_id
+					AND $canSwapProps
+				WHERE removed = 0 AND premium = 0 AND page_wikia_props.page_id is not null
 SQL;
 
 			// Select video info making sure to skip videos that have entries in the video_swap table
