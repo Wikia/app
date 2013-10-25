@@ -53,6 +53,13 @@
 						} );
 						require( [ 'wikia.ui.modal' ], function( modal ) {
 							forumModal = modal.init( modalId, forumModal );
+							forumModal.$element.find( '#cancel' ).click( function() {
+								forumModal.close();
+								forumModal.$element.remove(); //@todo - fix it
+							} );
+							forumModal.$element.find( '#submit' ).click( function() {
+								// @todo: implement
+							} );
 							forumModal.show();
 						} );
 					} );
