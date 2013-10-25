@@ -1,8 +1,8 @@
 <?php
 /**
- * Class definition for Wikia\Search\QueryService\Select\Dismax\InterWiki
+ * Class definition for \Wikia\Search\QueryService\Select\Dismax\InterWiki
  */
-namespace Wikia\Search\QueryService\Select\Dismax;
+namespace \Wikia\Search\QueryService\Select\Dismax;
 use \Solarium_Query_Select, \Wikia\Search\Utilities;
 /**
  * This class is responsible for performing interwiki search queries.
@@ -66,7 +66,7 @@ class InterWiki extends AbstractDismax
 	/**
 	 * Reuses AbstractSelect's extractWikiMatch as the primary match method
 	 * @see \Wikia\Search\QueryService\Select\AbstractSelect::extractMatch()
-	 * @return Wikia\Search\Match\Wiki
+	 * @return \Wikia\Search\Match\Wiki
 	 */
 	public function extractMatch() {
 		return $this->extractWikiMatch();
@@ -85,7 +85,7 @@ class InterWiki extends AbstractDismax
 	/**
 	 * Registers a filter query for documents matching the wiki ID of a match, if available.
 	 * @see \Wikia\Search\QueryService\Select\AbstractSelect::registerFilterQueryForMatch()
-	 * @return Wikia\Search\QueryService\Select\InterWiki
+	 * @return \Wikia\Search\QueryService\Select\InterWiki
 	 */
 	protected function registerFilterQueryForMatch() {
 		$config = $this->getConfig();
@@ -99,7 +99,7 @@ class InterWiki extends AbstractDismax
 	
 	/**
 	 * Handles initial configuration when invoking search.
-	 * @return Wikia\Search\QueryService\Select\InterWiki
+	 * @return \Wikia\Search\QueryService\Select\InterWiki
 	 */
 	protected function prepareRequest() {
 		$config = $this->getConfig();
@@ -120,8 +120,15 @@ class InterWiki extends AbstractDismax
 			$filterQueries[] = "-( commercial_use_allowed_b:false )";
 		}
 		$hub = $this->getConfig()->getHub();
+		$hubs = $this->getConfig()->getHubs();
 		if (! empty( $hub ) ) {
 			$filterQueries[] = Utilities::valueForField( 'hub_s', $hub );
+		} else if( !empty( $hubs ) ) {
+			$hubsQuery = '';
+			foreach ( $hubs as $hub ) {
+				$hubsQuery .= ( !empty( $hubsQuery ) ? ' OR ' : '' ) . Utilities::valueForField( 'hub_s', $hub );
+			}
+			$filterQueries[] = "({$hubsQuery})";
 		}
 		return implode( ' AND ', $filterQueries );
 	}

@@ -78,6 +78,53 @@ class SearchApiController extends WikiaApiController {
 		$this->response->setVal( 'items', $items );
 	}
 
+	public function getCombined() {
+		if ( !$this->request->getVal( 'query' ) ) {
+			throw new InvalidParameterApiException( 'query' );
+		}
+		$request = $this->getRequest();
+		$query = $this->request->getVal( 'query' );
+		$langs = $this->request->getArray( 'langs', ['en'] );
+		$hubs = $this->request->getArray( 'hubs', null );
+
+		$wikis = [];
+		foreach ( $langs as $lang ) {
+			$searchConfig = new Wikia\Search\Config;
+			$searchConfig->setQuery( $query )
+				->setLimit( 5 )
+				->setPage( $request->getVal( 'batch', 1 ) )
+				->setRank( 'default' )
+				->setInterWiki( true )
+				->setCommercialUse( $this->hideNonCommercialContent() )
+				->setLanguageCode( $lang );
+			if ( !empty($hubs) ) {
+				$searchConfig->setHubs( $hubs );
+			}
+			$resultSet = (new Factory)->getFromConfig( $searchConfig )->search();
+			$currentResults = $resultSet->toArray( ["sitename_txt", "url", "id", "description_txt", "lang_s"] );
+			$wikis = array_merge( $wikis, $currentResults );
+			if ( sizeof( $wikis) >= 3 ) {
+				break;
+			}
+		}
+		$wikis = array_slice( $wikis, 0, 30 );
+
+		$articles = [];
+		foreach ( $wikis as $wiki ) {
+			$searchConfig = new Wikia\Search\Config;
+			$searchConfig->setQuery( $request->getVal( 'query', $query ) )
+				->setLimit( 2 )
+				->setPage( 1 )
+				->setRank( 'default' );
+
+			$resultSet = (new Factory)->getFromConfig( $searchConfig )->search();
+			$currentResults = $resultSet->toArray( ["title", "url", "id", "description_txt"] );
+			$articles = array_merge( $articles, $currentResults );
+		}
+		$this->getResponse()->setVal( "wikias", $wikis );
+		$this->getResponse()->setVal( "articles", $articles );
+	}
+
 	/**
 	 * Sets the response based on values set in config
 	 * @param Wikia\Search\Config $searchConfig
