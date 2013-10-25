@@ -427,7 +427,9 @@ abstract class AbstractSelect
 		if (! empty( $wikiMatch ) && ( $wikiMatch->getId() !== $service->getWikiId() ) &&
 			( !( $config->getCommercialUse() ) ||  (new \LicensedWikisService)->isCommercialUseAllowedById($wikiMatch->getId()) ) ) {
 			$result = $wikiMatch->getResult();
-			if ( $result['articles_i'] >= 50 ) {
+			$hub = $config->getHub();
+			if ( $result['articles_i'] >= 50 &&
+				( $hub === null || strtolower($hub) === strtolower( $result['hub_s'] ) ) ) {
 				$config->setWikiMatch( $wikiMatch );
 			}
 		}

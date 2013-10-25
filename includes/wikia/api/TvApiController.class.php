@@ -9,27 +9,29 @@ class TvApiController extends WikiaApiController {
 	}
 
 	protected function getWikiId(){
+		$config = $this->getConfigCrossWiki();
+		$resultSet = (new Factory)->getFromConfig( $config )->search();
 
-		$request = $this->getRequest();
-		$params = [
-			'controller' => 'SearchApi',
-			'method' => 'getCrossWiki',
-			'lang' => $request->getVal( 'lang', 'en' ),
-			'limit' => $request->getInt( 'limit', 1 ),
-			'query' => $request->getVal( 'seriesName', null )
-		];
-
-		$request = new WikiaRequest( $params );
-		$request->setInternal( true );
-
-		$app = $this->getApp();
-		$response = $app->getDispatcher()->dispatch( $app, $request );
-		$results = $response->getData();
-		if (! count( $results['items']) ) {
-			throw new InvalidParameterApiException( 'seriesName' );
+		foreach( $resultSet->getResults() as $result ) {
+			if ( $result['id'] ) {
+				return $result['id'];
+			}
 		}
-		return isset( $results['items'][0] ) ? $results['items'][0]['id'] : null;
+	}
 
+	protected function getConfigCrossWiki() {
+		$request = $this->getRequest();
+		$searchConfig = new Wikia\Search\Config;
+		$searchConfig->setQuery( $request->getVal( 'seriesName', null ) )
+			->setLimit( 1 )
+			->setPage( 1 )
+			->setRank( 'default' )
+			->setInterWiki( true )
+			->setCommercialUse( $this->hideNonCommercialContent() )
+			->setLanguageCode( 'en' )
+			->setHub( 'Entertainment' )
+		;
+		return $searchConfig;
 	}
 
 	/**
