@@ -210,14 +210,12 @@ var ThemeDesigner = {
 		var currentVal = ThemeDesigner.settings['page-opacity'],
 			base = ThemeDesigner.basePageOpacity,
 			max = ThemeDesigner.maxPageOpacity;
-		ThemeDesigner.$slider = $('#OpacitySlider').slider({
-			value: max - ((base - currentVal) * (max / (base - max)) ),
-			stop: function(e, ui) {
-				var val = ui.value;
-				var wikiaNormalized = max - Math.round((val/max) * (max - base));
-				ThemeDesigner.set('page-opacity', wikiaNormalized);
-			}
-		});
+			ThemeDesigner.$slider = $('#OpacitySlider').slider({
+				value: max - ((base - currentVal) * (max / (base - max)) ),
+				stop: function(e, ui) {
+					ThemeDesigner.set('page-opacity', max - Math.round((ui.value/max) * (max - base)));
+				}
+			});
 	},
 
 	wordmarkTabInit: function() {
@@ -485,11 +483,13 @@ var ThemeDesigner = {
 	disableDynamicBg: function() {
 		'use strict';
 
-		if ( $('#dynamic-background').attr('checked') ) {
-			$('#dynamic-background').attr('checked', false);
+		var el = $('#dynamic-background');
+
+		if ( el.attr('checked') ) {
+			el.attr('checked', false);
 			ThemeDesigner.set('background-dynamic', false);
 		}
-		$('#dynamic-background').attr('disabled', true);
+		el.attr('disabled', true);
 	},
 
 	/**
@@ -921,7 +921,6 @@ var ThemeDesigner = {
 		}
 	},
 
-<<<<<<< HEAD
 	initSwatches: function() {
 		'use strict';
 
@@ -975,7 +974,7 @@ var ThemeDesigner = {
 			'f1f1f1',
 			'ebebeb',
 			'000000'
-		]
+		];
 
 		// copy color-body swatches to color-body-middle
 		this.swatches['color-body-middle'] = this.swatches['color-body'];
@@ -1073,7 +1072,7 @@ var ThemeDesigner = {
 		ThemeDesigner.set( 'page-opacity', value );
 
 		if( ThemeDesigner.$slider !== null ) {
-		// Special:CreateNewWiki uses ThemeDesigner without slider (DAR-2532)
+			// Special:CreateNewWiki uses ThemeDesigner without slider (DAR-2532)
 			ThemeDesigner.$slider.slider( 'value', ThemeDesigner.minSliderValue );
 		}
 	}

@@ -171,7 +171,7 @@
 					position: absolute;
 					right: 53px;
 					width: auto;
-					@include calc-shorthand('100% - 53px');
+					@include width-calc('100% - 53px');
 				}
 
 				.wikia-button {
