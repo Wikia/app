@@ -28,7 +28,7 @@ class TvApiController extends WikiaApiController {
 			->setRank( 'default' )
 			->setInterWiki( true )
 			->setCommercialUse( $this->hideNonCommercialContent() )
-			->setLanguageCode( 'en' )
+			->setLanguageCode( $request->getVal( 'lang', 'en' ) )
 			->setHub( 'Entertainment' )
 		;
 		return $searchConfig;
