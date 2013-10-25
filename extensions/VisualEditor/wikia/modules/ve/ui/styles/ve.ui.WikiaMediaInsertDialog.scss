@@ -2,6 +2,7 @@
 @import "skins/oasis/css/mixins/box-sizing";
 @import "skins/oasis/css/mixins/clearfix";
 
+$size-cart-item: 60px;
 $width-media-item-max: 365px;
 $width-cart: 101px;
 
@@ -69,8 +70,10 @@ $width-cart: 101px;
 	}
 
 	.ve-ui-optionWidget {
+		height: $size-cart-item;
 		padding: 0;
 		margin-bottom: 10px;
+		width: $size-cart-item;
 
 		&.ve-ui-optionWidget-selected {
 			&:before {
@@ -85,6 +88,12 @@ $width-cart: 101px;
 
 			.ve-ui-wikiaCartImage {
 				opacity: 1;
+			}
+		}
+
+		&.ve-ui-texture-pending {
+			.ve-wikiaCartImage {
+				display: none;
 			}
 		}
 	}
