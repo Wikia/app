@@ -8,13 +8,13 @@
 .ve-ui-window-title {
 	color: $color-text;
 }
-.ve-ui-window-head {
-	@if $is-dark-wiki {
+
+@if $is-dark-wiki {
+	.ve-ui-window-head {
 		border-bottom: 1px solid $color-page-border;
 	}
-}
-.ve-ui-window-foot {
-	@if $is-dark-wiki {
+
+	.ve-ui-window-foot {
 		border-top: 1px solid $color-page-border;
 	}
 }
