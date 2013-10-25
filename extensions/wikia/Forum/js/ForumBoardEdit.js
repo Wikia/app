@@ -53,14 +53,44 @@
 						} );
 						require( [ 'wikia.ui.modal' ], function( modal ) {
 							forumModal = modal.init( modalId, forumModal );
+							forumModal.form = new WikiaForm( forumModal.$element.find( '.WikiaForm' ) );
+
 							forumModal.$element.find( '#cancel' ).click( function() {
 								forumModal.close();
 								forumModal.$element.remove(); //@todo - fix it
 							} );
+							window.forumModal = forumModal;
 							forumModal.$element.find( '#submit' ).click( function() {
-								// @todo: implement
+								// @todo - how to disable all buttons including modal close?
+								forumModal.$element.find( 'footer .buttons a' ).attr('disabled', true);
+								$.nirvana.sendRequest( {
+									controller: 'ForumExternalController',
+									method: submissionMethod,
+									format: 'json',
+									data: $.extend({
+										boardTitle: forumModal.$element.find( 'input[name=boardTitle]' ).val(),
+										boardDescription: forumModal.$element.find( 'input[name=boardDescription]' ).val()
+									}, typeof submissionData === 'function' ? submissionData( forumModal ) : submissionData ),
+									callback: function( json ) {
+										if( json ) {
+											if( json.status === 'ok' ) {
+												Wikia.Querystring().addCb().goTo();
+											} else if( json.status === 'error' ) {
+												forumModal.form.clearAllInputErrors();
+												if( json.errorfield ) {
+													forumModal.form.showInputError( json.errorfield, json.errormsg );
+												} else {
+													forumModal.form.showGenericError( json.errormsg );
+												}
+												// @todo - implement, enable button clicks
+												forumModal.$element.find( 'footer .buttons a' ).removeAttr( 'disabled' );
+											}
+										}
+									}
+								} );
 							} );
 							forumModal.show();
+							deferred.resolve( forumModal );
 						} );
 					} );
 				} );
