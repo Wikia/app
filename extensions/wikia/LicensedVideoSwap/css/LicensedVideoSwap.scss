@@ -182,7 +182,6 @@ $button-icon-color: white;
 	.more-videos {
 		@include clearfix;
 		clear:both;
-		padding-top: 20px;
 		width: 100%; // needed for smooth jQuery animation
 		&:before {
 			@include arrow(15px, $alt-bg-color, 'up');
