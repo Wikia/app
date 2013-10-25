@@ -97,15 +97,16 @@ class CombinedSearchService {
 		$outputModel['url'] = $articleInfo['url'];
 		$outputModel['lang'] = $articleInfo['lang'];
 
-		$fullText = $articleInfo[Utilities::field('html', $articleInfo['lang'])];
-		$outputModel['snippet'] = trim( wfShortenText( $fullText, 200, true ) );
-
+		if ( isset($articleInfo[Utilities::field('html', $articleInfo['lang'])]) ) {
+			$fullText = $articleInfo[Utilities::field('html', $articleInfo['lang'])];
+			$outputModel['snippet'] = trim( wfShortenText( $fullText, 200, true ) );
+		}
 		return $outputModel;
 	}
 
 	private function getTopArticles( $wikiId, $lang ) {
 		$requestedFields = [ "title", "url", "id", "score", "pageid", "lang", "wid", Utilities::field('html', $wikiId) ];
-		$articles = \DataMartService::getTopArticlesByPageview(
+		$topArticlesMap = \DataMartService::getTopArticlesByPageview(
 			$wikiId,
 			null,
 			null,
@@ -113,18 +114,22 @@ class CombinedSearchService {
 			5
 		);
 
+		$query = " +(" . Utilities::valueForField("wid", $wikiId) . ") ";
+		$query .= " +( " . implode( " OR ", array_map(function( $x ) { return Utilities::valueForField("pageid", $x); }, array_keys($topArticlesMap)) ) . ") ";
+
 		$searchConfig = new Config;
 		$searchConfig
-			->setLimit( 2 )
-			->setQuery( '' )
+			->setLimit( 5 )
+			->setQuery( $query )
 			->setPage( 1 )
 			->setRequestedFields( $requestedFields )
-			->setWikiId( $wikiId )
-			->setRank( 'default' );
+			->setDirectLuceneQuery(true)
+			->setWikiId( $wikiId );
 
 		$resultSet = (new Factory)->getFromConfig( $searchConfig )->search();
 
 		$currentResults = $resultSet->toArray( $requestedFields );
+		$articles = [];
 		foreach ( $currentResults as $article ) {
 			$articles[] = $this->processArticle($article);
 		}
