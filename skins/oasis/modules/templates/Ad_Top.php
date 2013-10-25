@@ -30,3 +30,17 @@ if ($wg->EnableTopButtonWide) {
 <?= $app->renderView('Ad', 'Index', array('slotname' => 'INVISIBLE_SKIN')); ?>
 
 </div>
+
+<? if ($wg->Title && $wg->Title->getPageLanguage()->getCode() === 'de'): ?>
+	<? // SevenOne Media requested HTML {{{ ?>
+	<div id="ads-outer" class="noprint">
+		<?= $app->renderView('Ad', 'Index', array('slotname' => 'ad-popup1')); ?>
+		<div id="ad-fullbanner2-outer">
+			<?= $app->renderView('Ad', 'Index', array('slotname' => 'ad-fullbanner2')); ?>
+		</div>
+		<div id="ad-skyscraper1-outer">
+			<?= $app->renderView('Ad', 'Index', array('slotname' => 'ad-skyscraper1')); ?>
+		</div>
+	</div>
+	<? // }}} SevenOne Media requested HTML ?>
+<? endif; ?>
