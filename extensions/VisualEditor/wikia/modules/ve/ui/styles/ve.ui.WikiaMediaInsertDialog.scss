@@ -61,11 +61,26 @@ $width-cart: 100px;
 		.ve-ui-wikiaMediaPageWidget-item {
 			height: 325px;
 			margin-right: $width-gutter;
+			text-align: center;
 			width: 365px;
+		}
+
+		.ve-ui-wikiaMediaPageWidget-item-extension {
+			margin-left: $width-gutter / 4;
+			vertical-align: middle;
 		}
 
 		.ve-ui-textInputWidget {
 			margin-bottom: $width-gutter;
+			width: 100%;
+		}
+
+		&.photo .ve-ui-textInputWidget input {
+			width: 85%;
+		}
+
+		&.video .ve-ui-wikiaMediaPageWidget-item-extension {
+			display: none;
 		}
 	}
 

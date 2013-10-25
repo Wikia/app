@@ -15,6 +15,8 @@
  * will have inputs and textareas instead of text blocks.
  */
 ve.ui.WikiaMediaPageWidget = function VeUiWikiaMediaPageWidget( model, config ) {
+	var titleParts = model.title.match( /^(?:[^:]*\:)?(.*?)(\.[^.]+)?$/ );
+
 	// Configuration initialization
 	config = config || {};
 
@@ -34,7 +36,7 @@ ve.ui.WikiaMediaPageWidget = function VeUiWikiaMediaPageWidget( model, config ) 
 	this.title = new ve.ui.TextInputWidget( {
 		'$$': this.$$,
 		'readOnly': !this.editable,
-		'value': model.title
+		'value': titleParts[1]
 	} );
 	this.titleLabel = new ve.ui.InputLabelWidget( {
 		'$$': this.$$,
@@ -42,6 +44,7 @@ ve.ui.WikiaMediaPageWidget = function VeUiWikiaMediaPageWidget( model, config ) 
 		'label': 'Title' // TODO: i18n
 	} );
 
+	this.$extension = this.$$( '<span>' );
 	this.$item = null;
 	this.$itemWrapper = this.$$( '<div>' );
 
@@ -49,8 +52,12 @@ ve.ui.WikiaMediaPageWidget = function VeUiWikiaMediaPageWidget( model, config ) 
 	this.removeButton.connect( this, { 'click': 'onRemoveButtonClick' } );
 
 	// Initialization
+	this.$extension
+		.addClass( 've-ui-wikiaMediaPageWidget-item-extension' )
+		.text( titleParts[2] );
 	this.$itemWrapper
 		.addClass( 've-ui-wikiaMediaPageWidget-item' );
+	this.title.$.append( this.$extension );
 	this.fieldset.$.append( this.titleLabel.$, this.title.$, this.removeButton.$ );
 	this.$
 		.addClass( 've-ui-wikiaMediaPageWidget ' + this.model.type )
