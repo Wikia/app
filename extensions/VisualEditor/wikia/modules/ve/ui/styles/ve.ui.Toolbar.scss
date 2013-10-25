@@ -1,4 +1,12 @@
+@import "skins/oasis/css/core/color";
+
 // Toolbar
 .ve-ui-toolbar-bar {
 	@include linear-gradient($color-ve-gradient, top, $color-ve-gradient-light, 50%, $color-ve-gradient-dark, 100%);
+	border-bottom-color: $color-page-border;
+}
+
+.ve-ui-toolbar-shadow {
+	@include linear-gradient(transparent, top, rgba(0,0,0,.5), 0%, transparent, 100%);
+	bottom: -10px;
 }
