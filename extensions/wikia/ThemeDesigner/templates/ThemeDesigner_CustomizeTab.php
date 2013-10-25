@@ -9,6 +9,7 @@
 					<div class="wrap-middle-color">
 						<input type="checkbox" id="color-body-middle" />
 						<label for="color-body-middle"><?= wfMessage('themedesigner-color-middle')->plain() ?></label>
+						<span class="form-questionmark" rel="tooltip" title="<?= wfMessage('themedesigner-rules-color-middle')->plain() ?>"></span>
 						<img src="<?= $wg->BlankImgUrl ?>" class="color-body-middle" id="swatch-color-background-middle">
 					</div>
 				<? endif ?>
