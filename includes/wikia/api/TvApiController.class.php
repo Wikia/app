@@ -2,7 +2,7 @@
 use Wikia\Search\Config, Wikia\Search\QueryService\Factory, Wikia\Search\QueryService\DependencyContainer;
 class TvApiController extends WikiaApiController {
 
-	const PARAMETER_NAMESPACES = 'namespaces';
+	//const PARAMETER_NAMESPACES = 'namespaces';
 
 	public function getArticle() {
 		$this->setResponseFromConfig( $this->getConfigFromRequest() );
@@ -49,7 +49,8 @@ class TvApiController extends WikiaApiController {
 			->setOnWiki(true)
 			->setNamespaces([0,14]);
 		;
-		return $this->validateNamespacesForConfig( $searchConfig );
+		//return $this->validateNamespacesForConfig( $searchConfig );
+		return $searchConfig;
 	}
 
 
@@ -59,7 +60,7 @@ class TvApiController extends WikiaApiController {
 	 * @throws InvalidParameterApiException
 	 * @return Wikia\Search\Config
 	 */
-	protected function validateNamespacesForConfig( $searchConfig ) {
+	/*protected function validateNamespacesForConfig( $searchConfig ) {
 		$namespaces = $this->getRequest()->getArray( 'namespaces', [] );
 		if (! empty( $namespaces ) ) {
 			foreach ( $namespaces as &$n ) {
@@ -71,7 +72,7 @@ class TvApiController extends WikiaApiController {
 			$searchConfig->setNamespaces( $namespaces );
 		}
 		return $searchConfig;
-	}
+	}*/
 
 	protected function setResponseFromConfig( Wikia\Search\Config $searchConfig ) {
 		if (! $searchConfig->getQuery()->hasTerms() ) {
