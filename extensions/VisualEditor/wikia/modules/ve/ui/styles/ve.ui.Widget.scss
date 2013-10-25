@@ -18,3 +18,35 @@
 		color: $color-text;
 	}
 }
+
+.ve-ui-outlineControlsWidget {
+	background: $color-page;
+}
+
+.ve-ui-popupWidget-callout {
+	background: none;
+	height: 0;
+	width: 0;
+
+	&:before, &:after {
+		border-style: solid;
+		content: '';
+		height: 0;
+		position: absolute;
+		width: 0;
+	}
+
+	&:before {
+		border-width: 7px;
+		border-color: transparent transparent $color-page-border;
+		margin-left: 1px;
+		margin-top: -6px;
+	}
+
+	&:after {
+		border-width: 6px;
+		border-color: transparent transparent $color-ve-gradient-light;
+		margin-left: 2px;
+		margin-top: -4px;
+	}
+}

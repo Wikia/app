@@ -21,4 +21,8 @@
 
 .ve-ui-pagedOutlineLayout-outlinePanel {
 	border-color: $color-page-border;
+
+	.ve-ui-outlineControlsWidget {
+		border-top: 1px solid $color-page-border;
+	}
 }

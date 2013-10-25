@@ -88,6 +88,18 @@
 .ve-init-mw-viewPageTarget-saveDialog-closeButton {
 	@include ve-icon(collapse, ve);
 }
+.ve-ui-icon-add-item {
+	@include ve-icon(add-item, ve);
+}
+.ve-ui-icon-template {
+	@include ve-icon(template, mw);
+}
+.ve-ui-icon-source {
+	@include ve-icon(source, mw);
+}
+.ve-ui-icon-expand {
+	@include ve-icon(expand, ve);
+}
 
 // Down arrow for menus
 .ve-ui-icon-down {
