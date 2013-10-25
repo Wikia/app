@@ -31,6 +31,7 @@ var ThemeDesigner = {
                     .find('.cancel').click(that.cancelClick);
 
 		// init tabs
+		this.initSwatches();
 		this.themeTabInit();
 		this.customizeTabInit();
 		this.wordmarkTabInit();
@@ -916,8 +917,11 @@ var ThemeDesigner = {
 		}
 	},
 
-	swatches: {
-		'color-body': [
+	initSwatches: function() {
+		'use strict';
+
+		// init color-body swatches
+		this.swatches['color-body'] = [
 			'f9ebc3',
 			'ede5dd',
 			'f7e1d3',
@@ -966,58 +970,13 @@ var ThemeDesigner = {
 			'f1f1f1',
 			'ebebeb',
 			'000000'
-		],
-		'color-body-middle':[
-			'f9ebc3',
-			'ede5dd',
-			'f7e1d3',
-			'dfdbc3',
-			'fbe300',
-			'ffbf99',
-			'ffbf99',
-			'fdc355',
-			'cdbd89',
-			'd5a593',
-			'a37719',
-			'836d35',
-			'776b41',
-			'f14700',
-			'dd3509',
-			'a34111',
-			'7b3b09',
-			'4f4341',
-			'454545',
-			'611d03',
-			'891100',
-			'71130f',
-			'ebfffb',
-			'ebf1f5',
-			'f5ebf5',
-			'e7f3d1',
-			'bde9fd',
-			'dfbddd',
-			'c3d167',
-			'a5b5c5',
-			'6599ff',
-			'6b93b1',
-			'978f33',
-			'53835d',
-			'7f6f9f',
-			'd335f7',
-			'337700',
-			'006baf',
-			'2b53b5',
-			'2d2b17',
-			'003715',
-			'012d59',
-			'6f017b',
-			'790145',
-			'ffffff',
-			'f1f1f1',
-			'ebebeb',
-			'000000'
-		],
-		'color-buttons': [
+		]
+
+		// copy color-body swatches to color-body-middle
+		this.swatches['color-body-middle'] = this.swatches['color-body'];
+
+		// initialize color-button swatches
+		this.swatches['color-button'] = [
 			'fec356',
 			'6699ff',
 			'6c93b1',
@@ -1041,8 +1000,10 @@ var ThemeDesigner = {
 			'721410',
 			'6f027c',
 			'7a0146'
-		],
-		'color-links': [
+		];
+
+		// initialize color-links swatches
+		this.swatches['color-links'] = [
 			'fce300',
 			'fec356',
 			'c4d167',
@@ -1055,8 +1016,10 @@ var ThemeDesigner = {
 			'0148c2',
 			'6f027c',
 			'ffffff'
-		],
-		'color-page': [
+		];
+
+		// initialize color-page swatches
+		this.swatches['color-page'] = [
 			'ebf2f5',
 			'e7f4d2',
 			'f5ebf5',
@@ -1076,8 +1039,10 @@ var ThemeDesigner = {
 			'f2f2f2',
 			'ebebeb',
 			'000000'
-		],
-		'color-header': [
+		];
+
+		// initialize color-header swatches
+		this.swatches['color-header'] = [
 			'D09632',
 			'DD4702',
 			'2B53B5',
@@ -1090,7 +1055,7 @@ var ThemeDesigner = {
 			'002266',
 			'580062',
 			'808080'
-		]
+		];
 	}
 
 };
