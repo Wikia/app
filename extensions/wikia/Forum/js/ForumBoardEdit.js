@@ -6,13 +6,37 @@
 		currentDialog = false;
 		
 	function makeBoardModal(modalMethod, modalData, submissionMethod, submissionData) {
+		// ==========================================================================
 		var deferred = $.Deferred();
 		$.nirvana.sendRequest({
 			controller: 'ForumSpecialController',
 			method: modalMethod,
-			format: 'html',
+			format: 'json',
 			data: modalData,
-			callback: function(html) {
+			callback: function( jsonResponse ) {
+				//jsonResponse.submitLabel;
+				require( [ 'wikia.ui.factory' ], function( uiFactory ) {
+					uiFactory.init( [ 'button', 'modal' ] ).then( function( uiButton, uiModal ) {
+						var modalId = 'BoardModal',
+							forumModal = uiModal.render( {
+							type: 'default',
+							vars: {
+								id: modalId,
+								size: 'medium',
+								content: jsonResponse.html,
+								title: jsonResponse.title,
+								closeButton: true,
+								closeText: $.msg( 'close' )
+							}
+						} );
+						require( [ 'wikia.ui.modal' ], function( modal ) {
+							forumModal = modal.init( modalId, forumModal );
+							forumModal.show();
+						} );
+					} );
+				} );
+				return;
+
 				var dialog = $(html).makeModal({
 					width: 600
 				});
@@ -58,7 +82,7 @@
 		});
 		
 		return deferred.promise();
-	};
+	}
 	
 	/* Board edit event handlers */
 	function handleCreateNewBoardButtonClick(e) {
@@ -124,6 +148,8 @@
 		$.when(makeBoardModal('removeBoardModal', {boardId: boardId}, 'removeBoard', function() {
 			return {
 				boardId: boardId,
+				// this global currentDialog is just plain wrong
+				// but we can use a callback parameter here... :)
 				destinationBoardId: currentDialog.find('.destinationBoardId option:selected').val()
 			};
 		})).done(function(dialog) {
