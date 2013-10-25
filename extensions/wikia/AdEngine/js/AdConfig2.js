@@ -12,7 +12,8 @@ var AdConfig2 = function (
 	adProviderEvolve,
 	adProviderGamePro,
 	adProviderLater,
-	adProviderNull
+	adProviderNull,
+	adProviderSevenOneMedia
 ) {
 	'use strict';
 
@@ -20,7 +21,8 @@ var AdConfig2 = function (
 		city_lang = window.wgContentLanguage,
 		country = Geo.getCountryCode(),
 		defaultHighValueSlots,
-		highValueSlots;
+		highValueSlots,
+		useSevenOneMedia = window.wgAdDriverUseSevenOneMedia && abTest.inGroup('SEVENONEMEDIA_ADS', 'ENABLED');
 
 	defaultHighValueSlots = {
 		'CORP_TOP_LEADERBOARD':true,
@@ -81,6 +83,10 @@ var AdConfig2 = function (
 			return adProviderNull;
 		}
 
+		if (useSevenOneMedia && adProviderSevenOneMedia.canHandleSlot(slot)) {
+			return adProviderSevenOneMedia;
+		}
+
 		// TODO refactor highValueSlots check to the top of the whole config
 		if (highValueSlots[slotname]) {
 			// First ask GamePro (german lang wiki)
@@ -108,6 +114,11 @@ var AdConfig2 = function (
 
 	function getProvider(slot) {
 		var provider = getBackEndProvider(slot);
+
+		// No page length checking logic for Null/SevenOneMedia providers
+		if (provider === adProviderNull || provider === adProviderSevenOneMedia) {
+			return provider;
+		}
 
 		// Check if we should apply page length checking for that slot
 		if (adLogicPageDimensions.isApplicable(slot)) {
