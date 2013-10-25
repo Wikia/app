@@ -6,7 +6,6 @@
 		currentDialog = false;
 		
 	function makeBoardModal(modalMethod, modalData, submissionMethod, submissionData) {
-		// ==========================================================================
 		var deferred = $.Deferred();
 		$.nirvana.sendRequest({
 			controller: 'ForumSpecialController',
@@ -57,9 +56,8 @@
 
 							forumModal.$element.find( '#cancel' ).click( function() {
 								forumModal.close();
-								forumModal.$element.remove(); //@todo - fix it
 							} );
-							window.forumModal = forumModal;
+
 							forumModal.$element.find( '#submit' ).click( function() {
 								// @todo - how to disable all buttons including modal close?
 								forumModal.$element.find( 'footer .buttons a' ).attr('disabled', true);
@@ -89,54 +87,13 @@
 									}
 								} );
 							} );
+
 							forumModal.show();
+
 							deferred.resolve( forumModal );
 						} );
 					} );
 				} );
-				return;
-
-				var dialog = $(html).makeModal({
-					width: 600
-				});
-				
-				currentDialog = dialog;
-				
-				dialog.form = new WikiaForm(dialog.find('.WikiaForm'));
-				dialog.buttons = dialog.find('button');
-				
-				dialog.on('click.EditBoard', '.cancel', function(e) {
-					dialog.closeModal();
-				}).on('click.CreateNewBoard', '.submit', function(e) {
-					dialog.buttons.attr('disabled', true);
-					$.nirvana.sendRequest({
-						controller: 'ForumExternalController',
-						method: submissionMethod,
-						format: 'json',
-						data: $.extend({
-							boardTitle: dialog.find('input[name=boardTitle]').val(),
-							boardDescription: dialog.find('input[name=boardDescription]').val()
-						}, typeof submissionData === 'function' ? submissionData() : submissionData ),
-						callback: function (json) {
-							$().log(json);
-							if(json) {
-								if(json.status === 'ok') {
-									Wikia.Querystring().addCb().goTo();
-								} else if(json.status === 'error') {
-									dialog.form.clearAllInputErrors();
-									if(json.errorfield) {
-										dialog.form.showInputError(json.errorfield, json.errormsg);
-									} else {
-										dialog.form.showGenericError(json.errormsg);
-									}
-									dialog.buttons.removeAttr('disabled');
-								}
-							}
-						}
-					});
-				});
-				
-				deferred.resolve(dialog);
 			}
 		});
 		
