@@ -924,6 +924,8 @@ var ThemeDesigner = {
 	initSwatches: function() {
 		'use strict';
 
+		this.swatches = {};
+
 		// init color-body swatches
 		this.swatches['color-body'] = [
 			'f9ebc3',
