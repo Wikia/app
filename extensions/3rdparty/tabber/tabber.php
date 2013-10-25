@@ -62,6 +62,9 @@ function buildTab($tab, $parser){
 
 	$arr = explode("=",$tab);
 	$tabName = array_shift( $arr );
+	// Wikia Change Start @aquthor aquilax
+	$tabName = trim( $tabName );
+	// Wikia Change End
 	$tabBody = $parser->recursiveTagParse( implode("=",$arr) );
 
 	$tab = '<div class="tabbertab" title="'.htmlspecialchars($tabName).'">'
