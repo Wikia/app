@@ -2,14 +2,13 @@ var ThemeDesigner = {
 	slideByDefaultWidth: 760,
 	slideByItems: 5,
 	isSliding: false,
-	minWidthforDynamicBg: 1050,
 	// basePageOpacity used in calculating page-opacity setting
 	basePageOpacity: 70,
 	maxPageOpacity: 100,
 	minSliderValue: 0,
 	$slider: null,
 
-	init: function() {
+	init: function(fluidlayout) {
 		'use strict';
 
 		var that = this;
@@ -23,6 +22,10 @@ var ThemeDesigner = {
 
 		// themes
 		this.themes = window.themes;
+
+		// min width for dynamic is equal to our breakpoint
+		this.minWidthForDynamicBackground = fluidlayout.getBreakpointContent();
+
 
 		//$().log(ThemeDesigner, 'ThemeDesigner');
 
@@ -86,7 +89,6 @@ var ThemeDesigner = {
 			$('.tooltip').mouseenter(function() {
 				clearTimeout(tooltipTimeout);
 			}).mouseleave(function() {
-				$().log('mouse leaving');
 				setTooltipTimeout($this);
 			});
 		});
@@ -472,7 +474,7 @@ var ThemeDesigner = {
 
 		// TODO: Remove IF statement after fluid layout global release
 		if ( window.wgOasisResponsive ) {
-			if ( width < ThemeDesigner.minWidthforDynamicBg ) {
+			if ( width < ThemeDesigner.minWidthForDynamicBackground ) {
 				ThemeDesigner.disableDynamicBg();
 			} else {
 				$('#dynamic-background').attr('disabled', false);
@@ -1084,5 +1086,7 @@ var ThemeDesigner = {
 $(function() {
 	'use strict';
 
-	ThemeDesigner.init();
+	require(['wikia.fluidlayout'], function(fluidlayout) {
+		ThemeDesigner.init(fluidlayout);
+	});
 });
