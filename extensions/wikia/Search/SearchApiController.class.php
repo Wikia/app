@@ -3,6 +3,8 @@
  * Class definition for SearchApiController
  */
 use Wikia\Search\Config, Wikia\Search\QueryService\Factory, Wikia\Search\QueryService\DependencyContainer;
+use Wikia\Search\Services\CombinedSearchService;
+
 /**
  * Controller to execute searches in the content of a wiki.
  * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
@@ -87,45 +89,10 @@ class SearchApiController extends WikiaApiController {
 		$langs = $this->request->getArray( 'langs', ['en'] );
 		$hubs = $this->request->getArray( 'hubs', null );
 
-		$wikis = [];
-		foreach ( $langs as $lang ) {
-			$searchConfig = new Wikia\Search\Config;
-			$searchConfig->setQuery( $query )
-				->setLimit( 5 )
-				->setPage( $request->getVal( 'batch', 1 ) )
-				->setRank( 'default' )
-				->setInterWiki( true )
-				->setCommercialUse( $this->hideNonCommercialContent() )
-				->setLanguageCode( $lang )
-				->setVideoSearch             ( $this->getVal( 'videoSearch', false ) )
-				->setFilterQueriesFromCodes  ( $this->getVal( 'filters', array() ) );
-			if ( !empty($hubs) ) {
-				$searchConfig->setHubs( $hubs );
-			}
-			$resultSet = (new Factory)->getFromConfig( $searchConfig )->search();
-			$currentResults = $resultSet->toArray( ["sitename_txt", "url", "id", "description_txt", "lang_s", "score", "description_txt"] );
-			$wikis = array_merge( $wikis, $currentResults );
-			if ( sizeof( $wikis) >= 3 ) {
-				break;
-			}
-		}
-		$wikis = array_slice( $wikis, 0, 3 );
+		$searchService = new CombinedSearchService();
+		$response = $searchService->search($query, $langs, $hubs);
 
-		$articles = [];
-		foreach ( $wikis as $wiki ) {
-			$searchConfig = new Wikia\Search\Config;
-			$searchConfig->setQuery( $request->getVal( 'query', $query ) )
-				->setLimit( 2 )
-				->setPage( 1 )
-				->setWikiId( $wiki['id'] )
-				->setRank( 'default' );
-
-			$resultSet = (new Factory)->getFromConfig( $searchConfig )->search();
-			$currentResults = $resultSet->toArray( ["title", "url", "id", "description_txt", "score"] );
-			$articles = array_merge( $articles, $currentResults );
-		}
-		$this->getResponse()->setVal( "wikias", $wikis );
-		$this->getResponse()->setVal( "articles", $articles );
+		$this->getResponse()->setData($response);
 	}
 
 	/**
