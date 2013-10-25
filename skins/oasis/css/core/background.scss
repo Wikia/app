@@ -67,16 +67,18 @@ $background-is-wide: if( $background-width > $breakpoint-fluid, true, false );
 		}
 
 		.background-image-gradient {
+			background: $color-body-middle;
 			content: "";
 			height: 100%;
 			left: 50%;
+			margin-left: -webkit-calc(#{$margin-middle-base} - 50%);
+			margin-left: calc(#{$margin-middle-base} - 50%);
 			position: fixed;
 			top: 0;
-			z-index: -1;
-			background: $color-body-middle;
-
+			width: -webkit-calc(100% - #{$width-middle-subtrahend});
 			width: calc(100% - #{$width-middle-subtrahend});
-			margin-left: calc(#{$margin-middle-base} - 50%);
+			z-index: -1;
+
 
 			&:after,
 			&:before {
