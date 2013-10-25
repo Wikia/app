@@ -36,7 +36,7 @@ class LicensedVideoSwapHelper extends WikiaModel {
 	const THUMBNAIL_HEIGHT = 309;
 	const POSTED_IN_ARTICLES = 100;
 	const NUM_SUGGESTIONS = 5;
-	const USER_VISITED_DATE = 'LicensedVideoSwap_visitedDate';
+	const USER_VISITED_DATE = 'LicensedVideoSwap_visitedDate';    // last visited date (store in user properties)
 	const USER_VISITED_LIST = 'LicensedVideoSwap_visitedList';
 
 	/**
@@ -70,13 +70,13 @@ class LicensedVideoSwapHelper extends WikiaModel {
 	 * @param string $sort - The sort order for the video list (options: recent, popular, trend)
 	 * @param int $limit - The number of videos to return
 	 * @param int $page - Which page of video to return
-	 * @param bool $use_master - Whether to use the master DB to do this query
+	 * @param boolean $useMaster - Whether to use the master DB to do this query
 	 * @return array - An array of video metadata
 	 */
-	public function getUnswappedVideoList ( $sort = 'popular', $limit = 10, $page = 1, $use_master = false ) {
+	public function getUnswappedVideoList( $sort = 'popular', $limit = 10, $page = 1, $useMaster = false ) {
 		wfProfileIn( __METHOD__ );
 
-		if ( $use_master ) {
+		if ( $useMaster ) {
 			$db = wfGetDB( DB_MASTER );
 		} else {
 			$db = wfGetDB( DB_SLAVE );
@@ -131,36 +131,48 @@ SQL;
 
 	/**
 	 * Get the total number of unswapped videos
+	 * @param boolean $useMaster - Whether to use the master DB to do this query
 	 * @return int - The number of unswapped videos
 	 */
-	public function getUnswappedVideoTotal ( ) {
+	public function getUnswappedVideoTotal( $useMaster = false ) {
 		wfProfileIn( __METHOD__ );
 
-		$db = wfGetDB( DB_SLAVE );
+		$memcKey = $this->getMemcKeyTotalVideos();
+		$total = $this->wg->Memc->get( $memcKey );
+		if ( !is_numeric( $total ) ) {
+			if ( $useMaster ) {
+				$db = wfGetDB( DB_MASTER );
+			} else {
+				$db = wfGetDB( DB_SLAVE );
+			}
 
-		// We want to make sure the video hasn't been removed, is not premium and does not exist
-		// in the video_swap table
-		$pageNS = NS_FILE;
-		$canSwapProps = $this->canSwapPropLogic();
+			// We want to make sure the video hasn't been removed, is not premium and does not exist
+			// in the video_swap table
+			$pageNS = NS_FILE;
+			$canSwapProps = $this->canSwapPropLogic();
 
-		$sql = <<<SQL
-			SELECT count(*) as total
-			FROM video_info
-			JOIN page ON video_title = page_title AND page_namespace = $pageNS
-			LEFT JOIN page_wikia_props ON page.page_id = page_wikia_props.page_id
-				AND $canSwapProps
-			WHERE removed = 0 AND premium = 0 AND page_wikia_props.page_id is not null
+			$sql = <<<SQL
+				SELECT count(*) as total
+				FROM video_info
+				JOIN page ON video_title = page_title AND page_namespace = $pageNS
+				LEFT JOIN page_wikia_props ON page.page_id = page_wikia_props.page_id
+					AND $canSwapProps
+				WHERE removed = 0 AND premium = 0 AND page_wikia_props.page_id is not null
 SQL;
 
-		// Select video info making sure to skip videos that have entries in the video_swap table
-		$result = $db->query( $sql, __METHOD__ );
+			// Select video info making sure to skip videos that have entries in the video_swap table
+			$result = $db->query( $sql, __METHOD__ );
 
-		// Get the total count of relavent videos
-		while ( $row = $db->fetchObject( $result ) ) {
-			$total = $row->total;
+			// Get the total count of relavent videos
+			$total = 0;
+			while ( $row = $db->fetchObject( $result ) ) {
+				$total = $row->total;
 
-			// Should only be one result
-			break;
+				// Should only be one result
+				break;
+			}
+
+			$this->wg->Memc->set( $memcKey, $total, 60*60*24 );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -169,6 +181,22 @@ SQL;
 	}
 
 	/**
+	 * Get memcache key for total videos
+	 * @return string
+	 */
+	public function getMemcKeyTotalVideos() {
+		return wfMemcKey( 'licensedvideoswap', 'total_videos' );
+	}
+
+	/**
+	 * Clear cache for total videos
+	 */
+	public function invalidateCacheTotalVideos() {
+		$this->wg->Memc->delete( $this->getMemcKeyTotalVideos() );
+	}
+
+	/**
+	 * Get a list of non-premium video that is available to swap
 	 * Find the intersection between a list of video titles passed in and the current list of
 	 * unswapped videos on the LVS page.
 	 *
@@ -238,18 +266,18 @@ SQL;
 	 * Get a list of non-premium videos that are available to swap
 	 *
 	 * @param string $sort - The sort order for the video list (options: recent, popular, trend)
-	 * @param int $page - Which page to display. Each page contains self::VIDEOS_PER_PAGE videos
-	 * @param bool $use_master
+	 * @param integer $page - Which page to display. Each page contains self::VIDEOS_PER_PAGE videos
+	 * @param boolean $useMaster
 	 * @return array - Returns a list of video metadata
 	 */
-	public function getRegularVideoList ( $sort, $page, $use_master = false ) {
+	public function getRegularVideoList( $sort, $page, $useMaster = false ) {
 		wfProfileIn( __METHOD__ );
 
 		// Get the play button image to overlay on the video
 		$playButton = WikiaFileHelper::videoPlayButtonOverlay( self::THUMBNAIL_WIDTH, self::THUMBNAIL_HEIGHT );
 
 		// Get the list of videos that haven't been swapped yet
-		$videoList = $this->getUnswappedVideoList( $sort, self::VIDEOS_PER_PAGE, $page, $use_master );
+		$videoList = $this->getUnswappedVideoList( $sort, self::VIDEOS_PER_PAGE, $page, $useMaster );
 
 		// Reuse code from VideoHandlerHelper
 		$helper = new VideoHandlerHelper();
@@ -378,22 +406,27 @@ SQL;
 		// Get the play button image to overlay on the video
 		$playButton = WikiaFileHelper::videoPlayButtonOverlay( self::THUMBNAIL_WIDTH, self::THUMBNAIL_HEIGHT );
 
+		// flag for kept video
+		$pageStatus = $this->getPageStatus( $articleId );
+		$isKeptVideo = $this->isStatusKeep( $pageStatus );
+
 		// get videos that have been suggested (kept videos)
 		$historicalSuggestions = array_flip( $this->getHistoricalSuggestions( $articleId ) );
 
 		// get current suggestions
 		$suggestTitles = array();
-		$suggestions = wfGetWikiaPageProp( WPP_LVS_SUGGEST, $articleId );
-		if ( empty( $suggestions ) ) {
-			$suggestions = array();
-		} else {
-			foreach ( $suggestions as $video ) {
+		$suggest = wfGetWikiaPageProp( WPP_LVS_SUGGEST, $articleId );
+		$suggestions = array();
+		if ( !empty( $suggest ) ) {
+			foreach ( $suggest as $video ) {
 				$suggestTitles[$video['title']] = 1;
+				if ( $isKeptVideo && array_key_exists( $video['title'], $historicalSuggestions ) ) {
+					continue;
+				}
+
+				$suggestions[] = $video;
 			}
 		}
-
-		// flag for kept video
-		$pageStatus = $this->getPageStatus( $articleId );
 
 		$videos = array();
 		$count = 0;
@@ -410,7 +443,7 @@ SQL;
 			$videoTitle = preg_replace( '/.+File:/', '', urldecode( $videoInfo['url'] ) );
 
 			// skip if the video has already been suggested (from kept videos)
-			if ( $this->isStatusKeep( $pageStatus ) ) {
+			if ( $isKeptVideo ) {
 				if ( array_key_exists( $videoTitle, $historicalSuggestions ) ) {
 					continue;
 				} else {
@@ -938,13 +971,13 @@ SQL;
 
 	/**
 	 * Get pagination
+	 * @param integer $totalVideos
 	 * @param integer $currentPage
 	 * @param string $selectedSort
 	 * @return string $pagination
 	 */
-	public function getPagination( $currentPage, $selectedSort ) {
+	public function getPagination( $totalVideos, $currentPage, $selectedSort ) {
 		$pagination = '';
-		$totalVideos = $this->getUnswappedVideoTotal();
 		if ( $totalVideos > self::VIDEOS_PER_PAGE ) {
 			$pages = Paginator::newFromArray( array_fill( 0, $totalVideos, '' ), self::VIDEOS_PER_PAGE );
 			$pages->setActivePage( $currentPage - 1 );
@@ -1206,6 +1239,26 @@ SQL;
 		}
 
 		return $badge;
+	}
+
+	/**
+	 * Get redirect url - when user swap or keep last video of the page
+	 * @param integer $currentPage
+	 * @param string $sort
+	 * @return string $url
+	 */
+	public function getRedirectUrl( $currentPage, $sort ) {
+		if ( $currentPage > 1 ) {
+			$currentPage--;
+		}
+
+		$params = array(
+			'currentPage' => $currentPage,
+			'sort' => $sort,
+		);
+		$url = SpecialPage::getTitleFor( 'LicensedVideoSwap' )->getFullURL( $params );
+
+		return $url;
 	}
 
 }
