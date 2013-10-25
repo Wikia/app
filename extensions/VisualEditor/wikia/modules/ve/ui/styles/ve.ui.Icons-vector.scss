@@ -105,3 +105,9 @@
 .ve-ui-icon-down {
 	@include ve-icon(down, ve);
 }
+.ve-ui-icon-upload {
+	background-image: url(/extensions/VisualEditor/wikia/modules/ve/ui/styles/images/icons/upload.svg); /* $wgCdnStylePath */
+}
+.ve-ui-icon-upload-small {
+	background-image: url(/extensions/VisualEditor/wikia/modules/ve/ui/styles/images/icons/upload-small.svg); /* $wgCdnStylePath */
+}
