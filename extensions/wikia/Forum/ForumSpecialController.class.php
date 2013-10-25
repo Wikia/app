@@ -97,7 +97,7 @@ class ForumSpecialController extends WikiaSpecialPageController {
 
 	public function createNewBoardModal() {
 		wfProfileIn( __METHOD__ );
-		//$this->displayRestrictionError();
+
 		if ( !$this->wg->User->isAllowed( 'forumadmin' ) ) {
 			$this->displayRestrictionError();
 			wfProfileOut( __METHOD__ );
@@ -108,20 +108,31 @@ class ForumSpecialController extends WikiaSpecialPageController {
 		$this->setVal('title', wfMessage( 'forum-admin-create-new-board-modal-heading' )->plain() );
 		$this->setVal('submitLabel', wfMessage('forum-admin-create-new-board-label')->plain() );
 
-		$this->response->setVal( 'html', $this->app->renderView( 'ForumSpecial', 'renderNewBoardModalContent' ) );
-
-		wfProfileOut( __METHOD__ );
-	}
-
-	public function renderNewBoardModalContent() {
-		wfProfileIn( __METHOD__ );
-		// @tbd - is the right check really needed here?
-		if ( !$this->wg->User->isAllowed( 'forumadmin' ) ) {
-			$this->displayRestrictionError();
-			wfProfileOut( __METHOD__ );
-			return false;
-			// skip rendering
-		}
+		$form = array(
+			'inputs' => array(
+				array(
+					'type' => 'text',
+					'name' => 'boardTitle',
+					'isRequired' => true,
+					'label' => wfMsg('forum-admin-create-new-board-title'),
+					'attributes' => array(
+						'maxlength' => '40'
+					),
+				),
+				array(
+					'type' => 'text',
+					'name' => 'boardDescription',
+					'isRequired' => true,
+					'label' => wfMsg('forum-admin-create-new-board-description'),
+					'attributes' => array(
+						'maxlength' => '255'
+					),
+				),
+			),
+			'method' => 'post',
+			'action' => '',
+		);
+		$this->response->setVal( 'html', $this->app->renderView( 'WikiaStyleGuideForm', 'index', array( 'form' => $form ) ) );
 
 		wfProfileOut( __METHOD__ );
 	}
