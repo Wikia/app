@@ -5,6 +5,14 @@
 $width-cart: 100px;
 
 .ve-ui-wikiaMediaInsertDialog {
+	.ve-ui-pagedLayout {
+		bottom: 0;
+		left: 0;
+		position: absolute;
+		top: 75px;
+		right: 0;
+	}
+
 	.ve-ui-window-body {
 		margin-right: -( $width-cart + $width-gutter );
 		padding: 0;
@@ -18,129 +26,150 @@ $width-cart: 100px;
 		top: 0;
 		right: $width-cart;
 	}
+}
 
-	/* Cart */
-	.ve-ui-wikiaCartWidget-wrapper {
-		@include box-sizing( border-box );
-		border-left: #DDD 1px solid;
-		bottom: 0;
-		overflow: auto;
-		padding: $width-gutter;
-		position: absolute;
-		right: 0;
-		top: 0;
-		width: $width-cart;
+/* Cart */
+.ve-ui-wikiaCartWidget-wrapper {
+	@include box-sizing( border-box );
+	border-left: #DDD 1px solid;
+	bottom: 0;
+	overflow: auto;
+	padding: $width-gutter;
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: $width-cart;
 
-		.ve-ui-wikiaCartImage {
-			display: block;
-		}
-
-		.ve-ui-optionWidget {
-			padding: 0;
-			margin-bottom: 10px;
-		}
-
-		.ve-ui-labeledElement-label {
-			display: none;
-		}
+	.ve-ui-wikiaCartImage {
+		display: block;
 	}
 
-	/* Page */
-	.ve-ui-wikiaMediaPageWidget {
-		@include clearfix;
-
-		.ve-ui-fieldsetLayout,
-		.ve-ui-wikiaMediaPageWidget-item {
-			float: left;
-		}
-
-		.ve-ui-fieldsetLayout {
-			width: 275px;
-		}
-
-		.ve-ui-wikiaMediaPageWidget-item {
-			height: 325px;
-			margin-right: $width-gutter;
-			text-align: center;
-			width: 365px;
-		}
-
-		.ve-ui-wikiaMediaPageWidget-item-extension {
-			margin-left: $width-gutter / 4;
-			vertical-align: middle;
-		}
-
-		.ve-ui-textInputWidget {
-			margin-bottom: $width-gutter;
-			width: 100%;
-		}
-
-		&.photo .ve-ui-textInputWidget input {
-			width: 85%;
-		}
-
-		&.video .ve-ui-wikiaMediaPageWidget-item-extension {
-			display: none;
-		}
+	.ve-ui-optionWidget {
+		padding: 0;
+		margin-bottom: 10px;
 	}
 
-	/* Pages */
-	.ve-ui-pagedLayout {
-		bottom: 0;
-		left: 0;
-		position: absolute;
-		top: 75px;
-		right: 0;
+	.ve-ui-labeledElement-label {
+		display: none;
+	}
+}
+
+/* Media Page */
+.ve-ui-wikiaMediaPageWidget {
+	@include clearfix;
+
+	.ve-ui-fieldsetLayout,
+	.ve-ui-wikiaMediaPageWidget-item {
+		float: left;
 	}
 
-	/* Query */
-	.ve-ui-wikiaMediaQueryWidget {
-		@include box-sizing( border-box );
-		height: 75px;
-		padding: $width-gutter;
+	.ve-ui-fieldsetLayout {
+		width: 275px;
 	}
 
-	/* Results */
-	.ve-ui-wikiaMediaResultsWidget {
-		bottom: 0;
-		left: $width-gutter;
-		overflow-x: hidden;
-		overflow-y: auto;
-		position: absolute;
-		top: 0;
-		right: 0;
-	}
-
-	/* Upload - TODO: Move to Widget.scss when Sass work is merged */
-	.ve-ui-wikiaUploadButtonWidget {
-		@include box-sizing( border-box );
-		border: 3px dashed mix($color-page, black, 90%);
-		padding: 20px;
-		position: relative;
+	.ve-ui-wikiaMediaPageWidget-item {
+		height: 325px;
+		margin-right: $width-gutter;
 		text-align: center;
+		width: 365px;
+	}
+
+	.ve-ui-wikiaMediaPageWidget-item-extension {
+		margin-left: $width-gutter / 4;
+		vertical-align: middle;
+	}
+
+	.ve-ui-textInputWidget {
+		margin-bottom: $width-gutter;
 		width: 100%;
+	}
 
-		> span {
-			display: block;
-			font-size: 1.7em;
-			margin-bottom: 20px;
-		}
+	&.photo .ve-ui-textInputWidget input {
+		width: 85%;
+	}
 
-		input[type="file"] {
-			cursor: pointer;
-			height: 100%;
-			left: 0;
-			opacity: 0;
-			position: absolute;
-			top: 0;
-			width: 100%;
-		}
+	&.video .ve-ui-wikiaMediaPageWidget-item-extension {
+		display: none;
+	}
+}
 
-		.ve-ui-iconedElement-icon {
-			display: inline-block;
-			height: 32px;
-			margin-bottom: 15px;
-			width: 47px;
+/* Query */
+.ve-ui-wikiaMediaQueryWidget {
+	@include box-sizing( border-box );
+	height: 75px;
+	padding: $width-gutter;
+
+	.ve-ui-wikiaUploadButtonWidget {
+		border: none;
+		padding: 0;
+		width: auto;
+
+		> span,
+		.ve-ui-icon-upload {
+			display: none;
 		}
+	}
+
+	.ve-ui-textInputWidget {
+		width: 100%;
+		[type="text"] {
+			box-sizing: border-box;
+		}
+	}
+}
+
+.ve-ui-wikiaMediaQueryWidget-wrapper {
+	display: table;
+	width: 100%;
+	> div {
+		display: table-cell;
+		vertical-align: middle;
+	}
+}
+
+.ve-ui-wikiaMediaQueryWidget-queryWrapper {
+	width: 100%;
+}
+
+.ve-ui-wikiaMediaQueryWidget-uploadWrapper {
+	padding-left: 20px;
+}
+
+/* Results */
+.ve-ui-wikiaMediaResultsWidget {
+	bottom: 0;
+	left: $width-gutter;
+	overflow-x: hidden;
+	overflow-y: auto;
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+
+/* Upload - TODO: Move to Widget.scss when Sass work is merged */
+.ve-ui-wikiaUploadButtonWidget {
+	@include box-sizing( border-box );
+	border: 3px dashed mix($color-page, black, 90%);
+	cursor: pointer;
+	padding: 20px;
+	position: relative;
+	text-align: center;
+	width: 100%;
+
+	> span {
+		display: block;
+		font-size: 1.7em;
+		margin-bottom: 20px;
+	}
+
+	input[type="file"] {
+		display: none;
+	}
+
+	> .ve-ui-icon-upload {
+		display: inline-block;
+		height: 32px;
+		margin-bottom: 15px;
+		width: 47px;
 	}
 }

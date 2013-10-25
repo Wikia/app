@@ -58,7 +58,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	this.queryInput = this.query.getInput();
 	this.search = new ve.ui.WikiaMediaResultsWidget( { '$$': this.frame.$$ } );
 	this.searchResults = this.search.getResults();
-	this.uploadButton = new ve.ui.WikiaUploadWidget( { '$$': this.frame.$$ } );
+	this.upload = new ve.ui.WikiaUploadWidget( { '$$': this.frame.$$, 'hideIcon': true } );
 
 	this.$cart = this.$$( '<div>' );
 	this.$content = this.$$( '<div>' );
@@ -78,10 +78,10 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 		'nearingEnd': 'onSearchNearingEnd',
 		'select': 'onSearchSelect'
 	} );
+	this.upload.on( 'upload', ve.bind( this.onUploadSuccess, this ) );
 
 	// Initialization
-	this.uploadButton.$.appendTo( this.$mainPage );
-
+	this.upload.$.appendTo( this.$mainPage );
 	this.pages.addPage( 'main', { '$content': this.$mainPage } );
 	this.pages.addPage( 'search', { '$content': this.search.$ } );
 
@@ -159,7 +159,9 @@ ve.ui.WikiaMediaInsertDialog.prototype.onQueryRequestMediaDone = function ( item
  * @method
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onSearchNearingEnd = function () {
-	this.query.requestMedia();
+	if ( !this.queryInput.isPending() ) {
+		this.query.requestMedia();
+	}
 };
 
 /**
@@ -263,6 +265,11 @@ ve.ui.WikiaMediaInsertDialog.prototype.onOpen = function () {
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onPageSet = function () {
 	this.queryInput.$input.focus();
+	if ( this.pages.getPageName() === 'main' ) {
+		this.query.hideUpload();
+	} else {
+		this.query.showUpload();
+	}
 };
 
 /**
@@ -460,6 +467,18 @@ ve.ui.WikiaMediaInsertDialog.prototype.onGetImageInfoSuccess = function ( deferr
 		} );
 	}
 	deferred.resolve( results );
+};
+
+/**
+ * Handle successful file uploads.
+ *
+ * @method
+ * @param {Object} data The uploaded file information
+ */
+ve.ui.WikiaMediaInsertDialog.prototype.onUploadSuccess = function ( data ) {
+	this.cartModel.addItems( [
+		new ve.dm.WikiaCartItem( data.title, data.temporaryThumbUrl, 'photo', data.temporaryFileName )
+	] );
 };
 
 /* Registration */
