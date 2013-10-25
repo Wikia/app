@@ -93,6 +93,8 @@ class WikiaHomePageController extends WikiaController {
 			'wgWikiaBatchesStatus' => $batches['status'],
 			'wgInitialWikiBatchesForVisualization' => $batches['batches']
 		]);
+
+		OasisController::addBodyClass('WikiaHome');
 	}
 
 	public function wikiaMobileIndex() {
