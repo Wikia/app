@@ -3,7 +3,9 @@
  * thumbnails that are additional possible matches for the non-premium
  * video
  */
-define( 'lvs.suggestions', [], function() {
+define( 'lvs.suggestions', [
+	'jquery.ellipses'
+], function() {
 
 	'use strict';
 
