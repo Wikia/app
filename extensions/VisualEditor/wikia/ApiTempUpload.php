@@ -52,10 +52,10 @@ class ApiTempUpload extends ApiBase {
 			$result = array( 'name' => $name );
 		} else {
 			$temporaryFileName = $this->mParams['temporaryFileName'];
-          	$temporaryFile = new FakeLocalFile(Title::newFromText($temporaryFileName, 6), RepoGroup::singleton()->getLocalRepo());
+			$temporaryFile = new FakeLocalFile(Title::newFromText($temporaryFileName, 6), RepoGroup::singleton()->getLocalRepo());
 			$temporaryFileHash = FSFile::getSha1Base36FromPath( $temporaryFile->getLocalRefPath() );
 			$dupes = RepoGroup::singleton()->findBySha1( $temporaryFileHash );
-			if ( false && count ( $dupes ) > 0 ) {
+			if ( count ( $dupes ) > 0 ) {
 				$name = $dupes[0]->getName();
 			} else {
 				$desiredName = $this->mParams['desiredName'];
