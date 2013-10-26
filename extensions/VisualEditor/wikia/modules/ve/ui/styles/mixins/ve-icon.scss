@@ -1,0 +1,21 @@
+/*
+ * $name - name of the icon (bold, media, etc)
+ * $vendor - who is providing the icon? (ve, mw, wikia)
+ */
+@mixin ve-icon($name, $vendor) {
+	$white: "";
+	$path: "";
+
+	@if $is-dark-wiki {
+		$white: "-white";
+	}
+	@if $vendor == ve {
+		$path: "/extensions/VisualEditor/modules/ve/ui/styles/images/icons/";
+	} @elseif $vendor == mw {
+		$path: "/extensions/VisualEditor/modules/ve-mw/ui/styles/images/icons/";
+	} @elseif $vendor == wikia {
+		$path: "/extensions/VisualEditor/wikia/modules/ve/ui/styles/images/icons/";
+	}
+
+	background-image: url($path + $name + $white + ".svg"); /* $wgCdnStylePath */
+}
