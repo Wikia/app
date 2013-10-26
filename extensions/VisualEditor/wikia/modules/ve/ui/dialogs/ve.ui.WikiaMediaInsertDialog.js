@@ -310,8 +310,8 @@ ve.ui.WikiaMediaInsertDialog.prototype.onClose = function ( action ) {
 };
 
 ve.ui.WikiaMediaInsertDialog.prototype.convertToPermanent = function ( cartItem ) {
-	var deferred = $.Deferred();
-	var data = {
+	var deferred = $.Deferred(),
+		data = {
 		'action': 'apitempupload',
 		'format': 'json',
 		'type': 'permanent'
