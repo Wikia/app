@@ -36,7 +36,7 @@ class ApiTempUpload extends ApiBase {
 			);
 			if ( count( $duplicates ) > 0 ) {
 				$file = wfFindFile( $duplicates[0]['img_name'] );
-				$name = $file->getName();
+				$name = $file->getTitle()->getText();
 			} else {
 				$name = VideoFileUploader::sanitizeTitle( $this->mParams['desiredName'] );
 				$title = VideoFileUploader::getUniqueTitle( $name );
@@ -47,7 +47,7 @@ class ApiTempUpload extends ApiBase {
 				$uploader->setTargetTitle( $title->getBaseText() );
 				$uploader->upload( $title );
 
-				$name = $title->getBaseText();
+				$name = $title->getText();
 			}
 			$result = array( 'name' => $name );
 		} else {
@@ -56,7 +56,7 @@ class ApiTempUpload extends ApiBase {
 			$temporaryFileHash = FSFile::getSha1Base36FromPath( $temporaryFile->getLocalRefPath() );
 			$dupes = RepoGroup::singleton()->findBySha1( $temporaryFileHash );
 			if ( count ( $dupes ) > 0 ) {
-				$name = $dupes[0]->getName();
+				$name = $dupes[0]->getTitle()->getText();
 			} else {
 				$desiredName = $this->mParams['desiredName'];
 				$desiredFilename = pathinfo( $desiredName, PATHINFO_FILENAME );
@@ -64,7 +64,7 @@ class ApiTempUpload extends ApiBase {
 				$title = $this->getUniqueTitle( $desiredFilename, $desiredExtension );
 				$file = new LocalFile( $title, RepoGroup::singleton()->getLocalRepo() );
 				$file->upload( $temporaryFile->getPath(), '', '' );
-				$name = $file->getName();
+				$name = $file->getTitle()->getText();
 			}
 			$result = array( 'name' => $name );
 		}

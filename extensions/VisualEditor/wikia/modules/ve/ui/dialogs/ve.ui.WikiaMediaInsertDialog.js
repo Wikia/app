@@ -162,7 +162,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.onQueryRequestSearchDone = function ( ite
 ve.ui.WikiaMediaInsertDialog.prototype.onQueryRequestVideoDone = function ( data ) {
 	this.queryInput.setValue( '' );
 	this.cartModel.addItems( [
-		new ve.dm.WikiaCartItem( data.title, data.temporaryThumbUrl, 'video', data.temporaryFileName )
+		new ve.dm.WikiaCartItem( data.title, data.temporaryThumbUrl, 'video', data.temporaryFileName, data.provider, data.videoId )
 	] );
 	this.setPage( data.title );
 };
@@ -309,76 +309,126 @@ ve.ui.WikiaMediaInsertDialog.prototype.onClose = function ( action ) {
 	this.queryInput.setValue( '' );
 };
 
+ve.ui.WikiaMediaInsertDialog.prototype.convertToPermanent = function ( cartItem ) {
+	var deferred = $.Deferred();
+	var data = {
+		'action': 'apitempupload',
+		'format': 'json',
+		'type': 'permanent'
+	};
+	if ( cartItem.type === 'video' ) {
+		data.provider = cartItem.provider;
+		data.videoId = cartItem.videoId;
+		data.desiredName = cartItem.title;
+	} else {
+		data.temporaryFileName = cartItem.temporaryFileName;
+		data.desiredName = cartItem.title;
+	}
+	$.ajax( {
+		'url': mw.util.wikiScript( 'api' ),
+		'data': data,
+		'success': function( data ) {
+			deferred.resolve( data.apitempupload.name );
+		}
+	} );
+	return deferred.promise();
+};
+
 /**
  * @method
  * @param {ve.dm.WikiaCartItem[]} cartItems Items to add
  */
 ve.ui.WikiaMediaInsertDialog.prototype.insertMedia = function ( cartItems ) {
-	var attributes = {},
-		promises = [],
-		items = {
-			'photo': [],
-			'video': []
-		},
-		cartItem,
-		i,
-		title;
+	var i, promises = [];
 
-	// Populates attributes, items.video and items.photo
-	for ( i = 0; i < cartItems.length; i++ ) {
-		cartItem = cartItems[i];
-		attributes[ cartItem.title ] = {
-			'title': cartItem.title,
-			'type': cartItem.type
-		};
-		items[ cartItem.type ].push( cartItem.title );
+	function temporaryToPermanent( cartItem, name ){
+		//var title = new mw.Title( name, 6 );
+		cartItem.temporaryFileName = null;
+		cartItem.url = null;
+		cartItem.title = 'File:' + name;
 	}
 
-	function updateImageinfo( results ) {
-		var i, result;
-		for ( i = 0; i < results.length; i++ ) {
-			result = results[i];
-			attributes[result.title].height = result.height;
-			attributes[result.title].width = result.width;
-			attributes[result.title].url = result.url;
+	for ( i = 0; i < cartItems.length; i++ ) {
+		if ( cartItems[i].temporaryFileName ) {
+			promises.push(
+				this.convertToPermanent( cartItems[i] ).done(
+					ve.bind( temporaryToPermanent, this, cartItems[i] )
+				)
+			);
 		}
 	}
 
-	// Imageinfo for photos request
-	if ( items.photo.length ) {
-		promises.push(
-			this.getImageInfo( items.photo, 220 ).done(
-				ve.bind( updateImageinfo, this )
-			)
+	function insertMedia() {
+		var attributes = {},
+			promises = [],
+			items = {
+				'photo': [],
+				'video': []
+			},
+			cartItem,
+			i,
+			title;
+
+		// Populates attributes, items.video and items.photo
+		for ( i = 0; i < cartItems.length; i++ ) {
+			cartItem = cartItems[i];
+			attributes[ cartItem.title ] = {
+				'title': cartItem.title,
+				'type': cartItem.type
+			};
+			items[ cartItem.type ].push( cartItem.title );
+		}
+
+		function updateImageinfo( results ) {
+			var i, result;
+			for ( i = 0; i < results.length; i++ ) {
+				result = results[i];
+				attributes[result.title].height = result.height;
+				attributes[result.title].width = result.width;
+				attributes[result.title].url = result.url;
+			}
+		}
+
+		// Imageinfo for photos request
+		if ( items.photo.length ) {
+			promises.push(
+				this.getImageInfo( items.photo, 220 ).done(
+					ve.bind( updateImageinfo, this )
+				)
+			);
+		}
+
+		// Imageinfo for videos request
+		if ( items.video.length ) {
+			promises.push(
+				this.getImageInfo( items.video, 330 ).done(
+					ve.bind( updateImageinfo, this )
+				)
+			);
+		}
+
+		function updateAvatar( result ) {
+			attributes[result.title].avatar = result.avatar;
+			attributes[result.title].username = result.username;
+		}
+
+		// Attribution request
+		for ( title in attributes ) {
+			promises.push(
+				this.getPhotoAttribution( title ).done(
+					ve.bind( updateAvatar, this )
+				)
+			);
+		}
+
+		// When all ajax requests are finished, insert media
+		$.when.apply( $, promises ).done(
+			ve.bind( this.insertMediaCallback, this, attributes )
 		);
 	}
 
-	// Imageinfo for videos request
-	if ( items.video.length ) {
-		promises.push(
-			this.getImageInfo( items.video, 330 ).done(
-				ve.bind( updateImageinfo, this )
-			)
-		);
-	}
-
-	function updateAvatar( result ) {
-		attributes[result.title].avatar = result.avatar;
-		attributes[result.title].username = result.username;
-	}
-
-	// Attribution request
-	for ( title in attributes ) {
-		promises.push(
-			this.getPhotoAttribution( title ).done(
-				ve.bind( updateAvatar, this )
-			)
-		);
-	}
-
-	// When all ajax requests are finished, insert media
 	$.when.apply( $, promises ).done(
-		ve.bind( this.insertMediaCallback, this, attributes )
+		ve.bind( insertMedia, this )
 	);
 };
 
