@@ -21,11 +21,71 @@ class ApiTempUpload extends ApiBase {
 		if ( $this->mParams['type'] === 'temporary' ) {
 			$this->executeTemporary();
 		} else if ( $this->mParams['type'] === 'permanent' ) {
-			//$this->executePermanent();
-			$this->dieUsageMsg( 'Not implemented yet' );
+			$this->executePermanent();
 		} else {
 			$this->dieUsageMsg( 'The type parameter must be set to temporary or permanent' );
 		}
+	}
+
+	private function executePermanent() {
+		if ( !empty( $this->mParams['provider'] ) && !empty( $this->mParams['videoId'] ) ) {
+			// video
+			$duplicates = WikiaFileHelper::findVideoDuplicates(
+				$this->mParams['provider'],
+				$this->mParams['videoId']
+			);
+			if ( count( $duplicates ) > 0 ) {
+				$file = wfFindFile( $duplicates[0]['img_name'] );
+				$name = $file->getName();
+			} else {
+				$name = VideoFileUploader::sanitizeTitle( $this->mParams['desiredName'] );
+				$title = VideoFileUploader::getUniqueTitle( $name );
+
+				$uploader = new VideoFileUploader();
+				$uploader->setProvider( $this->mParams['provider'] );
+				$uploader->setVideoId( $this->mParams['videoId'] );
+				$uploader->setTargetTitle( $title->getBaseText() );
+				$uploader->upload( $title );
+
+				$name = $title->getBaseText();
+			}
+			$result = array( 'name' => $name );
+		} else {
+			$temporaryFileName = $this->mParams['temporaryFileName'];
+			$temporaryFile = new FakeLocalFile(Title::newFromText($temporaryFileName, 6), RepoGroup::singleton()->getLocalRepo());
+			$temporaryFileHash = FSFile::getSha1Base36FromPath( $temporaryFile->getLocalRefPath() );
+			$dupes = RepoGroup::singleton()->findBySha1( $temporaryFileHash );
+			if ( count ( $dupes ) > 0 ) {
+				$name = $dupes[0]->getName();
+			} else {
+				$desiredName = $this->mParams['desiredName'];
+				$desiredFilename = pathinfo( $desiredName, PATHINFO_FILENAME );
+				$desiredExtension = pathinfo( $desiredName, PATHINFO_EXTENSION );
+				$title = $this->getUniqueTitle( $desiredFilename, $desiredExtension );
+				$file = new LocalFile( $title, RepoGroup::singleton()->getLocalRepo() );
+				$file->upload( $temporaryFile->getPath(), '', '' );
+				$name = $file->getName();
+			}
+			$result = array( 'name' => $name );
+		}
+
+		$this->getResult()->addValue( null, $this->getModuleName(), $result );
+	}
+
+	private function getUniqueTitle( $filename, $extension ) {
+		$title = Title::makeTitleSafe( NS_IMAGE, $filename . '.' . $extension );
+		if ( !empty( $title ) && $title->exists() ) {
+			for ( $i = 0; $i <= 3; $i++ ) {
+				$title = Title::makeTitleSafe( NS_IMAGE, $filename . '-' . $i . '.' . $extension );
+				if ( $title && !$title->exists() ) {
+					break;
+				}
+			}
+			if ( !empty( $title ) && $title->exists() ) {
+				$title = Title::makeTitleSafe( NS_IMAGE, $filename . '-' . time() . '.' . $extension );
+			}
+		}
+		return $title;
 	}
 
 	private function createTemporaryFile( $filepath ) {
@@ -55,8 +115,13 @@ class ApiTempUpload extends ApiBase {
 		} else {
 			// video
 			$awf = ApiWrapperFactory::getInstance();
+			$url = $this->mParams['url'];
+			// ApiWrapperFactory->getApiWrapper(...) require whole URL to be passed in (including protocol)
+			if ( !preg_match( '/^https?:\/\//', $url ) ) {
+				$url = 'http://' . $url;
+			}
 			try {
-				$apiwrapper = $awf->getApiWrapper( $this->mParams['url'] );
+				$apiwrapper = $awf->getApiWrapper( $url );
 			} catch ( Exception $e ) {
 				$this->dieUsageMsg( 'Incorrect video URL' );
 			}	
@@ -173,6 +238,22 @@ class ApiTempUpload extends ApiBase {
 				ApiBase::PARAM_REQUIRED => true
 			),
 			'url' => array (
+				ApiBase::PARAM_TYPE => 'string',
+				ApiBase::PARAM_REQUIRED => false
+			),
+			'provider' => array (
+				ApiBase::PARAM_TYPE => 'string',
+				ApiBase::PARAM_REQUIRED => false
+			),
+			'videoId' => array (
+				ApiBase::PARAM_TYPE => 'string',
+				ApiBase::PARAM_REQUIRED => false
+			),
+			'temporaryFileName' => array (
+				ApiBase::PARAM_TYPE => 'string',
+				ApiBase::PARAM_REQUIRED => false
+			),
+			'desiredName' => array (
 				ApiBase::PARAM_TYPE => 'string',
 				ApiBase::PARAM_REQUIRED => false
 			)
