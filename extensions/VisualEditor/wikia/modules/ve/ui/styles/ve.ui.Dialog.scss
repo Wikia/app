@@ -26,3 +26,7 @@
 		border-top: 1px solid $color-page-border;
 	}
 }
+
+.ve-ui-dialog-content .ve-ui-window-body .ve-ui-surface {
+	border-color: $color-page-border;
+}
