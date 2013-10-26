@@ -103,6 +103,11 @@ class LicensedVideoSwapHelper extends WikiaModel {
 					break;
 			}
 
+			// Reuse code from VideoHandlerHelper
+			$helper = new VideoHandlerHelper();
+			$videoDetail = $helper->getVideoDetail( ["title" => $row->title ], 200, 200, 5 );
+
+			$debugInfo[ $row->title ]['detail'] = $videoDetail;
 			$debugInfo[ $row->title ]['props'][$name] = $val;
 		}
 
@@ -443,13 +448,9 @@ SQL;
 			if ( empty( $videos ) ) {
 				wfSetWikiaPageProp( WPP_LVS_EMPTY_SUGGEST, $articleId, 1 );
 			} else {
-gbug("TITLE: $title");
-gbug("Removing empty flag, setting suggetions for ".count($videos)." videos");
 				wfDeleteWikiaPageProp( WPP_LVS_EMPTY_SUGGEST, $articleId );
 				wfSetWikiaPageProp( WPP_LVS_SUGGEST, $articleId, $videos );
 
-gbug("Sleeping ...");
-sleep(20);
 				// set page status
 				if ( !$this->isStatusSwap( $pageStatus ) && !$this->isStatusForever( $pageStatus ) && $isNew ) {
 					$this->setPageStatusNew( $articleId );
