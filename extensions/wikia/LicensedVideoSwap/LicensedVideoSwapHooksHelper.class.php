@@ -41,7 +41,7 @@ class LicensedVideoSwapHooksHelper {
 	}
 
 	/**
-	 * Hook: reset confirmation message in global notification when file page is deleted
+	 * Hook: skip confirmation message in global notification when file page is deleted (set message to blank)
 	 * @param Title $title
 	 * @param string $message
 	 * @return true
