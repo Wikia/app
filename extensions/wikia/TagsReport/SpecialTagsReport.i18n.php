@@ -543,6 +543,7 @@ $messages['pt'] = array(
 	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|página|páginas}})',
 	'tagsreportpagesfound' => '{{PLURAL:$1|Foi encontrada <strong>$1</strong> página que contém|Foram encontradas <strong>$1</strong> páginas que contêm}} um elemento especial (DPL, YouTube, etc.)',
 	'tagsreportgenerated' => 'Gerado a $1 às $2',
+	'tagsreportpageremoved' => 'A página #$1 foi removida',
 );
 
 /** Brazilian Portuguese (português do Brasil)

@@ -117,7 +117,7 @@ $messages['qqq'] = array(
 	'lvs-posted-in-more' => 'This is the text that is shown after a truncated list of titles in which a video is posted.  When hovered, a full list appears.  When clicked, the user is taken to a page where the full list is displayed.
 {{Identical|More}}',
 	'lvs-confirm-keep-title' => 'This is the heading that is displayed in the confirm keep modal.',
-	'lvs-confirm-keep-message' => 'This message is show in a modal when a user clicks a button to keep an un-licensed video as opposed to swapping it out for a licensed video. It is a coonfirmation message. Translate the url in the <a> element to proper, would use wiki text but this is going to JavaScript which doesn\'t support wikitext',
+	'lvs-confirm-keep-message' => "This message is show in a modal when a user clicks a button to keep an un-licensed video as opposed to swapping it out for a licensed video. It is a coonfirmation message. Translate the url in the <a> element to proper, would use wiki text but this is going to JavaScript which doesn't support wikitext",
 	'lvs-confirm-undo-swap-title' => 'This is the heading that is displayed in the confirm undo swap modal.
 {{Identical|Confirm undo}}',
 	'lvs-confirm-undo-swap-message' => 'This message is show in a modal to confirm that a user wants to revert a video swap, i.e. the non-premium video they had originally replaced with a premium video will be restored.',
@@ -484,6 +484,16 @@ $messages['lb'] = array(
 	'lvs-confirm-undo-swap-message' => 'Sidd dir sécher datt Dir den Original-Video restauréiere wëllt?',
 	'lvs-log-removed-redirected-link' => 'Viruleedung ewechgeholl',
 	'lvs-click-here' => 'hei klicken',
+);
+
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'lvs-history-button-text' => 'ويرگار',
+	'lvs-undo-swap' => 'انجوم ندی ئن',
+	'lvs-undo-keep' => 'انجوم ندی ئن',
+	'lvs-posted-in-more' => 'بيشتر',
 );
 
 /** Malay (Bahasa Melayu)

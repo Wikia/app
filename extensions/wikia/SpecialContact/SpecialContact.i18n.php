@@ -314,6 +314,7 @@ $messages['fa'] = array(
 /** Finnish (suomi)
  * @author Olli
  * @author Tofu II
+ * @author Ville96
  */
 $messages['fi'] = array(
 	'contact' => 'Ota yhteyttä Wikiaan',
@@ -324,7 +325,7 @@ $messages['fi'] = array(
 Lisätietoja ongelmien ilmoittamisesta Wikiaan löytyy [[w:project:Report_a_problem|täältä]]. Voit myös lähettää viestin [[w:Forum:Index|Wikia-yhteisön keskustelualueelle]].
 
 Jos haluat käyttää tavallista sähköpostia tai sinulla on lähetettäviä liitteitä, voit ottaa meihin yhteyttä sähköpostiosoitteella [mailto:community@wikia.com community@wikia.com].',
-	'specialcontact-username' => 'Käyttäjätunnus', # Fuzzy
+	'specialcontact-username' => 'Käyttäjätunnuksesi',
 	'specialcontact-wikiname' => 'Mikä wiki',
 	'specialcontact-realname' => 'Nimesi',
 	'specialcontact-yourmail' => 'Sähköpostiosoite',
@@ -822,12 +823,12 @@ Se prefere usar o correio electrónico ou precisa de enviar ficheiros anexos, po
 	'specialcontact-notyou' => 'Não é você?',
 	'specialcontact-captchainfo' => 'Introduza o texto que está na imagem, por favor.',
 	'specialcontact-captchatitle' => 'Palavra distorcida',
-	'specialcontact-formtitle' => 'Contactar a Equipa de Suporte da Wikia',
+	'specialcontact-formtitle' => 'Contactar a Equipa de Apoio da Wikia',
 	'specialcontact-nomessage' => 'Introduza uma mensagem, por favor',
 	'specialcontact-captchafail' => 'Código de confirmação incorreto ou não preenchido.',
 	'specialcontact-mailsub' => 'Correio de Contacto da Wikia',
 	'specialcontact-mailsubcc' => 'Cópia do Correio de Contacto da Wikia',
-	'specialcontact-ccheader' => 'Esta é uma cópia da mensagem que foi enviada à Equipa de Suporte da Wikia',
+	'specialcontact-ccheader' => 'Esta é uma cópia da mensagem que foi enviada à Equipa de Apoio da Wikia',
 	'specialcontact-submitcomplete' => 'Obrigado por ter contactado a Wikia.',
 );
 

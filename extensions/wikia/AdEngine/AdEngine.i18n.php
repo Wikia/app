@@ -121,6 +121,16 @@ $messages['et'] = array(
 	'adengine-exitstitial-button' => 'Jäta see reklaam vahele',
 );
 
+/** Persian (فارسی)
+ * @author Ebraminio
+ */
+$messages['fa'] = array(
+	'adengine-exitstitial-title-template' => 'شما ترک می‌کند $1....',
+	'adengine-exitstitial-redirecting' => 'مرورگرتان در عرض چند ثانیه شما را به صفحه‌ای که درخواست‌کرده بودید هدایت خواهد کرد.',
+	'adengine-exitstitial-go-back' => 'می‌خواهید برگردید؟',
+	'adengine-exitstitial-button' => 'ردشدن از این تبلیغ',
+);
+
 /** Faroese (føroyskt)
  * @author EileenSanda
  */
@@ -298,6 +308,16 @@ $messages['ps'] = array(
 	'adengine-exitstitial-button' => 'له دې خبرتيا تېرېدل',
 );
 
+/** Portuguese (português)
+ * @author Hamilton Abreu
+ */
+$messages['pt'] = array(
+	'adengine-exitstitial-title-template' => 'Está a sair da wiki $1...',
+	'adengine-exitstitial-redirecting' => 'O browser vai reencaminhá-lo para a página solicitada dentro de segundos.',
+	'adengine-exitstitial-go-back' => 'Quer regressar?',
+	'adengine-exitstitial-button' => 'Saltar este anúncio',
+);
+
 /** Brazilian Portuguese (português do Brasil)
  * @author Matheus Sousa L.T
  * @author TheGabrielZaum
@@ -381,7 +401,7 @@ $messages['zh'] = array(
  * @author Liuxinyu970226
  */
 $messages['zh-hans'] = array(
-	'adengine-exitstitial-title-template' => '你要离开 $1 …',
+	'adengine-exitstitial-title-template' => '您将要离开$1......',
 	'adengine-exitstitial-redirecting' => '您的浏览器将在几秒钟后重定向至您请求的页面。',
 	'adengine-exitstitial-go-back' => '想要回去吗？',
 	'adengine-exitstitial-button' => '跳过这个广告',
