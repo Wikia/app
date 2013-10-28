@@ -15,7 +15,7 @@ require(['sections', 'wikia.window', 'jquery', 'wikia.mustache', 'wikia.toc'],
 		lis = "{{#.}}<li {{#sections.length}}class=has-children{{/sections.length}}><a href='#{{id}}'>{{name}}{{#firstLevel}}{{#sections.length}}<span class='chevron right'></span>{{/sections.length}}{{/firstLevel}}</a>{{#sections.length}}{{> ol}}{{/sections.length}}</li>{{/.}}",
 		$toc,
 		$ol,
-		tocData = toc.getData(document.querySelectorAll('h2,h3,h4'), function(header, level){
+		tocData = toc.getData(sections.list, function(header, level){
 			return {
 				id: header.id,
 				name: header.textContent,

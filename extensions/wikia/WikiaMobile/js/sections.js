@@ -1,7 +1,6 @@
 /*
  * @define sections
  * module used to handle sections on wikiamobile
- * expanding and collapsing
  *
  * @author Jakub Olek
  * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
@@ -57,7 +56,7 @@ define('sections', ['jquery'], function($){
 	});
 
 	return {
-		init: function(){},
+		list: sections,
 		scrollTo: scrollTo,
 		current: current
 	};

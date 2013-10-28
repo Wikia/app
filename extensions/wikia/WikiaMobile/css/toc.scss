@@ -44,13 +44,14 @@ $toc-background: #F8F8F8;
 	position: absolute;
 	right: -48px;
 	bottom: 75px;
+	border-radius: 0 3px 3px 0;
 	background-size: 80%;
 }
 
 .menu-stripe {
 	width: 48px;
 	height: 48px;
-	background: rgb(0,77,141);
+	background: rgb(0, 77, 141);
 }
 
 .menu-stripe:before, .menu-stripe:after {
@@ -153,7 +154,7 @@ $level0-border-left-width: 3px;
 		counter-increment: level3;
 
 		> a {
-			padding-left: 25px;
+			padding-left: 40px;
 
 			&:before {
 				content: counter(level1) '.' counter(level2) '.' counter(level3);

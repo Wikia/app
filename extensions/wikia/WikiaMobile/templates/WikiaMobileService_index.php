@@ -59,7 +59,7 @@
 <?= $modalInterstitial ;?>
 <?= $floatingAd ;?>
 <div id=wkTOC>
-	<header>table of contents</header>
+	<header><?= wfMessage('wikiamobile-toc-header')->plain() ?></header>
 	<div id=wkTOCHandle class=menu-stripe></div>
 </div>
 <?= $trackingCode ;?>

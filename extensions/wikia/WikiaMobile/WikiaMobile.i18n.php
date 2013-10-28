@@ -56,6 +56,9 @@ you should definitely check this out:
 	'wikiamobile-video-not-friendly-header' => 'Oh snap!',
 	'wikiamobile-video-not-friendly' => 'Sorry, this video isn\'t available on mobile.',
 
+	//toc
+	'wikiamobile-toc-header' => 'table of contents',
+
 	//ad
 	'wikiamobile-ad-label' => 'advertisement',
 
@@ -129,6 +132,7 @@ $messages['qqq'] = array(
 {{Identical|Free}}',
 	'wikiasmartbanner-view' => 'Message displayed in smart banner promoting on a button that leads to a store.
 {{Identical|View}}',
+	'wikiamobile-toc-header' => 'Message displayed on top of right side bar where table of content is displayed'
 );
 
 /** Адыгэбзэ (Адыгэбзэ)
