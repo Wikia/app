@@ -458,15 +458,6 @@ var Wall = $.createClass(Object, {
 		require( [ 'wikia.ui.factory' ], function( uiFactory ) {
 			uiFactory.init( [ 'button', 'modal' ] ).then( function( uiButton, uiModal ) {
 				var modalId = 'WallConfirm',
-					modalPrimaryBtn = uiButton.render( {
-						type: 'button',
-						vars: {
-							id: 'ok',
-							type: 'button',
-							classes: [ 'normal', 'primary' ],
-							value: okmsg
-						}
-					} ),
 					modalSecondaryBtn = uiButton.render( {
 						type: 'button',
 						vars: {
@@ -476,19 +467,33 @@ var Wall = $.createClass(Object, {
 							value: cancelmsg
 						}
 					}),
-					confirmModal = uiModal.render( {
-						type: 'default',
-						vars: {
-							id: modalId,
-							size: 'medium',
-							content: msg,
-							title: title,
-							closeButton: true,
-							closeText: $.msg( 'close' ),
-							primaryBtn: modalPrimaryBtn,
-							secondBtn: modalSecondaryBtn
-						}
-					} );
+					modalPrimaryBtnVars = {
+						id: 'ok',
+						type: 'button',
+						classes: [ 'normal', 'primary' ],
+						value: okmsg
+					},
+					modalPrimaryBtn, confirmModal;
+				if(mode !== 'rev') {
+					modalPrimaryBtnVars.disabled = true;
+				}
+				modalPrimaryBtn = uiButton.render( {
+					type: 'button',
+					vars: modalPrimaryBtnVars
+				} );
+				confirmModal = uiModal.render( {
+					type: 'default',
+					vars: {
+						id: modalId,
+						size: 'medium',
+						content: msg,
+						title: title,
+						closeButton: true,
+						closeText: $.msg( 'close' ),
+						primaryBtn: modalPrimaryBtn,
+						secondBtn: modalSecondaryBtn
+					}
+				} );
 
 				require( [ 'wikia.ui.modal' ], function( modal ) {
 					confirmModal = modal.init( modalId, confirmModal );
@@ -502,9 +507,6 @@ var Wall = $.createClass(Object, {
 					);
 					// @todo - implement this in new modals
 					/*
-					if(mode !== 'rev') {
-						$('#WikiaConfirmOk').attr('disabled', 'disabled');
-					}
 
 					$('textarea.wall-action-reason').bind('keydown keyup change', function(e) {
 						var target = $(e.target);
