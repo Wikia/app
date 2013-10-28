@@ -505,18 +505,14 @@ var Wall = $.createClass(Object, {
 							that.doAction(id, mode, wallMsg, target, formdata );
 						}
 					);
-					// @todo - implement this in new modals
-					/*
-
-					$('textarea.wall-action-reason').bind('keydown keyup change', function(e) {
+					confirmModal.$element.find('textarea.wall-action-reason').bind('keydown keyup change', function(e) {
 						var target = $(e.target);
 						if(target.val().length > 0) {
-							$('#WikiaConfirmOk').removeAttr('disabled');
+							confirmModal.$element.find( '#ok' ).removeAttr('disabled');
 						} else {
-							$('#WikiaConfirmOk').attr('disabled', 'disabled');
+							confirmModal.$element.find( '#ok' ).attr('disabled', 'disabled');
 						}
 					});
-					*/
 					confirmModal.show();
 				} );
 			} );
