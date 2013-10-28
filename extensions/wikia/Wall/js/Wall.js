@@ -503,10 +503,10 @@ var Wall = $.createClass(Object, {
 						confirmModal.close();
 					} );
 					confirmModal.$element.find( '#' + modalPrimaryBtnId ).click( function() {
-							var formdata = confirmModal.$element.find('form').serializeArray();
-							self.doAction(id, mode, wallMsg, target, formdata );
-						}
-					);
+						var formdata = confirmModal.$element.find('form').serializeArray();
+						self.doAction(id, mode, wallMsg, target, formdata );
+						confirmModal.close();
+					} );
 					confirmModal.$element.find('textarea.wall-action-reason').bind('keydown keyup change', function(e) {
 						var target = $(e.target);
 						if(target.val().length > 0) {
