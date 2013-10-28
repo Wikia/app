@@ -149,6 +149,7 @@ class MarketingToolboxModuleFromthecommunityServiceTest extends WikiaBaseTest {
 					'userUrl' => 'http://www.assassinscreed.wikia.com/wiki/User:Master_Sima_Yi',
 					'wikiUrl' => 'assassinscreed.wikia.com',
 					'quote' => 'Just a simple description. Visit <a href="nandytest.wikia.com/">nAndy wiki</a> to order some food!',
+					'photoName' => 'First SLS Roadster.jpg',
 				),
 			)
 		);
@@ -194,6 +195,7 @@ class MarketingToolboxModuleFromthecommunityServiceTest extends WikiaBaseTest {
 					'userUrl' => 'http://www.nandytest.wikia.com/wiki/User:Andrzej_Łukaszewski',
 					'wikiUrl' => 'nandytest.wikia.com',
 					'quote' => 'Pure awesomeness...',
+					'photoName' => 'FakeImage.png'
 				),
 			)
 		);
@@ -228,6 +230,7 @@ class MarketingToolboxModuleFromthecommunityServiceTest extends WikiaBaseTest {
 					'userUrl' => 'http://www.assassinscreed.wikia.com/wiki/User:Master_Sima_Yi',
 					'wikiUrl' => 'assassinscreed.wikia.com',
 					'quote' => 'Just a simple description. Visit <a href="nandytest.wikia.com/">nAndy wiki</a> to order some food!',
+					'photoName' => null,
 				),
 				array(
 					'articleTitle' => 'Kotleciarnia',
@@ -238,6 +241,7 @@ class MarketingToolboxModuleFromthecommunityServiceTest extends WikiaBaseTest {
 					'userUrl' => 'http://www.nandytest.wikia.com/wiki/User:Andrzej_Łukaszewski',
 					'wikiUrl' => 'nandytest.wikia.com',
 					'quote' => 'Pure awesomeness...',
+					'photoName' => 'FakeImage.png',
 				),
 			)
 		);
