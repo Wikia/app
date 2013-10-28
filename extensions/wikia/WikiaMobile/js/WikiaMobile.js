@@ -1,5 +1,5 @@
-require(['wikia.querystring', require.optional('topbar'), require.optional('toc'), require.optional('share'), require.optional('popover'), require.optional('wikia.cookies'), 'track', 'wikia.videoBootstrap', 'wikia.window', 'jquery'],
-	function (qs, topbar, toc, share, popover, cookies, track, VideoBootstrap, window, $) {
+require(['wikia.querystring', require.optional('wikia.cookies'), 'track', 'wikia.window', 'jquery'],
+	function (qs, cookies, track, window, $) {
 		'use strict';
 
 		var d = window.document,

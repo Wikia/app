@@ -98,7 +98,7 @@ $toc-background: #F8F8F8;
 $level0-padding: 20px;
 $level0-border-left-width: 3px;
 
-.level0 {
+.level1 {
 	padding: 0 0 $header-height 0;
 	overflow-x: hidden;
 	overflow-y: scroll;
@@ -128,11 +128,9 @@ $level0-border-left-width: 3px;
 			border-left: $level0-border-left-width solid $nice-blue;
 		}
 	}
-
-
 }
 
-.level1 {
+.level2 {
 	> li {
 		counter-increment: level2;
 
@@ -149,7 +147,7 @@ $level0-border-left-width: 3px;
 
 }
 
-.level2 {
+.level3 {
 	border-top: 1px solid #F0F0F0;
 
 	> li {
@@ -165,7 +163,7 @@ $level0-border-left-width: 3px;
 	}
 }
 
-.level1 {
+.level2 {
 	display:none;
 
 	.open & {
@@ -173,7 +171,7 @@ $level0-border-left-width: 3px;
 	}
 }
 
-.level1, .level2 {
+.level2, .level3 {
 
 	li {
 		border-bottom: 1px solid #F0F0F0;
