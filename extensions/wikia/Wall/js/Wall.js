@@ -458,23 +458,23 @@ var Wall = $.createClass(Object, {
 			uiFactory.init( [ 'button', 'modal' ] ).then( function( uiButton, uiModal ) {
 				var modalId = 'WallConfirm',
 					modalPrimaryBtn = uiButton.render( {
-						'type': 'link',
-						'vars': {
-							'id': 'ok',
-							'href': '#',
-							'classes': [ 'normal', 'primary' ],
-							'value': okmsg,
-							'title': okmsg
+						type: 'link',
+						vars: {
+							id: 'ok',
+							href: '#',
+							classes: [ 'normal', 'primary' ],
+							value: okmsg,
+							title: okmsg
 						}
 					} ),
 					modalSecondaryBtn = uiButton.render( {
-						'type': 'link',
-						'vars': {
-							'id': 'cancel',
-							'href': '#',
-							'classes': [ 'normal', 'secondary' ],
-							'value': cancelmsg,
-							'title': cancelmsg
+						type: 'link',
+						vars: {
+							id: 'cancel',
+							href: '#',
+							classes: [ 'normal', 'secondary' ],
+							value: cancelmsg,
+							title: cancelmsg
 						}
 					}),
 					confirmModal = uiModal.render( {
