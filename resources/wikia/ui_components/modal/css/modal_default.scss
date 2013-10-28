@@ -34,20 +34,20 @@ $modal-secondary-color: darken( $color-page, 10% );
 	top: 50%;
 	@include transform-translate( -50%, -50% );
 
-	header,
-	footer {
+	> header,
+	> footer {
 		background-color: $modal-secondary-color;
 		height: 60px;
 	}
 
-	header,
-	section,
-	footer {
+	> header,
+	> section,
+	> footer {
 		padding: 20px;
 		@include box-sizing-border-box;
 	}
 
-	header h3 {
+	> header h3 {
 		color: $color-text;
 		font-size: 21px;
 		font-weight: bold;
@@ -59,7 +59,7 @@ $modal-secondary-color: darken( $color-page, 10% );
 		word-wrap: normal;
 	}
 
-	header .close {
+	> header .close {
 		background: url( $close-image );
 		background-size: 24px 24px;
 		display: block;
@@ -70,18 +70,18 @@ $modal-secondary-color: darken( $color-page, 10% );
 		width: 24px;
 	}
 
-	footer .button {
+	> footer .button {
 		float: right;
 	}
 
-	footer .button:last-child {
+	> footer .button:last-child {
 		margin: 0 20px;
 	}
 
 	&.small {
 		width: 400px;
 
-		section {
+		> section {
 			height: 100px;
 		}
 	}
@@ -89,14 +89,14 @@ $modal-secondary-color: darken( $color-page, 10% );
 	&.medium {
 		width: 700px;
 
-		section {
+		> section {
 			height: 400px;
 		}
 	}
 
 	&.small,
 	&.medium {
-		section {
+		> section {
 			overflow: hidden;
 			overflow-y: auto;
 		}
@@ -106,7 +106,7 @@ $modal-secondary-color: darken( $color-page, 10% );
 		height: calc( 100% - 50px );
 		width: calc( 100% - 50px );
 
-		footer {
+		> footer {
 			bottom: 0;
 			left: 0;
 			position: absolute;
