@@ -22,8 +22,52 @@ class TvApiController extends WikiaApiController {
 
 		$this->setWikiVariables();
 
-		$config = $this->getConfigFromRequest();
-		$this->setResponseFromConfig( $config);
+		$responseValues = $this->getExactMatch();
+		if ( $responseValues === null ) {
+			$config = $this->getConfigFromRequest();
+			$responseValues = $this->getResponseFromConfig( $config );
+		}
+
+		if ( empty( $responseValues['items'] ) ) {
+			throw new NotFoundApiException();
+		}
+
+		foreach($responseValues['items'] as &$item)
+		{
+			$item['contentUrl'] = $this->url.self::API_URL.$item['pageid'];
+		}
+
+		$response = $this->getResponse();
+		$response->setValues( $responseValues );
+
+		$response->setCacheValidity(
+			86400 /* 24h */,
+			86400 /* 24h */,
+			array(
+				WikiaResponse::CACHE_TARGET_BROWSER,
+				WikiaResponse::CACHE_TARGET_VARNISH
+			)
+		);
+	}
+
+	protected function getExactMatch() {
+		$query = $this->request->getVal( 'episodeName', null );
+		if ( $query !== null ) {
+			$serializedQuery = ucwords( $query );
+			$title = GlobalTitle::newFromText( $serializedQuery, NS_MAIN, $this->wikiId );
+			if ( $title->exists() ) {
+				$title->getContent();
+				if ( $title->isRedirect() ) {
+					$title = $title->getRedirectTarget();
+				}
+				return [ 'items' => [[
+					'title' => $title->getText(),
+					'url' => $title->getFullURL(),
+					'pageid' => $title->getArticleID()
+				]]];
+			}
+		}
+		return null;
 	}
 
 
@@ -78,7 +122,7 @@ class TvApiController extends WikiaApiController {
 		return $searchConfig;
 	}
 
-	protected function setResponseFromConfig( Wikia\Search\Config $searchConfig ) {
+	protected function getResponseFromConfig( Wikia\Search\Config $searchConfig ) {
 		if (! $searchConfig->getQuery()->hasTerms() ) {
 			throw new InvalidParameterApiException( 'episodeName' );
 		}
@@ -86,25 +130,6 @@ class TvApiController extends WikiaApiController {
 		//Standard Wikia API response with pagination values
 		$responseValues = (new Factory)->getFromConfig( $searchConfig )->searchAsApi( ['pageid' => 'id', 'title', 'url', 'ns' ], true );
 
-		if ( empty( $responseValues['items'] ) ) {
-			throw new NotFoundApiException();
-		}
-
-		foreach($responseValues['items'] as &$item)
-		{
-			$item['contentUrl'] = $this->url.self::API_URL.$item['pageid'];
-		}
-
-		$response = $this->getResponse();
-		$response->setValues( $responseValues );
-
-		$response->setCacheValidity(
-			86400 /* 24h */,
-			86400 /* 24h */,
-			array(
-				WikiaResponse::CACHE_TARGET_BROWSER,
-				WikiaResponse::CACHE_TARGET_VARNISH
-			)
-		);
+		return $responseValues;
 	}
 }
