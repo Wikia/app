@@ -185,7 +185,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.onSearchNearingEnd = function () {
  * @param {Object} item The search result item data.
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onSearchSelect = function ( item ) {
-	var cartItemModel, cartItems, i, page;
+	var cartItemModel, cartItems, i;
 	if ( item === null ) {
 		return;
 	}
@@ -222,7 +222,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.onCartSelect = function ( item ) {
  * @param {ve.dm.WikiaCartItem|null} items
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onCartAdd = function ( items ) {
-	var i, page
+	var i, page;
 	for ( i = 0; i < items.length; i++ ) {
 		// Add item media page
 		page = new ve.ui.WikiaMediaPageWidget( items[i], {
