@@ -418,7 +418,7 @@ var Wall = $.createClass(Object, {
 			cancelmsg,
 			okmsg,
 			form = $( '<form>'),
-			that = this;
+			self = this;
 
 		if( mode[1] ) {
 			submode = mode[1];
@@ -504,7 +504,7 @@ var Wall = $.createClass(Object, {
 					} );
 					confirmModal.$element.find( '#' + modalPrimaryBtnId ).click( function() {
 							var formdata = confirmModal.$element.find('form').serializeArray();
-							that.doAction(id, mode, wallMsg, target, formdata );
+							self.doAction(id, mode, wallMsg, target, formdata );
 						}
 					);
 					confirmModal.$element.find('textarea.wall-action-reason').bind('keydown keyup change', function(e) {
