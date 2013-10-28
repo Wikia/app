@@ -31,7 +31,7 @@ class CloseWikiPage extends SpecialPage {
 		$mRedirects 	= array(),
 		$mRedirect		= "",
 		$mFlags 		= array(),
-		$mUrlDump		= "http://dumps.wikia.net";
+		$mUrlDump		= "http://s3.amazonaws.com/wikia_xml_dumps/";
 
 	/**
 	 * constructor
