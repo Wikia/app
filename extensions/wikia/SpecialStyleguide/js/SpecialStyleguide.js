@@ -1,4 +1,4 @@
-require(['jquery'], function($) {
+require([ 'jquery' ], function( $ ) {
 	$(function() {
 
 		var $toc = $('#styleguideTOC');
@@ -59,5 +59,6 @@ require(['jquery'], function($) {
 		$('.example').on( 'click', 'a', function(event) {
 			event.preventDefault();
 		});
+
 	});
 });

@@ -1554,6 +1554,7 @@ $messages['ps'] = array(
 );
 
 /** Portuguese (português)
+ * @author Hamilton Abreu
  * @author Luckas
  * @author Malafaya
  * @author Rhaijin
@@ -1584,8 +1585,8 @@ $messages['pt'] = array(
 	'founderprogressbar-gallery-add-label' => 'Adicionar uma galeria de imagens',
 	'founderprogressbar-video-add-label' => 'Adicionar um vídeo',
 	'founderprogressbar-user-add5-label' => 'Alcançar 5 perfis de utilizadores',
-	'founderprogressbar-recentchanges-visit-description' => 'Mudanças recentes é uma versão mais avançada de atividade wiki. Você pode ver "diffs" que detalhe a mudança exata que foi feita para uma página, verifique reversions para alterações e ver mais detalhes do que você pode ver na atividade do wiki. É uma ferramenta de gerenciamento grande quando você precisa de mais informações.',
-	'founderprogressbar-wordmark-edit-label' => 'Fazer upload de uma marca',
+	'founderprogressbar-recentchanges-visit-description' => 'Mudanças Recentes é uma versão mais avançada da atividade da wiki. Pode ver «diferenças» que detalham a mudança exata feita a uma página, desfazer edições, e ver mais detalhes do que na atividade da wiki. É uma boa ferramenta de gestão para quando precisa de mais informação.',
+	'founderprogressbar-wordmark-edit-label' => 'Enviar um símbolo',
 	'founderprogressbar-fb-likes3-label' => 'Alcançar $1 Gostos no Facebook',
 	'founderprogressbar-total-edit300-label' => 'Alcançou {{PLURAL:$1|$1 edição|as $1 edições}}',
 	'founderprogressbar-bonus-photo-add10-label' => 'Adicionar mais $1 imagens',
@@ -2019,6 +2020,26 @@ $messages['uk'] = array(
 	'founderprogressbar-browse-page-name' => 'Огляд',
 );
 
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'founderprogressbar-completion-message' => 'Chúc mừng! Bạn đã làm được một công việc tuyệt vời và hoàn thành tất cả nhiệm vụ đến mốc 100%. Wiki của bạn là tốt trên đường tới thành công, hoặc thậm chí đã có. Cứ theo kịp các công việc tuyệt vời!',
+	'founderprogressbar-bonus-task-notice' => 'Lưu ý: Mỗi nhiệm vụ thưởng có thể được hoàn thành nhiều hơn một lần. Hoàn thành như nhiều như bạn cần phải nhận được 100%',
+	'founderprogressbar-page-add10-label' => 'Đạt được  $1   {{PLURAL:$1| page|pages}}',
+	'founderprogressbar-page-add10-description' => 'Cách tốt nhất để nhảy bắt đầu wiki của bạn là để bắt đầu thêm trang với các thông tin về chủ đề của bạn. Các trang tốt nhất có ít nhất một đoạn văn hay hai, và có thể liên kết đến các trang khác.',
+	'founderprogressbar-themedesigner-visit-label' => 'Tùy chỉnh chủ đề của bạn',
+	'founderprogressbar-themedesigner-visit-description' => 'Chủ đề thiết kế cho phép bạn chọn một chủ đề cho wiki của bạn, hoặc tạo ra các chủ đề của riêng bạn với công cụ đơn giản. Một chủ đề tùy chỉnh thực sự làm cho wiki của bạn duy nhất.',
+	'founderprogressbar-mainpage-edit-label' => 'Điền trang chính của bạn',
+	'founderprogressbar-mainpage-edit-description' => 'Khi mọi người truy cập trang chính wiki của bạn là điều đầu tiên mà người dùng sẽ thấy. Hãy chắc chắn rằng nó nói với họ những gì wiki của bạn là về, làm thế nào họ có thể giúp chỉnh sửa wiki, và làm nổi bật một số nội dung tốt nhất của wiki.',
+	'founderprogressbar-photo-add10-label' => 'Đạt được $1 {{PLURAL:$1|Photo|Hình ảnh}}',
+	'founderprogressbar-photo-add10-description' => 'Hình ảnh giúp minh họa những gì wiki của bạn là về và nghiên cứu cho thấy rằng những người được rút ra cho hình ảnh. Chúng tôi đề nghị ít nhất một hình ảnh trên mỗi trang, hơn nếu bạn đã có họ!',
+	'founderprogressbar-fb-likes3-label' => 'Đạt được $1 lượt thích trên Facebook',
+	'founderprogressbar-fb-likes3-description' => 'Chia sẻ là chăm sóc, và nó thực sự có thể giúp nhận được từ về wiki của bạn ra với phần còn lại của thế giới. Khuyến khích của bạn thành viên và độc giả "thích" của wiki của bạn chính trang trên Facebook để lây lan từ.',
+	'founderprogressbar-uncategorized-visit-label' => 'Xem hình ảnh chưa phân loại',
+	'founderprogressbar-uncategorized-visit-description' => 'Khi wiki của bạn có nội dung hơn nó có thể được dễ dàng để mất theo dõi của tổ chức. Ở trên đầu trang của nó bằng cách theo dõi trang mà không có thể loại, và thêm thể loại vào các trang đó để giữ cho họ có thể truy cập và tổ chức.',
+);
+
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Hydra
@@ -2073,6 +2094,8 @@ $messages['zh-hans'] = array(
 	'founderprogressbar-uncategorized-visit-label' => '查询未分类的页面',
 	'founderprogressbar-total-edit300-label' => '达到{{PLURAL:$1|$1次编辑|$1次编辑}}',
 	'founderprogressbar-bonus-photo-add10-label' => '添加$1张图片。',
+	'founderprogressbar-bonus-page-add5-label' => '加入$1更多页面',
+	'founderprogressbar-bonus-edit50-label' => '编辑$1更多页面',
 	'founderprogressbar-browse-page-name' => '浏览',
 );
 

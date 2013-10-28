@@ -255,6 +255,7 @@ $messages['qqq'] = array(
 	'wikiaPhotoGallery-upload-uploadtitle' => '{{Identical|Upload}}',
 	'wikiaPhotoGallery-upload-existingtext-onarticle' => '{{Identical|This page}}',
 	'wikiaPhotoGallery-upload-selectbutton' => '{{Identical|Select}}',
+	'galery-slider-read-more' => '{{Identical|Read more}}',
 );
 
 /** Afrikaans (Afrikaans)

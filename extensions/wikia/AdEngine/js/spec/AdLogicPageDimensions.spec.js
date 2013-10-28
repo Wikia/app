@@ -16,7 +16,8 @@ describe('AdLogicPageDimensions', function(){
 			logMock = function() {},
 			documentMock = {documentElement: {scrollHeight: pageLength, scrollWidth: 1280}},
 			slotTweakerMock = {hide: function() {}, show: function() {}},
-			adLogicPageDimensions = AdLogicPageDimensions(windowMock, documentMock, logMock, slotTweakerMock),
+			abTestMock = {getGroup: function () {}},
+			adLogicPageDimensions = AdLogicPageDimensions(windowMock, documentMock, logMock, slotTweakerMock, abTestMock),
 			fillInSlotCalled = false,
 			providerMock = {fillInSlot: function() { fillInSlotCalled = true; }};
 
@@ -142,7 +143,8 @@ describe('AdLogicPageDimensions', function(){
 			adShown,
 			adLoadCounter = 0,
 			slotTweakerMock = {hide: function () {adShown = false;}, show: function () {adShown = true;}},
-			adLogicPageDimensions = AdLogicPageDimensions(windowMock, documentMock, logMock, slotTweakerMock),
+			abTestMock = {getGroup: function () {}},
+			adLogicPageDimensions = AdLogicPageDimensions(windowMock, documentMock, logMock, slotTweakerMock, abTestMock),
 			providerMock = {fillInSlot: function () { adLoadCounter += 1; }};
 
 		documentMock.documentElement.scrollHeight = 1000;
