@@ -506,21 +506,6 @@ var Wall = $.createClass(Object, {
 			} );
 		} );
 
-		// TODO: Remove comment below once the implementation of "Remove message/thread" modal is finished
-		/*
-		$.confirm({
-			title: title,
-			content: msg,
-			cancelMsg: cancelmsg,
-			okMsg: okmsg,
-			width: 400,
-			onOk: this.proxy(function() {
-				var formdata = $('.modalWrapper form').serializeArray();
-				this.doAction(id, mode, wallMsg, target, formdata );
-			})
-		});
-		*/
-
 		if(mode !== 'rev') {
 			$('#WikiaConfirmOk').attr('disabled', 'disabled');
 		}
