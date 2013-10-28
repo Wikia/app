@@ -73,7 +73,7 @@ class MigrateWikisToSwift extends Maintenance {
 		}
 
 		$res = $this->db->select( 
-			[ 'city_list, city_image_migrate' ], 
+			[ 'city_list', 'city_image_migrate' ], 
 			[ 'city_list.city_id', 'city_list.city_dbname' ],
 			$where,
 			'MigrateImagesToSwift',
