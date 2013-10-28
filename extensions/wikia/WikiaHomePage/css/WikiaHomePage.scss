@@ -43,10 +43,6 @@
 $wikiahomepage-line-height: 16px;
 $color-wikiahome-border-primary-brand-color: #c7d1d8;
 
-.WikiaHome .WikiaArticle {
-    overflow: visible;
-}
-
 .WikiaHomePage {
 	@include clearfix;
 	clear: both;
