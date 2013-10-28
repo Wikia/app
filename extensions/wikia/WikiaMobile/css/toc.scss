@@ -44,7 +44,6 @@ $toc-background: #F8F8F8;
 	position: absolute;
 	right: -48px;
 	bottom: 75px;
-	border-radius: 0 3px 3px 0;
 	background-size: 80%;
 }
 
@@ -168,6 +167,10 @@ $level0-border-left-width: 3px;
 
 	.open & {
 		display: block;
+	}
+
+	> li:last-child {
+		border-bottom: none;
 	}
 }
 

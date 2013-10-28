@@ -6,9 +6,6 @@ require(['wikia.querystring', require.optional('wikia.cookies'), 'track', 'wikia
 			clickEvent = 'click',
 			$curtain;
 
-		//add chevrons to elements that need it
-		$(d.getElementsByClassName('addChev')).append('<span class=chev></span>');
-
 		//used to handle close tracking on Read More section
 		$(d.getElementById('wkRelPag')).on('click', '.open', function(){
 			if (this.children[0].className.indexOf('open') > -1) {

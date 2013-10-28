@@ -25,6 +25,28 @@ require(['sections', 'wikia.window', 'jquery', 'wikia.mustache', 'wikia.toc'],
 			};
 		});
 
+	function toggleLi($li, force){
+		if($li.is('.has-children') && $li.parent().is('.level1')) {
+			$li.siblings().removeClass('fixed bottom open');
+
+			if($li.toggleClass('open', force).hasClass('open')) {
+				state = 'fixed';
+				$li.addClass('fixed');
+
+				$openOl = $li.find('ol').first();
+				offsetTop = $openOl[0].offsetTop;
+				$parent = $openOl.parent();
+			}else {
+				state = null;
+				$li.removeClass('fixed bottom');
+
+				$openOl = null;
+			}
+
+			$ol.scrollTop($li[0].offsetTop - 45);
+		}
+	}
+
 	$toc = $('#wkTOC')
 		.append(mustache.render(ol, tocData, {
 			ol: ol,
@@ -43,25 +65,7 @@ require(['sections', 'wikia.window', 'jquery', 'wikia.mustache', 'wikia.toc'],
 			//() and . have to be escaped before passed to querySelector
 			sections.scrollTo($($a.attr('href').replace(/[()\.]/g, '\\$&')));
 
-			if($li.is('.has-children') && $li.parent().is('.level1')) {
-				$li.siblings().removeClass('fixed bottom open');
-
-				if($li.toggleClass('open').hasClass('open')) {
-					state = 'fixed';
-					$li.addClass('fixed');
-
-					$openOl = $li.find('ol').first();
-					offsetTop = $openOl[0].offsetTop;
-					$parent = $openOl.parent();
-				}else {
-					state = null;
-					$li.removeClass('fixed bottom');
-
-					$openOl = null;
-				}
-
-				$ol.scrollTop(this.offsetTop - 45);
-			}
+			toggleLi($li);
 		});
 
 	$ol = $toc.find('.level1')
@@ -95,18 +99,26 @@ require(['sections', 'wikia.window', 'jquery', 'wikia.mustache', 'wikia.toc'],
 
 	$anchors = $ol.find('li > a');
 
-	function onSectionChange(event, data){
+	function onSectionChange(event, data, scrollTo){
 		if(data && data.id) {
 			$anchors.filter('.current').removeClass('current');
 
-			$anchors
-				.filter('a[href="#' + data.id + '"]')
-				.addClass('current')
-				.parents('li')
-				.last()
-				.find('a')
-				.first()
-				.addClass('current');
+			var $current = $anchors
+					.filter('a[href="#' + data.id + '"]')
+					.addClass('current'),
+				$currentLi = $current
+					.parents('li')
+					.last();
+
+			$currentLi
+					.find('a')
+					.first()
+					.addClass('current');
+
+			if(scrollTo){
+				toggleLi($currentLi, true);
+				$ol.scrollTop($current.parent()[0].offsetTop - 90);
+			}
 		}
 	}
 
@@ -118,6 +130,8 @@ require(['sections', 'wikia.window', 'jquery', 'wikia.mustache', 'wikia.toc'],
 
 	function onOpen() {
 		$document.on('section:changed', onSectionChange);
+
+		onSectionChange(null, sections.current()[0], true);
 	}
 
 	function onClose() {

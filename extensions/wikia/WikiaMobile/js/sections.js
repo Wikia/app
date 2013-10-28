@@ -22,8 +22,6 @@ define('sections', ['jquery'], function($){
 
 	function current(){
 		var top = window.scrollY,
-			section,
-			last,
 			i = 0;
 
 		for(;i < l;i++) {
@@ -58,17 +56,7 @@ define('sections', ['jquery'], function($){
 		}
 	});
 
-	function enableTracking() {
-
-	}
-
-	function disableTracking() {
-
-	}
-
 	return {
-		enableTracking: enableTracking,
-		disableTracking: disableTracking,
 		init: function(){},
 		scrollTo: scrollTo,
 		current: current
