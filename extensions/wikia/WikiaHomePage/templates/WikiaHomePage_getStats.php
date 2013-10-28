@@ -6,8 +6,8 @@
 					'WikiaStyleGuideTooltipIconController',
 					'index',
 					[
-						'text' => wfMessage( 'wikiahome-stats-visitors' )->parse(),
-						'tooltipIconTitle' => wfMessage( 'wikiahome-stats-visitors-tooltip' )->text()
+						'text' => wfMessage( 'wikiahome-stats-visitors' )->plain(),
+						'tooltipIconTitle' => wfMessage( 'wikiahome-stats-visitors-tooltip' )->plain()
 					]
 				);
 			?></h4>
@@ -15,7 +15,7 @@
 	</div>
     <div class="datasection">
         <h4><?= wfMessage('wikiahome-stats-mobile-percentage')->text(); ?></h4>
-        <strong><?= wfMessage('wikiahome-stats-mobile-percentage-value', $mobilePercentage)->text(); ?></strong>
+        <strong><?= wfMessage('wikiahome-stats-mobile-percentage-value', $mobilePercentage)->plain(); ?></strong>
     </div>
     <div class="datasection firstrowcell">
         <h4><?= wfMessage('wikiahome-stats-totalpages')->text(); ?></h4>
