@@ -19,7 +19,10 @@ $messages['en'] = array(
 
 	'wikiahome-stats-heading' => 'Collaboration in action',
 	'wikiahome-stats-visitors' => 'Monthly visitors',
+	'wikiahome-stats-visitors-tooltip' => 'Monthly Visitors is based on Quantcast\'s Global "People" metric which is composed of online and mobile web.',
 	'wikiahome-stats-mobile-visitors' => 'Monthly mobile visitors',
+	'wikiahome-stats-mobile-percentage' => '% Mobile Visitors',
+	'wikiahome-stats-mobile-percentage-value' => '$1%',
 	'wikiahome-stats-edits' => 'Changes today',
 	'wikiahome-stats-communities' => 'Total Communities',
 	'wikiahome-stats-new-communities' => 'Communities today',
@@ -142,11 +145,16 @@ $messages['de'] = array(
 
 	'wikiahome-stats-heading' => 'Interaktive Zusammenarbeit',
 	'wikiahome-stats-visitors' => 'Monatliche Besucher',
+	'wikiahome-stats-visitors-tooltip' => 'Die Anzahl der monatlichen Besucher basiert auf der "Globalen Besucher" Metrik von Quantcast, bestehend aus Desktop und Mobilem Internet.',
+
 	'wikiahome-stats-edits' => 'Änderungen heute',
 	'wikiahome-stats-communities' => 'Anzahl Communities',
 	'wikiahome-stats-totalpages' => 'Seiten gesamt',
 	'wikiahome-stats-mobile-visitors' => 'Von mobilen Geräten',
 	'wikiahome-stats-new-communities' => 'Neue Wikis heute',
+
+	'wikiahome-stats-mobile-percentage' => '% Besucher von mobilen Geräten',
+	'wikiahome-stats-mobile-percentage-value' => '$1%',
 
 	'wikia-home-page-preview' => 'Vorschau',
 	'wikia-home-page-visit' => 'Aufrufen',
@@ -250,10 +258,14 @@ $messages['es'] = array(
 
 	'wikiahome-stats-heading' => 'La colaboración en acción',
 	'wikiahome-stats-visitors' => 'Visitantes mensuales',
+	'wikiahome-stats-visitors-tooltip' => 'El número de visitantes mensuales se basa en la medición de "Gente" en Quantcast, que se compone por visitas online y desde móviles.',
 	'wikiahome-stats-edits' => 'Cambios hechos hoy',
 	'wikiahome-stats-communities' => 'Comunidades en total',
 	'wikiahome-stats-totalpages' => 'Páginas en total',
 	'wikiahome-stats-mobile-visitors' => 'Desde móviles',
+	'wikiahome-stats-mobile-percentage' => '% desde móviles',
+	'wikiahome-stats-mobile-percentage-value' => '$1%',
+
 	'wikiahome-stats-new-communities' => 'Nuevas comunidades',
 
 	'wikia-home-page-preview' => 'Previsualizar',
@@ -372,10 +384,13 @@ $messages['fr'] = array(
 
 	'wikiahome-stats-heading' => 'La collaboration en action',
 	'wikiahome-stats-visitors' => 'Visiteurs / mois',
+	'wikiahome-stats-visitors-tooltip' => 'Le nombre de visiteurs par mois est basé sur la mesure globale « Personnes » de Quantcast, qui est composée des accès en ligne et depuis les appareils mobiles.',
 	'wikiahome-stats-edits' => 'Modifications / jour',
 	'wikiahome-stats-communities' => 'Communautés totales',
 	'wikiahome-stats-totalpages' => 'Pages totales',
 	'wikiahome-stats-mobile-visitors' => 'Visiteurs mobiles / mois',
+	'wikiahome-stats-mobile-percentage' => '% visiteurs mobiles',
+	'wikiahome-stats-mobile-percentage-value' => '$1%',
 	'wikiahome-stats-new-communities' => 'Communautés / jour',
 
 	'wikia-home-page-preview' => 'Aperçu',
@@ -473,7 +488,10 @@ $messages['pl'] = array(
 
 	'wikiahome-stats-heading' => 'Współpraca w akcji',
 	'wikiahome-stats-visitors' => 'Miesięcznych odwiedzin',
+	'wikiahome-stats-visitors-tooltip' => 'Miesięczne odwiedziny na podstawie danych Quantcast z sekcji "People", zawierających odwiedziny stacjonarne i mobilne.',
 	'wikiahome-stats-mobile-visitors' => 'Mobilnych odwiedzin',
+	'wikiahome-stats-mobile-percentage' => '% Mobilnych odwiedzin',
+	'wikiahome-stats-mobile-percentage-value' => '$1%',
 	'wikiahome-stats-edits' => 'Zmian dzisiaj',
 	'wikiahome-stats-communities' => 'Społeczności łącznie',
 	'wikiahome-stats-new-communities' => 'Społeczności dzisiaj',
