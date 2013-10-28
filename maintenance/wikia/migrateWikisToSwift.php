@@ -73,7 +73,7 @@ class MigrateWikisToSwift extends Maintenance {
 			'MigrateImagesToSwift',
 			[ 'ORDER BY' => 'city_id', 'LIMIT' => $limit ],
 			[ 'city_image_migrate' => 
-				[ 'LEFT JOIN', [ 'city_image_migrate.city_id = city_list.city_id', 'city_image_migrate.locked is null' ] ]
+				[ 'LEFT JOIN', [ 'city_image_migrate.city_id = city_list.city_id', 'city_image_migrate.locked is not null' ] ]
 			] 
 		);
 
