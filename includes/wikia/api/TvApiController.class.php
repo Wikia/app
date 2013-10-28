@@ -55,11 +55,10 @@ class TvApiController extends WikiaApiController {
 		if ( $query !== null ) {
 			$serializedQuery = ucwords( $query );
 			$title = GlobalTitle::newFromText( $serializedQuery, NS_MAIN, $this->wikiId );
-			if ( $title->exists() ) {
-				$title->getContent();
-				if ( $title->isRedirect() ) {
-					$title = $title->getRedirectTarget();
-				}
+			if ( $title->isRedirect() ) {
+				$title = $title->getRedirectTarget();
+			}
+			if($title->exists()) {
 				return [ 'items' => [[
 					'title' => $title->getText(),
 					'url' => $title->getFullURL(),
@@ -115,7 +114,7 @@ class TvApiController extends WikiaApiController {
 			->setRank( static::RANK_SETTING )
 			->setWikiId($this->wikiId)
 			->setVideoSearch( false )
-			->setOnWiki(true)
+			->setOnEntertainment(true)
 			->setNamespaces([0,14]);
 		;
 
