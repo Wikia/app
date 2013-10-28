@@ -493,6 +493,14 @@ var Wall = $.createClass(Object, {
 
 				require( [ 'wikia.ui.modal' ], function( modal ) {
 					confirmModal = modal.init( modalId, confirmModal );
+					confirmModal.$element.find( '#cancel' ).click( function() {
+						confirmModal.close();
+					} );
+					confirmModal.$element.find( '#ok' ).click( this.proxy( function() {
+							var formdata = confirmModal.$element.find('form').serializeArray();
+							this.doAction(id, mode, wallMsg, target, formdata );
+						}
+					) );
 					confirmModal.show();
 				} );
 			} );
