@@ -8,7 +8,7 @@ var ThemeDesigner = {
 	minSliderValue: 0,
 	$slider: null,
 
-	init: function(fluidlayout) {
+	init: function() {
 		'use strict';
 
 		var that = this;
@@ -24,7 +24,8 @@ var ThemeDesigner = {
 		this.themes = window.themes;
 
 		// min width for dynamic is equal to our breakpoint
-		this.minWidthForDynamicBackground = fluidlayout.getBreakpointContent();
+		// TODO: When refactoring ThemeDesigner into AMD module, use wikia.fluidlayout.getBreakpointContent
+		this.minWidthForDynamicBackground = 1030;
 
 
 		//$().log(ThemeDesigner, 'ThemeDesigner');
@@ -589,7 +590,7 @@ var ThemeDesigner = {
 	 *
 	 * @author: Inez Korczynski
 	 */
-	wordmarkUpload: function(/*e*/) {
+	wordmarkUpload: function() {
 		'use strict';
 
 		return $('#WordMarkUploadFile').val() !== '';
@@ -616,7 +617,7 @@ var ThemeDesigner = {
 		}
 	},
 
-	faviconUpload: function(/*e*/) {
+	faviconUpload: function() {
 		'use strict';
 		// do validation
 	},
@@ -660,7 +661,7 @@ var ThemeDesigner = {
 	 *
 	 * @author: Inez Korczynski
 	 */
-	backgroundImageUpload: function(/*e*/) {
+	backgroundImageUpload: function() {
 		'use strict';
 
 		return $('#BackgroundImageForm').find('input[type="file"]').val() !== '';
@@ -891,7 +892,7 @@ var ThemeDesigner = {
 		}
 
 		$.post(window.returnTo, {
-			action:'purge'
+			action: 'purge'
 		}, function() {
 			$().log('URL "' + window.returnTo + '" has been purged', 'ThemeDesigner');
 
@@ -1086,7 +1087,5 @@ var ThemeDesigner = {
 $(function() {
 	'use strict';
 
-	require(['wikia.fluidlayout'], function(fluidlayout) {
-		ThemeDesigner.init(fluidlayout);
-	});
+	ThemeDesigner.init();
 });
