@@ -198,7 +198,7 @@ class OasisController extends WikiaController {
 
 		$mainSassFile = 'skins/oasis/css/oasis.scss';
 		if (!empty($sassFiles)) {
-			$sassFiles[] = $mainSassFile;
+			array_unshift($sassFiles, $mainSassFile);
 			$sassFiles = $this->assetsManager->getSassFilePath($sassFiles);
 			$sassFilesUrl = $this->assetsManager->getSassesUrl($sassFiles);
 
