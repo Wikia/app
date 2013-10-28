@@ -72,7 +72,7 @@ class WikiEntitiesServiceTest extends WikiaBaseTest
 	}
 	
 	/**
-	 * @covers Wikia\NLP\Entities\WikiEntitiesService::registerEntitiesWithDFP
+	 * @covers Wikia\NLP\Entities\WikiEntitiesService::registerLdaTopicsWithDFP
 	 */
 	public function testLdaTopicsWithDFP() {
 		$service = $this->getMock( self::CLASSNAME, [ 'getMwService', 'getLdaTopics' ] );
