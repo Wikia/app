@@ -441,7 +441,7 @@ var Wall = $.createClass(Object, {
 			form.append( $('<div>').text( $.msg('wall-action-'+mode+'-'+ type +'-confirm-info') ).addClass('subtle') );
 			if(mode === 'admin' || mode === 'remove' ) {
 				form.append( $('<input>').attr({'name':'notify-admin', 'id':'notify-admin','type':'checkbox'}) );
-				form.append( $('<label>').text( $.msg('wall-action-all-confirm-notify') ) );
+				form.append( $('<label for="notify-admin">').text( $.msg('wall-action-all-confirm-notify') ) );
 			}
 		}
 		msg += '<form>'+form.html()+'</form>';
