@@ -328,7 +328,7 @@ var Wall = $.createClass(Object, {
 	showVotersModal: function(e) {
 		var target = $(e.target),
 			id = target.closest('li.message').data('id'),
-			votes = parseInt( target.closest('.votes').data('votes'), 10);
+			votes = parseInt( target.closest('.votes').data('votes'), 10 );
 
 		if(votes > 0) {
 			$.nirvana.sendRequest( {
@@ -458,17 +458,19 @@ var Wall = $.createClass(Object, {
 		require( [ 'wikia.ui.factory' ], function( uiFactory ) {
 			uiFactory.init( [ 'button', 'modal' ] ).then( function( uiButton, uiModal ) {
 				var modalId = 'WallConfirm',
+					modalSecondaryBtnId = 'WikiaConfirmCancel',
 					modalSecondaryBtn = uiButton.render( {
 						type: 'button',
 						vars: {
-							id: 'cancel',
+							id: modalSecondaryBtnId,
 							type: 'button',
 							classes: [ 'normal', 'secondary' ],
 							value: cancelmsg
 						}
 					}),
+					modalPrimaryBtnId = 'WikiaConfirmOk',
 					modalPrimaryBtnVars = {
-						id: 'ok',
+						id: modalPrimaryBtnId,
 						type: 'button',
 						classes: [ 'normal', 'primary' ],
 						value: okmsg
@@ -497,10 +499,10 @@ var Wall = $.createClass(Object, {
 
 				require( [ 'wikia.ui.modal' ], function( modal ) {
 					confirmModal = modal.init( modalId, confirmModal );
-					confirmModal.$element.find( '#cancel' ).click( function() {
+					confirmModal.$element.find( '#' + modalSecondaryBtnId ).click( function() {
 						confirmModal.close();
 					} );
-					confirmModal.$element.find( '#ok' ).click( function() {
+					confirmModal.$element.find( '#' + modalPrimaryBtnId ).click( function() {
 							var formdata = confirmModal.$element.find('form').serializeArray();
 							that.doAction(id, mode, wallMsg, target, formdata );
 						}
@@ -508,9 +510,9 @@ var Wall = $.createClass(Object, {
 					confirmModal.$element.find('textarea.wall-action-reason').bind('keydown keyup change', function(e) {
 						var target = $(e.target);
 						if(target.val().length > 0) {
-							confirmModal.$element.find( '#ok' ).removeAttr('disabled');
+							confirmModal.$element.find( '#' + modalPrimaryBtnId ).removeAttr('disabled');
 						} else {
-							confirmModal.$element.find( '#ok' ).attr('disabled', 'disabled');
+							confirmModal.$element.find( '#' + modalPrimaryBtnId ).attr('disabled', 'disabled');
 						}
 					});
 					confirmModal.show();
