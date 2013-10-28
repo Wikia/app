@@ -372,14 +372,15 @@ class WikiService extends WikiaModel {
 	}
 
 	public function getWikiWordmark( $wikiId ) {
-
 		$url = '';
 		$history = WikiFactory::getVarByName( 'wgOasisThemeSettingsHistory', $wikiId );
 		$settings = unserialize( $history->cv_value );
-		$currentSettings =  end( $settings );
+		if ( $settings !== false ) {
+			$currentSettings =  end( $settings );
 
-		if ( isset( $currentSettings['settings'] ) && !empty( $currentSettings['settings']['wordmark-image-url'] ) ) {
-				$url = wfReplaceImageServer( $currentSettings['settings']['wordmark-image-url'], $currentSettings['timestamp'] );
+			if ( isset( $currentSettings['settings'] ) && !empty( $currentSettings['settings']['wordmark-image-url'] ) ) {
+					$url = wfReplaceImageServer( $currentSettings['settings']['wordmark-image-url'], $currentSettings['timestamp'] );
+			}
 		}
 		return $url;
 	}
