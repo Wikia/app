@@ -411,8 +411,8 @@ class WAMPageModel extends WikiaModel {
 	 * @param $title
 	 * @return null|Title
 	 */
-	public function getWAMRedirect($title) {
-		wfProfileIn(__METHOD__);
+	public function getWAMRedirect( $title ) {
+		wfProfileIn( __METHOD__ );
 		$newTabTitle = null;
 
 		if( $title instanceof Title && $title->isSubpage() ) {
@@ -420,16 +420,16 @@ class WAMPageModel extends WikiaModel {
 
 			$wamRedirects = $this->getWAMRedirectsList();
 			if ( isset( $wamRedirects[$titleText] ) ) {
-				$newTabTitle = $this->getTitleFromText($this->getWAMMainPageName() . '/' . $wamRedirects[$titleText]);
+				$newTabTitle = $this->getTitleFromText( $this->getWAMMainPageName() . '/' . $wamRedirects[$titleText] );
 			}
 		}
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 		return $newTabTitle;
 	}
 
 	protected function getWAMRedirectsList() {
-		wfProfileIn(__METHOD__);
+		wfProfileIn( __METHOD__ );
 		global $wgWAMRedirects;
 
 		$out = [];
