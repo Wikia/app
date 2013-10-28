@@ -437,9 +437,9 @@ var Wall = $.createClass(Object, {
 		//delete && remove
 		msg = $.msg('wall-action-'+mode+'-confirm');
 		form.append( $('<textarea>').attr({'class':'wall-action-reason','name':'reason','id':'reason'}) );
-		if(mode != 'restore') {
+		if(mode !== 'restore') {
 			form.append( $('<div>').text( $.msg('wall-action-'+mode+'-'+ type +'-confirm-info') ).addClass('subtle') );
-			if(mode == 'admin' || mode == 'remove' ) {
+			if(mode === 'admin' || mode === 'remove' ) {
 				form.append( $('<input>').attr({'name':'notify-admin', 'id':'notify-admin','type':'checkbox'}) );
 				form.append( $('<label>').text( $.msg('wall-action-all-confirm-notify') ) );
 			}
