@@ -742,6 +742,7 @@ var Wall = $.createClass(Object, {
 	},
 
 	moveThread: function(e) {
+		e.preventDefault();
 		var id = $(e.target).closest('.message').data('id');
 		$.nirvana.sendRequest({
 			controller: 'WallExternalController',
@@ -751,36 +752,86 @@ var Wall = $.createClass(Object, {
 				id: id
 			},
 			callback: function(html) {
-				var dialog = $(html).makeModal({
-					'width': 500
-				});
-				var buttons = $('.modalToolbar button'),
-					form = new WikiaForm(dialog.find('.WikiaForm'));
-				dialog.on('click.Wall', '.cancel', function(e) {
-					dialog.closeModal();
-				}).on('click.Wall', '.submit', function(e) {
-					buttons.attr('disabled', true);
-					$.nirvana.sendRequest({
-						controller: 'WallExternalController',
-						method: 'moveThread',
-						format: 'json',
-						data: {
-							destinationBoardId: dialog.find('.destinationBoardId option:selected').val(),
-							rootMessageId: id
-						},
-						callback: function(json) {
-							if(json.status === 'ok') {
-								Wikia.Querystring().addCb().goTo();
-							} else if(json.status === 'error') {
-								form.clearAllInputErrors();
-								if(json.errorfield) {
-									form.showInputError(json.errorfield, json.errormsg);
-								} else {
-									form.showGenericError(json.errormsg);
+				require( [ 'wikia.ui.factory' ], function( uiFactory ) {
+					uiFactory.init( [ 'button', 'modal' ] ).then( function( uiButton, uiModal ) {
+						var modalId = 'WallMoveModalWrapper',
+							cancelMsg = $.msg( 'cancel'),
+							moveThreadMsg = $.msg( 'wall-action-move-thread-ok'),
+							modalPrimaryBtn = uiButton.render( {
+								'type': 'button',
+								'vars': {
+									'id': '',
+									'type': 'button',
+									'href': '#',
+									'classes': [ 'normal', 'primary', 'submit' ],
+									'value': moveThreadMsg,
+									'title': moveThreadMsg
 								}
-								buttons.removeAttr('disabled');
-							}
-						}
+							} ),
+							modalSecondaryBtn = uiButton.render( {
+								'type': 'button',
+								'vars': {
+									'id': '',
+									'type': 'button',
+									'href': '#',
+									'classes': [ 'normal', 'secondary', 'cancel'],
+									'value': cancelMsg,
+									'title': cancelMsg
+								}
+							}),
+							moveThreadModal = uiModal.render( {
+								type: 'default',
+								vars: {
+									id: modalId,
+									size: 'small',
+									content: html,
+									title: $.msg( 'wall-action-move-thread-heading' ),
+									closeButton: true,
+									closeText: $.msg( 'close' ),
+									primaryBtn: modalPrimaryBtn,
+									secondBtn: modalSecondaryBtn
+								}
+							} );
+
+						require( [ 'wikia.ui.modal' ], function( modal ) {
+							moveThreadModal = modal.init( modalId, moveThreadModal );
+
+							moveThreadModal.show();
+
+							var dialog = $('#' + modalId),
+								buttons = dialog.find('.buttons').children('.button'),
+								form = new WikiaForm(dialog.find('.WikiaForm'));
+
+							dialog.on('click.Wall', '.cancel', function(e) {
+								e.preventDefault();
+								moveThreadModal.close();
+							}).on('click.Wall', '.submit', function(e) {
+								e.preventDefault();
+								buttons.attr('disabled', true);
+								$.nirvana.sendRequest({
+									controller: 'WallExternalController',
+									method: 'moveThread',
+									format: 'json',
+									data: {
+										destinationBoardId: dialog.find('.destinationBoardId option:selected').val(),
+										rootMessageId: id
+									},
+									callback: function(json) {
+										if(json.status === 'ok') {
+											Wikia.Querystring().addCb().goTo();
+										} else if(json.status === 'error') {
+											form.clearAllInputErrors();
+											if(json.errorfield) {
+												form.showInputError(json.errorfield, json.errormsg);
+											} else {
+												form.showGenericError(json.errormsg);
+											}
+											buttons.removeAttr('disabled');
+										}
+									}
+								});
+							});
+						});
 					});
 				});
 			}
