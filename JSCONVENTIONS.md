@@ -472,6 +472,7 @@ All JS should be written as AMD modules so see [above](#amd-modules) for matchin
 * [jQuery's JS Style Gude](https://github.com/jquery/contribute.jquery.org/blob/master/pages/style-guide/js.md)
 * [Douglas Crockford's Code Conventions for the JavaScript Programming Language](http://javascript.crockford.com/code.html)
 * [AirBnb's JS Style Guide](https://github.com/airbnb/javascript)
+* [JSLint](http://www.jslint.com/)
 
 ## To Do
 * Submit for feedback to engineering team
