@@ -11,7 +11,7 @@ define('sections', ['jquery'], function($){
 	'use strict';
 
 	var d = document,
-		sections = $('h2[id],h3[id],h4[id]', document.getElementById('mw-content-text')).toArray(),
+		sections = $('h2[id],h3[id],h4[id]', document.getElementById('wkPage')).toArray(),
 		l = sections.length,
 		lastSection,
 		timeout;
