@@ -3,6 +3,9 @@ use Wikia\Search\Config, Wikia\Search\QueryService\Factory, Wikia\Search\QuerySe
 class TvApiController extends WikiaApiController {
 
 	//const PARAMETER_NAMESPACES = 'namespaces';
+	const LIMIT_SETTING = 1;
+	const RANK_SETTING = 'default';
+	const LANG_SETTING = 'en';
 
 	public function getArticle() {
 		$this->setResponseFromConfig( $this->getConfigFromRequest() );
@@ -23,12 +26,11 @@ class TvApiController extends WikiaApiController {
 		$request = $this->getRequest();
 		$searchConfig = new Wikia\Search\Config;
 		$searchConfig->setQuery( $request->getVal( 'seriesName', null ) )
-			->setLimit( 1 )
-			->setPage( 1 )
+			->setLimit( static::LIMIT_SETTING )
 			->setRank( 'default' )
 			->setInterWiki( true )
 			->setCommercialUse( $this->hideNonCommercialContent() )
-			->setLanguageCode( $request->getVal( 'lang', 'en' ) )
+			->setLanguageCode( static::LANG_SETTING )
 			->setHub( 'Entertainment' )
 		;
 		return $searchConfig;
@@ -42,12 +44,12 @@ class TvApiController extends WikiaApiController {
 		$request = $this->getRequest();
 		$searchConfig = new Wikia\Search\Config;
 		$searchConfig->setQuery( $request->getVal( 'episodeName', null ) )
-			->setLimit( $request->getInt( 'limit', 1 ) )
-			->setPage( $request->getVal( 'batch', 1 ) )
-			->setLanguageCode($request->getVal( 'lang', 'en' ))
-			->setRank( $request->getVal( 'rank', 'default' ) )
+			->setLimit( static::LIMIT_SETTING )
+			->setPage( 1 )
+			->setLanguageCode( static::LANG_SETTING )
+			->setRank( static::RANK_SETTING )
 			->setWikiId($this->getWikiId())
-			->setVideoSearch( false  )
+			->setVideoSearch( false )
 			->setOnWiki(true)
 			->setNamespaces([0,14]);
 		;
