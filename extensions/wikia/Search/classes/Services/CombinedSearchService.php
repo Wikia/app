@@ -78,12 +78,15 @@ class CombinedSearchService {
 	}
 
 	private function processWiki( $wikiInfo ) {
+		$wikiService = new \WikiService();
+
 		$outputModel = [];
 		$outputModel['wikiId'] = $wikiInfo['id'];
 		$outputModel['name'] = $wikiInfo['sitename_txt'][0];
 		$outputModel['url'] = $wikiInfo['url'];
 		$outputModel['lang'] = $wikiInfo['lang_s'];
 		$outputModel['snippet'] = $wikiInfo['description_txt'];
+		$outputModel['wordmarkUrl'] = $wikiService->getWikiWordmark( $outputModel['wikiId'] );
 
 		$outputModel['topArticles'] = $this->getTopArticles( $outputModel['wikiId'], $outputModel['lang'] );
 

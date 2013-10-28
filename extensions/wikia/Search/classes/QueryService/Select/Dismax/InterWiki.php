@@ -2,7 +2,7 @@
 /**
  * Class definition for \Wikia\Search\QueryService\Select\Dismax\InterWiki
  */
-namespace \Wikia\Search\QueryService\Select\Dismax;
+namespace Wikia\Search\QueryService\Select\Dismax;
 use \Solarium_Query_Select, \Wikia\Search\Utilities;
 /**
  * This class is responsible for performing interwiki search queries.
