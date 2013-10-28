@@ -671,12 +671,12 @@ SQL;
 	}
 
 	/**
-	 * Set the LVS status of the file page to new for kept videos
+	 * Set the LVS status of the file page to new and swappable
 	 * @param integer $articleId - The ID of a video's file page
 	 */
 	public function setPageStatusNew( $articleId ) {
 		$status = $this->getPageStatus( $articleId );
-		$this->setFlag( $status, self::STATUS_NEW );
+		$this->setFlag( $status, self::STATUS_SWAPPABLE | self::STATUS_NEW );
 		$this->setPageStatus( $articleId, $status );
 	}
 
