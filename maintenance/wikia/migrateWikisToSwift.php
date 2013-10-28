@@ -12,6 +12,7 @@
 /* Table 
 CREATE table city_image_migrate (
 	city_id int UNSIGNED NOT NULL PRIMARY KEY,
+	lock tinyint(1) UNSIGNED DEFAULT NULL,
 	migration_date timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
 */
@@ -23,7 +24,8 @@ require_once( dirname( __FILE__ ) . '/../Maintenance.php' );
  */
 class MigrateWikisToSwift extends Maintenance {
 	CONST DEFAULT_LIMIT = 1000;
-	CONST CMD = 'http_proxy="" run_maintenance --db %s --script "wikia/migrateImagesToSwift.php"';
+	const MIGRATE_PACKAGE = 50;
+	CONST CMD = 'http_proxy="" run_maintenance --where="city_id in (%s)" --script "wikia/migrateImagesToSwift.php"';
 	
 	private $disabled_wikis = [ 717284, 298117 ];
 	private $db;
@@ -71,20 +73,34 @@ class MigrateWikisToSwift extends Maintenance {
 			'MigrateImagesToSwift',
 			[ 'ORDER BY' => 'city_id', 'LIMIT' => $limit ],
 			[ 'city_image_migrate' => 
-				[ 'LEFT JOIN', [ 'city_image_migrate.city_id = city_list.city_id' ] ]
+				[ 'LEFT JOIN', [ 'city_image_migrate.city_id = city_list.city_id', 'city_image_migrate.locked is null' ] ]
 			] 
 		);
 
+		$to_migrate = [];
+		$i = 0; $x = 0;
 		while ( $row = $res->fetchRow() ) {
 			$startTime = time();
-			$this->output( "\tMigrate {$row->city_dbname} ... " );
+			$this->output( "\tAdd {$row->city_dbname} to migration package ... " );
 			if ( in_array( $row->city_id, $this->disabled_wikis ) ) {
 				$this->output( "don't migrate it now \n" );
 				continue;
-			}
+			} 
+			
+			if ( $i == self::MIGRATE_PACKAGE ) $x++;
+			$to_migrate[ $x ][] = $row->city_id;
+			
+			$this->output( "done \n " );
+			$i++;
+		}
 
+		$this->output( "\n\nRun migrateImagesToSwift script \n" );
+
+		foreach ( $to_migrate as $id => $list_wikis ) {
 			# run main migration script written by Macbre
-			$cmd = sprintf( self::CMD, $row->city_dbname );
+			$wikis = implode(",", $list_wikis );
+			$this->output( "\tMigrate package {$id}: {$wikis} ... " );
+			$cmd = sprintf( self::CMD, $wikis );
 			if ( $debug ) {
 				$this->output( "\n\tRun cmd: {$cmd} \n" );
 			}
@@ -92,16 +108,14 @@ class MigrateWikisToSwift extends Maintenance {
 			if ( $retval ) {
 				$this->output( "Error code $retval: $result \n" );
 			} else {
-				$this->output( "Done in " . Wikia::timeDuration( time() - $this->time ) . "\n" );
-				
-				# update status in database 
-				$this->db->replace( 'city_image_migrate', [ 'city_id' ], [ 'city_id' => $row->city_id ], 'MigrateImagesToSwift' );
+				$this->output( "Done in " . Wikia::timeDuration( time() - $this->time ) . "\n" );				
 			}
 			
 			$migrated++;
+			$migrated_wikis = count( $list_wikis);
 		}
 
-		$this->output( sprintf( "\nMigrated %d Wikis in %s\n", $migrated, Wikia::timeDuration( time() - $this->time ) ) );
+		$this->output( sprintf( "\nMigrated %d Wikis (%d packages) in %s\n", $migrated_wikis, $migrated, Wikia::timeDuration( time() - $this->time ) ) );
 		$this->output( "\nDone!\n" );
 	}
 }

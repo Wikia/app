@@ -252,7 +252,7 @@ class MigrateImagesToSwift extends Maintenance {
 
 		// lock the wiki
 		$dbw = $this->getDB( DB_MASTER, array(), $wgExternalSharedDB );
-		$dbw->replace( 'city_image_migrate', [ 'city_id' ], [ 'city_id' => $wgCityId, 'lock' => 1 ], __CLASS__ );
+		$dbw->replace( 'city_image_migrate', [ 'city_id' ], [ 'city_id' => $wgCityId, 'locked' => 1 ], __CLASS__ );
 
 		// block uploads via WikiFactory
 		WikiFactory::setVarByName( 'wgEnableUploads',     $wgCityId, false, self::REASON );
@@ -327,7 +327,7 @@ class MigrateImagesToSwift extends Maintenance {
 		self::log( __CLASS__, 'migration ceompleted', self::LOG_MIGRATION_PROGRESS );
 
 		// unlock the wiki
-		$dbw->replace( 'city_image_migrate', [ 'city_id' ], [ 'city_id' => $wgCityId, 'lock' => 0 ], __CLASS__ );
+		$dbw->replace( 'city_image_migrate', [ 'city_id' ], [ 'city_id' => $wgCityId, 'locked' => 0 ], __CLASS__ );
 
 		// update wiki configuration
 		// enable Swift storage via WikiFactory
