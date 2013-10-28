@@ -1052,6 +1052,7 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 }
 
 .tooltip-icon-wrapper {
+    padding-right: 0.3em;
     position: relative;
     .tooltip-icon {
         @include tooltip-icon;
