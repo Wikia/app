@@ -85,7 +85,7 @@ class MigrateWikisToSwift extends Maintenance {
 
 		$to_migrate = [];
 		$i = 0; $x = 0;
-		while ( $row = $res->fetchRow() ) {
+		while ( $row = $res->fetchObject() ) {
 			$startTime = time();
 			$this->output( "\tAdd {$row->city_dbname} to migration package ... " );
 			if ( in_array( $row->city_id, $this->disabled_wikis ) ) {
