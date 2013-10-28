@@ -417,7 +417,8 @@ var Wall = $.createClass(Object, {
 			title,
 			cancelmsg,
 			okmsg,
-			form = $( '<form>' );
+			form = $( '<form>'),
+			that = this;
 
 		if( mode[1] ) {
 			submode = mode[1];
@@ -458,23 +459,21 @@ var Wall = $.createClass(Object, {
 			uiFactory.init( [ 'button', 'modal' ] ).then( function( uiButton, uiModal ) {
 				var modalId = 'WallConfirm',
 					modalPrimaryBtn = uiButton.render( {
-						type: 'link',
+						type: 'button',
 						vars: {
 							id: 'ok',
-							href: '#',
+							type: 'button',
 							classes: [ 'normal', 'primary' ],
-							value: okmsg,
-							title: okmsg
+							value: okmsg
 						}
 					} ),
 					modalSecondaryBtn = uiButton.render( {
-						type: 'link',
+						type: 'button',
 						vars: {
 							id: 'cancel',
-							href: '#',
+							type: 'button',
 							classes: [ 'normal', 'secondary' ],
-							value: cancelmsg,
-							title: cancelmsg
+							value: cancelmsg
 						}
 					}),
 					confirmModal = uiModal.render( {
@@ -496,11 +495,11 @@ var Wall = $.createClass(Object, {
 					confirmModal.$element.find( '#cancel' ).click( function() {
 						confirmModal.close();
 					} );
-					confirmModal.$element.find( '#ok' ).click( this.proxy( function() {
+					confirmModal.$element.find( '#ok' ).click( function() {
 							var formdata = confirmModal.$element.find('form').serializeArray();
-							this.doAction(id, mode, wallMsg, target, formdata );
+							that.doAction(id, mode, wallMsg, target, formdata );
 						}
-					) );
+					);
 					// @todo - implement this in new modals
 					/*
 					if(mode !== 'rev') {
