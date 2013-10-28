@@ -4,7 +4,7 @@ describe("Config tests suite", function() {
 
     //initializer function
     it("should be defined", function() {
-        expect(config.init).toBeDefined;
+        expect(config.init).toBeDefined();
     });
 
     it("should be a function", function() {

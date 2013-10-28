@@ -7,6 +7,8 @@
 
 define( 'editor', ['wikia.nirvana'], function( nirvana ){
 
+    'use strict';
+
     //textBox object from DOM
     var textBox = document.getElementById( 'wpTextbox1' ),
 
@@ -18,10 +20,11 @@ define( 'editor', ['wikia.nirvana'], function( nirvana ){
             snippet : false,
 
             //indicates sniffing for possible tag to close
-            tBlength : false,
+            textBoxlength : false,
 
             //indicates sniffing for possible API suggestions to come
-            suggestions : false
+            suggestions : false,
+
         },
 
         patterns = {
@@ -39,19 +42,21 @@ define( 'editor', ['wikia.nirvana'], function( nirvana ){
 
             //char separating extensions of a snippet
             extChar : ':'
-        }
+        };
 
     //inserts a phrase into textBox
     function insert( phrase ){
 
-        if( !phrase ) return;
+        if( !phrase ) {return;}
 
         //will store future shift of the caret if special caret string attached
         var caretShift = 0;
 
         // if there's no selection / caret position, set it to beginning of the text
-        if( !textBox.selectionStart && textBox.selectionEnd != 0 )
+        if( !textBox.selectionStart && textBox.selectionEnd !== 0 ){
+
             textBox.selectionStart = textBox.selectionEnd = 0;
+        }
 
         //if desired caret position is forced by special caret string
         if( phrase.match( patterns.caret )){
@@ -88,7 +93,7 @@ define( 'editor', ['wikia.nirvana'], function( nirvana ){
 
             closeTags();
 
-            watcher.tBlength = textBox.value.length;
+            watcher.textBoxlength = textBox.value.length;
         } );
     }
 
@@ -96,29 +101,34 @@ define( 'editor', ['wikia.nirvana'], function( nirvana ){
     function closeTags(){
 
         //check if a tag might've been closed
-        if( textBox.value[textBox.selectionStart-1] != '>' || textBox.value.length < watcher.tBlength) return;
+        if( textBox.value[textBox.selectionStart-1] !== '>'||
+            textBox.value.length < watcher.textBoxlength) {return;}
 
         var startPos = textBox.value.substring( 0, textBox.selectionStart - 1).lastIndexOf( '<' ),
             endPos = textBox.selectionStart - 1;
 
-        if( startPos != -1 && startPos > textBox.value.substring( 0, endPos ).lastIndexOf( '>' )
-            && !textBox.value.substring( startPos+1, endPos-1 ).match( patterns.snippetBreakers ) ){
+        if( startPos !== -1 && startPos > textBox.value.substring( 0, endPos ).lastIndexOf( '>' ) &&
+            !textBox.value.substring( startPos+1, endPos-1 ).match( patterns.snippetBreakers ) ){
 
             var tag = textBox.value.substring( startPos+1, endPos );
             var parityCheck = '_$' + textBox.value.substring( textBox.selectionStart,
                 textBox.selectionStart + tag.length + 3);
             var closure = '_$</' + tag + '>';
-            if( tag && closure != parityCheck ) insert( '_$</' + tag + '>' )
+            if( tag && closure !== parityCheck ) {
+
+                insert( '_$</' + tag + '>' );
+                watcher.tags = false;
+            }
         }
     }
 
     function initSuggestionBox(){
 
-        suggestionBox.addEventListener( 'click', function( evt ){
+        suggestionBox.addEventListener( 'click', function( ){
 
-           if( evt.target.classList.contains( 'suggestion' ) ){
+           if( event.target.classList.contains( 'suggestion' ) ){
 
-               var phrase = evt.target.innerText,
+               var phrase = event.target.innerText,
                    beginning = textBox.value.substring( textBox.value.substring( 0,
                        textBox.selectionEnd-1 ).lastIndexOf( '[' ) + 1, textBox.selectionEnd );
 
@@ -127,8 +137,9 @@ define( 'editor', ['wikia.nirvana'], function( nirvana ){
 
                textBox.selectionEnd = textBox.selectionStart = textBox.selectionStart -= beginning.length;
 
-               var ending = ( textBox.value.substring( textBox.selectionStart, textBox.selectionStart + 2 )
-                   === "]]" ) ? "" : "]]";
+               var ending =
+                   ( textBox.value.substring( textBox.selectionStart, textBox.selectionStart + 2 ) === ']]' ) ?
+                       '' : ']]';
 
                if( !ending ) {
 
@@ -182,33 +193,40 @@ define( 'editor', ['wikia.nirvana'], function( nirvana ){
 
             if(typeof data !== 'error'){
 
-                // parsing data from json to array of suggestions with a limit of 3 (optimal for mobile screens)
-                var suggs = [];
-                //var limit = (data.items.length < 3) ? data.items.length : 3;
-                for(var i = 0; i < data.items.length; i++){
+                if( data.items ) {
 
-                    suggs[i] = data.items[i].title;
+                    showSuggestions( data.items );
                 }
-
-                if( suggs ) showSuggestions( suggs );
             }
         });
     }
 
     //shows suggestionBox if there are suggestions to display
-    function showSuggestions( suggs ){
+    function showSuggestions( items ){
 
-        suggestionBox.innerHTML = '';
-        for( var i = 0; i < suggs.length; i++ ){
-            suggestionBox.innerHTML += '<li class="suggestion">' + suggs[i] + '</li>';
+        var suggestionsMarkup = '';
+        for( var prop in items ){
+
+            if(items.hasOwnProperty( prop ) ){
+
+                suggestionsMarkup += '<li class=\'suggestion\'>' + items[prop].title + '</li>';
+            }
         }
-        if(suggestionBox.classList.contains('off'))suggestionBox.classList.remove('off');
+        suggestionBox.innerHTML = suggestionsMarkup;
+
+        if(suggestionBox.classList.contains('off')){
+
+            suggestionBox.classList.remove('off');
+        }
     }
 
     //hides suggestionBox
     function hideSuggestions(){
 
-        if( !suggestionBox.classList.contains( 'off' ))suggestionBox.classList.add( 'off' );
+        if( !suggestionBox.classList.contains( 'off' )){
+
+            suggestionBox.classList.add( 'off' );
+        }
         suggestionBox.innerHTML = '';
     }
 
@@ -225,7 +243,10 @@ define( 'editor', ['wikia.nirvana'], function( nirvana ){
         textBoxClone.style.height = '1px';
         textBoxClone.style.position = 'absolute';
         textBoxClone.style.visibility = 'hidden';
-        if( !( textBox.scrollHeight > textBox.offsetHeight ) ) textBoxClone.classList.add('hiddenScrollbar');
+        if( ( textBox.scrollHeight <= textBox.offsetHeight ) ) {
+
+            textBoxClone.classList.add('hiddenScrollbar');
+        }
 
         //appending clone to DOM to measure height
         textBox.parentElement.appendChild(textBoxClone);
@@ -261,6 +282,6 @@ define( 'editor', ['wikia.nirvana'], function( nirvana ){
         insert : insert,
 
         patterns: patterns
-    }
+    };
 
 } );
