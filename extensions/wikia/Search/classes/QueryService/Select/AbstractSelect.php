@@ -99,13 +99,13 @@ abstract class AbstractSelect
 	
 	/**
 	 * Responsible for storing configuration values for a search.
-	 * @var Wikia\Search\Config
+	 * @var \Wikia\Search\Config
 	 */
 	protected $config;
 	
 	/**
 	 * Responsible for encapsulating logic that interacts with MediaWiki classes.
-	 * @var Wikia\Search\MediaWikiService
+	 * @var \Wikia\Search\MediaWikiService
 	 */
 	protected $service;
 	
@@ -163,7 +163,7 @@ abstract class AbstractSelect
 	 * is prepared and sent. The response, upon receipt, is used to create a ResultSet.
 	 * This is fault-tolerant, and will return an instance of Wikia\Search\ResultSet\EmptySet
 	 * in the event of no results or an internal exception.
-	 * @return Wikia\Search\ResultSet\AbstractResultSet
+	 * @return \Wikia\Search\ResultSet\AbstractResultSet
 	 */
 	public function search() {
 		$this->getMatch();
@@ -250,7 +250,7 @@ abstract class AbstractSelect
 	/**
 	 * Registers meta-parameters for the query
 	 * @param Solarium_Query_Select $query
-	 * @return Wikia\Search\QueryService\Select\AbstractSelect
+	 * @return \Wikia\Search\QueryService\Select\AbstractSelect
 	 */
 	protected function registerQueryParams( Solarium_Query_Select $query ) {
 		$config = $this->getConfig();
@@ -282,7 +282,7 @@ abstract class AbstractSelect
 	/**
 	 * Configures filter queries to, for instance, prevent duplicate results from PTT, or enable better caching.
 	 * @param Solarium_Query_Select $query
-	 * @return Wikia\Search\QueryService\Select\AbstractSelect
+	 * @return \Wikia\Search\QueryService\Select\AbstractSelect
 	 */
 	protected function registerFilterQueries( Solarium_Query_Select $query ) {
 		$config = $this->getConfig();
@@ -295,7 +295,7 @@ abstract class AbstractSelect
 	/**
 	 * Used to register a filter query based on settings in the config.
 	 * Children can override this method optionally.
-	 * @return Wikia\Search\QueryService\Select\AbstractSelect
+	 * @return \Wikia\Search\QueryService\Select\AbstractSelect
 	 */
 	protected function registerFilterQueryForMatch() {
 		return $this;
@@ -396,14 +396,14 @@ abstract class AbstractSelect
 	}
 	
 	/**
-	 * @return Wikia\Search\Config
+	 * @return \Wikia\Search\Config
 	 */
 	protected function getConfig() {
 		return $this->config;
 	}
 	
 	/**
-	 * @return Wikia\Search\MediaWikiService
+	 * @return \Wikia\Search\MediaWikiService
 	 */
 	protected function getService() {
 		return $this->service;
@@ -411,7 +411,7 @@ abstract class AbstractSelect
 	
 	/**
 	 * Reusable logic for storing matches on a wiki basis. Used in InterWiki and OnWiki Query Services.
-	 * @return Wikia\Search\Match\Wiki|null
+	 * @return \Wikia\Search\Match\Wiki|null
 	 */
 	protected function extractWikiMatch() {
 		$config = $this->getConfig();

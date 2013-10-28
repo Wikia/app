@@ -30,8 +30,8 @@ class CombinedSearchService {
 
 		$wikias = [];
 		foreach ( $langs as $lang ) {
-			$searchConfig = new Config;
-			$searchConfig->setQuery( $query )
+			$crossWikiSearchConfig = new Config;
+			$crossWikiSearchConfig->setQuery( $query )
 				->setLimit( 5 )
 				->setPage( 1 )
 				->setRank( 'default' )
@@ -39,11 +39,11 @@ class CombinedSearchService {
 				->setCommercialUse( $this->getHideNonCommercialContent() )
 				->setLanguageCode( $lang );
 			if ( !empty($hubs) ) {
-				$searchConfig->setHubs( $hubs );
+				$crossWikiSearchConfig->setHubs( $hubs );
 			}
-			$resultSet = (new Factory)->getFromConfig( $searchConfig )->search();
-			$currentResults = $resultSet->toArray( ["sitename_txt", "url", "id", "description_txt", "lang_s", "score", "description_txt"] );
-			foreach ( $currentResults as $wiki ) {
+			$crossWikiResultSet = (new Factory)->getFromConfig( $crossWikiSearchConfig )->search();
+			$crossWikiResults = $crossWikiResultSet->toArray( ["sitename_txt", "url", "id", "description_txt", "lang_s", "score", "description_txt"] );
+			foreach ( $crossWikiResults as $wiki ) {
 				$wikias[] = $this->processWiki( $wiki );
 			}
 			if ( sizeof( $wikias) >= 3 ) {
@@ -59,10 +59,11 @@ class CombinedSearchService {
 			$searchConfig->setQuery( $query )
 				->setLimit( 2 )
 				->setPage( 1 )
+				->setOnWiki(true)
 				->setRequestedFields( $requestedFields )
 				->setWikiId( $wiki['wikiId'] )
+				->setNamespaces( [ NS_MAIN ] )
 				->setRank( 'default' );
-
 			$resultSet = (new Factory)->getFromConfig( $searchConfig )->search();
 			$currentResults = $resultSet->toArray( $requestedFields );
 			foreach ( $currentResults as $article ) {
@@ -105,35 +106,37 @@ class CombinedSearchService {
 	}
 
 	private function getTopArticles( $wikiId, $lang ) {
-		$requestedFields = [ "title", "url", "id", "score", "pageid", "lang", "wid", Utilities::field('html', $wikiId) ];
-		$topArticlesMap = \DataMartService::getTopArticlesByPageview(
-			$wikiId,
-			null,
-			null,
-			false,
-			5
-		);
+		return \WikiaDataAccess::cache( wfSharedMemcKey( "CombinedSearchService", $wikiId, $lang ), 60 * 60 * 24 * 7, function() use( $wikiId, $lang ) {
+			$requestedFields = [ "title", "url", "id", "score", "pageid", "lang", "wid", Utilities::field('html', $lang) ];
+			$topArticlesMap = \DataMartService::getTopArticlesByPageview(
+				$wikiId,
+				null,
+				[0],
+				false,
+				5
+			);
 
-		$query = " +(" . Utilities::valueForField("wid", $wikiId) . ") ";
-		$query .= " +( " . implode( " OR ", array_map(function( $x ) { return Utilities::valueForField("pageid", $x); }, array_keys($topArticlesMap)) ) . ") ";
+			$query = " +(" . Utilities::valueForField("wid", $wikiId) . ") ";
+			$query .= " +( " . implode( " OR ", array_map(function( $x ) { return Utilities::valueForField("pageid", $x); }, array_keys($topArticlesMap)) ) . ") ";
 
-		$searchConfig = new Config;
-		$searchConfig
-			->setLimit( 5 )
-			->setQuery( $query )
-			->setPage( 1 )
-			->setRequestedFields( $requestedFields )
-			->setDirectLuceneQuery(true)
-			->setWikiId( $wikiId );
+			$searchConfig = new Config;
+			$searchConfig
+				->setLimit( 5 )
+				->setQuery( $query )
+				->setPage( 1 )
+				->setRequestedFields( $requestedFields )
+				->setDirectLuceneQuery(true)
+				->setWikiId( $wikiId );
 
-		$resultSet = (new Factory)->getFromConfig( $searchConfig )->search();
+			$resultSet = (new Factory)->getFromConfig( $searchConfig )->search();
 
-		$currentResults = $resultSet->toArray( $requestedFields );
-		$articles = [];
-		foreach ( $currentResults as $article ) {
-			$articles[] = $this->processArticle($article);
-		}
+			$currentResults = $resultSet->toArray( $requestedFields );
+			$articles = [];
+			foreach ( $currentResults as $article ) {
+				$articles[] = $this->processArticle($article);
+			}
 
-		return $articles;
+			return $articles;
+		});
 	}
 }
