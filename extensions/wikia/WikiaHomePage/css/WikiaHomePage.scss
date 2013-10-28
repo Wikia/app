@@ -8,6 +8,7 @@
 @import "../../../../skins/oasis/css/mixins/transition";
 @import "../../../../skins/oasis/css/mixins/transform";
 @import "../../../../skins/oasis/css/mixins/border-radius";
+@import "../../UserLogin/mixins/tooltip-icon";
 
 @mixin interstitial-toggle-animation {
 	-webkit-animation: InterstitialToggle 900ms;
@@ -1048,4 +1049,12 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 }
 @-ms-keyframes InterstitialToggle2 {
 	@include interstitial-toggle-style;
+}
+
+.tooltip-icon-wrapper {
+    padding-right: 0.3em;
+    position: relative;
+    .tooltip-icon {
+        @include tooltip-icon;
+    }
 }
