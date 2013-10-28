@@ -110,6 +110,8 @@ class MigrateWikisToSwift extends Maintenance {
 			if ( $debug ) {
 				$this->output( "\n\tRun cmd: {$cmd} \n" );
 			}
+			global $wgMaxShellTime;
+			$wgMaxShellTime = 0;
 			$result = wfShellExec( $cmd, $retval );
 			if ( $retval ) {
 				$this->output( "Error code $retval: $result \n" );
