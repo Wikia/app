@@ -457,7 +457,7 @@ var Wall = $.createClass(Object, {
 
 		require( [ 'wikia.ui.factory' ], function( uiFactory ) {
 			uiFactory.init( [ 'button', 'modal' ] ).then( function( uiButton, uiModal ) {
-				var modalId = 'WallConfirm',
+				var modalId = 'WikiaConfirm',
 					modalSecondaryBtnId = 'WikiaConfirmCancel',
 					modalSecondaryBtn = uiButton.render( {
 						type: 'button',

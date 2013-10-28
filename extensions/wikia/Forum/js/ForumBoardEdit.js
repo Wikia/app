@@ -17,26 +17,22 @@
 					uiFactory.init( [ 'button', 'modal' ] ).then( function( uiButton, uiModal ) {
 						var cancelBtnMsg = $.msg( 'cancel' ),
 							cancelBtn = uiButton.render( {
-								type: 'link',
+								type: 'button',
 								vars: {
-									id: 'cancel',
-									href: '#',
-									classes: [ 'normal', 'secondary' ],
-									value: cancelBtnMsg,
-									title: cancelBtnMsg
+									type: 'button',
+									classes: [ 'normal', 'secondary', 'cancel' ],
+									value: cancelBtnMsg
 								}
 							}),
 							submitBtn = uiButton.render( {
-								type: 'link',
+								type: 'button',
 								vars: {
-									id: 'submit',
-									href: '#',
-									classes: [ 'normal', 'primary' ],
-									value: jsonResponse.submitLabel,
-									title: jsonResponse.submitLabel
+									type: 'button',
+									classes: [ 'normal', 'primary', 'submit' ],
+									value: jsonResponse.submitLabel
 								}
 							}),
-							modalId = 'BoardModal',
+							modalId = 'EditBoardModal',
 							forumModal = uiModal.render( {
 							type: 'default',
 							vars: {
@@ -54,13 +50,13 @@
 							forumModal = modal.init( modalId, forumModal );
 							forumModal.form = new WikiaForm( forumModal.$element.find( '.WikiaForm' ) );
 
-							forumModal.$element.find( '#cancel' ).click( function() {
+							forumModal.$element.find( 'button.cancel' ).click( function() {
 								forumModal.close();
 							} );
 
-							forumModal.$element.find( '#submit' ).click( function() {
+							forumModal.$element.find( 'button.submit' ).click( function() {
 								// @todo - how to disable all buttons including modal close?
-								forumModal.$element.find( 'footer .buttons a' ).attr('disabled', true);
+								forumModal.$element.find( 'footer .buttons button' ).attr('disabled', true);
 								$.nirvana.sendRequest( {
 									controller: 'ForumExternalController',
 									method: submissionMethod,
@@ -81,7 +77,7 @@
 													forumModal.form.showGenericError( json.errormsg );
 												}
 												// @todo - implement, enable button clicks
-												forumModal.$element.find( 'footer .buttons a' ).removeAttr( 'disabled' );
+												forumModal.$element.find( 'footer .buttons button' ).removeAttr( 'disabled' );
 											}
 										}
 									}
