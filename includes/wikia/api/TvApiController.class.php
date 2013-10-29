@@ -126,7 +126,7 @@ class TvApiController extends WikiaApiController {
 			->setWikiId($this->wikiId)
 			->setVideoSearch( false )
 			->setOnWiki(true)
-			->setNamespaces([0,14]);
+			->setNamespaces([0]);
 		;
 
 		return $searchConfig;
