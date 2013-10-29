@@ -412,7 +412,7 @@
 					width += config.extraPageWidth;
 				}
 
-				if ( wgOasisResponsive ) {
+				if ( window.wgOasisResponsive ) {
 					var pageWidth = $('#WikiaPage').width(),
 						widthArticlePadding = fluidlayout.getWidthGutter(),
 						railWidth = fluidlayout.getRightRailWidth() + fluidlayout.getWidthPadding(),
@@ -462,7 +462,7 @@
 				};
 
 				// pass info about dropped rail to preview module
-				if( pageWidth <= railBreakPoint ) {
+				if( pageWidth <= railBreakPoint && window.wgOasisResponsive ) {
 				// if it's a small screen or wide page pass to preview a flag to drop rail
 					previewOptions.isRailDropped = true;
 				}
