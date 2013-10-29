@@ -289,7 +289,7 @@ $messages['pms'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
-	'sharedhelp-autotalkcreate-summary' => 'د خبرو اترو مخ په خپلکاره توګه جوړ شو',
+	'sharedhelp-autotalkcreate-summary' => 'د خبرو اترو مخ په خپلکاره توگه جوړ شو',
 );
 
 /** Portuguese (português)
@@ -300,6 +300,7 @@ $messages['pt'] = array(
 	'sharedhelp-desc' => 'Insere páginas da [[w:c:Help|Help Wikia]] no espaço nominal {{ns:help}} desta wiki',
 	'sharedhelp-autotalkcreate-summary' => 'Página de discussão criada automaticamente',
 	'sharedhelp-searchprofile' => 'Páginas de ajuda',
+	'sharedhelp-searchprofile-tooltip' => 'Pesquisar nas páginas de ajuda',
 );
 
 /** Brazilian Portuguese (português do Brasil)

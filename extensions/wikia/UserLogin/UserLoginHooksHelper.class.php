@@ -33,7 +33,7 @@ class UserLoginHooksHelper {
 		} else if ( $abortError == wfMessage('phalanx-help-type-user-email')->escaped() ) {
 			$errParam = 'email';
 		} else if ( $abortError == wfMessage('phalanx-email-block-new-account')->escaped()) {
-			$errParam = 'email';	 
+			$errParam = 'email';
 		}
 
 		return true;

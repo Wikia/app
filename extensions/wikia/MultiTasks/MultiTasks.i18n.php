@@ -1853,6 +1853,14 @@ $messages['lb'] = array(
 	'multiwikirecords' => '{{PLURAL:$1|Eng Wiki|$1 Wikie}} fonnt',
 );
 
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'multitasks-link-back-label' => 'ايچه',
+	'multiwikiedit_select_yourself' => 'شما',
+);
+
 /** Macedonian (македонски)
  * @author Bjankuloski06
  */
@@ -2639,24 +2647,24 @@ $messages['ps'] = array(
 	'multiwikiedit_reason' => 'د سمون سبب',
 	'multiwikiedit_list_caption' => 'ويکي لړليک',
 	'multiwikiedit_this_wiki' => 'همدا ويکي',
-	'multiwikiedit_all_wikis' => 'ټولې ويکي ګانې',
-	'multiwikiedit_selected_wikis' => 'ټاکلې ويکي ګانې',
+	'multiwikiedit_all_wikis' => 'ټولې ويکي گانې',
+	'multiwikiedit_selected_wikis' => 'ټاکلې ويکي گانې',
 	'multiwikiedit_select_yourself' => 'تاسې',
-	'multidelete_button' => 'ړنګول',
+	'multidelete_button' => 'ړنگول',
 	'multidelete_caption' => 'د مخ لړليک',
 	'multidelete_or' => '<b>يا</b>',
 	'multidelete_select_all' => 'ټول ټاکل',
-	'multidelete_reason' => 'د ړنګولو سبب',
+	'multidelete_reason' => 'د ړنگولو سبب',
 	'multidelete_this_wiki' => 'همدا ويکي',
-	'multidelete_all_wikis' => 'ټولې ويکي ګانې',
-	'multidelete_selected_wikis' => 'ټاکلې ويکي ګانې',
+	'multidelete_all_wikis' => 'ټولې ويکي گانې',
+	'multidelete_selected_wikis' => 'ټاکلې ويکي گانې',
 	'multidelete_success_subtitle' => 'د $1 لپاره',
-	'multidelete_brazilian_portuguese_wikis' => 'ټولې برازيلۍ پارتوګالي ويکي ګانې',
-	'multidelete_hebrew_wikis' => 'ټولې عبري ويکي ګانې',
-	'multidelete_chinese_wikis' => 'ټولې چينايي ويکي ګانې',
+	'multidelete_brazilian_portuguese_wikis' => 'ټولې برازيلۍ پارتوگالي ويکي گانې',
+	'multidelete_hebrew_wikis' => 'ټولې عبري ويکي گانې',
+	'multidelete_chinese_wikis' => 'ټولې چينايي ويکي گانې',
 	'multidelete_polish_wikis' => 'ټول پولنډي ويکي ګان',
 	'multidelete_czech_wikis' => 'ټول چېکي ويکي ګان',
-	'multidelete_german_wikis' => 'ټولې جرمنۍ ويکي ګانې',
+	'multidelete_german_wikis' => 'ټولې جرمنۍ ويکي گانې',
 	'multiwikifindpagenames' => 'د مخ نوم موندل',
 );
 
@@ -2685,7 +2693,7 @@ $messages['pt'] = array(
 	'multiwikiedit_list_caption' => 'Lista de wikis',
 	'multiwikiedit_minoredit_caption' => 'Edição menor',
 	'multiwikiedit_botedit_caption' => 'Edição de robô (ocultada)',
-	'multiwikiedit_autosummary_caption' => 'Activar auto-resumo',
+	'multiwikiedit_autosummary_caption' => 'Ativar o resumo automático',
 	'multiwikiedit_norecentchanges_caption' => 'Não apresentar a alteração nas mudanças recentes',
 	'multiwikiedit_newonly_caption' => 'Ignorar artigos existentes',
 	'multiwikiedit_choose_articles' => 'escolha quais os artigos encontrados que devem ser editados',

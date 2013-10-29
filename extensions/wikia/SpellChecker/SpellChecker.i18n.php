@@ -296,6 +296,9 @@ $messages['mg'] = array(
 	'spellchecker-info-dictionaries' => 'Rakibolana azo ampiasaina',
 	'spellchecker-info-spellcheck-text' => 'Teny tokony hotsaraina',
 	'spellchecker-info-spellcheck-languages' => 'Fiteny',
+	'spellchecker-info-spellcheck-submit' => 'Fanitsiana tsipelina',
+	'spellchecker-info-spellcheck-is-correct' => 'Voatsipelina tsara ny teny "$1"',
+	'spellchecker-info-spellcheck-suggestions' => 'Soso-kevi-tsipelina ho an\'i "$1": $2',
 );
 
 /** Macedonian (македонски)

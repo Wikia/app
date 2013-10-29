@@ -199,6 +199,13 @@ $messages['ca'] = array(
 	'wikiamobile-wikiapoll-user-voted' => 'Has votat per " $1 "',
 );
 
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'wikiapoll-thanks-for-vote' => 'Баркалла!',
+);
+
 /** Czech (česky)
  * @author Chmee2
  * @author Dontlietome7
@@ -706,8 +713,8 @@ $messages['ps'] = array(
 	'wikiapoll-createpoll-headline' => 'ټولپوښتنه جوړول',
 	'wikiapoll-editpoll-headline' => 'ټولپوښتنه سمول',
 	'wikiapoll-question-label' => 'پوښتنه',
-	'wikiapoll-addnewitem-label' => 'نوی توکی ورګډول',
-	'wikiapoll-cancel-label' => 'ناګارل',
+	'wikiapoll-addnewitem-label' => 'نوی توکی ورگډول',
+	'wikiapoll-cancel-label' => 'ناگارل',
 	'wikiapoll-publish-label' => 'خپرول',
 	'wikiapoll-error-duplicate' => 'په دې نوم يوه ټولپوښتنه له پخوا نه شته.',
 	'wikiapoll-error-invalid-title' => 'د پوښتنې متن سم نه دی.',

@@ -36,8 +36,8 @@
 				<p class="headline-character-counter"></p>
 				<p class="error error-msg"></p>
 			</div>
+			<span class='explanatory-copy'><?= wfMessage('promote-description-header-explanation')->text(); ?></span>
 		</div>
-		<span class='explanatory-copy'><?= wfMessage('promote-description-header-explanation')->text(); ?></span>
 		<div class='input-group required'>
 			<label><?= wfMessage('promote-description-about')->text(); ?></label>
 			<div class="description-wrapper">
@@ -47,8 +47,8 @@
 				<p class="character-counter"></p>
 				<p class="error error-msg"></p>
 			</div>
+			<span class='explanatory-copy'><?= wfMessage('promote-description-about-explanation')->text(); ?></span>
 		</div>
-		<span class='explanatory-copy'><?= wfMessage('promote-description-about-explanation')->text(); ?></span>
 	</fieldset>
 
 	<fieldset>

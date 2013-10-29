@@ -1,4 +1,4 @@
-var AdLogicPageDimensions = function (window, document, log, slotTweaker) {
+var AdLogicPageDimensions = function (window, document, log, slotTweaker, abTest) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adengine.logic.shortpage',
@@ -20,7 +20,8 @@ var AdLogicPageDimensions = function (window, document, log, slotTweaker) {
 		/**
 		 * Slots based on screen width
 		 *
-		 * @see skins/oasis/css/core/responsive.scss
+		 * @see skins/oasis/css/core/responsive-variables.scss
+		 * @see skins/oasis/css/core/responsive-background.scss
 		 */
 		mediaQueriesToCheck = {
 			oneColumn: 'screen and (max-width: 1023px)',
@@ -37,7 +38,7 @@ var AdLogicPageDimensions = function (window, document, log, slotTweaker) {
 		},
 		mediaQueriesMet,
 		// ABTesting: DAR-1859: START
-		notInAbTestRightRailPositionStatic,
+		railIsAlwaysOnRight = abTest.getGroup('DAR_RIGHTRAILPOSITION') === 'STATIC',
 		// ABTesting: DAR-1859: END
 		matchMedia;
 
@@ -75,7 +76,7 @@ var AdLogicPageDimensions = function (window, document, log, slotTweaker) {
 		if (mediaQueriesMet) {
 			if (slotsToHideOnMediaQuery[slotname]) {
 				// ABTesting: DAR-1859: START
-				if ((slotsToHideOnMediaQuery[slotname] == 'oneColumn') && notInAbTestRightRailPositionStatic) {
+				if ((slotsToHideOnMediaQuery[slotname] === 'oneColumn') && railIsAlwaysOnRight) {
 					wideEnough = true;
 				} else {
 				// ABTesting: DAR-1859: END
@@ -188,10 +189,6 @@ var AdLogicPageDimensions = function (window, document, log, slotTweaker) {
 	 * If supported, bind to resize event (and fire it once)
 	 */
 	function init() {
-		// ABTesting: DAR-1859: START
-		notInAbTestRightRailPositionStatic = window.Wikia.AbTest && (Wikia.AbTest.getGroup( "DAR_RIGHTRAILPOSITION" ) == 'STATIC');
-		// ABTesting: DAR-1859: END
-
 		log('init', 'debug', logGroup);
 		if (window.addEventListener) {
 			onResize();

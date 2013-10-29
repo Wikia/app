@@ -47,9 +47,9 @@ define('ext.wikia.adengine.template.skin', ['wikia.document', 'wikia.window', 'w
 			responsiveLink.href = window.wgCdnRootUrl +
 				'/__am/' + window.wgStyleVersion + '/sass/' +
 				encodeURIComponent(sassParams.join('&')) +
-				'//skins/oasis/css/core/responsive.scss';
+				'//skins/oasis/css/core/responsive-background.scss';
 
-			style.textContent = 'body:after, body:before {' +
+			style.textContent = 'body.skin-oasis:after, body.skin-oasis:before {' +
 				'  background-image:url(' + params.skinImage + ');' +
 				'}';
 

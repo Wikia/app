@@ -492,9 +492,13 @@ $messages['ar'] = array(
  */
 $messages['bg'] = array(
 	'founderemails-email-user-registered-subject' => 'Нов потребител се присъедини към $WIKINAME',
+	'founderemails-email-user-registered-signature' => 'Екипът на Wikia',
+	'founderemails-email-0-days-passed-subject' => 'Добре дошли в Wikia!',
 	'founderemails-email-0-days-passed-body' => 'Поздравления за създаването на $WIKINAME - вече сте част от общността на Wikia!
 
 -- Екипът на Wikia', # Fuzzy
+	'founderemails-email-first-edit-signature' => 'Екипът на Wikia',
+	'founderemails-email-general-edit-signature' => 'Екипът на Wikia',
 	'founderemails-email-page-edited-anon-subject' => 'Тайнствен приятел редактира $WIKINAME',
 	'founderemails-email-page-edited-anon-body' => 'Здрасти, $USERNAME,
 
@@ -512,6 +516,8 @@ $PAGEURL
 	'founderemails-email-0-day-addphotos-heading' => 'Добавяне на снимки.',
 	'founderemails-email-0-day-addphotos-button' => 'Добавяне на снимка',
 	'founderemails-email-3-day-addphotos-button' => 'Добавяне на снимки',
+	'founderemails-email-views-digest-signature' => 'Екипът на Wikia',
+	'founderemails-email-complete-digest-signature' => 'Екипът на Wikia',
 );
 
 /** Breton (brezhoneg)
@@ -2047,14 +2053,19 @@ $messages['fa'] = array(
  * @author Nedergard
  * @author Nike
  * @author Tofu II
+ * @author Ville96
  */
 $messages['fi'] = array(
 	'founderemails-email-user-registered-subject' => 'Joku on liittynyt $WIKINAME',
 	'founderemails-email-user-registered-body' => 'Hei $USERNAME,
 
-Näyttää siltä, että $EDITORNAME on rekisteröitynyt wikiisi! Miksi et sano hänen keskustelusivullaan $EDITORTALKPAGEURL hei?
+Onnittelut! $EDITORNAME on juuri liittynyt sivustolle $WIKINAME.
 
--- The Wikia Team', # Fuzzy
+Tartu tilaisuuteen ja toivota hänet tervetulleeksi wikiisi ja rohkaise häntä auttamaan muokkaamisessa. Mitä enemmän, sitä paremmin ja nopeammin wikisi kasvaa.
+
+$EDITORTALKPAGEURL
+
+Wikia-tiimi',
 	'founderemails-email-user-registered-greeting' => 'Hei $USERNAME,',
 	'founderemails-email-page-edited-reg-user-first-edit-subject' => 'Uusi $WIKINAME -muokkaus!',
 	'founderemails-email-page-edited-reg-user-first-edit-body' => 'Hei $USERNAME,
@@ -3546,6 +3557,7 @@ Kelihatannya $EDITORNAME telah menyunting wiki Anda untuk pertama kali! Mengapa 
 	'founderemails-answers-email-page-edited-reg-user-first-edit-body-HTML' => 'Hai $USERNAME,<br /><br />
 Kelihatannya pengguna terdaftar $EDITORNAME telah menyunting wiki Anda untuk pertama kali! Mengapa Anda tidak mengunjungi <a href="$EDITORTALKPAGEURL">halaman pembicaraannya</a> untuk menyapa?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Tim Wikia</div>',
+	'founderemails-answers-email-page-edited-reg-user-subject' => 'Pengguna terdaftar mengubah situs Anda!',
 	'founderemails-answers-email-page-edited-reg-user-body' => 'Hai $USERNAME,
 
 Kelihatannya $EDITORNAME telah menyunting wiki Anda! Mengapa Anda tidak mampir ke halaman pembicaraannya ($EDITORTALKPAGEURL) untuk menyapa?
@@ -3579,6 +3591,7 @@ Ada banyak yang terjadi pada wiki Anda hari ini! Kunjungi $MYHOMEURL untuk melih
 	'founderemails-email-3-day-addphotos-button' => 'Tambahkan Foto',
 	'founderemails-email-3-day-explore-heading' => 'Temukan inspirasi.',
 	'founderemails-email-3-day-wikiahelps-text' => 'Butuh bantuan mencari tahu bagaimana sesuatu bekerja? Kami selalu berada di sini untuk Anda! Datang dan tanyakan kami untuk bantuan dan saran di <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>.',
+	'founderemails-email-10-day-congratulations' => 'Whoa, waktu cepat berlalu! Telah 10 hari sejak Anda memulai $HDWIKINAME.',
 	'founderemails-email-views-digest-subject' => 'Dilihat hari ini pada $WIKINAME',
 	'founderemails-email-views-digest-content' => 'Tetaplah menambahkan konten baru dan mempromosikan wiki Anda untuk mendorong lebih banyak orang untuk membaca, menyunting, dan menyebarkan kata.',
 	'founderemails-email-complete-digest-body' => 'Hai $USERNAME,
@@ -4044,6 +4057,15 @@ $messages['lb'] = array(
 	'founderemails-email-views-digest-button' => 'Méi Säiten derbäisetzen',
 	'founderemails-email-complete-digest-greeting' => 'Salut $USERNAME,',
 	'founderemails-email-complete-digest-signature' => "D'Wikia-Team",
+);
+
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'founderemails-email-0-day-addpages-button' => 'يه گل بلگه اضاف بكيد',
+	'founderemails-email-0-day-addphotos-heading' => 'عسگيا نه اضاف بكيد',
+	'founderemails-email-3-day-addphotos-button' => 'عسگيا نه اضاف بكيد',
 );
 
 /** Lithuanian (lietuvių)
@@ -6163,18 +6185,20 @@ $messages['ps'] = array(
 	'founderemails-email-lot-happening-greeting' => 'سلامونه $USERNAME،',
 	'founderemails-email-lot-happening-signature' => 'د ويکيا ډله',
 	'founderemails-email-lot-happening-button' => 'فعاليتونه کتل',
-	'founderemails-email-0-day-addpages-heading' => 'مخونه ورګډول.',
-	'founderemails-email-0-day-addpages-button' => 'يو مخ ورګډول',
-	'founderemails-email-0-day-addphotos-heading' => 'انځورونه ورګډول.',
-	'founderemails-email-0-day-addphotos-button' => 'يو انځور ورګډول',
-	'founderemails-email-3-day-addphotos-heading' => 'نور انځورونه ورګډول',
-	'founderemails-email-3-day-addphotos-button' => 'انځورونه ورګډول',
+	'founderemails-email-0-day-addpages-heading' => 'مخونه ورگډول.',
+	'founderemails-email-0-day-addpages-button' => 'يو مخ ورگډول',
+	'founderemails-email-0-day-addphotos-heading' => 'انځورونه ورگډول.',
+	'founderemails-email-0-day-addphotos-button' => 'يو انځور ورگډول',
+	'founderemails-email-3-day-addphotos-heading' => 'نور انځورونه ورگډول',
+	'founderemails-email-3-day-addphotos-button' => 'انځورونه ورگډول',
 	'founderemails-email-views-digest-greeting' => 'سلامونه $USERNAME،',
 	'founderemails-email-views-digest-signature' => 'د ويکيا ډله',
-	'founderemails-email-views-digest-button' => 'نور مخونه ورګډول',
+	'founderemails-email-views-digest-button' => 'نور مخونه ورگډول',
 	'founderemails-email-complete-digest-subject' => 'په $WIKINAME باندې تازه فعاليتونه',
 	'founderemails-email-complete-digest-greeting' => 'سلامونه $USERNAME،',
 	'founderemails-email-complete-digest-signature' => 'د ويکيا ډله',
+	'founderemails-pref-joins-v2' => '...يو څوک زموږ سره راگډېږي',
+	'founderemails-pref-edits-v2' => '...يو څوک سمونونه ترسره کوي',
 );
 
 /** Portuguese (português)
@@ -6187,8 +6211,8 @@ $messages['ps'] = array(
  */
 $messages['pt'] = array(
 	'founderemails-desc' => 'Ajuda a informar os fundadores acerca das mudanças na sua wiki',
-	'tog-founderemailsenabled' => 'Enviar-me por correio electrónico actualizações sobre aquilo que os outros têm feito (só para fundadores)',
-	'founderemails-email-user-registered-subject' => 'Alguém novo juntou $ WikiName',
+	'tog-founderemailsenabled' => 'Enviar-me por correio eletrónico atualizações sobre aquilo que os outros fazem (só para fundadores)',
+	'founderemails-email-user-registered-subject' => 'Alguém novo registou-se na $WIKINAME',
 	'founderemails-email-user-registered-body' => 'Olá $USERNAME,
 
 Parece que o utilizador $EDITORNAME se registou na sua wiki! Que tal ir à página de discussão $EDITORTALKPAGEURL e dizer-lhe olá?
@@ -6201,77 +6225,139 @@ Parece que o utilizador $EDITORNAME se registou na sua wiki! Que tal ir à pági
 Parece que o utilizador $EDITORNAME se registou na sua wiki! Que tal ir à <a href="$EDITORTALKPAGEURL">página de discussão</a> e dizer-lhe olá?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- A Equipa da Wikia</div>',
 	'founderemails-email-0-days-passed-subject' => 'Bem-vindo(a) à Wikia!',
-	'founderemails-email-0-days-passed-body' => 'Bom conheçer-te, $USERNAME,
+	'founderemails-email-0-days-passed-body' => 'Olá $USERNAME,
 
-Parabéns por teres criado $WIKINAME, $WIKIURL.
+Parabéns por ter criado a wiki $WIKINAME, $WIKIURL.
 
-Aqui estão umas dicas para começares:
+Aqui estão algumas dicas úteis para começar:
 
-Adiciona páginas. Uma wiki tem como base a partilha de informação sobre o teu tópico único.
+Adicione páginas. Uma wiki tem por base a partilha de informação sobre um determinado tema ou tópico.
 
-Adiciona imagens. As páginas ficam sempre melhores com têm objetos visuais! Adiciona imagens às tuas páginas e na página principal.
+Adicione imagens e fotografias. As páginas ficam sempre melhores com elementos gráficos! Coloque imagens nas páginas da wiki e na página principal.
 
-Customiza o teu tema. Customiza o tema e a marca da tua wiki para a destacar! Usa o COmpositor de Temas Visuais para adicionar cores personalizadas á tua wiki e deixa-la única para o teu tópico.
+Personalize o tema visual da wiki. Personalize o tema e o símbolo da wiki para destacá-la! Use o Compositor de Temas Visuais para personalizar as cores da wiki e adaptá-la ao tópico.
 
-Não te vamos deixar sozinho. Estamos aqui para te ajudar a criar a $WIKINAME e a deixar-la perto do sucesso. Visita http://community.wikia.com para fóruns, conselhos e ajuda, ou envia-nos a tua questão!
+Não está só. Estamos aqui para ajudar a cada passo a tornar a $WIKINAME num sucesso. Visite http://community.wikia.com para conhecer os fóruns, conselhos e ajuda, ou envie-nos as suas questões!
 
 Boas edições! A Equipa da Wikia
 
 ___________________________________________
 
-Para verificar as últimas novidades na Wikia, visita http://community.wikia.com
-Queres controlar que e-mail recebes? Vai a: http://messaging.wikia.com/wiki/Special:Preferences.
-Clica no seguinte link para des-subscrever de todos os e-mails da Wikia: $UNSUBSCRIBEURL',
+Para conhecer as últimas novidades da Wikia, visite http://community.wikia.com
+Quer controlar as mensagens que recebe? Vá a: http://messaging.wikia.com/wiki/Special:Preferences.
+Quer deixar de receber estas mensagens da Wikia? Clique: $UNSUBSCRIBEURL',
 	'founderemails-email-0-days-passed-body-HTML' => 'Parabéns por ter criado a wiki <strong>$WIKINAME</strong> - agora faz parte da comunidade Wikia!<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- A Equipa da Wikia</div>',
 	'founderemails-email-3-days-passed-subject' => 'Como vai a sua wiki?',
-	'founderemails-email-3-days-passed-body' => 'Boas, $USERNAME,
+	'founderemails-email-3-days-passed-body' => 'Olá $USERNAME,
 
-Agora que a sua wiki já tem alguns dias, pensámos que gostaria de conhecer algumas outras coisas que pode fazer.
+Queriamos saber como correm as coisas na wiki $WIKINAME, $WIKIURL.
 
--- A Equipa da Wikia',
+Passaram 3 dias desde que criou a wiki e pensámos que seria boa ideia
+dar-lhe mais algumas dicas para criar a sua wiki:
+
+Melhore a página principal. A página principal é uma das primeiras
+coisas que as pessoas vêem quando visitam a $WIKINAME. Transmita uma
+boa primeira impressão escrevendo um resumo detalhado do tópico da wiki
+e acrescente uma apresentação de slides, uma galeria ou um slider de
+fotografias.
+  
+E mais imagens e fotografias. Uma das melhores maneiras de criar
+páginas espectaculares é «mais imagens e fotografias».
+  
+Procure inspiração. Não tenha medo de visitar outras wikis e ver o que
+têm na página principal, nas páginas de artigos e tudo o resto. Algumas
+das nossa favoritas são: Muppet Wiki, Pop Tarts Wiki e Monster High Wiki.
+
+Precisa de ajuda para perceber como algo funciona? Estamos sempre aqui
+para ajudar. Peça ajuda e conselhos em http://community.wikia.com.
+
+Continue o bom trabalho!
+A Equipa da Wikia
+
+___________________________________________
+
+Para conhecer as últimas novidades da Wikia, visite http://community.wikia.com
+Quer controlar as mensagens que recebe? Vá a: http://messaging.wikia.com/wiki/Special:Preferences.
+Quer deixar de receber estas mensagens da Wikia? Clique: $UNSUBSCRIBEURL',
 	'founderemails-email-3-days-passed-body-HTML' => 'Boas, $USERNAME,<br /><br />
 Agora que a sua wiki já tem alguns dias, pensámos que gostaria de conhecer algumas outras coisas que pode fazer.<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- A Equipa da Wikia</div>',
 	'founderemails-email-10-days-passed-subject' => 'Feliz aniversário de 10 dias!',
-	'founderemails-email-10-days-passed-body' => 'Olá, $USERNAME,
+	'founderemails-email-10-days-passed-body' => 'Como está, $USERNAME?
 
-Há já algum tempo que criou uma wiki na Wikia - esperamos que tudo esteja a correr bem! Queríamos partilhar consigo umas coisinhas finais para ajudá-lo a sentir-se em casa na sua wiki.
+Como o tempo voa! Já passaram 10 dias desde que criou a wiki $WIKINAME, $WIKIURL.
 
--- A Equipa da Wikia', # Fuzzy
+Envolva mais pessoas no seu projeto e mostre o trabalho maravilhoso que tem estado a fazer! Aqui vão algumas sugestões para espalhar a palavra:
+
+A sua mãe não mandou Partilhar? Use o botão Partilhar na página principal da sua wiki, nos artigos e nas fotos para mostrá-las aos seus amigos e Seguidores do Facebook, do Twitter e de outros sites populares.
+
+Aproveite o poder do correio eletrónico. Envie mensagens a quem esteja interessado no assunto ou em ajudá-lo(a), como um amigo ou amiga, ou colega de trabalho. Também pode enviar fotografias diretamente da sua wiki usando o botão mensagem.
+
+Junte-se a sites semelhantes. Peça ajuda aos utilizadores de outros sites e fóruns acerca do mesmo assunto da sua wiki. Se possível, contate os administradores e pergunte-lhes se estão dispostos a uma troca de links - eles colocam no site um link para a sua wiki e você coloca na wiki um link para o site deles.
+
+Também pode pedir ajuda a outros utilizadores aqui da Wikia, por mensagem no fórum da http://pt.wikia.com ou nos fóruns da http://community.wikia.com.
+
+Continue o bom trabalho!
+
+A Equipa da Wikia
+
+___________________________________________
+
+Para conhecer as últimas novidades da Wikia, visite http://community.wikia.com
+Quer controlar as mensagens que recebe? Vá a: http://messaging.wikia.com/wiki/Special:Preferences.
+Quer deixar de receber estas mensagens da Wikia? Clique: $UNSUBSCRIBEURL',
 	'founderemails-email-page-edited-reg-user-first-edit-subject' => '$WIKINAME tem uma nova edição!',
 	'founderemails-email-page-edited-reg-user-first-edit-body' => 'Olá $USERNAME,
 
-Parece que o utilizador registado $EDITORNAME editou a sua wiki pela primeira vez! Que tal ir à página de discussão ($EDITORTALKPAGEURL) e dizer-lhe olá?
+Ora bem! O utilizador $EDITORNAME acaba de fazer a primeira edição na $WIKINAME.
 
--- A Equipa da Wikia', # Fuzzy
+Vá à $PAGETITLE ver o que foi acrescentado.
+
+$PAGEURL
+
+A Equipa da Wikia',
 	'founderemails-email-first-edit-greeting' => 'Olá $USERNAME,',
+	'founderemails-email-first-edit-headline' => 'Ora bem! O utilizador $EDITORNAME acaba de fazer a primeira edição na $WIKINAME.',
+	'founderemails-email-first-edit-content' => 'Vá à $PAGETITLE ver o que foi acrescentado.',
 	'founderemails-email-first-edit-signature' => 'A Equipa da Wikia',
-	'founderemails-email-first-edit-button' => 'Dá uma vista de olhos!',
+	'founderemails-email-first-edit-button' => 'Ver!',
 	'founderemails-email-page-edited-reg-user-first-edit-body-HTML' => 'Olá $USERNAME,<br /><br />
 Parece que o utilizador registado $EDITORNAME editou a sua wiki pela primeira vez! Que tal ir à <a href="$EDITORTALKPAGEURL">página de discussão</a> e dizer-lhe olá?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- A Equipa da Wikia</div>',
 	'founderemails-email-page-edited-reg-user-subject' => 'Nova edição em $WIKINAME!',
 	'founderemails-email-page-edited-reg-user-body' => 'Olá $USERNAME,
 
-Parece que o utilizador registado $EDITORNAME editou a sua wiki! Que tal ir à página de discussão ($EDITORTALKPAGEURL) e dizer-lhe olá?
+O utilizador $EDITORNAME acaba de fazer outra edição na wiki $WIKINAME, a $PAGETITLE.
 
--- A Equipa da Wikia', # Fuzzy
+Vá a $PAGETITLE ver o que foi acrescentado.
+
+$PAGEURL
+
+A Equipa da Wikia',
 	'founderemails-email-general-edit-greeting' => 'Olá $USERNAME,',
+	'founderemails-email-general-edit-headline' => 'O utilizador $EDITORNAME acaba de fazer outra edição na wiki $WIKINAME, a $PAGETITLE.',
+	'founderemails-email-general-edit-content' => 'Vá a $PAGETITLE ver o que foi acrescentado.',
 	'founderemails-email-general-edit-signature' => 'A Equipa da Wikia',
-	'founderemails-email-general-edit-button' => 'Dá uma vista de olhos!',
+	'founderemails-email-general-edit-button' => 'Ver!',
 	'founderemails-email-page-edited-reg-user-body-HTML' => 'Olá $USERNAME,<br /><br />
 Parece que o utilizador registado $EDITORNAME editou a sua wiki! Que tal ir à <a href="$EDITORTALKPAGEURL">página de discussão</a> e dizer-lhe olá?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- A Equipa da Wikia</div>',
 	'founderemails-email-page-edited-anon-subject' => 'Um amigo misterioso editou $WIKINAME',
 	'founderemails-email-page-edited-anon-body' => 'Olá $USERNAME,
 
-Parece que alguém editou a sua wiki! Que tal visitá-la $MYHOMEURL e ver o que foi alterado?
+Um utilizador anónimo da Wikia acaba de editar $PAGETITLE na $WIKINAME.
 
--- A Equipa da Wikia', # Fuzzy
+Os utilizadores anónimos são pessoas que editam sem se autenticar numa conta da Wikia. Vá ver o que este amigo misterioso alterou!
+
+$PAGEURL
+
+A Equipa da Wikia',
 	'founderemails-email-anon-edit-greeting' => 'Olá $USERNAME,',
+	'founderemails-email-anon-edit-headline' => 'Um utilizador anónimo da Wikia acaba de editar $PAGETITLE na $WIKINAME.',
+	'founderemails-email-anon-edit-content' => 'Os utilizadores anónimos são pessoas que editam sem se autenticar numa conta da Wikia. Vá ver o que este amigo misterioso alterou!',
 	'founderemails-email-anon-edit-signature' => 'A Equipa da Wikia',
-	'founderemails-email-anon-edit-button' => 'Dá uma vista de olhos!',
+	'founderemails-email-anon-edit-button' => 'Ver!',
 	'founderemails-email-page-edited-anon-body-HTML' => 'Olá $USERNAME,<br /><br />
 Parece que alguém editou a sua wiki! Que tal <a href="$MYHOMEURL">visitá-la</a> e ver o que foi alterado?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- A Equipa da Wikia</div>',
@@ -8408,16 +8494,19 @@ Bạn luôn luôn có thể ghé qua hoạt động của wiki để xem tất c
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Anakmalaysia
+ * @author Byfserag
  * @author Dimension
  * @author Hydra
  * @author Hzy980512
  * @author Liuxinyu970226
  * @author Qiyue2001
  * @author Sam Wang
+ * @author Sora
  * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
 	'founderemails-desc' => '帮助通知创始人有关在他们的wiki上的变更',
+	'tog-founderemailsenabled' => '通过电子邮件告诉我其他人在做什么（仅创建者）',
 	'founderemails-email-user-registered-subject' => '有新用户加入$WIKINAME',
 	'founderemails-email-user-registered-body' => '嗨！$USERNAME，
 祝贺！$EDITORNAME刚刚加入了$WIKINAME。
@@ -8427,6 +8516,7 @@ $EDITORPAGEURL
 Wikia团队',
 	'founderemails-email-user-registered-greeting' => '嗨！$USERNAME，',
 	'founderemails-email-user-registered-headline' => '恭喜！$EDITORNAME刚刚加入了$WIKINAME。',
+	'founderemails-email-user-registered-content' => '抓住机会欢迎他们到您的Wiki来并鼓励他们帮助编辑。越多人参与，您的Wiki就会成长得越快。',
 	'founderemails-email-user-registered-signature' => 'Wikia团队',
 	'founderemails-email-user-registered-button' => '欢迎他们',
 	'founderemails-email-user-registered-body-HTML' => '嗨$USERNAME,<br /><br />
@@ -8519,6 +8609,7 @@ Wikia团队',
 看来注册用户$EDITORNAME已经在你的维基上做出首次编辑了！何不踩踩他们的讨论页($EDITORTALKPAGEURL)，和他们打个招呼呢？
 
 -- Wikia团队',
+	'founderemails-answers-email-page-edited-reg-user-subject' => '注册用户更改了您的网站！',
 	'founderemails-answers-email-page-edited-reg-user-body' => '嘿！$USERNAME，
 
 看来$EDITORNAME已经在你的维基上做出编辑了！何不踩踩他们的讨论页($EDITORTALKPAGEURL)，和他们打个招呼呢？
@@ -8542,6 +8633,7 @@ Wikia团队',
 	'founderemails-email-0-day-wikiahelps-signature' => '祝维基建设愉快！<br />Wikia团队',
 	'founderemails-email-3-day-heading' => '你好，$USERNAME，',
 	'founderemails-email-3-day-editmainpage-heading' => '美化您的主页。',
+	'founderemails-email-3-day-editmainpage-button' => '美化它',
 	'founderemails-email-3-day-addphotos-heading' => '添加更多图片。',
 	'founderemails-email-3-day-addphotos-button' => '添加照片',
 	'founderemails-email-3-day-explore-heading' => '寻找灵感。',
@@ -8550,6 +8642,7 @@ Wikia团队',
 	'founderemails-email-10-day-heading' => '$USERNAME，最近如何?',
 	'founderemails-email-10-day-congratulations' => '哇哦，时光飞逝！您建立$HDWIKINAME已逾10日。',
 	'founderemails-email-10-day-share-heading' => '妈妈一定和你说过“独乐乐不如众乐乐”的道理吧？',
+	'founderemails-email-10-day-email-heading' => '利用电子邮件的力量。',
 	'founderemails-email-10-day-join-heading' => '链接同类网站。',
 	'founderemails-email-views-digest-body' => '本日$WIKINAME的访问量是$1{{PLURAL:$1|人|人}}.
 
@@ -8589,6 +8682,7 @@ Wikia团队',
 	'founderemails-email-complete-digest-button' => '前往 维基活动',
 	'founderemails-pref-joins' => '有人加入$1时邮件通知我。',
 	'founderemails-pref-edits' => '有人编辑$1时邮件通知我。',
+	'founderemails-pref-complete-digest' => '给我发送$1的每日活动摘要',
 	'founderemails-pref-joins-v2' => '...一些人的加入',
 	'founderemails-pref-edits-v2' => '...他人编辑',
 	'founderemails-pref-complete-digest-v2' => '...一份每日注册、编辑、访问摘要已备好',

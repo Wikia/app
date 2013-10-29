@@ -1,5 +1,6 @@
 @import "skins/oasis/css/mixins/border-radius";
 @import "skins/oasis/css/mixins/box-shadow";
+@import "skins/oasis/css/mixins/calc";
 @import "skins/oasis/css/mixins/clearfix";
 @import "skins/oasis/css/mixins/forms";
 @import "skins/oasis/css/mixins/gradient";
@@ -93,7 +94,11 @@ $color-highlight-column: rgba($color-page, 0);
 	border: 0;
 	padding: 10px 0 0 0;
 	position: absolute;
-	right: if( $responsive-layout-enabled, $admin-dashboard-rail-width, $width-outside - $admin-dashboard-content-width );
+	@if ( $responsive-layout-enabled ) {
+		right: $admin-dashboard-rail-width;
+	} @else {
+		right: $width-outside - $admin-dashboard-content-width;
+	}
 	top: $admin-dashboard-header-height - $nav-height - 11px;
 	z-index: $base-z - 	1;
 	&.expanded {
@@ -160,7 +165,11 @@ $color-highlight-column: rgba($color-page, 0);
 				font-style: italic;
 				padding: 5px 20px 0;
 				position: absolute;
-				width: if( $responsive-layout-enabled, 100%, $admin-dashboard-content-width - 40px );
+				@if ( $responsive-layout-enabled ) {
+					width: 100%;
+				} @else {
+					width: $admin-dashboard-content-width - 40px;
+				}
 				h1 {
 					color: $color-admin-header-text;
 					float: left;
@@ -191,6 +200,7 @@ $color-highlight-column: rgba($color-page, 0);
 						display: block;
 						height: 50px;
 						margin: 0 auto 5px;
+						position: relative;
 						width: 50px;
 						.icon {
 							background-image: url(/extensions/wikia/AdminDashboard/images/icons.png); // $wgCdnStylePath
@@ -226,7 +236,7 @@ $color-highlight-column: rgba($color-page, 0);
 								background-position: -300px 0;
 							}
 							&.specialcsstool {
-								background-position: -900px 0;
+								background-position: -892px 0;
 							}
 
 							&.communitycorner {
@@ -256,6 +266,11 @@ $color-highlight-column: rgba($color-page, 0);
 							&.licensedvideoswap {
 								background-position: -950px 0;
 							}
+						}
+						.alert-badge {
+							position: absolute;
+							right: -.75em;
+							top: -.75em;
 						}
 					}
 					&:hover {
@@ -346,7 +361,11 @@ $color-highlight-column: rgba($color-page, 0);
 	padding: 20px 0 0 0;
 	position: relative;
 	z-index: $base-z;
-	width: if( $responsive-layout-enabled, 100%, $admin-dashboard-content-width );
+	@if ( $responsive-layout-enabled ) {
+		width: 100%;
+	} @else {
+		width: $admin-dashboard-content-width;
+	}
 
 	&.AdminDashboardChromedArticle {
 		@include box-shadow(0, 0, 0, $color-body);
@@ -354,7 +373,11 @@ $color-highlight-column: rgba($color-page, 0);
 		border-right: 0;
 		float: none;
 		padding: 0 12px 0 5px;
-		width: if( $responsive-layout-enabled, auto, $width-outside - 18px );
+		@if ( $responsive-layout-enabled ) {
+			width: auto;
+		} @else {
+			width: $width-outside - 18px;
+		}
 	}
 	fieldset {
 		border: solid 1px $color-links;
@@ -497,6 +520,14 @@ $color-highlight-column: rgba($color-page, 0);
 	@media screen and (max-width: 1023px) {
 		.adm-dash-search {
 			display: none;
+		}
+		.AdminDashboardTabs {
+			right: 10px;
+		}
+		.AdminDashboardRail {
+			@include width-calc('100% - 30px');
+			float: none;
+			margin: 20px 15px 0;
 		}
 	}
 

@@ -67,14 +67,7 @@ img.contactCaptch {
 
 @if ( $responsive-layout-enabled ) {
 	.special-contact-picker {
-		width: 760px;
-	}
-
-	@media screen and (max-width: 1023px)
-	{
-		.special-contact-picker {
-			width: auto;
-		}
+		width: 100%;
 	}
 }
 

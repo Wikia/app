@@ -8,12 +8,12 @@ var AdConfig2 = function (
 	abTest,
 
 	// adProviders
-	adProviderAdDriver2,
 	adProviderGpt,
 	adProviderEvolve,
 	adProviderGamePro,
 	adProviderLater,
-	adProviderNull
+	adProviderNull,
+	adProviderSevenOneMedia
 ) {
 	'use strict';
 
@@ -22,7 +22,7 @@ var AdConfig2 = function (
 		country = Geo.getCountryCode(),
 		defaultHighValueSlots,
 		highValueSlots,
-		dartProvider = window.wgAdDriverUseFullGpt ? adProviderGpt : adProviderAdDriver2;
+		useSevenOneMedia = window.wgAdDriverUseSevenOneMedia && abTest.inGroup('SEVENONEMEDIA_ADS', 'ENABLED');
 
 	defaultHighValueSlots = {
 		'CORP_TOP_LEADERBOARD':true,
@@ -64,10 +64,10 @@ var AdConfig2 = function (
 			return adProviderEvolve;
 		}
 		if (slot[2] === 'AdDriver2') {
-			return dartProvider;
+			return adProviderGpt;
 		}
 		if (slot[2] === 'AdDriver') {
-			return dartProvider;
+			return adProviderGpt;
 		}
 		if (slot[2] === 'Liftium2') {
 			return adProviderLater;
@@ -81,6 +81,10 @@ var AdConfig2 = function (
 		) {
 			log('AB experiment PERFORMANCE_V_PREFOOTERS, group PREFOOTERS_DISABLED: ' + slotname + ' disabled', 5, log_group);
 			return adProviderNull;
+		}
+
+		if (useSevenOneMedia && adProviderSevenOneMedia.canHandleSlot(slot)) {
+			return adProviderSevenOneMedia;
 		}
 
 		// TODO refactor highValueSlots check to the top of the whole config
@@ -101,8 +105,8 @@ var AdConfig2 = function (
 		}
 
 		// Non-high-value slots goes to ad provider Later, so GamePro can grab them later
-		if (highValueSlots[slotname] && dartProvider.canHandleSlot(slot)) {
-			return dartProvider;
+		if (highValueSlots[slotname] && adProviderGpt.canHandleSlot(slot)) {
+			return adProviderGpt;
 		}
 
 		return adProviderLater;
@@ -110,6 +114,11 @@ var AdConfig2 = function (
 
 	function getProvider(slot) {
 		var provider = getBackEndProvider(slot);
+
+		// No page length checking logic for Null/SevenOneMedia providers
+		if (provider === adProviderNull || provider === adProviderSevenOneMedia) {
+			return provider;
+		}
 
 		// Check if we should apply page length checking for that slot
 		if (adLogicPageDimensions.isApplicable(slot)) {

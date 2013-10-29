@@ -471,7 +471,7 @@ class MediaWikiService
 		$articleId = ( $title !== null ) ? $title->getArticleId() : 0;
 		if( ( $articleId > 0 ) && ( in_array( $title->getNamespace(), $namespaces ) ) ) {
 			$this->getPageFromPageId( $articleId );
-			$articleMatch = new \Wikia\Search\Match\Article( $title->getArticleId(), $this );
+			$articleMatch = new \Wikia\Search\Match\Article( $title->getArticleId(), $this ,$term);
 		}
 		return $articleMatch;
 	}
@@ -481,10 +481,10 @@ class MediaWikiService
 	 * @param string $domain
 	 * @return \Wikia\Search\Match\Wiki|NULL
 	 */
-	public function getWikiMatchByHost( $domain ) {
+	public function getWikiMatchByHost( $domain, $lang = null ) {
 		$match = null;
 		if ( $domain !== '' ) {
-			$langCode = $this->getLanguageCode();
+			$langCode = ( $lang !== null ) ? $lang : $this->getLanguageCode();
 			if ( $langCode === static::WIKI_DEFAULT_LANG_CODE ) {
 				$wikiId = $this->getWikiIdByHost( $domain . '.wikia.com' );
 			} else {

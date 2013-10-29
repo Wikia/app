@@ -797,7 +797,7 @@ QUnit.test( 'newFromDocumentReplace', function ( assert ) {
 		if ( cases[i].newDocData ) {
 			doc2 = new ve.dm.Document( cases[i].newDocData );
 		} else {
-			doc2 = doc.getDocumentSlice( cases[i].range );
+			doc2 = doc.cloneFromRange( cases[i].range instanceof ve.Range ? cases[i].range : cases[i].range.getRange() );
 			cases[i].modify( doc2 );
 		}
 		tx = ve.dm.Transaction.newFromDocumentReplace( doc, cases[i].range, doc2 );
@@ -1419,55 +1419,7 @@ QUnit.test( 'translateOffset', function ( assert ) {
 	for ( offset in mapping ) {
 		expected = ve.isArray( mapping[offset] ) ? mapping[offset] : [ mapping[offset], mapping[offset] ];
 		assert.strictEqual( tx.translateOffset( Number( offset ) ), expected[1], offset );
-		assert.strictEqual( tx.translateOffset( Number( offset ), false, true ), expected[0], offset + ' (excludeInsertion)' );
-	}
-} );
-
-QUnit.test( 'translateOffsetReversed', function ( assert ) {
-	var mapping, offset, expected,
-		doc = new ve.dm.Document( '-----defg---h--'.split( '' ) ),
-		tx = new ve.dm.Transaction();
-
-	tx.pushReplace( doc, 0, 0, ['a','b','c'] );
-	tx.pushRetain( 5 );
-	tx.pushReplace( doc, 5, 4, [] );
-	tx.pushRetain( 2 );
-	tx.pushStartAnnotating( 'set', { 'type': 'textStyle/bold' } );
-	tx.pushRetain( 1 );
-	tx.pushReplace( doc, 12, 1, ['i', 'j', 'k', 'l', 'm'] );
-	tx.pushRetain( 2 );
-	tx.pushReplace( doc, 15, 0, ['n', 'o', 'p'] );
-
-	mapping = {
-		0: 0,
-		1: 0,
-		2: 0,
-		3: 0,
-		4: 1,
-		5: 2,
-		6: 3,
-		7: 4,
-		8: [5, 9],
-		9: 10,
-		10: 11,
-		11: 12,
-		12: 13,
-		13: 13,
-		14: 13,
-		15: 13,
-		16: 13,
-		17: 14,
-		18: 15,
-		19: 15,
-		20: 15,
-		21: 15,
-		22: 16
-	};
-	QUnit.expect( 2*ve.getObjectKeys( mapping ).length );
-	for ( offset in mapping ) {
-		expected = ve.isArray( mapping[offset] ) ? mapping[offset] : [ mapping[offset], mapping[offset] ];
-		assert.strictEqual( tx.translateOffset( Number( offset ), true ), expected[1], offset );
-		assert.strictEqual( tx.translateOffset( Number( offset ), true, true ), expected[0], offset + ' (excludeInsertion)' );
+		assert.strictEqual( tx.translateOffset( Number( offset ), true ), expected[0], offset + ' (excludeInsertion)' );
 	}
 } );
 

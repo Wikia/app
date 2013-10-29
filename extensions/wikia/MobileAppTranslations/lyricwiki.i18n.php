@@ -371,6 +371,7 @@ $messages['es'] = array(
 
 /** Finnish (suomi)
  * @author Centerlink
+ * @author Ville96
  */
 $messages['fi'] = array(
 	'app-loading' => 'Ladataan...',
@@ -400,7 +401,7 @@ $messages['fi'] = array(
 	'about-heading-feedback' => 'Palaute',
 	'about-feedback-0' => 'Palautetta ohjelmasta? Lähetä minulle sähköpostia: %s (englanniksi)',
 	'about-heading-rate' => 'Arvioi ohjelma Marketissa!',
-	'about-rate-0-android' => 'Jos pidät tästä ohjelmasta, niin miksi et antaisi sille viittä tähteä Android Marketissa? :)', # Fuzzy
+	'about-rate-0-android' => 'Jos pidät tästä sovelluksesta, niin miksi et antaisi sille 5 tähteä Android Marketissa?',
 	'gracenote-takedown' => 'Valitettavasti emme tekijänoikeussyistä voi näyttää etsimäsi kappaleen koko sanoja. Tätä tapahtuu alle prosentille sanoituksistamme. Yritä uudelleen myöhemmin.',
 	'lyrics-artist-byline' => 'esittäjä: %s',
 	'ringtone-matcher-by-song' => 'Lähetä %s soittoäänenä puhelimeesi!',
@@ -1003,6 +1004,7 @@ $messages['ps'] = array(
 );
 
 /** Portuguese (português)
+ * @author Hamilton Abreu
  * @author Luckas
  * @author Malafaya
  * @author SandroHc
@@ -1018,7 +1020,7 @@ $messages['pt'] = array(
 	'app-nonetwork-dialog-close-button' => 'OK',
 	'search-go' => 'Ir!',
 	'search-hint-text' => "p.ex. 'John Lennon:Imagine'",
-	'login-username-hint' => 'Nome de usuário',
+	'login-username-hint' => 'Nome de utilizador',
 	'login-password-hint' => 'Senha',
 	'about-heading' => 'LyricWiki',
 	'about-credits' => 'por %s',

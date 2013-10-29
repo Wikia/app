@@ -110,12 +110,13 @@ For example, you could:
  */
 $messages['qqq'] = array(
 	'myhome-activity-feed' => 'This the title of the list/summary of recent activity in "My home page" in Wikia. "Feed" here does not refer to an RSS/Atom-type feed.',
-	'myhome-watchlist-feed' => '{{Identical|My watchlist}}',
+	'myhome-watchlist-feed' => '{{Identical|Watchlist}}',
 	'myhome-user-contributions-feed' => '{{Identical|Contribution}}',
 	'tog-userlandingpage' => 'Label next to selectbox when user can choose her landing page will be one of: Main Page, WikiActivity, RecentChanges',
 	'myhome-feed-newpage' => '{{Identical|New page}}',
 	'myhome-feed-edit' => '{{Identical|Edit}}',
 	'myhome-feed-delete' => '{{Identical|Deleted}}',
+	'myhome-feed-added-by' => '{{Identical|Added by}}',
 	'myhome-feed-new-page-details' => '{{Identical|New page}}',
 	'myhome-feed-summary-details' => '{{Identical|Summary}}',
 	'myhome-feed-new-blog-comment-details' => '{{Identical|Comment}}',
@@ -356,26 +357,68 @@ $messages['be-tarask'] = array(
 );
 
 /** Bulgarian (български)
+ * @author Aquilax
  * @author DCLXVI
  */
 $messages['bg'] = array(
+	'myhome-desc' => 'Лична начална страница за регистрирани потребители',
+	'myhome' => 'Моята начална страница',
 	'wikiactivity' => 'Уики активност',
+	'myhome-activity-more' => 'преглед на още скорощна активност',
+	'myhome-activity-feed' => 'Бюлетин действия',
+	'myhome-activity-feed-empty' => "Това уики очаква Вашето участие.
+Щракнете на '''[[Special:CreatePage|Нова страница]]''' и започнете да пишете!",
 	'myhome-watchlist-feed' => 'Списък за наблюдение',
+	'myhome-watchlist-feed-empty' => 'Можете да добавяте страници към вашия списък за наблюдение като щракнете върху връзката "{{int:watch}}" в лентата в горната част на страницата.
+Можете да използвате Вашият списък наблюдение, за да следите последните промени в страниците, които ви интересуват.',
 	'myhome-user-contributions-feed' => 'Приноси',
+	'myhome-hot-spots-feed' => 'Горещи точки',
+	'myhome-hot-spots-feed-empty' => "Това уики очаква Вашето участие.
+Щракнете на '''[[Special:CreatePage|Нова страница]]''' за да започнете да пишете!",
 	'myhome-hot-spots-newest' => 'Нови страници в уикито',
+	'tog-userlandingpage' => 'Входяща страница:',
+	'prefs-myhome' => 'Моята начална страница',
 	'myhome-feed-newpage' => 'нова страница',
 	'myhome-feed-edit' => 'редактиране',
+	'myhome-feed-move' => 'преместена страница',
+	'myhome-feed-talkpage' => 'дискусионна страница',
+	'myhome-feed-blogcomment' => 'блог коментар',
+	'myhome-feed-delete' => 'изтрито',
+	'myhome-feed-image' => 'добавено изображение',
+	'myhome-feed-video' => 'добавено видео',
+	'myhome-feed-categorization' => 'категоризация',
 	'myhome-feed-created-by' => 'създадена от $1',
 	'myhome-feed-added-by' => 'добавен от $1',
 	'myhome-feed-edited-by' => 'редактиранa от $1',
 	'myhome-feed-posted-by' => 'публикувано от $1',
+	'myhome-feed-comment-by' => 'коментирано от $1',
+	'myhome-feed-deleted-by' => 'изтрито от $1',
+	'myhome-feed-moved-by' => 'преместено от $1',
 	'myhome-feed-article-comment-created-by' => 'нов коментар от $1',
+	'myhome-feed-article-comment-edited-by' => 'редактиран коментар от $1',
 	'myhome-feed-by' => 'от $1',
+	'myhome-feed-diff-alt' => 'показване на промяната на тази страница',
 	'myhome-feed-new-page-details' => 'Нова страница',
 	'myhome-feed-summary-details' => 'Резюме',
+	'myhome-feed-section-edit-details' => 'Редактира секцията',
+	'myhome-feed-new-blog-post-details' => 'Нов блог',
+	'myhome-feed-new-blog-comment-details' => 'Коментар',
+	'myhome-feed-new-article-comment-details' => 'Коментар',
+	'myhome-feed-move-details' => 'Преименувано',
+	'myhome-feed-redirect-details' => 'Пренасочване',
+	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|Добавено изображение|Добавени изображения}}',
+	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|Добавено видео|Добавени видеа}}',
+	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Добавена категория|Добавени категории}}',
+	'myhome-user-contributions-empty' => 'Можете да се включите в това уики, като щракнете "{{int:editthispage}}" на която и да е страница, и добавите това, което знаете.
+Всеки може да прави промени, да добавя информация и да поправя грешки.
+Уики се изгражда от общността, и веднъж щракнали на бутона за редакция, Вие ставате част от общността.
+Опитайте!',
+	'myhome-hot-spots-number-of-editors' => 'редактори',
+	'myhome-log-in' => "<center>Функцията Моята начална страница е достъпна само ако сте влезли.<br /><br /><big>'''[{{fullurl:Special:Signup|$1}} Моля влезте за да видите тази страница!]'''</big></center>",
 	'myhome-namespace-blog' => 'Блог',
 	'oasis-myhome-community-corner-edit' => 'редактиране на съобщението &gt;',
 	'myhome-community-corner-edit' => 'редактиране на съобщението',
+	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|едно съобщение|$1 съобщения}}',
 );
 
 /** Tibetan (བོད་ཡིག)
@@ -583,9 +626,11 @@ Per exemple, pots:
 
 /** Chechen (нохчийн)
  * @author Sasan700
+ * @author Умар
  */
 $messages['ce'] = array(
 	'myhome-user-contributions-feed' => 'Къинхьегам',
+	'myhome-feed-edit' => 'нисдар',
 );
 
 /** Czech (česky)
@@ -2809,16 +2854,16 @@ $messages['ps'] = array(
 	'myhome-feed-move' => 'مخ ولېږدېده',
 	'myhome-feed-talkpage' => 'د خبرو اترو مخ',
 	'myhome-feed-blogcomment' => 'د بلاګ تبصره',
-	'myhome-feed-delete' => 'ړنګ شو',
-	'myhome-feed-image' => 'انځور ورګډ شو',
+	'myhome-feed-delete' => 'ړنگ شو',
+	'myhome-feed-image' => 'انځور ورگډ شو',
 	'myhome-feed-video' => 'ويډيو ورګډه شوه',
 	'myhome-feed-categorization' => 'ډلبندي',
 	'myhome-feed-created-by' => 'د $1 لخوا جوړ شو',
-	'myhome-feed-added-by' => 'د $1 لخوا ورګډ شو',
+	'myhome-feed-added-by' => 'د $1 لخوا ورگډ شو',
 	'myhome-feed-edited-by' => 'د $1 لخوا سم شو',
 	'myhome-feed-posted-by' => 'د $1 لخوا پوست شو',
 	'myhome-feed-comment-by' => 'تبصره د $1 لخوا',
-	'myhome-feed-deleted-by' => 'د $1 لخوا ړنګ شو',
+	'myhome-feed-deleted-by' => 'د $1 لخوا ړنگ شو',
 	'myhome-feed-moved-by' => 'د $1 لخوا ولېږدېده',
 	'myhome-feed-by' => 'د $1 لخوا',
 	'myhome-feed-new-page-details' => 'نوی مخ',
@@ -2827,10 +2872,10 @@ $messages['ps'] = array(
 	'myhome-feed-new-blog-post-details' => 'نوی بلاګ',
 	'myhome-feed-new-blog-comment-details' => 'تبصره',
 	'myhome-feed-new-article-comment-details' => 'تبصره',
-	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|انځور ورګډ شو|انځورونه ورګډ شوه}}',
-	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|ويډيو ورګډه شوه|ويډيوګانې ورګډې شوې}}',
-	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|وېشنيزه ورګډه شوه|وېشنيزې ورګډې شوې}}',
-	'myhome-hot-spots-number-of-editors' => 'سمونګران',
+	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|انځور ورگډ شو|انځورونه ورگډ شوه}}',
+	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|ويډيو ورگډه شوه|ويډيوگانې ورگډې شوې}}',
+	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|وېشنيزه ورگډه شوه|وېشنيزې ورگډې شوې}}',
+	'myhome-hot-spots-number-of-editors' => 'سمونگران',
 	'myhome-namespace-blog' => 'بلاګ',
 	'myhome-community-corner-header' => 'د ټولنې پيغام',
 	'myhome-community-corner-edit' => 'پيغام سمول',
@@ -2838,18 +2883,18 @@ $messages['ps'] = array(
 
 دا مخ په همدې ويکي باندې د هغو پېښو په اړه چې تازه پېښې شوي، له تاسې سره مرسته کوي.
 
-که تاسې د دې ويکي بنسټګر او يا هم پازوال ياست، نو تاسې د دې ويکي د ټولنې سره د اهمو شيانو او پېښو اړوند د خبرو اترو په تکل  دا پيغام بدلولی شی. 
-د بېلګې په توګه، تاسې کولای شی چې:
+که تاسې د دې ويکي بنسټگر او يا هم پازوال ياست، نو تاسې د دې ويکي د ټولنې سره د اهمو شيانو او پېښو اړوند د خبرو اترو په تکل  دا پيغام بدلولی شی. 
+د بېلگې په توگه، تاسې کولای شی چې:
 
-* يوه داسې پروژه ترتيب کړی چې د دې ويکي د بېلابېلو برخو د جوړ سبب شي
+* يوه داسې پروژه ترتيب کړی چې د دې ويکي د بېلابېلو برخو د جوړېدو سبب شي
 
 * هغه نوي مخونه چې هر څوک يې بايد وکتلای شي دلته ښکاره کړۍ
 
-* نور خلک د دې وېبځي د پېښو په اړه د خبرو اترو ګردي مېز او يا بحثونو کې ښکېل کړۍ
+* نور خلک د دې وېبځي د پېښو په اړه د خبرو اترو گردي مېز او يا بحثونو کې ښکېل کړۍ
 
-* د دې ويکي پر کارن چې دې وېبځي سره يې په ځانګړې ونډه کې ګډون کړی وي وستايل شي
+* د دې ويکي کارن چې دې وېبځي سره يې په ځانگړې ونډه کې گډون کړی وي وستايل شي
 
-* او يا هم يوازې د تشويق او د نورو د لېواله کولو لپاره خوږې خبرې وليکۍ!",
+* او يا هم يوازې د تشويق او د نورو د هڅولو لپاره خوږې خبرې وليکۍ!",
 	'tooltip-pt-myhome' => 'زما کورپاڼې ته ورتلل',
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|يو پيغام|$1 پيغامونه}}',
 );

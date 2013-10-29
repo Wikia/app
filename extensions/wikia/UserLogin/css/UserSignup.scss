@@ -112,16 +112,16 @@
 
 	.form-container {
 		margin: 0 auto;
-		width: 270px;
+		width: 332px;
 		.input-group {
-			width: 256px;
+			width: 318px;
 			label {
 				display:block;
 			}
 		}
 		input[type=text],
 		input[type=password] {
-			width: 237px;
+			width: 299px;
 		}
 		.captcha {
 			.fancy-captcha {
@@ -152,7 +152,7 @@
 				width: 52%;
 				padding-left: 2%;
 				form {
-					width: 270px;
+					width: 332px;
 				}
 				.sso-login {
 					margin: 0;
@@ -167,7 +167,7 @@
 	.sso-login {
 		margin: 0 auto;
 		text-align: center;
-		width: 270px;
+		width: 332px;
 
 		.sso-login-divider {
 			@include divider;

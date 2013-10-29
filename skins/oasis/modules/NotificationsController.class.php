@@ -96,12 +96,15 @@ class NotificationsController extends WikiaController {
 	public static function addConfirmation($message, $type = 1) {
 		wfProfileIn(__METHOD__);
 
-		$_SESSION[self::SESSION_KEY] = array(
-			'message' => $message,
-			'type' => $type,
-		);
+		if ( !empty( $message ) ) {
+			$_SESSION[self::SESSION_KEY] = array(
+				'message' => $message,
+				'type' => $type,
+			);
 
-		wfDebug(__METHOD__ . " - {$message}\n");
+			wfDebug(__METHOD__ . " - {$message}\n");
+		}
+
 		wfProfileOut(__METHOD__);
 	}
 

@@ -1349,6 +1349,10 @@ class WikiPage extends Page {
 				# creates a window where concurrent edits can cause an ignored edit conflict.
 				$ok = $this->updateRevisionOn( $dbw, $revision, $oldid, $oldIsRedirect );
 
+				// wikia changes begin
+				wfRunHooks( 'ArticleDoEdit', array( $dbw, $this->mTitle, $revision, $flags ) );
+				// wikia changes end
+
 				if ( !$ok ) {
 					/* Belated edit conflict! Run away!! */
 					$status->fatal( 'edit-conflict' );
@@ -1441,6 +1445,10 @@ class WikiPage extends Page {
 
 			# Update the page record with revision data
 			$this->updateRevisionOn( $dbw, $revision, 0 );
+
+			// wikia changes begin
+			wfRunHooks( 'ArticleDoEdit', array( $dbw, $this->mTitle, $revision, $flags ) );
+			// wikia changes end
 
 			wfRunHooks( 'NewRevisionFromEditComplete', array( $this, $revision, false, $user ) );
 

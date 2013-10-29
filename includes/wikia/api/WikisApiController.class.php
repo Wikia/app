@@ -22,7 +22,8 @@ class WikisApiController extends WikiaApiController {
 	const DEFAULT_WIDTH = 250;
 	const DEFAULT_HEIGHT = null;
 	const DEFAULT_SNIPPET_LENGTH = null;
-	const CACHE_VERSION = 1;
+	const CACHE_VERSION = 2;
+	const WORDMARK = 'Wiki-wordmark.png';
 	private static $flagsBlacklist = array( 'blocked', 'promoted' );
 
 	private $keys;
@@ -283,9 +284,13 @@ class WikisApiController extends WikiaApiController {
 			$factoryData = $this->getFromWikiFactory( $wikiId, $exists );
 			if ( $exists ) {
 				$wikiInfo = array_merge(
-					[ 'id' => (int) $wikiId ],
+					[
+						'id' => (int) $wikiId,
+						'wordmark' => $this->getWikiWordmarkImage( $wikiId )
+					],
 					$factoryData,
-					$this->getFromService( $wikiId )
+					$this->getFromService( $wikiId ),
+					$this->getFromWAMService( $wikiId )
 				);
 			} else {
 				$wikiInfo = [
@@ -339,6 +344,24 @@ class WikisApiController extends WikiaApiController {
 			];
 		}
 		return [];
+	}
+
+	protected function getWikiWordmarkImage( $id ) {
+		$title = GlobalTitle::newFromText( static::WORDMARK, NS_FILE, $id );
+		if ( $title !== null ) {
+			$file = new GlobalFile( $title );
+			if ( $file !== null && $file->exists() ) {
+				return $file->getUrl();
+			}
+		}
+		return '';
+	}
+
+	protected function getFromWAMService( $id ) {
+		$service = new WAMService();
+		return [
+			'wam_score' => $service->getCurrentWamScoreForWiki( $id )
+		];
 	}
 
 	protected function getFromWikiFactory( $id, &$exists = null ) {

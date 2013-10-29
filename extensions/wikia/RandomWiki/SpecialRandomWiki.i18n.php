@@ -41,9 +41,11 @@ $messages['be-tarask'] = array(
 );
 
 /** Bulgarian (български)
+ * @author Aquilax
  * @author DCLXVI
  */
 $messages['bg'] = array(
+	'randomwiki-desc' => 'Позволява на потребителите да разглеждат случайно уики',
 	'randomwiki' => 'Случайно уики',
 );
 

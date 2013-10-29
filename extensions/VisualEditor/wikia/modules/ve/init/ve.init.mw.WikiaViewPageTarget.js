@@ -33,12 +33,11 @@ ve.init.mw.WikiaViewPageTarget.static.toolbarGroups = [
 	},
 	{ 'include': [ 'bold', 'italic', 'link', 'clear' ] },
 	{ 'include': [ 'number', 'bullet' ] },
-	{ 'include': mw.config.get('debug') ? [ 'wikiaMediaInsert' ] : [] },
-	{ 'include': '*' }
-	
-
-
-
+	{ 'include': [ 'wikiaMediaInsert' ] },
+	{
+		'include': '*',
+		'exclude': [ 'mediaInsert' ]
+	}
 	/*
 	{
 		'include': [ 'history' ],
