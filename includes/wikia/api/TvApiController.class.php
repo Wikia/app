@@ -28,24 +28,15 @@ class TvApiController extends WikiaApiController {
 			$responseValues = $this->getResponseFromConfig( $config );
 		}
 
-		if ( empty( $responseValues['items'] ) ) {
+		if ( empty($responseValues[ 'items' ]) ) {
 			throw new NotFoundApiException();
 		}
 
-	//	print_r($responseValues['items']);die();
-
-		foreach($responseValues['items'] as &$item)
-		{
-			$item['contentUrl'] = $this->url.self::API_URL.$item['pageid'];
+		foreach ( $responseValues[ 'items' ] as &$item ) {
+			$item[ 'contentUrl' ] = $this->url . self::API_URL . $item[ 'pageid' ];
 		}
 
-		foreach($responseValues as $key => &$val)
-		{
-			if($key !== 'items'){
-				unset($responseValues[$key]);
-			}
-		}
-
+		$responseValues = $responseValues[ 'items' ][ 0 ];
 
 		$response = $this->getResponse();
 		$response->setValues( $responseValues );

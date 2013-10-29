@@ -10,34 +10,30 @@ use Swagger\Annotations as SWG;
  * 	basePath="http://www.wikia.com"
  * )
  *
- *
+
  * @SWG\Model( id="TvResultSet" )
- * @SWG\Property(
- * 		name="seriesName",
- * 		type="string",
- * 		required="true",
- * 		description="sss"
- * 	)
- *
- * @SWG\Model( id="TvItem" )
  * 	@SWG\Property(
  * 		name="title",
  * 		type="string",
+ *		required="true",
  * 		description="The title of the article"
  * 	)
  * 	@SWG\Property(
  * 		name="url",
  * 		type="string",
+ * 		required="true",
  * 		description="The relative URL of the Article"
  * 	)
  * 	@SWG\Property(
  * 		name="pageid",
  * 		type="int",
+ * 		required="true",
  * 		description="An internal identification number for Article"
  * 	)
  * 	@SWG\Property(
  * 		name="contentUrl",
  * 		type="string",
+ * 		required="true",
  * 		description="The URL of plain content of the article"
  * 	)
  *
