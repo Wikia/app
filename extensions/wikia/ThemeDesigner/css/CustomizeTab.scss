@@ -1,6 +1,28 @@
 .CustomizeTab {
-	.color-body-middle {
-		display: none;
+	.background {
+		max-width: 430px;
+		.wrap-color {
+			max-width: 60px;
+		}
+		.wrap-middle-color {
+			max-width: 80px;
+			position:relative;
+			.middle-color-mask {
+				background-color: #000;
+				display: none;
+				height: 52px;
+				opacity: 0.5;
+				position: absolute;
+				bottom: 3px;
+				width: 52px;
+			}
+		}
+		.wrap-background {
+			max-width: 200px;
+		}
+		.not-split-option {
+			display: none;
+		}
 	}
 	.page {
 		padding-left: 40px;
@@ -8,9 +30,6 @@
 	li {
 		float: left;
 		margin-right: 30px;
-		&.background {
-			max-width: 310px;
-		}
 		img {
 			border: 1px solid $color-borders;
 			cursor: pointer;

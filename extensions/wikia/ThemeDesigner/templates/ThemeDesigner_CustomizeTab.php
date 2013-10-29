@@ -1,27 +1,28 @@
 <section id="CustomizeTab" class="CustomizeTab">
-	<fieldset>
+	<fieldset class="background">
 		<h1><?= wfMessage('themedesigner-background')->plain() ?></h1>
 		<ul>
-			<li>
+			<li class="wrap-color">
 				<h2><?= wfMsg('themedesigner-color') ?></h2>
 				<img src="<?= $wg->BlankImgUrl ?>" class="color-body" id="swatch-color-background">
-				<? if ($wg->OasisResponsive) : ?>
-					<div class="wrap-middle-color">
-						<input type="checkbox" id="color-body-middle" />
-						<label for="color-body-middle"><?= wfMessage('themedesigner-color-middle')->plain() ?></label>
-						<span class="form-questionmark" rel="tooltip" title="<?= wfMessage('themedesigner-rules-color-middle')->plain() ?>"></span>
-						<img src="<?= $wg->BlankImgUrl ?>" class="color-body-middle" id="swatch-color-background-middle">
-					</div>
-				<? endif ?>
 			</li>
-			<li class="background">
+			<? if ($wg->OasisResponsive) : ?>
+				<li class="wrap-middle-color">
+					<h2><?= wfMessage('themedesigner-color-middle')->plain() ?></h2>
+					<img src="<?= $wg->BlankImgUrl ?>" class="color-body-middle" id="swatch-color-background-middle">
+					<div class="middle-color-mask"></div>
+				</li>
+			<? endif ?>
+			<li class="wrap-background">
 				<h2><?= wfMessage('themedesigner-graphic')->plain() ?></h2>
 				<img src="<?= $wg->BlankImgUrl ?>" class="background-image" id="swatch-image-background">
 				<input type="checkbox" id="tile-background"> <label for="tile-background"><?= wfMessage('themedesigner-tile-background')->plain() ?></label>
 				<input type="checkbox" id="fix-background"> <label for="fix-background"><?= wfMessage('themedesigner-fix-background')->plain() ?></label>
 				<? if ($wg->OasisResponsive) : ?>
-					<input type="checkbox" id="dynamic-background"> <label for="dynamic-background"><?= wfMessage('themedesigner-dynamic-background')->plain() ?></label>
-					<span class="form-questionmark" rel="tooltip" title="<?= wfMessage('themedesigner-rules-dynamic-background')->plain() ?>"></span>
+					<span class="not-split-option">
+						<input type="checkbox" id="not-split-background"> <label for="not-split-background"><?= wfMessage('themedesigner-not-split-background')->plain() ?></label>
+						<span class="form-questionmark" rel="tooltip" title="<?= wfMessage('themedesigner-rules-not-split-background')->parse() ?>"></span>
+					</span>
 				<? endif ?>
 			</li>
 		</ul>

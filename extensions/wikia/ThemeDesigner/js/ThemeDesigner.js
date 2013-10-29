@@ -23,10 +23,16 @@ var ThemeDesigner = {
 		// themes
 		this.themes = window.themes;
 
+		// Cashe selectors
+		this.themeDesignerPicker = $('#ThemeDesignerPicker');
+		this.previewFrame = $('#PreviewFrame');
+
 		// min width for dynamic is equal to our breakpoint
 		// TODO: When refactoring ThemeDesigner into AMD module, use wikia.fluidlayout.getBreakpointContent
 		this.minWidthForDynamicBackground = 1030;
+		this.minWidthNotSplitBackground = 2100;
 
+		this.backgroundType = 0;
 
 		//$().log(ThemeDesigner, 'ThemeDesigner');
 
@@ -57,10 +63,6 @@ var ThemeDesigner = {
 
 		// init tooltips
 		this.initTooltips();
-
-		// Cashe selectors
-		this.themeDesignerPicker = $('#ThemeDesignerPicker');
-		this.previewFrame = $('#PreviewFrame');
 
 		// iframe resizing
 		$(window).resize($.proxy(this.resizeIframe, this)).resize();
@@ -164,45 +166,35 @@ var ThemeDesigner = {
 		$('#swatch-image-background').click(function(event) {
 			ThemeDesigner.showPicker(event, 'image');
 		});
+
 		$('#tile-background').change(function() {
+			if (ThemeDesigner.backgroundType > 1) {
+				if ($(this).attr('checked') ) {
+					ThemeDesigner.changeDynamicBg();
+					$('#not-split-background').attr('disabled', true);
+				} else {
+					ThemeDesigner.changeDynamicBg(true);
+					$('#not-split-background').attr('disabled', false);
+				}
+			}
 			ThemeDesigner.set('background-tiled', $(this).attr('checked') ? 'true' : 'false');
 		});
 		$('#fix-background').change(function() {
 			ThemeDesigner.set('background-fixed', $(this).attr('checked') ? 'true' : 'false');
 		});
+
+		$('#tile-background').attr('checked', ThemeDesigner.settings['background-tiled'] === 'true');
+		$('#fix-background').attr('checked', ThemeDesigner.settings['background-fixed'] === 'true');
+
 		// TODO: Remove IF statement after fluid layout global release
 		if (window.wgOasisResponsive) {
-			$('#dynamic-background').change(function() {
-				ThemeDesigner.set('background-dynamic', $(this).attr('checked') ? 'true' : 'false');
+			$('#not-split-background').change(function() {
+				ThemeDesigner.set('background-dynamic', $(this).attr('checked') ? 'false' : 'true');
 			});
 
-			// Background cannot be tiled and dynamic at once
-			if (ThemeDesigner.settings['background-tiled'] === 'true') {
-				$('#dynamic-background').attr('disabled', true);
-			} else if (ThemeDesigner.settings['background-dynamic'] === 'true') {
-				$('#tile-background').attr('disabled', true);
-			}
+			$('#not-split-background').attr('checked', ThemeDesigner.settings['background-dynamic'] === 'false');
 
-			if (ThemeDesigner.settings['color-body'] !== ThemeDesigner.settings['color-body-middle']) {
-				$('#color-body-middle').attr('checked', true);
-				$('#CustomizeTab').find('.color-body-middle').css('display', 'block');
-			}
-			$('#swatch-color-background-middle').css('background-color', ThemeDesigner.settings['color-body-middle']);
-
-			// If background middle color is checked we are setting color from picker
-			// otherwise we are setting color from background color
-			$('#color-body-middle').change(function() {
-				if ($(this).attr('checked')) {
-					ThemeDesigner.set(
-							'color-body-middle',
-							ThemeDesigner.rgb2hex($('#swatch-color-background-middle').css('background-color'))
-					);
-					$('#CustomizeTab').find('.color-body-middle').css('display', 'block');
-				} else {
-					ThemeDesigner.set('color-body-middle', ThemeDesigner.settings['color-body']);
-					$('#CustomizeTab').find('.color-body-middle').css('display', 'none');
-				}
-			});
+			ThemeDesigner.checkBgIsDynamic(ThemeDesigner.settings['background-image-width']);
 		}
 
 		// submit handler for uploading custom background image
@@ -359,11 +351,6 @@ var ThemeDesigner = {
 			// handle swatch clicking
 			swatches.find('li').click(function() {
 				ThemeDesigner.hidePicker();
-				if (swatchName === 'color-body-middle') {
-					$('#color-body-middle').attr('checked', true);
-				} else if (swatchName === 'color-body' && !$('#color-body-middle').attr('checked')) {
-					ThemeDesigner.set('color-body-middle', ThemeDesigner.rgb2hex($(this).css('background-color')));
-				}
 				ThemeDesigner.set(swatchName, ThemeDesigner.rgb2hex($(this).css('background-color')));
 				ThemeDesigner.set('theme', 'custom');
 			});
@@ -422,6 +409,7 @@ var ThemeDesigner = {
 				//set correct image
 				if ($(this).attr('class') === 'no-image') {
 					ThemeDesigner.set('background-image', '');
+					ThemeDesigner.changeDynamicBg();
 				} else {
 					img = new Image();
 					imgUrl = $(this).children('img').attr('data-image');
@@ -473,26 +461,36 @@ var ThemeDesigner = {
 	checkBgIsDynamic: function(width) {
 		'use strict';
 
+		var noSplitOption = $('#CustomizeTab').find('.not-split-option');
+
 		// TODO: Remove IF statement after fluid layout global release
 		if ( window.wgOasisResponsive ) {
 			if ( width < ThemeDesigner.minWidthForDynamicBackground ) {
-				ThemeDesigner.disableDynamicBg();
+				noSplitOption.css('display', 'none');
+				ThemeDesigner.changeDynamicBg();
+				ThemeDesigner.backgroundType = 1;
+			} else if ( width < ThemeDesigner.minWidthNotSplitBackground ) {
+				noSplitOption.css('display', 'none');
+				ThemeDesigner.changeDynamicBg(true);
+				ThemeDesigner.backgroundType = 2;
 			} else {
-				$('#dynamic-background').attr('disabled', false);
+				noSplitOption.css('display', 'inline');
+				ThemeDesigner.changeDynamicBg(true);
+				ThemeDesigner.backgroundType = 3;
 			}
 		}
 	},
 
-	disableDynamicBg: function() {
+	changeDynamicBg: function(value) {
 		'use strict';
 
-		var el = $('#dynamic-background');
+		var value = value || false;
+		var el = $('#not-split-background');
 
-		if ( el.attr('checked') ) {
-			el.attr('checked', false);
-			ThemeDesigner.set('background-dynamic', false);
+		if ( el.prop('checked') === value ) {
+			el.prop('checked', !value);
+			ThemeDesigner.set('background-dynamic', value.toString());
 		}
-		el.attr('disabled', true);
 	},
 
 	/**
@@ -512,10 +510,8 @@ var ThemeDesigner = {
 		if (setting === 'background-tiled') {
 			if (newValue === 'true') {
 				ThemeDesigner.previewFrame.contents().find('body').removeClass('background-not-tiled');
-				$('#dynamic-background').attr('disabled', true);
 			} else {
 				ThemeDesigner.previewFrame.contents().find('body').addClass('background-not-tiled');
-				$('#dynamic-background').attr('disabled', false);
 			}
 		}
 
@@ -530,12 +526,10 @@ var ThemeDesigner = {
 		if (setting === 'background-dynamic') {
 			if (newValue === 'true') {
 				ThemeDesigner.previewFrame.contents().find('body').addClass('background-dynamic');
-				$('#tile-background').attr('disabled', true);
-				$('#CustomizeTab').find('.wrap-middle-color').css('display', 'block');
+				$('#CustomizeTab').find('.middle-color-mask').css('display', 'none');
 			} else {
 				ThemeDesigner.previewFrame.contents().find('body').removeClass('background-dynamic');
-				$('#tile-background').attr('disabled', false);
-				$('#CustomizeTab').find('.wrap-middle-color').css('display', 'none');
+				$('#CustomizeTab').find('.middle-color-mask').css('display', 'block');
 			}
 		}
 
@@ -765,6 +759,7 @@ var ThemeDesigner = {
 		/*** Customize Tab ***/
 		// color swatches
 		$('#swatch-color-background').css('background-color', ThemeDesigner.settings['color-body']);
+		$('#swatch-color-background-middle').css('background-color', ThemeDesigner.settings['color-body-middle']);
 		$('#swatch-color-buttons').css('background-color', ThemeDesigner.settings['color-buttons']);
 		$('#swatch-color-links').css('background-color', ThemeDesigner.settings['color-links']);
 		$('#swatch-color-page').css('background-color', ThemeDesigner.settings['color-page']);
@@ -773,10 +768,6 @@ var ThemeDesigner = {
 		if (ThemeDesigner.settings['background-image'] === '') {
 			//no background image
 			$('#swatch-image-background').attr('src', window.wgBlankImgUrl);
-			// TODO: Remove IF statement after fluid layout global release
-			if ( window.wgOasisResponsive ) {
-				ThemeDesigner.disableDynamicBg();
-			}
 		} else if (ThemeDesigner.settings['background-image'].indexOf('images/themes') > 0) {
 			//wikia background image
 			file = ThemeDesigner.settings['background-image'].substring(ThemeDesigner.settings['background-image']
@@ -787,23 +778,6 @@ var ThemeDesigner = {
 		} else {
 			//admin background image
 			$('#swatch-image-background').attr('src', ThemeDesigner.settings['user-background-image-thumb']);
-		}
-
-		$('#tile-background').attr('checked', ThemeDesigner.settings['background-tiled'] === 'true');
-		$('#fix-background').attr('checked', ThemeDesigner.settings['background-fixed'] === 'true');
-
-		// TODO: Remove IF statement after fluid layout global release
-		if (window.wgOasisResponsive) {
-			$('#dynamic-background').attr('checked', ThemeDesigner.settings['background-dynamic'] === 'true');
-
-			if ($('#color-body-middle').attr('checked')) {
-				$('#swatch-color-background-middle').css('background-color',
-					ThemeDesigner.settings['color-body-middle']);
-			}
-
-			if (ThemeDesigner.settings['background-dynamic'] === 'false') {
-				$('#CustomizeTab').find('.wrap-middle-color').css('display', 'none');
-			}
 		}
 
 		/*** Wordmark Tab ***/
