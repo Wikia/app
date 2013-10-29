@@ -10,6 +10,7 @@ $messages['en'] = array(
 	'visualeditor-wikiauploadwidget-label' => 'Upload new images to this Wikia',
 	'visualeditor-wikiauploadwidget-button' => 'Upload',
 	'visualeditor-wikiauploaderror' => 'Error uploading file',
+	'visualeditor-wikiamediainsertsearch-placeholder' => 'Search for something, or enter a URL',
 );
 
 $messages['qqq'] = array(
@@ -18,4 +19,5 @@ $messages['qqq'] = array(
 	'visualeditor-wikiauploadwidget-label' => 'The large call-to-action in the Add Media dialog upload box',
 	'visualeditor-wikiauploadwidget-button' => 'The button in the Add Media dialog upload box',
 	'visualeditor-wikiauploaderror' => 'Message that is shown when an upload error occurs',
+	'visualeditor-wikiamediainsertsearch-placeholder' => 'The placeholder text that appears in the search field, indicating functionality',
 );

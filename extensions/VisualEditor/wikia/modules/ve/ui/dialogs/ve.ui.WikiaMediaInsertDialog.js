@@ -54,7 +54,10 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	} );
 	this.insertionDetails = {};
 	this.pages = new ve.ui.PagedLayout( { '$$': this.frame.$$, 'attachPagesPanel': true } );
-	this.query = new ve.ui.WikiaMediaQueryWidget( { '$$': this.frame.$$ } );
+	this.query = new ve.ui.WikiaMediaQueryWidget( { 
+		'$$': this.frame.$$, 
+		'placeholder': ve.msg('visualeditor-wikiamediainsertsearch-placeholder') 
+	} );
 	this.queryInput = this.query.getInput();
 	this.queryUpload = this.query.getUpload();
 	this.search = new ve.ui.WikiaMediaResultsWidget( { '$$': this.frame.$$ } );
@@ -244,6 +247,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.setPage = function ( name ) {
 	if ( this.pages.getPageName() === name ) {
 		// Toggle cart item
 		if ( ve.indexOf( name, ve.ui.WikiaMediaInsertDialog.static.pages ) === -1 ) {
+			this.cart.selectItem( null );
 			this.pages.setPage( this.getDefaultPage() );
 		}
 	} else {
