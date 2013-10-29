@@ -3,13 +3,6 @@
 @import "responsive-variables";
 
 // set up background-specific-vars
-// TODO: This logic has to be moved to Theme Designer
-// Determines whether or not to apply the dynamic background. Only applies if:
-// - background is not tiled
-// - background image height is greather than zero
-// - background image width is wider than the width of the skin (visible in the ad skin margins)
-// $background-is-dynamic: if( not $background-tiled and $background-height > 0 and $background-width > $width-outside, true, false );
-
 
 // The background image is considered to be "wide" if it bleeds off the screen
 // at the size of the fluid breakpoint. This is important because it will determine
@@ -44,7 +37,7 @@ $background-is-wide: if( $background-width > $breakpoint-fluid, true, false );
 		$background-offset-right: $background-offset;
 	}
 
-	// Space in the middle sizes
+	// Middle space
 	$width-middle-subtrahend: $background-width + 2 * $background-offset;
 	$margin-middle-base: $width-middle-subtrahend / 2;
 
@@ -123,8 +116,9 @@ $background-is-wide: if( $background-width > $breakpoint-fluid, true, false );
 // slices, overlapping by the width of the gradient itself.
 	$gradient-offset: $background-margin + ( $background-width-half - $width-gradient );
 
-	$middle-body-width: ($breakpoint-max - $background-width-half) / 2;
-	$middle-body-margin: (-$middle-body-width) / 2;
+	// Middle space
+	$width-middle: $breakpoint-max - ($background-width + 2 * $background-offset);
+	$margin-middle: $width-middle / -2;
 
 	body.background-dynamic.skin-oasis {
 		&:after,
@@ -145,15 +139,15 @@ $background-is-wide: if( $background-width > $breakpoint-fluid, true, false );
 		}
 
 		.background-image-gradient {
+			background: $color-body-middle;
 			content: "";
 			height: 100%;
 			left: 50%;
+			margin-left: $margin-middle;
 			position: fixed;
 			top: 0;
+			width: $width-middle;
 			z-index: -1;
-			background: $color-body-middle;
-			width: $middle-body-width;
-			margin-left: $middle-body-margin;
 
 			&:after {
 				margin-right: $gradient-offset;
