@@ -28,5 +28,5 @@ $background-height: get_command_line_param( "background-image-height", 0 ) * 1px
 $background-width: get_command_line_param( "background-image-width", 0 ) * 1px; // convert int to pixel value
 $background-width-half: $background-width / 2;
 $background-offset: ( $breakpoint-fluid - $background-width ) / 2;
-$background-align: if( $background-width > 1050px, center, left );
+$background-align: if( $background-width > $width-outside, center, left );
 
