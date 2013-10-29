@@ -7,7 +7,8 @@ class TvApiController extends WikiaApiController {
 	const RANK_SETTING = 'default';
 	const LANG_SETTING = 'en';
 	const API_URL = 'wikia.php?controller=JsonFormatApi&method=getJsonFormatAsText&article=';
-	const MINIMAL_SCORE = 0.5;
+	const MINIMAL_WIKIA_SCORE = 0.5;
+	const MINIMAL_ARTICLE_SCORE = 0.5;
 
 	/**
 	 * @var wikiId
@@ -85,7 +86,7 @@ class TvApiController extends WikiaApiController {
 		$resultSet = (new Factory)->getFromConfig( $config )->search();
 
 		foreach( $resultSet->getResults() as $result ) {
-			if ( $result['id'] && $result['url'] && $result['score'] > static::MINIMAL_SCORE ) {
+			if ( $result['id'] && $result['url'] && $result['score'] > static::MINIMAL_WIKIA_SCORE ) {
 				$this->wikiId = $result['id'];
 				$this->url = $result['url'];
 				return true;
@@ -135,12 +136,15 @@ class TvApiController extends WikiaApiController {
 		if (! $searchConfig->getQuery()->hasTerms() ) {
 			throw new InvalidParameterApiException( 'episodeName' );
 		}
-
 		//Standard Wikia API response with pagination values
-		$responseValues = (new Factory)->getFromConfig( $searchConfig )->searchAsApi( [ 'pageid' => 'id', 'title', 'url', 'ns' ], true );
-
+		$responseValues = (new Factory)->getFromConfig( $searchConfig )->searchAsApi( [ 'pageid' => 'id', 'title', 'url', 'ns', 'score' ], true );
 		//post processing
 		$responseValues = $responseValues[ 'items' ][ 0 ];
+		if ( $responseValues['score'] < static::MINIMAL_ARTICLE_SCORE ) {
+			return null;
+		}
+		//remove score value from results
+		unset( $responseValues['score'] );
 
 		$subpage = strpos( $responseValues['title'], '/' );
 		if ( $subpage !== false ) {
