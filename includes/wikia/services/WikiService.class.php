@@ -378,6 +378,10 @@ class WikiService extends WikiaModel {
 		if ( $settings !== false ) {
 			$currentSettings =  end( $settings );
 
+			if ( isset($currentSettings['settings']['wordmark-type']) && $currentSettings['settings']['wordmark-type'] == 'text' ) {
+				return '';
+			}
+
 			if ( isset( $currentSettings['settings'] ) && !empty( $currentSettings['settings']['wordmark-image-url'] ) ) {
 					$url = wfReplaceImageServer( $currentSettings['settings']['wordmark-image-url'], $currentSettings['timestamp'] );
 			}
