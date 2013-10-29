@@ -484,7 +484,7 @@ var ThemeDesigner = {
 	changeDynamicBg: function(value) {
 		'use strict';
 
-		var val = value || false,
+		var val = !!value,
 			el = $('#not-split-background');
 
 		if ( el.prop('checked') === val ) {
