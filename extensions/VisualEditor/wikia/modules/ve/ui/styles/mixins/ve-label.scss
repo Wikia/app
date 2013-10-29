@@ -1,3 +1,11 @@
+/**
+ * Applies the label "overlay" styles to an element. Overflowing text will be hidden with
+ * an ellipsis applied to the end.
+ *
+ * @param {color} $text-color The color of the text
+ * @param {color} $text-shadow-color The color of the text shadow
+ * @param {color} $background-color The color for the label background
+ */
 @mixin ve-label ( $text-color: #fff, $text-shadow-color: #000, $background-color: rgba(0,0,0,0.5) ) {
 	position: absolute;
 	bottom: 0;
@@ -10,4 +18,31 @@
 	line-height: 1.125em;
 	background-color: $background-color;
 	text-overflow: ellipsis;
+}
+
+/**
+ * Applies the styles to show an icon in the left corner of the label.
+ */
+@mixin ve-label-icon {
+	background-position: 7px 50%;
+	background-repeat: no-repeat;
+	height: 1.125em;
+	line-height: 1.4em;
+	text-align: left;
+}
+
+/**
+ * Displays a photo icon.
+ */
+@mixin ve-label-icon-photo {
+	background-image: url(/extensions/VisualEditor/wikia/modules/ve/ui/styles/images/icons/photo.svg); /* $wgCdnStylePath */
+	padding-left: 29px;
+}
+
+/**
+ * Displays a video icon.
+ */
+@mixin ve-label-icon-video {
+	background-image: url(/extensions/VisualEditor/wikia/modules/ve/ui/styles/images/icons/video.svg); /* $wgCdnStylePath */
+	padding-left: 22px;
 }
