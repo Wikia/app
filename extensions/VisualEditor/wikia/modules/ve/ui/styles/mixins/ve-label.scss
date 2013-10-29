@@ -1,0 +1,13 @@
+@mixin ve-label ( $text-color: #fff, $text-shadow-color: #000, $background-color: rgba(0,0,0,0.5) ) {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	overflow: hidden;
+	padding: 0.5em;
+	color: $text-color;
+	text-shadow: 1px 1px $text-shadow-color;
+	line-height: 1.125em;
+	background-color: $background-color;
+	text-overflow: ellipsis;
+}
