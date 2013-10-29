@@ -27,7 +27,7 @@ class TvApiController extends WikiaApiController {
 			throw new NotFoundApiException();
 		}
 
-//		$responseValues = $this->getExactMatch();
+		$responseValues = $this->getExactMatch();
 		if ( $responseValues === null ) {
 			$config = $this->getConfigFromRequest();
 			$responseValues = $this->getResponseFromConfig( $config );
