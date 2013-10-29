@@ -11,6 +11,16 @@ class LvsStatus {
 	public static function lvsUpdateStatus( DatabaseMysql $db, $dbname, $verbose = false, $dryRun = false ) {
 		echo "Wiki: $dbname\n";
 
+		if ( !$db->tableExists( 'page_wikia_props' ) ) {
+			echo "ERROR: $dbname: page_wikia_props table not exist.\n\n";
+			return;
+		}
+
+		if ( $dbname == F::app()->wg->WikiaVideoRepoDBName ) {
+			echo "SKIP: $dbname\n\n";
+			return;
+		}
+
 		$limit = 5000;
 		$total = 0;
 		$kept = 0;
