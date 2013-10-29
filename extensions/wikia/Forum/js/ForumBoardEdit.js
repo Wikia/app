@@ -2,8 +2,7 @@
 	
 	/* dom cache */
 	var createNewBoardButton = $('#CreateNewBoardButton'),
-		boardList = $('#ForumBoardEdit .boards'),
-		currentDialog = false;
+		boardList = $('#ForumBoardEdit .boards');
 		
 	function makeBoardModal(modalMethod, modalData, submissionMethod, submissionData) {
 		var deferred = $.Deferred();
