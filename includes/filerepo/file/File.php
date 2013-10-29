@@ -287,6 +287,8 @@ abstract class File {
 			$this->url = $this->repo->getZoneUrl( 'public' ) . '/' . $this->getUrlRel();
 
 			# start wikia change
+			$this->originalUrl = $this->url;
+
 			global $wgDevelEnvironment;
 			if (!empty($wgDevelEnvironment)) {
 				$this->url = wfReplaceImageServer( $this->url, $this->getTimestamp() );
@@ -295,6 +297,18 @@ abstract class File {
 		}
 		return $this->url;
 	}
+
+	# start wikia change
+	protected $originalUrl;
+
+	public function getOriginalUrl() {
+		if ( !isset( $this->url ) ) {
+			$this->getUrl();
+		}
+
+		return $this->originalUrl;
+	}
+	# end wikia change
 
 	/**
 	 * Return a fully-qualified URL to the file.
