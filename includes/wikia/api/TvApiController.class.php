@@ -9,7 +9,7 @@ class TvApiController extends WikiaApiController {
 	const NAMESPACE_SETTING = 0;
 	const API_URL = 'wikia.php?controller=JsonFormatApi&method=getJsonFormatAsText&article=';
 	const MINIMAL_WIKIA_SCORE = 0.5;
-	const MINIMAL_ARTICLE_SCORE = 2;
+	const MINIMAL_ARTICLE_SCORE = 1;
 
 	/**
 	 * @var wikiId
