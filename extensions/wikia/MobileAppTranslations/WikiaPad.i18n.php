@@ -315,6 +315,13 @@ $messages['lb'] = array(
 	'tab-discover-no-network-dialog-close-button' => 'OK',
 );
 
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'main-tab-search' => 'پی جوری',
+);
+
 /** Macedonian (македонски)
  * @author Bjankuloski06
  */

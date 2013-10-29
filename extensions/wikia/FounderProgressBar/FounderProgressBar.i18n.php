@@ -302,6 +302,13 @@ $messages['ca'] = array(
 	'founderprogressbar-browse-page-name' => 'Navegador',
 );
 
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'founderprogressbar-browse-page-name' => 'Гучé яккха',
+);
+
 /** Czech (česky)
  * @author Chmee2
  */

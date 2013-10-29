@@ -1160,13 +1160,21 @@ $messages['bg'] = array(
 	'wall-button-cancel-changes' => 'Отказване',
 	'wall-button-done-source' => 'Готово',
 	'wall-message-edit' => 'Редактиране',
+	'wall-message-delete' => 'Изтриване',
 	'wall-action-all-confirm-cancel' => 'Отказване',
 	'wall-delete-error-title' => 'Грешка',
 	'wall-action-remove-confirm-ok' => 'Премахване',
+	'wall-action-close-confirm-ok' => 'Затваряне',
 	'wall-action-admin-confirm-ok' => 'Изтриване',
 	'wall-action-restore-confirm-ok' => 'Възстановяване',
+	'wall-notifications' => 'Известия',
+	'wall-notifications-all' => 'Всички известия',
+	'wall-notifications-markasread' => 'Отбелязване на всички като прочетени',
 	'wall-notifications-markasread-all-wikis' => 'Всички уикита',
 	'wall-notifications-markasread-this-wiki' => 'Това уики',
+	'wall-notifications-empty' => 'Няма известия',
+	'wall-notifications-loading' => 'Зареждане на известията',
+	'wall-notifications-reminder' => 'имате <span>$1</span> {{PLURAL:$1|непрочетено известие|непрочетени известия}}',
 	'wall-history' => 'История',
 	'wall-history-summary-label' => 'Резюме',
 	'mail-notification-html-greeting' => 'Здравейте $1,',
@@ -2763,10 +2771,11 @@ $messages['fa'] = array(
  * @author Lukkipoika
  * @author Nike
  * @author Silvonen
+ * @author Ville96
  */
 $messages['fi'] = array(
 	'wall-no-title' => 'Ei otsikkoa',
-	'wall-message-loadmore' => 'Näytä $1 {{PLURAL:$1|vastaus|vastaukset}}', # Fuzzy
+	'wall-message-loadmore' => 'Näytä <span class="count">{{PLURAL:$1|$1 vastaus|kaikki $1 vastausta}}</span>',
 	'wall-message-wall' => 'Viestiseinä',
 	'wall-message-wall-shorten' => 'seinä',
 	'wall-message-unfollow' => 'Lopeta seuraaminen',
@@ -2882,7 +2891,7 @@ Tätä ei voi peruuttaa.',
 	'wn-user3-reply-other-a-wall' => '$1 ja muut vastasivat $3:n viestiin',
 	'wn-newmsg-onmywall' => '$1 jätti uuden viestin seinällesi',
 	'wn-newmsg' => 'Jätit uuden viestin $1:n seinälle',
-	'wn-newmsg-on-followed-wall' => '$1 jätti uuden viestin $2:n seinälle.', # Fuzzy
+	'wn-newmsg-on-followed-wall' => '$1 jätti uuden viestin $2:n seinälle.',
 	'wn-admin-thread-deleted' => 'Keskustelu poistettu $1:n seinältä',
 	'wn-admin-reply-deleted' => 'Vastaus poistettu keskustelusta $1:n seinältä',
 	'wn-owner-thread-deleted' => 'Keskustelu poistettu seinältäsi',
@@ -6334,9 +6343,9 @@ Veja a conversação($MESSAGE_LINK)
 A Equipa da Wikia
 
 ___________________________________________
-* Encontre ajuda e conselhos na Central da Comunidade: http://community.wikia.com
-* Quer receber menos mensagens nossas? Você pode parar de subscrever ou alterar as
-suas preferências de e-mail aqui: http://community.wikia.com/Special:Preferences',
+* Encontra ajuda e conselhos na Central da Comunidade: http://community.wikia.com
+* Quer receber menos mensagens nossas? Pode alterar as suas preferências de mensagens
+aqui: http://community.wikia.com/Special:Preferences',
 	'mail-notification-body-HTML' => 'Olá $WATCHER,
 			<p>$SUBJECT.</p>
 			<p><a href="$MESSAGE_LINK">$METATITLE</a></p>
@@ -6366,7 +6375,7 @@ suas preferências de e-mail aqui: http://community.wikia.com/Special:Preference
 	'wall-votes-voted-tooltip' => 'Você deu um "Gosto" a esta mensagem!',
 	'wall-quote-author' => '$1 escreveu:',
 	'wall-quote-reply-to' => 'responder a #$1',
-	'wall-preview-modal-title' => 'Pre-visualizar',
+	'wall-preview-modal-title' => 'Antever',
 	'wall-preview-modal-button-back' => 'Voltar',
 	'wall-preview-modal-button-publish' => 'Publicar',
 	'wall-topic-input-heading' => 'Tópico',
@@ -8358,6 +8367,7 @@ Li messaedje d' oridjinne eyet vosse rascourti seront todi veyåves dins l' istw
  * @author Dimension
  * @author Liuxinyu970226
  * @author Sam Wang
+ * @author Xiaomingyan
  * @author Yfdyh000
  * @author 乌拉跨氪
  */
@@ -8377,7 +8387,7 @@ $messages['zh-hans'] = array(
 	'wall-toolbar-history' => '历史',
 	'wall-message-notify' => '通知管理员',
 	'wall-message-remove' => '移除',
-	'wall-message-rev-delete' => '修订版本删除',
+	'wall-message-rev-delete' => '版本删除',
 	'wall-message-fast-admin-delete-message' => 'VSTF 删除',
 	'wall-message-quote-button' => '引用',
 	'wall-message-elseswall' => '$1的留言墙',
