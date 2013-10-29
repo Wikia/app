@@ -27,7 +27,7 @@ class TvApiController extends WikiaApiController {
 			throw new NotFoundApiException();
 		}
 
-		$responseValues = $this->getExactMatch();
+//		$responseValues = $this->getExactMatch();
 		if ( $responseValues === null ) {
 			$config = $this->getConfigFromRequest();
 			$responseValues = $this->getResponseFromConfig( $config );
@@ -119,7 +119,7 @@ class TvApiController extends WikiaApiController {
 	protected function getConfigFromRequest() {
 		$request = $this->getRequest();
 		$searchConfig = new Wikia\Search\Config;
-		$searchConfig->setQuery( $request->getVal( 'episodeName', null ) )
+		$searchConfig->setQuery( $request->getVal( 'episodeName', null ) . " episode" )
 			->setLimit( static::LIMIT_SETTING )
 			->setPage( static::LIMIT_SETTING )
 			->setLanguageCode( static::LANG_SETTING )
