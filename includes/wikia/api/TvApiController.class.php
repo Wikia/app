@@ -6,6 +6,7 @@ class TvApiController extends WikiaApiController {
 	const LIMIT_SETTING = 1;
 	const RANK_SETTING = 'default';
 	const LANG_SETTING = 'en';
+	const NAMESPACE_SETTING = 0;
 	const API_URL = 'wikia.php?controller=JsonFormatApi&method=getJsonFormatAsText&article=';
 	const MINIMAL_WIKIA_SCORE = 0.5;
 	const MINIMAL_ARTICLE_SCORE = 2;
@@ -120,13 +121,13 @@ class TvApiController extends WikiaApiController {
 		$searchConfig = new Wikia\Search\Config;
 		$searchConfig->setQuery( $request->getVal( 'episodeName', null ) )
 			->setLimit( static::LIMIT_SETTING )
-			->setPage( 1 )
+			->setPage( static::LIMIT_SETTING )
 			->setLanguageCode( static::LANG_SETTING )
 			->setRank( static::RANK_SETTING )
 			->setWikiId($this->wikiId)
 			->setVideoSearch( false )
 			->setOnWiki(true)
-			->setNamespaces([0]);
+			->setNamespaces( [static::NAMESPACE_SETTING] );
 		;
 
 		return $searchConfig;
