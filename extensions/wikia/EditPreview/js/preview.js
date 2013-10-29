@@ -276,6 +276,11 @@ define( 'wikia.preview', [
 		} else {
 			$article.css(cssTransform, '');
 		}
+
+		// Force browser to redraw/repaint - http://stackoverflow.com/questions/3485365/how-can-i-force-webkit-to-redraw-repaint-to-propagate-style-changes
+		$article.hide();
+		$article.height();
+		$article.show();
 	}
 
 	/**
