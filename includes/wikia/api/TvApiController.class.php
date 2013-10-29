@@ -119,7 +119,7 @@ class TvApiController extends WikiaApiController {
 	protected function getConfigFromRequest() {
 		$request = $this->getRequest();
 		$searchConfig = new Wikia\Search\Config;
-		$searchConfig->setQuery( $request->getVal( 'episodeName', null ) . " episode" )
+		$searchConfig->setQuery( $request->getVal( 'episodeName', null ) )
 			->setLimit( static::LIMIT_SETTING )
 			->setPage( static::LIMIT_SETTING )
 			->setLanguageCode( static::LANG_SETTING )
