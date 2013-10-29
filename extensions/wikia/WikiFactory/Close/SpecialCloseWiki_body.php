@@ -389,23 +389,28 @@ class CloseWikiPage extends SpecialPage {
 			return;
 		}
 
-		$dbDumpUrl = sprintf("%s/%s/%s/%s/",
-			$this->mUrlDump,
-			substr( $this->closedWiki->city_dbname, 0, 1),
-			substr( $this->closedWiki->city_dbname, 0, 2),
-			$this->closedWiki->city_dbname
-		);
+		$bShowDumps = false;
+		$aFiles = array();
 
-		$res = ( strlen($content = Http::get( $dbDumpUrl ) ) == 0 ) ? false : true;
-		if ( ($this->closedWiki->city_flags > 0) && !($this->closedWiki->city_flags & WikiFactory::FLAG_CREATE_DB_DUMP) ) {
-			$res = -1;
+		if ( $this->closedWiki->city_lastdump_timestamp < DumpsOnDemand::S3_MIGRATION ) {
+			$aFiles = array(
+				'pages_current'	=> '_pages_current.xml.gz',
+				'pages_full'	=> '_pages_full.xml.gz',
+				'images'	=> '_images.tar'
+			);
+
+			foreach ( $aFiles as $sKey => $sValue ) {
+				$aFiles[$sKey] = $this->mUrlDump . DumpsOnDemand::getPath( $this->closedWiki->city_dbname . $sValue );
+			}
+
+			$bShowDumps = true;
 		}
 
 		$this->mTmpl->reset();
 		$this->mTmpl->set_vars( array(
 			"wgExtensionsPath" => $wgExtensionsPath,
-			"dbDumpUrl" => $dbDumpUrl,
-			"dbDumpExist" => $res,
+			"aDumps" => $aFiles,
+			"bShowDumps" => $bShowDumps,
 			"isDisabled" => (($this->closedWiki->city_flags == 0) && ($this->closedWiki->city_public == 0))
 		) );
 
