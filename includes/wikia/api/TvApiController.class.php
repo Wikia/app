@@ -7,6 +7,7 @@ class TvApiController extends WikiaApiController {
 	const RANK_SETTING = 'default';
 	const LANG_SETTING = 'en';
 	const API_URL = 'wikia.php?controller=JsonFormatApi&method=getJsonFormatAsText&article=';
+	const MINIMAL_SCORE = 0.5;
 
 	/**
 	 * @var wikiId
@@ -20,7 +21,9 @@ class TvApiController extends WikiaApiController {
 
 	public function getArticle() {
 
-		$this->setWikiVariables();
+		if ( !$this->setWikiVariables() ) {
+			throw new NotFoundApiException();
+		}
 
 		$responseValues = $this->getExactMatch();
 		if ( $responseValues === null ) {
@@ -28,15 +31,11 @@ class TvApiController extends WikiaApiController {
 			$responseValues = $this->getResponseFromConfig( $config );
 		}
 
-		if ( empty($responseValues[ 'items' ]) ) {
+		if ( empty($responseValues) ) {
 			throw new NotFoundApiException();
 		}
 
-		foreach ( $responseValues[ 'items' ] as &$item ) {
-			$item[ 'contentUrl' ] = $this->url . self::API_URL . $item[ 'pageid' ];
-		}
-
-		$responseValues = $responseValues[ 'items' ][ 0 ];
+		$responseValues[ 'contentUrl' ] = $this->url . self::API_URL . $responseValues[ 'id' ];
 
 		$response = $this->getResponse();
 		$response->setValues( $responseValues );
@@ -54,18 +53,23 @@ class TvApiController extends WikiaApiController {
 	protected function getExactMatch() {
 		$query = $this->request->getVal( 'episodeName', null );
 		if ( $query !== null ) {
-			$serializedQuery = str_replace( ' ', '_', ucwords( strtolower( $query ) ) );
-			$title = GlobalTitle::newFromText( $serializedQuery, NS_MAIN, $this->wikiId );
-			if ( $title->isRedirect() ) {
-				$title = $title->getRedirectTarget();
-			}
-			if($title->exists()) {
-				return [ 'items' => [[
-					'title' => $title->getText(),
-					'url' => $title->getFullURL(),
-					'pageid' => $title->getArticleID()
-				]]];
-			}
+			return $this->getTitle( $query );
+		}
+		return null;
+	}
+	protected function getTitle( $text ) {
+		$serializedText = str_replace( ' ', '_', ucwords( strtolower( $text ) ) );
+		$title = GlobalTitle::newFromText( $serializedText, NS_MAIN, $this->wikiId );
+		if ( $title->isRedirect() ) {
+			$title = $title->getRedirectTarget();
+		}
+		if($title->exists()) {
+			return [
+				'id' => $title->getArticleID(),
+				'title' => $title->getText(),
+				'url' => $title->getFullURL(),
+				'ns' => $title->getNamespace()
+			];
 		}
 		return null;
 	}
@@ -76,15 +80,15 @@ class TvApiController extends WikiaApiController {
 		$resultSet = (new Factory)->getFromConfig( $config )->search();
 
 		foreach( $resultSet->getResults() as $result ) {
-			if ( $result['id'] && $result['url'] ) {
+			if ( $result['id'] && $result['url'] && $result['score'] > static::MINIMAL_SCORE ) {
 				$this->wikiId = $result['id'];
 				$this->url = $result['url'];
-				return ;
+				return true;
 			}
+			return false;
 		}
 
 		throw new InvalidParameterApiException( 'seriesName' );
-
 	}
 
 	protected function getConfigCrossWiki() {
@@ -128,7 +132,20 @@ class TvApiController extends WikiaApiController {
 		}
 
 		//Standard Wikia API response with pagination values
-		$responseValues = (new Factory)->getFromConfig( $searchConfig )->searchAsApi( ['pageid' => 'id', 'title', 'url', 'ns' ], true );
+		$responseValues = (new Factory)->getFromConfig( $searchConfig )->searchAsApi( [ 'pageid' => 'id', 'title', 'url', 'ns' ], true );
+
+		//post processing
+		$responseValues = $responseValues[ 'items' ][ 0 ];
+
+		$subpage = strpos( $responseValues['title'], '/' );
+		if ( $subpage !== false ) {
+			//we found subpage, return only the main page then
+			$main = substr( $responseValues['title'], 0, $subpage );
+			$result = $this->getTitle( $main );
+			if ( $result !== null ) {
+				return $result;
+			}
+		}
 
 		return $responseValues;
 	}
