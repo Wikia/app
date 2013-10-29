@@ -53,7 +53,7 @@ class TvApiController extends WikiaApiController {
 	protected function getExactMatch() {
 		$query = $this->request->getVal( 'episodeName', null );
 		if ( $query !== null ) {
-			$serializedQuery = ucwords( $query );
+			$serializedQuery = str_replace( ' ', '_', ucwords( $query ) );
 			$title = GlobalTitle::newFromText( $serializedQuery, NS_MAIN, $this->wikiId );
 			if ( $title->isRedirect() ) {
 				$title = $title->getRedirectTarget();
