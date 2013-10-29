@@ -26,7 +26,7 @@ class CombinedSearchService {
 		return $this->hideNonCommercialContent;
 	}
 
-	public function search($query, $langs, $hubs) {
+	public function search($query, $langs, $namespaces, $hubs) {
 
 		$wikias = [];
 		foreach ( $langs as $lang ) {
@@ -62,7 +62,8 @@ class CombinedSearchService {
 				->setOnWiki(true)
 				->setRequestedFields( $requestedFields )
 				->setWikiId( $wiki['wikiId'] )
-				->setNamespaces( [ NS_MAIN ] )
+				->setNamespaces( $namespaces )
+				->setFilterQuery( "is_main_page:false" )
 				->setRank( 'default' );
 			$resultSet = (new Factory)->getFromConfig( $searchConfig )->search();
 			$currentResults = $resultSet->toArray( $requestedFields );
