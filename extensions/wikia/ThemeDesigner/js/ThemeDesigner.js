@@ -103,7 +103,7 @@ var ThemeDesigner = {
 
 		var slideBy = ThemeDesigner.slideByDefaultWidth,
 			slideMax = -Math.floor($('#ThemeTab').find('.slider').find('ul').find('li').length /
-				ThemeDesigner.slideByItems) *ThemeDesigner.slideByDefaultWidth;
+				ThemeDesigner.slideByItems) * ThemeDesigner.slideByDefaultWidth;
 
 		// click handler for next and previous arrows in theme slider
 		$('#ThemeTab .previous, #ThemeTab .next').click(function(event) {
@@ -170,7 +170,7 @@ var ThemeDesigner = {
 		$('#tile-background').change(function() {
 			if (ThemeDesigner.backgroundType > 1) {
 				if ($(this).attr('checked') ) {
-					ThemeDesigner.changeDynamicBg();
+					ThemeDesigner.changeDynamicBg(false);
 					$('#not-split-background').attr('disabled', true);
 				} else {
 					ThemeDesigner.changeDynamicBg(true);
@@ -409,7 +409,7 @@ var ThemeDesigner = {
 				//set correct image
 				if ($(this).attr('class') === 'no-image') {
 					ThemeDesigner.set('background-image', '');
-					ThemeDesigner.changeDynamicBg();
+					ThemeDesigner.changeDynamicBg(false);
 				} else {
 					img = new Image();
 					imgUrl = $(this).children('img').attr('data-image');
@@ -467,7 +467,7 @@ var ThemeDesigner = {
 		if ( window.wgOasisResponsive ) {
 			if ( width < ThemeDesigner.minWidthForDynamicBackground ) {
 				noSplitOption.css('display', 'none');
-				ThemeDesigner.changeDynamicBg();
+				ThemeDesigner.changeDynamicBg(false);
 				ThemeDesigner.backgroundType = 1;
 			} else if ( width < ThemeDesigner.minWidthNotSplitBackground ) {
 				noSplitOption.css('display', 'none');
@@ -484,12 +484,12 @@ var ThemeDesigner = {
 	changeDynamicBg: function(value) {
 		'use strict';
 
-		var value = value || false;
-		var el = $('#not-split-background');
+		var val = value || false,
+			el = $('#not-split-background');
 
-		if ( el.prop('checked') === value ) {
-			el.prop('checked', !value);
-			ThemeDesigner.set('background-dynamic', value.toString());
+		if ( el.prop('checked') === val ) {
+			el.prop('checked', !val);
+			ThemeDesigner.set('background-dynamic', val.toString());
 		}
 	},
 
@@ -507,34 +507,35 @@ var ThemeDesigner = {
 			return;
 		}
 
+		var body = ThemeDesigner.previewFrame.contents().find('body'),
+			reloadCSS = false,
+			updateSkinPreview = false;
+
 		if (setting === 'background-tiled') {
 			if (newValue === 'true') {
-				ThemeDesigner.previewFrame.contents().find('body').removeClass('background-not-tiled');
+				body.removeClass('background-not-tiled');
 			} else {
-				ThemeDesigner.previewFrame.contents().find('body').addClass('background-not-tiled');
+				body.addClass('background-not-tiled');
 			}
 		}
 
 		if (setting === 'background-fixed') {
 			if (newValue === 'true') {
-				ThemeDesigner.previewFrame.contents().find('body').addClass('background-fixed');
+				body.addClass('background-fixed');
 			} else {
-				ThemeDesigner.previewFrame.contents().find('body').removeClass('background-fixed');
+				body.removeClass('background-fixed');
 			}
 		}
 
 		if (setting === 'background-dynamic') {
 			if (newValue === 'true') {
-				ThemeDesigner.previewFrame.contents().find('body').addClass('background-dynamic');
+				body.addClass('background-dynamic');
 				$('#CustomizeTab').find('.middle-color-mask').css('display', 'none');
 			} else {
-				ThemeDesigner.previewFrame.contents().find('body').removeClass('background-dynamic');
+				body.removeClass('background-dynamic');
 				$('#CustomizeTab').find('.middle-color-mask').css('display', 'block');
 			}
 		}
-
-		var reloadCSS = false,
-			updateSkinPreview = false;
 
 		if(setting === 'theme' && newValue !== 'custom') {
 			$.extend(ThemeDesigner.settings, ThemeDesigner.themes[newValue]);
@@ -703,7 +704,7 @@ var ThemeDesigner = {
 			data: {
 				settings: ThemeDesigner.settings
 			},
-			callback: function(/*data*/) {
+			callback: function() {
 				// BugId:1349
 				ThemeDesigner.purgeReturnToPage(function() {
 					if (window.returnTo) {
@@ -770,8 +771,8 @@ var ThemeDesigner = {
 			$('#swatch-image-background').attr('src', window.wgBlankImgUrl);
 		} else if (ThemeDesigner.settings['background-image'].indexOf('images/themes') > 0) {
 			//wikia background image
-			file = ThemeDesigner.settings['background-image'].substring(ThemeDesigner.settings['background-image']
-				.lastIndexOf('/') + 1);
+			file = ThemeDesigner.settings['background-image']
+				.substring(ThemeDesigner.settings['background-image'].lastIndexOf('/') + 1);
 			theme = file.substr(0, file.length - 4);
 			$('#swatch-image-background').attr('src', window.wgExtensionsPath + '/wikia/ThemeDesigner/images/' +
 				theme + '_swatch.jpg');
@@ -814,8 +815,8 @@ var ThemeDesigner = {
 		}
 
 		// favicon image
-		$('#WordmarkTab').find('.favicon').find('.preview').find('img').attr('src',
-			ThemeDesigner.settings['favicon-image-url']);
+		$('#WordmarkTab').find('.favicon').find('.preview').find('img')
+			.attr('src', ThemeDesigner.settings['favicon-image-url']);
 
 		if(ThemeDesigner.settings['favicon-image-url'] === window.wgBlankImgUrl){
 			$('#WordmarkTab').find('.favicon').find('.preview').removeClass('active');

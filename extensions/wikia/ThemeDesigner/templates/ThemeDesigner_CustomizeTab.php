@@ -6,6 +6,7 @@
 				<h2><?= wfMsg('themedesigner-color') ?></h2>
 				<img src="<?= $wg->BlankImgUrl ?>" class="color-body" id="swatch-color-background">
 			</li>
+			<? //TODO: Remove this after global release of responsive layout  ?>
 			<? if ($wg->OasisResponsive) : ?>
 				<li class="wrap-middle-color">
 					<h2><?= wfMessage('themedesigner-color-middle')->plain() ?></h2>
@@ -18,6 +19,7 @@
 				<img src="<?= $wg->BlankImgUrl ?>" class="background-image" id="swatch-image-background">
 				<input type="checkbox" id="tile-background"> <label for="tile-background"><?= wfMessage('themedesigner-tile-background')->plain() ?></label>
 				<input type="checkbox" id="fix-background"> <label for="fix-background"><?= wfMessage('themedesigner-fix-background')->plain() ?></label>
+				<? //TODO: Remove this after global release of responsive layout  ?>
 				<? if ($wg->OasisResponsive) : ?>
 					<span class="not-split-option">
 						<input type="checkbox" id="not-split-background"> <label for="not-split-background"><?= wfMessage('themedesigner-not-split-background')->plain() ?></label>

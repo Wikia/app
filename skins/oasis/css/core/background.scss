@@ -1,8 +1,21 @@
 @import "color";
 @import "layout";
 @import "responsive-variables";
+@import "../mixins/calc";
 
-// set up background-specific-vars
+// Background
+// TODO: we might want to consider pre-calculating all of the background
+// positioning stuff in PHP and then passing it in here, it would be much
+// more performant. However, before we do that, we should come up with a
+// better way of passing parameters into Sass (like using a hash), otherwise
+// the URLs generated for Sass files will be even more ridiculously long.
+$background-height: get_command_line_param( "background-image-height", 0 ) * 1px; // convert int to pixel value
+$background-width: get_command_line_param( "background-image-width", 0 ) * 1px; // convert int to pixel value
+$background-width-half: $background-width / 2;
+$background-offset: ( $breakpoint-fluid - $background-width ) / 2;
+$background-align: if( $background-width > $width-outside, center, left );
+
+
 
 // The background image is considered to be "wide" if it bleeds off the screen
 // at the size of the fluid breakpoint. This is important because it will determine
@@ -60,27 +73,12 @@ $background-is-wide: if( $background-width > $breakpoint-fluid, true, false );
 		}
 
 		.background-image-gradient {
-			background: $color-body-middle;
-			content: "";
-			height: 100%;
-			left: 50%;
-			margin-left: -webkit-calc(#{$margin-middle-base} - 50%);
-			margin-left: calc(#{$margin-middle-base} - 50%);
-			position: fixed;
-			top: 0;
-			width: -webkit-calc(100% - #{$width-middle-subtrahend});
-			width: calc(100% - #{$width-middle-subtrahend});
-			z-index: -1;
-
+			@include calc(margin-left, #{$margin-middle-base} - 50%);
+			@include calc(width, 100% - #{$width-middle-subtrahend});
 
 			&:after,
 			&:before {
-				content: "";
-				height: 100%;
-				position: fixed;
-				top: 0;
 				width: $width-gradient;
-				z-index: -1;
 			}
 
 			&:after {
@@ -139,15 +137,8 @@ $background-is-wide: if( $background-width > $breakpoint-fluid, true, false );
 		}
 
 		.background-image-gradient {
-			background: $color-body-middle;
-			content: "";
-			height: 100%;
-			left: 50%;
 			margin-left: $margin-middle;
-			position: fixed;
-			top: 0;
 			width: $width-middle;
-			z-index: -1;
 
 			&:after {
 				margin-right: $gradient-offset;
@@ -209,6 +200,21 @@ body.background-fixed {
 			// The extra 0.1% fixes sub-pixel rendering issues in Safari (DAR-1052)
 			left: 50.1%;
 			margin-left: -$background-width-half;
+		}
+
+		.background-image-gradient {
+			background: $color-body-middle;
+			left: 50%;
+
+			&,
+			&:before,
+			&:after {
+				content: "";
+				height: 100%;
+				position: fixed;
+				top: 0;
+				z-index: -1;
+			}
 		}
 	}
 
