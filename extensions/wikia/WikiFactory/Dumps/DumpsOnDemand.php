@@ -18,6 +18,7 @@ $wgGroupPermissions['autoconfirmed']['dumpsondemand'] = true;
 class DumpsOnDemand {
 
 	const BASEURL = "http://dumps.wikia.net";
+	const S3_MIGRATION = '20131002154415';
 
 	/**
 	 * @access public
