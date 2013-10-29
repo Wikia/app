@@ -47,6 +47,7 @@ ve.ui.WikiaMediaPageWidget = function VeUiWikiaMediaPageWidget( model, config ) 
 	this.$extension = this.$$( '<span>' );
 	this.$item = null;
 	this.$itemWrapper = this.$$( '<div>' );
+	this.$label = this.$$( '<span>' );
 
 	// Events
 	this.removeButton.connect( this, { 'click': 'onRemoveButtonClick' } );
@@ -55,8 +56,11 @@ ve.ui.WikiaMediaPageWidget = function VeUiWikiaMediaPageWidget( model, config ) 
 	this.$extension
 		.addClass( 've-ui-wikiaMediaPageWidget-item-extension' )
 		.text( titleParts[2] );
-	this.$itemWrapper
-		.addClass( 've-ui-wikiaMediaPageWidget-item' );
+	this.$itemWrapper.addClass( 've-ui-wikiaMediaPageWidget-item' );
+	this.$label
+		.addClass( 've-ui-wikiaMediaPageWidget-item-label' )
+		.appendTo( this.$itemWrapper )
+		.text( titleParts[1] );
 	this.title.$.append( this.$extension );
 	this.fieldset.$.append( this.titleLabel.$, this.title.$, this.removeButton.$ );
 	this.$
@@ -96,7 +100,7 @@ ve.ui.WikiaMediaPageWidget.prototype.setupImage = function () {
 	}, this ) );
 
 	this.$item.load( ve.bind( this.onImageLoad, this ) );
-	this.$itemWrapper.append( this.$item );
+	this.$itemWrapper.prepend( this.$item );
 };
 
 /**
