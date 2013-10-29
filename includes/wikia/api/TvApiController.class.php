@@ -58,8 +58,13 @@ class TvApiController extends WikiaApiController {
 		return null;
 	}
 	protected function getTitle( $text ) {
-		$serializedText = str_replace( ' ', '_', ucwords( strtolower( $text ) ) );
-		$title = GlobalTitle::newFromText( $serializedText, NS_MAIN, $this->wikiId );
+		//try exact phrase
+		$underscoredText = str_replace( ' ', '_', $text );
+		$title = GlobalTitle::newFromText( $underscoredText, NS_MAIN, $this->wikiId );
+		if( !$title->exists() ) {
+			$serializedText = str_replace( ' ', '_', ucwords( strtolower( $text ) ) );
+			$title = GlobalTitle::newFromText( $serializedText, NS_MAIN, $this->wikiId );
+		}
 		if ( $title->isRedirect() ) {
 			$title = $title->getRedirectTarget();
 		}
