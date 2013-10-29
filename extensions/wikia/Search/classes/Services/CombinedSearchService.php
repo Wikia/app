@@ -106,6 +106,24 @@ class CombinedSearchService {
 			$fullText = $articleInfo[Utilities::field('html', $articleInfo['lang'])];
 			$outputModel['snippet'] = trim( wfShortenText( $fullText, 200, true ) );
 		}
+
+		try {
+			$dbName = \WikiFactory::getWikiByID( $outputModel['wikiId'] )->city_dbname;
+			$imageServing = new \ImageServing(
+				[ $outputModel['articleId'] ],
+				80,
+				[ 'w' => 1, 'h' => 1 ],
+				wfGetDB( DB_SLAVE, [], $dbName )
+			);
+			$images = $imageServing->getImages(1)[$outputModel['articleId']];
+			if ( $images && sizeof( $images ) > 0 ) {
+				$imageName = $images[0]['name'];
+				$file = \GlobalFile::newFromText( $imageName, $outputModel['wikiId'] );
+				$outputModel['image'] = $file->getThumbUrl();
+			}
+		} catch ( \DBConnectionError $ex ) {
+			// TODO
+		}
 		return $outputModel;
 	}
 
@@ -115,7 +133,7 @@ class CombinedSearchService {
 			$topArticlesMap = \DataMartService::getTopArticlesByPageview(
 				$wikiId,
 				null,
-				[0],
+				[ NS_MAIN ],
 				false,
 				5
 			);

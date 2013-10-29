@@ -84,7 +84,6 @@ class SearchApiController extends WikiaApiController {
 		if ( !$this->request->getVal( 'query' ) ) {
 			throw new InvalidParameterApiException( 'query' );
 		}
-		$request = $this->getRequest();
 		$query = $this->request->getVal( 'query' );
 		$langs = $this->request->getArray( 'langs', ['en'] );
 		$namespaces = $this->request->getArray( 'namespaces', [ NS_MAIN ] );
