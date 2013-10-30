@@ -3,51 +3,17 @@
  *
  * Used to run Wikia's JS Integration tests
  *
- * created by Jakub Olek <jakub.olek@wikia-inc.com>
+ * created by Jakub Olek <jakubolek@wikia-inc.com>
  */
 
-var buildPath = 'tests/build/';
+var base = require('./karma.base.config.js');
 
 module.exports = function(config) {
 	'use strict';
 
+	base(config);
+
 	config.set({
-		basePath: '../../',
-		frameworks: ['jasmine'/*, 'detectBrowsers'*/],
-		browsers: [
-			'PhantomJS'
-			//'SlimerJS',
-			//'Chrome',
-			//'ChromeCanary',
-			//'Firefox',
-			//'Opera',
-			//'iOS'
-			//'Safari', // only Mac
-			//'IE' // only Windows
-		],
-		detectBrowsers: {
-			enabled: false
-		},
-		autoWatch: true,
-		port: 9876,
-		runnerPort: 9100,
-		colors: true,
-		logLevel: config.LOG_ERROR,
-		captureTimeout: 5000,
-		singleRun: false,
-		reporters: [ 'dots', 'osx' /*, 'growl', 'coverage', 'osx' */],
-		coverageReporter: {
-			type : 'cobertura',
-			dir : buildPath + 'jsunit-coverage'
-		},
-		preprocessors: {
-			'**/resources/wikia/modules/*.js': ['coverage'],
-			'**/js/*.js': ['coverage']
-		},
-		reportSlowerThan: 500,
-		junitReporter: {
-			outputFile: buildPath + 'test-results.xml'
-		},
 		files: [
 			'tests/lib/jasmine/jasmine.async.js',
 
