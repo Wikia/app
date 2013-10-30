@@ -61,6 +61,7 @@ $messages['en'] = array(
 	'visualeditor-dialog-media-content-section' => 'Caption',
 	'visualeditor-dialog-media-insert-button' => 'Insert media',
 	'visualeditor-dialog-media-insert-title' => 'Insert media',
+	'visualeditor-dialog-source-mode-title' => 'Source editor',
 	'visualeditor-dialog-media-title' => 'Media settings',
 	'visualeditor-dialog-meta-categories-category' => 'Category',
 	'visualeditor-dialog-meta-categories-data-label' => 'Categories',
