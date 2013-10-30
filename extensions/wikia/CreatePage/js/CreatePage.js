@@ -2,16 +2,20 @@ var CreatePage = {
 	pageLayout: null,
 	options: {},
 	loading: false,
+	context: null,
 
-	checkTitle: function(title, enterWasHit) {
-		$.getJSON(wgScript, {
+	checkTitle: function(title) {
+		'use strict';
+
+		$.getJSON(CreatePage.context.wgScript, {
 			action: 'ajax',
 			rs: 'wfCreatePageAjaxCheckTitle',
 			title: title
 		},
 		function(response) {
-			if(response.result == 'ok') {
-				location.href = CreatePage.options[CreatePage.pageLayout]['submitUrl'].replace('$1', encodeURIComponent( title ));
+			if(response.result === 'ok') {
+				location.href = CreatePage.options[CreatePage.pageLayout].submitUrl
+					.replace('$1', encodeURIComponent( title ));
 			}
 			else {
 				CreatePage.displayError(response.msg);
@@ -20,14 +24,16 @@ var CreatePage = {
 	},
 
 	openDialog: function(e, titleText) {
+		'use strict';
+		console.debug(1);
 		// BugId:4941
-		if ((!!window.WikiaEnableNewCreatepage) === false) {
+		if (Boolean(window.WikiaEnableNewCreatepage) === false) {
 			// create page popouts are disabled - follow the link
 			return;
 		}
 
 		// Ignore middle-click. BugId:12544
-		if (e && e.which == 2) {
+		if (e && e.which === 2) {
 			return;
 		}
 
@@ -39,26 +45,33 @@ var CreatePage = {
 		if( false === CreatePage.loading ) {
 			CreatePage.loading = true;
 
-			$.getJSON(wgScript, {
+			$.getJSON(CreatePage.context.wgScript, {
 				action: 'ajax',
 				rs: 'wfCreatePageAjaxGetDialog'
 			},
 			function(data) {
+				var idToken,
+					elm,
+					onElementClick;
 				$.showModal(data.title, data.html, {
 					width: data.width,
 					id: 'CreatePageDialog',
 					callback: function() {
 						CreatePage.loading = false;
 
+						onElementClick = function() {
+							CreatePage.setPageLayout( $( this ).data( 'optionName' ) );
+						};
+
 						for(var name in CreatePage.options){
-							var idToken = name.charAt(0).toUpperCase() + name.substring(1);
-							var elm = $( '#CreatePageDialog' + idToken + 'Container' );
+							idToken = name.charAt(0).toUpperCase() + name.substring(1);
+							elm = $( '#CreatePageDialog' + idToken + 'Container' );
 
 							elm.data('optionName', name);
-							elm.click( function() {CreatePage.setPageLayout($(this).data('optionName'));});
+							elm.click( onElementClick );
 						}
 
-						if(titleText != null) {
+						if(titleText !== null) {
 							$('#wpCreatePageDialogTitle').val( decodeURIComponent( titleText ) );
 						}
 
@@ -77,16 +90,19 @@ var CreatePage = {
 	},
 
 	submitDialog: function( enterWasHit ) {
+		'use strict';
 		CreatePage.checkTitle( $('#wpCreatePageDialogTitle').val(), enterWasHit );
 	},
 
 	displayError: function( errorMsg ) {
+		'use strict';
 		var box = $( '#CreatePageDialogTitleErrorMsg' );
 		box.html( '<span id="createPageErrorMsg">' + errorMsg + '</span>' );
 		box.removeClass('hiddenStructure');
 	},
 
 	setPageLayout: function( layout ) {
+		'use strict';
 		CreatePage.pageLayout = layout;
 		var idToken = layout.charAt(0).toUpperCase() + layout.substring(1);
 
@@ -96,6 +112,7 @@ var CreatePage = {
 	},
 
 	getTitleFromUrl: function( url ) {
+		'use strict';
 		var vars = [],
 			i,
 			hash,
@@ -107,16 +124,18 @@ var CreatePage = {
 			vars[hash[0]] = hash[1];
 		}
 
-		return vars['title'].replace(/_/g, ' ');
+		return vars.title.replace(/_/g, ' ');
 	},
 
 	redLinkClick: function(e, titleText) {
+		'use strict';
 		var title = titleText.split(':'),
-			isContentNamespace = false;
+			isContentNamespace = false,
+			i;
 
 		if( window.ContentNamespacesText && (title.length > 1) ) {
-			for(var i in window.ContentNamespacesText) {
-				if(title[0] == window.ContentNamespacesText[i]) {
+			for(i in window.ContentNamespacesText) {
+				if(title[0] === window.ContentNamespacesText[i]) {
 					isContentNamespace = true;
 				}
 			}
@@ -133,22 +152,29 @@ var CreatePage = {
 		}
 	},
 
-	init: function() {
+	init: function(context) {
+		'use strict';
+		CreatePage.context = context;
 		if( window.WikiaEnableNewCreatepage ) {
 			$().log('init', 'CreatePage');
 
 			if( !window.WikiaDisableDynamicLinkCreatePagePopup ) {
-				$( '#dynamic-links-write-article-link, #dynamic-links-write-article-icon' ).click( function(e) {CreatePage.openDialog(e, null);});
-				    $('.noarticletext a[href*="redlink=1"]').click( function(e) {CreatePage.openDialog(e, wgPageName); return false; });
-                        }
+				$( '#dynamic-links-write-article-link, #dynamic-links-write-article-icon' ).click( function(e) {
+					CreatePage.openDialog(e, null);
+				});
+				$('.noarticletext a[href*="redlink=1"]').click( function(e) {
+					CreatePage.openDialog(e, CreatePage.context.wgPageName); return false;
+				});
+			}
 
 			// CreatePage chicklet (Oasis)
 			$('.createpage').click(CreatePage.openDialog);
 
 			// macbre: RT #38478
-			var addRecipeTab = $('#add_recipe_tab');
+			var addRecipeTab = $('#add_recipe_tab'),
+				addRecipeLink;
 			if (addRecipeTab.exists()) {
-				var addRecipeLink = addRecipeTab.find('a');
+				addRecipeLink = addRecipeTab.find('a');
 
 				// only show popup if this tab really points to CreatePage
 				if (addRecipeLink.attr('href').match(/CreatePage$/)) {
@@ -156,20 +182,23 @@ var CreatePage = {
 				}
 			}
 
-			$("a.new").bind('click', function(e) {
+			$('a.new').bind('click', function(e) {
 				CreatePage.redLinkClick(e, CreatePage.getTitleFromUrl(this.href));
 			});
 
-			$(".createboxButton").bind('click', function(e) {
-				var form = $(e.target).parent();
+			$('.createboxButton').bind('click', function(e) {
+				var form = $(e.target).parent(),
+					prefix,
+					field,
+					preloadField;
 
 				// make sure we're inside createbox and not inputbox (RT #40959)
-				if(form.attr('class') == 'createboxForm') {
-					var prefix = form.children("input[name|='prefix']").val() || '';
-					var field = form.children('.createboxInput');
-					var preloadField = form.children("input[name='preload']");
+				if(form.attr('class') === 'createboxForm') {
+					prefix = form.children('input[name=\'prefix\']').val() || '';
+					field = form.children('.createboxInput');
+					preloadField = form.children('input[name=\'preload\']');
 
-					if((typeof preloadField.val() == undefined) || (preloadField.val() == '')) {
+					if((typeof preloadField.val() === undefined) || (preloadField.val() === '')) {
 						CreatePage.openDialog(e, prefix + field.val());
 					}
 					else {
@@ -181,6 +210,7 @@ var CreatePage = {
 	}
 };
 
-jQuery(function($) {
-	CreatePage.init()
+jQuery(function() {
+	'use strict';
+	CreatePage.init(window);
 });
