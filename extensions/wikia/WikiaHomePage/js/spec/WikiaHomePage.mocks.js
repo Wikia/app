@@ -10,7 +10,5 @@ $.storage = {
 window.wgInitialWikiBatchesForVisualization = [];
 
 $.fn.log = function(){return true};
-
-
-
+$.fn.tooltip = function(){return true};
 $.fn.startThrobbing = function(){return true};

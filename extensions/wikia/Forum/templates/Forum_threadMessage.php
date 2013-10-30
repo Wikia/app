@@ -5,9 +5,9 @@
 	<blockquote class="message">
 		<div class="social-toolbar">
 			<? if ($isWatched): ?>
-				<button class="follow following" data-iswatched="1"><?= wfMsg('forum-board-thread-following') ?></button>
+				<button class="follow following" data-iswatched="1"><?= wfMessage( 'forum-board-thread-following' )->escaped() ?></button>
 			<? else: ?>
-				<button class="follow" data-iswatched="0"><?= wfMsg('forum-board-thread-follow') ?></button>
+				<button class="follow" data-iswatched="0"><?= wfMessage( 'forum-board-thread-follow' )->escaped() ?></button>
 			<? endif ?>
 		</div>
 		<div class="author">

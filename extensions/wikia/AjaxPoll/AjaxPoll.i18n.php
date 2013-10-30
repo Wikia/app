@@ -106,7 +106,10 @@ $messages['be-tarask'] = array(
 $messages['bg'] = array(
 	'ajaxpoll-percentVotes' => '$1%&nbsp;от всички гласове',
 	'ajaxpoll-thankyou' => 'Благодарности за участието ви в гласуването!',
+	'ajaxpoll-error' => 'Възникна проблем при обработката на гласуването, опитайте отново.',
 	'ajaxpoll-submit' => 'Гласуване!',
+	'ajaxpoll-closed' => 'Анкетата е затворена. Можете да видите резултатите.',
+	'ajaxpoll-submitting' => 'Изчакайте, гласуването се съхранява...',
 );
 
 /** Bengali (বাংলা)
@@ -497,6 +500,13 @@ $messages['lb'] = array(
 	'ajaxpoll-submit' => 'Ofstëmmen!',
 	'ajaxpoll-closed' => "D'Ëmfro ass ofgeschloss. Kuckt d'Resultater.",
 	'ajaxpoll-submitting' => 'Waart w.e.g., Är Stëmm gëtt elo geschéckt ...',
+);
+
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'ajaxpoll-submit' => 'رای بئيتو',
 );
 
 /** Lithuanian (lietuvių)

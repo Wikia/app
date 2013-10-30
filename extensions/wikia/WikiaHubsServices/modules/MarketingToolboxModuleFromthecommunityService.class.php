@@ -236,6 +236,7 @@ class MarketingToolboxModuleFromthecommunityService extends MarketingToolboxModu
 					'userUrl' => str_replace(' ', '_', $data['usersUrl' . $i]),
 					'wikiUrl' => $data['wikiUrl' . $i],
 					'quote' => $data['quote' . $i],
+					'photoName' => $data['photo'.$i]
 				);
 			}
 		}

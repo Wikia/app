@@ -2224,7 +2224,7 @@ $messages['pt'] = array(
 	'scavengerhunt-label-goodbye-text' => 'Mensagem da janela:',
 	'scavengerhunt-label-goodbye-image' => 'Imagem da janela (endereço URL):',
 	'scavengerhunt-button-add' => 'Adicionar um jogo',
-	'scavengerhunt-button-save' => 'Salvar',
+	'scavengerhunt-button-save' => 'Gravar',
 	'scavengerhunt-button-disable' => 'Desativar',
 	'scavengerhunt-button-enable' => 'Ativar',
 	'scavengerhunt-button-delete' => 'Eliminar',
@@ -2257,7 +2257,7 @@ $messages['pt'] = array(
 	'scavengerhunt-label-progress-bar' => 'Barra de progresso',
 	'scavengerhunt-quit-game-button-quit' => 'Sair',
 	'scavengerhunt-quit-game-button-cancel' => 'Cancelar',
-	'scavengerhunt-label-entry-form-username' => 'Nome de usuário',
+	'scavengerhunt-label-entry-form-username' => 'Nome de utilizador',
 	'scavengerhunt-label-clue-color' => 'Cor da fonte',
 	'scavengerhunt-label-clue-size' => 'Tamanho da fonte',
 );

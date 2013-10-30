@@ -278,6 +278,14 @@ $messages['uk'] = array(
 	'centralhelpsearch-placeholder' => 'Пошук довідки...',
 );
 
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'centralhelpsearch-desc' => 'Cho phép bao gồm một hình thức tìm kiếm cộng đồng Trung tâm trợ giúp',
+	'centralhelpsearch-placeholder' => 'Tìm kiếm trợ giúp...',
+);
+
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Hydra

@@ -33,6 +33,7 @@
 		adProviderGpt,
 		adProviderEvolve,
 		adProviderGamePro,
+		adProviderSevenOneMedia,
 		adProviderLater,
 		adProviderNull,
 		slotTweaker,
@@ -48,7 +49,7 @@
 	dartUrl = DartUrl();
 	adLogicDartSubdomain = AdLogicDartSubdomain(Geo);
 	adLogicHighValueCountry = AdLogicHighValueCountry(window);
-	adLogicPageDimensions = AdLogicPageDimensions(window, document, log, slotTweaker);
+	adLogicPageDimensions = AdLogicPageDimensions(window, document, log, slotTweaker, abTest);
 	adLogicPageLevelParams = AdLogicPageLevelParams(log, window, Krux, adLogicPageDimensions, abTest);
 	adLogicPageLevelParamsLegacy = AdLogicPageLevelParamsLegacy(log, window, adLogicPageLevelParams, Krux, dartUrl);
 	scriptWriter = ScriptWriter(log, ghostwriter, document);
@@ -60,6 +61,7 @@
 	adProviderGpt = AdProviderGpt(tracker, log, window, Geo, slotTweaker, Cache, adLogicHighValueCountry, wikiaFullGpt);
 	adProviderEvolve = AdProviderEvolve(adLogicPageLevelParamsLegacy, scriptWriter, tracker, log, window, document, Krux, evolveHelper, slotTweaker);
 	adProviderGamePro = AdProviderGamePro(adLogicPageLevelParamsLegacy, scriptWriter, tracker, log, window, slotTweaker);
+	adProviderSevenOneMedia = AdProviderSevenOneMedia();
 	adProviderNull = AdProviderNull(log, slotTweaker);
 
 	// Special Ad Provider, to deal with the late ads
@@ -80,7 +82,8 @@
 		adProviderEvolve,
 		adProviderGamePro,
 		adProviderLater,
-		adProviderNull
+		adProviderNull,
+		adProviderSevenOneMedia
 	);
 
 	window.wgAfterContentAndJS.push(function () {

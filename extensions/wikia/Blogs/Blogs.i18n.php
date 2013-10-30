@@ -165,6 +165,7 @@ Parameters:
 	'create-blog-listing-sortby' => '{{Identical|Sort by}}',
 	'create-blog-listing-sortby-author' => '{{Identical|Author}}',
 	'blog-defaulttitle' => '{{Identical|Blog}}',
+	'blog-readfullpost' => '{{Identical|Read more}}',
 	'blog-added' => 'This is the possible value of $CHANGEDORCREATED in {{msg-mw|enotif_subject}} and {{msg-mw|enotif_body|notext=1}}.',
 	'blog-edited' => 'This is a possible value of $CHANGEDORCREATED in {{msg-mw|enotif_subject}} and {{msg-mw|enotif_body|notext=1}}.',
 	'blog-page' => '{{Identical|Blog}}',
@@ -628,6 +629,7 @@ $messages['bg'] = array(
 	'blog-comment-history' => 'история',
 	'blog-comment-edit' => 'редактиране',
 	'blog-avatar-preferences-title' => 'Аватар',
+	'blog-page-rate' => 'Оценяване на статията:',
 	'blog-refresh-label' => 'Опресняване',
 	'blog-userblog' => 'Блогът на $1',
 	'blog-fromsitename' => 'От $1',
@@ -1559,7 +1561,7 @@ $messages['fa'] = array(
 	'blog-added' => 'اضافه شده',
 	'blog-edited' => 'ویرایش قبلی',
 	'blog-page' => 'وبلاگ',
-	'blog-zero-comments' => 'هیچ نظری نوشته نشده است!',
+	'blog-zero-comments' => 'هیچ نظری نوشته نشده‌است!',
 	'blog-comment-post' => 'ارسال نظر',
 	'blog-comments' => 'نظرات',
 	'blog-rc-comments' => 'نظرات وبلاگ',
@@ -1594,7 +1596,7 @@ $messages['fa'] = array(
 	'right-blog-articles-edit' => 'ویرایش مطالب وبلاگ',
 	'right-blog-articles-move' => 'جابجاکردن مقاله‌های وبلاگ',
 	'blogs-recent-url-text' => 'پست‌های اخیر وبلاگ',
-	'blog-movepage-badtitle' => 'عنوان پست وبلاگ نامعتبر می‌باشد',
+	'blog-movepage-badtitle' => 'عنوان پست وبلاگ نامعتبر است',
 	'blog-comment-sending' => 'در حال ارسال...',
 	'blog-by' => '$1 توسط $2',
 	'blogs-searchprofile' => 'وبلاگ‌ها',
@@ -1608,6 +1610,7 @@ $messages['fa'] = array(
  * @author Lukkipoika
  * @author Nedergard
  * @author VezonThunder
+ * @author Ville96
  */
 $messages['fi'] = array(
 	'createblogpage' => 'Luo blogi',
@@ -1723,6 +1726,7 @@ Luo blogilistalle sivuja luokkiin, kuten "Barack Obama", "Fanifiktiot" tai voit 
 	'blog-comment-sending' => 'Lähetetään...',
 	'blog-by' => '$1, kirjoittanut $2',
 	'blogs-searchprofile' => 'Blogit',
+	'blogs-searchprofile-tooltip' => 'Hae blogi-artikkeleista ja blogi-listauksista',
 	'user-blog-url-link' => 'Käyttäjän blogi: $1',
 );
 
@@ -2425,6 +2429,7 @@ Tu pote crear listas de blogs pro categorias como "Barack Obama", "libros", o me
 
 /** Indonesian (Bahasa Indonesia)
  * @author Aldnonymous
+ * @author C5st4wr6ch
  * @author Farras
  * @author Irwangatot
  */
@@ -2540,6 +2545,7 @@ Buat blog daftar halaman untuk kategori seperti "Barack Obama", "Penggemar Fiksi
 	'blog-movepage-badtitle' => 'Judul posting blog tidak sah.',
 	'blog-comment-sending' => 'Mengirimkan...',
 	'blog-by' => '$1oleh$2',
+	'user-blog-url-link' => 'Blog pengguna:$1',
 );
 
 /** Igbo (Igbo)
@@ -2916,6 +2922,25 @@ $messages['lb'] = array(
 	'blogs-comment-hidden' => 'Bemierkung verstoppt.',
 	'blog-comment-sending' => 'Schécken...',
 	'blog-by' => '$1 vum $2',
+);
+
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'blog-voting-label' => 'د حالت رای گرتن',
+	'blog-comment-delete' => 'پاك كردن',
+	'blog-comment-hide' => 'قام كردن',
+	'blog-comment-unhide' => 'قام نكردن',
+	'blog-comment-history' => 'ويرگار',
+	'blog-comment-edit' => 'ويرايشت',
+	'blog-avatar-preferences-title' => 'آواتار',
+	'blog-refresh-label' => 'د نؤ تازه كردن',
+	'blog-fromsitename' => 'د $1',
+	'blogs-reportproblem' => 'مشگل نه گزارش بكيتو',
+	'blog-comment-sending' => 'د حالت كل كردن',
+	'blog-by' => '$1 وه
+$2',
 );
 
 /** Lithuanian (lietuvių)
@@ -4037,11 +4062,13 @@ $messages['ps'] = array(
  * @author Luckas
  * @author Luckas Blade
  * @author McDutchie
+ * @author Polyethylen
  * @author Rhaijin
  * @author SandroHc
  * @author Waldir
  */
 $messages['pt'] = array(
+	'blog-file-page' => "<a href='$1'>$2</a> publicação no blogue de <a href='$3'>$4</a>",
 	'createblogpage' => 'Criar blogue',
 	'createbloglistingpage' => 'Criar uma listagem de blogues',
 	'create-blog-spam' => 'Parece ser spam',
@@ -4053,7 +4080,7 @@ $messages['pt'] = array(
 	'create-blog-post-recent-listing-title' => 'Entradas recentes',
 	'create-blog-post-recent-listing-log' => 'Criou artigo para as entradas de blogue recentes',
 	'create-blog-post-title' => 'Criar uma entrada nova num blogue',
-	'create-blog-post-title-edit' => 'Editar uma entrada de blog',
+	'create-blog-post-title-edit' => 'Editar uma entrada de blogue',
 	'create-blog-form-title' => 'O que é uma entrada de um blogue?',
 	'create-blog-form-post-text' => 'Texto do blogue',
 	'create-blog-form-info' => 'As entradas num blogue são uma ótima forma de partilhar novidades, opiniões, e obras criativas com a comunidade.',
@@ -4068,7 +4095,7 @@ $messages['pt'] = array(
 	'create-blog-categories-title' => 'Adicionar esta entrada do blogue a estas categorias (clique para selecionar)',
 	'create-blog-categories-textinput' => 'Adicionar uma categoria nova',
 	'create-blog-categories-submit' => 'Enviar',
-	'create-blog-save' => 'Salvar página',
+	'create-blog-save' => 'Gravar página',
 	'create-blog-preview' => 'Mostrar antevisão',
 	'create-blog-updated' => 'A entrada foi criada ou atualizada.',
 	'create-blog-permission-denied' => 'Erro ao gravar a página de blogue: Permissão negada',
@@ -4107,8 +4134,8 @@ Crie páginas de listagem de blogues para categorias, tais como "Barack Obama" o
 	'blog-nopostfound' => 'Não foram encontradas entradas.',
 	'blog-writeone' => 'Escreva um!',
 	'blog-empty-user-blog' => 'Este utilizador ainda não criou nenhuma entrada no blogue!',
-	'blog-added' => 'adicionado',
-	'blog-edited' => 'editado',
+	'blog-added' => 'adicionada',
+	'blog-edited' => 'editada',
 	'blog-page' => 'Blogue',
 	'blog-zero-comments' => 'Ainda não há comentários!',
 	'blog-comment-post' => 'Publicar comentário',
@@ -4141,7 +4168,7 @@ Crie páginas de listagem de blogues para categorias, tais como "Barack Obama" o
 	'blog-listing-zero-other' => 'Este utilizador ainda não criou nenhuma entrada no blogue!',
 	'blog-listing-created' => 'A página de listagem de blogues foi criada',
 	'blog-userblog' => 'blogue de $1',
-	'blog-fromsitename' => 'Do $1',
+	'blog-fromsitename' => 'Da wiki $1',
 	'blogs-reportproblem' => 'Reportar problema',
 	'blogs-comment-hidden' => 'Comentário escondido.',
 	'right-blog-comments-toggle' => 'Alternar a visibilidade dos comentários nos artigos dos blogues',
@@ -4154,6 +4181,8 @@ Crie páginas de listagem de blogues para categorias, tais como "Barack Obama" o
 	'blog-comment-sending' => 'A enviar...',
 	'blog-by' => '$1 de $2',
 	'blogs-searchprofile' => 'Blogues',
+	'blogs-searchprofile-tooltip' => 'Pesquisar nas entradas e listagens de blogues',
+	'user-blog-url-link' => 'Blogue do utilizador: $1',
 );
 
 /** Brazilian Portuguese (português do Brasil)
@@ -5256,6 +5285,7 @@ $messages['vep'] = array(
 );
 
 /** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
  * @author Minh Nguyen
  * @author Xiao Qiao
  */
@@ -5371,6 +5401,9 @@ Tạo trang danh sách blog cho thể loại chẳng hạn như "Fan tưởng t�
 	'blog-movepage-badtitle' => 'Tiêu đề blog đăng không hợp lệ.',
 	'blog-comment-sending' => 'Đang gửi...',
 	'blog-by' => '$1 bởi $2',
+	'blogs-searchprofile' => 'Blog',
+	'blogs-searchprofile-tooltip' => 'Tìm kiếm trong danh sách Blog và bài viết Blog',
+	'user-blog-url-link' => 'Thành viên blog:$1',
 );
 
 /** Walloon (walon)

@@ -238,6 +238,22 @@ $messages['ar'] = array(
 	'manage-wikia-home-collection-add-file-button' => 'إضافة صورة',
 );
 
+/** Bulgarian (български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'manage-wikia-home-wiki-list-blocked-no' => 'Не',
+	'manage-wikia-home-wiki-list-blocked-yes' => 'Да',
+	'manage-wikia-home-wiki-list-promoted-no' => 'Не',
+	'manage-wikia-home-wiki-list-promoted-yes' => 'Да',
+	'manage-wikia-home-wiki-list-official-no' => 'Не',
+	'manage-wikia-home-wiki-list-official-yes' => 'Да',
+	'manage-wikia-home-modal-button-no' => 'Не',
+	'manage-wikia-home-modal-button-yes' => 'Да',
+	'manage-wikia-home-modal-button-okay' => 'Добре',
+	'manage-wikia-home-collections-setup-save-button' => 'Съхраняване',
+);
+
 /** Breton (brezhoneg)
  * @author Fohanno
  */
@@ -767,6 +783,24 @@ $messages['lb'] = array(
 	'manage-wikia-home-collections-setup-save-button' => 'Späicheren',
 );
 
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'manage-wikia-home-wiki-filter' => 'فيلتر',
+	'manage-wikia-home-wiki-list-blocked-no' => 'نه',
+	'manage-wikia-home-wiki-list-blocked-yes' => 'هری',
+	'manage-wikia-home-wiki-list-promoted-no' => 'نه',
+	'manage-wikia-home-wiki-list-promoted-yes' => 'هری',
+	'manage-wikia-home-wiki-list-official-no' => 'نه',
+	'manage-wikia-home-wiki-list-official-yes' => 'هری',
+	'manage-wikia-home-modal-button-no' => 'نه',
+	'manage-wikia-home-modal-button-yes' => 'هری',
+	'manage-wikia-home-modal-button-okay' => 'خوئه',
+	'manage-wikia-home-collections-setup-save-button' => 'ذخيره كردن',
+	'manage-wikia-home-collections-enabled-field-label' => 'قادر بيه',
+);
+
 /** Malay (Bahasa Melayu)
  * @author Anakmalaysia
  */
@@ -1025,6 +1059,10 @@ $messages['ps'] = array(
 	'manage-wikia-home-wiki-filter' => 'چاڼگر',
 	'manage-wikia-home-wiki-filter-reset' => 'سپينول',
 	'manage-wikia-home-wiki-list-id' => 'پېژند',
+	'manage-wikia-home-wiki-list-headline' => 'ويکي نوم',
+	'manage-wikia-home-wiki-list-blocked' => 'بنديز لگېدلی',
+	'manage-wikia-home-wiki-list-official' => 'رسمي',
+	'manage-wikia-home-wiki-list-collection' => 'غونډونه',
 	'manage-wikia-home-wiki-list-blocked-no' => 'نه',
 	'manage-wikia-home-wiki-list-blocked-yes' => 'هو',
 	'manage-wikia-home-wiki-list-promoted-no' => 'نه',

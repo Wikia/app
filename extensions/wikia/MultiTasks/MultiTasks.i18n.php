@@ -1853,6 +1853,14 @@ $messages['lb'] = array(
 	'multiwikirecords' => '{{PLURAL:$1|Eng Wiki|$1 Wikie}} fonnt',
 );
 
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'multitasks-link-back-label' => 'ايچه',
+	'multiwikiedit_select_yourself' => 'شما',
+);
+
 /** Macedonian (македонски)
  * @author Bjankuloski06
  */
@@ -2685,7 +2693,7 @@ $messages['pt'] = array(
 	'multiwikiedit_list_caption' => 'Lista de wikis',
 	'multiwikiedit_minoredit_caption' => 'Edição menor',
 	'multiwikiedit_botedit_caption' => 'Edição de robô (ocultada)',
-	'multiwikiedit_autosummary_caption' => 'Activar auto-resumo',
+	'multiwikiedit_autosummary_caption' => 'Ativar o resumo automático',
 	'multiwikiedit_norecentchanges_caption' => 'Não apresentar a alteração nas mudanças recentes',
 	'multiwikiedit_newonly_caption' => 'Ignorar artigos existentes',
 	'multiwikiedit_choose_articles' => 'escolha quais os artigos encontrados que devem ser editados',
