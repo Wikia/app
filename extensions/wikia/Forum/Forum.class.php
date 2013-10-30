@@ -293,11 +293,8 @@ class Forum extends Walls {
 			$tmpUser = $app->wg->User;
 			$app->wg->User = User::newFromName( Forum::AUTOCREATE_USER );
 			for ( $i = 1; $i <= 5; $i++ ) {
-				$body = wfMessage( 'forum-autoboard-body-' . $i )->inContentLanguage()->text();
-				$title = wfMessage( 'forum-autoboard-title-' . $i )->inContentLanguage()->text();
-				//TODO: check with TOR
-				$title = str_replace( '$WIKINAME', $app->wg->Sitename, $title );
-				$body = str_replace( '$WIKINAME', $app->wg->Sitename, $body );
+				$body = wfMessage( 'forum-autoboard-body-' . $i, $app->wg->Sitename )->inContentLanguage()->text();
+				$title = wfMessage( 'forum-autoboard-title-' . $i, $app->wg->Sitename )->inContentLanguage()->text();
 
 				$this->createBoard( $title, $body, true );
 			}

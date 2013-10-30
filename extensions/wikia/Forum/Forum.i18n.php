@@ -195,14 +195,14 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 	'forum-autoboard-title-2' => 'News and Announcements',
  	'forum-autoboard-body-2' => 'Breaking news and information!',
 
- 	'forum-autoboard-title-3' => 'New on $WIKINAME',
+ 	'forum-autoboard-title-3' => 'New on $1',
 	'forum-autoboard-body-3' => "Want to share something that's just been posted on this wiki, or congratulate somebody for an outstanding contribution? This is the place!",
 
 	'forum-autoboard-title-4' => 'Questions and Answers',
 	'forum-autoboard-body-4' => 'Got a question about the wiki, or the topic? Ask your questions here!',
 
 	'forum-autoboard-title-5' => 'Fun and Games',
-	'forum-autoboard-body-5' => 'This board is for off-topic conversation -- a place to hang out with your $WIKINAME friends.',
+	'forum-autoboard-body-5' => 'This board is for off-topic conversation -- a place to hang out with your $1 friends.',
 
 	/* board creation validation messages */
 	'forum-board-destination-empty' => '(Please select board)',
@@ -271,12 +271,12 @@ $messages['qqq'] = array(
 	'forum-autoboard-body-1' => 'Description for default board.The length of this message needs to be between 4 and 255.',
 	'forum-autoboard-title-2' => 'Title for default board.The length of this message needs to be between 4 and 40.',
 	'forum-autoboard-body-2' => 'Description for default board.The length of this message needs to be between 4 and 255.',
-	'forum-autoboard-title-3' => 'Title for default board.The length of this message needs to be between 4 and 40.',
+	'forum-autoboard-title-3' => 'Title for default board.The length of this message needs to be between 4 and 40. $1 is the site name.',
 	'forum-autoboard-body-3' => 'Description for default board.The length of this message needs to be between 4 and 255.',
 	'forum-autoboard-title-4' => 'Title for default board.The length of this message needs to be between 4 and 40.',
 	'forum-autoboard-body-4' => 'Description for default board.The length of this message needs to be between 4 and 255.',
 	'forum-autoboard-title-5' => 'Title for default board.The length of this message needs to be between 4 and 40.',
-	'forum-autoboard-body-5' => 'Description for default board.The length of this message needs to be between 4 and 255.',
+	'forum-autoboard-body-5' => 'Description for default board.The length of this message needs to be between 4 and 255. $1 is the site name.',
 	'forum-admin-page-breadcrumb' => 'Breadcrumb heading',
 	'forum-admin-create-new-board-modal-heading' => 'Modal heading for create a new board dialog',
 	'forum-admin-create-new-board-title' => 'Form input label for board title',
