@@ -13,7 +13,6 @@ require(['throbber', 'wikia.querystring', 'wikia.loader', 'wikia.nirvana', 'slot
 
 	var hash = qs().getHash(),
 		wkArtCom,
-		collSec,
 		open,
 		wkComm,
 		clickEvent = 'click';
@@ -46,8 +45,6 @@ require(['throbber', 'wikia.querystring', 'wikia.loader', 'wikia.nirvana', 'slot
 				}
 			}
 		}
-
-		collSec.removeEventListener(clickEvent, init, true);
 	}
 
 	function init(){
@@ -80,21 +77,12 @@ require(['throbber', 'wikia.querystring', 'wikia.loader', 'wikia.nirvana', 'slot
 
 	$(function(){
 		wkArtCom = document.getElementById('wkArtCom');
-		collSec = wkArtCom.getElementsByClassName('collSec')[0];
 		wkComm = document.getElementById('wkComm');
 
 		sloth({
-			on: collSec,
-			threshold: 300,
+			on: wkArtCom,
+			threshold: 100,
 			callback: init
 		});
-
-//		if(open){
-//			init();
-//			collSec.className += ' open';
-//			wkComm.className += ' open';
-//		}else{
-//			$(collSec).one(clickEvent, init);
-//		}
 	});
 });
