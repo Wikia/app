@@ -47,13 +47,13 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	this.removeButton = new ve.ui.ButtonWidget( {
 		'$$': this.frame.$$,
 		'label': 'Remove from the cart', //TODO: i18n
-		'flags': ['destructive']
+		'flags': [ 'destructive' ]
 	} );
 	this.removeButton.$.appendTo( this.$removePage );
 	this.insertButton = new ve.ui.ButtonWidget( {
 		'$$': this.$$,
 		'label': ve.msg( 'visualeditor-wikiamediainsertbuttontool-label' ),
-		'flags': ['primary']
+		'flags': [ 'primary' ]
 	} );
 	this.insertionDetails = {};
 
@@ -83,8 +83,8 @@ ve.ui.WikiaMediaInsertDialog.prototype.onSearchSelect = function ( item ) {
 	}
 	cartItems = ve.copy( this.cartModel.getItems() );
 	for ( i = 0; i < cartItems.length; i++ ) {
-		if ( cartItems[i].title === item.title ) {
-			this.cartModel.removeItems( [ cartItems[i] ] );
+		if ( cartItems[ i ].title === item.title ) {
+			this.cartModel.removeItems( [ cartItems[ i ] ] );
 		}
 	}
 	this.cartModel.addItems( [
@@ -138,7 +138,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertMedia = function ( cartItems ) {
 
 	// Populates attributes, items.video and items.photo
 	for ( i = 0; i < cartItems.length; i++ ) {
-		cartItem = cartItems[i];
+		cartItem = cartItems[ i ];
 		attributes[ cartItem.title ] = {
 			'title': cartItem.title,
 			'type': cartItem.type
@@ -149,10 +149,10 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertMedia = function ( cartItems ) {
 	function updateImageinfo( results ) {
 		var i, result;
 		for ( i = 0; i < results.length; i++ ) {
-			result = results[i];
-			attributes[result.title].height = result.height;
-			attributes[result.title].width = result.width;
-			attributes[result.title].url = result.url;
+			result = results[ i ];
+			attributes[ result.title ].height = result.height;
+			attributes[ result.title ].width = result.width;
+			attributes[ result.title ].url = result.url;
 		}
 	}
 
@@ -175,8 +175,8 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertMedia = function ( cartItems ) {
 	}
 
 	function updateAvatar( result ) {
-		attributes[result.title].avatar = result.avatar;
-		attributes[result.title].username = result.username;
+		attributes[ result.title ].avatar = result.avatar;
+		attributes[ result.title ].username = result.username;
 	}
 
 	// Attribution request
@@ -203,7 +203,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertMedia = function ( cartItems ) {
 ve.ui.WikiaMediaInsertDialog.prototype.insertMediaCallback = function ( attributes ) {
 	var title, type, item, items = [];
 	for ( title in attributes ) {
-		item = attributes[title];
+		item = attributes[ title ];
 		if ( item.type === 'photo' ) {
 			type = 'wikiaBlockImage';
 		} else if ( item.type === 'video' ) {
@@ -276,7 +276,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.getImageInfo = function ( titles, width )
 			'iiurlwidth': width,
 			'iiprop': 'url',
 			'indexpageids': 'true',
-			'titles': titles.join('|')
+			'titles': titles.join( '|' )
 		},
 		'success': ve.bind( this.onGetImageInfoSuccess, this, deferred )
 	} );
@@ -293,12 +293,12 @@ ve.ui.WikiaMediaInsertDialog.prototype.getImageInfo = function ( titles, width )
 ve.ui.WikiaMediaInsertDialog.prototype.onGetImageInfoSuccess = function ( deferred, data ) {
 	var results = [], item, i;
 	for ( i = 0; i < data.query.pageids.length; i++ ) {
-		item = data.query.pages[ data.query.pageids[i] ];
+		item = data.query.pages[ data.query.pageids[ i ] ];
 		results.push( {
 			'title': item.title,
-			'height': item.imageinfo[0].thumbheight,
-			'width': item.imageinfo[0].thumbwidth,
-			'url': item.imageinfo[0].thumburl
+			'height': item.imageinfo[ 0 ].thumbheight,
+			'width': item.imageinfo[ 0 ].thumbwidth,
+			'url': item.imageinfo[ 0 ].thumburl
 		} );
 	}
 	deferred.resolve( results );
