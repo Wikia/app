@@ -241,7 +241,6 @@ define( 'wikia.preview', [
 	 */
 
 	function switchPreview(type) {
-		console.log(previewTypes[type].value);
 		$article.width(previewTypes[type].value);
 
 		tracker.track({
