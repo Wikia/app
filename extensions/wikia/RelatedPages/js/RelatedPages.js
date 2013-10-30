@@ -1,7 +1,11 @@
 require( [ 'sloth', 'wikia.window', 'jquery' ], function( sloth, w, $ ){
 	'use strict';
 
-	var $placeholder, isMobileSkin = false;
+	var $placeholder,
+		isMobileSkin = false,
+		cacheKey = 'RelatedPagesAssets',
+		articleId = w.wgArticleId,
+		element;
 
 	switch( w.skin ) {
 		case 'wikiamobile':
@@ -16,9 +20,7 @@ require( [ 'sloth', 'wikia.window', 'jquery' ], function( sloth, w, $ ){
 			break;
 	}
 
-	var element = $placeholder[0], // $placeholder[0] because sloth doesn't accept jQuery objects
-		cacheKey = 'RelatedPagesAssets',
-		articleId = w.wgArticleId;
+	element = $placeholder[0]; // $placeholder[0] because sloth doesn't accept jQuery objects
 
 	/**
 	 * Checks if template is cached in LocalStorage and if not loads it by using loader
@@ -57,57 +59,65 @@ require( [ 'sloth', 'wikia.window', 'jquery' ], function( sloth, w, $ ){
 			on: element,
 			threshold: 200,
 			callback: function() {
-				require([ 'wikia.mustache', 'JSMessages', 'wikia.nirvana', 'wikia.tracker' ], function( mustache, msg, nirvana, tracker ) {
-					$.when(
-						nirvana.getJson(
-							'RelatedPagesApi',
-							'getList',
-							{ ids: [articleId] }
-						),
-						loadTemplate()
-					).done(function(data ,template){
-						var items = data[0] && data[0].items,
-							pages = items && items[articleId],
-							relatedPages =  [],
-							artImgPlaceholder = (isMobileSkin ? w.wgCdnRootUrl + '/extensions/wikia/WikiaMobile/images/read_placeholder.png' : ''),
-							page,
-							mustacheData;
+				require(
+					[ 'wikia.mustache', 'JSMessages', 'wikia.nirvana', 'wikia.tracker' ],
+					function( mustache, msg, nirvana, tracker ) {
+						$.when(
+							nirvana.getJson(
+								'RelatedPagesApi',
+								'getList',
+								{ ids: [articleId] }
+							),
+							loadTemplate()
+						).done(function(data ,template){
+							var items = data[0] && data[0].items,
+								pages = items && items[articleId],
+								relatedPages =  [],
+								artImgPlaceholder =
+									(
+										isMobileSkin ?
+										w.wgCdnRootUrl +
+										'/extensions/wikia/WikiaMobile/images/read_placeholder.png' : ''
+									),
+								page,
+								mustacheData;
 
-						if( pages && pages.length ) {
-							while( page = pages.shift() ) {
-								relatedPages.push( {
-									pageUrl: page.url,
-									pageTitle: page.title,
-									imgUrl: ( page.imgUrl ? page.imgUrl : artImgPlaceholder ),
-									artSnippet: page.text
-								} );
-							}
-
-							mustacheData = {
-								relatedPagesHeading: msg( 'wikiarelatedpages-heading' ),
-								imgWidth: (isMobileSkin ? 100 : 200),
-								imgHeight: (isMobileSkin ? 50 : 100),
-								mobileSkin: isMobileSkin,
-								pages: relatedPages
-							};
-
-							$placeholder.prepend( mustache.render( template, mustacheData ) );
-							$placeholder.on( 'mousedown', '.RelatedPagesModule a', function( event ) {
-								// Primary mouse button only
-								if( event.type === 'mousedown' && event.which !== 1 ) {
-									return;
+							if( pages && pages.length ) {
+								while( ( page = pages.shift() ) ) {
+									relatedPages.push( {
+										pageUrl: page.url,
+										pageTitle: page.title,
+										imgUrl: ( page.imgUrl ? page.imgUrl : artImgPlaceholder ),
+										artSnippet: page.text
+									} );
 								}
 
-								tracker.track({
-									action: Wikia.Tracker.ACTIONS.CLICK,
-									trackingMethod: 'ga',
-									category: 'article',
-									label: 'related-pages'
+								mustacheData = {
+									relatedPagesHeading: msg( 'wikiarelatedpages-heading' ),
+									imgWidth: (isMobileSkin ? 100 : 200),
+									imgHeight: (isMobileSkin ? 50 : 100),
+									mobileSkin: isMobileSkin,
+									pages: relatedPages
+								};
+
+								$placeholder.prepend( mustache.render( template, mustacheData ) );
+								$placeholder.on( 'mousedown', '.RelatedPagesModule a', function( event ) {
+									// Primary mouse button only
+									if( event.type === 'mousedown' && event.which !== 1 ) {
+										return;
+									}
+
+									tracker.track({
+										action: Wikia.Tracker.ACTIONS.CLICK,
+										trackingMethod: 'ga',
+										category: 'article',
+										label: 'related-pages'
+									});
 								});
-							})
-						}
-					});
-				});
+							}
+						});
+					}
+				);
 			}
 		});
 	}
