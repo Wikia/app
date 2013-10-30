@@ -13,10 +13,10 @@ module.exports = function(config) {
 
 	config.set({
 		basePath: '../../',
-		frameworks: ['jasmine', 'detectBrowsers'],
+		frameworks: ['jasmine'/*, 'detectBrowsers'*/],
 		browsers: [
-			'PhantomJS',
-			//'SlimerJS'
+			'PhantomJS'
+			//'SlimerJS',
 			//'Chrome',
 			//'ChromeCanary',
 			//'Firefox',
@@ -32,10 +32,10 @@ module.exports = function(config) {
 		port: 9876,
 		runnerPort: 9100,
 		colors: true,
-		logLevel: config.LOG_ERROR,
-		captureTimeout: 5000,
+		logLevel: config.LOG_INFO,
+		captureTimeout: 10000,
 		singleRun: false,
-		reporters: [ 'dots', 'osx' /*, 'growl', 'coverage', 'osx' */],
+		reporters: [ 'progress' /*, 'growl', 'coverage', 'osx' */],
 		coverageReporter: {
 			type : 'cobertura',
 			dir : buildPath + 'jsunit-coverage'
@@ -85,6 +85,7 @@ module.exports = function(config) {
 			'resources/wikia/modules/thumbnailer.js',
 			'resources/wikia/modules/uniqueId.js',
 			'resources/wikia/modules/flick.js',
+
 			//UI Repo JS API
 			'resources/wikia/modules/uicomponent.js',
 			'resources/wikia/modules/uifactory.js',
@@ -92,25 +93,25 @@ module.exports = function(config) {
 			'resources/wikia/modules/spec/*.spec.js',
 
 			//Advertisment
-			'extensions/wikia/AdEngine/js/AdConfig2.js',
-			'extensions/wikia/AdEngine/js/AdConfig2Late.js',
-			'extensions/wikia/AdEngine/js/AdEngine2.js',
-			'extensions/wikia/AdEngine/js/AdLogicDartSubdomain.js',
-			'extensions/wikia/AdEngine/js/AdLogicHighValueCountry.js',
-			'extensions/wikia/AdEngine/js/AdLogicPageLevelParams.js',
-			'extensions/wikia/AdEngine/js/AdLogicPageLevelParamsLegacy.js',
-			'extensions/wikia/AdEngine/js/AdLogicPageDimensions.js',
-			'extensions/wikia/AdEngine/js/AdProviderEvolve.js',
-			'extensions/wikia/AdEngine/js/AdProviderGamePro.js',
-			'extensions/wikia/AdEngine/js/AdProviderGpt.js',
-			'extensions/wikia/AdEngine/js/AdProviderLater.js',
-			'extensions/wikia/AdEngine/js/AdProviderLiftium2Dom.js',
-			'extensions/wikia/AdEngine/js/AdProviderNull.js',
-			'extensions/wikia/AdEngine/js/DartUrl.js',
-			'extensions/wikia/AdEngine/js/EvolveHelper.js',
-			'extensions/wikia/AdEngine/js/WikiaDartHelper.js',
-			'extensions/wikia/AdEngine/js/WikiaDartMobileHelper.js',
-			'extensions/wikia/AdEngine/js/spec/*.spec.js',
+//			'extensions/wikia/AdEngine/js/AdConfig2.js',
+//			'extensions/wikia/AdEngine/js/AdConfig2Late.js',
+//			'extensions/wikia/AdEngine/js/AdEngine2.js',
+//			'extensions/wikia/AdEngine/js/AdLogicDartSubdomain.js',
+//			'extensions/wikia/AdEngine/js/AdLogicHighValueCountry.js',
+//			'extensions/wikia/AdEngine/js/AdLogicPageLevelParams.js',
+//			'extensions/wikia/AdEngine/js/AdLogicPageLevelParamsLegacy.js',
+//			'extensions/wikia/AdEngine/js/AdLogicPageDimensions.js',
+//			'extensions/wikia/AdEngine/js/AdProviderEvolve.js',
+//			'extensions/wikia/AdEngine/js/AdProviderGamePro.js',
+//			'extensions/wikia/AdEngine/js/AdProviderGpt.js',
+//			'extensions/wikia/AdEngine/js/AdProviderLater.js',
+//			'extensions/wikia/AdEngine/js/AdProviderLiftium2Dom.js',
+//			'extensions/wikia/AdEngine/js/AdProviderNull.js',
+//			'extensions/wikia/AdEngine/js/DartUrl.js',
+//			'extensions/wikia/AdEngine/js/EvolveHelper.js',
+//			'extensions/wikia/AdEngine/js/WikiaDartHelper.js',
+//			'extensions/wikia/AdEngine/js/WikiaDartMobileHelper.js',
+//			'extensions/wikia/AdEngine/js/spec/*.spec.js',
 
 			//PhalanxII
 			'extensions/wikia/PhalanxII/js/modules/phalanx.js',
@@ -192,13 +193,13 @@ notCovered = [
 	'extensions/wikia/CategoryExhibition/js/*.js',
 	'extensions/wikia/Blogs/js/*.js',
 	'extensions/wikia/ArticleComments/js/*.js',
-	'extensions/wikia/AjaxPoll/js/*.js',
+	'extensions/wikia/AjaxPoll/js/*.js'
 	//'extensions/wikia/AchievementsII/js/*.js',
 	//'extensions/wikia/WikiFeatures/js/WikiFeatures.js',
 ];
 
 /*
- npm install karma-coverage --save-dev
+ npm install karma-coverage
  npm install karma-detect-browsers
  npm install karma-osx-reporter
  npm install karma-slimerjs-launcher
