@@ -66,7 +66,10 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	this.$mainPage = this.$$( '<div>' );
 
 	// Events
-	this.cartModel.on( 'add', ve.bind( this.onCartAdd, this ) );
+	this.cartModel.connect( this, {
+		'add': 'onCartAdd',
+		'remove': 'onCartRemove'
+	} );
 	this.cart.on( 'select', ve.bind( this.onCartSelect, this ) );
 	this.insertButton.connect( this, { 'click': [ 'close', 'insert' ] } );
 	this.pages.on( 'set', ve.bind( this.onPageSet, this ) );
@@ -154,8 +157,8 @@ ve.ui.WikiaMediaInsertDialog.prototype.onQueryInputKeydown = function ( e ) {
  * @param {Object} items An object containing items to add to the search results
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onQueryRequestSearchDone = function ( items ) {
-	// TODO: handle filtering search results to show what's in the cart already
 	this.search.addItems( items );
+	this.searchResults.updateCartState( this.cartModel.getItems() );
 	this.pages.setPage( 'search' );
 };
 
@@ -185,23 +188,25 @@ ve.ui.WikiaMediaInsertDialog.prototype.onSearchNearingEnd = function () {
  * @param {Object} item The search result item data.
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onSearchSelect = function ( item ) {
-	var cartItemModel, cartItems, i, page;
+	var cartItemModel, cartItems, i, page, removed;
 	if ( item === null ) {
 		return;
 	}
 
 	// Remove item from cart if it already exists
-	// TODO: why is this necessary? Can't we just not add?
 	cartItems = ve.copy( this.cartModel.getItems() );
 	for ( i = 0; i < cartItems.length; i++ ) {
 		if ( cartItems[i].title === item.title ) {
 			this.cartModel.removeItems( [ cartItems[i] ] );
+			removed = true;
 		}
 	}
 
 	// Add item to cart
-	cartItemModel = new ve.dm.WikiaCartItem( item.title, item.url, item.type );
-	this.cartModel.addItems( [ cartItemModel ] );
+	if ( !removed ) {
+		cartItemModel = new ve.dm.WikiaCartItem( item.title, item.url, item.type );
+		this.cartModel.addItems( [ cartItemModel ] );
+	}
 };
 
 /**
@@ -232,6 +237,15 @@ ve.ui.WikiaMediaInsertDialog.prototype.onCartAdd = function ( items ) {
 		page.connect( this, { 'remove': 'onMediaPageRemove' } );
 		this.pages.addPage( items[i].title, { '$content': page.$ } );
 	}
+	this.searchResults.updateCartState( this.cartModel.getItems(), items, 'selected' );
+};
+
+/**
+ * @method
+ * @param {ve.dm.WikiaCartItem|null} items
+ */
+ve.ui.WikiaMediaInsertDialog.prototype.onCartRemove = function ( items ) {
+	this.searchResults.updateCartState( this.cartModel.getItems(), items, 'select' );
 };
 
 /**

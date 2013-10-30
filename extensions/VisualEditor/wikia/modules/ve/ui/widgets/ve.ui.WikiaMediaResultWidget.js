@@ -32,7 +32,7 @@ ve.ui.WikiaMediaResultWidget = function VeUiWikiaMediaResultWidget( data, config
 	this.$front = this.$$( '<div>' );
 	this.$thumb = this.$back.add( this.$front );
 	this.$overlay = this.$$( '<div>' );
-	this.cartState = new ve.ui.IconButtonWidget( { 'icon': 'bold-b' } );
+	this.cartState = new ve.ui.IconButtonWidget( { 'icon': 'select' } );
 
 	// Events
 	this.$image
@@ -105,3 +105,14 @@ ve.ui.WikiaMediaResultWidget.prototype.onThumbnailLoad = function () {
  */
 ve.ui.WikiaMediaResultWidget.prototype.onThumbnailError =
 	ve.ui.MWMediaResultWidget.prototype.onThumbnailError;
+
+/**
+ * Show the correct icon
+ *
+ * @method
+ * @param {string} state The state of the icon to be shown ('selected', 'select')
+ */
+
+ve.ui.WikiaMediaResultWidget.prototype.setCartState = function ( state ) {
+	this.cartState.setIcon( state );
+};

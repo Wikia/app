@@ -32,6 +32,12 @@ ve.inheritClass( ve.ui.WikiaMediaResultsSelectWidget, ve.ui.SelectWidget );
 
 /* Methods */
 
+/**
+ * Handle mouseup
+ *
+ * @method
+ * @param {jQuery.Event} e The jQuery event Object.
+ */
 ve.ui.WikiaMediaResultsSelectWidget.prototype.onMouseUp = function ( e ) {
 	this.pressed = false;
 	if ( !this.selecting ) {
@@ -48,3 +54,41 @@ ve.ui.WikiaMediaResultsSelectWidget.prototype.onMouseUp = function ( e ) {
 	}
 	return false;
 };
+
+/**
+ * Determines which icon to show for a search result item based on the cart
+ *
+ * @method
+ * @param {Object} cartItems Items in the cart
+ * @param {Object} items Items that are being affected
+ * @param {Object} state The state to set
+ */
+ve.ui.WikiaMediaResultsSelectWidget.prototype.updateCartState = function ( cartItems, items, state ) {
+	var i, j;
+
+	/*
+	 * this.items = search results shown in widget
+	 * items = items whose cartState needs updating
+	 * state = the state to set on the items
+	 */
+
+	if ( items && state ) {
+		// Sync a particular item
+		for ( i = 0; i < this.items.length; i++ ) {
+			for ( j = 0; j < items.length ; j++ ) {
+				if ( this.items[i].data.title == items[j].title ) {
+					this.items[i].setCartState( state );
+				}
+			}
+		}
+	} else {
+		// Compare all search results to the cart and set the cartState of the ones that are there
+		for ( i = 0; i < cartItems.length; i++ ) {
+			for ( j = 0; j < this.items.length; j++ ) {
+				if ( cartItems[i].title == this.items[j].data.title ) {
+					this.items[j].setCartState( 'selected' );
+				}
+			}
+		}
+	}
+}

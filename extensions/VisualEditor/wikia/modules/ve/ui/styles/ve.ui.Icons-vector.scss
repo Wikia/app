@@ -110,3 +110,10 @@
 .ve-ui-icon-upload-small {
 	background-image: url(/extensions/VisualEditor/wikia/modules/ve/ui/styles/images/icons/upload-small.svg); /* $wgCdnStylePath */
 }
+.ve-ui-icon-select {
+	@include ve-icon(select, wikia);
+}
+.ve-ui-icon-selected {
+	@include ve-icon(selected, wikia);
+}
+

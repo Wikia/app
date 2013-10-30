@@ -164,12 +164,17 @@ $width-cart: 100px;
 	right: 0;
 
 	.ve-ui-wikiaMediaResultWidget-cartState {
-		background-color: red;
-		height: 2em;
+		background-color: $color-page;
+		height: 32px;
 		position: absolute;
-		right: 0;
-		top: 0;
-		width: 2em;
+		right: 5px;
+		top: 5px;
+		width: 32px;
+
+		&.selected {
+			background-color: $color-buttons;
+		}
+
 	}
 }
 

@@ -26,7 +26,7 @@ ve.ui.IconButtonWidget = function VeUiIconButtonWidget( config ) {
 	// Initialization
 	this.$.addClass( 've-ui-iconButtonWidget' );
 	if ( config.icon ) {
-		this.$.addClass( 've-ui-icon-' + config.icon );
+		this.setIcon( config.icon );
 	}
 	if ( config.title ) {
 		this.$.attr( 'title', config.title );
@@ -62,3 +62,19 @@ ve.ui.IconButtonWidget.prototype.onClick = function () {
 	}
 	return false;
 };
+
+/**
+ * Sets the icon and removes any previously set icon.
+ *
+ * @method
+ * @param {string} icon The symbolic name of the icon to set
+ */
+ve.ui.IconButtonWidget.prototype.setIcon = function ( icon ) {
+	if ( !this.$.hasClass( 've-ui-icon-' + icon ) ) {
+		this.$
+			.removeClass( function (index, css) {
+				return (css.match (/\bve-ui-icon-\S+/g) || []).join(' ');
+			})
+			.addClass( 've-ui-icon-' + icon );
+	}
+}
