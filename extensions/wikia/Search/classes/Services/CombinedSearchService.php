@@ -130,7 +130,7 @@ class CombinedSearchService {
 				if ( $images && sizeof( $images ) > 0 ) {
 					$imageName = $images[0]['name'];
 					$file = \GlobalFile::newFromText( $imageName, $outputModel['wikiId'] );
-					$outputModel['image'] = wfReplaceImageServer( $file->getThumbUrl() );
+					$outputModel['image'] = ( $imageServing->getUrl($file) );
 				}
 			}
 		} catch ( \DBConnectionError $ex ) {
