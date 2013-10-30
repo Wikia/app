@@ -59,9 +59,18 @@ require( [ 'sloth', 'wikia.window', 'jquery' ], function( sloth, w, $ ){
 			on: element,
 			threshold: 200,
 			callback: function() {
-				require(
-					[ 'wikia.mustache', 'JSMessages', 'wikia.nirvana', 'wikia.tracker' ],
-					function( mustache, msg, nirvana, tracker ) {
+				require( [
+					'wikia.mustache',
+					'JSMessages',
+					'wikia.nirvana',
+					'wikia.tracker'
+				],
+				function (
+					mustache,
+					msg,
+					nirvana,
+					tracker
+				) {
 						$.when(
 							nirvana.getJson(
 								'RelatedPagesApi',
