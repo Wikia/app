@@ -11,7 +11,7 @@ require(['sections', 'wikia.window', 'jquery', 'wikia.mustache', 'wikia.toc'],
 		state,
 		offsetTop = 0,
 		$parent,
-		ol = "<ol class='toc-list level{{#level}}{{level}}{{/level}}{{^level}}1{{/level}}'>{{#sections}}{{> lis}}{{/sections}}</ol>",
+		ol = "<ol class='toc-list level{{level}}'>{{#sections}}{{> lis}}{{/sections}}</ol>",
 		lis = "{{#.}}<li {{#sections.length}}class=has-children{{/sections.length}}><a href='#{{id}}'>{{name}}{{#firstLevel}}{{#sections.length}}<span class='chevron right'></span>{{/sections.length}}{{/firstLevel}}</a>{{#sections.length}}{{> ol}}{{/sections.length}}</li>{{/.}}",
 		$toc,
 		$ol,
@@ -26,16 +26,15 @@ require(['sections', 'wikia.window', 'jquery', 'wikia.mustache', 'wikia.toc'],
 		});
 
 	function toggleLi($li, force){
-		if($li.is('.has-children') && $li.parent().is('.level1')) {
+		if($li.is('.has-children') && $li.parent().is('.level')) {
 			$li.siblings().removeClass('fixed bottom open');
 
 			if($li.toggleClass('open', force).hasClass('open')) {
-				state = 'fixed';
-				$li.addClass('fixed');
-
 				$openOl = $li.find('ol').first();
 				offsetTop = $openOl[0].offsetTop;
 				$parent = $openOl.parent();
+
+				handleFixingLiElement();
 			}else {
 				state = null;
 				$li.removeClass('fixed bottom');
@@ -44,6 +43,34 @@ require(['sections', 'wikia.window', 'jquery', 'wikia.mustache', 'wikia.toc'],
 			}
 
 			$ol.scrollTop($li[0].offsetTop - 45);
+		}
+	}
+
+	function handleFixingLiElement(){
+		var scrollTop,
+			self = $ol[0];
+
+		if(!timer && $openOl) {
+			timer = setTimeout(function(){
+				timer = null;
+
+				scrollTop = self.scrollTop + 90;
+
+				if(state !== 'disabled' && scrollTop < offsetTop) {
+					state = 'disabled';
+					$parent.removeClass('fixed');
+				} else if (scrollTop >= offsetTop) {
+					if(offsetTop + $openOl[0].offsetHeight - scrollTop >= 0) {
+						if(state !== 'fixed') {
+							state = 'fixed';
+							$parent.removeClass('bottom').addClass('fixed');
+						}
+					} else if (state !== 'bottom') {
+						state = 'bottom';
+						$parent.addClass('bottom');
+					}
+				}
+			}, 10);
 		}
 	}
 
@@ -68,41 +95,15 @@ require(['sections', 'wikia.window', 'jquery', 'wikia.mustache', 'wikia.toc'],
 			toggleLi($li);
 		});
 
-	$ol = $toc.find('.level1')
-		.on('scroll', function(){
-			var scrollTop,
-				self = this;
-
-			if(!timer && $openOl) {
-				timer = setTimeout(function(){
-					timer = null;
-
-					scrollTop = self.scrollTop + 90;
-
-					if(state !== 'disabled' && scrollTop < offsetTop) {
-						state = 'disabled';
-						$parent.removeClass('fixed');
-					} else if (scrollTop >= offsetTop) {
-						if(offsetTop + $openOl[0].offsetHeight - scrollTop >= 0) {
-							if(state !== 'fixed') {
-								state = 'fixed';
-								$parent.removeClass('bottom').addClass('fixed');
-							}
-						} else if (state !== 'bottom') {
-							state = 'bottom';
-							$parent.addClass('bottom');
-						}
-					}
-				}, 10);
-			}
-		});
+	$ol = $toc.find('.level')
+		.on('scroll', handleFixingLiElement);
 
 	$anchors = $ol.find('li > a');
 
 	function onSectionChange(event, data, scrollTo){
-		if(data && data.id) {
-			$anchors.filter('.current').removeClass('current');
+		$anchors.filter('.current').removeClass('current');
 
+		if(data && data.id) {
 			var $current = $anchors
 					.filter('a[href="#' + data.id + '"]')
 					.addClass('current'),

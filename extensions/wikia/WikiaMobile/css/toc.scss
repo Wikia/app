@@ -98,7 +98,7 @@ $toc-background: #F8F8F8;
 $level0-padding: 20px;
 $level0-border-left-width: 3px;
 
-.level1 {
+.level {
 	padding: 0 0 $header-height 0;
 	overflow-x: hidden;
 	overflow-y: scroll;
@@ -231,7 +231,4 @@ $level0-border-left-width: 3px;
 			top: inherit;
 		}
 	}
-
 }
-
-

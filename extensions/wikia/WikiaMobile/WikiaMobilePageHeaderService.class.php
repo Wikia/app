@@ -59,16 +59,18 @@ class  WikiaMobilePageHeaderService extends WikiaService {
 		if ( $article instanceof Article ) {
 			$revision = $article->getPage()->getRevision();
 
-			$user = User::newFromId( $revision->getRawUser() );
+			if ( $revision instanceof Revision ) {
+				$user = User::newFromId( $revision->getRawUser() );
 
-			$userName = $user->getName();
+				$userName = $user->getName();
 
-			if ( User::isIP( $userName ) ) {
-				//For anonymous users don't display IP
-				$userName = wfMessage( 'wikiamobile-anonymous-edited-by' )->text();
-			} else {
-				//Wrap username in a link to user page
-				$userName = '<a href="' . $user->getUserPage()->getFullURL() . '">' . $userName . '</a>';
+				if ( User::isIP( $userName ) ) {
+					//For anonymous users don't display IP
+					$userName = wfMessage( 'wikiamobile-anonymous-edited-by' )->text();
+				} else {
+					//Wrap username in a link to user page
+					$userName = '<a href="' . $user->getUserPage()->getFullURL() . '">' . $userName . '</a>';
+				}
 			}
 
 			$this->response->setVal(

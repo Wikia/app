@@ -8,9 +8,6 @@
 require(['sections', 'media', require.optional('wikia.cache'), 'wikia.loader', 'lazyload', 'jquery', 'sloth'], function(sections, media, cache, loader, lazyload, $, sloth) {
 	'use strict';
 
-	//init sections
-	sections.init(Features.gameguides);
-
 	var d = document,
 		images = d.getElementsByClassName('media'),
 		selector = 'table:not(.toc):not(.infobox)',

@@ -5,8 +5,8 @@
  * @author Jakub "Student" Olek
  */
 
-define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', 'jquery', 'track', 'throbber', 'wikia.window'],
-	function (qs, loader, toc, $, track, throbber, w) {
+define('topbar', ['wikia.querystring', 'wikia.loader', 'jquery', 'track', 'throbber', 'wikia.window'],
+	function (qs, loader, $, track, throbber, w) {
 	'use strict';
 
 	var	$html = $('html'),
@@ -52,7 +52,6 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', 'jquery', 'track',
 	function reset(stopScrolling){
 		!barSetUp && setupTopBar();
 		!stopScrolling && wkPrfTgl.scrollIntoView();
-		//toc.close();
 
 		$.event.trigger('nav:close');
 
