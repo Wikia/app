@@ -4,6 +4,8 @@ class CreateNewWikiController extends WikiaController {
 	const DAILY_USER_LIMIT = 2;
 	const WF_WDAC_REVIEW_FLAG_NAME = 'wgWikiDirectedAtChildrenByFounder';
 
+	const LANG_ALL_AGES_OPT = 'en';
+
 	public function index() {
 		global $wgSuppressWikiHeader, $wgSuppressPageHeader, $wgSuppressFooter, $wgSuppressAds, $wgSuppressToolbar, $fbOnLoginJsOverride, $wgRequest, $wgUser;
 		wfProfileIn( __METHOD__ );
@@ -63,9 +65,13 @@ class CreateNewWikiController extends WikiaController {
 		$this->keys = CreateNewWikiObfuscate::generateValidSeeds();
 		$_SESSION['cnw-answer'] = CreateNewWikiObfuscate::generateAnswer($this->keys);
 
+		$this->wg->Out->addJsConfigVars([
+			'wgLangAllAgesOpt' => self::LANG_ALL_AGES_OPT
+		]);
 		// prefill
 		$params['wikiName'] = $wgRequest->getVal('wikiName', '');
 		$params['wikiDomain'] = $wgRequest->getVal('wikiDomain', '');
+		$params['LangAllAgesOpt'] = self::LANG_ALL_AGES_OPT;
 		$this->params = $params;
 		$this->signupUrl = '';
 		if(!empty($this->wg->EnableUserLoginExt)) {
@@ -124,7 +130,7 @@ class CreateNewWikiController extends WikiaController {
 		$params = $wgRequest->getArray('data');
 
         //CE-315
-        if($params['wLanguage'] != 'en'){
+        if($params['wLanguage'] != self::LANG_ALL_AGES_OPT ){
             $params['wAllAges'] = null;
         }
 

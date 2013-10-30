@@ -109,7 +109,7 @@ var WikiBuilder = {
 			that.checkDomain();
 			var selected = that.wikiLanguage.find('option:selected').val();
 
-            if (selected && selected !== 'en')
+            if (selected && selected !== wgLangAllAgesOpt )
             {
                 that.wikiDomainCountry.html( selected + '.');
                 that.allAgesDiv.hide();

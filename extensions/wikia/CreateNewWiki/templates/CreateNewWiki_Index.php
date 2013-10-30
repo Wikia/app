@@ -156,7 +156,7 @@
 					<option value="3"><?= wfMessage('autocreatewiki-category-other')->escaped() ?></option>
 				</select>
 
-		        <div class="checkbox" id="all-ages-div" <?php echo empty($selectedLang) || $selectedLang === 'en' ? '':'style=display:none' ?> >
+		        <div class="checkbox" id="all-ages-div" <?php echo empty($selectedLang) || $selectedLang === $params['LangAllAgesOpt'] ? '':'style=display:none' ?> >
 					<input type="checkbox" name="all-ages" value="1">
 					<?= $app->renderView(
 						'WikiaStyleGuideTooltipIcon',
