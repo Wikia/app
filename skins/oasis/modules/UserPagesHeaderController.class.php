@@ -244,18 +244,18 @@ class UserPagesHeaderController extends WikiaController {
 				}
 			}
 		}
-		else if (defined('NS_BLOG_ARTICLE') && $namespace == NS_BLOG_ARTICLE) {
-				// "Create a blog post" button
-				if (self::isItMe($this->userName)) {
-					$this->actionButton = array(
-							'href' => SpecialPage::getTitleFor('CreateBlogPage')->getLocalUrl(),
-							'text' => wfMsg('blog-create-post-label'),
-							);
+		else if ( defined( 'NS_BLOG_ARTICLE' ) && $namespace == NS_BLOG_ARTICLE ) {
+			// "Create a blog post" button
+			if (self::isItMe($this->userName)) {
+				$this->actionButton = array(
+					'href' => SpecialPage::getTitleFor('CreateBlogPage')->getLocalUrl(),
+					'text' => wfMsg('blog-create-post-label'),
+				);
 
-					$this->actionImage = MenuButtonController::BLOG_ICON;
-					$this->actionName = 'createblogpost';
-				}
+				$this->actionImage = MenuButtonController::BLOG_ICON;
+				$this->actionName = 'createblogpost';
 			}
+		}
 
 		// dropdown actions for "Profile" and "Talk page" tabs
 		if (in_array($namespace, array(NS_USER, NS_USER_TALK))) {
@@ -461,14 +461,21 @@ class UserPagesHeaderController extends WikiaController {
 		}
 
 		$actionMenu = array();
+		$dropdownActions = array('move', 'protect', 'unprotect', 'delete', 'undelete', 'history');
+
 		// edit button / dropdown
-		if (isset($this->content_actions['edit'])) {
+		if (isset($this->content_actions['ve-edit'])) {
+			// new visual editor is enabled
+			$actionMenu['action'] = $this->content_actions['ve-edit'];
+			// add classic editor link to the possible dropdown options
+			array_unshift( $dropdownActions, 'edit' );
+		}
+		else if (isset($this->content_actions['edit'])) {
 			$actionMenu['action'] = $this->content_actions['edit'];
+			//$actionMenu['action'] = $this->content_actions['ve-edit'];
 		}
 
-		// dropdown actions
-		$actions = array('move', 'protect', 'unprotect', 'delete', 'undelete', 'history');
-		foreach($actions as $action) {
+		foreach($dropdownActions as $action) {
 			if (isset($this->content_actions[$action])) {
 				$actionMenu['dropdown'][$action] = $this->content_actions[$action];
 			}
