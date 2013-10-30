@@ -25,7 +25,6 @@ var CreatePage = {
 
 	openDialog: function(e, titleText) {
 		'use strict';
-		console.debug(1);
 		// BugId:4941
 		if (Boolean(window.WikiaEnableNewCreatepage) === false) {
 			// create page popouts are disabled - follow the link
