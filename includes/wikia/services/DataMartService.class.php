@@ -747,7 +747,7 @@ class DataMartService extends Service {
 		$memKey = wfSharedMemcKey( 'datamart', 'wam_top_200_wikis' );
 		$wikis = $app->wg->Memc->get($memKey);
 		if ( !is_array( $wikis ) ) {
-			$db = wfGetDB( DB_SLAVE, [], $app->wg->DatamartDB );
+			$db = wfGetDB( DB_SLAVE, [], $app->wg->DWStatsDB );
 			$wikis = [];
 
 			$res = $db->select( 'dimension_top_wikis', 'wiki_id', '', __METHOD__, [ 'ORDER BY' => 'rank', 'LIMIT' => 200 ] );
