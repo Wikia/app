@@ -48,15 +48,15 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	this.cartModel = new ve.dm.WikiaCart();
 	this.cart = new ve.ui.WikiaCartWidget( this.cartModel );
 	this.insertButton = new ve.ui.ButtonWidget( {
-		'$$': this.$$,
+		'$$': this.frame.$$,
 		'label': ve.msg( 'visualeditor-wikiamediainsertbuttontool-label' ),
 		'flags': ['primary']
 	} );
 	this.insertionDetails = {};
 	this.pages = new ve.ui.PagedLayout( { '$$': this.frame.$$, 'attachPagesPanel': true } );
-	this.query = new ve.ui.WikiaMediaQueryWidget( { 
-		'$$': this.frame.$$, 
-		'placeholder': ve.msg('visualeditor-wikiamediainsertsearch-placeholder') 
+	this.query = new ve.ui.WikiaMediaQueryWidget( {
+		'$$': this.frame.$$,
+		'placeholder': ve.msg('visualeditor-wikiamediainsertsearch-placeholder')
 	} );
 	this.queryInput = this.query.getInput();
 	this.queryUpload = this.query.getUpload();
