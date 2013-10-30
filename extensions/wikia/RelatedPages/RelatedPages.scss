@@ -64,6 +64,10 @@
 	.more {
 		display: block;
 		margin: 5px 0;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		word-wrap: normal;
 		&:hover {
 			text-decoration: underline;
 		}
