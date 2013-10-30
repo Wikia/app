@@ -21,6 +21,13 @@ Wikia.SevenOneMediaIntegration = {
 			ga_action: 'stage/' + stage,
 			trackingMethod: 'ad'
 		});
+		Wikia.Tracker && Wikia.Tracker.track({
+			eventName: 'liftium.71m',
+			ga_category: '71m',
+			ga_action: 'success', // for trackingMethod ga Wikia.Tracker requires ga_action to be one from a limited set
+			ga_label: 'stage/' + stage,
+			trackingMethod: 'ga'
+		});
 	},
 	initVars: function () {
 		if (!Wikia.SevenOneMediaIntegration.enabled) {
