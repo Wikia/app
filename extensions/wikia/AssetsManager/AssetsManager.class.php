@@ -259,17 +259,24 @@ class AssetsManager {
 	 * @return string|array the resulting filepaths or the original url if filepath can't be determined
 	 */
 	public function getSassFilePath($urls) {
-		if (!is_array($urls)) {
-			$urls = [$urls];
+		global $wgDevelEnvironment;
+
+		$regex = '/^(https?):\/\/(slot[0-9]+\.images([0-9]+))\.wikia.nocookie.net\/(.*)$/';
+		if (!empty($wgDevelEnvironment)) {
+			$regex = '/^(https?):\/\/(s[0-9]+\.([a-z0-9]+))\.wikia-dev.com\/(.*)$/';
 		}
 
-		$dummy = $this->getSassCommonURL('');
-		$dummyLength = strlen($dummy);
+		if (!preg_match($regex, $this->getSassCommonURL(''), $dummyMatches)) {
+			return $urls;
+		}
+
+		$urls = (array) $urls;
+		$dummyPath = $dummyMatches[4];
+		$dummyLength = strlen($dummyPath);
 		$result = [];
 		foreach ($urls as $url) {
-			$position = strpos($url, $dummy);
-			if ($position === 0) {
-				$result[] = substr($url, $dummyLength);
+			if (preg_match($regex, $url, $matches) && strpos($matches[4], $dummyPath) === 0) {
+				$result[] = substr($matches[4], $dummyLength);
 			} else {
 				$result[] = $url;
 			}
