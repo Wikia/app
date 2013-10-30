@@ -1,3 +1,5 @@
+@import "skins/oasis/css/core/layout";
+
 .editpage-visualwidemode {
 	.EditPageRail {
 		position: absolute;
@@ -104,10 +106,16 @@
 		.EditPageMain {
 			width: $width-outside;// - 10;
 		}
+		
 		.EditPageToolbar {
 			margin-right: -6px;
 			padding-right: 15px + $width-rail-epl  - 10;
+
+			@if ( $responsive-layout-enabled ) {
+				height: 65px;
+			}
 		}
+
 		.cke_toolbar_expand {
 			> a {
 				right: 20px + $width-rail-epl  - 10;
@@ -117,6 +125,11 @@
 
 	/* page controls styling */
 	$page-controls-wide-width: 640px;
+
+	@if ( $responsive-layout-enabled ) {
+		$page-controls-wide-width: 355px;
+	}
+
 	&.editpage-sourcewidemode-on {
 		.cke_toolbar_source {
 			width: $width-outside - $page-controls-wide-width - 65;
@@ -129,6 +142,10 @@
 				margin-left: 0;
 				// resetting module styling - end
 
+				@if ( $responsive-layout-enabled ) {
+					padding-top: 28px;
+				}
+
 				.module_content {
 					position: relative;
 					width: $page-controls-wide-width;
@@ -140,6 +157,11 @@
 					position: absolute;
 					text-align: left;
 					top: 10px;
+
+					@if ( $responsive-layout-enabled ) {
+						left: 0;
+					}
+
 				}
 				// summary box
 				textarea {
@@ -149,8 +171,16 @@
 					height: 15px;
 					padding: 2px;
 					margin: 0;
+
+					@if ( $responsive-layout-enabled ) {
+						left: auto;
+						right: 15px;
+						top: -19px;
+						width: 374px;
+					}
 				}
-				// save button
+
+					// save button
 				#wpSave {
 					position: absolute;
 					top: 0;
