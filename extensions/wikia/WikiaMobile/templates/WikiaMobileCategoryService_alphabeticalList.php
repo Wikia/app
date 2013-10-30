@@ -21,7 +21,7 @@
 	$id = 'catAlpha' . $urlSafeIndex;
 	?>
 	<h2 id="<?= $id ;?>" data-count="<?= $wg->ContLang->formatNum( $itemsBatch['total'] ) ;?>"><?= strtoupper( $index ) ;?></h2>
-	<section class=artSec data-batches=<?= $itemsBatch['batches'] ;?>>
+	<section class=artSec id="<?= $urlSafeIndex; ?>" data-batches=<?= $itemsBatch['batches'] ;?>>
 		<a class="pagLess<?= ( $currentBatch > 1 ? ' visible' : '' ) ;?>" data-batch="<?=$prevBatch?>" href="?page=<?=$prevBatch;?>&index=<?=$urlSafeIndex;?>#<?=$id;?>"><?= wfMessage( 'wikiamobile-category-items-prev' )->text() ;?></a>
 		<?= $app->getView( 'WikiaMobileCategoryService', 'getBatch', array( 'itemsBatch' => $itemsBatch['items'] ) ) ;?>
 		<a class="pagMore<?= ( $itemsBatch['next']  ? ' visible' : '' ) ;?>" data-batch="<?=$nextBatch;?>" href="?page=<?=$nextBatch;?>&index=<?=$urlSafeIndex;?>#<?=$id;?>"><?= wfMessage( 'wikiamobile-category-items-more' )->text() ;?></a>

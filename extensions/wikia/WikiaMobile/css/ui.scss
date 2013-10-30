@@ -117,22 +117,26 @@ body {
 }
 
 //counter displayed mainly in lists or on ArticleComments seaction
-.cnt {
-	position: relative;
-	bottom: 1px;
+h2[data-count] {
+	&:after {
+		content: attr(data-count);
 
-	margin: 0 10px;
-	padding: 1px 4px;
+		position: relative;
+		bottom: 3px;
 
-	color: #999;
-	font-size: small;
-	font-weight:100;
+		margin: 10px;
+		padding: 1px 4px;
 
-	background: #F2F2F2;
+		color: #999;
+		font-size: small;
+		font-weight:100;
 
-	border-radius: 3px;
+		background: #F2F2F2;
 
-	pointer-events: none;
+		border-radius: 3px;
+
+		pointer-events: none;
+	}
 }
 
 //classes with images to avoid loading them more than once

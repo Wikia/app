@@ -18,7 +18,7 @@ require(['sections', 'wikia.window', 'jquery', 'wikia.mustache', 'wikia.toc'],
 		tocData = toc.getData(sections.list, function(header, level){
 			return {
 				id: header.id,
-				name: header.textContent,
+				name: header.textContent.trim(),
 				level: level,
 				firstLevel: level === 2,
 				sections: []
