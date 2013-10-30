@@ -10,8 +10,10 @@
 /mysql-connector-license.txt
 .idea
 .DS_Store
+Thumbs.db
 .buildpath
 sftp-config.json
+psy.cfg
 *.iml
 /build
 /LocalSettings.php

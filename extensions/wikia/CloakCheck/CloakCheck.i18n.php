@@ -438,6 +438,13 @@ $messages['lb'] = array(
 	'cloakcheck-process-edits-no' => 'De Benotzer huet net genuch Ännerungen.',
 );
 
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'cloakcheck-form-username' => 'نوم كاروری:',
+);
+
 /** Lithuanian (lietuvių)
  * @author Eitvys200
  */
