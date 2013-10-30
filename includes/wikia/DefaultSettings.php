@@ -998,8 +998,7 @@ if( !isset( $wgUseMedusa ) ) {
 /**
  * Memcached class name
  */
-$wgMemCachedClass = 'MemCachedClientforWiki';
-$wgMoxiTestNodes = ['ap-s44'];
+$wgMemCachedClass = 'MemcacheMoxiCluster';
 
 /**
  * Extra configuration options for memcached when using libmemcached/pecl-memcached
