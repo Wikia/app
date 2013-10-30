@@ -72,11 +72,20 @@ $messages['bcl'] = array(
 );
 
 /** Bulgarian (български)
+ * @author Aquilax
  * @author DCLXVI
  */
 $messages['bg'] = array(
+	'category-exhibition-sorttype' => 'Начин на сортиране:',
+	'category-exhibition-alphabetical' => 'По азбучен ред',
+	'category-exhibition-mostvisited' => 'Най-посещавани',
+	'category-exhibition-recentedits' => 'Последно променени',
 	'category-exhibition-page-header' => 'Страници в категория „$1“',
 	'category-exhibition-subcategories-header' => 'Подкатегории',
+	'category-exhibition-media-header' => 'Медия в категория "$1"',
+	'category-exhibition-blogs-header' => 'Блог постове',
+	'category-exhibition-display-old' => 'Списъчен изглед на категория',
+	'category-exhibition-display-new' => 'Изложбен изглед на категория',
 );
 
 /** Breton (brezhoneg)
@@ -678,7 +687,7 @@ $messages['vi'] = array(
 	'category-exhibition-alphabetical' => 'Bảng chữ cái',
 	'category-exhibition-mostvisited' => 'Truy cập nhiều nhất',
 	'category-exhibition-recentedits' => 'Biên tập, sửa đổi gần đây',
-	'category-exhibition-page-header' => 'Các trang trong thể loại “$1”',
+	'category-exhibition-page-header' => 'Trang trong thể loại “$1”',
 	'category-exhibition-subcategories-header' => 'Thể loại con',
 	'category-exhibition-media-header' => 'Các tập tin trong thể loại “$1”',
 	'category-exhibition-blogs-header' => 'Bài đăng trên blog',

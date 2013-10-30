@@ -802,6 +802,7 @@ class SwiftFileBackend extends FileBackendStore {
 		)); // Wikia change
 
 		// Note: 10 second timeout consistent with php-cloudfiles
+		/* @var CurlHttpRequest $req */
 		$req = MWHttpRequest::factory( $url, array( 'method' => 'POST', 'timeout' => $this->swiftTimeout, 'noProxy' => true ) );
 		$req->setHeader( 'X-Auth-Token', $creds['auth_token'] );
 		$req->setHeader( 'X-Container-Read', implode( ',', $readGrps ) );

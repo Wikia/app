@@ -126,6 +126,7 @@ $messages['en'] = array(
 
 /** Message documentation (Message documentation)
  * @author EugeneZelenko
+ * @author Hamilton Abreu
  * @author NavaRose
  * @author Nemo bis
  * @author Sam Wang
@@ -135,6 +136,7 @@ $messages['en'] = array(
 $messages['qqq'] = array(
 	'rte-ck-bucket-insert' => '{{Identical|Insert}}',
 	'rte-ck-errorPopupTitle' => '{{Identical|Error}}',
+	'rte-ck-hoverPreview-codedElement-intro' => '{{Related|Source mode (wikia)}}',
 	'rte-ck-hoverPreview-comment-title' => '{{Identical|Comment}}',
 	'rte-ck-hoverPreview-delete' => '{{Identical|Delete}}',
 	'rte-ck-hoverPreview-edit' => '{{Identical|Edit}}',
@@ -148,8 +150,10 @@ $messages['qqq'] = array(
 	'rte-ck-link-status-external' => '{{Identical|External link}}',
 	'rte-ck-media-delete' => '{{Identical|Remove}}',
 	'rte-ck-media-edit' => '{{Identical|Modify}}',
-	'rte-ck-modeSwitch-toSource' => '{{Identical|Source}}',
+	'rte-ck-modeSwitch-toSource' => '{{Related|Source mode (wikia)}}
+{{Identical|Source}}',
 	'rte-ck-modeSwitch-toWysiwyg' => 'A type of editor that makes code easier to read/edit and easy for new editors.',
+	'rte-ck-modeSwitch-toSourceTooltip' => '{{Related|Source mode (wikia)}}',
 	'rte-ck-photoGallery-gallery' => '{{Identical|Gallery}}',
 	'rte-ck-photoGallery-slideshow' => '{{Identical|Slideshow}}',
 	'rte-ck-photoGallery-tooltipSlider' => 'Tooltip for the slider placeholder in the editor.',
@@ -687,6 +691,7 @@ $messages['ce'] = array(
 	'rte-ck-media-delete' => 'дӀаяккха',
 	'rte-ck-modeSwitch-toWysiwyg' => 'Визуальни тадар',
 	'rte-ck-templateDropDown-label' => 'Кеп',
+	'rte-ck-templateEditor-editor-parameters' => 'Параметраш',
 );
 
 /** Sorani Kurdish (کوردی)
@@ -1150,16 +1155,42 @@ $messages['fa'] = array(
  * @author Nedergard
  * @author Nike
  * @author Tofu II
+ * @author Ville96
  */
 $messages['fi'] = array(
 	'rte-ck-errorPopupTitle' => 'Virhe!',
+	'rte-ck-hoverPreview-delete' => 'poista',
+	'rte-ck-hoverPreview-edit' => 'muokkaa',
+	'rte-ck-image-add' => 'Lisää kuva',
+	'rte-ck-image-photo' => 'Kuva',
+	'rte-ck-justify-center' => 'Keskitä',
+	'rte-ck-link-add' => 'Lisää linkki',
+	'rte-ck-link-error-badPageTitle' => 'Kirjoita sivun otsikko.',
+	'rte-ck-link-error-badUrl' => 'Emme tunnista URL:lää - tarkista että se on oikein.',
+	'rte-ck-link-error-title' => 'Virhe',
+	'rte-ck-link-external-linkText' => 'Linkin teksti',
+	'rte-ck-link-external-numberedLink' => 'Luo numeroitu linkki (esimerkiksi "[1]")',
 	'rte-ck-link-external-tab' => 'Ulkoinen linkki',
 	'rte-ck-link-external-url' => 'URL',
 	'rte-ck-link-internal-linkText' => 'Linkin teksti',
 	'rte-ck-link-internal-pageName' => 'Sivun nimi',
 	'rte-ck-link-internal-tab' => 'Sisäinen linkki',
 	'rte-ck-link-title' => 'Luo tai muokkaa linkkiä',
+	'rte-ck-link-label-target' => 'Kohdesivu tai URL:',
+	'rte-ck-link-label-display' => 'Näytettävä teksti:',
+	'rte-ck-link-label-internal' => 'Wikisivuun',
+	'rte-ck-link-label-external' => 'Ulkoiseen linkkiin',
+	'rte-ck-link-status-checking' => 'Tilaa tarkastetaan',
+	'rte-ck-link-status-exists' => 'Sivu on olemassa',
+	'rte-ck-link-status-notexists' => 'Sivua ei ole olemassa',
+	'rte-ck-link-status-external' => 'Ulkoinen linkki',
 	'rte-ck-media-delete' => 'poista',
+	'rte-ck-media-edit' => 'muuta',
+	'rte-ck-modeSwitch-toSource' => 'Lähde',
+	'rte-ck-modeSwitch-toWysiwyg' => 'Visuaalinen',
+	'rte-ck-modeSwitch-toSourceTooltip' => 'Vaihda lähdetilaan',
+	'rte-ck-modeSwitch-toWysiwygTooltip' => 'Vaihda visuaaliseen tilaan',
+	'rte-ck-photoGallery-gallery' => 'Galleria',
 	'rte-ck-photoGallery-slideshow' => 'Kuvaesitys',
 	'rte-ck-photoGallery-slider' => 'Liukusäädin',
 	'rte-ck-photoGallery-addGallery' => 'Lisää kuvagalleria',
@@ -1210,6 +1241,10 @@ $messages['fi'] = array(
 	'rte-ck-spellchecker-moreSuggestions' => 'Lisää ehdostuksia',
 	'rte-ck-pasteText-title' => 'Liitä teksti',
 	'rte-ck-format-tag_p' => 'Normaali teksti',
+	'rte-ck-format-tag_h2' => 'Otsikko 2',
+	'rte-ck-format-tag_h3' => 'Otsikko 3',
+	'rte-ck-format-tag_h4' => 'Otsikko 4',
+	'rte-ck-format-tag_h5' => 'Otsikko 5',
 );
 
 /** French (français)
@@ -2394,6 +2429,7 @@ $messages['ne'] = array(
 
 /** Dutch (Nederlands)
  * @author AvatarTeam
+ * @author JurgenNL
  * @author Kjell
  * @author SPQRobin
  * @author Siebrand
@@ -2413,7 +2449,7 @@ $messages['nl'] = array(
 	'rte-ck-hoverPreview-edit' => 'bewerken',
 	'rte-ck-hoverPreview-media-notExisting' => 'Deze afbeelding of dit bestand bestaat niet.',
 	'rte-ck-hoverPreview-template-intro' => 'Dit is een sjabloon',
-	'rte-ck-hoverPreview-template-notExisting' => 'Deze sjabloon bestaat niet!',
+	'rte-ck-hoverPreview-template-notExisting' => 'Dit sjabloon bestaat niet!',
 	'rte-ck-hoverPreview-video-notExisting' => 'Deze video bestaat niet.',
 	'rte-ck-image-add' => 'Afbeelding toevoegen',
 	'rte-ck-image-photo' => 'Afbeelding',
@@ -2884,7 +2920,7 @@ $messages['pt'] = array(
 	'rte-ck-bucket-controls' => 'Controlos',
 	'rte-ck-commentEditor-title' => 'Editor de comentários',
 	'rte-ck-errorPopupTitle' => 'Erro!',
-	'rte-ck-hoverPreview-codedElement-intro' => 'Por favor, mude para o modo de texto-fonte para editar!',
+	'rte-ck-hoverPreview-codedElement-intro' => 'Para editar mude para o modo fonte, por favor!',
 	'rte-ck-hoverPreview-codedElement-title' => 'Elemento codificado',
 	'rte-ck-hoverPreview-comment-intro' => 'Isto só é visível durante a edição.',
 	'rte-ck-hoverPreview-comment-title' => 'Comentário',
@@ -2926,7 +2962,7 @@ $messages['pt'] = array(
 	'rte-ck-media-edit' => 'modificar',
 	'rte-ck-modeSwitch-toSource' => 'Fonte',
 	'rte-ck-modeSwitch-toWysiwyg' => 'Visual',
-	'rte-ck-modeSwitch-toSourceTooltip' => 'Alterar para modo Fonte',
+	'rte-ck-modeSwitch-toSourceTooltip' => 'Mudar para o modo Fonte',
 	'rte-ck-modeSwitch-toWysiwygTooltip' => 'Alterar para modo Visual',
 	'rte-ck-modeSwitch-error' => 'Ocorreu um erro durante a mudança de modo. Tente novamente, por favor.',
 	'rte-ck-photoGallery-gallery' => 'Galeria',
