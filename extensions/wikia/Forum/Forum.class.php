@@ -55,7 +55,7 @@ class Forum extends Walls {
 			array( 'count(*) as cnt' ),
 			array( 'page_namespace' => NS_WIKIA_FORUM_BOARD ),
 			__METHOD__,
-			array() 
+			array()
 		);
 
 		wfProfileOut(__METHOD__);
@@ -75,7 +75,7 @@ class Forum extends Walls {
 		if ( $totalThreads === false ) {
 			$db = wfGetDB( DB_SLAVE );
 
-			$sqlWhere = array( 
+			$sqlWhere = array(
 				'parent_comment_id' => 0,
 				'deleted' => 0,
 				'removed' => 0,
@@ -293,8 +293,8 @@ class Forum extends Walls {
 			$tmpUser = $app->wg->User;
 			$app->wg->User = User::newFromName( Forum::AUTOCREATE_USER );
 			for ( $i = 1; $i <= 5; $i++ ) {
-				$body = wfMsgForContent( 'forum-autoboard-body-' . $i );
-				$title = wfMsgForContent( 'forum-autoboard-title-' . $i );
+				$body = wfMessage( 'forum-autoboard-body-' . $i )->inContentLanguage()->text();
+				$title = wfMessage( 'forum-autoboard-title-' . $i )->inContentLanguage()->text();
 				//TODO: check with TOR
 				$title = str_replace( '$WIKINAME', $app->wg->Sitename, $title );
 				$body = str_replace( '$WIKINAME', $app->wg->Sitename, $body );
