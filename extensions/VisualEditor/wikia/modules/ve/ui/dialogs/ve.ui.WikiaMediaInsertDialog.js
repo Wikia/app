@@ -276,7 +276,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.getImageInfo = function ( titles, width )
 			'iiurlwidth': width,
 			'iiprop': 'url',
 			'indexpageids': 'true',
-			'titles': titles.join('|')
+			'titles': titles.join( '|' )
 		},
 		'success': ve.bind( this.onGetImageInfoSuccess, this, deferred )
 	} );
