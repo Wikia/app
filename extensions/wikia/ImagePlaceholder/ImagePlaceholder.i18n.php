@@ -171,6 +171,7 @@ $messages['fa'] = array(
 /** Finnish (suomi)
  * @author Centerlink
  * @author Crt
+ * @author Ville96
  */
 $messages['fi'] = array(
 	'imgplc-add-image' => 'Lisää kuva',
@@ -178,6 +179,7 @@ $messages['fi'] = array(
 	'imgplc-placeholder' => 'Paikanvaraaja',
 	'imgplc-image' => 'Kuva',
 	'imgplc-notinhistory' => 'Et voi lisätä kuvaa historiatilassa.',
+	'imgplc-notinhistory-video' => 'Et voi lisätä videota historiatilassa.',
 );
 
 /** Faroese (føroyskt)
@@ -328,6 +330,13 @@ $messages['lb'] = array(
 	'imgplc-placeholder' => 'Reservéiert Plaz',
 	'imgplc-image' => 'Bild',
 	'imgplc-notinhistory' => 'Dir kënnt am Historique Modus kee Bild derbäisetzen',
+);
+
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'imgplc-image' => 'عسگ',
 );
 
 /** Lithuanian (lietuvių)

@@ -33,6 +33,7 @@ $1
 );
 
 /** Message documentation (Message documentation)
+ * @author Hamilton Abreu
  * @author Shirayuki
  * @author Siebrand
  */
@@ -49,7 +50,7 @@ $messages['qqq'] = array(
 	'lightbox-share-button-www' => '{{Identical|Share}}',
 	'lightbox-share-email-error-caption' => '{{Identical|Error}}',
 	'lightbox-share-email-error-content' => 'Parameters:
-* $1 is the numer of sent e-mails
+* $1 is the number of sent e-mails
 * $2 is are the error details.',
 );
 
@@ -595,6 +596,16 @@ $messages['lb'] = array(
 	'lightbox-share-email-error-noaddress' => 'Dir hutt keng Adress uginn.',
 );
 
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'lightbox-send' => 'كل كردن',
+	'lightbox-share-button-email' => 'ايميل',
+	'lightbox-share-button-embed' => 'مئن رئته',
+	'lightbox-share-email-error-caption' => 'خطا',
+);
+
 /** Lithuanian (lietuvių)
  * @author Mantak111
  */
@@ -837,17 +848,22 @@ $messages['ps'] = array(
 );
 
 /** Portuguese (português)
+ * @author Hamilton Abreu
  * @author Luckas
  * @author SandroHc
  */
 $messages['pt'] = array(
+	'lightbox_details_tooltip' => 'Ver detalhes da foto',
 	'lightbox-forum' => 'Fórum',
 	'lightbox-standard-link' => 'Link padrão',
+	'lightbox-blog-link' => 'Link de blogue',
 	'lightbox-send' => 'Enviar',
+	'lightbox-share-description' => 'Fotografia em $1 na wiki $2',
+	'lightbox-share-email-subject' => '$1 enviou-lhe uma foto na Wikia',
 	'lightbox-share-button-email' => 'E-mail',
 	'lightbox-share-button-www' => 'Partilhar',
 	'lightbox-share-button-embed' => 'Incorporar',
-	'lightbox-share-email-page-label-address' => 'Correio electrónico',
+	'lightbox-share-email-page-label-address' => 'Correio eletrónico',
 	'lightbox-share-email-ok-caption' => 'Confirmação',
 	'lightbox-share-email-error-caption' => 'Erro',
 );

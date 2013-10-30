@@ -199,6 +199,13 @@ $messages['ca'] = array(
 	'wikiamobile-wikiapoll-user-voted' => 'Has votat per " $1 "',
 );
 
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'wikiapoll-thanks-for-vote' => 'Баркалла!',
+);
+
 /** Czech (česky)
  * @author Chmee2
  * @author Dontlietome7

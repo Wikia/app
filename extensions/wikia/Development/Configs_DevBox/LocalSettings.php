@@ -101,6 +101,7 @@ $wgFSSwiftDC = [
 
 $wgFSSwiftServer = $wgFSSwiftDC[ $wgWikiaDatacenter ][ 'server' ];
 $wgFSSwiftConfig = $wgFSSwiftDC[ $wgWikiaDatacenter ][ 'config' ];
+$wgEnableSwiftFileBackend = true; // enable globally on all devboxes
 
 $wgDevboxDefaultWikiDomain = 'www.wikia.com';
 #$wgDevboxSkipWikiFactoryVariables = true; // uncomment to skip loading of wiki-specific setup from WikiFactory
