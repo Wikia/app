@@ -94,6 +94,7 @@ define('wikia.ui.toc', ['jquery', 'wikia.window'], function($, w) {
 		/** TOC public methods */
 
 		this.init = function() {
+			console.debug(1);
 			var throttled = $.throttle(50, checkPosition);
 
 			$w.on('scroll', throttled);
