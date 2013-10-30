@@ -55,8 +55,7 @@ ve.ui.WikiaMediaPageWidget = function VeUiWikiaMediaPageWidget( model, config ) 
 	this.$extension
 		.addClass( 've-ui-wikiaMediaPageWidget-item-extension' )
 		.text( titleParts[2] );
-	this.$itemWrapper
-		.addClass( 've-ui-wikiaMediaPageWidget-item' );
+	this.$itemWrapper.addClass( 've-ui-wikiaMediaPageWidget-item' );
 	this.title.$.append( this.$extension );
 	this.fieldset.$.append( this.titleLabel.$, this.title.$, this.removeButton.$ );
 	this.$
@@ -108,8 +107,18 @@ ve.ui.WikiaMediaPageWidget.prototype.setupImage = function () {
  * @method
  */
 ve.ui.WikiaMediaPageWidget.prototype.onImageLoad = function () {
+	var $playArrow,
+		$playCircle;
+
 	if ( this.image.height > 325 ) {
 		this.image.height = 325;
+	}
+
+	// Set up video play button overlay
+	if ( this.model.type === 'video' ) {
+		$playArrow = this.$$( '<span>' ).addClass( 'play-arrow' );
+		$playCircle = this.$$( '<span>' ).addClass( 'play-circle' );
+		this.$itemWrapper.prepend( $playCircle, $playArrow );
 	}
 };
 
