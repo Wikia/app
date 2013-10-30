@@ -20,7 +20,7 @@
  */
 ( function () {
 	var conf, tabMessages, uri, pageExists, viewUri, veEditUri, isViewPage,
-		init, support, getTargetDeferred, userPrefEnabled, classicEditButton,
+		init, support, getTargetDeferred, userPrefEnabled, $classicEditLink,
 		plugins = [];
 
 	/**
@@ -269,10 +269,10 @@
 	mw.libs.ve = init;
 
 	if ( !init.isAvailable ) {
-		classicEditButton = $( '#ca-edit' );
+		$classicEditLink = $( '#ca-edit' );
 		$( 'html' ).addClass( 've-not-available' );
-		$( '#ca-ve-edit' ).attr( 'href', classicEditButton.attr( 'href' ) );
-		classicEditButton.parent().remove();
+		$( '#ca-ve-edit' ).attr( 'href', $classicEditLink.attr( 'href' ) );
+		$classicEditLink.parent().remove();
 	} else {
 		$( 'html' ).addClass( 've-available' );
 	}
