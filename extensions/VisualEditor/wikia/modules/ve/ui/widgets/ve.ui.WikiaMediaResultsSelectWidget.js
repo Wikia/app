@@ -48,7 +48,9 @@ ve.ui.WikiaMediaResultsSelectWidget.prototype.onMouseUp = function ( e ) {
 		if ( $( e.target ).hasClass( 've-ui-wikiaMediaResultWidget-cartState' ) ) {
 			this.emit( 'cartState', this.selecting );
 		} else {
-			this.selectItem( this.selecting );
+			// TODO: When preview is ready, this should call this.selectItem.
+			//this.selectItem( this.selecting );
+			this.emit( 'cartState', this.selecting );
 		}
 		this.selecting = null;
 	}
