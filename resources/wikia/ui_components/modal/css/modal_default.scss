@@ -15,6 +15,7 @@ $modal-secondary-color: darken( $color-page, 10% );
 	$close-image: '/resources/wikia/ui_components/modal/images/close-light.svg';
 	$modal-secondary-color: lighten( $color-page, 3% );
 }
+$modal-inactive-opacity: 0.3;
 
 .modal,
 .blackout {
@@ -145,7 +146,7 @@ $modal-secondary-color: darken( $color-page, 10% );
 	.inactive {
 		background-color: $default-blackout-background-color;
 		height: 100%;
-		opacity: $default-blackout-opacity;
+		opacity: $modal-inactive-opacity;
 		position: absolute;
 		top: 0;
 		width: 100%;
