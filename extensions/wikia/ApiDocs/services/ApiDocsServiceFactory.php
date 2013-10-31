@@ -20,7 +20,7 @@ class ApiDocsServiceFactory {
 		$swagger = Swagger::discover( $IP . "/includes/wikia/api/" );
 		$docsService = new ApiDocsService(
 			$swagger,
-			function( $x ) { return "/wikia.php?controller=ApiDocs&method=api&api=" . $x; }
+			function( $x ) { return "?controller=ApiDocs&method=api&api=" . $x; }
 		);
 		return new CachingApiDocsService( $docsService, \F::app()->wg->CacheBuster );
 	}
