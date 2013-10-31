@@ -141,6 +141,15 @@ $modal-secondary-color: darken( $color-page, 10% );
 		@include flexbox();
 		@include flex-direction(column);
 	}
+
+	.inactive {
+		background-color: $default-blackout-background-color;
+		height: 100%;
+		opacity: $default-blackout-opacity;
+		position: absolute;
+		top: 0;
+		width: 100%;
+	}
 }
 
 .blackout {
