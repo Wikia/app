@@ -58,6 +58,8 @@ class ApiDocsController extends WikiaController {
 		$thisWikiDocs = [];
 		// FIXME - find permanent solution
 		foreach ( $this->wg->WikiaApiControllers as $controller => $file ) {
+			// here you can disable single controller
+//			if ( $controller === 'WAMApiController' && !$this->isTest() ) { continue; }
 			foreach ( $docs['apis'] as $doc ) {
 				if ( $doc['readableName'] . "ApiController" == $controller ) {
 					if ( class_exists($controller) ) {
@@ -71,5 +73,9 @@ class ApiDocsController extends WikiaController {
 
 		$this->getResponse()->setFormat("json");
 		$this->getResponse()->setData( $docs );
+	}
+
+	protected function isTest() {
+		return (stripos( $this->request->getScriptUrl(), '/api/test' )!==false);
 	}
 }

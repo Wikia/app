@@ -14,7 +14,7 @@
     <script type="text/javascript">
         $(function () {
             window.swaggerUi = new SwaggerUi({
-                discoveryUrl:"/wikia.php?controller=ApiDocs&method=apiList",
+                discoveryUrl: window.location.pathname + "?controller=ApiDocs&method=apiList",
                 protocol: "http",
                 dom_id:"swagger-ui-container",
                 supportHeaderParams: false,
