@@ -9,10 +9,11 @@ module WikiaFunctions
 		ARGV.each do |arg|
 				# If it has an '=' in it and there is something to each side, it is one of our key/value pairs
 				if arg =~ /.=./
-						pair = arg.split(/=/)
-						if(pair[0] == paramName.value)
+						params = arg.split(/=/)
+						key = params.shift
+						if(key == paramName.value)
 								# Found correct param-name.  Use the first value if it exists, default to the passed-in default.
-								retVal = pair[1] || defaultResult
+								retVal = params.join('=') || defaultResult
 						end
 				end
 		end
