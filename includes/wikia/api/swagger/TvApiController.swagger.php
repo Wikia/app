@@ -38,13 +38,13 @@ use Swagger\Annotations as SWG;
  * 	)
  *
  * @SWG\Api(
- * 	path="/api/v1/Tv/Article",
+ * 	path="/api/v1/Tv/Episode",
  * 	description="Get article against series name and episode name",
  * 	@SWG\Operations(
  * 		@SWG\Operation(
  * 			httpMethod="GET",
  * 			summary="Get article against series name and episode name",
- * 			nickname="getArticle",
+ * 			nickname="getEpisode",
  * 			responseClass="TvResultSet",
  *			@SWG\ErrorResponses(
  *				@SWG\ErrorResponse( code="400", reason="seriesName or episodeName not provided" ),

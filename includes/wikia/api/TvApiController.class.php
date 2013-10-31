@@ -21,7 +21,7 @@ class TvApiController extends WikiaApiController {
 	 */
 	private $url;
 
-	public function getArticle() {
+	public function getEpisode() {
 
 		if ( !$this->setWikiVariables() ) {
 			throw new NotFoundApiException();
