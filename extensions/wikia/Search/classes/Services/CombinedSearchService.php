@@ -13,7 +13,7 @@ class CombinedSearchService {
 	const TOP_ARTICLES_PER_WIKI = 5;
 	const SNIPPET_LENGTH = 200;
 	const IMAGE_SIZE = 80;
-	const CACHE_TIME = 604800; // 60 * 60 * 24 * 7 - one week
+	const TOP_ARTICLES_CACHE_TIME = 604800; // 60 * 60 * 24 * 7 - one week
 
 	/**
 	 * @var bool
@@ -148,7 +148,7 @@ class CombinedSearchService {
 	}
 
 	private function getTopArticles( $wikiId, $lang ) {
-		return \WikiaDataAccess::cache( wfSharedMemcKey( "CombinedSearchService", $wikiId, $lang ), self::CACHE_TIME, function() use( $wikiId, $lang ) {
+		return \WikiaDataAccess::cache( wfSharedMemcKey( "CombinedSearchService", $wikiId, $lang ), self::TOP_ARTICLES_CACHE_TIME, function() use( $wikiId, $lang ) {
 			$timer = Time::start(["CombinedSearchService", "getTopArticles"]);
 			$requestedFields = [ "title", "url", "id", "score", "pageid", "lang", "wid", Utilities::field('html', $lang) ];
 			$topArticlesMap = \DataMartService::getTopArticlesByPageview(
