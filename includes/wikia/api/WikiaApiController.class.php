@@ -123,6 +123,14 @@ class WikiaApiController extends WikiaController {
 	public function hideNonCommercialContent() {
 		return stripos($this->request->getScriptUrl(), "/api/v1")===0;
 	}
+
+	/**
+	 * Returns true if we are using /api/test endpoint (beta features)
+	 * @return bool
+	 */
+	public function isThisApiTestEndpoint() {
+		return stripos($this->request->getScriptUrl(), "/api/test")===0;
+	}
 	
 	/** Block content if this wiki is does not allow commercial use of it's content outside of Wikia
 	 * Raises WikiaHttpException
