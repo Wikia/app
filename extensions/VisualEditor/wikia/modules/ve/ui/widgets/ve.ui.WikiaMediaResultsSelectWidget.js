@@ -76,7 +76,7 @@ ve.ui.WikiaMediaResultsSelectWidget.prototype.updateCartState = function ( cartI
 		// Sync a particular item
 		for ( i = 0; i < this.items.length; i++ ) {
 			for ( j = 0; j < items.length ; j++ ) {
-				if ( this.items[i].data.title == items[j].title ) {
+				if ( this.items[i].data.title === items[j].title ) {
 					this.items[i].setCartState( state );
 				}
 			}
@@ -85,10 +85,10 @@ ve.ui.WikiaMediaResultsSelectWidget.prototype.updateCartState = function ( cartI
 		// Compare all search results to the cart and set the cartState of the ones that are there
 		for ( i = 0; i < cartItems.length; i++ ) {
 			for ( j = 0; j < this.items.length; j++ ) {
-				if ( cartItems[i].title == this.items[j].data.title ) {
+				if ( cartItems[i].title === this.items[j].data.title ) {
 					this.items[j].setCartState( 'selected' );
 				}
 			}
 		}
 	}
-}
+};

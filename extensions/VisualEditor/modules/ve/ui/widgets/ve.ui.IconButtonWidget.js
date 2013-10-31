@@ -77,4 +77,4 @@ ve.ui.IconButtonWidget.prototype.setIcon = function ( icon ) {
 			})
 			.addClass( 've-ui-icon-' + icon );
 	}
-}
+};

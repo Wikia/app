@@ -46,7 +46,7 @@ ve.inheritClass( ve.ui.WikiaMediaResultsWidget, ve.ui.Widget );
 
 ve.ui.WikiaMediaResultsWidget.prototype.onCartState = function ( item ) {
 	this.emit( 'cartState', item.getData() );
-}
+};
 
 /**
  * Add items to the results.
