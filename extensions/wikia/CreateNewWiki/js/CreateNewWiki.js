@@ -28,6 +28,7 @@ var WikiBuilder = {
 		this.wikiLanguage = $('#NameWiki select[name=wiki-language]');
 		this.wikiCategory = $('#DescWiki select[name=wiki-category]');
 		this.wikiAllAges = $('#DescWiki input[name=all-ages]');
+		this.allAgesDiv = $('#all-ages-div');
 		this.descWikiSubmitError = $('#DescWiki .submit-error');
 		this.nextButtons = this.wb.find('nav .next');
 		this.finishSpinner = $('#CreateNewWiki .finish-status');
@@ -107,7 +108,18 @@ var WikiBuilder = {
 			that.checkWikiName();
 			that.checkDomain();
 			var selected = that.wikiLanguage.find('option:selected').val();
-			that.wikiDomainCountry.html((selected && selected !== 'en') ? selected + '.' : '');
+
+            if (selected && selected !== wgLangAllAgesOpt )
+            {
+                that.wikiDomainCountry.html( selected + '.');
+                that.allAgesDiv.hide();
+            }
+            else
+            {
+                that.wikiDomainCountry.html('');
+                that.allAgesDiv.show();
+            }
+
 		});
 		$('#ChangeLang').click(function(e) {
 			e.preventDefault();

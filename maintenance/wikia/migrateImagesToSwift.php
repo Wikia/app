@@ -134,7 +134,7 @@ class MigrateImagesToSwift extends Maintenance {
 	 * @param $path array image info
 	 */
 	private function copyFile( $path, Array $row ) {
-		global $wgUploadDirectory;
+		global $wgUploadDirectory, $wgCityId, $wgDBname;
 
 		if ( $path === false ) return;
 
@@ -153,6 +153,15 @@ class MigrateImagesToSwift extends Maintenance {
 			$this->migratedImagesFailedCnt++;
 		}
 		else {
+			$mwStorePath = sprintf( 'mwstore://swift-backend/%s/images/%s', $wgDBname, $path );
+						
+			Wikia\SwiftSync\Queue::newFromParams( [
+				'city_id' => $wgCityId,
+				'op' => 'store',
+				'src' => $wgUploadDirectory . '/' . $path,
+				'dst' => $mwStorePath
+			] )->add();
+					
 			$this->migratedImagesSize += $row['size'];
 			$this->migratedImagesCnt++;
 		}
@@ -324,9 +333,10 @@ class MigrateImagesToSwift extends Maintenance {
 		);
 
 		$this->output( "\n{$report}\n" );
-		self::log( __CLASS__, 'migration ceompleted', self::LOG_MIGRATION_PROGRESS );
+		self::log( __CLASS__, 'migration completed - ' . $report, self::LOG_MIGRATION_PROGRESS );
 
 		// unlock the wiki
+		$dbw->ping();
 		$dbw->replace( 'city_image_migrate', [ 'city_id' ], [ 'city_id' => $wgCityId, 'locked' => 0 ], __CLASS__ );
 
 		// update wiki configuration
