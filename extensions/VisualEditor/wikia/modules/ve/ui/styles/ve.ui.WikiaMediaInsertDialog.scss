@@ -2,6 +2,7 @@
 @import "skins/oasis/css/core/layout";
 @import "skins/oasis/css/mixins/box-sizing";
 @import "skins/oasis/css/mixins/clearfix";
+@import "extensions/VisualEditor/wikia/modules/ve/ui/styles/mixins/ve-icon";
 
 $width-media-item-max: 365px;
 $width-cart: 100px;
@@ -171,7 +172,8 @@ $width-cart: 100px;
 		top: 5px;
 		width: 32px;
 
-		&.selected {
+		&.ve-ui-icon-selected {
+			@include ve-icon(selected, wikia, $color-buttons);
 			background-color: $color-buttons;
 		}
 
