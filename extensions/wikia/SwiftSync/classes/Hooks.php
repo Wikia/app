@@ -76,7 +76,7 @@ class Hooks {
 				} 
 				
 				if ( !$status->isOK() ) {
-					\Wikia\SwiftStorage::log( __METHOD__, 'Cannot save image on local storage' );
+					\Wikia\SwiftStorage::log( __METHOD__, 'Cannot save image on local storage: ' . json_encode( $status ) );
 				}
 			} else {
 				\Wikia\SwiftStorage::log( __METHOD__, 'Destination not defined' );

@@ -336,6 +336,7 @@ class MigrateImagesToSwift extends Maintenance {
 		self::log( __CLASS__, 'migration completed - ' . $report, self::LOG_MIGRATION_PROGRESS );
 
 		// unlock the wiki
+		$dbw->ping();
 		$dbw->replace( 'city_image_migrate', [ 'city_id' ], [ 'city_id' => $wgCityId, 'locked' => 0 ], __CLASS__ );
 
 		// update wiki configuration
