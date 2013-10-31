@@ -44,7 +44,12 @@ class NewrelicDriver implements Driver {
 	 * @param float $time - in seconds
 	 */
 	public function measureTime( $measurementName, $time ) {
-		$fullMeasurementName = "Custom/{$measurementName}[milliseconds|call]";
+		$fullMeasurementName = "Custom/{$measurementName}[seconds|call]";
+		/*
+		 * We need to multiply time in seconds by 1000.
+		 * From newrelic documentation:
+		 * Adds a custom metric with the specified name and value, which is of type double. Values saved are assumed to be milliseconds, so "4" will be stored as ".004" in our system.
+		 */
 		/** @noinspection PhpUndefinedFunctionInspection */
 		newrelic_custom_metric( $fullMeasurementName, $time * self::MILLISECONDS_IN_SECOND );
 	}
