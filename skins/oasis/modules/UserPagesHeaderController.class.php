@@ -472,7 +472,6 @@ class UserPagesHeaderController extends WikiaController {
 		}
 		else if (isset($this->content_actions['edit'])) {
 			$actionMenu['action'] = $this->content_actions['edit'];
-			//$actionMenu['action'] = $this->content_actions['ve-edit'];
 		}
 
 		foreach($dropdownActions as $action) {

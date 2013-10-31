@@ -20,7 +20,7 @@
  */
 ( function () {
 	var conf, tabMessages, uri, pageExists, viewUri, veEditUri, isViewPage,
-		init, support, getTargetDeferred, userPrefEnabled, $classicEditLink,
+		init, support, getTargetDeferred, userPrefEnabled, $edit,
 		plugins = [];
 
 	/**
@@ -57,19 +57,13 @@
 	}
 
 	conf = mw.config.get( 'wgVisualEditorConfig' );
-
 	tabMessages = conf.tabMessages;
-
 	uri = new mw.Uri( location.href );
-
 	// For special pages, no information about page existence is exposed to
 	// mw.config, so we assume it exists TODO: fix this in core.
 	pageExists = !!mw.config.get( 'wgArticleId' ) || mw.config.get( 'wgNamespaceNumber' ) < 0;
-
 	viewUri = new mw.Uri( mw.util.wikiGetlink( mw.config.get( 'wgRelevantPageName' ) ) );
-
 	veEditUri = viewUri.clone().extend( { 'veaction': 'edit' } );
-
 	isViewPage = (
 		mw.config.get( 'wgIsArticle' ) &&
 		!( 'diff' in uri.query )
@@ -269,10 +263,10 @@
 	mw.libs.ve = init;
 
 	if ( !init.isAvailable ) {
-		$classicEditLink = $( '#ca-edit' );
+		$edit = $( '#ca-edit' );
 		$( 'html' ).addClass( 've-not-available' );
-		$( '#ca-ve-edit' ).attr( 'href', $classicEditLink.attr( 'href' ) );
-		$classicEditLink.parent().remove();
+		$( '#ca-ve-edit' ).attr( 'href', $edit.attr( 'href' ) );
+		$edit.parent().remove();
 	} else {
 		$( 'html' ).addClass( 've-available' );
 	}
