@@ -150,23 +150,25 @@ class TvApiController extends WikiaApiController {
 		//Standard Wikia API response with pagination values
 		$responseValues = (new Factory)->getFromConfig( $searchConfig )->searchAsApi( [ 'pageid' => 'articleId', 'title', 'url', 'score' ], true );
 		//post processing
-		$responseValues = $responseValues[ 'items' ][ 0 ];
-		if ( $responseValues['score'] < static::MINIMAL_ARTICLE_SCORE ) {
-			return null;
-		}
-		//remove score value from results
-		unset( $responseValues['score'] );
-
-		$subpage = strpos( $responseValues['title'], '/' );
-		if ( $subpage !== false ) {
-			//we found subpage, return only the main page then
-			$main = substr( $responseValues['title'], 0, $subpage );
-			$result = $this->getTitle( $main );
-			if ( $result !== null ) {
-				return $result;
+		if ( !empty( $responseValues[ 'items' ] ) ) {
+			$responseValues = $responseValues[ 'items' ][ 0 ];
+			if ( $responseValues['score'] < static::MINIMAL_ARTICLE_SCORE ) {
+				return null;
 			}
-		}
+			//remove score value from results
+			unset( $responseValues['score'] );
 
-		return $responseValues;
+			$subpage = strpos( $responseValues['title'], '/' );
+			if ( $subpage !== false ) {
+				//we found subpage, return only the main page then
+				$main = substr( $responseValues['title'], 0, $subpage );
+				$result = $this->getTitle( $main );
+				if ( $result !== null ) {
+					return $result;
+				}
+			}
+			return $responseValues;
+		}
+		return null;
 	}
 }
