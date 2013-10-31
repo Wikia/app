@@ -107,7 +107,7 @@ class ForumHooksHelper {
 
 			$titleData = WallHelper::getWallTitleData(null, $element );
 
-			$boardText = wfMsg( 'forum-wiki-activity-msg' )->rawParams( '<a href="' .$titleData['wallPageFullUrl'] . '">' . wfMessage( 'forum-wiki-activity-msg-name', $titleData['wallPageName'] )->escaped() . '</a>' )->escaped();
+			$boardText = wfMessage( 'forum-wiki-activity-msg' )->rawParams( '<a href="' .$titleData['wallPageFullUrl'] . '">' . wfMessage( 'forum-wiki-activity-msg-name', $titleData['wallPageName'] )->escaped() . '</a>' )->escaped();
 			$link = '<a href="'.$titleData['articleFullUrl'].'">'.$titleData['articleTitleTxt'].'</a> ' . $boardText;
 		}
 		return true;
@@ -170,7 +170,7 @@ class ForumHooksHelper {
 		}
 
 		if ( empty( $wfMsgOptsBase['articleTitleVal'] ) ) {
-			$wfMsgOptsBase['articleTitleTxt'] = wfMsg( 'forum-recentchanges-deleted-reply-title' );
+			$wfMsgOptsBase['articleTitleTxt'] = wfMessage( 'forum-recentchanges-deleted-reply-title' )->text();
 		}
 
 		$wfMsgOpts = array(
@@ -189,7 +189,7 @@ class ForumHooksHelper {
 			$wfMsgOpts[] = '';
 		}
 
-		$ret .= wfMsg( 'forum-contributions-line', $wfMsgOpts )->text();
+		$ret .= wfMessage( 'forum-contributions-line', $wfMsgOpts )->text();
 
 		return false;
 	}
