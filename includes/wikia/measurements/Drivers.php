@@ -41,12 +41,12 @@ class NewrelicDriver implements Driver {
 
 	/**
 	 * @param string $measurementName
-	 * @param float $time - time in seconds
+	 * @param float $time
 	 */
 	public function measureTime( $measurementName, $time ) {
-		$fullMeasurementName = "Custom/{$measurementName}[milliseconds|call]";
+		$fullMeasurementName = "Custom/{$measurementName}[seconds|call]";
 		/** @noinspection PhpUndefinedFunctionInspection */
-		newrelic_custom_metric( $fullMeasurementName, $time * 1000 );
+		newrelic_custom_metric( $fullMeasurementName, $time );
 	}
 }
 
