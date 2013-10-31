@@ -73,7 +73,7 @@ ve.ui.IconButtonWidget.prototype.setIcon = function ( icon ) {
 	if ( !this.$.hasClass( 've-ui-icon-' + icon ) ) {
 		this.$
 			.removeClass( function ( index, classNames ) {
-				return ( classNames.match(/\bve-ui-icon-\S+/g) || [] ).join(' ');
+				return ( classNames.match( /\bve-ui-icon-\S+/g ) || [] ).join(' ');
 			})
 			.addClass( 've-ui-icon-' + icon );
 	}

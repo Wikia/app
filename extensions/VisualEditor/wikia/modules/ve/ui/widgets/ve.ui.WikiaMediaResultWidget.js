@@ -31,7 +31,6 @@ ve.ui.WikiaMediaResultWidget = function VeUiWikiaMediaResultWidget( data, config
 	this.$back = this.$$( '<div>' );
 	this.$front = this.$$( '<div>' );
 	this.$thumb = this.$back.add( this.$front );
-	this.$overlay = this.$$( '<div>' );
 	this.state = new ve.ui.IconButtonWidget( { 'icon': 'select' } );
 
 	// Events
@@ -42,7 +41,6 @@ ve.ui.WikiaMediaResultWidget = function VeUiWikiaMediaResultWidget( data, config
 	// Initialization
 	this.loadThumbnail();
 	this.setLabel( this.mwTitle );
-	this.$overlay.addClass( 've-ui-mwMediaResultWidget-overlay' );
 	this.state.$.addClass( 've-ui-wikiaMediaResultWidget-state' );
 	this.$
 		.addClass( 've-ui-mwMediaResultWidget ve-ui-texture-pending ' + data.type )

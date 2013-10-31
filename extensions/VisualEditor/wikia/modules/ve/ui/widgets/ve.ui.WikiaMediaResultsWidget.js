@@ -22,7 +22,7 @@ ve.ui.WikiaMediaResultsWidget = function VeUiWikiaMediaResultsWidget( config ) {
 	this.results.connect( this, {
 		'highlight': 'onResultsHighlight',
 		'select': 'onResultsSelect',
-		'state': 'onState'
+		'state': 'onResultsState'
 	} );
 	this.$.on( 'scroll', ve.bind( this.onResultsScroll, this ) );
 
@@ -48,9 +48,9 @@ ve.inheritClass( ve.ui.WikiaMediaResultsWidget, ve.ui.Widget );
  * Handle state change
  *
  * @method
- * @param {ve.ui.WikiaMediaResultWidget} items Item whose state is changing
+ * @param {ve.ui.WikiaMediaResultWidget} item Item whose state is changing
  */
-ve.ui.WikiaMediaResultsWidget.prototype.onState = function ( item ) {
+ve.ui.WikiaMediaResultsWidget.prototype.onResultsState = function ( item ) {
 	this.emit( 'state', item.getData() );
 };
 
