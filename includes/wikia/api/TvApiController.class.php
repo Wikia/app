@@ -99,21 +99,24 @@ class TvApiController extends WikiaApiController {
 				$this->url = $result['url'];
 				return true;
 			}
-			return false;
 		}
 
-		throw new InvalidParameterApiException( 'seriesName' );
+		return false;
 	}
 
 	protected function getConfigCrossWiki() {
 		$request = $this->getRequest();
 		$searchConfig = new Wikia\Search\Config;
-		$searchConfig->setQuery( $request->getVal( 'seriesName', null ) )
+		$query = $request->getVal( 'seriesName', null );
+		if ( empty( $query ) || $query === null ) {
+			throw new InvalidParameterApiException( 'seriesName' );
+		}
+		$searchConfig->setQuery( $query )
 			->setLimit( static::LIMIT_SETTING )
 			->setRank( 'default' )
 			->setInterWiki( true )
 			->setCommercialUse( $this->hideNonCommercialContent() )
-			->setLanguageCode( static::LANG_SETTING )
+			->setLanguageCode( $request->getVal( 'lang', static::LANG_SETTING ) )
 			->setHub( 'Entertainment' )
 		;
 		return $searchConfig;
@@ -145,7 +148,7 @@ class TvApiController extends WikiaApiController {
 			throw new InvalidParameterApiException( 'episodeName' );
 		}
 		//Standard Wikia API response with pagination values
-		$responseValues = (new Factory)->getFromConfig( $searchConfig )->searchAsApi( [ 'pageid' => 'id', 'title', 'url', 'ns', 'score' ], true );
+		$responseValues = (new Factory)->getFromConfig( $searchConfig )->searchAsApi( [ 'pageid' => 'id', 'title', 'url', 'score' ], true );
 		//post processing
 		$responseValues = $responseValues[ 'items' ][ 0 ];
 		if ( $responseValues['score'] < static::MINIMAL_ARTICLE_SCORE ) {
