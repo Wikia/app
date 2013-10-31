@@ -7,6 +7,7 @@
 @import "skins/oasis/css/mixins/transition.scss";
 @import "skins/oasis/css/mixins/blackout.scss";
 @import "skins/oasis/css/mixins/box-sizing-border-box.scss";
+@import "skins/oasis/css/mixins/flexbox";
 
 $close-image: '/resources/wikia/ui_components/modal/images/close-dark.svg';
 $modal-secondary-color: darken( $color-page, 10% );
@@ -27,17 +28,23 @@ $modal-secondary-color: darken( $color-page, 10% );
 	border-radius: 2px;
 	display: none;
 	left: 50%;
+	max-height: 605px;
+	min-height: 200px;
 	margin: 0;
 	overflow: hidden;
 	padding: 0;
 	position: fixed;
 	top: 50%;
+
 	@include transform-translate( -50%, -50% );
 
 	> header,
 	> footer {
 		background-color: $modal-secondary-color;
-		height: 60px;
+		height: 60px; // flex-basis is not supported on Safari 6 so fixed height is needed
+
+		@include flex-shrink(0);
+		@include flex-grow(0);
 	}
 
 	> header,
@@ -78,12 +85,15 @@ $modal-secondary-color: darken( $color-page, 10% );
 		margin: 0 20px;
 	}
 
+	> section {
+		overflow: auto;
+
+		@include flex-grow(1);
+	}
+
 	&.small {
 		width: 400px;
 
-		> section {
-			height: 100px;
-		}
 	}
 
 	&.medium {
@@ -122,12 +132,15 @@ $modal-secondary-color: darken( $color-page, 10% );
 	}
 
 	&.shown {
-		display: block;
 		margin: 0;
 		padding: 0;
 		opacity: 1;
 		overflow: hidden;
 		z-index: $zTop;
+
+		@include flexbox();
+		@include flex-direction(column);
+
 	}
 }
 
