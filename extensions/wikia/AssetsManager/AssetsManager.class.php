@@ -263,7 +263,7 @@ class AssetsManager {
 
 		$regex = '/^(https?):\/\/(slot[0-9]+\.images([0-9]+))\.wikia.nocookie.net\/(.*)$/';
 		if (!empty($wgDevelEnvironment)) {
-			$regex = '/^(https?):\/\/(s[0-9]+\.([a-z0-9]+))\.wikia-dev.com\/(.*)$/';
+			$regex = '/^(https?):\/\/(i[0-9]+\.([a-z0-9]+))\.wikia-dev.com\/(.*)$/';
 		}
 
 		if (!preg_match($regex, $this->getSassCommonURL(''), $dummyMatches)) {

@@ -197,7 +197,7 @@ function wfReplaceAssetServer( $url ) {
 		$serverNo = $inthash%($wgImagesServers-1);
 		$serverNo++;
 
-		$url = "{$matches[1]}s{$serverNo}.{$matches[3]}";
+		$url = "{$matches[1]}i{$serverNo}.{$matches[3]}";
 	}
 
 	return $url;
