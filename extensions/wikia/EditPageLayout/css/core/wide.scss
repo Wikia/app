@@ -120,6 +120,13 @@
 			> a {
 				right: 20px + $width-rail-epl  - 10;
 			}
+
+		}
+
+		@if ( $responsive-layout-enabled ) {
+			span.cke_toolbar_expand > a {
+				right: auto;
+			}
 		}
 	}
 
@@ -127,7 +134,7 @@
 	$page-controls-wide-width: 640px;
 
 	@if ( $responsive-layout-enabled ) {
-		$page-controls-wide-width: 355px;
+		$page-controls-wide-width: 335px;
 	}
 
 	&.editpage-sourcewidemode-on {
@@ -176,7 +183,7 @@
 						left: auto;
 						right: 15px;
 						top: -19px;
-						width: 374px;
+						width: 354px;
 					}
 				}
 
