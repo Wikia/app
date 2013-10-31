@@ -7,12 +7,13 @@ define( 'wikia.ui.modal', [ 'jquery' ], function( $ ) {
 		destroyOnClose;
 
 	function Modal( id, modalMarkup ) {
-		var that = this;
+		var that = this,
+			jQuerySelector = '#' + id;
 
-		this.$element = $( '#' + id );
+		this.$element = $( jQuerySelector );
 		if( !this.$element.exists() && typeof( modalMarkup ) !== 'undefined' ) {
 			$( 'body' ).append( modalMarkup );
-			this.$element = $( '#' + id );
+			this.$element = $( jQuerySelector );
 		}
 
 		function getBlackout() {
@@ -71,7 +72,7 @@ define( 'wikia.ui.modal', [ 'jquery' ], function( $ ) {
 	Modal.prototype.activate = function() {
 		var dialog = this.$element;
 
-		dialog.find( INACTIVE_CLASS ).remove();
+		dialog.find( '.' + INACTIVE_CLASS ).remove();
 		dialog.removeClass( INACTIVE_CLASS )
 			.find( 'button' ).attr( 'disabled', false );
 	};
