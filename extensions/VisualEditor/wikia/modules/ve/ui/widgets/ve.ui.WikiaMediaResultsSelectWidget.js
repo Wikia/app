@@ -66,23 +66,13 @@ ve.ui.WikiaMediaResultsSelectWidget.prototype.onMouseUp = function ( e ) {
  * @param {Object} state The state to set
  */
 ve.ui.WikiaMediaResultsSelectWidget.prototype.updateState = function ( cartItems, changedItems, state ) {
-	var i, item;
+	var i, item,
+		items = changedItems ? changedItems : cartItems;
 
-	if ( changedItems && state ) {
-		// Sync a particular item
-		for ( i = 0; i < changedItems.length ; i++ ) {
-			item = this.getItemFromData( changedItems[i] );
-			if ( item ) {
-				item.setState( state );
-			}
-		}
-	} else {
-		// Compare all search results to the cart and set the state of the ones that are there
-		for ( i = 0; i < cartItems.length; i++ ) {
-			item = this.getItemFromData( cartItems[i] );
-			if ( item ) {
-				item.setState( 'selected' );
-			}
+	for ( i = 0; i < items.length ; i++ ) {
+		item = this.getItemFromData( items[i] );
+		if ( item ) {
+			item.setState( state );
 		}
 	}
 };

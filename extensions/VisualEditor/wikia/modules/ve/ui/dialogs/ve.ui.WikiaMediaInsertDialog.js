@@ -161,7 +161,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.onQueryInputKeydown = function ( e ) {
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onQueryRequestSearchDone = function ( items ) {
 	this.search.addItems( items );
-	this.searchResults.updateState( this.cartModel.getItems() );
+	this.searchResults.updateState( this.cartModel.getItems(), null, 'selected' );
 	this.pages.setPage( 'search' );
 };
 
