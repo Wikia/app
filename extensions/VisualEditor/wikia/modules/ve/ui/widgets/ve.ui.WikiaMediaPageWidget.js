@@ -107,8 +107,7 @@ ve.ui.WikiaMediaPageWidget.prototype.setupImage = function () {
  * @method
  */
 ve.ui.WikiaMediaPageWidget.prototype.onImageLoad = function () {
-	var $playArrow,
-		$playCircle;
+	var $playArrow, $playCircle;
 
 	if ( this.image.height > 325 ) {
 		this.image.height = 325;
