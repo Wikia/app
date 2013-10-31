@@ -46,6 +46,7 @@ Please go back and try again.',
 	'userrenametool-error-cannot-rename-account' => 'Renaming the user account on the shared global database failed.',
 	'userrenametool-error-cannot-create-block' => 'Creation of Phalanx block failed.',
 	'userrenametool-error-cannot-rename-unexpected' => 'Unexpected error occurred, check logs or try again.',
+	'userrenametool-error-invalid-ip' => 'Invalid IP addresses provided.',
 	'userrenametool-warnings-characters' => 'New username contains illegal characters!',
 	'userrenametool-warnings-maxlength' => 'New username\'s length cannot exceed 255 characters!',
 	'userrenametool-warn-repeat' => 'Attention! The user "<nowiki>$1</nowiki>" has already been renamed to "<nowiki>$2</nowiki>".
@@ -108,6 +109,7 @@ $messages['qqq'] = array(
 	'userrenametool-error-antispoof-notinstalled' => 'Message to show when AntiSpoof extension is not installed.',
 	'userrenametool-error-cannot-create-block' => 'When this user rename tool is running, a block is supposed to be put in place to prevent the user from being able to edit to prevent data corruption. This message appears as a warning that the block was not able to be added automatically and that the user will need to be blocked manually.',
 	'userrenametool-error-cannot-rename-unexpected' => 'Process failed on some point, detailed info with path to file and number of line can be found in logs',
+	'userrenametool-error-invalid-ip' => 'Error provided when an invalid IP address is provided to be renamed.',
 	'userrenametool-info-wiki-finished' => '',
 	'userrenametool-confirm-yes' => '{{Identical|Yes}}',
 	'userrenametool-confirm-no' => '{{Identical|No}}',
@@ -695,6 +697,7 @@ Molimo Vas da se vratite nazad i pokušate ponovo.',
 /** Catalan (català)
  * @author Alvaro Vidal-Abarca
  * @author Juanpabl
+ * @author Light of Cosmos
  * @author Marcmpujol
  * @author Paucabot
  * @author SMP
@@ -719,6 +722,7 @@ $messages['ca'] = array(
 	'userrenametool-phalanx-matches' => 'Coincidències en filtres de Phalanx: $1',
 	'userrenametool-confirm' => "Sí, reanomena l'usuari",
 	'userrenametool-submit' => 'Tramet',
+	'userrenametool-error-antispoof-notinstalled' => 'AntiSpoof no instal·lat.',
 	'userrenametool-errordoesnotexist' => "L'usuari «<nowiki>$1</nowiki>» no existeix",
 	'userrenametool-errorexists' => "L'usuari «<nowiki>$1</nowiki>» ja existeix",
 	'userrenametool-errorinvalid' => "El nom d'usuari «<nowiki>$1</nowiki>» no és vàlid",
@@ -735,6 +739,8 @@ Torneu enrere i torneu-ho a intentar.",
 	'userrenametool-error-cannot-rename-account' => "El canvi de nom d'usuari en la base de dades global compartida ha fallat.",
 	'userrenametool-error-cannot-create-block' => "La creació d'un filtre de bloqueig en Phalanx ha fallat.",
 	'userrenametool-error-cannot-rename-unexpected' => "S'ha produït un error inesperat, comprova els registres o prova un altre cop.",
+	'userrenametool-warnings-characters' => "El nom nou d'usuari conté caràcters il·legals!",
+	'userrenametool-warnings-maxlength' => "El nou nom d'usuari no pot sobrepassar els 255 caràcters!",
 	'userrenametool-warn-repeat' => 'Atenció! L\'usuari "<nowiki>$1</nowiki>" ja ha sigut reanomenat a "<nowiki>$2</nowiki>".
 Continua amb el procés sol si necessites actualitzar alguna informació que falta.',
 	'userrenametool-warn-table-missing' => 'La taula "<nowiki>$2</nowiki>" no existeix en la base de dades "<nowiki>$1</nowiki>."',
@@ -779,6 +785,8 @@ $messages['ce'] = array(
 	'userrenametool-submit' => 'Кхочушдé',
 	'userrenametool-page-exists' => 'Агӏо $1 йолуш ю цундела и ша юху дӏаязъян йиш яц.',
 	'userrenametool-move-log' => 'Автоматически декъашхочун цӀе хийцина дела «[[User:$1|$1]]» оцу «[[User:$2|$2]]»',
+	'right-renameuser' => 'Декъашхойн цӀе хийцар',
+	'action-renameuser' => 'декъашхойн цӀераш хийцар',
 );
 
 /** Sorani Kurdish (کوردی)
@@ -999,6 +1007,7 @@ Siehe [[Special:Stafflog|Mitarbeiterlog]] für Logs.',
 	'userrenametool-error-cannot-rename-account' => 'Die Umbenennung des Benutzerkontos in der gemeinsamen globalen Datenbank ist fehlgeschlagen.',
 	'userrenametool-error-cannot-create-block' => 'Fehler bei der Erstellung des Phalanx-Blocks',
 	'userrenametool-error-cannot-rename-unexpected' => 'Es ist ein unerwarteter Fehler aufgetreten. Bitte Logs überprüfen oder erneut versuchen.',
+	'userrenametool-error-invalid-ip' => 'Ungültige IP-Adresse angegeben.',
 	'userrenametool-warnings-characters' => 'Der neue Benutzername enthält ungültige Zeichen!',
 	'userrenametool-warnings-maxlength' => 'Die Länge des neuen Benutzernamens kann nicht länger sein als 255 Zeichen!',
 	'userrenametool-warn-repeat' => 'Achtung! Der Benutzer "<nowiki> $1 </nowiki>" wurde bereits umbenannt in "<nowiki> $2 </nowiki>".
@@ -1165,6 +1174,7 @@ Bonvolu retroigi kaj reprovi.',
  * @author Icvav
  * @author Jatrobat
  * @author Lin linao
+ * @author Ovruni
  * @author Remember the dot
  * @author Rhaijin
  * @author Sanbec
@@ -1191,6 +1201,8 @@ $messages['es'] = array(
 	'userrenametool-phalanx-matches' => 'Coincidencias en filtros de Phalanx: $1',
 	'userrenametool-confirm' => 'Sí, renombrar el usuario',
 	'userrenametool-submit' => 'Enviar',
+	'userrenametool-error-antispoof-conflict' => 'Advertencia AntiSpoof - ya existe un nombre de usuario similar a "<nowiki>$1</nowiki>".',
+	'userrenametool-error-antispoof-notinstalled' => 'AntiSpoof no está instalado.',
 	'userrenametool-errordoesnotexist' => 'El usuario «<nowiki>$1</nowiki>» no existe',
 	'userrenametool-errorexists' => 'El usuario «<nowiki>$1</nowiki>» ya existe',
 	'userrenametool-errorinvalid' => 'El nombre de usuario «<nowiki>$1</nowiki>» no es válido',
@@ -1207,6 +1219,9 @@ Por favor, vuelve atrás e inténtalo de nuevo.',
 	'userrenametool-error-cannot-rename-account' => 'El cambio de nombre de usuario en la base de datos global compartida falló.',
 	'userrenametool-error-cannot-create-block' => 'La creación de un filtro de bloqueo en Phalanx falló.',
 	'userrenametool-error-cannot-rename-unexpected' => 'Se produjo un error inesperado, comprueba los registros o intenta de nuevo.',
+	'userrenametool-error-invalid-ip' => 'Dirección IP no válida.',
+	'userrenametool-warnings-characters' => 'El nuevo nombre de usuario contiene caracteres no válidos!',
+	'userrenametool-warnings-maxlength' => 'La longitud del nuevo nombre de usuario no puede exceder de 255 caracteres!',
 	'userrenametool-warn-repeat' => '¡Atención! El usuario "<nowiki>$1</nowiki>" ya ha sido renombrado a "<nowiki>$2</nowiki>".
 Continúa con el proceso sólo si necesitas actualizar alguna información faltante.',
 	'userrenametool-warn-table-missing' => 'La tabla "<nowiki>$2</nowiki>" no existe en la base de datos "<nowiki>$1</nowiki>."',
@@ -1279,7 +1294,7 @@ $messages['eu'] = array(
 	'userrenametool-errortoomany' => '"<nowiki>$1</nowiki>" lankideak $2 {{PLURAL:$2|ekarpen|ekarpen}} ditu, $3 baino {{PLURAL:$3|ekarpen|ekarpen}} gehiago dituen lankide baten izena aldatzeak gunearen errendimenduan eragin txarrak izan ditzake.',
 	'userrenametool-success' => '"<nowiki>$1</nowiki>" lankidearen izen berria "<nowiki>$2</nowiki>" da',
 	'userrenametool-page-exists' => 'Badago $1 orrialdea, eta ezin da automatikoki gainidatzi.',
-	'userrenametool-page-moved' => '$1 orria $2 izenera aldatu da.',
+	'userrenametool-page-moved' => '«$1» orria «$2» izenera aldatu da.',
 	'userrenametool-page-unmoved' => 'Ezin izan da $1 orrialdea $2(e)ra mugitu.',
 	'userrenametool-logpage' => 'Erabiltzaileen izen aldaketa erregistroa',
 	'userrenametool-logpagetext' => 'Erabiltzaileen izen aldaketen erregistroa da hau',
@@ -1295,6 +1310,7 @@ $messages['ext'] = array(
 );
 
 /** Persian (فارسی)
+ * @author Ebraminio
  * @author Huji
  * @author Mjbmr
  */
@@ -1313,7 +1329,7 @@ $messages['fa'] = array(
 	'userrenametool-submit' => 'ثبت',
 	'userrenametool-errordoesnotexist' => 'نام کاربری «<nowiki>$1</nowiki>» وجود ندارد',
 	'userrenametool-errorexists' => 'نام کاربری «<nowiki>$1</nowiki>» استفاده شده‌است',
-	'userrenametool-errorinvalid' => 'نام کاربری «<nowiki>$1</nowiki>» غیر مجاز است',
+	'userrenametool-errorinvalid' => 'نام کاربری «<nowiki>$1</nowiki>» نامجاز است.',
 	'userrenametool-errortoomany' => 'کاربر «<nowiki>$1</nowiki>» دارای $2 {{PLURAL:$2|مشارکت|مشارکت}} است؛ تغییر نام کاربران با بیش از $3 ویرایش ممکن است عملکرد وبگاه را دچار مشکل کند.',
 	'userrenametool-error-request' => 'در دریافت درخواست مشکلی پیش آمد. لطفاً به صفحهٔ قبل بازگردید و دوباره تلاش کنید.',
 	'userrenametool-error-same-user' => 'شما نمی‌توانید نام یک کاربر را به همان نام قبلی‌اش تغییر دهید.',
@@ -1560,6 +1576,8 @@ $messages['gl'] = array(
 	'userrenametool-phalanx-matches' => 'Filtros de Phalanx que coinciden con $1:',
 	'userrenametool-confirm' => 'Si, renomear este usuario',
 	'userrenametool-submit' => 'Mudar o nome de usuario',
+	'userrenametool-error-antispoof-conflict' => 'Advertencia contra as usurpacións: Xa hai un nome de usuario similar a "<nowiki>$1</nowiki>".',
+	'userrenametool-error-antispoof-notinstalled' => 'AntiSpoof non está instalado.',
 	'userrenametool-errordoesnotexist' => 'O usuario "<nowiki>$1</nowiki>" non existe.',
 	'userrenametool-errorexists' => 'O usuario "<nowiki>$1</nowiki>" xa existe.',
 	'userrenametool-errorinvalid' => 'O nome de usuario "<nowiki>$1</nowiki>" non é válido.',
@@ -1576,6 +1594,9 @@ Volva atrás e inténteo de novo.',
 	'userrenametool-error-cannot-rename-account' => 'Houbo un erro ao mudar o nome á conta de usuario na base de datos global.',
 	'userrenametool-error-cannot-create-block' => 'Houbo un erro ao crear o bloqueo Phalanx.',
 	'userrenametool-error-cannot-rename-unexpected' => 'Produciuse un erro inesperado. Comprobe os rexistros ou inténteo de novo.',
+	'userrenametool-error-invalid-ip' => 'Os enderezos IP proporcionados non son válidos.',
+	'userrenametool-warnings-characters' => 'O novo nome de usuario contén caracteres ilegais!',
+	'userrenametool-warnings-maxlength' => 'A lonxitude do novo nome de usuario supera os 255 caracteres!',
 	'userrenametool-warn-repeat' => 'Atención! Ao usuario "<nowiki>$1</nowiki>" xa se lle mudou o nome por "<nowiki>$2</nowiki>".
 Continúe o proceso só se necesita actualizar información que falte.',
 	'userrenametool-warn-table-missing' => 'A táboa "<nowiki>$2</nowiki>" non existe na base de datos "<nowiki>$1</nowiki>".',
@@ -2475,6 +2496,7 @@ $messages['lb'] = array(
 	'userrenametool-warnings' => 'Warnungen:',
 	'userrenametool-confirm' => 'Jo, Benotzer ëmbenennen',
 	'userrenametool-submit' => 'Ëmbenennen',
+	'userrenametool-error-antispoof-notinstalled' => 'AntiSpoof ass net installéiert.',
 	'userrenametool-errordoesnotexist' => 'De Benotzer "<nowiki>$1</nowiki>" gëtt et net.',
 	'userrenametool-errorexists' => 'De Benotzer "<nowiki>$1</nowiki>" gët et schonn.',
 	'userrenametool-errorinvalid' => 'De Benotzernumm "<nowiki>$1</nowiki>" kann net benotzt ginn.',
@@ -2486,6 +2508,8 @@ $messages['lb'] = array(
 Gitt w.e.g. zréck a versicht et nach eng Kéier.',
 	'userrenametool-error-same-user' => 'Dir kënnt kee Benotzernumm änneren, an him dee selweschte Numm erëmginn.',
 	'userrenametool-error-extension-abort' => "Eng Erweiderung léissen d'Ëmbenennen net zou.",
+	'userrenametool-error-invalid-ip' => 'Net valabel IP-Adressen uginn.',
+	'userrenametool-warnings-characters' => 'Den neie Benotzernumm huet Zeechen déi net akzeptéiert ginn!',
 	'userrenametool-success' => 'De Benotzer "<nowiki>$1</nowiki>" gouf "<nowiki>$2</nowiki>" ëmbenannt.',
 	'userrenametool-confirm-intro' => 'Wëllt Dir dat wierklech maachen?',
 	'userrenametool-confirm-yes' => 'Jo',
@@ -2589,8 +2613,25 @@ $messages['lv'] = array(
  * @author Jagwar
  */
 $messages['mg'] = array(
+	'userrenametool' => 'Hanova anaram-pikambana',
 	'renameuser' => "Hanova ny anaran'ny mpikambana",
+	'userrenametool-warning' => "<strong>Vakio azafady ny fampahalalana manaraka</strong>:<p>Alohan'ny manova ny anaram-pikambana, marino tsara raha <strong>marina ireo fampahalalana nomena</strong> ary <strong>mila fotoana izy ity vao tanteraka</strong>.<br />
+Fantaro ihany koa fa nohon'ny antony ivelany, dia <strong>mety ho pejy fotsy no valiny</strong>, izay <b>tsy midika</b> fa tsy tanteraka ilay izy</p><p>Afaka manaraka ny firosony ianao amin'ny alalan'ny 
+[[Special:Stafflog|Laogin'ny mpiasa]], ary <strong>handefa mailaka anao ny rafitra rehefa vita tanteraka ilay asa</strong>.</p<",
+	'userrenametool-old' => 'Anaram-pikambana ankehitriny:',
+	'userrenametool-new' => 'Anaram-pikambana vaovao:',
+	'userrenametool-encoded' => 'URL voakaody:',
+	'userrenametool-reason' => "Anton'ny fanovana anarana:",
+	'userrenametool-move' => "Hanova ny anaran'ny pejim-pikambana, ny pejin-dresany ary ny zana-pejy",
+	'userrenametool-reserve' => "Atokana ho an'ny fampiasana ho avy ny anarana taloha",
+	'userrenametool-notify-renamed' => "Alefa mailaka any amin'ilay mpikambana voaova anarana rehefa vita",
+	'userrenametool-warnings' => 'Fampitandremana :',
+	'userrenametool-requested-rename' => 'Nangataka fiovana anarana ny mpikambana $1',
+	'userrenametool-did-not-request-rename' => 'Tsy nangataka fiovana anarana ny mpikambana $1',
+	'userrenametool-previously-renamed' => 'Efa voaova anarana $1',
+	'userrenametool-phalanx-matches' => "Sivana falanjy niady tamin'i $1:",
 	'userrenametool-confirm' => 'Eny, soloy anarana ilay mpikambana',
+	'userrenametool-submit' => 'Alefa',
 	'right-renameuser' => "Manova ny anaran'ny mpikambana",
 );
 
@@ -2981,6 +3022,7 @@ $messages['ne'] = array(
  * @author SPQRobin
  * @author Saruman
  * @author Siebrand
+ * @author Southparkfan
  */
 $messages['nl'] = array(
 	'userrenametool' => 'Gebruikersnaam wijzigen',
@@ -3002,6 +3044,8 @@ Zie ook het [[Special:Stafflog|Staflogboek]].',
 	'userrenametool-phalanx-matches' => 'Phalanxfilters die overeenkomen met $1:',
 	'userrenametool-confirm' => 'Ja, hernoem de gebruiker',
 	'userrenametool-submit' => 'Hernoemen',
+	'userrenametool-error-antispoof-conflict' => 'Waarschuwing van AntiSpoof: er is al een gebruikersnaam die lijkt op <nowiki>$1</nowiki>".',
+	'userrenametool-error-antispoof-notinstalled' => 'AntiSpoof is niet geïnstalleerd.',
 	'userrenametool-errordoesnotexist' => 'De gebruiker "<nowiki>$1</nowiki>" bestaat niet.',
 	'userrenametool-errorexists' => 'De gebruiker "<nowiki>$1</nowiki>" bestaat al.',
 	'userrenametool-errorinvalid' => 'De gebruikersnaam "<nowiki>$1</nowiki>" is ongeldig.',
@@ -3017,6 +3061,9 @@ Zie ook het [[Special:Stafflog|Staflogboek]].',
 	'userrenametool-error-cannot-rename-account' => 'De naamswijziging op de gedeelde globale database is mislukt.',
 	'userrenametool-error-cannot-create-block' => 'Het aanmaken van de Phalanx-blokkade is mislukt.',
 	'userrenametool-error-cannot-rename-unexpected' => 'Er is een onverwachte fout opgetreden. Controleer de logboeken of probeer het opnieuw.',
+	'userrenametool-error-invalid-ip' => 'Er zijn ongeldige IP-adressen opgegeven.',
+	'userrenametool-warnings-characters' => 'De nieuwe gebruikersnaam bevat ongeldige tekens!',
+	'userrenametool-warnings-maxlength' => 'De lengte van de nieuwe gebruikersnaam mag niet langer zijn dan 255 tekens!',
 	'userrenametool-warn-repeat' => 'Let op! De gebruikersnaam "<nowiki>$1</nowiki>" is al gewijzigd in "<nowiki>$2</nowiki>".
 Ga alleen door met de verwerking als u missende gegevens wilt bijwerken.',
 	'userrenametool-warn-table-missing' => 'De tabel "<nowiki>$2</nowiki>" bestaat niet in de database "<nowiki>$1</nowiki>".',
@@ -3227,6 +3274,7 @@ Wróć i spróbuj jeszcze raz.',
 	'userrenametool-error-cannot-rename-account' => 'Zmiana nazwy użytkownika w globalnej bazie danych nie powiodła się.',
 	'userrenametool-error-cannot-create-block' => 'Tworzenie bloku Phalanx nie powiodło się.',
 	'userrenametool-error-cannot-rename-unexpected' => 'Wystąpił nieoczekiwany błąd, sprawdź logi lub spróbuj ponownie.',
+	'userrenametool-error-invalid-ip' => 'Wprowadzono niewłaściwy adres IP.',
 	'userrenametool-warnings-characters' => 'Nowa nazwa użytkownika zawiera niedozwolone znaki!',
 	'userrenametool-warnings-maxlength' => 'Nowa nazwa użytkownika nie może przekraczać 255 znaków!',
 	'userrenametool-warn-repeat' => 'Uwaga! Nazwa użytkownika "<nowiki>$1</nowiki>" została już zmieniona na "<nowiki>$2</nowiki>".
@@ -3371,8 +3419,8 @@ $messages['ps'] = array(
 $messages['pt'] = array(
 	'userrenametool' => 'Alterar o nome de um utilizador',
 	'renameuser' => 'Alterar o nome do utilizador',
-	'userrenametool-warning' => 'Antes de alterar o nome de um utilizador, certifique-se de que todas as informações estão corretas e que o utilizador sabe que o processo pode demorar algum tempo.
-Pode ver os registros no [[Special:Stafflog|Registro da equipa]].',
+	'userrenametool-warning' => '<strong>Leia atentamente a seguinte informação</strong>:<p>Antes de alterar o nome de um utilizador, certifique-se de que <strong>toda a informação está correta</strong> e confime que o <strong>utilizador sabe que pode levar algum tempo a executar</strong>, por favor.
+<br />Saiba que devido a alguns fatores externos a primeira parte do processo <strong>pode resultar numa página vazia</strong>. Isto não significa que o processo não tenha sido devidamente concluído.</p><p>Pode monitorizar o progresso do processo através do [[Special:Stafflog|Registo da Equipa]] e <strong>o sistema envia-lhe uma mensagem quando todo o processo de alteração do nome estiver concluído</strong>.</p>',
 	'userrenametool-desc' => "Adiciona uma [[Special:UserRenameTool|página especial]] para alterar o nome de um utilizador (requer o privilégio ''renameuser'') e processar todos os dados relacionados",
 	'userrenametool-old' => 'Nome de utilizador atual:',
 	'userrenametool-new' => 'Novo nome de utilizador:',
@@ -3425,7 +3473,7 @@ Quando este terminar, receberá uma notificação por correio electrónico.',
 	'userrenametool-finished-email-body-text' => 'O processo de alteração de "<nowiki>$1</nowiki>" para "<nowiki>$2</nowiki>" terminou.',
 	'userrenametool-finished-email-body-html' => 'O processo de alteração de "<nowiki>$1</nowiki>" para "<nowiki>$2</nowiki>" terminou.',
 	'userrenametool-logpage' => 'Registo de alteração do nome de utilizador',
-	'userrenametool-logpagetext' => 'Este é um registro de alterações efetuadas a nomes de utilizadores.',
+	'userrenametool-logpagetext' => 'Este é um registo das alterações efetuadas a nomes de utilizador.',
 	'userrenametool-logentry' => 'alterou o nome de $1 para "$2"',
 	'userrenametool-log' => '{{PLURAL:$1|1 edição|$1 edições}}. Motivo: $2',
 	'userrenametool-move-log' => 'Página movida automaticamente ao alterar o nome do utilizador "[[User:$1|$1]]" para "[[User:$2|$2]]"',
@@ -3632,6 +3680,8 @@ $messages['ru'] = array(
 	'userrenametool-phalanx-matches' => 'Фильтры Phalanx соответствуют $1:',
 	'userrenametool-confirm' => 'Да, переименовать участника',
 	'userrenametool-submit' => 'Выполнить',
+	'userrenametool-error-antispoof-conflict' => 'Предупреждение AntiSpoof — уже есть имя пользователя, похожее на «<nowiki>$1</nowiki>».',
+	'userrenametool-error-antispoof-notinstalled' => 'AntiSpoof не установлен.',
 	'userrenametool-errordoesnotexist' => 'Участник с именем «<nowiki>$1</nowiki>» не зарегистрирован.',
 	'userrenametool-errorexists' => 'Участник с именем «<nowiki>$1</nowiki>» уже зарегистрирован.',
 	'userrenametool-errorinvalid' => 'Недопустимое имя участника «<nowiki>$1</nowiki>»',
@@ -3647,6 +3697,9 @@ $messages['ru'] = array(
 	'userrenametool-error-cannot-rename-account' => 'Переименование учетной записи участника в общей глобальной базе данных не удалось.',
 	'userrenametool-error-cannot-create-block' => 'Создание блока с помощью Phalanx не удалось.',
 	'userrenametool-error-cannot-rename-unexpected' => 'Произошла непредвиденная ошибка, проверьте журналы или попробуйте еще раз.',
+	'userrenametool-error-invalid-ip' => 'Предоставлен недопустимый IP-адрес.',
+	'userrenametool-warnings-characters' => 'Новое имя пользователя содержит недопустимые символы!',
+	'userrenametool-warnings-maxlength' => 'Длина нового имени пользователя не может превышать 255 символов!',
 	'userrenametool-warn-repeat' => 'Внимание! Участник «<nowiki>$1</nowiki>» уже был переименован в «<nowiki>$2</nowiki>».
 Продолжайте обработку только в том случае, когда вам необходимо обновить некоторую недостающую информацию.',
 	'userrenametool-warn-table-missing' => 'Таблица «<nowiki>$2</nowiki>» не существует в базе данных «<nowiki>$1</nowiki>».',
@@ -3809,6 +3862,7 @@ $messages['sk'] = array(
 
 /** Slovenian (slovenščina)
  * @author Dbc334
+ * @author Eleassar
  */
 $messages['sl'] = array(
 	'userrenametool' => 'Spreminjanje uporabniškega imena',
@@ -3818,6 +3872,7 @@ $messages['sl'] = array(
 	'userrenametool-desc' => "Doda [[Special:UserRenameTool|posebno stran]] za preimenovanje uporabnika (potrebna je pravica ''renameuser'') in obdela vse sorodne podatke",
 	'userrenametool-old' => 'Trenutno uporabniško ime:',
 	'userrenametool-new' => 'Novo uporabniško ime:',
+	'userrenametool-encoded' => 'Zakodiran URL:',
 	'userrenametool-reason' => 'Razlog za preimenovanje:',
 	'userrenametool-move' => 'Prestavi uporabniške in pogovorne strani (ter njihove podstrani) na novo ime',
 	'userrenametool-reserve' => 'Blokiraj staro uporabniško ime pred nadaljnjo uporabo',
@@ -3829,6 +3884,8 @@ $messages['sl'] = array(
 	'userrenametool-phalanx-matches' => 'Filtri Phalanx, ki se ujemajo z $1:',
 	'userrenametool-confirm' => 'Da, preimenuj uporabnika',
 	'userrenametool-submit' => 'Spremeni uporabniško ime',
+	'userrenametool-error-antispoof-conflict' => 'Opozorilo pred prevaro - uporabniško ime, podobno »<nowiki>$1</nowiki>«, že obstaja.',
+	'userrenametool-error-antispoof-notinstalled' => 'AntiSpoof ni nameščen.',
 	'userrenametool-errordoesnotexist' => 'Uporabnik »<nowiki>$1</nowiki>« ne obstaja.',
 	'userrenametool-errorexists' => 'Uporabnik »<nowiki>$1</nowiki>« že obstaja.',
 	'userrenametool-errorinvalid' => '»<nowiki>$1</nowiki>« ni veljavno uporabniško ime.',
@@ -3845,6 +3902,9 @@ Prosimo, pojdite nazaj in poskusite znova.',
 	'userrenametool-error-cannot-rename-account' => 'Preimenovanje uporabniškega računa v skupni globalni zbirki podatkov ni uspelo.',
 	'userrenametool-error-cannot-create-block' => 'Ustvarjanje blokade Phalanx ni uspelo.',
 	'userrenametool-error-cannot-rename-unexpected' => 'Prišlo je do nepričakovane napake; preverite dnevnike ali poskusite znova.',
+	'userrenametool-error-invalid-ip' => 'Naveden je neveljaven IP-naslov.',
+	'userrenametool-warnings-characters' => 'Novo uporabniško ime vsebuje prepovedane znake!',
+	'userrenametool-warnings-maxlength' => 'Dolžina novega uporabniškega imena ne sme presegati 255 znakov!',
 	'userrenametool-warn-repeat' => 'Pozor! Uporabnik »<nowiki>$1</nowiki>« je že preimenovan v »<nowiki>$2</nowiki>«.
 Nadaljujte obdelavo le, če morate posodobiti kakšne manjkajoče informacije.',
 	'userrenametool-warn-table-missing' => 'Tabela »<nowiki>$2</nowiki>« v zbirki podatkov »<nowiki>$1</nowiki>« ne obstaja.',
@@ -4058,6 +4118,7 @@ Se [[Special:Stafflog|personalloggen]] för loggar.',
 	'userrenametool-error-cannot-rename-account' => 'Att byta namn på användarkontot på den delade globala databasen misslyckades.',
 	'userrenametool-error-cannot-create-block' => 'Misslyckades att skapa ett Phalanx-block.',
 	'userrenametool-error-cannot-rename-unexpected' => 'Oväntat fel uppstod, kolla loggarna eller försök igen.',
+	'userrenametool-error-invalid-ip' => 'Ogiltig tillhandahållen IP-adress.',
 	'userrenametool-warnings-characters' => 'Det nya användarnamnet innehåller ogiltiga tecken!',
 	'userrenametool-warnings-maxlength' => 'Längden för det nya användarnamnet får inte överskrida 255 tecken!',
 	'userrenametool-warn-repeat' => 'OBS! Användaren "<nowiki>$1</nowiki>" har redan byt namn till "<nowiki>$2</nowiki>".
@@ -4389,6 +4450,7 @@ $messages['uk'] = array(
 	'userrenametool-error-cannot-rename-account' => 'Перейменування облікового запису користувача у спільній глобальній базі даних не вдалося.',
 	'userrenametool-error-cannot-create-block' => 'Невдале створення блоку Phalanx.',
 	'userrenametool-error-cannot-rename-unexpected' => 'Сталася неочікувана помилка, перевірте журнали або повторіть спробу.',
+	'userrenametool-error-invalid-ip' => 'Надано недопустиму IP-адресу.',
 	'userrenametool-warnings-characters' => "Нове ім'я користувача містить неприпустимі символи!",
 	'userrenametool-warnings-maxlength' => 'Довжина нового імені користувача не може перевищувати 255 символів!',
 	'userrenametool-warn-repeat' => 'Увага! Учасник „<nowiki>$1</nowiki>“ вже перейменований у „<nowiki>$2</nowiki>“.
@@ -4640,6 +4702,7 @@ $messages['yue'] = array(
  * @author Dimension
  * @author Gzdavidwong
  * @author Hydra
+ * @author Hzy980512
  * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
@@ -4658,6 +4721,8 @@ $messages['zh-hans'] = array(
 	'userrenametool-previously-renamed' => '用户 $1 已经要求了重命名',
 	'userrenametool-confirm' => '是，为用户重命名',
 	'userrenametool-submit' => '提交',
+	'userrenametool-error-antispoof-conflict' => 'AntiSpoof警告 - 现已有一个用户名和“<nowiki>$1</nowiki>”相似。',
+	'userrenametool-error-antispoof-notinstalled' => 'AntiSpoof未安装。',
 	'userrenametool-errordoesnotexist' => '用户"<nowiki>$1</nowiki>"不存在',
 	'userrenametool-errorexists' => '用户"<nowiki>$1</nowiki>"已存在',
 	'userrenametool-errorinvalid' => '用户名"<nowiki>$1</nowiki>"不可用',
@@ -4671,6 +4736,7 @@ $messages['zh-hans'] = array(
 	'userrenametool-error-same-user' => '您不可以更改一位用户是跟之前的东西一样。',
 	'userrenametool-error-extension-abort' => '一个扩展阻碍了重命名进程。',
 	'userrenametool-error-cannot-rename-account' => '在共享的全局数据库重命名用户失败。',
+	'userrenametool-warnings-maxlength' => '新用户名长度不可超过255个字符！',
 	'userrenametool-success' => '用户"<nowiki>$1</nowiki>"已经更名为"<nowiki>$2</nowiki>"',
 	'userrenametool-confirm-intro' => '你真的想这样做呢？',
 	'userrenametool-confirm-yes' => '是',

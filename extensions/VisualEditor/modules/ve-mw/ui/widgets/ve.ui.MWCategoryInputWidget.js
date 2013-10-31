@@ -16,7 +16,7 @@
  *
  * @constructor
  * @param {ve.ui.MWCategoryWidget} categoryWidget
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ui.MWCategoryInputWidget = function VeUiMWCategoryInputWidget( categoryWidget, config ) {
 	// Config intialization

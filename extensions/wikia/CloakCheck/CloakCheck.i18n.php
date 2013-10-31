@@ -438,6 +438,13 @@ $messages['lb'] = array(
 	'cloakcheck-process-edits-no' => 'De Benotzer huet net genuch Ännerungen.',
 );
 
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'cloakcheck-form-username' => 'نوم كاروری:',
+);
+
 /** Lithuanian (lietuvių)
  * @author Eitvys200
  */
@@ -596,7 +603,7 @@ $messages['pms'] = array(
 $messages['ps'] = array(
 	'cloakcheck-form-username' => 'کارن-نوم:',
 	'cloakcheck-process-username' => 'کارن-نوم: $1',
-	'cloakcheck-process-accountage-no' => 'ګڼون لا تر اوسه نوی دی.',
+	'cloakcheck-process-accountage-no' => 'گڼون لا تر اوسه نوی دی.',
 );
 
 /** Portuguese (português)
@@ -835,6 +842,27 @@ $messages['uk'] = array(
 	'cloakcheck-process-emailconf-no' => 'Адреса електронної пошти не підтверджена.',
 	'cloakcheck-process-edits-yes' => 'Користувач має достатньо редагувань.',
 	'cloakcheck-process-edits-no' => 'Користувач не має достатньо редагувань.',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'cloakcheck' => 'IRC áo choàng hội đủ điều kiện phòng',
+	'cloakcheck-desc' => 'Cung cấp một giao diện All-in-one để xác minh yêu cầu cho một áo choàng IRC',
+	'right-cloakcheck' => 'Có thể kiểm tra IRC cloak liên quan thông tin về người dùng khác',
+	'cloakcheck-form-username' => 'Tên người dùng:',
+	'cloakcheck-form-check' => 'Kiểm tra tên người dùng',
+	'cloakcheck-form-check-self' => 'Kiểm tra IRC áo choàng hội đủ điều kiện',
+	'cloakcheck-process-empty' => 'Tên người dùng không phải là sản phẩm nào.',
+	'cloakcheck-process-notexist' => 'Tên người dùng không tồn tại.',
+	'cloakcheck-process-username' => 'Tên người dùng: $1',
+	'cloakcheck-process-accountage-yes' => 'Tài khoản là đủ tuổi.',
+	'cloakcheck-process-accountage-no' => 'Tài khoản là quá mới.',
+	'cloakcheck-process-emailconf-yes' => 'E-mail địa chỉ xác nhận.',
+	'cloakcheck-process-emailconf-no' => 'Địa chỉ e-mail không được xác nhận.',
+	'cloakcheck-process-edits-yes' => 'Người dùng có đủ chỉnh sửa của bạn.',
+	'cloakcheck-process-edits-no' => 'Người dùng không có đủ chỉnh sửa của bạn.',
 );
 
 /** Simplified Chinese (中文（简体）‎)

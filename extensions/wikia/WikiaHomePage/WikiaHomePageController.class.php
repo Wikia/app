@@ -46,12 +46,12 @@ class WikiaHomePageController extends WikiaController {
 	const hubsGridImgHeight = 160;
 	// skin change values end
 
-	const INITIAL_BATCHES_NUMBER = 5;
+	const INITIAL_BATCHES_NUMBER = 3;
 
 	//failsafe
 	const FAILSAFE_ARTICLE_TITLE = 'Failsafe';
 
-	const HUBS_IMAGES_MEMC_KEY_VER = '1.03';
+	const HOMEPAGE_MEMC_KEY_VER = '1.04';
 
 	/**
 	 * @var WikiaHomePageHelper
@@ -93,6 +93,8 @@ class WikiaHomePageController extends WikiaController {
 			'wgWikiaBatchesStatus' => $batches['status'],
 			'wgInitialWikiBatchesForVisualization' => $batches['batches']
 		]);
+
+		OasisController::addBodyClass('WikiaHome');
 	}
 
 	public function wikiaMobileIndex() {
@@ -143,11 +145,11 @@ class WikiaHomePageController extends WikiaController {
 	public function getStats() {
 		wfProfileIn(__METHOD__);
 
-		$memKey = wfSharedMemcKey('wikiahomepage', 'stats', $this->wg->contLang->getCode());
+		$memKey = wfSharedMemcKey('wikiahomepage', 'stats', $this->wg->contLang->getCode(), self::HOMEPAGE_MEMC_KEY_VER);
 		$stats = $this->wg->Memc->get($memKey);
 		if (empty($stats)) {
 			$stats['visitors'] = $this->helper->getStatsFromArticle('StatsVisitors');
-			$stats['mobileVisitors'] = $this->helper->getStatsFromArticle('StatsMobileVisitors');
+			$stats['mobilePercentage'] = $this->helper->getStatsFromArticle('MobilePercentage') / 100.0;
 
 			$stats['edits'] = $this->helper->getEdits();
 			if (empty($stats['edits'])) {
@@ -182,17 +184,6 @@ class WikiaHomePageController extends WikiaController {
 	protected function getList() {
 		$wikiBatches = $this->helper->getWikiBatches($this->wg->cityId, $this->wg->contLang->getCode(), self::INITIAL_BATCHES_NUMBER);
 
-		//according to CityVisualization:
-		//complexity limited by maximum number of elements ( 5 in $resultingBatches, 2 in $resultingBatch, 17 in $batchPromotedDemoted )
-		foreach($wikiBatches as &$wikiBatch) {
-			foreach($wikiBatch as &$batchPromotedDemoted) {
-				foreach($batchPromotedDemoted as &$batch) {
-					// replace image thumbnails with JPG
-					$batch['image'] = ImagesService::overrideThumbnailFormat($batch['image'], ImagesService::EXT_JPG);
-				}
-			}
-		}
-
 		if (!empty($wikiBatches)) {
 			Wikia::log(__METHOD__, false, ' pulling visualization data from db');
 			$status = 'true';
@@ -205,7 +196,7 @@ class WikiaHomePageController extends WikiaController {
 
 				$failoverData = $this->parseSourceMessage();
 				$visualization = $this->getVisualization();
-				$visualization->generateBatches($this->wg->cityId, $this->wg->contLang->getCode(), $failoverData, true);
+				$visualization->generateBatches($this->wg->cityId, $failoverData);
 				$wikiBatches = $this->helper->getWikiBatches($this->wg->cityId, $this->wg->contLang->getCode(), self::INITIAL_BATCHES_NUMBER);
 			} catch (Exception $e) {
 				Wikia::log(__METHOD__, false, ' pulling failover visualization data from file');
@@ -214,7 +205,7 @@ class WikiaHomePageController extends WikiaController {
 
 				$failoverData = $this->getFailoverWikiList();
 				$visualization = $this->getVisualization();
-				$visualization->generateBatches($this->wg->cityId, $this->wg->contLang->getCode(), $failoverData, true);
+				$visualization->generateBatches($this->wg->cityId, $failoverData);
 				$wikiBatches = $this->helper->getWikiBatches($this->wg->cityId, $this->wg->contLang->getCode(), self::INITIAL_BATCHES_NUMBER);
 			}
 		}

@@ -14,7 +14,7 @@
  *
  * @constructor
  * @param {ve.ui.SurfaceToolbar} toolbar
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ui.AnnotationTool = function VeUiAnnotationTool( toolbar, config ) {
 	// Parent constructor
@@ -69,7 +69,7 @@ ve.ui.AnnotationTool.prototype.onUpdateState = function ( nodes, full ) {
  * @extends ve.ui.AnnotationTool
  * @constructor
  * @param {ve.ui.SurfaceToolbar} toolbar
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ui.BoldAnnotationTool = function VeUiBoldAnnotationTool( toolbar, config ) {
 	ve.ui.AnnotationTool.call( this, toolbar, config );
@@ -114,7 +114,7 @@ ve.ui.toolFactory.register( ve.ui.BoldAnnotationTool );
  * @extends ve.ui.AnnotationTool
  * @constructor
  * @param {ve.ui.SurfaceToolbar} toolbar
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ui.ItalicAnnotationTool = function VeUiItalicAnnotationTool( toolbar, config ) {
 	ve.ui.AnnotationTool.call( this, toolbar, config );
@@ -159,7 +159,7 @@ ve.ui.toolFactory.register( ve.ui.ItalicAnnotationTool );
  * @extends ve.ui.AnnotationTool
  * @constructor
  * @param {ve.ui.SurfaceToolbar} toolbar
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ui.CodeAnnotationTool = function VeUiCodeAnnotationTool( toolbar, config ) {
 	ve.ui.AnnotationTool.call( this, toolbar, config );
@@ -179,7 +179,7 @@ ve.ui.toolFactory.register( ve.ui.CodeAnnotationTool );
  * @extends ve.ui.AnnotationTool
  * @constructor
  * @param {ve.ui.SurfaceToolbar} toolbar
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ui.StrikethroughAnnotationTool = function VeUiStrikethroughAnnotationTool( toolbar, config ) {
 	ve.ui.AnnotationTool.call( this, toolbar, config );
@@ -203,7 +203,7 @@ ve.ui.toolFactory.register( ve.ui.StrikethroughAnnotationTool );
  * @extends ve.ui.AnnotationTool
  * @constructor
  * @param {ve.ui.SurfaceToolbar} toolbar
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ui.UnderlineAnnotationTool = function VeUiUnderlineAnnotationTool( toolbar, config ) {
 	ve.ui.AnnotationTool.call( this, toolbar, config );
@@ -227,7 +227,7 @@ ve.ui.toolFactory.register( ve.ui.UnderlineAnnotationTool );
  * @extends ve.ui.AnnotationTool
  * @constructor
  * @param {ve.ui.SurfaceToolbar} toolbar
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ui.SubscriptAnnotationTool = function VeUiSubscriptAnnotationTool( toolbar, config ) {
 	ve.ui.AnnotationTool.call( this, toolbar, config );
@@ -248,7 +248,7 @@ ve.ui.toolFactory.register( ve.ui.SubscriptAnnotationTool );
  * @extends ve.ui.AnnotationTool
  * @constructor
  * @param {ve.ui.SurfaceToolbar} toolbar
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ui.SuperscriptAnnotationTool = function VeUiSuperscriptAnnotationTool( toolbar, config ) {
 	ve.ui.AnnotationTool.call( this, toolbar, config );

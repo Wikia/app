@@ -13,35 +13,14 @@
  *
  * @class
  * @extends ve.ui.MWDialog
- * @mixins ve.ui.PagedDialog
  *
  * @constructor
  * @param {ve.ui.Surface} surface
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ui.MWTransclusionDialog = function VeUiMWTransclusionDialog( surface, config ) {
-	// Configuration initialization
-	config = ve.extendObject( {}, config, {
-		'editable': true,
-		'adders': [
-			{
-				'name': 'template',
-				'icon': 'template',
-				'title': ve.msg( 'visualeditor-dialog-transclusion-add-template' )
-			},
-			{
-				'name': 'content',
-				'icon': 'source',
-				'title': ve.msg( 'visualeditor-dialog-transclusion-add-content' )
-			}
-		]
-	} );
-
 	// Parent constructor
 	ve.ui.MWDialog.call( this, surface, config );
-
-	// Mixin constructors
-	ve.ui.PagedDialog.call( this, surface, config );
 
 	// Properties
 	this.node = null;
@@ -52,8 +31,6 @@ ve.ui.MWTransclusionDialog = function VeUiMWTransclusionDialog( surface, config 
 /* Inheritance */
 
 ve.inheritClass( ve.ui.MWTransclusionDialog, ve.ui.MWDialog );
-
-ve.mixinClass( ve.ui.MWTransclusionDialog, ve.ui.PagedDialog );
 
 /* Static Properties */
 
@@ -70,22 +47,36 @@ ve.ui.MWTransclusionDialog.prototype.initialize = function () {
 	// Parent method
 	ve.ui.MWDialog.prototype.initialize.call( this );
 
-	// Setup for PagedDialog
-	this.initializePages();
-
 	// Properties
 	this.applyButton = new ve.ui.ButtonWidget( {
 		'$$': this.$$, 'label': ve.msg( 'visualeditor-dialog-action-apply' ), 'flags': ['primary']
 	} );
+	this.pagedOutlineLayout = new ve.ui.PagedOutlineLayout( {
+		'$$': this.frame.$$,
+		'editable': true,
+		'adders': [
+			{
+				'name': 'template',
+				'icon': 'template',
+				'title': ve.msg( 'visualeditor-dialog-transclusion-add-template' )
+			},
+			{
+				'name': 'content',
+				'icon': 'source',
+				'title': ve.msg( 'visualeditor-dialog-transclusion-add-content' )
+			}
+		]
+	} );
 
 	// Events
-	this.outlineControlsWidget.connect( this, {
+	this.pagedOutlineLayout.getOutlineControls().connect( this, {
 		'move': 'onOutlineControlsMove',
 		'add': 'onOutlineControlsAdd'
 	} );
 	this.applyButton.connect( this, { 'click': [ 'close', 'apply' ] } );
 
 	// Initialization
+	this.$body.append( this.pagedOutlineLayout.$ );
 	this.$foot.append( this.applyButton.$ );
 };
 
@@ -145,7 +136,7 @@ ve.ui.MWTransclusionDialog.prototype.onClose = function ( action ) {
 	this.transclusion.disconnect( this );
 	this.transclusion.abortRequests();
 	this.transclusion = null;
-	this.clearPages();
+	this.pagedOutlineLayout.clearPages();
 	this.node = null;
 	this.content = null;
 };
@@ -168,7 +159,7 @@ ve.ui.MWTransclusionDialog.prototype.onAddPart = function ( part ) {
 	}
 	if ( page ) {
 		page.index = this.getPageIndex( part );
-		this.addPage( part.getId(), page );
+		this.pagedOutlineLayout.addPage( part.getId(), page );
 		// Add existing params to templates
 		if ( part instanceof ve.dm.MWTemplateModel ) {
 			names = part.getParameterNames();
@@ -197,7 +188,7 @@ ve.ui.MWTransclusionDialog.prototype.onAddPart = function ( part ) {
 		pending = this.pending[i];
 		if ( pending.part === part ) {
 			// Auto-select new part if placeholder is still selected
-			item = this.outlineWidget.getSelectedItem();
+			item = this.pagedOutlineLayout.getOutline().getSelectedItem();
 			if ( item.getData() === pending.placeholder.getId() ) {
 				this.setPageByName( part.getId() );
 			}
@@ -221,11 +212,11 @@ ve.ui.MWTransclusionDialog.prototype.onRemovePart = function ( part ) {
 	if ( part instanceof ve.dm.MWTemplateModel ) {
 		params = part.getParameters();
 		for ( name in params ) {
-			this.removePage( params[name].getId() );
+			this.pagedOutlineLayout.removePage( params[name].getId() );
 		}
 		part.disconnect( this );
 	}
-	this.removePage( part.getId() );
+	this.pagedOutlineLayout.removePage( part.getId() );
 };
 
 /**
@@ -237,7 +228,7 @@ ve.ui.MWTransclusionDialog.prototype.onRemovePart = function ( part ) {
 ve.ui.MWTransclusionDialog.prototype.onAddParameter = function ( param ) {
 	var page = this.getParameterPage( param );
 	page.index = this.getPageIndex( param );
-	this.addPage( param.getId(), page );
+	this.pagedOutlineLayout.addPage( param.getId(), page );
 };
 
 /**
@@ -247,7 +238,7 @@ ve.ui.MWTransclusionDialog.prototype.onAddParameter = function ( param ) {
  * @param {ve.dm.MWTemplateParameterModel} param Removed param
  */
 ve.ui.MWTransclusionDialog.prototype.onRemoveParameter = function ( param ) {
-	this.removePage( param.getId() );
+	this.pagedOutlineLayout.removePage( param.getId() );
 	// Return to template page
 	this.setPageByName( param.getTemplate().getId() );
 };
@@ -261,7 +252,7 @@ ve.ui.MWTransclusionDialog.prototype.onRemoveParameter = function ( param ) {
 ve.ui.MWTransclusionDialog.prototype.onOutlineControlsMove = function ( places ) {
 	var part, index, name,
 		parts = this.transclusion.getParts(),
-		item = this.outlineWidget.getSelectedItem();
+		item = this.pagedOutlineLayout.getOutline().getSelectedItem();
 
 	if ( item ) {
 		name = item.getData();
@@ -301,7 +292,7 @@ ve.ui.MWTransclusionDialog.prototype.onOutlineControlsAdd = function ( type ) {
  */
 ve.ui.MWTransclusionDialog.prototype.getPartInsertionIndex = function () {
 	var parts = this.transclusion.getParts(),
-		item = this.outlineWidget.getSelectedItem();
+		item = this.pagedOutlineLayout.getOutline().getSelectedItem();
 
 	if ( item ) {
 		return ve.indexOf( this.transclusion.getPartFromId( item.getData() ), parts ) + 1;
@@ -318,7 +309,9 @@ ve.ui.MWTransclusionDialog.prototype.getPartInsertionIndex = function () {
  * @param {string} name Page name
  */
 ve.ui.MWTransclusionDialog.prototype.setPageByName = function ( name ) {
-	this.outlineWidget.selectItem( this.outlineWidget.getItemFromData( name ) );
+	this.pagedOutlineLayout.getOutline().selectItem(
+		this.pagedOutlineLayout.getOutline().getItemFromData( name )
+	);
 };
 
 /**

@@ -20,6 +20,9 @@ $wgAutoloadClasses['LicensedVideoSwapHooksHelper'] = $dir.'LicensedVideoSwapHook
 // i18n mapping
 $wgExtensionMessagesFiles['LicensedVideoSwap'] = $dir.'LicensedVideoSwap.i18n.php';
 
+// Aliases
+$wgExtensionMessagesFiles['LicensedVideoSwapAliases'] = __DIR__ . '/LicensedVideoSwap.aliases.php';
+
 // special pages
 $wgSpecialPages['LicensedVideoSwap'] = 'LicensedVideoSwapSpecialController';
 
@@ -32,7 +35,9 @@ $wgGroupPermissions['sysop']['licensedvideoswap'] = true;
 $wgGroupPermissions['helper']['licensedvideoswap'] = true;
 $wgGroupPermissions['vstf']['licensedvideoswap'] = true;
 
+// hooks
 $wgHooks['PageHeaderIndexExtraButtons'][] = 'LicensedVideoSwapHooksHelper::onPageHeaderIndexExtraButtons';
+$wgHooks['OasisAddPageDeletedConfirmationMessage'][] = 'LicensedVideoSwapHooksHelper::onOasisAddPageDeletedConfirmationMessage';
 
 // register messages package for JS
 JSMessages::registerPackage('LVS', array(
@@ -42,4 +47,6 @@ JSMessages::registerPackage('LVS', array(
 	'lvs-confirm-undo-swap-message',
 	'lvs-confirm-undo-keep-title',
 	'lvs-confirm-undo-keep-message',
+	'lvs-button-yes',
+	'lvs-button-no'
 ));

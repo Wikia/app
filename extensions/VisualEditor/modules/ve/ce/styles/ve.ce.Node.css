@@ -122,6 +122,12 @@
 	background: rgba(0,0,0,1);
 }
 
+/* ve.ce.GeneratedContentNode */
+
+.ve-ce-generatedContentNode-generating {
+	opacity: 0.5;
+}
+
 /* ve.ce.ImageNode */
 
 .ve-ce-imageNode {

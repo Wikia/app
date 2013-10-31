@@ -14,7 +14,7 @@
  *
  * @constructor
  * @param {ve.dm.MWReferenceListNode} model Model to observe
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ce.MWReferenceListNode = function VeCeMWReferenceListNode( model, config ) {
 	// Parent constructor
@@ -142,7 +142,11 @@ ve.ce.MWReferenceListNode.prototype.update = function () {
 	this.$refmsg.detach();
 
 	if ( !nodes || !nodes.indexOrder.length ) {
-		this.$refmsg.text( ve.msg( 'visualeditor-referencelist-isempty', refGroup ) );
+		if ( refGroup !== '' ) {
+			this.$refmsg.text( ve.msg( 'visualeditor-referencelist-isempty', refGroup ) );
+		} else {
+			this.$refmsg.text( ve.msg( 'visualeditor-referencelist-isempty-default' ) );
+		}
 		this.$.append( this.$refmsg );
 	} else {
 		for ( i = 0, iLen = nodes.indexOrder.length; i < iLen; i++ ) {

@@ -13,7 +13,7 @@
  * @mixins ve.ui.LabeledElement
  *
  * @constructor
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  * @cfg {string} [icon] Symbolic icon name
  */
 ve.ui.FieldsetLayout = function VeUiFieldsetLayout( config ) {

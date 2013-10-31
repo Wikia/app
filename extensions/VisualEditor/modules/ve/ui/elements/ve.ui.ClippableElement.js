@@ -90,6 +90,11 @@ ve.ui.ClippableElement.prototype.isClipped = function () {
  * @chainable
  */
 ve.ui.ClippableElement.prototype.clip = function () {
+	if ( !this.clipping ) {
+		// this.$clippableContainer and this.$clippableWindow are null, so the below will fail
+		return this;
+	}
+
 	var buffer = 10,
 		cOffset = this.$clippable.offset(),
 		ccOffset = this.$clippableContainer.offset() || { 'top': 0, 'left': 0 },

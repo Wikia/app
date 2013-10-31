@@ -16,7 +16,7 @@
  *
  * @constructor
  * @param {ve.dm.LeafNode} model Model to observe
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ce.LeafNode = function VeCeLeafNode( model, config ) {
 	// Mixin constructor

@@ -72,11 +72,20 @@ $messages['bcl'] = array(
 );
 
 /** Bulgarian (български)
+ * @author Aquilax
  * @author DCLXVI
  */
 $messages['bg'] = array(
+	'category-exhibition-sorttype' => 'Начин на сортиране:',
+	'category-exhibition-alphabetical' => 'По азбучен ред',
+	'category-exhibition-mostvisited' => 'Най-посещавани',
+	'category-exhibition-recentedits' => 'Последно променени',
 	'category-exhibition-page-header' => 'Страници в категория „$1“',
 	'category-exhibition-subcategories-header' => 'Подкатегории',
+	'category-exhibition-media-header' => 'Медия в категория "$1"',
+	'category-exhibition-blogs-header' => 'Блог постове',
+	'category-exhibition-display-old' => 'Списъчен изглед на категория',
+	'category-exhibition-display-new' => 'Изложбен изглед на категория',
 );
 
 /** Breton (brezhoneg)
@@ -617,7 +626,7 @@ $messages['sv'] = array(
 	'category-exhibition-recentedits' => 'Nyligen ändrade',
 	'category-exhibition-page-header' => 'Sidor i kategori "$1"',
 	'category-exhibition-subcategories-header' => 'Underkategorier',
-	'category-exhibition-media-header' => 'Media i kategori "$1"',
+	'category-exhibition-media-header' => 'Media i kategorin "$1"',
 	'category-exhibition-blogs-header' => 'Blogg-inlägg',
 	'category-exhibition-display-old' => 'Kategori-listvyn',
 	'category-exhibition-display-new' => 'Visning av kategoriutställning',
@@ -668,6 +677,22 @@ $messages['uk'] = array(
 	'category-exhibition-blogs-header' => 'Записи у блозі',
 	'category-exhibition-display-old' => 'Подання категорії списком',
 	'category-exhibition-display-new' => 'Подання категорії піктограмами',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'category-exhibition-sorttype' => 'Phân loại các loại:',
+	'category-exhibition-alphabetical' => 'Bảng chữ cái',
+	'category-exhibition-mostvisited' => 'Truy cập nhiều nhất',
+	'category-exhibition-recentedits' => 'Biên tập, sửa đổi gần đây',
+	'category-exhibition-page-header' => 'Trang trong thể loại “$1”',
+	'category-exhibition-subcategories-header' => 'Thể loại con',
+	'category-exhibition-media-header' => 'Các tập tin trong thể loại “$1”',
+	'category-exhibition-blogs-header' => 'Bài đăng trên blog',
+	'category-exhibition-display-old' => 'Xem danh sách thể loại',
+	'category-exhibition-display-new' => 'Danh mục triển lãm xem',
 );
 
 /** Simplified Chinese (中文（简体）‎)

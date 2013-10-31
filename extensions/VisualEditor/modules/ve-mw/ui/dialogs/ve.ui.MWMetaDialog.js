@@ -12,18 +12,14 @@
  *
  * @class
  * @extends ve.ui.MWDialog
- * @mixins ve.ui.PagedDialog
  *
  * @constructor
  * @param {ve.ui.Surface} surface
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ui.MWMetaDialog = function VeUiMWMetaDialog( surface, config ) {
 	// Parent constructor
 	ve.ui.MWDialog.call( this, surface, config );
-
-	// Mixin constructors
-	ve.ui.PagedDialog.call( this, surface, config );
 
 	// Properties
 	this.metaList = surface.getModel().metaList;
@@ -40,8 +36,6 @@ ve.ui.MWMetaDialog = function VeUiMWMetaDialog( surface, config ) {
 /* Inheritance */
 
 ve.inheritClass( ve.ui.MWMetaDialog, ve.ui.MWDialog );
-
-ve.mixinClass( ve.ui.MWMetaDialog, ve.ui.PagedDialog );
 
 /* Static Properties */
 
@@ -60,10 +54,8 @@ ve.ui.MWMetaDialog.prototype.initialize = function () {
 	// Parent method
 	ve.ui.MWDialog.prototype.initialize.call( this );
 
-	// Initialization for PagedDialog
-	this.initializePages();
-
 	// Properties
+	this.pagedOutlineLayout = new ve.ui.PagedOutlineLayout( { '$$': this.frame.$$ } );
 	this.categoriesFieldset = new ve.ui.FieldsetLayout( {
 		'$$': this.frame.$$,
 		'label': ve.msg( 'visualeditor-dialog-meta-categories-data-label' ),
@@ -106,21 +98,22 @@ ve.ui.MWMetaDialog.prototype.initialize = function () {
 
 	// Initialization
 	this.categoryWidget.addItems( this.getCategoryItems() );
-	this.addPage( 'categories', {
+
+	this.$body.append( this.pagedOutlineLayout.$ );
+	this.$foot.append( this.applyButton.$ );
+
+	this.pagedOutlineLayout.addPage( 'categories', {
+		'$content': [ this.categoriesFieldset.$, this.categoryOptionsFieldset.$ ],
 		'label': ve.msg( 'visualeditor-dialog-meta-categories-section' ),
 		'icon': 'tag'
 	} ).addPage( 'languages', {
+		'$content': this.languagesFieldset.$,
 		'label': ve.msg( 'visualeditor-dialog-meta-languages-section' ),
 		'icon': 'language'
 	} );
 
-	this.pages.categories.$.append( this.categoriesFieldset.$, this.categoryOptionsFieldset.$ );
 	this.categoriesFieldset.$.append( this.categoryWidget.$ );
 	this.categoryOptionsFieldset.$.append( this.defaultSortLabel.$, this.defaultSortInput.$ );
-	this.$foot.append( this.applyButton.$ );
-
-	this.pages.languages.$.append( this.languagesFieldset.$ );
-
 	this.languagesFieldset.$.append(
 		this.frame.$$( '<span>' )
 			.text( ve.msg( 'visualeditor-dialog-meta-languages-readonlynote' ) )

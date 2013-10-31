@@ -14,7 +14,7 @@
  * @extends ve.ce.BranchNode
  * @constructor
  * @param {ve.dm.MWImageCaptionNode} model Model to observe
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ce.MWImageCaptionNode = function VeCeMWImageCaptionNode( model, config ) {
 	// Parent constructor

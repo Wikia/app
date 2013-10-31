@@ -668,38 +668,150 @@ QUnit.test( 'newFromRemoval', function ( assert ) {
 	runConstructorTests( assert, ve.dm.Transaction.newFromRemoval, cases );
 } );
 
-QUnit.test( 'newFromNodeReplacement', function ( assert ) {
-	var doc = ve.dm.example.createExampleDocument( 'internalData' ),
-		paragraph = [ { 'type': 'paragraph' }, 'H', 'e', 'l', 'l', 'o', { 'type': '/paragraph' } ],
-		secondNode = doc.internalList.getItemNode( 1 ),
-		cases = {
-			'replacing first internal node with paragraph': {
-				'args': [doc, new ve.Range( 7, 12 ), paragraph],
-				'ops': [
-					{ 'type': 'retain', 'length': 7 },
+QUnit.test( 'newFromDocumentReplace', function ( assert ) {
+	var i, j, doc2, tx, actualStoreItems, expectedStoreItems,
+		doc = ve.dm.example.createExampleDocument( 'internalData' ),
+		nextIndex = doc.store.valueStore.length,
+		whee = [ { 'type': 'paragraph' }, 'W', 'h', 'e', 'e', { 'type': '/paragraph' } ],
+		wheeItem = [ { 'type': 'internalItem' } ].concat( whee ).concat( [ { 'type': '/internalItem' } ] ),
+		cases = [
+			{
+				'msg': 'simple insertion',
+				'doc': 'internalData',
+				'range': new ve.Range( 7, 12 ),
+				'modify': function ( newDoc ) {
+					// Change "Bar" to "Bazaar"
+					newDoc.commit( ve.dm.Transaction.newFromInsertion(
+						newDoc, 3, [ 'z', 'a', 'a' ]
+					) );
+				},
+				'expectedOps': [
+					{ 'type': 'retain', 'length': 6 },
 					{
 						'type': 'replace',
-						'remove': doc.data.slice( 7, 12 ),
-						'insert': paragraph
+						'remove': doc.getData( new ve.Range( 6, 20 ) ),
+						'insert': doc.getData( new ve.Range( 6, 10 ) )
+							.concat( [ 'z', 'a', 'a' ] )
+							.concat( doc.getData( new ve.Range( 10, 20 ) ) )
 					},
-					{ 'type': 'retain', 'length': 15 }
+					{ 'type': 'retain', 'length': 7 }
 				]
 			},
-			'replacing second internal node with two paragraphs': {
-				'args': [doc, secondNode, paragraph.concat( paragraph )],
-				'ops': [
-					{ 'type': 'retain', 'length': 14 },
+			{
+				'msg': 'simple annotation',
+				'doc': 'internalData',
+				'range': doc.getInternalList().getItemNode( 1 ),
+				'modify': function ( newDoc ) {
+					// Bold the first two characters
+					newDoc.commit( ve.dm.Transaction.newFromAnnotation(
+						newDoc, new ve.Range( 1, 3 ), 'set', ve.dm.example.bold
+					) );
+				},
+				'expectedOps': [
+					{ 'type': 'retain', 'length': 6 },
 					{
 						'type': 'replace',
-						'remove': doc.data.getDataSlice( secondNode.getRange() ),
-						'insert': paragraph.concat( paragraph )
+						'remove': doc.getData( new ve.Range( 6, 20 ) ),
+						'insert': doc.getData( new ve.Range( 6, 15 ) )
+							.concat( [ [ doc.data.getData( 15 ), [ nextIndex ] ] ] )
+							.concat( [ [ doc.data.getData( 16 ), [ nextIndex ] ] ] )
+							.concat( doc.getData( new ve.Range( 17, 20 ) ) )
 					},
-					{ 'type': 'retain', 'length': 8 }
+					{ 'type': 'retain', 'length': 7 }
+				],
+				'expectedStoreItems': [
+					ve.dm.example.bold
+				]
+			},
+			{
+				'msg': 'insertion into internal list',
+				'doc': 'internalData',
+				'range': new ve.Range( 21, 27 ),
+				'modify': function ( newDoc ) {
+					var insertion = newDoc.internalList.getItemInsertion( 'test', 'whee', whee );
+					newDoc.commit( insertion.transaction );
+				},
+				'expectedOps': [
+					{ 'type': 'retain', 'length': 6 },
+					{
+						'type': 'replace',
+						'remove': doc.getData( new ve.Range( 6, 20 ) ),
+						'insert': doc.getData( new ve.Range( 6, 20 ) ).concat( wheeItem )
+					},
+					{ 'type': 'retain', 'length': 1 },
+					{
+						'type': 'replace',
+						'remove': doc.getData( new ve.Range( 21, 27 ) ),
+						'insert': doc.getData( new ve.Range( 21, 27 ) )
+					}
+				]
+			},
+			{
+				'msg': 'change in internal list',
+				'doc': 'internalData',
+				'range': new ve.Range( 21, 27 ),
+				'modify': function ( newDoc ) {
+					newDoc.commit( ve.dm.Transaction.newFromInsertion(
+						newDoc, 12, [ '!', '!', '!' ]
+					) );
+				},
+				'expectedOps': [
+					{ 'type': 'retain', 'length': 6 },
+					{
+						'type': 'replace',
+						'remove': doc.getData( new ve.Range( 6, 20 ) ),
+						'insert': doc.getData( new ve.Range( 6, 11 ) )
+							.concat( [ '!', '!', '!' ] )
+							.concat( doc.getData( new ve.Range( 11, 20 ) ) )
+					},
+					{ 'type': 'retain', 'length': 1 },
+					{
+						'type': 'replace',
+						'remove': doc.getData( new ve.Range( 21, 27 ) ),
+						'insert': doc.getData( new ve.Range( 21, 27 ) )
+					}
+				]
+			},
+			{
+				'msg': 'insertion into internal list from slice within internal list',
+				'doc': 'internalData',
+				'range': new ve.Range( 7, 12 ),
+				'modify': function ( newDoc ) {
+					var insertion = newDoc.internalList.getItemInsertion( 'test', 'whee', whee );
+					newDoc.commit( insertion.transaction );
+				},
+				'expectedOps': [
+					{ 'type': 'retain', 'length': 6 },
+					{
+						'type': 'replace',
+						'remove': doc.getData( new ve.Range( 6, 20 ) ),
+						'insert': doc.getData( new ve.Range( 6, 20 ) ).concat( wheeItem )
+					},
+					{ 'type': 'retain', 'length': 7 }
 				]
 			}
-		};
-	QUnit.expect( ve.getObjectKeys( cases ).length );
-	runConstructorTests( assert, ve.dm.Transaction.newFromNodeReplacement, cases );
+		];
+	QUnit.expect( 2 * cases.length );
+	for ( i = 0; i < cases.length; i++ ) {
+		doc = ve.dm.example.createExampleDocument( cases[i].doc );
+		if ( cases[i].newDocData ) {
+			doc2 = new ve.dm.Document( cases[i].newDocData );
+		} else {
+			doc2 = doc.cloneFromRange( cases[i].range instanceof ve.Range ? cases[i].range : cases[i].range.getRange() );
+			cases[i].modify( doc2 );
+		}
+		tx = ve.dm.Transaction.newFromDocumentReplace( doc, cases[i].range, doc2 );
+		assert.deepEqualWithDomElements( tx.getOperations(), cases[i].expectedOps, cases[i].msg + ': transaction' );
+
+		actualStoreItems = [];
+		expectedStoreItems = cases[i].expectedStoreItems || [];
+		for ( j = 0; j < expectedStoreItems.length; j++ ) {
+			actualStoreItems[j] = doc.store.value( doc.store.indexOfHash(
+				ve.getHash( expectedStoreItems[j] )
+			) );
+		}
+		assert.deepEqual( actualStoreItems, expectedStoreItems, cases[i].msg + ': store items' );
+	}
 } );
 QUnit.test( 'newFromAttributeChanges', function ( assert ) {
 	var doc = ve.dm.example.createExampleDocument(),
@@ -764,6 +876,7 @@ QUnit.test( 'newFromAttributeChanges', function ( assert ) {
 QUnit.test( 'newFromAnnotation', function ( assert ) {
 	var bold = ve.dm.example.createAnnotation( ve.dm.example.bold ),
 		doc = ve.dm.example.createExampleDocument(),
+		annotationDoc = ve.dm.example.createExampleDocument( 'annotationData' ),
 		cases = {
 			'over plain text': {
 				'args': [doc, new ve.Range( 1, 2 ), 'set', bold],
@@ -858,8 +971,63 @@ QUnit.test( 'newFromAnnotation', function ( assert ) {
 					},
 					{ 'type': 'retain', 'length': 52 }
 				]
+			},
+			'over content and content element (image)': {
+				'args': [doc, new ve.Range( 38, 42 ), 'set', bold],
+				'ops': [
+					{ 'type': 'retain', 'length': 38 },
+					{
+						'type': 'annotate',
+						'method': 'set',
+						'bias': 'start',
+						'annotation': bold
+					},
+					{ 'type': 'retain', 'length': 4 },
+					{
+						'type': 'annotate',
+						'method': 'set',
+						'bias': 'stop',
+						'annotation': bold
+					},
+					{ 'type': 'retain', 'length': 21 }
+				]
+			},
+			'over content and unannotatable content element (unboldable node)': {
+				'args': [annotationDoc, new ve.Range( 1, 9 ), 'set', bold],
+				'ops': [
+					{ 'type': 'retain', 'length': 1 },
+					{
+						'type': 'annotate',
+						'method': 'set',
+						'bias': 'start',
+						'annotation': bold
+					},
+					{ 'type': 'retain', 'length': 3 },
+					{
+						'type': 'annotate',
+						'method': 'set',
+						'bias': 'stop',
+						'annotation': bold
+					},
+					{ 'type': 'retain', 'length': 2 },
+					{
+						'type': 'annotate',
+						'method': 'set',
+						'bias': 'start',
+						'annotation': bold
+					},
+					{ 'type': 'retain', 'length': 3 },
+					{
+						'type': 'annotate',
+						'method': 'set',
+						'bias': 'stop',
+						'annotation': bold
+					},
+					{ 'type': 'retain', 'length': 3 }
+				]
 			}
 		};
+
 	QUnit.expect( ve.getObjectKeys( cases ).length );
 	runConstructorTests( assert, ve.dm.Transaction.newFromAnnotation, cases );
 } );
@@ -1251,55 +1419,7 @@ QUnit.test( 'translateOffset', function ( assert ) {
 	for ( offset in mapping ) {
 		expected = ve.isArray( mapping[offset] ) ? mapping[offset] : [ mapping[offset], mapping[offset] ];
 		assert.strictEqual( tx.translateOffset( Number( offset ) ), expected[1], offset );
-		assert.strictEqual( tx.translateOffset( Number( offset ), false, true ), expected[0], offset + ' (excludeInsertion)' );
-	}
-} );
-
-QUnit.test( 'translateOffsetReversed', function ( assert ) {
-	var mapping, offset, expected,
-		doc = new ve.dm.Document( '-----defg---h--'.split( '' ) ),
-		tx = new ve.dm.Transaction();
-
-	tx.pushReplace( doc, 0, 0, ['a','b','c'] );
-	tx.pushRetain( 5 );
-	tx.pushReplace( doc, 5, 4, [] );
-	tx.pushRetain( 2 );
-	tx.pushStartAnnotating( 'set', { 'type': 'textStyle/bold' } );
-	tx.pushRetain( 1 );
-	tx.pushReplace( doc, 12, 1, ['i', 'j', 'k', 'l', 'm'] );
-	tx.pushRetain( 2 );
-	tx.pushReplace( doc, 15, 0, ['n', 'o', 'p'] );
-
-	mapping = {
-		0: 0,
-		1: 0,
-		2: 0,
-		3: 0,
-		4: 1,
-		5: 2,
-		6: 3,
-		7: 4,
-		8: [5, 9],
-		9: 10,
-		10: 11,
-		11: 12,
-		12: 13,
-		13: 13,
-		14: 13,
-		15: 13,
-		16: 13,
-		17: 14,
-		18: 15,
-		19: 15,
-		20: 15,
-		21: 15,
-		22: 16
-	};
-	QUnit.expect( 2*ve.getObjectKeys( mapping ).length );
-	for ( offset in mapping ) {
-		expected = ve.isArray( mapping[offset] ) ? mapping[offset] : [ mapping[offset], mapping[offset] ];
-		assert.strictEqual( tx.translateOffset( Number( offset ), true ), expected[1], offset );
-		assert.strictEqual( tx.translateOffset( Number( offset ), true, true ), expected[0], offset + ' (excludeInsertion)' );
+		assert.strictEqual( tx.translateOffset( Number( offset ), true ), expected[0], offset + ' (excludeInsertion)' );
 	}
 } );
 

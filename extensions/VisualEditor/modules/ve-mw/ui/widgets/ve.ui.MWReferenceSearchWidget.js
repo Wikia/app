@@ -13,13 +13,13 @@
  *
  * @constructor
  * @param {ve.ui.Surface} [varname] [description]
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ui.MWReferenceSearchWidget = function VeUiMWReferenceSearchWidget( surface, config ) {
 	// Configuration intialization
-	config = ve.extendObject( {}, config, {
+	config = ve.extendObject( {
 		'placeholder': ve.msg( 'visualeditor-reference-input-placeholder' )
-	} );
+	}, config );
 
 	// Parent constructor
 	ve.ui.SearchWidget.call( this, config );
@@ -90,7 +90,7 @@ ve.ui.MWReferenceSearchWidget.prototype.onResultsSelect = function ( item ) {
  */
 ve.ui.MWReferenceSearchWidget.prototype.buildIndex = function () {
 	var i, iLen, j, jLen, group, groupName, groupNames, view, text, attr, firstNodes, indexOrder,
-		refnode, name, citation,
+		refnode, matches, name, citation,
 		internalList = this.surface.getModel().getDocument().getInternalList(),
 		groups = internalList.getNodeGroups();
 
@@ -121,7 +121,8 @@ ve.ui.MWReferenceSearchWidget.prototype.buildIndex = function () {
 			}
 
 			citation = ( attr.refGroup.length ? attr.refGroup + ' ' : '' ) + ( j + 1 );
-			name = !ve.dm.InternalList.static.isUniqueListKey( attr.listKey ) ? attr.listKey : '';
+			matches = attr.listKey.match( /^literal\/(.*)$/ );
+			name = matches && matches[1] || '';
 			// Make visible text, citation and reference name searchable
 			text = [ view.$.text().toLowerCase(), citation, name ].join( ' ' );
 			// Make URLs searchable

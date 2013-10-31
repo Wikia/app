@@ -13,7 +13,7 @@
  * @extends ve.ui.Tool
  * @constructor
  * @param {ve.ui.SurfaceToolbar} toolbar
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ui.InspectorTool = function VeUiInspectorTool( toolbar, config ) {
 	// Parent constructor
@@ -75,9 +75,8 @@ ve.ui.InspectorTool.prototype.onSelect = function () {
  * @param {ve.dm.AnnotationSet} partial Annotations that cover some or all of the current selection
  */
 ve.ui.InspectorTool.prototype.onUpdateState = function ( nodes, full ) {
-	this.setActive(
-		ve.ui.toolFactory.getToolsForAnnotations( full ).indexOf( this.constructor ) !== -1
-	);
+	var toolFactory = this.toolbar.getToolFactory();
+	this.setActive( toolFactory.getToolsForAnnotations( full ).indexOf( this.constructor ) !== -1 );
 };
 
 /**
@@ -87,7 +86,7 @@ ve.ui.InspectorTool.prototype.onUpdateState = function ( nodes, full ) {
  * @extends ve.ui.InspectorTool
  * @constructor
  * @param {ve.ui.SurfaceToolbar} toolbar
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ui.LinkInspectorTool = function VeUiLinkInspectorTool( toolbar, config ) {
 	ve.ui.InspectorTool.call( this, toolbar, config );

@@ -1,10 +1,9 @@
 <?php
-
 /**
-* Internationalisation file for the LicensedVideoSwap extension.
-*
-* @addtogroup Languages
-*/
+ * Internationalisation file for the LicensedVideoSwap extension.
+ *
+ * @addtogroup Languages
+ */
 
 $messages = array();
 
@@ -16,7 +15,8 @@ $messages['en'] = array(
 	'lvs-tooltip-history' => 'Licensed Video Swap Button',
 	'lvs-history-button-text' => 'History',
 	'lvs-page-header-back-link' => 'Back to Licensed Video Swap',
-	'lvs-callout-header' => "We've found matches for videos on your wiki in Wikia Video. <br> Replacing your videos with videos from Wikia Video is a good idea because:",
+	'lvs-callout-header' => "We've found matches for videos on your wiki in Wikia Video. <br /> Replacing your videos with videos from Wikia Video is a good idea because:",
+	'lvs-match-stats-description' => 'Videos<br />with Matches',
 	'lvs-callout-title-licensed' => "100% Licensed",
 	'lvs-callout-reason-licensed' => "Wikia Videos are licensed for our communities for use on your wikis",
 	'lvs-callout-title-quality' => "High Quality",
@@ -28,20 +28,26 @@ $messages['en'] = array(
 	'lvs-instructions' => "Many of the videos you embed on your wikis become unavailable when they are removed or taken down for copyright violations. That's why Wikia has licensed [[w:c:video|thousands of videos]] for use on your wikis from several content partners. This Special page is an easy way for you to see if we have a licensed copy of the same or similar videos on your wikis. Please note that often the exact same video may have a different video thumbnail so it's best to review the videos before you make a decision. Happy swapping!",
 	'lvs-button-keep' => 'Keep',
 	'lvs-button-swap' => 'Swap',
+	'lvs-button-yes' => 'Yes',
+	'lvs-button-no' => 'No',
 	'lvs-more-suggestions' => 'more suggestions',
 	'lvs-best-match-label' => 'Best Licensed Match from Wikia Video',
 	'lvs-undo-swap' => 'Undo',
 	'lvs-undo-keep' => 'Undo',
 	'lvs-swap-video-success' => 'Congratulations. The original video has been deleted and all instances of this video, including embeds, have successfully been swapped out with the matching Wikia Video. $1',
-	'lvs-keep-video-success' => 'You have chosen to keep your current video. The video will be removed from this list. $1',
+	'lvs-keep-video-success' => 'You have chosen to keep your current video. The video has been removed from this list. $1',
 	'lvs-restore-video-success' => 'You have restored the video to this list.',
 	'lvs-error-permission' => 'You cannot swap this video.',
+	'lvs-error-permission-access' => 'You cannot access this page.',
 	'lvs-error-invalid-page-status' => 'You cannot restore this video.',
+	'lvs-error-already-swapped' => 'This video has already been swapped.',
+	'lvs-error-already-kept-forever' => 'This video has already been kept.',
 	'lvs-posted-in-label' => 'Current video posted in',
 	'lvs-posted-in-label-none' => 'Current video is not posted in any articles',
 	'lvs-posted-in-more' => 'more',
 	'lvs-confirm-keep-title' => 'Keep Video',
-	'lvs-confirm-keep-message' => 'You have chosen not to replace your current video with a licensed Wikia Video. Do you want to continue?',
+	// confirm-keep-message ultimately goes to $.msg which does not support wiki text so we hardcode the markup
+	'lvs-confirm-keep-message' => 'We are continuously adding new licensed videos to <a href="http://video.wikia.com/" target="_blank">Wikia Video</a>. Would you like to see new matches for this video as they become available?',
 	'lvs-confirm-undo-swap-title' => 'Confirm Undo',
 	'lvs-confirm-undo-swap-message' => 'Are you sure you want to restore the original video?',
 	'lvs-confirm-undo-keep-title' => 'Confirm Undo',
@@ -74,6 +80,7 @@ $messages['qqq'] = array(
 {{Identical|History}}',
 	'lvs-page-header-back-link' => 'Text for link that brings users back to the Licensed Video Swap page from the history page',
 	'lvs-callout-header' => 'This is some header text that encourages the user to replace unlicensed videos with videos licensed for use on Wikia.  This section is temporary and will go away after a certain number of views. There\'s an optional "<br />" tag between the two sentences for purposes of making the header look nicer.',
+	'lvs-match-stats-description' => 'Description for numerical counter that shows how many total matched videos are available',
 	'lvs-callout-title-licensed' => 'Title for lvs callout header section.',
 	'lvs-callout-reason-licensed' => 'This is a bullet point that appears below lvs-callout-header. It explains that Wikia videos are licensed for use on Wikia. This section is temporary and will go away after a certain number of views.',
 	'lvs-callout-title-quality' => 'Title for lvs callout header section.',
@@ -85,6 +92,8 @@ $messages['qqq'] = array(
 	'lvs-instructions' => 'This is the text at the top of the Licensed Video Swap special page that explains to the user what this page is all about. The idea is that users can exchange unlicensed videos for videos licensed for use on Wikia.',
 	'lvs-button-keep' => 'This is the text that appears on a button that, when clicked, will keep the non-licensed video as opposed to swapping it out for a licensed video.',
 	'lvs-button-swap' => 'This is the text that appears on a button that, when clicked, will swap out a non-licensed video for a licensed video suggested from the wikia video library.',
+	'lvs-button-yes' => 'Yes (user agrees to keep seeing suggestions for video matches for that video)',
+	'lvs-button-no' => 'No, (user decides to "Keep" the video and no longer see matches for it)',
 	'lvs-more-suggestions' => 'This text will appear below a video that is a suggestion for a licensed version of a video that already exists on the wiki.  When clicked, this link will reveal more licensed possible replacements for the non-licensed video.',
 	'lvs-best-match-label' => 'This text appears above the licensed video that is considered the best match for replacing a non-licensed video.',
 	'lvs-undo-swap' => 'This text appears after swapping out the video to undo the swapping video.
@@ -99,13 +108,16 @@ $messages['qqq'] = array(
 * $2 is a link to restore the video to the Special page again',
 	'lvs-restore-video-success' => 'This text appears after restoring the video to the list.',
 	'lvs-error-permission' => 'This text appears if user does not have permission to swap the video.',
+	'lvs-error-permission-access' => 'This text appears if user does not have permission to access the page.',
 	'lvs-error-invalid-page-status' => 'This text appears if the file is in invalid status',
+	'lvs-error-already-swapped' => 'This text appears if the file has already been swapped.',
+	'lvs-error-already-kept-forever' => 'This text appears if the file has already been kept.',
 	'lvs-posted-in-label' => 'This is the label text that appears before a list of titles in which the video is posted.  Due to design constraints, it comes before the list, so if, when translated, it would otherwise come after the list, please do your best to adjust accordingly. Think of it as a label or a heading followed by bullet points. ex: "Current video posted in: title1, title2, title3."  It is up to you if you want to include a colon at the end.',
 	'lvs-posted-in-label-none' => 'Message shown above a video when it is not posted in any articles.',
 	'lvs-posted-in-more' => 'This is the text that is shown after a truncated list of titles in which a video is posted.  When hovered, a full list appears.  When clicked, the user is taken to a page where the full list is displayed.
 {{Identical|More}}',
 	'lvs-confirm-keep-title' => 'This is the heading that is displayed in the confirm keep modal.',
-	'lvs-confirm-keep-message' => 'This message is show in a modal when a user clicks a button to keep an un-licensed video as opposed to swapping it out for a licensed video. It is a coonfirmation message.',
+	'lvs-confirm-keep-message' => "This message is show in a modal when a user clicks a button to keep an un-licensed video as opposed to swapping it out for a licensed video. It is a coonfirmation message. Translate the url in the <a> element to proper, would use wiki text but this is going to JavaScript which doesn't support wikitext",
 	'lvs-confirm-undo-swap-title' => 'This is the heading that is displayed in the confirm undo swap modal.
 {{Identical|Confirm undo}}',
 	'lvs-confirm-undo-swap-message' => 'This message is show in a modal to confirm that a user wants to revert a video swap, i.e. the non-premium video they had originally replaced with a premium video will be restored.',
@@ -145,6 +157,7 @@ $messages['ar'] = array(
  * @author Fohanno
  */
 $messages['br'] = array(
+	'lvs-history-button-text' => 'Istor',
 	'lvs-callout-title-quality' => 'Kalite uhel',
 	'lvs-callout-title-collaborative' => 'Kenlabourat',
 	'lvs-instructions-header' => 'Penaos implijout ar bajenn-mañ',
@@ -152,6 +165,7 @@ $messages['br'] = array(
 	'lvs-more-suggestions' => "muioc'h a ginnigoù",
 	'lvs-undo-swap' => 'Dizober',
 	'lvs-undo-keep' => 'Dizober',
+	'lvs-restore-video-success' => 'Adlakaet ho peus ar video er roll-mañ.',
 	'lvs-error-invalid-page-status' => "Ne c'hallit ket assevel ar video-mañ.",
 	'lvs-posted-in-more' => "muioc'h",
 	'lvs-confirm-keep-title' => "Derc'hel ar video",
@@ -339,6 +353,7 @@ $messages['fo'] = array(
 
 /** French (français)
  * @author Gomoko
+ * @author Urhixidur
  */
 $messages['fr'] = array(
 	'licensedvideoswap' => 'Bascule de vidéo sous licence',
@@ -357,7 +372,7 @@ $messages['fr'] = array(
 	'lvs-callout-reason-collaborative' => 'Les vidéos de Wikia sont collaboratives et peuvent être utilisées dans de multiples wikis',
 	'lvs-callout-reason-more' => 'et davantage… nous ajouterons d’autres fonctionnalités et des moyens d’utiliser facilement et de gérer les vidéos Wikia. Restez à l’écoute !',
 	'lvs-instructions-header' => 'Comment utiliser cette page',
-	'lvs-instructions' => 'Beaucoup de vidéos incluses dans vos wikis deviennent indisponibles quand elles sont supprimées ou enlevées pour des violations de droit. C’est pourquoi Wikia a mis sous licence [[w:c:video|des milliers de vidéos]] à utiliser sur vos wikis de la part de plusieurs partenaires de contenu. Cette page spéciale est un moyen pratique pour vous de voir si nous disposons d&une copie sous licence de vidéos identiques ou semblables à celles de vos wikis. Remarquez que souvent, la même vidéo peut avoir un format de vignette différent, donc il vaut mieux visualiser les vidéos avant de vous décider. Bonne bascule !',
+	'lvs-instructions' => 'Beaucoup de vidéos incluses dans vos wikis deviennent indisponibles quand elles sont supprimées ou enlevées pour des violations de droit d’auteur. C’est pourquoi Wikia a mis sous licence [[w:c:video|des milliers de vidéos]] à utiliser sur vos wikis de la part de plusieurs partenaires de contenu. Cette page spéciale est un moyen pratique pour vous de voir si nous disposons d’une copie sous licence de vidéos identiques ou semblables à celles de vos wikis. Remarquez que souvent, la même vidéo peut avoir un format de vignette différent, donc il vaut mieux visualiser les vidéos avant de vous décider. Bonne bascule !',
 	'lvs-button-keep' => 'Conserver',
 	'lvs-button-swap' => 'Basculer',
 	'lvs-more-suggestions' => 'plus de suggestions',
@@ -366,9 +381,9 @@ $messages['fr'] = array(
 	'lvs-undo-keep' => 'Annuler',
 	'lvs-swap-video-success' => 'Félicitations. La vidéo d’origine a été supprimée et toutes les instances de celle-ci, y compris celles incluses, ont bien été basculées vers la vidéo Wikia correspondante. $1',
 	'lvs-keep-video-success' => 'Vous avez choisi de conserver la vidéo actuelle. Cette vidéo sera supprimée de cette liste. $1',
-	'lvs-restore-video-success' => 'Vous avez remis la vidéo dans cette liste.',
+	'lvs-restore-video-success' => 'Vous avez rétabli la vidéo dans cette liste.',
 	'lvs-error-permission' => 'Vous ne pouvez pas basculer cette vidéo.',
-	'lvs-error-invalid-page-status' => 'Vous ne pouvez pas remettre cette vidéo.',
+	'lvs-error-invalid-page-status' => 'Vous ne pouvez pas rétablir cette vidéo.',
 	'lvs-posted-in-label' => 'Vidéo actuelle publiée dans :',
 	'lvs-posted-in-label-none' => 'La vidéo actuelle n’est publiée dans aucun article',
 	'lvs-posted-in-more' => 'plus',
@@ -378,7 +393,7 @@ $messages['fr'] = array(
 	'lvs-confirm-undo-swap-message' => 'Êtes-vous sûr de vouloir restaurer la vidéo d’origine ?',
 	'lvs-confirm-undo-keep-title' => 'Confirmer l’annulation',
 	'lvs-confirm-undo-keep-message' => 'Êtes-vous sûr de vouloir de nouveau ajouter cette vidéo dans la liste ?',
-	'lvs-no-matching-videos' => 'Il n’y a actuellement aucune top vidéo associée à cette vidéo',
+	'lvs-no-matching-videos' => 'Il n’y a actuellement aucune vidéo prémium associée à cette vidéo',
 	'lvs-log-swap' => 'Vidéo basculée de [[{{ns:File}}:$1]] à [[{{ns:File}}:$2]]',
 	'lvs-log-restore' => 'Vidéo basculée restaurée ([[{{ns:File}}:$1]])',
 	'lvs-log-removed-redirected-link' => 'Lien de redirection supprimé',
@@ -387,7 +402,7 @@ $messages['fr'] = array(
 	'lvs-history-swapped-exact' => 'Basculé de « $1 » vers une vidéo du même nom',
 	'lvs-history-kept' => '« $1 » conservé',
 	'lvs-history-instructions' => 'Pour afficher un historique de toutes les bascules et annulations, aller sur $1.',
-	'lvs-no-monobook-support' => 'Cette page n’est pas supportée en Monobook. Pour y accéder dans la disposition de Wikia, $1. Cela ne modifiera pas votre choix de disposition',
+	'lvs-no-monobook-support' => 'Cette page n’est pas prise en charge par Monobook. Pour y accéder dans la disposition de Wikia, $1. Cela ne modifiera pas votre choix de disposition',
 	'lvs-click-here' => 'cliquer ici',
 );
 
@@ -469,6 +484,16 @@ $messages['lb'] = array(
 	'lvs-confirm-undo-swap-message' => 'Sidd dir sécher datt Dir den Original-Video restauréiere wëllt?',
 	'lvs-log-removed-redirected-link' => 'Viruleedung ewechgeholl',
 	'lvs-click-here' => 'hei klicken',
+);
+
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'lvs-history-button-text' => 'ويرگار',
+	'lvs-undo-swap' => 'انجوم ندی ئن',
+	'lvs-undo-keep' => 'انجوم ندی ئن',
+	'lvs-posted-in-more' => 'بيشتر',
 );
 
 /** Malay (Bahasa Melayu)
@@ -577,7 +602,7 @@ $messages['nl'] = array(
 	'lvs-history-kept' => '"$1" is behouden',
 	'lvs-history-instructions' => "Als u de geschiedenis van alle wijzigingen en undo's wil zien, gaat u naar $1.",
 	'lvs-no-monobook-support' => 'Deze pagina wordt niet ondersteund in Monobook. Om deze te openen in de indeling van Wikia, $1. Dit zal uw voorkeurs-layout niet aanpassen.',
-	'lvs-click-here' => 'Klik hier',
+	'lvs-click-here' => 'klik hier',
 );
 
 /** Polish (polski)
@@ -666,19 +691,53 @@ $messages['roa-tara'] = array(
  * @author Okras
  */
 $messages['ru'] = array(
+	'licensedvideoswap' => 'Замена на лицензионное видео',
+	'action-licensedvideoswap' => 'заменять нелицензионные видео',
+	'lvs-page-title' => 'Замена на лицензионное видео',
+	'lvs-history-page-title' => 'История замены на лицензионное видео',
+	'lvs-tooltip-history' => 'Кнопка замены на лицензионное видео',
 	'lvs-history-button-text' => 'История',
+	'lvs-page-header-back-link' => 'Назад к Замене на лицензионное видео',
+	'lvs-callout-header' => 'Мы нашли совпадения для видео из вашей вики в Wikia Video.<br />Замена вашего видео на видео из Wikia Video — это хорошая идея, потому что:',
 	'lvs-callout-title-licensed' => '100% лицензионное',
+	'lvs-callout-reason-licensed' => 'Видео в Wikia лицензированы для наших сообществ для использования в ваших проектах',
 	'lvs-callout-title-quality' => 'Высокое качество',
+	'lvs-callout-reason-quality' => 'Видео в Wikia — высокого качества',
+	'lvs-callout-title-collaborative' => 'Общие',
+	'lvs-callout-reason-collaborative' => 'Видеозаписи на Wikia — общие и могут быть использованы в нескольких проектах',
+	'lvs-callout-reason-more' => 'и многое другое… Мы будем добавлять больше возможностей и способов легко использовать и управлять видеозаписями в Wikia. Оставайтесь с нами!',
 	'lvs-instructions-header' => 'Как пользоваться этой страницей',
+	'lvs-instructions' => 'Многие видео, которые вы вставляете в ваших проектах, становятся недоступными, когда их удаляют или убирают из-за нарушения авторских прав. Вот почему Wikia лицензировала [[w:c:video|тысячи видео]] от нескольких контент-партнеров для использования в вашей вики. Эта спецстраница — простой способ увидеть, если у нас есть лицензионная копия такого же или похожего видео с вашей вики. Пожалуйста, обратите внимание, что часто точно такое же видео может иметь различные видео-эскизы, так что лучше пересмотреть видео, прежде чем сделать решение. Счастливой замены!',
+	'lvs-button-keep' => 'Оставить',
+	'lvs-button-swap' => 'Заменить',
+	'lvs-more-suggestions' => 'больше предложений',
+	'lvs-best-match-label' => 'Лучшее лицензированное совпадение из Wikia Video',
 	'lvs-undo-swap' => 'Отменить',
 	'lvs-undo-keep' => 'Отменить',
+	'lvs-swap-video-success' => 'Поздравляем! Оригинальное видео было удалено и все экземпляры этого видео, включая внедрённые, успешно заменены на подходящие видео от Wikia. $1',
+	'lvs-keep-video-success' => 'Вы решили оставить текущее видео. Видео будет удалено из этого списка. $1',
 	'lvs-restore-video-success' => 'Вы восстановили видео в этот список.',
+	'lvs-error-permission' => 'Вы не можете заменить это видео.',
 	'lvs-error-invalid-page-status' => 'Вы не можете восстановить это видео.',
 	'lvs-posted-in-label' => 'Это видео размещено в',
 	'lvs-posted-in-label-none' => 'Это видео не размещено ни в одной статье',
 	'lvs-posted-in-more' => 'далее',
+	'lvs-confirm-keep-title' => 'Оставить видео',
+	'lvs-confirm-keep-message' => 'Вы решили не заменять текущее видео  лицензированным видео от Wikia. Вы действительно хотите продолжить?',
 	'lvs-confirm-undo-swap-title' => 'Подтвердить отмену',
+	'lvs-confirm-undo-swap-message' => 'Вы уверены, что хотите восстановить оригинальное видео?',
 	'lvs-confirm-undo-keep-title' => 'Подтвердить отмену',
+	'lvs-confirm-undo-keep-message' => 'Вы уверены, что хотите добавить это видео обратно в список?',
+	'lvs-no-matching-videos' => 'В настоящее время нет премиум-видео, относящегося к этому видео',
+	'lvs-log-swap' => 'Видео, заменённое с [[{{ns:File}}:$1]] на [[{{ns:File}}:$2]]',
+	'lvs-log-restore' => 'Восстановленное заменённое видео ([[{{ns:File}}:$1]])',
+	'lvs-log-removed-redirected-link' => 'Удалённые ссылки-перенаправления',
+	'lvs-zero-state' => 'На данный момент у нас нет подходящих видео в Wikia Video для видео-записей в вашей вики. Попробуйте проверить еще раз через некоторое время!',
+	'lvs-history-swapped' => '«$1» заменён на «$2»',
+	'lvs-history-swapped-exact' => '«$1» заменён на видео с таким же именем',
+	'lvs-history-kept' => 'Оставлено «$1»',
+	'lvs-history-instructions' => 'Для просмотра истории всех замен и их отмен, перейдите на $1.',
+	'lvs-no-monobook-support' => 'Эта страница не поддерживается в Monobook. Для доступа к ней в макете Wikia $1. Это не изменит тему в настройках',
 	'lvs-click-here' => 'нажмите здесь',
 );
 
@@ -803,6 +862,7 @@ $messages['wuu'] = array(
 );
 
 /** Simplified Chinese (中文（简体）‎)
+ * @author Hzy980512
  * @author Liuxinyu970226
  */
 $messages['zh-hans'] = array(
@@ -821,6 +881,7 @@ $messages['zh-hans'] = array(
 	'lvs-more-suggestions' => '更多建议',
 	'lvs-undo-swap' => '撤销',
 	'lvs-undo-keep' => '撤销',
+	'lvs-error-invalid-page-status' => '您无法恢复此视频。',
 	'lvs-posted-in-more' => '更多',
 	'lvs-confirm-keep-title' => '保持视频',
 	'lvs-confirm-undo-swap-title' => '确认撤销',

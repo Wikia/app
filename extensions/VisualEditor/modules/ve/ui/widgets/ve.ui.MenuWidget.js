@@ -13,7 +13,7 @@
  * @mixins ve.ui.ClippableElement
  *
  * @constructor
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  * @cfg {ve.ui.InputWidget} [input] Input to bind keyboard handlers to
  */
 ve.ui.MenuWidget = function VeUiMenuWidget( config ) {

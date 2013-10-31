@@ -13,7 +13,7 @@
  * @extends ve.ui.Tool
  * @constructor
  * @param {ve.ui.SurfaceToolbar} toolbar
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ui.ListTool = function VeUiListTool( toolbar, config ) {
 	// Parent constructor
@@ -82,7 +82,7 @@ ve.ui.ListTool.prototype.onUpdateState = function ( nodes ) {
  * @extends ve.ui.ListTool
  * @constructor
  * @param {ve.ui.SurfaceToolbar} toolbar
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ui.BulletListTool = function VeUiBulletListTool( toolbar, config ) {
 	ve.ui.ListTool.call( this, toolbar, config );
@@ -102,7 +102,7 @@ ve.ui.toolFactory.register( ve.ui.BulletListTool );
  * @extends ve.ui.ListTool
  * @constructor
  * @param {ve.ui.SurfaceToolbar} toolbar
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ui.NumberListTool = function VeUiNumberListTool( toolbar, config ) {
 	ve.ui.ListTool.call( this, toolbar, config );

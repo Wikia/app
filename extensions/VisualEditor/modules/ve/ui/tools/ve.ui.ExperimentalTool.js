@@ -12,7 +12,7 @@
  * @extends ve.ui.InspectorTool
  * @constructor
  * @param {ve.ui.SurfaceToolbar} toolbar
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ui.LanguageInspectorTool = function VeUiLanguageInspectorTool( toolbar, config ) {
 	ve.ui.InspectorTool.call( this, toolbar, config );

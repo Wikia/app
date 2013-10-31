@@ -24,13 +24,15 @@ ve.inheritClass( ve.ui.ContentAction, ve.ui.Action );
 
 /* Static Properties */
 
+ve.ui.ContentAction.static.name = 'content';
+
 /**
  * List of allowed methods for the action.
  *
  * @static
  * @property
  */
-ve.ui.ContentAction.static.methods = ['insert', 'remove', 'select'];
+ve.ui.ContentAction.static.methods = [ 'insert', 'remove', 'select' ];
 
 /* Methods */
 
@@ -66,4 +68,4 @@ ve.ui.ContentAction.prototype.select = function ( range ) {
 
 /* Registration */
 
-ve.ui.actionFactory.register( 'content', ve.ui.ContentAction );
+ve.ui.actionFactory.register( ve.ui.ContentAction );

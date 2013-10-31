@@ -5,6 +5,7 @@
 @import "skins/oasis/css/mixins/clearfix";
 @import "skins/oasis/css/mixins/box-shadow";
 @import "skins/oasis/css/mixins/opacity";
+@import "skins/oasis/css/mixins/ribbon";
 
 $color-inactive-button: darken($color-secondary-button, 50%);
 @if lightness($color-page) < 50 {
@@ -174,40 +175,10 @@ $color-related-videos-background: darken($color-page, 20%);
 		}
 
 		.new {
+			@include ribbon( $color-button-text, $color-buttons, 11px, 8px, 1px 4px 1px 6px);
 			position: absolute;
 			left: 0px;
 			top: 0px;
-			color: $color-button-text;
-			font-size: 11px;
-			line-height: 14px;
-			padding: 1px 4px 1px 6px;
-			background-color: $color-buttons;
-
-			&:before {
-				content: '';
-				position: absolute;
-				height: 0px;
-				width: 0px;
-				border-width: 8px;
-				border-style: solid;
-				border-color: transparent transparent $color-buttons transparent;
-				right: -8px;
-				top: 0px;
-				visibility: visible;
-			}
-
-			&:after {
-				content: '';
-				position: absolute;
-				height: 0px;
-				width: 0px;
-				border-width: 8px;
-				border-style: solid;
-				border-color: $color-buttons transparent transparent transparent;
-				right: -8px;
-				top: 0px;
-				visibility: visible;
-			}
 		}
 
 		.video {
@@ -407,7 +378,11 @@ $color-related-videos-background: darken($color-page, 20%);
 		}
 
 		.wrapper {
-			width: if( $responsive-layout-enabled, 269px, 298px );
+			@if( $responsive-layout-enabled ) {
+				width: 269px;
+			} @else {
+				width: 298px;
+			}
 			position: static;
 			margin: 5px 0;
 		}
@@ -439,7 +414,11 @@ $color-related-videos-background: darken($color-page, 20%);
 				display: block;
 				float: left;
 				max-height: 80px;
-				width: if( $responsive-layout-enabled, 107px, 135px );
+				@if( $responsive-layout-enabled ) {
+					width: 107px;
+				} @else {
+					width: 135px;
+				}
 				padding-top: 2px;
 				font-size: 11px;
 				margin: 0;

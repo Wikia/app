@@ -60,9 +60,15 @@ ve.dm.LanguageAnnotation.static.toDomElements = function ( dataElement, doc ) {
 
 /* Methods */
 
-// TODO:
-// Set up a proper comparable method for lang and dir attributes
-// ve.dm.LanguageAnnotation.prototype.getComparableObject
+/**
+ * @returns {Object}
+ */
+ve.dm.LanguageAnnotation.prototype.getComparableObject = function () {
+	return {
+		'type': 'meta/language',
+		'lang': this.getAttribute( 'lang' )
+	};
+};
 
 /* Registration */
 

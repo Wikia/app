@@ -13,7 +13,7 @@
  *
  * @constructor
  * @param {jQuery} $label Label element
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  * @cfg {jQuery|string} [label=''] Label text
  */
 ve.ui.LabeledElement = function VeUiLabeledElement( $label, config ) {

@@ -81,7 +81,7 @@ class WikiaPageType {
 
 		return (
 			(defined('NS_FORUM') && $wg->Title && $wg->Title->getNamespace() === NS_FORUM) // old forum
-			|| ($wg->EnableForumExt && $wg->IsForum)                                       // new forum
+			|| ($wg->EnableForumExt && ForumHelper::isForum())                             // new forum
 		);
 	}
 

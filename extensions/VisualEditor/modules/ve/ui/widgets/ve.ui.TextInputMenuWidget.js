@@ -13,7 +13,7 @@
  *
  * @constructor
  * @param {ve.ui.TextInputWidget} input Text input widget to provide menu for
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  * @cfg {jQuery} [$container=input.$] Element to render menu under
  */
 ve.ui.TextInputMenuWidget = function VeUiTextInputMenuWidget( input, config ) {
@@ -92,7 +92,7 @@ ve.ui.TextInputMenuWidget.prototype.position = function () {
 	// Compensate for frame position if in a differnt frame
 	if ( this.input.$$.frame && this.input.$$.context !== this.$[0].ownerDocument ) {
 		frameOffset = ve.Element.getRelativePosition(
-			this.input.$$.frame.$, this.$.closest( '.ve-ui-surface' )
+			this.input.$$.frame.$, this.$.offsetParent()
 		);
 		dimensions.left += frameOffset.left;
 		dimensions.top += frameOffset.top;

@@ -14,7 +14,7 @@
  * @mixin ve.EventEmitter
  *
  * @constructor
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  * @cfg {boolean} [disabled=false] Disable
  */
 ve.ui.Widget = function VeUiWidget( config ) {

@@ -169,6 +169,13 @@ $messages['ksh'] = array(
 	'signup' => 'Aanmälde',
 );
 
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'signup' => 'اومائن د سيستم',
+);
+
 /** Macedonian (македонски)
  */
 $messages['mk'] = array(
@@ -276,11 +283,12 @@ $messages['shi'] = array(
 );
 
 /** Swedish (svenska)
+ * @author Jopparn
  * @author Tobulos1
  */
 $messages['sv'] = array(
 	'signup-desc' => 'Lägger till alias [[{{#Special:Signup}}]] för [[{{#Special:UserLogin}}/signup]]',
-	'signup' => 'Registrera',
+	'signup' => 'Skapa ett konto',
 );
 
 /** Tamil (தமிழ்)

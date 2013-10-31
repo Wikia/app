@@ -16,7 +16,7 @@
  * @mixins ve.BranchNode
  * @constructor
  * @param {ve.dm.BranchNode} model Model to observe
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ce.BranchNode = function VeCeBranchNode( model, config ) {
 	// Mixin constructor
@@ -227,7 +227,11 @@ ve.ce.BranchNode.prototype.setupSlugs = function () {
 		slug = ve.ce.BranchNode.$inlineSlugTemplate[0];
 	}
 
-	if ( this.getLength() === 0 ) {
+	// If this content branch no longer has any rendered children, insert a slug to keep the node
+	// from becoming invisible/unfocusable. In Firefox, backspace after Ctrl-A leaves the document
+	// completely empty, so this ensures DocumentNode gets a slug.
+	// Can't use this.getLength() because the internal list adds to the length but doesn't render.
+	if ( this.$.contents().length === 0 ) {
 		this.slugs[0] = doc.importNode( slug, true );
 		this.$[0].appendChild( this.slugs[0] );
 	} else {

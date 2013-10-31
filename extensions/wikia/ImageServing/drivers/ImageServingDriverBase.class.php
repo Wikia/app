@@ -140,22 +140,35 @@ abstract class ImageServingDriverBase {
 	protected function formatResult($imageList ,$dbOut, $limit) {
 		wfProfileIn( __METHOD__ );
 
-		$out = array();
-		foreach( $imageList as $key => $value  ) {
-			if( isset($dbOut[ $key ]) ) {
-				foreach($value as $key2 => $value2) {
-					if (empty($out[$key2]) || count($out[$key2]) < $limit) {
-						$img = $this->getImageFile( $key );
-						$out[$key2][] = array(
-							"name" => $key,
-							"original_dimensions" => array(
-								"width"	=> !empty( $img ) ? $img->getWidth() : 0,
-								"height"=> !empty( $img ) ? $img->getHeight() : 0
-							),
-							"url" => !empty( $img ) ? $this->imageServing->getUrl($img, $dbOut[$key]['img_width'], $dbOut[$key]['img_height']) : ''
-						);
+		$out = [ ];
+		$pageOrderedImages = [ ];
+		foreach ( $imageList as $imageName => $pageData ) {
+			if ( isset( $dbOut[ $imageName ] ) ) {
+				foreach ( $pageData as $pageId => $pageImageOrder ) {
+					// unit tests say that this can be an array. I don't see how, but maybe there's case I'm not aware of
+					if (is_array($pageImageOrder)) {
+						$pageImageOrder = $pageImageOrder[0];
 					}
+
+					// insert into an array so we can ensure the $order is respected
+					$pageOrderedImages[ $pageId ][ $pageImageOrder ] = $imageName;
 				}
+			}
+		}
+
+		foreach ( $pageOrderedImages as $pageId => $pageImageList ) {
+			ksort( $pageImageList );
+			$useImages = $limit == 0 ? $pageImageList : array_slice( $pageImageList, 0, $limit );
+			foreach ( $useImages as $imageName ) {
+				$img = $this->getImageFile( $imageName );
+				$out[ $pageId ][ ] = [
+					"name" => $imageName,
+					"original_dimensions" => [
+						"width" => !empty( $img ) ? $img->getWidth() : 0,
+						"height" => !empty( $img ) ? $img->getHeight() : 0
+					],
+					"url" => !empty( $img ) ? $this->imageServing->getUrl( $img, $dbOut[ $imageName ][ 'img_width' ], $dbOut[ $imageName ][ 'img_height' ] ) : ''
+				];
 			}
 		}
 

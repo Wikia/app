@@ -85,6 +85,17 @@ $messages['ar'] = array(
 	'file-page-more-links' => 'انظر القائمة الكاملة',
 );
 
+/** Bulgarian (български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'video-page-description-heading' => 'Описание',
+	'video-page-description-zero-state' => 'Все още няма описание.',
+	'video-page-add-description-link-text' => 'Добавне на описание.',
+	'video-page-default-description-header-and-text' => '== Описание ==
+Въведете описанието тук.',
+);
+
 /** Breton (brezhoneg)
  * @author Gwenn-Ael
  * @author Y-M D
@@ -217,6 +228,10 @@ $messages['et'] = array(
  * @author Ville96
  */
 $messages['fi'] = array(
+	'video-page-file-list-header' => 'Esiintyy näillä sivuilla',
+	'video-page-global-file-list-header' => 'Esiintyy näissä wikeissä',
+	'video-page-see-more-info' => 'Näytä lisätiedot',
+	'video-page-see-less-info' => 'Näytä vähemmän tietoa',
 	'video-page-description-heading' => 'Kuvaus',
 	'video-page-description-zero-state' => 'Kuvausta ei ole vielä.',
 	'video-page-add-description-link-text' => 'Lisää kuvaus.',
@@ -536,6 +551,7 @@ $messages['ps'] = array(
 );
 
 /** Portuguese (português)
+ * @author Hamilton Abreu
  * @author Luckas
  */
 $messages['pt'] = array(
@@ -544,7 +560,7 @@ $messages['pt'] = array(
 	'video-page-file-list-pagination' => '$1 de $2',
 	'file-page-replace-button' => 'Substituir',
 	'file-page-tab-about' => 'Sobre',
-	'file-page-tab-history' => 'Histórico do arquivo',
+	'file-page-tab-history' => 'Histórico do ficheiro',
 	'file-page-tab-metadata' => 'Metadados',
 	'file-page-more-links' => 'Ver lista completa',
 );
@@ -739,11 +755,16 @@ $messages['ur'] = array(
 );
 
 /** Simplified Chinese (中文（简体）‎)
+ * @author Byfserag
+ * @author Hzy980512
  * @author Kuailong
  * @author Liuxinyu970226
  * @author Qiyue2001
  */
 $messages['zh-hans'] = array(
+	'filepage-desc' => '为了支持视频而修改标准MediaWiki文件页面',
+	'video-page-file-list-header' => '出现在这些页面上',
+	'video-page-global-file-list-header' => '出现在这些 wiki 上',
 	'video-page-from-provider' => '来自$1',
 	'video-page-views' => '$1次浏览',
 	'video-page-see-more-info' => '显示更多信息',

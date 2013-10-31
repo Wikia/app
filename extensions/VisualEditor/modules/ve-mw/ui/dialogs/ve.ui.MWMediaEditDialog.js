@@ -13,13 +13,14 @@
  *
  * @constructor
  * @param {ve.ui.Surface} surface
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ui.MWMediaEditDialog = function VeUiMWMediaEditDialog( surface, config ) {
 	// Parent constructor
 	ve.ui.MWDialog.call( this, surface, config );
 
 	// Properties
+	this.mediaNode = null;
 	this.captionNode = null;
 };
 
@@ -43,7 +44,9 @@ ve.ui.MWMediaEditDialog.static.toolbarGroups = [
 		'exclude': [
 			{ 'group': 'format' },
 			{ 'group': 'structure' },
-			'referenceList'
+			'referenceList',
+			'wikiaMediaInsert',
+			'mediaInsert'
 		]
 	}
 ];
@@ -87,24 +90,27 @@ ve.ui.MWMediaEditDialog.prototype.initialize = function () {
 
 /** */
 ve.ui.MWMediaEditDialog.prototype.onOpen = function () {
-	var data, doc = this.surface.getModel().getDocument();
+	var newDoc, doc = this.surface.getModel().getDocument();
 
 	// Parent method
 	ve.ui.MWDialog.prototype.onOpen.call( this );
 
 	// Properties
-	this.captionNode = this.surface.getView().getFocusedNode().getModel().getCaptionNode();
+	this.mediaNode = this.surface.getView().getFocusedNode().getModel();
+	this.captionNode = this.mediaNode.getCaptionNode();
 	if ( this.captionNode && this.captionNode.getLength() > 0 ) {
-		data = doc.getData( this.captionNode.getRange(), true );
+		newDoc = doc.cloneFromRange( this.captionNode.getRange() );
 	} else {
-		data = [
+		newDoc = [
 			{ 'type': 'paragraph', 'internal': { 'generated': 'wrapper' } },
-			{ 'type': '/paragraph' }
+			{ 'type': '/paragraph' },
+			{ 'type': 'internalList' },
+			{ 'type': '/internalList' }
 		];
 	}
 
 	this.captionSurface = new ve.ui.SurfaceWidget(
-		new ve.dm.ElementLinearData( doc.getStore(), data ),
+		newDoc,
 		{
 			'$$': this.frame.$$,
 			'tools': this.constructor.static.toolbarGroups,
@@ -120,28 +126,26 @@ ve.ui.MWMediaEditDialog.prototype.onOpen = function () {
 
 /** */
 ve.ui.MWMediaEditDialog.prototype.onClose = function ( action ) {
-	var data, doc, surfaceModel = this.surface.getModel();
+	var newDoc, doc, surfaceModel = this.surface.getModel();
 
 	// Parent method
 	ve.ui.MWDialog.prototype.onClose.call( this );
 
 	if ( action === 'apply' ) {
-		data = this.captionSurface.getContent();
+		newDoc = this.captionSurface.getSurface().getModel().getDocument();
 		doc = surfaceModel.getDocument();
-		if ( this.captionNode ) {
-			// Replace the contents of the caption
-			surfaceModel.getFragment( this.captionNode.getRange(), true ).insertContent( data );
-		} else {
+		if ( !this.captionNode ) {
 			// Insert a new caption at the beginning of the image node
 			surfaceModel.getFragment()
 				.adjustRange( 1 )
 				.collapseRangeToStart()
-				.insertContent(
-					[ { 'type': 'mwImageCaption' } ]
-						.concat( data )
-						.concat( [ { 'type': '/mwImageCaption' } ] )
-				);
+				.insertContent( [ { 'type': 'mwImageCaption' }, { 'type': '/mwImageCaption' } ] );
+			this.captionNode = this.mediaNode.getCaptionNode();
 		}
+		// Replace the contents of the caption
+		surfaceModel.change(
+			ve.dm.Transaction.newFromDocumentReplace( doc, this.captionNode, newDoc )
+		);
 	}
 
 	// Cleanup

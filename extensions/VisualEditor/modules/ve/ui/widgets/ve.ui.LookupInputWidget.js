@@ -16,8 +16,8 @@
  *
  * @constructor
  * @param {ve.ui.TextInputWidget} input Input widget
- * @param {Object} [config] Config options
- * @cfg {jQuery} [$overlay=this.$$( '.ve-surface-overlay-local:last' )] Overlay layer
+ * @param {Object} [config] Configuration options
+ * @cfg {jQuery} [$overlay=this.$$( 'body' )] Overlay layer
  */
 ve.ui.LookupInputWidget = function VeUiLookupInputWidget( input, config ) {
 	// Config intialization
@@ -25,7 +25,7 @@ ve.ui.LookupInputWidget = function VeUiLookupInputWidget( input, config ) {
 
 	// Properties
 	this.lookupInput = input;
-	this.$overlay = config.$overlay || this.$$( '.ve-surface-overlay-local:last' );
+	this.$overlay = config.$overlay || this.$$( 'body' );
 	this.lookupMenu = new ve.ui.TextInputMenuWidget( this, {
 		'$$': ve.Element.get$$( this.$overlay ),
 		'input': this.lookupInput,

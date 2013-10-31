@@ -41,7 +41,7 @@ if (!Object.keys) {
 }
 
 var WikiaHomePageRemix = function () {
-	this.WIKISETSTACKOFFSET = 3;
+	this.WIKISETSTACKOFFSET = 2;
 	this.NUMBEROFBATCHESTODOWNLOAD = 5;
 
 	this.COLLECTIONS_LS_KEY = 'WHP_collections';
@@ -105,6 +105,9 @@ var WikiPreviewInterstitial = {
 		$('.close-button').click(function (e) {
 			WikiPreviewInterstitial.hide();
 		});
+
+        $('.tooltip-icon').tooltip();
+
 	},
 	loadContent: function (wikiId) {
 		WikiPreviewInterstitial.el.removeClass('loaded');
@@ -354,12 +357,14 @@ WikiaHomePageRemix.prototype = {
 		}
 	},
 	preload: function () {
-		var allWikisInBatch = this.wikiSetStack[this.wikiSetStackIndex].mediumslots;
-		allWikisInBatch = allWikisInBatch.concat(this.wikiSetStack[this.wikiSetStackIndex].smallslots);
-		allWikisInBatch = allWikisInBatch.concat(this.wikiSetStack[this.wikiSetStackIndex].bigslots);
-		for (var i in allWikisInBatch) {
-			var image = new Image();
-			image.src = allWikisInBatch[i].image;
+		if (typeof this.wikiSetStack[this.wikiSetStackIndex] != 'undefined') {
+			var allWikisInBatch = this.wikiSetStack[this.wikiSetStackIndex].mediumslots;
+			allWikisInBatch = allWikisInBatch.concat(this.wikiSetStack[this.wikiSetStackIndex].smallslots);
+			allWikisInBatch = allWikisInBatch.concat(this.wikiSetStack[this.wikiSetStackIndex].bigslots);
+			for (var i in allWikisInBatch) {
+				var image = new Image();
+				image.src = allWikisInBatch[i].image;
+			}
 		}
 	},
 	updateVisualisation: function () {

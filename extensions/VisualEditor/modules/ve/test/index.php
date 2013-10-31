@@ -65,7 +65,6 @@
 		<script src="../../ve/ve.Factory.js"></script>
 		<script src="../../ve/ve.Range.js"></script>
 		<script src="../../ve/ve.Node.js"></script>
-		<script src="../../ve/ve.NamedClassFactory.js"></script>
 		<script src="../../ve/ve.BranchNode.js"></script>
 		<script src="../../ve/ve.LeafNode.js"></script>
 		<script src="../../ve/ve.Element.js"></script>
@@ -92,10 +91,10 @@
 		<script src="../../ve/dm/ve.dm.DataString.js"></script>
 		<script src="../../ve/dm/ve.dm.Document.js"></script>
 		<script src="../../ve/dm/ve.dm.LinearData.js"></script>
-		<script src="../../ve/dm/ve.dm.DocumentSlice.js"></script>
 		<script src="../../ve/dm/ve.dm.DocumentSynchronizer.js"></script>
 		<script src="../../ve/dm/ve.dm.IndexValueStore.js"></script>
 		<script src="../../ve/dm/ve.dm.Converter.js"></script>
+		<script src="../../ve/dm/lineardata/ve.dm.SlicedLinearData.js"></script>
 		<script src="../../ve/dm/lineardata/ve.dm.ElementLinearData.js"></script>
 		<script src="../../ve/dm/lineardata/ve.dm.MetaLinearData.js"></script>
 		<script src="../../ve/dm/nodes/ve.dm.GeneratedContentNode.js"></script>
@@ -186,6 +185,7 @@
 		<script src="../../ve/ui/ve.ui.ToolFactory.js"></script>
 		<script src="../../ve/ui/ve.ui.Toolbar.js"></script>
 		<script src="../../ve/ui/ve.ui.SurfaceToolbar.js"></script>
+		<script src="../../ve/ui/ve.ui.TargetToolbar.js"></script>
 		<script src="../../ve/ui/ve.ui.CommandRegistry.js"></script>
 		<script src="../../ve/ui/ve.ui.Trigger.js"></script>
 		<script src="../../ve/ui/ve.ui.TriggerRegistry.js"></script>
@@ -288,6 +288,7 @@
 		<script src="dm/lineardata/ve.dm.MetaLinearData.test.js"></script>
 		<script src="ce/ve.ce.test.js"></script>
 		<script src="ce/ve.ce.Document.test.js"></script>
+		<script src="ce/ve.ce.Surface.test.js"></script>
 		<script src="ce/ve.ce.NodeFactory.test.js"></script>
 		<script src="ce/ve.ce.Node.test.js"></script>
 		<script src="ce/ve.ce.BranchNode.test.js"></script>

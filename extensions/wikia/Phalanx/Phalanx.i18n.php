@@ -150,6 +150,7 @@ $messages['qqq'] = array(
 	'phalanx-test-submit' => '{{Identical|Test}}',
 	'phalanx-link-unblock' => '{{Identical|Unblock}}',
 	'phalanx-unblock-message' => '$1 is the ID of the block removed.',
+	'phalanx-stats-table-user' => '{{Identical|Added by}}',
 	'phalanx-stats-table-create' => '{{Identical|Created}}',
 	'phalanx-stats-table-expire' => '{{Identical|Expire}}',
 	'phalanx-stats-table-regex' => '{{Identical|Regex}}',
@@ -343,6 +344,7 @@ $messages['br'] = array(
 
 /** Catalan (català)
  * @author Alvaro Vidal-Abarca
+ * @author Light of Cosmos
  * @author Roxas Nobody 15
  */
 $messages['ca'] = array(
@@ -417,8 +419,8 @@ Si us plau [[especial: Contact|contact Wikia]] sobre el problema.", # Fuzzy
 	'phalanx-user-block-new-account' => "Nom d'usuari no està disponible per a la matrícula. Si us plau, escolliu un altre.",
 	'phalanx-user-block-withreason-ip' => 'Aquesta adreça IP és impedir edició a través de tota la xarxa Wikia per vandalisme o altre interrupció per vostè o algú que comparteix la seva adreça IP.
 Si vostè creu que això és error, si us plau [[Wikia especials: Contact|contact]].<br>El blocker també va donar aquesta raó addicional:  $1 .', # Fuzzy
-	'phalanx-user-block-withreason-exact' => 'Aquest nom d\'usuari o adreça IP és impedir l\'edició de tota la Wikia de la xarxa a causa del vandalisme o altres molèsties.
-Si vostè creu que això és un error, si us plau, [[Special:Contacte|contact Wikia]].<br />El bloquejador també va donar aquesta raó addicional: <span class="notranslate" traduir="no">$1</span>.', # Fuzzy
+	'phalanx-user-block-withreason-exact' => 'Aquest usuari o adreça IP han estat bloquejats per editar en tota Wikia degut a vandalisme o altres molèsties causades. 
+Si vostè creu que es tracta d\'un error, si us plau, [[Special:Contact|contacti amb Wikia]].<br />Raó addicional de bloqueig: <span class="notranslate" traduir="no">$1</span>.',
 	'phalanx-user-block-withreason-similar' => "Aquest nom d'usuari te impedida  l´edició a través de tota la xarxa Wikia per vandalisme o altre interrupció per un usuari amb un nom semblant.
 Si us plau [[especial: Contact|contact Wikia]] sobre el problema.<br>El blocker també va donar aquesta raó addicional:  $1 .", # Fuzzy
 	'phalanx-title-move-summary' => 'La raó que heu introduït contenia una frase bloquejat.',
@@ -779,6 +781,7 @@ Si crees que es un error, por favor [[Special:Contact|contacta a Wikia]].<br />E
  * @author Nedergard
  * @author Nike
  * @author Tofu II
+ * @author Ville96
  */
 $messages['fi'] = array(
 	'phalanx' => 'Phalanx',
@@ -818,8 +821,8 @@ Tallenna muutoksesi napsauttamalla {{int:phalanx-edit-block}}.',
 	'phalanx-legend-input' => 'Luo tai muokkaa suodatinta',
 	'phalanx-legend-listing' => 'Tällä hetkellä käytetyt suodattimet',
 	'phalanx-unblock-message' => 'Estotunnisteen #$1 poisto onnistui',
-	'phalanx-user-block-reason-exact' => 'Tämä käyttäjätunnus tai IP-osoite on estetty ilkivallan tai muunlaisen häiriköinnin vuoksi.
-Jos tämä on mielestäsi virhe, ole hyvä ja [[Special:Contact|ota yhteyttä Wikiaan]].', # Fuzzy
+	'phalanx-user-block-reason-exact' => 'Tämä käyttäjätunnus tai IP-osoite on estetty muokkaamasta koko Wikian verkostossa ilkivallan tai muunlaisen häiriköinnin vuoksi.
+Jos tämä on mielestäsi virhe, ole hyvä ja [[Special:Contact|ota yhteyttä Wikiaan]].',
 	'phalanx-stats-table-user' => 'Lisääjä',
 	'phalanx-stats-table-type' => 'Tyyppi',
 	'phalanx-stats-table-create' => 'Luotu',
@@ -2229,13 +2232,13 @@ Për piasì [[Special:Contact|ch'a contata Wikia]] për parlé dël problema.<br
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
-	'phalanx-type-content' => 'د مخ منځپانګه',
+	'phalanx-type-content' => 'د مخ منځپانگه',
 	'phalanx-type-summary' => 'د مخ لنډيز',
 	'phalanx-type-title' => 'مخ سرليک',
 	'phalanx-type-user' => 'کارن',
 	'phalanx-type-user-email' => 'برېښليک',
 	'phalanx-type-answers-question-title' => 'د پوښتنې سرليک',
-	'phalanx-label-filter' => 'چاڼګر:',
+	'phalanx-label-filter' => 'چاڼگر:',
 	'phalanx-label-reason' => 'سبب:',
 	'phalanx-label-type' => 'ډول:',
 	'phalanx-label-lang' => 'ژبه:',

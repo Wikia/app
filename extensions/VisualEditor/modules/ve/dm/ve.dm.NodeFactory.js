@@ -9,17 +9,17 @@
  * DataModel node factory.
  *
  * @class
- * @extends ve.NamedClassFactory
+ * @extends ve.Factory
  * @constructor
  */
 ve.dm.NodeFactory = function VeDmNodeFactory() {
 	// Parent constructor
-	ve.NamedClassFactory.call( this );
+	ve.Factory.call( this );
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.dm.NodeFactory, ve.NamedClassFactory );
+ve.inheritClass( ve.dm.NodeFactory, ve.Factory );
 
 /* Methods */
 
@@ -152,6 +152,31 @@ ve.dm.NodeFactory.prototype.canNodeContainContent = function ( type ) {
 		return this.registry[type].static.canContainContent;
 	}
 	throw new Error( 'Unknown node type: ' + type );
+};
+
+
+/**
+ * Check if node can take annotations of a specific type.
+ *
+ * @method
+ * @param {string} type Node type
+ * @param {ve.dm.Annotation} annotation Annotation to test
+ * @returns {boolean} Node can take annotations of this type
+ * @throws {Error} Unknown node type
+ */
+ve.dm.NodeFactory.prototype.canNodeTakeAnnotationType = function ( type, annotation ) {
+	if ( !( type in this.registry ) ) {
+		throw new Error( 'Unknown node type: ' + type );
+	}
+	var i, len,
+		blacklist = this.registry[type].static.blacklistedAnnotationTypes;
+
+	for ( i = 0, len = blacklist.length; i < len; i++ ) {
+		if ( annotation instanceof ve.dm.annotationFactory.create( blacklist[i] ).constructor ) {
+			return false;
+		}
+	}
+	return true;
 };
 
 /**

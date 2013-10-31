@@ -543,6 +543,7 @@ $messages['pt'] = array(
 	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|página|páginas}})',
 	'tagsreportpagesfound' => '{{PLURAL:$1|Foi encontrada <strong>$1</strong> página que contém|Foram encontradas <strong>$1</strong> páginas que contêm}} um elemento especial (DPL, YouTube, etc.)',
 	'tagsreportgenerated' => 'Gerado a $1 às $2',
+	'tagsreportpageremoved' => 'A página #$1 foi removida',
 );
 
 /** Brazilian Portuguese (português do Brasil)
@@ -710,10 +711,13 @@ $messages['vep'] = array(
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Hydra
+ * @author Hzy980512
  */
 $messages['zh-hans'] = array(
 	'tagsreportgo' => '显示',
 	'tagsreportmainnspace' => '主要',
+	'tagsreportpagesfound' => '找到$1个含特殊标签（DPL、YouTube等）的页面。',
+	'tagsreportpageremoved' => '页面#$1已被移除',
 );
 
 /** Traditional Chinese (中文（繁體）‎)

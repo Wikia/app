@@ -12,7 +12,7 @@
  *
  * @constructor
  * @param {ve.ui.OutlineWidget} outline Outline to control
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  * @cfg {Object[]} [adders] List of icons to show as addable item types, each an object with
  *  name, title and icon properties
  */

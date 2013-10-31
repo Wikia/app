@@ -12,7 +12,7 @@
  * @extends ve.ce.Annotation
  * @constructor
  * @param {ve.dm.MWNowikiAnnotation} model Model to observe
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ce.MWNowikiAnnotation = function VeCeMWInternalLinkAnnotation( model, config ) {
 	// Parent constructor

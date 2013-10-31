@@ -14,7 +14,7 @@
  * @mixins ve.ui.LabeledElement
  *
  * @constructor
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  * @cfg {number} [tabIndex] Button's tab index
  */
 ve.ui.ButtonWidget = function VeUiButtonWidget( config ) {

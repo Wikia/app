@@ -15,7 +15,7 @@
  *
  * @constructor
  * @param {Mixed} data Item data
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  * @cfg {number} [size] Media thumbnail size
  */
 ve.ui.MWMediaResultWidget = function VeUiMWMediaResultWidget( data, config ) {

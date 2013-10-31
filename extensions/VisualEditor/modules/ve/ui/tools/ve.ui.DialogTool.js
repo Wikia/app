@@ -13,7 +13,7 @@
  * @extends ve.ui.Tool
  * @constructor
  * @param {ve.ui.SurfaceToolbar} toolbar
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ui.DialogTool = function VeUiDialogTool( toolbar, config ) {
 	// Parent constructor
@@ -76,6 +76,8 @@ ve.ui.DialogTool.prototype.onSelect = function () {
  */
 ve.ui.DialogTool.prototype.onUpdateState = function ( nodes ) {
 	if ( nodes.length ) {
-		this.setActive( ve.ui.toolFactory.getToolForNode( nodes[0] ) === this.constructor );
+		this.setActive(
+			this.toolbar.getToolFactory().getToolForNode( nodes[0] ) === this.constructor
+		);
 	}
 };

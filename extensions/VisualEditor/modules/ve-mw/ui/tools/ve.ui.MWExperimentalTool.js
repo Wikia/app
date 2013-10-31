@@ -12,7 +12,7 @@
  * @extends ve.ui.InspectorTool
  * @constructor
  * @param {ve.ui.SurfaceToolbar} toolbar
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ui.MWHieroInspectorTool = function VeUiMWHieroInspectorTool( toolbar, config ) {
 	ve.ui.InspectorTool.call( this, toolbar, config );
@@ -33,7 +33,7 @@ ve.ui.toolFactory.register( ve.ui.MWHieroInspectorTool );
  * @extends ve.ui.InspectorTool
  * @constructor
  * @param {ve.ui.SurfaceToolbar} toolbar
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ui.MWAlienExtensionInspectorTool = function VeUiMWAlienExtensionInspectorTool( toolbar, config ) {
 	ve.ui.InspectorTool.call( this, toolbar, config );
@@ -56,7 +56,7 @@ ve.ui.toolFactory.register( ve.ui.MWAlienExtensionInspectorTool );
  * @extends ve.ui.InspectorTool
  * @constructor
  * @param {ve.ui.SurfaceToolbar} toolbar
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ui.MWMathInspectorTool = function VeUiMWMathInspectorTool( toolbar, config ) {
 	ve.ui.InspectorTool.call( this, toolbar, config );

@@ -12,7 +12,7 @@
  * @extends ve.ui.Layout
  *
  * @constructor
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  * @cfg {boolean} [scrollable] Allow vertical scrolling
  * @cfg {boolean} [padded] Pad the content from the edges
  */

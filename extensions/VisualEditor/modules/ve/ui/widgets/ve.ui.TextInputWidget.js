@@ -12,7 +12,7 @@
  * @extends ve.ui.InputWidget
  *
  * @constructor
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  * @cfg {string} [placeholder] Placeholder text
  * @cfg {string} [icon] Symbolic name of icon
  * @cfg {boolean} [multiline=false] Allow multiple lines of text
@@ -80,7 +80,7 @@ ve.ui.TextInputWidget.prototype.onKeyPress = function ( e ) {
  * Get input element.
  *
  * @method
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  * @returns {jQuery} Input element
  */
 ve.ui.TextInputWidget.prototype.getInputElement = function ( config ) {

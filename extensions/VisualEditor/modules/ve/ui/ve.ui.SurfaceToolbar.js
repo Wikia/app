@@ -1,19 +1,19 @@
 /*!
- * VisualEditor UserInterface Toolbar class.
+ * VisualEditor UserInterface SurfaceToolbar class.
  *
  * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
 /**
- * UserInterface toolbar.
+ * UserInterface surface toolbar.
  *
  * @class
  * @extends ve.ui.Toolbar
  *
  * @constructor
- * @param {ve.ui.Surface} surface
- * @param {Object} [config] Config options
+ * @param {ve.ui.Surface} surface Surface to control
+ * @param {Object} [options] Configuration options
  */
 ve.ui.SurfaceToolbar = function VeUiSurfaceToolbar( surface, options ) {
 	var toolbar = this;
@@ -22,7 +22,7 @@ ve.ui.SurfaceToolbar = function VeUiSurfaceToolbar( surface, options ) {
 	options = options || {};
 
 	// Parent constructor
-	ve.ui.Toolbar.call( this, options );
+	ve.ui.Toolbar.call( this, ve.ui.toolFactory, options );
 
 	// Properties
 	this.surface = surface;
@@ -85,7 +85,7 @@ ve.inheritClass( ve.ui.SurfaceToolbar, ve.ui.Toolbar );
 /**
  * Handle window resize events while toolbar floating is enabled.
  *
- * @returns {jQuery.Event} e Window resize event
+ * @param {jQuery.Event} e Window resize event
  */
 ve.ui.SurfaceToolbar.prototype.onWindowScroll = function () {
 	var scrollTop = this.$window.scrollTop();
@@ -104,7 +104,7 @@ ve.ui.SurfaceToolbar.prototype.onWindowScroll = function () {
  * branch node in the root of the document being edited, at which point it will stop just above it.
  *
  * @emits position
- * @returns {jQuery.Event} e Window scroll event
+ * @param {jQuery.Event} e Window scroll event
  */
 ve.ui.SurfaceToolbar.prototype.onWindowResize = function () {
 	var update = {},
@@ -142,7 +142,7 @@ ve.ui.SurfaceToolbar.prototype.onSurfaceViewKeyUp = function () {
 };
 
 /**
- * Gets the surface the toolbar controls.
+ * Gets the surface which the toolbar controls.
  *
  * @returns {ve.ui.Surface} Surface being controlled
  */

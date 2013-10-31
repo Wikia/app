@@ -1,0 +1,59 @@
+[
+	{
+		"description": "styleguide-example-description-button-primary-big",
+		"params": {
+			"type": "link",
+			"vars": {
+				"href": "#",
+				"classes": [
+					"primary",
+					"big"
+				],
+				"title": "Primary big button example",
+				"value": "Primary big button"
+			}
+		}
+	},
+	{
+		"description": "styleguide-example-description-button-primary-normal",
+		"params": {
+			"type": "link",
+			"vars": {
+				"href": "#",
+				"classes": [
+					"primary"
+				],
+				"title": "Primary standard button example",
+				"value": "Primary standard button"
+			}
+		}
+	},
+	{
+		"description": "styleguide-example-description-button-secondary-small",
+		"params": {
+			"type": "button",
+			"vars": {
+				"type": "submit",
+				"classes": [
+					"secondary"
+				],
+				"value": "Secondary standard button (disabled)",
+				"disabled": "disabled"
+			}
+		}
+	},
+	{
+		"description": "styleguide-example-description-button-secondary-big",
+		"params": {
+			"type": "button",
+			"vars": {
+				"type": "submit",
+				"classes": [
+					"secondary",
+					"big"
+				],
+				"value": "Secondary big button"
+			}
+		}
+	}
+]

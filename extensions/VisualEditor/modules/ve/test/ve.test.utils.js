@@ -5,6 +5,11 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
+/**
+ * @class
+ * @singleton
+ * @ignore
+ */
 ve.test = { 'utils': {} };
 
 ve.test.utils.runIsolateTest = function ( assert, type, range, expected, label ) {
@@ -22,9 +27,7 @@ ve.test.utils.runIsolateTest = function ( assert, type, range, expected, label )
 
 ve.test.utils.runFormatConverterTest = function ( assert, range, type, attributes, expectedSelection, expectedData, msg ) {
 	var selection,
-		dom = ve.createDocumentFromHtml( ve.dm.example.isolationHtml ),
-		target = new ve.init.sa.Target( $( '#qunit-fixture' ), dom ),
-		surface = target.surface,
+		surface = ve.test.utils.createSurfaceFromHtml( ve.dm.example.isolationHtml ),
 		formatAction = new ve.ui.FormatAction( surface ),
 		data = ve.copy( surface.getModel().getDocument().getFullData() ),
 		originalData = ve.copy( data );
@@ -116,4 +119,15 @@ ve.test.utils.runGetDomFromDataTests = function( assert, cases ) {
 		);
 		assert.deepEqualWithDomElements( doc.getFullData(), originalData, msg + ' (data hasn\'t changed)' );
 	}
+};
+
+/**
+ * Create a UI surface from some HTML
+ *
+ * @param {string} html Document HTML
+ * @returns {ve.ui.Surface} UI surface
+ */
+ve.test.utils.createSurfaceFromHtml = function ( html ) {
+	var target = new ve.init.sa.Target( $( '#qunit-fixture' ), ve.createDocumentFromHtml( html ) );
+	return target.surface;
 };

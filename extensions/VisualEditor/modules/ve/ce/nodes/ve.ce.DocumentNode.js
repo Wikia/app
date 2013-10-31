@@ -13,7 +13,7 @@
  * @constructor
  * @param {ve.dm.DocumentNode} model Model to observe
  * @param {ve.ce.Surface} surface Surface document is part of
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ce.DocumentNode = function VeCeDocumentNode( model, surface, config ) {
 	// Parent constructor
