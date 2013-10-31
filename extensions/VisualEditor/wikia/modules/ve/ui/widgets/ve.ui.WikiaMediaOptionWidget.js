@@ -1,5 +1,5 @@
 /*!
- * VisualEditor UserInterface WikiaMediaResultWidget class.
+ * VisualEditor UserInterface WikiaMediaOptionWidget class.
  *
  * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
@@ -16,7 +16,7 @@
  * @param {Object} [config] Configuration options
  * @cfg {number} [size] Media thumbnail size
  */
-ve.ui.WikiaMediaResultWidget = function VeUiWikiaMediaResultWidget( data, config ) {
+ve.ui.WikiaMediaOptionWidget = function VeUiWikiaMediaOptionWidget( data, config ) {
 	// Configuration intialization
 	config = config || {};
 
@@ -41,7 +41,7 @@ ve.ui.WikiaMediaResultWidget = function VeUiWikiaMediaResultWidget( data, config
 	// Initialization
 	this.loadThumbnail();
 	this.setLabel( this.mwTitle );
-	this.state.$.addClass( 've-ui-wikiaMediaResultWidget-state' );
+	this.state.$.addClass( 've-ui-wikiaMediaOptionWidget-state' );
 	this.$
 		.addClass( 've-ui-mwMediaResultWidget ve-ui-texture-pending ' + data.type )
 		.css( { 'width': this.size, 'height': this.size } )
@@ -50,7 +50,7 @@ ve.ui.WikiaMediaResultWidget = function VeUiWikiaMediaResultWidget( data, config
 
 /* Inheritance */
 
-ve.inheritClass( ve.ui.WikiaMediaResultWidget, ve.ui.OptionWidget );
+ve.inheritClass( ve.ui.WikiaMediaOptionWidget, ve.ui.OptionWidget );
 
 /* Methods */
 
@@ -59,11 +59,11 @@ ve.inheritClass( ve.ui.WikiaMediaResultWidget, ve.ui.OptionWidget );
  *
  * @method
  */
-ve.ui.WikiaMediaResultWidget.prototype.loadThumbnail = function () {
+ve.ui.WikiaMediaOptionWidget.prototype.loadThumbnail = function () {
 	require( ['wikia.thumbnailer'], ve.bind( function ( thumbnailer ) {
 		this.image.src = thumbnailer.getThumbURL( this.data.url, 'image', this.size, this.size );
 		this.$thumb.addClass(
-			've-ui-mwMediaResultWidget-thumbnail ve-ui-WikiaMediaResultWidget-thumbnail'
+			've-ui-mwMediaResultWidget-thumbnail ve-ui-WikiaMediaOptionWidget-thumbnail'
 		);
 		this.$thumb.last().css( 'background-image', 'url(' + this.image.src + ')' );
 	}, this ) );
@@ -74,7 +74,7 @@ ve.ui.WikiaMediaResultWidget.prototype.loadThumbnail = function () {
  *
  * @method
  */
-ve.ui.WikiaMediaResultWidget.prototype.onThumbnailLoad = function () {
+ve.ui.WikiaMediaOptionWidget.prototype.onThumbnailLoad = function () {
 	this.$thumb.first().addClass( 've-ui-texture-transparency' );
 	this.$
 		.addClass( 've-ui-mwMediaResultWidget-done' )
@@ -101,7 +101,7 @@ ve.ui.WikiaMediaResultWidget.prototype.onThumbnailLoad = function () {
  * @method
  * @see {@link ve.ui.MWMediaResultWidget.prototype.onThumbnailError}
  */
-ve.ui.WikiaMediaResultWidget.prototype.onThumbnailError =
+ve.ui.WikiaMediaOptionWidget.prototype.onThumbnailError =
 	ve.ui.MWMediaResultWidget.prototype.onThumbnailError;
 
 /**
@@ -111,6 +111,6 @@ ve.ui.WikiaMediaResultWidget.prototype.onThumbnailError =
  * @param {string} state The state of the icon to be shown ('selected', 'select')
  */
 
-ve.ui.WikiaMediaResultWidget.prototype.setState = function ( state ) {
+ve.ui.WikiaMediaOptionWidget.prototype.setState = function ( state ) {
 	this.state.setIcon( state );
 };

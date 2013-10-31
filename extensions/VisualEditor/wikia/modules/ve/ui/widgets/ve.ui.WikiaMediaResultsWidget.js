@@ -15,7 +15,7 @@ ve.ui.WikiaMediaResultsWidget = function VeUiWikiaMediaResultsWidget( config ) {
 	ve.ui.Widget.call( this, config );
 
 	// Properties
-	this.results = new ve.ui.WikiaMediaResultsSelectWidget( { '$$': this.$$ } );
+	this.results = new ve.ui.WikiaMediaSelectWidget( { '$$': this.$$ } );
 	this.size = config.size || 160;
 
 	// Events
@@ -48,7 +48,7 @@ ve.inheritClass( ve.ui.WikiaMediaResultsWidget, ve.ui.Widget );
  * Handle state change
  *
  * @method
- * @param {ve.ui.WikiaMediaResultWidget} item Item whose state is changing
+ * @param {ve.ui.WikiaMediaOptionWidget} item Item whose state is changing
  */
 ve.ui.WikiaMediaResultsWidget.prototype.onResultsState = function ( item ) {
 	this.emit( 'state', item.getData() );
@@ -66,7 +66,7 @@ ve.ui.WikiaMediaResultsWidget.prototype.addItems = function ( items ) {
 
 	for ( i = 0; i < items.length; i++ ) {
 		results.push(
-			new ve.ui.WikiaMediaResultWidget( items[i], { '$$': this.$$, 'size': this.size } )
+			new ve.ui.WikiaMediaOptionWidget( items[i], { '$$': this.$$, 'size': this.size } )
 		);
 	}
 

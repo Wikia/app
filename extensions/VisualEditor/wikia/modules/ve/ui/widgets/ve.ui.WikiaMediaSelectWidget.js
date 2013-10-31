@@ -1,5 +1,5 @@
 /*!
- * VisualEditor UserInterface WikiaMediaResultsSelectWidget class.
+ * VisualEditor UserInterface WikiaMediaSelectWidget class.
  */
 
 /**
@@ -9,7 +9,7 @@
  * @constructor
  * @param {Object} [config] Configuration options
  */
-ve.ui.WikiaMediaResultsSelectWidget = function VeUiWikiaMediaResultsSelectWidget( config ) {
+ve.ui.WikiaMediaSelectWidget = function VeUiWikiaMediaSelectWidget( config ) {
 	// Parent constructor
 	ve.ui.SelectWidget.call( this, config );
 
@@ -22,7 +22,7 @@ ve.ui.WikiaMediaResultsSelectWidget = function VeUiWikiaMediaResultsSelectWidget
 
 /* Inheritance */
 
-ve.inheritClass( ve.ui.WikiaMediaResultsSelectWidget, ve.ui.SelectWidget );
+ve.inheritClass( ve.ui.WikiaMediaSelectWidget, ve.ui.SelectWidget );
 
 /* Events */
 
@@ -38,7 +38,7 @@ ve.inheritClass( ve.ui.WikiaMediaResultsSelectWidget, ve.ui.SelectWidget );
  * @method
  * @param {jQuery.Event} e The jQuery event Object.
  */
-ve.ui.WikiaMediaResultsSelectWidget.prototype.onMouseUp = function ( e ) {
+ve.ui.WikiaMediaSelectWidget.prototype.onMouseUp = function ( e ) {
 	this.pressed = false;
 	if ( !this.selecting ) {
 		this.selecting = this.getTargetItem( e );
@@ -65,7 +65,7 @@ ve.ui.WikiaMediaResultsSelectWidget.prototype.onMouseUp = function ( e ) {
  * @param {Object} changedItems Items whose state is being changed
  * @param {Object} state The state to set
  */
-ve.ui.WikiaMediaResultsSelectWidget.prototype.updateState = function ( cartItems, changedItems, state ) {
+ve.ui.WikiaMediaSelectWidget.prototype.updateState = function ( cartItems, changedItems, state ) {
 	var i, item,
 		items = changedItems ? changedItems : cartItems;
 
