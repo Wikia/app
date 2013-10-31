@@ -2,7 +2,7 @@
 @import "skins/oasis/css/core/layout";
 @import "skins/oasis/css/mixins/box-sizing";
 @import "skins/oasis/css/mixins/clearfix";
-@import "extensions/VisualEditor/wikia/modules/ve/ui/styles/mixins/ve-icon";
+@import "mixins/ve-icon";
 
 $size-cart-item: 60px;
 $width-media-item-max: 365px;
@@ -184,7 +184,7 @@ $width-cart: 101px;
 	top: 0;
 	right: 0;
 
-	.ve-ui-wikiaMediaResultWidget-cartState {
+	.ve-ui-wikiaMediaResultWidget-state {
 		background-color: $color-page;
 		height: 32px;
 		position: absolute;

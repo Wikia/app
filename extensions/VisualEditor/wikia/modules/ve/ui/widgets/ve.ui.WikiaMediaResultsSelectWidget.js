@@ -45,12 +45,12 @@ ve.ui.WikiaMediaResultsSelectWidget.prototype.onMouseUp = function ( e ) {
 	}
 	if ( !this.disabled && e.which === 1 && this.selecting ) {
 		// What was clicked on?
-		if ( $( e.target ).hasClass( 've-ui-wikiaMediaResultWidget-cartState' ) ) {
-			this.emit( 'cartState', this.selecting );
+		if ( $( e.target ).hasClass( 've-ui-wikiaMediaResultWidget-state' ) ) {
+			this.emit( 'state', this.selecting );
 		} else {
 			// TODO: When preview is ready, this should call this.selectItem.
 			//this.selectItem( this.selecting );
-			this.emit( 'cartState', this.selecting );
+			this.emit( 'state', this.selecting );
 		}
 		this.selecting = null;
 	}
@@ -65,12 +65,12 @@ ve.ui.WikiaMediaResultsSelectWidget.prototype.onMouseUp = function ( e ) {
  * @param {Object} items Items that are being affected
  * @param {Object} state The state to set
  */
-ve.ui.WikiaMediaResultsSelectWidget.prototype.updateCartState = function ( cartItems, items, state ) {
+ve.ui.WikiaMediaResultsSelectWidget.prototype.updateState = function ( cartItems, items, state ) {
 	var i, j;
 
 	/*
 	 * this.items = search results shown in widget
-	 * items = items whose cartState needs updating
+	 * items = items whose state needs updating
 	 * state = the state to set on the items
 	 */
 
@@ -79,16 +79,16 @@ ve.ui.WikiaMediaResultsSelectWidget.prototype.updateCartState = function ( cartI
 		for ( i = 0; i < this.items.length; i++ ) {
 			for ( j = 0; j < items.length ; j++ ) {
 				if ( this.items[i].data.title === items[j].title ) {
-					this.items[i].setCartState( state );
+					this.items[i].setState( state );
 				}
 			}
 		}
 	} else {
-		// Compare all search results to the cart and set the cartState of the ones that are there
+		// Compare all search results to the cart and set the state of the ones that are there
 		for ( i = 0; i < cartItems.length; i++ ) {
 			for ( j = 0; j < this.items.length; j++ ) {
 				if ( cartItems[i].title === this.items[j].data.title ) {
-					this.items[j].setCartState( 'selected' );
+					this.items[j].setState( 'selected' );
 				}
 			}
 		}

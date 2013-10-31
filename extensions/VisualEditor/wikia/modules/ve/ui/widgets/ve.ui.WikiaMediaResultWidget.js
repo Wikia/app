@@ -32,7 +32,7 @@ ve.ui.WikiaMediaResultWidget = function VeUiWikiaMediaResultWidget( data, config
 	this.$front = this.$$( '<div>' );
 	this.$thumb = this.$back.add( this.$front );
 	this.$overlay = this.$$( '<div>' );
-	this.cartState = new ve.ui.IconButtonWidget( { 'icon': 'select' } );
+	this.state = new ve.ui.IconButtonWidget( { 'icon': 'select' } );
 
 	// Events
 	this.$image
@@ -43,11 +43,11 @@ ve.ui.WikiaMediaResultWidget = function VeUiWikiaMediaResultWidget( data, config
 	this.loadThumbnail();
 	this.setLabel( this.mwTitle );
 	this.$overlay.addClass( 've-ui-mwMediaResultWidget-overlay' );
-	this.cartState.$.addClass( 've-ui-wikiaMediaResultWidget-cartState' );
+	this.state.$.addClass( 've-ui-wikiaMediaResultWidget-state' );
 	this.$
 		.addClass( 've-ui-mwMediaResultWidget ve-ui-texture-pending ' + data.type )
 		.css( { 'width': this.size, 'height': this.size } )
-		.prepend( this.$thumb, this.cartState.$ );
+		.prepend( this.$thumb, this.state.$ );
 };
 
 /* Inheritance */
@@ -113,6 +113,6 @@ ve.ui.WikiaMediaResultWidget.prototype.onThumbnailError =
  * @param {string} state The state of the icon to be shown ('selected', 'select')
  */
 
-ve.ui.WikiaMediaResultWidget.prototype.setCartState = function ( state ) {
-	this.cartState.setIcon( state );
+ve.ui.WikiaMediaResultWidget.prototype.setState = function ( state ) {
+	this.state.setIcon( state );
 };

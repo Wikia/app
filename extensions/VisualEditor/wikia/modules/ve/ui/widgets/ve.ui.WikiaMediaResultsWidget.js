@@ -22,7 +22,7 @@ ve.ui.WikiaMediaResultsWidget = function VeUiWikiaMediaResultsWidget( config ) {
 	this.results.connect( this, {
 		'highlight': 'onResultsHighlight',
 		'select': 'onResultsSelect',
-		'cartState': 'onCartState'
+		'state': 'onState'
 	} );
 	this.$.on( 'scroll', ve.bind( this.onResultsScroll, this ) );
 
@@ -44,8 +44,14 @@ ve.inheritClass( ve.ui.WikiaMediaResultsWidget, ve.ui.Widget );
 
 /* Methods */
 
-ve.ui.WikiaMediaResultsWidget.prototype.onCartState = function ( item ) {
-	this.emit( 'cartState', item.getData() );
+/**
+ * Handle state change
+ *
+ * @method
+ * @param {ve.ui.WikiaMediaResultWidget} items Item whose state is changing
+ */
+ve.ui.WikiaMediaResultsWidget.prototype.onState = function ( item ) {
+	this.emit( 'state', item.getData() );
 };
 
 /**

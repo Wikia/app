@@ -87,7 +87,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	this.queryInput.$input.on( 'keydown', ve.bind( this.onQueryInputKeydown, this ) );
 	this.search.connect( this, {
 		'nearingEnd': 'onSearchNearingEnd',
-		'cartState': 'onSearchSelect'
+		'state': 'onState'
 	} );
 	this.upload.on( 'upload', ve.bind( this.onUploadSuccess, this ) );
 	this.queryUpload.on( 'upload', ve.bind( this.onUploadSuccess, this ) );
@@ -161,7 +161,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.onQueryInputKeydown = function ( e ) {
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onQueryRequestSearchDone = function ( items ) {
 	this.search.addItems( items );
-	this.searchResults.updateCartState( this.cartModel.getItems() );
+	this.searchResults.updateState( this.cartModel.getItems() );
 	this.pages.setPage( 'search' );
 };
 
@@ -185,12 +185,12 @@ ve.ui.WikiaMediaInsertDialog.prototype.onSearchNearingEnd = function () {
 };
 
 /**
- * Handle clicking on search result items.
+ * Handle clicking on the cart state indicator in search results.
  *
  * @method
  * @param {Object} item The search result item data.
  */
-ve.ui.WikiaMediaInsertDialog.prototype.onSearchSelect = function ( item ) {
+ve.ui.WikiaMediaInsertDialog.prototype.onState = function ( item ) {
 	var cartItemModel, cartItems, i, removed;
 	if ( item === null ) {
 		return;
@@ -227,7 +227,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.onCartSelect = function ( item ) {
 
 /**
  * @method
- * @param {ve.dm.WikiaCartItem|null} items
+ * @param {Array} items
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onCartAdd = function ( items ) {
 	var i, page;
@@ -240,15 +240,15 @@ ve.ui.WikiaMediaInsertDialog.prototype.onCartAdd = function ( items ) {
 		page.connect( this, { 'remove': 'onMediaPageRemove' } );
 		this.pages.addPage( items[i].title, { '$content': page.$ } );
 	}
-	this.searchResults.updateCartState( this.cartModel.getItems(), items, 'selected' );
+	this.searchResults.updateState( this.cartModel.getItems(), items, 'selected' );
 };
 
 /**
  * @method
- * @param {ve.dm.WikiaCartItem|null} items
+ * @param {Array} items
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onCartRemove = function ( items ) {
-	this.searchResults.updateCartState( this.cartModel.getItems(), items, 'select' );
+	this.searchResults.updateState( this.cartModel.getItems(), items, 'select' );
 };
 
 /**
