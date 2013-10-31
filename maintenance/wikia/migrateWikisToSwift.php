@@ -26,7 +26,7 @@ class MigrateWikisToSwift extends Maintenance {
 	CONST DEFAULT_LIMIT = 1000;
 	const MIGRATE_PACKAGE = 50;
 	const SCRIPT_PROCS = 50;
-	CONST CMD = 'run_maintenance --conf=%s --where="city_id in (%s)" --script "wikia/migrateImagesToSwift.php %s" --procs=%d ';
+	CONST CMD = 'run_maintenance --conf=%s --where="city_id in (%s)" --script "wikia/migrateImagesToSwift.php%s" --procs=%d ';
 	
 	private $disabled_wikis = [ 717284, 298117 ];
 	private $db;
@@ -70,16 +70,11 @@ class MigrateWikisToSwift extends Maintenance {
 
 		$this->db = $this->getDB( DB_SLAVE, array(), $wgExternalSharedDB );
 
-		$where = [ 'city_public' => 1 ];
+		$where = [ 'city_public' => 1, 'city_image_migrate.city_id is null' ];
 		if ( !empty( $wikis  ) ) {
 			$where[ 'city_list.city_id' ] = explode( ",", $wikis );
 		}
-
-		$join = [ 'city_image_migrate.city_id = city_list.city_id' ];
-		if ( empty( $force ) ) {
-			$join[] = 'city_image_migrate.locked is not null';
-			$where[] = 'city_image_migrate.city_id is null';
-		}
+		$join = [ 'city_image_migrate.city_id = city_list.city_id', 'city_image_migrate.locked is not null' ];
 
 		$res = $this->db->select(
 			[ 'city_list', 'city_image_migrate' ], 
@@ -115,7 +110,7 @@ class MigrateWikisToSwift extends Maintenance {
 			# run main migration script written by Macbre
 			$wikis = implode(",", $list_wikis );
 			$this->output( "\tMigrate package {$id}: {$wikis} ... " );
-			$cmd = sprintf( self::CMD, $this->getOption( 'conf' ), $wikis, ( $force ) ? '--force' : '', self::SCRIPT_PROCS );
+			$cmd = sprintf( self::CMD, $this->getOption( 'conf' ), $wikis, ( $force ) ? ' --force' : '', self::SCRIPT_PROCS );
 			if ( $debug ) {
 				$this->output( "\n\tRun cmd: {$cmd} \n" );
 			}
