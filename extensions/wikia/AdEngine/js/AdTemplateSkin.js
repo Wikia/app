@@ -22,44 +22,12 @@ define('ext.wikia.adengine.template.skin', ['wikia.document', 'wikia.window', 'w
 			i,
 			len,
 			pixelElement,
-			pixelUrl,
-			body = document.getElementsByTagName('body')[0],
-			head = document.getElementsByTagName('head')[0],
-			style = document.createElement('style'),
-			responsiveLink = document.createElement('link'),
-			imagePreload = new Image(),
-			sassParams;
+			pixelUrl;
 
 		params = params || {};
 
 		if (window.wgOasisResponsive) {
-			sassParams = [
-				'color-body=#' + params.backgroundColor,
-				'background-image=NA',
-				'background-fixed=true',
-				'background-tiled=false',
-				'background-image-height=800',
-				'background-image-width=1700',
-				'widthType=2'
-			];
-
-			responsiveLink.rel = 'stylesheet';
-			responsiveLink.href = window.wgCdnRootUrl +
-				'/__am/' + window.wgStyleVersion + '/sass/' +
-				encodeURIComponent(sassParams.join('&')) +
-				'//skins/oasis/css/core/responsive-background.scss';
-
-			style.textContent = 'body.skin-oasis:after, body.skin-oasis:before {' +
-				'  background-image:url(' + params.skinImage + ');' +
-				'}';
-
-			// Preload skin image, so it effectively download in parallel to the CSS
-			imagePreload.src = params.skinImage;
-
-			// Append the necessary CSS
-			head.appendChild(responsiveLink);
-			head.appendChild(style);
-
+			AdSkin.load(params);
 		} else {
 			adSkinStyle.background = 'url("' + params.skinImage + '") no-repeat top center #' + params.backgroundColor;
 		}
