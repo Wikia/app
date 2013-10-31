@@ -4,7 +4,7 @@
  *
  * Liftium must call AdEngine_loadLateAds to trigger showing ads
  */
-(function(log, tracker, window, ghostwriter, document, Geo, Krux) {
+(function(log, tracker, window, document, Geo, Krux) {
 	var adConfig
 		, scriptWriter
 		, adLogicPageLevelParams
@@ -23,7 +23,7 @@
 	};
 
 	dartUrl = DartUrl();
-	scriptWriter = ScriptWriter(log, ghostwriter, document);
+	scriptWriter = ScriptWriter(document, log, window);
 	adLogicPageLevelParams = AdLogicPageLevelParams(log, window, Krux /* omiting a few optional deps */);
 	adLogicPageLevelParamsLegacy = AdLogicPageLevelParamsLegacy(log, window, adLogicPageLevelParams, Krux, dartUrl);
 	slotTweaker = SlotTweaker(log, document, window);
@@ -56,4 +56,4 @@
 	 */
 	window.AdEngine_setLateAdsConfig(adConfig);
 
-}(Wikia.log, Wikia.Tracker, window, ghostwriter, document, Geo, Krux));
+}(Wikia.log, Wikia.Tracker, window, document, Geo, Krux));
