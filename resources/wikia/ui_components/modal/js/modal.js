@@ -56,6 +56,18 @@ define( 'wikia.ui.modal', [ 'jquery' ], function( $ ) {
 		}
 	};
 
+	Modal.prototype.deactivate = function() {
+		var inactiveLayer = document.createElement('div');
+		$( inactiveLayer ).addClass( 'inactive' );
+		this.$element.append( inactiveLayer );
+		this.$element.addClass( 'inactive' );
+	};
+
+	Modal.prototype.activate = function() {
+		this.$element.find( '.inactive' ).remove();
+		this.$element.removeClass( 'inactive' );
+	};
+
 	Modal.prototype.isShown = function() {
 		return this.$element.hasClass( 'shown' );
 	};
