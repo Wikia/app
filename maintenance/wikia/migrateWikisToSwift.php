@@ -26,7 +26,7 @@ class MigrateWikisToSwift extends Maintenance {
 	CONST DEFAULT_LIMIT = 1000;
 	const MIGRATE_PACKAGE = 50;
 	const SCRIPT_PROCS = 50;
-	CONST CMD = 'run_maintenance --conf=%s --where="city_id in (%s)" --script "wikia/migrateImagesToSwift.php %s" --procs=%d ';
+	CONST CMD = 'run_maintenance --conf=%s --where="city_id in (%s)" --script "wikia/migrateImagesToSwift.php%s" --procs=%d ';
 	
 	private $disabled_wikis = [ 717284, 298117 ];
 	private $db;
@@ -115,7 +115,7 @@ class MigrateWikisToSwift extends Maintenance {
 			# run main migration script written by Macbre
 			$wikis = implode(",", $list_wikis );
 			$this->output( "\tMigrate package {$id}: {$wikis} ... " );
-			$cmd = sprintf( self::CMD, $this->getOption( 'conf' ), $wikis, ( $force ) ? '--force' : '', self::SCRIPT_PROCS );
+			$cmd = sprintf( self::CMD, $this->getOption( 'conf' ), $wikis, ( $force ) ? ' --force' : '', self::SCRIPT_PROCS );
 			if ( $debug ) {
 				$this->output( "\n\tRun cmd: {$cmd} \n" );
 			}
