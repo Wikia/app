@@ -75,7 +75,12 @@ class Queue {
 			$params[ 'src' ] = '';
 		}
 		
-		$city_id = ( !empty( $params[ 'city_id' ] ) ) ? $params[  'city_id' ] : $wgCityId;
+		if ( !is_null( $params[ 'city_id' ] ) ) {
+			$city_id = ( !empty( $params[ 'city_id' ] ) ) ? $params[  'city_id' ] : $wgCityId;
+		} else {
+			/* for Avatars */
+			$city_id = 0;
+		}
 		
 		$obj = new Queue( $city_id, $params[ 'op' ], $params[ 'dst' ], $params[ 'src' ] );
 		
@@ -95,7 +100,7 @@ class Queue {
 			return false;
 		}
 		
-		if ( empty( $row->city_id ) ) {
+		if ( is_null( $row->city_id ) ) {
 			\Wikia\SwiftStorage::log( __METHOD__, 'Wikia identify is empty' );
 			return false;
 		}
