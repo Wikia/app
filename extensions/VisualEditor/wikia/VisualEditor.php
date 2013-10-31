@@ -76,6 +76,7 @@ $wgResourceModules += array(
 			'oasis-content-picture-added-by',
 			'visualeditor-wikiamediainsertbuttontool-label',
 			'visualeditor-wikiasourcemodebuttontool-label',
+			'visualeditor-wikiasourcemode-button-apply',
 			'visualeditor-dialog-source-mode-title',
 			'videohandler-video-views'
 		),

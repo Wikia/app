@@ -37,10 +37,27 @@ ve.ui.WikiaSourceModeDialog.prototype.initialize = function () {
 	// Parent method
 	ve.ui.MWDialog.prototype.initialize.call( this );
 
+	this.sourceModeTextarea = new ve.ui.TextInputWidget({
+		'$$': this.frame.$$,
+		'multiline': true
+	});
+	this.$body.append( this.sourceModeTextarea.$ );
+
+	this.applytButton = new ve.ui.ButtonWidget( {
+		'$$': this.frame.$$,
+		'label': ve.msg( 'visualeditor-wikiasourcemode-button-apply' ),
+		'flags': ['primary']
+	} );
+	this.$foot.append( this.applytButton.$ );
+
 };
 
 ve.ui.WikiaSourceModeDialog.prototype.onOpen = function () {
 	ve.ui.MWDialog.prototype.onOpen.call( this );
+	// TODO: display loading graphic
+	// TODO: request wikitext
+	// TODO: insert wikitext inside textarea
+	// TODO: remove loading graphic
 };
 
 ve.ui.dialogFactory.register( ve.ui.WikiaSourceModeDialog );
