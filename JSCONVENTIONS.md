@@ -1,12 +1,14 @@
 # Wikia JavaScript Coding Conventions
 
-## Our Mission ##
->As a developer I want a clear and well documented guide dealing with coding conventions, patterns and best practices for JavaScript development at Wikia along with tools to help me in making my code compliant.
+This styleguide defines the JavaScript coding conventions at Wikia. While it is managed by the JavaScript Style Guide Team, it is here to serve the entire JavaScript developer community at Wikia. Therefore, if you would like to propose a change, simply create a pull request and tag [@wikia-frontenders](https://github.com/wikia-frontenders).
 
-This styleguide defines the JavaScript coding conventions at Wikia. It's managed by the JS StyleGuide team but is here to serve all JS developers at Wikia and in our community.  If you'd like to propose a change to the style guide, simply create a pull request and tag [@wikia-frontenders](https://github.com/wikia-frontenders).
-We also have our [JSHint Config](https://github.com/Wikia/app/blob/dev/.jshintrc) and [EditorConfig](https://github.com/Wikia/app/blob/dev/.editorconfig) files, which should be followed in order to pass code review. 
+## Our Mission ##
+
+> As a developer, I want a clear and well documented guide covering coding conventions, patterns and best practices for JavaScript development at Wikia along with tools to help me in making my code compliant.
 
 ## TOC
+
+* [Tools](#tools)
 * [Language Rules](#language-rules)
   * [Early returns](#early-returns)
   * [Semi-colons](#semi-colons)
@@ -33,12 +35,34 @@ We also have our [JSHint Config](https://github.com/Wikia/app/blob/dev/.jshintrc
 * [Resources](#resources)
 * [To Do](#to-do)
 
+## Tools
+
+Here at Wikia, we employ a few tools to make compliance with our coding conventions easier. These tools are detailed below.
+
+### [JSHint](http://jshint.com)
+
+Wikia uses JSHint to detect errors, prevent potential problems and enforce some of our coding conventions. Our rules are enforced globally in the root level [.jshintrc](https://github.com/Wikia/app/blob/dev/.jshintrc) file. Keep in mind that some extensions have JSHint guidelines of their own.
+
+#### How to use JSHint
+
+Running JSHint can be [performed in a variety of ways](http://jshint.com/install/) though we currently recommend using an editor plugin, if available, but it's also easy to run straight from the command line.
+
+### [EditorConfig](http://editorconfig.org/)
+
+Wikia uses EditorConfig to help enforce whitespace consistency across our repository. Our rules are enforced globally in the root level [.editorconfig](https://github.com/Wikia/app/blob/dev/.editorconfig) file.
+
+#### How to use EditorConfig
+
+Simply [download a plugin](http://editorconfig.org/#download) for your editor of choice. If your editor is not listed, you will need to configure your editor manually to conform to any of our guidelines. If this is the case, please consider opening an issue (https://github.com/editorconfig/editorconfig/issues) or contributing a plugin (http://editorconfig.org/#contributing) to the EditorConfig project. Don't forget to update when changes to the guidelines get rolled out.
+
 ## Language Rules
 
-Language rules refer to rules that can have an impact on the functionality.  They are chosen based on performance implications as well as their tendencies to reduce bugs.
+Language rules have an impact on functionality. They were chosen based on performance implications and their tendency to reduce bugs.
 
 ### Early returns
-Try to avoid early returns.  It makes the code easier to read.
+
+Avoid early returns, they make the flow of the code harder to follow.
+
 ```javascript
 // not best practice
 function() {
@@ -58,8 +82,10 @@ function() {
 }
 ```
 
-### Semi-colons
-Always use semicolons at the end of every simple statement.  No more than one statement per line.
+### Semicolons
+
+Always use semicolons at the end of every statement. Do not use more than one statement per line.
+
 ```javascript
 // bad:
 var x = y
@@ -74,7 +100,9 @@ myFunc();
 ```
 
 ### Function declarations within blocks
-Don't declare functions within blocks like loops and conditionals as this will often lead to unintended consequences.
+
+Do not declare functions within blocks such as loops and conditionals. This will often lead to unintended consequences.
+
 ```javascript
 // bad:
 if ( someBool ) {
@@ -92,6 +120,7 @@ while ( condition ) {
 ```
 
 ### Try/catch blocks
+
 Avoid using try/catch blocks in performance critical functions and inside loops.
 
 ```javascript
@@ -151,10 +180,11 @@ switch( foo ) {
 }
 ```
 
-###Delete Operator###
-Try to avoid using the delete operator.  Contrary to what you might think, the delete operator doesn't actually clean up memory.  Instead, removing properties actually changes the shape of objects and is bad for performance. It is better to set the property to null some other falsey value.
+### Delete Operator
 
-Quoted from google's style guide:
+Avoid using the delete operator. It is better to set the property to null or some other falsey value.
+
+From Google's style guide:
 > "In modern JavaScript engines, changing the number of properties on an object is much slower than reassigning the values. The delete keyword should be avoided except when it is necessary to remove a property from an object's iterated list of keys, or to change the result of if (key in obj)."
 
 __Example:__
@@ -171,22 +201,20 @@ delete myObj.goodBye;
 myObj.goodBye = false; // or null or '' etc.
 ```
 
-###Modifying prototypes of built-in objects###
-This is heavily discouraged.  We'll follow Google's style guidelines here:
->"Modifying builtins like Object.prototype and Array.prototype are strictly forbidden. Modifying other builtins like Function.prototype is less dangerous but still leads to hard to debug issues in production and should be avoided."
+### Modifying prototypes of built-in objects
 
-Also, jQuery code works on the assumption that no built in object prototypes are modified.
+Modifying prototypes is heavily discouraged. For this reason, many JavaScript frameworks, such as jQuery, work on the assumption that no built in Object prototypes are modified.
 
-
+From Google's style guide:
+> "Modifying builtins like Object.prototype and Array.prototype are strictly forbidden. Modifying other builtins like Function.prototype is less dangerous but still leads to hard to debug issues in production and should be avoided."
 
 ## Style Rules
 
 Style rules help us write easy to read, well documented, and consistant code.
 
-### White space guidelines
-We are basing our white space rules off of jQuery's, which can be found [here](http://contribute.jquery.org/style-guide/js/). The are copied below so we can make changes to them as we see fit.
+### Whitespace guidelines
 
-In general, the jQuery style guide encourages liberal spacing for improved human readability. The minification process creates a file that is optimized for browsers to read and process.
+Our whitespace guidelines are based on the [jQuery Style Guide](http://contribute.jquery.org/style-guide/js/). We have copied them below so we can make changes to them as we see fit. In general, the jQuery style guide encourages liberal spacing for improved human readability. The minification process creates a file that is optimized for browsers to read and process.
 
 - Indentation with tabs.
 - No whitespace at the end of line or on blank lines.
@@ -201,7 +229,7 @@ In general, the jQuery style guide encourages liberal spacing for improved human
 - New line at the end of each file.
 - If the entire file is wrapped in a closure, the function body is not indented.
 
-##### Bad Examples
+#### Bad Examples
 
 ```js
 
@@ -212,7 +240,7 @@ for(var i=0;i<100;i++) object[array[i]] = someFn(i);
 
 ```
 
-##### Good Examples
+#### Good Examples
 
 ```js
 var i = 0;
@@ -240,8 +268,7 @@ try {
 }
 ```
 
-
-##### Objects
+#### Objects
 
 Object declarations can be made on a single line if they are short (remember the line length limits). When an object declaration is too long to fit on one line, there must be one property per line. Property names only need to be quoted if they are reserved words or contain special characters:
 
@@ -261,8 +288,7 @@ var map = {
 };
 ```
 
-
-##### Arrays and Function Calls
+#### Arrays and Function Calls
 
 Always include extra spaces around elements and arguments:
 
@@ -303,8 +329,7 @@ foo( data, function() {
 });
 ```
 
-
-##### Multi-line Statements
+#### Multi-line Statements
 
 When a statement is too long to fit on one line, line breaks must occur after an operator.
 
@@ -335,8 +360,7 @@ When a conditional is too long to fit on one line, successive lines must be inde
 	}
 ```
 
-
-##### Chained Method Calls
+#### Chained Method Calls
 
 When a chain of method calls is too long to fit on one line, there must be one call per line, with the first call on a separate line from the object the methods are called on. If the method changes the context, an extra level of indentation must be used.
 
@@ -349,21 +373,9 @@ elements
 	.appendTo( 'body' );
 ```
 
-
-
-### Prefixing jQuery objects
-All variables referencing jQuery objects, should be prefixed with a $.
-
-```javascript
-// $div is a jQuery object
-var $div = $( 'div' );
-```
-
-
 ### Comments
-Comment early and often!
 
-For comments inside functions, use inline comments.  For comments about functions and documents, use JSDoc style block comments.
+Comment early and often! For comments inside functions, use inline comments. For comments about functions and documents, use [JSDoc](http://usejsdoc.org/) style block comments.
 
 ```javascript
 /* @desc This function bakes cookies
@@ -383,21 +395,24 @@ function makeCookies( flavor ) {
 }
 ```
 
-We use JSDoc style comments above function declarations and at the top of files because they make code clear and easy to read, and we'd like to be able to generate JSDocs at some point.  For examples of syntax you can check out  [these examples](http://usejsdoc.org/#JSDoc_Examples).
+We use JSDoc style comments above function declarations and at the top of files because they make code clear and easy to read, and we'd like to be able to generate JavaScript documentation at some point.
 
-##### Required JSDoc Anotations (when applicable)
+#### Required JSDoc Anotations (when applicable)
+
 * @desc
 * @param
 * @return
 
-##### Recommended JSDoc Anotations
+#### Recommended JSDoc Anotations
+
 * @author (at the top of a file)
 * @see (for links to documentation)
 
-###Naming conventions###
+### Naming conventions
 
-####Variables###
-Use lazyCamelCase for all variables with the exception of constructers, which should use UpperCamelCase. Declare all variables using one `var` keyword at the top of their scope context. Declaration and assignment on the same line are allowed. Examples follow below:
+#### Variables
+
+Use lazyCamelCase for all variables with the exception of constructers, which should use UpperCamelCase. Declare all variables using one `var` keyword at the top of their scope context. Declaration and assignment on the same line are allowed.
 
 ```javascript
 // bad
@@ -422,18 +437,35 @@ var myVariable;
 function MyConstructor() { ... }
 ```
 
-Use lazyCamelCase for all variables with the exception of constructers, which should use UpperCamelCase.
+##### Constants
 
-Constants don't exist in JS so don't use all caps to denote constants.
+Constants do not exist in JavaScript so do not use all caps to denote constants.
 
-Try to avoid acronyms in variable names and be explicit so it is clear to anyone reading your code what the variable does. Since we don't have an uglifier that reduces variable size yet, do this within reason.
+##### Acronyms
 
-#### AMD Modules ####
+Avoid acronyms in variable names and be explicit in your variable naming. It should be clear to anyone reading your code what the variable does.
+
+##### Obfuscation
+
+Avoid minification through obfuscation and try to make your code more human readable. Let the minification process handle minifying for production use.
+
+##### jQuery Objects
+
+All variables referencing jQuery Objects, should be prefixed with a `$`.
+
+```javascript
+// $div is a jQuery object
+var $div = $( 'div' );
+```
+
+#### AMD Modules
+
 AMD modules should be all lowercase. If the code is exension-specific, namespace with the extension.
+
 ```javascript
 define( 'myextension.mypage' ... )
 ```
-If there's a folder structure within the extension's scripts directory, the module's namespace should match the folder structure.
+If there is a folder structure within the extension's scripts directory, the module's namespace should match the folder structure.
 
 For example, if the tree looks like this:
 
@@ -454,29 +486,33 @@ define( 'search.models.results' ... );
 ```
 
 If the code is meant to be used site wide or by multiple different extensions, namespace with 'wikia'.
+
 ```javascript
 define( 'wikia.mymodule' )
 ```
+
 Hint: If it's in the modules folder, it should be namespace with 'wikia'.
 
-#### Folders ####
+#### Folders
+
 For clarity and future-proofness, all javascript files should go into a 'scripts' folder and all stylesheet files should go into a 'styles' folder.  This is different from what we've done in the past, which was putting all scripts into a 'js' folder and all stylesheets into a 'css' folder.
 
-All library files should go inside "lib" folders.  This will make it easier for JSHint to ignore library code.
+All library files should go inside 'lib' folders. This will make it easier for JSHint to ignore library code.
 
-#### JS Files ####
-All JS should be written as AMD modules so see [above](#amd-modules) for matching files names to module names.
+#### Files
 
-## Resources ##
+All re-usable JavaScript should be written as AMD modules. See the [above section](#amd-modules) for matching file names to module names.
+
+## Resources
+
 * [Google's JS Style Guide](http://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml)
 * [jQuery's JS Style Gude](https://github.com/jquery/contribute.jquery.org/blob/master/pages/style-guide/js.md)
 * [Douglas Crockford's Code Conventions for the JavaScript Programming Language](http://javascript.crockford.com/code.html)
 * [AirBnb's JS Style Guide](https://github.com/airbnb/javascript)
 * [JSLint](http://www.jslint.com/)
 
-## To Do
-* Submit for feedback to engineering team
+## TODO
+
 * Add more pics!
 
 ![Wikia](http://i.imgur.com/tVxkjhG.gif)
-
