@@ -713,7 +713,6 @@ class Masthead {
 				
 				// synchronize between DC
 				if ($res->isOK()) {
-					global $wgCityId;
 					$mwStorePath = sprintf( 'mwstore://swift-backend/%s%s%s', 
 						$wgBlogAvatarSwiftContainer, $wgBlogAvatarSwiftPathPrefix, $this->getLocalPath() );
 
