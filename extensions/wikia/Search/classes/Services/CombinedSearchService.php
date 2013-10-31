@@ -116,26 +116,33 @@ class CombinedSearchService {
 		}
 
 		// try set $outputModel['image']
+		$dbName = '';
 		try {
-			$dbName = \WikiFactory::getWikiByID( $outputModel['wikiId'] )->city_dbname;
-			if ( !empty( $dbName ) ) {
-				$db = wfGetDB( DB_SLAVE, [], $dbName ); // throws if database does not exits.
-				$imageServing = new \ImageServing(
-					[ $outputModel['articleId'] ],
-					self::IMAGE_SIZE,
-					[ 'w' => 1, 'h' => 1 ],
-					$db
-				);
-				$images = $imageServing->getImages(1)[$outputModel['articleId']];
-				if ( $images && sizeof( $images ) > 0 ) {
-					$imageName = $images[0]['name'];
-					$file = \GlobalFile::newFromText( $imageName, $outputModel['wikiId'] );
-					$outputModel['image'] = ( $imageServing->getUrl($file) );
+			$row = \WikiFactory::getWikiByID( $outputModel['wikiId'] );
+			if ( $row ) {
+				$dbName = $row->city_dbname;
+				if ( !empty( $dbName ) ) {
+					$db = wfGetDB( DB_SLAVE, [], $dbName ); // throws if database does not exits.
+					$imageServing = new \ImageServing(
+						[ $outputModel['articleId'] ],
+						self::IMAGE_SIZE,
+						self::IMAGE_SIZE,
+						$db
+					);
+					$images = $imageServing->getImages(1)[$outputModel['articleId']];
+					if ( $images && sizeof( $images ) > 0 ) {
+						$imageName = $images[0]['name'];
+						$file = \GlobalFile::newFromText( $imageName, $outputModel['wikiId'] );
+						if ( $file->exists() ) {
+							$outputModel['image'] = ( $imageServing->getUrl($file, $file->getWidth(), $file->getHeight()) );
+						}
+					}
 				}
 			}
 		} catch ( \DBConnectionError $ex ) {
 			// Swallow this exception. there is no simple way of telling if database does not exist other than catching exception.
 			// Or am I wrong ?
+			\Wikia::log(__METHOD__, false, "Cannot get database connection to " . $dbName );
 		}
 		return $outputModel;
 	}
