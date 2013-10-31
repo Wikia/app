@@ -209,7 +209,7 @@ $config['oasis_jquery'] = array(
 		// jQuery/Oasis specific code
 		'//skins/oasis/js/tables.js',
 
-		// AdSkin
+		// BackgroundChanger
 		'//skins/oasis/js/BackgroundChanger.js',
 
 		// Search A/B testing
