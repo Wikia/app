@@ -54,8 +54,7 @@
 							} );
 
 							forumModal.$element.find( 'button.submit' ).click( function() {
-								// @todo - how to disable all buttons including modal close?
-								forumModal.$element.find( 'footer .buttons button' ).attr('disabled', true);
+								forumModal.deactivate();
 								$.nirvana.sendRequest( {
 									controller: 'ForumExternalController',
 									method: submissionMethod,
@@ -75,8 +74,8 @@
 												} else {
 													forumModal.form.showGenericError( json.errormsg );
 												}
-												// @todo - implement, enable button clicks
-												forumModal.$element.find( 'footer .buttons button' ).removeAttr( 'disabled' );
+
+												forumModal.activate();
 											}
 										}
 									}
