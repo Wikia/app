@@ -61,13 +61,11 @@ ve.ui.WikiaMediaSelectWidget.prototype.onMouseUp = function ( e ) {
  * Determines which icon to show for a search result item based on the cart
  *
  * @method
- * @param {Object} cartItems Items in the cart
- * @param {Object} changedItems Items whose state is being changed
+ * @param {Object} items Items to match against
  * @param {Object} state The state to set
  */
-ve.ui.WikiaMediaSelectWidget.prototype.updateState = function ( cartItems, changedItems, state ) {
-	var i, item,
-		items = changedItems ? changedItems : cartItems;
+ve.ui.WikiaMediaSelectWidget.prototype.updateState = function ( items, state ) {
+	var i, item;
 
 	for ( i = 0; i < items.length ; i++ ) {
 		item = this.getItemFromData( items[i] );

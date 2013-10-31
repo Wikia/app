@@ -161,7 +161,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.onQueryInputKeydown = function ( e ) {
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onQueryRequestSearchDone = function ( items ) {
 	this.search.addItems( items );
-	this.searchResults.updateState( this.cartModel.getItems(), null, 'selected' );
+	this.searchResults.updateState( this.cartModel.getItems(), 'selected' );
 	this.pages.setPage( 'search' );
 };
 
@@ -240,7 +240,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.onCartAdd = function ( items ) {
 		page.connect( this, { 'remove': 'onMediaPageRemove' } );
 		this.pages.addPage( items[i].title, { '$content': page.$ } );
 	}
-	this.searchResults.updateState( this.cartModel.getItems(), items, 'selected' );
+	this.searchResults.updateState( items, 'selected' );
 };
 
 /**
@@ -248,7 +248,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.onCartAdd = function ( items ) {
  * @param {ve.dm.WikiaCartItem[]} items
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onCartRemove = function ( items ) {
-	this.searchResults.updateState( this.cartModel.getItems(), items, 'select' );
+	this.searchResults.updateState( items, 'select' );
 };
 
 /**
