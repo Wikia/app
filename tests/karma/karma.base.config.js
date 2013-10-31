@@ -3,7 +3,7 @@
  *
  * Shared across unit and integration tests
  *
- * created by Jakub Olek <jakub.olek@wikia-inc.com>
+ * created by Jakub Olek <jakubolek@wikia-inc.com>
  */
 
 var buildPath = 'tests/build/';
