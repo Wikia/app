@@ -70,7 +70,7 @@ class MigrateWikisToSwift extends Maintenance {
 
 		$this->db = $this->getDB( DB_SLAVE, array(), $wgExternalSharedDB );
 
-		$where = [ 'city_public' => 1, 'city_image_migrate.city_id is null' ];
+		$where = [ 'city_public' => 1 ];
 		if ( !empty( $wikis  ) ) {
 			$where[ 'city_list.city_id' ] = explode( ",", $wikis );
 		}
@@ -78,6 +78,7 @@ class MigrateWikisToSwift extends Maintenance {
 		$join = [ 'city_image_migrate.city_id = city_list.city_id' ];
 		if ( empty( $force ) ) {
 			$join[] = 'city_image_migrate.locked is not null';
+			$where[] = 'city_image_migrate.city_id is null';
 		}
 
 		$res = $this->db->select(
