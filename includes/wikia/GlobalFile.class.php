@@ -124,12 +124,12 @@ class GlobalFile extends WikiaObject {
 	 * @return string
 	 */
 	private function getHashPath() {
-		$hash = md5($this->mTitle->getText());
+		$hash = md5($this->mTitle->getDBkey());
 		return "{$hash[0]}/{$hash[0]}{$hash[1]}/";
 	}
 
 	function getUrlRel() {
-		return $this->getHashPath() . rawurlencode($this->getName());
+		return $this->getHashPath() . rawurlencode($this->mTitle->getDBkey());
 	}
 
 	/**
