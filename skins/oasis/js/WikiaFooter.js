@@ -197,47 +197,75 @@ var WikiaFooterApp = {
 		},
 
 		buildOveflowItem: function () {
-			return this.el.find('.overflow-menu').css('display','');
+			return this.el.find('.overflow-menu');
+		},
+
+		generateMediaQuery: function (moreable, minWidth) {
+			var firstMediaJSQuery = true,
+				mediaJSQueries = '',
+				moreableCount = moreable.length;
+			moreable.each(function (i, v) {
+				var elemWidth = $(v).outerWidth(true);
+
+				mediaJSQueries += '@media screen ';
+				if (!firstMediaJSQuery) {
+					mediaJSQueries += 'and (min-width:' + minWidth + 'px) ';
+				}
+				mediaJSQueries += 'and (max-width:' + (minWidth + elemWidth) + 'px) ' +
+					'{ .WikiaBarWrapper .tools > .overflow:nth-of-type(n + ' + (i + 1) + ') { display:none; } ' +
+					'.WikiaBarWrapper .tools .overflow-menu {  display: block; }' +
+					'.WikiaBarWrapper .tools .overflow-menu .overflow:nth-of-type(-n + ' + (moreableCount - i) + ') { display:block; }} ';
+				minWidth += elemWidth;
+				firstMediaJSQuery = false;
+			});
+			return mediaJSQueries;
+		},
+		getMinWidth: function(all) {
+			var arrow = this.el.parents('.wikia-bar:first').find('.arrow'),
+				minWidth = parseInt(this.el.css('padding-left'), 10) + arrow.outerWidth(true),
+				notMoreable = all.filter(':not(.overflow)');
+
+			notMoreable.each(function(i,v) {
+				minWidth += $(v).outerWidth(true);
+			});
+
+			return minWidth;
+		},
+
+		generateSubMenu: function(moreable) {
+			var where = moreable.last().next(),
+				liMore = this.buildOveflowItem(),
+				more = liMore.children('ul').empty();
+
+			if (where.exists()) {
+				where.before(liMore);
+			} else {
+				this.el.append(liMore);
+			}
+
+			moreable.each(function (i, v) {
+				$(v).clone().prependTo(more);
+			});
+			this.menuGroup.add(liMore,$.proxy(this.onShowMenu,this));
+		},
+		addStyles: function(mediaJsQueries) {
+			var styles = $('#WikiaFooterMediaQueries');
+			if (!styles.exists()) {
+				styles = $(document.createElement('style')).attr({
+					type: 'text/css',
+					id: 'WikiaFooterMediaQueries'
+				});
+			}
+			styles.html(mediaJsQueries).appendTo('head');
 		},
 
 		handleOverflowMenu: function () {
 			var all = this.el.children('li'),
 				moreable = all.filter('.overflow'),
-				where = moreable.last().next(),
-				width = 0,
-				mwidth = 0,
-				fwidth = this.el.width();
+				minWidth = this.getMinWidth(all);
 
-			all.each(function(i,v) {
-				width += $(v).outerWidth(true);
-			});
-			moreable.each(function(i,v) {
-				mwidth += $(v).outerWidth(true);
-			});
-
-			if (width < fwidth) {
-				return;
-			}
-
-			var li_more = this.buildOveflowItem();
-
-			if (where.exists()) {
-				where.before(li_more);
-			}
-			else {
-				this.el.append(li_more);
-			}
-			var more = li_more.children('ul');
-			var moreWidth = li_more.outerWidth(true) + 5;
-
-			var rwidth = fwidth - moreWidth - (width - mwidth);
-			moreable.each(function(i,v){
-				rwidth -= $(v).outerWidth(true);
-				if (rwidth < 0) {
-					$(v).prependTo(more);
-				}
-			});
-			this.menuGroup.add(li_more,$.proxy(this.onShowMenu,this));
+			this.addStyles(this.generateMediaQuery(moreable, minWidth));
+			this.generateSubMenu(moreable);
 		},
 
 		onShowMenu: function( mgroup, li, ul ) {
