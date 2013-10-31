@@ -1,12 +1,12 @@
-@import "skins/oasis/css/core/color.scss";
-@import "skins/oasis/css/core/responsive-background.scss";
-@import "skins/oasis/css/core/responsive-core.scss";
-@import "skins/oasis/css/core/responsive-font-sizing.scss";
-@import "skins/oasis/css/core/responsive-variables.scss";
-@import "skins/oasis/css/mixins/transform.scss";
-@import "skins/oasis/css/mixins/transition.scss";
-@import "skins/oasis/css/mixins/blackout.scss";
-@import "skins/oasis/css/mixins/box-sizing-border-box.scss";
+@import "skins/oasis/css/core/color";
+@import "skins/oasis/css/core/responsive-background";
+@import "skins/oasis/css/core/responsive-core";
+@import "skins/oasis/css/core/responsive-font-sizing";
+@import "skins/oasis/css/core/responsive-variables";
+@import "skins/oasis/css/mixins/transform";
+@import "skins/oasis/css/mixins/transition";
+@import "skins/oasis/css/mixins/blackout";
+@import "skins/oasis/css/mixins/box-sizing-border-box";
 @import "skins/oasis/css/mixins/flexbox";
 
 $close-image: '/resources/wikia/ui_components/modal/images/close-dark.svg';
@@ -140,15 +140,12 @@ $modal-secondary-color: darken( $color-page, 10% );
 
 		@include flexbox();
 		@include flex-direction(column);
-
 	}
 }
 
 .blackout {
 	@include blackout();
 }
-
-
 
 @media screen and (max-width: $breakpoint-min) {
 	.modal.medium {
