@@ -102,7 +102,7 @@ class MigrateImagesBetweenSwiftDC extends Maintenance {
 			} elseif ( empty( $this->imageSyncQueue->action ) ) {
 				$this->output("\tAction cannot be empty \n" );
 				$error = 3;
-			} elseif ( !in_array( $this->imageSyncQueue->action, [ 'store', 'delete', 'copy' ] ) ) {
+			} elseif ( !in_array( $this->imageSyncQueue->action, [ 'store', 'delete', 'copy', 'move' ] ) ) {
 				$this->output( "\tInvalid action: {$this->imageSyncQueue->action} \n" ); 
 				$error = 4;
 			} else {
