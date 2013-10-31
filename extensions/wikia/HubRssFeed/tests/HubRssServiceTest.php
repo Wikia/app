@@ -11,7 +11,8 @@ class HubRssServiceTest extends WikiaBaseTest {
 
 	public function setUp() {
 		$dir = dirname( __FILE__ ) . '/../';
-		require_once $dir . '../WikiFactory/Hubs/WikiFactoryHub.php';
+		global $wgAutoloadClasses;
+		$wgAutoloadClasses['WikiFactoryHub']	=  $dir . '../WikiFactory/Hubs/WikiFactoryHub.php';
 		$this->setupFile = $dir . 'HubRssFeed.setup.php';
 		parent::setUp();
 	}

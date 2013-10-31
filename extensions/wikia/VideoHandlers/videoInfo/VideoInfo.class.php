@@ -289,6 +289,10 @@ SQL;
 			ADD provider varchar(255) AFTER video_title,
 			ADD INDEX provider (provider, added_at)
 		",
+		3 => "
+			ALTER TABLE video_info
+			ADD `views_7day` int(10) unsigned DEFAULT '0' AFTER featured
+		"
 	);
 
 	/**

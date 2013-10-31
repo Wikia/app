@@ -10,7 +10,7 @@ $messages = array();
 $messages['en'] = array(
 	'forum-forum-title' => 'Forum',
 	'forum-active-threads' => '$1 {{PLURAL:$1|Active Discussion|Active Discussions}}',
-	'forum-active-threads-on-topic' => '$1 {{PLURAL:$1|Active Discussion|Active Discussions}} about: $2',
+	'forum-active-threads-on-topic' => "$1 {{PLURAL:$1|Active Discussion|Active Discussions}} about: '''[[$2]]'''",
 
 	/* Heading Bar */
 	'forum-header-total-threads' => '<em>$1</em><span>{{PLURAL:$1|Thread<br />in this Forum|Threads<br />in this Forum}}</span>',
@@ -61,10 +61,8 @@ Before contributing to the {{SITENAME}} Forums, please keep in mind a few best p
 	'forum-board-thread-follow' => 'Follow',
 	'forum-board-thread-following' => 'Following',
 	'forum-board-thread-kudos' => '$1 Kudos',
-	'forum-board-thread-replies' => '$1 Messages',
-	'forum-board-thread-unfollow' => 'Unfollow',
+	'forum-board-thread-replies' => '$1 {{PLURAL:$1|Message|Messages}}',
 	'forum-board-new-message-heading' => 'Start a Discussion',
-	'forum-board-select-board' => 'Select a Board',
 
 	'forum-no-board-selection-error' => '← Please select a board to post to',
 
@@ -147,12 +145,6 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 	'forum-activity-module-posted' => '$1 posted a reply $2',
 	'forum-activity-module-started' => '$1 started a discussion $2',
 
-	/* Forum Participation Module */
-	'forum-participation-module-heading' => 'Who\'s Here',
-	'forum-participation-module-kudos' => 'gave [[$1|kudos]] $2',
-	'forum-participation-module-posted' => 'posted a <a href="$1">reply</a> $2',
-	'forum-participation-module-started' => 'started a <a href="$1">discussion</a> $2',
-
 	/* Contribution/RC */
 	'forum-contributions-line' => '$5 ($6 | $7) $8 <a href="$1">$2</a> on the <a href="$3">$4 board</a>',
 
@@ -173,14 +165,12 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 	'forum-recentchanges-reopened-thread' => 'reopened thread "[[$1|$2]]" from [[$3|$4]]',
 
 	/* history */
-
 	'forum-board-history-title' => 'board history',
 
 	/* Old version of forum */
 	'forum-specialpage-oldforum-link' => 'Old forum Archives',
 
 	/* board admin page messages */
-	'forum-admin-page-heading' => '{{SITENAME}} Board Admin',
 	'forum-admin-page-breadcrumb' => 'Admin Board Management',
 	'forum-admin-create-new-board-label' => 'Create New Board',
 	'forum-admin-create-new-board-modal-heading' => 'Create a new board',
@@ -205,17 +195,16 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 	'forum-autoboard-title-2' => 'News and Announcements',
  	'forum-autoboard-body-2' => 'Breaking news and information!',
 
- 	'forum-autoboard-title-3' => 'New on $WIKINAME',
+ 	'forum-autoboard-title-3' => 'New on $1',
 	'forum-autoboard-body-3' => "Want to share something that's just been posted on this wiki, or congratulate somebody for an outstanding contribution? This is the place!",
 
 	'forum-autoboard-title-4' => 'Questions and Answers',
 	'forum-autoboard-body-4' => 'Got a question about the wiki, or the topic? Ask your questions here!',
 
 	'forum-autoboard-title-5' => 'Fun and Games',
-	'forum-autoboard-body-5' => 'This board is for off-topic conversation -- a place to hang out with your $WIKINAME friends.',
+	'forum-autoboard-body-5' => 'This board is for off-topic conversation -- a place to hang out with your $1 friends.',
 
 	/* board creation validation messages */
-
 	'forum-board-destination-empty' => '(Please select board)',
 
 	'forum-board-title-validation-invalid' => 'Board name contains invalid characters',
@@ -225,9 +214,6 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 
 	'forum-board-description-validation-length' => 'Please write a description for this board',
 	'forum-board-id-validation-missing' => 'Board id is missing',
-
-	'forum-board-destination-validation-missing' => 'You need to choose a board to merge',
-	'forum-board-title-validation-compare-error' => 'You need typing in the name of the board you are deleting',
 
 	'forum-board-no-board-warning' => 'We couldn\'t find a board with that title.  Here\'s the list of forum boards.',
 
@@ -247,28 +233,30 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 
 $messages['qqq'] = array(
 	'forum-forum-title' => 'The main title for the forum.',
-	'forum-board-title' => 'Appears in the header of board page',
+	'forum-board-title' => 'Appears in the header of board page. $1 is the title of the board.',
 	'forum-specialpage-title' => 'Appears as the main title of the forum and also in the browser title bar.',
-	'forum-specialpage-blurb-heading' => 'Heading for the introduction text.',
+	'forum-specialpage-blurb-heading' => 'Heading for the introduction text. This for wikis to change to be used in combination with forum-specialpage-blurb to add text to the bottom of Special:Forum.',
 	'forum-specialpage-blurb' => 'A optional short description of the forum.  By default, this should be blank, and should not be translated.  It is for wikis to decide to change this message.',
 	'forum-specialpage-board-threads' => 'The count of threads on a board. Parameters: * $1 - the number of threads.',
 	'forum-specialpage-board-posts' => 'The count of posts on a board. Parameters: * $1 - the number of posts.',
 	'forum-specialpage-board-lastpostby' => 'Displayed on the list of boards on the main forum special page, showing which user most recently posted on the listed board.',
-	'forum-specialpage-policies-edit' => 'Edit button on modal with forum Policies',
+	'forum-specialpage-policies-edit' => 'Edit button on modal with forum policies',
 	'forum-specialpage-policies' => 'Button label for forum policies',
 	'forum-policies-and-faq' => 'Default policies and faq',
 	'forum-notification-user1-reply-to-your' => 'Notification when someone replies on your thread. Parameters:
-* $1 is a username (GENDER is supported in this message).',
+* $1 is the username of the user that left the message (GENDER is supported in this message).
+* $3 is the name of the board that the reply was left on.
+* $4 is the username of the registered user seeing this message (for GENDER support).',
 	'forum-notification-user2-reply-to-your' => "Notification when 2 users reply on the logged in user's thread. Parameters:
-* $1 and $2 are names of users that replied (GENDER is supported in this message).",
+* $1 and $2 are names of users that replied (GENDER is supported in this message).
+* $3 is the name of the board that the reply was left on.
+* $4 is the username of the registered user seeing this message (for GENDER support).",
 	'forum-notification-user3-reply-to-your' => "Notification when 3 or more users reply on the logged in user's thread. Parameters:
-* $1 is the first user who replied (GENDER is supported in this message).",
+* $1 is the first user who replied (GENDER is supported in this message).
+* $3 is the name of the board that the reply was left on.
+* $4 is the username of the registered user seeing this message (for GENDER support).",
 	'forum-activity-module-heading' => 'Forum Activity right rail module heading',
 	'forum-activity-module-posted' => '$1 is username, $2 is url to user page, $3 is a translated time statement such as "20 seconds ago" or "20 hours ago" or "20 days ago"',
-	'forum-participation-module-heading' => 'Forum Participation right rail module heading.  Informal, and state "there are these people here"',
-	'forum-participation-module-kudos' => 'Gives state of kudos user activity by event and time.  $1 is a url link to the kudos event page.  $2 is a translated time statement such as "20 seconds ago" or "20 hours ago" or "20 days ago"',
-	'forum-participation-module-posted' => 'Gives state of posted user activity by event and time.  $1 is a url link to the posted event page.  $2 is a translated time statement such as "20 seconds ago" or "20 hours ago" or "20 days ago"',
-	'forum-participation-module-started' => 'Gives state of started user activity by event and time.  $1 is a url link to the started event page.  $2 is a translated time statement such as "20 seconds ago" or "20 hours ago" or "20 days ago"',
 	'forum-recentchanges-closed-thread' => 'Recent changes item. Parameters:
 * $2 is thread title
 * $4 is thread owner
@@ -283,13 +271,12 @@ $messages['qqq'] = array(
 	'forum-autoboard-body-1' => 'Description for default board.The length of this message needs to be between 4 and 255.',
 	'forum-autoboard-title-2' => 'Title for default board.The length of this message needs to be between 4 and 40.',
 	'forum-autoboard-body-2' => 'Description for default board.The length of this message needs to be between 4 and 255.',
-	'forum-autoboard-title-3' => 'Title for default board.The length of this message needs to be between 4 and 40.',
+	'forum-autoboard-title-3' => 'Title for default board.The length of this message needs to be between 4 and 40. $1 is the site name.',
 	'forum-autoboard-body-3' => 'Description for default board.The length of this message needs to be between 4 and 255.',
 	'forum-autoboard-title-4' => 'Title for default board.The length of this message needs to be between 4 and 40.',
 	'forum-autoboard-body-4' => 'Description for default board.The length of this message needs to be between 4 and 255.',
 	'forum-autoboard-title-5' => 'Title for default board.The length of this message needs to be between 4 and 40.',
-	'forum-autoboard-body-5' => 'Description for default board.The length of this message needs to be between 4 and 255.',
-	'forum-admin-page-heading' => 'Page label and heading for board admin page',
+	'forum-autoboard-body-5' => 'Description for default board.The length of this message needs to be between 4 and 255. $1 is the site name.',
 	'forum-admin-page-breadcrumb' => 'Breadcrumb heading',
 	'forum-admin-create-new-board-modal-heading' => 'Modal heading for create a new board dialog',
 	'forum-admin-create-new-board-title' => 'Form input label for board title',
@@ -302,15 +289,12 @@ $messages['qqq'] = array(
 	'forum-board-title-validation-invalid' => 'Display on board create in case of validation error ',
 	'forum-board-title-validation-length' => 'Display on board create in case of validation error ',
 	'forum-board-title-validation-exists' => 'Display on board create in case of validation error ',
-	'forum-board-title-validation-compare-error' => 'Display on board create in case of validation error ',
-	'forum-board-validation-count' => 'Display on board create in case of validation error ',
+	'forum-board-validation-count' => 'Display on board create in case of validation error. $1 is the maximum number of boards allowed.',
 	'forum-board-description-validation-length' => 'Display on board create in case of validation error ',
-	'forum-board-destination-validation-missing' => 'Display on board create in case of validation error ',
 	'forum-board-id-validation-missing' => 'User should not see this message unless they hack the wiki.  Nevertheless, it is a validation error when it is not provided.',
 	'forum-related-discussion-heading' => 'Section heading for related discussion section.  $1 is article that this section will be on.',
 	'forum-related-discussion-total-replies' => 'Label showing total number of replies in a discussion.  $1 is number of replies',
 	'forum-related-discussion-see-more' => 'See More link to topic page',
-	'forum-board-select-board' => 'A form label instructing someone to select a board from a drop down.',
 	'forum-discussion-placeholder-message-short' => 'Display on topic page inside new discussion body textarea',
 	'forum-confirmation-board-deleted' => 'Board delete confirmation message. $1 is board name',
 	'forum-sorting-option-newest-threads' => 'Sorting option, newest threads first',
@@ -334,13 +318,12 @@ $messages['qqq'] = array(
 * $1 the number of kudos a thread has received',
 	'forum-board-thread-replies' => 'The number of replies a thread has received which is displayed next to the thread link on lists. Parameters:
 * $1 the number of replies a thread has received',
-	'forum-board-thread-unfollow' => 'Text of the link to stop following a thread.',
 	'forum-board-new-message-heading' => 'Title of the start a new thread input box.',
 	'forum-board-no-board-warning' => 'Warning displayed when a board was not found. Displayed as a warning message at the top of the Forum page listing all the boards',
 	'forum-no-board-selection-error' => 'Error message displayed when trying to create a new thread without selecting a board to post it to. Appears next to a dropdown list of available boards.',
 	'forum-thread-reply-placeholder' => 'Placeholder text shown in reply text box.',
 	'forum-thread-reply-post' => 'Text of the submit button when replying to thread posts.',
-	'forum-thread-deleted-return-to' => 'Message shown when a user has deleted a thread.',
+	'forum-thread-deleted-return-to' => 'Message shown when a user has deleted a thread. $1 is the name of the board the deleted thread was on.',
 	'forum-sorting-option-newest-replies' => 'Sorting option for listing threads ordered by most recent replies.',
 	'forum-sorting-option-popular-threads' => 'Sorting option for listing threads ordered by popularity.',
 	'forum-sorting-option-most-replies' => 'Sorting option for listing threads by number of replies.',
@@ -442,7 +425,8 @@ $messages['qqq'] = array(
 * $4 is the board title",
 	'forum-board-history-title' => 'Heading on the board history page.',
 	'forum-specialpage-oldforum-link' => 'Text of link to old archived forums.',
-	'forum-admin-edit-board-modal-heading' => 'Heading on the board editing modal.',
+	'forum-admin-edit-board-modal-heading' => 'Heading on the board editing modal. Parameters:
+* $1 is the borad title.',
 	'forum-admin-edit-board-title' => 'Text next to the inputbox to edit the board title in the board editing modal.',
 	'forum-admin-edit-board-description' => 'Text next to the inputbox to edit the board description in the board editing modal.',
 	'forum-board-destination-empty' => 'Default text of the dropdown list of available boards for a user to post a new thread to.',
