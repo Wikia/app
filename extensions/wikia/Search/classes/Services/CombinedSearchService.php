@@ -95,7 +95,7 @@ class CombinedSearchService {
 		$outputModel['url'] = $wikiInfo['url'];
 		$outputModel['lang'] = $wikiInfo['lang_s'];
 		$outputModel['snippet'] = $wikiInfo['description_txt'];
-		$outputModel['wordmarkUrl'] = $wikiService->getWikiWordmark( $outputModel['wikiId'] );
+		$outputModel['wordmark'] = $wikiService->getWikiWordmark( $outputModel['wikiId'] );
 
 		$outputModel['topArticles'] = $this->getTopArticles( $outputModel['wikiId'], $outputModel['lang'] );
 
