@@ -1,6 +1,6 @@
 <section id="EditBoardModal" class="EditBoardModal">
 	<h1>
-		<?= wfMsg('forum-admin-delete-and-merge-board-modal-heading', $boardTitle) ?>
+		<?= wfMessage( 'forum-admin-delete-and-merge-board-modal-heading', $boardTitle )->escaped() ?>
 	</h1>
 
 <?
@@ -10,18 +10,18 @@
 				'type' => 'text',
 				'name' => 'boardTitle',
 				'isRequired' => true,
-				'label' => wfMsg('forum-admin-delete-board-title'),
+				'label' => wfMessage( 'forum-admin-delete-board-title' )->escaped(),
 			),
 			array(
 				'type' => 'custom',
-				'output' => wfMsg('forum-admin-merge-board-warning'),
+				'output' => wfMessage( 'forum-admin-merge-board-warning' )->escaped(),
 			),
 			array(
 				'type' => 'select',
 				'name' => 'destinationBoardId',
 				'class' => 'destinationBoardId',
 				'isRequired' => true,
-				'label' => wfMsg('forum-admin-merge-board-destination', $boardTitle),
+				'label' => wfMessage( 'forum-admin-merge-board-destination', $boardTitle )->escaped(),
 				'options' => $destinationBoards,
 			),
 		),
@@ -31,13 +31,13 @@
 
 	echo $app->renderView('WikiaStyleGuideForm', 'index', array('form' => $form));
 ?>
-	
+
 	<div class="neutral modalToolbar">
 		<button class="secondary cancel">
-			<?= wfMsg('cancel') ?>
+			<?= wfMessage( 'cancel' )->escaped() ?>
 		</button>
 		<button class="submit">
-			<?= wfMsg('forum-admin-delete-and-merge-button-label') ?>
+			<?= wfMessage( 'forum-admin-delete-and-merge-button-label' )->escaped() ?>
 		</button>
 	</div>
 </section>

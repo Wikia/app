@@ -315,11 +315,11 @@ $messages['fr'] = array(
  * @author Toliño
  */
 $messages['gl'] = array(
-	'wva-success' => 'Engadiuse con éxito a páxina do vídeo $1.', # Fuzzy
-	'wva-success-replaced' => 'Substituíuse con éxito a páxina do vídeo $1.', # Fuzzy
+	'wva-success' => 'Engadiuse con éxito a páxina do vídeo [[:$1]].',
+	'wva-success-replaced' => 'Substituíuse con éxito a páxina do vídeo [[:$1]].',
 	'wva-failure' => 'Por favor, dea parámetros válidos.',
-	'wva-name' => 'Introduza o nome:', # Fuzzy
-	'wva-url' => 'Introduza o URL:', # Fuzzy
+	'wva-name' => 'Nome do vídeo:',
+	'wva-url' => 'URL do vídeo:',
 	'wva-add' => 'Engadir',
 	'wva-title' => 'Engadir un vídeo de xeito rápido desde un URL',
 	'wva-notlogged' => 'Debe acceder ao sistema ou rexistrarse para inserir vídeos.',
@@ -740,14 +740,15 @@ $messages['roa-tara'] = array(
  * @author Eleferen
  * @author Kuzura
  * @author Lockal
+ * @author Okras
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
-	'wva-success' => 'Страница видео $1 успешно добавлена.', # Fuzzy
-	'wva-success-replaced' => 'Страница видео $1 успешно заменена.', # Fuzzy
+	'wva-success' => 'Страница видео [[:$1]] была успешно добавлена.',
+	'wva-success-replaced' => 'Страница видео [[:$1]] была успешно заменена.',
 	'wva-failure' => 'Пожалуйста, укажите верные параметры.',
-	'wva-name' => 'Введите имя:', # Fuzzy
-	'wva-url' => 'Введите URL:', # Fuzzy
+	'wva-name' => 'Название видео:',
+	'wva-url' => 'URL видео:',
 	'wva-add' => 'Добавить',
 	'wva-title' => 'Быстрое добавление видео по URL',
 	'wva-notlogged' => 'Чтобы добавить видео вам необходимо представиться системе или зарегистрироваться.',
@@ -858,17 +859,18 @@ $messages['tr'] = array(
 );
 
 /** Ukrainian (українська)
+ * @author Andriykopanytsia
  * @author Ast
  * @author Prima klasy4na
  * @author Ua2004
  * @author Тест
  */
 $messages['uk'] = array(
-	'wva-success' => 'Сторінка відео $1 була успішно записана.', # Fuzzy
-	'wva-success-replaced' => 'Сторінка відео $1 була успішно замінена.', # Fuzzy
+	'wva-success' => 'Сторінка відео  [[:$1]] була успішно записана.',
+	'wva-success-replaced' => 'Сторінка відео [[:$1]] була успішно замінена.',
 	'wva-failure' => 'Будь ласка, вкажіть вірні параметри.',
-	'wva-name' => 'Введіть назву:', # Fuzzy
-	'wva-url' => 'Введіть URL:', # Fuzzy
+	'wva-name' => 'Назва відео:',
+	'wva-url' => 'URL відео:',
 	'wva-add' => 'Додати',
 	'wva-title' => 'Швидке додавання відео по URL',
 	'wva-notlogged' => 'Для того, щоб вставити відео, Вам потрібно увійти до системи або зареєструватися.',

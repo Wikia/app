@@ -255,6 +255,7 @@ $messages['ckb'] = array(
  * @author Andriykopanytsia
  * @author Chmee2
  * @author Darth Daron
+ * @author Mormegil
  */
 $messages['cs'] = array(
 	'quickstats-header-label' => 'Stručná statistika',
@@ -265,7 +266,7 @@ $messages['cs'] = array(
 	'quickstats-header-likes' => 'To se mi líbí',
 	'quickstats-totals-label' => 'Celkem',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Další statistiky]]',
-	'quickstats-number-shortening' => '$1 тис.',
+	'quickstats-number-shortening' => '$1K',
 	'quickstats-number-shortening-millions' => '$1M',
 	'quickstats-number-shortening-billions' => '$1B',
 );
@@ -406,18 +407,23 @@ $messages['et'] = array(
 );
 
 /** Persian (فارسی)
+ * @author Ebraminio
  * @author Huji
  * @author Reza1615
  * @author جواد
  */
 $messages['fa'] = array(
+	'quickstats-header-label' => 'آماز سریع',
 	'quickstats-header-date' => 'تاریخ',
 	'quickstats-header-views' => 'بازدیدها',
 	'quickstats-header-edits' => 'ویرایش‌ها',
 	'quickstats-header-photos' => 'عکس‌ها',
+	'quickstats-header-likes' => 'دوست‌داشتن‌ها',
 	'quickstats-totals-label' => 'مجموع',
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|دیدن آمار بیشتر]]',
 	'quickstats-number-shortening' => '$1 هزار',
 	'quickstats-number-shortening-millions' => '$1 میلیون',
+	'quickstats-number-shortening-billions' => '$1 میلیارد',
 );
 
 /** Finnish (suomi)
@@ -690,6 +696,22 @@ $messages['lb'] = array(
 	'quickstats-number-shortening-billions' => '$1 Mrd',
 );
 
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'quickstats-header-date' => 'تاريخ',
+	'quickstats-header-views' => 'ديئنيا',
+	'quickstats-header-edits' => 'ويرايشت',
+	'quickstats-header-photos' => 'عسكيا',
+	'quickstats-header-likes' => 'حاستنيا',
+	'quickstats-totals-label' => 'همه',
+	'quickstats-see-more-stats-link' => '[[Special:ويكی امار|آماريا بيشتر بوينيتو]]', # Fuzzy
+	'quickstats-number-shortening' => '$1ك',
+	'quickstats-number-shortening-millions' => '$1 م',
+	'quickstats-number-shortening-billions' => '$1 ب',
+);
+
 /** Lithuanian (lietuvių)
  * @author Eitvys200
  * @author Vilius
@@ -955,13 +977,14 @@ $messages['ps'] = array(
 );
 
 /** Portuguese (português)
+ * @author Hamilton Abreu
  * @author Malafaya
  * @author SandroHc
  */
 $messages['pt'] = array(
 	'quickstats-header-label' => 'Estatísticas Rápidas',
 	'quickstats-header-date' => 'Data',
-	'quickstats-header-views' => 'Visualizações',
+	'quickstats-header-views' => 'Visionamentos',
 	'quickstats-header-edits' => 'Edições',
 	'quickstats-header-photos' => 'Imagens',
 	'quickstats-header-likes' => 'Gostos',
