@@ -50,6 +50,8 @@ ve.ui.WikiaSourceModeDialog.prototype.initialize = function () {
 	} );
 	this.$foot.append( this.applytButton.$ );
 
+	this.frame.$content.addClass( 've-ui-wikiaSourceModeDialog-content' );
+
 };
 
 ve.ui.WikiaSourceModeDialog.prototype.onOpen = function () {
