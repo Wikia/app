@@ -3,6 +3,7 @@ define( 'wikia.ui.modal', [ 'jquery' ], function( $ ) {
 
 	var BLACKOUT_CLASS = 'blackout',
 		CLOSE_CLASS = 'close',
+		INACTIVE_CLASS = 'inactive',
 		destroyOnClose;
 
 	function Modal( id, modalMarkup ) {
@@ -21,7 +22,7 @@ define( 'wikia.ui.modal', [ 'jquery' ], function( $ ) {
 			$blackout.click( $.proxy(function( event ) {
 				event.preventDefault();
 
-				if( this.isShown() ) {
+				if( this.isShown() && this.isActive() ) {
 					this.close();
 				}
 			}, that) );
@@ -34,6 +35,7 @@ define( 'wikia.ui.modal', [ 'jquery' ], function( $ ) {
 
 		this.$close.click( $.proxy( function( event ) {
 			event.preventDefault();
+
 			this.close();
 		}, that ) );
 
@@ -60,22 +62,26 @@ define( 'wikia.ui.modal', [ 'jquery' ], function( $ ) {
 		var inactiveLayer = document.createElement('div'),
 			dialog = this.$element;
 
-		$( inactiveLayer ).addClass( 'inactive' );
+		$( inactiveLayer ).addClass( INACTIVE_CLASS );
 		dialog.append( inactiveLayer )
-			.addClass( 'inactive' )
+			.addClass( INACTIVE_CLASS )
 			.find( 'button' ).attr( 'disabled', true );
 	};
 
 	Modal.prototype.activate = function() {
 		var dialog = this.$element;
 
-		dialog.find( '.inactive' ).remove();
-		dialog.removeClass( 'inactive' )
+		dialog.find( INACTIVE_CLASS ).remove();
+		dialog.removeClass( INACTIVE_CLASS )
 			.find( 'button' ).attr( 'disabled', false );
 	};
 
 	Modal.prototype.isShown = function() {
 		return this.$element.hasClass( 'shown' );
+	};
+
+	Modal.prototype.isActive = function() {
+		return !this.$element.hasClass( INACTIVE_CLASS );
 	};
 
 	/** Public API */
