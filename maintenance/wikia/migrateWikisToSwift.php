@@ -26,7 +26,7 @@ class MigrateWikisToSwift extends Maintenance {
 	CONST DEFAULT_LIMIT = 1000;
 	const MIGRATE_PACKAGE = 50;
 	const SCRIPT_PROCS = 50;
-	CONST CMD = 'http_proxy="" run_maintenance --conf=%s --where="city_id in (%s)" --script "wikia/migrateImagesToSwift.php" --procs=%d ';
+	CONST CMD = 'run_maintenance --conf=%s --where="city_id in (%s)" --script "wikia/migrateImagesToSwift.php" --procs=%d ';
 	
 	private $disabled_wikis = [ 717284, 298117 ];
 	private $db;
