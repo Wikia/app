@@ -151,6 +151,11 @@ class Hooks {
 		
 		wfProfileIn( __METHOD__ );
 		
+		if ( !empty( $params['src'] ) && ( strpos( $params['src'], '/images/thumb' ) !== false ) ) {
+			wfProfileOut( __METHOD__ );
+			return true;
+		}
+		
 		if ( empty( $params['op']  ) ) {
 			$params['op'] = 'delete';
 		}
