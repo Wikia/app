@@ -13,8 +13,10 @@
 
     <script type="text/javascript">
         $(function () {
+        	var path = window.location.pathname;
             window.swaggerUi = new SwaggerUi({
-                discoveryUrl: window.location.pathname + "?controller=ApiDocs&method=apiList",
+                discoveryUrl: (path[ path.length - 1] !== '/') ? path + '/' : path,
+                mainUrl: 'Docs/List',
                 protocol: "http",
                 dom_id:"swagger-ui-container",
                 supportHeaderParams: false,
