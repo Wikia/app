@@ -2,8 +2,8 @@
 @import "skins/oasis/css/core/layout";
 @import "skins/oasis/css/mixins/box-sizing";
 @import "skins/oasis/css/mixins/clearfix";
+@import "skins/oasis/css/mixins/gradient";
 
-@import "mixins/ve-label";
 // TODO: remove me when VID-927-tohtml is merged into dev!
 @import "mixins/play-button";
 
@@ -29,16 +29,28 @@ $width-cart: 101px;
 	/* Search Results */
 	.ve-ui-mwMediaResultWidget {
 		.ve-ui-labeledElement-label {
-			@include ve-label( $icon: true );
+			@include linear-gradient( transparent, top, transparent, 0, rgba(0,0,0,0.5), 100% );
+			line-height: 1.4em;
+			padding: 0.5em;
+			text-align: left;
+			text-shadow: #000 0px 1px 8px;
+
+			&:before {
+				background-position: 7px 50%;
+				background-repeat: no-repeat;
+				content: '';
+			}
 		}
 		&.photo {
-			.ve-ui-labeledElement-label {
-				@include ve-label-icon-photo;
+			.ve-ui-labeledElement-label:before {
+				background-image: url(/extensions/VisualEditor/wikia/modules/ve/ui/styles/images/icons/photo.svg); /* $wgCdnStylePath */
+				padding-left: 29px;
 			}
 		}
 		&.video {
-			.ve-ui-labeledElement-label {
-				@include ve-label-icon-video;
+			.ve-ui-labeledElement-label:before {
+				background-image: url(/extensions/VisualEditor/wikia/modules/ve/ui/styles/images/icons/video.svg); /* $wgCdnStylePath */
+				padding-left: 22px;
 			}
 		}
 	}
