@@ -47,7 +47,7 @@ class NewrelicDriver implements Driver {
 		$fullMeasurementName = "Custom/{$measurementName}[seconds|call]";
 		/*
 		 * We need to multiply time in seconds by 1000.
-		 * From newrelic documentation:
+		 * From newrelic_custom_metric documentation:
 		 * Adds a custom metric with the specified name and value, which is of type double. Values saved are assumed to be milliseconds, so "4" will be stored as ".004" in our system.
 		 */
 		/** @noinspection PhpUndefinedFunctionInspection */
