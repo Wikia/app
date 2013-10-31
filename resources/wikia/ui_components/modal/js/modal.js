@@ -57,15 +57,21 @@ define( 'wikia.ui.modal', [ 'jquery' ], function( $ ) {
 	};
 
 	Modal.prototype.deactivate = function() {
-		var inactiveLayer = document.createElement('div');
+		var inactiveLayer = document.createElement('div'),
+			dialog = this.$element;
+
 		$( inactiveLayer ).addClass( 'inactive' );
-		this.$element.append( inactiveLayer );
-		this.$element.addClass( 'inactive' );
+		dialog.append( inactiveLayer )
+			.addClass( 'inactive' )
+			.find( 'button' ).attr( 'disabled', true );
 	};
 
 	Modal.prototype.activate = function() {
-		this.$element.find( '.inactive' ).remove();
-		this.$element.removeClass( 'inactive' );
+		var dialog = this.$element;
+
+		dialog.find( '.inactive' ).remove();
+		dialog.removeClass( 'inactive' )
+			.find( 'button' ).attr( 'disabled', false );
 	};
 
 	Modal.prototype.isShown = function() {
