@@ -59,7 +59,7 @@ class ApiDocsController extends WikiaController {
 		// FIXME - find permanent solution
 		foreach ( $this->wg->WikiaApiControllers as $controller => $file ) {
 			// here you can disable single controller
-//			if ( $controller === 'WAMApiController' && !$this->isTest() ) { continue; }
+			if ( $controller === 'TvApiController' && !$this->isTest() ) { continue; }
 			foreach ( $docs['apis'] as $doc ) {
 				if ( $doc['readableName'] . "ApiController" == $controller ) {
 					if ( class_exists($controller) ) {
