@@ -1,3 +1,6 @@
+@import "skins/oasis/css/core/responsive-core";
+@import "skins/oasis/css/core/responsive-variables";
+
 .EditPageHeader {
 	@include box-shadow(0, -4px, 2px, $color-epl-header-shadow, true, 0);
 	background-color: $color-epl-header;
@@ -49,6 +52,22 @@
 			display: none;
 		}
 	}
+}
+
+@if ( $responsive-layout-enabled ) {
+  @media screen and (max-width: $breakpoint-small) {
+	.EditPageHeader {
+	  > h2 {
+		display: inline-block;
+		margin-right: 2px;
+	  }
+	  > h1 {
+		float: none;
+		line-height: normal;
+		vertical-align: bottom;
+	  }
+	}
+  }
 }
 
 // "edit title" button
