@@ -30,7 +30,6 @@ require(['jquery', 'wikia.toc', 'wikia.mustache'], function($, toc, mustache) {
 	 */
 
 	function createTOCSection(header) {
-		var title = [];
 
 		header = $(header).children('.mw-headline');
 
@@ -38,20 +37,12 @@ require(['jquery', 'wikia.toc', 'wikia.mustache'], function($, toc, mustache) {
 			return false;
 		}
 
-		header.contents()
-			.filter( function() {
-				return this.nodeType === 3;
-			})
-			.each( function() {
-				title.push($(this).text());
-			});
-
-		if (title.length === 0) {
-			return false;
-		}
+		// clone node and remove noscript to exclude it from text
+		header = header.clone();
+		header.find('noscript').remove();
 
 		return {
-			title: title.join(' '),
+			title: header.text(),
 			id: header.attr('id'),
 			sections: []
 		};
