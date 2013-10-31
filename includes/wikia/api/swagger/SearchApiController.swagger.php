@@ -68,7 +68,46 @@ use Swagger\Annotations as SWG;
  * 		items="$ref:localWikiSearchResult",
  * 		description="Standard container name for element collection (list)"
  * 	)
- * 
+ *
+ * @SWG\Model ( id="CombinedSearchArticlesResultSet" )
+ *  @SWG\Property(
+ * 		name="wikiId",
+ * 		required="true",
+ * 		type="int",
+ * 		description="ID of Wikia site"
+ *  )
+ *  @SWG\Property(
+ * 		name="articleId",
+ * 		required="true",
+ * 		type="int",
+ * 		description="ID of the article on the Wikia site"
+ *  )
+ *  @SWG\Property(
+ * 		name="title",
+ * 		required="true",
+ * 		type="string",
+ * 		description="The title of the article"
+ *  )
+ *  @SWG\Property(
+ * 		name="url",
+ * 		required="true",
+ * 		type="string",
+ * 		description="URL to the article"
+ *  )
+ * @SWG\Property(
+ * 		name="lang",
+ * 		required="true",
+ * 		type="string",
+ * 		description="Language of the article"
+ *  )
+ * @SWG\Property(
+ * 		name="snippet",
+ * 		required="true",
+ * 		type="string",
+ * 		description="Text snippet for the article"
+ *  )
+ *
+ *
  * @SWG\Model( id="CrossWikiSearchResult" )
  * 	@SWG\Property(
  * 		name="id",
@@ -91,7 +130,69 @@ use Swagger\Annotations as SWG;
  * 		items="$ref:CrossWikiSearchResult",
  * 		description="Standard container name for element collection (list)"
  * 	)
- * 
+ *
+ * @SWG\Model( id="CombinedSearchResultSet" )
+ * 	@SWG\Property(
+ * 		name="wikias",
+ * 		required="true",
+ * 		type="Array",
+ * 		items="$ref:WikiasResultSet",
+ * 		description="Container for wikias collection (list)"
+ * 	)
+ *  @SWG\Property(
+ * 		name="articles",
+ * 		required="true",
+ * 		type="Array",
+ * 		items="$ref:CombinedSearchArticlesResultSet",
+ * 		description="Container for articles collection (list)"
+ * 	)
+ *
+ * @SWG\Model( id="WikiasResultSet" )
+ * 	@SWG\Property(
+ * 		name="wikiId",
+ * 		required="true",
+ * 		type="int",
+ * 		description="ID of Wikia site"
+ *  )
+ *  @SWG\Property(
+ * 		name="name",
+ * 		required="true",
+ * 		type="string",
+ * 		description="Name of Wikia site"
+ *  )
+ * 	@SWG\Property(
+ * 		name="url",
+ * 		required="true",
+ * 		type="string",
+ * 		description="URL to the main page"
+ *  )
+ *  @SWG\Property(
+ * 		name="lang",
+ * 		required="true",
+ * 		type="string",
+ * 		description="Language of the Wikia site"
+ *  )
+ * 	@SWG\Property(
+ * 		name="snippet",
+ * 		required="true",
+ * 		type="string",
+ * 		description="Description of the Wikia site"
+ *  )
+ * 	@SWG\Property(
+ * 		name="wordmark",
+ * 		required="true",
+ * 		type="string",
+ * 		description="URL for Wikia site logo"
+ *  )
+ * 	@SWG\Property(
+ * 		name="topArticles",
+ * 		required="true",
+ * 		type="Array",
+ * 		items="$ref:CombinedSearchArticlesResultSet",
+ * 		description="The list of top articles on the Wikia site"
+ *  )
+ *
+ *
  * @SWG\Api(
  * 	path="/api/v1/Search/List",
  * 	description="Search local Wikia for given phrase. Should not be used directly on www.wikia.com.",
@@ -219,6 +320,52 @@ use Swagger\Annotations as SWG;
  * 				@SWG\Parameter(
  * 					name="batch",
  * 					description="The batch (page) of results to fetch",
+ * 					paramType="query",
+ * 					required="false",
+ * 					allowMultiple="false",
+ * 					dataType="int",
+ * 					defaultValue=""
+ * 				)
+ * 			)
+ * 		)
+ * 	)
+ * )
+ *
+ *
+ *  @SWG\Api(
+ * 	path="/api/v1/Search/Combined",
+ * 	description="Get results for combined wiki and cross-wiki search ",
+ * 	@SWG\Operations(
+ * 		@SWG\Operation(
+ * 			httpMethod="get",
+ * 			summary="Get results for combined (wiki and cross-wiki) search",
+ * 			nickname="getCombined",
+ * 			responseClass="CombinedSearchResultSet",
+ * 			@SWG\ErrorResponses(
+ * 				@SWG\ErrorResponse( code="400", reason="Query parameter is missing" )
+ * 			),
+ * 			@SWG\Parameters(
+ * 				@SWG\Parameter(
+ * 					name="query",
+ * 					description="The query to use for the search",
+ * 					paramType="query",
+ * 					required="true",
+ * 					allowMultiple="false",
+ * 					dataType="string",
+ * 					defaultValue=""
+ * 				),
+ * 				@SWG\Parameter(
+ * 					name="langs",
+ * 					description="The two chars wiki language code set, coma-separated, (eg.: en,de,fr or en,pl)",
+ * 					paramType="query",
+ * 					required="false",
+ * 					allowMultiple="true",
+ * 					dataType="string",
+ * 					defaultValue="en"
+ * 				),
+ * 				@SWG\Parameter(
+ * 					name="hubs",
+ * 					description="Filter by the verticals, coma-separated, (eg.: Gaming,Entertainment,Lifestyle)",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="false",
