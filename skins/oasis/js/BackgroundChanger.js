@@ -1,20 +1,20 @@
 /**
- * AdSkin
+ * BackgroundChanger
  *
- * Loader for background.scss AdSkin
+ * Loader for background.scss
  *
  * @type {{load: Function}}
  */
 
-var AdSkin = {
+var BackgroundChanger = {
 	/**
-	 * Load AdSkin
+	 * Load background.scss with params
 	 *
 	 * param is object with following properties:
 	 * a) skinImage (string, mandatory) - URL to skin's image
 	 * b) backgroundColor (string, mandatory) - background color for skin
-	 * c) skinImageWidth (integer, defaults to 1700) - image's width
-	 * d) skinImageHeight (integer, defaults to 800) - image's height
+	 * c) skinImageWidth (integer, mandatory if skinImage is given) - image's width
+	 * d) skinImageHeight (integer, mandatory if skinImage is given) - image's height
 	 * e) backgroundFixed (boolean, defaults to true) - "true" if image should be fixed on top, "false" otherwise
 	 * f) backgroundTiled (boolean, defaults to false) - "true" if image should be tiles, "false" otherwise
 	 *
@@ -33,9 +33,9 @@ var AdSkin = {
 		var imagePreload = new Image(),
 			optionsForSass = {
 				'background-dynamic': options.backgroundDynamic || false,
-				'background-image': options.skinImage,
-				'background-image-width': options.skinImageWidth || 1700,
-				'background-image-height': options.skinImageHeight || 800,
+				'background-image': options.skinImage || '',
+				'background-image-width': options.skinImageWidth || 0,
+				'background-image-height': options.skinImageHeight || 0,
 				'color-body': options.backgroundColor,
 				'color-body-middle': options.backgroundMiddleColor || options.backgroundColor
 			},

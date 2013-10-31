@@ -27,7 +27,7 @@ define('ext.wikia.adengine.template.skin', ['wikia.document', 'wikia.window', 'w
 		params = params || {};
 
 		if (window.wgOasisResponsive) {
-			AdSkin.load(params);
+			BackgroundChanger.load(params);
 		} else {
 			adSkinStyle.background = 'url("' + params.skinImage + '") no-repeat top center #' + params.backgroundColor;
 		}
