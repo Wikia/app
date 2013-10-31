@@ -44,6 +44,16 @@ class DocsApiController extends WikiaController {
 		$api = $this->getVal("name");
 
 		$apiDoc = $this->docsService->getDoc( $api );
+		if ( !$this->isTest() ) {
+			$newElemSet = [];
+			foreach ( $apiDoc['apis'] as $i => $apiElem ) {
+				//FIXME find better solution for disabling test methods in non-test API-DOCS
+				if ( !in_array( $apiElem['path'], [ '/api/v1/Search/Combined' ] ) ) {
+					$newElemSet[] = $apiElem;
+				}
+			}
+			$apiDoc['apis'] = $newElemSet;
+		}
 
 		$this->getResponse()->setFormat("json");
 		$this->getResponse()->setData( $apiDoc );
