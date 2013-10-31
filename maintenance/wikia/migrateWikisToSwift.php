@@ -76,7 +76,7 @@ class MigrateWikisToSwift extends Maintenance {
 		}
 
 		$join = [ 'city_image_migrate.city_id = city_list.city_id' ];
-		if ( $force ) {
+		if ( empty( $force ) ) {
 			$join[] = 'city_image_migrate.locked is not null';
 		}
 
