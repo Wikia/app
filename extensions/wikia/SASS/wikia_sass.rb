@@ -12,7 +12,7 @@ module WikiaFunctions
 						params = arg.split(/=/)
 						key = params.shift
 						if(key == paramName.value)
-								# Found correct param-name.  Use the first value if it exists, default to the passed-in default.
+								# Found correct param-name.  Use the values if those exists, default to the passed-in default.
 								retVal = params.join('=') || defaultResult
 						end
 				end
