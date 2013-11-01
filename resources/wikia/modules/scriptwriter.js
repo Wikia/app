@@ -56,7 +56,7 @@ var ScriptWriter = function (document, log, window, loader) {
 			}
 		}
 
-		throw 'wikia.scriptwriter: Not a valid element or element id';
+		throw 'wikia.scriptwriter: Not a valid element or element id ' + elementOrElementId;
 	}
 
 	function callLater(callback) {
@@ -175,6 +175,7 @@ var ScriptWriter = function (document, log, window, loader) {
 	// PostScribe implementation:
 
 	function psBeforeWrite(str) {
+		log(['psBeforeWrite', str], 'trace_l3', module);
 		return str.replace(/<\/embed>/gi, '');
 	}
 
