@@ -68,7 +68,7 @@ ve.ui.WikiaMediaSelectWidget.prototype.setChecked = function ( items, checked ) 
 	var i, item;
 
 	for ( i = 0; i < items.length ; i++ ) {
-		item = this.getItemFromData( items[i] );
+		item = this.getItemFromData( items[i].title );
 		if ( item ) {
 			item.setChecked( checked );
 		}

@@ -12,20 +12,22 @@
  * @extends ve.ui.OptionWidget
  *
  * @constructor
- * @param {Mixed} data Item data
+ * @param {Mixed} model Item data
  * @param {Object} [config] Configuration options
  * @cfg {number} [size] Media thumbnail size
  */
-ve.ui.WikiaMediaOptionWidget = function VeUiWikiaMediaOptionWidget( data, config ) {
+ve.ui.WikiaMediaOptionWidget = function VeUiWikiaMediaOptionWidget( model, config ) {
 	// Configuration intialization
 	config = config || {};
 
+	this.model = model
+
 	// Parent constructor
-	ve.ui.OptionWidget.call( this, data, config );
+	ve.ui.OptionWidget.call( this, this.model.title, config );
 
 	// Properties
 	this.size = config.size || 160;
-	this.mwTitle = new mw.Title( this.data.title ).getNameText();
+	this.mwTitle = new mw.Title( this.model.title ).getNameText();
 	this.image = new Image();
 	this.$image = this.$$( this.image );
 	this.$back = this.$$( '<div>' );
@@ -43,7 +45,7 @@ ve.ui.WikiaMediaOptionWidget = function VeUiWikiaMediaOptionWidget( data, config
 	this.setLabel( this.mwTitle );
 	this.check.$.addClass( 've-ui-wikiaMediaOptionWidget-check' );
 	this.$
-		.addClass( 've-ui-mwMediaResultWidget ve-ui-texture-pending ' + data.type )
+		.addClass( 've-ui-mwMediaResultWidget ve-ui-texture-pending ' + this.model.type )
 		.css( { 'width': this.size, 'height': this.size } )
 		.prepend( this.$thumb, this.check.$ );
 };
@@ -61,7 +63,7 @@ ve.inheritClass( ve.ui.WikiaMediaOptionWidget, ve.ui.OptionWidget );
  */
 ve.ui.WikiaMediaOptionWidget.prototype.loadThumbnail = function () {
 	require( ['wikia.thumbnailer'], ve.bind( function ( thumbnailer ) {
-		this.image.src = thumbnailer.getThumbURL( this.data.url, 'image', this.size, this.size );
+		this.image.src = thumbnailer.getThumbURL( this.model.url, 'image', this.size, this.size );
 		this.$thumb.addClass(
 			've-ui-mwMediaResultWidget-thumbnail ve-ui-WikiaMediaOptionWidget-thumbnail'
 		);
@@ -113,4 +115,8 @@ ve.ui.WikiaMediaOptionWidget.prototype.onThumbnailError =
 
 ve.ui.WikiaMediaOptionWidget.prototype.setChecked = function ( checked ) {
 	this.check.setIcon( checked ? 'checked' : 'unchecked' );
+};
+
+ve.ui.WikiaMediaOptionWidget.prototype.getModel = function () {
+	return this.model;
 };

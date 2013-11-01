@@ -51,7 +51,7 @@ ve.inheritClass( ve.ui.WikiaMediaResultsWidget, ve.ui.Widget );
  * @param {ve.ui.WikiaMediaOptionWidget} item Item whose state is changing
  */
 ve.ui.WikiaMediaResultsWidget.prototype.onResultsCheck = function ( item ) {
-	this.emit( 'check', item.getData() );
+	this.emit( 'check', item.getModel() );
 };
 
 /**

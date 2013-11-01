@@ -191,22 +191,12 @@ ve.ui.WikiaMediaInsertDialog.prototype.onSearchNearingEnd = function () {
  * @param {Object} item The search result item data.
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onSearchCheck = function ( item ) {
-	var cartItemModel, cartItems, i, removed;
-	if ( item === null ) {
-		return;
-	}
+	var cartItem, cartItemModel;
 
-	// Remove item from cart if it already exists
-	cartItems = ve.copy( this.cartModel.getItems() );
-	for ( i = 0; i < cartItems.length; i++ ) {
-		if ( cartItems[i].title === item.title ) {
-			this.cartModel.removeItems( [ cartItems[i] ] );
-			removed = true;
-		}
-	}
-
-	// Add item to cart
-	if ( !removed ) {
+	cartItem = this.cart.getItemFromData( item.title );
+	if ( cartItem ) {
+		this.cartModel.removeItems( [ cartItem.getModel() ] );
+	} else {
 		cartItemModel = new ve.dm.WikiaCartItem( item.title, item.url, item.type );
 		this.cartModel.addItems( [ cartItemModel ] );
 	}
