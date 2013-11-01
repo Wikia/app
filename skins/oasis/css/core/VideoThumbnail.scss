@@ -46,10 +46,10 @@
 		border-radius: 2px;
 		content: "";
 		display: block;
-		transform: rotate( 35deg ) skewX( -15deg );  /* Safari and Chrome */
+		transform: rotate( 35deg ) skewX( -15deg );
 		-webkit-transform: rotate( 35deg ) skewX( -15deg );  /* Safari and Chrome */
 		-ms-transform: rotate( 35deg ) skewX( -15deg ); /* IE 9 */
-		
+
 		// only for medium
 		height: 20px;
 		margin: 2px 0 0 -10px;
@@ -69,6 +69,7 @@
 			left: 34px;
 			top: auto;
 		}
+
 		.play-arrow {
 			// sizing
 			height: 21px;
@@ -79,6 +80,7 @@
 			left: 28px;
 			top: auto;
 		}
+
 		.play-arrow:after {
 			height: 14px;
 			margin: 2px 0 0 -7px;
@@ -93,11 +95,13 @@
 			margin: -35px 0 0 -35px;
 			width: 70px;
 		}
+
 		.play-arrow {
 			height: 420px;
 			margin: -15.5px 0 0 -5.5px;
 			width: 35px;
 		}
+
 		.play-arrow:after {
 			height: 28px;
 			margin: 2px 0 0 -14px;
@@ -112,11 +116,13 @@
 			margin: -45px 0 0 -45px;
 			width: 90px;
 		}
+
 		.play-arrow {
 			height: 54px;
 			margin: -20px 0 0 -7.2px;
 			width: 45px;
 		}
+
 		.play-arrow:after {
 			height: 36px;
 			margin: 3px 0 0 -18px;
@@ -131,15 +137,19 @@
 	}
 
 	&.hide-play {
-		.play-circle, .play-arrow {
+		.play-circle,
+		.play-arrow {
 			display: none;
 		}
+
 		&:hover {
-			.play-circle, .play-arrow {
+			.play-circle,
+			.play-arrow {
 				display: block;
 			}
 		}
 	}
+
 	&.responsive .wikia-video-thumb {
 		width: 100%;
 	}
