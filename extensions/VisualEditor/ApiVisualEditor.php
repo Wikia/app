@@ -38,7 +38,7 @@ class ApiVisualEditor extends ApiBase {
 			$oldid = $parserParams['oldid'];
 
 			$req = MWHttpRequest::factory( wfAppendQuery(
-					$wgVisualEditorParsoidURL . '/' . $wgVisualEditorParsoidPrefix .
+					$wgVisualEditorParsoidURL . '/' . $this->getApiUrl() .
 						'/' . urlencode( $title->getPrefixedDBkey() ),
 					$parserParams
 				),
@@ -95,7 +95,7 @@ class ApiVisualEditor extends ApiBase {
 			$parserParams['oldid'] = '';
 		}
 		return Http::post(
-			$wgVisualEditorParsoidURL . '/' . $wgVisualEditorParsoidPrefix .
+			$wgVisualEditorParsoidURL . '/' . $this->getApiUrl() .
 				'/' . urlencode( $title->getPrefixedDBkey() ),
 			array(
 				'postData' => array(
@@ -198,6 +198,15 @@ class ApiVisualEditor extends ApiBase {
 		} else {
 			return array( 'result' => 'nochanges' );
 		}
+	}
+
+	/**
+	 * @protected
+	 * @description Simple helper to retrieve relevant api uri, eg: http:://muppet.wikia.com/api.php
+	 * @return String
+	 */
+	protected function getApiUrl() {
+		return wfExpandUrl( wfScript( 'api') );
 	}
 
 	public function execute() {
