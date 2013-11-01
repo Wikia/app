@@ -6,20 +6,7 @@
 
 require( ['wikia.tracker'], function ( tracker ) {
 	var actions = tracker.ACTIONS,
-		keysToNormalize = [ 'category', 'label' ];
-
-	// Normalize special parameter values
-	function normalize( params ) {
-		var i, key,
-			rSpecialChars = /[_\s]/g;
-
-		for ( i = 0; i < keysToNormalize.length; i++ ) {
-			key = keysToNormalize[i];
-			params[key] = params[key].toLowerCase().replace( rSpecialChars, '-' );
-		}
-
-		return params;
-	}
+		rSpecialChars = /[_\s]/g;
 
 	ve.track.actions = actions;
 	ve.trackRegisterHandler( function ( name, data ) {
@@ -61,6 +48,9 @@ require( ['wikia.tracker'], function ( tracker ) {
 			ve.extendObject( params, name );
 		}
 
-		tracker.track( normalize( params ) );
+		// Normalize label values
+		params.label = params.label.toLowerCase().replace( rSpecialChars, '-' );
+
+		tracker.track( params );
 	} );
 } );
