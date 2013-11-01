@@ -14,8 +14,9 @@
  * @constructor
  * @param {HTMLDocument|Array|ve.dm.LinearData|ve.dm.Document} dataOrDoc Document data to edit
  * @param {Object} [config] Configuration options
+ * @param {ve.init.mw.Target} target Target instance (optional)
  */
-ve.ui.Surface = function VeUiSurface( dataOrDoc, config ) {
+ve.ui.Surface = function VeUiSurface( dataOrDoc, config, target ) {
 	// Parent constructor
 	ve.Element.call( this, config );
 
@@ -36,6 +37,7 @@ ve.ui.Surface = function VeUiSurface( dataOrDoc, config ) {
 	this.dialogs = new ve.ui.WindowSet( this, ve.ui.dialogFactory );
 	this.commands = {};
 	this.enabled = true;
+	this.target = target || null;
 
 	// Initialization
 	this.$
@@ -260,4 +262,11 @@ ve.ui.Surface.prototype.addTriggers = function ( triggers, command ) {
  */
 ve.ui.Surface.prototype.getDir = function () {
 	return this.$.css( 'direction' );
+};
+
+/**
+ * TODO: Document
+ */
+ve.ui.Surface.prototype.getTarget = function () {
+	return this.target;
 };

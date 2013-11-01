@@ -56,10 +56,22 @@ ve.ui.WikiaSourceModeDialog.prototype.initialize = function () {
 
 ve.ui.WikiaSourceModeDialog.prototype.onOpen = function () {
 	ve.ui.MWDialog.prototype.onOpen.call( this );
+
+	var doc = this.surface.getModel().getDocument();
 	// TODO: display loading graphic
-	// TODO: request wikitext
+
+	// Request wikitext
+	this.surface.target.serialize(
+		ve.dm.converter.getDomFromData( doc.getFullData(), doc.getStore(), doc.getInternalList() ),
+		ve.bind( this.onSerialize, this )
+	);
+
 	// TODO: insert wikitext inside textarea
 	// TODO: remove loading graphic
+};
+
+ve.ui.WikiaSourceModeDialog.prototype.onSerialize = function ( wikitext ) {
+	this.sourceModeTextarea.$input.val( wikitext );
 };
 
 ve.ui.dialogFactory.register( ve.ui.WikiaSourceModeDialog );
