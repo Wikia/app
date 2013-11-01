@@ -108,7 +108,7 @@ ve.ui.WikiaMediaOptionWidget.prototype.onThumbnailError =
  * Show the correct icon
  *
  * @method
- * @param {Boolean} checked Should the item be checked?
+ * @param {boolean} checked Should the item be checked?
  */
 
 ve.ui.WikiaMediaOptionWidget.prototype.setChecked = function ( checked ) {

@@ -62,7 +62,7 @@ ve.ui.WikiaMediaSelectWidget.prototype.onMouseUp = function ( e ) {
  *
  * @method
  * @param {Object} items Items to match against
- * @param {Boolean} checked Should the item be checked?
+ * @param {boolean} checked Should the item be checked?
  */
 ve.ui.WikiaMediaSelectWidget.prototype.setChecked = function ( items, checked ) {
 	var i, item;
