@@ -22,7 +22,7 @@ ve.ui.WikiaMediaResultsWidget = function VeUiWikiaMediaResultsWidget( config ) {
 	this.results.connect( this, {
 		'highlight': 'onResultsHighlight',
 		'select': 'onResultsSelect',
-		'state': 'onResultsState'
+		'check': 'onResultsCheck'
 	} );
 	this.$.on( 'scroll', ve.bind( this.onResultsScroll, this ) );
 
@@ -45,13 +45,13 @@ ve.inheritClass( ve.ui.WikiaMediaResultsWidget, ve.ui.Widget );
 /* Methods */
 
 /**
- * Handle state change
+ * Handle check/uncheck of items in search results.
  *
  * @method
  * @param {ve.ui.WikiaMediaOptionWidget} item Item whose state is changing
  */
-ve.ui.WikiaMediaResultsWidget.prototype.onResultsState = function ( item ) {
-	this.emit( 'state', item.getData() );
+ve.ui.WikiaMediaResultsWidget.prototype.onResultsCheck = function ( item ) {
+	this.emit( 'check', item.getData() );
 };
 
 /**

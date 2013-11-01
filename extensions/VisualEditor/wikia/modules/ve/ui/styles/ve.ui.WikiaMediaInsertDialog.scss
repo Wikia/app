@@ -184,7 +184,7 @@ $width-cart: 101px;
 	top: 0;
 	right: 0;
 
-	.ve-ui-wikiaMediaOptionWidget-state {
+	.ve-ui-wikiaMediaOptionWidget-check {
 		background-color: $color-page;
 		height: 32px;
 		position: absolute;
@@ -192,8 +192,8 @@ $width-cart: 101px;
 		top: 5px;
 		width: 32px;
 
-		&.ve-ui-icon-selected {
-			@include ve-icon(selected, wikia, $color-buttons);
+		&.ve-ui-icon-checked {
+			@include ve-icon(checked, wikia, $color-buttons);
 			background-color: $color-buttons;
 		}
 

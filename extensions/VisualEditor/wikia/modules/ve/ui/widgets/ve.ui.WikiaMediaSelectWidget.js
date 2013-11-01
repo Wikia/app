@@ -45,12 +45,12 @@ ve.ui.WikiaMediaSelectWidget.prototype.onMouseUp = function ( e ) {
 	}
 	if ( !this.disabled && e.which === 1 && this.selecting ) {
 		// What was clicked on?
-		if ( $( e.target ).hasClass( 've-ui-wikiaMediaResultWidget-state' ) ) {
-			this.emit( 'state', this.selecting );
+		if ( $( e.target ).hasClass( 've-ui-wikiaMediaResultWidget-check' ) ) {
+			this.emit( 'check', this.selecting );
 		} else {
 			// TODO: When preview is ready, this should call this.selectItem.
 			//this.selectItem( this.selecting );
-			this.emit( 'state', this.selecting );
+			this.emit( 'check', this.selecting );
 		}
 		this.selecting = null;
 	}
@@ -62,15 +62,15 @@ ve.ui.WikiaMediaSelectWidget.prototype.onMouseUp = function ( e ) {
  *
  * @method
  * @param {Object} items Items to match against
- * @param {Object} state The state to set
+ * @param {Boolean} checked Should the item be checked?
  */
-ve.ui.WikiaMediaSelectWidget.prototype.updateState = function ( items, state ) {
+ve.ui.WikiaMediaSelectWidget.prototype.setChecked = function ( items, checked ) {
 	var i, item;
 
 	for ( i = 0; i < items.length ; i++ ) {
 		item = this.getItemFromData( items[i] );
 		if ( item ) {
-			item.setState( state );
+			item.setChecked( checked );
 		}
 	}
 };

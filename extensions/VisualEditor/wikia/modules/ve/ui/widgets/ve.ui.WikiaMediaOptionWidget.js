@@ -31,7 +31,7 @@ ve.ui.WikiaMediaOptionWidget = function VeUiWikiaMediaOptionWidget( data, config
 	this.$back = this.$$( '<div>' );
 	this.$front = this.$$( '<div>' );
 	this.$thumb = this.$back.add( this.$front );
-	this.state = new ve.ui.IconButtonWidget( { 'icon': 'select' } );
+	this.check = new ve.ui.IconButtonWidget( { 'icon': 'unchecked' } );
 
 	// Events
 	this.$image
@@ -41,11 +41,11 @@ ve.ui.WikiaMediaOptionWidget = function VeUiWikiaMediaOptionWidget( data, config
 	// Initialization
 	this.loadThumbnail();
 	this.setLabel( this.mwTitle );
-	this.state.$.addClass( 've-ui-wikiaMediaOptionWidget-state' );
+	this.check.$.addClass( 've-ui-wikiaMediaOptionWidget-check' );
 	this.$
 		.addClass( 've-ui-mwMediaResultWidget ve-ui-texture-pending ' + data.type )
 		.css( { 'width': this.size, 'height': this.size } )
-		.prepend( this.$thumb, this.state.$ );
+		.prepend( this.$thumb, this.check.$ );
 };
 
 /* Inheritance */
@@ -108,9 +108,9 @@ ve.ui.WikiaMediaOptionWidget.prototype.onThumbnailError =
  * Show the correct icon
  *
  * @method
- * @param {string} state The state of the icon to be shown ('selected', 'select')
+ * @param {Boolean} checked Should the item be checked?
  */
 
-ve.ui.WikiaMediaOptionWidget.prototype.setState = function ( state ) {
-	this.state.setIcon( state );
+ve.ui.WikiaMediaOptionWidget.prototype.setChecked = function ( checked ) {
+	this.check.setIcon( checked ? 'checked' : 'unchecked' );
 };

@@ -56,7 +56,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	this.pages = new ve.ui.PagedLayout( { '$$': this.frame.$$, 'attachPagesPanel': true } );
 	this.query = new ve.ui.WikiaMediaQueryWidget( {
 		'$$': this.frame.$$,
-		'placeholder': ve.msg('visualeditor-wikiamediainsertsearch-placeholder')
+		'placeholder': ve.msg( 'visualeditor-wikiamediainsertsearch-placeholder' )
 	} );
 	this.queryInput = this.query.getInput();
 	this.queryUpload = this.query.getUpload();
@@ -87,7 +87,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	this.queryInput.$input.on( 'keydown', ve.bind( this.onQueryInputKeydown, this ) );
 	this.search.connect( this, {
 		'nearingEnd': 'onSearchNearingEnd',
-		'state': 'onSearchState'
+		'check': 'onSearchCheck'
 	} );
 	this.upload.on( 'upload', ve.bind( this.onUploadSuccess, this ) );
 	this.queryUpload.on( 'upload', ve.bind( this.onUploadSuccess, this ) );
@@ -161,7 +161,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.onQueryInputKeydown = function ( e ) {
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onQueryRequestSearchDone = function ( items ) {
 	this.search.addItems( items );
-	this.searchResults.updateState( this.cartModel.getItems(), 'selected' );
+	this.searchResults.setChecked( this.cartModel.getItems(), true );
 	this.pages.setPage( 'search' );
 };
 
@@ -185,12 +185,12 @@ ve.ui.WikiaMediaInsertDialog.prototype.onSearchNearingEnd = function () {
 };
 
 /**
- * Handle clicking on the cart state indicator in search results.
+ * Handle check/uncheck of items in search results.
  *
  * @method
  * @param {Object} item The search result item data.
  */
-ve.ui.WikiaMediaInsertDialog.prototype.onSearchState = function ( item ) {
+ve.ui.WikiaMediaInsertDialog.prototype.onSearchCheck = function ( item ) {
 	var cartItemModel, cartItems, i, removed;
 	if ( item === null ) {
 		return;
@@ -240,7 +240,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.onCartAdd = function ( items ) {
 		page.connect( this, { 'remove': 'onMediaPageRemove' } );
 		this.pages.addPage( items[i].title, { '$content': page.$ } );
 	}
-	this.searchResults.updateState( items, 'selected' );
+	this.searchResults.setChecked( items, true );
 };
 
 /**
@@ -248,7 +248,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.onCartAdd = function ( items ) {
  * @param {ve.dm.WikiaCartItem[]} items
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onCartRemove = function ( items ) {
-	this.searchResults.updateState( items, 'select' );
+	this.searchResults.setChecked( items, false );
 };
 
 /**
