@@ -5,9 +5,6 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
-/* global mw */
-/* global Wikia */
-
 /**
  * Initialization MediaWiki view page target.
  *
@@ -85,57 +82,10 @@ ve.init.mw.WikiaViewPageTarget.static.toolbarGroups = [
 
 ve.init.mw.WikiaViewPageTarget.prototype.activate = function () {
 	ve.init.mw.ViewPageTarget.prototype.activate.call( this );
-	this.setupTracking();
 };
 
 ve.init.mw.WikiaViewPageTarget.prototype.setupSkinTabs = function () {
 	// Intentionally left empty
-};
-
-ve.init.mw.WikiaViewPageTarget.prototype.setupTracking = function () {
-	var actions = Wikia.Tracker.ACTIONS;
-
-	ve.trackRegisterHandler( function ( name, data ) {
-		var params = {
-			category: 'editor-ve',
-			trackingMethod: 'ga'
-		};
-
-		// Handle MW tracking calls
-		if ( typeof name === 'string' ) {
-			switch( data.action ) {
-				case 'edit-link-click':
-					params.action = actions.CLICK;
-					params.category = 'article';
-					params.label = 've-edit';
-					break;
-				case 'page-edit-impression':
-					params.action = actions.IMPRESSION;
-					params.label = 'edit';
-					break;
-				case 'page-save-attempt':
-					params.action = actions.CLICK;
-					params.label = 'button-publish';
-					break;
-				case 'page-save-success':
-					params.action = actions.SUCCESS;
-					params.label = 'save';
-					break;
-				case 'section-edit-link-click':
-					params.action = actions.CLICK;
-					params.category = 'article';
-					params.label = 've-section-edit';
-					break;
-				default:
-					// Don't track
-					return;
-			}
-		} else {
-			ve.extendObject( params, name );
-		}
-
-		Wikia.Tracker.track( params );
-	} );
 };
 
 ve.init.mw.WikiaViewPageTarget.prototype.mutePageContent = function () {
