@@ -12,10 +12,7 @@
 
 <title><?= $pageTitle ?></title>
 
-<!-- SASS-generated CSS file -->
-<link rel="stylesheet" href="<?= AssetsManager::getInstance()->getSassCommonURL( $mainSassFile ) ?>">
-
-<!-- CSS injected by extensions -->
+<!-- CSS injected by skin and extensions -->
 <?= $cssLinks ?>
 
 <?
