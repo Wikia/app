@@ -47,24 +47,28 @@ ve.ui.WikiaMediaPageWidget = function VeUiWikiaMediaPageWidget( model, config ) 
 	this.$extension = this.$$( '<span>' );
 	this.$item = null;
 	this.$itemWrapper = this.$$( '<div>' );
+	this.$overlay = null;
 
 	// Events
+	this.$itemWrapper.on( 'click', ve.bind( this.onItemClick, this ) );
 	this.removeButton.connect( this, { 'click': 'onRemoveButtonClick' } );
 
 	// Initialization
 	this.$extension
 		.addClass( 've-ui-wikiaMediaPageWidget-item-extension' )
 		.text( titleParts[2] );
-	this.$itemWrapper
-		.addClass( 've-ui-wikiaMediaPageWidget-item' );
+	this.$itemWrapper.addClass( 've-ui-wikiaMediaPageWidget-item' );
 	this.title.$.append( this.$extension );
 	this.fieldset.$.append( this.titleLabel.$, this.title.$, this.removeButton.$ );
 	this.$
 		.addClass( 've-ui-wikiaMediaPageWidget ' + this.model.type )
 		.append( this.$itemWrapper, this.fieldset.$ );
 
-	// TODO: support embdedded video
 	this.setupImage();
+	if ( this.model.type === 'video' ) {
+		// TODO: support embdedded video
+		this.setupVideoOverlay();
+	}
 };
 
 /* Inheritance */
@@ -96,21 +100,50 @@ ve.ui.WikiaMediaPageWidget.prototype.setupImage = function () {
 	}, this ) );
 
 	this.$item.load( ve.bind( this.onImageLoad, this ) );
-	this.$itemWrapper.append( this.$item );
+	this.$itemWrapper
+		.addClass( 've-ui-texture-pending' )
+		.append( this.$item );
+};
+
+/**
+ * Handle video setup.
+ *
+ * @method
+ */
+ve.ui.WikiaMediaPageWidget.prototype.setupVideoOverlay = function () {
+	this.$overlay = this.$$( '<span>' )
+		.addClass( 'play-circle' )
+		.add(
+			this.$$( '<span>' ).addClass( 'play-arrow' )
+		);
+
+	this.$itemWrapper
+		.addClass( 'wikia-video-thumbnail' )
+		.prepend( this.$overlay );
 };
 
 /**
  * Handle image load.
  *
- * TODO: if we have image dimensions available on the model, we could request the proper
- * thumbnail size without having to scale height in the browser.
- *
  * @method
  */
 ve.ui.WikiaMediaPageWidget.prototype.onImageLoad = function () {
+	this.$itemWrapper.removeClass( 've-ui-texture-pending' );
+
+	// TODO: if we have image dimensions available on the model, we could request the proper
+	// thumbnail size without having to scale height in the browser.
 	if ( this.image.height > 325 ) {
 		this.image.height = 325;
 	}
+};
+
+/**
+ * Handle clicks on the media item.
+ *
+ * @method
+ */
+ve.ui.WikiaMediaPageWidget.prototype.onItemClick = function () {
+	window.alert( ve.msg( 'visualeditor-wikiamediapagewidget-preview-alert' ) );
 };
 
 /** */

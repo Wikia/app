@@ -48,7 +48,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	this.cartModel = new ve.dm.WikiaCart();
 	this.cart = new ve.ui.WikiaCartWidget( this.cartModel );
 	this.insertButton = new ve.ui.ButtonWidget( {
-		'$$': this.$$,
+		'$$': this.frame.$$,
 		'label': ve.msg( 'visualeditor-wikiamediainsertbuttontool-label' ),
 		'flags': ['primary']
 	} );

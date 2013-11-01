@@ -11,6 +11,7 @@ $messages['en'] = array(
 	'visualeditor-wikiauploadwidget-button' => 'Upload',
 	'visualeditor-wikiauploaderror' => 'Error uploading file',
 	'visualeditor-wikiamediainsertsearch-placeholder' => 'Search for something, or enter a URL',
+	'visualeditor-wikiamediapagewidget-preview-alert' => 'Preview coming soon!',
 );
 
 $messages['qqq'] = array(
