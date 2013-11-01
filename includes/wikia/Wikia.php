@@ -1553,7 +1553,9 @@ class Wikia {
 		if ($link != null) {
 			// extract the url from the link src
 			preg_match("/\"(.*)\"/", $link, $matches);
-			$urls[]= $matches[1];
+			if ( isset($matches[1]) ) {
+				$urls[]= $matches[1];
+			}
 		}
 
 		wfProfileOut(__METHOD__);
