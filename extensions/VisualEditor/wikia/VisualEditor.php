@@ -74,7 +74,8 @@ $wgResourceModules += array(
 			've/ui/widgets/ve.ui.WikiaCartWidget.js',
 			've/ui/widgets/ve.ui.WikiaCartItemWidget.js',
 			've/ui/widgets/ve.ui.WikiaMediaPageWidget.js',
-			've/ui/widgets/ve.ui.WikiaMediaResultWidget.js',
+			've/ui/widgets/ve.ui.WikiaMediaSelectWidget.js',
+			've/ui/widgets/ve.ui.WikiaMediaOptionWidget.js',
 			've/ui/widgets/ve.ui.WikiaMediaResultsWidget.js',
 			've/ui/widgets/ve.ui.WikiaMediaQueryWidget.js',
 			've/ui/widgets/ve.ui.WikiaUploadWidget.js',
@@ -86,6 +87,7 @@ $wgResourceModules += array(
 			'visualeditor-wikiauploadwidget-label',
 			'visualeditor-wikiauploadwidget-button',
 			'visualeditor-wikiauploaderror',
+			'visualeditor-wikiamediainsertsearch-placeholder',
 		),
 		'dependencies' => array(
 			'ext.visualEditor.core'

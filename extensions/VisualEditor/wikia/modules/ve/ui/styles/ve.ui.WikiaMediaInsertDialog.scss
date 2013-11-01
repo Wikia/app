@@ -1,8 +1,12 @@
+@import "skins/oasis/css/core/color";
 @import "skins/oasis/css/core/layout";
 @import "skins/oasis/css/mixins/box-sizing";
 @import "skins/oasis/css/mixins/clearfix";
+@import "mixins/ve-icon";
 
-$width-cart: 100px;
+$size-cart-item: 60px;
+$width-media-item-max: 365px;
+$width-cart: 101px;
 
 .ve-ui-wikiaMediaInsertDialog {
 	.ve-ui-pagedLayout {
@@ -53,7 +57,7 @@ $width-cart: 100px;
 /* Cart */
 .ve-ui-wikiaCartWidget-wrapper {
 	@include box-sizing( border-box );
-	border-left: #DDD 1px solid;
+	border-left: $color-page-border 1px solid;
 	bottom: 0;
 	overflow: auto;
 	padding: $width-gutter;
@@ -64,11 +68,30 @@ $width-cart: 100px;
 
 	.ve-ui-wikiaCartImage {
 		display: block;
+		opacity: 0.75;
 	}
 
 	.ve-ui-optionWidget {
+		height: $size-cart-item;
 		padding: 0;
 		margin-bottom: 10px;
+		width: $size-cart-item;
+
+		&.ve-ui-optionWidget-selected {
+			&:before {
+				border: $color-buttons 4px solid;
+				bottom: 0;
+				content: '';
+				left: 0;
+				position: absolute;
+				right: 0;
+				top: 0;
+			}
+
+			.ve-ui-wikiaCartImage {
+				opacity: 1;
+			}
+		}
 	}
 
 	.ve-ui-labeledElement-label {
@@ -80,20 +103,14 @@ $width-cart: 100px;
 .ve-ui-wikiaMediaPageWidget {
 	@include clearfix;
 
-	.ve-ui-fieldsetLayout,
+	.ve-ui-fieldsetLayout {
+		margin-left: $width-media-item-max + $width-gutter;
+	}
+
 	.ve-ui-wikiaMediaPageWidget-item {
 		float: left;
-	}
-
-	.ve-ui-fieldsetLayout {
-		width: 275px;
-	}
-
-	.ve-ui-wikiaMediaPageWidget-item {
-		height: 325px;
-		margin-right: $width-gutter;
 		text-align: center;
-		width: 365px;
+		width: $width-media-item-max;
 	}
 
 	.ve-ui-wikiaMediaPageWidget-item-extension {
@@ -166,6 +183,21 @@ $width-cart: 100px;
 	position: absolute;
 	top: 0;
 	right: 0;
+
+	.ve-ui-wikiaMediaOptionWidget-check {
+		background-color: $color-page;
+		height: 32px;
+		position: absolute;
+		right: 5px;
+		top: 5px;
+		width: 32px;
+
+		&.ve-ui-icon-checked {
+			@include ve-icon(checked, wikia, $color-buttons);
+			background-color: $color-buttons;
+		}
+
+	}
 }
 
 /* Upload - TODO: Move to Widget.scss when Sass work is merged */
