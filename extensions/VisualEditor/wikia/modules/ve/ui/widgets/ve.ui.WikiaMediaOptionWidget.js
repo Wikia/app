@@ -20,7 +20,7 @@ ve.ui.WikiaMediaOptionWidget = function VeUiWikiaMediaOptionWidget( model, confi
 	// Configuration intialization
 	config = config || {};
 
-	this.model = model
+	this.model = model;
 
 	// Parent constructor
 	ve.ui.OptionWidget.call( this, this.model.title, config );
