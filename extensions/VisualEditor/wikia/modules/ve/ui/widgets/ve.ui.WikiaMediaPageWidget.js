@@ -47,8 +47,10 @@ ve.ui.WikiaMediaPageWidget = function VeUiWikiaMediaPageWidget( model, config ) 
 	this.$extension = this.$$( '<span>' );
 	this.$item = null;
 	this.$itemWrapper = this.$$( '<div>' );
+	this.$overlay = null;
 
 	// Events
+	this.$itemWrapper.on( 'click', ve.bind( this.onItemClick, this ) );
 	this.removeButton.connect( this, { 'click': 'onRemoveButtonClick' } );
 
 	// Initialization
@@ -64,6 +66,9 @@ ve.ui.WikiaMediaPageWidget = function VeUiWikiaMediaPageWidget( model, config ) 
 
 	// TODO: support embdedded video
 	this.setupImage();
+	if ( this.model.type === 'video' ) {
+		this.setupVideoOverlay();
+	}
 };
 
 /* Inheritance */
@@ -99,6 +104,23 @@ ve.ui.WikiaMediaPageWidget.prototype.setupImage = function () {
 };
 
 /**
+ * Handle video setup.
+ *
+ * @method
+ */
+ve.ui.WikiaMediaPageWidget.prototype.setupVideoOverlay = function () {
+	this.$overlay = this.$$( '<span>' )
+		.addClass( 'play-circle' )
+		.add(
+			this.$$( '<span>' ).addClass( 'play-arrow' )
+		);
+
+	this.$itemWrapper
+		.addClass( 'wikia-video-thumbnail' )
+		.prepend( this.$overlay );
+};
+
+/**
  * Handle image load.
  *
  * TODO: if we have image dimensions available on the model, we could request the proper
@@ -107,26 +129,18 @@ ve.ui.WikiaMediaPageWidget.prototype.setupImage = function () {
  * @method
  */
 ve.ui.WikiaMediaPageWidget.prototype.onImageLoad = function () {
-	var $playArrow, $playCircle;
-
 	if ( this.image.height > 325 ) {
 		this.image.height = 325;
 	}
+};
 
-	// Set up video play button overlay
-	if ( this.model.type === 'video' ) {
-		$playArrow = this.$$( '<span>' ).addClass( 'play-arrow' );
-		$playCircle = this.$$( '<span>' ).addClass( 'play-circle' );
-		this.$itemWrapper
-			.addClass( 'wikia-video-thumbnail' )
-			.prepend( $playCircle, $playArrow );
-	}
-
-	// TODO: remove this when actual preview happens
-	this.$itemWrapper.on( 'click', function() {
-		alert( mw.message( 'visualeditor-wikiamediapagewidget-preview-alert' ) );
-	});
-
+/**
+ * Handle clicks on the media item.
+ *
+ * @method
+ */
+ve.ui.WikiaMediaPageWidget.prototype.onItemClick = function () {
+	window.alert( ve.msg( 'visualeditor-wikiamediapagewidget-preview-alert' ) );
 };
 
 /** */
