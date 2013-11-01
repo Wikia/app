@@ -130,8 +130,8 @@ ve.ui.WikiaMediaPageWidget.prototype.setupVideoOverlay = function () {
 ve.ui.WikiaMediaPageWidget.prototype.onImageLoad = function () {
 	this.$itemWrapper.removeClass( 've-ui-texture-pending' );
 
- 	// TODO: if we have image dimensions available on the model, we could request the proper
- 	// thumbnail size without having to scale height in the browser.
+	// TODO: if we have image dimensions available on the model, we could request the proper
+	// thumbnail size without having to scale height in the browser.
 	if ( this.image.height > 325 ) {
 		this.image.height = 325;
 	}

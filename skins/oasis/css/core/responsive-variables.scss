@@ -38,4 +38,3 @@ $background-is-dynamic: if( not $background-tiled and $background-height > 0 and
 // at the size of the fluid breakpoint. This is important because it will determine
 // how the two slices of background images need to be positioned below.
 $background-is-wide: if( $background-width > $breakpoint-fluid, true, false );
-
