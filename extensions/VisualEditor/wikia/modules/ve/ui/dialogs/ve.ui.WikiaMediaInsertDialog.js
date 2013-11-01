@@ -54,9 +54,9 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	} );
 	this.insertionDetails = {};
 	this.pages = new ve.ui.PagedLayout( { '$$': this.frame.$$, 'attachPagesPanel': true } );
-	this.query = new ve.ui.WikiaMediaQueryWidget( { 
-		'$$': this.frame.$$, 
-		'placeholder': ve.msg('visualeditor-wikiamediainsertsearch-placeholder') 
+	this.query = new ve.ui.WikiaMediaQueryWidget( {
+		'$$': this.frame.$$,
+		'placeholder': ve.msg( 'visualeditor-wikiamediainsertsearch-placeholder' )
 	} );
 	this.queryInput = this.query.getInput();
 	this.queryUpload = this.query.getUpload();
@@ -69,7 +69,10 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	this.$mainPage = this.$$( '<div>' );
 
 	// Events
-	this.cartModel.on( 'add', ve.bind( this.onCartAdd, this ) );
+	this.cartModel.connect( this, {
+		'add': 'onCartAdd',
+		'remove': 'onCartRemove'
+	} );
 	this.cart.on( 'select', ve.bind( this.onCartSelect, this ) );
 	this.insertButton.connect( this, { 'click': [ 'close', 'insert' ] } );
 	this.pages.on( 'set', ve.bind( this.onPageSet, this ) );
@@ -84,7 +87,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	this.queryInput.$input.on( 'keydown', ve.bind( this.onQueryInputKeydown, this ) );
 	this.search.connect( this, {
 		'nearingEnd': 'onSearchNearingEnd',
-		'select': 'onSearchSelect'
+		'check': 'onSearchCheck'
 	} );
 	this.upload.on( 'upload', ve.bind( this.onUploadSuccess, this ) );
 	this.queryUpload.on( 'upload', ve.bind( this.onUploadSuccess, this ) );
@@ -157,8 +160,8 @@ ve.ui.WikiaMediaInsertDialog.prototype.onQueryInputKeydown = function ( e ) {
  * @param {Object} items An object containing items to add to the search results
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onQueryRequestSearchDone = function ( items ) {
-	// TODO: handle filtering search results to show what's in the cart already
 	this.search.addItems( items );
+	this.searchResults.setChecked( this.cartModel.getItems(), true );
 	this.pages.setPage( 'search' );
 };
 
@@ -182,29 +185,21 @@ ve.ui.WikiaMediaInsertDialog.prototype.onSearchNearingEnd = function () {
 };
 
 /**
- * Handle clicking on search result items.
+ * Handle check/uncheck of items in search results.
  *
  * @method
  * @param {Object} item The search result item data.
  */
-ve.ui.WikiaMediaInsertDialog.prototype.onSearchSelect = function ( item ) {
-	var cartItemModel, cartItems, i;
-	if ( item === null ) {
-		return;
-	}
+ve.ui.WikiaMediaInsertDialog.prototype.onSearchCheck = function ( item ) {
+	var cartItem, cartItemModel;
 
-	// Remove item from cart if it already exists
-	// TODO: why is this necessary? Can't we just not add?
-	cartItems = ve.copy( this.cartModel.getItems() );
-	for ( i = 0; i < cartItems.length; i++ ) {
-		if ( cartItems[i].title === item.title ) {
-			this.cartModel.removeItems( [ cartItems[i] ] );
-		}
+	cartItem = this.cart.getItemFromData( item.title );
+	if ( cartItem ) {
+		this.cartModel.removeItems( [ cartItem.getModel() ] );
+	} else {
+		cartItemModel = new ve.dm.WikiaCartItem( item.title, item.url, item.type );
+		this.cartModel.addItems( [ cartItemModel ] );
 	}
-
-	// Add item to cart
-	cartItemModel = new ve.dm.WikiaCartItem( item.title, item.url, item.type );
-	this.cartModel.addItems( [ cartItemModel ] );
 };
 
 /**
@@ -222,7 +217,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.onCartSelect = function ( item ) {
 
 /**
  * @method
- * @param {ve.dm.WikiaCartItem|null} items
+ * @param {ve.dm.WikiaCartItem[]} items
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onCartAdd = function ( items ) {
 	var i, page;
@@ -235,6 +230,15 @@ ve.ui.WikiaMediaInsertDialog.prototype.onCartAdd = function ( items ) {
 		page.connect( this, { 'remove': 'onMediaPageRemove' } );
 		this.pages.addPage( items[i].title, { '$content': page.$ } );
 	}
+	this.searchResults.setChecked( items, true );
+};
+
+/**
+ * @method
+ * @param {ve.dm.WikiaCartItem[]} items
+ */
+ve.ui.WikiaMediaInsertDialog.prototype.onCartRemove = function ( items ) {
+	this.searchResults.setChecked( items, false );
 };
 
 /**
