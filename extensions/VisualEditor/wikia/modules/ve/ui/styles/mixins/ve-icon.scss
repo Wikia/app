@@ -1,12 +1,14 @@
+@import "skins/oasis/css/core/color";
+
 /*
  * $name - name of the icon (bold, media, etc)
  * $vendor - who is providing the icon? (ve, mw, wikia)
  */
-@mixin ve-icon($name, $vendor) {
+@mixin ve-icon($name, $vendor, $baseColor: $color-page) {
 	$white: "";
 	$path: "";
 
-	@if $is-dark-wiki {
+	@if lightness($baseColor) < 50 {
 		$white: "-white";
 	}
 	@if $vendor == ve {

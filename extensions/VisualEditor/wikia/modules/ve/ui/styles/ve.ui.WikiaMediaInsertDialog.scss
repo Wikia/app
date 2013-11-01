@@ -6,6 +6,7 @@
 
 // TODO: remove me when VID-927-tohtml is merged into dev!
 @import "mixins/play-button";
+@import "mixins/ve-icon";
 
 $size-cart-item: 60px;
 $width-media-item-max: 365px;
@@ -199,6 +200,21 @@ $width-cart: 101px;
 	position: absolute;
 	top: 0;
 	right: 0;
+
+	.ve-ui-wikiaMediaOptionWidget-check {
+		background-color: $color-page;
+		height: 32px;
+		position: absolute;
+		right: 5px;
+		top: 5px;
+		width: 32px;
+
+		&.ve-ui-icon-checked {
+			@include ve-icon(checked, wikia, $color-buttons);
+			background-color: $color-buttons;
+		}
+
+	}
 }
 
 /* Upload - TODO: Move to Widget.scss when Sass work is merged */

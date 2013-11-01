@@ -15,13 +15,14 @@ ve.ui.WikiaMediaResultsWidget = function VeUiWikiaMediaResultsWidget( config ) {
 	ve.ui.Widget.call( this, config );
 
 	// Properties
-	this.results = new ve.ui.SelectWidget( { '$$': this.$$ } );
+	this.results = new ve.ui.WikiaMediaSelectWidget( { '$$': this.$$ } );
 	this.size = config.size || 160;
 
 	// Events
 	this.results.connect( this, {
 		'highlight': 'onResultsHighlight',
-		'select': 'onResultsSelect'
+		'select': 'onResultsSelect',
+		'check': 'onResultsCheck'
 	} );
 	this.$.on( 'scroll', ve.bind( this.onResultsScroll, this ) );
 
@@ -44,6 +45,16 @@ ve.inheritClass( ve.ui.WikiaMediaResultsWidget, ve.ui.Widget );
 /* Methods */
 
 /**
+ * Handle check/uncheck of items in search results.
+ *
+ * @method
+ * @param {ve.ui.WikiaMediaOptionWidget} item Item whose state is changing
+ */
+ve.ui.WikiaMediaResultsWidget.prototype.onResultsCheck = function ( item ) {
+	this.emit( 'check', item.getModel() );
+};
+
+/**
  * Add items to the results.
  *
  * @method
@@ -55,7 +66,7 @@ ve.ui.WikiaMediaResultsWidget.prototype.addItems = function ( items ) {
 
 	for ( i = 0; i < items.length; i++ ) {
 		results.push(
-			new ve.ui.WikiaMediaResultWidget( items[i], { '$$': this.$$, 'size': this.size } )
+			new ve.ui.WikiaMediaOptionWidget( items[i], { '$$': this.$$, 'size': this.size } )
 		);
 	}
 
