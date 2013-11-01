@@ -117,8 +117,16 @@ ve.ui.WikiaMediaPageWidget.prototype.onImageLoad = function () {
 	if ( this.model.type === 'video' ) {
 		$playArrow = this.$$( '<span>' ).addClass( 'play-arrow' );
 		$playCircle = this.$$( '<span>' ).addClass( 'play-circle' );
-		this.$itemWrapper.prepend( $playCircle, $playArrow );
+		this.$itemWrapper
+			.addClass( 'wikia-video-thumbnail' )
+			.prepend( $playCircle, $playArrow );
 	}
+
+	// TODO: remove this when actual preview happens
+	this.$itemWrapper.on( 'click', function() {
+		alert( 'Preview coming soon!' );
+	});
+
 };
 
 /** */

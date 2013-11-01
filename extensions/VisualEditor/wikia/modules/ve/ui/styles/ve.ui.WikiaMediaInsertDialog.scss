@@ -4,8 +4,6 @@
 @import "skins/oasis/css/mixins/clearfix";
 @import "skins/oasis/css/mixins/gradient";
 
-// TODO: remove me when VID-927-tohtml is merged into dev!
-@import "mixins/play-button";
 @import "mixins/ve-icon";
 
 $size-cart-item: 60px;
@@ -139,10 +137,6 @@ $width-cart: 101px;
 	}
 
 	&.video {
-		.ve-ui-wikiaMediaPageWidget-item {
-			@include play-button;
-		}
-
 		.ve-ui-wikiaMediaPageWidget-item-extension {
 			display: none;
 		}

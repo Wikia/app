@@ -1,21 +1,22 @@
-@import "skins/oasis/css/mixins/opacity";
+@import "skins/oasis/css/mixins/background-opacity";
 
-/*
- * Adds a play button to a video thumbnail
- * If no size class is defined, the default case is .medium
+/**
+ * Style the refactored video thumbnails and allow for responsive and non-responsive thumbnails.
  */
 
-@mixin play-button {
+.wikia-video-thumbnail {
+	display: inline-block;
+	width: 100%;
 	position: relative;
 
 	// Background circle
 	.play-circle {
-		@include opacity( 50 );
 		background: black;
 		border: 1px solid #FFF;
 		border-radius: 100px;
 		display: block;
 		left: 50%;
+		opacity: .5;
 		position: absolute;
 		top: 50%;
 
@@ -126,7 +127,7 @@
 
 	&:hover {
 		.play-circle {
-			@include opacity( 70 );
+			opacity: .7;
 		}
 	}
 
@@ -139,5 +140,20 @@
 				display: block;
 			}
 		}
+	}
+	&.responsive .wikia-video-thumb {
+		width: 100%;
+	}
+
+	.duration {
+		@include background-opacity(#000, 70);
+		border-radius: 1px 0 0 0;
+		bottom: 0;
+		color: white;
+		font-size: 12px;
+		line-height: 17px;
+		padding: 0px 6px;
+		position: absolute;
+		right: 0;
 	}
 }
