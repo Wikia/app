@@ -64,9 +64,9 @@ ve.ui.WikiaMediaPageWidget = function VeUiWikiaMediaPageWidget( model, config ) 
 		.addClass( 've-ui-wikiaMediaPageWidget ' + this.model.type )
 		.append( this.$itemWrapper, this.fieldset.$ );
 
-	// TODO: support embdedded video
 	this.setupImage();
 	if ( this.model.type === 'video' ) {
+		// TODO: support embdedded video
 		this.setupVideoOverlay();
 	}
 };
@@ -100,7 +100,9 @@ ve.ui.WikiaMediaPageWidget.prototype.setupImage = function () {
 	}, this ) );
 
 	this.$item.load( ve.bind( this.onImageLoad, this ) );
-	this.$itemWrapper.append( this.$item );
+	this.$itemWrapper
+		.addClass( 've-ui-texture-pending' )
+		.append( this.$item );
 };
 
 /**
@@ -123,12 +125,13 @@ ve.ui.WikiaMediaPageWidget.prototype.setupVideoOverlay = function () {
 /**
  * Handle image load.
  *
- * TODO: if we have image dimensions available on the model, we could request the proper
- * thumbnail size without having to scale height in the browser.
- *
  * @method
  */
 ve.ui.WikiaMediaPageWidget.prototype.onImageLoad = function () {
+	this.$itemWrapper.removeClass( 've-ui-texture-pending' );
+
+ 	// TODO: if we have image dimensions available on the model, we could request the proper
+ 	// thumbnail size without having to scale height in the browser.
 	if ( this.image.height > 325 ) {
 		this.image.height = 325;
 	}

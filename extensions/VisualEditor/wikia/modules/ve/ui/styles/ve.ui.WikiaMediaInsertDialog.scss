@@ -121,6 +121,13 @@ $width-cart: 101px;
 		float: left;
 		text-align: center;
 		width: $width-media-item-max;
+
+		&.ve-ui-texture-pending {
+			.play-arrow,
+			.play-circle {
+				display: none;
+			}
+		}
 	}
 
 	.ve-ui-wikiaMediaPageWidget-item-extension {
