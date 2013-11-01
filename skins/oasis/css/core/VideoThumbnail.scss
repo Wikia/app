@@ -46,11 +46,10 @@
 		border-radius: 2px;
 		content: "";
 		display: block;
+		transform: rotate( 35deg ) skewX( -15deg );  /* Safari and Chrome */
 		-webkit-transform: rotate( 35deg ) skewX( -15deg );  /* Safari and Chrome */
 		-ms-transform: rotate( 35deg ) skewX( -15deg ); /* IE 9 */
-		-o-transform: rotate( 35deg ) skewX( -15deg ); /* Opera */
-		-moz-transform: rotate( 35deg ) skewX( -15deg ); /* Firefox */
-
+		
 		// only for medium
 		height: 20px;
 		margin: 2px 0 0 -10px;
