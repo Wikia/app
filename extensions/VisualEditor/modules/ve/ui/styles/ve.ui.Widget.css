@@ -19,9 +19,15 @@
 	-ms-transition: opacity 200ms;
 	-o-transition: opacity 200ms;
 	transition: opacity 200ms;
+	-webkit-backface-visibility: hidden;
+	-moz-backface-visibility: hidden;
+	backface-visibility: hidden;
 }
 
 .ve-ui-iconButtonWidget:hover {
+	-webkit-backface-visibility: hidden;
+	-moz-backface-visibility: hidden;
+	backface-visibility: hidden;
 	opacity: 1;
 }
 
