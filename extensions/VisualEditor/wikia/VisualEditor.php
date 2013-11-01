@@ -88,6 +88,7 @@ $wgResourceModules += array(
 			'visualeditor-wikiauploadwidget-button',
 			'visualeditor-wikiauploaderror',
 			'visualeditor-wikiamediainsertsearch-placeholder',
+			'visualeditor-wikiamediapagewidget-preview-alert',
 		),
 		'dependencies' => array(
 			'ext.visualEditor.core'

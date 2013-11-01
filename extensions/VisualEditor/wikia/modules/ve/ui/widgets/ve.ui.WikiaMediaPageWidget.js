@@ -124,7 +124,7 @@ ve.ui.WikiaMediaPageWidget.prototype.onImageLoad = function () {
 
 	// TODO: remove this when actual preview happens
 	this.$itemWrapper.on( 'click', function() {
-		alert( 'Preview coming soon!' );
+		alert( mw.message( 'visualeditor-wikiamediapagewidget-preview-alert' ) );
 	});
 
 };
