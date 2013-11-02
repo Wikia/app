@@ -79,7 +79,7 @@ class ApiTempUpload extends ApiBase {
 
 	private function getUniqueTitle( $name ) {
 		$filename = pathinfo( $name, PATHINFO_FILENAME );
-		$extension = pathinfo( $desiredName, PATHINFO_EXTENSION );
+		$extension = pathinfo( $name, PATHINFO_EXTENSION );
 		$title = Title::makeTitleSafe( NS_IMAGE, $filename . '.' . $extension );
 		if ( !empty( $title ) && $title->exists() ) {
 			for ( $i = 0; $i <= 3; $i++ ) {
