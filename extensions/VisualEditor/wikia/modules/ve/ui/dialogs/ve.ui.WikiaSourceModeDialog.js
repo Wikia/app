@@ -122,7 +122,20 @@ ve.ui.WikiaSourceModeDialog.prototype.onParseSuccess = function( deferred, respo
 	if ( !response || response.error || !response.visualeditor || response.visualeditor.result !== 'success' ) {
 		return this.onParseError.call( this, deferred );
 	}
-	// TODO: update surface with response.visualeditor.content (html)
+
+	var newDoc = ve.createDocumentFromHtml( response.visualeditor.content ),// this is not quite what we're looking for.  need to transform it to ve.dm.Document or ve.dm.DocumentNode or something else.
+		surfaceModel = this.surface.getModel(),
+		doc = surfaceModel.getDocument();
+
+	// TODO: figure out what params to pass to newFromDocumentReplace
+	surfaceModel.change(
+		ve.dm.Transaction.newFromDocumentReplace( doc, doc.getDocumentNode(), newDoc )
+	);
+
+
+	/*debugger;
+	this.surface.getModel().getFragment().collapseRangeToEnd().insertContent( ['heloooo'] );*/
+
 };
 
 ve.ui.WikiaSourceModeDialog.prototype.onParseError = function ( deferred ) {
