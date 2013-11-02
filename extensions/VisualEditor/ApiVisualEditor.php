@@ -200,12 +200,13 @@ class ApiVisualEditor extends ApiBase {
 
 	/**
 	 * @protected
-	 * @description Simple helper to retrieve relevant api uri, eg: http:://muppet.wikia.com/api.php
+	 * @description Simple helper to retrieve relevant api uri, eg: http://muppet.wikia.com/api.php
 	 * @return String
 	 */
 	protected function getApiSource() {
 		global $wgVisualEditorParsoidPrefix;
-		return empty( $wgVisualEditorParsoidPrefix ) ? wfExpandUrl( wfScript( 'api' ) ) : $wgVisualEditorParsoidPrefix;
+		return empty( $wgVisualEditorParsoidPrefix ) ?
+				wfExpandUrl( wfScript( 'api' ) ) : $wgVisualEditorParsoidPrefix;
 	}
 
 	public function execute() {
