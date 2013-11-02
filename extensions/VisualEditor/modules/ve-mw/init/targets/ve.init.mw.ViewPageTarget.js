@@ -731,12 +731,13 @@ ve.init.mw.ViewPageTarget.prototype.onToolbarSaveButtonClick = function () {
 };
 
 /**
- * Handle clicks on the save button in the toolbar.
+ * Handle clicks on the cancel button in the toolbar.
  *
  * @method
  * @param {jQuery.Event} e Mouse click event
  */
 ve.init.mw.ViewPageTarget.prototype.onToolbarCancelButtonClick = function () {
+	ve.track( { 'action': ve.track.actions.CLICK, 'label': 'button-cancel' } );
 	this.deactivate();
 };
 
@@ -858,6 +859,7 @@ ve.init.mw.ViewPageTarget.prototype.updateToolbarSaveButtonState = function () {
  * @method
  */
 ve.init.mw.ViewPageTarget.prototype.onSaveDialogReviewButtonClick = function () {
+	ve.track( { 'action': ve.track.actions.CLICK, 'label': 'save-dialog-review-changes' } );
 	this.swapSaveDialog( 'review' );
 };
 
@@ -867,6 +869,7 @@ ve.init.mw.ViewPageTarget.prototype.onSaveDialogReviewButtonClick = function () 
  * @method
  */
 ve.init.mw.ViewPageTarget.prototype.onSaveDialogSaveButtonClick = function () {
+	ve.track( { 'action': ve.track.actions.CLICK, 'label': 'save-dialog-publish' } );
 	this.saveDocument();
 };
 
@@ -973,6 +976,7 @@ ve.init.mw.ViewPageTarget.prototype.getSaveOptions = function () {
  * @param {jQuery.Event} e Mouse click event
  */
 ve.init.mw.ViewPageTarget.prototype.onSaveDialogCloseButtonClick = function () {
+	ve.track( { 'action': ve.track.actions.CLICK, 'label': 'save-dialog-close' } );
 	this.hideSaveDialog();
 };
 

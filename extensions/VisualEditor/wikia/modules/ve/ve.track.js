@@ -43,7 +43,7 @@ require( ['wikia.tracker'], function ( tracker ) {
 					break;
 				case 'page-save-success':
 					params.action = actions.SUCCESS;
-					params.label = 'save';
+					params.label = 'publish';
 					break;
 				case 'section-edit-link-click':
 					params.action = actions.CLICK;
