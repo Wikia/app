@@ -6,7 +6,17 @@
 
 require( ['wikia.tracker'], function ( tracker ) {
 	var actions = tracker.ACTIONS,
-		rSpecialChars = /[_\s]/g;
+		upperToHyphenLower = ( function () {
+			var rSpecialChars = /[A-Z]/g;
+
+			function upperToHyphenLower( match ) {
+				return '-' + match.toLowerCase();
+			}
+
+			return function ( str ) {
+				return str.replace( rSpecialChars, upperToHyphenLower );
+			};
+		}() );
 
 	ve.track.actions = actions;
 	ve.trackRegisterHandler( function ( name, data ) {
@@ -49,7 +59,7 @@ require( ['wikia.tracker'], function ( tracker ) {
 		}
 
 		// Normalize label values
-		params.label = params.label.toLowerCase().replace( rSpecialChars, '-' );
+		params.label = upperToHyphenLower( params.label );
 
 		tracker.track( params );
 	} );

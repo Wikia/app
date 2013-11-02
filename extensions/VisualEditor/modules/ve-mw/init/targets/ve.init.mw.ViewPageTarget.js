@@ -747,6 +747,7 @@ ve.init.mw.ViewPageTarget.prototype.onToolbarCancelButtonClick = function () {
  * @param {jQuery.Event} e Mouse click event
  */
 ve.init.mw.ViewPageTarget.prototype.onToolbarMwMetaButtonClick = function () {
+	ve.track( { 'action': ve.track.actions.CLICK, 'label': 'tool-page-settings' } );
 	this.surface.getDialogs().open( 'meta' );
 };
 
@@ -770,6 +771,7 @@ ve.init.mw.ViewPageTarget.prototype.onToolbarEditNoticesToolClick = function () 
  * @param {jQuery.Event} e Mouse click event
  */
 ve.init.mw.ViewPageTarget.prototype.onToolbarBetaNoticeToolClick = function () {
+	ve.track( { 'action': ve.track.actions.CLICK, 'label': 'tool-beta-notice' } );
 	this.$toolbarBetaNotice.fadeToggle( 'fast' );
 	this.$toolbarEditNotices.fadeOut( 'fast' );
 	this.$document[0].focus();
