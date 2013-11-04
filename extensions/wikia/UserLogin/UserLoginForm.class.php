@@ -212,7 +212,7 @@ class UserLoginForm extends LoginForm {
 			$key = wfSharedMemcKey( "UserLogin", "AccountsPerEmail", $sEmail );
 			$count = $wgMemc->get($key);
 			if ( $count !== false
-				&& (int)$count > (int)$wgAccountsPerEmail
+				&& (int)$count >= (int)$wgAccountsPerEmail
 			) {
 				$this->mainLoginForm( wfMessage( 'userlogin-error-userlogin-unable-info' )->escaped(), 'error', 'email' );
 				return false;
