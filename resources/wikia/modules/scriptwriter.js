@@ -31,7 +31,7 @@ var ScriptWriter = function (document, log, window, loader) {
 
 	var module = 'wikia.scriptwriter',
 		postscribeLoaded = !!window.postscribe, // we don't want a reference
-		library = postscribeLoaded || window.wgUsePostScribe ? 'postscribe' : 'ghostwriter',
+		library = window.wgUsePostScribe ? 'postscribe' : 'ghostwriter',
 		queue = [],
 		queueCompleted = false,
 		impl,
@@ -138,15 +138,15 @@ var ScriptWriter = function (document, log, window, loader) {
 		if (library === 'postscribe') {
 			url = '/resources/wikia/libraries/postscribe/postscribe.min.js';
 			impl = implPs;
+
+			if (postscribeLoaded) {
+				log(['loadImpl', 'postscribe already loaded, processing queue'], 'debug', module);
+				processQueue();
+				return;
+			}
 		} else {
 			url = '/resources/wikia/libraries/ghostwriter/gw.min.js';
 			impl = implGw;
-		}
-
-		if (postscribeLoaded) {
-			log(['loadImpl', 'postscribe already loaded, processing queue'], 'debug', module);
-			processQueue();
-			return;
 		}
 
 		if (loader) {

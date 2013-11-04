@@ -40,6 +40,15 @@
 		queueForLateAds,
 		adConfigForLateAds;
 
+	/*
+	 * Currently PostScribe conflicts with Krux as it supplies a different version of the lib.
+	 * Here we disable Krux when PostScribe is to be used
+	 * Related ticket: ADEN-666
+	 */
+	if (window.wgUsePostScribe) {
+		window.wgEnableKruxTargeting = false;
+	}
+
 	// Construct Ad Engine
 	adEngine = AdEngine2(log, LazyQueue);
 
