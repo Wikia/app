@@ -5,7 +5,12 @@
 /* global require */
 
 require( ['wikia.tracker'], function ( tracker ) {
-	var actions = tracker.ACTIONS;
+	var actions = tracker.ACTIONS,
+		rSpecialChars = /[A-Z]/g;
+
+	function upperToHyphenLower( match ) {
+		return '-' + match.toLowerCase();
+	}
 
 	ve.track.actions = actions;
 	ve.trackRegisterHandler( function ( name, data ) {
@@ -24,7 +29,7 @@ require( ['wikia.tracker'], function ( tracker ) {
 					break;
 				case 'page-edit-impression':
 					params.action = actions.IMPRESSION;
-					params.label = 'edit';
+					params.label = 'edit-page';
 					break;
 				case 'page-save-attempt':
 					params.action = actions.CLICK;
@@ -32,7 +37,7 @@ require( ['wikia.tracker'], function ( tracker ) {
 					break;
 				case 'page-save-success':
 					params.action = actions.SUCCESS;
-					params.label = 'save';
+					params.label = 'publish';
 					break;
 				case 'section-edit-link-click':
 					params.action = actions.CLICK;
@@ -45,6 +50,9 @@ require( ['wikia.tracker'], function ( tracker ) {
 			}
 		} else {
 			ve.extendObject( params, name );
+
+			// Normalize label values
+			params.label = params.label.replace( rSpecialChars, upperToHyphenLower );
 		}
 
 		tracker.track( params );

@@ -139,6 +139,10 @@ ve.ui.ToolGroup.prototype.onMouseUp = function ( e ) {
 	var tool = this.getTargetTool( e );
 
 	if ( !this.disabled && e.which === 1 && this.pressed && this.pressed === tool ) {
+		ve.track( {
+			'action': ve.track.actions.CLICK,
+			'label': 'tool-' + tool.constructor.static.name
+		} );
 		this.pressed.onSelect();
 	}
 
