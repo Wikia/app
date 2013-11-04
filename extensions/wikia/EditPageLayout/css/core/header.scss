@@ -10,31 +10,6 @@
 	position: relative;
 	vertical-align: top;
 
-	// scale down wiki logo
-	> .wordmark {
-		@include wordmark;
-		@include clearfix;
-		color: $color-epl-header-text;
-		display: inline-block;
-		float: left;
-		height: $height-epl-header;
-		line-height: $height-epl-header;
-		margin-right: 20px;
-		width: auto;
-		img {
-			max-height: $height-epl-header;
-		}
-	}
-
-	> h2 {
-		color: $color-epl-header-text;
-		font-size: 14px;
-		line-height: 21px;
-		// BugId:7024 - override per-wiki custom CSS
-		margin: 0;
-		padding: 0;
-	}
-
 	> h1 {
 		display: inline-block;
 		float: left;
@@ -52,22 +27,48 @@
 			display: none;
 		}
 	}
+
+	> h2 {
+		color: $color-epl-header-text;
+		font-size: 14px;
+		line-height: 21px;
+		// BugId:7024 - override per-wiki custom CSS
+		margin: 0;
+		padding: 0;
+	}
+
+	// scale down wiki logo
+	> .wordmark {
+		@include wordmark;
+		@include clearfix;
+		color: $color-epl-header-text;
+		display: inline-block;
+		float: left;
+		height: $height-epl-header;
+		line-height: $height-epl-header;
+		margin-right: 20px;
+		width: auto;
+		img {
+			max-height: $height-epl-header;
+		}
+	}
 }
 
 @if ( $responsive-layout-enabled ) {
-  @media screen and (max-width: $breakpoint-small) {
-	.EditPageHeader {
-	  > h2 {
-		display: inline-block;
-		margin-right: 2px;
-	  }
-	  > h1 {
-		float: none;
-		line-height: normal;
-		vertical-align: bottom;
-	  }
+	@media screen and (max-width: $breakpoint-small) {
+		.EditPageHeader {
+			> h1 {
+				float: none;
+				line-height: normal;
+				vertical-align: bottom;
+			}
+
+			> h2 {
+				display: inline-block;
+				margin-right: 2px;
+			}
+		}
 	}
-  }
 }
 
 // "edit title" button
