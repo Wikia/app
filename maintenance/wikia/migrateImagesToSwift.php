@@ -259,6 +259,9 @@ class MigrateImagesToSwift extends Maintenance {
 
 		self::log( __CLASS__, 'migration started', self::LOG_MIGRATION_PROGRESS );
 
+		// wait a bit to prevent deadlocks (from 0 to 2 sec)
+		usleep( mt_rand(0,2000) * 1000 );
+
 		// lock the wiki
 		$dbw = $this->getDB( DB_MASTER, array(), $wgExternalSharedDB );
 		$dbw->replace( 'city_image_migrate', [ 'city_id' ], [ 'city_id' => $wgCityId, 'locked' => 1 ], __CLASS__ );
