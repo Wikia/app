@@ -155,10 +155,11 @@ class VideoPageToolProgram extends WikiaModel {
 		if ( $timestamp ) {
 			// If there was a specific timestamp given, look it up directly, don't cache it
 			$date = date( 'Y-m-d', $timestamp );
+			$nearestDate = '';
 		} else {
 			// If no timestamp was given, assume today and use a cache
 			$date = date( 'Y-m-d', time() );
-			$nearestKey = self::getMemcKeyNearestDate( $language, $date );
+			$nearestKey = self::getMemcKeyNearestDate( $language );
 			$nearestDate = $app->wg->Memc->get( $nearestKey );
 		}
 
@@ -185,8 +186,6 @@ class VideoPageToolProgram extends WikiaModel {
 				if ( isset($nearestKey) ) {
 					$app->wg->Memc->set( $nearestKey, $nearestDate, self::DATE_CACHE_TTL );
 				}
-			} else {
-				return '';
 			}
 		}
 
@@ -198,15 +197,10 @@ class VideoPageToolProgram extends WikiaModel {
 	/**
 	 * Get the memcached key for storing the nearest published date
 	 * @param string $lang - Look for published content dates in this language
-	 * @param string $date [yyyy-mm-dd]
 	 * @return string - A string to use as the memcached string
 	 */
-	protected static function getMemcKeyNearestDate( $lang, $date = '' ) {
-		if ( empty( $date ) ) {
-			$date = date( 'Y-m-d' );
-		}
-
-		return wfMemcKey( 'videopagetool', 'nearest-date', $lang, $date );
+	protected static function getMemcKeyNearestDate( $lang ) {
+		return wfMemcKey( 'videopagetool', 'nearest-date', $lang, date( 'Y-m-d' ) );
 	}
 
 	/**
@@ -215,7 +209,7 @@ class VideoPageToolProgram extends WikiaModel {
 	 * @param $lang
 	 */
 	protected function invalidateNearestDate( $lang ) {
-		$this->wg->Memc->delete( self::getMemcKeyNearestDate( $lang, date( 'Y-m-d' ) ) );
+		$this->wg->Memc->delete( self::getMemcKeyNearestDate( $lang ) );
 	}
 
 	/**
