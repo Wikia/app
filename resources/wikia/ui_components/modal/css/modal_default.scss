@@ -142,15 +142,6 @@ $modal-inactive-opacity: 0.3;
 		@include flexbox();
 		@include flex-direction(column);
 	}
-
-	.inactive {
-		background-color: $default-blackout-background-color;
-		height: 100%;
-		opacity: $modal-inactive-opacity;
-		position: absolute;
-		top: 0;
-		width: 100%;
-	}
 }
 
 .blackout {
