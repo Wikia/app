@@ -47,22 +47,26 @@ var BackgroundChanger = {
 
 		// load CSS and apply class changes to body element after loading
 		$.getCSS(sassUrl, function() {
-			if ((options.backgroundFixed === undefined) || !!options.backgroundFixed) {
-				$('body').addClass('background-fixed');
-			} else {
-				$('body').removeClass('background-fixed');
-			}
+			if (options.skinImage !== '' && options.skinImageWidth > 0 && options.skinImageHeight > 0) {
+				if ((options.backgroundFixed === undefined) || !!options.backgroundFixed) {
+					$('body').addClass('background-fixed');
+				} else {
+					$('body').removeClass('background-fixed');
+				}
 
-			if ((options.backgroundTiled !== undefined) && !!options.backgroundTiled) {
-				$('body').removeClass('background-not-tiled');
-			} else {
-				$('body').addClass('background-not-tiled');
-			}
+				if ((options.backgroundTiled !== undefined) && !!options.backgroundTiled) {
+					$('body').removeClass('background-not-tiled');
+				} else {
+					$('body').addClass('background-not-tiled');
+				}
 
-			if ((options.backgroundDynamic === undefined) || !!options.backgroundDynamic) {
-				$('body').addClass('background-dynamic');
+				if ((options.backgroundDynamic === undefined) || !!options.backgroundDynamic) {
+					$('body').addClass('background-dynamic');
+				} else {
+					$('body').removeClass('background-dynamic');
+				}
 			} else {
-				$('body').removeClass('background-dynamic');
+				$('body').removeClass('background-dynamic background-not-tiled background-fixed');
 			}
 		});
 	}
