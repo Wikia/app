@@ -298,7 +298,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 		$email = $this->request->getVal( 'email', '' );
 
 		// error if empty
-		if ( empty($email) ) {
+		if ( empty( $email ) ) {
 			$this->result = 'error';
 			$this->msg = wfMessage( 'usersignup-error-empty-email' )->escaped();
 			$this->errParam = 'email';
@@ -314,8 +314,8 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 		}
 
 		// get username from request
-		$username = $this->request->getVal('username');
-		if ( empty($username) ) {
+		$username = $this->request->getVal( 'username' );
+		if ( empty( $username ) ) {
 			$this->result = 'error';
 			$this->msg = wfMessage( 'userlogin-error-noname' )->escaped();
 			$this->errParam = 'username';
@@ -331,7 +331,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 				$this->errParam = 'username';
 				return;
 			}
-		} else {// user doesn't exist
+		} else { // user doesn't exist
 			$this->result = 'error';
 			$this->msg = wfMessage( 'userlogin-error-nosuchuser' )->escaped();
 			$this->errParam = 'username';
@@ -339,7 +339,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 		}
 
 		// error if session is invalid
-		if ( !(isset($_SESSION['notConfirmedUserId']) && $_SESSION['notConfirmedUserId'] == $user->getId()) ) {
+		if ( !( isset( $_SESSION['notConfirmedUserId'] ) && $_SESSION['notConfirmedUserId'] == $user->getId() ) ) {
 			$this->result = 'invalidsession';
 			$this->msg = wfMessage( 'usersignup-error-invalid-user' )->escaped();
 			$this->errParam = 'username';
@@ -348,7 +348,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 
 		// check email changes limit
 		$memKey = wfSharedMemcKey( 'wikialogin', 'email_changes', $user->getId() );
-		$emailChanges = intval( $this->wg->Memc->get($memKey) );
+		$emailChanges = intval( $this->wg->Memc->get( $memKey ) );
 		if ( $emailChanges >= UserLoginHelper::LIMIT_EMAIL_CHANGES ) {
 			$this->result = 'error';
 			$this->msg = wfMessage( 'usersignup-error-too-many-changes' )->escaped();
