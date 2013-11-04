@@ -120,7 +120,7 @@ define( 'wikia.stringhelper', function stringhelper() {
 	 * @return {boolean}
 	 */
 	function isLatin( str ) {
-		return str == latinise( str );
+		return str === latinise( str );
 	}
 
 	/**
@@ -138,9 +138,22 @@ define( 'wikia.stringhelper', function stringhelper() {
 		});
 	}
 
+	/**
+	 * Uppercase the first letter in a string.
+	 *
+	 * @method
+	 * @static
+	 * @param {String} str The string.
+	 * @returns {String} The string with the first letter uppercased.
+	 */
+	function ucFirst( str ) {
+		return str.charAt( 0 ).toUpperCase() + str.slice( 1 );
+	}
+
 	return {
+		isLatin: isLatin,
 		latinise: latinise,
 		latinize: latinise,
-		isLatin: isLatin
+		ucFirst: ucFirst
 	};
 });
