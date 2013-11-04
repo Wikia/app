@@ -251,6 +251,60 @@ class AssetsManager {
 		return $this->getSassURL( $scssFilePath, '', $minify, $params );
 	}
 
+	/**
+	 * attempts to turn a url (http://something.wikia.com/__am/etc/etc/path/to/file.scss) to a local filepath
+	 * (path/to/file.scss)
+	 *
+	 * @param string|array $urls the url to try and convert
+	 * @return string|array the resulting filepaths or the original url if filepath can't be determined
+	 */
+	public function getSassFilePath($urls) {
+		global $wgDevelEnvironment;
+
+		$regex = '/^(https?):\/\/(slot[0-9]+\.images([0-9]+))\.wikia.nocookie.net\/(.*)$/';
+		if (!empty($wgDevelEnvironment)) {
+			$regex = '/^(https?):\/\/(i[0-9]+\.([a-z0-9]+))\.wikia-dev.com\/(.*)$/';
+		}
+
+		if (!preg_match($regex, $this->getSassCommonURL(''), $dummyMatches)) {
+			return $urls;
+		}
+
+		$urls = (array) $urls;
+		$dummyPath = $dummyMatches[4];
+		$dummyLength = strlen($dummyPath);
+		$result = [];
+		foreach ($urls as $url) {
+			if (preg_match($regex, $url, $matches) && strpos($matches[4], $dummyPath) === 0) {
+				$result[] = substr($matches[4], $dummyLength);
+			} else {
+				$result[] = $url;
+			}
+		}
+
+		return count($result) > 1 ? $result : $result[0];
+	}
+
+	/**
+	 * determines whether a given url is for a sass resource. They tend to end in .scss
+	 * @param string $url the url to check
+	 * @return bool true if the url is a sass resource, false otherwise
+	 */
+	public function isSassUrl($url) {
+		return substr($url, -5) == '.scss';
+	}
+
+	public function getSassesUrl($sassList) {
+		if (!is_array($sassList)) {
+			$sassList = [$sassList];
+		}
+
+		$url = $this->getSassCommonURL(implode(',', $sassList));
+		$url =  str_replace(['/sass/', 'type=sass'], ['/sasses/', 'type=sasses'], $url);
+
+		return $url;
+	}
+
 	private function getSassGroupURL( $groupName, $prefix, $combine = null, $minify = null ) {
 		wfProfileIn( __METHOD__ );
 

@@ -22,6 +22,7 @@ $wgAutoloadClasses['AssetsManagerOneBuilder'] = $dir.'builders/AssetsManagerOneB
 $wgAutoloadClasses['AssetsManagerGroupBuilder'] = $dir.'builders/AssetsManagerGroupBuilder.class.php';
 $wgAutoloadClasses['AssetsManagerGroupsBuilder'] = $dir.'builders/AssetsManagerGroupsBuilder.class.php';
 $wgAutoloadClasses['AssetsManagerSassBuilder'] = $dir.'builders/AssetsManagerSassBuilder.class.php';
+$wgAutoloadClasses['AssetsManagerSassesBuilder'] = $dir.'builders/AssetsManagerSassesBuilder.class.php';
 $wgAutoloadClasses['AssetsManagerServer'] = $dir.'AssetsManagerServer.class.php';
 
 $wgAutoloadClasses['AssetsManagerController'] = $dir.'AssetsManagerController.class.php';
