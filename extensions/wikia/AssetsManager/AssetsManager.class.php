@@ -266,19 +266,32 @@ class AssetsManager {
 			$regex = '/^(https?):\/\/(i[0-9]+\.([a-z0-9]+))\.wikia-dev.com\/(.*)$/';
 		}
 
-		if (!preg_match($regex, $this->getSassCommonURL(''), $dummyMatches)) {
-			return $urls;
-		}
-
 		$urls = (array) $urls;
-		$dummyPath = $dummyMatches[4];
-		$dummyLength = strlen($dummyPath);
 		$result = [];
-		foreach ($urls as $url) {
-			if (preg_match($regex, $url, $matches) && strpos($matches[4], $dummyPath) === 0) {
-				$result[] = substr($matches[4], $dummyLength);
-			} else {
-				$result[] = $url;
+		$dummy = $this->getSassCommonURL('');
+
+		if (preg_match($regex, $dummy, $dummyMatches)) {
+			$dummyPath = $dummyMatches[4];
+			$dummyLength = strlen($dummyPath);
+			foreach ($urls as $url) {
+				if (preg_match($regex, $url, $matches) && strpos($matches[4], $dummyPath) === 0) {
+					$result[] = substr($matches[4], $dummyLength);
+				} else {
+					$result[] = $url;
+				}
+			}
+		} else {
+			/**
+			 * fallback since some environments (preview) map everything to the same domain.
+			 * in such cases we can use simple string manipulation
+			 */
+			$dummyLength = strlen($dummy);
+			foreach ($urls as $url) {
+				if (strpos($url, $dummy) === 0) {
+					$result[] = substr($url, $dummyLength);
+				} else {
+					$result[] = $url;
+				}
 			}
 		}
 
