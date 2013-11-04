@@ -1,8 +1,6 @@
 define('wikia.toc', function() {
 	'use strict';
 
-	var MAXHEADER = 2; // <h2> is the highest article header
-
 	/**
 	 *  Create TOC data structure
 	 *
@@ -68,6 +66,6 @@ define('wikia.toc', function() {
 	/** PUBLIC API */
 	return {
 		getData: getData
-	}
+	};
 
 });

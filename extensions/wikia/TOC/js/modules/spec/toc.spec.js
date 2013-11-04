@@ -8,7 +8,7 @@ describe('TOC', function() {
 			return {
 				title: header.textContent,
 				sections: []
-			}
+			};
 		},
 		// other vars
 		html = getBody(),
@@ -26,7 +26,7 @@ describe('TOC', function() {
 
 	it('works for one level deep TOC', function(){
 
-	    htmlContent = '<h2>test</h2><h2>test</h2><h2>test</h2>';
+		htmlContent = '<h2>test</h2><h2>test</h2><h2>test</h2>';
 		dataMock = {
 			sections: [
 				{
@@ -138,5 +138,97 @@ describe('TOC', function() {
 
 		expect(JSON.stringify(data)).toBe(JSON.stringify(dataMock));
 	});
+
+	it('works for flat TOC', function() {
+
+		htmlContent = '<h2>test</h2><h2>test</h2><h2>test</h2>';
+		dataMock = {
+			sections: [
+				{
+					title: 'test',
+					sections: []
+				},
+				{
+					title: 'test',
+					sections: []
+				},
+				{
+					title: 'test',
+					sections: []
+				}
+			]
+		};
+
+		html.innerHTML = htmlContent;
+		headers = getHeaders(html);
+		data = toc.getData(headers, createTOCSection);
+
+		expect(JSON.stringify(data)).toBe(JSON.stringify(dataMock));
+	});
+
+	it('works for broken TOC', function() {
+
+		htmlContent = '<h3>test3</h3><h4>test4</h4><h2>test2</h2><h5>test5</h5>';
+		dataMock = {
+			sections: [
+				{
+					title: 'test3',
+					sections: [
+						{
+							title: 'test4',
+							sections: []
+						}
+					]
+				},
+				{
+					title: 'test2',
+					sections: [
+						{
+							title: 'test5',
+							sections: []
+						}
+					]
+				}
+			]
+		};
+
+		html.innerHTML = htmlContent;
+		headers = getHeaders(html);
+		data = toc.getData(headers, createTOCSection);
+
+		expect(JSON.stringify(data)).toBe(JSON.stringify(dataMock));
+	});
+
+	it('works for reversed TOC', function() {
+
+		htmlContent = '<h5>test5</h5><h4>test4</h4><h3>test3</h3><h2>test2</h2>';
+		dataMock = {
+			sections: [
+				{
+					title: 'test5',
+					sections: []
+				},
+				{
+					title: 'test4',
+					sections: []
+				},
+				{
+					title: 'test3',
+					sections: []
+				},
+				{
+					title: 'test2',
+					sections: []
+				}
+			]
+		};
+
+		html.innerHTML = htmlContent;
+		headers = getHeaders(html);
+		data = toc.getData(headers, createTOCSection);
+
+		expect(JSON.stringify(data)).toBe(JSON.stringify(dataMock));
+	});
+
 
 });
