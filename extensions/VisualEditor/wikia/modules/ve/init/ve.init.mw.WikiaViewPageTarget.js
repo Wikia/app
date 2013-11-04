@@ -80,10 +80,6 @@ ve.init.mw.WikiaViewPageTarget.static.toolbarGroups = [
 	*/
 ];
 
-ve.init.mw.WikiaViewPageTarget.prototype.activate = function () {
-	ve.init.mw.ViewPageTarget.prototype.activate.call( this );
-};
-
 ve.init.mw.WikiaViewPageTarget.prototype.setupSkinTabs = function () {
 	// Intentionally left empty
 };
