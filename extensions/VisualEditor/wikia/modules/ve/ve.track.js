@@ -38,6 +38,7 @@ require( ['wikia.tracker'], function ( tracker ) {
 				case 'page-save-success':
 					params.action = actions.SUCCESS;
 					params.label = 'publish';
+					params.value = data.latency;
 					break;
 				case 'section-edit-link-click':
 					params.action = actions.CLICK;
