@@ -60,19 +60,16 @@ define( 'wikia.ui.modal', [ 'jquery' ], function( $ ) {
 	};
 
 	Modal.prototype.deactivate = function() {
-		var inactiveLayer = document.createElement('div'),
-			dialog = this.$element;
+		var dialog = this.$element;
 
-		$( inactiveLayer ).addClass( INACTIVE_CLASS );
-		dialog.append( inactiveLayer )
-			.addClass( INACTIVE_CLASS )
-			.find( 'button' ).attr( 'disabled', true );
+		dialog.addClass( INACTIVE_CLASS ).find( 'button' ).attr( 'disabled', true );
+		dialog.startThrobbing();
 	};
 
 	Modal.prototype.activate = function() {
 		var dialog = this.$element;
 
-		dialog.find( '.' + INACTIVE_CLASS ).remove();
+		dialog.stopThrobbing();
 		dialog.removeClass( INACTIVE_CLASS )
 			.find( 'button' ).attr( 'disabled', false );
 	};
