@@ -47,12 +47,12 @@ class ApiMediaSearchTest extends WikiaBaseTest {
 		$this->assertFalse( $mockSearch->getVideo( ['type' => 'image|donkey'] ) );
 	}
 
-	public function testimage() {
+	public function testImage() {
 		$mockSearch = $this->setupMock();
 
-		$this->assertTrue( $mockSearch->getimage( ['type' => 'image'] ) );
-		$this->assertTrue( $mockSearch->getimage( ['type' => 'image|video|donkey'] ) );
-		$this->assertFalse( $mockSearch->getimage( ['type' => 'video|donkey'] ) );
+		$this->assertTrue( $mockSearch->getImage( ['type' => 'image'] ) );
+		$this->assertTrue( $mockSearch->getImage( ['type' => 'image|video|donkey'] ) );
+		$this->assertFalse( $mockSearch->getImage( ['type' => 'video|donkey'] ) );
 	}
 
 	public function testGetResultsVideo() {
@@ -85,7 +85,7 @@ class ApiMediaSearchTest extends WikiaBaseTest {
 		$this->assertEquals( $expectedResponse, json_encode( $mockSearch->getResults( $query, $limit, $batch, $video, $image, $mixed ) ) );
 	}
 
-	public function testGetResultsimage() {
+	public function testGetResultsImage() {
 		$query = 'cool';
 		$limit = 50;
 		$batch = 1;
@@ -115,7 +115,7 @@ class ApiMediaSearchTest extends WikiaBaseTest {
 		$this->assertEquals( $expectedResponse, json_encode( $mockSearch->getResults( $query, $limit, $batch, $video, $image, $mixed ) ) );
 	}
 
-	public function testGetResultsimageAndVideoSeparate() {
+	public function testGetResultsImageAndVideoSeparate() {
 		$query = 'cool';
 		$limit = 50;
 		$batch = 1;
@@ -132,7 +132,7 @@ class ApiMediaSearchTest extends WikiaBaseTest {
 				[ "title" => "File:Cool video" ]
 			]
 		];
-		$getSearchResultsimage = [
+		$getSearchResultsImage = [
 			"total" => 1,
 			"batches" => 1,
 			"currentBatch" => 1,
@@ -154,12 +154,12 @@ class ApiMediaSearchTest extends WikiaBaseTest {
 		$mockSearch->expects( $this->at(1) )
 		       ->method ( 'getSearchResults' )
 		       ->with   ( $query, $limit, $batch, false, true )
-		       ->will   ( $this->returnValue( $getSearchResultsimage ) );
+		       ->will   ( $this->returnValue( $getSearchResultsImage ) );
 
 		$this->assertEquals( $expectedResponse, json_encode( $mockSearch->getResults( $query, $limit, $batch, $video, $image, $mixed ) ) );
 	}
 
-	public function testGetResultsimageAndVideoMixed() {
+	public function testGetResultsImageAndVideoMixed() {
 		$query = 'cool';
 		$limit = 50;
 		$batch = 1;
