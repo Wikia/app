@@ -1,7 +1,7 @@
 <?php
 
 /**
-* Maintenance script to remove duplicate videos from video wiki and ooyala for IVA videos only
+* Maintenance script to remove duplicate videos from ooyala for IVA videos only
 * This is one time use script
 * @author Saipetch Kongkatong
 */
@@ -12,28 +12,17 @@
  * @return array $duplicateVideos
  */
 function getDuplicateVideos( $db, $videoTitle = '' ) {
-	if ( empty( $videoTitle ) ) {
-		$sql = <<<SQL
-			SELECT GROUP_CONCAT(img_name SEPARATOR '|') names,
-				GROUP_CONCAT(substring_index(SUBSTRING_INDEX(img_metadata, 's:7:"videoId";s:32:"', -1), '";s:10:"altVideoId"', 1) SEPARATOR '|') videoIds,
-				GROUP_CONCAT(substring_index(SUBSTRING_INDEX(img_metadata, 's:8:"sourceId";', -1), ';s:14:"pageCategories"', 1) SEPARATOR '|') sourceIds,
-				substring_index(SUBSTRING_INDEX(img_metadata, 's:2:"hd";', -1), 's:4:"name";', 1) as data, count(*) cnt
-			FROM image
-			WHERE img_media_type = 'video' and img_minor_mime = 'ooyala' and img_metadata like '%s:8:"provider";s:10:"ooyala/iva";%'
-			GROUP BY data
-			HAVING cnt > 1
-			LIMIT 100
+	$sqlWhere = empty( $videoTitle ) ? '' : 'and img_name like '.$db->addQuotes( $videoTitle.'%' );
+	$sql = <<<SQL
+		SELECT GROUP_CONCAT(img_name SEPARATOR '|') names,
+			GROUP_CONCAT(substring_index(SUBSTRING_INDEX(img_metadata, 's:7:"videoId";s:32:"', -1), '";s:10:"altVideoId"', 1) SEPARATOR '|') videoIds,
+			GROUP_CONCAT(substring_index(SUBSTRING_INDEX(img_metadata, 's:8:"sourceId";', -1), ';s:14:"pageCategories"', 1) SEPARATOR '|') sourceIds,
+			substring_index(SUBSTRING_INDEX(img_metadata, 's:2:"hd";', -1), 's:4:"name";', 1) as data, count(*) cnt
+		FROM image
+		WHERE img_media_type = 'video' and img_minor_mime = 'ooyala' and img_metadata like '%s:8:"provider";s:10:"ooyala/iva";%' $sqlWhere
+		GROUP BY data
+		HAVING cnt > 1
 SQL;
-	} else {
-		$videoTitle = $db->addQuotes( $videoTitle );
-		$sql = <<<SQL
-			SELECT img_name names,
-				GROUP_CONCAT(substring_index(SUBSTRING_INDEX(img_metadata, 's:7:"videoId";s:32:"', -1), '";s:10:"altVideoId"', 1) SEPARATOR '|') videoIds,
-				GROUP_CONCAT(substring_index(SUBSTRING_INDEX(img_metadata, 's:8:"sourceId";', -1), ';s:14:"pageCategories"', 1) SEPARATOR '|') sourceIds,
-			FROM image
-			WHERE img_name = $videoTitle
-SQL;
-	}
 
 	$result = $db->query( $sql, __METHOD__ );
 
@@ -130,7 +119,7 @@ echo "Wiki: $wgCityId ($wgDBname)\n";
 $db = wfGetDB( DB_SLAVE );
 $ooyala = new OoyalaAsset();
 
-$duplicateVideos = empty( $videoTitle ) ? getDuplicateVideos( $db ) : array( $videoTitle );
+$duplicateVideos = getDuplicateVideos( $db, $videoTitle );
 
 echo "Total duplicate videos: ".count( $duplicateVideos )."\n";
 
