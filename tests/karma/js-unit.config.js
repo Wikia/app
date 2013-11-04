@@ -87,14 +87,14 @@ module.exports = function(config) {
 			'extensions/wikia/WikiaHomePage/js/spec/WikiaHomePage.mocks.js',
 			'extensions/wikia/WikiaHomePage/js/WikiaHomePage.js',
 			'extensions/wikia/WikiaHomePage/js/spec/WikiaHomePage.spec.js',
-	// Video
-	'extensions/wikia/VideoPageTool/js/views/jquery.switcher.js',
-	'extensions/wikia/VideoPageTool/js/spec/*.spec.js',
 
-	//Suggestions
-	'extensions/wikia/Suggestions/js/SuggestionsMatcher.js',
-	'extensions/wikia/Suggestions/js/spec/*.spec.js'
-];
+			// Video
+			'extensions/wikia/VideoPageTool/js/views/jquery.switcher.js',
+			'extensions/wikia/VideoPageTool/js/spec/*.spec.js',
+
+			//Suggestions
+			'extensions/wikia/Suggestions/js/SuggestionsMatcher.js',
+			'extensions/wikia/Suggestions/js/spec/*.spec.js',
 
 			//Search
 			'extensions/wikia/Search/js/SearchAbTest.js',
