@@ -507,7 +507,6 @@ ve.ui.WikiaMediaInsertDialog.prototype.onGetImageInfoSuccess = function ( deferr
  * @param {Object} data The uploaded file information
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onUploadSuccess = function ( data ) {
-	// CHECKME
 	this.cartModel.addItems( [
 		new ve.dm.WikiaCartItem( data.title, data.temporaryThumbUrl, 'image', data.temporaryFileName )
 	] );
