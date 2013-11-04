@@ -56,10 +56,10 @@ require( ['wikia.tracker'], function ( tracker ) {
 			}
 		} else {
 			ve.extendObject( params, name );
-		}
 
-		// Normalize label values
-		params.label = upperToHyphenLower( params.label );
+			// Normalize label values
+			params.label = upperToHyphenLower( params.label );
+		}
 
 		tracker.track( params );
 	} );
