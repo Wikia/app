@@ -78,7 +78,7 @@ class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
 				return;
 			}
 
-			$userLoginHelper = ( new UserLoginHelper ); /* @var UserLoginHelper $userLoginHelper */
+			$userLoginHelper = new UserLoginHelper ; /* @var UserLoginHelper $userLoginHelper */
 			if ( $userLoginHelper->isPasswordThrottled( $this->username ) ) {
 				$this->result = 'error';
 				$this->msg = wfMessage( 'userlogin-error-login-throttled' )->escaped();
@@ -86,20 +86,20 @@ class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
 				return;
 			}
 
-			if ( $user->checkPassword($this->password) ) {
+			if ( $user->checkPassword( $this->password ) ) {
 				$this->wg->User = $user;
 				$this->wg->User->setCookies();
 				LoginForm::clearLoginToken();
 				UserLoginHelper::clearNotConfirmedUserSession();
 				$userLoginHelper->clearPasswordThrottle( $this->username );
 
-				if ( $user->getOption( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) != null ){//Signup confirm
+				if ( $user->getOption( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) != null ){// Signup confirm
 
-					//Confirm
+					// Confirm
 					UserLoginHelper::removeNotConfirmedFlag( $user );
 					$user->confirmEmail();
 
-					//Get and clear redirect page
+					// Get and clear redirect page
 					$userSignupRedirect = $user->getOption( UserLoginSpecialController::SIGNUP_REDIRECT_OPTION_NAME );
 					$user->setOption( UserLoginSpecialController::SIGNUP_REDIRECT_OPTION_NAME, null );
 
@@ -116,7 +116,7 @@ class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
 					$userLoginHelper->sendEmail( $user, 'WelcomeMail', 'usersignup-welcome-email-subject', 'usersignup-welcome-email-body', $emailParams, 'welcome-email', 'WelcomeMail' );
 
 					// redirect user
-					if ( !empty( $userSignupRedirect ) ) {//Redirect user to the point where he finished (when signup on create wiki)
+					if ( !empty( $userSignupRedirect ) ) {// Redirect user to the point where he finished (when signup on create wiki)
 						$titleObj = SpecialPage::getTitleFor( 'CreateNewWiki' );
 						$query = $userSignupRedirect;
 					} else {
@@ -126,7 +126,7 @@ class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
 					$this->wg->out->redirect( $titleObj->getFullURL( $query ) );
 					return;
 
-				} else {//Email change
+				} else {// Email change
 
 					$optionNewEmail = $this->wg->User->getOption( 'new_email' );
 					if ( !empty( $optionNewEmail ) ) {

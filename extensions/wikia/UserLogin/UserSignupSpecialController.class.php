@@ -224,7 +224,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 		$mailTo = $this->username;
 		$user = User::newFromName( $this->username );
 		if ( $user instanceof User && $user->getID() != 0 ) {
-			if ( (isset($_SESSION['notConfirmedUserId']) && $_SESSION['notConfirmedUserId'] == $user->getId()) ) {
+			if ( ( isset( $_SESSION['notConfirmedUserId'] ) && $_SESSION['notConfirmedUserId'] == $user->getId() ) ) {
 				$mailTo = $user->getEmail();
 			}
 		}
@@ -294,10 +294,10 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	 */
 	public function changeUnconfirmedUserEmail() {
 
-		//get new email from request
+		// get new email from request
 		$email = $this->request->getVal( 'email', '' );
 
-		//error if empty
+		// error if empty
 		if ( empty($email) ) {
 			$this->result = 'error';
 			$this->msg = wfMessage( 'usersignup-error-empty-email' )->escaped();
@@ -305,7 +305,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 			return;
 		}
 
-		//validate new email
+		// validate new email
 		if ( !Sanitizer::validateEmail( $email ) ) {
 			$this->result = 'error';
 			$this->msg = wfMessage( 'usersignup-error-invalid-email' )->escaped();
@@ -313,7 +313,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 			return;
 		}
 
-		//get username from request
+		// get username from request
 		$username = $this->request->getVal('username');
 		if ( empty($username) ) {
 			$this->result = 'error';
@@ -324,21 +324,21 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 
 		$user = User::newFromName( $username );
 		if ( $user instanceof User && $user->getID() != 0 ) {
-			//break if user is already confirmed
+			// break if user is already confirmed
 			if ( !$user->getOption( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) ) {
 				$this->result = 'confirmed';
 				$this->msg = wfMessage( 'usersignup-error-confirmed-user', $username, $user->getUserPage()->getFullURL() )->parse();
 				$this->errParam = 'username';
 				return;
 			}
-		} else {//user doesn't exist
+		} else {// user doesn't exist
 			$this->result = 'error';
 			$this->msg = wfMessage( 'userlogin-error-nosuchuser' )->escaped();
 			$this->errParam = 'username';
 			return;
 		}
 
-		//error if session is invalid
+		// error if session is invalid
 		if ( !(isset($_SESSION['notConfirmedUserId']) && $_SESSION['notConfirmedUserId'] == $user->getId()) ) {
 			$this->result = 'invalidsession';
 			$this->msg = wfMessage( 'usersignup-error-invalid-user' )->escaped();
@@ -346,7 +346,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 			return;
 		}
 
-		//check email changes limit
+		// check email changes limit
 		$memKey = wfSharedMemcKey( 'wikialogin', 'email_changes', $user->getId() );
 		$emailChanges = intval( $this->wg->Memc->get($memKey) );
 		if ( $emailChanges >= UserLoginHelper::LIMIT_EMAIL_CHANGES ) {

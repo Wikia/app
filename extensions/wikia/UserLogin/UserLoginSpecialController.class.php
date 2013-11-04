@@ -423,7 +423,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 			$this->result = 'error';
 			$this->msg = wfMessage('userlogin-error-blocked-mailpassword')->escaped();
 		} else {
-			$user = User::newFromName($loginForm->mUsername);
+			$user = User::newFromName( $loginForm->mUsername );
 			if ( !$user instanceof User ) {
 				$this->result = 'error';
 				$this->msg = wfMessage('userlogin-error-noname')->escaped();

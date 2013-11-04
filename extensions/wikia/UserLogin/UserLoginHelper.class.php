@@ -240,31 +240,31 @@ class UserLoginHelper extends WikiaModel {
 			return $result;
 		}
 
-		//Check whether user already exists or is already confirmed
+		// Check whether user already exists or is already confirmed
 		wfWaitForSlaves();
 		$user = User::newFromName( $username );
 		if ( !($user instanceof User) || $user->getID() == 0 ) {
-			//User doesn't exist
+			// User doesn't exist
 			$result['result'] = 'error';
 			$result['msg'] = wfMessage( 'userlogin-error-nosuchuser' )->escaped();
 			return $result;
 		} else {
 			if ( !$user->getOption( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) && $user->isEmailConfirmed()) {
-				//User already confirmed on signup
+				// User already confirmed on signup
 				$result['result'] = 'confirmed';
 				$result['msg'] = wfMessage( 'usersignup-error-confirmed-user', $username, $user->getUserPage()->getFullURL() )->parse();
 				return $result;
 			}
 		}
 
-		//IF session is invalid, set invalidsession result and redirect to login page
-		if ( !(isset($_SESSION['notConfirmedUserId']) && $_SESSION['notConfirmedUserId'] == $user->getId()) ) {
+		// IF session is invalid, set invalidsession result and redirect to login page
+		if ( !( isset( $_SESSION['notConfirmedUserId'] ) && $_SESSION['notConfirmedUserId'] == $user->getId() ) ) {
 			$result['result'] = 'invalidsession';
 			$result['msg'] = wfMessage( 'usersignup-error-invalid-user' )->escaped();
 			return $result;
 		}
 
-		if ( !$this->wg->EmailAuthentication || !Sanitizer::validateEmail($user->getEmail()) ) {//Why throw an invalid email error when wgEmailAuthentication is off?
+		if ( !$this->wg->EmailAuthentication || !Sanitizer::validateEmail( $user->getEmail() ) ) {// Why throw an invalid email error when wgEmailAuthentication is off?
 			$result['result'] = 'error';
 			$result['msg'] = wfMessage( 'usersignup-error-invalid-email' )->escaped();
 			return $result;
@@ -276,7 +276,7 @@ class UserLoginHelper extends WikiaModel {
 			return $result;
 		}
 
-		//Signup throttle check
+		// Signup throttle check
 		$memKey = $this->getMemKeyConfirmationEmailsSent( $user->getId() );
 		$emailSent = intval( $this->wg->Memc->get($memKey) );
 		if( $user->isEmailConfirmationPending() && (strtotime($user->mEmailTokenExpires) - strtotime("+6 days") > 0) && $emailSent >= self::LIMIT_EMAILS_SENT ) {

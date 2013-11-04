@@ -182,7 +182,7 @@ class EditAccount extends SpecialPage {
 			) );
 
 		if( is_object( $this->mUser ) ) {
-			$userStatus = wfMsg('editaccount-status-realuser');
+			$userStatus = wfMsg( 'editaccount-status-realuser' );
 			$this->mUser->load();
 
 			// get new email (unconfirmed)
@@ -221,15 +221,15 @@ class EditAccount extends SpecialPage {
 		if ( Sanitizer::validateEmail( $email ) || $email == '' ) {
 			$this->mUser->setEmail( $email );
 			if ( $email != '' ) {
-				if ( !empty( $wgEnableUserLoginExt ) ) {//Clear not confirmed signup flag
+				if ( !empty( $wgEnableUserLoginExt ) ) {// Clear not confirmed signup flag
 					UserLoginHelper::removeNotConfirmedFlag( $this->mUser );
 				}
 				$this->mUser->confirmEmail();
 				$this->mUser->setOption( 'new_email', null );
 			} else {
 				if ( !empty( $wgEnableUserLoginExt ) && $this->mUser->getOption( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) ) {
-					//User not confirmed on signup can't has empty email
-					//@TODO introduce new message since usecase here is same as temp user empty email but it's not temp user anymore
+					// User not confirmed on signup can't has empty email
+					// @TODO introduce new message since usecase here is same as temp user empty email but it's not temp user anymore
 					$this->mStatusMsg = wfMsg( 'editaccount-error-tempuser-email' );
 					return false;
 				}
