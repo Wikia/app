@@ -195,6 +195,9 @@ class MigrateImagesBetweenSwiftDC extends Maintenance {
 				$magic = MimeMagic::singleton();
 				$ext = pathinfo( basename( $remoteFile ), PATHINFO_EXTENSION );
 				$mime_type = $magic->guessTypesForExtension( $ext );
+				if ( empty( $mime_type ) ) {
+					$mime_type = 'application/octet-stream';
+				}
 
 				/* store image in destination path */
 				$result = $dstStorage->store( $fp, $remoteFile, array(), $mime_type )->isOK();
