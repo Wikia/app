@@ -4,8 +4,7 @@
  */
 
 /*global document, window */
-/*global Geo, Wikia */
-/*global ghostwriter, Krux */
+/*global Geo, Wikia, Krux */
 /*global AdConfig2, AdEngine2, DartUrl, EvolveHelper, SlotTweaker, ScriptWriter */
 /*global WikiaDartHelper, WikiaFullGptHelper */
 /*global AdProviderEvolve, AdProviderGpt, AdProviderGamePro, AdProviderLater, AdProviderNull */
@@ -14,7 +13,7 @@
 /*global require*/
 /*jslint newcap:true */
 
-(function (log, tracker, window, ghostwriter, document, Geo, LazyQueue, Cookies, Cache, Krux, abTest) {
+(function (log, tracker, window, document, Geo, LazyQueue, Cookies, Cache, Krux, abTest) {
 	'use strict';
 
 	var module = 'AdEngine2.run',
@@ -41,6 +40,15 @@
 		queueForLateAds,
 		adConfigForLateAds;
 
+	/*
+	 * Currently PostScribe conflicts with Krux as it supplies a different version of the lib.
+	 * Here we disable Krux when PostScribe is to be used
+	 * Related ticket: ADEN-666
+	 */
+	if (window.wgUsePostScribe) {
+		window.wgEnableKruxTargeting = false;
+	}
+
 	// Construct Ad Engine
 	adEngine = AdEngine2(log, LazyQueue);
 
@@ -52,7 +60,7 @@
 	adLogicPageDimensions = AdLogicPageDimensions(window, document, log, slotTweaker, abTest);
 	adLogicPageLevelParams = AdLogicPageLevelParams(log, window, Krux, adLogicPageDimensions, abTest);
 	adLogicPageLevelParamsLegacy = AdLogicPageLevelParamsLegacy(log, window, adLogicPageLevelParams, Krux, dartUrl);
-	scriptWriter = ScriptWriter(log, ghostwriter, document);
+	scriptWriter = ScriptWriter(document, log, window);
 	wikiaDart = WikiaDartHelper(log, adLogicPageLevelParams, dartUrl, adLogicDartSubdomain);
 	wikiaFullGpt = WikiaFullGptHelper(log, window, document, adLogicPageLevelParams);
 	evolveHelper = EvolveHelper(log, window);
@@ -181,4 +189,4 @@
 		});
 	};
 
-}(Wikia.log, Wikia.Tracker, window, ghostwriter, document, Geo, Wikia.LazyQueue, Wikia.Cookies, Wikia.Cache, Krux, Wikia.AbTest));
+}(Wikia.log, Wikia.Tracker, window, document, Geo, Wikia.LazyQueue, Wikia.Cookies, Wikia.Cache, Krux, Wikia.AbTest));
