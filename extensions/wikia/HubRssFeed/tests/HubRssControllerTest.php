@@ -12,7 +12,6 @@ class HubRssControllerTest extends WikiaBaseTest {
 
 	public function setUp() {
 		$dir = dirname( __FILE__ ) . '/../';
-		/*require_once $dir . '../WikiaHubsServices/models/MarketingToolboxModel.class.php';*/
 		$this->setupFile = $dir . 'HubRssFeed.setup.php';
 
 		parent::setUp();

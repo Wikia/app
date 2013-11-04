@@ -888,6 +888,20 @@ $messages['nl-informal'] = array(
 	'categoryselect-error-edit-abort' => 'De wijziging die je probeerde te maken is afgebroken door een uitbreidingshook', # Fuzzy
 );
 
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'categoryselect-button-add' => 'Apondre de categorias',
+	'categoryselect-button-cancel' => 'Anullar',
+	'categoryselect-button-save' => 'Enregistrar',
+	'categoryselect-category-add' => 'Apondre una categoria...',
+	'categoryselect-category-edit' => 'Modificar la categoria',
+	'categoryselect-category-remove' => 'Levar la categoria',
+	'categoryselect-edit-summary' => 'Apondon de categorias',
+	'categoryselect-error-article-doesnt-exist' => 'L’article [id=$1] existís pas.',
+);
+
 /** Oriya (ଓଡ଼ିଆ)
  * @author Psubhashish
  */
@@ -996,6 +1010,7 @@ $messages['pt'] = array(
 	'categoryselect-category-remove' => 'Remover categoria',
 	'categoryselect-edit-summary' => 'A adicionar categorias',
 	'categoryselect-error-article-doesnt-exist' => 'A página [id=$1] não existe.',
+	'categoryselect-error-category-name-length' => 'Foi atingido o comprimento máximo para o nome de uma categoria.',
 	'categoryselect-error-db-locked' => 'A base de dados está trancada.',
 	'categoryselect-error-duplicate-category-name' => 'A categoria "$1" já existe.',
 	'categoryselect-error-edit-abort' => 'A alteração que tentou fazer foi abortada pelo hook de uma extensão.',

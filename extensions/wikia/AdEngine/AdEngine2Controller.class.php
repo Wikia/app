@@ -430,6 +430,7 @@ class AdEngine2Controller extends WikiaController {
 
 		$vars['wgAdVideoTargeting'] = $req->getBool('videotargeting', (bool) $wg->AdVideoTargeting);
 		$vars['wgAdDriverStartLiftiumOnLoad'] = $req->getBool('liftiumonload', (bool) $wg->LiftiumOnLoad);
+		$vars['wgUsePostScribe'] = $req->getBool('usepostscribe', false);
 
 		// Used to hop by DART ads
 		$vars['adDriverLastDARTCallNoAds'] = array();

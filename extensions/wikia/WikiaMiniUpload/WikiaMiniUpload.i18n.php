@@ -641,10 +641,11 @@ $messages['ce'] = array(
 	'wmu-insert2' => 'Файл чуйиллар',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Chmee2
  * @author Darth Daron
  * @author Dontlietome7
+ * @author Littledogboy
  * @author Mr. Richard Bolla
  */
 $messages['cs'] = array(
@@ -2466,7 +2467,7 @@ $messages['pt'] = array(
 	'wmu-name' => 'Nome',
 	'wmu-license' => 'Licença',
 	'wmu-licensing' => 'Licenciamento',
-	'wmu-details-inf2' => '<h1>Opções do artigo</h1>Escolha o aspecto deste ficheiro na página.',
+	'wmu-details-inf2' => '<h1>Opções do artigo</h1>Escolha o aspeto deste ficheiro na página.',
 	'wmu-size' => 'Tamanho',
 	'wmu-thumbnail' => 'Miniatura',
 	'wmu-fullsize' => 'Tamanho original ($1x$2px)',

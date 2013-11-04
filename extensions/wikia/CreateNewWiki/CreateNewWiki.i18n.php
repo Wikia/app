@@ -191,6 +191,7 @@ $messages['af'] = array(
 
 /** Arabic (العربية)
  * @author Achraf94
+ * @author Claw eg
  * @author Kuwaity26
  * @author Meno25
  * @author OsamaK
@@ -238,6 +239,7 @@ $messages['ar'] = array(
 	'cnw-desc-choose' => 'إختيار فئة',
 	'cnw-desc-select-one' => 'إختر واحدة',
 	'cnw-desc-all-ages' => 'جميع الأعمار',
+	'cnw-desc-tip-all-ages' => 'هل هذه الويكي عن موضوع للأطفال؟ لأجل مساعدتنا للامتثال للقانون الأمريكي، نستمر بمتابعة الويكي التي تناسب مواضيعها مباشرة الأطفال بسن 12 أو أقل.',
 	'cnw-desc-default-lang' => 'سوف تكون هذه الويكي باللغة $1',
 	'cnw-desc-change-lang' => 'تغيير',
 	'cnw-desc-lang' => 'اللغة',

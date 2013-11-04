@@ -25,7 +25,8 @@ require_once( dirname( __FILE__ ) . '/../Maintenance.php' );
 class MigrateWikisToSwift extends Maintenance {
 	CONST DEFAULT_LIMIT = 1000;
 	const MIGRATE_PACKAGE = 50;
-	CONST CMD = 'http_proxy="" run_maintenance --conf=%s --where="city_id in (%s)" --script "wikia/migrateImagesToSwift.php"';
+	const SCRIPT_PROCS = 50;
+	CONST CMD = 'run_maintenance --conf=%s --where="city_id in (%s)" --script "wikia/migrateImagesToSwift.php%s" --procs=%d ';
 	
 	private $disabled_wikis = [ 717284, 298117 ];
 	private $db;
@@ -41,6 +42,7 @@ class MigrateWikisToSwift extends Maintenance {
 		$this->addOption( 'wiki', 'Run script for Wikis (comma separated list of Wikis)' );
 		$this->addOption( 'limit', 'Number of Wikis to migrate' );
 		$this->addOption( 'debug', 'Enable debug mode' );
+		$this->addOption( 'force', 'Re-reun script for migrated Wikis' );
 		$this->mDescription = 'Migrate images for all Wikis';
 	}
 
@@ -53,6 +55,7 @@ class MigrateWikisToSwift extends Maintenance {
 
 		$limit = $this->getOption( 'limit', self::DEFAULT_LIMIT );
 		$debug = $this->hasOption( 'debug' );
+		$force = $this->hasOption( 'force' );
 		$wikis = $this->getOption( 'wiki', '' );
 
 		# don't migrate top 200 Wikis
@@ -71,16 +74,17 @@ class MigrateWikisToSwift extends Maintenance {
 		if ( !empty( $wikis  ) ) {
 			$where[ 'city_list.city_id' ] = explode( ",", $wikis );
 		}
+		$join = [ 'city_image_migrate.city_id = city_list.city_id', 'city_image_migrate.locked is not null' ];
 
-		$res = $this->db->select( 
+		$res = $this->db->select(
 			[ 'city_list', 'city_image_migrate' ], 
 			[ 'city_list.city_id', 'city_list.city_dbname' ],
 			$where,
 			'MigrateImagesToSwift',
 			[ 'ORDER BY' => 'city_id', 'LIMIT' => $limit ],
 			[ 'city_image_migrate' => 
-				[ 'LEFT JOIN', [ 'city_image_migrate.city_id = city_list.city_id', 'city_image_migrate.locked is not null' ] ]
-			] 
+				[ 'LEFT JOIN', $join ]
+			]
 		);
 
 		$to_migrate = [];
@@ -106,7 +110,7 @@ class MigrateWikisToSwift extends Maintenance {
 			# run main migration script written by Macbre
 			$wikis = implode(",", $list_wikis );
 			$this->output( "\tMigrate package {$id}: {$wikis} ... " );
-			$cmd = sprintf( self::CMD, $this->getOption( 'conf' ), $wikis );
+			$cmd = sprintf( self::CMD, $this->getOption( 'conf' ), $wikis, ( $force ) ? ' --force' : '', self::SCRIPT_PROCS );
 			if ( $debug ) {
 				$this->output( "\n\tRun cmd: {$cmd} \n" );
 			}

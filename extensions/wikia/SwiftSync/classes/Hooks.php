@@ -76,7 +76,7 @@ class Hooks {
 				} 
 				
 				if ( !$status->isOK() ) {
-					\Wikia\SwiftStorage::log( __METHOD__, 'Cannot save image on local storage' );
+					\Wikia\SwiftStorage::log( __METHOD__, 'Cannot save image on local storage: ' . json_encode( $status ) );
 				}
 			} else {
 				\Wikia\SwiftStorage::log( __METHOD__, 'Destination not defined' );
@@ -150,6 +150,11 @@ class Hooks {
 		global $wgEnableSwithSyncToLocalFS, $wgDevelEnvironment;
 		
 		wfProfileIn( __METHOD__ );
+		
+		if ( !empty( $params['src'] ) && ( strpos( $params['src'], '/images/thumb' ) !== false ) ) {
+			wfProfileOut( __METHOD__ );
+			return true;
+		}
 		
 		if ( empty( $params['op']  ) ) {
 			$params['op'] = 'delete';

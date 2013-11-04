@@ -39,7 +39,7 @@ var AdProviderGpt = function (tracker, log, window, Geo, slotTweaker, cacheStora
 		'TEST_HOME_TOP_RIGHT_BOXAD': {'size': '300x250,300x600,300x1050', 'tile': 1, 'loc': 'top'},
 		'TOP_LEADERBOARD': {'size': '728x90,1030x130,1030x65,1030x250,970x250,970x90,970x66', 'tile': 2, 'loc': 'top', 'dcopt': 'ist'},
 		'TOP_RIGHT_BOXAD': {'size': '300x250,300x600,300x1050', 'tile': 1, 'loc': 'top'},
-		'WIKIA_BAR_BOXAD_1': {'size': '320x50', 'tile': 4, 'loc': 'bottom'},
+		'WIKIA_BAR_BOXAD_1': {'size': '320x50,320x70,320x100', 'tile': 4, 'loc': 'bottom'},
 		'GPT_FLUSH': 'flushonly'
 	};
 	// TODO: integrate this array to slotMap if it makes sense
