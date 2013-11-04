@@ -279,11 +279,12 @@ Wikia
  * @author Centerlink
  * @author Crt
  * @author VezonThunder
+ * @author Ville96
  */
 $messages['fi'] = array(
 	'globalwatchlist-desc' => 'Lähettää viikkokatsaussähköposteja kaikkien wikien seuratuista sivuista',
 	'tog-watchlistdigest' => 'Lähetä minulle viikottainen tarkkailulistatiivistelmä sähköpostitse',
-	'tog-watchlistdigestclear' => 'Merkitse kaikki sivut viikottaiselta tarkkailulistatiivistelmästä vierailluiksi',
+	'tog-watchlistdigestclear' => 'Merkitse kaikki sivut viikottaisesta tarkkailulistatiivistelmästä vierailluiksi',
 	'globalwatchlist-see-more' => 'Tarkista lisämuutokset paikallisilta tarkkailulistoilta',
 	'globalwatchlist-digest-email-subject' => 'Viikottainen tiivistelmä',
 	'globalwatchlist-digest-email-body' => 'Hei $1.
@@ -780,7 +781,7 @@ $messages['ps'] = array(
  */
 $messages['pt'] = array(
 	'globalwatchlist-desc' => 'Envia mensagens mensais de resumo das páginas vigiadas em todas as wikis',
-	'tog-watchlistdigest' => 'Enviar-me, por correio electrónico, uma Compilação Semanal de Mudanças nas Páginas Vigiadas',
+	'tog-watchlistdigest' => 'Enviar-me, por correio eletrónico, uma Compilação Semanal de Mudanças nas Páginas Vigiadas',
 	'tog-watchlistdigestclear' => 'Marcar como visitadas todas as páginas da Compilação Semanal de Mudanças nas Páginas Vigiadas',
 	'globalwatchlist-see-more' => 'Para ver mudanças adicionais, verifique as páginas vigiadas locais',
 	'globalwatchlist-digest-email-subject' => 'Compilação Semanal',
