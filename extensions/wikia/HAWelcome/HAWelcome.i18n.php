@@ -448,11 +448,17 @@ Bienvenido a {{SITENAME}} y gracias por tu edición en la página [[:$1]]. Si ne
 Por favor, si tienes alguna duda, no seas tímido, deja un mensaje en mi muro para ver si puedo ayudarte con cualquier cosa.",
 	'welcome-message-wall-anon-staff' => "Hola,
 
-¡Bienvenido a {{SITENAME}}! Gracias por tu edición en [[:$1]]. 
+¡Bienvenido a {{SITENAME}}! Te agradecemos por tu edición en [[:$1]].
 
-¿Por qué no '''[[Special:Userlogin|te creas una cuenta y te identificas?]]'''. De esta forma será mucho más fácil saber qué páginas has editado y se te atribuirá tu trabajo en el wiki, acceder a más funcionalidades de Wikia y darte a conocer al resto de {{SITENAME}}.
+¿Qué tal si te '''[[Special:UserLogin|creas una cuenta]]'''?, así, nos será más sencillo saber que páginas has editado y recibirás una atribución por tu trabajo en {{SITENAME}}.
 
-Si necesitas ayuda, visita primero las [[Help:Contents|páginas de ayuda]] y luego visita la [[w:c:community|Comunidad Central]] para aprender más. ¡Que te diviertas!", # Fuzzy
+Además, podrás acceder a muchas otras funcionalidades de Wikia, ¡incluso tendrás la posibilidad de darte a conocer con otros miembros de la comunidad!
+
+Si lo que buscas es ayuda, puedes consultar nuestras [[Help:Contents|páginas de ayuda]], llenas de información.
+
+Si requieres más ayuda, o sigues teniendo dudas, ¡no dudes en visitar la [[w:c:community|Comunidad Central de Wikia en Español]]!
+
+¡Esperamos que te diviertas!",
 	'welcome-description' => 'Envía un mensaje a todos los usuarios después de realizar su primera edición.',
 );
 
@@ -505,6 +511,7 @@ $messages['fa'] = array(
  * @author Crt
  * @author Nike
  * @author Varusmies
+ * @author Ville96
  */
 $messages['fi'] = array(
 	'welcome-user-page' => "==Tietoa minusta==
@@ -531,9 +538,9 @@ Jos vain jotenkin voin auttaa, niin laita viesti [[$2|keskustelusivulleni]]! $3"
 	'welcome-message-log' => 'tervetuloa uusi muokkaaja',
 	'welcome-message-user-staff' => '==Tervetuloa==
 
-Hei ja tervetuloa sivustolle {{SITENAME}}! Kiitos, että muokkasit sivua [[:$1]].
+Hei,
 
-Jos tarvitset apua ja täällä ei ole paikallisia ylläpitäjiä, tahdot ehkä käydä [[wikia:Forum:Community Central Forum|Keskuswikian foorumeilla]] $3', # Fuzzy
+Tervetuloa sivustolle {{SITENAME}}. Kiitos, että muokkasit sivua [[:$1]]. Jos tarvitset apua, aloita katsomalla meidän [[Help:Contents|ohjesivujamme]]. Käy [[w:c:community|Community Centralissa]] pysyäksesi ajan tasalla [[w:c:community:Blog:Wikia_Staff_Blog|henkilökunnan blogista]], kysyäksesi kysymyksiä meidän [[w:c:community:Special:Forum|yhteisöfoorumeillamme]], osallistuaksesi [[w:c:community:Help:Webinars|webinaarisarjoihimme]], tai keskustellaksesi muiden wikialaisten kanssa. Iloisia muokkaamisia! $3',
 	'welcome-description' => 'Lähettää tervetuloviestin ensimmäisen muokkasensa tehneille käyttäjille',
 );
 
@@ -1279,9 +1286,9 @@ S'avètz besonh d'ajuda, començatz per consultar nòstras [[Help:Contents|pagin
 
 Bonjorn,
 
-Benvenguda sus {{SITENAME}} e mercé d'aver modificada la pagina [[:$1]]. Encoratjam totes los contributors a [[Special:Userlogin|crear un nom d'utilizaire]]''' per tal de gardar la traça de vòstras contribucions, d'accedir a mai de foncionalitats e connéisser la rèsta de la comunautat de {{SITENAME}}.
+Benvenguda sus {{SITENAME}} e mercé d'aver modificat la pagina [[:$1]]. Encoratjam totes los contributors a [[Special:UserLogin|crear un nom d'utilizaire]]''' per tal de gardar la traça de vòstras contribucions, d'accedir a mai de foncionalitats de Wikia e connéisser la rèsta de la comunautat de {{SITENAME}}.
 
-S'avètz besonh d'ajuda e, podètz visitar peimièr nòstras [[Help:Contents|paginas d’ajuda]], puèi, visitatz lo [[w:c:community|centre de la comunautat]] per ne saber mai. Bonas modificacions! $3", # Fuzzy
+S'avètz besonh d'ajuda e, podètz visitar primièr nòstras [[Help:Contents|paginas d’ajuda]], puèi, visitatz lo [[w:c:community|centre de la comunautat]] per ne saber mai. Bonas modificacions! $3",
 );
 
 /** Polish (polski)
@@ -1912,6 +1919,7 @@ $messages['ur'] = array(
 );
 
 /** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
  * @author Xiao Qiao
  * @author XiaoQiaoGrace
  */
@@ -1941,9 +1949,14 @@ Xin vui lòng để lại tin nhắn vào [[$2|trang thảo luận]] của tôi 
 
 Chào bạn, hoan nghênh bạn đến {{SITENAME}}! Cảm ơn bạn đã sửa đổi trang [[:$1]].
 
-Wiki hiện nay không có bảo quản viên, vì thế nên nếu bạn cần giúp đỡ, có lẽ bạn sẽ cần đến [[wikia:Forum:Community Central Forum|diễn đàn cộng đồng trung tâm Wikia]] hoặc [http://vi.wikia.com Wikia Tiếng Việt] $3', # Fuzzy
+Wiki hiện nay không có bảo quản viên, vì thế nên nếu bạn cần giúp đỡ, có lẽ bạn sẽ cần đến [[wikia:Forum:Community Central Forum|diễn đàn cộng đồng trung tâm Wikia]] hoặc [http://vi.wikia.com Wikia Tiếng Việt]
+
+----$3', # Fuzzy
 	'welcome-message-anon-staff' => "==Xin chào==
-Chào bạn, hoan nghênh bạn đến với {{SITENAME}}! Cảm ơn bạn đã sửa đổi trang [[:$1]].
+
+Chào bạn
+
+Hoan nghênh bạn đến với {{SITENAME}}! Cảm ơn bạn đã sửa đổi trang [[:$1]].
 
 '''[[Special:UserLogin|Xin bạn đăng kí và tạo tài khoản mới]]'''.
 
@@ -1959,7 +1972,7 @@ Xin vui lòng để lại cho tôi một tin nhắn nếu tôi có thể giúp v
 
 Wiki hiện nay không có bảo quản viên, vì thế nên nếu bạn cần trợ giúp, có lẽ bạn sẽ cần đến [[wikia:Forum:Community Central Forum|diễn đàn cộng đồng trung tâm Wikia]] hoặc [[wikia:vi:Trang Chính|Wikia Tiếng Việt]]. Bạn cũng có thể xem qua [[w:c:community:Blog:Wikia_Staff_Blog|blog nhân viên]] của chúng tôi để cập nhật với những tin tức và sự kiện mới nhất xung quanh Wikia.
 
-Sửa đổi vui vẻ!', # Fuzzy
+Sửa đổi vui vẻ!',
 	'welcome-message-wall-anon' => "Chào bạn, hoan nghênh bạn đến với {{SITENAME}}! Cảm ơn bạn đã sửa đổi trang [[:$1]].
 
 '''[[Special:Userlogin|Xin hãy đăng ký và tạo tài khoản mới]]'''. Đó là cách dễ dàng để giữ lại những đóng góp của bạn và giúp bạn giao tiếp với cộng đồng.

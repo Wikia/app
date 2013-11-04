@@ -105,6 +105,9 @@ var WikiPreviewInterstitial = {
 		$('.close-button').click(function (e) {
 			WikiPreviewInterstitial.hide();
 		});
+
+        $('.tooltip-icon').tooltip();
+
 	},
 	loadContent: function (wikiId) {
 		WikiPreviewInterstitial.el.removeClass('loaded');

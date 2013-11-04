@@ -150,6 +150,7 @@ $messages['qqq'] = array(
 	'phalanx-test-submit' => '{{Identical|Test}}',
 	'phalanx-link-unblock' => '{{Identical|Unblock}}',
 	'phalanx-unblock-message' => '$1 is the ID of the block removed.',
+	'phalanx-stats-table-user' => '{{Identical|Added by}}',
 	'phalanx-stats-table-create' => '{{Identical|Created}}',
 	'phalanx-stats-table-expire' => '{{Identical|Expire}}',
 	'phalanx-stats-table-regex' => '{{Identical|Regex}}',
@@ -780,6 +781,7 @@ Si crees que es un error, por favor [[Special:Contact|contacta a Wikia]].<br />E
  * @author Nedergard
  * @author Nike
  * @author Tofu II
+ * @author Ville96
  */
 $messages['fi'] = array(
 	'phalanx' => 'Phalanx',
@@ -819,8 +821,8 @@ Tallenna muutoksesi napsauttamalla {{int:phalanx-edit-block}}.',
 	'phalanx-legend-input' => 'Luo tai muokkaa suodatinta',
 	'phalanx-legend-listing' => 'Tällä hetkellä käytetyt suodattimet',
 	'phalanx-unblock-message' => 'Estotunnisteen #$1 poisto onnistui',
-	'phalanx-user-block-reason-exact' => 'Tämä käyttäjätunnus tai IP-osoite on estetty ilkivallan tai muunlaisen häiriköinnin vuoksi.
-Jos tämä on mielestäsi virhe, ole hyvä ja [[Special:Contact|ota yhteyttä Wikiaan]].', # Fuzzy
+	'phalanx-user-block-reason-exact' => 'Tämä käyttäjätunnus tai IP-osoite on estetty muokkaamasta koko Wikian verkostossa ilkivallan tai muunlaisen häiriköinnin vuoksi.
+Jos tämä on mielestäsi virhe, ole hyvä ja [[Special:Contact|ota yhteyttä Wikiaan]].',
 	'phalanx-stats-table-user' => 'Lisääjä',
 	'phalanx-stats-table-type' => 'Tyyppi',
 	'phalanx-stats-table-create' => 'Luotu',
@@ -2230,7 +2232,7 @@ Për piasì [[Special:Contact|ch'a contata Wikia]] për parlé dël problema.<br
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
-	'phalanx-type-content' => 'د مخ منځپانګه',
+	'phalanx-type-content' => 'د مخ منځپانگه',
 	'phalanx-type-summary' => 'د مخ لنډيز',
 	'phalanx-type-title' => 'مخ سرليک',
 	'phalanx-type-user' => 'کارن',

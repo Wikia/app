@@ -54,8 +54,7 @@
 
 		// init page controls widget
 		init: function() {
-			var pageControls = $('#EditPageRail .module_page_controls'),
-				menu = pageControls.find('nav');
+			var pageControls = $('#EditPageRail .module_page_controls');
 
 			this.categories = $('#categories');
 			this.textarea = pageControls.find('textarea');
@@ -103,7 +102,7 @@
 				$('#EditPageTitle').
 					// show it only when hovering over #EditPageHeader
 					addClass('enabled').
-					bind('click', this.proxy(function(ev) {
+					bind('click', this.proxy(function() {
 						this.renderHiddenFieldsDialog();
 					}));
 
@@ -206,8 +205,7 @@
 
 		// send AJAX request
 		ajax: function(method, params, callback) {
-			var editor = typeof RTE == 'object'? RTE.getInstance() : false,
-				mode = editor ? editor.mode : 'mw';
+			var editor = typeof RTE == 'object'? RTE.getInstance() : false;
 
 			params = $.extend({
 				page: wgEditPageClass ? wgEditPageClass:"",
@@ -395,81 +393,87 @@
 		// of any widthType/gridLayout settings when the responsive layout goes out
 		// for a global release.
 		renderPreview: function(extraData) {
-			var self = this,
-				previewPadding = 22, // + 2px for borders
-				articleWidth = mw.config.values.sassParams.widthType == 1 ? 850 : 660,
-				width = articleWidth + (this.isGridLayout ? 30 : 0),
-				config = this.editor.config;
+			var self = this;
 
-			if (config.isWidePage) {
-				// 980 px of content width on main pages / pages without right rail
-				width += 320 + (this.isGridLayout ? 20 : 0);
-			}
+			require( [ 'wikia.fluidlayout' ], function( fluidlayout ) {
+				var previewPadding = 22, // + 2px for borders
+					articleWidth = mw.config.values.sassParams.widthType == 1 ? 850 : 660,
+					width = articleWidth + (self.isGridLayout ? 30 : 0),
+					railBreakPoint = fluidlayout.getBreakpointSmall(),
+					config = self.editor.config;
 
-			if (config.extraPageWidth) {
-				// wide wikis
-				width += config.extraPageWidth;
-			}
-
-			if ( wgOasisResponsive ) {
-				var pageWidth = $('#WikiaPage').width(),
-					widthArticlePadding = 20,
-					railWidth = 310,
-					railBreakPoint = 1023,
-					minWidth = 768;
-
-				// don't go below minimum width
-				if (pageWidth <= minWidth) {
-					pageWidth = minWidth;
+				if (config.isWidePage) {
+					// 980 px of content width on main pages / pages without right rail
+					width += 320 + (self.isGridLayout ? 20 : 0);
 				}
 
-				// subtract rail width only in certain criteria
-				width = (config.isWidePage || pageWidth <= railBreakPoint) ? pageWidth : pageWidth - railWidth;
-
-				width -= widthArticlePadding;
-
-				// For Webkit browsers, when the responsive layout kicks in
-				// we have to subtract the width of the scrollbar. For more
-				// information, read: http://bit.ly/hhJpJg
-				// PS: this doesn't work between 1370-1384px because at that point
-				// the article page has a scrollbar and the edit page doesn't.
-				// Luckily, those screen resolutions are kind of an edge case.
-				// PSS: fuck scrollbars.
-				// TODO: we should have access to breakpoints and such in JavaScript
-				// as variables instead of hardcoded values.
-				if ( isWebkit && pageWidth >= 1370 || pageWidth <= railBreakPoint) {
-					width -= this.scrollbarWidth;
+				if (config.extraPageWidth) {
+					// wide wikis
+					width += config.extraPageWidth;
 				}
-			}
 
-			// add article preview padding width
-			width += previewPadding;
+				if ( window.wgOasisResponsive ) {
+					var pageWidth = $('#WikiaPage').width(),
+						widthArticlePadding = fluidlayout.getWidthGutter(),
+						railWidth = fluidlayout.getRightRailWidth() + fluidlayout.getWidthPadding(),
+						minWidth = fluidlayout.getMinArticleWidth();
 
-			// add width of scrollbar (BugId:35767)
-			width += this.scrollbarWidth;
+					// don't go below minimum width
+					if (pageWidth <= minWidth) {
+						pageWidth = minWidth;
+					}
 
-			var previewOptions = {
-				width: width,
-				scrollbarWidth: this.scrollbarWidth,
-				onPublishButton: function() {
-					$('#wpSave').click();
-				},
-				getPreviewContent: function(callback) {
-					self.getContent(function(content) {
-						self.getPreviewContent(content, extraData, callback);
-					});
+					// subtract rail width only in certain criteria
+					width = (config.isWidePage || pageWidth <= railBreakPoint) ? pageWidth : pageWidth - railWidth;
+
+					width -= widthArticlePadding;
+
+					// For Webkit browsers, when the responsive layout kicks in
+					// we have to subtract the width of the scrollbar. For more
+					// information, read: http://bit.ly/hhJpJg
+					// PS: this doesn't work between 1370-1384px because at that point
+					// the article page has a scrollbar and the edit page doesn't.
+					// Luckily, those screen resolutions are kind of an edge case.
+					// PSS: fuck scrollbars.
+					// TODO: we should have access to breakpoints and such in JavaScript
+					// as variables instead of hardcoded values.
+					if( isWebkit && pageWidth >= 1370 || pageWidth <= railBreakPoint ) {
+						width -= self.scrollbarWidth;
+					}
 				}
-			};
 
-			// pass info about dropped rail to preview module
-			if (wgOasisResponsive && pageWidth <= railBreakPoint) {
-				previewOptions.isRailDropped = true;
-			}
+				// add article preview padding width
+				width += previewPadding;
 
-			require(['wikia.preview'], function(preview) {
-				preview.renderPreview(previewOptions);
+				// add width of scrollbar (BugId:35767)
+				width += self.scrollbarWidth;
+
+				var previewOptions = {
+					width: width,
+					scrollbarWidth: self.scrollbarWidth,
+					onPublishButton: function() {
+						$('#wpSave').click();
+					},
+					getPreviewContent: function(callback) {
+						self.getContent(function(content) {
+							self.getPreviewContent(content, extraData, callback);
+						});
+					}
+				};
+
+				// pass info about dropped rail to preview module
+				if( pageWidth <= railBreakPoint && window.wgOasisResponsive ) {
+				// if it's a small screen or wide page pass to preview a flag to drop rail
+					previewOptions.isRailDropped = true;
+				}
+
+				// pass info about if it's a wide page (main page or page without right rail)
+				previewOptions.isWidePage = config.isWidePage;
+
+				require(['wikia.preview'], function(preview) {
+					preview.renderPreview(previewOptions);
+				});
 			});
-
 		},
 
 		// render "show diff" modal

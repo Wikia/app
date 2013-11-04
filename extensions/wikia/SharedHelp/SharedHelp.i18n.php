@@ -300,6 +300,7 @@ $messages['pt'] = array(
 	'sharedhelp-desc' => 'Insere páginas da [[w:c:Help|Help Wikia]] no espaço nominal {{ns:help}} desta wiki',
 	'sharedhelp-autotalkcreate-summary' => 'Página de discussão criada automaticamente',
 	'sharedhelp-searchprofile' => 'Páginas de ajuda',
+	'sharedhelp-searchprofile-tooltip' => 'Pesquisar nas páginas de ajuda',
 );
 
 /** Brazilian Portuguese (português do Brasil)
