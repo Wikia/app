@@ -50,7 +50,6 @@ module.exports = function(config) {
 			'resources/wikia/modules/stringhelper.js',
 			'resources/wikia/modules/thumbnailer.js',
 			'resources/wikia/modules/uniqueId.js',
-			'resources/wikia/modules/flick.js',
 
 			//UI Repo JS API
 			'resources/wikia/modules/uicomponent.js',
