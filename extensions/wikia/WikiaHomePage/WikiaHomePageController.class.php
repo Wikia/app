@@ -51,7 +51,7 @@ class WikiaHomePageController extends WikiaController {
 	//failsafe
 	const FAILSAFE_ARTICLE_TITLE = 'Failsafe';
 
-	const HUBS_IMAGES_MEMC_KEY_VER = '1.03';
+	const HOMEPAGE_MEMC_KEY_VER = '1.04';
 
 	/**
 	 * @var WikiaHomePageHelper
@@ -93,6 +93,8 @@ class WikiaHomePageController extends WikiaController {
 			'wgWikiaBatchesStatus' => $batches['status'],
 			'wgInitialWikiBatchesForVisualization' => $batches['batches']
 		]);
+
+		OasisController::addBodyClass('WikiaHome');
 	}
 
 	public function wikiaMobileIndex() {
@@ -143,11 +145,11 @@ class WikiaHomePageController extends WikiaController {
 	public function getStats() {
 		wfProfileIn(__METHOD__);
 
-		$memKey = wfSharedMemcKey('wikiahomepage', 'stats', $this->wg->contLang->getCode());
+		$memKey = wfSharedMemcKey('wikiahomepage', 'stats', $this->wg->contLang->getCode(), self::HOMEPAGE_MEMC_KEY_VER);
 		$stats = $this->wg->Memc->get($memKey);
 		if (empty($stats)) {
 			$stats['visitors'] = $this->helper->getStatsFromArticle('StatsVisitors');
-			$stats['mobileVisitors'] = $this->helper->getStatsFromArticle('StatsMobileVisitors');
+			$stats['mobilePercentage'] = $this->helper->getStatsFromArticle('MobilePercentage') / 100.0;
 
 			$stats['edits'] = $this->helper->getEdits();
 			if (empty($stats['edits'])) {

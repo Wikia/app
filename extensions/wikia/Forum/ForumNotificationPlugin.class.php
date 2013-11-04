@@ -20,25 +20,37 @@ class ForumNotificationPlugin {
 				$replyTo = "someone";
 			}
 
-			//$params[] = $data->msg_author_displayname;
-			$params['$1'] = $nc->getDisplayname( $data->msg_author_displayname );
-			$params['$2'] = "";
+			$secondUser = '';
 
 			if ( $userCount == 2 ) {
-				$params['$2'] = $nc->getDisplayname( $authors[1]['displayname'] );
+				$secondUser = $nc->getDisplayname( $authors[1]['displayname'] );
 			}
 
-			$params['$3'] = $data->article_title_text;
+			$params = [
+				$nc->getDisplayname( $data->msg_author_displayname ),
+				$secondUser,
+				$data->article_title_text,
+				$myName,
+			];
 
-			$msgid = "forum-notification-user$userCount-reply-to-$replyTo";
+			// Messages that can be used here:
+			// * forum-notification-user1-reply-to-your
+			// * forum-notification-user2-reply-to-your
+			// * forum-notification-user3-reply-to-your
+			// * forum-notification-user1-reply-to-someone
+			// * forum-notification-user2-reply-to-someone
+			// * forum-notification-user3-reply-to-someone
+			$msgKey = "forum-notification-user$userCount-reply-to-$replyTo";
 		} else {
-			$msgid = 'forum-notification-newmsg-on-followed-wall';
+			$msgKey = 'forum-notification-newmsg-on-followed-wall';
 
-			$params['$1'] = $nc->getDisplayname( $data->msg_author_displayname );
-			$params['$2'] = $data->wall_displayname;
+			$params = [
+				$nc->getDisplayname( $data->msg_author_displayname ),
+				$data->wall_displayname,
+			];
 		}
 
-		$msg = wfMsgExt( $msgid, array( 'parsemag' ), $params );
+		$msg = wfMessage( $msgKey, $params )->text();
 
 		return true;
 	}
@@ -55,7 +67,7 @@ class ForumNotificationPlugin {
 			'$AUTHOR_NAME' => $notification->data->msg_author_displayname,
 			'$AUTHOR' => $notification->data->msg_author_username,
 			'$AUTHOR_SIGNATURE' => $author_signature,
-			'$MAIL_SUBJECT' => wfMsg( 'forum-mail-notification-subject', array( '$1' => $notification->data->thread_title, '$2' => $notification->data->wikiname ) ),
+			'$MAIL_SUBJECT' => wfMessage( 'forum-mail-notification-subject', $notification->data->thread_title, $notification->data->wikiname )->text(),
 			'$METATITLE' => $notification->data->thread_title,
 			'$MESSAGE_LINK' => $notification->data->url,
 			'$MESSAGE_NO_HTML' => $textNoHtml,

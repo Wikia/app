@@ -36,6 +36,11 @@ if( $sourceWikiId <= 0 ) {
 	exit(5);
 }
 
+if ( empty( $wgEnableUploads ) ) {
+	echo 'ERROR: File uploads disabled'."\n";
+	exit(6);
+}
+
 $imageData = new stdClass();
 $imageData->name = $destImageName;
 $imageData->description = $imageData->comment = wfMsg('wikiahome-image-auto-uploaded-comment');

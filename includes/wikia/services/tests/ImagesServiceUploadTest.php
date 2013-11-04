@@ -8,12 +8,14 @@
 class ImagesServiceUploadTest extends WikiaBaseTest {
 
 	const URL = 'http://upload.wikimedia.org/wikipedia/commons/d/d9/Eldfell%2C_Helgafell_and_the_fissure.jpg';
+	const REUPLOAD_URL = 'http://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Reykjavik%2C_Iceland-13July2011.jpg/800px-Reykjavik%2C_Iceland-13July2011.jpg';
 	const PREFIX = 'QAImage';
 	const FILENAME = 'Test-$1.jpg';
 
 	private $origUser;
 	private $fileName;
 	private $fileHash;
+	private $reuploadedFileHash;
 
 	protected function setUp() {
 		global $wgUser;
@@ -24,12 +26,13 @@ class ImagesServiceUploadTest extends WikiaBaseTest {
 
 		$this->fileName = self::PREFIX . str_replace( '$1', time(), self::FILENAME );
 
-		// get a hash of external file
+		// get a hash of both external file
 		$this->fileHash = md5( Http::get( self::URL, 'default', ['noProxy' => true] ) );
+		$this->reuploadedFileHash = md5( Http::get( self::REUPLOAD_URL, 'default', ['noProxy' => true] ) );
 
 		// use Swift domain
 		global $wgDevelEnvironmentName;
-		$this->mockGlobalVariable('wgDevBoxImageServerOverride', "d.{$wgDevelEnvironmentName}.wikia-dev.com");
+		$this->mockGlobalVariable( 'wgDevBoxImageServerOverride', "static.{$wgDevelEnvironmentName}.wikia-dev.com" );
 
 		// debug
 		global $wgLocalFileRepo;
@@ -37,7 +40,7 @@ class ImagesServiceUploadTest extends WikiaBaseTest {
 	}
 
 	// check the path - /firefly/images/9/93/Test-1378975563.jpg
-	private function checkImage( LocalFile $image ) {
+	private function checkImage( LocalFile $image, $fileHash ) {
 		$hash = md5( $image->getName() );
 		$url = $image->getUrl();
 
@@ -51,7 +54,7 @@ class ImagesServiceUploadTest extends WikiaBaseTest {
 		$res = Http::get( $url, 'default', ['noProxy' => true] );
 
 		$this->assertTrue( $res !== false, 'Uploaded image should return HTTP 200 - ' . $url );
-		$this->assertEquals( $this->fileHash, md5($res), 'Uploaded image hash should match - ' . $url );
+		$this->assertEquals( $fileHash, md5( $res ), 'Uploaded image hash should match - ' . $url );
 	}
 
 	// check the path - /firefly/images/thumb/5/53/Test-1378979336.jpg/120px-0%2C451%2C0%2C294-Test-1378979336.jpg
@@ -71,13 +74,13 @@ class ImagesServiceUploadTest extends WikiaBaseTest {
 			'Path should end with file name'
 		);
 
-		$this->assertTrue(Http::get($thumb, 'default', ['noProxy' => true]) !== false, 'Thumbnail should return HTTP 200 - ' . $thumb);
+		$this->assertTrue( Http::get( $thumb, 'default', ['noProxy' => true] ) !== false, 'Thumbnail should return HTTP 200 - ' . $thumb );
 	}
 
 	// check cropped file (provided by ImageServing)
 	private function checkCrop( LocalFile $image ) {
-		$im = new ImageServing(null, 150);
-		$crop = $im->getUrl($image, 250, 250); // take 250x250 square from original image and scale it down to 150px (width)
+		$im = new ImageServing( null, 150 );
+		$crop = $im->getUrl( $image, 250, 250 ); // take 250x250 square from original image and scale it down to 150px (width)
 
 		$this->assertContains(
 			'150px-0%2C251%2C0%2C250-',
@@ -85,7 +88,7 @@ class ImagesServiceUploadTest extends WikiaBaseTest {
 			'Cropped URL is correct'
 		);
 
-		$this->assertTrue(Http::get($crop, 'default', ['noProxy' => true]) !== false, 'Crop should return HTTP 200 - ' . $crop);
+		$this->assertTrue( Http::get( $crop, 'default', ['noProxy' => true] ) !== false, 'Crop should return HTTP 200 - ' . $crop );
 	}
 
 	private function assertReturns404( $url, $msg ) {
@@ -95,33 +98,47 @@ class ImagesServiceUploadTest extends WikiaBaseTest {
 		$this->assertEquals( 404, $req->getStatus(), "{$msg} - {$url}" );
 	}
 
+	/**
+	 * @param LocalFile $file
+	 * @param string $url
+	 * @param string $comment
+	 * @return FileRepoStatus
+	 */
+	private function uploadFromUrl( $file, $url, $comment ) {
+		$tmpFile = tempnam( wfTempDir(), 'upload' );
+		file_put_contents( $tmpFile, Http::get( $url, 'default', ['noProxy' => true] ) );
+
+		$res = $file->upload( $tmpFile, $comment, '' );
+
+		unlink( $tmpFile );
+		return $res;
+	}
+
 	function testUploadAndRemove() {
-		$time = microtime( true );
+		// create a file
+		$file = new WikiaLocalFile( Title::newFromText( $this->fileName, NS_FILE ), RepoGroup::singleton()->getLocalRepo() );
 
 		// (A) upload an image
-		$res = ImagesService::uploadImageFromUrl( self::URL, (object) [
-			'name' => $this->fileName,
-			'comment' => __CLASS__,
-			'description' => __CLASS__
-		] );
+		$time = microtime( true );
 
+		$res = $this->uploadFromUrl( $file, self::URL, __CLASS__ );
 		Wikia::log( __METHOD__ , 'upload', sprintf( 'took %.4f sec', microtime( true ) - $time ) );
 
-		$this->assertTrue( $res['status'], 'Upload should end up successfully' );
-		$this->assertInternalType( 'integer', $res['page_id'], 'Page ID should be returned' );
+		$this->assertTrue( $res->isOK(), 'Upload should end up successfully' );
 
 		/* @var LocalFile $file */
-		$file = wfFindFile( $this->fileName );
 		$this->assertInstanceOf( 'LocalFile', $file );
 
-		$this->checkImage( $file );
+		$this->checkImage( $file, $this->fileHash );
 		$this->checkThumbnail( $file );
 
 		// (B) move it...
 		$time = microtime( true );
 		$oldUrl = $file->getUrl();
 
-		$target = Title::newFromText( 'New' . $this->fileName, NS_FILE );
+		$this->fileName = 'New' . $this->fileName;
+
+		$target = Title::newFromText( $this->fileName, NS_FILE );
 		$status = $file->move( $target );
 
 		Wikia::log( __METHOD__ , 'move', sprintf( 'took %.4f sec', microtime( true ) - $time ) );
@@ -129,14 +146,22 @@ class ImagesServiceUploadTest extends WikiaBaseTest {
 		$this->assertTrue( $status->isOK(), 'Move failed' );
 		$this->assertReturns404( $oldUrl, 'Old image (before move) should return HTTP 404' );
 
-		$this->checkImage( $file );
+		$this->checkImage( $file, $this->fileHash );
 		$this->checkThumbnail( $file );
 		$this->checkCrop( $file );
 
-		// (C) remove it...
+		// (C) re-upload...
+		$time = microtime( true );
+
+		$res = $this->uploadFromUrl( $file, self::REUPLOAD_URL, 'Reupload' );
+		Wikia::log( __METHOD__ , 'reupload', sprintf( 'took %.4f sec', microtime( true ) - $time ) );
+
+		$this->assertTrue( $res->isOK(), 'Re-upload should end up successfully' );
+
+		// (D) remove it...
 		$time = microtime( true );
 		$oldUrl = $file->getUrl();
-		$status = $file->delete( 'Test cleanup' );
+		$status = $file->delete( 'Deleting an image' );
 		$this->assertTrue( $status->isOK(), 'Deleting failed' );
 
 		Wikia::log( __METHOD__ , 'delete', sprintf( 'took %.4f sec', microtime( true ) - $time ) );
@@ -144,14 +169,14 @@ class ImagesServiceUploadTest extends WikiaBaseTest {
 		// verify that removed image is not accessible via HTTP
 		$this->assertReturns404( $oldUrl, 'Removed image should return HTTP 404' );
 
-		// (D) restore it
+		// (E) restore it
 		$time = microtime( true );
-		$file->restore([], true ); // $unsuppress = true - remove file from /deleted directory
+		$file->restore( [], true ); // $unsuppress = true - remove file from /deleted directory
 		$this->assertTrue( $status->isOK(), 'Restoring failed' );
 
 		Wikia::log( __METHOD__ , 'restore', sprintf( 'took %.4f sec', microtime( true ) - $time ) );
 
-		$this->checkImage( $file );
+		$this->checkImage( $file, $this->reuploadedFileHash );
 		$this->checkThumbnail( $file );
 		$this->checkCrop( $file );
 	}

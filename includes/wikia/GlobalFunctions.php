@@ -153,13 +153,13 @@ function wfReplaceImageServer( $url, $timestamp = false ) {
 			// RT#98969 if the url already has a cb value, don't add another one...
 			$cb = ($timestamp!='' && strpos($url, "__cb") === false) ? "__cb{$timestamp}/" : '';
 
-			// TODO: support domain sharding on devboxes
 			if (!empty($wg->DevBoxImageServerOverride)) {
 				// Dev boxes
+				// TODO: support domains sharding on devboxes
 				$url = str_replace('http://images.wikia.com/', sprintf("http://{$wg->DevBoxImageServerOverride}/%s", $cb), $url);
 			} else {
 				// Production
-				$url = str_replace('http://images.wikia.com/', sprintf("http://images%s.wikia.nocookie.net/%s",$serverNo, $cb), $url);
+				$url = str_replace('http://images.wikia.com/', sprintf("http://{$wg->ImagesDomainSharding}/%s",$serverNo, $cb), $url);
 			}
 		}
 	} else if (!empty($wg->DevBoxImageServerOverride)) {
@@ -178,9 +178,10 @@ function wfReplaceImageServer( $url, $timestamp = false ) {
  * @return string URL after applying domain sharding
  */
 function wfReplaceAssetServer( $url ) {
-	global $wgImagesServers;
+	global $wgImagesServers, $wgDevelEnvironment;
 
 	$matches = array();
+
 	if ( preg_match("#^(?<a>(https?:)?//(slot[0-9]+\\.)?images)(?<b>\\.wikia\\.nocookie\\.net/.*)\$#",$url,$matches) ) {
 		$hash = sha1($url);
 		$inthash = ord($hash);
@@ -189,7 +190,14 @@ function wfReplaceAssetServer( $url ) {
 		$serverNo++;
 
 		$url = $matches['a'] . ($serverNo) . $matches['b'];
+	} elseif (!empty($wgDevelEnvironment) && preg_match('/^((https?:)?\/\/)(([a-z0-9]+)\.wikia-dev\.com\/(.*))$/', $url, $matches)) {
+		$hash = sha1($url);
+		$inthash = ord($hash);
 
+		$serverNo = $inthash%($wgImagesServers-1);
+		$serverNo++;
+
+		$url = "{$matches[1]}i{$serverNo}.{$matches[3]}";
 	}
 
 	return $url;

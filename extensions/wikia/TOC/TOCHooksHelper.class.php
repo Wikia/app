@@ -12,8 +12,10 @@ class TOCHooksHelper {
 
 	public static function onOverwriteTOC( &$title, &$toc ) {
 
-		if (!empty($toc)) {
-			$toc = F::app()->renderView('TOCCOntroller', 'index');
+        $app = F::app();
+
+		if ( !empty( $toc ) && !$app->checkSkin( 'wikiamobile' ) ) {
+			$toc = $app->renderView( 'TOCController', 'index' );
 		}
 
 		return true;

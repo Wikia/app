@@ -357,26 +357,68 @@ $messages['be-tarask'] = array(
 );
 
 /** Bulgarian (български)
+ * @author Aquilax
  * @author DCLXVI
  */
 $messages['bg'] = array(
+	'myhome-desc' => 'Лична начална страница за регистрирани потребители',
+	'myhome' => 'Моята начална страница',
 	'wikiactivity' => 'Уики активност',
+	'myhome-activity-more' => 'преглед на още скорощна активност',
+	'myhome-activity-feed' => 'Бюлетин действия',
+	'myhome-activity-feed-empty' => "Това уики очаква Вашето участие.
+Щракнете на '''[[Special:CreatePage|Нова страница]]''' и започнете да пишете!",
 	'myhome-watchlist-feed' => 'Списък за наблюдение',
+	'myhome-watchlist-feed-empty' => 'Можете да добавяте страници към вашия списък за наблюдение като щракнете върху връзката "{{int:watch}}" в лентата в горната част на страницата.
+Можете да използвате Вашият списък наблюдение, за да следите последните промени в страниците, които ви интересуват.',
 	'myhome-user-contributions-feed' => 'Приноси',
+	'myhome-hot-spots-feed' => 'Горещи точки',
+	'myhome-hot-spots-feed-empty' => "Това уики очаква Вашето участие.
+Щракнете на '''[[Special:CreatePage|Нова страница]]''' за да започнете да пишете!",
 	'myhome-hot-spots-newest' => 'Нови страници в уикито',
+	'tog-userlandingpage' => 'Входяща страница:',
+	'prefs-myhome' => 'Моята начална страница',
 	'myhome-feed-newpage' => 'нова страница',
 	'myhome-feed-edit' => 'редактиране',
+	'myhome-feed-move' => 'преместена страница',
+	'myhome-feed-talkpage' => 'дискусионна страница',
+	'myhome-feed-blogcomment' => 'блог коментар',
+	'myhome-feed-delete' => 'изтрито',
+	'myhome-feed-image' => 'добавено изображение',
+	'myhome-feed-video' => 'добавено видео',
+	'myhome-feed-categorization' => 'категоризация',
 	'myhome-feed-created-by' => 'създадена от $1',
 	'myhome-feed-added-by' => 'добавен от $1',
 	'myhome-feed-edited-by' => 'редактиранa от $1',
 	'myhome-feed-posted-by' => 'публикувано от $1',
+	'myhome-feed-comment-by' => 'коментирано от $1',
+	'myhome-feed-deleted-by' => 'изтрито от $1',
+	'myhome-feed-moved-by' => 'преместено от $1',
 	'myhome-feed-article-comment-created-by' => 'нов коментар от $1',
+	'myhome-feed-article-comment-edited-by' => 'редактиран коментар от $1',
 	'myhome-feed-by' => 'от $1',
+	'myhome-feed-diff-alt' => 'показване на промяната на тази страница',
 	'myhome-feed-new-page-details' => 'Нова страница',
 	'myhome-feed-summary-details' => 'Резюме',
+	'myhome-feed-section-edit-details' => 'Редактира секцията',
+	'myhome-feed-new-blog-post-details' => 'Нов блог',
+	'myhome-feed-new-blog-comment-details' => 'Коментар',
+	'myhome-feed-new-article-comment-details' => 'Коментар',
+	'myhome-feed-move-details' => 'Преименувано',
+	'myhome-feed-redirect-details' => 'Пренасочване',
+	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|Добавено изображение|Добавени изображения}}',
+	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|Добавено видео|Добавени видеа}}',
+	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Добавена категория|Добавени категории}}',
+	'myhome-user-contributions-empty' => 'Можете да се включите в това уики, като щракнете "{{int:editthispage}}" на която и да е страница, и добавите това, което знаете.
+Всеки може да прави промени, да добавя информация и да поправя грешки.
+Уики се изгражда от общността, и веднъж щракнали на бутона за редакция, Вие ставате част от общността.
+Опитайте!',
+	'myhome-hot-spots-number-of-editors' => 'редактори',
+	'myhome-log-in' => "<center>Функцията Моята начална страница е достъпна само ако сте влезли.<br /><br /><big>'''[{{fullurl:Special:Signup|$1}} Моля влезте за да видите тази страница!]'''</big></center>",
 	'myhome-namespace-blog' => 'Блог',
 	'oasis-myhome-community-corner-edit' => 'редактиране на съобщението &gt;',
 	'myhome-community-corner-edit' => 'редактиране на съобщението',
+	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|едно съобщение|$1 съобщения}}',
 );
 
 /** Tibetan (བོད་ཡིག)

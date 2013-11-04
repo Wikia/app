@@ -502,6 +502,13 @@ $messages['lb'] = array(
 	'ajaxpoll-submitting' => 'Waart w.e.g., Är Stëmm gëtt elo geschéckt ...',
 );
 
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'ajaxpoll-submit' => 'رای بئيتو',
+);
+
 /** Lithuanian (lietuvių)
  * @author Eitvys200
  */
