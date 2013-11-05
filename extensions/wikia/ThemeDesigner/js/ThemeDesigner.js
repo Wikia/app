@@ -493,6 +493,48 @@ var ThemeDesigner = {
 		}
 	},
 
+	middleColorSelect: function(enable) {
+		'use strict';
+
+		if (enable) {
+			$('#CustomizeTab').find('.wrap-middle-color').css({opacity: 1});
+			$('#CustomizeTab').find('.middle-color-mask').hide();
+		} else {
+			$('#CustomizeTab').find('.wrap-middle-color').css({opacity: 0.3});
+			$('#CustomizeTab').find('.middle-color-mask').show();
+		}
+	},
+
+	updateBodySettings: function() {
+		'use strict';
+
+		var body = ThemeDesigner.previewFrame.contents().find('body');
+
+		if (ThemeDesigner.settings['background-tiled'] === 'true') {
+			body.removeClass('background-not-tiled background-dynamic');
+
+			ThemeDesigner.middleColorSelect(false);
+		} else {
+			body.addClass('background-not-tiled');
+
+			if (ThemeDesigner.settings['background-dynamic'] === 'true') {
+				body.addClass('background-dynamic');
+
+				ThemeDesigner.middleColorSelect(true);
+			} else {
+				body.removeClass('background-dynamic');
+
+				ThemeDesigner.middleColorSelect(false);
+			}
+		}
+
+		if (ThemeDesigner.settings['background-fixed'] === 'true') {
+			body.addClass('background-fixed');
+		} else {
+			body.removeClass('background-fixed');
+		}
+	},
+
 	/**
 	 * @author: Inez Korczynski
 	 */
@@ -530,10 +572,8 @@ var ThemeDesigner = {
 		if (setting === 'background-dynamic') {
 			if (newValue === 'true') {
 				body.addClass('background-dynamic');
-				$('#CustomizeTab').find('.middle-color-mask').css('display', 'none');
 			} else {
 				body.removeClass('background-dynamic');
-				$('#CustomizeTab').find('.middle-color-mask').css('display', 'block');
 			}
 		}
 
@@ -854,6 +894,8 @@ var ThemeDesigner = {
 				this.previewFrame.contents().find('#WikiHeader .shadow-mask').show();
 			}
 		}
+
+		ThemeDesigner.updateBodySettings();
 	},
 
 	/**
