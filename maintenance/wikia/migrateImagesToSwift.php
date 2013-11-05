@@ -200,6 +200,10 @@ class MigrateImagesToSwift extends Maintenance {
 	public function execute() {
 		global $wgCityId, $wgExternalSharedDB;
 
+		if (wfReadOnly()) {
+			$this->error( "Wiki is in read-only mode!", 1 );
+		}
+
 		$this->init();
 		$dbr = $this->getDB( DB_SLAVE );
 
