@@ -6,12 +6,23 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window' ], function( $, w ) {
 		INACTIVE_CLASS = 'inactive',
 		destroyOnClose;
 
-	// IE flexbox fallback
+
+	/**
+	 * IE 9 doesn't support flex-box. IE-10 and IE-11 has some bugs in implementation:
+	 *
+	 * https://connect.microsoft.com/IE/feedback/details/802625/
+	 * min-height-and-flexbox-flex-direction-column-dont-work-together-in-ie-10-11-preview
+	 *
+	 * This is a fallback for IE which based on window 'height' and sets 'max-height' modal section
+	 *
+	 * @param {Object} modal - Wikia modal object
+	 */
+
 	function ieFlexboxFallback( modal ) {
 		var element = modal.$element,
-			HEADER_AND_FOOTER_HEIGHT = 120,
+			HEADER_AND_FOOTER_HEIGHT = 120, // modal header and footer have 60px fixed height
 			winHeight = parseInt( $( w ).height(), 10 ),
-			modalMaxHeight = ( 90 / 100 ) * winHeight - HEADER_AND_FOOTER_HEIGHT;
+			modalMaxHeight = ( 90 / 100 ) * winHeight - HEADER_AND_FOOTER_HEIGHT; // 90% viewport - (header + footer)
 
 		element.children( 'section' ).css( 'maxHeight', modalMaxHeight );
 	}
@@ -44,6 +55,7 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window' ], function( $, w ) {
 		 *
 		 * @returns {Object} jQuery wrapped blackout markup
 		 */
+
 		function getBlackout() {
 			var blackoutId = BLACKOUT_CLASS + '_' + id,
 				$blackout = $('#' + blackoutId );
@@ -75,6 +87,7 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window' ], function( $, w ) {
 	/**
 	 * Shows modal; adds shown class to modal and visible class to blackout
 	 */
+
 	Modal.prototype.show = function() {
 		this.$element.addClass( 'shown' );
 		this.$blackout.addClass( 'visible' );
@@ -82,10 +95,11 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window' ], function( $, w ) {
 		// IE flexbox fallback
 		if ( navigator.appName === 'Microsoft Internet Explorer' ||
 			( navigator.appName === 'Netscape' && navigator.userAgent.indexOf('Trident/') !== -1 ) ) {
+
 			this.$element.addClass( 'IE-flex-fix' );
 			ieFlexboxFallback( this );
 
-			// update fix on window resize
+			// update modal section max-height on window resize
 			$( w ).on( 'resize', $.proxy( function() {
 				ieFlexboxFallback( this );
 			}, this ) );
@@ -95,6 +109,7 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window' ], function( $, w ) {
 	/**
 	 * Closes the modal; removes it from dom or just removes classes - it depends on destroyOnClose flag
 	 */
+
 	Modal.prototype.close = function() {
 		if( !destroyOnClose ) {
 			this.$element.removeClass( 'shown' );
@@ -109,6 +124,7 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window' ], function( $, w ) {
 	 * Disables all modal's buttons, adds inactive class to the modal
 	 * and runs jQuery $.startThrobbing() method on it
 	 */
+
 	Modal.prototype.deactivate = function() {
 		var dialog = this.$element;
 
@@ -120,6 +136,7 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window' ], function( $, w ) {
 	 * Runs jQuery $.stopThrobbing() on modal, removes inactive class from it and
 	 * sets disabled attribute for all modal's buttons to false
 	 */
+
 	Modal.prototype.activate = function() {
 		var dialog = this.$element;
 
@@ -133,6 +150,7 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window' ], function( $, w ) {
 	 *
 	 * @returns {Boolean}
 	 */
+
 	Modal.prototype.isShown = function() {
 		return this.$element.hasClass( 'shown' );
 	};
@@ -142,11 +160,13 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window' ], function( $, w ) {
 	 *
 	 * @returns {boolean}
 	 */
+
 	Modal.prototype.isActive = function() {
 		return !this.$element.hasClass( INACTIVE_CLASS );
 	};
 
 	/** Public API */
+	
 	return {
 		init: function( id, modalMarkup ) {
 			return new Modal( id, modalMarkup );
