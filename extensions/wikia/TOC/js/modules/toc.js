@@ -26,9 +26,9 @@ define('wikia.toc', function() {
 		var toc = {
 				sections: []
 			}, // set base object for TOC data structure
-			levels = [toc.sections],
+			levels = [toc.sections], // level placeholders
 			headersLength = headers.length,
-			hToLevel = [],
+			hToLevel = [], // header to TOC level dictionary
 			level = -1,
 			lastHeader = -1,
 			headerLevel,
@@ -51,7 +51,7 @@ define('wikia.toc', function() {
 				level += 1;
 			} else if (headerLevel < lastHeader && level > 0) {
 				level = 0;
-				if (typeof hToLevel[headerLevel] !== 'undefined') {
+				if (typeof hToLevel[headerLevel] !== 'undefined') { // jump to the designated level if it is set
 					level = hToLevel[headerLevel];
 				}
 			}
@@ -60,6 +60,7 @@ define('wikia.toc', function() {
 			levels[level].push(obj);
 			levels[level+1] = obj.sections;
 		}
+
 		return toc;
 	}
 

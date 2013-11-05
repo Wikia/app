@@ -230,5 +230,106 @@ describe('TOC', function() {
 		expect(JSON.stringify(data)).toBe(JSON.stringify(dataMock));
 	});
 
+	it('works for missed heading steps', function() {
 
+		htmlContent = '<h2>test2</h2><h3>test3</h3><h2>test2</h2><h4>test4</h4>';
+		dataMock = {
+			sections: [
+				{
+					title: 'test2',
+					sections: [
+						{
+							title: 'test3',
+							sections: []
+						}
+					]
+				},
+				{
+					title: 'test2',
+					sections: [
+						{
+							title: 'test4',
+							sections: []
+						}
+					]
+				}
+			]
+		};
+
+		html.innerHTML = htmlContent;
+		headers = getHeaders(html);
+		data = toc.getData(headers, createTOCSection);
+
+		expect(JSON.stringify(data)).toBe(JSON.stringify(dataMock));
+	});
+
+	it('works for http://kirkburn.wikia.com/wiki/Test5347a', function() {
+
+		htmlContent = '<h3>Heading 3</h3><h4>Heading 4</h4><h5>Heading 5 1</h5><h5>Heading 5 2</h5>';
+		dataMock = {
+			sections: [
+				{
+					title: 'Heading 3',
+					sections: [
+						{
+							title: 'Heading 4',
+							sections: [
+								{
+									title: 'Heading 5 1',
+									sections: []
+								},
+								{
+									title: 'Heading 5 2',
+									sections: []
+								}
+							]
+						}
+					]
+				}
+			]
+		};
+
+		html.innerHTML = htmlContent;
+		headers = getHeaders(html);
+		data = toc.getData(headers, createTOCSection);
+
+		expect(JSON.stringify(data)).toBe(JSON.stringify(dataMock));
+	});
+
+	it('works for http://kirkburn.wikia.com/wiki/Test5347b', function() {
+
+		htmlContent = '<h3>Heading 3</h3><h3>Heading 3</h3><h4>Heading 4</h4><h5>Heading 5 1</h5><h5>Heading 5 2</h5>';
+		dataMock = {
+			sections: [
+				{
+					title: 'Heading 3',
+					sections: []
+				},
+				{
+					title: 'Heading 3',
+					sections: [
+						{
+							title: 'Heading 4',
+							sections: [
+								{
+									title: 'Heading 5 1',
+									sections: []
+								},
+								{
+									title: 'Heading 5 2',
+									sections: []
+								}
+							]
+						}
+					]
+				}
+			]
+		};
+
+		html.innerHTML = htmlContent;
+		headers = getHeaders(html);
+		data = toc.getData(headers, createTOCSection);
+
+		expect(JSON.stringify(data)).toBe(JSON.stringify(dataMock));
+	});
 });
