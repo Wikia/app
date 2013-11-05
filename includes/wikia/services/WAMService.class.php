@@ -153,7 +153,7 @@ class WAMService extends Service {
 		wfProfileIn(__METHOD__);
 
 		if (!empty($app->wg->StatsDBEnabled)) {
-			$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
+			$db = wfGetDB(DB_SLAVE, array(), $app->wg->DWStatsDB);
 
 			$fields = array(
 				'MAX(time_id) AS max_date',
