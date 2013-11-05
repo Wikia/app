@@ -80,7 +80,8 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window' ], function( $, w ) {
 		this.$blackout.addClass( 'visible' );
 
 		// IE flexbox fallback
-		if ( navigator.appName === 'Microsoft Internet Explorer' || ( navigator.appName === 'Netscape' && navigator.userAgent.indexOf('Trident/') !== -1 ) ) {
+		if ( navigator.appName === 'Microsoft Internet Explorer' ||
+			( navigator.appName === 'Netscape' && navigator.userAgent.indexOf('Trident/') !== -1 ) ) {
 			this.$element.addClass( 'IE-flex-fix' );
 			ieFlexboxFallback( this );
 
