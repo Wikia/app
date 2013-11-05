@@ -38,14 +38,13 @@ define('wikia.toc', function() {
 
 		for (i = 0; i < headersLength; i++) {
 			header = headers[i];
-			obj = createSection(header); // create section object from HTML header node
+			headerLevel = parseInt(header.nodeName.slice(1), 10); // get position from header node (exp. <h2>)
+			obj = createSection(header, headerLevel); // create section object from HTML header node
 
 			// skip corrupted TOC section element
-			if (obj === false || typeof obj.sections  === 'undefined' || !(obj.sections instanceof Array)) {
+			if (!obj || !(obj.sections instanceof Array)) {
 				continue;
 			}
-
-			headerLevel = parseInt(header.nodeName.slice(1), 10); // get position from header node (exp. <h2>)
 
 			if (headerLevel > lastHeader) {
 				level += 1;
