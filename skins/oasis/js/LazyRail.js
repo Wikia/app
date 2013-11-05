@@ -39,6 +39,11 @@ $(function() {
 					window.ChatEntryPoint.init();
 				}
 
+				// Fix any rail modules that use jQuery timeago (DAR-2344)
+				if ( typeof $.fn.timeago !== 'undefined' ) {
+					rail.find( '.timeago' ).timeago();
+				}
+
 				if ( window.Wikia && window.Wikia.initRailTracking ) {
 					Wikia.initRailTracking();
 				}
