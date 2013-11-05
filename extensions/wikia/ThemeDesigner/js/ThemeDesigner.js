@@ -15,6 +15,7 @@ var ThemeDesigner = {
 		var that = this;
 		// theme settings
 		this.settings = window.themeSettings;
+		this.standarizeSettingValues();
 
 		// settings history
 		this.history = window.themeHistory;
@@ -67,6 +68,12 @@ var ThemeDesigner = {
 
 		// iframe resizing
 		$(window).resize($.proxy(this.resizeIframe, this)).resize();
+	},
+
+	standarizeSettingValues: function() {
+		ThemeDesigner.settings['background-dynamic'] = ThemeDesigner.settings['background-dynamic'].toString();
+		ThemeDesigner.settings['background-fixed'] = ThemeDesigner.settings['background-fixed'].toString();
+		ThemeDesigner.settings['background-tiled'] = ThemeDesigner.settings['background-tiled'].toString();
 	},
 
 	initTooltips: function() {
@@ -191,9 +198,12 @@ var ThemeDesigner = {
 			});
 
 			$('#not-split-background').attr('checked', ThemeDesigner.settings['background-dynamic'] === 'false');
-			ThemeDesigner.splitOption = ThemeDesigner.settings['background-dynamic'];
 
-			ThemeDesigner.checkBgIsDynamic(ThemeDesigner.settings['background-image-width']);
+			ThemeDesigner.middleColorSelect(ThemeDesigner.settings['background-dynamic'] === 'true');
+			ThemeDesigner.checkBgIsDynamic(
+				ThemeDesigner.settings['background-image-width'],
+				ThemeDesigner.settings['background-dynamic'] === 'true'
+			);
 		}
 
 		// submit handler for uploading custom background image
@@ -418,7 +428,7 @@ var ThemeDesigner = {
 							ThemeDesigner.set('background-image-width', img.width);
 							ThemeDesigner.set('background-image-height', img.height);
 							ThemeDesigner.set('background-image', imgUrl);
-							ThemeDesigner.checkBgIsDynamic(img.width);
+							ThemeDesigner.checkBgIsDynamic(img.width, true);
 						}
 					};
 					img.src = imgUrl;
@@ -457,7 +467,7 @@ var ThemeDesigner = {
 		$('#color-name').val('').blur();
 	},
 
-	checkBgIsDynamic: function(width) {
+	checkBgIsDynamic: function(width, value) {
 		'use strict';
 
 		var noSplitOption = $('#CustomizeTab').find('.not-split-option');
@@ -471,12 +481,12 @@ var ThemeDesigner = {
 			} else if ( width < ThemeDesigner.minWidthNotSplitBackground ) {
 				noSplitOption.css('display', 'none');
 				ThemeDesigner.backgroundType = 2;
-				ThemeDesigner.checkTiledBg(true);
-				ThemeDesigner.splitOption = true;
+				ThemeDesigner.checkTiledBg(value);
+				ThemeDesigner.splitOption = value;
 			} else {
 				noSplitOption.css('display', 'inline');
 				ThemeDesigner.backgroundType = 3;
-				ThemeDesigner.checkTiledBg(true);
+				ThemeDesigner.checkTiledBg(value);
 			}
 		}
 	},
@@ -519,36 +529,6 @@ var ThemeDesigner = {
 		}
 	},
 
-	updateBodySettings: function() {
-		'use strict';
-
-		var body = ThemeDesigner.previewFrame.contents().find('body');
-
-		if (ThemeDesigner.settings['background-tiled'] === 'true') {
-			body.removeClass('background-not-tiled background-dynamic');
-
-			ThemeDesigner.middleColorSelect(false);
-		} else {
-			body.addClass('background-not-tiled');
-
-			if (ThemeDesigner.settings['background-dynamic'] === 'true') {
-				body.addClass('background-dynamic');
-
-				ThemeDesigner.middleColorSelect(true);
-			} else {
-				body.removeClass('background-dynamic');
-
-				ThemeDesigner.middleColorSelect(false);
-			}
-		}
-
-		if (ThemeDesigner.settings['background-fixed'] === 'true') {
-			body.addClass('background-fixed');
-		} else {
-			body.removeClass('background-fixed');
-		}
-	},
-
 	/**
 	 * @author: Inez Korczynski
 	 */
@@ -586,8 +566,10 @@ var ThemeDesigner = {
 		if (setting === 'background-dynamic') {
 			if (newValue === 'true') {
 				body.addClass('background-dynamic');
+				ThemeDesigner.middleColorSelect(true);
 			} else {
 				body.removeClass('background-dynamic');
+				ThemeDesigner.middleColorSelect(false);
 			}
 		}
 
@@ -700,7 +682,7 @@ var ThemeDesigner = {
 
 				// This should be last, it triggers a CSS reload
 				ThemeDesigner.set('background-image', resp.backgroundImageUrl);
-				ThemeDesigner.checkBgIsDynamic( resp.backgroundImageWidth );
+				ThemeDesigner.checkBgIsDynamic( resp.backgroundImageWidth, true );
 			}
 		}
 	},
@@ -908,8 +890,6 @@ var ThemeDesigner = {
 				this.previewFrame.contents().find('#WikiHeader .shadow-mask').show();
 			}
 		}
-
-		ThemeDesigner.updateBodySettings();
 	},
 
 	/**
