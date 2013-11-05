@@ -888,7 +888,7 @@ class WikiStats {
 			foreach ( $dates as $date ) {
 				$ts_date = sprintf( "%s 00:00:00", $date );
 				$oRes = $dbr->select(
-					array( 'rollup_wiki_namespace_user_events' ),
+					array( 'statsdb_mart.rollup_wiki_namespace_user_events' ),
 					array(
 						'wiki_id',
 						'namespace_id AS page_ns',
@@ -1078,7 +1078,7 @@ class WikiStats {
 			foreach ( $dates as $date ) {
 				$ts_date = sprintf( "%s 00:00:00", $date );
 				$oRes = $dbr->select(
-					array( 'rollup_wiki_namespace_user_events' ),
+					array( 'statsdb_mart.rollup_wiki_namespace_user_events' ),
 					array(
 						'wiki_id',
 						'time_id as date',

@@ -49,7 +49,7 @@ class DataMartService extends Service {
 				$db = wfGetDB(DB_SLAVE, array(), $app->wg->DWStatsDB);
 
 				$result = $db->select(
-					array('rollup_wiki_pageviews'),
+					array('statsdb_mart.rollup_wiki_pageviews'),
 					array("date_format(time_id,'%Y-%m-%d') as date, pageviews as cnt"),
 					array('period_id' => $periodId,
 						'wiki_id' => $wikiId,
@@ -105,7 +105,7 @@ class DataMartService extends Service {
 				$db = wfGetDB(DB_SLAVE, array(), $app->wg->DWStatsDB);
 
 				$result = $db->select(
-					array('rollup_wiki_pageviews'),
+					array('statsdb_mart.rollup_wiki_pageviews'),
 					array("wiki_id, date_format(time_id,'%Y-%m-%d') as date, pageviews as cnt"),
 					array('period_id' => $periodId,
 						'wiki_id' => $wikis,
@@ -154,7 +154,7 @@ class DataMartService extends Service {
 
 				foreach ($dates as $date) {
 					$row = $db->selectRow(
-						array('rollup_wiki_pageviews'),
+						array('statsdb_mart.rollup_wiki_pageviews'),
 						array("sum(pageviews) as cnt"),
 						array(
 							'period_id' => $periodId,
@@ -257,7 +257,7 @@ class DataMartService extends Service {
 			if (!empty($app->wg->StatsDBEnabled)) {
 				$db = wfGetDB(DB_SLAVE, array(), $app->wg->DWStatsDB);
 
-				$tables = array('report_wiki_recent_pageviews as r');
+				$tables = array('statsdb_mart.report_wiki_recent_pageviews as r');
 				$where = array();
 
 				if (!empty($langs)) {
@@ -272,7 +272,7 @@ class DataMartService extends Service {
 
 				// Default to showing all wikis
 				if (is_integer($public)) {
-					$tables[] = 'dimension_wikis AS d';
+					$tables[] = 'statsdb_mart.dimension_wikis AS d';
 					$where[] = 'r.wiki_id = d.wiki_id';
 					$where[] = "d.public = {$public}";
 				}
@@ -333,7 +333,7 @@ class DataMartService extends Service {
 
 			$db = wfGetDB(DB_SLAVE, array(), $app->wg->DWStatsDB);
 
-			$tables = array('rollup_wiki_video_views as r');
+			$tables = array('statsdb_mart.rollup_wiki_video_views as r');
 			$where = array('period_id = ' . $periodId,
 				"time_id > NOW() - interval $lastN day");
 
@@ -408,7 +408,7 @@ class DataMartService extends Service {
 				$db = wfGetDB(DB_SLAVE, array(), $app->wg->DWStatsDB);
 
 				$result = $db->select(
-					array('rollup_wiki_namespace_user_events'),
+					array('statsdb_mart.rollup_wiki_namespace_user_events'),
 					array("date_format(time_id,'%Y-%m-%d') as date, sum(creates) creates, sum(edits) edits, sum(deletes) deletes, sum(undeletes) undeletes"),
 					array('period_id' => $periodId,
 						'wiki_id' => $wikiId,
@@ -481,7 +481,7 @@ class DataMartService extends Service {
 				if (!empty($app->wg->StatsDBEnabled)) {
 					$db = wfGetDB(DB_SLAVE, array(), $app->wg->DWStatsDB);
 
-					$table = 'rollup_wiki_namespace_user_events';
+					$table = 'statsdb_mart.rollup_wiki_namespace_user_events';
 
 					$vars = [
 						'user_id',
@@ -631,7 +631,7 @@ class DataMartService extends Service {
 				}
 
 				$result = $db->select(
-					array( 'rollup_wiki_article_pageviews' ),
+					array( 'statsdb_mart.rollup_wiki_article_pageviews' ),
 					array(
 						'namespace_id',
 						'article_id',
@@ -702,9 +702,9 @@ class DataMartService extends Service {
 				$db = wfGetDB(DB_SLAVE, array(), $app->wg->DWStatsDB);
 
 				$tables = array(
-					'r' => 'rollup_wiki_pageviews',
-					'c' => 'wikicities.city_tag_map',
-					'd' => 'dimension_wikis'
+					'r' => 'statsdb_mart.rollup_wiki_pageviews',
+					'c' => 'wikicities.city_tag_map', // TODO: this won't work, since this db doesn't exist in statsdb!
+					'd' => 'statsdb_mart.dimension_wikis'
 				);
 				$fields = array(
 					'c.tag_id as tag_id',
