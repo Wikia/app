@@ -382,6 +382,10 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertMedia = function ( cartItems ) {
 	);
 };
 
+/**
+ * @method
+ * @param {Object} cartItems Cart items to insert.
+ */
 ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMedia = function ( cartItems ) {
 	var attributes = {},
 		promises = [],
@@ -455,18 +459,18 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMedia = function ( cartIte
  * Inserts media items into the document
  *
  * @method
- * @param {Object} attributes Items to insert
+ * @param {Object} items Items to insert
  */
-ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMediaCallback = function ( attributes ) {
-	var title, type, item, items = [];
-	for ( title in attributes ) {
-		item = attributes[title];
+ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMediaCallback = function ( items ) {
+	var title, type, item, linmod = [];
+	for ( title in items ) {
+		item = items[title];
 		if ( item.type === 'photo' ) {
 			type = 'wikiaBlockImage';
 		} else if ( item.type === 'video' ) {
 			type = 'wikiaBlockVideo';
 		}
-		items.push(
+		linmod.push(
 			{
 				'type': type,
 				'attributes': {
@@ -488,7 +492,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMediaCallback = function (
 			{ 'type': '/' + type }
 		);
 	}
-	this.surface.getModel().getFragment().collapseRangeToEnd().insertContent( items );
+	this.surface.getModel().getFragment().collapseRangeToEnd().insertContent( linmod );
 };
 
 /**
