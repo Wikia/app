@@ -46,7 +46,7 @@ class DataMartService extends Service {
 		if (!is_array($pageviews)) {
 			$pageviews = array();
 			if (!empty($app->wg->StatsDBEnabled)) {
-				$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
+				$db = wfGetDB(DB_SLAVE, array(), $app->wg->DWStatsDB);
 
 				$result = $db->select(
 					array('rollup_wiki_pageviews'),
@@ -102,7 +102,7 @@ class DataMartService extends Service {
 		if (!is_array($pageviews)) {
 			$pageviews = array();
 			if (!empty($app->wg->StatsDBEnabled)) {
-				$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
+				$db = wfGetDB(DB_SLAVE, array(), $app->wg->DWStatsDB);
 
 				$result = $db->select(
 					array('rollup_wiki_pageviews'),
@@ -150,7 +150,7 @@ class DataMartService extends Service {
 		if (!is_array($pageviews)) {
 			$pageviews = array();
 			if (!empty($app->wg->StatsDBEnabled)) {
-				$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
+				$db = wfGetDB(DB_SLAVE, array(), $app->wg->DWStatsDB);
 
 				foreach ($dates as $date) {
 					$row = $db->selectRow(
@@ -255,7 +255,7 @@ class DataMartService extends Service {
 			$topWikis = array();
 
 			if (!empty($app->wg->StatsDBEnabled)) {
-				$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
+				$db = wfGetDB(DB_SLAVE, array(), $app->wg->DWStatsDB);
 
 				$tables = array('report_wiki_recent_pageviews as r');
 				$where = array();
@@ -331,7 +331,7 @@ class DataMartService extends Service {
 
 			wfProfileIn(__CLASS__ . '::TopWikisVideoViewQuery');
 
-			$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
+			$db = wfGetDB(DB_SLAVE, array(), $app->wg->DWStatsDB);
 
 			$tables = array('rollup_wiki_video_views as r');
 			$where = array('period_id = ' . $periodId,
@@ -405,7 +405,7 @@ class DataMartService extends Service {
 		if (!is_array($events)) {
 			$events = array();
 			if (!empty($app->wg->StatsDBEnabled)) {
-				$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
+				$db = wfGetDB(DB_SLAVE, array(), $app->wg->DWStatsDB);
 
 				$result = $db->select(
 					array('rollup_wiki_namespace_user_events'),
@@ -479,7 +479,7 @@ class DataMartService extends Service {
 			function () use ($app, $wikiId, $userIds, $periodId, $rollupDate) {
 				$events = [];
 				if (!empty($app->wg->StatsDBEnabled)) {
-					$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
+					$db = wfGetDB(DB_SLAVE, array(), $app->wg->DWStatsDB);
 
 					$table = 'rollup_wiki_namespace_user_events';
 
@@ -601,7 +601,7 @@ class DataMartService extends Service {
 			$topArticles = array();
 
 			if ( !empty( $app->wg->StatsDBEnabled ) ) {
-				$db = wfGetDB( DB_SLAVE, array(), $app->wg->DatamartDB );
+				$db = wfGetDB( DB_SLAVE, array(), $app->wg->DWStatsDB );
 
 				$where = array(
 					//the rollup_wiki_article_pageviews contains only summarized data
@@ -699,7 +699,7 @@ class DataMartService extends Service {
 		if (!is_array($tagViews)) {
 			$tagViews = array();
 			if (!empty($app->wg->StatsDBEnabled)) {
-				$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
+				$db = wfGetDB(DB_SLAVE, array(), $app->wg->DWStatsDB);
 
 				$tables = array(
 					'r' => 'rollup_wiki_pageviews',

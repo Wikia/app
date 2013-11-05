@@ -856,7 +856,7 @@ class WikiStats {
 	}
 
 	public function rollupStats($wiki_id, $by_month=null, $by_day=null) {
-		global $wgStatsDB, $wgDatamartDB;
+		global $wgDWStatsDB;
 
 		$data = $dates = $params = array();
 
@@ -882,8 +882,8 @@ class WikiStats {
 			$dates[] = date( $params['format'], strtotime("-{$num} {$params['period']}") );
 		}
 
-		if ( !empty( $wgDatamartDB ) ) {
-			$dbr = wfGetDB(DB_SLAVE, array(), $wgDatamartDB);
+		if ( !empty( $wgDWStatsDB ) ) {
+			$dbr = wfGetDB(DB_SLAVE, array(), $wgDWStatsDB);
 
 			foreach ( $dates as $date ) {
 				$ts_date = sprintf( "%s 00:00:00", $date );
@@ -1047,7 +1047,7 @@ class WikiStats {
 	 */
 
 	public function loadMonthlyNSActions() {
-		global $wgStatsDB, $wgDatamartDB;
+		global $wgDWStatsDB;
 
 		// The existing index requires a city ID, so don't try anything without it
 		if (!$this->mCityId) return array();
@@ -1067,8 +1067,8 @@ class WikiStats {
 		}
 
 		$ns_actions = array();
-		if ( !empty( $wgDatamartDB ) ) {
-			$dbr = wfGetDB(DB_SLAVE, array(), $wgDatamartDB);
+		if ( !empty( $wgDWStatsDB ) ) {
+			$dbr = wfGetDB(DB_SLAVE, array(), $wgDWStatsDB);
 
 			$base_where = array( 'period_id' => 3 );
 			if ( $this->mCityId ) {
