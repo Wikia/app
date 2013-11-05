@@ -127,7 +127,6 @@ ve.ui.WikiaSourceModeDialog.prototype.onParseSuccess = function( deferred, respo
 
 	var newDoc, doc, surfaceModel, tx;
 
-
 	surfaceModel = this.surface.getModel();
 	doc = surfaceModel.getDocument();
 
@@ -135,7 +134,7 @@ ve.ui.WikiaSourceModeDialog.prototype.onParseSuccess = function( deferred, respo
 
 	// Create a new transaction to change surfaceModel.
 	// Note: there is a bug where the last metadata item needs to be processed with tx.pushReplaceMetadata.
-	// Ask Roan, I'm really not sure waht that's about - Liz
+	// Ask Roan, I'm really not sure what that's about - Liz
 	tx = new ve.dm.Transaction();
 	tx.pushReplace( doc, 0, doc.data.data.length, newDoc.data.data,
 		// get all except the last item
