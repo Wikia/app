@@ -121,7 +121,7 @@ class AdEngine2Controller extends WikiaController {
 			return self::AD_LEVEL_CORPORATE;
 		}
 
-		if (preg_match('/TOP_LEADERBOARD|TOP_RIGHT_BOXAD|GPT_FLUSH/', $slotname)) {
+		if (preg_match('/TOP_LEADERBOARD|TOP_RIGHT_BOXAD|GPT_FLUSH|SEVENONEMEDIA_FLUSH/', $slotname)) {
 			return self::AD_LEVEL_LIMITED;
 		}
 		return self::AD_LEVEL_ALL;
@@ -430,6 +430,7 @@ class AdEngine2Controller extends WikiaController {
 
 		$vars['wgAdVideoTargeting'] = $req->getBool('videotargeting', (bool) $wg->AdVideoTargeting);
 		$vars['wgAdDriverStartLiftiumOnLoad'] = $req->getBool('liftiumonload', (bool) $wg->LiftiumOnLoad);
+		$vars['wgUsePostScribe'] = $req->getBool('usepostscribe', false);
 
 		// Used to hop by DART ads
 		$vars['adDriverLastDARTCallNoAds'] = array();

@@ -448,7 +448,7 @@ Bienvenido a {{SITENAME}} y gracias por tu edición en la página [[:$1]]. Si ne
 Por favor, si tienes alguna duda, no seas tímido, deja un mensaje en mi muro para ver si puedo ayudarte con cualquier cosa.",
 	'welcome-message-wall-anon-staff' => "Hola,
 
-¡Bienvenido a {{SITENAME}}! Te agradecemos por tu edición en [[$1]].
+¡Bienvenido a {{SITENAME}}! Te agradecemos por tu edición en [[:$1]].
 
 ¿Qué tal si te '''[[Special:UserLogin|creas una cuenta]]'''?, así, nos será más sencillo saber que páginas has editado y recibirás una atribución por tu trabajo en {{SITENAME}}.
 
@@ -458,7 +458,7 @@ Si lo que buscas es ayuda, puedes consultar nuestras [[Help:Contents|páginas de
 
 Si requieres más ayuda, o sigues teniendo dudas, ¡no dudes en visitar la [[w:c:community|Comunidad Central de Wikia en Español]]!
 
-¡Esperamos que te diviertas!", # Fuzzy
+¡Esperamos que te diviertas!",
 	'welcome-description' => 'Envía un mensaje a todos los usuarios después de realizar su primera edición.',
 );
 
@@ -1286,9 +1286,9 @@ S'avètz besonh d'ajuda, començatz per consultar nòstras [[Help:Contents|pagin
 
 Bonjorn,
 
-Benvenguda sus {{SITENAME}} e mercé d'aver modificada la pagina [[:$1]]. Encoratjam totes los contributors a [[Special:Userlogin|crear un nom d'utilizaire]]''' per tal de gardar la traça de vòstras contribucions, d'accedir a mai de foncionalitats e connéisser la rèsta de la comunautat de {{SITENAME}}.
+Benvenguda sus {{SITENAME}} e mercé d'aver modificat la pagina [[:$1]]. Encoratjam totes los contributors a [[Special:UserLogin|crear un nom d'utilizaire]]''' per tal de gardar la traça de vòstras contribucions, d'accedir a mai de foncionalitats de Wikia e connéisser la rèsta de la comunautat de {{SITENAME}}.
 
-S'avètz besonh d'ajuda e, podètz visitar peimièr nòstras [[Help:Contents|paginas d’ajuda]], puèi, visitatz lo [[w:c:community|centre de la comunautat]] per ne saber mai. Bonas modificacions! $3", # Fuzzy
+S'avètz besonh d'ajuda e, podètz visitar primièr nòstras [[Help:Contents|paginas d’ajuda]], puèi, visitatz lo [[w:c:community|centre de la comunautat]] per ne saber mai. Bonas modificacions! $3",
 );
 
 /** Polish (polski)

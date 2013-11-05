@@ -1615,10 +1615,10 @@ ___________________________________________
 * Troba l\'ajuda i els consells que necessites a la Central de Wikia en català: http://ca.wikia.com
 * Vols rebre menys missatges de nosaltres? Pots canviar les teves preferències respecte als emails aquí: http://ca.wikia.com/wiki/Especial:Preferències',
 	'mail-notification-body-HTML' => 'Hola $WATCHER,
-<p>$SUBJECT.</p>
+<p>$SUBJECT.</p> 
 <p><a href="$MESSAGE_LINK">$METATITLE</a></p>
 <p>$MESSAGE_HTML</p>
-<p>-- $AUTHOR_SIGNATURE<p>
+<p>-- $AUTHOR_SIGNATURE<p> 			
 <p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">Veure la conversació</a></p>
 <p>L\'equip de Wikia</p>
 ___________________________________________<br />
@@ -2756,6 +2756,13 @@ ___________________________________________<br />
 	'wall-topic-edit' => 'Editar temas',
 	'wall-topic-edit-save' => 'Guardar',
 	'wall-topic-edit-cancel' => 'Cancelar',
+);
+
+/** Basque (euskara)
+ * @author Xabier Armendaritz
+ */
+$messages['eu'] = array(
+	'wall-notifications-all' => 'Jakinarazpen guztiak',
 );
 
 /** Persian (فارسی)
@@ -4422,6 +4429,15 @@ http://ja.wikia.com/wiki/Special:Following</p>',
 	'wall-preview-modal-title' => 'プレビュー',
 	'wall-preview-modal-button-back' => '戻る',
 	'wall-preview-modal-button-publish' => '発行',
+);
+
+/** Georgian (ქართული)
+ * @author DevaMK
+ */
+$messages['ka'] = array(
+	'wall-button-to-preview-comment' => 'გადახედე',
+	'wall-button-to-submit-comment' => 'გამოაქვეყნე',
+	'wall-button-to-submit-reply' => 'უპასუხე',
 );
 
 /** Kabardian (Адыгэбзэ)
@@ -6293,7 +6309,7 @@ $messages['pt'] = array(
 	'wall-deleted-reply' => 'Esta resposta foi eliminada',
 	'wall-history' => 'Histórico',
 	'wall-history-title' => 'histórico do mural',
-	'wall-history-who-involved-wall-title' => 'Quem está envolvido neste mural?', # Fuzzy
+	'wall-history-who-involved-wall-title' => 'Quem está envolvido?',
 	'wall-history-who-involved-thread-title' => 'Quem está envolvido neste tópico?',
 	'wall-history-thread-created' => '$1 foi criado por $2',
 	'wall-history-thread-removed' => '$1 foi removido por $2',
@@ -6443,7 +6459,7 @@ $messages['pt-br'] = array(
 	'wall-action-all-confirm-notify' => 'Notificar um administrador',
 	'wall-action-remove-reply-title' => 'Remover esta resposta',
 	'wall-action-remove-thread-title' => 'Remover este tópico',
-	'wall-confirm-monobook-remove' => 'Informe-nos por que você gostaria de remover isto.
+	'wall-confirm-monobook-remove' => 'Informe-nos por que você gostaria de remover isto. 
 
 O post original e seu sumário ainda aparecerão no histórico da wiki.',
 	'wall-confirm-monobook-admin' => 'Informe-nos por que você gostaria de excluir isto.
@@ -6518,7 +6534,7 @@ $MESSAGE_NO_HTML
 -- $AUTHOR
 
 Veja a conversa($MESSAGE_LINK)
-
+ 
 A Equipe Wikia
 
 ___________________________________________
@@ -6532,7 +6548,7 @@ suas preferências de email aqui: http://pt-br.wikia.com/wiki/Especial:Preferên
 <p>-- $AUTHOR_SIGNATURE<p>
 <p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">Veja a conversa</a></p>
 <p>A Equipe Wikia</p>
-___________________________________________<br>
+___________________________________________<br />
 * Procure ajuda e conselho na Wikia Português do Brasil: http://pt-br.wikia.com
 * Quer receber menos mensagens de nós? Você pode cancelar sua inscrição ou alterar
 suas preferências de email aqui: http://pt-br.wikia.com/wiki/Especial:Preferências', # Fuzzy

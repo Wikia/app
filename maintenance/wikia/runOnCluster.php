@@ -130,6 +130,10 @@ class RunOnCluster extends Maintenance {
 				die("File '$file' does not exist\n");
 			}
 			require_once($file);
+		} else {
+			if ( $this->class ) {
+				echo "Warning: Argument --class given without --file; this is probably not correct\n";
+			}
 		}
 
 		// Make sure the class and method we're using exist
