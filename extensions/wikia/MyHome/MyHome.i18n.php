@@ -2059,6 +2059,13 @@ $messages['ja'] = array(
  */
 $messages['ka'] = array(
 	'wikiactivity' => 'ვიკი აქტიურობა',
+	'myhome-feed-created-by' => 'შემქმნელი - $1.',
+	'myhome-feed-edited-by' => 'რედაქტორი - $1.',
+	'myhome-feed-new-page-details' => 'ახალი გვერდი',
+	'myhome-feed-summary-details' => 'რეზიუმე',
+	'myhome-feed-section-edit-details' => 'რედაქტირება გაუკეთა სექციას',
+	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|დამატებული ფოტო|დამატებული ფოტოები}}',
+	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|დამატებული კატეგორია|დამატებული კატეგორიები}}',
 );
 
 /** Kannada (ಕನ್ನಡ)

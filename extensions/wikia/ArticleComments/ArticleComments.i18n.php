@@ -1929,6 +1929,7 @@ $messages['ky'] = array(
 
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
+ * @author Soued031
  */
 $messages['lb'] = array(
 	'article-comments-anonymous' => 'Anonyme Benotzer',
@@ -1944,7 +1945,7 @@ $messages['lb'] = array(
 	'article-comments-rc-comments' => 'Bemierkunge vum Artikel ([[$1]])',
 	'article-comments-fblogin' => '<a href="$1">Loggt Iech an a verbannt mat Facebook</a> fir eng Bemierkung op dëser Wiki ze schreiwen!',
 	'article-comments-toc-item' => 'Bemierkungen',
-	'article-comments-comment-cannot-add' => 'Dir däerft keng Bemierkung bäi den Artikel derbäisetzen.',
+	'article-comments-comment-cannot-add' => 'Dir däerft keng Bemierkung bei den Artikel derbäisetzen.',
 	'article-comments-reply' => 'Äntwerten',
 	'article-comments-show-all' => 'All Bemierkunge weisen',
 	'article-comments-prev-page' => 'Vireg',
@@ -2002,17 +2003,32 @@ $PAGEEDITOR къейд ттуна "$PAGETITLE".
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
+	'article-comments-anonymous' => 'كارور ناشناس',
+	'article-comments-comments' => 'نظر($1)',
+	'article-comments-post' => 'نظرتونه بفرسنین',
 	'article-comments-cancel' => 'رد بكيد',
 	'article-comments-delete' => 'پاك كردن',
 	'article-comments-edit' => 'ويرايشت',
 	'article-comments-history' => 'ويرگار',
 	'article-comments-error' => 'نظر نتونه ذخيره بوئه',
+	'article-comments-toc-item' => 'نظریا',
+	'article-comments-comment-cannot-add' => 'شما نتونید نظر د ای گوتار اضاف بکید.',
+	'article-comments-vote' => 'رایا ری وه بالا رئتنه',
 	'article-comments-reply' => 'جؤاو ده ئن',
+	'article-comments-show-all' => 'همه نظریانه نشو بیه',
 	'article-comments-prev-page' => 'دما',
 	'article-comments-next-page' => 'نيا',
+	'article-comments-page-spacer' => '&#160...&#160',
 	'wikiamobile-article-comments-more' => 'بيشتر سواركرد كو',
+	'wikiamobile-article-comments-prev' => 'دمایی نه سوار کو',
+	'wikiamobile-article-comments-none' => 'بی نظر',
+	'wikiamobile-article-comments-view' => 'درحاستیانه بویئنیت',
 	'wikiamobile-article-comments-replies' => 'جؤاويا',
+	'wikiamobile-article-comments-post-reply' => 'یه گل جواو بفرسنیت',
+	'wikiamobile-article-comments-post' => 'بفرسنیت',
+	'wikiamobile-article-comments-placeholder' => 'یه گل نظر بفرسنیت',
 	'wikiamobile-article-comments-show' => 'نشون دائن',
+	'wikiamobile-article-comments-login-post' => 'خواهش می کیم سی نظر دیئن وارد سیستم بویئت',
 );
 
 /** Lithuanian (lietuvių)
@@ -3199,6 +3215,18 @@ ___________________________________________
 <li>Vill du få färre meddelanden från oss? Vill du få färre meddelanden från oss? Du kan avprenumerera eller ändra din e-postadress här: <a href="http://community.wikia.com/Special:Preferences">http://community.wikia.com/Special:Preferences</a></li>
 </ul>
 </p>',
+);
+
+/** Silesian (ślůnski)
+ * @author Krol111
+ */
+$messages['szl'] = array(
+	'article-comments-cancel' => 'Uodćepej',
+	'article-comments-delete' => 'wyćep',
+	'article-comments-edit' => 'sprowjej',
+	'article-comments-history' => 'gyszichta',
+	'article-comments-toc-item' => 'Kůmyntorze:',
+	'article-comments-next-page' => 'Dalij',
 );
 
 /** Telugu (తెలుగు)

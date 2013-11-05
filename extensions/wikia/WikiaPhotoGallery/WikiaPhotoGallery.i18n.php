@@ -1145,6 +1145,7 @@ Alternativament, pot fer clic " $2 " per veure la pàgina en la seva forma d\'ac
  * @author Умар
  */
 $messages['ce'] = array(
+	'wikiaPhotoGallery-error-user-rights' => 'Декъашхочун тӀекхачаре бакъона гӀалат.',
 	'wikiaPhotoGallery-upload-findbutton' => 'Каро',
 	'wikiaPhotoGallery-slideshow-view-link-overlay' => 'Дехьа гӀо $1',
 );
@@ -1898,6 +1899,7 @@ $messages['fa'] = array(
  */
 $messages['fi'] = array(
 	'wikiaphotogallery-desc' => 'Tarjoaa käyttöliittymän gallerioiden ja diaesitysten hallintaan sivuilla',
+	'wikiaPhotoGallery-back' => 'Takaisin',
 	'wikiaPhotoGallery-finish' => 'Valmis',
 	'wikiaPhotoGallery-add-gallery' => 'Aseta kuvagalleria tai diaesitys',
 	'wikiaPhotoGallery-viewmode-addphoto' => 'Lisää kuva tähän galleriaan',
@@ -3405,7 +3407,7 @@ $messages['lb'] = array(
 	'wikiaPhotoGallery-viewmode-addphoto' => 'Eng Photo an dës Gallerie derbäisetzen',
 	'wikiaPhotoGallery-edit-summary' => 'Eng Galerie änneren',
 	'wikiaPhotoGallery-error-caption' => 'Feeler',
-	'wikiaPhotoGallery-error-user-rights' => 'Feeler bäi de Benotzerrechter.',
+	'wikiaPhotoGallery-error-user-rights' => 'Feeler bei de Benotzerrechter.',
 	'wikiaPhotoGallery-upload-title' => 'Bild fannen an eroplueden',
 	'wikiaPhotoGallery-upload-info-images-label' => 'Biller vun dëser Säit',
 	'wikiaPhotoGallery-upload-findtitle' => 'Sichen',

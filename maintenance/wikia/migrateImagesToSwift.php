@@ -134,7 +134,7 @@ class MigrateImagesToSwift extends Maintenance {
 	 * @param $path array image info
 	 */
 	private function copyFile( $path, Array $row ) {
-		global $wgUploadDirectory;
+		global $wgUploadDirectory, $wgCityId, $wgDBname;
 
 		if ( $path === false ) return;
 
@@ -153,6 +153,15 @@ class MigrateImagesToSwift extends Maintenance {
 			$this->migratedImagesFailedCnt++;
 		}
 		else {
+			$mwStorePath = sprintf( 'mwstore://swift-backend/%s/images/%s', $wgDBname, $path );
+						
+			Wikia\SwiftSync\Queue::newFromParams( [
+				'city_id' => $wgCityId,
+				'op' => 'store',
+				'src' => $wgUploadDirectory . '/' . $path,
+				'dst' => $mwStorePath
+			] )->add();
+					
 			$this->migratedImagesSize += $row['size'];
 			$this->migratedImagesCnt++;
 		}
@@ -190,6 +199,12 @@ class MigrateImagesToSwift extends Maintenance {
 
 	public function execute() {
 		global $wgCityId, $wgExternalSharedDB;
+
+		// force migration of wikis with read-only mode
+		if (wfReadOnly()) {
+			global $wgReadOnly;
+			$wgReadOnly = false;
+		}
 
 		$this->init();
 		$dbr = $this->getDB( DB_SLAVE );
@@ -249,6 +264,9 @@ class MigrateImagesToSwift extends Maintenance {
 		$this->time = time();
 
 		self::log( __CLASS__, 'migration started', self::LOG_MIGRATION_PROGRESS );
+
+		// wait a bit to prevent deadlocks (from 0 to 2 sec)
+		usleep( mt_rand(0,2000) * 1000 );
 
 		// lock the wiki
 		$dbw = $this->getDB( DB_MASTER, array(), $wgExternalSharedDB );
@@ -324,9 +342,10 @@ class MigrateImagesToSwift extends Maintenance {
 		);
 
 		$this->output( "\n{$report}\n" );
-		self::log( __CLASS__, 'migration ceompleted', self::LOG_MIGRATION_PROGRESS );
+		self::log( __CLASS__, 'migration completed - ' . $report, self::LOG_MIGRATION_PROGRESS );
 
 		// unlock the wiki
+		$dbw->ping();
 		$dbw->replace( 'city_image_migrate', [ 'city_id' ], [ 'city_id' => $wgCityId, 'locked' => 0 ], __CLASS__ );
 
 		// update wiki configuration

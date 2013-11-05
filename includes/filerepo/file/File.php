@@ -288,11 +288,7 @@ abstract class File {
 
 			# start wikia change
 			$this->originalUrl = $this->url;
-
-			global $wgDevelEnvironment;
-			if (!empty($wgDevelEnvironment)) {
-				$this->url = wfReplaceImageServer( $this->url, $this->getTimestamp() );
-			}
+			$this->url = wfReplaceImageServer( $this->url, $this->getTimestamp() ); // rewrite URL in all envirnoments (BAC-939)
 			# end wikia change
 		}
 		return $this->url;

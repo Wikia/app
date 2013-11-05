@@ -298,11 +298,11 @@ $messages['fo'] = array(
  * @author Iluvalar
  */
 $messages['fr'] = array(
-	'wva-success' => 'La page de la vidéo $1 a été ajoutée avec succès.', # Fuzzy
-	'wva-success-replaced' => 'La page de vidéo $1 a été remplacée avec succès', # Fuzzy
+	'wva-success' => 'La page de vidéo [[:$1]] a bien été ajoutée.',
+	'wva-success-replaced' => 'La page de vidéo [[:$1]] a bien été remplacée.',
 	'wva-failure' => 'Veuillez fournir des paramètres valides',
-	'wva-name' => 'Entrez le nom:', # Fuzzy
-	'wva-url' => "Entrez l'URL:", # Fuzzy
+	'wva-name' => 'Nom de la vidéo :',
+	'wva-url' => 'URL de la vidéo :',
 	'wva-add' => 'Ajouter',
 	'wva-title' => 'Ajouter une vidéo rapidement à partir de son URL',
 	'wva-notlogged' => 'Vous devez vous inscrire ou bien vous enregistrer pour ajouter des vidéos',
