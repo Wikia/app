@@ -27,4 +27,5 @@ $messages['qqq'] = array(
 	'visualeditor-wikiauploadwidget-button' => 'The button in the Add Media dialog upload box',
 	'visualeditor-wikiauploaderror' => 'Message that is shown when an upload error occurs',
 	'visualeditor-wikiamediainsertsearch-placeholder' => 'The placeholder text that appears in the search field, indicating functionality',
+	'visualeditor-wikiamediapagewidget-preview-alert' => 'Alert pop-up when user clicks on a video or image to preview.',
 );
