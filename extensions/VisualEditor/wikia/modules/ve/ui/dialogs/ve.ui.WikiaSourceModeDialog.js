@@ -62,7 +62,7 @@ ve.ui.WikiaSourceModeDialog.prototype.onOpen = function () {
 	// TODO: display loading graphic
 
 	// Request wikitext
-	this.surface.target.serialize(
+	this.surface.getTarget().serialize(
 		ve.dm.converter.getDomFromData( doc.getFullData(), doc.getStore(), doc.getInternalList() ),
 		ve.bind( this.onSerialize, this )
 	);
@@ -76,7 +76,7 @@ ve.ui.WikiaSourceModeDialog.prototype.onSerialize = function ( wikitext ) {
 
 ve.ui.WikiaSourceModeDialog.prototype.onApply = function ( action, wikitext ) {
 	if( action === 'parse' ) {
-		this.parse( )
+		this.parse( );
 	}
 };
 
@@ -96,7 +96,9 @@ ve.ui.WikiaSourceModeDialog.prototype.parse = function( ) {
 		'url': mw.util.wikiScript( 'api' ),
 		'data': {
 			'action': 'visualeditor',
-			'paction': 'parsefragment',
+			// NOTE: neither of these (parse / parsefragment) is the API we want, that will be written next
+			'paction': 'parse',
+			//'paction': 'parsefragment',
 			'page': mw.config.get( 'wgRelevantPageName' ),
 			'wikitext': wikitext,
 			'token': mw.user.tokens.get( 'editToken' ),
@@ -123,19 +125,31 @@ ve.ui.WikiaSourceModeDialog.prototype.onParseSuccess = function( deferred, respo
 		return this.onParseError.call( this, deferred );
 	}
 
-	var newDoc = ve.createDocumentFromHtml( response.visualeditor.content ),// this is not quite what we're looking for.  need to transform it to ve.dm.Document or ve.dm.DocumentNode or something else.
-		surfaceModel = this.surface.getModel(),
-		doc = surfaceModel.getDocument();
+	var newDoc, doc, surfaceModel, tx;
 
-	// TODO: figure out what params to pass to newFromDocumentReplace
-	surfaceModel.change(
-		ve.dm.Transaction.newFromDocumentReplace( doc, doc.getDocumentNode(), newDoc )
+
+	surfaceModel = this.surface.getModel();
+	doc = surfaceModel.getDocument();
+
+	newDoc = new ve.dm.Document ( ve.createDocumentFromHtml( response.visualeditor.content ) );
+
+	// Create a new transaction to change surfaceModel.
+	// Note: there is a bug where the last metadata item needs to be processed with tx.pushReplaceMetadata.
+	// Ask Roan, I'm really not sure waht that's about - Liz
+	tx = new ve.dm.Transaction();
+	tx.pushReplace( doc, 0, doc.data.data.length, newDoc.data.data,
+		// get all except the last item
+		( newDoc.metadata.data.length ? newDoc.metadata.data.slice( 0, -1 ) : [] )
+	);
+	tx.pushReplaceMetadata(
+		// only send the last items
+		( doc.metadata.length ? doc.metadata[doc.metadata.length - 1] : [] ),
+		( newDoc.metadata.length ? newDoc.metadata[doc.metadata.length - 1] : [] )
 	);
 
+	surfaceModel.change( tx );
 
-	/*debugger;
-	this.surface.getModel().getFragment().collapseRangeToEnd().insertContent( ['heloooo'] );*/
-
+	this.close();
 };
 
 ve.ui.WikiaSourceModeDialog.prototype.onParseError = function ( deferred ) {
