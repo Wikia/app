@@ -387,9 +387,9 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertMedia = function ( cartItems ) {
  * @param {Object} cartItems Cart items to insert.
  */
 ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMedia = function ( cartItems ) {
-	var attributes = {},
+	var items = {},
 		promises = [],
-		items = {
+		types = {
 			'photo': [],
 			'video': []
 		},
@@ -397,51 +397,51 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMedia = function ( cartIte
 		i,
 		title;
 
-	// Populates attributes, items.video and items.photo
+	// Populates items, types.video and types.photo
 	for ( i = 0; i < cartItems.length; i++ ) {
 		cartItem = cartItems[i];
-		attributes[ cartItem.title ] = {
+		items[ cartItem.title ] = {
 			'title': cartItem.title,
 			'type': cartItem.type
 		};
-		items[ cartItem.type ].push( cartItem.title );
+		types[ cartItem.type ].push( cartItem.title );
 	}
 
 	function updateImageinfo( results ) {
 		var i, result;
 		for ( i = 0; i < results.length; i++ ) {
 			result = results[i];
-			attributes[result.title].height = result.height;
-			attributes[result.title].width = result.width;
-			attributes[result.title].url = result.url;
+			items[result.title].height = result.height;
+			items[result.title].width = result.width;
+			items[result.title].url = result.url;
 		}
 	}
 
 	// Imageinfo for photos request
-	if ( items.photo.length ) {
+	if ( types.photo.length ) {
 		promises.push(
-			this.getImageInfo( items.photo, 220 ).done(
+			this.getImageInfo( types.photo, 220 ).done(
 				ve.bind( updateImageinfo, this )
 			)
 		);
 	}
 
 	// Imageinfo for videos request
-	if ( items.video.length ) {
+	if ( types.video.length ) {
 		promises.push(
-			this.getImageInfo( items.video, 330 ).done(
+			this.getImageInfo( types.video, 330 ).done(
 				ve.bind( updateImageinfo, this )
 			)
 		);
 	}
 
 	function updateAvatar( result ) {
-		attributes[result.title].avatar = result.avatar;
-		attributes[result.title].username = result.username;
+		items[result.title].avatar = result.avatar;
+		items[result.title].username = result.username;
 	}
 
 	// Attribution request
-	for ( title in attributes ) {
+	for ( title in items ) {
 		promises.push(
 			this.getPhotoAttribution( title ).done(
 				ve.bind( updateAvatar, this )
@@ -451,7 +451,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMedia = function ( cartIte
 
 	// When all ajax requests are finished, insert media
 	$.when.apply( $, promises ).done(
-		ve.bind( this.insertPermanentMediaCallback, this, attributes )
+		ve.bind( this.insertPermanentMediaCallback, this, items )
 	);
 };
 
