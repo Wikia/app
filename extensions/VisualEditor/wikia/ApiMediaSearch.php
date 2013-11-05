@@ -25,10 +25,10 @@ class ApiMediaSearch extends ApiBase {
 
 		// Type
 		$video = $this->getVideo( $params );
-		$photo = $this->getPhoto( $params );
+		$image = $this->getImage( $params );
 
 		// Get results, not well-structured
-		$results = $this->getResults( $query, $limit, $batch, $video, $photo, $mixed );
+		$results = $this->getResults( $query, $limit, $batch, $video, $image, $mixed );
 
 		// Properly format results
 		$response = $this->formatResults( $results, $limit, $batch );
@@ -59,9 +59,9 @@ class ApiMediaSearch extends ApiBase {
 		return in_array( 'video', $typeArray );
 	}
 
-	public function getPhoto( $params ) {
+	public function getImage( $params ) {
 		$typeArray = explode( '|', $params['type'] );
-		return in_array( 'photo', $typeArray );
+		return in_array( 'image', $typeArray );
 	}
 
 	protected function getType( $title ) {
@@ -69,7 +69,7 @@ class ApiMediaSearch extends ApiBase {
 		$image = wfFindFile( $fileTitle );
 
 		$mediaTypes = [
-			'BITMAP' => 'photo',
+			'BITMAP' => 'image',
 			'VIDEO' => 'video'
 		];
 
@@ -82,24 +82,24 @@ class ApiMediaSearch extends ApiBase {
 		return $image->getFullUrl();
 	}
 
-	public function getResults( $query, $limit, $batch, $video, $photo, $mixed ) {
+	public function getResults( $query, $limit, $batch, $video, $image, $mixed ) {
 		$results = [];
-		if ( $video && $photo ) {
+		if ( $video && $image ) {
 			if ( $mixed ) {
-				// video and photo mixed
+				// video and image mixed
 				$results['mixed'] = $this->getSearchResults( $query, $limit, $batch, false, false );
 			} else {
-				// video and photo separate
+				// video and image separate
 				$results['video'] = $this->getSearchResults( $query, $limit, $batch, true, false );
-				$results['photo'] = $this->getSearchResults( $query, $limit, $batch, false, true );
+				$results['image'] = $this->getSearchResults( $query, $limit, $batch, false, true );
 			}
 		} else {
-			// either photo or video
-			$items = $this->getSearchResults( $query, $limit, $batch, $video, $photo );
+			// either image or video
+			$items = $this->getSearchResults( $query, $limit, $batch, $video, $image );
 			if ( $mixed ) {
 				$key = 'mixed';
 			} else {
-				$key = $video ? 'video' : 'photo';
+				$key = $video ? 'video' : 'image';
 			}
 			$results[$key] = $items;
 		}
