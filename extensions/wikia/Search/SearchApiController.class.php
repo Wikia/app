@@ -151,7 +151,7 @@ class SearchApiController extends WikiaApiController {
 	 * Inspects request and sets config accordingly.
 	 * @return Wikia\Search\Config
 	 */
-	protected function getConfigFromRequest() {
+	protected function getConfigFromRequest($wikiid= null) {
 		$request = $this->getRequest();
 		$searchConfig = new Wikia\Search\Config;
 		$searchConfig->setQuery( $request->getVal( 'query', null ) )
