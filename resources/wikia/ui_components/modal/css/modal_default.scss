@@ -29,7 +29,7 @@ $modal-inactive-opacity: 0.3;
 	border-radius: 2px;
 	display: none;
 	left: 50%;
-	max-height: 605px;
+	max-height: 90%;
 	min-height: 200px;
 	margin: 0;
 	overflow: hidden;
@@ -141,6 +141,11 @@ $modal-inactive-opacity: 0.3;
 
 		@include flexbox();
 		@include flex-direction(column);
+
+		// IE flex-box fallback
+		&.IE-flex-fix {
+			display: block;
+		}
 	}
 }
 

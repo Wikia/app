@@ -1,10 +1,20 @@
-define( 'wikia.ui.modal', [ 'jquery' ], function( $ ) {
+define( 'wikia.ui.modal', [ 'jquery', 'wikia.window' ], function( $, w ) {
 	'use strict';
 
 	var BLACKOUT_CLASS = 'blackout',
 		CLOSE_CLASS = 'close',
 		INACTIVE_CLASS = 'inactive',
 		destroyOnClose;
+
+	// IE flexbox fallback
+	function ieFlexboxFallback( modal ) {
+		var element = modal.$element,
+			HEADER_AND_FOOTER_HEIGHT = 120,
+			winHeight = parseInt( $( w ).height(), 10 ),
+			modalMaxHeight = ( 90 / 100 ) * winHeight - HEADER_AND_FOOTER_HEIGHT;
+
+		element.children( 'section' ).css( 'maxHeight', modalMaxHeight );
+	}
 
 	/**
 	 * Initializes a modal
@@ -18,6 +28,7 @@ define( 'wikia.ui.modal', [ 'jquery' ], function( $ ) {
 	 * @param {Object} modalMarkup (optional) jQuery wrapper for existing in DOM modal markup
 	 * @constructor
 	 */
+
 	function Modal( id, modalMarkup ) {
 		var that = this,
 			jQuerySelector = '#' + id;
@@ -67,6 +78,17 @@ define( 'wikia.ui.modal', [ 'jquery' ], function( $ ) {
 	Modal.prototype.show = function() {
 		this.$element.addClass( 'shown' );
 		this.$blackout.addClass( 'visible' );
+
+		// IE flexbox fallback
+		if ( navigator.appName === 'Microsoft Internet Explorer' || ( navigator.appName === 'Netscape' && navigator.userAgent.indexOf('Trident/') !== -1 ) ) {
+			this.$element.addClass( 'IE-flex-fix' );
+			ieFlexboxFallback( this );
+
+			// update fix on window resize
+			$( w ).on( 'resize', $.proxy( function() {
+				ieFlexboxFallback( this );
+			}, this ) );
+		}
 	};
 
 	/**
