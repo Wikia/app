@@ -177,7 +177,11 @@ class WAMApiController extends WikiaApiController {
 			$options['previousTimestamp'] = $options['currentTimestamp'] - 60 * 60 * 24;
 		} else {
 			if($options['currentTimestamp'] > $wamDates['max_date'] || $options['currentTimestamp'] < $wamDates['min_date']) {
-				throw new OutOfRangeApiException('currentTimestamp', $wamDates['min_date'], $wamDates['max_date']);
+				$logMsg = 'OutOfRangeApiException - currentTimestamp: ' . $options['currentTimestamp']
+					. 'possible min_date: ' . $wamDates['min_date']
+					. 'possible max_date: ' . $wamDates['max_date'];
+				Wikia::log(__METHOD__, false, $logMsg );
+				Wikia::logBacktrace(__METHOD__);
 			}
 
 			if(empty($options['previousTimestamp'])) {
