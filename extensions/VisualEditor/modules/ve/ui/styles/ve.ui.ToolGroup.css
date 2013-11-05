@@ -96,8 +96,7 @@
 	cursor: default;
 }
 
-.ve-ui-barToolGroup .ve-ui-tool.ve-ui-widget-disabled .ve-ui-iconedElement-icon,
-.ve-ui-barToolGroup .ve-ui-tool.ve-ui-widget-disabled .ve-ui-labeledElement-label {
+.ve-ui-barToolGroup .ve-ui-tool.ve-ui-widget-disabled .ve-ui-iconedElement-icon {
 	opacity: 0.2;
 }
 
@@ -217,8 +216,7 @@
 	cursor: default;
 }
 
-.ve-ui-listToolGroup .ve-ui-tool.ve-ui-widget-disabled .ve-ui-iconedElement-icon,
-.ve-ui-listToolGroup .ve-ui-tool.ve-ui-widget-disabled .ve-ui-labeledElement-label {
+.ve-ui-listToolGroup .ve-ui-tool.ve-ui-widget-disabled .ve-ui-iconedElement-icon {
 	opacity: 0.2;
 }
 
