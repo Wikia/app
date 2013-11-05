@@ -9,16 +9,18 @@ class SpecialPromoteHooks {
 	 * @see http://www.mediawiki.org/wiki/Manual:Hooks/FileDeleteComplete
 	 */
 	public static function onFileDeleteComplete($file, $oldimage, $page) {
-		global $wgCityId, $wgContLang;
-		$visualization = new CityVisualization();
 		/**
 		 * No $page when deleting an old image ($oldimage).
 		 *
 		 * @see FileDeleteForm::doDelete()
 		 */
-		if ( $page instanceof Page ) {
-			$visualization->removeImageFromReviewByName($wgCityId, $page->getTitle()->getText(), $wgContLang->getCode());
+		if ( ! $page instanceof Page ) {
+			return true;
 		}
+
+		global $wgCityId, $wgContLang;
+		$visualization = new CityVisualization();
+		$visualization->removeImageFromReviewByName($wgCityId, $page->getTitle()->getText(), $wgContLang->getCode());
 		$visualization->purgeWikiPromoteDataCache($wgCityId, $wgContLang->getCode());
 		return true;
 	}
