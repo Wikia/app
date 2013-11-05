@@ -506,7 +506,10 @@ $messages['lb'] = array(
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
+	'ajaxpoll-thankyou' => 'سی رایتو منمونیم!',
+	'ajaxpoll-error' => 'ایچه یه گل مشگل سی فرایند رای دئینتو پیش اومائه،خواهش می کیم هنی تلاش بکید',
 	'ajaxpoll-submit' => 'رای بئيتو',
+	'ajaxpoll-closed' => 'صنوق رای ایسه بسه بیه. د نتیجه یا علاقه داریتو',
 );
 
 /** Lithuanian (lietuvių)
@@ -724,7 +727,7 @@ $messages['pt'] = array(
 	'ajaxpoll-error' => 'Ocorreu um problema ao processar o seu voto, por favor, tente novamente.',
 	'ajaxpoll-summary' => 'A votação foi criada às $1 de $2 e, até agora, $3 pessoas votaram.',
 	'ajaxpoll-submit' => 'Vote!',
-	'ajaxpoll-closed' => 'A votação foi encerrada. Disfrute dos resultados.',
+	'ajaxpoll-closed' => 'A votação foi encerrada. Desfrute dos resultados.',
 	'ajaxpoll-submitting' => 'Espere, por favor. A submeter o seu voto...',
 );
 
