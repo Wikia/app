@@ -1,5 +1,5 @@
 /*!
- * VisualEditor UserInterface WikiaMediaOptionWidget class.
+ * VisualEditor UserInterface WikiaMediaResultWidget class.
  *
  * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
@@ -8,32 +8,32 @@
 /* global require,mw */
 
 /**
+ * Creates an ve.ui.WikiaMediaResultWidget object.
+ *
  * @class
  * @extends ve.ui.OptionWidget
  *
  * @constructor
- * @param {Mixed} model Item data
+ * @param {Mixed} data Item data
  * @param {Object} [config] Configuration options
  * @cfg {number} [size] Media thumbnail size
  */
-ve.ui.WikiaMediaOptionWidget = function VeUiWikiaMediaOptionWidget( model, config ) {
+ve.ui.WikiaMediaResultWidget = function VeUiWikiaMediaResultWidget( data, config ) {
 	// Configuration intialization
 	config = config || {};
 
-	this.model = model;
-
 	// Parent constructor
-	ve.ui.OptionWidget.call( this, this.model.title, config );
+	ve.ui.OptionWidget.call( this, data, config );
 
 	// Properties
 	this.size = config.size || 160;
-	this.mwTitle = new mw.Title( this.model.title ).getNameText();
+	this.mwTitle = new mw.Title( this.data.title ).getNameText();
 	this.image = new Image();
 	this.$image = this.$$( this.image );
 	this.$back = this.$$( '<div>' );
 	this.$front = this.$$( '<div>' );
 	this.$thumb = this.$back.add( this.$front );
-	this.check = new ve.ui.IconButtonWidget( { 'icon': 'unchecked' } );
+	this.$overlay = this.$$( '<div>' );
 
 	// Events
 	this.$image
@@ -43,40 +43,30 @@ ve.ui.WikiaMediaOptionWidget = function VeUiWikiaMediaOptionWidget( model, confi
 	// Initialization
 	this.loadThumbnail();
 	this.setLabel( this.mwTitle );
-	this.check.$.addClass( 've-ui-wikiaMediaOptionWidget-check' );
+	this.$overlay.addClass( 've-ui-mwMediaResultWidget-overlay' );
 	this.$
-		.addClass( 've-ui-mwMediaResultWidget ve-ui-texture-pending ' + this.model.type )
+		.addClass( 've-ui-mwMediaResultWidget ve-ui-texture-pending' )
 		.css( { 'width': this.size, 'height': this.size } )
-		.prepend( this.$thumb, this.check.$ );
+		.prepend( this.$thumb, this.$overlay );
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.ui.WikiaMediaOptionWidget, ve.ui.OptionWidget );
+ve.inheritClass( ve.ui.WikiaMediaResultWidget, ve.ui.OptionWidget );
 
 /* Methods */
 
-/**
- * Load image thumbnails.
- *
- * @method
- */
-ve.ui.WikiaMediaOptionWidget.prototype.loadThumbnail = function () {
+ve.ui.WikiaMediaResultWidget.prototype.loadThumbnail = function () {
 	require( ['wikia.thumbnailer'], ve.bind( function ( thumbnailer ) {
-		this.image.src = thumbnailer.getThumbURL( this.model.url, 'image', this.size, this.size );
+		this.image.src = thumbnailer.getThumbURL( this.data.url, 'image', this.size, this.size );
 		this.$thumb.addClass(
-			've-ui-mwMediaResultWidget-thumbnail ve-ui-WikiaMediaOptionWidget-thumbnail'
+			've-ui-mwMediaResultWidget-thumbnail ve-ui-WikiaMediaResultWidget-thumbnail'
 		);
 		this.$thumb.last().css( 'background-image', 'url(' + this.image.src + ')' );
 	}, this ) );
 };
 
-/**
- * Handle when thumbnails are loaded.
- *
- * @method
- */
-ve.ui.WikiaMediaOptionWidget.prototype.onThumbnailLoad = function () {
+ve.ui.WikiaMediaResultWidget.prototype.onThumbnailLoad = function () {
 	this.$thumb.first().addClass( 've-ui-texture-transparency' );
 	this.$
 		.addClass( 've-ui-mwMediaResultWidget-done' )
@@ -96,27 +86,5 @@ ve.ui.WikiaMediaOptionWidget.prototype.onThumbnailLoad = function () {
 		} );
 	}
 };
-
-/**
- * Handle thumbnail loading errors.
- *
- * @method
- * @see {@link ve.ui.MWMediaResultWidget.prototype.onThumbnailError}
- */
-ve.ui.WikiaMediaOptionWidget.prototype.onThumbnailError =
+ve.ui.WikiaMediaResultWidget.prototype.onThumbnailError =
 	ve.ui.MWMediaResultWidget.prototype.onThumbnailError;
-
-/**
- * Show the correct icon
- *
- * @method
- * @param {boolean} checked Should the item be checked?
- */
-
-ve.ui.WikiaMediaOptionWidget.prototype.setChecked = function ( checked ) {
-	this.check.setIcon( checked ? 'checked' : 'unchecked' );
-};
-
-ve.ui.WikiaMediaOptionWidget.prototype.getModel = function () {
-	return this.model;
-};

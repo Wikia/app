@@ -5,10 +5,10 @@
 // in fluid width mode. Positioning is based on the left and right edges of
 // the viewport.
 @mixin background-fluid() {
-	// This calculates the width from the edge of each background image slice
-	// to the point where it is visible inside the viewpoint at the time the
-	// fluid breakpoint is reached. This will be used as an offset to keep
-	// the image positioned in the same place when the browser is being resized.
+// This calculates the width from the edge of each background image slice
+// to the point where it is visible inside the viewpoint at the time the
+// fluid breakpoint is reached. This will be used as an offset to keep
+// the image positioned in the same place when the browser is being resized.
 	$background-offset: ( $breakpoint-fluid - $background-width ) / 2;
 	$background-offset-left: 0;
 	$background-offset-right: 0;
@@ -16,8 +16,8 @@
 	$background-position-before: 0;
 	$background-width-both: $background-width-half;
 
-	// The gradient is positioned on the outer edge of the background image
-	// slices, overlapping by the width of the gradient itself.
+// The gradient is positioned on the outer edge of the background image
+// slices, overlapping by the width of the gradient itself.
 	$gradient-offset: ( $background-width-half + $background-offset ) - $width-gradient;
 
 	@if ( $background-is-wide ) {
@@ -81,14 +81,14 @@
 // has been hit and the skin goes back into static mode. Positioning is done
 // relative to the center of the viewport.
 @mixin background-max() {
-	// This margin correctly aligns the background image slices from the center
-	// of the viewport. It's basically the difference between where the image sat
-	// before the layout became fluid, and where it sits once max width is reached.
+// This margin correctly aligns the background image slices from the center
+// of the viewport. It's basically the difference between where the image sat
+// before the layout became fluid, and where it sits once max width is reached.
 	$background-margin: $width-outside-half - ( $width-outside-max-half + $background-width-half );
 	$background-position-after: -$background-width-half;
 
-	// The gradient is still positioned on the outer edge of the background image
-	// slices, overlapping by the width of the gradient itself.
+// The gradient is still positioned on the outer edge of the background image
+// slices, overlapping by the width of the gradient itself.
 	$gradient-offset: $background-margin + ( $background-width-half - $width-gradient );
 
 	body.skin-oasis {
