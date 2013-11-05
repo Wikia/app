@@ -4,6 +4,11 @@ $header-height: 44px;
 $nice-blue: rgb(0, 77, 141);
 $toc-background: #F8F8F8;
 
+//TODO: Remove after 2 weeks :)
+#toc.toc {
+	display: none;
+}
+
 #wkTOC {
 	position: fixed;
 	left: 0;
