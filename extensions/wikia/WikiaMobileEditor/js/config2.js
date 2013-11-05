@@ -5,11 +5,14 @@
  * @author Bartłomiej Kowalczyk
  */
 
-define( 'config', ['editor', 'wikia.mustache', 'wikia.loader', 'toast'], function(editor, mustache, loader){
+define( 'config', ['editor', 'wikia.mustache', 'wikia.loader', 'toast'], function(editor, mustache, loader, toast){
 
     'use strict';
 
     var wrapper = document.getElementById( 'tagListWrapper' ),
+        custTmpl,
+        custMarkup,
+        clear,
 
     //list of all tags
     taglist = {
@@ -223,11 +226,12 @@ define( 'config', ['editor', 'wikia.mustache', 'wikia.loader', 'toast'], functio
         ]
     };
 
-    //adds custom tag to the tags dictionary & saves it to localStorage ToDo
-    function addCustom( tag ){
+    var customTags = ( localStorage.customTags ) ? JSON.parse( localStorage.customTags ) : {
 
-        var cTags = JSON.parse( localStorage.getItem( 'cTags' ) );
-    }
+        name: 'Custom Tags',
+        tags: []
+    };
+
 
     //finds tag object in the dictionary
     function findTag ( tagShort ){
@@ -254,7 +258,53 @@ define( 'config', ['editor', 'wikia.mustache', 'wikia.loader', 'toast'], functio
 
                 editor.insert( event.target.getAttribute( 'data-tag' ) );
             }
+
+            if(event.target.id === 'addCustom'){
+
+                event.preventDefault();
+                addCustom();
+            }
+
+            if(event.target.id === 'clearCustom'){
+
+                event.preventDefault();
+                clearCustom();
+            }
         } );
+    }
+
+    function addCustom(){
+
+        var abbr = document.getElementById( 'custAbbr' ).value,
+            cTag = document.getElementById( 'custTag' ).value;
+
+        if( !abbr || !cTag ){
+
+            toast.show( 'You should give both tag markup and abbreviation for it' );
+            return;
+        }
+
+        while( abbr.indexOf( '<' ) != -1 || abbr.indexOf( '>' ) != -1 ){
+
+            abbr.replace( '<', '&lt;' ).replace( '>', '&gt;' );
+        }
+
+        custAbbr.value = custTag.value = '';
+        customTags.tags.push( {name: 'Custom Tag', short: abbr, tag: cTag} );
+        localStorage.customTags = JSON.stringify( customTags );
+
+        custMarkup.innerHTML = mustache.render( custTmpl, customTags );
+
+    }
+
+    //clears all the custom tags from view and locaStorage
+
+    function clearCustom(){
+
+        custMarkup.innerHTML = '';
+        localStorage.removeItem('customTags');
+        customTags.tags = [];
+        custMarkup.setAttribute( 'class', custMarkup.getAttribute('class').replace( ' open', '' ) );
     }
 
     //check if user possible wrote snippet <special_char><tag_shortcut><special_char>
@@ -303,7 +353,7 @@ define( 'config', ['editor', 'wikia.mustache', 'wikia.loader', 'toast'], functio
                 textBox.value.substring( endPos + 1 );
 
             textBox.selectionStart = textBox.selectionEnd  = sel - ( endPos + 1 - startPos );
-            if( phrTab && isExt) {mw-anon-edit-warning
+            if( phrTab && isExt) {
 
                 var ending = ( phrTab[1] ) ? phrTab[1] : '';
                 insert( phrTab[0] + ext + ending );
@@ -324,13 +374,19 @@ define( 'config', ['editor', 'wikia.mustache', 'wikia.loader', 'toast'], functio
             type: loader.MULTI,
             resources: {
                 mustache: '/extensions/wikia/WikiaMobileEditor/templates/WikiaMobileEditorController_tagList.mustache'
+                + ',/extensions/wikia/WikiaMobileEditor/templates/WikiaMobileEditorController_customTags.mustache'
+                   + ',/extensions/wikia/WikiaMobileEditor/templates/WikiaMobileEditorController_customTag.mustache'
             }
         }).done(function(resp){
 
-                wrapper.innerHTML = mustache.render(resp.mustache[0], taglist);
+                wrapper.innerHTML = mustache.render(resp.mustache[0], taglist)
+                    + mustache.render(resp.mustache[1], customTags);
 
+                custMarkup = document.getElementById('custom');
+                clear = document.getElementById('clearCustom');
+                custTmpl = resp.mustache[2];
+                custMarkup.innerHTML = mustache.render( custTmpl, customTags );
                 initLinks();
-
             });
 
     }

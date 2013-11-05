@@ -126,7 +126,7 @@ define( 'editor', ['wikia.nirvana'], function( nirvana ){
 
         suggestionBox.addEventListener( 'click', function( ){
 
-           if( event.target.classList.contains( 'suggestion' ) ){
+           if( event.target.getAttribute( 'class' ).indexOf( 'suggestion' ) != -1 ){
 
                var phrase = event.target.innerText,
                    beginning = textBox.value.substring( textBox.value.substring( 0,
@@ -214,18 +214,18 @@ define( 'editor', ['wikia.nirvana'], function( nirvana ){
         }
         suggestionBox.innerHTML = suggestionsMarkup;
 
-        if(suggestionBox.classList.contains('off')){
+        if(suggestionBox.getAttribute( 'class').indexOf( 'off' ) != -1 ){
 
-            suggestionBox.classList.remove('off');
+            suggestionBox.setAttribute( 'class', suggestionBox.getAttribute( 'class').replace(' off', '') );
         }
     }
 
     //hides suggestionBox
     function hideSuggestions(){
 
-        if( !suggestionBox.classList.contains( 'off' )){
+        if( suggestionBox.getAttribute( 'class').indexOf( 'off' ) === -1 ){
 
-            suggestionBox.classList.add( 'off' );
+            suggestionBox.setAttribute( 'class', suggestionBox.getAttribute( 'class' ) + ' off' );
         }
         suggestionBox.innerHTML = '';
     }
@@ -245,7 +245,7 @@ define( 'editor', ['wikia.nirvana'], function( nirvana ){
         textBoxClone.style.visibility = 'hidden';
         if( ( textBox.scrollHeight <= textBox.offsetHeight ) ) {
 
-            textBoxClone.classList.add('hiddenScrollbar');
+            textBoxClone.setAttribute('class', textBoxClone.getAttribute('class') + 'hiddenScrollbar');
         }
 
         //appending clone to DOM to measure height

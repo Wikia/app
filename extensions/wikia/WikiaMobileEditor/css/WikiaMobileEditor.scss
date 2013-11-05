@@ -1,9 +1,3 @@
-ul{
-  margin:0;
-  padding:0;
-  list-style-type:none;
-}
-
 .suggestion-box{
   position:absolute;
   top:100px;
@@ -34,6 +28,18 @@ ul{
   margin-bottom:10px;
 }
 
+.artSec{
+
+  margin:0;
+  padding:0 0 0 5px;
+  list-style-type:none;
+}
+
+.artSec.open{
+
+  border-bottom:none;
+}
+
 .artSec li{
   padding: 2.5% 0 2.5% 0;
   line-height:2em;
@@ -44,13 +50,18 @@ ul{
   border-bottom: 1px solid #f0f0f0;
 }
 
+.goBck{
+
+  margin-top:10px;
+}
+
 .tag-section small{
   color: #c4c4c4;
   margin-left: 10px;
   font-size: 1.2em;
 }
 
-.tag-section>ul a{
+.tag-section>ul a, .add-custom{
   padding:8px 16px;
 
   width:auto;
@@ -66,10 +77,15 @@ ul{
   border-radius:5px;
 }
 
-.tag-section input[type='text']{
+.add-custom{
+  margin-top: 10px;
+}
+
+.cust-field{
+  margin-top: 10px;
   padding:10px 0 10px 10px;
 
-  width:45%;
+  width:37%;
 
   border: 1px solid #cccccc;
   border-radius:5px;
