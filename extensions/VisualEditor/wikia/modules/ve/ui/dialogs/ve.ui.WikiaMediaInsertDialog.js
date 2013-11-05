@@ -2,7 +2,7 @@
  * VisualEditor user interface WikiaMediaInsertDialog class.
  */
 
-/*global mw*/
+/* global mw, require */
 
 /**
  * Dialog for inserting MediaWiki media objects.
@@ -293,6 +293,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.onMediaPageRemove = function ( item ) {
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onOpen = function () {
 	ve.ui.MWDialog.prototype.onOpen.call( this );
+	ve.track( { 'action': ve.track.actions.OPEN, 'label': 'media-dialog' } );
 	this.pages.setPage( 'main' );
 };
 
@@ -317,11 +318,22 @@ ve.ui.WikiaMediaInsertDialog.prototype.onPageSet = function () {
  * @param {string} action Which action is being performed on close.
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onClose = function ( action ) {
+	ve.track( { 'action': ve.track.actions.CLOSE, 'label': 'media-dialog' } );
 	if ( action === 'insert' ) {
 		this.insertMedia( ve.copy( this.cartModel.getItems() ) );
 	}
 	this.cartModel.clearItems();
 	this.queryInput.setValue( '' );
+};
+
+/**
+ * Handle close button click events.
+ *
+ * @method
+ */
+ve.ui.WikiaMediaInsertDialog.prototype.onCloseButtonClick = function () {
+	ve.ui.MWDialog.prototype.onCloseButtonClick.call( this );
+	ve.track( { 'action': ve.track.actions.CLICK, 'label': 'media-dialog-button-close' } );
 };
 
 /**
@@ -462,37 +474,46 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMedia = function ( cartIte
  * @param {Object} items Items to insert
  */
 ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMediaCallback = function ( items ) {
-	var title, type, item, linmod = [];
-	for ( title in items ) {
-		item = items[title];
-		if ( item.type === 'image' ) {
-			type = 'wikiaBlockImage';
-		} else if ( item.type === 'video' ) {
-			type = 'wikiaBlockVideo';
-		}
-		linmod.push(
-			{
-				'type': type,
-				'attributes': {
-					'type': 'thumb',
-					'align': 'default',
-					'href': './' + item.title,
-					'src': item.url,
-					'width': item.width,
-					'height': item.height,
-					'resource': './' + item.title,
-					'attribution': {
-						'username': item.username,
-						'avatar': item.avatar
+	require( ['wikia.stringhelper'], ve.bind( function ( stringUtils ) {
+		var item, mediaType, title, type,
+			count = 0,
+			linmod = [];
+
+		for ( title in items ) {
+			item = items[title];
+			type = 'wikiaBlock' + stringUtils.ucFirst( item.type );
+			mediaType = ( mediaType === undefined || mediaType === item.type ) ?
+				item.type : 'multiple';
+			count++;
+			linmod.push(
+				{
+					'type': type,
+					'attributes': {
+						'type': 'thumb',
+						'align': 'default',
+						'href': './' + item.title,
+						'src': item.url,
+						'width': item.width,
+						'height': item.height,
+						'resource': './' + item.title,
+						'attribution': {
+							'username': item.username,
+							'avatar': item.avatar
+						}
 					}
-				}
-			},
-			{ 'type': 'wikiaMediaCaption' },
-			{ 'type': '/wikiaMediaCaption' },
-			{ 'type': '/' + type }
-		);
-	}
-	this.surface.getModel().getFragment().collapseRangeToEnd().insertContent( linmod );
+				},
+				{ 'type': 'wikiaMediaCaption' },
+				{ 'type': '/wikiaMediaCaption' },
+				{ 'type': '/' + type }
+			);
+		}
+		ve.track( {
+			'action': ve.track.actions.ADD,
+			'label': 'media-dialog-insert-' + mediaType,
+			'value': count
+		} );
+		this.surface.getModel().getFragment().collapseRangeToEnd().insertContent( linmod );
+	}, this ) );
 };
 
 /**
