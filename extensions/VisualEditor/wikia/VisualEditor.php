@@ -13,12 +13,12 @@ $dir = dirname( __FILE__ ) . '/';
 $wgAutoloadClasses['VisualEditorWikiaHooks'] = $dir . 'VisualEditor.hooks.php';
 $wgAutoloadClasses['ApiTempUpload'] = $dir . 'ApiTempUpload.php';
 $wgAutoloadClasses['ApiMediaSearch'] = $dir . 'ApiMediaSearch.php';
-$wgAutoloadClasses['ApiImageAttribution'] = $dir . 'ApiImageAttribution.php';
+$wgAutoloadClasses['ApiPhotoAttribution'] = $dir . 'ApiPhotoAttribution.php';
 
 // Register API modules
 $wgAPIModules['apitempupload'] = 'ApiTempUpload';
 $wgAPIModules['apimediasearch'] = 'ApiMediaSearch';
-$wgAPIModules['apiimageattribution'] = 'ApiImageAttribution';
+$wgAPIModules['apiphotoattribution'] = 'ApiPhotoAttribution';
 
 // Register resource modules
 $wgVisualEditorWikiaResourceTemplate = array(

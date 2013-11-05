@@ -390,14 +390,14 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMedia = function ( cartIte
 	var items = {},
 		promises = [],
 		types = {
-			'image': [],
+			'photo': [],
 			'video': []
 		},
 		cartItem,
 		i,
 		title;
 
-	// Populates items, types.video and types.image
+	// Populates attributes, items.video and items.photo
 	for ( i = 0; i < cartItems.length; i++ ) {
 		cartItem = cartItems[i];
 		items[ cartItem.title ] = {
@@ -417,10 +417,10 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMedia = function ( cartIte
 		}
 	}
 
-	// Imageinfo for images request
-	if ( types.image.length ) {
+	// Imageinfo for photo request
+	if ( types.photo.length ) {
 		promises.push(
-			this.getImageInfo( types.image, 220 ).done(
+			this.getImageInfo( types.photo, 220 ).done(
 				ve.bind( updateImageinfo, this )
 			)
 		);
@@ -443,7 +443,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMedia = function ( cartIte
 	// Attribution request
 	for ( title in items ) {
 		promises.push(
-			this.getImageAttribution( title ).done(
+			this.getPhotoAttribution( title ).done(
 				ve.bind( updateAvatar, this )
 			)
 		);
@@ -465,7 +465,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMediaCallback = function (
 	var title, type, item, linmod = [];
 	for ( title in items ) {
 		item = items[title];
-		if ( item.type === 'image' ) {
+		if ( item.type === 'photo' ) {
 			type = 'wikiaBlockImage';
 		} else if ( item.type === 'video' ) {
 			type = 'wikiaBlockVideo';
@@ -496,18 +496,18 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMediaCallback = function (
 };
 
 /**
- * Gets image attribution information
+ * Gets photo attribution information
  *
  * @method
  * @param {string} title Title of the file
  * @returns {jQuery.Promise}
  */
-ve.ui.WikiaMediaInsertDialog.prototype.getImageAttribution = function ( title ) {
+ve.ui.WikiaMediaInsertDialog.prototype.getPhotoAttribution = function ( title ) {
 	var deferred = $.Deferred();
 	$.ajax( {
 		'url': mw.util.wikiScript( 'api' ),
 		'data': {
-			'action': 'apiimageattribution',
+			'action': 'apiphotoattribution',
 			'format': 'json',
 			'file': title
 		},
@@ -573,7 +573,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.onGetImageInfoSuccess = function ( deferr
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onUploadSuccess = function ( data ) {
 	this.cartModel.addItems( [
-		new ve.dm.WikiaCartItem( data.title, data.temporaryThumbUrl, 'image', data.temporaryFileName )
+		new ve.dm.WikiaCartItem( data.title, data.temporaryThumbUrl, 'photo', data.temporaryFileName )
 	] );
 	this.setPage( data.title );
 };
