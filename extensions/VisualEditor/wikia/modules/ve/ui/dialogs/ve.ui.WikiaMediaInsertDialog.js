@@ -168,7 +168,14 @@ ve.ui.WikiaMediaInsertDialog.prototype.onQueryRequestSearchDone = function ( ite
 ve.ui.WikiaMediaInsertDialog.prototype.onQueryRequestVideoDone = function ( data ) {
 	this.queryInput.setValue( '' );
 	this.cartModel.addItems( [
-		new ve.dm.WikiaCartItem( data.title, data.temporaryThumbUrl, 'video', data.temporaryFileName )
+		new ve.dm.WikiaCartItem(
+			data.title,
+			data.temporaryThumbUrl,
+			'video',
+			data.temporaryFileName,
+			data.provider,
+			data.videoId
+		)
 	] );
 	this.setPage( data.title );
 };
@@ -318,13 +325,71 @@ ve.ui.WikiaMediaInsertDialog.prototype.onClose = function ( action ) {
 };
 
 /**
+ * Converts temporary cart item into permanent.
+ *
+ * @method
+ * @param {ve.dm.WikiaCartItem} cartItem Cart item to convert.
+ */
+ve.ui.WikiaMediaInsertDialog.prototype.convertTemporaryToPermanent = function ( cartItem ) {
+	var deferred = $.Deferred(),
+		data = {
+			'action': 'apitempupload',
+			'format': 'json',
+			'type': 'permanent',
+			'desiredName': cartItem.title
+		};
+	if ( cartItem.type === 'video' ) {
+		data.provider = cartItem.provider;
+		data.videoId = cartItem.videoId;
+	} else {
+		data.temporaryFileName = cartItem.temporaryFileName;
+	}
+	$.ajax( {
+		'url': mw.util.wikiScript( 'api' ),
+		'data': data,
+		'success': function( data ) {
+			deferred.resolve( data.apitempupload.name );
+		}
+	} );
+	return deferred.promise();
+};
+
+/**
  * @method
  * @param {ve.dm.WikiaCartItem[]} cartItems Items to add
  */
 ve.ui.WikiaMediaInsertDialog.prototype.insertMedia = function ( cartItems ) {
-	var attributes = {},
+	var i, promises = [];
+
+	function temporaryToPermanentCallback ( cartItem, name ) {
+		cartItem.temporaryFileName = null;
+		cartItem.url = null;
+		cartItem.title = 'File:' + name;
+	}
+
+	for ( i = 0; i < cartItems.length; i++ ) {
+		if ( cartItems[i].temporaryFileName ) {
+			promises.push(
+				this.convertTemporaryToPermanent( cartItems[i] ).done(
+					ve.bind( temporaryToPermanentCallback, this, cartItems[i] )
+				)
+			);
+		}
+	}
+
+	$.when.apply( $, promises ).done(
+		ve.bind( function() { this.insertPermanentMedia( cartItems ); }, this )
+	);
+};
+
+/**
+ * @method
+ * @param {Object} cartItems Cart items to insert.
+ */
+ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMedia = function ( cartItems ) {
+	var items = {},
 		promises = [],
-		items = {
+		types = {
 			'image': [],
 			'video': []
 		},
@@ -332,51 +397,51 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertMedia = function ( cartItems ) {
 		i,
 		title;
 
-	// Populates attributes, items.video and items.image
+	// Populates items, types.video and types.image
 	for ( i = 0; i < cartItems.length; i++ ) {
 		cartItem = cartItems[i];
-		attributes[ cartItem.title ] = {
+		items[ cartItem.title ] = {
 			'title': cartItem.title,
 			'type': cartItem.type
 		};
-		items[ cartItem.type ].push( cartItem.title );
+		types[ cartItem.type ].push( cartItem.title );
 	}
 
 	function updateImageinfo( results ) {
 		var i, result;
 		for ( i = 0; i < results.length; i++ ) {
 			result = results[i];
-			attributes[result.title].height = result.height;
-			attributes[result.title].width = result.width;
-			attributes[result.title].url = result.url;
+			items[result.title].height = result.height;
+			items[result.title].width = result.width;
+			items[result.title].url = result.url;
 		}
 	}
 
 	// Imageinfo for images request
-	if ( items.image.length ) {
+	if ( types.image.length ) {
 		promises.push(
-			this.getImageInfo( items.image, 220 ).done(
+			this.getImageInfo( types.image, 220 ).done(
 				ve.bind( updateImageinfo, this )
 			)
 		);
 	}
 
 	// Imageinfo for videos request
-	if ( items.video.length ) {
+	if ( types.video.length ) {
 		promises.push(
-			this.getImageInfo( items.video, 330 ).done(
+			this.getImageInfo( types.video, 330 ).done(
 				ve.bind( updateImageinfo, this )
 			)
 		);
 	}
 
 	function updateAvatar( result ) {
-		attributes[result.title].avatar = result.avatar;
-		attributes[result.title].username = result.username;
+		items[result.title].avatar = result.avatar;
+		items[result.title].username = result.username;
 	}
 
 	// Attribution request
-	for ( title in attributes ) {
+	for ( title in items ) {
 		promises.push(
 			this.getImageAttribution( title ).done(
 				ve.bind( updateAvatar, this )
@@ -386,7 +451,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertMedia = function ( cartItems ) {
 
 	// When all ajax requests are finished, insert media
 	$.when.apply( $, promises ).done(
-		ve.bind( this.insertMediaCallback, this, attributes )
+		ve.bind( this.insertPermanentMediaCallback, this, items )
 	);
 };
 
@@ -394,18 +459,18 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertMedia = function ( cartItems ) {
  * Inserts media items into the document
  *
  * @method
- * @param {Object} attributes Items to insert
+ * @param {Object} items Items to insert
  */
-ve.ui.WikiaMediaInsertDialog.prototype.insertMediaCallback = function ( attributes ) {
-	var title, type, item, items = [];
-	for ( title in attributes ) {
-		item = attributes[title];
+ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMediaCallback = function ( items ) {
+	var title, type, item, linmod = [];
+	for ( title in items ) {
+		item = items[title];
 		if ( item.type === 'image' ) {
 			type = 'wikiaBlockImage';
 		} else if ( item.type === 'video' ) {
 			type = 'wikiaBlockVideo';
 		}
-		items.push(
+		linmod.push(
 			{
 				'type': type,
 				'attributes': {
@@ -427,7 +492,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertMediaCallback = function ( attribut
 			{ 'type': '/' + type }
 		);
 	}
-	this.surface.getModel().getFragment().collapseRangeToEnd().insertContent( items );
+	this.surface.getModel().getFragment().collapseRangeToEnd().insertContent( linmod );
 };
 
 /**

@@ -29,50 +29,66 @@ class ApiTempUpload extends ApiBase {
 
 	private function executePermanent() {
 		if ( !empty( $this->mParams['provider'] ) && !empty( $this->mParams['videoId'] ) ) {
-			// video
-			$duplicates = WikiaFileHelper::findVideoDuplicates(
-				$this->mParams['provider'],
-				$this->mParams['videoId']
-			);
-			if ( count( $duplicates ) > 0 ) {
-				$file = wfFindFile( $duplicates[0]['img_name'] );
-				$name = $file->getName();
-			} else {
-				$name = VideoFileUploader::sanitizeTitle( $this->mParams['desiredName'] );
-				$title = VideoFileUploader::getUniqueTitle( $name );
-
-				$uploader = new VideoFileUploader();
-				$uploader->setProvider( $this->mParams['provider'] );
-				$uploader->setVideoId( $this->mParams['videoId'] );
-				$uploader->setTargetTitle( $title->getBaseText() );
-				$uploader->upload( $title );
-
-				$name = $title->getBaseText();
-			}
-			$result = array( 'name' => $name );
+			$this->executePermanentVideo();
 		} else {
-			$temporaryFileName = $this->mParams['temporaryFileName'];
-			$temporaryFile = new FakeLocalFile(Title::newFromText($temporaryFileName, 6), RepoGroup::singleton()->getLocalRepo());
-			$temporaryFileHash = FSFile::getSha1Base36FromPath( $temporaryFile->getLocalRefPath() );
-			$dupes = RepoGroup::singleton()->findBySha1( $temporaryFileHash );
-			if ( count ( $dupes ) > 0 ) {
-				$name = $dupes[0]->getName();
-			} else {
-				$desiredName = $this->mParams['desiredName'];
-				$desiredFilename = pathinfo( $desiredName, PATHINFO_FILENAME );
-				$desiredExtension = pathinfo( $desiredName, PATHINFO_EXTENSION );
-				$title = $this->getUniqueTitle( $desiredFilename, $desiredExtension );
-				$file = new LocalFile( $title, RepoGroup::singleton()->getLocalRepo() );
-				$file->upload( $temporaryFile->getPath(), '', '' );
-				$name = $file->getName();
-			}
-			$result = array( 'name' => $name );
+			$this->executePermanentImage();
 		}
-
-		$this->getResult()->addValue( null, $this->getModuleName(), $result );
 	}
 
-	private function getUniqueTitle( $filename, $extension ) {
+	private function executePermanentVideo() {
+		if ( empty ( $this->mParams['desiredName'] ) ) {
+			$this->dieUsageMsg( 'The desiredName parameter must be set' );
+		}
+		// TODO: Check with Video team if that's the best way to look for video duplicates
+		$duplicates = WikiaFileHelper::findVideoDuplicates(
+			$this->mParams['provider'],
+			$this->mParams['videoId']
+		);
+		if ( count( $duplicates ) > 0 ) {
+			$file = wfFindFile( $duplicates[0]['img_name'] );
+			$name = $file->getTitle()->getText();
+		} else {
+			$title = VideoFileUploader::getUniqueTitle(
+				VideoFileUploader::sanitizeTitle( $this->mParams['desiredName'] )
+			);
+			$uploader = new VideoFileUploader();
+			$uploader->setProvider( $this->mParams['provider'] );
+			$uploader->setVideoId( $this->mParams['videoId'] );
+			$uploader->setTargetTitle( $title->getBaseText() );
+			$uploader->upload( $title );
+			$name = $title->getText();
+		}
+		$this->getResult()->addValue( null, $this->getModuleName(), array( 'name' => $name ) );
+	}
+
+	private function executePermanentImage() {
+		if ( empty ( $this->mParams['desiredName'] ) ) {
+			$this->dieUsageMsg( 'The desiredName parameter must be set' );
+		}
+		if ( empty ( $this->mParams['temporaryFileName'] ) ) {
+			$this->dieUsageMsg( 'The temporaryFileName parameter must be set' );
+		}
+		$temporaryFile = new FakeLocalFile(
+			Title::newFromText( $this->mParams['temporaryFileName'], 6 ),
+			RepoGroup::singleton()->getLocalRepo()
+		);
+		$duplicates = RepoGroup::singleton()->findBySha1(
+			FSFile::getSha1Base36FromPath( $temporaryFile->getLocalRefPath() )
+		);
+		if ( count ( $duplicates ) > 0 ) {
+			$name = $duplicates[0]->getTitle()->getText();
+		} else {
+			$title = $this->getUniqueTitle( $this->mParams['desiredName'] );
+			$file = new LocalFile( $title, RepoGroup::singleton()->getLocalRepo() );
+			$file->upload( $temporaryFile->getPath(), '', '' );
+			$name = $file->getTitle()->getText();
+		}
+		$this->getResult()->addValue( null, $this->getModuleName(), array( 'name' => $name ) );
+	}
+
+	private function getUniqueTitle( $name ) {
+		$filename = pathinfo( $name, PATHINFO_FILENAME );
+		$extension = pathinfo( $name, PATHINFO_EXTENSION );
 		$title = Title::makeTitleSafe( NS_IMAGE, $filename . '.' . $extension );
 		if ( !empty( $title ) && $title->exists() ) {
 			for ( $i = 0; $i <= 3; $i++ ) {
@@ -98,61 +114,69 @@ class ApiTempUpload extends ApiBase {
 	}
 
 	private function executeTemporary() {
-		$result = array();
-
 		if ( $this->mRequest->wasPosted() ) {
-			// file/image
-			$this->mUpload = new UploadFromFile();
-			$this->mUpload->initialize(
-				$this->mRequest->getFileName( 'file' ),
-				$this->mRequest->getUpload( 'file' )
-			);
-			// First check permission to upload
-			$this->checkPermissions( $this->mUser );
-			$this->verifyUpload();
-			$temporaryFile = $this->createTemporaryFile( $this->mRequest->getFileTempName( 'file' ) );
-			$result['title'] = $this->mUpload->getTitle()->getText();
+			$this->executeTemporaryImage();
 		} else {
-			// video
-			$awf = ApiWrapperFactory::getInstance();
-			$url = $this->mParams['url'];
-			// ApiWrapperFactory->getApiWrapper(...) require whole URL to be passed in (including protocol)
-			if ( !preg_match( '/^https?:\/\//', $url ) ) {
-				$url = 'http://' . $url;
-			}
-			try {
-				$apiwrapper = $awf->getApiWrapper( $url );
-			} catch ( Exception $e ) {
-				$this->dieUsageMsg( 'Incorrect video URL' );
-			}	
-			if ( !$apiwrapper ) {
-				$this->dieUsageMsg( 'Not a video URL' );
-			}
-			$this->mUpload = new UploadFromUrl();
-			$this->mUpload->initializeFromRequest( new FauxRequest(
-				array(
-					'wpUpload' => 1,
-					'wpSourceType' => 'web',
-					'wpUploadFileURL' => $apiwrapper->getThumbnailUrl()
-				),
-				true
-			) );
-			// First check permission to upload
-			$this->checkPermissions( $this->mUser );
-			$status = $this->mUpload->fetchFile();
-			if ( !$status->isGood() ) {
-				$this->dieUsage( 'Error fetching file from remote source' );
-			}
-			$this->verifyUpload();
-			$temporaryFile = $this->createTemporaryFile( $this->mUpload->getTempPath() );
-			$result['title'] = $apiwrapper->getTitle();
-			$result['provider'] = $apiwrapper->getProvider();
-			$result['videoId'] = $apiwrapper->getVideoId();
+			$this->executeTemporaryVideo();
 		}
+	}
 
-		$result['temporaryThumbUrl'] = $temporaryFile->getUrl();
-		$result['temporaryFileName'] = $temporaryFile->getName();
-		$this->getResult()->addValue( null, $this->getModuleName(), $result );
+	private function executeTemporaryImage() {
+		$this->mUpload = new UploadFromFile();
+		$this->mUpload->initialize(
+			$this->mRequest->getFileName( 'file' ),
+			$this->mRequest->getUpload( 'file' )
+		);
+		// First check permission to upload
+		$this->checkPermissions( $this->mUser );
+		$this->verifyUpload();
+		$temporaryFile = $this->createTemporaryFile( $this->mRequest->getFileTempName( 'file' ) );
+		$this->getResult()->addValue( null, $this->getModuleName(), array(
+			'title' => $this->mUpload->getTitle()->getText(),
+			'temporaryThumbUrl' => $temporaryFile->getUrl(),
+			'temporaryFileName' => $temporaryFile->getName()
+		) );
+	}
+
+	private function executeTemporaryVideo() {
+		$awf = ApiWrapperFactory::getInstance();
+		$url = $this->mParams['url'];
+		// ApiWrapperFactory->getApiWrapper(...) require whole URL to be passed in (including protocol)
+		if ( !preg_match( '/^https?:\/\//', $url ) ) {
+			$url = 'http://' . $url;
+		}
+		try {
+			$apiwrapper = $awf->getApiWrapper( $url );
+		} catch ( Exception $e ) {
+			$this->dieUsageMsg( 'Incorrect video URL' );
+		}	
+		if ( !$apiwrapper ) {
+			$this->dieUsageMsg( 'Not a video URL' );
+		}
+		$this->mUpload = new UploadFromUrl();
+		$this->mUpload->initializeFromRequest( new FauxRequest(
+			array(
+				'wpUpload' => 1,
+				'wpSourceType' => 'web',
+				'wpUploadFileURL' => $apiwrapper->getThumbnailUrl()
+			),
+			true
+		) );
+		// First check permission to upload
+		$this->checkPermissions( $this->mUser );
+		$status = $this->mUpload->fetchFile();
+		if ( !$status->isGood() ) {
+			$this->dieUsage( 'Error fetching file from remote source' );
+		}
+		$this->verifyUpload();
+		$temporaryFile = $this->createTemporaryFile( $this->mUpload->getTempPath() );
+		$this->getResult()->addValue( null, $this->getModuleName(), array(
+			'title' => $apiwrapper->getTitle(),
+			'temporaryThumbUrl' => $temporaryFile->getUrl(),
+			'temporaryFileName' => $temporaryFile->getName(),
+			'provider' => $apiwrapper->getProvider(),
+			'videoId' => $apiwrapper->getVideoId()
+		) );
 	}
 
 	/**
