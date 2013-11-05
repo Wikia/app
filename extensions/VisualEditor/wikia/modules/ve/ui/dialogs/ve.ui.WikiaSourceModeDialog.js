@@ -143,7 +143,7 @@ ve.ui.WikiaSourceModeDialog.prototype.onParseSuccess = function( deferred, respo
 	tx.pushReplaceMetadata(
 		// only send the last items
 		( doc.metadata.length ? doc.metadata.data[doc.metadata.data.length - 1] : [] ),
-		( newDoc.metadata.length ? newDoc.metadata.data[doc.metadata.data.length - 1] : [] )
+		( newDoc.metadata.length ? newDoc.metadata.data[newDoc.metadata.data.length - 1] : [] )
 	);
 
 	surfaceModel.change( tx );
