@@ -1,22 +1,29 @@
-.ve-ui-barToolGroup .ve-ui-tool-wikiaMediaInsert {
-	padding-left: .5em;
-	padding-right: .5em;
-	width: auto;
+@import "skins/oasis/css/core/color";
+
+.ve-ui-barToolGroup {
+	.ve-ui-tool-wikiaMediaInsert {
+		padding-left: .5em;
+		padding-right: .5em;
+		width: auto;
+
+		&:hover {
+			text-decoration: none;
+		}
+
+		.ve-ui-iconedElement-icon {
+			display: inline-block;
+			margin-right: .3em;
+			vertical-align: middle;
+		}
+
+		.ve-ui-labeledElement-label {
+			display: inline;
+			font-size: .8em;
+			vertical-align: middle;
+		}
+	}
 }
 
-.ve-ui-tool-wikiaMediaInsert:hover {
-	text-decoration: none;
-}
-
-.ve-ui-barToolGroup .ve-ui-tool-wikiaMediaInsert .ve-ui-iconedElement-icon {
-	display: inline-block;
-	margin-right: .3em;
-	vertical-align: middle;
-}
-
-.ve-ui-barToolGroup .ve-ui-tool-wikiaMediaInsert .ve-ui-labeledElement-label {
-	color: #555;
-	display: inline;
-	font-size: .8em;
-	vertical-align: middle;
+.ve-ui-toolGroup .ve-ui-tool .ve-ui-labeledElement-label {
+	color: $color-text;
 }
