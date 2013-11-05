@@ -219,7 +219,9 @@ body.background-fixed {
 	}
 
 	@media screen and (max-width: $breakpoint-content) {
-		body.background-dynamic.skin-oasis {
+		body.skin-oasis {
+			background-image: none;
+
 			&:after,
 			&:before {
 				display: none;
