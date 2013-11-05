@@ -13,7 +13,6 @@ class ApiVisualEditor extends ApiBase {
 	protected function getHTML( $title, $parserParams ) {
 		global $wgDevelEnvironment,
 			$wgVisualEditorParsoidURL,
-			$wgVisualEditorParsoidPrefix,
 			$wgVisualEditorParsoidTimeout;
 
 		$restoring = false;
@@ -38,7 +37,7 @@ class ApiVisualEditor extends ApiBase {
 			$oldid = $parserParams['oldid'];
 
 			$req = MWHttpRequest::factory( wfAppendQuery(
-					$wgVisualEditorParsoidURL . '/' . $wgVisualEditorParsoidPrefix .
+					$wgVisualEditorParsoidURL . '/' . $this->getApiSource() .
 						'/' . urlencode( $title->getPrefixedDBkey() ),
 					$parserParams
 				),
@@ -88,14 +87,13 @@ class ApiVisualEditor extends ApiBase {
 	protected function postHTML( $title, $html, $parserParams ) {
 		global $wgDevelEnvironment,
 			$wgVisualEditorParsoidURL,
-			$wgVisualEditorParsoidPrefix,
 			$wgVisualEditorParsoidTimeout;
 
 		if ( $parserParams['oldid'] === 0 ) {
 			$parserParams['oldid'] = '';
 		}
 		return Http::post(
-			$wgVisualEditorParsoidURL . '/' . $wgVisualEditorParsoidPrefix .
+			$wgVisualEditorParsoidURL . '/' . $this->getApiSource() .
 				'/' . urlencode( $title->getPrefixedDBkey() ),
 			array(
 				'postData' => array(
@@ -198,6 +196,17 @@ class ApiVisualEditor extends ApiBase {
 		} else {
 			return array( 'result' => 'nochanges' );
 		}
+	}
+
+	/**
+	 * @protected
+	 * @description Simple helper to retrieve relevant api uri, eg: http://muppet.wikia.com/api.php
+	 * @return String
+	 */
+	protected function getApiSource() {
+		global $wgVisualEditorParsoidPrefix;
+		return empty( $wgVisualEditorParsoidPrefix ) ?
+				wfExpandUrl( wfScript( 'api' ) ) : $wgVisualEditorParsoidPrefix;
 	}
 
 	public function execute() {
