@@ -16,7 +16,12 @@ class HubRssModelTest extends WikiaBaseTest {
 
 	public function setUp() {
 		$dir = dirname( __FILE__ ) . '/../';
-		require_once $dir . '../WikiaHubsServices/models/MarketingToolboxModel.class.php';
+		global $wgAutoloadClasses;
+		$wgAutoloadClasses['MarketingToolboxModel']	= $dir . '../WikiaHubsServices/models/MarketingToolboxModel.class.php';
+		$wgAutoloadClasses['MarketingToolboxModuleSliderService'] = $dir . '../WikiaHubsServices/modules/MarketingToolboxModuleSliderService.class.php';
+		$wgAutoloadClasses['MarketingToolboxModuleFromthecommunityService'] = $dir . '../WikiaHubsServices/modules/MarketingToolboxModuleFromthecommunityService.class.php';
+		$wgAutoloadClasses['MarketingToolboxModuleEditableService'] = $dir . '../WikiaHubsServices/modules/MarketingToolboxModuleEditableService.class.php';
+		$wgAutoloadClasses['MarketingToolboxModuleService'] =  $dir . '../WikiaHubsServices/modules/MarketingToolboxModuleService.class.php';
 		$this->setupFile = $dir . 'HubRssFeed.setup.php';
 		$this->mockToolbox = $this->getMockBuilder( 'MarketingToolboxModel' )
 			->disableOriginalConstructor();
@@ -38,7 +43,6 @@ class HubRssModelTest extends WikiaBaseTest {
 			->setMethods( ['setUpModel'] )
 			->getMock();
 
-
 		$refl = new \ReflectionObject($mock);
 
 		$propApp = $refl->getProperty( 'app' );
@@ -58,7 +62,6 @@ class HubRssModelTest extends WikiaBaseTest {
 	 * @covers  HubRssFeedModel::isValidVerticalId
 	 */
 	public function testIsValidVerticalId() {
-
 		$mockToolbox = $this->mockToolbox->setMethods( ['getVerticalsIds'] )->getMock();
 
 		$mockToolbox->expects( $this->any() )
@@ -86,9 +89,15 @@ class HubRssModelTest extends WikiaBaseTest {
 	 * @covers  HubRssFeedModel::getServices
 	 */
 	public function testGetServices() {
+		$mockSlider = $this->getMockBuilder( 'MarketingToolboxModuleSliderService' )
+			->setMethods( ['__construct'] )
+			->disableOriginalConstructor()
+			->getMock();
 
-		$mockSlider = $this->getMock( 'MarketingToolboxModuleSliderService', ['__construct'] );
-		$mockCommunity = $this->getMock( 'MarketingToolboxModuleFromthecommunityService', ['__construct'] );
+		$mockCommunity = $this->getMockBuilder( 'MarketingToolboxModuleFromthecommunityService' )
+			->disableOriginalConstructor()
+			->setMethods( ['__construct'] )
+			->getMock();
 
 		$this->mockClass( 'MarketingToolboxModuleSliderService', $mockSlider );
 		$this->mockClass( 'MarketingToolboxModuleFromthecommunityService', $mockCommunity );
@@ -113,9 +122,15 @@ class HubRssModelTest extends WikiaBaseTest {
 	 * @covers  HubRssFeedModel::getDataFromModules
 	 */
 	public function testGetDataFromModules() {
+		$mockSlider = $this->getMockBuilder( 'MarketingToolboxModuleSliderService' )
+			->disableOriginalConstructor()
+			->setMethods( ['loadData'] )
+			->getMock();
 
-		$mockSlider = $this->getMock( 'MarketingToolboxModuleSliderService', ['loadData'] );
-		$mockCommunity = $this->getMock( 'MarketingToolboxModuleFromthecommunityService', ['loadData'] );
+		$mockCommunity = $this->getMockBuilder( 'MarketingToolboxModuleFromthecommunityService' )
+			->disableOriginalConstructor()
+			->setMethods( ['loadData'] )
+			->getMock();
 
 		$mockSlider->expects( $this->any() )
 			->method( 'loadData' )

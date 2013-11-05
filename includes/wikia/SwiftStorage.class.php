@@ -57,12 +57,12 @@ class SwiftStorage {
 	 * @param $pathPrefix string path prefix
 	 * @return SwiftStorage storage instance
 	 */
-	public static function newFromContainer( $containerName, $pathPrefix = '' ) {
+	public static function newFromContainer( $containerName, $pathPrefix = '', $dataCenter = null ) {
 		if ($pathPrefix !== '') {
 			$pathPrefix = '/' . ltrim($pathPrefix, '/');
 		}
 
-		return new self( $containerName,  $pathPrefix );
+		return new self( $containerName,  $pathPrefix, $dataCenter );
 	}
 
 	/**

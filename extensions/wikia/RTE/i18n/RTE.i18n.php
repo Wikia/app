@@ -278,9 +278,10 @@ $messages['fa'] = array(
 
 /** Finnish (suomi)
  * @author Centerlink
+ * @author Ville96
  */
 $messages['fi'] = array(
-	'rte-edgecase-info' => 'Rich text-muokkaus on poistettu käytöstä, koska sivu sisältää monimutkaisia koodi.',
+	'rte-edgecase-info' => 'Rich text -muokkaus on poistettu käytöstä, koska sivu sisältää monimutkaista koodia.',
 	'rte-edgecase-comment' => 'HTML-kommentit',
 );
 

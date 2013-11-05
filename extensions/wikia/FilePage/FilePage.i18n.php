@@ -378,6 +378,13 @@ $messages['it'] = array(
 	'video-page-description-heading' => 'Descrizione',
 );
 
+/** Georgian (ქართული)
+ * @author DevaMK
+ */
+$messages['ka'] = array(
+	'file-page-replace-button' => 'ჩანაცვლება',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
@@ -555,8 +562,19 @@ $messages['ps'] = array(
  * @author Luckas
  */
 $messages['pt'] = array(
+	'filepage-desc' => 'Modificação da página padrão do MediaWiki para suporte de vídeo',
+	'video-page-file-list-header' => 'Aparece nestas páginas',
+	'video-page-global-file-list-header' => 'Aparece nestas wikis',
 	'video-page-from-provider' => 'De $1',
+	'video-page-expires' => 'Conteúdo disponível até $1',
+	'video-page-views' => '$1 {{PLURAL:$1|Visionamento|Visionamentos}}',
+	'video-page-see-more-info' => 'Mostrar mais informações',
+	'video-page-see-less-info' => 'Mostrar menos informações',
 	'video-page-description-heading' => 'Descrição',
+	'video-page-description-zero-state' => 'Ainda não tem descrição.',
+	'video-page-add-description-link-text' => 'Inserir uma descrição.',
+	'video-page-default-description-header-and-text' => '==Descrição==
+Insira a descrição aqui.',
 	'video-page-file-list-pagination' => '$1 de $2',
 	'file-page-replace-button' => 'Substituir',
 	'file-page-tab-about' => 'Sobre',
