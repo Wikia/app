@@ -29,7 +29,7 @@ class Factory
 	 * Skips instantiating dependency container, just using config and allowing default client instance.
 	 * @todo return type hinting to this method when we have a more sane way to test things than mock proxy
 	 * @param Config $config
-	 * @return Ambigous <\Wikia\Search\QueryService\Select\AbstractSelect, \Wikia\Search\QueryService\Select\InterWiki, \Wikia\Search\QueryService\Select\Video, \Wikia\Search\QueryService\Select\Lucene, \Wikia\Search\QueryService\Select\OnWiki>
+	 * @return \Wikia\Search\QueryService\Select\AbstractSelect|\Wikia\Search\QueryService\Select\InterWiki|\Wikia\Search\QueryService\Select\Video|\Wikia\Search\QueryService\Select\Lucene|\Wikia\Search\QueryService\Select\OnWiki
 	 */
 	public function getFromConfig( $config ) {
 		$container = new DependencyContainer( array( 'config' => $config ) );

@@ -371,6 +371,24 @@ class WikiService extends WikiaModel {
 		return $images;
 	}
 
+	public function getWikiWordmark( $wikiId ) {
+		$url = '';
+		$history = WikiFactory::getVarByName( 'wgOasisThemeSettingsHistory', $wikiId );
+		$settings = unserialize( $history->cv_value );
+		if ( $settings !== false ) {
+			$currentSettings =  end( $settings );
+
+			if ( isset($currentSettings['settings']['wordmark-type']) && $currentSettings['settings']['wordmark-type'] == 'text' ) {
+				return '';
+			}
+
+			if ( isset( $currentSettings['settings'] ) && !empty( $currentSettings['settings']['wordmark-image-url'] ) ) {
+					$url = wfReplaceImageServer( $currentSettings['settings']['wordmark-image-url'], $currentSettings['timestamp'] );
+			}
+		}
+		return $url;
+	}
+
 	public function getWikiAdmins ($wikiId, $avatarSize, $limit = null) {
 		return WikiaDataAccess::cacheWithLock(
 			wfsharedMemcKey('get_wiki_admins', $wikiId, $avatarSize, $limit),

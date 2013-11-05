@@ -3,6 +3,8 @@
  * Class definition for SearchApiController
  */
 use Wikia\Search\Config, Wikia\Search\QueryService\Factory, Wikia\Search\QueryService\DependencyContainer;
+use Wikia\Search\Services\CombinedSearchService;
+
 /**
  * Controller to execute searches in the content of a wiki.
  * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
@@ -76,6 +78,21 @@ class SearchApiController extends WikiaApiController {
 		}
 
 		$this->response->setVal( 'items', $items );
+	}
+
+	public function getCombined() {
+		if ( !$this->request->getVal( 'query' ) ) {
+			throw new InvalidParameterApiException( 'query' );
+		}
+		$query = $this->request->getVal( 'query' );
+		$langs = $this->request->getArray( 'langs', ['en'] );
+		$namespaces = $this->request->getArray( 'namespaces', [ NS_MAIN ] );
+		$hubs = $this->request->getArray( 'hubs', null );
+
+		$searchService = new CombinedSearchService();
+		$response = $searchService->search($query, $langs, $namespaces, $hubs);
+
+		$this->getResponse()->setData($response);
 	}
 
 	/**
