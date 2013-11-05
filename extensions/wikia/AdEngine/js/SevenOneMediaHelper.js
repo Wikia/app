@@ -1,6 +1,6 @@
 /*global require*/
 
-var SevenOneMediaHelper = function (adLogicPageLevelParams, scriptWriter, log, window, $) {
+var SevenOneMediaHelper = function (adLogicPageLevelParams, scriptWriter, log, window, $, tracker) {
 	'use strict';
 
 	var logGroup = 'SevenOneMediaHelper',
@@ -47,6 +47,25 @@ var SevenOneMediaHelper = function (adLogicPageLevelParams, scriptWriter, log, w
 		},
 		slotsQueue = [];
 
+	function track(action) {
+		log(['track', action], 'info', logGroup);
+
+		tracker.track({
+			eventName: 'liftium.71m',
+			ga_category: '71m',
+			ga_action: action,
+			trackingMethod: 'ad'
+		});
+
+		tracker.track({
+			eventName: 'liftium.71m',
+			ga_category: '71m',
+			ga_action: 'success', // for trackingMethod ga Wikia.Tracker requires ga_action to be one from a limited set
+			ga_label: action,
+			trackingMethod: 'ga'
+		});
+	}
+
 	function shiftQueue() {
 		var item = slotsQueue.shift(),
 			slotname,
@@ -70,6 +89,14 @@ var SevenOneMediaHelper = function (adLogicPageLevelParams, scriptWriter, log, w
 		postponedSlotId = 'ad-' + slotname + '-postponed';
 		$postponedSlot = $('<div></div>').attr('id', postponedSlotId);
 		$postponedContainer.append($postponedSlot);
+
+		if (slotname === 'trackEnd') {
+			scriptWriter.injectScriptByText(postponedSlotId, '', function () {
+				track('stage/ads');
+				shiftQueue();
+			});
+			return;
+		}
 
 		scriptWriter.injectScriptByText(
 			postponedSlotId,
@@ -220,6 +247,8 @@ var SevenOneMediaHelper = function (adLogicPageLevelParams, scriptWriter, log, w
 			return;
 		}
 
+		track('stage/init');
+
 		flushCalled = true;
 
 		function tryInjectJavaScripts() {
@@ -227,6 +256,7 @@ var SevenOneMediaHelper = function (adLogicPageLevelParams, scriptWriter, log, w
 				// DONE
 				allLoaded = true;
 				log('injectJavaScript success', 'info', logGroup);
+				track('stage/scripts');
 				shiftQueue();
 			}, function (what) {
 				// ERROR
@@ -235,6 +265,7 @@ var SevenOneMediaHelper = function (adLogicPageLevelParams, scriptWriter, log, w
 					log(['injectJavaScript failed after 3 retries. Quiting', what], 'error', logGroup);
 				}
 				retries += 1;
+				track('error/scripts' + retries);
 				tryInjectJavaScripts();
 			});
 		}
@@ -264,8 +295,14 @@ var SevenOneMediaHelper = function (adLogicPageLevelParams, scriptWriter, log, w
 		slotsQueue.push({slotname: slotname, params: params});
 	}
 
+	function trackEnd(slotname) {
+		log('trackEnd', 'info', logGroup);
+		slotsQueue.push({slotname: 'trackEnd'});
+	}
+
 	return {
 		pushAd: pushAd,
-		flushAds: flushAds
+		flushAds: flushAds,
+		trackEnd: trackEnd
 	};
 };
