@@ -10,7 +10,7 @@ class SpecialPromoteHooks {
 	 */
 	public static function onFileDeleteComplete($file, $oldimage, $page) {
 		/**
-		 * No $page when deleting an old image ($oldimage).
+		 * No $page when deleting an old image ($oldimage). Nothing to do.
 		 *
 		 * @see FileDeleteForm::doDelete()
 		 */
