@@ -249,6 +249,8 @@ $wgAutoloadClasses[ 'Wikia\\Measurements\\Drivers'    ] = "$IP/includes/wikia/me
 $wgAutoloadClasses[ 'Wikia\\Measurements\\NewrelicDriver' ] = "$IP/includes/wikia/measurements/Drivers.php";
 $wgAutoloadClasses[ 'Wikia\\Measurements\\DummyDriver'    ] = "$IP/includes/wikia/measurements/Drivers.php";
 $wgAutoloadClasses[ 'Wikia\\Measurements\\Time'       ] = "$IP/includes/wikia/measurements/Time.class.php";
+$wgAutoloadClasses[ 'MemcacheMoxiCluster'             ] = "{$IP}/includes/wikia/MemcacheMoxiCluster.class.php";
+$wgAutoloadClasses[ 'MemcacheClientShadower'          ] = "{$IP}/includes/wikia/MemcacheClientShadower.class.php";
 $wgAutoloadClasses[ 'Wikia\\SwiftStorage'             ] = "$IP/includes/wikia/SwiftStorage.class.php";
 
 /**
@@ -997,6 +999,7 @@ if( !isset( $wgUseMedusa ) ) {
  * Memcached class name
  */
 $wgMemCachedClass = 'MemCachedClientforWiki';
+$wgMoxiTestNodes = ['ap-s44'];
 
 /**
  * Extra configuration options for memcached when using libmemcached/pecl-memcached
@@ -1151,6 +1154,12 @@ $wgEnableJavaScriptErrorLogging = false;
  * Enables ad engine
  */
 $wgEnableAdEngineExt = true;
+
+/**
+ * @name $wgAdDriverUseSevenOneMedia
+ * Whether to use SevenOne Media ads (true) or the other ads (false)
+ */
+$wgAdDriverUseSevenOneMedia = false;
 
 /**
  * @name $wgAdVideoTargeting

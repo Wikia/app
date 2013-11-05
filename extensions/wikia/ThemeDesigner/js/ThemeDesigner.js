@@ -914,7 +914,11 @@ var ThemeDesigner = {
 	resetPageOpacity: function() {
 		var value = ThemeDesigner.maxPageOpacity;
 		ThemeDesigner.set( "page-opacity", value );
-		ThemeDesigner.$slider.slider( "value", ThemeDesigner.minSliderValue );
+
+		if( ThemeDesigner.$slider !== null ) {
+		// Special:CreateNewWiki uses ThemeDesigner without slider (DAR-2532)
+			ThemeDesigner.$slider.slider( "value", ThemeDesigner.minSliderValue );
+		}
 	}
 
 };

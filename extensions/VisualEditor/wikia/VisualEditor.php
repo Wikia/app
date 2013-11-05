@@ -13,12 +13,12 @@ $dir = dirname( __FILE__ ) . '/';
 $wgAutoloadClasses['VisualEditorWikiaHooks'] = $dir . 'VisualEditor.hooks.php';
 $wgAutoloadClasses['ApiTempUpload'] = $dir . 'ApiTempUpload.php';
 $wgAutoloadClasses['ApiMediaSearch'] = $dir . 'ApiMediaSearch.php';
-$wgAutoloadClasses['ApiPhotoAttribution'] = $dir . 'ApiPhotoAttribution.php';
+$wgAutoloadClasses['ApiImageAttribution'] = $dir . 'ApiImageAttribution.php';
 
 // Register API modules
 $wgAPIModules['apitempupload'] = 'ApiTempUpload';
 $wgAPIModules['apimediasearch'] = 'ApiMediaSearch';
-$wgAPIModules['apiphotoattribution'] = 'ApiPhotoAttribution';
+$wgAPIModules['apiimageattribution'] = 'ApiImageAttribution';
 
 // Register resource modules
 $wgVisualEditorWikiaResourceTemplate = array(
@@ -51,6 +51,8 @@ $wgResourceModules += array(
 	),
 	'ext.visualEditor.wikiaCore' => $wgVisualEditorWikiaResourceTemplate + array(
 		'scripts' => array(
+			've/ve.track.js',
+
 			// dm
 			've/dm/ve.dm.WikiaMediaCaptionNode.js',
 			've/dm/ve.dm.WikiaBlockMediaNode.js',
@@ -88,6 +90,7 @@ $wgResourceModules += array(
 			'visualeditor-wikiauploadwidget-button',
 			'visualeditor-wikiauploaderror',
 			'visualeditor-wikiamediainsertsearch-placeholder',
+			'visualeditor-wikiamediapagewidget-preview-alert',
 		),
 		'dependencies' => array(
 			'ext.visualEditor.core'

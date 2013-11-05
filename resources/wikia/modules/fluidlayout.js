@@ -13,7 +13,8 @@ define('wikia.fluidlayout',  function() {
 		WIDTH_GUTTER = 20,
 		ARTICLE_BORDER_WIDTH = 1,
 		WIDTH_ADSKIN = 170,
-		BREAKPOINT_SMALL = 1023;
+		BREAKPOINT_SMALL = 1023,
+		RIGHT_RAIL_WIDTH = 300;
 
 	/**
 	 * Public API method for getting the maximum width to which an article can be resized
@@ -106,6 +107,15 @@ define('wikia.fluidlayout',  function() {
 		return WIDTH_OUTSIDE_MAX + 2 * WIDTH_ADSKIN;
 	}
 
+	/**
+	 * Return the width of right rail
+	 *
+	 * @return {number} Right rail width in pixels
+	 */
+	function getRightRailWidth() {
+		return RIGHT_RAIL_WIDTH;
+	}
+
 	/** @public **/
 	return {
 		getMinArticleWidth: getMinArticleWidth,
@@ -117,7 +127,8 @@ define('wikia.fluidlayout',  function() {
 		getBreakpointContent: getBreakpointContent,
 		getBreakpointFluid: getBreakpointFluid,
 		getBreakpointMin: getBreakpointMin,
-		getBreakpointMax: getBreakpointMax
+		getBreakpointMax: getBreakpointMax,
+		getRightRailWidth: getRightRailWidth
 	};
 
 });

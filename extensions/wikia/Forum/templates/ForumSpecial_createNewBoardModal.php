@@ -1,6 +1,6 @@
 <section id="EditBoardModal" class="EditBoardModal">
 	<h1>
-		<?= wfMsg('forum-admin-create-new-board-modal-heading') ?>
+		<?= wfMessage( 'forum-admin-create-new-board-modal-heading' )->escaped() ?>
 	</h1>
 
 <?
@@ -10,7 +10,7 @@
 				'type' => 'text',
 				'name' => 'boardTitle',
 				'isRequired' => true,
-				'label' => wfMsg('forum-admin-create-new-board-title'),
+				'label' => wfMessage( 'forum-admin-create-new-board-title' )->escaped(),
 				'attributes' => array(
 					'maxlength' => '40'
 				),
@@ -19,7 +19,7 @@
 				'type' => 'text',
 				'name' => 'boardDescription',
 				'isRequired' => true,
-				'label' => wfMsg('forum-admin-create-new-board-description'),
+				'label' => wfMessage( 'forum-admin-create-new-board-description' )->escaped(),
 				'attributes' => array(
 					'maxlength' => '255'
 				),
@@ -31,13 +31,13 @@
 
 	echo $app->renderView('WikiaStyleGuideForm', 'index', array('form' => $form));
 ?>
-	
+
 	<div class="neutral modalToolbar">
 		<button class="secondary cancel">
-			<?= wfMsg('cancel') ?>
+			<?= wfMessage( 'cancel' )->escaped() ?>
 		</button>
 		<button class="submit">
-			<?= wfMsg('forum-admin-create-new-board-label') ?>
+			<?= wfMessage( 'forum-admin-create-new-board-label' )->escaped() ?>
 		</button>
 	</div>
 </section>

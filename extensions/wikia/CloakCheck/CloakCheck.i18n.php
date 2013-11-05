@@ -438,6 +438,13 @@ $messages['lb'] = array(
 	'cloakcheck-process-edits-no' => 'De Benotzer huet net genuch Ännerungen.',
 );
 
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'cloakcheck-form-username' => 'نوم كاروری:',
+);
+
 /** Lithuanian (lietuvių)
  * @author Eitvys200
  */
@@ -615,8 +622,8 @@ $messages['pt'] = array(
 	'cloakcheck-process-username' => 'Nome de utilizador: $1',
 	'cloakcheck-process-accountage-yes' => 'A conta é suficientemente antiga.',
 	'cloakcheck-process-accountage-no' => 'A conta é demasiado recente.',
-	'cloakcheck-process-emailconf-yes' => 'O endereço de correio electrónico foi confirmado.',
-	'cloakcheck-process-emailconf-no' => 'O endereço de correio electrónico não foi confirmado.',
+	'cloakcheck-process-emailconf-yes' => 'O endereço de correio eletrónico foi confirmado.',
+	'cloakcheck-process-emailconf-no' => 'O endereço de correio eletrónico não foi confirmado.',
 	'cloakcheck-process-edits-yes' => 'O utilizador tem edições suficientes.',
 	'cloakcheck-process-edits-no' => 'O utilizador não tem edições suficientes.',
 );
@@ -835,6 +842,27 @@ $messages['uk'] = array(
 	'cloakcheck-process-emailconf-no' => 'Адреса електронної пошти не підтверджена.',
 	'cloakcheck-process-edits-yes' => 'Користувач має достатньо редагувань.',
 	'cloakcheck-process-edits-no' => 'Користувач не має достатньо редагувань.',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'cloakcheck' => 'IRC áo choàng hội đủ điều kiện phòng',
+	'cloakcheck-desc' => 'Cung cấp một giao diện All-in-one để xác minh yêu cầu cho một áo choàng IRC',
+	'right-cloakcheck' => 'Có thể kiểm tra IRC cloak liên quan thông tin về người dùng khác',
+	'cloakcheck-form-username' => 'Tên người dùng:',
+	'cloakcheck-form-check' => 'Kiểm tra tên người dùng',
+	'cloakcheck-form-check-self' => 'Kiểm tra IRC áo choàng hội đủ điều kiện',
+	'cloakcheck-process-empty' => 'Tên người dùng không phải là sản phẩm nào.',
+	'cloakcheck-process-notexist' => 'Tên người dùng không tồn tại.',
+	'cloakcheck-process-username' => 'Tên người dùng: $1',
+	'cloakcheck-process-accountage-yes' => 'Tài khoản là đủ tuổi.',
+	'cloakcheck-process-accountage-no' => 'Tài khoản là quá mới.',
+	'cloakcheck-process-emailconf-yes' => 'E-mail địa chỉ xác nhận.',
+	'cloakcheck-process-emailconf-no' => 'Địa chỉ e-mail không được xác nhận.',
+	'cloakcheck-process-edits-yes' => 'Người dùng có đủ chỉnh sửa của bạn.',
+	'cloakcheck-process-edits-no' => 'Người dùng không có đủ chỉnh sửa của bạn.',
 );
 
 /** Simplified Chinese (中文（简体）‎)

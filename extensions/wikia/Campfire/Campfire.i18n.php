@@ -58,6 +58,7 @@ $messages['bcl'] = array(
  */
 $messages['bg'] = array(
 	'campfire-page-header' => '$1 от $2',
+	'campfire-licensed-under' => 'Лицензирано според условията на $1',
 );
 
 /** Breton (brezhoneg)

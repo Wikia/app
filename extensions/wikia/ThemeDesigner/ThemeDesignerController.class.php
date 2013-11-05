@@ -291,31 +291,35 @@ class ThemeDesignerController extends WikiaController {
 	 * @return array
 	 */
 	private function uploadImage($upload) {
-		global $wgRequest, $wgUser;
+		global $wgRequest, $wgUser, $wgEnableUploads;
 
 		$uploadStatus = array("status" => "error");
 
-		$upload->initializeFromRequest( $wgRequest );
-		$permErrors = $upload->verifyPermissions( $wgUser );
-
-		if ( $permErrors !== true ) {
-			$uploadStatus["errors"] = array( wfMsg( 'badaccess' ) );
+		if ( empty( $wgEnableUploads )) {
+			$uploadStatus["errors"] = [ wfMessage( 'themedesigner-upload-disabled' )->plain() ];
 		} else {
-			$details = $upload->verifyUpload();
+			$upload->initializeFromRequest( $wgRequest );
+			$permErrors = $upload->verifyPermissions( $wgUser );
 
-			if ( $details[ 'status' ] != UploadBase::OK ) {
-				$uploadStatus["errors"] = array( $this->getUploadErrorMessage( $details ) );
+			if ( $permErrors !== true ) {
+				$uploadStatus["errors"] = array( wfMsg( 'badaccess' ) );
 			} else {
-				$warnings = $upload->checkWarnings();
+				$details = $upload->verifyUpload();
 
-				if ( !empty( $warnings ) ) {
-					$uploadStatus["errors"] = $this->getUploadWarningMessages( $warnings );
+				if ( $details[ 'status' ] != UploadBase::OK ) {
+					$uploadStatus["errors"] = array( $this->getUploadErrorMessage( $details ) );
 				} else {
-					//save temp file
-					$status = $upload->performUpload();
+					$warnings = $upload->checkWarnings();
 
-					$uploadStatus["status"] = "uploadattempted";
-					$uploadStatus["isGood"] = $status->isGood();
+					if ( !empty( $warnings ) ) {
+						$uploadStatus["errors"] = $this->getUploadWarningMessages( $warnings );
+					} else {
+						//save temp file
+						$status = $upload->performUpload();
+
+						$uploadStatus["status"] = "uploadattempted";
+						$uploadStatus["isGood"] = $status->isGood();
+					}
 				}
 			}
 		}

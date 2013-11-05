@@ -35,10 +35,10 @@ class ForumHooksHelper {
 		if ( MWNamespace::getSubject( $title->getNamespace() ) == NS_WIKIA_FORUM_BOARD ) {
 			$app = F::App();
 
-			$response->setVal( 'pageTitle', wfMsg( 'forum-board-history-title' ) );
-			$app->wg->Out->setPageTitle( wfMsg( 'forum-board-history-title' ) );
+			$response->setVal( 'pageTitle', wfMessage( 'forum-board-history-title' )->escaped() );
+			$app->wg->Out->setPageTitle( wfMessage( 'forum-board-history-title' )->plain() );
 
-			$path = array( static::getIndexPath(), array( 'title' => wfMsg( 'forum-board-title', $title->getText() ), 'url' => $title->getFullUrl() ) );
+			$path = array( static::getIndexPath(), array( 'title' => wfMessage( 'forum-board-title', $title->getText() )->escaped(), 'url' => $title->getFullUrl() ) );
 		}
 		return true;
 	}
@@ -46,7 +46,7 @@ class ForumHooksHelper {
 	static public function onWallHeader($title, &$path, &$response, &$request) {
 		if ( $title->getNamespace() === NS_WIKIA_FORUM_BOARD ) {
 			$path[] = static::getIndexPath();
-			$path[] = array( 'title' => wfMsg( 'forum-board-title', $title->getText() ), );
+			$path[] = array( 'title' => wfMessage( 'forum-board-title', $title->getText() )->escaped(), );
 
 		}
 		return true;
@@ -54,11 +54,11 @@ class ForumHooksHelper {
 
 	static public function onWallNewMessage($title, &$response) {
 		if ( $title->getNamespace() === NS_WIKIA_FORUM_BOARD) {
-			$response->setVal( 'wall_message', wfMsg( 'forum-discussion-placeholder-message', $title->getText() ) );
+			$response->setVal( 'wall_message', wfMessage( 'forum-discussion-placeholder-message', $title->getText() )->escaped() );
 		}
 
 		if ( $title->getNamespace() === NS_WIKIA_FORUM_TOPIC_BOARD ) {
-			$response->setVal( 'wall_message', wfMsg( 'forum-discussion-placeholder-message-short' ) );
+			$response->setVal( 'wall_message', wfMessage( 'forum-discussion-placeholder-message-short' )->escaped() );
 		}
 		return true;
 	}
@@ -66,7 +66,7 @@ class ForumHooksHelper {
 	static protected function getPath($wallMessage) {
 		$path = array();
 		$path[] = static::getIndexPath();
-		$path[] = array( 'title' => wfMsg( 'forum-board-title', $wallMessage->getArticleTitle()->getText() ), 'url' => $wallMessage->getArticleTitle()->getFullUrl() );
+		$path[] = array( 'title' => wfMessage( 'forum-board-title', $wallMessage->getArticleTitle()->getText() )->escaped(), 'url' => $wallMessage->getArticleTitle()->getFullUrl() );
 
 		return $path;
 	}
@@ -74,7 +74,7 @@ class ForumHooksHelper {
 	static protected function getIndexPath() {
 		$app = F::App();
 		$indexPage = Title::newFromText( 'Forum', NS_SPECIAL );
-		return array( 'title' => wfMsg( 'forum-forum-title', $app->wg->sitename ), 'url' => $indexPage->getFullUrl() );
+		return array( 'title' => wfMessage( 'forum-forum-title' )->escaped(), 'url' => $indexPage->getFullUrl() );
 	}
 
 	/**
@@ -94,7 +94,7 @@ class ForumHooksHelper {
 			} else {
 				// new comments on existing board - we build Title object based on id from WallMessage class logic ( getting parent )
 				$board = $wmessage->getArticleTitle();
-				$item['wall-msg'] = wfMsg( 'forum-wiki-activity-msg', '<a href="' . $board->getFullURL() . '">' . wfMsg( 'forum-wiki-activity-msg-name', $board->getText() ) . '</a>' );
+				$item['wall-msg'] = wfMessage( 'forum-wiki-activity-msg' )->rawParams( '<a href="' . $board->getFullURL() . '">' . wfMessage( 'forum-wiki-activity-msg-name', $board->getText() )->escaped() . '</a>' )->escaped();
 			}
 		}
 
@@ -107,7 +107,7 @@ class ForumHooksHelper {
 
 			$titleData = WallHelper::getWallTitleData(null, $element );
 
-			$boardText = wfMsg( 'forum-wiki-activity-msg', '<a href="' .$titleData['wallPageFullUrl'] . '">' . wfMsg( 'forum-wiki-activity-msg-name', $titleData['wallPageName'] ) . '</a>' );
+			$boardText = wfMessage( 'forum-wiki-activity-msg' )->rawParams( '<a href="' .$titleData['wallPageFullUrl'] . '">' . wfMessage( 'forum-wiki-activity-msg-name', $titleData['wallPageName'] )->escaped() . '</a>' )->escaped();
 			$link = '<a href="'.$titleData['articleFullUrl'].'">'.$titleData['articleTitleTxt'].'</a> ' . $boardText;
 		}
 		return true;
@@ -158,7 +158,7 @@ class ForumHooksHelper {
 		if ( $title->getNamespace() == NS_WIKIA_FORUM_BOARD ) {
 
 			$pageName = $title->getPrefixedText();
-			$message = wfMsgExt( 'forum-confirmation-board-deleted', array('parseinline'), $pageName );
+			$message = wfMessage( 'forum-confirmation-board-deleted', $pageName )->parse();
 		}
 
 		return true;
@@ -170,7 +170,7 @@ class ForumHooksHelper {
 		}
 
 		if ( empty( $wfMsgOptsBase['articleTitleVal'] ) ) {
-			$wfMsgOptsBase['articleTitleTxt'] = wfMsg( 'forum-recentchanges-deleted-reply-title' );
+			$wfMsgOptsBase['articleTitleTxt'] = wfMessage( 'forum-recentchanges-deleted-reply-title' )->text();
 		}
 
 		$wfMsgOpts = array(
@@ -184,12 +184,12 @@ class ForumHooksHelper {
 		);
 
 		if ( $wfMsgOptsBase['isThread'] && $wfMsgOptsBase['isNew'] ) {
-			$wfMsgOpts[7] = Xml::element( 'strong', array(), wfMessage( 'newpageletter' )->plain() . ' ' );
+			$wfMsgOpts[] = Xml::element( 'strong', array(), wfMessage( 'newpageletter' )->plain() . ' ' );
 		} else {
-			$wfMsgOpts[7] = '';
+			$wfMsgOpts[] = '';
 		}
 
-		$ret .= wfMsg( 'forum-contributions-line', $wfMsgOpts );
+		$ret .= wfMessage( 'forum-contributions-line', $wfMsgOpts )->text();
 
 		return false;
 	}
@@ -257,7 +257,7 @@ class ForumHooksHelper {
 	static public function onWallMessageDeleted(&$mw, &$response) {
 		$title = $mw->getTitle();
 		if ( $title->getNamespace() == NS_WIKIA_FORUM_BOARD_THREAD ) {
-			$response->setVal( 'returnTo', wfMsg( 'forum-thread-deleted-return-to', $mw->getWallTitle()->getText() ) );
+			$response->setVal( 'returnTo', wfMessage( 'forum-thread-deleted-return-to', $mw->getWallTitle()->getText() )->escaped() );
 		}
 		return true;
 	}
