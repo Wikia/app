@@ -44,20 +44,7 @@ class WikiFilePage extends WikiPage {
 		if ( !$this->mFile ) {
 			$this->mFile = wfFindFile( $this->mTitle );
 
-
-			# @author garth
-			# If we're on a file page and we don't have any video_info for the current
-			# title, treat it like a non-existent file
-			if ( $this->mFile && $this->mFile->getMediaType() == 'VIDEO' ) {
-				$title = $this->mFile->getTitle()->getDBkey();
-				$info = VideoInfo::newFromTitle( $title );
-				if ( empty($info) ) {
-					F::app()->wg->IsGhostVideo = true;
-					$this->mFile = null;
-				}
-			}
-
-			if ( !$this->mFile ) {
+			if ( !$this->mFile || !wfRunHooks('WikiFilePageCheckFile', [$this->mFile]) ) {
 				$this->mFile = wfLocalFile( $this->mTitle ); // always a File
 			}
 		}
