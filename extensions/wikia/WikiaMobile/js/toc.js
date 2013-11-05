@@ -11,8 +11,8 @@ require(['sections', 'wikia.window', 'jquery', 'wikia.mustache', 'wikia.toc'],
 		state,
 		offsetTop = 0,
 		$parent,
-		ol = "<ol class='toc-list level{{level}}'>{{#sections}}{{> lis}}{{/sections}}</ol>",
-		lis = "{{#.}}<li {{#sections.length}}class=has-children{{/sections.length}}><a href='#{{id}}'>{{name}}{{#firstLevel}}{{#sections.length}}<span class='chevron right'></span>{{/sections.length}}{{/firstLevel}}</a>{{#sections.length}}{{> ol}}{{/sections.length}}</li>{{/.}}",
+		ol = '<ol class="toc-list level{{level}}">{{#sections}}{{> lis}}{{/sections}}</ol>',
+		lis = '{{#.}}<li {{#sections.length}}class=has-children{{/sections.length}}><a href="#{{id}}">{{name}}{{#firstLevel}}{{#sections.length}}<span class="chevron right"></span>{{/sections.length}}{{/firstLevel}}</a>{{#sections.length}}{{> ol}}{{/sections.length}}</li>{{/.}}',
 		$toc,
 		$ol,
 		tocData = toc.getData(sections.list, function(header, level){
@@ -145,6 +145,7 @@ require(['sections', 'wikia.window', 'jquery', 'wikia.mustache', 'wikia.toc'],
 		}else {
 			onClose();
 		}
+
 		$.event.trigger('curtain:toggle');
 	});
 });
