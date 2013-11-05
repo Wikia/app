@@ -168,7 +168,14 @@ ve.ui.WikiaMediaInsertDialog.prototype.onQueryRequestSearchDone = function ( ite
 ve.ui.WikiaMediaInsertDialog.prototype.onQueryRequestVideoDone = function ( data ) {
 	this.queryInput.setValue( '' );
 	this.cartModel.addItems( [
-		new ve.dm.WikiaCartItem( data.title, data.temporaryThumbUrl, 'video', data.temporaryFileName, data.provider, data.videoId )
+		new ve.dm.WikiaCartItem(
+			data.title,
+			data.temporaryThumbUrl,
+			'video',
+			data.temporaryFileName,
+			data.provider,
+			data.videoId
+		)
 	] );
 	this.setPage( data.title );
 };
@@ -317,14 +324,20 @@ ve.ui.WikiaMediaInsertDialog.prototype.onClose = function ( action ) {
 	this.queryInput.setValue( '' );
 };
 
+/**
+ * Converts temporary cart item into permanent.
+ *
+ * @method
+ * @param {ve.dm.WikiaCartItem} cartItem Cart item to convert.
+ */
 ve.ui.WikiaMediaInsertDialog.prototype.convertTemporaryToPermanent = function ( cartItem ) {
 	var deferred = $.Deferred(),
 		data = {
-		'action': 'apitempupload',
-		'format': 'json',
-		'type': 'permanent',
-		'desiredName': cartItem.title
-	};
+			'action': 'apitempupload',
+			'format': 'json',
+			'type': 'permanent',
+			'desiredName': cartItem.title
+		};
 	if ( cartItem.type === 'video' ) {
 		data.provider = cartItem.provider;
 		data.videoId = cartItem.videoId;
@@ -348,7 +361,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.convertTemporaryToPermanent = function ( 
 ve.ui.WikiaMediaInsertDialog.prototype.insertMedia = function ( cartItems ) {
 	var i, promises = [];
 
-	function temporaryToPermanentCallback( cartItem, name ){
+	function temporaryToPermanentCallback ( cartItem, name ) {
 		cartItem.temporaryFileName = null;
 		cartItem.url = null;
 		cartItem.title = 'File:' + name;

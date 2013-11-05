@@ -36,6 +36,9 @@ class ApiTempUpload extends ApiBase {
 	}
 
 	private function executePermanentVideo() {
+		if ( empty ( $this->mParams['desiredName'] ) ) {
+			$this->dieUsageMsg( 'The desiredName parameter must be set' );
+		}
 		// TODO: Check with Video team if that's the best way to look for video duplicates
 		$duplicates = WikiaFileHelper::findVideoDuplicates(
 			$this->mParams['provider'],
@@ -59,6 +62,12 @@ class ApiTempUpload extends ApiBase {
 	}
 
 	private function executePermanentImage() {
+		if ( empty ( $this->mParams['desiredName'] ) ) {
+			$this->dieUsageMsg( 'The desiredName parameter must be set' );
+		}
+		if ( empty ( $this->mParams['temporaryFileName'] ) ) {
+			$this->dieUsageMsg( 'The temporaryFileName parameter must be set' );
+		}
 		$temporaryFile = new FakeLocalFile(
 			Title::newFromText( $this->mParams['temporaryFileName'], 6 ),
 			RepoGroup::singleton()->getLocalRepo()
@@ -109,7 +118,6 @@ class ApiTempUpload extends ApiBase {
 			$this->executeTemporaryImage();
 		} else {
 			$this->executeTemporaryVideo();
-
 		}
 	}
 
@@ -122,7 +130,7 @@ class ApiTempUpload extends ApiBase {
 		// First check permission to upload
 		$this->checkPermissions( $this->mUser );
 		$this->verifyUpload();
-				$temporaryFile = $this->createTemporaryFile( $this->mRequest->getFileTempName( 'file' ) );
+		$temporaryFile = $this->createTemporaryFile( $this->mRequest->getFileTempName( 'file' ) );
 		$this->getResult()->addValue( null, $this->getModuleName(), array(
 			'title' => $this->mUpload->getTitle()->getText(),
 			'temporaryThumbUrl' => $temporaryFile->getUrl(),
