@@ -6,6 +6,7 @@ var ThemeDesigner = {
 	basePageOpacity: 70,
 	maxPageOpacity: 100,
 	minSliderValue: 0,
+	splitOption: null,
 	$slider: null,
 
 	init: function() {
@@ -168,15 +169,7 @@ var ThemeDesigner = {
 		});
 
 		$('#tile-background').change(function() {
-			if (ThemeDesigner.backgroundType > 1) {
-				if ($(this).attr('checked') ) {
-					ThemeDesigner.changeDynamicBg(false);
-					$('#not-split-background').attr('disabled', true);
-				} else {
-					ThemeDesigner.changeDynamicBg(true);
-					$('#not-split-background').attr('disabled', false);
-				}
-			}
+			ThemeDesigner.checkTiledBg(ThemeDesigner.splitOption);
 			ThemeDesigner.set('background-tiled', $(this).attr('checked') ? 'true' : 'false');
 		});
 		$('#fix-background').change(function() {
@@ -190,9 +183,15 @@ var ThemeDesigner = {
 		if (window.wgOasisResponsive) {
 			$('#not-split-background').change(function() {
 				ThemeDesigner.set('background-dynamic', $(this).attr('checked') ? 'false' : 'true');
+				if ($(this).attr("checked")) {
+					ThemeDesigner.splitOption = false;
+				} else {
+					ThemeDesigner.splitOption = true;
+				}
 			});
 
 			$('#not-split-background').attr('checked', ThemeDesigner.settings['background-dynamic'] === 'false');
+			ThemeDesigner.splitOption = ThemeDesigner.settings['background-dynamic'];
 
 			ThemeDesigner.checkBgIsDynamic(ThemeDesigner.settings['background-image-width']);
 		}
@@ -467,16 +466,31 @@ var ThemeDesigner = {
 		if ( window.wgOasisResponsive ) {
 			if ( width < ThemeDesigner.minWidthForDynamicBackground ) {
 				noSplitOption.css('display', 'none');
-				ThemeDesigner.changeDynamicBg(false);
 				ThemeDesigner.backgroundType = 1;
+				ThemeDesigner.changeDynamicBg(false);
 			} else if ( width < ThemeDesigner.minWidthNotSplitBackground ) {
 				noSplitOption.css('display', 'none');
-				ThemeDesigner.changeDynamicBg(true);
 				ThemeDesigner.backgroundType = 2;
+				ThemeDesigner.checkTiledBg(true);
+				ThemeDesigner.splitOption = true;
 			} else {
 				noSplitOption.css('display', 'inline');
-				ThemeDesigner.changeDynamicBg(true);
 				ThemeDesigner.backgroundType = 3;
+				ThemeDesigner.checkTiledBg(true);
+			}
+		}
+	},
+
+	checkTiledBg: function(value) {
+		'use strict';
+
+		if (ThemeDesigner.backgroundType > 1) {
+			if ($('#tile-background').attr('checked') ) {
+				ThemeDesigner.changeDynamicBg(false);
+				$('#not-split-background').attr('disabled', true);
+			} else {
+				ThemeDesigner.changeDynamicBg(value);
+				$('#not-split-background').attr('disabled', false);
 			}
 		}
 	},
