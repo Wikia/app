@@ -512,6 +512,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMediaCallback = function (
 				'label': 'dialog-media-insert-multiple'
 			} );
 		}
+
 		this.surface.getModel().getFragment().collapseRangeToEnd().insertContent( linmod );
 	}, this ) );
 };
