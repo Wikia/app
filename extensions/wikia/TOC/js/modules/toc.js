@@ -26,7 +26,7 @@ define( 'wikia.toc', function() {
 		var toc = {
 				sections: []
 			}, // set base object for TOC data structure
-			levels =  [toc.sections ], // level placeholders
+			levels =  [ toc.sections ], // level placeholders
 			headersLength = headers.length,
 			hToLevel = [], // header to TOC level dictionary
 			level = -1,
