@@ -293,7 +293,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.onMediaPageRemove = function ( item ) {
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onOpen = function () {
 	ve.ui.MWDialog.prototype.onOpen.call( this );
-	ve.track( { 'action': ve.track.actions.OPEN, 'label': 'media-dialog' } );
+	ve.track( { 'action': ve.track.actions.OPEN, 'label': 'dialog-media-insert' } );
 	this.pages.setPage( 'main' );
 };
 
@@ -318,7 +318,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.onPageSet = function () {
  * @param {string} action Which action is being performed on close.
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onClose = function ( action ) {
-	ve.track( { 'action': ve.track.actions.CLOSE, 'label': 'media-dialog' } );
+	ve.track( { 'action': ve.track.actions.CLOSE, 'label': 'dialog-media-insert' } );
 	if ( action === 'insert' ) {
 		this.insertMedia( ve.copy( this.cartModel.getItems() ) );
 	}
@@ -465,16 +465,14 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMedia = function ( cartIte
  */
 ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMediaCallback = function ( items ) {
 	require( ['wikia.stringhelper'], ve.bind( function ( stringUtils ) {
-		var item, mediaType, title, type,
-			count = 0,
+		var item, title, type,
+			count = { 'image': 0, 'video': 0 },
 			linmod = [];
 
 		for ( title in items ) {
 			item = items[title];
 			type = 'wikiaBlock' + stringUtils.ucFirst( item.type );
-			mediaType = ( mediaType === undefined || mediaType === item.type ) ?
-				item.type : 'multiple';
-			count++;
+			count[item.type]++;
 			linmod.push(
 				{
 					'type': type,
@@ -497,11 +495,19 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMediaCallback = function (
 				{ 'type': '/' + type }
 			);
 		}
-		ve.track( {
-			'action': ve.track.actions.ADD,
-			'label': 'media-dialog-insert-' + mediaType,
-			'value': count
-		} );
+		for ( type in count ) {
+			ve.track( {
+				'action': ve.track.actions.ADD,
+				'label': 'dialog-media-insert-' + type,
+				'value': count[type]
+			} );
+		}
+		if ( count['image'] > 0 && count['video'] > 0 ) {
+			ve.track( {
+				'action': ve.track.actions.ADD,
+				'label': 'dialog-media-insert-multiple'
+			} );
+		}
 		this.surface.getModel().getFragment().collapseRangeToEnd().insertContent( linmod );
 	}, this ) );
 };

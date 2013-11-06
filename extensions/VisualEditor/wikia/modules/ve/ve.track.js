@@ -8,7 +8,8 @@ require( ['wikia.tracker'], function ( tracker ) {
 	var actions = tracker.ACTIONS,
 		nameToLabelMap = {
 			'meta': 'page-settings',
-			'transclusion': 'template'
+			'transclusion': 'template',
+			'wikiaMediaInsert': 'media-insert'
 		},
 		rSpecialChars = /[A-Z]/g;
 
