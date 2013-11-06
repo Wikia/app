@@ -252,6 +252,7 @@ class VideoInfo extends WikiaModel {
 			$sql =<<<SQL
 				CREATE TABLE IF NOT EXISTS `video_info` (
 					`video_title` varchar(255) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL DEFAULT '',
+					`video_id` varchar(255) NOT NULL DEFAULT '',
 					`provider` varchar(255),
 					`added_at` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
 					`added_by` int(10) unsigned NOT NULL DEFAULT '0',
@@ -260,6 +261,7 @@ class VideoInfo extends WikiaModel {
 					`hdfile` tinyint(1) NOT NULL DEFAULT '0',
 					`removed` tinyint(1) NOT NULL DEFAULT '0',
 					`featured` tinyint(1) NOT NULL DEFAULT '0',
+					`views_7day` int(10) unsigned DEFAULT '0',
 					`views_30day` int(10) unsigned DEFAULT '0',
 					`views_total` int(10) unsigned DEFAULT '0',
 					PRIMARY KEY (`video_title`),
@@ -267,6 +269,8 @@ class VideoInfo extends WikiaModel {
 					KEY `premium` (`premium`, `added_at`),
 					KEY `hdfile` (`hdfile`, `added_at`),
 					KEY `featured` (`featured`, `added_at`)
+					KEY `provider` (`provider`,`added_at`),
+					KEY `video_id` (`video_id`,`provider`)
 				) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 SQL;
 
@@ -292,7 +296,12 @@ SQL;
 		3 => "
 			ALTER TABLE video_info
 			ADD `views_7day` int(10) unsigned DEFAULT '0' AFTER featured
-		"
+		",
+		4 => "
+			ALTER TABLE video_info
+			ADD `video_id` varchar(255) NOT NULL DEFAULT '' AFTER video_title,
+			ADD INDEX video_id (video_id, provider)
+		",
 	);
 
 	/**
