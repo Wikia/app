@@ -198,4 +198,33 @@ Class WikiFactoryChangedHooks {
 		}
 		return true;
 	}
+
+	static public function VisualEditor($cv_name, $wiki_id, $value) {
+		global $wgOut;
+		if ($cv_name == 'wgEnableVisualEditorExt') {
+			Wikia::log(__METHOD__, $wiki_id, "{$cv_name} = {$value}");
+
+			// get resource loader url
+			$link = $wgOut->makeResourceLoaderLink('startup', ResourceLoaderModule::TYPE_SCRIPTS);
+			if ($link != null) {
+			// extract the url from the link src
+				preg_match("/\"(.*)\"/", $link, $matches);
+				if ( isset($matches[1]) ) {
+					$urls[]= $matches[1];
+				}
+			}
+
+			// parsed resource loader URL
+			$resourceLoaderURL = parse_url( $urls[0] );
+			// parsed wiki URL
+			$wikiURL = parse_url( GlobalTitle::newFromText( 'Version', NS_SPECIAL, $wiki_id )->getFullURL() );
+			// URL to purge (constructed from $resourceLoaderURL and $wikiURL)
+			$purgeURL = $wikiURL['scheme'] . '://' . $wikiURL['host'] . $resourceLoaderURL['path'];
+
+			// purge
+			$u = new SquidUpdate( [$purgeURL] );
+			$u->doUpdate();
+		}
+		return true;
+	}
 }
