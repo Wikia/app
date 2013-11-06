@@ -36,7 +36,7 @@ class CombinedSearchService {
 	}
 
 	public function search($query, $langs, $namespaces, $hubs, $limit = null) {
-		$timer = Time::start(["CombinedSearchService", "search"]);
+		$timer = Time::start([__CLASS__, __METHOD__]);
 		$wikias = $this->searchForWikias($query, $langs, $hubs);
 
 		$limit = ( $limit !== null ) ? $limit : self::MAX_TOTAL_ARTICLES;
@@ -65,26 +65,40 @@ class CombinedSearchService {
 	 * @return array
 	 */
 	public function searchForArticles($query, $namespaces, $wikias, $maxArticlesPerWiki) {
+		$timer = Time::start([__CLASS__, __METHOD__]);
 		$articles = [];
 		foreach ($wikias as $wiki) {
-			$requestedFields = ["title", "url", "id", "score", "pageid", "lang", "wid", Utilities::field('html', $wiki['lang'])];
-			$searchConfig = new Config;
-			$searchConfig->setQuery($query)
-				->setLimit($maxArticlesPerWiki)
-				->setPage(1)
-				->setOnWiki(true)
-				->setRequestedFields($requestedFields)
-				->setWikiId($wiki['wikiId'])
-				->setNamespaces($namespaces)
-				->setFilterQuery("is_main_page:false")
-				->setRank('default');
-			$resultSet = (new Factory)->getFromConfig($searchConfig)->search();
-			$currentResults = $resultSet->toArray($requestedFields);
+			$currentResults = $this->querySolrForArticles($query, $namespaces, $maxArticlesPerWiki, $wiki['wikiId'], $wiki['lang']);
 			foreach ($currentResults as $article) {
 				$articles[] = $this->processArticle($article);
 			}
 		}
+		$timer->stop();
 		return $articles;
+	}
+
+	/**
+	 * @param $query
+	 * @param $namespaces
+	 * @param $maxArticlesPerWiki
+	 * @param $wiki
+	 * @return array
+	 */
+	protected function querySolrForArticles($query, $namespaces, $maxArticlesPerWiki, $wikiId, $wikiLang) {
+		$requestedFields = ["title", "url", "id", "score", "pageid", "lang", "wid", Utilities::field('html', $wikiLang)];
+		$searchConfig = new Config;
+		$searchConfig->setQuery($query)
+			->setLimit($maxArticlesPerWiki)
+			->setPage(1)
+			->setOnWiki(true)
+			->setRequestedFields($requestedFields)
+			->setWikiId($wikiId)
+			->setNamespaces($namespaces)
+			->setFilterQuery("is_main_page:false")
+			->setRank('default');
+		$resultSet = (new Factory)->getFromConfig($searchConfig)->search();
+		$currentResults = $resultSet->toArray($requestedFields);
+		return $currentResults;
 	}
 
 	/**
@@ -94,6 +108,7 @@ class CombinedSearchService {
 	 * @return array
 	 */
 	public function searchForWikias($query, $langs, $hubs) {
+		$timer = Time::start([__CLASS__, __METHOD__]);
 		$wikias = [];
 		foreach ($langs as $lang) {
 			$crossWikiSearchConfig = new Config;
@@ -117,10 +132,11 @@ class CombinedSearchService {
 			}
 		}
 		$wikias = array_slice($wikias, 0, self::CROSS_WIKI_RESULTS);
+		$timer->stop();
 		return $wikias;
 	}
 
-	private function processWiki( $wikiInfo ) {
+	protected function processWiki( $wikiInfo ) {
 		$wikiService = new \WikiService();
 
 		$outputModel = [];
@@ -181,7 +197,7 @@ class CombinedSearchService {
 		return $outputModel;
 	}
 
-	private function getTopArticles( $wikiId, $lang ) {
+	protected function getTopArticles( $wikiId, $lang ) {
 		return \WikiaDataAccess::cache( wfSharedMemcKey( "CombinedSearchService", $wikiId, $lang ), self::TOP_ARTICLES_CACHE_TIME, function() use( $wikiId, $lang ) {
 			$timer = Time::start(["CombinedSearchService", "getTopArticles"]);
 			$requestedFields = [ "title", "url", "id", "score", "pageid", "lang", "wid", Utilities::field('html', $lang) ];
