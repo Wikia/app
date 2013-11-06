@@ -32,6 +32,7 @@ define('ext.wikia.adengine.template.skin', ['wikia.document', 'wikia.window', 'w
 			params.backgroundTiled = false;
 			params.backgroundFixed = true;
 			params.backgroundDynamic = true;
+			params.backgroundColor = '#' + params.backgroundColor;
 
 			BackgroundChanger.load(params);
 		} else {
