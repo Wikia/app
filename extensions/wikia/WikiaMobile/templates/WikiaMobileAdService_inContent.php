@@ -8,22 +8,33 @@ require(['ads', 'sloth', 'jquery', 'JSMessages'], function (ads, sloth, $, msg) 
 		firstSectionTop = ($firstSection.length && $firstSection.offset().top) || 0,
 		showInContent = firstSectionTop > MIN_ZEROTH_SECTION_LENGTH,
 		showBeforeFooter = document.height > MIN_PAGE_LENGTH || firstSectionTop < MIN_ZEROTH_SECTION_LENGTH,
+		loading = false,
 		lazyLoadAd = function(elem, slotName){
 			sloth({
 				on: elem,
-				threshold: 500,
+				threshold: 200,
 				callback: function onEnter(adWrapper){
-					ads.setupSlot({
-						name: slotName,
-						size: '300x250',
-						wrapper: adWrapper,
-						init: function onInit(found){
-							if(found) {
-								adWrapper.innerHTML += '<label class="wkAdLabel inContent">' + msg('wikiamobile-ad-label') + '<label>';
-								adWrapper.className += ' show';
+					if(!loading) {
+						//Do not load both ads at the same time
+						//postscribe cant handle that, as a matter of fact nothing can
+						loading = true;
+
+						ads.setupSlot({
+							name: slotName,
+							size: '300x250',
+							wrapper: adWrapper,
+							init: function onInit(found){
+								if(found) {
+									adWrapper.innerHTML += '<label class="wkAdLabel inContent">' + msg('wikiamobile-ad-label') + '</label>';
+									adWrapper.className += ' show';
+								}
+
+								loading = false;
 							}
-						}
-					});
+						});
+					} else {
+						lazyLoadAd(elem, slotName);
+					}
 				}
 			})
 		};
