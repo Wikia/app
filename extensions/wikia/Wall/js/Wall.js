@@ -565,7 +565,10 @@ var Wall = $.createClass(Object, {
 						msg.fadeOut('fast', function() { msg.remove(); });
 					}
 
-					modal.close();
+					if( typeof( modal ) !== 'undefined' ) {
+					// VSTF can delete without confirmation modal
+						modal.close();
+					}
 				}
 			})
 		});
