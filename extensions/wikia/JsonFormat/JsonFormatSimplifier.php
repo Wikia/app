@@ -21,18 +21,57 @@ class JsonFormatSimplifier {
 				$this->newParagraph( $contentElements );
 				$this->getParagraphs( $childNode, $contentElements );
 			} else if ( $childNode->getType() == "list" ) {
-				/** @var \JsonFormatListNode $childNode */
-				$simpleListElements = [];
-				foreach ( $childNode->getChildren() as $listElement ) {
-					$simpleListElements[] = $this->readText( $listElement );
-				}
-				$contentElements[] = [
+
+				$contentElements[ ] = [
 					"type" => "list",
-					"elements" => $simpleListElements
+					"elements" => self::processList( $childNode )
 				];
 			}
 		}
 	}
+
+	private static function processList( \JsonFormatNode $childNode ) {
+		$out = [];
+		$text = null;
+
+		$children = $childNode->getChildren();
+		$numChild = count( $children );
+
+		$i = 0;
+
+		if ( $numChild ) {
+
+			while ( $i < $numChild ) {
+				$type = $children[ $i ]->getType();
+
+				if ( $type == 'text' ) {
+					$text = $children[ $i ]->getText();
+
+					$elements = [];
+					$i++;
+
+					if ( $i < $numChild && $children[ $i ]->getType() == 'list' ) {
+						$elements = self::processList( $children[ $i ] );
+					}
+					else {
+						$i--;
+					}
+
+					$out[ ] = ['text' => $text, 'elements' => $elements];
+
+				}
+				elseif ( $type == 'listItem' ) {
+					$arr = self::processList( $children[ $i ] );
+					$out[ ] = array_shift( $arr );
+				}
+
+				$i++;
+			}
+		}
+
+		return $out;
+	}
+
 
 	private function readText( \JsonFormatContainerNode $parentNode ) {
 		$text = "";
