@@ -209,6 +209,9 @@ $config['oasis_jquery'] = array(
 		// jQuery/Oasis specific code
 		'//skins/oasis/js/tables.js',
 
+		// BackgroundChanger
+		'//skins/oasis/js/BackgroundChanger.js',
+
 		// Search A/B testing
 		'//extensions/wikia/Search/js/SearchAbTest.DomUpdater.js',
 		'//extensions/wikia/Search/js/SearchAbTest.Context.js',
