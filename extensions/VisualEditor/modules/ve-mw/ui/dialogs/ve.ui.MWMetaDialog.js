@@ -188,16 +188,6 @@ ve.ui.MWMetaDialog.prototype.onOpen = function () {
 };
 
 /** */
-ve.ui.MWMetaDialog.prototype.onCloseButtonClick = function () {
-	// explicitly track when page settings dialog close button has been clicked
-	ve.track( {
-		'action': ve.track.actions.CLICK,
-		'label': 'dialog-page-settings-button-close'
-	} );
-	ve.ui.MWDialog.prototype.onCloseButtonClick.call( this );
-};
-
-/** */
 ve.ui.MWMetaDialog.prototype.onClose = function ( action ) {
 	var hasTransactions, newDefaultSortKeyItem, newDefaultSortKeyItemData,
 		surfaceModel = this.surface.getModel(),
