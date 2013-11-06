@@ -323,10 +323,10 @@ class VideoInfoHooksHelper {
 	 * Check the file passed and fail if its a ghost file; that is, a file
 	 * that is from the video wiki but doesn't have any local record
 	 *
-	 * @param $file
-	 * @return bool
+	 * @param File $file A file object to check
+	 * @return bool Whether this hook has succeeded
 	 */
-	public static function onCheckGhostFile( $file ) {
+	public static function onCheckGhostFile( &$file ) {
 		# If we're on a file page and we don't have any video_info for the current
 		# title, treat it like a non-existent file
 		if ( $file && WikiaFileHelper::isFileTypeVideo($file) ) {
@@ -334,7 +334,7 @@ class VideoInfoHooksHelper {
 			$info = VideoInfo::newFromTitle( $title );
 			if ( empty($info) ) {
 				F::app()->wg->IsGhostVideo = true;
-				return false;
+				$file = null;
 			}
 		}
 
