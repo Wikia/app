@@ -164,7 +164,7 @@ class CombinedSearchService {
 			$fullText = $articleInfo[Utilities::field('html', $articleInfo['lang'])];
 			$outputModel['snippet'] = trim( wfShortenText( $fullText, self::SNIPPET_LENGTH, true ) );
 		}
-		$image = $this->getImage($outputModel);
+		$image = $this->getImage($outputModel["wikiId"], $outputModel["articleId"]);
 		if ( !empty($image) ) {
 			$outputModel['image'] = $image;
 		}
@@ -176,24 +176,24 @@ class CombinedSearchService {
 	 * @param $outputModel
 	 * @return mixed
 	 */
-	protected function getImage($outputModel) {
+	protected function getImage( $wikiId, $articleId ) {
 		$dbName = '';
 		try {
-			$row = \WikiFactory::getWikiByID($outputModel['wikiId']);
+			$row = \WikiFactory::getWikiByID($wikiId);
 			if ($row) {
 				$dbName = $row->city_dbname;
 				if (!empty($dbName)) {
 					$db = wfGetDB(DB_SLAVE, [], $dbName); // throws if database does not exits.
 					$imageServing = new \ImageServing(
-						[$outputModel['articleId']],
+						[$articleId],
 						self::IMAGE_SIZE,
 						self::IMAGE_SIZE,
 						$db
 					);
-					$images = $imageServing->getImages(1)[$outputModel['articleId']];
+					$images = $imageServing->getImages(1)[$articleId];
 					if ($images && sizeof($images) > 0) {
 						$imageName = $images[0]['name'];
-						$file = \GlobalFile::newFromText($imageName, $outputModel['wikiId']);
+						$file = \GlobalFile::newFromText($imageName, $wikiId);
 						if ($file->exists()) {
 							return ($imageServing->getUrl($file, $file->getWidth(), $file->getHeight()));
 						}

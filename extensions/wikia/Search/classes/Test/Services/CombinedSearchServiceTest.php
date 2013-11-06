@@ -76,7 +76,7 @@ class CombinedSearchServiceTest extends BaseTest {
 
 
 	public function testSearchForArticles() {
-		$combinedSearchServiceMock = $this->getMock('Wikia\Search\Services\CombinedSearchService', ['querySolrForArticles']);
+		$combinedSearchServiceMock = $this->getMock('Wikia\Search\Services\CombinedSearchService', ['querySolrForArticles', 'getImage']);
 		$foundResultsMock1 = [ [ 'lang' => 'pl', 'title' => 'a', 'url' => 'b', 'id' => '123_14', 'score' => 3, 'pageid' => 14, 'wid' => 123, 'html_pl' => 'lorem ipsum pl' ] ];
 		$foundResultsMock2 = [ [ 'lang' => 'en', 'title' => 'w', 'url' => 'x', 'id' => '124_15', 'score' => 3, 'pageid' => 15, 'wid' => 124, 'html_en' => 'lorem ipsum en' ] ];
 
@@ -86,9 +86,19 @@ class CombinedSearchServiceTest extends BaseTest {
 			->will   ( $this->returnValue($foundResultsMock1) );
 
 		$combinedSearchServiceMock->expects( $this->at(1) )
+			->method ( 'getImage' )
+			->withAnyParameters()
+			->will   ( $this->returnValue(null) );
+
+		$combinedSearchServiceMock->expects( $this->at(2) )
 			->method ( 'querySolrForArticles' )
 			->with   ( "foo", [ 13 ], 4, 124, 'en' )
 			->will   ( $this->returnValue($foundResultsMock2) );
+
+		$combinedSearchServiceMock->expects( $this->at(3) )
+			->method ( 'getImage' )
+			->withAnyParameters()
+			->will   ( $this->returnValue(null) );
 
 		/** @var $combinedSearchServiceMock CombinedSearchService */
 		$response = $combinedSearchServiceMock->searchForArticles( 'foo', [13], [ [ 'wikiId' => 123, "lang" => 'pl' ], [ 'wikiId' => 124, "lang" => 'en' ] ], 4 );
