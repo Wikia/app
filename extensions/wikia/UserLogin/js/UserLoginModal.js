@@ -33,7 +33,7 @@ var UserLoginModal = {
 					require( [ 'wikia.ui.modal' ], function( modal ) {
 						UserLoginModal.$modal = modal.init( 'userForceLoginModal' );
 
-						UserLoginModal.loginAjaxForm = new UserLoginAjaxForm( UserLoginModal.$modal.$element, {
+						UserLoginModal.loginAjaxForm = new window.UserLoginAjaxForm( UserLoginModal.$modal.$element, {
 							ajaxLogin: true,
 							callback: function( res ) {
 								window.wgUserName = res.username;
@@ -75,7 +75,7 @@ var UserLoginModal = {
 								} );
 							}
 						} );
-						UserLoginFacebook.init();
+						window.UserLoginFacebook.init();
 
 						if (options.modalInitCallback && typeof options.modalInitCallback === 'function') {
 							options.modalInitCallback();
@@ -110,9 +110,9 @@ var UserLoginModal = {
 			return true;
 		} else if ( window.wgComboAjaxLogin ) {
 			/* 1st, 2nd, 4th, and 5th vars in this method is not used outside of ajaxlogin itself*/
-			showComboAjaxForPlaceHolder( false, false, function() {
-				if ( options[ 'callback' ] ) {
-					AjaxLogin.doSuccess = options['callback'];
+			window.showComboAjaxForPlaceHolder( false, false, function() {
+				if ( options.callback ) {
+					window.AjaxLogin.doSuccess = options.callback;
 				}
 			}, false, true );
 
@@ -123,7 +123,8 @@ var UserLoginModal = {
 	},
 	isPreventingForceLogin: function( element ) {
 		'use strict';
-		if ( !(element.closest( 'span').hasClass( 'drop' )) && !( element.closest( 'ul' ).hasClass( 'WikiaMenuElement' ) ) ) {
+		if ( !(element.closest( 'span').hasClass( 'drop' )) &&
+			!( element.closest( 'ul' ).hasClass( 'WikiaMenuElement' ) ) ) {
 			return false;
 		}
 		return true;
@@ -141,7 +142,7 @@ var UserLoginModal = {
 		editpromptable.click( $.proxy( function( ev ) {
 			ev.stopPropagation(); // (BugId:34026) stop bubbling up when parent and child both have event listener.
 
-			if ( !this.isPreventingForceLogin( $( ev.target ) ) && UserLogin.isForceLogIn() ) {
+			if ( !this.isPreventingForceLogin( $( ev.target ) ) && window.UserLogin.isForceLogIn() ) {
 				ev.preventDefault();
 			}
 		}, this ) );
