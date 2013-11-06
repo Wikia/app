@@ -1,6 +1,7 @@
 <?php
 
 namespace Wikia\Search\Services;
+use WikiService;
 use Wikia\Measurements\Time;
 use Wikia\Search\Config;
 use Wikia\Search\Field\Field;
@@ -20,6 +21,29 @@ class CombinedSearchService {
 	 * @var bool
 	 */
 	private $hideNonCommercialContent = false;
+
+	/**
+	 * @var WikiService
+	 */
+	private $wikiService;
+
+	function __construct( $wikiService = null ) {
+		$this->wikiService = $wikiService === null ? new WikiService() : $wikiService;
+	}
+
+	/**
+	 * @param \WikiService $wikiService
+	 */
+	public function setWikiService($wikiService) {
+		$this->wikiService = $wikiService;
+	}
+
+	/**
+	 * @return \WikiService
+	 */
+	public function getWikiService() {
+		return $this->wikiService;
+	}
 
 	/**
 	 * @param boolean $hideNonCommercialContent
@@ -81,7 +105,8 @@ class CombinedSearchService {
 	 * @param $query
 	 * @param $namespaces
 	 * @param $maxArticlesPerWiki
-	 * @param $wiki
+	 * @param $wikiId
+	 * @param $wikiLang
 	 * @return array
 	 */
 	protected function querySolrForArticles($query, $namespaces, $maxArticlesPerWiki, $wikiId, $wikiLang) {
@@ -111,19 +136,7 @@ class CombinedSearchService {
 		$timer = Time::start([__CLASS__, __METHOD__]);
 		$wikias = [];
 		foreach ($langs as $lang) {
-			$crossWikiSearchConfig = new Config;
-			$crossWikiSearchConfig->setQuery($query)
-				->setLimit(self::CROSS_WIKI_RESULTS)
-				->setPage(1)
-				->setRank('default')
-				->setInterWiki(true)
-				->setCommercialUse($this->getHideNonCommercialContent())
-				->setLanguageCode($lang);
-			if (!empty($hubs)) {
-				$crossWikiSearchConfig->setHubs($hubs);
-			}
-			$crossWikiResultSet = (new Factory)->getFromConfig($crossWikiSearchConfig)->search();
-			$crossWikiResults = $crossWikiResultSet->toArray(["sitename_txt", "url", "id", "description_txt", "lang_s", "score", "description_txt"]);
+			$crossWikiResults = $this->queryForWikias($query, $hubs, $lang);
 			foreach ($crossWikiResults as $wikiSearchResult) {
 				$wikias[] = $this->processWiki($wikiSearchResult);
 			}
@@ -136,16 +149,37 @@ class CombinedSearchService {
 		return $wikias;
 	}
 
-	protected function processWiki( $wikiInfo ) {
-		$wikiService = new \WikiService();
+	/**
+	 * @param $query
+	 * @param $hubs
+	 * @param $lang
+	 * @return array
+	 */
+	public function queryForWikias($query, $hubs, $lang) {
+		$crossWikiSearchConfig = new Config;
+		$crossWikiSearchConfig->setQuery($query)
+			->setLimit(self::CROSS_WIKI_RESULTS)
+			->setPage(1)
+			->setRank('default')
+			->setInterWiki(true)
+			->setCommercialUse($this->getHideNonCommercialContent())
+			->setLanguageCode($lang);
+		if (!empty($hubs)) {
+			$crossWikiSearchConfig->setHubs($hubs);
+		}
+		$crossWikiResultSet = (new Factory)->getFromConfig($crossWikiSearchConfig)->search();
+		$crossWikiResults = $crossWikiResultSet->toArray(["sitename_txt", "url", "id", "description_txt", "lang_s", "score", "description_txt"]);
+		return $crossWikiResults;
+	}
 
+	protected function processWiki( $wikiInfo ) {
 		$outputModel = [];
-		$outputModel['wikiId'] = $wikiInfo['id'];
+		$outputModel['wikiId'] = (int) $wikiInfo['id'];
 		$outputModel['name'] = $wikiInfo['sitename_txt'][0]; // this is multivalue field
 		$outputModel['url'] = $wikiInfo['url'];
 		$outputModel['lang'] = $wikiInfo['lang_s'];
 		$outputModel['snippet'] = $wikiInfo['description_txt'];
-		$outputModel['wordmark'] = $wikiService->getWikiWordmark( $outputModel['wikiId'] );
+		$outputModel['wordmark'] = $this->wikiService->getWikiWordmark( $outputModel['wikiId'] );
 
 		$outputModel['topArticles'] = $this->getTopArticles( $outputModel['wikiId'], $outputModel['lang'] );
 

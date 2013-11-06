@@ -120,4 +120,63 @@ class CombinedSearchServiceTest extends BaseTest {
 				'snippet' => 'lorem ipsum en' ] ],
 			$response );
 	}
+
+
+	public function testSearchForWikias() {
+		$combinedSearchServiceMock = $this->getMock('Wikia\Search\Services\CombinedSearchService', ['queryForWikias', 'getTopArticles']);
+
+		$foundResultsMockPL = [ [ 'sitename_txt' => 'a', 'url' => 'b', 'id' => '125', 'score' => 3, 'description_txt' => 'lorem ipsum pl', 'lang_s' => 'pl' ] ];
+		$foundResultsMockEN = [ [ 'sitename_txt' => 'w', 'url' => 'x', 'id' => '126', 'score' => 3, 'description_txt' => 'lorem ipsum en', 'lang_s' => 'en' ] ];
+
+		$combinedSearchServiceMock->expects( $this->at(0) )
+			->method ( 'queryForWikias' )
+			->with   ( "foobar", ['FOO'], 'en' )
+			->will   ( $this->returnValue($foundResultsMockEN) );
+
+		$combinedSearchServiceMock->expects( $this->at(1) )
+			->method ( 'getTopArticles' )
+			->withAnyParameters()
+			->will   ( $this->returnValue(['fake1']) );
+
+		$combinedSearchServiceMock->expects( $this->at(2) )
+			->method ( 'queryForWikias' )
+			->with   ( "foobar", ['FOO'], 'pl' )
+			->will   ( $this->returnValue($foundResultsMockPL) );
+
+		$combinedSearchServiceMock->expects( $this->at(3) )
+			->method ( 'getTopArticles' )
+			->withAnyParameters()
+			->will   ( $this->returnValue(['fake2']) );
+
+		$wikiServiceMock = $this->getMock('WikiService', ['getWikiWordmark']);
+
+		$wikiServiceMock->expects( $this->any() )
+			->method( 'getWikiWordmark' )
+			->withAnyParameters()
+			->will( $this->returnValue( 'fake wordmarkUrl' ) );
+
+		/** @var $combinedSearchServiceMock CombinedSearchService */
+		$combinedSearchServiceMock->setWikiService( $wikiServiceMock );
+
+		$response = $combinedSearchServiceMock->searchForWikias( 'foobar', ['en', 'pl'], ['FOO']);
+
+		$this->assertEquals([
+				[
+					'wikiId' => 126,
+					'name' => 'w',
+					'url' => 'x',
+					'lang' => 'en',
+					'snippet' => 'lorem ipsum en',
+					'wordmark' => 'fake wordmarkUrl',
+					'topArticles' => [ 'fake1' ] ],
+				[
+					'wikiId' => 125,
+					'name' => 'a',
+					'url' => 'b',
+					'lang' => 'pl',
+					'snippet' => 'lorem ipsum pl',
+					'wordmark' => 'fake wordmarkUrl',
+					'topArticles' => [ 'fake2'] ] ],
+			$response );
+	}
 }
