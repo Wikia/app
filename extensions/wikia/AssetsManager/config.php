@@ -8,7 +8,8 @@ $config['oasis_shared_core_js'] = array(
 	'assets' => array(
 		'#group_oasis_wikia_js',
 		'//resources/wikia/libraries/sloth/sloth.js',
-		'//resources/wikia/libraries/mustache/mustache.js'
+		'//resources/wikia/libraries/mustache/mustache.js',
+		'#group_ui_repo_api_js'
 	),
 );
 

@@ -1,5 +1,4 @@
 <div class="UserLoginModal">
-	<h1><?= wfMessage('userlogin-login-heading')->escaped() ?></h1>
 <?php
 	$tabIndex = 5;
 	$specialSignupLink = SpecialPage::getTitleFor('UserSignup')->getLocalURL();
@@ -67,3 +66,4 @@
 	echo $app->renderView('UserLoginSpecial', 'Providers', array('tabindex' => ++$tabIndex));
 ?>
 </div>
+
