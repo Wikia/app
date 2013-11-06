@@ -91,11 +91,12 @@ class WikiaFileHelper extends Service {
 	 * @param string $provider
 	 * @param string $videoId
 	 * @param boolean $isRemoteAsset
+	 * @param boolean $useMaster
 	 * @return array $result
 	 */
-	public static function findVideoDuplicates( $provider, $videoId, $isRemoteAsset = false ) {
+	public static function findVideoDuplicates( $provider, $videoId, $isRemoteAsset = false, $useMaster = false ) {
 		//print "Looking for duplicaes of $provider $videoId\n";
-		$dbr = wfGetDB( DB_MASTER ); // has to be master otherwise there's a chance of getting duplicates
+		$dbr = wfGetDB( $useMaster ? DB_MASTER : DB_SLAVE ); // has to be master otherwise there's a chance of getting duplicates
 
 		// for remote asset, $videoId is string even if it is numeric
 		if ( is_numeric( $videoId ) && !$isRemoteAsset ) {
