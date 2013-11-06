@@ -504,8 +504,8 @@ var Wall = $.createClass(Object, {
 					} );
 					confirmModal.$element.find( '#' + modalPrimaryBtnId ).click( function() {
 						var formdata = confirmModal.$element.find('form').serializeArray();
-						self.doAction(id, mode, wallMsg, target, formdata );
-						confirmModal.close();
+						confirmModal.deactivate();
+						self.doAction(id, mode, wallMsg, target, formdata, confirmModal );
 					} );
 					confirmModal.$element.find('textarea.wall-action-reason').bind('keydown keyup change', function(e) {
 						var target = $(e.target);
@@ -528,7 +528,7 @@ var Wall = $.createClass(Object, {
 	 * restore(mode: restore)
 	 */
 
-	doAction: function(id, mode, msg, target, formdata){
+	doAction: function( id, mode, msg, target, formdata, modal ){
 		switch(mode) {
 			case 'close':
 				this.doThreadChangeSendRequest(id, 'close', formdata);
@@ -537,12 +537,12 @@ var Wall = $.createClass(Object, {
 				this.doRestore(id, target, formdata);
 			break;
 			default:
-				this.doDelete(id, mode, msg, formdata);
+				this.doDelete(id, mode, msg, formdata, modal);
 			break;
 		}
 	},
 
-	doDelete: function(id, mode, msg, formdata){
+	doDelete: function( id, mode, msg, formdata, modal ){
 		$.nirvana.sendRequest({
 			controller: 'WallExternalController',
 			method: 'deleteMessage',
@@ -564,6 +564,8 @@ var Wall = $.createClass(Object, {
 					} else {
 						msg.fadeOut('fast', function() { msg.remove(); });
 					}
+
+					modal.close();
 				}
 			})
 		});
