@@ -101,4 +101,63 @@ class GlobalFileTest extends WikiaBaseTest {
 			]
 		];
 	}
+
+	/**
+	 * @dataProvider testNewFromTextDbNameMatchProvider
+	 */
+	public function testNewFromTextDbNameMatch($row, $cityId) {
+		$mockSelectRow = $this->getMethodMock( 'DatabaseMysql', 'selectRow' );
+		$mockSelectRow
+			->expects( $this->any() )
+			->method( 'selectRow' )
+			->will( $this->returnCallback( function( $table, $vars, $conds, $fname ) use ($row) {
+				if ( $fname == 'GlobalFile::loadData' ) {
+					if ( $conds['img_name'] == $row->img_name ) {
+						return $row;
+					} else {
+						return false;
+					}
+				} else { // don't mess with WikiFactory accessing database
+					return $this->getCurrentInvocation()->callOriginal();
+				}
+			}));
+
+		$dbName = $row->img_name;
+		$name = str_replace("_", " ", $dbName);
+
+		$file = GlobalFile::newFromText($dbName, $cityId);
+		$file2 = GlobalFile::newFromText($name, $cityId);
+		$file3 = GlobalFile::newFromText("Not-existing-Image.jpg", $cityId);
+
+		$this->assertTrue( $file->exists() );
+		$this->assertTrue( $file2->exists() );
+		$this->assertFalse( $file3->exists() );
+	}
+
+	public function testNewFromTextDbNameMatchProvider() {
+		return [
+			[
+				'row' => (object) [
+						'img_name' => "Gzik.jpg",
+						'img_width' => '600',
+						'img_height' => '450',
+						'img_major_mime' => 'image',
+						'img_minor_mime' => 'jpeg',
+						'img_timestamp' => '20111213221639',
+					],
+				'cityId' => self::POZNAN_CITY_ID,
+			],
+			[
+				'row' => (object) [
+						'img_name' => "Gzik_v2.jpg",
+						'img_width' => '600',
+						'img_height' => '450',
+						'img_major_mime' => 'image',
+						'img_minor_mime' => 'jpeg',
+						'img_timestamp' => '20111213221639',
+					],
+				'cityId' => self::POZNAN_CITY_ID,
+			]
+		];
+	}
 }
