@@ -24,7 +24,7 @@ class JsonFormatSimplifier {
 
 				$contentElements[ ] = [
 					"type" => "list",
-					"elements" => self::processList( $childNode )
+					"elements" => $this->processList( $childNode )
 				];
 			}
 		}
@@ -88,7 +88,7 @@ class JsonFormatSimplifier {
 				$text .= " " . $this->readText( $childNode );
 			}
 		}
-		return $text;
+		return trim($text);
 	}
 
 	private function getImages( \JsonFormatContainerNode $containerNode, &$images ) {

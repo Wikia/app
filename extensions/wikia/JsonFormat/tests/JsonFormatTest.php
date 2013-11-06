@@ -156,7 +156,7 @@ Nullam eros mi, mollis in sollicitudin non, tincidunt sed enim. Sed et felis met
 							1 => [
 								'child' => [
 									0 => [
-										'text' => "Nullam eros mi, mollis in sollicitudin non, tincidunt sed enim. Sed et felis metus, rhoncus ornare nibh. Ut at magna leo.\n"
+										'text' => "Nullam eros mi, mollis in sollicitudin non, tincidunt sed enim. Sed et felis metus, rhoncus ornare nibh. Ut at magna leo."
 									]
 								]
 							]
@@ -170,7 +170,7 @@ Nullam eros mi, mollis in sollicitudin non, tincidunt sed enim. Sed et felis met
 					0 => [
 						'child' => [
 							0 => [
-								'text' => "mollis in sollicitudin non\n"
+								'text' => "mollis in sollicitudin non"
 							]
 						]
 					]
