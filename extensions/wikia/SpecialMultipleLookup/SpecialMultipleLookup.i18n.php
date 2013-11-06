@@ -206,9 +206,11 @@ $messages['ca'] = array(
  * @author Умар
  */
 $messages['ce'] = array(
+	'multilookupgo' => 'Дехьа гӀо',
 	'multilookupnoresultfound' => 'ХӀума ца карийна',
-	'multilookuplink' => 'Къинхьегаме хьажориг',
+	'multilookuplink' => 'Къинхьегаме хьажораг',
 	'multilookupwikititle' => 'Корта',
+	'multilookupwikioptions' => 'Параметраш',
 );
 
 /** Czech (česky)

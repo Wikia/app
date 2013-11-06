@@ -479,13 +479,8 @@ $wgContLang = Language::factory( $wgLanguageCode );
 $wgContLang->initEncoding();
 $wgContLang->initContLang();
 
-if (defined('DONT_INTERPOLATE_TITLE')) {
-// rt#22195
-} else {
-// Now that variant lists may be available...
-	$wgRequest->interpolateTitle();
-	$wgUser = RequestContext::getMain()->getUser(); # BackCompat
-}
+$wgRequest->interpolateTitle();
+$wgUser = RequestContext::getMain()->getUser(); # BackCompat
 
 /**
  * @var Language

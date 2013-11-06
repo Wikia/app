@@ -46,6 +46,8 @@ define( 'lvs.swapkeep', [
 		if ( isSwap ) {
 			data.newTitle = newTitle;
 			trackingLabel = tracker.labels.SWAP;
+		} else {
+			data.suggestions = _getSuggestions();
 		}
 
 		nirvana.sendRequest({
@@ -64,25 +66,18 @@ define( 'lvs.swapkeep', [
 	function confirmModal() {
 		videoControls.reset();
 		var currTitleText,
-				request,
-				suggestions;
+				request;
 
 		request = {};
-		suggestions = _getSuggestions();
-
-		if ( suggestions.length ) {
-			request.suggestions = suggestions;
-		}
-
 		currTitleText =  currTitle.replace(/_/g, ' ' );
 
 		// Show confirmation modal only on "Keep"
 		$.confirm({
-			cancelMsg: $.msg( 'lvs-button-yes' ),
-			okMsg: $.msg( 'lvs-button-no' ),
+			okMsg: $.msg( 'lvs-button-yes' ),
+			cancelMsg: $.msg( 'lvs-button-no' ),
 			title: $.msg( 'lvs-confirm-keep-title' ),
 			content: $.msg( 'lvs-confirm-keep-message', currTitleText ),
-			onOk: function() {
+			onCancel: function() {
 				request.forever = true;
 				doRequest( request );
 				// Track click on 'no' button
@@ -91,7 +86,7 @@ define( 'lvs.swapkeep', [
 					label: tracker.labels.KEEP
 				});
 			},
-			onCancel: function() {
+			onOk: function() {
 				request.forever = false;
 				doRequest( request );
 
@@ -149,7 +144,7 @@ define( 'lvs.swapkeep', [
 				currTitle = decodeURIComponent( $keepButton.attr( 'data-video-keep' ) );
 				// no new title b/c we're keeping the current video
 				newTitle = '';
-				
+
 				if ( $keepButton.data( 'subsequent-keep' ) ) {
 
 					confirmModal();
@@ -175,10 +170,17 @@ define( 'lvs.swapkeep', [
 
 		arr = [];
 		$suggestions = $row.find( '.more-videos .thumbimage' );
+
 		if ( $suggestions.length ) {
 			$suggestions.each(function( idx, elem ) {
 					arr.push( $( elem ).data().videoKey );
 			});
+		} else {
+			arr.push(
+				$row
+					.find( '.premium .video-wrapper .thumbimage' )
+					.data().videoKey
+			);
 		}
 
 		return arr;

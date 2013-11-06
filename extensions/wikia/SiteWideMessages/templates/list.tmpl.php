@@ -5,15 +5,11 @@
 </style>
 
 <div id="PaneNav">
-	<a href="<?= $title->getLocalUrl() ?>"><?= wfMsg('swm-page-title-editor') ?></a>
+	<a href="<?= $title->getLocalUrl() ?>"><?= wfMessage( 'swm-page-title-editor' )->escaped() ?></a>
 </div>
 
 <div id="PaneList">
-	<fieldset>
-		<legend><?= wfMsg('swm-label-list') ?></legend>
-		<?= $formData['body'] ?>
-		<?= $formData['nav'] ?>
-		</table>
-	</fieldset>
+	<?= $formData['body'] ?>
+	<?= $formData['nav'] ?>
 </div>
 <!-- e:<?= __FILE__ ?> -->

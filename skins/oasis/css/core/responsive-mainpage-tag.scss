@@ -1,0 +1,76 @@
+@import "layout";
+@import "responsive-variables";
+
+@mixin minMainPageTags() {
+// START - main page tag fixes
+	.home-top-right-ads {
+		display: none;
+	}
+
+	.lcs-container {
+		margin-right: 0;
+	}
+
+	.main-page-tag-lcs {
+		float: none;
+		margin-right: 0;
+	}
+
+	.main-page-tag-rcs {
+		float: none;
+		width: auto;
+	}
+// END - main page tag fixes
+}
+
+@mixin maxMainPageTags() {
+// fixes max width edit preview for main pages
+	.home-top-right-ads {
+		display: block;
+		float: right;
+	}
+
+	.lcs-container {
+		margin-right: 310px;
+	}
+
+	.main-page-tag-lcs {
+		margin-right: -320px;
+		float: left;
+		position: relative;
+		width: 100%;
+	}
+
+	.main-page-tag-rcs {
+		clear: right;
+		float: right;
+		position: relative;
+		width: 300px;
+	}
+}
+
+@if ( $responsive-layout-enabled ) {
+	.lcs-container {
+		margin-right: $width-rail + $width-padding;
+	}
+
+	.main-page-tag-lcs-exploded {
+		margin-right: -( $width-rail + $width-gutter );
+	}
+
+	.ArticlePreviewInner[data-size="min"] {
+		@include minMainPageTags();
+	}
+
+	.ArticlePreviewInner[data-size="max"] {
+		@include maxMainPageTags();
+	}
+
+	@media screen and (max-width: $breakpoint-small) {
+	// ABTesting: DAR-1859: START
+		html:not(.keep-rail-on-right) {
+			// ABTesting: DAR-1859: END
+			@include minMainPageTags();
+		}
+	}
+}

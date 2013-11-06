@@ -1,0 +1,12 @@
+js/lib/**/test
+js/lib/**/docs
+js/lib/**/examples
+js/lib/**/bower.json
+js/lib/**/index.js
+js/lib/**/*.html
+js/lib/**/*.md
+js/lib/**/*.txt
+js/lib/**/*.json
+
+CNAME
+LICENSE

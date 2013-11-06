@@ -50,6 +50,7 @@
 @import "core/GlobalNotification";
 @import "core/WikiaBar";
 @import "core/jquery.ui.autocomplete"; // TODO: load on demand
+@import "core/video-thumbnail";
 
 // Bootstrap
 @import "resources/wikia/libraries/bootstrap/tooltip";
@@ -71,6 +72,7 @@
 @import "extensions/wikia/WikiaSeasons/css/WikiaSeasonsBar";
 @import "extensions/wikia/UserLogin/css/UserLoginDropdown";
 @import "extensions/wikia/Forum/css/RelatedForumDiscussion";	// on every article page
+@import "extensions/wikia/TOC/css/toc.scss";
 
 // CSS (needs leading slash and file extension)
 @import "/extensions/wikia/CreatePage/css/CreatePage.css";
@@ -81,3 +83,12 @@
 @media print {
 	@import "print";
 }
+
+// load all responsive layout files
+// These files should always be loaded after everything else in oasis.scss because
+// they override some of the styles.
+@import "core/responsive-variables";
+@import "core/responsive-font-sizing";
+@import "core/responsive-background";
+@import "core/responsive-core";
+@import "core/responsive-mainpage-tag";

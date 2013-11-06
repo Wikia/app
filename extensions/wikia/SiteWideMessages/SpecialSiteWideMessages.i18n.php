@@ -124,6 +124,7 @@ $messages['en'] = array(
 
 /** Message documentation (Message documentation)
  * @author EugeneZelenko
+ * @author Hamilton Abreu
  * @author Lloffiwr
  * @author Shirayuki
  * @author Siebrand
@@ -139,10 +140,25 @@ $messages['qqq'] = array(
 	'swm-label-list' => 'List is a noun here.
 
 {{Identical|List}}',
-	'swm-label-recipient-wikis' => '{{Identical|Wiki}}',
+	'swm-label-recipient-wikis' => 'Referred to in:
+*{{msg-wikia|Swm-label-mode-users-user-hint}}
+{{Identical|Wiki}}',
 	'swm-label-recipient-users' => '{{Identical|User}}',
-	'swm-label-mode-wikis-wiki-multi' => 'Option to select if user wants to send message to users on a list of wikis.',
+	'swm-label-mode-wikis-all' => 'Referred to in:
+*{{msg-wikia|Swm-label-mode-users-anon-hint}}',
+	'swm-label-mode-wikis-wiki' => 'Referred to in:
+*{{msg-wikia|Swm-label-mode-users-anon-hint}}',
+	'swm-label-mode-wikis-wiki-multi' => 'Option to select if user wants to send message to users on a list of wikis.
+
+Referred to in:
+*{{msg-wikia|Swm-label-mode-users-anon-hint}}',
 	'swm-label-mode-wikis-wiki-multi-hint' => 'Message explaining the format of the list of wikis.',
+	'swm-label-mode-users-user-hint' => 'Refers to option:
+*{{msg-wikia|Swm-label-recipient-wikis}}',
+	'swm-label-mode-users-anon-hint' => 'Refers to options:
+*{{msg-wikia|Swm-label-mode-wikis-all}}
+*{{msg-wikia|Swm-label-mode-wikis-wiki-multi}}
+*{{msg-wikia|Swm-label-mode-wikis-wiki}}',
 	'swm-label-content' => '{{Identical|Content}}',
 	'swm-label-comment' => '{{Identical|Comment}}',
 	'swm-label-dismissed' => 'Page title after message is sent out.',
@@ -158,7 +174,7 @@ $messages['qqq'] = array(
 	'swm-list-table-removed' => 'Column heading of a table with one message per line. The column contains either yes or no if the message was removed or not.
 {{Identical|Removed}}',
 	'swm-list-table-content' => '{{Identical|Content}}',
-	'swm-list-table-tools' => '{{Identical|Tools}}',
+	'swm-list-table-tools' => '{{Identical|Tool}}',
 	'swm-list-table-lang' => '{{Identical|Language}}',
 	'swm-list-table-hub' => 'Column heading of a table with one message per line. The column contains the hub of wikis the message was sent to.',
 	'swm-yes' => '{{Identical|Yes}}',
@@ -502,8 +518,11 @@ $messages['bg'] = array(
 	'swm-label-mode-wikis-all' => 'Всички уикита',
 	'swm-label-mode-wikis-hub' => 'Избраният хъб',
 	'swm-label-mode-wikis-wiki' => 'Избраното уики',
+	'swm-label-mode-wikis-wiki-multi' => 'Списък уикита',
 	'swm-label-mode-users-all' => 'Всички потребители',
 	'swm-label-mode-users-active' => 'Активни потребители',
+	'swm-label-mode-users-user-multi' => 'Списък с потребители',
+	'swm-label-mode-users-anon' => 'Всички анонимни потребители',
 	'swm-label-language' => 'Език',
 	'swm-list-no-messages' => 'Няма съобщения.',
 	'swm-list-table-id' => 'Номер',
@@ -694,6 +713,7 @@ $messages['ca'] = array(
  */
 $messages['ce'] = array(
 	'swm-label-preview' => 'Хьалха муха ю хьажа',
+	'swm-label-list' => 'МогӀа',
 	'swm-label-mode-users-active' => 'Жигара декъашхой',
 	'swm-label-language' => 'Мотт',
 	'swm-list-table-expire' => 'Чекхйолу',
@@ -2578,7 +2598,7 @@ $messages['ps'] = array(
 	'swm-label-mode-users-active' => 'فعاله کارنان',
 	'swm-label-mode-users-user' => 'ټاکلی کارن',
 	'swm-label-mode-users-user-multi' => 'د کارنانو لړليک',
-	'swm-label-content' => 'منځپانګه',
+	'swm-label-content' => 'منځپانگه',
 	'swm-label-comment' => 'تبصره',
 	'swm-label-language' => 'ژبه',
 	'swm-button-preview' => '[ مخليدنه]',
@@ -2592,7 +2612,7 @@ $messages['ps'] = array(
 	'swm-list-table-group' => 'ډله',
 	'swm-list-table-expire' => 'د پای نېټه',
 	'swm-list-table-date' => 'د لېږلو نېټه',
-	'swm-list-table-content' => 'منځپانګه',
+	'swm-list-table-content' => 'منځپانگه',
 	'swm-list-table-tools' => 'اوزارونه',
 	'swm-list-table-lang' => 'ژبې',
 	'swm-yes' => 'هو',
@@ -2630,19 +2650,23 @@ $messages['pt'] = array(
 	'swm-label-recipient-wikis' => 'Wikis',
 	'swm-label-recipient-users' => 'Utilizadores',
 	'swm-label-expiration' => 'Prazo de expiração',
+	'swm-label-expiration-hint' => '<i>Escolha um prazo de expiração no menu descendente ou introduza uma data e hora se diferentes do período escolhido. Use o formato 2012-04-01 00:00:00</i>',
 	'swm-label-mode-wikis-all' => 'Todas as wikis',
 	'swm-label-mode-wikis-hub' => 'Portal selecionado',
 	'swm-label-mode-wikis-cluster' => 'Conjunto de wikis selecionado',
 	'swm-label-mode-wikis-wiki' => 'Wiki selecionada',
 	'swm-label-mode-wikis-wiki-multi' => 'Lista de wikis',
+	'swm-label-mode-wikis-wiki-multi-hint' => '<i>Introduza uma wiki por linha.</i>',
 	'swm-label-mode-users-all' => 'Todos os utilizadores',
 	'swm-label-mode-users-active' => 'Utilizadores ativos',
 	'swm-label-mode-users-group' => 'Utilizadores pertencentes ao grupo',
 	'swm-label-mode-users-group-hint' => '<i>Escolha um grupo da lista ou escreva o nome do grupo para substituir a seleção da lista.</i>',
 	'swm-label-mode-users-user' => 'Utilizador selecionado',
 	'swm-label-mode-users-user-hint' => '<i>Esta opção ignora a seleção no grupo "Wikis".</i>',
-	'swm-label-mode-users-user-multi' => 'Lista de usuários',
-	'swm-label-mode-users-anon' => 'Todos os usuários anônimos',
+	'swm-label-mode-users-user-multi' => 'Lista de utilizadores',
+	'swm-label-mode-users-user-multi-hint' => '<i>Introduza um nome de utilizador por linha. Esta opção ignora a seleção no grupo "Wikis".</i>',
+	'swm-label-mode-users-anon' => 'Todos os utilizadores anónimos',
+	'swm-label-mode-users-anon-hint' => '<i>Esta opção só funciona de momento com uma das opções «Todas as wikis», «Lista de wikis» ou «Wiki selecionada».</i>',
 	'swm-label-content' => 'Conteúdo',
 	'swm-label-comment' => 'Comentário',
 	'swm-label-dismissed' => 'Descartadas',
@@ -2652,7 +2676,7 @@ $messages['pt'] = array(
 	'swm-taskmanager-hint' => '<i>Note que algumas opções são demoradas e serão colocadas na fila do TaskManager.</i>',
 	'swm-button-preview' => '[ Antever ]',
 	'swm-button-send' => '[ Enviar ]',
-	'swm-button-save' => '[ Salvar ]',
+	'swm-button-save' => '[ Gravar ]',
 	'swm-button-new' => '[ Nova ]',
 	'swm-msg-sent-ok' => '<h3>A mensagem foi enviada.</h3>',
 	'swm-msg-sent-err' => '<h3>A mensagem NÃO foi enviada.</h3>Verifique o registo para mais informações.',
@@ -2672,15 +2696,19 @@ $messages['pt'] = array(
 	'swm-list-table-content' => 'Conteúdo',
 	'swm-list-table-tools' => 'Ferramentas',
 	'swm-list-table-lang' => 'Línguas',
+	'swm-list-table-hub' => 'Portal',
 	'swm-yes' => 'Sim',
 	'swm-no' => 'Não',
 	'swm-error-no-such-wiki' => 'Essa wiki não existe!',
+	'swm-error-no-wiki-list' => 'Tem de introduzir pelo menos uma wiki',
 	'swm-error-no-such-user' => 'O utilizador especificado não existe.',
+	'swm-error-no-user-list' => 'Tem de introduzir pelo menos um utilizador',
 	'swm-error-empty-message' => 'Introduza o conteúdo da mensagem.',
 	'swm-error-long-message' => 'As mensagens estão limitadas a 500 caracteres.',
 	'swm-error-empty-group' => 'Introduza o nome do grupo.',
+	'swm-error-invalid-time' => 'A hora introduzida e inválida.',
 	'swm-lang-other' => 'todas as línguas restantes',
-	'swm-label-mode-users-registration' => 'Data de registro',
+	'swm-label-mode-users-registration' => 'Data de registo',
 	'swm-mode-users-registration-after' => 'Depois',
 	'swm-mode-users-registration-before' => 'Antes',
 	'swm-mode-users-registration-between' => 'Entre',
@@ -2776,6 +2804,14 @@ $messages['pt-br'] = array(
 	'swm-mode-wikis-created-before' => 'Antes',
 	'swm-mode-wikis-created-between' => 'Entre',
 	'swm-label-mode-wikis-created-hint' => '<i>As datas devem estar no formato 2012-04-01 00:00:00</i>',
+);
+
+/** Quechua (Runa Simi)
+ * @author AlimanRuna
+ */
+$messages['qu'] = array(
+	'swm-label-language' => 'Rimay',
+	'swm-list-table-lang' => 'Rimaykuna',
 );
 
 /** Romanian (română)
@@ -3460,6 +3496,7 @@ $messages['yi'] = array(
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Hydra
+ * @author Hzy980512
  * @author Sam Wang
  * @author Xiaomingyan
  */
@@ -3488,6 +3525,7 @@ $messages['zh-hans'] = array(
 	'swm-list-table-recipient' => '受信者',
 	'swm-list-table-group' => '用户组',
 	'swm-list-table-content' => '内容',
+	'swm-list-table-tools' => '工具',
 	'swm-list-table-lang' => '语言',
 	'swm-yes' => '是',
 	'swm-no' => '不是',

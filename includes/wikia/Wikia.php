@@ -28,7 +28,8 @@ $wgHooks['AfterInitialize']          [] = "Wikia::onAfterInitialize";
 $wgHooks['UserMailerSend']           [] = "Wikia::onUserMailerSend";
 $wgHooks['ArticleDeleteComplete']    [] = "Wikia::onArticleDeleteComplete";
 $wgHooks['ContributionsToolLinks']   [] = 'Wikia::onContributionsToolLinks';
-$wgHooks['AjaxAddScript'][] = 'Wikia::onAjaxAddScript';
+$wgHooks['AjaxAddScript']            [] = 'Wikia::onAjaxAddScript';
+$wgHooks['TitleGetSquidURLs']        [] = 'Wikia::onTitleGetSquidURLs';
 
 # changes in recentchanges (MultiLookup)
 $wgHooks['RecentChange_save']        [] = "Wikia::recentChangesSave";
@@ -41,6 +42,10 @@ $wgHooks['UploadVerifyFile']         [] = 'Wikia::onUploadVerifyFile';
 # User hooks
 $wgHooks['UserNameLoadFromId']       [] = "Wikia::onUserNameLoadFromId";
 $wgHooks['UserLoadFromDatabase']     [] = "Wikia::onUserLoadFromDatabase";
+
+# Swift file backend
+$wgHooks['AfterSetupLocalFileRepo']  [] = "Wikia::onAfterSetupLocalFileRepo";
+$wgHooks['BeforeRenderTimeline']     [] = "Wikia::onBeforeRenderTimeline";
 
 /**
  * This class have only static methods so they can be used anywhere
@@ -480,7 +485,7 @@ class Wikia {
 		$msg = "***** END *****";
 		Wikia::log($method, false, $msg, true /* $force */);
 	}
-	
+
 	/**
 	 * get staff person responsible for language
 	 *
@@ -1026,7 +1031,7 @@ class Wikia {
 	 * add entries to software info
 	 */
 	static public function softwareInfo( &$software ) {
-		global $wgCityId, $wgDBcluster, $wgWikiaDatacenter;
+		global $wgCityId, $wgDBcluster, $wgWikiaDatacenter, $wgLocalFileRepo;
 
 		if( !empty( $wgCityId ) ) {
 			$info = "city_id: {$wgCityId}";
@@ -1040,6 +1045,7 @@ class Wikia {
 		if( !empty( $wgWikiaDatacenter ) ) {
 			$info .= ", dc: $wgWikiaDatacenter";
 		}
+		$info .= ", file_repo: {$wgLocalFileRepo['backend']}";
 
 		$software[ "Internals" ] = $info;
 
@@ -1515,59 +1521,42 @@ class Wikia {
 	}
 
 	/**
-	 * Get list of all URLs to be purged for a given Title
+	 * Purge Common and Wikia and User css/js when those files are edited
+	 * Uses $wgOut->makeResourceLoaderLink which was protected, but has lots of logic we don't want to duplicate
+	 * This was rewritten from scratch as part of BAC-895
 	 *
 	 * @param Title $title page to be purged
 	 * @param Array $urls list of URLs to be purged
 	 * @return mixed true - it's a hook
 	 */
 	static public function onTitleGetSquidURLs(Title $title, Array $urls) {
-		// if this is a site css or js purge it as well
 		global $wgUseSiteCss, $wgAllowUserJs;
-		global $wgSquidMaxage, $wgJsMimeType;
-
+		global $wgOut;
 		wfProfileIn(__METHOD__);
 
+		$link = null;
 		if( $wgUseSiteCss && $title->getNamespace() == NS_MEDIAWIKI ) {
-			global $wgServer;
-			$urls[] = $wgServer.'/__am/';
-			$urls[] = $wgServer.'/__wikia_combined/';
-			$query = array(
-				'usemsgcache' => 'yes',
-				'ctype' => 'text/css',
-				'smaxage' => $wgSquidMaxage,
-				'action' => 'raw',
-				'maxage' => $wgSquidMaxage,
-			);
-
-			if( $title->getText() == 'Common.css' || $title->getText() == 'Wikia.css' ) {
-				// BugId:20929 - tell (or trick) varnish to store the latest revisions of Wikia.css and Common.css.
-				$oTitleCommonCss	= Title::newFromText( 'Common.css', NS_MEDIAWIKI );
-				$oTitleWikiaCss		= Title::newFromText( 'Wikia.css',  NS_MEDIAWIKI );
-				$query['maxrev'] = max( (int) $oTitleWikiaCss->getLatestRevID(), (int) $oTitleCommonCss->getLatestRevID() );
-				unset( $oTitleWikiaCss, $oTitleCommonCss );
-				$urls[] = $title->getInternalURL( $query );
-			} else {
-				foreach( Skin::getSkinNames() as $skinkey => $skinname ) {
-					if( $title->getText() == ucfirst($skinkey).'.css' ) {
-						$urls[] = str_replace('text%2Fcss', 'text/css', $title->getInternalURL( $query )); // For Artur
-						$urls[] = $title->getInternalURL( $query ); // For Artur
-						break;
-					} elseif ( $title->getText() == 'Common.js' ) {
-						$urls[] = Skin::makeUrl('-', "action=raw&smaxage=86400&gen=js&useskin=" .urlencode( $skinkey ) );
-					}
-				}
+			$text = $title->getText();
+			if( $text == 'Common.js' || $text == 'Wikia.js') {
+				$link = $wgOut->makeResourceLoaderLink( 'site', ResourceLoaderModule::TYPE_SCRIPTS);
 			}
-		} elseif( $wgAllowUserJs && $title->isCssJsSubpage() ) {
-			if( $title->isJsSubpage() ) {
-				$urls[] = $title->getInternalURL( 'action=raw&ctype='.$wgJsMimeType );
-			} elseif( $title->isCssSubpage() ) {
-				$urls[] = $title->getInternalURL( 'action=raw&ctype=text/css' );
+			else if( $text == 'Common.css' || $text == 'Wikia.css' ) {
+				$link = $wgOut->makeResourceLoaderLink( 'site', ResourceLoaderModule::TYPE_STYLES);
 			}
 		}
-
-		// purge Special:RecentChanges too
-		$urls[] = SpecialPage::getTitleFor('RecentChanges')->getInternalURL();
+		if( $wgAllowUserJs && $title->isJsSubpage() ) {
+			$link = $wgOut->makeResourceLoaderLink( 'user', ResourceLoaderModule::TYPE_SCRIPTS);
+		}
+		else if( $wgAllowUserJs && $title->isCssSubpage() ) {
+			$link = $wgOut->makeResourceLoaderLink( 'user', ResourceLoaderModule::TYPE_STYLES);
+		}
+		if ($link != null) {
+			// extract the url from the link src
+			preg_match("/\"(.*)\"/", $link, $matches);
+			if ( isset($matches[1]) ) {
+				$urls[]= $matches[1];
+			}
+		}
 
 		wfProfileOut(__METHOD__);
 		return true;
@@ -2096,6 +2085,54 @@ class Wikia {
 			ExternalUser_Wikia::removeFromSecondaryClusters( $id );
 		}
 		$user->invalidateCache();
+
+		return true;
+	}
+
+	/**
+	 * Register Swift file backend
+	 *
+	 * @author macbre
+	 * @param array $repo $wgLocalFileRepo
+	 * @return bool true - it's a hook
+	 */
+	static function onAfterSetupLocalFileRepo(Array &$repo) {
+		// $wgUploadPath: http://images.wikia.com/poznan/pl/images
+		// $wgFSSwiftContainer: poznan/pl
+		global $wgFSSwiftContainer, $wgFSSwiftServer, $wgEnableSwiftFileBackend, $wgUploadPath;
+
+		$path = trim( parse_url( $wgUploadPath, PHP_URL_PATH ), '/' );
+		$wgFSSwiftContainer = substr( $path, 0, -7 );
+
+		if ( !empty( $wgEnableSwiftFileBackend ) ) {
+			$repo['backend'] = 'swift-backend';
+			$repo['zones'] = array (
+				'public' => array( 'container' => $wgFSSwiftContainer, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images' ),
+				'temp'   => array( 'container' => $wgFSSwiftContainer, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images/temp' ),
+				'thumb'  => array( 'container' => $wgFSSwiftContainer, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images/thumb' ),
+				'deleted'=> array( 'container' => $wgFSSwiftContainer, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images/deleted' ),
+				'archive'=> array( 'container' => $wgFSSwiftContainer, 'url' => 'http://' . $wgFSSwiftServer, 'directory' => 'images/archive' )
+			);
+		}
+
+		return true;
+	}
+
+	/**
+	 * Modify timeline extension to use Swift storage (BAC-893)
+	 *
+	 * @param FileBackend $backend
+	 * @param string $fname mwstore abstract path
+	 * @param string $hash file hash
+	 * @return bool true - it's a hook
+	 */
+	static function onBeforeRenderTimeline(&$backend, &$fname, $hash) {
+		global $wgEnableSwiftFileBackend, $wgFSSwiftContainer;
+
+		if ( !empty( $wgEnableSwiftFileBackend ) ) {
+			$backend = FileBackendGroup::singleton()->get( 'swift-backend' );
+			$fname = 'mwstore://' . $backend->getName() . "/$wgFSSwiftContainer/images/timeline/$hash";
+		}
 
 		return true;
 	}

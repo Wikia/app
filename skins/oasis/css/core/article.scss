@@ -412,6 +412,8 @@
 	.inline-video {
 		display: inline-block;
 	}
+
+	// foundation block-grid ul's should not have normal ul padding when used in articles
 	ul[class*="block-grid-"] {
 		margin: 0;
 		padding: 0;
@@ -422,9 +424,11 @@
 // Wall and Forum have dropdowns that escape the article area. This prevents
 // them from getting chopped off with the downside that large tables won't be
 // controlled properly until the JavaScript loads.
+// Home Page zoom effect is also exceeding the WikiaArticle boundary
 .ns-1200,
 .ns-1201,
-.ns-2000 {
+.ns-2000,
+.WikiaHome {
 	.WikiaArticle {
 		overflow: visible;
 	}

@@ -33,6 +33,10 @@
 @import "core/toolbar";
 @import "core/wide";
 
+@import "skins/oasis/css/core/responsive-core";
+@import "skins/oasis/css/core/responsive-variables";
+
+
 body {
 	padding: 0;
 	&.EditPageScrollable {
@@ -42,7 +46,9 @@ body {
 
 .WikiaPage {
 	border-bottom: none;
-	margin: 0 auto;
+	@if ( $responsive-layout-enabled == false) {
+		margin: 0 auto;
+	}
 	padding: 0;
 	z-index: auto;
 }
@@ -332,9 +338,7 @@ body {
 					width: auto;
 				}
 			}
-			.ArticlePreviewInnerWrapper {
-				overflow: hidden;
-			}
+
 			// FB#8087 - styling for interlanguage links in RTE popup preview
 			.WikiaArticleInterlang {
 				h3 {
@@ -423,4 +427,66 @@ body {
 
 .mw-toolbar-editbutton {
 	@include sprite-edit-mw-toolbar-deep-embed(23px,23px);
+}
+
+
+
+@if ( $responsive-layout-enabled ) {
+// START - edit page fixes
+
+	.editor .WikiaMainContent {
+		float: none;
+		width: 100%;
+	}
+
+	.editpage-sourcewidemode.mode-source {
+		&.editpage-sourcewidemode-on {
+			.EditPageMain {
+				margin-right: 0;
+				width: 100%;
+			}
+
+			.EditPageMainContainer {
+				margin-right: 0;
+			}
+		}
+
+		.editpage-widemode-trigger {
+			right: $width-rail;
+		}
+	}
+
+	.editpage-visualwidemode {
+		.EditPageMain {
+			margin-right: 0;
+			width: 100%;
+		}
+
+		.EditPageMainContainer {
+			margin-right: 0;
+		}
+
+		.EditPageToolbar {
+			padding-right: $width-rail;
+
+			.cke_toolbar_expand > a {
+				right: $width-rail + $width-padding;
+			}
+		}
+	}
+
+	.EditPageMain {
+		margin-right: -$width-rail;
+		padding: 0;
+		width: 100%;
+	}
+
+	.EditPageMainContainer {
+		margin-right: $width-rail;
+	}
+
+	.EditPageRail {
+		width: $width-rail;
+	}
+// END - edit page fixes
 }

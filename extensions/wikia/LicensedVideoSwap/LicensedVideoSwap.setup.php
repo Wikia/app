@@ -35,7 +35,9 @@ $wgGroupPermissions['sysop']['licensedvideoswap'] = true;
 $wgGroupPermissions['helper']['licensedvideoswap'] = true;
 $wgGroupPermissions['vstf']['licensedvideoswap'] = true;
 
+// hooks
 $wgHooks['PageHeaderIndexExtraButtons'][] = 'LicensedVideoSwapHooksHelper::onPageHeaderIndexExtraButtons';
+$wgHooks['OasisAddPageDeletedConfirmationMessage'][] = 'LicensedVideoSwapHooksHelper::onOasisAddPageDeletedConfirmationMessage';
 
 // register messages package for JS
 JSMessages::registerPackage('LVS', array(
