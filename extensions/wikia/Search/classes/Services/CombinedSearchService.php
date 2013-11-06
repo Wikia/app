@@ -39,18 +39,22 @@ class CombinedSearchService {
 		$timer = Time::start(["CombinedSearchService", "search"]);
 		$wikias = $this->searchForWikias($query, $langs, $hubs);
 
-		$total = ( $limit !== null ) ? $limit : self::MAX_TOTAL_ARTICLES;
+		$limit = ( $limit !== null ) ? $limit : self::MAX_TOTAL_ARTICLES;
 		if ( !empty( $wikias ) ) {
 			//set only if we have any wikis to check
-			$maxArticlesPerWiki = min ( (int)ceil( $total / count( $wikias ) ), self::MAX_ARTICLES_PER_WIKI );
+			$maxArticlesPerWiki = min ( (int)ceil( $limit / count( $wikias ) ), self::MAX_ARTICLES_PER_WIKI );
+			$articles = $this->searchForArticles($query, $namespaces, $wikias, $maxArticlesPerWiki);
+			$timer->stop();
+			return [
+				"wikias" => $wikias,
+				"articles" => array_slice( $articles, 0, $limit )
+			];
+		} else {
+			return [
+				"wikias" => [],
+				"articles" => []
+			];
 		}
-
-		$articles = $this->searchForArticles($query, $namespaces, $wikias, $maxArticlesPerWiki);
-		$timer->stop();
-		return [
-			"wikias" => $wikias,
-			"articles" => array_slice( $articles, 0, $total )
-		];
 	}
 
 	/**
