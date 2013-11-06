@@ -43,11 +43,11 @@ $(function() {
 					Wikia.initRailTracking();
 				}
 
-				if ( !window.wgUserName ) {
+				if ( window.AIC2 ) {
 					window.AIC2.init();
 				}
 
-				if (window.wgEnableLightboxExt) {
+				if ( window.wgEnableLightboxExt ) {
 					LightboxLoader.init();
 					LightboxLoader.loadFromURL();
 				}
