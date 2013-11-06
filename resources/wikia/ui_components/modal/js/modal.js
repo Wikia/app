@@ -45,7 +45,7 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window' ], function( $, w ) {
 			jQuerySelector = '#' + id;
 
 		this.$element = $( jQuerySelector );
-		if( !this.$element.exists() && typeof( modalMarkup ) !== 'undefined' ) {
+		if ( !this.$element.exists() && typeof( modalMarkup ) !== 'undefined' ) {
 			$( 'body' ).append( modalMarkup );
 			this.$element = $( jQuerySelector );
 		}
@@ -63,7 +63,7 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window' ], function( $, w ) {
 			$blackout.click( $.proxy(function( event ) {
 				event.preventDefault();
 
-				if( this.isShown() && this.isActive() ) {
+				if ( this.isShown() && this.isActive() ) {
 					this.close();
 				}
 			}, that) );
@@ -81,7 +81,7 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window' ], function( $, w ) {
 		}, that ) );
 
 		destroyOnClose = this.$element.data( 'destroy-on-close' );
-		destroyOnClose = ( typeof(destroyOnClose) === 'undefined' ) ? true : destroyOnClose;
+		destroyOnClose = ( typeof( destroyOnClose ) === 'undefined' ) ? true : destroyOnClose;
 	}
 
 	/**
@@ -94,7 +94,7 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window' ], function( $, w ) {
 
 		// IE flexbox fallback
 		if ( navigator.appName === 'Microsoft Internet Explorer' ||
-			( navigator.appName === 'Netscape' && navigator.userAgent.indexOf('Trident/') !== -1 ) ) {
+			( navigator.appName === 'Netscape' && navigator.userAgent.indexOf( 'Trident/') !== -1 ) ) {
 
 			this.$element.addClass( 'IE-flex-fix' );
 			ieFlexboxFallback( this );
@@ -111,7 +111,7 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window' ], function( $, w ) {
 	 */
 
 	Modal.prototype.close = function() {
-		if( !destroyOnClose ) {
+		if ( !destroyOnClose ) {
 			this.$element.removeClass( 'shown' );
 			this.$blackout.removeClass( 'visible' );
 		} else {
