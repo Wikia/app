@@ -10,7 +10,7 @@ use Wikia\Search\Utilities;
 class CombinedSearchService {
 	const CROSS_WIKI_RESULTS = 3;
 	const MAX_ARTICLES_PER_WIKI = 5;
-	const TOP_ARTICLES_PER_WIKI = 5;
+	const TOP_ARTICLES_PER_WIKI = 3;
 	const MAX_TOTAL_ARTICLES = 6;
 	const SNIPPET_LENGTH = 200;
 	const IMAGE_SIZE = 80;
