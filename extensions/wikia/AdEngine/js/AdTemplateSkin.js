@@ -27,14 +27,16 @@ define('ext.wikia.adengine.template.skin', ['wikia.document', 'wikia.window', 'w
 		params = params || {};
 
 		if (window.wgOasisResponsive) {
-			params.skinImageWidth = 1700;
-			params.skinImageHeight = 800;
-			params.backgroundTiled = false;
-			params.backgroundFixed = true;
-			params.backgroundDynamic = true;
-			params.backgroundColor = '#' + params.backgroundColor;
-
-			BackgroundChanger.load(params);
+			BackgroundChanger.load({
+				skinImage: params.skinImage,
+				skinImageWidth: 1700,
+				skinImageHeight: 800,
+				backgroundTiled: false,
+				backgroundFixed: true,
+				backgroundDynamic: true,
+				backgroundColor: '#' + params.backgroundColor,
+				middleColor: '#' + params.middleColor
+			});
 		} else {
 			adSkinStyle.background = 'url("' + params.skinImage + '") no-repeat top center #' + params.backgroundColor;
 		}
