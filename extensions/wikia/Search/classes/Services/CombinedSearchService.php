@@ -1,6 +1,7 @@
 <?php
 
 namespace Wikia\Search\Services;
+use WikiService;
 use Wikia\Measurements\Time;
 use Wikia\Search\Config;
 use Wikia\Search\Field\Field;
@@ -22,6 +23,29 @@ class CombinedSearchService {
 	private $hideNonCommercialContent = false;
 
 	/**
+	 * @var WikiService
+	 */
+	private $wikiService;
+
+	function __construct( $wikiService = null ) {
+		$this->wikiService = $wikiService === null ? new WikiService() : $wikiService;
+	}
+
+	/**
+	 * @param \WikiService $wikiService
+	 */
+	public function setWikiService($wikiService) {
+		$this->wikiService = $wikiService;
+	}
+
+	/**
+	 * @return \WikiService
+	 */
+	public function getWikiService() {
+		return $this->wikiService;
+	}
+
+	/**
 	 * @param boolean $hideNonCommercialContent
 	 */
 	public function setHideNonCommercialContent($hideNonCommercialContent) {
@@ -36,7 +60,7 @@ class CombinedSearchService {
 	}
 
 	public function search($query, $langs, $namespaces, $hubs, $limit = null) {
-		$timer = Time::start(["CombinedSearchService", "search"]);
+		$timer = Time::start([__CLASS__, __METHOD__]);
 		$wikias = $this->searchForWikias($query, $langs, $hubs);
 
 		$limit = ( $limit !== null ) ? $limit : self::MAX_TOTAL_ARTICLES;
@@ -65,26 +89,41 @@ class CombinedSearchService {
 	 * @return array
 	 */
 	public function searchForArticles($query, $namespaces, $wikias, $maxArticlesPerWiki) {
+		$timer = Time::start([__CLASS__, __METHOD__]);
 		$articles = [];
 		foreach ($wikias as $wiki) {
-			$requestedFields = ["title", "url", "id", "score", "pageid", "lang", "wid", Utilities::field('html', $wiki['lang'])];
-			$searchConfig = new Config;
-			$searchConfig->setQuery($query)
-				->setLimit($maxArticlesPerWiki)
-				->setPage(1)
-				->setOnWiki(true)
-				->setRequestedFields($requestedFields)
-				->setWikiId($wiki['wikiId'])
-				->setNamespaces($namespaces)
-				->setFilterQuery("is_main_page:false")
-				->setRank('default');
-			$resultSet = (new Factory)->getFromConfig($searchConfig)->search();
-			$currentResults = $resultSet->toArray($requestedFields);
+			$currentResults = $this->querySolrForArticles($query, $namespaces, $maxArticlesPerWiki, $wiki['wikiId'], $wiki['lang']);
 			foreach ($currentResults as $article) {
 				$articles[] = $this->processArticle($article);
 			}
 		}
+		$timer->stop();
 		return $articles;
+	}
+
+	/**
+	 * @param $query
+	 * @param $namespaces
+	 * @param $maxArticlesPerWiki
+	 * @param $wikiId
+	 * @param $wikiLang
+	 * @return array
+	 */
+	protected function querySolrForArticles($query, $namespaces, $maxArticlesPerWiki, $wikiId, $wikiLang) {
+		$requestedFields = ["title", "url", "id", "score", "pageid", "lang", "wid", Utilities::field('html', $wikiLang)];
+		$searchConfig = new Config;
+		$searchConfig->setQuery($query)
+			->setLimit($maxArticlesPerWiki)
+			->setPage(1)
+			->setOnWiki(true)
+			->setRequestedFields($requestedFields)
+			->setWikiId($wikiId)
+			->setNamespaces($namespaces)
+			->setFilterQuery("is_main_page:false")
+			->setRank('default');
+		$resultSet = (new Factory)->getFromConfig($searchConfig)->search();
+		$currentResults = $resultSet->toArray($requestedFields);
+		return $currentResults;
 	}
 
 	/**
@@ -94,21 +133,10 @@ class CombinedSearchService {
 	 * @return array
 	 */
 	public function searchForWikias($query, $langs, $hubs) {
+		$timer = Time::start([__CLASS__, __METHOD__]);
 		$wikias = [];
 		foreach ($langs as $lang) {
-			$crossWikiSearchConfig = new Config;
-			$crossWikiSearchConfig->setQuery($query)
-				->setLimit(self::CROSS_WIKI_RESULTS)
-				->setPage(1)
-				->setRank('default')
-				->setInterWiki(true)
-				->setCommercialUse($this->getHideNonCommercialContent())
-				->setLanguageCode($lang);
-			if (!empty($hubs)) {
-				$crossWikiSearchConfig->setHubs($hubs);
-			}
-			$crossWikiResultSet = (new Factory)->getFromConfig($crossWikiSearchConfig)->search();
-			$crossWikiResults = $crossWikiResultSet->toArray(["sitename_txt", "url", "id", "description_txt", "lang_s", "score", "description_txt"]);
+			$crossWikiResults = $this->queryForWikias($query, $hubs, $lang);
 			foreach ($crossWikiResults as $wikiSearchResult) {
 				$wikias[] = $this->processWiki($wikiSearchResult);
 			}
@@ -117,19 +145,41 @@ class CombinedSearchService {
 			}
 		}
 		$wikias = array_slice($wikias, 0, self::CROSS_WIKI_RESULTS);
+		$timer->stop();
 		return $wikias;
 	}
 
-	private function processWiki( $wikiInfo ) {
-		$wikiService = new \WikiService();
+	/**
+	 * @param $query
+	 * @param $hubs
+	 * @param $lang
+	 * @return array
+	 */
+	public function queryForWikias($query, $hubs, $lang) {
+		$crossWikiSearchConfig = new Config;
+		$crossWikiSearchConfig->setQuery($query)
+			->setLimit(self::CROSS_WIKI_RESULTS)
+			->setPage(1)
+			->setRank('default')
+			->setInterWiki(true)
+			->setCommercialUse($this->getHideNonCommercialContent())
+			->setLanguageCode($lang);
+		if (!empty($hubs)) {
+			$crossWikiSearchConfig->setHubs($hubs);
+		}
+		$crossWikiResultSet = (new Factory)->getFromConfig($crossWikiSearchConfig)->search();
+		$crossWikiResults = $crossWikiResultSet->toArray(["sitename_txt", "url", "id", "description_txt", "lang_s", "score", "description_txt"]);
+		return $crossWikiResults;
+	}
 
+	protected function processWiki( $wikiInfo ) {
 		$outputModel = [];
-		$outputModel['wikiId'] = $wikiInfo['id'];
+		$outputModel['wikiId'] = (int) $wikiInfo['id'];
 		$outputModel['name'] = $wikiInfo['sitename_txt'][0]; // this is multivalue field
 		$outputModel['url'] = $wikiInfo['url'];
 		$outputModel['lang'] = $wikiInfo['lang_s'];
 		$outputModel['snippet'] = $wikiInfo['description_txt'];
-		$outputModel['wordmark'] = $wikiService->getWikiWordmark( $outputModel['wikiId'] );
+		$outputModel['wordmark'] = $this->wikiService->getWikiWordmark( $outputModel['wikiId'] );
 
 		$outputModel['topArticles'] = $this->getTopArticles( $outputModel['wikiId'], $outputModel['lang'] );
 
@@ -148,40 +198,51 @@ class CombinedSearchService {
 			$fullText = $articleInfo[Utilities::field('html', $articleInfo['lang'])];
 			$outputModel['snippet'] = trim( wfShortenText( $fullText, self::SNIPPET_LENGTH, true ) );
 		}
+		$image = $this->getImage($outputModel["wikiId"], $outputModel["articleId"]);
+		if ( !empty($image) ) {
+			$outputModel['image'] = $image;
+		}
 
-		// try set $outputModel['image']
+		return $outputModel;
+	}
+
+	/**
+	 * @param $outputModel
+	 * @return mixed
+	 */
+	protected function getImage( $wikiId, $articleId ) {
 		$dbName = '';
 		try {
-			$row = \WikiFactory::getWikiByID( $outputModel['wikiId'] );
-			if ( $row ) {
+			$row = \WikiFactory::getWikiByID($wikiId);
+			if ($row) {
 				$dbName = $row->city_dbname;
-				if ( !empty( $dbName ) ) {
-					$db = wfGetDB( DB_SLAVE, [], $dbName ); // throws if database does not exits.
+				if (!empty($dbName)) {
+					$db = wfGetDB(DB_SLAVE, [], $dbName); // throws if database does not exits.
 					$imageServing = new \ImageServing(
-						[ $outputModel['articleId'] ],
+						[$articleId],
 						self::IMAGE_SIZE,
 						self::IMAGE_SIZE,
 						$db
 					);
-					$images = $imageServing->getImages(1)[$outputModel['articleId']];
-					if ( $images && sizeof( $images ) > 0 ) {
+					$images = $imageServing->getImages(1)[$articleId];
+					if ($images && sizeof($images) > 0) {
 						$imageName = $images[0]['name'];
-						$file = \GlobalFile::newFromText( $imageName, $outputModel['wikiId'] );
-						if ( $file->exists() ) {
-							$outputModel['image'] = ( $imageServing->getUrl($file, $file->getWidth(), $file->getHeight()) );
+						$file = \GlobalFile::newFromText($imageName, $wikiId);
+						if ($file->exists()) {
+							return ($imageServing->getUrl($file, $file->getWidth(), $file->getHeight()));
 						}
 					}
 				}
 			}
-		} catch ( \DBConnectionError $ex ) {
+		} catch (\DBConnectionError $ex) {
 			// Swallow this exception. there is no simple way of telling if database does not exist other than catching exception.
 			// Or am I wrong ?
-			\Wikia::log(__METHOD__, false, "Cannot get database connection to " . $dbName );
+			\Wikia::log(__METHOD__, false, "Cannot get database connection to " . $dbName);
 		}
-		return $outputModel;
+		return null;
 	}
 
-	private function getTopArticles( $wikiId, $lang ) {
+	protected function getTopArticles( $wikiId, $lang ) {
 		return \WikiaDataAccess::cache( wfSharedMemcKey( "CombinedSearchService", $wikiId, $lang ), self::TOP_ARTICLES_CACHE_TIME, function() use( $wikiId, $lang ) {
 			$timer = Time::start(["CombinedSearchService", "getTopArticles"]);
 			$requestedFields = [ "title", "url", "id", "score", "pageid", "lang", "wid", Utilities::field('html', $lang) ];
@@ -190,7 +251,7 @@ class CombinedSearchService {
 				null,
 				[ NS_MAIN ],
 				false,
-				self::TOP_ARTICLES_PER_WIKI
+				self::TOP_ARTICLES_PER_WIKI + 1
 			);
 
 			$query = " +(" . Utilities::valueForField("wid", $wikiId) . ") ";
@@ -203,6 +264,7 @@ class CombinedSearchService {
 				->setPage( 1 )
 				->setRequestedFields( $requestedFields )
 				->setDirectLuceneQuery(true)
+				->setFilterQuery("is_main_page:false")
 				->setWikiId( $wikiId );
 
 			$resultSet = (new Factory)->getFromConfig( $searchConfig )->search();
@@ -211,6 +273,9 @@ class CombinedSearchService {
 			$articles = [];
 			foreach ( $currentResults as $article ) {
 				$articles[] = $this->processArticle($article);
+				if ( sizeof(self::TOP_ARTICLES_PER_WIKI) >= self::TOP_ARTICLES_PER_WIKI ) {
+					break;
+				}
 			}
 			$timer->stop();
 			return $articles;
