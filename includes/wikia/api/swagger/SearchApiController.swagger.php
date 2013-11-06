@@ -371,6 +371,15 @@ use Swagger\Annotations as SWG;
  * 					allowMultiple="false",
  * 					dataType="int",
  * 					defaultValue=""
+ * 				),
+ * 				@SWG\Parameter(
+ * 					name="namespaces",
+ * 					description="Page namespace number, see more: http://www.mediawiki.org/wiki/help:namespaces",
+ * 					paramType="query",
+ * 					required="false",
+ * 					allowMultiple="false",
+ * 					dataType="string",
+ * 					defaultValue="0,14"
  * 				)
  * 			)
  * 		)
