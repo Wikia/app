@@ -9,8 +9,9 @@ use Wikia\Search\Utilities;
 
 class CombinedSearchService {
 	const CROSS_WIKI_RESULTS = 3;
-	const MAX_ARTICLES_PER_WIKI = 2;
+	const MAX_ARTICLES_PER_WIKI = 5;
 	const TOP_ARTICLES_PER_WIKI = 5;
+	const MAX_TOTAL_ARTICLES = 6;
 	const SNIPPET_LENGTH = 200;
 	const IMAGE_SIZE = 80;
 	const TOP_ARTICLES_CACHE_TIME = 604800; // 60 * 60 * 24 * 7 - one week
@@ -34,7 +35,7 @@ class CombinedSearchService {
 		return $this->hideNonCommercialContent;
 	}
 
-	public function search($query, $langs, $namespaces, $hubs) {
+	public function search($query, $langs, $namespaces, $hubs, $limit = null) {
 		$timer = Time::start(["CombinedSearchService", "search"]);
 		$wikias = [];
 		foreach ( $langs as $lang ) {
@@ -59,13 +60,15 @@ class CombinedSearchService {
 			}
 		}
 		$wikias = array_slice( $wikias, 0, self::CROSS_WIKI_RESULTS );
+		$total = ( $limit !== null ) ? $limit : self::MAX_TOTAL_ARTICLES;
+		$articlesPerWiki = min ( (int)ceil( $total / count( $wikias ) ), self::MAX_ARTICLES_PER_WIKI );
 
 		$articles = [];
 		foreach ( $wikias as $wiki ) {
 			$requestedFields = ["title", "url", "id", "score", "pageid", "lang", "wid", Utilities::field('html', $wiki['lang'])];
 			$searchConfig = new Config;
 			$searchConfig->setQuery( $query )
-				->setLimit( self::MAX_ARTICLES_PER_WIKI )
+				->setLimit( $articlesPerWiki )
 				->setPage( 1 )
 				->setOnWiki(true)
 				->setRequestedFields( $requestedFields )
@@ -82,7 +85,7 @@ class CombinedSearchService {
 		$timer->stop();
 		return [
 			"wikias" => $wikias,
-			"articles" => $articles,
+			"articles" => array_slice( $articles, 0, $total )
 		];
 	}
 
