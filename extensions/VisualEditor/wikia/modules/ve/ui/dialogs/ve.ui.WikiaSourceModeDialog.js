@@ -138,15 +138,17 @@ ve.ui.WikiaSourceModeDialog.prototype.onParseSuccess = function( deferred, respo
 	// Note: there is a bug where the last metadata item needs to be processed with tx.pushReplaceMetadata.
 	// Ask Roan, I'm really not sure what that's about - Liz
 	tx = new ve.dm.Transaction();
+
 	tx.pushReplace( doc, 0, doc.data.data.length, newDoc.data.data,
-		// get all except the last item
-		( newDoc.metadata.data.length ? newDoc.metadata.data.slice( 0, -1 ) : [] )
+		( newDoc.metadata.data.length ? newDoc.metadata.data : [] )
+		//( newDoc.metadata.data.length ? newDoc.metadata.data.slice( 0, -1 ) : [] )
 	);
-	tx.pushReplaceMetadata(
+
+	/*tx.pushReplaceMetadata(
 		// only send the last items
-		( doc.metadata.length ? doc.metadata.data[doc.metadata.data.length - 1] : [] ),
-		( newDoc.metadata.length ? newDoc.metadata.data[newDoc.metadata.data.length - 1] : [] )
-	);
+		( doc.metadata.data.length ? doc.metadata.data[doc.metadata.data.length - 1] : [] ),
+		( newDoc.metadata.data.length ? newDoc.metadata.data[doc.metadata.data.length - 1] : [] )
+	);*/
 
 	surfaceModel.change( tx, new ve.Range( 0 ) );
 
