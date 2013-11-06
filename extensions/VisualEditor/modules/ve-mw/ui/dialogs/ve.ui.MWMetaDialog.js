@@ -180,6 +180,21 @@ ve.ui.MWMetaDialog.prototype.onOpen = function () {
 	setTimeout( function () {
 		categoryWidget.fitInput();
 	} );
+
+	ve.track( {
+		'action': ve.track.actions.OPEN,
+		'label': 'dialog-page-settings'
+	} );
+};
+
+/** */
+ve.ui.MWMetaDialog.prototype.onCloseButtonClick = function () {
+	// explicitly track when page settings dialog close button has been clicked
+	ve.track( {
+		'action': ve.track.actions.CLICK,
+		'label': 'dialog-page-settings-button-close'
+	} );
+	ve.ui.MWDialog.prototype.onCloseButtonClick.call( this );
 };
 
 /** */
@@ -187,6 +202,14 @@ ve.ui.MWMetaDialog.prototype.onClose = function ( action ) {
 	var hasTransactions, newDefaultSortKeyItem, newDefaultSortKeyItemData,
 		surfaceModel = this.surface.getModel(),
 		currentDefaultSortKeyItem = this.getDefaultSortKeyItem();
+
+	// track 'apply changes' event
+	if ( action === 'apply' ) {
+		ve.track( {
+			'action': ve.track.actions.CLICK,
+			'label': 'dialog-page-settings-button-save'
+		} );
+	}
 
 	// Parent method
 	ve.ui.MWDialog.prototype.onClose.call( this );
