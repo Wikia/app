@@ -32,11 +32,11 @@ define( 'wikia.toc', function() {
 			level = -1,
 			lastHeader = -1,
 			headerLevel,
-			i = 0,
+			i,
 			obj,
 			header;
 
-		for ( ; i < headersLength; i++ ) {
+		for ( i = 0; i < headersLength; i++ ) {
 			header = headers[ i ];
 			obj = createSection( header ); // create section object from HTML header node
 
