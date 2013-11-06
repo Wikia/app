@@ -66,4 +66,3 @@
 	echo $app->renderView('UserLoginSpecial', 'Providers', array('tabindex' => ++$tabIndex));
 ?>
 </div>
-
