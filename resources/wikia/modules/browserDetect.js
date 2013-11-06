@@ -4,6 +4,11 @@ define( 'wikia.browserDetect', function() {
 	var appName = navigator.appName,
 		userAgent = navigator.userAgent;
 
+	/**
+	 * Checks if the browser is IE
+	 * @returns {boolean}
+	 */
+
 	function isIE() {
 		var bool = false;
 		if ( appName === 'Microsoft Internet Explorer' || // IE <= 10
@@ -13,6 +18,10 @@ define( 'wikia.browserDetect', function() {
 
 		return bool;
 	}
+
+	/**
+	 * Public API
+	 */
 
 	return {
 		isIE: isIE
