@@ -72,28 +72,30 @@ var WikiaFullGptHelper = function (log, window, document, adLogicPageLevelParams
 					oldLog = debug_log.log;
 
 				// We're plugging into the log function in GPT so we get some insight of what
-				// happens in GPT internals. We're looking for logging messages and comparing them
-				// to the pattern that is the most interesting for us. We chose out of those 4
-				// (listed here in the order of appearing for each slot GPT loads):
+				// happens in GPT internals. The message parameter is an object with getMessageId()
+				// method returning the following integer for the interesting events:
 				//
-				//  /^Fetching ad/i
-				//  /^Receiving ad/i
-				//  /^Rendering ad/i
-				//  /^Completed rendering ad/i
+				// 3, /Fetching ad for slot ([\/\w]*)/ig);
+				// 4, /Receiving ad for slot ([\/\w]*)/ig);
+				// 5, /^Rendering ad for slot ([\/\w]*)/ig);
+				// 6, /Completed rendering ad for slot ([\/\w]*)/
 				//
 				// Inspiration: https://github.com/mcountis/dfp-events
+				//
+				// 23 Oct 2013: the method changed as explained in this bug and pull request:
+				//
+				// https://github.com/mcountis/dfp-events/pull/5
 
 				googletag.debug_log.log = function (level, message, service, slot) {
 					var domId,
-						donePattern = /^Rendering ad/i;
+						doneMessageId = 5;
 
 					// Play extra-safe with this
 					try {
-						domId = slot.getSlotId().getDomId();
+						domId = slot && slot.getSlotId().getDomId();
 
-						if (typeof message === 'string') {
-							if (message.search(donePattern) === 0) {
-								// If the message is what we look for, trigger the event
+						if (domId && typeof message === 'object' && message.getMessageId) {
+							if (message.getMessageId() === doneMessageId) {
 								triggerDone(domId);
 							}
 						}

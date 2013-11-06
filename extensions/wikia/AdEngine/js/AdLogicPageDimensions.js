@@ -38,7 +38,7 @@ var AdLogicPageDimensions = function (window, document, log, slotTweaker, abTest
 		},
 		mediaQueriesMet,
 		// ABTesting: DAR-1859: START
-		railIsAlwaysOnRight = abTest.getGroup('DAR_RIGHTRAILPOSITION') === 'STATIC',
+		railIsAlwaysOnRight = abTest && abTest.getGroup('DAR_RIGHTRAILPOSITION') === 'STATIC',
 		// ABTesting: DAR-1859: END
 		matchMedia;
 

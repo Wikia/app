@@ -59,7 +59,18 @@ class AdminDashboardSpecialPageController extends WikiaSpecialPageController {
 		$this->displayWikiFeatures = !empty($this->wg->EnableWikiFeatures);
 		$this->displaySpecialPromote = !empty($this->wg->EnableSpecialPromoteExt);
 		$this->displaySpecialCss = !empty($this->wg->EnableSpecialCssExt);
-		$this->displayLicensedVideoSwap = !empty($this->wg->EnableLicensedVideoSwapExt);
+
+		// LicensedVideoSwap
+		if ( empty( $this->wg->EnableLicensedVideoSwapExt ) ) {
+			$this->displayLicensedVideoSwap = false;
+			$this->badgeLicensedVideoSwap = '';
+		} else {
+			$this->displayLicensedVideoSwap = true;
+
+			// alert badge
+			$lvsHelper = new LicensedVideoSwapHelper();
+			$this->badgeLicensedVideoSwap = $lvsHelper->getAlertBadge();
+		}
 
 		// add messages package
 		JSMessages::enqueuePackage('AdminDashboard', JSMessages::INLINE);

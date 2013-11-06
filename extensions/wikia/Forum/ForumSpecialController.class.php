@@ -23,9 +23,11 @@ class ForumSpecialController extends WikiaSpecialPageController {
 	public function index() {
 		wfProfileIn( __METHOD__ );
 
-		$this->getContext()->getOutput()->setRobotPolicy( "index,follow" );
+		$output = $this->getContext()->getOutput();
 
-		$policies = Title::newFromText( 'forum-policies-and-faq', NS_MEDIAWIKI);
+		$output->setRobotPolicy( "index,follow" );
+
+		$policies = Title::newFromText( 'forum-policies-and-faq', NS_MEDIAWIKI );
 		$this->response->setJsVar( 'wgCanEditPolicies', $this->wg->User->isAllowed('forumadmin'));
 		$this->response->setJsVar( 'wgPoliciesRev', $policies->getLatestRevID()  );
 		$this->response->setJsVar( 'wgPoliciesEditURL', $policies->getFullUrl( 'action=edit' )  );
@@ -36,7 +38,7 @@ class ForumSpecialController extends WikiaSpecialPageController {
 		$this->response->addAsset( 'extensions/wikia/Forum/js/Forum.js' );
 
 		if ( $this->request->getVal( 'showWarning', 0 ) == 1 ) {
-			NotificationsController::addConfirmation( wfMsg( 'forum-board-no-board-warning' ), NotificationsController::CONFIRMATION_WARN );
+			NotificationsController::addConfirmation( wfMessage( 'forum-board-no-board-warning' )->escaped(), NotificationsController::CONFIRMATION_WARN );
 		}
 
 		$action = $this->getVal( 'action', '' );
@@ -45,13 +47,13 @@ class ForumSpecialController extends WikiaSpecialPageController {
 			$this->forward( 'ForumSpecial', 'editMode' );
 		}
 
-		$this->wg->Out->setPageTitle( wfMsg( 'forum-forum-title', $this->wg->Sitename ) );
+		$output->setPageTitle( wfMessage( 'forum-forum-title' )->plain() );
 
 		$action = $this->getVal( 'action', '' );
 
-		$this->blurb = wfMsgExt( 'forum-specialpage-blurb', 'parse' );
-		$this->blurbHeading = wfMsg( 'forum-specialpage-blurb-heading' );
-		$this->lastPostByMsg = wfMsg( 'forum-specialpage-board-lastpostby' );
+		$this->blurb = wfMessage( 'forum-specialpage-blurb' )->parse();
+		$this->blurbHeading = wfMessage( 'forum-specialpage-blurb-heading' )->parse();
+		$this->lastPostByMsg = wfMessage( 'forum-specialpage-board-lastpostby' )->escaped();
 		$this->canEdit = $this->wg->User->isAllowed( 'forumadmin' );
 		$this->editUrl = $this->wg->Title->getFullUrl( 'action=editmode' );
 
@@ -151,7 +153,7 @@ class ForumSpecialController extends WikiaSpecialPageController {
 
 		$list = $forum->getBoardList();
 
-		$this->destinationBoards = array( array( 'value' => '', 'content' => wfMsg( 'forum-board-destination-empty' ) ) );
+		$this->destinationBoards = array( array( 'value' => '', 'content' => wfMessage( 'forum-board-destination-empty' )->escaped() ) );
 
 		foreach ( $list as $value ) {
 			if ( $this->boardId != $value['id'] ) {

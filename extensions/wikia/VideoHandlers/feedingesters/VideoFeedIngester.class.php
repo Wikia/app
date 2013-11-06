@@ -206,7 +206,8 @@ abstract class VideoFeedIngester {
 			}
 		}
 
-		$duplicates = WikiaFileHelper::findVideoDuplicates( $provider, $id, $remoteAsset );
+		$useMaster = true;
+		$duplicates = WikiaFileHelper::findVideoDuplicates( $provider, $id, $remoteAsset, $useMaster );
 		$dup_count = count($duplicates);
 		$previousFile = null;
 		if ( $dup_count > 0 ) {

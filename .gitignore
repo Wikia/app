@@ -13,6 +13,7 @@
 Thumbs.db
 .buildpath
 sftp-config.json
+psy.cfg
 *.iml
 /build
 /LocalSettings.php

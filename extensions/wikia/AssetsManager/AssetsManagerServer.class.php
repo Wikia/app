@@ -28,10 +28,6 @@ class AssetsManagerServer {
 					$builder = new AssetsManagerSassBuilder($request);
 					break;
 
-				case 'sasses':
-					$builder = new AssetsManagerSassesBuilder($request);
-					break;
-
 				default:
 					Wikia::log(__METHOD__, false, "Unknown type: {$_SERVER['REQUEST_URI']}", true /* $always */);
 					Wikia::log(__METHOD__, false, AssetsManager::getRequestDetails(), true /* $always */);

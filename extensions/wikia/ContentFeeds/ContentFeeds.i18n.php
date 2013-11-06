@@ -58,10 +58,16 @@ $messages['az'] = array(
 );
 
 /** Bulgarian (български)
+ * @author Aquilax
  * @author DCLXVI
  */
 $messages['bg'] = array(
+	'contentfeeds-newimages-rss-desc' => 'Бюлетин от $1',
+	'contentfeeds-firstfewarticles-tag-header' => 'Създайте първите си няколко страници!',
 	'contentfeeds-firstfewarticles-tag-title' => 'Заглавие',
+	'contentfeeds-firstfewarticles-tag-next' => 'Следващ',
+	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Грешка: Заглавието на страница е задължително',
+	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Грешка: Тялото на страницата е задължително',
 );
 
 /** Breton (brezhoneg)
@@ -252,6 +258,7 @@ $messages['ia'] = array(
  */
 $messages['id'] = array(
 	'contentfeeds-desc' => 'Menyediakan informasi yang kaya dan mutakhir melalui berbagai tag atau "umpan balik"',
+	'contentfeeds-firstfewarticles-tag-header' => 'Buatlah beberapa halaman pertama Anda!',
 	'contentfeeds-firstfewarticles-tag-title' => 'Judul',
 	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Kesalahan: Judul halaman disyaratkan',
 );
