@@ -30,7 +30,7 @@ class JsonFormatSimplifier {
 		}
 	}
 
-	private static function processList( \JsonFormatNode $childNode ) {
+	private function processList( \JsonFormatNode $childNode ) {
 		$out = [];
 		$text = null;
 
@@ -41,31 +41,32 @@ class JsonFormatSimplifier {
 
 		if ( $numChild ) {
 
+			$text = $this->readText( $childNode );
+
+			$elements = [];
+
+			$listItem = false;
+
 			while ( $i < $numChild ) {
+
 				$type = $children[ $i ]->getType();
 
-				if ( $type == 'text' ) {
-					$text = $children[ $i ]->getText();
+				if ( $type == 'list' ) {
 
-					$elements = [];
-					$i++;
-
-					if ( $i < $numChild && $children[ $i ]->getType() == 'list' ) {
-						$elements = self::processList( $children[ $i ] );
-					}
-					else {
-						$i--;
-					}
-
-					$out[ ] = ['text' => $text, 'elements' => $elements];
+					$elements = array_merge( $elements, self::processList( $children[ $i ] ) );
 
 				}
 				elseif ( $type == 'listItem' ) {
-					$arr = self::processList( $children[ $i ] );
+					$listItem = true;
+					$arr = $this->processList( $children[ $i ] );
 					$out[ ] = array_shift( $arr );
 				}
 
 				$i++;
+			}
+
+			if ( !$listItem ) {
+				$out[ ] = ['text' => $text, 'elements' => $elements];
 			}
 		}
 
