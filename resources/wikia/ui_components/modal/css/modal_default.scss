@@ -34,6 +34,7 @@ $modal-inactive-opacity: 0.3;
 	position: fixed;
 	top: 0;
 	width: 100%;
+	z-index: $zTop;
 }
 
 .modal {
@@ -142,7 +143,6 @@ $modal-inactive-opacity: 0.3;
 		padding: 0;
 		opacity: 1;
 		overflow: hidden;
-		z-index: $zTop;
 
 		@include flexbox();
 		@include flex-direction(column);
