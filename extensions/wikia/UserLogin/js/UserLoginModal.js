@@ -62,7 +62,7 @@ var UserLoginModal = {
 											heading = content.find('h1'),
 											contentBlock = UserLoginModal.$modal.$element.find('.UserLoginModal');
 
-										UserLoginModal.$modal.$element.find('h1').text(heading.text());
+										UserLoginModal.$modal.$element.find('header h3').text(heading.text());
 										heading.remove();
 
 										contentBlock.slideUp(400, function() {
@@ -95,7 +95,7 @@ var UserLoginModal = {
 	 */
 	show: function(options) {
 		'use strict';
-		
+
 		if (!window.wgComboAjaxLogin && window.wgEnableUserLoginExt) {
 			options = options || {};
 
