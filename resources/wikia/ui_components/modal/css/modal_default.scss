@@ -25,6 +25,7 @@ $modal-inactive-opacity: 0.3;
 }
 
 .modal {
+	@include transform-translate( -50%, -50% );
 	background-color: $color-page;
 	border-radius: 2px;
 	display: none;
@@ -37,22 +38,19 @@ $modal-inactive-opacity: 0.3;
 	position: fixed;
 	top: 50%;
 
-	@include transform-translate( -50%, -50% );
-
 	> header,
 	> footer {
+		@include flex-grow(0);
+		@include flex-shrink(0);
 		background-color: $modal-secondary-color;
 		height: 60px; // flex-basis is not supported on Safari 6 so fixed height is needed
-
-		@include flex-shrink(0);
-		@include flex-grow(0);
 	}
 
 	> header,
 	> section,
 	> footer {
-		padding: 20px;
 		@include box-sizing-border-box;
+		padding: 20px;
 	}
 
 	> header h3 {
@@ -87,9 +85,9 @@ $modal-inactive-opacity: 0.3;
 	}
 
 	> section {
-		overflow: auto;
-
 		@include flex-grow(1);
+
+		overflow: auto;
 	}
 
 	&.small {
@@ -133,14 +131,13 @@ $modal-inactive-opacity: 0.3;
 	}
 
 	&.shown {
+		@include flexbox();
+		@include flex-direction(column);
 		margin: 0;
 		padding: 0;
 		opacity: 1;
 		overflow: hidden;
 		z-index: $zTop;
-
-		@include flexbox();
-		@include flex-direction(column);
 
 		// IE flex-box fallback
 		&.IE-flex-fix {
