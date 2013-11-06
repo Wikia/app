@@ -164,37 +164,48 @@ class CombinedSearchService {
 			$fullText = $articleInfo[Utilities::field('html', $articleInfo['lang'])];
 			$outputModel['snippet'] = trim( wfShortenText( $fullText, self::SNIPPET_LENGTH, true ) );
 		}
+		$image = $this->getImage($outputModel);
+		if ( !empty($image) ) {
+			$outputModel['image'] = $image;
+		}
 
-		// try set $outputModel['image']
+		return $outputModel;
+	}
+
+	/**
+	 * @param $outputModel
+	 * @return mixed
+	 */
+	protected function getImage($outputModel) {
 		$dbName = '';
 		try {
-			$row = \WikiFactory::getWikiByID( $outputModel['wikiId'] );
-			if ( $row ) {
+			$row = \WikiFactory::getWikiByID($outputModel['wikiId']);
+			if ($row) {
 				$dbName = $row->city_dbname;
-				if ( !empty( $dbName ) ) {
-					$db = wfGetDB( DB_SLAVE, [], $dbName ); // throws if database does not exits.
+				if (!empty($dbName)) {
+					$db = wfGetDB(DB_SLAVE, [], $dbName); // throws if database does not exits.
 					$imageServing = new \ImageServing(
-						[ $outputModel['articleId'] ],
+						[$outputModel['articleId']],
 						self::IMAGE_SIZE,
 						self::IMAGE_SIZE,
 						$db
 					);
 					$images = $imageServing->getImages(1)[$outputModel['articleId']];
-					if ( $images && sizeof( $images ) > 0 ) {
+					if ($images && sizeof($images) > 0) {
 						$imageName = $images[0]['name'];
-						$file = \GlobalFile::newFromText( $imageName, $outputModel['wikiId'] );
-						if ( $file->exists() ) {
-							$outputModel['image'] = ( $imageServing->getUrl($file, $file->getWidth(), $file->getHeight()) );
+						$file = \GlobalFile::newFromText($imageName, $outputModel['wikiId']);
+						if ($file->exists()) {
+							return ($imageServing->getUrl($file, $file->getWidth(), $file->getHeight()));
 						}
 					}
 				}
 			}
-		} catch ( \DBConnectionError $ex ) {
+		} catch (\DBConnectionError $ex) {
 			// Swallow this exception. there is no simple way of telling if database does not exist other than catching exception.
 			// Or am I wrong ?
-			\Wikia::log(__METHOD__, false, "Cannot get database connection to " . $dbName );
+			\Wikia::log(__METHOD__, false, "Cannot get database connection to " . $dbName);
 		}
-		return $outputModel;
+		return null;
 	}
 
 	protected function getTopArticles( $wikiId, $lang ) {
