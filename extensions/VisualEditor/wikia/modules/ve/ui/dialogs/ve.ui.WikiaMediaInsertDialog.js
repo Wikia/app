@@ -463,14 +463,14 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMedia = function ( cartIte
  */
 ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMediaCallback = function ( items ) {
 	require( ['wikia.stringhelper'], ve.bind( function ( stringUtils ) {
-		var item, title, type,
-			count = { 'image': 0, 'video': 0 },
+		var count, item, title, type,
+			typeCount = { 'image': 0, 'video': 0 },
 			linmod = [];
 
 		for ( title in items ) {
 			item = items[title];
 			type = 'wikiaBlock' + stringUtils.ucFirst( item.type );
-			count[item.type]++;
+			typeCount[item.type]++;
 			linmod.push(
 				{
 					'type': type,
@@ -493,14 +493,20 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMediaCallback = function (
 				{ 'type': '/' + type }
 			);
 		}
-		for ( type in count ) {
-			ve.track( {
-				'action': ve.track.actions.ADD,
-				'label': 'dialog-media-insert-' + type,
-				'value': count[type]
-			} );
+
+		for ( type in typeCount ) {
+			count = typeCount[type];
+
+			if ( count ) {
+				ve.track( {
+					'action': ve.track.actions.ADD,
+					'label': 'dialog-media-insert-' + type,
+					'value': count
+				} );
+			}
 		}
-		if ( count['image'] > 0 && count['video'] > 0 ) {
+
+		if ( count.image && count.video ) {
 			ve.track( {
 				'action': ve.track.actions.ADD,
 				'label': 'dialog-media-insert-multiple'
