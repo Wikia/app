@@ -350,6 +350,7 @@ Treiwch eto neu [[Special:Contact|dywedwch rhywbeth]].",
 );
 
 /** Danish (dansk)
+ * @author Christian List
  * @author Claus chr
  * @author Kaare
  * @author Sarrus
@@ -364,9 +365,9 @@ $messages['da'] = array(
 </ul>',
 	'comboajaxlogin-connectmarketing-back' => '« Tilbage',
 	'comboajaxlogin-connectmarketing-forward' => 'Kom i gang »',
-	'comboajaxlogin-connectdirections' => 'Indtast dit Wikia-brugernavn og kodeord her - vi vil på magisk vis forbinde dine Wikia og Facebook konti i baggrunden.
+	'comboajaxlogin-connectdirections' => 'Indtast dit Wikia-brugernavn og adgangskode her - vi vil på magisk vis forbinde dine Wikia og Facebook konti i baggrunden.
 
-Når du er færdig, kan du let logge ind med  enhver Facebook Connect-knap.',
+Når du er færdig, kan du let logge på med enhver Facebook Connect-knap.',
 	'comboajaxlogin-post-not-understood' => 'Der opstod en fejl i den måde denne formular blev konstrueret på.
 Prøv igen eller [[Special: Contact|rapportér dette]].', # Fuzzy
 	'comboajaxlogin-readonlytext' => '<h2>Beklager!</h2>
@@ -383,6 +384,7 @@ Prøv igen eller [[Special: Contact|rapportér dette]].', # Fuzzy
  * @author Inkowik
  * @author LWChris
  * @author SVG
+ * @author Suriyaa Kudo
  * @author The Evil IP address
  */
 $messages['de'] = array(
@@ -390,11 +392,10 @@ $messages['de'] = array(
 	'comboajaxlogin-createlog' => 'Anmelden oder Benutzerkonto erstellen',
 	'comboajaxlogin-actionmsg' => 'Um diese Aktion auszuführen, musst du dich zuerst anmelden oder ein Benutzerkonto erstellen',
 	'comboajaxlogin-actionmsg-protected' => 'Um diese geschützten Seite zu bearbeiten, musst du dich zunächst anmelden oder ein Konto anlegen.',
-	'comboajaxlogin-connectmarketing' => '<h1>Verbinde deine Benutzerkonten</h1>
+	'comboajaxlogin-connectmarketing' => '<h1>Verbinden Sie Ihre Konten</h1>
 <ul>
-<li>Behalte deinen momentanen Benutzernamen, Geschichte, Bearbeitungen … nichts ändert sich außer der Art und Weise, wie du dich einloggst</li>
-<li>Teile deine Aktivität auf Wikia mit deinen Freunden auf Facebook</li>
-<li>Komplette Kontrolle darüber, was veröffentlicht wird</li>
+<li>Behalte Sie Ihre aktuellen Benutzernamen, Versionsgeschichte, Bearbeitungen... ändert sich nichts, außer, wie Sie in </li> einloggen <li>Teile deine Aktivitäten auf Wikia mit deinen Freunden auf Facebook</li>
+<li>komplette Kontrolle darüber, was veröffentlicht wird.</li>
 </ul>',
 	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>Mit Facebook Connect anmelden</h1>',
 	'comboajaxlogin-connectmarketing-oasis' => '<h1>Verbinde dein Wikia-Benutzerkonto mit Facebook</h1>
@@ -403,13 +404,13 @@ $messages['de'] = array(
 <li>Teile deine Aktivität auf Wikia mit deinen Freunden auf Facebook, mit kompletter Kontrolle darüber, was veröffentlicht wird</li>
 </ul>',
 	'comboajaxlogin-connectmarketing-back' => '« Zurück',
-	'comboajaxlogin-connectmarketing-forward' => 'Anfangen »',
+	'comboajaxlogin-connectmarketing-forward' => 'Fange nun an »',
 	'comboajaxlogin-connectdirections' => 'Gib deinen Wikia-Benutzernamen und das Passwort hier ein - wir werden dann dein Wikia- und Facebook-Benutzerkonto im Hintergrund verknüpfen.
 
 Sobald du fertig bist, kannst du dich einfach über den Facebook-Connect-Knopf anmelden.',
 	'comboajaxlogin-post-not-understood' => 'Es gab einen Fehler beim Aufbau dieses Formulars.
 Bitte versuche es erneut oder [[Special:Contact|melde es]].',
-	'comboajaxlogin-readonlytext' => '<h2>Entschuldige!</h2>
+	'comboajaxlogin-readonlytext' => '<h2>Entschuldigung!</h2>
 <p>Du kannst momentan kein Benutzerkonto erstellen - wir sollten in Kürze wieder erreichbar sein. Sieh nach, was los ist:<br /><em>$1</em></p>
 <p>Bitte schau bei <a href="http://twitter.com/wikia">Twitter</a> oder <a href="http://facebook.com/wikia">Facebook</a> für weitere Informationen. 
 <br />
@@ -450,11 +451,12 @@ $messages['eo'] = array(
 
 /** Spanish (español)
  * @author Absay
+ * @author Benfutbol10
  * @author Crazymadlover
  * @author VegaDark
  */
 $messages['es'] = array(
-	'comboajaxlogin-desc' => 'Cuadro dinámico que permite a los usuarios iniciar sesión,recordar contraseñas y registrar usuarios',
+	'comboajaxlogin-desc' => 'Cuadro dinámico que permite a los usuarios iniciar sesión, recordar contraseñas y registrar usuarios',
 	'comboajaxlogin-createlog' => 'iniciar sesión o crear una cuenta',
 	'comboajaxlogin-actionmsg' => 'Para realizar esta acción primero necesitas iniciar sesión o crear una cuenta',
 	'comboajaxlogin-actionmsg-protected' => 'Para poder editar una página protegida primero necesitas iniciar sesión o crear una cuenta.',
@@ -916,6 +918,7 @@ $messages['lb'] = array(
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
+	'comboajaxlogin-createlog' => 'وارد سیستم بوئیتو یا یه گل حساو راس بکید',
 	'comboajaxlogin-connectmarketing-back' => '« ؤريرد',
 	'comboajaxlogin-connectmarketing-forward' => 'شرو بيه »',
 );
@@ -1280,7 +1283,7 @@ $messages['pt'] = array(
 	'comboajaxlogin-connectdirections' => 'Introduza aqui o seu nome de utilizador e palavra-chave - por artes mágicas, ligaremos as suas contas Wikia e Facebook nos bastidores.
 
 Quando acabar, poderá autenticar-se usando qualquer botão Ligação Facebook.',
-	'comboajaxlogin-post-not-understood' => 'Foi detectado um erro na forma como este formulário foi construído.
+	'comboajaxlogin-post-not-understood' => 'Foi detetado um erro na forma como este formulário foi construído.
 Tente novamente ou [[Special:Contact|reporte este erro]], por favor.',
 	'comboajaxlogin-readonlytext' => '<h2>Desculpe!</h2>
 <p>Neste momento não pode criar uma conta - devemos estar novamente operacionais dentro de pouco tempo. O que está a acontecer é o seguinte:<br /><em>$1</em></p>
@@ -1477,6 +1480,14 @@ Försök igen eller [[Special:Contact|anmäl det här]].',
 <br />
 (Om du redan har ett konto kan du <a href="#">logga in</a> som vanligt, men du kommer inte kunna redigera.)</p>',
 	'comboajaxlogin-ajaxerror' => 'Wikia svarar inte. Var god kontrollera din nätverksanslutning.',
+);
+
+/** Silesian (ślůnski)
+ * @author Krol111
+ */
+$messages['szl'] = array(
+	'comboajaxlogin-connectmarketing-back' => '« Nazod',
+	'comboajaxlogin-connectmarketing-forward' => 'Sztartuj &raquo;',
 );
 
 /** Telugu (తెలుగు)

@@ -58,7 +58,7 @@ class RailController extends WikiaController {
 	 */
 	protected function getLazyRail() {
 		wfProfileIn(__METHOD__);
-		global $wgUseSiteJs, $wgAllowUserJs, $wgTitle, $wgAllInOne;
+		global $wgUseSiteJs, $wgAllowUserJs, $wgTitle;
 		$title = Title::newFromText($this->request->getVal('articleTitle', null), $this->request->getInt('namespace', null));
 
 		if ($title instanceof Title) {
@@ -67,7 +67,6 @@ class RailController extends WikiaController {
 			// https://wikia-inc.atlassian.net/browse/BAC-906
 			$oldWgTitle = $wgTitle;
 			$wgTitle = $title;
-			$assetManager = AssetsManager::getInstance();
 			$railModules = $this->filterModules((new BodyController)->getRailModuleList(), self::FILTER_LAZY_MODULES);
 			$this->railLazyContent = '';
 			krsort($railModules);
@@ -81,24 +80,7 @@ class RailController extends WikiaController {
 
 			$this->railLazyContent .= Html::element('div', ['id' => 'WikiaAdInContentPlaceHolder']);
 
-			$this->css = $sassFiles = [];
-			foreach (array_keys($this->app->wg->Out->styles) as $style) {
-				if ($wgAllInOne && $assetManager->isSassUrl($style)) {
-					$sassFiles[] = $style;
-				} else {
-					$this->css[] = $style;
-				}
-			}
-
-			if (!empty($sassFiles)) {
-				$excludeScss = (array) $this->getRequest()->getVal('excludeScss', []);
-				$sassFilePath = (array) $assetManager->getSassFilePath($sassFiles);
-				$includeScss = array_diff($sassFilePath, $excludeScss);
-
-				if (!empty($includeScss)) {
-					$this->css[] = $assetManager->getSassesUrl($includeScss);
-				}
-			}
+			$this->css = array_keys($this->app->wg->Out->styles);
 
 			// Do not load user and site jses as they are already loaded and can break page
 			$oldWgUseSiteJs = $wgUseSiteJs;
