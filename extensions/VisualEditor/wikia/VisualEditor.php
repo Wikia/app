@@ -93,7 +93,8 @@ $wgResourceModules += array(
 			'visualeditor-wikiamediapagewidget-preview-alert',
 		),
 		'dependencies' => array(
-			'ext.visualEditor.core'
+			'ext.visualEditor.core',
+			'wikia.stringhelper',
 		)
 	),
 );
