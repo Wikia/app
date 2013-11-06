@@ -321,11 +321,12 @@ Registre d\'entrada donat nom d\'usuari per possibles errors tipogràfics.</p>',
  */
 $messages['ce'] = array(
 	'lookupcontribs' => 'Къинхьегаме хьажа',
-	'lookupcontribslinks' => 'къинхьегаме хьажориг',
+	'lookupcontribslinks' => 'къинхьегаме хьажораг',
+	'lookupcontribsgo' => 'Дехьа гӀо',
 	'lookupcontribsnoresultfound' => 'ХӀума ца карийна!',
 	'lookupcontribswikititle' => 'ЦӀе',
 	'lookupcontribswikioptions' => 'Параметраш',
-	'lookupcontribscontribslink' => 'Къинхьегаме хьажориг',
+	'lookupcontribscontribslink' => 'Къинхьегаме хьажораг',
 	'lookupcontribscontribs' => 'къинхьегам',
 	'lookupcontribsall' => 'массо',
 );
@@ -955,6 +956,19 @@ Vergewëssert Iech datt Dir Iech beim Benotzernumm net vertippt hutt.</p>',
 	'lookupcontribsshowpages' => 'All Säiten ($1 Nummraim)',
 	'lookupcontribscontent' => 'Inhalt',
 	'lookupcontribsall' => 'All',
+);
+
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'lookupcontribsselectfor' => 'انتخاب بيه سی:',
+	'lookupcontribsgo' => 'رو',
+	'lookupcontribswiki' => 'ويكی',
+	'lookupcontribswikiurl' => 'يو آر ال',
+	'lookupcontribscontent' => 'محتويات',
+	'lookupcontribsnormal' => 'تازه باو',
+	'lookupcontribsall' => 'همه',
 );
 
 /** Macedonian (македонски)

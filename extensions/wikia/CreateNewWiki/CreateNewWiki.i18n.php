@@ -191,6 +191,7 @@ $messages['af'] = array(
 
 /** Arabic (العربية)
  * @author Achraf94
+ * @author Claw eg
  * @author Kuwaity26
  * @author Meno25
  * @author OsamaK
@@ -238,6 +239,7 @@ $messages['ar'] = array(
 	'cnw-desc-choose' => 'إختيار فئة',
 	'cnw-desc-select-one' => 'إختر واحدة',
 	'cnw-desc-all-ages' => 'جميع الأعمار',
+	'cnw-desc-tip-all-ages' => 'هل هذه الويكي عن موضوع للأطفال؟ لأجل مساعدتنا للامتثال للقانون الأمريكي، نستمر بمتابعة الويكي التي تناسب مواضيعها مباشرة الأطفال بسن 12 أو أقل.',
 	'cnw-desc-default-lang' => 'سوف تكون هذه الويكي باللغة $1',
 	'cnw-desc-change-lang' => 'تغيير',
 	'cnw-desc-lang' => 'اللغة',
@@ -377,7 +379,9 @@ $messages['bg'] = array(
 	'cnw-auth-signup-creative' => 'Необходима е сметка, за да продължите да създавате вашето уики.<br />Регистрацията отнема по-малко от минута!',
 	'cnw-auth-facebook-signup' => 'Регистриране чрез Facebook',
 	'cnw-auth-facebook-login' => 'Влизане с Facebook',
+	'cnw-userauth-headline' => 'Имате сметка?',
 	'cnw-userauth-creative' => 'Влизане',
+	'cnw-userauth-marketing-heading' => 'Нямате сметка?',
 	'cnw-userauth-signup-button' => 'Регистриране',
 	'cnw-desc-headline' => 'За какво е вашето уики?',
 	'cnw-desc-creative' => 'Опишете темата',
@@ -389,6 +393,7 @@ $messages['bg'] = array(
 	'cnw-desc-tip3-creative' => 'Нека хората знаят, че могат да помогнат на уикито ви да се развива, като редактират или създават нови страници',
 	'cnw-desc-choose' => 'Избиране на категория',
 	'cnw-desc-select-one' => 'Избиране',
+	'cnw-desc-all-ages' => 'Всички възрасти',
 	'cnw-desc-default-lang' => 'Вашето уики ще бъде на $1',
 	'cnw-desc-change-lang' => 'промяна',
 	'cnw-desc-lang' => 'Език',
@@ -826,6 +831,7 @@ $messages['fa'] = array(
  * @author Nike
  * @author Tofu II
  * @author VezonThunder
+ * @author Ville96
  */
 $messages['fi'] = array(
 	'createnewwiki-desc' => '[[Special:CreateNewWiki|Ohjattu wikin luonti]]',
@@ -867,6 +873,7 @@ $messages['fi'] = array(
 	'cnw-desc-tip3-creative' => 'Kerro ihmisille miten he voivat auttaa wikiäsi kasvamaan muokkaamalla ja lisäämällä sivuja',
 	'cnw-desc-choose' => 'Valitse kategoria',
 	'cnw-desc-select-one' => 'Valitse yksi',
+	'cnw-desc-all-ages' => 'Kaikenikäisille',
 	'cnw-desc-default-lang' => 'Wikisi kieli tulee olemaan $1',
 	'cnw-desc-change-lang' => 'vaihda',
 	'cnw-desc-lang' => 'Kieli',
@@ -878,8 +885,8 @@ $messages['fi'] = array(
 	'cnw-welcome-instruction1' => 'Klikkaa painiketta alta aloittaaksesi sivujen lisäämisen wikiisi.',
 	'cnw-welcome-instruction2' => 'Näet tämän painikkeen joka puolella wikissäsi, käytä sitä kun haluat lisätä uuden sivun.',
 	'cnw-welcome-help' => 'Löydä vastauksia, neuvoa, ja muuta <a href="http://community.wikia.com">Community Central:sta</a>',
-	'cnw-error-general' => 'Jokin meni vikaan wikin luonnissasi. Yritä uudestaan myöhemmin.', # Fuzzy
-	'cnw-error-general-heading' => 'Virhe uuden wikin luonnissa', # Fuzzy
+	'cnw-error-general' => 'Oho, jokin meni pieleen meidän puolellamme!  Ole hyvä ja yritä uudelleen tai <a href="/Special:Contact">ota yhteyttä</a> saadaksesi apua.',
+	'cnw-error-general-heading' => 'Pahoittelumme',
 	'cnw-badword-header' => 'Hei siellä',
 	'cnw-badword-msg' => 'Hei, vältä käyttämästä näitä rumia sanoja tai kiellettyjä sanoja Wikisi kuvauksesta: $1',
 	'cnw-error-wiki-limit-header' => 'Wikien enimmäis määrä saavutettu',
@@ -1269,8 +1276,11 @@ $messages['id'] = array(
 	'cnw-or' => 'atau',
 	'cnw-name-wiki-headline' => 'Memulai sebuah Wiki',
 	'cnw-name-wiki-wiki' => 'Wiki',
+	'cnw-name-wiki-domain-label' => 'Berikan alamat ke wiki Anda',
 	'cnw-login' => 'Masuk Log',
+	'cnw-auth-signup-creative' => 'Anda akan memerlukan akun untuk terus membangun wiki Anda.<br />Hanya butuh satu menit untuk mendaftar!',
 	'cnw-userauth-marketing-heading' => 'Belum memiliki akun?',
+	'cnw-userauth-marketing-body' => 'Anda memerlukan sebuah akun untuk membuat wiki di Wikia. Hanya butuh satu menit untuk mendaftar!',
 	'cnw-desc-creative' => 'Gambarkan topik Anda',
 	'cnw-desc-select-one' => 'Pilih salah satu',
 	'cnw-desc-lang' => 'Bahasa',
@@ -1564,6 +1574,23 @@ $messages['lfn'] = array(
 	'cnw-or' => 'o',
 	'cnw-name-wiki-wiki' => 'Vici',
 	'cnw-desc-lang' => 'Lingua',
+);
+
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'cnw-next' => 'نيا',
+	'cnw-back' => 'وا دما',
+	'cnw-or' => 'يا',
+	'cnw-title' => 'يه گل ويكی تازه راس بكيت',
+	'cnw-login' => 'اومائن د سيستم',
+	'cnw-signup' => 'حساو راست بكيد',
+	'cnw-userauth-creative' => 'اومائن د سيستم',
+	'cnw-userauth-signup-button' => 'ثوت نام كردن',
+	'cnw-desc-tip3' => 'نكتيا خو',
+	'cnw-desc-change-lang' => 'آلشت بكيد',
+	'cnw-desc-lang' => 'زون',
 );
 
 /** Lithuanian (lietuvių)
@@ -2176,6 +2203,8 @@ $messages['pt'] = array(
 	'cnw-desc-tip3-creative' => 'Diga às pessoas que podem ajudar a desenvolver a wiki editando e acrescentando páginas',
 	'cnw-desc-choose' => 'Escolher uma categoria',
 	'cnw-desc-select-one' => 'Seleccione uma',
+	'cnw-desc-all-ages' => 'Todas as idades',
+	'cnw-desc-tip-all-ages' => 'Esta wiki é sobre um tema infantil? Para obedecer à lei dos Estados Unidos, monitorizamos as wikis sobre temas de interesse para crianças até aos 12 anos de idade.',
 	'cnw-desc-default-lang' => 'A sua wiki será em $1',
 	'cnw-desc-change-lang' => 'alterar',
 	'cnw-desc-lang' => 'Língua',
@@ -2188,13 +2217,16 @@ $messages['pt'] = array(
 	'cnw-welcome-instruction2' => 'Verá este botão em todas as páginas da wiki; use-o em qualquer altura para criar uma página nova.',
 	'cnw-welcome-help' => 'Encontrará respostas, conselhos e mais na <a href="http://pt.wikia.com">Comunidade Central</a>.',
 	'cnw-error-general' => 'Ocorreu um erro não identificado ao criar a sua wiki. Tente novamente mais tarde, por favor.', # Fuzzy
-	'cnw-error-general-heading' => 'Nossas desculpas',
+	'cnw-error-general-heading' => 'As nossas desculpas',
 	'cnw-badword-header' => 'Atenção',
 	'cnw-badword-msg' => 'Não use estas palavras impróprias ou proibidas na Descrição da Wiki, por favor: $1',
 	'cnw-error-wiki-limit-header' => 'O limite de wikis foi atingido',
 	'cnw-error-wiki-limit' => 'Olá, está limitado à criação de $1 {{PLURAL:$1|wiki|wikis}} por dia. Aguarde 24 horas antes de criar outra wiki.',
 	'cnw-error-blocked-header' => 'Conta bloqueada',
-	'cnw-error-blocked' => 'Você foi bloqueado por $1. Pelo seguinte motivo: $2. (ID do Bloqueio para referência: $3)',
+	'cnw-error-blocked' => 'Foi bloqueado por $1. O motivo apresentado foi: $2. (Identificação do bloqueio para referência: $3)',
+	'cnw-error-torblock' => 'Não é permitido criar wikis através da rede Tor.',
+	'cnw-error-bot' => 'Detetámos que pode ser um robô. Se errámos, contate-nos descrevendo esta falsa identificação e podemos ajudá-lo a criar a sua wiki: [http://www.wikia.com/Special:Contact/general Contate-nos]',
+	'cnw-error-bot-header' => 'Detetámos que é um robô',
 );
 
 /** Brazilian Portuguese (português do Brasil)

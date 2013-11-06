@@ -12,7 +12,10 @@
 
 <title><?= $pageTitle ?></title>
 
-<!-- CSS injected by skin and extensions -->
+<!-- SASS-generated CSS file -->
+<link rel="stylesheet" href="<?= AssetsManager::getInstance()->getSassCommonURL( $mainSassFile ) ?>">
+
+<!-- CSS injected by extensions -->
 <?= $cssLinks ?>
 
 <?
@@ -104,6 +107,7 @@ if ( window.Wikia.AbTest && (Wikia.AbTest.getGroup( "DAR_RIGHTRAILPOSITION" ) ==
 			echo F::app()->renderView('Ad', 'Index', array('slotname' => 'INVISIBLE_2'));
 		}
 	}
+	echo F::app()->renderView('Ad', 'Index', array('slotname' => 'SEVENONEMEDIA_FLUSH'));
 ?>
 
 <? if( $jsAtBottom ): ?>

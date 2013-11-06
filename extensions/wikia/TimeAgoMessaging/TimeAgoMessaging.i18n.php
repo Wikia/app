@@ -114,7 +114,12 @@ $messages['ca'] = array(
  * @author Умар
  */
 $messages['ce'] = array(
+	'timeago-year' => '$1 {{PLURAL:$1|шо}} хьалха',
 	'timeago-month' => '$1 {{PLURAL:$1|бутт}} хьалха',
+	'timeago-day' => '{{PLURAL:$1|$1 де|$1 де|$1 де}} хьалха', # Fuzzy
+	'timeago-hour' => '{{PLURAL:$1|сахьат}} хьалха',
+	'timeago-day-from-now' => '{{PLURAL:$1|$1 де|$1 де|$1 де}} хьалха', # Fuzzy
+	'timeago-hour-from-now' => '{{PLURAL:$1|сахьат}} хьалха',
 	'timeago-month-from-now' => '$1 {{PLURAL:$1|бутт}} хьалха',
 );
 

@@ -1,0 +1,32 @@
+@import "skins/oasis/css/core/color";
+
+
+.ve-ui-dialog .ve-ui-window-frame {
+	border-color: $color-page-border;
+}
+
+.ve-ui-window-title {
+	color: $color-text;
+}
+
+@if $is-dark-wiki {
+	.ve-ui-window-head {
+		border-bottom: 1px solid $color-page-border;
+	}
+
+	.ve-ui-window-foot {
+		border-top: 1px solid $color-page-border;
+	}
+}
+
+.ve-ui-pagedOutlineLayout-outlinePanel {
+	border-color: $color-page-border;
+
+	.ve-ui-outlineControlsWidget {
+		border-top: 1px solid $color-page-border;
+	}
+}
+
+.ve-ui-dialog-content .ve-ui-window-body .ve-ui-surface {
+	border-color: $color-page-border;
+}

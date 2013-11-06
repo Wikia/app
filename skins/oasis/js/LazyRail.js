@@ -4,20 +4,14 @@ $(function() {
 	LAZY_LOADING_SAMPLING_RATIO = 10; // integer (0-100): 0 - no tracking, 100 - track everything */
 
 	if (rail.find('.loading').exists()) {
-		var params = {
-			'articleTitle': window.wgTitle,
-			'namespace': window.wgNamespaceNumber,
-			'cb': window.wgStyleVersion
-		};
-
-		if (typeof wgSassLoadedScss != 'undefined') {
-			params.excludeScss = wgSassLoadedScss;
-		}
-
 		$.nirvana.sendRequest({
 			controller: 'RailController',
 			method: (window.wgUserName) ? 'lazy' : 'lazyForAnons',
-			data: params,
+			data: {
+				'articleTitle': window.wgTitle,
+				'namespace': window.wgNamespaceNumber,
+				'cb': window.wgStyleVersion
+			},
 			type: 'get',
 			format: 'json',
 			callback: function(data) {
@@ -49,11 +43,11 @@ $(function() {
 					Wikia.initRailTracking();
 				}
 
-				if ( !window.wgUserName ) {
+				if ( window.AIC2 ) {
 					window.AIC2.init();
 				}
 
-				if (window.wgEnableLightboxExt) {
+				if ( window.wgEnableLightboxExt ) {
 					LightboxLoader.init();
 					LightboxLoader.loadFromURL();
 				}
