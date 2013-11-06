@@ -71,14 +71,14 @@ class  WikiaMobilePageHeaderService extends WikiaService {
 					//Wrap username in a link to user page
 					$userName = '<a href="' . $user->getUserPage()->getFullURL() . '">' . $userName . '</a>';
 				}
-			}
 
-			$this->response->setVal(
-				'lastEdited',
-				wfMessage( 'wikiamobile-last-edited-by' )
-					->params( $userName, $this->wg->Lang->date( $revision->getTimestamp() ) )
-					->text()
-			);
+				$this->response->setVal(
+					'lastEdited',
+					wfMessage( 'wikiamobile-last-edited-by' )
+						->params( $userName, $this->wg->Lang->date( $revision->getTimestamp() ) )
+						->text()
+				);
+			}
 		}
 
 		return true;
