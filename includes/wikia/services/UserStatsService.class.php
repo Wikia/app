@@ -247,7 +247,7 @@ class UserStatsService extends WikiaModel {
 	/**
 	 * Get likes count, edit points and date of first edit done by the user
 	 */
-	function getStats() {
+	public function getStats() {
 		wfProfileIn(__METHOD__);
 
 		// try to get cached data
@@ -259,8 +259,11 @@ class UserStatsService extends WikiaModel {
 			wfDebug(__METHOD__ . ": cache miss\n");
 
 			// get edit points / first edit date
-			$dbr = wfGetDB(DB_SLAVE);
-			$stats = $this->doStatsQuery($dbr);
+			$stats = array();
+
+			$stats[ 'lastRevision' ] = $this->getLastRevisionTimestamp();
+			$stats[ 'date' ] = $this->getFirstRevisionTimestamp();
+			$stats[ 'edits' ] = $this->getEditCountWiki();
 
 			// TODO: get likes
 			$stats['likes'] = 20 + ($this->userId % 50);
@@ -299,19 +302,18 @@ class UserStatsService extends WikiaModel {
 			wfProfileIn(__METHOD__ . '::miss');
 			wfDebug(__METHOD__ . ": cache miss\n");
 
-			$wikiDbName = WikiFactory::IDtoDB($wikiId);
+			// get edit points / first edit date and last edit date
+			$stats = array();
 
-			if( !empty($wikiDbName) ) {
-				// get edit points / first edit date
-				$dbr = wfGetDB( DB_SLAVE, array(), $wikiDbName );
-				$stats = $this->doStatsQuery($dbr);
+			$stats[ 'lastRevision' ] = $this->getFirstRevisionTimestamp( $wikiId );
+			$stats[ 'date' ] = $this->getLastRevisionTimestamp( $wikiId );
+			$stats[ 'edits' ] = $this->getEditCountWiki( $wikiId );
 
-				// TODO: get likes
-				$stats['likes'] = 20 + ($this->userId % 50);
+			// TODO: get likes
+			$stats['likes'] = 20 + ($this->userId % 50);
 
-				if( !empty($stats) ) {
-					$this->wg->memc->set($key, $stats, self::CACHE_TTL);
-				}
+			if( !empty($stats) ) {
+				$this->wg->memc->set($key, $stats, self::CACHE_TTL);
 			}
 
 			wfProfileOut(__METHOD__ . '::miss');
@@ -325,31 +327,107 @@ class UserStatsService extends WikiaModel {
 		return $stats;
 	}
 
-	/**
-	 * @desc Sends a query to database and returns an array based on database results; used by UserStatsService::getStats() and UserStatsService::getGlobalStats()
-	 * @param $dbr
-	 * @return array
-	 *
-	 * @author Andrzej 'nAndy' Lukaszewski
-	 */
-	private function doStatsQuery($dbr) {
-		$stats = array();
 
-		$res = $dbr->selectRow(
-			'revision',
-			array('min(rev_timestamp) AS date, max(rev_timestamp) AS last_revision,  count(*) AS edits'),
-			array('rev_user' => $this->userId),
+	/**
+	 * Get timestamp of first user's fevision on specified wiki.
+	 * @since Nov 2013
+	 * @author Kamil Koterba
+	 *
+	 * @param $userId Integer Id of user
+	 * @param $wikiId Integer Id of wiki - specifies wiki from which to get editcount, 0 for current wiki
+	 * @param $skipCache boolean On true ignores cache
+	 * @return Int Number of edits
+	 */
+	private function getFirstRevisionTimestamp( $wikiId = 0 ) {
+		wfProfileIn( __METHOD__ );
+
+		$wikiId = ( empty($wikiId) ) ? $this->wg->CityId : $wikiId ;
+
+		$dbName = ( $wikiId != $this->wg->CityId ) ? WikiFactory::IDtoDB( $wikiId ) : false;
+
+		/* Get firstRevisionTimestamp from database */
+		$dbr = $this->getWikiDB( DB_SLAVE, $dbName );
+		$field = $dbr->selectField(
+			'wikia_user_properties',
+			'wup_value',
+			array( 'wup_user' => $this->userId,
+				'wup_property' => 'firstRevisionTimestamp' ),
 			__METHOD__
 		);
 
-		if( !empty($res) ) {
-			$stats = array(
-				'edits' => intval($res->edits),
-				'date' => $res->date,
-				'lastRevision' => $res->last_revision
+		if( $field === null or $field === false ) { // firstRevisionTimestamp has not been initialized. do so.
+
+			$res = $dbr->selectRow(
+				'revision',
+				array('rev_timestamp AS firstRevisionTimestamp'),
+				array('rev_user' => $this->userId),
+				__METHOD__,
+				array(
+					'ORDER BY' => 'rev_timestamp ASC',
+					'LIMIT' => '1'
+				)
 			);
+
+			if( !empty($res) ) {
+				$firstRevisionTimestamp = $res->firstRevisionTimestamp;
+
+				$dbw = $this->getWikiDB( DB_MASTER, $dbName );
+				$dbw->replace(
+					'wikia_user_properties',
+					array(),
+					array( 'wup_user' => $this->userId,
+						'wup_property' => 'firstRevisionTimestamp',
+						'wup_value' => $firstRevisionTimestamp),
+					__METHOD__
+				);
+			}
+
+		} else {
+			$firstRevisionTimestamp = $field;
 		}
 
-		return $stats;
+		wfProfileOut( __METHOD__ );
+		return $firstRevisionTimestamp;
 	}
+
+
+	/**
+	 * Get timestamp of last user's revision on specified wiki.
+	 * @since Nov 2013
+	 * @author Kamil Koterba
+	 *
+	 * @param $userId Integer Id of user
+	 * @param $wikiId Integer Id of wiki - specifies wiki from which to get editcount, 0 for current wiki
+	 * @param $skipCache boolean On true ignores cache
+	 * @return Int Number of edits
+	 */
+	private function getLastRevisionTimestamp( $wikiId = 0 ) {
+		wfProfileIn( __METHOD__ );
+
+		$wikiId = ( empty($wikiId) ) ? $this->wg->CityId : $wikiId ;
+
+		$dbName = ( $wikiId != $this->wg->CityId ) ? WikiFactory::IDtoDB( $wikiId ) : false;
+
+		/* Get firstRevisionTimestamp from database */
+		$dbr = $this->getWikiDB( DB_SLAVE, $dbName );
+
+			$res = $dbr->selectRow(
+				'revision',
+				array('rev_timestamp AS lastRevisionTimestamp'),
+				array('rev_user' => $this->userId),
+				__METHOD__,
+				array(
+					'ORDER BY' => 'rev_timestamp DESC',
+					'LIMIT' => '1'
+				)
+			);
+
+			if( !empty($res) ) {
+				$lastRevisionTimestamp = $res->lastRevisionTimestamp;
+			}
+
+		wfProfileOut( __METHOD__ );
+		return $lastRevisionTimestamp;
+	}
+
 }
