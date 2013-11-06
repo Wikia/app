@@ -293,7 +293,6 @@ ve.ui.WikiaMediaInsertDialog.prototype.onMediaPageRemove = function ( item ) {
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onOpen = function () {
 	ve.ui.MWDialog.prototype.onOpen.call( this );
-	ve.track( { 'action': ve.track.actions.OPEN, 'label': 'dialog-media-insert' } );
 	this.pages.setPage( 'main' );
 };
 
@@ -318,7 +317,6 @@ ve.ui.WikiaMediaInsertDialog.prototype.onPageSet = function () {
  * @param {string} action Which action is being performed on close.
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onClose = function ( action ) {
-	ve.track( { 'action': ve.track.actions.CLOSE, 'label': 'dialog-media-insert' } );
 	if ( action === 'insert' ) {
 		this.insertMedia( ve.copy( this.cartModel.getItems() ) );
 	}
