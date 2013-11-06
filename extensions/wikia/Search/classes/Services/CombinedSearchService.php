@@ -273,7 +273,7 @@ class CombinedSearchService {
 			$articles = [];
 			foreach ( $currentResults as $article ) {
 				$articles[] = $this->processArticle($article);
-				if ( sizeof(self::TOP_ARTICLES_PER_WIKI) ) {
+				if ( sizeof(self::TOP_ARTICLES_PER_WIKI) >= self::TOP_ARTICLES_PER_WIKI ) {
 					break;
 				}
 			}
