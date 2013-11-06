@@ -62,6 +62,11 @@ ve.ui.Dialog.static.name = '';
  * @method
  */
 ve.ui.Dialog.prototype.onCloseButtonClick = function () {
+	var label = ve.track.nameToLabel( this.constructor.static.name );
+	ve.track( {
+		'action': ve.track.actions.CLICK,
+		'label': 'dialog-' + label + '-button-close'
+	} );
 	this.close( 'cancel' );
 };
 

@@ -327,16 +327,6 @@ ve.ui.WikiaMediaInsertDialog.prototype.onClose = function ( action ) {
 };
 
 /**
- * Handle close button click events.
- *
- * @method
- */
-ve.ui.WikiaMediaInsertDialog.prototype.onCloseButtonClick = function () {
-	ve.ui.MWDialog.prototype.onCloseButtonClick.call( this );
-	ve.track( { 'action': ve.track.actions.CLICK, 'label': 'media-dialog-button-close' } );
-};
-
-/**
  * Converts temporary cart item into permanent.
  *
  * @method
