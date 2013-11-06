@@ -18,7 +18,7 @@ describe( 'TOC', function() {
 		dataMock,
 		headers,
 		// TOC module
-		toc = modules['wikia.toc']();
+		toc = modules[ 'wikia.toc' ]();
 
 	it( 'registers AMD module', function() {
 		expect( typeof toc ).toBe( 'object' );
