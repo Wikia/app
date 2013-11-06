@@ -37,56 +37,87 @@ class CombinedSearchService {
 
 	public function search($query, $langs, $namespaces, $hubs, $limit = null) {
 		$timer = Time::start(["CombinedSearchService", "search"]);
-		$wikias = [];
-		foreach ( $langs as $lang ) {
-			$crossWikiSearchConfig = new Config;
-			$crossWikiSearchConfig->setQuery( $query )
-				->setLimit( self::CROSS_WIKI_RESULTS )
-				->setPage( 1 )
-				->setRank( 'default' )
-				->setInterWiki( true )
-				->setCommercialUse( $this->getHideNonCommercialContent() )
-				->setLanguageCode( $lang );
-			if ( !empty($hubs) ) {
-				$crossWikiSearchConfig->setHubs( $hubs );
-			}
-			$crossWikiResultSet = (new Factory)->getFromConfig( $crossWikiSearchConfig )->search();
-			$crossWikiResults = $crossWikiResultSet->toArray( ["sitename_txt", "url", "id", "description_txt", "lang_s", "score", "description_txt"] );
-			foreach ( $crossWikiResults as $wiki ) {
-				$wikias[] = $this->processWiki( $wiki );
-			}
-			if ( sizeof( $wikias) >= self::CROSS_WIKI_RESULTS ) {
-				break;
-			}
-		}
-		$wikias = array_slice( $wikias, 0, self::CROSS_WIKI_RESULTS );
-		$total = ( $limit !== null ) ? $limit : self::MAX_TOTAL_ARTICLES;
-		$articlesPerWiki = min ( (int)ceil( $total / count( $wikias ) ), self::MAX_ARTICLES_PER_WIKI );
+		$wikias = $this->searchForWikias($query, $langs, $hubs);
 
+		$limit = ( $limit !== null ) ? $limit : self::MAX_TOTAL_ARTICLES;
+		if ( !empty( $wikias ) ) {
+			//set only if we have any wikis to check
+			$maxArticlesPerWiki = min ( (int)ceil( $limit / count( $wikias ) ), self::MAX_ARTICLES_PER_WIKI );
+			$articles = $this->searchForArticles($query, $namespaces, $wikias, $maxArticlesPerWiki);
+			$timer->stop();
+			return [
+				"wikias" => $wikias,
+				"articles" => array_slice( $articles, 0, $limit )
+			];
+		} else {
+			return [
+				"wikias" => [],
+				"articles" => []
+			];
+		}
+	}
+
+	/**
+	 * @param $query
+	 * @param $namespaces
+	 * @param $wikias
+	 * @param $maxArticlesPerWiki
+	 * @return array
+	 */
+	public function searchForArticles($query, $namespaces, $wikias, $maxArticlesPerWiki) {
 		$articles = [];
-		foreach ( $wikias as $wiki ) {
+		foreach ($wikias as $wiki) {
 			$requestedFields = ["title", "url", "id", "score", "pageid", "lang", "wid", Utilities::field('html', $wiki['lang'])];
 			$searchConfig = new Config;
-			$searchConfig->setQuery( $query )
-				->setLimit( $articlesPerWiki )
-				->setPage( 1 )
+			$searchConfig->setQuery($query)
+				->setLimit($maxArticlesPerWiki)
+				->setPage(1)
 				->setOnWiki(true)
-				->setRequestedFields( $requestedFields )
-				->setWikiId( $wiki['wikiId'] )
-				->setNamespaces( $namespaces )
-				->setFilterQuery( "is_main_page:false" )
-				->setRank( 'default' );
-			$resultSet = (new Factory)->getFromConfig( $searchConfig )->search();
-			$currentResults = $resultSet->toArray( $requestedFields );
-			foreach ( $currentResults as $article ) {
+				->setRequestedFields($requestedFields)
+				->setWikiId($wiki['wikiId'])
+				->setNamespaces($namespaces)
+				->setFilterQuery("is_main_page:false")
+				->setRank('default');
+			$resultSet = (new Factory)->getFromConfig($searchConfig)->search();
+			$currentResults = $resultSet->toArray($requestedFields);
+			foreach ($currentResults as $article) {
 				$articles[] = $this->processArticle($article);
 			}
 		}
-		$timer->stop();
-		return [
-			"wikias" => $wikias,
-			"articles" => array_slice( $articles, 0, $total )
-		];
+		return $articles;
+	}
+
+	/**
+	 * @param $query
+	 * @param $langs
+	 * @param $hubs
+	 * @return array
+	 */
+	public function searchForWikias($query, $langs, $hubs) {
+		$wikias = [];
+		foreach ($langs as $lang) {
+			$crossWikiSearchConfig = new Config;
+			$crossWikiSearchConfig->setQuery($query)
+				->setLimit(self::CROSS_WIKI_RESULTS)
+				->setPage(1)
+				->setRank('default')
+				->setInterWiki(true)
+				->setCommercialUse($this->getHideNonCommercialContent())
+				->setLanguageCode($lang);
+			if (!empty($hubs)) {
+				$crossWikiSearchConfig->setHubs($hubs);
+			}
+			$crossWikiResultSet = (new Factory)->getFromConfig($crossWikiSearchConfig)->search();
+			$crossWikiResults = $crossWikiResultSet->toArray(["sitename_txt", "url", "id", "description_txt", "lang_s", "score", "description_txt"]);
+			foreach ($crossWikiResults as $wikiSearchResult) {
+				$wikias[] = $this->processWiki($wikiSearchResult);
+			}
+			if (sizeof($wikias) >= self::CROSS_WIKI_RESULTS) {
+				break;
+			}
+		}
+		$wikias = array_slice($wikias, 0, self::CROSS_WIKI_RESULTS);
+		return $wikias;
 	}
 
 	private function processWiki( $wikiInfo ) {
