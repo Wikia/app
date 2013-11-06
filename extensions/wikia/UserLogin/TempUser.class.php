@@ -154,6 +154,11 @@ class TempUser extends WikiaModel {
 		$app = F::app();
 		$tempUser = false;
 
+		/* CE-478 */
+		if ( empty($app->wg->ExternalSharedDB) ) {
+			return false;
+		}
+
 		wfProfileIn( __METHOD__ );
 
 		$username = User::getCanonicalName( $username, 'valid' );
