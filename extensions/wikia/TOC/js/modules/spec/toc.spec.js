@@ -2,7 +2,7 @@ describe( 'TOC', function() {
 	'use strict';
 
 	// Helper functions
-	var	getHeaders = function( html ) {
+	var getHeaders = function( html ) {
 			return html.querySelectorAll( 'h2, h3, h4, h5' );
 		},
 		createTOCSection = function( header ) {
