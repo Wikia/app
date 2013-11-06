@@ -17,14 +17,21 @@
 			<li class="wrap-background">
 				<h2><?= wfMessage('themedesigner-graphic')->plain() ?></h2>
 				<img src="<?= $wg->BlankImgUrl ?>" class="background-image" id="swatch-image-background">
-				<input type="checkbox" id="tile-background"> <label for="tile-background"><?= wfMessage('themedesigner-tile-background')->plain() ?></label>
-				<input type="checkbox" id="fix-background"> <label for="fix-background"><?= wfMessage('themedesigner-fix-background')->plain() ?></label>
+				<label for="tile-background">
+					<input type="checkbox" id="tile-background">
+					<?= wfMessage('themedesigner-tile-background')->plain() ?>
+				</label>
+				<label for="fix-background">
+					<input type="checkbox" id="fix-background">
+					<?= wfMessage('themedesigner-fix-background')->plain() ?>
+				</label>
 				<? //TODO: Remove this after global release of responsive layout  ?>
 				<? if ($wg->OasisResponsive) : ?>
-					<span class="not-split-option">
-						<input type="checkbox" id="not-split-background"> <label for="not-split-background"><?= wfMessage('themedesigner-not-split-background')->plain() ?></label>
+					<label for="not-split-background" class="not-split-option">
+						<input type="checkbox" id="not-split-background">
+						<?= wfMessage('themedesigner-not-split-background')->plain() ?>
 						<span class="form-questionmark" rel="tooltip" title="<?= wfMessage('themedesigner-rules-not-split-background')->parse() ?>"></span>
-					</span>
+					</label>
 				<? endif ?>
 			</li>
 		</ul>

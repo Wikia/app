@@ -17,6 +17,10 @@
 		}
 		.wrap-background {
 			max-width: 200px;
+			label {
+				display: block;
+				float: left;
+			}
 		}
 		.not-split-option {
 			display: none;
@@ -37,7 +41,7 @@
 			width: 50px;
 		}
 		.background-image {
-			height: 100px;
+			height: 65px;
 			width: 120px;
 		}
 	}

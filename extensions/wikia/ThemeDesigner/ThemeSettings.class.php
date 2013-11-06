@@ -166,7 +166,7 @@ class ThemeSettings {
 			$settings['background-image-width'] = $file->getWidth();
 			$settings['background-image-height'] = $file->getHeight();
 
-			$imageServing = new ImageServing(null, 120, array("w"=>"120", "h"=>"100"));
+			$imageServing = new ImageServing(null, 120, array("w"=>"120", "h"=>"65"));
 			$settings['user-background-image'] = $file->getURL();
 			$settings['user-background-image-thumb'] = wfReplaceImageServer($file->getThumbUrl( $imageServing->getCut($file->getWidth(), $file->getHeight(), "origin")."-".$file->getName()));
 
