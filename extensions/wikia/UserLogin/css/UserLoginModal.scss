@@ -6,8 +6,8 @@
 	@include transition-shorthand(200ms opacity ease-in-out);
 	@include opacity(100);
 	height: auto;
-	margin: 0 auto 15px;
-	padding: 10px 0 0 0;
+	margin: 0 auto;
+	padding: 0;
 	width: 264px;
 	input[type=text],
 	input[type=password] {
