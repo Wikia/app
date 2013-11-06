@@ -21,7 +21,7 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window', 'wikia.browserDetect' ], f
 	function ieFlexboxFallback( modal ) {
 		var element = modal.$element,
 			HEADER_AND_FOOTER_HEIGHT = 120, // modal header and footer have 60px fixed height
-			winHeight = parseInt( $( w ).height(), 10 ),
+			winHeight = $( w ).height(),
 			modalMaxHeight = ( 90 / 100 ) * winHeight - HEADER_AND_FOOTER_HEIGHT; // 90% viewport - (header + footer)
 
 		element.children( 'section' ).css( 'maxHeight', modalMaxHeight );
