@@ -279,8 +279,8 @@ class StyleguideComponents {
 				}
 			}
 
-			if( !empty( $sampleArray['assets'] ) ) {
-				foreach( $sampleArray['assets'] as $assetUrl ) {
+			if( !empty( $sampleArray[ 'assets' ] ) ) {
+				foreach( $sampleArray[ 'assets' ] as $assetUrl ) {
 					\Wikia::addAssetsToOutput( $assetUrl );
 				}
 			}
