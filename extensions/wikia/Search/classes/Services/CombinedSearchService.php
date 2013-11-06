@@ -61,7 +61,10 @@ class CombinedSearchService {
 		}
 		$wikias = array_slice( $wikias, 0, self::CROSS_WIKI_RESULTS );
 		$total = ( $limit !== null ) ? $limit : self::MAX_TOTAL_ARTICLES;
-		$articlesPerWiki = min ( (int)ceil( $total / count( $wikias ) ), self::MAX_ARTICLES_PER_WIKI );
+		if ( !empty( $wikias ) ) {
+			//set only if we have any wikis to check
+			$articlesPerWiki = min ( (int)ceil( $total / count( $wikias ) ), self::MAX_ARTICLES_PER_WIKI );
+		}
 
 		$articles = [];
 		foreach ( $wikias as $wiki ) {
