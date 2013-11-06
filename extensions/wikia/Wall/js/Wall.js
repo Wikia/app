@@ -807,7 +807,7 @@ var Wall = $.createClass(Object, {
 								moveThreadModal.close();
 							}).on('click.Wall', '.submit', function(e) {
 								e.preventDefault();
-								buttons.attr('disabled', true);
+								moveThreadModal.deactivate();
 								$.nirvana.sendRequest({
 									controller: 'WallExternalController',
 									method: 'moveThread',
@@ -826,7 +826,7 @@ var Wall = $.createClass(Object, {
 											} else {
 												form.showGenericError(json.errormsg);
 											}
-											buttons.removeAttr('disabled');
+											moveThreadModal.activate();
 										}
 									}
 								});
