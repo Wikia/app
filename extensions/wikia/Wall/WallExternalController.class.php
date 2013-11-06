@@ -102,7 +102,7 @@ class WallExternalController extends WikiaController {
 		/**
 		 * @var $mw WallMessage
 		 */
-		$mw =  WallMessage::newFromId($this->request->getVal('id'));
+		$mw =  WallMessage::newFromId( $this->request->getVal( 'id' ) );
 
 		$this->response->setVal('list',
 			$this->app->renderView( 'WallExternalController', 'votersListItems',
@@ -113,7 +113,7 @@ class WallExternalController extends WikiaController {
 	}
 
 	public function votersListItems() {
-		//TODO: imaplmant load more button
+		//TODO: implement load more button
 
 		/**
 		 * @var $mw WallMessage

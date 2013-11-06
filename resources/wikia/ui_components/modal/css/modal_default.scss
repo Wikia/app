@@ -1,9 +1,12 @@
-@import "skins/oasis/css/core/color.scss";
-@import "skins/oasis/css/core/responsive-variables.scss";
-@import "skins/oasis/css/mixins/transform.scss";
-@import "skins/oasis/css/mixins/transition.scss";
-@import "skins/oasis/css/mixins/blackout.scss";
-@import "skins/oasis/css/mixins/box-sizing-border-box.scss";
+@import "skins/oasis/css/core/color";
+@import "skins/oasis/css/core/responsive-core";
+@import "skins/oasis/css/core/responsive-font-sizing";
+@import "skins/oasis/css/core/responsive-variables";
+@import "skins/oasis/css/mixins/transform";
+@import "skins/oasis/css/mixins/transition";
+@import "skins/oasis/css/mixins/blackout";
+@import "skins/oasis/css/mixins/box-sizing-border-box";
+@import "skins/oasis/css/mixins/flexbox";
 
 $close-image: '/resources/wikia/ui_components/modal/images/close-dark.svg';
 $modal-secondary-color: darken( $color-page, 10% );
@@ -11,11 +14,7 @@ $modal-secondary-color: darken( $color-page, 10% );
 	$close-image: '/resources/wikia/ui_components/modal/images/close-light.svg';
 	$modal-secondary-color: lighten( $color-page, 3% );
 }
-
-.modal-shown {
-	overflow: hidden;
-	height: 100%;
-}
+$modal-inactive-opacity: 0.3;
 
 .modal,
 .blackout {
@@ -25,39 +24,47 @@ $modal-secondary-color: darken( $color-page, 10% );
 }
 
 .modal {
+	@include transform-translate( -50%, -50% );
 	background-color: $color-page;
 	border-radius: 2px;
 	display: none;
 	left: 50%;
+	max-height: 90%;
+	min-height: 200px;
 	margin: 0;
 	overflow: hidden;
 	padding: 0;
 	position: fixed;
 	top: 50%;
-	@include transform-translate( -50%, -50% );
 
-	header,
-	footer {
+	> header,
+	> footer {
+		@include flex-grow(0);
+		@include flex-shrink(0);
 		background-color: $modal-secondary-color;
-		height: 60px;
+		height: 60px; // flex-basis is not supported on Safari 6 so fixed height is needed
 	}
 
-	header,
-	section,
-	footer {
-		padding: 20px;
+	> header,
+	> section,
+	> footer {
 		@include box-sizing-border-box;
+		padding: 20px;
 	}
 
-	header h3 {
+	> header h3 {
 		color: $color-text;
 		font-size: 21px;
 		font-weight: bold;
 		margin: 0;
-		padding: 0;
+		overflow: hidden;
+		padding: 0 20px 0 0;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		word-wrap: normal;
 	}
 
-	header .close {
+	> header .close {
 		background: url( $close-image );
 		background-size: 24px 24px;
 		display: block;
@@ -68,33 +75,36 @@ $modal-secondary-color: darken( $color-page, 10% );
 		width: 24px;
 	}
 
-	footer .button {
+	> footer .button {
 		float: right;
 	}
 
-	footer .button:last-child {
+	> footer .button:last-child {
 		margin: 0 20px;
+	}
+
+	> section {
+		@include flex-grow(1);
+
+		overflow: auto;
 	}
 
 	&.small {
 		width: 400px;
 
-		section {
-			height: 100px;
-		}
 	}
 
 	&.medium {
 		width: 700px;
 
-		section {
+		> section {
 			height: 400px;
 		}
 	}
 
 	&.small,
 	&.medium {
-		section {
+		> section {
 			overflow: hidden;
 			overflow-y: auto;
 		}
@@ -104,7 +114,7 @@ $modal-secondary-color: darken( $color-page, 10% );
 		height: calc( 100% - 50px );
 		width: calc( 100% - 50px );
 
-		footer {
+		> footer {
 			bottom: 0;
 			left: 0;
 			position: absolute;
@@ -120,20 +130,24 @@ $modal-secondary-color: darken( $color-page, 10% );
 	}
 
 	&.shown {
-		display: block;
+		@include flexbox();
+		@include flex-direction(column);
 		margin: 0;
 		padding: 0;
 		opacity: 1;
 		overflow: hidden;
 		z-index: $zTop;
+
+		// IE flex-box fallback
+		&.IE-flex-fix {
+			display: block;
+		}
 	}
 }
 
 .blackout {
 	@include blackout();
 }
-
-
 
 @media screen and (max-width: $breakpoint-min) {
 	.modal.medium {

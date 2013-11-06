@@ -1,55 +1,89 @@
 var ChatBanModal = function(title, okCallback, options) {
-	var self = this,
-		data = {};
+	'use strict';
+
+	var data = {};
 
 	if (options) {
 		data = {
-			userId: options.userId || ""
-		}
+			userId: options.userId || ''
+		};
 	}
 
 	// TODO: Remove isChangeBan - back end will check for this
-	$.get(wgScript + '?action=ajax&rs=ChatAjax&method=BanModal', data, function(data) {
-		$.showCustomModal(title, data.template, {
-			id: "ChatBanModal",
-			width: 404,
-			buttons: [
-				{
-					id: 'cancel',
-					message: $.msg('chat-ban-modal-button-cancel'),
-					handler: function(){
-						var dialog = $('#ChatBanModal');
-						dialog.closeModal();
-					}
-				},
-				{
-					id: 'ok',
-					defaultButton: true,
-					message: data.isChangeBan ? $.msg('chat-ban-modal-button-change-ban') : $.msg('chat-ban-modal-button-ok'),
-					handler: function() {
-						var reason = self.reasonInput.val(),
-							expires = self.expiresInput.val();
+	$.get( window.wgScript + '?action=ajax&rs=ChatAjax&method=BanModal', data, function( data ) {
+		require( [ 'wikia.ui.factory' ], function( uiFactory ) {
+			uiFactory.init( [ 'button', 'modal' ] ).then( function( uiButton, uiModal ) {
+				var primaryBtnMsg = data.isChangeBan ?
+						$.msg('chat-ban-modal-button-change-ban') : $.msg('chat-ban-modal-button-ok'),
+					modalPrimaryBtn = uiButton.render( {
+						'type': 'link',
+						'vars': {
+							'id': 'ok',
+							'href': '#',
+							'classes': [ 'normal', 'primary' ],
+							'value': primaryBtnMsg,
+							'title': primaryBtnMsg
+						}
+					} ),
+					secondaryBtnMsg = $.msg( 'chat-ban-modal-button-cancel' ),
+					modalSecondaryBtn = uiButton.render( {
+						'type': 'link',
+						'vars': {
+							'id': 'cancel',
+							'href': '#',
+							'classes': [ 'normal', 'secondary' ],
+							'value': secondaryBtnMsg,
+							'title': secondaryBtnMsg
+						}
+					}),
+					modalId = 'ChatBanModal',
+					banModal = uiModal.render( {
+						type: 'default',
+						vars: {
+							id: modalId,
+							size: 'small',
+							content: data.template,
+							title: title,
+							closeButton: true,
+							closeText: $.msg( 'close' ),
+							primaryBtn: modalPrimaryBtn,
+							secondBtn: modalSecondaryBtn
+						}
+					} );
 
-						okCallback(expires, reason);
+				require( [ 'wikia.ui.modal' ], function( modal ) {
+					banModal = modal.init( modalId, banModal );
 
-						self.dialog.closeModal();
-					}
-				}
-			],
-			callback: function() {
-				var dialog, reasonInput, expiresInput;
+					banModal.$element.find( '#cancel' ).click( function( event ) {
+						event.preventDefault();
+						banModal.close();
+					} );
 
-				self.dialog = dialog = $('#ChatBanModal');
-				self.reasonInput = reasonInput = dialog.find("input[name=reason]");
-				self.expiresInput = expiresInput = dialog.find("select[name=expires]");
-				reasonInput.placeholder().keydown(function(e) {
-					// Submit when 'enter' key is pressed (BugId:28101).
-					if (e.which == 13) {
-						e.preventDefault();
-						$('#ok').click();
-					}
-				});
-			}
-		});
-	});
+					var banModalOkBtn = banModal.$element.find( '#ok'),
+						reasonInput = banModal.$element.find( 'input[name=reason]' );
+
+					reasonInput.placeholder().keydown( function( e ) {
+						if( e.which === 13 ) {
+							// Submit when 'enter' key is pressed (BugId:28101).
+							e.preventDefault();
+							banModalOkBtn.click();
+						}
+					} );
+
+					banModalOkBtn.click( function( event ) {
+						event.preventDefault();
+
+						var reason = reasonInput.val(),
+							expires = banModal.$element.find( 'select[name=expires]' ).val();
+
+						okCallback( expires, reason );
+
+						banModal.close();
+					} );
+
+					banModal.show();
+				} );
+			} );
+		} );
+	} );
 };

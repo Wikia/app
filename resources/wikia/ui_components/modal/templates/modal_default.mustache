@@ -1,5 +1,5 @@
 <div id="blackout_{{id}}" class="blackout"></div>
-<div id="{{id}}" class="modal {{size}} {{#classes}}{{.}} {{/classes}}">
+<div id="{{id}}" class="modal {{size}} {{#classes}}{{.}} {{/classes}}" {{#data}}data-{{key}}="{{value}}"{{/data}}>
 	<header>
 		{{#closeButton}}
 			<a href="#" class="close">{{closeText}}</a>

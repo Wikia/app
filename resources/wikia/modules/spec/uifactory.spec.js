@@ -160,10 +160,10 @@ describe('UIFactory', function(){
 			nirvana = nirvanaMock(componentConfig),
 		uifactory = modules['wikia.ui.factory'](nirvana, window, loader, uiComponent, jQuery);
 
-		uifactory.init(requestedComponent).done(function(components) {
-			expect(components.length).toBe(2);
-			expect(components[0] instanceof uiComponent).toBe(true);
-			expect(components[1] instanceof uiComponent).toBe(true);
+		uifactory.init(requestedComponent).done(function(component1, component2) {
+			expect(arguments.length).toBe(2);
+			expect(component1 instanceof uiComponent).toBe(true);
+			expect(component2 instanceof uiComponent).toBe(true);
 
 			done();
 		});
