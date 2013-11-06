@@ -26,7 +26,7 @@ define( 'wikia.toc', function() {
 		var toc = {
 				sections: []
 			}, // set base object for TOC data structure
-			levels = [toc.sections], // level placeholders
+			levels =  [toc.sections ], // level placeholders
 			headersLength = headers.length,
 			hToLevel = [], // header to TOC level dictionary
 			level = -1,
@@ -37,7 +37,7 @@ define( 'wikia.toc', function() {
 			header;
 
 		for ( ; i < headersLength; i++ ) {
-			header = headers[i];
+			header = headers[ i ];
 			obj = createSection( header ); // create section object from HTML header node
 
 			// skip corrupted TOC section element
