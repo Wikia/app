@@ -84,7 +84,7 @@ ve.inheritClass( ve.ui.MWCategoryPopupWidget, ve.ui.PopupWidget );
 ve.ui.MWCategoryPopupWidget.prototype.onRemoveCategory = function () {
 	ve.track( {
 		'action': ve.track.actions.CLICK,
-		'label': 'dialog-page-settings-remove-category'
+		'label': 'dialog-page-settings-button-remove-category'
 	} );
 	this.removed = true;
 	this.emit( 'removeCategory', this.category );

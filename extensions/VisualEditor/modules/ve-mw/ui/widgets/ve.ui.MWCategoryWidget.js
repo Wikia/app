@@ -114,8 +114,8 @@ ve.ui.MWCategoryWidget.prototype.onLookupMenuItemSelect = function ( item ) {
 		}
 
 		ve.track( {
-			'action': ve.track.actions.CLICK,
-			'label': 'dialog-page-settings-add-category-suggestion'
+			'action': ve.track.actions.ADD,
+			'label': 'dialog-page-settings-category-suggestion'
 		} );
 		// Add new item
 		this.emit( 'newCategory',  this.input.getCategoryItemFromValue( value ) );
