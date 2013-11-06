@@ -14,7 +14,7 @@ var UserLoginModal = {
 				} ],
 				styles: '/extensions/wikia/UserLogin/css/UserLoginModal.scss',
 				messages: 'UserLogin'
-			})
+			} )
 		).done( function(packagesData) {
 			require( [ 'wikia.ui.factory', 'wikia.loader' ], function( uiFactory, loader ) {
 				loader.processStyle( packagesData.styles );
@@ -70,20 +70,20 @@ var UserLoginModal = {
 											contentBlock.html( '' ).html( content );
 											content.show();
 											contentBlock.slideDown( 400 );
-										});
+										} );
 									}
-								});
+								} );
 							}
-						});
+						} );
 						UserLoginFacebook.init();
 
 						if (options.modalInitCallback && typeof options.modalInitCallback === 'function') {
 							options.modalInitCallback();
 						}
-					});
-				});
-			});
-		});
+					} );
+				} );
+			} );
+		} );
 	},
 
 	/**
