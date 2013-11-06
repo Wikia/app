@@ -27,7 +27,7 @@ class MigrateWikisToSwift extends Maintenance {
 	const MIGRATE_PROCS = 50;
 	const SCRIPT_PROCS = 1;
 	const SCRIPT_PATH = '/var/log/runit/swift_migration';
-	CONST CMD = 'run_maintenance --ip=/usr/wikia/source/app/maintenance --conf=%s --db=%s --script "wikia/migrateImagesToSwift.php%s" --procs=%d >> %s/debug.log & ';
+	CONST CMD = 'run_maintenance --conf=%s --db=%s --script "wikia/migrateImagesToSwift.php%s" --procs=%d >> %s/debug.log & ';
 	
 	private $disabled_wikis = [ 717284, 298117 ];
 	private $db;
