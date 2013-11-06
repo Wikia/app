@@ -1,4 +1,4 @@
-define( 'wikia.ui.modal', [ 'jquery', 'wikia.window' ], function( $, w ) {
+define( 'wikia.ui.modal', [ 'jquery', 'wikia.window', 'wikia.browserDetect' ], function( $, w, browserDetect ) {
 	'use strict';
 
 	var BLACKOUT_CLASS = 'blackout',
@@ -92,9 +92,8 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window' ], function( $, w ) {
 		this.$element.addClass( 'shown' );
 		this.$blackout.addClass( 'visible' );
 
-		// IE flexbox fallback
-		if ( navigator.appName === 'Microsoft Internet Explorer' ||
-			( navigator.appName === 'Netscape' && navigator.userAgent.indexOf( 'Trident/') !== -1 ) ) {
+		// IE flex-box fallback
+		if ( browserDetect.isIE() ) {
 
 			this.$element.addClass( 'IE-flex-fix' );
 			ieFlexboxFallback( this );
