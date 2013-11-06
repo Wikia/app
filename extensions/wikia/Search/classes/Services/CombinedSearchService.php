@@ -251,7 +251,7 @@ class CombinedSearchService {
 				null,
 				[ NS_MAIN ],
 				false,
-				self::TOP_ARTICLES_PER_WIKI
+				self::TOP_ARTICLES_PER_WIKI + 1
 			);
 
 			$query = " +(" . Utilities::valueForField("wid", $wikiId) . ") ";
@@ -264,6 +264,7 @@ class CombinedSearchService {
 				->setPage( 1 )
 				->setRequestedFields( $requestedFields )
 				->setDirectLuceneQuery(true)
+				->setFilterQuery("is_main_page:false")
 				->setWikiId( $wikiId );
 
 			$resultSet = (new Factory)->getFromConfig( $searchConfig )->search();
@@ -272,6 +273,9 @@ class CombinedSearchService {
 			$articles = [];
 			foreach ( $currentResults as $article ) {
 				$articles[] = $this->processArticle($article);
+				if ( sizeof(self::TOP_ARTICLES_PER_WIKI) ) {
+					break;
+				}
 			}
 			$timer->stop();
 			return $articles;
