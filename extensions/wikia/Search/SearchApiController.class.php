@@ -88,9 +88,10 @@ class SearchApiController extends WikiaApiController {
 		$langs = $this->request->getArray( 'langs', ['en'] );
 		$namespaces = $this->request->getArray( 'namespaces', [ NS_MAIN ] );
 		$hubs = $this->request->getArray( 'hubs', null );
+		$limit = $this->request->getVal( 'limit', null );
 
 		$searchService = new CombinedSearchService();
-		$response = $searchService->search($query, $langs, $namespaces, $hubs);
+		$response = $searchService->search($query, $langs, $namespaces, $hubs, $limit);
 
 		$this->getResponse()->setData($response);
 	}
