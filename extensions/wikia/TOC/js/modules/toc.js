@@ -1,4 +1,4 @@
-define('wikia.toc', function() {
+define( 'wikia.toc', function() {
 	'use strict';
 
 	/**
@@ -22,7 +22,7 @@ define('wikia.toc', function() {
 	 *  @returns {Object} - TOC data structure of all the subsections
 	 */
 
-	function getData(headers, createSection) {
+	function getData( headers, createSection ) {
 		var toc = {
 				sections: []
 			}, // set base object for TOC data structure
@@ -32,33 +32,33 @@ define('wikia.toc', function() {
 			level = -1,
 			lastHeader = -1,
 			headerLevel,
-			i,
+			i = 0,
 			obj,
 			header;
 
-		for (i = 0; i < headersLength; i++) {
+		for ( ; i < headersLength; i++ ) {
 			header = headers[i];
-			obj = createSection(header); // create section object from HTML header node
+			obj = createSection( header ); // create section object from HTML header node
 
 			// skip corrupted TOC section element
-			if (obj === false || typeof obj.sections  === 'undefined' || !(obj.sections instanceof Array)) {
+			if ( obj === false || typeof obj.sections  === 'undefined' || !( obj.sections instanceof Array ) ) {
 				continue;
 			}
 
-			headerLevel = parseInt(header.nodeName.slice(1), 10); // get position from header node (exp. <h2>)
+			headerLevel = parseInt( header.nodeName.slice( 1 ), 10 ); // get position from header node (exp. <h2>)
 
-			if (headerLevel > lastHeader) {
+			if ( headerLevel > lastHeader ) {
 				level += 1;
-			} else if (headerLevel < lastHeader && level > 0) {
+			} else if ( headerLevel < lastHeader && level > 0 ) {
 				level = 0;
-				if (typeof hToLevel[headerLevel] !== 'undefined') { // jump to the designated level if it is set
-					level = hToLevel[headerLevel];
+				if ( typeof hToLevel[ headerLevel ] !== 'undefined' ) { // jump to the designated level if it is set
+					level = hToLevel[ headerLevel ];
 				}
 			}
-			hToLevel[headerLevel] = level;
+			hToLevel[ headerLevel ] = level;
 			lastHeader = headerLevel;
-			levels[level].push(obj);
-			levels[level+1] = obj.sections;
+			levels[ level ].push( obj );
+			levels[ level + 1 ] = obj.sections;
 		}
 
 		return toc;
