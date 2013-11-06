@@ -22,21 +22,27 @@ define('ext.wikia.adengine.template.skin', ['wikia.document', 'wikia.window', 'w
 			i,
 			len,
 			pixelElement,
-			pixelUrl;
+			pixelUrl,
+			bcParams;
 
 		params = params || {};
 
 		if (window.wgOasisResponsive) {
-			BackgroundChanger.load({
+			bcParams = {
 				skinImage: params.skinImage,
 				skinImageWidth: 1700,
 				skinImageHeight: 800,
 				backgroundTiled: false,
 				backgroundFixed: true,
-				backgroundDynamic: true,
-				backgroundColor: '#' + params.backgroundColor,
-				middleColor: '#' + params.middleColor
-			});
+				backgroundDynamic: true
+			};
+			if (params.backgroundColor) {
+				bcParams.backgroundColor = '#' + params.backgroundColor;
+			}
+			if (params.middleColor) {
+				bcParams.backgroundMiddleColor = '#' + params.middleColor;
+			}
+			BackgroundChanger.load(bcParams);
 		} else {
 			adSkinStyle.background = 'url("' + params.skinImage + '") no-repeat top center #' + params.backgroundColor;
 		}
