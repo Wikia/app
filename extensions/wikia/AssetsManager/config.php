@@ -486,6 +486,8 @@ $config['wikiamobile_js_body_full'] = array(
 		'//extensions/wikia/WikiaMobile/js/track.js',
 		'//extensions/wikia/WikiaMobile/js/infobox.js',
 		'//extensions/wikia/WikiaMobile/js/events.js',
+		'//extensions/wikia/WikiaMobile/js/topbar.js',
+		'//extensions/wikia/WikiaMobile/js/sections.js',
         '//extensions/wikia/TOC/js/modules/toc.js',
 		'//extensions/wikia/WikiaMobile/js/toc.js',
 		'//extensions/wikia/WikiaMobile/js/throbber.js',
@@ -494,10 +496,9 @@ $config['wikiamobile_js_body_full'] = array(
 		'//extensions/wikia/WikiaMobile/js/modal.js',
 		'//extensions/wikia/WikiaMobile/js/media.class.js',
 		'//extensions/wikia/WikiaMobile/js/media.js',
-		'//extensions/wikia/WikiaMobile/js/sections.js',
 		'//extensions/wikia/WikiaMobile/js/layout.js',
 		'//extensions/wikia/WikiaMobile/js/navigation.wiki.js',
-		'//extensions/wikia/WikiaMobile/js/topbar.js',
+		'//extensions/wikia/WikiaMobile/js/curtain.js',
 		'//extensions/wikia/WikiaMobile/js/hide_url_bar.js',
 
 		//entrypoint

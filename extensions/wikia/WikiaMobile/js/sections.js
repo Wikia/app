@@ -12,8 +12,7 @@ define('sections', ['jquery'], function($){
 	var d = document,
 		sections = $('h2[id],h3[id],h4[id]', document.getElementById('wkPage')).toArray(),
 		l = sections.length,
-		lastSection,
-		timeout;
+		lastSection;
 
 	function scrollTo(header){
 		header[0].scrollIntoView();
@@ -37,6 +36,8 @@ define('sections', ['jquery'], function($){
 	function onScroll(){
 		var currentSection = current();
 
+		window.removeEventListener('scroll', onScroll);
+
 		if(currentSection && !currentSection.is(lastSection)) {
 			$(d).trigger('section:changed', {
 				section: currentSection,
@@ -46,14 +47,12 @@ define('sections', ['jquery'], function($){
 			lastSection = currentSection;
 		}
 
-		timeout = null;
+		window.setTimeout(function(){
+			window.addEventListener('scroll', onScroll);
+		}, 200);
 	}
 
-	window.addEventListener('scroll', function(){
-		if(!timeout) {
-			timeout = setTimeout(onScroll, 100);
-		}
-	});
+	window.addEventListener('scroll', onScroll);
 
 	return {
 		list: sections,

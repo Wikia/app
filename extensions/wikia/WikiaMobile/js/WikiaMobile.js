@@ -2,9 +2,7 @@ require(['wikia.querystring', require.optional('wikia.cookies'), 'track', 'wikia
 	function (qs, cookies, track, window, $) {
 		'use strict';
 
-		var d = window.document,
-			clickEvent = 'click',
-			$curtain;
+		var d = window.document;
 
 		//used to handle close tracking on Read More section
 		$(d.getElementById('wkRelPag')).on('click', '.open', function(){
@@ -31,31 +29,12 @@ require(['wikia.querystring', require.optional('wikia.cookies'), 'track', 'wikia
 			qs().setVal('useskin', skin).addCb().goTo();
 		});
 
-		//close toc and topbar when 'curtain' is clicked
-		$curtain = $('#wkCurtain').on(clickEvent, function(){
-			$.event.trigger('curtain:hide');
-			$curtain.removeClass('active');
-			$.event.trigger('ads:fix');
-		});
-
-		$(d).on('curtain:show', function(){
-			$curtain.addClass('active');
-			$.event.trigger('ads:unfix');
-		}).on('curtain:toggle', function(){
-			if($curtain.toggleClass('active').hasClass('active')){
-				$.event.trigger('ads:unfix');
-			}else{
-				$.event.trigger('ads:fix');
-			}
-		});
-
 		$(d.getElementById('wkFtr')).on('click' , 'a', function(event){
 			track.event('footer', track.TEXT_LINK, {
 				label: 'link',
 				href: this.href
 			},event);
 		});
-
 
 		$(d.getElementById('wkTopBar')).find('a:first-child').on('click', function(event){
 			track.event('wordmark', track.CLICK, {

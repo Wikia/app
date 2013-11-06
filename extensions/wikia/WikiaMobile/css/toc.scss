@@ -14,15 +14,14 @@ $toc-background: #F8F8F8;
 	left: 0;
 	top: 0;
 	bottom:0;
-	width: 80%;
-	max-width: 260px;
+	width: 260px;
 	background: $toc-background;
 	-webkit-transition: -webkit-transform .1s ease-out;
 	-webkit-transform: translate(-100%);
 	-moz-transform: translate(-100%);
 	transform: translate(-100%);
 
-	z-index: 101;
+
 
 	counter-reset: level1, level2, level3;
 
@@ -30,6 +29,8 @@ $toc-background: #F8F8F8;
 		-webkit-transform: translate(0);
 		-moz-transform: translate(0);
 		transform: translate(0);
+
+		z-index: 101;
 	}
 
 	header {
@@ -49,33 +50,15 @@ $toc-background: #F8F8F8;
 	position: absolute;
 	right: -48px;
 	bottom: 75px;
-	border-radius: 0 3px 3px 0;
-	background-size: 80%;
-}
-
-.menu-stripe {
 	width: 48px;
 	height: 48px;
-	background: rgb(0, 77, 141);
-}
 
-.menu-stripe:before, .menu-stripe:after {
-	background: white;
-	content: "";
-	position: absolute;
-	height: 3px;
-	top: 12px;
-	box-shadow: 0 10px white, 0 20px white;
-}
-
-.menu-stripe:before {
-	width: 3px;
-	left: 12px;
-}
-
-.menu-stripe:after {
-	width: 18px;
-	left: 18px;
+	background-color: rgb(0, 77, 141);
+	background-size: 55%;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-image: url(/extensions/wikia/WikiaMobile/images/toc-icon.png); /* base64 */
+	border-radius: 0 3px 3px 0;
 }
 
 .toc-list {

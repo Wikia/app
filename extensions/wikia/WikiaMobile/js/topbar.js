@@ -9,8 +9,7 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'jquery', 'track', 'throb
 	function (qs, loader, $, track, throbber, w) {
 	'use strict';
 
-	var	$html = $('html'),
-		d = w.document,
+	var	d = w.document,
 		wkPrfTgl = d.getElementById('wkPrfTgl'),
 		navBar = d.getElementById('wkTopNav'),
 		$navBar = $(navBar),
@@ -217,13 +216,17 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'jquery', 'track', 'throb
 		}
 	}
 
+	$(d).on('curtain:hidden', function(){
+		showPage();
+	});
+
 	function close() {
 		showPage();
 
 		if(qs().getHash() === '#topbar') {
 			var pos = w.scrollY;
 			w.history.back();
-			w.scrollTo(0,pos);
+			w.scrollTo(0, pos);
 		}
 
 		$.event.trigger('topbar:close');
@@ -231,15 +234,14 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'jquery', 'track', 'throb
 
 	function hidePage(){
 		$.event.trigger('ads:unfix');
-
-		$html.addClass('hidden');
+		$.event.trigger('curtain:show');
 	}
 
 	function showPage(){
 		$.event.trigger('ads:fix');
 
 		$navBar.removeClass();
-		$html.removeClass('hidden');
+		$.event.trigger('curtain:hide');
 	}
 
 	return {

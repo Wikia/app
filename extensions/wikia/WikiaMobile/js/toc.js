@@ -6,7 +6,6 @@ require(['sections', 'wikia.window', 'jquery', 'wikia.mustache', 'wikia.toc'],
 	//private
 	var $document = $(window.document),
 		$anchors,
-		timer,
 		$openOl,
 		state,
 		offsetTop = 0,
@@ -50,28 +49,29 @@ require(['sections', 'wikia.window', 'jquery', 'wikia.mustache', 'wikia.toc'],
 		var scrollTop,
 			self = $ol[0];
 
-		if(!timer && $openOl) {
-			timer = setTimeout(function(){
-				timer = null;
+		$ol.off('scroll', handleFixingLiElement);
 
-				scrollTop = self.scrollTop + 90;
+		scrollTop = self.scrollTop + 90;
 
-				if(state !== 'disabled' && scrollTop < offsetTop) {
-					state = 'disabled';
-					$parent.removeClass('fixed');
-				} else if (scrollTop >= offsetTop) {
-					if(offsetTop + $openOl[0].offsetHeight - scrollTop >= 0) {
-						if(state !== 'fixed') {
-							state = 'fixed';
-							$parent.removeClass('bottom').addClass('fixed');
-						}
-					} else if (state !== 'bottom') {
-						state = 'bottom';
-						$parent.addClass('bottom');
-					}
+		if(state !== 'disabled' && scrollTop < offsetTop) {
+			state = 'disabled';
+			$parent.removeClass('fixed');
+		} else if (scrollTop >= offsetTop) {
+			if(offsetTop + $openOl[0].offsetHeight - scrollTop >= 0) {
+				if(state !== 'fixed') {
+					state = 'fixed';
+					$parent.removeClass('bottom').addClass('fixed');
 				}
-			}, 10);
+			} else if (state !== 'bottom') {
+				state = 'bottom';
+				$parent.addClass('bottom');
+			}
 		}
+
+		setTimeout(function(){
+			$ol.on('scroll', handleFixingLiElement);
+		}, 50);
+
 	}
 
 	$toc = $('#wkTOC')
@@ -123,9 +123,8 @@ require(['sections', 'wikia.window', 'jquery', 'wikia.mustache', 'wikia.toc'],
 		}
 	}
 
-	$document.on('curtain:hide', function(){
-		$toc.removeClass('active');
-		$.event.trigger('ads:unfix');
+	$document.on('curtain:hidden', function(){
+		$toc.removeClass();
 		onClose();
 	});
 
@@ -133,19 +132,21 @@ require(['sections', 'wikia.window', 'jquery', 'wikia.mustache', 'wikia.toc'],
 		$document.on('section:changed', onSectionChange);
 
 		onSectionChange(null, sections.current()[0], true);
+		$.event.trigger('curtain:show');
+		$.event.trigger('ads:unfix');
 	}
 
 	function onClose() {
 		$document.off('section:changed', onSectionChange);
+		$.event.trigger('curtain:hide');
+		$.event.trigger('ads:fix');
 	}
 
 	$('#wkTOCHandle').on('click', function(){
-		if($toc.toggleClass('active').hasClass('active')){
+		if ( $toc.toggleClass('active').hasClass('active') ){
 			onOpen();
 		}else {
 			onClose();
 		}
-
-		$.event.trigger('curtain:toggle');
 	});
 });

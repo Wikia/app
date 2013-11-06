@@ -53,15 +53,15 @@
 <?= $pageContent ;?>
 <?= $wikiaFooter ;?>
 <div id=wkCurtain>&nbsp;</div>
+<div id=wkTOC>
+	<header><?= wfMessage('wikiamobile-toc-header')->plain() ?></header>
+	<div id=wkTOCHandle></div>
+</div>
 <?= $jsBodyFiles ;?>
 <?= $jsExtensionPackages ?>
 <?= $inContentAd ;?>
 <?= $modalInterstitial ;?>
 <?= $floatingAd ;?>
-<div id=wkTOC>
-	<header><?= wfMessage('wikiamobile-toc-header')->plain() ?></header>
-	<div id=wkTOCHandle class=menu-stripe></div>
-</div>
 <?= $trackingCode ;?>
 </body>
 </html>
