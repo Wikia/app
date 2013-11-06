@@ -179,7 +179,7 @@ class RunOnCluster extends Maintenance {
 			$method = $this->method;
 
 			try {
-				$class::$method( $this->db, $dbname, $this->test );
+				$class::$method( $this->db, $dbname, $this->test, $this->verbose );
 			} catch ( Exception $e ) {
 				fwrite(STDERR, "Could not run $class::$method for $dbname: ".$e->getMessage()."\n");
 			}
