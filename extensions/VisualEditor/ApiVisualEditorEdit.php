@@ -67,7 +67,9 @@ class ApiVisualEditorEdit extends ApiVisualEditor {
 		}
 
 		$parserParams = array();
-		if ( isset( $params['oldid'] ) ) {
+		if ( isset( $params['oldwt'] ) ) {
+			$parserParams['oldwt'] = $params['oldwt'];
+		} else if ( isset( $params['oldid'] ) ) {
 			$parserParams['oldid'] = $params['oldid'];
 		}
 

@@ -92,14 +92,22 @@ class ApiVisualEditor extends ApiBase {
 		if ( $parserParams['oldid'] === 0 ) {
 			$parserParams['oldid'] = '';
 		}
+
+		$postData = array( 'content' => $html );
+		if ( isset( $parserParams['oldwt'] ) ) {
+			$postData[ 'oldwt' ] = $parserParams['oldwt'];
+		} else {
+			if ( $parserParams['oldid'] === 0 ) {
+				$parserParams['oldid'] = '';
+			}
+			$postData[ 'oldid' ] = $parserParams['oldid'];
+		}
+
 		return Http::post(
 			$wgVisualEditorParsoidURL . '/' . $this->getApiSource() .
 				'/' . urlencode( $title->getPrefixedDBkey() ),
 			array(
-				'postData' => array(
-					'content' => $html,
-					'oldid' => $parserParams['oldid']
-				),
+				'postData' => $postData,
 				'timeout' => $wgVisualEditorParsoidTimeout,
 				'noProxy' => !empty( $wgDevelEnvironment )
 			)
@@ -224,11 +232,33 @@ class ApiVisualEditor extends ApiBase {
 		}
 
 		$parserParams = array();
-		if ( isset( $params['oldid'] ) ) {
+		if ( isset( $params['oldwt'] ) ) {
+			$parserParams['oldwt'] = $params['oldwt'];
+		} else if ( isset( $params['oldid'] ) ) {
 			$parserParams['oldid'] = $params['oldid'];
 		}
 
+		global $wgVisualEditorParsoidURL, $wgVisualEditorParsoidTimeout, $wgDevelEnvironment;
+
 		switch ( $params['paction'] ) {
+			case 'wikiaparse':
+				$postData = array(
+					'wt' => $params['wikitext']
+				);
+				$content = Http::post(
+					$wgVisualEditorParsoidURL . '/' . $this->getApiSource() .
+						'/' . urlencode( $page->getPrefixedDBkey() ),
+					array(
+						'postData' => $postData,
+						'timeout' => $wgVisualEditorParsoidTimeout,
+						'noProxy' => !empty( $wgDevelEnvironment )
+					)
+				);
+				$result = array(
+					'result' => 'success',
+					'content' => $content
+				);
+				break;
 			case 'parse':
 				$parsed = $this->getHTML( $page, $parserParams );
 				// Dirty hack to provide the correct context for edit notices
@@ -339,13 +369,14 @@ class ApiVisualEditor extends ApiBase {
 			),
 			'paction' => array(
 				ApiBase::PARAM_REQUIRED => true,
-				ApiBase::PARAM_TYPE => array( 'parse', 'parsefragment', 'serialize', 'diff' ),
+				ApiBase::PARAM_TYPE => array( 'wikiaparse', 'parse', 'parsefragment', 'serialize', 'diff' ),
 			),
 			'wikitext' => null,
 			'basetimestamp' => null,
 			'starttimestamp' => null,
 			'oldid' => null,
 			'html' => null,
+			'oldwt' => null
 		);
 	}
 

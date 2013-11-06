@@ -97,7 +97,7 @@ ve.ui.WikiaSourceModeDialog.prototype.parse = function( ) {
 		'data': {
 			'action': 'visualeditor',
 			// NOTE: neither of these (parse / parsefragment) is the API we want, that will be written next
-			'paction': 'parse',
+			'paction': 'wikiaparse',
 			//'paction': 'parsefragment',
 			'page': mw.config.get( 'wgRelevantPageName' ),
 			'wikitext': wikitext,
@@ -125,6 +125,8 @@ ve.ui.WikiaSourceModeDialog.prototype.onParseSuccess = function( deferred, respo
 		return this.onParseError.call( this, deferred );
 	}
 
+	this.surface.getTarget().setWikitext( this.getWikitext() );
+
 	var newDoc, doc, surfaceModel, tx;
 
 	surfaceModel = this.surface.getModel();
@@ -146,7 +148,7 @@ ve.ui.WikiaSourceModeDialog.prototype.onParseSuccess = function( deferred, respo
 		( newDoc.metadata.length ? newDoc.metadata.data[newDoc.metadata.data.length - 1] : [] )
 	);
 
-	surfaceModel.change( tx );
+	surfaceModel.change( tx, new ve.Range( 0 ) );
 
 	this.close();
 };

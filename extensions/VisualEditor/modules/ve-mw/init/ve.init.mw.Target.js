@@ -29,6 +29,7 @@ ve.init.mw.Target = function VeInitMwTarget( $container, pageName, revisionId ) 
 	this.pageName = pageName;
 	this.pageExists = mw.config.get( 'wgArticleId', 0 ) !== 0;
 	this.revid = revisionId || mw.config.get( 'wgCurRevisionId' );
+	this.wikitext = null;
 	this.restoring = !!revisionId;
 	this.editToken = mw.user.tokens.get( 'editToken' );
 	this.apiUrl = mw.util.wikiScript( 'api' );
@@ -669,6 +670,7 @@ ve.init.mw.Target.prototype.submit = function ( wikitext, options ) {
  * @returns {boolean} Serializing has beeen started
 */
 ve.init.mw.Target.prototype.serialize = function ( doc, callback ) {
+	var data;
 	// Prevent duplicate requests
 	if ( this.serializing ) {
 		return false;
@@ -676,16 +678,21 @@ ve.init.mw.Target.prototype.serialize = function ( doc, callback ) {
 	// Load DOM
 	this.serializing = true;
 	this.serializeCallback = callback;
+	data = {
+		'action': 'visualeditor',
+		'paction': 'serialize',
+		'html': this.getHtml( doc ),
+		'page': this.pageName,
+		'format': 'json'
+	};
+	if ( this.wikitext !== null ) {
+		data.oldwt = this.wikitext;
+	} else {
+		data.oldid = this.revid;
+	}
 	$.ajax( {
 		'url': this.apiUrl,
-		'data': {
-			'action': 'visualeditor',
-			'paction': 'serialize',
-			'html': this.getHtml( doc ),
-			'page': this.pageName,
-			'oldid': this.revid,
-			'format': 'json'
-		},
+		'data': data,
 		'dataType': 'json',
 		'type': 'POST',
 		// Wait up to 100 seconds before giving up
@@ -695,4 +702,14 @@ ve.init.mw.Target.prototype.serialize = function ( doc, callback ) {
 		'error': ve.bind( ve.init.mw.Target.onSerializeError, this )
 	} );
 	return true;
+};
+
+/**
+ * TODO: Document...
+ *
+ * @method
+ * @param {string} wikitext
+*/
+ve.init.mw.Target.prototype.setWikitext = function ( wikitext ) {
+	this.wikitext = wikitext;
 };
