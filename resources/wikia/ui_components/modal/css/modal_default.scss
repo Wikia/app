@@ -22,10 +22,8 @@ $small-modal-width: 400px;
 $medium-modal-width: 700px;
 $medium-modal-width-small-screen: 500px;
 
-.modal,
 .modal-blackout {
 	@include transition-shorthand( display 0.2s ease-in-out );
-	z-index: -1; //@todo: needed?
 }
 
 .modal {
