@@ -6,14 +6,36 @@
 
 require( ['wikia.tracker'], function ( tracker ) {
 	var actions = tracker.ACTIONS,
+		nameToLabelMap = {
+			'meta': 'page-settings',
+			'transclusion': 'template',
+			'wikiaMediaInsert': 'media-insert'
+		},
 		rSpecialChars = /[A-Z]/g;
 
-	function upperToHyphenLower( match ) {
-		return '-' + match.toLowerCase();
+	/**
+	 * Convert symbolic names to tracking labels, falling back to the symbolic name if there is
+	 * nothing else to map it to.
+	 *
+	 * @example
+	 * "meta" -> "page-settings"
+	 *
+	 * @method
+	 * @param {string} name The symbolic name
+	 * @returns {string} The converted label
+	 */
+	function nameToLabel( name ) {
+		return nameToLabelMap[name] || name;
 	}
 
-	ve.track.actions = actions;
-	ve.trackRegisterHandler( function ( name, data ) {
+	/**
+	 * Editor tracking function.
+	 *
+	 * @method
+	 * @param {string} [name] Used by MediaWiki to distinguish tracking events.
+	 * @param {Object} data The data to send to our internal tracking function.
+	 */
+	function track( name, data ) {
 		var params = {
 			category: 'editor-ve',
 			trackingMethod: 'ga'
@@ -38,6 +60,7 @@ require( ['wikia.tracker'], function ( tracker ) {
 				case 'page-save-success':
 					params.action = actions.SUCCESS;
 					params.label = 'publish';
+					params.value = data.latency;
 					break;
 				case 'section-edit-link-click':
 					params.action = actions.CLICK;
@@ -56,5 +79,21 @@ require( ['wikia.tracker'], function ( tracker ) {
 		}
 
 		tracker.track( params );
-	} );
+	}
+
+	/**
+	 * Convert a string from lazyCamelCase to lowercase-hyphen style.
+	 *
+	 * @method
+	 * @param {string} match The matched string to convert.
+	 * @returns {string} The converted string.
+	 */
+	function upperToHyphenLower( match ) {
+		return '-' + match.toLowerCase();
+	}
+
+	// Exports
+	ve.track.actions = actions;
+	ve.track.nameToLabel = nameToLabel;
+	ve.trackRegisterHandler( track );
 } );

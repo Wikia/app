@@ -859,7 +859,7 @@ ve.init.mw.ViewPageTarget.prototype.updateToolbarSaveButtonState = function () {
  * @method
  */
 ve.init.mw.ViewPageTarget.prototype.onSaveDialogReviewButtonClick = function () {
-	ve.track( { 'action': ve.track.actions.CLICK, 'label': 'save-dialog-review-changes' } );
+	ve.track( { 'action': ve.track.actions.CLICK, 'label': 'dialog-save-review-changes' } );
 	this.swapSaveDialog( 'review' );
 };
 
@@ -869,7 +869,7 @@ ve.init.mw.ViewPageTarget.prototype.onSaveDialogReviewButtonClick = function () 
  * @method
  */
 ve.init.mw.ViewPageTarget.prototype.onSaveDialogSaveButtonClick = function () {
-	ve.track( { 'action': ve.track.actions.CLICK, 'label': 'save-dialog-publish' } );
+	ve.track( { 'action': ve.track.actions.CLICK, 'label': 'dialog-save-publish' } );
 	this.saveDocument();
 };
 
@@ -976,7 +976,7 @@ ve.init.mw.ViewPageTarget.prototype.getSaveOptions = function () {
  * @param {jQuery.Event} e Mouse click event
  */
 ve.init.mw.ViewPageTarget.prototype.onSaveDialogCloseButtonClick = function () {
-	ve.track( { 'action': ve.track.actions.CLICK, 'label': 'save-dialog-close' } );
+	ve.track( { 'action': ve.track.actions.CLICK, 'label': 'dialog-save-close' } );
 	this.hideSaveDialog();
 };
 
