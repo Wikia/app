@@ -260,7 +260,7 @@ class ThemeSettings {
 	 * "background-image" entry (for custom backgrounds) and settings revision ID are ignored.
 	 *
 	 * @author macbre
-	 * @return string|bool wordmark URL or false if not found
+	 * @return string|bool background URL or false if not found
 	 */
 	public function getBackgroundUrl() {
 		$settings = $this->getSettings();
