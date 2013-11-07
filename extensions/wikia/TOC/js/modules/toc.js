@@ -50,10 +50,12 @@ define('wikia.toc', function() {
 				level += 1;
 			} else if (headerLevel < lastHeader && level > 0) {
 				level = 0;
+
 				if (typeof hToLevel[headerLevel] !== 'undefined') { // jump to the designated level if it is set
 					level = hToLevel[headerLevel];
 				}
 			}
+
 			hToLevel[headerLevel] = level;
 			lastHeader = headerLevel;
 			levels[level].push(obj);
