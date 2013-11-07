@@ -88,6 +88,11 @@ class MigrateWikisToSwift extends Maintenance {
 		# don't migrate top 200 Wikis
 		$top200Wikis = DataMartService::getWAM200Wikis();
 		
+		if ( count($top200Wikis) != 200 ) {
+			$this->output( "Number of Top 200 Wikis is different than 200 !\n" );
+			exit;
+		}
+		
 		# don't migrate video.wikia.com & corp.wikia.com
 		$this->disabled_wikis = array_merge( $top200Wikis, $this->disabled_wikis );
 
@@ -117,12 +122,11 @@ class MigrateWikisToSwift extends Maintenance {
 		$to_migrate = [];
 		$i = 0; $x = 0;
 		while ( $row = $res->fetchObject() ) {
-			$startTime = time();
 			$this->output( "\tAdd {$row->city_dbname} to migration package ... " );
 			if ( in_array( $row->city_id, $this->disabled_wikis ) ) {
 				$this->output( "don't migrate it now \n" );
 				continue;
-			} 
+			}
 			
 			$to_migrate[ $row->city_id ] = $row->city_dbname;
 			
