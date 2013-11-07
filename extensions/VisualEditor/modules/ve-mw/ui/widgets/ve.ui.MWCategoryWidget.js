@@ -88,6 +88,7 @@ ve.mixinClass( ve.ui.MWCategoryWidget, ve.ui.GroupElement );
  * @param {jQuery.Event} e Input key down event
  */
 ve.ui.MWCategoryWidget.prototype.onLookupInputKeyDown = function ( e ) {
+	// TODO: this doesn't actually get fired
 	if ( this.input.getValue() !== '' && e.which === 13 ) {
 		this.emit(
 			'newCategory',
@@ -111,6 +112,11 @@ ve.ui.MWCategoryWidget.prototype.onLookupMenuItemSelect = function ( item ) {
 		if ( value in this.categories ) {
 			this.categories[value].metaItem.remove();
 		}
+
+		ve.track( {
+			'action': ve.track.actions.ADD,
+			'label': 'dialog-page-settings-category-suggestion'
+		} );
 		// Add new item
 		this.emit( 'newCategory',  this.input.getCategoryItemFromValue( value ) );
 		// Reset input

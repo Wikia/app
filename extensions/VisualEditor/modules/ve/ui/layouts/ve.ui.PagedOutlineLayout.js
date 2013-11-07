@@ -156,6 +156,11 @@ ve.ui.PagedOutlineLayout.prototype.onPagedLayoutSet = function ( page ) {
 ve.ui.PagedOutlineLayout.prototype.onPageOutlineSelect = function ( item ) {
 	if ( item ) {
 		this.setPage( item.getData() );
+
+		ve.track( {
+			'action': ve.track.actions.CLICK,
+			'label': 'dialog-page-settings-item-' + item.data
+		} );
 	}
 };
 
