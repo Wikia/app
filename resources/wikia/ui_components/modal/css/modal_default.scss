@@ -18,23 +18,9 @@ $modal-secondary-color: darken( $color-page, 10% );
 $modal-inactive-opacity: 0.3;
 
 .modal,
-.blackout {
+.modal-blackout {
 	@include transition-shorthand( display 0.2s ease-in-out );
-	opacity: 0;
-	z-index: -1;
-}
-
-.modal-wrapper {
-	align-items: center;
-	display: flex;
-	flex-direction: column;
-	height: 100%;
-	justify-content: center;
-	left: 0;
-	position: fixed;
-	top: 0;
-	width: 100%;
-	z-index: $zTop;
+	z-index: -1; //@todo: needed?
 }
 
 .modal {
@@ -141,7 +127,6 @@ $modal-inactive-opacity: 0.3;
 	&.shown {
 		margin: 0;
 		padding: 0;
-		opacity: 1;
 		overflow: hidden;
 
 		@include flexbox();
@@ -156,6 +141,13 @@ $modal-inactive-opacity: 0.3;
 
 .modal-blackout {
 	@include blackout();
+	// @todo - use mixins here
+	align-items: center;
+	-webkit-align-items: center;
+	display: flex;
+	display: -webkit-flex;
+	justify-content: center;
+	-webkit-justify-content: center;
 }
 
 @media screen and (max-width: $breakpoint-min) {
