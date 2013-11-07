@@ -665,9 +665,11 @@ class AbuseFilter {
 	public static function filterAction( $vars, $title ) {
 		global $wgUser, $wgTitle;
 
+		/* Wikia change begin: Needed to be able to bypass filters */
 		if ( !wfRunHooks( 'AbuseFilterShouldFilter', array( $wgUser ) ) ) {
 			return true;
 		}
+		/* Wikia change end */
 
 		wfProfileIn( __METHOD__ );
 
