@@ -559,13 +559,16 @@ ve.init.mw.Target.prototype.save = function ( doc, options ) {
 		'format': 'json',
 		'action': 'visualeditoredit',
 		'page': this.pageName,
-		'oldid': this.revid,
 		'basetimestamp': this.baseTimeStamp,
 		'starttimestamp': this.startTimeStamp,
 		'html': this.getHtml( doc ),
 		'token': this.editToken
 	} );
-
+	if ( this.wikitext !== null ) {
+		data.oldwt = this.wikitext;
+	} else {
+		data.oldid = this.revid;
+	}	
 	// Save DOM
 	this.saving = true;
 	$.ajax( {
@@ -588,16 +591,21 @@ ve.init.mw.Target.prototype.save = function ( doc, options ) {
  * @param {HTMLDocument} doc Document to compare against (via wikitext)
 */
 ve.init.mw.Target.prototype.showChanges = function ( doc ) {
+	var data = {
+		'format': 'json',
+		'action': 'visualeditor',
+		'paction': 'diff',
+		'page': this.pageName,
+		'html': this.getHtml( doc )
+	};
+	if ( this.wikitext !== null ) {
+		data.oldwt = this.wikitext;
+	} else {
+		data.oldid = this.revid;
+	}	
 	$.ajax( {
 		'url': this.apiUrl,
-		'data': {
-			'format': 'json',
-			'action': 'visualeditor',
-			'paction': 'diff',
-			'page': this.pageName,
-			'oldid': this.revid,
-			'html': this.getHtml( doc )
-		},
+		'data': data,
 		'dataType': 'json',
 		'type': 'POST',
 		// Wait up to 100 seconds before giving up

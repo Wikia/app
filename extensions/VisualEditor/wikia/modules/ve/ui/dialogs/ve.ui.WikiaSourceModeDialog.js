@@ -130,6 +130,53 @@ ve.ui.WikiaSourceModeDialog.prototype.onParseSuccess = function( deferred, respo
 	}
 
 	this.surface.getTarget().setWikitext( this.getWikitext() );
+ 
+ 	var surfaceModel = this.surface.getModel(),
+		doc = surfaceModel.getDocument();
+
+	surfaceModel.change(
+		ve.dm.Transaction.newFromRemoval( doc, doc.getDocumentNode().getRange() )
+	);
+
+	if ( doc.metadata.data[0].length ) {
+		surfaceModel.change(
+			ve.dm.Transaction.newFromMetadataRemoval( doc, 0, new ve.Range( 0, doc.metadata.data[0].length ) )
+		);
+	}
+
+
+	var store = new ve.dm.IndexValueStore();
+	var internalList = new ve.dm.InternalList();
+	var fullData = ve.dm.converter.getDataFromDom( ve.createDocumentFromHtml( response.visualeditor.content ), store, internalList );
+	var newDoc = new ve.dm.Document( fullData, null, internalList );
+	//var newDoc = new ve.dm.Document ( ve.createDocumentFromHtml( response.visualeditor.content ) );
+
+
+	var tx = ve.dm.Transaction.newFromDocumentReplace( doc, new ve.Range(0,0), newDoc );
+	surfaceModel.change(
+		tx,
+		new ve.Range(0,0)
+	);
+	this.close();
+
+	/*
+		new ve.Range( 0, this.surface.model.documentModel.metadata.data[0].length )
+
+
+
+
+
+
+	var surface = this.surface
+	t2 = ve.dm.Transaction.newFromRemoval(ve.instances[0].model.documentModel, ve.instances[0].model.documentModel.documentNode.getRange(), true)
+	t2 = ve.dm.Transaction.newFromMetadataRemoval(ve.instances[0].model.documentModel, 0, new ve.Range(0,3))
+
+
+
+
+
+
+
 
 	var newDoc, doc, surfaceModel, tx;
 
@@ -157,6 +204,7 @@ ve.ui.WikiaSourceModeDialog.prototype.onParseSuccess = function( deferred, respo
 	surfaceModel.change( tx, new ve.Range( 0 ) );
 
 	this.close();
+	*/
 };
 
 ve.ui.WikiaSourceModeDialog.prototype.onParseError = function ( deferred ) {

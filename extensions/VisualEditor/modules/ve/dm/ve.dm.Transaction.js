@@ -190,15 +190,13 @@ ve.dm.Transaction.newFromDocumentReplace = function ( doc, removeNodeOrRange, ne
 	);
 	metadata = new ve.dm.MetaLinearData( doc.getStore(),
 		newDoc.getMetadata( new ve.Range( 0, newListNodeOuterRange.start ), true ).concat(
-			// Merge the metadata immediately before and immediately after the internal list
-			ve.copy( ve.dm.MetaLinearData.static.merge( [
-				newDoc.metadata.getData( newListNodeOuterRange.start ),
-				newDoc.metadata.getData( newListNodeOuterRange.end )
-			] ) )
-		).concat( newDoc.getMetadata(
-			new ve.Range( newListNodeOuterRange.end, newDoc.data.getLength() ), true
-		) )
+			newListNodeOuterRange.end < newDoc.data.getLength() ? newDoc.getMetadata(
+				new ve.Range( newListNodeOuterRange.end + 1, newDoc.data.getLength() ), true
+			) : []
+		)
 	);
+	// TODO deal with metadata right before and right after the internal list
+
 	// Merge the stores
 	merge = doc.getStore().merge( newDoc.getStore() );
 	// Remap the store indexes in the data
@@ -261,7 +259,7 @@ ve.dm.Transaction.newFromDocumentReplace = function ( doc, removeNodeOrRange, ne
 		ve.batchSplice( listData, range.start - listNodeRange.start,
 			range.end - range.start, data.data );
 		ve.batchSplice( listMetadata, range.start - listNodeRange.start,
-			range.end - range.start + 1, metadata.data );
+			range.end - range.start, metadata.data );
 		tx.pushRetain( listNodeRange.start );
 		tx.pushReplace( doc, listNodeRange.start, listNodeRange.end - listNodeRange.start,
 			listData, listMetadata
