@@ -264,10 +264,10 @@ class ThemeSettings {
 	 */
 	public function getBackgroundUrl() {
 		$settings = $this->getSettings();
+		$hasCustomBackground = strpos($settings['background-image'], '/common/skins/oasis/images/themes') !== false;
 
-		// return standard, themed background
-		// e.g. 'http://slot1.images.wikia.nocookie.net/__cb62424/common/skins/oasis/images/themes/opulence.png'
-		if ($settings['background-image'] !== '') {
+		// return standard, themed background - e.g. '/skins/oasis/images/themes/plated.jpg'
+		if (!$hasCustomBackground) {
 			return $settings['background-image'];
 		}
 
