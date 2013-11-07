@@ -106,7 +106,7 @@
 			]
 		},
 		"assets": [
-			"//resources/wikia/ui_components/modal/js/modal.sample.js"
+			"//resources/wikia/ui_components/modal/js/modal_sample.js"
 		]
 	}
 ]
