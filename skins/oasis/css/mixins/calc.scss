@@ -2,3 +2,8 @@
 	width: -webkit-calc(#{$formula});
 	width: calc(#{$formula});
 }
+
+@mixin height-calc($formula) {
+	height: -webkit-calc(#{$formula});
+	height: calc(#{$formula});
+}
