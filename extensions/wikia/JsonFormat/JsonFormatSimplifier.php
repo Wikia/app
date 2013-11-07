@@ -6,7 +6,7 @@ namespace Wikia\JsonFormat;
 
 class JsonFormatSimplifier {
 
-	private function getParagraphs( \JsonFormatContainerNode $containerNode, &$contentElements ) {
+	protected function getParagraphs( \JsonFormatContainerNode $containerNode, &$contentElements ) {
 		foreach( $containerNode->getChildren() as $childNode ) {
 			if ( $childNode->getType() == 'section' ) {
 				return;
@@ -30,7 +30,7 @@ class JsonFormatSimplifier {
 		}
 	}
 
-	private function processList( \JsonFormatNode $childNode ) {
+	protected function processList( \JsonFormatNode $childNode ) {
 		$out = [];
 		$text = null;
 
@@ -74,7 +74,7 @@ class JsonFormatSimplifier {
 	}
 
 
-	private function readText( \JsonFormatContainerNode $parentNode ) {
+	protected function readText( \JsonFormatContainerNode $parentNode ) {
 		$text = "";
 		foreach ( $parentNode->getChildren() as $childNode ) {
 			if ( $childNode->getType() == 'text' ) {
