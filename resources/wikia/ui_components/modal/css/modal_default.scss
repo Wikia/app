@@ -154,7 +154,7 @@ $modal-inactive-opacity: 0.3;
 	}
 }
 
-.blackout {
+.modal-blackout {
 	@include blackout();
 }
 
