@@ -47,6 +47,7 @@ class VideoInfoHelper extends WikiaModel {
 
 				$duration = 0;
 				$hdfile = 0;
+				$videoId = '';
 				if ( $fileMetadata ) {
 					$fileMetadata = unserialize( $fileMetadata );
 					if ( array_key_exists('duration', $fileMetadata) ) {
@@ -55,11 +56,15 @@ class VideoInfoHelper extends WikiaModel {
 					if ( array_key_exists('hd', $fileMetadata) ) {
 						$hdfile = ( $fileMetadata['hd'] ) ? 1 : 0;
 					}
+					if ( array_key_exists( 'videoId', $fileMetadata ) ) {
+						$videoId = $fileMetadata['videoId'];
+					}
 				}
 
 				$premium = ( $file->isLocal() ) ? 0 : 1 ;
 				$video = array(
 					'videoTitle' => $file->getName(),
+					'videoId' => $videoId,
 					'provider' => $file->minor_mime,
 					'addedAt' => $addedAt,
 					'addedBy' => $userId,

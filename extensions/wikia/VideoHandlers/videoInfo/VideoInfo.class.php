@@ -9,6 +9,7 @@ class VideoInfo extends WikiaModel {
 	const SCHEMA_VERSION = 2;
 
 	protected $videoTitle = 0;
+	protected $videoId = '';
 	protected $provider = '';
 	protected $addedAt = 0;
 	protected $addedBy = 0;
@@ -20,6 +21,7 @@ class VideoInfo extends WikiaModel {
 
 	protected static $fields = array(
 		'videoTitle',
+		'videoId',
 		'provider',
 		'addedAt',
 		'addedBy',
@@ -47,6 +49,14 @@ class VideoInfo extends WikiaModel {
 	}
 
 	/**
+	 * Set video id
+	 * @param string $videoId
+	 */
+	public function setVideoId( $videoId ) {
+		$this->videoId = $videoId;
+	}
+
+	/**
 	 * Set the provider name
 	 * @param string $provider The name of the provider for this video (e.g., 'ooyala', 'anyclip')
 	 */
@@ -71,7 +81,7 @@ class VideoInfo extends WikiaModel {
 	}
 
 	/**
-	 * get video title
+	 * Get video title
 	 * @return string videoTitle
 	 */
 	public function getVideoTitle() {
@@ -86,20 +96,40 @@ class VideoInfo extends WikiaModel {
 		return $this->provider;
 	}
 
+	/**
+	 * Get video id
+	 * @return string
+	 */
+	public function getVideoId() {
+		return $this->videoId;
+	}
+
+	/**
+	 * Get datetime when user added the video
+	 * @return string
+	 */
 	public function getAddedAt() {
 		return $this->addedAt;
 	}
 
+	/**
+	 * Get the id of user who added the video
+	 * @return interger
+	 */
 	public function getAddedBy() {
 		return $this->addedBy;
 	}
 
+	/**
+	 * Get duration in second
+	 * @return integer
+	 */
 	public function getDuration() {
 		return $this->duration;
 	}
 
 	/**
-	 * check if it is premium video
+	 * Check if it is premium video
 	 * @return boolean
 	 */
 	public function isPremium() {
@@ -107,7 +137,7 @@ class VideoInfo extends WikiaModel {
 	}
 
 	/**
-	 * check if it is hd file
+	 * Check if it is hd file
 	 * @return boolean
 	 */
 	public function isHdfile() {
@@ -123,7 +153,7 @@ class VideoInfo extends WikiaModel {
 	}
 
 	/**
-	 * check if it is featured video
+	 * Check if it is featured video
 	 * @return boolean
 	 */
 	public function isFeatured() {
@@ -144,6 +174,7 @@ class VideoInfo extends WikiaModel {
 			$db->update(
 				'video_info',
 				array(
+					'video_id' => $this->videoId,
 					'provider' => $this->provider,
 					'added_at' => $this->addedAt,
 					'added_by' => $this->addedBy,
@@ -190,6 +221,7 @@ class VideoInfo extends WikiaModel {
 				'video_info',
 				array(
 					'video_title' => $this->videoTitle,
+					'video_id' => $this->videoId,
 					'provider' => $this->provider,
 					'added_at' => $this->addedAt,
 					'added_by' => $this->addedBy,
@@ -375,6 +407,7 @@ SQL;
 	protected static function newFromRow( $row ) {
 		$data = array(
 			'videoTitle' => $row->video_title,
+			'videoId' => $row->video_id,
 			'provider' => $row->provider,
 			'addedAt' => $row->added_at,
 			'addedBy' => $row->added_by,
