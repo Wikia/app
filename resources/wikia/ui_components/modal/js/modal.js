@@ -1,7 +1,7 @@
 define( 'wikia.ui.modal', [ 'jquery', 'wikia.window' ], function( $, w ) {
 	'use strict';
 
-	var BLACKOUT_CLASS = 'blackout',
+	var BLACKOUT_ID = 'blackout',
 		CLOSE_CLASS = 'close',
 		INACTIVE_CLASS = 'inactive',
 		destroyOnClose;
@@ -57,7 +57,7 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window' ], function( $, w ) {
 		 */
 
 		function getBlackout() {
-			var blackoutId = BLACKOUT_CLASS + '_' + id,
+			var blackoutId = BLACKOUT_ID + '_' + id,
 				$blackout = $('#' + blackoutId );
 
 			$blackout.click( $.proxy(function( event ) {
