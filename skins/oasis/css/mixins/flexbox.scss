@@ -48,10 +48,21 @@
 	flex-shrink: $number;
 }
 
-@mixin flex-basis($length) { //(default: auto)
+@mixin flex-basis($length) { // (default: auto)
 	-ms-flex-preferred-size: $length; // (IE spec - default: 0px)
 
 	-webkit-flex-basis: $length;
 	-moz-flex-basis: $length;
 	flex-basis: $length;
+}
+
+@mixin align-items($type) { // (default: stretch)
+	-webkit-align-items: $type;
+	align-items: $type;
+
+}
+
+@mixin justify-content($type) { // (default: flex-start)
+	-webkit-justify-content: $type;
+	justify-content: $type;
 }
