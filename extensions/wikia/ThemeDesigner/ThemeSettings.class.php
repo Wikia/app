@@ -234,9 +234,46 @@ class ThemeSettings {
 			}
 		}
 
-
 		WikiFactory::setVarByName(self::WikiFactoryHistory, $cityId, $history, $reason);
-
 	}
 
+	/**
+	 * Get wordmark full, up-to-date URL
+	 *
+	 * This method returns URL based on "wordmark-image-name" settings entry.
+	 * "wordmark-image-url" entry and settings revision ID are ignored.
+	 *
+	 * @author macbre
+	 * @return string|bool wordmark URL or false if not found
+	 */
+	public function getWordmarkUrl() {
+		$title = Title::newFromText($this->getSettings()['wordmark-image-name'] , NS_FILE);
+		$file = ($title instanceof Title) ? wfFindFile($title) : false;
+
+		return ($file instanceof File) ? $file->getUrl() : false;
+	}
+
+	/**
+	 * Get wiki background full, up-to-date URL
+	 *
+	 * This method returns URL based on "background-image-name" settings entry.
+	 * "background-image" entry (for custom backgrounds) and settings revision ID are ignored.
+	 *
+	 * @author macbre
+	 * @return string|bool background URL or false if not found
+	 */
+	public function getBackgroundUrl() {
+		$settings = $this->getSettings();
+		$hasCustomBackground = $settings['background-image-name'] !== '';
+
+		// return standard, themed background - e.g. '/skins/oasis/images/themes/plated.jpg'
+		if (!$hasCustomBackground) {
+			return $settings['background-image'];
+		}
+
+		$title = Title::newFromText($this->getSettings()['background-image-name'] , NS_FILE);
+		$file = ($title instanceof Title) ? wfFindFile($title) : false;
+
+		return ($file instanceof File) ? $file->getUrl() : false;
+	}
 }
