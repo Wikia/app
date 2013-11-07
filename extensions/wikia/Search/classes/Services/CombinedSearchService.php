@@ -256,6 +256,7 @@ class CombinedSearchService {
 
 			$query = " +(" . Utilities::valueForField("wid", $wikiId) . ") ";
 			$query .= " +( " . implode( " OR ", array_map(function( $x ) { return Utilities::valueForField("pageid", $x); }, array_keys($topArticlesMap)) ) . ") ";
+			$query .= " +(is_main_page:false) ";
 
 			$searchConfig = new Config;
 			$searchConfig
@@ -264,7 +265,6 @@ class CombinedSearchService {
 				->setPage( 1 )
 				->setRequestedFields( $requestedFields )
 				->setDirectLuceneQuery(true)
-				->setFilterQuery("is_main_page:false")
 				->setWikiId( $wikiId );
 
 			$resultSet = (new Factory)->getFromConfig( $searchConfig )->search();
