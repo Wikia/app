@@ -34,8 +34,7 @@ class WikiaMobileEditorController extends WikiaController{
 	public static function onEditPageInitial( EditPage $editPage ) {
 		$app = F::app();
 
-		if ( $app->checkSkin( 'wikiamobile' ) ) {
-			$editPage->editFormTextBottom .= F::app()->renderView( __CLASS__, 'editPage' );
+		if ( $app->checkSkin( 'wikiamobile' ) ) { $editPage->editFormTextBottom .= F::app()->renderView( __CLASS__, 'editPage' );
 		}
 
 		return true;
