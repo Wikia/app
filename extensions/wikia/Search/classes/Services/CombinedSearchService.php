@@ -272,13 +272,20 @@ class CombinedSearchService {
 			$currentResults = $resultSet->toArray( $requestedFields );
 			$articles = [];
 			foreach ( $currentResults as $article ) {
-				$articles[] = $this->processArticle($article);
-				if ( sizeof(self::TOP_ARTICLES_PER_WIKI) >= self::TOP_ARTICLES_PER_WIKI ) {
+				$articles[ $article[ 'pageid' ] ] = $this->processArticle($article);
+				if ( sizeof($articles) >= self::TOP_ARTICLES_PER_WIKI ) {
 					break;
 				}
 			}
+			$result = [];
+			foreach ( $topArticlesMap as $id => $a ) {
+				if ( isset( $articles[ $id ] ) ) {
+					$result[] = $articles[ $id ];
+				}
+			}
+
 			$timer->stop();
-			return $articles;
+			return $result;
 		});
 	}
 }
