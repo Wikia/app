@@ -18,16 +18,6 @@ body.global-header-fixed-at-top {
 	padding-top: 37px;
 }
 
-@if $oasisWidthType == 1 {
-	body {
-		min-width: $width-outside + 40;
-	}
-	// Don't apply min-width to RTE's iframed body tag
-	body#bodyContent {
-		min-width: auto;
-	}
-}
-
 a {
 	color: $color-links;
 	text-decoration: none;
