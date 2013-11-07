@@ -2,6 +2,7 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window' ], function( $, w ) {
 	'use strict';
 
 	var BLACKOUT_ID = 'blackout',
+		BLACKOUT_VISIBLE_CLASS = 'visible',
 		CLOSE_CLASS = 'close',
 		INACTIVE_CLASS = 'inactive',
 		destroyOnClose;
@@ -94,7 +95,7 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window' ], function( $, w ) {
 	 */
 
 	Modal.prototype.show = function() {
-		this.$blackout.addClass( 'visible' );
+		this.$blackout.addClass( BLACKOUT_VISIBLE_CLASS );
 
 		// IE flex-box fallback for small and medium modals
 		if ( this.$element.hasClass('large') === false && ( navigator.appName === 'Microsoft Internet Explorer' ||
@@ -116,7 +117,7 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window' ], function( $, w ) {
 
 	Modal.prototype.close = function() {
 		if( !destroyOnClose ) {
-			this.$blackout.removeClass( 'visible' );
+			this.$blackout.removeClass( BLACKOUT_VISIBLE_CLASS );
 		} else {
 			this.$blackout.remove();
 		}
@@ -154,7 +155,7 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window' ], function( $, w ) {
 	 */
 
 	Modal.prototype.isShown = function() {
-		return this.$blackout.hasClass( 'visible' );
+		return this.$blackout.hasClass( BLACKOUT_VISIBLE_CLASS );
 	};
 
 	/**
