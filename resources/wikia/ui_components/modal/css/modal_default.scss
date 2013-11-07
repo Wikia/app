@@ -27,9 +27,10 @@ $medium-modal-width-small-screen: 500px;
 }
 
 .modal {
+	@include flexbox();
+	@include flex-direction(column);
 	background-color: $color-page;
 	border-radius: 2px;
-	display: none;
 	max-height: $modal-max-height;
 	min-height: $modal-min-height;
 	margin: 0;
@@ -89,6 +90,11 @@ $medium-modal-width-small-screen: 500px;
 		@include flex-grow(1);
 	}
 
+	// IE flex-box fallback
+	&.IE-flex-fix {
+		display: block;
+	}
+
 	&.small {
 		width: $small-modal-width;
 
@@ -122,20 +128,6 @@ $medium-modal-width-small-screen: 500px;
 	.buttons {
 		bottom: 15px;
 		right: 20px;
-	}
-
-	&.shown {
-		margin: 0;
-		padding: 0;
-		overflow: hidden;
-
-		@include flexbox();
-		@include flex-direction(column);
-
-		// IE flex-box fallback
-		&.IE-flex-fix {
-			display: block;
-		}
 	}
 }
 
