@@ -176,7 +176,7 @@ class WikiaMobileHooks {
 
 			//$link contains the section edit link, add it to the next line to put it back
 			//ATM editing is not allowed in WikiaMobile
-			$ret = "<h{$level} id=\"{$anchor}\" {$attribs}{$text}</h{$level}>";
+			$ret = "<h{$level} id=\"{$anchor}\" {$attribs}{$text}{$link}</h{$level}>";
 		}
 
 		wfProfileOut( __METHOD__ );

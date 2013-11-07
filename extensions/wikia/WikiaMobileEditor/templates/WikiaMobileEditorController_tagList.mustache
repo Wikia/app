@@ -1,0 +1,15 @@
+{{#tags}}
+<section class=tag-section>
+	<h2 class=collSec>{{name}}</h2>
+	<ul class="artSec">
+		{{#tags}}
+            <li>
+                <label> {{name}} <small>!{{short}}!</small></label>
+                <a href=# class=tagLink data-tag={{tag}}> ↳ </a>
+            </li>
+		{{/tags}}
+	</ul>
+</section>
+{{/tags}}
+
+
