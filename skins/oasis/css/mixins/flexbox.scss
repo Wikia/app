@@ -57,12 +57,34 @@
 }
 
 @mixin align-items($type) { // (default: stretch)
+	$old-syntax-type: $type;
+	@if $type == flex-start {
+		$old-syntax-type: start;
+	}
+	@if $type == flex-end {
+		$old-syntax-type: end;
+	}
+
+	-webkit-box-align: $old-syntax-type; // old syntax
 	-webkit-align-items: $type;
 	align-items: $type;
 
 }
 
 @mixin justify-content($type) { // (default: flex-start)
+	$old-syntax-type: $type; // no equivalent for 'space-around' in old syntax
+	@if $type == flex-start {
+		$old-syntax-type: start;
+	}
+	@if $type == flex-end {
+		$old-syntax-type: end;
+	}
+	@if $type == space-between {
+		$old-syntax-type: justify;
+	}
+
+
+	-webkit-box-pack: $old-syntax-type; // old syntax
 	-webkit-justify-content: $type;
 	justify-content: $type;
 }
