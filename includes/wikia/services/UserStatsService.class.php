@@ -261,8 +261,8 @@ class UserStatsService extends WikiaModel {
 			// get edit points / first edit date
 			$stats = array();
 
-			$stats[ 'lastRevision' ] = $this->getLastRevisionTimestamp();
-			$stats[ 'date' ] = $this->getFirstRevisionTimestamp();
+			$stats[ 'lastRevision' ] = $this->getLastContributionTimestamp();
+			$stats[ 'date' ] = $this->getFirstContributionTimestamp();
 			$stats[ 'edits' ] = $this->getEditCountWiki();
 
 			// TODO: get likes
@@ -305,8 +305,8 @@ class UserStatsService extends WikiaModel {
 			// get edit points / first edit date and last edit date
 			$stats = array();
 
-			$stats[ 'lastRevision' ] = $this->getFirstRevisionTimestamp( $wikiId );
-			$stats[ 'date' ] = $this->getLastRevisionTimestamp( $wikiId );
+			$stats[ 'lastRevision' ] = $this->getFirstContributionTimestamp( $wikiId );
+			$stats[ 'date' ] = $this->getLastContributionTimestamp( $wikiId );
 			$stats[ 'edits' ] = $this->getEditCountWiki( $wikiId );
 
 			// TODO: get likes
@@ -329,105 +329,123 @@ class UserStatsService extends WikiaModel {
 
 
 	/**
-	 * Get timestamp of first user's fevision on specified wiki.
+	 * Get timestamp of first user's contribution on specified wiki.
 	 * @since Nov 2013
 	 * @author Kamil Koterba
 	 *
-	 * @param $userId Integer Id of user
 	 * @param $wikiId Integer Id of wiki - specifies wiki from which to get editcount, 0 for current wiki
-	 * @param $skipCache boolean On true ignores cache
-	 * @return Int Number of edits
+	 * @return String Timestamp in format YmdHis e.g. 20131107192200 or empty string
 	 */
-	private function getFirstRevisionTimestamp( $wikiId = 0 ) {
+	private function getFirstContributionTimestamp( $wikiId = 0 ) {
 		wfProfileIn( __METHOD__ );
 
 		$wikiId = ( empty($wikiId) ) ? $this->wg->CityId : $wikiId ;
 
 		$dbName = ( $wikiId != $this->wg->CityId ) ? WikiFactory::IDtoDB( $wikiId ) : false;
 
-		/* Get firstRevisionTimestamp from database */
+		/* Get firstContributionTimestamp from wiki specific user properties */
 		$dbr = $this->getWikiDB( DB_SLAVE, $dbName );
 		$field = $dbr->selectField(
 			'wikia_user_properties',
 			'wup_value',
 			array( 'wup_user' => $this->userId,
-				'wup_property' => 'firstRevisionTimestamp' ),
+				'wup_property' => 'firstContributionTimestamp' ),
 			__METHOD__
 		);
 
-		if( $field === null or $field === false ) { // firstRevisionTimestamp has not been initialized. do so.
+		if( $field === null or $field === false ) { // firstContributionTimestamp has not been initialized. do so.
 
-			$res = $dbr->selectRow(
-				'revision',
-				array('rev_timestamp AS firstRevisionTimestamp'),
-				array('rev_user' => $this->userId),
-				__METHOD__,
-				array(
-					'ORDER BY' => 'rev_timestamp ASC',
-					'LIMIT' => '1'
-				)
-			);
-
-			if( !empty($res) ) {
-				$firstRevisionTimestamp = $res->firstRevisionTimestamp;
-
-				$dbw = $this->getWikiDB( DB_MASTER, $dbName );
-				$dbw->replace(
-					'wikia_user_properties',
-					array(),
-					array( 'wup_user' => $this->userId,
-						'wup_property' => 'firstRevisionTimestamp',
-						'wup_value' => $firstRevisionTimestamp),
-					__METHOD__
-				);
-			}
+			$firstContributionTimestamp = $this->initFirstContributionTimestamp( $dbName );
 
 		} else {
-			$firstRevisionTimestamp = $field;
+			$firstContributionTimestamp = $field;
 		}
 
 		wfProfileOut( __METHOD__ );
-		return $firstRevisionTimestamp;
+		return $firstContributionTimestamp;
 	}
 
 
 	/**
-	 * Get timestamp of last user's revision on specified wiki.
+	 * Initialize firstContributionTimestamp in wikia specific user properties from revision table
 	 * @since Nov 2013
 	 * @author Kamil Koterba
 	 *
-	 * @param $userId Integer Id of user
-	 * @param $wikiId Integer Id of wiki - specifies wiki from which to get editcount, 0 for current wiki
-	 * @param $skipCache boolean On true ignores cache
-	 * @return Int Number of edits
+	 * @param $dbName String wiki's database name - specifies wiki from which to get timestamp
+	 * @return String Timestamp in format YmdHis e.g. 20131107192200 or empty string
 	 */
-	private function getLastRevisionTimestamp( $wikiId = 0 ) {
+	private function initFirstContributionTimestamp( $dbName ) {
+		wfProfileIn( __METHOD__ );
+
+		$dbr = $this->getWikiDB( DB_SLAVE, $dbName );
+
+		$res = $dbr->selectRow(
+			'revision',
+			array('rev_timestamp AS firstContributionTimestamp'),
+			array('rev_user' => $this->userId),
+			__METHOD__,
+			array(
+				'ORDER BY' => 'rev_timestamp ASC',
+				'LIMIT' => '1'
+			)
+		);
+
+		$firstContributionTimestamp = '';
+		if( !empty($res) ) {
+			$firstContributionTimestamp = $res->firstContributionTimestamp;
+
+			$dbw = $this->getWikiDB( DB_MASTER, $dbName );
+			$dbw->replace(
+				'wikia_user_properties',
+				array(),
+				array( 'wup_user' => $this->userId,
+					'wup_property' => 'firstContributionTimestamp',
+					'wup_value' => $firstContributionTimestamp),
+				__METHOD__
+			);
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $firstContributionTimestamp;
+	}
+
+
+	/**
+	 * Get timestamp of last (most recent) user's contribution on specified wiki.
+	 * @since Nov 2013
+	 * @author Kamil Koterba
+	 *
+	 * @param $wikiId Integer Id of wiki - specifies wiki from which to get editcount, 0 for current wiki
+	 * @return String Timestamp in format YmdHis e.g. 20131107192200 or empty string
+	 */
+	private function getLastContributionTimestamp( $wikiId = 0 ) {
 		wfProfileIn( __METHOD__ );
 
 		$wikiId = ( empty($wikiId) ) ? $this->wg->CityId : $wikiId ;
 
 		$dbName = ( $wikiId != $this->wg->CityId ) ? WikiFactory::IDtoDB( $wikiId ) : false;
 
-		/* Get firstRevisionTimestamp from database */
+		/* Get lastContributionTimestamp from database */
 		$dbr = $this->getWikiDB( DB_SLAVE, $dbName );
 
-			$res = $dbr->selectRow(
-				'revision',
-				array('rev_timestamp AS lastRevisionTimestamp'),
-				array('rev_user' => $this->userId),
-				__METHOD__,
-				array(
-					'ORDER BY' => 'rev_timestamp DESC',
-					'LIMIT' => '1'
-				)
-			);
+		$res = $dbr->selectRow(
+			'revision',
+			array('rev_timestamp AS lastContributionTimestamp'),
+			array('rev_user' => $this->userId),
+			__METHOD__,
+			array(
+				'ORDER BY' => 'rev_timestamp DESC',
+				'LIMIT' => '1'
+			)
+		);
 
-			if( !empty($res) ) {
-				$lastRevisionTimestamp = $res->lastRevisionTimestamp;
-			}
+		$lastContributionTimestamp = '';
+		if( !empty($res) ) {
+			$lastContributionTimestamp = $res->lastContributionTimestamp;
+		}
 
 		wfProfileOut( __METHOD__ );
-		return $lastRevisionTimestamp;
+		return $lastContributionTimestamp;
 	}
 
 }
