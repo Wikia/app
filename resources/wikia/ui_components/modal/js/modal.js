@@ -71,6 +71,11 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window' ], function( $, w ) {
 			return $blackout;
 		}
 
+		this.$element.click( function( event ) {
+			// when click happens inside the modal, stop the propagation so it won't be handled by the blackout
+			event.stopPropagation();
+		} );
+
 		this.$blackout = getBlackout();
 		this.$close = this.$element.find( '.' + CLOSE_CLASS );
 
