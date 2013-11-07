@@ -37,9 +37,6 @@ var AdLogicPageDimensions = function (window, document, log, slotTweaker) {
 			INCONTENT_BOXAD_1: 'oneColumn'
 		},
 		mediaQueriesMet,
-		// ABTesting: DAR-1859: START
-		notInAbTestRightRailPositionStatic,
-		// ABTesting: DAR-1859: END
 		matchMedia;
 
 	function matchMediaMoz(query) {
@@ -75,16 +72,8 @@ var AdLogicPageDimensions = function (window, document, log, slotTweaker) {
 		}
 		if (mediaQueriesMet) {
 			if (slotsToHideOnMediaQuery[slotname]) {
-				// ABTesting: DAR-1859: START
-				if ((slotsToHideOnMediaQuery[slotname] == 'oneColumn') && notInAbTestRightRailPositionStatic) {
-					wideEnough = true;
-				} else {
-				// ABTesting: DAR-1859: END
-					conflictingMediaQuery = slotsToHideOnMediaQuery[slotname];
-					wideEnough = !mediaQueriesMet[conflictingMediaQuery];
-				// ABTesting: DAR-1859: START
-				}
-				// ABTesting: DAR-1859: END
+				conflictingMediaQuery = slotsToHideOnMediaQuery[slotname];
+				wideEnough = !mediaQueriesMet[conflictingMediaQuery];
 			} else {
 				wideEnough = true;
 			}
@@ -189,10 +178,6 @@ var AdLogicPageDimensions = function (window, document, log, slotTweaker) {
 	 * If supported, bind to resize event (and fire it once)
 	 */
 	function init() {
-		// ABTesting: DAR-1859: START
-		notInAbTestRightRailPositionStatic = window.Wikia.AbTest && (Wikia.AbTest.getGroup( "DAR_RIGHTRAILPOSITION" ) == 'STATIC');
-		// ABTesting: DAR-1859: END
-
 		log('init', 'debug', logGroup);
 		if (window.addEventListener) {
 			onResize();
