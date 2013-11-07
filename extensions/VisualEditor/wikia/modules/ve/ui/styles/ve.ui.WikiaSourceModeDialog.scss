@@ -8,4 +8,17 @@
 			height: 100%;
 		}
 	}
+	// TODO: move this higher up the prototype chain?
+	.loading-overlay {
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		opacity: .75;
+		background: url("/skins/common/images/ajax.gif") no-repeat scroll center #FFF;/* $wgCdnStylePath */
+		&.hidden {
+			display: none;
+		}
+	}
 }

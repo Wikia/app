@@ -37,6 +37,12 @@ ve.ui.WikiaSourceModeDialog.prototype.initialize = function () {
 	// Parent method
 	ve.ui.MWDialog.prototype.initialize.call( this );
 
+	// Loading graphic overlay
+	// TODO: move this higher up the prototype chain?
+	this.$loadingOverlay = this.$$( '<div>' );
+	this.$loadingOverlay.addClass( 'loading-overlay hidden' );
+	this.frame.$content.append( this.$loadingOverlay );
+
 	this.sourceModeTextarea = new ve.ui.TextInputWidget({
 		'$$': this.frame.$$,
 		'multiline': true
@@ -59,7 +65,9 @@ ve.ui.WikiaSourceModeDialog.prototype.onOpen = function () {
 	ve.ui.MWDialog.prototype.onOpen.call( this );
 
 	var doc = this.surface.getModel().getDocument();
-	// TODO: display loading graphic
+
+	// Display loading graphic
+	this.startLoading();
 
 	// Request wikitext
 	this.surface.getTarget().serialize(
@@ -70,18 +78,19 @@ ve.ui.WikiaSourceModeDialog.prototype.onOpen = function () {
 };
 
 ve.ui.WikiaSourceModeDialog.prototype.onSerialize = function ( wikitext ) {
-	this.sourceModeTextarea.$input.val( wikitext );
-	// TODO: remove loading graphic
+	this.sourceModeTextarea.setValue( wikitext );
+	this.stopLoading();
 };
 
 ve.ui.WikiaSourceModeDialog.prototype.onApply = function ( action, wikitext ) {
 	if( action === 'parse' ) {
+		this.startLoading();
 		this.parse( );
 	}
 };
 
 ve.ui.WikiaSourceModeDialog.prototype.getWikitext = function() {
-	return this.sourceModeTextarea.$input.val();
+	return this.sourceModeTextarea.getValue();
 };
 
 ve.ui.WikiaSourceModeDialog.prototype.parse = function( ) {
@@ -110,7 +119,8 @@ ve.ui.WikiaSourceModeDialog.prototype.parse = function( ) {
 		'timeout': 100000,
 		'cache': 'false',
 		'success': ve.bind( this.onParseSuccess, this, deferred ),
-		'error': ve.bind( this.onParseError, this, deferred )
+		'error': ve.bind( this.onParseError, this, deferred ),
+		'complete': ve.bind( this.stopLoading, this )
 	} );
 	promise = deferred.promise();
 	promise.abort = function () {
@@ -158,6 +168,18 @@ ve.ui.WikiaSourceModeDialog.prototype.onParseSuccess = function( deferred, respo
 ve.ui.WikiaSourceModeDialog.prototype.onParseError = function ( deferred ) {
 	// TODO: error handling?
 	deferred.reject();
+};
+
+ve.ui.WikiaSourceModeDialog.prototype.startLoading = function () {
+	this.$loadingOverlay.removeClass( 'hidden' );
+};
+
+ve.ui.WikiaSourceModeDialog.prototype.stopLoading = function () {
+	this.$loadingOverlay.addClass( 'hidden' );
+};
+
+ve.ui.WikiaSourceModeDialog.prototype.onClose = function () {
+	this.sourceModeTextarea.setValue( '' );
 };
 
 ve.ui.dialogFactory.register( ve.ui.WikiaSourceModeDialog );
