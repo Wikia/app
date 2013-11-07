@@ -727,7 +727,7 @@ class ArticlesApiController extends WikiaApiController {
 
 		$article = Article::newFromID( $articleId );
 		if( empty($article) ) {
-			throw new WikiaApiQueryError( 1,  "Article not found. Id:" . $articleId );
+			throw new NotFoundApiException();
 		}
 
 		$jsonFormatService = new JsonFormatService();
