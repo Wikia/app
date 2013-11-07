@@ -27,7 +27,7 @@ class MigrateWikisToSwift extends Maintenance {
 	const MIGRATE_PROCS = 50;
 	const SCRIPT_PROCS = 1;
 	const SCRIPT_PATH = '/var/log/runit/swift_migration';
-	CONST CMD = 'run_maintenance --conf=%s --db=%s --script "wikia/migrateImagesToSwift.php%s" --procs=%d >> %s/debug.log & ';
+	CONST CMD = 'run_maintenance --conf=%s --id=%d --script "wikia/migrateImagesToSwift.php%s" --procs=%d >> %s/debug.log & ';
 	
 	private $disabled_wikis = [ 717284, 298117 ];
 	private $db;
@@ -142,7 +142,7 @@ class MigrateWikisToSwift extends Maintenance {
 			
 			# run main migration script written by Macbre
 			$this->output( "\tMigrate Wiki {$id}: {$dbname} ... " );
-			$cmd = sprintf( self::CMD, $this->getOption( 'conf' ), $dbname, ( $force ) ? ' --force' : '', self::SCRIPT_PROCS, $this->makePath( $dbname ) );
+			$cmd = sprintf( self::CMD, $this->getOption( 'conf' ), $id, ( $force ) ? ' --force' : '', self::SCRIPT_PROCS, $this->makePath( $dbname ) );
 			if ( $debug ) {
 				$this->output( "\n\tRun cmd: {$cmd} \n" );
 			}
