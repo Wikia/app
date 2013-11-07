@@ -234,9 +234,22 @@ class ThemeSettings {
 			}
 		}
 
-
 		WikiFactory::setVarByName(self::WikiFactoryHistory, $cityId, $history, $reason);
-
 	}
 
+	/**
+	 * Get wordmark full, up-to-date URL
+	 *
+	 * This method returns URL based on "wordmark-image-name" settings entry.
+	 * "wordmark-image-url" entry and settings revision ID are ignored.
+	 *
+	 * @author macbre
+	 * @return string|bool wordmark URL or false if not found
+	 */
+	public function getWordmarkUrl() {
+		$title = Title::newFromText($this->getSettings()['wordmark-image-name'] , NS_FILE);
+		$file = ($title instanceof Title) ? wfFindFile($title) : false;
+
+		return ($file instanceof File) ? $file->getUrl() : false;
+	}
 }
