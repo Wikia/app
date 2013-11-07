@@ -94,7 +94,6 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window' ], function( $, w ) {
 	 */
 
 	Modal.prototype.show = function() {
-		this.$element.addClass( 'shown' );
 		this.$blackout.addClass( 'visible' );
 
 		// IE flexbox fallback
@@ -117,10 +116,8 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window' ], function( $, w ) {
 
 	Modal.prototype.close = function() {
 		if( !destroyOnClose ) {
-			this.$element.removeClass( 'shown' );
 			this.$blackout.removeClass( 'visible' );
 		} else {
-			this.$element.remove();
 			this.$blackout.remove();
 		}
 	};
@@ -157,7 +154,7 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window' ], function( $, w ) {
 	 */
 
 	Modal.prototype.isShown = function() {
-		return this.$element.hasClass( 'shown' );
+		return this.$blackout.hasClass( 'visible' );
 	};
 
 	/**
