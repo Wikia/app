@@ -449,6 +449,30 @@ body {
 			.EditPageMainContainer {
 				margin-right: 0;
 			}
+
+			@media screen and (max-width: $width-outside) {
+				.EditPageRail {
+					.module_page_controls {
+						.wikia-menu-button,
+						#wpSave {
+							// fix for touch devices, because in touchScreen.scss height is set to 30px !important
+							height: 21px !important;
+							top: 30px;
+						}
+						#wpSummaryLabel {
+							clear: none;
+						}
+						#wpSummary {
+							float: right;
+							margin: 0 10px 0 0;
+						}
+						label,
+						textarea {
+							position: static;
+						}
+					}
+				}
+			}
 		}
 
 		.editpage-widemode-trigger {
