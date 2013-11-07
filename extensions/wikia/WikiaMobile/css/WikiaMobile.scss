@@ -48,14 +48,14 @@
 
 		line-height: 2.2rem;
 		font-size: 2rem;
-		font-weight: 300;
+		font-weight: 400;
 	}
 
 	span {
 		color: #AAA;
 
 		font-size: .9rem;
-		line-height: 1.4rem;
+		line-height: 1rem;
 	}
 }
 
@@ -73,10 +73,6 @@ a {
 
 //fixes for fluid content
 #wkMainCnt{
-	font-size: 1.125rem;
-	line-height: 1.6rem;
-	font-weight: 300;
-
 	.tvetnone {
 		width: 100% !important;
 		text-align: center;
@@ -95,17 +91,13 @@ a {
 //end of fluiding thead content
 
 blockquote {
-	border-left: 1px solid $border-color;
-	padding-left: 5px;
-	margin: 15px;
+	border-left: 4px solid $nice-blue;
+	padding-left: 10px;
+	margin: 25px 0;
 }
 
 .printfooter {
 	display: none;
-}
-
-.js .wkShr {
-	display: inline-block;
 }
 
 #wkTst{
