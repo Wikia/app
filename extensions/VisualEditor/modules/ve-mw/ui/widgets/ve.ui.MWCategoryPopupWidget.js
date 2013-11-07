@@ -162,10 +162,6 @@ ve.ui.MWCategoryPopupWidget.prototype.closePopup = function () {
  */
 ve.ui.MWCategoryPopupWidget.prototype.setDefaultSortKey = function ( value ) {
 	this.sortKeyInput.$input.attr( 'placeholder', value );
-	ve.track( {
-		'action': ve.track.actions.SUBMIT,
-		'label': 'dialog-page-settings-change-defaultsort'
-	} );
 };
 
 /**
