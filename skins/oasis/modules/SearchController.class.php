@@ -25,8 +25,6 @@ class SearchController extends WikiaController {
 			foreach ( $namespaces as $namespaceInt ) {
 				$searchParams['ns'.$namespaceInt] = 1;
 			}
-
-
 		}
 		if ( $this->wg->CityId == Wikia\Search\QueryService\Select\Dismax\Video::VIDEO_WIKI_ID ) {
 			$searchParams['filters[]'] = 'is_video'; // this is required to hide images
@@ -42,7 +40,6 @@ class SearchController extends WikiaController {
 
 	}
 
-
 	protected function getNamespaceFromRequest()
 	{
 		$user = $this->wg->User;
@@ -57,7 +54,6 @@ class SearchController extends WikiaController {
 			if ( $user->getOption( 'searchAllNamespaces' ) ) {
 				$namespaces = array_keys($searchableNamespaces);
 			} else {
-
 				// this is mostly needed for unit testing
 				$defaultProfile = !empty( $this->wg->DefaultSearchProfile ) ? $this->wg->DefaultSearchProfile : 'default';
 				switch($defaultProfile)
@@ -76,11 +72,8 @@ class SearchController extends WikiaController {
 					case SEARCH_PROFILE_ALL:
 						$namespaces = \SearchEngine::searchableNamespaces();
 						break;
-
 				}
-
 			}
-
 		}
 		return  $namespaces ;
 	}
