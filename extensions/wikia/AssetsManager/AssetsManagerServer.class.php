@@ -57,8 +57,25 @@ class AssetsManagerServer {
 
 		// BugId:31327
 		$headers['Vary'] = $builder->getVary();
-
 		$cacheDuration = $builder->getCacheDuration();
+
+		// render the response
+		try {
+			$content = $builder->getContent();
+		} catch(Exception $e) {
+			// return HTTP 503 in case of SASS processing error (BAC-592)
+			// Varnish will cache such response for 5 seconds
+			header('HTTP/1.1 503');
+
+			// log exception messages
+			$msg = $e->getMessage();
+			Wikia::log(__METHOD__, $type, str_replace("\n", ' ', $msg), true);
+
+			// emit full message on devboxes only
+			global $wgDevelEnvironment;
+			$content = !empty($wgDevelEnvironment) ? $msg : '/* SASS processing failed! */';
+		}
+
 		if($cacheDuration > 0) {
 			$headers['Expires'] = gmdate('D, d M Y H:i:s \G\M\T', strtotime($cacheDuration['server'] . ' seconds'));
 			$headers['Cache-Control'] = $builder->getCacheMode() . ', max-age=' . $cacheDuration['server'];
@@ -71,6 +88,6 @@ class AssetsManagerServer {
 			header($k . ': ' . $v);
 		}
 
-		echo $builder->getContent();
+		echo $content;
 	}
 }

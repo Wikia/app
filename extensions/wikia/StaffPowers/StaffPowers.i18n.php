@@ -160,10 +160,11 @@ $messages['pms'] = array(
 );
 
 /** Portuguese (português)
+ * @author Hamilton Abreu
  * @author SandroHc
  */
 $messages['pt'] = array(
-	'staffpowers-ipblock-abort' => 'Bloquear Wikia Staff, Wikia Helpers, ou membros da nossa equipa de utilizadores do "Voluntário da Task Force Contra o Spam" (VTFCS) não é possível. Por favor, use o [[Special:Contact|formulário de contacto]] para reportar alguma questão ou problema com os nossos staff.',
+	'staffpowers-ipblock-abort' => "Não é possível bloquear utilizadores da Equipa da Wikia, Ajudantes da Wikia, ou membros Voluntários da ''Task Force'' Contra o Spam (VTFCS). Use o [[Special:Contact|formulário de contacto]] para reportar qualquer questão ou problema com estes utilizadores, por favor.",
 );
 
 /** Brazilian Portuguese (português do Brasil)

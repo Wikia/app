@@ -406,7 +406,8 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 				$response = $signupForm->initValidationPassword();
 				break;
 			case 'email' :
-				$response = $signupForm->initValidationEmail();
+				$response = $signupForm->initValidationEmail()
+					&& $signupForm->initValidationRegsPerEmail();
 				break;
 			case 'birthdate' :
 				$response = $signupForm->initValidationBirthdate();

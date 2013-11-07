@@ -1,5 +1,5 @@
 @import "skins/oasis/css/core/color.scss";
-@import "skins/oasis/css/core/responsive.scss";
+@import "skins/oasis/css/core/responsive-variables.scss";
 @import "skins/oasis/css/mixins/transform.scss";
 @import "skins/oasis/css/mixins/transition.scss";
 @import "skins/oasis/css/mixins/blackout.scss";
@@ -132,6 +132,8 @@ $modal-secondary-color: darken( $color-page, 10% );
 .blackout {
 	@include blackout();
 }
+
+
 
 @media screen and (max-width: $breakpoint-min) {
 	.modal.medium {

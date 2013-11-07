@@ -89,6 +89,13 @@ class SwiftFileBackend extends FileBackendStore {
 	}
 
 	/**
+	 * @see FileBackendStore::isValidContainerName()
+	 */
+	protected static function isValidContainerName( $container ) {
+		return preg_match( '/^[a-z0-9][a-z0-9-_.]{0,199}$/i', $container );
+	}
+	
+	/**
 	 * @see FileBackendStore::resolveContainerPath()
 	 */
 	protected function resolveContainerPath( $container, $relStoragePath ) {
@@ -535,14 +542,14 @@ class SwiftFileBackend extends FileBackendStore {
 				'size' => (int)$srcObj->content_length,
 				'sha1' => $srcObj->getMetadataValue( 'Sha1base36' )
 			);
+
+			$this->objCache[ $params['src'] ] = $stat; // Wikia change
 		} catch ( NoSuchContainerException $e ) {
 			$this->logException( $e, __METHOD__, $params );
 		} catch ( NoSuchObjectException $e ) {
 			$this->logException( $e, __METHOD__, $params );
 		}
 
-		$this->objCache[ $params['src'] ] = $stat;
-			
 		return $stat;
 	}
 
@@ -802,6 +809,7 @@ class SwiftFileBackend extends FileBackendStore {
 		)); // Wikia change
 
 		// Note: 10 second timeout consistent with php-cloudfiles
+		/* @var CurlHttpRequest $req */
 		$req = MWHttpRequest::factory( $url, array( 'method' => 'POST', 'timeout' => $this->swiftTimeout, 'noProxy' => true ) );
 		$req->setHeader( 'X-Auth-Token', $creds['auth_token'] );
 		$req->setHeader( 'X-Container-Read', implode( ',', $readGrps ) );

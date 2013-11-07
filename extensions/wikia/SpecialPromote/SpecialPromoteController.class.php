@@ -74,9 +74,16 @@ class SpecialPromoteController extends WikiaSpecialPageController {
 	}
 
 	public function getUploadForm() {
+		global $wgEnableUploads;
+
 		$this->checkAccess = $this->checkAccess();
-		$this->uploadType = $this->request->getVal('uploadType');
-		$this->imageIndex = $this->request->getVal('imageIndex',null);
+
+		if ( ! empty( $wgEnableUploads ) ) {
+			$this->uploadType = $this->request->getVal( 'uploadType' );
+			$this->imageIndex = $this->request->getVal( 'imageIndex', null );
+		} else {
+			$this->overrideTemplate( 'uploadsDisabled' );
+		}
 	}
 
 	public function removeTempImage() {
