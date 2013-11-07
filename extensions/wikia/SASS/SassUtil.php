@@ -55,7 +55,7 @@ class SassUtil {
 	 *  - theme chosen using usetheme URL param
 	 */
 	public static function getOasisSettings() {
-		global $wgOasisThemes, $wgContLang;
+		global $wgContLang;
 		wfProfileIn(__METHOD__);
 
 		// Load the 5 deafult colors by theme here (eg: in case the wiki has an override but the user doesn't have overrides).
@@ -70,7 +70,7 @@ class SassUtil {
 			$oasisSettings["color-buttons"] = self::sanitizeColor($settings["color-buttons"]);
 			$oasisSettings["color-links"] = self::sanitizeColor($settings["color-links"]);
 			$oasisSettings["color-header"] = self::sanitizeColor($settings["color-header"]);
-			$oasisSettings["background-image"] = wfReplaceImageServer($settings['background-image'], self::getCacheBuster());
+			$oasisSettings["background-image"] = $themeSettings->getBackgroundUrl();
 
 			// sending width and height of background image to SASS
 			if ( !empty($settings["background-image-width"]) && !empty($settings["background-image-height"]) ) {
@@ -198,7 +198,7 @@ class SassUtil {
 	 *
 	 * @see http://blog.archive.jpsykes.com/211/rgb2hsl/index.html
 	 *
-	 * @param string RGB color in hex format (#474646)
+	 * @param string $rgbhex RGB color in hex format (#474646)
 	 * @return array HSL set
 	 */
 	private static function rgb2hsl($rgbhex){
