@@ -96,9 +96,9 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window' ], function( $, w ) {
 	Modal.prototype.show = function() {
 		this.$blackout.addClass( 'visible' );
 
-		// IE flexbox fallback
-		if ( navigator.appName === 'Microsoft Internet Explorer' ||
-			( navigator.appName === 'Netscape' && navigator.userAgent.indexOf('Trident/') !== -1 ) ) {
+		// IE flex-box fallback for small and medium modals
+		if ( this.$element.hasClass('large') === false && ( navigator.appName === 'Microsoft Internet Explorer' ||
+			( navigator.appName === 'Netscape' && navigator.userAgent.indexOf('Trident/') !== -1 ) ) ) {
 
 			this.$blackout.addClass( 'IE-flex-fix' );
 			ieFlexboxFallback( this );
