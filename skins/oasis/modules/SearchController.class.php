@@ -8,7 +8,7 @@
 class SearchController extends WikiaController {
 
 	public function executeIndex() {
-		$t1 = microtime(true);
+
 		$this->setVal('specialSearchUrl', SpecialPage::getTitleFor( 'Search' )->getFullUrl());
 		$this->searchterm = $this->wg->request->getVal('search');
 		if ( !isset( $this->searchterm ) ) {
@@ -39,8 +39,7 @@ class SearchController extends WikiaController {
 		$this->isCrossWikiaSearch = $this->wg->request->getCheck('crossWikiaSearch');
 
 		$this->searchFormId = $this->request->getVal('searchFormId');
-		$res = microtime(true)-$t1;
-		die('asdf:'.$res);
+
 	}
 
 
