@@ -9,6 +9,7 @@
 @import "skins/oasis/css/mixins/box-sizing-border-box";
 @import "skins/oasis/css/mixins/flexbox";
 @import "skins/oasis/css/mixins/calc";
+@import "skins/oasis/css/mixins/image-replacement";
 
 $close-image: '/resources/wikia/ui_components/modal/images/close-dark.svg';
 $modal-secondary-color: darken( $color-page, 10% );
@@ -68,13 +69,13 @@ $large-modal-margin: 50px;
 	}
 
 	> header .close {
+		@include image-replacement();
 		background: url( $close-image );
 		background-size: 24px 24px;
 		display: block;
 		float: right;
 		height: 24px;
 		outline: none;
-		text-indent: -9999px;
 		width: 24px;
 	}
 
