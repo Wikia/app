@@ -190,7 +190,7 @@ var AdLogicPageDimensions = function (window, document, log, slotTweaker) {
 	 */
 	function init() {
 		// ABTesting: DAR-1859: START
-		notInAbTestRightRailPositionStatic = window.Wikia && window.Wikia.AbTest && (Wikia.AbTest.getGroup( "DAR_RIGHTRAILPOSITION" ) == 'STATIC');
+		notInAbTestRightRailPositionStatic = window.Wikia.AbTest && (Wikia.AbTest.getGroup( "DAR_RIGHTRAILPOSITION" ) == 'STATIC');
 		// ABTesting: DAR-1859: END
 
 		log('init', 'debug', logGroup);
