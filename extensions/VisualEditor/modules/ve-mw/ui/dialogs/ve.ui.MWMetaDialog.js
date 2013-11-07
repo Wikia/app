@@ -180,11 +180,6 @@ ve.ui.MWMetaDialog.prototype.onOpen = function () {
 	setTimeout( function () {
 		categoryWidget.fitInput();
 	} );
-
-	ve.track( {
-		'action': ve.track.actions.OPEN,
-		'label': 'dialog-page-settings'
-	} );
 };
 
 /** */
