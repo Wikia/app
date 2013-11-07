@@ -90,6 +90,19 @@
 		}
 	}
 }
+// DAR-2719/BEGIN: Hidden global notification when window shrank
+@media screen and (max-width: 1020px) {
+	.wikia-grid .global-notification.float {
+		width: 100%;
+		margin: 0;
+		left: 0;
+		
+		.close {
+			margin-right: 20px;
+		}
+	}
+}
+// DAR-2719/END: Hidden global notification when window shrank
 /* end temp transistion code */
 
 .modalWrapper >.global-notification {
