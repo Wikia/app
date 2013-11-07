@@ -28,13 +28,10 @@ $header-and-footer-height: 60px;
 $modal-padding: 20px;
 $large-modal-margin: 50px;
 
-.modal-blackout {
-	@include transition-shorthand( display 0.2s ease-in-out );
-}
-
 .modal {
 	@include flexbox();
 	@include flex-direction(column);
+
 	background-color: $color-page;
 	border-radius: 2px;
 	max-height: $modal-max-height;
@@ -137,10 +134,11 @@ $large-modal-margin: 50px;
 }
 
 .modal-blackout {
+	@include align-items(center);
 	@include blackout();
 	@include flexbox();
-	@include align-items(center);
 	@include justify-content(center);
+	@include transition-shorthand( display 0.2s ease-in-out );
 
 	&.IE-flex-fix {
 		display: block;
