@@ -8,19 +8,25 @@
 @import "skins/oasis/css/mixins/blackout";
 @import "skins/oasis/css/mixins/box-sizing-border-box";
 @import "skins/oasis/css/mixins/flexbox";
+@import "skins/oasis/css/mixins/calc";
 
 $close-image: '/resources/wikia/ui_components/modal/images/close-dark.svg';
 $modal-secondary-color: darken( $color-page, 10% );
+
 @if( $is-dark-wiki ) {
 	$close-image: '/resources/wikia/ui_components/modal/images/close-light.svg';
 	$modal-secondary-color: lighten( $color-page, 3% );
 }
 
+// modals dimensions
 $modal-min-height: 200px;
 $modal-max-height: 90%;
 $small-modal-width: 400px;
 $medium-modal-width: 700px;
 $medium-modal-width-small-screen: 500px;
+$header-and-footer-height: 60px;
+$modal-padding: 20px;
+$large-modal-margin: 50px;
 
 .modal-blackout {
 	@include transition-shorthand( display 0.2s ease-in-out );
@@ -39,18 +45,17 @@ $medium-modal-width-small-screen: 500px;
 
 	> header,
 	> footer {
-		background-color: $modal-secondary-color;
-		height: 60px; // flex-basis is not supported on Safari 6 so fixed height is needed
-
-		@include flex-shrink(0);
 		@include flex-grow(0);
+		@include flex-shrink(0);
+		background-color: $modal-secondary-color;
+		height: $header-and-footer-height; // flex-basis is not supported on Safari 6 so fixed height is needed
 	}
 
 	> header,
 	> section,
 	> footer {
-		padding: 20px;
 		@include box-sizing-border-box;
+		padding: $modal-padding;
 	}
 
 	> header h3 {
@@ -85,9 +90,8 @@ $medium-modal-width-small-screen: 500px;
 	}
 
 	> section {
-		overflow: auto;
-
 		@include flex-grow(1);
+		overflow: auto;
 	}
 
 	// IE flex-box fallback
@@ -113,9 +117,10 @@ $medium-modal-width-small-screen: 500px;
 	}
 
 	&.large {
+		@include height-calc('100% - #{$large-modal-margin}');
+		@include width-calc('100% - #{$large-modal-margin}');
 		display: block;
-		height: calc( 100% - 50px );
-		width: calc( 100% - 50px );
+		position: relative;
 
 		> footer {
 			bottom: 0;
@@ -127,7 +132,7 @@ $medium-modal-width-small-screen: 500px;
 
 	.buttons {
 		bottom: 15px;
-		right: 20px;
+		right: $modal-padding;
 	}
 }
 
@@ -170,5 +175,4 @@ $medium-modal-width-small-screen: 500px;
 			}
 		}
 	}
-
 }
