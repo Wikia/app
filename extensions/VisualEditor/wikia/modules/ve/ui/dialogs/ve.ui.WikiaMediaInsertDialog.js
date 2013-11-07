@@ -2,7 +2,7 @@
  * VisualEditor user interface WikiaMediaInsertDialog class.
  */
 
-/*global mw*/
+/* global mw, require */
 
 /**
  * Dialog for inserting MediaWiki media objects.
@@ -462,37 +462,59 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMedia = function ( cartIte
  * @param {Object} items Items to insert
  */
 ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMediaCallback = function ( items ) {
-	var title, type, item, linmod = [];
-	for ( title in items ) {
-		item = items[title];
-		if ( item.type === 'image' ) {
-			type = 'wikiaBlockImage';
-		} else if ( item.type === 'video' ) {
-			type = 'wikiaBlockVideo';
-		}
-		linmod.push(
-			{
-				'type': type,
-				'attributes': {
-					'type': 'thumb',
-					'align': 'default',
-					'href': './' + item.title,
-					'src': item.url,
-					'width': item.width,
-					'height': item.height,
-					'resource': './' + item.title,
-					'attribution': {
-						'username': item.username,
-						'avatar': item.avatar
+	require( ['wikia.stringhelper'], ve.bind( function ( stringUtils ) {
+		var count, item, title, type,
+			typeCount = { 'image': 0, 'video': 0 },
+			linmod = [];
+
+		for ( title in items ) {
+			item = items[title];
+			type = 'wikiaBlock' + stringUtils.ucFirst( item.type );
+			typeCount[item.type]++;
+			linmod.push(
+				{
+					'type': type,
+					'attributes': {
+						'type': 'thumb',
+						'align': 'default',
+						'href': './' + item.title,
+						'src': item.url,
+						'width': item.width,
+						'height': item.height,
+						'resource': './' + item.title,
+						'attribution': {
+							'username': item.username,
+							'avatar': item.avatar
+						}
 					}
-				}
-			},
-			{ 'type': 'wikiaMediaCaption' },
-			{ 'type': '/wikiaMediaCaption' },
-			{ 'type': '/' + type }
-		);
-	}
-	this.surface.getModel().getFragment().collapseRangeToEnd().insertContent( linmod );
+				},
+				{ 'type': 'wikiaMediaCaption' },
+				{ 'type': '/wikiaMediaCaption' },
+				{ 'type': '/' + type }
+			);
+		}
+
+		for ( type in typeCount ) {
+			count = typeCount[type];
+
+			if ( count ) {
+				ve.track( {
+					'action': ve.track.actions.ADD,
+					'label': 'dialog-media-insert-' + type,
+					'value': count
+				} );
+			}
+		}
+
+		if ( count.image && count.video ) {
+			ve.track( {
+				'action': ve.track.actions.ADD,
+				'label': 'dialog-media-insert-multiple'
+			} );
+		}
+
+		this.surface.getModel().getFragment().collapseRangeToEnd().insertContent( linmod );
+	}, this ) );
 };
 
 /**
