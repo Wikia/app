@@ -12,7 +12,7 @@ var SevenOneMediaHelper = function (adLogicPageLevelParams, scriptWriter, log, w
 		allLoaded = false,
 		pageLevelParams = adLogicPageLevelParams.getPageLevelParams(),
 		firstSlotname,
-		waitForMyAdCssMs = 2000, // if CSS callback is not called within 1000 ms, call it anyways (Safari 5 bug)
+		waitForMyAdCssMs = 2000, // if CSS callback is not called within 2000 ms, call it anyways (Safari 5 bug)
 		slotVars = {
 			'popup1': {
 				SOI_PU1: true,
