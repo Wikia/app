@@ -264,6 +264,12 @@ class ThemeSettings {
 	 */
 	public function getBackgroundUrl() {
 		$settings = $this->getSettings();
+
+		// no background defined
+		if (empty($settings['background-image'])) {
+			return '';
+		}
+
 		$hasCustomBackground = strpos($settings['background-image'], '/common/skins/oasis/images/themes') === false;
 
 		// return standard, themed background - e.g. '/skins/oasis/images/themes/plated.jpg'
