@@ -33,35 +33,25 @@ class JsonFormatSimplifier {
 	protected function processList( \JsonFormatNode $childNode ) {
 		$out = [];
 		$text = null;
-
 		$children = $childNode->getChildren();
 		$numChild = count( $children );
-
 		$i = 0;
 
 		if ( $numChild ) {
-
 			$text = $this->readText( $childNode );
-
 			$elements = [];
-
 			$listItem = false;
 
 			while ( $i < $numChild ) {
-
 				$type = $children[ $i ]->getType();
-
 				if ( $type == 'list' ) {
-
 					$elements = array_merge( $elements, self::processList( $children[ $i ] ) );
-
 				}
 				elseif ( $type == 'listItem' ) {
 					$listItem = true;
 					$arr = $this->processList( $children[ $i ] );
 					$out[ ] = array_shift( $arr );
 				}
-
 				$i++;
 			}
 
