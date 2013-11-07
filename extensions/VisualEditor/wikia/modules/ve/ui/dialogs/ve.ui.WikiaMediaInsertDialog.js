@@ -39,6 +39,7 @@ ve.ui.WikiaMediaInsertDialog.static.pages = [ 'search', 'suggestions' ];
  * Initialize the dialog.
  *
  * @method
+ * @todo Inherit from ve.ui.WikiaDialog instead of MWDialog
  */
 ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	// Parent method

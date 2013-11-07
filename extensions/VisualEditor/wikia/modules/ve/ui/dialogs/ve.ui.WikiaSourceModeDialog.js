@@ -8,20 +8,20 @@
  * Dialog for editing wikitext in source mode.
  *
  * @class
- * @extends ve.ui.MWDialog
+ * @extends ve.ui.WikiaDialog
  *
  * @constructor
  * @param {ve.ui.Surface} surface
  * @param {Object} [config] Config options
  */
-ve.ui.WikiaSourceModeDialog = function VeUiMWSourceModeDialog( surface, config ) {
+ve.ui.WikiaSourceModeDialog = function VeUiWikiaSourceModeDialog( surface, config ) {
 	// Parent constructor
-	ve.ui.MWDialog.call( this, surface, config );
+	ve.ui.WikiaDialog.call( this, surface, config );
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.ui.WikiaSourceModeDialog, ve.ui.MWDialog );
+ve.inheritClass( ve.ui.WikiaSourceModeDialog, ve.ui.WikiaDialog );
 
 /* Static Properties */
 
@@ -35,13 +35,7 @@ ve.ui.WikiaSourceModeDialog.static.icon = 'source';
 
 ve.ui.WikiaSourceModeDialog.prototype.initialize = function () {
 	// Parent method
-	ve.ui.MWDialog.prototype.initialize.call( this );
-
-	// Loading graphic overlay
-	// TODO: move this higher up the prototype chain?
-	this.$loadingOverlay = this.$$( '<div>' );
-	this.$loadingOverlay.addClass( 'loading-overlay hidden' );
-	this.frame.$content.append( this.$loadingOverlay );
+	ve.ui.WikiaDialog.prototype.initialize.call( this );
 
 	this.sourceModeTextarea = new ve.ui.TextInputWidget({
 		'$$': this.frame.$$,
@@ -62,7 +56,7 @@ ve.ui.WikiaSourceModeDialog.prototype.initialize = function () {
 };
 
 ve.ui.WikiaSourceModeDialog.prototype.onOpen = function () {
-	ve.ui.MWDialog.prototype.onOpen.call( this );
+	ve.ui.WikiaDialog.prototype.onOpen.call( this );
 
 	var doc = this.surface.getModel().getDocument();
 
@@ -85,7 +79,7 @@ ve.ui.WikiaSourceModeDialog.prototype.onSerialize = function ( wikitext ) {
 ve.ui.WikiaSourceModeDialog.prototype.onApply = function ( action, wikitext ) {
 	if( action === 'parse' ) {
 		this.startLoading();
-		this.parse( );
+		this.parse();
 	}
 };
 
@@ -168,14 +162,6 @@ ve.ui.WikiaSourceModeDialog.prototype.onParseSuccess = function( deferred, respo
 ve.ui.WikiaSourceModeDialog.prototype.onParseError = function ( deferred ) {
 	// TODO: error handling?
 	deferred.reject();
-};
-
-ve.ui.WikiaSourceModeDialog.prototype.startLoading = function () {
-	this.$loadingOverlay.removeClass( 'hidden' );
-};
-
-ve.ui.WikiaSourceModeDialog.prototype.stopLoading = function () {
-	this.$loadingOverlay.addClass( 'hidden' );
 };
 
 ve.ui.WikiaSourceModeDialog.prototype.onClose = function () {
