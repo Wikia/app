@@ -101,7 +101,7 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window' ], function( $, w ) {
 		if ( navigator.appName === 'Microsoft Internet Explorer' ||
 			( navigator.appName === 'Netscape' && navigator.userAgent.indexOf('Trident/') !== -1 ) ) {
 
-			this.$element.addClass( 'IE-flex-fix' );
+			this.$blackout.addClass( 'IE-flex-fix' );
 			ieFlexboxFallback( this );
 
 			// update modal section max-height on window resize

@@ -15,7 +15,12 @@ $modal-secondary-color: darken( $color-page, 10% );
 	$close-image: '/resources/wikia/ui_components/modal/images/close-light.svg';
 	$modal-secondary-color: lighten( $color-page, 3% );
 }
-$modal-inactive-opacity: 0.3;
+
+$modal-min-height: 200px;
+$modal-max-height: 90%;
+$small-modal-width: 400px;
+$medium-modal-width: 700px;
+$medium-modal-width-small-screen: 500px;
 
 .modal,
 .modal-blackout {
@@ -27,8 +32,8 @@ $modal-inactive-opacity: 0.3;
 	background-color: $color-page;
 	border-radius: 2px;
 	display: none;
-	max-height: 90%;
-	min-height: 200px;
+	max-height: $modal-max-height;
+	min-height: $modal-min-height;
 	margin: 0;
 	overflow: hidden;
 	padding: 0;
@@ -87,16 +92,12 @@ $modal-inactive-opacity: 0.3;
 	}
 
 	&.small {
-		width: 400px;
+		width: $small-modal-width;
 
 	}
 
 	&.medium {
-		width: 700px;
-
-		> section {
-			height: 400px;
-		}
+		width: $medium-modal-width;
 	}
 
 	&.small,
@@ -108,6 +109,7 @@ $modal-inactive-opacity: 0.3;
 	}
 
 	&.large {
+		display: block;
 		height: calc( 100% - 50px );
 		width: calc( 100% - 50px );
 
@@ -144,10 +146,39 @@ $modal-inactive-opacity: 0.3;
 	@include flexbox();
 	@include align-items(center);
 	@include justify-content(center);
+
+	&.IE-flex-fix {
+		display: block;
+		.modal {
+			display: block;
+		}
+		> .small,
+		.medium {
+			left: 50%;
+			position: fixed;
+			top: 5%;
+		}
+		> .small {
+			margin-left: -$small-modal-width / 2;
+		}
+		> .medium {
+			margin-left: -$small-modal-width / 2;
+		}
+
+
+	}
 }
 
 @media screen and (max-width: $breakpoint-min) {
 	.modal.medium {
-		width: 500px;
+		width: $medium-modal-width-small-screen;
 	}
+	.modal-blackout {
+		&.IE-flex-fix {
+			> .medium {
+				margin-left: -$medium-modal-width-small-screen / 2;
+			}
+		}
+	}
+
 }
