@@ -77,6 +77,16 @@ $config['adengine2_js'] = array(
 	),
 );
 
+$config['adengine2_sevenonemedia_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/AdEngine/SevenOneMedia/my_ad_integration_css.js',
+		'//extensions/wikia/AdEngine/SevenOneMedia/my_ad_integration.js',
+		'//extensions/wikia/AdEngine/SevenOneMedia/wikia.js',
+		'//extensions/wikia/AdEngine/SevenOneMedia/globalV6.js',
+	),
+);
+
 $config['oasis_ads_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
