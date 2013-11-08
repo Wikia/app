@@ -161,13 +161,9 @@ abstract class ApiWrapper {
 		$response = F::app()->wg->memc->get( $memcKey );
 		$cacheMe = false;
 		if ( empty( $response ) ){
-			// reset proxy to blank
-			$originalProxy = F::app()->wg->HTTPProxy;
-			F::app()->wg->HTTPProxy = '';
-
 			$cacheMe = true;
 			$req = MWHttpRequest::factory( $apiUrl );
-			$status = $req->execute();
+			$status = VideoHandlerHelper::wrapHttpRequest( $req );
 			if( $status->isOK() ) {
 				$response = $req->getContent();
 				$this->response = $response;	// Only for migration purposes
@@ -180,9 +176,6 @@ abstract class ApiWrapper {
 			} else {
 				$this->checkForResponseErrors( $req->status, $req->getContent(), $apiUrl );
 			}
-
-			// set proxy to original value
-			F::app()->wg->HTTPProxy = $originalProxy;
 		}
 		$processedResponse = $this->processResponse( $response, $type );
 		if ( $cacheMe ) F::app()->wg->memc->set( $memcKey, $response, static::$CACHE_EXPIRY );
