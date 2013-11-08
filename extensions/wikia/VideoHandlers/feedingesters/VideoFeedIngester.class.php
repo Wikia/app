@@ -206,7 +206,8 @@ abstract class VideoFeedIngester {
 			}
 		}
 
-		$duplicates = WikiaFileHelper::findVideoDuplicates( $provider, $id, $remoteAsset );
+		$useMaster = true;
+		$duplicates = WikiaFileHelper::findVideoDuplicates( $provider, $id, $remoteAsset, $useMaster );
 		$dup_count = count($duplicates);
 		$previousFile = null;
 		if ( $dup_count > 0 ) {
@@ -519,7 +520,7 @@ abstract class VideoFeedIngester {
 	 * @return string
 	 */
 	protected function getUrlContent($url) {
-		return Http::get($url);
+		return VideoHandlerHelper::wrapHttpGet( $url );
 	}
 
 	/**

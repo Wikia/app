@@ -96,12 +96,6 @@ class UserLoginForm extends LoginForm {
 			return false;
 		}
 
-		// check if exist in tempUser
-		if ( UserLoginHelper::isTempUser( $this->mUsername ) && TempUser::getTempUserFromName( $this->mUsername ) ) {
-			$this->mainLoginForm( wfMessage( 'userlogin-error-userexists' )->escaped(), 'error', 'username' );
-			return false;
-		}
-
 		// check username length
 		if( !User::isNotMaxNameChars($this->mUsername) ) {
 			global $wgWikiaMaxNameChars;
@@ -193,6 +187,31 @@ class UserLoginForm extends LoginForm {
 			return false;
 		}
 
+		return true;
+	}
+
+	/**
+	 * Validates email in terms of maximum registrations per email limit
+	 *
+	 * @return bool
+	 */
+	public function initValidationRegsPerEmail() {
+		global $wgAccountsPerEmail, $wgMemc;
+
+		$sEmail = $this->mEmail;
+		if ( isset( $wgAccountsPerEmail )
+			&& is_numeric( $wgAccountsPerEmail )
+			&& !UserLoginHooksHelper::isWikiaEmail( $sEmail )
+		) {
+			$key = wfSharedMemcKey( "UserLogin", "AccountsPerEmail", $sEmail );
+			$count = $wgMemc->get($key);
+			if ( $count !== false
+				&& (int)$count >= (int)$wgAccountsPerEmail
+			) {
+				$this->mainLoginForm( wfMessage( 'userlogin-error-userlogin-unable-info' )->escaped(), 'error', 'email' );
+				return false;
+			}
+		}
 		return true;
 	}
 

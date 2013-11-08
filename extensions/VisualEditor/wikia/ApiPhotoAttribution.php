@@ -1,6 +1,6 @@
 <?
 
-class ApiImageAttribution extends ApiBase {
+class ApiPhotoAttribution extends ApiBase {
 	public function execute() {
 
 		$params = $this->extractRequestParams();

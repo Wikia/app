@@ -1,6 +1,6 @@
-/*global require*/
+/*global require, setTimeout*/
 
-var SevenOneMediaHelper = function (adLogicPageLevelParams, scriptWriter, log, window, $) {
+var SevenOneMediaHelper = function (adLogicPageLevelParams, scriptWriter, log, window, $, tracker) {
 	'use strict';
 
 	var logGroup = 'SevenOneMediaHelper',
@@ -12,6 +12,7 @@ var SevenOneMediaHelper = function (adLogicPageLevelParams, scriptWriter, log, w
 		allLoaded = false,
 		pageLevelParams = adLogicPageLevelParams.getPageLevelParams(),
 		firstSlotname,
+		waitForMyAdCssMs = 2000, // if CSS callback is not called within 2000 ms, call it anyways (Safari 5 bug)
 		slotVars = {
 			'popup1': {
 				SOI_PU1: true,
@@ -47,6 +48,25 @@ var SevenOneMediaHelper = function (adLogicPageLevelParams, scriptWriter, log, w
 		},
 		slotsQueue = [];
 
+	function track(action) {
+		log(['track', action], 'info', logGroup);
+
+		tracker.track({
+			eventName: 'liftium.71m',
+			ga_category: '71m',
+			ga_action: action,
+			trackingMethod: 'ad'
+		});
+
+		tracker.track({
+			eventName: 'liftium.71m',
+			ga_category: '71m',
+			ga_action: 'success', // for trackingMethod ga Wikia.Tracker requires ga_action to be one from a limited set
+			ga_label: action,
+			trackingMethod: 'ga'
+		});
+	}
+
 	function shiftQueue() {
 		var item = slotsQueue.shift(),
 			slotname,
@@ -70,6 +90,14 @@ var SevenOneMediaHelper = function (adLogicPageLevelParams, scriptWriter, log, w
 		postponedSlotId = 'ad-' + slotname + '-postponed';
 		$postponedSlot = $('<div></div>').attr('id', postponedSlotId);
 		$postponedContainer.append($postponedSlot);
+
+		if (slotname === 'trackEnd') {
+			scriptWriter.injectScriptByText(postponedSlotId, '', function () {
+				track('stage/ads');
+				shiftQueue();
+			});
+			return;
+		}
 
 		scriptWriter.injectScriptByText(
 			postponedSlotId,
@@ -137,13 +165,21 @@ var SevenOneMediaHelper = function (adLogicPageLevelParams, scriptWriter, log, w
 	}
 
 	function injectStyles(done) {
+		var doneCalled = false;
+
+		function runDoneOnce() {
+			if (!doneCalled) {
+				doneCalled = true;
+				done();
+			}
+		}
+
 		require(['wikia.loader'], function (loader) {
-			loader('/extensions/wikia/AdEngine/SevenOneMedia/my_ad_integration.css').done(
-				function () {
-					$('#WikiaTopAds').hide();
-					done();
-				}
-			);
+			loader('/extensions/wikia/AdEngine/SevenOneMedia/my_ad_integration.css').
+				done(runDoneOnce);
+
+			// On Safari 5 there's no callback on CSS load
+			setTimeout(runDoneOnce, waitForMyAdCssMs);
 		});
 	}
 
@@ -220,6 +256,8 @@ var SevenOneMediaHelper = function (adLogicPageLevelParams, scriptWriter, log, w
 			return;
 		}
 
+		track('stage/init');
+
 		flushCalled = true;
 
 		function tryInjectJavaScripts() {
@@ -227,14 +265,17 @@ var SevenOneMediaHelper = function (adLogicPageLevelParams, scriptWriter, log, w
 				// DONE
 				allLoaded = true;
 				log('injectJavaScript success', 'info', logGroup);
+				track('stage/scripts');
 				shiftQueue();
 			}, function (what) {
 				// ERROR
 				log(['injectJavaScript failed', what], 'error', logGroup);
 				if (retries === 3) {
 					log(['injectJavaScript failed after 3 retries. Quiting', what], 'error', logGroup);
+					return;
 				}
 				retries += 1;
+				track('error/scripts' + retries);
 				tryInjectJavaScripts();
 			});
 		}
@@ -264,8 +305,14 @@ var SevenOneMediaHelper = function (adLogicPageLevelParams, scriptWriter, log, w
 		slotsQueue.push({slotname: slotname, params: params});
 	}
 
+	function trackEnd(slotname) {
+		log('trackEnd', 'info', logGroup);
+		slotsQueue.push({slotname: 'trackEnd'});
+	}
+
 	return {
 		pushAd: pushAd,
-		flushAds: flushAds
+		flushAds: flushAds,
+		trackEnd: trackEnd
 	};
 };

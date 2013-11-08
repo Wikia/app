@@ -836,7 +836,7 @@ ve.init.mw.ViewPageTarget.prototype.onSurfaceModelChange = function ( tx, range 
 	if ( text.match( /\[\[|\{\{|''|<nowiki|~~~|^==|^\*|^\#/ ) ) {
 		$.showModal(
 			ve.msg( 'visualeditor-wikitext-warning-title' ),
-			$( $.parseHTML( ve.init.platform.getParsedMessage( 'visualeditor-wikitext-warning' ) ) )
+			$( $.parseHTML( ve.init.platform.getParsedMessage( 'wikia-visualeditor-wikitext-warning' ) ) )
 				.filter( 'a' ).attr( 'target', '_blank ' ).end()
 		);
 		this.surface.getModel().disconnect( this, { 'change': 'onSurfaceModelChange' } );
@@ -1021,7 +1021,7 @@ ve.init.mw.ViewPageTarget.prototype.setupToolbarBetaNotice = function () {
 	this.$toolbarBetaNotice.empty();
 	this.$toolbarBetaNotice
 		.append( $( '<span>' )
-			.text( ve.msg( 'visualeditor-beta-warning' ) )
+			.text( ve.msg( 'wikia-visualeditor-beta-warning' ) )
 		)
 		.append( $( '<div>' )
 			.addClass( 've-init-mw-viewPageTarget-tool' )
@@ -1030,8 +1030,8 @@ ve.init.mw.ViewPageTarget.prototype.setupToolbarBetaNotice = function () {
 				.append( $( '<a>' )
 					.attr( 'title', ve.msg( 'visualeditor-help-title' ) )
 					.attr( 'target', '_blank' )
-					.attr( 'href', new mw.Title( ve.msg( 'visualeditor-help-link' ) ).getUrl() )
-					.text( ve.msg( 'visualeditor-help-label' ) )
+					.attr( 'href', new mw.Title( ve.msg( 'wikia-visualeditor-help-link' ) ).getUrl() )
+					.text( ve.msg( 'wikia-visualeditor-help-label' ) )
 		) ) );
 	if ( ve.version.id !== false ) {
 		this.$toolbarBetaNotice
@@ -1075,7 +1075,7 @@ ve.init.mw.ViewPageTarget.prototype.setUpSurface = function ( doc, callback ) {
 			var dmDoc = new ve.dm.Document( data, undefined, internalList );
 			setTimeout( function () {
 				// Create ui.Surface (also creates ce.Surface and dm.Surface and builds CE tree)
-				target.surface = new ve.ui.Surface( dmDoc, target.surfaceOptions );
+				target.surface = new ve.ui.Surface( dmDoc, target.surfaceOptions, target );
 				target.surface.$.addClass( 've-init-mw-viewPageTarget-surface' );
 				setTimeout( function () {
 					// Initialize surface
@@ -1275,7 +1275,7 @@ ve.init.mw.ViewPageTarget.prototype.setupToolbarButtons = function () {
 	this.toolbarCancelButton = new ve.ui.ButtonWidget( { 'label': ve.msg( 'visualeditor-toolbar-cancel' ) } );
 	this.toolbarCancelButton.$.addClass( 've-ui-toolbar-cancelButton' );
 	this.toolbarSaveButton = new ve.ui.ButtonWidget( {
-		'label': ve.msg( 'visualeditor-toolbar-savedialog' ),
+		'label': ve.msg( 'wikia-visualeditor-toolbar-savedialog' ),
 		'flags': ['constructive'],
 		'disabled': !this.restoring
 	} );
@@ -1390,7 +1390,7 @@ ve.init.mw.ViewPageTarget.prototype.setupSaveDialog = function () {
 	this.saveDialogSaveButton = new ve.ui.ButtonWidget( {
 		'label': ve.msg(
 			 // visualeditor-savedialog-label-restore, visualeditor-savedialog-label-save
-			'visualeditor-savedialog-label-' + ( viewPage.restoring ? 'restore' : 'save' )
+			'wikia-visualeditor-savedialog-label-' + ( viewPage.restoring ? 'restore' : 'save' )
 		),
 		'flags': ['constructive']
 	} );
