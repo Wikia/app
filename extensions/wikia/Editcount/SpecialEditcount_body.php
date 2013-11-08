@@ -3,6 +3,9 @@ if (!defined('MEDIAWIKI')) die();
 
 class Editcount extends SpecialPage {
 	const ONE_QUERY = 1;
+	const CACHE_TIME = 86400; // 24h
+	var $refreshTimestamps;
+
 	/**
 	 * Constructor
 	 */
@@ -67,7 +70,7 @@ class Editcount extends SpecialPage {
 				$totalAll = $this->getTotal( $nscountAll = $this->editsByNsAll( $uid ) );
 			}
 			$html = new EditcountHTML;
-			$html->outputHTML( $username, $uid, @$nscount, @$total, @$nscountAll, @$totalAll );
+			$html->outputHTML( $username, $uid, @$nscount, @$total, @$nscountAll, @$totalAll, $this->refreshTimestamps );
 		}
 	}
 
@@ -117,7 +120,10 @@ class Editcount extends SpecialPage {
 	function editsByNs( $uid ) {
 		global $wgMemc;
 		$key = wfMemcKey( 'namespaceCount', $uid );
+		$keyTimestamp = wfMemcKey( 'namespaceCountTimestamp', $uid );
 		$nscount = $wgMemc->get($key);
+		$this->refreshTimestamps['currentWikia'] = $wgMemc->get($keyTimestamp);
+
 		if ( empty($nscount) ) {
 			$nscount = array();
 
@@ -147,7 +153,10 @@ class Editcount extends SpecialPage {
 					}
 				}
 			}
-			$wgMemc->set( $key, $nscount, 86400 );
+
+			$wgMemc->set( $key, $nscount, self::CACHE_TIME );
+			$this->refreshTimestamps['currentWikia'] = time()+self::CACHE_TIME;
+			$wgMemc->set( $keyTimestamp, $this->refreshTimestamps['currentWikia'], self::CACHE_TIME );
 		}
 
 		return $nscount;
@@ -157,7 +166,9 @@ class Editcount extends SpecialPage {
 		global $wgStatsDB, $wgStatsDBEnabled, $wgMemc;
 
 		$key = wfSharedMemcKey( 'namespaceCountAllWikis', $uid );
+		$keyTimestamp = wfMemcKey( 'namespaceCountTimestamp', $uid );
 		$nscount = $wgMemc->get($key);
+		$this->refreshTimestamps['allWikias'] = $wgMemc->get($keyTimestamp);
 
 		if ( empty($nscount) ) {
 			$nscount = array();
@@ -182,7 +193,9 @@ class Editcount extends SpecialPage {
 				}
 				$dbs->freeResult( $res );
 			}
-			$wgMemc->set( $key, $nscount, 86400 );
+			$wgMemc->set( $key, $nscount, self::CACHE_TIME );
+			$this->refreshTimestamps['allWikias'] = time()+self::CACHE_TIME;
+			$wgMemc->set( $keyTimestamp, $this->refreshTimestamps['allWikias'], self::CACHE_TIME );
 		}
 		return $nscount;
 	}
@@ -213,7 +226,7 @@ class Editcount extends SpecialPage {
 				),
 				__METHOD__
 			);
-			$wgMemc->set( $key, $nscount, 86400 );
+			$wgMemc->set( $key, $nscount, self::CACHE_TIME );
 		}
 
 		return $res;
@@ -244,8 +257,8 @@ class EditcountHTML extends Editcount {
 	 * @param array  $nscount
 	 * @param int    $total
 	 */
-	function outputHTML( $username, $uid, $nscount, $total, $nscountall, $totalall ) {
-		global $wgTitle, $wgOut, $wgLang;
+	function outputHTML( $username, $uid, $nscount, $total, $nscountall, $totalall, $refreshTimestamps ) {
+		global $wgOut;
 		wfProfileIn( __METHOD__ );
 
 		/* current wiki */
@@ -275,6 +288,9 @@ class EditcountHTML extends Editcount {
 			"editcounttable" 	=> $editcounttable
 		));
 		$wgOut->addHTML( $oTmpl->render("main-form") );
+
+		$this->addRefreshTimestampsToOut( $refreshTimestamps );
+
 		wfProfileOut( __METHOD__ );
 	}
 
@@ -314,4 +330,33 @@ class EditcountHTML extends Editcount {
         wfProfileOut( __METHOD__ );
         return $res;
 	}
+
+	/**
+	 * Adds to output information for user when cached data will be refreshed next time
+	 *
+	 * @param $refreshTimestamps Array of timestamps in format YmdHis e.g. 20131107192200
+	 *
+	 * @access private
+	 */
+	function addRefreshTimestampsToOut( $refreshTimestamps ) {
+		wfProfileIn( __METHOD__ );
+		global $wgOut, $wgLang, $wgDBname;
+
+		// Current wikia column (using db name as column name)
+		if( isset( $refreshTimestamps['currentWikia'] ) ) {
+			$currentWikiaMsg = $wgDBname;
+			$nextRefCurrW = $wgLang->timeanddate( $refreshTimestamps['currentWikia'] ,true, true );
+			$wgOut->addElement( 'p', '', wfMessage( 'editcount_refresh_time' )->rawParams( $currentWikiaMsg, $nextRefCurrW )->escaped() );
+		}
+
+		// all wikias (summary column)
+		if( isset( $refreshTimestamps[ 'allWikias' ] ) ) {
+			$allWikiasMsg = wfMessage( 'editcount_allwikis' )->escaped();
+			$nextRefAllW = $wgLang->timeanddate( $refreshTimestamps[ 'allWikias' ] ,true, true );
+			$wgOut->addElement( 'p', '', wfMessage( 'editcount_refresh_time' )->rawParams( $allWikiasMsg, $nextRefAllW )->escaped() );
+		}
+
+		wfProfileOut( __METHOD__ );
+	}
+
 }
