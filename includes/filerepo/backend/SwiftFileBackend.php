@@ -89,6 +89,13 @@ class SwiftFileBackend extends FileBackendStore {
 	}
 
 	/**
+	 * @see FileBackendStore::isValidContainerName()
+	 */
+	protected static function isValidContainerName( $container ) {
+		return preg_match( '/^[a-z0-9][a-z0-9-_.]{0,199}$/i', $container );
+	}
+	
+	/**
 	 * @see FileBackendStore::resolveContainerPath()
 	 */
 	protected function resolveContainerPath( $container, $relStoragePath ) {
