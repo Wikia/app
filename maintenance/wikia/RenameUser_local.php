@@ -34,7 +34,7 @@ if( isset( $options['help'] ) && $options['help'] ) {
 	exit( 0 );
 }
 
-// BAC-602: decode user names if they were encoded first
+// BAC-602: decode user names if they were encoded in the first place
 if ( !empty( $options['rename-old-name-enc'] ) ) {
 	$options['rename-old-name'] = rawurldecode($options['rename-old-name-enc']);
 }

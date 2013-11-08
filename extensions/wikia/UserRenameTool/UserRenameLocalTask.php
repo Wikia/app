@@ -97,7 +97,7 @@ class UserRenameLocalTask extends BatchTask {
 						"--requestor-id {$this->mParams['requestor_id']} --reason {$this->mParams['reason']} ".
 						"--rename-ip-address --conf {$wgWikiaLocalSettingsPath} --aconf {$aconf}";
 				} else {
-					// BAC-602: encode special characters so they get removed
+					// BAC-602: encode special characters so they don't get removed
 					$oldUsernameEnc = escapeshellarg(rawurlencode($oldUsername));
 					$newUsernameEnc = escapeshellarg(rawurlencode($newUsername));
 					$cmd = "SERVER_ID={$cityId} php {$IP}/maintenance/wikia/RenameUser_local.php ".
