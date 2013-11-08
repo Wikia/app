@@ -44,13 +44,13 @@
 			padding: 0 10px;
 			z-index: 1000;	/* IE7 */
 			>li {
-				border-left: 1px solid mix($color-header-text, $color-header, 20%);
+				border-right: 1px solid mix($color-header-text, $color-header, 20%);
 				float: left;
 				height: 16px;
 				line-height: 16px;
 				margin-top: 2px;
 				padding: 0 10px;
-				&:first-child {
+				&:last-child {
 					border: 0;
 				}
 				img {
@@ -93,6 +93,12 @@
 				left: 0;
 			}
 		}
+	}
+	.overflow-menu {
+		display: none;
+	}
+	.overflow-menu .overflow {
+		display: none;
 	}
 	.tools-menu {
 		@include menu-heavy;

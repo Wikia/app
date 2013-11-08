@@ -178,11 +178,17 @@ class HAWelcomeJob extends Job {
 				 * @global Object User The state of the user viewing/using the site
 				 * @see http://www.mediawiki.org/wiki/Manual:$wgUser
 				 */
-				global $wgUser;
+				global $wgUser, $wgCityId;
+				$wiki = WikiFactory::getWikiById( $wgCityId );
+				$founderId = isset( $wiki->city_founding_user ) ? intval( $wiki->city_founding_user ) : false;
 				// Abort if the contributor is a member of a group that should not be welcomed or the default welcomer
-				if ( $wgUser->isAllowed( 'welcomeexempt' ) || $wgUser->getName() == self::DEFAULT_WELCOMER ) {
+				// Also, don't welcome founders as they are welcomed separately
+				if ( $wgUser->isAllowed( 'welcomeexempt' ) ||
+					$wgUser->getName() == self::DEFAULT_WELCOMER ||
+					$founderId === intval( $oRevision->getRawUser() )
+				) {
 					if ( !empty( $wgHAWelcomeNotices ) ) {
-						trigger_error( sprintf( '%s Done. The registered contributor is a bot, a staff member or the default welcomer.', __METHOD__ ) , E_USER_NOTICE );
+						trigger_error( sprintf( '%s Done. The registered contributor is a bot, a staff member, the wiki founder or the default welcomer.', __METHOD__ ) , E_USER_NOTICE );
 					}
 					// Restore the original error reporting level.
 					error_reporting( $iErrorReporting );
