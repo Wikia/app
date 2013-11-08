@@ -243,21 +243,21 @@ class ThemeSettings {
 	 * This method returns URL based on "wordmark-image-url" and performs URL rewrite
 	 * for migrated wikis with short Swift bucket name
 	 *
-	 * @see  $wgUploadDirectory - </images/2/24_/es/images>
-	 * @see  $wgUploadDirectoryNFS - </images/2/24/es/images>
+	 * @see  $wgUploadPath - "http://images.wikia.com/24_/es/images"
 	 *
 	 * @author macbre
 	 * @return string wordmark URL or empty string if not found
 	 */
 	public function getWordmarkUrl() {
-		global $wgUploadDirectory, $wgUploadDirectoryNFS;
+		global $wgUploadPath;
 
 		$wordmarkUrl = $this->getSettings()['wordmark-image-url'];
+		$wordmarkPath = reset(explode('/images/', $wordmarkUrl));
 
-		if (!empty($wgUploadDirectoryNFS)) {
+		if (!empty($wordmarkPath)) {
 			$wordmarkUrl = str_replace(
-				substr($wgUploadDirectoryNFS, 9) . '/', // </24/es/images/>
-				substr($wgUploadDirectory, 9) . '/', // </24_/es/images/>
+				$wordmarkPath . '/images',
+				$wgUploadPath,
 				$wordmarkUrl
 			);
 		}
