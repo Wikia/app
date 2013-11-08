@@ -438,13 +438,14 @@ abstract class AbstractSelect
 	 * @return bool
 	 */
 	protected function isValidExactMatch($result) {
-		$hub = $this->getConfig()->getHub();
+		$config = $this->getConfig();
+		$hub = $config->getHub();
 		if ( !empty( $hub ) ) {
 			if ( strtolower( $result['hub_s'] ) !== strtolower( $hub ) ) {
 				return false;
 			}
 		}
-		$hubs = $this->getConfig()->getHubs();
+		$hubs = $config->getHubs();
 		if ( !empty( $hubs ) ) {
 			$found = false;
 			foreach ( $hubs as $hub )
