@@ -26,7 +26,7 @@ var AdLogicPageDimensions = function (window, document, log, slotTweaker) {
 		mediaQueriesToCheck = {
 			oneColumn: 'screen and (max-width: 1023px)',
 			noTopButton: 'screen and (max-width: 1030px)',
-			noSkins: 'screen and (max-width: 1280px)'
+			noSkins: 'screen and (max-width: 1260px)'
 		},
 		slotsToHideOnMediaQuery = {
 			TOP_BUTTON_WIDE: 'noTopButton',
