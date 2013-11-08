@@ -36,7 +36,7 @@ ve.inheritClass( ve.ui.MWTransclusionDialog, ve.ui.MWDialog );
 
 ve.ui.MWTransclusionDialog.static.name = 'transclusion';
 
-ve.ui.MWTransclusionDialog.static.titleMessage = 'visualeditor-dialog-transclusion-title';
+ve.ui.MWTransclusionDialog.static.titleMessage = 'wikia-visualeditor-dialog-transclusion-title';
 
 ve.ui.MWTransclusionDialog.static.icon = 'template';
 

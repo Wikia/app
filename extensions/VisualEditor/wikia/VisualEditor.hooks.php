@@ -8,6 +8,12 @@
 
 class VisualEditorWikiaHooks {
 
+	public static function onListDefinedTags( &$tags ) {
+		$tags[] = 'wikia-visualeditor';
+		$tags[] = 'wikia-visualeditor-needcheck';
+		return true;
+	}
+	
 	public static function onResourceLoaderTestModules( array &$testModules, ResourceLoader &$resourceLoader ) {
 		global $wgVisualEditorWikiaResourceTemplate;
 

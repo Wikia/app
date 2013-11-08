@@ -28,6 +28,10 @@ ve.ce.AlienNode = function VeCeAlienNode( model, config ) {
 
 	// DOM changes
 	this.$.addClass( 've-ce-alienNode' );
+	
+	// Update tooltip in constructor to allow Wikia messages to load first
+	ve.ce.AlienNode.static.$phantomTemplate
+		.attr( 'title', ve.msg( 'wikia-visualeditor-aliennode-tooltip' ) );
 };
 
 /* Inheritance */
