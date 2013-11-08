@@ -164,7 +164,7 @@ class CombinedSearchService {
 			->setInterWiki(true)
 			->setCommercialUse($this->getHideNonCommercialContent())
 			->setLanguageCode($lang);
-		if (!empty($hubs)) {
+		if ( !empty($hubs) ) {
 			$crossWikiSearchConfig->setHubs($hubs);
 		}
 		$crossWikiResultSet = (new Factory)->getFromConfig($crossWikiSearchConfig)->search();

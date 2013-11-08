@@ -123,12 +123,13 @@ class InterWiki extends AbstractDismax
 		$hubs = $this->getConfig()->getHubs();
 		if (! empty( $hub ) ) {
 			$filterQueries[] = Utilities::valueForField( 'hub_s', $hub );
-		} else if( !empty( $hubs ) ) {
+		}
+		if( !empty( $hubs ) ) {
 			$hubsQuery = '';
 			foreach ( $hubs as $hub ) {
 				$hubsQuery .= ( !empty( $hubsQuery ) ? ' OR ' : '' ) . Utilities::valueForField( 'hub_s', $hub );
 			}
-			$filterQueries[] = "({$hubsQuery})";
+			$filterQueries[] = "+({$hubsQuery})";
 		}
 		return implode( ' AND ', $filterQueries );
 	}
