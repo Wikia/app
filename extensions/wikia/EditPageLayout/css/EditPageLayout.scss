@@ -453,22 +453,36 @@ body {
 			@media screen and (max-width: $width-outside) {
 				.EditPageRail {
 					.module_page_controls {
-						.wikia-menu-button,
 						#wpSave {
 							// fix for touch devices, because in touchScreen.scss height is set to 30px !important
 							height: 21px !important;
-							top: 30px;
+							margin: 0;
+							right: 20px;
+							top: 40px;
+						}
+						.wikia-menu-button {
+							margin: 0;
+							right: 145px;
+							top: 40px;
 						}
 						#wpSummaryLabel {
 							clear: none;
 						}
-						#wpSummary {
-							float: right;
-							margin: 0 10px 0 0;
+						.checkboxes {
+							position: absolute;
+							right: 275px;
+							top: 37px;
+							label {
+								float: right;
+								margin: 0 0 0 10px;
+								position: static;
+							}
 						}
-						label,
 						textarea {
+							float: right;
+							margin: 0 0 0 10px;
 							position: static;
+							width: 380px;
 						}
 					}
 				}
