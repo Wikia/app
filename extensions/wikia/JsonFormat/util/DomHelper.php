@@ -6,6 +6,7 @@
  */
 
 class DomHelper {
+	private static $hasDescendantHeaderInternalCache = [];
 
 	/**
 	 * @param DOMNode $node
@@ -70,18 +71,29 @@ class DomHelper {
 		return false;
 	}
 
-	public static function hasAncestorTag( DomElement $domElement, $tagNames ) {
-		$set = array_flip( $tagNames );
-		return self::hasAncestorTagInternal( $domElement, $set );
+	public static function hasDescendantHeader( DomElement $domElement ) {
+		return self::hasDescendantHeaderInternalCached( $domElement );
 	}
 
-	private static function hasAncestorTagInternal( DOMElement $domElement, &$tagNameSet ) {
+	private static function hasDescendantHeaderInternalCached( DOMElement $domElement ) {
+		$cacheId = spl_object_hash( $domElement );
+		if ( isset( self::$hasDescendantHeaderInternalCache[ $cacheId ] ) ) {
+			return self::$hasDescendantHeaderInternalCache[ $cacheId ];
+		}
+		$result = self::hasDescendantHeaderInternal( $domElement );
+		self::$hasDescendantHeaderInternalCache[ $cacheId ] = $result;
+		return $result;
+	}
+
+	private static function hasDescendantHeaderInternal( DOMElement $domElement ) {
 		foreach ( $domElement->childNodes as $node ) {
 			if ( $node instanceof DOMElement ) {
-				if ( isset($tagNameSet[ $node->tagName ]) ) {
+				if ( $node->tagName[0] === 'h' &&
+					is_numeric($node->tagName[1]) &&
+					strlen( $node->tagName ) === 2 ) {
 					return true;
 				}
-				if( self::hasAncestorTagInternal( $node, $tagNameSet ) ) {
+				if( self::hasDescendantHeaderInternalCached( $node ) ) {
 					return true;
 				}
 			}
