@@ -449,7 +449,7 @@ abstract class AbstractSelect
 		if ( !empty( $hubs ) ) {
 			$found = false;
 			foreach ( $hubs as $hub )
-			if ( strtolower( $result['hub_s'] ) === strtolower( $hub ) ) {
+			if ( strtolower( $result['hub_s'] ) === strtolower( trim($hub) ) ) {
 				$found = true;
 			}
 			if ( !$found ) {
