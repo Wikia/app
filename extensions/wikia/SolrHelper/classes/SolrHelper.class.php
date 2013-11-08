@@ -33,7 +33,7 @@ class SolrHelper {
 	}
 
 	public function updateDocuments( $documents ) {
-		if ( !is_array( $documents ) || !is_array( $documents[ 0 ] ) ) {
+		if ( !is_array( $documents ) || !is_array( reset( $documents ) ) ) {
 			throw new \InvalidArgumentException( 'Expected format: [ [xxx=>1,yyy=>2} , ... ]' );
 		}
 
@@ -41,17 +41,21 @@ class SolrHelper {
 
 		$list = [ ];
 		foreach ( $documents as $current ) {
-			$doc = $update->createDocument();
-			foreach ( $current as $fName => $fvalue ) {
-				$doc->setField( $fName, $fvalue );
-			}
+			if ( isset( $current[ $this->pageId_field ] ) ) {
+				$doc = $update->createDocument();
+				foreach ( $current as $fName => $fvalue ) {
+					$doc->setField( $fName, $fvalue );
+				}
 
-			$list[ ] = $doc;
+				$list[ ] = $doc;
+			}
 		}
 
-		$update->addDocuments( $list, true );
-		$update->addCommit();
-		$result = $this->client->update( $update );
+		if( !empty( $list ) ) {
+			$update->addDocuments( $list, true );
+			$update->addCommit();
+			$result = $this->client->update( $update );
+		}
 
 		return $result->getStatus();
 	}
@@ -102,7 +106,7 @@ class SolrHelper {
 	}
 
 
-	public function getByArticleId( $wikiID, $articleId, $fields = [ ] ) {
+	public function getByArticleId( $wikiID, $articleId, $fields = [ ], &$numFound ) {
 		if ( $fields && !is_array( $fields ) ) {
 			$fields = [ $fields ];
 		}
@@ -126,8 +130,11 @@ class SolrHelper {
 			$queryObj->setFields( $fields );
 		}
 
+		$queryObj->setRows( count( $articleId ) );
+
 		$queryObj->setQuery( $query );
 		$results = $this->client->select( $queryObj );
+		$numFound = $results->getNumFound();
 
 		return $results->getDocuments();
 	}
