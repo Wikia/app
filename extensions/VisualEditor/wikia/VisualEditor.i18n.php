@@ -27,6 +27,8 @@ $messages['en'] = array(
 	'wikia-visualeditor-dialogbutton-wikiasourcemode-tooltip' => 'Source Editor',
 	'wikia-visualeditor-dialog-wikiasourcemode-title' => 'Source Editor',
 	'wikia-visualeditor-dialog-wikiasourcemode-apply-button' => 'Apply changes',
+	'wikia-visualeditor-dialog-wikiasourcemode-help-link' => 'Help:Wikitext',
+	'wikia-visualeditor-dialog-wikiasourcemode-help-text' => 'Formatting help',
 );
 
 $messages['qqq'] = array(
