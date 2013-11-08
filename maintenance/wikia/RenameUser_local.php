@@ -16,6 +16,8 @@ $optionsWithArgs = array(
 	'rename-user-id',
 	'rename-old-name',
 	'rename-new-name',
+	'rename-old-name-enc',
+	'rename-new-name-enc',
 	'rename-fake-user-id',
 	'phalanx-block-id',
 	'task-id',
@@ -30,6 +32,14 @@ global $IP, $wgCityId;
 if( isset( $options['help'] ) && $options['help'] ) {
 	echo( "Usage: SERVER_ID=target_cityId php RenameUser_local.php --rename-user-id {int} --rename-old-name {string} --rename-new-name {string} --requestor-id {int} [--phalanx-block-id {int}] [--task-id {int}] [--reason {string}] --conf {path} --aconf {path}\n\n" );
 	exit( 0 );
+}
+
+// BAC-602: decode user names if they were encoded first
+if ( !empty( $options['rename-old-name-enc'] ) ) {
+	$options['rename-old-name'] = rawurldecode($options['rename-old-name-enc']);
+}
+if ( !empty( $options['rename-new-name-enc'] ) ) {
+	$options['rename-new-name'] = rawurldecode($options['rename-new-name-enc']);
 }
 
 if ( !isset( $options['rename-user-id'] ) || !is_numeric( $options['rename-user-id'] ) || empty($options['rename-old-name']) || empty($options['rename-new-name']) ) {
