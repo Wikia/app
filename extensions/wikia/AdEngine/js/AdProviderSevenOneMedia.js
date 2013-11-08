@@ -10,9 +10,11 @@ var AdProviderSevenOneMedia = function (log, window, tracker, $, sevenOneMedia) 
 
 //			PREFOOTER_LEFT_BOXAD: 'promo1',
 
-			TOP_LEADERBOARD: 'topads',
-			HOME_TOP_LEADERBOARD: 'topads',
-			HUB_TOP_LEADERBOARD: 'topads'
+			TOP_LEADERBOARD: 'topAds',
+			HOME_TOP_LEADERBOARD: 'topAds',
+			HUB_TOP_LEADERBOARD: 'topAds',
+
+			SEVENONEMEDIA_FLUSH: 'trackEnd'
 		};
 
 	function canHandleSlot(slot) {
@@ -71,7 +73,7 @@ var AdProviderSevenOneMedia = function (log, window, tracker, $, sevenOneMedia) 
 			$('#' + slotname).removeClass('default-height');
 		}
 
-		if (slotDeName === 'topads') {
+		if (slotDeName === 'topAds') {
 			makeTopAds();
 			sevenOneMedia.pushAd('popup1');
 			sevenOneMedia.pushAd('fullbanner2', {afterFinish: handleTopButton});
@@ -85,6 +87,10 @@ var AdProviderSevenOneMedia = function (log, window, tracker, $, sevenOneMedia) 
 			$('#' + slotname).append($slot);
 			sevenOneMedia.pushAd(slotDeName, {beforeFinish: clearDefaultHeight});
 			sevenOneMedia.flushAds();
+		}
+
+		if (slotDeName === 'trackEnd') {
+			sevenOneMedia.trackEnd(slotname);
 		}
 	}
 

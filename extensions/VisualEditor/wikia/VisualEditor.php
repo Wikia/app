@@ -13,12 +13,12 @@ $dir = dirname( __FILE__ ) . '/';
 $wgAutoloadClasses['VisualEditorWikiaHooks'] = $dir . 'VisualEditor.hooks.php';
 $wgAutoloadClasses['ApiTempUpload'] = $dir . 'ApiTempUpload.php';
 $wgAutoloadClasses['ApiMediaSearch'] = $dir . 'ApiMediaSearch.php';
-$wgAutoloadClasses['ApiImageAttribution'] = $dir . 'ApiImageAttribution.php';
+$wgAutoloadClasses['ApiPhotoAttribution'] = $dir . 'ApiPhotoAttribution.php';
 
 // Register API modules
 $wgAPIModules['apitempupload'] = 'ApiTempUpload';
 $wgAPIModules['apimediasearch'] = 'ApiMediaSearch';
-$wgAPIModules['apiimageattribution'] = 'ApiImageAttribution';
+$wgAPIModules['apiphotoattribution'] = 'ApiPhotoAttribution';
 
 // Register resource modules
 $wgVisualEditorWikiaResourceTemplate = array(
@@ -71,8 +71,10 @@ $wgResourceModules += array(
 			've/ce/ve.ce.WikiaInlineVideoNode.js',
 
 			// ui
-			've/ui/dialogs/ve.ui.WikiaMediaInsertDialog.js',
 			've/ui/tools/buttons/ve.ui.WikiaMediaInsertButtonTool.js',
+			've/ui/tools/buttons/ve.ui.WikiaSourceModeButtonTool.js',
+			've/ui/dialogs/ve.ui.WikiaMediaInsertDialog.js',
+			've/ui/dialogs/ve.ui.WikiaSourceModeDialog.js',
 			've/ui/widgets/ve.ui.WikiaCartWidget.js',
 			've/ui/widgets/ve.ui.WikiaCartItemWidget.js',
 			've/ui/widgets/ve.ui.WikiaMediaPageWidget.js',

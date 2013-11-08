@@ -29,6 +29,7 @@
 @import "core/reset";
 @import "core/modal";
 @import "core/body";
+@import "core/background";
 @import "core/globalelements";
 @import "core/GlobalHeader";
 @import "core/AccountNavigation";
@@ -88,6 +89,5 @@
 // they override some of the styles.
 @import "core/responsive-variables";
 @import "core/responsive-font-sizing";
-@import "core/responsive-background";
 @import "core/responsive-core";
 @import "core/responsive-mainpage-tag";
