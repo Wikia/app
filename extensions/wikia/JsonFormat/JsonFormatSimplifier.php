@@ -145,10 +145,9 @@ class JsonFormatSimplifier {
 
 	}
 
-	/**
-	 * @throws \InvalidParameterApiException
-	 */
+
 	public function getJsonFormat( \JsonFormatRootNode $rootNode, $articleTitle ) {
+		$timer = Time::start([__CLASS__, __METHOD__]);
 		/** @var \JsonFormatSectionNode[]|\JsonFormatRootNode[] $sections */
 		$sections = [];
 		$this->findSections( $rootNode, $sections );
@@ -176,6 +175,7 @@ class JsonFormatSimplifier {
 			];
 		}
 		$returnSections = array_reverse($returnSections);
+		$timer->stop();
 		return [
 			"sections" => $returnSections
 		];

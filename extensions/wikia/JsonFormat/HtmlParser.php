@@ -2,12 +2,15 @@
 
 namespace Wikia\JsonFormat;
 
+use Wikia\Measurements\Time;
+
 class HtmlParser {
 	/**
 	 * @param string $html
 	 * @return \JsonFormatNode
 	 */
 	public function parse( $html ) {
+		$time = Time::start([__CLASS__, __METHOD__]);
 		$doc = new \DOMDocument();
 
 		libxml_use_internal_errors(true);
@@ -19,10 +22,13 @@ class HtmlParser {
 		$jsonFormatTraversingState = new \JsonFormatBuilder();
 		$visitor = $this->createVisitor( $jsonFormatTraversingState );
 		$visitor->visit( $body );
-		return $jsonFormatTraversingState->getJsonRoot();
+		$root = $jsonFormatTraversingState->getJsonRoot();
+		$time->stop();
+		return $root;
 	}
 
-	protected function debugOut( \DOMNode $node, $indent ) {
+	/*
+	private function debugOut( \DOMNode $node, $indent ) {
 		for ( $i = 0; $i < $indent; $i++ ) echo ' ';
 		if( $node instanceof \DOMText ) {
 			echo "text {$node->textContent}\n";
@@ -34,6 +40,7 @@ class HtmlParser {
 			}
 		}
 	}
+	*/
 
 	protected function createVisitor( $jsonFormatTraversingState ) {
 		$compositeVisitor = new \CompositeVisitor();
