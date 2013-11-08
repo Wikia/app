@@ -82,6 +82,7 @@ ve.ui.WikiaSourceModeDialog.prototype.onOpen = function () {
  */
 ve.ui.WikiaSourceModeDialog.prototype.onSerialize = function ( wikitext ) {
 	this.sourceModeTextarea.setValue( wikitext );
+	this.sourceModeTextarea.$input.focus();
 	this.$frame.stopThrobbing();
 };
 
