@@ -118,7 +118,6 @@ class Editcount extends SpecialPage {
 		global $wgMemc;
 		$key = wfMemcKey( 'namespaceCount', $uid );
 		$nscount = $wgMemc->get($key);
-
 		if ( empty($nscount) ) {
 			$nscount = array();
 
@@ -262,8 +261,8 @@ class EditcountHTML extends Editcount {
 		$title = SpecialPage::getTitleFor( $name ); // get link WITHOUT subpage
 		$action = $title->getLocalUrl();
 
-		$user = wfMsgHtml( 'editcount_username' );
-		$submit = wfMsgHtml( 'editcount_submit' );
+		$user = wfMessage( 'editcount_username' )->escaped();
+		$submit = wfMessage( 'editcount_submit' )->escaped();
 
 		$editcounttable = ($username != null && $uid != 0) ? $this->makeTable() : "";
 
@@ -288,7 +287,7 @@ class EditcountHTML extends Editcount {
 		global $wgLang, $wgCityId, $wgDBname;
         wfProfileIn( __METHOD__ );
 
-		$total = wfMsgHtml( 'editcount_total' );
+		$total = wfMessage( 'editcount_total' )->escaped();
 		$wikiName = $wgDBname;
 		/* current wiki */
 		$ftotal = $wgLang->formatNum( $this->total );
