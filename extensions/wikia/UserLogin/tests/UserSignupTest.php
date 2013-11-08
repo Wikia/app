@@ -326,7 +326,7 @@
 		/**
 		 * @dataProvider changeUnconfirmedUserEmailDataProvider
 		 */
-		public function testChangeTempUserEmail( $params, $mockUserParams, $mockSessionParams, $mockCacheParams, $expResult, $expMsg, $expErrParam ) {
+		public function testChangeUnconfirmedUserEmail( $params, $mockUserParams, $mockSessionParams, $mockCacheParams, $expResult, $expMsg, $expErrParam ) {
 			// setup
 			$this->setUpMockObject( 'User', $mockUserParams, true );
 
@@ -338,9 +338,6 @@
 				);
 			}
 			$this->setUpMock( $mockCacheParams );
-
-			//Set up empty TempUser
-			$this->setUpMockObject( 'TempUser', false, true );
 
 			// test
 			$response = $this->app->sendRequest( 'UserSignupSpecial', 'changeUnconfirmedUserEmail', $params );
@@ -357,6 +354,7 @@
 			// tear down
 			$this->tearDownSession( $mockSessionParams );
 		}
+
 
 		public function changeUnconfirmedUserEmailDataProvider() {
 			// error - empty email
@@ -548,24 +546,6 @@
 
 			// tear down
 			$this->tearDownSession( $mockSessionParams );
-		}
-
-		/**
-		 * @dataProvider isTempUserDataProvider
-		 */
-		public function testIsTempUser( $mockTempUserParams, $globalDisableTempUserMock, $username, $expResult ) {
-
-			$this->mockGlobalVariable( 'wgDisableTempUser', $globalDisableTempUserMock );
-			$this->setUpMockObject( 'TempUser', $mockTempUserParams, true );
-
-			//Clear static isTempUser as it stays set between tests
-			UserLoginHelper::clearIsTempUserStatic($username);
-
-			// test
-			$responseData = UserLoginHelper::isTempUser($username);
-
-			$this->assertEquals( $expResult, $responseData, 'result' );
-
 		}
 
 		public function sendConfirmationEmailDataProvider() {
@@ -846,32 +826,6 @@
 				array($mockWebRequest101, $params102, $mockEmailAuth105, $mockUser6, $mockSession104, $mockCache108, $mockMessagesMap107, '', 'error', $expMsg107, $expMsgEmail1, '', $expHeading101, $expSubheading1),
 				'success - email sent < limit ( POST + action = resendconfirmation )' =>
 				array($mockWebRequest101, $params102, $mockEmailAuth105, $mockUser7, $mockSession104, $mockCache109, $mockMessagesMap7, $mockMsgExt1, 'ok', $expMsg7, $expMsgEmail1, '', $expHeading101, $expSubheading1),
-			);
-		}
-
-		public function isTempUserDataProvider() {
-
-			// TempUser globally disabled wgDisableTempUser = true
-			$globalDisableTempUserMock = true;
-			$globalDisableTempUserMock2 = false;
-
-			$username = self::TEST_USERNAME;
-
-			// TempUser exists
-			$mockTempUserParams1 = array(
-				'getTempUserFromName' => true
-			);
-
-			// TempUser doesn't exist
-			$mockTempUserParams2 = false;
-
-			return array (
-				'TempUser globally disabled wgDisableTempUser = true' =>
-				array($mockTempUserParams1, $globalDisableTempUserMock, $username, false),
-				'TempUser exists' =>
-				array($mockTempUserParams1, $globalDisableTempUserMock2, $username, true),
-				'TempUser doesnt exist' =>
-				array($mockTempUserParams2, $globalDisableTempUserMock2, $username, false),
 			);
 		}
 

@@ -1,4 +1,4 @@
-/*global require*/
+/*global require, setTimeout*/
 
 var SevenOneMediaHelper = function (adLogicPageLevelParams, scriptWriter, log, window, $, tracker) {
 	'use strict';
@@ -12,6 +12,7 @@ var SevenOneMediaHelper = function (adLogicPageLevelParams, scriptWriter, log, w
 		allLoaded = false,
 		pageLevelParams = adLogicPageLevelParams.getPageLevelParams(),
 		firstSlotname,
+		waitForMyAdCssMs = 2000, // if CSS callback is not called within 2000 ms, call it anyways (Safari 5 bug)
 		slotVars = {
 			'popup1': {
 				SOI_PU1: true,
@@ -164,13 +165,21 @@ var SevenOneMediaHelper = function (adLogicPageLevelParams, scriptWriter, log, w
 	}
 
 	function injectStyles(done) {
+		var doneCalled = false;
+
+		function runDoneOnce() {
+			if (!doneCalled) {
+				doneCalled = true;
+				done();
+			}
+		}
+
 		require(['wikia.loader'], function (loader) {
-			loader('/extensions/wikia/AdEngine/SevenOneMedia/my_ad_integration.css').done(
-				function () {
-					$('#WikiaTopAds').hide();
-					done();
-				}
-			);
+			loader('/extensions/wikia/AdEngine/SevenOneMedia/my_ad_integration.css').
+				done(runDoneOnce);
+
+			// On Safari 5 there's no callback on CSS load
+			setTimeout(runDoneOnce, waitForMyAdCssMs);
 		});
 	}
 
@@ -263,6 +272,7 @@ var SevenOneMediaHelper = function (adLogicPageLevelParams, scriptWriter, log, w
 				log(['injectJavaScript failed', what], 'error', logGroup);
 				if (retries === 3) {
 					log(['injectJavaScript failed after 3 retries. Quiting', what], 'error', logGroup);
+					return;
 				}
 				retries += 1;
 				track('error/scripts' + retries);
