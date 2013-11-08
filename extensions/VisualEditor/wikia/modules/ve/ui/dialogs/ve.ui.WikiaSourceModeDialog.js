@@ -50,8 +50,10 @@ ve.ui.WikiaSourceModeDialog.prototype.initialize = function () {
 	} );
 	this.$helpLink = this.$$('<a>')
 		.addClass( 've-ui-wikiaSourceModeDialog-helplink' )
-		.attr( 'href', new mw.Title( ve.msg( 'wikia-visualeditor-dialog-wikiasourcemode-help-link' ) ).getUrl() )
-		.attr( 'target', '_blank' )
+		.attr( {
+			'href': new mw.Title( ve.msg( 'wikia-visualeditor-dialog-wikiasourcemode-help-link' ) ).getUrl(),
+			'target': '_blank'
+		} )
 		.text( ve.msg( 'wikia-visualeditor-dialog-wikiasourcemode-help-text' ) );
 
 	// Events
