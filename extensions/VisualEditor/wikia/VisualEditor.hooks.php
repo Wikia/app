@@ -46,3 +46,4 @@ class VisualEditorWikiaHooks {
 		return true;
 	}
 }
+
