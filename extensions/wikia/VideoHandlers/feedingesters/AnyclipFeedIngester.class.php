@@ -214,7 +214,7 @@ class AnyclipFeedIngester extends VideoFeedIngester {
 
 		$url = AnyclipApiWrapper::getApi( $code );
 		$req = MWHttpRequest::factory( $url );
-		$status = $req->execute();
+		$status = VideoHandlerHelper::wrapHttpRequest( $req );
 		if( $status->isOK() ) {
 			$response = $req->getContent();
 			$content = json_decode( $response, true );
