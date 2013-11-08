@@ -251,14 +251,18 @@ class ThemeSettings {
 	public function getWordmarkUrl( $wikiId = null ) {
 		$wordmarkName = $this->getSettings()['wordmark-image-name'];
 
-		if ( !is_int( $wikiId )) {
+		if ( !is_int( $wikiId ) ) {
 			$title = Title::newFromText( $wordmarkName, NS_FILE );
 			$file = ($title instanceof Title) ? wfFindFile( $title ) : false;
 		} else {
 			$file = GlobalFile::newFromText( $wordmarkName, $wikiId );
 		}
 
-		return method_exists( $file, 'getUrl' ) ? $file->getUrl() : false;
+		if ( method_exists( $file, 'exists' ) && $file->exists() && method_exists( $file, 'getUrl' ) ) {
+			return $file->getUrl();
+		}
+
+		return '';
 	}
 
 	/**
