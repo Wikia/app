@@ -32,7 +32,7 @@
 		border-color: $color-page-border;
 	}
 	.loading-overlay {
-		background: url("/skins/common/images/ajax.gif") no-repeat scroll center #FFF;/* $wgCdnStylePath */
+		background: url("/skins/common/images/ajax.gif") no-repeat scroll center $color-page;/* $wgCdnStylePath */
 		bottom: 0;
 		left: 0;
 		opacity: .75;

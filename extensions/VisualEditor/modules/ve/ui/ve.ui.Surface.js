@@ -265,7 +265,8 @@ ve.ui.Surface.prototype.getDir = function () {
 };
 
 /**
- * TODO: Document
+ * @method
+ * @returns {ve.init.mw.Target}
  */
 ve.ui.Surface.prototype.getTarget = function () {
 	return this.target;

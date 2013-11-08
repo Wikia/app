@@ -713,11 +713,9 @@ ve.init.mw.Target.prototype.serialize = function ( doc, callback ) {
 };
 
 /**
- * TODO: Document...
- *
  * @method
  * @param {string} wikitext
-*/
+ */
 ve.init.mw.Target.prototype.setWikitext = function ( wikitext ) {
 	this.wikitext = wikitext;
 };
