@@ -82,7 +82,10 @@ class SearchApiController extends WikiaApiController {
 
 	public function getCombined() {
 		if ( !$this->request->getVal( 'query' ) ) {
-			throw new InvalidParameterApiException( 'query' );
+			throw new MissingParameterApiException( 'query' );
+		}
+		if ( $this->request->getVal( 'lang' ) ) {
+			throw new InvalidParameterApiException( 'lang' );
 		}
 		$query = $this->request->getVal( 'query' );
 		$langs = $this->request->getArray( 'langs', ['en'] );
