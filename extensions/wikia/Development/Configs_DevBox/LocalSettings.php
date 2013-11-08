@@ -91,7 +91,7 @@ $wgFSSwiftDC = [
 		]
 	],
 	'poz' => [
-		'server' => [
+		'servers' => [
 			's3.dev-dfs-p1'
 		],
 		'config' => [
