@@ -97,9 +97,12 @@ class UserRenameLocalTask extends BatchTask {
 						"--requestor-id {$this->mParams['requestor_id']} --reason {$this->mParams['reason']} ".
 						"--rename-ip-address --conf {$wgWikiaLocalSettingsPath} --aconf {$aconf}";
 				} else {
+					// BAC-602: encode special characters so they don't get removed
+					$oldUsernameEnc = escapeshellarg(rawurlencode($oldUsername));
+					$newUsernameEnc = escapeshellarg(rawurlencode($newUsername));
 					$cmd = "SERVER_ID={$cityId} php {$IP}/maintenance/wikia/RenameUser_local.php ".
-						"--rename-user-id {$this->mParams['rename_user_id']} --rename-old-name {$this->mParams['rename_old_name']} ".
-						"--rename-new-name {$this->mParams['rename_new_name']} --rename-fake-user-id {$this->mParams['rename_fake_user_id']} ".
+						"--rename-user-id {$this->mParams['rename_user_id']} --rename-old-name-enc {$oldUsernameEnc} ".
+						"--rename-new-name-enc {$newUsernameEnc} --rename-fake-user-id {$this->mParams['rename_fake_user_id']} ".
 						"--phalanx-block-id {$this->mParams['phalanx_block_id']} ".
 						"--task-id {$this->mTaskID} --requestor-id {$this->mParams['requestor_id']} --reason {$this->mParams['reason']} ".
 						"--global-task-id {$this->mParams['global_task_id']} --conf {$wgWikiaLocalSettingsPath} --aconf {$aconf}";
@@ -133,10 +136,11 @@ class UserRenameLocalTask extends BatchTask {
 
 		//send e-mail to the user that rename process has finished
 		$notify = array( $requestorUser );
-		if ( $notifyRenamed ) {
+		if ( $notifyRenamed && !empty($renamedUser) ) {
 			$notify[] = $renamedUser;
 		}
 
+		/** @var $notifyUser User */
 		foreach ( $notify as $notifyUser ) {
 			if($notifyUser->getEmail() != null){
 				$notifyUser->sendMail(
@@ -147,10 +151,10 @@ class UserRenameLocalTask extends BatchTask {
 					'UserRenameProcessFinishedNotification',
 					wfMsgForContent('userrenametool-finished-email-body-html', $oldUsername, $newUsername)
 				);
-				$process->addLog("Notification sent.");
+				$process->addLog("Notification sent to: ".$notifyUser->getEmail());
 			}
 			else{
-				$process->addLog("Cannot send email, requestor user has no email address.");
+				$process->addLog("Cannot send email, no email set for user: ".$notifyUser->getName());
 			}
 		}
 
@@ -167,9 +171,9 @@ class UserRenameLocalTask extends BatchTask {
 	* @author eloy@wikia
 	*
 	* @param Title $title: Title struct
-	* @param mixes $data: params from HTML form
+	* @param mixed $data: params from HTML form
 	*
-	* @return false
+	* @return bool false
 	*/
 	public function getForm( $title, $data = false ) {
 		return false;
@@ -212,7 +216,7 @@ class UserRenameLocalTask extends BatchTask {
 	* @access public
 	* @author eloy@wikia
 	*
-	* @return true
+	* @return bool true
 	*/
 	public function submitForm() {
 		return true;

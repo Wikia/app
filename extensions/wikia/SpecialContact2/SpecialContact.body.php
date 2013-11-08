@@ -638,14 +638,6 @@ class ContactForm extends SpecialPage {
 			return false;
 		}
 
-		// check if exist in tempUser
-		// @TODO get rid of TempUser handling when it will be globally disabled
-		if ( TempUser::getTempUserFromName( $userName ) ) {
-			$this->err[] = wfMsg( 'userlogin-error-userexists' );
-			$this->errInputs['wpUserNameNew'] = true;
-			return false;
-		}
-
 		// check username length
 		if ( !User::isNotMaxNameChars( $userName ) ) {
 			$this->err[] = wfMsg( 'usersignup-error-username-length', $wgWikiaMaxNameChars );

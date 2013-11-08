@@ -96,12 +96,6 @@ class UserLoginForm extends LoginForm {
 			return false;
 		}
 
-		// check if exist in tempUser
-		if ( UserLoginHelper::isTempUser( $this->mUsername ) && TempUser::getTempUserFromName( $this->mUsername ) ) {
-			$this->mainLoginForm( wfMessage( 'userlogin-error-userexists' )->escaped(), 'error', 'username' );
-			return false;
-		}
-
 		// check username length
 		if( !User::isNotMaxNameChars($this->mUsername) ) {
 			global $wgWikiaMaxNameChars;

@@ -393,4 +393,45 @@ class VideoHandlerHelper extends WikiaModel {
 		$oUploader->setTargetTitle( $title->getDBkey() );
 		return $oUploader->resetThumbnail( $file );
 	}
+
+	/**
+	 * Reset proxy before sending request
+	 * @param Request $req
+	 * @return Status $status
+	 */
+	public static function wrapHttpRequest( &$req ) {
+		$app = F::app();
+
+		// reset proxy to blank
+		$originalProxy = $app->wg->HTTPProxy;
+		$app->wg->HTTPProxy = '';
+
+		$status = $req->execute();
+
+		// set proxy to original value
+		$app->wg->HTTPProxy = $originalProxy;
+
+		return $status;
+	}
+
+	/**
+	 * Reset proxy before sending Http::get
+	 * @param Request $req
+	 * @return type
+	 */
+	public static function wrapHttpGet( $url ) {
+		$app = F::app();
+
+		// reset proxy to blank
+		$originalProxy = $app->wg->HTTPProxy;
+		$app->wg->HTTPProxy = '';
+
+		$result = Http::get( $url );
+
+		// set proxy to original value
+		$app->wg->HTTPProxy = $originalProxy;
+
+		return $result;
+	}
+
 }
