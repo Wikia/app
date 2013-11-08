@@ -27,21 +27,6 @@
 	}
 }
 
-.ve-ui-dialog-content {
-	.ve-ui-window-body .ve-ui-surface {
-		border-color: $color-page-border;
-	}
-	.loading-overlay {
-		background: url("/skins/common/images/ajax.gif") no-repeat scroll center $color-page;/* $wgCdnStylePath */
-		bottom: 0;
-		left: 0;
-		opacity: .75;
-		position: absolute;
-		right: 0;
-		top: 0;
-		&.hidden {
-			display: none;
-		}
-	}
-
+.ve-ui-dialog-content .ve-ui-window-body .ve-ui-surface {
+	border-color: $color-page-border;
 }

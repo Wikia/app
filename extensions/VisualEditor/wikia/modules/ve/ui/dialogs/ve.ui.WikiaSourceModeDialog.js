@@ -9,7 +9,7 @@
  * Dialog for editing wikitext in source mode.
  *
  * @class
- * @extends ve.ui.WikiaDialog
+ * @extends ve.ui.MWDialog
  *
  * @constructor
  * @param {ve.ui.Surface} surface
@@ -17,12 +17,12 @@
  */
 ve.ui.WikiaSourceModeDialog = function VeUiWikiaSourceModeDialog( surface, config ) {
 	// Parent constructor
-	ve.ui.WikiaDialog.call( this, surface, config );
+	ve.ui.MWDialog.call( this, surface, config );
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.ui.WikiaSourceModeDialog, ve.ui.WikiaDialog );
+ve.inheritClass( ve.ui.WikiaSourceModeDialog, ve.ui.MWDialog );
 
 /* Static Properties */
 
@@ -69,7 +69,7 @@ ve.ui.WikiaSourceModeDialog.prototype.onOpen = function () {
 	// Parent method
 	ve.ui.WikiaDialog.prototype.onOpen.call( this );
 
-	this.showLoadingOverlay();
+	this.$frame.startThrobbing();
 	this.surface.getTarget().serialize(
 		ve.dm.converter.getDomFromData( doc.getFullData(), doc.getStore(), doc.getInternalList() ),
 		ve.bind( this.onSerialize, this )
@@ -82,14 +82,14 @@ ve.ui.WikiaSourceModeDialog.prototype.onOpen = function () {
  */
 ve.ui.WikiaSourceModeDialog.prototype.onSerialize = function ( wikitext ) {
 	this.sourceModeTextarea.setValue( wikitext );
-	this.hideLoadingOverlay();
+	this.$frame.stopThrobbing();
 };
 
 /**
  * @method
  */
 ve.ui.WikiaSourceModeDialog.prototype.onApply = function () {
-	this.showLoadingOverlay();
+	this.$frame.startThrobbing();
 	this.parse();
 };
 
@@ -121,7 +121,7 @@ ve.ui.WikiaSourceModeDialog.prototype.parse = function( ) {
 		'cache': 'false',
 		'success': ve.bind( this.onParseSuccess, this ),
 		'error': ve.bind( this.onParseError, this ),
-		'complete': ve.bind( this.hideLoadingOverlay, this )
+		'complete': this.$frame.stopThrobbing
 	} );
 };
 
