@@ -36,7 +36,7 @@ ve.ui.WikiaSourceModeDialog.static.icon = 'source';
 
 ve.ui.WikiaSourceModeDialog.prototype.initialize = function () {
 	// Parent method
-	ve.ui.WikiaDialog.prototype.initialize.call( this );
+	ve.ui.MWDialog.prototype.initialize.call( this );
 
 	// Properties
 	this.sourceModeTextarea = new ve.ui.TextInputWidget({
@@ -67,7 +67,7 @@ ve.ui.WikiaSourceModeDialog.prototype.onOpen = function () {
 	var doc = this.surface.getModel().getDocument();
 
 	// Parent method
-	ve.ui.WikiaDialog.prototype.onOpen.call( this );
+	ve.ui.MWDialog.prototype.onOpen.call( this );
 
 	this.$frame.startThrobbing();
 	this.surface.getTarget().serialize(
