@@ -129,7 +129,7 @@ class SnappytvApiWrapper extends ApiWrapper {
 		$processedResponse = F::app()->wg->memc->get( $memcKey );
 		if ( empty( $processedResponse ) ) {
 			$req = MWHttpRequest::factory( $apiUrl );
-			$status = $req->execute();
+			$status = VideoHandlerHelper::wrapHttpRequest( $req );
 			if( $status->isOK() ) {
 				$response = $req->getContent();
 				$this->response = $response;	// Only for migration purposes
@@ -189,7 +189,7 @@ class SnappytvApiWrapper extends ApiWrapper {
 		$redirectUrl = $app->wg->memc->get( $memcKey );
 		if ( empty($redirectUrl) ) {
 			$req = MWHttpRequest::factory( $url );
-			$status = $req->execute();
+			$status = VideoHandlerHelper::wrapHttpRequest( $req );
 			if( $status->isOK() ) {
 				$response = $req->getContent();
 				if ( !empty( $response ) ) {
@@ -212,7 +212,7 @@ class SnappytvApiWrapper extends ApiWrapper {
 		$info = array();
 		$url = self::getRedirectUrl( $url );
 		$req = MWHttpRequest::factory( $url );
-		$status = $req->execute();
+		$status = VideoHandlerHelper::wrapHttpRequest( $req );
 		if( $status->isOK() ) {
 			$response = $req->getContent();
 			if ( !empty( $response ) ) {

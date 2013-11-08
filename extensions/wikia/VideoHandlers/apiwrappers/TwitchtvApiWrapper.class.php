@@ -55,7 +55,7 @@ class TwitchtvApiWrapper extends ApiWrapper {
 	public function getThumbnailUrl() {
 		$url = str_replace( '$2', 'streams', static::$API_URL );
 		$url = str_replace( '$1', $this->videoId, $url );
-		$content = Http::get( $url );
+		$content = VideoHandlerHelper::wrapHttpGet( $url );
 		$result = json_decode( $content, true );
 		if ( isset( $result['stream']['preview']['large'] ) ) {
 			$thumb = $result['stream']['preview']['large'];
