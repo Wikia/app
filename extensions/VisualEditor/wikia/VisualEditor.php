@@ -106,6 +106,9 @@ $wgResourceModules += array(
 			'wikia-visualeditor-savedialog-label-restore',
 			'wikia-visualeditor-toolbar-savedialog',
 			'visualeditor-descriptionpagelink',
+			'wikia-visualeditor-dialogbutton-wikiasourcemode-tooltip',
+			'wikia-visualeditor-dialog-wikiasourcemode-title',
+			'wikia-visualeditor-dialog-wikiasourcemode-apply-button',
 		),
 		'dependencies' => array(
 			'ext.visualEditor.core',
