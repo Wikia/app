@@ -17,7 +17,15 @@ class SolrHelper {
 	 */
 	protected $client;
 
-	public function __construct( $config ) {
+	protected $wikiId_field;
+
+	protected $pageId_field;
+
+	public function __construct( $config, $wikiId_field = 'wid', $pageId_field = 'pageid' ) {
+
+		$this->pageId_field = $pageId_field;
+		$this->wikiId_field = $wikiId_field;
+
 		if ( !$config || !is_array( $config ) ) {
 			throw new \InvalidArgumentException( 'No config specified' );
 		}
@@ -70,9 +78,9 @@ class SolrHelper {
 		}
 
 		$update = $this->client->createUpdate();
-		$query = '+(wid:' . (int)$wikiID . ') AND ';
+		$query = '+(' . $this->wikiId_field . ':' . (int)$wikiID . ') AND ';
 		if ( $range ) {
-			$query .= ' pageid:[' . $from . ' TO ' . $to . ']';
+			$query .= ' ' . $this->pageId_field . ':[' . $from . ' TO ' . $to . ']';
 		}
 		else {
 			$ids = '';
@@ -82,7 +90,7 @@ class SolrHelper {
 				}
 				$ids .= (int)$val;
 			}
-			$query .= ' pageid:(' . $ids . ')';
+			$query .= ' ' . $this->pageId_field . ':(' . $ids . ')';
 
 		}
 
@@ -94,7 +102,7 @@ class SolrHelper {
 	}
 
 
-	public function getByArticleId( $wikiID, $articleId, $fields = [ ], $config = null ) {
+	public function getByArticleId( $wikiID, $articleId, $fields = [ ] ) {
 		if ( $fields && !is_array( $fields ) ) {
 			$fields = [ $fields ];
 		}
@@ -102,7 +110,7 @@ class SolrHelper {
 			$articleId = [ (int)$articleId ];
 		}
 
-		$query = '+(wid:' . (int)$wikiID . ') AND ';
+		$query = '+(' . $this->wikiId_field . ':' . (int)$wikiID . ') AND ';
 		$ids = '';
 		foreach ( $articleId as &$val ) {
 			if ( $ids > '' ) {
@@ -111,7 +119,7 @@ class SolrHelper {
 			$ids .= (int)$val;
 		}
 
-		$query .= ' pageid:(' . $ids . ')';
+		$query .= ' ' . $this->pageId_field . ':(' . $ids . ')';
 		$queryObj = $this->client->createSelect();
 
 		if ( !empty( $fields ) ) {
