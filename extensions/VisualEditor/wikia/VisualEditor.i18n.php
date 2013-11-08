@@ -54,4 +54,6 @@ $messages['qqq'] = array(
 	'wikia-visualeditor-dialogbutton-wikiasourcemode-tooltip' => 'Call-to-action text rendered in the toolbar button for opening the dialog to edit wikitext in source mode',
 	'wikia-visualeditor-dialog-wikiasourcemode-title' => 'The text that will appear in the header of the source editor dialog',
 	'wikia-visualeditor-dialog-wikiasourcemode-apply-button' => 'Button text for applying changes made in source mode.',
+	'wikia-visualeditor-dialog-wikiasourcemode-help-link' => 'Link to the user guide for how to use Wikitext',
+	'wikia-visualeditor-dialog-wikiasourcemode-help-text' => 'Text for the link to the user guide for how to use Wikitext',
 );
