@@ -95,9 +95,10 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window', 'wikia.browserDetect' ], f
 	 */
 
 	Modal.prototype.show = function() {
-
 		// fix iOS Safari position: fixed - virtual keyboard bug
-		$( w ).scrollTop( $ ( w ).scrollTop() );
+		if ( browserDetect.isIPad() ) {
+			$( w ).scrollTop( $ ( w ).scrollTop() );
+		}
 
 		this.$blackout.addClass( BLACKOUT_VISIBLE_CLASS );
 
