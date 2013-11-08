@@ -272,6 +272,7 @@ var SevenOneMediaHelper = function (adLogicPageLevelParams, scriptWriter, log, w
 				log(['injectJavaScript failed', what], 'error', logGroup);
 				if (retries === 3) {
 					log(['injectJavaScript failed after 3 retries. Quiting', what], 'error', logGroup);
+					return;
 				}
 				retries += 1;
 				track('error/scripts' + retries);
