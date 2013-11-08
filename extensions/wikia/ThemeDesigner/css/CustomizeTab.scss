@@ -1,4 +1,31 @@
 .CustomizeTab {
+	.background {
+		max-width: 430px;
+		.wrap-color {
+			max-width: 60px;
+		}
+		.wrap-middle-color {
+			max-width: 80px;
+			position:relative;
+			.middle-color-mask {
+				display: none;
+				height: 52px;
+				position: absolute;
+				bottom: 3px;
+				width: 52px;
+			}
+		}
+		.wrap-background {
+			max-width: 200px;
+			label {
+				display: block;
+				float: left;
+			}
+		}
+		.not-split-option {
+			display: none;
+		}
+	}
 	.page {
 		padding-left: 40px;
 	}
@@ -14,7 +41,7 @@
 			width: 50px;
 		}
 		.background-image {
-			height: 100px;
+			height: 65px;
 			width: 120px;
 		}
 	}

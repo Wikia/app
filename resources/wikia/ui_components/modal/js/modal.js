@@ -1,4 +1,4 @@
-define( 'wikia.ui.modal', [ 'jquery', 'wikia.window' ], function( $, w ) {
+define( 'wikia.ui.modal', [ 'jquery', 'wikia.window', 'wikia.browserDetect' ], function( $, w, browserDetect ) {
 	'use strict';
 
 	var BLACKOUT_ID = 'blackout',
@@ -22,7 +22,7 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window' ], function( $, w ) {
 	function ieFlexboxFallback( modal ) {
 		var element = modal.$element,
 			HEADER_AND_FOOTER_HEIGHT = 120, // modal header and footer have 60px fixed height
-			winHeight = parseInt( $( w ).height(), 10 ),
+			winHeight = $( w ).height(),
 			modalMaxHeight = ( 90 / 100 ) * winHeight - HEADER_AND_FOOTER_HEIGHT; // 90% viewport - (header + footer)
 
 		element.children( 'section' ).css( 'maxHeight', modalMaxHeight );
@@ -46,7 +46,7 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window' ], function( $, w ) {
 			jQuerySelector = '#' + id;
 
 		this.$element = $( jQuerySelector );
-		if( !this.$element.exists() && typeof( modalMarkup ) !== 'undefined' ) {
+		if ( !this.$element.exists() && typeof( modalMarkup ) !== 'undefined' ) {
 			$( 'body' ).append( modalMarkup );
 			this.$element = $( jQuerySelector );
 		}
@@ -64,7 +64,7 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window' ], function( $, w ) {
 			$blackout.click( $.proxy(function( event ) {
 				event.preventDefault();
 
-				if( this.isShown() && this.isActive() ) {
+				if ( this.isShown() && this.isActive() ) {
 					this.close();
 				}
 			}, that) );
@@ -87,7 +87,7 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window' ], function( $, w ) {
 		}, that ) );
 
 		destroyOnClose = this.$element.data( 'destroy-on-close' );
-		destroyOnClose = ( typeof(destroyOnClose) === 'undefined' ) ? true : destroyOnClose;
+		destroyOnClose = ( typeof( destroyOnClose ) === 'undefined' ) ? true : destroyOnClose;
 	}
 
 	/**
@@ -98,8 +98,7 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window' ], function( $, w ) {
 		this.$blackout.addClass( BLACKOUT_VISIBLE_CLASS );
 
 		// IE flex-box fallback for small and medium modals
-		if ( this.$element.hasClass('large') === false && ( navigator.appName === 'Microsoft Internet Explorer' ||
-			( navigator.appName === 'Netscape' && navigator.userAgent.indexOf('Trident/') !== -1 ) ) ) {
+		if ( this.$element.hasClass('large') === false && browserDetect.isIE() ) {
 
 			this.$blackout.addClass( 'IE-flex-fix' );
 			ieFlexboxFallback( this );

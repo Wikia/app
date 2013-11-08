@@ -315,6 +315,13 @@ $messages['lb'] = array(
 	'tab-discover-no-network-dialog-close-button' => 'OK',
 );
 
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'main-tab-search' => 'پی جوری',
+);
+
 /** Macedonian (македонски)
  * @author Bjankuloski06
  */
@@ -437,7 +444,7 @@ $messages['pt'] = array(
 	'main-tab-offline' => 'Desligado',
 	'tab-discover-loading-message' => 'A carregar…',
 	'tab-discover-no-network-dialog-title' => 'Rede indisponível',
-	'tab-discover-no-network-dialog-message' => 'Não foi detectada uma ligação de rede',
+	'tab-discover-no-network-dialog-message' => 'Não foi detetada uma ligação de rede',
 	'tab-discover-no-network-dialog-close-button' => 'OK',
 	'tab-search-loading-message' => 'A pesquisar...',
 	'browser-loading-message' => 'A carregar…',

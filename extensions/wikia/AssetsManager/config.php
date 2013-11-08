@@ -8,7 +8,8 @@ $config['oasis_shared_core_js'] = array(
 	'assets' => array(
 		'#group_oasis_wikia_js',
 		'//resources/wikia/libraries/sloth/sloth.js',
-		'//resources/wikia/libraries/mustache/mustache.js'
+		'//resources/wikia/libraries/mustache/mustache.js',
+		'//resources/wikia/modules/browserDetect.js',
 	),
 );
 
@@ -45,12 +46,9 @@ $config['adengine2_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		// core
-		'//extensions/wikia/AdEngine/ghost/gw-12.4.4/lib/gw.min.js',
-		'//extensions/wikia/AdEngine/js/gw.config.js',
-
+		'//resources/wikia/modules/scriptwriter.js',
 		'//extensions/wikia/AdEngine/js/Krux.js',
 		'//extensions/wikia/AdEngine/js/SlotTweaker.js',
-		'//extensions/wikia/AdEngine/js/ScriptWriter.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.js',
 
 		// high prio
@@ -59,9 +57,11 @@ $config['adengine2_js'] = array(
 		'//extensions/wikia/AdEngine/js/WikiaDartHelper.js',
 		'//extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
 		'//extensions/wikia/AdEngine/js/WikiaFullGptHelper.js',
+		'//extensions/wikia/AdEngine/js/SevenOneMediaHelper.js',
 		'//extensions/wikia/AdEngine/js/EvolveHelper.js',
 		'//extensions/wikia/AdEngine/js/AdProviderEvolve.js',
 		'//extensions/wikia/AdEngine/js/AdProviderGamePro.js',
+		'//extensions/wikia/AdEngine/js/AdProviderSevenOneMedia.js',
 		'//extensions/wikia/AdEngine/js/AdProviderGpt.js',
 		'//extensions/wikia/AdEngine/js/AdProviderLater.js',
 		'//extensions/wikia/AdEngine/js/AdProviderNull.js',
@@ -91,6 +91,7 @@ $config['oasis_ads_js'] = array(
 		// @requires adengine2 core already loaded
 		// @requires liftium loaded later (TODO FIXME)
 		'//extensions/wikia/AdEngine/js/AdProviderLiftium2Dom.js',
+		'//extensions/wikia/AdEngine/js/AdProviderSevenOneMedia.js',
 		'//extensions/wikia/AdEngine/js/AdConfig2Late.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.configLateAds.js',
 
@@ -209,6 +210,9 @@ $config['oasis_jquery'] = array(
 
 		// jQuery/Oasis specific code
 		'//skins/oasis/js/tables.js',
+
+		// BackgroundChanger
+		'//skins/oasis/js/BackgroundChanger.js',
 
 		// Search A/B testing
 		'//extensions/wikia/Search/js/SearchAbTest.DomUpdater.js',
@@ -436,6 +440,7 @@ $config['wikiamobile_js_body_minimal'] = array(
 
 		//core modules
 		'//resources/wikia/modules/window.js',
+		'//resources/wikia/modules/document.js',
 		'//resources/wikia/modules/location.js',
 		'//resources/wikia/modules/localStorage.js',
 		'//resources/wikia/modules/querystring.js',
@@ -538,6 +543,7 @@ $config['wikiamobile_js_ads'] = array(
 		//I wan't to minimize how much data we have to transfer
 		//We currently don't have JS minimizer so I used minified version of it
 		'//resources/wikia/libraries/postscribe/postscribe.min.js',
+		'//resources/wikia/modules/scriptwriter.js',
 
 		//advertisement "core"
 		'//extensions/wikia/AdEngine/js/AdLogicPageLevelParams.js',
@@ -646,7 +652,7 @@ $config['monobook_js'] = array(
 		'//extensions/FBConnect/fbconnect.js',
 		'//extensions/wikia/AdEngine/AdProviderOpenX.js',
 		'//extensions/wikia/AdEngine/LazyLoadAds.js',
-		'//extensions/wikia/AdEngine/ghost/gw-12.4.4/lib/gw.src.js',
+		'//resources/wikia/libraries/ghostwriter/gw.min.js',
 		'//extensions/wikia/GlobalNotification/GlobalNotification.js',
 		'//extensions/wikia/VideoHandlers/js/VideoBootstrap.js',
 
@@ -1033,7 +1039,14 @@ $config['videohomepage_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'//resources/wikia/libraries/jquery/bxslider/jquery.bxslider.js',
-		'//extensions/wikia/VideoPageTool/js/models/videohomepage.featured.js',
+		'//resources/wikia/libraries/jquery/ellipses.js',
+
+		// Lodash is an underscore.js rewrite and a prereq for Backbone
+		'//extensions/wikia/VideoPageTool/js/lib/lodash/dist/lodash.underscore.js',
+		'//extensions/wikia/VideoPageTool/js/lib/backbone/backbone.js',
+
+		'//extensions/wikia/VideoPageTool/js/models/videohomepage.slide.js',
+		'//extensions/wikia/VideoPageTool/js/collections/videohomepage.featuredslides.js',
 		'//extensions/wikia/VideoPageTool/js/views/videohomepage.featured.js',
 		'//extensions/wikia/VideoPageTool/js/views/videohomepage.search.js',
 		'//extensions/wikia/VideoPageTool/js/views/videohomepage.index.js',
@@ -1393,6 +1406,7 @@ $config['manage_wikia_home_js'] = array(
 $config['licensed_video_swap_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
+		'//resources/wikia/libraries/jquery/ellipses.js',
 		'//extensions/wikia/LicensedVideoSwap/js/lvsTracker.js',
 		'//extensions/wikia/LicensedVideoSwap/js/lvsCommonAjax.js',
 		'//extensions/wikia/LicensedVideoSwap/js/lvsVideoControls.js',

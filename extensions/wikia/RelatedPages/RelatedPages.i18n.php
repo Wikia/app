@@ -179,6 +179,13 @@ $messages['ja'] = array(
 	'wikiarelatedpages-heading' => 'さらに読む',
 );
 
+/** Georgian (ქართული)
+ * @author DevaMK
+ */
+$messages['ka'] = array(
+	'wikiarelatedpages-heading' => 'წაიკითხე მეტი',
+);
+
 /** Korean (한국어)
  * @author 아라
  */
