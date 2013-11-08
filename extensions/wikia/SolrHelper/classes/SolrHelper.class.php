@@ -10,29 +10,28 @@ namespace Wikia\SolrHelper;
 
 use \Solarium_Client;
 
-class Query {
+class SolrHelper {
 
 	/**
 	 * @var \Solarium_Client
 	 */
 	protected $client;
 
-
 	public function __construct( $config ) {
 		if ( !$config || !is_array( $config ) ) {
-			throw new \InvalidArgumentException('No config specified');
+			throw new \InvalidArgumentException( 'No config specified' );
 		}
-		$this->client = new Solarium_Client($config);
+		$this->client = new Solarium_Client( $config );
 	}
 
 	public function updateDocuments( $documents ) {
 		if ( !is_array( $documents ) || !is_array( $documents[ 0 ] ) ) {
-			throw new \InvalidArgumentException('Expected format: [ [xxx=>1,yyy=>2} , ... ]');
+			throw new \InvalidArgumentException( 'Expected format: [ [xxx=>1,yyy=>2} , ... ]' );
 		}
 
 		$update = $this->client->createUpdate();
 
-		$list = [];
+		$list = [ ];
 		foreach ( $documents as $current ) {
 			$doc = $update->createDocument();
 			foreach ( $current as $fName => $fvalue ) {
@@ -54,19 +53,19 @@ class Query {
 		$wikiID = (int)$wikiID;
 		$to = (int)$to;
 		if ( !$wikiID ) {
-			throw new \InvalidArgumentException('wikiID not specified');
+			throw new \InvalidArgumentException( 'wikiID not specified' );
 		}
 
 		if ( $to ) {
 			if ( is_array( $from ) ) {
-				throw new \InvalidArgumentException('Expected format: ID | [A,B,C,D] | FROM, TO ');
+				throw new \InvalidArgumentException( 'Expected format: ID | [A,B,C,D] | FROM, TO ' );
 			}
 			$from = (int)$from;
 			$range = true;
 		}
 		else {
 			if ( !is_array( $from ) ) {
-				$from = [(int)$from];
+				$from = [ (int)$from ];
 			}
 		}
 
@@ -95,12 +94,12 @@ class Query {
 	}
 
 
-	public function getByArticleId( $wikiID, $articleId, $fields = [], $config = null ) {
+	public function getByArticleId( $wikiID, $articleId, $fields = [ ], $config = null ) {
 		if ( $fields && !is_array( $fields ) ) {
-			$fields = [$fields];
+			$fields = [ $fields ];
 		}
 		if ( $articleId && !is_array( $articleId ) ) {
-			$articleId = [(int)$articleId];
+			$articleId = [ (int)$articleId ];
 		}
 
 		$query = '+(wid:' . (int)$wikiID . ') AND ';
@@ -115,7 +114,7 @@ class Query {
 		$query .= ' pageid:(' . $ids . ')';
 		$queryObj = $this->client->createSelect();
 
-		if ( !empty($fields) ) {
+		if ( !empty( $fields ) ) {
 			$queryObj->setFields( $fields );
 		}
 

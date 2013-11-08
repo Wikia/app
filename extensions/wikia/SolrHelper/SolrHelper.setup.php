@@ -4,6 +4,6 @@ $app = F::app();
 $dir = dirname(__FILE__) . '/';
 
 # load 
-$wgAutoloadClasses[ 'Wikia\\SolrHelper\\Query'         ] = $dir . "classes/Query.class.php";
+$wgAutoloadClasses[ 'Wikia\\SolrHelper\\SolrHelper'] = $dir . "classes/SolrHelper.class.php";
 
 
