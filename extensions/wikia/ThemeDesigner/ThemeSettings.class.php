@@ -244,13 +244,13 @@ class ThemeSettings {
 	 * "wordmark-image-url" entry and settings revision ID are ignored.
 	 *
 	 * @author macbre
-	 * @return string|bool wordmark URL or false if not found
+	 * @return string wordmark URL or empty string if not found
 	 */
 	public function getWordmarkUrl() {
 		$title = Title::newFromText($this->getSettings()['wordmark-image-name'] , NS_FILE);
-		$file = ($title instanceof Title) ? wfFindFile($title) : false;
+		$file = ($title instanceof Title) ? wfLocalFile($title) : false;
 
-		return ($file instanceof File) ? $file->getUrl() : false;
+		return ($file instanceof File && $file->exists()) ? $file->getUrl() : '';
 	}
 
 	/**
@@ -260,20 +260,26 @@ class ThemeSettings {
 	 * "background-image" entry (for custom backgrounds) and settings revision ID are ignored.
 	 *
 	 * @author macbre
-	 * @return string|bool background URL or false if not found
+	 * @return string background URL or empty string if not found
 	 */
 	public function getBackgroundUrl() {
 		$settings = $this->getSettings();
-		$hasCustomBackground = $settings['background-image-name'] !== '';
+
+		// no background defined
+		if (empty($settings['background-image'])) {
+			return '';
+		}
+
+		$hasCustomBackground = strpos($settings['background-image'], '/common/skins/oasis/images/themes') === false;
 
 		// return standard, themed background - e.g. '/skins/oasis/images/themes/plated.jpg'
 		if (!$hasCustomBackground) {
 			return $settings['background-image'];
 		}
 
-		$title = Title::newFromText($this->getSettings()['background-image-name'] , NS_FILE);
-		$file = ($title instanceof Title) ? wfFindFile($title) : false;
+		$title = Title::newFromText($settings['background-image-name'] , NS_FILE);
+		$file = ($title instanceof Title) ? wfLocalFile($title) : false;
 
-		return ($file instanceof File) ? $file->getUrl() : false;
+		return ($file instanceof File && $file->exists()) ? $file->getUrl() : '';
 	}
 }
