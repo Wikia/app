@@ -154,9 +154,6 @@ class MigrateWikisToSwift extends Maintenance {
 			} else {
 				$this->output( "Done in " . Wikia::timeDuration( time() - $this->time ) . "\n" );				
 			}
-			
-			// wait a bit to prevent deadlocks (from 0 to 2 sec)
-			usleep( mt_rand(0,2000) * 1000 );
 		
 			$migrated++;
 		}
