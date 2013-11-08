@@ -1075,7 +1075,7 @@ ve.init.mw.ViewPageTarget.prototype.setUpSurface = function ( doc, callback ) {
 			var dmDoc = new ve.dm.Document( data, undefined, internalList );
 			setTimeout( function () {
 				// Create ui.Surface (also creates ce.Surface and dm.Surface and builds CE tree)
-				target.surface = new ve.ui.Surface( dmDoc, target.surfaceOptions );
+				target.surface = new ve.ui.Surface( dmDoc, target.surfaceOptions, target );
 				target.surface.$.addClass( 've-init-mw-viewPageTarget-surface' );
 				setTimeout( function () {
 					// Initialize surface

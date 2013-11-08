@@ -71,8 +71,10 @@ $wgResourceModules += array(
 			've/ce/ve.ce.WikiaInlineVideoNode.js',
 
 			// ui
-			've/ui/dialogs/ve.ui.WikiaMediaInsertDialog.js',
 			've/ui/tools/buttons/ve.ui.WikiaMediaInsertButtonTool.js',
+			've/ui/tools/buttons/ve.ui.WikiaSourceModeButtonTool.js',
+			've/ui/dialogs/ve.ui.WikiaMediaInsertDialog.js',
+			've/ui/dialogs/ve.ui.WikiaSourceModeDialog.js',
 			've/ui/widgets/ve.ui.WikiaCartWidget.js',
 			've/ui/widgets/ve.ui.WikiaCartItemWidget.js',
 			've/ui/widgets/ve.ui.WikiaMediaPageWidget.js',
@@ -85,6 +87,10 @@ $wgResourceModules += array(
 		'messages' => array(
 			'oasis-content-picture-added-by',
 			'visualeditor-wikiamediainsertbuttontool-label',
+			'visualeditor-wikiasourcemodebuttontool-label',
+			'visualeditor-wikiasourcemode-button-apply',
+			'visualeditor-dialog-source-mode-title',
+			'videohandler-video-views',
 			'videohandler-video-views',
 			'visualeditor-wikiauploadwidget-label',
 			'visualeditor-wikiauploadwidget-button',
