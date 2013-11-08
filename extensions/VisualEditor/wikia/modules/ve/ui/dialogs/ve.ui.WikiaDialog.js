@@ -38,11 +38,11 @@ ve.ui.WikiaDialog.prototype.initialize = function () {
 
 };
 
-ve.ui.WikiaDialog.prototype.startLoading = function () {
+ve.ui.WikiaDialog.prototype.showLoadingOverlay = function () {
 	this.$loadingOverlay.removeClass( 'hidden' );
 };
 
-ve.ui.WikiaDialog.prototype.stopLoading = function () {
+ve.ui.WikiaDialog.prototype.hideLoadingOverlay = function () {
 	this.$loadingOverlay.addClass( 'hidden' );
 };
 

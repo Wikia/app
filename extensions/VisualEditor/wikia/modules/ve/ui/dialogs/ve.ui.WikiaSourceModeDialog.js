@@ -1,3 +1,4 @@
+
 /*!
  * VisualEditor user interface WikiaSourceModeDialog class.
  */
@@ -37,73 +38,79 @@ ve.ui.WikiaSourceModeDialog.prototype.initialize = function () {
 	// Parent method
 	ve.ui.WikiaDialog.prototype.initialize.call( this );
 
+	// Properties
 	this.sourceModeTextarea = new ve.ui.TextInputWidget({
 		'$$': this.frame.$$,
 		'multiline': true
 	});
-	this.$body.append( this.sourceModeTextarea.$ );
-
-	this.applytButton = new ve.ui.ButtonWidget( {
+	this.applyButton = new ve.ui.ButtonWidget( {
 		'$$': this.frame.$$,
 		'label': ve.msg( 'visualeditor-wikiasourcemode-button-apply' ),
 		'flags': ['primary']
 	} );
-	this.$foot.append( this.applytButton.$ );
-	this.applytButton.connect( this, { 'click': [ 'onApply', 'parse' ] } );
 
+	// Events
+	this.applyButton.connect( this, { 'click': [ 'onApply' ] } );
+
+	// Initialization
+	this.$body.append( this.sourceModeTextarea.$ );
+	this.$foot.append( this.applyButton.$ );
 	this.frame.$content.addClass( 've-ui-wikiaSourceModeDialog-content' );
-
 };
 
+/**
+ * Handle opening the dialog.
+ *
+ * @method
+ */
 ve.ui.WikiaSourceModeDialog.prototype.onOpen = function () {
-	ve.ui.WikiaDialog.prototype.onOpen.call( this );
-
 	var doc = this.surface.getModel().getDocument();
 
-	// Display loading graphic
-	this.startLoading();
+	// Parent method
+	ve.ui.WikiaDialog.prototype.onOpen.call( this );
 
-	// Request wikitext
+	this.showLoadingOverlay();
 	this.surface.getTarget().serialize(
 		ve.dm.converter.getDomFromData( doc.getFullData(), doc.getStore(), doc.getInternalList() ),
 		ve.bind( this.onSerialize, this )
 	);
-
 };
 
+/**
+ * @method
+ * @param {string} wikitext Wikitext returned from Parsoid.
+ */
 ve.ui.WikiaSourceModeDialog.prototype.onSerialize = function ( wikitext ) {
 	this.sourceModeTextarea.setValue( wikitext );
-	this.stopLoading();
+	this.hideLoadingOverlay();
 };
 
-ve.ui.WikiaSourceModeDialog.prototype.onApply = function ( action, wikitext ) {
-	if( action === 'parse' ) {
-		this.startLoading();
-		this.parse();
-	}
+/**
+ * @method
+ */
+ve.ui.WikiaSourceModeDialog.prototype.onApply = function () {
+	this.showLoadingOverlay();
+	this.parse();
 };
 
+/**
+ * @method
+ */
 ve.ui.WikiaSourceModeDialog.prototype.getWikitext = function() {
 	return this.sourceModeTextarea.getValue();
 };
 
+/**
+ * @method
+ */
 ve.ui.WikiaSourceModeDialog.prototype.parse = function( ) {
-	// TODO: I basically just copied and pasted this function from ve.ce.MWTransclusionNode.js
-	// maybe we should create a common helper function for this sort of thing.
-	var xhr, promise, wikitext, deferred;
-
-	deferred = $.Deferred();
-	wikitext = this.getWikitext();
-
-	xhr = $.ajax( {
+	$.ajax( {
 		'url': mw.util.wikiScript( 'api' ),
 		'data': {
 			'action': 'visualeditor',
-			// NOTE: neither of these (parse / parsefragment) is the API we want, that will be written next
-			'paction': 'wikiaparse',
-			//'paction': 'parsefragment',
+			'paction': 'parsewt',
 			'page': mw.config.get( 'wgRelevantPageName' ),
-			'wikitext': wikitext,
+			'wikitext': this.sourceModeTextarea.getValue(),
 			'token': mw.user.tokens.get( 'editToken' ),
 			'format': 'json'
 		},
@@ -112,108 +119,56 @@ ve.ui.WikiaSourceModeDialog.prototype.parse = function( ) {
 		// Wait up to 100 seconds before giving up
 		'timeout': 100000,
 		'cache': 'false',
-		'success': ve.bind( this.onParseSuccess, this, deferred ),
-		'error': ve.bind( this.onParseError, this, deferred ),
-		'complete': ve.bind( this.stopLoading, this )
+		'success': ve.bind( this.onParseSuccess, this ),
+		'error': ve.bind( this.onParseError, this ),
+		'complete': ve.bind( this.hideLoadingOverlay, this )
 	} );
-	promise = deferred.promise();
-	promise.abort = function () {
-		xhr.abort();
-	};
-	return promise;
-
 };
 
-ve.ui.WikiaSourceModeDialog.prototype.onParseSuccess = function( deferred, response ) {
+/**
+ * @method
+ */
+ve.ui.WikiaSourceModeDialog.prototype.onParseSuccess = function( response ) {
+	var surfaceModel, doc, newDoc, merge, tx;
 	if ( !response || response.error || !response.visualeditor || response.visualeditor.result !== 'success' ) {
-		return this.onParseError.call( this, deferred );
+		return this.onParseError.call( this );
 	}
-
-	this.surface.getTarget().setWikitext( this.getWikitext() );
- 
- 	var surfaceModel = this.surface.getModel(),
-		doc = surfaceModel.getDocument();
-
-	surfaceModel.change(
-		ve.dm.Transaction.newFromRemoval( doc, doc.getDocumentNode().getRange() )
-	);
-
-	if ( doc.metadata.data[0].length ) {
-		surfaceModel.change(
-			ve.dm.Transaction.newFromMetadataRemoval( doc, 0, new ve.Range( 0, doc.metadata.data[0].length ) )
-		);
-	}
-
-
-	var store = new ve.dm.IndexValueStore();
-	var internalList = new ve.dm.InternalList();
-	var fullData = ve.dm.converter.getDataFromDom( ve.createDocumentFromHtml( response.visualeditor.content ), store, internalList );
-	var newDoc = new ve.dm.Document( fullData, null, internalList );
-	//var newDoc = new ve.dm.Document ( ve.createDocumentFromHtml( response.visualeditor.content ) );
-
-
-	var tx = ve.dm.Transaction.newFromDocumentReplace( doc, new ve.Range(0,0), newDoc );
-	surfaceModel.change(
-		tx,
-		new ve.Range(0,0)
-	);
-	this.close();
-
-	/*
-		new ve.Range( 0, this.surface.model.documentModel.metadata.data[0].length )
-
-
-
-
-
-
-	var surface = this.surface
-	t2 = ve.dm.Transaction.newFromRemoval(ve.instances[0].model.documentModel, ve.instances[0].model.documentModel.documentNode.getRange(), true)
-	t2 = ve.dm.Transaction.newFromMetadataRemoval(ve.instances[0].model.documentModel, 0, new ve.Range(0,3))
-
-
-
-
-
-
-
-
-	var newDoc, doc, surfaceModel, tx;
 
 	surfaceModel = this.surface.getModel();
-	doc = surfaceModel.getDocument();
 
+	doc = surfaceModel.getDocument();
 	newDoc = new ve.dm.Document ( ve.createDocumentFromHtml( response.visualeditor.content ) );
 
-	// Create a new transaction to change surfaceModel.
-	// Note: there is a bug where the last metadata item needs to be processed with tx.pushReplaceMetadata.
-	// Ask Roan, I'm really not sure what that's about - Liz
+	// merge store
+	merge = doc.getStore().merge( newDoc.getStore() );
+	newDoc.data.remapStoreIndexes( merge );
+
+	// merge internal list
+	merge = doc.internalList.merge( newDoc.internalList, newDoc.origInternalListLength || 0 );
+	newDoc.data.remapInteralListIndexes( merge.mapping );
+
 	tx = new ve.dm.Transaction();
-
 	tx.pushReplace( doc, 0, doc.data.data.length, newDoc.data.data,
-		( newDoc.metadata.data.length ? newDoc.metadata.data : [] )
-		//( newDoc.metadata.data.length ? newDoc.metadata.data.slice( 0, -1 ) : [] )
+		// get all except the last item
+		( newDoc.metadata.data.length ? newDoc.metadata.data.slice( 0, -1 ) : [] )
 	);
-
-	/*tx.pushReplaceMetadata(
+	tx.pushReplaceMetadata(
 		// only send the last items
-		( doc.metadata.data.length ? doc.metadata.data[doc.metadata.data.length - 1] : [] ),
-		( newDoc.metadata.data.length ? newDoc.metadata.data[doc.metadata.data.length - 1] : [] )
-	);*/
-
+		( doc.metadata.length ? doc.metadata.data[doc.metadata.data.length - 1] : [] ),
+		( newDoc.metadata.length ? newDoc.metadata.data[newDoc.metadata.data.length - 1] : [] )
+	);
 	surfaceModel.change( tx, new ve.Range( 0 ) );
 
 	this.close();
-	*/
-};
-
-ve.ui.WikiaSourceModeDialog.prototype.onParseError = function ( deferred ) {
-	// TODO: error handling?
-	deferred.reject();
-};
-
-ve.ui.WikiaSourceModeDialog.prototype.onClose = function () {
+	this.surface.getTarget().setWikitext( this.sourceModeTextarea.getValue() );
 	this.sourceModeTextarea.setValue( '' );
+};
+
+/**
+ * @method
+ */
+ve.ui.WikiaSourceModeDialog.prototype.onParseError = function ( ) {
+	// TODO: error handling?
 };
 
 ve.ui.dialogFactory.register( ve.ui.WikiaSourceModeDialog );

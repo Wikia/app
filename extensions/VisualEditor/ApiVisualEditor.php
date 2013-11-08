@@ -95,12 +95,12 @@ class ApiVisualEditor extends ApiBase {
 
 		$postData = array( 'content' => $html );
 		if ( isset( $parserParams['oldwt'] ) ) {
-			$postData[ 'oldwt' ] = $parserParams['oldwt'];
+			$postData['oldwt'] = $parserParams['oldwt'];
 		} else {
 			if ( $parserParams['oldid'] === 0 ) {
 				$parserParams['oldid'] = '';
 			}
-			$postData[ 'oldid' ] = $parserParams['oldid'];
+			$postData['oldid'] = $parserParams['oldid'];
 		}
 
 		return Http::post(
@@ -241,7 +241,7 @@ class ApiVisualEditor extends ApiBase {
 		global $wgVisualEditorParsoidURL, $wgVisualEditorParsoidTimeout, $wgDevelEnvironment;
 
 		switch ( $params['paction'] ) {
-			case 'wikiaparse':
+			case 'parsewt':
 				$postData = array(
 					'wt' => $params['wikitext']
 				);
@@ -369,7 +369,7 @@ class ApiVisualEditor extends ApiBase {
 			),
 			'paction' => array(
 				ApiBase::PARAM_REQUIRED => true,
-				ApiBase::PARAM_TYPE => array( 'wikiaparse', 'parse', 'parsefragment', 'serialize', 'diff' ),
+				ApiBase::PARAM_TYPE => array( 'parsewt', 'parse', 'parsefragment', 'serialize', 'diff' ),
 			),
 			'wikitext' => null,
 			'basetimestamp' => null,

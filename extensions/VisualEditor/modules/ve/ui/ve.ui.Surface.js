@@ -14,7 +14,7 @@
  * @constructor
  * @param {HTMLDocument|Array|ve.dm.LinearData|ve.dm.Document} dataOrDoc Document data to edit
  * @param {Object} [config] Configuration options
- * @param {ve.init.mw.Target} target Target instance (optional)
+ * @param {ve.init.mw.Target} [target] Target instance (optional)
  */
 ve.ui.Surface = function VeUiSurface( dataOrDoc, config, target ) {
 	// Parent constructor
