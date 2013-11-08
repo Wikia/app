@@ -243,14 +243,22 @@ class ThemeSettings {
 	 * This method returns URL based on "wordmark-image-name" settings entry.
 	 * "wordmark-image-url" entry and settings revision ID are ignored.
 	 *
+	 * if wikiId passed it'll return wordmark for a given wiki
+	 *
 	 * @author macbre
 	 * @return string wordmark URL or empty string if not found
 	 */
-	public function getWordmarkUrl() {
-		$title = Title::newFromText($this->getSettings()['wordmark-image-name'] , NS_FILE);
-		$file = ($title instanceof Title) ? wfLocalFile($title) : false;
+	public function getWordmarkUrl( $wikiId = null ) {
+		$wordmarkName = $this->getSettings()['wordmark-image-name'];
 
-		return ($file instanceof File && $file->exists()) ? $file->getUrl() : '';
+		if ( !is_int( $wikiId )) {
+			$title = Title::newFromText( $wordmarkName, NS_FILE );
+			$file = ($title instanceof Title) ? wfFindFile( $title ) : false;
+		} else {
+			$file = GlobalFile::newFromText( $wordmarkName, $wikiId );
+		}
+
+		return method_exists( $file, 'getUrl' ) ? $file->getUrl() : false;
 	}
 
 	/**
