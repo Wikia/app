@@ -28,7 +28,7 @@ ve.inheritClass( ve.ui.WikiaSourceModeDialog, ve.ui.MWDialog );
 
 ve.ui.WikiaSourceModeDialog.static.name = 'wikiaSourceMode';
 
-ve.ui.WikiaSourceModeDialog.static.titleMessage = 'visualeditor-dialog-source-mode-title';
+ve.ui.WikiaSourceModeDialog.static.titleMessage = 'wikia-visualeditor-dialog-wikiasourcemode-title';
 
 ve.ui.WikiaSourceModeDialog.static.icon = 'source';
 
@@ -45,7 +45,7 @@ ve.ui.WikiaSourceModeDialog.prototype.initialize = function () {
 	});
 	this.applyButton = new ve.ui.ButtonWidget( {
 		'$$': this.frame.$$,
-		'label': ve.msg( 'visualeditor-wikiasourcemode-button-apply' ),
+		'label': ve.msg( 'wikia-visualeditor-dialog-wikiasourcemode-apply-button' ),
 		'flags': ['primary']
 	} );
 

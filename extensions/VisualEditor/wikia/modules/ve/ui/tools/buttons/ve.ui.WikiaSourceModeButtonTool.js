@@ -29,7 +29,7 @@ ve.ui.WikiaSourceModeButtonTool.static.group = 'object';
 
 ve.ui.WikiaSourceModeButtonTool.static.icon = 'source';
 
-ve.ui.WikiaSourceModeButtonTool.static.titleMessage = 'visualeditor-wikiasourcemodebuttontool-label';
+ve.ui.WikiaSourceModeButtonTool.static.titleMessage = 'wikia-visualeditor-dialogbutton-wikiasourcemode-tooltip';
 
 ve.ui.WikiaSourceModeButtonTool.static.dialog = 'wikiaSourceMode';
 
