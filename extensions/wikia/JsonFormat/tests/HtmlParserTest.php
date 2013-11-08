@@ -100,7 +100,7 @@ class HtmlParserTest extends WikiaBaseTest {
 		$this->assertEquals( 1, $node->getChildren()[0]->getLevel(), "Wrong section level." );
 		$this->assertEquals( 1, sizeof($node->getChildren()[0]->getChildren()), "Wrong number of children in section." );
 		$this->assertEquals( 'text', $node->getChildren()[0]->getChildren()[0]->getType() );
-		$this->assertEquals( ' content', $node->getChildren()[0]->getChildren()[0]->getText() );
+		$this->assertEquals( 'content', $node->getChildren()[0]->getChildren()[0]->getText() );
 	}
 
 	public function testAmericanDadWrapper() {
