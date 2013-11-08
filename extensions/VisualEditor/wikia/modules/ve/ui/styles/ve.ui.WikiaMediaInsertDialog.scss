@@ -40,9 +40,9 @@ $width-cart: 101px;
 				content: '';
 			}
 		}
-		&.image {
+		&.photo {
 			.ve-ui-labeledElement-label:before {
-				background-image: url(/extensions/VisualEditor/wikia/modules/ve/ui/styles/images/icons/image.svg); /* $wgCdnStylePath */
+				background-image: url(/extensions/VisualEditor/wikia/modules/ve/ui/styles/images/icons/photo.svg); /* $wgCdnStylePath */
 				padding-left: 29px;
 			}
 		}
@@ -139,7 +139,7 @@ $width-cart: 101px;
 		width: 100%;
 	}
 
-	&.image .ve-ui-textInputWidget input {
+	&.photo .ve-ui-textInputWidget input {
 		width: 85%;
 	}
 
