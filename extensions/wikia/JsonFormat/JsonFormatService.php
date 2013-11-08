@@ -39,7 +39,7 @@ class JsonFormatService extends \WikiaService {
 	 * @return JsonFormatNode
 	 */
 	public function getJsonFormatForArticle( \Article $article ) {
-		$measurement = \Wikia\Measurements\Time::start(["JsonFormatService", "getJsonFormatForArticle"]);
+		$measurement = \Wikia\Measurements\Time::start([__CLASS__, __METHOD__]);
 
 		$html = $article->getPage()->getParserOutput( \ParserOptions::newFromContext( $this->requestContext))->getText();
 
@@ -51,7 +51,7 @@ class JsonFormatService extends \WikiaService {
 	 *
 	 */
 	public function getSimpleFormatForArticle( \Article $article ) {
-		$measurement = \Wikia\Measurements\Time::start(["JsonFormatService", "getSimpleFormatForArticle"]);
+		$measurement = \Wikia\Measurements\Time::start([__CLASS__, __METHOD__]);
 
 		$cacheKey = wfMemcKey( "SimpleJson", $article->getPage()->getId(), self::SIMPLE_JSON_SCHEMA_VERSION );
 		$jsonSimple = $this->app->wg->memc->get( $cacheKey );
@@ -59,7 +59,7 @@ class JsonFormatService extends \WikiaService {
 			$jsonFormatRootNode = $this->getJsonFormatForArticle( $article );
 
 			$simplifier = new Wikia\JsonFormat\JsonFormatSimplifier;
-			$jsonSimple = $simplifier->getJsonFormat( $jsonFormatRootNode, $article->getTitle()->getText() );
+			$jsonSimple = $simplifier->simplify( $jsonFormatRootNode, $article->getTitle()->getText() );
 
 			$this->app->wg->memc->set( $cacheKey, $jsonSimple, self::SIMPLE_JSON_CACHE_EXPIRATION );
 		}

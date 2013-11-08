@@ -4,6 +4,8 @@
 namespace Wikia\JsonFormat;
 
 
+use Wikia\Measurements\Time;
+
 class JsonFormatSimplifier {
 
 	protected function getParagraphs( \JsonFormatContainerNode $containerNode, &$contentElements ) {
@@ -21,7 +23,6 @@ class JsonFormatSimplifier {
 				$this->newParagraph( $contentElements );
 				$this->getParagraphs( $childNode, $contentElements );
 			} else if ( $childNode->getType() == "list" ) {
-
 				$contentElements[ ] = [
 					"type" => "list",
 					"elements" => $this->processList( $childNode )
@@ -30,7 +31,7 @@ class JsonFormatSimplifier {
 		}
 	}
 
-	protected function processList( \JsonFormatNode $childNode ) {
+	protected function processList( \JsonFormatContainerNode $childNode ) {
 		$out = [];
 		$text = null;
 		$children = $childNode->getChildren();
@@ -146,7 +147,7 @@ class JsonFormatSimplifier {
 	}
 
 
-	public function getJsonFormat( \JsonFormatRootNode $rootNode, $articleTitle ) {
+	public function simplify( \JsonFormatRootNode $rootNode, $articleTitle ) {
 		$timer = Time::start([__CLASS__, __METHOD__]);
 		/** @var \JsonFormatSectionNode[]|\JsonFormatRootNode[] $sections */
 		$sections = [];
