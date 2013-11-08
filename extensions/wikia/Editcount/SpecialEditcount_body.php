@@ -115,64 +115,76 @@ class Editcount extends SpecialPage {
 	 * @return array
 	 */
 	function editsByNs( $uid ) {
-		$nscount = array();
+		global $wgMemc;
+		$key = wfMemcKey( 'namespaceCount', $uid );
+		$nscount = $wgMemc->get($key);
 
-		if (self::ONE_QUERY == 1) {
-			$dbr =& wfGetDB( DB_SLAVE );
-			$res = $dbr->select(
-				array( 'revision', 'page' ),
-				array( 'page_namespace', 'COUNT(*) as count' ),
-				array(
-					'rev_user' => $uid,
-					'rev_page = page_id'
-				),
-				__METHOD__,
-				array( 'GROUP BY' => 'page_namespace' )
-			);
+		if ( empty($nscount) ) {
+			$nscount = array();
 
-			while( $row = $dbr->fetchObject( $res ) ) {
-				$nscount[$row->page_namespace] = $row->count;
-			}
-		} else {
-			$nspaces = $this->editsByNsAll($uid);
-			if (!empty($nspaces)) {
-				foreach ($nspaces as $ns => $count) {
-					if ($count > 0) {
-						$nscount[$ns] = $this->editsInNs($uid, $ns);
+			if (self::ONE_QUERY == 1) {
+				$dbr =& wfGetDB( DB_SLAVE );
+				$res = $dbr->select(
+					array( 'revision', 'page' ),
+					array( 'page_namespace', 'COUNT(*) as count' ),
+					array(
+						'rev_user' => $uid,
+						'rev_page = page_id'
+					),
+					__METHOD__,
+					array( 'GROUP BY' => 'page_namespace' )
+				);
+
+				while( $row = $dbr->fetchObject( $res ) ) {
+					$nscount[$row->page_namespace] = $row->count;
+				}
+			} else {
+				$nspaces = $this->editsByNsAll($uid);
+				if (!empty($nspaces)) {
+					foreach ($nspaces as $ns => $count) {
+						if ($count > 0) {
+							$nscount[$ns] = $this->editsInNs($uid, $ns);
+						}
 					}
 				}
 			}
+			$wgMemc->set( $key, $nscount, 86400 );
 		}
 
 		return $nscount;
 	}
 
 	function editsByNsAll( $uid ) {
-		global $wgStatsDB, $wgStatsDBEnabled;
-		$nscount = array();
+		global $wgStatsDB, $wgStatsDBEnabled, $wgMemc;
 
-		if ( !empty( $wgStatsDBEnabled ) ) {
-			$dbs = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
-			$res = $dbs->select(
-				array( 'events' ),
-				array( 'page_ns as namespace', 'count(page_ns) as count' ),
-				array(
-					'user_id' => $uid,
-					' ( event_type = 1 ) or ( event_type = 2 ) '
-				),
-				__METHOD__,
-				array (
-					'GROUP BY' => 'page_ns',
-					'ORDER BY' => 'null'
-				)
-			);
+		$key = wfSharedMemcKey( 'namespaceCountAllWikis', $uid );
+		$nscount = $wgMemc->get($key);
 
-			while( $row = $dbs->fetchObject( $res ) ) {
-				$nscount[$row->namespace] = $row->count;
+		if ( empty($nscount) ) {
+			$nscount = array();
+			if ( !empty( $wgStatsDBEnabled ) ) {
+				$dbs = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
+				$res = $dbs->select(
+					array( 'events' ),
+					array( 'page_ns as namespace', 'count(page_ns) as count' ),
+					array(
+						'user_id' => $uid,
+						' ( event_type = 1 ) or ( event_type = 2 ) '
+					),
+					__METHOD__,
+					array (
+						'GROUP BY' => 'page_ns',
+						'ORDER BY' => 'null'
+					)
+				);
+
+				while( $row = $dbs->fetchObject( $res ) ) {
+					$nscount[$row->namespace] = $row->count;
+				}
+				$dbs->freeResult( $res );
 			}
-			$dbs->freeResult( $res );
+			$wgMemc->set( $key, $nscount, 86400 );
 		}
-
 		return $nscount;
 	}
 
@@ -184,19 +196,26 @@ class Editcount extends SpecialPage {
 	 * @return string
 	 */
 	function editsInNs( $uid, $ns ) {
-		$nscount = array();
+		global $wgMemc;
+		$key = wfMemcKey( 'namespaceCount', $uid, $ns );
+		$nscount = $wgMemc->get( $key );
 
-		$dbr =& wfGetDB( DB_SLAVE );
-		$res = $dbr->selectField(
-			array( 'revision', 'page' ),
-			array( 'COUNT(*) as count' ),
-			array(
-				'page_namespace' => $ns,
-				'rev_user' => $uid,
-				'rev_page = page_id'
-			),
-			__METHOD__
-		);
+		if ( empty($nscount) ) {
+			$nscount = array();
+
+			$dbr =& wfGetDB( DB_SLAVE );
+			$res = $dbr->selectField(
+				array( 'revision', 'page' ),
+				array( 'COUNT(*) as count' ),
+				array(
+					'page_namespace' => $ns,
+					'rev_user' => $uid,
+					'rev_page = page_id'
+				),
+				__METHOD__
+			);
+			$wgMemc->set( $key, $nscount, 86400 );
+		}
 
 		return $res;
 	}
