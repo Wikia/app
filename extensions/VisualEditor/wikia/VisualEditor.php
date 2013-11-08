@@ -73,7 +73,6 @@ $wgResourceModules += array(
 			// ui
 			've/ui/tools/buttons/ve.ui.WikiaMediaInsertButtonTool.js',
 			've/ui/tools/buttons/ve.ui.WikiaSourceModeButtonTool.js',
-			've/ui/dialogs/ve.ui.WikiaDialog.js',
 			've/ui/dialogs/ve.ui.WikiaMediaInsertDialog.js',
 			've/ui/dialogs/ve.ui.WikiaSourceModeDialog.js',
 			've/ui/widgets/ve.ui.WikiaCartWidget.js',
