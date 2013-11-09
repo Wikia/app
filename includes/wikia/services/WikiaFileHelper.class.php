@@ -91,12 +91,13 @@ class WikiaFileHelper extends Service {
 	 * @param string $provider
 	 * @param string $videoId
 	 * @param boolean $isRemoteAsset
-	 * @param boolean $useMaster
 	 * @return array $result
 	 */
-	public static function findVideoDuplicates( $provider, $videoId, $isRemoteAsset = false, $useMaster = false ) {
+	public static function findVideoDuplicates( $provider, $videoId, $isRemoteAsset = false ) {
+		wfProfileIn( __METHOD__ );
+
 		//print "Looking for duplicaes of $provider $videoId\n";
-		$dbr = wfGetDB( $useMaster ? DB_MASTER : DB_SLAVE ); // has to be master otherwise there's a chance of getting duplicates
+		$db = wfGetDB( DB_MASTER ); // has to be master otherwise there's a chance of getting duplicates
 
 		// for remote asset, $videoId is string even if it is numeric
 		if ( is_numeric( $videoId ) && !$isRemoteAsset ) {
@@ -121,7 +122,7 @@ class WikiaFileHelper extends Service {
 			$conds[] = "img_metadata LIKE '%s:7:\"videoId\";".$videoStr.";%'";
 		}
 
-		$rows = $dbr->select(
+		$rows = $db->select(
 			'image',
 			'*',
 			$conds,
@@ -130,13 +131,48 @@ class WikiaFileHelper extends Service {
 
 		$result = array();
 
-		while ( $row = $dbr->fetchRow( $rows ) ) {
+		while ( $row = $db->fetchRow( $rows ) ) {
 			$result[] = $row;
 		}
 
-		$dbr->freeResult( $rows );
+		$db->freeResult( $rows );
+
+		wfProfileOut( __METHOD__ );
 
 		return $result;
+	}
+
+	/**
+	 * Get duplicate videos (from video_info table)
+	 * @param string $provider
+	 * @param string $videoId
+	 * @param integer $limit
+	 * @return array $videos
+	 */
+	public static function getDuplicateVideos( $provider, $videoId, $limit = 1 ) {
+		wfProfileIn( __METHOD__ );
+
+		$db = wfGetDB( DB_MASTER );
+
+		$result = $db->select(
+			'video_info',
+			'*',
+			array(
+				'video_id' => $videoId,
+				'provider' => $provider,
+			),
+			__METHOD__,
+			array( 'LIMIT' => $limit )
+		);
+
+		$videos = array();
+		while ( $row = $db->fetchRow( $result ) ) {
+			$videos[] = $row;
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $videos;
 	}
 
 	/**
