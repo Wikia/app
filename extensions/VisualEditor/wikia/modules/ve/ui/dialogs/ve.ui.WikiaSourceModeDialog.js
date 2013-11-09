@@ -173,9 +173,9 @@ ve.ui.WikiaSourceModeDialog.prototype.onParseSuccess = function( response ) {
 		( newDoc.metadata.length ? newDoc.metadata.data[newDoc.metadata.data.length - 1] : [] )
 	);
 	surfaceModel.change( tx, new ve.Range( 0 ) );
-
-	this.close();
 	this.surface.getTarget().setWikitext( this.sourceModeTextarea.getValue() );
+	surfaceModel.clearHistory();
+	this.close();
 	this.sourceModeTextarea.setValue( '' );
 };
 
