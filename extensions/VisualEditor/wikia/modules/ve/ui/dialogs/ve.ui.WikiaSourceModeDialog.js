@@ -147,13 +147,18 @@ ve.ui.WikiaSourceModeDialog.prototype.onParseSuccess = function( response ) {
 	doc = surfaceModel.getDocument();
 	newDoc = new ve.dm.Document ( ve.createDocumentFromHtml( response.visualeditor.content ) );
 
+	// TODO: Eventually stores and internalLists should be merged (and data remapped) but currently that
+	// functionality does not work correct.
+
 	// merge store
-	merge = doc.getStore().merge( newDoc.getStore() );
-	newDoc.data.remapStoreIndexes( merge );
+	//merge = doc.getStore().merge( newDoc.getStore() );
+	//newDoc.data.remapStoreIndexes( merge );
+	doc.store = newDoc.store;
 
 	// merge internal list
-	merge = doc.internalList.merge( newDoc.internalList, newDoc.origInternalListLength || 0 );
-	newDoc.data.remapInteralListIndexes( merge.mapping );
+	//merge = doc.internalList.merge( newDoc.internalList, 0 );
+	//newDoc.data.remapInteralListIndexes( merge.mapping );
+	doc.internalList = newDoc.internalList;
 
 	tx = new ve.dm.Transaction();
 	tx.pushReplace( doc, 0, doc.data.data.length, newDoc.data.data,
