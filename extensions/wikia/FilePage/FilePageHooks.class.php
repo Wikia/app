@@ -116,7 +116,7 @@ class FilePageHooks extends WikiaObject{
 			return true;
 		}
 
-		if ( WikiaFileHelper::isTitleVideo( $title ) ) {
+		if ( WikiaFileHelper::isFileTypeVideo( $title ) ) {
 			$file = wfFindFile( $title );
 			if( !$file->isLocal() ) {
 				// Prevent move tab being shown.
