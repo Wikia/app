@@ -124,11 +124,15 @@ ve.ui.Dialog.prototype.onFrameDocumentKeyDown = function ( e ) {
  * @emits open
  */
 ve.ui.Dialog.prototype.open = function () {
-	ve.ui.Window.prototype.open.call( this );
-	ve.track( {
+	var data = {
 		'action': ve.track.actions.OPEN,
 		'label': 'dialog-' + ve.track.nameToLabel( this.constructor.static.name )
-	} );
+	};
+	ve.ui.Window.prototype.open.call( this );
+	if ( this.openCount ) {
+		data.value = this.openCount;
+	}
+	ve.track( data );
 	// Prevent scrolling in top-level window
 	$( window ).on( 'mousewheel', this.onWindowMouseWheelHandler );
 	$( document ).on( 'keydown', this.onDocumentKeyDownHandler );
