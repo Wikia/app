@@ -182,7 +182,7 @@ ve.ui.WikiaSourceModeDialog.prototype.onParseSuccess = function( response ) {
 		this.attachSaveDialog();
 		this.$document[0].focus();
 		this.activating = false;
-	}, target ) )
+	}, target ) );
 };
 
 /**
