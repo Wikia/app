@@ -38,7 +38,7 @@ require( ['wikia.tracker'], function ( tracker ) {
 	function track( name, data ) {
 		var params = {
 			category: 'editor-ve',
-			trackingMethod: 'ga'
+			trackingMethod: 'both'
 		};
 
 		// Handle MW tracking calls
