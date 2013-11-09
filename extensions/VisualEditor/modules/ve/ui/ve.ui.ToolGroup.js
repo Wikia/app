@@ -141,7 +141,8 @@ ve.ui.ToolGroup.prototype.onMouseUp = function ( e ) {
 	if ( !this.disabled && e.which === 1 && this.pressed && this.pressed === tool ) {
 		ve.track( {
 			'action': ve.track.actions.CLICK,
-			'label': 'tool-' + ve.track.nameToLabel( tool.constructor.static.name )
+			'label': 'tool-' + ve.track.nameToLabel( tool.constructor.static.name ) +
+				( tool.toolbar.constructor === ve.ui.SurfaceToolbar ? '-surface' : '' )
 		} );
 		this.pressed.onSelect();
 	}
