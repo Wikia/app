@@ -129,7 +129,9 @@ ve.ui.WikiaSourceModeDialog.prototype.parse = function( ) {
 		'cache': 'false',
 		'success': ve.bind( this.onParseSuccess, this ),
 		'error': ve.bind( this.onParseError, this ),
-		'complete': this.$frame.stopThrobbing
+		'complete': ve.bind( function() {
+			this.$frame.stopThrobbing();
+		} , this )
 	} );
 };
 
