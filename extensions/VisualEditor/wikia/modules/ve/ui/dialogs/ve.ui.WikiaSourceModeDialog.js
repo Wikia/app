@@ -139,44 +139,50 @@ ve.ui.WikiaSourceModeDialog.prototype.parse = function( ) {
  * @method
  */
 ve.ui.WikiaSourceModeDialog.prototype.onParseSuccess = function( response ) {
-	var surfaceModel, doc, newDoc, merge, tx;
+	var target;
 	if ( !response || response.error || !response.visualeditor || response.visualeditor.result !== 'success' ) {
 		return this.onParseError.call( this );
 	}
 
-	surfaceModel = this.surface.getModel();
+	// TODO: Close is called in this way in order to be synchronous (compare with ve.ui.Dialog.close)
+	// otherwise it was causing problems with stealing the focus from newly created surface.
+	ve.ui.Window.prototype.close.call( this );
+	$( window ).off( 'mousewheel', this.onWindowMouseWheelHandler );
+	$( document ).off( 'keydown', this.onDocumentKeyDownHandler );
 
-	doc = surfaceModel.getDocument();
-	newDoc = new ve.dm.Document ( ve.createDocumentFromHtml( response.visualeditor.content ) );
+	// TODO: This whole approach is based on ve.init.mw.ViewPageTarget.js and contains a lot of code
+	// duplication, it should be discussed with WMF guys and refactored.
+	target = this.surface.getTarget();
 
-	// TODO: Eventually stores and internalLists should be merged (and data remapped) but currently that
-	// functionality does not work correct.
+	target.deactivating = true;
+	target.tearDownToolbarButtons();
+	target.detachToolbarButtons();
+	target.resetSaveDialog();
+	target.hideSaveDialog();
+	target.detachSaveDialog();
+	target.$document.blur();
+	target.$document = null;
+	target.toolbar.destroy();
+	target.toolbar = null;
+	target.surface.destroy();
+	target.surface = null;
+	target.active = false;
+	target.deactivating = false;
 
-	// merge store
-	//merge = doc.getStore().merge( newDoc.getStore() );
-	//newDoc.data.remapStoreIndexes( merge );
-	doc.store = newDoc.store;
+	target.wikitext = this.sourceModeTextarea.getValue();
 
-	// merge internal list
-	//merge = doc.internalList.merge( newDoc.internalList, 0 );
-	//newDoc.data.remapInteralListIndexes( merge.mapping );
-	doc.internalList = newDoc.internalList;
-
-	tx = new ve.dm.Transaction();
-	tx.pushReplace( doc, 0, doc.data.data.length, newDoc.data.data,
-		// get all except the last item
-		( newDoc.metadata.data.length ? newDoc.metadata.data.slice( 0, -1 ) : [] )
-	);
-	tx.pushReplaceMetadata(
-		// only send the last items
-		( doc.metadata.length ? doc.metadata.data[doc.metadata.data.length - 1] : [] ),
-		( newDoc.metadata.length ? newDoc.metadata.data[newDoc.metadata.data.length - 1] : [] )
-	);
-	surfaceModel.change( tx, new ve.Range( 0 ) );
-	this.surface.getTarget().setWikitext( this.sourceModeTextarea.getValue() );
-	surfaceModel.clearHistory();
-	this.close();
-	this.sourceModeTextarea.setValue( '' );
+	target.activating = true;
+	target.edited = true;
+	target.doc = ve.createDocumentFromHtml( response.visualeditor.content );
+	target.setUpSurface( target.doc, ve.bind( function() {
+		this.editNotices = {};
+		this.setupToolbarButtons();
+		this.setupSaveDialog();
+		this.attachToolbarButtons();
+		this.attachSaveDialog();
+		this.$document[0].focus();
+		this.activating = false;
+	}, target ) )
 };
 
 /**
