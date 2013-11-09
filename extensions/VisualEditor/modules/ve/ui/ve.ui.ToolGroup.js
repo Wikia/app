@@ -142,6 +142,9 @@ ve.ui.ToolGroup.prototype.onMouseUp = function ( e ) {
 		ve.track( {
 			'action': ve.track.actions.CLICK,
 			'label': 'tool-' + ve.track.nameToLabel( tool.constructor.static.name ) +
+				// HACK: is this coming from the surface?
+				// TODO: this should probably be passed into the config or some other
+				// solution that is less dirty.
 				( tool.toolbar.constructor === ve.ui.SurfaceToolbar ? '-surface' : '' )
 		} );
 		this.pressed.onSelect();
