@@ -39,6 +39,7 @@ ve.ui.WikiaSourceModeDialog.prototype.initialize = function () {
 	ve.ui.MWDialog.prototype.initialize.call( this );
 
 	// Properties
+	this.openCount = 0;
 	this.sourceModeTextarea = new ve.ui.TextInputWidget({
 		'$$': this.frame.$$,
 		'multiline': true
@@ -73,6 +74,8 @@ ve.ui.WikiaSourceModeDialog.prototype.initialize = function () {
 ve.ui.WikiaSourceModeDialog.prototype.onOpen = function () {
 	var doc = this.surface.getModel().getDocument();
 
+	this.openCount++;
+
 	// Parent method
 	ve.ui.MWDialog.prototype.onOpen.call( this );
 
@@ -97,6 +100,7 @@ ve.ui.WikiaSourceModeDialog.prototype.onSerialize = function ( wikitext ) {
  * @method
  */
 ve.ui.WikiaSourceModeDialog.prototype.onApply = function () {
+	ve.track( { 'action': ve.track.actions.CLICK, 'label': 'dialog-source-button-save' } );
 	this.$frame.startThrobbing();
 	this.parse();
 };
@@ -142,6 +146,7 @@ ve.ui.WikiaSourceModeDialog.prototype.onParseSuccess = function( response ) {
 		return this.onParseError.call( this );
 	}
 
+	ve.track( { 'action': ve.track.actions.SUCCESS, 'label': 'dialog-parse-success' } );
 	surfaceModel = this.surface.getModel();
 
 	doc = surfaceModel.getDocument();
@@ -176,6 +181,7 @@ ve.ui.WikiaSourceModeDialog.prototype.onParseSuccess = function( response ) {
  * @method
  */
 ve.ui.WikiaSourceModeDialog.prototype.onParseError = function ( ) {
+	ve.track( { 'action': ve.track.actions.ERROR, 'label': 'dialog-parse-error' } );
 	// TODO: error handling?
 };
 

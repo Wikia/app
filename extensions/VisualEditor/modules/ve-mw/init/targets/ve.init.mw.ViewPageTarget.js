@@ -837,7 +837,15 @@ ve.init.mw.ViewPageTarget.prototype.onSurfaceModelChange = function ( tx, range 
 		$.showModal(
 			ve.msg( 'visualeditor-wikitext-warning-title' ),
 			$( $.parseHTML( ve.init.platform.getParsedMessage( 'wikia-visualeditor-wikitext-warning' ) ) )
-				.filter( 'a' ).attr( 'target', '_blank ' ).end()
+				.filter( 'a' ).attr( 'target', '_blank ' ).end(),
+			{
+				'onClose': function() {
+					ve.track( { 'action': ve.track.actions.CLOSE, 'label': 'modal-wikitext-warning' } );
+				},
+				'onCreate': function() {
+					ve.track( { 'action': ve.track.actions.OPEN, 'label': 'modal-wikitext-warning' } );
+				}
+			}
 		);
 		this.surface.getModel().disconnect( this, { 'change': 'onSurfaceModelChange' } );
 	}

@@ -9,7 +9,8 @@ require( ['wikia.tracker'], function ( tracker ) {
 		nameToLabelMap = {
 			'meta': 'page-settings',
 			'transclusion': 'template',
-			'wikiaMediaInsert': 'media-insert'
+			'wikiaMediaInsert': 'media-insert',
+			'wikiaSourceMode': 'source'
 		},
 		rSpecialChars = /[A-Z]/g;
 
@@ -38,7 +39,7 @@ require( ['wikia.tracker'], function ( tracker ) {
 	function track( name, data ) {
 		var params = {
 			category: 'editor-ve',
-			trackingMethod: 'ga'
+			trackingMethod: 'both'
 		};
 
 		// Handle MW tracking calls
