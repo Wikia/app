@@ -90,6 +90,7 @@ ve.ui.WikiaSourceModeDialog.prototype.onSerialize = function ( wikitext ) {
  * @method
  */
 ve.ui.WikiaSourceModeDialog.prototype.onApply = function () {
+	ve.track( { 'action': ve.track.actions.CLICK, 'label': 'dialog-source-button-save' } );
 	this.$frame.startThrobbing();
 	this.parse();
 };
@@ -135,6 +136,7 @@ ve.ui.WikiaSourceModeDialog.prototype.onParseSuccess = function( response ) {
 		return this.onParseError.call( this );
 	}
 
+	ve.track( { 'action': ve.track.actions.SUCCESS, 'label': 'dialog-parse-success' } );
 	surfaceModel = this.surface.getModel();
 
 	doc = surfaceModel.getDocument();
@@ -169,6 +171,7 @@ ve.ui.WikiaSourceModeDialog.prototype.onParseSuccess = function( response ) {
  * @method
  */
 ve.ui.WikiaSourceModeDialog.prototype.onParseError = function ( ) {
+	ve.track( { 'action': ve.track.actions.ERROR, 'label': 'dialog-parse-error' } );
 	// TODO: error handling?
 };
 

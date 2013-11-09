@@ -9,7 +9,8 @@ require( ['wikia.tracker'], function ( tracker ) {
 		nameToLabelMap = {
 			'meta': 'page-settings',
 			'transclusion': 'template',
-			'wikiaMediaInsert': 'media-insert'
+			'wikiaMediaInsert': 'media-insert',
+			'wikiaSourceMode': 'source'
 		},
 		rSpecialChars = /[A-Z]/g;
 
