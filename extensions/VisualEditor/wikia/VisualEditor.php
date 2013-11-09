@@ -109,6 +109,8 @@ $wgResourceModules += array(
 			'wikia-visualeditor-dialogbutton-wikiasourcemode-tooltip',
 			'wikia-visualeditor-dialog-wikiasourcemode-title',
 			'wikia-visualeditor-dialog-wikiasourcemode-apply-button',
+			'wikia-visualeditor-dialog-wikiasourcemode-help-link',
+			'wikia-visualeditor-dialog-wikiasourcemode-help-text',
 		),
 		'dependencies' => array(
 			'ext.visualEditor.core',

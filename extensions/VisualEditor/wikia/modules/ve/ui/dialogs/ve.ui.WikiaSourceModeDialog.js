@@ -48,13 +48,20 @@ ve.ui.WikiaSourceModeDialog.prototype.initialize = function () {
 		'label': ve.msg( 'wikia-visualeditor-dialog-wikiasourcemode-apply-button' ),
 		'flags': ['primary']
 	} );
+	this.$helpLink = this.$$('<a>')
+		.addClass( 've-ui-wikiaSourceModeDialog-helplink' )
+		.attr( {
+			'href': new mw.Title( ve.msg( 'wikia-visualeditor-dialog-wikiasourcemode-help-link' ) ).getUrl(),
+			'target': '_blank'
+		} )
+		.text( ve.msg( 'wikia-visualeditor-dialog-wikiasourcemode-help-text' ) );
 
 	// Events
 	this.applyButton.connect( this, { 'click': [ 'onApply' ] } );
 
 	// Initialization
 	this.$body.append( this.sourceModeTextarea.$ );
-	this.$foot.append( this.applyButton.$ );
+	this.$foot.append( this.$helpLink, this.applyButton.$ );
 	this.frame.$content.addClass( 've-ui-wikiaSourceModeDialog-content' );
 };
 
