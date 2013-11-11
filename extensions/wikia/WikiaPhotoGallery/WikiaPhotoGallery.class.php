@@ -1260,7 +1260,7 @@ class WikiaPhotoGallery extends ImageGallery {
 		if (!empty($this->mShowAddButton)) {
 			$slideshowHtml .= Xml::element('a',
 				array('class' => 'wikia-slideshow-addimage wikia-button secondary', 'style' => 'float: right'),
-				wfMsg('wikiaPhotoGallery-slideshow-view-addphoto'));
+				wfMessage( 'wikiaPhotoGallery-slideshow-view-addphoto' )->inContentLanguage()->text());
 		}
 		$slideshowHtml .= Xml::closeElement('div');
 
