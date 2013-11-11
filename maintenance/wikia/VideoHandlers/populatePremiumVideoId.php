@@ -30,7 +30,7 @@ class PopulatePremiumVideoId {
 	public static function run( DatabaseMysql $db, $dbname, $test = false, $verbose = false ) {
 		global $titleIDs;
 
-		$sql = "select video_title, provider from video_info where premium = 1 and video_id = ''";
+		$sql = "select video_title as title, provider from video_info where premium = 1 and video_id = ''";
 		$result = $db->query($sql);
 
 		$numRows = 0;
