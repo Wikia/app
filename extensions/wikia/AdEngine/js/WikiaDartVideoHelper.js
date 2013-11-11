@@ -21,13 +21,7 @@ define('ext.wikia.adengine.dartvideohelper', ['wikia.log', 'wikia.location', 'wi
 					urlEncodedVals = [];
 					if (vals.length) {
 						for (valIndex = 0; valIndex < vals.length; valIndex += 1) {
-							// FIXME: why would it be empty ?
-							if ( vals[valIndex] ) {
-								urlEncodedVals.push(encodeURIComponent(vals[valIndex].toString()));
-							} else {
-								// log for Ad team
-								urlEncodedVals.push('VID1030');
-							}
+							urlEncodedVals.push(encodeURIComponent(vals[valIndex].toString()));
 						}
 						params.push(key + '=' + urlEncodedVals.join(','));
 					}
