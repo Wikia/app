@@ -45,7 +45,9 @@ class PopulatePremiumVideoId {
 		}
 		$db->freeResult($result);
 
-		echo "[$dbname] Found video IDs for $numFound of $numRows videos\n";
+		if ( $numRows ) {
+			echo "[$dbname] Found video IDs for $numFound of $numRows videos\n";
+		}
 
 		foreach ( $update as $info ) {
 			list($title, $provider, $id) = $info;
@@ -54,7 +56,7 @@ class PopulatePremiumVideoId {
                      where video_title = ".$db->addQuotes($title)."
 				       and provider = ".$db->addQuotes($provider);
 
-			if ( isset($verbose) ) {
+			if ( $verbose ) {
 				echo "Running SQL on $dbname: $sql\n";
 			}
 
