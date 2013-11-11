@@ -45,7 +45,7 @@ class PopulatePremiumVideoId {
 		}
 		$db->freeResult($result);
 
-		echo "Found video IDs for $numFound of $numRows videos\n";
+		echo "[$dbname] Found video IDs for $numFound of $numRows videos\n";
 
 		foreach ( $update as $info ) {
 			list($title, $provider, $id) = $info;
