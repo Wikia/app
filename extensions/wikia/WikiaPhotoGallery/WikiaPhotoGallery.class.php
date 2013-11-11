@@ -988,13 +988,13 @@ class WikiaPhotoGallery extends ImageGallery {
 				// add button for Monaco
 				$html .= Xml::openElement('span', array('class' => 'wikia-gallery-add noprint', 'style' => 'display: none'));
 				$html .= Xml::element('img', array('src' => $wgBlankImgUrl, 'class' => 'sprite-small add'));
-				$html .= Xml::element('a', array('href' => '#'), wfMsgForContent('wikiaPhotoGallery-viewmode-addphoto'));
+				$html .= Xml::element('a', array('href' => '#'), wfMessage('wikiaPhotoGallery-viewmode-addphoto')->inContentLanguage()->text());
 				$html .= Xml::closeElement('span');
 
 				// add button for Oasis
 				$html .= Xml::openElement('a', array('class' => 'wikia-photogallery-add wikia-button noprint', 'style' => 'display: none'));
 				$html .= Xml::element('img', array('src' => $wgBlankImgUrl, 'class' => 'sprite photo', 'width' => 26, 'height' => 16));
-				$html .= wfMsgForContent('wikiaPhotoGallery-viewmode-addphoto');
+				$html .= wfMessage('wikiaPhotoGallery-viewmode-addphoto')->inContentLanguage()->text();
 				$html .= Xml::closeElement('a');
 			}
 
@@ -1130,7 +1130,7 @@ class WikiaPhotoGallery extends ImageGallery {
 
 			if ($link == '') {
 				// tooltip to be used for not-linked images
-				$linkAttribs['title'] = wfMsg('wikiaPhotoGallery-slideshow-view-popout-tooltip');
+				$linkAttribs['title'] = wfMessage('wikiaPhotoGallery-slideshow-view-popout-tooltip')->text();
 				$linkAttribs['class'] = 'wikia-slideshow-image';
 				unset($linkAttribs['href']);
 			} else {
@@ -1146,7 +1146,7 @@ class WikiaPhotoGallery extends ImageGallery {
 
 				// add link overlay
 				$linkOverlay = Xml::openElement('span', array('class' => 'wikia-slideshow-link-overlay'))
-					. wfMsg('wikiaPhotoGallery-slideshow-view-link-overlay', Sanitizer::removeHTMLtags( $linkText ))
+					. wfMessage('wikiaPhotoGallery-slideshow-view-link-overlay', Sanitizer::removeHTMLtags( $linkText ))->text()
 					. Xml::closeElement('span');
 			}
 
@@ -1220,7 +1220,8 @@ class WikiaPhotoGallery extends ImageGallery {
 
 		// prev
 		$slideshowHtml .= Xml::openElement('a',
-			array('class' => 'wikia-slideshow-sprite wikia-slideshow-prev', 'style' => "top: {$top}px", 'title' => wfMsg('wikiaPhotoGallery-slideshow-view-prev-tooltip')));
+			array('class' => 'wikia-slideshow-sprite wikia-slideshow-prev', 'style' => "top: {$top}px",
+				'title' => wfMessage('wikiaPhotoGallery-slideshow-view-prev-tooltip')->text()));
 		$slideshowHtml .= Xml::openElement('span');
 		$slideshowHtml .= Xml::element('img', array('class' => 'chevron', 'src' => $wgBlankImgUrl));
 		$slideshowHtml .= Xml::closeElement('span');
@@ -1228,7 +1229,8 @@ class WikiaPhotoGallery extends ImageGallery {
 
 		// next
 		$slideshowHtml .= Xml::openElement('a',
-			array('class' => 'wikia-slideshow-sprite wikia-slideshow-next', 'style' => "top: {$top}px", 'title' =>  wfMsg('wikiaPhotoGallery-slideshow-view-next-tooltip')));
+			array('class' => 'wikia-slideshow-sprite wikia-slideshow-next', 'style' => "top: {$top}px",
+				'title' =>  wfMessage('wikiaPhotoGallery-slideshow-view-next-tooltip')->text()));
 		$slideshowHtml .= Xml::openElement('span');
 		$slideshowHtml .= Xml::element('img', array('class' => 'chevron', 'src' => $wgBlankImgUrl));
 		$slideshowHtml .= Xml::closeElement('span');
@@ -1240,7 +1242,7 @@ class WikiaPhotoGallery extends ImageGallery {
 		$slideshowHtml .= Xml::openElement('div', array('class' => 'wikia-slideshow-toolbar clearfix', 'style' => 'display: none'));
 
 		// Pop-out icon, "X of X" counter
-		$counterValue = wfMsg('wikiaPhotoGallery-slideshow-view-number', '$1', $index);
+		$counterValue = wfMessage('wikiaPhotoGallery-slideshow-view-number', '$1', $index)->text();
 
 		$slideshowHtml .= Xml::openElement('div', array('style' => 'float: left'));
 			$slideshowHtml .= Xml::element('img',
@@ -1248,7 +1250,7 @@ class WikiaPhotoGallery extends ImageGallery {
 					'class' => 'wikia-slideshow-popout lightbox',
 					'height' => 11,
 					'src' => "{$wgStylePath}/common/images/magnify-clip.png",
-					'title' => wfMsg('wikiaPhotoGallery-slideshow-view-popout-tooltip'),
+					'title' => wfMessage('wikiaPhotoGallery-slideshow-view-popout-tooltip')->text(),
 					'width' => 15,
 				));
 			$slideshowHtml .= Xml::element('span',
@@ -1568,7 +1570,7 @@ class WikiaPhotoGallery extends ImageGallery {
 		}
 
 		$attribs = array(
-			'data-feed-title' => wfMsg('wikiaPhotoGallery-lightbox-caption', $this->mData['feedTitle']),
+			'data-feed-title' => wfMessge('wikiaPhotoGallery-lightbox-caption', $this->mData['feedTitle'])->text(),
 			'id' => $id,
 			'hash' => $hash,
 			'class' =>  'wikia-gallery'.
@@ -1644,7 +1646,7 @@ class WikiaPhotoGallery extends ImageGallery {
 			$image['width'] = $thumbSize;
 			//TODO: move this before foreach? `link` should be always the same
 			preg_match('%(?:' . wfUrlProtocols() . ')([^/]+)%i', $imageData['link'], $match);
-			$image['caption'] = wfMsg('wikiaPhotoGallery-feed-caption', $imageData['caption'], $imageData['link'], $match[1]);
+			$image['caption'] = wfMessage('wikiaPhotoGallery-feed-caption', $imageData['caption'], $imageData['link'], $match[1])->text();
 
 			$linkAttribs = $this->parseLink($imageData['src'], $image['caption'], $imageData['link']);
 
@@ -1826,14 +1828,14 @@ class WikiaPhotoGallery extends ImageGallery {
 
 			if ($imageData['link'] == '') {
 				// tooltip to be used for not-linked images
-				$linkAttribs['title'] = wfMsg('wikiaPhotoGallery-slideshow-view-popout-tooltip');
+				$linkAttribs['title'] = wfMessage('wikiaPhotoGallery-slideshow-view-popout-tooltip')->text();
 				unset($linkAttribs['href']);
 			} else {
 				$linkText = $imageData['link'];
 
 				// add link overlay
 				$linkOverlay = Xml::openElement('span', array('class' => 'wikia-slideshow-link-overlay'))
-					. wfMsg('wikiaPhotoGallery-slideshow-view-link-overlay', $linkText)
+					. wfMessage('wikiaPhotoGallery-slideshow-view-link-overlay', $linkText)->text()
 					. Xml::closeElement('span');
 			}
 
@@ -1860,7 +1862,8 @@ class WikiaPhotoGallery extends ImageGallery {
 
 		// prev
 		$html .= Xml::openElement('a',
-			array('class' => 'wikia-slideshow-sprite wikia-slideshow-prev', 'style' => "top: {$top}px", 'title' => wfMsg('wikiaPhotoGallery-slideshow-view-prev-tooltip')));
+			array('class' => 'wikia-slideshow-sprite wikia-slideshow-prev', 'style' => "top: {$top}px",
+				'title' => wfMessage('wikiaPhotoGallery-slideshow-view-prev-tooltip')->text()));
 		$html .= Xml::openElement('span');
 		$html .= Xml::element('img', array('class' => 'chevron', 'src' => $wgBlankImgUrl));
 		$html .= Xml::closeElement('span');
@@ -1868,7 +1871,8 @@ class WikiaPhotoGallery extends ImageGallery {
 
 		// next
 		$html .= Xml::openElement('a',
-			array('class' => 'wikia-slideshow-sprite wikia-slideshow-next', 'style' => "top: {$top}px", 'title' =>  wfMsg('wikiaPhotoGallery-slideshow-view-next-tooltip')));
+			array('class' => 'wikia-slideshow-sprite wikia-slideshow-next', 'style' => "top: {$top}px",
+				'title' =>  wfMessage('wikiaPhotoGallery-slideshow-view-next-tooltip')->text()));
 		$html .= Xml::openElement('span');
 		$html .= Xml::element('img', array('class' => 'chevron', 'src' => $wgBlankImgUrl));
 		$html .= Xml::closeElement('span');
@@ -1880,7 +1884,7 @@ class WikiaPhotoGallery extends ImageGallery {
 		$html .= Xml::openElement('div', array('class' => 'wikia-slideshow-toolbar clearfix', 'style' => 'display: none'));
 
 		// Pop-out icon, "X of X" counter
-		$counterValue = wfMsg('wikiaPhotoGallery-slideshow-view-number', '$1', $index);
+		$counterValue = wfMessage('wikiaPhotoGallery-slideshow-view-number', '$1', $index)->text();
 
 		$html .= Xml::openElement('div', array('style' => 'float: left'));
 			$html .= Xml::element('img',
@@ -1888,7 +1892,7 @@ class WikiaPhotoGallery extends ImageGallery {
 					'class' => 'wikia-slideshow-popout',
 					'height' => 11,
 					'src' => "{$wgStylePath}/common/images/magnify-clip.png",
-					'title' => wfMsg('wikiaPhotoGallery-slideshow-view-popout-tooltip'),
+					'title' => wfMessge('wikiaPhotoGallery-slideshow-view-popout-tooltip')->text(),
 					'width' => 15,
 				));
 			$html .= Xml::element('span',
