@@ -1,11 +1,13 @@
 <div class="buttons">
-	
+
 	<? if($canFastAdminDelete): ?>
 		<button  class="secondary fast-admin-delete-message" data-mode="fastadmin"><?= wfMsg('wall-message-fast-admin-delete-message') ?></button>
 	<? endif; ?>
 
-	<button class="quote-button secondary"><?= wfMsg('wall-message-quote-button') ?></button>
-	
+	<? if ( !$isClosed ): ?>
+		<button class="quote-button secondary"><?= wfMessage( 'wall-message-quote-button' )->escaped() ?></button>
+	<? endif; ?>
+
 	<?php
 		$dropdown = array();
 
@@ -92,7 +94,7 @@
 				'text' => wfMsg('wall-message-reopen-thread'),
 			);
 		}
-		
+
 		if($canMove) {
 			$dropdown[] = array(
 				'class' => 'move-thread',
@@ -119,17 +121,19 @@
 		<? if($canFastAdminDelete): ?>
 			<a href="#"  class="fast-admin-delete-message" data-mode="fastadmin"><?= wfMsg('wall-message-fast-admin-delete-message') ?></a>
 		<? endif; ?>
-		
-		<a href="#" class="quote-button"><?= wfMsg('wall-message-quote-button') ?></a>
-		
+
+		<? if ( !$isClosed ): ?>
+			<a href="#" class="quote-button"><?= wfMessage( 'wall-message-quote-button' )->escaped() ?></a>
+		<? endif; ?>
+
 		<? if( $canClose ): ?>
 		 	<a href="#" class="close-thread" data-mode="close"> <?= wfMsg('wall-message-close-thread'); ?> </a>
 		 <? endif; ?>
-		 
+
 		<? if( $canReopen): ?>
 		 	<a href="#" class="reopen-thread"> <?= wfMsg('wall-message-reopen-thread'); ?> </a>
 		<? endif; ?>
-		
+
 		<? if( $showViewSource ): ?>
 			<a href="#" class="source-message"> <?= wfMsg('user-action-menu-view-source'); ?> </a>
 		<? endif; ?>
