@@ -12,7 +12,7 @@ define('ext.wikia.adengine.dartvideohelper', ['wikia.log', 'wikia.location', 'wi
 		var key,  vals, params = [], urlEncodedVals, valIndex;
 
 		for (key in pageParams) {
-			if (pageParams.hasOwnProperty(key)) {
+			if (pageParams.hasOwnProperty(key) && key !== '') {
 				vals = pageParams[key];
 				if (vals) {
 					if (!(vals instanceof Array)) {
@@ -21,7 +21,13 @@ define('ext.wikia.adengine.dartvideohelper', ['wikia.log', 'wikia.location', 'wi
 					urlEncodedVals = [];
 					if (vals.length) {
 						for (valIndex = 0; valIndex < vals.length; valIndex += 1) {
-							urlEncodedVals.push(encodeURIComponent(vals[valIndex].toString()));
+							// FIXME: why would it be empty ?
+							if ( vals[valIndex] ) {
+								urlEncodedVals.push(encodeURIComponent(vals[valIndex].toString()));
+							} else {
+								// log
+								urlEncodedVals.push('VID1030');
+							}
 						}
 						params.push(key + '=' + urlEncodedVals.join(','));
 					}
