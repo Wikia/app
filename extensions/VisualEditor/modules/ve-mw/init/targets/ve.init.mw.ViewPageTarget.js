@@ -855,7 +855,7 @@ ve.init.mw.ViewPageTarget.prototype.onSurfaceModelChange = function ( tx, range 
  * Re-evaluate whether the toolbar save button should be disabled or not.
  */
 ve.init.mw.ViewPageTarget.prototype.updateToolbarSaveButtonState = function () {
-	this.edited = this.surface.getModel().hasPastState();
+	this.edited = this.surface.getModel().hasPastState() || this.wikitext !== null;
 	// Disable the save button if we have no history or if the sanity check is not finished
 	this.toolbarSaveButton.setDisabled( ( !this.edited && !this.restoring ) || !this.sanityCheckFinished );
 	this.toolbarSaveButton.$.toggleClass( 've-init-mw-viewPageTarget-waiting', !this.sanityCheckFinished );
