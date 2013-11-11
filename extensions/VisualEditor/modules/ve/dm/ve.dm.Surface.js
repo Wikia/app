@@ -501,16 +501,3 @@ ve.dm.Surface.prototype.redo = function () {
 	}
 	return null;
 };
-
-/**
- * Clears history.
- *
- * @method
- * @emits history
- */
-ve.dm.Surface.prototype.clearHistory = function () {
-	this.smallStack = [];
-	this.bigStack = [];
-	this.undoIndex = 0;
-	this.emit( 'history' );
-};
