@@ -30,13 +30,9 @@ SQL;
 			echo "Running on $dbname:\n\t$str_sql\n\t$int_sql\n";
 		}
 
-		$affected = 0;
 		if ( empty($test) ) {
 			$res = $db->query( $str_sql );
-			$affected += $res->numRows();
 			$res = $db->query( $int_sql );
-			$affected += $res->numRows();
 		}
-		echo "$affected row(s) affected\n";
 	}
 }
