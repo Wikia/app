@@ -30,6 +30,11 @@ class PopulatePremiumVideoId {
 	public static function run( DatabaseMysql $db, $dbname, $test = false, $verbose = false ) {
 		global $titleIDs;
 
+		// Don't process the video wiki
+		if ( $dbname == 'video151' ) {
+			return true;
+		}
+
 		$sql = "select video_title as title, provider from video_info where premium = 1 and video_id = ''";
 		$result = $db->query($sql);
 
