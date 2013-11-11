@@ -27,7 +27,7 @@ update video_info, image
 SQL;
 
 		if ( $verbose ) {
-			echo "Running on $dbname:\n\t$str_sql\n\t$int_sql";
+			echo "Running on $dbname:\n\t$str_sql\n\t$int_sql\n";
 		}
 
 		$affected = 0;
