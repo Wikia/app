@@ -39,6 +39,6 @@ define( 'wikia.browserDetect', function() {
 
 	return {
 		isIE: isIE,
-		isIPAD: isIPad
+		isIPad: isIPad
 	};
 } );
