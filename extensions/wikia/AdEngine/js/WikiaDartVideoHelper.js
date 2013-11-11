@@ -25,7 +25,7 @@ define('ext.wikia.adengine.dartvideohelper', ['wikia.log', 'wikia.location', 'wi
 							if ( vals[valIndex] ) {
 								urlEncodedVals.push(encodeURIComponent(vals[valIndex].toString()));
 							} else {
-								// log
+								// log for Ad team
 								urlEncodedVals.push('VID1030');
 							}
 						}
