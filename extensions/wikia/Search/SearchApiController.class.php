@@ -14,8 +14,9 @@ use Wikia\Search\Services\CombinedSearchService;
 class SearchApiController extends WikiaApiController {
 	const ITEMS_PER_BATCH = 25;
 	const CROSS_WIKI_LIMIT = 25;
-
 	const PARAMETER_NAMESPACES = 'namespaces';
+
+	protected $allowedHubs = [ 'Gaming' => true, 'Entertainment' => true, 'Lifestyle' => true ];
 
 	/**
 	 * Fetches results for the submitted query
