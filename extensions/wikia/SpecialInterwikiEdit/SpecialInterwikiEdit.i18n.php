@@ -138,7 +138,13 @@ $messages['ca'] = array(
  * @author Умар
  */
 $messages['ce'] = array(
+	'interwikiedit' => 'Юкъарвикин хьажораш та йе гӀирс',
+	'iwedit-title' => 'Юкъарвикеш та йе гӀирс',
+	'iwedit-language-interwikis' => 'Меттанийн юкъарвикеш бен',
+	'iwedit-all-interwikis' => 'Массо юкъарвикеш',
 	'iwedit-update' => 'Карлаяккха',
+	'iwedit-error' => '<p>ГӀалат даьлла.</p>',
+	'iwedit-success' => '<p>Хьажораг кхиамца кхоьллина.</p>',
 );
 
 /** Czech (česky)

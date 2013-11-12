@@ -65,7 +65,7 @@ foreach ($videoList as $video):
 							<div class="Wikia-video-play-button"><img class="sprite play small" src=" <?= $wg->BlankImgUrl ?>"></div>
 							<img alt="<?= $suggest['fileTitle'] ?>" src="<?= $suggest['thumbUrl'] ?>" data-video-name="<?= htmlspecialchars($suggest['title']) ?>" data-video-key="<?= htmlspecialchars(urlencode($suggest['title'])) ?>" class="Wikia-video-thumb thumbimage">
 						</a>
-						<p><?=$suggest['fileTitle'] ?></p>
+						<p class="suggestion-title"><?=$suggest['fileTitle'] ?></p>
 					</li>
 				<? endforeach; ?>
 			</ul>

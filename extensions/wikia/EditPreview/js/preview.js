@@ -29,23 +29,12 @@ define( 'wikia.preview', [
 		// TODO: when we will redesign preview to meet darwin design directions - this should be done differently and refactored
 		articleMargin = fluidlayout.getWidthPadding() + fluidlayout.getArticleBorderWidth(),
 		// values for min and max are Darwin minimum and maximum supported article width.
-		previewTypes = {
-			current: {
-				name: 'current',
-				value: null
-			},
-			min: {
-				name: 'min',
-				value: fluidlayout.getMinArticleWidth() - 2 * articleMargin
-			},
-			max: {
-				name:'max',
-				value: fluidlayout.getMaxArticleWidth() - 2 * articleMargin
-			}
-		},
+		rightRailWidth = fluidlayout.getRightRailWidth(),
 		isRailDropped = false,
+		isWidePage = false,
 		articleWrapperWidth, // width of article wrapper needed as reference for preview scaling
-		FIT_SMALL_SCREEN = 80; // pixels to be removed from modal width to fit modal on small screens, won't be needed when new modals will be introduced
+		FIT_SMALL_SCREEN = 80, // pixels to be removed from modal width to fit modal on small screens, won't be needed when new modals will be introduced
+		previewTypes = null;
 
 	// show dialog for preview / show changes and scale it to fit viewport's height
 	function renderDialog(title, options, callback) {
@@ -76,7 +65,7 @@ define( 'wikia.preview', [
 		}, options);
 
 		// use loading indicator before real content will be fetched
-		var content = '<div class="ArticlePreview"><div class="ArticlePreviewInnerWrapper"><div class="ArticlePreviewInner"><img src="' + stylepath + '/common/images/ajax.gif" class="loading"></div></div></div>';
+		var content = '<div class="ArticlePreview"><div class="ArticlePreviewInner"><img src="' + stylepath + '/common/images/ajax.gif" class="loading"></div></div>';
 
 		$.showCustomModal(title, content, options);
 	}
@@ -95,8 +84,9 @@ define( 'wikia.preview', [
 	 * @param options object containing dialog options, see method description for details
 	 */
 	function renderPreview(options) {
-
 		isRailDropped = (options.isRailDropped) ? true : false;
+		isWidePage = (options.isWidePage) ? true : false;
+		previewTypes = getPreviewTypes( isWidePage );
 
 		var dialogOptions = {
 			buttons: [
@@ -115,17 +105,17 @@ define( 'wikia.preview', [
 				}
 			],
 			// set modal width based on screen size
-			width: (isRailDropped === false) ? options.width : options.width - FIT_SMALL_SCREEN,
+			width: ( (isRailDropped === false && isWidePage === false) || !window.wgOasisResponsive ) ? options.width : options.width - FIT_SMALL_SCREEN,
 			className: 'preview',
 			onClose: function() {
 				$(window).trigger('EditPagePreviewClosed');
 			}
 		};
+
 		// allow extension to modify the preview dialog
 		$(window).trigger('EditPageRenderPreview', [dialogOptions]);
 
 		renderDialog(msg('preview'), dialogOptions, function(contentNode) {
-
 			// cache selector for other functions in this module
 			$article = contentNode;
 
@@ -136,7 +126,7 @@ define( 'wikia.preview', [
 				if (window.wgOasisResponsive) {
 
 					// set proper preview width for shrinken modal
-					if (isRailDropped) {
+					if (isRailDropped || isWidePage) {
 						contentNode.width(options.width - articleMargin * 2);
 					}
 
@@ -206,19 +196,42 @@ define( 'wikia.preview', [
 					$(this).appendTo($(this).next());
 				});
 
-				// add summary
-				if (typeof summary != 'undefined') {
-					$('<div>', {id: "EditPagePreviewEditSummary"}).
-						width(options.width - 150).
-						appendTo(contentNode.parent()).
-						html(summary);
-				}
+				addEditSummary( contentNode, options.width, summary );
 
 				// fire an event once preview is rendered
 				$(window).trigger('EditPageAfterRenderPreview', [contentNode]);
 
 			});
 		});
+	}
+
+	/**
+	 * If summary parameter's type isn't undefined adds summary (new DOM element) and change height of article preview
+	 *
+	 * @param {object} contentNode article's wrapper
+	 * @param {int} width
+	 * @param {string} summary Summary text in HTML (parsed wikitext)
+	 */
+
+	function addEditSummary( contentNode, width, summary ) {
+		if (typeof summary !== 'undefined') {
+			var $editPagePreviewEditSummary = $('<div>', {id: "EditPagePreviewEditSummary"}),
+				$articlePreview = contentNode.closest(".ArticlePreview"),
+				articleHeight = $articlePreview.height(),
+				minArticleHeight = 200;
+
+			$editPagePreviewEditSummary .
+				width( width ) .
+				appendTo( $articlePreview.parent() ) .
+				html(summary);
+
+			var editSummaryHeight = $editPagePreviewEditSummary.height(),
+				newArticleHeight = articleHeight - editSummaryHeight;
+
+			if( newArticleHeight > minArticleHeight ) {
+				$articlePreview.height( newArticleHeight );
+			}
+		}
 	}
 
 	/**
@@ -248,25 +261,81 @@ define( 'wikia.preview', [
 	 */
 
 	function scalePreview(type) {
-		var	initialPreviewWidth = articleWrapperWidth,
-			selectedPreviewWidth = previewTypes[type].value,
-			scaleRatio = initialPreviewWidth / selectedPreviewWidth,
+		var selectedPreviewWidth = previewTypes[type].value,
+			scaleRatio = articleWrapperWidth / selectedPreviewWidth,
 			cssTransform = cssPropHelper.getSupportedProp('transform'),
-			cssTransformOrigin = cssPropHelper.getSupportedProp('transform-origin');
-		if (selectedPreviewWidth > initialPreviewWidth) {
-			var scaleVar = 'scale(' + scaleRatio + ')';
+			cssTransformOrigin = cssPropHelper.getSupportedProp('transform-origin'),
+			scaleVar = 'scale(' + scaleRatio + ')';
+
+		setClassesForWidePage( type, $article );
+
+		if (selectedPreviewWidth > articleWrapperWidth) {
 			$article.css(cssTransformOrigin, 'left top');
 			$article.css(cssTransform , scaleVar);
 		} else {
 			$article.css(cssTransform, '');
 		}
 
-		// DAR-2182
-		var newHeight = $article[0].getBoundingClientRect().height;
-		newHeight += articleMargin;
+		// Force browser to redraw/repaint - http://stackoverflow.com/questions/3485365/how-can-i-force-webkit-to-redraw-repaint-to-propagate-style-changes
+		$article.hide();
+		$article.height();
+		$article.show();
+	}
 
-		// we have a wrapper with overflow: hidden not to show white space after CSS scaling
-		$article.parent().height( newHeight );
+	/**
+	 * Adds/removes id to article preview according to selected type if it's a wide page
+	 *
+	 * @param {string} type type of
+	 * @param {jQuery} $article
+	 */
+
+	function setClassesForWidePage( type, $article ) {
+		var dataSize;
+
+		// DAR-2506 make the preview works like correctly for main pages
+		switch ( type ) {
+			case 'min':
+				dataSize = 'min';
+				break;
+			case 'max':
+				dataSize = 'max';
+				break;
+			default:
+				dataSize = '';
+		}
+
+		$article.attr( 'data-size', dataSize );
+	}
+
+	/**
+	 * Returns previewTypes object which depends on the type of previewing page
+	 *
+	 * @param {boolean} isWidePage - type of previewing article page is it mainpage/a page without right rail or not (DAR-2366)
+	 */
+
+	function getPreviewTypes( isWidePage ) {
+		var articleMinWidth = fluidlayout.getMinArticleWidth(),
+			articleMaxWidth = fluidlayout.getMaxArticleWidth(),
+			previewTypes = {
+			current: {
+				name: 'current',
+				value: null
+			},
+			min: {
+				name: 'min',
+				value: articleMinWidth - 2 * articleMargin
+			},
+			max: {
+				name:'max',
+				value: articleMaxWidth - 2 * articleMargin
+			}
+		};
+
+		if( isWidePage ) {
+			previewTypes.max.value += rightRailWidth;
+		}
+
+		return previewTypes;
 	}
 
 	/** @public **/

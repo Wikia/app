@@ -740,4 +740,25 @@ class DataMartService extends Service {
 
 		return $tagViews;
 	}
+	
+	public static function getWAM200Wikis() {
+		$app = F::app();
+
+		$memKey = wfSharedMemcKey( 'datamart', 'wam_top_200_wikis' );
+		$wikis = $app->wg->Memc->get($memKey);
+		if ( !is_array( $wikis ) ) {
+			$db = wfGetDB( DB_SLAVE, [], $app->wg->DWStatsDB );
+			$wikis = [];
+
+			$res = $db->select( 'dimension_top_wikis', 'wiki_id', '', __METHOD__, [ 'ORDER BY' => 'rank', 'LIMIT' => 200 ] );
+
+			while ( $row = $res->fetchRow() ) {
+				$wikis[] = intval( $row['wiki_id'] );
+			}
+
+			$app->wg->Memc->set($memKey, $wikis, 60 * 60 * 12);
+		}
+
+		return $wikis;
+	}
 }

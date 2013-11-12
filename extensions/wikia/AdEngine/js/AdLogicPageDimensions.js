@@ -1,4 +1,4 @@
-var AdLogicPageDimensions = function (window, document, log, slotTweaker, abTest) {
+var AdLogicPageDimensions = function (window, document, log, slotTweaker) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adengine.logic.shortpage',
@@ -25,7 +25,8 @@ var AdLogicPageDimensions = function (window, document, log, slotTweaker, abTest
 		 */
 		mediaQueriesToCheck = {
 			oneColumn: 'screen and (max-width: 1023px)',
-			noTopButton: 'screen and (max-width: 1030px)'
+			noTopButton: 'screen and (max-width: 1030px)',
+			noSkins: 'screen and (max-width: 1260px)'
 		},
 		slotsToHideOnMediaQuery = {
 			TOP_BUTTON_WIDE: 'noTopButton',
@@ -34,12 +35,10 @@ var AdLogicPageDimensions = function (window, document, log, slotTweaker, abTest
 			HOME_TOP_RIGHT_BOXAD: 'oneColumn',
 			LEFT_SKYSCRAPER_2: 'oneColumn',
 			LEFT_SKYSCRAPER_3: 'oneColumn',
-			INCONTENT_BOXAD_1: 'oneColumn'
+			INCONTENT_BOXAD_1: 'oneColumn',
+			INVISIBLE_SKIN: 'noSkins'
 		},
 		mediaQueriesMet,
-		// ABTesting: DAR-1859: START
-		railIsAlwaysOnRight = abTest.getGroup('DAR_RIGHTRAILPOSITION') === 'STATIC',
-		// ABTesting: DAR-1859: END
 		matchMedia;
 
 	function matchMediaMoz(query) {
@@ -75,16 +74,8 @@ var AdLogicPageDimensions = function (window, document, log, slotTweaker, abTest
 		}
 		if (mediaQueriesMet) {
 			if (slotsToHideOnMediaQuery[slotname]) {
-				// ABTesting: DAR-1859: START
-				if ((slotsToHideOnMediaQuery[slotname] === 'oneColumn') && railIsAlwaysOnRight) {
-					wideEnough = true;
-				} else {
-				// ABTesting: DAR-1859: END
-					conflictingMediaQuery = slotsToHideOnMediaQuery[slotname];
-					wideEnough = !mediaQueriesMet[conflictingMediaQuery];
-				// ABTesting: DAR-1859: START
-				}
-				// ABTesting: DAR-1859: END
+				conflictingMediaQuery = slotsToHideOnMediaQuery[slotname];
+				wideEnough = !mediaQueriesMet[conflictingMediaQuery];
 			} else {
 				wideEnough = true;
 			}

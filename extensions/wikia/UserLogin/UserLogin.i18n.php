@@ -313,6 +313,20 @@ $messages['be-tarask'] = array(
 	'userlogin-changepassword-needlogin' => 'Вам неабходна $1, каб зьмяніць ваш пароль.',
 );
 
+/** Bulgarian (български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'userlogin-login-heading' => 'Влизане',
+	'userlogin-forgot-password' => 'Забравена парола?',
+	'userlogin-forgot-password-button' => 'Продължаване',
+	'userlogin-error-invalid-username' => 'Невалидно потребителско име',
+	'userlogin-oldpassword' => 'Стара парола',
+	'userlogin-newpassword' => 'Нова парола',
+	'userlogin-retypenew' => 'Нова парола (повторно)',
+	'wikiamobile-sendpassword-label' => 'Изпращане на нова парола',
+);
+
 /** Breton (brezhoneg)
  * @author Fohanno
  * @author Y-M D
@@ -418,6 +432,13 @@ Desitges controlar quins missatges de correu electrònic reps? Vés a: {{fullurl
 	'userlogin-changepassword-needlogin' => 'Necessites $1 per canviar la contrasenya.',
 	'wikiamobile-sendpassword-label' => 'Enviar una contrasenya nova',
 	'wikiamobile-facebook-connect-fail' => 'Ho sentim, el teu compte de Facebook no està actualment vinculat amb el teu compte de Wikia.',
+);
+
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'userlogin-error-throttled-mailpassword' => 'Оха хӀинцале хӀокху декъашхочун дӀаяздаран пароль яийтина {{PLURAL:$1| сахьат|$1 сахьат}} хьалха. Дехар до, хьай электронан почте хьажа.',
 );
 
 /** Czech (česky)
@@ -629,6 +650,39 @@ Para comprobar los acontecimientos más recientes en Wikia, visita http://comuni
 	'userlogin-changepassword-needlogin' => 'Necesitas $1 para cambiar la contraseña.',
 	'wikiamobile-sendpassword-label' => 'Enviar una nueva contraseña',
 	'wikiamobile-facebook-connect-fail' => 'Lo sentimos, pero tu cuenta en Facebook no está actualmente vinculada con una cuenta Wikia.',
+);
+
+/** Finnish (suomi)
+ * @author Ville96
+ */
+$messages['fi'] = array(
+	'userlogin-login-heading' => 'Kirjaudu sisään',
+	'userlogin-forgot-password' => 'Unohditko salasanasi?',
+	'userlogin-forgot-password-button' => 'Jatka',
+	'userlogin-forgot-password-go-to-login' => 'Onko sinulla jo salasana? [[Special:UserLogin|Kirjaudu sisään]]',
+	'userlogin-remembermypassword' => 'Pysy kirjautuneena',
+	'userlogin-error-noname' => 'Oho, täytä käyttäjätunnus-kenttä.',
+	'userlogin-error-sessionfailure' => 'Sisäänkirjautumisistunto on aikakatkaistu. Kirjaudu sisään uudestaan.',
+	'userlogin-error-nosuchuser' => 'Hm, emme tunnista tätä nimeä. Muista että kirjainkoolla on väliä.',
+	'userlogin-error-wrongpassword' => 'Oho, väärä salasana. Varmista, että caps lock on pois päältä, ja yritä uudelleen.',
+	'userlogin-error-wrongpasswordempty' => 'Oho, täytä salasana-kenttä.',
+	'userlogin-error-login-throttled' => 'Olet yrittänyt kirjautua sisään väärällä salasanalla liian monta kertaa. Odota hetki ennen kuin yrität uudelleen.',
+	'userlogin-error-login-userblocked' => 'Käyttäjätunnuksesi on estetty eikä sitä voi käyttää sisäänkirjautumiseen.',
+	'userlogin-error-edit-account-closed-flag' => 'Wikia on poistanut tilisi käytöstä.',
+	'userlogin-error-cantcreateaccount-text' => 'IP-osoitteellasi ei voi luoda uusia käyttäjätilejä.',
+	'userlogin-error-userexists' => 'Jollakin on jo tämä käyttäjätunnus. Kokeile toista!',
+	'userlogin-error-invalidemailaddress' => 'Syötä kelvollinen sähköpostiosoite.',
+	'userlogin-get-account' => 'Eikö sinulla ole tiliä? <a href="$1" tabindex="$2">Rekisteröidy</a>',
+	'userlogin-error-invalid-username' => 'Virheellinen käyttäjätunnus',
+	'userlogin-error-user-not-allowed' => 'Tämä käyttäjätunnus ei ole sallittu.',
+	'userlogin-error-userlogin-bad-birthday' => 'Oho, täytä kuukausi, päivä ja vuosi.',
+	'userlogin-error-noemailtitle' => 'Syötä kelvollinen sähköpostiosoite.',
+	'userlogin-password-email-sent' => 'Olemme lähettäneet uuden salasanan käyttäjän $1 sähköpostiosoitteeseen.',
+	'userlogin-password-page-title' => 'Vaihda salasanasi',
+	'userlogin-oldpassword' => 'Vanha salasana',
+	'userlogin-newpassword' => 'Uusi salasana',
+	'userlogin-retypenew' => 'Kirjoita uusi salasana uudelleen',
+	'userlogin-provider-or' => 'Tai',
 );
 
 /** Faroese (føroyskt)
@@ -1693,6 +1747,7 @@ $messages['ps'] = array(
 );
 
 /** Portuguese (português)
+ * @author Hamilton Abreu
  * @author Luckas
  * @author SandroHc
  */
@@ -1700,7 +1755,7 @@ $messages['pt'] = array(
 	'userlogin-login-heading' => 'Login',
 	'userlogin-forgot-password' => 'Esqueceu a sua senha?',
 	'userlogin-forgot-password-button' => 'Continuar',
-	'userlogin-remembermypassword' => 'Manter-me logado', # Fuzzy
+	'userlogin-remembermypassword' => 'Permanecer ligado',
 	'userlogin-error-noname' => 'Ops, preencha o campo do nome de utilizador.',
 	'userlogin-error-nosuchuser' => 'Hum, nos não reconhecemos este nome. Não se esqueça que os nomes de utilizador são sensíveis a maiúsculas e minúsculas.',
 	'userlogin-error-wrongpassword' => 'Ops, senha incorreta. Certifique-se que o caps lock está desativado e tente novamente.',
@@ -1717,7 +1772,7 @@ $messages['pt'] = array(
 	'userlogin-newpassword' => 'Nova senha',
 	'userlogin-retypenew' => 'Confirme a nova senha',
 	'userlogin-password-email-greeting' => 'Olá $USERNAME,',
-	'userlogin-password-email-signature' => 'Suporte da Comunidade da Wikia',
+	'userlogin-password-email-signature' => 'Apoio da Comunidade da Wikia',
 	'userlogin-provider-or' => 'Ou',
 	'userlogin-loginreqlink' => 'entrar',
 	'userlogin-changepassword-needlogin' => 'Você necessita de $1 para alterar a senha.',
@@ -2357,7 +2412,7 @@ $messages['vi'] = array(
 	'userlogin-remembermypassword' => 'Giữ đăng nhập', # Fuzzy
 	'userlogin-error-noname' => 'Rất tiếc, xin vui lòng điền vào trường tên người dùng.',
 	'userlogin-error-sessionfailure' => 'Thời gian đăng nhập của bạn đã hết. Xin vui lòng đăng nhập lại.',
-	'userlogin-error-nosuchuser' => 'Xin lỗi, tên tài khoản bạn vừa đăng nhập chưa từng tồn tại, hãy thử lại hoặc bạn có thể đăng ký tại [[Special:UserSignup|đây]]', # Fuzzy
+	'userlogin-error-nosuchuser' => 'Rất tiếc, tên tài khoản bạn vừa mới đăng nhập chưa từng tồn tại, hãy thử lại hoặc bạn có thể đăng ký tài khoản này.',
 	'userlogin-error-wrongpassword' => 'Rất tiếc, sai mật khẩu. Hãy chắc rằng trạng thái caps lock của bạn đang tắt và thử lại.',
 	'userlogin-error-wrongpasswordempty' => 'Rất tiếc, xin vui lòng điền vào trường mật khẩu.',
 	'userlogin-error-resetpass_announce' => 'Hình như bạn đã sử dụng một mật khẩu tạm thời. Chọn một mật khẩu mới ở đây để tiếp tục đăng nhập.',

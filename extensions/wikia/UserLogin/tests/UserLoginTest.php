@@ -39,7 +39,6 @@
 			// setup
 			$this->setUpRequest( $requestParams );
 			$this->setUpMockObject( 'User', $mockUserParams, true, 'wgUser' );
-			$this->setUpMockObject( 'TempUser', false, true );
 			$this->setUpMockObject( 'UserLoginHelper', $mockHelperParams, true );
 			if ( !is_null($mockLoginFormParams) ) {
 				$this->setUpMockObject( 'LoginForm', $mockLoginFormParams, true, null, array(), false );
@@ -278,7 +277,6 @@
 			$this->setUpMockObject( 'AuthPlugin', $mockAuthParams, false, 'wgAuth' );
 			$this->setUpMockObject( 'User', $mockWgUserParams, false, 'wgUser' );
 			$this->setUpMockObject( 'User', $mockUserParams, true );
-			$this->setUpMockObject( 'TempUser', false, true );
 			if ( !is_null($mockLoginFormParams) ) {
 				$this->setUpMockObject( 'LoginForm', $mockLoginFormParams, true, null, array(), false );
 			}
@@ -412,7 +410,6 @@
 			$this->setUpMockObject( 'AuthPlugin', $mockAuthParams, false, 'wgAuth' );
 			$this->setUpMockObject( 'User', $mockWgUserParams, false, 'wgUser' );
 			$this->setUpMockObject( 'User', $mockUserParams, true );
-			$this->setUpMockObject( 'TempUser', false, true );
 
 			$this->setUpMockObject( 'UserLoginHelper', $mockHelperParams, true );
 

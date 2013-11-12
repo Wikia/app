@@ -94,6 +94,7 @@ class CreateWiki {
 				"es" => "esstarter",
 				"pl" => "plstarter",
 				"ru" => "rustarter",
+				"it" => "italianstarter",
 			)
 		);
 

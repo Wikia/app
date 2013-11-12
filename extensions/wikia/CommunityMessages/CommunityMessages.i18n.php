@@ -296,7 +296,7 @@ $messages['ps'] = array(
  */
 $messages['pt'] = array(
 	'communitymessages-desc' => 'Extensão de ajuda para as Mensagens da Comunidade',
-	'communitymessages-notice-msg' => 'As [[Special:WikiActivity|Mensagens da Comunidade foram acualizadas]].',
+	'communitymessages-notice-msg' => '[[Special:WikiActivity|As Mensagens da Comunidade foram atualizadas]].',
 );
 
 /** Brazilian Portuguese (português do Brasil)

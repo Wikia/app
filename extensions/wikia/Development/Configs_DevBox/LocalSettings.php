@@ -80,7 +80,9 @@ switch($wgWikiaDatacenter) {
 // Swift storage setup
 $wgFSSwiftDC = [
 	'sjc' => [
-		'server' => 's3.dev-dfs-s1',
+		'servers' => [
+			's3.dev-dfs-s1'
+		],
 		'config' => [
 			'swiftUser'    => 'development:swift',
 			'swiftKey'     => '6pS1+dRQuqtI7SSIZM2q6Dfwe6FR4O4zL12JZ5IF',
@@ -89,7 +91,9 @@ $wgFSSwiftDC = [
 		]
 	],
 	'poz' => [
-		'server' => 's3.dev-dfs-p1',
+		'servers' => [
+			's3.dev-dfs-p1'
+		],
 		'config' => [
 			'swiftUser'    => 'development:swift',
 			'swiftKey'     => 'yA3P1uh+gin4iX8exjnNmOLisiWOPwwyq8og40Z0',
@@ -99,8 +103,9 @@ $wgFSSwiftDC = [
 	]
 ];
 
-$wgFSSwiftServer = $wgFSSwiftDC[ $wgWikiaDatacenter ][ 'server' ];
+$wgFSSwiftServer = $wgFSSwiftDC[ $wgWikiaDatacenter ][ 'servers' ][ 0 ];
 $wgFSSwiftConfig = $wgFSSwiftDC[ $wgWikiaDatacenter ][ 'config' ];
+$wgEnableSwiftFileBackend = true; // enable globally on all devboxes
 
 $wgDevboxDefaultWikiDomain = 'www.wikia.com';
 #$wgDevboxSkipWikiFactoryVariables = true; // uncomment to skip loading of wiki-specific setup from WikiFactory
@@ -195,6 +200,8 @@ if (!empty($wgEnableSwiftFileBackend)) {
 else {
 	$wgDevBoxImageServerOverride ="images.{$wgDevelEnvironmentName}.wikia-dev.com";
 }
+
+$wgWikiaVideoImageHost = false; // don't rewrite URLs for shared video thumbnails
 
 // macbre: generate proper paths for static assets on devboxes (BugId:6809)
 $wgCdnStylePath = "{$wgCdnRootUrl}/__cb{$wgStyleVersion}"; // paths for images requested from CSS/SASS

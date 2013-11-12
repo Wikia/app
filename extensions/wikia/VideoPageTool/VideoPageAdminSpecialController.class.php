@@ -55,7 +55,7 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 	}
 
 	/**
-	 * Edit page
+	 * Edit program assets given a language (region), program date and page section
 	 * @requestParam string language
 	 * @requestParam string date [timestamp]
 	 * @requestParam string section [featured/category/fan]
@@ -92,7 +92,7 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 		// get program assets
 		$assets = $program->getAssetsBySection( $section );
 		if ( empty( $assets ) ) {
-			$publishedProgram = VideoPageToolProgram::newProgramNearestToday( $language, $date );
+			$publishedProgram = VideoPageToolProgram::loadProgramNearestDate( $language, $date );
 			if ( !empty( $publishedProgram ) ) {
 				$assets = $publishedProgram->getAssetsBySection( $section );
 			}

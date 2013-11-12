@@ -438,6 +438,13 @@ $messages['lb'] = array(
 	'cloakcheck-process-edits-no' => 'De Benotzer huet net genuch Ännerungen.',
 );
 
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'cloakcheck-form-username' => 'نوم كاروری:',
+);
+
 /** Lithuanian (lietuvių)
  * @author Eitvys200
  */
@@ -615,8 +622,8 @@ $messages['pt'] = array(
 	'cloakcheck-process-username' => 'Nome de utilizador: $1',
 	'cloakcheck-process-accountage-yes' => 'A conta é suficientemente antiga.',
 	'cloakcheck-process-accountage-no' => 'A conta é demasiado recente.',
-	'cloakcheck-process-emailconf-yes' => 'O endereço de correio electrónico foi confirmado.',
-	'cloakcheck-process-emailconf-no' => 'O endereço de correio electrónico não foi confirmado.',
+	'cloakcheck-process-emailconf-yes' => 'O endereço de correio eletrónico foi confirmado.',
+	'cloakcheck-process-emailconf-no' => 'O endereço de correio eletrónico não foi confirmado.',
 	'cloakcheck-process-edits-yes' => 'O utilizador tem edições suficientes.',
 	'cloakcheck-process-edits-no' => 'O utilizador não tem edições suficientes.',
 );

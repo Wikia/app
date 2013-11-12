@@ -1361,6 +1361,7 @@ $messages['ku-latn'] = array(
 
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
+ * @author Soued031
  */
 $messages['lb'] = array(
 	'scavengerhunt-list-header-name' => 'Numm vum Spill',
@@ -1368,7 +1369,7 @@ $messages['lb'] = array(
 	'scavengerhunt-list-enabled' => 'Aktivéiert',
 	'scavengerhunt-list-disabled' => 'Desaktivéiert',
 	'scavengerhunt-list-edit' => 'änneren',
-	'scavengerhunt-label-dialog-check' => '(visuellen Editeur weisen - pre-alpha, fonctionnéiert nach net)',
+	'scavengerhunt-label-dialog-check' => '(visuellen Editeur weisen - pre-alpha, funktionéiert nach net)',
 	'scavengerhunt-label-image-check' => '(Bild weisen)',
 	'scavengerhunt-label-general' => 'Allgemeng',
 	'scavengerhunt-label-name' => 'Numm:',
@@ -2224,7 +2225,7 @@ $messages['pt'] = array(
 	'scavengerhunt-label-goodbye-text' => 'Mensagem da janela:',
 	'scavengerhunt-label-goodbye-image' => 'Imagem da janela (endereço URL):',
 	'scavengerhunt-button-add' => 'Adicionar um jogo',
-	'scavengerhunt-button-save' => 'Salvar',
+	'scavengerhunt-button-save' => 'Gravar',
 	'scavengerhunt-button-disable' => 'Desativar',
 	'scavengerhunt-button-enable' => 'Ativar',
 	'scavengerhunt-button-delete' => 'Eliminar',
@@ -2250,9 +2251,9 @@ $messages['pt'] = array(
 	'scavengerhunt-game-has-been-enabled' => 'O jogo selecionado de Caça ao Tesouro foi ativado.',
 	'scavengerhunt-game-has-been-disabled' => 'O jogo selecionado de Caça ao Tesouro foi desativado.',
 	'scavengerhunt-game-has-not-been-saved' => 'O jogo da Caça ao Tesouro não foi gravado.',
-	'scavengerhunt-edit-token-mismatch' => 'Foi detectada uma incompatibilidade nas etiquetas de edição - tente novamente, por favor.',
+	'scavengerhunt-edit-token-mismatch' => 'Foi detetada uma incompatibilidade nas etiquetas de edição - tente novamente, por favor.',
 	'scavengerhunt-entry-form-name' => 'O seu nome:',
-	'scavengerhunt-entry-form-email' => 'Correio electrónico:',
+	'scavengerhunt-entry-form-email' => 'Correio eletrónico:',
 	'scavengerhunt-entry-form-submit' => 'Enviar entrada',
 	'scavengerhunt-label-progress-bar' => 'Barra de progresso',
 	'scavengerhunt-quit-game-button-quit' => 'Sair',

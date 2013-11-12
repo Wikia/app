@@ -6,6 +6,9 @@ if ( $_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 	return;
 }
 
+// prevent $_GET['title'] from being overwritten on API calls (BAC-906)
+define('DONT_INTERPOLATE_TITLE', true);
+
 // Initialise common MW code
 require ( dirname( __FILE__ ) . '/includes/WebStart.php' );
 

@@ -9,12 +9,18 @@ $wgExtensionCredits['other'][] = array(
 
 $dir = dirname( __FILE__ ) . '/';
 
-/* Classes */
-
+// Register files
 $wgAutoloadClasses['VisualEditorWikiaHooks'] = $dir . 'VisualEditor.hooks.php';
+$wgAutoloadClasses['ApiTempUpload'] = $dir . 'ApiTempUpload.php';
+$wgAutoloadClasses['ApiMediaSearch'] = $dir . 'ApiMediaSearch.php';
+$wgAutoloadClasses['ApiPhotoAttribution'] = $dir . 'ApiPhotoAttribution.php';
 
-/* ResourceLoader Modules */
+// Register API modules
+$wgAPIModules['apitempupload'] = 'ApiTempUpload';
+$wgAPIModules['apimediasearch'] = 'ApiMediaSearch';
+$wgAPIModules['apiphotoattribution'] = 'ApiPhotoAttribution';
 
+// Register resource modules
 $wgVisualEditorWikiaResourceTemplate = array(
 	'localBasePath' => $dir . 'modules',
 	'remoteExtPath' => 'VisualEditor/wikia/modules',
@@ -45,6 +51,8 @@ $wgResourceModules += array(
 	),
 	'ext.visualEditor.wikiaCore' => $wgVisualEditorWikiaResourceTemplate + array(
 		'scripts' => array(
+			've/ve.track.js',
+
 			// dm
 			've/dm/ve.dm.WikiaMediaCaptionNode.js',
 			've/dm/ve.dm.WikiaBlockMediaNode.js',
@@ -63,17 +71,26 @@ $wgResourceModules += array(
 			've/ce/ve.ce.WikiaInlineVideoNode.js',
 
 			// ui
-			've/ui/tools/buttons/ve.ui.WikiaMediaInsertButtonTool.js',
 			've/ui/dialogs/ve.ui.WikiaMediaInsertDialog.js',
+			've/ui/tools/buttons/ve.ui.WikiaMediaInsertButtonTool.js',
 			've/ui/widgets/ve.ui.WikiaCartWidget.js',
 			've/ui/widgets/ve.ui.WikiaCartItemWidget.js',
-			've/ui/widgets/ve.ui.WikiaMediaResultWidget.js',
-			've/ui/widgets/ve.ui.WikiaMediaSearchWidget.js',
+			've/ui/widgets/ve.ui.WikiaMediaPageWidget.js',
+			've/ui/widgets/ve.ui.WikiaMediaSelectWidget.js',
+			've/ui/widgets/ve.ui.WikiaMediaOptionWidget.js',
+			've/ui/widgets/ve.ui.WikiaMediaResultsWidget.js',
+			've/ui/widgets/ve.ui.WikiaMediaQueryWidget.js',
+			've/ui/widgets/ve.ui.WikiaUploadWidget.js',
 		),
 		'messages' => array(
 			'oasis-content-picture-added-by',
 			'visualeditor-wikiamediainsertbuttontool-label',
-			'videohandler-video-views'
+			'videohandler-video-views',
+			'visualeditor-wikiauploadwidget-label',
+			'visualeditor-wikiauploadwidget-button',
+			'visualeditor-wikiauploaderror',
+			'visualeditor-wikiamediainsertsearch-placeholder',
+			'visualeditor-wikiamediapagewidget-preview-alert',
 		),
 		'dependencies' => array(
 			'ext.visualEditor.core'

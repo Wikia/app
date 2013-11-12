@@ -14,11 +14,6 @@ $width-rail: 300px;
 
 $wikia-search-base-width: 200px;
 
-// $wgOasisHD
-@if $oasisWidthType == 1 {
-	$width-outside: 1200px;
-}
-
 // $wgOasisResponsive
 @if $responsive-layout-enabled {
 	$width-gutter: 20px;

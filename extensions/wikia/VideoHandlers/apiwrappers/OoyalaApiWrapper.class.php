@@ -4,7 +4,7 @@ class OoyalaApiWrapper extends ApiWrapper {
 
 	protected $ingestion = true;
 
-	protected static $API_URL = 'https://api.ooyala.com';
+	protected static $API_URL = 'http://api.ooyala.com';
 	protected static $CACHE_KEY = 'ooyalaapi';
 	protected static $CACHE_KEY_VERSION = 0.2;
 	protected static $aspectRatio = 1.7777778;
