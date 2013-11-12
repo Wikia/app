@@ -208,14 +208,13 @@ Class WikiFactoryChangedHooks {
 			$link = $wgOut->makeResourceLoaderLink('startup', ResourceLoaderModule::TYPE_SCRIPTS);
 			if ($link != null) {
 			// extract the url from the link src
-				preg_match("/\"(.*)\"/", $link, $matches);
-				if ( isset($matches[1]) ) {
-					$urls[]= $matches[1];
+				if ( preg_match("/\"(.*)\"/", $link, $matches) ) {
+					$url= $matches[1];
 				}
 			}
 
 			// parsed resource loader URL
-			$resourceLoaderURL = parse_url( $urls[0] );
+			$resourceLoaderURL = parse_url( $url );
 			// parsed wiki URL
 			$wikiURL = parse_url( GlobalTitle::newFromText( 'Version', NS_SPECIAL, $wiki_id )->getFullURL() );
 			// URL to purge (constructed from $resourceLoaderURL and $wikiURL)
