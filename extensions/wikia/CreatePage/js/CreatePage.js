@@ -20,7 +20,7 @@ var CreatePage = {
 			else {
 				CreatePage.displayError( response.msg );
 			}
-		} );
+		});
 	},
 
 	openDialog: function( e, titleText ) {
@@ -84,13 +84,13 @@ var CreatePage = {
 
 						$( '#wpCreatePageDialogTitle' ).focus();
 
-						$( '#CreatePageDialogButton' ).find( '.createpage' ).click( function( e ) {
+						$( '#CreatePageDialogButton' ).find( '.createpage' ).click(function( e ) {
 							e.preventDefault();
 							CreatePage.submitDialog( false );
-						} );
+						});
 					}
-				} );
-			} );
+				});
+			});
 		}
 	},
 
@@ -164,12 +164,12 @@ var CreatePage = {
 			$().log( 'init', 'CreatePage' );
 
 			if( !window.WikiaDisableDynamicLinkCreatePagePopup ) {
-				$( '#dynamic-links-write-article-link, #dynamic-links-write-article-icon' ).click( function( e ) {
+				$( '#dynamic-links-write-article-link, #dynamic-links-write-article-icon' ).click(function( e ) {
 					CreatePage.openDialog( e, null );
-				} );
-				$( '.noarticletext a[href*="redlink=1"]' ).click( function( e ) {
+				});
+				$( '.noarticletext a[href*="redlink=1"]' ).click(function( e ) {
 					CreatePage.openDialog( e, CreatePage.context.wgPageName ); return false;
-				} );
+				});
 			}
 
 			// CreatePage chicklet ( Oasis )
@@ -189,7 +189,7 @@ var CreatePage = {
 
 			$( 'a.new' ).bind( 'click', function( e ) {
 				CreatePage.redLinkClick( e, CreatePage.getTitleFromUrl( this.href ) );
-			} );
+			});
 
 			$( '.createboxButton' ).bind( 'click', function( e ) {
 				var form = $( e.target ).parent(),
@@ -210,12 +210,12 @@ var CreatePage = {
 						return true;
 					}
 				}
-			} );
+			});
 		}
 	}
 };
 
-jQuery( function() {
+jQuery(function() {
 	'use strict';
 	CreatePage.init( window );
-} );
+});
