@@ -61,10 +61,11 @@ class SuggestionsIndexer extends Maintenance {
 		$this->addOption( 'range', 'Index articles in the given id range.', false, false, 'r' );
 		$this->addOption( 'delete', 'Delete articles instead of index.', false, false, 'd' );
 		$this->addOption( 'output', 'Change output server config with given value. Expected format: <host>:<port>/<path>/.../<core>', false, true, 'o' );
-//		$this->addOption( 'profile', 'Show execution times.', false, false, 'p' );
+		$this->addOption( 'profile', 'Show execution times.', false, false, 'p' );
 	}
 
 	public function execute() {
+		$this->startProfile( __METHOD__ );
 		if ( $this->hasOption( 'output' ) ) {
 			$values = parse_url( $this->getOption( 'output' ) );
 			$pos = strrpos( $values[ 'path' ], '/' );
@@ -105,15 +106,27 @@ class SuggestionsIndexer extends Maintenance {
 
 		//main loop
 		foreach( $batches as $key => $batch ) {
+			$this->profileData = [];
 			$dataBatch = $this->getDataForBatch( $batch );
+			$this->profileNamedData[ 'solrData' ][ $key ] = $this->profileData;
 
+			$this->profileData = [];
 			if( $this->pushData( $dataBatch ) ) {
 				echo implode( ',', $batch )." ids updated correctly!\n";
 			} else {
 				echo implode( ',', $batch )." failed!\n";
 			}
+			$this->profileNamedData[ 'update' ][ $key ] = $this->profileData;
+			$this->profileData = [];
 		}
 		echo "Update complete. Updated ".count( $idsList )." documents.\n";
+		$this->endProfile( __METHOD__ );
+
+		if ( $this->hasOption( 'profile' ) ) {
+			echo "\n";
+			print_r( $this->profileNamedData );
+			echo "\n";
+		}
 	}
 
 	protected function startProfile( $name = null ) {
@@ -127,7 +140,7 @@ class SuggestionsIndexer extends Maintenance {
 	protected function endProfile( $name = null ) {
 		if ( $name !== null ) {
 			$this->profileNamedData[ $name ] = microtime( true ) - $this->profileNamedData[ $name ];
-			return $this->profileData[ $name ];
+			return $this->profileNamedData[ $name ];
 		} else {
 			$val = microtime( true ) - array_pop( $this->profileData );
 			array_unshift( $this->profileData, $val );
@@ -150,20 +163,24 @@ class SuggestionsIndexer extends Maintenance {
 	}
 
 	protected function deleteData( $ids ) {
+		$this->startProfile( __METHOD__ );
 		$client = $this->getSolrClient( self::SOLR_SUGGEST );
 		if ( isset( $ids[ 'min' ] ) && isset( $ids[ 'max' ] ) ) {
 			$client->deleteDocuments( $this->wikiId, $ids[ 'min' ], $ids[ 'max' ] );
 		} else {
 			$client->deleteDocuments( $this->wikiId, $ids );
 		}
+		$this->endProfile( __METHOD__ );
 	}
 
 	protected function pushData( $data ) {
+		$this->startProfile();
 		if ( empty( $data ) ) { return false; }
 		$client = $this->getSolrClient( self::SOLR_SUGGEST );
 		//remove old version, so if article was deleted it wont be indexed anymore
 		$client->deleteDocuments( $this->wikiId, array_keys( $data ) );
 		$status = $client->updateDocuments( $data );
+		$this->endProfile();
 		if ( $status === 0 ) {
 			return true;
 		}
@@ -183,6 +200,7 @@ class SuggestionsIndexer extends Maintenance {
 	}
 
 	protected function getFromSolr( $batch ) {
+		$this->startProfile();
 		$client = $this->getSolrClient( self::SOLR_MAIN );
 		$solrData = $client->getByArticleId( $this->wikiId, $batch, $this->solrFields, $count );
 		echo $count." found!\n";
@@ -208,6 +226,7 @@ class SuggestionsIndexer extends Maintenance {
 				$result[ $id ]['redirects_ngram_mv'] = array_unique( $data[ 'redirect_titles_mv_en' ] );
 			}
 		}
+		$this->endProfile();
 		return $result;
 	}
 
@@ -275,6 +294,7 @@ class SuggestionsIndexer extends Maintenance {
 	}
 
 	protected function getIDsRangeFromDB( $low, $up ) {
+		$this->startProfile( __METHOD__ );
 		$dbr = $this->getDB( DB_SLAVE );
 		//build query
 		$res = $dbr->select(
@@ -287,10 +307,12 @@ class SuggestionsIndexer extends Maintenance {
 		while( $row = $res->fetchRow() ) {
 			$result[] = $row[ 'page_id' ];
 		}
+		$this->endProfile( __METHOD__ );
 		return $result;
 	}
 
 	protected function getIDsFromDB() {
+		$this->startProfile( __METHOD__ );
 		$dbr = $this->getDB( DB_SLAVE );
 		//build query
 		$res = $dbr->select(
@@ -303,10 +325,12 @@ class SuggestionsIndexer extends Maintenance {
 		while( $row = $res->fetchRow() ) {
 			$result[] = $row[ 'page_id' ];
 		}
+		$this->endProfile( __METHOD__ );
 		return $result;
 	}
 
 	protected function getMaxIDFromDB() {
+		$this->startProfile( __METHOD__ );
 		$dbr = $this->getDB( DB_SLAVE );
 		//build query
 		$res = $dbr->select(
@@ -319,6 +343,7 @@ class SuggestionsIndexer extends Maintenance {
 		while( $row = $res->fetchRow() ) {
 			$result = $row[ 0 ];
 		}
+		$this->endProfile( __METHOD__ );
 		return $result;
 	}
 }
