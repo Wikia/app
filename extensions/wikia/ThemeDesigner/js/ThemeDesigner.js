@@ -532,7 +532,7 @@ var ThemeDesigner = {
 		img.src = src;
 	},
 
-	checkBgIsSet: function() {
+	checkBgImageIsSet: function() {
 		'use strict';
 
 		if (ThemeDesigner.settings['background-image'] === '') {
