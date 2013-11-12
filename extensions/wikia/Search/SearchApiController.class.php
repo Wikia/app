@@ -87,7 +87,6 @@ class SearchApiController extends WikiaApiController {
 		if ( $this->request->getVal( 'lang' ) ) {
 			throw new InvalidParameterApiException( 'lang' );
 		}
-
 		$hubs = $this->request->getArray( 'hubs', null );
 		foreach ( $hubs as $hub ) {
 			if ( !isset( $this->allowedHubs[ $hub ] ) ) {
@@ -99,7 +98,6 @@ class SearchApiController extends WikiaApiController {
 		$query = $this->request->getVal( 'query' );
 		$langs = $this->request->getArray( 'langs', ['en'] );
 		$namespaces = $this->request->getArray( 'namespaces', [ NS_MAIN ] );
-
 		$limit = $this->request->getVal( 'limit', null );
 
 		$searchService = new CombinedSearchService();
