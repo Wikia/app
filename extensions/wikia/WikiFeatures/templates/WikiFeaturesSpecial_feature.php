@@ -2,9 +2,9 @@
 	<div class="representation<?= !empty($feature['new']) ? ' promotion' : '' ?>">
 		<?php 
 			$featureName = $feature['name'];
-			$imageExt = $featureName == 'wgEnableVisualEditorExt' ? '.gif' : '.png';
+			$imageExt = $featureName == 'wgEnableVisualEditorExt' ? 'gif' : 'png';
 		?>
-		<img height="100" width="150" src="<?= $wg->ExtensionsPath ?>/wikia/WikiFeatures/images/<?= $featureName . $imageExt ?>" >
+		<img height="100" width="150" src="<?= $wg->ExtensionsPath ?>/wikia/WikiFeatures/images/<?= $featureName . '.' . $imageExt ?>" >
 		<? if(!empty($feature['new'])) { ?>
 			<span class="promo-text"><?= wfMsg('wikifeatures-promotion-new') ?></span>
 		<? } ?>

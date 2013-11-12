@@ -43,7 +43,7 @@ class WikiFeaturesHelper extends WikiaModel {
 		'wgShowTopListsInCreatePage' => '2012-02-12',	// Top 10 Lists
 		'wgEnableAchievementsExt' => '2012-02-12',		// Achievements
 		'wgEnableForumExt' => '2012-11-29',				// Forum
-		'wgEnableVisualEditorExt' => '2013-11-29',				// Visual Editor
+		'wgEnableVisualEditorExt' => '2013-12-04',				// Visual Editor
 	);
 
 	/**
