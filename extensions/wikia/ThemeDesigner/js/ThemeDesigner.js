@@ -45,6 +45,9 @@ var ThemeDesigner = {
 		$('#Toolbar').find('.save').click(that.saveClick)
 			.end().find('.cancel').click(that.cancelClick);
 
+
+		this.checkBgIsSet();
+
 		// init tabs
 		this.initSwatches();
 		this.themeTabInit();
@@ -71,6 +74,8 @@ var ThemeDesigner = {
 	},
 
 	standarizeSettingValues: function() {
+		'use strict';
+
 		ThemeDesigner.settings['background-dynamic'] = ThemeDesigner.settings['background-dynamic'].toString();
 		ThemeDesigner.settings['background-fixed'] = ThemeDesigner.settings['background-fixed'].toString();
 		ThemeDesigner.settings['background-tiled'] = ThemeDesigner.settings['background-tiled'].toString();
@@ -158,6 +163,13 @@ var ThemeDesigner = {
 			targetObject.parent().find('.selected').removeClass('selected').end().end().addClass('selected');
 
 			ThemeDesigner.set('theme', targetObject.attr('data-theme'));
+			if (ThemeDesigner.settings['background-image'] === '') {
+				ThemeDesigner.set('background-image-height', 0);
+				ThemeDesigner.set('background-image-width', 0);
+				ThemeDesigner.checkBgIsDynamic(0);
+			} else {
+				ThemeDesigner.loadImage(ThemeDesigner.settings['background-image']);
+			}
 			ThemeDesigner.resetPageOpacity();
 		});
 
@@ -190,7 +202,7 @@ var ThemeDesigner = {
 		if (window.wgOasisResponsive) {
 			$('#not-split-background').change(function() {
 				ThemeDesigner.set('background-dynamic', $(this).attr('checked') ? 'false' : 'true');
-				if ($(this).attr("checked")) {
+				if ($(this).attr('checked')) {
 					ThemeDesigner.splitOption = false;
 				} else {
 					ThemeDesigner.splitOption = true;
@@ -327,9 +339,7 @@ var ThemeDesigner = {
 			duplicate,
 			swatchNodes,
 			expression,
-			i,
-			img,
-			imgUrl;
+			i;
 
 		// check the type (color or image)
 		if(type === 'color') {
@@ -420,18 +430,7 @@ var ThemeDesigner = {
 					ThemeDesigner.set('background-image', '');
 					ThemeDesigner.changeDynamicBg(false);
 				} else {
-					img = new Image();
-					imgUrl = $(this).children('img').attr('data-image');
-
-					img.onload = function() {
-						if (img.width && img.height) {
-							ThemeDesigner.set('background-image-width', img.width);
-							ThemeDesigner.set('background-image-height', img.height);
-							ThemeDesigner.set('background-image', imgUrl);
-							ThemeDesigner.checkBgIsDynamic(img.width, true);
-						}
-					};
-					img.src = imgUrl;
+					ThemeDesigner.loadImage($(this).children('img').attr('data-image'));
 				}
 
 				ThemeDesigner.hidePicker();
@@ -514,6 +513,31 @@ var ThemeDesigner = {
 		if ( el.prop('checked') === val ) {
 			el.prop('checked', !val);
 			ThemeDesigner.set('background-dynamic', val.toString());
+		}
+	},
+
+	loadImage: function(src) {
+		'use strict';
+
+		var img = new Image();
+
+		img.onload = function() {
+			if (img.width && img.height) {
+				ThemeDesigner.set('background-image-width', img.width);
+				ThemeDesigner.set('background-image-height', img.height);
+				ThemeDesigner.set('background-image', src);
+				ThemeDesigner.checkBgIsDynamic(img.width, true);
+			}
+		};
+		img.src = src;
+	},
+
+	checkBgIsSet: function() {
+		'use strict';
+
+		if (ThemeDesigner.settings['background-image'] === '') {
+			ThemeDesigner.set('background-image-width', 0);
+			ThemeDesigner.set('background-image-height', 0);
 		}
 	},
 
