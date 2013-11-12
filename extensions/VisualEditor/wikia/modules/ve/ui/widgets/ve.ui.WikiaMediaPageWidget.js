@@ -143,7 +143,7 @@ ve.ui.WikiaMediaPageWidget.prototype.onImageLoad = function () {
  * @method
  */
 ve.ui.WikiaMediaPageWidget.prototype.onItemClick = function () {
-	window.alert( ve.msg( 'visualeditor-wikiamediapagewidget-preview-alert' ) );
+	window.alert( ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-preview-alert' ) );
 };
 
 /** */

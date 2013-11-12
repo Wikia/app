@@ -41,6 +41,10 @@ class ArticlesApiController extends WikiaApiController {
 	const CATEGORY_TYPE = 'category';
 	const UNKNOWN_PROVIDER = 'unknown';
 
+
+	const SIMPLE_JSON_VARNISH_CACHE_EXPIRATION = 86400; //24 hours
+	const SIMPLE_JSON_ARTICLE_ID_PARAMETER_NAME = "id";
+
 	/**
 	 * Get the top articles by pageviews optionally filtering by category and/or namespaces
 	 *
@@ -713,6 +717,29 @@ class ArticlesApiController extends WikiaApiController {
 		}
 
 		return $namespaces;
+	}
+
+	public function getAsSimpleJson() {
+		$articleId = (int) $this->getRequest()->getInt(self::SIMPLE_JSON_ARTICLE_ID_PARAMETER_NAME, NULL);
+		if( empty($articleId) ) {
+			throw new InvalidParameterApiException( self::SIMPLE_JSON_ARTICLE_ID_PARAMETER_NAME );
+		}
+
+		$article = Article::newFromID( $articleId );
+		if( empty($article) ) {
+			throw new WikiaApiQueryError( "Article not found. Id:" . $articleId );
+		}
+
+		$jsonFormatService = new JsonFormatService();
+		$jsonSimple = $jsonFormatService->getSimpleFormatForArticle( $article );
+
+		$response = $this->getResponse();
+		$response->setCacheValidity(self::SIMPLE_JSON_VARNISH_CACHE_EXPIRATION, self::SIMPLE_JSON_VARNISH_CACHE_EXPIRATION,
+			[WikiaResponse::CACHE_TARGET_VARNISH,
+				WikiaResponse::CACHE_TARGET_BROWSER ]);
+
+		$response->setFormat("json");
+		$response->setData( $jsonSimple );
 	}
 
 	static private function getCacheKey( $name, $type, $params = '' ) {

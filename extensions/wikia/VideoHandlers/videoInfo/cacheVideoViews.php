@@ -26,12 +26,15 @@ if ( $script == $file ) {
 			"\t--help	This help page\n\n" );
 	}
 
+	$dryRun = isset($options['dry-run']);
+	$verbose = isset($options['verbose']);
+
 	$app = F::app();
 	if ( empty($app->wg->CityId) ) {
 		die( "Error: Invalid wiki id." );
 	}
 
-	WikiaTask::work($app->wg->CityId);
+	WikiaTask::work($app->wg->CityId, $dryRun, $verbose);
 }
 
 /**
@@ -56,14 +59,7 @@ class WikiaTask {
 		}
 
 		if ( $verbose ) {
-			echo "Wiki $wiki_id\n";
-		}
-
-		$db = wfGetDB( DB_MASTER );
-
-		$tableExists = $db->tableExists( 'video_info' );
-		if ( !$tableExists ) {
-			throw new Exception( "Error: Table does NOT exist.\n" );
+			echo "Caching video views for wiki $wiki_id ... ";
 		}
 
 		$memKeyBase = MediaQueryService::getMemKeyTotalVideoViews();
@@ -77,7 +73,7 @@ class WikiaTask {
 		}
 
 		if ( $verbose ) {
-			echo "Cached video views....DONE\n";
+			echo "DONE\n";
 		}
 	}
 }

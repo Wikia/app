@@ -2,7 +2,7 @@
  * VisualEditor user interface WikiaMediaInsertDialog class.
  */
 
-/*global mw*/
+/* global mw, require */
 
 /**
  * Dialog for inserting MediaWiki media objects.
@@ -49,14 +49,14 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	this.cart = new ve.ui.WikiaCartWidget( this.cartModel );
 	this.insertButton = new ve.ui.ButtonWidget( {
 		'$$': this.frame.$$,
-		'label': ve.msg( 'visualeditor-wikiamediainsertbuttontool-label' ),
+		'label': ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-insert-button' ),
 		'flags': ['primary']
 	} );
 	this.insertionDetails = {};
 	this.pages = new ve.ui.PagedLayout( { '$$': this.frame.$$, 'attachPagesPanel': true } );
 	this.query = new ve.ui.WikiaMediaQueryWidget( {
 		'$$': this.frame.$$,
-		'placeholder': ve.msg( 'visualeditor-wikiamediainsertsearch-placeholder' )
+		'placeholder': ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' )
 	} );
 	this.queryInput = this.query.getInput();
 	this.queryUpload = this.query.getUpload();
@@ -462,37 +462,59 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMedia = function ( cartIte
  * @param {Object} items Items to insert
  */
 ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMediaCallback = function ( items ) {
-	var title, type, item, linmod = [];
-	for ( title in items ) {
-		item = items[title];
-		if ( item.type === 'image' ) {
-			type = 'wikiaBlockImage';
-		} else if ( item.type === 'video' ) {
-			type = 'wikiaBlockVideo';
-		}
-		linmod.push(
-			{
-				'type': type,
-				'attributes': {
-					'type': 'thumb',
-					'align': 'default',
-					'href': './' + item.title,
-					'src': item.url,
-					'width': item.width,
-					'height': item.height,
-					'resource': './' + item.title,
-					'attribution': {
-						'username': item.username,
-						'avatar': item.avatar
+		var count, item, title, type,
+			typeCount = { 'photo': 0, 'video': 0 },
+			linmod = [];
+
+		for ( title in items ) {
+			item = items[title];
+			type = 'wikiaBlock' + ( item.type === 'photo' ? 'Image' : 'Video' );
+			typeCount[item.type]++;
+			linmod.push(
+				{
+					'type': type,
+					'attributes': {
+						'type': 'thumb',
+						'align': 'default',
+						'href': './' + item.title,
+						'src': item.url,
+						'width': item.width,
+						'height': item.height,
+						'resource': './' + item.title,
+						'attribution': {
+							'username': item.username,
+							'avatar': item.avatar
+						}
 					}
-				}
-			},
-			{ 'type': 'wikiaMediaCaption' },
-			{ 'type': '/wikiaMediaCaption' },
-			{ 'type': '/' + type }
-		);
-	}
-	this.surface.getModel().getFragment().collapseRangeToEnd().insertContent( linmod );
+				},
+				{ 'type': 'wikiaMediaCaption' },
+				{ 'type': '/wikiaMediaCaption' },
+				{ 'type': '/' + type }
+			);
+		}
+
+		for ( type in typeCount ) {
+			count = typeCount[type];
+			if ( type === 'photo' ) {
+				type = 'image';
+			}
+			if ( count ) {
+				ve.track( {
+					'action': ve.track.actions.ADD,
+					'label': 'dialog-media-insert-' + type,
+					'value': count
+				} );
+			}
+		}
+
+		if ( count.image && count.video ) {
+			ve.track( {
+				'action': ve.track.actions.ADD,
+				'label': 'dialog-media-insert-multiple'
+			} );
+		}
+
+		this.surface.getModel().getFragment().collapseRangeToEnd().insertContent( linmod );
 };
 
 /**

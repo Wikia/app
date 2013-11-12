@@ -410,42 +410,14 @@ class MediaQueryService extends WikiaService {
 		if ( !is_numeric($totalVideos) ) {
 			$db = wfGetDB( DB_SLAVE );
 
-			if ( !VideoInfoHelper::videoInfoExists() ) {
-				$excludeList = array( 'png', 'gif', 'bmp', 'jpg', 'jpeg', 'ogg', 'ico', 'svg', 'mp3', 'wav', 'midi' );
-				$sqlWhere = implode( "','", $excludeList );
+			$row = $db->selectRow(
+				array( 'video_info' ),
+				array( 'count(video_title) cnt' ),
+				array( 'removed' => 0 ),
+				__METHOD__
+			);
 
-				$sql =<<<SQL
-					SELECT il_to as name
-					FROM imagelinks
-					WHERE NOT EXISTS ( SELECT 1 FROM image WHERE img_media_type = 'VIDEO' AND img_name = il_to )
-						AND LOWER(il_to) != 'placeholder'
-						AND LOWER(SUBSTRING_INDEX(il_to, '.', -1)) NOT IN ( '$sqlWhere' )
-					UNION ALL
-					SELECT img_name as name
-					FROM image
-					WHERE img_media_type = 'VIDEO'
-					LIMIT 10000
-SQL;
-				$result = $db->query( $sql, __METHOD__ );
-
-				$totalVideos = 0;
-				while ( $row = $db->fetchObject($result) ) {
-					$title = Title::newFromText( $row->name, NS_FILE );
-					$file = wfFindFile( $title );
-					if ( $file instanceof File && $file->exists() && WikiaFileHelper::isTitleVideo($title) ) {
-						$totalVideos++;
-					}
-				}
-			} else {
-				$row = $db->selectRow(
-					array( 'video_info' ),
-					array( 'count(video_title) cnt' ),
-					array( 'removed' => 0 ),
-					__METHOD__
-				);
-
-				$totalVideos = ($row) ? $row->cnt : 0 ;
-			}
+			$totalVideos = ($row) ? $row->cnt : 0 ;
 
 			$this->wg->Memc->set( $memKey, $totalVideos, 60*60*24 );
 		}
