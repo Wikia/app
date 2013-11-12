@@ -91,7 +91,6 @@ class SuggestionsIndexer extends Maintenance {
 			die( 1 );
 		}
 		$this->wikiId = $_ENV['SERVER_ID'];
-		$idsList = $this->getIDs();
 
 		if ( $this->hasOption( 'delete' ) ) {
 			$ids = $this->getRanges();
@@ -100,6 +99,7 @@ class SuggestionsIndexer extends Maintenance {
 			return;
 		}
 
+		$idsList = $this->getIDs();
 		//do batches
 		$batches = array_chunk( $idsList, self::BATCH_SIZE );
 
