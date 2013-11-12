@@ -7,7 +7,6 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window', 'wikia.browserDetect' ], f
 		INACTIVE_CLASS = 'inactive',
 		destroyOnClose;
 
-
 	/**
 	 * IE 9 doesn't support flex-box. IE-10 and IE-11 has some bugs in implementation:
 	 *
@@ -125,7 +124,15 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window', 'wikia.browserDetect' ], f
 		} else {
 			this.$blackout.remove();
 		}
+
+		this.onClose();
 	};
+
+	/**
+	 * Hook method
+	 */
+
+	Modal.prototype.onClose = function() {};
 
 	/**
 	 * Disables all modal's buttons, adds inactive class to the modal
