@@ -1570,7 +1570,7 @@ class WikiaPhotoGallery extends ImageGallery {
 		}
 
 		$attribs = array(
-			'data-feed-title' => wfMessge('wikiaPhotoGallery-lightbox-caption', $this->mData['feedTitle'])->text(),
+			'data-feed-title' => wfMessage('wikiaPhotoGallery-lightbox-caption', $this->mData['feedTitle'])->text(),
 			'id' => $id,
 			'hash' => $hash,
 			'class' =>  'wikia-gallery'.
@@ -1892,7 +1892,7 @@ class WikiaPhotoGallery extends ImageGallery {
 					'class' => 'wikia-slideshow-popout',
 					'height' => 11,
 					'src' => "{$wgStylePath}/common/images/magnify-clip.png",
-					'title' => wfMessge('wikiaPhotoGallery-slideshow-view-popout-tooltip')->text(),
+					'title' => wfMessage('wikiaPhotoGallery-slideshow-view-popout-tooltip')->text(),
 					'width' => 15,
 				));
 			$html .= Xml::element('span',
