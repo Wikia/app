@@ -63,8 +63,6 @@ class LinksUpdate {
 		$this->mTitle = $title;
 		$this->mId = $title->getArticleID();
 
-		if ($this->mId === 0) Wikia::logBacktrace(__CLASS__ . '::mIdIsZero'); // Wikia change - BAC-597
-
 		$this->mParserOutput = $parserOutput;
 		$this->mLinks = $parserOutput->getLinks();
 		$this->mImages = $parserOutput->getImages();
@@ -117,6 +115,13 @@ class LinksUpdate {
 	}
 
 	protected function doIncrementalUpdate() {
+		// Wikia change - start (BAC-597)
+		if ($this->mId === 0) {
+			Wikia::logBacktrace(__CLASS__ . '::mIdIsZero - update skipped');
+			return;
+		}
+		// Wikia change - end
+
 		wfProfileIn( __METHOD__ );
 
 		# Page links
