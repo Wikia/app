@@ -52,9 +52,9 @@ class DataMartService extends Service {
 				->AND_('wiki_id')->EQUAL_TO($wikiId)
 				->AND_('time_id')->BETWEEN($startDate, $endDate)
 			->cache(60*60*12)
-			->run($db, function ($db, $result) {
+			->run($db, function ($result) {
 				$pageViews = [];
-				while ($row = $db->fetchObject($result)) {
+				while ($row = $result->fetchObject($result)) {
 					$pageViews[$row->date] = $row->cnt;
 				}
 
@@ -102,9 +102,10 @@ class DataMartService extends Service {
 				->AND_('wiki_id')->IN($wikis)
 				->AND_('time_id')->BETWEEN($startDate, $endDate)
 			->cache(60*60*12)
-			->run($db, function ($db, $result) {
+			->run($db, function ($result) {
 				$pageViews = [];
-				while ($row = $db->fetchObject($result)) {
+
+				while ($row = $result->fetchObject()) {
 					$pageviews[$row->wiki_id][$row->date] = $row->cnt;
 					$pageviews[$row->wiki_id]['SUM'] += $row->cnt;
 				}
@@ -135,16 +136,16 @@ class DataMartService extends Service {
 
 		$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
 		$pageviews = (new WikiaSQL())->skipSqlIf(empty($app->wg->StatsDBEnabled))
-			->SELECT(sql::SUM('pageviews'))->AS_('cnt')
-				->FIELD('time_id')
+			->SELECT('time_id')
+				->SUM('pageviews')->AS_('cnt')
 			->FROM('rollup_wiki_pageviews')
 			->WHERE('period_id')->EQUAL_TO($periodId)
 				->AND_('time_id')->IN($dates)
 			->cache(60*60*12)
-			->run($db, function($db, $result) {
+			->run($db, function($result) {
 				$pageViews = [];
 
-				while ($row = $db->fetchObject($result)) {
+				while ($row = $result->fetchObject()) {
 					$pageViews[$row->time_id] = intval($row->cnt);
 				}
 
@@ -211,7 +212,6 @@ class DataMartService extends Service {
 		$app = F::app();
 		wfProfileIn(__METHOD__);
 
-		$cacheVersion = 2;
 		$limitDefault = 200;
 		$limitUsed = ($limit > $limitDefault) ? $limit : $limitDefault;
 
@@ -252,10 +252,10 @@ class DataMartService extends Service {
 			$sql->AND_('r.hub_name')->EQUAL_TO($hub);
 		}
 
-		$topWikis = $sql->run($db, function($db, $result) {
+		$topWikis = $sql->run($db, function($result) {
 			$topWikis = [];
 
-			while ($row = $db->fetchObject($result)) {
+			while ($row = $result->fetchObject()) {
 				$topWikis[$row->id] = $row->pageviews;
 			}
 
@@ -283,7 +283,7 @@ class DataMartService extends Service {
 		$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
 		$topWikis = (new WikiaSQL())->skipSqlIf(empty($app->wg->StatsDBEnabled))
 			->SELECT('r.wiki_id')->AS_('id')
-				->FIELD(sql::SUM('views'))->AS_('totalViews')
+				->SUM('views')->AS_('totalViews')
 			->FROM('rollup_wiki_video_views')->AS_('r')
 			->WHERE('period_id')->EQUAL_TO($periodId)
 				->AND_('time_id')->GREATER_THAN(sql::NOW()->MINUS_INTERVAL($lastN, 'day'))
@@ -291,10 +291,10 @@ class DataMartService extends Service {
 			->ORDER_BY(['totalViews', 'desc'])
 			->LIMIT(200)
 			->cache(43200)
-			->run($db, function($db, $result) {
-				$topWikis = array();
+			->run($db, function($result) {
+				$topWikis = [];
 
-				while ($row = $db->fetchObject($result)) {
+				while ($row = $result->fetchObject()) {
 					$topWikis[$row->id] = $row->totalViews;
 				}
 
@@ -334,24 +334,23 @@ class DataMartService extends Service {
 			}
 		}
 
-		$memKey = wfSharedMemcKey('datamart', 'events', $wikiId, $periodId, $startDate, $endDate);
-		$events = $app->wg->Memc->get($memKey);
-		if (!is_array($events)) {
-			$events = array();
-			if (!empty($app->wg->StatsDBEnabled)) {
-				$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
+		$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
+		$events = (new WikiaSQL())->skipSqlIf(empty($app->wg->StatsDBEnabled))
+			->SELECT("date_format(time_id,'%Y-%m-%d')")->AS_('date')
+				->SUM('creates')->AS_('creates')
+				->SUM('edits')->AS_('edits')
+				->SUM('deletes')->AS_('deletes')
+				->SUM('undeletes')->AS_('undeletes')
+			->FROM('rollup_wiki_namespace_user_events')
+			->WHERE('period_id')->EQUAL_TO($periodId)
+				->AND_('wiki_id')->EQUAL_TO($wikiId)
+				->AND_('time_id')->BETWEEN($startDate, $endDate)
+			->GROUP_BY('date', 'wiki_id')
+			->cache(60*60*12)
+			->run($db, function($result) {
+				$events = [];
 
-				$result = $db->select(
-					array('rollup_wiki_namespace_user_events'),
-					array("date_format(time_id,'%Y-%m-%d') as date, sum(creates) creates, sum(edits) edits, sum(deletes) deletes, sum(undeletes) undeletes"),
-					array('period_id' => $periodId,
-						'wiki_id' => $wikiId,
-						"time_id between '$startDate' and '$endDate'"),
-					__METHOD__,
-					array('GROUP BY' => 'date, wiki_id')
-				);
-
-				while ($row = $db->fetchObject($result)) {
+				while ($row = $result->fetchObject()) {
 					$events[$row->date] = array(
 						'creates' => $row->creates,
 						'edits' => $row->creates + $row->edits,
@@ -360,9 +359,8 @@ class DataMartService extends Service {
 					);
 				}
 
-				$app->wg->Memc->set($memKey, $events, 60 * 60 * 12);
-			}
-		}
+				return $events;
+			});
 
 		// get data depending on eventType
 		if (!empty($eventType)) {
@@ -411,48 +409,34 @@ class DataMartService extends Service {
 			wfSharedMemcKey('datamart', 'user_edits', $wikiId, $userIdsKey, $periodId, $rollupDate),
 			86400 /* 24 hours */,
 			function () use ($app, $wikiId, $userIds, $periodId, $rollupDate) {
-				$events = [];
-				if (!empty($app->wg->StatsDBEnabled)) {
-					$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
+				$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
+				$events = (new WikiaSQL())->skipSqlIf(empty($app->wg->StatsDBEnabled))
+					->SELECT('user_id')
+						->SUM('creates')->AS_('creates')
+						->SUM('edits')->AS_('edits')
+						->SUM('deletes')->AS_('deletes')
+						->SUM('undeletes')->AS_('undeletes')
+					->FROM('rollup_wiki_namespace_user_events')
+					->WHERE('period_id')->EQUAL_TO($periodId)
+						->AND_('wiki_id')->EQUAL_TO($wikiId)
+						->AND_('time_id')->EQUAL_TO($rollupDate)
+						->AND_('user_id')->IN($userIds)
+					->GROUP_BY('user_id')
+					->run($db, function($result) {
+						$events = [];
 
-					$table = 'rollup_wiki_namespace_user_events';
+						while ($row = $result->fetchRow()) {
+							$events[$row['user_id']] = [
+								'creates' => $row['creates'],
+								'edits' => $row['creates'] + $row['edits'],
+								'deletes' => $row['deletes'],
+								'undeletes' => $row['undeletes'],
+							];
+						}
 
-					$vars = [
-						'user_id',
-						'sum(creates) creates',
-						'sum(edits) edits',
-						'sum(deletes) deletes',
-						'sum(undeletes) undeletes'
-					];
+						return $events;
+					});
 
-					$conds = [
-						'period_id' => $periodId,
-						'wiki_id' => $wikiId,
-						'time_id' => $rollupDate,
-						'user_id' => $userIds
-					];
-
-					$options = [
-						'GROUP BY' => 'user_id'
-					];
-
-					$result = $db->select(
-						$table,
-						$vars,
-						$conds,
-						__METHOD__,
-						$options
-					);
-
-					while ($row = $db->fetchRow($result)) {
-						$events[$row['user_id']] = [
-							'creates' => $row['creates'],
-							'edits' => $row['creates'] + $row['edits'],
-							'deletes' => $row['deletes'],
-							'undeletes' => $row['undeletes'],
-						];
-					}
-				}
 				return $events;
 			}
 		);
@@ -532,61 +516,60 @@ class DataMartService extends Service {
 
 		$getData = function() use ( $app, $wikiId, $namespaces, $excludeNamespaces, $articleIds, $limitUsed ) {
 			wfProfileIn( __CLASS__ . '::TopArticlesQuery' );
-			$topArticles = array();
 
-			if ( !empty( $app->wg->StatsDBEnabled ) ) {
-				$db = wfGetDB( DB_SLAVE, array(), $app->wg->DatamartDB );
+			/*
+			the rollup_wiki_article_pageviews contains only summarized data
+			with the time_id of last sunday, so fetch just that one as
+			the table is partitioned on a per-day basis and crossing
+			multiple partitions kills kittens
+			*/
 
-				$where = array(
-					//the rollup_wiki_article_pageviews contains only summarized data
-					//with the time_id of last sunday, so fetch just that one as
-					//the table is partitioned on a per-day basis and crossing
-					//multiple partitions kills kittens
-					'time_id = curdate() - INTERVAL DAYOFWEEK(curdate())-1 DAY',
-					//for now this table supports only this period ID
-					'period_id' => DataMartService::PERIOD_ID_WEEKLY,
-					'wiki_id' => $wikiId
-				);
+			$db = wfGetDB( DB_SLAVE, array(), $app->wg->DatamartDB );
+			$sql = (new WikiaSQL())->skipSqlIf(empty($app->wg->StatsDBEnabled))
+				->SELECT('namespace_id', 'article_id')
+					->SUM('pageviews')->AS_('pv')
+				->FROM('rollup_wiki_article_pageviews')
+				->WHERE('time_id')->EQUAL_TO(sql::RAW('CURDATE() - INTERVAL DAYOFWEEK(CURDATE()) - 1 DAY'))
+					->AND_('period_id')->EQUAL_TO(DataMartService::PERIOD_ID_WEEKLY)
+					->AND_('wiki_id')->EQUAL_TO($wikiId)
+				->GROUP_BY('namespace_id', 'article_id')
+				->ORDER_BY(['pv', 'desc'])
+				->LIMIT($limitUsed);
 
-				if ( !empty( $namespaces ) ) {
-					$namespaces = array_filter( $namespaces, function( $val ) {
-						return is_integer( $val );
-					} );
+			if ( !empty( $namespaces ) ) {
+				$namespaces = array_filter( $namespaces, function( $val ) {
+					return is_integer( $val );
+				} );
 
-					$where[] = 'namespace_id ' . ( ( !empty( $excludeNamespaces ) ) ? 'NOT ' : null ) . ' IN (' . implode( ',' , $namespaces ) . ')';
+				$sql->AND_('namespace_id');
+
+				if (!empty($excludeNamespaces)) {
+					$sql->NOT_IN($namespaces);
+				} else {
+					$sql->IN($namespaces);
 				}
+			}
 
-				if ( !empty( $articleIds ) ) {
-					$articleIds = array_filter( $articleIds, function( $val ) {
-						return is_integer( $val );
-					} );
+			if ( !empty( $articleIds ) ) {
+				$articleIds = array_filter( $articleIds, function( $val ) {
+					return is_integer( $val );
+				} );
 
-					$where[] = 'article_id IN (' . implode( ',' , $articleIds ) . ')';
-				}
+				$sql->AND_('article_id')->IN($articleIds);
+			}
 
-				$result = $db->select(
-					array( 'rollup_wiki_article_pageviews' ),
-					array(
-						'namespace_id',
-						'article_id',
-						'SUM(pageviews) AS pv'
-					),
-					$where,
-					__METHOD__,
-					array(
-						'GROUP BY' => array( 'namespace_id', 'article_id' ),
-						'ORDER BY' => 'pv DESC',
-						'LIMIT'    => $limitUsed
-					)
-				);
+			$topArticles = $sql->run($db, function($result) {
+				$topArticles = [];
 
-				while ( $row = $db->fetchObject( $result ) ) {
-					$topArticles[ $row->article_id ] = array(
+				while ($row = $result->fetchObject()) {
+					$topArticles[$row->article_id] = array(
 						'namespace_id' => $row->namespace_id,
 						'pageviews' => $row->pv
 					);
 				}
-			};
+
+				return $topArticles;
+			});
 
 			wfProfileOut( __CLASS__ . '::TopArticlesQuery' );
 			return $topArticles;
@@ -678,20 +661,21 @@ class DataMartService extends Service {
 	public static function getWAM200Wikis() {
 		$app = F::app();
 
-		$memKey = wfSharedMemcKey( 'datamart', 'wam_top_200_wikis' );
-		$wikis = $app->wg->Memc->get($memKey);
-		if ( !is_array( $wikis ) ) {
-			$db = wfGetDB( DB_SLAVE, [], $app->wg->DWStatsDB );
-			$wikis = [];
+		$wikis = (new WikiaSQL())
+			->SELECT('wiki_id')
+			->FROM('dimension_top_wikis')
+			->ORDER_BY('rank')
+			->LIMIT(200)
+			->cache(60*60*12)
+			->run(wfGetDB( DB_SLAVE, [], $app->wg->DWStatsDB ), function($result) {
+				$wikis = [];
 
-			$res = $db->select( 'dimension_top_wikis', 'wiki_id', '', __METHOD__, [ 'ORDER BY' => 'rank', 'LIMIT' => 200 ] );
+				while ($row = $result->fetchObject()) {
+					$wikis[] = intval($row->wiki_id);
+				}
 
-			while ( $row = $res->fetchRow() ) {
-				$wikis[] = intval( $row['wiki_id'] );
-			}
-
-			$app->wg->Memc->set($memKey, $wikis, 60 * 60 * 12);
-		}
+				return $wikis;
+			}, wfSharedMemcKey('datamart', 'wam_top_200_wikis'));
 
 		return $wikis;
 	}
