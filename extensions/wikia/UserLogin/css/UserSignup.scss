@@ -173,11 +173,6 @@
 			@include divider;
 		}
 	}
-	/* VOLDEV-11: Fix malformed "Change my email address" link */
-	.change-email-link {
-		display: block;
-		text-align: left;
-	}
 }
 
 .modalWrapper.WikiaArticle {
