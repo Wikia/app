@@ -305,8 +305,8 @@ class UserStatsService extends WikiaModel {
 			// get edit points / first edit date and last edit date
 			$stats = array();
 
-			$stats[ 'lastRevision' ] = $this->getFirstContributionTimestamp( $wikiId );
-			$stats[ 'date' ] = $this->getLastContributionTimestamp( $wikiId );
+			$stats[ 'lastRevision' ] = $this->getLastContributionTimestamp( $wikiId );
+			$stats[ 'date' ] = $this->getFirstContributionTimestamp( $wikiId );
 			$stats[ 'edits' ] = $this->getEditCountWiki( $wikiId );
 
 			// TODO: get likes
@@ -334,7 +334,7 @@ class UserStatsService extends WikiaModel {
 	 * @author Kamil Koterba
 	 *
 	 * @param $wikiId Integer Id of wiki - specifies wiki from which to get editcount, 0 for current wiki
-	 * @return String Timestamp in format YmdHis e.g. 20131107192200 or empty string
+	 * @return String Timestamp in format YmdHis e.g. 20131107192200 or null
 	 */
 	private function getFirstContributionTimestamp( $wikiId = 0 ) {
 		wfProfileIn( __METHOD__ );
@@ -390,7 +390,7 @@ class UserStatsService extends WikiaModel {
 			)
 		);
 
-		$firstContributionTimestamp = '';
+		$firstContributionTimestamp = null;
 		if( !empty($res) ) {
 			$firstContributionTimestamp = $res->firstContributionTimestamp;
 
@@ -416,7 +416,7 @@ class UserStatsService extends WikiaModel {
 	 * @author Kamil Koterba
 	 *
 	 * @param $wikiId Integer Id of wiki - specifies wiki from which to get editcount, 0 for current wiki
-	 * @return String Timestamp in format YmdHis e.g. 20131107192200 or empty string
+	 * @return String Timestamp in format YmdHis e.g. 20131107192200 or null
 	 */
 	private function getLastContributionTimestamp( $wikiId = 0 ) {
 		wfProfileIn( __METHOD__ );
@@ -439,7 +439,7 @@ class UserStatsService extends WikiaModel {
 			)
 		);
 
-		$lastContributionTimestamp = '';
+		$lastContributionTimestamp = null;
 		if( !empty($res) ) {
 			$lastContributionTimestamp = $res->lastContributionTimestamp;
 		}
