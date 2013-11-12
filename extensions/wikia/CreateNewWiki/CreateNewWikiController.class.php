@@ -27,9 +27,9 @@ class CreateNewWikiController extends WikiaController {
 		$fbreturn = $wgRequest->getVal('fbreturn');
 		if((!empty($fbconnected) && $fbconnected === '1') || (!empty($fbreturn) && $fbreturn === '1')) {
 			$this->LoadState();
-			$this->currentStep = 'DescWiki';
+			$currentStep = 'DescWiki';
 		} else {
-			$this->currentStep = '';
+			$currentStep = '';
 		}
 
 		// form field values
@@ -58,9 +58,9 @@ class CreateNewWikiController extends WikiaController {
 		$this->isUserLoggedIn = $wgUser->isLoggedIn();
 
 		// remove wikia plus for now for all languages
-		$this->skipWikiaPlus = true;
+		$skipWikiaPlus = true;
 
-		$this->keys = CreateNewWikiObfuscate::generateValidSeeds();
+		$keys = CreateNewWikiObfuscate::generateValidSeeds();
 		$_SESSION['cnw-answer'] = CreateNewWikiObfuscate::generateAnswer($this->keys);
 
 		// prefill
@@ -72,6 +72,19 @@ class CreateNewWikiController extends WikiaController {
 			$signupTitle = Title::newFromText('UserSignup', NS_SPECIAL);
 			$this->signupUrl = $signupTitle->getFullURL();
 		}
+
+		// Make various parsed messages and status available in JS
+		// Necessary because JSMessages does not support parsing
+		$this->wikiBuilderCfg = array(
+			'name-wiki-submit-error' => wfMessage( 'cnw-name-wiki-submit-error' )->escaped(),
+			'desc-wiki-submit-error' => wfMessage( 'cnw-desc-wiki-submit-error' )->escaped(),
+			'currentstep' => $currentStep,
+			'skipwikiaplus' => $skipWikiaPlus,
+			'descriptionplaceholder' => wfMessage( 'cnw-desc-placeholder' )->escaped(),
+			'cnw-error-general' => wfMessage( 'cnw-error-general' )->parse(),
+			'cnw-error-general-heading' => wfMessage( 'cnw-error-general-heading' )->escaped(),
+			'cnw-keys' => json_encode( $keys )
+		);
 		
 		// theme designer application theme settings
 		$this->applicationThemeSettings = SassUtil::getApplicationThemeSettings();
