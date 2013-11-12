@@ -41,7 +41,7 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 		$this->getContext()->getOutput()->setRobotPolicy( "index,follow" );
 
 		// Add meta description tag to HTML source
-		$catInfo = HubService::getCategoryInfoForCity($this->wg->CityId);
+		$catInfo = HubService::getComscoreCategory($this->wg->CityId);
 
 		$descriptionKey = 'specialvideos-meta-description';
 
