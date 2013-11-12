@@ -56,11 +56,28 @@ class SuggestionsIndexer extends Maintenance {
 
 	public function __construct() {
 		parent::__construct();
-		$this->addOption( 'range', 'Will index articles in the given id range.', false, false, 'r' );
-		$this->addOption( 'delete', 'Will delete all articles for given wiki.', false, false, 'd' );
+		$this->addOption( 'range', 'Index articles in the given id range.', false, false, 'r' );
+		$this->addOption( 'delete', 'Delete articles instead of index.', false, false, 'd' );
+		$this->addOption( 'output', 'Change output server config with given value. Expected format: <host>:<port>/<path>/.../<core>', false, true, 'o' );
 	}
 
 	public function execute() {
+		if ( $this->hasOption( 'output' ) ) {
+			$values = parse_url( $this->getOption( 'output' ) );
+			$pos = strrpos( $values[ 'path' ], '/' );
+			$path = substr( $values[ 'path' ], 0, $pos + 1 );
+			$core = substr( $values[ 'path' ], $pos + 1 );
+			if ( !empty( $values[ 'host' ] ) && !empty( $values[ 'port' ] ) && $core !== false && $path && $core ) {
+				$this->config[ self::SOLR_SUGGEST ][ 0 ][ 'adapteroptions' ] = [
+					'host' => $values[ 'host' ],
+					'port' => $values[ 'port' ],
+					'path' => $path,
+					'core' => $core
+				];
+			} else {
+				$this->maybeHelp( true );
+			}
+		}
 //		we need to get info from db if all wiki or range option, set up connection
 		if ( empty( $this->mArgs ) || $this->hasOption( 'range' ) ) {
 			$this->setDBConnection();
@@ -74,8 +91,9 @@ class SuggestionsIndexer extends Maintenance {
 		$idsList = $this->getIDs();
 
 		if ( $this->hasOption( 'delete' ) ) {
-			$client = $this->getSolrClient( self::SOLR_SUGGEST );
-			$client->deleteDocuments( $this->wikiId, 0, 999999);
+			$ids = $this->getRanges();
+			$this->deleteData( $ids );
+			echo "Delete complete.\n";
 			return;
 		}
 
@@ -93,6 +111,29 @@ class SuggestionsIndexer extends Maintenance {
 			}
 		}
 		echo "Update complete. Updated ".count( $idsList )." documents.\n";
+	}
+
+	protected function getRanges() {
+		if ( !empty( $this->mArgs ) ) {
+			if ( $this->hasOption( 'range' ) ) {
+				//get ids from given range
+				return [ 'min' => min( $this->mArgs ), 'max' => max( $this->mArgs ) ];
+			}
+			//get only given ids
+			return $this->mArgs;
+		} else {
+			//get all the ids range
+			return [ 'min' => 0, 'max' => $this->getMaxIDFromDB() ];
+		}
+	}
+
+	protected function deleteData( $ids ) {
+		$client = $this->getSolrClient( self::SOLR_SUGGEST );
+		if ( isset( $ids[ 'min' ] ) && isset( $ids[ 'max' ] ) ) {
+			$client->deleteDocuments( $this->wikiId, $ids[ 'min' ], $ids[ 'max' ] );
+		} else {
+			$client->deleteDocuments( $this->wikiId, $ids );
+		}
 	}
 
 	protected function pushData( $data ) {
@@ -239,6 +280,22 @@ class SuggestionsIndexer extends Maintenance {
 		$result = [];
 		while( $row = $res->fetchRow() ) {
 			$result[] = $row[ 'page_id' ];
+		}
+		return $result;
+	}
+
+	protected function getMaxIDFromDB() {
+		$dbr = $this->getDB( DB_SLAVE );
+		//build query
+		$res = $dbr->select(
+			[ 'page' ],
+			[ 'max(page_id)' ],
+			'',
+			'SuggestionsIndexer::GetMaxID'
+		);
+		$result = 0;
+		while( $row = $res->fetchRow() ) {
+			$result = $row[ 0 ];
 		}
 		return $result;
 	}
