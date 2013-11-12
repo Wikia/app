@@ -206,23 +206,20 @@ Class WikiFactoryChangedHooks {
 
 			// get resource loader url
 			$link = $wgOut->makeResourceLoaderLink('startup', ResourceLoaderModule::TYPE_SCRIPTS);
-			if ($link != null) {
-			// extract the url from the link src
-				if (preg_match("/\"(.*)\"/", $link, $matches)) {
-					$url= $matches[1];
-				}
+			if ($link != null && preg_match("/\"(.*)\"/", $link, $matches)) {
+				// parsed resource loader URL
+				$resourceLoaderURL = parse_url($matches[1]);
+				// parsed wiki URL
+				$wikiURL = parse_url(GlobalTitle::newFromText('Version', NS_SPECIAL, $wiki_id )->getFullURL());
+				// URL to purge (constructed from $resourceLoaderURL and $wikiURL)
+				$purgeURL = $wikiURL['scheme'] . '://' . $wikiURL['host'] . $resourceLoaderURL['path'];
+
+				// purge
+				$update = new SquidUpdate([$purgeURL]);
+				$update->doUpdate();
+			} else {
+				Wikia::log( __METHOD__, false, "Error retreiving script tag for ResourceLoader startup js file");
 			}
-
-			// parsed resource loader URL
-			$resourceLoaderURL = parse_url($url);
-			// parsed wiki URL
-			$wikiURL = parse_url(GlobalTitle::newFromText('Version', NS_SPECIAL, $wiki_id )->getFullURL());
-			// URL to purge (constructed from $resourceLoaderURL and $wikiURL)
-			$purgeURL = $wikiURL['scheme'] . '://' . $wikiURL['host'] . $resourceLoaderURL['path'];
-
-			// purge
-			$u = new SquidUpdate([$purgeURL]);
-			$u->doUpdate();
 		}
 		return true;
 	}
