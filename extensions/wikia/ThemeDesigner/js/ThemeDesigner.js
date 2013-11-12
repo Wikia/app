@@ -46,7 +46,7 @@ var ThemeDesigner = {
 			.end().find('.cancel').click(that.cancelClick);
 
 
-		this.checkBgIsSet();
+		this.checkBgImageIsSet();
 
 		// init tabs
 		this.initSwatches();
@@ -163,12 +163,10 @@ var ThemeDesigner = {
 			targetObject.parent().find('.selected').removeClass('selected').end().end().addClass('selected');
 
 			ThemeDesigner.set('theme', targetObject.attr('data-theme'));
-			if (ThemeDesigner.settings['background-image'] === '') {
-				ThemeDesigner.set('background-image-height', 0);
-				ThemeDesigner.set('background-image-width', 0);
-				ThemeDesigner.checkBgIsDynamic(0);
-			} else {
+			if (ThemeDesigner.checkBgImageIsSet()) {
 				ThemeDesigner.loadImage(ThemeDesigner.settings['background-image']);
+			} else {
+				ThemeDesigner.checkBgIsDynamic(0);
 			}
 			ThemeDesigner.resetPageOpacity();
 		});
@@ -538,6 +536,9 @@ var ThemeDesigner = {
 		if (ThemeDesigner.settings['background-image'] === '') {
 			ThemeDesigner.set('background-image-width', 0);
 			ThemeDesigner.set('background-image-height', 0);
+			return false;
+		} else {
+			return true;
 		}
 	},
 
