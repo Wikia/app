@@ -789,9 +789,6 @@ abstract class DatabaseBase implements DatabaseType {
 	 * @throws DBQueryError Thrown when the database returns an error of any kind
 	 */
 	public function query( $sql, $fname = '', $tempIgnore = false ) {
-if ( preg_match('/page_wikia_props/', $sql)) {
-	gbug("SQL == $sql");
-}
 		$isMaster = !is_null( $this->getLBInfo( 'master' ) );
 		if ( !Profiler::instance()->isStub() ) {
 			# generalizeSQL will probably cut down the query to reasonable

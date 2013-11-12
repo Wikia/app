@@ -29,12 +29,8 @@ class DatabaseMysql extends DatabaseBase {
 	protected function doQuery( $sql ) {
 		$this->installErrorHandler();
 		if( $this->bufferResults() ) {
-if (preg_match('/page_wikia_props/', $sql)) {
-gbug("=========== ABOUT TO RUN BUFFERED $sql");
-}
 			$ret = mysql_query( $sql, $this->mConn );
 		} else {
-if (preg_match('/page_wikia_props/', $sql)) gbug("=========== ABOUT TO RUN UN BUFFERED $sql");
 			$ret = mysql_unbuffered_query( $sql, $this->mConn );
 		}
 		$phpError = $this->restoreErrorHandler();
