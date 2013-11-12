@@ -104,6 +104,23 @@ class VideoFileUploader {
 		}
 		$oTitle = Title::newFromText( $titleText, NS_FILE );
 
+		// Check if the user has the proper permissions
+		// Mimicks Special:Upload's behavior
+		$user = RequestContext::getMain()->getUser();
+		$permErrors = $oTitle->getUserPermissionsErrors( 'edit', $user );
+		$permErrorsUpload = $oTitle->getUserPermissionsErrors( 'upload', $user );
+		if ( !$oTitle->exists() ) {
+			$permErrorsCreate = $oTitle->getUserPermissionsErrors( 'create', $user );
+		} else {
+			$permErrorsCreate = [];
+		}
+
+		if ( $permErrors || $permErrorsUpload || $permErrorsCreate ) {
+			$permErrors = array_merge( $permErrors, wfArrayDiff2( $permErrorsUpload, $permErrors ) );
+			$permErrors = array_merge( $permErrors, wfArrayDiff2( $permErrorsCreate, $permErrors ) );
+			throw new Exception( wfMessage( array_shift( $permErrors[0] ), $permErrors[0] )->parse()  );
+		}
+	
 		if ( $oTitle->exists() ) {
 			// @TODO
 			// if video already exists make sure that we are in fact changing something
