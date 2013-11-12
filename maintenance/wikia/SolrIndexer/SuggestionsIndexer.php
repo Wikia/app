@@ -16,6 +16,8 @@ class SuggestionsIndexer extends Maintenance {
 
 	protected $wikiId;
 	protected $solrHelper;
+	protected $profileNamedData = [];
+	protected $profileData = [];
 	protected $config = [
 		self::SOLR_MAIN => [
 			[
@@ -59,6 +61,7 @@ class SuggestionsIndexer extends Maintenance {
 		$this->addOption( 'range', 'Index articles in the given id range.', false, false, 'r' );
 		$this->addOption( 'delete', 'Delete articles instead of index.', false, false, 'd' );
 		$this->addOption( 'output', 'Change output server config with given value. Expected format: <host>:<port>/<path>/.../<core>', false, true, 'o' );
+//		$this->addOption( 'profile', 'Show execution times.', false, false, 'p' );
 	}
 
 	public function execute() {
@@ -111,6 +114,25 @@ class SuggestionsIndexer extends Maintenance {
 			}
 		}
 		echo "Update complete. Updated ".count( $idsList )." documents.\n";
+	}
+
+	protected function startProfile( $name = null ) {
+		if ( $name !== null ) {
+			$this->profileNamedData[ $name ] = microtime( true );
+		} else {
+			array_push( $this->profileData, microtime( true ) );
+		}
+	}
+
+	protected function endProfile( $name = null ) {
+		if ( $name !== null ) {
+			$this->profileNamedData[ $name ] = microtime( true ) - $this->profileNamedData[ $name ];
+			return $this->profileData[ $name ];
+		} else {
+			$val = microtime( true ) - array_pop( $this->profileData );
+			array_unshift( $this->profileData, $val );
+			return $val;
+		}
 	}
 
 	protected function getRanges() {
@@ -275,7 +297,7 @@ class SuggestionsIndexer extends Maintenance {
 			[ 'page' ],
 			[ 'page_id' ],
 			[ 'page_namespace = 0', 'page_is_redirect = 0' ],
-			'SuggestionsIndexer::GetPageIDs'
+			'SuggestionsIndexer::GetAllPageIDs'
 		);
 		$result = [];
 		while( $row = $res->fetchRow() ) {
