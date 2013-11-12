@@ -25,6 +25,7 @@ var CreatePage = {
 
 	openDialog: function(e, titleText) {
 		'use strict';
+
 		// BugId:4941
 		if (Boolean(window.WikiaEnableNewCreatepage) === false) {
 			// create page popouts are disabled - follow the link
@@ -70,7 +71,12 @@ var CreatePage = {
 							elm.click( onElementClick );
 						}
 
-						if( titleText !== null && typeof titleText !== 'undefined' ) {
+						// Titles can be numbers, let's just make them strings for simplicity
+						if( typeof titleText === 'number' ) {
+							titleText = titleText.toString();
+						}
+
+						if( titleText ) {
 							$('#wpCreatePageDialogTitle').val( decodeURIComponent( titleText ) );
 						}
 
@@ -159,7 +165,7 @@ var CreatePage = {
 
 			if( !window.WikiaDisableDynamicLinkCreatePagePopup ) {
 				$( '#dynamic-links-write-article-link, #dynamic-links-write-article-icon' ).click( function(e) {
-					CreatePage.openDialog(e, null);
+					CreatePage.openDialog(e, 0);
 				});
 				$('.noarticletext a[href*="redlink=1"]').click( function(e) {
 					CreatePage.openDialog(e, CreatePage.context.wgPageName); return false;
