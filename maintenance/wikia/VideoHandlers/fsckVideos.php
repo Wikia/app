@@ -24,11 +24,13 @@ class FSCKVideos extends Maintenance {
 		$this->mDescription = "Pre-populate LVS suggestions";
 		$this->addOption( 'test', 'Test mode; make no changes', false, false, 't' );
 		$this->addOption( 'verbose', 'Show extra debugging output', false, false, 'v' );
+		$this->addOption( 'title', 'Fix a specific file', false, true, 'i' );
 	}
 
 	public function execute() {
 		$this->test    = $this->hasOption('test');
 		$this->verbose = $this->hasOption('verbose');
+		$title         = $this->getOption('title', '');
 
 		echo "Checking ".F::app()->wg->Server."\n";
 
@@ -46,8 +48,12 @@ class FSCKVideos extends Maintenance {
 
 		$startTime = time();
 
-		$videos = VideoInfoHelper::getLocalVideoTitles();
-		$this->debug("Found ".count($videos)." video(s)\n");
+		if ( $title ) {
+			$videos = [ $title ];
+		} else {
+			$videos = VideoInfoHelper::getLocalVideoTitles();
+			$this->debug("Found ".count($videos)." video(s)\n");
+		}
 
 		$fix = $this->test ? false : true;
 
