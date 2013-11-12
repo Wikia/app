@@ -70,7 +70,7 @@ var CreatePage = {
 							elm.click( onElementClick );
 						}
 
-						if(titleText !== null) {
+						if( titleText !== null && typeof titleText !== 'undefined' ) {
 							$('#wpCreatePageDialogTitle').val( decodeURIComponent( titleText ) );
 						}
 
