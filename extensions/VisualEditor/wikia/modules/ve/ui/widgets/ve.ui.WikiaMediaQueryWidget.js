@@ -131,7 +131,7 @@ ve.ui.WikiaMediaQueryWidget.prototype.requestSearch = function () {
 			'format': 'json',
 			'action': 'apimediasearch',
 			'query': this.value,
-			'type': 'photo|video',
+			'type': 'image|video',
 			'mixed': true,
 			'batch': this.batch,
 			'limit': 16

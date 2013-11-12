@@ -390,14 +390,14 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMedia = function ( cartIte
 	var items = {},
 		promises = [],
 		types = {
-			'photo': [],
+			'image': [],
 			'video': []
 		},
 		cartItem,
 		i,
 		title;
 
-	// Populates attributes, items.video and items.photo
+	// Populates items, types.video and types.image
 	for ( i = 0; i < cartItems.length; i++ ) {
 		cartItem = cartItems[i];
 		items[ cartItem.title ] = {
@@ -417,10 +417,10 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMedia = function ( cartIte
 		}
 	}
 
-	// Imageinfo for photo request
-	if ( types.photo.length ) {
+	// Imageinfo for images request
+	if ( types.image.length ) {
 		promises.push(
-			this.getImageInfo( types.photo, 220 ).done(
+			this.getImageInfo( types.image, 220 ).done(
 				ve.bind( updateImageinfo, this )
 			)
 		);
@@ -443,7 +443,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMedia = function ( cartIte
 	// Attribution request
 	for ( title in items ) {
 		promises.push(
-			this.getPhotoAttribution( title ).done(
+			this.getImageAttribution( title ).done(
 				ve.bind( updateAvatar, this )
 			)
 		);
@@ -518,18 +518,18 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMediaCallback = function (
 };
 
 /**
- * Gets photo attribution information
+ * Gets image attribution information
  *
  * @method
  * @param {string} title Title of the file
  * @returns {jQuery.Promise}
  */
-ve.ui.WikiaMediaInsertDialog.prototype.getPhotoAttribution = function ( title ) {
+ve.ui.WikiaMediaInsertDialog.prototype.getImageAttribution = function ( title ) {
 	var deferred = $.Deferred();
 	$.ajax( {
 		'url': mw.util.wikiScript( 'api' ),
 		'data': {
-			'action': 'apiphotoattribution',
+			'action': 'apiimageattribution',
 			'format': 'json',
 			'file': title
 		},
@@ -595,7 +595,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.onGetImageInfoSuccess = function ( deferr
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onUploadSuccess = function ( data ) {
 	this.cartModel.addItems( [
-		new ve.dm.WikiaCartItem( data.title, data.temporaryThumbUrl, 'photo', data.temporaryFileName )
+		new ve.dm.WikiaCartItem( data.title, data.temporaryThumbUrl, 'image', data.temporaryFileName )
 	] );
 	this.setPage( data.title );
 };
