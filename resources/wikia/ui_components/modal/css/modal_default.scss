@@ -104,6 +104,7 @@ $large-modal-margin: 50px;
 
 	&.small,
 	&.medium {
+		
 		> section {
 			overflow: hidden;
 			overflow-y: auto;
@@ -136,33 +137,49 @@ $large-modal-margin: 50px;
 	@include flexbox();
 	@include justify-content(center);
 	@include transition-shorthand( display 0.2s ease-in-out );
+}
 
-	&.IE-flex-fix {
+.IE-flex-fix {
+	display: block;
+
+	.modal {
 		display: block;
-		.modal {
-			display: block;
+
+		& > footer {
+			bottom: 0;
+			position: absolute;
+			width: 100%;
 		}
-		> .small,
-		.medium {
-			left: 50%;
-			position: fixed;
-			top: 5%;
-		}
-		> .small {
-			margin-left: -$small-modal-width / 2;
-		}
-		> .medium {
-			margin-left: -$medium-modal-width / 2;
-		}
+
 	}
+
+	> .small,
+	.medium {
+		left: 50%;
+		position: fixed;
+		top: 5%;
+	}
+
+	> .small {
+		margin-left: -$small-modal-width / 2;
+	}
+
+	> .medium {
+		margin-left: -$medium-modal-width / 2;
+	}
+
 }
 
 @media screen and (max-width: $breakpoint-min) {
+
 	.modal.medium {
 		width: $medium-modal-width-small-screen;
 	}
+
 	.modal-blackout {
+
 		&.IE-flex-fix {
+
 			> .medium {
 				margin-left: -$medium-modal-width-small-screen / 2;
 			}
