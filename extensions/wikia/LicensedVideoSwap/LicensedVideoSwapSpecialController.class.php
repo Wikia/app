@@ -108,6 +108,11 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 	}
 
 	public function debugStatus() {
+		if ( !F::app()->wg->LVSDebugStatusEnabled ) {
+			$this->displayRestrictionError();
+			return false;
+		}
+
 		$helper = new LicensedVideoSwapHelper();
 
 		$info = $helper->getVideoDebugInfo();
