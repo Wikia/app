@@ -36,9 +36,9 @@ class MatchDailyMotion extends Maintenance {
 		$videos = VideoInfoHelper::getLocalVideoTitles();
 		$this->debug("Found ".count($videos)." video(s)\n");
 
-		foreach ( $videos as $title ) {
-			$title = preg_replace('/_/', ' ', $title);
-			$url = "https://api.dailymotion.com/videos?search=".urlencode( $title );
+		foreach ( $videos as $origTitle ) {
+			$title = preg_replace('/_/', ' ', $origTitle);
+			$url = "https://api.dailymotion.com/videos?search=".urlencode( $title ).'&fields=title,ads';
 
 			$json = Http::request('GET', $url);
 			if ( $json ) {
@@ -55,11 +55,9 @@ class MatchDailyMotion extends Maintenance {
 
 						// See if the normalized versions match
 						if ( $normalMatch == $normalTitle ) {
-							echo "$title\n";
-							// If the non normalized forms don't match,
-							if ( $title != $info['title'] ) {
-								echo "\t(DailyMotion: ".$info['title']."\n";
-							}
+							echo "$origTitle\t".$info['title']."\t".$info['ads']."\n";
+
+							continue;
 						}
 					}
 				}
