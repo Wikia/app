@@ -221,7 +221,7 @@ class SassService extends WikiaObject {
 			if ( empty( $afterCompilation ) ) $afterCompilation = microtime(true);
 			if ( empty( $end ) ) $end = microtime(true);
 
-			$fileName = $this->source->getLocalFile();
+			$fileName = $this->source->getHumanName();
 			$errorId = $this->getUniqueId();
 
 			Wikia::log(__METHOD__, false, "SASS error [{$errorId} in {$fileName}]: ". $e->getMessage(), true /* $always */);
