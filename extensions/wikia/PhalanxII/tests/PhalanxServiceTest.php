@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @category Wikia
+ * @group Integration
+ */
 class PhalanxServiceTest extends WikiaBaseTest {
 
 	/* @var PhalanxService */
@@ -10,14 +14,11 @@ class PhalanxServiceTest extends WikiaBaseTest {
 	 */
 	public function setUp() {
 		$this->setupFile =  dirname(__FILE__) . '/../Phalanx_setup.php';
-		wfDebug( __METHOD__ . ': '  .$this->setupFile );
 		parent::setUp();
 		$this->checkPhalanxAlive();
 	}
 
 	public function checkPhalanxAlive( ) {
-		error_log( __CLASS__ . '::' . __FUNCTION__ );
-
 		$this->service = new PhalanxService();
 		if (!$this->service->status()) {
 			//Skip test if phalanx service is not available
