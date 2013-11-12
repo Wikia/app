@@ -165,7 +165,7 @@ var CreatePage = {
 
 			if( !window.WikiaDisableDynamicLinkCreatePagePopup ) {
 				$( '#dynamic-links-write-article-link, #dynamic-links-write-article-icon' ).click( function(e) {
-					CreatePage.openDialog(e, 0);
+					CreatePage.openDialog(e, null);
 				});
 				$('.noarticletext a[href*="redlink=1"]').click( function(e) {
 					CreatePage.openDialog(e, CreatePage.context.wgPageName); return false;
