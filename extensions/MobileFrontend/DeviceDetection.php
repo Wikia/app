@@ -322,6 +322,9 @@ class DeviceDetection {
 			} else {
 				$formatName = 'webkit';
 			}
+		} elseif ( preg_match( '/mobi.*firefox/i', $userAgent ) ) {
+			$formatName = 'android'
+		        }
 		} elseif ( preg_match( '/Kindle\/1.0/', $userAgent ) ) {
 			$formatName = 'kindle';
 		} elseif ( preg_match( '/Kindle\/2.0/', $userAgent ) ) {
