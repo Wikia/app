@@ -952,6 +952,19 @@ $messages['uk'] = array(
 	'lvs-click-here' => 'натисніть тут',
 );
 
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'licensedvideoswap' => 'Cấp phép trao đổi Video',
+	'action-licensedvideoswap' => 'Trao đổi không có giấy phép video',
+	'lvs-page-title' => 'Cấp phép trao đổi Video',
+	'lvs-history-page-title' => 'lịch sử cấp phép trao đổi Video',
+	'lvs-tooltip-history' => 'Nút cấp phép trao đổi Video',
+	'lvs-history-button-text' => 'Lịch sử',
+	'lvs-page-header-back-link' => 'Quay lại cấp phép trao đổi Video',
+);
+
 /** Wu (吴语)
  * @author 十弌
  */

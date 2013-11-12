@@ -122,7 +122,8 @@ Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Prefer
 $messages['qqq'] = array(
 	'userlogin-login-heading' => 'Login page heading.
 {{Identical|Log in}}',
-	'userlogin-forgot-password' => 'Link that asks if you forgot your password.',
+	'userlogin-forgot-password' => 'Link that asks if you forgot your password.
+{{Identical|Forgot your password}}',
 	'userlogin-forgot-password-button' => 'Text on button on forgot your password form.
 {{Identical|Continue}}',
 	'userlogin-forgot-password-go-to-login' => 'Text with link to Special:UserLogin page',
@@ -2409,7 +2410,7 @@ $messages['uz'] = array(
 $messages['vi'] = array(
 	'userlogin-login-heading' => 'Đăng nhập',
 	'userlogin-forgot-password' => 'Quên mật khẩu?',
-	'userlogin-remembermypassword' => 'Giữ đăng nhập', # Fuzzy
+	'userlogin-remembermypassword' => 'Giữ đăng nhập',
 	'userlogin-error-noname' => 'Rất tiếc, xin vui lòng điền vào trường tên người dùng.',
 	'userlogin-error-sessionfailure' => 'Thời gian đăng nhập của bạn đã hết. Xin vui lòng đăng nhập lại.',
 	'userlogin-error-nosuchuser' => 'Rất tiếc, tên tài khoản bạn vừa mới đăng nhập chưa từng tồn tại, hãy thử lại hoặc bạn có thể đăng ký tài khoản này.',
@@ -2447,7 +2448,7 @@ $messages['vi'] = array(
 <br /><br />
 Nếu bạn không yêu cầu mật khẩu mới, đừng lo lắng! Tài khoản của bạn vẫn an toàn và bảo mật. Bạn có thể bỏ qua email này và tiếp tục đăng nhập vào Wikia với mật khẩu hiện tại.
 <br /><br />
-Có câu hỏi hoặc quan tâm? Vui lòng liên hệ với chúng tôi.', # Fuzzy
+Có câu hỏi hoặc quan tâm? Vui lòng l<a href="http://community.wikia.com/wiki/Special:Contact/account-issue">liên hệ</a>. với chúng tôi.',
 	'userlogin-password-email-signature' => 'Cộng đồng Hỗ trợ Wikia',
 	'userlogin-password-email-body' => 'Chào $2,
 
@@ -2461,9 +2462,9 @@ Cộng đồng Hỗ trợ Wikia
 
 ___________________________________________
 
-Để kiểm tra những sự kiện mới nhất trên Wikia, truy cập http://community.wikia.com
-Để nhận được sự hỗ trợ cho ngôn ngữ của bạn, truy cập http://vi.wikia.com
-Muốn kiểm soát email mà bạn nhận được? Đi đến: {{fullurl:{{ns:special}}:Tùy chọn}}', # Fuzzy
+Để kiểm tra những sự kiện mới nhất trên Wikia, truy cập [http://community.wikia.com]
+Để nhận được sự hỗ trợ cho ngôn ngữ của bạn, truy cập [http://vi.wikia.com]
+Muốn kiểm soát email mà bạn nhận được? Đi đến: {{fullurl:{{ns:special}}:Tùy chọn}}',
 	'userlogin-email-footer-line1' => 'Để kiểm tra những sự kiện mới nhất trên Wikia, truy cập <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>
 Để nhận được sự hỗ trợ cho ngôn ngữ của bạn, truy cập <a style="color:#2a87d5;text-decoration:none;" href="http://vi.wikia.com">vi.wikia.com</a>',
 	'userlogin-email-footer-line2' => 'Muốn kiểm soát email mà bạn nhận được? Đi đến <a href="{{fullurl:{{ns:special}}:Tùy chọn}}" style="color:#2a87d5;text-decoration:none;">Tùy chọn</a>',

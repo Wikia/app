@@ -252,7 +252,7 @@ $messages['fa'] = array(
 	'wva-title' => 'به سرعت فیلم را از نشانی اینترنتی واردکردن',
 	'wva-notlogged' => 'برای وارد کردن فیلم، شما باید به سامانه وارد شوید یا ثبت نام کنید.',
 	'wva-notallowed' => 'شما نمی‌توانید در این ویکی فیلم وارد کنید.',
-	'wva-protected' => 'این ویدیو محافظت شده است.',
+	'wva-protected' => 'این ویدیو محافظت شده‌است.',
 );
 
 /** Finnish (suomi)
@@ -593,8 +593,14 @@ $messages['nl-informal'] = array(
  * @author Cedric31
  */
 $messages['oc'] = array(
+	'wva-success' => 'La pagina de vidèo [[:$1]] es estada aponduda corrèctament.',
+	'wva-success-replaced' => 'La pagina de vidèo [[:$1]] es estada remplaçada corrèctament.',
+	'wva-failure' => 'Provesissètz de paramètres valids',
+	'wva-name' => 'Nom de la vidèo :',
+	'wva-url' => 'URL de la vidèo :',
 	'wva-add' => 'Apondre',
 	'wva-title' => 'Apondre una vidèo rapidament a partir de son URL',
+	'wva-protected' => 'Aquesta vidèo es protegida',
 );
 
 /** Papiamento (Papiamentu)
@@ -877,6 +883,23 @@ $messages['uk'] = array(
 	'wva-notallowed' => 'Ви не можете додавати відео у цю Вікі.',
 	'wva-protected' => 'Це відео захищено.',
 	'wva-thumbnail-upload-failed' => 'Вставлення відео не вдалося, неможливо отримати належну мініатюрку',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'wva-success' => 'Trang video [[:$1]] đã được thêm vào.',
+	'wva-success-replaced' => 'Trang video [[:$1]] đã được thay thế.',
+	'wva-failure' => 'Xin hãy cung cấp tham số hợp lệ.',
+	'wva-name' => 'Tên video',
+	'wva-url' => 'URL của video:',
+	'wva-add' => 'Thêm',
+	'wva-title' => 'Một cách nhanh chóng LÀ thêm video từ URL',
+	'wva-notlogged' => 'Bạn cần phải đăng nhập hoặc đăng ký để chèn video.',
+	'wva-notallowed' => 'Bạn không thể chèn video trên wiki này.',
+	'wva-protected' => 'Video này đã bị khóa.',
+	'wva-thumbnail-upload-failed' => 'Video bạn nhúng thất bại, không thể để có được hình ảnh thu nhỏ thích hợp',
 );
 
 /** Simplified Chinese (中文（简体）‎)

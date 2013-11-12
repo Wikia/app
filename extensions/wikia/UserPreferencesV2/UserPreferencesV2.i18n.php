@@ -59,6 +59,7 @@ $messages['en'] = array(
 );
 
 /** Message documentation (Message documentation)
+ * @author Shirayuki
  */
 $messages['qqq'] = array(
 	'prefs-personal' => 'Title of a tab in [[Special:Preferences]].',
@@ -70,17 +71,23 @@ $messages['qqq'] = array(
 	'preferences-v2-nickname' => 'Label for the field to set a custom signature on [[Special:Preferences]].',
 	'preferences-v2-fancysig' => 'Message text for checkbox for enabling wikitext in signature. Includes localized message with link to Help:Signature (or equivalent). This link needs to be in the content language (language of the wiki) hence the MediaWiki namespace transclusion.',
 	'preferences-v2-fancysig-help-page-name' => 'The translated version of the namespace based on local wiki language: Help:Signature for wikis in English',
-	'prefs-appearance' => 'Title of a section in [[Special:Preferences]].',
-	'preferences-v2-date' => 'Label for the date formate option listed on [[Special:Preferences]].',
-	'preferences-v2-time' => 'Label for the time zone option listed on [[Special:Preferences]].',
-	'preferences-v2-skin' => 'Label for the skin selection dropdown on [[Special:Preferences]].',
-	'prefs-emailv2' => 'Title of a tab in [[Special:Preferences]].',
+	'prefs-appearance' => 'Title of a section in [[Special:Preferences]].
+{{Identical|Appearance}}',
+	'preferences-v2-date' => 'Label for the date format option listed on [[Special:Preferences]].
+{{Identical|Date format}}',
+	'preferences-v2-time' => 'Label for the time zone option listed on [[Special:Preferences]].
+{{Identical|Time zone}}',
+	'preferences-v2-skin' => 'Label for the skin selection dropdown on [[Special:Preferences]].
+{{Identical|Layout}}',
+	'prefs-emailv2' => 'Title of a tab in [[Special:Preferences]].
+{{Identical|E-mail}}',
 	'prefs-email-me-v2' => 'Title of a section in [[Special:Preferences]].',
 	'tog-enotifwatchlistpages-v2' => 'An option in [[Special:Preferences]] > {{int:prefs-emailv2}} > {{int:prefs-email-me-v2}}.',
 	'tog-enotifusertalkpages-v2' => 'An option in [[Special:Preferences]] > {{int:prefs-emailv2}} > {{int:prefs-email-me-v2}}.',
 	'tog-enotifminoredits-v2' => 'An option in [[Special:Preferences]] > {{int:prefs-emailv2}} > {{int:prefs-email-me-v2}}.',
 	'tog-marketingallowed-v2' => 'An option in [[Special:Preferences]] > {{int:prefs-emailv2}} > {{int:prefs-email-me-v2}}.',
-	'prefs-email-advanced-v2' => 'Title of a section in [[Special:Preferences]].',
+	'prefs-email-advanced-v2' => 'Title of a section in [[Special:Preferences]].
+{{Identical|Advanced options}}',
 	'tog-htmlemails-v2' => 'An option in [[Special:Preferences]] > {{int:prefs-emailv2}} > {{int:prefs-email-advanced-v2}}.',
 	'prefs-wikiemail' => 'Title of a section in [[Special:Preferences]].',
 	'prefs-email-unsubscribe' => 'Title of a section in [[Special:Preferences]].',
@@ -89,8 +96,10 @@ $messages['qqq'] = array(
 	'tog-justify-v2' => 'An option in [[Special:Preferences]] > {{int:prefs-under-the-hood}} > {{int:prefs-advanced-displayv2}}.',
 	'preferences-v2-user-landing-page' => "Label for the option to change which page the user should be taken to when they navigate to the wiki's URL without specifying a page (i.e. http://community.wikia.com/).",
 	'preferences-v2-redirect-wiki-activity' => 'Option to be taken to the Wiki Activity page when the user navigates to the main wiki URL without a specific page.',
-	'preferences-v2-redirect-main-page' => "Option to be taken to the wiki's main page page when the user navigates to the main wiki URL without a specific page.",
-	'preferences-v2-redirect-recent-changes' => 'Option to be taken to the Recent Changes page when the user navigates to the main wiki URL without a specific page.',
+	'preferences-v2-redirect-main-page' => "Option to be taken to the wiki's main page page when the user navigates to the main wiki URL without a specific page.
+{{Identical|Main page}}",
+	'preferences-v2-redirect-recent-changes' => 'Option to be taken to the Recent Changes page when the user navigates to the main wiki URL without a specific page.
+{{Identical|Recent changes}}',
 	'preferences-v2-redirect-explanation' => 'Text explaining the landing page option. $1 is the URL of the site, e.g. www.wikia.com',
 	'prefs-monobookv2' => 'Title of a section in [[Special:Preferences]].',
 	'prefs-under-the-hood' => 'Title of a tab in [[Special:Preferences]].',
@@ -99,12 +108,17 @@ $messages['qqq'] = array(
 	'prefs-advanced-displayv2' => 'Title of a section in [[Special:Preferences]].',
 	'tog-highlightbrokenv2' => 'An option in [[Special:Preferences]] > {{int:prefs-under-the-hood}} > {{int:prefs-advanced-displayv2}}.',
 	'tog-showAdsv2' => 'Label for the option to hide or display advertisements listed on [[Special:Preferences]].',
-	'prefs-addressv2' => 'Title of a section in [[Special:Preferences]] > {{int:prefs-emailv2}}.',
+	'prefs-addressv2' => 'Title of a section in [[Special:Preferences]] > {{int:prefs-emailv2}}.
+{{Identical|Address}}',
 	'prefs-followed-pages-iv2' => 'Title of a section in [[Special:Preferences]] > {{int:prefs-emailv2}}.',
-	'preferences-v2-watchdefault' => 'An option in [[Special:Preferences]] > {{int:prefs-emailv2}} > {{int:prefs-followed-pages-iv2}}.',
-	'preferences-v2-watchmoves' => 'An option in [[Special:Preferences]] > {{int:prefs-emailv2}} > {{int:prefs-followed-pages-iv2}}.',
-	'preferences-v2-watchdeletion' => 'An option in [[Special:Preferences]] > {{int:prefs-emailv2}} > {{int:prefs-followed-pages-iv2}}.',
-	'preferences-v2-watchcreations' => 'An option in [[Special:Preferences]] > {{int:prefs-emailv2}} > {{int:prefs-followed-pages-iv2}}.',
+	'preferences-v2-watchdefault' => 'An option in [[Special:Preferences]] > {{int:prefs-emailv2}} > {{int:prefs-followed-pages-iv2}}.
+{{Identical|Edit}}',
+	'preferences-v2-watchmoves' => 'An option in [[Special:Preferences]] > {{int:prefs-emailv2}} > {{int:prefs-followed-pages-iv2}}.
+{{Identical|Move}}',
+	'preferences-v2-watchdeletion' => 'An option in [[Special:Preferences]] > {{int:prefs-emailv2}} > {{int:prefs-followed-pages-iv2}}.
+{{Identical|Delete}}',
+	'preferences-v2-watchcreations' => 'An option in [[Special:Preferences]] > {{int:prefs-emailv2}} > {{int:prefs-followed-pages-iv2}}.
+{{Identical|Create}}',
 	'preferences-v2-showads-enable' => 'Option to see ads while logged-in.',
 	'preferences-v2-showads-disable' => 'Option to hide ads while logged-in.',
 	'preferences-v2-my-email-address' => 'Label for the field to set the email address for the user account.',
@@ -375,6 +389,46 @@ $messages['fr'] = array(
 	'tog-hidefollowedpages-v2' => 'Masquer ma liste de pages suivies pour tout le monde',
 );
 
+/** Japanese (日本語)
+ * @author Tommy6
+ */
+$messages['ja'] = array(
+	'prefs-personal' => '利用者情報',
+	'preferences-v2-username' => '利用者名:',
+	'preferences-v2-usergroups' => '所属利用者グループ:',
+	'preferences-v2-gender' => '性別:',
+	'preferences-v2-password' => 'パスワード:',
+	'preferences-v2-oldsig' => '現在の署名:',
+	'preferences-v2-nickname' => '新しい署名:',
+	'preferences-v2-fancysig' => '署名をウィキテキストとして扱う<br />[[{{MediaWiki:preferences-v2-fancysig-help-page-name}}|署名とは?]]',
+	'prefs-appearance' => '表示',
+	'preferences-v2-date' => '日付の表示形式:',
+	'preferences-v2-time' => '時間帯:',
+	'preferences-v2-skin' => 'スキン:',
+	'prefs-emailv2' => 'メールの設定',
+	'prefs-email-me-v2' => '以下のイベントをメールで通知する',
+	'prefs-email-advanced-v2' => '高度な設定',
+	'prefs-email-unsubscribe' => '全てのメール通知の無効化',
+	'preferences-v2-user-landing-page' => '初期ページ:',
+	'preferences-v2-redirect-wiki-activity' => 'ウィキアクティビティ',
+	'preferences-v2-redirect-main-page' => 'メインページ',
+	'preferences-v2-redirect-recent-changes' => '最近の更新',
+	'preferences-v2-redirect-explanation' => '初期ページオプションは、「$1」のようにページ名を指定せずにサイトにアクセスした際に、どのページを表示するかを選択するものです。',
+	'prefs-under-the-hood' => 'システム設定',
+	'prefs-recent-changesv2' => '最近の更新、履歴、ログ',
+	'prefs-followed-pagesv2' => 'フォローページフィード',
+	'prefs-advanced-displayv2' => '高度な設定',
+	'prefs-addressv2' => 'メールアドレス',
+	'prefs-followed-pages-iv2' => '以下のアクション時にページをフォローに追加する',
+	'preferences-v2-watchdefault' => '編集',
+	'preferences-v2-watchmoves' => '移動',
+	'preferences-v2-watchdeletion' => '削除',
+	'preferences-v2-watchcreations' => 'ページ作成',
+	'preferences-v2-showads-enable' => '全ての広告を表示する',
+	'preferences-v2-showads-disable' => '広告を表示しない',
+	'preferences-v2-my-email-address' => 'メールアドレス:',
+);
+
 /** Korean (한국어)
  * @author Hym411
  */
@@ -515,7 +569,7 @@ $messages['pl'] = array(
 	'preferences-v2-redirect-wiki-activity' => 'Aktywność na wiki',
 	'preferences-v2-redirect-main-page' => 'Strona główna',
 	'preferences-v2-redirect-recent-changes' => 'Ostatnie zmiany',
-	'preferences-v2-redirect-explanation' => 'Ta opcja pozwala ustawić domyślną stronę, którą zobaczysz logując się na wiki.', # Fuzzy
+	'preferences-v2-redirect-explanation' => 'Ta opcja pozwala ustawić domyślną stronę, którą zobaczysz wchodząc na $1.',
 	'prefs-monobookv2' => 'Monobook',
 	'prefs-under-the-hood' => 'Opcje zaawansowane',
 	'prefs-recent-changesv2' => 'Ostatnie zmiany, historia i rejestry',

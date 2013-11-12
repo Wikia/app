@@ -359,6 +359,14 @@ $messages['nb'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Feil: Sideinnhold er påkrevd',
 );
 
+/** Nepali (नेपाली)
+ * @author सरोज कुमार ढकाल
+ */
+$messages['ne'] = array(
+	'contentfeeds-firstfewarticles-tag-title' => 'शीर्षक',
+	'contentfeeds-firstfewarticles-tag-next' => 'अर्को',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */

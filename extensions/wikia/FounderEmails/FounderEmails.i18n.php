@@ -8604,6 +8604,7 @@ Wikia团队',
 	'founderemails-email-anon-edit-greeting' => '嗨，$USERNAME，',
 	'founderemails-email-anon-edit-signature' => 'Wikia团队',
 	'founderemails-email-anon-edit-button' => '去查看！',
+	'founderemails-answers-email-user-registered-subject' => '某人在您的问答wiki注册了一个账户！',
 	'founderemails-answers-email-user-registered-body' => '嘿！$USERNAME，
 
 看来$EDITORNAME已经在你的维基上注册了！何不踩踩他们的讨论页$EDITORTALKPAGEURL，和他们打个招呼呢？
@@ -8613,6 +8614,7 @@ Wikia团队',
 	'founderemails-answers-email-0-days-passed-body' => '祝贺创建$WIKINAME——您现在是Wikia社区的一部分了！',
 	'founderemails-answers-email-3-days-passed-subject' => '登记',
 	'founderemails-answers-email-10-days-passed-subject' => '您的wiki最近如何？',
+	'founderemails-answers-email-page-edited-reg-user-first-edit-subject' => '注册用户第一次更改了您的网站！',
 	'founderemails-answers-email-page-edited-reg-user-first-edit-body' => '嘿！$USERNAME，
 
 看来注册用户$EDITORNAME已经在你的维基上做出首次编辑了！何不踩踩他们的讨论页($EDITORTALKPAGEURL)，和他们打个招呼呢？

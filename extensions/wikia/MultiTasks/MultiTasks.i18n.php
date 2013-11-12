@@ -126,6 +126,7 @@ $messages['en'] = array(
  * @author Siebrand
  */
 $messages['qqq'] = array(
+	'multiwikiedit_button' => '{{Identical|Edit}}',
 	'multiwikiedit_on' => 'Label for dropdown menu where user can select type of wikis to run script on',
 	'multiwikiedit_success_subtitle' => '{{Identical|For $1}}',
 	'multiwikiedit_max_display_size' => 'Parameters:

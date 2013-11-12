@@ -1489,6 +1489,13 @@ $messages['nb'] = array(
 	'action-editaccount' => 'rediger andre brukeres informasjon',
 );
 
+/** Nepali (नेपाली)
+ * @author सरोज कुमार ढकाल
+ */
+$messages['ne'] = array(
+	'editaccount' => 'खाता सम्पादन',
+);
+
 /** Dutch (Nederlands)
  * @author SPQRobin
  * @author Siebrand
@@ -1583,6 +1590,51 @@ De huidige gegevens gaan dan verloren en zijn niet te herstellen.',
 Je staat op het punt de gebruiker <b>$1</b> permanent af te sluiten.
 Dit kan niet ongedaan gemaakt worden.
 Weet je zeker dat u dit wilt doen?',
+);
+
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'editaccount' => 'Modificar lo compte',
+	'editaccount-desc' => "Permet als membres del personal de gerir las informacions suls comptes d'utilizaire",
+	'editaccount-title' => 'Special:EditAccount',
+	'editaccount-frame-manage' => 'Modificar un compte',
+	'editaccount-frame-usage' => 'Nòta',
+	'editaccount-label-select' => "Seleccionar un compte d'utilizaire",
+	'editaccount-submit-account' => 'Gerir lo compte',
+	'editaccount-frame-account' => "Modificacion del compte d'utilizaire : $1",
+	'editaccount-frame-close' => "Desactivar lo compte d'utilizaire : $1",
+	'editaccount-label-email' => 'Definir una novèla adreça electronica',
+	'editaccount-label-pass' => 'Definir un senhal novèl',
+	'editaccount-label-realname' => 'Definir un novèl nom complet',
+	'editaccount-label-clearunsub' => 'Desabonat',
+	'editaccount-label-toggleadopt' => "Modificar l'estatut d’adoptant (per AutomaticWikiAdopt) :",
+	'editaccount-label-toggleadopt-prevent' => 'Empachar l’adopcion automatica',
+	'editaccount-label-toggleadopt-allow' => 'Autorizar l’adopcion automatica',
+	'editaccount-label-reason' => 'Motiu :',
+	'editaccount-submit-email' => "Salvar l'adreça electronica",
+	'editaccount-submit-pass' => 'Salvar lo senhal',
+	'editaccount-submit-realname' => 'Salvar lo nom complet',
+	'editaccount-submit-clearunsub' => 'Escafar lo desabonament',
+	'editaccount-submit-cleardisable' => 'Levar lo flag « desactivat »',
+	'editaccount-submit-close' => 'Tampar lo compte',
+	'editaccount-submit-button' => 'Enregistrar',
+	'editaccount-status' => "Messatge d'estatut",
+	'editaccount-nouser' => 'Lo compte « $1 » existís pas.',
+	'editaccount-labal-account-status' => 'Estat de compte',
+	'editaccount-labal-email-status' => 'Estat del Corrièr electronic',
+	'editaccount-status-confirmed' => 'Confirmat',
+	'editaccount-status-unconfirmed' => 'Pas confirmat',
+	'editaccount-status-realuser' => 'Utilizaire real',
+	'editaccount-status-tempuser' => 'Utilizaire temporari',
+	'editaccount-log' => "Jornal dels comptes d'utilizaires",
+	'editaccount-log-entry-email' => "a modificat l'adreça electronica de l'utilizaire $2",
+	'editaccount-log-entry-pass' => 'a modificat lo senhal del compte $2',
+	'editaccount-log-entry-realname' => 'a modificat lo nom complet del compte $2',
+	'editaccount-log-entry-close' => 'a desactivat lo compte $2§',
+	'right-editaccount' => "Modificar las preferéncias d'autres utilizaires",
+	'action-editaccount' => 'modificar las informacions dels autres utilizaires',
 );
 
 /** Punjabi (ਪੰਜਾਬੀ)
@@ -2164,7 +2216,7 @@ $messages['sv'] = array(
 	'editaccount-success-email-blank' => 'Tog bort e-postadressen för kontot $1.',
 	'editaccount-success-pass' => 'Ändrade lösenordet för kontot $1.',
 	'editaccount-success-realname' => 'Ändrade riktigt namn för kontot $1.',
-	'editaccount-success-unsub' => 'Lyckades ta bort avprenumerationsbiten för kontot $1.',
+	'editaccount-success-unsub' => 'Tog bort avprenumerationsbiten för kontot $1.',
 	'editaccount-success-disable' => 'Inaktiverade delen för kontot $1 har tagits bort.',
 	'editaccount-success-toggleadopt' => 'Ändring av statusen för adoptionsbehörigheter för kontot $1 lyckades.',
 	'editaccount-success-close' => 'Konto $1 har avaktiverats.',

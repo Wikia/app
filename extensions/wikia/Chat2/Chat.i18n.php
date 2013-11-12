@@ -123,6 +123,7 @@ $messages['en'] = array(
 
 /** Message documentation (Message documentation)
  * @author Aldnonymous
+ * @author BryghtShadow
  * @author Claudia Hattitten
  * @author Lloffiwr
  * @author Sean Colombo
@@ -168,6 +169,10 @@ $messages['qqq'] = array(
 	'chat-log-reason-banremove' => '{{Identical|No reason given}}',
 	'chat-you-are-banned' => '{{Identical|Permission error}}',
 	'chat-kick-log-reason' => '{{doc-singularthey}}',
+	'chat-start-a-chat' => 'Text of button to join a Wikia chat room.
+Displayed only when chat room is empty; otherwise, {{msg-w|Chat-join-the-chat}} is displayed.
+
+Refers to {{msg-w|Chat-live2}} rail module.',
 	'chat-edit-count' => '$1 is the number of edits made by the user',
 	'chat-member-since' => '$1 tells both the month and the year, month abbreviated. E.g. "Apr 2008".',
 	'chat-user-menu-contribs' => '{{Identical|Contribution}}',
@@ -1674,6 +1679,7 @@ $1 è stato bannato da $2 $3.',
 );
 
 /** Japanese (日本語)
+ * @author BryghtShadow
  * @author Shirayuki
  * @author Tommy6
  */
@@ -1752,14 +1758,14 @@ $messages['ja'] = array(
 	'group-bannedfromchat' => 'チャットから追放された利用者',
 	'group-bannedfromchat-member' => 'チャットから追放された利用者',
 	'chat-ban-option-list' => '2時間:2 hours,1日:1 day,3日:3 days,1週間:1 week,2週間:2 weeks,1か月:1 month,3か月:3 months,6か月:6 months,1年:1 year,無期限:infinite',
-	'chat-ban-log-change-ban-link' => '設定を変更',
+	'chat-ban-log-change-ban-link' => '追放を変更',
 	'chat-chatconnect-log' => 'チャット接続記録',
 	'chat-chatconnect-log-entry' => 'アドレス $2 から $1 に接続しました',
 	'chat-chatban-log' => 'チャット追放記録',
 	'chat-chatbanadd-log-entry' => '$1 を$3までの$2チャットから追放しました。',
 	'chat-chatbanremove-log-entry' => '$1 の追放を解除しました。',
 	'chat-chatbanchange-log-entry' => '$1 のチャット追放設定を$3までの$2に変更しました。',
-	'chat-contributions-ban-notice' => 'この利用者は現在チャットから追放されています。 参考のために最新のブロック記録を以下に表示します：', # Fuzzy
+	'chat-contributions-ban-notice' => '{{GENDER:$1|この利用者}}は現在チャットから追放されています。 参考のために最新のブロック記録を以下に表示します：',
 	'chat-browser-is-notsupported' => 'お使いのブラウザはサポートされていません。より快適にご利用いただくために、<a href="http://community.wikia.com/wiki/Help:Supported_browsers">最新のブラウザ</a>への変更をお勧めいたします。',
 	'chat-checkuser-join-action' => 'チャットに参加',
 	'chat-status-away' => '退席中',
@@ -2209,6 +2215,18 @@ $messages['nb'] = array(
 	'chat-status-away' => 'Borte',
 );
 
+/** Nepali (नेपाली)
+ * @author सरोज कुमार ढकाल
+ */
+$messages['ne'] = array(
+	'chat-ban-modal-label-reason' => 'कारण',
+	'chat-log-reason-undo' => 'रद्द गर्ने',
+	'chat-ban-undolink' => 'रद्द गर्ने',
+	'chat-ban-modal-button-cancel' => 'रद्द',
+	'chat-log-reason-banchange' => 'कारण दिइएको छैन',
+	'chat-log-reason-banremove' => 'कारण दिइएको छैन',
+);
+
 /** Dutch (Nederlands)
  * @author AvatarTeam
  * @author SPQRobin
@@ -2315,6 +2333,22 @@ $messages['nl-informal'] = array(
 	'chat-ban-you-need-permission' => 'Je hebt het recht "$1" niet wat nodig is om een gebruiker te kicken of te verbannen.',
 	'chat-you-are-banned-text' => 'Je mag niet langer deelnemen aan de chat. Als je denkt dat dit niet klopt, of als je wilt vragen uw blokkade op te heffen, neem dan contact op met een beheerder.',
 	'chat-room-is-not-on-this-wiki' => 'De chatroom waar je probeert binnen te komen bestaat niet op deze wiki.',
+);
+
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'chat' => 'Chat',
+	'chat-ban-modal-label-expires' => 'Expira',
+	'chat-ban-modal-label-reason' => 'Rason',
+	'chat-log-reason-undo' => 'anullar',
+	'chat-ban-undolink' => 'anullar',
+	'chat-ban-modal-button-cancel' => 'Anullar',
+	'chat-ban-modal-change-ban-label' => 'Modificar en',
+	'chat-user-menu-kick' => 'Expulsar',
+	'chat-user-menu-ban' => 'Bandir',
+	'chat-status-away' => 'Absent',
 );
 
 /** Polish (polski)
