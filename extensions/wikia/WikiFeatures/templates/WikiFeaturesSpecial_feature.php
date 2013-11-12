@@ -1,6 +1,10 @@
 <li class="feature" data-name="<?= $feature['name'] ?>">
 	<div class="representation<?= !empty($feature['new']) ? ' promotion' : '' ?>">
-		<img height="100" width="150" src="<?= $wg->ExtensionsPath ?>/wikia/WikiFeatures/images/<?= $feature['name'] ?>.png" >
+		<?php 
+			$featureName = $feature['name'];
+			$imageExt = $featureName == 'wgEnableVisualEditorExt' ? 'gif' : 'png';
+		?>
+		<img height="100" width="150" src="<?= $wg->ExtensionsPath ?>/wikia/WikiFeatures/images/<?= $featureName . '.' . $imageExt ?>" >
 		<? if(!empty($feature['new'])) { ?>
 			<span class="promo-text"><?= wfMsg('wikifeatures-promotion-new') ?></span>
 		<? } ?>

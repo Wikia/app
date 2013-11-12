@@ -34,6 +34,7 @@ class WikiFeaturesHelper extends WikiaModel {
 		'wgEnableChat' => 258,					// Chat
 		'wgEnableWallExt' => 258,				// Wall
 		'wgEnableForumExt' => 259,				// Forum
+		'wgEnableVisualEditorExt' => 259,				// Forum
 	);
 
 	// no need to add feature to $release_date if not require "new" flag
@@ -42,6 +43,7 @@ class WikiFeaturesHelper extends WikiaModel {
 		'wgShowTopListsInCreatePage' => '2012-02-12',	// Top 10 Lists
 		'wgEnableAchievementsExt' => '2012-02-12',		// Achievements
 		'wgEnableForumExt' => '2012-11-29',				// Forum
+		'wgEnableVisualEditorExt' => '2013-12-04',				// Visual Editor
 	);
 
 	/**
