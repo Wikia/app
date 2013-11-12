@@ -4,56 +4,56 @@ var CreatePage = {
 	loading: false,
 	context: null,
 
-	checkTitle: function(title) {
+	checkTitle: function( title ) {
 		'use strict';
 
-		$.getJSON(CreatePage.context.wgScript, {
+		$.getJSON( CreatePage.context.wgScript, {
 			action: 'ajax',
 			rs: 'wfCreatePageAjaxCheckTitle',
 			title: title
 		},
-		function(response) {
-			if(response.result === 'ok') {
-				location.href = CreatePage.options[CreatePage.pageLayout].submitUrl
-					.replace('$1', encodeURIComponent( title ));
+		function( response ) {
+			if ( response.result === 'ok' ) {
+				location.href = CreatePage.options[ CreatePage.pageLayout ].submitUrl
+					.replace( '$1', encodeURIComponent( title ) );
 			}
 			else {
-				CreatePage.displayError(response.msg);
+				CreatePage.displayError( response.msg );
 			}
-		});
+		} );
 	},
 
-	openDialog: function(e, titleText) {
+	openDialog: function( e, titleText ) {
 		'use strict';
 
 		// BugId:4941
-		if (Boolean(window.WikiaEnableNewCreatepage) === false) {
+		if ( Boolean( window.WikiaEnableNewCreatepage ) === false ) {
 			// create page popouts are disabled - follow the link
 			return;
 		}
 
 		// Ignore middle-click. BugId:12544
-		if (e && e.which === 2) {
+		if ( e && e.which === 2 ) {
 			return;
 		}
 
 		// don't follow the link
-		if (e && e.preventDefault) {
+		if ( e && e.preventDefault ) {
 			e.preventDefault();
 		}
 
 		if( false === CreatePage.loading ) {
 			CreatePage.loading = true;
 
-			$.getJSON(CreatePage.context.wgScript, {
+			$.getJSON( CreatePage.context.wgScript, {
 				action: 'ajax',
 				rs: 'wfCreatePageAjaxGetDialog'
 			},
-			function(data) {
+			function( data ) {
 				var idToken,
 					elm,
 					onElementClick;
-				$.showModal(data.title, data.html, {
+				$.showModal( data.title, data.html, {
 					width: data.width,
 					id: 'CreatePageDialog',
 					callback: function() {
@@ -63,11 +63,11 @@ var CreatePage = {
 							CreatePage.setPageLayout( $( this ).data( 'optionName' ) );
 						};
 
-						for(var name in CreatePage.options){
-							idToken = name.charAt(0).toUpperCase() + name.substring(1);
+						for( var name in CreatePage.options ){
+							idToken = name.charAt( 0 ).toUpperCase() + name.substring( 1 );
 							elm = $( '#CreatePageDialog' + idToken + 'Container' );
 
-							elm.data('optionName', name);
+							elm.data( 'optionName', name );
 							elm.click( onElementClick );
 						}
 
@@ -77,43 +77,43 @@ var CreatePage = {
 						}
 
 						if( titleText ) {
-							$('#wpCreatePageDialogTitle').val( decodeURIComponent( titleText ) );
+							$( '#wpCreatePageDialogTitle' ).val( decodeURIComponent( titleText ) );
 						}
 
 						CreatePage.setPageLayout( data.defaultOption );
 
-						$('#wpCreatePageDialogTitle').focus();
+						$( '#wpCreatePageDialogTitle' ).focus();
 
-						$('#CreatePageDialogButton .createpage').click(function(e) {
+						$( '#CreatePageDialogButton' ).find( '.createpage' ).click( function( e ) {
 							e.preventDefault();
-							CreatePage.submitDialog(false);
-						});
+							CreatePage.submitDialog( false );
+						} );
 					}
-				});
-			});
+				} );
+			} );
 		}
 	},
 
 	submitDialog: function( enterWasHit ) {
 		'use strict';
-		CreatePage.checkTitle( $('#wpCreatePageDialogTitle').val(), enterWasHit );
+		CreatePage.checkTitle( $( '#wpCreatePageDialogTitle' ).val(), enterWasHit );
 	},
 
 	displayError: function( errorMsg ) {
 		'use strict';
 		var box = $( '#CreatePageDialogTitleErrorMsg' );
 		box.html( '<span id="createPageErrorMsg">' + errorMsg + '</span>' );
-		box.removeClass('hiddenStructure');
+		box.removeClass( 'hiddenStructure' );
 	},
 
 	setPageLayout: function( layout ) {
 		'use strict';
 		CreatePage.pageLayout = layout;
-		var idToken = layout.charAt(0).toUpperCase() + layout.substring(1);
+		var idToken = layout.charAt( 0 ).toUpperCase() + layout.substring( 1 );
 
-		$('#CreatePageDialog' + idToken).attr( 'checked', 'checked' );
-		$('#CreatePageDialogChoices').children('li').removeClass( 'accent' );
-		$('#CreatePageDialog' + idToken + 'Container').addClass( 'accent' );
+		$( '#CreatePageDialog' + idToken ).attr( 'checked', 'checked' );
+		$( '#CreatePageDialogChoices' ).children( 'li' ).removeClass( 'accent' );
+		$( '#CreatePageDialog' + idToken + 'Container' ).addClass( 'accent' );
 	},
 
 	getTitleFromUrl: function( url ) {
@@ -121,26 +121,26 @@ var CreatePage = {
 		var vars = [],
 			i,
 			hash,
-			hashes = url.slice(url.indexOf('?') + 1).split('&');
+			hashes = url.slice( url.indexOf( '?' ) + 1 ).split( '&' );
 
-		for(i = 0; i < hashes.length; i++) {
-			hash = hashes[i].split('=');
-			vars.push(hash[0]);
-			vars[hash[0]] = hash[1];
+		for( i = 0; i < hashes.length; i++ ) {
+			hash = hashes[ i ].split( '=' );
+			vars.push( hash[ 0 ] );
+			vars[ hash[ 0 ] ] = hash[ 1 ];
 		}
 
-		return vars.title.replace(/_/g, ' ');
+		return vars.title.replace( /_/g, ' ' );
 	},
 
-	redLinkClick: function(e, titleText) {
+	redLinkClick: function( e, titleText ) {
 		'use strict';
-		var title = titleText.split(':'),
+		var title = titleText.split( ':' ),
 			isContentNamespace = false,
 			i;
 
-		if( window.ContentNamespacesText && (title.length > 1) ) {
-			for(i in window.ContentNamespacesText) {
-				if(title[0] === window.ContentNamespacesText[i]) {
+		if( window.ContentNamespacesText && ( title.length > 1 ) ) {
+			for( i in window.ContentNamespacesText ) {
+				if( title[ 0 ] === window.ContentNamespacesText[ i ] ) {
 					isContentNamespace = true;
 				}
 			}
@@ -150,72 +150,72 @@ var CreatePage = {
 		}
 
 		if( isContentNamespace ) {
-			CreatePage.openDialog(e, titleText );
+			CreatePage.openDialog( e, titleText );
 		}
 		else {
 			return false;
 		}
 	},
 
-	init: function(context) {
+	init: function( context ) {
 		'use strict';
 		CreatePage.context = context;
 		if( window.WikiaEnableNewCreatepage ) {
-			$().log('init', 'CreatePage');
+			$().log( 'init', 'CreatePage' );
 
 			if( !window.WikiaDisableDynamicLinkCreatePagePopup ) {
-				$( '#dynamic-links-write-article-link, #dynamic-links-write-article-icon' ).click( function(e) {
-					CreatePage.openDialog(e, null);
-				});
-				$('.noarticletext a[href*="redlink=1"]').click( function(e) {
-					CreatePage.openDialog(e, CreatePage.context.wgPageName); return false;
-				});
+				$( '#dynamic-links-write-article-link, #dynamic-links-write-article-icon' ).click( function( e ) {
+					CreatePage.openDialog( e, null );
+				} );
+				$( '.noarticletext a[href*="redlink=1"]' ).click( function( e ) {
+					CreatePage.openDialog( e, CreatePage.context.wgPageName ); return false;
+				} );
 			}
 
-			// CreatePage chicklet (Oasis)
-			$('.createpage').click(CreatePage.openDialog);
+			// CreatePage chicklet ( Oasis )
+			$( '.createpage' ).click( CreatePage.openDialog );
 
 			// macbre: RT #38478
-			var addRecipeTab = $('#add_recipe_tab'),
+			var addRecipeTab = $( '#add_recipe_tab' ),
 				addRecipeLink;
-			if (addRecipeTab.exists()) {
-				addRecipeLink = addRecipeTab.find('a');
+			if ( addRecipeTab.exists() ) {
+				addRecipeLink = addRecipeTab.find( 'a' );
 
 				// only show popup if this tab really points to CreatePage
-				if (addRecipeLink.attr('href').match(/CreatePage$/)) {
-					addRecipeLink.click(CreatePage.openDialog);
+				if ( addRecipeLink.attr( 'href' ).match( /CreatePage$/ ) ) {
+					addRecipeLink.click( CreatePage.openDialog );
 				}
 			}
 
-			$('a.new').bind('click', function(e) {
-				CreatePage.redLinkClick(e, CreatePage.getTitleFromUrl(this.href));
-			});
+			$( 'a.new' ).bind( 'click', function( e ) {
+				CreatePage.redLinkClick( e, CreatePage.getTitleFromUrl( this.href ) );
+			} );
 
-			$('.createboxButton').bind('click', function(e) {
-				var form = $(e.target).parent(),
+			$( '.createboxButton' ).bind( 'click', function( e ) {
+				var form = $( e.target ).parent(),
 					prefix,
 					field,
 					preloadField;
 
-				// make sure we're inside createbox and not inputbox (RT #40959)
-				if(form.attr('class') === 'createboxForm') {
-					prefix = form.children('input[name=\'prefix\']').val() || '';
-					field = form.children('.createboxInput');
-					preloadField = form.children('input[name=\'preload\']');
+				// make sure we're inside createbox and not inputbox ( RT #40959 )
+				if( form.attr( 'class' ) === 'createboxForm' ) {
+					prefix = form.children( 'input[name=\'prefix\']' ).val() || '';
+					field = form.children( '.createboxInput' );
+					preloadField = form.children( 'input[name=\'preload\']' );
 
-					if((typeof preloadField.val() === undefined) || (preloadField.val() === '')) {
-						CreatePage.openDialog(e, prefix + field.val());
+					if( ( typeof preloadField.val() === undefined ) || ( preloadField.val() === '' ) ) {
+						CreatePage.openDialog( e, prefix + field.val() );
 					}
 					else {
 						return true;
 					}
 				}
-			});
+			} );
 		}
 	}
 };
 
-jQuery(function() {
+jQuery( function() {
 	'use strict';
-	CreatePage.init(window);
-});
+	CreatePage.init( window );
+} );
