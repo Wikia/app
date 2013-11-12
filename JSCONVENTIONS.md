@@ -18,7 +18,7 @@ This styleguide defines the JavaScript coding conventions at Wikia. While it is 
   * [Delete Operator](#delete-operator)
   * [Modifying prototypes of built-in objects](#modifying-prototypes-of-built-in-objects)
 * [Style Rules](#style-rules)
-  * [White space guidelines](#white-space-guidelines)
+  * [White space guidelines](#whitespace-guidelines)
      * [Bad examples](#bad-examples)
      * [Good examples](#good-examples)
      * [Objects](#objects)
