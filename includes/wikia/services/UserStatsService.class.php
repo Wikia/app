@@ -329,6 +329,83 @@ class UserStatsService extends WikiaModel {
 
 
 	/**
+	 * Retrives wiki specific user option
+	 * from wikia_user_properties table from wiki DB
+	 *
+	 * @param String $optionName  name of wiki specific user option
+	 * @param int $wikiId Integer Id of wiki - specifies wiki from which to get editcount, 0 for current wiki
+	 * @param $skipCache boolean On true ignores cache
+	 * @return $optionVal string|null
+	 */
+	public function getOptionWiki( $optionName, $wikiId = 0, $skipCache = false ) {
+		wfProfileIn( __METHOD__ );
+
+		$wikiId = ( empty($wikiId) ) ? $this->wg->CityId : $wikiId ;
+
+		/* Get option value from memcache */
+		$key = wfSharedMemcKey( $optionName, $wikiId, $this->userId );
+		$optionVal = $this->wg->Memc->get( $key );
+
+		if ( !empty( $optionVal ) && !$skipCache ) {
+			wfProfileOut( __METHOD__ );
+			return $optionVal;
+		}
+
+		$dbName = ( $wikiId != $this->wg->CityId ) ? WikiFactory::IDtoDB( $wikiId ) : false;
+
+		/* Get option value from wiki specific user properties */
+		$dbr = $this->getWikiDB( DB_SLAVE, $dbName );
+		$optionVal = $dbr->selectField(
+			'wikia_user_properties',
+			'wup_value',
+			array( 'wup_user' => $this->userId,
+				'wup_property' => $optionName ),
+			__METHOD__
+		);
+
+		$this->wg->Memc->set( $key, $optionVal, 86400 );
+
+		wfProfileOut( __METHOD__ );
+		return $optionVal;
+	}
+
+
+
+	/**
+	 * Sets wiki specific user option
+	 * into wikia_user_properties table from wiki DB
+	 *
+	 * @param String $optionName name of wiki specific user option
+	 * @param String $optionValue option value to be set
+	 * @param int $wikiId Integer Id of wiki - specifies wiki from which to get editcount, 0 for current wiki
+	 * @return $optionVal string|null
+	 */
+	public function setOptionWiki( $optionName, $optionVal, $wikiId = 0 ) {
+		wfProfileIn( __METHOD__ );
+
+		$wikiId = ( empty($wikiId) ) ? $this->wg->CityId : $wikiId ;
+
+		$dbName = ( $wikiId != $this->wg->CityId ) ? WikiFactory::IDtoDB( $wikiId ) : false;
+
+		$dbw = $this->getWikiDB( DB_MASTER, $dbName );
+		$dbw->replace(
+			'wikia_user_properties',
+			array(),
+			array( 'wup_user' => $this->userId,
+				'wup_property' => $optionName,
+				'wup_value' => $optionVal ),
+			__METHOD__
+		);
+
+		$key = wfSharedMemcKey( $optionName, $wikiId, $this->userId );
+		$this->wg->Memc->set( $key, $optionVal, 86400 );
+
+		wfProfileOut( __METHOD__ );
+		return $optionVal;
+	}
+
+
+	/**
 	 * Get timestamp of first user's contribution on specified wiki.
 	 * @since Nov 2013
 	 * @author Kamil Koterba
