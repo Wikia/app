@@ -63,6 +63,7 @@ $messages['en'] = array(
 	'lvs-history-instructions' => "To view the history for all swaps and undos, go to $1.",
 	'lvs-no-monobook-support' => "This page is not supported in Monobook. To access it in the Wikia layout, $1. This will not change your layout preference",
 	'lvs-click-here' => 'click here',
+	'lvs-new-flag' => 'New',
 );
 
 /** Message documentation (Message documentation)
@@ -136,6 +137,7 @@ $messages['qqq'] = array(
 	'lvs-history-instructions' => 'This is informational text at the top of the LVS history page.',
 	'lvs-no-monobook-support' => 'This message is shown to users who try to access LVS in an unsupported skin. The $1 value is lvs-click-here.',
 	'lvs-click-here' => 'This message is inserted into lvs-no-monobook-support and replaces the $1 value there.',
+	'lvs-new-flag' => 'This message is shown in the new flag when the video has new suggestions',
 );
 
 /** Arabic (العربية)
