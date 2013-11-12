@@ -280,6 +280,11 @@
 			display: block;
 		}
 	}
+
+	.policies-link {
+		float: right;
+		margin: 10px;
+	}
 }
 
 .WikiaPage .WikiaPageHeader {
@@ -363,9 +368,4 @@
   .editsection{
     display: none;
   }
-}
-
-.policies-link {
-  float: right;
-  margin: 10px;
 }
