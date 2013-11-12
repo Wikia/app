@@ -5,10 +5,10 @@
 			uiFactory.init( [ 'button', 'modal' ] ).then( function( uiButton, uiModal ) {
 				var backBtnMsg = $.msg( 'back' ),
 					backBtn = uiButton.render( {
-						type: 'link',
+						type: 'button',
 						vars: {
 							id: 'close',
-							href: '#',
+							type: 'button',
 							classes: [ 'normal', 'secondary' ],
 							value: backBtnMsg,
 							title: backBtnMsg
@@ -20,10 +20,10 @@
 				if ( window.wgCanEditPolicies ) {
 					editBtnMsg = $.msg( 'forum-specialpage-policies-edit' );
 					editBtn = uiButton.render( {
-						type: 'link',
+						type: 'button',
 						vars: {
 							id: 'edit',
-							href: '#',
+							type: 'button',
 							classes: [ 'normal', 'secondary' ],
 							value: editBtnMsg,
 							title: editBtnMsg
