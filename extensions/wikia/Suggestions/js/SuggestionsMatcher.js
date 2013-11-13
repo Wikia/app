@@ -8,7 +8,8 @@ define('SuggestionsMatcher', [], function() {
 		return testChar( character ) ? '' : character.toLocaleLowerCase();
 	}
 	function matchStartingFrom( title, pattern, from ) {
-		var len = 0, patternPos = 0;
+		var len = 0,
+			patternPos = 0;
 
 		while( patternPos < pattern.length ) {
 			if( title.length <= from+len ) {
@@ -41,7 +42,8 @@ define('SuggestionsMatcher', [], function() {
 		 */
 		match: function( title, pattern ) {
 			var prevTest = true,
-				match, position;
+				match,
+				position;
 			if ( title && title.length ) {
 				for( position = 0; position < title.length; position++ ) {
 					if( testChar( title[position] ) ) {
@@ -68,7 +70,8 @@ define('SuggestionsMatcher', [], function() {
 		 */
 		matchSuggestion: function( suggestion, pattern ) {
 			var redirects = suggestion.redirects || [],
-				matchResult, i;
+				matchResult,
+				i;
 			if ( suggestion.title && suggestion.title.length ) {
 				if ( ( matchResult = this.match( suggestion.title, pattern ) ) ) {
 					matchResult.type = 'title';

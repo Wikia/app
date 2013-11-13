@@ -2,22 +2,25 @@ define('SuggestionsView', ['SuggestionsViewModel'], function( viewModel ) {
 	'use strict';
 	var ads = $('[id$=\'TOP_RIGHT_BOXAD\']'),
 		keyCodes = [ 13 /*enter*/, 38 /*up*/, 40 /*down*/ ],
-		searchInput, dropdown;
+		searchInput,
+		dropdown;
 
 	/* html markups */
 	function buildTitleMarkup( result ) {
-		if ( result.match && ( result.match.type === 'title' ) ) {
-			return result.match.prefix + '<span class="match">' +result.match.match + '</span>' +
-				result.match.suffix;
+		var match = result.match;
+		if ( match && ( match.type === 'title' ) ) {
+			return match.prefix + '<span class="match">' + match.match + '</span>' +
+				match.suffix;
 		} else {
 			return result.title;
 		}
 	}
 	function buildRedirectMarkup( result ) {
-		if ( result.match && ( result.match.type === 'redirect' ) ) {
+		var match = result.match;
+		if ( match && ( match.type === 'redirect' ) ) {
 			return '<span class="redirect"><span class="redirect-from">' +
-				$.msg('suggestions-redirect-from') + ': </span>' + result.match.prefix +
-				'<span class="match">' + result.match.match + '</span>' + result.match.suffix + '</span>';
+				$.msg('suggestions-redirect-from') + ': </span>' + match.prefix +
+				'<span class="match">' + match.match + '</span>' + match.suffix + '</span>';
 		} else {
 			return '';
 		}
@@ -61,29 +64,23 @@ define('SuggestionsView', ['SuggestionsViewModel'], function( viewModel ) {
 		$(e.currentTarget).addClass('highlight');
 	}
 	function removeSelect() {
-		var active = dropdown.find('.highlight');
-		if ( active.length ) {
-			active.removeClass('highlight');
-		}
+		dropdown.find('.highlight').removeClass('highlight');
 	}
 	function stopPropagation() {
 		return false;
 	}
 	/* ads handling */
 	function hideAds() {
-		ads.each(function() {
-			$(this).children().css('margin-left', '-9999px');
-		});
+		ads.children().css('margin-left', '-9999px');
 	}
 	function showAds() {
-		ads.each(function() {
-			$(this).children().css('margin-left', 'auto');
-		});
+		ads.children().css('margin-left', 'auto');
 	}
 	/* events handling */
 	function handleNavigation(key) {
 		var active = dropdown.find('.highlight'),
-			next, href;
+			next,
+			href;
 		if( dropdown.children().length ) {
 			if( key === 40 ) {
 				//down
@@ -125,7 +122,10 @@ define('SuggestionsView', ['SuggestionsViewModel'], function( viewModel ) {
 	function bindEvents() {
 		viewModel.on( 'displayResults changed', function() {
 			var results = viewModel.getDisplayResults(),
-				html, res, i, $el, $title;
+				html,
+				res,
+				i,
+				$el;
 			dropdown.empty();
 			if ( !viewModel.getUse() ) { return; }
 			for( i in results ) {

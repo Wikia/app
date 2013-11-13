@@ -27,10 +27,10 @@ define('SuggestionsViewModel', ['jquery', 'SuggestionsMatcher', 'wikia.log', 'Su
 		var handlers = _ev[ev] || {},
 			i;
 		for( i in handlers ) {
-			try {
+			if ( typeof handlers[i] === 'function' ) {
 				handlers[i](value);
-			} catch(ex) {
-				log(ex, log.levels.info, 'suggestions');
+			} else {
+				log('Bad handler: ' + handlers[i], log.levels.info, 'suggestions');
 			}
 		}
 	}

@@ -33,8 +33,8 @@ define('SuggestionsClient', ['jquery', 'SuggestionsMatcher', 'wikia.log'], funct
 	return {
 		getSuggestions: function( wiki, query, cb ) {
 			var cacheKey = wiki + '_' + query,
-				data;
-			if( (data = getFromCache(cacheKey)) ) {
+				data = getFromCache(cacheKey);
+			if( data ) {
 				cb( data );
 			} else {
 				if ( !wiki || !query || query === '' ) {
@@ -47,12 +47,14 @@ define('SuggestionsClient', ['jquery', 'SuggestionsMatcher', 'wikia.log'], funct
 						q: query,
 						wikiId: wiki,
 						bid: window.beacon_id,
-						user: wgUserName,
-						page: wgPageName,
+						user: window.wgUserName,
+						page: window.wgPageName,
 						uid: uid
 					},
 					function( response ) {
-						var suggestion, matchResult, i;
+						var suggestion,
+							matchResult,
+							i;
 						for ( i = 0; i<response.length; i++ ) {
 							suggestion = response[i];
 							matchResult = matcher.matchSuggestion( suggestion, query );

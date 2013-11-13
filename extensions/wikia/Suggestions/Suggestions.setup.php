@@ -8,5 +8,5 @@ $wgHooks['BeforePageDisplay'][] = 'Suggestions::loadAssets';
 
 //message files
 $wgExtensionMessagesFiles['Suggestions'] = $dir . 'Suggestions.i18n.php';
-JSMessages::registerPackage('Suggestions', array('suggestions-*'));
+JSMessages::registerPackage('Suggestions', array('suggestions-redirect-from', 'suggestions-see-all'));
 JSMessages::enqueuePackage('Suggestions', JSMessages::EXTERNAL);
