@@ -23,7 +23,6 @@ $small-modal-width: 400px;
 $medium-modal-width: 700px;
 $medium-modal-width-small-screen: 500px;
 $header-and-footer-height: 45px;
-$modal-padding: 20px;
 $large-modal-margin: 50px;
 
 .modal {
@@ -53,7 +52,10 @@ $large-modal-margin: 50px;
 	> section,
 	> footer {
 		@include box-sizing-border-box;
-		padding: $modal-padding;
+	}
+
+	> section {
+		padding: 20px;
 	}
 
 	> header h3 {
@@ -99,7 +101,6 @@ $large-modal-margin: 50px;
 
 	&.small {
 		width: $small-modal-width;
-
 	}
 
 	&.medium {
@@ -108,7 +109,6 @@ $large-modal-margin: 50px;
 
 	&.small,
 	&.medium {
-
 		> section {
 			overflow: hidden;
 			overflow-y: auto;
@@ -131,7 +131,6 @@ $large-modal-margin: 50px;
 
 	.buttons {
 		bottom: 15px;
-		right: $modal-padding;
 	}
 }
 
