@@ -1,7 +1,5 @@
-define('wikia.toc', function() {
+define( 'wikia.toc', function() {
 	'use strict';
-
-	var MAXHEADER = 2; // <h2> is the highest article header
 
 	/**
 	 *  Create TOC data structure
@@ -24,39 +22,43 @@ define('wikia.toc', function() {
 	 *  @returns {Object} - TOC data structure of all the subsections
 	 */
 
-	function getData(headers, createSection) {
-
+	function getData( headers, createSection ) {
 		var toc = {
 				sections: []
 			}, // set base object for TOC data structure
-			stack = [toc.sections],
-			pos = MAXHEADER - 1, // set starting position
+			levels =  [ toc.sections ], // level placeholders
+			headersLength = headers.length,
+			hToLevel = [], // header to TOC level dictionary
+			level = -1,
+			lastHeader = -1,
+			headerLevel,
 			i,
-			headersLength = headers.length;
+			obj,
+			header;
 
-		for (i = 0; i < headersLength; i++) {
-
-			var header = headers[i],
-				obj = createSection(header), // create section object from HTML header node
-				tempoPos = parseInt(header.nodeName.slice(1), 10), // get position from header node (exp. <h2>)
-				sections = obj.sections;
+		for ( i = 0; i < headersLength; i++ ) {
+			header = headers[ i ];
+			obj = createSection( header ); // create section object from HTML header node
 
 			// skip corrupted TOC section element
-			if (obj === false || typeof sections  === 'undefined' || !(sections instanceof Array)) {
+			if ( obj === false || typeof obj.sections  === 'undefined' || !( obj.sections instanceof Array ) ) {
 				continue;
 			}
 
-			if (tempoPos > pos) {
-				tempoPos = pos + 1; // fix pos problem with header 1,3 => 1,2
-			} else {
-				var itemsToRemove = pos - tempoPos + 1; // (+1) at least one item need to be removed from stack
+			headerLevel = parseInt( header.nodeName.slice( 1 ), 10 ); // get position from header node (exp. <h2>)
 
-				stack.splice(-itemsToRemove);
+			if ( headerLevel > lastHeader ) {
+				level += 1;
+			} else if ( headerLevel < lastHeader && level > 0 ) {
+				level = 0;
+				if ( typeof hToLevel[ headerLevel ] !== 'undefined' ) { // jump to the designated level if it is set
+					level = hToLevel[ headerLevel ];
+				}
 			}
-
-			pos = tempoPos; // update current position
-			stack[stack.length - 1].push(obj); // add object to sections array of its parent
-			stack.push(obj.sections); // add object sections array to the stack
+			hToLevel[ headerLevel ] = level;
+			lastHeader = headerLevel;
+			levels[ level ].push( obj );
+			levels[ level + 1 ] = obj.sections;
 		}
 
 		return toc;
@@ -65,6 +67,6 @@ define('wikia.toc', function() {
 	/** PUBLIC API */
 	return {
 		getData: getData
-	}
+	};
 
 });
