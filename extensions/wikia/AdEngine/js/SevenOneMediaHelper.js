@@ -86,13 +86,17 @@ var SevenOneMediaHelper = function (adLogicPageLevelParams, scriptWriter, log, w
 		if (slotname === 'trackEnd') {
 			script = '';
 		} else {
-			script = 'myAd.insertAd(' + JSON.stringify(slotname) + ');';
+			script = 'window.myAd && myAd.insertAd(' + JSON.stringify(slotname) + ');';
 		}
 
 		scriptWriter.injectScriptByText(
 			postponedSlotId,
 			script,
 			function () {
+				if (!myAd) {
+					return;
+				}
+
 				log(['insertAd', slotname, 'myAd.insertAd done'], 'debug', logGroup);
 
 				if (typeof beforeFinish === 'function') {
