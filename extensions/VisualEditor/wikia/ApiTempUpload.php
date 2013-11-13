@@ -139,8 +139,16 @@ class ApiTempUpload extends ApiBase {
 	}
 
 	private function executeTemporaryVideo() {
+		$app = F::app();
+
+		// First check permission to upload
+		$this->mUpload = new UploadFromUrl();
+		$this->checkPermissions( $this->mUser );
+
 		$awf = ApiWrapperFactory::getInstance();
 		$url = $this->mParams['url'];
+		$nonPremiumException = null;
+
 		// ApiWrapperFactory->getApiWrapper(...) require whole URL to be passed in (including protocol)
 		if ( !preg_match( '/^https?:\/\//', $url ) ) {
 			$url = 'http://' . $url;
@@ -148,34 +156,90 @@ class ApiTempUpload extends ApiBase {
 		try {
 			$apiwrapper = $awf->getApiWrapper( $url );
 		} catch ( Exception $e ) {
-			$this->dieUsageMsg( 'Incorrect video URL' );
-		}	
-		if ( !$apiwrapper ) {
-			$this->dieUsageMsg( 'Not a video URL' );
+			$nonPremiumException = $e;
 		}
-		$this->mUpload = new UploadFromUrl();
-		$this->mUpload->initializeFromRequest( new FauxRequest(
-			array(
-				'wpUpload' => 1,
-				'wpSourceType' => 'web',
-				'wpUploadFileURL' => $apiwrapper->getThumbnailUrl()
-			),
-			true
-		) );
-		// First check permission to upload
-		$this->checkPermissions( $this->mUser );
-		$status = $this->mUpload->fetchFile();
-		if ( !$status->isGood() ) {
-			$this->dieUsage( 'Error fetching file from remote source' );
+		if ( !empty( $apiwrapper ) ) {
+			// handle supported 3rd party videos
+			$this->mUpload->initializeFromRequest( new FauxRequest(
+				array(
+					'wpUpload' => 1,
+					'wpSourceType' => 'web',
+					'wpUploadFileURL' => $apiwrapper->getThumbnailUrl()
+				),
+				true
+			) );
+			$status = $this->mUpload->fetchFile();
+			if ( !$status->isGood() ) {
+				$this->dieUsageMsg( 'Error fetching file from remote source' );
+			}
+			$this->verifyUpload();
+			$temporaryFile = $this->createTemporaryFile( $this->mUpload->getTempPath() );
+
+			// define vars to pass back
+			$fileTitle = $apiwrapper->getTitle();
+			$fileThumbUrl = $temporaryFile->getUrl();
+			$fileName = $temporaryFile->getName();
+			$fileProvider = $apiwrapper->getProvider();
+			$fileId = $apiwrapper->getVideoId();
+
+		} else {
+			// handle local and premium videos by parsing url for 'File:'
+			$file = null;
+
+			// get the video name
+			$nsFileTranslated = $app->wg->ContLang->getNsText( NS_FILE );
+
+			// added $nsFileTransladed to fix bugId:#48874
+			$pattern = '/(File:|Video:|'.$nsFileTranslated.':)(.+)$/';
+
+			if ( preg_match( $pattern, $url, $matches ) ) {
+				$file = wfFindFile( $matches[2] );
+				if ( !$file ) { // bugID: 26721
+					$file = wfFindFile( urldecode( $matches[2] ) );
+				}
+			}
+			elseif ( preg_match( $pattern, urldecode( $url ), $matches ) ) {
+				$file = wfFindFile( $matches[2] );
+				if ( !$file ) { // bugID: 26721
+					$file = wfFindFile( $matches[2] );
+				}
+			}
+			else {
+				if ( $nonPremiumException ) {
+					// Non premium videos are not allowed on some wikis
+					if ( empty( $app->wg->allowNonPremiumVideos ) ) {
+						$this->dieUsageMsg( wfMessage( 'videohandler-non-premium' )->parse() );
+					}
+
+					if ( $nonPremiumException->getMessage() != '' ) {
+						$this->dieUsageMsg( $nonPremiumException->getMessage() );
+					}
+				}
+
+				// TODO: don't use vet message
+				$this->dieUsageMsg( wfMessage( 'vet-bad-url' )->plain() );
+			}
+
+			if ( !$file ) {
+				// TODO: don't use vet message
+				$this->dieUsageMsg( wfMessage( 'vet-non-existing' )->plain() );
+			}
+
+			// define vars to pass back
+			$fileTitle = $file->getTitle();
+			$fileThumbUrl = $file->getUrl();
+			$fileName = $file->getTitle()->getText();
+			$fileProvider = 'FILE';
+			$fileId = $file->getHandler()->getVideoId();
+
 		}
-		$this->verifyUpload();
-		$temporaryFile = $this->createTemporaryFile( $this->mUpload->getTempPath() );
+
 		$this->getResult()->addValue( null, $this->getModuleName(), array(
-			'title' => $apiwrapper->getTitle(),
-			'temporaryThumbUrl' => $temporaryFile->getUrl(),
-			'temporaryFileName' => $temporaryFile->getName(),
-			'provider' => $apiwrapper->getProvider(),
-			'videoId' => $apiwrapper->getVideoId()
+			'title' => $fileTitle,
+			'temporaryThumbUrl' => $fileThumbUrl,
+			'temporaryFileName' => $fileName,
+			'provider' => $fileProvider,
+			'videoId' => $fileId,
 		) );
 	}
 
