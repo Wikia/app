@@ -24,6 +24,10 @@
 		}
 		.not-split-option {
 			display: none;
+			float: left;
+			.form-questionmark {
+				margin: 5px 0 0 5px;
+			}
 		}
 	}
 	.page {

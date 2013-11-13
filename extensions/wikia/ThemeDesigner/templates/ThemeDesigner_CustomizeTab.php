@@ -27,11 +27,13 @@
 				</label>
 				<? //TODO: Remove this after global release of responsive layout  ?>
 				<? if ($wg->OasisResponsive) : ?>
-					<label for="not-split-background" class="not-split-option">
-						<input type="checkbox" id="not-split-background">
-						<?= wfMessage('themedesigner-not-split-background')->plain() ?>
+					<span class="not-split-option">
+						<label for="not-split-background">
+							<input type="checkbox" id="not-split-background">
+							<?= wfMessage('themedesigner-not-split-background')->plain() ?>
+						</label>
 						<span class="form-questionmark" rel="tooltip" title="<?= wfMessage('themedesigner-rules-not-split-background')->parse() ?>"></span>
-					</label>
+					</span>
 				<? endif ?>
 			</li>
 		</ul>
