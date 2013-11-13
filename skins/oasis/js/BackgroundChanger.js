@@ -6,7 +6,8 @@
  * @type {{load: Function}}
  */
 
-var BackgroundChanger = {
+define('wikia.backgroundchanger', function()  {
+	'use strict';
 	/**
 	 * Load background.scss with params
 	 *
@@ -27,9 +28,7 @@ var BackgroundChanger = {
 	 *
 	 * @param options
 	 */
-	load: function(options) {
-		'use strict';
-
+	function load(options) {
 		var imagePreload = new Image(),
 			optionsForSass = {
 				'background-dynamic': options.backgroundDynamic || false,
@@ -70,4 +69,8 @@ var BackgroundChanger = {
 			}
 		});
 	}
-};
+
+	return {
+		load: load
+	};
+});
