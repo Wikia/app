@@ -45,12 +45,4 @@ class VisualEditorWikiaHooks {
 		);
 		return true;
 	}
-
-	public static function onMakeGlobalVariablesScript( &$vars ) {
-		$licenses = new Licenses(array('fieldname' => 'ThisParamIsRequired'));
-		$vars['wgVisualEditor'] += array(
-			'mediaLicenses' => $licenses->getLicenses()
-		);
-		return true;
-	}
 }
