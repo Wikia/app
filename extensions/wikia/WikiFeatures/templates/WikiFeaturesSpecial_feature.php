@@ -1,6 +1,8 @@
 <li class="feature" data-name="<?= $feature['name'] ?>">
 	<div class="representation<?= !empty($feature['new']) ? ' promotion' : '' ?>">
-		<img height="100" width="150" src="<?= $wg->ExtensionsPath ?>/wikia/WikiFeatures/images/<?= $feature['name'] ?>.png" >
+		<div class="feature-image-wrapper">
+			<img src="<?= $wg->ExtensionsPath ?>/wikia/WikiFeatures/images/<?= $feature['name'] ?>.png" >
+		</div>
 		<? if(!empty($feature['new'])) { ?>
 			<span class="promo-text"><?= wfMsg('wikifeatures-promotion-new') ?></span>
 		<? } ?>

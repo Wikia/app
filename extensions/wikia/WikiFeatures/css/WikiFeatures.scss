@@ -45,9 +45,7 @@
 			.representation {
 				border: 1px solid $color-page-border;
 				float: left;
-				height: 100px;
 				position: relative;
-				width: 150px;
 				.promo-text {
 					color: red;
 					display: block;
@@ -77,10 +75,15 @@
 						width: 93px;
 					}
 				}
+				.feature-image-wrapper {
+					height: 200px;
+					overflow: hidden;
+					width: 300px;
+				}
 			}
 
 			.details {
-				margin: 0 190px 0 165px;
+				margin: 0 190px 0 315px;
 			}
 			.actions {
 				float: right;
