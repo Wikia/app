@@ -1,11 +1,11 @@
 define( 'wikia.ui.modal', [ 'jquery', 'wikia.window', 'wikia.browserDetect' ], function( $, w, browserDetect ) {
 	'use strict';
 
-	var BLACKOUT_CLASS = 'blackout',
+	var BLACKOUT_ID = 'blackout',
+		BLACKOUT_VISIBLE_CLASS = 'visible',
 		CLOSE_CLASS = 'close',
 		INACTIVE_CLASS = 'inactive',
 		destroyOnClose;
-
 
 	/**
 	 * IE 9 doesn't support flex-box. IE-10 and IE-11 has some bugs in implementation:
@@ -20,7 +20,7 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window', 'wikia.browserDetect' ], f
 
 	function ieFlexboxFallback( modal ) {
 		var element = modal.$element,
-			HEADER_AND_FOOTER_HEIGHT = 120, // modal header and footer have 60px fixed height
+			HEADER_AND_FOOTER_HEIGHT = 90, // modal header and footer have 45px fixed height
 			winHeight = $( w ).height(),
 			modalMaxHeight = ( 90 / 100 ) * winHeight - HEADER_AND_FOOTER_HEIGHT; // 90% viewport - (header + footer)
 
@@ -57,7 +57,7 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window', 'wikia.browserDetect' ], f
 		 */
 
 		function getBlackout() {
-			var blackoutId = BLACKOUT_CLASS + '_' + id,
+			var blackoutId = BLACKOUT_ID + '_' + id,
 				$blackout = $('#' + blackoutId );
 
 			$blackout.click( $.proxy(function( event ) {
@@ -70,6 +70,11 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window', 'wikia.browserDetect' ], f
 
 			return $blackout;
 		}
+
+		this.$element.click( function( event ) {
+			// when click happens inside the modal, stop the propagation so it won't be handled by the blackout
+			event.stopPropagation();
+		} );
 
 		this.$blackout = getBlackout();
 		this.$close = this.$element.find( '.' + CLOSE_CLASS );
@@ -89,13 +94,17 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window', 'wikia.browserDetect' ], f
 	 */
 
 	Modal.prototype.show = function() {
-		this.$element.addClass( 'shown' );
-		this.$blackout.addClass( 'visible' );
+		// fix iOS Safari position: fixed - virtual keyboard bug
+		if ( browserDetect.isIPad() ) {
+			$( w ).scrollTop( $ ( w ).scrollTop() );
+		}
 
-		// IE flex-box fallback
-		if ( browserDetect.isIE() ) {
+		this.$blackout.addClass( BLACKOUT_VISIBLE_CLASS );
 
-			this.$element.addClass( 'IE-flex-fix' );
+		// IE flex-box fallback for small and medium modals
+		if ( this.$element.hasClass('large') === false && browserDetect.isIE() ) {
+
+			this.$blackout.addClass( 'IE-flex-fix' );
 			ieFlexboxFallback( this );
 
 			// update modal section max-height on window resize
@@ -110,14 +119,20 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window', 'wikia.browserDetect' ], f
 	 */
 
 	Modal.prototype.close = function() {
-		if ( !destroyOnClose ) {
-			this.$element.removeClass( 'shown' );
-			this.$blackout.removeClass( 'visible' );
+		if( !destroyOnClose ) {
+			this.$blackout.removeClass( BLACKOUT_VISIBLE_CLASS );
 		} else {
-			this.$element.remove();
 			this.$blackout.remove();
 		}
+
+		this.onClose();
 	};
+
+	/**
+	 * Hook method
+	 */
+
+	Modal.prototype.onClose = function() {};
 
 	/**
 	 * Disables all modal's buttons, adds inactive class to the modal
@@ -151,7 +166,7 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window', 'wikia.browserDetect' ], f
 	 */
 
 	Modal.prototype.isShown = function() {
-		return this.$element.hasClass( 'shown' );
+		return this.$blackout.hasClass( BLACKOUT_VISIBLE_CLASS );
 	};
 
 	/**

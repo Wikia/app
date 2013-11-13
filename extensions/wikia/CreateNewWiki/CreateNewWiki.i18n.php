@@ -1874,6 +1874,21 @@ $messages['nb'] = array(
 	'cnw-error-bot-header' => 'Du har blitt fanget opp som en bot',
 );
 
+/** Nepali (नेपाली)
+ * @author सरोज कुमार ढकाल
+ */
+$messages['ne'] = array(
+	'cnw-login' => 'प्रवेश',
+	'cnw-signup' => 'खाता खोल्नुहोस्',
+	'cnw-login-prompt' => 'के तपाईँसँग पहिले देखि नै खाता छ ?',
+	'cnw-auth-headline' => 'प्रवेश',
+	'cnw-userauth-creative' => 'प्रवेश',
+	'cnw-userauth-marketing-heading' => 'के खाता छैन ?',
+	'cnw-desc-all-ages' => 'सबै उमेरहरू',
+	'cnw-desc-change-lang' => 'परिवर्तन',
+	'cnw-desc-lang' => 'भाषा',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -1968,6 +1983,16 @@ $messages['nl-informal'] = array(
 	'cnw-welcome-instruction2' => 'Je ziet deze knop overal in je wiki. Gebruik hem als je een nieuwe pagina wilt toevoegen.',
 	'cnw-error-general' => 'Er is iets misgegaan tijdens het aanmaken van je wiki. Probeer het later opnieuw.', # Fuzzy
 	'cnw-error-wiki-limit' => "Hoi. Je mag maximaal $1 {{PLURAL:$1|wiki|wiki's}} per dag aanmaken. Wacht 24 uur om een nieuwe wiki aan te kunnen maken.",
+);
+
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'cnw-next' => 'Seguent',
+	'cnw-back' => 'Precedent',
+	'cnw-or' => 'o',
+	'cnw-name-wiki-wiki' => 'Wiki',
 );
 
 /** Pälzisch (Pälzisch)
@@ -2982,7 +3007,7 @@ $messages['vi'] = array(
 	'cnw-theme-headline' => 'Chọn một chủ đề',
 	'cnw-theme-creative' => 'Chọn một chủ đề dưới đây, bạn sẽ có thể xem thử từng chủ đề như bạn đã chọn nó.',
 	'cnw-theme-instruction' => 'Bạn cũng có thể thiết kế chủ đề sau này bằng cách vào "Công cụ của tôi".',
-	'cnw-welcome-headline' => 'Chúc mừng! $1 đã được tạo ra',
+	'cnw-welcome-headline' => 'Chúc mừng! $1 đã được tạo ra thành công.',
 	'cnw-welcome-instruction1' => 'Nhấn vào nút dưới đây để bắt đầu thêm các trang cho wiki của bạn.',
 	'cnw-welcome-instruction2' => 'Bạn sẽ thấy nút này trong suốt wiki của bạn, sử dụng nó bất cứ lúc nào bạn muốn thêm một trang mới.',
 	'cnw-welcome-help' => 'Tìm câu trả lời, lời khuyên và nhiều hơn trên <a href="http://vi.wikia.com/wiki/Trang_Chính">Wikia Tiếng Việt</a>.',
@@ -2993,10 +3018,10 @@ $messages['vi'] = array(
 	'cnw-error-wiki-limit-header' => 'Wiki đã đạt đến giới hạn',
 	'cnw-error-wiki-limit' => 'Xin chào, bạn bị giới hạn {{PLURAL:$1|tạo lập $1 wiki|tạo lập $1 wiki}} mỗi ngày. Hãy chờ 24 giờ trước khi tạo lập một wiki khác.',
 	'cnw-error-blocked-header' => 'Tài khoản bị chặn',
-	'cnw-error-blocked' => 'Bạn đã bị cấm bởi  $1. Lý do đưa ra là: $2 . (ID cấm để tham khảo: $3 )',
+	'cnw-error-blocked' => 'Bạn đã bị cấm bởi $1. Lý do đưa ra là: $2 . (ID cấm để tham khảo: $3 )',
 	'cnw-error-torblock' => 'Tạo wiki qua mạng Tor là không được phép.',
 	'cnw-error-bot' => 'Chúng tôi đã phát hiện rằng bạn có thể là một bot. Nếu chúng tôi đã làm sai, hãy liên hệ với chúng tôi mô tả rằng bạn đã được phát hiện sai là một bot, và chúng tôi sẽ hỗ trợ bạn trong việc tạo ra của wiki bạn: [http://www.wikia.com/Special:Contact/general Liên hệ với Chúng tôi]',
-	'cnw-error-bot-header' => 'Bạn đã được phát hiện là một bot',
+	'cnw-error-bot-header' => 'Bạn đã được phát hiện như một bot',
 );
 
 /** Chinese (中文)

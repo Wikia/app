@@ -20,10 +20,25 @@ define( 'wikia.browserDetect', function() {
 	}
 
 	/**
+	 * Checks if the site is opened on iPad
+	 * @returns {boolean}
+	 */
+
+	function isIPad() {
+		var bool = false;
+		if ( userAgent.match( /iPad/i ) !== null ) {
+			bool = true;
+		}
+
+		return bool;
+	}
+
+	/**
 	 * Public API
 	 */
 
 	return {
-		isIE: isIE
+		isIE: isIE,
+		isIPad: isIPad
 	};
 } );

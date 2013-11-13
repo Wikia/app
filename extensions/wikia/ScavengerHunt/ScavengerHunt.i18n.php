@@ -189,9 +189,13 @@ $messages['en'] = array(
  */
 $messages['qqq'] = array(
 	'scavengerhunt-desc' => '{{desc}}',
+	'scavengerhunt-list-header-actions' => '{{Identical|Action}}',
 	'scavengerhunt-list-enabled' => '{{Identical|Enabled}}',
 	'scavengerhunt-list-disabled' => '{{Identical|Disabled}}',
+	'scavengerhunt-list-edit' => '{{Identical|Edit}}',
 	'scavengerhunt-label-general' => '{{Identical|General}}',
+	'scavengerhunt-button-disable' => '{{Identical|Disable}}',
+	'scavengerhunt-button-enable' => '{{Identical|Enable}}',
 	'scavengerhunt-button-delete' => '{{Identical|Delete}}',
 	'scavengerhunt-label-clue-size' => '{{Identical|Font size}}',
 	'scavengerhunt-editor-tip-entry-form-email' => '{{doc-singularthey}}',

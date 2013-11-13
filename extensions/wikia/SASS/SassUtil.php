@@ -29,13 +29,9 @@ class SassUtil {
 	 *            Non-settable settings should be driven programmatically.
 	 */
 	public static function getApplicationThemeSettings() {
-		global $wgOasisGrid, $wgOasisHD;
+		global $wgOasisGrid;
 
 		$params = array();
-
-		if ( $wgOasisHD ) {
-			$params['widthType'] = 1;
-		}
 
 		if ( $wgOasisGrid ) {
 			$params['widthType'] = 3;
@@ -71,7 +67,7 @@ class SassUtil {
 			$oasisSettings['color-buttons'] = self::sanitizeColor($settings['color-buttons']);
 			$oasisSettings['color-links'] = self::sanitizeColor($settings['color-links']);
 			$oasisSettings['color-header'] = self::sanitizeColor($settings['color-header']);
-			$oasisSettings['background-image'] = wfReplaceImageServer($settings['background-image'], self::getCacheBuster());
+			$oasisSettings["background-image"] = $themeSettings->getBackgroundUrl();
 
 			// sending width and height of background image to SASS
 			if ( !empty($settings['background-image-width']) && !empty($settings['background-image-height']) ) {
@@ -197,7 +193,7 @@ class SassUtil {
 	 *
 	 * @see http://blog.archive.jpsykes.com/211/rgb2hsl/index.html
 	 *
-	 * @param string RGB color in hex format (#474646)
+	 * @param string $rgbhex RGB color in hex format (#474646)
 	 * @return array HSL set
 	 */
 	private static function rgb2hsl($rgbhex){

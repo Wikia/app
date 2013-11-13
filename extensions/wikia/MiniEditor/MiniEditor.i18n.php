@@ -254,6 +254,18 @@ $messages['nl'] = array(
 	'minieditor-placeholder-reply' => 'Beantwoord het bericht hier',
 );
 
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'minieditor-specialpage-title' => 'Pagina de demostracion de MiniEditor',
+	'minieditor-new-heading' => 'Crear un messatge novèl',
+	'minieditor-placeholder-new' => 'Picatz vòstre messatge aicí',
+	'minieditor-message-edit' => 'Aquò es un messatge existent',
+	'minieditor-reply' => 'Respondre',
+	'minieditor-placeholder-reply' => 'Respondètz al messatge aicí',
+);
+
 /** Polish (polski)
  * @author Sovq
  */

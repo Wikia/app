@@ -6,7 +6,7 @@
  * UserInterface MediaWiki media insert button tool.
  *
  * @class
- * @extends ve.ui.IconTextButtonTool
+ * @extends ve.ui.DialogTool
  *
  * @constructor
  * @param {ve.ui.Toolbar} toolbar
@@ -29,7 +29,7 @@ ve.ui.WikiaMediaInsertButtonTool.static.group = 'object';
 
 ve.ui.WikiaMediaInsertButtonTool.static.icon = 'media';
 
-ve.ui.WikiaMediaInsertButtonTool.static.titleMessage = 'visualeditor-wikiamediainsertbuttontool-label';
+ve.ui.WikiaMediaInsertButtonTool.static.titleMessage = 'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip';
 
 ve.ui.WikiaMediaInsertButtonTool.static.dialog = 'wikiaMediaInsert';
 

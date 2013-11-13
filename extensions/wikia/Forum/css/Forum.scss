@@ -280,11 +280,16 @@
 			display: block;
 		}
 	}
+
+	.policies-link {
+		float: right;
+		margin: 10px;
+	}
 }
 
 .WikiaPage .WikiaPageHeader {
 	border-bottom: 0;
-	margin: 0 10px 0 10px;
+	margin: 0 10px 0 0;
 	padding-bottom: 0;
 	// DAR-1382 overwrite right padding to make place for larger forum tally
 	padding-right: 260px;
@@ -363,9 +368,4 @@
   .editsection{
     display: none;
   }
-}
-
-.policies-link {
-  float: right;
-  margin: 10px;
 }

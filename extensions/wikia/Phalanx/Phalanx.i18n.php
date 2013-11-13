@@ -139,6 +139,7 @@ Please [[Special:Contact|contact Wikia]] about the problem.<br />The blocker als
 $messages['qqq'] = array(
 	'phalanx-type-title' => '{{Identical|Page title}}',
 	'phalanx-type-user' => '{{Identical|User}}',
+	'phalanx-type-user-email' => '{{Identical|Email}}',
 	'phalanx-add-block' => 'This message is used as a button label (like "Save", "Show preview" and "Show changes" in <code>action=edit</code>). Clicking on the button adds a new block to the Phalanx database. ([[Thread:Support/About_Wikia:Phalanx-add-block/fi/reply|documentation]] by [[User:Jack Phoenix|Jack Phoenix]])',
 	'phalanx-label-filter' => '{{Identical|Filter}}',
 	'phalanx-label-reason' => '{{Identical|Reason}}',

@@ -80,8 +80,9 @@ $messages['qqq'] = array(
 	'themedesigner-desc' => '{{desc}}',
 	'themedesigner-background' => '{{Identical|Background}}',
 	'themedesigner-page' => '{{Identical|Page}}',
-	'themedesigner-color' => '{{Identical|Color}}',
-	'themedesigner-color-middle' => 'Background color between background image (when background image is splited to two parts in fluid layout.',
+	'themedesigner-color' => '{{Identical|Main}}',
+	'themedesigner-color-middle' => 'Background color between background image (when background image is split to two parts in fluid layout.
+{{Identical|Middle}}',
 	'themedesigner-rules-color-middle' => 'Information about position and purpose of color and that can be different from standard background color',
 	'themedesigner-links' => '{{Identical|Link}}',
 	'themedesigner-header' => '{{Identical|Header}}',
@@ -90,10 +91,10 @@ $messages['qqq'] = array(
 	'themedesigner-small' => '{{Identical|Small}}',
 	'themedesigner-medium' => '{{Identical|Medium}}',
 	'themedesigner-large' => '{{Identical|Large}}',
-	'themedesigner-not-split-background' => 'Used in Theme Designer, and can be triggered to allow the current background graphic to be splitted.',
-	'themedesigner-rules-not-split-background' => 'Requirement about background image width to split it into two parts',
 	'themedesigner-tile-background' => 'Used in Theme Designer, and can be triggered to allow the current background graphic to tile, repeating itself around the page.',
 	'themedesigner-fix-background' => '{{Identical|Fix}}',
+	'themedesigner-not-split-background' => 'Used in Theme Designer, and can be triggered to allow the current background graphic to be splitted.',
+	'themedesigner-rules-not-split-background' => 'Requirement about background image width to split it into two parts',
 	'themedesigner-tab-theme' => '{{Identical|Theme}}',
 	'themedesigner-tab-customize' => '{{Identical|Customize}}',
 	'themedesigner-button-upload' => '{{Identical|Upload}}',
@@ -507,7 +508,9 @@ $messages['de'] = array(
 	'themedesigner-title' => 'Wikia Theme Designer',
 	'themedesigner-background' => 'Hintergrund',
 	'themedesigner-page' => 'Seite',
-	'themedesigner-color' => 'Farbe',
+	'themedesigner-color' => 'Haupt',
+	'themedesigner-color-middle' => 'Mitte',
+	'themedesigner-rules-color-middle' => 'Andere Farbe für die Seitenmitte',
 	'themedesigner-graphic' => 'Grafik',
 	'themedesigner-buttons' => 'Buttons',
 	'themedesigner-links' => 'Links',
@@ -519,6 +522,8 @@ $messages['de'] = array(
 	'themedesigner-large' => 'Groß',
 	'themedesigner-tile-background' => 'kacheln',
 	'themedesigner-fix-background' => 'fixieren',
+	'themedesigner-not-split-background' => 'keine Aufteilung',
+	'themedesigner-rules-not-split-background' => "Falls deine Hintergrundgrafik breiter als 2100 Pixel ist, hast du die Option, ein Bild ''nicht'' aufzuteilen.",
 	'themedesigner-transparency' => 'Transparenz',
 	'themedesigner-tab-theme' => 'Farbschema',
 	'themedesigner-tab-customize' => 'Anpassen',
@@ -757,6 +762,7 @@ $messages['fi'] = array(
 );
 
 /** French (français)
+ * @author Crochet.david
  * @author Gomoko
  * @author Iluvalar
  * @author Jean-Frédéric
@@ -772,7 +778,7 @@ $messages['fr'] = array(
 	'themedesigner-title' => 'Concepteur de thème Wikia',
 	'themedesigner-background' => 'Arrière-plan',
 	'themedesigner-page' => 'Page',
-	'themedesigner-color' => 'couleur',
+	'themedesigner-color' => 'principal',
 	'themedesigner-graphic' => 'image',
 	'themedesigner-buttons' => 'boutons',
 	'themedesigner-links' => 'liens',
@@ -784,6 +790,7 @@ $messages['fr'] = array(
 	'themedesigner-large' => 'Grand',
 	'themedesigner-tile-background' => 'mosaïque',
 	'themedesigner-fix-background' => 'fixe',
+	'themedesigner-not-split-background' => 'pas de séparation',
 	'themedesigner-transparency' => 'transparence',
 	'themedesigner-tab-theme' => 'Thème',
 	'themedesigner-tab-customize' => 'Personnaliser',
@@ -1486,6 +1493,8 @@ $messages['pl'] = array(
 	'themedesigner-background' => 'Tło',
 	'themedesigner-page' => 'Strona',
 	'themedesigner-color' => 'kolor',
+	'themedesigner-color-middle' => 'środek',
+	'themedesigner-rules-color-middle' => 'Inny kolor dla środka tła',
 	'themedesigner-graphic' => 'obraz',
 	'themedesigner-buttons' => 'przyciski',
 	'themedesigner-links' => 'linki',
@@ -1497,6 +1506,8 @@ $messages['pl'] = array(
 	'themedesigner-large' => 'Duża',
 	'themedesigner-tile-background' => 'sąsiadująco',
 	'themedesigner-fix-background' => 'nieruchomy',
+	'themedesigner-not-split-background' => 'bez podziału',
+	'themedesigner-rules-not-split-background' => 'Jeśli obraz tła ma więcej niż 2100px szerokości, można wybrać opcję nie dzielenia go.',
 	'themedesigner-transparency' => 'przezroczystość',
 	'themedesigner-tab-theme' => 'Motyw',
 	'themedesigner-tab-customize' => 'Dostosuj',
@@ -1789,7 +1800,9 @@ $messages['ru'] = array(
 	'themedesigner-title' => 'Конструктор тем Викия',
 	'themedesigner-background' => 'Фон',
 	'themedesigner-page' => 'Страница',
-	'themedesigner-color' => 'цвет',
+	'themedesigner-color' => 'главный',
+	'themedesigner-color-middle' => 'середина',
+	'themedesigner-rules-color-middle' => 'Другой цвет для середины страницы',
 	'themedesigner-graphic' => 'графика',
 	'themedesigner-buttons' => 'кнопки',
 	'themedesigner-links' => 'ссылки',
@@ -1801,6 +1814,8 @@ $messages['ru'] = array(
 	'themedesigner-large' => 'Большой',
 	'themedesigner-tile-background' => 'плитка',
 	'themedesigner-fix-background' => 'фикс.',
+	'themedesigner-not-split-background' => 'не разрезать',
+	'themedesigner-rules-not-split-background' => "Если ваш фоновый рисунок шире 2100 пикселей, у вас есть опция ''не'' разрезать изображение.",
 	'themedesigner-transparency' => 'прозрачность',
 	'themedesigner-tab-theme' => 'Тема',
 	'themedesigner-tab-customize' => 'Настройка',
@@ -2057,7 +2072,9 @@ $messages['uk'] = array(
 	'themedesigner-title' => 'Дизайнер тем Вікія',
 	'themedesigner-background' => 'Тло',
 	'themedesigner-page' => 'Сторінка',
-	'themedesigner-color' => 'колір',
+	'themedesigner-color' => 'основний',
+	'themedesigner-color-middle' => 'середній',
+	'themedesigner-rules-color-middle' => 'Інший колір для середини сторінки',
 	'themedesigner-graphic' => 'графіка',
 	'themedesigner-buttons' => 'кнопки',
 	'themedesigner-links' => 'посилання',
@@ -2069,6 +2086,8 @@ $messages['uk'] = array(
 	'themedesigner-large' => 'Великий',
 	'themedesigner-tile-background' => 'плитка',
 	'themedesigner-fix-background' => 'виправити',
+	'themedesigner-not-split-background' => "без роз'єднань",
+	'themedesigner-rules-not-split-background' => 'Якщо фонове зображення ширше, ніж 2100 пікселів, то у вас є можливість не розділювати зображення.',
 	'themedesigner-transparency' => 'прозорість',
 	'themedesigner-tab-theme' => 'Тема',
 	'themedesigner-tab-customize' => 'Налаштувати',
@@ -2110,6 +2129,7 @@ $messages['uk'] = array(
 );
 
 /** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
  * @author Minh Nguyen
  * @author Xiao Qiao
  * @author XiaoQiaoGrace
@@ -2120,7 +2140,7 @@ $messages['vi'] = array(
 	'themedesigner-title' => 'Thiết kế Chủ đề Wikia',
 	'themedesigner-background' => 'Nền',
 	'themedesigner-page' => 'Trang',
-	'themedesigner-color' => 'màu sắc',
+	'themedesigner-color' => 'màu sắc', # Fuzzy
 	'themedesigner-graphic' => 'đồ họa',
 	'themedesigner-buttons' => 'nút',
 	'themedesigner-links' => 'liên kết',
@@ -2156,7 +2176,7 @@ $messages['vi'] = array(
 	'themedesigner-button-save' => 'Lưu trang',
 	'themedesigner-upload-a-graphic' => 'tải lên một đồ họa',
 	'themedesigner-rules-wordmark' => 'Tải lên một tập tin .png có kích thước 250 x 65 pixel hoặc ít hơn.',
-	'themedesigner-rules-favicon' => 'Tải lên một tập tin .ico 16x16 pixel. Favicon là một biểu tượng nhỏ xuất hiện trên wiki của bạn trên thanh trình duyệt. [http://community.wikia.com/wiki/Help:Favicon Tìm hiểu thêm.]', # Fuzzy
+	'themedesigner-rules-favicon' => 'Tải lên một tập tin .ico 16x16 pixel. Favicon là một biểu tượng nhỏ xuất hiện trên wiki của bạn trên thanh trình duyệt.[http://community.wikia.com/wiki/Help:Favicon Tìm hiểu thêm.]',
 	'themedesigner-dont-use-a-graphic' => 'dời bỏ',
 	'themedesigner-history-item' => '$1 bởi $2',
 	'themedesigner-button-change-text' => 'Thay đổi văn bản',

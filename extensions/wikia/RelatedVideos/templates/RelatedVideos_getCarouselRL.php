@@ -8,7 +8,7 @@
 		<label>
 			<input type="checkbox" name="delete-from-wiki" value="1">
 			<?=wfMessage('related-videos-delete-from-wiki');?>
-		</lable>
+		</label>
 	</div>
 	<div class="removingProcess messageHolder"><?=wfMsg('related-videos-remove-call');?></div>
 	<div class="errorWhileLoading messageHolder"><?=wfMsg('videos-error-while-loading');?></div>

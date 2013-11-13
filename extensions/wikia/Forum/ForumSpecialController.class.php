@@ -213,7 +213,7 @@ class ForumSpecialController extends WikiaSpecialPageController {
 		$this->destinationBoards = array( array( 'value' => '', 'content' => wfMessage( 'forum-board-destination-empty' )->escaped() ) );
 
 		foreach ( $list as $value ) {
-			if ( $this->boardId != $value['id'] ) {
+			if ( $boardId != $value['id'] ) {
 				$this->destinationBoards[] = array( 'value' => $value['id'], 'content' => htmlspecialchars( $value['name'] ) );
 			}
 		}

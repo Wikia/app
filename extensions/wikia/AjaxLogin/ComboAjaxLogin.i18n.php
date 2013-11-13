@@ -1102,6 +1102,15 @@ Vennligst prøv igjen eller [[Special:Contact|rapporter dette]].',
 	'comboajaxlogin-ajaxerror' => 'Wikia svarer ikke. Kontroller nettverkstilkoblingen.',
 );
 
+/** Nepali (नेपाली)
+ * @author सरोज कुमार ढकाल
+ */
+$messages['ne'] = array(
+	'comboajaxlogin-createlog' => 'प्रवेश गर्ने अथवा नयाँ खाता बनाउने',
+	'comboajaxlogin-connectmarketing-back' => '« पहिलेको',
+	'comboajaxlogin-connectmarketing-forward' => 'सुरुगर्ने »',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -1170,9 +1179,12 @@ Als je al een gebruiker hebt, kan je <a href="#">aanmelden</a> zoals altijd, maa
 $messages['oc'] = array(
 	'comboajaxlogin-desc' => "Bóstia de dinamica que permeton als utilizaires de se connectar, se rapelar de lor senhal e d'enregistrar d'utilizaires",
 	'comboajaxlogin-createlog' => 'Se connectar o crear un compte',
+	'comboajaxlogin-actionmsg' => "D'en primièr, vos cal vos connectar o crear un compte abans d'efectuar aquesta accion",
+	'comboajaxlogin-actionmsg-protected' => "Per modificar aquesta pagina protegida, d'en primièr, vos cal vos connectar o crear un compte.",
 	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>Se connectar amb Facebook Connect</h1>',
 	'comboajaxlogin-connectmarketing-back' => '&laquo; Retorn',
 	'comboajaxlogin-connectmarketing-forward' => 'Abans de començar &raquo;',
+	'comboajaxlogin-ajaxerror' => 'Wikia respond pas. Verificatz vòstra connexion ret.',
 );
 
 /** Polish (polski)

@@ -14,7 +14,7 @@
  */
 function wfSpecialWikiaNewFiles ( $par, $specialPage ) {
 	global $wgOut, $wgLang, $wgRequest, $wgMiserMode;
-	global $wmu, $wgOasisHD;
+	global $wmu;
 
 	$wpIlMatch = $wgRequest->getText( 'wpIlMatch' );
 	$dbr = wfGetDB( DB_SLAVE );
@@ -127,13 +127,8 @@ function wfSpecialWikiaNewFiles ( $par, $specialPage ) {
 		"hideoverflow" => true
 		) );
 
-	//FB#1150 - make the images fit the whole horizontal space in Oasis and Oasis HD
 	if ( get_class( $sk ) == 'SkinOasis' ) {
-		if ( $wgOasisHD ) {
-			$gallery->setWidths( 202 );
-		} else {
-			$gallery->setWidths( 212 );
-		}
+		$gallery->setWidths( 212 );
 	}
 
 	$firstTimestamp = null;

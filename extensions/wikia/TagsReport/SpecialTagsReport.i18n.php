@@ -484,6 +484,23 @@ $messages['nl-informal'] = array(
 	'tagsreportnotspecify' => 'Je hebt nog geen special label geselecteerd.',
 );
 
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'tagsreport' => 'Rapòrt de balisas',
+	'tagsreporttitle' => 'Rapòrt de balisas',
+	'tagsreportselecttag' => 'Seleccionar la balisa :',
+	'tagsreportgo' => 'Afichar',
+	'tagsreportnotspecify' => 'Avètz pas seleccionat cap de balisa especiala',
+	'tagsreportnoresults' => 'Cap de resultat pas trobat',
+	'tagsreportmainnspace' => 'Principal',
+	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|pagina|paginas}})',
+	'tagsreportpagesfound' => 'Trouvé <strong>$1</strong> {{PLURAL:$1|pagina|paginas}}, que {{PLURAL:$1|conten|contenon}} una balisa especiala (dpl, youtube, ...)',
+	'tagsreportgenerated' => 'Generat lo $1 a $2',
+	'tagsreportpageremoved' => 'La pagina #$1 es estada suprimida',
+);
+
 /** Polish (polski)
  * @author BeginaFelicysym
  * @author Sovq
@@ -707,6 +724,23 @@ $messages['vep'] = array(
 	'tagsreportpages' => "(<strong>$1</strong> {{PLURAL:$1|lehtpol'|lehtpol't}})",
 	'tagsreportpagesfound' => "Om löutud <strong>$1</strong> {{PLURAL:$1|lehtpol'|lehtpol't}}, kus om specialižid virgoid (DPL, YouTube, etc.)",
 	'tagsreportgenerated' => 'Om sätud $1 aigal $2',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'tagsreport' => 'Bài báo cáo',
+	'tagsreporttitle' => 'Bài báo cáo',
+	'tagsreportselecttag' => 'Chọn từ khóa:',
+	'tagsreportgo' => 'Xem',
+	'tagsreportnotspecify' => 'Bạn đã không chọn bất kỳ thẻ đặc biệt được',
+	'tagsreportnoresults' => 'Không tìm thấy kết quả',
+	'tagsreportmainnspace' => 'Chính',
+	'tagsreportpages' => '({{PLURAL:$1|trang|trang}} <strong>$1</strong>)',
+	'tagsreportpagesfound' => 'Tìm thấy {{PLURAL:$1|trang|trang}} <strong>$1</strong>, có chứa các từ khóa đặc biệt (DPL, YouTube, vv)',
+	'tagsreportgenerated' => 'Được tạo ra trên $1 tại $2',
+	'tagsreportpageremoved' => 'Trang #$1 đã bị xóa bỏ',
 );
 
 /** Simplified Chinese (中文（简体）‎)

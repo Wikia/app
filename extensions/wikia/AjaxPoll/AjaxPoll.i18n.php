@@ -614,6 +614,13 @@ $messages['nb'] = array(
 	'ajaxpoll-submitting' => 'Vennligst vent, sender inn stemmen din...',
 );
 
+/** Nepali (नेपाली)
+ * @author सरोज कुमार ढकाल
+ */
+$messages['ne'] = array(
+	'ajaxpoll-submit' => 'भोट गर्नुहोस !',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */

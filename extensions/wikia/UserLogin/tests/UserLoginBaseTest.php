@@ -9,9 +9,6 @@ abstract class UserLoginBaseTest extends WikiaBaseTest {
 	public function setUp() {
 		$this->setupFile = dirname(__FILE__) . '/../UserLogin.setup.php';
 		parent::setUp();
-
-		//Set up empty TempUser
-		$this->setUpMockObject( 'TempUser', false, true );
 	}
 
 	protected function setUpMockObject( $objectName, $objectParams=null, $needSetInstance=false, $globalVarName=null, $objectValues=array(), $callOriginalConstructor=true ) {
@@ -90,10 +87,6 @@ abstract class UserLoginBaseTest extends WikiaBaseTest {
 				$this->mockClass( $objectName, $mockObject, 'newFromRow' );
 				$this->mockClass( $objectName, true, 'loadOptions' );
 				$this->mockClass( $objectName, (isset($objectParams['params']['mId']) ? $objectParams['params']['mId'] : 0), 'idFromName' );
-			}
-			if ( $objectName == 'TempUser' ) {
-				$this->mockClass( $objectName, $mockObject, 'getTempUserFromName' );
-				$this->mockClass( $objectName, $mockObject, 'createNewFromUser' );
 			}
 			if ( !empty( $objectParams['mockStatic'] ) ) {
 				$parameters = $objectParams['mockStatic'];

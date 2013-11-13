@@ -1,59 +1,66 @@
 @import "skins/oasis/css/core/color";
-@import "skins/oasis/css/core/responsive-core";
-@import "skins/oasis/css/core/responsive-font-sizing";
 @import "skins/oasis/css/core/responsive-variables";
-@import "skins/oasis/css/mixins/transform";
 @import "skins/oasis/css/mixins/transition";
 @import "skins/oasis/css/mixins/blackout";
 @import "skins/oasis/css/mixins/box-sizing-border-box";
+@import "skins/oasis/css/mixins/box-shadow";
 @import "skins/oasis/css/mixins/flexbox";
+@import "skins/oasis/css/mixins/calc";
+@import "skins/oasis/css/mixins/image-replacement";
 
 $close-image: '/resources/wikia/ui_components/modal/images/close-dark.svg';
 $modal-secondary-color: darken( $color-page, 10% );
+
 @if( $is-dark-wiki ) {
 	$close-image: '/resources/wikia/ui_components/modal/images/close-light.svg';
 	$modal-secondary-color: lighten( $color-page, 3% );
 }
 
-.modal,
-.blackout {
-	@include transition-shorthand( display 0.2s ease-in-out );
-	opacity: 0;
-	z-index: -1;
-}
+// modals dimensions
+$modal-min-height: 200px;
+$modal-max-height: 90%;
+$small-modal-width: 400px;
+$medium-modal-width: 700px;
+$medium-modal-width-small-screen: 500px;
+$header-and-footer-height: 45px;
+$large-modal-margin: 50px;
 
 .modal {
-	@include transform-translate( -50%, -50% );
+	@include box-shadow( 1px, 2px, 5px, rgba(0, 0, 0, .7) );
+	@include flexbox();
+	@include flex-direction(column);
+
 	background-color: $color-page;
 	border-radius: 2px;
-	display: none;
-	left: 50%;
-	max-height: 90%;
-	min-height: 200px;
+	max-height: $modal-max-height;
+	min-height: $modal-min-height;
 	margin: 0;
 	overflow: hidden;
 	padding: 0;
-	position: fixed;
-	top: 50%;
+	position: relative;
 
 	> header,
 	> footer {
 		@include flex-grow(0);
 		@include flex-shrink(0);
 		background-color: $modal-secondary-color;
-		height: 60px; // flex-basis is not supported on Safari 6 so fixed height is needed
+		height: $header-and-footer-height; // flex-basis is not supported on Safari 6 so fixed height is needed
+		padding: 13px 20px 18px;
 	}
 
 	> header,
 	> section,
 	> footer {
 		@include box-sizing-border-box;
+	}
+
+	> section {
 		padding: 20px;
 	}
 
 	> header h3 {
 		color: $color-text;
-		font-size: 21px;
+		font-size: 17px;
 		font-weight: bold;
 		margin: 0;
 		overflow: hidden;
@@ -64,14 +71,14 @@ $modal-secondary-color: darken( $color-page, 10% );
 	}
 
 	> header .close {
+		@include image-replacement();
 		background: url( $close-image );
-		background-size: 24px 24px;
+		background-size: 20px 20px;
 		display: block;
 		float: right;
-		height: 24px;
+		height: 20px;
 		outline: none;
-		text-indent: -9999px;
-		width: 24px;
+		width: 20px;
 	}
 
 	> footer .button {
@@ -84,21 +91,20 @@ $modal-secondary-color: darken( $color-page, 10% );
 
 	> section {
 		@include flex-grow(1);
-
 		overflow: auto;
 	}
 
-	&.small {
-		width: 400px;
+	// IE flex-box fallback
+	&.IE-flex-fix {
+		display: block;
+	}
 
+	&.small {
+		width: $small-modal-width;
 	}
 
 	&.medium {
-		width: 700px;
-
-		> section {
-			height: 400px;
-		}
+		width: $medium-modal-width;
 	}
 
 	&.small,
@@ -110,8 +116,10 @@ $modal-secondary-color: darken( $color-page, 10% );
 	}
 
 	&.large {
-		height: calc( 100% - 50px );
-		width: calc( 100% - 50px );
+		@include height-calc('100% - #{$large-modal-margin}');
+		@include width-calc('100% - #{$large-modal-margin}');
+		display: block;
+		position: relative;
 
 		> footer {
 			bottom: 0;
@@ -123,33 +131,62 @@ $modal-secondary-color: darken( $color-page, 10% );
 
 	.buttons {
 		bottom: 15px;
-		display: inline-block;
-		position: absolute;
-		right: 20px;
-	}
-
-	&.shown {
-		@include flexbox();
-		@include flex-direction(column);
-		margin: 0;
-		padding: 0;
-		opacity: 1;
-		overflow: hidden;
-		z-index: $zTop;
-
-		// IE flex-box fallback
-		&.IE-flex-fix {
-			display: block;
-		}
 	}
 }
 
-.blackout {
+.modal-blackout {
+	@include align-items(center);
 	@include blackout();
+	@include flexbox();
+	@include justify-content(center);
+	@include transition-shorthand( display 0.2s ease-in-out );
+}
+
+.IE-flex-fix {
+	display: block;
+
+	.modal {
+		display: block;
+		padding-bottom: 60px;
+
+		& > footer {
+			bottom: 0;
+			position: absolute;
+			width: 100%;
+		}
+
+	}
+
+	> .small,
+	.medium {
+		left: 50%;
+		position: fixed;
+		top: 5%;
+	}
+
+	> .small {
+		margin-left: -$small-modal-width / 2;
+	}
+
+	> .medium {
+		margin-left: -$medium-modal-width / 2;
+	}
+
 }
 
 @media screen and (max-width: $breakpoint-min) {
+
 	.modal.medium {
-		width: 500px;
+		width: $medium-modal-width-small-screen;
+	}
+
+	.modal-blackout {
+
+		&.IE-flex-fix {
+
+			> .medium {
+				margin-left: -$medium-modal-width-small-screen / 2;
+			}
+		}
 	}
 }
