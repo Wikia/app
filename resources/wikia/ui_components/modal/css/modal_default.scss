@@ -21,7 +21,7 @@ $modal-max-height: 90%;
 $small-modal-width: 400px;
 $medium-modal-width: 700px;
 $medium-modal-width-small-screen: 500px;
-$header-and-footer-height: 60px;
+$header-and-footer-height: 45px;
 $modal-padding: 20px;
 $large-modal-margin: 50px;
 
@@ -44,6 +44,7 @@ $large-modal-margin: 50px;
 		@include flex-shrink(0);
 		background-color: $modal-secondary-color;
 		height: $header-and-footer-height; // flex-basis is not supported on Safari 6 so fixed height is needed
+		padding: 13px 20px 18px;
 	}
 
 	> header,
