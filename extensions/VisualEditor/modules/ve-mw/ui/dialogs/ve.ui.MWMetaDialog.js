@@ -188,6 +188,14 @@ ve.ui.MWMetaDialog.prototype.onClose = function ( action ) {
 		surfaceModel = this.surface.getModel(),
 		currentDefaultSortKeyItem = this.getDefaultSortKeyItem();
 
+	// track 'apply changes' event
+	if ( action === 'apply' ) {
+		ve.track( {
+			'action': ve.track.actions.CLICK,
+			'label': 'dialog-page-settings-button-save'
+		} );
+	}
+
 	// Parent method
 	ve.ui.MWDialog.prototype.onClose.call( this );
 

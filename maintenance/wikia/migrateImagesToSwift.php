@@ -67,8 +67,15 @@ class MigrateImagesToSwift extends Maintenance {
 	/**
 	 * Try to "fix" wikis with too short (less than 3 characters) bucket names
 	 *
-	 * $wgUploadDirectory = '/images/x/x/images'
-	 * wgUploadPath = 'http://images.wikia.com/x/x/images'
+	 * $wgUploadDirectory = '/images/v/vs/pl/images'
+	 * wgUploadPath = 'http://images.wikia.com/vs/pl/images'
+	 *
+	 * Migrate to:
+	 *
+	 * $wgUploadDirectory = '/images/v/vs_/pl/images'
+	 * wgUploadPath = 'http://images.wikia.com/vs_/pl/images'
+	 *
+	 * Container name: "vs_"
 	 *
 	 * This method sets $wgUploadDirectoryNFS WF variable.
 	 * It is used when synchronizing Swift operations back to NFS storage.
@@ -78,26 +85,28 @@ class MigrateImagesToSwift extends Maintenance {
 	private function fixShortBucketName() {
 		global $wgUploadDirectory, $wgUploadPath, $wgUploadDirectoryNFS;
 
-		$parts = explode('/', trim($wgUploadDirectory, '/')); // images, <bucket name>, ...
-		$bucketName = $parts[1];
+		$nfsUploadDirectory = !empty($wgUploadDirectoryNFS) ? $wgUploadDirectoryNFS : $wgUploadDirectory;
+
+		$parts = explode('/', trim($nfsUploadDirectory, '/')); // images, first bucket name letter, <bucket name>, ...
+		$bucketName = $parts[2];
 
 		// bucket name is fine, leave now
 		if (strlen($bucketName) >= self::SWIFT_BUCKET_NAME_MIN_LENGTH) {
-			return false;
+			if (!$this->hasOption('force')) return false;
 		}
 
 		// keep the old path
-		$wgUploadDirectoryNFS = $wgUploadDirectory;
+		$wgUploadDirectoryNFS = $nfsUploadDirectory;
 
 		// fill with underscores
 		$bucketName = str_pad($bucketName, self::SWIFT_BUCKET_NAME_MIN_LENGTH, '_', STR_PAD_RIGHT);
 
 		// update $wgUploadDirectory and wgUploadPath accordingly
-		$parts[1] = $bucketName;
+		$parts[2] = $bucketName;
 		$wgUploadDirectory = '/' . join('/', $parts);
-		$wgUploadPath = 'http://images.wikia.com/' . join('/', array_slice($parts, 1));
+		$wgUploadPath = 'http://images.wikia.com/' . join('/', array_slice($parts, 2)); // remove /images/ and first letter parts
 
-		self::log( __CLASS__, "short bucket name fix applied - '{$bucketName}', <{$wgUploadPath}>, <{$wgUploadDirectory}>" , self::LOG_MIGRATION_PROGRESS );
+		self::log( __CLASS__, "short bucket name fix applied - '{$bucketName}', <{$wgUploadPath}>, <{$wgUploadDirectory}>, NFS: <{$wgUploadDirectoryNFS}>" , self::LOG_MIGRATION_PROGRESS );
 		return true;
 	}
 

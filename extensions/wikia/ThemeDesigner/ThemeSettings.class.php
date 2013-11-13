@@ -234,9 +234,67 @@ class ThemeSettings {
 			}
 		}
 
-
 		WikiFactory::setVarByName(self::WikiFactoryHistory, $cityId, $history, $reason);
-
 	}
 
+	/**
+	 * Get wordmark full, up-to-date URL
+	 *
+	 * This method returns URL based on "wordmark-image-url" and performs URL rewrite
+	 * for migrated wikis with short Swift bucket name
+	 *
+	 * @see  $wgUploadPath - "http://images.wikia.com/24_/es/images"
+	 *
+	 * @author macbre
+	 * @return string wordmark URL or empty string if not found
+	 */
+	public function getWordmarkUrl() {
+		global $wgUploadPath;
+
+		$wordmarkUrl = $this->getSettings()['wordmark-image-url'];
+		$wordmarkPath = reset(explode('/images/', $wordmarkUrl));
+
+		if (!empty($wordmarkPath)) {
+			$wordmarkUrl = str_replace(
+				$wordmarkPath . '/images',
+				$wgUploadPath,
+				$wordmarkUrl
+			);
+		}
+
+		return wfReplaceImageServer($wordmarkUrl, SassUtil::getCacheBuster());
+	}
+
+	/**
+	 * Get wiki background full, up-to-date URL
+	 *
+	 * This method returns URL based on "background-image" and performs URL rewrite
+	 * for migrated wikis with short Swift bucket name
+	 *
+	 * @see  $wgUploadPath - "http://images.wikia.com/24_/es/images"
+	 *
+	 * @author macbre
+	 * @return string background URL or empty string if not found
+	 */
+	public function getBackgroundUrl() {
+		global $wgUploadPath;
+
+		$backgroundUrl = $this->getSettings()['background-image'];
+
+		if (empty($backgroundUrl)) {
+			return $backgroundUrl;
+		}
+
+		$backgroundPath = reset(explode('/images/', $backgroundUrl));
+
+		if (!empty($wordmarkPath)) {
+			$backgroundUrl = str_replace(
+				$backgroundPath . '/images',
+				$wgUploadPath,
+				$backgroundUrl
+			);
+		}
+
+		return wfReplaceImageServer($backgroundUrl, SassUtil::getCacheBuster());
+	}
 }

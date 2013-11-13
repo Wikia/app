@@ -194,6 +194,7 @@ function renderGracenoteLyricsTag($input, $argv, Parser $parser)
 	$ringtoneLink.= "$href<img src='$imgPath/phone_left.gif' alt='phone' width='16' height='17'/> ";
 	$ringtoneLink.= "Send \"$songTitle\" Ringtone to your Cell";
 	$ringtoneLink.= " <img src='$imgPath/phone_right.gif' alt='phone' width='16' height='17'/></a>";
+	$ringtoneLink.= "<span class='adNotice'>Ad</span>";
 	$ringtoneLink.= "</div>";
 	GLOBAL $wgFirstLyricTag;
 	$wgFirstLyricTag = false; // Even though the gracenote extension ignores these, this will prevent ringtones on other <lyrics> tags.

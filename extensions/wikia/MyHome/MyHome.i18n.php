@@ -2059,6 +2059,9 @@ $messages['ja'] = array(
  */
 $messages['ka'] = array(
 	'wikiactivity' => 'ვიკი აქტიურობა',
+	'myhome-activity-feed' => 'აქტიურობის არხი',
+	'myhome-watchlist-feed' => 'გვერდები, რომლებსაც თვალს ვადევნებ',
+	'myhome-hot-spots-feed' => 'ცხელი წერტილები',
 	'myhome-feed-created-by' => 'შემქმნელი - $1.',
 	'myhome-feed-edited-by' => 'რედაქტორი - $1.',
 	'myhome-feed-new-page-details' => 'ახალი გვერდი',
@@ -2066,6 +2069,11 @@ $messages['ka'] = array(
 	'myhome-feed-section-edit-details' => 'რედაქტირება გაუკეთა სექციას',
 	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|დამატებული ფოტო|დამატებული ფოტოები}}',
 	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|დამატებული კატეგორია|დამატებული კატეგორიები}}',
+	'myhome-hot-spots-number-of-editors' => 'რედაქტორი',
+	'myhome-community-corner-header' => 'განცხადებები',
+	'oasis-myhome-community-corner-edit' => 'განცხადების რედაქტირება &gt;',
+	'myhome-hot-spots-definition' => 'გვერდები, რომლებსაც ბოლო $1 დღის მანძილზე ყველაზე მეტი რედაქტორი ჰყავდათ.',
+	'myhome-default-view-checkbox' => 'აქციე $1 ჩემს ნაგულისხმევ ხედად',
 );
 
 /** Kannada (ಕನ್ನಡ)

@@ -733,6 +733,8 @@ class ArticleComment {
 
 		$editPage->summary = $summary;
 
+		$editPage->watchthis = $user->isWatched( $article->getTitle() );
+
 		if(!empty($metadata)) {
 			$editPage->textbox1 =  $text. Xml::element( 'ac_metadata', $metadata, ' ' );
 		}

@@ -1,4 +1,5 @@
-@import "../../../skins/oasis/css/core/color";
+@import "skins/oasis/css/core/color";
+@import "skins/oasis/css/mixins/ellipses";
 
 .RelatedPagesModule {
 	clear: both;
@@ -64,6 +65,7 @@
 	.more {
 		display: block;
 		margin: 5px 0;
+		@include ellipses;
 		&:hover {
 			text-decoration: underline;
 		}

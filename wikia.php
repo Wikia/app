@@ -30,7 +30,9 @@ if( function_exists( 'newrelic_name_transaction' ) ) {
 
 if ( !empty( $wgEnableNirvanaAPI ) ){
 	// temporarily force ApiDocs extension regardless of config
-	require $IP."/extensions/wikia/ApiDocs/ApiDocs.setup.php";
+	require_once $IP."/extensions/wikia/ApiDocs/ApiDocs.setup.php";
+	// same for JsonFormat
+	require_once $IP."/extensions/wikia/JsonFormat/JsonFormat.setup.php";
 	
 	$app = F::app();
 

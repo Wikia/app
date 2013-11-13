@@ -109,7 +109,7 @@ ve.ui.MWTransclusionDialogTool.static.name = 'transclusion';
 ve.ui.MWTransclusionDialogTool.static.group = 'object';
 ve.ui.MWTransclusionDialogTool.static.icon = 'template';
 ve.ui.MWTransclusionDialogTool.static.titleMessage =
-	'visualeditor-dialogbutton-transclusion-tooltip';
+	'wikia-visualeditor-dialogbutton-transclusion-tooltip';
 ve.ui.MWTransclusionDialogTool.static.dialog = 'transclusion';
 ve.ui.MWTransclusionDialogTool.static.modelClasses = [ ve.dm.MWTransclusionNode ];
 ve.ui.toolFactory.register( ve.ui.MWTransclusionDialogTool );

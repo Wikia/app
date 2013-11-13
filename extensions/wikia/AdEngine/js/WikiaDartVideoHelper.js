@@ -12,7 +12,7 @@ define('ext.wikia.adengine.dartvideohelper', ['wikia.log', 'wikia.location', 'wi
 		var key,  vals, params = [], urlEncodedVals, valIndex;
 
 		for (key in pageParams) {
-			if (pageParams.hasOwnProperty(key)) {
+			if (pageParams.hasOwnProperty(key) && key !== '') {
 				vals = pageParams[key];
 				if (vals) {
 					if (!(vals instanceof Array)) {

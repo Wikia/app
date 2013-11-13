@@ -696,6 +696,16 @@ Groet, Wikia
 * Zie het tabblad "Volglijst" in je voorkeuren om alle pagina\'s uit deze wekelijkse samenvatting als gelezen te markeren.',
 );
 
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'globalwatchlist-digest-email-subject' => 'Somari de la setmana',
+	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|comentari|comentaris}})',
+	'globalwatchlist-no-page-found' => 'Cap de pagina pas trobada.',
+	'globalwatchlist-no-blog-page-found' => 'Cap de pagina de blog pas trobada.',
+);
+
 /** Pälzisch (Pälzisch)
  * @author Manuae
  */

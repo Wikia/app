@@ -37,7 +37,7 @@ foreach ($videoList as $video):
 		<? if ( !empty($best) ): ?>
 			<div class="video-wrapper">
 				<? if ( $video['isNew'] ): ?>
-					<div class="new">New</div>
+					<div class="new"><?= wfMessage( 'lvs-new-flag' )->plain() ?></div>
 				<? endif; ?>
 				<a href="<?= $best['fileUrl'] ?>" class="image video no-lightbox">
 					<?= $best['videoPlayButton'] ?>
