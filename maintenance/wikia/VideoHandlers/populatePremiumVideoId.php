@@ -1,25 +1,18 @@
 <?php
 
-$filename = './video-info.tsv';
-if ( !file_exists($filename) ) {
-	die("Could not find $filename\n");
-}
-
-echo "Reading file of IDs ...";
-$handle = fopen($filename, 'r');
-$contents = fread($handle, filesize($filename));
-fclose($handle);
-echo " done\n";
+$db = wfGetDB(DB_SLAVE, array(), 'video151');
 
 echo "Building ID list ... ";
-global $titleIDs;
-$titleIDs = array();
-foreach ( explode("\n", $contents) as $line ) {
-	list($title, $provider, $id) = explode("\t", $line);
-
-	$titleIDs[$title][$provider] = $id;
+global $titleInfo;
+$titleInfo = [];
+$result = $db->query('select video_title as title, video_id, provider from video_info where premium = 0');
+while ( $row = $db->fetchObject( $result ) ) {
+	$titleInfo[$row->title] = ['id'       => $row->video_id,
+							   'provider' => $row->provider];
 }
-echo " done\n";
+
+$db->freeResult($result);
+echo "done\n";
 
 /**
  * Class PopulatePremiumVideoId
@@ -28,14 +21,14 @@ echo " done\n";
  */
 class PopulatePremiumVideoId {
 	public static function run( DatabaseMysql $db, $dbname, $test = false, $verbose = false ) {
-		global $titleIDs;
+		global $titleInfo;
 
 		// Don't process the video wiki
 		if ( $dbname == 'video151' ) {
 			return true;
 		}
 
-		$sql = "select video_title as title, provider from video_info where premium = 1 and video_id = ''";
+		$sql = "select video_title as title, provider from video_info where premium = 1 and (video_id = '' or provider is null)";
 		$result = $db->query($sql);
 
 		$numRows = 0;
@@ -43,9 +36,13 @@ class PopulatePremiumVideoId {
 		$update = array();
 		while ( $row = $db->fetchObject( $result ) ) {
 			$numRows++;
-			if ( isset( $titleIDs[$row->title][$row->provider] ) ) {
+//			echo "Checking ".$row->title." from ".$row->provider."\n";
+			if ( isset( $titleInfo[$row->title] ) ) {
 				$numFound++;
-				$update[] = [ $row->title, $row->provider, $titleIDs[$row->title][$row->provider] ];
+
+				$info = $titleInfo[$row->title];
+				$provider = $row->provider ? null : $info['provider'];
+				$update[] = [ $row->title, $provider, $info['id'] ];
 			}
 		}
 		$db->freeResult($result);
@@ -57,9 +54,9 @@ class PopulatePremiumVideoId {
 		foreach ( $update as $info ) {
 			list($title, $provider, $id) = $info;
 			$sql = "update video_info
-                       set video_id='$id'
-                     where video_title = ".$db->addQuotes($title)."
-				       and provider = ".$db->addQuotes($provider);
+                       set video_id='$id' ".
+			         ($provider ? ", provider=".$db->addQuotes($provider) : '').' '.
+                     "where video_title = ".$db->addQuotes($title);
 
 			if ( $verbose ) {
 				echo "Running SQL on $dbname: $sql\n";
