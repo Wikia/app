@@ -227,15 +227,15 @@ ve.ui.WikiaMediaInsertDialog.prototype.onCartSelect = function ( item ) {
  * @param {ve.dm.WikiaCartItem[]} items
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onCartAdd = function ( items ) {
-	var i, page;
+	var i, item, page;
 	for ( i = 0; i < items.length; i++ ) {
-		// Add item media page
-		page = new ve.ui.WikiaMediaPageWidget( items[i], {
+		item = items[i];
+		page = new ve.ui.WikiaMediaPageWidget( item, {
 			'$$': this.frame.$$,
-			'editable': false
+			'editable': item.isTemporary()
 		} );
 		page.connect( this, { 'remove': 'onMediaPageRemove' } );
-		this.pages.addPage( items[i].title, { '$content': page.$ } );
+		this.pages.addPage( item.title, { '$content': page.$ } );
 	}
 	this.searchResults.setChecked( items, true );
 };

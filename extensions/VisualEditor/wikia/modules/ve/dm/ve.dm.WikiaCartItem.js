@@ -17,3 +17,13 @@ ve.dm.WikiaCartItem = function VeDmWikiaCartItem( title, url, type, temporaryFil
 	this.provider = provider;
 	this.videoId = videoId;
 };
+
+/**
+ * Is this item temporary (was it uploaded)?
+ *
+ * @method
+ * @returns {boolean} True if the item is temporary, false otherwise.
+ */
+ve.dm.WikiaCartItem.prototype.isTemporary = function () {
+	return !!this.temporaryFileName;
+};
