@@ -188,13 +188,13 @@ class VideoFileUploader {
 		// Try to upload the thumbnail for this video
 		$upload = $this->uploadThumbnailFromUrl( $this->getApiWrapper()->getThumbnailUrl() );
 
-		// set proxy to original value
-		$app->wg->HTTPProxy = $originalProxy;
-
 		// If uploading the actual thumbnail fails, load a default thumbnail
 		if ( empty($upload) ) {
 			$upload = $this->uploadThumbnailFromUrl( LegacyVideoApiWrapper::$THUMBNAIL_URL );
 		}
+
+		// set proxy to original value
+		$app->wg->HTTPProxy = $originalProxy;
 
 		// If we still don't have anything, give up.
 		if ( empty($upload) ) {

@@ -236,21 +236,29 @@ class VideoInfoHelper extends WikiaModel {
 
 	/**
 	 * Fetch the list of local (e.g. non-premium) videos from this wiki
-	 *
-	 * @return array
+	 * @return array $titles
 	 */
 	public static function getLocalVideoTitles() {
-		$sql = "SELECT video_title FROM video_info WHERE premium = 0";
-		$dbh = wfGetDB(DB_SLAVE);
+		wfProfileIn( __METHOD__ );
 
-		$res = $dbh->query($sql);
+		$db = wfGetDB( DB_SLAVE );
+
+		$res = $db->select(
+			array( 'video_info' ),
+			array( 'video_title' ),
+			array( 'premium' => 0 ),
+			__METHOD__
+		);
 
 		$titles = array();
-		while ($row = $dbh->fetchObject($res)) {
+		while ( $row = $db->fetchObject( $res ) ) {
 			$titles[] = $row->video_title;
 		}
-		$dbh->freeResult($res);
+		$db->freeResult( $res );
+
+		wfProfileOut( __METHOD__ );
 
 		return $titles;
 	}
+
 }

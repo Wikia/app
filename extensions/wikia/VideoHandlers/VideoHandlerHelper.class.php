@@ -345,20 +345,21 @@ class VideoHandlerHelper extends WikiaModel {
 	/**
 	 * Checks to see if the video title passed in has a thumbnail on disk or not.
 	 *
-	 * @param string|Title $title The video title to check
-	 * @param bool|$fixit Whether to fix the problem or ignore it
+	 * @param string|Title $title - The video title to check
+	 * @param boolean $fixit - Whether to fix the problem or ignore it
+	 * @param boolean $reupload (for default thumbnail only)
 	 * @return Status
 	 */
-	public function fcskVideoThumbnail( $title, $fixit = true ) {
+	public function fcskVideoThumbnail( $title, $fixit = true, $reupload = false ) {
 		$file = WikiaFileHelper::getVideoFileFromTitle( $title );
 
 		// See if a file exists for this title
-		if ( empty($file) ) {
+		if ( empty( $file ) ) {
 			return Status::newFatal( 'File object not found' );
 		}
 
 		// See if the thumbnail exists for this title
-		if ( file_exists($file->getLocalRefPath()) ) {
+		if ( file_exists($file->getLocalRefPath()) && !$reupload ) {
 			return Status::newGood( ['check' => 'ok'] );
 		} else {
 			// Determine if we should fix this problem or leave it be
