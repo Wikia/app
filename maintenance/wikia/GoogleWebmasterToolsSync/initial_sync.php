@@ -8,7 +8,7 @@ GWTLogHelper::notice( __FILE__ . " script starts.");
 $minCountOfPagesToSync = 100;
 
 try {
-	global $wgExternalSharedDB, $wgDatamartDB;
+	global $wgExternalSharedDB;
 
 	$wikiPageCountService = (new WikiPageCountServiceFactory())->get();
 	$wikiRepository = new GWTWikiRepository();

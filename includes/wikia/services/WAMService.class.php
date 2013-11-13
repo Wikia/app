@@ -48,7 +48,7 @@ class WAMService extends Service {
 			$db = wfGetDB(DB_SLAVE, array(), $app->wg->DWStatsDB);
 
 			$result = $db->select(
-				array('fact_wam_scores'),
+				array('statsdb_mart.fact_wam_scores'),
 				array(
 					'wam'
 				),
@@ -161,7 +161,7 @@ class WAMService extends Service {
 			);
 
 			$result = $db->select(
-				'fact_wam_scores',
+				'statsdb_mart.fact_wam_scores',
 				$fields
 			);
 
@@ -289,9 +289,9 @@ class WAMService extends Service {
 
 	protected function getWamIndexTables () {
 		$tables = array(
-			'fw1' => 'fact_wam_scores',
-			'fw2' => 'fact_wam_scores',
-			'dw' => 'dimension_wikis'
+			'fw1' => 'statsdb_mart.fact_wam_scores',
+			'fw2' => 'statsdb_mart.fact_wam_scores',
+			'dw' => 'statsdb_mart.dimension_wikis'
 		);
 		return $tables;
 	}

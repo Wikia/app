@@ -46,10 +46,10 @@ class DataMartService extends Service {
 		if (!is_array($pageviews)) {
 			$pageviews = array();
 			if (!empty($app->wg->StatsDBEnabled)) {
-				$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
+				$db = wfGetDB(DB_SLAVE, array(), $app->wg->DWStatsDB);
 
 				$result = $db->select(
-					array('rollup_wiki_pageviews'),
+					array('statsdb_mart.rollup_wiki_pageviews'),
 					array("date_format(time_id,'%Y-%m-%d') as date, pageviews as cnt"),
 					array('period_id' => $periodId,
 						'wiki_id' => $wikiId,
@@ -102,10 +102,10 @@ class DataMartService extends Service {
 		if (!is_array($pageviews)) {
 			$pageviews = array();
 			if (!empty($app->wg->StatsDBEnabled)) {
-				$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
+				$db = wfGetDB(DB_SLAVE, array(), $app->wg->DWStatsDB);
 
 				$result = $db->select(
-					array('rollup_wiki_pageviews'),
+					array('statsdb_mart.rollup_wiki_pageviews'),
 					array("wiki_id, date_format(time_id,'%Y-%m-%d') as date, pageviews as cnt"),
 					array('period_id' => $periodId,
 						'wiki_id' => $wikis,
@@ -150,11 +150,11 @@ class DataMartService extends Service {
 		if (!is_array($pageviews)) {
 			$pageviews = array();
 			if (!empty($app->wg->StatsDBEnabled)) {
-				$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
+				$db = wfGetDB(DB_SLAVE, array(), $app->wg->DWStatsDB);
 
 				foreach ($dates as $date) {
 					$row = $db->selectRow(
-						array('rollup_wiki_pageviews'),
+						array('statsdb_mart.rollup_wiki_pageviews'),
 						array("sum(pageviews) as cnt"),
 						array(
 							'period_id' => $periodId,
@@ -255,9 +255,9 @@ class DataMartService extends Service {
 			$topWikis = array();
 
 			if (!empty($app->wg->StatsDBEnabled)) {
-				$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
+				$db = wfGetDB(DB_SLAVE, array(), $app->wg->DWStatsDB);
 
-				$tables = array('report_wiki_recent_pageviews as r');
+				$tables = array('statsdb_mart.report_wiki_recent_pageviews as r');
 				$where = array();
 
 				if (!empty($langs)) {
@@ -272,7 +272,7 @@ class DataMartService extends Service {
 
 				// Default to showing all wikis
 				if (is_integer($public)) {
-					$tables[] = 'dimension_wikis AS d';
+					$tables[] = 'statsdb_mart.dimension_wikis AS d';
 					$where[] = 'r.wiki_id = d.wiki_id';
 					$where[] = "d.public = {$public}";
 				}
@@ -331,9 +331,9 @@ class DataMartService extends Service {
 
 			wfProfileIn(__CLASS__ . '::TopWikisVideoViewQuery');
 
-			$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
+			$db = wfGetDB(DB_SLAVE, array(), $app->wg->DWStatsDB);
 
-			$tables = array('rollup_wiki_video_views as r');
+			$tables = array('statsdb_mart.rollup_wiki_video_views as r');
 			$where = array('period_id = ' . $periodId,
 				"time_id > NOW() - interval $lastN day");
 
@@ -405,10 +405,10 @@ class DataMartService extends Service {
 		if (!is_array($events)) {
 			$events = array();
 			if (!empty($app->wg->StatsDBEnabled)) {
-				$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
+				$db = wfGetDB(DB_SLAVE, array(), $app->wg->DWStatsDB);
 
 				$result = $db->select(
-					array('rollup_wiki_namespace_user_events'),
+					array('statsdb_mart.rollup_wiki_namespace_user_events'),
 					array("date_format(time_id,'%Y-%m-%d') as date, sum(creates) creates, sum(edits) edits, sum(deletes) deletes, sum(undeletes) undeletes"),
 					array('period_id' => $periodId,
 						'wiki_id' => $wikiId,
@@ -479,9 +479,9 @@ class DataMartService extends Service {
 			function () use ($app, $wikiId, $userIds, $periodId, $rollupDate) {
 				$events = [];
 				if (!empty($app->wg->StatsDBEnabled)) {
-					$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
+					$db = wfGetDB(DB_SLAVE, array(), $app->wg->DWStatsDB);
 
-					$table = 'rollup_wiki_namespace_user_events';
+					$table = 'statsdb_mart.rollup_wiki_namespace_user_events';
 
 					$vars = [
 						'user_id',
@@ -601,7 +601,7 @@ class DataMartService extends Service {
 			$topArticles = array();
 
 			if ( !empty( $app->wg->StatsDBEnabled ) ) {
-				$db = wfGetDB( DB_SLAVE, array(), $app->wg->DatamartDB );
+				$db = wfGetDB( DB_SLAVE, array(), $app->wg->DWStatsDB );
 
 				$where = array(
 					//the rollup_wiki_article_pageviews contains only summarized data
@@ -631,7 +631,7 @@ class DataMartService extends Service {
 				}
 
 				$result = $db->select(
-					array( 'rollup_wiki_article_pageviews' ),
+					array( 'statsdb_mart.rollup_wiki_article_pageviews' ),
 					array(
 						'namespace_id',
 						'article_id',
@@ -662,83 +662,6 @@ class DataMartService extends Service {
 		$topArticles = array_slice( $topArticles, 0, $limit, true );
 		wfProfileOut( __METHOD__ );
 		return $topArticles;
-	}
-
-	/**
-	 * Gets the list of top wikis for tag_id and language on a monthly pageviews basis
-	 *
-	 * @param integer $tagId A valid tag_id from city_tag_map table
-	 * @param string $startDate [YYYY-MM-DD]
-	 * @param string $endDate [YYYY-MM-DD]
-	 * @param string $langCode A valid Wiki's language code
-	 * @param integer $periodId
-	 * @param integer $limit [OPTIONAL] The maximum number of items in the list, defaults to 200
-	 *
-	 * @return Array The list, the key contains Wiki ID's and "pageviews" number
-	 */
-	public static function getTopTagsWikisByPageviews ($tagId, $startDate, $endDate, $langCode = 'en', $periodId = null, $limit = 200) {
-		$app = F::app();
-
-		wfProfileIn(__METHOD__);
-
-		if (empty($endDate)) {
-			if ($periodId == self::PERIOD_ID_MONTHLY) {
-				$endDate = date('Y-m-01');
-			} else {
-				$endDate = date('Y-m-d', strtotime('-1 day'));
-			}
-
-		}
-
-		if (empty($periodId)) {
-			$periodId = self::PERIOD_ID_MONTHLY;
-		}
-
-		$memKey = wfSharedMemcKey('datamart', 'tags_top_wikis', $tagId, $periodId, $startDate, $endDate, $langCode, $limit);
-		$tagViews = $app->wg->Memc->get($memKey);
-		if (!is_array($tagViews)) {
-			$tagViews = array();
-			if (!empty($app->wg->StatsDBEnabled)) {
-				$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
-
-				$tables = array(
-					'r' => 'rollup_wiki_pageviews',
-					'c' => 'wikicities.city_tag_map',
-					'd' => 'dimension_wikis'
-				);
-				$fields = array(
-					'c.tag_id as tag_id',
-					'r.wiki_id',
-					'sum(r.pageviews) as pviews'
-				);
-				$cond = array(
-					'period_id' => $periodId,
-					'tag_id' => $tagId,
-					"time_id between '{$startDate}' AND '{$endDate}'",
-				);
-				$opts = array(
-					'GROUP BY' => 'c.tag_id, r.wiki_id',
-					'ORDER BY' => 'pviews DESC',
-					'LIMIT' => $limit
-				);
-				$join_conds = array(
-					'c' => array('INNER JOIN', array('c.city_id = r.wiki_id')),
-					'd' => array('INNER JOIN', array('d.wiki_id = r.wiki_id', 'd.public = 1', "d.lang = '{$langCode}'"))
-				);
-
-				$result = $db->select($tables, $fields, $cond, __METHOD__, $opts, $join_conds);
-
-				while ($row = $db->fetchObject($result)) {
-					$tagViews[$row->wiki_id] = $row->pviews;
-				}
-
-				$app->wg->Memc->set($memKey, $tagViews, 60 * 60 * 12);
-			}
-		}
-
-		wfProfileOut(__METHOD__);
-
-		return $tagViews;
 	}
 	
 	public static function getWAM200Wikis() {
