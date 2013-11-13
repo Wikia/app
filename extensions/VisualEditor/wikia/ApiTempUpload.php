@@ -47,6 +47,17 @@ class ApiTempUpload extends ApiBase {
 		if ( count( $duplicates ) > 0 ) {
 			$file = wfFindFile( $duplicates[0]['img_name'] );
 			$name = $file->getTitle()->getText();
+
+		} else if( $this->mParams['provider'] == 'FILE' ) { // no need to upload, local reference
+			$title = Title::newFromText( $this->mParams['desiredName'], NS_FILE );
+			$name = $title->getText();
+
+			if ( empty( $title ) ) {
+				// TODO: don't use VET message
+				$this->dieUsageMsg( wfMessage( 'vet-name-incorrect' )->plain() );
+			}
+			wfRunHooks( 'AddPremiumVideo', array( $title ) );
+
 		} else {
 			$title = VideoFileUploader::getUniqueTitle(
 				VideoFileUploader::sanitizeTitle( $this->mParams['desiredName'] )
@@ -158,6 +169,7 @@ class ApiTempUpload extends ApiBase {
 		} catch ( Exception $e ) {
 			$nonPremiumException = $e;
 		}
+
 		if ( !empty( $apiwrapper ) ) {
 			// handle supported 3rd party videos
 			$this->mUpload->initializeFromRequest( new FauxRequest(
@@ -190,7 +202,7 @@ class ApiTempUpload extends ApiBase {
 			$nsFileTranslated = $app->wg->ContLang->getNsText( NS_FILE );
 
 			// added $nsFileTransladed to fix bugId:#48874
-			$pattern = '/(File:|Video:|'.$nsFileTranslated.':)(.+)$/';
+			$pattern = '/(File:|'.$nsFileTranslated.':)(.+)$/';
 
 			if ( preg_match( $pattern, $url, $matches ) ) {
 				$file = wfFindFile( $matches[2] );
@@ -226,7 +238,7 @@ class ApiTempUpload extends ApiBase {
 			}
 
 			// define vars to pass back
-			$fileTitle = $file->getTitle();
+			$fileTitle = $file->getTitle()->getText();
 			$fileThumbUrl = $file->getUrl();
 			$fileName = $file->getTitle()->getText();
 			$fileProvider = 'FILE';
