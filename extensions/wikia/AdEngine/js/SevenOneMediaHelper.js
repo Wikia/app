@@ -148,6 +148,10 @@ var SevenOneMediaHelper = function (adLogicPageLevelParams, scriptWriter, log, w
 			javaScriptsPlaceHolder,
 			jsUrl,
 			function () {
+				if (!window.SEVENONEMEDIA_CSS) {
+					error('sevenonemedia_css');
+					return;
+				}
 				if (!window.myAd) {
 					error('my_ad_integration');
 					return;
@@ -202,6 +206,8 @@ var SevenOneMediaHelper = function (adLogicPageLevelParams, scriptWriter, log, w
 			log('injectJavaScript success', 'info', logGroup);
 			track('stage/scripts');
 
+			// Apply CSS
+			$('head').append('<style>' + window.SEVENONEMEDIA_CSS + '</style>');
 			$('#WikiaTopAds').hide();
 
 		}, function (what) {
