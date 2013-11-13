@@ -25,6 +25,7 @@ var CreatePage = {
 
 	openDialog: function(e, titleText) {
 		'use strict';
+
 		// BugId:4941
 		if (Boolean(window.WikiaEnableNewCreatepage) === false) {
 			// create page popouts are disabled - follow the link
@@ -70,7 +71,12 @@ var CreatePage = {
 							elm.click( onElementClick );
 						}
 
-						if(titleText !== null) {
+						// Titles can be numbers, let's just make them strings for simplicity
+						if( typeof titleText === 'number' ) {
+							titleText = titleText.toString();
+						}
+
+						if( titleText ) {
 							$('#wpCreatePageDialogTitle').val( decodeURIComponent( titleText ) );
 						}
 
