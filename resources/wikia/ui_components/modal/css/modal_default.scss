@@ -3,7 +3,6 @@
 @import "skins/oasis/css/mixins/transition";
 @import "skins/oasis/css/mixins/blackout";
 @import "skins/oasis/css/mixins/box-sizing-border-box";
-@import "skins/oasis/css/mixins/box-shadow";
 @import "skins/oasis/css/mixins/flexbox";
 @import "skins/oasis/css/mixins/calc";
 @import "skins/oasis/css/mixins/image-replacement";
@@ -22,11 +21,11 @@ $modal-max-height: 90%;
 $small-modal-width: 400px;
 $medium-modal-width: 700px;
 $medium-modal-width-small-screen: 500px;
-$header-and-footer-height: 45px;
+$header-and-footer-height: 60px;
+$modal-padding: 20px;
 $large-modal-margin: 50px;
 
 .modal {
-	@include box-shadow( 1px, 2px, 5px, rgba(0, 0, 0, .7) );
 	@include flexbox();
 	@include flex-direction(column);
 
@@ -45,22 +44,18 @@ $large-modal-margin: 50px;
 		@include flex-shrink(0);
 		background-color: $modal-secondary-color;
 		height: $header-and-footer-height; // flex-basis is not supported on Safari 6 so fixed height is needed
-		padding: 13px 20px 18px;
 	}
 
 	> header,
 	> section,
 	> footer {
 		@include box-sizing-border-box;
-	}
-
-	> section {
-		padding: 20px;
+		padding: $modal-padding;
 	}
 
 	> header h3 {
 		color: $color-text;
-		font-size: 17px;
+		font-size: 21px;
 		font-weight: bold;
 		margin: 0;
 		overflow: hidden;
@@ -73,12 +68,12 @@ $large-modal-margin: 50px;
 	> header .close {
 		@include image-replacement();
 		background: url( $close-image );
-		background-size: 20px 20px;
+		background-size: 24px 24px;
 		display: block;
 		float: right;
-		height: 20px;
+		height: 24px;
 		outline: none;
-		width: 20px;
+		width: 24px;
 	}
 
 	> footer .button {
@@ -101,6 +96,7 @@ $large-modal-margin: 50px;
 
 	&.small {
 		width: $small-modal-width;
+
 	}
 
 	&.medium {
@@ -109,6 +105,7 @@ $large-modal-margin: 50px;
 
 	&.small,
 	&.medium {
+
 		> section {
 			overflow: hidden;
 			overflow-y: auto;
@@ -131,6 +128,7 @@ $large-modal-margin: 50px;
 
 	.buttons {
 		bottom: 15px;
+		right: $modal-padding;
 	}
 }
 
