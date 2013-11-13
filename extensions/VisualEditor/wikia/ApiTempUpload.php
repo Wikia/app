@@ -48,21 +48,22 @@ class ApiTempUpload extends ApiBase {
 			$file = wfFindFile( $duplicates[0]['img_name'] );
 			$name = $file->getTitle()->getText();
 
-		} else if( $this->mParams['provider'] == 'FILE' ) { // no need to upload, local reference
+		} else if( $this->mParams['provider'] == 'FILE' ) {
+			// no need to upload, local reference
 			$title = Title::newFromText( $this->mParams['desiredName'], NS_FILE );
 			$name = $title->getText();
 
 			if ( empty( $title ) ) {
-				// TODO: don't use VET message
-				$this->dieUsageMsg( wfMessage( 'vet-name-incorrect' )->plain() );
+				$this->dieUsageMsg( 'This video name contains invalid characters, like #' );
 			}
 			wfRunHooks( 'AddPremiumVideo', array( $title ) );
 
 		} else {
-			$title = VideoFileUploader::getUniqueTitle(
-				VideoFileUploader::sanitizeTitle( $this->mParams['desiredName'] )
-			);
 			$uploader = new VideoFileUploader();
+
+			$title = $uploader->getUniqueTitle(
+				$uploader->sanitizeTitle( $this->mParams['desiredName'] )
+			);
 			$uploader->setProvider( $this->mParams['provider'] );
 			$uploader->setVideoId( $this->mParams['videoId'] );
 			$uploader->setTargetTitle( $title->getBaseText() );
@@ -171,7 +172,7 @@ class ApiTempUpload extends ApiBase {
 		}
 
 		if ( !empty( $apiwrapper ) ) {
-			// handle supported 3rd party videos
+			// handle supported 3rd party (non-premium) videos
 			$this->mUpload->initializeFromRequest( new FauxRequest(
 				array(
 					'wpUpload' => 1,
@@ -220,7 +221,7 @@ class ApiTempUpload extends ApiBase {
 				if ( $nonPremiumException ) {
 					// Non premium videos are not allowed on some wikis
 					if ( empty( $app->wg->allowNonPremiumVideos ) ) {
-						$this->dieUsageMsg( wfMessage( 'videohandler-non-premium' )->parse() );
+						$this->dieUsageMsg( 'This wiki does not support non-premium videos' );
 					}
 
 					if ( $nonPremiumException->getMessage() != '' ) {
@@ -228,13 +229,11 @@ class ApiTempUpload extends ApiBase {
 					}
 				}
 
-				// TODO: don't use vet message
-				$this->dieUsageMsg( wfMessage( 'vet-bad-url' )->plain() );
+				$this->dieUsageMsg( 'The supplied URL is invalid' );
 			}
 
 			if ( !$file ) {
-				// TODO: don't use vet message
-				$this->dieUsageMsg( wfMessage( 'vet-non-existing' )->plain() );
+				$this->dieUsageMsg( 'The supplied video does not exist' );
 			}
 
 			// define vars to pass back
