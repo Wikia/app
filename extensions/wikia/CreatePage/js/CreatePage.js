@@ -42,7 +42,7 @@ var CreatePage = {
 			e.preventDefault();
 		}
 
-		if( false === CreatePage.loading ) {
+		if ( false === CreatePage.loading ) {
 			CreatePage.loading = true;
 
 			$.getJSON( CreatePage.context.wgScript, {
@@ -72,11 +72,11 @@ var CreatePage = {
 						}
 
 						// Titles can be numbers, let's just make them strings for simplicity
-						if( typeof titleText === 'number' ) {
+						if ( typeof titleText === 'number' ) {
 							titleText = titleText.toString();
 						}
 
-						if( titleText ) {
+						if ( titleText ) {
 							$( '#wpCreatePageDialogTitle' ).val( decodeURIComponent( titleText ) );
 						}
 
@@ -138,9 +138,9 @@ var CreatePage = {
 			isContentNamespace = false,
 			i;
 
-		if( window.ContentNamespacesText && ( title.length > 1 ) ) {
+		if ( window.ContentNamespacesText && ( title.length > 1 ) ) {
 			for( i in window.ContentNamespacesText ) {
-				if( title[ 0 ] === window.ContentNamespacesText[ i ] ) {
+				if ( title[ 0 ] === window.ContentNamespacesText[ i ] ) {
 					isContentNamespace = true;
 				}
 			}
@@ -149,7 +149,7 @@ var CreatePage = {
 			isContentNamespace = true;
 		}
 
-		if( isContentNamespace ) {
+		if ( isContentNamespace ) {
 			CreatePage.openDialog( e, titleText );
 		}
 		else {
@@ -160,10 +160,10 @@ var CreatePage = {
 	init: function( context ) {
 		'use strict';
 		CreatePage.context = context;
-		if( window.WikiaEnableNewCreatepage ) {
+		if ( window.WikiaEnableNewCreatepage ) {
 			$().log( 'init', 'CreatePage' );
 
-			if( !window.WikiaDisableDynamicLinkCreatePagePopup ) {
+			if ( !window.WikiaDisableDynamicLinkCreatePagePopup ) {
 				$( '#dynamic-links-write-article-link, #dynamic-links-write-article-icon' ).click(function( e ) {
 					CreatePage.openDialog( e, null );
 				});
@@ -198,12 +198,12 @@ var CreatePage = {
 					preloadField;
 
 				// make sure we're inside createbox and not inputbox ( RT #40959 )
-				if( form.attr( 'class' ) === 'createboxForm' ) {
+				if ( form.attr( 'class' ) === 'createboxForm' ) {
 					prefix = form.children( 'input[name=\'prefix\']' ).val() || '';
 					field = form.children( '.createboxInput' );
 					preloadField = form.children( 'input[name=\'preload\']' );
 
-					if( ( typeof preloadField.val() === undefined ) || ( preloadField.val() === '' ) ) {
+					if ( ( typeof preloadField.val() === undefined ) || ( preloadField.val() === '' ) ) {
 						CreatePage.openDialog( e, prefix + field.val() );
 					}
 					else {
