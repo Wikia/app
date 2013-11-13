@@ -36,8 +36,8 @@ class WikiaSQL extends FluentSql\SQL {
 	 * @param array $params
 	 * @return mixed
 	 */
-	protected function injectParams($db, $preparedSql, $params) {
-		return $db->fillPrepared($preparedSql, $params);
+	public function injectParams($db, sql\Breakdown $breakDown) {
+		return $db->fillPrepared($breakDown->getSql(), $breakDown->getParameters());
 	}
 
 	public function skipSqlIf($condition) {
