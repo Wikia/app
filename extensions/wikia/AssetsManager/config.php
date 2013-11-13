@@ -72,6 +72,9 @@ $config['adengine2_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdConfig2.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.run.js',
 
+		// BackgroundChanger
+		'//skins/oasis/js/BackgroundChanger.js',
+
 		// low prio
 		// not here! @see adengine2 low prio section someplace else
 	),
@@ -208,9 +211,6 @@ $config['oasis_jquery'] = array(
 
 		// jQuery/Oasis specific code
 		'//skins/oasis/js/tables.js',
-
-		// BackgroundChanger
-		'//skins/oasis/js/BackgroundChanger.js',
 
 		// Search A/B testing
 		'//extensions/wikia/Search/js/SearchAbTest.DomUpdater.js',
