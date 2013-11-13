@@ -69,12 +69,12 @@ $large-modal-margin: 50px;
 	> header .close {
 		@include image-replacement();
 		background: url( $close-image );
-		background-size: 24px 24px;
+		background-size: 20px 20px;
 		display: block;
 		float: right;
-		height: 24px;
+		height: 20px;
 		outline: none;
-		width: 24px;
+		width: 20px;
 	}
 
 	> footer .button {
