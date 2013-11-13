@@ -190,10 +190,10 @@ class ApiTempUpload extends ApiBase {
 
 			// define vars to pass back
 			$fileTitle = $apiwrapper->getTitle();
-			$fileThumbUrl = $temporaryFile->getUrl();
-			$fileName = $temporaryFile->getName();
-			$fileProvider = $apiwrapper->getProvider();
-			$fileId = $apiwrapper->getVideoId();
+			$temporaryThumbUrl = $temporaryFile->getUrl();
+			$temporaryFileName = $temporaryFile->getName();
+			$provider = $apiwrapper->getProvider();
+			$videoId = $apiwrapper->getVideoId();
 
 		} else {
 			// handle local and premium videos by parsing url for 'File:'
@@ -238,19 +238,19 @@ class ApiTempUpload extends ApiBase {
 
 			// define vars to pass back
 			$fileTitle = $file->getTitle()->getText();
-			$fileThumbUrl = $file->getUrl();
-			$fileName = $file->getTitle()->getText();
-			$fileProvider = 'FILE';
-			$fileId = $file->getHandler()->getVideoId();
+			$temporaryThumbUrl = $file->getUrl();
+			$temporaryFileName = $file->getTitle()->getText();
+			$provider = 'FILE';
+			$videoId = $file->getHandler()->getVideoId();
 
 		}
 
 		$this->getResult()->addValue( null, $this->getModuleName(), array(
 			'title' => $fileTitle,
-			'temporaryThumbUrl' => $fileThumbUrl,
-			'temporaryFileName' => $fileName,
-			'provider' => $fileProvider,
-			'videoId' => $fileId,
+			'temporaryThumbUrl' => $temporaryThumbUrl,
+			'temporaryFileName' => $temporaryFileName,
+			'provider' => $provider,
+			'videoId' => $videoId,
 		) );
 	}
 
