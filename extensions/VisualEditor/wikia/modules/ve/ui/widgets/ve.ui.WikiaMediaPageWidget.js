@@ -33,6 +33,8 @@ ve.ui.WikiaMediaPageWidget = function VeUiWikiaMediaPageWidget( model, config ) 
 		'label': 'Remove from the cart', //TODO: i18n
 		'flags': ['destructive']
 	} );
+
+	this.editable = true;
 	this.title = new ve.ui.TextInputWidget( {
 		'$$': this.$$,
 		'readOnly': !this.editable,
@@ -52,6 +54,10 @@ ve.ui.WikiaMediaPageWidget = function VeUiWikiaMediaPageWidget( model, config ) 
 	// Events
 	this.$itemWrapper.on( 'click', ve.bind( this.onItemClick, this ) );
 	this.removeButton.connect( this, { 'click': 'onRemoveButtonClick' } );
+
+	if ( this.editable ) {
+		this.title.$input.on( 'keyup', ve.bind( this.onFilenameEdit, this ) );
+	}
 
 	// Initialization
 	this.$extension
@@ -120,6 +126,24 @@ ve.ui.WikiaMediaPageWidget.prototype.setupVideoOverlay = function () {
 	this.$itemWrapper
 		.addClass( 'wikia-video-thumbnail' )
 		.prepend( this.$overlay );
+};
+
+/**
+ * Handle modification of filename
+ *
+ * @method
+ */
+ve.ui.WikiaMediaPageWidget.prototype.onFilenameEdit = function ( e ) {
+	// get value of input prior to modification based on validation
+	var oldText = this.title.$input.val();
+
+	if ( oldText.length > 200 ) {
+		this.title.$input.val( oldText.slice( 0, 199 ) );
+		e.preventDefault();
+	}
+
+	// update ve.dm.WikiaCartItem model
+	this.getModel().setTitle( this.title.$input.val() );
 };
 
 /**

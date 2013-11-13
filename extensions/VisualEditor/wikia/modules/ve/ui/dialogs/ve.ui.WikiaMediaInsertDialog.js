@@ -338,6 +338,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.convertTemporaryToPermanent = function ( 
 			'type': 'permanent',
 			'desiredName': cartItem.title
 		};
+
 	if ( cartItem.type === 'video' ) {
 		data.provider = cartItem.provider;
 		data.videoId = cartItem.videoId;
