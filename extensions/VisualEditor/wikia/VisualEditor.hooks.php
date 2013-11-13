@@ -8,6 +8,13 @@
 
 class VisualEditorWikiaHooks {
 
+	public static function onGetPreferences( $user, &$preferences ) {
+		unset( $preferences['visualeditor-betatempdisable'] );
+		$preferences['visualeditor-enable']['label-message'] = 'visualeditor-wikiapreference-enable';
+
+		return true;
+	}
+
 	public static function onResourceLoaderTestModules( array &$testModules, ResourceLoader &$resourceLoader ) {
 		global $wgVisualEditorWikiaResourceTemplate;
 
@@ -39,10 +46,11 @@ class VisualEditorWikiaHooks {
 		return true;
 	}
 
-	public static function onGetPreferences( $user, &$preferences ) {
-		unset( $preferences['visualeditor-betatempdisable'] );
-		$preferences['visualeditor-enable']['label-message'] = 'visualeditor-wikiapreference-enable';
-
+	public static function onMakeGlobalVariablesScript( &$vars ) {
+		$licenses = new Licenses(array('fieldname' => 'ThisParamIsRequired'));
+		$vars['wgVisualEditor'] += array(
+			'mediaLicenses' => $licenses->getLicenses()
+		);
 		return true;
 	}
 }

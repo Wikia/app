@@ -9,18 +9,21 @@ $wgExtensionCredits['other'][] = array(
 
 $dir = dirname( __FILE__ ) . '/';
 
-// Register files
+/* Classes */
+
 $wgAutoloadClasses['VisualEditorWikiaHooks'] = $dir . 'VisualEditor.hooks.php';
 $wgAutoloadClasses['ApiTempUpload'] = $dir . 'ApiTempUpload.php';
 $wgAutoloadClasses['ApiMediaSearch'] = $dir . 'ApiMediaSearch.php';
 $wgAutoloadClasses['ApiPhotoAttribution'] = $dir . 'ApiPhotoAttribution.php';
 
-// Register API modules
+/* API Modules */
+
 $wgAPIModules['apitempupload'] = 'ApiTempUpload';
 $wgAPIModules['apimediasearch'] = 'ApiMediaSearch';
 $wgAPIModules['apiphotoattribution'] = 'ApiPhotoAttribution';
 
-// Register resource modules
+/* Resource Loader Modules */
+
 $wgVisualEditorWikiaResourceTemplate = array(
 	'localBasePath' => $dir . 'modules',
 	'remoteExtPath' => 'VisualEditor/wikia/modules',
@@ -127,5 +130,6 @@ $wgExtensionMessagesFiles['VisualEditorWikia'] = $dir . 'VisualEditor.i18n.php';
 
 /* Hooks */
 
-$wgHooks['ResourceLoaderTestModules'][] = 'VisualEditorWikiaHooks::onResourceLoaderTestModules';
 $wgHooks['GetPreferences'][] = 'VisualEditorWikiaHooks::onGetPreferences';
+$wgHooks['MakeGlobalVariablesScript'][] = 'VisualEditorWikiaHooks::onMakeGlobalVariablesScript';
+$wgHooks['ResourceLoaderTestModules'][] = 'VisualEditorWikiaHooks::onResourceLoaderTestModules';
