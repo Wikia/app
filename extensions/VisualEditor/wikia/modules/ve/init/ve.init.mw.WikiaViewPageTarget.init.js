@@ -227,10 +227,8 @@
 
 	// Whether VisualEditor should be available for the current user, page, wiki, mediawiki skin,
 	// browser etc.
-	init.isAvailable = (
-		support.visualEditor &&
-
-		userPrefEnabled &&
+	init.isAvailable = function ( article ) {
+		var isAvailable = false, isRedirect = false;
 
 		// Disable on redirect pages until redirects are editable (bug 47328)
 		// Property wgIsRedirect is relatively new in core, many cached pages
@@ -238,17 +236,29 @@
 		// which will cover all working redirect (the only case where one can
 		// read a redirect page without ?redirect=no is in case of broken or
 		// double redirects).
-		!mw.config.get( 'wgIsRedirect', !!uri.query.redirect ) &&
+		if ( article === mw.config.get( 'wgRelevantPageName' ) && mw.config.get( 'wgIsRedirect', !!uri.query.redirect ) ) {
+				isRedirect = true;
+		}
 
-		// Only in supported skins
-		$.inArray( mw.config.get( 'skin' ), conf.skins ) !== -1 &&
+		if (
+			support.visualEditor &&
 
-		// Only in enabled namespaces
-		$.inArray(
-			new mw.Title( mw.config.get( 'wgRelevantPageName' ) ).getNamespaceId(),
-			conf.namespaces
-		) !== -1
-	);
+			userPrefEnabled &&
+
+			// Only in supported skins
+			$.inArray( mw.config.get( 'skin' ), conf.skins ) !== -1 &&
+
+			// Only in enabled namespaces
+			$.inArray(
+				new mw.Title( article ).getNamespaceId(),
+				conf.namespaces
+			) !== -1
+		) {
+			isAvailable = true;
+		}
+
+		return ( isAvailable && !isRedirect );
+	};
 
 	// Note: Though VisualEditor itself only needs this exposure for a very small reason
 	// (namely to access init.blacklist from the unit tests...) this has become one of the nicest
@@ -262,7 +272,7 @@
 	// on this page. See above for why it may be false.
 	mw.libs.ve = init;
 
-	if ( !init.isAvailable ) {
+	if ( !init.isAvailable( mw.config.get( 'wgRelevantPageName' ) ) ) {
 		$edit = $( '#ca-edit' );
 		$( 'html' ).addClass( 've-not-available' );
 		$( '#ca-ve-edit' ).attr( 'href', $edit.attr( 'href' ) );
@@ -275,7 +285,7 @@
 		return;
 	}
 
-	if ( init.isAvailable ) {
+	if ( init.isAvailable( mw.config.get( 'wgRelevantPageName' ) ) ) {
 		$( function () {
 			if ( isViewPage ) {
 				if ( uri.query.veaction === 'edit' ) {
@@ -287,4 +297,15 @@
 			init.setupSkin();
 		} );
 	}
+
+	// Redlinks
+	$( function () {
+		$( document ).on( 'mouseover click', 'a[href*="action=edit"][href*="&redlink"]', function () {
+			var href = $( this ).attr( 'href' );
+
+			if ( href.indexOf( 'veaction' ) === -1 && init.isAvailable( new mw.Uri( href ).path.replace( '/wiki/', '' ) ) ) {
+				$( this ).attr( 'href', href.replace( 'action=edit', 'veaction=edit' ) );
+			}
+		} );
+	} );
 }() );
