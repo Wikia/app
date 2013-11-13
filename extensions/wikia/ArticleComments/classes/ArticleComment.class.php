@@ -874,21 +874,19 @@ class ArticleComment {
 		// Purge squid proxy URLs for ajax loaded content if we are lazy loading
 		if ( !empty( $wgArticleCommentsLoadOnDemand ) ) {
 			$urls = array();
-			$pages = $commentList->getCountPages();
 			$articleId = $title->getArticleId();
 
-			for ( $page = 1; $page <= $pages; $page++ ) {
-				$params[ 'page' ] = $page;
-				$urls[] = ArticleCommentsController::getUrl(
-					'Content',
-					array(
-						'format' => 'html',
-						'articleId' => $articleId,
-						'page' => $page,
-						'skin' => 'true'
-					)
-				);
-			}
+			// Only page 1 is cached in varnish when lazy loading is on
+			// Other pages load with action=ajax&rs=ArticleCommentsAjax&method=axGetComments
+			$urls[] = ArticleCommentsController::getUrl(
+				'Content',
+				array(
+					'format' => 'html',
+					'articleId' => $articleId,
+					'page' => 1,
+					'skin' => 'true'
+				)
+			);
 
 			$squidUpdate = new SquidUpdate( $urls );
 			$squidUpdate->doUpdate();
