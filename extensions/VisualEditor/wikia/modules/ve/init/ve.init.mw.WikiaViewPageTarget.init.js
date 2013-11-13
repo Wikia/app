@@ -9,7 +9,7 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
-/*global mw */
+/*global mw, wgArticlePath */
 
 /**
  * Platform preparation for the MediaWiki view page. This loads (when user needs it) the
@@ -20,7 +20,7 @@
  */
 ( function () {
 	var conf, tabMessages, uri, pageExists, viewUri, veEditUri, isViewPage,
-		init, support, getTargetDeferred, userPrefEnabled, $edit,
+		init, support, getTargetDeferred, userPrefEnabled, $edit, thisPageIsAvailable,
 		plugins = [];
 
 	/**
@@ -228,19 +228,18 @@
 	// Whether VisualEditor should be available for the current user, page, wiki, mediawiki skin,
 	// browser etc.
 	init.isAvailable = function ( article ) {
-		var isAvailable = false, isRedirect = false;
+		return (
+			// Disable on redirect pages until redirects are editable (bug 47328)
+			// Property wgIsRedirect is relatively new in core, many cached pages
+			// don't have it yet. We do a best-effort approach using the url query
+			// which will cover all working redirect (the only case where one can
+			// read a redirect page without ?redirect=no is in case of broken or
+			// double redirects).
+			!(
+				article === mw.config.get( 'wgRelevantPageName' ) &&
+				mw.config.get( 'wgIsRedirect', !!uri.query.redirect )
+			) &&
 
-		// Disable on redirect pages until redirects are editable (bug 47328)
-		// Property wgIsRedirect is relatively new in core, many cached pages
-		// don't have it yet. We do a best-effort approach using the url query
-		// which will cover all working redirect (the only case where one can
-		// read a redirect page without ?redirect=no is in case of broken or
-		// double redirects).
-		if ( article === mw.config.get( 'wgRelevantPageName' ) && mw.config.get( 'wgIsRedirect', !!uri.query.redirect ) ) {
-				isRedirect = true;
-		}
-
-		if (
 			support.visualEditor &&
 
 			userPrefEnabled &&
@@ -253,11 +252,7 @@
 				new mw.Title( article ).getNamespaceId(),
 				conf.namespaces
 			) !== -1
-		) {
-			isAvailable = true;
-		}
-
-		return ( isAvailable && !isRedirect );
+		);
 	};
 
 	// Note: Though VisualEditor itself only needs this exposure for a very small reason
@@ -272,7 +267,9 @@
 	// on this page. See above for why it may be false.
 	mw.libs.ve = init;
 
-	if ( !init.isAvailable( mw.config.get( 'wgRelevantPageName' ) ) ) {
+	thisPageIsAvailable = init.isAvailable( mw.config.get( 'wgRelevantPageName' ) );
+
+	if ( !thisPageIsAvailable ) {
 		$edit = $( '#ca-edit' );
 		$( 'html' ).addClass( 've-not-available' );
 		$( '#ca-ve-edit' ).attr( 'href', $edit.attr( 'href' ) );
@@ -285,7 +282,7 @@
 		return;
 	}
 
-	if ( init.isAvailable( mw.config.get( 'wgRelevantPageName' ) ) ) {
+	if ( thisPageIsAvailable ) {
 		$( function () {
 			if ( isViewPage ) {
 				if ( uri.query.veaction === 'edit' ) {
@@ -300,12 +297,16 @@
 
 	// Redlinks
 	$( function () {
-		$( document ).on( 'mouseover click', 'a[href*="action=edit"][href*="&redlink"]', function () {
-			var href = $( this ).attr( 'href' );
+		$( document ).on(
+			'mouseover click',
+			'a[href*="action=edit"][href*="&redlink"]:not([href*="veaction=edit"])',
+			function () {
+				var href = $( this ).attr( 'href' );
 
-			if ( href.indexOf( 'veaction' ) === -1 && init.isAvailable( new mw.Uri( href ).path.replace( '/wiki/', '' ) ) ) {
-				$( this ).attr( 'href', href.replace( 'action=edit', 'veaction=edit' ) );
+				if ( init.isAvailable( new mw.Uri( href ).path.replace( wgArticlePath.replace( '$1', '' ), '' ) ) ) {
+					$( this ).attr( 'href', href.replace( 'action=edit', 'veaction=edit' ) );
+				}
 			}
-		} );
+		);
 	} );
 }() );
