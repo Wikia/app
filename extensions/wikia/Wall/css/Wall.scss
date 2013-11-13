@@ -600,18 +600,20 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 
 #WikiaConfirm {
 	textarea.wall-action-reason {
-		width: 370px;
+		font-family: "Helvetica", "Arial", sans-serif;
+		font-size: 13px;
 		height: 70px;
 		line-height: 1.5em;
-		padding: 7px 10px;
-		font-size: 13px;
-		font-family: "Helvetica", "Arial", sans-serif;
 		margin: 3px 0;
+		padding: 7px 10px;
+		width: 95%;
 	}
+
 	#notify-admin {
 		margin-left: 0;
 		margin-right: 5px;
 	}
+
 	.modalToolbar button {
 		margin: 3px;
 	}

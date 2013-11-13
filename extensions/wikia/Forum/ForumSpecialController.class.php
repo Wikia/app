@@ -107,6 +107,35 @@ class ForumSpecialController extends WikiaSpecialPageController {
 			// skip rendering
 		}
 
+		$this->setVal('title', wfMessage( 'forum-admin-create-new-board-modal-heading' )->plain() );
+		$this->setVal('submitLabel', wfMessage('forum-admin-create-new-board-label')->plain() );
+
+		$form = array(
+			'inputs' => array(
+				array(
+					'type' => 'text',
+					'name' => 'boardTitle',
+					'isRequired' => true,
+					'label' => wfMessage('forum-admin-create-new-board-title')->plain(),
+					'attributes' => array(
+						'maxlength' => '40'
+					),
+				),
+				array(
+					'type' => 'text',
+					'name' => 'boardDescription',
+					'isRequired' => true,
+					'label' => wfMessage('forum-admin-create-new-board-description')->plain(),
+					'attributes' => array(
+						'maxlength' => '255'
+					),
+				),
+			),
+			'method' => 'post',
+			'action' => '',
+		);
+		$this->setVal( 'html', $this->app->renderView( 'WikiaStyleGuideForm', 'index', array( 'form' => $form ) ) );
+
 		wfProfileOut( __METHOD__ );
 	}
 
@@ -120,14 +149,43 @@ class ForumSpecialController extends WikiaSpecialPageController {
 			// skip rendering
 		}
 
-		$this->boardId = $this->getVal( 'boardId', -1 );
+		$boardId = $this->getVal( 'boardId', -1 );
 
-		$board = ForumBoard::newFromId( $this->boardId );
+		$board = ForumBoard::newFromId( $boardId );
+		$boardTitle = $board->getTitle()->getText();
+		$boardDescription = $board->getRawDescription();
 
-		/* backend magic here */
+		$this->setVal( 'title', wfMessage( 'forum-admin-edit-board-modal-heading', $boardTitle )->plain() );
+		$this->setVal( 'submitLabel', wfMessage( 'save' )->plain() );
 
-		$this->boardTitle = $board->getTitle()->getText();
-		$this->boardDescription = $board->getRawDescription();
+		$form = array(
+			'inputs' => array(
+				array(
+					'type' => 'text',
+					'name' => 'boardTitle',
+					'value' => htmlspecialchars( $boardTitle ),
+					'isRequired' => true,
+					'label' => wfMessage('forum-admin-edit-board-title')->plain(),
+					'attributes' => array(
+						'maxlength' => '40'
+					),
+				),
+				array(
+					'type' => 'text',
+					'name' => 'boardDescription',
+					'value' => htmlspecialchars( $boardDescription ),
+					'isRequired' => true,
+					'label' => wfMessage('forum-admin-edit-board-description')->plain(),
+					'attributes' => array(
+						'maxlength' => '255'
+					),
+				),
+			),
+			'method' => 'post',
+			'action' => '',
+		);
+
+		$this->setVal( 'html', $this->app->renderView( 'WikiaStyleGuideForm', 'index', array( 'form' => $form ) ) );
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -142,12 +200,11 @@ class ForumSpecialController extends WikiaSpecialPageController {
 			// skip rendering
 		}
 
-		$this->boardId = $this->getVal( 'boardId', -1 );
+		$boardId = $this->getVal( 'boardId', -1 );
 
-		$board = ForumBoard::newFromId( $this->boardId );
+		$board = ForumBoard::newFromId( $boardId );
+		$boardTitle = $board->getTitle()->getText();
 
-		// mock data
-		$this->boardTitle = $board->getTitle()->getText();
 
 		$forum = new Forum();
 
@@ -156,10 +213,40 @@ class ForumSpecialController extends WikiaSpecialPageController {
 		$this->destinationBoards = array( array( 'value' => '', 'content' => wfMessage( 'forum-board-destination-empty' )->escaped() ) );
 
 		foreach ( $list as $value ) {
-			if ( $this->boardId != $value['id'] ) {
+			if ( $boardId != $value['id'] ) {
 				$this->destinationBoards[] = array( 'value' => $value['id'], 'content' => htmlspecialchars( $value['name'] ) );
 			}
 		}
+
+		$this->setVal( 'title', wfMessage( 'forum-admin-delete-and-merge-board-modal-heading', $boardTitle )->plain() );
+		$this->setVal( 'submitLabel', wfMessage( 'forum-admin-delete-and-merge-button-label' )->plain() );
+
+		$form = array(
+			'inputs' => array(
+				array(
+					'type' => 'text',
+					'name' => 'boardTitle',
+					'isRequired' => true,
+					'label' => wfMessage( 'forum-admin-delete-board-title' )->plain(),
+				),
+				array(
+					'type' => 'custom',
+					'output' => wfMessage( 'forum-admin-merge-board-warning' )->plain(),
+				),
+				array(
+					'type' => 'select',
+					'name' => 'destinationBoardId',
+					'class' => 'destinationBoardId',
+					'isRequired' => true,
+					'label' => wfMessage( 'forum-admin-merge-board-destination', $boardTitle )->plain(),
+					'options' => $this->destinationBoards,
+				),
+			),
+			'method' => 'post',
+			'action' => '',
+		);
+
+		$this->setVal( 'html', $this->app->renderView( 'WikiaStyleGuideForm', 'index', array( 'form' => $form ) ) );
 
 		wfProfileOut( __METHOD__ );
 	}

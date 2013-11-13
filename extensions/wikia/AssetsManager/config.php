@@ -8,7 +8,8 @@ $config['oasis_shared_core_js'] = array(
 	'assets' => array(
 		'#group_oasis_wikia_js',
 		'//resources/wikia/libraries/sloth/sloth.js',
-		'//resources/wikia/libraries/mustache/mustache.js'
+		'//resources/wikia/libraries/mustache/mustache.js',
+		'//resources/wikia/modules/browserDetect.js',
 	),
 );
 
@@ -16,7 +17,8 @@ $config['oasis_extensions_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'#group_oasis_ads_js',
-		'#group_oasis_noads_extensions_js'
+		'#group_oasis_noads_extensions_js',
+		'#group_ui_repo_api_js',
 	)
 );
 
@@ -812,6 +814,7 @@ $config['chat_js2'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'#group_oasis_jquery',
+		'#group_ui_repo_api_js',
 
 		// shared libraries
 		'//extensions/wikia/AssetsManager/js/AssetsManager.js',
@@ -830,6 +833,7 @@ $config['chat_js2'] = array(
 		'//extensions/wikia/Chat2/js/models/models.js',
 		'//extensions/wikia/Chat2/js/controllers/controllers.js',
 		'//extensions/wikia/Chat2/js/views/views.js',
+		'//resources/wikia/modules/browserDetect.js',
 		'//extensions/wikia/Chat2/js/views/ChatBanModal.js',
 	)
 );
@@ -1435,10 +1439,6 @@ $config['ui_repo_api_js'] = array(
 		'//resources/wikia/modules/uifactory.js',
 		'//resources/wikia/libraries/mustache/mustache.js',
 		'//resources/wikia/modules/uicomponent.js',
-
-		// examples of components
-		// TODO: move it probably to modal_sample.json to load additional assets on Special:Styleguide
-		'//resources/wikia/ui_components/modal/js/modal.sample.js',
 	)
 );
 
