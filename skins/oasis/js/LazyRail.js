@@ -56,6 +56,7 @@ $(function() {
 					LightboxLoader.init();
 					LightboxLoader.loadFromURL();
 				}
+				$('#WikiaRail').zid({width: 300, selector: '.module', 'gutter': 20});
 			}
 		});
 	}
