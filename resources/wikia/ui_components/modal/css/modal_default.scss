@@ -3,6 +3,7 @@
 @import "skins/oasis/css/mixins/transition";
 @import "skins/oasis/css/mixins/blackout";
 @import "skins/oasis/css/mixins/box-sizing-border-box";
+@import "skins/oasis/css/mixins/box-shadow";
 @import "skins/oasis/css/mixins/flexbox";
 @import "skins/oasis/css/mixins/calc";
 @import "skins/oasis/css/mixins/image-replacement";
@@ -26,6 +27,7 @@ $modal-padding: 20px;
 $large-modal-margin: 50px;
 
 .modal {
+	@include box-shadow( 1px, 2px, 5px, rgba(0, 0, 0, .7) );
 	@include flexbox();
 	@include flex-direction(column);
 
