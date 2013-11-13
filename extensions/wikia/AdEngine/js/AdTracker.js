@@ -35,51 +35,51 @@ var AdTracker = function (log, tracker) {
 		return formatted;
 	}
 
-	function trackEnd(category, slotname, hopTime) {
-		log(['trackEnd', category, slotname, hopTime], 'debug', logGroup);
-
-		tracker.track({
-			eventName: 'liftium.hop2',
-			ga_category: category + '2/addriver2',
-			ga_action: 'slot ' + slotname,
-			ga_label: formatTrackTime(hopTime),
-			trackingMethod: 'ad'
-		});
-	}
-
-	function trackInit(slotname, slotsize) {
+	function trackInit(provider, slotname, slotsize) {
 		log(['trackInit', slotname, slotsize], 'debug', logGroup);
 
 		tracker.track({
 			eventName: 'liftium.slot2',
 			ga_category: 'slot2/' + slotsize.split(',')[0],
 			ga_action: slotname,
-			ga_label: 'addriver2',
+			ga_label: provider,
 			trackingMethod: 'ad'
 		});
 	}
 
-	function trackSlot(slotname, slotsize) {
+	function trackEnd(provider, category, slotname, hopTime) {
+		log(['trackEnd', category, slotname, hopTime], 'debug', logGroup);
+
+		tracker.track({
+			eventName: 'liftium.hop2',
+			ga_category: category + '2/' + provider,
+			ga_action: 'slot ' + slotname,
+			ga_label: formatTrackTime(hopTime),
+			trackingMethod: 'ad'
+		});
+	}
+
+	function trackSlot(provider, slotname, slotsize) {
 		var slotStart;
 
 		return {
 			init: function () {
 				slotStart = new Date().getTime();
-				trackInit(slotname, slotsize);
+				trackInit(provider, slotname, slotsize);
 			},
 			success: function () {
 				var slotEnd = new Date().getTime();
 				if (!slotStart) {
 					throw 'AdTracker: call init before success';
 				}
-				trackEnd('success', slotname, slotEnd - slotStart);
+				trackEnd(provider, 'success', slotname, slotEnd - slotStart);
 			},
 			hop: function () {
 				var slotEnd = new Date().getTime();
 				if (!slotStart) {
 					throw 'AdTracker: call init before hop';
 				}
-				trackEnd('hop', slotname, slotEnd - slotStart);
+				trackEnd(provider, 'hop', slotname, slotEnd - slotStart);
 			}
 		};
 	}

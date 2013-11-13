@@ -5,10 +5,11 @@
  * Liftium must call AdEngine_loadLateAds to trigger showing ads
  */
 
-/*global DartUrl, ScriptWriter, AdLogicPageLevelParams, AdLogicPageLevelParamsLegacy, SlotTweaker*/
+/*global DartUrl, ScriptWriter, AdLogicPageLevelParams, AdLogicPageLevelParamsLegacy, SlotTweaker, AdTracker*/
 /*global AdProviderNull, AdProviderLiftium2Dom, AdProviderGamePro, AdProviderSevenOneMedia, SevenOneMediaHelper*/
 /*global AdConfig2Late, Wikia, window, document, Geo, Krux, jQuery*/
-/*jslint newcap: true*/
+/*jslint newcap:true*/
+/*jshint maxparams:false, camelcase:false, maxlen: 150*/
 
 (function (log, tracker, window, document, Geo, Krux, $) {
 	'use strict';
@@ -18,6 +19,7 @@
 		adLogicPageLevelParams,
 		adLogicPageLevelParamsLegacy,
 		dartUrl,
+		adTracker,
 		slotTweaker,
 		fakeLiftium = {},
 		adProviderGamePro,
@@ -31,6 +33,7 @@
 		return window.Liftium.callInjectedIframeAd(sizeOrSlot, iframeElement, placement);
 	};
 
+	adTracker = AdTracker(log, tracker);
 	dartUrl = DartUrl();
 	scriptWriter = ScriptWriter(document, log, window);
 	adLogicPageLevelParams = AdLogicPageLevelParams(log, window, Krux); // omitted a few optional deps
@@ -41,7 +44,7 @@
 	adProviderNull = AdProviderNull(log, slotTweaker);
 
 	sevenOneMediaHelper = SevenOneMediaHelper(adLogicPageLevelParams, scriptWriter, log, window, $, tracker);
-	adProviderSevenOneMedia = AdProviderSevenOneMedia(log, window, tracker, $, sevenOneMediaHelper);
+	adProviderSevenOneMedia = AdProviderSevenOneMedia(log, window, adTracker, $, sevenOneMediaHelper);
 	adProviderGamePro = AdProviderGamePro(adLogicPageLevelParamsLegacy, scriptWriter, tracker, log, window, slotTweaker);
 	adProviderLiftium2Dom = AdProviderLiftium2Dom(tracker, log, document, slotTweaker, fakeLiftium, scriptWriter, window);
 
