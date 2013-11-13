@@ -1,6 +1,7 @@
-// TODO: move Wikia.Tracker outside
+/* exported AdProviderGpt */
+/* jshint maxparams: false, maxlen: 150 */
 
-var AdProviderGpt = function (tracker, log, window, Geo, slotTweaker, cacheStorage, adLogicHighValueCountry, wikiaGpt) {
+var AdProviderGpt = function (adTracker, log, window, Geo, slotTweaker, cacheStorage, adLogicHighValueCountry, wikiaGpt) {
 	'use strict';
 
 	var logGroup = 'AdProviderGpt',
@@ -22,7 +23,7 @@ var AdProviderGpt = function (tracker, log, window, Geo, slotTweaker, cacheStora
 	slotMap = {
 		'CORP_TOP_LEADERBOARD': {'size': '728x90,1030x130,1030x65,1030x250,970x250,970x90,970x66', 'tile': 2, 'loc': 'top', 'dcopt': 'ist'},
 		'CORP_TOP_RIGHT_BOXAD': {'size': '300x250,300x600,300x1050', 'tile': 1, 'loc': 'top'},
-		'EXIT_STITIAL_BOXAD_1': {'size': '300x250,600x400,800x450,550x480', 'tile': 2, 'loc': "exit"},
+		'EXIT_STITIAL_BOXAD_1': {'size': '300x250,600x400,800x450,550x480', 'tile': 2, 'loc': 'exit'},
 		'HOME_TOP_LEADERBOARD': {'size': '728x90,1030x130,1030x65,1030x250,970x250,970x90,970x66', 'tile': 2, 'loc': 'top', 'dcopt': 'ist'},
 		'HOME_TOP_RIGHT_BOXAD': {'size': '300x250,300x600,300x1050', 'tile': 1, 'loc': 'top'},
 		'HUB_TOP_LEADERBOARD':  {'size': '728x90,1030x130,1030x65,1030x250,970x250,970x90,970x66', 'tile': 2, 'loc': 'top', 'dcopt': 'ist'},
@@ -131,6 +132,8 @@ var AdProviderGpt = function (tracker, log, window, Geo, slotTweaker, cacheStora
 			hopTimer,
 			hopTime,
 
+			slotTracker = adTracker.trackSlot(slotname, slotsize),
+
 			// Do this when DART hops or doesn't handle
 			error = function () {
 				log(slotname + ' was not filled by DART', 2, logGroup);
@@ -142,13 +145,7 @@ var AdProviderGpt = function (tracker, log, window, Geo, slotTweaker, cacheStora
 					// Track hop time
 					hopTime = new Date().getTime() - hopTimer;
 					log('slotTimer2 end for ' + slotname + ' after ' + hopTime + ' ms (hop)', 7, logGroup);
-					tracker.track({
-						eventName: 'liftium.hop2',
-						ga_category: 'hop2/addriver2',
-						ga_action: 'slot ' + slotname,
-						ga_label: formatTrackTime(hopTime, 5),
-						trackingMethod: 'ad'
-					});
+					slotTracker.hop();
 				}
 
 				slot[2] = 'Liftium2';
@@ -166,13 +163,7 @@ var AdProviderGpt = function (tracker, log, window, Geo, slotTweaker, cacheStora
 					// Track hop time
 					hopTime = new Date().getTime() - hopTimer;
 					log('slotTimer2 end for ' + slotname + ' after ' + hopTime + ' ms (success)', 7, logGroup);
-					tracker.track({
-						eventName: 'liftium.hop2',
-						ga_category: 'success2/addriver2',
-						ga_action: 'slot ' + slotname,
-						ga_label: formatTrackTime(hopTime, 5),
-						trackingMethod: 'ad'
-					});
+					slotTracker.success();
 				}
 			};
 
@@ -216,15 +207,7 @@ var AdProviderGpt = function (tracker, log, window, Geo, slotTweaker, cacheStora
 		incrementItemInStorage(numCallForSlotStorageKey);
 		cacheStorage.del(noAdStorageKey);
 
-		tracker.track({
-			eventName: 'liftium.slot2',
-			ga_category: 'slot2/' + slotsize.split(',')[0],
-			ga_action: slotname,
-			ga_label: 'addriver2',
-			trackingMethod: 'ad'
-		});
-
-		log('Use the new GPT library for ' + slotname, 5, logGroup);
+		slotTracker.init();
 
 		wikiaGpt.pushAd(slotname, success, error);
 
