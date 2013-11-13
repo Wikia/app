@@ -77,7 +77,7 @@
 	// Construct Ad Providers
 	adProviderGpt = AdProviderGpt(adTracker, log, window, Geo, slotTweaker, Cache, adLogicHighValueCountry, wikiaFullGpt);
 	adProviderEvolve = AdProviderEvolve(adLogicPageLevelParamsLegacy, scriptWriter, tracker, log, window, document, Krux, evolveHelper, slotTweaker);
-	adProviderGamePro = AdProviderGamePro(adLogicPageLevelParamsLegacy, scriptWriter, tracker, log, window, slotTweaker);
+	adProviderGamePro = AdProviderGamePro(adLogicPageLevelParamsLegacy, scriptWriter, adTracker, log, window, slotTweaker);
 	adProviderNull = AdProviderNull(log, slotTweaker);
 
 	// Special Ad Provider, to deal with the late ads

@@ -45,7 +45,7 @@
 
 	sevenOneMediaHelper = SevenOneMediaHelper(adLogicPageLevelParams, scriptWriter, log, window, $, tracker);
 	adProviderSevenOneMedia = AdProviderSevenOneMedia(log, window, adTracker, $, sevenOneMediaHelper);
-	adProviderGamePro = AdProviderGamePro(adLogicPageLevelParamsLegacy, scriptWriter, tracker, log, window, slotTweaker);
+	adProviderGamePro = AdProviderGamePro(adLogicPageLevelParamsLegacy, scriptWriter, adTracker, log, window, slotTweaker);
 	adProviderLiftium2Dom = AdProviderLiftium2Dom(tracker, log, document, slotTweaker, fakeLiftium, scriptWriter, window);
 
 	adConfig = AdConfig2Late(
