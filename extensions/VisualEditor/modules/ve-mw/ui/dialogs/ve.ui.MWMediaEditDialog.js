@@ -46,7 +46,9 @@ ve.ui.MWMediaEditDialog.static.toolbarGroups = [
 			{ 'group': 'structure' },
 			'referenceList',
 			'wikiaMediaInsert',
-			'mediaInsert'
+			'mediaInsert',
+			'code',
+			'wikiaSourceMode'
 		]
 	}
 ];
