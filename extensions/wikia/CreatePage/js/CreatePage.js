@@ -63,7 +63,7 @@ var CreatePage = {
 							CreatePage.setPageLayout( $( this ).data( 'optionName' ) );
 						};
 
-						for( var name in CreatePage.options ){
+						for ( var name in CreatePage.options ){
 							idToken = name.charAt( 0 ).toUpperCase() + name.substring( 1 );
 							elm = $( '#CreatePageDialog' + idToken + 'Container' );
 
@@ -123,7 +123,7 @@ var CreatePage = {
 			hash,
 			hashes = url.slice( url.indexOf( '?' ) + 1 ).split( '&' );
 
-		for( i = 0; i < hashes.length; i++ ) {
+		for ( i = 0; i < hashes.length; i++ ) {
 			hash = hashes[ i ].split( '=' );
 			vars.push( hash[ 0 ] );
 			vars[ hash[ 0 ] ] = hash[ 1 ];
@@ -139,7 +139,7 @@ var CreatePage = {
 			i;
 
 		if ( window.ContentNamespacesText && ( title.length > 1 ) ) {
-			for( i in window.ContentNamespacesText ) {
+			for ( i in window.ContentNamespacesText ) {
 				if ( title[ 0 ] === window.ContentNamespacesText[ i ] ) {
 					isContentNamespace = true;
 				}
