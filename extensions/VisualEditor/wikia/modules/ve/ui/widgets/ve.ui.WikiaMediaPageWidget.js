@@ -34,7 +34,6 @@ ve.ui.WikiaMediaPageWidget = function VeUiWikiaMediaPageWidget( model, config ) 
 		'flags': ['destructive']
 	} );
 
-	this.editable = true;
 	this.title = new ve.ui.TextInputWidget( {
 		'$$': this.$$,
 		'readOnly': !this.editable,
