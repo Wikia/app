@@ -30,8 +30,7 @@
 				)
 			);
 		?>
-	</p>
-	<p>
+		<br />
 		<a href="#" class="change-email-link"><?= wfMessage('usersignup-confirm-email-change-email')->escaped() ?></a>
 	</p>
 <?
