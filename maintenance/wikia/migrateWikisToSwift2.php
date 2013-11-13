@@ -27,7 +27,7 @@ class MigrateWikisToSwift extends Maintenance {
 	const MIGRATE_PROCS = 50;
 	const SCRIPT_PROCS = 1;
 	const SCRIPT_PATH = '/var/log/runit/swift_migration';
-	CONST CMD = 'run_maintenance --ip=/usr/wikia/source/app/maintenance --conf=%s --db=%s --script "wikia/migrateImagesToSwift.php%s" --procs=%d >> %s/debug.log & ';
+	CONST CMD = 'run_maintenance --conf=%s --id=%d --script "wikia/migrateImagesToSwift.php%s" --procs=%d >> %s/debug.log & ';
 	
 	private $disabled_wikis = [ 717284, 298117 ];
 	private $db;
@@ -88,6 +88,11 @@ class MigrateWikisToSwift extends Maintenance {
 		# don't migrate top 200 Wikis
 		$top200Wikis = DataMartService::getWAM200Wikis();
 		
+		if ( count($top200Wikis) != 200 ) {
+			$this->output( "Number of Top 200 Wikis is different than 200 !\n" );
+			exit;
+		}
+		
 		# don't migrate video.wikia.com & corp.wikia.com
 		$this->disabled_wikis = array_merge( $top200Wikis, $this->disabled_wikis );
 
@@ -117,12 +122,11 @@ class MigrateWikisToSwift extends Maintenance {
 		$to_migrate = [];
 		$i = 0; $x = 0;
 		while ( $row = $res->fetchObject() ) {
-			$startTime = time();
 			$this->output( "\tAdd {$row->city_dbname} to migration package ... " );
 			if ( in_array( $row->city_id, $this->disabled_wikis ) ) {
 				$this->output( "don't migrate it now \n" );
 				continue;
-			} 
+			}
 			
 			$to_migrate[ $row->city_id ] = $row->city_dbname;
 			
@@ -138,7 +142,7 @@ class MigrateWikisToSwift extends Maintenance {
 			
 			# run main migration script written by Macbre
 			$this->output( "\tMigrate Wiki {$id}: {$dbname} ... " );
-			$cmd = sprintf( self::CMD, $this->getOption( 'conf' ), $dbname, ( $force ) ? ' --force' : '', self::SCRIPT_PROCS, $this->makePath( $dbname ) );
+			$cmd = sprintf( self::CMD, $this->getOption( 'conf' ), $id, ( $force ) ? ' --force' : '', self::SCRIPT_PROCS, $this->makePath( $dbname ) );
 			if ( $debug ) {
 				$this->output( "\n\tRun cmd: {$cmd} \n" );
 			}
@@ -150,9 +154,6 @@ class MigrateWikisToSwift extends Maintenance {
 			} else {
 				$this->output( "Done in " . Wikia::timeDuration( time() - $this->time ) . "\n" );				
 			}
-			
-			// wait a bit to prevent deadlocks (from 0 to 2 sec)
-			usleep( mt_rand(0,2000) * 1000 );
 		
 			$migrated++;
 		}

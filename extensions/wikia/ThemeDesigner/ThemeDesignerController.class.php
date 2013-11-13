@@ -4,7 +4,6 @@ class ThemeDesignerController extends WikiaController {
 	public function init() {
 		$this->backgroundImageName = null;
 		$this->backgroundImageUrl = null;
-		$this->backgroundImageAlign = null;
 		$this->backgroundImageThumb = null;
 		$this->backgroundImageWidth = null;
 		$this->backgroundImageHeight = null;
@@ -268,7 +267,6 @@ class ThemeDesignerController extends WikiaController {
 			$file = $upload->getLocalFile(); /* @var $file LocalFile */
 			$this->backgroundImageUrl = wfReplaceImageServer( $file->getUrl() );
 			$this->backgroundImageName = $file->getName();
-			$this->backgroundImageAlign = $upload->getImageAlign();
 			$this->backgroundImageHeight = $file->getHeight();
 			$this->backgroundImageWidth = $file->getWidth();
 

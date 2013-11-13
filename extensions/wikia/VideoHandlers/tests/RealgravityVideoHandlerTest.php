@@ -21,7 +21,7 @@
 			// test
 			$url = 'http://api.realgravity.com/v1/widgets/single.json?video_id=124624&player_id=733&api_key='.$this->app->wg->RealgravityApiKey;
 			$req = MWHttpRequest::factory( $url );
-			$status = $req->execute();
+			$status = VideoHandlerHelper::wrapHttpRequest( $req );
 			if( $status->isOK() ) {
 				$response = $req->getContent();
 				$response = json_decode( $response, true );

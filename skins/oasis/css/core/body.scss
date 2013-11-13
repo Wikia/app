@@ -3,7 +3,6 @@
 @import "../mixins/clearfix";
 
 body {
-	background: $color-body url($background-image) top $background-align repeat; /* $wgCdnStylePath */
 	color: $color-text;
 	font-family: Helvetica, Arial, sans-serif;
 	font-size: 12px;
@@ -17,26 +16,6 @@ body {
 
 body.global-header-fixed-at-top {
 	padding-top: 37px;
-}
-
-@if $background-tiled == false {
-	body {
-		background-repeat: no-repeat;
-	}
-}
-@if $background-fixed == true {
-	body {
-		background-attachment: fixed;
-	}
-}
-@if $oasisWidthType == 1 {
-	body {
-		min-width: $width-outside + 40;
-	}
-	// Don't apply min-width to RTE's iframed body tag
-	body#bodyContent {
-		min-width: auto;
-	}
 }
 
 a {

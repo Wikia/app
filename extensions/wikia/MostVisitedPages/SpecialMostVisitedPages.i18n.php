@@ -568,7 +568,7 @@ $messages['sv'] = array(
 	'mostvisitedpages' => 'Sidor med flest besök',
 	'mostvisitedpagessearchtext' => 'Artikelns namn:',
 	'mostvisitedpagessearchbtn' => 'sök',
-	'mostvisitedpageslatest' => 'under de senaste $1 minuterna',
+	'mostvisitedpageslatest' => 'under {{PLURAL:$1|den senaste minuten|de senaste $1 minuterna}}',
 	'mostvisitedpageslatestlink' => 'Se senast besökta sidor',
 	'mostvisitedpagesalllink' => 'Se mest besökta sidor',
 );
@@ -664,9 +664,10 @@ $messages['vi'] = array(
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Hydra
+ * @author Xiaomingyan
  */
 $messages['zh-hans'] = array(
-	'mostvisitedpages' => '浏览最多的页面',
+	'mostvisitedpages' => '最多访问页面',
 	'mostvisitedpagessearchtext' => '条目名称：',
 	'mostvisitedpagessearchbtn' => '搜寻',
 	'mostvisitedpageslatest' => '在最近$1分钟内',

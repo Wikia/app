@@ -191,8 +191,10 @@ class PhalanxService extends Service {
 		if ( $response === false ) {
 			/* service doesn't work */
 			$res = false;
+
+			wfDebug( __METHOD__ . " - response failed!\n" );
 		} else {
-			wfDebug( __METHOD__ . "::response - {$response}\n" );
+			wfDebug( __METHOD__ . " - received '{$response}'\n" );
 
 			switch ( $action ) {
 				case "stats":

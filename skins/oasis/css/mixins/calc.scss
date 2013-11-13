@@ -1,4 +1,10 @@
-@mixin width-calc($formula) {
-	width: -webkit-calc(#{$formula});
-	width: calc(#{$formula});
+@mixin calc($property, $expression) {
+	#{$property}: -moz-calc(#{$expression});
+	#{$property}: -o-calc(#{$expression});
+	#{$property}: -webkit-calc(#{$expression});
+	#{$property}: calc(#{$expression});
+}
+
+@mixin width-calc($expression) {
+	@include calc(width, #{$expression});
 }

@@ -141,6 +141,14 @@
 		.cke_toolbar_source {
 			width: $width-outside - $page-controls-wide-width - 65;
 		}
+
+		// save button
+		#wpSave {
+			position: absolute;
+			top: 0;
+			right: 15px;
+		}
+
 		.EditPageRail {
 			width: auto;
 			.module_page_controls {
@@ -186,13 +194,7 @@
 						width: 354px;
 					}
 				}
-
-					// save button
-				#wpSave {
-					position: absolute;
-					top: 0;
-					right: 15px;
-				}
+				
 				// preview button
 				.wikia-menu-button {
 					position: absolute;

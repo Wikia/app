@@ -20,7 +20,7 @@
  */
 ( function () {
 	var conf, tabMessages, uri, pageExists, viewUri, veEditUri, isViewPage,
-		init, support, getTargetDeferred, userPrefEnabled,
+		init, support, getTargetDeferred, userPrefEnabled, $edit,
 		plugins = [];
 
 	/**
@@ -163,7 +163,7 @@
 		},
 
 		setupSectionLinks: function () {
-			$( '#mw-content-text .editsection a' ).click( init.onEditSectionLinkClick );
+			$( '#mw-content-text' ).find( '.editsection a' ).click( init.onEditSectionLinkClick );
 		},
 
 		onEditTabClick: function ( e ) {
@@ -263,9 +263,10 @@
 	mw.libs.ve = init;
 
 	if ( !init.isAvailable ) {
+		$edit = $( '#ca-edit' );
 		$( 'html' ).addClass( 've-not-available' );
-		$( '#ca-ve-edit' ).attr( 'href', $( '#ca-edit' ).attr( 'href' ) );
-		$( '#ca-edit' ).parent().remove();
+		$( '#ca-ve-edit' ).attr( 'href', $edit.attr( 'href' ) );
+		$edit.parent().remove();
 	} else {
 		$( 'html' ).addClass( 've-available' );
 	}

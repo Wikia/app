@@ -39,11 +39,6 @@ class VideoInfoHelper extends WikiaModel {
 
 		$video = null;
 
-		if ( !self::videoInfoExists() ) {
-			wfProfileOut( __METHOD__ );
-			return $video;
-		}
-
 		if ( $file instanceof File && $file->exists() && WikiaFileHelper::isFileTypeVideo($file) ) {
 			if ( !($premiumOnly && $file->isLocal()) ) {
 				$fileMetadata = $file->getMetadata();
@@ -52,6 +47,7 @@ class VideoInfoHelper extends WikiaModel {
 
 				$duration = 0;
 				$hdfile = 0;
+				$videoId = '';
 				if ( $fileMetadata ) {
 					$fileMetadata = unserialize( $fileMetadata );
 					if ( array_key_exists('duration', $fileMetadata) ) {
@@ -60,11 +56,15 @@ class VideoInfoHelper extends WikiaModel {
 					if ( array_key_exists('hd', $fileMetadata) ) {
 						$hdfile = ( $fileMetadata['hd'] ) ? 1 : 0;
 					}
+					if ( array_key_exists( 'videoId', $fileMetadata ) ) {
+						$videoId = $fileMetadata['videoId'];
+					}
 				}
 
 				$premium = ( $file->isLocal() ) ? 0 : 1 ;
 				$video = array(
 					'videoTitle' => $file->getName(),
+					'videoId' => $videoId,
 					'provider' => $file->minor_mime,
 					'addedAt' => $addedAt,
 					'addedBy' => $userId,
@@ -110,15 +110,7 @@ class VideoInfoHelper extends WikiaModel {
 	 * @return array $videoList
 	 */
 	public static function getTotalViewsFromDB() {
-
 		wfProfileIn( __METHOD__ );
-
-		$videoList = array();
-
-		if ( !self::videoInfoExists() ) {
-			wfProfileOut( __METHOD__ );
-			return $videoList;
-		}
 
 		$db = wfGetDB( DB_SLAVE );
 
@@ -129,6 +121,7 @@ class VideoInfoHelper extends WikiaModel {
 			__METHOD__
 		);
 
+		$videoList = array();
 		while ( $row = $db->fetchObject($result) ) {
 			$hashTitle = md5( $row->video_title );
 			$key = substr( $hashTitle, 0, 2 );
@@ -146,10 +139,6 @@ class VideoInfoHelper extends WikiaModel {
 	 * @return boolean
 	 */
 	public function isVideoRemoved( $title ) {
-		if ( !self::videoInfoExists() ) {
-			return false;
-		}
-
 		if ( is_string($title) ) {
 			$title = Title::newFromText( $title, NS_FILE );
 		}
@@ -171,10 +160,6 @@ class VideoInfoHelper extends WikiaModel {
 	 * @return Boolean
 	 */
 	public function videoExists( $title, $premiumOnly = false ) {
-		if ( !self::videoInfoExists() ) {
-			return false;
-		}
-
 		if ( is_string($title) ) {
 			$title = Title::newFromText( $title, NS_FILE );
 		}
@@ -247,27 +232,6 @@ class VideoInfoHelper extends WikiaModel {
 		wfProfileOut( __METHOD__ );
 
 		return $affected;
-	}
-
-	/**
-	 * Check if Special Videos Ext is enabled and video_info table exists
-	 */
-	public static function videoInfoExists() {
-		global $wgVideoInfoExists;
-
-		if ( $wgVideoInfoExists !== null ) {
-			return  $wgVideoInfoExists;
-		}
-		$app = F::app();
-		$wgVideoInfoExists = false;
-		if ( !empty($app->wg->enableSpecialVideosExt) ) {
-			$db = wfGetDB( DB_SLAVE );
-			if ( $db->tableExists( 'video_info' ) ) {
-				$wgVideoInfoExists = true;
-			}
-		}
-
-		return $wgVideoInfoExists;
 	}
 
 	/**
