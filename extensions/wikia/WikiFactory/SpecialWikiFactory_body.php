@@ -65,19 +65,7 @@ class WikiFactoryPage extends SpecialPage {
 		$wgOut->setRobotpolicy( 'noindex,nofollow' );
 		$wgOut->setArticleRelated( false );
 
-		#--- handle chagelog
-		if ( $subpage === "change.log" ) {
-			$oPager = new ChangeLogPager;
-
-			$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-			$oTmpl->set_vars( array(
-				"limit"     => $oPager->getForm(),
-				"body"      => $oPager->getBody(),
-				"nav"       => $oPager->getNavigationBar()
-			));
-			$wgOut->addHTML( $oTmpl->render("changelog") );
-		}
-		elseif ( in_array( strtolower($subpage), array( "metrics", "metrics/main", "metrics/monthly", "metrics/daily" ) ) ) {
+		if ( in_array( strtolower($subpage), array( "metrics", "metrics/main", "metrics/monthly", "metrics/daily" ) ) ) {
 			$oAWCMetrics = new WikiMetrics();
 			$oAWCMetrics->show( $subpage );
 		}
