@@ -153,14 +153,6 @@ define('SuggestionsView', ['SuggestionsViewModel'], function( viewModel ) {
 			}
 		});
 		searchInput.on( 'blur', blurDropdown );
-		searchInput.on( 'keypress', function (e) {
-			if ( keyCodes.indexOf(e.keyCode) === -1 ) {
-				window.setTimeout(function() {
-					var value = searchInput.val();
-					viewModel.setQuery( value );
-				}, 0);
-			}
-		});
 		searchInput.on( 'keyup', function (e) {
 			if ( keyCodes.indexOf(e.keyCode) === -1 ) {
 				var value = searchInput.val();
