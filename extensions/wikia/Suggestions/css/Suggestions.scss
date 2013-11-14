@@ -1,0 +1,171 @@
+@import "skins/oasis/css/core/color";
+
+//prepare colors
+$color-suggestions-redirect: mix($color-page-border, #000, 50%);
+@if $is-dark-wiki {
+	$color-suggestions-redirect: mix($color-page-border, #fff, 50%);
+}
+$color-suggestions-redirect-from: mix($color-page-border, #000, 50%);
+@if $is-dark-wiki {
+	$color-suggestions-redirect-from: mix($color-page-border, #fff, 50%);
+}
+$color-suggestions-background: lighten($color-page, 5%);
+$color-suggestions-shadow-box: mix($color-page, #000, 70%);
+@if $is-dark-wiki {
+	$color-suggestions-shadow-box: mix($color-page, #000, 65%);
+}
+$color-suggestions-background-hover: lighten($color-page, 10%);
+@if ( $color-suggestions-background-hover == $color-suggestions-background ) {
+	$color-suggestions-background-hover: darken($color-page, 5%);
+}
+$color-suggestions-all-background: mix($color-page-border, #fff, 60%);
+@if $is-dark-wiki {
+	$color-suggestions-all-background: mix($color-suggestions-background, #000, 75%);
+}
+$color-suggestions-all-text: mix($color-text, #fff, 75%);
+@if $is-dark-wiki {
+	$color-suggestions-all-text: mix($color-suggestions-all-background, #fff, 70%);
+}
+$color-suggestions-match: lighten($color-buttons, 10%);
+
+//placholder images
+$suggestions-placeholder-image: url('/extensions/wikia/Suggestions/images/wiki_image_placeholder.png'); /* wgCdnStylePath */
+@if $is-dark-wiki {
+	$suggestions-placeholder-image: url('/extensions/wikia/Suggestions/images/wiki_image_placeholder_dark.png'); /* wgCdnStylePath */
+}
+
+$element-height: 50px;
+$element-width: 355px;
+$image-width: 55px;
+
+.search-suggest {
+	background-color: $color-suggestions-background;
+	border-bottom-left-radius: 2px;
+	border-bottom-right-radius: 2px;
+	box-shadow: 1px 8px 12px 0px $color-suggestions-shadow-box;
+	font-weight: bold;
+	left: -25px;
+	margin-top: 38px;
+	position: absolute;
+	width: $element-width;
+	z-index: 1;
+	a {
+		color: $color-text;
+	}
+	li {
+		border: 1px solid $color-page-border;
+		border-top: none;
+		display: block;
+		height: $element-height;
+	}
+	li:first-child {
+		border-top: 1px solid $color-page-border;
+	}
+	li:first-child:before, li:first-child:after {
+		border-bottom: 9px solid $color-page-border;
+		border-left: 9px solid transparent;
+		border-right: 9px solid transparent;
+		color: transparent;
+		content: "";
+		height: 0;
+		left: $element-width / 2 - 4.5px;
+		position: absolute;
+		top: -9px;
+		width: 0;
+	}
+	li:first-child:after {
+		border-bottom: 9px solid $color-suggestions-background;
+		border-left: 9px solid transparent;
+		border-right: 9px solid transparent;
+		left: $element-width / 2 - 4.5px;
+		top: -8px;
+	}
+	.highlight {
+		background-color: $color-suggestions-background-hover;
+	}
+	li.highlight:first-child:after {
+		border-bottom: 9px solid $color-suggestions-background-hover;
+		border-left: 9px solid transparent;
+		border-right: 9px solid transparent;
+		left: $element-width / 2 - 4.5px;
+		top: -8px;
+	}
+	.all {
+		background-color: $color-suggestions-all-background;
+		border-bottom-left-radius: 2px;
+		border-bottom-right-radius: 2px;
+		font-size: 14px;
+		height: 30px;
+		line-height: 30px;
+		text-align: center;
+		a {
+			color: $color-suggestions-all-text;
+			display: block;
+		}
+	}
+	.all.highlight {
+		background-color: $color-buttons;
+		a {
+			color: $color-button-text;
+			cursor: pointer;
+			text-decoration: none;
+		}
+	}
+	.block {
+		bottom: 0;
+		height: 70%;
+		margin: auto;
+		position: absolute;
+		top: 0;
+	}
+	.match {
+		color: $color-suggestions-match;
+	}
+	.redirect {
+		color: $color-suggestions-redirect;
+		display: block;
+		float: left;
+		font-size: 12px;
+		height: 15px;
+		margin-top: 2px;
+		overflow: hidden;
+		width: 295px;
+	}
+	.redirect-from {
+		color: $color-suggestions-redirect-from;
+		font-weight: normal;
+	}
+	.search-suggest-image {
+		display: none;
+		height: 40px;
+		width: 40px;
+	}
+	.search-suggest-img-wrapper {
+		background-image: $suggestions-placeholder-image;
+		background-size: 40px 40px;
+		height: 40px;
+		margin: 5px;
+		margin-right: 10px;
+		position: absolute;
+		width: 40px;
+	}
+	.title {
+		display: block;
+		float: left;
+		font-size: 14px;
+		height: 34px;
+		line-height: 17px;
+		overflow: hidden;
+		width: 295px;
+	}
+	.titleShort {
+		height: 16px;
+	}
+	.wraper {
+		float: right;
+		height: $element-height;
+		padding-left: 55px;
+		position: relative;
+		width: $element-width - $image-width - 2px;
+	}
+}

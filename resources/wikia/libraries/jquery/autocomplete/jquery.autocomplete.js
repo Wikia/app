@@ -12,7 +12,12 @@
 
   $.fn.autocomplete = function(options) {
     return this.each(function() {
-      return new Autocomplete(this, options);
+      /* Wikia changes - reach autocomplete instance */
+      if(!window.Wikia.autocomplete) {
+        window.Wikia.autocomplete = {};
+      }
+      window.Wikia.autocomplete[this.name] = new Autocomplete(this, options);
+      return window.Wikia.autocomplete[this.name];
     });
   };
 
@@ -40,6 +45,8 @@
     this.ignoreValueChange = false;
     this.serviceUrl = options.serviceUrl;
     this.isLocal = false;
+    /* Wikia changes */
+    this.inUse = true;
     this.options = {
       autoSubmit: false,
       minChars: 1,
@@ -146,7 +153,8 @@
     },
 
     onKeyPress: function(e) {
-      if (!this.enabled) { return; }
+      /* Wikia changes */
+      if (!this.enabled || !this.inUse) { return; }
       // return will exit the function
       // and event will not fire
       switch (e.keyCode) {
@@ -160,7 +168,7 @@
             this.hide();
             return;
           }
-            //Wikia: fire event when enter was pressed on suggestion
+          //Wikia: fire event when enter was pressed on suggestion
           this.el.trigger('suggestEnter');
           this.select(this.selectedIndex, /*wikia change*/ e /*end*/);
           if (e.keyCode === 9/* Event.KEY_TAB */) { return; }
@@ -179,6 +187,8 @@
     },
 
     onKeyUp: function(e) {
+      /* Wikia changes */
+      if (!this.inUse) { return; }
       switch (e.keyCode) {
         case 38: //Event.KEY_UP:
         case 40: //Event.KEY_DOWN:
@@ -236,6 +246,8 @@
     },
 
     getSuggestions: function(q) {
+      /* Wikia changes */
+      if (!this.inUse) { return; }
       var cr, me, ls;
       cr = this.isLocal ? this.getSuggestionsLocal(q) : this.cachedResponse[q];
       if (cr && $.isArray(cr.suggestions)) {
@@ -245,10 +257,10 @@
       } else if (!this.isBadQuery(q)) {
         me = this;
 
-		/* Wikia change - allow custom param name */
-		//me.options.params.query = q;
-		var requestParams = me.options.params;
-		requestParams[me.options.queryParamName] = q;
+    /* Wikia change - allow custom param name */
+    //me.options.params.query = q;
+    var requestParams = me.options.params;
+    requestParams[me.options.queryParamName] = q;
         $.get(this.serviceUrl, requestParams, function(txt) { me.processResponse(txt); }, 'text');
       }
     },
@@ -266,8 +278,8 @@
       this.selectedIndex = -1;
       this.container.hide();
 
-	  // Wikia: fire event when suggestions are shown
-	  this.el.trigger('suggestHide');
+    // Wikia: fire event when suggestions are shown
+    this.el.trigger('suggestHide');
     },
 
     suggest: function() {
@@ -284,11 +296,11 @@
       this.container.hide().empty();
       
       for (var i = 0; i < len; i++) {
-      	// wikia change - start
-      	suggestion = this.suggestions[i];
+        // wikia change - start
+        suggestion = this.suggestions[i];
         div = $((me.selectedIndex === i ? '<div class="' + this.options.selectedClass + '"' : '<div')
-        	+ ' title="' + suggestion + '">' + f(suggestion, this.data[i], v)
-        	+ '</div>');
+          + ' title="' + suggestion + '">' + f(suggestion, this.data[i], v)
+          + '</div>');
         // wikia change - end
         div.mouseover((function(xi) { return function() { me.activate(xi); }; })(i));
         // wikia change - start
@@ -300,8 +312,8 @@
       this.enabled = true;
       this.container.show();
 
-	  // Wikia: fire event when suggestions are shown
-	  this.el.trigger('suggestShow');
+    // Wikia: fire event when suggestions are shown
+    this.el.trigger('suggestShow');
     },
 
     processResponse: function(text) {
@@ -310,10 +322,10 @@
         response = eval('(' + text + ')');
       } catch (err) { return; }
 
-	  /* Wikia change - allow function to preprocess result data into a format this plugin understands*/
-	  if(this.options.fnPreprocessResults != null){
-		response = this.options.fnPreprocessResults(response);
-	  }
+    /* Wikia change - allow function to preprocess result data into a format this plugin understands*/
+    if(this.options.fnPreprocessResults != null){
+    response = this.options.fnPreprocessResults(response);
+    }
 
       if (!$.isArray(response.data)) { response.data = []; }
       this.suggestions = response.suggestions;
@@ -355,7 +367,7 @@
         this.ignoreValueChange = true;
         // wikia change - start
         if (this.onSelect(i, e) !== false) {
-	        this.hide();
+          this.hide();
         }
         // wikia change - end
       }
