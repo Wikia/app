@@ -9,7 +9,7 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
-/*global mw, wgArticlePath */
+/*global mw */
 
 /**
  * Platform preparation for the MediaWiki view page. This loads (when user needs it) the
@@ -301,9 +301,11 @@
 			'mouseover click',
 			'a[href*="action=edit"][href*="&redlink"]:not([href*="veaction=edit"])',
 			function () {
-				var href = $( this ).attr( 'href' );
+				var href = $( this ).attr( 'href' ),
+					articlePath = mw.config.get( 'wgArticlePath' ).replace( '$1', '' ),
+					redlinkArticle = new mw.Uri( href ).path.replace( articlePath, '' );
 
-				if ( init.isAvailable( new mw.Uri( href ).path.replace( wgArticlePath.replace( '$1', '' ), '' ) ) ) {
+				if ( init.isAvailable( redlinkArticle ) ) {
 					$( this ).attr( 'href', href.replace( 'action=edit', 'veaction=edit' ) );
 				}
 			}
