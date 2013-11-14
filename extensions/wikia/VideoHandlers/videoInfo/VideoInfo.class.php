@@ -300,7 +300,7 @@ class VideoInfo extends WikiaModel {
 					KEY `added_at` (`added_at`, `duration`),
 					KEY `premium` (`premium`, `added_at`),
 					KEY `hdfile` (`hdfile`, `added_at`),
-					KEY `featured` (`featured`, `added_at`)
+					KEY `featured` (`featured`, `added_at`),
 					KEY `provider` (`provider`,`added_at`),
 					KEY `video_id` (`video_id`,`provider`)
 				) ENGINE=InnoDB DEFAULT CHARSET=latin1;

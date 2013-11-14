@@ -952,10 +952,10 @@ class SwiftFileBackend extends FileBackendStore {
 	 *
 	 * @param $e Exception
 	 * @param $func string
-	 * @param $params Array
+	 * @param $params mixed
 	 * @return void
 	 */
-	protected function logException( Exception $e, $func, array $params ) {
+	protected function logException( Exception $e, $func, $params ) {
 		// Wikia change - begin
 		if ( $e instanceof InvalidResponseException ) { // possibly a stale token
 			$this->closeConnection(); // force a re-connect and re-auth next time

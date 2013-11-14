@@ -58,12 +58,13 @@
 	}
 }
 
-.EditBoardModal {
+#EditBoardModal {
 	.WikiaForm {
-		margin: 0 auto;
-		width: 582px;
+		.input-group {
+			width: 100%;
+		}
 		input[type=text] {
-			width: 550px;
+			width: 90%;
 		}
 	}
 }

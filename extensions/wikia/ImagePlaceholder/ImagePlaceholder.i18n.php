@@ -426,9 +426,11 @@ $messages['nn'] = array(
  */
 $messages['oc'] = array(
 	'imgplc-add-image' => 'Apondre un imatge',
+	'imgplc-add-video' => 'Apondre una vidèo',
 	'imgplc-placeholder' => 'Posicionador',
 	'imgplc-image' => 'Imatge',
 	'imgplc-notinhistory' => "Podètz pas apondre cap d'imatge en mòde istoric.",
+	'imgplc-notinhistory-video' => 'Podètz pas apondre cap de vidèo en mòde istoric.',
 );
 
 /** Polish (polski)

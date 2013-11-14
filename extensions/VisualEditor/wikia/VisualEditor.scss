@@ -6,21 +6,21 @@
 @import "skins/oasis/css/core/layout";
 
 // VE Mixins
-@import "extensions/VisualEditor/wikia/modules/ve/ui/styles/mixins/ve-icon";
+@import "modules/ve/ui/styles/mixins/ve-icon";
 
 // Wikia VE Imports
-@import "extensions/VisualEditor/wikia/modules/ve/ui/styles/color";
-@import "extensions/VisualEditor/wikia/modules/ve/ui/styles/ve.ui.Icons-vector";
-@import "extensions/VisualEditor/wikia/modules/ve/ui/styles/ve.ui.Surface";
-@import "extensions/VisualEditor/wikia/modules/ve/ui/styles/ve.ui.Dialog";
-@import "extensions/VisualEditor/wikia/modules/ve/ui/styles/ve.ui.Frame";
-@import "extensions/VisualEditor/wikia/modules/ve/ui/styles/ve.ui.Tool";
-@import "extensions/VisualEditor/wikia/modules/ve/ui/styles/ve.ui.ToolGroup";
-@import "extensions/VisualEditor/wikia/modules/ve/ui/styles/ve.ui.WikiaMediaInsertDialog";
-@import "extensions/VisualEditor/wikia/modules/ve/ui/styles/ve.ui.WikiaSourceModeDialog";
-@import "extensions/VisualEditor/wikia/modules/ve/ui/styles/ve.ui.Toolbar";
-@import "extensions/VisualEditor/wikia/modules/ve/ui/styles/ve.ui.Context";
-@import "extensions/VisualEditor/wikia/modules/ve/ui/styles/ve.ui.Widget";
+@import "modules/ve/ui/styles/color";
+@import "modules/ve/ui/styles/ve.ui.Icons-vector";
+@import "modules/ve/ui/styles/ve.ui.Surface";
+@import "modules/ve/ui/styles/ve.ui.Dialog";
+@import "modules/ve/ui/styles/ve.ui.Frame";
+@import "modules/ve/ui/styles/ve.ui.Tool";
+@import "modules/ve/ui/styles/ve.ui.ToolGroup";
+@import "modules/ve/ui/styles/ve.ui.WikiaMediaInsertDialog";
+@import "modules/ve/ui/styles/ve.ui.WikiaSourceModeDialog";
+@import "modules/ve/ui/styles/ve.ui.Toolbar";
+@import "modules/ve/ui/styles/ve.ui.Context";
+@import "modules/ve/ui/styles/ve.ui.Widget";
 
 /*
  * Fixes background colors in inspectors and dialogs

@@ -853,6 +853,15 @@ $messages['nb'] = array(
 	'tog-disablecategoryselect-v2' => 'Deaktiver kategorimodulen (gjelder kun dersom redigering i visuell modus er deaktivert)',
 );
 
+/** Nepali (नेपाली)
+ * @author सरोज कुमार ढकाल
+ */
+$messages['ne'] = array(
+	'categoryselect-button-cancel' => 'रद्द',
+	'categoryselect-button-save' => 'संग्रह गर्ने',
+	'categoryselect-error-db-locked' => 'डेटाबेस बन्द गरिएको छ',
+);
+
 /** Dutch (Nederlands)
  * @author McDutchie
  * @author SPQRobin
