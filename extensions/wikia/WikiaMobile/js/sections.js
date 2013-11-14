@@ -3,10 +3,9 @@
  * module used to handle sections on wikiamobile
  *
  * @author Jakub Olek
- * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
  */
 
-define('sections', ['jquery'], function($){
+define('sections', ['jquery', 'wikia.window'], function($, window){
 	'use strict';
 
 	var d = document,
@@ -15,7 +14,16 @@ define('sections', ['jquery'], function($){
 		lastSection;
 
 	function scrollTo(header){
-		header[0].scrollIntoView();
+		//() and . have to be escaped before passed to querySelector
+		var h = document.getElementById(header.replace(/[()\.]/g, '\\$&') ),
+			ret;
+
+		if ( h ) {
+			h.scrollIntoView();
+			ret = true;
+		}
+
+		return ret;
 	}
 
 	function current(){

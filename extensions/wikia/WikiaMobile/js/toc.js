@@ -78,8 +78,7 @@ require(['sections', 'wikia.window', 'jquery', 'wikia.mustache', 'wikia.toc'],
 			event.stopPropagation();
 			event.preventDefault();
 
-			//() and . have to be escaped before passed to querySelector
-			sections.scrollTo($($a.attr('href').replace(/[()\.]/g, '\\$&')));
+			sections.scrollTo($a.attr('href').slice(1));
 
 			toggleLi($li);
 		});
@@ -87,7 +86,7 @@ require(['sections', 'wikia.window', 'jquery', 'wikia.mustache', 'wikia.toc'],
 	function onSectionChange(event, data, scrollTo){
 		$anchors.filter('.current').removeClass('current');
 
-		if(data && data.id) {
+		if ( data && data.id ) {
 			var $current = $anchors
 					.filter('a[href="#' + data.id + '"]')
 					.addClass('current'),
