@@ -1,13 +1,14 @@
-// TODO: remove Wikia.Tracker dependency
-var AdProviderLiftium2Dom = function (tracker, log, document, slotTweaker, Liftium, scriptWriter, window) {
+/*exported AdProviderLiftium2Dom*/
+/*jshint maxparams:false*/
+
+var AdProviderLiftium2Dom = function (log, document, slotTweaker, Liftium, scriptWriter, window) {
 	'use strict';
 
-	var logGroup = 'AdProviderLiftium2'
-		, adNum = 200 // TODO global-ize it (move to Liftium?)!
-		, slotMap
-		, canHandleSlot
-		, fillInSlot
-	;
+	var logGroup = 'AdProviderLiftium2',
+		adNum = 200, // TODO global-ize it (move to Liftium?)!
+		slotMap,
+		canHandleSlot,
+		fillInSlot;
 
 	slotMap = {
 		'EXIT_STITIAL_BOXAD_1': {'size':'300x250'},
@@ -70,23 +71,13 @@ var AdProviderLiftium2Dom = function (tracker, log, document, slotTweaker, Lifti
 			return;
 		}
 
-		var slotname = slot[0]
-			, slotsize = slotMap[slotname].size
-			, useGw = slotMap[slotname].useGw
-			, adDiv = document.createElement("div")
-			, adIframe = document.createElement("iframe")
-			, s = slotsize && slotsize.split('x')
-			, script
-		;
-
-		// not needed, liftium got its own tracking (but pls keep it for reference)
-		//tracker.track({
-		//	eventName: 'liftium.slot2',
-		//	ga_category: 'slot2/' + slotsize.replace(/,.*$/, ''),
-		//	ga_action: slotname,
-		//	ga_label: 'liftium2',
-		//	trackingMethod: 'ad'
-		//});
+		var slotname = slot[0],
+			slotsize = slotMap[slotname].size,
+			useGw = slotMap[slotname].useGw,
+			adDiv = document.createElement('div'),
+			adIframe = document.createElement('iframe'),
+			s = slotsize && slotsize.split('x'),
+			script;
 
 		if (useGw) {
 			log('using ghostwriter for #' + slotname, 6, logGroup);
@@ -100,7 +91,7 @@ var AdProviderLiftium2Dom = function (tracker, log, document, slotTweaker, Lifti
 
 			adIframe.width = s[0];
 			adIframe.height = s[1];
-			adIframe.scrolling = "no";
+			adIframe.scrolling = 'no';
 			adIframe.frameBorder = 0;
 			adIframe.marginHeight = 0;
 			adIframe.marginWidth = 0;
@@ -118,8 +109,8 @@ var AdProviderLiftium2Dom = function (tracker, log, document, slotTweaker, Lifti
 	};
 
 	return {
-		name: 'Liftium2Dom'
-		, canHandleSlot: canHandleSlot
-		, fillInSlot: fillInSlot
+		name: 'Liftium2Dom',
+		canHandleSlot: canHandleSlot,
+		fillInSlot: fillInSlot
 	};
 };
