@@ -359,7 +359,7 @@ class VideoHandlerHelper extends WikiaModel {
 		}
 
 		// See if the thumbnail exists for this title
-		if ( file_exists($file->getLocalRefPath()) && !$reupload ) {
+		if ( file_exists( $file->getLocalRefPath() ) && !$reupload ) {
 			return Status::newGood( ['check' => 'ok'] );
 		} else {
 			// Determine if we should fix this problem or leave it be

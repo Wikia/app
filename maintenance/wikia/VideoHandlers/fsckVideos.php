@@ -59,7 +59,11 @@ class FSCKVideos extends Maintenance {
 
 		$startTime = time();
 
-		$videos = $this->getVideos();
+		if ( $this->reupload ) {
+			$videos = $this->getVideos();
+		} else {
+			$videos = VideoInfoHelper::getLocalVideoTitles();
+		}
 		$this->debug("Found ".count($videos)." video(s)\n");
 
 		$fix = $this->test ? false : true;
@@ -122,13 +126,9 @@ class FSCKVideos extends Maintenance {
 			$sqlWhere[] = "img_timestamp <= '{$db->timestamp( $this->endDate )}'";
 		}
 
-		if ( $this->reupload ) {
-			// size and hash from LegacyVideoApiWrapper::$THUMBNAIL_URL
-			$sqlWhere['img_size'] = 66162;
-			$sqlWhere['img_sha1'] = 'm03a6fnvxhk8oj5kgnt11t6j7phj5nh';
-		} else {
-			$sqlWhere['img_size'] = 0;
-		}
+		// size and hash from LegacyVideoApiWrapper::$THUMBNAIL_URL
+		$sqlWhere['img_size'] = 66162;
+		$sqlWhere['img_sha1'] = 'm03a6fnvxhk8oj5kgnt11t6j7phj5nh';
 
 		$result = $db->select(
 			array( 'image' ),
