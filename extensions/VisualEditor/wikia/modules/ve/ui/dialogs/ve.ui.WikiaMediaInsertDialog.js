@@ -344,6 +344,9 @@ ve.ui.WikiaMediaInsertDialog.prototype.convertTemporaryToPermanent = function ( 
 			'type': 'permanent',
 			'desiredName': cartItem.title
 		};
+	if ( cartItem.license ) {
+		data.license = cartItem.license;
+	}
 	if ( cartItem.type === 'video' ) {
 		data.provider = cartItem.provider;
 		data.videoId = cartItem.videoId;
