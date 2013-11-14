@@ -47,10 +47,9 @@ var AdProviderGamePro = function(adLogicPageLevelParamsLegacy, ScriptWriter, adT
 		log('fillInSlot', 5, 'AdProviderGamePro');
 		log(slot, 5, 'AdProviderGamePro');
 
-		var slotname = slot[0],
-			slotsize = slot[1] || slotMap[slotname].size;
+		var slotname = slot[0];
 
-		adTracker.trackSlot('gamepro', slotname, slotsize);
+		adTracker.trackSlot('gamepro', slotname).init();
 
 		ScriptWriter.injectScriptByUrl(slotname, getUrl(slotname), function () {
 			slotTweaker.removeTopButtonIfNeeded(slotname);

@@ -16,12 +16,6 @@ var AdProviderSevenOneMedia = function (log, window, adTracker, $, sevenOneMedia
 			HUB_TOP_LEADERBOARD: 'topAds',
 
 			SEVENONEMEDIA_FLUSH: 'trackEnd'
-		},
-		trackedSize = {
-			rectangle1: '300x250',
-			promo1: '300x250',
-			topAds: '728x90',
-			trackEnd: '1x1'
 		};
 
 	function canHandleSlot(slot) {
@@ -74,9 +68,8 @@ var AdProviderSevenOneMedia = function (log, window, adTracker, $, sevenOneMedia
 
 		var slotname = slot[0],
 			slotDeName = slotMap[slotname],
-			slotsize = slotDeName && trackedSize[slotDeName],
 			$slot,
-			slotTracker = adTracker.trackSlot('sevenonemedia', slotname, slotsize);
+			slotTracker = adTracker.trackSlot('sevenonemedia', slotname);
 
 		function clearDefaultHeight() {
 			$('#' + slotname).removeClass('default-height');

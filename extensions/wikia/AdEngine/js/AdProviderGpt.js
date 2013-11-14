@@ -132,7 +132,7 @@ var AdProviderGpt = function (adTracker, log, window, Geo, slotTweaker, cacheSto
 			hopTimer,
 			hopTime,
 
-			slotTracker = adTracker.trackSlot('addriver2', slotname, slotsize),
+			slotTracker = adTracker.trackSlot('addriver2', slotname),
 
 			// Do this when DART hops or doesn't handle
 			error = function () {

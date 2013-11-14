@@ -5,7 +5,34 @@ var AdTracker = function (log, tracker) {
 	'use strict';
 
 	var logGroup = 'AdTracker',
-		maxTrackedTime = 5;
+		maxTrackedTime = 5,
+		trackedSize = {
+			CORP_TOP_LEADERBOARD: '728x90',
+			CORP_TOP_RIGHT_BOXAD: '300x250',
+			EXIT_STITIAL_BOXAD_1: '300x250',
+			HOME_TOP_LEADERBOARD: '728x90',
+			HOME_TOP_RIGHT_BOXAD: '300x250',
+			HUB_TOP_LEADERBOARD:  '728x90',
+			INCONTENT_BOXAD_1:    '300x250',
+			INVISIBLE_1:          '0x0',
+			INVISIBLE_2:          '0x0',
+			INVISIBLE_SKIN:       '1x1',
+			LEFT_SKYSCRAPER_2:    '160x600',
+			LEFT_SKYSCRAPER_3:    '160x600',
+			MODAL_INTERSTITIAL:   '300x250',
+			MODAL_INTERSTITIAL_1: '300x250',
+			MODAL_INTERSTITIAL_2: '300x250',
+			MODAL_INTERSTITIAL_3: '300x250',
+			MODAL_INTERSTITIAL_4: '300x250',
+			MODAL_RECTANGLE:      '300x100',
+			PREFOOTER_LEFT_BOXAD: '300x250',
+			PREFOOTER_RIGHT_BOXAD:'300x250',
+			SEVENONEMEDIA_FLUSH:  '0x0',
+			TOP_BUTTON_WIDE:      '292x90',
+			TOP_LEADERBOARD:      '728x90',
+			TOP_RIGHT_BOXAD:      '300x250',
+			WIKIA_BAR_BOXAD_1:    '300x50'
+		};
 
 	function formatTrackTime(t) {
 		var formatted;
@@ -59,8 +86,9 @@ var AdTracker = function (log, tracker) {
 		});
 	}
 
-	function trackSlot(provider, slotname, slotsize) {
-		var slotStart;
+	function trackSlot(provider, slotname) {
+		var slotStart,
+			slotsize = trackedSize[slotname] || 'unknown';
 
 		return {
 			init: function () {

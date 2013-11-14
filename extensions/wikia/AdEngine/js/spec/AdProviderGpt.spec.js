@@ -1,8 +1,9 @@
 describe('AdProviderGpt', function(){
+	var adTrackerMock = {trackSlot: function() { return {init: function () {}, success: function () {}, hop: function () {}}}};
+
 	it('Leaderboard works as expected in low value countries', function() {
 		var dartCalled,
 			liftiumCalled,
-			trackerMock = {track: function() {}},
 			logMock = function() {},
 			windowMock = {adslots2: {push: function() {
 				liftiumCalled = true;
@@ -25,7 +26,7 @@ describe('AdProviderGpt', function(){
 		adLogicHighValueCountryMock.getMaxCallsToDART = function() {return 0;};
 
 		adProviderGpt = AdProviderGpt(
-			trackerMock,
+			adTrackerMock,
 			logMock,
 			windowMock,
 			geoMock,
@@ -44,7 +45,6 @@ describe('AdProviderGpt', function(){
 	it('Leaderboard works as expected in high value countries', function() {
 		var dartCalled,
 			liftiumCalled,
-			trackerMock = {track: function() {}},
 			logMock = function() {},
 			windowMock = {adslots2: {push: function() {
 				liftiumCalled = true;
@@ -65,7 +65,7 @@ describe('AdProviderGpt', function(){
 		adLogicHighValueCountryMock.getMaxCallsToDART = function() {return 7;};
 
 		adProviderAdDriver2 = AdProviderGpt(
-			trackerMock,
+			adTrackerMock,
 			logMock,
 			windowMock,
 			geoMock,
