@@ -70,7 +70,7 @@ $messages['en'] = array(
 	'cnw-welcome-instruction2' => 'You\'ll see this button throughout your wiki, use it any time you want to add a new page.',
 	'cnw-welcome-help' => 'Find answers, advice, and more on <a href="http://community.wikia.com">Community Central</a>.',
 	// error messages
-	'cnw-error-general' => 'Oops, something went wrong on our side!  Please try again, or <a href="/Special:Contact">contact us</a> for help.',
+	'cnw-error-general' => 'Oops, something went wrong on our side!  Please try again, or [[Special:Contact|contact us]] for help.',
 	'cnw-error-general-heading' => 'Our apologies',
 	'cnw-badword-header' => 'Whoa there',
 	'cnw-badword-msg' => 'Hi, please refrain from using these bad words or banned words in your Wiki Description: $1',
@@ -191,6 +191,7 @@ $messages['af'] = array(
 
 /** Arabic (العربية)
  * @author Achraf94
+ * @author Claw eg
  * @author Kuwaity26
  * @author Meno25
  * @author OsamaK
@@ -238,6 +239,7 @@ $messages['ar'] = array(
 	'cnw-desc-choose' => 'إختيار فئة',
 	'cnw-desc-select-one' => 'إختر واحدة',
 	'cnw-desc-all-ages' => 'جميع الأعمار',
+	'cnw-desc-tip-all-ages' => 'هل هذه الويكي عن موضوع للأطفال؟ لأجل مساعدتنا للامتثال للقانون الأمريكي، نستمر بمتابعة الويكي التي تناسب مواضيعها مباشرة الأطفال بسن 12 أو أقل.',
 	'cnw-desc-default-lang' => 'سوف تكون هذه الويكي باللغة $1',
 	'cnw-desc-change-lang' => 'تغيير',
 	'cnw-desc-lang' => 'اللغة',
@@ -249,7 +251,7 @@ $messages['ar'] = array(
 	'cnw-welcome-instruction1' => 'انقر الزر أدناه لبدء إضافة صفحات في الويكي الخاص بك.',
 	'cnw-welcome-instruction2' => 'سوف ترى هذا الزر في جميع أنحاء الويكي الخاصة بك، استخدمه في أي وقت تريد أن تضيف صفحة جديدة.',
 	'cnw-welcome-help' => 'إبحث عن إجابات و نصائح و معلومات أكثر في  <a href="http://ar.wikia.com"> مركز ويكيا</a>.',
-	'cnw-error-general' => 'عفوا! حدث خطأ من جهتنا! الرجاء المحاولة مرة أخرى أو <a href="/Special:Contact">الاتصال بنا</a> للحصول على المساعدة.',
+	'cnw-error-general' => 'عفوا! حدث خطأ من جهتنا! الرجاء المحاولة مرة أخرى أو [[Special:Contact|الاتصال بنا]] للحصول على المساعدة.',
 	'cnw-error-general-heading' => 'نحن نعتذر',
 	'cnw-badword-header' => 'قف هناك',
 	'cnw-badword-msg' => 'مرحبا، يرجى عدم استعمال الكلمات السيئة والعبارات المحظورة هذه في وصف الويكي: $1',
@@ -532,7 +534,7 @@ $messages['ca'] = array(
 	'cnw-welcome-instruction1' => 'Fes clic al botó de sota per començar a afegir pàgines al teu wiki.',
 	'cnw-welcome-instruction2' => "Veuràs aquest botó al llarg del teu wiki. Utilitza'l en qualsevol moment quan vulguis afegir una nova pàgina.",
 	'cnw-welcome-help' => 'Troba respostes, assessorament i més informació a <a href="http://ca.wikia.com">Comunitat Central</a>.',
-	'cnw-error-general' => 'Ui! Alguna cosa ha sortit malament al nostre sistema!  Si us plau, torna-ho a provar un altre cop o <a href="/Special:Contact">contacta amb nosaltres</a> per obtenir ajuda.',
+	'cnw-error-general' => 'Ui! Alguna cosa ha sortit malament al nostre sistema!  Si us plau, torna-ho a provar un altre cop o [[Special:Contact|contacta amb nosaltres]] per obtenir ajuda.',
 	'cnw-error-general-heading' => 'Les nostres disculpes',
 	'cnw-badword-header' => 'Ui!',
 	'cnw-badword-msg' => "Hola, si us plau, absten-te d'utilitzar aquestes paraules malsonants o paraules prohibides en la descripció del teu wiki: $1",
@@ -669,7 +671,7 @@ $messages['de'] = array(
 	'cnw-welcome-instruction1' => 'Klick auf die Schaltfläche unten, um Seiten zu deinem Wiki hinzufügen.',
 	'cnw-welcome-instruction2' => 'Du wirst diese Schaltfläche in deinem ganzen Wiki sehen, nutze sie jedes Mal wenn du eine neue Seite hinzufügen willst.',
 	'cnw-welcome-help' => 'Finde Antworten, Ratschläge und mehr auf <a href="http://community.wikia.com">Community Central</a>.',
-	'cnw-error-general' => 'Huch! Etwas ist auf unserer Website schief gelaufen. Bitte versuche es erneut oder <a href="/Special:Contact">kontaktiere uns</a>, wenn du Hilfe brauchst.',
+	'cnw-error-general' => 'Huch! Etwas ist auf unserer Website schief gelaufen. Bitte versuche es erneut oder [[Special:Contact|kontaktiere uns]], wenn du Hilfe brauchst.',
 	'cnw-error-general-heading' => 'Wir bitten um Entschuldigung',
 	'cnw-badword-header' => 'Ganz ruhig',
 	'cnw-badword-msg' => 'Hallo, bitte verwende keines der folgenden Schimpfwörter oder unerlaubten Begriffe in deiner Wiki-Beschreibung: $1',
@@ -788,7 +790,7 @@ $messages['es'] = array(
 	'cnw-welcome-instruction1' => 'Ahora haz clic al botón de abajo para empezar a llenar tu wiki con información.',
 	'cnw-welcome-instruction2' => 'Verás este botón a través de tu wiki. Úsalo en cualquier momento cuando quieras agregar una página nueva.',
 	'cnw-welcome-help' => 'Encuentra respuestas, consejos, y más en la <a href="http://es.wikia.com">Comunidad Central</a>.',
-	'cnw-error-general' => '¡Algo salió mal en nuestro sistema! Por favor inténtalo de nuevo o <a href="/Special:Contact">contáctanos</a> para obtener ayuda.',
+	'cnw-error-general' => '¡Algo salió mal en nuestro sistema! Por favor inténtalo de nuevo o [[Special:Contact|contáctanos]] para obtener ayuda.',
 	'cnw-error-general-heading' => 'Lo sentimos',
 	'cnw-badword-header' => '¡Oops!',
 	'cnw-badword-msg' => 'Hola, por favor abstente de usar estas malas palabras o palabras prohibidas en la descripción de tu wiki: $1',
@@ -997,7 +999,7 @@ $messages['fr'] = array(
 	'cnw-welcome-instruction1' => 'Cliquez sur le bouton ci-dessous pour commencer à ajouter des pages à votre wiki.',
 	'cnw-welcome-instruction2' => 'Vous verrez ce bouton partout sur votre wiki, utilisez-le chaque fois que vous souhaitez ajouter une nouvelle page.',
 	'cnw-welcome-help' => 'Trouvez des réponses, conseils et plus sur sur <a href="http://community.wikia.com">Community Central</a>.',
-	'cnw-error-general' => 'Oups, quelque chose s’est mal passé de notre côté ! Veuillez réessayer plus tard ou <a href="/Special:Contact">nous contacter</a> pour obtenir de l’aide.',
+	'cnw-error-general' => 'Oups, quelque chose s’est mal passé de notre côté ! Veuillez réessayer plus tard ou [[Special:Contact|nous contacter]] pour obtenir de l’aide.',
 	'cnw-error-general-heading' => 'Toutes nos excuses',
 	'cnw-badword-header' => 'Eh Oh',
 	'cnw-badword-msg' => 'Bonjour, veuillez éviter d’utiliser des mots grossiers ou interdits dans la description de votre wiki : $1',
@@ -1066,7 +1068,7 @@ $messages['gl'] = array(
 	'cnw-welcome-instruction1' => 'Prema no botón que hai a continuación para comezar a engadir páxinas ao seu wiki.',
 	'cnw-welcome-instruction2' => 'Verá este botón ao longo do wiki; úseo cada vez que queira engadir unha nova páxina.',
 	'cnw-welcome-help' => 'Atope respostas, consellos e máis cousas na <a href="http://community.wikia.com">central da comunidade</a>.',
-	'cnw-error-general' => 'Vaites! Fixemos algo mal pola nosa parte! Inténteo de novo ou <a href="/Special:Contact">póñase en contacto con nós</a> para solicitar axuda.',
+	'cnw-error-general' => 'Vaites! Fixemos algo mal pola nosa parte! Inténteo de novo ou [[Special:Contact|póñase en contacto con nós]] para solicitar axuda.',
 	'cnw-error-general-heading' => 'Sentímolo',
 	'cnw-badword-header' => 'Vaites!',
 	'cnw-badword-msg' => 'Por favor, abstéñase de empregar palabras groseiras na descrición do seu wiki: $1',
@@ -1284,7 +1286,7 @@ $messages['id'] = array(
 	'cnw-desc-lang' => 'Bahasa',
 	'cnw-welcome-headline' => 'Selamat! $1 telah dibuat',
 	'cnw-welcome-instruction1' => 'Klik tombol di bawah untuk memulai menambahkan halaman ke wiki Anda.',
-	'cnw-error-general' => 'Ups, ada sesuatu yang salah di pihak kami! Silakan coba lagi, atau <a href="/Special:Contact">hubungi kami</a> untuk bantuan.',
+	'cnw-error-general' => 'Ups, ada sesuatu yang salah di pihak kami! Silakan coba lagi, atau [[Special:Contact|hubungi kami]] untuk bantuan.',
 	'cnw-error-wiki-limit-header' => 'Wiki telah mencapai batas',
 	'cnw-error-blocked-header' => 'Akun diblokir',
 );
@@ -1690,7 +1692,7 @@ $messages['mk'] = array(
 	'cnw-welcome-instruction1' => 'Стиснете на копчето подолу за да почнете да додавате страници на викито.',
 	'cnw-welcome-instruction2' => 'Ова копче ќе биде присутно ширум целото вики. Користете го секогаш кога сакате да додадете нова страница.',
 	'cnw-welcome-help' => 'Одговори на прашања, совети и друго ќе добиете на <a href="http://community.wikia.com">Центарот на заедницата</a>.',
-	'cnw-error-general' => 'Нешто тргна наопаку од кај вас! Обидете се подоцна или <a href="/Special:Contact">конрактирајте нè</a> за помош.',
+	'cnw-error-general' => 'Нешто тргна наопаку од кај вас! Обидете се подоцна или [[Special:Contact|конрактирајте нè]] за помош.',
 	'cnw-error-general-heading' => 'Се извинуваме',
 	'cnw-badword-header' => 'Предупредување',
 	'cnw-badword-msg' => 'Здраво. Ве молиме да се воздржите од употреба на непристојни зборови или забранетите зборови наведени во описот на викито: $1',
@@ -1789,7 +1791,7 @@ $messages['ms'] = array(
 	'cnw-welcome-instruction1' => 'Klik butang di bawah untuk mulai membuka laman pada wiki anda.',
 	'cnw-welcome-instruction2' => 'Anda akan melihat butang ini di seluruh wiki. Gunakannya pada bila-bila masa anda ingin menambahkan laman baru.',
 	'cnw-welcome-help' => 'Cari jawapan, nasihat, dan banyak lagi di <a href="http://community.wikia.com">Community Central</a>.',
-	'cnw-error-general' => 'Maaf, kami berdepan dengan maslaah! Sila cuba lagi atau <a href="/Special:Contact">hubungi kami</a> untuk meminta tolong.',
+	'cnw-error-general' => 'Maaf, kami berdepan dengan maslaah! Sila cuba lagi atau [[Special:Contact|hubungi kami]] untuk meminta tolong.',
 	'cnw-error-general-heading' => 'Harap maaf',
 	'cnw-badword-header' => 'Nanti kejap',
 	'cnw-badword-msg' => 'Hai, sila hindari penggunaan kata-kata kesat/terlarang dalam Penerangan Wiki anda: $1',
@@ -1859,7 +1861,7 @@ $messages['nb'] = array(
 	'cnw-welcome-instruction1' => 'Trykk på knappen under for å begynne å legge til siden på wikien din.',
 	'cnw-welcome-instruction2' => 'Du vil se denne knappen på wikien din, bruk den når du vil legge til en ny side.',
 	'cnw-welcome-help' => 'Finn svar, råd, og mer på <a href="http://community.wikia.com">Community Central</a>.',
-	'cnw-error-general' => 'Noe gikk galt under opprettning av wikien din. Vennligst prøv igjen, eller <a href="/Special:Contact">kontakt oss</a> for hjelp.',
+	'cnw-error-general' => 'Noe gikk galt under opprettning av wikien din. Vennligst prøv igjen, eller [[Special:Contact|kontakt oss]] for hjelp.',
 	'cnw-error-general-heading' => 'Våre unnskyldninger',
 	'cnw-badword-header' => 'Hei der',
 	'cnw-badword-msg' => 'Hei, vennligst unngå å bruke disse grove eller forbudte ordene i beskrivelsen av wikien: $1',
@@ -1870,6 +1872,21 @@ $messages['nb'] = array(
 	'cnw-error-torblock' => 'Å opprette wikier via Tor-nettverket er ikke tillatt.',
 	'cnw-error-bot' => 'Vi har registrert at du kan være en bot. Hvis vi har gjort en feil, vennligst kontakt oss og gi beskjed om at du har blitt feilaktig registrert som en bot, og vi vil hjelpe deg med å opprette wikien din: [http://www.wikia.com/Special:Contact/general Kontakt oss]',
 	'cnw-error-bot-header' => 'Du har blitt fanget opp som en bot',
+);
+
+/** Nepali (नेपाली)
+ * @author सरोज कुमार ढकाल
+ */
+$messages['ne'] = array(
+	'cnw-login' => 'प्रवेश',
+	'cnw-signup' => 'खाता खोल्नुहोस्',
+	'cnw-login-prompt' => 'के तपाईँसँग पहिले देखि नै खाता छ ?',
+	'cnw-auth-headline' => 'प्रवेश',
+	'cnw-userauth-creative' => 'प्रवेश',
+	'cnw-userauth-marketing-heading' => 'के खाता छैन ?',
+	'cnw-desc-all-ages' => 'सबै उमेरहरू',
+	'cnw-desc-change-lang' => 'परिवर्तन',
+	'cnw-desc-lang' => 'भाषा',
 );
 
 /** Dutch (Nederlands)
@@ -1928,7 +1945,7 @@ $messages['nl'] = array(
 	'cnw-welcome-instruction1' => "Klik op de onderstaande knop om pagina's aan uw wiki toe te voegen.",
 	'cnw-welcome-instruction2' => 'U ziet deze knop overal in uw wiki. Gebruik hem als u een nieuwe pagina wilt toevoegen.',
 	'cnw-welcome-help' => 'Antwoorden, advies en meer op <a href="http://community.wikia.com">Community Central</a>.',
-	'cnw-error-general' => 'Er is iets misgegaan tijdens het aanmaken van uw wiki. Probeer het later opnieuw of <a href="/Special:Contact">neem contact met ons op</a> voor hulp.',
+	'cnw-error-general' => 'Er is iets misgegaan tijdens het aanmaken van uw wiki. Probeer het later opnieuw of [[Special:Contact|neem contact met ons op]] voor hulp.',
 	'cnw-error-general-heading' => 'Fout tijdens het aanmaken van een nieuwe wiki',
 	'cnw-badword-header' => 'Pas op!',
 	'cnw-badword-msg' => 'Hallo. Probeer u te onthouden van het gebruiken van ongewenste woorden in uw wikibeschrijving: $1',
@@ -1966,6 +1983,16 @@ $messages['nl-informal'] = array(
 	'cnw-welcome-instruction2' => 'Je ziet deze knop overal in je wiki. Gebruik hem als je een nieuwe pagina wilt toevoegen.',
 	'cnw-error-general' => 'Er is iets misgegaan tijdens het aanmaken van je wiki. Probeer het later opnieuw.', # Fuzzy
 	'cnw-error-wiki-limit' => "Hoi. Je mag maximaal $1 {{PLURAL:$1|wiki|wiki's}} per dag aanmaken. Wacht 24 uur om een nieuwe wiki aan te kunnen maken.",
+);
+
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'cnw-next' => 'Seguent',
+	'cnw-back' => 'Precedent',
+	'cnw-or' => 'o',
+	'cnw-name-wiki-wiki' => 'Wiki',
 );
 
 /** Pälzisch (Pälzisch)
@@ -2033,7 +2060,7 @@ $messages['pl'] = array(
 	'cnw-welcome-instruction1' => 'Kliknij na poniższy przycisk aby zacząć dodawanie stron do Twojej wiki',
 	'cnw-welcome-instruction2' => 'Znajdziesz ten przycisk w wielu miejscach na Twojej wiki, użyj go, jeżeli chcesz dodać nową stronę.',
 	'cnw-welcome-help' => 'Znajdź odpowiedzi, porady i więcej w <a href="http://spolecznosc.wikia.com">Centrum Społeczności</a>.',
-	'cnw-error-general' => 'Coś poszło nie tak podczas tworzenia wiki. Spróbuj ponownie później lub <a href="/Special:Contact">skontaktuj się z nami</a>.',
+	'cnw-error-general' => 'Coś poszło nie tak podczas tworzenia wiki. Spróbuj ponownie później lub [[Special:Contact|skontaktuj się z nami]].',
 	'cnw-error-general-heading' => 'Przepraszamy',
 	'cnw-badword-header' => 'Uwaga',
 	'cnw-badword-msg' => 'Witaj, proszę nie używaj tych niedozwolonych słów w opisie wiki: $1',
@@ -2288,7 +2315,7 @@ $messages['pt-br'] = array(
 	'cnw-welcome-instruction1' => 'Clique o botão abaixo para começar a criar páginas na sua wiki.',
 	'cnw-welcome-instruction2' => 'Verá este botão em toda a wiki; use-o em qualquer altura para criar uma página nova.',
 	'cnw-welcome-help' => 'Encontrará respostas, conselhos e mais na <a href="http://pt.wikia.com">Comunidade Central</a>.',
-	'cnw-error-general' => 'Oops, algo deu errado em nosso sistema! Por favor, tente novamente ou entre em <a href="/Special:Contact">contato</a> conosco para obter ajuda.',
+	'cnw-error-general' => 'Oops, algo deu errado em nosso sistema! Por favor, tente novamente ou entre em [[Special:Contact|contato]] conosco para obter ajuda.',
 	'cnw-error-general-heading' => 'Nossas desculpas',
 	'cnw-badword-header' => 'Atenção',
 	'cnw-badword-msg' => 'Olá, por favor não use estas palavras grosseiras ou banidas na sua Descrição da Wiki: $1',
@@ -2438,7 +2465,7 @@ $messages['ru'] = array(
 	'cnw-welcome-instruction1' => 'Нажмите на кнопку ниже, чтобы начать добавлять страницы на вики.',
 	'cnw-welcome-instruction2' => 'Вы будете видеть эту кнопку всегда и можете использовать её в любое время, когда захотите добавить новую страницу.',
 	'cnw-welcome-help' => 'Найти ответы, советы и многое другое на <a href="http://community.wikia.com">Центральной вики</a>.',
-	'cnw-error-general' => 'Оппаньки, что-то тут не сработало с нашей стороны!  Пожалуйста, попробуйте еще раз или <a href="/Special:Contact">свяжитесь с нами</a> для поддержки.',
+	'cnw-error-general' => 'Оппаньки, что-то тут не сработало с нашей стороны!  Пожалуйста, попробуйте еще раз или [[Special:Contact|свяжитесь с нами]] для поддержки.',
 	'cnw-error-general-heading' => 'Наши извинения',
 	'cnw-badword-header' => 'Эй там',
 	'cnw-badword-msg' => 'Пожалуйста, воздержитесь от использования плохих или запрещенных слов в описании вики: $1',
@@ -2580,7 +2607,7 @@ $messages['sv'] = array(
 	'cnw-welcome-instruction1' => 'Klicka på knappen nedan för att börja lägga till sidor på din wiki.',
 	'cnw-welcome-instruction2' => 'Du kommer att se den här knappen på din wiki, använd den när du vill lägga till en ny sida.',
 	'cnw-welcome-help' => 'Hitta svar, råd och mer på <a href="http://community.wikia.com">Community Central</a> .',
-	'cnw-error-general' => 'Hoppsan, någonting gick fel på vår sida! Var god försök igen eller <a href="/Special:Contact">kontakta oss</a> för hjälp.',
+	'cnw-error-general' => 'Hoppsan, någonting gick fel på vår sida! Var god försök igen eller [[Special:Contact|kontakta oss]] för hjälp.',
 	'cnw-error-general-heading' => 'Vi beklagar',
 	'cnw-badword-header' => 'Hallå där',
 	'cnw-badword-msg' => 'Hej, var god avstå från att använda dessa grova eller fula ord i beskrivningen av din wiki: $1',
@@ -2764,7 +2791,7 @@ $messages['tr'] = array(
 	'cnw-welcome-instruction1' => 'Wikinize sayfalar eklemeye başlamak için aşağıdaki düğmeye tıklayın.',
 	'cnw-welcome-instruction2' => 'Wikide bu düğmeyi, yeni bir sayfa eklemek istediğiniz herhangi bir zaman kullanabilirsiniz.',
 	'cnw-welcome-help' => 'Daha fazla cevap ve öneri bulabilmek için <a href="http://community.wikia.com">Topluluk Merkezini</a> ziyaret edin.',
-	'cnw-error-general' => 'Oops, bizim tarafımızda bir şeyler ters gitti!  Lütfen yeniden deneyin veya yardım için <a href="/Special:Contact">bize ulaşın</a> .',
+	'cnw-error-general' => 'Oops, bizim tarafımızda bir şeyler ters gitti!  Lütfen yeniden deneyin veya yardım için [[Special:Contact|bize ulaşın]] .',
 	'cnw-error-general-heading' => 'Özür dileriz',
 	'cnw-badword-header' => 'Oops!',
 	'cnw-badword-msg' => 'Merhaba, lütfen Wiki tanımınızda $1 gibi kötü kelimeler veya yasaklı kelimeler kullanmaktan kaçının.',
@@ -2902,7 +2929,7 @@ $messages['uk'] = array(
 	'cnw-welcome-instruction1' => 'Натисніть на кнопку нижче, щоб почати додавати сторінки на вікі.',
 	'cnw-welcome-instruction2' => 'Ви будете бачити цю кнопку завжди і можете використовувати її в будь-який час, коли захочете додати нову сторінку.',
 	'cnw-welcome-help' => 'Знайті відповіді, поради та багато іншого на <a href="http://community.wikia.com">Центральній вікі</a>.',
-	'cnw-error-general' => 'Ой, щось пішло не так на нашому боці! Будь ласка, спробуйте ще раз або <a href="/Special:Contact">зв\'яжіться з нами</a>.',
+	'cnw-error-general' => 'Ой, щось пішло не так на нашому боці! Будь ласка, спробуйте ще раз або [[Special:Contact|зв\'яжіться з нами]].',
 	'cnw-error-general-heading' => 'Просимо вибачення',
 	'cnw-badword-header' => 'Шо за фігня?',
 	'cnw-badword-msg' => 'Будь ласка, не вживайте русизмів на $1 !',
@@ -2980,7 +3007,7 @@ $messages['vi'] = array(
 	'cnw-theme-headline' => 'Chọn một chủ đề',
 	'cnw-theme-creative' => 'Chọn một chủ đề dưới đây, bạn sẽ có thể xem thử từng chủ đề như bạn đã chọn nó.',
 	'cnw-theme-instruction' => 'Bạn cũng có thể thiết kế chủ đề sau này bằng cách vào "Công cụ của tôi".',
-	'cnw-welcome-headline' => 'Chúc mừng! $1 đã được tạo ra',
+	'cnw-welcome-headline' => 'Chúc mừng! $1 đã được tạo ra thành công.',
 	'cnw-welcome-instruction1' => 'Nhấn vào nút dưới đây để bắt đầu thêm các trang cho wiki của bạn.',
 	'cnw-welcome-instruction2' => 'Bạn sẽ thấy nút này trong suốt wiki của bạn, sử dụng nó bất cứ lúc nào bạn muốn thêm một trang mới.',
 	'cnw-welcome-help' => 'Tìm câu trả lời, lời khuyên và nhiều hơn trên <a href="http://vi.wikia.com/wiki/Trang_Chính">Wikia Tiếng Việt</a>.',
@@ -2991,10 +3018,10 @@ $messages['vi'] = array(
 	'cnw-error-wiki-limit-header' => 'Wiki đã đạt đến giới hạn',
 	'cnw-error-wiki-limit' => 'Xin chào, bạn bị giới hạn {{PLURAL:$1|tạo lập $1 wiki|tạo lập $1 wiki}} mỗi ngày. Hãy chờ 24 giờ trước khi tạo lập một wiki khác.',
 	'cnw-error-blocked-header' => 'Tài khoản bị chặn',
-	'cnw-error-blocked' => 'Bạn đã bị cấm bởi  $1. Lý do đưa ra là: $2 . (ID cấm để tham khảo: $3 )',
+	'cnw-error-blocked' => 'Bạn đã bị cấm bởi $1. Lý do đưa ra là: $2 . (ID cấm để tham khảo: $3 )',
 	'cnw-error-torblock' => 'Tạo wiki qua mạng Tor là không được phép.',
 	'cnw-error-bot' => 'Chúng tôi đã phát hiện rằng bạn có thể là một bot. Nếu chúng tôi đã làm sai, hãy liên hệ với chúng tôi mô tả rằng bạn đã được phát hiện sai là một bot, và chúng tôi sẽ hỗ trợ bạn trong việc tạo ra của wiki bạn: [http://www.wikia.com/Special:Contact/general Liên hệ với Chúng tôi]',
-	'cnw-error-bot-header' => 'Bạn đã được phát hiện là một bot',
+	'cnw-error-bot-header' => 'Bạn đã được phát hiện như một bot',
 );
 
 /** Chinese (中文)
@@ -3111,7 +3138,7 @@ $messages['zh-hans'] = array(
 	'cnw-welcome-instruction1' => '点击以下的按钮来开始在您的维基新增页面。',
 	'cnw-welcome-instruction2' => '您会在您的维基中看到此按钮，需要新增新页面时就利用它。',
 	'cnw-welcome-help' => '在<a href="http://community.wikia.com">社区中心</a>中找到答案、咨询和更多其它。',
-	'cnw-error-general' => '哎呀，在我们这边出错了！请再试一次，或<a href="/Special:Contact">联系我们</a>',
+	'cnw-error-general' => '哎呀，在我们这边出错了！请再试一次，或[[Special:Contact|联系我们]]',
 	'cnw-error-general-heading' => '抱歉',
 	'cnw-badword-header' => '哇',
 	'cnw-badword-msg' => '您好，请不要在您的维基说明使用这些不良的和被禁止的字词：$1',

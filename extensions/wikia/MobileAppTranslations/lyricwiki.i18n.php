@@ -312,11 +312,12 @@ $messages['de'] = array(
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
+ * @author Gorizon
  */
 $messages['diq'] = array(
 	'app-loading' => 'Bar beno...',
 	'app-tab-search' => 'Cı geyre',
-	'app-tab-about' => 'Heq te cı',
+	'app-tab-about' => 'Heqdé cı',
 	'app-tab-browse' => 'A ra Z',
 	'app-async-error-title' => 'Hoooop',
 	'app-nonetwork-dialog-close-button' => 'TEMAM',
@@ -1180,7 +1181,7 @@ $messages['sv'] = array(
 	'login-submit-button' => 'Logga in',
 	'about-heading' => 'LyricWiki',
 	'about-credits' => 'av %s',
-	'about-heading-tips' => 'Sökningar',
+	'about-heading-tips' => 'Söker',
 	'about-tips-0' => 'Auto-complete. Börja skriva in namnet på en artist för att få det kompletterat medan du skiver.',
 	'about-tips-1' => 'Bilderna på huvudsidan är Topp 9-låtarna på iTunes just nu.',
 	'about-heading-licensing' => 'Upphovsrätt',

@@ -379,6 +379,23 @@ $messages['nl'] = array(
 	'spellchecker-info-spellcheck-suggestions' => 'Spellingsuggesties voor "$1": $2',
 );
 
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'spellchecker-desc' => 'Provesís una interfàcia de verificacion d’ortografia pel modul PHP enchant',
+	'enablespellchecker' => 'Activar lo corrector ortografic en mòde visual',
+	'spellchecker-info' => 'Informacions del verificador d’ortografia',
+	'spellchecker-info-languages' => 'Lengas disponiblas ($1)',
+	'spellchecker-info-provider' => 'Provesidor',
+	'spellchecker-info-dictionaries' => 'Diccionaris disponibles',
+	'spellchecker-info-spellcheck-text' => 'Tèxte de verificar',
+	'spellchecker-info-spellcheck-languages' => 'Lenga',
+	'spellchecker-info-spellcheck-submit' => 'Verificar l’ortografia',
+	'spellchecker-info-spellcheck-is-correct' => 'Lo mot « $1 » es ortografiat corrèctament',
+	'spellchecker-info-spellcheck-suggestions' => 'Suggestions d’ortografia per « $1 » : $2',
+);
+
 /** Polish (polski)
  * @author BeginaFelicysym
  * @author Sovq

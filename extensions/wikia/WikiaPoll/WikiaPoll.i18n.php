@@ -312,12 +312,13 @@ $messages['es'] = array(
 
 /** Basque (euskara)
  * @author An13sa
+ * @author Xabier Armendaritz
  */
 $messages['eu'] = array(
 	'wikiapoll-desc' => 'Bozketak sortzeko eta kudeatzeko erraztasuna ahalbidetzen du',
 	'wikiapoll-people-voted' => '{{PLURAL:$1|pertsona $1-ek bozkatu du|$1 pertsonak bozkatu dute}}',
 	'wikiapoll-question' => '$1?',
-	'wikiapoll-thanks-for-vote' => 'Eskerrikasko!',
+	'wikiapoll-thanks-for-vote' => 'Eskerrik asko!',
 	'wikiapoll-vote' => 'Bozkatu!',
 	'wikiapoll-votes' => '({{PLURAL:$1|bozka $1|$1 bozka}})',
 	'wikiapoll-createpoll-headline' => 'Bozketa sortu',

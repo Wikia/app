@@ -333,9 +333,10 @@ $messages['sr-ec'] = array(
 
 /** Swedish (svenska)
  * @author Tobulos1
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
-	'randomwiki-desc' => 'Lets users explore a random wiki',
+	'randomwiki-desc' => 'Låter användare utforska en slumpartad wiki',
 	'randomwiki' => 'Slumpmässig Wiki',
 );
 

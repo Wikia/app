@@ -21,7 +21,7 @@ class VideoHomePageController extends WikiaController {
 		if ( !$this->program ) {
 			$lang = F::App()->wg->LanguageCode;
 
-			$this->program = VideoPageToolProgram::newProgramNearestToday( $lang );
+			$this->program = VideoPageToolProgram::loadProgramNearestDate( $lang );
 		}
 
 		return $this->program;

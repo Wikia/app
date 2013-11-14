@@ -1930,6 +1930,7 @@ $messages['ky'] = array(
 
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
+ * @author Soued031
  */
 $messages['lb'] = array(
 	'article-comments-anonymous' => 'Anonyme Benotzer',
@@ -1945,7 +1946,7 @@ $messages['lb'] = array(
 	'article-comments-rc-comments' => 'Bemierkunge vum Artikel ([[$1]])',
 	'article-comments-fblogin' => '<a href="$1">Loggt Iech an a verbannt mat Facebook</a> fir eng Bemierkung op dëser Wiki ze schreiwen!',
 	'article-comments-toc-item' => 'Bemierkungen',
-	'article-comments-comment-cannot-add' => 'Dir däerft keng Bemierkung bäi den Artikel derbäisetzen.',
+	'article-comments-comment-cannot-add' => 'Dir däerft keng Bemierkung bei den Artikel derbäisetzen.',
 	'article-comments-reply' => 'Äntwerten',
 	'article-comments-show-all' => 'All Bemierkunge weisen',
 	'article-comments-prev-page' => 'Vireg',
@@ -2003,17 +2004,32 @@ $PAGEEDITOR къейд ттуна "$PAGETITLE".
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
+	'article-comments-anonymous' => 'كارور ناشناس',
+	'article-comments-comments' => 'نظر($1)',
+	'article-comments-post' => 'نظرتونه بفرسنین',
 	'article-comments-cancel' => 'رد بكيد',
 	'article-comments-delete' => 'پاك كردن',
 	'article-comments-edit' => 'ويرايشت',
 	'article-comments-history' => 'ويرگار',
 	'article-comments-error' => 'نظر نتونه ذخيره بوئه',
+	'article-comments-toc-item' => 'نظریا',
+	'article-comments-comment-cannot-add' => 'شما نتونید نظر د ای گوتار اضاف بکید.',
+	'article-comments-vote' => 'رایا ری وه بالا رئتنه',
 	'article-comments-reply' => 'جؤاو ده ئن',
+	'article-comments-show-all' => 'همه نظریانه نشو بیه',
 	'article-comments-prev-page' => 'دما',
 	'article-comments-next-page' => 'نيا',
+	'article-comments-page-spacer' => '&#160...&#160',
 	'wikiamobile-article-comments-more' => 'بيشتر سواركرد كو',
+	'wikiamobile-article-comments-prev' => 'دمایی نه سوار کو',
+	'wikiamobile-article-comments-none' => 'بی نظر',
+	'wikiamobile-article-comments-view' => 'درحاستیانه بویئنیت',
 	'wikiamobile-article-comments-replies' => 'جؤاويا',
+	'wikiamobile-article-comments-post-reply' => 'یه گل جواو بفرسنیت',
+	'wikiamobile-article-comments-post' => 'بفرسنیت',
+	'wikiamobile-article-comments-placeholder' => 'یه گل نظر بفرسنیت',
 	'wikiamobile-article-comments-show' => 'نشون دائن',
+	'wikiamobile-article-comments-login-post' => 'خواهش می کیم سی نظر دیئن وارد سیستم بویئت',
 );
 
 /** Lithuanian (lietuvių)
@@ -2420,6 +2436,32 @@ ___________________________________________
 <li>Vil du motta færre meldinger fra oss? Du kan avslutte abonnementet eller endre e-postinnstillingene dine her: <a href="http://community.wikia.com/Special:Preferences">http://community.wikia.com/Special:Preferences</a></li>
 </ul>
 </p>',
+);
+
+/** Nepali (नेपाली)
+ * @author सरोज कुमार ढकाल
+ */
+$messages['ne'] = array(
+	'article-comments-anonymous' => 'अज्ञात  प्रयोगकर्ता',
+	'article-comments-comments' => 'टिप्पणीहरू ($1)',
+	'article-comments-post' => 'टिप्पणी पोष्ट गर्ने',
+	'article-comments-cancel' => 'रद्द',
+	'article-comments-delete' => 'मेट्ने',
+	'article-comments-edit' => 'सम्पादन गर्ने',
+	'article-comments-history' => 'इतिहास',
+	'article-comments-error' => 'टिप्पणी सङ्ग्रह गर्न सकिएन',
+	'article-comments-reply' => 'जवाफ दिने',
+	'article-comments-show-all' => 'सबै टिप्पणीहरू देखाउने',
+	'article-comments-prev-page' => 'अघिल्लो',
+	'article-comments-next-page' => 'अर्को',
+	'wikiamobile-article-comments-more' => 'थप पढ्ने',
+	'wikiamobile-article-comments-none' => 'कुनै पनि टिप्पणीहरू छैनन्',
+	'wikiamobile-article-comments-view' => 'जवाफहरू हेर्ने',
+	'wikiamobile-article-comments-replies' => 'उत्तरहरु',
+	'wikiamobile-article-comments-post-reply' => 'उत्तर दिने',
+	'wikiamobile-article-comments-post' => 'पोष्ट',
+	'wikiamobile-article-comments-placeholder' => 'टिप्पणी पोष्ट गर्ने',
+	'wikiamobile-article-comments-show' => 'देखाउने',
 );
 
 /** Dutch (Nederlands)
@@ -3202,6 +3244,18 @@ ___________________________________________
 </p>',
 );
 
+/** Silesian (ślůnski)
+ * @author Krol111
+ */
+$messages['szl'] = array(
+	'article-comments-cancel' => 'Uodćepej',
+	'article-comments-delete' => 'wyćep',
+	'article-comments-edit' => 'sprowjej',
+	'article-comments-history' => 'gyszichta',
+	'article-comments-toc-item' => 'Kůmyntorze:',
+	'article-comments-next-page' => 'Dalij',
+);
+
 /** Telugu (తెలుగు)
  * @author Praveen Illa
  * @author Veeven
@@ -3487,12 +3541,14 @@ $messages['vep'] = array(
 );
 
 /** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
  * @author Tuankiet65
  * @author Xiao Qiao
  * @author XiaoQiaoGrace
  */
 $messages['vi'] = array(
 	'article-comments-file-page' => "<a href='$1'>Bình luận của $2</a> trên bài <a href='$3'>$4</a>",
+	'article-blog-comments-file-page' => "<a href='$1'>Bình luận từ  $2  </a> trên <a href='$3'> $4 </a> đăng bài trên <a href='$5'>  $6 của</a> blog",
 	'article-comments-anonymous' => 'Thành viên vô danh',
 	'article-comments-comments' => 'Bình luận ($1)',
 	'article-comments-post' => 'Gửi bình luận',
@@ -3541,7 +3597,7 @@ $PAGETITLE_URL
 
 Xin hãy truy cập và sửa đổi thường xuyên...
 
-Wikia', # Fuzzy
+- Cộng đồng hỗ trợ Wikia',
 	'enotif_body_article_comment-HTML' => '<p>Xin chào $WATCHINGUSERNAME,
 <br /><br />
 $PAGEEDITOR đã có một bình luận trên trang "$PAGETITLE".
@@ -3555,7 +3611,7 @@ Wikia
 <ul>
 <li>Muốn kiểm soát email mà bạn nhận được? <a href="{{fullurl:Special:Preferences}}">Nâng cấp Tùy chọn của bạn<a>.</li>
 </ul>
-</p>', # Fuzzy
+</p>',
 );
 
 /** Simplified Chinese (中文（简体）‎)

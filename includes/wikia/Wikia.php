@@ -28,7 +28,8 @@ $wgHooks['AfterInitialize']          [] = "Wikia::onAfterInitialize";
 $wgHooks['UserMailerSend']           [] = "Wikia::onUserMailerSend";
 $wgHooks['ArticleDeleteComplete']    [] = "Wikia::onArticleDeleteComplete";
 $wgHooks['ContributionsToolLinks']   [] = 'Wikia::onContributionsToolLinks';
-$wgHooks['AjaxAddScript'][] = 'Wikia::onAjaxAddScript';
+$wgHooks['AjaxAddScript']            [] = 'Wikia::onAjaxAddScript';
+$wgHooks['TitleGetSquidURLs']        [] = 'Wikia::onTitleGetSquidURLs';
 
 # changes in recentchanges (MultiLookup)
 $wgHooks['RecentChange_save']        [] = "Wikia::recentChangesSave";
@@ -484,7 +485,7 @@ class Wikia {
 		$msg = "***** END *****";
 		Wikia::log($method, false, $msg, true /* $force */);
 	}
-	
+
 	/**
 	 * get staff person responsible for language
 	 *
@@ -1520,59 +1521,47 @@ class Wikia {
 	}
 
 	/**
-	 * Get list of all URLs to be purged for a given Title
+	 * Purge Common and Wikia and User css/js when those files are edited
+	 * Uses $wgOut->makeResourceLoaderLink which was protected, but has lots of logic we don't want to duplicate
+	 * This was rewritten from scratch as part of BAC-895
 	 *
 	 * @param Title $title page to be purged
 	 * @param Array $urls list of URLs to be purged
 	 * @return mixed true - it's a hook
 	 */
 	static public function onTitleGetSquidURLs(Title $title, Array $urls) {
-		// if this is a site css or js purge it as well
-		global $wgUseSiteCss, $wgAllowUserJs;
-		global $wgSquidMaxage, $wgJsMimeType;
-
+		global $wgUseSiteJs, $wgAllowUserJs, $wgUseSiteCss, $wgAllowUserCss;
+		global $wgOut;
 		wfProfileIn(__METHOD__);
 
-		if( $wgUseSiteCss && $title->getNamespace() == NS_MEDIAWIKI ) {
-			global $wgServer;
-			$urls[] = $wgServer.'/__am/';
-			$urls[] = $wgServer.'/__wikia_combined/';
-			$query = array(
-				'usemsgcache' => 'yes',
-				'ctype' => 'text/css',
-				'smaxage' => $wgSquidMaxage,
-				'action' => 'raw',
-				'maxage' => $wgSquidMaxage,
-			);
-
-			if( $title->getText() == 'Common.css' || $title->getText() == 'Wikia.css' ) {
-				// BugId:20929 - tell (or trick) varnish to store the latest revisions of Wikia.css and Common.css.
-				$oTitleCommonCss	= Title::newFromText( 'Common.css', NS_MEDIAWIKI );
-				$oTitleWikiaCss		= Title::newFromText( 'Wikia.css',  NS_MEDIAWIKI );
-				$query['maxrev'] = max( (int) $oTitleWikiaCss->getLatestRevID(), (int) $oTitleCommonCss->getLatestRevID() );
-				unset( $oTitleWikiaCss, $oTitleCommonCss );
-				$urls[] = $title->getInternalURL( $query );
-			} else {
-				foreach( Skin::getSkinNames() as $skinkey => $skinname ) {
-					if( $title->getText() == ucfirst($skinkey).'.css' ) {
-						$urls[] = str_replace('text%2Fcss', 'text/css', $title->getInternalURL( $query )); // For Artur
-						$urls[] = $title->getInternalURL( $query ); // For Artur
-						break;
-					} elseif ( $title->getText() == 'Common.js' ) {
-						$urls[] = Skin::makeUrl('-', "action=raw&smaxage=86400&gen=js&useskin=" .urlencode( $skinkey ) );
-					}
-				}
-			}
-		} elseif( $wgAllowUserJs && $title->isCssJsSubpage() ) {
-			if( $title->isJsSubpage() ) {
-				$urls[] = $title->getInternalURL( 'action=raw&ctype='.$wgJsMimeType );
-			} elseif( $title->isCssSubpage() ) {
-				$urls[] = $title->getInternalURL( 'action=raw&ctype=text/css' );
+		$link = null;
+		if( $wgUseSiteJs && $title->getNamespace() == NS_MEDIAWIKI ) {
+			if( $title->getText() == 'Common.js' || $title->getText() == 'Wikia.js') {
+				$wgOut->setAllowedModules( ResourceLoaderModule::TYPE_SCRIPTS, ResourceLoaderModule::ORIGIN_ALL );
+				$link = $wgOut->makeResourceLoaderLink( 'site', ResourceLoaderModule::TYPE_SCRIPTS );
 			}
 		}
-
-		// purge Special:RecentChanges too
-		$urls[] = SpecialPage::getTitleFor('RecentChanges')->getInternalURL();
+		if ($wgUseSiteCss && $title->getNamespace() == NS_MEDIAWIKI ) {
+			if( $title->getText() == 'Common.css' || $title->getText() == 'Wikia.css' ) {
+				$wgOut->setAllowedModules( ResourceLoaderModule::TYPE_STYLES, ResourceLoaderModule::ORIGIN_ALL );
+				$link = $wgOut->makeResourceLoaderLink( 'site', ResourceLoaderModule::TYPE_STYLES );
+			}
+		}
+		if( $wgAllowUserJs && $title->isJsSubpage() ) {
+			$wgOut->setAllowedModules( ResourceLoaderModule::TYPE_SCRIPTS, ResourceLoaderModule::ORIGIN_ALL );
+			$link = $wgOut->makeResourceLoaderLink( 'user', ResourceLoaderModule::TYPE_SCRIPTS );
+		}
+		if( $wgAllowUserCss && $title->isCssSubpage() ) {
+			$wgOut->setAllowedModules( ResourceLoaderModule::TYPE_STYLES, ResourceLoaderModule::ORIGIN_ALL );
+			$link = $wgOut->makeResourceLoaderLink( 'user', ResourceLoaderModule::TYPE_STYLES );
+		}
+		if ($link != null) {
+			// extract the url from the link src
+			preg_match("/.*\"(.*)\"/", $link, $matches);
+			if ( isset($matches[1]) ) {
+				$urls[]= $matches[1];
+			}
+		}
 
 		wfProfileOut(__METHOD__);
 		return true;

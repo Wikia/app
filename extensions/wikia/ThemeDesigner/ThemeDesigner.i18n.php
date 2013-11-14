@@ -9,7 +9,9 @@ $messages['en'] = array(
 	'themedesigner-title' => 'Wikia Theme Designer',
 	'themedesigner-background' => 'Background',
 	'themedesigner-page' => 'Page',
-	'themedesigner-color' => 'color',
+	'themedesigner-color' => 'main',
+	'themedesigner-color-middle' => 'middle',
+	'themedesigner-rules-color-middle' => 'Different color for middle of the page',
 	'themedesigner-graphic' => 'graphic',
 	'themedesigner-buttons' => 'buttons',
 	'themedesigner-links' => 'links',
@@ -21,6 +23,8 @@ $messages['en'] = array(
 	'themedesigner-large' => 'Large',
 	'themedesigner-tile-background' => 'tile',
 	'themedesigner-fix-background' => 'fix',
+	'themedesigner-not-split-background' => 'no split',
+	'themedesigner-rules-not-split-background' => "If your background graphic is wider than 2100px you have an option of ''not'' splitting an image.",
 	'themedesigner-transparency' => 'transparency',
 	'themedesigner-tab-theme' => 'Theme',
 	'themedesigner-tab-customize' => 'Customize',
@@ -76,7 +80,10 @@ $messages['qqq'] = array(
 	'themedesigner-desc' => '{{desc}}',
 	'themedesigner-background' => '{{Identical|Background}}',
 	'themedesigner-page' => '{{Identical|Page}}',
-	'themedesigner-color' => '{{Identical|Color}}',
+	'themedesigner-color' => '{{Identical|Main}}',
+	'themedesigner-color-middle' => 'Background color between background image (when background image is split to two parts in fluid layout.
+{{Identical|Middle}}',
+	'themedesigner-rules-color-middle' => 'Information about position and purpose of color and that can be different from standard background color',
 	'themedesigner-links' => '{{Identical|Link}}',
 	'themedesigner-header' => '{{Identical|Header}}',
 	'themedesigner-text-wordmark' => 'A wordmark, subset of the term logotype, is a standardized graphic representation of the name of a company, institution, or product name used for purposes of identification and branding. See [http://en.wikipedia.org/wiki/Wordmark_%28graphic_identity%29 Wikipedia on "wordmark"] for more information.',
@@ -86,6 +93,8 @@ $messages['qqq'] = array(
 	'themedesigner-large' => '{{Identical|Large}}',
 	'themedesigner-tile-background' => 'Used in Theme Designer, and can be triggered to allow the current background graphic to tile, repeating itself around the page.',
 	'themedesigner-fix-background' => '{{Identical|Fix}}',
+	'themedesigner-not-split-background' => 'Used in Theme Designer, and can be triggered to allow the current background graphic to be splitted.',
+	'themedesigner-rules-not-split-background' => 'Requirement about background image width to split it into two parts',
 	'themedesigner-tab-theme' => '{{Identical|Theme}}',
 	'themedesigner-tab-customize' => '{{Identical|Customize}}',
 	'themedesigner-button-upload' => '{{Identical|Upload}}',
@@ -499,7 +508,9 @@ $messages['de'] = array(
 	'themedesigner-title' => 'Wikia Theme Designer',
 	'themedesigner-background' => 'Hintergrund',
 	'themedesigner-page' => 'Seite',
-	'themedesigner-color' => 'Farbe',
+	'themedesigner-color' => 'Haupt',
+	'themedesigner-color-middle' => 'Mitte',
+	'themedesigner-rules-color-middle' => 'Andere Farbe für die Seitenmitte',
 	'themedesigner-graphic' => 'Grafik',
 	'themedesigner-buttons' => 'Buttons',
 	'themedesigner-links' => 'Links',
@@ -511,6 +522,8 @@ $messages['de'] = array(
 	'themedesigner-large' => 'Groß',
 	'themedesigner-tile-background' => 'kacheln',
 	'themedesigner-fix-background' => 'fixieren',
+	'themedesigner-not-split-background' => 'keine Aufteilung',
+	'themedesigner-rules-not-split-background' => "Falls deine Hintergrundgrafik breiter als 2100 Pixel ist, hast du die Option, ein Bild ''nicht'' aufzuteilen.",
 	'themedesigner-transparency' => 'Transparenz',
 	'themedesigner-tab-theme' => 'Farbschema',
 	'themedesigner-tab-customize' => 'Anpassen',
@@ -749,6 +762,7 @@ $messages['fi'] = array(
 );
 
 /** French (français)
+ * @author Crochet.david
  * @author Gomoko
  * @author Iluvalar
  * @author Jean-Frédéric
@@ -764,7 +778,7 @@ $messages['fr'] = array(
 	'themedesigner-title' => 'Concepteur de thème Wikia',
 	'themedesigner-background' => 'Arrière-plan',
 	'themedesigner-page' => 'Page',
-	'themedesigner-color' => 'couleur',
+	'themedesigner-color' => 'principal',
 	'themedesigner-graphic' => 'image',
 	'themedesigner-buttons' => 'boutons',
 	'themedesigner-links' => 'liens',
@@ -776,6 +790,7 @@ $messages['fr'] = array(
 	'themedesigner-large' => 'Grand',
 	'themedesigner-tile-background' => 'mosaïque',
 	'themedesigner-fix-background' => 'fixe',
+	'themedesigner-not-split-background' => 'pas de séparation',
 	'themedesigner-transparency' => 'transparence',
 	'themedesigner-tab-theme' => 'Thème',
 	'themedesigner-tab-customize' => 'Personnaliser',
@@ -814,6 +829,7 @@ $messages['fr'] = array(
 	'themedesigner-wodmark-preview' => 'Aperçu',
 	'themedesigner-wordmark-preview-error' => 'Oups ! Le nom du wiki ne peut pas être vide,
 veuillez entrer le nom du wiki pour sauvegarder.',
+	'themedesigner-upload-disabled' => 'Désolé, nous avons temporairement désactivé les téléchargements. Vérifiez prochainement pour faire des modifications',
 );
 
 /** Galician (galego)
@@ -876,6 +892,7 @@ $messages['gl'] = array(
 	'themedesigner-wodmark-preview' => 'Vista previa',
 	'themedesigner-wordmark-preview-error' => 'Vaites! O nome do wiki non pode quedar baleiro.
 Para gardar, escriba o nome do wiki.',
+	'themedesigner-upload-disabled' => 'Sentímolo. A carga de ficheiros está desactivada temporalmente. Volva nuns minutos para facer os cambios',
 );
 
 /** Hungarian (magyar)
@@ -1387,6 +1404,7 @@ $messages['nb'] = array(
 );
 
 /** Dutch (Nederlands)
+ * @author Flightmare
  * @author Jochempluim
  * @author McDutchie
  * @author SPQRobin
@@ -1449,6 +1467,7 @@ $messages['nl'] = array(
 	'themedesigner-favicon-heading' => 'Favicon',
 	'themedesigner-wodmark-preview' => 'Voorvertoning',
 	'themedesigner-wordmark-preview-error' => 'Oeps! De naam van de Wiki mag niet leeg zijn, vul alsjeblieft een naam in om de wiki op te slaan.',
+	'themedesigner-upload-disabled' => 'Sorry, we hebben uploads tijdelijk uitgeschakeld. Probeer het binnenkort opnieuw om veranderingen te maken.',
 );
 
 /** Deitsch (Deitsch)
@@ -1474,6 +1493,8 @@ $messages['pl'] = array(
 	'themedesigner-background' => 'Tło',
 	'themedesigner-page' => 'Strona',
 	'themedesigner-color' => 'kolor',
+	'themedesigner-color-middle' => 'środek',
+	'themedesigner-rules-color-middle' => 'Inny kolor dla środka tła',
 	'themedesigner-graphic' => 'obraz',
 	'themedesigner-buttons' => 'przyciski',
 	'themedesigner-links' => 'linki',
@@ -1485,6 +1506,8 @@ $messages['pl'] = array(
 	'themedesigner-large' => 'Duża',
 	'themedesigner-tile-background' => 'sąsiadująco',
 	'themedesigner-fix-background' => 'nieruchomy',
+	'themedesigner-not-split-background' => 'bez podziału',
+	'themedesigner-rules-not-split-background' => 'Jeśli obraz tła ma więcej niż 2100px szerokości, można wybrać opcję nie dzielenia go.',
 	'themedesigner-transparency' => 'przezroczystość',
 	'themedesigner-tab-theme' => 'Motyw',
 	'themedesigner-tab-customize' => 'Dostosuj',
@@ -1777,7 +1800,9 @@ $messages['ru'] = array(
 	'themedesigner-title' => 'Конструктор тем Викия',
 	'themedesigner-background' => 'Фон',
 	'themedesigner-page' => 'Страница',
-	'themedesigner-color' => 'цвет',
+	'themedesigner-color' => 'главный',
+	'themedesigner-color-middle' => 'середина',
+	'themedesigner-rules-color-middle' => 'Другой цвет для середины страницы',
 	'themedesigner-graphic' => 'графика',
 	'themedesigner-buttons' => 'кнопки',
 	'themedesigner-links' => 'ссылки',
@@ -1789,6 +1814,8 @@ $messages['ru'] = array(
 	'themedesigner-large' => 'Большой',
 	'themedesigner-tile-background' => 'плитка',
 	'themedesigner-fix-background' => 'фикс.',
+	'themedesigner-not-split-background' => 'не разрезать',
+	'themedesigner-rules-not-split-background' => "Если ваш фоновый рисунок шире 2100 пикселей, у вас есть опция ''не'' разрезать изображение.",
 	'themedesigner-transparency' => 'прозрачность',
 	'themedesigner-tab-theme' => 'Тема',
 	'themedesigner-tab-customize' => 'Настройка',
@@ -2045,7 +2072,9 @@ $messages['uk'] = array(
 	'themedesigner-title' => 'Дизайнер тем Вікія',
 	'themedesigner-background' => 'Тло',
 	'themedesigner-page' => 'Сторінка',
-	'themedesigner-color' => 'колір',
+	'themedesigner-color' => 'основний',
+	'themedesigner-color-middle' => 'середній',
+	'themedesigner-rules-color-middle' => 'Інший колір для середини сторінки',
 	'themedesigner-graphic' => 'графіка',
 	'themedesigner-buttons' => 'кнопки',
 	'themedesigner-links' => 'посилання',
@@ -2057,6 +2086,8 @@ $messages['uk'] = array(
 	'themedesigner-large' => 'Великий',
 	'themedesigner-tile-background' => 'плитка',
 	'themedesigner-fix-background' => 'виправити',
+	'themedesigner-not-split-background' => "без роз'єднань",
+	'themedesigner-rules-not-split-background' => 'Якщо фонове зображення ширше, ніж 2100 пікселів, то у вас є можливість не розділювати зображення.',
 	'themedesigner-transparency' => 'прозорість',
 	'themedesigner-tab-theme' => 'Тема',
 	'themedesigner-tab-customize' => 'Налаштувати',
@@ -2098,6 +2129,7 @@ $messages['uk'] = array(
 );
 
 /** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
  * @author Minh Nguyen
  * @author Xiao Qiao
  * @author XiaoQiaoGrace
@@ -2108,7 +2140,7 @@ $messages['vi'] = array(
 	'themedesigner-title' => 'Thiết kế Chủ đề Wikia',
 	'themedesigner-background' => 'Nền',
 	'themedesigner-page' => 'Trang',
-	'themedesigner-color' => 'màu sắc',
+	'themedesigner-color' => 'màu sắc', # Fuzzy
 	'themedesigner-graphic' => 'đồ họa',
 	'themedesigner-buttons' => 'nút',
 	'themedesigner-links' => 'liên kết',
@@ -2144,7 +2176,7 @@ $messages['vi'] = array(
 	'themedesigner-button-save' => 'Lưu trang',
 	'themedesigner-upload-a-graphic' => 'tải lên một đồ họa',
 	'themedesigner-rules-wordmark' => 'Tải lên một tập tin .png có kích thước 250 x 65 pixel hoặc ít hơn.',
-	'themedesigner-rules-favicon' => 'Tải lên một tập tin .ico 16x16 pixel. Favicon là một biểu tượng nhỏ xuất hiện trên wiki của bạn trên thanh trình duyệt. [http://community.wikia.com/wiki/Help:Favicon Tìm hiểu thêm.]', # Fuzzy
+	'themedesigner-rules-favicon' => 'Tải lên một tập tin .ico 16x16 pixel. Favicon là một biểu tượng nhỏ xuất hiện trên wiki của bạn trên thanh trình duyệt.[http://community.wikia.com/wiki/Help:Favicon Tìm hiểu thêm.]',
 	'themedesigner-dont-use-a-graphic' => 'dời bỏ',
 	'themedesigner-history-item' => '$1 bởi $2',
 	'themedesigner-button-change-text' => 'Thay đổi văn bản',

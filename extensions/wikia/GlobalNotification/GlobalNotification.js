@@ -8,11 +8,14 @@
 
 var GlobalNotification = {
 	init: function() {
+		'use strict';
 		// If there's already a global notification on page load, set up JS
 		GlobalNotification.dom = $('.global-notification');
 		if(GlobalNotification.dom.length) {
 			GlobalNotification.setUpClose();
 		}
+		// Float notification (BugId:33365)
+		this.wikiaHeaderHeight = $('#WikiaHeader').height();
 	},
 	// This is only for introspection in the browser
 	options: {
@@ -22,9 +25,14 @@ var GlobalNotification = {
 		'warn': 'yellow'
 	},
 	createDom: function(element) {
+		'use strict';
 		// create and store dom
 		if(!GlobalNotification.dom.length) {
-			GlobalNotification.dom = $( '<div class="global-notification"><button class="close wikia-chiclet-button"><img src="' + stylepath + '/oasis/images/icon_close.png"></button><div class="msg"></div></div>' ).hide();
+			GlobalNotification.dom = $( '<div class="global-notification">' +
+				'<button class="close wikia-chiclet-button">' +
+				'<img src="' + window.stylepath + '/oasis/images/icon_close.png">' +
+				'</button><div class="msg"></div></div>' )
+				.hide();
 			GlobalNotification.setUpClose();
 		}
 		// allow notification wrapper element to be passed by extension (used for YUI modal in VET)
@@ -44,6 +52,7 @@ var GlobalNotification = {
 		GlobalNotification.msg = GlobalNotification.dom.find( '.msg' );
 	},
 	show: function(content, type, element, timeout) {
+		'use strict';
 		GlobalNotification.content = content;
 		var callback = function() {
 			GlobalNotification.createDom(element);
@@ -54,7 +63,7 @@ var GlobalNotification = {
 				WikiaFooterApp.addScrollEvent();
 			}
 			GlobalNotification.dom.fadeIn('slow');
-			if(typeof timeout == 'number') {
+			if(typeof timeout === 'number') {
 				setTimeout(function() {
 					GlobalNotification.hide();
 				}, timeout);
@@ -63,6 +72,7 @@ var GlobalNotification = {
 		GlobalNotification.hide( callback );
 	},
 	hide: function( callback ) {
+		'use strict';
 		if ( !GlobalNotification.dom ) {
 			return;
 		}
@@ -85,6 +95,7 @@ var GlobalNotification = {
 		}
 	},
 	isModal: function() {
+		'use strict';
 		GlobalNotification.modal = $( '.modalWrapper, .yui-panel' );
 		if ( GlobalNotification.modal.length > 0 && GlobalNotification.modal.is( ':visible' ) ) {
 			return true;
@@ -92,12 +103,12 @@ var GlobalNotification = {
 		return false;
 	},
 	setUpClose: function() {
+		'use strict';
 		GlobalNotification.dom.find( '.close' ).click(GlobalNotification.hide);
 	},
-	// Float notification (BugId:33365)
-	wikiaHeaderHeight: $('#WikiaHeader').height(),
 	// Called from WikiaFooter.js
 	onScroll: function(scrollTop) {
+		'use strict';
 		if(GlobalNotification.dom && GlobalNotification.dom.length) {
 			var minTop = GlobalNotification.wikiaHeaderHeight;
 			if(scrollTop > minTop) {
@@ -110,12 +121,14 @@ var GlobalNotification = {
 	}
 };
 $(function() {
+	'use strict';
 	GlobalNotification.init();
 });
 
 // ajax failure notification event registration
-if( typeof wgAjaxFailureMsg != 'undefined' ) {
-	$( document ).ajaxError( function( evt, request, settings ) {
-		GlobalNotification.show( wgAjaxFailureMsg, 'error' );
+if( typeof wgAjaxFailureMsg !== 'undefined' ) {
+	$( document ).ajaxError( function() {
+		'use strict';
+		GlobalNotification.show( window.wgAjaxFailureMsg, 'error' );
 	});
 }

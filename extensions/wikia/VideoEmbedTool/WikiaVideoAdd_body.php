@@ -152,13 +152,6 @@ class WikiaVideoAddForm extends SpecialPage {
 						return;
 					}
 				}
-
-				if ( WikiaFileHelper::useWikiaVideoExtForEmbed() ) {
-					$video = new VideoPage( $title );
-					$video->parseUrl( $this->mUrl );
-					$video->setName( $this->mName );
-					$video->save();
-				}
 			} else {
 				//bad title returned
 				$errors['name'] = wfMessage( 'wva-failure' )->text();

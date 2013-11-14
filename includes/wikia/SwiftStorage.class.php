@@ -57,12 +57,12 @@ class SwiftStorage {
 	 * @param $pathPrefix string path prefix
 	 * @return SwiftStorage storage instance
 	 */
-	public static function newFromContainer( $containerName, $pathPrefix = '' ) {
+	public static function newFromContainer( $containerName, $pathPrefix = '', $dataCenter = null ) {
 		if ($pathPrefix !== '') {
 			$pathPrefix = '/' . ltrim($pathPrefix, '/');
 		}
 
-		return new self( $containerName,  $pathPrefix );
+		return new self( $containerName,  $pathPrefix, $dataCenter );
 	}
 
 	/**
@@ -79,8 +79,9 @@ class SwiftStorage {
 		$this->wg = \F::app()->wg;
 
 		if ( !is_null( $dataCenter )  ) {
+			$this->swiftServer = $this->wg->FSSwiftDC[ $dataCenter ][ 'servers' ][ array_rand( $this->wg->FSSwiftDC[ $dataCenter ][ 'servers' ] ) ];
 			$this->swiftConfig = $this->wg->FSSwiftDC[ $dataCenter ][ 'config' ];
-			$this->swiftServer = $this->wg->FSSwiftDC[ $dataCenter ][ 'server' ]; 
+			array_walk( $this->swiftConfig, function( &$v, $k, $data ) { $v = sprintf( $v, $data ); }, $this->swiftServer );			 
 		} else {
 			$this->swiftConfig = $this->wg->FSSwiftConfig;
 			$this->swiftServer = $this->wg->FSSwiftServer;

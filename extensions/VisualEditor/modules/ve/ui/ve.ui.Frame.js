@@ -84,7 +84,7 @@ ve.ui.Frame.prototype.load = function () {
 	doc.open();
 	doc.write(
 		'<!doctype html>' +
-		'<html>' +
+		'<html class="ve-ui-frame-html">' +
 			'<body class="ve-ui-frame-body ve-' + this.dir + '" style="direction:' + this.dir + ';" dir="' + this.dir + '">' +
 				'<div class="ve-ui-frame-content"></div>' +
 			'</body>' +

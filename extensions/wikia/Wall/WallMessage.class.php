@@ -259,14 +259,6 @@ class WallMessage {
 			// after changing reply invalidate thread cache
 			$this->getThread()->invalidateCache();
 		}
-		if ( !$preserveMetadata ) { // it's only a request to modify metadata, so we probably don't need to add watch
-			/**
-			 * mech: EditPage calls Article with watchThis set to false
-			 *      in Wall we assume that save on message subscribes you to it
-			 *      so we re-scubscribe it here
-			*/
-			$this->addWatch( $user );
-		}
 		$out = $this->getArticleComment()->parseText($body);
 		wfProfileOut( __METHOD__ );
 		return $out;

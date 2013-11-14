@@ -1,12 +1,26 @@
+// Oasis Mixins
+@import "skins/oasis/css/mixins/gradient";
+
 // Oasis Imports
 @import "skins/oasis/css/core/color";
 @import "skins/oasis/css/core/layout";
 
-// VE Imports
-@import "extensions/VisualEditor/wikia/modules/ve/ui/styles/ve.ui.Icons-vector";
-@import "extensions/VisualEditor/wikia/modules/ve/ui/styles/ve.ui.Surface";
-@import "extensions/VisualEditor/wikia/modules/ve/ui/styles/ve.ui.Tool";
-@import "extensions/VisualEditor/wikia/modules/ve/ui/styles/ve.ui.WikiaMediaInsertDialog";
+// VE Mixins
+@import "modules/ve/ui/styles/mixins/ve-icon";
+
+// Wikia VE Imports
+@import "modules/ve/ui/styles/color";
+@import "modules/ve/ui/styles/ve.ui.Icons-vector";
+@import "modules/ve/ui/styles/ve.ui.Surface";
+@import "modules/ve/ui/styles/ve.ui.Dialog";
+@import "modules/ve/ui/styles/ve.ui.Frame";
+@import "modules/ve/ui/styles/ve.ui.Tool";
+@import "modules/ve/ui/styles/ve.ui.ToolGroup";
+@import "modules/ve/ui/styles/ve.ui.WikiaMediaInsertDialog";
+@import "modules/ve/ui/styles/ve.ui.WikiaSourceModeDialog";
+@import "modules/ve/ui/styles/ve.ui.Toolbar";
+@import "modules/ve/ui/styles/ve.ui.Context";
+@import "modules/ve/ui/styles/ve.ui.Widget";
 
 /*
  * Fixes background colors in inspectors and dialogs
@@ -30,4 +44,46 @@
  */
 .ve-init-mw-viewPageTarget-surface .ve-ui-menuWidget {
 	font-size: .8em;
+}
+
+/*
+ * Color for toolbar button labels
+ */
+.ve-init-mw-viewPageTarget-tool-label {
+	color: $color-text;
+}
+
+/*
+ * Beta notice
+ */
+.ve-init-mw-viewPageTarget-toolbar-betaNotice {
+	background: $color-page;
+	border-color: $color-page-border;
+}
+
+/*
+ * Save panel
+ */
+.ve-init-mw-viewPageTarget-saveDialog {
+	background: $color-page;
+	color: $color-text;
+
+	// Copied from Oasis article.scss
+	td.diff-context {
+		background-color: $color-diff-context;
+	}
+	td.diff-deletedline,
+	td.diff-addedline {
+		color: #000;
+	}
+	table.diff, td.diff-otitle, td.diff-ntitle {
+		background-color: $color-page;
+	}
+
+}
+.ve-init-mw-viewPageTarget-saveDialog-title {
+	color: $color-text;
+}
+.ve-init-mw-viewPageTarget-saveDialog-options {
+	background: $color-ve-page-secondary;
 }

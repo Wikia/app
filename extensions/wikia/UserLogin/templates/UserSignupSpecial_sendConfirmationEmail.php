@@ -30,10 +30,9 @@
 				)
 			);
 		?>
+		<br />
+		<a href="#" class="change-email-link"><?= wfMessage('usersignup-confirm-email-change-email')->escaped() ?></a>
 	</p>
-
-	<a href="#" class="change-email-link"><?= wfMessage('usersignup-confirm-email-change-email')->escaped() ?></a>
-
 <?
 	$form = array(
 		'method' => 'post',

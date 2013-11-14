@@ -89,6 +89,13 @@ class SwiftFileBackend extends FileBackendStore {
 	}
 
 	/**
+	 * @see FileBackendStore::isValidContainerName()
+	 */
+	protected static function isValidContainerName( $container ) {
+		return preg_match( '/^[a-z0-9][a-z0-9-_.]{0,199}$/i', $container );
+	}
+	
+	/**
 	 * @see FileBackendStore::resolveContainerPath()
 	 */
 	protected function resolveContainerPath( $container, $relStoragePath ) {
@@ -945,10 +952,10 @@ class SwiftFileBackend extends FileBackendStore {
 	 *
 	 * @param $e Exception
 	 * @param $func string
-	 * @param $params Array
+	 * @param $params mixed
 	 * @return void
 	 */
-	protected function logException( Exception $e, $func, array $params ) {
+	protected function logException( Exception $e, $func, $params ) {
 		// Wikia change - begin
 		if ( $e instanceof InvalidResponseException ) { // possibly a stale token
 			$this->closeConnection(); // force a re-connect and re-auth next time

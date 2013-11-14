@@ -217,6 +217,13 @@ $messages['it'] = array(
 	'communitymessages-notice-msg' => '[[Special:WikiActivity|I messaggi della community sono stati aggiornati]].',
 );
 
+/** Georgian (ქართული)
+ * @author DevaMK
+ */
+$messages['ka'] = array(
+	'communitymessages-notice-msg' => '[[Special:WikiActivity|ერთი ან რამდენიმე განცხადების შინაარსი ან ტექსტი შეიცვალა]].',
+);
+
 /** Colognian (Ripoarisch)
  * @author Purodha
  */

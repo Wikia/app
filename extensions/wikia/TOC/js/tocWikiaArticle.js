@@ -17,7 +17,7 @@ require(['jquery', 'wikia.toc', 'wikia.mustache'], function($, toc, mustache) {
 			} else {
 				return false;
 			}
-		}
+		};
 	}
 
 	/**
@@ -30,11 +30,16 @@ require(['jquery', 'wikia.toc', 'wikia.mustache'], function($, toc, mustache) {
 	 */
 
 	function createTOCSection(header) {
+
 		header = $(header).children('.mw-headline');
 
 		if (header.length === 0) {
 			return false;
 		}
+
+		// clone node and remove noscript to exclude it from text
+		header = header.clone();
+		header.find('noscript').remove();
 
 		return {
 			title: header.text(),

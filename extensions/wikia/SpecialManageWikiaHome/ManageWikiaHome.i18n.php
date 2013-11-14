@@ -1405,6 +1405,19 @@ $messages['uk'] = array(
 	'manage-wikia-home-collection-add-file-button' => 'Додати фото',
 );
 
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'manage-wikia-home-wiki-list-promoted' => 'Quảng cáo',
+	'manage-wikia-home-wiki-list-blocked-yes' => 'Có',
+	'manage-wikia-home-wiki-list-promoted-no' => 'Không',
+	'manage-wikia-home-wiki-list-promoted-yes' => 'Có',
+	'manage-wikia-home-wiki-list-official-no' => 'Không',
+	'manage-wikia-home-wiki-list-official-yes' => 'Có',
+	'manage-wikia-home-modal-content-add-promoted' => 'Bạn có muốn thúc đẩy wiki này trong hình dung wiki?',
+);
+
 /** Simplified Chinese (中文（简体）‎)
  * @author Liuxinyu970226
  */

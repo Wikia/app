@@ -40,6 +40,9 @@
 	<li>
 		<a href="<?php echo "{$wikiFactoryUrl}/{$variable->cv_city_id}/variables/{$variable->cv_name}"; ?>">permalink</a>
 	</li>
+	<li>
+		<a href="<?php echo "{$wikiFactoryUrl}/{$variable->cv_city_id}/clog?variable={$variable->cv_id}"; ?>" target="_blank">changelog</a>
+	</li>
 </ul>
 <h2>
 	Variable value

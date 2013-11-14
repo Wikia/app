@@ -104,6 +104,9 @@
 					}
 				}
 			]
-		}
+		},
+		"assets": [
+			"//resources/wikia/ui_components/modal/js/modal_sample.js"
+		]
 	}
 ]

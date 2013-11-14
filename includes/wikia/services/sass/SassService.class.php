@@ -25,7 +25,7 @@ use Wikia\Sass\Compiler\ExternalRubyCompiler;
  */
 class SassService extends WikiaObject {
 
-	const CACHE_VERSION = 1; # SASS caching does not depend on $wgStyleVersion, use this constant to bust SASS cache
+	const CACHE_VERSION = 2; # SASS caching does not depend on $wgStyleVersion, use this constant to bust SASS cache
 
 	const FILTER_IMPORT_CSS = 1;
 	const FILTER_CDN_REWRITE = 2;
@@ -221,8 +221,11 @@ class SassService extends WikiaObject {
 			if ( empty( $afterCompilation ) ) $afterCompilation = microtime(true);
 			if ( empty( $end ) ) $end = microtime(true);
 
+			$fileName = $this->source->getHumanName();
 			$errorId = $this->getUniqueId();
-			Wikia::log(__METHOD__, false, "SASS error [{$errorId}]: ". $e->getMessage(), true /* $always */);
+
+			Wikia::log(__METHOD__, false, "SASS error [{$errorId} in {$fileName}]: ". $e->getMessage(), true /* $always */);
+
 			$errorMessage = $this->getDebug()
 				? ("SASS error [{$errorId}]: " . $e->getMessage())
 				: (self::DEFAULT_ERROR_MESSAGE . $errorId);

@@ -3,10 +3,10 @@
  * @author Sean Colombo
  *
  * This extension hooks into Wikia's CanonicalHref extension to extend it for LyricWiki specific functionality. Namely,
- * that Gracenote pages should have the same 'canonical' tag as their community page (if there is a corresponding community page).
+ * that Gracenote/LyricFind pages should have the same 'canonical' tag as their community page (if there is a corresponding community page).
  *
  * This prevents search engines from penalizing us for duplicate content, and also makes sure that search results will tend to
- * show the community (editable) page rather than the Gracenote (locked) page.
+ * show the community (editable) page rather than the Gracenote/LyricFind (locked) page.
  */
  
 if ( !defined( 'MEDIAWIKI' ) ) die( "This is an extension to the MediaWiki package and cannot be run standalone." );
@@ -35,8 +35,9 @@ function lw_CanonicalHref( &$canonicalUrl ){
 	wfProfileIn( __METHOD__ );
 	global $wgTitle;
 
-	// Only process if we're in NS_GRACENOTE
-	if(defined('NS_GRACENOTE') && ($wgTitle->getNamespace() == NS_GRACENOTE)){
+	// Only process if we're in NS_GRACENOTE or NS_LYRICFIND
+	if((defined('NS_GRACENOTE') && ($wgTitle->getNamespace() == NS_GRACENOTE))
+		|| (defined('NS_LYRICFIND') && $wgTitle->getNamespace() == NS_LYRICFIND)){
 		// Check if a community version of the page exists.
 		$nonPrefixedTitleText = $wgTitle->getText();
 		$mainNsTitle = Title::newFromText( $nonPrefixedTitleText, NS_MAIN );
