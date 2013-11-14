@@ -380,6 +380,16 @@ use Swagger\Annotations as SWG;
  * 					allowMultiple="false",
  * 					dataType="string",
  * 					defaultValue="0,14"
+ * 				),
+ * 				@SWG\Parameter(
+ * 					name="limit",
+ * 					description="Will limit number of articles returned to given number",
+ * 					paramType="query",
+ * 					required="false",
+ * 					allowMultiple="false",
+ * 					dataType="int",
+ * 					defaultValue="6",
+ * 					@SWG\AllowableValues(valueType="RANGE",min="0", max="15")
  * 				)
  * 			)
  * 		)
