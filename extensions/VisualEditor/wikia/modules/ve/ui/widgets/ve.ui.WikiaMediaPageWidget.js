@@ -142,7 +142,7 @@ ve.ui.WikiaMediaPageWidget.prototype.onFilenameEdit = function ( e ) {
 	}
 
 	// update ve.dm.WikiaCartItem model
-	this.getModel().setTitle( this.title.$input.val() );
+	this.model.setTitle( this.title.$input.val() );
 };
 
 /**
