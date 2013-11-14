@@ -12,6 +12,12 @@ class LyricFindTrackingServiceTest extends WikiaBaseTest {
 		// mock API settings
 		$this->mockGlobalVariable('wgLyricFindApiUrl', self::SERVICE_URL);
 		$this->mockGlobalVariable('wgLyricFindApiKeys', ['display' => self::API_KEY]);
+
+		// mock title and prevent DB changes
+		$this->mockGlobalVariable('wgTitle', $this->mockClassWithMethods('Title', [
+			'getArticleID' => 123
+		]));
+		$this->mockGlobalFunction('wfSetWikiaPageProp', null);
 	}
 
 	/**
@@ -62,7 +68,17 @@ class LyricFindTrackingServiceTest extends WikiaBaseTest {
 				'amgId' => 1234,
 				'apiResponse' => ['foo' => 'bar'],
 				'res' => false
-			]
+			],
+			// mark lyric for removal
+			[
+				'amgId' => 1234,
+				'apiResponse' => [
+					'response' => [
+						'code' => 206
+					]
+				],
+				'res' => true
+			],
 		];
 	}
 }

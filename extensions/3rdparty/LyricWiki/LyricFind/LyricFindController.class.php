@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * This controller sends HTTP request to LyricFind tracking API with the following data:
+ *
+ * - amgid (if available)
+ * - gnlyricid (if available)
+ * - page title (always) - controller should be called with title parameter passed
+ */
 class LyricFindController extends WikiaController {
 
 	const RESPONSE_OK = 204;

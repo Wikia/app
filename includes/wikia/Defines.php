@@ -68,6 +68,9 @@ define( "WPP_LVS_SUGGEST_DATE", 20 );
 define( "WPP_LVS_EMPTY_SUGGEST", 21 );
 define( "WPP_LVS_STATUS", 22 );
 
+// LyricFind
+define( "WPP_LYRICFIND_MARKED_FOR_REMOVAL", 23 );
+
 // Any types listed in this array will not have their values serialized
 // This should only be used for properties that are simple strings or integers
-$wgWPPNotSerialized = array( WPP_LVS_SUGGEST_DATE, WPP_LVS_EMPTY_SUGGEST, WPP_LVS_STATUS );
+$wgWPPNotSerialized = array( WPP_LVS_SUGGEST_DATE, WPP_LVS_EMPTY_SUGGEST, WPP_LVS_STATUS, WPP_LYRICFIND_MARKED_FOR_REMOVAL );
