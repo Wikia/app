@@ -10,7 +10,8 @@
  *
  * @constructor
  * @param {Object} model Page item model
- * @param {Object} [config] Configuration options
+ * @param {Object} config Configuration options
+ * @param {jQuery} $license jQuery object containing license dropdown
  * @param {boolean} [config.editable] Whether or not the page should be editable. Editable pages
  * will have inputs and textareas instead of text blocks.
  */
@@ -47,6 +48,8 @@ ve.ui.WikiaMediaPageWidget = function VeUiWikiaMediaPageWidget( model, config ) 
 	this.$extension = this.$$( '<span>' );
 	this.$item = null;
 	this.$itemWrapper = this.$$( '<div>' );
+	this.$license = this.$$( '<div>' );
+	this.$licenseLabel = null;
 	this.$overlay = null;
 
 	// Events
@@ -54,12 +57,23 @@ ve.ui.WikiaMediaPageWidget = function VeUiWikiaMediaPageWidget( model, config ) 
 	this.removeButton.connect( this, { 'click': 'onRemoveButtonClick' } );
 
 	// Initialization
+	this.$itemWrapper.addClass( 've-ui-wikiaMediaPageWidget-item' );
 	this.$extension
 		.addClass( 've-ui-wikiaMediaPageWidget-item-extension' )
 		.text( titleParts[2] );
-	this.$itemWrapper.addClass( 've-ui-wikiaMediaPageWidget-item' );
 	this.title.$.append( this.$extension );
-	this.fieldset.$.append( this.titleLabel.$, this.title.$, this.removeButton.$ );
+	this.fieldset.$.append( this.titleLabel.$, this.title.$ );
+	if ( this.model.type === 'photo' && this.editable ) {
+		// TODO: would be nice if this were a <select> widget with label
+		this.$license
+			.addClass( 've-ui-wikiaMediaPageWidget-item-license' )
+			.append( config.$license );
+		this.$licenseLabel = this.$$( '<label>' )
+			.addClass( 've-ui-widget ve-ui-labeledElement-label ve-ui-inputLabelWidget' )
+			.text( 'License' ); // TODO: i18n
+		this.fieldset.$.append( this.$licenseLabel, this.$license );
+	}
+	this.fieldset.$.append( this.removeButton.$ );
 	this.$
 		.addClass( 've-ui-wikiaMediaPageWidget ' + this.model.type )
 		.append( this.$itemWrapper, this.fieldset.$ );

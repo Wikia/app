@@ -134,8 +134,13 @@ $width-cart: 101px;
 		vertical-align: middle;
 	}
 
-	.ve-ui-textInputWidget {
+	.ve-ui-textInputWidget,
+	.ve-ui-wikiaMediaPageWidget-item-license {
 		margin-bottom: $width-gutter;
+		width: 100%;
+	}
+
+	.ve-ui-wikiaMediaPageWidget-item-license select {
 		width: 100%;
 	}
 

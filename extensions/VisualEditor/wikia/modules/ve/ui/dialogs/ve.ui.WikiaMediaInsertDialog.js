@@ -2,7 +2,7 @@
  * VisualEditor user interface WikiaMediaInsertDialog class.
  */
 
-/* global mw, require */
+/* global mw */
 
 /**
  * Dialog for inserting MediaWiki media objects.
@@ -54,6 +54,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	} );
 	this.insertionDetails = {};
 	this.pages = new ve.ui.PagedLayout( { '$$': this.frame.$$, 'attachPagesPanel': true } );
+	this.promise = {};
 	this.query = new ve.ui.WikiaMediaQueryWidget( {
 		'$$': this.frame.$$,
 		'placeholder': ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' )
@@ -107,6 +108,8 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	this.$body.append( this.$content, this.$cart );
 	this.frame.$content.addClass( 've-ui-wikiaMediaInsertDialog' );
 	this.$foot.append( this.insertButton.$ );
+
+	this.getLicense();
 };
 
 /**
@@ -227,17 +230,20 @@ ve.ui.WikiaMediaInsertDialog.prototype.onCartSelect = function ( item ) {
  * @param {ve.dm.WikiaCartItem[]} items
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onCartAdd = function ( items ) {
-	var i, item, page;
-	for ( i = 0; i < items.length; i++ ) {
-		item = items[i];
-		page = new ve.ui.WikiaMediaPageWidget( item, {
-			'$$': this.frame.$$,
-			'editable': item.isTemporary()
-		} );
-		page.connect( this, { 'remove': 'onMediaPageRemove' } );
-		this.pages.addPage( item.title, { '$content': page.$ } );
-	}
-	this.searchResults.setChecked( items, true );
+	this.promise.license.done( ve.bind( function ( license ) {
+		var i, item, page;
+		for ( i = 0; i < items.length; i++ ) {
+			item = items[i];
+			page = new ve.ui.WikiaMediaPageWidget( item, {
+				'$$': this.frame.$$,
+				'$license': this.$$( license ),
+				'editable': item.isTemporary()
+			} );
+			page.connect( this, { 'remove': 'onMediaPageRemove' } );
+			this.pages.addPage( item.title, { '$content': page.$ } );
+		}
+		this.searchResults.setChecked( items, true );
+	}, this ) );
 };
 
 /**
@@ -585,6 +591,32 @@ ve.ui.WikiaMediaInsertDialog.prototype.onGetImageInfoSuccess = function ( deferr
 		} );
 	}
 	deferred.resolve( results );
+};
+
+/**
+ * Gets media license dropdown HTML template.
+ *
+ * @method
+ * @returns {string} Html template for licenses
+ */
+ve.ui.WikiaMediaInsertDialog.prototype.getLicense = function () {
+	if ( this.promise.license ) {
+		return this.promise.license;
+	}
+
+	this.promise.license = $.Deferred();
+	$.ajax( {
+		'url': mw.util.wikiScript( 'api' ),
+		'data': {
+			'action': 'licenses',
+			'format': 'json',
+			'id': 'license',
+			'name': 'license'
+		},
+		'success': ve.bind( function ( data ) {
+			this.promise.license.resolve( data.licenses.html );
+		}, this )
+	} );
 };
 
 /**
