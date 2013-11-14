@@ -29,7 +29,7 @@ abstract class WikiaSkinMonoBook extends WikiaSkin {
 	}
 
 	function initPage(&$out) {
-		global $wgHooks, $wgShowAds, $wgRequest, $wgOut;
+		global $wgHooks, $wgShowAds, $wgRequest;
 
 		parent::initPage( $out );
 
@@ -66,6 +66,9 @@ abstract class WikiaSkinMonoBook extends WikiaSkin {
 
 		# rt33045
 		$tpl->set('contact',    '<a href="'. $wgUser->getSkin()->makeUrl('Special:Contact') . '" title="Contact Wikia">Contact Wikia</a>');
+
+		# BAC-1036
+		$tpl->set('logopath', wfReplaceImageServer( $tpl->data['logopath'] ));
 
 		wfProfileOut(__METHOD__);
 		return true;
