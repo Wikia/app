@@ -24,8 +24,7 @@ ve.dm.WikiaCartItem = function VeDmWikiaCartItem( title, url, type, temporaryFil
  * @returns { Array | null } Array of strings or null, same out put as String.prototype.match
  */
 ve.dm.WikiaCartItem.prototype.extractFilenameParts = function() {
-	var filenameParts = this.title.match( /^(?:[^:]*\:)?(.*?)(\.[^.]+)?$/ );
-	return filenameParts ? filenameParts[ filenameParts.length - 1 ] : filenameParts;
+	return this.title.match( /^(?:[^:]*\:)?(.*?)(\.[^.]+)?$/ );
 };
 
 /**
@@ -33,9 +32,9 @@ ve.dm.WikiaCartItem.prototype.extractFilenameParts = function() {
  * @description Sets title with special case for user-blanked input
  */
 ve.dm.WikiaCartItem.prototype.setTitle = function( title ) {
-	var extension = this.extractFilenameParts();
-	if ( !title ) {
+	var filenameParts = this.extractFilenameParts();
+	if ( title === '' || typeof title === 'undefined' ) {
 		title = mw.config.get( 'wgPageName' );
 	}
-	this.title = extension ? title + extension : title;
+	this.title = filenameParts ? title + filenameParts[ filenameParts.length - 1 ] : title;
 };

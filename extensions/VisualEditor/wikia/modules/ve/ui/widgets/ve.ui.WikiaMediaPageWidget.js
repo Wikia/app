@@ -15,7 +15,6 @@
  * will have inputs and textareas instead of text blocks.
  */
 ve.ui.WikiaMediaPageWidget = function VeUiWikiaMediaPageWidget( model, config ) {
-	var titleParts = model.title.match( /^(?:[^:]*\:)?(.*?)(\.[^.]+)?$/ );
 
 	// Configuration initialization
 	config = config || {};
@@ -28,6 +27,7 @@ ve.ui.WikiaMediaPageWidget = function VeUiWikiaMediaPageWidget( model, config ) 
 	this.fieldset = new ve.ui.FieldsetLayout( { '$$': this.$$ } );
 	this.image = null;
 	this.model = model;
+	this.filename = this.model.extractFilenameParts();
 	this.removeButton = new ve.ui.ButtonWidget( {
 		'$$': this.$$,
 		'label': 'Remove from the cart', //TODO: i18n
@@ -37,7 +37,7 @@ ve.ui.WikiaMediaPageWidget = function VeUiWikiaMediaPageWidget( model, config ) 
 	this.title = new ve.ui.TextInputWidget( {
 		'$$': this.$$,
 		'readOnly': !this.editable,
-		'value': titleParts[1]
+		'value': this.filename[1]
 	} );
 	this.titleLabel = new ve.ui.InputLabelWidget( {
 		'$$': this.$$,
@@ -61,7 +61,7 @@ ve.ui.WikiaMediaPageWidget = function VeUiWikiaMediaPageWidget( model, config ) 
 	// Initialization
 	this.$extension
 		.addClass( 've-ui-wikiaMediaPageWidget-item-extension' )
-		.text( titleParts[2] );
+		.text( this.filename[2] );
 	this.$itemWrapper.addClass( 've-ui-wikiaMediaPageWidget-item' );
 	this.title.$.append( this.$extension );
 	this.fieldset.$.append( this.titleLabel.$, this.title.$, this.removeButton.$ );
