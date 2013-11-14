@@ -48,8 +48,9 @@ ve.ui.WikiaMediaPageWidget = function VeUiWikiaMediaPageWidget( model, config ) 
 	this.$extension = this.$$( '<span>' );
 	this.$item = null;
 	this.$itemWrapper = this.$$( '<div>' );
-	this.$license = this.$$( '<div>' );
+	this.$license = null;
 	this.$licenseLabel = null;
+	this.$licenseSelect = null;
 	this.$overlay = null;
 
 	// Events
@@ -64,14 +65,7 @@ ve.ui.WikiaMediaPageWidget = function VeUiWikiaMediaPageWidget( model, config ) 
 	this.title.$.append( this.$extension );
 	this.fieldset.$.append( this.titleLabel.$, this.title.$ );
 	if ( this.model.type === 'photo' && this.editable ) {
-		// TODO: would be nice if this were a <select> widget with label
-		this.$license
-			.addClass( 've-ui-wikiaMediaPageWidget-item-license' )
-			.append( config.$license );
-		this.$licenseLabel = this.$$( '<label>' )
-			.addClass( 've-ui-widget ve-ui-labeledElement-label ve-ui-inputLabelWidget' )
-			.text( 'License' ); // TODO: i18n
-		this.fieldset.$.append( this.$licenseLabel, this.$license );
+		this.setupLicense( config.$license );
 	}
 	this.fieldset.$.append( this.removeButton.$ );
 	this.$
@@ -98,42 +92,9 @@ ve.inheritClass( ve.ui.WikiaMediaPageWidget, ve.ui.Widget );
 
 /* Methods */
 
-/**
- * Handle image setup.
- *
- * @method
- */
-ve.ui.WikiaMediaPageWidget.prototype.setupImage = function () {
-	this.image = new Image();
-	this.$item = this.$$( this.image );
-
-	require( ['wikia.thumbnailer'], ve.bind( function ( thumbnailer ) {
-		// TODO: (nice to have) be able to calculate the bounding box without hardcoded
-		// values but we would need to know bounding box size up front for that.
-		this.image.src = thumbnailer.getThumbURL( this.model.url, 'image', 365 );
-	}, this ) );
-
-	this.$item.load( ve.bind( this.onImageLoad, this ) );
-	this.$itemWrapper
-		.addClass( 've-ui-texture-pending' )
-		.append( this.$item );
-};
-
-/**
- * Handle video setup.
- *
- * @method
- */
-ve.ui.WikiaMediaPageWidget.prototype.setupVideoOverlay = function () {
-	this.$overlay = this.$$( '<span>' )
-		.addClass( 'play-circle' )
-		.add(
-			this.$$( '<span>' ).addClass( 'play-arrow' )
-		);
-
-	this.$itemWrapper
-		.addClass( 'wikia-video-thumbnail' )
-		.prepend( this.$overlay );
+/** */
+ve.ui.WikiaMediaPageWidget.prototype.getModel = function () {
+	return this.model;
 };
 
 /**
@@ -161,8 +122,8 @@ ve.ui.WikiaMediaPageWidget.prototype.onItemClick = function () {
 };
 
 /** */
-ve.ui.WikiaMediaPageWidget.prototype.getModel = function () {
-	return this.model;
+ve.ui.WikiaMediaPageWidget.prototype.onLicenseSelectChange = function () {
+	this.model.setLicense( this.$licenseSelect.val() );
 };
 
 /**
@@ -173,4 +134,68 @@ ve.ui.WikiaMediaPageWidget.prototype.getModel = function () {
  */
 ve.ui.WikiaMediaPageWidget.prototype.onRemoveButtonClick = function () {
 	this.emit( 'remove', this.model );
+};
+
+/**
+ * Handle image setup.
+ *
+ * @method
+ */
+ve.ui.WikiaMediaPageWidget.prototype.setupImage = function () {
+	this.image = new Image();
+	this.$item = this.$$( this.image );
+
+	require( ['wikia.thumbnailer'], ve.bind( function ( thumbnailer ) {
+		// TODO: (nice to have) be able to calculate the bounding box without hardcoded
+		// values but we would need to know bounding box size up front for that.
+		this.image.src = thumbnailer.getThumbURL( this.model.url, 'image', 365 );
+	}, this ) );
+
+	this.$item.load( ve.bind( this.onImageLoad, this ) );
+	this.$itemWrapper
+		.addClass( 've-ui-texture-pending' )
+		.append( this.$item );
+};
+
+/**
+ * Handle license setup.
+ *
+ * FIXME: should be a <select> widget with label
+ *
+ * @method
+ */
+ve.ui.WikiaMediaPageWidget.prototype.setupLicense = function ( $license ) {
+	// Properties
+	this.$license = this.$$( '<div>' );
+	this.$licenseLabel = this.$$( '<label>' );
+	this.$licenseSelect = $license;
+
+	// Events
+	this.$licenseSelect.on( 'change', ve.bind( this.onLicenseSelectChange, this ) );
+
+	// Initialization
+	this.$license
+		.addClass( 've-ui-wikiaMediaPageWidget-item-license' )
+		.append( this.$licenseSelect );
+	this.$licenseLabel
+		.addClass( 've-ui-widget ve-ui-labeledElement-label ve-ui-inputLabelWidget' )
+		.text( 'License' ); // TODO: i18n
+	this.fieldset.$.append( this.$licenseLabel, this.$license );
+}
+
+/**
+ * Handle video setup.
+ *
+ * @method
+ */
+ve.ui.WikiaMediaPageWidget.prototype.setupVideoOverlay = function () {
+	this.$overlay = this.$$( '<span>' )
+		.addClass( 'play-circle' )
+		.add(
+			this.$$( '<span>' ).addClass( 'play-arrow' )
+		);
+
+	this.$itemWrapper
+		.addClass( 'wikia-video-thumbnail' )
+		.prepend( this.$overlay );
 };
