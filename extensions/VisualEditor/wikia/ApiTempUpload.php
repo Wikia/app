@@ -80,7 +80,11 @@ class ApiTempUpload extends ApiBase {
 		} else {
 			$title = $this->getUniqueTitle( $this->mParams['desiredName'] );
 			$file = new LocalFile( $title, RepoGroup::singleton()->getLocalRepo() );
-			$file->upload( $temporaryFile->getPath(), '', '' );
+			$pageText = '';
+			if ( isset( $this->mParams['license'] ) ) {
+				$pageText = SpecialUpload::getInitialPageText( '', $this->mParams['license'] );
+			}
+			$file->upload( $temporaryFile->getPath(), '', $pageText );
 			$name = $file->getTitle()->getText();
 		}
 		$this->getResult()->addValue( null, $this->getModuleName(), array( 'name' => $name ) );
@@ -149,7 +153,7 @@ class ApiTempUpload extends ApiBase {
 			$apiwrapper = $awf->getApiWrapper( $url );
 		} catch ( Exception $e ) {
 			$this->dieUsageMsg( 'Incorrect video URL' );
-		}	
+		}
 		if ( !$apiwrapper ) {
 			$this->dieUsageMsg( 'Not a video URL' );
 		}
@@ -257,30 +261,30 @@ class ApiTempUpload extends ApiBase {
 
 	public function getAllowedParams() {
 		return array(
-			'type' => array (
+			'desiredName' => array(
+				ApiBase::PARAM_TYPE => 'string',
+				ApiBase::PARAM_REQUIRED => false
+			),
+			'license' => array(
+				ApiBase::PARAM_TYPE => 'string',
+				ApiBase::PARAM_REQUIRED => false
+			),
+			'temporaryFileName' => array(
+				ApiBase::PARAM_TYPE => 'string',
+				ApiBase::PARAM_REQUIRED => false
+			),
+			'type' => array(
 				ApiBase::PARAM_TYPE => 'string',
 				ApiBase::PARAM_REQUIRED => true
 			),
-			'url' => array (
+			'url' => array(
 				ApiBase::PARAM_TYPE => 'string',
 				ApiBase::PARAM_REQUIRED => false
 			),
-			'provider' => array (
+			'videoId' => array(
 				ApiBase::PARAM_TYPE => 'string',
 				ApiBase::PARAM_REQUIRED => false
 			),
-			'videoId' => array (
-				ApiBase::PARAM_TYPE => 'string',
-				ApiBase::PARAM_REQUIRED => false
-			),
-			'temporaryFileName' => array (
-				ApiBase::PARAM_TYPE => 'string',
-				ApiBase::PARAM_REQUIRED => false
-			),
-			'desiredName' => array (
-				ApiBase::PARAM_TYPE => 'string',
-				ApiBase::PARAM_REQUIRED => false
-			)
 		);
 	}
 
