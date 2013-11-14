@@ -139,17 +139,6 @@
 	margin-left: 5px;
 }
 
-header {
-	&:after {
-		content: ".";
-		display: block;
-		height: 0;
-		font-size:0;
-		clear: both;
-		visibility:hidden;
-	}
-}
-
 @media screen and (min-width:321px) {
 	.wkExhItm, .exhPlcHld {
 		width: 105px;

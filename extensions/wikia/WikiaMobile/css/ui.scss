@@ -100,22 +100,6 @@ body {
 	}
 }
 
-//Pop over menu
-.ppOvr {
-	display: none;
-	position: absolute;
-	border-radius: 5px;
-	border: 1px solid $link-color;
-	background-color: white;
-	width: 50px;
-	height: auto;
-	min-height: 30px;
-
-	.on & {
-		display: block;
-	}
-}
-
 //counter displayed mainly in lists or on ArticleComments seaction
 h2[data-count] {
 	&:after {
@@ -167,7 +151,7 @@ h2[data-count] {
 	}
 }
 
-.wikitable:not(.infobox), sortable {
+.wikitable:not(.infobox), .sortable {
 	th, td {
 		white-space:nowrap;
 	}
