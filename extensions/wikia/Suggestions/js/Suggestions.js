@@ -4,7 +4,7 @@ require( [ 'jquery', 'wikia.log', 'SuggestionsView' ], function( $, log, view ) 
 	$(function() {
 		window.Wikia.newSearchSuggestions =  view.init(
 			$('#WikiaSearch input[name="search"]'),
-			$('ul.search-suggest'),
+			$('#WikiaSearch').nextAll('ul.search-suggest').first(),
 			window.wgCityId
 		);
 		log('New search suggestions loaded!', log.levels.info, 'suggestions');
