@@ -11,6 +11,7 @@ class SuggestionsIndexer extends Maintenance {
 
 	const SOLR_MAIN = 'main';
 	const SOLR_SUGGEST = 'suggest';
+	const SOLR_SUGGEST_S2 = 'suggest2';
 	const SNIPPET_LENGTH = 100;
 	const BATCH_SIZE = 500;
 	const IMAGE_SIZE = 50;
@@ -44,6 +45,19 @@ class SuggestionsIndexer extends Maintenance {
 			],
 			'wikiId_i',
 			'pageId_i'
+		],
+		self::SOLR_SUGGEST_S2 => [
+			[
+				'adapteroptions' => [
+					'host' => 'db-sds-s2',
+					'port' => 8983,
+					'path' => '/solr/',
+					'core' => 'suggest'
+				],
+				'adapter' => 'Solarium_Client_Adapter_Curl'
+			],
+			'wikiId_i',
+			'pageId_i'
 		]
 	];
 	protected $solrFields = [
@@ -63,6 +77,7 @@ class SuggestionsIndexer extends Maintenance {
 		$this->addOption( 'delete', 'Delete articles instead of index.', false, false, 'd' );
 		$this->addOption( 'output', 'Change output server config with given value. Expected format: <host>:<port>/<path>/.../<core>', false, true, 'o' );
 		$this->addOption( 'profile', 'Show execution times.', false, false, 'p' );
+		$this->addOption( 'both', 'Index articles on both suggestions solr servers.', false, false, 'b' );
 	}
 
 	public function execute() {
@@ -171,6 +186,16 @@ class SuggestionsIndexer extends Maintenance {
 		} else {
 			$client->deleteDocuments( $this->wikiId, $ids );
 		}
+
+		if ( $this->hasOption( 'both' ) && !$this->hasOption( 'output' ) ) {
+			$clientS2 = $this->getSolrClient( self::SOLR_SUGGEST_S2 );
+			if ( isset( $ids[ 'min' ] ) && isset( $ids[ 'max' ] ) ) {
+				$clientS2->deleteDocuments( $this->wikiId, $ids[ 'min' ], $ids[ 'max' ] );
+			} else {
+				$clientS2->deleteDocuments( $this->wikiId, $ids );
+			}
+		}
+
 		$this->endProfile( __METHOD__ );
 	}
 
@@ -181,6 +206,14 @@ class SuggestionsIndexer extends Maintenance {
 		//remove old version, so if article was deleted it wont be indexed anymore
 		$client->deleteDocuments( $this->wikiId, array_keys( $data ) );
 		$status = $client->updateDocuments( $data );
+
+		if ( $this->hasOption( 'both' ) && !$this->hasOption( 'output' ) ) {
+			$clientS2 = $this->getSolrClient( self::SOLR_SUGGEST_S2 );
+			//remove old version, so if article was deleted it wont be indexed anymore
+			$clientS2->deleteDocuments( $this->wikiId, array_keys( $data ) );
+			$status = $clientS2->updateDocuments( $data );
+		}
+
 		$this->endProfile();
 		if ( $status === 0 ) {
 			return true;
