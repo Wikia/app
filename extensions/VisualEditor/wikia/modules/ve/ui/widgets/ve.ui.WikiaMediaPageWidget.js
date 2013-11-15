@@ -181,7 +181,7 @@ ve.ui.WikiaMediaPageWidget.prototype.setupLicense = function ( $license ) {
 		.addClass( 've-ui-widget ve-ui-labeledElement-label ve-ui-inputLabelWidget' )
 		.text( 'License' ); // TODO: i18n
 	this.fieldset.$.append( this.$licenseLabel, this.$license );
-}
+};
 
 /**
  * Handle video setup.
