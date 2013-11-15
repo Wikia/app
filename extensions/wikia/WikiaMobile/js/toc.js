@@ -15,6 +15,7 @@ require( ['sections', 'wikia.window', 'jquery', 'wikia.mustache', 'wikia.toc'],
 			state,
 			offsetTop = 0,
 			$parent,
+			sideMenuCapable = false,
 			ol = '<ol class="toc-list level{{level}}">{{#sections}}{{> lis}}{{/sections}}</ol>',
 			lis = '{{#.}}<li{{#sections.length}} class="has-children{{#firstLevel}}' +
 				' first-children{{/firstLevel}}"{{/sections.length}}>' +
@@ -143,6 +144,34 @@ require( ['sections', 'wikia.window', 'jquery', 'wikia.mustache', 'wikia.toc'],
 			}
 		}
 
+		if ( !sideMenuCapable ) {
+			var tocData = toc.getData(
+				sections.list,
+				function ( header, level ) {
+					return {
+						id: header.id,
+						name: header.textContent.trim(),
+						level: level,
+						firstLevel: level === 2,
+						sections: []
+					};
+				}
+			);
+
+			$ol = $document.find('#mw-content-text')
+				.append( mustache.render( ol, tocData, {
+					ol: ol,
+					lis: lis
+				} ) ).find('.level');
+
+			$document.append();
+		}
+
+		function onTap(){
+			console.log('lol')
+			$ol[0].scrollIntoView();
+		}
+
 		function onOpen () {
 			$document.on( 'section:changed', onSectionChange );
 
@@ -160,10 +189,15 @@ require( ['sections', 'wikia.window', 'jquery', 'wikia.mustache', 'wikia.toc'],
 		}
 
 		$( '#wkTOCHandle' ).on( 'click', function () {
-			if ( $toc.toggleClass( 'active' ).hasClass( 'active' ) ) {
-				onOpen();
+			if ( sideMenuCapable ) {
+				if ( $toc.toggleClass( 'active' ).hasClass( 'active' ) ) {
+					onOpen();
+				} else {
+					onClose();
+				}
 			} else {
-				onClose();
+				onTap();
 			}
+
 		} );
 	} );
