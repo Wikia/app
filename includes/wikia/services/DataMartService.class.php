@@ -43,16 +43,14 @@ class DataMartService extends Service {
 			}
 		}
 
-		$memKey = wfSharedMemcKey('datamart', 'pageviews', $wikiId, $periodId, $startDate, $endDate);
 		$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
-		$pageviews = (new WikiaSQL())->skipSqlIf(empty($app->wg->StatsDBEnabled))
+		$pageviews = (new WikiaSQL())->skipSqlIf(empty($app->wg->StatsDBEnabled))->cacheGlobal(60*60*12)
 			->SELECT("date_format(time_id,'%Y-%m-%d')")->AS_('date')
 				->FIELD('pageviews')->AS_('cnt')
 			->FROM('rollup_wiki_pageviews')
 			->WHERE('period_id')->EQUAL_TO($periodId)
 				->AND_('wiki_id')->EQUAL_TO($wikiId)
 				->AND_('time_id')->BETWEEN($startDate, $endDate)
-			->cache(60*60*12)
 			->run($db, function ($result) {
 				$pageViews = [];
 				while ($row = $result->fetchObject($result)) {
@@ -60,7 +58,7 @@ class DataMartService extends Service {
 				}
 
 				return $pageViews;
-			}, $memKey);
+			});
 
 		wfProfileOut(__METHOD__);
 
@@ -93,9 +91,8 @@ class DataMartService extends Service {
 			}
 		}
 
-		$memKey = wfSharedMemcKey('datamart', 'pageviews_wikis', md5(implode(":", $wikis)), $periodId, $startDate, $endDate);
 		$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
-		$pageviews = (new WikiaSQL())->skipSqlIf(empty($app->wg->StatsDBEnabled))
+		$pageviews = (new WikiaSQL())->skipSqlIf(empty($app->wg->StatsDBEnabled))->cacheGlobal(60*60*12)
 			->SELECT('wiki_id')
 				->FIELD("date_format(time_id,'%Y-%m-%d')")->AS_('date')
 				->FIELD('pageviews')->AS_('cnt')
@@ -103,7 +100,6 @@ class DataMartService extends Service {
 			->WHERE('period_id')->EQUAL_TO($periodId)
 				->AND_('wiki_id')->IN($wikis)
 				->AND_('time_id')->BETWEEN($startDate, $endDate)
-			->cache(60*60*12)
 			->run($db, function ($result) {
 				$pageViews = [];
 
@@ -113,7 +109,7 @@ class DataMartService extends Service {
 				}
 
 				return $pageViews;
-			}, $memKey);
+			});
 
 		wfProfileOut(__METHOD__);
 
@@ -136,15 +132,13 @@ class DataMartService extends Service {
 			return array();
 		}
 
-		$memKey = wfSharedMemcKey('datamart', 'sumpageviews', $periodId, md5(implode(":", $dates)));
 		$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
-		$pageviews = (new WikiaSQL())->skipSqlIf(empty($app->wg->StatsDBEnabled))
+		$pageviews = (new WikiaSQL())->skipSqlIf(empty($app->wg->StatsDBEnabled))->cacheGlobal(60*60*12)
 			->SELECT('time_id')
 				->SUM('pageviews')->AS_('cnt')
 			->FROM('rollup_wiki_pageviews')
 			->WHERE('period_id')->EQUAL_TO($periodId)
 				->AND_('time_id')->IN($dates)
-			->cache(60*60*12)
 			->run($db, function($result) {
 				$pageViews = [];
 
@@ -153,7 +147,7 @@ class DataMartService extends Service {
 				}
 
 				return $pageViews;
-			}, $memKey);
+			});
 
 		wfProfileOut(__METHOD__);
 
@@ -231,15 +225,13 @@ class DataMartService extends Service {
 				break;
 		}
 
-		$memKey = wfSharedMemcKey('datamart', 'topwikis', 2, $field, $limitUsed, implode( ',', $langs ), $hub, $public);
 		$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
-		$sql = (new WikiaSQL())->skipSqlIf(empty($app->wg->StatsDBEnabled))
+		$sql = (new WikiaSQL())->skipSqlIf(empty($app->wg->StatsDBEnabled))->cacheGlobal(43200)
 			->SELECT('r.wiki_id')->AS_('id')
 				->FIELD($field)->AS_('pageviews')
 			->FROM('report_wiki_recent_pageviews')->AS_('r')
 			->ORDER_BY(['pageviews', 'desc'])
-			->LIMIT($limitUsed)
-			->cache(43200);
+			->LIMIT($limitUsed);
 
 		if (is_integer($public)) {
 			$sql
@@ -264,7 +256,7 @@ class DataMartService extends Service {
 			}
 
 			return $topWikis;
-		}, $memKey);
+		});
 
 		wfProfileOut(__METHOD__);
 		return $topWikis;
@@ -284,9 +276,8 @@ class DataMartService extends Service {
 		$app = F::app();
 		wfProfileIn(__METHOD__);
 
-		$memKey = wfSharedMemcKey('datamart', 'topvideowikis', 1, $periodId);
 		$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
-		$topWikis = (new WikiaSQL())->skipSqlIf(empty($app->wg->StatsDBEnabled))
+		$topWikis = (new WikiaSQL())->skipSqlIf(empty($app->wg->StatsDBEnabled))->cacheGlobal(43200)
 			->SELECT('r.wiki_id')->AS_('id')
 				->SUM('views')->AS_('totalViews')
 			->FROM('rollup_wiki_video_views')->AS_('r')
@@ -295,7 +286,6 @@ class DataMartService extends Service {
 			->GROUP_BY('id')
 			->ORDER_BY(['totalViews', 'desc'])
 			->LIMIT(200)
-			->cache(43200)
 			->run($db, function($result) {
 				$topWikis = [];
 
@@ -304,7 +294,7 @@ class DataMartService extends Service {
 				}
 
 				return $topWikis;
-			}, $memKey);
+			});
 
 		$topWikis = array_slice($topWikis, 0, $limit, true);
 
@@ -339,9 +329,8 @@ class DataMartService extends Service {
 			}
 		}
 
-		$memKey = wfSharedMemcKey('datamart', 'events', $wikiId, $periodId, $startDate, $endDate);
 		$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
-		$events = (new WikiaSQL())->skipSqlIf(empty($app->wg->StatsDBEnabled))
+		$events = (new WikiaSQL())->skipSqlIf(empty($app->wg->StatsDBEnabled))->cacheGlobal(60*60*12)
 			->SELECT("date_format(time_id,'%Y-%m-%d')")->AS_('date')
 				->SUM('creates')->AS_('creates')
 				->SUM('edits')->AS_('edits')
@@ -352,7 +341,6 @@ class DataMartService extends Service {
 				->AND_('wiki_id')->EQUAL_TO($wikiId)
 				->AND_('time_id')->BETWEEN($startDate, $endDate)
 			->GROUP_BY('date', 'wiki_id')
-			->cache(60*60*12)
 			->run($db, function($result) {
 				$events = [];
 
@@ -366,7 +354,7 @@ class DataMartService extends Service {
 				}
 
 				return $events;
-			}, $memKey);
+			});
 
 		// get data depending on eventType
 		if (!empty($eventType)) {
@@ -667,12 +655,11 @@ class DataMartService extends Service {
 	public static function getWAM200Wikis() {
 		$app = F::app();
 
-		$wikis = (new WikiaSQL())
+		$wikis = (new WikiaSQL())->cacheGlobal(60*60*12)
 			->SELECT('wiki_id')
 			->FROM('dimension_top_wikis')
 			->ORDER_BY('rank')
 			->LIMIT(200)
-			->cache(60*60*12)
 			->run(wfGetDB( DB_SLAVE, [], $app->wg->DWStatsDB ), function($result) {
 				$wikis = [];
 
@@ -681,7 +668,7 @@ class DataMartService extends Service {
 				}
 
 				return $wikis;
-			}, wfSharedMemcKey('datamart', 'wam_top_200_wikis'));
+			});
 
 		return $wikis;
 	}

@@ -11,6 +11,30 @@ use FluentSql as sql;
 
 class WikiaSQL extends FluentSql\SQL {
 	private $skipIfCondition = false;
+	private $useSharedMemKey = false;
+
+	/**
+	 * @param $ttl
+	 * @return WikiaSQL
+	 */
+	public function cacheGlobal($ttl) {
+		return $this->cache($ttl, true);
+	}
+
+	/**
+	 * @param int $ttl
+	 * @param bool $sharedKey
+	 * @return WikiaSQL
+	 */
+	public function cache($ttl, $sharedKey=false) {
+		$this->useSharedMemKey = $sharedKey;
+		return parent::cache($ttl);
+	}
+
+	protected function getCacheKey(sql\Breakdown $breakDown) {
+		$cache = $this->getCache();
+		return $cache->generateKey($breakDown, $this->useSharedMemKey);
+	}
 
 	protected function query($db, sql\Breakdown $breakDown, callable $callback) {
 		if ($this->skipIfCondition) {
@@ -43,7 +67,7 @@ class WikiaSQL extends FluentSql\SQL {
 	 * skip the sql execution if the following condition evaluates to true
 	 *
 	 * @param bool $condition
-	 * @return sql\SQL
+	 * @return WikiaSQL
 	 */
 	public function skipSqlIf($condition) {
 		$this->skipIfCondition = $condition;

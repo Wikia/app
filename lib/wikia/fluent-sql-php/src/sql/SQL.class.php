@@ -803,6 +803,10 @@ class SQL {
 		return $this->called($having);
 	}
 
+	/**
+	 * @param $limit
+	 * @return SQL
+	 */
 	public function LIMIT($limit) {
 		$this->limit = new Limit($limit);
 
@@ -840,7 +844,7 @@ class SQL {
 	public function run($db, callable $callback, $cacheKey=null, $defaultReturn=[]) {
 		$breakDown = $this->build();
 		$cache = $this->getCache();
-		$cacheKey = isset($cacheKey) ? $cacheKey : $cache->generateKey($breakDown);
+		$cacheKey = isset($cacheKey) ? $cacheKey : $this->getCacheKey($breakDown);
 		$result = false;
 
 		if ($this->cacheEnabled()) {
@@ -856,6 +860,11 @@ class SQL {
 		}
 
 		return $result === false ? $defaultReturn : $result;
+	}
+
+	protected function getCacheKey(Breakdown $breakDown) {
+		$cache = $this->getCache();
+		return $cache->generateKey($breakDown);
 	}
 
 	public function build($bk=null, $tabs=0) {
