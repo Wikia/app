@@ -1,18 +1,26 @@
 (function(){
 	window.ToolbarCustomize = window.ToolbarCustomize || {};
-	var TC = window.ToolbarCustomize;
+	var TC = window.ToolbarCustomize,
+		isIPad = false;
+
+	require( [ 'wikia.browserDetect' ], function( browserDetect ) {
+		isIPad = browserDetect.isIPad();
+	} );
 
 	TC.OptionsTree = $.createClass(Observable,{
 
 		constructor: function(el) {
 			TC.OptionsTree.superclass.constructor.call(this);
 			this.el = el;
-			this.el.sortable({
-				axis: "y",
-				handle: ".drag",
-				opacity: 0.8,
-				update: $.proxy(this.updateLevels,this)
-			});
+
+			if( !isIPad ) {
+				this.el.sortable( {
+					axis: 'y',
+					handle: '.drag',
+					opacity: 0.8,
+					update: $.proxy( this.updateLevels, this )
+				} );
+			}
 		},
 
 		/* assumes one my tools menu */
@@ -54,15 +62,27 @@
 			}
 			html += '<span class="name">'+$.htmlentities(item.caption)+'</span>';
 			if (type == 'item') {
-				html +=
-				'<img src="'+wgBlankImgUrl+'" class="sprite edit-pencil">'
-				+'<img src="'+wgBlankImgUrl+'" class="sprite trash">'
-				+'<img src="'+wgBlankImgUrl+'" class="sprite drag">';
+				html = this.addIcons( html );
 			}
 			html += '</li>';
 			var itemEl = $(html);
 			this.fire('itembuild',this,item,itemEl);
 			return itemEl;
+		},
+
+		addIcons: function( html ) {
+			if( !isIPad ) {
+				html +=
+					'<img src="'+wgBlankImgUrl+'" class="sprite edit-pencil">'
+					+'<img src="'+wgBlankImgUrl+'" class="sprite trash">'
+					+'<img src="'+wgBlankImgUrl+'" class="sprite drag">';
+			} else {
+				html +=
+					'<img src="'+wgBlankImgUrl+'" class="sprite edit-pencil">'
+					+'<img src="'+wgBlankImgUrl+'" class="sprite trash">';
+			}
+
+			return html;
 		},
 
 		loadLevel: function(els,level) {
@@ -297,8 +317,14 @@
 				.keypress(function(e){if (e.which == 13) {return false;}});
 
 			// Toolbar list
-			this.tree = new TC.OptionsTree(this.w.find('.options-list'));
-			this.tree.on('itembuild',$.proxy(this.initItem,this));
+			var optionList = this.w.find('.options-list');
+			this.tree = new TC.OptionsTree(optionList);
+			if( isIPad ) {
+				optionList.addClass( 'on-ipad' );
+				this.tree.on('itembuild',$.proxy(this.initItemForIPad,this));
+			} else {
+				this.tree.on('itembuild',$.proxy(this.initItem,this));
+			}
 			this.tree.load(this.data.options);
 			this.w.find('.reset-defaults a').click($.proxy(this.loadDefaults,this));
 
@@ -379,6 +405,15 @@
 		initItem: function( tree, item, el ) {
 			el.find('.edit-pencil').click($.proxy(this.renameItem,this));
 			el.find('.trash').click($.proxy(this.deleteItem,this));
+		},
+
+		initItemForIPad: function( tree, item, el ) {
+			el.click( function( e ) {
+				e.preventDefault();
+				tree.el.children().removeClass( 'hover' );
+				$(this).addClass( 'hover' );
+			} );
+			this.initItem( tree, item, el );
 		},
 
 		renameItem: function( evt ) {
