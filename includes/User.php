@@ -3003,6 +3003,7 @@ class User {
 		if ( wfReadOnly() ) { return; }
 		if ( 0 == $this->mId ) { return; }
 
+		$this->logSomeData();
 		$this->mTouched = self::newTouchedTimestamp();
 		if ( !$wgAuth->allowSetLocalPassword() ) {
 			$this->mPassword = '';
@@ -4476,5 +4477,14 @@ class User {
 	 */
 	public function wikiaConfirmationTokenUrl( $token ) {
 		return $this->getTokenUrl( 'WikiaConfirmEmail', $token );
+	}
+
+	/**
+	 * Kamil Koterba debuging
+	 */
+	private function logSomeData() {
+		error_log('KamilkUserSaveSettings-WIKIA: UserId:'.$this->getId().' Touched:'.$this->getTouched());
+		error_log('KamilkUserSaveSettings-WIKIA: UserId:'.$this->getId().' '.json_encode($this->getOptions()));
+		error_log('KamilkUserSaveSettings-WIKIA: Backtrace:'.json_encode(debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS)));
 	}
 }
