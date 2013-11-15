@@ -112,7 +112,7 @@ define('SuggestionsView', ['SuggestionsViewModel'], function( viewModel ) {
 			}
 			if ( href && href !== '#' ) {
 				emitEvent('newSuggestionsEnter');
-				window.location.pathname = href;
+				window.location.href = window.location.origin + href;
 			} else {
 				emitEvent('newSuggestionsSearchEnter');
 				searchInput[0].form.submit();
