@@ -27,18 +27,54 @@ class LyricFindTrackingService extends WikiaService {
 	}
 
 	/**
-	 * @param $amgId int AMG (All Music Guide) lyric ID to track page view for
+	 * Returns properly formatted "trackid" parameter for LyricFind API from given data
+	 *
+	 * Example: trackid=amg:2033,gnlyricid:123,trackname:mony+mony,artistname:tommy+james
+	 *
+	 * @param $data array containing amgid, gnlyricid and title of the lyric
+	 */
+	private function formatTrackId($data) {
+		$parts = [];
+
+		if (!empty($data['amg'])) {
+			$parts[] = sprintf('amg:%d', $data['amg']);
+		}
+
+		if (!empty($data['gracenote'])) {
+			$parts[] = sprintf('gnlyricid:%d', $data['gracenote']);
+		}
+
+		list($artistName, $trackName) = explode(':', $data['title'], 2);
+
+		// artist and track name needs to be lowercase and without commas
+		$parts[] = sprintf('trackname:%s', mb_strtolower(str_replace(',', ' ', $trackName)));
+		$parts[] = sprintf('artistname:%s', mb_strtolower(str_replace(',', ' ', $artistName)));
+
+		return join(',', $parts);
+	}
+
+	/**
+	 * @param $amgId int|bool AMG (All Music Guide) lyric ID to track page view for (or false if not found)
+	 * @param $gracenoteId int|bool Gracenote lyric ID to track page view for (or false if not found)
+	 * @param $title Title page with the lyric to track
 	 * @return bool success
 	 */
-	public function track($amgId) {
+	public function track($amgId, $gracenoteId, Title $title) {
 		wfProfileIn(__METHOD__);
+
+		// format trackid parameter
+		$trackId = $this->formatTrackId([
+			'amg' => $amgId,
+			'gracenote' => $gracenoteId,
+			'title' => $title->getText()
+		]);
 
 		$url = $this->wg->LyricFindApiUrl . '/lyric.do';
 		$data = [
 			'apikey' => $this->wg->LyricFindApiKeys['display'],
 			'reqtype' => 'offlineviews',
 			'count' => 1,
-			'trackid' => "amg:{$amgId}",
+			'trackid' => $trackId,
 			'output' => 'json',
 			'useragent' => isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : self::DEFAULT_USER_AGENT
 		];

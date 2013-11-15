@@ -14,15 +14,11 @@ class LyricFindController extends WikiaController {
 
 	public function track() {
 		$amgId = intval($this->getVal('amgid'));
+		$gracenoteId = intval($this->getVal('gracenoteid'));
 
-		if ($amgId > 0) {
-			// make a request to LyricFind API
-			$service = new LyricFindTrackingService();
-			$res = $service->track($amgId);
-		}
-		else {
-			$res = false;
-		}
+		// make a request to LyricFind API
+		$service = new LyricFindTrackingService();
+		$res = $service->track($amgId, $gracenoteId, $this->wg->Title);
 
 		$this->response->setFormat('json');
 		$this->response->setCode( $res ? self::RESPONSE_OK : self::RESPONSE_ERR /* bad request */ );
