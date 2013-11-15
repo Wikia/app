@@ -13,11 +13,60 @@ class LyricFindTrackingServiceTest extends WikiaBaseTest {
 		$this->mockGlobalVariable('wgLyricFindApiUrl', self::SERVICE_URL);
 		$this->mockGlobalVariable('wgLyricFindApiKeys', ['display' => self::API_KEY]);
 
-		// mock title and prevent DB changes
-		$this->mockGlobalVariable('wgTitle', $this->mockClassWithMethods('Title', [
-			'getArticleID' => 123
-		]));
+		// prevent DB changes
 		$this->mockGlobalFunction('wfSetWikiaPageProp', null);
+	}
+
+	/**
+	 * @dataProvider formatTrackIdProvider
+	 * @param $amgId
+	 * @param $gracenoteId
+	 * @param $title
+	 * @param $expected
+	 */
+	public function testFormatTrackId($amgId, $gracenoteId, $title, $expected) {
+		$service = new LyricFindTrackingService();
+
+		$refl = new ReflectionMethod('LyricFindTrackingService', 'formatTrackId');
+		$refl->setAccessible(true);
+
+		$trackId = $refl->invoke($service, [
+			'amg' => $amgId,
+			'gracenote' => $gracenoteId,
+			'title' => $title
+		]);
+
+		$this->assertEquals($expected, $trackId, 'Track ID should match expected value');
+	}
+
+	public function formatTrackIdProvider() {
+		return [
+			[
+				'amgId' => 0,
+				'gracenoteId' => 0,
+				'title' => 'Paradise_Lost:Forever_Failure',
+				'expected' => 'trackname:forever_failure,artistname:paradise_lost'
+			],
+			[
+				'amgId' => 123,
+				'gracenoteId' => 0,
+				'title' => 'Paradise_Lost:Forever_Failure',
+				'expected' => 'amg:123,trackname:forever_failure,artistname:paradise_lost'
+			],
+			[
+				'amgId' => 123,
+				'gracenoteId' => 456,
+				'title' => 'Paradise_Lost:Forever_Failure',
+				'expected' => 'amg:123,gnlyricid:456,trackname:forever_failure,artistname:paradise_lost'
+			],
+			// UTF should not be encoded
+			[
+				'amgId' => 0,
+				'gracenoteId' => 0,
+				'title' => 'Sólstafir:Þín Orð',
+				'expected' => 'trackname:þín orð,artistname:sólstafir'
+			],
+		];
 	}
 
 	/**
@@ -31,9 +80,13 @@ class LyricFindTrackingServiceTest extends WikiaBaseTest {
 		$respMock = is_array($apiResponse) ? json_encode($apiResponse) : $apiResponse;
 
 		$this->mockStaticMethod('Http', 'post', $respMock);
+		$this->mockGlobalVariable('wgTitle', $this->mockClassWithMethods('Title', [
+			'getArticleID' => 123,
+			'getText' => 'Paradise_Lost:Forever_Failure'
+		]));
 
 		$service = new LyricFindTrackingService();
-		$this->assertEquals($res, $service->track($amgId), 'API response code should match expected value');
+		$this->assertEquals($res, $service->track($amgId, 0, $this->app->wg->Title), 'API response code should match expected value');
 	}
 
 	public function trackResponseCodeProvider() {

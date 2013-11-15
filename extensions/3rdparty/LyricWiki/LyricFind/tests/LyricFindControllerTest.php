@@ -5,10 +5,14 @@ class LyricFindControllerTest extends WikiaBaseTest {
 	public function setUp() {
 		$this->setupFile = __DIR__ . '/../LyricFind.setup.php';
 		parent::setUp();
+
+		// mock title and prevent DB changes
+		$this->mockGlobalVariable('wgTitle', $this->mockClassWithMethods('Title', [
+			'getArticleID' => 123
+		]));
 	}
 
 	/**
-	 *
 	 * @dataProvider trackDataProvider
 	 * @param $amgId
 	 * @param $trackResult
@@ -38,10 +42,11 @@ class LyricFindControllerTest extends WikiaBaseTest {
 				'trackResult' => false,
 				'responseCode' => 404
 			],
+			// should be ok, despite missing amg ID
 			[
 				'amgId' => 0,
 				'trackResult' => true,
-				'responseCode' => 404
+				'responseCode' => 204
 			],
 		];
 	}
