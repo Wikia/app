@@ -12,6 +12,11 @@ define('SuggestionsMatcher', [], function() {
 			patternPos = 0,
 			lastValidChar = 0;
 
+		//start from first normal character in pattern
+		while( patternPos < pattern.length && testChar(pattern[patternPos]) ) {
+			patternPos++;
+		}
+
 		while( patternPos < pattern.length ) {
 			if( title.length <= from+len ) {
 				if ( lastValidChar > 0 && testChar(pattern[patternPos]) && title.length >= from+lastValidChar ) {
