@@ -41,6 +41,11 @@ ve.ui.WikiaMediaInsertDialog.static.pages = [ 'search', 'suggestions' ];
  * @method
  */
 ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
+	var uploadEvents = {
+		'change': 'onUploadChange',
+		'upload': 'onUploadSuccess'
+	};
+
 	// Parent method
 	ve.ui.MWDialog.prototype.initialize.call( this );
 
@@ -90,11 +95,8 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 		'nearingEnd': 'onSearchNearingEnd',
 		'check': 'onSearchCheck'
 	} );
-	this.upload.connect( this, {
-		'change': 'onUploadChange',
-		'upload': 'onUploadSuccess'
-	} );
-	this.queryUpload.on( 'upload', ve.bind( this.onUploadSuccess, this ) );
+	this.upload.connect( this, uploadEvents );
+	this.queryUpload.connect( this, uploadEvents );
 
 	// Initialization
 	this.upload.$.appendTo( this.$mainPage );
