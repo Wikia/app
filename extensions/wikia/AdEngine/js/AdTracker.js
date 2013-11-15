@@ -74,14 +74,20 @@ var AdTracker = function (log, tracker) {
 		});
 	}
 
-	function trackEnd(provider, category, slotname, hopTime) {
+	function trackEnd(provider, category, slotname, hopTime, reason) {
 		log(['trackEnd', category, slotname, hopTime], 'debug', logGroup);
+
+		var labelPrefix;
+
+		if (reason) {
+			labelPrefix = reason + '/';
+		}
 
 		tracker.track({
 			eventName: 'liftium.hop2',
 			ga_category: category + '2/' + provider,
 			ga_action: 'slot ' + slotname,
-			ga_label: formatTrackTime(hopTime),
+			ga_label: labelPrefix + formatTrackTime(hopTime),
 			trackingMethod: 'ad'
 		});
 	}
@@ -102,12 +108,13 @@ var AdTracker = function (log, tracker) {
 				}
 				trackEnd(provider, 'success', slotname, slotEnd - slotStart);
 			},
-			hop: function () {
+			hop: function (reason) {
 				var slotEnd = new Date().getTime();
+
 				if (!slotStart) {
 					throw 'AdTracker: call init before hop';
 				}
-				trackEnd(provider, 'hop', slotname, slotEnd - slotStart);
+				trackEnd(provider, 'hop', slotname, slotEnd - slotStart, reason);
 			}
 		};
 	}

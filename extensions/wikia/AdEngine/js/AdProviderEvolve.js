@@ -169,7 +169,7 @@ var AdProviderEvolve = function (adLogicPageLevelParamsLegacy, scriptWriter, adT
 		slotname = sanitizeSlotname(slotname);
 
 		hoppedSlots[slotname] = true;
-		slotTrackers[slotname].hop();
+		slotTrackers[slotname].hop(method);
 
 		window.adslots2.push([slotname, undef, 'Liftium2Dom']);
 	}
