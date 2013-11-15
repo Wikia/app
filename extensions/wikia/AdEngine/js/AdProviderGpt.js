@@ -60,25 +60,6 @@ var AdProviderGpt = function (adTracker, log, window, Geo, slotTweaker, cacheSto
 
 	// Private methods
 
-	function formatTrackTime(t, max) {
-		if (isNaN(t)) {
-			log('Error, time tracked is NaN: ' + t, 7, logGroup);
-			return "NaN";
-		}
-
-		if (t < 0) {
-			log('Error, time tracked is a negative number: ' + t, 7, logGroup);
-			return "negative";
-		}
-
-		t /= 1000;
-		if (t > max) {
-			return "more_than_" + max;
-		}
-
-		return t.toFixed(1);
-	}
-
 	function incrementItemInStorage(storageKey) {
 		log('incrementItemInStorage ' + storageKey, 5, logGroup);
 
@@ -120,7 +101,6 @@ var AdProviderGpt = function (adTracker, log, window, Geo, slotTweaker, cacheSto
 		}
 
 		var slotname = slot[0],
-			slotsize = slotMap[slotname].size,
 
 			noAdStorageKey = 'dart_noad_' + slotname,
 			numCallForSlotStorageKey = 'dart_calls_' + slotname,
@@ -128,9 +108,6 @@ var AdProviderGpt = function (adTracker, log, window, Geo, slotTweaker, cacheSto
 			noAdLastTime = cacheStorage.get(noAdStorageKey, now) || false,
 			numCallForSlot = cacheStorage.get(numCallForSlotStorageKey, now) || 0,
 			dontCallDart = false,
-
-			hopTimer,
-			hopTime,
 
 			slotTracker = adTracker.trackSlot('addriver2', slotname),
 
@@ -143,8 +120,6 @@ var AdProviderGpt = function (adTracker, log, window, Geo, slotTweaker, cacheSto
 				// don't track hop if dart was not called but rather skipped
 				if (isHighValueCountry && !dontCallDart) {
 					// Track hop time
-					hopTime = new Date().getTime() - hopTimer;
-					log('slotTimer2 end for ' + slotname + ' after ' + hopTime + ' ms (hop)', 7, logGroup);
 					slotTracker.hop();
 				}
 
@@ -161,8 +136,6 @@ var AdProviderGpt = function (adTracker, log, window, Geo, slotTweaker, cacheSto
 				// experimental hack: track LB success time
 				if (slotname.search('LEADERBOARD') > -1) {
 					// Track hop time
-					hopTime = new Date().getTime() - hopTimer;
-					log('slotTimer2 end for ' + slotname + ' after ' + hopTime + ' ms (success)', 7, logGroup);
 					slotTracker.success();
 				}
 			};
@@ -200,9 +173,6 @@ var AdProviderGpt = function (adTracker, log, window, Geo, slotTweaker, cacheSto
 		if (slotname.search('LEADERBOARD') > -1) {
 			leaderboardCalled = true;
 		}
-
-		hopTimer = new Date().getTime();
-		log('hopTimer start for ' + slotname, 7, logGroup);
 
 		incrementItemInStorage(numCallForSlotStorageKey);
 		cacheStorage.del(noAdStorageKey);
