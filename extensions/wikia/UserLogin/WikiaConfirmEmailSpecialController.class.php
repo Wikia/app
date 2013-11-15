@@ -103,6 +103,9 @@ class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
 					$userSignupRedirect = $user->getOption( UserLoginSpecialController::SIGNUP_REDIRECT_OPTION_NAME );
 					$user->setOption( UserLoginSpecialController::SIGNUP_REDIRECT_OPTION_NAME, null );
 
+					// CE-487 Set marketingallowed option (note: should be already done on signup, but somehow it isn't)
+					$user->setOption( 'marketingallowed', 1);
+
 					$user->saveSettings();
 
 					// send welcome email
