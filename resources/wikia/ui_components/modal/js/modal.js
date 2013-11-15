@@ -7,7 +7,8 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window', 'wikia.browserDetect' ], f
 		INACTIVE_CLASS = 'inactive',
 		destroyOnClose,
 		// vars required for disable scroll behind modal
-		bodyElm = $( 'body' ),
+		$bodyElm = $( 'body' ),
+		$win = $( w ),
 		wScrollTop;
 
 	/**
@@ -34,21 +35,25 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window', 'wikia.browserDetect' ], f
 	 * Disable scrolling content behind modal
 	 */
 
-	function disableScrollBehindModal() {
-		if ( bodyElm.hasClass( 'with-blackout' ) === false ) {
-			// prevent page from jumping to right if vertical scroll bar exist
-			if ( bodyElm.height() > $( w ).height() ) {
-				bodyElm.addClass( 'fake-scrollbar' );
-			}
-
-			wScrollTop = $( w ).scrollTop();
-
-			bodyElm.addClass( 'with-blackout').css('top', -wScrollTop);
-
-		} else {
-			bodyElm.removeClass( 'with-blackout fake-scrollbar' );
-			$( w ).scrollTop( wScrollTop );
+	function blockPageScrolling() {
+		// prevent page from jumping to right if vertical scroll bar exist
+		if ( $bodyElm.height() > $win.height() ) {
+			$bodyElm.addClass( 'fake-scrollbar' );
 		}
+
+		// set current page vertical position
+		wScrollTop = $win.scrollTop();
+
+		$bodyElm.addClass( 'with-blackout' ).css( 'top', -wScrollTop );
+	}
+
+	/**
+	 *  Cancel blockPageScrolling() function effect
+	 */
+
+	function unblockPageScrolling() {
+		$bodyElm.removeClass( 'with-blackout fake-scrollbar' );
+		$win.scrollTop( wScrollTop );
 	}
 
 	/**
@@ -119,7 +124,7 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window', 'wikia.browserDetect' ], f
 
 	Modal.prototype.show = function() {
 
-		disableScrollBehindModal();
+		blockPageScrolling();
 
 		this.$blackout.addClass( BLACKOUT_VISIBLE_CLASS );
 
@@ -147,7 +152,7 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window', 'wikia.browserDetect' ], f
 			this.$blackout.remove();
 		}
 
-		disableScrollBehindModal();
+		unblockPageScrolling();
 
 		this.onClose();
 	};
