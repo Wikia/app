@@ -79,6 +79,8 @@ class LyricFindTrackingService extends WikiaService {
 			'useragent' => isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : self::DEFAULT_USER_AGENT
 		];
 
+		wfDebug(__METHOD__ . ': ' . json_encode($data) . "\n");
+
 		$resp = Http::post($url, ['postData' => $data]);
 
 		if ($resp !== false) {
@@ -104,7 +106,7 @@ class LyricFindTrackingService extends WikiaService {
 
 				// log errors
 				if ($success === false) {
-					Wikia::log(__METHOD__, false, "got #{$code} response code from API (track #{$amgId})", true);
+					Wikia::log(__METHOD__, false, "got #{$code} response code from API (track amg#{$amgId} / gn#{$$gracenoteId})", true);
 				}
 			}
 		}

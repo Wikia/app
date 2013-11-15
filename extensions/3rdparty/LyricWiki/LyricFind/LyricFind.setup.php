@@ -1,14 +1,13 @@
 <?php
 
 /**
- * Provides page views counter for LyricFind namespace
+ * Provides page views counter for namespaces with lyric pages
  *
  * @author macbre
- * @var $app WikiaApp
- */
-
+  */
 $wgExtensionCredits['other'][] = array(
 	'name' => 'LyricFind',
+	'version' => '1.1',
 	'author' => array('Maciej Brencz'),
 	'description' => 'Provides page views tracking and &lt;lyricfind&gt; parser tag'
 );
@@ -30,7 +29,11 @@ $wgAutoloadClasses['LyricFindController'] =  $dir . '/LyricFindController.class.
 $wgAutoloadClasses['LyricFindTrackingService'] =  $dir . '/LyricFindTrackingService.class.php';
 $wgHooks['OasisSkinAssetGroups'][] = 'LyricFindHooks::onOasisSkinAssetGroups';
 
-$wgLyricFindTrackingNamespaces = array(NS_LYRICFIND);
+$wgLyricFindTrackingNamespaces = [
+	NS_MAIN,
+	220, // NS_GRACENOTE
+	NS_LYRICFIND
+];
 
 // LyricFind indexing
 $wgHooks['BeforePageDisplay'][] = 'LyricFindHooks::onBeforePageDisplay';
