@@ -43,6 +43,7 @@ class DataMartService extends Service {
 			}
 		}
 
+		$memKey = wfSharedMemcKey('datamart', 'pageviews', $wikiId, $periodId, $startDate, $endDate);
 		$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
 		$pageviews = (new WikiaSQL())->skipSqlIf(empty($app->wg->StatsDBEnabled))
 			->SELECT("date_format(time_id,'%Y-%m-%d')")->AS_('date')
@@ -59,7 +60,7 @@ class DataMartService extends Service {
 				}
 
 				return $pageViews;
-			});
+			}, $memKey);
 
 		wfProfileOut(__METHOD__);
 
@@ -92,6 +93,7 @@ class DataMartService extends Service {
 			}
 		}
 
+		$memKey = wfSharedMemcKey('datamart', 'pageviews_wikis', md5(implode(":", $wikis)), $periodId, $startDate, $endDate);
 		$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
 		$pageviews = (new WikiaSQL())->skipSqlIf(empty($app->wg->StatsDBEnabled))
 			->SELECT('wiki_id')
@@ -111,7 +113,7 @@ class DataMartService extends Service {
 				}
 
 				return $pageViews;
-			});
+			}, $memKey);
 
 		wfProfileOut(__METHOD__);
 
@@ -134,6 +136,7 @@ class DataMartService extends Service {
 			return array();
 		}
 
+		$memKey = wfSharedMemcKey('datamart', 'sumpageviews', $periodId, md5(implode(":", $dates)));
 		$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
 		$pageviews = (new WikiaSQL())->skipSqlIf(empty($app->wg->StatsDBEnabled))
 			->SELECT('time_id')
@@ -150,7 +153,7 @@ class DataMartService extends Service {
 				}
 
 				return $pageViews;
-			});
+			}, $memKey);
 
 		wfProfileOut(__METHOD__);
 
@@ -228,6 +231,7 @@ class DataMartService extends Service {
 				break;
 		}
 
+		$memKey = wfSharedMemcKey('datamart', 'topwikis', 2, $field, $limitUsed, implode( ',', $langs ), $hub, $public);
 		$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
 		$sql = (new WikiaSQL())->skipSqlIf(empty($app->wg->StatsDBEnabled))
 			->SELECT('r.wiki_id')->AS_('id')
@@ -260,7 +264,7 @@ class DataMartService extends Service {
 			}
 
 			return $topWikis;
-		});
+		}, $memKey);
 
 		wfProfileOut(__METHOD__);
 		return $topWikis;
@@ -280,6 +284,7 @@ class DataMartService extends Service {
 		$app = F::app();
 		wfProfileIn(__METHOD__);
 
+		$memKey = wfSharedMemcKey('datamart', 'topvideowikis', 1, $periodId);
 		$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
 		$topWikis = (new WikiaSQL())->skipSqlIf(empty($app->wg->StatsDBEnabled))
 			->SELECT('r.wiki_id')->AS_('id')
@@ -299,7 +304,7 @@ class DataMartService extends Service {
 				}
 
 				return $topWikis;
-			});
+			}, $memKey);
 
 		$topWikis = array_slice($topWikis, 0, $limit, true);
 
@@ -334,6 +339,7 @@ class DataMartService extends Service {
 			}
 		}
 
+		$memKey = wfSharedMemcKey('datamart', 'events', $wikiId, $periodId, $startDate, $endDate);
 		$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
 		$events = (new WikiaSQL())->skipSqlIf(empty($app->wg->StatsDBEnabled))
 			->SELECT("date_format(time_id,'%Y-%m-%d')")->AS_('date')
@@ -360,7 +366,7 @@ class DataMartService extends Service {
 				}
 
 				return $events;
-			});
+			}, $memKey);
 
 		// get data depending on eventType
 		if (!empty($eventType)) {
