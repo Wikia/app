@@ -53,8 +53,8 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 		'flags': ['primary']
 	} );
 	this.insertionDetails = {};
+	this.license = { 'promise': null, 'html': null };
 	this.pages = new ve.ui.PagedLayout( { '$$': this.frame.$$, 'attachPagesPanel': true } );
-	this.promise = {};
 	this.query = new ve.ui.WikiaMediaQueryWidget( {
 		'$$': this.frame.$$,
 		'placeholder': ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' )
@@ -90,7 +90,10 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 		'nearingEnd': 'onSearchNearingEnd',
 		'check': 'onSearchCheck'
 	} );
-	this.upload.on( 'upload', ve.bind( this.onUploadSuccess, this ) );
+	this.upload.connect( this, {
+		'change': 'onUploadChange',
+		'upload': 'onUploadSuccess'
+	} );
 	this.queryUpload.on( 'upload', ve.bind( this.onUploadSuccess, this ) );
 
 	// Initialization
@@ -108,8 +111,6 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	this.$body.append( this.$content, this.$cart );
 	this.frame.$content.addClass( 've-ui-wikiaMediaInsertDialog' );
 	this.$foot.append( this.insertButton.$ );
-
-	this.getLicense();
 };
 
 /**
@@ -226,27 +227,32 @@ ve.ui.WikiaMediaInsertDialog.prototype.onCartSelect = function ( item ) {
 };
 
 /**
+ * Handle adding items to the cart.
+ *
  * @method
  * @param {ve.dm.WikiaCartItem[]} items
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onCartAdd = function ( items ) {
-	this.promise.license.done( ve.bind( function ( license ) {
-		var i, item, page;
-		for ( i = 0; i < items.length; i++ ) {
-			item = items[i];
-			page = new ve.ui.WikiaMediaPageWidget( item, {
-				'$$': this.frame.$$,
-				'$license': this.$$( license ),
-				'editable': item.isTemporary()
-			} );
-			page.connect( this, { 'remove': 'onMediaPageRemove' } );
-			this.pages.addPage( item.title, { '$content': page.$ } );
+	var config, i, isTemporary, item, page;
+
+	for ( i = 0; i < items.length; i++ ) {
+		item = items[i];
+		isTemporary = item.isTemporary();
+		config = { '$$': this.frame.$$, 'editable': isTemporary };
+		if ( isTemporary ) {
+			config.$license = this.$$( this.license.html );
 		}
-		this.searchResults.setChecked( items, true );
-	}, this ) );
+		page = new ve.ui.WikiaMediaPageWidget( item, config );
+		page.connect( this, { 'remove': 'onMediaPageRemove' } );
+		this.pages.addPage( item.title, { '$content': page.$ } );
+	}
+
+	this.searchResults.setChecked( items, true );
 };
 
 /**
+ * Handle removing items from the cart.
+ *
  * @method
  * @param {ve.dm.WikiaCartItem[]} items
  */
@@ -344,22 +350,23 @@ ve.ui.WikiaMediaInsertDialog.prototype.convertTemporaryToPermanent = function ( 
 			'type': 'permanent',
 			'desiredName': cartItem.title
 		};
-	if ( cartItem.license ) {
-		data.license = cartItem.license;
-	}
+
 	if ( cartItem.type === 'video' ) {
 		data.provider = cartItem.provider;
 		data.videoId = cartItem.videoId;
 	} else {
+		data.license = cartItem.license;
 		data.temporaryFileName = cartItem.temporaryFileName;
 	}
+
 	$.ajax( {
 		'url': mw.util.wikiScript( 'api' ),
 		'data': data,
-		'success': function( data ) {
+		'success': function ( data ) {
 			deferred.resolve( data.apitempupload.name );
 		}
 	} );
+
 	return deferred.promise();
 };
 
@@ -370,7 +377,8 @@ ve.ui.WikiaMediaInsertDialog.prototype.convertTemporaryToPermanent = function ( 
 ve.ui.WikiaMediaInsertDialog.prototype.insertMedia = function ( cartItems ) {
 	var i, promises = [];
 
-	function temporaryToPermanentCallback ( cartItem, name ) {
+	// TODO: consider encapsulating this so it doesn't get created on every function call
+	function temporaryToPermanentCallback( cartItem, name ) {
 		cartItem.temporaryFileName = null;
 		cartItem.url = null;
 		cartItem.title = 'File:' + name;
@@ -386,9 +394,9 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertMedia = function ( cartItems ) {
 		}
 	}
 
-	$.when.apply( $, promises ).done(
-		ve.bind( function() { this.insertPermanentMedia( cartItems ); }, this )
-	);
+	$.when.apply( $, promises ).done( ve.bind( function() {
+		this.insertPermanentMedia( cartItems );
+	}, this ) );
 };
 
 /**
@@ -471,59 +479,59 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMedia = function ( cartIte
  * @param {Object} items Items to insert
  */
 ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMediaCallback = function ( items ) {
-		var count, item, title, type,
-			typeCount = { 'photo': 0, 'video': 0 },
-			linmod = [];
+	var count, item, title, type,
+		typeCount = { 'photo': 0, 'video': 0 },
+		linmod = [];
 
-		for ( title in items ) {
-			item = items[title];
-			type = 'wikiaBlock' + ( item.type === 'photo' ? 'Image' : 'Video' );
-			typeCount[item.type]++;
-			linmod.push(
-				{
-					'type': type,
-					'attributes': {
-						'type': 'thumb',
-						'align': 'default',
-						'href': './' + item.title,
-						'src': item.url,
-						'width': item.width,
-						'height': item.height,
-						'resource': './' + item.title,
-						'attribution': {
-							'username': item.username,
-							'avatar': item.avatar
-						}
+	for ( title in items ) {
+		item = items[title];
+		type = 'wikiaBlock' + ( item.type === 'photo' ? 'Image' : 'Video' );
+		typeCount[item.type]++;
+		linmod.push(
+			{
+				'type': type,
+				'attributes': {
+					'type': 'thumb',
+					'align': 'default',
+					'href': './' + item.title,
+					'src': item.url,
+					'width': item.width,
+					'height': item.height,
+					'resource': './' + item.title,
+					'attribution': {
+						'username': item.username,
+						'avatar': item.avatar
 					}
-				},
-				{ 'type': 'wikiaMediaCaption' },
-				{ 'type': '/wikiaMediaCaption' },
-				{ 'type': '/' + type }
-			);
-		}
+				}
+			},
+			{ 'type': 'wikiaMediaCaption' },
+			{ 'type': '/wikiaMediaCaption' },
+			{ 'type': '/' + type }
+		);
+	}
 
-		for ( type in typeCount ) {
-			count = typeCount[type];
-			if ( type === 'photo' ) {
-				type = 'image';
-			}
-			if ( count ) {
-				ve.track( {
-					'action': ve.track.actions.ADD,
-					'label': 'dialog-media-insert-' + type,
-					'value': count
-				} );
-			}
+	for ( type in typeCount ) {
+		count = typeCount[type];
+		if ( type === 'photo' ) {
+			type = 'image';
 		}
-
-		if ( count.image && count.video ) {
+		if ( count ) {
 			ve.track( {
 				'action': ve.track.actions.ADD,
-				'label': 'dialog-media-insert-multiple'
+				'label': 'dialog-media-insert-' + type,
+				'value': count
 			} );
 		}
+	}
 
-		this.surface.getModel().getFragment().collapseRangeToEnd().insertContent( linmod );
+	if ( count.image && count.video ) {
+		ve.track( {
+			'action': ve.track.actions.ADD,
+			'label': 'dialog-media-insert-multiple'
+		} );
+	}
+
+	this.surface.getModel().getFragment().collapseRangeToEnd().insertContent( linmod );
 };
 
 /**
@@ -542,7 +550,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.getPhotoAttribution = function ( title ) 
 			'format': 'json',
 			'file': title
 		},
-		'success': function( data ) {
+		'success': function ( data ) {
 			deferred.resolve( data );
 		}
 	} );
@@ -600,26 +608,38 @@ ve.ui.WikiaMediaInsertDialog.prototype.onGetImageInfoSuccess = function ( deferr
  * Gets media license dropdown HTML template.
  *
  * @method
- * @returns {string} Html template for licenses
+ * @returns {jQuery.Deferred} The AJAX API request promise
  */
 ve.ui.WikiaMediaInsertDialog.prototype.getLicense = function () {
-	if ( this.promise.license ) {
-		return this.promise.license;
+	var deferred;
+
+	if ( !this.license.promise ) {
+		deferred = $.Deferred();
+		this.license.promise = deferred.promise();
+		$.ajax( {
+			'url': mw.util.wikiScript( 'api' ),
+			'data': {
+				'action': 'licenses',
+				'format': 'json',
+				'id': 'license',
+				'name': 'license'
+			},
+			'success': ve.bind( function ( data ) {
+				deferred.resolve( this.license.html = data.licenses.html );
+			}, this )
+		} );
 	}
 
-	this.promise.license = $.Deferred();
-	$.ajax( {
-		'url': mw.util.wikiScript( 'api' ),
-		'data': {
-			'action': 'licenses',
-			'format': 'json',
-			'id': 'license',
-			'name': 'license'
-		},
-		'success': ve.bind( function ( data ) {
-			this.promise.license.resolve( data.licenses.html );
-		}, this )
-	} );
+	return this.license.promise;
+};
+
+/**
+ * Handle file input changes.
+ *
+ * @method
+ */
+ve.ui.WikiaMediaInsertDialog.prototype.onUploadChange = function () {
+	this.getLicense();
 };
 
 /**
@@ -629,10 +649,14 @@ ve.ui.WikiaMediaInsertDialog.prototype.getLicense = function () {
  * @param {Object} data The uploaded file information
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onUploadSuccess = function ( data ) {
-	this.cartModel.addItems( [
-		new ve.dm.WikiaCartItem( data.title, data.temporaryThumbUrl, 'photo', data.temporaryFileName )
-	] );
-	this.setPage( data.title );
+	if ( !this.license.html ) {
+		this.license.promise.done( ve.bind( this.onUploadSuccess, this, data ) );
+	} else {
+		this.cartModel.addItems( [
+			new ve.dm.WikiaCartItem( data.title, data.temporaryThumbUrl, 'photo', data.temporaryFileName )
+		] );
+		this.setPage( data.title );
+	}
 };
 
 /* Registration */

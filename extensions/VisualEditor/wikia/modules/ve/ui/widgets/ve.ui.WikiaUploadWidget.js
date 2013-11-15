@@ -39,7 +39,7 @@ ve.ui.WikiaUploadWidget = function VeUiWikiaUploadWidget( config ) {
 	this.$file = this.$$( '<input>' ).attr( {
 		'type': 'file',
 		'name': 'file'
-		} );
+	} );
 
 	// Events
 	this.$.on( 'click', ve.bind( this.onClick, this ) );
@@ -60,6 +60,17 @@ ve.ui.WikiaUploadWidget = function VeUiWikiaUploadWidget( config ) {
 
 ve.inheritClass( ve.ui.WikiaUploadWidget, ve.ui.Widget );
 
+/* Events */
+
+/**
+ * @event change
+ */
+
+/**
+ * @event upload
+ * @param {Object} data The API response data.
+ */
+
 /* Methods */
 
 /**
@@ -75,12 +86,14 @@ ve.ui.WikiaUploadWidget.prototype.onClick = function () {
  * Handle input file change event
  *
  * @method
+ * @fires success
  */
 ve.ui.WikiaUploadWidget.prototype.onFileChange = function () {
+	var formData;
 	if ( !this.$file[0].files[0] ) {
 		return;
 	}
-	var formData = new FormData( this.$form[0] );
+	formData = new FormData( this.$form[0] );
 	$.ajax( {
 		'url': mw.util.wikiScript( 'api' ) + '?action=apitempupload&type=temporary&format=json',
 		'type': 'post',
@@ -93,6 +106,7 @@ ve.ui.WikiaUploadWidget.prototype.onFileChange = function () {
 	} );
 	this.showUploadAnimation();
 	this.$file.attr( 'value', '' );
+	this.emit( 'change' );
 };
 
 /**
@@ -112,6 +126,7 @@ ve.ui.WikiaUploadWidget.prototype.onUploadSuccess = function ( data ) {
 	}
 
 	// Success
+	// TODO: this should probably fire 'success' not 'upload'
 	this.emit( 'upload', data.apitempupload );
 };
 
