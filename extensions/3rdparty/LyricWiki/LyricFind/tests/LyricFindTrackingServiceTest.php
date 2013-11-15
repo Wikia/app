@@ -27,10 +27,10 @@ class LyricFindTrackingServiceTest extends WikiaBaseTest {
 	public function testFormatTrackId($amgId, $gracenoteId, $title, $expected) {
 		$service = new LyricFindTrackingService();
 
-		$refl = new ReflectionMethod('LyricFindTrackingService', 'formatTrackId');
-		$refl->setAccessible(true);
+		$method = new ReflectionMethod('LyricFindTrackingService', 'formatTrackId');
+		$method->setAccessible(true);
 
-		$trackId = $refl->invoke($service, [
+		$trackId = $method->invoke($service, [
 			'amg' => $amgId,
 			'gracenote' => $gracenoteId,
 			'title' => $title
@@ -96,7 +96,7 @@ class LyricFindTrackingServiceTest extends WikiaBaseTest {
 
 		$this->mockStaticMethod('Http', 'post', $respMock);
 		$this->mockGlobalVariable('wgTitle', $this->mockClassWithMethods('Title', [
-			'getArticleID' => 123,
+			'getArticleID' => 666,
 			'getText' => 'Paradise_Lost:Forever_Failure'
 		]));
 
