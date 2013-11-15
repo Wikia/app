@@ -35,6 +35,17 @@ describe('Test matcher', function() {
 		test = 'a:b:c:d:e';
 		expect(matcher.match(test, 'b')).toEqual( { prefix: 'a:', match: 'b', suffix: ':c:d:e' } );
 		expect(matcher.match(test, 'bc')).toBeNull();
+		test = 'the a-test';
+		expect(matcher.match(test, 'a:')).toEqual( { prefix: 'the ', match: 'a', suffix: '-test' } );
+		test = 'Map Pack';
+		expect(matcher.match(test, 'map:')).toEqual( { prefix: '', match: 'Map', suffix: ' Pack' } );
+		test = 'Maps';
+		expect(matcher.match(test, 'map:')).toEqual( { prefix: '', match: 'Map', suffix: 's' } );
+		expect(matcher.match(test, 'map: ')).toEqual( { prefix: '', match: 'Map', suffix: 's' } );
+		expect(matcher.match(test, 'maps:')).toEqual( { prefix: '', match: 'Maps', suffix: '' } );
+		expect(matcher.match(test, 'maps: ')).toEqual( { prefix: '', match: 'Maps', suffix: '' } );
+		test = 'Map';
+		expect(matcher.match(test, 'maps')).toBeNull();
 	});
 
 });

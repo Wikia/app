@@ -9,17 +9,25 @@ define('SuggestionsMatcher', [], function() {
 	}
 	function matchStartingFrom( title, pattern, from ) {
 		var len = 0,
-			patternPos = 0;
+			patternPos = 0,
+			lastValidChar = 0;
 
 		while( patternPos < pattern.length ) {
 			if( title.length <= from+len ) {
+				if ( lastValidChar > 0 && testChar(pattern[patternPos]) && title.length >= from+lastValidChar ) {
+					break;
+				} else {
+					return null;
+				}
+			}
+			if( getChar(pattern[patternPos]) !== '' && getChar(title[from+len]) !== getChar(pattern[patternPos]) ) {
 				return null;
 			}
-			if( getChar(title[from+len]) !== getChar(pattern[patternPos]) ) { return null; }
 			if( testChar(title[from+len]) ) {
-				do { len++; } while( from+len < title.length && testChar(title[from+len]) );
+				do { len++; } while( from+len <= title.length && testChar(title[from+len]) );
 			} else {
 				len++;
+				lastValidChar = len;
 			}
 			if( testChar(pattern[patternPos]) ) {
 				do { patternPos++; } while( patternPos < pattern.length && testChar(pattern[patternPos]) );
@@ -28,10 +36,14 @@ define('SuggestionsMatcher', [], function() {
 			}
 		}
 
+		if(len === lastValidChar && lastValidChar === title.length && !pattern[patternPos]) {
+			lastValidChar--;
+		}
+
 		return {
 			prefix: title.substr(0, from),
-			match: title.substr(from, len),
-			suffix: title.substr(from + len)
+			match: title.substr(from, lastValidChar),
+			suffix: title.substr(from + lastValidChar)
 		};
 	}
 	return {
