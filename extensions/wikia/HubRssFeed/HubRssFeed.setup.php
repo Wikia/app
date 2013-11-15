@@ -12,12 +12,11 @@ $wgAutoloadClasses['HubRssFeedService']	= $dir . 'HubRssFeedService.class.php';
 $wgSpecialPages['HubRssFeed']		= 'HubRssFeedSpecialController';
 
 $wgHubRssFeeds = array(
-	'gaming', 'entertainment','lifestyle'
+	'Gaming', 'Entertainment','Lifestyle'
 );
 
 foreach ( $wgHubRssFeeds as $feed ) {
-	if ( strtolower( $_REQUEST['title'] ) == strtolower( 'Special:HubRssFeed/'.$feed ) ) {
-
+	if ( strcmp( $_SERVER['REQUEST_URI'],  '/rss/'.$feed ) ) {
 		/*
 		 * This is used by WebRequest::interpolateTitle to overwrite title in $_GET
 		 * (based on $_SERVER['REQUEST_URI']).
