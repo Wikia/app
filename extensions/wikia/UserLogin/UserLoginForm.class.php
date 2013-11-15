@@ -253,7 +253,7 @@ class UserLoginForm extends LoginForm {
 			$u->saveSettings();
 			$u->saveToCache();
 			wfWaitForSlaves();
-			error_log('KamilkUserSignup-WIKIA: debug-log:SetUnconfirmed:UserId:'.$u->getId()."\n".print_r($u->getOptions(),true));
+			error_log('KamilkUserSignup-WIKIA: debug-log:SetUnconfirmed:UserId:'.$u->getId()."\n".json_encode($u->getOptions()));
 			UserLoginHelper::setNotConfirmedUserSession( $u->getId() );
 		}
 
