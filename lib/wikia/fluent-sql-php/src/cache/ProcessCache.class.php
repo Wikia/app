@@ -12,7 +12,7 @@ namespace FluentSql;
 class ProcessCache extends Cache {
 	static $cache = [];
 
-	public function get(Breakdown $breakDown, $key) {
+	public function get($key) {
 		$result = false;
 
 		if (isset(self::$cache[$key])) {
@@ -22,7 +22,7 @@ class ProcessCache extends Cache {
 		return $result;
 	}
 
-	public function set(Breakdown $breakDown, $value, $ttl, $key) {
+	public function set($key, $value, $ttl) {
 		self::$cache[$key] = $value;
 		return true;
 	}

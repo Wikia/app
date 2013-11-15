@@ -32,14 +32,19 @@ class WikiaSQL extends FluentSql\SQL {
 
 	/**
 	 * @param DatabaseBase $db
-	 * @param string $preparedSql
-	 * @param array $params
+	 * @param sql\Breakdown $breakDown
 	 * @return mixed
 	 */
 	public function injectParams($db, sql\Breakdown $breakDown) {
 		return $db->fillPrepared($breakDown->getSql(), $breakDown->getParameters());
 	}
 
+	/**
+	 * skip the sql execution if the following condition evaluates to true
+	 *
+	 * @param bool $condition
+	 * @return sql\SQL
+	 */
 	public function skipSqlIf($condition) {
 		$this->skipIfCondition = $condition;
 		return $this;

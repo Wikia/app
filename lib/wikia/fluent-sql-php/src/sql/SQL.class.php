@@ -816,7 +816,10 @@ class SQL {
 	}
 
 	/**
-	 * @param $ttl
+	 * indicate that we want to fetch from a cache and, if cache result is not found, cache
+	 * the results of the database query
+	 *
+	 * @param int $ttl cache time to live
 	 * @return SQL
 	 */
 	public function cache($ttl) {
@@ -825,6 +828,15 @@ class SQL {
 		return $this;
 	}
 
+	/**
+	 * run this query, fetching from/setting to the cache if there is a TTL defined
+	 *
+	 * @param mixed $db database to query against
+	 * @param callable $callback callback to process the raw database result
+	 * @param string|null $cacheKey optionally forced cache key. If not provided, one will be generated
+	 * @param mixed|array $defaultReturn default return value if we're unable to query and there is no cache value
+	 * @return mixed|bool results returned by $callback processing of the db query result, or false on error
+	 */
 	public function run($db, callable $callback, $cacheKey=null, $defaultReturn=[]) {
 		$breakDown = $this->build();
 		$cache = $this->getCache();
@@ -832,14 +844,14 @@ class SQL {
 		$result = false;
 
 		if ($this->cacheEnabled()) {
-			$result = $cache->get($breakDown, $cacheKey);
+			$result = $cache->get($cacheKey);
 		}
 
 		if ($result === false) {
 			$result = $this->query($db, $breakDown, $callback);
 
 			if ($this->cacheEnabled() && $result) {
-				$cache->set($breakDown, $result, $this->cacheTtl, $cacheKey);
+				$cache->set($cacheKey, $result, $this->cacheTtl);
 			}
 		}
 

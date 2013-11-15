@@ -29,12 +29,12 @@ class WikiaSQLCache extends FluentSql\Cache {
 		return call_user_func_array('wfMemcKey', $keyArgs);
 	}
 
-	public function get(\FluentSql\Breakdown $breakDown, $key) {
+	public function get($key) {
 		global $wgMemc;
 		return $wgMemc->get($key);
 	}
 
-	public function set(\FluentSql\Breakdown $breakDown, $value, $ttl, $key) {
+	public function set($key, $value, $ttl) {
 		global $wgMemc;
 		return $wgMemc->set($key, $value, $ttl);
 	}

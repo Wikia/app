@@ -14,6 +14,6 @@ abstract class Cache {
 		return md5($breakDown->getSql().implode(',', $breakDown->getParameters()));
 	}
 
-	abstract public function get(Breakdown $breakDown, $key);
-	abstract public function set(Breakdown $breakDown, $value, $ttl, $key);
+	abstract public function get($key);
+	abstract public function set($key, $value, $ttl);
 }
