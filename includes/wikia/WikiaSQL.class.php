@@ -69,7 +69,7 @@ class WikiaSQL extends FluentSql\SQL {
 	 * @param bool $condition
 	 * @return WikiaSQL
 	 */
-	public function skipSqlIf($condition) {
+	public function skipIf($condition) {
 		$this->skipIfCondition = $condition;
 		return $this;
 	}

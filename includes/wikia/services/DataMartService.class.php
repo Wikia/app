@@ -44,7 +44,7 @@ class DataMartService extends Service {
 		}
 
 		$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
-		$pageviews = (new WikiaSQL())->skipSqlIf(empty($app->wg->StatsDBEnabled))->cacheGlobal(60*60*12)
+		$pageviews = (new WikiaSQL())->skipIf(empty($app->wg->StatsDBEnabled))->cacheGlobal(60*60*12)
 			->SELECT("date_format(time_id,'%Y-%m-%d')")->AS_('date')
 				->FIELD('pageviews')->AS_('cnt')
 			->FROM('rollup_wiki_pageviews')
@@ -92,7 +92,7 @@ class DataMartService extends Service {
 		}
 
 		$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
-		$pageviews = (new WikiaSQL())->skipSqlIf(empty($app->wg->StatsDBEnabled))->cacheGlobal(60*60*12)
+		$pageviews = (new WikiaSQL())->skipIf(empty($app->wg->StatsDBEnabled))->cacheGlobal(60*60*12)
 			->SELECT('wiki_id')
 				->FIELD("date_format(time_id,'%Y-%m-%d')")->AS_('date')
 				->FIELD('pageviews')->AS_('cnt')
@@ -133,7 +133,7 @@ class DataMartService extends Service {
 		}
 
 		$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
-		$pageviews = (new WikiaSQL())->skipSqlIf(empty($app->wg->StatsDBEnabled))->cacheGlobal(60*60*12)
+		$pageviews = (new WikiaSQL())->skipIf(empty($app->wg->StatsDBEnabled))->cacheGlobal(60*60*12)
 			->SELECT('time_id')
 				->SUM('pageviews')->AS_('cnt')
 			->FROM('rollup_wiki_pageviews')
@@ -226,7 +226,7 @@ class DataMartService extends Service {
 		}
 
 		$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
-		$sql = (new WikiaSQL())->skipSqlIf(empty($app->wg->StatsDBEnabled))->cacheGlobal(43200)
+		$sql = (new WikiaSQL())->skipIf(empty($app->wg->StatsDBEnabled))->cacheGlobal(43200)
 			->SELECT('r.wiki_id')->AS_('id')
 				->FIELD($field)->AS_('pageviews')
 			->FROM('report_wiki_recent_pageviews')->AS_('r')
@@ -277,7 +277,7 @@ class DataMartService extends Service {
 		wfProfileIn(__METHOD__);
 
 		$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
-		$topWikis = (new WikiaSQL())->skipSqlIf(empty($app->wg->StatsDBEnabled))->cacheGlobal(43200)
+		$topWikis = (new WikiaSQL())->skipIf(empty($app->wg->StatsDBEnabled))->cacheGlobal(43200)
 			->SELECT('r.wiki_id')->AS_('id')
 				->SUM('views')->AS_('totalViews')
 			->FROM('rollup_wiki_video_views')->AS_('r')
@@ -330,7 +330,7 @@ class DataMartService extends Service {
 		}
 
 		$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
-		$events = (new WikiaSQL())->skipSqlIf(empty($app->wg->StatsDBEnabled))->cacheGlobal(60*60*12)
+		$events = (new WikiaSQL())->skipIf(empty($app->wg->StatsDBEnabled))->cacheGlobal(60*60*12)
 			->SELECT("date_format(time_id,'%Y-%m-%d')")->AS_('date')
 				->SUM('creates')->AS_('creates')
 				->SUM('edits')->AS_('edits')
@@ -404,7 +404,7 @@ class DataMartService extends Service {
 			86400 /* 24 hours */,
 			function () use ($app, $wikiId, $userIds, $periodId, $rollupDate) {
 				$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
-				$events = (new WikiaSQL())->skipSqlIf(empty($app->wg->StatsDBEnabled))
+				$events = (new WikiaSQL())->skipIf(empty($app->wg->StatsDBEnabled))
 					->SELECT('user_id')
 						->SUM('creates')->AS_('creates')
 						->SUM('edits')->AS_('edits')
@@ -519,7 +519,7 @@ class DataMartService extends Service {
 			*/
 
 			$db = wfGetDB( DB_SLAVE, array(), $app->wg->DatamartDB );
-			$sql = (new WikiaSQL())->skipSqlIf(empty($app->wg->StatsDBEnabled))
+			$sql = (new WikiaSQL())->skipIf(empty($app->wg->StatsDBEnabled))
 				->SELECT('namespace_id', 'article_id')
 					->SUM('pageviews')->AS_('pv')
 				->FROM('rollup_wiki_article_pageviews')
