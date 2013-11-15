@@ -346,11 +346,14 @@ class VideoHandlerHelper extends WikiaModel {
 	 * Checks to see if the video title passed in has a thumbnail on disk or not.
 	 *
 	 * @param string|Title $title - The video title to check
-	 * @param boolean $fixit - Whether to fix the problem or ignore it
-	 * @param boolean $reupload (for default thumbnail only)
+	 * @param array $options
+	 * Keys:
+	 *   fixit - Whether to fix the problem or ignore it
+	 *   reupload - reupload thumbnail (for default thumbnail only)
+	 *   updateData - update image data
 	 * @return Status
 	 */
-	public function fcskVideoThumbnail( $title, $fixit = true, $reupload = false ) {
+	public function fcskVideoThumbnail( $title, $options ) {
 		$file = WikiaFileHelper::getVideoFileFromTitle( $title );
 
 		// See if a file exists for this title
@@ -359,12 +362,17 @@ class VideoHandlerHelper extends WikiaModel {
 		}
 
 		// See if the thumbnail exists for this title
-		if ( file_exists( $file->getLocalRefPath() ) && !$reupload ) {
+		if ( file_exists( $file->getLocalRefPath() ) && empty( $options['reupload'] ) && empty( $options['updateData'] ) ) {
 			return Status::newGood( ['check' => 'ok'] );
 		} else {
 			// Determine if we should fix this problem or leave it be
-			if ( $fixit ) {
-				$status = $this->resetVideoThumb( $file );
+			if ( !empty( $options['fixit'] ) ) {
+				if ( file_exists( $file->getLocalRefPath() ) && !empty( $options['updateData'] ) ) {
+					$status = $this->updateThumbnailData( $file );
+				} else {
+					$status = $this->resetVideoThumb( $file );
+				}
+
 				if ( $status->isGood() ) {
 					return Status::newGood( ['check' => 'failed', 'action' => 'fixed'] );
 				} else {
@@ -392,7 +400,67 @@ class VideoHandlerHelper extends WikiaModel {
 		$oUploader->setProvider( $provider );
 		$oUploader->setVideoId( $videoId );
 		$oUploader->setTargetTitle( $title->getDBkey() );
-		return $oUploader->resetThumbnail( $file );
+		$result = $oUploader->resetThumbnail( $file );
+
+		if ( $result->isGood() ) {
+			// update data and clear cache
+			$status = $this->updateThumbnailData( $file );
+			if ( !$status->isGood() ) {
+				$result->fatal( $status->getMessage() );
+			}
+		}
+
+		return $result;
+	}
+
+	/**
+	 * Update thumbnail data (update database and clear cache)
+	 * @param File $file
+	 * @return Status $status
+	 */
+	public function updateThumbnailData( $file ) {
+		wfProfileIn( __METHOD__ );
+
+		// check for read only mode
+		if ( wfReadOnly() ) {
+			wfProfileOut( __METHOD__ );
+			return Status::newFatal( wfMessage( 'videos-error-readonly' )->plain() );
+		}
+
+		$props = $file->repo->getFileProps( $file->getVirtualUrl() );
+		if ( empty( $props['size'] ) || empty( $props['width'] ) || empty( $props['height'] )
+			|| empty( $props['bits'] ) || empty( $props['sha1'] ) || $props['sha1'] == $file->getSha1() ) {
+			wfProfileOut( __METHOD__ );
+			return Status::newGood( 0 );
+		}
+
+		$dbw = wfGetDB( DB_MASTER );
+		$dbw->begin();
+		$dbw->update(
+			'image',
+			array(
+				'img_size'   => $props['size'],
+				'img_width'  => intval( $props['width'] ),
+				'img_height' => intval( $props['height'] ),
+				'img_bits'   => $props['bits'],
+				'img_sha1'   => $props['sha1'],
+			),
+			array( 'img_name' => $file->getName() ),
+			__METHOD__
+		);
+
+		$affected = $dbw->affectedRows();
+
+		$dbw->commit();
+
+		$status = Status::newGood( $affected );
+		if ( $affected > 0 ) {
+			$file->purgeEverything();
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $status;
 	}
 
 	/**

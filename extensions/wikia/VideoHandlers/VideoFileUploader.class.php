@@ -152,7 +152,7 @@ class VideoFileUploader {
 	 * @param File $file
 	 * @return FileRepoStatus
 	 */
-	public function resetThumbnail( File $file ) {
+	public function resetThumbnail( File &$file ) {
 		wfProfileIn(__METHOD__);
 
 		// Some providers will sometimes return error codes when attempting
@@ -166,63 +166,8 @@ class VideoFileUploader {
 		// Publish the thumbnail file
 		$result = $file->publish( $upload->getTempPath(), File::DELETE_SOURCE );
 
-		if ( $result->isGood() ) {
-			$status = $this->resetThumbnailData( $file );
-			if ( !$status->isGood() ) {
-				$result->fatal( $status->getMessage() );
-			}
-		}
-
 		wfProfileOut(__METHOD__);
 		return $result;
-	}
-
-	/**
-	 * Reset thumbnail data (update database and clear cache)
-	 * @param File $file
-	 * @return Status $status
-	 */
-	protected function resetThumbnailData( $file ) {
-		wfProfileIn( __METHOD__ );
-
-		// check for read only mode
-		if ( wfReadOnly() ) {
-			wfProfileOut( __METHOD__ );
-			return Status::newFatal( wfMessage( 'videos-error-readonly' )->plain() );
-		}
-
-		$props = $file->repo->getFileProps( $file->getVirtualUrl() );
-		if ( empty( $props['size'] ) || empty( $props['width'] ) || empty( $props['height'] )
-			|| empty( $props['bits'] ) || empty( $props['sha1'] ) ) {
-			wfProfileOut( __METHOD__ );
-			return Status::newGood( 0 );
-		}
-
-		$dbw = wfGetDB( DB_MASTER );
-		$dbw->begin();
-		$dbw->update(
-			'image',
-			array(
-				'img_size'   => $props['size'],
-				'img_width'  => intval( $props['width'] ),
-				'img_height' => intval( $props['height'] ),
-				'img_bits'   => $props['bits'],
-				'img_sha1'   => $props['sha1'],
-			),
-			array( 'img_name' => $file->getName() ),
-			__METHOD__
-		);
-		$dbw->commit();
-
-		$affected = $dbw->affectedRows();
-		$status = Status::newGood( $affected );
-		if ( $affected > 0 ) {
-			$file->purgeEverything();
-		}
-
-		wfProfileOut( __METHOD__ );
-
-		return $status;
 	}
 
 	/**

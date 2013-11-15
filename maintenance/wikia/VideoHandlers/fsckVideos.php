@@ -21,6 +21,7 @@ class FSCKVideos extends Maintenance {
 	protected $reupload = false;
 	protected $startDate = '';
 	protected $endDate = '';
+	protected $updateData = false;
 
 	public function __construct() {
 		parent::__construct();
@@ -30,14 +31,16 @@ class FSCKVideos extends Maintenance {
 		$this->addOption( 'reupload', 'Reupload image for default image only', false, false, 'r' );
 		$this->addOption( 'start', 'Start date (timestamp); required for reupload option', false, true, 's' );
 		$this->addOption( 'end', 'End date (timestamp); required for reupload option', false, true, 'e' );
+		$this->addOption( 'data', 'Update image data', false, false, 'd' );
 	}
 
 	public function execute() {
-		$this->test    = $this->hasOption('test');
-		$this->verbose = $this->hasOption('verbose');
-		$this->reupload = $this->hasOption('reupload');
-		$this->startDate = $this->getOption('start');
-		$this->endDate = $this->getOption('end');
+		$this->test    = $this->hasOption( 'test' );
+		$this->verbose = $this->hasOption( 'verbose' );
+		$this->reupload = $this->hasOption( 'reupload' );
+		$this->startDate = $this->getOption( 'start' );
+		$this->endDate = $this->getOption( 'end' );
+		$this->updateData = $this->hasOption( 'data' );
 
 		if ( $this->reupload && ( empty( $this->startDate ) || empty( $this->endDate ) ) ) {
 			die( "Error: Reuploading image requires start date and end date.\n" );
@@ -55,7 +58,7 @@ class FSCKVideos extends Maintenance {
 		if ( $this->test ) {
 			echo "== TEST MODE ==\n";
 		}
-		$this->debug("(debugging output enabled)\n");
+		$this->debug( "(debugging output enabled)\n" );
 
 		$startTime = time();
 
@@ -64,16 +67,20 @@ class FSCKVideos extends Maintenance {
 		} else {
 			$videos = VideoInfoHelper::getLocalVideoTitles();
 		}
-		$this->debug("Found ".count($videos)." video(s)\n");
+		$this->debug( "Found ".count($videos)." video(s)\n" );
 
-		$fix = $this->test ? false : true;
+		$options = array(
+			'fixit' => ( $this->test ? false : true ),
+			'reupload' => $this->reupload,
+			'updateData' => $this->updateData,
+		);
 
 		$helper = new VideoHandlerHelper();
 
 		foreach ( $videos as $title ) {
 			$stats['checked']++;
 
-			$status = $helper->fcskVideoThumbnail( $title, $fix, $this->reupload );
+			$status = $helper->fcskVideoThumbnail( $title, $options );
 			if ( $status->isGood() ) {
 				$result = $status->value;
 				if ( $result['check']  == 'ok' ) {
