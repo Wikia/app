@@ -5,7 +5,10 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window', 'wikia.browserDetect' ], f
 		BLACKOUT_VISIBLE_CLASS = 'visible',
 		CLOSE_CLASS = 'close',
 		INACTIVE_CLASS = 'inactive',
-		destroyOnClose;
+		destroyOnClose,
+		// vars required for disable scroll behind modal
+		bodyElm = $( 'body' ),
+		wScrollTop;
 
 	/**
 	 * IE 9 doesn't support flex-box. IE-10 and IE-11 has some bugs in implementation:
@@ -25,6 +28,27 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window', 'wikia.browserDetect' ], f
 			modalMaxHeight = ( 90 / 100 ) * winHeight - HEADER_AND_FOOTER_HEIGHT; // 90% viewport - (header + footer)
 
 		element.children( 'section' ).css( 'maxHeight', modalMaxHeight );
+	}
+
+	/**
+	 * Disable scrolling content behind modal
+	 */
+
+	function disableScrollBehindModal() {
+		if ( bodyElm.hasClass( 'with-blackout' ) === false ) {
+			// prevent page from jumping to right if scroll bar vertical exist
+			if ( bodyElm.height() > $( w ).height() ) {
+				bodyElm.addClass( 'fake-scrollbar' );
+			}
+
+			wScrollTop = $( w ).scrollTop();
+
+			bodyElm.addClass( 'with-blackout').css('top', -wScrollTop);
+
+		} else {
+			bodyElm.removeClass( 'with-blackout fake-scrollbar' );
+			$( w ).scrollTop( wScrollTop );
+		}
 	}
 
 	/**
@@ -94,10 +118,8 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window', 'wikia.browserDetect' ], f
 	 */
 
 	Modal.prototype.show = function() {
-		// fix iOS Safari position: fixed - virtual keyboard bug
-		if ( browserDetect.isIPad() ) {
-			$( w ).scrollTop( $ ( w ).scrollTop() );
-		}
+
+		disableScrollBehindModal();
 
 		this.$blackout.addClass( BLACKOUT_VISIBLE_CLASS );
 
@@ -124,6 +146,8 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window', 'wikia.browserDetect' ], f
 		} else {
 			this.$blackout.remove();
 		}
+
+		disableScrollBehindModal();
 
 		this.onClose();
 	};
