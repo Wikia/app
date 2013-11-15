@@ -2,6 +2,18 @@
 
 /**
  * VideoPageToolProgram Class
+ *
+ * Cache key functions used:
+ *
+ *  - getMemcKey() : Key for caching this program object
+ *  - getMemcKeyNearestDate() : Key for caching program with date nearest to the date passed
+ *  - getMemcKeyCompletedSections() : Key for caching the distinct list of section numbers for a program
+ *  - getMemcKeyPrograms() : Key for caching a list of program IDs for a language for a specific month
+ *
+ * All caches can be cleared via function:
+ *
+ *   invalidateCache()
+ *
  */
 class VideoPageToolProgram extends WikiaModel {
 
@@ -107,12 +119,12 @@ class VideoPageToolProgram extends WikiaModel {
 	 * @param string $date [timestamp]
 	 * @return object|null $program
 	 */
-	public static function newProgramNearestToday( $lang, $date = '' ) {
+	public static function loadProgramNearestDate( $lang, $date = '' ) {
 		wfProfileIn( __METHOD__ );
 
 		// Figure out what the nearest date to today is
 		$nearestDate = self::getNearestDate( $lang, $date );
-		if ($nearestDate) {
+		if ( $nearestDate ) {
 			// Load the program with this nearest date
 			$program = self::newProgram( $lang, $nearestDate );
 
@@ -121,6 +133,83 @@ class VideoPageToolProgram extends WikiaModel {
 		} else {
 			return null;
 		}
+	}
+
+	/**
+	 * Returns the nearest program date to the date for a given language (default = today's date)
+	 *
+	 * This function will only cache the nearest date if the starting point ($timestamp) is not given and
+	 * defaults to today.  This is the only way to reliably clear this cache (otherwise we would have clear
+	 * cache for every date in the future in case a request cached something there.  Since the user facing
+	 * side always assumes the default date, this case will be cached and will be performant
+	 *
+	 * @param string $language
+	 * @param string $timestamp
+	 * @return string
+	 */
+	protected static function getNearestDate( $language, $timestamp = '' ) {
+		wfProfileIn( __METHOD__ );
+
+		$app = F::app();
+
+		if ( $timestamp ) {
+			// If there was a specific timestamp given, look it up directly, don't cache it
+			$date = date( 'Y-m-d', $timestamp );
+			$nearestDate = '';
+		} else {
+			// If no timestamp was given, assume today and use a cache
+			$date = date( 'Y-m-d', time() );
+			$nearestKey = self::getMemcKeyNearestDate( $language );
+			$nearestDate = $app->wg->Memc->get( $nearestKey );
+		}
+
+		if ( empty($nearestDate) ) {
+			$db = wfGetDB( DB_SLAVE );
+
+			$row = $db->selectRow(
+				array( 'vpt_program' ),
+				array( 'unix_timestamp(publish_date) as publish_date' ),
+				array(
+					'language' => $language,
+					'publish_date <= '.$db->addQuotes( $date ),
+					'is_published' => 1,
+				),
+				__METHOD__,
+				array( 'ORDER BY' => 'publish_date DESC' )
+			);
+
+			if ( $row ) {
+				$nearestDate = $row->publish_date;
+
+				// Cache this for at most one day.  Don't cache if we were given a specific
+				// timestamp
+				if ( isset($nearestKey) ) {
+					$app->wg->Memc->set( $nearestKey, $nearestDate, self::DATE_CACHE_TTL );
+				}
+			}
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $nearestDate;
+	}
+
+	/**
+	 * Get the memcached key for storing the nearest published date
+	 * @param string $lang - Look for published content dates in this language
+	 * @return string - A string to use as the memcached string
+	 */
+	protected static function getMemcKeyNearestDate( $lang ) {
+		return wfMemcKey( 'videopagetool', 'nearest-date', $lang, date( 'Y-m-d' ) );
+	}
+
+	/**
+	 * Invalidate the cache holding the program with a date nearest to today.
+	 *
+	 * @param $lang
+	 */
+	protected function invalidateNearestDate( $lang ) {
+		$this->wg->Memc->delete( self::getMemcKeyNearestDate( $lang ) );
 	}
 
 	/**
@@ -143,6 +232,7 @@ class VideoPageToolProgram extends WikiaModel {
 		} else {
 			$result = $program->loadFromDatabase();
 			if ( $result ) {
+				$program->invalidateCache();
 				$program->saveToCache();
 			}
 		}
@@ -210,65 +300,6 @@ class VideoPageToolProgram extends WikiaModel {
 		foreach ( static::$fields as $varName ) {
 			$this->$varName = $cache[$varName];
 		}
-	}
-
-	/**
-	 * Returns the nearest program date to the date for a given language (default = today's date)
-	 * @param string $language
-	 * @param string $timestamp
-	 * @return null|string
-	 */
-	protected static function getNearestDate( $language, $timestamp = '' ) {
-		wfProfileIn( __METHOD__ );
-
-		$app = F::app();
-
-		if ( empty( $timestamp ) ) {
-			$timestamp = time();
-		}
-		$date = date( 'Y-m-d', $timestamp );
-
-		$nearestKey = self::getMemcKeyNearestDate( $language, $date );
-		$nearestDate = $app->wg->Memc->get( $nearestKey );
-		if ( !$nearestDate ) {
-			$db = wfGetDB( DB_SLAVE );
-
-			$row = $db->selectRow(
-				array( 'vpt_program' ),
-				array( 'unix_timestamp(publish_date) as publish_date' ),
-				array(
-					'language' => $language,
-					'publish_date <= '.$db->addQuotes( $date ),
-				),
-				__METHOD__,
-				array( 'ORDER BY' => 'publish_date DESC' )
-			);
-
-			if ( $row ) {
-				$nearestDate = $row->publish_date;
-
-				// Cache this for at most one day
-				$app->wg->Memc->set( $nearestKey, $nearestDate, self::DATE_CACHE_TTL );
-			}
-		}
-
-		wfProfileOut( __METHOD__ );
-
-		return $nearestDate;
-	}
-
-	/**
-	 * Get the memcached key for storing the nearest published date
-	 * @param string $lang - Look for published content dates in this language
-	 * @param string $date [yyyy-mm-dd]
-	 * @return string - A string to use as the memcached string
-	 */
-	protected static function getMemcKeyNearestDate( $lang, $date = '' ) {
-		if ( empty( $date ) ) {
-			$date = date( 'Y-m-d' );
-		}
-
-		return wfMemcKey( 'videopagetool', 'nearest-date', $lang, $date );
 	}
 
 	/**
@@ -361,13 +392,13 @@ class VideoPageToolProgram extends WikiaModel {
 	}
 
 	/**
-	 * Clear cache
+	 * Clear all program caches
 	 */
 	protected function invalidateCache() {
 		$this->invalidateCacheCompletedSections();
 		$this->invalidateCachePrograms( $this->language );
+		$this->invalidateNearestDate( $this->language );
 		$this->wg->Memc->delete( $this->getMemcKey() );
-		$this->wg->Memc->delete( $this->getMemcKeyNearestDate( $this->language ) );
 	}
 
 	/**
@@ -540,9 +571,8 @@ class VideoPageToolProgram extends WikiaModel {
 		$db->commit();
 
 		// save cache
+		$this->invalidateCache();
 		$this->saveToCache();
-		$this->invalidateCachePrograms( $this->language );
-		$this->invalidateCacheCompletedSections();
 
 		foreach ( $assetList as $assetObj ) {
 			$assetObj->saveToCache();

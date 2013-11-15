@@ -243,21 +243,21 @@ class ThemeSettings {
 	 * This method returns URL based on "wordmark-image-url" and performs URL rewrite
 	 * for migrated wikis with short Swift bucket name
 	 *
-	 * @see  $wgUploadDirectory - </images/2/24_/es/images>
-	 * @see  $wgUploadDirectoryNFS - </images/2/24/es/images>
+	 * @see  $wgUploadPath - "http://images.wikia.com/24_/es/images"
 	 *
 	 * @author macbre
 	 * @return string wordmark URL or empty string if not found
 	 */
 	public function getWordmarkUrl() {
-		global $wgUploadDirectory, $wgUploadDirectoryNFS;
+		global $wgUploadPath;
 
 		$wordmarkUrl = $this->getSettings()['wordmark-image-url'];
+		$wordmarkPath = reset(explode('/images/', $wordmarkUrl));
 
-		if (!empty($wgUploadDirectoryNFS)) {
+		if (!empty($wordmarkPath)) {
 			$wordmarkUrl = str_replace(
-				substr($wgUploadDirectoryNFS, 9) . '/', // </24/es/images/>
-				substr($wgUploadDirectory, 9) . '/', // </24_/es/images/>
+				$wordmarkPath . '/images',
+				$wgUploadPath,
 				$wordmarkUrl
 			);
 		}
@@ -268,30 +268,33 @@ class ThemeSettings {
 	/**
 	 * Get wiki background full, up-to-date URL
 	 *
-	 * This method returns URL based on "background-image-name" settings entry.
-	 * "background-image" entry (for custom backgrounds) and settings revision ID are ignored.
+	 * This method returns URL based on "background-image" and performs URL rewrite
+	 * for migrated wikis with short Swift bucket name
+	 *
+	 * @see  $wgUploadPath - "http://images.wikia.com/24_/es/images"
 	 *
 	 * @author macbre
 	 * @return string background URL or empty string if not found
 	 */
 	public function getBackgroundUrl() {
-		$settings = $this->getSettings();
+		global $wgUploadPath;
 
-		// no background defined
-		if (empty($settings['background-image'])) {
-			return '';
+		$backgroundUrl = $this->getSettings()['background-image'];
+
+		if (empty($backgroundUrl)) {
+			return $backgroundUrl;
 		}
 
-		$hasCustomBackground = strpos($settings['background-image'], '/common/skins/oasis/images/themes') === false;
+		$backgroundPath = reset(explode('/images/', $backgroundUrl));
 
-		// return standard, themed background - e.g. '/skins/oasis/images/themes/plated.jpg'
-		if (!$hasCustomBackground) {
-			return $settings['background-image'];
+		if (!empty($wordmarkPath)) {
+			$backgroundUrl = str_replace(
+				$backgroundPath . '/images',
+				$wgUploadPath,
+				$backgroundUrl
+			);
 		}
 
-		$title = Title::newFromText($settings['background-image-name'] , NS_FILE);
-		$file = ($title instanceof Title) ? wfLocalFile($title) : false;
-
-		return ($file instanceof File && $file->exists()) ? $file->getUrl() : '';
+		return wfReplaceImageServer($backgroundUrl, SassUtil::getCacheBuster());
 	}
 }

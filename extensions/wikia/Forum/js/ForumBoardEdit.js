@@ -2,63 +2,97 @@
 	
 	/* dom cache */
 	var createNewBoardButton = $('#CreateNewBoardButton'),
-		boardList = $('#ForumBoardEdit .boards'),
-		currentDialog = false;
+		boardList = $('#ForumBoardEdit .boards');
 		
 	function makeBoardModal(modalMethod, modalData, submissionMethod, submissionData) {
 		var deferred = $.Deferred();
 		$.nirvana.sendRequest({
 			controller: 'ForumSpecialController',
 			method: modalMethod,
-			format: 'html',
+			format: 'json',
 			data: modalData,
-			callback: function(html) {
-				var dialog = $(html).makeModal({
-					width: 600
-				});
-				
-				currentDialog = dialog;
-				
-				dialog.form = new WikiaForm(dialog.find('.WikiaForm'));
-				dialog.buttons = dialog.find('button');
-				
-				dialog.on('click.EditBoard', '.cancel', function(e) {
-					dialog.closeModal();
-				}).on('click.CreateNewBoard', '.submit', function(e) {
-					dialog.buttons.attr('disabled', true);
-					$.nirvana.sendRequest({
-						controller: 'ForumExternalController',
-						method: submissionMethod,
-						format: 'json',
-						data: $.extend({
-							boardTitle: dialog.find('input[name=boardTitle]').val(),
-							boardDescription: dialog.find('input[name=boardDescription]').val()
-						}, typeof submissionData === 'function' ? submissionData() : submissionData ),
-						callback: function (json) {
-							$().log(json);
-							if(json) {
-								if(json.status === 'ok') {
-									Wikia.Querystring().addCb().goTo();
-								} else if(json.status === 'error') {
-									dialog.form.clearAllInputErrors();
-									if(json.errorfield) {
-										dialog.form.showInputError(json.errorfield, json.errormsg);
-									} else {
-										dialog.form.showGenericError(json.errormsg);
-									}
-									dialog.buttons.removeAttr('disabled');
+			callback: function( jsonResponse ) {
+				require( [ 'wikia.ui.factory' ], function( uiFactory ) {
+					uiFactory.init( [ 'button', 'modal' ] ).then( function( uiButton, uiModal ) {
+						var cancelBtnMsg = $.msg( 'cancel' ),
+							cancelBtn = uiButton.render( {
+								type: 'button',
+								vars: {
+									type: 'button',
+									classes: [ 'normal', 'secondary', 'cancel' ],
+									value: cancelBtnMsg
 								}
+							}),
+							submitBtn = uiButton.render( {
+								type: 'button',
+								vars: {
+									type: 'button',
+									classes: [ 'normal', 'primary', 'submit' ],
+									value: jsonResponse.submitLabel
+								}
+							}),
+							modalId = 'EditBoardModal',
+							forumModal = uiModal.render( {
+							type: 'default',
+							vars: {
+								id: modalId,
+								size: 'small',
+								content: jsonResponse.html,
+								title: jsonResponse.title,
+								closeButton: true,
+								closeText: $.msg( 'close' ),
+								primaryBtn: submitBtn,
+								secondBtn: cancelBtn
 							}
-						}
-					});
-				});
-				
-				deferred.resolve(dialog);
+						} );
+						require( [ 'wikia.ui.modal' ], function( modal ) {
+							forumModal = modal.init( modalId, forumModal );
+							forumModal.form = new WikiaForm( forumModal.$element.find( '.WikiaForm' ) );
+
+							forumModal.$element.find( 'button.cancel' ).click( function() {
+								forumModal.close();
+							} );
+
+							forumModal.$element.find( 'button.submit' ).click( function() {
+								forumModal.deactivate();
+								$.nirvana.sendRequest( {
+									controller: 'ForumExternalController',
+									method: submissionMethod,
+									format: 'json',
+									data: $.extend({
+										boardTitle: forumModal.$element.find( 'input[name=boardTitle]' ).val(),
+										boardDescription: forumModal.$element.find( 'input[name=boardDescription]' ).val()
+									}, typeof submissionData === 'function' ? submissionData( forumModal ) : submissionData ),
+									callback: function( json ) {
+										if( json ) {
+											if( json.status === 'ok' ) {
+												Wikia.Querystring().addCb().goTo();
+											} else if( json.status === 'error' ) {
+												forumModal.form.clearAllInputErrors();
+												if( json.errorfield ) {
+													forumModal.form.showInputError( json.errorfield, json.errormsg );
+												} else {
+													forumModal.form.showGenericError( json.errormsg );
+												}
+
+												forumModal.activate();
+											}
+										}
+									}
+								} );
+							} );
+
+							forumModal.show();
+
+							deferred.resolve( forumModal );
+						} );
+					} );
+				} );
 			}
 		});
 		
 		return deferred.promise();
-	};
+	}
 	
 	/* Board edit event handlers */
 	function handleCreateNewBoardButtonClick(e) {
@@ -121,14 +155,14 @@
 	function handleRemoveBoardButtonClick(e) {
 		var boardItem = $(e.target).closest('.board');
 		var boardId = boardItem.data('id');
-		$.when(makeBoardModal('removeBoardModal', {boardId: boardId}, 'removeBoard', function() {
+		$.when(makeBoardModal('removeBoardModal', {boardId: boardId}, 'removeBoard', function( boardModal ) {
 			return {
 				boardId: boardId,
-				destinationBoardId: currentDialog.find('.destinationBoardId option:selected').val()
+				destinationBoardId: boardModal.$element.find('.destinationBoardId option:selected').val()
 			};
-		})).done(function(dialog) {
+		} ) ).done( function( dialog ) {
 			// done
-		});
+		} );
 	};
 	
 	/* Board edit event bindings */

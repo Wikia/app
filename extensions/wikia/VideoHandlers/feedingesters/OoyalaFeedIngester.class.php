@@ -58,7 +58,7 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 			print( "Connecting to $url...\n" );
 
 			$req = MWHttpRequest::factory( $url );
-			$status = $req->execute();
+			$status = VideoHandlerHelper::wrapHttpRequest( $req );
 			if ( $status->isGood() ) {
 				$response = $req->getContent();
 			} else {

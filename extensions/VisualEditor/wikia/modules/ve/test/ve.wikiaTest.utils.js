@@ -116,18 +116,6 @@ ve.wikiaTest = ( function () {
 		return testCases;
 	};
 
-	/**
-	 * Uppercase the first letter in a string.
-	 *
-	 * @method
-	 * @static
-	 * @param {String} str The string.
-	 * @returns {String} The string with the first letter uppercased.
-	 */
-	utils.ucFirst = function ( str ) {
-		return str.charAt( 0 ).toUpperCase() + str.slice( 1 );
-	};
-
 	/* Media Utils */
 
 	utils.media = {};
