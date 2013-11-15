@@ -6,7 +6,7 @@ var ThemeDesigner = {
 	basePageOpacity: 70,
 	maxPageOpacity: 100,
 	minSliderValue: 0,
-	splitOption: null,
+	splitOption: true,
 	$slider: null,
 
 	init: function() {
@@ -214,6 +214,8 @@ var ThemeDesigner = {
 				ThemeDesigner.settings['background-image-width'],
 				ThemeDesigner.settings['background-dynamic'] === 'true'
 			);
+
+			ThemeDesigner.setSplitOption();
 		}
 
 		// submit handler for uploading custom background image
@@ -474,16 +476,18 @@ var ThemeDesigner = {
 			if ( width < ThemeDesigner.minWidthForDynamicBackground ) {
 				noSplitOption.css('display', 'none');
 				ThemeDesigner.backgroundType = 1;
+				ThemeDesigner.splitOption = false;
 				ThemeDesigner.changeDynamicBg(false);
 			} else if ( width < ThemeDesigner.minWidthNotSplitBackground ) {
 				noSplitOption.css('display', 'none');
 				ThemeDesigner.backgroundType = 2;
+				ThemeDesigner.splitOption = true;
 				ThemeDesigner.checkTiledBg(value);
-				ThemeDesigner.splitOption = value;
 			} else {
 				noSplitOption.css('display', 'inline');
 				ThemeDesigner.backgroundType = 3;
 				ThemeDesigner.checkTiledBg(value);
+				ThemeDesigner.splitOption = value;
 			}
 		}
 	},
@@ -511,6 +515,16 @@ var ThemeDesigner = {
 		if ( el.prop('checked') === val ) {
 			el.prop('checked', !val);
 			ThemeDesigner.set('background-dynamic', val.toString());
+		}
+	},
+
+	setSplitOption: function() {
+		'use strict';
+
+		if (ThemeDesigner.backgroundType === 1) {
+			ThemeDesigner.splitOption = false;
+		} else if (ThemeDesigner.backgroundType === 3) {
+			ThemeDesigner.splitOption = ThemeDesigner.settings['background-dynamic'] === 'true';
 		}
 	},
 

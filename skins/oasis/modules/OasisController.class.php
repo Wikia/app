@@ -161,23 +161,7 @@ class OasisController extends WikiaController {
 		}
 
 		// sets background settings by adding classes to <body>
-		if ( isset($this->wg->OasisThemeSettings['background-fixed'])
-			&& filter_var($this->wg->OasisThemeSettings['background-fixed'], FILTER_VALIDATE_BOOLEAN) )
-		{
-			$bodyClasses[] = 'background-fixed';
-		}
-
-		if ( isset($this->wg->OasisThemeSettings['background-tiled'])
-			&& !filter_var($this->wg->OasisThemeSettings['background-tiled'], FILTER_VALIDATE_BOOLEAN) )
-		{
-			$bodyClasses[] = 'background-not-tiled';
-		}
-
-		if ( isset($this->wg->OasisThemeSettings['background-dynamic'])
-			&& filter_var($this->wg->OasisThemeSettings['background-dynamic'], FILTER_VALIDATE_BOOLEAN) )
-		{
-			$bodyClasses[] = 'background-dynamic';
-		}
+		$bodyClasses = array_merge($bodyClasses, $this->getOasisBackgroundClasses());
 
 		$this->bodyClasses = $bodyClasses;
 
@@ -562,6 +546,36 @@ EOT;
 		}
 
 		return '';
+	}
+
+	protected function getOasisBackgroundClasses() {
+		$bodyClasses = [];
+
+		if ( isset($this->wg->OasisThemeSettings['background-fixed'])
+			&& filter_var($this->wg->OasisThemeSettings['background-fixed'], FILTER_VALIDATE_BOOLEAN) )
+		{
+			$bodyClasses[] = 'background-fixed';
+		}
+
+		if ( isset($this->wg->OasisThemeSettings['background-tiled'])
+			&& !filter_var($this->wg->OasisThemeSettings['background-tiled'], FILTER_VALIDATE_BOOLEAN) )
+		{
+			$bodyClasses[] = 'background-not-tiled';
+		}
+
+		if ( !filter_var($this->wg->OasisThemeSettings['background-tiled'], FILTER_VALIDATE_BOOLEAN)) {
+			if ( (isset($this->wg->OasisThemeSettings['background-dynamic'])
+					&& filter_var($this->wg->OasisThemeSettings['background-dynamic'], FILTER_VALIDATE_BOOLEAN))
+				// old wikis may not have 'background-dynamic' set
+				|| (!isset($this->wg->OasisThemeSettings['background-dynamic'])
+					&& isset($this->wg->OasisThemeSettings['background-image-width'])
+					&& (int)$this->wg->OasisThemeSettings['background-image-width'] >= ThemeSettings::MinWidthForSplit))
+			{
+				$bodyClasses[] = 'background-dynamic';
+			}
+		}
+
+		return $bodyClasses;
 	}
 
 	public static function addBodyParameter($parameter) {

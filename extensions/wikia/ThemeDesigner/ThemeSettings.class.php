@@ -8,6 +8,8 @@ class ThemeSettings {
 
 	const HistoryItemsLimit = 10;
 
+	const MinWidthForSplit = 1030;
+
 	const WordmarkImageName = 'Wiki-wordmark.png';
 	const BackgroundImageName = 'Wiki-background';
 	const FaviconImageName = 'Favicon.ico';
@@ -55,7 +57,7 @@ class ThemeSettings {
 		$this->defaultSettings['banner-image-name'] = '';
 
 		// background
-		$this->defaultSettings['background-image'] = false;
+		$this->defaultSettings['background-image'] = '';
 		$this->defaultSettings['background-image-height'] = null;
 		$this->defaultSettings['background-image-name'] = '';
 		$this->defaultSettings['background-image-width'] = null;
