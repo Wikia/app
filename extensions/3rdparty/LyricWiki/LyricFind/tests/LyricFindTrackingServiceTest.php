@@ -47,6 +47,21 @@ class LyricFindTrackingServiceTest extends WikiaBaseTest {
 				'title' => 'Paradise_Lost:Forever_Failure',
 				'expected' => 'trackname:forever_failure,artistname:paradise_lost'
 			],
+			// strip commas
+			[
+				'amgId' => 0,
+				'gracenoteId' => 0,
+				'title' => 'Paradise_Lost:Forever_Failure,123',
+				'expected' => 'trackname:forever_failure 123,artistname:paradise_lost'
+			],
+			// use the first semicolon to separate artist and track name
+			[
+				'amgId' => 0,
+				'gracenoteId' => 0,
+				'title' => 'Paradise_Lost:Forever_Failure:foo:bar',
+				'expected' => 'trackname:forever_failure foo bar,artistname:paradise_lost'
+			],
+			// pass additional IDs
 			[
 				'amgId' => 123,
 				'gracenoteId' => 0,

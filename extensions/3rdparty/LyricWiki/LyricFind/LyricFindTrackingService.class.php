@@ -48,9 +48,16 @@ class LyricFindTrackingService extends WikiaService {
 
 		list($artistName, $trackName) = explode(':', $data['title'], 2);
 
-		// artist and track name needs to be lowercase and without commas
-		$parts[] = sprintf('trackname:%s', mb_strtolower(str_replace(',', ' ', $trackName)));
-		$parts[] = sprintf('artistname:%s', mb_strtolower(str_replace(',', ' ', $artistName)));
+		// artist and track name needs to be lowercase and without commas or colons
+		$encode = function($item) {
+			return mb_strtolower(strtr($item, [
+				',' => ' ',
+				':' => ' ',
+			]));
+		};
+
+		$parts[] = sprintf('trackname:%s', $encode($trackName));
+		$parts[] = sprintf('artistname:%s', $encode($artistName));
 
 		return join(',', $parts);
 	}
