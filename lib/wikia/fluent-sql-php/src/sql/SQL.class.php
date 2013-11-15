@@ -280,7 +280,7 @@ class SQL {
 	 * @return SQL
 	 */
 	public function CASE_($value=null) {
-		$case = new Case_($value);
+		$case = new Cases($value);
 		$this->called($case);
 		$this->FIELD($case);
 
@@ -306,7 +306,7 @@ class SQL {
 	 * @throws \Exception if there was no CASE statement called before
 	 */
 	public function WHEN($when, $convertToValues=true) {
-		$case = $this->getLast('Case_');
+		$case = $this->getLast('Cases');
 
 		if ($case === null) {
 			throw new \Exception('unable to find CASE statement');
@@ -318,7 +318,7 @@ class SQL {
 		}
 
 		$this->called($when);
-		/** @var Case_ $case */
+		/** @var Cases $case */
 		$case->addWhen($when);
 
 		return $this;
@@ -332,13 +332,13 @@ class SQL {
 	 * @throws \Exception if there is no case statement
 	 */
 	public function THEN($then) {
-		$case = $this->getLast('Case_');
+		$case = $this->getLast('Cases');
 
 		if ($case === null) {
 			throw new \Exception('unable to find CASE statement');
 		}
 
-		/** @var Case_ $case */
+		/** @var Cases $case */
 		$case->addThen($then);
 
 		return $this;
@@ -352,13 +352,13 @@ class SQL {
 	 * @throws \Exception if there is no case statement
 	 */
 	public function ELSE_($else) {
-		$case = $this->getLast('Case_');
+		$case = $this->getLast('Cases');
 
 		if ($case === null) {
 			throw new \Exception('unable to find CASE statement');
 		}
 
-		/** @var Case_ $case */
+		/** @var Cases $case */
 		$case->else_($else);
 
 		return $this;

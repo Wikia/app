@@ -26,7 +26,7 @@ class Field implements ClauseBuild {
 	/** @var Condition */
 	protected $condition; //Condition can also be in field
 
-	/** @var Case_ */
+	/** @var Cases */
 	protected $case;
 
 	public function __construct( /*...*/ ) {
@@ -52,7 +52,7 @@ class Field implements ClauseBuild {
 				$this->condition = $arg;
 			} elseif ($arg instanceof SQL) {
 				$this->fieldSql = $arg;
-			} elseif ($arg instanceof Case_) {
+			} elseif ($arg instanceof Cases) {
 				$this->case = $arg;
 			} else { // is_string
 				$this->column = $arg;

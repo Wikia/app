@@ -9,7 +9,7 @@
 
 namespace FluentSql;
 
-class Case_ implements ClauseBuild {
+class Cases implements ClauseBuild {
 	private $value;
 	private $whenThen;
 	private $else;
