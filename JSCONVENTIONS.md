@@ -270,7 +270,7 @@ for(var i=0;i<100;i++) object[array[i]] = someFn(i);
 #### Good Examples
 
 ```js
-var i = 0;
+var i;
 
 if ( condition ) {
 	doSomething();
@@ -284,7 +284,7 @@ while ( !condition ) {
 	iterating++;
 }
 
-for ( ; i < 100; i++ ) {
+for ( i = 0; i < 100; i++ ) {
 	object[ array[ i ] ] = someFn( i );
 }
 
