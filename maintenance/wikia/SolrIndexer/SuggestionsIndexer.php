@@ -5,7 +5,7 @@
  */
 
 require_once( dirname( __FILE__ ) . '/../../Maintenance.php' );
-require_once( dirname( __FILE__ ) . '/../../../extensions/wikia/SolrHelper/SolrHelper.setup.php' );
+require_once( dirname( __FILE__ ) . '/SolrHelper.class.php' );
 
 class SuggestionsIndexer extends Maintenance {
 
