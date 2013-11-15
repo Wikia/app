@@ -36,7 +36,7 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window', 'wikia.browserDetect' ], f
 
 	function disableScrollBehindModal() {
 		if ( bodyElm.hasClass( 'with-blackout' ) === false ) {
-			// prevent page from jumping to right if scroll bar vertical exist
+			// prevent page from jumping to right if vertical scroll bar exist
 			if ( bodyElm.height() > $( w ).height() ) {
 				bodyElm.addClass( 'fake-scrollbar' );
 			}
