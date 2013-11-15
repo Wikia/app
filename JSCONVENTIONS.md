@@ -17,6 +17,7 @@ This styleguide defines the JavaScript coding conventions at Wikia. While it is 
   * [Switch statements](#switch-statements)
   * [Delete Operator](#delete-operator)
   * [Modifying prototypes of built-in objects](#modifying-prototypes-of-built-in-objects)
+  * [Maximum Parameters](#maximum-parameters)
 * [Style Rules](#style-rules)
   * [White space guidelines](#whitespace-guidelines)
      * [Bad examples](#bad-examples)
@@ -207,6 +208,32 @@ Modifying prototypes is heavily discouraged. For this reason, many JavaScript fr
 
 From Google's style guide:
 > "Modifying builtins like Object.prototype and Array.prototype are strictly forbidden. Modifying other builtins like Function.prototype is less dangerous but still leads to hard to debug issues in production and should be avoided."
+
+### Maximum Parameters
+Functions should have no more than 4 parameters.  If more than 4 are needed you can create an object that contains the parameters and pass that object to the function. 
+
+The one exception right now is AMD module dependencies.  
+
+Examples:
+```javascript
+// bad
+function bakeCupcakes( sugar, eggs, milk, icing, flour ) {
+    //...
+}
+
+// good
+function bakeCupcakes( ingredients ) {
+    // do something with ingredients.sugar, etc.
+}
+
+// exception: AMD
+define( 'bakecupcakes', 
+    [ 'sugar', 'eggs', 'milk', 'icing', 'flour' ],  
+    function( sugar, eggs, milk, icing, flour ) {
+ // ...
+})
+
+```
 
 ## Style Rules
 
