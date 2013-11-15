@@ -10,21 +10,28 @@
  * @constructor
  */
 ve.dm.WikiaCartItem = function VeDmWikiaCartItem( title, url, type, temporaryFileName, provider, videoId ) {
+	// TODO: this.title should really be this.filename since it contains prefix & extension
 	this.title = title;
 	this.url = url;
 	this.type = type;
 	this.temporaryFileName = temporaryFileName;
 	this.provider = provider;
 	this.videoId = videoId;
+
+	var filenameParts = this.extractFilenameParts( this.title );
+
+	this.prefix = filenameParts[1];
+	this.basename = filenameParts[2];
+	this.extension = filenameParts[3];
 };
 
 /**
  * @method
- * @description Takes the previous title name and returns it's parts
+ * @description Takes a title name and returns it's parts
  * @returns { Array | null } Array of strings or null, same out put as String.prototype.match
  */
-ve.dm.WikiaCartItem.prototype.extractFilenameParts = function() {
-	return this.title.match( /^(?:[^:]*\:)?(.*?)(\.[^.]+)?$/ );
+ve.dm.WikiaCartItem.prototype.extractFilenameParts = function( title ) {
+	return ( title || this.title ).match( /^([^:]*\:)?(.*?)(\.[^.]+)?$/ );
 };
 
 /**
@@ -32,9 +39,19 @@ ve.dm.WikiaCartItem.prototype.extractFilenameParts = function() {
  * @description Sets title with special case for user-blanked input
  */
 ve.dm.WikiaCartItem.prototype.setTitle = function( title ) {
-	var filenameParts = this.extractFilenameParts();
-	if ( title === '' || typeof title === 'undefined' ) {
-		title = mw.config.get( 'wgPageName' );
+	var parts,
+			prefix,
+			basename,
+			extension;
+
+	if ( typeof title === 'number' ) {
+		title = title.toString();
 	}
-	this.title = filenameParts ? title + filenameParts[ filenameParts.length - 1 ] : title;
+
+	parts = this.extractFilenameParts( title || mw.config.get( 'wgPageName' ) );
+	prefix = parts[1] || this.prefix || '';
+	basename = parts[2] || this.basename || '';
+	extension = parts[3] || this.extension || '';
+
+	this.title = prefix + basename + extension;
 };

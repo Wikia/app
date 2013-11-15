@@ -27,7 +27,6 @@ ve.ui.WikiaMediaPageWidget = function VeUiWikiaMediaPageWidget( model, config ) 
 	this.fieldset = new ve.ui.FieldsetLayout( { '$$': this.$$ } );
 	this.image = null;
 	this.model = model;
-	this.filename = this.model.extractFilenameParts();
 	this.removeButton = new ve.ui.ButtonWidget( {
 		'$$': this.$$,
 		'label': 'Remove from the cart', //TODO: i18n
@@ -37,7 +36,7 @@ ve.ui.WikiaMediaPageWidget = function VeUiWikiaMediaPageWidget( model, config ) 
 	this.title = new ve.ui.TextInputWidget( {
 		'$$': this.$$,
 		'readOnly': !this.editable,
-		'value': this.filename[1]
+		'value': this.model.basename
 	} );
 	this.titleLabel = new ve.ui.InputLabelWidget( {
 		'$$': this.$$,
@@ -61,7 +60,7 @@ ve.ui.WikiaMediaPageWidget = function VeUiWikiaMediaPageWidget( model, config ) 
 	// Initialization
 	this.$extension
 		.addClass( 've-ui-wikiaMediaPageWidget-item-extension' )
-		.text( this.filename[2] );
+		.text( this.model.extension );
 	this.$itemWrapper.addClass( 've-ui-wikiaMediaPageWidget-item' );
 	this.title.$.append( this.$extension );
 	this.fieldset.$.append( this.titleLabel.$, this.title.$, this.removeButton.$ );
