@@ -75,7 +75,7 @@ function efCreateSearchForm() {
 			'type' => 'text',
 			'name' => 'search',
 			'size' => 50,
-			'placeholder' => wfMsg( 'centralhelpsearch-placeholder' ),
+			'placeholder' => wfMessage( 'centralhelpsearch-placeholder' )->inContentLanguage()->plain(),
 			'style' => 'border:1px solid #999; padding: 10px; width: 500px; font-size: 20px;',
 			'id' => 'bodyCentralSearchInput'
 		)
