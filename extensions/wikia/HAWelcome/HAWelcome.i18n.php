@@ -448,7 +448,7 @@ Bienvenido a {{SITENAME}} y gracias por tu edición en la página [[:$1]]. Si ne
 Por favor, si tienes alguna duda, no seas tímido, deja un mensaje en mi muro para ver si puedo ayudarte con cualquier cosa.",
 	'welcome-message-wall-anon-staff' => "Hola,
 
-¡Bienvenido a {{SITENAME}}! Te agradecemos por tu edición en [[$1]].
+¡Bienvenido a {{SITENAME}}! Te agradecemos por tu edición en [[:$1]].
 
 ¿Qué tal si te '''[[Special:UserLogin|creas una cuenta]]'''?, así, nos será más sencillo saber que páginas has editado y recibirás una atribución por tu trabajo en {{SITENAME}}.
 
@@ -458,7 +458,7 @@ Si lo que buscas es ayuda, puedes consultar nuestras [[Help:Contents|páginas de
 
 Si requieres más ayuda, o sigues teniendo dudas, ¡no dudes en visitar la [[w:c:community|Comunidad Central de Wikia en Español]]!
 
-¡Esperamos que te diviertas!", # Fuzzy
+¡Esperamos que te diviertas!",
 	'welcome-description' => 'Envía un mensaje a todos los usuarios después de realizar su primera edición.',
 );
 
@@ -1286,9 +1286,31 @@ S'avètz besonh d'ajuda, començatz per consultar nòstras [[Help:Contents|pagin
 
 Bonjorn,
 
-Benvenguda sus {{SITENAME}} e mercé d'aver modificada la pagina [[:$1]]. Encoratjam totes los contributors a [[Special:Userlogin|crear un nom d'utilizaire]]''' per tal de gardar la traça de vòstras contribucions, d'accedir a mai de foncionalitats e connéisser la rèsta de la comunautat de {{SITENAME}}.
+Benvenguda sus {{SITENAME}} e mercé d'aver modificat la pagina [[:$1]]. Encoratjam totes los contributors a [[Special:UserLogin|crear un nom d'utilizaire]]''' per tal de gardar la traça de vòstras contribucions, d'accedir a mai de foncionalitats de Wikia e connéisser la rèsta de la comunautat de {{SITENAME}}.
 
-S'avètz besonh d'ajuda e, podètz visitar peimièr nòstras [[Help:Contents|paginas d’ajuda]], puèi, visitatz lo [[w:c:community|centre de la comunautat]] per ne saber mai. Bonas modificacions! $3", # Fuzzy
+S'avètz besonh d'ajuda e, podètz visitar primièr nòstras [[Help:Contents|paginas d’ajuda]], puèi, visitatz lo [[w:c:community|centre de la comunautat]] per ne saber mai. Bonas modificacions! $3",
+	'staffsig-text' => '[[{{ns:user}}:$1|$2]]<staff /> <small>([[w:forums|forum d’ajuda]] | [[w:sblog|blog]])</small>',
+	'hawelcomeedit' => 'HAWelcomeEdit',
+	'welcome-message-wall-user' => "Bonjorn, benvenguda sus {{SITENAME}} ! Mercés d'aver modificat la pagina [[:$1]].
+
+Daissatz-me un messatge se vos pòdi ajudar per qué que siá !",
+	'welcome-message-wall-user-staff' => "== Benvenguda ==
+Bonjorn
+
+Benvenguda sus {{SITENAME}} e mercé d'aver modificada la pagina [[:$1]].
+
+S'avètz besonh d'ajuda, començatz per consultar nòstras [[Help:Contents|paginas d’ajuda]]. Visitatz lo [[w:c:community|centre de la comunautat]] per demorar assabentat via lo [[w:c:community:Blog:Wikia_Staff_Blog|blog de nòstra equipa]], pausatz vòstras questions sus nòstre [[w:c:community:Special:Forum|forum de comunautat]], participatz a nòstras [[w:c:community:Help:Webinars|serias de webinar]], o discutissètz en dirècte amb d’autres Wikians. Bonas modificacions!",
+	'welcome-message-wall-anon' => "Bonjorn, benvenguda sus {{SITENAME}}. Mercés per vòstra contribucion a la pagina [[:$1]].
+
+'''Mercés de vos [[Special:Userlogin|connectar o de crear un compte]]'''. Es un mejan simple de gardar una traça de vòstras contribucions e aquò facilita la comunicacion amb la rèsta de la comunautat.
+
+Trantalhetz pas a daissar un messatge se vos pòdi ajudar per qué que siá !",
+	'welcome-message-wall-anon-staff' => "Bonjorn,
+
+Benvenguda sus {{SITENAME}} e mercé d'aver modificat la pagina [[:$1]]. Encoratjam totes los contributors a [[Special:UserLogin|crear un nom d'utilizaire]]''' per tal de gardar la traça de vòstras contribucions, d'accedir a mai de foncionalitats de Wikia e connéisser la rèsta de la comunautat de {{SITENAME}}.
+
+S'avètz besonh d'ajuda e, podètz visitar primièr nòstras [[Help:Contents|paginas d’ajuda]], puèi, visitatz lo [[w:c:community|centre de la comunautat]] per ne saber mai. Bonas modificacions!",
+	'welcome-description' => 'Manda un messatge d’acuèlh als utilizaires aprèp lors primièras modificacions',
 );
 
 /** Polish (polski)
@@ -1945,13 +1967,11 @@ Xin vui lòng để lại tin nhắn vào [[$2|trang thảo luận]] của tôi 
 
 Xin vui lòng để lại tin nhắn vào [[$2|trang thảo luận]] của tôi nếu bạn cần trợ giúp về bất cứ điều gì! $3",
 	'welcome-message-log' => 'Chào mừng thành viên mới',
-	'welcome-message-user-staff' => '==Xin chào==
+	'welcome-message-user-staff' => '==Chào mừng==
 
-Chào bạn, hoan nghênh bạn đến {{SITENAME}}! Cảm ơn bạn đã sửa đổi trang [[:$1]].
+Xin chào,
 
-Wiki hiện nay không có bảo quản viên, vì thế nên nếu bạn cần giúp đỡ, có lẽ bạn sẽ cần đến [[wikia:Forum:Community Central Forum|diễn đàn cộng đồng trung tâm Wikia]] hoặc [http://vi.wikia.com Wikia Tiếng Việt]
-
-----$3', # Fuzzy
+Hoan nghênh vì bạn đã đến thăm {{SITENAME}}! Cảm ơn bạn đã sửa đổi trang [[:$1]]. Wiki hiện nay không có bảo quản viên, vì thế nên nếu bạn cần trợ giúp, có lẽ bạn sẽ cần đến [[wikia:Forum:Community Central Forum|diễn đàn cộng đồng trung tâm Wikia]] hoặc [[wikia:vi:Trang Chính|Wikia Tiếng Việt]]. Bạn cũng có thể xem qua [[w:c:community:Blog:Wikia_Staff_Blog|blog nhân viên]] của chúng tôi để cập nhật với những tin tức và sự kiện mới nhất xung quanh Wikia. Sửa đổi vui vẻ! $3', # Fuzzy
 	'welcome-message-anon-staff' => "==Xin chào==
 
 Chào bạn
@@ -1980,9 +2000,10 @@ Sửa đổi vui vẻ!',
 Xin vui lòng để lại tin nhắn cho tôi nếu bạn cần sự trợ giúp về bất cứ điều gì!",
 	'welcome-message-wall-anon-staff' => "Chào bạn, hoan nghênh bạn đến với {{SITENAME}}! Cảm ơn bạn đã sửa đổi trang [[:$1]].
 
-'''[[Special:Userlogin|Xin hãy đăng ký và tạo tài khoản mới]]'''. Đó là cách dễ dàng để giữ lại những đóng góp của bạn và giúp bạn giao tiếp với cộng đồng.
+'''[[Special:Userlogin|Xin hãy đăng ký và tạo tài khoản mới]]'''. Đó là cách dễ dàng để giữ lại những đóng góp của bạn và giúp bạn giao tiếp với cộng đồng. Ngoài ra còn giúp bạn che giấu địa chỉ IP của bạn.
 
 Xin vui lòng để lại tin nhắn cho tôi nếu bạn cần sự trợ giúp về bất cứ điều gì!", # Fuzzy
+	'welcome-description' => 'Gửi thư chào đón cho người dùng sau khi có một sửa đổi đầu tiên của họ',
 );
 
 /** Simplified Chinese (中文（简体）‎)

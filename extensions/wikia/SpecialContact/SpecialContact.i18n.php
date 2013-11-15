@@ -49,6 +49,7 @@ If you prefer to use regular e-mail or have attachments, you can contact us at [
  * @author Shirayuki
  */
 $messages['qqq'] = array(
+	'specialcontact-username' => '{{Identical|Your username}}',
 	'specialcontact-problem' => '{{Identical|Subject}}',
 	'specialcontact-problemdesc' => '{{Identical|Message}}',
 );
@@ -807,19 +808,19 @@ $messages['pt'] = array(
 	'specialcontact-pagetitle' => 'Contactar a Wikia',
 	'specialcontact-intro' => 'Pode contactar a [[w:project:Staff|Equipa da Wikia]] usando este formulário. Encontra uma lista dos administradores desta wiki [[Special:ListAdmins|aqui]].
 
-Para mais informações sobre como relatar problemas à Wikia visite [[w:project:Report_a_problem|esta página]], ou pode colocar um pedido de suporte no [[w:Forum:Index|Wikia Community Forums]]
+Para mais informações sobre como relatar problemas à Wikia visite [[w:project:Report_a_problem|esta página]], ou pode colocar um pedido de apoio no [[w:Forum:Index|Wikia Community Forums]]
 
-Se prefere usar o correio electrónico ou precisa de enviar ficheiros anexos, pode contactar-nos em [mailto:community@wikia.com community@wikia.com].',
+Se prefere usar o correio eletrónico ou precisa de enviar ficheiros anexos, pode contactar-nos em [mailto:community@wikia.com community@wikia.com].',
 	'specialcontact-username' => 'Nome de utilizador', # Fuzzy
 	'specialcontact-wikiname' => 'Qual é a wiki?',
 	'specialcontact-realname' => 'O seu nome',
-	'specialcontact-yourmail' => 'Correio electrónico',
+	'specialcontact-yourmail' => 'Correio eletrónico',
 	'specialcontact-problem' => 'Assunto',
 	'specialcontact-problemdesc' => 'Mensagem',
 	'specialcontact-mail' => 'Enviar à Wikia',
 	'specialcontact-filledin' => 'Esta informação foi preenchida de acordo com as preferências da sua conta',
 	'specialcontact-ccme' => 'Enviar-me uma cópia desta mensagem',
-	'specialcontact-ccdisabled' => 'Impossibilitado: Valide o seu endereço de correio electrónico para usar esta funcionalidade',
+	'specialcontact-ccdisabled' => 'Impossibilitado: Valide o seu endereço de correio eletrónico para usar esta funcionalidade',
 	'specialcontact-notyou' => 'Não é você?',
 	'specialcontact-captchainfo' => 'Introduza o texto que está na imagem, por favor.',
 	'specialcontact-captchatitle' => 'Palavra distorcida',

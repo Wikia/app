@@ -179,8 +179,17 @@ class VideoFileUploader {
 	protected function uploadBestThumbnail( ) {
 		wfProfileIn(__METHOD__);
 
+		$app = F::app();
+
+		// reset proxy to blank
+		$originalProxy = $app->wg->HTTPProxy;
+		$app->wg->HTTPProxy = '';
+
 		// Try to upload the thumbnail for this video
 		$upload = $this->uploadThumbnailFromUrl( $this->getApiWrapper()->getThumbnailUrl() );
+
+		// set proxy to original value
+		$app->wg->HTTPProxy = $originalProxy;
 
 		// If uploading the actual thumbnail fails, load a default thumbnail
 		if ( empty($upload) ) {

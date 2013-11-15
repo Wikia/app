@@ -192,8 +192,15 @@ class MigrateImagesBetweenSwiftDC extends Maintenance {
 				/* connect to destination Ceph/Swift */
 				$dstStorage = $this->destConn();							
 
+				$magic = MimeMagic::singleton();
+				$ext = pathinfo( basename( $remoteFile ), PATHINFO_EXTENSION );
+				$mime_type = $magic->guessTypesForExtension( $ext );
+				if ( empty( $mime_type ) ) {
+					$mime_type = 'unknown/unknown';
+				}
+
 				/* store image in destination path */
-				$result = $dstStorage->store( $fp, $remoteFile )->isOK();
+				$result = $dstStorage->store( $fp, $remoteFile, array(), $mime_type )->isOK();
 			}
 		}
 		

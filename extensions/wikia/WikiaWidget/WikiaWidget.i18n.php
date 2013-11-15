@@ -113,6 +113,13 @@ $messages['es'] = array(
 	'wikiawidget' => 'Wikia widgets',
 );
 
+/** Basque (euskara)
+ * @author Theklan
+ */
+$messages['eu'] = array(
+	'wikiawidget' => 'Wikia widgetak',
+);
+
 /** Finnish (suomi)
  * @author Centerlink
  */

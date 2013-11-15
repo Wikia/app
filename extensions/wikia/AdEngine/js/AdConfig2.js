@@ -12,40 +12,39 @@ var AdConfig2 = function (
 	adProviderEvolve,
 	adProviderGamePro,
 	adProviderLater,
-	adProviderNull,
-	adProviderSevenOneMedia
+	adProviderNull
 ) {
 	'use strict';
 
-	var log_group = 'AdConfig2',
-		city_lang = window.wgContentLanguage,
+	var logGroup = 'AdConfig2',
+		cityLang = window.wgContentLanguage,
 		country = Geo.getCountryCode(),
 		defaultHighValueSlots,
 		highValueSlots,
-		useSevenOneMedia = window.wgAdDriverUseSevenOneMedia && abTest.inGroup('SEVENONEMEDIA_ADS', 'ENABLED');
+		useSevenOneMedia = window.wgAdDriverUseSevenOneMedia;
 
 	defaultHighValueSlots = {
-		'CORP_TOP_LEADERBOARD':true,
-		'CORP_TOP_RIGHT_BOXAD':true,
-		'EXIT_STITIAL_BOXAD_1':true,
-		'HOME_TOP_LEADERBOARD':true,
-		'HOME_TOP_RIGHT_BOXAD':true,
-		'HUB_TOP_LEADERBOARD':true,
-		'INVISIBLE_SKIN':true,
-		'LEFT_SKYSCRAPER_2':true,
-		'MIDDLE_RIGHT_BOXAD':true,
-		'MODAL_RECTANGLE':true,
-		'MODAL_INTERSTITIAL':true,
-		'MODAL_INTERSTITIAL_1':true,
-		'MODAL_INTERSTITIAL_2':true,
-		'MODAL_INTERSTITIAL_3':true,
-		'MODAL_INTERSTITIAL_4':true,
-		'TEST_HOME_TOP_RIGHT_BOXAD':true,
-		'TEST_TOP_RIGHT_BOXAD':true,
-		'TOP_LEADERBOARD':true,
-		'TOP_RIGHT_BOXAD':true,
-		'WIKIA_BAR_BOXAD_1':true,
-		'GPT_FLUSH':true
+		'CORP_TOP_LEADERBOARD': true,
+		'CORP_TOP_RIGHT_BOXAD': true,
+		'EXIT_STITIAL_BOXAD_1': true,
+		'HOME_TOP_LEADERBOARD': true,
+		'HOME_TOP_RIGHT_BOXAD': true,
+		'HUB_TOP_LEADERBOARD': true,
+		'INVISIBLE_SKIN': true,
+		'LEFT_SKYSCRAPER_2': true,
+		'MIDDLE_RIGHT_BOXAD': true,
+		'MODAL_RECTANGLE': true,
+		'MODAL_INTERSTITIAL': true,
+		'MODAL_INTERSTITIAL_1': true,
+		'MODAL_INTERSTITIAL_2': true,
+		'MODAL_INTERSTITIAL_3': true,
+		'MODAL_INTERSTITIAL_4': true,
+		'TEST_HOME_TOP_RIGHT_BOXAD': true,
+		'TEST_TOP_RIGHT_BOXAD': true,
+		'TOP_LEADERBOARD': true,
+		'TOP_RIGHT_BOXAD': true,
+		'WIKIA_BAR_BOXAD_1': true,
+		'GPT_FLUSH': true
 	};
 
 	highValueSlots = defaultHighValueSlots;
@@ -53,8 +52,8 @@ var AdConfig2 = function (
 	function getBackEndProvider(slot) {
 		var slotname = slot[0];
 
-		log('getProvider', 5, log_group);
-		log(slot, 5, log_group);
+		log('getProvider', 5, logGroup);
+		log(slot, 5, logGroup);
 
 		// Force providers:
 		if (slot[2] === 'GamePro') {
@@ -76,21 +75,15 @@ var AdConfig2 = function (
 			return adProviderLater;
 		}
 
-		if (abTest && abTest.inGroup('PERFORMANCE_V_PREFOOTERS', 'PREFOOTERS_DISABLED')
-			&& (slotname === 'PREFOOTER_LEFT_BOXAD' || slotname === 'PREFOOTER_RIGHT_BOXAD')
-		) {
-			log('AB experiment PERFORMANCE_V_PREFOOTERS, group PREFOOTERS_DISABLED: ' + slotname + ' disabled', 5, log_group);
-			return adProviderNull;
-		}
-
-		if (useSevenOneMedia && adProviderSevenOneMedia.canHandleSlot(slot)) {
-			return adProviderSevenOneMedia;
+		if (useSevenOneMedia) {
+			// All SevenOne Media ads are handled in the Later queue
+			return adProviderLater;
 		}
 
 		// TODO refactor highValueSlots check to the top of the whole config
 		if (highValueSlots[slotname]) {
 			// First ask GamePro (german lang wiki)
-			if (city_lang === 'de') {
+			if (cityLang === 'de') {
 				if (adProviderGamePro.canHandleSlot(slot)) {
 					return adProviderGamePro;
 				}
@@ -115,13 +108,13 @@ var AdConfig2 = function (
 	function getProvider(slot) {
 		var provider = getBackEndProvider(slot);
 
-		// No page length checking logic for Null/SevenOneMedia providers
-		if (provider === adProviderNull || provider === adProviderSevenOneMedia) {
+		// No page length checking logic for Null provider
+		if (provider === adProviderNull) {
 			return provider;
 		}
 
 		// Check if we should apply page length checking for that slot
-		if (adLogicPageDimensions.isApplicable(slot)) {
+		if (provider !== adProviderNull && adLogicPageDimensions.isApplicable(slot)) {
 			return adLogicPageDimensions.getProxy(provider);
 		}
 

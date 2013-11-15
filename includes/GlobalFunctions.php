@@ -3580,6 +3580,10 @@ function &wfGetLBFactory() {
  */
 function wfFindFile( $title, $options = array() ) {
 	wfProfileIn(__METHOD__);
+
+	if ( F::app()->wg->IsGhostVideo ) {
+		return false;
+	}
 	$file = RepoGroup::singleton()->findFile( $title, $options );
 	wfProfileOut(__METHOD__);
 	return $file;

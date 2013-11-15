@@ -54,6 +54,7 @@ class WikiaMobileService extends WikiaService {
 				$inContentAd = $this->app->renderView( 'WikiaMobileAdService', 'inContent' );
 				$modalInterstitial = $this->app->renderView( 'WikiaMobileAdService', 'modalInterstitial' );
 				$this->globalVariables['wgShowAds'] = true;
+				$this->globalVariables['wgUsePostScribe'] = true; /** @see ADEN-666 */
 			}
 		}
 

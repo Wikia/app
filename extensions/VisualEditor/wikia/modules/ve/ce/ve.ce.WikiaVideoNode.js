@@ -85,7 +85,8 @@ ve.ce.WikiaVideoNode.prototype.createPlayButton = function () {
 		width = this.model.getAttribute( 'width' ),
 		// This logic is from the function videoPlayButtonOverlay() in WikiaFileHelper.class.php
 		size = (
-			width <= this.playButtonSmallWidth ? 'small' : this.playButtonLargeWidth > 360 ? 'large' : ''
+			( width <= this.playButtonSmallWidth ) ? 'small' :
+			( width > this.playButtonLargeWidth ) ? 'large' : ''
 		);
 
 	$wrapper = this.$$( '<div>' )

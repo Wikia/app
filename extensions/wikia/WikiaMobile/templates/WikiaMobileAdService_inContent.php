@@ -19,7 +19,7 @@ require(['ads', 'sloth', 'jquery', 'JSMessages'], function (ads, sloth, $, msg) 
 						wrapper: adWrapper,
 						init: function onInit(found){
 							if(found) {
-								adWrapper.innerHTML += '<label class="wkAdLabel inContent">' + msg('wikiamobile-ad-label') + '<label>';
+								adWrapper.innerHTML += '<label class="wkAdLabel inContent">' + msg('wikiamobile-ad-label') + '</label>';
 								adWrapper.className += ' show';
 							}
 						}

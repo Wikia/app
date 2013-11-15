@@ -91,33 +91,4 @@ class ReplaceImageServerTest extends WikiaBaseTest {
 			],
 		];
 	}
-
-	/** @dataProvider devBoxReplaceAssetServerProvider */
-	public function testDevBoxReplaceAssetServer($url, $regex) {
-		$this->mockGlobalVariable('wgDevelEnvironment', true);
-		$replacedUrl = wfReplaceAssetServer($url);
-
-		if ($regex) {
-			$this->assertEquals(true, preg_match($regex, $replacedUrl));
-		} else {
-			$this->assertEquals($url, $replacedUrl);
-		}
-	}
-
-	public function devBoxReplaceAssetServerProvider() {
-		return [
-			[
-				'http://developer.wikia-dev.com/path/to/some/file.scss',
-				'/^http:\/\/i([0-9])\.developer\.wikia-dev.com\/path\/to\/some\/file\.scss$/'
-			],
-			[
-				'https://slot1.images.wikia.nocookie.net/path/to/file.js',
-				'/^https:\/\/slot1\.images([0-9])\.wikia\.nocookie\.net\/path\/to\/file\.js$/',
-			],
-			[
-				'http://google.com/resource.js',
-				false,
-			],
-		];
-	}
 }

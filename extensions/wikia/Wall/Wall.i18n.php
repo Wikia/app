@@ -421,7 +421,8 @@ $messages['qqq'] = array(
 	'wall-toolbar-history' => 'Link in the toolbar to see the history of the wall or thread.
 {{Identical|History}}',
 	'wall-message-notify' => 'In the remove/delete-message modal box, checkbox for telling the admin about the removal',
-	'wall-message-remove' => 'Menu item to remove a message',
+	'wall-message-remove' => 'Menu item to remove a message.
+{{Identical|Remove}}',
 	'wall-message-rev-delete' => 'Dropdown menu for staff, option to revision-delete the message',
 	'wall-message-fast-admin-delete-message' => 'Button for vstf, allow to delete without any confirmation',
 	'wall-message-quote-button' => 'Quote button on messages',
@@ -445,16 +446,19 @@ $messages['qqq'] = array(
 	'wall-placeholder-reply' => 'Entry field for posting a reply to a thread',
 	'wall-button-to-preview-comment' => 'Link to preview a message.
 {{Identical|Preview}}',
-	'wall-button-to-cancel-preview' => 'Link to cancel a preview and go back to editing',
+	'wall-button-to-cancel-preview' => 'Link to cancel a preview and go back to editing.
+{{Identical|Edit}}',
 	'wall-button-to-submit-comment' => 'Button to post the first message of a new thread.
 {{Identical|Post}}',
 	'wall-button-to-submit-reply' => 'Button to post a reply to a thread.
 {{Identical|Reply}}',
 	'wall-button-to-submit-comment-no-topic' => 'Button to post a new thread after getting an error message for not having a title',
-	'wall-button-save-changes' => 'Button to save edits to a message',
+	'wall-button-save-changes' => 'Button to save edits to a message.
+{{Identical|Save changes}}',
 	'wall-button-cancel-changes' => 'Button to cancel an edit to a message',
 	'wall-button-done-source' => 'Button to close the source view for a message',
-	'wall-message-edit' => 'Menu item to edit a message',
+	'wall-message-edit' => 'Menu item to edit a message.
+{{Identical|Edit}}',
 	'wall-message-more' => 'Top of the menu for each message.
 {{Identical|More}}',
 	'wall-message-delete' => 'Menu item to delete a message.
@@ -503,7 +507,8 @@ See also:
 	'wall-action-remove-confirm' => 'Asks for summary in the remove modal box',
 	'wall-action-remove-thread-confirm-info' => 'Explanation in the remove modal box that the thread and summary will still appear in the history',
 	'wall-action-remove-reply-confirm-info' => 'Explanation in the remove modal box that the reply and summary will still appear in the history',
-	'wall-action-remove-confirm-ok' => 'Button in the remove modal box',
+	'wall-action-remove-confirm-ok' => 'Button in the remove modal box.
+{{Identical|Remove}}',
 	'wall-action-close-thread-title' => 'Title of the modal box for closing a thread.
 {{Identical|Close this thread}}',
 	'wall-action-close-confirm' => 'Asks for summary in the close thread modal box',
@@ -820,9 +825,11 @@ checkbox on Special:Block',
 	'wall-message-unnotifyeveryone' => 'Dropdown menu for admin, Un-highlight this thread',
 	'wall-message-notifyeveryone-tooltip' => 'Tooltip on checkbox instructing users they can highlight the thread if checked.',
 	'wall-votes-modal-showmore' => 'It is display in kudos modal (mainly forums)',
-	'wall-votes-modal-title' => 'Kudos modal title (mainly forums)',
+	'wall-votes-modal-title' => 'Kudos modal title (mainly forums).
+{{Identical|Kudos}}',
 	'wall-votes-modal-title-desc' => 'description in user title (mainly forums).  $1 contains number of people, take note of plural.',
-	'wall-votes-number' => 'kudos number on message (mainly forums)',
+	'wall-votes-number' => 'kudos number on message (mainly forums).
+{{Identical|Kudos}}',
 	'wall-votes-number-tooltip' => 'Tooltip under numbers of Kudos.',
 	'wall-votes-vote-tooltip' => 'hover tooltip instructing users they can vote',
 	'wall-votes-voted-tooltip' => 'hover tooltip instructing users they have already voted',
@@ -833,7 +840,8 @@ checkbox on Special:Block',
 	'wall-preview-modal-button-back' => 'buton on preview modal.
 {{Identical|Back}}',
 	'wall-preview-modal-button-publish' => 'buton on preview modal',
-	'wall-topic-input-heading' => 'Topic input label',
+	'wall-topic-input-heading' => 'Topic input label.
+{{Identical|Topic}}',
 	'wall-topic-input-placeholder' => 'Adding topic instruction and call to action.  State that it is optional',
 	'wall-topic-input-error' => 'Error message saying article is not on the wiki.  Topic is a wiki article, therefore, state that there is no article.',
 	'wall-topic-input-error-limit' => 'Error message saying user has reached the maximum amount of topics.  $1 is the max such as 4',
@@ -1666,6 +1674,7 @@ $messages['ce'] = array(
 	'wall-message-wall' => 'Декъашхочун дийцаре',
 	'wall-message-wall-shorten' => 'дийцаре',
 	'wall-thread-closed' => 'ДӀачӀагӀа',
+	'wall-notifications-markasread' => 'Массо билгал йе еша сана',
 	'mail-notification-html-button' => 'Хьажа дийцаре',
 );
 
@@ -2756,6 +2765,13 @@ ___________________________________________<br />
 	'wall-topic-edit' => 'Editar temas',
 	'wall-topic-edit-save' => 'Guardar',
 	'wall-topic-edit-cancel' => 'Cancelar',
+);
+
+/** Basque (euskara)
+ * @author Xabier Armendaritz
+ */
+$messages['eu'] = array(
+	'wall-notifications-all' => 'Jakinarazpen guztiak',
 );
 
 /** Persian (فارسی)
@@ -4424,6 +4440,29 @@ http://ja.wikia.com/wiki/Special:Following</p>',
 	'wall-preview-modal-button-publish' => '発行',
 );
 
+/** Georgian (ქართული)
+ * @author DevaMK
+ */
+$messages['ka'] = array(
+	'wall-message-unfollow' => 'კონტროლის გაუქმება',
+	'wall-message-mywall' => 'ჩემი კედელი',
+	'wall-message-remove' => 'წაშლა',
+	'wall-message-quote-button' => 'ციტირება',
+	'wall-no-title-warning' => '← თქვენ არ გაუკეთეთ სათაური შეტყობინებას',
+	'wall-placeholder-topic' => 'ჩაწერე შეტყობინების სათაური',
+	'wall-placeholder-message' => 'მისწერე $1-ს ახალი შეტყობინება',
+	'wall-button-to-preview-comment' => 'გადახედე',
+	'wall-button-to-submit-comment' => 'გამოაქვეყნე',
+	'wall-button-to-submit-reply' => 'უპასუხე',
+	'wall-button-to-submit-comment-no-topic' => 'გამოაქვეყნე სათაურის გარეშე',
+	'wall-message-edit' => 'რედაქტირება',
+	'wall-message-more' => 'მეტი',
+	'wall-message-close-thread' => 'ბმულის დახურვა',
+	'wall-sorting-newest-threads' => 'უახლესი ბმულები',
+	'wall-sorting-oldest-threads' => 'უძველესი ბმულები',
+	'wall-sorting-newest-replies' => 'უახლესი პასუხები',
+);
+
 /** Kabardian (Адыгэбзэ)
  * @author Erdemaslancan
  */
@@ -5807,6 +5846,7 @@ $messages['pfl'] = array(
  * @author Ankry
  * @author BeginaFelicysym
  * @author Debeet
+ * @author Rezonansowy
  * @author Sovq
  */
 $messages['pl'] = array(
@@ -5875,9 +5915,9 @@ $messages['pl'] = array(
 	'wall-confirm-monobook-remove' => 'Podaj powód usunięcia.
 
 Ten wątek i jego historia nadal będą dostępne w historii wiki.',
-	'wall-confirm-monobook-admin' => 'Podaj powód skasowania.
+	'wall-confirm-monobook-admin' => 'Napisz proszę, dlaczego chcesz to usunąć.
 
-Ten wątek i jego historia nadal będą dostępne w historii wiki.',
+Oryginał wiadomości i twój komentarz wciąż pozostaną w historii wiki.',
 	'wall-confirm-monobook-restore' => 'Podaj powód przywrócenia',
 	'wall-delete-error-title' => 'Błąd',
 	'wall-delete-error-content' => 'Wiadomość została wcześniej skasowana i nie jest dostępna.',
@@ -6293,7 +6333,7 @@ $messages['pt'] = array(
 	'wall-deleted-reply' => 'Esta resposta foi eliminada',
 	'wall-history' => 'Histórico',
 	'wall-history-title' => 'histórico do mural',
-	'wall-history-who-involved-wall-title' => 'Quem está envolvido neste mural?', # Fuzzy
+	'wall-history-who-involved-wall-title' => 'Quem está envolvido?',
 	'wall-history-who-involved-thread-title' => 'Quem está envolvido neste tópico?',
 	'wall-history-thread-created' => '$1 foi criado por $2',
 	'wall-history-thread-removed' => '$1 foi removido por $2',
@@ -6532,7 +6572,7 @@ suas preferências de email aqui: http://pt-br.wikia.com/wiki/Especial:Preferên
 <p>-- $AUTHOR_SIGNATURE<p>
 <p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">Veja a conversa</a></p>
 <p>A Equipe Wikia</p>
-___________________________________________<br>
+___________________________________________<br />
 * Procure ajuda e conselho na Wikia Português do Brasil: http://pt-br.wikia.com
 * Quer receber menos mensagens de nós? Você pode cancelar sua inscrição ou alterar
 suas preferências de email aqui: http://pt-br.wikia.com/wiki/Especial:Preferências', # Fuzzy
@@ -7968,6 +8008,7 @@ $messages['uz'] = array(
 );
 
 /** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
  * @author Xiao Qiao
  */
 $messages['vi'] = array(
@@ -8234,7 +8275,7 @@ ___________________________________________<br />
 * Nhận được sự hỗ trợ từ ngôn ngữ của bạn tại Wikia Tiếng Việt: http://vi.wikia.com
 * Muốn nhận ít thư thông báo hơn từ chúng tôi? Bạn có thể bỏ chọn hoặc thay đổi
  tuỳ chọn thư điện tử của bạn ở đây: http://vi.wikia.com/wiki/Đặc_biệt:Tùy_chọn',
-	'prefs-email-wall-v2' => 'Tường tin nhắn', # Fuzzy
+	'prefs-email-wall-v2' => 'Tường tin nhắn và diễn đàn',
 	'tog-enotifwallthread-v2' => 'Gửi thư điện tử cho tôi…',
 	'tog-enotifmywall-every' => 'Cho mỗi tin nhắn & trả lời',
 	'tog-enotifmywall-sincevisited' => 'Mỗi lần một luồng kể từ lần cuối cùng tôi đăng nhập',
@@ -8450,6 +8491,7 @@ $messages['zh-hans'] = array(
 	'wall-removed-reply' => '这条回复已被删除',
 	'wall-history-action-view' => '查看',
 	'mail-notification-html-greeting' => '嗨！$1,',
+	'mail-notification-html-button' => '查看会话',
 	'prefs-email-wall-v2' => '留言墙和论坛',
 	'tog-enotifwallthread-v2' => '邮件通知我…',
 	'tog-enotifmywall-reminder' => '以每日提醒邮件',

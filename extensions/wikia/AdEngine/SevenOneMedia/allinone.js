@@ -1,3 +1,5 @@
+// TODO: remove this file, not needed anymore
+
 /*global:window,document,Wikia*/
 
 Wikia = window.Wikia || {};

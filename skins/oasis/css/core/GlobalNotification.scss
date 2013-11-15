@@ -1,5 +1,6 @@
 @import "layout";
 @import "../mixins/border-radius";
+@import "../mixins/calc";
 
 .global-notification {
 	@include box-shadow(0px, 2px, 5px, darken($color-page,12%));
@@ -83,10 +84,18 @@
 /* temp transition code until grid is fully rolled out, remove and integrate after transition */
 .wikia-grid {
 	.global-notification {
-    	width: 988px;
+		width: 988px;
 
 		&.float {
 			margin-left: -505px;
+
+			// DAR-2719: Hidden global notification when window shrank
+			@media screen and (max-width: 1020px) {
+				margin: 0;
+				left: 0;
+
+				@include calc(width, "100% - 20px");
+			}
 		}
 	}
 }

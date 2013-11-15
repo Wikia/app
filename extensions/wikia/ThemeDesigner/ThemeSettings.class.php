@@ -62,14 +62,14 @@ class ThemeSettings {
 		$this->defaultSettings['background-image-revision'] = false; //what is this?
 		$this->defaultSettings['background-tiled'] = false;
 		$this->defaultSettings['background-fixed'] = false;
-		$this->defaultSettings['background-align'] = "center";
+		$this->defaultSettings['background-dynamic'] = true;
 	}
 
 	public function getSettings() {
 		$settings = $this->defaultSettings;
 		if(!empty($GLOBALS[self::WikiFactorySettings])) {
 			$settings = array_merge($settings, $GLOBALS[self::WikiFactorySettings]);
-			$colorKeys = array( "color-body", "color-page", "color-buttons", "color-links", "color-header" );
+			$colorKeys = array( "color-body", "color-body-middle", "color-page", "color-buttons", "color-links", "color-header" );
 
 			// if any of the user set colors are invalid, use default
 			foreach ($colorKeys as $colorKey) {
@@ -166,7 +166,7 @@ class ThemeSettings {
 			$settings['background-image-width'] = $file->getWidth();
 			$settings['background-image-height'] = $file->getHeight();
 
-			$imageServing = new ImageServing(null, 120, array("w"=>"120", "h"=>"100"));
+			$imageServing = new ImageServing(null, 120, array("w"=>"120", "h"=>"65"));
 			$settings['user-background-image'] = $file->getURL();
 			$settings['user-background-image-thumb'] = wfReplaceImageServer($file->getThumbUrl( $imageServing->getCut($file->getWidth(), $file->getHeight(), "origin")."-".$file->getName()));
 
@@ -234,9 +234,67 @@ class ThemeSettings {
 			}
 		}
 
-
 		WikiFactory::setVarByName(self::WikiFactoryHistory, $cityId, $history, $reason);
-
 	}
 
+	/**
+	 * Get wordmark full, up-to-date URL
+	 *
+	 * This method returns URL based on "wordmark-image-url" and performs URL rewrite
+	 * for migrated wikis with short Swift bucket name
+	 *
+	 * @see  $wgUploadPath - "http://images.wikia.com/24_/es/images"
+	 *
+	 * @author macbre
+	 * @return string wordmark URL or empty string if not found
+	 */
+	public function getWordmarkUrl() {
+		global $wgUploadPath;
+
+		$wordmarkUrl = $this->getSettings()['wordmark-image-url'];
+		$wordmarkPath = reset(explode('/images/', $wordmarkUrl));
+
+		if (!empty($wordmarkPath)) {
+			$wordmarkUrl = str_replace(
+				$wordmarkPath . '/images',
+				$wgUploadPath,
+				$wordmarkUrl
+			);
+		}
+
+		return wfReplaceImageServer($wordmarkUrl, SassUtil::getCacheBuster());
+	}
+
+	/**
+	 * Get wiki background full, up-to-date URL
+	 *
+	 * This method returns URL based on "background-image" and performs URL rewrite
+	 * for migrated wikis with short Swift bucket name
+	 *
+	 * @see  $wgUploadPath - "http://images.wikia.com/24_/es/images"
+	 *
+	 * @author macbre
+	 * @return string background URL or empty string if not found
+	 */
+	public function getBackgroundUrl() {
+		global $wgUploadPath;
+
+		$backgroundUrl = $this->getSettings()['background-image'];
+
+		if (empty($backgroundUrl)) {
+			return $backgroundUrl;
+		}
+
+		$backgroundPath = reset(explode('/images/', $backgroundUrl));
+
+		if (!empty($wordmarkPath)) {
+			$backgroundUrl = str_replace(
+				$backgroundPath . '/images',
+				$wgUploadPath,
+				$backgroundUrl
+			);
+		}
+
+		return wfReplaceImageServer($backgroundUrl, SassUtil::getCacheBuster());
+	}
 }

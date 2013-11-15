@@ -239,6 +239,7 @@ class MediaWikiService
 	 * @return \Wikia\Search\MediaWikiService
 	 */
 	public function setGlobal( $global, $value ) {
+		$global = substr_count( $global, 'wg', 0, 2 ) ? substr( $global, 2 ) : $global;
 		$this->app->wg->{$global} = $value;
 		return $this;
 	}

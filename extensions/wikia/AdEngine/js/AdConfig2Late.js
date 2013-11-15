@@ -6,15 +6,22 @@ var AdConfig2Late = function (
 	// AdProviders
 	adProviderGamePro,
 	adProviderLiftium2Dom,
-	adProviderNull
+	adProviderNull,
+	adProviderSevenOneMedia
 ) {
 	'use strict';
 
 	var logGroup = 'AdConfig2',
 		cityLang = window.wgContentLanguage,
-		getProvider;
+		deProvider = window.wgAdDriverUseSevenOneMedia ? adProviderSevenOneMedia : adProviderGamePro,
+		liftiumSlotsToShowWithSevenOneMedia = {
+			'WIKIA_BAR_BOXAD_1': true,
+			'TOP_BUTTON_WIDE': true,
+			'TOP_BUTTON_WIDE.force': true
+		},
+		tryLiftium;
 
-	getProvider = function(slot) {
+	function getProvider(slot) {
 		var slotname = slot[0];
 
 		log('getProvider', 5, logGroup);
@@ -23,10 +30,9 @@ var AdConfig2Late = function (
 		if (slot[2] === 'Liftium2' || slot[2] === 'Liftium2Dom') {
 			if (adProviderLiftium2Dom.canHandleSlot(slot)) {
 				return adProviderLiftium2Dom;
-			} else {
-				log('#' + slotname + ' disabled. Forced Liftium2, but it can\'t handle it', 7, logGroup);
-				return adProviderNull;
 			}
+			log('#' + slotname + ' disabled. Forced Liftium2, but it can\'t handle it', 7, logGroup);
+			return adProviderNull;
 		}
 
 		// First ask GamePro (german lang wiki)
@@ -34,17 +40,23 @@ var AdConfig2Late = function (
 			if (slotname === 'PREFOOTER_RIGHT_BOXAD' || slotname === 'LEFT_SKYSCRAPER_3') {
 				return adProviderNull;
 			}
-			if (adProviderGamePro.canHandleSlot(slot)) {
-				return adProviderGamePro;
+			if (deProvider.canHandleSlot(slot)) {
+				return deProvider;
 			}
 		}
 
-		if (adProviderLiftium2Dom.canHandleSlot(slot)) {
+		if (window.wgAdDriverUseSevenOneMedia) {
+			tryLiftium = liftiumSlotsToShowWithSevenOneMedia[slot[0]];
+		} else {
+			tryLiftium = true;
+		}
+
+		if (tryLiftium && adProviderLiftium2Dom.canHandleSlot(slot)) {
 			return adProviderLiftium2Dom;
 		}
 
 		return adProviderNull;
-	};
+	}
 
 	return {
 		getProvider: getProvider

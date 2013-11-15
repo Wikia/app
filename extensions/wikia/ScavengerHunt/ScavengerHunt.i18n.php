@@ -189,9 +189,13 @@ $messages['en'] = array(
  */
 $messages['qqq'] = array(
 	'scavengerhunt-desc' => '{{desc}}',
+	'scavengerhunt-list-header-actions' => '{{Identical|Action}}',
 	'scavengerhunt-list-enabled' => '{{Identical|Enabled}}',
 	'scavengerhunt-list-disabled' => '{{Identical|Disabled}}',
+	'scavengerhunt-list-edit' => '{{Identical|Edit}}',
 	'scavengerhunt-label-general' => '{{Identical|General}}',
+	'scavengerhunt-button-disable' => '{{Identical|Disable}}',
+	'scavengerhunt-button-enable' => '{{Identical|Enable}}',
 	'scavengerhunt-button-delete' => '{{Identical|Delete}}',
 	'scavengerhunt-label-clue-size' => '{{Identical|Font size}}',
 	'scavengerhunt-editor-tip-entry-form-email' => '{{doc-singularthey}}',
@@ -1361,6 +1365,7 @@ $messages['ku-latn'] = array(
 
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
+ * @author Soued031
  */
 $messages['lb'] = array(
 	'scavengerhunt-list-header-name' => 'Numm vum Spill',
@@ -1368,7 +1373,7 @@ $messages['lb'] = array(
 	'scavengerhunt-list-enabled' => 'Aktivéiert',
 	'scavengerhunt-list-disabled' => 'Desaktivéiert',
 	'scavengerhunt-list-edit' => 'änneren',
-	'scavengerhunt-label-dialog-check' => '(visuellen Editeur weisen - pre-alpha, fonctionnéiert nach net)',
+	'scavengerhunt-label-dialog-check' => '(visuellen Editeur weisen - pre-alpha, funktionéiert nach net)',
 	'scavengerhunt-label-image-check' => '(Bild weisen)',
 	'scavengerhunt-label-general' => 'Allgemeng',
 	'scavengerhunt-label-name' => 'Numm:',
@@ -2250,9 +2255,9 @@ $messages['pt'] = array(
 	'scavengerhunt-game-has-been-enabled' => 'O jogo selecionado de Caça ao Tesouro foi ativado.',
 	'scavengerhunt-game-has-been-disabled' => 'O jogo selecionado de Caça ao Tesouro foi desativado.',
 	'scavengerhunt-game-has-not-been-saved' => 'O jogo da Caça ao Tesouro não foi gravado.',
-	'scavengerhunt-edit-token-mismatch' => 'Foi detectada uma incompatibilidade nas etiquetas de edição - tente novamente, por favor.',
+	'scavengerhunt-edit-token-mismatch' => 'Foi detetada uma incompatibilidade nas etiquetas de edição - tente novamente, por favor.',
 	'scavengerhunt-entry-form-name' => 'O seu nome:',
-	'scavengerhunt-entry-form-email' => 'Correio electrónico:',
+	'scavengerhunt-entry-form-email' => 'Correio eletrónico:',
 	'scavengerhunt-entry-form-submit' => 'Enviar entrada',
 	'scavengerhunt-label-progress-bar' => 'Barra de progresso',
 	'scavengerhunt-quit-game-button-quit' => 'Sair',

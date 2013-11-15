@@ -32,28 +32,6 @@ class AssetsManagerTest extends WikiaBaseTest {
 		$this->assertContains('foo,bar', $url[0]);
 	}
 
-	/** @dataProvider isSassFileDataProvider */
-	public function testIsSassUrl($file, $expected) {
-		$this->assertEquals($this->instance->isSassUrl($file), $expected);
-	}
-
-	/** @dataProvider testGetSassFilePathProvider */
-	public function testGetSassFilePath($url, $expected) {
-		$filePath = $this->instance->getSassFilePath($url);
-		$this->assertEquals($filePath, $expected);
-	}
-
-	public function testGetSassesUrl() {
-		$otherSass = 'path/to/another/sass.scss';
-		$sassList = [self::SASS_FILE, $otherSass];
-		$url = $this->instance->getSassesUrl($sassList);
-
-		$this->assertContains('__am', $url);
-		$this->assertContains('/sasses/', $url);
-		$this->assertContains(self::SASS_FILE, $url);
-		$this->assertContains($otherSass, $url);
-	}
-
 	/**
 	 * @dataProvider duplicateAssetsDataProvider
 	 */
@@ -136,24 +114,6 @@ class AssetsManagerTest extends WikiaBaseTest {
 					]
 				]
 			],
-		];
-	}
-
-	public function isSassFileDataProvider() {
-		return [
-			[self::SASS_FILE, true],
-			['path/to/unknown/file.jpg', false],
-			['path/to/unknown/file.scss', true],
-			['path/without/extension', false],
-			['normal/css/file.css', false],
-		];
-	}
-
-	public function testGetSassFilePathProvider() {
-		return [
-			[AssetsManager::getInstance()->getSassCommonURL(self::SASS_FILE), self::SASS_FILE],
-			[self::SASS_FILE, self::SASS_FILE],
-			['http://google.com'.self::SASS_FILE, 'http://google.com'.self::SASS_FILE],
 		];
 	}
 }
