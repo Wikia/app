@@ -84,6 +84,9 @@
 			&:hover {
 				background: $color-menu-highlight;
 			}
+			&.hover {
+				background: $color-menu-highlight;
+			}
 			img.sprite {
 				position: absolute;
 				top: .4em;
@@ -100,6 +103,11 @@
 				display: none;
 			}
 			&:hover {
+				.edit-pencil, .trash, .drag {
+					display: block;
+				}
+			}
+			&.hover {
 				.edit-pencil, .trash, .drag {
 					display: block;
 				}
@@ -151,6 +159,17 @@
 				width: 8px;
 				background-color: $color-text;
 			}
+		}
+	}
+
+	.options-list.on-ipad {
+		.edit-pencil {
+			cursor: pointer;
+			right: 26px
+		}
+		.trash {
+			cursor: pointer;
+			right: 6px;
 		}
 	}
 
