@@ -106,6 +106,12 @@ use Swagger\Annotations as SWG;
  * 		type="string",
  * 		description="Text snippet for the article"
  *  )
+ *  @SWG\Property(
+ * 		name="image",
+ * 		required="true",
+ * 		type="string",
+ * 		description="The URL of the image"
+ *  )
  *
  *
  * @SWG\Model( id="CrossWikiSearchResult" )
