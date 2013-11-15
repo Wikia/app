@@ -251,9 +251,6 @@ class UserLoginForm extends LoginForm {
 			$u->setOption( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME, true );
 			$u->setOption( UserLoginSpecialController::SIGNED_UP_ON_WIKI_OPTION_NAME, $wgCityId );
 			$u->saveSettings();
-			$u->saveToCache();
-			wfWaitForSlaves();
-			error_log('KamilkUserSignup-WIKIA: debug-log:SetUnconfirmed:UserId:'.$u->getId()." ".json_encode($u->getOptions()));
 			UserLoginHelper::setNotConfirmedUserSession( $u->getId() );
 		}
 

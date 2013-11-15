@@ -173,7 +173,6 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 
 		// pass and ID of created account for FBConnect feature
 		if ($ret instanceof User) {
-			error_log('KamilkUserSignup-WIKIA: debug-log:Final:UserId:'.$ret->getId()." ".json_encode($ret->getOptions()));
 			$this->userId = $ret->getId();
 			$this->userPage = $ret->getUserPage()->getFullUrl();
 		}
