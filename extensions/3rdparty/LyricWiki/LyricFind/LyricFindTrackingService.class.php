@@ -102,21 +102,20 @@ class LyricFindTrackingService extends WikiaService {
 
 			$code = !empty($json['response']['code']) ? intval($json['response']['code']) : false;
 
-			// mark lyrics for removal
-			if ($code == self::CODE_LYRIC_IS_BLOCKED) {
-				$success = $this->markLyricForRemoval($this->wg->Title->getArticleID());
-			}
-			else {
-				$success = in_array($code, [
-					self::CODE_LRC_IS_AVAILABLE,
-					self::CODE_LYRIC_IS_INSTRUMENTAL,
-					self::CODE_LYRIC_IS_AVAILABLE
-				]);
+			switch ($code) {
+				case self::CODE_LYRIC_IS_BLOCKED:
+					$success = $this->markLyricForRemoval($this->wg->Title->getArticleID());
+					break;
 
-				// log errors
-				if ($success === false) {
+				case self::CODE_LRC_IS_AVAILABLE:
+				case self::CODE_LYRIC_IS_INSTRUMENTAL:
+				case self::CODE_LYRIC_IS_AVAILABLE:
+					$success = true;
+					break;
+
+				default:
+					$success = false;
 					self::log(__METHOD__, "got #{$code} response code from API (track amg#{$amgId} / gn#{$gracenoteId} / '{$title->getPrefixedText()}')");
-				}
 			}
 		}
 		else {
