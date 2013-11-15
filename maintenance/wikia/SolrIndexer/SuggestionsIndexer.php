@@ -13,6 +13,7 @@ class SuggestionsIndexer extends Maintenance {
 	const SOLR_SUGGEST = 'suggest';
 	const SNIPPET_LENGTH = 100;
 	const BATCH_SIZE = 500;
+	const IMAGE_SIZE = 50;
 
 	protected $wikiId;
 	protected $solrHelper;
@@ -260,7 +261,7 @@ class SuggestionsIndexer extends Maintenance {
 	}
 
 	protected function getImageServing( $ids ) {
-		return new ImageServing( $ids, 50, 50 );
+		return new ImageServing( $ids, self::IMAGE_SIZE, self::IMAGE_SIZE );
 	}
 
 	/**
