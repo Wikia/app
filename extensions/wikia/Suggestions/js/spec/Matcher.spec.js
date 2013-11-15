@@ -44,6 +44,7 @@ describe('Test matcher', function() {
 		expect(matcher.match(test, 'map: ')).toEqual( { prefix: '', match: 'Map', suffix: 's' } );
 		expect(matcher.match(test, 'maps:')).toEqual( { prefix: '', match: 'Maps', suffix: '' } );
 		expect(matcher.match(test, 'maps: ')).toEqual( { prefix: '', match: 'Maps', suffix: '' } );
+		expect(matcher.match(test, ':maps ')).toEqual( { prefix: '', match: 'Maps', suffix: '' } );
 		test = 'Map';
 		expect(matcher.match(test, 'maps')).toBeNull();
 	});
