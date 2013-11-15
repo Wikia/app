@@ -4,6 +4,7 @@
 @import "skins/oasis/css/mixins/clearfix";
 @import "skins/oasis/css/mixins/gradient";
 
+@import "helpers/ve-table-layout";
 @import "mixins/ve-icon";
 
 $size-cart-item: 60px;
@@ -116,6 +117,10 @@ $width-cart: 101px;
 		margin-left: $width-media-item-max + $width-gutter;
 	}
 
+	.ve-ui-textInputWidget {
+		@extend .ve-table-layout;
+	}
+
 	.ve-ui-wikiaMediaPageWidget-item {
 		float: left;
 		text-align: center;
@@ -130,8 +135,7 @@ $width-cart: 101px;
 	}
 
 	.ve-ui-wikiaMediaPageWidget-item-extension {
-		margin-left: $width-gutter / 4;
-		vertical-align: middle;
+		padding-left: $width-gutter / 4;
 	}
 
 	.ve-ui-textInputWidget,
@@ -142,10 +146,6 @@ $width-cart: 101px;
 
 	.ve-ui-wikiaMediaPageWidget-item-license select {
 		width: 100%;
-	}
-
-	&.photo .ve-ui-textInputWidget input {
-		width: 85%;
 	}
 
 	&.video {
@@ -181,12 +181,7 @@ $width-cart: 101px;
 }
 
 .ve-ui-wikiaMediaQueryWidget-wrapper {
-	display: table;
-	width: 100%;
-	> div {
-		display: table-cell;
-		vertical-align: middle;
-	}
+	@extend .ve-table-layout;
 }
 
 .ve-ui-wikiaMediaQueryWidget-queryWrapper {
