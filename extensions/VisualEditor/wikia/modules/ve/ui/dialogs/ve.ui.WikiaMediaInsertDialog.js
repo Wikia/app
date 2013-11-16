@@ -623,6 +623,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.getLicense = function () {
 			'data': {
 				'action': 'licenses',
 				'format': 'json',
+				'default': 'Fairuse',
 				'id': 'license',
 				'name': 'license'
 			},
