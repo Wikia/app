@@ -76,8 +76,8 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 
 	// Events
 	this.cartModel.connect( this, {
-		'add': 'onCartAdd',
-		'remove': 'onCartRemove'
+		'add': 'onCartModelAdd',
+		'remove': 'onCartModelRemove'
 	} );
 	this.cart.on( 'select', ve.bind( this.onCartSelect, this ) );
 	this.insertButton.connect( this, { 'click': [ 'close', 'insert' ] } );
@@ -229,12 +229,12 @@ ve.ui.WikiaMediaInsertDialog.prototype.onCartSelect = function ( item ) {
 };
 
 /**
- * Handle adding items to the cart.
+ * Handle adding items to the cart model.
  *
  * @method
- * @param {ve.dm.WikiaCartItem[]} items
+ * @param {ve.dm.WikiaCartItem[]} items Cart models
  */
-ve.ui.WikiaMediaInsertDialog.prototype.onCartAdd = function ( items ) {
+ve.ui.WikiaMediaInsertDialog.prototype.onCartModelAdd = function ( items ) {
 	var config, i, isTemporary, item, page;
 
 	for ( i = 0; i < items.length; i++ ) {
@@ -253,12 +253,12 @@ ve.ui.WikiaMediaInsertDialog.prototype.onCartAdd = function ( items ) {
 };
 
 /**
- * Handle removing items from the cart.
+ * Handle removing items from the cart model.
  *
  * @method
  * @param {ve.dm.WikiaCartItem[]} items
  */
-ve.ui.WikiaMediaInsertDialog.prototype.onCartRemove = function ( items ) {
+ve.ui.WikiaMediaInsertDialog.prototype.onCartModelRemove = function ( items ) {
 	this.searchResults.setChecked( items, false );
 };
 
@@ -656,9 +656,14 @@ ve.ui.WikiaMediaInsertDialog.prototype.onUploadSuccess = function ( data ) {
 		this.license.promise.done( ve.bind( this.onUploadSuccess, this, data ) );
 	} else {
 		this.cartModel.addItems( [
-			new ve.dm.WikiaCartItem( data.title, data.temporaryThumbUrl, 'photo', data.temporaryFileName )
+			new ve.dm.WikiaCartItem(
+				data.title,
+				data.temporaryThumbUrl,
+				'photo',
+				data.temporaryFileName
+			)
 		] );
-		this.setPage( data.title );
+		this.cart.selectItem( this.cart.getItemFromData( data.title ) );
 	}
 };
 
