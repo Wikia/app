@@ -117,6 +117,10 @@ $width-cart: 101px;
 		margin-left: $width-media-item-max + $width-gutter;
 	}
 
+	.ve-ui-labeledElement-label {
+		padding-top: 0;
+	}
+
 	.ve-ui-textInputWidget {
 		@extend .ve-table-layout;
 	}
