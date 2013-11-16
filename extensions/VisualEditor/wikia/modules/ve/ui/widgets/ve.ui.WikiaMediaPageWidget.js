@@ -31,8 +31,8 @@ ve.ui.WikiaMediaPageWidget = function VeUiWikiaMediaPageWidget( model, config ) 
 	this.model = model;
 	this.removeButton = new ve.ui.ButtonWidget( {
 		'$$': this.$$,
-		'label': 'Remove from the cart', //TODO: i18n
-		'flags': ['destructive']
+		'flags': ['destructive'],
+		'label': ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-item-remove-button' )
 	} );
 	this.title = new ve.ui.TextInputWidget( {
 		'$$': this.$$,
@@ -42,7 +42,7 @@ ve.ui.WikiaMediaPageWidget = function VeUiWikiaMediaPageWidget( model, config ) 
 	this.titleLabel = new ve.ui.InputLabelWidget( {
 		'$$': this.$$,
 		'input': this.title,
-		'label': 'Title' // TODO: i18n
+		'label': ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-item-title-label' )
 	} );
 
 	this.$extension = this.$$( '<span>' );
@@ -179,7 +179,7 @@ ve.ui.WikiaMediaPageWidget.prototype.setupLicense = function ( $license ) {
 		.append( this.$licenseSelect );
 	this.$licenseLabel
 		.addClass( 've-ui-widget ve-ui-labeledElement-label ve-ui-inputLabelWidget' )
-		.text( 'License' ); // TODO: i18n
+		.text( ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-item-license-label' ) );
 	this.fieldset.$.append( this.$licenseLabel, this.$license );
 };
 
