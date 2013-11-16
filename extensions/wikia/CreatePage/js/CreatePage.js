@@ -129,7 +129,7 @@ var CreatePage = {
 		'use strict';
 		var uri = new mw.Uri( url );
 
-		return uri.path.replace( mw.config.get( 'wgArticlePath').replace( '$1', '' ), '' );
+		return uri.path.replace( mw.config.get( 'wgArticlePath').replace( '$1', '' ), '' ).replace( /_/g, ' ' );
 	},
 
 	redLinkClick: function( e, titleText ) {
@@ -155,7 +155,6 @@ var CreatePage = {
 		}
 
 		if ( isContentNamespace ) {
-			e.preventDefault();
 			CreatePage.openDialog( e, titleText );
 		}
 		else {
