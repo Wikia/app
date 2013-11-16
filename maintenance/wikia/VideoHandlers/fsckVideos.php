@@ -18,33 +18,17 @@ class FSCKVideos extends Maintenance {
 
 	protected $verbose = false;
 	protected $test = false;
-	protected $reupload = false;
-	protected $startDate = '';
-	protected $endDate = '';
-	protected $updateData = false;
 
 	public function __construct() {
 		parent::__construct();
 		$this->mDescription = "Pre-populate LVS suggestions";
 		$this->addOption( 'test', 'Test mode; make no changes', false, false, 't' );
 		$this->addOption( 'verbose', 'Show extra debugging output', false, false, 'v' );
-		$this->addOption( 'reupload', 'Reupload image for default image only', false, false, 'r' );
-		$this->addOption( 'start', 'Start date (timestamp); required for reupload option', false, true, 's' );
-		$this->addOption( 'end', 'End date (timestamp); required for reupload option', false, true, 'e' );
-		$this->addOption( 'data', 'Update image data', false, false, 'd' );
 	}
 
 	public function execute() {
 		$this->test    = $this->hasOption( 'test' );
 		$this->verbose = $this->hasOption( 'verbose' );
-		$this->reupload = $this->hasOption( 'reupload' );
-		$this->startDate = $this->getOption( 'start' );
-		$this->endDate = $this->getOption( 'end' );
-		$this->updateData = $this->hasOption( 'data' );
-
-		if ( $this->reupload && ( empty( $this->startDate ) || empty( $this->endDate ) ) ) {
-			die( "Error: Reuploading image requires start date and end date.\n" );
-		}
 
 		echo "Checking ".F::app()->wg->Server."\n";
 
@@ -62,25 +46,18 @@ class FSCKVideos extends Maintenance {
 
 		$startTime = time();
 
-		if ( $this->reupload ) {
-			$videos = $this->getVideos();
-		} else {
-			$videos = VideoInfoHelper::getLocalVideoTitles();
-		}
+		$videos = VideoInfoHelper::getLocalVideoTitles();
+
 		$this->debug( "Found ".count($videos)." video(s)\n" );
 
-		$options = array(
-			'fixit' => ( $this->test ? false : true ),
-			'reupload' => $this->reupload,
-			'updateData' => $this->updateData,
-		);
+		$fixit = $this->test ? false : true;
 
 		$helper = new VideoHandlerHelper();
 
 		foreach ( $videos as $title ) {
 			$stats['checked']++;
 
-			$status = $helper->fcskVideoThumbnail( $title, $options );
+			$status = $helper->fcskVideoThumbnail( $title, $fixit );
 			if ( $status->isGood() ) {
 				$result = $status->value;
 				if ( $result['check']  == 'ok' ) {
@@ -113,47 +90,6 @@ class FSCKVideos extends Maintenance {
 		printf("\t%5d error(s)\n", $stats['error']);
 		$delta = F::app()->wg->lang->formatTimePeriod( time() - $startTime );
 		echo "Finished after $delta\n";
-	}
-
-	/**
-	 * Get the list of videos from this wiki
-	 * @return array $titles
-	 */
-	private function getVideos() {
-		wfProfileIn( __METHOD__ );
-
-		$db = wfGetDB( DB_SLAVE );
-
-		$sqlWhere['img_media_type'] = 'video';
-		if ( !empty( $this->startDate ) ) {
-			$sqlWhere[] = "img_timestamp > '{$db->timestamp( $this->startDate )}'";
-		}
-
-		if ( !empty( $this->endDate ) ) {
-			$sqlWhere[] = "img_timestamp <= '{$db->timestamp( $this->endDate )}'";
-		}
-
-		// size and hash from LegacyVideoApiWrapper::$THUMBNAIL_URL
-		$sqlWhere['img_size'] = 66162;
-		$sqlWhere['img_sha1'] = 'm03a6fnvxhk8oj5kgnt11t6j7phj5nh';
-
-		$result = $db->select(
-			array( 'image' ),
-			array( 'img_name' ),
-			$sqlWhere,
-			__METHOD__
-		);
-
-		$titles = array();
-		while ( $row = $db->fetchObject( $result ) ) {
-			$titles[] = $row->img_name;
-		}
-
-		$db->freeResult( $result );
-
-		wfProfileOut( __METHOD__ );
-
-		return $titles;
 	}
 
 	/**

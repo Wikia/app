@@ -346,14 +346,10 @@ class VideoHandlerHelper extends WikiaModel {
 	 * Checks to see if the video title passed in has a thumbnail on disk or not.
 	 *
 	 * @param string|Title $title - The video title to check
-	 * @param array $options
-	 * Keys:
-	 *   fixit - Whether to fix the problem or ignore it
-	 *   reupload - reupload thumbnail (for default thumbnail only)
-	 *   updateData - update image data
+	 * @param boolean $fixit - Whether to fix the problem or ignore it
 	 * @return Status
 	 */
-	public function fcskVideoThumbnail( $title, $options ) {
+	public function fcskVideoThumbnail( $title, $fixit ) {
 		$file = WikiaFileHelper::getVideoFileFromTitle( $title );
 
 		// See if a file exists for this title
@@ -362,16 +358,12 @@ class VideoHandlerHelper extends WikiaModel {
 		}
 
 		// See if the thumbnail exists for this title
-		if ( file_exists( $file->getLocalRefPath() ) && empty( $options['reupload'] ) && empty( $options['updateData'] ) ) {
+		if ( file_exists( $file->getLocalRefPath() ) ) {
 			return Status::newGood( ['check' => 'ok'] );
 		} else {
 			// Determine if we should fix this problem or leave it be
-			if ( !empty( $options['fixit'] ) ) {
-				if ( file_exists( $file->getLocalRefPath() ) && !empty( $options['updateData'] ) ) {
-					$status = $this->updateThumbnailData( $file );
-				} else {
-					$status = $this->resetVideoThumb( $file );
-				}
+			if ( $fixit ) {
+				$status = $this->resetVideoThumb( $file );
 
 				if ( $status->isGood() ) {
 					return Status::newGood( ['check' => 'failed', 'action' => 'fixed'] );
