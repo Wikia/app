@@ -15,7 +15,7 @@ require( ['sections', 'wikia.window', 'jquery', 'wikia.mustache', 'wikia.toc'],
 			state,
 			offsetTop = 0,
 			$parent,
-			sideMenuCapable = false,
+			sideMenuCapable = true,
 			ol = '<ol class="toc-list level{{level}}">{{#sections}}{{> lis}}{{/sections}}</ol>',
 			lis = '{{#.}}<li{{#sections.length}} class="has-children{{#firstLevel}}' +
 				' first-children{{/firstLevel}}"{{/sections.length}}>' +
@@ -163,12 +163,9 @@ require( ['sections', 'wikia.window', 'jquery', 'wikia.mustache', 'wikia.toc'],
 					ol: ol,
 					lis: lis
 				} ) ).find('.level');
-
-			$document.append();
 		}
 
 		function onTap(){
-			console.log('lol')
 			$ol[0].scrollIntoView();
 		}
 
