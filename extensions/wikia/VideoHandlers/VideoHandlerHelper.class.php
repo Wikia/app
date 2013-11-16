@@ -349,7 +349,7 @@ class VideoHandlerHelper extends WikiaModel {
 	 * @param boolean $fixit - Whether to fix the problem or ignore it
 	 * @return Status
 	 */
-	public function fcskVideoThumbnail( $title, $fixit ) {
+	public function fsckVideoThumbnail( $title, $fixit = true ) {
 		$file = WikiaFileHelper::getVideoFileFromTitle( $title );
 
 		// See if a file exists for this title

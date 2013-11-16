@@ -17,7 +17,7 @@ require_once( dirname( __FILE__ ) . '/../../Maintenance.php' );
 class FSCKVideos extends Maintenance {
 
 	protected $verbose = false;
-	protected $test = false;
+	protected $test    = false;
 
 	public function __construct() {
 		parent::__construct();
@@ -50,14 +50,14 @@ class FSCKVideos extends Maintenance {
 
 		$this->debug( "Found ".count($videos)." video(s)\n" );
 
-		$fixit = $this->test ? false : true;
+		$fix = $this->test ? false : true;
 
 		$helper = new VideoHandlerHelper();
 
 		foreach ( $videos as $title ) {
 			$stats['checked']++;
 
-			$status = $helper->fcskVideoThumbnail( $title, $fixit );
+			$status = $helper->fsckVideoThumbnail( $title, $fix );
 			if ( $status->isGood() ) {
 				$result = $status->value;
 				if ( $result['check']  == 'ok' ) {
