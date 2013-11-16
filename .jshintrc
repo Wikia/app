@@ -55,6 +55,7 @@
 	"browser": true,
 	"devel": false,
 	"globals": {
+		"mw": false,
 		"mediaWiki": false,
 		"Wikia": false,
 		"define": false,
