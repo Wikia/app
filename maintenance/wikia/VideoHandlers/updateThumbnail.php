@@ -118,7 +118,11 @@ class UpdateThumbnail extends Maintenance {
 					$affected++;
 				}
 			} else {
-				$this->debug( "... FAILED (".implode( ', ', $status->errors ).")\n" );
+				$errorMsg = array();
+				foreach ( $status->errors as $err ) {
+					$errorMsg[] = $err['message'];
+				}
+				$this->debug( "... FAILED (".implode( ', ', $errorMsg ).")\n" );
 				$failed++;
 			}
 		}
