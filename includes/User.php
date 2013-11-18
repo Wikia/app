@@ -4483,8 +4483,8 @@ class User {
 	 * Kamil Koterba debuging
 	 */
 	private function logSomeData() {
-		error_log('KamilkUserSaveSettings-WIKIA: UserId:'.$this->getId().' Touched:'.$this->getTouched());
-		error_log('KamilkUserSaveSettings-WIKIA: UserId:'.$this->getId().' '.json_encode($this->getOptions()));
-		error_log('KamilkUserSaveSettings-WIKIA: Backtrace:'.json_encode(debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS)));
+		error_log('KamilkUserSignup2-WIKIA: UserId:'.$this->getId().' Touched:'.$this->getTouched());
+		error_log('KamilkUserSignup2-WIKIA: UserId:'.$this->getId().' '.json_encode($this->getOptions()));
+		error_log('KamilkUserSignup2-WIKIA: Backtrace:'.json_encode(debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS)));
 	}
 }
