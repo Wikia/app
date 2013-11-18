@@ -1,10 +1,9 @@
 @import "skins/oasis/css/core/color";
 @import "skins/oasis/css/core/layout";
+@import "skins/oasis/css/helpers/table-layout";
 @import "skins/oasis/css/mixins/box-sizing";
 @import "skins/oasis/css/mixins/clearfix";
 @import "skins/oasis/css/mixins/gradient";
-
-@import "helpers/ve-table-layout";
 @import "mixins/ve-icon";
 
 $size-cart-item: 60px;
@@ -122,7 +121,7 @@ $width-cart: 101px;
 	}
 
 	.ve-ui-textInputWidget {
-		@extend .ve-table-layout;
+		@extend .table-layout;
 	}
 
 	.ve-ui-wikiaMediaPageWidget-item {
@@ -185,7 +184,7 @@ $width-cart: 101px;
 }
 
 .ve-ui-wikiaMediaQueryWidget-wrapper {
-	@extend .ve-table-layout;
+	@extend .table-layout;
 }
 
 .ve-ui-wikiaMediaQueryWidget-queryWrapper {
