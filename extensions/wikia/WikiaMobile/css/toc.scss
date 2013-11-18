@@ -1,6 +1,6 @@
 @import 'variables.scss';
 
-$header-height: 44px;
+$line-height: 40px;
 $toc-background: #F8F8F8;
 $handle-size: 48px;
 
@@ -20,7 +20,6 @@ $handle-size: 48px;
 	-webkit-transform: translate(-100%);
 	-moz-transform: translate(-100%);
 	transform: translate(-100%);
-	line-height: $header-height;
 
 	counter-reset: level1, level2, level3;
 
@@ -35,6 +34,7 @@ $handle-size: 48px;
 	header {
 		background: $toc-background;
 		border-bottom: 1px solid $border-color;
+		line-height: $line-height;
 		text-transform: uppercase;
 		padding-left: 20px;
 		position: relative;
@@ -84,10 +84,12 @@ $level0-padding: 20px;
 $level0-border-left-width: 3px;
 
 .level {
-	padding: 0 0 $header-height 0;
+	padding: 0 0 $line-height 0;
 	overflow-x: hidden;
 	overflow-y: scroll;
 	//-webkit-overflow-scrolling: touch;
+
+	line-height: $line-height;
 
 	height: 100%;
 
@@ -196,11 +198,11 @@ $level0-border-left-width: 3px;
 	}
 
 	&.fixed {
-		padding-top: 45px;
+		padding-top: $line-height;
 
 		> a {
 			position: absolute;
-			top: 45px;
+			top: $line-height;
 			background: $toc-background;
 			z-index: 1;
 		}
@@ -214,5 +216,28 @@ $level0-border-left-width: 3px;
 			bottom: 0;
 			top: inherit;
 		}
+	}
+}
+
+.in-page-toc {
+	.level {
+		padding: 0;
+	}
+
+	li {
+		border: none;
+
+		a {
+			border: none;
+		}
+	}
+
+	ol {
+		display: block;
+		border: none;
+	}
+
+	.chevron {
+		display: none;
 	}
 }
