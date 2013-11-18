@@ -30,7 +30,7 @@ ve.dm.WikiaCartItem = function VeDmWikiaCartItem( title, url, type, temporaryFil
  * @param String A title passed in at invocation or the title stored in class instance
  * @returns {Array|null} Array of strings or null, the default return of String.prototype.match
  */
-ve.dm.WikiaCartItem.prototype.extractFilenameParts = function( title ) {
+ve.dm.WikiaCartItem.prototype.extractFilenameParts = function ( title ) {
 	return ( title || this.title ).match( /^([^:]*\:)?(.*?)(\.[^.]+)?$/ );
 };
 
@@ -38,7 +38,7 @@ ve.dm.WikiaCartItem.prototype.extractFilenameParts = function( title ) {
  * @method
  * @description Sets title with special case for user-blanked input
  */
-ve.dm.WikiaCartItem.prototype.setTitle = function( title ) {
+ve.dm.WikiaCartItem.prototype.setTitle = function ( title ) {
 	var parts,
 			prefix,
 			basename,
