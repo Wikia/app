@@ -1,7 +1,7 @@
 require(['jquery', 'wikia.toc', 'wikia.mustache'], function($, toc, mustache) {
 	'use strict';
 
-	var hasTOC = false, // flag - TOC is already created
+	var containerHasTOC = {},
 		cacheKey = 'TOCAssets'; // Local Storage key
 
 	/**
@@ -98,7 +98,8 @@ require(['jquery', 'wikia.toc', 'wikia.mustache'], function($, toc, mustache) {
 
 	function renderTOC($target) {
 		var $container = $target.parents('#toc').children('ol'),
-			$headers = $target.parents('#mw-content-text').find('h2, h3, h4, h5'),
+			$contentContainer = getContentContainer($target),
+			$headers = $contentContainer.find('h2, h3, h4, h5'),
 			data = toc.getData($headers, createTOCSection);
 
 		data.wrapper = wrapper;
@@ -106,7 +107,7 @@ require(['jquery', 'wikia.toc', 'wikia.mustache'], function($, toc, mustache) {
 		loadTemplate().done(function(template) {
 			$container.append(mustache.render(template, data));
 
-			hasTOC = true;
+			setHasTOC($target, true);
 		});
 	}
 
@@ -168,10 +169,30 @@ require(['jquery', 'wikia.toc', 'wikia.mustache'], function($, toc, mustache) {
 	 */
 	function initTOC() {
 		var $showLink = $('#togglelink');
-		if (!hasTOC) {
+		if (!hasTOC($showLink)) {
 			renderTOC($showLink);
 		}
 		showHideTOC($showLink);
+	}
+
+	function hasTOC($target) {
+		var containerIdentifier = getContainerIndetifier($target);
+
+		return typeof containerHasTOC[containerIdentifier] !== 'undefined' && containerHasTOC[containerIdentifier];
+	}
+
+	function setHasTOC($target, value) {
+		var containerIdentifier = getContainerIndetifier($target);
+		containerHasTOC[containerIdentifier] = value;
+	}
+
+	function getContentContainer($target) {
+		// if tabviewer is on site use content from one tab only
+		return $target.parents( '.tabBody, #mw-content-text' ).first();
+	}
+
+	function getContainerIndetifier($target) {
+		return getContentContainer($target ).data('tab-body') || 'main';
 	}
 
 	$(function() {
@@ -182,7 +203,7 @@ require(['jquery', 'wikia.toc', 'wikia.mustache'], function($, toc, mustache) {
 			if(isNewTOC()) {
 				var $target = $(event.target);
 
-				if (!hasTOC) {
+				if (!hasTOC($target)) {
 					renderTOC($target);
 				}
 
@@ -190,9 +211,9 @@ require(['jquery', 'wikia.toc', 'wikia.mustache'], function($, toc, mustache) {
 			}
 		});
 
-		// reset hasTOC flag for each time preview modal is opened
+		// reset containerHasTOC flags for each time preview modal is opened
 		$(window).on('EditPageAfterRenderPreview', function() {
-			hasTOC = false;
+			containerHasTOC = {};
 			if (isNewTOC() && window.wgUserName !== null) {
 				initTOC();
 			}
