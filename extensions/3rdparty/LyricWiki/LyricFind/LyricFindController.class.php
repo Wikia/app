@@ -18,9 +18,19 @@ class LyricFindController extends WikiaController {
 
 		// make a request to LyricFind API
 		$service = new LyricFindTrackingService();
-		$res = $service->track($amgId, $gracenoteId, $this->wg->Title);
+		$status = $service->track($amgId, $gracenoteId, $this->wg->Title);
+
+		// debug response headers
+		if (!$status->isOK()) {
+			$errors = $status->getErrorsArray();
+			$this->response->setHeader('X-LyricFind-API-Error', reset($errors)[0]);
+		}
+
+		if (!empty($status->value)) {
+			$this->response->setHeader('X-LyricFind-API-Code', $status->value);
+		}
 
 		$this->response->setFormat('json');
-		$this->response->setCode( $res ? self::RESPONSE_OK : self::RESPONSE_ERR /* bad request */ );
+		$this->response->setCode( $status->isOK() ? self::RESPONSE_OK : self::RESPONSE_ERR /* API error */ );
 	}
 }

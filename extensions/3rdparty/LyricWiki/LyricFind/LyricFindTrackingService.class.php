@@ -66,10 +66,12 @@ class LyricFindTrackingService extends WikiaService {
 	 * @param $amgId int|bool AMG (All Music Guide) lyric ID to track page view for (or false if not found)
 	 * @param $gracenoteId int|bool Gracenote lyric ID to track page view for (or false if not found)
 	 * @param $title Title page with the lyric to track
-	 * @return bool success
+	 * @return Status success
 	 */
 	public function track($amgId, $gracenoteId, Title $title) {
 		wfProfileIn(__METHOD__);
+
+		$status = Status::newGood();
 
 		// format trackid parameter
 		$trackId = $this->formatTrackId([
@@ -101,30 +103,30 @@ class LyricFindTrackingService extends WikiaService {
 			$json = json_decode($resp, true);
 
 			$code = !empty($json['response']['code']) ? intval($json['response']['code']) : false;
+			$status->value = $code;
 
 			switch ($code) {
 				case self::CODE_LYRIC_IS_BLOCKED:
-					$success = $this->markLyricForRemoval($this->wg->Title->getArticleID());
+					$this->markLyricForRemoval($this->wg->Title->getArticleID());
 					break;
 
 				case self::CODE_LRC_IS_AVAILABLE:
 				case self::CODE_LYRIC_IS_INSTRUMENTAL:
 				case self::CODE_LYRIC_IS_AVAILABLE:
-					$success = true;
 					break;
 
 				default:
-					$success = false;
+					$status->fatal('not expected response code');
 					self::log(__METHOD__, "got #{$code} response code from API (track amg#{$amgId} / gn#{$gracenoteId} / '{$title->getPrefixedText()}')");
 			}
 		}
 		else {
-			$success = false;
+			$status = Status::newFatal("API request failed!");
 			self::log(__METHOD__, "LyricFind API request failed!");
 		}
 
 		wfProfileOut(__METHOD__);
-		return $success;
+		return $status;
 	}
 
 	/**

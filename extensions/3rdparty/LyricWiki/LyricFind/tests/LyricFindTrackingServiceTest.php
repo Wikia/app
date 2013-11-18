@@ -101,7 +101,9 @@ class LyricFindTrackingServiceTest extends WikiaBaseTest {
 		]));
 
 		$service = new LyricFindTrackingService();
-		$this->assertEquals($res, $service->track($amgId, 0, $this->app->wg->Title), 'API response code should match expected value');
+		$status = $service->track($amgId, 0, $this->app->wg->Title);
+
+		$this->assertEquals($res, $status->isOK(), 'API response code should match expected value');
 	}
 
 	public function trackResponseCodeProvider() {
@@ -125,7 +127,7 @@ class LyricFindTrackingServiceTest extends WikiaBaseTest {
 				],
 				'res' => false
 			],
-			// API request fauled
+			// API request failed
 			[
 				'amgId' => 1234,
 				'apiResponse' => false,

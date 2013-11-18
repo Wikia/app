@@ -24,7 +24,7 @@ class LyricFindControllerTest extends WikiaBaseTest {
 		$controller->setRequest(new WikiaRequest(['amgid' => $amgId]));
 		$controller->setResponse(new WikiaResponse('json'));
 
-		$this->mockClassWithMethods('LyricFindTrackingService', ['track' => $trackResult]);
+		$this->mockClassWithMethods('LyricFindTrackingService', ['track' => $trackResult ? Status::newGood() : Status::newFatal('foo')]);
 
 		$controller->track();
 		$this->assertEquals($responseCode, $controller->getResponse()->getCode(), 'HTTP response code should match the expected value');
