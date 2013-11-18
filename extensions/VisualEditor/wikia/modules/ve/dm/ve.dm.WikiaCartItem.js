@@ -10,6 +10,7 @@
  * @constructor
  */
 ve.dm.WikiaCartItem = function VeDmWikiaCartItem( title, url, type, temporaryFileName, provider, videoId ) {
+	var filenameParts = this.extractFilenameParts( this.title );
 	// TODO: this.title should really be this.filename since it contains prefix & extension
 	this.title = title;
 	this.url = url;
@@ -17,8 +18,6 @@ ve.dm.WikiaCartItem = function VeDmWikiaCartItem( title, url, type, temporaryFil
 	this.temporaryFileName = temporaryFileName;
 	this.provider = provider;
 	this.videoId = videoId;
-
-	var filenameParts = this.extractFilenameParts( this.title );
 
 	this.prefix = filenameParts[1];
 	this.basename = filenameParts[2];
