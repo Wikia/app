@@ -1,5 +1,6 @@
 @import "layout";
 @import "../mixins/border-radius";
+@import "../mixins/box-sizing-border-box";
 @import "../mixins/calc";
 
 .global-notification {
@@ -119,3 +120,19 @@
 		padding: 8px 10px;
 	}
 }
+
+// Visual Editor specific notification styling
+.ve-ui-window-frame {
+	.global-notification {
+		@include box-sizing-border-box;
+		position: absolute;
+		top: 49px; // notification shows below VE modal header
+		width: 100%;
+
+		& > .close {
+			position: absolute;
+			right: 15px;
+		}
+	}
+}
+
