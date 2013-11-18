@@ -23,7 +23,7 @@ class VideoHandlerHelper extends WikiaModel {
 
 		$status = false;
 		if ( $title instanceof Title && !$title->exists() ) {
-			if ( is_integer($user) ) {
+			if ( !is_object($user) ) {
 				$user = User::newFromId( $user );
 			}
 
