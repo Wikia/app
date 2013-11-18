@@ -312,7 +312,6 @@ class ExternalUser_Wikia extends ExternalUser {
 
 		if ( $obj ) {
 			$res = User::newFromRow( $this->mRow );
-			$res->getOptions();
 		} else {
 			$res = $this->mRow;
 		}
