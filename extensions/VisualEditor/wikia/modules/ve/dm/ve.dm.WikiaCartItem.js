@@ -27,7 +27,8 @@ ve.dm.WikiaCartItem = function VeDmWikiaCartItem( title, url, type, temporaryFil
 /**
  * @method
  * @description Takes a title name and returns it's parts
- * @returns { Array | null } Array of strings or null, same out put as String.prototype.match
+ * @param String A title passed in at invocation or the title stored in class instance
+ * @returns {Array|null} Array of strings or null, the default return of String.prototype.match
  */
 ve.dm.WikiaCartItem.prototype.extractFilenameParts = function( title ) {
 	return ( title || this.title ).match( /^([^:]*\:)?(.*?)(\.[^.]+)?$/ );
