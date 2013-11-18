@@ -76,6 +76,29 @@ class Component {
 	}
 
 	/**
+	 * @var Array names of the components that this component depends on
+	 */
+	private $componentDependencies = [];
+
+	/**
+	 * @desc Set the dependency on other components
+	 *
+	 * @param $componentDependencies array containing names of the components
+	 */
+	public function setComponentDependencies( $componentDependencies ) {
+		$this->componentDependencies = $componentDependencies;
+	}
+
+	/**
+	 * @desc Returns names of the components this component depends on
+	 *
+	 * @return array containing names of the components
+	 */
+	public function getComponentDependencies() {
+		return $this->componentDependencies;
+	}
+
+	/**
 	 * @desc Set component name
 	 *
 	 * @param $name component name

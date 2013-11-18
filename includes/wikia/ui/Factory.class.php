@@ -45,6 +45,11 @@ class Factory {
 	const ASSET_TYPE_JS = 'js';
 
 	/**
+	 * @desc key in dependencies config indicating dependency on another component
+	 */
+	const COMPONENT_DEPENDENCY = 'components';
+
+	/**
 	 * @var \Wikia\UI\Factory
 	 */
 	private static $instance = null;
@@ -324,6 +329,10 @@ class Factory {
 			$component->setBaseTemplatePath( $this->getComponentsBaseTemplatePath( $name ) );
 
 			$component->setAssets( array_intersect_key( $componentConfig['dependencies'], array_flip( $assetsTypes ) ) );
+
+			if ( !empty( $componentConfig['dependencies'][self::COMPONENT_DEPENDENCY] ) ) {
+				$component->setComponentDependencies( $componentConfig['dependencies'][self::COMPONENT_DEPENDENCY] );
+			}
 
 			$components[] = $component;
 		}
