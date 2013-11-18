@@ -125,17 +125,17 @@ jQuery(function($){
 				});
 			}
 		}).on('mousedown', '.editsection a', {
-			category: category,
-			label: 'section-edit'
-		}, trackWithEventData);
+				category: category,
+				label: 'section-edit'
+			}, trackWithEventData);
 
 		$('#WikiaArticleCategories').on('mousedown', 'a', {
 			category: category,
 			label: 'category-name'
 		}, trackWithEventData).on('mousedown', '.add', {
-			category: category,
-			label: 'add-category'
-		}, trackWithEventData);
+				category: category,
+				label: 'add-category'
+			}, trackWithEventData);
 	})();
 
 	/** category **/
@@ -242,36 +242,78 @@ jQuery(function($){
 			suggestionShowed = false,
 			$topModule = $('.top-wiki-articles'),
 			$categoryModule = $('.category-articles'),
-			$wikiaSearch = $('.WikiaSearch');
+			$wikiaSearch = $('.WikiaSearch'),
+			$searchSuggestions = $('.search-suggest');
 
-		$wikiaSearch.on('mousedown', '.autocomplete', {
+		//tracking for new search suggestions
+		$searchSuggestions.on('mousedown', 'li:not(.all)', {
 			category: category,
-			label: 'search-suggest'
-		}, trackWithEventData).on('mousedown', '.wikia-button', function(e) {
+			label: 'new-search-suggest'
+		}, trackWithEventData).on('newSuggestionsEnter', {
+				category: category,
+				label: 'new-search-suggest-enter'
+			}, trackWithEventData).on('newSuggestionsSearchEnter', {
+				category: category,
+				label: 'new-search-after-suggest-enter'
+			}, trackWithEventData).on('newSuggestionsSearchClick', {
+				category: category,
+				label: 'new-search-after-suggest-button'
+			}, trackWithEventData).one('newSuggestionsShow', {
+				action: Wikia.Tracker.ACTIONS.VIEW,
+				category: category,
+				label: 'new-search-suggest-show'
+			}, function(e) {
+				suggestionShowed = true;
+				trackWithEventData(e);
+			}
+		);
+		//track input box
+		$wikiaSearch.on('mousedown', '.wikia-button', function(e) {
 			// Prevent tracking 'fake' form submission clicks
-			if (e.which === 1 && e.clientX > 0) {
-				var label = !suggestionShowed ? 'search-button' : 'search-after-suggest-button';
+			if (e.which === 1 && e.clientX > 0 && window.Wikia.newSearchSuggestions) {
+				var label = !suggestionShowed ? 'new-search-button' : 'new-search-after-suggest-button';
 				track({
 					category: category,
 					label: label
 				});
 			}
 		}).on('keypress', '[name=search]', function(e) {
-			if ( e.which === 13 && $(this).is(':focus') ) {
-				var label = !suggestionShowed ? 'search-enter' : 'search-after-suggest-enter';
-				track({
-					category: category,
-					label: label
-				});
-			}
-		}).on('suggestEnter', {
+				if ( e.which === 13 && window.Wikia.newSearchSuggestions ) {
+					var label = !suggestionShowed ? 'new-search-enter' : 'new-search-after-suggest-enter';
+					track({
+						category: category,
+						label: label
+					});
+				}
+			});
+		$wikiaSearch.on('mousedown', '.autocomplete', {
 			category: category,
-			label: 'search-suggest-enter'
-		}, trackWithEventData).one('suggestShow', {
-			action: Wikia.Tracker.ACTIONS.VIEW,
-			category: category,
-			label: 'search-suggest-show'
-		}, function(e) {
+			label: 'search-suggest'
+		}, trackWithEventData).on('mousedown', '.wikia-button', function(e) {
+				// Prevent tracking 'fake' form submission clicks
+				if (e.which === 1 && e.clientX > 0 && !window.Wikia.newSearchSuggestions) {
+					var label = !suggestionShowed ? 'search-button' : 'search-after-suggest-button';
+					track({
+						category: category,
+						label: label
+					});
+				}
+			}).on('keypress', '[name=search]', function(e) {
+				if ( e.which === 13 && $(this).is(':focus') && !window.Wikia.newSearchSuggestions ) {
+					var label = !suggestionShowed ? 'search-enter' : 'search-after-suggest-enter';
+					track({
+						category: category,
+						label: label
+					});
+				}
+			}).on('suggestEnter', {
+				category: category,
+				label: 'search-suggest-enter'
+			}, trackWithEventData).one('suggestShow', {
+				action: Wikia.Tracker.ACTIONS.VIEW,
+				category: category,
+				label: 'search-suggest-show'
+			}, function(e) {
 				suggestionShowed = true;
 				trackWithEventData(e);
 			}
@@ -286,45 +328,45 @@ jQuery(function($){
 					label: 'sidebar-' + $(e.currentTarget).prop('className')
 				});
 			}).on('mousedown', '.Results .result-link', function(e) {
-				var el = $(e.currentTarget);
-				track({
-					browserEvent: e,
-					category: category,
-					label: 'result-' + (el.data('event') === 'search_click_match' ? 'push-top' : 'item-' + el.data('pos')),
-					trackingMethod: 'both'
-				});
-			}).on('mousedown',  '.Results .wiki-thumb-tracking', function(e){
-				var el = $(e.currentTarget);
+					var el = $(e.currentTarget);
+					track({
+						browserEvent: e,
+						category: category,
+						label: 'result-' + (el.data('event') === 'search_click_match' ? 'push-top' : 'item-' + el.data('pos')),
+						trackingMethod: 'both'
+					});
+				}).on('mousedown',  '.Results .wiki-thumb-tracking', function(e){
+					var el = $(e.currentTarget);
 
-				track({
-					browserEvent: e,
-					category: category,
-					label: 'result-item-' + el.data('pos') + '-image' + (el.data('event') === 'search_click_wiki-no-thumb' ? '-placeholder' : ''),
-					trackingMethod: 'both'
+					track({
+						browserEvent: e,
+						category: category,
+						label: 'result-item-' + el.data('pos') + '-image' + (el.data('event') === 'search_click_wiki-no-thumb' ? '-placeholder' : ''),
+						trackingMethod: 'both'
+					});
+				}).on('mousedown', '.thumb-tracking', function(e){
+					var el = $(e.currentTarget);
+					track({
+						browserEvent: e,
+						category: category,
+						label: 'result-item-' + 'image-' + (el.data('event') === 'search_click_match' ? 'push-top' : el.data('pos') ),
+						trackingMethod: 'both'
+					});
+				}).on('mousedown', '.image', function(e) {
+					var $currentTarget = $(e.currentTarget);
+					track({
+						browserEvent: e,
+						category: category,
+						label: 'result-' + ($currentTarget.hasClass('video') ? 'video' : 'photo')
+							+ ( ( $currentTarget.parents('.video-addon-results').length > 0 ) ? '-video-addon' : '' ) // video addon ab tests
+					});
+				}).on('mousedown', '.video-addon-seach-video', function(e) {
+					track({
+						browserEvent: e,
+						category: category,
+						label: 'video-addon-results-header'
+					});
 				});
-			}).on('mousedown', '.thumb-tracking', function(e){
-				var el = $(e.currentTarget);
-				track({
-					browserEvent: e,
-					category: category,
-					label: 'result-item-' + 'image-' + (el.data('event') === 'search_click_match' ? 'push-top' : el.data('pos') ),
-					trackingMethod: 'both'
-				});
-			}).on('mousedown', '.image', function(e) {
-				var $currentTarget = $(e.currentTarget);
-				track({
-					browserEvent: e,
-					category: category,
-					label: 'result-' + ($currentTarget.hasClass('video') ? 'video' : 'photo')
-						+ ( ( $currentTarget.parents('.video-addon-results').length > 0 ) ? '-video-addon' : '' ) // video addon ab tests
-				});
-			}).on('mousedown', '.video-addon-seach-video', function(e) {
-				track({
-					browserEvent: e,
-					category: category,
-					label: 'video-addon-results-header'
-				});
-			});
 		}
 		if ( $topModule.length ) {
 			$topModule.on('mousedown', '.top-wiki-article-thumbnail a', function(e){
@@ -335,13 +377,13 @@ jQuery(function($){
 					label: 'top-module-thumb-' + el.data('pos')
 				});
 			}).on('mousedown', '.top-wiki-article-text a', function(e) {
-				var el = $(e.currentTarget);
-				track({
-					browserEvent: e,
-					category: category,
-					label: 'top-module-title-' + el.data('pos')
+					var el = $(e.currentTarget);
+					track({
+						browserEvent: e,
+						category: category,
+						label: 'top-module-title-' + el.data('pos')
+					});
 				});
-			});
 		}
 		if ( $categoryModule.length ) {
 			$categoryModule.on('mousedown', '.category-articles-thumb a', function(e){
@@ -352,13 +394,13 @@ jQuery(function($){
 					label: 'category-module-thumb-' + el.data('pos')
 				});
 			}).on('mousedown', '.category-articles-text a', function(e){
-				var el = $(e.currentTarget);
-				track({
-					browserEvent: e,
-					category: category,
-					label: 'category-module-title-' + el.data('pos')
+					var el = $(e.currentTarget);
+					track({
+						browserEvent: e,
+						category: category,
+						label: 'category-module-title-' + el.data('pos')
+					});
 				});
-			});
 		}
 	})();
 
@@ -551,7 +593,7 @@ jQuery(function($){
 				el.hasClass('real-name') ||
 				parent.hasClass('wall-owner') ||
 				parent.hasClass('subtle')
-			) {
+				) {
 				label = 'username';
 			} else if (parent.hasClass('activityfeed-diff')) {
 				label = 'diff';
