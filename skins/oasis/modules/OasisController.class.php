@@ -84,7 +84,7 @@ class OasisController extends WikiaController {
 	}
 
 	public function executeIndex($params) {
-		global $wgOut, $wgUser, $wgTitle, $wgRequest, $wgCityId, $wgEnableAdminDashboardExt, $wgAllInOne;
+		global $wgOut, $wgUser, $wgTitle, $wgRequest, $wgCityId, $wgEnableAdminDashboardExt, $wgAllInOne, $wgOasisThemeSettings;
 
 		wfProfileIn(__METHOD__);
 
@@ -161,7 +161,7 @@ class OasisController extends WikiaController {
 		}
 
 		// sets background settings by adding classes to <body>
-		$bodyClasses = array_merge($bodyClasses, $this->getOasisBackgroundClasses());
+		$bodyClasses = array_merge($bodyClasses, $this->getOasisBackgroundClasses($wgOasisThemeSettings));
 
 		$this->bodyClasses = $bodyClasses;
 
@@ -548,27 +548,36 @@ EOT;
 		return '';
 	}
 
-	protected function getOasisBackgroundClasses() {
+	/**
+	 * Takes $themeSettings ( in $wgOasisThemeSettings format )
+	 * and produces array of strings representing classes
+	 * that should be applied to body element
+	 *
+	 * @param $themeSettings array
+	 * @return array
+	 */
+	protected function getOasisBackgroundClasses($themeSettings) {
 		$bodyClasses = [];
 
-		if ( isset($this->wg->OasisThemeSettings['background-fixed'])
-			&& filter_var($this->wg->OasisThemeSettings['background-fixed'], FILTER_VALIDATE_BOOLEAN) )
+		if ( isset($themeSettings['background-fixed'])
+			&& filter_var($themeSettings['background-fixed'], FILTER_VALIDATE_BOOLEAN) )
 		{
 			$bodyClasses[] = 'background-fixed';
 		}
 
-		if ( isset($this->wg->OasisThemeSettings['background-tiled'])
-			&& !filter_var($this->wg->OasisThemeSettings['background-tiled'], FILTER_VALIDATE_BOOLEAN) )
+		if ( isset($themeSettings['background-tiled'])
+			&& !filter_var($themeSettings['background-tiled'], FILTER_VALIDATE_BOOLEAN) )
 		{
 			$bodyClasses[] = 'background-not-tiled';
 
-			if ( (isset($this->wg->OasisThemeSettings['background-dynamic'])
-					&& filter_var($this->wg->OasisThemeSettings['background-dynamic'], FILTER_VALIDATE_BOOLEAN))
+			if ( (isset($themeSettings['background-dynamic'])
+					&& filter_var($themeSettings['background-dynamic'], FILTER_VALIDATE_BOOLEAN))
 				// old wikis may not have 'background-dynamic' set
-				|| (!isset($this->wg->OasisThemeSettings['background-dynamic'])
-					&& isset($this->wg->OasisThemeSettings['background-image-width'])
-					&& (int)$this->wg->OasisThemeSettings['background-image-width'] >= ThemeSettings::MIN_WIDTH_FOR_SPLIT))
+				|| (!isset($themeSettings['background-dynamic'])
+					&& isset($themeSettings['background-image-width'])
+					&& (int)$themeSettings['background-image-width'] >= ThemeSettings::MIN_WIDTH_FOR_SPLIT))
 			{
+
 				$bodyClasses[] = 'background-dynamic';
 			}
 		}
