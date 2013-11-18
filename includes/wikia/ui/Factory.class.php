@@ -323,7 +323,7 @@ class Factory {
 			}
 			$component->setBaseTemplatePath( $this->getComponentsBaseTemplatePath( $name ) );
 
-			$component->setAssets( $componentConfig['dependencies'] );
+			$component->setAssets( array_intersect_key( $componentConfig['dependencies'], array_flip( $assetsTypes ) ) );
 
 			$components[] = $component;
 		}
