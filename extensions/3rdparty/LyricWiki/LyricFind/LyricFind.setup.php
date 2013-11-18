@@ -14,6 +14,9 @@ $wgExtensionCredits['other'][] = array(
 
 $dir = __DIR__;
 
+// for backward compatibility
+if (!defined('NS_GRACENOTE')) define('NS_GRACENOTE', 220);
+
 // LyricFind namespace setup
 define('NS_LYRICFIND', 222);
 $wgExtraNamespaces[NS_LYRICFIND] = 'LyricFind';
@@ -34,7 +37,7 @@ $wgHooks['WikiaMobileAssetsPackages'][] = 'LyricFindHooks::onSkinAssetGroups';
 
 $wgLyricFindTrackingNamespaces = [
 	NS_MAIN,
-	220, // NS_GRACENOTE
+	NS_GRACENOTE,
 	NS_LYRICFIND
 ];
 
