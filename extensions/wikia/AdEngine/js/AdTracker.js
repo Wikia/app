@@ -77,7 +77,7 @@ var AdTracker = function (log, tracker) {
 	function trackEnd(provider, category, slotname, hopTime, reason) {
 		log(['trackEnd', category, slotname, hopTime], 'debug', logGroup);
 
-		var labelPrefix;
+		var labelPrefix = '';
 
 		if (reason) {
 			labelPrefix = reason + '/';
