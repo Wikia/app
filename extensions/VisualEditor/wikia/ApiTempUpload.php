@@ -50,14 +50,12 @@ class ApiTempUpload extends ApiBase {
 
 		} else if( $this->mParams['provider'] == 'FILE' ) {
 			// no need to upload, local reference
-			$title = Title::newFromText( $this->mParams['desiredName'], NS_FILE );
+			$title = Title::newFromText( $this->mParams['title'], NS_FILE );
 			$name = $title->getText();
-
 			if ( empty( $title ) ) {
 				$this->dieUsageMsg( 'This video name contains invalid characters, like #' );
 			}
 			wfRunHooks( 'AddPremiumVideo', array( $title ) );
-
 		} else {
 			$uploader = new VideoFileUploader();
 
@@ -150,6 +148,37 @@ class ApiTempUpload extends ApiBase {
 		) );
 	}
 
+	/**
+	 * Determine if the url is a Wikia file, either premium or local
+	 *
+	 * @param $url
+	 * @return bool
+	 */
+	private function isWikiaFile( $url ) {
+		$file = null;
+
+		// get the video name
+		$nsFileTranslated = F::app()->wg->ContLang->getNsText( NS_FILE );
+
+		// added $nsFileTransladed to fix bugId:#48874
+		$pattern = '/(File:|'.$nsFileTranslated.':)(.+)$/';
+
+		if ( preg_match( $pattern, $url, $matches ) ) {
+			$file = wfFindFile( $matches[2] );
+			if ( !$file ) { // bugID: 26721
+				$file = wfFindFile( urldecode( $matches[2] ) );
+			}
+		}
+		elseif ( preg_match( $pattern, urldecode( $url ), $matches ) ) {
+			$file = wfFindFile( $matches[2] );
+			if ( !$file ) { // bugID: 26721
+				$file = wfFindFile( $matches[2] );
+			}
+		}
+
+		return $file;
+	}
+
 	private function executeTemporaryVideo() {
 		$app = F::app();
 
@@ -159,99 +188,66 @@ class ApiTempUpload extends ApiBase {
 
 		$awf = ApiWrapperFactory::getInstance();
 		$url = $this->mParams['url'];
-		$nonPremiumException = null;
+		$file = $this->isWikiaFile( $url );
 
-		// ApiWrapperFactory->getApiWrapper(...) require whole URL to be passed in (including protocol)
-		if ( !preg_match( '/^https?:\/\//', $url ) ) {
-			$url = 'http://' . $url;
-		}
-		try {
-			$apiwrapper = $awf->getApiWrapper( $url );
-		} catch ( Exception $e ) {
-			$nonPremiumException = $e;
-		}
-
-		if ( !empty( $apiwrapper ) ) {
-			// handle supported 3rd party (non-premium) videos
-			$this->mUpload->initializeFromRequest( new FauxRequest(
-				array(
-					'wpUpload' => 1,
-					'wpSourceType' => 'web',
-					'wpUploadFileURL' => $apiwrapper->getThumbnailUrl()
-				),
-				true
+		if( !empty( $file ) ) {
+			// Handle local and premium videos
+			$this->getResult()->addValue( null, $this->getModuleName(), array(
+				'title' => $file->getTitle()->getText(),
+				'url' => $file->getUrl(),
+				'provider' => 'FILE',
+				'videoId' => $file->getHandler()->getVideoId(),
 			) );
-			$status = $this->mUpload->fetchFile();
-			if ( !$status->isGood() ) {
-				$this->dieUsageMsg( 'Error fetching file from remote source' );
-			}
-			$this->verifyUpload();
-			$temporaryFile = $this->createTemporaryFile( $this->mUpload->getTempPath() );
-
-			// define vars to pass back
-			$fileTitle = $apiwrapper->getTitle();
-			$temporaryThumbUrl = $temporaryFile->getUrl();
-			$temporaryFileName = $temporaryFile->getName();
-			$provider = $apiwrapper->getProvider();
-			$videoId = $apiwrapper->getVideoId();
 
 		} else {
-			// handle local and premium videos by parsing url for 'File:'
-			$file = null;
-
-			// get the video name
-			$nsFileTranslated = $app->wg->ContLang->getNsText( NS_FILE );
-
-			// added $nsFileTransladed to fix bugId:#48874
-			$pattern = '/(File:|'.$nsFileTranslated.':)(.+)$/';
-
-			if ( preg_match( $pattern, $url, $matches ) ) {
-				$file = wfFindFile( $matches[2] );
-				if ( !$file ) { // bugID: 26721
-					$file = wfFindFile( urldecode( $matches[2] ) );
-				}
+			// Handle urls from supported 3rd parties (like youtube)
+			// ApiWrapperFactory->getApiWrapper(...) require whole URL to be passed in (including protocol)
+			if ( !preg_match( '/^https?:\/\//', $url ) ) {
+				$url = 'http://' . $url;
 			}
-			elseif ( preg_match( $pattern, urldecode( $url ), $matches ) ) {
-				$file = wfFindFile( $matches[2] );
-				if ( !$file ) { // bugID: 26721
-					$file = wfFindFile( $matches[2] );
+			try {
+				// ApiWrapper handles adding of non-premium videos
+				$apiwrapper = $awf->getApiWrapper( $url );
+			} catch ( Exception $e ) {
+				// There was some issue with adding the video, e.g. provider not responding or not supported
+				if ( $e->getMessage() != '' ) {
+					$this->dieUsageMsg( $e->getMessage() );
 				}
-			}
-			else {
-				if ( $nonPremiumException ) {
-					// Non premium videos are not allowed on some wikis
-					if ( empty( $app->wg->allowNonPremiumVideos ) ) {
-						$this->dieUsageMsg( 'This wiki does not support non-premium videos' );
-					}
 
-					if ( $nonPremiumException->getMessage() != '' ) {
-						$this->dieUsageMsg( $nonPremiumException->getMessage() );
-					}
+				// Non premium videos are not allowed on some wikis
+				if ( empty( $app->wg->allowNonPremiumVideos ) ) {
+					$this->dieUsageMsg( 'This wiki does not support non-premium videos' );
 				}
 
 				$this->dieUsageMsg( 'The supplied URL is invalid' );
 			}
 
-			if ( !$file ) {
-				$this->dieUsageMsg( 'The supplied video does not exist' );
+			// handle supported 3rd party (non-premium) urls
+			if ( !empty( $apiwrapper ) ) {
+				$this->mUpload->initializeFromRequest( new FauxRequest(
+					array(
+						'wpUpload' => 1,
+						'wpSourceType' => 'web',
+						'wpUploadFileURL' => $apiwrapper->getThumbnailUrl()
+					),
+					true
+				) );
+				$status = $this->mUpload->fetchFile();
+				if ( !$status->isGood() ) {
+					$this->dieUsageMsg( 'Error fetching file from remote source' );
+				}
+				$this->verifyUpload();
+				$temporaryFile = $this->createTemporaryFile( $this->mUpload->getTempPath() );
+
+				$this->getResult()->addValue( null, $this->getModuleName(), array(
+					'title' => $apiwrapper->getTitle(),
+					'temporaryThumbUrl' => $temporaryFile->getUrl(),
+					'temporaryFileName' => $temporaryFile->getName(),
+					'provider' => $apiwrapper->getProvider(),
+					'videoId' => $apiwrapper->getVideoId(),
+				) );
 			}
-
-			// define vars to pass back
-			$fileTitle = $file->getTitle()->getText();
-			$temporaryThumbUrl = $file->getUrl();
-			$temporaryFileName = $file->getTitle()->getText();
-			$provider = 'FILE';
-			$videoId = $file->getHandler()->getVideoId();
-
 		}
-
-		$this->getResult()->addValue( null, $this->getModuleName(), array(
-			'title' => $fileTitle,
-			'temporaryThumbUrl' => $temporaryThumbUrl,
-			'temporaryFileName' => $temporaryFileName,
-			'provider' => $provider,
-			'videoId' => $videoId,
-		) );
 	}
 
 	/**
@@ -355,7 +351,11 @@ class ApiTempUpload extends ApiBase {
 			'desiredName' => array (
 				ApiBase::PARAM_TYPE => 'string',
 				ApiBase::PARAM_REQUIRED => false
-			)
+			),
+			'title' => array (
+				ApiBase::PARAM_TYPE => 'string',
+				ApiBase::PARAM_REQUIRED => false
+			),
 		);
 	}
 

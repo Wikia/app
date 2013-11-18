@@ -170,7 +170,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.onQueryRequestVideoDone = function ( data
 	this.cartModel.addItems( [
 		new ve.dm.WikiaCartItem(
 			data.title,
-			data.temporaryThumbUrl,
+			data.url || data.temporaryThumbUrl,
 			'video',
 			data.temporaryFileName,
 			data.provider,
@@ -339,6 +339,10 @@ ve.ui.WikiaMediaInsertDialog.prototype.convertTemporaryToPermanent = function ( 
 			'desiredName': cartItem.title
 		};
 	if ( cartItem.type === 'video' ) {
+		// Provider 'FILE' means it's a local or premium video
+		if( cartItem.provider === 'FILE' ) {
+			data.title = cartItem.title;
+		}
 		data.provider = cartItem.provider;
 		data.videoId = cartItem.videoId;
 	} else {
@@ -368,7 +372,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertMedia = function ( cartItems ) {
 	}
 
 	for ( i = 0; i < cartItems.length; i++ ) {
-		if ( cartItems[i].temporaryFileName ) {
+		if ( cartItems[i].temporaryFileName || cartItems[i].provider === 'FILE' ) {
 			promises.push(
 				this.convertTemporaryToPermanent( cartItems[i] ).done(
 					ve.bind( temporaryToPermanentCallback, this, cartItems[i] )
