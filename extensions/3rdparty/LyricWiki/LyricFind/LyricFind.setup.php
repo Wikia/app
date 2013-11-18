@@ -27,8 +27,10 @@ $wgExtensionMessagesFiles['LyricFind'] = $dir . '/LyricFind.i18n.php';
 // LyricFind page views tracking
 $wgAutoloadClasses['LyricFindController'] =  $dir . '/LyricFindController.class.php';
 $wgAutoloadClasses['LyricFindTrackingService'] =  $dir . '/LyricFindTrackingService.class.php';
+
 $wgHooks['OasisSkinAssetGroups'][] = 'LyricFindHooks::onSkinAssetGroups';
 $wgHooks['MonobookSkinAssetGroups'][] = 'LyricFindHooks::onSkinAssetGroups';
+$wgHooks['WikiaMobileAssetsPackages'][] = 'LyricFindHooks::onSkinAssetGroups';
 
 $wgLyricFindTrackingNamespaces = [
 	NS_MAIN,

@@ -3,7 +3,7 @@ require(['jquery','LyricFindTracker', 'wikia.log'], function($, tracker, log) {
         gracenoteId = parseInt($('#gracenoteid').text(), 10) || 0;
 
     // does the current page contain lyrics?
-    if (!$('.lyricbox').exists()) {
+    if ($('.lyricbox').length === 0) {
         log('not a lyrics page', log.levels.info, 'LyricFind');
         return;
     }
