@@ -5,17 +5,23 @@
  * @author Jakub Olek
  */
 
-define('sections', ['jquery', 'wikia.window'], function($, window){
+define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 	'use strict';
 
 	var d = document,
-		sections = $('h2[id],h3[id],h4[id]', document.getElementById('wkPage')).toArray(),
+		sections = $( 'h2[id],h3[id],h4[id]', document.getElementById( 'wkPage' ) ).toArray(),
 		l = sections.length,
-		lastSection;
+		lastSection,
+		escapeRegExp = /[()\.]/g;
 
-	function scrollTo(header){
+	/**
+	 * @desc Function that lets you scroll viewport to a given section
+	 * @param header - a string representation of a header
+	 * @returns {undefined|true} - status code if scroll actually happened
+	 */
+	function scrollTo ( header ) {
 		//() and . have to be escaped before passed to querySelector
-		var h = document.getElementById(header.replace(/[()\.]/g, '\\$&') ),
+		var h = document.querySelector( header.replace( escapeRegExp, '\\$&' ) ),
 			ret;
 
 		if ( h ) {
@@ -26,45 +32,53 @@ define('sections', ['jquery', 'wikia.window'], function($, window){
 		return ret;
 	}
 
-	function current(){
+	/**
+	 * @desc Finds and returns a current section
+	 * @returns jQuery object - a current section
+	 */
+	function current () {
 		var top = window.scrollY,
 			i = 0;
 
-		for(;i < l;i++) {
-			if(sections[i].offsetTop - 5 > top) {
+		for ( ; i < l; i++ ) {
+			if ( sections[i].offsetTop - 5 > top ) {
 				break;
 			}
 		}
 
-		return $(sections[i-1]);
+		return $( sections[i - 1] );
 	}
 
 	lastSection = current();
 
-	function onScroll(){
+	/**
+	 * @desc Function that fires at most every 200ms while scrolling\
+	 * @triggers section:changed with a current section refernece and its id
+	 */
+	function onScroll () {
 		var currentSection = current();
+		// this is not needed to be fired on every scroll event
+		window.removeEventListener( 'scroll', onScroll );
 
-		window.removeEventListener('scroll', onScroll);
-
-		if(currentSection && !currentSection.is(lastSection)) {
-			$(d).trigger('section:changed', {
+		if ( currentSection && !currentSection.is( lastSection ) ) {
+			$( d ).trigger( 'section:changed', {
 				section: currentSection,
 				id: currentSection.length ? currentSection[0].id : undefined
-			});
+			} );
 
 			lastSection = currentSection;
 		}
 
-		window.setTimeout(function(){
-			window.addEventListener('scroll', onScroll);
-		}, 200);
+		window.setTimeout( function () {
+			window.addEventListener( 'scroll', onScroll );
+		}, 200 );
 	}
 
-	window.addEventListener('scroll', onScroll);
+	window.addEventListener( 'scroll', onScroll );
 
 	return {
 		list: sections,
 		scrollTo: scrollTo,
 		current: current
 	};
-});
+} );

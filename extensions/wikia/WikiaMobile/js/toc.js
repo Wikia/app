@@ -8,6 +8,7 @@ function ( sections, window, $, mustache, toc ) {
 		fixed = 'fixed',
 		disabled = 'disabled',
 		open = 'open',
+		active = 'active',
 		$document = $( window.document ),
 		$anchors,
 		$openOl,
@@ -15,11 +16,61 @@ function ( sections, window, $, mustache, toc ) {
 		state,
 		$parent,
 		sideMenuCapable = true,
-		$toc,
 		$ol,
 		inited,
-		lineHeight = 45;
+		lineHeight = 45,
+		$toc = $( '#wkTOC' )
+			.on( 'click', 'header', function () {
+				window.scrollTo( 0, 0 );
+			} )
+			.on( 'click', 'li', function ( event ) {
+				var $li = $( this ),
+					$a = $li.find( 'a' ).first();
 
+				event.stopPropagation();
+				event.preventDefault();
+
+				sections.scrollTo( $a.attr( 'href' ) );
+
+				toggleLi( $li );
+			} );
+
+	/**
+	 * @desc Renders toc for a given page
+	 * @returns HTML String
+	 */
+	function renderToc () {
+		var ol = '<ol class="toc-list level{{level}}">{{#sections}}{{> lis}}{{/sections}}</ol>',
+			lis = '{{#.}}<li{{#sections.length}} class="has-children{{#firstLevel}}' +
+				' first-children{{/firstLevel}}"{{/sections.length}}>' +
+				'<a href="#{{id}}">{{name}}{{#firstLevel}}{{#sections.length}}<span class="chevron right"></span>' +
+				'{{/sections.length}}{{/firstLevel}}</a>' +
+				'{{#sections.length}}{{> ol}}{{/sections.length}}</li>{{/.}}',
+			tocData = toc.getData(
+				sections.list,
+				function ( header, level ) {
+					return {
+						id: header.id,
+						name: header.textContent.trim(),
+						level: level,
+						firstLevel: level === 2,
+						sections: []
+					};
+				}
+			);
+
+		return mustache.render( ol, tocData, {
+			ol: ol,
+			lis: lis
+		} );
+	}
+
+	/**
+	 * @desc Handles opening and closing sections
+	 *
+	 * @param $li jQuery object for a sections
+	 * @param force whether to force a toggle
+	 */
 	function toggleLi ( $li, force ) {
 		if ( $li.is( '.first-children' ) ) {
 			$li.siblings().removeClass( fixed + ' ' + bottom + ' ' + open );
@@ -40,6 +91,10 @@ function ( sections, window, $, mustache, toc ) {
 		}
 	}
 
+	/**
+	 * @desc Handles fixing and unfixing a section header in TOC
+	 * Fires on every scroll of a main ol of TOC
+	 */
 	function handleFixingLiElement () {
 		if ( !timeout && $openOl ) {
 			timeout = setTimeout( function () {
@@ -70,22 +125,14 @@ function ( sections, window, $, mustache, toc ) {
 		}
 	}
 
-	$toc = $( '#wkTOC' )
-		.on( 'click', 'header', function () {
-			window.scrollTo( 0, 0 );
-		} )
-		.on( 'click', 'li', function ( event ) {
-			var $li = $( this ),
-				$a = $li.find( 'a' ).first();
-
-			event.stopPropagation();
-			event.preventDefault();
-
-			sections.scrollTo( $a.attr( 'href' ).slice( 1 ) );
-
-			toggleLi( $li );
-		} );
-
+	/**
+	 *
+	 * @desc Function that is fired on every section changed so we can highlight it in TOC
+	 *
+	 * @param event Event
+	 * @param data Data passed from sections evetn
+	 * @param scrollTo weather to scroll to the element used to force it on TOC open
+	 */
 	function onSectionChange ( event, data, scrollTo ) {
 		$anchors.removeClass( 'current' );
 
@@ -109,37 +156,9 @@ function ( sections, window, $, mustache, toc ) {
 		}
 	}
 
-	$document.on( 'curtain:hidden', function () {
-		$toc.removeClass();
-		onClose();
-	} );
-
-	function renderToc () {
-		var ol = '<ol class="toc-list level{{level}}">{{#sections}}{{> lis}}{{/sections}}</ol>',
-			lis = '{{#.}}<li{{#sections.length}} class="has-children{{#firstLevel}}' +
-				' first-children{{/firstLevel}}"{{/sections.length}}>' +
-				'<a href="#{{id}}">{{name}}{{#firstLevel}}{{#sections.length}}<span class="chevron right"></span>' +
-				'{{/sections.length}}{{/firstLevel}}</a>' +
-				'{{#sections.length}}{{> ol}}{{/sections.length}}</li>{{/.}}',
-			tocData = toc.getData(
-				sections.list,
-				function ( header, level ) {
-					return {
-						id: header.id,
-						name: header.textContent.trim(),
-						level: level,
-						firstLevel: level === 2,
-						sections: []
-					};
-				}
-			);
-
-		return mustache.render( ol, tocData, {
-			ol: ol,
-			lis: lis
-		} );
-	}
-
+	/**
+	 * @desc Handles appending the toc to a side menu
+	 */
 	function init () {
 		if ( !inited ) {
 			$ol = $toc
@@ -153,16 +172,16 @@ function ( sections, window, $, mustache, toc ) {
 		}
 	}
 
-	if ( !sideMenuCapable ) {
-		$ol = $document.find('#mw-content-text')
-			.append( '<div class="in-page-toc">' + renderToc() + '</div>' )
-			.find('.level');
-	}
-
+	/**
+	 * @desc Used in fallback mode
+	 */
 	function onTap(){
 		$ol[0].scrollIntoView();
 	}
 
+	/**
+	 * @desc Fires on opening of a Side menu toc
+	 */
 	function onOpen () {
 		$document.on( 'section:changed', onSectionChange );
 
@@ -173,15 +192,30 @@ function ( sections, window, $, mustache, toc ) {
 		$.event.trigger( 'ads:unfix' );
 	}
 
+	/**
+	 * @desc Fires on closing of a Side menu toc
+	 */
 	function onClose () {
 		$document.off( 'section:changed', onSectionChange );
 		$.event.trigger( 'curtain:hide' );
 		$.event.trigger( 'ads:fix' );
 	}
 
+
+	$document.on( 'curtain:hidden', function () {
+		$toc.removeClass();
+		onClose();
+	} );
+
+	if ( !sideMenuCapable ) {
+		$ol = $document.find('#mw-content-text')
+			.append( '<div class="in-page-toc">' + renderToc() + '</div>' )
+			.find('.level');
+	}
+
 	$( '#wkTOCHandle' ).on( 'click', function () {
 		if ( sideMenuCapable ) {
-			if ( $toc.toggleClass( 'active' ).hasClass( 'active' ) ) {
+			if ( $toc.toggleClass( active ).hasClass( active ) ) {
 				onOpen();
 			} else {
 				onClose();
