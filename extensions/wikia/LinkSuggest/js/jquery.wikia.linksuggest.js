@@ -325,17 +325,31 @@ $.widget( 'wikia.linksuggest', {
 		for ( var i = 0; i < props.length; i++ ) {
 			tester.css( props[i], this.element.css( props[i] ) );
 		}
- 		// Using clientWidth because if the textarea has scroll, the effective
+
+		var textToAppend = text.substr( 0, caret );
+		// Using clientWidth because if the textarea has scroll, the effective
 		// width for word wrap doesn't include the width used by the scrollbar
-		tester.width( control.clientWidth ).appendTo( document.body ).text( text.substr( 0, caret ) );
+		tester.width( control.clientWidth ).appendTo( document.body );
+		if ($.browser.msie) {
+			tester[0].innerText = textToAppend;
+		} else {
+			tester.text(textToAppend);
+		}
+
 		left = tester.outerWidth();
 		top = tester.outerHeight() - control.scrollTop;
 		var initialheight = tester.height();
 		var paddingText = '';
+		textToAppend = text.substr( 0, initialcaret ) + ' ';
 		// Insert the text until the initial position of the element we want to
 		// suggest, plus a space, to get the characters needed to force a word
 		// wrap to a new line
-		tester.text( text.substr( 0, initialcaret ) + ' ' );
+		if ($.browser.msie) {
+			// Additional whitespace is required for text wrap, when user starts typing from beginning of new line
+			tester[0].innerText = textToAppend + ' ';
+		} else {
+			tester.text( textToAppend );
+		}
 		if ( tester.height() < initialheight ) {
 			// If the height has been reduced then the element to suggest is
 			// forcing a word wrap to a new line and it's on the left side of
@@ -349,7 +363,7 @@ $.widget( 'wikia.linksuggest', {
 				paddingText += 'A';
 				// msie appendData doesn't update the height()
 				if ( $.browser.msie ) {
-					tester[0].firstChild.data += 'A';
+					tester[0].innerText += 'A';
 				} else {
 					tester[0].firstChild.appendData( 'A' );
 				}
