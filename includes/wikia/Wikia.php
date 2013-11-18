@@ -2005,6 +2005,8 @@ class Wikia {
 			if ( is_object( $mExtUser ) && ( 0 != $mExtUser->getId() ) ) {
 				$mExtUser->linkToLocal( $mExtUser->getId() );
 				$s = $mExtUser->getLocalUser( $bUserObject );
+				error_log( "KamilkUserSignup2-WIKIA: " . __METHOD__ . " ==UserOptions== " . json_encode( $s->getOptions() ) );
+				error_log( "KamilkUserSignup2-WIKIA: ".__METHOD__. " ==Backtrace== ".json_encode( debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS) ) );
 			}
 		}
 
