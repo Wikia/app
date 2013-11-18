@@ -1,5 +1,5 @@
 /* exported AdTracker */
-/* jshint camelcase:false */
+/* jshint camelcase:false, maxparams:5 */
 
 var AdTracker = function (log, tracker) {
 	'use strict';
@@ -67,7 +67,7 @@ var AdTracker = function (log, tracker) {
 
 		tracker.track({
 			eventName: 'liftium.slot2',
-			ga_category: 'slot2/' + slotsize.split(',')[0],
+			ga_category: 'slot3/' + slotsize.split(',')[0],
 			ga_action: slotname,
 			ga_label: provider,
 			trackingMethod: 'ad'
@@ -85,7 +85,7 @@ var AdTracker = function (log, tracker) {
 
 		tracker.track({
 			eventName: 'liftium.hop2',
-			ga_category: category + '2/' + provider,
+			ga_category: category + '3/' + provider,
 			ga_action: 'slot ' + slotname,
 			ga_label: labelPrefix + formatTrackTime(hopTime),
 			trackingMethod: 'ad'
