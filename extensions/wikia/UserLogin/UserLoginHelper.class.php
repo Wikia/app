@@ -243,7 +243,6 @@ class UserLoginHelper extends WikiaModel {
 		// Check whether user already exists or is already confirmed
 		wfWaitForSlaves();
 		$user = User::newFromName( $username );
-		wfRunHooks( 'UserNameLoadFromId', array( $username, &$user, true ) );
 		if ( !($user instanceof User) || $user->getID() == 0 ) {
 			// User doesn't exist
 			$result['result'] = 'error';
