@@ -44,6 +44,7 @@ ve.ui.WikiaMediaPageWidget = function VeUiWikiaMediaPageWidget( model, config ) 
 		'label': 'Title' // TODO: i18n
 	} );
 
+	this.title.$input.attr( 'maxlength', 200 );
 	this.$extension = this.$$( '<span>' );
 	this.$item = null;
 	this.$itemWrapper = this.$$( '<div>' );
@@ -131,15 +132,7 @@ ve.ui.WikiaMediaPageWidget.prototype.setupVideoOverlay = function () {
  *
  * @method
  */
-ve.ui.WikiaMediaPageWidget.prototype.onFilenameEdit = function ( e ) {
-	// get value of input prior to modification based on validation
-	var oldText = this.title.$input.val();
-
-	if ( oldText.length > 200 ) {
-		e.preventDefault();
-		this.title.$input.val( oldText.slice( 0, 200 ) );
-	}
-
+ve.ui.WikiaMediaPageWidget.prototype.onFilenameEdit = function () {
 	// update ve.dm.WikiaCartItem model
 	this.model.setTitle( this.title.$input.val() );
 };
