@@ -1,9 +1,11 @@
-/* global $, mw */
+/* global $ */
 var CreatePage = {
 	pageLayout: null,
 	options: {},
 	loading: false,
 	context: null,
+	wgArticlePath: mw.config.get( 'wgArticlePath' ),
+	visualEditorEnabled: !!mw.config.get( 'wgVisualEditor' ),
 
 	checkTitle: function( title ) {
 		'use strict';
@@ -14,9 +16,11 @@ var CreatePage = {
 			title: title
 		},
 		function( response ) {
+			var articlePath;
 			if ( response.result === 'ok' ) {
-				if ( window.wgVisualEditor ) {
-					location.href = mw.config.get( 'wgArticlePath' ).replace( '$1', title ) + '?veaction=edit';
+				if ( CreatePage.visualEditorEnabled ) {
+					articlePath = CreatePage.wgArticlePath.replace( '$1', encodeURIComponent( title ) );
+					location.href =  articlePath + '?veaction=edit';
 				} else {
 					location.href = CreatePage.options[ CreatePage.pageLayout ].submitUrl
 						.replace( '$1', encodeURIComponent( title ) );
@@ -31,7 +35,7 @@ var CreatePage = {
 	openDialog: function( e, titleText ) {
 		'use strict';
 
-		if ( mw.config.get( 'wgVisualEditor' ) && !$( e.target ).hasClass( 'createpage' ) ) {
+		if ( CreatePage.visualEditorEnabled && !$( e.target ).hasClass( 'createpage' ) ) {
 			return;
 		}
 
@@ -129,13 +133,13 @@ var CreatePage = {
 		'use strict';
 		var uri = new mw.Uri( url );
 
-		return uri.path.replace( mw.config.get( 'wgArticlePath').replace( '$1', '' ), '' ).replace( /_/g, ' ' );
+		return uri.path.replace( CreatePage.wgArticlePath.replace( '$1', '' ), '' ).replace( /_/g, ' ' );
 	},
 
 	redLinkClick: function( e, titleText ) {
 		'use strict';
 
-		if ( mw.config.get( 'wgVisualEditor' ) ) {
+		if ( CreatePage.visualEditorEnabled ) {
 			return;
 		}
 
