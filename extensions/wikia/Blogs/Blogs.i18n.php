@@ -176,6 +176,7 @@ Parameters:
 	'blog-comment-delete' => '{{Identical|Delete}}',
 	'blog-comment-hide' => '{{Identical|Hide}}',
 	'blog-comment-history' => '{{Identical|History}}',
+	'blog-comment-edit' => '{{Identical|Edit}}',
 	'blog-refresh-label' => '{{Identical|Refresh}}',
 	'blog-userblog' => 'Appears in an RSS feed.
 Parameters:
@@ -3532,6 +3533,7 @@ Opprett bloggoppføringssider for å kategorier som «Barack Obama», «Fan Fict
 /** Nepali (नेपाली)
  * @author Bhawani Gautam
  * @author RajeshPandey
+ * @author सरोज कुमार ढकाल
  */
 $messages['ne'] = array(
 	'createblogpage' => 'ब्लग बनाउने',
@@ -3541,7 +3543,29 @@ $messages['ne'] = array(
 	'create-blog-post-category' => 'ब्लोग पोस्ट',
 	'create-blog-post-category-body' => 'यो ब्लग पोस्टको एक स्वत: उत्पन्न सूची हो',
 	'create-blog-post-category-log' => 'ब्लग पोस्टको लागि श्रेणी लेख बनाइएको',
+	'create-blog-post-recent-listing' => 'हालसालैका पोष्टहरू',
+	'create-blog-post-recent-listing-title' => 'हालसालैका पोष्टहरू',
+	'create-blog-categories-submit' => 'बुझाउने',
+	'create-blog-save' => 'पृष्ठ संग्रह गर्ने',
+	'create-blog-preview' => 'पूर्वालोकन देखाउनुहोस्',
+	'create-blog-listing-preview' => 'पूर्वावलोकन',
+	'blog-readfullpost' => 'थप पढ्ने',
+	'blog-added' => 'थपियो',
+	'blog-edited' => 'सम्पादन गरियो',
+	'blog-page' => 'ब्लग',
+	'blog-comment-post' => 'टिप्पणी पोष्ट गर्ने',
 	'blog-comments' => 'टिप्पणीहरु',
+	'blog-rc-comments' => 'ब्लग टिप्पणीहरु',
+	'blog-comments-new' => 'ब्लगमा नयाँ टिप्पणी',
+	'blog-voting-label' => 'मतदान',
+	'blog-comment-delete' => 'हटाउने',
+	'blog-comment-hide' => 'लुकाउनुहोस्',
+	'blog-comment-unhide' => 'देखाउने',
+	'blog-comment-history' => 'इतिहास',
+	'blog-comment-edit' => 'सम्पादन',
+	'blog-comment-error' => 'टिप्पणी सङ्ग्रह गर्न सकिएन',
+	'blog-avatar-preferences-title' => 'अवतार',
+	'blog-fromsitename' => ' $1बाट',
 );
 
 /** Dutch (Nederlands)
@@ -4732,7 +4756,7 @@ Skapa blogglistor för kategorier som "Barack Obama", "Fan Fiction", eller kombi
 	'blog-added' => 'tillagd',
 	'blog-edited' => 'redigerad',
 	'blog-page' => 'Blogg',
-	'blog-zero-comments' => 'Inga kommentarer än!',
+	'blog-zero-comments' => 'Inga kommentarer ännu!',
 	'blog-comment-post' => 'Skicka kommentar',
 	'blog-comments' => 'Kommentarer',
 	'blog-rc-comments' => 'Bloggkommentarer',
@@ -4743,7 +4767,7 @@ Skapa blogglistor för kategorier som "Barack Obama", "Fan Fiction", eller kombi
 	'blog-comments-info' => 'Detta fält använder wikitext-stil för indata',
 	'blog-comments-login' => '<a href="$1" rel="nofollow">Logga in</a> för att kommentera',
 	'blog-comments-dsc' => 'Nyaste först',
-	'blog-comments-asc' => 'Nyaste sista',
+	'blog-comments-asc' => 'Nyaste sist',
 	'blog-comments-anonymous' => 'Anonym användare',
 	'blog-comment-delete' => 'radera',
 	'blog-comment-hide' => 'göm',

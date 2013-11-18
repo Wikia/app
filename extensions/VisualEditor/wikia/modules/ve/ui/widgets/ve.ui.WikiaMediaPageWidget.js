@@ -16,7 +16,6 @@
  * will have inputs and textareas instead of text blocks.
  */
 ve.ui.WikiaMediaPageWidget = function VeUiWikiaMediaPageWidget( model, config ) {
-	var titleParts = model.title.match( /^(?:[^:]*\:)?(.*?)(\.[^.]+)?$/ );
 
 	// Configuration initialization
 	config = config || {};
@@ -37,7 +36,7 @@ ve.ui.WikiaMediaPageWidget = function VeUiWikiaMediaPageWidget( model, config ) 
 	this.title = new ve.ui.TextInputWidget( {
 		'$$': this.$$,
 		'readOnly': !this.editable,
-		'value': titleParts[1]
+		'value': this.model.basename
 	} );
 	this.titleLabel = new ve.ui.InputLabelWidget( {
 		'$$': this.$$,
@@ -56,12 +55,17 @@ ve.ui.WikiaMediaPageWidget = function VeUiWikiaMediaPageWidget( model, config ) 
 	// Events
 	this.$itemWrapper.on( 'click', ve.bind( this.onItemClick, this ) );
 	this.removeButton.connect( this, { 'click': 'onRemoveButtonClick' } );
+	if ( this.editable ) {
+		this.title.$input.on( 'keyup', ve.bind( this.onTitleKeyup, this ) );
+	}
 
 	// Initialization
+	this.title.$input.attr( 'maxlength', 200 );
 	this.$itemWrapper.addClass( 've-ui-wikiaMediaPageWidget-item' );
 	this.$extension
 		.addClass( 've-ui-wikiaMediaPageWidget-item-extension' )
-		.text( titleParts[2] );
+		.text( this.model.extension );
+	this.$itemWrapper.addClass( 've-ui-wikiaMediaPageWidget-item' );
 	this.title.$.append( this.$extension );
 	this.fieldset.$.append( this.titleLabel.$, this.title.$ );
 	if ( this.model.type === 'photo' && this.editable ) {
@@ -92,9 +96,21 @@ ve.inheritClass( ve.ui.WikiaMediaPageWidget, ve.ui.Widget );
 
 /* Methods */
 
-/** */
+/**
+ * @method
+ * @returns {ve.dm.WikiaCartItem} The model for the item being displayed
+ */
 ve.ui.WikiaMediaPageWidget.prototype.getModel = function () {
 	return this.model;
+};
+
+/**
+ * Handle modification of title.
+ *
+ * @method
+ */
+ve.ui.WikiaMediaPageWidget.prototype.onTitleKeyup = function () {
+	this.model.setTitle( this.title.$input.val() );
 };
 
 /**
@@ -121,7 +137,11 @@ ve.ui.WikiaMediaPageWidget.prototype.onItemClick = function () {
 	window.alert( ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-preview-alert' ) );
 };
 
-/** */
+/**
+ * Handle changes to the license dropdown.
+ *
+ * @method
+ */
 ve.ui.WikiaMediaPageWidget.prototype.onLicenseSelectChange = function () {
 	this.model.setLicense( this.$licenseSelect.val() );
 };

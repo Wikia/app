@@ -8,7 +8,8 @@ $config['oasis_shared_core_js'] = array(
 	'assets' => array(
 		'#group_oasis_wikia_js',
 		'//resources/wikia/libraries/sloth/sloth.js',
-		'//resources/wikia/libraries/mustache/mustache.js'
+		'//resources/wikia/libraries/mustache/mustache.js',
+		'//resources/wikia/modules/browserDetect.js',
 	),
 );
 
@@ -16,7 +17,8 @@ $config['oasis_extensions_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'#group_oasis_ads_js',
-		'#group_oasis_noads_extensions_js'
+		'#group_oasis_noads_extensions_js',
+		'#group_ui_repo_api_js',
 	)
 );
 
@@ -74,6 +76,16 @@ $config['adengine2_js'] = array(
 
 		// low prio
 		// not here! @see adengine2 low prio section someplace else
+	),
+);
+
+$config['adengine2_sevenonemedia_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/AdEngine/SevenOneMedia/my_ad_integration_css.js',
+		'//extensions/wikia/AdEngine/SevenOneMedia/my_ad_integration.js',
+		'//extensions/wikia/AdEngine/SevenOneMedia/wikia.js',
+		'//extensions/wikia/AdEngine/SevenOneMedia/globalV6.js',
 	),
 );
 
@@ -812,6 +824,7 @@ $config['chat_js2'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'#group_oasis_jquery',
+		'#group_ui_repo_api_js',
 
 		// shared libraries
 		'//extensions/wikia/AssetsManager/js/AssetsManager.js',
@@ -830,6 +843,7 @@ $config['chat_js2'] = array(
 		'//extensions/wikia/Chat2/js/models/models.js',
 		'//extensions/wikia/Chat2/js/controllers/controllers.js',
 		'//extensions/wikia/Chat2/js/views/views.js',
+		'//resources/wikia/modules/browserDetect.js',
 		'//extensions/wikia/Chat2/js/views/ChatBanModal.js',
 	)
 );
@@ -1435,10 +1449,6 @@ $config['ui_repo_api_js'] = array(
 		'//resources/wikia/modules/uifactory.js',
 		'//resources/wikia/libraries/mustache/mustache.js',
 		'//resources/wikia/modules/uicomponent.js',
-
-		// examples of components
-		// TODO: move it probably to modal_sample.json to load additional assets on Special:Styleguide
-		'//resources/wikia/ui_components/modal/js/modal.sample.js',
 	)
 );
 
@@ -1514,3 +1524,20 @@ $config['api_docs_scss'] = array(
 	)
 );
 
+$config['suggestions_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/Suggestions/js/SuggestionsMatcher.js',
+		'//extensions/wikia/Suggestions/js/SuggestionsClient.js',
+		'//extensions/wikia/Suggestions/js/SuggestionsViewModel.js',
+		'//extensions/wikia/Suggestions/js/SuggestionsView.js',
+		'//extensions/wikia/Suggestions/js/Suggestions.js',
+	)
+);
+
+$config['suggestions_scss'] = array(
+	'type' => AssetsManager::TYPE_SCSS,
+	'assets' => array(
+		'//extensions/wikia/Suggestions/css/Suggestions.scss',
+	)
+);

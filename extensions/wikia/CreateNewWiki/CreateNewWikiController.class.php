@@ -29,9 +29,9 @@ class CreateNewWikiController extends WikiaController {
 		$fbreturn = $wgRequest->getVal('fbreturn');
 		if((!empty($fbconnected) && $fbconnected === '1') || (!empty($fbreturn) && $fbreturn === '1')) {
 			$this->LoadState();
-			$this->currentStep = 'DescWiki';
+			$currentStep = 'DescWiki';
 		} else {
-			$this->currentStep = '';
+			$currentStep = '';
 		}
 
 		// form field values
@@ -60,9 +60,9 @@ class CreateNewWikiController extends WikiaController {
 		$this->isUserLoggedIn = $wgUser->isLoggedIn();
 
 		// remove wikia plus for now for all languages
-		$this->skipWikiaPlus = true;
+		$skipWikiaPlus = true;
 
-		$this->keys = CreateNewWikiObfuscate::generateValidSeeds();
+		$keys = CreateNewWikiObfuscate::generateValidSeeds();
 		$_SESSION['cnw-answer'] = CreateNewWikiObfuscate::generateAnswer($this->keys);
 
 		$this->wg->Out->addJsConfigVars([
@@ -78,6 +78,19 @@ class CreateNewWikiController extends WikiaController {
 			$signupTitle = Title::newFromText('UserSignup', NS_SPECIAL);
 			$this->signupUrl = $signupTitle->getFullURL();
 		}
+
+		// Make various parsed messages and status available in JS
+		// Necessary because JSMessages does not support parsing
+		$this->wikiBuilderCfg = array(
+			'name-wiki-submit-error' => wfMessage( 'cnw-name-wiki-submit-error' )->escaped(),
+			'desc-wiki-submit-error' => wfMessage( 'cnw-desc-wiki-submit-error' )->escaped(),
+			'currentstep' => $currentStep,
+			'skipwikiaplus' => $skipWikiaPlus,
+			'descriptionplaceholder' => wfMessage( 'cnw-desc-placeholder' )->escaped(),
+			'cnw-error-general' => wfMessage( 'cnw-error-general' )->parse(),
+			'cnw-error-general-heading' => wfMessage( 'cnw-error-general-heading' )->escaped(),
+			'cnw-keys' => $keys
+		);
 		
 		// theme designer application theme settings
 		$this->applicationThemeSettings = SassUtil::getApplicationThemeSettings();
@@ -155,8 +168,9 @@ class CreateNewWikiController extends WikiaController {
 		{
 			// do nothing
 			$this->status = 'error';
-			$this->statusMsg = wfMsg('cnw-error-general');
-			$this->statusHeader = wfMsg('cnw-error-general-heading');
+			// VOLDEV-10: Parse the HTML in the message
+			$this->statusMsg = wfMessage( 'cnw-error-general' )->parse();
+			$this->statusHeader = wfMessage( 'cnw-error-general-heading' )->escaped();
 		} else {
 			/*
 			$stored_answer = $this->getStoredAnswer();
@@ -201,8 +215,8 @@ class CreateNewWikiController extends WikiaController {
 			$cityId = $createWiki->getWikiInfo('city_id');
 			if(empty($cityId)) {
 				$this->status = 'backenderror';
-				$this->statusMsg = wfMsg('cnw-error-general');
-				$this->statusHeader = wfMsg('cnw-error-general-heading');
+				$this->statusMsg = wfMessage( 'cnw-error-general' )->parse();
+				$this->statusHeader = wfMessage( 'cnw-error-general-heading' )->escaped();
 				trigger_error("Failed to create new wiki: $error_code " . $params['wName'] . " " . $params['wLanguage'] . " " . $wgRequest->getIP(), E_USER_WARNING);
 			} else {
 				if ( isset($params['wAllAges']) && !empty( $params['wAllAges'] ) ) {

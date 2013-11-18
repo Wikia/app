@@ -1,9 +1,8 @@
 @import "skins/oasis/css/core/layout.scss";
 
-$default-blackout-background-color: black;
-$default-blackout-opacity: 0.5;
+$default-blackout-background-color: rgba(0, 0, 0, 0.5);
 
-@mixin blackout( $blackout-background-color: $default-blackout-background-color, $blackout-opacity: $default-blackout-opacity ) {
+@mixin blackout( $blackout-background-color: $default-blackout-background-color ) {
 	background: $blackout-background-color;
 	bottom: 0;
 	left: 0;
@@ -13,7 +12,6 @@ $default-blackout-opacity: 0.5;
 	z-index: -1;
 
 	&.visible {
-		opacity: $default-blackout-opacity;
 		z-index: $zTop;
 	}
 }

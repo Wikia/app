@@ -328,10 +328,10 @@ var Wall = $.createClass(Object, {
 	showVotersModal: function(e) {
 		var target = $(e.target),
 			id = target.closest('li.message').data('id'),
-			votes = parseInt(target.closest('.votes').data('votes'));
+			votes = parseInt( target.closest('.votes').data('votes'), 10 );
 
 		if(votes > 0) {
-			$.nirvana.sendRequest({
+			$.nirvana.sendRequest( {
 				controller: 'WallExternalController',
 				method: 'votersModal',
 				format: 'html',
@@ -339,14 +339,32 @@ var Wall = $.createClass(Object, {
 					id: id
 				},
 				callback: function(data) {
-					$(data).makeModal({
-						'width': 300
-					});
-				}
-			});
-		}
+					require( [ 'wikia.ui.factory' ], function( uiFactory ) {
+						uiFactory.init( 'modal' ).then( function( uiModal ) {
+							var modalId = 'WallVotersModalWrapper',
+								votersModal = uiModal.render( {
+									type: 'default',
+									vars: {
+										id: modalId,
+										size: 'small',
+										content: data,
+										title: $.msg( 'wall-votes-modal-title' ),
+										closeButton: true,
+										closeText: $.msg( 'close' )
+									}
+								} );
 
-		$.getResources([$.getSassCommonURL('/extensions/wikia/Wall/css/WallVoters.scss')]);
+							require( [ 'wikia.ui.modal' ], function( modal ) {
+								votersModal = modal.init( modalId, votersModal );
+								votersModal.show();
+							} );
+						} );
+					} );
+				}
+			} );
+
+			$.getResources([$.getSassCommonURL('/extensions/wikia/Wall/css/WallVoters.scss')]);
+		}
 	},
 
 	undoRemoveOrAdminDelete: function(e) {
@@ -386,31 +404,31 @@ var Wall = $.createClass(Object, {
 
 	confirmAction: function(e) {
 		e.preventDefault();
-		var target = $(e.target);
 
-		var isreply = target.closest('.SpeechBubble').attr('data-is-reply');
-		var wallMsg = target.closest('li.message, .message-restore');
-		var id = wallMsg.attr('data-id');
+		var target = $( e.target ),
+			isreply = target.closest('.SpeechBubble').attr('data-is-reply'),
+			wallMsg = target.closest('li.message, .message-restore'),
+			id = wallMsg.attr('data-id'),
+			type = isreply ? 'reply':'thread',
+			mode = target.attr('data-mode').split('-'),
+			submode = '',
+			formdata = {},
+			msg,
+			title,
+			cancelmsg,
+			okmsg,
+			form = $( '<form>'),
+			self = this;
 
-		var type = isreply ? 'reply':'thread';
-		var mode = target.attr('data-mode').split('-');
-
-		var submode = '';
-		if(mode[1]) {
+		if( mode[1] ) {
 			submode = mode[1];
 		}
 
 		mode = mode[0];
-		if(submode == 'fast' || mode == 'fastadmin' ) {
-			var formdata = {};
+		if( submode === 'fast' || mode === 'fastadmin' ) {
 			this.doAction(id, mode, wallMsg, target, formdata );
 			return true;
 		}
-
-		var msg;
-		var title;
-		var cancelmsg;
-		var okmsg;
 
 		title = $.msg('wall-action-' + mode + '-' + type + '-title');
 		okmsg = $.msg('wall-action-' + mode + '-confirm-ok');
@@ -418,18 +436,17 @@ var Wall = $.createClass(Object, {
 
 		//delete && remove
 		msg = $.msg('wall-action-'+mode+'-confirm');
-		var form = $('<form>');
 		form.append( $('<textarea>').attr({'class':'wall-action-reason','name':'reason','id':'reason'}) );
-		if(mode != 'restore') {
+		if(mode !== 'restore') {
 			form.append( $('<div>').text( $.msg('wall-action-'+mode+'-'+ type +'-confirm-info') ).addClass('subtle') );
-			if(mode == 'admin' || mode == 'remove' ) {
+			if(mode === 'admin' || mode === 'remove' ) {
 				form.append( $('<input>').attr({'name':'notify-admin', 'id':'notify-admin','type':'checkbox'}) );
-				form.append( $('<label>').text( $.msg('wall-action-all-confirm-notify') ) );
+				form.append( $('<label for="notify-admin">').text( $.msg('wall-action-all-confirm-notify') ) );
 			}
 		}
 		msg += '<form>'+form.html()+'</form>';
 
-		if( mode == 'rev' ) {
+		if( mode === 'rev' ) {
 		//rev delete
 			if(isreply) {
 				msg = $.msg('wall-action-rev-reply-confirm');
@@ -438,30 +455,70 @@ var Wall = $.createClass(Object, {
 			}
 		}
 
-		$.confirm({
-			title: title,
-			content: msg,
-			cancelMsg: cancelmsg,
-			okMsg: okmsg,
-			width: 400,
-			onOk: this.proxy(function() {
-				var formdata = $('.modalWrapper form').serializeArray();
-				this.doAction(id, mode, wallMsg, target, formdata );
-			})
-		});
+		require( [ 'wikia.ui.factory' ], function( uiFactory ) {
+			uiFactory.init( [ 'button', 'modal' ] ).then( function( uiButton, uiModal ) {
+				var modalId = 'WikiaConfirm',
+					modalSecondaryBtnId = 'WikiaConfirmCancel',
+					modalSecondaryBtn = uiButton.render( {
+						type: 'button',
+						vars: {
+							id: modalSecondaryBtnId,
+							type: 'button',
+							classes: [ 'normal', 'secondary' ],
+							value: cancelmsg
+						}
+					}),
+					modalPrimaryBtnId = 'WikiaConfirmOk',
+					modalPrimaryBtnVars = {
+						id: modalPrimaryBtnId,
+						type: 'button',
+						classes: [ 'normal', 'primary' ],
+						value: okmsg
+					},
+					modalPrimaryBtn, confirmModal;
+				if(mode !== 'rev') {
+					modalPrimaryBtnVars.disabled = true;
+				}
+				modalPrimaryBtn = uiButton.render( {
+					type: 'button',
+					vars: modalPrimaryBtnVars
+				} );
+				confirmModal = uiModal.render( {
+					type: 'default',
+					vars: {
+						id: modalId,
+						size: 'medium',
+						content: msg,
+						title: title,
+						closeButton: true,
+						closeText: $.msg( 'close' ),
+						primaryBtn: modalPrimaryBtn,
+						secondBtn: modalSecondaryBtn
+					}
+				} );
 
-		if(mode != 'rev') {
-			$('#WikiaConfirmOk').attr('disabled', 'disabled');
-		}
-
- 		$('textarea.wall-action-reason').bind('keydown keyup change', function(e) {
-			var target = $(e.target);
-			if(target.val().length > 0) {
-				$('#WikiaConfirmOk').removeAttr('disabled');
-			} else {
-				$('#WikiaConfirmOk').attr('disabled', 'disabled');
-			}
-		});
+				require( [ 'wikia.ui.modal' ], function( modal ) {
+					confirmModal = modal.init( modalId, confirmModal );
+					confirmModal.$element.find( '#' + modalSecondaryBtnId ).click( function() {
+						confirmModal.close();
+					} );
+					confirmModal.$element.find( '#' + modalPrimaryBtnId ).click( function() {
+						var formdata = confirmModal.$element.find('form').serializeArray();
+						confirmModal.deactivate();
+						self.doAction(id, mode, wallMsg, target, formdata, confirmModal );
+					} );
+					confirmModal.$element.find('textarea.wall-action-reason').bind('keydown keyup change', function(e) {
+						var target = $(e.target);
+						if(target.val().length > 0) {
+							confirmModal.$element.find( '#' + modalPrimaryBtnId ).removeAttr('disabled');
+						} else {
+							confirmModal.$element.find( '#' + modalPrimaryBtnId ).attr('disabled', 'disabled');
+						}
+					});
+					confirmModal.show();
+				} );
+			} );
+		} );
 	},
 
 	/*
@@ -471,7 +528,7 @@ var Wall = $.createClass(Object, {
 	 * restore(mode: restore)
 	 */
 
-	doAction: function(id, mode, msg, target, formdata){
+	doAction: function( id, mode, msg, target, formdata, modal ){
 		switch(mode) {
 			case 'close':
 				this.doThreadChangeSendRequest(id, 'close', formdata);
@@ -480,12 +537,12 @@ var Wall = $.createClass(Object, {
 				this.doRestore(id, target, formdata);
 			break;
 			default:
-				this.doDelete(id, mode, msg, formdata);
+				this.doDelete(id, mode, msg, formdata, modal);
 			break;
 		}
 	},
 
-	doDelete: function(id, mode, msg, formdata){
+	doDelete: function( id, mode, msg, formdata, modal ){
 		$.nirvana.sendRequest({
 			controller: 'WallExternalController',
 			method: 'deleteMessage',
@@ -506,6 +563,11 @@ var Wall = $.createClass(Object, {
 						}));
 					} else {
 						msg.fadeOut('fast', function() { msg.remove(); });
+					}
+
+					if( typeof( modal ) !== 'undefined' ) {
+					// VSTF can delete without confirmation modal
+						modal.close();
 					}
 				}
 			})
@@ -685,6 +747,7 @@ var Wall = $.createClass(Object, {
 	},
 
 	moveThread: function(e) {
+		e.preventDefault();
 		var id = $(e.target).closest('.message').data('id');
 		$.nirvana.sendRequest({
 			controller: 'WallExternalController',
@@ -694,36 +757,86 @@ var Wall = $.createClass(Object, {
 				id: id
 			},
 			callback: function(html) {
-				var dialog = $(html).makeModal({
-					'width': 500
-				});
-				var buttons = $('.modalToolbar button'),
-					form = new WikiaForm(dialog.find('.WikiaForm'));
-				dialog.on('click.Wall', '.cancel', function(e) {
-					dialog.closeModal();
-				}).on('click.Wall', '.submit', function(e) {
-					buttons.attr('disabled', true);
-					$.nirvana.sendRequest({
-						controller: 'WallExternalController',
-						method: 'moveThread',
-						format: 'json',
-						data: {
-							destinationBoardId: dialog.find('.destinationBoardId option:selected').val(),
-							rootMessageId: id
-						},
-						callback: function(json) {
-							if(json.status === 'ok') {
-								Wikia.Querystring().addCb().goTo();
-							} else if(json.status === 'error') {
-								form.clearAllInputErrors();
-								if(json.errorfield) {
-									form.showInputError(json.errorfield, json.errormsg);
-								} else {
-									form.showGenericError(json.errormsg);
+				require( [ 'wikia.ui.factory' ], function( uiFactory ) {
+					uiFactory.init( [ 'button', 'modal' ] ).then( function( uiButton, uiModal ) {
+						var modalId = 'WallMoveModalWrapper',
+							cancelMsg = $.msg( 'cancel'),
+							moveThreadMsg = $.msg( 'wall-action-move-thread-ok'),
+							modalPrimaryBtn = uiButton.render( {
+								'type': 'button',
+								'vars': {
+									'id': '',
+									'type': 'button',
+									'href': '#',
+									'classes': [ 'normal', 'primary', 'submit' ],
+									'value': moveThreadMsg,
+									'title': moveThreadMsg
 								}
-								buttons.removeAttr('disabled');
-							}
-						}
+							} ),
+							modalSecondaryBtn = uiButton.render( {
+								'type': 'button',
+								'vars': {
+									'id': '',
+									'type': 'button',
+									'href': '#',
+									'classes': [ 'normal', 'secondary', 'cancel'],
+									'value': cancelMsg,
+									'title': cancelMsg
+								}
+							}),
+							moveThreadModal = uiModal.render( {
+								type: 'default',
+								vars: {
+									id: modalId,
+									size: 'small',
+									content: html,
+									title: $.msg( 'wall-action-move-thread-heading' ),
+									closeButton: true,
+									closeText: $.msg( 'close' ),
+									primaryBtn: modalPrimaryBtn,
+									secondBtn: modalSecondaryBtn
+								}
+							} );
+
+						require( [ 'wikia.ui.modal' ], function( modal ) {
+							moveThreadModal = modal.init( modalId, moveThreadModal );
+
+							moveThreadModal.show();
+
+							var dialog = $('#' + modalId),
+								buttons = dialog.find('.buttons').children('.button'),
+								form = new WikiaForm(dialog.find('.WikiaForm'));
+
+							dialog.on('click.Wall', '.cancel', function(e) {
+								e.preventDefault();
+								moveThreadModal.close();
+							}).on('click.Wall', '.submit', function(e) {
+								e.preventDefault();
+								moveThreadModal.deactivate();
+								$.nirvana.sendRequest({
+									controller: 'WallExternalController',
+									method: 'moveThread',
+									format: 'json',
+									data: {
+										destinationBoardId: dialog.find('.destinationBoardId option:selected').val(),
+										rootMessageId: id
+									},
+									callback: function(json) {
+										if(json.status === 'ok') {
+											Wikia.Querystring().addCb().goTo();
+										} else if(json.status === 'error') {
+											form.clearAllInputErrors();
+											if(json.errorfield) {
+												form.showInputError(json.errorfield, json.errormsg);
+											} else {
+												form.showGenericError(json.errormsg);
+											}
+											moveThreadModal.activate();
+										}
+									}
+								});
+							});
+						});
 					});
 				});
 			}
