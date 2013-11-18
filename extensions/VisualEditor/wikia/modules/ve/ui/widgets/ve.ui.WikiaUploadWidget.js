@@ -80,18 +80,26 @@ ve.ui.WikiaUploadWidget.prototype.onFileChange = function () {
 	if ( !this.$file[0].files[0] ) {
 		return;
 	}
-	var formData = new FormData( this.$form[0] );
-	$.ajax( {
-		'url': mw.util.wikiScript( 'api' ) + '?action=apitempupload&type=temporary&format=json',
-		'type': 'post',
-		'cache': false,
-		'contentType': false,
-		'processData': false,
-		'data': formData,
-		'success': ve.bind( this.onUploadSuccess, this ),
-		'error': ve.bind( this.onUploadError, this )
-	} );
-	this.showUploadAnimation();
+	var file = this.$file[0].files[0],
+		formData = new FormData( this.$form[0] );
+
+	if ( file.size > 10485760 ) {
+		console.log('error size');
+	} else if ( ve.indexOf( file.type.substr( file.type.indexOf('/') + 1 ), mw.config.values.wgFileExtensions ) < 0 ) {
+		console.log('error filetype');
+	} else {
+		$.ajax( {
+			'url': mw.util.wikiScript( 'api' ) + '?action=apitempupload&type=temporary&format=json',
+			'type': 'post',
+			'cache': false,
+			'contentType': false,
+			'processData': false,
+			'data': formData,
+			'success': ve.bind( this.onUploadSuccess, this ),
+			'error': ve.bind( this.onUploadError, this )
+		} );
+		this.showUploadAnimation();
+	}
 	this.$file.attr( 'value', '' );
 };
 
