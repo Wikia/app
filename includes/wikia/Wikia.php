@@ -2005,6 +2005,12 @@ class Wikia {
 			if ( is_object( $mExtUser ) && ( 0 != $mExtUser->getId() ) ) {
 				$mExtUser->linkToLocal( $mExtUser->getId() );
 				$s = $mExtUser->getLocalUser( $bUserObject );
+				if ( $s !== null ) {
+					error_log( "KamilkUserSignup2-WIKIA: " . __METHOD__ . " UserId:".$s->getId()." ==UserOptions== " . json_encode( $s->getOptions() ) );
+					error_log( "KamilkUserSignup2-WIKIA: ".__METHOD__. " ".$s->getId()." ==Backtrace== ".json_encode( debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS) ) );
+				} else {
+					error_log( "KamilkUserSignup2-WIKIA: ".__METHOD__. " ".$username" ==EMPTY== " );
+				}
 			}
 		}
 
