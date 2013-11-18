@@ -169,7 +169,7 @@ class ApiTempUpload extends ApiBase {
 				$file = wfFindFile( urldecode( $matches[2] ) );
 			}
 		}
-		elseif ( preg_match( $pattern, urldecode( $url ), $matches ) ) {
+		else if ( preg_match( $pattern, urldecode( $url ), $matches ) ) {
 			$file = wfFindFile( $matches[2] );
 			if ( !$file ) { // bugID: 26721
 				$file = wfFindFile( $matches[2] );
