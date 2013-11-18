@@ -561,15 +561,13 @@ EOT;
 			&& !filter_var($this->wg->OasisThemeSettings['background-tiled'], FILTER_VALIDATE_BOOLEAN) )
 		{
 			$bodyClasses[] = 'background-not-tiled';
-		}
 
-		if ( !filter_var($this->wg->OasisThemeSettings['background-tiled'], FILTER_VALIDATE_BOOLEAN)) {
 			if ( (isset($this->wg->OasisThemeSettings['background-dynamic'])
 					&& filter_var($this->wg->OasisThemeSettings['background-dynamic'], FILTER_VALIDATE_BOOLEAN))
 				// old wikis may not have 'background-dynamic' set
 				|| (!isset($this->wg->OasisThemeSettings['background-dynamic'])
 					&& isset($this->wg->OasisThemeSettings['background-image-width'])
-					&& (int)$this->wg->OasisThemeSettings['background-image-width'] >= ThemeSettings::MinWidthForSplit))
+					&& (int)$this->wg->OasisThemeSettings['background-image-width'] >= ThemeSettings::MIN_WIDTH_FOR_SPLIT))
 			{
 				$bodyClasses[] = 'background-dynamic';
 			}
