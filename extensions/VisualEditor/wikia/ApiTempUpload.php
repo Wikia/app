@@ -36,7 +36,9 @@ class ApiTempUpload extends ApiBase {
 	}
 
 	private function executePermanentVideo() {
-		if ( empty ( $this->mParams['desiredName'] ) ) {
+		$this->mParams['desiredName'] = wfStripIllegalFilenameChars( $this->mParams['desiredName'] );
+
+		if ( empty( $this->mParams['desiredName'] ) ) {
 			$this->dieUsageMsg( 'The desiredName parameter must be set' );
 		}
 		// TODO: Check with Video team if that's the best way to look for video duplicates

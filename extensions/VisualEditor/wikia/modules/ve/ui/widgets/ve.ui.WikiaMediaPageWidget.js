@@ -15,7 +15,6 @@
  * will have inputs and textareas instead of text blocks.
  */
 ve.ui.WikiaMediaPageWidget = function VeUiWikiaMediaPageWidget( model, config ) {
-	var titleParts = model.title.match( /^(?:[^:]*\:)?(.*?)(\.[^.]+)?$/ );
 
 	// Configuration initialization
 	config = config || {};
@@ -33,10 +32,11 @@ ve.ui.WikiaMediaPageWidget = function VeUiWikiaMediaPageWidget( model, config ) 
 		'label': 'Remove from the cart', //TODO: i18n
 		'flags': ['destructive']
 	} );
+
 	this.title = new ve.ui.TextInputWidget( {
 		'$$': this.$$,
 		'readOnly': !this.editable,
-		'value': titleParts[1]
+		'value': this.model.basename
 	} );
 	this.titleLabel = new ve.ui.InputLabelWidget( {
 		'$$': this.$$,
@@ -44,6 +44,7 @@ ve.ui.WikiaMediaPageWidget = function VeUiWikiaMediaPageWidget( model, config ) 
 		'label': 'Title' // TODO: i18n
 	} );
 
+	this.title.$input.attr( 'maxlength', 200 );
 	this.$extension = this.$$( '<span>' );
 	this.$item = null;
 	this.$itemWrapper = this.$$( '<div>' );
@@ -53,10 +54,14 @@ ve.ui.WikiaMediaPageWidget = function VeUiWikiaMediaPageWidget( model, config ) 
 	this.$itemWrapper.on( 'click', ve.bind( this.onItemClick, this ) );
 	this.removeButton.connect( this, { 'click': 'onRemoveButtonClick' } );
 
+	if ( this.editable ) {
+		this.title.$input.on( 'keyup', ve.bind( this.onFilenameEdit, this ) );
+	}
+
 	// Initialization
 	this.$extension
 		.addClass( 've-ui-wikiaMediaPageWidget-item-extension' )
-		.text( titleParts[2] );
+		.text( this.model.extension );
 	this.$itemWrapper.addClass( 've-ui-wikiaMediaPageWidget-item' );
 	this.title.$.append( this.$extension );
 	this.fieldset.$.append( this.titleLabel.$, this.title.$, this.removeButton.$ );
@@ -120,6 +125,16 @@ ve.ui.WikiaMediaPageWidget.prototype.setupVideoOverlay = function () {
 	this.$itemWrapper
 		.addClass( 'wikia-video-thumbnail' )
 		.prepend( this.$overlay );
+};
+
+/**
+ * Handle modification of filename
+ *
+ * @method
+ */
+ve.ui.WikiaMediaPageWidget.prototype.onFilenameEdit = function () {
+	// update ve.dm.WikiaCartItem model
+	this.model.setTitle( this.title.$input.val() );
 };
 
 /**
