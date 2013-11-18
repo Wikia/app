@@ -137,7 +137,7 @@ ve.ui.WikiaMediaPageWidget.prototype.onFilenameEdit = function ( e ) {
 
 	if ( oldText.length > 200 ) {
 		e.preventDefault();
-		this.title.$input.val( oldText.slice( 0, 199 ) );
+		this.title.$input.val( oldText.slice( 0, 200 ) );
 	}
 
 	// update ve.dm.WikiaCartItem model

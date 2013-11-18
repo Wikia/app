@@ -37,6 +37,7 @@ ve.dm.WikiaCartItem.prototype.extractFilenameParts = function ( title ) {
 /**
  * @method
  * @description Sets title with special case for user-blanked input
+ * @param String May be full path (File:Example.jpg) or string for basename
  */
 ve.dm.WikiaCartItem.prototype.setTitle = function ( title ) {
 	var parts,
