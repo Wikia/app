@@ -66,7 +66,7 @@ var AdTracker = function (log, tracker) {
 		log(['trackInit', slotname, slotsize], 'debug', logGroup);
 
 		tracker.track({
-			eventName: 'liftium.slot2',
+			eventName: 'liftium.slot3',
 			ga_category: 'slot3/' + slotsize.split(',')[0],
 			ga_action: slotname,
 			ga_label: provider,
@@ -84,7 +84,7 @@ var AdTracker = function (log, tracker) {
 		}
 
 		tracker.track({
-			eventName: 'liftium.hop2',
+			eventName: 'liftium.hop3',
 			ga_category: category + '3/' + provider,
 			ga_action: 'slot ' + slotname,
 			ga_label: labelPrefix + formatTrackTime(hopTime),
