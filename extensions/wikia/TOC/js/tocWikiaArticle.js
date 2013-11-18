@@ -99,7 +99,7 @@ require( ['jquery', 'wikia.toc', 'wikia.mustache'], function ( $, toc, mustache 
 	function renderTOC( $target ) {
 		var $container = $target.parents( '#toc' ).children( 'ol' ),
 			$contentContainer = getContentContainer( $target ),
-			$headers = $contentContainer.find( 'h2, h3, h4, h5' ),
+			$headers = $contentContainer.find( 'h1, h2, h3, h4, h5, h6' ),
 			data = toc.getData( $headers, createTOCSection );
 
 		data.wrapper = wrapper;
