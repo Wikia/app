@@ -2009,7 +2009,7 @@ class Wikia {
 					error_log( "KamilkUserSignup2-WIKIA: " . __METHOD__ . " UserId:".$s->getId()." ==UserOptions== " . json_encode( $s->getOptions() ) );
 					error_log( "KamilkUserSignup2-WIKIA: ".__METHOD__. " ".$s->getId()." ==Backtrace== ".json_encode( debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS) ) );
 				} else {
-					error_log( "KamilkUserSignup2-WIKIA: ".__METHOD__. " ".$username" ==EMPTY== " );
+					error_log( "KamilkUserSignup2-WIKIA: ".__METHOD__. " ".$user_name." ==EMPTY== " );
 				}
 			}
 		}
