@@ -325,7 +325,7 @@ jQuery(function($){
 				track({
 					action: Wikia.Tracker.ACTIONS.VIEW,
 					category: category,
-					label: 'no-result'
+					label: 'empty-page'
 				});
 			}
 			$wikiaSearch.on('mousedown', '.search-tabs a', function(e) {
