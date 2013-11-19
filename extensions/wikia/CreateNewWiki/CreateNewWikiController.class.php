@@ -182,6 +182,15 @@ class CreateNewWikiController extends WikiaController {
 			}
 			*/
 
+			// check if user is logged in
+			if ( !$wgUser->isLoggedIn() ) {
+				$this->status = 'error';
+				$this->statusMsg = wfMessage( 'cnw-error-anon-user' )->text();
+				$this->statusHeader = wfMessage( 'cnw-error-blocked-header' )->text();
+				wfProfileOut(__METHOD__);
+				return;
+			}
+
 			// check if user is blocked
 			if ( $wgUser->isBlocked() ) {
 				$this->status = 'error';
