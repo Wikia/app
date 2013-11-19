@@ -124,8 +124,8 @@ class RealgravityFeedIngester extends VideoFeedIngester {
 			$url = $this->initFeedUrl( $marketplaceId, $startDate, $page++ );
 			print( "Connecting to $url...\n" );
 
-			$req = MWHttpRequest::factory( $url );
-			$status = VideoHandlerHelper::wrapHttpRequest( $req );
+			$req = MWHttpRequest::factory( $url, array( 'noProxy' => true ) );
+			$status = $req->execute();
 			if( $status->isOK() ) {
 				$response = $req->getContent();
 			} else {

@@ -59,9 +59,9 @@ class GamestarApiWrapper extends ApiWrapper {
 		$memcKey = wfMemcKey( static::$CACHE_KEY, $apiUrl, static::$CACHE_KEY_VERSION );
 		$processedResponse = F::app()->wg->memc->get( $memcKey );
 		if ( empty($processedResponse) ) {
-			$req = MWHttpRequest::factory( $apiUrl );
+			$req = MWHttpRequest::factory( $apiUrl, array( 'noProxy' => true ) );
 			$req->setHeader( 'User-Agent', self::$REQUEST_USER_AGENT );
-			$status = VideoHandlerHelper::wrapHttpRequest( $req );
+			$status = $req->execute();
 			if( $status->isOK() ) {
 				$response = $req->getContent();
 				$this->response = $response;	// Only for migration purposes
@@ -121,10 +121,9 @@ class GamestarApiWrapper extends ApiWrapper {
 
 		$thumbnail = '';
 		$url = 'http://www.gamestar.de/emb/getVideoData5.cfm?vid='.$this->videoId;
-		$req = MWHttpRequest::factory( $url );
+		$req = MWHttpRequest::factory( $url, array( 'noProxy' => true ) );
 		$req->setHeader( 'User-Agent', self::$REQUEST_USER_AGENT );
-
-		$status = VideoHandlerHelper::wrapHttpRequest( $req );
+		$status = $req->execute();
 		if( $status->isOK() ) {
 			$response = trim( $req->getContent() );
 			if ( !empty($response) ) {

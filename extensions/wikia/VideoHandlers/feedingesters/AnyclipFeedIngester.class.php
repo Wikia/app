@@ -14,7 +14,6 @@ class AnyclipFeedIngester extends VideoFeedIngester {
 		print( "Connecting to $url...\n" );
 
 		$content = $this->getUrlContent( $url );
-
 		if ( !$content ) {
 			print( "ERROR: problem downloading content!\n" );
 			wfProfileOut( __METHOD__ );
@@ -213,8 +212,8 @@ class AnyclipFeedIngester extends VideoFeedIngester {
 		wfProfileIn( __METHOD__ );
 
 		$url = AnyclipApiWrapper::getApi( $code );
-		$req = MWHttpRequest::factory( $url );
-		$status = VideoHandlerHelper::wrapHttpRequest( $req );
+		$req = MWHttpRequest::factory( $url, array( 'noProxy' => true ) );
+		$status = $req->execute();
 		if( $status->isOK() ) {
 			$response = $req->getContent();
 			$content = json_decode( $response, true );

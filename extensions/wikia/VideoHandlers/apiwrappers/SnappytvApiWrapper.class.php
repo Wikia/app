@@ -128,8 +128,8 @@ class SnappytvApiWrapper extends ApiWrapper {
 		$memcKey = wfMemcKey( static::$CACHE_KEY, $this->videoId, static::$CACHE_KEY_VERSION );
 		$processedResponse = F::app()->wg->memc->get( $memcKey );
 		if ( empty( $processedResponse ) ) {
-			$req = MWHttpRequest::factory( $apiUrl );
-			$status = VideoHandlerHelper::wrapHttpRequest( $req );
+			$req = MWHttpRequest::factory( $apiUrl, array( 'noProxy' => true ) );
+			$status = $req->execute();
 			if( $status->isOK() ) {
 				$response = $req->getContent();
 				$this->response = $response;	// Only for migration purposes
@@ -188,8 +188,8 @@ class SnappytvApiWrapper extends ApiWrapper {
 		$memcKey = wfmemcKey( static::$CACHE_KEY, md5($url), static::$CACHE_KEY_VERSION );
 		$redirectUrl = $app->wg->memc->get( $memcKey );
 		if ( empty($redirectUrl) ) {
-			$req = MWHttpRequest::factory( $url );
-			$status = VideoHandlerHelper::wrapHttpRequest( $req );
+			$req = MWHttpRequest::factory( $url, array( 'noProxy' => true ) );
+			$status = $req->execute();
 			if( $status->isOK() ) {
 				$response = $req->getContent();
 				if ( !empty( $response ) ) {
@@ -211,8 +211,8 @@ class SnappytvApiWrapper extends ApiWrapper {
 
 		$info = array();
 		$url = self::getRedirectUrl( $url );
-		$req = MWHttpRequest::factory( $url );
-		$status = VideoHandlerHelper::wrapHttpRequest( $req );
+		$req = MWHttpRequest::factory( $url, array( 'noProxy' => true ) );
+		$status = $req->execute();
 		if( $status->isOK() ) {
 			$response = $req->getContent();
 			if ( !empty( $response ) ) {

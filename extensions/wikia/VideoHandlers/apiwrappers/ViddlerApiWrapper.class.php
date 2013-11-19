@@ -168,8 +168,13 @@ class ViddlerApiWrapper extends ApiWrapper {
 
 		wfProfileIn( __METHOD__ );
 
-		$req = MWHttpRequest::factory( $url, array('timeout'=>'default', 'headersOnly'=>true) );
-		$status = VideoHandlerHelper::wrapHttpRequest( $req );
+		$options = array(
+			'timeout'=>'default',
+			'headersOnly'=>true,
+			'noProxy' => true,
+		);
+		$req = MWHttpRequest::factory( $url, $options );
+		$status = $req->execute();
 		$finalUrl = $req->getFinalUrl();
 
 		wfProfileOut( __METHOD__ );
