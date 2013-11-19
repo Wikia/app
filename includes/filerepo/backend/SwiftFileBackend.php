@@ -565,6 +565,11 @@ class SwiftFileBackend extends FileBackendStore {
 		if ( $obj->getMetadataValue( 'Sha1base36' ) !== null ) {
 			return true; // nothing to do
 		}
+		
+		# don't check SHA-1 for thumbnailers 
+		if ( $this->isThumbnailer( $path ) ) {
+			return true; //nothing to do
+		}
 		wfProfileIn( __METHOD__ );
 		trigger_error( "$path was not stored with SHA-1 metadata.", E_USER_WARNING );
 		$status = Status::newGood();
@@ -974,6 +979,20 @@ class SwiftFileBackend extends FileBackendStore {
 				)
 		);
 		// Wikia change - end
+	}
+	
+	/**
+	 * Check if image path contains /thumb/ 
+	 *
+	 * @param $path image path
+	 * @return Boolean
+	 */
+	private function isThumbnailer( $path ) {
+		if ( strpos( $path, '/images/thumb/' ) !== false ) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }
 
