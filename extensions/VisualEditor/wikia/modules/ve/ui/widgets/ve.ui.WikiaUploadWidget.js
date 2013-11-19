@@ -95,7 +95,7 @@ ve.ui.WikiaUploadWidget.prototype.validateFile = function ( file ) {
 	errors = [];
 	filetype = ve.indexOf( file.type.substr( file.type.indexOf('/') + 1 ), mw.config.get( 'wgFileExtensions' ) );
 
-	// hardcoded 10mb filesize
+	// 10mb filesize
 	if ( file.size > mw.config.get( 'wgMaxFileUploadSize' ) ) {
 		errors.push( 'size' );
 	}
