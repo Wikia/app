@@ -72,6 +72,29 @@ ve.ui.WikiaUploadWidget.prototype.onClick = function () {
 };
 
 /**
+ * Check file for size and filetype errors
+ * @method
+ * @param Object object containing properties of user uploaded file
+ * @returns Array of error strings. May return empty array
+ */
+ve.ui.WikiaUploadWidget.prototype.validateFile = function ( file ) {
+	var errors,
+			filetype;
+
+	errors = [];
+	filetype = ve.indexOf( file.type.substr( file.type.indexOf('/') + 1 ), mw.config.get( 'wgFileExtensions' ) );
+
+	// hardcoded 10mb filesize
+	if ( file.size > 10485760 ) {
+		errors.push( 'size' );
+	} else if ( filetype < 0 ) {
+		errors.push( 'filetype' );
+	}
+
+	return errors;
+};
+
+/**
  * Handle input file change event
  *
  * @method
@@ -81,12 +104,11 @@ ve.ui.WikiaUploadWidget.prototype.onFileChange = function () {
 		return;
 	}
 	var file = this.$file[0].files[0],
-		formData = new FormData( this.$form[0] );
+			formData = new FormData( this.$form[0] ),
+			fileErrors = this.validateFile( file );
 
-	if ( file.size > 10485760 ) {
-		console.log('error size');
-	} else if ( ve.indexOf( file.type.substr( file.type.indexOf('/') + 1 ), mw.config.values.wgFileExtensions ) < 0 ) {
-		console.log('error filetype');
+	if ( fileErrors.length ) {
+		window.GlobalNotification.show( ve.msg('wikia-visualeditor-dialog-wikiamediainsert-upload-error-' + fileErrors.join('-') ), 'error' );
 	} else {
 		$.ajax( {
 			'url': mw.util.wikiScript( 'api' ) + '?action=apitempupload&type=temporary&format=json',
