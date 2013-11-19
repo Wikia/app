@@ -98,6 +98,8 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 			$this->errParam = $response->getVal( 'errParam', '' );
 
 			if ( $this->result == 'ok' ) {
+				$dbw = wfGetDB( DB_MASTER );
+				$dbw->commit();
 				$params = array(
 					'method' => 'sendConfirmationEmail',
 					'username' => $this->username,
