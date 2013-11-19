@@ -79,6 +79,10 @@ var ThemeDesigner = {
 		ThemeDesigner.settings['background-dynamic'] = ThemeDesigner.settings['background-dynamic'].toString();
 		ThemeDesigner.settings['background-fixed'] = ThemeDesigner.settings['background-fixed'].toString();
 		ThemeDesigner.settings['background-tiled'] = ThemeDesigner.settings['background-tiled'].toString();
+
+		if ( ThemeDesigner.settings['background-image'] === false ) {
+			ThemeDesigner.settings['background-image'] = '';
+		}
 	},
 
 	initTooltips: function() {
@@ -1021,7 +1025,7 @@ var ThemeDesigner = {
 		this.swatches['color-body-middle'] = this.swatches['color-body'];
 
 		// initialize color-button swatches
-		this.swatches['color-button'] = [
+		this.swatches['color-buttons'] = [
 			'fec356',
 			'6699ff',
 			'6c93b1',
