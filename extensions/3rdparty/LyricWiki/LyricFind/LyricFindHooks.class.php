@@ -38,7 +38,7 @@ class LyricFindHooks {
 	}
 
 	/**
-	 * Loads page views tracking code (in Oasis and monobook)
+	 * Loads page views tracking code (in Oasis, mobile skin and monobook)
 	 *
 	 * @param array $jsAssetGroups AssetsManager groups to load
 	 * @return bool true

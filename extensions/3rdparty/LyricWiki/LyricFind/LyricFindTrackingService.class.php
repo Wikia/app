@@ -29,6 +29,19 @@ class LyricFindTrackingService extends WikiaService {
 	}
 
 	/**
+	 * Artist and track name needs to be lowercase and without commas or colons
+	 *
+	 * @param $item string parameter value to be encoded
+	 * @return string encoded value
+	 */
+	private static function encodeParam($item) {
+		return mb_strtolower(strtr($item, [
+			',' => ' ',
+			':' => ' ',
+		]));
+	}
+
+	/**
 	 * Returns properly formatted "trackid" parameter for LyricFind API from given data
 	 *
 	 * Example: trackid=amg:2033,gnlyricid:123,trackname:mony+mony,artistname:tommy+james
@@ -48,16 +61,8 @@ class LyricFindTrackingService extends WikiaService {
 
 		list($artistName, $trackName) = explode(':', $data['title'], 2);
 
-		// artist and track name needs to be lowercase and without commas or colons
-		$encode = function($item) {
-			return mb_strtolower(strtr($item, [
-				',' => ' ',
-				':' => ' ',
-			]));
-		};
-
-		$parts[] = sprintf('trackname:%s', $encode($trackName));
-		$parts[] = sprintf('artistname:%s', $encode($artistName));
+		$parts[] = sprintf('trackname:%s', self::encodeParam($trackName));
+		$parts[] = sprintf('artistname:%s', self::encodeParam($artistName));
 
 		return join(',', $parts);
 	}
