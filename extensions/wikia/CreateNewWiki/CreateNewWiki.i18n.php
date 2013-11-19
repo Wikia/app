@@ -161,7 +161,7 @@ Be carefull to keep it short as there are 3 successive balloon tips to display i
 * $1 is a username
 * $2 is a block reason
 * $3 is a block ID',
-	'cnw-error-anon-user' => 'Header for error dialog, displayed when when anon user tries to create new wiki.',
+	'cnw-error-anon-user-header' => 'Header for error dialog, displayed when when anon user tries to create new wiki.',
 	'cnw-error-anon-user' => 'Error message when anon user tries to create new wiki.',
 	'cnw-error-bot' => 'Message describing you may be a bot and link to contact page',
 	'cnw-error-bot-header' => 'Message header for modal box',
