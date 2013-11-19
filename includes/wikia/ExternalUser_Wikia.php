@@ -313,6 +313,7 @@ class ExternalUser_Wikia extends ExternalUser {
 		if ( $obj ) {
 			$res = User::newFromRow( $this->mRow );
 			if ( !is_null( $res ) ) {
+				error_log( "KamilkUserSignup3-WIKIA: UserId".$res->getId()." == mOptionsLoaded = ". var_export($res->mOptionsLoaded,true) );
 				$this->checkForSomeOptions($res->getId());
 				$res->getOptions();
 			}
