@@ -36,8 +36,8 @@ class ApiTempUpload extends ApiBase {
 	}
 
 	private function executePermanentVideo() {
-		if ( empty ( $this->mParams['desiredName'] ) ) {
-			$this->dieUsageMsg( 'The desiredName parameter must be set' );
+		if ( empty( $this->mParams['desiredName'] ) && empty( $this->mParams['title'] ) ) {
+			$this->dieUsageMsg( 'The desiredName or title parameter must be set' );
 		}
 		// TODO: Check with Video team if that's the best way to look for video duplicates
 		$duplicates = WikiaFileHelper::findVideoDuplicates(
@@ -48,13 +48,13 @@ class ApiTempUpload extends ApiBase {
 			$file = wfFindFile( $duplicates[0]['img_name'] );
 			$name = $file->getTitle()->getText();
 
-		} else if( $this->mParams['provider'] == 'FILE' ) {
+		} else if ( $this->mParams['provider'] == 'wikia' ) {
 			// no need to upload, local reference
 			$title = Title::newFromText( $this->mParams['title'], NS_FILE );
-			$name = $title->getText();
 			if ( empty( $title ) ) {
 				$this->dieUsageMsg( 'This video name contains invalid characters, like #' );
 			}
+			$name = $title->getText();
 			wfRunHooks( 'AddPremiumVideo', array( $title ) );
 		} else {
 			$uploader = new VideoFileUploader();
@@ -157,7 +157,7 @@ class ApiTempUpload extends ApiBase {
 
 		$awf = ApiWrapperFactory::getInstance();
 		$url = $this->mParams['url'];
-		$nonPremiumException = null;
+		$apiWrapperException = null;
 
 		// ApiWrapperFactory->getApiWrapper(...) require whole URL to be passed in (including protocol)
 		if ( !preg_match( '/^https?:\/\//', $url ) ) {
@@ -166,7 +166,7 @@ class ApiTempUpload extends ApiBase {
 		try {
 			$apiwrapper = $awf->getApiWrapper( $url );
 		} catch ( Exception $e ) {
-			$nonPremiumException = $e;
+			$apiWrapperException = $e;
 		}
 		if ( !empty( $apiwrapper ) ) {
 			// handle supported 3rd party videos
@@ -201,7 +201,7 @@ class ApiTempUpload extends ApiBase {
 			$nsFileTranslated = $app->wg->ContLang->getNsText( NS_FILE );
 
 			// added $nsFileTransladed to fix bugId:#48874
-			$pattern = '/(File:|Video:|'.$nsFileTranslated.':)(.+)$/';
+			$pattern = '/(File:|'.$nsFileTranslated.':)(.+)$/';
 
 			if ( preg_match( $pattern, $url, $matches ) ) {
 				$file = wfFindFile( $matches[2] );
@@ -216,15 +216,15 @@ class ApiTempUpload extends ApiBase {
 				}
 			}
 			else {
-				if ( $nonPremiumException ) {
+				if ( $apiWrapperException ) {
 					// Non premium videos are not allowed on some wikis. This error message should supercede any other messages.
 					if ( empty( $app->wg->allowNonPremiumVideos ) ) {
 						$this->dieUsageMsg( 'This wiki does not support non-premium videos' );
 					}
 
 					// There was some issue with adding the video, e.g. provider not responding or not supported
-					if ( $nonPremiumException->getMessage() != '' ) {
-						$this->dieUsageMsg( $nonPremiumException->getMessage() );
+					if ( $apiWrapperException->getMessage() != '' ) {
+						$this->dieUsageMsg( $apiWrapperException->getMessage() );
 					}
 				}
 
@@ -238,7 +238,7 @@ class ApiTempUpload extends ApiBase {
 			$this->getResult()->addValue( null, $this->getModuleName(), array(
 				'title' => $file->getTitle()->getText(),
 				'url' => $file->getUrl(),
-				'provider' => 'FILE',
+				'provider' => 'wikia',
 				'videoId' => $file->getHandler()->getVideoId(),
 			) );
 		}

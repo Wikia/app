@@ -339,8 +339,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.convertTemporaryToPermanent = function ( 
 			'desiredName': cartItem.title
 		};
 	if ( cartItem.type === 'video' ) {
-		// Provider 'FILE' means it's a local or premium video
-		if( cartItem.provider === 'FILE' ) {
+		if( cartItem.provider === 'wikia' ) {
 			data.title = cartItem.title;
 		}
 		data.provider = cartItem.provider;
@@ -372,7 +371,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertMedia = function ( cartItems ) {
 	}
 
 	for ( i = 0; i < cartItems.length; i++ ) {
-		if ( cartItems[i].temporaryFileName || cartItems[i].provider === 'FILE' ) {
+		if ( cartItems[i].temporaryFileName || cartItems[i].provider === 'wikia' ) {
 			promises.push(
 				this.convertTemporaryToPermanent( cartItems[i] ).done(
 					ve.bind( temporaryToPermanentCallback, this, cartItems[i] )
