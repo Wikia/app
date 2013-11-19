@@ -5,6 +5,21 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window', 'wikia.browserDetect' ], f
 		BLACKOUT_VISIBLE_CLASS = 'visible',
 		CLOSE_CLASS = 'close',
 		INACTIVE_CLASS = 'inactive',
+		primaryBtnConfig = {
+			type: 'button',
+			vars: {
+				type: 'button',
+				classes: [ 'normal', 'secondary' ]
+			}
+		},
+		secondBtnConfig = {
+			type: 'button',
+			vars: {
+				type: 'button',
+				id: 'close',
+				classes: [ 'normal', 'secondary' ]
+			}
+		},
 		destroyOnClose;
 
 	/**
@@ -40,13 +55,28 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window', 'wikia.browserDetect' ], f
 	 * @constructor
 	 */
 
-	function Modal( id, modalMarkup ) {
+	function Modal( id, uiComponent, params ) {
 		var that = this,
 			jQuerySelector = '#' + id;
 
 		this.$element = $( jQuerySelector );
-		if ( !this.$element.exists() && typeof( modalMarkup ) !== 'undefined' ) {
-			$( 'body' ).append( modalMarkup );
+		if ( !this.$element.exists() && typeof( uiComponent ) !== 'undefined' ) {
+
+			if ( typeof uiComponent === 'object' && typeof params !== 'undefined' ) {
+				if ( typeof params.vars.primaryBtn === 'object' ) {
+					params.vars.primaryBtn = uiComponent.render( $.extend( true, primaryBtnConfig, params.vars.primaryBtn ) );
+				} else {
+					delete( params.vars.primaryBtn );
+				}
+				if ( typeof params.vars.secondBtn === 'object' ) {
+					params.vars.secondBtn = uiComponent.render( $.extend( true, secondBtnConfig, params.vars.secondBtn ) );
+				} else {
+					delete( params.vars.secondBtn );
+				}
+				uiComponent = uiComponent.render( params );
+			}
+
+			$( 'body' ).append( uiComponent );
 			this.$element = $( jQuerySelector );
 		}
 
@@ -182,8 +212,8 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window', 'wikia.browserDetect' ], f
 	/** Public API */
 	
 	return {
-		init: function( id, modalMarkup ) {
-			return new Modal( id, modalMarkup );
+		init: function( id, uiComponent, params ) {
+			return new Modal( id, uiComponent, params );
 		}
 	};
 });

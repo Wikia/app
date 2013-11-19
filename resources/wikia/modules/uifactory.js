@@ -115,26 +115,37 @@ define('wikia.ui.factory', [
 		getComponentsConfig(componentName).done(function(data) {
 
 			var jsAssets = [],
-				cssAssets = [];
+				cssAssets = [],
+				createComponents = function( components ) {
+					var componentsList = [];
 
-			data.components.forEach(function(element) {
+					components.forEach(function(element) {
 
-				var component = getComponentInstance(),
-					templateVarsConfig = element.templateVarsConfig,
-					assets = element.assets,
-					templates = element.templates;
+						var component = getComponentInstance(),
+							templateVarsConfig = element.templateVarsConfig,
+							assets = element.assets,
+							templates = element.templates,
+							dependencies = element.templates;
 
-				if (assets) {
-					jsAssets = jsAssets.concat(assets.js);
-					cssAssets = cssAssets.concat(assets.css);
-				}
+						if ( typeof dependencies === "array" ) {
+							dependencies = createComponents(dependencies);
+						}
 
-				if (templateVarsConfig && templates) {
-					component.setComponentsConfig(templates, templateVarsConfig);
-				}
+						if (assets) {
+							jsAssets = jsAssets.concat(assets.js);
+							cssAssets = cssAssets.concat(assets.css);
+						}
 
-				components.push(component);
-			});
+						if (templateVarsConfig && templates) {
+							component.setComponentsConfig(templates, templateVarsConfig, dependencies);
+						}
+
+						componentsList.push(component);
+					});
+					return componentsList;
+				};
+
+			components = createComponents( data.components );
 
 			jsAssets = arrayUnique(jsAssets);
 			cssAssets = arrayUnique(cssAssets);
