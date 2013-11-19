@@ -120,7 +120,7 @@ ve.ui.WikiaUploadWidget.prototype.onFileChange = function () {
 			fileErrors = this.validateFile( file );
 
 	if ( fileErrors.length ) {
-		window.GlobalNotification.show(
+		mw.config.get( 'GlobalNotification' ).show(
 			ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-upload-error-' + fileErrors.join( '-' ) ),
 			'error',
 			$( '.ve-ui-frame' ).contents().find( '.ve-ui-window-body' )
