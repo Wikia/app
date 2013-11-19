@@ -38,8 +38,9 @@ class UIFactoryApiController extends \WikiaApiController {
 
 		// create the Component instances for names specified in request parameter
 		$factory = Factory::getInstance();
+		$dependencies = [];
 		try {
-			$components = $factory->init( $componentNames, false );
+			$components = $factory->init( $componentNames, false, $dependencies );
 			if ( !is_array( $components ) ) {
 				$components = [ $components ];
 			}
@@ -55,6 +56,7 @@ class UIFactoryApiController extends \WikiaApiController {
 
 			$componentResult[ 'templateVarsConfig' ] = $component->getTemplateVarsConfig();
 			$componentResult[ 'templates' ] = [];
+			$componentResult[ 'name' ] = $component->getName();
 			foreach( array_keys( $componentResult[ 'templateVarsConfig' ] ) as $type ) {
 				$componentResult[ 'templates' ][ $type ] = $factory->loadComponentTemplateContent( $component, $type );
 			}
