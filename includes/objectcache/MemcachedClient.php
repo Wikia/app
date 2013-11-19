@@ -71,6 +71,7 @@
  * @author  Ryan T. Dean <rtdean@cytherianage.net>
  * @ingroup Cache
  */
+
 class MWMemcached {
 	// {{{ properties
 	// {{{ public
@@ -231,12 +232,12 @@ class MWMemcached {
 	 */
 	var $_connect_attempts;
 
-   /**
-    * @author wikia
-    * Internal memoization to avoid unnecessary network requests
-    * If a get() is done twice in a single request use the stored value
-    */
-   var $_dupe_cache;
+	/**
+	 * @author wikia
+	 * Internal memoization to avoid unnecessary network requests
+	 * If a get() is done twice in a single request use the stored value
+	 */
+	var $_dupe_cache;
 
 	// }}}
 	// }}}
@@ -329,7 +330,7 @@ class MWMemcached {
 		unset( $this->_dupe_cache[ $key ] );
 		# end wikia change
 
-		$sock = $this->get_sock( $key );
+		$sock = $this->get_sock( $key, $host );
 		if ( !is_resource( $sock ) ) {
 			return false;
 		}
@@ -342,7 +343,7 @@ class MWMemcached {
 			$this->stats['delete'] = 1;
 		}
 		$cmd = "delete $key $time\r\n";
-		if( !$this->_safe_fwrite( $sock, $cmd, strlen( $cmd ) ) ) {
+		if( !$this->_safe_fwrite( $sock, $host, $cmd, strlen( $cmd ) ) ) {
 			$this->_dead_sock( $sock );
 			return false;
 		}
@@ -450,7 +451,7 @@ class MWMemcached {
 		}
 		# end wikia change
 
-		$sock = $this->get_sock( $key );
+		$sock = $this->get_sock( $key, $host );
 
 		if ( !is_resource( $sock ) ) {
 			wfProfileOut( __METHOD__ . "::$key" );
@@ -466,7 +467,7 @@ class MWMemcached {
 		}
 
 		$cmd = "get $key\r\n";
-		if ( !$this->_safe_fwrite( $sock, $cmd, strlen( $cmd ) ) ) {
+		if ( !$this->_safe_fwrite( $sock, $host, $cmd, strlen( $cmd ) ) ) {
 			$this->_dead_sock( $sock );
 			wfProfileOut( __METHOD__ . "::$key" );
 			wfProfileOut( __METHOD__ );
@@ -555,7 +556,7 @@ class MWMemcached {
 		$sock_keys = array();
 
 		foreach ( $keys as $key ) {
-			$sock = $this->get_sock( $key );
+			$sock = $this->get_sock( $key, $host );
 			if ( !is_resource( $sock ) ) {
 				continue;
 			}
@@ -575,7 +576,7 @@ class MWMemcached {
 			}
 			$cmd .= "\r\n";
 
-			if ( $this->_safe_fwrite( $sock, $cmd, strlen( $cmd ) ) ) {
+			if ( $this->_safe_fwrite( $sock, $host, $cmd, strlen( $cmd ) ) ) {
 				$gather[] = $sock;
 			} else {
 				$this->_dead_sock( $sock );
@@ -811,7 +812,7 @@ class MWMemcached {
 	 * @access  private
 	 */
 	function _connect_sock( &$sock, $host ) {
-		list( $ip, $port ) = explode( ':', $host );
+		list( $ip, $port ) = $this->parseHost($host);
 		$sock = false;
 		$timeout = $this->_connect_timeout;
 		$errno = $errstr = null;
@@ -837,6 +838,10 @@ class MWMemcached {
 		return true;
 	}
 
+	protected function parseHost($host) {
+		return explode(':', $host);
+	}
+
 	// }}}
 	// {{{ _dead_sock()
 
@@ -853,7 +858,7 @@ class MWMemcached {
 	}
 
 	function _dead_host( $host ) {
-		$parts = explode( ':', $host );
+		$parts = explode(':', $host);
 		$ip = $parts[0];
 		$this->_host_dead[$ip] = time() + 30 + intval( rand( 0, 10 ) );
 		$this->_host_dead[$host] = $this->_host_dead[$ip];
@@ -871,7 +876,7 @@ class MWMemcached {
 	 * @return Mixed: resource on success, false on failure
 	 * @access private
 	 */
-	function get_sock( $key ) {
+	function get_sock( $key, &$host=null ) {
 		if ( !$this->_active ) {
 			return false;
 		}
@@ -947,7 +952,7 @@ class MWMemcached {
 			return null;
 		}
 
-		$sock = $this->get_sock( $key );
+		$sock = $this->get_sock( $key, $host );
 		if ( !is_resource( $sock ) ) {
 			return null;
 		}
@@ -963,7 +968,7 @@ class MWMemcached {
 		} else {
 			$this->stats[$cmd] = 1;
 		}
-		if ( !$this->_safe_fwrite( $sock, "$cmd $key $amt\r\n" ) ) {
+		if ( !$this->_safe_fwrite( $sock, $host, "$cmd $key $amt\r\n" ) ) {
 			return $this->_dead_sock( $sock );
 		}
 
@@ -1070,7 +1075,7 @@ class MWMemcached {
 			return false;
 		}
 
-		$sock = $this->get_sock( $key );
+		$sock = $this->get_sock( $key, $host );
 		if ( !is_resource( $sock ) ) {
 			return false;
 		}
@@ -1122,7 +1127,7 @@ class MWMemcached {
 				$flags |= self::COMPRESSED;
 			}
 		}
-		if ( !$this->_safe_fwrite( $sock, "$cmd $key $flags $exp $len\r\n$val\r\n" ) ) {
+		if ( !$this->_safe_fwrite( $sock, $host, "$cmd $key $flags $exp $len\r\n$val\r\n" ) ) {
 			return $this->_dead_sock( $sock );
 		}
 
@@ -1155,7 +1160,7 @@ class MWMemcached {
 
 		$sock = null;
 		$now = time();
-		list( $ip, /* $port */) = explode( ':', $host );
+		list( $ip, /*$port*/ ) = $this->parseHost($host);
 		if ( isset( $this->_host_dead[$host] ) && $this->_host_dead[$host] > $now ||
 			isset( $this->_host_dead[$ip] ) && $this->_host_dead[$ip] > $now
 		) {
@@ -1206,7 +1211,7 @@ class MWMemcached {
 	/**
 	 * Original behaviour
 	 */
-	function _safe_fwrite( $f, $buf, $len = false ) {
+	function _safe_fwrite( $f, $host, $buf, $len = false ) {
 		if ( $len === false ) {
 			$bytesWritten = fwrite( $f, $buf );
 		} else {

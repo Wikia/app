@@ -273,10 +273,13 @@ $messages['qqq'] = array(
 	'wikistats_images' => '{{Identical|Image}}',
 	'wikistats_video' => '{{Identical|Video}}',
 	'wikistats_uploaded_images' => '{{Identical|Uploaded}}',
+	'wikistats_distrib_edits' => '{{Identical|Edit}}',
 	'wikistats_namespace' => '{{Identical|Namespace}}',
 	'wikistats_hide' => '{{Identical|Hide}}',
 	'wikistats_wikicategory' => '{{Identical|Category}}',
+	'wikistats_wikiid' => '{{Identical|ID}}',
 	'wikistats_username' => '{{Identical|User}}',
+	'wikistats_edits' => '{{Identical|Edit}}',
 	'wikistats_size' => '{{Identical|Size}}',
 	'wikistats_words' => '{{Identical|Word}}',
 	'wikistats_image' => '{{Identical|Image}}',
@@ -313,6 +316,7 @@ $messages['qqq'] = array(
 	'wikistats_content' => '{{Identical|Content}}',
 	'wikistats_userns' => '{{Identical|User}}',
 	'wikistats_nbr_format' => '{{Identical|Number format}}',
+	'wikistats_language_all' => '{{Identical|All languages}}',
 	'wikistats_language_toplist' => '{{Optional}}',
 	'wikistats_title' => '{{Identical|Title}}',
 );
@@ -1014,11 +1018,24 @@ $messages['bg'] = array(
 	'wikistats_select_btn' => 'Избиране',
 	'wikistats_ns_statistics_legend' => 'Именни пространства',
 	'wikistats_search_text' => 'Търсене:',
+	'wikistats_lifetime_editors' => 'Общо редактори',
+	'wikistats_article_total' => 'Общо статии',
+	'wikistats_photo_new' => 'Нови снимки',
+	'wikistats_video_new' => 'Нови видеоклипове',
 	'wikistats_other_namespace' => 'други<br />именни пространства',
 	'wikistats_code_version' => 'Версия на кода:',
+	'wikistats_mediawiki_stats' => 'Статистики за МедияУики',
+	'wikistats_statistics_information' => 'Информация за статистиките',
+	'wikistats_nbr_kilo' => 'K = x 1000',
+	'wikistats_nbr_mega' => 'M = K x 1000',
+	'wikistats_nbr_giga' => 'G = M x 1000',
+	'wikistats_nbr_format' => 'Формат на числата:',
+	'wikistats_daily' => 'Дневна статистика (за текущия месец)',
+	'wikistats_month' => 'Месечна статистика',
 	'wikistats_current_month' => 'Текущ месец',
 	'wikistats_see_also' => 'Вижте също:',
 	'wikistats_language_all' => 'Всички езици',
+	'wikistats_recordspager' => "Показване на записи от '''$1''' до '''$2''' от общо '''$3'''.",
 	'wikistats_title' => 'Заглавие',
 	'wikistats_namespace_top' => 'Предварително дефинирани именни пространства',
 );
@@ -1596,9 +1613,12 @@ $messages['ce'] = array(
 	'wikistats_panel_close_btn' => 'ДӀачӀагӀа',
 	'wikistats_active_year' => 'шо',
 	'wikistats_username' => 'Декъашхо',
+	'wikistats_image' => 'сурт',
 	'wikistats_more_txt' => 'кхин дӀа',
+	'wikistats_days_ago' => 'де хьалха',
 	'wikistats_wikicreated' => 'Кхоьллина:',
 	'wikistats_wikilang' => 'Мотт:',
+	'wikistats_trend_all_wikia_text' => 'Массо Википедеш',
 	'wikistats_xls_cancel' => 'Цаоьшу',
 	'wikistats_language_stats' => 'Меттан статистика',
 	'wikistats_article_talk' => 'Яззам:Дийцаре',
@@ -5192,6 +5212,13 @@ $messages['li'] = array(
 	'wikistats_new_per_day' => 'nuuj<br />edaag',
 );
 
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'wikistats_photo_new' => 'عسگیا تازه',
+);
+
 /** Lithuanian (lietuvių)
  * @author Mantak111
  */
@@ -7308,13 +7335,13 @@ $messages['ps'] = array(
 	'wikistats_blog_created' => 'جوړ شوي بلاګونه',
 	'wikistats_blog_comment' => 'د بلاګ تبصرې',
 	'wikistats_photo_new' => 'نوي انځورونه',
-	'wikistats_video_new' => 'نوې ويډيوګانې',
+	'wikistats_video_new' => 'نوې ويډيوگانې',
 	'wikistats_user_page_edits' => 'کارن:د مخ سمونونه',
 	'wikistats_user_talk_edits' => 'کارن:د خبرو اترو سمونونه',
 	'wikistats_article_daily' => 'سمونونه/ورځ',
-	'wikistats_video_uploads' => 'پورته شوې ويډيوګانې',
+	'wikistats_video_uploads' => 'پورته شوې ويډيوگانې',
 	'wikistats_months_edits' => 'د دې مياشتې سمونگران',
-	'wikistats_content' => 'منځپانګه',
+	'wikistats_content' => 'منځپانگه',
 	'wikistats_content_editors' => 'د مېنځپانگې سمونگران',
 	'wikistats_userns' => 'کارن',
 	'wikistats_mediawiki_stats' => 'ميډياويکي شمار:',
@@ -7355,12 +7382,12 @@ $messages['pt'] = array(
 	'wikistats_daterange_from' => 'Desde:',
 	'wikistats_daterange_to' => 'Até:',
 	'wikistats_nostats_found' => 'Não foram encontrados dados estatísticos para a Wikia selecionada',
-	'wikistats_pviews_notfound' => 'Não foram encontradas visualizações de páginas',
+	'wikistats_pviews_notfound' => 'Não foram encontrados visionamentos de páginas',
 	'wikistats_invalid_date' => 'Intervalo de datas inválido',
 	'wikistats_distrib_article' => 'Distribuição da atividade dos editores',
 	'wikistats_breakdown_editors' => 'Atividade de editor',
 	'wikistats_breakdown_anons' => 'Atividades de anónimos',
-	'wikistats_active_absent_wikians' => 'Detalhe da atividade dos editores registrados',
+	'wikistats_active_absent_wikians' => 'Detalhe da atividade dos editores registados',
 	'wikistats_anon_wikians' => 'Detalhe da atividade dos editores anónimos',
 	'wikistats_anon_wikians_count' => 'Foram encontrados $1 {{PLURAL:$1|utilizador|utilizadores}} anónimos',
 	'wikistats_latest_pageviews' => 'Últimas páginas visitadas',
@@ -7368,8 +7395,8 @@ $messages['pt'] = array(
 	'wikistats_latest_pageviews_subtitle' => '{{PLURAL:$1|no último minuto|nos últimos $1 minutos}}',
 	'wikistats_pageviews' => 'Visitas por espaço nominal por mês',
 	'wikistats_article_one_link' => 'Artigos que contêm pelo menos um link interno',
-	'wikistats_recently_active_wikians' => '$1 {{PLURAL:$1|editor registrado|editores registrados, ordenados por número de contribuições,}} com atividade recente',
-	'wikistats_recently_absent_wikians' => '$1 {{PLURAL:$1|editor registrado|editores registrados, ordenados por número de contribuições,}} sem atividade recente',
+	'wikistats_recently_active_wikians' => '$1 {{PLURAL:$1|editor registado com atividade recente|editores registados com atividade recente, ordenados pelo número de edições}}',
+	'wikistats_recently_absent_wikians' => '$1 {{PLURAL:$1|editor registado sem atividade recente|editores registados sem atividade recente, ordenados pelo número de edições}}',
 	'wikistats_active_wikians_subtitle' => 'só são consideradas as edições nos espaços nominais de conteúdo, exceto na coluna "{{int:wikiastats_other}}"',
 	'wikistats_anon_wikians_subtitle' => 'só são consideradas as edições nos espaços nominais de conteúdo',
 	'wikistats_active_wikians_subtitle_info' => 'Δ = mudança de posição nos últimos 30 dias',
@@ -9384,15 +9411,61 @@ $messages['ur'] = array(
 );
 
 /** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
  * @author Nglekhoi
  * @author Xiao Qiao
  * @author XiaoQiaoGrace
  */
 $messages['vi'] = array(
+	'wikistats' => 'Thống kê Wikia',
+	'wikistats_wikia' => 'Wikia',
+	'wikistats_pagetitle' => 'Thống kê Wikia',
+	'wikistats_info' => 'Chọn một wiki trong danh sách và nhấn "{{int:wikistats_showstats_btn}}"',
+	'wikistats_mainstats_info' => 'Chọn một wiki trong danh sách và nhấn "{{int:wikistats_xls_generate}}"',
+	'wikistats_comparision' => 'So sánh',
+	'wikistats_showstats_btn' => 'Xem thống kê',
+	'wikistats_wikia_information' => 'Thông tin Wikia',
+	'wikiastast_refresh_data' => 'Làm mới dữ liệu',
+	'wikistats_showcharts' => 'Xem thay đổi',
+	'wikistats_export_xls' => 'Xuất khẩu cho XLS',
+	'wikistats_panel_close_btn' => 'Đóng',
+	'wikistats_daterange_from' => 'Từ:',
+	'wikistats_daterange_to' => 'Đến:',
+	'wikistats_nostats_found' => 'Không có số liệu thống kê không tìm thấy cho Wikia đã chọn',
+	'wikistats_pviews_notfound' => 'Số lần xem trang không tìm thấy',
+	'wikistats_invalid_date' => 'Phạm vi ngày tháng không hợp lệ',
+	'wikistats_distrib_article' => 'Biên tập viên hoạt động phân phối',
+	'wikistats_breakdown_editors' => 'Biên tập viên hoạt động',
+	'wikistats_breakdown_anons' => 'Các thành viên vô danh hoạt động',
+	'wikistats_active_absent_wikians' => 'Biên tập viên đăng ký hoạt động phân tích',
+	'wikistats_anon_wikians' => 'Chưa xác định người biên tập viên hoạt động phân tích',
+	'wikistats_anon_wikians_count' => '$1 Chưa xác định người {{PLURAL:$1| người dùng|người dùng}} tìm thấy',
+	'wikistats_latest_pageviews' => 'Các trang được xem nhiều nhất',
+	'wikistats_active_useredits' => 'Các ngôn ngữ hoạt động',
+	'wikistats_latest_pageviews_subtitle' => 'trong $1 {{PLURAL:$1|phút|phút}} cuối',
+	'wikistats_pageviews' => 'Số lần xem trang cho một không gian tên / tháng',
+	'wikistats_article_one_link' => 'Bài viết có chứa ít nhất một liên kết',
+	'wikistats_recently_active_wikians' => '$1 mới đăng ký hoạt động {{PLURAL:$1| biên dịch viên|biên dịch viên, đã ra lệnh bởi số lượng đóng góp}}',
+	'wikistats_recently_absent_wikians' => '$1 gần đây không có đăng ký  {{PLURAL:$1|biên dịch viên|biên dịch viên, đã ra lệnh bởi số lượng đóng góp khác}}',
+	'wikistats_active_wikians_subtitle' => 'chỉ chỉnh sửa nội dung không gian tên được tính, ngoài các cột "{{int:wikiastats_other}}"',
+	'wikistats_anon_wikians_subtitle' => 'chỉ chỉnh sửa nội dung không gian tên được tính',
+	'wikistats_active_wikians_subtitle_info' => 'Δ = thay đổi trong xếp hạng',
+	'wikistats_pageviews_subtext' => 'Trang điểm tháng này (K = x 1000, M = K x 1000, G = M x 1000, T = G x 1000)',
+	'wikistats_pageviews_counting' => 'x% = thay đổi so với trước ngày/tháng',
+	'wikistats_pageviews_percent' => 'Tỷ lệ phần trăm tăng hoặc giảm so với tháng trước',
+	'wikistats_distrib_article_subtext' => 'chỉnh sửa bài viết chỉ được tính, không chỉnh sửa trên trang thảo luận, vv',
+	'wikistats_namespace_records' => 'Cơ sở dữ liệu hồ sơ cho một không gian tên',
+	'wikistats_page_edits' => 'Đặt chỉnh sửa bài viết (nội dung không gian tên) (> 25 chỉnh sửa)',
+	'wikistats_other_nspaces_edits' => 'Đặt chỉnh sửa trang (không gian tên khác) (&gt; 25 chỉnh sửa)',
+	'wikistats_page_edits_count' => '$1 {{PLURAL:$1|article|most đã chỉnh sửa, chỉnh sửa bài viết}} tìm thấy',
+	'wikistats_other_nspaces_edits_count' => '$1 {{PLURAL:$1|trang|đã chỉnh sửa, chỉnh sửa trang}} tìm thấy',
+	'wikistats_active_wikians_date' => 'Hiển thị thay đổi qua',
 	'wikistats_active_day' => 'ngày',
 	'wikistats_active_month' => 'tháng',
 	'wikistats_active_year' => 'năm',
 	'wikistats_active_months' => 'tháng',
+	'wikistats_number_editors' => 'Số lần sửa đổi',
+	'wikistats_number_anons' => 'số thành viên vô danh',
 	'wikistats_photo_new' => 'Hình ảnh mới',
 	'wikistats_content' => 'nội dung',
 	'wikistats_userns' => 'thành viên',
@@ -9408,6 +9481,7 @@ $messages['wuu'] = array(
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Hydra
+ * @author Liuxinyu970226
  * @author Yfdyh000
  * @author 乌拉跨氪
  */
@@ -9456,6 +9530,7 @@ $messages['zh-hans'] = array(
 	'wikistats_show' => '显示',
 	'wikistats_hide' => '隐瞒',
 	'wikistats_wikiname' => '名：',
+	'wikistats_wikicategory' => '分类：',
 	'wikistats_wikiid' => 'ID:',
 	'wikistats_username' => '用户',
 	'wikistats_usernames' => '用户们',

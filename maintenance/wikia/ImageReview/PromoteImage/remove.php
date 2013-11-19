@@ -34,6 +34,11 @@ if( !($imageTitle instanceof Title) ) {
 	exit(5);
 }
 
+if ( empty( $wgEnableUploads ) ) {
+	echo 'ERROR: File uploads disabled'."\n";
+	exit(6);
+}
+
 $file = wfFindFile($imageTitle);
 
 if( $file instanceof File && $file->exists() ) {

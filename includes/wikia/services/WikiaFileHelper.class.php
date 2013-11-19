@@ -7,32 +7,25 @@ class WikiaFileHelper extends Service {
 	const maxWideoWidth = 1200;
 
 	/**
-	 * Checks if videos on the wiki are converted to new format (File namespace)
-	 * @return boolean
-	 */
-	public static function isVideoStoredAsFile() {
-		// all videos are already converted and stored as a file
-		return true;
-	}
-
-	/**
 	 * Checks if given File is video
-	 * @param $file WikiaLocalFile object or Title object eventually
+	 * @param WikiaLocalFile|Title $file object or Title object eventually
 	 * @return boolean
 	 */
 	public static function isFileTypeVideo( $file ) {
-		if ( self::isVideoStoredAsFile() ) {
-			// File can be video only when new video logic is enabled for the wiki
-			if ( $file instanceof Title ) {
-				$file = wfFindFile( $file );
-			}
-			return self::isVideoFile( $file );
+		// File can be video only when new video logic is enabled for the wiki
+		if ( $file instanceof Title ) {
+			$file = wfFindFile( $file );
 		}
-		return false;
+		return self::isVideoFile( $file );
 	}
 
+	/**
+	 * Check if the file is video
+	 * @param LocalFile $file
+	 * @return boolean
+	 */
 	public static function isVideoFile( $file ) {
-		return ( $file instanceof LocalFile && $file->getHandler() instanceof VideoHandler);
+		return ( $file instanceof LocalFile && $file->getHandler() instanceof VideoHandler );
 	}
 
 	/**
@@ -43,37 +36,22 @@ class WikiaFileHelper extends Service {
 	 * @return boolean
 	 */
 	public static function isTitleVideo( $title, $allowOld = true ) {
-
 		$title = self::getTitle( $title );
 
-		if ( empty($title) ) {
+		if ( empty( $title ) ) {
 			return false;
 		}
 
-		if ( self::isVideoStoredAsFile() ) {
-
-			// video-as-file logic
-			if ( self::isFileTypeVideo($title) ) {
-
-				return true;
-			}
-			return false;
-
-		} elseif ( ( $title->getNamespace() == NS_VIDEO ) && $allowOld ) {
-
-			return true;
-		}
-
-		return false;
+		// video-as-file logic
+		return self::isFileTypeVideo( $title );
 	}
 
 
 	public static function getTitle( $mTitle ){
-
 		if ( !( $mTitle instanceof Title ) ) {
 
 			$mTitle = Title::newFromText( $mTitle );
-			if ( !($mTitle instanceof Title) ) {
+			if ( !( $mTitle instanceof Title ) ) {
 				return false;
 			}
 		}
@@ -91,15 +69,17 @@ class WikiaFileHelper extends Service {
 	 * @return array $result
 	 */
 	public static function findVideoDuplicates( $provider, $videoId, $isRemoteAsset = false ) {
+		wfProfileIn( __METHOD__ );
+
 		//print "Looking for duplicaes of $provider $videoId\n";
-		$dbr = wfGetDB(DB_MASTER); // has to be master otherwise there's a chance of getting duplicates
+		$db = wfGetDB( DB_MASTER ); // has to be master otherwise there's a chance of getting duplicates
 
 		// for remote asset, $videoId is string even if it is numeric
 		if ( is_numeric( $videoId ) && !$isRemoteAsset ) {
 			$videoStr = 'i:'.$videoId;
 		} else {
 			$videoId = (string) $videoId;
-			$videoStr = 's:'.strlen($videoId).':"'.$videoId.'"';
+			$videoStr = 's:'.strlen( $videoId ).':"'.$videoId.'"';
 		}
 
 		if ( strstr($provider, '/') ) {
@@ -109,7 +89,7 @@ class WikiaFileHelper extends Service {
 
 		$conds = array( 'img_media_type' => 'VIDEO' );
 		if ( $isRemoteAsset ) {
-			$providerStr = 's:6:"source";s:'.strlen($provider).':"'.$provider.'";';
+			$providerStr = 's:6:"source";s:'.strlen( $provider ).':"'.$provider.'";';
 			$conds[] = "img_metadata LIKE '%$providerStr%'";
 			$conds[] = "img_metadata LIKE '%s:8:\"sourceId\";".$videoStr.";%'";
 		} else {
@@ -117,7 +97,7 @@ class WikiaFileHelper extends Service {
 			$conds[] = "img_metadata LIKE '%s:7:\"videoId\";".$videoStr.";%'";
 		}
 
-		$rows = $dbr->select(
+		$rows = $db->select(
 			'image',
 			'*',
 			$conds,
@@ -126,13 +106,48 @@ class WikiaFileHelper extends Service {
 
 		$result = array();
 
-		while($row = $dbr->fetchRow($rows)) {
+		while ( $row = $db->fetchRow( $rows ) ) {
 			$result[] = $row;
 		}
 
-		$dbr->freeResult($rows);
+		$db->freeResult( $rows );
+
+		wfProfileOut( __METHOD__ );
 
 		return $result;
+	}
+
+	/**
+	 * Get duplicate videos (from video_info table)
+	 * @param string $provider
+	 * @param string $videoId
+	 * @param integer $limit
+	 * @return array $videos
+	 */
+	public static function getDuplicateVideos( $provider, $videoId, $limit = 1 ) {
+		wfProfileIn( __METHOD__ );
+
+		$db = wfGetDB( DB_MASTER );
+
+		$result = $db->select(
+			'video_info',
+			'*',
+			array(
+				'video_id' => $videoId,
+				'provider' => $provider,
+			),
+			__METHOD__,
+			array( 'LIMIT' => $limit )
+		);
+
+		$videos = array();
+		while ( $row = $db->fetchRow( $result ) ) {
+			$videos[] = $row;
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $videos;
 	}
 
 	/**
@@ -143,8 +158,6 @@ class WikiaFileHelper extends Service {
 	 * @return string
 	 */
 	public static function videoPlayButtonOverlay( $width, $height ) {
-		global $wgBlankImgUrl;
-
 		$sizeClass = '';
 		if ( $width <= 170 ) {
 			$sizeClass = 'small';
@@ -160,7 +173,7 @@ class WikiaFileHelper extends Service {
 
 		$html .= Xml::element( 'img', array(
 			'class' => 'sprite play ' . $sizeClass,
-			'src' => $wgBlankImgUrl,
+			'src' => F::app()->wg->BlankImgUrl,
 		));
 
 		$html .= Xml::closeElement( 'div' );
@@ -259,12 +272,10 @@ class WikiaFileHelper extends Service {
 	 * @return string
 	 */
 	public static function videoOverlayViews( $views ) {
-		$app = F::app();
-
 		$attribs = array(
 			'class' => 'info-overlay-views',
 		);
-		$views = wfMsgExt( 'videohandler-video-views', array( 'parsemag' ), $app->wg->Lang->formatNum($views) );
+		$views = wfMessage( 'videohandler-video-views', F::app()->wg->Lang->formatNum( $views ) )->text();
 
 		return Xml::element( 'span', $attribs, $views, false );
 	}
@@ -274,7 +285,6 @@ class WikiaFileHelper extends Service {
 	 * @return boolean
 	 */
 	public static function preserveOldImageBehaviour() {
-
 		return false;
 	}
 
@@ -291,15 +301,7 @@ class WikiaFileHelper extends Service {
 	 * @return boolean
 	 */
 	public static function useVideoHandlersExtForIngestion() {
-		return static::isVideoStoredAsFile() || !empty(F::app()->wg->ingestVideosUseVideoHandlersExt);
-	}
-
-	/**
-	 * Can VideoHandlers extension be used to embed video
-	 * @return boolean
-	 */
-	public static function useWikiaVideoExtForEmbed() {
-		return !static::isVideoStoredAsFile() && !empty(F::app()->wg->embedVideosUseWikiaVideoExt);
+		return !empty( F::app()->wg->ingestVideosUseVideoHandlersExt );
 	}
 
 	/**
@@ -307,7 +309,7 @@ class WikiaFileHelper extends Service {
 	 * @return boolean
 	 */
 	public static function useVideoHandlersExtForEmbed() {
-		return static::isVideoStoredAsFile() || !empty(F::app()->wg->embedVideosUseVideoHandlersExt);
+		return !empty( F::app()->wg->embedVideosUseVideoHandlersExt );
 	}
 
 	/**
@@ -331,7 +333,6 @@ class WikiaFileHelper extends Service {
 	}
 
 	public static function getMediaDetailConfig( $config = array() ) {
-
 		$configDefaults = array(
 			'contextWidth'          => false,
 			'contextHeight'         => false,
@@ -376,8 +377,6 @@ class WikiaFileHelper extends Service {
 	 * @return array
 	 */
 	public static function getMediaDetail( $fileTitle, $config = array() ) {
-		global $wgEnableVideoPageRedesign;
-
 		$data = array(
 			'mediaType' => '',
 			'videoEmbedCode' => '',
@@ -398,7 +397,7 @@ class WikiaFileHelper extends Service {
 
 		if ( !empty($fileTitle) ) {
 			if ( $fileTitle->getNamespace() != NS_FILE ) {
-				$fileTitle = Title::newFromText($fileTitle->getDBKey(), NS_FILE);
+				$fileTitle = Title::newFromText( $fileTitle->getDBKey(), NS_FILE );
 			}
 
 			$file = wfFindFile( $fileTitle );
@@ -425,14 +424,14 @@ class WikiaFileHelper extends Service {
 					$mediaPage = self::getMediaPage( $fileTitle );
 				} else {
 					$width = $width > $config['imageMaxWidth'] ? $config['imageMaxWidth'] : $width;
-					$mediaPage = new ImagePage($fileTitle);
+					$mediaPage = new ImagePage( $fileTitle );
 				}
 
 				$thumb = $file->transform( array('width'=>$width, 'height'=>$height), 0 );
 				$user = User::newFromId( $file->getUser('id') );
 
 				// get article list
-				$mediaQuery =  new ArticlesUsingMediaQuery($fileTitle);
+				$mediaQuery =  new ArticlesUsingMediaQuery( $fileTitle );
 				$articleList = $mediaQuery->getArticleList();
 
 				$data['imageUrl'] = $thumb->getUrl();
@@ -440,7 +439,7 @@ class WikiaFileHelper extends Service {
 				$data['rawImageUrl'] = $file->getUrl();
 				$data['userId'] = $user->getId();
 				$data['userName'] = $user->getName();
-				$data['userThumbUrl'] = AvatarService::getAvatarUrl($user, $config['userAvatarWidth'] );
+				$data['userThumbUrl'] = AvatarService::getAvatarUrl( $user, $config['userAvatarWidth'] );
 				$data['userPageUrl'] = $user->getUserPage()->getFullURL();
 				$data['description']  = $mediaPage->getContent();
 				$data['articles'] = $articleList;
@@ -450,12 +449,17 @@ class WikiaFileHelper extends Service {
 		return $data;
 	}
 
-	// truncate article list
+	/**
+	 * Truncate article list
+	 * @param array $articles
+	 * @param integer $limit
+	 * @return array
+	 */
 	public static function truncateArticleList( $articles, $limit = 2 ) {
 		$isTruncated = 0;
 		$truncatedList = array();
 		if( !empty( $articles ) ) {
-			foreach( $articles as $article ) {
+			foreach ( $articles as $article ) {
 				// Create truncated list
 				if ( count( $truncatedList ) < $limit ) {
 					$article['titleText'] = preg_replace( '/\/@comment-.*/', '', $article['titleText'] );
@@ -471,7 +475,6 @@ class WikiaFileHelper extends Service {
 	}
 
 	public static function inflateArrayWithVideoData( &$arr, Title $title, $width=150, $height=75, $force16x9Ratio=false ) {
-
 		$arr['ns'] = $title->getNamespace();
 		$arr['nsText'] = $title->getNsText();
 		$arr['dbKey'] = $title->getDbKey();
@@ -513,7 +516,7 @@ class WikiaFileHelper extends Service {
 	public static function  getVideoThumbnailHtml( Title $title, $width=150, $height=75, $force16x9Ratio=false ) {
 		$arr = [];
 		self::inflateArrayWithVideoData( $arr, $title, $width, $height, $force16x9Ratio );
-		if( !empty($arr['thumbnail']) ) {
+		if( !empty( $arr['thumbnail'] ) ) {
 			return $arr['thumbnail'];
 		} else {
 			return false;
@@ -529,34 +532,38 @@ class WikiaFileHelper extends Service {
 	 * @author ADi
 	 */
 	public static function thumbUrl2thumbUrl( $thumbUrl, $type, $width = 50, $height = 0 ) {
-		$width .= ($height ? '' : 'px');
+		$width .= ( $height ? '' : 'px' );
 
 		// URL points to a thumbnail, remove crop and size
 		//The URL of a thumbnail is in the following format:
 		//http://domain/image_path/image.ext/thumbnail_options.ext
 		//so return the URL till the last / to remove the options
-		$thumbUrl = substr($thumbUrl, 0, strripos($thumbUrl, '/'));
+		$thumbUrl = substr( $thumbUrl, 0, strripos( $thumbUrl, '/' ) );
 
-		$tokens = explode('/', $thumbUrl);
+		$tokens = explode( '/', $thumbUrl );
 		$last = $tokens[count($tokens)-1];
-		$tokens[] = $width . ($height ? 'x' . $height : '-') . ( ($type == 'video' || $type == 'nocrop') ? '-' : 'x2-' ) . $last . '.png';
+		$tokens[] = $width . ( $height ? 'x' . $height : '-' ) . ( ( $type == 'video' || $type == 'nocrop' ) ? '-' : 'x2-' ) . $last . '.png';
 
-		return implode('/', $tokens);
+		return implode( '/', $tokens );
 	}
 
-	// format duration from second to h:m:s
+	/**
+	 * Format duration from second to h:m:s
+	 * @param integer $sec
+	 * @return string $hms
+	 */
 	public static function formatDuration( $sec ) {
 		$hms = "";
-		$hours = intval(intval($sec) / 3600);
-		if ($hours > 0) {
-			$hms .= str_pad($hours, 2, "0", STR_PAD_LEFT). ":";
+		$hours = intval( intval( $sec ) / 3600 );
+		if ( $hours > 0 ) {
+			$hms .= str_pad( $hours, 2, "0", STR_PAD_LEFT ). ":";
 		}
 
-		$minutes = intval(($sec / 60) % 60);
-		$hms .= str_pad($minutes, 2, "0", STR_PAD_LEFT). ":";
+		$minutes = intval( ( $sec / 60 ) % 60 );
+		$hms .= str_pad( $minutes, 2, "0", STR_PAD_LEFT ). ":";
 
-		$seconds = intval($sec % 60);
-		$hms .= str_pad($seconds, 2, "0", STR_PAD_LEFT);
+		$seconds = intval( $sec % 60 );
+		$hms .= str_pad( $seconds, 2, "0", STR_PAD_LEFT );
 
 		return $hms;
 	}
@@ -567,36 +574,45 @@ class WikiaFileHelper extends Service {
 	 * @return string
 	 */
 	public static function getISO8601Duration( $hms ) {
-		if ( !empty($hms) ) {
-			$segments = explode(':', $hms);
+		if ( !empty( $hms ) ) {
+			$segments = explode( ':', $hms );
 			$ret = "PT";
-			if(count($segments) == 3) {
-				$ret .= array_shift($segments) . 'H';
+			if( count( $segments ) == 3 ) {
+				$ret .= array_shift( $segments ) . 'H';
 			}
-			$ret .= array_shift($segments) . 'M';
-			$ret .= array_shift($segments) . 'S';
+			$ret .= array_shift( $segments ) . 'M';
+			$ret .= array_shift( $segments ) . 'S';
 
 			return $ret;
 		}
 		return '';
 	}
 
+	/**
+	 * Get videos category [Category:Videos]
+	 * @return string
+	 */
 	public static function getVideosCategory() {
 		$cat = F::app()->wg->ContLang->getFormattedNsText( NS_CATEGORY );
-		return ucfirst($cat) . ':' . wfMsgForContent( 'videohandler-category' );
+		return ucfirst( $cat ) . ':' . wfMessage( 'videohandler-category' )->inContentLanguage()->text();
 	}
 
 	/**
-	 * get file from title
+	 * Get file from title (Please be careful when using $force)
 	 * @param Title|string $title
 	 * @return File|null $file
 	 */
-	public static function getFileFromTitle( &$title ) {
+	public static function getFileFromTitle( &$title, $force = false ) {
 		if ( is_string( $title ) ) {
 			$title = Title::newFromText( $title, NS_FILE );
 		}
 
 		if ( $title instanceof Title ) {
+			// clear cache for file object
+			if ( $force ) {
+				RepoGroup::singleton()->clearCache( $title );
+			}
+
 			$file = wfFindFile( $title );
 			if ( $file instanceof File && $file->exists() ) {
 				return $file;
@@ -607,12 +623,12 @@ class WikiaFileHelper extends Service {
 	}
 
 	/**
-	 * get video file from title
+	 * Get video file from title (Please be careful when using $force)
 	 * @param Title|string $title
 	 * @return File|null $file
 	 */
-	public static function getVideoFileFromTitle( &$title ) {
-		$file = self::getFileFromTitle( $title );
+	public static function getVideoFileFromTitle( &$title, $force = false ) {
+		$file = self::getFileFromTitle( $title, $force );
 		if ( !empty( $file ) && self::isFileTypeVideo( $file ) ) {
 			return $file;
 		}

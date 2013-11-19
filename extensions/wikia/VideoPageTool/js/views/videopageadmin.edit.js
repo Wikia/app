@@ -197,7 +197,8 @@ define( 'views.videopageadmin.edit', [
 
 			// reset custom thumb name
 			this.$form.find( '.alt-thumb-name' )
-				.text( $.msg('videopagetool-image-title-default-text') );
+				.text( $.msg('videopagetool-image-title-default-text') )
+				.addClass( 'alternative' );
 
 			// Also clear all error messages for better UX
 			this.validator.clearErrors();

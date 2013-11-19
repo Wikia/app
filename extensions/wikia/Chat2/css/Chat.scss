@@ -178,7 +178,7 @@ a {
 	}
 }
 
-.WikiaPage {
+#WikiaPage {
 	@include border-radius-se(5px);
 	@include border-radius-sw(5px);
 	background-color: $color-page;
@@ -186,6 +186,7 @@ a {
 	bottom: 10px;
 	color: $color-text;
 	left: 10px;
+	margin: 0;
 	position: absolute;
 	right: 10px;
 	top: 55px;

@@ -489,11 +489,16 @@ $messages['pt'] = array(
 	'stafflog-piggybackloginmsg' => 'Personificação $1 - utilizador $2 autenticou-se como $3',
 	'stafflog-piggybacklogoutmsg' => 'Personificação $1 - utilizador $2 saiu da conta $3',
 	'right-stafflog' => 'Pode ver o Registo da Equipa',
+	'stafflog-wiki-status-change' => '$1 alterou o estado da $2 para $3. Motivo: $4',
 	'stafflog-filter-label' => 'Filtro',
 	'stafflog-filter-user' => 'Utilizador:',
 	'stafflog-filter-type' => 'Tipo:',
 	'stafflog-filter-apply' => 'Aplicar filtro',
 	'stafflog-filter-type-block' => 'Bloqueios',
+	'stafflog-filter-type-piggyback' => 'Personificação',
+	'stafflog-filter-type-renameuser' => 'Alterações do nome',
+	'stafflog-filter-type-wikifactory' => 'Estado da wiki',
+	'action-stafflog' => 'ver o Registo da Equipa',
 );
 
 /** Brazilian Portuguese (português do Brasil)

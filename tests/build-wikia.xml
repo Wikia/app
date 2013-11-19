@@ -120,7 +120,7 @@
 					   --conf ${localsettings}
 					   --mode=js
 					   --dir=${basedir}/../skins/oasis,${basedir}/../skins/wikia,${basedir}/../resources,${basedir}/../extensions/wikia
-					   --blacklist=/CodeLint/examples/anticode.js,/AdEngine/ghost/,/libraries/zepto/,/libraries/yui,/CodeLint/js/,/RTE/ckeditor/_../,/jquery/jquery-,/resources/jquery,/resources/mediawiki,/Chat/js/lib/,lib/socket.io,/AdEngine/bezen/,/extensions/wikia/hacks,/extensions/wikia/SemanticBundle,qunit/qunit.js,jasmine/jasmine.js,/resources/mediawiki.language/,/tests/
+					   --blacklist=/CodeLint/examples/anticode.js,/resources/wikia/libraries/ghostwriter/,/libraries/zepto/,/libraries/yui,/CodeLint/js/,/RTE/ckeditor/_../,/jquery/jquery-,/resources/jquery,/resources/mediawiki,/Chat/js/lib/,lib/socket.io,/AdEngine/bezen/,/extensions/wikia/hacks,/extensions/wikia/SemanticBundle,qunit/qunit.js,jasmine/jasmine.js,/resources/mediawiki.language/,/tests/
 					   --format=html
 					   --output=${basedir}/build/jslint.html
 					   " />

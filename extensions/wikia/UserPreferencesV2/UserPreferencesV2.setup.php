@@ -1,11 +1,11 @@
-<?
-/* User preferences V2 extension setup file
-*
-* @author Marcin Maciejewski <marcin(at)wikia.com>
-*
-*/
+<?php
 
-$dir = dirname(__FILE__) . '/';
+/**
+ * User preferences V2 extension setup file
+ *
+ * @author Marcin Maciejewski <marcin(at)wikia.com>
+ *
+ */
 
 /**
  * new default user preferences
@@ -15,7 +15,7 @@ $wgDefaultUserOptions['watchdeletion'] = 1;
 /**
  * classes
  */
-$wgAutoloadClasses['UserPreferencesV2'] =  $dir . 'UserPreferencesV2.class.php';
+$wgAutoloadClasses['UserPreferencesV2'] =  __DIR__ . '/UserPreferencesV2.class.php';
 
 /**
  * hooks
@@ -30,4 +30,4 @@ $wgHooks['UserGetDefaultOptions'][] = 'UserPreferencesV2::onUserGetDefaultOption
 /**
  * messages
  */
-$wgExtensionMessagesFiles['UserPreferencesV2'] = $dir . '/UserPreferencesV2.i18n.php';
+$wgExtensionMessagesFiles['UserPreferencesV2'] = __DIR__ . '/UserPreferencesV2.i18n.php';

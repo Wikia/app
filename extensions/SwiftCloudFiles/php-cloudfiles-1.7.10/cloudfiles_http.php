@@ -185,7 +185,8 @@ class CF_Http
 
         if (in_array((strtolower (substr(PHP_OS, 0,3))), $OS_CAFILE_NONUPDATED))
             $this->ssl_use_cabundle();
-        
+
+		wfDebug(__METHOD__ . ": connected\n"); // Wikia change
     }
 
     function ssl_use_cabundle($path=NULL)
@@ -204,49 +205,42 @@ class CF_Http
 
     # Uses separate cURL connection to authenticate
     #
-    function authenticate($user, $pass, $acct=NULL, $host=NULL)
-    {
-        $path = array();
-        if (isset($acct)){
-            $headers = array(
-                sprintf("%s: %s", AUTH_USER_HEADER_LEGACY, $user),
-                sprintf("%s: %s", AUTH_KEY_HEADER_LEGACY, $pass),
-                );
-            $path[] = $host;
-            $path[] = rawurlencode(sprintf("v%d",$this->api_version));
-            $path[] = rawurlencode($acct);
-        } else {
-            $headers = array(
-                sprintf("%s: %s", AUTH_USER_HEADER, $user),
-                sprintf("%s: %s", AUTH_KEY_HEADER, $pass),
-                );
-	    $path[] = $host;
-        }
-	$path[] = "v1.0";
-        $url = implode("/", $path);
+    public function authenticate( $user, $pass, $host = NULL ) {
+		$path = array( );
+		$headers = array(
+			sprintf( "%s: %s", AUTH_USER_HEADER, $user ),
+			sprintf( "%s: %s", AUTH_KEY_HEADER, $pass ),
+		);
+		$path[] = $host;
+		$path[] = "v1.0";
+		$url = implode( "/", $path );
 
-        $curl_ch = curl_init();
-        if (!is_null($this->cabundle_path)) {
-            curl_setopt($curl_ch, CURLOPT_SSL_VERIFYPEER, True);
-            curl_setopt($curl_ch, CURLOPT_CAINFO, $this->cabundle_path);
-        }
-        curl_setopt($curl_ch, CURLOPT_VERBOSE, $this->dbug);
-        curl_setopt($curl_ch, CURLOPT_FOLLOWLOCATION, 1);
-        curl_setopt($curl_ch, CURLOPT_MAXREDIRS, 4);
-        curl_setopt($curl_ch, CURLOPT_HEADER, 0);
-        curl_setopt($curl_ch, CURLOPT_HTTPHEADER, $headers);
-        curl_setopt($curl_ch, CURLOPT_USERAGENT, USER_AGENT);
-        curl_setopt($curl_ch, CURLOPT_RETURNTRANSFER, TRUE);
-        curl_setopt($curl_ch, CURLOPT_HEADERFUNCTION,array(&$this,'_auth_hdr_cb'));
-        curl_setopt($curl_ch, CURLOPT_CONNECTTIMEOUT, 10);
-        curl_setopt($curl_ch, CURLOPT_URL, $url);
-        curl_exec($curl_ch);
-        curl_close($curl_ch);
+		$curl_ch = curl_init();
+		if ( !is_null( $this->cabundle_path ) ) {
+			curl_setopt( $curl_ch, CURLOPT_SSL_VERIFYPEER, True );
+			curl_setopt( $curl_ch, CURLOPT_CAINFO, $this->cabundle_path );
+		}
+		curl_setopt( $curl_ch, CURLOPT_VERBOSE, $this->dbug );
+		curl_setopt( $curl_ch, CURLOPT_FOLLOWLOCATION, 1 );
+		curl_setopt( $curl_ch, CURLOPT_MAXREDIRS, 4 );
+		curl_setopt( $curl_ch, CURLOPT_HEADER, 0 );
+		curl_setopt( $curl_ch, CURLOPT_HTTPHEADER, $headers );
+		curl_setopt( $curl_ch, CURLOPT_USERAGENT, USER_AGENT );
+		curl_setopt( $curl_ch, CURLOPT_RETURNTRANSFER, TRUE );
+		curl_setopt( $curl_ch, CURLOPT_HEADERFUNCTION, array( &$this, '_auth_hdr_cb' ) );
+		curl_setopt( $curl_ch, CURLOPT_CONNECTTIMEOUT, 10 );
+		curl_setopt( $curl_ch, CURLOPT_TIMEOUT, 10 );
+		curl_setopt( $curl_ch, CURLOPT_URL, $url );
+		if ( curl_exec( $curl_ch ) === false ) {
+			$this->response_reason = "(curl error: " . curl_errno( $curl_ch ) . ") ";
+			$this->response_reason .= curl_error( $curl_ch );
+		}
+		curl_close( $curl_ch );
 
-        return array($this->response_status, $this->response_reason,
-            $this->storage_url, $this->cdnm_url, $this->auth_token);
-    }
-
+		return array( $this->response_status, $this->response_reason,
+			$this->storage_url, $this->cdnm_url, $this->auth_token );
+	}
+	
     # (CDN) GET /v1/Account
     #
     function list_cdn_containers($enabled_only)
@@ -705,7 +699,6 @@ class CF_Http
     #
     function head_container($container_name)
     {
-
         if ($container_name == "") {
             $this->error_str = "Container name not set.";
             return False;
@@ -752,11 +745,11 @@ class CF_Http
 
         if (!$return_code) {
             $this->error_str .= ": Failed to obtain valid HTTP response.";
-            return array($return_code0,$this->error_str,NULL);
+            return array($return_code,$this->error_str,NULL); // Wikia change
         }
         if ($return_code == 404) {
             $this->error_str = "Object not found.";
-            return array($return_code0,$this->error_str,NULL);
+            return array($return_code,$this->error_str,NULL); // Wikia change
         }
         if (($return_code < 200) || ($return_code > 299
                 && $return_code != 412 && $return_code != 304)) {
@@ -971,8 +964,10 @@ class CF_Http
 
         $conn_type = "COPY";
 
-        $url_path = $this->_make_path("STORAGE", $container_name_source, rawurlencode($src_obj_name));
-        $destination = rawurlencode($container_name_target."/".$dest_obj_name);
+        // Wikia change - begin
+        $url_path = $this->_make_path("STORAGE", $container_name_source, $src_obj_name);
+        $destination = $container_name_target."/".$dest_obj_name;
+        // Wikia change - end
 
         $hdrs = self::_process_headers($metadata, $headers);
         $hdrs[DESTINATION] = $destination;
@@ -1416,8 +1411,8 @@ class CF_Http
 
         return $hdrs;
     }
-    
-    private function _send_request($conn_type, $url_path, $hdrs=NULL, $method="GET", $force_new=False)
+
+    private function _do_send_request($conn_type, $url_path, $hdrs=NULL, $method="GET", $force_new=False)
     {
         $this->_init($conn_type, $force_new);
         $this->_reset_callback_vars();
@@ -1427,7 +1422,6 @@ class CF_Http
             throw new ConnectionNotOpenException (
                 "Connection is not open."
                 );
-        
         switch ($method) {
         case "COPY":
             curl_setopt($this->connections[$conn_type],
@@ -1440,9 +1434,8 @@ class CF_Http
         case "POST":
             curl_setopt($this->connections[$conn_type],
                 CURLOPT_CUSTOMREQUEST, "POST");
-        default:
             break;
-        }        
+        }
 
         curl_setopt($this->connections[$conn_type],
                     CURLOPT_HTTPHEADER, $headers);
@@ -1454,17 +1447,63 @@ class CF_Http
             $this->error_str = "(curl error: "
                 . curl_errno($this->connections[$conn_type]) . ") ";
             $this->error_str .= curl_error($this->connections[$conn_type]);
+
+            wfDebug(__METHOD__ . "::error - {$this->error_str}\n"); // Wikia change
             return False;
         }
-        return curl_getinfo($this->connections[$conn_type], CURLINFO_HTTP_CODE);
+
+        // Wikia change - begin
+        $code = intval( curl_getinfo($this->connections[$conn_type], CURLINFO_HTTP_CODE) );
+        wfDebug(__METHOD__ . ' - ' . json_encode([$conn_type, $url_path, $hdrs, "HTTP {$code}"]) . "\n");
+        // Wikia change - end
+
+		return $code;
     }
+
+	// Wikia change - begin
+	// retry request in case of an error
+	const MAX_RETRIES = 5;
+	const RETRY_DELAY = 1000; // ms
+
+	private function _send_request($conn_type, $url_path, $hdrs=NULL, $method="GET", $force_new=False) {
+		$retriesLeft = self::MAX_RETRIES;
+		$res = false;
+
+		while( $retriesLeft >= 0 ) {
+			$res = $this->_do_send_request( $conn_type, $url_path, $hdrs, $method, $force_new );
+
+			if ( !in_array( $res, [ 500, 503, false ] ) ) {
+				// request was successful, return
+				break;
+			}
+
+			// log errors
+			if ( is_numeric( $res ) ) {
+				$message = json_encode( [ $conn_type, $url_path, $hdrs, "HTTP {$res}" ] );
+			}
+			else {
+				$message = $this->error_str;
+			}
+
+			\Wikia\SwiftStorage::log( __CLASS__ . '::retryRequest::' . $retriesLeft, $message );
+
+			// wait a bit before retrying the request
+			usleep( self::RETRY_DELAY * 1000 );
+			$retriesLeft--;
+		}
+
+		return $res;
+	}
+	// Wikia change - end
     
     function close()
     {
-        foreach ($this->connections as $cnx) {
+		wfDebug(__METHOD__ . "\n"); // Wikia change
+
+        foreach ($this->connections as $type => $cnx) {
             if (isset($cnx)) {
                 curl_close($cnx);
-                $this->connections[$cnx] = NULL;
+                $this->connections[$type] = NULL;
             }
         }
     }
@@ -1485,4 +1524,3 @@ class CF_Http
  * c-hanging-comment-ender-p: nil
  * End:
  */
-?>

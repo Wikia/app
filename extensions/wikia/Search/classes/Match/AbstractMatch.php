@@ -23,6 +23,12 @@ abstract class AbstractMatch
 	protected $id;
 
 	/**
+	 * @var string Search string
+	 */
+	protected $term;
+
+
+	/**
 	 * Encapsulates appropriate logic.
 	 * @var MediaWikiService
 	 */
@@ -39,7 +45,8 @@ abstract class AbstractMatch
 	 * @param int $id
 	 * @param MediaWikiService $service
 	 */
-	public function __construct( $id, MediaWikiService $service ) {
+	public function __construct( $id, MediaWikiService $service, $term = '' ) {
+		$this->term = $term;
 		$this->id = $id;
 		$this->service = $service;
 	}

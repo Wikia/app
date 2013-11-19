@@ -95,14 +95,18 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	public function index() {
 		$this->handleSkinSettings();
 		//will change template depending on passed ab group
+		/*@var Wikia\Search\Config */
 		$searchConfig = $this->getSearchConfigFromRequest();
+
 		$this->handleLayoutAbTest( $this->getVal( 'ab', null ), $searchConfig->getNamespaces() );
 		if ( $searchConfig->getQuery()->hasTerms() ) {
 			$search = $this->queryServiceFactory->getFromConfig( $searchConfig);
-			// explicity called to accommodate go-search
+			/* @var $search Wikia\Search\QueryService\Select\Dismax\OnWiki */
 			$search->getMatch();
+
 			$this->handleArticleMatchTracking( $searchConfig );
 			$search->search();
+
 		}
 
 		$this->setPageTitle( $searchConfig );

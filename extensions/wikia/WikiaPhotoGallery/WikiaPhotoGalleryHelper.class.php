@@ -1099,11 +1099,11 @@ class WikiaPhotoGalleryHelper {
 	 * @author Macbre
 	 */
 	static public function isUploadAllowed() {
-		global $wgEnableUploads, $wgDisableUploads, $wgUser;
+		global $wgEnableUploads, $wgUser;
 
 		$result = $wgUser->isLoggedIn() &&
 			$wgUser->isAllowed('upload') &&
-			$wgEnableUploads && empty($wgDisableUploads) &&
+			$wgEnableUploads &&
 			!wfReadOnly();
 
 		if ($result == false) {

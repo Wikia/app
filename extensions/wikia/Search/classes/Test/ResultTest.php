@@ -82,6 +82,23 @@ class ResultTest extends BaseTest {
 	}
 
 	/**
+	 * @covers Wikia\Search\Result::getEscapedUrl
+	 */
+	public function testGetEscapedUrl() {
+		$mock = $this->getMockBuilder( 'Wikia\Search\Result' )
+			->disableOriginalConstructor()
+			->setMethods( ['getUrl'] )
+			->getMock();
+
+		$mock->expects( $this->once() )
+			->method( 'getUrl' )
+			->will( $this->returnValue( 'test&amp;this_is_"' ) );
+
+		$this->assertEquals( 'test&amp;this_is_&quot;',
+			$mock->getEscapedUrl() );
+	}
+
+	/**
 	 * @covers Wikia\Search\Result::getTitle
 	 * @covers Wikia\Search\Result::setTitle
 	 */

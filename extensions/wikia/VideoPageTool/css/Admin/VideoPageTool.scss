@@ -131,8 +131,9 @@ $label-padding: 10px 10px 10px 0px;
 		width: 70%;
 	}
 
-	.tip {
+	.button-group .hint {
 		clear: both;
+		float: none;
 		padding: 10px 0;
 	}
 
@@ -154,21 +155,18 @@ $label-padding: 10px 10px 10px 0px;
 		.video-title, .alt-thumb-name {
 			padding-top: 11px;
 		}
-		.video-thumb {
+		.video-thumb-wrapper {
 			@include box-sizing-border-box;
-			background: $color-page-border-subtle;
 			clear: left;
 			float: right;
-			height: 100px;
 			margin-top: 5px;
-			position: relative;
+			text-align: center;
 			width: 179px;
 		}
-		.preview-large-link {
-			display: none;
-			position: absolute;
-			right: 60px;
-			top: 165px;
+		.video-thumb {
+			background: $color-page-border-subtle;
+			height: 100px;
+			position: relative;
 		}
 		// validation
 		label.error {
@@ -178,9 +176,14 @@ $label-padding: 10px 10px 10px 0px;
 			margin: 0;
 			width: 70%;
 		}
-		.video-key-group label.error {
-			float: none;
+		.button-group {
+			label.error {
+				float: none;
+			}
 		}
+	}
+	.hidden {
+		display: none;
 	}
 }
 

@@ -125,15 +125,16 @@ $messages['es'] = array(
 );
 
 /** Persian (فارسی)
+ * @author Ebraminio
  * @author Omidh
  */
 $messages['fa'] = array(
-	'wikiaconfirmemail-error-empty-code' => 'کد تایید را وارد نکرده اید',
-	'wikiaconfirmemail-error-invalid-code' => 'کد تایید نامعتبر است',
-	'wikiaconfirmemail-error-user-not-match' => 'اوه, این لینک تایید با نام کاربری مطابقت ندارد. مطمئن شوید که نام کاربری خود را درست وارد کرده اید. اگر می خواهید با یک حساب کاربری دیگر وارد شوید, <a href="{{fullurl:{{ns:special}}:UserLogin}}">کلیک کنید</a>',
-	'wikiaconfirmemail-login-button' => 'تایید کنید و وارد شوید',
-	'wikiaconfirmemail-heading' => 'تقریبا تمام شد!',
-	'wikiaconfirmemail-subheading' => 'با نام کاربری و رمز عبور خود وارد سیستم شوید بنابراین ما می فهمیم که شما ایمیل را دریافت کرده اید.',
+	'wikiaconfirmemail-error-empty-code' => 'کد تأیید را وارد نکرده‌اید',
+	'wikiaconfirmemail-error-invalid-code' => 'کد تأیید نامعتبر است',
+	'wikiaconfirmemail-error-user-not-match' => 'اوه، این پیوند تأیید با نام کاربری مطابقت ندارد. مطمئن شوید که نام کاربری خود را درست وارد کرده‌اید. اگر می‌خواهید با یک حساب کاربری دیگر وارد شوید، <a href="{{fullurl:{{ns:special}}:UserLogin}}">اینجا</a> را کلیک کنید',
+	'wikiaconfirmemail-login-button' => 'تأیید کنید و وارد شوید',
+	'wikiaconfirmemail-heading' => 'تقریباً تمام شد!',
+	'wikiaconfirmemail-subheading' => 'با نام کاربری و رمز عبور خود وارد سامانه شوید بنابراین ما می‌فهمیم که شما رایانامه را دریافت کرده‌اید.',
 	'wikiaconfirmemail-username' => 'نام کاربری',
 );
 
@@ -309,13 +310,14 @@ $messages['ps'] = array(
 );
 
 /** Portuguese (português)
+ * @author Hamilton Abreu
  * @author Luckas
  */
 $messages['pt'] = array(
 	'wikiaconfirmemail-error-empty-code' => 'Código de confirmação vazio',
 	'wikiaconfirmemail-error-invalid-code' => 'Código de confirmação inválido',
 	'wikiaconfirmemail-heading' => 'Quase lá!',
-	'wikiaconfirmemail-username' => 'Nome de usuário',
+	'wikiaconfirmemail-username' => 'Nome de utilizador',
 );
 
 /** Brazilian Portuguese (português do Brasil)

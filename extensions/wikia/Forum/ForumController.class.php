@@ -42,7 +42,7 @@ class ForumController extends WallBaseController {
 			$this->response->setVal( 'activeThreads', $board->getTotalActiveThreads( $this->wall->getRelatedPageId() ) );
 			$this->response->setVal( 'isTopicPage', true );
 
-			$this->app->wg->Out->setPageTitle( wfMsg( 'forum-board-topic-title', $this->wg->title->getBaseText() ) );
+			$this->app->wg->Out->setPageTitle( wfMessage( 'forum-board-topic-title', $this->wg->title->getBaseText() )->plain() );
 		} else {
 			$boardId = $this->wall->getId();
 			$board = ForumBoard::newFromId( $boardId );
@@ -57,7 +57,7 @@ class ForumController extends WallBaseController {
 
 			$this->description = $board->getDescription();
 
-			$this->app->wg->Out->setPageTitle( wfMsg( 'forum-board-title', $this->wg->title->getBaseText() ) );
+			$this->app->wg->Out->setPageTitle( wfMessage( 'forum-board-title', $this->wg->title->getBaseText() )->plain() );
 		}
 
 		$this->response->setVal( 'boardNamespace', NS_WIKIA_FORUM_BOARD );
@@ -75,7 +75,7 @@ class ForumController extends WallBaseController {
 
 	protected function getTopicTitle() {
 		$text = $this->wg->Title->getText();
-		$topicTitle =  Title::newFromURL($text);
+		$topicTitle = Title::newFromText( $text );
 		return $topicTitle;
 	}
 
@@ -85,7 +85,6 @@ class ForumController extends WallBaseController {
 			if ( !empty( $topicTitle ) ) {
 				$wall = Wall::newFromRelatedPages( $title, $topicTitle->getArticleId() );
 				$this->response->setVal( 'topicText', $topicTitle->getPrefixedText() );
-				$this->response->setVal( 'topicURL', $topicTitle->getFullUrl() );
 				$wall->disableCache();
 			} else {
 				$wall = Wall::newFromTitle( $title );
@@ -105,7 +104,7 @@ class ForumController extends WallBaseController {
 
 			$list = $forum->getBoardList();
 
-			$this->destinationBoards = array( array( 'value' => '', 'content' => wfMsg( 'forum-board-destination-empty' ) ) );
+			$this->destinationBoards = array( array( 'value' => '', 'content' => wfMessage( 'forum-board-destination-empty' )->escaped() ) );
 
 			foreach ( $list as $value ) {
 				$this->destinationBoards[] = array( 'value' => htmlspecialchars( $value['name'] ), 'content' => htmlspecialchars( $value['name'] ) );
@@ -175,9 +174,9 @@ class ForumController extends WallBaseController {
 		if ( $this->app->wg->Title->getNamespace() == NS_WIKIA_FORUM_TOPIC_BOARD ) {
 			$indexPage = Title::newFromText( 'Forum', NS_SPECIAL );
 			$path = array();
-			$path[] = array( 'title' => wfMsg( 'forum-forum-title', $this->app->wg->sitename ), 'url' => $indexPage->getFullUrl() );
+			$path[] = array( 'title' => wfMessage( 'forum-forum-title' )->escaped(), 'url' => $indexPage->getFullUrl() );
 
-			$path[] = array( 'title' => wfMsg( 'forum-board-topics' ) );
+			$path[] = array( 'title' => wfMessage( 'forum-board-topics' )->escaped() );
 
 			$topicTitle = Title::newFromURL( $this->app->wg->Title->getText() );
 
@@ -197,13 +196,13 @@ class ForumController extends WallBaseController {
 		$this->response->setVal( 'activeThreads', $forum->getTotalActiveThreads() );
 
 		$title = $this->wg->Title;
-		$pageHeading = wfMsg( 'forum-specialpage-heading' );
+		$pageHeading = wfMessage( 'forum-specialpage-heading' )->escaped();
 		$pageDescription = '';
 		$this->showStats = true;
 		$nameSpace = $title->getNamespace();
 		if ( $nameSpace === NS_WIKIA_FORUM_BOARD ) {
 			$this->showStats = false;
-			$pageHeading = wfMsg( 'forum-board-title', $title->getText() );
+			$pageHeading = wfMessage( 'forum-board-title', $title->getText() )->escaped();
 			$board = ForumBoard::newFromTitle( $title );
 			$pageDescription = $board->getDescription();
 		} else if ( $nameSpace === NS_USER_WALL_MESSAGE ) {
@@ -256,11 +255,11 @@ class ForumController extends WallBaseController {
 			case 'index' :
 			default :
 				$options = array(
-					'nr' => wfMessage( 'forum-sorting-option-newest-replies' )->text(),
-					// 'pt' => wfMessage('forum-sorting-option-popular-threads')->text(),
-					'mr' => wfMessage( 'forum-sorting-option-most-replies' )->text(),
-					'nt' => wfMessage( 'forum-sorting-option-newest-threads' )->text(),
-					'ot' => wfMessage( 'forum-sorting-option-oldest-threads' )->text(),
+					'nr' => wfMessage( 'forum-sorting-option-newest-replies' )->escaped(),
+					// 'pt' => wfMessage('forum-sorting-option-popular-threads')->escaped(),
+					'mr' => wfMessage( 'forum-sorting-option-most-replies' )->escaped(),
+					'nt' => wfMessage( 'forum-sorting-option-newest-threads' )->escaped(),
+					'ot' => wfMessage( 'forum-sorting-option-oldest-threads' )->escaped(),
 				);
 				break;
 		}

@@ -24,7 +24,7 @@ class OoyalaAsset extends WikiaModel {
 			'postData' => $reqBody,
 		);
 		$req = MWHttpRequest::factory( $url, $options );
-		$status = $req->execute();
+		$status = VideoHandlerHelper::wrapHttpRequest( $req );
 		if ( $status->isGood() ) {
 			$response = $req->getContent();
 			$asset = json_decode( $response, true );
@@ -106,7 +106,7 @@ class OoyalaAsset extends WikiaModel {
 		);
 
 		$req = MWHttpRequest::factory( $url, $options );
-		$status = $req->execute();
+		$status = VideoHandlerHelper::wrapHttpRequest( $req );
 		if ( $status->isGood() ) {
 			$meta = json_decode( $req->getContent(), true );
 			$resp = true;
@@ -238,7 +238,7 @@ class OoyalaAsset extends WikiaModel {
 		$cond = array(
 			"asset_type='$assetType'",
 			"metadata.sourceid='$videoId'",
-			"metadata.source='$source'",
+			//"metadata.source='$source'",
 		);
 
 		return $this->isExist( $cond );
@@ -264,7 +264,7 @@ class OoyalaAsset extends WikiaModel {
 		//print( "Connecting to $url...\n" );
 
 		$req = MWHttpRequest::factory( $url );
-		$status = $req->execute();
+		$status = VideoHandlerHelper::wrapHttpRequest( $req );
 		if ( $status->isGood() ) {
 			$response = json_decode( $req->getContent(), true );
 			$result = !empty( $response['items'] );
@@ -337,7 +337,7 @@ class OoyalaAsset extends WikiaModel {
 		//print( "Connecting to $url...\n" );
 
 		$req = MWHttpRequest::factory( $url );
-		$status = $req->execute();
+		$status = VideoHandlerHelper::wrapHttpRequest( $req );
 		if ( $status->isGood() ) {
 			$response = json_decode( $req->getContent(), true );
 		} else {
@@ -444,7 +444,7 @@ class OoyalaAsset extends WikiaModel {
 		);
 
 		$req = MWHttpRequest::factory( $url, $options );
-		$status = $req->execute();
+		$status = VideoHandlerHelper::wrapHttpRequest( $req );
 		if ( $status->isGood() ) {
 			$result = true;
 			print( "Ooyala: sent $reqPath request: \n" );

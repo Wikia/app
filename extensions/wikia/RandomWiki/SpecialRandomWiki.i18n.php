@@ -41,9 +41,11 @@ $messages['be-tarask'] = array(
 );
 
 /** Bulgarian (български)
+ * @author Aquilax
  * @author DCLXVI
  */
 $messages['bg'] = array(
+	'randomwiki-desc' => 'Позволява на потребителите да разглеждат случайно уики',
 	'randomwiki' => 'Случайно уики',
 );
 
@@ -331,9 +333,10 @@ $messages['sr-ec'] = array(
 
 /** Swedish (svenska)
  * @author Tobulos1
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
-	'randomwiki-desc' => 'Lets users explore a random wiki',
+	'randomwiki-desc' => 'Låter användare utforska en slumpartad wiki',
 	'randomwiki' => 'Slumpmässig Wiki',
 );
 

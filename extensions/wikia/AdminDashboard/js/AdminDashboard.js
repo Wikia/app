@@ -6,7 +6,7 @@ var AdminDashboard = {
 		// precache
 		AdminDashboard.cc = $('#AdminDashboard');
 
-		if(AdminDashboard.cc.length == 0) {
+		if(AdminDashboard.cc.length === 0) {
 			return;
 		}
 
@@ -44,9 +44,9 @@ var AdminDashboard = {
 						{ url: url },
 						// success callback
 						function( formRes ) {
-							GlobalNotification.hide();
+							window.GlobalNotification.hide();
 							if ( formRes.error ) {
-								GlobalNotification.show( formRes.error, 'error' );
+								window.GlobalNotification.show( formRes.error, 'error' );
 							} else {
 								VET.close();
 								window.location = addVideoButtonReturnUrl;
@@ -54,7 +54,7 @@ var AdminDashboard = {
 						},
 						// error callback
 						function() {
-							GlobalNotification.show( $.msg('vet-error-while-loading'), 'error' );
+							window.GlobalNotification.show( $.msg('vet-error-while-loading'), 'error' );
 						}
 					);
 					// Don't move on to second VET screen.  We're done.
@@ -71,12 +71,12 @@ var AdminDashboard = {
 			AdminDashboard.ui.showSection(el.data('section'));
 		});
 
-		$('#AdminDashboard').on('mousedown', 'a[data-tracking]', function(e) {
+		AdminDashboard.cc.on('mousedown', 'a[data-tracking]', function(e) {
 			var t = $(this);
 			AdminDashboard.track(Wikia.Tracker.ACTIONS.CLICK, t.data('tracking'), null, {}, e);
- 		});
+		});
 	},
-	track: function (action, label, value, params, event) {
+	track: function(action, label, value, params, event) {
 		Wikia.Tracker.track({
 			category: 'admin-dashboard',
 			action: action,
@@ -100,7 +100,7 @@ var AdminDashboard = {
 			AdminDashboard.section.contentarea.html( $.msg( 'admindashboard-loading' ) );
 			AdminDashboard.wikiaArticle.removeClass('AdminDashboardChromedArticle expanded');
 			$('.AdminDashboardDrawer, .AdminDashboardNavigation, .AdminDashboardArticleHeader').remove();
-			if(typeof FounderProgressList != 'undefined') {
+			if(typeof FounderProgressList !== 'undefined') {
 				FounderProgressList.hideListModal();
 			}
 		},

@@ -1,6 +1,9 @@
 <?php
 require_once dirname(__FILE__) . '/../tests/ScavengerHuntTest.php';
 
+/**
+ * @group Broken
+ */
 class ScavengerHuntGetActiveGameTest extends ScavengerHuntTest {
 
 	public function testLoadingHunt() {

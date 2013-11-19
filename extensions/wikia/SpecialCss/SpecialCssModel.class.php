@@ -61,7 +61,7 @@ class SpecialCssModel extends WikiaModel {
 	/**
 	 * @desc Memcache key for CSS Updates
 	 */
-	const MEMC_KEY = 'css-chrome-updates-v2.1';
+	const MEMC_KEY = 'css-chrome-updates-v2.2';
 
 	/**
 	 * @desc Memcache key suffix for CSS Updates headline

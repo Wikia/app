@@ -171,6 +171,7 @@ $messages['fa'] = array(
 /** Finnish (suomi)
  * @author Centerlink
  * @author Crt
+ * @author Ville96
  */
 $messages['fi'] = array(
 	'imgplc-add-image' => 'Lisää kuva',
@@ -178,6 +179,7 @@ $messages['fi'] = array(
 	'imgplc-placeholder' => 'Paikanvaraaja',
 	'imgplc-image' => 'Kuva',
 	'imgplc-notinhistory' => 'Et voi lisätä kuvaa historiatilassa.',
+	'imgplc-notinhistory-video' => 'Et voi lisätä videota historiatilassa.',
 );
 
 /** Faroese (føroyskt)
@@ -330,6 +332,13 @@ $messages['lb'] = array(
 	'imgplc-notinhistory' => 'Dir kënnt am Historique Modus kee Bild derbäisetzen',
 );
 
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'imgplc-image' => 'عسگ',
+);
+
 /** Lithuanian (lietuvių)
  * @author Mantak111
  */
@@ -417,9 +426,11 @@ $messages['nn'] = array(
  */
 $messages['oc'] = array(
 	'imgplc-add-image' => 'Apondre un imatge',
+	'imgplc-add-video' => 'Apondre una vidèo',
 	'imgplc-placeholder' => 'Posicionador',
 	'imgplc-image' => 'Imatge',
 	'imgplc-notinhistory' => "Podètz pas apondre cap d'imatge en mòde istoric.",
+	'imgplc-notinhistory-video' => 'Podètz pas apondre cap de vidèo en mòde istoric.',
 );
 
 /** Polish (polski)

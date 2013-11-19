@@ -259,14 +259,6 @@ class WallMessage {
 			// after changing reply invalidate thread cache
 			$this->getThread()->invalidateCache();
 		}
-		if ( !$preserveMetadata ) { // it's only a request to modify metadata, so we probably don't need to add watch
-			/**
-			 * mech: EditPage calls Article with watchThis set to false
-			 *      in Wall we assume that save on message subscribes you to it
-			 *      so we re-scubscribe it here
-			*/
-			$this->addWatch( $user );
-		}
 		$out = $this->getArticleComment()->parseText($body);
 		wfProfileOut( __METHOD__ );
 		return $out;
@@ -438,6 +430,7 @@ class WallMessage {
 	public function getWallOwner( $master = false ) {
 		$parts = explode( '/', $this->getWallTitle( $master )->getText() );
 		$userName = $parts[0];
+		/*
 		// mech: I'm not sure we have to create wall title doing db queries on both, page and comments_index tables.
 		// as the user name is the first part on comment's title. But I'm not able to go through all wall/forum
 		// usecases. I'm going to check production logs for the next 2-3 sprints and make sure the result is
@@ -448,6 +441,7 @@ class WallMessage {
 			Wikia::log( __METHOD__, false, 'WALL_PERF article title owner does not match ci username (' . $userName .
 				' vs ' . $parts[0] . ') for ' . $this->getId() . ' (title is ' . $titleText. ')', true );
 		}
+		*/
 
 		$wall_owner = User::newFromName( $userName, false );
 

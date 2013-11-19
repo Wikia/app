@@ -148,6 +148,36 @@ pre {
 	font-size: 94%;
 }
 
+/* Wikia changes to TOC */
+#toc {
+    display: table;
+}
+#toc h2 {
+    padding-right: 5px;;
+}
+#toc > div {
+    padding: 5px;
+}
+#toc ol {
+    list-style: decimal;
+    counter-reset: item;
+}
+#toc > ol {
+    display: none;
+}
+#toc.show > ol {
+    display: block;
+}
+#toc li {
+    display: block;
+}
+#toc li:before {
+    content: counters(item, ".") " ";
+    counter-increment: item;
+}
+
+/* End of Wikia changes */
+
 .mw-warning {
 	margin-left: 50px;
 	margin-right: 50px;

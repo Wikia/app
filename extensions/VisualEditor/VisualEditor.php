@@ -39,15 +39,11 @@ $wgAutoloadClasses['ApiVisualEditor'] = $dir . 'ApiVisualEditor.php';
 $wgAutoloadClasses['ApiVisualEditorEdit'] = $dir . 'ApiVisualEditorEdit.php';
 $wgAutoloadClasses['VisualEditorHooks'] = $dir . 'VisualEditor.hooks.php';
 $wgAutoloadClasses['VisualEditorDataModule'] = $dir . 'VisualEditorDataModule.php';
-$wgAutoloadClasses['ApiPhotoAttribution'] = $dir . 'ApiPhotoAttribution.php';
-$wgAutoloadClasses['ApiMediaSearch'] = $dir . 'ApiMediaSearch.php';
 $wgExtensionMessagesFiles['VisualEditor'] = $dir . 'VisualEditor.i18n.php';
 
 // Register API modules
 $wgAPIModules['visualeditor'] = 'ApiVisualEditor';
 $wgAPIModules['visualeditoredit'] = 'ApiVisualEditorEdit';
-$wgAPIModules['apiphotoattribution'] = 'ApiPhotoAttribution';
-$wgAPIModules['apimediasearch'] = 'ApiMediaSearch';
 
 // Register Hooks
 $wgHooks['BeforePageDisplay'][] = 'VisualEditorHooks::onBeforePageDisplay';
@@ -793,7 +789,7 @@ $wgVisualEditorParsoidURL = 'http://localhost:8000';
 
 // Interwiki prefix to pass to the Parsoid instance
 // Parsoid will be called as $url/$prefix/$pagename
-$wgVisualEditorParsoidPrefix = 'localhost';
+//$wgVisualEditorParsoidPrefix = 'localhost';
 
 // Timeout for HTTP requests to Parsoid in seconds
 $wgVisualEditorParsoidTimeout = 100;

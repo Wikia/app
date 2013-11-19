@@ -38,7 +38,10 @@ class Time {
 	 */
 	public static function run( $measurementName, $callable ) {
 		$measurement = self::start( $measurementName );
-		return $callable();
+		$result = $callable();
+		$measurement->stop();
+
+		return $result;
 	}
 
 	/**

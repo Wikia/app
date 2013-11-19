@@ -136,6 +136,15 @@ $messages['pl'] = array(
 	'wikiastyleguide-dropdown-selected-items-list' => '$1 i $2 więcej',
 );
 
+/** Portuguese (português)
+ * @author Hamilton Abreu
+ */
+$messages['pt'] = array(
+	'wikiastyleguide-dropdown-all' => 'Todos',
+	'wikiastyleguide-dropdown-select-all' => 'Selecionar todos',
+	'wikiastyleguide-dropdown-selected-items-list' => '$1 e mais $2',
+);
+
 /** tarandíne (tarandíne)
  * @author Joetaras
  */

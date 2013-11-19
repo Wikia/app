@@ -10,7 +10,11 @@ require([
 		};
 
 		$(function() {
-				views.videohomepage.featured = new FeaturedVideoView();
+				views.videohomepage.featured = new FeaturedVideoView({
+						el: '#featured-video-slider',
+						$bxSlider: $( '#featured-video-bxslider' ),
+						$thumbs: $( '#featured-video-thumbs' )
+				});
 				views.videohomepage.search = new SearchView();
 		});
 });

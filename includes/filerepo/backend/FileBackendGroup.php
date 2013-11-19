@@ -57,6 +57,7 @@ class FileBackendGroup {
 		$autoBackends = array();
 		// Automatically create b/c backends for file repos...
 		$repos = array_merge( $wgForeignFileRepos, array( $wgLocalFileRepo ) );
+
 		foreach ( $repos as $info ) {
 			$backendName = $info['backend'];
 			if ( is_object( $backendName ) || isset( $this->backends[$backendName] ) ) {

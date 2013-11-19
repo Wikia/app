@@ -44,6 +44,7 @@
 	text-align: center;
 	font-size: 1em;
 	cursor: pointer;
+	white-space: nowrap;
 	-webkit-touch-callout: none;
 	-webkit-user-select: none;
 	-moz-user-select: none;
@@ -94,6 +95,13 @@
 .ve-ui-widget-disabled.ve-ui-buttonWidget:hover {
 	border-color: #ccc;
 	box-shadow: none;
+}
+
+.ve-ui-buttonWidget .ve-ui-iconedElement-icon {
+	display: inline-block;
+	height: 2em;
+	width: 2em;
+	vertical-align: middle;
 }
 
 .ve-ui-buttonWidget .ve-ui-labeledElement-label {

@@ -8,11 +8,6 @@ class UploadBackgroundFromFile extends UploadFromFile {
 	const FILESIZE_ERROR = 20;
 	const FILETYPE_ERROR = 21;
 
-	private $mImageAlign;
-
-	public function getImageAlign(){
-		return $this->mImageAlign;
-	}
 	public function verifyUpload(){
 		$this->getTitle(); //will fill in final destination and extension
 		$details = parent::verifyUpload();
@@ -26,16 +21,7 @@ class UploadBackgroundFromFile extends UploadFromFile {
 				// check if file is correct file size
 				$imageFileSize = filesize( $tempPath );
 
-				if ( $imageFileSize <= self::FILESIZE_LIMIT ) {
-
-					// center image if wider than 1050, otherwise left align
-					$imageSize = getimagesize( $tempPath );
-					if( $imageSize[0] > 1050 ) {
-						$this->mImageAlign = "center";
-					} else {
-						$this->mImageAlign = "left";
-					}
-				} else {
+				if ( $imageFileSize > self::FILESIZE_LIMIT ) {
 					$details[ 'status' ] = self::FILESIZE_ERROR;
 				}
 			} else {

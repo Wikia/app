@@ -152,7 +152,7 @@ class VideoFileUploader {
 	 * @param File $file
 	 * @return FileRepoStatus
 	 */
-	public function resetThumbnail( File $file ) {
+	public function resetThumbnail( File &$file ) {
 		wfProfileIn(__METHOD__);
 
 		// Some providers will sometimes return error codes when attempting
@@ -179,6 +179,12 @@ class VideoFileUploader {
 	protected function uploadBestThumbnail( ) {
 		wfProfileIn(__METHOD__);
 
+		$app = F::app();
+
+		// reset proxy to blank
+		$originalProxy = $app->wg->HTTPProxy;
+		$app->wg->HTTPProxy = '';
+
 		// Try to upload the thumbnail for this video
 		$upload = $this->uploadThumbnailFromUrl( $this->getApiWrapper()->getThumbnailUrl() );
 
@@ -186,6 +192,9 @@ class VideoFileUploader {
 		if ( empty($upload) ) {
 			$upload = $this->uploadThumbnailFromUrl( LegacyVideoApiWrapper::$THUMBNAIL_URL );
 		}
+
+		// set proxy to original value
+		$app->wg->HTTPProxy = $originalProxy;
 
 		// If we still don't have anything, give up.
 		if ( empty($upload) ) {

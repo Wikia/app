@@ -6,6 +6,9 @@ if ( $_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 	return;
 }
 
+// prevent $_GET['title'] from being overwritten on API calls (BAC-906)
+define('DONT_INTERPOLATE_TITLE', true);
+
 // Initialise common MW code
 require ( dirname( __FILE__ ) . '/includes/WebStart.php' );
 
@@ -27,7 +30,9 @@ if( function_exists( 'newrelic_name_transaction' ) ) {
 
 if ( !empty( $wgEnableNirvanaAPI ) ){
 	// temporarily force ApiDocs extension regardless of config
-	require $IP."/extensions/wikia/ApiDocs/ApiDocs.setup.php";
+	require_once $IP."/extensions/wikia/ApiDocs/ApiDocs.setup.php";
+	// same for JsonFormat
+	require_once $IP."/extensions/wikia/JsonFormat/JsonFormat.setup.php";
 	
 	$app = F::app();
 

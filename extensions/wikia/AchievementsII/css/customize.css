@@ -108,6 +108,7 @@ span.enabled-flag label {
 
 form.save-all {
 	display:inline;
+	float: right;
 }
 
 .customize-section h2 {

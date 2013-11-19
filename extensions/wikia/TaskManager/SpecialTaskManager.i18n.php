@@ -366,6 +366,7 @@ $messages['pt'] = array(
 	'right-taskmanager' => 'Pode mostrar tarefas de segundo plano',
 	'right-taskmanager-action' => 'Pode administrar tarefas de segundo plano',
 	'taskmanager-invert' => 'Inverter seleção',
+	'action-taskmanager' => 'mostrar e gerir tarefas de segundo plano',
 );
 
 /** Brazilian Portuguese (português do Brasil)

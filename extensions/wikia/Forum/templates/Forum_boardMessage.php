@@ -24,13 +24,13 @@
 			</td></tr></table>
 		</div>
 	<?php endif; ?>
-	
+
 	<? if($showRemovedBox): ?>
 		<div class='removed-info speech-bubble-message-removed' >
 			<?php echo wfMsg('wall-removed-reply'); ?>
 		</div>
 	<? endif; ?>
-	
+
 	<div class="speech-bubble-avatar">
 		<a href="<?= $user_author_url ?>">
 			<? if(!$isreply): ?>
@@ -52,31 +52,31 @@
 		<? if(!$isreply): ?>
 			<?php if($isWatched): ?>
 				<a <?php if(!$showFollowButton): ?>style="display:none"<?php endif;?> data-iswatched="1" class="follow wikia-button"><?= wfMsg('wikiafollowedpages-following'); ?></a>
-			<?php else: ?>	
+			<?php else: ?>
 				<a <?php if(!$showFollowButton): ?>style="display:none"<?php endif;?> data-iswatched="0" class="follow wikia-button secondary"><?= wfMsg('oasis-follow'); ?></a>
 			<?php endif;?>
 			<div class="msg-title"><a href="<?= $fullpageurl; ?>"><? echo $feedtitle ?></a></div>
 		<? endif; ?>
 		<div class="edited-by">
-			<a href="<?= $user_author_url ?>"><?= $displayname ?></a> 
+			<a href="<?= $user_author_url ?>"><?= $displayname ?></a>
 			<a href="<?= $user_author_url ?>" class="subtle"><?= $displayname2 ?></a>
-			<?php if( !empty($isStaff) ): ?> 
+			<?php if( !empty($isStaff) ): ?>
 				<span class="stafflogo"></span>
 			<?php endif; ?>
 		</div>
 		<? if ( $wg->EnableMiniEditorExtForWall ):
-			echo $app->getView( 'MiniEditorController', 'Editor_Header' )->render(); 
+			echo $app->getView( 'MiniEditorController', 'Editor_Header' )->render();
 		endif; ?>
 		<div class="msg-body" id="WallMessage_<?= $id ?>">
 			<? echo $body ?>
 		</div>
 		<? if ( $wg->EnableMiniEditorExtForWall ):
-			echo $app->getView( 'MiniEditorController', 'Editor_Footer' )->render(); 
+			echo $app->getView( 'MiniEditorController', 'Editor_Footer' )->render();
 		endif; ?>
 		<div class="msg-toolbar">
 			<div class="timestamp">
 				<?php if($isEdited):?>
-					<? echo wfMsg('wall-message-edited', array('$1' => $editorUrl, '$2' => $editorName, '$3' => $historyUrl )); ?>
+					<? echo wfMsg('wall-message-edited', array( $editorUrl, $editorName, $historyUrl )); ?>
 				<?php endif; ?>
 				<a href="<?= $fullpageurl; ?>" class="permalink" tabindex="-1">
 					<?php if (!is_null($iso_timestamp)): ?>

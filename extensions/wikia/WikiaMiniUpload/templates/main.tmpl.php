@@ -6,10 +6,9 @@
 		<td><h1><?= wfMsg('wmu-upload') ?></h1></td>
 		<td>
 <?php
-global $wgScript, $wgStylePath, $wgExtensionsPath, $wgUser, $wgEnableUploads, $wgDisableUploads;
+global $wgScript, $wgStylePath, $wgExtensionsPath, $wgUser, $wgEnableUploads;
 
-// macbre: check wgDisableUploads too (RT #53714)
-if (!$wgEnableUploads || !empty($wgDisableUploads)) {
+if (!$wgEnableUploads) {
 	echo wfMsg( "wmu-uploaddisabled" );
 } else if( !$wgUser->isAllowed( 'upload' ) ) {
 	if( !$wgUser->isLoggedIn() ) {
@@ -39,8 +38,7 @@ if (!$wgEnableUploads || !empty($wgDisableUploads)) {
 		<td><h1><?= wfMsg('wmu-find') ?></h1></td>
 		<td>
 <?php
-// macbre: check wgDisableUploads too (RT #53714)
-if( $wgUser->isLoggedIn() && $wgUser->isAllowed('upload') && $wgEnableUploads && empty($wgDisableUploads) && !wfReadOnly() ) {
+if( $wgUser->isLoggedIn() && $wgUser->isAllowed('upload') && $wgEnableUploads && !wfReadOnly() ) {
 ?>
 			<div onclick="WMU_changeSource(event);" style="font-size: 9pt; float: right; margin-top: 5px;">
 				<a id="WMU_source_0" href="#" style="font-weight: bold;"><?= wfMsg('wmu-thiswiki') ?></a> |

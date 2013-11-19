@@ -7,11 +7,7 @@ define('wikia.ui.drawer', function drawer(){
 		this.drawerBackground = getDrawerBackground();
 
 		function getDrawerBackground() {
-			var drawerBackground = $('#drawerBackground');
-			if (!drawerBackground.exists()) {
-				drawerBackground = $('<div id="drawerBackground" class="drawerBackground" />');
-				$('body').append(drawerBackground);
-			}
+			var drawerBackground = $('#drawerBackground_' + side);
 			drawerBackground.click($.proxy(function() {
 				if (this.isOpen()) {
 					this.close();

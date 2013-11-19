@@ -89,15 +89,19 @@ class AvatarService extends Service {
 
 	/**
 	 * Get URL for avatar
+	 *
+	 * @param string|User $user user name
+	 * @param int $avatarSize
+	 * @return String avatar's URL
 	 */
-	static function getAvatarUrl($user, $avatarSize = 20, $avoidUpscaling = false) {
+	static function getAvatarUrl($user, $avatarSize = 20) {
 		wfProfileIn(__METHOD__);
 
 		static $avatarsCache;
 		if( $user instanceof User ) {
 			$key = "{$user->getName()}::{$avatarSize}";
 		} else {
-		//assumes $user is a string with user name
+			//assumes $user is a string with user name
 			$key = "{$user}::{$avatarSize}";
 		}
 
@@ -117,7 +121,7 @@ class AvatarService extends Service {
 			}
 
 			$masthead = Masthead::newFromUser($user);
-			$avatarUrl = $masthead->getThumbnail($avatarSize, true, $avoidUpscaling);
+			$avatarUrl = $masthead->getThumbnailPurgeUrl($avatarSize);
 
 			// use per-user cachebuster when custom avatar is used
 			$cb = !$masthead->isDefault() ? intval($user->getOption('avatar_rev')) : 0;
@@ -143,7 +147,7 @@ class AvatarService extends Service {
 	/**
 	 * Render avatar
 	 */
-	static function renderAvatar($userName, $avatarSize = 20, $avoidUpscaling = false) {
+	static function renderAvatar($userName, $avatarSize = 20) {
 		wfProfileIn(__METHOD__);
 
 		// For performance reasons, we only generate avatars that are of specific sizes.
@@ -156,23 +160,15 @@ class AvatarService extends Service {
 			$allowedSize = self::AVATAR_SIZE_LARGE;
 		}
 
-		$avatarUrl = self::getAvatarUrl($userName, $allowedSize, $avoidUpscaling);
+		$avatarUrl = self::getAvatarUrl($userName, $allowedSize);
 
-		if( $avoidUpscaling ) {
-			$ret = Xml::element('img', array(
-				'src' => $avatarUrl,
-				'class' => 'avatar',
-				'alt' => $userName,
-			));
-		} else {
-			$ret = Xml::element('img', array(
-				'src' => $avatarUrl,
-				'width' => $avatarSize,
-				'height' => $avatarSize,
-				'class' => 'avatar',
-				'alt' => $userName,
-			));
-		}
+		$ret = Xml::element('img', array(
+			'src' => $avatarUrl,
+			'width' => $avatarSize,
+			'height' => $avatarSize,
+			'class' => 'avatar',
+			'alt' => $userName,
+		));
 
 		wfProfileOut(__METHOD__);
 		return $ret;

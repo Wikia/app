@@ -318,6 +318,13 @@ $messages['ln'] = array(
 	'ircgate-channel' => 'Lileko:',
 );
 
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'ircgate-channel' => 'كانال:',
+);
+
 /** Latvian (latviešu)
  * @author Xil
  */

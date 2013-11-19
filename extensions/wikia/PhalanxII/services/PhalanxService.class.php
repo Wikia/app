@@ -148,9 +148,22 @@ class PhalanxService extends Service {
 		 * for any other we're sending POST
 		 */
 		else {
-			if (($action == "match" || $action == "check") && !is_null( $this->user ) ) {
-				$parameters[ 'wiki' ] = F::app()->wg->CityId;
-				$parameters[ 'user' ][] = $this->user->getName();
+			/**
+			 * city_id should be always known
+			 */
+			$parameters[ 'wiki' ] = F::app()->wg->CityId;
+
+			if( ( $action == "match" || $action == "check") ) {
+				if( !is_null( $this->user ) ) {
+					$parameters[ 'user' ][] = $this->user->getName();
+				}
+				else {
+					/**
+					 * it will be IP in worst case scenario
+					 */
+					global $wgUser;
+					$parameters[ 'user' ][] = $wgUser->getName();
+				}
 			}
 			if ($action == "match" && $this->limit != 1) {
 				$parameters['limit'] = $this->limit;
@@ -178,8 +191,10 @@ class PhalanxService extends Service {
 		if ( $response === false ) {
 			/* service doesn't work */
 			$res = false;
+
+			wfDebug( __METHOD__ . " - response failed!\n" );
 		} else {
-			wfDebug( __METHOD__ . "::response - {$response}\n" );
+			wfDebug( __METHOD__ . " - received '{$response}'\n" );
 
 			switch ( $action ) {
 				case "stats":

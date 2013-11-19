@@ -15,7 +15,7 @@ $wgExtensionCredits['specialpage'][] = array(
 	'version' => '0.0.1',
 );
 
-$dir = dirname(__FILE__) . '/';
+$dir = __DIR__ . '/';
 
 $wgAutoloadClasses['StaffLog'] = $dir . 'StaffLog_body.php'; # Tell MediaWiki to load the extension body.
 $wgAutoloadClasses['StaffLogger'] = $dir . 'StaffLog.events.php';
@@ -33,5 +33,6 @@ $wgSpecialPageGroups['stafflog'] = 'changes';
 
 $wgAvailableRights[] = 'stafflog';
 $wgGroupPermissions['staff']['stafflog'] = true;
+$wgGroupPermissions['helper']['stafflog'] = true;
 
 require_once $dir."StaffLog.events.php";

@@ -105,34 +105,40 @@ class SpecialPromoteHelper extends WikiaObject {
 		return $out;
 	}
 
-	public function uploadImage($upload) {
-		$uploadStatus = array("status" => "error");
+	public function uploadImage( $upload ) {
+		global $wgEnableUploads;
 
-		$upload->initializeFromRequest($this->wg->request);
-		$permErrors = $upload->verifyPermissions($this->wg->user);
+		$uploadStatus = array( "status" => "error" );
 
-		if ($permErrors !== true) {
-			$uploadStatus["errors"] = array(wfMsg('badaccess'));
+		if ( empty( $wgEnableUploads ) ) {
+			$uploadStatus["errors"] = [ wfMessage( 'promote-upload-image-uploads-disabled' )->plain() ];
 		} else {
-			$details = $upload->verifyUpload();
+			$upload->initializeFromRequest( $this->wg->request );
+			$permErrors = $upload->verifyPermissions( $this->wg->user );
 
-			if ($details['status'] != UploadBase::OK) {
-				$uploadStatus["errors"] = array($this->getUploadErrorMessage($details));
+			if ( $permErrors !== true ) {
+				$uploadStatus["errors"] = array( wfMessage( 'badaccess' )->plain() );
 			} else {
-				$warnings = $upload->checkWarnings();
+				$details = $upload->verifyUpload();
 
-				if (!empty($warnings)) {
-					$uploadStatus["errors"] = $this->getUploadWarningMessages($warnings);
+				if ( $details['status'] != UploadBase::OK ) {
+					$uploadStatus["errors"] = array( $this->getUploadErrorMessage( $details ) );
 				} else {
-					//save temp file
-					$file = $upload->stashFile();
+					$warnings = $upload->checkWarnings();
 
-					$uploadStatus["status"] = "uploadattempted";
-					if ($file instanceof File) {
-						$uploadStatus["isGood"] = true;
-						$uploadStatus["file"] = $file;
+					if ( ! empty( $warnings ) ) {
+						$uploadStatus["errors"] = $this->getUploadWarningMessages( $warnings );
 					} else {
-						$uploadStatus["isGood"] = false;
+						//save temp file
+						$file = $upload->stashFile();
+
+						$uploadStatus["status"] = "uploadattempted";
+						if ( $file instanceof File ) {
+							$uploadStatus["isGood"] = true;
+							$uploadStatus["file"] = $file;
+						} else {
+							$uploadStatus["isGood"] = false;
+						}
 					}
 				}
 			}
@@ -238,10 +244,24 @@ class SpecialPromoteHelper extends WikiaObject {
 	}
 
 	public function removeTempImage($imageName) {
-		$file = RepoGroup::singleton()->getLocalRepo()->getUploadStash()->getFile($imageName);
-		if ($file instanceof File) {
-			$file->remove();
+		global $wgEnableUploads;
+
+		if ( empty( $wgEnableUploads ) ) {
+			throw new Exception('promote-upload-image-uploads-disabled');
 		}
+
+		try {
+			$file = RepoGroup::singleton()->getLocalRepo()->getUploadStash()->getFile( $imageName );
+
+			if ( $file instanceof File ) {
+				$file->remove();
+				return true;
+			}
+		} catch ( Exception $e ) {
+			return false;
+		}
+
+		return false;
 	}
 
 	public function removeImage($imageName) {
@@ -257,7 +277,14 @@ class SpecialPromoteHelper extends WikiaObject {
 	}
 
 	public function saveVisualizationData($data, $langCode) {
+		global $wgEnableUploads;
+
 		wfProfileIn(__METHOD__);
+
+		if ( empty( $wgEnableUploads ) ) {
+			throw new Exception('promote-upload-image-uploads-disabled');
+		}
+
 		$cityId = $this->wg->cityId;
 		$contentLang = $this->wg->contLang->getCode();
 		$files = array('additionalImages' => array());
@@ -271,9 +298,9 @@ class SpecialPromoteHelper extends WikiaObject {
 			switch ($fileType) {
 				case 'mainImageName':
 					$fileName = $dataContent;
-					if (strpos($fileName, UploadVisualizationImageFromFile::VISUALIZATION_MAIN_IMAGE_NAME) === false) {
+					if ( strpos( $fileName, UploadVisualizationImageFromFile::VISUALIZATION_MAIN_IMAGE_NAME ) === false ) {
 						$dstFileName = UploadVisualizationImageFromFile::VISUALIZATION_MAIN_IMAGE_NAME;
-						$files['mainImage'] = $this->moveTmpFile($fileName, $dstFileName);
+						$files['mainImage'] = $this->moveTmpFile( $fileName, $dstFileName );
 						$files['mainImage']['modified'] = true;
 					} else {
 						$files['mainImage']['name'] = $fileName;
@@ -348,7 +375,6 @@ class SpecialPromoteHelper extends WikiaObject {
 		$this->wg->memc->delete(
 			$visualizationModel->getVisualizationBatchesCacheKey($corpWikiId, $langCode)
 		);
-
 
 		wfProfileOut(__METHOD__);
 	}

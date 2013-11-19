@@ -85,7 +85,8 @@ var WikiaQuiz = {
 		}, 1000);
 	},
 	showQuiz: function() {
-		WikiaQuiz.ui.questions.add(WikiaQuiz.ui.countDown).animate({left:"-=840px"}, WikiaQuiz.animationTiming + 200);
+		WikiaQuiz.ui.questions.animate({left:"-="+$('#WikiaQuiz').css('width')}, WikiaQuiz.animationTiming + 200);
+		WikiaQuiz.ui.countDown.animate({left:"-=840px"}, WikiaQuiz.animationTiming + 200);
 	},
 	initializeQuestion: function(cq) {
 		WikiaQuiz.trackEvent('impression', 'question' + (WikiaQuiz.cqNum + 1));

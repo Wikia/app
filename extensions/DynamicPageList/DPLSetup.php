@@ -586,6 +586,7 @@ class ExtDynamicPageList {
 
 		'dplcache'			   => array( 'default' => '' ),
 		'dplcacheperiod'	   => array( 'default' => '86400', 'pattern' => '/^\d+$/' ), // 86400 = # seconds for one day
+		'dplcachestorage'     => array( 'default' => 'files', 'memcache' ),
 
 		/**
 		 * number of columns for output, default is 1

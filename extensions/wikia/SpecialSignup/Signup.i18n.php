@@ -169,6 +169,13 @@ $messages['ksh'] = array(
 	'signup' => 'Aanmälde',
 );
 
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'signup' => 'اومائن د سيستم',
+);
+
 /** Macedonian (македонски)
  */
 $messages['mk'] = array(

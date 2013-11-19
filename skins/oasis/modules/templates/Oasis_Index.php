@@ -12,10 +12,7 @@
 
 <title><?= $pageTitle ?></title>
 
-<!-- SASS-generated CSS file -->
-<link rel="stylesheet" href="<?= AssetsManager::getInstance()->getSassCommonURL( $mainSassFile ) ?>">
-
-<!-- CSS injected by extensions -->
+<!-- CSS injected by skin and extensions -->
 <?= $cssLinks ?>
 
 <?
@@ -81,14 +78,6 @@ if(Math.random()<0.01){
 <body class="<?= implode(' ', $bodyClasses) ?>"<?= $itemType ?>>
 <? if ( BodyController::isResponsiveLayoutEnabled() ): ?>
 	<div class="background-image-gradient"></div>
-<script>
-// START DAR-1859 | A/B Test CTR on right rail modules below the article vs next to the article
-// Those lines will be removed in DAR-2121, after the test
-if ( window.Wikia.AbTest && (Wikia.AbTest.getGroup( "DAR_RIGHTRAILPOSITION" ) == "STATIC") ) {
-	document.documentElement.className += " keep-rail-on-right";
-}
-// END DAR-1859 | A/B Test CTR on right rail modules below the article vs next to the article
-</script>
 <? endif ?>
 
 <?= $comScore ?>
@@ -107,6 +96,7 @@ if ( window.Wikia.AbTest && (Wikia.AbTest.getGroup( "DAR_RIGHTRAILPOSITION" ) ==
 			echo F::app()->renderView('Ad', 'Index', array('slotname' => 'INVISIBLE_2'));
 		}
 	}
+	echo F::app()->renderView('Ad', 'Index', array('slotname' => 'SEVENONEMEDIA_FLUSH'));
 ?>
 
 <? if( $jsAtBottom ): ?>

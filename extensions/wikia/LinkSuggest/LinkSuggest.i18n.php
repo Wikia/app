@@ -8,6 +8,13 @@ $messages['en'] = array(
 	'tog-redirected-from' => '&ndash; redirected from $1'
 );
 
+/** Message documentation (Message documentation)
+ * @author Hamilton Abreu
+ */
+$messages['qqq'] = array(
+	'tog-disablelinksuggest' => '{{Related|Source mode (wikia)}}',
+);
+
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */
@@ -317,7 +324,7 @@ $messages['ps'] = array(
  * @author Hamilton Abreu
  */
 $messages['pt'] = array(
-	'tog-disablelinksuggest' => 'Não apresentar sugestões de links no modo de Código',
+	'tog-disablelinksuggest' => 'Não apresentar sugestões de links no modo Fonte',
 );
 
 /** Brazilian Portuguese (português do Brasil)

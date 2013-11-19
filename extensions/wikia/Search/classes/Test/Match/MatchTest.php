@@ -108,8 +108,10 @@ class MatchTest extends BaseTest {
 		                      ->getMock();
 		
 		$pageId = 123;
+		$highlight = 'long span class';
+
 		$mockMatch = $this->getMockBuilder( 'Wikia\Search\Match\Article' )
-		                   ->setConstructorArgs( array( $pageId, $mockService ) )
+		                   ->setConstructorArgs( array( $pageId, $mockService,$highlight ) )
 		                   ->setMethods( array( 'hasRedirect' ) )
 		                   ->getMock();
 		
@@ -122,7 +124,9 @@ class MatchTest extends BaseTest {
 		$nonCanonicalUrl = 'http://foo.wikia.com/wiki/Turduckens';
 		$created = '30 days ago';
 		$touched = 'now';
-		$snippet = "This be my snippet";
+		$snippet = "This be my long snippet";
+		$highlighted = 'This be my <span class="searchmatch">long</span> snippet&hellip;';
+
 		$fieldsArray = array(
 				'id' => sprintf( '%s_%s', $wid, $canonicalPageId ),
 				'pageid' => $pageId,
@@ -135,7 +139,7 @@ class MatchTest extends BaseTest {
 				'created' => $created,
 				'touched' => $touched
 				);
-		
+
 		$mockService
 		    ->expects( $this->atLeastOnce() )
 		    ->method ( 'getWikiId' )
@@ -206,7 +210,7 @@ class MatchTest extends BaseTest {
 				$result
 		);
 		$this->assertEquals(
-				$snippet."&hellip;",
+				$highlighted,
 				$result->getText()
 		);
 		$this->assertEquals(

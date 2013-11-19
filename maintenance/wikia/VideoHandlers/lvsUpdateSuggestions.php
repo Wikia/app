@@ -93,7 +93,7 @@ class LVSUpdateSuggestions extends Maintenance {
 				   $whereExpired";
 
 		$db = wfGetDB( DB_SLAVE );
-		$results = $db->query($sql);
+		$results = $db->query( $sql, __METHOD__ );
 
 		$lvsHelper = new LicensedVideoSwapHelper();
 
@@ -111,7 +111,7 @@ class LVSUpdateSuggestions extends Maintenance {
 			// This sets page_wikia_props for WPP_LVS_SUGGEST_DATE, WPP_LVS_EMPTY_SUGGEST and WPP_LVS_SUGGEST
 			$suggestions = $lvsHelper->suggestionSearch( $title, $this->test );
 
-			if ( $suggestions ) {
+			if ( empty( $suggestions ) ) {
 				$vidsWithSugggestions++;
 				$totalSuggestions += count($suggestions);
 
@@ -120,6 +120,12 @@ class LVSUpdateSuggestions extends Maintenance {
 				$this->debug("\tNo suggestions found\n");
 			}
 		}
+
+		// clear cache for total videos
+		$lvsHelper->invalidateCacheTotalVideos();
+
+		// clear cache for total new videos
+		$lvsHelper->invalidateCacheTotalNewVideos();
 
 		wfProfileOut( __METHOD__ );
 

@@ -332,7 +332,7 @@ class CommentsIndex extends WikiaModel {
 		} else {
 			// instances created during this requests are stored in the cache, so we don't call the db to fetch them
 			if ( isset( self::$objectCache[ $commentId ] ) ) {
-				error_log("MECH NEW returning cached object for id " . $commentId);
+				Wikia::log(__FUNCTION__, __LINE__, "WALL_COMMENTS returning cached object for id " . $commentId, true);
 				$ci = clone self::$objectCache[ $commentId ];
 				$ci->setDB( $dbw );
 				return $ci;

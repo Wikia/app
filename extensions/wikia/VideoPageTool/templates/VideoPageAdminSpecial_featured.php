@@ -5,12 +5,15 @@
 		<?
 			$video = $videos[ $x ];
 			$descriptionMaxLength = "200";
+
+			// hide large image preview link if there's no large image yet.
+			$previewLinkDisplayClass = empty( $video[ 'altThumbKey' ] ) ? "hidden" : "";
 		?>
 
 		<div class="form-box featured-video with-nav">
 			<span class="count"><?= $x ?>.</span>
 
-			<div class="input-group video-key-group">
+			<div class="input-group button-group">
 				<button type="button" class="add-video-button media-btn">
 					<?= wfMessage( 'videopagetool-button-add-video' )->text() ?>
 				</button>
@@ -18,13 +21,14 @@
 				<input type="hidden" name="videoKey[]" class="video-key" id="video-key-<?= $x ?>" value="<?= $video[ 'videoKey' ] ?>">
 			</div>
 
-			<div class="video-thumb">
-				<?= $video[ 'videoThumb' ] ?>
+			<div class="video-thumb-wrapper">
+				<div class="video-thumb">
+					<?= $video[ 'videoThumb' ] ?>
+				</div>
+				<a class="preview-large-link <?= $previewLinkDisplayClass ?>" href="<?= $video[ 'largeThumbUrl' ] ?>" target="_blank">Preview large version</a>
 			</div>
-			<a class="preview-large-link" href="#" target="_blank">Preview large version</a>
 
-			<div class="input-group">
-
+			<div class="input-group button-group">
 				<button type="button" class="media-uploader-btn media-btn">
 					<?= wfMessage( 'videopagetool-button-add-thumbnail' )->plain() ?>
 				</button>
@@ -35,7 +39,7 @@
 				</p>
 
 				<input type="hidden" name="altThumbKey[]" class="alt-thumb" id="alt-thumb-<?= $x ?>" value="<?= $video[ 'altThumbKey' ] ?>">
-				<div class="tip"><?= wfMessage('videopagetool-hint-required-dimensions')->plain() ?></div>
+				<div class="hint"><?= wfMessage('videopagetool-hint-required-dimensions')->plain() ?></div>
 			</div>
 
 			<div class="input-group border">

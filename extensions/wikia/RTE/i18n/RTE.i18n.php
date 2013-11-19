@@ -25,11 +25,14 @@ $messages['en'] = array(
 
 /** Message documentation (Message documentation)
  * @author EugeneZelenko
+ * @author Hamilton Abreu
  * @author Shirayuki
  */
 $messages['qqq'] = array(
+	'rte-edgecase-info-title' => '{{Related|Source mode (wikia)}}',
 	'rte-edgecase-triplecurls' => '{{Identical|Template parameter}}',
 	'rte-edgecase-redirect' => '{{Identical|Redirect}}',
+	'enablerichtexteditor' => '{{Related|Source mode (wikia)}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -275,9 +278,10 @@ $messages['fa'] = array(
 
 /** Finnish (suomi)
  * @author Centerlink
+ * @author Ville96
  */
 $messages['fi'] = array(
-	'rte-edgecase-info' => 'Rich text-muokkaus on poistettu käytöstä, koska sivu sisältää monimutkaisia koodi.',
+	'rte-edgecase-info' => 'Rich text -muokkaus on poistettu käytöstä, koska sivu sisältää monimutkaista koodia.',
 	'rte-edgecase-comment' => 'HTML-kommentit',
 );
 
@@ -615,7 +619,7 @@ $messages['pms'] = array(
 $messages['pt'] = array(
 	'rte-desc' => 'Integração do CKeditor no MediaWiki',
 	'rte-no-js-fallback' => 'O editor de texto enriquecido não funciona com o JavaScript desativado. Ative-o nas opções do browser, ou mude as suas [[Special:Preferences|preferências]] para o editor antigo do MediaWiki.',
-	'rte-edgecase-info-title' => 'É necessário o modo de código fonte',
+	'rte-edgecase-info-title' => 'É necessário o modo fonte',
 	'rte-edgecase-info' => 'A edição de texto enriquecido foi desativada porque a página contém código complexo.',
 	'rte-edgecase-comment' => 'comentários HTML',
 	'rte-edgecase-triplecurls' => 'parâmetros de predefinições',
@@ -627,8 +631,8 @@ $messages['pt'] = array(
 	'rte-edgecase-redirect' => 'redirecionamento',
 	'rte-edgecase-templateintable' => 'uma tabela cuja definição chama uma predefinição',
 	'rte-edgecase-unclosed-tags' => 'elemento HTML não foi fechado',
-	'enablerichtexteditor' => 'Activar o Editor de Texto Enriquecido ("Rich Text Editor")', # Fuzzy
-	'rte-enablerichtexteditormessage' => 'O Editor de Texto Enriquecido foi activado!',
+	'enablerichtexteditor' => 'Ativar o editor no modo visual (em adição ao modo fonte)',
+	'rte-enablerichtexteditormessage' => 'O Editor de Texto Enriquecido foi ativado!',
 	'rte-first-run-notice' => 'Fizemos algumas melhorias no editor. Para saber mais, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news leia o anúncio].',
 	'prefs-rte' => 'Editor de Texto Enriquecido',
 );

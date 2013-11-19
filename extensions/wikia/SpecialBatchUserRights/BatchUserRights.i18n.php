@@ -601,6 +601,24 @@ $messages['uk'] = array(
 Решту сторінки буде оброблено, щоб показати користувачів, яких не можна завантажити.',
 );
 
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'batchuserrights' => 'Lô người dùng quyền',
+	'batchuserrights-desc' => 'Cho phép thêm một hoặc nhiều người dùng vào một nhóm trong một hành động',
+	'batchuserrights-names' => 'Tên người dùng để thêm nhóm này vào (một mỗi dòng):',
+	'batchuserrights-intro' => 'Trang này sẽ cho phép bạn thêm một nhóm để nhiều người dùng cùng một lúc.
+Vì lý do an ninh, danh sách addable nhóm được thiết lập trong cấu hình của phần mở rộng và không thể được thay đổi từ trong wiki.
+Xin vui lòng hỏi người quản trị hệ thống, nếu bạn cần phải cho phép thêm hàng loạt của các nhóm khác.',
+	'batchuserrights-single-progress-update' => 'Thêm vào  {{PLURAL:$1| group|groups}} để <strong> $2 </strong>.',
+	'batchuserrights-add-groups' => 'Thêm  {{PLURAL:$1| một user| $1  người dùng}} sau  {{PLURAL:$2| group|groups}}: <strong> $3 </strong>.',
+	'batchuserrights-userload-error' => "Không thể nạp người sử dụng \"'' ' \$1 '''\".",
+	'batchuserrights-no-groups' => 'Bạn đã không chọn bất kỳ nhóm.
+Điều này sẽ không thực hiện bất cứ điều gì.
+Phần còn lại của trang web sẽ được phép chạy chỉ vì vậy mà bạn có thể dễ dàng nhìn thấy nếu bất kỳ tên người dùng có thể không được nạp.',
+);
+
 /** Simplified Chinese (中文（简体）‎)
  * @author Anakmalaysia
  * @author Dimension

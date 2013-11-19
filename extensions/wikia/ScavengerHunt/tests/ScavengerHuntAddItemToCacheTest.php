@@ -1,6 +1,9 @@
 <?php
 require_once dirname(__FILE__) . '/../tests/ScavengerHuntTest.php';
 
+/**
+ * @group Broken
+ */
 class ScavengerHuntAddItemToCacheTest extends ScavengerHuntTest {
 
 	public function conditions(){
@@ -23,7 +26,6 @@ class ScavengerHuntAddItemToCacheTest extends ScavengerHuntTest {
 
 	public function testAddItemToCache( $articleExist, $articlesList, $cachedList, $expectedResult, $brokenCache = false ) {
 
-		$this->markTestSkipped('Test is failing and causing false positives');
 		// Game
 		$articlesIdentifiers = array();
 		foreach( $articlesList as $art ) {
