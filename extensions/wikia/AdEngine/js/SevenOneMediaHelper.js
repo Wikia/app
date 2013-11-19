@@ -129,16 +129,11 @@ var SevenOneMediaHelper = function (adLogicPageLevelParams, scriptWriter, log, w
 	}
 
 	function injectJavaScripts(slotname, done, error) {
-		var javaScriptsPlaceHolder = 'ad-' + slotname,
-			jsUrl = window.wgCdnRootUrl + window.wgAssetsManagerQuery.
-				replace('%1$s', 'groups').
-				replace('%2$s', 'adengine2_sevenonemedia_js').
-				replace('%3$s', '-').
-				replace('%4$d', window.wgStyleVersion);
+		var javaScriptsPlaceHolder = 'ad-' + slotname;
 
 		scriptWriter.injectScriptByUrl(
 			javaScriptsPlaceHolder,
-			jsUrl,
+			window.wgAdDriverSevenOneMediaCombinedUrl,
 			function () {
 				if (!window.SEVENONEMEDIA_CSS) {
 					error('sevenonemedia_css');
