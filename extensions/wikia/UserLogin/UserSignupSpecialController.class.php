@@ -98,17 +98,12 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 			$this->errParam = $response->getVal( 'errParam', '' );
 
 			if ( $this->result == 'ok' ) {
-				$dbw = wfGetDB( DB_MASTER );
-				$dbw->commit();
 				$params = array(
 					'method' => 'sendConfirmationEmail',
 					'username' => $this->username,
 					'byemail' => intval($this->byemail),
 				);
 				$redirectUrl = $this->wg->title->getFullUrl( $params );
-				//log user options before redirect
-				$uTest = User::newFromName($this->username);
-				error_log("KamilkUserSignup4-WIKIA: UserId".$uTest->getId()." ==getOptions before redirect to sendmail== ".json_encode( $uTest->getOptions() ) );
 				$this->wg->out->redirect( $redirectUrl );
 			}
 
