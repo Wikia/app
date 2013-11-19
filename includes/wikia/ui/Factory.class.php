@@ -314,7 +314,6 @@ class Factory {
 
 		if ( !empty( $componentConfig['dependencies'][self::COMPONENT_DEPENDENCY] ) ) {
 			$component->setComponentDependencies( $componentConfig['dependencies'][self::COMPONENT_DEPENDENCY] );
-			// @todo - do we need to process the dependencies here? like call init on them and fetch their assets?
 		}
 	}
 
@@ -344,7 +343,21 @@ class Factory {
 		}
 
 		if ( is_array( $dependencies ) ) {
-			// process dependencies
+			// process the dependencies
+			$dependenciesToLoad = [];
+			foreach( $result as $component ) {
+				$dependenciesToLoad = array_merge( $dependenciesToLoad, $component->getComponentDependencies() );
+			}
+			while( !empty( $dependenciesToLoad ) ) {
+				$name = array_shift( $dependenciesToLoad );
+				if ( !isset( $components[$name] ) ) {
+					$components[$name] = $this->initComponent( $name, $assets );
+					$dependenciesToLoad = array_merge($dependenciesToLoad, $components[$name]->getComponentDependencies() );
+				}
+				if ( !isset( $dependencies[$name] ) ) {
+					$dependencies[$name] = $components[$name];
+				}
+			}
 		}
 
 		if ( $loadAssets ) {
