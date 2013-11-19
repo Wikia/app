@@ -28,7 +28,10 @@ class MigrateWikisToSwift extends Maintenance {
 	const SCRIPT_PROCS = 50;
 	CONST CMD = 'run_maintenance --conf=%s --where="city_id in (%s)" --script "wikia/migrateImagesToSwift.php%s" --procs=%d ';
 	
-	private $disabled_wikis = [ 717284, 298117 ];
+	private $disabled_wikis = [
+		717284, // corp.wikia.com
+		298117  // video.wikia.com
+	];
 	private $db;
 	
 	/* time counter */

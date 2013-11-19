@@ -2455,6 +2455,17 @@ $messages['uk'] = array(
 	'toplists-oasis-only' => 'Створення та редагування списків 10 популярних недоступне в Monobook. Якщо ви хотіли б скористатися цією функцією, то, будь ласка, перемкніть ваші налаштування на оболонку Вікія.',
 );
 
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'toplists-seconds' => '$1 {{PLURAL:$1|giây|giây}}',
+	'toplists-minutes' => '$1 {{PLURAL:$1|phút|phút}}',
+	'toplists-hours' => '$1 {{PLURAL:$1|giờ|giờ}}',
+	'toplists-days' => '$1 {{PLURAL:$1|ngày|ngày}}',
+	'toplists-weeks' => '$1 {{PLURAL:$1|tuần|tuần}}',
+);
+
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Hydra

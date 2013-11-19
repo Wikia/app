@@ -116,10 +116,12 @@ $messages['ca'] = array(
 $messages['ce'] = array(
 	'timeago-year' => '$1 {{PLURAL:$1|шо}} хьалха',
 	'timeago-month' => '$1 {{PLURAL:$1|бутт}} хьалха',
-	'timeago-day' => '{{PLURAL:$1|$1 де|$1 де|$1 де}} хьалха', # Fuzzy
-	'timeago-hour' => '{{PLURAL:$1|сахьат}} хьалха',
-	'timeago-day-from-now' => '{{PLURAL:$1|$1 де|$1 де|$1 де}} хьалха', # Fuzzy
-	'timeago-hour-from-now' => '{{PLURAL:$1|сахьат}} хьалха',
+	'timeago-day' => '{{PLURAL:$1|$1 де}} хьалха',
+	'timeago-hour' => '{{PLURAL:$1|$1 сахьат}} хьалха',
+	'timeago-minute' => '$1 {{PLURAL:$1|минут}} хьалха',
+	'timeago-day-from-now' => '{{PLURAL:$1|$1 де}} хьалха',
+	'timeago-hour-from-now' => '{{PLURAL:$1|$1 сахьат}} хьалха',
+	'timeago-minute-from-now' => '$1 {{PLURAL:$1|минут}} хьалха',
 	'timeago-month-from-now' => '$1 {{PLURAL:$1|бутт}} хьалха',
 );
 
@@ -325,6 +327,16 @@ $messages['ja'] = array(
 	'timeago-minute-from-now' => '$1分前',
 	'timeago-month-from-now' => '$1ヶ月前',
 	'timeago-second-from-now' => '1分前',
+);
+
+/** Georgian (ქართული)
+ * @author DevaMK
+ */
+$messages['ka'] = array(
+	'timeago-day' => '$1 დღის წინ',
+	'timeago-hour' => '$1 საათის წინ',
+	'timeago-minute' => '$1 წუთის წინ',
+	'timeago-second' => '1 წუთის წინ',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -636,11 +648,13 @@ $messages['uk'] = array(
 );
 
 /** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
  * @author Minh Nguyen
  * @author Xiao Qiao
  */
 $messages['vi'] = array(
 	'timeagomessaging-desc' => 'Cung cấp i18n cho phần mềm jquery.timeago.js',
+	'timeago-year' => 'cách đây $1 năm',
 	'timeago-month' => '$1 tháng trước',
 	'timeago-day' => '{{PLURAL:$1|1 ngày|$1 ngày}} trước',
 	'timeago-hour' => '{{PLURAL:$1|1 giờ|$1 giờ}} trước',

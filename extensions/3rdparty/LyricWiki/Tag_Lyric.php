@@ -144,6 +144,7 @@ function renderLyricTag($input, $argv, $parser)
 		$ringtoneLink.= "$href<img src='" . $imgPath . "/phone_left.gif' alt='phone' width='16' height='17'/> ";
 		$ringtoneLink.= "Send \"$songTitle\" Ringtone to your Cell";
 		$ringtoneLink.= " <img src='" . $imgPath . "/phone_right.gif' alt='phone' width='16' height='17'/></a>";
+		$ringtoneLink.= "<span class='adNotice'>Ad</span>";
 		$ringtoneLink.= "</div>";
 		$wgFirstLyricTag = false;
 	}

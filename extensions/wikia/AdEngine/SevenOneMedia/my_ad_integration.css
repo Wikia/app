@@ -3,10 +3,6 @@
 	SevenOne Media Ad Integration for de.wikia.com
 */
 
-#WikiaTopAds {
-	display: none;
-}
-
 .ad-version:after {
 	content: '$Revision: 1.6 $';
 	display: none;

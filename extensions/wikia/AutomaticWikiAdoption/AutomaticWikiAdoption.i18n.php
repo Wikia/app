@@ -2837,22 +2837,69 @@ $messages['uk'] = array(
  * @author Baonguyen21022003
  */
 $messages['vi'] = array(
+	'wikiadoption-button-adopt' => 'Có, tôi muốn áp dụng {{SITENAME}}!',
+	'wikiadoption-adopt-inquiry' => 'Tìm hiểu thêm',
+	'wikiadoption-description' => '$1, sẵn sàng để áp dụng {{SITENAME}}?
+<br /><br />
+Chưa có một quản trị viên hoạt động trên {{SITENAME}} trong một thời gian, và chúng tôi đang tìm kiếm một nhà lãnh đạo mới để giúp wiki này nội dung và cộng đồng phát triển! Là một người đã đóng góp cho {{SITENAME}}, chúng tôi đã tự hỏi nếu bạn muốn công việc.
+<br /><br />
+Bằng việc áp dụng wiki, bạn sẽ được lên đến người quản trị và hành chính để cung cấp cho bạn các công cụ bạn cần để quản lý wiki cộng đồng và nội dung. Bạn cũng có thể tạo các quản trị viên để giúp đỡ, xóa, quay ngược lại, di chuyển và bảo vệ trang.
+<br /><br />
+Bạn đã sẵn sàng để thực hiện các bước tiếp theo để giúp {{SITENAME}} trở nên thành công hơn?',
+	'wikiadoption-know-more-header' => 'Bạn có muốn biết thêm chi tiết?',
+	'wikiadoption-know-more-description' => 'Kiểm tra những liên kết này cho biết thêm thông tin. Và tất nhiên, cảm thấy tự do để liên hệ với chúng tôi nếu bạn có bất kỳ câu hỏi!',
+	'wikiadoption-adoption-successed' => 'Chúc mừng bạn! Bây giờ bạn là một bảo quản viên trên wiki này!',
+	'wikiadoption-adoption-failed' => 'Chúng tôi rất tiếc. Chúng tôi đã cố gắng để làm cho bạn một bảo quản viên, nhưng không có hiệu quả. Xin vui lòng [http://community.wikia.com/Special:Contact liên hệ chúng tôi], và chúng tôi sẽ cố gắng giúp bạn ra ngoài.',
+	'wikiadoption-not-allowed' => 'Chúng tôi rất tiếc. Bạn không thể áp dụng wiki này ngay bây giờ được.',
+	'wikiadoption-not-enough-edits' => 'Rất tiếc! Bạn cần phải có nhiều hơn 10 sửa đổi mới thông qua wiki này.',
+	'wikiadoption-adopted-recently' => 'Rất tiếc! Bạn đã thông qua một wiki mới. Bạn sẽ cần phải chờ đợi một thời gian nữa trước khi bạn có thể áp dụng một wiki mới.',
+	'wikiadoption-log-reason' => 'Nhận con nuôi tự động Wiki',
+	'wikiadoption-notification' => '{{SITENAME}} là một wiki của bạn. Muốn trở thành một nhà lãnh đạo ở đây? Áp dụng wiki này để bắt đầu!$2',
+	'wikiadoption-mail-first-subject' => 'Chúng tôi đã không nhìn thấy bạn xung quanh trong một thời gian',
+	'wikiadoption-mail-first-content' => 'Xin chào $1,
+
+Nó đã là một vài tuần kể từ khi chúng tôi đã thấy một bảo quản viên trên #WIKINAME. bảo quản viên là một phần không thể tách rời của #WIKINAME và nó là quan trọng, họ có một sự hiện diện thường xuyên. Nếu không có không có bảo quản viên hoạt động trong một thời gian dài của thời gian, wiki này có thể được đưa lên làm con nuôi để cho phép các người dùng khác để trở thành người bảo quản viên.
+
+Nếu bạn cần trợ giúp chăm sóc của wiki, bạn cũng có thể cho phép các thành viên khác của cộng đồng để trở thành bảo quản viên bây giờ bằng cách đi tới  $2 .  Hy vọng để xem bạn trên #WIKINAME sớm!
+
+Đội Wikia
+
+Bạn có thể ngừng đăng ký thay đổi vào danh sách này ở đây:$3',
+	'wikiadoption-mail-first-content-HTML' => 'Hi $1,<br /><br />
+
+Nó đã là một vài tuần kể từ khi chúng tôi đã thấy một bảo quản viên trên #WIKINAME. bảo quản viên là một phần không thể tách rời của #WIKINAME và nó là quan trọng, họ có một sự hiện diện thường xuyên. Nếu không có bảo quản viên hoạt động trong một thời gian dài của thời gian, wiki này có thể được đưa lên làm wiki cần nhận để cho phép các người dùng khác để trở thành bảo quản viên.<br /><br />
+
+Nếu bạn cần trợ giúp chăm sóc của wiki, bạn cũng có thể cho phép các thành viên khác của cộng đồng để trở thành bảo quản viên bây giờ bằng cách đi đến <a href="<span class=" notranslate"="" translate="no">$2"> quản lý người dùng quyền</a>.  Hy vọng để xem bạn trên #WIKINAME sớm!<br /><br />
+
+Cộng đồng hỗ trợ Wikia<br /><br />
+
+Bạn có thể <a href="<span class=" notranslate"="" translate="no">$3"> bỏ đăng ký</a> từ các thay đổi vào danh sách này.',
+	'wikiadoption-mail-second-subject' => '#WIKINAME sẽ được đưa lên làm chủ sớm',
+	'wikiadoption-mail-second-content' => 'Xin chào $1,
+
+Ôi, không! Nó đã là gần 60 ngày kể từ khi đã có hoạt động quản trị viên trên #WIKINAME. Nó là quan trọng là quản trị viên thường xuyênn xuất hiện và đóng góp để wiki có thể tiếp tục chạy trơn tru.
+
+Kể từ khi nó đã là nhiều ngày kể từ khi một quản trị hiện tại đã xuất hiện, #WIKINAME sẽ bây giờ được cung cấp cho nhận con nuôi cho biên tập viên khác.
+
+Đội Wikia
+
+Bạn có thể ngừng đăng ký thay đổi vào danh sách này ở đây: $3',
 	'wikiadoption-welcome-header' => 'Chúc mừng! Bạn đã thông qua {{SITENAME}}!',
 	'wikiadoption-welcome-body' => 'Bạn bây giờ là một công chức wiki này. Với tình trạng mới của bạn, bạn bây giờ có quyền truy cập vào tất cả các công cụ mà sẽ giúp bạn quản lý {{SITENAME}}.
-<br><br>
+<br /><br />
 Điều quan trọng nhất bạn có thể làm để giúp đỡ {{SITENAME}} phát triển là tiếp tục chỉnh sửa.
-<br><br>
+<br /><br />
 Nếu có là không có quản trị viên hoạt động trên một wiki nó có thể được đưa lên cho nhận con nuôi như vậy chắc chắn để kiểm tra thường xuyên trong wiki.
-<br><br>
+<br /><br />
 Công cụ hữu ích:
-<br><br>
-[[Đặc biệt:ThemeDesigner|ThemeDesigner]]
-<br>
-[[Đặc biệt:LayoutBuilder|Trang bố trí Builder]]
-<br>
-[[Đặc biệt:ListUsers|Danh sách người dùng]]
-<br>
-[[Đặc biệt:UserRights|Quản lý quyền]]', # Fuzzy
+<br /><br />
+[[Special:ThemeDesigner|ThemeDesigner]]
+<br />
+[[Special:LayoutBuilder|Page Layout Builder]]
+<br />
+[[Special:ListUsers|User List]]
+<br />
+[[Special:UserRights|Manage Rights]]',
 );
 
 /** Simplified Chinese (中文（简体）‎)
