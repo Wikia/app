@@ -74,8 +74,15 @@ h1, h2, h3{
 
 	//TODO:Find it in core and do not print it out in mobile skin
 	.editsection {
-		display: none;
+        margin-left:10px;
+
+      font-size: 0.5em;
+        line-height:1.0em;
+        color: black;
 	}
+    .editsection a:active{
+      font-size: 1em;
+    }
 
 	//a nicer way to display images in sections header
 	figure {
