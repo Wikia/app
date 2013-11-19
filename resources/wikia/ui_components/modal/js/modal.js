@@ -88,7 +88,7 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window', 'wikia.browserDetect' ], f
 
 		function getBlackout() {
 			var blackoutId = BLACKOUT_ID + '_' + id,
-				$blackout = $('#' + blackoutId );
+				$blackout = $( '#' + blackoutId );
 
 			$blackout.click( $.proxy(function( event ) {
 				event.preventDefault();
@@ -96,15 +96,15 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window', 'wikia.browserDetect' ], f
 				if ( this.isShown() && this.isActive() ) {
 					this.close();
 				}
-			}, that) );
+			}, that ) );
 
 			return $blackout;
 		}
 
-		this.$element.click( function( event ) {
+		this.$element.click(function( event ) {
 			// when click happens inside the modal, stop the propagation so it won't be handled by the blackout
 			event.stopPropagation();
-		} );
+		});
 
 		this.$blackout = getBlackout();
 		this.$close = this.$element.find( '.' + CLOSE_CLASS );
@@ -132,7 +132,7 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window', 'wikia.browserDetect' ], f
 		this.$blackout.addClass( BLACKOUT_VISIBLE_CLASS );
 
 		// IE flex-box fallback for small and medium modals
-		if ( this.$element.hasClass('large') === false && browserDetect.isIE() ) {
+		if ( this.$element.hasClass( 'large' ) === false && browserDetect.isIE() ) {
 
 			this.$blackout.addClass( 'IE-flex-fix' );
 			ieFlexboxFallback( this );

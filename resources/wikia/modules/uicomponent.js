@@ -7,7 +7,7 @@
  *
  */
 
-define('wikia.ui.component', ['wikia.mustache'], function uicomponent(mustache) {
+define( 'wikia.ui.component', [ 'wikia.mustache' ], function uicomponent( mustache ) {
 	'use strict';
 
 	/**
@@ -16,35 +16,39 @@ define('wikia.ui.component', ['wikia.mustache'], function uicomponent(mustache) 
 	 * @throw {Error} message with missing variables
 	 */
 
-	function validateComponent(componentConfig, componentType, componentVars) {
+	function validateComponent( componentConfig, componentType, componentVars ) {
 
 		// Validate component type
-		var supportedTypes = componentConfig.templates;
+		var supportedTypes = componentConfig.templates,
+			variables,
+			requiredVars,
+			missingVars = [];
 
-		if (!supportedTypes.hasOwnProperty(componentType)) {
-			throw new Error('Requested component type is not supported!');
+
+		if ( !supportedTypes.hasOwnProperty( componentType ) ) {
+			throw new Error( 'Requested component type is not supported!' );
 		}
 
 		// Validate required mustache variables
-		var requiredVars = componentConfig.templateVarsConfig[componentType].required,
-			missingVars= [];
+		requiredVars = componentConfig.templateVarsConfig[ componentType ].required;
+		missingVars= [];
 
-		requiredVars.forEach(function(element) {
-			if (!componentVars.hasOwnProperty(element)) {
-				missingVars.push(element);
+		requiredVars.forEach(function( element ) {
+			if ( !componentVars.hasOwnProperty( element ) ) {
+				missingVars.push( element );
 			}
 		});
 
-		if (missingVars.length > 0) {
-			var variables = missingVars.join(', ');
-			throw new Error('Missing required mustache variables: ' + variables + '!');
+		if ( missingVars.length > 0 ) {
+			variables = missingVars.join( ', ' );
+			throw new Error( 'Missing required mustache variables: ' + variables + '!' );
 		}
 	}
 
 	function UIComponent() {
 
-		if (!(this instanceof UIComponent)) {
-			return new UIComponent;
+		if ( !( this instanceof UIComponent ) ) {
+			return new UIComponent();
 		}
 
 		var componentConfig = {},
@@ -59,14 +63,14 @@ define('wikia.ui.component', ['wikia.mustache'], function uicomponent(mustache) 
 		 * @return {String} html markup for the component
 		 */
 
-		this.render = function(params) {
+		this.render = function( params ) {
 
-			componentType = params['type'];
-			componentVars = params['vars'];
+			componentType = params.type;
+			componentVars = params.vars;
 
-			validateComponent(componentConfig, componentType, componentVars);
+			validateComponent( componentConfig, componentType, componentVars );
 
-			return mustache.render(componentConfig.templates[componentType], componentVars);
+			return mustache.render( componentConfig.templates[ componentType ], componentVars );
 		};
 
 		/**
