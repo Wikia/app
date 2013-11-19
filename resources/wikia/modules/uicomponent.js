@@ -87,7 +87,6 @@ define( 'wikia.ui.component', [ 'wikia.mustache' ], function uicomponent( mustac
 		/**
 		 * Creates new component object
 		 *
-		 * @param {String} moduleName
 		 * @param {String} id Element id
 		 * @param {{}} params Component params
 		 * @param {function} callback callback function function ( object ) {}
@@ -100,13 +99,19 @@ define( 'wikia.ui.component', [ 'wikia.mustache' ], function uicomponent( mustac
 			});
 		};
 
+		/**
+		 * Returns sub component by name
+		 *
+		 * @param {String} componentName
+		 * @returns {*} Component
+		 */
 		this.getSubComponent = function( componentName ) {
 			if ( componentConfig.dependencies[ componentName ] !== 'undefined' ) {
 				return componentConfig.dependencies[ componentName ];
 			} else {
 				throw new Error( 'Dependency ' + componentName + ' not found.');
 			}
-		}
+		};
 	}
 
 	return UIComponent;
