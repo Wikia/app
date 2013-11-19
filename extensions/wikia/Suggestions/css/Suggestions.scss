@@ -40,7 +40,6 @@ $image-width: 55px;
 
 //mainpage positioning is bit different
 .mainpage .search-suggest {
-	margin-top: 10px;
 	right: 0px;
 }
 
@@ -52,8 +51,9 @@ $image-width: 55px;
 	font-weight: bold;
 	right: 10px;
 	position: absolute;
+	top: 38px;
 	width: $element-width;
-	z-index: 1;
+	z-index: 100;
 	a {
 		color: $color-text;
 	}
