@@ -13,7 +13,9 @@ class WikiaMobileFooterService extends WikiaService {
 
 	public function index(){
 
-		if(self::$skipRendering) return false;
+		if ( self::$skipRendering ) {
+			return false;
+		}
 
 		$this->response->setVal( 'copyrightLink', $this->getLinkFromMessage( 'wikiamobile-footer-link-licencing' ) );
 		$this->response->setVal( 'links', array(
