@@ -160,6 +160,25 @@ class OasisController extends WikiaController {
 			$bodyClasses[] = 'oasis-dark-theme';
 		}
 
+		// sets background settings by adding classes to <body>
+		if ( isset($this->wg->OasisThemeSettings['background-fixed'])
+			&& filter_var($this->wg->OasisThemeSettings['background-fixed'], FILTER_VALIDATE_BOOLEAN) )
+		{
+			$bodyClasses[] = 'background-fixed';
+		}
+
+		if ( isset($this->wg->OasisThemeSettings['background-tiled'])
+			&& !filter_var($this->wg->OasisThemeSettings['background-tiled'], FILTER_VALIDATE_BOOLEAN) )
+		{
+			$bodyClasses[] = 'background-not-tiled';
+		}
+
+		if ( isset($this->wg->OasisThemeSettings['background-dynamic'])
+			&& filter_var($this->wg->OasisThemeSettings['background-dynamic'], FILTER_VALIDATE_BOOLEAN) )
+		{
+			$bodyClasses[] = 'background-dynamic';
+		}
+
 		$this->bodyClasses = $bodyClasses;
 
 		if (is_array($scssPackages)) {

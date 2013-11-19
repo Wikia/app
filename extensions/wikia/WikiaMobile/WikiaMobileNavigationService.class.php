@@ -24,7 +24,7 @@ class  WikiaMobileNavigationService extends WikiaService {
 		$this->response->setVal( 'wordmarkFont', $settings["wordmark-font"] );
 
 		if ( $settings["wordmark-type"] == "graphic" ) {
-			$this->response->setVal( 'wordmarkUrl', wfReplaceImageServer( $settings['wordmark-image-url'], SassUtil::getCacheBuster() ) );
+			$this->response->setVal( 'wordmarkUrl', $themeSettings->getWordmarkUrl() );
 		} else {
 			$this->response->setVal( 'wikiName', ( !empty( $settings['wordmark-text'] ) ) ? $settings['wordmark-text'] : $this->wg->SiteName );
 		}

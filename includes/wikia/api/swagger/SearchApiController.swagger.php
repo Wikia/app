@@ -106,6 +106,12 @@ use Swagger\Annotations as SWG;
  * 		type="string",
  * 		description="Text snippet for the article"
  *  )
+ *  @SWG\Property(
+ * 		name="image",
+ * 		required="true",
+ * 		type="string",
+ * 		description="The URL of the image"
+ *  )
  *
  *
  * @SWG\Model( id="CrossWikiSearchResult" )
@@ -371,6 +377,25 @@ use Swagger\Annotations as SWG;
  * 					allowMultiple="false",
  * 					dataType="int",
  * 					defaultValue=""
+ * 				),
+ * 				@SWG\Parameter(
+ * 					name="namespaces",
+ * 					description="Page namespace number, see more: http://www.mediawiki.org/wiki/help:namespaces",
+ * 					paramType="query",
+ * 					required="false",
+ * 					allowMultiple="false",
+ * 					dataType="string",
+ * 					defaultValue="0,14"
+ * 				),
+ * 				@SWG\Parameter(
+ * 					name="limit",
+ * 					description="Will limit number of articles returned to given number",
+ * 					paramType="query",
+ * 					required="false",
+ * 					allowMultiple="false",
+ * 					dataType="int",
+ * 					defaultValue="6",
+ * 					@SWG\AllowableValues(valueType="RANGE",min="0", max="15")
  * 				)
  * 			)
  * 		)

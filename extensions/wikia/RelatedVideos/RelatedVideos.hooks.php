@@ -46,33 +46,32 @@ class RelatedVideosHookHandler {
 						$relatedVideos = RelatedVideosNamespaceData::newFromGeneralMessage();
 						if ( !empty($relatedVideos) ) {
 							$relatedVideos->purge();
-							if ( VideoInfoHelper::videoInfoExists() ) {
-								$data = $relatedVideos->getData();
-								if ( !empty($data['lists'][RelatedVideosNamespaceData::WHITELIST_MARKER]) ) {
-									$images = array();
-									foreach( $data['lists'][RelatedVideosNamespaceData::WHITELIST_MARKER] as $page ) {
-										$key = md5( $page['title'] );
-										if ( !array_key_exists($key, $images) ) {
-											$images[$key] = $page['title'];
+
+							$data = $relatedVideos->getData();
+							if ( !empty($data['lists'][RelatedVideosNamespaceData::WHITELIST_MARKER]) ) {
+								$images = array();
+								foreach( $data['lists'][RelatedVideosNamespaceData::WHITELIST_MARKER] as $page ) {
+									$key = md5( $page['title'] );
+									if ( !array_key_exists($key, $images) ) {
+										$images[$key] = $page['title'];
+									}
+								}
+
+								if ( !empty($images) ) {
+									$affected = false;
+									$userId = $user->getId();
+									$videoInfoHelper = new VideoInfoHelper();
+									foreach( $images as $img ) {
+										$videoInfo = $videoInfoHelper->getVideoInfoFromTitle( $img, true );
+										if ( !empty($videoInfo) ) {
+											$affected = ( $affected || $videoInfo->addPremiumVideo( $userId ) );
 										}
 									}
 
-									if ( !empty($images) ) {
-										$affected = false;
-										$userId = $user->getId();
-										$videoInfoHelper = new VideoInfoHelper();
-										foreach( $images as $img ) {
-											$videoInfo = $videoInfoHelper->getVideoInfoFromTitle( $img, true );
-											if ( !empty($videoInfo) ) {
-												$affected = ( $affected || $videoInfo->addPremiumVideo( $userId ) );
-											}
-										}
-
-										if ( $affected ) {
-											$mediaService = new MediaQueryService();
-											$mediaService->clearCacheTotalVideos();
-											$mediaService->clearCacheTotalPremiumVideos();
-										}
+									if ( $affected ) {
+										$mediaService = new MediaQueryService();
+										$mediaService->clearCacheTotalVideos();
+										$mediaService->clearCacheTotalPremiumVideos();
 									}
 								}
 							}

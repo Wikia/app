@@ -1,0 +1,22 @@
+@import "skins/oasis/css/core/color";
+@import "color";
+
+.ve-ui-wikiaSourceModeDialog-content {
+	.ve-ui-window-body .ve-ui-textInputWidget {
+		height: 100%;
+		padding: 0.75em 0;
+		width: 100%;
+		textarea {
+			background-color: $color-page;
+			border-color: $color-page-border;
+			box-shadow: 0 0 0 $color-page, inset 0 0.1em 0.2em $color-page-border;
+			color: $color-text;
+			height: 100%;
+			width: 100%;
+		}
+	}
+	.ve-ui-wikiaSourceModeDialog-helplink {
+		font-weight: bold;
+		line-height: 3em;
+	}
+}

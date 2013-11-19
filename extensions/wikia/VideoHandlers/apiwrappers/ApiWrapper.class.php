@@ -163,7 +163,7 @@ abstract class ApiWrapper {
 		if ( empty( $response ) ){
 			$cacheMe = true;
 			$req = MWHttpRequest::factory( $apiUrl );
-			$status = $req->execute();
+			$status = VideoHandlerHelper::wrapHttpRequest( $req );
 			if( $status->isOK() ) {
 				$response = $req->getContent();
 				$this->response = $response;	// Only for migration purposes

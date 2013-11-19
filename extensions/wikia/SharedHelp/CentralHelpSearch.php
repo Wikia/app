@@ -26,9 +26,7 @@ $wgExtensionCredits['parserhook'][] = array(
 	'descriptionmsg' => 'centralhelpsearch-desc',
 );
 
-$dir = dirname( __FILE__ ) . '/';
-
-$wgExtensionMessagesFiles['CentralHelpSearch'] = $dir . 'CentralHelpSearch.i18n.php';
+$wgExtensionMessagesFiles['CentralHelpSearch'] = __DIR__ . '/CentralHelpSearch.i18n.php';
 
 $wgHooks['ParserFirstCallInit'][] = 'efCentralHelpSearchSetup';
 
@@ -50,13 +48,20 @@ function efCentralHelpSearchSetup( Parser &$parser ) {
  * @return string
  */
 function efCreateSearchForm() {
+	global $wgHelpWikiId;
+
+	if ( !empty( $wgHelpWikiId ) ) {
+		$helpSearchUrl = GlobalTitle::newFromText( 'Search', NS_SPECIAL, $wgHelpWikiId )->getFullURL();
+	} else {
+		$helpSearchUrl = SpecialPage::getTitleFor( 'Search' )->getLocalURL();
+	}
 
 	$htmlOut = Xml::openElement( 'form',
 		array(
 			'name' => 'bodyCentralSearch',
 			'id' => 'bodyCentralSearch',
 			'class' => 'bodyCentralSearch',
-			'action' => htmlspecialchars( 'http://community.wikia.com/wiki/Special:Search' )
+			'action' => $helpSearchUrl,
 		)
 	);
 	$htmlOut .= Xml::openElement( 'div',

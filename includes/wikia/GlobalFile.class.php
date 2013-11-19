@@ -38,7 +38,7 @@ class GlobalFile extends WikiaObject {
 					'img_major_mime',
 					'img_minor_mime'
 				],
-				['img_name' => $this->getName()],
+				['img_name' => $this->mTitle->getDBkey()],
 				__METHOD__
 			);
 		}

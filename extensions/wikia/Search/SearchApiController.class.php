@@ -14,8 +14,9 @@ use Wikia\Search\Services\CombinedSearchService;
 class SearchApiController extends WikiaApiController {
 	const ITEMS_PER_BATCH = 25;
 	const CROSS_WIKI_LIMIT = 25;
-
 	const PARAMETER_NAMESPACES = 'namespaces';
+
+	protected $allowedHubs = [ 'Gaming' => true, 'Entertainment' => true, 'Lifestyle' => true ];
 
 	/**
 	 * Fetches results for the submitted query
@@ -82,15 +83,26 @@ class SearchApiController extends WikiaApiController {
 
 	public function getCombined() {
 		if ( !$this->request->getVal( 'query' ) ) {
-			throw new InvalidParameterApiException( 'query' );
+			throw new MissingParameterApiException( 'query' );
 		}
+		if ( $this->request->getVal( 'lang' ) ) {
+			throw new InvalidParameterApiException( 'lang' );
+		}
+		$hubs = $this->request->getArray( 'hubs' );
+		foreach ( $hubs as $hub ) {
+			if ( !isset( $this->allowedHubs[ $hub ] ) ) {
+				$hub = htmlentities( $hub, ENT_QUOTES );
+				throw new InvalidParameterApiException( 'hubs (' . $hub . ')' );
+			}
+		}
+
 		$query = $this->request->getVal( 'query' );
 		$langs = $this->request->getArray( 'langs', ['en'] );
 		$namespaces = $this->request->getArray( 'namespaces', [ NS_MAIN ] );
-		$hubs = $this->request->getArray( 'hubs', null );
+		$limit = $this->request->getVal( 'limit', null );
 
 		$searchService = new CombinedSearchService();
-		$response = $searchService->search($query, $langs, $namespaces, $hubs);
+		$response = $searchService->search($query, $langs, $namespaces, $hubs, $limit);
 
 		$this->getResponse()->setData($response);
 	}

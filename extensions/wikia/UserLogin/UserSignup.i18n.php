@@ -1033,6 +1033,7 @@ Steuere, welche E-Mails du von uns erhalten willst, auf {{fullurl:{{ns:special}}
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
+ * @author Gorizon
  */
 $messages['diq'] = array(
 	'usersignup-page-title' => 'Dekew Wikia',
@@ -1051,7 +1052,7 @@ $messages['diq'] = array(
 	'usersignup-welcome-email-signature' => 'Taxıma Wikia',
 	'usersignup-heading' => 'Noroc dekewe Wikia',
 	'usersignup-marketing-community-heading' => 'Piyakarkerdış',
-	'usersignup-marketing-global-heading' => 'Vıraze',
+	'usersignup-marketing-global-heading' => 'İycad ke',
 	'usersignup-marketing-creativity-heading' => 'Oricinal be',
 	'usersignup-account-creation-email-greeting' => 'Merheba,',
 	'usersignup-account-creation-email-signature' => 'Taxıma Wikia',

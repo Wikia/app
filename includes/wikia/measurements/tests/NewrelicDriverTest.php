@@ -16,7 +16,7 @@ class NewrelicDriverTest extends \WikiaBaseTest {
 		$this->getGlobalFunctionMock("newrelic_custom_metric")
 			->expects( $this->once() )
 			->method( 'newrelic_custom_metric' )
-			->with( "Custom/foo[seconds|call]", 0.1 );
+			->with( "Custom/foo[seconds|call]", 100.0 );
 
 		(new NewrelicDriver())->measureTime( "foo", 0.1 );
 	}

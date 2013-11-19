@@ -427,15 +427,39 @@ abstract class AbstractSelect
 		if (! empty( $wikiMatch ) && ( $wikiMatch->getId() !== $service->getWikiId() ) &&
 			( !( $config->getCommercialUse() ) ||  (new \LicensedWikisService)->isCommercialUseAllowedById($wikiMatch->getId()) ) ) {
 			$result = $wikiMatch->getResult();
-			$hub = $config->getHub();
-			if ( $result['articles_i'] >= 50 &&
-				( $hub === null || strtolower($hub) === strtolower( $result['hub_s'] ) ) ) {
+			if ($this->isValidExactMatch($result)) {
 				$config->setWikiMatch( $wikiMatch );
 			}
 		}
 		return $config->getWikiMatch();
 	}
-	
+
+	/**
+	 * @param $result
+	 * @return bool
+	 */
+	protected function isValidExactMatch($result) {
+		$config = $this->getConfig();
+		$hub = $config->getHub();
+		if ( !empty( $hub ) ) {
+			if ( strtolower( $result['hub_s'] ) !== strtolower( $hub ) ) {
+				return false;
+			}
+		}
+		$hubs = $config->getHubs();
+		if ( !empty( $hubs ) ) {
+			$found = false;
+			foreach ( $hubs as $hub )
+			if ( strtolower( $result['hub_s'] ) === strtolower( trim($hub) ) ) {
+				$found = true;
+			}
+			if ( !$found ) {
+				return false;
+			}
+		}
+		return $result['articles_i'] >= 50;
+	}
+
 	/**
 	 * This allows internal manipulation of the specific core being queried by this service.
 	 * There is probably a better way to do this, but this is the least disruptive way to handle this somewhat circular dependency.

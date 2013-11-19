@@ -216,11 +216,7 @@ $animationSpeed: 200ms;
 		padding: 3px 0 0 0;
 		position: relative;
 		text-align: left;
-		@if ( $responsive-layout-enabled ) {
-			width: 100%;
-		} @else {
-			width: $width-outside;
-		}
+		width: 100%;
 	}
 	.arrow {
 		background-image: url(/extensions/wikia/WikiaBar/images/arrowDown.png); /* base64 */

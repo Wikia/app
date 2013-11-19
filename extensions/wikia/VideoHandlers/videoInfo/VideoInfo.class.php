@@ -9,6 +9,7 @@ class VideoInfo extends WikiaModel {
 	const SCHEMA_VERSION = 2;
 
 	protected $videoTitle = 0;
+	protected $videoId = '';
 	protected $provider = '';
 	protected $addedAt = 0;
 	protected $addedBy = 0;
@@ -20,6 +21,7 @@ class VideoInfo extends WikiaModel {
 
 	protected static $fields = array(
 		'videoTitle',
+		'videoId',
 		'provider',
 		'addedAt',
 		'addedBy',
@@ -47,6 +49,14 @@ class VideoInfo extends WikiaModel {
 	}
 
 	/**
+	 * Set video id
+	 * @param string $videoId
+	 */
+	public function setVideoId( $videoId ) {
+		$this->videoId = $videoId;
+	}
+
+	/**
 	 * Set the provider name
 	 * @param string $provider The name of the provider for this video (e.g., 'ooyala', 'anyclip')
 	 */
@@ -71,7 +81,7 @@ class VideoInfo extends WikiaModel {
 	}
 
 	/**
-	 * get video title
+	 * Get video title
 	 * @return string videoTitle
 	 */
 	public function getVideoTitle() {
@@ -86,20 +96,40 @@ class VideoInfo extends WikiaModel {
 		return $this->provider;
 	}
 
+	/**
+	 * Get video id
+	 * @return string
+	 */
+	public function getVideoId() {
+		return $this->videoId;
+	}
+
+	/**
+	 * Get datetime when user added the video
+	 * @return string
+	 */
 	public function getAddedAt() {
 		return $this->addedAt;
 	}
 
+	/**
+	 * Get the id of user who added the video
+	 * @return interger
+	 */
 	public function getAddedBy() {
 		return $this->addedBy;
 	}
 
+	/**
+	 * Get duration in second
+	 * @return integer
+	 */
 	public function getDuration() {
 		return $this->duration;
 	}
 
 	/**
-	 * check if it is premium video
+	 * Check if it is premium video
 	 * @return boolean
 	 */
 	public function isPremium() {
@@ -107,7 +137,7 @@ class VideoInfo extends WikiaModel {
 	}
 
 	/**
-	 * check if it is hd file
+	 * Check if it is hd file
 	 * @return boolean
 	 */
 	public function isHdfile() {
@@ -123,7 +153,7 @@ class VideoInfo extends WikiaModel {
 	}
 
 	/**
-	 * check if it is featured video
+	 * Check if it is featured video
 	 * @return boolean
 	 */
 	public function isFeatured() {
@@ -144,6 +174,7 @@ class VideoInfo extends WikiaModel {
 			$db->update(
 				'video_info',
 				array(
+					'video_id' => $this->videoId,
 					'provider' => $this->provider,
 					'added_at' => $this->addedAt,
 					'added_by' => $this->addedBy,
@@ -190,6 +221,7 @@ class VideoInfo extends WikiaModel {
 				'video_info',
 				array(
 					'video_title' => $this->videoTitle,
+					'video_id' => $this->videoId,
 					'provider' => $this->provider,
 					'added_at' => $this->addedAt,
 					'added_by' => $this->addedBy,
@@ -252,6 +284,7 @@ class VideoInfo extends WikiaModel {
 			$sql =<<<SQL
 				CREATE TABLE IF NOT EXISTS `video_info` (
 					`video_title` varchar(255) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL DEFAULT '',
+					`video_id` varchar(255) NOT NULL DEFAULT '',
 					`provider` varchar(255),
 					`added_at` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
 					`added_by` int(10) unsigned NOT NULL DEFAULT '0',
@@ -260,13 +293,16 @@ class VideoInfo extends WikiaModel {
 					`hdfile` tinyint(1) NOT NULL DEFAULT '0',
 					`removed` tinyint(1) NOT NULL DEFAULT '0',
 					`featured` tinyint(1) NOT NULL DEFAULT '0',
+					`views_7day` int(10) unsigned DEFAULT '0',
 					`views_30day` int(10) unsigned DEFAULT '0',
 					`views_total` int(10) unsigned DEFAULT '0',
 					PRIMARY KEY (`video_title`),
 					KEY `added_at` (`added_at`, `duration`),
 					KEY `premium` (`premium`, `added_at`),
 					KEY `hdfile` (`hdfile`, `added_at`),
-					KEY `featured` (`featured`, `added_at`)
+					KEY `featured` (`featured`, `added_at`),
+					KEY `provider` (`provider`,`added_at`),
+					KEY `video_id` (`video_id`,`provider`)
 				) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 SQL;
 
@@ -292,7 +328,12 @@ SQL;
 		3 => "
 			ALTER TABLE video_info
 			ADD `views_7day` int(10) unsigned DEFAULT '0' AFTER featured
-		"
+		",
+		4 => "
+			ALTER TABLE video_info
+			ADD `video_id` varchar(255) NOT NULL DEFAULT '' AFTER video_title,
+			ADD INDEX video_id (video_id, provider)
+		",
 	);
 
 	/**
@@ -366,6 +407,7 @@ SQL;
 	protected static function newFromRow( $row ) {
 		$data = array(
 			'videoTitle' => $row->video_title,
+			'videoId' => $row->video_id,
 			'provider' => $row->provider,
 			'addedAt' => $row->added_at,
 			'addedBy' => $row->added_by,

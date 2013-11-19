@@ -19,7 +19,7 @@ ve.ui.WikiaUploadWidget = function VeUiWikiaUploadWidget( config ) {
 
 	uploadButtonConfig = {
 		'$$': this.$$,
-		'label': ve.msg( 'visualeditor-wikiauploadwidget-button' ),
+		'label': ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-upload-button' ),
 		'flags': ['constructive']
 	};
 	if ( !config.hideIcon ) {
@@ -31,7 +31,7 @@ ve.ui.WikiaUploadWidget = function VeUiWikiaUploadWidget( config ) {
 		.addClass( 've-ui-icon-upload' );
 
 	this.$uploadLabel = this.$$( '<span>' )
-		.text( ve.msg( 'visualeditor-wikiauploadwidget-label' ) );
+		.text( ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-upload-label' ) );
 
 	this.uploadButton = new ve.ui.ButtonWidget( uploadButtonConfig );
 
@@ -122,7 +122,7 @@ ve.ui.WikiaUploadWidget.prototype.onUploadSuccess = function ( data ) {
  */
 ve.ui.WikiaUploadWidget.prototype.onUploadError = function () {
 	this.hideUploadAnimation();
-	window.alert( ve.msg( 'visualeditor-wikiauploaderror' ) );
+	window.alert( ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-upload-error' ) );
 };
 
 
