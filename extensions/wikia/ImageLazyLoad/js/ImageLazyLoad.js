@@ -2,7 +2,9 @@
  * @author Piotr Bablok <pbablok@wikia-inc.com>
  */
 
-$(function() {
+$( function() {
+	'use strict';
+
 	// it's a global, it should be a global
 	var ImgLzy = {
 		cache: [],
@@ -10,99 +12,118 @@ $(function() {
 		lastScrollTop: 0,
 
 		init: function() {
-			var self = this;
+			var self = this,
+				throttled;
 			self.createCache();
 			self.checkAndLoad();
-			var throttled = $.throttle( 250, $.proxy(self.checkAndLoad, self) );
-			$(window).on('scroll', throttled);
+			throttled = $.throttle( 250, $.proxy( self.checkAndLoad, self ) );
+			$( window ).on( 'scroll', throttled );
 		},
 
 		createCache: function() {
 			var self = this;
 			self.cache = [];
-			$('img.lzy').each(function(idx) {
-				var cacheItem = [];
-				var $el = $(this);
-				var top = $el.offset().top;
-				cacheItem.push(this);
-				cacheItem.push($el);
-				cacheItem.push(top);
-				cacheItem.push($el.height() + top);
-				self.cache[idx] = cacheItem;
+			$( 'img.lzy' ).each( function( idx ) {
+				var cacheItem = [],
+					$el = $( this ),
+					top = $el.offset().top;
+				cacheItem.push( this );
+				cacheItem.push ($el );
+				cacheItem.push( top );
+				cacheItem.push( $el.height() + top );
+				self.cache[ idx ] = cacheItem;
 			});
 		},
 
 		verifyCache: function() {
-			if( this.cache.length == 0 ) { return; }
+			if( this.cache.length === 0 ) {
+				return;
+			}
 			// make sure that position of elements in the cache didn't change
-			var lastidx = this.cache.length - 1;
-			var randidx = Math.floor(Math.random() * lastidx);
-			var checkidx = [lastidx, randidx];
-			var changed = false;
-			for( var i in checkidx ) {
-				var idx = checkidx[i];
+			var lastidx = this.cache.length - 1,
+				randidx = Math.floor( Math.random() * lastidx ),
+				checkidx = [ lastidx, randidx ],
+				changed = false,
+				i,
+				idx,
+				pos,
+				diff;
+			for( i in checkidx ) {
+				idx = checkidx[ i ];
 				if( idx in this.cache ) {
-					var pos = this.cache[idx][1].offset().top;
-					var diff = Math.abs( pos - this.cache[idx][2] );
+					pos = this.cache[ idx ][ 1 ].offset().top;
+					diff = Math.abs( pos - this.cache[ idx ][ 2 ] );
 					if ( diff > 5 ) {
 						changed = true;
 						break;
 					}
 				}
 			}
-			if (changed) {
+			if ( changed ) {
 				this.createCache();
 			}
 		},
 
-		load: function(image) {
+		load: function( image ) {
 			// this code can only be run from AJAX requests (ie. ImgLzy is registered AFTER DOM ready event
 			// so those are new images in DOM
-			var $img = $(image);
+			var $img = $( image ),
+				dataSrc = $img.data( 'src' );
 			image.onload = '';
-			var dataSrc = $img.data('src');
-			if (dataSrc) {
+			if ( dataSrc ) {
 				image.src = dataSrc;
 			}
-			$img.removeClass('lzy').removeClass('lzyPlcHld');
+			$img.removeClass( 'lzy' ).removeClass( 'lzyPlcHld' );
 
 		},
 
 		checkAndLoad: function() {
-			//var timestart = (new Date()).getTime();
+			//var timestart = ( new Date() ).getTime();
 
 			this.verifyCache();
 
-			var scrollTop = $(window).scrollTop();
-			var scrollSpeed = Math.abs( scrollTop - this.lastScrollTop );
-			scrollSpeed = Math.min(scrollSpeed, 1000)*3 + 200;
+			var scrollTop = $( window ).scrollTop(),
+				scrollSpeed = Math.abs( scrollTop - this.lastScrollTop ),
+				scrollBottom,
+				onload,
+				idx,
+				cacheEl,
+				el,
+				$el,
+				elTop,
+				elBottom;
+
+			scrollSpeed = Math.min( scrollSpeed, 1000 ) * 3 + 200;
 			this.lastScrollTop = scrollTop;
-			var scrollBottom = scrollTop + $(window).height() + scrollSpeed;
+			scrollBottom = scrollTop + $( window ).height() + scrollSpeed;
 			scrollTop = scrollTop - scrollSpeed;
-			var onload = function() { this.setAttribute( 'class', this.getAttribute('class') + " lzyLoaded" ); };
-			for (var idx in this.cache) {
-				var cacheEl = this.cache[idx];
-				var el = cacheEl[0];
-				var $el = cacheEl[1];
-				var elTop = cacheEl[2];
-				var elBottom = cacheEl[3];
-				if( (scrollTop < elTop && scrollBottom > elTop) || (scrollTop < elBottom && scrollBottom > elBottom) ) {
-					$el.addClass('lzyTrns');
+			onload = function() {
+				this.setAttribute( 'class', this.getAttribute( 'class' ) + ' lzyLoaded' );
+			};
+			for ( idx in this.cache ) {
+				cacheEl = this.cache[ idx ];
+				el = cacheEl[ 0 ];
+				$el = cacheEl[ 1 ];
+				elTop = cacheEl[ 2 ];
+				elBottom = cacheEl[ 3 ];
+				if( ( scrollTop < elTop && scrollBottom > elTop ) ||
+					( scrollTop < elBottom && scrollBottom > elBottom ) ) {
+					$el.addClass( 'lzyTrns' );
 					el.onload = onload;
-					el.src = $el.data('src');
-					$el.removeClass('lzy');
-					delete this.cache[idx];
+					el.src = $el.data( 'src' );
+					$el.removeClass( 'lzy' );
+					delete this.cache[ idx ];
 				}
 			}
-			//this.timestats = (new Date()).getTime() - timestart;
-			//console.log(this.timestats);
+			//this.timestats = ( new Date() ).getTime() - timestart;
+			//console.log( this.timestats );
 		}
-	}
+	};
 
 	ImgLzy.init();
 
 	// fix iOS bug - not firing scroll event when after refresh page is opened in the middle of its content
-	require( ['wikia.browserDetect', 'wikia.window'], function( browserDetect, w ) {
+	require( [ 'wikia.browserDetect', 'wikia.window' ], function( browserDetect, w ) {
 		if ( browserDetect.isIPad() ) {
 			w.addEventListener( 'pageshow', function() {
 				$.proxy( ImgLzy.checkAndLoad, ImgLzy );
@@ -112,4 +133,4 @@ $(function() {
 	} );
 
 	window.ImgLzy = ImgLzy;
-});
+} );
