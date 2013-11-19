@@ -1157,8 +1157,10 @@ $wgEnableAdEngineExt = true;
 /**
  * @name $wgAdDriverUseSevenOneMedia
  * Whether to use SevenOne Media ads (true) or the other ads (false)
+ * Null means true for languages within $wgAdDriverUseSevenOneMediaInLanguages
  */
-$wgAdDriverUseSevenOneMedia = false;
+$wgAdDriverUseSevenOneMedia = null;
+$wgAdDriverUseSevenOneMediaInLanguages = ['de'];
 
 /**
  * @name $wgAdVideoTargeting
