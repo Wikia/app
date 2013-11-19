@@ -108,7 +108,7 @@ $wgFSSwiftConfig = $wgFSSwiftDC[ $wgWikiaDatacenter ][ 'config' ];
 $wgEnableSwiftFileBackend = true; // enable globally on all devboxes
 
 // avatars
-$wgAvatarsMaintenance = true; // disable avatar uploads and removes (see BAC-979)
+$wgAvatarsUseSwiftStorage = true;
 
 $wgDevboxDefaultWikiDomain = 'www.wikia.com';
 #$wgDevboxSkipWikiFactoryVariables = true; // uncomment to skip loading of wiki-specific setup from WikiFactory
