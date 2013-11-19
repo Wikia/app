@@ -287,54 +287,64 @@ class Factory {
 			$name;
 	}
 
+	private function initComponent( $name, &$assets) {
+		$componentConfig = $this->loadComponentConfig( $name );
+
+		// if there are some components, put them in the $assets
+		$assetsTypes = [ self::ASSET_TYPE_JS, self::ASSET_TYPE_CSS ];
+		foreach( $assetsTypes as $assetType ) {
+			$dependenciesCfg = !empty( $componentConfig['dependencies'][$assetType] ) ? $componentConfig['dependencies'][$assetType] : [];
+			if( is_array( $dependenciesCfg ) ) {
+				$assets = array_merge( $assets, $dependenciesCfg );
+			} else {
+				$exceptionMessage = sprintf( DataException::EXCEPTION_MSG_INVALID_ASSETS_TYPE, $assetType );
+				throw new DataException( $exceptionMessage );
+			}
+		}
+
+		// init component, put config inside and set base template path
+		$component = $this->getComponentInstance();
+		$component->setName( $name );
+		if ( !empty($componentConfig['templateVars']) ) {
+			$component->setTemplateVarsConfig( $componentConfig['templateVars'] );
+		}
+		$component->setBaseTemplatePath( $this->getComponentsBaseTemplatePath( $name ) );
+
+		$component->setAssets( array_intersect_key( $componentConfig['dependencies'], array_flip( $assetsTypes ) ) );
+
+		if ( !empty( $componentConfig['dependencies'][self::COMPONENT_DEPENDENCY] ) ) {
+			$component->setComponentDependencies( $componentConfig['dependencies'][self::COMPONENT_DEPENDENCY] );
+			// @todo - do we need to process the dependencies here? like call init on them and fetch their assets?
+		}
+	}
+
 	/**
 	 * @desc Loads JS/CSS dependencies, creates and configurates an instance of \Wikia\UI\Component object which is returned
 	 *
 	 * @param string|array $componentNames
 	 * @param bool $loadAssets flag indicating if the component assets should be loaded - needed when we want to render components
+	 * @param array|null optional array, when specified, the dependent components will be loaded and stored in it
 	 *
 	 * @throws \Wikia\UI\DataException
 	 * @return array
 	 */
-	public function init( $componentNames, $loadAssets = true ) {
+	public function init( $componentNames, $loadAssets = true, &$dependencies = null ) {
 		if ( !is_array($componentNames ) ) {
 			$componentNames = (array)$componentNames;
 		}
 		
 		$components = [];
 		$assets = [];
+		$result = [];
 
 		// iterate $componentNames, read configs, write down dependencies
 		foreach ( $componentNames as $name ) {
-			$componentConfig = $this->loadComponentConfig( $name );
+			$components[$name] = $this->initComponent( $name, $assets );
+			$result[] = $components[$name];
+		}
 
-			// if there are some components, put them in the $assets
-			$assetsTypes = [ self::ASSET_TYPE_JS, self::ASSET_TYPE_CSS ];
-			foreach( $assetsTypes as $assetType ) {
-				$dependenciesCfg = !empty( $componentConfig['dependencies'][$assetType] ) ? $componentConfig['dependencies'][$assetType] : [];
-				if( is_array( $dependenciesCfg ) ) {
-					$assets = array_merge( $assets, $dependenciesCfg );
-				} else {
-					$exceptionMessage = sprintf( DataException::EXCEPTION_MSG_INVALID_ASSETS_TYPE, $assetType );
-					throw new DataException( $exceptionMessage );
-				}
-			}
-
-			// init component, put config inside and set base template path
-			$component = $this->getComponentInstance();
-			$component->setName( $name );
-			if ( !empty($componentConfig['templateVars']) ) {
-				$component->setTemplateVarsConfig( $componentConfig['templateVars'] );
-			}
-			$component->setBaseTemplatePath( $this->getComponentsBaseTemplatePath( $name ) );
-
-			$component->setAssets( array_intersect_key( $componentConfig['dependencies'], array_flip( $assetsTypes ) ) );
-
-			if ( !empty( $componentConfig['dependencies'][self::COMPONENT_DEPENDENCY] ) ) {
-				$component->setComponentDependencies( $componentConfig['dependencies'][self::COMPONENT_DEPENDENCY] );
-			}
-
-			$components[] = $component;
+		if ( is_array( $dependencies ) ) {
+			// process dependencies
 		}
 
 		if ( $loadAssets ) {
@@ -345,7 +355,7 @@ class Factory {
 		}
 
 		// return components
-		return (sizeof($components) == 1) ? $components[0] : $components;
+		return (sizeof($result) == 1) ? $result[0] : $result;
 	}
 
 	/**
