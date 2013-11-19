@@ -104,6 +104,9 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 					'byemail' => intval($this->byemail),
 				);
 				$redirectUrl = $this->wg->title->getFullUrl( $params );
+				//log user options before redirect
+				$uTest = User::newFromName($this->username);
+				error_log("KamilkUserSignup4-WIKIA: UserId".$uTest->getId()." ==getOptions before redirect to sendmail== ".json_encode( $uTest->getOptions() ) );
 				$this->wg->out->redirect( $redirectUrl );
 			}
 
