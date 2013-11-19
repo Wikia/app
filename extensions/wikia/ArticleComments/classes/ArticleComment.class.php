@@ -770,10 +770,10 @@ class ArticleComment {
 	 * @return Article -- newly created article
 	 */
 	static public function doPost( $text, $user, $title, $parentId = false, $metadata = array() ) {
-		global $wgTitle;
+		global $wgTitle, $wgEnableArticleCommentsExt;
 		wfProfileIn( __METHOD__ );
 
-		if ( !$text || !strlen( $text ) ) {
+		if ( !$text || !strlen( $text ) || !$wgEnableArticleCommentsExt) {
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
