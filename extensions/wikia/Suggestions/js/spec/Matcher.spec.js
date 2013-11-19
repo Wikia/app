@@ -32,7 +32,7 @@ describe('Test matcher', function() {
 	});
 
 	it('checks matching logic', function() {
-		var test;
+		var test = undefined;
 		expect(matcher.match(test, '')).toBeNull();
 		test = '';
 		expect(matcher.match(test, '')).toBeNull();
@@ -59,6 +59,8 @@ describe('Test matcher', function() {
 		expect(matcher.match(test, 'first second third')).toEqual( { prefix: '', match: 'first second third', suffix: '' } );
 		test = 'missions';
 		expect(matcher.match(test, 'mission')).toEqual( { prefix: '', match: 'mission', suffix: 's' } );
+		test = 'a b';
+		expect(matcher.match(test, 'a[-^[]_)(*&%$#@! 	:"\<>(){}?\/~`+=\\;., b')).toEqual( { prefix: '', match: 'a b', suffix: '' } );
 	});
 
 });

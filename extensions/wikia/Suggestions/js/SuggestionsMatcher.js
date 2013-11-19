@@ -2,7 +2,7 @@ define('SuggestionsMatcher', [], function() {
 	'use strict';
 	function testChar( character ) {
 		// todo change regex to match solr logic
-		return character.match(/[_\-)(*&^%$#@!\s:"<>(){}\[\]?\/"']+/) !== null;
+		return character.match(/[\\\-\^\[\]_)(*&%$#@!\s:"<>(){}?\/~`+=\;.,]+/) !== null;
 	}
 	function getChar( character ) {
 		return testChar( character ) ? '' : character.toLocaleLowerCase();
