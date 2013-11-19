@@ -39,6 +39,13 @@ $messages['az'] = array(
 	'imageserving-desc' => 'Vizual tələblər əsasında göstərilən səhifələrin massivindən şəkilləri seçir',
 );
 
+/** Bulgarian (български)
+ * @author Aquilax
+ */
+$messages['bg'] = array(
+	'imageserving-desc' => 'Изберете изображения от указания набор страници на база на визуалните изисквания',
+);
+
 /** Breton (brezhoneg)
  */
 $messages['br'] = array(
@@ -242,6 +249,13 @@ $messages['tt-cyrl'] = array(
  */
 $messages['uk'] = array(
 	'imageserving-desc' => 'Вибір зображень із вказаного масиву сторінок на основі візуальних вимог',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'imageserving-desc' => 'Chọn hình ảnh từ một mảng được chỉ định của trang dựa trên yêu cầu hình ảnh',
 );
 
 /** Simplified Chinese (中文（简体）‎)

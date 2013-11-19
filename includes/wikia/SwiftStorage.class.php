@@ -315,4 +315,13 @@ class SwiftStorage {
 	public static function log($method, $msg) {
 		\Wikia::log(self::LOG_GROUP . '-WIKIA', false, $method . ': ' . $msg, true /* $force */);
 	}
+
+	/**
+	 * Return Swift server 
+	 * 
+	 * @param - no params
+	 */
+	public function getSwiftServer() {
+		return $this->swiftServer;
+	} 
 }

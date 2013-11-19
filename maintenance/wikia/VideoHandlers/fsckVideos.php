@@ -44,7 +44,7 @@ class FSCKVideos extends Maintenance {
 		if ( $this->test ) {
 			echo "== TEST MODE ==\n";
 		}
-		$this->debug("(debugging output enabled)\n");
+		$this->debug( "(debugging output enabled)\n" );
 
 		$startTime = time();
 
@@ -62,7 +62,7 @@ class FSCKVideos extends Maintenance {
 		foreach ( $videos as $title ) {
 			$stats['checked']++;
 
-			$status = $helper->fcskVideoThumbnail( $title, $fix );
+			$status = $helper->fsckVideoThumbnail( $title, $fix );
 			if ( $status->isGood() ) {
 				$result = $status->value;
 				if ( $result['check']  == 'ok' ) {
