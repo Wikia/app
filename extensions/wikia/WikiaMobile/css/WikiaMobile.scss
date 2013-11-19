@@ -52,16 +52,15 @@
 	}
 
 	span {
+		display: inline-block;
 		color: #AAA;
 
 		font-size: .9rem;
-		line-height: 1rem;
-	}
-}
+		line-height: 1.2rem;
 
-a {
-	color: $link-color;
-	text-decoration: none;
+		margin-top: 10px;
+
+	}
 }
 
 #wkPage {

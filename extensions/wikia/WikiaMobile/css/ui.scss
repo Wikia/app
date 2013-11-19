@@ -149,8 +149,24 @@ h2[data-count] {
 
 .wikitable:not(.infobox), .sortable {
 	th, td {
-		white-space:nowrap;
 		border:1px solid $border-color;
+		padding: 5px;
 		text-align: left;
+		white-space:nowrap;
 	}
+}
+
+sup.reference {
+	font-size: 0.9rem;
+	line-height: 0px;
+	margin: 2px;
+}
+
+a {
+	color: $link-color;
+	text-decoration: none;
+}
+
+dd {
+	margin: 0;
 }
