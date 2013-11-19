@@ -12,6 +12,8 @@ define('LyricFindTracker', ['wikia.window', 'jquery'], function(window, $) {
 			url = window.wgServer + window.wgScriptPath + '/wikia.php?' + $.param(data);
 
 		img.src = url;
+
+        return img;
 	}
 
 	return track;
