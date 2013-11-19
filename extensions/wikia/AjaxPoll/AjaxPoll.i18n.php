@@ -451,6 +451,7 @@ $messages['it'] = array(
 );
 
 /** Japanese (日本語)
+ * @author BryghtShadow
  * @author Fryed-peach
  * @author Shirayuki
  * @author Tommy6
@@ -460,7 +461,7 @@ $messages['ja'] = array(
 	'ajaxpoll-thankyou' => '投票ありがとうございます！',
 	'ajaxpoll-error' => '投票の処理中に問題が発生しました。再投票してください。',
 	'ajaxpoll-summary' => 'この投票は $2 $1 に作成され、これまでに$3人が投票しました。',
-	'ajaxpoll-submit' => '投票',
+	'ajaxpoll-submit' => '投票！',
 	'ajaxpoll-closed' => '投票は既に終了しています。結果をお楽しみください。',
 	'ajaxpoll-submitting' => '投票を送信しています。お待ちください...',
 );
@@ -612,6 +613,13 @@ $messages['nb'] = array(
 	'ajaxpoll-submit' => 'Stem!',
 	'ajaxpoll-closed' => 'Avstemningen er stengt nå. Nyt resultatene.',
 	'ajaxpoll-submitting' => 'Vennligst vent, sender inn stemmen din...',
+);
+
+/** Nepali (नेपाली)
+ * @author सरोज कुमार ढकाल
+ */
+$messages['ne'] = array(
+	'ajaxpoll-submit' => 'भोट गर्नुहोस !',
 );
 
 /** Dutch (Nederlands)

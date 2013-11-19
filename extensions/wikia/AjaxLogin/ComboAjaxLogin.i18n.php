@@ -53,19 +53,20 @@ Parameters:
 /** Arabic (العربية)
  * @author Achraf94
  * @author Alexknight12
+ * @author Claw eg
  */
 $messages['ar'] = array(
 	'comboajaxlogin-desc' => 'صندوق ديناميكي يسمح للمستخدمين بتسجيل الدخول كما يذكرهم بكلمة السر و المستخدمين المسجلين.',
 	'comboajaxlogin-createlog' => 'تسجيل الدخول أو إنشاء حساب',
 	'comboajaxlogin-actionmsg' => 'لكي تقوم بهذه العملية يجب عليك أولا تسجيل الدخول أو إنشاء حساب',
-	'comboajaxlogin-actionmsg-protected' => 'لتنفيذ هذا الإجراء، تحتاج أولاً لتسجيل الدخول أو إنشاء حساب.',
+	'comboajaxlogin-actionmsg-protected' => 'لكي تقوم بهذه العملية يجب عليك أولا تسجيل الدخول أو إنشاء حساب',
 	'comboajaxlogin-connectmarketing' => '<h1>اربط حساباتك</h1>
 <ul>
 <li>حافظ على اسم المستخدم الحالي, تاريخ المساهمات, التعديلات... لا شيء يتغير إلا كيفية تسجيل الدخول</li>
 <li>شارك نشاطك في ويكيا مع أصدقائك في الفيسبوك</li>
 <li>تحكم فيما ينشر على الفيسبوك الخاص بك</li>
 </ul>',
-	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>سجل الدخول عبر فيسبوك كونيكت</h1>',
+	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>سجل الدخول عبر الاتصال بفيسبوك</h1>',
 	'comboajaxlogin-connectmarketing-oasis' => '<h1>قم بربط حسابك في ويكيا مع حسابك في الفيسبوك</h1>
 <ul>
 <li>حافظ على اسم المستخدم الحالي, تاريخ المساهمات, التعديلات... لا شيء يتغير إلا كيفية تسجيل الدخول</li>
@@ -1102,6 +1103,15 @@ Vennligst prøv igjen eller [[Special:Contact|rapporter dette]].',
 	'comboajaxlogin-ajaxerror' => 'Wikia svarer ikke. Kontroller nettverkstilkoblingen.',
 );
 
+/** Nepali (नेपाली)
+ * @author सरोज कुमार ढकाल
+ */
+$messages['ne'] = array(
+	'comboajaxlogin-createlog' => 'प्रवेश गर्ने अथवा नयाँ खाता बनाउने',
+	'comboajaxlogin-connectmarketing-back' => '« पहिलेको',
+	'comboajaxlogin-connectmarketing-forward' => 'सुरुगर्ने »',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -1170,9 +1180,12 @@ Als je al een gebruiker hebt, kan je <a href="#">aanmelden</a> zoals altijd, maa
 $messages['oc'] = array(
 	'comboajaxlogin-desc' => "Bóstia de dinamica que permeton als utilizaires de se connectar, se rapelar de lor senhal e d'enregistrar d'utilizaires",
 	'comboajaxlogin-createlog' => 'Se connectar o crear un compte',
+	'comboajaxlogin-actionmsg' => "D'en primièr, vos cal vos connectar o crear un compte abans d'efectuar aquesta accion",
+	'comboajaxlogin-actionmsg-protected' => "Per modificar aquesta pagina protegida, d'en primièr, vos cal vos connectar o crear un compte.",
 	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>Se connectar amb Facebook Connect</h1>',
 	'comboajaxlogin-connectmarketing-back' => '&laquo; Retorn',
 	'comboajaxlogin-connectmarketing-forward' => 'Abans de començar &raquo;',
+	'comboajaxlogin-ajaxerror' => 'Wikia respond pas. Verificatz vòstra connexion ret.',
 );
 
 /** Polish (polski)

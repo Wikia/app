@@ -41,6 +41,13 @@ $messages['qqq'] = array(
 	'quickstats-number-shortening-billions' => 'This is a shortend number abbreviation shown in a stats table. Number larger than 1.000.000.000 are rendered using this message (as billions rounded up to the first decimal fraction). B stands for billions (1.000.000.000)',
 );
 
+/** Old English (Ænglisc)
+ * @author Espreon
+ */
+$messages['ang'] = array(
+	'quickstats-header-date' => 'Tælmearc',
+);
+
 /** Arabic (العربية)
  * @author Achraf94
  */
@@ -621,6 +628,7 @@ $messages['it'] = array(
 );
 
 /** Japanese (日本語)
+ * @author BryghtShadow
  * @author Tommy6
  */
 $messages['ja'] = array(
@@ -632,6 +640,9 @@ $messages['ja'] = array(
 	'quickstats-date-format' => 'n月j日',
 	'quickstats-totals-label' => '合計',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|さらに詳しい統計をみる]]',
+	'quickstats-number-shortening' => '$1K',
+	'quickstats-number-shortening-millions' => '$1M',
+	'quickstats-number-shortening-billions' => '$1B',
 );
 
 /** Korean (한국어)
@@ -863,12 +874,17 @@ $messages['nb'] = array(
  * @author सरोज कुमार ढकाल
  */
 $messages['ne'] = array(
+	'quickstats-header-label' => 'छरितो तथ्यंक',
 	'quickstats-header-date' => 'मिति',
 	'quickstats-header-views' => 'अवलोकनहरू',
 	'quickstats-header-edits' => 'सम्पादनहरु',
 	'quickstats-header-photos' => 'चित्र',
 	'quickstats-header-likes' => 'मनपर्दो',
 	'quickstats-totals-label' => 'कुल',
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|थप तथ्याङ्क हेर्नुहोस्]]',
+	'quickstats-number-shortening' => '$1 हजार',
+	'quickstats-number-shortening-millions' => '$1 मिलियन',
+	'quickstats-number-shortening-billions' => '$1 बिलियन',
 );
 
 /** Dutch (Nederlands)

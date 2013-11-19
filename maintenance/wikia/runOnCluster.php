@@ -108,8 +108,8 @@ class RunOnCluster extends Maintenance {
 		$this->verbose = $this->hasOption('verbose') ? true : false;
 		$this->master  = $this->hasOption('master') ? true : false;
 		$this->cluster = $this->getOption('cluster', '1');
-		$this->class   = $this->getOption('class', 'ClusterTestClass');
-		$this->method  = $this->getOption('method', 'testCode');
+		$this->class   = $this->getOption('class');
+		$this->method  = $this->getOption('method', 'run');
 		$singleDBname  = $this->getOption('dbname');
 		$file = $this->getOption('file');
 
@@ -133,6 +133,23 @@ class RunOnCluster extends Maintenance {
 		} else {
 			if ( $this->class ) {
 				echo "Warning: Argument --class given without --file; this is probably not correct\n";
+			} else {
+				// If there's no file or class given, use the default test class
+				$this->class = 'ClusterTestClass';
+			}
+		}
+
+		// Try to figure out what class was defined in the file given
+		if ( empty($this->class) ) {
+			// Look through each declared class
+			foreach ( get_declared_classes() as $class ) {
+				// Figure out where that class was defined
+				$reflector = new ReflectionClass($class);
+				if ( realpath($file) == $reflector->getFileName() ) {
+					// Bingo, this is the class to use
+					$this->class = $class;
+					break;
+				}
 			}
 		}
 
@@ -160,6 +177,8 @@ class RunOnCluster extends Maintenance {
 		if ( !$this->initDBHandle() ) {
 			die("Could not connect to cluster ".$this->cluster."\n");
 		}
+
+		echo "Running ".$this->class.'::'.$this->method.' on cluster '.$this->cluster."\n";
 
 		// Loop through each dbname and run our code
 		foreach ( $clusterWikis as $dbname ) {
@@ -237,7 +256,7 @@ class RunOnCluster extends Maintenance {
 }
 
 class ClusterTestClass {
-	public static function testCode( $db, $dbname, $verbose = false, $test = false ) {
+	public static function run( $db, $dbname, $verbose = false, $test = false ) {
 		echo "Default code : Running ".__METHOD__."\n";
 		$sql = 'SELECT database() as db';
 		$result = $db->query($sql);

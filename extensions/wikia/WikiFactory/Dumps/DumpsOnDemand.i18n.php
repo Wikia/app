@@ -594,8 +594,12 @@ $messages['oc'] = array(
 	'dump-database' => 'Dumps de la banca de donadas',
 	'dump-database-curr-pages' => 'Paginas actualas',
 	'dump-database-full-pages' => 'Paginas actualas e istoric',
+	'dump-database-full-pages-info' => '(Atencion : aqueste fichièr pòt èsser fòrça grand)',
 	'dump-database-request' => 'Demandar una mesa a jorn',
+	'dump-database-request-info' => '(Los dumps son generalament efectuats a cada setmana)',
 	'dump-database-request-submit' => 'Mandar la requèsta',
+	'dump-database-request-requested' => 'Requèsta per un dump de la banca de donada mandada',
+	'dump-database-last-unknown' => 'Desconegut',
 );
 
 /** Polish (polski)
