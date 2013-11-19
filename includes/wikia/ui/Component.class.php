@@ -58,6 +58,16 @@ class Component {
 	private $assets = null;
 
 	/**
+	 * @var Array names of the components that this component depends on
+	 */
+	private $componentDependencies = [];
+
+	/**
+	 * @var String name of the JS AMD module that wraps the component functionality
+	 */
+	private $jsWrapperModule;
+
+	/**
 	 * @desc Sets template JS and CSS assets
 	 *
 	 * @param $assets Dictionary containing Factory::ASSET_TYPE_CSS and Factory::ASSET_TYPE_JS keys
@@ -76,11 +86,6 @@ class Component {
 	}
 
 	/**
-	 * @var Array names of the components that this component depends on
-	 */
-	private $componentDependencies = [];
-
-	/**
 	 * @desc Set the dependency on other components
 	 *
 	 * @param $componentDependencies array containing names of the components
@@ -96,6 +101,24 @@ class Component {
 	 */
 	public function getComponentDependencies() {
 		return $this->componentDependencies;
+	}
+
+	/**
+	 * @desc Sets the JS wrapper module name
+	 *
+	 * @param $jsWrapperModule String name of the AMD module
+	 */
+	public function setJSWrapperModule( $jsWrapperModule ) {
+		$this->jsWrapperModule = $jsWrapperModule;
+	}
+
+	/**
+	 * @desc Returns JS wrapper module name for the component
+	 *
+	 * @return String
+	 */
+	public function getJSWrapperModule() {
+		return $this->jsWrapperModule;
 	}
 
 	/**

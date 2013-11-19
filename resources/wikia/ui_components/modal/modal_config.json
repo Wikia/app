@@ -1,5 +1,5 @@
 {
-	"wrapperClass": "wikia.ui.modal",
+	"jsWrapperModule": "wikia.ui.modal",
 	"templateVars": {
 		"default": {
 			"required": [ "id", "size", "content" ],
