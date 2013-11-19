@@ -14,14 +14,11 @@ $dir = __DIR__ . '/';
 $app = F::app();
 
 $wgAutoloadClasses['ApiDocsController'] = "{$dir}ApiDocsController.class.php";
+$wgAutoloadClasses['DocsApiController'] = "{$dir}DocsApiController.class.php";
 $wgAutoloadClasses['Wikia\ApiDocs\Services\IApiDocsService'] = "{$dir}services/IApiDocsService.php";
 $wgAutoloadClasses['Wikia\ApiDocs\Services\ApiDocsServiceFactory'] = "{$dir}services/ApiDocsServiceFactory.php";
 $wgAutoloadClasses['Wikia\ApiDocs\Services\CachingApiDocsService'] = "{$dir}services/CachingApiDocsService.php";
 $wgAutoloadClasses['Wikia\ApiDocs\Services\ApiDocsService'] = "{$dir}services/ApiDocsService.php";
-
-
-$wgSpecialPages['ApiDocs'] = 'ApiDocsController';
-
 
 global $IP;
 // load swagger

@@ -18,7 +18,6 @@ class Article extends AbstractMatch
 	 * @return Result
 	 */
 	public function createResult() {
-		NS_BLOG;
 		/**@var $this->service Wikia\Search\MediaWikiService*/
 		$wikiId = $this->service->getWikiId();
 		$pageId = $this->service->getCanonicalPageIdFromPageId( $this->id );
