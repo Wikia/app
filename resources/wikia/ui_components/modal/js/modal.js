@@ -9,14 +9,13 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window', 'wikia.browserDetect' ], f
 			type: 'button',
 			vars: {
 				type: 'button',
-				classes: [ 'normal', 'secondary' ]
+				classes: [ 'normal', 'primary' ]
 			}
 		},
 		secondBtnConfig = {
 			type: 'button',
 			vars: {
 				type: 'button',
-				id: 'close',
 				classes: [ 'normal', 'secondary' ]
 			}
 		},
