@@ -50,6 +50,7 @@ $config['adengine2_js'] = array(
 		'//extensions/wikia/AdEngine/js/Krux.js',
 		'//extensions/wikia/AdEngine/js/SlotTweaker.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.js',
+		'//extensions/wikia/AdEngine/js/AdTracker.js',
 
 		// high prio
 		'//extensions/wikia/AdEngine/js/OoyalaTracking.js',
