@@ -44,6 +44,9 @@ class WikiaSQL extends FluentSql\SQL {
 		return parent::query($db, $breakDown, $callback);
 	}
 
+	/**
+	 * @return sql\Cache|WikiaSQLCache
+	 */
 	protected function getCache() {
 		static $cache = null;
 
