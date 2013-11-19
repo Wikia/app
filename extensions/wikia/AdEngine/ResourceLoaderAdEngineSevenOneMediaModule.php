@@ -4,8 +4,7 @@ class ResourceLoaderAdEngineSevenOneMediaModule extends ResourceLoaderModule {
 	const TTL_SCRIPTS = 1800; // half an hour -- cache scripts from ad.71i.de for this time
 	const TTL_GRACE = 300; // five minutes -- cache last response additionally for this time if we can't download the scripts anymore
 
-	private function generateScript() {
-
+	private function generateData() {
 		$random = mt_rand();
 
 		$global = Http::get('http://ad.71i.de/global_js/globalV6.js?' . $random);
@@ -21,8 +20,9 @@ class ResourceLoaderAdEngineSevenOneMediaModule extends ResourceLoaderModule {
 		$myCss = file_get_contents(__DIR__ . '/SevenOneMedia/my_ad_integration.css');
 		$myJs = file_get_contents(__DIR__ . '/SevenOneMedia/my_ad_integration.js');
 
+		// $myCss = Minify_CSS_Compressor::process($myCss);
+
 		$script = [
-			'var SEVENONEMEDIA_GENTIME = ' . json_encode(date('r')) . ';',
 			'var SEVENONEMEDIA_CSS = ' . json_encode($myCss) . ';',
 			$myJs,
 			$site,
@@ -32,51 +32,87 @@ class ResourceLoaderAdEngineSevenOneMediaModule extends ResourceLoaderModule {
 		return join(PHP_EOL, $script);
 	}
 
-	public function getModifiedTime(ResourceLoaderContext $context) {
-		return intval(time() / self::TTL_SCRIPTS) * self::TTL_SCRIPTS;
+	private function getCurrentTimestamp() {
+		static $now;
+		if (!$now) {
+			$now = time();
+		}
+		return $now;
 	}
 
-	public function getScript(ResourceLoaderContext $context) {
+	private function getData() {
 		global $wgMemc;
+		static $localCache;
 
-		$now = time();
+		if ($localCache) {
+			return $localCache;
+		}
+
+		$now = $this->getCurrentTimestamp();
 
 		$memKey = wfSharedMemcKey('adengine', __METHOD__);
 
 		$cached = $wgMemc->get($memKey);
 		if (is_array($cached) && $cached['ttl'] > $now) {
 			// Cache hit!
-			return $cached['value'];
+			$localCache = $cached;
+			return $cached;
 		}
 
 		// Cache miss, need to re-download the scripts
-		$generated = $this->generateScript();
+		$generated = $this->generateData();
 
 		if ($generated === false) {
 			// HTTP request didn't work
 
 			if (is_array($cached)) {
 				// Oh, we still have the thing cached
-				// Let's use the value for the next a few minutes
+				// Let's use the script for the next a few minutes
 
-				$wgMemc->set($memKey, [
-					'ttl' => $now + self::TTL_GRACE,
-					'value' => $cached['value'],
-				]);
+				$cached['ttl'] = $now + self::TTL_GRACE;
+				$wgMemc->set($memKey, $cached);
 
-				return $cached['value'];
+				$localCache = $cached;
+				return $cached;
 			}
 
-			$error = 'Failed to download SevenOne Media files and had no cached value';
-			return 'var SEVENONEMEDIA_ERROR = ' . json_encode($error) . ';';
+			$error = 'Failed to download SevenOne Media files and had no cached script';
+			$localCache = [
+				'script' => 'var SEVENONEMEDIA_ERROR = ' . json_encode($error) . ';',
+				'modTime' => $now,
+				'ttl' => $now + self::TTL_GRACE,
+			];
+			return $localCache;
 		}
 
-		$wgMemc->set($memKey, [
+		$data = [
+			'script' => $generated,
+			'modTime' => $now,
 			'ttl' => $now + self::TTL_SCRIPTS,
-			'value' => $generated,
-		]);
+		];
 
-		return $generated;
+		if ($generated === $cached['script']) {
+			$data['modTime'] = $cached['modTime'];
+		}
+
+		$wgMemc->set($memKey, $data);
+
+		$localCache = $data;
+		return $data;
+	}
+
+	public function getModifiedTime(ResourceLoaderContext $context) {
+		return $this->getData()['modTime'];
+	}
+
+	public function getScript(ResourceLoaderContext $context) {
+		$data = $this->getData();
+		$script = [
+			'var SEVENONEMEDIA_MODTIME = ' . json_encode(date('r', $data['modTime'])) . ';',
+			'var SEVENONEMEDIA_GENTIME = ' . json_encode(date('r', $this->getCurrentTimestamp())) . ';',
+			$data['script'],
+		];
+		return join(PHP_EOL, $script);
 	}
 
 	public function supportsURLLoading() {
