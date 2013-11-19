@@ -16,19 +16,20 @@ $handle-size: 48px;
 	bottom:0;
 	width: 260px;
 	background: $toc-background;
+
+	counter-reset: level1, level2, level3;
+
 	-webkit-transition: -webkit-transform .1s ease-out;
 	-webkit-transform: translate(-100%);
 	-moz-transform: translate(-100%);
 	transform: translate(-100%);
 
-	counter-reset: level1, level2, level3;
+	z-index: 101;
 
 	&.active {
 		-webkit-transform: translate(0);
 		-moz-transform: translate(0);
 		transform: translate(0);
-
-		z-index: 101;
 	}
 
 	header {
@@ -39,7 +40,7 @@ $handle-size: 48px;
 		padding-left: 20px;
 		position: relative;
 		font-weight: 600;
-		z-index: 1;
+		z-index: 2;
 	}
 
 }
@@ -83,11 +84,35 @@ $handle-size: 48px;
 $level0-padding: 20px;
 $level0-border-left-width: 3px;
 
+#tocWrapper {
+	overflow: hidden;
+	height: 100%;
+}
+
+#scroller {
+	position: absolute;
+	z-index: 1;
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+	width: 100%;
+	-webkit-transform: translateZ(0);
+	-moz-transform: translateZ(0);
+	-ms-transform: translateZ(0);
+	-o-transform: translateZ(0);
+	transform: translateZ(0);
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	-webkit-text-size-adjust: none;
+	-moz-text-size-adjust: none;
+	-ms-text-size-adjust: none;
+	-o-text-size-adjust: none;
+	text-size-adjust: none;
+}
+
 .level {
 	padding: 0 0 $line-height 0;
-	overflow-x: hidden;
-	overflow-y: scroll;
-	//-webkit-overflow-scrolling: touch;
 
 	line-height: $line-height;
 
@@ -197,26 +222,26 @@ $level0-border-left-width: 3px;
 		}
 	}
 
-	&.fixed {
-		padding-top: $line-height;
-
-		> a {
-			position: absolute;
-			top: $line-height;
-			background: $toc-background;
-			z-index: 1;
-		}
-	}
-
-	&.bottom {
-		position: relative;
-
-		> a {
-			position: absolute;
-			bottom: 0;
-			top: inherit;
-		}
-	}
+//	&.fixed {
+//		//padding-top: $line-height;
+//
+//		> a {
+////			position: absolute;
+////			top: $line-height;
+////			background: $toc-background;
+////			z-index: 1;
+//		}
+//	}
+//
+//	&.bottom {
+//		position: relative;
+//
+//		> a {
+//			position: absolute;
+//			bottom: 0;
+//			top: inherit;
+//		}
+//	}
 }
 
 .in-page-toc {

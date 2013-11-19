@@ -1,3 +1,4 @@
+/* globals Features:true */
 //init toc
 require( ['sections', 'wikia.window', 'jquery', 'wikia.mustache', 'wikia.toc'],
 function ( sections, window, $, mustache, toc ) {
@@ -15,25 +16,16 @@ function ( sections, window, $, mustache, toc ) {
 		timeout,
 		state,
 		$parent,
-		sideMenuCapable = true,
+		sideMenuCapable = (Features.positionfixed && Features.overflow),
 		$ol,
 		inited,
 		lineHeight = 45,
-		$toc = $( '#wkTOC' )
-			.on( 'click', 'header', function () {
-				window.scrollTo( 0, 0 );
-			} )
-			.on( 'click', 'li', function ( event ) {
-				var $li = $( this ),
-					$a = $li.find( 'a' ).first();
+		$toc = $( '#wkTOC' ),
+		tocScroll;
 
-				event.stopPropagation();
-				event.preventDefault();
-
-				sections.scrollTo( $a.attr( 'href' ) );
-
-				toggleLi( $li );
-			} );
+	if ( sideMenuCapable ) {
+		$toc.addClass( 'side-menu-capable' );
+	}
 
 	/**
 	 * @desc Renders toc for a given page
@@ -59,10 +51,10 @@ function ( sections, window, $, mustache, toc ) {
 				}
 			);
 
-		return mustache.render( ol, tocData, {
+		return "<div id='tocWrapper'><div id='scroller'>" + mustache.render( ol, tocData, {
 			ol: ol,
 			lis: lis
-		} );
+		} ) + '</div></div>';
 	}
 
 	/**
@@ -72,14 +64,16 @@ function ( sections, window, $, mustache, toc ) {
 	 * @param force whether to force a toggle
 	 */
 	function toggleLi ( $li, force ) {
-		if ( $li.is( '.first-children' ) ) {
+		var isTogglable = $li.is( '.first-children' );
+
+		if ( isTogglable ) {
 			$li.siblings().removeClass( fixed + ' ' + bottom + ' ' + open );
 
 			if ( $li.toggleClass( open, force ).hasClass( open ) ) {
 				$openOl = $li.find( 'ol' ).first();
 				$parent = $openOl.parent();
 
-				handleFixingLiElement();
+				//handleFixingLiElement();
 			} else {
 				state = null;
 				$li.removeClass( fixed + ' ' + bottom );
@@ -87,8 +81,11 @@ function ( sections, window, $, mustache, toc ) {
 				$openOl = null;
 			}
 
-			$ol.scrollTop( $li.position().top - lineHeight );
+			tocScroll.refresh();
+			tocScroll.scrollToElement( $li[0] );
 		}
+
+		return isTogglable;
 	}
 
 	/**
@@ -151,7 +148,7 @@ function ( sections, window, $, mustache, toc ) {
 
 			if ( scrollTo ) {
 				toggleLi( $currentLi, true );
-				$ol.scrollTop( $current.parent().position().top - lineHeight * 2 );
+				tocScroll.scrollToElement( $current[0] );
 			}
 		}
 	}
@@ -161,12 +158,34 @@ function ( sections, window, $, mustache, toc ) {
 	 */
 	function init () {
 		if ( !inited ) {
+			$toc.on( 'click', 'header', function () {
+					window.scrollTo( 0, 0 );
+				} )
+				.on( 'click', 'li', function ( event ) {
+					var $li = $( this ),
+						$a = $li.find( 'a' ).first();
+
+					event.stopPropagation();
+					event.preventDefault();
+
+					if ( !toggleLi( $li ) ) {
+						onClose();
+					}
+
+					sections.scrollTo( $a.attr( 'href' ) );
+				} );
+
 			$ol = $toc
 				.append( renderToc() )
-				.find( '.level' )
-				.on( 'scroll', handleFixingLiElement );
+				.find( '.level' );
 
 			$anchors = $ol.find( 'li > a' );
+
+			tocScroll = new IScroll('#tocWrapper', {
+				click: true,
+				scrollY: true,
+				scrollX: false
+			});
 
 			inited = true;
 		}
@@ -203,7 +222,7 @@ function ( sections, window, $, mustache, toc ) {
 
 
 	$document.on( 'curtain:hidden', function () {
-		$toc.removeClass();
+		$toc.removeClass( active );
 		onClose();
 	} );
 

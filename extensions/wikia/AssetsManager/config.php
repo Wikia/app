@@ -488,6 +488,8 @@ $config['wikiamobile_js_body_full'] = array(
 		//polyfills
 		'//extensions/wikia/WikiaMobile/js/viewport.js',
 
+		'//resources/wikia/libraries/iScroll/iscroll.js',
+
 		//platform components
 		'//extensions/wikia/AssetsManager/js/AssetsManager.js',
 		'//extensions/wikia/JSMessages/js/JSMessages.js',
