@@ -107,7 +107,9 @@ define( 'wikia.ui.factory', [
 	function init( componentName ) {
 
 		var deferred = new $.Deferred(),
-			components = [];
+			components = [],
+			dependencyObjects = {},
+			component;
 
 		if ( !( componentName instanceof Array ) ) {
 			componentName = [ componentName ];
@@ -122,12 +124,16 @@ define( 'wikia.ui.factory', [
 						templateVarsConfig = element.templateVarsConfig,
 						assets = element.assets,
 						templates = element.templates,
-						dependencies = element.templates,
+						dependencies = element.dependencies,
 						dependencyList = {};
 
 					if ( typeof dependencies === 'object' ) {
-						Object.keys(dependencies).forEach( function ( key ) {
-							dependencyList[ key ] = createComponent( dependencies[ key ] );
+						dependencies.forEach( function ( name ) {
+							if ( typeof dependencyObjects[ name ] !== 'undefined' ) {
+								dependencyList[ name ] = dependencyObjects[ name ];
+							} else {
+								throw new Error( 'Sub component ' + name + ' not found' );
+							}
 						});
 					}
 
@@ -137,13 +143,24 @@ define( 'wikia.ui.factory', [
 					}
 
 					if ( templateVarsConfig && templates ) {
-						component.setComponentsConfig( templates, templateVarsConfig, dependencyList );
+						component.setComponentsConfig( {
+							name: element.name,
+							jsWrapperModule: element.jsWrapperModule,
+							templates: templates,
+							templateVarsConfig: templateVarsConfig,
+							dependencies: dependencyList
+						});
 					}
 
 					return component;
 				};
 
-			data.components.forEach(function( element) {
+			if ( data.dependencies ) {
+				Object.keys(data.dependencies).forEach(function( name ) {
+					dependencyObjects[ name ] = createComponent( data.dependencies[ name ] );
+				});
+			}
+			data.components.forEach(function( element ) {
 				components.push( createComponent( element ) );
 			});
 

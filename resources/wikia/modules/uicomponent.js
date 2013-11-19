@@ -80,10 +80,8 @@ define( 'wikia.ui.component', [ 'wikia.mustache' ], function uicomponent( mustac
 		 * @param {{}} templateVarsConfig object with accepted template variables
 		 */
 
-		this.setComponentsConfig = function( templates, templateVarsConfig, dependencies ) {
-			componentConfig.templates = templates;
-			componentConfig.templateVarsConfig = templateVarsConfig;
-			componentConfig.dependencies = dependencies;
+		this.setComponentsConfig = function( config ) {
+			componentConfig = config;
 		};
 
 		/**
@@ -95,9 +93,9 @@ define( 'wikia.ui.component', [ 'wikia.mustache' ], function uicomponent( mustac
 		 * @param {function} callback callback function function ( object ) {}
 		 * @returns {undefined}
 		 */
-		this.create = function( moduleName, id, params, callback ) {
+		this.create = function( id, params, callback ) {
 			var that = this;
-			require( [ moduleName ], function( object ) {
+			require( [ componentConfig.jsWrapperModule ], function( object ) {
 				callback( object.init( id, that, params ) );
 			});
 		};
