@@ -312,12 +312,64 @@ class ExternalUser_Wikia extends ExternalUser {
 
 		if ( $obj ) {
 			$res = User::newFromRow( $this->mRow );
+			if ( !is_null( $res ) ) {
+				error_log( "KamilkUserSignup3-WIKIA: UserId".$res->getId()." == mOptionsLoaded = ". var_export($res->mOptionsLoaded,true) );
+				$this->checkForSomeOptions($res->getId());
+				$res->getOptions();
+			}
 		} else {
 			$res = $this->mRow;
 		}
 
 		wfProfileOut( __METHOD__ );
 		return $res;
+	}
+
+	/**
+	 * Kamil Koterba debug test function
+	 */
+	private function checkForSomeOptions($id) {
+		global $wgExternalSharedDB;
+
+		//for provided user
+		$cond = array( 'up_user' => $id );
+
+		//get options from slave
+		$this->mDb = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
+		$res = $this->mDb->select(
+			'`user_properties`',
+			array( 'up_property, up_value' ),
+			$cond,
+			__METHOD__
+		);
+
+		//prepare results
+		$aRes = array();
+		while( $row = $res->fetchRow() ) {
+			$aRes[$row['up_property']]= $row['up_value'];
+		}
+
+		//log options
+		error_log( "KamilkUserSignup3-WIKIA: UserId".$id." ==slave ExternalSharedDB== ".json_encode( $aRes ) );
+
+		//get options from master
+		$this->mDb = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
+		$res = $this->mDb->select(
+			'`user_properties`',
+			array( '*' ),
+			$cond,
+			__METHOD__
+		);
+
+		//prepare results
+		$aRes = array();
+		while( $row = $res->fetchRow() ) {
+			$aRes[$row['up_property']]= $row['up_value'];
+		}
+
+		//log options
+		error_log( "KamilkUserSignup3-WIKIA: UserId".$id." ==master ExternalSharedDB== ".json_encode( $aRes ) );
+
 	}
 
 	public function updateUser() {
