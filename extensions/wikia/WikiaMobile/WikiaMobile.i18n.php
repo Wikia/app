@@ -83,7 +83,8 @@ $messages['qqq'] = array(
 	'wikiamobile-search-wiki' => 'Text indicating that scope for a search will be current wiki',
 	'wikiamobile-search-wikia' => 'Text indicating that scope for a search will be whole wikia network',
 	'wikiamobile-login' => 'Placeholder on input asking for password',
-	'wikiamobile-password' => 'Placeholder on input asking for password',
+	'wikiamobile-password' => 'Placeholder on input asking for password.
+{{Identical|Password}}',
 	'wikiamobile-login-submit' => 'Label on a blue button prompting user to log in',
 	'wikiamobile-menu' => 'Header on wiki menu',
 	'wikiamobile-article-categories' => 'Message displayed on category section on an article',
@@ -1427,6 +1428,57 @@ $1",
 	'wikiasmartbanner-googleplay' => 'У Google Play',
 	'wikiasmartbanner-price' => 'Безкоштовно',
 	'wikiasmartbanner-view' => 'перегляд',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'wikiamobile-search' => 'Tìm kiếm',
+	'wikiamobile-search-this-wiki' => 'Tìm kiếm trên wiki này',
+	'wikiamobile-search-wiki' => 'Wiki',
+	'wikiamobile-search-wikia' => 'Wikia',
+	'wikiamobile-login' => 'Đăng Nhập',
+	'wikiamobile-password' => 'Mật khẩu',
+	'wikiamobile-login-submit' => 'Đăng nhập',
+	'wikiamobile-menu' => 'Trình đơn',
+	'wikiamobile-article-categories' => 'Thể loại',
+	'wikiamobile-feedback' => 'Phản hồi',
+	'wikiamobile-back' => 'Quay lại',
+	'wikiamobile-hide-section' => 'Ẩn',
+	'wikiamobile-profile' => 'Hồ sơ',
+	'wikiamobile-footer-link-lifestyle' => '[[w:c:www:Lifestyle|Lối sống]]',
+	'wikiamobile-footer-link-entertainment' => '[[w:c:www:Entertainment|Giải trí]]',
+	'wikiamobile-footer-link-videogames' => '[[w:c:www:Video_Games|Trò chơi điện tử]]',
+	'wikiamobile-footer-link-licencing' => '[[w:Wikia:Licensing|Cấp phép]]',
+	'mobile-full-site' => 'Ghi chú đầy đủ',
+	'wikiamobile-categories-tagline' => 'Cây thể loại',
+	'wikiamobile-categories-items-total' => '$1 {{PLURAL:$1|bài viết|bài viết}}',
+	'wikiamobile-category-items-more' => 'Tải tiếp',
+	'wikiamobile-category-items-prev' => 'Tải trước',
+	'wikiamobile-categories-expand' => 'Hiển thị tất cả',
+	'wikiamobile-categories-collapse' => 'Ẩn tất cả',
+	'wikiamobile-sharing-media-image' => 'Hình ảnh',
+	'wikiamobile-sharing-page-text' => '$1 – $2',
+	'wikiamobile-sharing-modal-text' => '$1 on $2 - $3',
+	'wikiamobile-sharing-email-text' => 'Ê
+ bạn chắc chắn nên kiểm tra này:
+
+$1',
+	'wikiamobile-media-group-footer' => '1 của $1',
+	'wikiamobile-unsupported-video-download' => 'Trình duyệt của bạn không hỗ trợ định dạng video này, hãy thử cách nhấn vào <a href="$1">đây</a>',
+	'wikiamobile-video-views-counter' => '$1 {{PLURAL:$1|lượt truy cập|lượt truy cập}}',
+	'wikiamobile-video-not-friendly-header' => 'Oh lỗi!',
+	'wikiamobile-video-not-friendly' => 'Xin lỗi, video này không có sẵn trên điện thoại di động.',
+	'wikiamobile-ad-label' => 'quảng cáo',
+	'wikiamobile-image-not-loaded' => 'Bức ảnh này không còn tồn tại',
+	'wikiamobile-shared-file-not-available' => 'Rất tiếc, mục này là không còn tồn tại có sẵn, nhưng bây giờ mà bạn đang ở đây, khám phá wiki!',
+	'wikiamobile-page-not-found' => 'Rất tiếc! <b>$1</b> không tồn tại.',
+	'wikiamobile-page-not-found-tap' => 'Bấm vào những gì ẩn đằng sau các crack để xem một trong đó có.',
+	'wikiasmartbanner-appstore' => 'Trên App Store',
+	'wikiasmartbanner-googleplay' => 'Trên Google Play',
+	'wikiasmartbanner-price' => 'miễn phí',
+	'wikiasmartbanner-view' => 'xem',
 );
 
 /** Simplified Chinese (中文（简体）‎)

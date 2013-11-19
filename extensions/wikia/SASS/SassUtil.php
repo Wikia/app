@@ -29,13 +29,9 @@ class SassUtil {
 	 *            Non-settable settings should be driven programmatically.
 	 */
 	public static function getApplicationThemeSettings() {
-		global $wgOasisGrid, $wgOasisHD;
+		global $wgOasisGrid;
 
 		$params = array();
-
-		if ( $wgOasisHD ) {
-			$params['widthType'] = 1;
-		}
 
 		if ( $wgOasisGrid ) {
 			$params['widthType'] = 3;

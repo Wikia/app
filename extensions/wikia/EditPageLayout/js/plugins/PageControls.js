@@ -397,7 +397,7 @@
 
 			require( [ 'wikia.fluidlayout' ], function( fluidlayout ) {
 				var previewPadding = 22, // + 2px for borders
-					articleWidth = mw.config.values.sassParams.widthType == 1 ? 850 : 660,
+					articleWidth = 660,
 					width = articleWidth + (self.isGridLayout ? 30 : 0),
 					railBreakPoint = fluidlayout.getBreakpointSmall(),
 					config = self.editor.config;

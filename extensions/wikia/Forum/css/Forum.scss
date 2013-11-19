@@ -280,6 +280,11 @@
 			display: block;
 		}
 	}
+
+	.policies-link {
+		float: right;
+		margin: 10px;
+	}
 }
 
 .WikiaPage .WikiaPageHeader {
@@ -349,12 +354,6 @@
 }
 
 .ForumPolicies {
-  overflow-y: scroll;
-  border: 1px solid $color-page-border-subtle;
-  font-size: 13px;
-  height: 400px;
-  position: relative;
-  padding: 10px;
   .WikiaArticle {
     padding: 0;
     .msg-title {
@@ -369,9 +368,4 @@
   .editsection{
     display: none;
   }
-}
-
-.policies-link {
-  float: right;
-  margin: 10px;
 }

@@ -174,8 +174,12 @@ $messages['qqq'] = array(
 	'action-wikifactory' => '{{doc-action|wikifactory}}',
 	'closewiki-nbr-wiki' => 'Number of wikis. $1 represents a numeric value',
 	'closewiki-unknown' => '{{Identical|Unknown}}',
+	'wikifactory-button-save' => '{{Identical|Save changes}}',
 	'wikifactory-public-status-change-default-reason' => 'WikiFactory is a staff tool that allows Wikia to manage per-wiki settings across their network. The "public status" setting determines whether a wiki is available for users or closed and assigned for removal. Staff members usually justify a change of the status of a wiki by filling in the "Reason" field in the form. If no reason is provided, the wikifactory-public-status-change-default-reason is used automatically so it can be deduced where the change had been requested from.',
+	'awc-metrics-all-languages' => '{{Identical|All languages}}',
+	'awc-metrics-search' => '{{Identical|Search options}}',
 	'awc-metrics-nbr-result' => '{{Identical|Result}}',
+	'awc-metrics-edits' => '{{Identical|Edit}}',
 	'awc-metrics-images' => '{{Identical|Image}}',
 	'awc-metrics-close' => '{{Identical|Close}}',
 	'awc-metrics-close-action' => '{{Identical|Close}}',
@@ -5330,6 +5334,7 @@ $messages['yi'] = array(
  * @author Anakmalaysia
  * @author Dimension
  * @author Hydra
+ * @author Liuxinyu970226
  * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
@@ -5370,6 +5375,7 @@ $messages['zh-hans'] = array(
 	'closewiki-redirect-to' => '重定向至',
 	'closewiki-message' => '域名 $1',
 	'closewiki-nbr-wiki' => '$1 维基',
+	'closewiki-dump-url' => '数据库转储：$1',
 	'awc-metrics-all' => '所有维基',
 	'awc-metrics-all-languages' => '所有语言',
 	'awc-metrics-images' => '图像',

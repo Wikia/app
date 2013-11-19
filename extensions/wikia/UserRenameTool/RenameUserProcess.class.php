@@ -1196,13 +1196,6 @@ class RenameUserProcess {
 		return $o;
 	}
 
-	//TODO: remove the following functions since unused?
-	static public function hackSharedDb() {
-		global $wgSharedDB;
-		if ( preg_match("/^wikicities_/", $wgSharedDB) )
-			$wgSharedDB = "wikicities";
-	}
-
 
 	/* Static utility functions */
 

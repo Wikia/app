@@ -24,43 +24,39 @@ class VideoService extends WikiaModel {
 		}
 
 		try {
-			if ( WikiaFileHelper::isVideoStoredAsFile() ) {
-				// is it a WikiLink?
-				$title = Title::newFromText($url, NS_FILE);
-				if ( !$title || !WikiaFileHelper::isTitleVideo($title) ) {
-					$title = Title::newFromText( str_replace(array('[[',']]'),array('',''),$url), NS_FILE );
-				}
-				if ( !$title || !WikiaFileHelper::isTitleVideo($title) ) {
-					$transFileNS = wfMessage('nstab-image')->inContentLanguage()->text();
-
-					if ( ($pos = strpos($url, 'Video:')) !== false ) {
-						$title = Title::newFromText( substr($url,$pos), NS_FILE );
-					} elseif ( ($pos = strpos($url, 'File:')) !== false ) {
-						$title = Title::newFromText( substr($url,$pos), NS_FILE );
-					} elseif ( ($pos = strpos($url, $transFileNS.':')) !== false ) {
-						$title = Title::newFromText( substr($url,$pos), NS_FILE );
-					}
-				}
-				if ( $title && WikiaFileHelper::isTitleVideo($title) ) {
-					$videoTitle = $title;
-					$videoPageId = $title->getArticleId();
-					$videoProvider = '';
-					wfRunHooks( 'AddPremiumVideo', array( $title ) );
-				} else {
-					if ( empty( $this->wg->allowNonPremiumVideos ) ) {
-						wfProfileOut( __METHOD__ );
-						return wfMessage( 'videohandler-non-premium' )->parse();
-					}
-					list($videoTitle, $videoPageId, $videoProvider) = $this->addVideoVideoHandlers( $url );
-				}
-
-				// Add a default description if available and one doesn't already exist
-				$file = wfFindFile( $videoTitle );
-				$vHelper = new VideoHandlerHelper();
-				$vHelper->addDefaultVideoDescription( $file );
-			} else {
-				throw new Exception( wfMessage( 'videos-error-old-type-video' )->text() );
+			// is it a WikiLink?
+			$title = Title::newFromText($url, NS_FILE);
+			if ( !$title || !WikiaFileHelper::isFileTypeVideo($title) ) {
+				$title = Title::newFromText( str_replace(array('[[',']]'),array('',''),$url), NS_FILE );
 			}
+			if ( !$title || !WikiaFileHelper::isFileTypeVideo($title) ) {
+				$transFileNS = wfMessage('nstab-image')->inContentLanguage()->text();
+
+				if ( ($pos = strpos($url, 'Video:')) !== false ) {
+					$title = Title::newFromText( substr($url,$pos), NS_FILE );
+				} elseif ( ($pos = strpos($url, 'File:')) !== false ) {
+					$title = Title::newFromText( substr($url,$pos), NS_FILE );
+				} elseif ( ($pos = strpos($url, $transFileNS.':')) !== false ) {
+					$title = Title::newFromText( substr($url,$pos), NS_FILE );
+				}
+			}
+			if ( $title && WikiaFileHelper::isFileTypeVideo($title) ) {
+				$videoTitle = $title;
+				$videoPageId = $title->getArticleId();
+				$videoProvider = '';
+				wfRunHooks( 'AddPremiumVideo', array( $title ) );
+			} else {
+				if ( empty( $this->wg->allowNonPremiumVideos ) ) {
+					wfProfileOut( __METHOD__ );
+					return wfMessage( 'videohandler-non-premium' )->parse();
+				}
+				list($videoTitle, $videoPageId, $videoProvider) = $this->addVideoVideoHandlers( $url );
+			}
+
+			// Add a default description if available and one doesn't already exist
+			$file = wfFindFile( $videoTitle );
+			$vHelper = new VideoHandlerHelper();
+			$vHelper->addDefaultVideoDescription( $file );
 		} catch ( Exception $e ) {
 			wfProfileOut( __METHOD__ );
 			return $e->getMessage();

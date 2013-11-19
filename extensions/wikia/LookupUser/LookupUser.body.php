@@ -175,21 +175,11 @@ EOT
 		} else {
 			$user = User::newFromName( $targetUserName );
 		}
-		//@TODO get rid of TempUser handling when it will be globally disabled
-		$tempUser = false;
 		if ( is_object( $extUser ) && ( $extUser->getId() != 0 ) ) {
 			$user = $extUser->mapToUser();
 		} elseif ( $user == null || $user->getId() == 0 ) {
-			// Check if a temporary user is at this name
-			if ( !empty( $wgEnableUserLoginExt ) ) {
-				$tempUser = TempUser::getTempUserFromName( $targetUserName );
-			}
-			if ( $tempUser ) {
-				$user = $tempUser->mapTempUserToUser( false );
-			} else {
-				$wgOut->addWikiText( '<span class="error">' . wfMessage( 'lookupuser-nonexistent', $target )->text() . '</span>' );
-				return;
-			}
+			$wgOut->addWikiText( '<span class="error">' . wfMessage( 'lookupuser-nonexistent', $target )->text() . '</span>' );
+			return;
 		}
 		if ( $count > 1 ) {
 			$options = array();
@@ -257,11 +247,7 @@ EOT
 
 		$wgOut->addWikiText( '*' . wfMessage( 'lookupuser-toollinks', $name, urlencode($name) )->inContentLanguage()->text() );
 		$wgOut->addWikiText( '*' . wfMessage( 'lookupuser-id', $user->getId() )->text() );
-		if ( !empty( $tempUser ) ) {
-			$userStatus = wfMessage( 'lookupuser-account-status-tempuser' )->text();
-		} else {
-			$userStatus = wfMessage( 'lookupuser-account-status-realuser' )->text();
-		}
+		$userStatus = wfMessage( 'lookupuser-account-status-realuser' )->text();
 		$wgOut->addWikiText( '*' . wfMessage( 'lookupuser-account-status' )->text() . $userStatus );
 		$wgOut->addWikiText( '*' . $email_output );
 		$wgOut->addWikiText( '*' . wfMessage( 'lookupuser-realname', $user->getRealName() )->text() );

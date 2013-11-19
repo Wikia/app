@@ -33,6 +33,7 @@ class VisualEditorWikiaHooks {
 			'dependencies' => array(
 				'ext.visualEditor.test',
 				'ext.visualEditor.wikiaCore',
+				'wikia.stringhelper',
 			)
 		);
 		return true;
