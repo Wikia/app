@@ -307,6 +307,7 @@ $.widget( 'wikia.linksuggest', {
 			// This should never happen
 			return [ 0, 0 ];
 		}
+
 		// Get the position at the start of the link/template
 		for ( var i = caret - 1; i >= 0; i-- ) {
 			var c = text.charAt( i );
@@ -326,30 +327,20 @@ $.widget( 'wikia.linksuggest', {
 			tester.css( props[i], this.element.css( props[i] ) );
 		}
 
-		var textToAppend = text.substr( 0, caret );
 		// Using clientWidth because if the textarea has scroll, the effective
 		// width for word wrap doesn't include the width used by the scrollbar
 		tester.width( control.clientWidth ).appendTo( document.body );
-		if ($.browser.msie) {
-			tester[0].innerText = textToAppend;
-		} else {
-			tester.text(textToAppend);
-		}
+		tester[0].textContent = text.substr( 0, caret );
 
 		left = tester.outerWidth();
 		top = tester.outerHeight() - control.scrollTop;
 		var initialheight = tester.height();
 		var paddingText = '';
-		textToAppend = text.substr( 0, initialcaret ) + ' ';
 		// Insert the text until the initial position of the element we want to
 		// suggest, plus a space, to get the characters needed to force a word
 		// wrap to a new line
-		if ($.browser.msie) {
-			// Additional whitespace is required for text wrap, when user starts typing from beginning of new line
-			tester[0].innerText = textToAppend + ' ';
-		} else {
-			tester.text( textToAppend );
-		}
+		tester[0].textContent = text.substr( 0, initialcaret ) + '  ';
+
 		if ( tester.height() < initialheight ) {
 			// If the height has been reduced then the element to suggest is
 			// forcing a word wrap to a new line and it's on the left side of
@@ -362,11 +353,12 @@ $.widget( 'wikia.linksuggest', {
 			for ( var i = 1; i < 500; i++ ) {
 				paddingText += 'A';
 				// msie appendData doesn't update the height()
-				if ( $.browser.msie ) {
+				if ( tester[0].innerText ) {
 					tester[0].innerText += 'A';
 				} else {
 					tester[0].firstChild.appendData( 'A' );
 				}
+
 				if ( tester.height() > initialheight ) {
 					tester.css( 'width', 'auto' );
 					tester.text( paddingText );
