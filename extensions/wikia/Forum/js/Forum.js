@@ -5,6 +5,7 @@
 			uiFactory.init( [ 'modal' ] ).then( function( uiModal ) {
 				var backBtnMsg = $.msg( 'back' ),
 					modalId = 'ForumPoliciesModal',
+					editBtnMsg,
 					modalConfig = {
 						type: 'default',
 						vars: {
@@ -25,8 +26,7 @@
 								}
 							}
 						}
-					},
-					editBtnMsg;
+					};
 
 				if ( window.wgCanEditPolicies ) {
 					editBtnMsg = $.msg( 'forum-specialpage-policies-edit' );
@@ -43,13 +43,14 @@
 				}
 
 				uiModal.create( modalId, modalConfig, function ( policiesModal ) {
+
 					policiesModal.$element.find( '#close' ).click( function() {
 						policiesModal.close();
-					} );
+					});
+
 					policiesModal.$element.find( '#edit' ).click( function() {
 						window.location = window.wgPoliciesEditURL;
-					} );
-
+					});
 
 					policiesModal.show();
 					policiesModal.$element.find( '.ForumPolicies' ).startThrobbing();
@@ -61,9 +62,9 @@
 						data: {
 							'rev': window.wgPoliciesRev
 						},
-						callback: function(data) {
+						callback: function( data ) {
 							policiesModal.$element.find( '.ForumPolicies' ).stopThrobbing();
-							policiesModal.$element.find( '.ForumPolicies .WikiaArticle' ).html(data.body);
+							policiesModal.$element.find( '.ForumPolicies .WikiaArticle' ).html( data.body );
 						}
 					});
 				});
@@ -75,7 +76,8 @@
 	$(function() {
 		$( '.policies-link' ).click( showPoliciesModal );
 	});
-// Just the namespace, for now.
-window.Forum = {};
 
-})(window, jQuery);
+	// Just the namespace, for now.
+	window.Forum = {};
+
+})( window, jQuery );
