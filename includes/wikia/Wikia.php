@@ -2023,7 +2023,6 @@ class Wikia {
 			if ( is_object( $mExtUser ) && ( 0 != $mExtUser->getId() ) ) {
 				$mExtUser->linkToLocal( $mExtUser->getId() );
 				$s = $mExtUser->getLocalUser( false );
-
 			}
 		}
 

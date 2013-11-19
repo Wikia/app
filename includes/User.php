@@ -4477,5 +4477,4 @@ class User {
 	public function wikiaConfirmationTokenUrl( $token ) {
 		return $this->getTokenUrl( 'WikiaConfirmEmail', $token );
 	}
-
 }
