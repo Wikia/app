@@ -469,6 +469,13 @@ $messages['it'] = array(
 	'wikiapoll-error-invalid-title' => 'Il testo della domanda non è valido.',
 );
 
+/** Japanese (日本語)
+ * @author BryghtShadow
+ */
+$messages['ja'] = array(
+	'wikiapoll-votes' => '{{PLURAL:$1|$1 票}}',
+);
+
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
  * @author George Animal
  */

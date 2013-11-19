@@ -288,6 +288,13 @@ $messages['an'] = array(
 	'swm-no' => 'No',
 );
 
+/** Old English (Ænglisc)
+ * @author Espreon
+ */
+$messages['ang'] = array(
+	'swm-label-edit' => 'Adihtan',
+);
+
 /** Arabic (العربية)
  * @author Achraf94
  * @author Malhargan
@@ -959,12 +966,13 @@ $messages['de-formal'] = array(
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
+ * @author Gorizon
  * @author Mirzali
  */
 $messages['diq'] = array(
 	'swm-label-preview' => 'Verqayt',
 	'swm-label-edit' => 'Bıvurne',
-	'swm-label-remove' => 'Wedarne',
+	'swm-label-remove' => 'Hewad',
 	'swm-label-sent' => 'Bırş',
 	'swm-label-list' => 'Liste',
 	'swm-label-recipient-wikis' => 'Wikiy',

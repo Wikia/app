@@ -96,6 +96,13 @@ $messages['az'] = array(
 	'lightbox-share-button-email' => 'E-məktub',
 );
 
+/** Bulgarian (български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'lightbox-share-email-error-caption' => 'Грешка',
+);
+
 /** Breton (brezhoneg)
  * @author Fohanno
  * @author Y-M D

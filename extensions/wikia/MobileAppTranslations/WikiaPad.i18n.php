@@ -629,6 +629,22 @@ $messages['uk'] = array(
 	'browser-loading-message' => 'Завантаження…',
 );
 
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'main-tab-discover' => 'Khám phá',
+	'main-tab-personal' => 'Wikia của tôi',
+	'main-tab-search' => 'Tìm kiếm',
+	'main-tab-offline' => 'Ngoại tuyến',
+	'tab-discover-loading-message' => 'Đang tải…',
+	'tab-discover-no-network-dialog-title' => 'Mạng không sẵn dùng',
+	'tab-discover-no-network-dialog-message' => 'Không có kết nối mạng được phát hiện',
+	'tab-discover-no-network-dialog-close-button' => 'OK',
+	'tab-search-loading-message' => 'Đang tìm…',
+	'browser-loading-message' => 'Đang tải...',
+);
+
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Hydra

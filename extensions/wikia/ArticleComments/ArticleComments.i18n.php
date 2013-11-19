@@ -147,6 +147,13 @@ $messages['af'] = array(
 	'article-comments-page-spacer' => '&#160...&#160',
 );
 
+/** Old English (Ænglisc)
+ * @author Espreon
+ */
+$messages['ang'] = array(
+	'article-comments-edit' => 'adihtan',
+);
+
 /** Arabic (العربية)
  * @author Achraf94
  * @author DRIHEM

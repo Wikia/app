@@ -1,5 +1,8 @@
-/*global define, Image*/
-define('ext.wikia.adengine.template.skin', ['wikia.document', 'wikia.window', 'wikia.log'], function (document, window, log) {
+/*global define*/
+define('ext.wikia.adengine.template.skin',
+	['wikia.document', 'wikia.window', 'wikia.log', 'wikia.backgroundchanger'],
+	function (document, window, log, backgroundchanger)
+	{
 	'use strict';
 
 	var logGroup = 'ext.wikia.adengine.template.skin';
@@ -42,7 +45,7 @@ define('ext.wikia.adengine.template.skin', ['wikia.document', 'wikia.window', 'w
 			if (params.middleColor) {
 				bcParams.backgroundMiddleColor = '#' + params.middleColor;
 			}
-			BackgroundChanger.load(bcParams);
+			backgroundchanger.load(bcParams);
 		} else {
 			adSkinStyle.background = 'url("' + params.skinImage + '") no-repeat top center #' + params.backgroundColor;
 		}
@@ -57,7 +60,7 @@ define('ext.wikia.adengine.template.skin', ['wikia.document', 'wikia.window', 'w
 
 		wikiaSkinStyle.opacity = 1;
 
-		adSkin.onclick = function (e) {
+		adSkin.onclick = function () {
 			log('Click on skin', 'user', logGroup);
 			window.open(params.destUrl);
 		};

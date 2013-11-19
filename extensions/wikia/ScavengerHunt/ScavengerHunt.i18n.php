@@ -216,6 +216,15 @@ $messages['af'] = array(
 	'scavengerhunt-entry-form-submit' => 'Stuur inskrywing',
 );
 
+/** Old English (Ænglisc)
+ * @author Espreon
+ */
+$messages['ang'] = array(
+	'scavengerhunt-label-name' => 'Nama:',
+	'scavengerhunt-button-save' => 'Hordian',
+	'scavengerhunt-entry-form-name' => 'Þīn nama:',
+);
+
 /** Arabic (العربية)
  * @author Achraf94
  * @author Meno25

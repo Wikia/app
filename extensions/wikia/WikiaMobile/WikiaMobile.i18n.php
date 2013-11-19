@@ -87,10 +87,12 @@ $messages['qqq'] = array(
 	'wikiamobile-search-this-wiki' => 'Placeholder in input on search field',
 	'wikiamobile-search-wiki' => 'Text indicating that scope for a search will be current wiki',
 	'wikiamobile-search-wikia' => 'Text indicating that scope for a search will be whole wikia network',
-	'wikiamobile-login' => 'Placeholder on input asking for password',
+	'wikiamobile-login' => 'Placeholder on input asking for password.
+{{Identical|Log in}}',
 	'wikiamobile-password' => 'Placeholder on input asking for password.
 {{Identical|Password}}',
-	'wikiamobile-login-submit' => 'Label on a blue button prompting user to log in',
+	'wikiamobile-login-submit' => 'Label on a blue button prompting user to log in.
+{{Identical|Log in}}',
 	'wikiamobile-menu' => 'Header on wiki menu',
 	'wikiamobile-article-categories' => 'Message displayed on category section on an article',
 	'wikiamobile-feedback' => 'Link to a feedback form',

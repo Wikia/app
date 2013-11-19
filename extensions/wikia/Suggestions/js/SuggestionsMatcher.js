@@ -2,7 +2,7 @@ define('SuggestionsMatcher', [], function() {
 	'use strict';
 	function testChar( character ) {
 		// todo change regex to match solr logic
-		return character.match(/[_\-)(*&^%$#@!\s:"<>(){}\[\]?\/"']+/) !== null;
+		return character.match(/[\\\-\^\[\]_)(*&%$#@!\s:"<>(){}?\/~`+=\;.,]+/) !== null;
 	}
 	function getChar( character ) {
 		return testChar( character ) ? '' : character.toLocaleLowerCase();
@@ -10,39 +10,42 @@ define('SuggestionsMatcher', [], function() {
 	function matchStartingFrom( title, pattern, from ) {
 		var len = 0,
 			patternPos = 0,
-			lastValidChar = 0;
+			lastValidChar;
 
 		//start from first normal character in pattern
 		while( patternPos < pattern.length && testChar(pattern[patternPos]) ) {
 			patternPos++;
 		}
+		//find first normal character in title
+		while( from+len <= title.length && testChar(title[from+len]) ) {
+			len++;
+		}
+		lastValidChar = len;
 
 		while( patternPos < pattern.length ) {
-			if( title.length <= from+len ) {
-				if ( lastValidChar > 0 && testChar(pattern[patternPos]) && title.length >= from+lastValidChar ) {
-					break;
-				} else {
-					return null;
-				}
-			}
-			if( getChar(pattern[patternPos]) !== '' && getChar(title[from+len]) !== getChar(pattern[patternPos]) ) {
+			if ( getChar(title[from+len]) === getChar(pattern[patternPos]) ) {
+				len++;
+				patternPos++;
+				lastValidChar = len;
+			} else {
 				return null;
 			}
-			if( testChar(title[from+len]) ) {
-				do { len++; } while( from+len <= title.length && testChar(title[from+len]) );
-			} else {
-				len++;
-				lastValidChar = len;
+			if ( from+len >= title.length ) {
+				break;
 			}
-			if( testChar(pattern[patternPos]) ) {
+			//check if we have special chars there
+			if( from+len <= title.length && testChar(title[from+len]) ) {
+				do { len++; } while( from+len < title.length && testChar(title[from+len]) );
+			}
+			if( patternPos < pattern.length && testChar(pattern[patternPos]) ) {
 				do { patternPos++; } while( patternPos < pattern.length && testChar(pattern[patternPos]) );
-			} else {
-				patternPos++;
 			}
 		}
 
-		if(len === lastValidChar && lastValidChar === title.length && !pattern[patternPos]) {
-			lastValidChar--;
+		if ( patternPos < pattern.length ) {
+			if (getChar(pattern[patternPos]) !== '' ) {
+				return null;
+			}
 		}
 
 		return {
