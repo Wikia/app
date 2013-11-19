@@ -725,7 +725,10 @@ class Masthead {
 				}
 
 				// sync with NFS
-				copy($sFilePath, $this->getFullPath());
+				global $wgEnableSwithSyncToLocalFS;
+				if (!empty($wgEnableSwithSyncToLocalFS)) {
+					copy($sFilePath, $this->getFullPath());
+				}
 			}
 
 			$sUserText =  $this->mUser->getName();
