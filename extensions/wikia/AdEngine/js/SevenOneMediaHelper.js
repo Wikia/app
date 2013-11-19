@@ -54,14 +54,6 @@ var SevenOneMediaHelper = function (adLogicPageLevelParams, scriptWriter, log, w
 			ga_action: action,
 			trackingMethod: 'ad'
 		});
-
-		tracker.track({
-			eventName: 'liftium.71m',
-			ga_category: '71m',
-			ga_action: 'success', // for trackingMethod ga Wikia.Tracker requires ga_action to be one from a limited set
-			ga_label: action,
-			trackingMethod: 'ga'
-		});
 	}
 
 	function insertAd(item) {
