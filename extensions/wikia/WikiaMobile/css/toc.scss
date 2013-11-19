@@ -121,10 +121,14 @@ $level0-border-left-width: 3px;
 	> li {
 		counter-increment: level1;
 
+		border-top: 1px solid #D8D8D8;
+
+		&:last-child {
+			border-bottom: 1px solid #D8D8D8;
+		}
+
 		> a {
 			border-left: $level0-border-left-width solid $toc-background;
-
-			border-bottom: 1px solid #D8D8D8;
 
 			font-size: 1.15rem;
 			padding-left: $level0-padding - $level0-border-left-width;
@@ -164,6 +168,10 @@ $level0-border-left-width: 3px;
 	> li {
 		counter-increment: level3;
 
+		&:first-child {
+			border-top: none;
+		}
+
 		> a {
 			padding-left: 40px;
 
@@ -189,7 +197,7 @@ $level0-border-left-width: 3px;
 .level2, .level3 {
 
 	li {
-		border-bottom: 1px solid #F0F0F0;
+		border-top: 1px solid #F0F0F0;
 	}
 
 	.current {

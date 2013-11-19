@@ -16,7 +16,7 @@ function ( sections, window, $, mustache, toc ) {
 		timeout,
 		state,
 		$parent,
-		sideMenuCapable = (Features.positionfixed && Features.overflow),
+		sideMenuCapable = true || (Features.positionfixed && Features.overflow),
 		$ol,
 		inited,
 		lineHeight = 45,
@@ -230,6 +230,7 @@ function ( sections, window, $, mustache, toc ) {
 		$ol = $document.find('#mw-content-text')
 			.append( '<div class="in-page-toc">' + renderToc() + '</div>' )
 			.find('.level');
+
 	}
 
 	$( '#wkTOCHandle' ).on( 'click', function () {
