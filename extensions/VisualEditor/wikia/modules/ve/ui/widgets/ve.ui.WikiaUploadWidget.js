@@ -121,7 +121,8 @@ ve.ui.WikiaUploadWidget.prototype.onFileChange = function () {
 
 	if ( fileErrors.length ) {
 		mw.config.get( 'GlobalNotification' ).show(
-			ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-upload-error-' + fileErrors.join( '-' ) ),
+			// show filetype message first if multiple errors exist
+			ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-upload-error-' + fileErrors[ fileErrors.length - 1 ] ),
 			'error',
 			$( '.ve-ui-frame' ).contents().find( '.ve-ui-window-body' )
 		);
