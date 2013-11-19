@@ -14,11 +14,11 @@ class WikiaSQLCache extends FluentSql\Cache {
 	 * @return string a memcache key to use
 	 */
 	public function generateKey(\FluentSql\Breakdown $breakDown, $sharedKey) {
-		$stack = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 3);
+		$stack = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 4);
 		$keyArgs = ['sql-cache'];
 
-		if (isset($stack[2])) { // index0=this, index1=SQL->run(), index 2=whoever called "run"
-			$caller = $stack[2];
+		if (isset($stack[3])) { // 0=this, 1=WikiaSQL->getCacheKey, 2=SQL->run(), 3=whoever called "run"
+			$caller = $stack[3];
 
 			if (isset($caller['class'])) {
 				$keyArgs []= $caller['class'];
