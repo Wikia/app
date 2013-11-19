@@ -12,10 +12,9 @@ describe('UIFactory', function(){
 			}
 		},
 		uiComponent = function() {
-			var config = {};
-			this.setComponentsConfig = function(templates, templateVarsConfig) {
-				config.templates = templates;
-				config.templateVarsConfig = templateVarsConfig;
+			var componentConfig = {};
+			this.setComponentsConfig = function( config ) {
+				componentConfig = config;
 			}
 		},
 		componentConfig = {

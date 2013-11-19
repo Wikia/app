@@ -94,9 +94,13 @@ define( 'wikia.ui.component', [ 'wikia.mustache' ], function uicomponent( mustac
 		 */
 		this.create = function( id, params, callback ) {
 			var that = this;
-			require( [ componentConfig.jsWrapperModule ], function( object ) {
-				callback( object.init( id, that, params ) );
-			});
+			if ( componentConfig.jsWrapperModule ) {
+				require( [ componentConfig.jsWrapperModule ], function( object ) {
+					callback( object.init( id, that, params ) );
+				});
+			} else {
+				callback( that, params );
+			}
 		};
 
 		/**
@@ -106,11 +110,10 @@ define( 'wikia.ui.component', [ 'wikia.mustache' ], function uicomponent( mustac
 		 * @returns {*} Component
 		 */
 		this.getSubComponent = function( componentName ) {
-			if ( componentConfig.dependencies[ componentName ] !== 'undefined' ) {
+			if ( typeof componentConfig.dependencies[ componentName ] !== 'undefined' ) {
 				return componentConfig.dependencies[ componentName ];
-			} else {
-				throw new Error( 'Dependency ' + componentName + ' not found.');
 			}
+			throw new Error( 'Dependency ' + componentName + ' not found.' );
 		};
 	}
 
