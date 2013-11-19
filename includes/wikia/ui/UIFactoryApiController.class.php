@@ -22,6 +22,13 @@ class UIFactoryApiController extends \WikiaApiController {
 	const PARAMETER_COMPONENTS = 'components';
 
 
+	/**
+	 * Prepare JSON description of the UI Styleguide component
+	 *
+	 * @param \Wikia\UI\Component $component
+	 * @param \Wikia\UI\Factory $factory
+	 * @return dictionary describing the component
+	 */
 	private function getComponentConfig( $component, $factory ) {
 		$componentResult = [];
 
@@ -33,8 +40,11 @@ class UIFactoryApiController extends \WikiaApiController {
 			$componentResult[ 'templates' ][ $type ] = $factory->loadComponentTemplateContent( $component, $type );
 		}
 		$componentResult[ 'assets' ] = $factory->getComponentAssetsUrls( $component );
+		$jsModule = $component->getJSWrapperModule();
+		if ( !empty( $jsModule ) ) {
+			$componentResult[ 'jsWrapperModule' ] = $jsModule;
+		}
 		return $componentResult;
-
 	}
 
 	/**

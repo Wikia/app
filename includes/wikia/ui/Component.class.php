@@ -65,7 +65,7 @@ class Component {
 	/**
 	 * @var String name of the JS AMD module that wraps the component functionality
 	 */
-	private $jsWrapperModule;
+	private $jsWrapperModule = null;
 
 	/**
 	 * @desc Sets template JS and CSS assets

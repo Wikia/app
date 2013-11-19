@@ -323,6 +323,10 @@ class Factory {
 			$component->setComponentDependencies( $componentConfig['dependencies'][self::COMPONENT_DEPENDENCY] );
 		}
 
+		if ( !empty( $componentConfig[ 'jsWrapperModule' ] ) ) {
+			$component->setJSWrapperModule( $componentConfig[ 'jsWrapperModule' ] );
+		}
+
 		return $component;
 	}
 
