@@ -118,17 +118,12 @@ class RealgravityFeedIngester extends VideoFeedIngester {
 		$articlesCreated = 0;
 
 		do {
-			$numVideos = 0;
-
 			// connect to provider API
 			$url = $this->initFeedUrl( $marketplaceId, $startDate, $page++ );
 			print( "Connecting to $url...\n" );
 
-			$req = MWHttpRequest::factory( $url, array( 'noProxy' => true ) );
-			$status = $req->execute();
-			if( $status->isOK() ) {
-				$response = $req->getContent();
-			} else {
+			$resp = Http::request( 'GET', $url, array( 'noProxy' => true ) );
+			if ( $resp === false ) {
 				print( "ERROR: problem downloading content.\n" );
 				wfProfileOut( __METHOD__ );
 
@@ -136,13 +131,13 @@ class RealgravityFeedIngester extends VideoFeedIngester {
 			}
 
 			// parse response
-			$response = json_decode( $response, true );
+			$response = json_decode( $resp, true );
 			$videos = empty( $response['contents'] ) ? array() : $response['contents'] ;
 
 			$numVideos = count( $videos );
 			print("Found $numVideos videos...\n");
 
-			foreach( $videos as $video ) {
+			foreach ( $videos as $video ) {
 				$clipData = array();
 				$clipData['titleName'] = trim( $video['title'] );
 				$clipData['videoId'] = $video['id'];
@@ -170,7 +165,7 @@ class RealgravityFeedIngester extends VideoFeedIngester {
 					print "ERROR: $msg\n";
 				}
 			}
-		} while( $numVideos == self::API_PAGE_SIZE );
+		} while ( $numVideos == self::API_PAGE_SIZE );
 
 		wfProfileOut( __METHOD__ );
 

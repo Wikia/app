@@ -187,16 +187,12 @@ class SnappytvApiWrapper extends ApiWrapper {
 		$app = F::app();
 		$memcKey = wfmemcKey( static::$CACHE_KEY, md5($url), static::$CACHE_KEY_VERSION );
 		$redirectUrl = $app->wg->memc->get( $memcKey );
-		if ( empty($redirectUrl) ) {
-			$req = MWHttpRequest::factory( $url, array( 'noProxy' => true ) );
-			$status = $req->execute();
-			if( $status->isOK() ) {
-				$response = $req->getContent();
-				if ( !empty( $response ) ) {
-					if ( preg_match('/<a href="(.+)">/', $response, $matches) ) {
-						$redirectUrl = trim( $matches[1] );
-						$app->wg->memc->set( $memcKey, $redirectUrl, static::$CACHE_EXPIRY );
-					}
+		if ( empty( $redirectUrl ) ) {
+			$response = Http::request( 'GET', $redirectUrl, array( 'noProxy' => true ) );
+			if ( !empty( $response ) ) {
+				if ( preg_match('/<a href="(.+)">/', $response, $matches) ) {
+					$redirectUrl = trim( $matches[1] );
+					$app->wg->memc->set( $memcKey, $redirectUrl, static::$CACHE_EXPIRY );
 				}
 			}
 		}
@@ -211,18 +207,14 @@ class SnappytvApiWrapper extends ApiWrapper {
 
 		$info = array();
 		$url = self::getRedirectUrl( $url );
-		$req = MWHttpRequest::factory( $url, array( 'noProxy' => true ) );
-		$status = $req->execute();
-		if( $status->isOK() ) {
-			$response = $req->getContent();
-			if ( !empty( $response ) ) {
-				if ( preg_match('/"id":(\d+),/', $response, $matches) ) {
-					$info['videoId'] = trim( $matches[1] );
-				}
+		$response = Http::request( 'GET', $url, array( 'noProxy' => true ) );
+		if ( !empty( $response ) ) {
+			if ( preg_match('/"id":(\d+),/', $response, $matches) ) {
+				$info['videoId'] = trim( $matches[1] );
+			}
 
-				if ( preg_match('/"event_id":(\d+),/', $response, $matches) ) {
-					$info['eventId'] = trim( $matches[1] );
-				}
+			if ( preg_match('/"event_id":(\d+),/', $response, $matches) ) {
+				$info['eventId'] = trim( $matches[1] );
 			}
 		}
 

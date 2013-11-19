@@ -9,7 +9,7 @@ class GamestarApiWrapper extends ApiWrapper {
 	protected static $REQUEST_USER_AGENT = '';
 
 	public static function isMatchingHostname( $hostname ) {
-		return endsWith($hostname, "gamestar.de") ? true : false;
+		return endsWith( $hostname, "gamestar.de" ) ? true : false;
 	}
 
 	public static function newFromUrl( $url ) {
@@ -20,7 +20,7 @@ class GamestarApiWrapper extends ApiWrapper {
 		if( is_array( $parsed ) ) {
 			$last = explode( ",", array_pop( $parsed ), 2 );
 			$videoId = array_pop( $last );
-			if ( is_numeric($videoId) ) {
+			if ( is_numeric( $videoId ) ) {
 				wfProfileOut( __METHOD__ );
 
 				return new static( $videoId );
@@ -52,13 +52,13 @@ class GamestarApiWrapper extends ApiWrapper {
 		wfProfileIn( __METHOD__ );
 
 		$apiUrl = $this->getApiUrl();
-		if ( empty($this->videoId) ){
+		if ( empty( $this->videoId ) ){
 			throw new EmptyResponseException($apiUrl);
 		}
 
 		$memcKey = wfMemcKey( static::$CACHE_KEY, $apiUrl, static::$CACHE_KEY_VERSION );
 		$processedResponse = F::app()->wg->memc->get( $memcKey );
-		if ( empty($processedResponse) ) {
+		if ( empty( $processedResponse ) ) {
 			$req = MWHttpRequest::factory( $apiUrl, array( 'noProxy' => true ) );
 			$req->setHeader( 'User-Agent', self::$REQUEST_USER_AGENT );
 			$status = $req->execute();
@@ -83,11 +83,11 @@ class GamestarApiWrapper extends ApiWrapper {
 		return $processedResponse;
 	}
 
-	protected function processResponse( $response, $type ){
+	protected function processResponse( $response, $type ) {
 		wfProfileIn( __METHOD__ );
 
 		$return = '';
-		if ( preg_match('/\<title\>(.*)\<\/title>/', $response, $matches) ) {
+		if ( preg_match( '/\<title\>(.*)\<\/title>/', $response, $matches ) ) {
 			$title = trim( $matches[1] );
 			$title = preg_replace( '/[vV]ideo [bB]ei [gG]ame[sS]tar.de$|[vV]ideo [oO]n [gG]ame[sS]tar.de$/', '', $title );
 			$title = trim( $title, " -" );
@@ -105,7 +105,7 @@ class GamestarApiWrapper extends ApiWrapper {
 
 				// thumbnail url
 				$thumbnail = $this->getThumbnail();
-				if ( !empty($thumbnail) ) {
+				if ( !empty( $thumbnail ) ) {
 					$return['image'] = $thumbnail;
 				}
 			}
@@ -121,14 +121,16 @@ class GamestarApiWrapper extends ApiWrapper {
 
 		$thumbnail = '';
 		$url = 'http://www.gamestar.de/emb/getVideoData5.cfm?vid='.$this->videoId;
-		$req = MWHttpRequest::factory( $url, array( 'noProxy' => true ) );
-		$req->setHeader( 'User-Agent', self::$REQUEST_USER_AGENT );
-		$status = $req->execute();
-		if( $status->isOK() ) {
-			$response = trim( $req->getContent() );
-			if ( !empty($response) ) {
+		$options = array(
+			'noProxy' => true,
+			'userAgent' => self::$REQUEST_USER_AGENT,
+		);
+		$response = Http::request( 'GET', $url, $options );
+		if ( $response !== false ) {
+			$response = trim( $response );
+			if ( !empty( $response ) ) {
 				$xml = @simplexml_load_string( $response );
-				if ( isset($xml->image) ) {
+				if ( isset( $xml->image ) ) {
 					$thumbnail = (string) $xml->image;
 				}
 			}
