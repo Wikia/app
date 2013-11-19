@@ -107,7 +107,6 @@ define( 'wikia.ui.component', [ 'wikia.mustache' ], function uicomponent( mustac
 				throw new Error( 'Dependency ' + componentName + ' not found.');
 			}
 		}
-
 	}
 
 	return UIComponent;

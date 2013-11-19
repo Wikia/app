@@ -2,24 +2,35 @@
 	'use strict';
 	var showPoliciesModal = function() {
 		require( [ 'wikia.ui.factory' ], function( uiFactory ) {
-			uiFactory.init( [ 'button', 'modal' ] ).then( function( uiButton, uiModal ) {
+			uiFactory.init( [ 'modal' ] ).then( function( uiModal ) {
 				var backBtnMsg = $.msg( 'back' ),
-					backBtn = uiButton.render( {
-						type: 'button',
-						vars: {
-							id: 'close',
-							type: 'button',
-							classes: [ 'normal', 'secondary' ],
-							value: backBtnMsg,
-							title: backBtnMsg
-						}
-					}),
 					modalId = 'ForumPoliciesModal',
-					editBtn, policiesModal, editBtnMsg;
+					modalConfig = {
+						type: 'default',
+						vars: {
+							id: modalId,
+							size: 'medium',
+							content: '<div class="ForumPolicies"><div class="WikiaArticle"></div></div>',
+							title: $.msg( 'forum-specialpage-policies' ),
+							closeButton: true,
+							closeText: $.msg( 'close' ),
+							secondBtn: {
+								type: 'button',
+								vars: {
+									id: 'close',
+									type: 'button',
+									classes: [ 'normal', 'secondary' ],
+									value: backBtnMsg,
+									title: backBtnMsg
+								}
+							}
+						}
+					},
+					editBtnMsg;
 
 				if ( window.wgCanEditPolicies ) {
 					editBtnMsg = $.msg( 'forum-specialpage-policies-edit' );
-					editBtn = uiButton.render( {
+					modalConfig.vars.primaryBtn = {
 						type: 'button',
 						vars: {
 							id: 'edit',
@@ -28,26 +39,10 @@
 							value: editBtnMsg,
 							title: editBtnMsg
 						}
-					} );
+					};
 				}
 
-
-				policiesModal = uiModal.render( {
-					type: 'default',
-					vars: {
-						id: modalId,
-						size: 'medium',
-						content: '<div class="ForumPolicies"><div class="WikiaArticle"></div></div>',
-						title: $.msg( 'forum-specialpage-policies' ),
-						closeButton: true,
-						closeText: $.msg( 'close' ),
-						primaryBtn: editBtn,
-						secondBtn: backBtn
-					}
-				} );
-
-				require( [ 'wikia.ui.modal' ], function( modal ) {
-					policiesModal = modal.init( modalId, policiesModal );
+				uiModal.create( modalId, modalConfig, function ( policiesModal ) {
 					policiesModal.$element.find( '#close' ).click( function() {
 						policiesModal.close();
 					} );
@@ -71,8 +66,8 @@
 							policiesModal.$element.find( '.ForumPolicies .WikiaArticle' ).html(data.body);
 						}
 					});
-				} );
-			} );
+				});
+			});
 		} );
 		return false;
 	};
