@@ -96,7 +96,7 @@ var GlobalNotification = {
 	},
 	isModal: function() {
 		'use strict';
-		GlobalNotification.modal = $( '.modalWrapper, .yui-panel, .ve-ui-window-frame' );
+		GlobalNotification.modal = $( '.modalWrapper, .yui-panel' );
 		if ( GlobalNotification.modal.length > 0 && GlobalNotification.modal.is( ':visible' ) ) {
 			return true;
 		}

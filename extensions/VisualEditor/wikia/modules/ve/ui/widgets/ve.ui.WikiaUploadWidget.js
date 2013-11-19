@@ -108,7 +108,11 @@ ve.ui.WikiaUploadWidget.prototype.onFileChange = function () {
 			fileErrors = this.validateFile( file );
 
 	if ( fileErrors.length ) {
-		window.GlobalNotification.show( ve.msg('wikia-visualeditor-dialog-wikiamediainsert-upload-error-' + fileErrors.join('-') ), 'error' );
+		window.GlobalNotification.show(
+			ve.msg('wikia-visualeditor-dialog-wikiamediainsert-upload-error-' + fileErrors.join('-') ),
+			'error',
+			$('.ve-ui-frame').contents().find('.ve-ui-window-body')
+		);
 	} else {
 		$.ajax( {
 			'url': mw.util.wikiScript( 'api' ) + '?action=apitempupload&type=temporary&format=json',

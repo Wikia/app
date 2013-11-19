@@ -122,11 +122,10 @@
 }
 
 // Visual Editor specific notification styling
-.ve-ui-window-frame {
+.ve-ui-window-body {
 	.global-notification {
 		@include box-sizing-border-box;
 		position: absolute;
-		top: 49px; // notification shows below VE modal header
 		width: 100%;
 
 		& > .close {
