@@ -3061,6 +3061,7 @@ class User {
 		# Wikia - bad style fix for #1531 - needs review if it is still needed
 		global $wgRequest;
 		$action = $wgRequest->getVal( 'action');
+		error_log("KamilkUserSignup4-WIKIA: UserId".$this->getId()." ==saveSettings action from reguest== ". $action );
 		$commit = ( isset($action) && $action == 'ajax' );
 		if ( $commit === true ) {
 			$dbw->commit();
@@ -4477,4 +4478,5 @@ class User {
 	public function wikiaConfirmationTokenUrl( $token ) {
 		return $this->getTokenUrl( 'WikiaConfirmEmail', $token );
 	}
+
 }
