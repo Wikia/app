@@ -8,6 +8,13 @@
 
 class VisualEditorWikiaHooks {
 
+	public static function onGetPreferences( $user, &$preferences ) {
+		unset( $preferences['visualeditor-betatempdisable'] );
+		$preferences['visualeditor-enable']['label-message'] = 'visualeditor-wikiapreference-enable';
+
+		return true;
+	}
+
 	public static function onResourceLoaderTestModules( array &$testModules, ResourceLoader &$resourceLoader ) {
 		global $wgVisualEditorWikiaResourceTemplate;
 
@@ -36,13 +43,6 @@ class VisualEditorWikiaHooks {
 				'wikia.stringhelper',
 			)
 		);
-		return true;
-	}
-
-	public static function onGetPreferences( $user, &$preferences ) {
-		unset( $preferences['visualeditor-betatempdisable'] );
-		$preferences['visualeditor-enable']['label-message'] = 'visualeditor-wikiapreference-enable';
-
 		return true;
 	}
 }

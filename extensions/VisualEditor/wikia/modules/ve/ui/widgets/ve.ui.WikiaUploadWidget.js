@@ -39,7 +39,7 @@ ve.ui.WikiaUploadWidget = function VeUiWikiaUploadWidget( config ) {
 	this.$file = this.$$( '<input>' ).attr( {
 		'type': 'file',
 		'name': 'file'
-		} );
+	} );
 
 	// Events
 	this.$.on( 'click', ve.bind( this.onClick, this ) );
@@ -98,6 +98,7 @@ ve.ui.WikiaUploadWidget.prototype.validateFile = function ( file ) {
  * Handle input file change event
  *
  * @method
+ * @fires success
  */
 ve.ui.WikiaUploadWidget.prototype.onFileChange = function () {
 	if ( !this.$file[0].files[0] ) {
@@ -127,6 +128,7 @@ ve.ui.WikiaUploadWidget.prototype.onFileChange = function () {
 		this.showUploadAnimation();
 	}
 	this.$file.attr( 'value', '' );
+	this.emit( 'change' );
 };
 
 /**
@@ -146,6 +148,7 @@ ve.ui.WikiaUploadWidget.prototype.onUploadSuccess = function ( data ) {
 	}
 
 	// Success
+	// TODO: this should probably fire 'success' not 'upload'
 	this.emit( 'upload', data.apitempupload );
 };
 
