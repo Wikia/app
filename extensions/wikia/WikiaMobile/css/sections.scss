@@ -1,12 +1,27 @@
 @import 'variables.scss';
 
-
 h2, h3, h4, h5, h6{
-	text-transform: uppercase;
-
-	font-weight: 300;
-
 	margin: 25px 0 10px 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	text-transform: capitalize;
+	font-weight: 600;
+
+	word-break: break-word;
+
+	.editsection {
+		display: none;
+	}
+
+	//a nicer way to display images in sections header
+	figure {
+		display: inline-block;
+
+		img {
+			max-height: 1em;
+		}
+	}
 }
 
 h2 {
@@ -30,46 +45,4 @@ h5 {
 
 h6 {
 	font-size: 1rem;
-}
-
-.artSec {
-	width: 100%;
-
-	ul:not(.wkLst) {
-		//setting to 20px makes it narrower but still nicely indented
-		padding-left: 20px;
-	}
-
-	&::after{
-		content: '';
-		display: block;
-		height: 0;
-		font-size:0;
-		clear: both;
-		visibility:hidden;
-	}
-}
-
-.collSec {
-	word-break: break-word;
-
-	position: relative;
-
-	.editsection {
-		display: none;
-	}
-
-	//a nicer way to display images in sections header
-	figure {
-		display: inline-block;
-
-		img {
-			max-height: 1em;
-		}
-	}
-}
-
-#wkMainCntFtr .collSec{
-	text-transform: uppercase;
-	font-size: medium;
 }
