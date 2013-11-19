@@ -176,13 +176,13 @@ require( ['jquery', 'wikia.toc', 'wikia.mustache'], function ( $, toc, mustache 
 	}
 
 	function hasTOC( $target ) {
-		var containerIdentifier = getContainerIndetifier( $target );
+		var containerIdentifier = getContainerIdentifier( $target );
 
 		return typeof containerHasTOC[containerIdentifier] !== 'undefined' && containerHasTOC[containerIdentifier];
 	}
 
 	function setHasTOC( $target, value ) {
-		var containerIdentifier = getContainerIndetifier( $target );
+		var containerIdentifier = getContainerIdentifier( $target );
 		containerHasTOC[containerIdentifier] = value;
 	}
 
@@ -191,7 +191,7 @@ require( ['jquery', 'wikia.toc', 'wikia.mustache'], function ( $, toc, mustache 
 		return $target.parents( '.tabBody, #mw-content-text' ).first();
 	}
 
-	function getContainerIndetifier( $target ) {
+	function getContainerIdentifier( $target ) {
 		return getContentContainer( $target ).data( 'tab-body' ) || 'main';
 	}
 
