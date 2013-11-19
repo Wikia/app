@@ -121,9 +121,9 @@ ve.ui.WikiaUploadWidget.prototype.onFileChange = function () {
 
 	if ( fileErrors.length ) {
 		window.GlobalNotification.show(
-			ve.msg('wikia-visualeditor-dialog-wikiamediainsert-upload-error-' + fileErrors.join('-') ),
+			ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-upload-error-' + fileErrors.join( '-' ) ),
 			'error',
-			$('.ve-ui-frame').contents().find('.ve-ui-window-body')
+			$( '.ve-ui-frame' ).contents().find( '.ve-ui-window-body' )
 		);
 	} else {
 		$.ajax( {
