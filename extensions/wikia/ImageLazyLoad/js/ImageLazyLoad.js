@@ -101,5 +101,15 @@ $(function() {
 
 	ImgLzy.init();
 
+	// fix iOS bug - not firing scroll event when after refresh page is opened in the middle of its content
+	require( ['wikia.browserDetect', 'wikia.window'], function( browserDetect, w ) {
+		if ( browserDetect.isIPad() ) {
+			w.addEventListener( 'pageshow', function() {
+				$.proxy( ImgLzy.checkAndLoad, ImgLzy );
+			} );
+		}
+
+	} );
+
 	window.ImgLzy = ImgLzy;
 });
