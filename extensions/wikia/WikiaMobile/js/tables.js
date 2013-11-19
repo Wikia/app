@@ -8,23 +8,6 @@ define('tables', ['events', 'track', 'wikia.window', 'jquery', 'sloth'], functio
 		initialized = false,
 		handledTables = $();
 
-	function sc(el){
-			var i = 15,
-				fu = function(){
-					if(el.scrollLeft > 0) {
-
-						el.scrollLeft -= i;
-						i *=0.90;
-						webkitRequestAnimationFrame(fu);
-					} else {
-
-						el.done = true;
-					}
-				};
-
-			webkitRequestAnimationFrame(fu);
-	}
-
 	function check(){
 		var table,
 			isWrapped,
@@ -83,9 +66,7 @@ define('tables', ['events', 'track', 'wikia.window', 'jquery', 'sloth'], functio
 
 		tables.filter(function(index, element){
 			return $(element).width() > realWidth;
-		}).wrap('<div class="bigTable" />').each(function(){
-				$(this).parent()[0].scrollLeft = 150;
-			});
+		}).wrap('<div class="bigTable" />');
 
 		if(!initialized && handledTables.length > 0){
 			initialized = true;
@@ -97,28 +78,17 @@ define('tables', ['events', 'track', 'wikia.window', 'jquery', 'sloth'], functio
 					var table = this.getElementsByTagName('table')[0];
 
 					if(!table.wkScroll) {
-						table.wkScroll = new w.iScroll(this, function(){
-							track.event('tables', track.SWIPE);
-						});
+						table.wkScroll = new w.IScroll( this, {
+							click: true,
+							scrollY: false,
+							scrollX: true
+						} );
 						this.className += ' active';
 					}
 				});
 			}
 		}
-
 	}
-
-	$(function(){
-		setTimeout(function(){
-			sloth({
-				on: Array.prototype.slice.apply(handledTables),
-				callback: function(el){
-					sc(el.parentElement);
-				}
-			});
-		},500);
-
-	});
 
 	return {
 		process: process,

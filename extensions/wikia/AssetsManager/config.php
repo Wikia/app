@@ -374,10 +374,10 @@ $config['gameguides_js'] = array(
 
 		//polyfills
 		'//extensions/wikia/WikiaMobile/js/viewport.js',
+		'//resources/wikia/libraries/iScroll/iscroll.js',
 
 		//groups
 		'#group_wikiamobile_tables_js',
-		'#group_wikiamobile_scroll_js',
 		'#group_wikiamobile_mediagallery_js',
 
 		//video
@@ -576,14 +576,6 @@ $config['wikiamobile_autocomplete_js'] = array(
 	'skin' => 'wikiamobile',
 	'assets' => array(
 		'//extensions/wikia/WikiaMobile/js/autocomplete.js'
-	)
-);
-
-$config['wikiamobile_scroll_js'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => 'wikiamobile',
-	'assets' => array(
-		'//extensions/wikia/WikiaMobile/js/scroll.wikiamobile.js'
 	)
 );
 

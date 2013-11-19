@@ -66,7 +66,7 @@ require(['sections', 'media', require.optional('wikia.cache'), 'wikia.loader', '
 			loader({
 				type: loader.MULTI,
 				resources: {
-					scripts: 'wikiamobile_tables_js' + (Features.overflow ? '' : ',wikiamobile_scroll_js'),
+					scripts: 'wikiamobile_tables_js',
 					styles: '/extensions/wikia/WikiaMobile/css/tables.scss',
 					ttl: ttl
 				}
