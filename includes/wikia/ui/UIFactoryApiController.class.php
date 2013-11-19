@@ -21,6 +21,22 @@ class UIFactoryApiController extends \WikiaApiController {
 	 */
 	const PARAMETER_COMPONENTS = 'components';
 
+
+	private function getComponentConfig( $component, $factory ) {
+		$componentResult = [];
+
+		$componentResult[ 'templateVarsConfig' ] = $component->getTemplateVarsConfig();
+		$componentResult[ 'templates' ] = [];
+		$componentResult[ 'name' ] = $component->getName();
+		$componentResult[ 'dependencies' ] = $component->getComponentDependencies();
+		foreach( array_keys( $componentResult[ 'templateVarsConfig' ] ) as $type ) {
+			$componentResult[ 'templates' ][ $type ] = $factory->loadComponentTemplateContent( $component, $type );
+		}
+		$componentResult[ 'assets' ] = $factory->getComponentAssetsUrls( $component );
+		return $componentResult;
+
+	}
+
 	/**
 	 * Return configuration of UI Styleguide components
 	 *
@@ -52,19 +68,16 @@ class UIFactoryApiController extends \WikiaApiController {
 		// build the response
 		$result = [];
 		foreach( $components as $component ) {
-			$componentResult = [];
-
-			$componentResult[ 'templateVarsConfig' ] = $component->getTemplateVarsConfig();
-			$componentResult[ 'templates' ] = [];
-			$componentResult[ 'name' ] = $component->getName();
-			$componentResult[ 'dependencies' ] = $component->getComponentDependencies();
-			foreach( array_keys( $componentResult[ 'templateVarsConfig' ] ) as $type ) {
-				$componentResult[ 'templates' ][ $type ] = $factory->loadComponentTemplateContent( $component, $type );
-			}
-			$componentResult[ 'assets' ] = $factory->getComponentAssetsUrls( $component );
-			$result[] = $componentResult;
+			$result[] = $this->getComponentConfig( $component, $factory );
 		}
 		$this->setVal( 'components', $result );
+
+		// add the dependencies to the response
+		$result = [];
+		foreach( $dependencies as $component ) {
+			$result[ $component->getName() ] = $this->getComponentConfig( $component, $factory );
+		}
+		$this->setVal( 'dependencies', $result );
 
 		// set response caching
 		$this->response->setCacheValidity(
