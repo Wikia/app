@@ -22,7 +22,7 @@ $(function() {
 					});
 				});
 
-				$('#WikiaRail').find('.loading').remove().end().append(data.railLazyContent + data.js);
+				rail.find('.loading').remove().end().append(data.railLazyContent + data.js);
 
 				if( LAZY_LOADING_SAMPLING_RATIO >= Math.floor( (Math.random() * 100 + 1) ) ) {
 					var lazyLoadingTime = ( new Date() ) - ( window.wgNow || 0 );
@@ -56,7 +56,7 @@ $(function() {
 					LightboxLoader.init();
 					LightboxLoader.loadFromURL();
 				}
-				$('#WikiaRail').zid({width: 300, selector: '.module, .wikia-ad', 'gutter': 20});
+				rail.zid({width: 350, selector: '.module, .wikia-ad', 'gutter': 20});
 			}
 		});
 	}
