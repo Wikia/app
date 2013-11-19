@@ -102,6 +102,14 @@ define( 'wikia.ui.component', [ 'wikia.mustache' ], function uicomponent( mustac
 			});
 		};
 
+		this.getSubComponent = function( componentName ) {
+			if ( componentConfig.dependencies[ componentName ] !== 'undefined' ) {
+				return componentConfig.dependencies[ componentName ];
+			} else {
+				throw new Error( 'Dependency ' + componentName + ' not found.');
+			}
+		}
+
 	}
 
 	return UIComponent;

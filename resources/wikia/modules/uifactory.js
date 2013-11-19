@@ -117,36 +117,35 @@ define( 'wikia.ui.factory', [
 
 			var jsAssets = [],
 				cssAssets = [],
-				createComponents = function( components ) {
-					var componentsList = [];
+				createComponent = function( element ) {
+					var component = getComponentInstance(),
+						templateVarsConfig = element.templateVarsConfig,
+						assets = element.assets,
+						templates = element.templates,
+						dependencies = element.templates,
+						dependencyList = {};
 
-					components.forEach(function( element ) {
+					if ( typeof dependencies === 'object' ) {
+						Object.keys(dependencies).forEach( function ( key ) {
+							dependencyList[ key ] = createComponent( dependencies[ key ] );
+						});
+					}
 
-						var component = getComponentInstance(),
-							templateVarsConfig = element.templateVarsConfig,
-							assets = element.assets,
-							templates = element.templates,
-							dependencies = element.templates;
+					if ( assets ) {
+						jsAssets = jsAssets.concat( assets.js );
+						cssAssets = cssAssets.concat( assets.css );
+					}
 
-						if ( typeof dependencies === 'object' ) {
-							dependencies = createComponents( dependencies );
-						}
+					if ( templateVarsConfig && templates ) {
+						component.setComponentsConfig( templates, templateVarsConfig, dependencyList );
+					}
 
-						if ( assets ) {
-							jsAssets = jsAssets.concat( assets.js );
-							cssAssets = cssAssets.concat( assets.css );
-						}
-
-						if ( templateVarsConfig && templates ) {
-							component.setComponentsConfig( templates, templateVarsConfig, dependencies );
-						}
-
-						componentsList.push( component );
-					});
-					return componentsList;
+					return component;
 				};
 
-			components = createComponents( data.components );
+			data.components.forEach(function( element) {
+				components.push( createComponent( element ) );
+			});
 
 			jsAssets = arrayUnique( jsAssets );
 			cssAssets = arrayUnique( cssAssets );

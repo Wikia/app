@@ -64,12 +64,14 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window', 'wikia.browserDetect' ], f
 
 			if ( typeof uiComponent === 'object' && typeof params !== 'undefined' ) {
 				if ( typeof params.vars.primaryBtn === 'object' ) {
-					params.vars.primaryBtn = uiComponent.render( $.extend( true, primaryBtnConfig, params.vars.primaryBtn ) );
+					params.vars.primaryBtn = uiComponent.getSubComponent( 'button' )
+						.render( $.extend( true, primaryBtnConfig, params.vars.primaryBtn ) );
 				} else {
 					delete( params.vars.primaryBtn );
 				}
 				if ( typeof params.vars.secondBtn === 'object' ) {
-					params.vars.secondBtn = uiComponent.render( $.extend( true, secondBtnConfig, params.vars.secondBtn ) );
+					params.vars.secondBtn = uiComponent.getSubComponent( 'button' )
+						.render( $.extend( true, secondBtnConfig, params.vars.secondBtn ) );
 				} else {
 					delete( params.vars.secondBtn );
 				}
