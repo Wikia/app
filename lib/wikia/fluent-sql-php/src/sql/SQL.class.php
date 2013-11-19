@@ -1355,7 +1355,7 @@ class SQL {
 			throw new \InvalidArgumentException;
 		}
 
-		$sql = $this->injectParams($db, $breakDown->getSql(), $breakDown->getParameters());
+		$sql = $this->injectParams($db, $breakDown);
 		return $callback($db->query($sql));
 	}
 
