@@ -35,7 +35,7 @@ class LyricFindControllerTest extends WikiaBaseTest {
 			[
 				'amgId' => 1,
 				'trackResult' => true,
-				'responseCode' => 204
+				'responseCode' => 200
 			],
 			[
 				'amgId' => 1,
@@ -46,7 +46,7 @@ class LyricFindControllerTest extends WikiaBaseTest {
 			[
 				'amgId' => 0,
 				'trackResult' => true,
-				'responseCode' => 204
+				'responseCode' => 200
 			],
 		];
 	}

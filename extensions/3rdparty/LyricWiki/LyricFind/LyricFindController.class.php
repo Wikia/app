@@ -9,7 +9,7 @@
  */
 class LyricFindController extends WikiaController {
 
-	const RESPONSE_OK = 204;
+	const RESPONSE_OK = 200;
 	const RESPONSE_ERR = 404;
 
 	public function track() {
@@ -19,6 +19,9 @@ class LyricFindController extends WikiaController {
 		// make a request to LyricFind API
 		$service = new LyricFindTrackingService();
 		$status = $service->track($amgId, $gracenoteId, $this->wg->Title);
+
+		// don't try to find a template for this controller's method
+		$this->skipRendering();
 
 		// debug response headers
 		if (!$status->isOK()) {
@@ -30,7 +33,15 @@ class LyricFindController extends WikiaController {
 			$this->response->setHeader('X-LyricFind-API-Code', $status->value);
 		}
 
-		$this->response->setFormat('json');
-		$this->response->setCode( $status->isOK() ? self::RESPONSE_OK : self::RESPONSE_ERR /* API error */ );
+		if ($status->isOK()) {
+			// emit blank image - /skins/common/blank.gif
+			$this->response->setCode(self::RESPONSE_OK);
+			$this->response->setContentType('image/gif');
+
+			echo file_get_contents($this->wg->StyleDirectory . '/common/blank.gif');
+		}
+		else {
+			$this->response->setCode(self::RESPONSE_ERR);
+		}
 	}
 }
