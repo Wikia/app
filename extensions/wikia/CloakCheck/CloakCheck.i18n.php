@@ -41,6 +41,13 @@ $messages['qqq'] = array(
 	'cloakcheck-form-check-self' => "An \"''IRC cloak''\" is a technical measure on an IRC network to hide the IP address of a user.",
 );
 
+/** Old English (Ænglisc)
+ * @author Espreon
+ */
+$messages['ang'] = array(
+	'cloakcheck-process-username' => 'Brūcendnama: $1',
+);
+
 /** Arabic (العربية)
  * @author Achraf94
  * @author Meno25

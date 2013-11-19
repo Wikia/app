@@ -2080,6 +2080,7 @@ Bitte [[Special:UserLogin|anmelden oder ein Konto anlegen]] falls Sie noch keine
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
+ * @author Marmase
  * @author Mirzali
  */
 $messages['diq'] = array(
@@ -2115,7 +2116,7 @@ $messages['diq'] = array(
 	'wikistats_hide' => 'Bınımne',
 	'wikistats_wikiname' => 'Name:',
 	'wikistats_wikidbname' => 'DBName:',
-	'wikistats_wikicategory' => 'Kategoriye:',
+	'wikistats_wikicategory' => 'Kategori:',
 	'wikistats_wikiid' => 'ID:',
 	'wikistats_mean' => 'vatış',
 	'wikistats_username' => 'Karber',
@@ -9187,7 +9188,7 @@ $messages['uk'] = array(
 	'wikistats_export_xls' => 'Експорт до XLS',
 	'wikistats_panel_close_btn' => 'Закрити',
 	'wikistats_daterange_from' => 'Від:',
-	'wikistats_daterange_to' => 'Кому:',
+	'wikistats_daterange_to' => 'До:',
 	'wikistats_nostats_found' => 'Немає статистичних даних для цієї Wikia',
 	'wikistats_pviews_notfound' => 'Не знайдено переглядів сторінки',
 	'wikistats_invalid_date' => 'Неправильний діапазон дат',
@@ -9341,7 +9342,7 @@ $messages['uk'] = array(
 	'wikistats_records' => 'записів',
 	'wikistats_xml_dump' => 'Дамп XML',
 	'wikistats_see_MW_stats' => 'Див. статистику МВ:',
-	'wikistats_see_definitions' => 'Див. визначення',
+	'wikistats_see_definitions' => 'Див. опис',
 	'wikistats_generate_stats_msg' => 'Будь ласка, зачекайте ... генерується ...',
 	'wikistats_generate_XLS_file_title' => 'Генерувати XLS файли для завантаження',
 	'wikistats_language_stats' => 'Статистика для цієї мови',
@@ -9391,7 +9392,7 @@ $messages['uk'] = array(
 	'wikistats_current_month' => 'Поточний місяць',
 	'wikistats_see_also' => 'Дивіться також',
 	'wikistats_language_top' => '$1 {{PLURAL:$1|найважливіша мова|найважливіші мови|найважливіших мов}}',
-	'wikistats_language_all' => 'Всі мови',
+	'wikistats_language_all' => 'Усі мови',
 	'wikistats_recordspager' => "Показано від '''$1''' до '''$2''' із '''$3''' записів.",
 	'wikistats_title' => 'Заголовок',
 	'wikistats_summary_data' => 'Підсумкові дані',
@@ -9466,6 +9467,16 @@ $messages['vi'] = array(
 	'wikistats_active_months' => 'tháng',
 	'wikistats_number_editors' => 'Số lần sửa đổi',
 	'wikistats_number_anons' => 'số thành viên vô danh',
+	'wikistats_video' => 'Video',
+	'wikistats_media' => 'Hình ảnh & Video',
+	'wikistats_video_embeded' => 'embeded',
+	'wikistats_uploaded_images' => 'Tải lên xong',
+	'wikistats_with_links' => 'với liên kết',
+	'wikistats_connection_error' => 'Lỗi kết nối',
+	'wikistats_distrib_edits' => 'Chỉnh sửa >=',
+	'wikistats_distrib_wikians' => 'Đăng ký biên tập',
+	'wikistats_distrib_edits_total' => 'Tổng số sửa đổi',
+	'wikistats_date' => 'Ngày',
 	'wikistats_photo_new' => 'Hình ảnh mới',
 	'wikistats_content' => 'nội dung',
 	'wikistats_userns' => 'thành viên',

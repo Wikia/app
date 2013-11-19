@@ -316,6 +316,14 @@ $messages['uk'] = array(
 	'interwikidispatcher-desc' => 'Виправлення інтервікі з метою зменшення посилань на перенаправлення',
 );
 
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'interwikidispatcher' => 'điều phối Interwiki',
+	'interwikidispatcher-desc' => 'Giải quyết các liên kết interwiki để giảm Apache chuyển hướng',
+);
+
 /** Simplified Chinese (中文（简体）‎)
  * @author Yfdyh000
  */

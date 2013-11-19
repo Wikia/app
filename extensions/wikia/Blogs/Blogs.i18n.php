@@ -1140,6 +1140,7 @@ $messages['de-formal'] = array(
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
+ * @author Gorizon
  * @author Mirzali
  */
 $messages['diq'] = array(
@@ -1153,7 +1154,7 @@ $messages['diq'] = array(
 	'create-blog-form-title' => 'Rıştena blog çıçiya?',
 	'create-blog-form-post-text' => 'Metnê blogi',
 	'create-blog-no-login' => 'Şıma cıkewtış nêvıraşto',
-	'create-blog-categories-textinput' => 'Kategoriya newi deke',
+	'create-blog-categories-textinput' => 'Newi kategori dek',
 	'create-blog-categories-submit' => 'Bırşê',
 	'create-blog-save' => 'Ena pele qeyd ke',
 	'create-blog-preview' => 'Verasayışi bıvin',
@@ -2687,6 +2688,7 @@ Crea una lista blog per categorie come "Barack Obama", "Fan Fiction" o combina p
 );
 
 /** Japanese (日本語)
+ * @author BryghtShadow
  * @author McDutchie
  * @author Shirayuki
  * @author Tommy6
@@ -2725,9 +2727,9 @@ $messages['ja'] = array(
 	'create-blog-permission-denied' => 'ブログの記事を保存中にエラーが発生しました: パーミッションが拒否されました',
 	'create-blog-article-already-exists' => 'このタイトルの記事は既に存在します。別のタイトルを指定してください。',
 	'create-blog-listing-title' => 'ブログのリストページの新規作成・編集',
-	'create-blog-listing-form-title' => 'ブログのリストとは?',
-	'create-blog-listing-form-info' => 'ブログのリストは、異なる作者のブログの記事を一つのページに集約して表示するために使用されます。それぞれのページの趣旨に合わせ、適切なカテゴリを指定すると、そのカテゴリにあるブログの記事がリストとして表示されます。',
-	'create-blog-listing-page-title' => 'リストページのタイトル',
+	'create-blog-listing-form-title' => 'ブログのリストページとは?',
+	'create-blog-listing-form-info' => 'ブログのリストページは、異なる作者のブログの記事を一つのページに集約して表示するために使用されます。それぞれのページの趣旨に合わせ、適切なカテゴリを指定すると、そのカテゴリにあるブログの記事がリストとして表示されます。',
+	'create-blog-listing-page-title' => 'ブログのリストページのタイトル',
 	'create-blog-listing-preview' => 'プレビュー',
 	'create-blog-listing-authors' => 'ブログの記事を取得する作者名を指定（コンマで区切る）',
 	'create-blog-listing-blog-post-categories-title' => 'ブログの記事を取得するカテゴリを選択',
@@ -5356,6 +5358,7 @@ $messages['vep'] = array(
  * @author Xiao Qiao
  */
 $messages['vi'] = array(
+	'blog-file-page' => "<a href='$1'>$2</a>Đăng ngày <a href='$3'> $4 của</a>blog",
 	'createblogpage' => 'Tạo blog',
 	'createbloglistingpage' => 'Tạo danh sách blog',
 	'create-blog-spam' => 'Trông giống thư rác',

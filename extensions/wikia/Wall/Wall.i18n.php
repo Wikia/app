@@ -4178,6 +4178,7 @@ $messages['it'] = array(
 );
 
 /** Japanese (日本語)
+ * @author BryghtShadow
  * @author Shirayuki
  * @author Tommy6
  * @author Whym
@@ -4415,7 +4416,7 @@ ___________________________________________
 ___________________________________________<br />
 <p>* フォローの設定を変更する:<br />
 http://ja.wikia.com/wiki/Special:Following</p>',
-	'prefs-email-wall-v2' => 'メッセージウォール', # Fuzzy
+	'prefs-email-wall-v2' => 'メッセージウォールとフォーラム',
 	'tog-enotifwallthread-v2' => 'メール通知の設定',
 	'tog-enotifmywall-every' => 'すべてのメッセージと返信を通知',
 	'tog-enotifmywall-sincevisited' => '各スレッドについて最後の閲覧後に一度だけ通知する',
@@ -4429,7 +4430,7 @@ http://ja.wikia.com/wiki/Special:Following</p>',
 	'wall-message-notifyeveryone-tooltip' => 'このウィキを閲覧している全ての登録利用者に対してこのスレッドに関する通知が行われます', # Fuzzy
 	'wall-votes-modal-title' => 'いいね',
 	'wall-votes-modal-title-desc' => '$1人の利用者がこのメッセージに「いいね」を付けました。',
-	'wall-votes-number' => '$1 いいね', # Fuzzy
+	'wall-votes-number' => '$1 いいね',
 	'wall-votes-number-tooltip' => '誰がこのメッセージに「いいね」を付けたのかをみる。',
 	'wall-votes-vote-tooltip' => 'このメッセージに「いいね」を付ける',
 	'wall-votes-voted-tooltip' => 'このメッセージには既に「いいね」を付けています',
@@ -6894,7 +6895,7 @@ $messages['ru'] = array(
 </a>',
 	'mail-notification-html-footer-line1' => 'Чтобы узнать о последних событиях на Викия, посетите <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
 	'mail-notification-html-footer-line2' => 'Чтобы настроить уведомления по email, перейдите на страницу <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">личных настроек</a>',
-	'mail-notification-body' => 'Hi $WATCHER,
+	'mail-notification-body' => 'Привет, $WATCHER,
 
 $SUBJECT
 
@@ -6934,11 +6935,11 @@ ___________________________________________<br />
 	'wall-message-notifyeveryone' => 'Сообщить всем об этой теме',
 	'wall-message-unnotifyeveryone' => 'Отменить сообщение об этой теме',
 	'wall-message-notifyeveryone-tooltip' => 'Все зарегистрированные участники будут уведомлены об этой теме при следующем визите проекта',
-	'wall-votes-modal-showmore' => 'Посмотреть, кто ещё добавил "Мне нравится"',
+	'wall-votes-modal-showmore' => 'Посмотреть, кто ещё добавил «Мне нравится»',
 	'wall-votes-modal-title' => 'Мне нравится',
-	'wall-votes-modal-title-desc' => '{{PLURAL:$1|Один участник|$1 участника|$1 участников}} добавили "Мне нравится" к этому сообщению',
+	'wall-votes-modal-title-desc' => '{{PLURAL:$1|Один участник|$1 участника|$1 участников}} добавили «Мне нравится» к этому сообщению',
 	'wall-votes-number' => '$1 {{PLURAL:$1|«мне нравится»}}',
-	'wall-votes-number-tooltip' => 'Посмотреть, кто добавил "Мне нравится"',
+	'wall-votes-number-tooltip' => 'Посмотреть, кто добавил «Мне нравится»',
 	'wall-votes-vote-tooltip' => 'Мне нравится это сообщение',
 	'wall-votes-voted-tooltip' => 'Вам понравилось это сообщение!',
 	'wall-quote-author' => 'От $1:',

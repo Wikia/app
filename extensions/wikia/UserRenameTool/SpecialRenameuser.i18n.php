@@ -4704,6 +4704,7 @@ $messages['yue'] = array(
  * @author Gzdavidwong
  * @author Hydra
  * @author Hzy980512
+ * @author Liuxinyu970226
  * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
@@ -4716,7 +4717,7 @@ $messages['zh-hans'] = array(
 	'userrenametool-move' => '移动用户页及其对话页（包括各子页）到新的名字',
 	'userrenametool-reserve' => '封禁旧用户名，使之不能在日后使用',
 	'userrenametool-notify-renamed' => '完成时发邮件给被重命名的用户',
-	'userrenametool-warnings' => '警告:',
+	'userrenametool-warnings' => '警告：',
 	'userrenametool-requested-rename' => '用户$1要求重命名',
 	'userrenametool-did-not-request-rename' => '用户 $1 没有要求重命名',
 	'userrenametool-previously-renamed' => '用户 $1 已经要求了重命名',

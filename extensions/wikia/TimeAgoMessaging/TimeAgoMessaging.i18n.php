@@ -660,6 +660,11 @@ $messages['vi'] = array(
 	'timeago-hour' => '{{PLURAL:$1|1 giờ|$1 giờ}} trước',
 	'timeago-minute' => '$1 phút trước',
 	'timeago-second' => '1 phút trước',
+	'timeago-day-from-now' => '{{PLURAL:$1|1 ngày|$1 ngày}} trước',
+	'timeago-hour-from-now' => '{{PLURAL:$1|1 giờ|$1 giờ}} trước',
+	'timeago-minute-from-now' => '{{PLURAL:$1|phút|$1 phút}} từ bây giờ',
+	'timeago-month-from-now' => '{{PLURAL:$1|một thang1|$1 tháng}} từ bây giờ',
+	'timeago-second-from-now' => 'một phút từ bây giờ',
 );
 
 /** Simplified Chinese (中文（简体）‎)

@@ -56,8 +56,10 @@ $messages['qqq'] = array(
 {{Identical|Save}}',
 	'categoryselect-category-add' => 'The placeholder text displayed in the category input field when it is empty.
 {{Identical|Add category}}',
-	'categoryselect-category-edit' => 'Title text for the edit icon and the heading for category edit modals.',
-	'categoryselect-category-remove' => 'Title text for the remove icon.',
+	'categoryselect-category-edit' => 'Title text for the edit icon and the heading for category edit modals.
+{{Identical|Edit category}}',
+	'categoryselect-category-remove' => 'Title text for the remove icon.
+{{Identical|Remove category}}',
 	'categoryselect-edit-summary' => 'The summary used for revisions created when saving category updates on view pages.',
 	'categoryselect-error-article-doesnt-exist' => "The error message shown when trying to add categories to an article that doesn't exist. Parameters:
 * $1: The ID of the article.",
@@ -181,7 +183,9 @@ $messages['bg'] = array(
 	'categoryselect-category-edit' => 'Редактиране на категорията',
 	'categoryselect-category-remove' => 'Премахване на категорията',
 	'categoryselect-edit-summary' => 'Добавяне на категории',
+	'categoryselect-error-article-doesnt-exist' => 'Не съществува страница [id=$1].',
 	'categoryselect-error-db-locked' => 'Базата от данни е заключена.',
+	'categoryselect-error-duplicate-category-name' => 'Вече съьествува категория „$1“.',
 );
 
 /** Bengali (বাংলা)
@@ -642,6 +646,7 @@ $messages['it'] = array(
 );
 
 /** Japanese (日本語)
+ * @author BryghtShadow
  * @author Shirayuki
  * @author Tommy6
  * @author 아라
@@ -651,11 +656,12 @@ $messages['ja'] = array(
 	'categoryselect-button-add' => 'カテゴリを追加',
 	'categoryselect-button-cancel' => '取り消し',
 	'categoryselect-button-save' => '保存',
-	'categoryselect-category-add' => 'カテゴリを追加', # Fuzzy
-	'categoryselect-category-edit' => 'カテゴリのオプション', # Fuzzy
+	'categoryselect-category-add' => 'カテゴリを追加...',
+	'categoryselect-category-edit' => 'カテゴリを編集',
+	'categoryselect-category-remove' => 'カテゴリを除去',
 	'categoryselect-edit-summary' => 'カテゴリを追加',
 	'categoryselect-error-article-doesnt-exist' => '記事 [id=$1] は存在しません。',
-	'categoryselect-error-db-locked' => 'データベースがロックされています',
+	'categoryselect-error-db-locked' => 'データベースがロックされています。',
 	'categoryselect-error-edit-abort' => '拡張機能のフックによって、修正が中断されました', # Fuzzy
 	'categoryselect-error-empty-category-name' => 'カテゴリ名を入力（"|"より前の部分）', # Fuzzy
 	'categoryselect-error-user-rights' => '利用者権限のエラーです。', # Fuzzy
