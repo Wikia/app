@@ -287,7 +287,14 @@ class Factory {
 			$name;
 	}
 
-	private function initComponent( $name, &$assets) {
+	/**
+	 * @desc returns configurated instance of \Wikia\UI\Component
+	 *
+	 * @param string $name name of the component to create
+	 * @param array $assets component assets will be added to this array
+	 * @throws DataException
+	 */
+	private function initComponent( $name, &$assets ) {
 		$componentConfig = $this->loadComponentConfig( $name );
 
 		// if there are some components, put them in the $assets
@@ -315,6 +322,8 @@ class Factory {
 		if ( !empty( $componentConfig['dependencies'][self::COMPONENT_DEPENDENCY] ) ) {
 			$component->setComponentDependencies( $componentConfig['dependencies'][self::COMPONENT_DEPENDENCY] );
 		}
+
+		return $component;
 	}
 
 	/**
