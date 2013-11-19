@@ -60,6 +60,17 @@ ve.ui.WikiaUploadWidget = function VeUiWikiaUploadWidget( config ) {
 
 ve.inheritClass( ve.ui.WikiaUploadWidget, ve.ui.Widget );
 
+/* Events */
+
+/**
+ * @event change
+ */
+
+/**
+ * @event upload
+ * @param {Object} data The API response data.
+ */
+
 /* Methods */
 
 /**
