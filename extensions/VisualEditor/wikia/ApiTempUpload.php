@@ -28,7 +28,7 @@ class ApiTempUpload extends ApiBase {
 	}
 
 	private function executePermanent() {
-		if ( !empty( $this->mParams['provider'] ) && !empty( $this->mParams['videoId'] ) ) {
+		if ( $this->mParams['mediaType'] === 'video' ) {
 			$this->executePermanentVideo();
 		} else {
 			$this->executePermanentImage();
@@ -38,19 +38,14 @@ class ApiTempUpload extends ApiBase {
 	private function executePermanentVideo() {
 		$this->mParams['desiredName'] = wfStripIllegalFilenameChars( $this->mParams['desiredName'] );
 
-		if ( empty( $this->mParams['desiredName'] ) && empty( $this->mParams['title'] ) ) {
-			$this->dieUsageMsg( 'The desiredName or title parameter must be set' );
+		if( empty( $this->mParams['provider'] ) ) {
+			$this->dieUsageMsg( 'The provider parameter must be set' );
 		}
-		// TODO: Check with Video team if that's the best way to look for video duplicates
-		$duplicates = WikiaFileHelper::findVideoDuplicates(
-			$this->mParams['provider'],
-			$this->mParams['videoId']
-		);
-		if ( count( $duplicates ) > 0 ) {
-			$file = wfFindFile( $duplicates[0]['img_name'] );
-			$name = $file->getTitle()->getText();
 
-		} else if ( $this->mParams['provider'] == 'wikia' ) {
+		if ( $this->mParams['provider'] == 'wikia' ) {
+			if( empty( $this->mParams['title'] ) ) {
+				$this->dieUsageMsg( 'The title parameter must be set' );
+			}
 			// no need to upload, local reference
 			$title = Title::newFromText( $this->mParams['title'], NS_FILE );
 			if ( empty( $title ) ) {
@@ -58,18 +53,33 @@ class ApiTempUpload extends ApiBase {
 			}
 			$name = $title->getText();
 			wfRunHooks( 'AddPremiumVideo', array( $title ) );
-		} else {
-			$uploader = new VideoFileUploader();
 
-			$title = $uploader->getUniqueTitle(
-				$uploader->sanitizeTitle( $this->mParams['desiredName'] )
+		} else if ( empty( $this->mParams['desiredName'] ) || empty( $this->mParams['videoId'] ) ) {
+			$this->dieUsageMsg( 'The desiredName, provider, and videoId parameters must be set' );
+		} else {
+			// TODO: Check with Video team if that's the best way to look for video duplicates
+			$duplicates = WikiaFileHelper::findVideoDuplicates(
+				$this->mParams['provider'],
+				$this->mParams['videoId']
 			);
-			$uploader->setProvider( $this->mParams['provider'] );
-			$uploader->setVideoId( $this->mParams['videoId'] );
-			$uploader->setTargetTitle( $title->getBaseText() );
-			$uploader->upload( $title );
-			$name = $title->getText();
+
+			if ( count( $duplicates ) > 0 ) {
+				$file = wfFindFile( $duplicates[0]['img_name'] );
+				$name = $file->getTitle()->getText();
+			} else {
+				$uploader = new VideoFileUploader();
+
+				$title = $uploader->getUniqueTitle(
+					$uploader->sanitizeTitle( $this->mParams['desiredName'] )
+				);
+				$uploader->setProvider( $this->mParams['provider'] );
+				$uploader->setVideoId( $this->mParams['videoId'] );
+				$uploader->setTargetTitle( $title->getBaseText() );
+				$uploader->upload( $title );
+				$name = $title->getText();
+			}
 		}
+
 		$this->getResult()->addValue( null, $this->getModuleName(), array( 'name' => $name ) );
 	}
 
@@ -327,6 +337,10 @@ class ApiTempUpload extends ApiBase {
 				ApiBase::PARAM_REQUIRED => false
 			),
 			'title' => array (
+				ApiBase::PARAM_TYPE => 'string',
+				ApiBase::PARAM_REQUIRED => false
+			),
+			'mediaType' => array(
 				ApiBase::PARAM_TYPE => 'string',
 				ApiBase::PARAM_REQUIRED => false
 			),
