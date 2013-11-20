@@ -71,6 +71,33 @@ ve.inheritClass( ve.ui.WikiaUploadWidget, ve.ui.Widget );
  * @param {Object} data The API response data.
  */
 
+/* Static methods */
+
+/**
+ * Check file for size and filetype errors
+ * @method
+ * @param {File} file File object containing properties of user uploaded file
+ * @returns {Array} Array of error strings. May return empty array
+ */
+ve.ui.WikiaUploadWidget.static.validateFile = function ( file ) {
+	var errors = [],
+		maxUploadSize = mw.config.get( 'wgMaxUploadSize' ),
+		fileExtensions = mw.config.get( 'wgFileExtensions' ),
+		filetype = fileExtensions[ ve.indexOf( file.type.substr( file.type.indexOf( '/' ) + 1 ), fileExtensions ) ];
+
+	if ( ve.isPlainObject( maxUploadSize ) ) {
+		maxUploadSize = maxUploadSize[ maxUploadSize[ filetype ] ? filetype : '*' ];
+	}
+	if ( file.size > maxUploadSize ) {
+		errors.push( [ 'size', Math.round( maxUploadSize / 1024 / 1024 * 100 ) / 100 ] );
+	}
+	if ( !filetype ) {
+		errors.push( [ 'filetype',  fileExtensions.join( ', ' ) ] );
+	}
+
+	return errors;
+};
+
 /* Methods */
 
 /**
@@ -83,32 +110,6 @@ ve.ui.WikiaUploadWidget.prototype.onClick = function () {
 };
 
 /**
- * Check file for size and filetype errors
- * @method
- * @param {File} file File object containing properties of user uploaded file
- * @returns {Array} Array of error strings. May return empty array
- */
-ve.ui.WikiaUploadWidget.prototype.validateFile = function ( file ) {
-
-	var errors = [],
-		maxUploadSize = mw.config.get( 'wgMaxUploadSize' ),
-		fileExtensions = mw.config.get( 'wgFileExtensions' ),
-		filetype = fileExtensions[ ve.indexOf( file.type.substr( file.type.indexOf( '/' ) + 1 ), fileExtensions ) ];
-
-	if ( ve.isPlainObject( maxUploadSize ) ) {
-		maxUploadSize = ( maxUploadSize[ filetype ] ) ? maxUploadSize[ filetype ] : maxUploadSize[ '*' ];
-	}
-	if ( file.size > maxUploadSize ) {
-		errors.push( [ 'size', Math.round( maxUploadSize / 1024 / 1024 * 100 ) / 100 ] );
-	}
-	if ( !filetype ) {
-		errors.push( [ 'filetype',  fileExtensions.join( ', ' ) ] );
-	}
-
-	return errors;
-};
-
-/**
  * Handle input file change event
  *
  * @method
@@ -118,7 +119,7 @@ ve.ui.WikiaUploadWidget.prototype.onFileChange = function () {
 	if ( !this.$file[0].files[0] ) {
 		return;
 	}
-	var fileErrors = this.validateFile( this.$file[0].files[0] );
+	var fileErrors = this.constructor.static.validateFile( this.$file[0].files[0] );
 
 	if ( fileErrors.length ) {
 		mw.config.get( 'GlobalNotification' ).show(

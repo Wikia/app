@@ -1,5 +1,4 @@
 <?php
-global $wgMaxUploadSize;
 $messages = array();
 
 /** English
