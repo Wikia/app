@@ -77,12 +77,15 @@ class ResourceLoaderAdEngineSevenOneMediaModule extends ResourceLoaderModule {
 			}
 
 			$error = 'Failed to download SevenOne Media files and had no cached script';
-			$localCache = [
+			$data = [
 				'script' => 'var SEVENONEMEDIA_ERROR = ' . json_encode($error) . ';',
 				'modTime' => $now,
 				'ttl' => $now + self::TTL_GRACE,
 			];
-			return $localCache;
+			$wgMemc->set($memKey, $data);
+
+			$localCache = $data;
+			return $data;
 		}
 
 		$data = [
