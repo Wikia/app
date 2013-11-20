@@ -1,4 +1,4 @@
-describe('UIComponent', function() {
+describe( 'UIComponent', function() {
 	'use strict';
 
 	var mustache = {
@@ -115,7 +115,7 @@ describe('UIComponent', function() {
 		var componentId = 'xxx',
 			uiComponent1 = uicomponent(),
 			uiComponent2 = uiComponent1.create( componentId, paramsToRender );
-		expect( uiComponent1 === uiComponent2 ).toBe(true);
+		expect( uiComponent1 === uiComponent2 ).toBe( true );
 	});
 
 	if( 'returns Custom object if jsWrapperModule is set', function() {
@@ -127,7 +127,7 @@ describe('UIComponent', function() {
 				},
 				templateVarsConfig: {
 					link: {
-						required: ['href', 'title', 'value']
+						required: [ 'href', 'title', 'value' ]
 					}
 				},
 				dependencies: {},
@@ -136,6 +136,6 @@ describe('UIComponent', function() {
 			uiComponent2;
 		uiComponent1.setComponentsConfig( componentConfig );
 		uiComponent2 = uiComponent1.create( componentId, paramsToRender );
-		expect( uiComponent1 === uiComponent2 ).toBe(false);
+		expect( uiComponent1 === uiComponent2 ).toBe( false );
 	});
 });

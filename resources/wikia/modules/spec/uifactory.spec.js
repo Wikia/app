@@ -28,12 +28,12 @@ describe( 'UIFactory', function() {
 					},
 					templateVarsConfig: {
 						link: {
-							required: ['href', 'title', 'value']
+							required: [ 'href', 'title', 'value' ]
 						}
 					},
 					assets: {
-						css: ['link1', 'link2', 'link3'],
-						js: ['link1', 'link2', 'link3']
+						css: [ 'link1', 'link2', 'link3' ],
+						js: [ 'link1', 'link2', 'link3' ]
 					}
 				}
 			]
@@ -85,7 +85,7 @@ describe( 'UIFactory', function() {
 			return nirvana;
 		}
 
-		var nirvana = nirvanaMock( componentConfig) ,
+		var nirvana = nirvanaMock( componentConfig ),
 		uifactory = modules[ 'wikia.ui.factory' ]( nirvana, window, loader, uiComponent, jQuery );
 
 		uifactory.init( requestedComponent ).done(function() {
@@ -136,7 +136,7 @@ describe( 'UIFactory', function() {
 						},
 						templateVarsConfig: {
 							link: {
-								required: ['href', 'title', 'value']
+								required: [ 'href', 'title', 'value' ]
 							}
 						},
 						assets: {
@@ -150,12 +150,12 @@ describe( 'UIFactory', function() {
 						},
 						templateVarsConfig: {
 							link: {
-								required: ['href', 'title', 'value']
+								required: [ 'href', 'title', 'value' ]
 							}
 						},
 						assets: {
-							css: ['link1', 'link2', 'link3'],
-							js: ['link1', 'link2', 'link3']
+							css: [ 'link1', 'link2', 'link3' ],
+							js: [ 'link1', 'link2', 'link3' ]
 						}
 					}
 				]
@@ -218,12 +218,12 @@ describe( 'UIFactory', function() {
 						},
 						templateVarsConfig: {
 							link: {
-								required: ['href', 'title', 'value']
+								required: [ 'href', 'title', 'value' ]
 							}
 						},
 						assets: {
-							css: ['link1', 'link2', 'link3'],
-							js: ['link1', 'link2', 'link3']
+							css: [ 'link1', 'link2', 'link3' ],
+							js: [ 'link1', 'link2', 'link3' ]
 						}
 					}
 				},
@@ -234,12 +234,12 @@ describe( 'UIFactory', function() {
 						},
 						templateVarsConfig: {
 							link: {
-								required: ['href', 'title', 'value']
+								required: [ 'href', 'title', 'value' ]
 							}
 						},
 						assets: {
-							css: ['link1', 'link2', 'link3'],
-							js: ['link1', 'link2', 'link3']
+							css: [ 'link1', 'link2', 'link3' ],
+							js: [ 'link1', 'link2', 'link3' ]
 						},
 						dependencies: [ 'button' ]
 					}
