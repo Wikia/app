@@ -44,16 +44,18 @@
 
 				uiModal.create( modalId, modalConfig, function ( policiesModal ) {
 
-					policiesModal.$element.find( '#close' ).click( function() {
-						policiesModal.close();
-					});
-
-					policiesModal.$element.find( '#edit' ).click( function() {
+					policiesModal.onPrimaryBtnClick(function ( event ) {
+						event.preventDefault();
 						window.location = window.wgPoliciesEditURL;
 					});
 
+					policiesModal.onSecondaryBtnClick(function ( event ) {
+						event.preventDefault();
+						policiesModal.close();
+					});
+
 					policiesModal.show();
-					policiesModal.$element.find( '.ForumPolicies' ).startThrobbing();
+					policiesModal.$content.find( '.ForumPolicies' ).startThrobbing();
 					$.nirvana.sendRequest({
 						controller: 'ForumExternalController',
 						type: 'GET',
@@ -63,8 +65,8 @@
 							'rev': window.wgPoliciesRev
 						},
 						callback: function( data ) {
-							policiesModal.$element.find( '.ForumPolicies' ).stopThrobbing();
-							policiesModal.$element.find( '.ForumPolicies .WikiaArticle' ).html( data.body );
+							policiesModal.$content.find( '.ForumPolicies' ).stopThrobbing();
+							policiesModal.$content.find( '.ForumPolicies .WikiaArticle' ).html( data.body );
 						}
 					});
 				});

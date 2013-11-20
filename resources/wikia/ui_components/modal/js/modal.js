@@ -5,18 +5,22 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window', 'wikia.browserDetect' ], f
 		BLACKOUT_VISIBLE_CLASS = 'visible',
 		CLOSE_CLASS = 'close',
 		INACTIVE_CLASS = 'inactive',
+		PRIMARY_BUTTON_DATA = 'primary',
+		SECONDARY_BUTTON_DATA = 'secondary',
 		primaryBtnConfig = {
 			type: 'button',
 			vars: {
 				type: 'button',
-				classes: [ 'normal', 'primary' ]
+				classes: [ 'normal', 'primary' ],
+				data: [ { key: PRIMARY_BUTTON_DATA, value: 1 } ]
 			}
 		},
 		secondBtnConfig = {
 			type: 'button',
 			vars: {
 				type: 'button',
-				classes: [ 'normal', 'secondary' ]
+				classes: [ 'normal', 'secondary' ],
+				data: [ { key: SECONDARY_BUTTON_DATA, value: 1 } ]
 			}
 		},
 		destroyOnClose;
@@ -108,12 +112,23 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window', 'wikia.browserDetect' ], f
 		});
 
 		this.$blackout = getBlackout();
+		this.$content = this.$element.children().eq(1);
 		this.$close = this.$element.find( '.' + CLOSE_CLASS );
+		this.$primaryButton = this.$element.find( 'footer [data-' + PRIMARY_BUTTON_DATA + '=1]' );
+		this.$secondaryButton = this.$element.find( 'footer [data-' + SECONDARY_BUTTON_DATA + '=1]' );
 
 		this.$close.click( $.proxy( function( event ) {
 			event.preventDefault();
 
 			this.close();
+		}, that ) );
+
+		this.$primaryButton.click( $.proxy( function ( event ) {
+			this.$element.trigger( 'onPrimaryBtnClick', [ event ]);
+		}, that ) );
+
+		this.$secondaryButton.click( $.proxy( function( event ) {
+			this.$element.trigger( 'onSecondaryBtnClick', [ event ]);
 		}, that ) );
 
 		destroyOnClose = this.$element.data( 'destroy-on-close' );
@@ -164,6 +179,13 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window', 'wikia.browserDetect' ], f
 	 */
 
 	Modal.prototype.onClose = function() {};
+	Modal.prototype.onPrimaryBtnClick = function( callback ) {
+		this.$element.on( 'onPrimaryBtnClick', callback );
+	};
+
+	Modal.prototype.onSecondaryBtnClick = function( callback ) {
+		this.$element.on( 'onSecondaryBtnClick', callback );
+	};
 
 	/**
 	 * Disables all modal's buttons, adds inactive class to the modal
@@ -209,6 +231,14 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window', 'wikia.browserDetect' ], f
 	Modal.prototype.isActive = function() {
 		return !this.$element.hasClass( INACTIVE_CLASS );
 	};
+
+	/**
+	 * Sets modal's content
+	 * @param content HTML text
+	 */
+	Modal.prototype.setContent = function( content ) {
+		this.$content.html( content );
+	}
 
 	/** Public API */
 	
