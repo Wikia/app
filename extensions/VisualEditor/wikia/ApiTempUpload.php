@@ -154,28 +154,75 @@ class ApiTempUpload extends ApiBase {
 		) );
 	}
 
-	private function executeTemporaryVideo() {
-		$app = F::app();
+	/**
+	 * Determine if the url is a Wikia file, either premium or local
+	 *
+	 * @param $url
+	 * @return bool
+	 */
+	private function isWikiaFile( $url ) {
+		$file = null;
 
+		// get the video name
+		$nsFileTranslated = F::app()->wg->ContLang->getNsText( NS_FILE );
+
+		// added $nsFileTransladed to fix bugId:#48874
+		$pattern = '/(File:|'.$nsFileTranslated.':)(.+)$/';
+
+		if ( preg_match( $pattern, $url, $matches ) ) {
+			$file = wfFindFile( $matches[2] );
+			if ( !$file ) { // bugID: 26721
+				$file = wfFindFile( urldecode( $matches[2] ) );
+			}
+		// If the i18n'ed namespace has a special char it might need to be decoded
+		} else if ( preg_match( $pattern, urldecode( $url ), $matches ) ) {
+			$file = wfFindFile( $matches[2] );
+		}
+
+		return $file;
+	}
+
+	private function executeTemporaryVideo() {
 		// First check permission to upload
 		$this->mUpload = new UploadFromUrl();
 		$this->checkPermissions( $this->mUser );
 
-		$awf = ApiWrapperFactory::getInstance();
 		$url = $this->mParams['url'];
-		$apiWrapperException = null;
+		$file = $this->isWikiaFile( $url );
 
-		// ApiWrapperFactory->getApiWrapper(...) require whole URL to be passed in (including protocol)
-		if ( !preg_match( '/^https?:\/\//', $url ) ) {
-			$url = 'http://' . $url;
-		}
-		try {
-			$apiwrapper = $awf->getApiWrapper( $url );
-		} catch ( Exception $e ) {
-			$apiWrapperException = $e;
-		}
-		if ( !empty( $apiwrapper ) ) {
-			// handle supported 3rd party videos
+		if( !empty( $file ) ) {
+			// Handle local and premium videos
+			$this->getResult()->addValue( null, $this->getModuleName(), array(
+				'title' => $file->getTitle()->getText(),
+				'url' => $file->getUrl(),
+				'provider' => 'FILE',
+				'videoId' => $file->getHandler()->getVideoId(),
+			) );
+
+		} else {
+			// Handle urls from supported 3rd parties (like youtube)
+			// A whole url (including protocol) is necessary for ApiWrapperFactory->getApiWrapper()
+			if ( !preg_match( '/^https?:\/\//', $url ) ) {
+				$url = 'http://' . $url;
+			}
+
+			// ApiWrapper handles adding of non-premium videos
+			try {
+				$awf = ApiWrapperFactory::getInstance();
+				$apiwrapper = $awf->getApiWrapper( $url );
+			} catch ( Exception $e ) {
+				if ( $e->getMessage() != '' ) {
+					$this->dieUsageMsg( $e->getMessage() );
+				}
+
+				$this->dieUsageMsg( 'The supplied URL is invalid' );
+			}
+
+			if ( empty( $apiwrapper ) ) {
+				$this->dieUsageMsg( 'The supplied video does not exist' );
+			}
+
+			// handle supported 3rd party (non-premium) urls
 			$this->mUpload->initializeFromRequest( new FauxRequest(
 				array(
 					'wpUpload' => 1,
@@ -198,57 +245,7 @@ class ApiTempUpload extends ApiBase {
 				'provider' => $apiwrapper->getProvider(),
 				'videoId' => $apiwrapper->getVideoId(),
 			) );
-
-		} else {
-			// handle local and premium videos by parsing url for 'File:'
-			$file = null;
-
-			// get the video name
-			$nsFileTranslated = $app->wg->ContLang->getNsText( NS_FILE );
-
-			// added $nsFileTransladed to fix bugId:#48874
-			$pattern = '/(File:|'.$nsFileTranslated.':)(.+)$/';
-
-			if ( preg_match( $pattern, $url, $matches ) ) {
-				$file = wfFindFile( $matches[2] );
-				if ( !$file ) { // bugID: 26721
-					$file = wfFindFile( urldecode( $matches[2] ) );
-				}
-			}
-			elseif ( preg_match( $pattern, urldecode( $url ), $matches ) ) {
-				$file = wfFindFile( $matches[2] );
-				if ( !$file ) { // bugID: 26721
-					$file = wfFindFile( $matches[2] );
-				}
-			}
-			else {
-				if ( $apiWrapperException ) {
-					// Non premium videos are not allowed on some wikis. This error message should supercede any other messages.
-					if ( empty( $app->wg->allowNonPremiumVideos ) ) {
-						$this->dieUsageMsg( 'This wiki does not support non-premium videos' );
-					}
-
-					// There was some issue with adding the video, e.g. provider not responding or not supported
-					if ( $apiWrapperException->getMessage() != '' ) {
-						$this->dieUsageMsg( $apiWrapperException->getMessage() );
-					}
-				}
-
-				$this->dieUsageMsg( 'The supplied URL is invalid' );
-			}
-
-			if ( !$file ) {
-				$this->dieUsageMsg( 'The supplied video does not exist' );
-			}
-
-			$this->getResult()->addValue( null, $this->getModuleName(), array(
-				'title' => $file->getTitle()->getText(),
-				'url' => $file->getUrl(),
-				'provider' => 'wikia',
-				'videoId' => $file->getHandler()->getVideoId(),
-			) );
 		}
-
 	}
 
 	/**
