@@ -294,7 +294,7 @@ class Factory {
 	 * @param array $assets component assets will be added to this array
 	 * @throws DataException
 	 */
-	private function initComponent( $name, &$assets ) {
+	protected function initComponent( $name, &$assets ) {
 		$componentConfig = $this->loadComponentConfig( $name );
 
 		// if there are some components, put them in the $assets
