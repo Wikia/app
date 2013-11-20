@@ -7,6 +7,7 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window', 'wikia.browserDetect' ], f
 		INACTIVE_CLASS = 'inactive',
 		PRIMARY_BUTTON_DATA = 'primary',
 		SECONDARY_BUTTON_DATA = 'secondary',
+		CLOSE_MSG = $.msg( 'close'),
 		primaryBtnConfig = {
 			type: 'button',
 			vars: {
@@ -78,6 +79,9 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window', 'wikia.browserDetect' ], f
 				} else {
 					delete( params.vars.secondBtn );
 				}
+
+				params.vars.closeText = CLOSE_MSG;
+				
 				uiComponent = uiComponent.render( params );
 			}
 
