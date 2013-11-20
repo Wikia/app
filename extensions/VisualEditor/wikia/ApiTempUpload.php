@@ -222,7 +222,7 @@ class ApiTempUpload extends ApiBase {
 				$this->dieUsageMsg( 'The supplied video does not exist' );
 			}
 
-			// handle supported 3rd party (non-premium) urls
+			// We have passed the error checking, the URL is good, so create a temp file
 			$this->mUpload->initializeFromRequest( new FauxRequest(
 				array(
 					'wpUpload' => 1,
