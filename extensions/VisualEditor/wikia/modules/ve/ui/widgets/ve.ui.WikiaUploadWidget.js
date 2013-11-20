@@ -85,23 +85,24 @@ ve.ui.WikiaUploadWidget.prototype.onClick = function () {
 /**
  * Check file for size and filetype errors
  * @method
- * @param {Object} file Object containing properties of user uploaded file
+ * @param {File} file File object containing properties of user uploaded file
  * @returns {Array} Array of error strings. May return empty array
  */
 ve.ui.WikiaUploadWidget.prototype.validateFile = function ( file ) {
-	var errors = [],
-		wgMaxUploadSize = mw.config.get( 'wgMaxUploadSize' ),
-		wgFileExtensions = mw.config.get( 'wgFileExtensions' ),
-		filetype = wgFileExtensions[ ve.indexOf( file.type.substr( file.type.indexOf( '/' ) + 1 ), wgFileExtensions ) ];
 
-	if ( ve.isPlainObject( wgMaxUploadSize ) ) {
-		wgMaxUploadSize = ( wgMaxUploadSize[ filetype ] ) ? wgMaxUploadSize[ filetype ] : wgMaxUploadSize[ '*' ];
+	var errors = [],
+		maxUploadSize = mw.config.get( 'wgMaxUploadSize' ),
+		fileExtensions = mw.config.get( 'wgFileExtensions' ),
+		filetype = fileExtensions[ ve.indexOf( file.type.substr( file.type.indexOf( '/' ) + 1 ), fileExtensions ) ];
+
+	if ( ve.isPlainObject( maxUploadSize ) ) {
+		maxUploadSize = ( maxUploadSize[ filetype ] ) ? maxUploadSize[ filetype ] : maxUploadSize[ '*' ];
 	}
-	if ( file.size > wgMaxUploadSize ) {
-		errors.push( [ 'size', Math.round( wgMaxUploadSize / 1024 / 1024 * 100 ) / 100 ] );
+	if ( file.size > maxUploadSize ) {
+		errors.push( [ 'size', Math.round( maxUploadSize / 1024 / 1024 * 100 ) / 100 ] );
 	}
 	if ( !filetype ) {
-		errors.push( [ 'filetype',  wgFileExtensions.join( ', ' ) ] );
+		errors.push( [ 'filetype',  fileExtensions.join( ', ' ) ] );
 	}
 
 	return errors;
@@ -117,9 +118,7 @@ ve.ui.WikiaUploadWidget.prototype.onFileChange = function () {
 	if ( !this.$file[0].files[0] ) {
 		return;
 	}
-	var file = this.$file[0].files[0],
-			formData = new FormData( this.$form[0] ),
-			fileErrors = this.validateFile( file );
+	var fileErrors = this.validateFile( this.$file[0].files[0] );
 
 	if ( fileErrors.length ) {
 		mw.config.get( 'GlobalNotification' ).show(
@@ -138,7 +137,7 @@ ve.ui.WikiaUploadWidget.prototype.onFileChange = function () {
 			'cache': false,
 			'contentType': false,
 			'processData': false,
-			'data': formData,
+			'data': new FormData( this.$form[0] ),
 			'success': ve.bind( this.onUploadSuccess, this ),
 			'error': ve.bind( this.onUploadError, this )
 		} );
