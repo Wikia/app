@@ -1,7 +1,7 @@
 /* globals Features:true */
 //init toc
-require( ['sections', 'wikia.window', 'jquery', 'wikia.mustache', 'wikia.toc'],
-function ( sections, window, $, mustache, toc ) {
+require( ['sections', 'wikia.window', 'jquery', 'wikia.mustache', 'wikia.toc', 'JSMessages'],
+function ( sections, window, $, mustache, toc, msg ) {
 	'use strict';
 
 	//private
@@ -16,7 +16,7 @@ function ( sections, window, $, mustache, toc ) {
 		timeout,
 		state,
 		$parent,
-		sideMenuCapable = true || (Features.positionfixed && Features.overflow),
+		sideMenuCapable = (Features.positionfixed && Features.overflow),
 		$ol,
 		inited,
 		lineHeight = 45,
@@ -227,7 +227,7 @@ function ( sections, window, $, mustache, toc ) {
 
 	if ( !sideMenuCapable ) {
 		$ol = $document.find('#mw-content-text')
-			.append( '<div class="in-page-toc"><h2>Table of Content</h2>' + renderToc() + '</div>' )
+			.append( '<div class="in-page-toc"><h2>' + msg('wikiamobile-toc-header') + '</h2>' + renderToc() + '</div>' )
 			.find('.level');
 
 	}
