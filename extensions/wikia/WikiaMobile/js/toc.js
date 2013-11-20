@@ -155,6 +155,7 @@ function ( sections, window, $, mustache, toc ) {
 	function init () {
 		if ( !inited ) {
 			$toc.on( 'click', 'header', function () {
+					onClose();
 					window.scrollTo( 0, 0 );
 				} )
 				.on( 'click', 'li', function ( event ) {
@@ -182,6 +183,8 @@ function ( sections, window, $, mustache, toc ) {
 				scrollY: true,
 				scrollX: false
 			});
+
+			window.lol = tocScroll;
 
 			inited = true;
 		}
