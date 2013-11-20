@@ -76,12 +76,12 @@ class CreateNewWikiControllerTest extends WikiaBaseTest {
 	public function getCreateWikiDataProvider() {
 		return [
 			[
-				true,
-				'ok'
+				'userLogged' => true,
+				'status' => 'ok'
 			],
 			[
-				false,
-				'error'
+				'userLogged' => false,
+				'status' => 'error'
 			]
 		];
 	}
