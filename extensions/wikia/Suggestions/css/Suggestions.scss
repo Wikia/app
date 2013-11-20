@@ -38,22 +38,16 @@ $element-height: 50px;
 $element-width: 355px;
 $image-width: 55px;
 
-//mainpage positioning is bit different
-.mainpage .search-suggest {
-	right: 0px;
-}
-
 .search-suggest {
 	background-color: $color-suggestions-background;
 	border-bottom-left-radius: 2px;
 	border-bottom-right-radius: 2px;
 	box-shadow: 1px 8px 12px 0px $color-suggestions-shadow-box;
 	font-weight: bold;
-	right: 10px;
 	position: absolute;
 	top: 38px;
 	width: $element-width;
-	z-index: 100;
+	z-index: 10;
 	a {
 		color: $color-text;
 	}
