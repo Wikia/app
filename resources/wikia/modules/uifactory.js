@@ -108,8 +108,7 @@ define( 'wikia.ui.factory', [
 
 		var deferred = new $.Deferred(),
 			components = [],
-			dependencyObjects = {},
-			component;
+			dependencyObjects = {};
 
 		if ( !( componentName instanceof Array ) ) {
 			componentName = [ componentName ];
@@ -132,6 +131,7 @@ define( 'wikia.ui.factory', [
 							if ( typeof dependencyObjects[ name ] !== 'undefined' ) {
 								dependencyList[ name ] = dependencyObjects[ name ];
 							} else {
+								deferred.reject();
 								throw new Error( 'Sub component ' + name + ' not found' );
 							}
 						});
