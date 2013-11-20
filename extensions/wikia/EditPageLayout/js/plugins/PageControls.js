@@ -364,7 +364,7 @@
 
 		// internal method, based on the editor content and some extraData, prepare a preview markup for the
 		// preview dialog and pass it to the callback
-		getPreviewContent: function(content, extraData, callback) {
+		getPreviewContent: function(content, extraData, callback, skin) {
 			// add section name when adding new section (BugId:7658)
 			if (window.wgEditPageSection === 'new') {
 				content = '== ' + this.getSummary() + ' ==\n\n' + content;
@@ -382,8 +382,12 @@
 				extraData.categories = this.categories.val();
 			}
 
+			if ( skin ) {
+				extraData.skin = skin;
+			}
+
 			this.ajax('preview', extraData, function(data) {
-				callback(data.html + data.catbox + data.interlanglinks, data.summary);
+				callback(data.html + data.catbox + data.interlanglinks, data.summary, data);
 			});
 		},
 
@@ -392,7 +396,7 @@
 		// Any changes to the article page or modal will break here. Also, get rid
 		// of any widthType/gridLayout settings when the responsive layout goes out
 		// for a global release.
-		renderPreview: function(extraData) {
+		renderPreview: function(extraData, type) {
 			var self = this;
 
 			require( [ 'wikia.fluidlayout' ], function( fluidlayout ) {
@@ -454,9 +458,9 @@
 					onPublishButton: function() {
 						$('#wpSave').click();
 					},
-					getPreviewContent: function(callback) {
+					getPreviewContent: function(callback, skin) {
 						self.getContent(function(content) {
-							self.getPreviewContent(content, extraData, callback);
+							self.getPreviewContent(content, extraData, callback, skin);
 						});
 					}
 				};

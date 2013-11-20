@@ -528,3 +528,12 @@ body {
 	}
 // END - edit page fixes
 }
+
+//Mobile preview styles
+.mobile-preview {
+	border: 1px solid $color-page-border;
+	display: block;
+	height: 480px;
+	margin: 0 auto;
+	width: 320px;
+}

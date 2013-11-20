@@ -34,7 +34,9 @@ define( 'wikia.preview', [
 		isWidePage = false,
 		articleWrapperWidth, // width of article wrapper needed as reference for preview scaling
 		FIT_SMALL_SCREEN = 80, // pixels to be removed from modal width to fit modal on small screens, won't be needed when new modals will be introduced
-		previewTypes = null;
+		previewTypes = null,
+		currentPreviewType,
+		getPreviewContent;
 
 	// show dialog for preview / show changes and scale it to fit viewport's height
 	function renderDialog(title, options, callback) {
@@ -119,6 +121,8 @@ define( 'wikia.preview', [
 			// cache selector for other functions in this module
 			$article = contentNode;
 
+			getPreviewContent = options.getPreviewContent;
+
 			options.getPreviewContent(function(content, summary) {
 
 				contentNode.html(content);
@@ -151,6 +155,7 @@ define( 'wikia.preview', [
 					}).done(function(response) {
 						var $dialog = $('#EditPageDialog'),
 							template = response.mustache[0],
+							tooltipParams = { placement: 'right' },
 							params = {
 								options: [
 									{
@@ -184,7 +189,6 @@ define( 'wikia.preview', [
 							switchPreview($(event.target).val());
 						});
 
-						var tooltipParams = { placement: 'right' };
 						if( $dialog[0] && $dialog[0].style && $dialog[0].style.zIndex ) {
 							// on Chrome when using $.css('z-index') / $.css('zIndex') it returns 2e+9
 							// this vanilla solution works better
@@ -219,8 +223,8 @@ define( 'wikia.preview', [
 
 	function addEditSummary( contentNode, width, summary ) {
 		if (typeof summary !== 'undefined') {
-			var $editPagePreviewEditSummary = $('<div>', {id: "EditPagePreviewEditSummary"}),
-				$articlePreview = contentNode.closest(".ArticlePreview"),
+			var $editPagePreviewEditSummary = $('<div>', {id: 'EditPagePreviewEditSummary'}),
+				$articlePreview = contentNode.closest('.ArticlePreview'),
 				articleHeight = $articlePreview.height(),
 				minArticleHeight = 200;
 
@@ -245,7 +249,12 @@ define( 'wikia.preview', [
 	 */
 
 	function switchPreview(type) {
-		$article.width(previewTypes[type].value);
+		if ( type === previewTypes.mobile.name ) {
+			loadMobilePreview();
+		} else {
+			$article.width(previewTypes[type].value);
+			scalePreview(type);
+		}
 
 		tracker.track({
 			action: Wikia.Tracker.ACTIONS.CLICK,
@@ -254,8 +263,25 @@ define( 'wikia.preview', [
 			trackingMethod: 'both',
 			value: type
 		});
+	}
 
-		scalePreview(type);
+	function loadMobilePreview () {
+		getPreviewContent( function(content, summary, data) {
+			var iframe = $article.html('<iframe class="mobile-preview"></iframe>' ).find('iframe')[0],
+				doc = iframe.document;
+
+			if ( iframe.contentDocument ) {
+				doc = iframe.contentDocument;
+			}else if ( iframe.contentWindow ) {
+				doc = iframe.contentWindow.document;
+			}
+			doc.open();
+			doc.writeln(data.html);
+			doc.close();
+
+
+
+		}, 'wikiamobile' );
 	}
 
 	/**
@@ -268,21 +294,21 @@ define( 'wikia.preview', [
 		var selectedPreviewWidth = previewTypes[type].value,
 			scaleRatio = articleWrapperWidth / selectedPreviewWidth,
 			cssTransform = cssPropHelper.getSupportedProp('transform'),
-			cssTransformOrigin = cssPropHelper.getSupportedProp('transform-origin'),
 			scaleVar = 'scale(' + scaleRatio + ')';
 
 		setClassesForWidePage( type, $article );
 
 		if (selectedPreviewWidth > articleWrapperWidth) {
-			$article.css(cssTransformOrigin, 'left top');
-			$article.css(cssTransform , scaleVar);
+			$article.css({
+				cssTransformOrigin: 'left top',
+				cssTransform: scaleVar
+			});
 		} else {
 			$article.css(cssTransform, '');
 		}
 
 		// Force browser to redraw/repaint - http://stackoverflow.com/questions/3485365/how-can-i-force-webkit-to-redraw-repaint-to-propagate-style-changes
-		$article.hide();
-		$article.height();
+		$article.hide().height();
 		$article.show();
 	}
 

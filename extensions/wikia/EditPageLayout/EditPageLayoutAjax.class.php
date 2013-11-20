@@ -8,6 +8,7 @@ class EditPageLayoutAjax {
 	static private function resolveWikitext( $content, $mode, $page, $method, $section ) {
 		global $wgRequest, $wgTitle, $wgOut;
 		wfProfileIn(__METHOD__);
+
 		if($wgTitle && class_exists($page)) {
 			$pageObj = new $page();
 			if(is_a( $pageObj, 'SpecialCustomEditPage' )) {
@@ -22,27 +23,34 @@ class EditPageLayoutAjax {
 					if($method == 'preview') {
 						list($html, $catbox, $interlanglinks) = $service->getPreview($wikitext);
 
-						// allow extensions to modify preview (BugId:8354) - this hook should only be run on article's content
-						wfRunHooks('OutputPageBeforeHTML', array(&$wgOut, &$html));
+						if ( F::app()->checkSkin( 'wikiamobile' ) ) {
+							$html = F::app()->renderView( 'WikiaMobileService', 'preview', [ 'content' => $html ] );
+						} else {
+							// add page title when not in section edit mode
+							if ($section === '') {
+								$html = '<h1 class="pagetitle">' . $wgTitle->getPrefixedText() .  '</h1>' . $html;
+							}
 
-						// add page title when not in section edit mode
-						if ($section === '') {
-							$html = '<h1 class="pagetitle">' . $wgTitle->getPrefixedText() .  '</h1>' . $html;
-						}
+							$html = '<div class="WikiaArticle">'. $html .'</div>';
 
-						// allow extensions to modify preview (BugId:6721)
-						wfRunHooks('EditPageLayoutModifyPreview', array($wgTitle, &$html, $wikitext));
+							// allow extensions to modify preview (BugId:8354) - this hook should only be run on article's content
+							wfRunHooks('OutputPageBeforeHTML', array(&$wgOut, &$html));
 
-						/**
-						 * bugid: 11407
-						 * Provide an appropriate preview for a redirect, based on wikitext, not revision.
-						 */
-						if ( preg_match( '/^#REDIRECT /m', $wikitext ) ) {
-							$article = Article::newFromTitle( $wgTitle, RequestContext::getMain() );
-							$matches = array();
-							if ( preg_match_all( '/^#REDIRECT \[\[([^\]]+)\]\]/Um', $wikitext, $matches ) ) {
-    							$redirectTitle = Title::newFromText( $matches[1][0] );
-    							$html = $article->viewRedirect( array( $redirectTitle ) );
+
+							// allow extensions to modify preview (BugId:6721)
+							wfRunHooks('EditPageLayoutModifyPreview', array($wgTitle, &$html, $wikitext));
+
+							/**
+							 * bugid: 11407
+							 * Provide an appropriate preview for a redirect, based on wikitext, not revision.
+							 */
+							if ( preg_match( '/^#REDIRECT /m', $wikitext ) ) {
+								$article = Article::newFromTitle( $wgTitle, RequestContext::getMain() );
+								$matches = array();
+								if ( preg_match_all( '/^#REDIRECT \[\[([^\]]+)\]\]/Um', $wikitext, $matches ) ) {
+									$redirectTitle = Title::newFromText( $matches[1][0] );
+									$html = $article->viewRedirect( array( $redirectTitle ) );
+								}
 							}
 						}
 
@@ -50,8 +58,6 @@ class EditPageLayoutAjax {
 						$html = $service->getDiff($wikitext, intval($section));
 					}
 				}
-
-				$html = '<div class="WikiaArticle">'. $html .'</div>';
 
 				$res = array(
 					'html' => $html,
@@ -90,6 +96,14 @@ class EditPageLayoutAjax {
 	static public function preview() {
 		global $wgRequest, $wgLang;
 		wfProfileIn(__METHOD__);
+
+		$skin = $wgRequest->getVal('skin');
+
+		if ( !empty( $skin ) ) {
+			RequestContext::getMain()->setSkin(
+				Skin::newFromKey( $skin )
+			);
+		}
 
 		$res = self::resolveWikitextFromRequest('preview');
 
