@@ -154,48 +154,20 @@ class ApiTempUpload extends ApiBase {
 		) );
 	}
 
-	/**
-	 * Determine if the url is a Wikia file, either premium or local
-	 *
-	 * @param $url
-	 * @return bool
-	 */
-	private function isWikiaFile( $url ) {
-		$file = null;
-
-		// get the video name
-		$nsFileTranslated = F::app()->wg->ContLang->getNsText( NS_FILE );
-
-		// added $nsFileTransladed to fix bugId:#48874
-		$pattern = '/(File:|'.$nsFileTranslated.':)(.+)$/';
-
-		if ( preg_match( $pattern, $url, $matches ) ) {
-			$file = wfFindFile( $matches[2] );
-			if ( !$file ) { // bugID: 26721
-				$file = wfFindFile( urldecode( $matches[2] ) );
-			}
-		// If the i18n'ed namespace has a special char it might need to be decoded
-		} else if ( preg_match( $pattern, urldecode( $url ), $matches ) ) {
-			$file = wfFindFile( $matches[2] );
-		}
-
-		return $file;
-	}
-
 	private function executeTemporaryVideo() {
 		// First check permission to upload
 		$this->mUpload = new UploadFromUrl();
 		$this->checkPermissions( $this->mUser );
 
 		$url = $this->mParams['url'];
-		$file = $this->isWikiaFile( $url );
+		$file = WikiaFileHelper::isWikiaFile( $url );
 
 		if( !empty( $file ) ) {
 			// Handle local and premium videos
 			$this->getResult()->addValue( null, $this->getModuleName(), array(
 				'title' => $file->getTitle()->getText(),
 				'url' => $file->getUrl(),
-				'provider' => 'FILE',
+				'provider' => 'wikia',
 				'videoId' => $file->getHandler()->getVideoId(),
 			) );
 
