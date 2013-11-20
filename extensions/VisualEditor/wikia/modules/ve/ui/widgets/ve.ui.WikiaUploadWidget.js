@@ -89,7 +89,8 @@ ve.ui.WikiaUploadWidget.static.validateFile = function ( file ) {
 		maxUploadSize = maxUploadSize[ maxUploadSize[ filetype ] ? filetype : '*' ];
 	}
 	if ( file.size > maxUploadSize ) {
-		errors.push( [ 'size', Math.round( maxUploadSize / 1024 / 1024 * 100 ) / 100 ] );
+		// Convert maxUploadSize from bytes to MB rounded to two decimals.
+		errors.push( [ 'size', Math.round( maxUploadSize / 1048576 * 100 ) / 100 ] );
 	}
 	if ( !filetype ) {
 		errors.push( [ 'filetype',  fileExtensions.join( ', ' ) ] );
