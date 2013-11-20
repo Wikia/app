@@ -181,7 +181,7 @@ class RunOnCluster extends Maintenance {
 		echo "Running ".$this->class.'::'.$this->method.' on cluster '.$this->cluster."\n";
 
 		// Loop through each dbname and run our code
-		foreach ( $clusterWikis as $dbname ) {
+		foreach ( $clusterWikis as $cityId => $dbname ) {
 			// Catch connection errors and log them
 			try {
 				$result = $this->db->query("use `$dbname`");
@@ -196,9 +196,13 @@ class RunOnCluster extends Maintenance {
 			// Call our method passing the connected DB handle and test flag
 			$class = $this->class;
 			$method = $this->method;
+			$params = array(
+				'dbname' => $dbname,
+				'cityId' => $cityId,
+			);
 
 			try {
-				$class::$method( $this->db, $dbname, $this->test, $this->verbose );
+				$class::$method( $this->db, $this->test, $this->verbose, $params );
 			} catch ( Exception $e ) {
 				fwrite(STDERR, "Could not run $class::$method for $dbname: ".$e->getMessage()."\n");
 			}
@@ -214,8 +218,8 @@ class RunOnCluster extends Maintenance {
 	 * @return array An array of database names
 	 */
 	private function getClusterWikis() {
-		$db = wfGetDB( DB_SLAVE, array(), 'wikicities');
-		$sql = 'SELECT city_dbname
+		$db = wfGetDB( DB_SLAVE, array(), 'wikicities' );
+		$sql = 'SELECT city_dbname, city_id
 		 		FROM city_list
 		 		WHERE city_cluster = "c'.$this->cluster.'"
 		 		  AND city_public = 1
@@ -224,7 +228,7 @@ class RunOnCluster extends Maintenance {
 
 		$wikis = array();
 		while ( $row = $db->fetchObject($result) ) {
-			$wikis[] = $row->city_dbname;
+			$wikis[$row->city_id] = $row->city_dbname;
 		}
 
 		return $wikis;
