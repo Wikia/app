@@ -1,23 +1,26 @@
 /*global ToolbarCustomize:true*/
+'use strict';
+
 var WikiaFooterApp = {
 
 	init: function() {
 		//Variables
 		if( window.wgEnableWikiaBarExt ) {
 		//the admin tool bar is within wikia bar container which is outside the #WikiaPage
-			this.footer = $("#WikiaBarWrapper .wikia-bar");
+			this.footer = $('#WikiaBarWrapper').find('.wikia-bar');
 		} else {
 		//the admin tool bar is positioned absolutely but in DOM in it's in #WikiaFooter within #WikiaPage
-			this.footer = $("#WikiaFooter");
+			this.footer = $('#WikiaFooter');
 		}
-		this.toolbar = this.footer.children(".toolbar");
+		this.toolbar = this.footer.children('.toolbar');
 		this.gn = $('.global-notification');
 		this.windowObj = $(window);
 		this.originalWidth = this.toolbar.width();
 
 		// avoid stack overflow in IE (RT #98938)
 		if (this.toolbar.exists() || this.gn.exists()) {
-			if(!( navigator.platform in {'iPad':'', 'iPhone':'', 'iPod':''} || (navigator.userAgent.match(/android/i) != null))){
+			if(!( navigator.platform in {'iPad':'', 'iPhone':'', 'iPod':''} ||
+				(navigator.userAgent.match(/android/i) !== null))){
 				this.addScrollEvent();
 				this.addResizeEvent();
 			}
@@ -59,17 +62,17 @@ var WikiaFooterApp = {
 			line = WikiaFooterApp.footer.offset().top + WikiaFooterApp.toolbar.outerHeight();
 		}
 
-		if (scroll > line && WikiaFooterApp.footer.hasClass("float")) {
-			WikiaFooterApp.footer.removeClass("float");
+		if (scroll > line && WikiaFooterApp.footer.hasClass('float')) {
+			WikiaFooterApp.footer.removeClass('float');
 			WikiaFooterApp.centerBar();
-		} else if (scroll < line && !WikiaFooterApp.footer.hasClass("float")) {
-			WikiaFooterApp.footer.addClass("float");
+		} else if (scroll < line && !WikiaFooterApp.footer.hasClass('float')) {
+			WikiaFooterApp.footer.addClass('float');
 			WikiaFooterApp.centerBar();
 		}
 
 		// GlobalNotification uses same scroll event for performance reasons (BugId:33365)
 		if(window.GlobalNotification && !window.GlobalNotification.isModal()) {
-			GlobalNotification.onScroll(scrollTop);
+			window.GlobalNotification.onScroll(scrollTop);
 		}
 	}
 };
@@ -78,7 +81,7 @@ var WikiaFooterApp = {
 	window.ToolbarCustomize = window.ToolbarCustomize || {};
 	var TC = window.ToolbarCustomize;
 
-	TC.MenuGroup = $.createClass(Observable,{
+	TC.MenuGroup = $.createClass(window.Observable,{
 
 		showTimer: false,
 		hideTimer: false,
@@ -91,8 +94,8 @@ var WikiaFooterApp = {
 
 		constructor: function() {
 			TC.MenuGroup.superclass.constructor.call(this);
-			this.showTimer = Timer.create($.proxy(this.show,this),this.showTimeout);
-			this.hideTimer = Timer.create($.proxy(this.hide,this),this.hideTimeout);
+			this.showTimer = window.Timer.create($.proxy(this.show,this),this.showTimeout);
+			this.hideTimer = window.Timer.create($.proxy(this.hide,this),this.hideTimeout);
 		},
 
 		add: function( el ) {
@@ -113,10 +116,10 @@ var WikiaFooterApp = {
 					.unbind('.menugroup');
 		},
 
-		show: function( evt ) {
+		show: function() {
 			this.hideTimer.stop();
 			this.showTimer.stop();
-			if (!this.showing || this.visible == this.showing) {
+			if (!this.showing || this.visible === this.showing) {
 				return;
 			}
 
@@ -147,7 +150,7 @@ var WikiaFooterApp = {
 			this.show(evt);
 		},
 
-		hide: function( evt ) {
+		hide: function() {
 			this.hideTimer.stop();
 			this.showTimer.stop();
 			if (this.visible) {
@@ -157,7 +160,7 @@ var WikiaFooterApp = {
 			}
 		},
 
-		delayedHide: function( evt ) {
+		delayedHide: function() {
 			this.hideTimer.stop();
 			if (this.visible) {
 				this.hideTimer.start();
@@ -206,7 +209,11 @@ var WikiaFooterApp = {
 				where = moreable.last().next(),
 				width = 0,
 				mwidth = 0,
-				fwidth = this.el.width();
+				fwidth = this.el.width(),
+				liMore = this.buildOveflowItem(),
+				more = liMore.children('ul'),
+				moreWidth = liMore.outerWidth(true) + 5,
+				rwidth = 0;
 
 			all.each(function(i,v) {
 				width += $(v).outerWidth(true);
@@ -219,25 +226,21 @@ var WikiaFooterApp = {
 				return;
 			}
 
-			var li_more = this.buildOveflowItem();
-
 			if (where.exists()) {
-				where.before(li_more);
+				where.before(liMore);
 			}
 			else {
-				this.el.append(li_more);
+				this.el.append(liMore);
 			}
-			var more = li_more.children('ul');
-			var moreWidth = li_more.outerWidth(true) + 5;
 
-			var rwidth = fwidth - moreWidth - (width - mwidth);
+			rwidth = fwidth - moreWidth - (width - mwidth);
 			moreable.each(function(i,v){
 				rwidth -= $(v).outerWidth(true);
 				if (rwidth < 0) {
 					$(v).prependTo(more);
 				}
 			});
-			this.menuGroup.add(li_more,$.proxy(this.onShowMenu,this));
+			this.menuGroup.add(liMore,$.proxy(this.onShowMenu,this));
 		},
 
 		onShowMenu: function( mgroup, li, ul ) {
@@ -261,7 +264,7 @@ var WikiaFooterApp = {
 
 		show: function() {
 			$.loadLibrary('ToolbarCustomize',
-				stylepath + '/oasis/js/ToolbarCustomize.js',
+				window.stylepath + '/oasis/js/ToolbarCustomize.js',
 				typeof TC.Configuration,
 				$.proxy(function(){
 					var c = new TC.Configuration(this.toolbar);
