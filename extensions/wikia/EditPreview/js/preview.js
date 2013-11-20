@@ -164,6 +164,10 @@ define( 'wikia.preview', [
 									{
 										value: previewTypes.max.name,
 										name: msg('wikia-editor-preview-max-width')
+									},
+									{
+										value: previewTypes.mobile.name,
+										name: msg('wikia-editor-preview-mobile-width')
 									}
 								],
 								toolTipMessage: msg('wikia-editor-preview-type-tooltip')
@@ -328,6 +332,10 @@ define( 'wikia.preview', [
 			max: {
 				name:'max',
 				value: articleMaxWidth - 2 * articleMargin
+			},
+			mobile: {
+				name: 'mobile',
+				value: 'wikiamobile'
 			}
 		};
 
