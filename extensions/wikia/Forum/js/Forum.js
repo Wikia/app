@@ -1,4 +1,4 @@
-(function(window, $) {
+(function( window, $ ) {
 	'use strict';
 	var showPoliciesModal = function() {
 		require( [ 'wikia.ui.factory' ], function( uiFactory ) {
@@ -42,14 +42,14 @@
 					};
 				}
 
-				uiModal.create( modalId, modalConfig, function ( policiesModal ) {
+				uiModal.create( modalId, modalConfig, function( policiesModal ) {
 
-					policiesModal.onPrimaryBtnClick(function ( event ) {
+					policiesModal.onPrimaryBtnClick(function( event ) {
 						event.preventDefault();
 						window.location = window.wgPoliciesEditURL;
 					});
 
-					policiesModal.onSecondaryBtnClick(function ( event ) {
+					policiesModal.onSecondaryBtnClick(function( event ) {
 						event.preventDefault();
 						policiesModal.close();
 					});
@@ -71,7 +71,7 @@
 					});
 				});
 			});
-		} );
+		});
 		return false;
 	};
 		

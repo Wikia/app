@@ -112,7 +112,7 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window', 'wikia.browserDetect' ], f
 		});
 
 		this.$blackout = getBlackout();
-		this.$content = this.$element.children().eq(1);
+		this.$content = this.$element.children().eq( 1 );
 		this.$close = this.$element.find( '.' + CLOSE_CLASS );
 		this.$primaryButton = this.$element.find( 'footer [data-' + PRIMARY_BUTTON_DATA + '=1]' );
 		this.$secondaryButton = this.$element.find( 'footer [data-' + SECONDARY_BUTTON_DATA + '=1]' );
@@ -124,11 +124,11 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window', 'wikia.browserDetect' ], f
 		}, that ) );
 
 		this.$primaryButton.click( $.proxy( function ( event ) {
-			this.$element.trigger( 'onPrimaryBtnClick', [ event ]);
+			this.$element.trigger( 'onPrimaryBtnClick', [ event ] );
 		}, that ) );
 
 		this.$secondaryButton.click( $.proxy( function( event ) {
-			this.$element.trigger( 'onSecondaryBtnClick', [ event ]);
+			this.$element.trigger( 'onSecondaryBtnClick', [ event ] );
 		}, that ) );
 
 		destroyOnClose = this.$element.data( 'destroy-on-close' );
@@ -179,10 +179,19 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window', 'wikia.browserDetect' ], f
 	 */
 
 	Modal.prototype.onClose = function() {};
+
+	/**
+	 * Add onPrimaryButtonClick handler
+	 * @param {function} callback
+	 */
 	Modal.prototype.onPrimaryBtnClick = function( callback ) {
 		this.$element.on( 'onPrimaryBtnClick', callback );
 	};
 
+	/**
+	 * Add onSecondaryButtonClick handler
+	 * @param {function} callback
+	 */
 	Modal.prototype.onSecondaryBtnClick = function( callback ) {
 		this.$element.on( 'onSecondaryBtnClick', callback );
 	};
@@ -238,7 +247,7 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window', 'wikia.browserDetect' ], f
 	 */
 	Modal.prototype.setContent = function( content ) {
 		this.$content.html( content );
-	}
+	};
 
 	/** Public API */
 	
