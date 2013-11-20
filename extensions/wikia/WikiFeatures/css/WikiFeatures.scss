@@ -23,7 +23,7 @@
 	>.creative {
 		font-size: 16px;
 		line-height: 26px;
-		margin-top: 15px;
+		margin: 15px 0 30px;
 	}
 	.features {
 		margin: 0;
@@ -31,12 +31,12 @@
 		list-style: none;
 		.feature {
 			@include clearfix;
-			border-top: 1px solid $color-page-border;
-			padding: 30px 0 30px 0;
+			/*border-top: 1px solid $color-page-border;*/
+			padding-bottom: 30px;
 			h3 {
 				border-bottom: 1px solid $color-page-border;
 				font-size: 20px;
-				margin: 0;
+				margin: 0 0 20px 0;
 				padding: 0 0 5px 0;
 			}
 			&:first-child {
@@ -44,7 +44,7 @@
 			}
 			.representation {
 				border: 1px solid $color-page-border;
-				float: left;
+				float: right;
 				position: relative;
 				.promo-text {
 					color: red;
@@ -83,17 +83,20 @@
 			}
 
 			.details {
-				margin: 0 190px 0 315px;
+				margin: 0 315px 0 0px;
 			}
 			.actions {
-				float: right;
+				clear: left;
+				float: left;
+				margin-top: 10px;
 				.slider {
 					@include border-radius(14px);
 					@include box-shadow(0, 2px, 5px, #999, true);
 					background-color: #eeeded;
 					border: 1px solid #a6a6a6;
 					cursor: pointer;
-					display: block;
+					display: inline-block;
+					float: left;
 					height: 26px;
 					position: relative;
 					width: 107px;
@@ -144,15 +147,16 @@
 					}
 				}
 				.feedback {
-					margin-top: 5px;
+					margin: 4px 0 0 15px;
 					>img {
 						position: relative;
 						top: -1px;
 					}
 				}
-				.active-on {
-					font-size: 11px;
-				}
+			}
+			.active-on {
+				font-size: 13px;
+				margin-left: 5px;
 			}
 		}
 	}
