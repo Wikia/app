@@ -121,14 +121,14 @@
 	}
 }
 
-// Visual Editor specific notification styling
+// VisualEditor specific notification styling
 .ve-ui-window-body {
 	.global-notification {
 		@include box-sizing-border-box;
 		position: absolute;
 		width: 100%;
 
-		& > .close {
+		> .close {
 			position: absolute;
 			right: 15px;
 		}
