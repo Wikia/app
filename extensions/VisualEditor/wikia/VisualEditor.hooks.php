@@ -45,4 +45,14 @@ class VisualEditorWikiaHooks {
 		);
 		return true;
 	}
+
+	/**
+	 * Adds extra variables to the page config.
+	 */
+	public static function onMakeGlobalVariablesScript( array &$vars, OutputPage $out ) {
+		global $wgMaxUploadSize;
+		$vars[ 'wgMaxUploadSize' ] = $wgMaxUploadSize; 
+		return true;
+	}
+
 }

@@ -101,6 +101,8 @@ $wgResourceModules += array(
 			'wikia-visualeditor-dialog-wikiamediainsert-upload-error',
 			'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder',
 			'wikia-visualeditor-dialog-wikiamediainsert-preview-alert',
+			'wikia-visualeditor-dialog-wikiamediainsert-upload-error-size',
+			'wikia-visualeditor-dialog-wikiamediainsert-upload-error-filetype',
 			'wikia-visualeditor-help-label',
 			'wikia-visualeditor-help-link',
 			'wikia-visualeditor-beta-warning',
@@ -135,3 +137,4 @@ $wgExtensionMessagesFiles['VisualEditorWikia'] = $dir . 'VisualEditor.i18n.php';
 
 $wgHooks['GetPreferences'][] = 'VisualEditorWikiaHooks::onGetPreferences';
 $wgHooks['ResourceLoaderTestModules'][] = 'VisualEditorWikiaHooks::onResourceLoaderTestModules';
+$wgHooks['MakeGlobalVariablesScript'][] = 'VisualEditorWikiaHooks::onMakeGlobalVariablesScript';
