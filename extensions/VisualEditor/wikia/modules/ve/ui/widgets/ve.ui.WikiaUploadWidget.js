@@ -116,10 +116,13 @@ ve.ui.WikiaUploadWidget.prototype.onClick = function () {
  * @fires success
  */
 ve.ui.WikiaUploadWidget.prototype.onFileChange = function () {
+	var fileErrors;
+
 	if ( !this.$file[0].files[0] ) {
 		return;
 	}
-	var fileErrors = this.constructor.static.validateFile( this.$file[0].files[0] );
+
+	fileErrors = this.constructor.static.validateFile( this.$file[0].files[0] );
 
 	if ( fileErrors.length ) {
 		mw.config.get( 'GlobalNotification' ).show(
