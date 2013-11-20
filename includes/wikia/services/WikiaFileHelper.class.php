@@ -656,7 +656,7 @@ class WikiaFileHelper extends Service {
 			if ( !$file ) { // bugID: 26721
 				$file = wfFindFile( urldecode( $matches[2] ) );
 			}
-			// If the i18n'ed namespace has a special char it might need to be decoded
+		// If the i18n'ed namespace has a special char it might need to be decoded
 		} else if ( preg_match( $pattern, urldecode( $url ), $matches ) ) {
 			$file = wfFindFile( $matches[2] );
 		}
