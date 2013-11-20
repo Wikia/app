@@ -39,7 +39,6 @@
 								size: 'small',
 								content: jsonResponse.html,
 								title: jsonResponse.title,
-								closeButton: true,
 								closeText: $.msg( 'close' ),
 								primaryBtn: submitBtn,
 								secondBtn: cancelBtn

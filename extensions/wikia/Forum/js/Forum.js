@@ -13,7 +13,6 @@
 							size: 'medium',
 							content: '<div class="ForumPolicies"><div class="WikiaArticle"></div></div>',
 							title: $.msg( 'forum-specialpage-policies' ),
-							closeButton: true,
 							closeText: $.msg( 'close' ),
 							secondBtn: {
 								type: 'button',

@@ -44,7 +44,6 @@ var ChatBanModal = function(title, okCallback, options) {
 							size: 'small',
 							content: data.template,
 							title: title,
-							closeButton: true,
 							closeText: $.msg( 'close' ),
 							primaryBtn: modalPrimaryBtn,
 							secondBtn: modalSecondaryBtn

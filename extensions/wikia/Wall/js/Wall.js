@@ -349,7 +349,6 @@ var Wall = $.createClass(Object, {
 										size: 'small',
 										content: data,
 										title: $.msg( 'wall-votes-modal-title' ),
-										closeButton: true,
 										closeText: $.msg( 'close' )
 									}
 								} );
@@ -490,7 +489,6 @@ var Wall = $.createClass(Object, {
 						size: 'medium',
 						content: msg,
 						title: title,
-						closeButton: true,
 						closeText: $.msg( 'close' ),
 						primaryBtn: modalPrimaryBtn,
 						secondBtn: modalSecondaryBtn
@@ -791,7 +789,6 @@ var Wall = $.createClass(Object, {
 									size: 'small',
 									content: html,
 									title: $.msg( 'wall-action-move-thread-heading' ),
-									closeButton: true,
 									closeText: $.msg( 'close' ),
 									primaryBtn: modalPrimaryBtn,
 									secondBtn: modalSecondaryBtn

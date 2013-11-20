@@ -193,7 +193,6 @@ var ChatEntryPoint = {
 						size: 'small',
 						content: html,
 						title: $.msg( 'chat-start-a-chat' ),
-						closeButton: true,
 						closeText: $.msg( 'close' )
 					}
 				} );
