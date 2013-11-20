@@ -15,8 +15,6 @@ class VisualEditorWikiaHooks {
 			$preferences['visualeditor-betatempdisable']
 		);
 
-		Wikia::log('enablerichtext: '.  !empty( $preferences['enablerichtext'] ) );
-
 		return true;
 	}
 
