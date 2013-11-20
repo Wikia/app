@@ -42,7 +42,7 @@
 					};
 				}
 
-				uiModal.create( modalId, modalConfig, function( policiesModal ) {
+				uiModal.create( modalConfig, function( policiesModal ) {
 
 					policiesModal.onPrimaryBtnClick(function( event ) {
 						event.preventDefault();

@@ -87,16 +87,15 @@ define( 'wikia.ui.component', [ 'wikia.mustache' ], function uicomponent( mustac
 		/**
 		 * Creates new component object
 		 *
-		 * @param {String} id Element id
 		 * @param {{}} params Component params
 		 * @param {function} callback callback function function ( object ) {}
 		 * @returns {undefined}
 		 */
-		this.create = function( id, params, callback ) {
+		this.create = function( params, callback ) {
 			var that = this;
 			if ( componentConfig.jsWrapperModule ) {
 				require( [ componentConfig.jsWrapperModule ], function( object ) {
-					callback( object.init( id, that, params ) );
+					callback( object.init( params.vars.id, that, params ) );
 				});
 			} else {
 				callback( that, params );
