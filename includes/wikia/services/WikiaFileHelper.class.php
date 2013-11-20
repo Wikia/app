@@ -642,7 +642,7 @@ class WikiaFileHelper extends Service {
 	 * @param $url String the url of a video
 	 * @return File|null
 	 */
-	public static function isWikiaFile( $url ) {
+	public static function getWikiaFile( $url ) {
 		$file = null;
 
 		// get the video name

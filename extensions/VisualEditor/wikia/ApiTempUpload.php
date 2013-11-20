@@ -170,7 +170,7 @@ class ApiTempUpload extends ApiBase {
 		$this->checkPermissions( $this->mUser );
 
 		$url = $this->mParams['url'];
-		$file = WikiaFileHelper::isWikiaFile( $url );
+		$file = WikiaFileHelper::getWikiaFile( $url );
 
 		if( !empty( $file ) ) {
 			// Handle local and premium videos
