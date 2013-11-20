@@ -196,4 +196,33 @@ class FactoryTest extends WikiaBaseTest {
         $this->assertEquals( [ 'js' => [ 'url1', 'url2' ], 'css' => [ 'url3', 'url4' ] ], $UIFactoryMock->getComponentAssetsUrls( $componentMock ));
 	}
 
+	public function testLoadSingleDependency() {
+		$c1ComponentMock = $this->getMock( 'Wikia\UI\Component', [ 'getComponentDependencies' ] );
+		$c1ComponentMock->expects( $this->any() )->method( 'getComponentDependencies' )->will( $this->returnValue( [ 'c2' ] ) );
+
+		$c2ComponentMock = $this->getMock( 'Wikia\UI\Component', [ 'getComponentDependencies' ] );
+		$c2ComponentMock->expects( $this->any() )->method( 'getComponentDependencies' )->will( $this->returnValue( [ ] ) );
+
+		$UIFactoryMock = $this->getMock( 'Wikia\UI\Factory', [ 'initComponent', '__wakeup' ], [], '', false );
+		$UIFactoryMock->expects( $this->exactly( 2 ) )->method( 'initComponent' )->will( $this->returnValueMap([
+			[ 'c1', [], $c1ComponentMock ],
+			[ 'c2', [], $c2ComponentMock ]
+		] ) );
+
+
+		$dep = [];
+		$res = $UIFactoryMock->init( [ 'c1' ], false, $dep );
+
+		$this->assertEquals( $c1ComponentMock, $res );
+		$this->assertEquals( [ 'c2' => $c2ComponentMock], $dep );
+	}
+
+	public function testLoadDependencyJustOnce() {
+		// 2 komponenty sa zalezne od tego i dodatkowo sam laduje to recznie
+	}
+
+	public function testCircularDependencies() {
+
+	}
+
 }
