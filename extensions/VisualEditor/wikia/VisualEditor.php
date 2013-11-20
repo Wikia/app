@@ -102,7 +102,6 @@ $wgResourceModules += array(
 			'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder',
 			'wikia-visualeditor-dialog-wikiamediainsert-preview-alert',
 			'wikia-visualeditor-dialog-wikiamediainsert-upload-error-size',
-			'wikia-visualeditor-dialog-wikiamediainsert-upload-error-size-filetype',
 			'wikia-visualeditor-dialog-wikiamediainsert-upload-error-filetype',
 			'wikia-visualeditor-help-label',
 			'wikia-visualeditor-help-link',

@@ -85,22 +85,23 @@ ve.ui.WikiaUploadWidget.prototype.onClick = function () {
 /**
  * Check file for size and filetype errors
  * @method
- * @param Object object containing properties of user uploaded file
- * @returns Array of error strings. May return empty array
+ * @param {Object} file Object containing properties of user uploaded file
+ * @returns {Array} Array of error strings. May return empty array
  */
 ve.ui.WikiaUploadWidget.prototype.validateFile = function ( file ) {
-	var errors,
-			filetype;
+	var errors = [],
+		wgMaxUploadSize = mw.config.get( 'wgMaxUploadSize' ),
+		wgFileExtensions = mw.config.get( 'wgFileExtensions' ),
+		filetype = wgFileExtensions[ ve.indexOf( file.type.substr( file.type.indexOf( '/' ) + 1 ), wgFileExtensions ) ];
 
-	errors = [];
-	filetype = ve.indexOf( file.type.substr( file.type.indexOf('/') + 1 ), mw.config.get( 'wgFileExtensions' ) );
-
-	// 10mb filesize
-	if ( file.size > mw.config.get( 'wgMaxUploadSize' ) ) {
-		errors.push( 'size' );
+	if ( ve.isPlainObject( wgMaxUploadSize ) ) {
+		wgMaxUploadSize = ( wgMaxUploadSize[ filetype ] ) ? wgMaxUploadSize[ filetype ] : wgMaxUploadSize[ '*' ];
 	}
-	if ( filetype < 0 ) {
-		errors.push( 'filetype' );
+	if ( file.size > wgMaxUploadSize ) {
+		errors.push( [ 'size', Math.round( wgMaxUploadSize / 1024 / 1024 * 100 ) / 100 ] );
+	}
+	if ( !filetype ) {
+		errors.push( [ 'filetype',  wgFileExtensions.join( ', ' ) ] );
 	}
 
 	return errors;
@@ -123,7 +124,10 @@ ve.ui.WikiaUploadWidget.prototype.onFileChange = function () {
 	if ( fileErrors.length ) {
 		mw.config.get( 'GlobalNotification' ).show(
 			// show filetype message first if multiple errors exist
-			ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-upload-error-' + fileErrors[ fileErrors.length - 1 ] ),
+			ve.msg(
+				'wikia-visualeditor-dialog-wikiamediainsert-upload-error-' + fileErrors[ fileErrors.length - 1 ][ 0 ],
+				 fileErrors[ fileErrors.length - 1 ][ 1 ]
+			),
 			'error',
 			$( '.ve-ui-frame' ).contents().find( '.ve-ui-window-body' )
 		);
