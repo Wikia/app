@@ -86,6 +86,7 @@ class UIFactoryApiController extends \WikiaApiController {
 		$result = [];
 		foreach( $dependencies as $component ) {
 			// @todo - do we want to include in the dependencies the components that are already returned in the 'components' array?
+			/** @var $component \Wikia\UI\Component */
 			$result[ $component->getName() ] = $this->getComponentConfig( $component, $factory );
 		}
 		$this->setVal( 'dependencies', $result );

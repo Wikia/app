@@ -150,7 +150,7 @@ class FactoryTest extends WikiaBaseTest {
 		
 		$UIFactoryMock->expects( $this->once() )->method( 'getComponentsBaseTemplatePath' );
 		
-		/** @var $UIFactoryMock Wikia\UI\Factory */
+		/** @var $UIFactoryMock \Wikia\UI\Factory */
 		$component = $UIFactoryMock->init( 'component' );
 
 		// make sure the dependencies are not in the assets
@@ -197,7 +197,7 @@ class FactoryTest extends WikiaBaseTest {
 		        [ '4.css', [ [ 'url4' ], \Wikia\UI\Factory::ASSET_TYPE_CSS ] ],
 	        ] ) );
 
-        /** @var $UIFactoryMock Wikia\UI\Factory */
+        /** @var $UIFactoryMock \Wikia\UI\Factory */
         $this->assertEquals( [ 'js' => [ 'url1', 'url2' ], 'css' => [ 'url3', 'url4' ] ], $UIFactoryMock->getComponentAssetsUrls( $componentMock ) );
 	}
 
