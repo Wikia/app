@@ -178,7 +178,6 @@ class ApiTempUpload extends ApiBase {
 				'title' => $file->getTitle()->getText(),
 				'url' => $file->getUrl(),
 				'provider' => 'wikia',
-				'videoId' => $file->getHandler()->getVideoId(),
 			) );
 
 		} else {
