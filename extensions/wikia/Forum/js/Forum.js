@@ -14,31 +14,30 @@
 							content: '<div class="ForumPolicies"><div class="WikiaArticle"></div></div>',
 							title: $.msg( 'forum-specialpage-policies' ),
 							closeText: $.msg( 'close' ),
-							secondBtn: {
-								type: 'button',
-								vars: {
-									id: 'close',
-									type: 'button',
-									classes: [ 'normal', 'secondary' ],
-									value: backBtnMsg,
-									title: backBtnMsg
+							buttons: [
+								{
+									vars: {
+										value: backBtnMsg,
+										data: [
+											{
+												key: 'event',
+												value: 'close'
+											}
+										]
+									}
 								}
-							}
+							]
 						}
 					};
 
 				if ( window.wgCanEditPolicies ) {
 					editBtnMsg = $.msg( 'forum-specialpage-policies-edit' );
-					modalConfig.vars.primaryBtn = {
-						type: 'button',
+					modalConfig.vars.buttons.push( {
 						vars: {
-							id: 'edit',
-							type: 'button',
 							classes: [ 'normal', 'secondary' ],
-							value: editBtnMsg,
-							title: editBtnMsg
+							value: editBtnMsg
 						}
-					};
+					} );
 				}
 
 				uiModal.create( modalConfig, function( policiesModal ) {
