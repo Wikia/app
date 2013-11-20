@@ -8,20 +8,11 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window', 'wikia.browserDetect' ], f
 		PRIMARY_BUTTON_DATA = 'primary',
 		SECONDARY_BUTTON_DATA = 'secondary',
 		CLOSE_MSG = $.msg( 'close'),
-		primaryBtnConfig = {
+		btnConfig = {
 			type: 'button',
 			vars: {
 				type: 'button',
-				classes: [ 'normal', 'primary' ],
-				data: [ { key: PRIMARY_BUTTON_DATA, value: 1 } ]
-			}
-		},
-		secondBtnConfig = {
-			type: 'button',
-			vars: {
-				type: 'button',
-				classes: [ 'normal', 'secondary' ],
-				data: [ { key: SECONDARY_BUTTON_DATA, value: 1 } ]
+				classes: [ 'normal', 'secondary' ]
 			}
 		},
 		destroyOnClose;
@@ -54,38 +45,35 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window', 'wikia.browserDetect' ], f
 	 * sets flags depending on data- attributes:
 	 * - data-destroy-on-close -- if false value passed the modal will remain in DOM after closing it
 	 *
-	 * @param {String} id
-	 * @param {Object} modalMarkup (optional) jQuery wrapper for existing in DOM modal markup
+	 * @param {UIComponent} UIComponent for modal
+	 * @param {Object} params Component parameters
 	 * @constructor
 	 */
 
-	function Modal( id, uiComponent, params ) {
+	function Modal( uiComponent, params ) {
 		var that = this,
+			id = params.vars.id,
+			buttons = params.vars.buttons,
 			jQuerySelector = '#' + id;
 
 		this.$element = $( jQuerySelector );
+
+		// In case the modal is rendered on the server side skip JS rendering
 		if ( !this.$element.exists() && typeof( uiComponent ) !== 'undefined' ) {
 
-			if ( typeof uiComponent === 'object' && typeof params !== 'undefined' ) {
-				if ( typeof params.vars.primaryBtn === 'object' ) {
-					params.vars.primaryBtn = uiComponent.getSubComponent( 'button' )
-						.render( $.extend( true, primaryBtnConfig, params.vars.primaryBtn ) );
-				} else {
-					delete( params.vars.primaryBtn );
+			// Create buttons
+			buttons.forEach(function( button, index ) {
+				if ( typeof button === 'object' ) {
+					if ( typeof button.classes !== 'undefined' ) {
+						$.merge( button.vars.classes, btnConfig.vars.classes );
+					}
+					buttons[ index ] = uiComponent.getSubComponent( 'button' ).render(
+						$.extend( true, {}, btnConfig, button )
+					);
 				}
-				if ( typeof params.vars.secondBtn === 'object' ) {
-					params.vars.secondBtn = uiComponent.getSubComponent( 'button' )
-						.render( $.extend( true, secondBtnConfig, params.vars.secondBtn ) );
-				} else {
-					delete( params.vars.secondBtn );
-				}
+			});
 
-				params.vars.closeText = CLOSE_MSG;
-				
-				uiComponent = uiComponent.render( params );
-			}
-
-			$( 'body' ).append( uiComponent );
+			$( 'body' ).append( uiComponent.render( params ) );
 			this.$element = $( jQuerySelector );
 		}
 
