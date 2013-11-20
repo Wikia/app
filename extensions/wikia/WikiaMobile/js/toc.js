@@ -35,6 +35,7 @@ function ( sections, window, $, mustache, toc ) {
 				'<a href="#{{id}}">{{name}}{{#firstLevel}}{{#sections.length}}<span class="chevron right"></span>' +
 				'{{/sections.length}}{{/firstLevel}}</a>' +
 				'{{#sections.length}}{{> ol}}{{/sections.length}}</li>{{/.}}',
+			wrap = '<div id="tocWrapper"><div id="scroller">{{> ol}}</div></div>',
 			tocData = toc.getData(
 				sections.list,
 				function ( header, level ) {
@@ -48,10 +49,10 @@ function ( sections, window, $, mustache, toc ) {
 				}
 			);
 
-		return '<div id="tocWrapper"><div id="scroller">' + mustache.render( ol, tocData, {
+		return  mustache.render( wrap, tocData, {
 			ol: ol,
 			lis: lis
-		} ) + '</div></div>';
+		} );
 	}
 
 	/**
