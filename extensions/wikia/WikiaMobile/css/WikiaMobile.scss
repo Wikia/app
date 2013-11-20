@@ -89,9 +89,9 @@
 }
 //end of fluiding thead content
 
-blockquote {
-	border-left: 4px solid $nice-blue;
-	padding-left: 10px;
+blockquote, .quote {
+	border-left: 5px solid $nice-blue;
+	padding-left: 12px;
 	margin: 25px 0;
 }
 

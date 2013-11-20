@@ -23,10 +23,6 @@ function ( sections, window, $, mustache, toc ) {
 		$toc = $( '#wkTOC' ),
 		tocScroll;
 
-	if ( sideMenuCapable ) {
-		$toc.addClass( 'side-menu-capable' );
-	}
-
 	/**
 	 * @desc Renders toc for a given page
 	 * @returns HTML String
@@ -51,7 +47,7 @@ function ( sections, window, $, mustache, toc ) {
 				}
 			);
 
-		return "<div id='tocWrapper'><div id='scroller'>" + mustache.render( ol, tocData, {
+		return '<div id="tocWrapper"><div id="scroller">' + mustache.render( ol, tocData, {
 			ol: ol,
 			lis: lis
 		} ) + '</div></div>';
@@ -181,7 +177,7 @@ function ( sections, window, $, mustache, toc ) {
 
 			$anchors = $ol.find( 'li > a' );
 
-			tocScroll = new IScroll('#tocWrapper', {
+			tocScroll = new window.IScroll('#tocWrapper', {
 				click: true,
 				scrollY: true,
 				scrollX: false
@@ -228,7 +224,7 @@ function ( sections, window, $, mustache, toc ) {
 
 	if ( !sideMenuCapable ) {
 		$ol = $document.find('#mw-content-text')
-			.append( '<div class="in-page-toc">' + renderToc() + '</div>' )
+			.append( '<div class="in-page-toc"><h2>Table of Content</h2>' + renderToc() + '</div>' )
 			.find('.level');
 
 	}
@@ -240,6 +236,7 @@ function ( sections, window, $, mustache, toc ) {
 			} else {
 				onClose();
 			}
+
 		} else {
 			onTap();
 		}

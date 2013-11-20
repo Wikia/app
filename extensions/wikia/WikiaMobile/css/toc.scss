@@ -3,6 +3,7 @@
 $line-height: 40px;
 $toc-background: #F8F8F8;
 $handle-size: 48px;
+$dark-border: #D8D8D8;
 
 //TODO: Remove after 2 weeks :)
 #toc.toc {
@@ -11,7 +12,7 @@ $handle-size: 48px;
 
 #wkTOC {
 	position: fixed;
-	left: 0;
+	left: -260px;
 	top: 0;
 	bottom:0;
 	width: 260px;
@@ -19,17 +20,27 @@ $handle-size: 48px;
 
 	counter-reset: level1, level2, level3;
 
-	-webkit-transition: -webkit-transform .1s ease-out;
-	-webkit-transform: translate(-100%);
-	-moz-transform: translate(-100%);
-	transform: translate(-100%);
+//	-webkit-transition: -webkit-transform .1s ease-out;
+//	-webkit-transform: translate(-100%);
+//	-moz-transform: translate(-100%);
+//	transform: translate(-100%);
 
 	z-index: 101;
 
+//	&.active {
+//		-webkit-transform: translate(0);
+//		-moz-transform: translate(0);
+//		transform: translate(0);
+//	}
+
+	left: -260px;
+
 	&.active {
-		-webkit-transform: translate(0);
-		-moz-transform: translate(0);
-		transform: translate(0);
+		left:0;
+	}
+
+	.no-positionfixed.no-overflow & {
+
 	}
 
 	header {
@@ -82,7 +93,7 @@ $handle-size: 48px;
 }
 
 $level0-padding: 20px;
-$level0-border-left-width: 3px;
+$level0-border-left-width: 5px;
 
 #tocWrapper {
 	overflow: hidden;
@@ -121,16 +132,16 @@ $level0-border-left-width: 3px;
 	> li {
 		counter-increment: level1;
 
-		border-top: 1px solid #D8D8D8;
+		border-top: 1px solid $dark-border;
 
 		&:last-child {
-			border-bottom: 1px solid #D8D8D8;
+			border-bottom: 1px solid $dark-border;
 		}
 
 		> a {
 			border-left: $level0-border-left-width solid $toc-background;
 
-			font-size: 1.15rem;
+			font-size: 1rem;
 			padding-left: $level0-padding - $level0-border-left-width;
 
 			-webkit-transition: border-left .2s;
@@ -147,8 +158,12 @@ $level0-border-left-width: 3px;
 }
 
 .level2 {
+	border-top: 1px solid $dark-border;
+
 	> li {
 		counter-increment: level2;
+
+		font-size: .9rem;
 
 		> a {
 			padding-left: 20px;
@@ -185,6 +200,10 @@ $level0-border-left-width: 3px;
 
 	.open & {
 		display: block;
+	}
+
+	> li:first-child {
+		border-top: none;
 	}
 
 	> li:last-child {
@@ -258,6 +277,10 @@ $level0-border-left-width: 3px;
 	li {
 		border: none;
 
+		&:last-child {
+			border: none;
+		}
+
 		a {
 			border: none;
 		}
@@ -270,5 +293,9 @@ $level0-border-left-width: 3px;
 
 	.chevron {
 		display: none;
+	}
+
+	#scroller {
+		position: static;
 	}
 }
