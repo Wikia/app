@@ -73,9 +73,16 @@ class  WikiaMobilePageHeaderService extends WikiaService {
 				}
 
 				$this->response->setVal(
-					'lastEdited',
+					'lastEditedOn',
+					wfMessage( 'wikiamobile-last-edited-on' )
+						->params( $this->wg->Lang->date( $revision->getTimestamp() ) )
+						->text()
+				);
+
+				$this->response->setVal(
+					'lastEditedBy',
 					wfMessage( 'wikiamobile-last-edited-by' )
-						->params( $userName, $this->wg->Lang->date( $revision->getTimestamp() ) )
+						->params( $userName )
 						->text()
 				);
 			}

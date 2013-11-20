@@ -22,7 +22,8 @@ $messages['en'] = array(
 	'wikiamobile-back' => 'Back',
 	'wikiamobile-hide-section' => 'hide',
 	'wikiamobile-profile' => 'Profile',
-	'wikiamobile-last-edited-by' => 'Last edited by $1 on $2',
+	'wikiamobile-last-edited-on' => 'Last edited on $1',
+	'wikiamobile-last-edited-by' => 'by $1',
 	'wikiamobile-anonymous-edited-by' => 'Anonymous',
 
 	//footer
@@ -135,7 +136,10 @@ $messages['qqq'] = array(
 {{Identical|Free}}',
 	'wikiasmartbanner-view' => 'Message displayed in smart banner promoting on a button that leads to a store.
 {{Identical|View}}',
-	'wikiamobile-toc-header' => 'Message displayed on top of right side bar where table of content is displayed'
+	'wikiamobile-toc-header' => 'Message displayed on top of right side bar where table of content is displayed',
+	'wikiamobile-last-edited-on' => 'In a sentance when was the list time an article got edited. "Last edited on September 3, 2013"',
+	'wikiamobile-last-edited-by' => 'indicates by whom the edit has been made. "by Anonymous"',
+	'wikiamobile-anonymous-edited-by' => 'an unknown user'
 );
 
 /** Адыгэбзэ (Адыгэбзэ)
