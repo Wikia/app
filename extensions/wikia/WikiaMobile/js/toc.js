@@ -1,7 +1,7 @@
 /* globals Features:true */
 //init toc
-require( ['sections', 'wikia.window', 'jquery', 'wikia.mustache', 'wikia.toc', 'JSMessages'],
-function ( sections, window, $, mustache, toc, msg ) {
+require( [ 'sections', 'wikia.window', 'jquery', 'wikia.mustache', 'wikia.toc' ],
+function ( sections, window, $, mustache, toc ) {
 	'use strict';
 
 	//private
@@ -21,7 +21,8 @@ function ( sections, window, $, mustache, toc, msg ) {
 		inited,
 		lineHeight = 45,
 		$toc = $( '#wkTOC' ),
-		tocScroll;
+		tocScroll,
+		inPageToc;
 
 	/**
 	 * @desc Renders toc for a given page
@@ -194,7 +195,7 @@ function ( sections, window, $, mustache, toc, msg ) {
 	 * @desc Used in fallback mode
 	 */
 	function onTap(){
-		$ol[0].scrollIntoView();
+		inPageToc.scrollIntoView();
 	}
 
 	/**
@@ -227,8 +228,10 @@ function ( sections, window, $, mustache, toc, msg ) {
 
 	if ( !sideMenuCapable ) {
 		$ol = $document.find('#mw-content-text')
-			.append( '<div class="in-page-toc"><h2>' + msg('wikiamobile-toc-header') + '</h2>' + renderToc() + '</div>' )
+			.append( '<div class="in-page-toc"><h2>' + $toc.find( 'header' ).text() + '</h2>' + renderToc() + '</div>' )
 			.find('.level');
+
+		inPageToc = document.getElementsByClassName('in-page-toc')[0];
 
 	}
 
