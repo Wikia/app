@@ -2,7 +2,7 @@ define('SuggestionsView', ['SuggestionsViewModel'], function( viewModel ) {
 	'use strict';
 	var ads = $('[id$=\'TOP_RIGHT_BOXAD\']'),
 		keyCodes = [ 13 /*enter*/, 38 /*up*/, 40 /*down*/ ],
-		dropdownPosition = { left: 25, top: -38 },
+		dropdownPosition = { left: 25, top: -38, responsive: 30 },
 		searchInput,
 		dropdown;
 
@@ -180,6 +180,10 @@ define('SuggestionsView', ['SuggestionsViewModel'], function( viewModel ) {
 			absDropPos = dropdown.offset(),
 			top = absDropPos.top - inputPos.top + dropdownPosition.top,
 			left = absDropPos.left - inputPos.left + dropdownPosition.left;
+
+		if ( window.wgOasisResponsive ) {
+			left = left + dropdownPosition.responsive;
+		}
 
 		if ( top !== 0 ) {
 			dropdown.css('margin-top', -top);

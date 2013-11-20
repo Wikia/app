@@ -48,7 +48,7 @@ $image-width: 55px;
 	position: absolute;
 	right: 10px;
 	width: $element-width;
-	z-index: 6;
+	z-index: 1000;
 	a {
 		color: $color-text;
 	}
