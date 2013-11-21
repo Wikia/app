@@ -95,7 +95,7 @@ define( 'wikia.ui.component', [ 'wikia.mustache' ], function uicomponent( mustac
 			var that = this;
 			if ( componentConfig.jsWrapperModule ) {
 				require( [ componentConfig.jsWrapperModule ], function( object ) {
-					callback( object.init( that, params ) );
+					callback( object.init( params, that ) );
 				});
 			} else {
 				callback( that, params );

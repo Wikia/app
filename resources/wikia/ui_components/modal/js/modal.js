@@ -15,7 +15,8 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window', 'wikia.browserDetect' ], f
 				classes: [ 'normal', 'secondary' ]
 			}
 		},
-		destroyOnClose;
+		destroyOnClose,
+		uiComponent;
 
 	/**
 	 * IE 9 doesn't support flex-box. IE-10 and IE-11 has some bugs in implementation:
@@ -50,10 +51,12 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window', 'wikia.browserDetect' ], f
 	 * @constructor
 	 */
 
-	function Modal( uiComponent, params ) {
+	function Modal( params ) {
 		var that = this,
-			id = params.vars.id,
-			buttons = params.vars.buttons,
+			id = typeof params === 'object' ?
+					params.vars.id :
+					params,
+			buttons,
 			jQuerySelector = '#' + id;
 
 		this.$element = $( jQuerySelector );
@@ -61,6 +64,7 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window', 'wikia.browserDetect' ], f
 		// In case the modal is rendered on the server side skip JS rendering
 		if ( !this.$element.exists() && typeof( uiComponent ) !== 'undefined' ) {
 
+			buttons = params.vars.buttons;
 			// Create buttons
 			buttons.forEach(function( button, index ) {
 				if ( typeof button === 'object' ) {
@@ -104,7 +108,7 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window', 'wikia.browserDetect' ], f
 		});
 
 		this.$blackout = getBlackout();
-		this.$content = this.$element.children().eq( 1 );
+		this.$content = this.$element.children( 'section' );
 		this.$close = this.$element.find( '.' + CLOSE_CLASS );
 		this.$primaryButton = this.$element.find( 'footer [data-' + PRIMARY_BUTTON_DATA + '=1]' );
 		this.$secondaryButton = this.$element.find( 'footer [data-' + SECONDARY_BUTTON_DATA + '=1]' );
@@ -244,8 +248,9 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window', 'wikia.browserDetect' ], f
 	/** Public API */
 	
 	return {
-		init: function( id, uiComponent, params ) {
-			return new Modal( id, uiComponent, params );
+		init: function( params, component ) {
+			uiComponent = component;
+			return new Modal( params );
 		}
 	};
 });
