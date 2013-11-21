@@ -3,7 +3,7 @@ require( ['jquery', 'wikia.toc', 'wikia.mustache'], function ( $, toc, mustache 
 
 	/**
 	 * map container identifier as key, true/false values that determine if TOC was generated for that container
-	 * @type object
+	 * @type {Object}
 	 */
 	var containerHasTOC = {},
 		cacheKey = 'TOCAssets'; // Local Storage key
@@ -181,7 +181,7 @@ require( ['jquery', 'wikia.toc', 'wikia.mustache'], function ( $, toc, mustache 
 
 	/**
 	 * Checks if TOC was generated already
-	 * @param $target TOC open link
+	 * @param {Object} $target (jquery collection) TOC open link
 	 * @returns {boolean}
 	 */
 	function hasTOC( $target ) {
@@ -192,8 +192,8 @@ require( ['jquery', 'wikia.toc', 'wikia.mustache'], function ( $, toc, mustache 
 
 	/**
 	 * Sets that toc was generated or not for selected TOC
-	 * @param $target toc open link
-	 * @param boolean value
+	 * @param {Object} $target (jquery collection) TOC open link
+	 * @param {boolean} value
 	 */
 	function setHasTOC( $target, value ) {
 		var containerIdentifier = getContainerIdentifier( $target );
@@ -202,8 +202,8 @@ require( ['jquery', 'wikia.toc', 'wikia.mustache'], function ( $, toc, mustache 
 
 	/**
 	 * Gets TOC container
-	 * @param $target TOC open link
-	 * @returns {jquery collection}
+	 * @param {Object} $target (jquery collection) TOC open link
+	 * @returns {Object} jquery collection
 	 */
 	function getContentContainer( $target ) {
 		// if tabviewer is on site use content from one tab only
@@ -212,7 +212,7 @@ require( ['jquery', 'wikia.toc', 'wikia.mustache'], function ( $, toc, mustache 
 
 	/**
 	 * Get TOC container identifier - used for setting that TOC was already rendered for that container
-	 * @param $target TOC open link
+	 * @param {Object} $target (jquery collection) TOC open link
 	 * @returns {string}
 	 */
 	function getContainerIdentifier( $target ) {
