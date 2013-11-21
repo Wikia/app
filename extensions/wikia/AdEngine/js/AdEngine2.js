@@ -20,7 +20,7 @@ var AdEngine2 = function (log, LazyQueue) {
 
 			log('calling ' + provider.name + '.fillInSlot for ' + slotname, 3, module);
 
-			provider.fillInSlot([slotname]);
+			provider.fillInSlot(slotname);
 		});
 
 		log('launching queue on adslots', 7, module);

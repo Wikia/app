@@ -76,7 +76,7 @@ var AdConfig2 = function (
 		}
 
 		// Prevent passing WIKIA_BAR_BOXAD_1 to Later queue if useSevenOneMedia
-		if (slotname === 'WIKIA_BAR_BOXAD_1' && adProviderGpt.canHandleSlot(slot)) {
+		if (slotname === 'WIKIA_BAR_BOXAD_1' && adProviderGpt.canHandleSlot(slotname)) {
 			return adProviderGpt;
 		}
 
@@ -89,7 +89,7 @@ var AdConfig2 = function (
 		if (highValueSlots[slotname]) {
 			// First ask GamePro (german lang wiki)
 			if (cityLang === 'de') {
-				if (adProviderGamePro.canHandleSlot(slot)) {
+				if (adProviderGamePro.canHandleSlot(slotname)) {
 					return adProviderGamePro;
 				}
 			}
@@ -97,13 +97,13 @@ var AdConfig2 = function (
 
 		// Next Evolve (AU, CA, and NZ traffic)
 		if (country === 'AU' || country === 'CA' || country === 'NZ') {
-			if (adProviderEvolve.canHandleSlot(slot)) {
+			if (adProviderEvolve.canHandleSlot(slotname)) {
 				return adProviderEvolve;
 			}
 		}
 
 		// Non-high-value slots goes to ad provider Later, so GamePro can grab them later
-		if (highValueSlots[slotname] && adProviderGpt.canHandleSlot(slot)) {
+		if (highValueSlots[slotname] && adProviderGpt.canHandleSlot(slotname)) {
 			return adProviderGpt;
 		}
 
@@ -119,7 +119,7 @@ var AdConfig2 = function (
 		}
 
 		// Check if we should apply page length checking for that slot
-		if (provider !== adProviderNull && adLogicPageDimensions.isApplicable(slot)) {
+		if (provider !== adProviderNull && adLogicPageDimensions.isApplicable(slot[0])) {
 			return adLogicPageDimensions.getProxy(provider);
 		}
 

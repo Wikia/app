@@ -33,11 +33,8 @@ var AdProviderLiftium2Dom = function (log, document, slotTweaker, Liftium, scrip
 		'WIKIA_BAR_BOXAD_1':{'size':'300x250'}
 	};
 
-	canHandleSlot = function(slot) {
-		var slotname = slot[0];
-
-		log('canHandleSlot', 5, logGroup);
-		log(slot, 5, logGroup);
+	canHandleSlot = function(slotname) {
+		log(['canHandleSlot', slotname], 5, logGroup);
 
 		if (slotMap[slotname]) {
 			return true;
@@ -46,33 +43,30 @@ var AdProviderLiftium2Dom = function (log, document, slotTweaker, Liftium, scrip
 		return false;
 	};
 
-	// adapted for Evolve + simplified copy of AdDriverDelayedLoader.callLiftium
-	fillInSlot = function(slot) {
-		log(['fillInSlot', slot], 5, logGroup);
-		log(slot, 5, logGroup);
+	fillInSlot = function(slotname) {
+		log(['fillInSlot', slotname], 5, logGroup);
 
 		// TOP_BUTTON after TOP_LEADERBOARD hack:
-		if (slot[0] === 'TOP_BUTTON' || slot[0] === 'TOP_BUTTON_WIDE') {
+		if (slotname === 'TOP_BUTTON' || slotname === 'TOP_BUTTON_WIDE') {
 			log('Tried TOP_BUTTON(_WIDE). Disabled (waiting for leaderboard ads)', 2, logGroup);
 			return;
 		}
-		if (slot[0] === 'TOP_BUTTON.force' || slot[0] === 'TOP_BUTTON_WIDE.force') {
+		if (slotname === 'TOP_BUTTON.force' || slotname === 'TOP_BUTTON_WIDE.force') {
 			log('Forced TOP_BUTTON(_WIDE) call (this means leaderboard is ready and standard)', 2, logGroup);
-			slot[0] = slot[0].replace('.force', '');
+			slotname = slotname.replace('.force', '');
 		}
-		if (slot[0].indexOf('LEADERBOARD') !== -1) {
+		if (slotname.indexOf('LEADERBOARD') !== -1) {
 			log('LEADERBOARD-ish slot handled by Liftium. Running the forced TOP_BUTTON(_WIDE) now', 2, logGroup);
 
 			window.adslots2.push(['TOP_BUTTON_WIDE.force', null, 'Liftium2']);
 		}
 		// END of hack
-		if (!document.getElementById(slot[0])) {
-			log('No such element in DOM: #' + slot[0], 2, logGroup);
+		if (!document.getElementById(slotname)) {
+			log('No such element in DOM: #' + slotname, 2, logGroup);
 			return;
 		}
 
-		var slotname = slot[0],
-			slotsize = slotMap[slotname].size,
+		var slotsize = slotMap[slotname].size,
 			useGw = slotMap[slotname].useGw,
 			adDiv = document.createElement('div'),
 			adIframe = document.createElement('iframe'),

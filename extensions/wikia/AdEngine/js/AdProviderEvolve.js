@@ -174,18 +174,16 @@ var AdProviderEvolve = function (adLogicPageLevelParamsLegacy, scriptWriter, adT
 		window.adslots2.push([slotname, undef, 'Liftium2Dom']);
 	}
 
-	function fillInSlot(slot) {
+	function fillInSlot(slotname) {
 		log('fillInSlot', 5, 'AdProviderEvolve');
-		log(slot, 5, 'AdProviderEvolve');
-
-		var slotname = slot[0];
+		log(slotname, 5, 'AdProviderEvolve');
 
 		slotTrackers[slotname] = adTracker.trackSlot('evolve', slotname);
 		slotTrackers[slotname].init();
 
 		if (slotname === slotForSkin) {
 			scriptWriter.injectScriptByUrl(
-				slot[0],
+				slotname,
 				'http://cdn.triggertag.gorillanation.com/js/triggertag.js',
 				function () {
 					log('(invisible triggertag) ghostwriter done', 5, logGroup);
@@ -224,11 +222,8 @@ var AdProviderEvolve = function (adLogicPageLevelParamsLegacy, scriptWriter, adT
 		}
 	}
 
-	function canHandleSlot(slot) {
-		var slotname = slot[0];
-
-		log('canHandleSlot', 5, 'AdProviderEvolve');
-		log([slotname], 5, 'AdProviderEvolve');
+	function canHandleSlot(slotname) {
+		log(['canHandleSlot', slotname], 5, 'AdProviderEvolve');
 
 		if (slotMap[slotname]) {
 			return true;

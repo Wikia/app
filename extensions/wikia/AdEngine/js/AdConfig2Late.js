@@ -40,7 +40,7 @@ var AdConfig2Late = function (
 			if (slotname === 'PREFOOTER_RIGHT_BOXAD' || slotname === 'LEFT_SKYSCRAPER_3') {
 				return adProviderNull;
 			}
-			if (deProvider.canHandleSlot(slot)) {
+			if (deProvider.canHandleSlot(slotname)) {
 				return deProvider;
 			}
 		}
@@ -51,7 +51,7 @@ var AdConfig2Late = function (
 			tryLiftium = true;
 		}
 
-		if (tryLiftium && adProviderLiftium2Dom.canHandleSlot(slot)) {
+		if (tryLiftium && adProviderLiftium2Dom.canHandleSlot(slotname)) {
 			return adProviderLiftium2Dom;
 		}
 

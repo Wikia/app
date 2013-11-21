@@ -96,7 +96,7 @@ var AdLogicPageDimensions = function (window, document, log, slotTweaker) {
 				log(['Loading ad in slot ' + ad.slotname, ad], 'info', logGroup);
 
 				slotTweaker.show(ad.slotname, true);
-				ad.provider.fillInSlot(ad.slotinfo);
+				ad.provider.fillInSlot(ad.slotname);
 				ad.state = 'shown';
 
 			} else if (ad.state === 'hidden') {
@@ -128,13 +128,12 @@ var AdLogicPageDimensions = function (window, document, log, slotTweaker) {
 	 * @param slotinfo -- the info you pass to fillInSlot
 	 * @param provider -- the original provider for the slot
 	 */
-	function add(slotname, slotinfo, provider) {
-		log(['add', slotname, slotinfo, provider], 'debug', logGroup);
+	function add(slotname, provider) {
+		log(['add', slotname, provider], 'debug', logGroup);
 
 		wrappedAds[slotname] = {
 			slotname: slotname,
 			state: 'none',
-			slotinfo: slotinfo,
 			provider: provider
 		};
 
@@ -192,13 +191,12 @@ var AdLogicPageDimensions = function (window, document, log, slotTweaker) {
 	/**
 	 * Check if window size logic is applicable to the given slot
 	 *
-	 * @param slotinfo
+	 * @param slotname
 	 * @return {boolean}
 	 */
-	function isApplicable(slotinfo) {
-		log(['isApplicable', slotinfo], 'debug', logGroup);
+	function isApplicable(slotname) {
+		log(['isApplicable', slotname], 'debug', logGroup);
 
-		var slotname = slotinfo[0];
 		return !!(slotsOnlyOnLongPages[slotname] || slotsToHideOnMediaQuery[slotname]);
 	}
 
@@ -228,11 +226,10 @@ var AdLogicPageDimensions = function (window, document, log, slotTweaker) {
 			return provider.canHandleSlot(slotinfo);
 		}
 
-		function fillInSlot(slotinfo) {
-			log(['fillInSlot', slotinfo, provider], 'debug', logGroup);
+		function fillInSlot(slotname) {
+			log(['fillInSlot', slotname, provider], 'debug', logGroup);
 
-			var slotname = slotinfo[0];
-			add(slotname, slotinfo, provider);
+			add(slotname, provider);
 		}
 
 		// Init once
