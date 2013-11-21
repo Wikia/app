@@ -13,14 +13,14 @@
  * @extends ve.ui.Dialog
  *
  * @constructor
- * @param {ve.ui.Surface} surface
+ * @param {ve.ui.WindowSet} windowSet Window set this dialog is part of
  * @param {Object} [config] Configuration options
  */
-ve.ui.MWDialog = function VeUiMWDialog( surface, config ) {
+ve.ui.MWDialog = function VeUiMWDialog( windowSet, config ) {
 	// Parent constructor
-	ve.ui.Dialog.call( this, surface, config );
+	ve.ui.Dialog.call( this, windowSet, config );
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.ui.MWDialog, ve.ui.Dialog );
+OO.inheritClass( ve.ui.MWDialog, ve.ui.Dialog );

@@ -20,7 +20,7 @@ ve.dm.MWHieroNode = function VeDmMWHieroNode( length, element ) {
 
 /* Inheritance */
 
-ve.inheritClass( ve.dm.MWHieroNode, ve.dm.MWExtensionNode );
+OO.inheritClass( ve.dm.MWHieroNode, ve.dm.MWExtensionNode );
 
 /* Static members */
 
