@@ -20,7 +20,7 @@ ve.init.mw.WikiaViewPageTarget = function VeInitMwWikiaViewPageTarget() {
 
 /* Inheritance */
 
-ve.inheritClass( ve.init.mw.WikiaViewPageTarget, ve.init.mw.ViewPageTarget );
+OO.inheritClass( ve.init.mw.WikiaViewPageTarget, ve.init.mw.ViewPageTarget );
 
 /* Static Properties */
 ve.init.mw.WikiaViewPageTarget.static.toolbarGroups = [
