@@ -199,8 +199,12 @@ var WikiaFooterApp = {
 			conf.show();
 		},
 
-		buildOveflowItem: function () {
-			return this.el.find('.overflow-menu').css('display','');
+		showOverflowMenu: function () {
+			return this.el.find('.overflow-menu').css('display', '');
+		},
+
+		hideOveflowMenu: function () {
+			return this.el.find('.overflow-menu').css('display', 'none');
 		},
 
 		handleOverflowMenu: function () {
@@ -210,7 +214,7 @@ var WikiaFooterApp = {
 				width = 0,
 				mwidth = 0,
 				fwidth = this.el.width(),
-				liMore = this.buildOveflowItem(),
+				liMore = this.showOverflowMenu(),
 				more = liMore.children('ul'),
 				moreWidth = liMore.outerWidth(true) + 5,
 				rwidth = 0;
@@ -240,7 +244,15 @@ var WikiaFooterApp = {
 					$(v).prependTo(more);
 				}
 			});
-			this.menuGroup.add(liMore,$.proxy(this.onShowMenu,this));
+			this.menuGroup.add(liMore, $.proxy(this.onShowMenu,this));
+		},
+
+		rebuildOverflowMenu: function() {
+			var overflowMenu = this.hideOveflowMenu().appendTo( this.el );
+			$('li.overflow', overflowMenu ).insertBefore( $('.mytools') );
+
+			this.menuGroup.remove( overflowMenu );
+			this.handleOverflowMenu();
 		},
 
 		onShowMenu: function( mgroup, li, ul ) {
