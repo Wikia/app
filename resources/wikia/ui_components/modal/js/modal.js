@@ -109,7 +109,7 @@ define( 'wikia.ui.modal', [
 					);
 				}
 			});
-debugger;
+
 			// extend default modal params with the one passed in constructor call
 			params = $.extend( true, {}, modalDefaults, params );
 
