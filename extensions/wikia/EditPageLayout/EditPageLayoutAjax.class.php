@@ -23,14 +23,14 @@ class EditPageLayoutAjax {
 					if($method == 'preview') {
 						list($html, $catbox, $interlanglinks) = $service->getPreview($wikitext);
 
-						// add page title when not in section edit mode
-						if ($section === '') {
-							$html = '<h1 class="pagetitle">' . $wgTitle->getPrefixedText() .  '</h1>' . $html;
-						}
-
 						if ( F::app()->checkSkin( 'wikiamobile' ) ) {
-							$html = F::app()->renderView( 'WikiaMobileService', 'preview', [ 'content' => $html ] );
+							$html = F::app()->renderView( 'WikiaMobileService', 'preview', [ 'content' => $html, 'section' => $section ] );
 						} else {
+
+							// add page title when not in section edit mode
+							if ($section === '') {
+								$html = '<h1 class="pagetitle">' . $wgTitle->getPrefixedText() .  '</h1>' . $html;
+							}
 
 							// allow extensions to modify preview (BugId:8354) - this hook should only be run on article's content
 							wfRunHooks('OutputPageBeforeHTML', array(&$wgOut, &$html));

@@ -170,58 +170,60 @@ define( 'wikia.preview', [
 				loadPreview( true );
 			}
 
-
-			// adding type dropdown to preview
-			loader({
-				type: loader.MULTI,
-				resources: {
-					mustache: 'extensions/wikia/EditPreview/templates/preview_type_dropdown.mustache'
-				}
-			}).done(function(response) {
-				var $dialog = $('#EditPageDialog'),
-					template = response.mustache[0],
-					tooltipParams = { placement: 'right' },
-					params = {
-						options: [
-							{
-								value: previewTypes.current.name,
-								name: msg('wikia-editor-preview-current-width')
+			if ( window.wgOasisResponsive ) {
+				// adding type dropdown to preview
+				loader({
+					type: loader.MULTI,
+					resources: {
+						mustache: 'extensions/wikia/EditPreview/templates/preview_type_dropdown.mustache'
+					}
+				}).done(function(response) {
+						var $dialog = $('#EditPageDialog'),
+							template = response.mustache[0],
+							tooltipParams = { placement: 'right' },
+							params = {
+								options: [
+									{
+										value: previewTypes.current.name,
+										name: msg('wikia-editor-preview-current-width')
+									},
+									{
+										value: previewTypes.min.name,
+										name: msg('wikia-editor-preview-min-width')
+									},
+									{
+										value: previewTypes.max.name,
+										name: msg('wikia-editor-preview-max-width')
+									},
+									{
+										value: previewTypes.mobile.name,
+										name: msg('wikia-editor-preview-mobile-width')
+									}
+								],
+								toolTipMessage: msg('wikia-editor-preview-type-tooltip')
 							},
-							{
-								value: previewTypes.min.name,
-								name: msg('wikia-editor-preview-min-width')
-							},
-							{
-								value: previewTypes.max.name,
-								name: msg('wikia-editor-preview-max-width')
-							},
-							{
-								value: previewTypes.mobile.name,
-								name: msg('wikia-editor-preview-mobile-width')
-							}
-						],
-						toolTipMessage: msg('wikia-editor-preview-type-tooltip')
-					},
-					html = mustache.render(template, params);
+							html = mustache.render(template, params);
 
-				$(html).insertAfter( $dialog.find('h1:first') );
+						$(html).insertAfter( $dialog.find('h1:first') );
 
-				// fire an event once preview is rendered
-				$(window).trigger('EditPageAfterRenderPreview', [$article]);
+						// fire an event once preview is rendered
+						$(window).trigger('EditPageAfterRenderPreview', [$article]);
 
-				// attach events to type dropdown
-				$('#previewTypeDropdown').on('change', function(event) {
-					switchPreview($(event.target).val());
-				} ).val(currentType);
+						// attach events to type dropdown
+						$('#previewTypeDropdown').on('change', function(event) {
+							switchPreview($(event.target).val());
+						} ).val(currentType);
 
-				if( $dialog[0] && $dialog[0].style && $dialog[0].style.zIndex ) {
-					// on Chrome when using $.css('z-index') / $.css('zIndex') it returns 2e+9
-					// this vanilla solution works better
-					tooltipParams['z-index'] = parseInt( $dialog[0].style.zIndex, 10 );
-				}
+						if( $dialog[0] && $dialog[0].style && $dialog[0].style.zIndex ) {
+							// on Chrome when using $.css('z-index') / $.css('zIndex') it returns 2e+9
+							// this vanilla solution works better
+							tooltipParams['z-index'] = parseInt( $dialog[0].style.zIndex, 10 );
+						}
 
-				$('.tooltip-icon').tooltip( tooltipParams );
-			});
+						$('.tooltip-icon').tooltip( tooltipParams );
+					});
+			}
+
 		});
 	}
 
