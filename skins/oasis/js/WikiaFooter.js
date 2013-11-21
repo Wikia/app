@@ -178,7 +178,6 @@ var WikiaFooterApp = {
 		more: false,
 
 		menuGroup: false,
-		lastOverflowedWidth: 0,
 
 		constructor: function ( el ) {
 			TC.Toolbar.superclass.constructor.call(this);
@@ -252,17 +251,13 @@ var WikiaFooterApp = {
 			var width = $('#WikiaPage').outerWidth(),
 				overflowMenu;
 
-			if ( width !== this.lastOverflowedWidth ) {
-				$('.wikia-bar').width( width );
+			$('.wikia-bar').width( width );
 
-				overflowMenu = this.hideOveflowMenu().appendTo( this.el );
-				$('li.overflow', overflowMenu ).insertBefore( $('.mytools') );
+			overflowMenu = this.hideOveflowMenu().appendTo( this.el );
+			$('li.overflow', overflowMenu ).insertBefore( $('.mytools') );
 
-				this.menuGroup.remove( overflowMenu );
-				this.handleOverflowMenu();
-
-				this.lastOverflowedWidth = width;
-			}
+			this.menuGroup.remove( overflowMenu );
+			this.handleOverflowMenu();
 		},
 
 		onShowMenu: function( mgroup, li, ul ) {
@@ -301,4 +296,11 @@ var WikiaFooterApp = {
 
 $(function(){
 	WikiaFooterApp.init();
+
+	if (window.addEventListener) {
+		WikiaFooterApp.tcToolbar.rebuildOverflowMenuIfNeeded( );
+		window.addEventListener('resize', $.throttle( 100, function() {
+			WikiaFooterApp.tcToolbar.rebuildOverflowMenuIfNeeded( false );
+		} ) );
+	}
 });
