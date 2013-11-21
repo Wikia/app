@@ -87,7 +87,8 @@ define( 'wikia.ui.modal', [
 		var that = this,
 			id = (typeof params === 'object') ? params.vars.id : params, // modal ID
 			jQuerySelector = '#' + id,
-			buttons; // array of objects with params for rendering modal buttons
+			buttons, // array of objects with params for rendering modal buttons
+			blackoutId = BLACKOUT_ID + '_' + id;
 
 		// In case the modal already exists in DOM - skip rendering part
 		if ( $( jQuerySelector ).length === 0 && typeof( uiComponent ) !== 'undefined' ) {
@@ -116,37 +117,25 @@ define( 'wikia.ui.modal', [
 			this.$element = $( jQuerySelector );
 		}
 
-		/**
-		 * Wraps with jQuery blackout div, adds click event handler and returns it
-		 *
-		 * @returns {Object} jQuery wrapped blackout markup
-		 */
-
-		function getBlackout() {
-			var blackoutId = BLACKOUT_ID + '_' + id,
-				$blackout = $( '#' + blackoutId );
-
-			$blackout.click( $.proxy(function( event ) {
-				event.preventDefault();
-
-				if ( this.isShown() && this.isActive() ) {
-					this.trigger( 'close' );
-				}
-			}, that ) );
-
-			return $blackout;
-		}
-
-		this.$element.click(function( event ) {
+		this.$element.click( function( event ) {
 			// when click happens inside the modal, stop the propagation so it won't be handled by the blackout
 			event.stopPropagation();
-		});
+		} );
 
-		this.$blackout = getBlackout();
 		this.$content = this.$element.children( 'section' );
 		this.$close = this.$element.find( '.' + CLOSE_CLASS );
 		this.$primaryButton = this.$element.find( 'footer [data-' + PRIMARY_BUTTON_DATA + '=1]' );
 		this.$secondaryButton = this.$element.find( 'footer [data-' + SECONDARY_BUTTON_DATA + '=1]' );
+		this.$blackout = $( '#' + blackoutId );
+
+		// clicking outside modal triggers the close action
+		this.$blackout.click( $.proxy(function( event ) {
+			event.preventDefault();
+
+			if ( this.isShown() && this.isActive() ) {
+				this.trigger( 'close' );
+			}
+		}, that ) );
 
 		this.$close.click( $.proxy( function( event ) {
 			event.preventDefault();
