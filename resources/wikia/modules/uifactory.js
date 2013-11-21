@@ -156,7 +156,7 @@ define( 'wikia.ui.factory', [
 				};
 
 			if ( data.dependencies ) {
-				Object.keys(data.dependencies).forEach(function( name ) {
+				Object.keys( data.dependencies ).forEach(function( name ) {
 					dependencyObjects[ name ] = createComponent( data.dependencies[ name ] );
 				});
 			}

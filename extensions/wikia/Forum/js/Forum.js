@@ -26,7 +26,7 @@
 					};
 
 				if ( window.wgCanEditPolicies ) {
-					modalConfig.vars.buttons.unshift( {
+					modalConfig.vars.buttons.unshift({
 						vars: {
 							value: $.msg( 'forum-specialpage-policies-edit' ),
 							data: [
@@ -36,7 +36,7 @@
 								}
 							]
 						}
-					} );
+					});
 				}
 
 				uiModal.create( modalConfig, function( policiesModal ) {
@@ -44,7 +44,7 @@
 					policiesModal.bind( 'edit', function( event ) {
 						event.preventDefault();
 						window.location = window.wgPoliciesEditURL;
-					} );
+					});
 
 					policiesModal.show();
 					policiesModal.$content.startThrobbing();
