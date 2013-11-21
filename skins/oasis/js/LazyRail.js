@@ -19,6 +19,8 @@ $(function() {
 					loader({
 						type: loader.CSS,
 						resources: data.css
+					}).done(function() {
+						rail.zid({width: 350, selector: '.module, .wikia-ad', 'gutter': 20});
 					});
 				});
 
@@ -56,7 +58,6 @@ $(function() {
 					LightboxLoader.init();
 					LightboxLoader.loadFromURL();
 				}
-				rail.zid({width: 350, selector: '.module, .wikia-ad', 'gutter': 20});
 			}
 		});
 	}
