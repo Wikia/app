@@ -117,9 +117,9 @@ define( 'wikia.ui.modal', [
 			// Create buttons
 			buttons.forEach(function( button, index ) {
 				if ( typeof button === 'object' ) {
-					if ( typeof button.vars.classes !== 'undefined' ) {
-						$.merge( button.vars.classes, btnConfig.vars.classes );
-					}
+
+					// Extend the button param with the modal default, get the button uicomponent,
+					// and render the params then replace the button params with the rendered html
 					buttons[ index ] = uiComponent.getSubComponent( 'button' ).render(
 						$.extend( true, {}, btnConfig, button )
 					);
