@@ -39,7 +39,7 @@
 					});
 				}
 
-				uiModal.create( modalConfig, function( policiesModal ) {
+				uiModal.createComponent( modalConfig, function( policiesModal ) {
 
 					policiesModal.bind( 'edit', function( event ) {
 						event.preventDefault();
