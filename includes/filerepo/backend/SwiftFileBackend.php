@@ -957,6 +957,8 @@ class SwiftFileBackend extends FileBackendStore {
 	 */
 	protected function logException( Exception $e, $func, $params ) {
 		// Wikia change - begin
+		global $wgFSSwiftServer;
+
 		if ( $e instanceof InvalidResponseException ) { // possibly a stale token
 			$this->closeConnection(); // force a re-connect and re-auth next time
 		}
@@ -967,6 +969,7 @@ class SwiftFileBackend extends FileBackendStore {
 
 		\Wikia\SwiftStorage::log(
 			__CLASS__ . '::exception',
+			"[$wgFSSwiftServer] " .
 			get_class( $e ) . " in '{$func}' (given '" . serialize( $params ) . "')" .
 				( $e instanceof InvalidResponseException
 					? ": {$e->getMessage()}"
