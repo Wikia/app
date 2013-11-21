@@ -636,4 +636,32 @@ class WikiaFileHelper extends Service {
 		return null;
 	}
 
+	/**
+	 * Parse a url for the 'File' namespace and return the File object if it's found. Otherwise return null.
+	 *
+	 * @param $url String the url of a video
+	 * @return File|null
+	 */
+	public static function getWikiaFile( $url ) {
+		$file = null;
+
+		// get the video name
+		$nsFileTranslated = F::app()->wg->ContLang->getNsText( NS_FILE );
+
+		// added $nsFileTransladed to fix bugId:#48874
+		$pattern = '/(File:|'.$nsFileTranslated.':)(.+)$/';
+
+		if ( preg_match( $pattern, $url, $matches ) ) {
+			$file = wfFindFile( $matches[2] );
+			if ( !$file ) { // bugID: 26721
+				$file = wfFindFile( urldecode( $matches[2] ) );
+			}
+		// If the i18n'ed namespace has a special char it might need to be decoded
+		} else if ( preg_match( $pattern, urldecode( $url ), $matches ) ) {
+			$file = wfFindFile( $matches[2] );
+		}
+
+		return $file;
+	}
+
 }

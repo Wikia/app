@@ -36,13 +36,13 @@ ve.dm.WikiaCartItem = function VeDmWikiaCartItem(
 };
 
 /**
- * Is this item temporary (was it uploaded)?
+ * Is this item temporary (was it added via url)?
  *
  * @method
  * @returns {boolean} True if the item is temporary, false otherwise.
  */
 ve.dm.WikiaCartItem.prototype.isTemporary = function () {
-	return !!this.temporaryFileName;
+	return !!this.temporaryFileName || this.provider === 'wikia';
 };
 
 /**

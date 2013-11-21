@@ -176,7 +176,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.onQueryRequestVideoDone = function ( data
 	this.cartModel.addItems( [
 		new ve.dm.WikiaCartItem(
 			data.title,
-			data.temporaryThumbUrl,
+			data.url || data.temporaryThumbUrl,
 			'video',
 			data.temporaryFileName,
 			data.provider,
@@ -354,9 +354,15 @@ ve.ui.WikiaMediaInsertDialog.prototype.convertTemporaryToPermanent = function ( 
 		};
 
 	if ( cartItem.type === 'video' ) {
+		data.mediaType = 'video';
+		if( cartItem.provider === 'wikia' ) {
+			data.title = cartItem.title;
+		} else {
+			data.videoId = cartItem.videoId;
+		}
 		data.provider = cartItem.provider;
-		data.videoId = cartItem.videoId;
 	} else {
+		data.mediaType = 'image';
 		data.license = cartItem.license;
 		data.temporaryFileName = cartItem.temporaryFileName;
 	}
@@ -387,7 +393,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertMedia = function ( cartItems ) {
 	}
 
 	for ( i = 0; i < cartItems.length; i++ ) {
-		if ( cartItems[i].temporaryFileName ) {
+		if ( cartItems[i].isTemporary() ) {
 			promises.push(
 				this.convertTemporaryToPermanent( cartItems[i] ).done(
 					ve.bind( temporaryToPermanentCallback, this, cartItems[i] )
