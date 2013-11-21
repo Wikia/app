@@ -18,9 +18,9 @@ class WikiaMobileService extends WikiaService {
 	 */
 	private $templateObject;
 
-	private $jsBodyPackages = [ 'wikiamobile_js_body_full' ];
+	private $jsBodyPackages = [];
 	private $jsExtensionPackages = [];
-	private $scssPackages = [ 'wikiamobile_scss' ];
+	private $scssPackages = [];
 
 	private $globalVariables = [];
 

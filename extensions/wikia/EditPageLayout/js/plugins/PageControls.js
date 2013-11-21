@@ -204,7 +204,7 @@
 		},
 
 		// send AJAX request
-		ajax: function(method, params, callback) {
+		ajax: function(method, params, callback, skin) {
 			var editor = typeof RTE == 'object'? RTE.getInstance() : false;
 
 			params = $.extend({
@@ -214,6 +214,10 @@
 			}, params);
 
 			var url = window.wgEditPageHandler.replace('$1', encodeURIComponent(window.wgEditedTitle));
+
+			if ( skin ) {
+				url += '&skin=' + encodeURIComponent( skin );
+			}
 
 			return jQuery.post(url, params, function(data) {
 				if (typeof callback == 'function') {
@@ -382,13 +386,9 @@
 				extraData.categories = this.categories.val();
 			}
 
-			if ( skin ) {
-				extraData.skin = skin;
-			}
-
 			this.ajax('preview', extraData, function(data) {
 				callback(data.html + data.catbox + data.interlanglinks, data.summary, data);
-			});
+			}, skin);
 		},
 
 		// render "Preview" modal

@@ -333,6 +333,7 @@ body {
 				overflow-y: scroll;
 				min-height: 320px;
 				padding: 10px;
+				position: relative;
 				.global-notification {
 					// FB#48494 - change nav2 error styling for modal preview
 					width: auto;
@@ -535,5 +536,6 @@ body {
 	display: block;
 	height: 480px;
 	margin: 0 auto;
+	max-height: 100%;
 	width: 320px;
 }

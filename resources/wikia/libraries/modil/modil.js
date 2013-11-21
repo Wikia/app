@@ -270,4 +270,4 @@
 	//expose needed functions to context
 	context.require = require;
 	context.define = define;
-}(this));
+}(window));
