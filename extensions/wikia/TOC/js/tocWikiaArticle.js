@@ -1,6 +1,10 @@
 require( ['jquery', 'wikia.toc', 'wikia.mustache'], function ( $, toc, mustache ) {
 	'use strict';
 
+	/**
+	 * map container identifier as key, true/false values that determine if TOC was generated for that container
+	 * @type object
+	 */
 	var containerHasTOC = {},
 		cacheKey = 'TOCAssets'; // Local Storage key
 
@@ -175,22 +179,42 @@ require( ['jquery', 'wikia.toc', 'wikia.mustache'], function ( $, toc, mustache 
 		showHideTOC( $showLink );
 	}
 
+	/**
+	 * Checks if TOC was generated already
+	 * @param $target TOC open link
+	 * @returns {boolean}
+	 */
 	function hasTOC( $target ) {
 		var containerIdentifier = getContainerIdentifier( $target );
 
 		return typeof containerHasTOC[containerIdentifier] !== 'undefined' && containerHasTOC[containerIdentifier];
 	}
 
+	/**
+	 * Sets that toc was generated or not for selected TOC
+	 * @param $target toc open link
+	 * @param boolean value
+	 */
 	function setHasTOC( $target, value ) {
 		var containerIdentifier = getContainerIdentifier( $target );
 		containerHasTOC[containerIdentifier] = value;
 	}
 
+	/**
+	 * Gets TOC container
+	 * @param $target TOC open link
+	 * @returns {jquery collection}
+	 */
 	function getContentContainer( $target ) {
 		// if tabviewer is on site use content from one tab only
 		return $target.parents( '.tabBody, #mw-content-text' ).first();
 	}
 
+	/**
+	 * Get TOC container identifier - used for setting that TOC was already rendered for that container
+	 * @param $target TOC open link
+	 * @returns {string}
+	 */
 	function getContainerIdentifier( $target ) {
 		return getContentContainer( $target ).data( 'tab-body' ) || 'main';
 	}
