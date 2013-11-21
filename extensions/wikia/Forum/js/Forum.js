@@ -34,8 +34,13 @@
 					editBtnMsg = $.msg( 'forum-specialpage-policies-edit' );
 					modalConfig.vars.buttons.push( {
 						vars: {
-							classes: [ 'normal', 'secondary' ],
-							value: editBtnMsg
+							value: editBtnMsg,
+							data: [
+								{
+									key: 'event',
+									value: 'edit'
+								}
+							]
 						}
 					} );
 				}
