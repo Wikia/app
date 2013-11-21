@@ -217,11 +217,13 @@ define( 'wikia.ui.modal', [
 	 */
 
 	Modal.prototype.close = function() {
-		if( !this.destroyOnClose ) {
-			this.$blackout.removeClass( BLACKOUT_VISIBLE_CLASS );
-		} else {
-			this.$blackout.remove();
-		}
+		this.trigger( 'beforeClose').then( $.proxy( function() {
+			if( !this.destroyOnClose ) {
+				this.$blackout.removeClass( BLACKOUT_VISIBLE_CLASS );
+			} else {
+				this.$blackout.remove();
+			}
+		}, this ) );
 	};
 
 	/**
