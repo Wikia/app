@@ -86,13 +86,13 @@ define( 'wikia.ui.modal', [
 	function Modal( params ) {
 		var that = this,
 			id = (typeof params === 'object') ? params.vars.id : params, // modal ID
-			buttons = [], // array of objects with params for rendering modal buttons
-			jQuerySelector = '#' + id;
+			jQuerySelector = '#' + id,
+			buttons; // array of objects with params for rendering modal buttons
 
 		// In case the modal already exists in DOM - skip rendering part
 		if ( $( jQuerySelector ).length === 0 && typeof( uiComponent ) !== 'undefined' ) {
 
-			$.merge( buttons, params.vars.buttons);
+			buttons = params.vars.buttons;
 
 			// Create buttons
 			buttons.forEach(function( button, index ) {
