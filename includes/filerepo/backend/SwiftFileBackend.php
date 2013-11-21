@@ -981,6 +981,8 @@ class SwiftFileBackend extends FileBackendStore {
 					: ""
 				)
 		);
+
+		\Wikia::logBacktrace(get_class($e) . " [$wgFSSwiftServer]");
 		// Wikia change - end
 	}
 	
