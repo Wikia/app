@@ -211,10 +211,17 @@ define( 'wikia.ui.modal', [
 	Modal.prototype.trigger = function ( eventName ) {
 		var i;
 		if ( typeof( this.listeners[ eventName ] ) !== 'undefined' ) {
-			for (i = 0 ; i < this.listeners[ eventName ].length ; i++ ) {
+			for ( i = 0 ; i < this.listeners[ eventName ].length ; i++ ) {
 				this.listeners[ eventName ][ i ]();
 			}
 		}
+	};
+
+	Modal.prototype.bind = function( eventName, callback ) {
+		if ( typeof( this.listeners[ eventName ] ) === 'undefined' ) {
+			this.listeners[ eventName ] = [];
+		}
+		this.listeners[ eventName ].push( callback );
 	};
 
 	/**
