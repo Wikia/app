@@ -637,13 +637,16 @@ class WikiaFileHelper extends Service {
 	}
 
 	/**
-	 * Parse a url for the 'File' namespace and return the File object if it's found. Otherwise return null.
+	 * Parse a url for 'File' (or i18n'ed namespace) and send back the File object if it's found.
+	 * If the url has 'File' but the file name is not found in our system, send back an error message.
+	 * It could also just be a 3rd party URL (like youtube) in which case a generic status object is returned.
 	 *
-	 * @param $url String the url of a video
-	 * @return File|null
+	 * @param $url String The URL of a video
+	 * @return Status
 	 */
 	public static function getWikiaFile( $url ) {
 		$file = null;
+		$hasMatch = false;
 
 		// get the video name
 		$nsFileTranslated = F::app()->wg->ContLang->getNsText( NS_FILE );
@@ -652,16 +655,25 @@ class WikiaFileHelper extends Service {
 		$pattern = '/(File:|'.$nsFileTranslated.':)(.+)$/';
 
 		if ( preg_match( $pattern, $url, $matches ) ) {
+			$hasMatch = true;
 			$file = wfFindFile( $matches[2] );
 			if ( !$file ) { // bugID: 26721
 				$file = wfFindFile( urldecode( $matches[2] ) );
 			}
 		// If the i18n'ed namespace has a special char it might need to be decoded
 		} else if ( preg_match( $pattern, urldecode( $url ), $matches ) ) {
+			$hasMatch = true;
 			$file = wfFindFile( $matches[2] );
 		}
 
-		return $file;
+		$status = Status::newGood();
+		if( !empty( $file ) ) {
+			$status->setResult( true, $file );
+		} else if( $hasMatch ) {
+			$status->warning( 'The supplied video does not exist' );
+		}
+
+		return $status;
 	}
 
 }
