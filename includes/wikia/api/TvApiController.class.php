@@ -147,7 +147,18 @@ class TvApiController extends WikiaApiController {
 		if (! $searchConfig->getQuery()->hasTerms() ) {
 			throw new InvalidParameterApiException( 'episodeName' );
 		}
-		//Standard Wikia API response with pagination values
+
+		 if(isset($_SERVER['HTTP_X_ORIGINAL_HOST']))
+		 {
+			 $host = $_SERVER['HTTP_X_ORIGINAL_HOST'];
+
+		 }
+		$host = 'sandbox-s1.www.wikia.com';
+		if(!preg_match('/^sandbox-[a-z0-9]{0,3}\.www\.wikia\.com$/',$host))
+		{
+			$host = null;
+		}
+
 		$responseValues = (new Factory)->getFromConfig( $searchConfig )->searchAsApi( [ 'pageid' => 'articleId', 'title', 'url', 'score' ], true );
 		//post processing
 		if ( !empty( $responseValues[ 'items' ] ) ) {
