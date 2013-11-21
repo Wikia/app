@@ -208,12 +208,12 @@
 			var editor = typeof RTE == 'object'? RTE.getInstance() : false;
 
 			params = $.extend({
-				page: wgEditPageClass ? wgEditPageClass:"",
+				page: window.wgEditPageClass ? window.wgEditPageClass:"",
 				method: method,
 				mode: editor.mode
 			}, params);
 
-			var url = window.wgEditPageHandler.replace('$1', encodeURIComponent(window.wgEditedTitle));
+			var url = window.wgEditPageHandler.replace( '$1', encodeURIComponent( window.wgEditedTitle ) );
 
 			if ( skin ) {
 				url += '&skin=' + encodeURIComponent( skin );
@@ -253,7 +253,8 @@
 				attr('href', wgArticlePath.replace('$1', window.wgEditedTitle)).
 				attr('title', $.htmlentities(window.wgEditedTitle)).
 				html(window.wgEditedTitle);
-				$('#EditPageHeader .hiddenTitle').show();
+
+			$('#EditPageHeader' ).find('.hiddenTitle').show();
 		},
 
 		// return true if any of the required fields has no value
@@ -386,8 +387,8 @@
 				extraData.categories = this.categories.val();
 			}
 
-			this.ajax('preview', extraData, function(data) {
-				callback(data.html + data.catbox + data.interlanglinks, data.summary, data);
+			this.ajax('preview', extraData, function( data ) {
+				callback( data );
 			}, skin);
 		},
 
@@ -458,9 +459,9 @@
 					onPublishButton: function() {
 						$('#wpSave').click();
 					},
-					getPreviewContent: function(callback, skin) {
-						self.getContent(function(content) {
-							self.getPreviewContent(content, extraData, callback, skin);
+					getPreviewContent: function( callback, skin ) {
+						self.getContent(function( content ) {
+							self.getPreviewContent( content, extraData, callback, skin );
 						});
 					}
 				};
