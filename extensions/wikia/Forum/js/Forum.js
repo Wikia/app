@@ -32,7 +32,7 @@
 
 				if ( window.wgCanEditPolicies ) {
 					editBtnMsg = $.msg( 'forum-specialpage-policies-edit' );
-					modalConfig.vars.buttons.push( {
+					modalConfig.vars.buttons.unshift( {
 						vars: {
 							value: editBtnMsg,
 							data: [
