@@ -31,7 +31,6 @@
 		list-style: none;
 		.feature {
 			@include clearfix;
-			/*border-top: 1px solid $color-page-border;*/
 			padding-bottom: 30px;
 			h3 {
 				border-bottom: 1px solid $color-page-border;
@@ -83,10 +82,9 @@
 			}
 
 			.details {
-				margin: 0 315px 0 0px;
+				margin-right: 315px;
 			}
 			.actions {
-				clear: left;
 				float: left;
 				margin-top: 10px;
 				.slider {
@@ -95,7 +93,7 @@
 					background-color: #eeeded;
 					border: 1px solid #a6a6a6;
 					cursor: pointer;
-					display: inline-block;
+					display: block;
 					float: left;
 					height: 26px;
 					position: relative;
