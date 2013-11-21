@@ -51,13 +51,8 @@ class DataMartService extends Service {
 			->WHERE('period_id')->EQUAL_TO($periodId)
 				->AND_('wiki_id')->EQUAL_TO($wikiId)
 				->AND_('time_id')->BETWEEN($startDate, $endDate)
-			->run($db, function ($result) {
-				$pageViews = [];
-				while ($row = $result->fetchObject($result)) {
-					$pageViews[$row->date] = $row->cnt;
-				}
-
-				return $pageViews;
+			->run($db, function (&$pageViews, $row) {
+				$pageViews[$row->date] = $row->cnt;
 			});
 
 		wfProfileOut(__METHOD__);
@@ -100,15 +95,9 @@ class DataMartService extends Service {
 			->WHERE('period_id')->EQUAL_TO($periodId)
 				->AND_('wiki_id')->IN($wikis)
 				->AND_('time_id')->BETWEEN($startDate, $endDate)
-			->run($db, function ($result) {
-				$pageViews = [];
-
-				while ($row = $result->fetchObject()) {
-					$pageviews[$row->wiki_id][$row->date] = $row->cnt;
-					$pageviews[$row->wiki_id]['SUM'] += $row->cnt;
-				}
-
-				return $pageViews;
+			->run($db, function (&$pageViews, $row) {
+				$pageViews[$row->wiki_id][$row->date] = $row->cnt;
+				$pageViews[$row->wiki_id]['SUM'] += $row->cnt;
 			});
 
 		wfProfileOut(__METHOD__);
@@ -139,14 +128,8 @@ class DataMartService extends Service {
 			->FROM('rollup_wiki_pageviews')
 			->WHERE('period_id')->EQUAL_TO($periodId)
 				->AND_('time_id')->IN($dates)
-			->run($db, function($result) {
-				$pageViews = [];
-
-				while ($row = $result->fetchObject()) {
-					$pageViews[$row->time_id] = intval($row->cnt);
-				}
-
-				return $pageViews;
+			->run($db, function(&$pageViews, $row) {
+				$pageViews[$row->time_id] = intval($row->cnt);
 			});
 
 		wfProfileOut(__METHOD__);
@@ -248,14 +231,8 @@ class DataMartService extends Service {
 			$sql->AND_('r.hub_name')->EQUAL_TO($hub);
 		}
 
-		$topWikis = $sql->run($db, function($result) {
-			$topWikis = [];
-
-			while ($row = $result->fetchObject()) {
-				$topWikis[$row->id] = $row->pageviews;
-			}
-
-			return $topWikis;
+		$topWikis = $sql->run($db, function(&$topWikis, $row) {
+			$topWikis[$row->id] = $row->pageviews;
 		});
 
 		wfProfileOut(__METHOD__);
@@ -286,14 +263,8 @@ class DataMartService extends Service {
 			->GROUP_BY('id')
 			->ORDER_BY(['totalViews', 'desc'])
 			->LIMIT(200)
-			->run($db, function($result) {
-				$topWikis = [];
-
-				while ($row = $result->fetchObject()) {
-					$topWikis[$row->id] = $row->totalViews;
-				}
-
-				return $topWikis;
+			->run($db, function(&$topWikis, $row) {
+				$topWikis[$row->id] = $row->totalViews;
 			});
 
 		$topWikis = array_slice($topWikis, 0, $limit, true);
@@ -341,19 +312,13 @@ class DataMartService extends Service {
 				->AND_('wiki_id')->EQUAL_TO($wikiId)
 				->AND_('time_id')->BETWEEN($startDate, $endDate)
 			->GROUP_BY('date', 'wiki_id')
-			->run($db, function($result) {
-				$events = [];
-
-				while ($row = $result->fetchObject()) {
-					$events[$row->date] = array(
-						'creates' => $row->creates,
-						'edits' => $row->creates + $row->edits,
-						'deletes' => $row->deletes,
-						'undeletes' => $row->undeletes,
-					);
-				}
-
-				return $events;
+			->run($db, function(&$events, $row) {
+				$events[$row->date] = array(
+					'creates' => $row->creates,
+					'edits' => $row->creates + $row->edits,
+					'deletes' => $row->deletes,
+					'undeletes' => $row->undeletes,
+				);
 			});
 
 		// get data depending on eventType
@@ -416,19 +381,13 @@ class DataMartService extends Service {
 						->AND_('time_id')->EQUAL_TO($rollupDate)
 						->AND_('user_id')->IN($userIds)
 					->GROUP_BY('user_id')
-					->run($db, function($result) {
-						$events = [];
-
-						while ($row = $result->fetchRow()) {
-							$events[$row['user_id']] = [
-								'creates' => $row['creates'],
-								'edits' => $row['creates'] + $row['edits'],
-								'deletes' => $row['deletes'],
-								'undeletes' => $row['undeletes'],
-							];
-						}
-
-						return $events;
+					->run($db, function(&$events, $row) {
+						$events[$row['user_id']] = [
+							'creates' => $row['creates'],
+							'edits' => $row['creates'] + $row['edits'],
+							'deletes' => $row['deletes'],
+							'undeletes' => $row['undeletes'],
+						];
 					});
 
 				return $events;
@@ -552,17 +511,11 @@ class DataMartService extends Service {
 				$sql->AND_('article_id')->IN($articleIds);
 			}
 
-			$topArticles = $sql->run($db, function($result) {
-				$topArticles = [];
-
-				while ($row = $result->fetchObject()) {
-					$topArticles[$row->article_id] = array(
-						'namespace_id' => $row->namespace_id,
-						'pageviews' => $row->pv
-					);
-				}
-
-				return $topArticles;
+			$topArticles = $sql->run($db, function(&$topArticles, $row) {
+				$topArticles[$row->article_id] = [
+					'namespace_id' => $row->namespace_id,
+					'pageviews' => $row->pv
+				];
 			});
 
 			wfProfileOut( __CLASS__ . '::TopArticlesQuery' );
@@ -660,14 +613,8 @@ class DataMartService extends Service {
 			->FROM('dimension_top_wikis')
 			->ORDER_BY('rank')
 			->LIMIT(200)
-			->run(wfGetDB( DB_SLAVE, [], $app->wg->DWStatsDB ), function($result) {
-				$wikis = [];
-
-				while ($row = $result->fetchObject()) {
-					$wikis[] = intval($row->wiki_id);
-				}
-
-				return $wikis;
+			->run(wfGetDB( DB_SLAVE, [], $app->wg->DWStatsDB ), function(&$wikis, $row) {
+				$wikis[] = intval($row->wiki_id);
 			});
 
 		return $wikis;

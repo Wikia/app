@@ -836,12 +836,13 @@ class SQL {
 	 * run this query, fetching from/setting to the cache if there is a TTL defined
 	 *
 	 * @param mixed $db database to query against
-	 * @param callable $callback callback to process the raw database result
+	 * @param callable $recordProcessor callback to process a row in the result set
 	 * @param string|null $cacheKey optionally forced cache key. If not provided, one will be generated
 	 * @param mixed|array $defaultReturn default return value if we're unable to query and there is no cache value
+	 * @param bool $autoIterate whether or not this class should iterate over the results for us, or if callable will handle it
 	 * @return mixed|bool results returned by $callback processing of the db query result, or false on error
 	 */
-	public function run($db, callable $callback, $cacheKey=null, $defaultReturn=[]) {
+	public function run($db, callable $recordProcessor, $cacheKey=null, $defaultReturn=[], $autoIterate=true) {
 		$breakDown = $this->build();
 		$cache = $this->getCache();
 		$cacheKey = isset($cacheKey) ? $cacheKey : $this->getCacheKey($breakDown);
@@ -852,7 +853,7 @@ class SQL {
 		}
 
 		if ($result === false) {
-			$result = $this->query($db, $breakDown, $callback);
+			$result = $this->query($db, $breakDown, $recordProcessor, $autoIterate);
 
 			if ($this->cacheEnabled() && $result) {
 				$cache->set($cacheKey, $result, $this->cacheTtl);
@@ -860,6 +861,10 @@ class SQL {
 		}
 
 		return $result === false ? $defaultReturn : $result;
+	}
+
+	public function runNoIterate($db, callable $callback, $cacheKey=null, $defaultReturn=[]) {
+		return $this->run($db, $callback, $cacheKey, $defaultReturn, false);
 	}
 
 	protected function getCacheKey(Breakdown $breakDown) {
@@ -1343,20 +1348,45 @@ class SQL {
 	}
 
 	/**
-	 * assumes $db has a method named "query", like mysqli
+	 * assumes $db has a method named "query", like mysqli or PDO
 	 *
 	 * @param $db
 	 * @param BreakDown $breakDown
 	 * @param callable $callback
+	 * @param bool $autoIterate whether we should wrap the logic of iterating through db results for the callback
 	 * @throws \InvalidArgumentException
 	 */
-	protected function query($db, Breakdown $breakDown, callable $callback) {
+	protected function query($db, Breakdown $breakDown, callable $callback, $autoIterate) {
 		if (!method_exists($db, 'query')) {
 			throw new \InvalidArgumentException;
 		}
 
 		$sql = $this->injectParams($db, $breakDown);
-		return $callback($db->query($sql));
+		$result = $db->query($sql);
+
+		if ($autoIterate) {
+			$data = $this->autoIterate($result, $callback);
+		} else {
+			$data = $callback($result);
+		}
+
+		return $data;
+	}
+
+	/**
+	 * iterates over a result object and calls $callback for each row in the result
+	 * @param \PDOStatement|mixed $result result object with a fetchObject() method
+	 * @param callable $callback
+	 * @return array
+	 */
+	protected function autoIterate($result, $callback) {
+		$data = [];
+
+		while ($row = $result->fetchObject()) {
+			$callback($data, $row);
+		}
+
+		return $data;
 	}
 
 	public function injectParams($db, Breakdown $breakDown) {

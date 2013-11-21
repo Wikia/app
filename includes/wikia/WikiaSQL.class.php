@@ -36,12 +36,12 @@ class WikiaSQL extends FluentSql\SQL {
 		return $cache->generateKey($breakDown, $this->useSharedMemKey);
 	}
 
-	protected function query($db, sql\Breakdown $breakDown, callable $callback) {
+	protected function query($db, sql\Breakdown $breakDown, callable $callback, $autoIterate) {
 		if ($this->skipIfCondition) {
 			return false;
 		}
 
-		return parent::query($db, $breakDown, $callback);
+		return parent::query($db, $breakDown, $callback, $autoIterate);
 	}
 
 	/**
