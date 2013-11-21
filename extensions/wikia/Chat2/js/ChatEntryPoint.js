@@ -185,39 +185,39 @@ var ChatEntryPoint = {
 
 		require( [ 'wikia.ui.factory' ], function( uiFactory ) {
 			uiFactory.init( 'modal' ).then( function( uiModal ) {
-				var modalId = 'JoinChatModal',
-					joinModal = uiModal.render( {
-					type: 'default',
-					vars: {
-						id: modalId,
-						size: 'small',
-						content: html,
-						title: $.msg( 'chat-start-a-chat' ),
-						closeText: $.msg( 'close' )
-					}
-				} );
-
-				require( [ 'wikia.ui.modal' ], function( modal ) {
-					ChatEntryPoint.chatLaunchModal = modal.init( modalId, joinModal );
-					ChatEntryPoint.chatLaunchModal.show();
-					$( '#modal-join-chat-button' ).bind( 'click', ChatEntryPoint.launchChatWindow );
-					ChatEntryPoint.chatLaunchModal.onClose = function() {
-						ChatEntryPoint.reloadPage();
+				var joinModalConfig =  {
+						vars: {
+							id: 'JoinChatModal',
+							size: 'small',
+							content: html,
+							title: $.msg( 'chat-start-a-chat' ),
+						}
 					};
-				} );
-			} );
-		} );
+				uiModal.createComponent( joinModalConfig, function ( joinModal ) {
+					joinModal.$content
+						.find( '#modal-join-chat-button' )
+						.bind( 'click', function ( event ) {
+							ChatEntryPoint.launchChatWindow( event, joinModal);
+						});
+					joinModal.bind( 'close', function() {
+						ChatEntryPoint.reloadPage();
+					});
+					joinModal.show();
+
+				});
+			});
+		});
 	},
 
 	reloadPage: function() {
 		Wikia.Querystring().addCb().goTo();
 	},
 
-	launchChatWindow: function(event) {
-		var pageLink = $('#modal-join-chat-button').data('chat-page');
-		window.open(pageLink, 'wikiachat', window.wgWikiaChatWindowFeatures);
-		if(ChatEntryPoint.chatLaunchModal) {
-			ChatEntryPoint.chatLaunchModal.close();
+	launchChatWindow: function( event, chatLaunchModal ) {
+		var pageLink = $( '#modal-join-chat-button').data('chat-page' );
+		window.open( pageLink, 'wikiachat', window.wgWikiaChatWindowFeatures );
+		if( chatLaunchModal ) {
+			chatLaunchModal.close();
 		}
 		ChatEntryPoint.reloadPage();
 	}
