@@ -25,16 +25,16 @@ class WikiFeaturesHelper extends WikiaModel {
 	);
 
 	public static $feedbackAreaIDs = array (
-		'wgEnableAjaxPollExt' => 280,			// Polls
-		'wgShowTopListsInCreatePage' => 199,	// Top 10 Lists
-		'wgEnableAchievementsExt' => 247,		// Achievements
-		'wgEnableBlogArticles' => 281,			// Blogs
-		'wgEnableArticleCommentsExt' => 200,	// Article Comments
-		'wgEnableCategoryExhibitionExt' => 201,	// Category Exhibition
-		'wgEnableChat' => 258,					// Chat
-		'wgEnableWallExt' => 258,				// Wall
-		'wgEnableForumExt' => 259,				// Forum
-		'wgEnableVisualEditorExt' => 259,				// Forum
+		'wgEnableAjaxPollExt' => 280,
+		'wgShowTopListsInCreatePage' => 199,
+		'wgEnableAchievementsExt' => 247,
+		'wgEnableBlogArticles' => 281,
+		'wgEnableArticleCommentsExt' => 200,
+		'wgEnableCategoryExhibitionExt' => 201,
+		'wgEnableChat' => 258,
+		'wgEnableWallExt' => 258,
+		'wgEnableForumExt' => 259,
+		'wgEnableVisualEditorExt' => 259
 	);
 
 	// no need to add feature to $release_date if not require "new" flag
