@@ -654,15 +654,8 @@ class WikiaFileHelper extends Service {
 		// added $nsFileTransladed to fix bugId:#48874
 		$pattern = '/(File:|'.$nsFileTranslated.':)(.+)$/';
 
-		if ( preg_match( $pattern, $url, $matches ) ) {
-			$hasMatch = true;
-			$file = wfFindFile( $matches[2] );
-			if ( !$file ) { // bugID: 26721
-				$file = wfFindFile( urldecode( $matches[2] ) );
-			}
-		// If the i18n'ed namespace has a special char it might need to be decoded
-		} else if ( preg_match( $pattern, urldecode( $url ), $matches ) ) {
-			$hasMatch = true;
+		$hasMatch = preg_match( $pattern, urldecode( $url ), $matches );
+		if ( $hasMatch ) {
 			$file = wfFindFile( $matches[2] );
 		}
 
