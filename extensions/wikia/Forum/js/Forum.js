@@ -42,7 +42,7 @@
 				uiModal.create( modalConfig, function( policiesModal ) {
 
 					policiesModal.bind( 'edit', function( event ) {
-						//event.preventDefault();
+						event.preventDefault();
 						window.location = window.wgPoliciesEditURL;
 					} );
 

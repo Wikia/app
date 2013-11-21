@@ -129,7 +129,7 @@ define( 'wikia.ui.modal', [
 		this.$element.find( 'footer button' ).click( $.proxy( function( event ) {
 			var modalEventName = $( event.target ).data( 'event' );
 			if ( modalEventName ) {
-				this.trigger( modalEventName );
+				this.trigger( modalEventName, event );
 			}
 		}, that ) );
 
@@ -142,13 +142,13 @@ define( 'wikia.ui.modal', [
 			event.preventDefault();
 
 			if ( this.isShown() && this.isActive() ) {
-				this.trigger( 'close' );
+				this.trigger( 'close', event );
 			}
 		}, that ) );
 
 		this.$close.click( $.proxy( function( event ) {
 			event.preventDefault();
-			this.trigger( 'close' );
+			this.trigger( 'close', event );
 		}, that ) );
 
 		// allow to override the default value
@@ -207,11 +207,12 @@ define( 'wikia.ui.modal', [
 	};
 
 	Modal.prototype.trigger = function ( eventName ) {
-		var i;
+
+		var i, args =  [].slice.call( arguments, 1 );
 		if ( typeof( this.listeners[ eventName ] ) !== 'undefined' ) {
 			for ( i = 0 ; i < this.listeners[ eventName ].length ; i++ ) {
 				// @TODO - add support for promise
-				this.listeners[ eventName ][ i ]();
+				this.listeners[ eventName ][ i ].apply(undefined, args );
 			}
 		}
 	};
