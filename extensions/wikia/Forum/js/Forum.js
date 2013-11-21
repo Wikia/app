@@ -4,13 +4,11 @@
 		require( [ 'wikia.ui.factory' ], function( uiFactory ) {
 			uiFactory.init( [ 'modal' ] ).then( function( uiModal ) {
 				var modalConfig = {
-						type: 'default',
 						vars: {
 							id: 'ForumPoliciesModal',
 							size: 'medium',
 							content: '<div class="ForumPolicies"><div class="WikiaArticle"></div></div>',
 							title: $.msg( 'forum-specialpage-policies' ),
-							closeText: $.msg( 'close' ),
 							buttons: [
 								{
 									vars: {

@@ -19,7 +19,10 @@ define( 'wikia.ui.modal', [
 
 		// default modal rendering params
 		modalDefaults = {
-			closeText: $.msg( 'close' )
+			type: 'default',
+			vars: {
+				closeText: $.msg( 'close' )
+			}
 		},
 		// default modal buttons rendering params
 		btnConfig = {
@@ -106,9 +109,9 @@ define( 'wikia.ui.modal', [
 					);
 				}
 			});
-
+debugger;
 			// extend default modal params with the one passed in constructor call
-			params = $.extend( modalDefaults, params );
+			params = $.extend( true, {}, modalDefaults, params );
 
 			// render modal markup and append to DOM
 			$( 'body' ).append( uiComponent.render( params ) );
