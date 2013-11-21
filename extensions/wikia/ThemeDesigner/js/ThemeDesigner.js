@@ -1,3 +1,4 @@
+(function( window ) {
 'use strict';
 var ThemeDesigner = {
 	slideByDefaultWidth: 760,
@@ -1065,7 +1066,10 @@ var ThemeDesigner = {
 	}
 
 };
+	window.ThemeDesigner = ThemeDesigner;
+})( window );
 
 $(function() {
-	ThemeDesigner.init();
+	'use strict';
+	window.ThemeDesigner.init();
 });
