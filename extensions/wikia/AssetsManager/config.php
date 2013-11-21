@@ -1389,6 +1389,7 @@ $config['file_page_tabbed_css'] = array(
 /* LyricFind */
 $config['LyricsFindTracking'] = array(
 	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis', 'wikiamobile', 'monobook'],
 	'assets' => array(
 		'//extensions/3rdparty/LyricWiki/LyricFind/js/modules/LyricFind.Tracker.js',
 		'//extensions/3rdparty/LyricWiki/LyricFind/js/tracking.js',
