@@ -30,9 +30,6 @@ define( 'wikia.ui.modal', [
 			}
 		},
 		
-		// TODO: need description !!!
-		destroyOnClose,
-		
 		// reference to UI component instance
 		uiComponent;
 
@@ -164,9 +161,17 @@ define( 'wikia.ui.modal', [
 			this.$element.trigger( 'onSecondaryBtnClick', [ event ] );
 		}, that ) );
 
-		destroyOnClose = this.$element.data( 'destroy-on-close' );
-		destroyOnClose = ( typeof( destroyOnClose ) === 'undefined' ) ? true : destroyOnClose;
+		// allow to override the default value
+		if ( ( typeof( this.$element.data( 'destroy-on-close' ) ) !== 'undefined' ) ) {
+			this.destroyOnClose = this.$element.data( 'destroy-on-close' );
+		}
 	}
+
+	/**
+	 * When set to true (default), destroys the modal when close action is triggered
+	 * @type {boolean}
+	 */
+	Modal.prototype.destroyOnClose = true;
 
 	/**
 	 * Shows modal; adds shown class to modal and visible class to blackout
@@ -198,7 +203,7 @@ define( 'wikia.ui.modal', [
 	 */
 
 	Modal.prototype.close = function() {
-		if( !destroyOnClose ) {
+		if( !this.destroyOnClose ) {
 			this.$blackout.removeClass( BLACKOUT_VISIBLE_CLASS );
 		} else {
 			this.$blackout.remove();
