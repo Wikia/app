@@ -28,6 +28,7 @@ class ApiTempUpload extends ApiBase {
 	}
 
 	private function executePermanent() {
+		$this->desiredName = wfStripIllegalFilenameChars( $this->mParams['desiredName'] );
 		if ( $this->mParams['mediaType'] === 'video' ) {
 			$this->executePermanentVideo();
 		} else {
@@ -36,8 +37,6 @@ class ApiTempUpload extends ApiBase {
 	}
 
 	private function executePermanentVideo() {
-		$this->mParams['desiredName'] = wfStripIllegalFilenameChars( $this->mParams['desiredName'] );
-
 		if ( empty( $this->mParams['provider'] ) ) {
 			$this->dieUsageMsg( 'The provider parameter must be set' );
 		}
@@ -70,7 +69,7 @@ class ApiTempUpload extends ApiBase {
 				$uploader = new VideoFileUploader();
 
 				$title = $uploader->getUniqueTitle(
-					$uploader->sanitizeTitle( $this->mParams['desiredName'] )
+					$uploader->sanitizeTitle( $this->desiredName )
 				);
 				$uploader->setProvider( $this->mParams['provider'] );
 				$uploader->setVideoId( $this->mParams['videoId'] );
@@ -100,7 +99,7 @@ class ApiTempUpload extends ApiBase {
 		if ( count ( $duplicates ) > 0 ) {
 			$name = $duplicates[0]->getTitle()->getText();
 		} else {
-			$title = $this->getUniqueTitle( $this->mParams['desiredName'] );
+			$title = $this->getUniqueTitle( $this->desiredName );
 			$file = new LocalFile( $title, RepoGroup::singleton()->getLocalRepo() );
 			$pageText = '';
 			if ( isset( $this->mParams['license'] ) ) {
