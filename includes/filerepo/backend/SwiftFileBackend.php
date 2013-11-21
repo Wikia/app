@@ -835,7 +835,7 @@ class SwiftFileBackend extends FileBackendStore {
 		// Authenticate with proxy and get a session key...
 		if ( $this->conn === null ) {
 			$cacheKey = $this->getCredsCacheKey( $this->auth->username );
-			$creds = false; # $this->srvCache->get( $cacheKey ); // credentials # BAC-1068
+			$creds = $this->srvCache->get( $cacheKey ); // credentials
 
 			if ( is_array( $creds ) ) { // cache hit
 				$this->auth->load_cached_credentials( $creds['auth_token'], $creds['storage_url'], $creds['cdnm_url'] );
