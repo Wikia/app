@@ -2,14 +2,20 @@
 
 class CreateNewWikiControllerTest extends WikiaBaseTest {
 
-	public function __construct() {
+	public function setUp() {
 		$this->setupFile = dirname(__FILE__) . '/../CreateNewWiki_setup.php';
+		parent::setUp();
 	}
-	
+
+	public function tearDown() {
+		parent::tearDown();
+	}
+
 	/**
 	 * @group hyun
+	 * @dataProvider getCreateWikiDataProvider
 	 */
-	public function testCreateWikiSuccess() {
+	public function testCreateWikiSuccess($userLoggedIn, $status) {
 		$wikiName = 'Muppet is great';
 		$wikiDomain = 'muppet';
 		$wikiLanguage = 'en';
@@ -31,23 +37,26 @@ class CreateNewWikiControllerTest extends WikiaBaseTest {
 			->will($this->returnValue($requestParams));
 		$wgDevelDomains = array();
 		$wgUser = $this->getMock('User');
-		$wgUser->expects($this->once())
+		$wgUser->expects($this->any())
 			->method('getId')
 			->will($this->returnValue(6));
+		$wgUser->expects($this->once())
+			->method('isLoggedIn')
+			->will($this->returnValue($userLoggedIn));
 		$app = $this->getMock('WikiaApp', array('getGlobal', 'runFunction'));
 		$app->expects($this->exactly(3))
 			->method('getGlobal')
 			->will($this->onConsecutiveCalls($wgRequest, $wgDevelDomains, $wgUser));
 
 		$createWiki = $this->getMock('CreateWiki', array('create', 'getWikiInfo'), array(), '', false);
-		$createWiki->expects($this->once())
+		$createWiki->expects($this->any())
 			->method('create');
-		$createWiki->expects($this->exactly(2))
+		$createWiki->expects($this->any())
 			->method('getWikiInfo')
 			->will($this->onConsecutiveCalls($wikiId, $siteName));
 
 		$mainPageTitle = $this->getMock('GlobalTitle', array(), array(), '', false);
-		$mainPageTitle->expects($this->once())
+		$mainPageTitle->expects($this->any())
 			->method('getFullURL')
 			->will($this->returnValue($mainPageUrl));
 
@@ -56,10 +65,25 @@ class CreateNewWikiControllerTest extends WikiaBaseTest {
 
 		$response = $app->sendRequest('CreateNewWiki', 'CreateWiki');
 
-		$this->assertEquals("ok", $response->getVal('status'));
-		$this->assertEquals($siteName, $response->getVal('siteName'));
-		$this->assertEquals($mainPageUrl, $response->getval('finishCreateUrl'));
+		$this->assertEquals($status, $response->getVal('status'));
 
+		if ($userLoggedIn) {
+			$this->assertEquals($siteName, $response->getVal('siteName'));
+			$this->assertEquals($mainPageUrl, $response->getval('finishCreateUrl'));
+		}
+	}
+
+	public function getCreateWikiDataProvider() {
+		return [
+			[
+				'userLogged' => true,
+				'status' => 'ok'
+			],
+			[
+				'userLogged' => false,
+				'status' => 'error'
+			]
+		];
 	}
 
 	public function testCheckWikiNameSuccess() {
@@ -81,5 +105,4 @@ class CreateNewWikiControllerTest extends WikiaBaseTest {
 
 		$this->assertEquals("", $response->getVal('res'));
 	}
-
 }
