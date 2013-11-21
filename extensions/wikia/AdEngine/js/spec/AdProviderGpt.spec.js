@@ -36,7 +36,7 @@ describe('AdProviderGpt', function(){
 			wikiaGptMock
 		);
 
-		adProviderGpt.fillInSlot(['TOP_LEADERBOARD']);
+		adProviderGpt.fillInSlot('TOP_LEADERBOARD');
 		expect(dartCalled).toBeFalsy('DART not called when user in low value country');
 		expect(liftiumCalled).toBeTruthy('Liftium called when user in low value country');
 	});
@@ -77,7 +77,7 @@ describe('AdProviderGpt', function(){
 
 		dartCalled = false;
 		liftiumCalled = false;
-		adProviderAdDriver2.fillInSlot(['TOP_LEADERBOARD']);
+		adProviderAdDriver2.fillInSlot('TOP_LEADERBOARD');
 		expect(liftiumCalled).toBeFalsy('Liftium not called when user in high value country (and not exceeded number of DART calls)');
 		expect(dartCalled).toBeTruthy('DART called when user in high value country (and not exceeded number of DART calls)');
 	});

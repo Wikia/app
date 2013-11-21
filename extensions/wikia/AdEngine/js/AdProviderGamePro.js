@@ -14,11 +14,8 @@ var AdProviderGamePro = function(adLogicPageLevelParamsLegacy, ScriptWriter, adT
 			'TOP_RIGHT_BOXAD': {'size': '300x250,300x600', 'tile': 3, 'pos': 'mpu'}
 		};
 
-	function canHandleSlot(slot) {
-		var slotname = slot[0];
-
-		log('canHandleSlot', 5, 'AdProviderGamePro');
-		log([slotname], 5, 'AdProviderGamePro');
+	function canHandleSlot(slotname) {
+		log(['canHandleSlot', slotname], 5, 'AdProviderGamePro');
 
 		if (slotMap[slotname]) {
 			return true;
@@ -43,11 +40,9 @@ var AdProviderGamePro = function(adLogicPageLevelParamsLegacy, ScriptWriter, adT
 		return url;
 	}
 
-	function fillInSlot(slot) {
+	function fillInSlot(slotname) {
 		log('fillInSlot', 5, 'AdProviderGamePro');
-		log(slot, 5, 'AdProviderGamePro');
-
-		var slotname = slot[0];
+		log(slotname, 5, 'AdProviderGamePro');
 
 		adTracker.trackSlot('gamepro', slotname).init();
 

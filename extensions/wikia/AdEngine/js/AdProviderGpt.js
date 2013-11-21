@@ -13,7 +13,8 @@ var AdProviderGpt = function (adTracker, log, window, Geo, slotTweaker, cacheSto
 		isHighValueCountry,
 		leaderboardCalled = false, // save if leaderboard was called, so we know whether to call INVISIBLE slot as well
 		gptConfig,
-		gptFlushed = false;
+		gptFlushed = false,
+		undef;
 
 	maxCallsToDART = adLogicHighValueCountry.getMaxCallsToDART(country);
 	isHighValueCountry = adLogicHighValueCountry.isHighValueCountry(country);
@@ -71,10 +72,10 @@ var AdProviderGpt = function (adTracker, log, window, Geo, slotTweaker, cacheSto
 		return numCallForSlot;
 	}
 
-	function canHandleSlot(slotinfo) {
-		log(['canHandleSlot', slotinfo], 5, logGroup);
+	function canHandleSlot(slotname) {
+		log(['canHandleSlot', slotname], 5, logGroup);
 
-		return !!slotMap[slotinfo[0]];
+		return !!slotMap[slotname];
 	}
 
 	// Public methods
@@ -92,17 +93,15 @@ var AdProviderGpt = function (adTracker, log, window, Geo, slotTweaker, cacheSto
 		wikiaGpt.flushAds();
 	}
 
-	function fillInSlot(slot) {
-		log(['fillInSlot', slot], 5, logGroup);
+	function fillInSlot(slotname) {
+		log(['fillInSlot', slotname], 5, logGroup);
 
-		if (gptConfig[slot[0]] === 'flushonly') {
+		if (gptConfig[slotname] === 'flushonly') {
 			flushGpt();
 			return;
 		}
 
-		var slotname = slot[0],
-
-			noAdStorageKey = 'dart_noad_' + slotname,
+		var noAdStorageKey = 'dart_noad_' + slotname,
 			numCallForSlotStorageKey = 'dart_calls_' + slotname,
 
 			noAdLastTime = cacheStorage.get(noAdStorageKey, now) || false,
@@ -123,8 +122,7 @@ var AdProviderGpt = function (adTracker, log, window, Geo, slotTweaker, cacheSto
 					slotTracker.hop();
 				}
 
-				slot[2] = 'Liftium2';
-				window.adslots2.push(slot);
+				window.adslots2.push([slotname, undef, 'Liftium2']);
 			},
 
 			// Do this when filling slot by DART
