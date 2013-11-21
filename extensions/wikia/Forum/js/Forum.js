@@ -3,13 +3,10 @@
 	var showPoliciesModal = function() {
 		require( [ 'wikia.ui.factory' ], function( uiFactory ) {
 			uiFactory.init( [ 'modal' ] ).then( function( uiModal ) {
-				var backBtnMsg = $.msg( 'back' ),
-					modalId = 'ForumPoliciesModal',
-					editBtnMsg,
-					modalConfig = {
+				var modalConfig = {
 						type: 'default',
 						vars: {
-							id: modalId,
+							id: 'ForumPoliciesModal',
 							size: 'medium',
 							content: '<div class="ForumPolicies"><div class="WikiaArticle"></div></div>',
 							title: $.msg( 'forum-specialpage-policies' ),
@@ -17,7 +14,7 @@
 							buttons: [
 								{
 									vars: {
-										value: backBtnMsg,
+										value: $.msg( 'back' ),
 										data: [
 											{
 												key: 'event',
@@ -31,10 +28,9 @@
 					};
 
 				if ( window.wgCanEditPolicies ) {
-					editBtnMsg = $.msg( 'forum-specialpage-policies-edit' );
 					modalConfig.vars.buttons.unshift( {
 						vars: {
-							value: editBtnMsg,
+							value: $.msg( 'forum-specialpage-policies-edit' ),
 							data: [
 								{
 									key: 'event',
