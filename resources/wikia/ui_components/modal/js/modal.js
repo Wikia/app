@@ -157,6 +157,10 @@ define( 'wikia.ui.modal', [
 		if ( ( typeof( this.$element.data( 'destroy-on-close' ) ) !== 'undefined' ) ) {
 			this.destroyOnClose = this.$element.data( 'destroy-on-close' );
 		}
+
+		this.listeners = {
+			'close': [ this.close ]
+		};
 	}
 
 	/**
@@ -204,8 +208,18 @@ define( 'wikia.ui.modal', [
 		this.onClose();
 	};
 
+	Modal.prototype.trigger = function ( eventName ) {
+		var i;
+		if ( typeof( this.listeners[ eventName ] ) !== 'undefined' ) {
+			for (i = 0 ; i < this.listeners[ eventName ].length ; i++ ) {
+				this.listeners[ eventName ][ i ]();
+			}
+		}
+	};
+
 	/**
 	 * Hook method
+	 * @TODO - do we need this?
 	 */
 
 	Modal.prototype.onClose = function() {};
