@@ -458,7 +458,7 @@ class WikiaFileHelper extends Service {
 	public static function truncateArticleList( $articles, $limit = 2 ) {
 		$isTruncated = 0;
 		$truncatedList = array();
-		if( !empty( $articles ) ) {
+		if ( !empty( $articles ) ) {
 			foreach ( $articles as $article ) {
 				// Create truncated list
 				if ( count( $truncatedList ) < $limit ) {
@@ -496,7 +496,7 @@ class WikiaFileHelper extends Service {
 				'duration' => true,
 				'linkAttribs' => array( 'class' => 'video-thumbnail' )
 			);
-			if( $force16x9Ratio ) {
+			if ( $force16x9Ratio ) {
 				$htmlParams['src'] = self::thumbUrl2thumbUrl( $thumb->getUrl(), 'video', $width, $height );
 				$thumb->width = $width;
 				$thumb->height = $height;
@@ -516,7 +516,7 @@ class WikiaFileHelper extends Service {
 	public static function  getVideoThumbnailHtml( Title $title, $width=150, $height=75, $force16x9Ratio=false ) {
 		$arr = [];
 		self::inflateArrayWithVideoData( $arr, $title, $width, $height, $force16x9Ratio );
-		if( !empty( $arr['thumbnail'] ) ) {
+		if ( !empty( $arr['thumbnail'] ) ) {
 			return $arr['thumbnail'];
 		} else {
 			return false;
@@ -577,7 +577,7 @@ class WikiaFileHelper extends Service {
 		if ( !empty( $hms ) ) {
 			$segments = explode( ':', $hms );
 			$ret = "PT";
-			if( count( $segments ) == 3 ) {
+			if ( count( $segments ) == 3 ) {
 				$ret .= array_shift( $segments ) . 'H';
 			}
 			$ret .= array_shift( $segments ) . 'M';
@@ -667,9 +667,9 @@ class WikiaFileHelper extends Service {
 		}
 
 		$status = Status::newGood();
-		if( !empty( $file ) ) {
+		if ( !empty( $file ) ) {
 			$status->setResult( true, $file );
-		} else if( $hasMatch ) {
+		} else if ( $hasMatch ) {
 			$status->warning( 'The supplied video does not exist' );
 		}
 
