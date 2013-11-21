@@ -37,6 +37,37 @@ define( 'wikia.ui.modal', [
 		uiComponent;
 
 	/**
+	 * THIS FUNCTION IS REQUIRED FOR EACH COMPONENT WITH AMD JS WRAPPER !!!!
+	 *
+	 * It's used by UI Component class 'createComponent' method as a shortcut for rendering, appending to DOM
+	 * and initializing component with a single function call.
+	 *
+	 * Sets a reference to UI component object configured for rendering / creating modals
+	 * and creates new instance of modal class passing mustache params to constructor call.
+	 *
+	 * @param {Object} params - mustache params for rendering modal
+	 * @param {Object} component - UI Component configured for creating modal
+	 * @returns {Object} - new instance of Modal object
+	 */
+
+	function createComponent( params, component ) {
+		uiComponent = component; // set reference to UI Component
+
+		return new Modal( params );
+	}
+
+	/**
+	 * Simple initializing new modal object based on the DOM element id passed as parameter
+	 *
+	 * @param {String} id - id of modal DOM element
+	 * @returns {Object} - new instance of modal object
+	 */
+
+	function init( id ) {
+		return new Modal( id );
+	}
+
+	/**
 	 * IE 9 doesn't support flex-box. IE-10 and IE-11 has some bugs in implementation:
 	 *
 	 * https://connect.microsoft.com/IE/feedback/details/802625/
@@ -57,33 +88,25 @@ define( 'wikia.ui.modal', [
 	}
 
 	/**
-	 * TODO: need description
-	 * @param params
-	 * @param component
-	 * @returns {Modal}
-	 */
-
-	function init( params, component ) {
-		uiComponent = component;
-
-		return new Modal( params );
-	}
-
-	/**
-	 * Initializes a modal
+	 * Constructor function for Modal class which creates a new instance of modal,
 	 *
-	 * TODO: update the description !!!!
+	 * OPTION 1 ( if called with 'params' type = string )
+	 * - link it with DOM element ID passed as params
 	 *
-	 * Checks if element with given id exists in DOM and if not creates it
-	 * and appends it to body; adds event handlers for blackout and close button;
+	 * OPTION 2: ( if called 'params' type = object )
+	 * - renders modal component based on passed params object
+	 * - append markup to DOM
+	 * - link new modal instance with ID of the appended element
+	 *
+	 * Finally attach event handlers for modal component
+	 *
+	 * TODO: below comment is needed???
 	 * sets flags depending on data- attributes:
-	 *
 	 * - data-destroy-on-close -- if false value passed the modal will remain in DOM after closing it
+	 * END TODO
 	 *
 	 * @constructor
-	 *
-	 * @param {Object} uiComponent - UI Component configured for creating modals
-	 * @param {Object} params - Mustache parameters for rendering modal
+	 * @param {String|Object} params - ID of modal element in DOM or object with mustache params
 	 */
 
 	function Modal( params ) {
@@ -287,6 +310,7 @@ define( 'wikia.ui.modal', [
 	/** Public API */
 	
 	return {
-		init: init
+		init: init,
+		createComponent: createComponent
 	};
 });

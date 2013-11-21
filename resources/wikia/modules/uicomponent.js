@@ -4,7 +4,6 @@
  * UIComponent handles rendering component
  *
  * @author Rafal Leszczynski <rafal@wikia-inc.com>
- *
  */
 
 define( 'wikia.ui.component', [ 'wikia.mustache' ], function uicomponent( mustache ) {
@@ -45,6 +44,13 @@ define( 'wikia.ui.component', [ 'wikia.mustache' ], function uicomponent( mustac
 		}
 	}
 
+	/**
+	 * Constructor function for creating UI Components
+	 *
+	 * @returns {Object} - new instance of UI component class
+	 * @constructor
+	 */
+
 	function UIComponent() {
 
 		if ( !( this instanceof UIComponent ) ) {
@@ -76,8 +82,7 @@ define( 'wikia.ui.component', [ 'wikia.mustache' ], function uicomponent( mustac
 		/**
 		 * Configures component
 		 *
-		 * @param {{}} templates object with mustache templates
-		 * @param {{}} templateVarsConfig object with accepted template variables
+		 * @param {Object} config - component configuration object needed for rendering and creating components
 		 */
 
 		this.setComponentsConfig = function( config ) {
@@ -85,17 +90,34 @@ define( 'wikia.ui.component', [ 'wikia.mustache' ], function uicomponent( mustac
 		};
 
 		/**
-		 * Creates new component object
+		 * Shortcut method for creating components which have additional JS logic (example: Modals)
 		 *
-		 * @param {{}} params Component params
-		 * @param {function} callback callback function function ( object ) {}
-		 * @returns {undefined}
+		 * Calls special 'createComponent' function in components AMD wrapper module with mustache params
+		 * and reference to UI component instance passed as parameters. Rendering, appending to DOM and
+		 * initializing are done in a single step.
+		 *
+		 *      Example:
+		 *              require( [ wikia.ui.factory ], function( uifactory ) {
+		 *
+		 *                  uifactory.init( [ 'modal' ] ).then( function( modal ) {
+		 *
+		 *                     modal.createComponent( mustacheParams, function(newModalInstance ) {
+		 *
+		 *                          newModalInstance.show();
+		 *
+		 *                      } );
+		 *                  } );
+		 *              } );
+		 *
+		 *
+		 * @param {Object} params - Mustache params for rendering component
+		 * @param {Function} callback - callback function with the instance of components object passed as parameter
 		 */
-		this.create = function( params, callback ) {
+		this.createComponent = function( params, callback ) {
 			var that = this;
 			if ( componentConfig.jsWrapperModule ) {
 				require( [ componentConfig.jsWrapperModule ], function( object ) {
-					callback( object.init( params, that ) );
+					callback( object.createComponent( params, that ) );
 				});
 			} else {
 				callback( that, params );
@@ -105,8 +127,9 @@ define( 'wikia.ui.component', [ 'wikia.mustache' ], function uicomponent( mustac
 		/**
 		 * Returns sub component by name
 		 *
-		 * @param {String} componentName
-		 * @returns {*} Component
+		 * @param {String} componentName - name of requested subcomponent
+		 * @returns {Object} - requested component
+		 * @throws {Error} - if sub-component not found
 		 */
 		this.getSubComponent = function( componentName ) {
 			if ( typeof componentConfig.dependencies[ componentName ] !== 'undefined' ) {
