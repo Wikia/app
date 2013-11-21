@@ -246,17 +246,22 @@ var WikiaFooterApp = {
 				}
 			});
 			this.menuGroup.add(liMore, $.proxy(this.onShowMenu,this));
-
-			this.lastOverflowedWidth = fwidth;
 		},
 
-		rebuildOverflowMenu: function() {
-			if ( this.el.width() !== this.lastOverflowedWidth ) {
-				var overflowMenu = this.hideOveflowMenu().appendTo( this.el );
+		rebuildOverflowMenuIfNeeded: function() {
+			var width = $('#WikiaPage').outerWidth(),
+				overflowMenu;
+
+			if ( width !== this.lastOverflowedWidth ) {
+				$('.wikia-bar').width( width );
+
+				overflowMenu = this.hideOveflowMenu().appendTo( this.el );
 				$('li.overflow', overflowMenu ).insertBefore( $('.mytools') );
 
 				this.menuGroup.remove( overflowMenu );
 				this.handleOverflowMenu();
+
+				this.lastOverflowedWidth = width;
 			}
 		},
 
