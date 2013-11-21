@@ -212,6 +212,7 @@ define( 'wikia.ui.modal', [
 		var i;
 		if ( typeof( this.listeners[ eventName ] ) !== 'undefined' ) {
 			for ( i = 0 ; i < this.listeners[ eventName ].length ; i++ ) {
+				// @TODO - add support for promise
 				this.listeners[ eventName ][ i ]();
 			}
 		}
