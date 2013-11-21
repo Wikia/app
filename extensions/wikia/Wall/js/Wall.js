@@ -451,57 +451,53 @@ var Wall = $.createClass(Object, {
 		}
 
 		require( [ 'wikia.ui.factory' ], function( uiFactory ) {
-			uiFactory.init( [ 'button', 'modal' ] ).then( function( uiButton, uiModal ) {
-				var modalId = 'WikiaConfirm',
-					modalSecondaryBtnId = 'WikiaConfirmCancel',
-					modalSecondaryBtn = uiButton.render( {
-						type: 'button',
+			uiFactory.init( [ 'modal' ] ).then( function( uiModal ) {
+				var modalPrimaryBtnId = 'WikiaConfirmOk',
+					confirmModalConfig = {
 						vars: {
-							id: modalSecondaryBtnId,
-							type: 'button',
-							classes: [ 'normal', 'secondary' ],
-							value: cancelmsg
+							id: 'WikiaConfirm',
+							size: 'medium',
+							content: msg,
+							title: title,
+							buttons: [
+								{
+									vars: {
+										id: modalPrimaryBtnId,
+										value: okmsg,
+										classes: [ 'normal', 'primary' ],
+										disabled: ( mode !== 'rev' ) ? true : false,
+										data: [
+											{
+												key: 'event',
+												value: modalPrimaryBtnId
+											}
+										]
+									}
+								},
+								{
+									vars: {
+										value: cancelmsg,
+										data: [
+											{
+												key: 'event',
+												value: 'close'
+											}
+										]
+									}
+								}
+							]
 						}
-					}),
-					modalPrimaryBtnId = 'WikiaConfirmOk',
-					modalPrimaryBtnVars = {
-						id: modalPrimaryBtnId,
-						type: 'button',
-						classes: [ 'normal', 'primary' ],
-						value: okmsg
-					},
-					modalPrimaryBtn, confirmModal;
-				if(mode !== 'rev') {
-					modalPrimaryBtnVars.disabled = true;
-				}
-				modalPrimaryBtn = uiButton.render( {
-					type: 'button',
-					vars: modalPrimaryBtnVars
-				} );
-				confirmModal = uiModal.render( {
-					type: 'default',
-					vars: {
-						id: modalId,
-						size: 'medium',
-						content: msg,
-						title: title,
-						closeText: $.msg( 'close' ),
-						primaryBtn: modalPrimaryBtn,
-						secondBtn: modalSecondaryBtn
 					}
-				} );
 
-				require( [ 'wikia.ui.modal' ], function( modal ) {
-					confirmModal = modal.init( modalId, confirmModal );
-					confirmModal.$element.find( '#' + modalSecondaryBtnId ).click( function() {
-						confirmModal.close();
-					} );
-					confirmModal.$element.find( '#' + modalPrimaryBtnId ).click( function() {
+				uiModal.createComponent( confirmModalConfig, function( confirmModal ) {
+					confirmModal.bind( 'WikiaConfirmOk', function () {
 						var formdata = confirmModal.$element.find('form').serializeArray();
 						confirmModal.deactivate();
 						self.doAction(id, mode, wallMsg, target, formdata, confirmModal );
-					} );
+					});
+
 					confirmModal.$element.find('textarea.wall-action-reason').bind('keydown keyup change', function(e) {
+
 						var target = $(e.target);
 						if(target.val().length > 0) {
 							confirmModal.$element.find( '#' + modalPrimaryBtnId ).removeAttr('disabled');
@@ -509,10 +505,11 @@ var Wall = $.createClass(Object, {
 							confirmModal.$element.find( '#' + modalPrimaryBtnId ).attr('disabled', 'disabled');
 						}
 					});
+
 					confirmModal.show();
-				} );
-			} );
-		} );
+				});
+			});
+		});
 	},
 
 	/*
