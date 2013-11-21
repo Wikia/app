@@ -173,7 +173,7 @@ define( 'wikia.ui.modal', [
 
 		// object containing modal event listeners
 		this.listeners = {
-			'close': [ $.proxy(this.close, that) ]
+			'close': [ $.proxy( this.close, that ) ]
 		};
 
 		// allow to override the default value
@@ -191,7 +191,6 @@ define( 'wikia.ui.modal', [
 	/**
 	 * Shows modal; adds shown class to modal and visible class to blackout
 	 */
-
 	Modal.prototype.show = function() {
 		// fix iOS Safari position: fixed - virtual keyboard bug
 		if ( browserDetect.isIPad() ) {
@@ -225,17 +224,37 @@ define( 'wikia.ui.modal', [
 		}
 	};
 
+	/**
+	 * @TODO This is somewhat magical, so document it!
+	 * @param eventName
+	 * @return Promise object
+	 */
 	Modal.prototype.trigger = function ( eventName ) {
+		var deferred = new $.Deferred(),
+			i = 0,
+			args =  [].slice.call( arguments, 1 ),
+			listeners = this.listeners[ eventName ];
 
-		var i, args =  [].slice.call( arguments, 1 );
-		if ( typeof( this.listeners[ eventName ] ) !== 'undefined' ) {
-			for ( i = 0; i < this.listeners[ eventName ].length; i++ ) {
-				// @TODO - add support for promise
-				this.listeners[ eventName ][ i ].apply( undefined, args );
+		( function iterate() {
+			var result;
+			while( listeners && ( i < listeners.length ) ) {
+				result = listeners[ i++ ].apply( undefined, args );
+				if ( result && ( typeof result.then === 'function' ) ) {
+					result.then( iterate );
+					return;
+				}
 			}
-		}
+			deferred.resolve();
+		} )();
+
+		return deferred.promise();
 	};
 
+	/**
+	 * @TODO - document
+	 * @param eventName
+	 * @param callback
+	 */
 	Modal.prototype.bind = function( eventName, callback ) {
 		if ( typeof( this.listeners[ eventName ] ) === 'undefined' ) {
 			this.listeners[ eventName ] = [];
