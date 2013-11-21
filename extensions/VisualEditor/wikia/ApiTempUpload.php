@@ -38,12 +38,12 @@ class ApiTempUpload extends ApiBase {
 	private function executePermanentVideo() {
 		$this->mParams['desiredName'] = wfStripIllegalFilenameChars( $this->mParams['desiredName'] );
 
-		if( empty( $this->mParams['provider'] ) ) {
+		if ( empty( $this->mParams['provider'] ) ) {
 			$this->dieUsageMsg( 'The provider parameter must be set' );
 		}
 
 		if ( $this->mParams['provider'] == 'wikia' ) {
-			if( empty( $this->mParams['title'] ) ) {
+			if ( empty( $this->mParams['title'] ) ) {
 				$this->dieUsageMsg( 'The title parameter must be set' );
 			}
 			// no need to upload, local reference
@@ -172,14 +172,14 @@ class ApiTempUpload extends ApiBase {
 		$url = $this->mParams['url'];
 		$wikiaFileStatus = WikiaFileHelper::getWikiaFile( $url );
 
-		if( !$wikiaFileStatus->isGood() ) {
+		if ( !$wikiaFileStatus->isGood() ) {
 			// It's a wikia file url but the file doesn't exist
 			$this->dieUsageMsg( $wikiaFileStatus->getWarningsArray() );
 		}
 
 		$file = $wikiaFileStatus->value;
 
-		if( !empty( $file ) ) {
+		if ( !empty( $file ) ) {
 			// Handle local and premium videos
 			$this->getResult()->addValue( null, $this->getModuleName(), array(
 				'title' => $file->getTitle()->getText(),
