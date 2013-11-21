@@ -126,6 +126,13 @@ define( 'wikia.ui.modal', [
 			event.stopPropagation();
 		} );
 
+		this.$element.find( 'footer button' ).click( $.proxy( function( event ) {
+			var modalEventName = $( event.target ).data( 'event' );
+			if ( modalEventName ) {
+				this.trigger( modalEventName );
+			}
+		}, that ) );
+
 		this.$content = this.$element.children( 'section' );
 		this.$close = this.$element.find( '.' + CLOSE_CLASS );
 		this.$primaryButton = this.$element.find( 'footer [data-' + PRIMARY_BUTTON_DATA + '=1]' );
