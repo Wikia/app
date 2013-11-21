@@ -157,7 +157,7 @@ define( 'wikia.ui.modal', [
 		}
 
 		this.listeners = {
-			'close': [ this.close ]
+			'close': [ $.proxy(this.close, that) ]
 		};
 	}
 
