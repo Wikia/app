@@ -23,8 +23,9 @@
 
 	Zid.settings = {
 		selector: '.item',
-		width: 225,
-		gutter: 20
+		minColumnWidth: 225,
+		gutter: 20,
+		debounceThreshold: 50
 	};
 
 	Zid.prototype = {
@@ -53,7 +54,7 @@
 			// add class 'zid' to container
 			$( this.box ).addClass( 'zid' );
 			// bind on resize
-			$( window ).on( 'resize', $.debounce( 50, $.proxy( container.resize, this ) ) );
+			$( window ).on( 'resize', $.debounce( this.options.debounceThreshold, $.proxy( container.resize, this ) ) );
 		},
 
 		/**
@@ -70,7 +71,7 @@
 					'display': 'block'
 				} ).attr( 'id', 'clear' + this.name );
 			// calculate columns count
-			this.cols = Math.floor( this.box.width() / ( this.options.width + this.options.gutter ) );
+			this.cols = Math.floor( this.box.width() / ( this.options.minColumnWidth + this.options.gutter ) );
 			// We should always render at least one column
 			if ( this.cols < 1 ) {
 				this.cols = 1;
@@ -99,8 +100,10 @@
 		 * @private
 		 */
 		_setbreakPoints: function() {
-			this.maxBreakPoint = ( this.cols + 1 ) * ( this.options.width + this.options.gutter );
-			this.minBreakPoint = ( this.cols <= 1 ) ? 1 : this.cols * ( this.options.width + this.options.gutter );
+			this.maxBreakPoint = ( this.cols + 1 ) * ( this.options.minColumnWidth + this.options.gutter );
+			this.minBreakPoint = ( this.cols <= 1 ) ?
+				1 :
+				this.cols * ( this.options.minColumnWidth + this.options.gutter );
 		},
 
 		/**
@@ -124,7 +127,7 @@
 			$.each( arr, $.proxy(
 				function( index, value ) {
 					var item = $( value ),
-						col = this._getLowestColumn();
+						col = this._getShortestColumn();
 					// prepend on append to column
 					if ( method === 'prepend' ) {
 						col.prepend( item );
@@ -137,23 +140,23 @@
 		},
 
 		/**
-		 * Get lowest columns from zid columns.
+		 * Get shortest columns from zid columns.
 		 * In most cases this is the column when we're going to add next item
 		 * @private
 		 */
-		_getLowestColumn: function() {
-			var lowest = this.columns[ 0 ],
-				lowestHeight = lowest.height();
+		_getShortestColumn: function() {
+			var shortest = this.columns[ 0 ],
+				shortestHeight = shortest.height();
 
 			$.each( this.columns, function( index, currentColumn ) {
 				var currHeight = currentColumn.height();
-				if ( currHeight < lowestHeight ) {
-					lowest = currentColumn;
-					lowestHeight = currHeight;
+				if ( currHeight < shortestHeight ) {
+					shortest = currentColumn;
+					shortestHeight = currHeight;
 				}
 			});
 
-			return lowest;
+			return shortest;
 		},
 
 		/**

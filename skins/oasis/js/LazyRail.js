@@ -20,7 +20,7 @@ $(function() {
 						type: loader.CSS,
 						resources: data.css
 					}).done(function() {
-						rail.zid({width: 350, selector: '.module, .wikia-ad', 'gutter': 20});
+						rail.zid({minColumnWidth: 350, selector: '.module, .wikia-ad'});
 					});
 				});
 

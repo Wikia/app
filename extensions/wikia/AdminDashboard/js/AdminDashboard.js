@@ -67,7 +67,7 @@ var AdminDashboard = {
 
 		if ( AdminDashboard.rail.find( '> section' ).length >= 2 ) {
 			// Add column based layout for rail only when there are at least 2 modules
-			AdminDashboard.rail.zid( {width: 350, selector: '> section', 'gutter': 20} );
+			AdminDashboard.rail.zid( { minColumnWidth: 350, selector: '> section' } );
 		}
 
 		AdminDashboard.allTabs.click( function( e ) {
@@ -107,7 +107,7 @@ var AdminDashboard = {
 			AdminDashboard.section.contentarea.html( $.msg( 'admindashboard-loading' ) );
 			AdminDashboard.wikiaArticle.removeClass( 'AdminDashboardChromedArticle expanded' );
 			$( '.AdminDashboardDrawer, .AdminDashboardNavigation, .AdminDashboardArticleHeader' ).remove();
-			if ( typeof window.FounderProgressList !== 'undefined' ) {
+			if ( window.FounderProgressList ) {
 				window.FounderProgressList.hideListModal();
 			}
 		},
