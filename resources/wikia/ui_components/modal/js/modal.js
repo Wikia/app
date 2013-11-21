@@ -133,7 +133,7 @@ define( 'wikia.ui.modal', [
 				event.preventDefault();
 
 				if ( this.isShown() && this.isActive() ) {
-					this.close();
+					this.trigger( 'close' );
 				}
 			}, that ) );
 
@@ -153,8 +153,7 @@ define( 'wikia.ui.modal', [
 
 		this.$close.click( $.proxy( function( event ) {
 			event.preventDefault();
-
-			this.close();
+			this.trigger( 'close' );
 		}, that ) );
 
 		this.$primaryButton.click( $.proxy( function ( event ) {
