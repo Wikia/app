@@ -57,6 +57,19 @@ define( 'wikia.ui.modal', [
 	}
 
 	/**
+	 * TODO: need description
+	 * @param params
+	 * @param component
+	 * @returns {Modal}
+	 */
+
+	function init( params, component ) {
+		uiComponent = component;
+
+		return new Modal( params );
+	}
+
+	/**
 	 * Initializes a modal
 	 *
 	 * TODO: update the description !!!!
@@ -73,14 +86,16 @@ define( 'wikia.ui.modal', [
 	 * @param {Object} params - Mustache parameters for rendering modal
 	 */
 
-	function Modal( uiComponent, params ) {
+	function Modal( params ) {
 		var that = this,
-			id = params.vars.id, // modal ID
-			buttons = params.vars.buttons, // array of objects with params for rendering modal buttons
+			id = (typeof params === 'object') ? params.vars.id : params, // modal ID
+			buttons = [], // array of objects with params for rendering modal buttons
 			jQuerySelector = '#' + id;
 
 		// In case the modal already exists in DOM - skip rendering part
 		if ( $( jQuerySelector ).length === 0 && typeof( uiComponent ) !== 'undefined' ) {
+
+			$.merge( buttons, params.vars.buttons);
 
 			// Create buttons
 			buttons.forEach(function( button, index ) {
@@ -131,7 +146,7 @@ define( 'wikia.ui.modal', [
 		});
 
 		this.$blackout = getBlackout();
-		this.$content = this.$element.children().eq( 1 );
+		this.$content = this.$element.children( 'section' );
 		this.$close = this.$element.find( '.' + CLOSE_CLASS );
 		this.$primaryButton = this.$element.find( 'footer [data-' + PRIMARY_BUTTON_DATA + '=1]' );
 		this.$secondaryButton = this.$element.find( 'footer [data-' + SECONDARY_BUTTON_DATA + '=1]' );
@@ -271,8 +286,6 @@ define( 'wikia.ui.modal', [
 	/** Public API */
 	
 	return {
-		init: function( id, uiComponent, params ) {
-			return new Modal( id, uiComponent, params );
-		}
+		init: init
 	};
 });
