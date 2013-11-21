@@ -207,46 +207,54 @@ var WikiaFooterApp = {
 			return this.el.find('.overflow-menu').css('display', 'none');
 		},
 
+		/**
+		 * This function moves items in wikia-bar to the "more" menu (if it's needed);
+		 * it's checking outerWidth of the bar itself and every item.
+		 */
 		handleOverflowMenu: function () {
-			var all = this.el.children('li'),
-				moreable = all.filter('.overflow'),
-				where = moreable.last().next(),
-				width = 0,
-				mwidth = 0,
-				fwidth = this.el.width(),
-				liMore = this.showOverflowMenu(),
-				more = liMore.children('ul'),
-				moreWidth = liMore.outerWidth(true) + 5,
-				rwidth = 0;
+			var items = this.el.children('li'),
+				moreableItems = items.filter('.overflow'),
+				where = moreableItems.last().next(),
+				itemsWidth = 0,
+				moreableItemsWidth = 0,
+				containerWidth = this.el.width(),
+				overflowMenuElement = this.showOverflowMenu(),
+				moreList = overflowMenuElement.children('ul'),
+				overflowMenuElementWidth = overflowMenuElement.outerWidth(true) + 5,
+				freeSpace = 0;
 
-			all.each(function(i,v) {
-				width += $(v).outerWidth(true);
+			items.each(function(i,v) {
+				itemsWidth += $(v).outerWidth(true);
 			});
-			moreable.each(function(i,v) {
-				mwidth += $(v).outerWidth(true);
+			moreableItems.each(function(i,v) {
+				moreableItemsWidth += $(v).outerWidth(true);
 			});
 
-			if (width < fwidth) {
+			if (itemsWidth < containerWidth) {
+				this.hideOveflowMenu();
 				return;
 			}
 
 			if (where.exists()) {
-				where.before(liMore);
-			}
-			else {
-				this.el.append(liMore);
+				where.before(overflowMenuElement);
+			} else {
+				this.el.append(overflowMenuElement);
 			}
 
-			rwidth = fwidth - moreWidth - (width - mwidth);
-			moreable.each(function(i,v){
-				rwidth -= $(v).outerWidth(true);
-				if (rwidth < 0) {
-					$(v).prependTo(more);
+			freeSpace = containerWidth - overflowMenuElementWidth - (itemsWidth - moreableItemsWidth);
+			moreableItems.each(function(index, element) {
+				freeSpace -= $(element).outerWidth(true);
+				if (freeSpace < 0) {
+					$(element).prependTo(moreList);
 				}
 			});
-			this.menuGroup.add(liMore, $.proxy(this.onShowMenu,this));
+			this.menuGroup.add(overflowMenuElement, $.proxy(this.onShowMenu,this));
 		},
 
+		/**
+		 * Revert all changes made by handleOverflowMenu and prepare for
+		 * calling it second time, but before that, resize bar to match WikiaPage.
+		 */
 		resizeBarAndRebuildOverflowMenu: function() {
 			var width = $('#WikiaPage').outerWidth(),
 				overflowMenu = this.hideOveflowMenu().appendTo( this.el );
@@ -255,6 +263,8 @@ var WikiaFooterApp = {
 			$('li.overflow', overflowMenu ).insertBefore( $('.mytools') );
 
 			this.menuGroup.remove( overflowMenu );
+
+			// ... and start over again
 			this.handleOverflowMenu();
 		},
 
@@ -295,9 +305,11 @@ var WikiaFooterApp = {
 $(function(){
 	WikiaFooterApp.init();
 
+	// it's nasty way of handling resizing, but it's most efficient and bulletproof
 	if (window.addEventListener) {
 		WikiaFooterApp.tcToolbar.resizeBarAndRebuildOverflowMenu();
 		window.addEventListener('resize', $.throttle( 100, function() {
+			// this fires no more than every 100ms
 			WikiaFooterApp.tcToolbar.resizeBarAndRebuildOverflowMenu();
 		} ) );
 	}
