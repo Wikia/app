@@ -84,14 +84,12 @@ define( 'wikia.preview', [
 			$article.html( content ).parent().stopThrobbing();
 
 			if (window.wgOasisResponsive) {
-				if ( !opening ) {
-					$article.width( previewTypes[currentType].value );
-				} else if (isRailDropped || isWidePage) {
+				if (isRailDropped || isWidePage) {
 					// set proper preview width for shrinken modal
-					$article.width(options.width - articleMargin * 2);
-
+					//$article.width(options.width - articleMargin * 2);
+					$article.width( previewTypes[currentType].value );
 					// set current width of the article
-					previewTypes.current.value = $article.width();
+					previewTypes[currentType].value = $article.width();
 
 					// get width of article Wrapper
 					articleWrapperWidth = $article.parent().width();
@@ -130,9 +128,9 @@ define( 'wikia.preview', [
 	 * @param options object containing dialog options, see method description for details
 	 */
 	function renderPreview(option) {
-		isRailDropped = (option.isRailDropped) ? true : false;
-		isWidePage = (option.isWidePage) ? true : false;
-		previewTypes = getPreviewTypes( isWidePage );
+		isRailDropped = !!option.isRailDropped;
+		isWidePage = !!option.isWidePage;
+		getPreviewTypes( isWidePage );
 
 		var dialogOptions = {
 			buttons: [
@@ -166,7 +164,12 @@ define( 'wikia.preview', [
 			$article = contentNode;
 			options = option;
 
-			loadPreview( true );
+			if ( currentType === previewTypes.mobile.name ) {
+				loadMobilePreview( true );
+			} else {
+				loadPreview( true );
+			}
+
 
 			// adding type dropdown to preview
 			loader({
@@ -209,7 +212,7 @@ define( 'wikia.preview', [
 				// attach events to type dropdown
 				$('#previewTypeDropdown').on('change', function(event) {
 					switchPreview($(event.target).val());
-				});
+				} ).val(currentType);
 
 				if( $dialog[0] && $dialog[0].style && $dialog[0].style.zIndex ) {
 					// on Chrome when using $.css('z-index') / $.css('zIndex') it returns 2e+9
@@ -280,8 +283,10 @@ define( 'wikia.preview', [
 		currentType = type;
 	}
 
-	function loadMobilePreview() {
-		$article.parent().startThrobbing();
+	function loadMobilePreview( opening ) {
+		if ( !opening ) {
+			$article.parent().startThrobbing();
+		}
 
 		options.getPreviewContent( function(content, summary, data) {
 			$article
@@ -368,33 +373,36 @@ define( 'wikia.preview', [
 	 */
 
 	function getPreviewTypes( isWidePage ) {
-		var articleMinWidth = fluidlayout.getMinArticleWidth(),
-			articleMaxWidth = fluidlayout.getMaxArticleWidth(),
+		if ( !previewTypes ) {
+			var articleMinWidth = fluidlayout.getMinArticleWidth(),
+				articleMaxWidth = fluidlayout.getMaxArticleWidth();
+
 			previewTypes = {
-			current: {
-				name: 'current',
-				value: null
-			},
-			min: {
-				name: 'min',
-				value: articleMinWidth - 2 * articleMargin
-			},
-			max: {
-				name:'max',
-				value: articleMaxWidth - 2 * articleMargin
-			},
-			mobile: {
-				name: 'mobile',
-				skin: 'wikiamobile',
-				value: null
+					current: {
+						name: 'current',
+						value: null
+					},
+					min: {
+						name: 'min',
+						value: articleMinWidth - 2 * articleMargin
+					},
+					max: {
+						name:'max',
+						value: articleMaxWidth - 2 * articleMargin
+					},
+					mobile: {
+						name: 'mobile',
+						skin: 'wikiamobile',
+						value: null
+					}
+				};
+
+			if( isWidePage ) {
+				previewTypes.max.value += rightRailWidth;
 			}
-		};
 
-		if( isWidePage ) {
-			previewTypes.max.value += rightRailWidth;
+			currentType = previewTypes.current.name;
 		}
-
-		currentType = previewTypes.current.name;
 
 		return previewTypes;
 	}
