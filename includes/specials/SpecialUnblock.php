@@ -105,8 +105,15 @@ class SpecialUnblock extends SpecialPage {
 				$fields['Target']['default'] = $target;
 				$fields['Target']['type'] = 'hidden';
 				switch( $type ){
-					case Block::TYPE_USER:
 					case Block::TYPE_IP:
+						$fields['Name']['default'] = Linker::link(
+							Title::newFromText( 'Contributions/' . $target->getName(), NS_SPECIAL ),
+							$target->getName()
+						);
+						$fields['Name']['raw'] = true;
+						break;
+
+					case Block::TYPE_USER:
 						$fields['Name']['default'] = Linker::link(
 							$target->getUserPage(),
 							$target->getName()
