@@ -170,7 +170,7 @@ class ApiTempUpload extends ApiBase {
 		$this->checkPermissions( $this->mUser );
 
 		$url = $this->mParams['url'];
-		$wikiaFileStatus = WikiaFileHelper::getWikiaFile( $url );
+		$wikiaFileStatus = WikiaFileHelper::getWikiaFileFromUrl( $url );
 
 		if ( !$wikiaFileStatus->isGood() ) {
 			// It's a wikia file url but the file doesn't exist

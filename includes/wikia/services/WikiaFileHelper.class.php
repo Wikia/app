@@ -644,9 +644,8 @@ class WikiaFileHelper extends Service {
 	 * @param $url String The URL of a video
 	 * @return Status
 	 */
-	public static function getWikiaFile( $url ) {
+	public static function getWikiaFileFromUrl( $url ) {
 		$file = null;
-		$hasMatch = false;
 
 		// get the video name
 		$nsFileTranslated = F::app()->wg->ContLang->getNsText( NS_FILE );
