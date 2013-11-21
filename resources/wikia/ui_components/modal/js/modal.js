@@ -88,7 +88,7 @@ define( 'wikia.ui.modal', [
 
 	function Modal( params ) {
 		var that = this,
-			id = (typeof params === 'object') ? params.vars.id : params, // modal ID
+			id = ( typeof params === 'object' ) ? params.vars.id : params, // modal ID
 			jQuerySelector = '#' + id,
 			buttons, // array of objects with params for rendering modal buttons
 			blackoutId = BLACKOUT_ID + '_' + id;
@@ -121,10 +121,10 @@ define( 'wikia.ui.modal', [
 		// link modal instance with DOM element
 		this.$element = $( jQuerySelector );
 
-		this.$element.click( function( event ) {
+		this.$element.click(function( event ) {
 			// when click happens inside the modal, stop the propagation so it won't be handled by the blackout
 			event.stopPropagation();
-		} );
+		});
 
 		this.$element.find( 'footer button' ).click( $.proxy( function( event ) {
 			var modalEventName = $( event.target ).data( 'event' );
@@ -157,7 +157,7 @@ define( 'wikia.ui.modal', [
 		}
 
 		this.listeners = {
-			'close': [ $.proxy(this.close, that) ]
+			'close': [ $.proxy( this.close, that ) ]
 		};
 	}
 
@@ -210,9 +210,9 @@ define( 'wikia.ui.modal', [
 
 		var i, args =  [].slice.call( arguments, 1 );
 		if ( typeof( this.listeners[ eventName ] ) !== 'undefined' ) {
-			for ( i = 0 ; i < this.listeners[ eventName ].length ; i++ ) {
+			for ( i = 0; i < this.listeners[ eventName ].length; i++ ) {
 				// @TODO - add support for promise
-				this.listeners[ eventName ][ i ].apply(undefined, args );
+				this.listeners[ eventName ][ i ].apply( undefined, args );
 			}
 		}
 	};
