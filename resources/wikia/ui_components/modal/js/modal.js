@@ -1,13 +1,27 @@
-define( 'wikia.ui.modal', [ 'jquery', 'wikia.window', 'wikia.browserDetect' ], function( $, w, browserDetect ) {
+define( 'wikia.ui.modal', [
+	'jquery',
+	'wikia.window',
+	'wikia.browserDetect'
+], function(
+	$,
+	w,
+	browserDetect
+) {
 	'use strict';
 
+	// constants for modal component
 	var BLACKOUT_ID = 'blackout',
 		BLACKOUT_VISIBLE_CLASS = 'visible',
 		CLOSE_CLASS = 'close',
 		INACTIVE_CLASS = 'inactive',
 		PRIMARY_BUTTON_DATA = 'primary',
 		SECONDARY_BUTTON_DATA = 'secondary',
-		CLOSE_MSG = $.msg( 'close'),
+
+		// default modal rendering params
+		modalDefaults = {
+			closeText: $.msg( 'close' )
+		},
+		// default modal buttons rendering params
 		btnConfig = {
 			type: 'button',
 			vars: {
@@ -15,7 +29,11 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window', 'wikia.browserDetect' ], f
 				classes: [ 'normal', 'secondary' ]
 			}
 		},
+		
+		// TODO: need description !!!
 		destroyOnClose,
+		
+		// reference to UI component instance
 		uiComponent;
 
 	/**
@@ -41,30 +59,29 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window', 'wikia.browserDetect' ], f
 	/**
 	 * Initializes a modal
 	 *
+	 * TODO: update the description !!!!
+	 *
 	 * Checks if element with given id exists in DOM and if not creates it
 	 * and appends it to body; adds event handlers for blackout and close button;
 	 * sets flags depending on data- attributes:
+	 *
 	 * - data-destroy-on-close -- if false value passed the modal will remain in DOM after closing it
 	 *
-	 * @param {UIComponent} UIComponent for modal
-	 * @param {Object} params Component parameters
 	 * @constructor
+	 *
+	 * @param {Object} uiComponent - UI Component configured for creating modals
+	 * @param {Object} params - Mustache parameters for rendering modal
 	 */
 
-	function Modal( params ) {
+	function Modal( uiComponent, params ) {
 		var that = this,
-			id = typeof params === 'object' ?
-					params.vars.id :
-					params,
-			buttons,
+			id = params.vars.id, // modal ID
+			buttons = params.vars.buttons, // array of objects with params for rendering modal buttons
 			jQuerySelector = '#' + id;
 
-		this.$element = $( jQuerySelector );
+		// In case the modal already exists in DOM - skip rendering part
+		if ( $( jQuerySelector ).length === 0 && typeof( uiComponent ) !== 'undefined' ) {
 
-		// In case the modal is rendered on the server side skip JS rendering
-		if ( !this.$element.exists() && typeof( uiComponent ) !== 'undefined' ) {
-
-			buttons = params.vars.buttons;
 			// Create buttons
 			buttons.forEach(function( button, index ) {
 				if ( typeof button === 'object' ) {
@@ -77,7 +94,13 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window', 'wikia.browserDetect' ], f
 				}
 			});
 
+			// extend default modal params with the one passed in constructor call
+			params = $.extend( modalDefaults, params );
+
+			// render modal markup and append to DOM
 			$( 'body' ).append( uiComponent.render( params ) );
+
+			// link modal instance with DOM element
 			this.$element = $( jQuerySelector );
 		}
 
@@ -108,7 +131,7 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window', 'wikia.browserDetect' ], f
 		});
 
 		this.$blackout = getBlackout();
-		this.$content = this.$element.children( 'section' );
+		this.$content = this.$element.children().eq( 1 );
 		this.$close = this.$element.find( '.' + CLOSE_CLASS );
 		this.$primaryButton = this.$element.find( 'footer [data-' + PRIMARY_BUTTON_DATA + '=1]' );
 		this.$secondaryButton = this.$element.find( 'footer [data-' + SECONDARY_BUTTON_DATA + '=1]' );
@@ -248,9 +271,8 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window', 'wikia.browserDetect' ], f
 	/** Public API */
 	
 	return {
-		init: function( params, component ) {
-			uiComponent = component;
-			return new Modal( params );
+		init: function( id, uiComponent, params ) {
+			return new Modal( id, uiComponent, params );
 		}
 	};
 });
