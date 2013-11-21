@@ -27,6 +27,7 @@ define( 'wikia.preview', [
 	'use strict';
 
 	var	$article,
+		$previewTypeDropdown,
 		// current design of preview has this margins to emulate page margins
 		// TODO: when we will redesign preview to meet darwin design directions - this should be done differently and refactored
 		articleMargin = fluidlayout.getWidthPadding() + fluidlayout.getArticleBorderWidth(),
@@ -74,44 +75,78 @@ define( 'wikia.preview', [
 		$.showCustomModal(title, content, options);
 	}
 
+	function handleMobilePreview( data ) {
+		var iframe = $article.html( '<iframe class="mobile-preview"></iframe>' ).find( 'iframe' )[0],
+			doc = iframe.document;
 
-	function loadPreview( opening ){
+		if ( iframe.contentDocument ) {
+			doc = iframe.contentDocument;
+		}else if ( iframe.contentWindow ) {
+			doc = iframe.contentWindow.document;
+		}
+
+		doc.open();
+		doc.writeln( data.html );
+		doc.close();
+	}
+
+	function handleDesktopPreview( content ){
+		$article.html( content );
+	}
+
+	/**
+	 * Function that loads 'desktop' preview and
+	 * @param Boolean opening - whether this is first load and all values should be calculated
+	 */
+	function loadPreview( type, opening ){
 		if ( !opening ) {
+			$previewTypeDropdown.attr( 'disabled', true);
 			$article.parent().startThrobbing();
 		}
 
-		options.getPreviewContent(function(content, summary) {
-			$article.html( content ).parent().stopThrobbing();
+		options.getPreviewContent( function( content, summary, data ) {
+			$previewTypeDropdown.attr( 'disabled', false );
+			$article.parent().stopThrobbing();
 
-			if (window.wgOasisResponsive) {
-				if (isRailDropped || isWidePage) {
+			if ( type === previewTypes.mobile.name ) {
+				handleMobilePreview( data );
+			} else {
+				handleDesktopPreview( content );
+			}
+
+			if ( window.wgOasisResponsive ) {
+				if ( isRailDropped || isWidePage ) {
+					if ( opening ) {
+						// set current width of the article
+						previewTypes.current.value = previewTypes.mobile.value = $article.width();
+
+						// get width of article Wrapper
+						articleWrapperWidth = $article.parent().width();
+
+						// subtract scrollbar width to get correct width needed as reference point for scaling
+						articleWrapperWidth -= options.scrollbarWidth;
+					}
+
 					// set proper preview width for shrinken modal
-					//$article.width(options.width - articleMargin * 2);
 					$article.width( previewTypes[currentType].value );
-					// set current width of the article
-					previewTypes[currentType].value = $article.width();
-
-					// get width of article Wrapper
-					articleWrapperWidth = $article.parent().width();
-
-					// subtract scrollbar width to get correct width needed as reference point for scaling
-					articleWrapperWidth -= options.scrollbarWidth;
 				}
 
 				// initial scale of article preview
 				scalePreview( currentType );
 			}
 
-			// move "edit" link to the right side of heading names
-			$article.find('.editsection').each(function() {
-				$(this).appendTo($(this).next());
-			});
+			if ( opening ) {
+				// move "edit" link to the right side of heading names
+				$article.find('.editsection').each(function() {
+					$(this).appendTo($(this).next());
+				});
 
-			addEditSummary( $article, options.width, summary );
+				addEditSummary( $article, options.width, summary );
 
-			// fire an event once preview is rendered
-			$(window).trigger('EditPageAfterRenderPreview', [$article]);
-		});
+				// fire an event once preview is rendered
+				$(window).trigger('EditPageAfterRenderPreview', [$article]);
+			}
+		}, previewTypes[currentType].skin );
 	}
 
 	/**
@@ -164,11 +199,7 @@ define( 'wikia.preview', [
 			$article = contentNode;
 			options = option;
 
-			if ( currentType === previewTypes.mobile.name ) {
-				loadMobilePreview( true );
-			} else {
-				loadPreview( true );
-			}
+			loadPreview( previewTypes[currentType].name, true );
 
 			if ( window.wgOasisResponsive ) {
 				// adding type dropdown to preview
@@ -210,7 +241,7 @@ define( 'wikia.preview', [
 						$(window).trigger('EditPageAfterRenderPreview', [$article]);
 
 						// attach events to type dropdown
-						$('#previewTypeDropdown').on('change', function(event) {
+						$previewTypeDropdown = $('#previewTypeDropdown').on('change', function(event) {
 							switchPreview($(event.target).val());
 						} ).val(currentType);
 
@@ -263,16 +294,16 @@ define( 'wikia.preview', [
 	 */
 
 	function switchPreview( type ) {
-		if ( type === previewTypes.mobile.name ) {
-			loadMobilePreview();
-		} else {
-			if ( currentType === previewTypes.mobile.name ) {
-				loadPreview();
-			}else {
-				$article.width( previewTypes[type].value );
-				scalePreview( type );
-			}
+		var lastType = currentType;
+
+		currentType = type;
+
+		if ( type === previewTypes.mobile.name || lastType === previewTypes.mobile.name ) {
+			loadPreview( previewTypes[currentType].name );
 		}
+
+		$article.width( previewTypes[currentType].value );
+		scalePreview( currentType );
 
 		tracker.track({
 			action: Wikia.Tracker.ACTIONS.CLICK,
@@ -281,37 +312,6 @@ define( 'wikia.preview', [
 			trackingMethod: 'both',
 			value: type
 		});
-
-		currentType = type;
-	}
-
-	function loadMobilePreview( opening ) {
-		if ( !opening ) {
-			$article.parent().startThrobbing();
-		}
-
-		options.getPreviewContent( function(content, summary, data) {
-			$article
-				.width( previewTypes.current.value )
-				.parent()
-				.stopThrobbing();
-
-			scalePreview( 'current' );
-
-			var iframe = $article.html( '<iframe class="mobile-preview"></iframe>' ).find( 'iframe' )[0],
-				doc = iframe.document;
-
-			if ( iframe.contentDocument ) {
-				doc = iframe.contentDocument;
-			}else if ( iframe.contentWindow ) {
-				doc = iframe.contentWindow.document;
-			}
-
-			doc.open();
-			doc.writeln( data.html );
-			doc.close();
-
-		}, previewTypes.mobile.skin );
 	}
 
 	/**
