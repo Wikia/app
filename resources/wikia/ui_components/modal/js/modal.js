@@ -113,18 +113,19 @@ define( 'wikia.ui.modal', [
 		if ( $( jQuerySelector ).length === 0 && typeof( uiComponent ) !== 'undefined' ) {
 
 			buttons = params.vars.buttons;
+			if ( buttons ) {
+				// Create buttons
+				buttons.forEach(function( button, index ) {
+					if ( typeof button === 'object' ) {
 
-			// Create buttons
-			buttons.forEach(function( button, index ) {
-				if ( typeof button === 'object' ) {
-
-					// Extend the button param with the modal default, get the button uicomponent,
-					// and render the params then replace the button params with the rendered html
-					buttons[ index ] = uiComponent.getSubComponent( 'button' ).render(
-						$.extend( true, {}, btnConfig, button )
-					);
-				}
-			});
+						// Extend the button param with the modal default, get the button uicomponent,
+						// and render the params then replace the button params with the rendered html
+						buttons[ index ] = uiComponent.getSubComponent( 'button' ).render(
+							$.extend( true, {}, btnConfig, button )
+						);
+					}
+				});
+			}
 
 			// extend default modal params with the one passed in constructor call
 			params = $.extend( true, {}, modalDefaults, params );
