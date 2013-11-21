@@ -264,7 +264,7 @@ class RunOnCluster extends Maintenance {
 }
 
 class ClusterTestClass {
-	public static function run( $db, $dbname, $verbose = false, $test = false ) {
+	public static function run( $db, $verbose = false, $test = false, $params = array() ) {
 		echo "Default code : Running ".__METHOD__."\n";
 		$sql = 'SELECT database() as db';
 		$result = $db->query( $sql, __METHOD__ );
