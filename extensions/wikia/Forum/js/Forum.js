@@ -47,7 +47,7 @@
 					} );
 
 					policiesModal.show();
-					policiesModal.$content.find( '.ForumPolicies' ).startThrobbing();
+					policiesModal.$content.startThrobbing();
 					$.nirvana.sendRequest({
 						controller: 'ForumExternalController',
 						type: 'GET',
@@ -57,7 +57,7 @@
 							'rev': window.wgPoliciesRev
 						},
 						callback: function( data ) {
-							policiesModal.$content.find( '.ForumPolicies' ).stopThrobbing();
+							policiesModal.$content.stopThrobbing();
 							policiesModal.$content.find( '.ForumPolicies .WikiaArticle' ).html( data.body );
 						}
 					});
