@@ -879,7 +879,11 @@ class SwiftFileBackend extends FileBackendStore {
 	 * @return string
 	 */
 	private function getCredsCacheKey( $username ) {
-		return wfMemcKey( 'backend', $this->getName(), 'usercreds', $username );
+		// Wikia change - begin
+		global $wgFSSwiftServer;
+		// Wikia change - end
+
+		return wfForeignMemcKey(__CLASS__, $wgFSSwiftServer, 'usercreds', $username );
 	}
 
 	/**
