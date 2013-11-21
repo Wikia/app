@@ -247,13 +247,11 @@ var WikiaFooterApp = {
 			this.menuGroup.add(liMore, $.proxy(this.onShowMenu,this));
 		},
 
-		rebuildOverflowMenuIfNeeded: function() {
+		resizeBarAndRebuildOverflowMenu: function() {
 			var width = $('#WikiaPage').outerWidth(),
-				overflowMenu;
+				overflowMenu = this.hideOveflowMenu().appendTo( this.el );
 
 			$('.wikia-bar').width( width );
-
-			overflowMenu = this.hideOveflowMenu().appendTo( this.el );
 			$('li.overflow', overflowMenu ).insertBefore( $('.mytools') );
 
 			this.menuGroup.remove( overflowMenu );
@@ -298,9 +296,9 @@ $(function(){
 	WikiaFooterApp.init();
 
 	if (window.addEventListener) {
-		WikiaFooterApp.tcToolbar.rebuildOverflowMenuIfNeeded( );
+		WikiaFooterApp.tcToolbar.resizeBarAndRebuildOverflowMenu();
 		window.addEventListener('resize', $.throttle( 100, function() {
-			WikiaFooterApp.tcToolbar.rebuildOverflowMenuIfNeeded( false );
+			WikiaFooterApp.tcToolbar.resizeBarAndRebuildOverflowMenu();
 		} ) );
 	}
 });
