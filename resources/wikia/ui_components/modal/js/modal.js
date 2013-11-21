@@ -14,8 +14,6 @@ define( 'wikia.ui.modal', [
 		BLACKOUT_VISIBLE_CLASS = 'visible',
 		CLOSE_CLASS = 'close',
 		INACTIVE_CLASS = 'inactive',
-		PRIMARY_BUTTON_DATA = 'primary',
-		SECONDARY_BUTTON_DATA = 'secondary',
 
 		// default modal rendering params
 		modalDefaults = {
@@ -100,11 +98,6 @@ define( 'wikia.ui.modal', [
 	 *
 	 * Finally attach event handlers for modal component
 	 *
-	 * TODO: below comment is needed???
-	 * sets flags depending on data- attributes:
-	 * - data-destroy-on-close -- if false value passed the modal will remain in DOM after closing it
-	 * END TODO
-	 *
 	 * @constructor
 	 * @param {String|Object} params - ID of modal element in DOM or object with mustache params
 	 */
@@ -141,24 +134,26 @@ define( 'wikia.ui.modal', [
 
 		}
 
-		// link modal instance with DOM element
+		// cache jQuery selectors for different parts of modal
 		this.$element = $( jQuerySelector );
+		this.$content = this.$element.children( 'section' );
+		this.$close = this.$element.find( '.' + CLOSE_CLASS );
+		this.$blackout = $( '#' + blackoutId );
+
+		/** ATTACHING EVENT HANDLERS TO MODAL */
 
 		this.$element.click(function( event ) {
 			// when click happens inside the modal, stop the propagation so it won't be handled by the blackout
 			event.stopPropagation();
 		});
 
+		// trigger custom buttons events based on button 'data-event' attribute
 		this.$element.find( 'footer button' ).click( $.proxy( function( event ) {
 			var modalEventName = $( event.target ).data( 'event' );
 			if ( modalEventName ) {
 				this.trigger( modalEventName, event );
 			}
 		}, that ) );
-
-		this.$content = this.$element.children( 'section' );
-		this.$close = this.$element.find( '.' + CLOSE_CLASS );
-		this.$blackout = $( '#' + blackoutId );
 
 		// clicking outside modal triggers the close action
 		this.$blackout.click( $.proxy(function( event ) {
@@ -169,19 +164,21 @@ define( 'wikia.ui.modal', [
 			}
 		}, that ) );
 
+		// attach close event to X icon in modal header
 		this.$close.click( $.proxy( function( event ) {
 			event.preventDefault();
 			this.trigger( 'close', event );
 		}, that ) );
 
+		// object containing modal event listeners
+		this.listeners = {
+			'close': [ $.proxy(this.close, that) ]
+		};
+
 		// allow to override the default value
 		if ( ( typeof( this.$element.data( 'destroy-on-close' ) ) !== 'undefined' ) ) {
 			this.destroyOnClose = this.$element.data( 'destroy-on-close' );
 		}
-
-		this.listeners = {
-			'close': [ $.proxy( this.close, that ) ]
-		};
 	}
 
 	/**
@@ -225,8 +222,6 @@ define( 'wikia.ui.modal', [
 		} else {
 			this.$blackout.remove();
 		}
-
-		this.onClose();
 	};
 
 	Modal.prototype.trigger = function ( eventName ) {
@@ -248,14 +243,7 @@ define( 'wikia.ui.modal', [
 	};
 
 	/**
-	 * Hook method
-	 * @TODO - do we need this?
-	 */
-
-	Modal.prototype.onClose = function() {};
-
-	/**
-	 * Disables all modal's buttons, adds inactive class to the modal
+	 * Disables all modal buttons, adds inactive class to the modal
 	 * and runs jQuery $.startThrobbing() method on it
 	 */
 
