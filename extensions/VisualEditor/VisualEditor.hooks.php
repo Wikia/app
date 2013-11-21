@@ -9,14 +9,12 @@
  */
 
 class VisualEditorHooks {
-	/** List of skins VisualEditor integration supports */
-	protected static $supportedSkins = array( 'oasis' );
-
 	public static function isAvailable( $skin ) {
+		global $wgVisualEditorSupportedSkins;
 		static $isAvailable = null;
 		if ( is_null( $isAvailable ) ) {
 			$isAvailable = (
-				in_array( $skin->getSkinName(), self::$supportedSkins ) &&
+				in_array( $skin->getSkinName(), $wgVisualEditorSupportedSkins ) &&
 				$skin->getUser()->getOption( 'visualeditor-enable' ) &&
 				!$skin->getUser()->getOption( 'visualeditor-betatempdisable' )
 			);

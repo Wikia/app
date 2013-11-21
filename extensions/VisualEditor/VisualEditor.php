@@ -836,7 +836,7 @@ $wgVisualEditorParsoidTimeout = 100;
 $wgVisualEditorNamespaces = $wgContentNamespaces;
 
 // List of skins VisualEditor integration supports
-$wgVisualEditorSupportedSkins = array( 'vector', 'apex', 'monobook' );
+$wgVisualEditorSupportedSkins = array( 'oasis' );
 
 // List of browsers VisualEditor is incompatibe with
 // See jQuery.client for specification
