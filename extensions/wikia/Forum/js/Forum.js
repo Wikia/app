@@ -41,15 +41,10 @@
 
 				uiModal.create( modalConfig, function( policiesModal ) {
 
-					policiesModal.onPrimaryBtnClick(function( event ) {
-						event.preventDefault();
+					policiesModal.bind( 'edit', function( event ) {
+						//event.preventDefault();
 						window.location = window.wgPoliciesEditURL;
-					});
-
-					policiesModal.onSecondaryBtnClick(function( event ) {
-						event.preventDefault();
-						policiesModal.close();
-					});
+					} );
 
 					policiesModal.show();
 					policiesModal.$content.find( '.ForumPolicies' ).startThrobbing();
