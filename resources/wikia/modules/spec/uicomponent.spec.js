@@ -39,7 +39,7 @@ describe( 'UIComponent', function() {
 		expect( typeof uiComponent.render ).toBe( 'function', 'render' );
 		expect( typeof uiComponent.setComponentsConfig ).toBe( 'function', 'setComponentsConfig' );
 		expect( typeof uiComponent.getSubComponent ).toBe( 'function', 'getSubComponent' );
-		expect( typeof uiComponent.create ).toBe( 'function', 'create' );
+		expect( typeof uiComponent.createComponent ).toBe( 'function', 'createComponent' );
 	});
 
 	it( 'calling without a "new" returns a new instance of UIComponent', function() {
@@ -114,7 +114,7 @@ describe( 'UIComponent', function() {
 	it( 'returns UIComponent if jsWrapperModule is not set', function() {
 		var componentId = 'xxx',
 			uiComponent1 = uicomponent();
-		uiComponent1.create( paramsToRender, function (uiComponent2) {
+		uiComponent1.createComponent( paramsToRender, function (uiComponent2) {
 			expect( uiComponent1 === uiComponent2 ).toBe( true );
 		});
 	});
@@ -135,7 +135,7 @@ describe( 'UIComponent', function() {
 				jsWrapperModule: 'wikia.ui.modal'
 			};
 		uiComponent1.setComponentsConfig( componentConfig );
-		uiComponent1.create( paramsToRender, function ( uiComponent2 ) {
+		uiComponent1.createComponent( paramsToRender, function ( uiComponent2 ) {
 			expect( uiComponent1 === uiComponent2 ).toBe( false );
 		});
 	});
