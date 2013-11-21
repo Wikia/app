@@ -405,7 +405,8 @@ elements
 Comment early and often! For comments inside functions, use inline comments. For comments about functions and documents, use [JSDoc](http://usejsdoc.org/) style block comments.
 
 ```javascript
-/* @desc This function bakes cookies
+/**
+ * @desc This function bakes cookies
  * @param {string} flavor The flavor of the cookie
  * @return {object} cookie The delicious cookie
  */
