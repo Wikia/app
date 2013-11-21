@@ -129,6 +129,14 @@ $messages['qqq'] = array(
 	'tog-hidefollowedpages-v2' => 'An option in [[Special:Preferences]] > {{int:prefs-under-the-hood}} > {{int:prefs-advanced-displayv2}}.',
 );
 
+/** Old English (Ænglisc)
+ * @author Espreon
+ */
+$messages['ang'] = array(
+	'preferences-v2-username' => 'Mīn brūcendnama:',
+	'preferences-v2-redirect-main-page' => 'Hēafodtramet',
+);
+
 /** Arabic (العربية)
  * @author مشعل الحربي
  */
@@ -169,6 +177,13 @@ $messages['br'] = array(
 	'preferences-v2-watchmoves' => "Dilec'hiañ",
 	'preferences-v2-watchdeletion' => 'Diverkañ',
 	'preferences-v2-watchcreations' => 'Krouiñ',
+);
+
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'preferences-v2-redirect-main-page' => 'Коьрта агӀо',
 );
 
 /** German (Deutsch)
@@ -317,7 +332,7 @@ $messages['fi'] = array(
 	'unsubscribe-preferences-toggle-v2' => 'Älä lähetä mitään sähköpostia Wikiasta (ohittaa muut valinnat)',
 	'tog-watchlistdigest-v2' => '...viikoittainen tiedote muutoksista seuraamilleni sivuille on valmis',
 	'preferences-v2-user-landing-page' => 'Aloitussivu:',
-	'preferences-v2-redirect-wiki-activity' => 'Aktiivisuus wikissä',
+	'preferences-v2-redirect-wiki-activity' => 'Viimeisimmät muutokset',
 	'preferences-v2-redirect-main-page' => 'Etusivu',
 	'preferences-v2-redirect-recent-changes' => 'Tuoreet muutokset',
 	'preferences-v2-redirect-explanation' => 'Aloitussivu-vaihtoehto antaa sinun valita mille sivulle päädyt, kun kirjoitat $1 selaimeesi.',
@@ -401,17 +416,18 @@ $messages['gl'] = array(
 	'preferences-v2-usergroups' => 'Os meus grupos de usuario:',
 	'preferences-v2-gender' => 'O meu sexo:',
 	'preferences-v2-password' => 'O meu contrasinal:',
+	'preferences-v2-oldsig' => 'Sinatura actual:',
 	'preferences-v2-nickname' => 'Sinatura personalizada:',
 	'preferences-v2-fancysig' => 'Quero usar texto wiki na miña sinatura<br />[[{{MediaWiki:preferences-v2-fancysig-help-page-name}}|Que son as sinaturas?]]',
 	'preferences-v2-fancysig-help-page-name' => 'Help:Sinatura',
 	'prefs-appearance' => 'Aparencia',
-	'preferences-v2-date' => 'Formato da data',
+	'preferences-v2-date' => 'Formato da data:',
 	'preferences-v2-time' => 'Zona horaria:',
-	'preferences-v2-skin' => 'Diseño:',
+	'preferences-v2-skin' => 'Disposición:',
 	'prefs-emailv2' => 'Correo electrónico',
 	'prefs-email-me-v2' => 'Enviádeme un correo electrónico cando...',
 	'tog-enotifwatchlistpages-v2' => '...se modifique unha páxina que estou seguindo',
-	'tog-enotifusertalkpages-v2' => '...se modifique a páxina de conversa do meu usuario',
+	'tog-enotifusertalkpages-v2' => '...se modifique a miña páxina de conversa de usuario',
 	'tog-enotifminoredits-v2' => '...se realicen cambios pequenos nunha páxina que estou seguindo',
 	'tog-marketingallowed-v2' => '...Wikia teña noticias e eventos',
 	'prefs-email-advanced-v2' => 'Opcións avanzadas',
@@ -419,15 +435,19 @@ $messages['gl'] = array(
 	'prefs-wikiemail' => 'Opcións de {{SITENAME}}. Enviádeme un correo electrónico cando...',
 	'prefs-email-unsubscribe' => 'Desactivar todos os correos electrónicos',
 	'unsubscribe-preferences-toggle-v2' => 'Desactivar todos os correos electrónicos de Wikia (anula todas as outras opcións)',
+	'tog-watchlistdigest-v2' => '...estea preparado un boletín semanal de cambios nas miñas páxinas seguidas',
+	'tog-justify-v2' => 'Amosar os parágrafos xustificados',
+	'preferences-v2-user-landing-page' => 'Páxina de destino:',
+	'preferences-v2-redirect-wiki-activity' => 'Actividade no wiki',
 	'preferences-v2-redirect-main-page' => 'Portada',
 	'preferences-v2-redirect-recent-changes' => 'Cambios recentes',
 	'preferences-v2-redirect-explanation' => 'A opción da páxina de destino permite elixir a onde ir cando escribe "$1" no seu navegador.',
 	'prefs-monobookv2' => 'MonoBook',
 	'prefs-under-the-hood' => 'Para detallistas',
 	'prefs-recent-changesv2' => 'Cambios recentes, historiais e rexistros',
-	'prefs-followed-pagesv2' => 'Canal de páxinas seguidas',
+	'prefs-followed-pagesv2' => 'Fonte de novas das páxinas seguidas',
 	'prefs-advanced-displayv2' => 'Opcións de visualización avanzadas',
-	'tog-highlightbrokenv2' => 'Amosar ligazóns rotas en vermello, non con un signo de interrogación.',
+	'tog-highlightbrokenv2' => 'Mostrar as ligazóns rotas en vermello, non cun signo de interrogación.',
 	'tog-showAdsv2' => 'Anuncios:',
 	'prefs-addressv2' => 'Enderezo',
 	'prefs-followed-pages-iv2' => 'Seguir as páxinas nas que eu faga esta acción...',

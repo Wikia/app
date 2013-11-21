@@ -851,6 +851,19 @@ checkbox on Special:Block',
 	'wall-topic-edit-cancel' => 'Edit Topics - Cancel button',
 );
 
+/** Old English (Ænglisc)
+ * @author Espreon
+ */
+$messages['ang'] = array(
+	'wall-toolbar-history' => 'Stǣr',
+	'wall-button-to-cancel-preview' => 'Adihtan',
+	'wall-message-edit' => 'Adihtan',
+	'wall-message-delete' => 'Forlēosan',
+	'wall-history' => 'Stǣr',
+	'wall-quote-author' => '$1 wrāt:',
+	'wall-topic-edit-save' => 'Hordian',
+);
+
 /** Arabic (العربية)
  * @author Achraf94
  * @author زكريا

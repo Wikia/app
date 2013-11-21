@@ -30,6 +30,8 @@ $messages['en'] = array(
 	'wikia-visualeditor-dialog-wikiasourcemode-help-text' => 'Formatting help',
 );
 
+/** Message documentation (Message documentation)
+ */
 $messages['qqq'] = array(
 	'wikia-visualeditor-preference-enable' => 'The description next to the checkbox to enable or disable VisualEditor in Preferences',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Call-to-action text rendered in the toolbar button for opening the dialog to add media items to the article',
@@ -41,7 +43,7 @@ $messages['qqq'] = array(
 	'wikia-visualeditor-dialog-wikiamediainsert-preview-alert' => 'Alert pop-up when user clicks on a video or image to preview.',
 	'wikia-visualeditor-help-label' => 'Display text for the link to the user guide.',
 	'wikia-visualeditor-help-link' => 'Link to the user guide for how to use VisualEditor',
-	'wikia-visualeditor-beta-warning' => 'Note shown when user clicks on \'beta\' label in VisualEditor, warning users that the software may have issues.',
+	'wikia-visualeditor-beta-warning' => "Note shown when user clicks on 'beta' label in VisualEditor, warning users that the software may have issues.",
 	'wikia-visualeditor-wikitext-warning' => 'Contents of notification displayed when Wikitext has been detected.',
 	'wikia-visualeditor-aliennode-tooltip' => 'Tooltip for items that VisualEditor cannot edit',
 	'wikia-visualeditor-dialog-transclusion-title' => 'Title of the transclusion dialog',
@@ -54,4 +56,60 @@ $messages['qqq'] = array(
 	'wikia-visualeditor-dialog-wikiasourcemode-apply-button' => 'Button text for applying changes made in source mode.',
 	'wikia-visualeditor-dialog-wikiasourcemode-help-link' => 'Link to the user guide for how to use Wikitext',
 	'wikia-visualeditor-dialog-wikiasourcemode-help-text' => 'Text for the link to the user guide for how to use Wikitext',
+);
+
+/** Russian (русский)
+ * @author Okras
+ */
+$messages['ru'] = array(
+	'wikia-visualeditor-preference-enable' => 'Включить бета-версию Визуального редактора',
+	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Добавить медиа-файлы',
+	'wikia-visualeditor-dialog-wikiamediainsert-insert-button' => 'Добавить медиа-файлы',
+	'wikia-visualeditor-dialog-wikiamediainsert-upload-label' => 'Добавить новые изображения в эту викию',
+	'wikia-visualeditor-dialog-wikiamediainsert-upload-button' => 'Загрузить',
+	'wikia-visualeditor-dialog-wikiamediainsert-upload-error' => 'Ошибка загрузки файла',
+	'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' => 'Введите фразу для поиска или URL-адрес',
+	'wikia-visualeditor-dialog-wikiamediainsert-preview-alert' => 'Предварительный просмотр скоро появится!',
+	'wikia-visualeditor-help-label' => 'Известные проблемы',
+	'wikia-visualeditor-help-link' => 'Help:VisualEditor',
+	'wikia-visualeditor-aliennode-tooltip' => 'К сожалению, в настоящее время этот элемент можно изменять только в режиме правки исходного текста.',
+	'wikia-visualeditor-dialog-transclusion-title' => 'Шаблон',
+	'wikia-visualeditor-dialogbutton-transclusion-tooltip' => 'Шаблон',
+	'wikia-visualeditor-savedialog-label-save' => 'Опубликовать',
+	'wikia-visualeditor-savedialog-label-restore' => 'Восстановить страницу',
+	'wikia-visualeditor-toolbar-savedialog' => 'Опубликовать',
+	'wikia-visualeditor-dialogbutton-wikiasourcemode-tooltip' => 'Редактор исходного кода',
+	'wikia-visualeditor-dialog-wikiasourcemode-title' => 'Редактор исходного кода',
+	'wikia-visualeditor-dialog-wikiasourcemode-apply-button' => 'Применить изменения',
+	'wikia-visualeditor-dialog-wikiasourcemode-help-link' => 'Help:Wikitext',
+	'wikia-visualeditor-dialog-wikiasourcemode-help-text' => 'Помощь по форматированию',
+);
+
+/** Ukrainian (українська)
+ * @author Andriykopanytsia
+ */
+$messages['uk'] = array(
+	'wikia-visualeditor-preference-enable' => 'Увімкнути бета-версію Візуального редактора',
+	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Додати медіа',
+	'wikia-visualeditor-dialog-wikiamediainsert-insert-button' => 'Додати медіа',
+	'wikia-visualeditor-dialog-wikiamediainsert-upload-label' => 'Додати нові зображення в цю вікію',
+	'wikia-visualeditor-dialog-wikiamediainsert-upload-button' => 'Завантажити',
+	'wikia-visualeditor-dialog-wikiamediainsert-upload-error' => 'Помилка завантаження файлу',
+	'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' => 'Введіть фразу для пошуку або URL-адресу',
+	'wikia-visualeditor-dialog-wikiamediainsert-preview-alert' => 'Попередній перегляд найближчим часом!',
+	'wikia-visualeditor-help-label' => 'Відомі проблеми',
+	'wikia-visualeditor-help-link' => 'Help:Візуальний редактор',
+	'wikia-visualeditor-beta-warning' => 'Це бета інтеграція Візуального редактора у Вікію. Наявні деякі неполадки, але ми сподіваємося, що він вам сподобається!',
+	'wikia-visualeditor-wikitext-warning' => "Ви використовуєте бета версію Візуального редактора - вікітекст тут не працює. Виберіть пункт \"Режим коду“ із меню 'Більше' для використання вікітексту.",
+	'wikia-visualeditor-aliennode-tooltip' => 'Вибачте, цей елемент наразі можна редагувати лише у режимі класичного редактора.',
+	'wikia-visualeditor-dialog-transclusion-title' => 'Шаблон',
+	'wikia-visualeditor-dialogbutton-transclusion-tooltip' => 'Шаблон',
+	'wikia-visualeditor-savedialog-label-save' => 'Опублікувати',
+	'wikia-visualeditor-savedialog-label-restore' => 'Відновити сторінку',
+	'wikia-visualeditor-toolbar-savedialog' => 'Опублікувати',
+	'wikia-visualeditor-dialogbutton-wikiasourcemode-tooltip' => 'Редактор вихідного коду',
+	'wikia-visualeditor-dialog-wikiasourcemode-title' => 'Редактор вихідного коду',
+	'wikia-visualeditor-dialog-wikiasourcemode-apply-button' => 'Застосувати зміни',
+	'wikia-visualeditor-dialog-wikiasourcemode-help-link' => 'Help:вікітекст',
+	'wikia-visualeditor-dialog-wikiasourcemode-help-text' => 'Довідка з форматування',
 );
