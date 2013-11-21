@@ -28,6 +28,7 @@ class ApiTempUpload extends ApiBase {
 	}
 
 	private function executePermanent() {
+		$this->desiredName = wfStripIllegalFilenameChars( $this->mParams['desiredName'] );
 		if ( $this->mParams['mediaType'] === 'video' ) {
 			$this->executePermanentVideo();
 		} else {
@@ -36,8 +37,6 @@ class ApiTempUpload extends ApiBase {
 	}
 
 	private function executePermanentVideo() {
-		$this->mParams['desiredName'] = wfStripIllegalFilenameChars( $this->mParams['desiredName'] );
-
 		if ( empty( $this->mParams['provider'] ) ) {
 			$this->dieUsageMsg( 'The provider parameter must be set' );
 		}
@@ -54,8 +53,8 @@ class ApiTempUpload extends ApiBase {
 			$name = $title->getText();
 			wfRunHooks( 'AddPremiumVideo', array( $title ) );
 
-		} else if ( empty( $this->mParams['desiredName'] ) || empty( $this->mParams['videoId'] ) ) {
-			$this->dieUsageMsg( 'The desiredName, provider, and videoId parameters must be set' );
+		} else if ( empty( $this->desiredName ) || empty( $this->mParams['videoId'] ) ) {
+			$this->dieUsageMsg( 'The desiredName, provider, and videoId parameters must be set to correct values' );
 		} else {
 			// TODO: Check with Video team if that's the best way to look for video duplicates
 			$duplicates = WikiaFileHelper::findVideoDuplicates(
@@ -70,7 +69,7 @@ class ApiTempUpload extends ApiBase {
 				$uploader = new VideoFileUploader();
 
 				$title = $uploader->getUniqueTitle(
-					$uploader->sanitizeTitle( $this->mParams['desiredName'] )
+					$uploader->sanitizeTitle( $this->desiredName )
 				);
 				$uploader->setProvider( $this->mParams['provider'] );
 				$uploader->setVideoId( $this->mParams['videoId'] );
@@ -84,8 +83,8 @@ class ApiTempUpload extends ApiBase {
 	}
 
 	private function executePermanentImage() {
-		if ( empty ( $this->mParams['desiredName'] ) ) {
-			$this->dieUsageMsg( 'The desiredName parameter must be set' );
+		if ( empty ( $this->desiredName ) ) {
+			$this->dieUsageMsg( 'The desiredName parameter must be set to a correct value' );
 		}
 		if ( empty ( $this->mParams['temporaryFileName'] ) ) {
 			$this->dieUsageMsg( 'The temporaryFileName parameter must be set' );
@@ -100,7 +99,7 @@ class ApiTempUpload extends ApiBase {
 		if ( count ( $duplicates ) > 0 ) {
 			$name = $duplicates[0]->getTitle()->getText();
 		} else {
-			$title = $this->getUniqueTitle( $this->mParams['desiredName'] );
+			$title = $this->getUniqueTitle( $this->desiredName );
 			$file = new LocalFile( $title, RepoGroup::singleton()->getLocalRepo() );
 			$pageText = '';
 			if ( isset( $this->mParams['license'] ) ) {
