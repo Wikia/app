@@ -135,8 +135,6 @@ define( 'wikia.ui.modal', [
 
 		this.$content = this.$element.children( 'section' );
 		this.$close = this.$element.find( '.' + CLOSE_CLASS );
-		this.$primaryButton = this.$element.find( 'footer [data-' + PRIMARY_BUTTON_DATA + '=1]' );
-		this.$secondaryButton = this.$element.find( 'footer [data-' + SECONDARY_BUTTON_DATA + '=1]' );
 		this.$blackout = $( '#' + blackoutId );
 
 		// clicking outside modal triggers the close action
@@ -151,14 +149,6 @@ define( 'wikia.ui.modal', [
 		this.$close.click( $.proxy( function( event ) {
 			event.preventDefault();
 			this.trigger( 'close' );
-		}, that ) );
-
-		this.$primaryButton.click( $.proxy( function ( event ) {
-			this.$element.trigger( 'onPrimaryBtnClick', [ event ] );
-		}, that ) );
-
-		this.$secondaryButton.click( $.proxy( function( event ) {
-			this.$element.trigger( 'onSecondaryBtnClick', [ event ] );
 		}, that ) );
 
 		// allow to override the default value
@@ -239,22 +229,6 @@ define( 'wikia.ui.modal', [
 	 */
 
 	Modal.prototype.onClose = function() {};
-
-	/**
-	 * Add onPrimaryButtonClick handler
-	 * @param {function} callback
-	 */
-	Modal.prototype.onPrimaryBtnClick = function( callback ) {
-		this.$element.on( 'onPrimaryBtnClick', callback );
-	};
-
-	/**
-	 * Add onSecondaryButtonClick handler
-	 * @param {function} callback
-	 */
-	Modal.prototype.onSecondaryBtnClick = function( callback ) {
-		this.$element.on( 'onSecondaryBtnClick', callback );
-	};
 
 	/**
 	 * Disables all modal's buttons, adds inactive class to the modal
