@@ -116,9 +116,10 @@ define( 'wikia.ui.modal', [
 			// render modal markup and append to DOM
 			$( 'body' ).append( uiComponent.render( params ) );
 
-			// link modal instance with DOM element
-			this.$element = $( jQuerySelector );
 		}
+
+		// link modal instance with DOM element
+		this.$element = $( jQuerySelector );
 
 		this.$element.click( function( event ) {
 			// when click happens inside the modal, stop the propagation so it won't be handled by the blackout
