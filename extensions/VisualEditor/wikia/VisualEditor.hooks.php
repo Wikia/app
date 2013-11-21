@@ -9,8 +9,11 @@
 class VisualEditorWikiaHooks {
 
 	public static function onGetPreferences( $user, &$preferences ) {
-		unset( $preferences['visualeditor-betatempdisable'] );
-		$preferences['visualeditor-enable']['label-message'] = 'visualeditor-wikiapreference-enable';
+		// Remove core VisualEditor preferences
+		unset(
+			$preferences['visualeditor-enable'],
+			$preferences['visualeditor-betatempdisable']
+		);
 
 		return true;
 	}
