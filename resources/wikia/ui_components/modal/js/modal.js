@@ -64,7 +64,7 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window', 'wikia.browserDetect' ], f
 			// Create buttons
 			buttons.forEach(function( button, index ) {
 				if ( typeof button === 'object' ) {
-					if ( typeof button.classes !== 'undefined' ) {
+					if ( typeof button.vars.classes !== 'undefined' ) {
 						$.merge( button.vars.classes, btnConfig.vars.classes );
 					}
 					buttons[ index ] = uiComponent.getSubComponent( 'button' ).render(
