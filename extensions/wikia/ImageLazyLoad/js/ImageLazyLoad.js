@@ -2,7 +2,7 @@
  * @author Piotr Bablok <pbablok@wikia-inc.com>
  */
 
-$( function() {
+$(function() {
 	'use strict';
 
 	// it's a global, it should be a global
@@ -23,12 +23,12 @@ $( function() {
 		createCache: function() {
 			var self = this;
 			self.cache = [];
-			$( 'img.lzy' ).each( function( idx ) {
+			$( 'img.lzy' ).each(function( idx ) {
 				var cacheItem = [],
 					$el = $( this ),
 					top = $el.offset().top;
 				cacheItem.push( this );
-				cacheItem.push ($el );
+				cacheItem.push ( $el );
 				cacheItem.push( top );
 				cacheItem.push( $el.height() + top );
 				self.cache[ idx ] = cacheItem;
@@ -133,4 +133,4 @@ $( function() {
 	} );
 
 	window.ImgLzy = ImgLzy;
-} );
+});
