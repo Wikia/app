@@ -83,7 +83,8 @@
 				"altLink": {
 					"id": "largeModalAltLink",
 					"href": "#",
-					"text": "Open small modal"
+					"text": "Open small modal",
+					"title": "Open small modal"
 				},
 				"buttons": [
 					"<a href=\"#\" id=\"largeModalPrimaryBtn\" class=\"button primary\" title=\"large modal primary button\">Submit</a>",
