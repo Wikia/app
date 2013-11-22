@@ -15,7 +15,7 @@ define( 'wikia.preview', [
 	'use strict';
 
 	var $article,
-		$previewTypeDropdown,
+		$previewTypeDropdown = $(), // in case preview loaded quicker than switchPreview
 		previewTemplate,
 		// current design of preview has this margins to emulate page margins
 		// TODO: when we will redesign preview to meet darwin design directions - this should be done differently and refactored
@@ -104,7 +104,6 @@ define( 'wikia.preview', [
 	 */
 	function loadPreview ( type, opening ) {
 		if ( !opening ) {
-			previewLoaded = false;
 			$previewTypeDropdown.attr( 'disabled', true );
 			$article.parent().startThrobbing();
 		}
