@@ -842,7 +842,7 @@ class SQL {
 	 * @param bool $autoIterate whether or not this class should iterate over the results for us, or if callable will handle it
 	 * @return mixed|bool results returned by $callback processing of the db query result, or false on error
 	 */
-	public function run($db, callable $recordProcessor, $cacheKey=null, $defaultReturn=[], $autoIterate=true) {
+	public function runLoop($db, callable $recordProcessor, $cacheKey=null, $defaultReturn=[], $autoIterate=true) {
 		$breakDown = $this->build();
 		$cache = $this->getCache();
 		$cacheKey = isset($cacheKey) ? $cacheKey : $this->getCacheKey($breakDown);
@@ -863,8 +863,8 @@ class SQL {
 		return $result === false ? $defaultReturn : $result;
 	}
 
-	public function runNoIterate($db, callable $callback, $cacheKey=null, $defaultReturn=[]) {
-		return $this->run($db, $callback, $cacheKey, $defaultReturn, false);
+	public function run($db, callable $callback, $cacheKey=null, $defaultReturn=[]) {
+		return $this->runLoop($db, $callback, $cacheKey, $defaultReturn, false);
 	}
 
 	protected function getCacheKey(Breakdown $breakDown) {
@@ -1355,6 +1355,7 @@ class SQL {
 	 * @param callable $callback
 	 * @param bool $autoIterate whether we should wrap the logic of iterating through db results for the callback
 	 * @throws \InvalidArgumentException
+	 * @return array|mixed query results
 	 */
 	protected function query($db, Breakdown $breakDown, callable $callback, $autoIterate) {
 		if (!method_exists($db, 'query')) {
