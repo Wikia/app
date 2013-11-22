@@ -73,6 +73,7 @@ class WikiFeaturesHelper extends WikiaModel {
 				$list[] = array(
 					'name' => $feature,
 					'enabled' => $this->getFeatureEnabled($feature),
+					'imageExtension' => 'png'
 				);
 			}
 		}
@@ -92,6 +93,7 @@ class WikiFeaturesHelper extends WikiaModel {
 					'enabled' => $this->getFeatureEnabled($feature),
 					'new' => self::isNew($feature),
 					'active' => $this->wg->Lang->formatNum( $this->getNumActiveWikis( $feature ) ),
+					'imageExtension' => $feature == 'wgEnableVisualEditorExt' ? 'gif' : 'png'
 				);
 			}
 		}
