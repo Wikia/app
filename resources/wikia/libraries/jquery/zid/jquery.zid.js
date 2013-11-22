@@ -7,7 +7,7 @@
  * Copyright 2013 Wikia. All rights reserved.
  * ( https://github.com/kvas-damian/zid )
  *
- * Requires jQuery debounce plugin: http://benalman.com/projects/jquery-throttle-debounce-plugin/
+ * Requires jQuery throttle plugin: http://benalman.com/projects/jquery-throttle-debounce-plugin/
  *
  */
 
@@ -25,7 +25,7 @@
 		selector: '.item',
 		minColumnWidth: 225,
 		gutter: 20,
-		debounceThreshold: 50
+		ThrottleThreshold: 50
 	};
 
 	Zid.prototype = {
@@ -54,7 +54,8 @@
 			// add class 'zid' to container
 			$( this.box ).addClass( 'zid' );
 			// bind on resize
-			$( window ).on( 'resize', $.debounce( this.options.debounceThreshold, $.proxy( container.resize, this ) ) );
+			$( window ).on( 'resize', $.throttle( this.options.ThrottleThreshold, $.proxy( container.resize, this ) ) );
+			$( window ).on( 'orientationchange', $.proxy( container.resize, this ));
 		},
 
 		/**
@@ -112,8 +113,14 @@
 		 * @private
 		 */
 		_getColumnWidthStyle: function() {
-			return 'calc(' + ( 100 / this.cols ) + '% - ' +
+			var out = 'calc(' + ( 100 / this.cols ) + '% - ' +
 				( ( ( this.cols - 1 ) * this.options.gutter ) / this.cols ) + 'px )';
+
+			if ($.browser.webkit) {
+				out = '-webkit-' + out;
+			}
+
+			return out;
 		},
 
 		/**
