@@ -39,7 +39,7 @@ describe( 'Modal module', function() {
 			},
 			modalObject = modal.createComponent( params, uiComponent);
 
-		expect( document.body.innerHTML.indexOf( htmlMock )).toNotBe( -1 );
+		expect( document.body.innerHTML.indexOf( htmlMock ) ).toNotBe( -1 );
 		expect( typeof modalObject ).toBe( 'object' );
 		expect( modalObject.$element.selector ).toBe( modalSelector );
 	} );
