@@ -422,43 +422,17 @@ SQL;
 	 * Search for related video titles
 	 * @param Title|string $title - Either a Title object or title text
 	 * @param bool $test - Operate in test mode.  Allows commandline scripts to implement --test
+	 * @param bool $verbose - Whether to output more debugging information
 	 * @return array - A list of suggested videos
 	 */
-	public function suggestionSearch( $title, $test = false ) {
+	public function suggestionSearch( $title, $test = false, $verbose = false ) {
 		// Accept either a title string or title object here
 		$titleObj = is_object( $title ) ? $title : Title::newFromText( $title, NS_FILE );
 		$articleId = $titleObj->getArticleID();
 
-		$readableTitle = $titleObj->getText();
-
-		$params = array( 'title' => $readableTitle );
-
-		$file = wfFindFile( $titleObj );
-		if ( !empty( $file ) ) {
-			$serializedMetadata = $file->getMetadata();
-			if ( !empty( $serializedMetadata ) ) {
-				$metadata = unserialize( $serializedMetadata );
-				if ( !empty( $metadata['duration'] ) ) {
-					$duration = $metadata['duration'];
-					$params['minseconds'] = $duration - min( [ $duration, self::DURATION_DELTA ] );
-					$params['maxseconds'] = $duration + min( [ $duration, self::DURATION_DELTA ] );
-				}
-			}
-		}
-
-		// get search results
-		$videoRows = $this->app->sendRequest( 'WikiaSearchController', 'searchVideosByTitle', $params )
-								->getData();
-
 		if ( !$test ) {
 			wfSetWikiaPageProp( WPP_LVS_SUGGEST_DATE, $articleId, time() );
 		}
-
-		// Reuse code from VideoHandlerHelper
-		$helper = new VideoHandlerHelper();
-
-		// Get the play button image to overlay on the video
-		$playButton = WikiaFileHelper::videoPlayButtonOverlay( self::THUMBNAIL_WIDTH, self::THUMBNAIL_HEIGHT );
 
 		// flag for kept video
 		$pageStatus = $this->getPageStatus( $articleId );
@@ -472,14 +446,45 @@ SQL;
 		$suggest = wfGetWikiaPageProp( WPP_LVS_SUGGEST, $articleId );
 		$suggestions = array();
 		if ( !empty( $suggest ) ) {
+			if ( $verbose ) {
+				echo "\tExamining the ".count($suggest)." current match(es)\n";
+			}
+
 			foreach ( $suggest as $video ) {
 				$suggestTitles[$video['title']] = 1;
 				if ( $isKeptVideo && array_key_exists( $video['title'], $historicalSuggestions ) ) {
+					if ( $verbose ) {
+						echo "\t\t[FILTER] Match was already suggested in the past: '".$video['title']."'\n";
+					}
 					continue;
 				}
 
 				$suggestions[] = $video;
 			}
+		}
+
+		$readableTitle = $titleObj->getText();
+		$params = array( 'title' => $readableTitle );
+
+		$file = wfFindFile( $titleObj );
+		if ( !empty( $file ) ) {
+			$serializedMetadata = $file->getMetadata();
+			if ( !empty( $serializedMetadata ) ) {
+				$metadata = unserialize( $serializedMetadata );
+				if ( !empty( $metadata['duration'] ) ) {
+					$duration = $metadata['duration'];
+#					$params['minseconds'] = $duration - min( [ $duration, self::DURATION_DELTA ] );
+#					$params['maxseconds'] = $duration + min( [ $duration, self::DURATION_DELTA ] );
+				}
+			}
+		}
+
+		// get search results
+		$videoRows = $this->app->sendRequest( 'WikiaSearchController', 'searchVideosByTitle', $params )
+							   ->getData();
+
+		if ( $verbose ) {
+			echo "\tSearch found ".count($videoRows)." potential new match(es)\n";
 		}
 
 		$videos = array();
@@ -488,9 +493,21 @@ SQL;
 
 		$titleTokenized = $this->getNormalizedTokens( $readableTitle );
 
+		// Reuse code from VideoHandlerHelper
+		$helper = new VideoHandlerHelper();
+
+		// Get the play button image to overlay on the video
+		$playButton = WikiaFileHelper::videoPlayButtonOverlay( self::THUMBNAIL_WIDTH, self::THUMBNAIL_HEIGHT );
+
 		foreach ( $videoRows as $videoInfo ) {
-			$videoRowTitleTokenized = $this->getNormalizedTokens( preg_replace( '/^File:/', '',  $videoInfo['title'] ) );
-			if ( $this->getJaccard()->similarity( $titleTokenized, $videoRowTitleTokenized ) < self::MIN_JACCARD_SIMILARITY ) {
+			$rowTitle = preg_replace( '/^File:/', '',  $videoInfo['title'] );
+			$videoRowTitleTokenized = $this->getNormalizedTokens( $rowTitle );
+
+			$similarity = $this->getJaccard()->similarity( $titleTokenized, $videoRowTitleTokenized );
+			if ( $similarity < self::MIN_JACCARD_SIMILARITY ) {
+				if ( $verbose ) {
+					echo "\t\t[FILTER] Below Jaccard similarity threshold ($similarity < ".self::MIN_JACCARD_SIMILARITY."): '$rowTitle'\n";
+				}
 				continue;
 			}
 
@@ -499,6 +516,9 @@ SQL;
 			// skip if the video has already been suggested (from kept videos)
 			if ( $isKeptVideo ) {
 				if ( array_key_exists( $videoTitle, $historicalSuggestions ) ) {
+					if ( $verbose ) {
+						echo "\t\t[FILTER] New suggestion was suggested previously: '$videoTitle'\n";
+					}
 					continue;
 				} else {
 					$isNew = true;
@@ -507,6 +527,9 @@ SQL;
 
 			// skip if the video exists in the current suggestions
 			if ( array_key_exists( $videoTitle, $suggestTitles ) ) {
+				if ( $verbose ) {
+					echo "\t\t[FILTER] New suggestion is already suggested: '$videoTitle'\n";
+				}
 				continue;
 			} else {
 				$isNew = true;
@@ -521,6 +544,9 @@ SQL;
 
 			// Go to the next suggestion if we can't get any details for this one
 			if ( empty( $videoDetail ) ) {
+				if ( $verbose ) {
+					echo "\t\t[FILTER] Can't find video detail for '$videoTitle'\n";
+				}
 				continue;
 			}
 
