@@ -57,6 +57,9 @@ module.exports = function(config) {
 			'resources/wikia/modules/csspropshelper.js',
 			'resources/wikia/modules/spec/*.spec.js',
 
+			//UI components
+			'resources/wikia/ui_components/**/*.js',
+
 			//Advertisment
 			'extensions/wikia/AdEngine/js/AdConfig2.js',
 			'extensions/wikia/AdEngine/js/AdConfig2Late.js',
