@@ -340,13 +340,13 @@ var Wall = $.createClass(Object, {
 				},
 				callback: function( data ) {
 					require( [ 'wikia.ui.factory' ], function( uiFactory ) {
-						uiFactory.init( 'modal' ).then( function( uiModal ) {
+						uiFactory.init( [ 'modal' ] ).then( function( uiModal ) {
 							var votersModalConfig = {
 									vars: {
 										id: 'WallVotersModalWrapper',
 										size: 'small',
 										content: data,
-										title: $.msg( 'wall-votes-modal-title' ),
+										title: $.msg( 'wall-votes-modal-title' )
 									}
 								};
 
@@ -358,7 +358,7 @@ var Wall = $.createClass(Object, {
 				}
 			});
 
-			$.getResources([$.getSassCommonURL('/extensions/wikia/Wall/css/WallVoters.scss')]);
+			$.getResources( [ $.getSassCommonURL( '/extensions/wikia/Wall/css/WallVoters.scss' ) ] );
 		}
 	},
 
@@ -465,7 +465,7 @@ var Wall = $.createClass(Object, {
 										id: modalPrimaryBtnId,
 										value: okmsg,
 										classes: [ 'normal', 'primary' ],
-										disabled: ( mode !== 'rev' ) ? true : false,
+										disabled: ( mode !== 'rev' ),
 										data: [
 											{
 												key: 'event',
@@ -487,7 +487,7 @@ var Wall = $.createClass(Object, {
 								}
 							]
 						}
-					}
+					};
 
 				uiModal.createComponent( confirmModalConfig, function( confirmModal ) {
 					confirmModal.bind( 'WikiaConfirmOk', function () {
