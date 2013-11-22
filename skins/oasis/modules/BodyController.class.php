@@ -77,16 +77,13 @@ class BodyController extends WikiaController {
 	 * @return Boolean
 	 */
 	public static function isResponsiveLayoutEnabled() {
-		global $wgOasisResponsive, $wgEnableWikiaHomePageExt, $wgLanguageCode;
+		global $wgOasisResponsive, $wgEnableWikiaHomePageExt;
 
 		return !empty( $wgOasisResponsive ) &&
 				// Prevent the responsive layout from being enabled on the
 				// corporate wiki as it will break styling on it.
 				// TODO: remove this check when it's safe to enable there.
-				empty( $wgEnableWikiaHomePageExt ) &&
-				// enable only on non-german wikis
-				// TODO: remove this check after it's safe to enable responsive on germal wikis
-				($wgLanguageCode !== 'de');
+				empty( $wgEnableWikiaHomePageExt );
 	}
 
 	/**
