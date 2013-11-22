@@ -46,7 +46,10 @@ OO.mixinClass( ve.ce.WikiaBlockMediaNode, ve.ce.FocusableNode );
 
 OO.mixinClass( ve.ce.WikiaBlockMediaNode, ve.ce.RelocatableNode );
 
+// Need to mixin base class as well
 OO.mixinClass( ve.ce.WikiaBlockMediaNode, ve.ce.ResizableNode );
+
+OO.mixinClass( ve.ce.WikiaBlockMediaNode, ve.ce.MWResizableNode );
 
 /* Static Properties */
 
