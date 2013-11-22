@@ -89,4 +89,53 @@ describe( 'Modal events', function() {
 		expect( array ).toEqual( [ 'foo1', 'foo2' ] );
 	} );
 
+	it( 'allows listeners to return deferreds', function() {
+		var listeners = {
+			onFoo: function() {
+				var deferred = new $.Deferred();
+				deferred.resolve();
+				return deferred.promise();
+			},
+			onTriggerComplete: function() { }
+		};
+
+		spyOn( listeners, 'onFoo' ).andCallThrough();
+		spyOn( listeners, 'onTriggerComplete' );
+
+		modal.bind( 'foo', listeners.onFoo );
+		modal.trigger( 'foo' ).then( listeners.onTriggerComplete );
+		expect( listeners.onFoo ).toHaveBeenCalled();
+		expect( listeners.onFoo.calls.length ).toEqual( 1 );
+		expect( listeners.onTriggerComplete ).toHaveBeenCalled();
+		expect( listeners.onTriggerComplete.calls.length ).toEqual( 1 );
+	} );
+
+	it( 'allows event to be completed without listeners', function() {
+		var listeners = {
+			onTriggerComplete: function() { }
+		};
+
+		spyOn( listeners, 'onTriggerComplete' );
+		modal.trigger( 'foo' ).then( listeners.onTriggerComplete );
+		expect( listeners.onTriggerComplete ).toHaveBeenCalled();
+		expect( listeners.onTriggerComplete.calls.length ).toEqual( 1 );
+	} );
+
+	it( 'allows to pass parameters to listeners', function() {
+		var listeners = {
+			onFoo: function() { }
+		};
+
+		spyOn( listeners, 'onFoo' );
+
+		modal.bind( 'foo', listeners.onFoo );
+		modal.trigger( 'foo', 1, 'test', [ 'bar' ] );
+
+		expect( listeners.onFoo ).toHaveBeenCalledWith( 1, 'test', [ 'bar' ] );
+	} );
+
+	it( 'using reject allows to cancel the event call', function() {
+
+	} );
+
 });
