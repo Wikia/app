@@ -45,6 +45,36 @@ ve.ui.WikiaUploadWidget = function VeUiWikiaUploadWidget( config ) {
 	this.$.on( 'click', ve.bind( this.onClick, this ) );
 	this.uploadButton.on( 'click', ve.bind( this.onClick, this ) );
 	this.$file.on( 'change', ve.bind( this.onFileChange, this ) );
+	this.$.on( 'dragenter dragover', function(e) {
+		e.preventDefault();
+	});
+	var that = this;
+	this.$.on( 'drop', function(e) {
+		var files,
+				transfer,
+				reader,
+				i,
+				file;
+
+		e.preventDefault();
+
+		transfer = e.originalEvent.dataTransfer;
+		files = transfer.files;
+		for( i = 0; i < files.length; i++ ) {
+			file = files[i];
+			console.log(file);
+			that.$file.trigger('change', function() {
+				console.log(arguments);
+			});
+			// reader = new FileReader();
+
+			// reader.readAsDataURL(file);
+			// reader.addEventListener('loadend', function( e, file ) {
+			// 	console.log(arguments);
+			// });
+		}
+		return false;
+	});
 
 	// Initialization
 	this.$form.append( this.$file );
