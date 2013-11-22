@@ -1,5 +1,5 @@
 /* global Features */
-define('tables', ['events', 'track', 'wikia.window', 'jquery'], function(ev, track, w, $){
+define('tables', ['events', 'track', 'wikia.window', 'jquery', 'sloth'], function(ev, track, w, $, sloth){
 	'use strict';
 
 	var d = w.document,
@@ -78,9 +78,11 @@ define('tables', ['events', 'track', 'wikia.window', 'jquery'], function(ev, tra
 					var table = this.getElementsByTagName('table')[0];
 
 					if(!table.wkScroll) {
-						table.wkScroll = new w.iScroll(this, function(){
-							track.event('tables', track.SWIPE);
-						});
+						table.wkScroll = new w.IScroll( this, {
+							click: true,
+							scrollY: false,
+							scrollX: true
+						} );
 						this.className += ' active';
 					}
 				});

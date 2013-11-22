@@ -1,23 +1,33 @@
-.chev {
-	background-position: center;
-	background-repeat: no-repeat;
-	background-image:  url('/extensions/wikia/WikiaMobile/images/chevron-grey-down.png'); /* base64 */
-	-webkit-animation: cute .3s ease-in;
-	-moz-animation: cute .3s ease-in;
-}
+@import 'variables';
 
-.open .chev {
-	background-image:  url('/extensions/wikia/WikiaMobile/images/chevron-blue-up.png'); /* base64 */
-	-webkit-animation: cute .3s ease-out;
-	-moz-animation: cute .3s ease-out;
-}
+.chevron {
+	border-color: transparent transparent $border-color transparent;
+	border-style: solid;
+	border-width: $chevron-size;
+	display: inline-block;
+	position: relative;
+	pointer-events: none;
 
-@-webkit-keyframes cute {
-	0%{-webkit-transform: rotate(180deg);}
-	100%{-webkit-transform: rotate(0);}
-}
+	-webkit-transition: -webkit-transform .3s;
 
-@-moz-keyframes cute {
-	0%{-moz-transform: rotate(180deg);}
-	100%{-moz-transform: rotate(0);}
+	&.right {
+		border-color: transparent transparent transparent $border-color;
+
+		&:after {
+			border-color: transparent transparent transparent white;
+			left: -12px;
+			bottom: -10px;
+		}
+	}
+
+	&:after {
+		content: '';
+		border-color: transparent transparent white transparent;
+		border-style: solid;
+		border-width: 10px;
+		bottom: -$chevron-size - 1;
+		left: -10px;
+		position: absolute;
+	}
+
 }

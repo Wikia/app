@@ -374,10 +374,10 @@ $config['gameguides_js'] = array(
 
 		//polyfills
 		'//extensions/wikia/WikiaMobile/js/viewport.js',
+		'//resources/wikia/libraries/iScroll/iscroll.js',
 
 		//groups
 		'#group_wikiamobile_tables_js',
-		'#group_wikiamobile_scroll_js',
 		'#group_wikiamobile_mediagallery_js',
 
 		//video
@@ -487,17 +487,24 @@ $config['wikiamobile_js_body_full'] = array(
 		//polyfills
 		'//extensions/wikia/WikiaMobile/js/viewport.js',
 
+		'//resources/wikia/libraries/iScroll/iscroll.js',
+
 		//platform components
 		'//extensions/wikia/AssetsManager/js/AssetsManager.js',
 		'//extensions/wikia/JSMessages/js/JSMessages.js',
 		'//extensions/wikia/JSSnippets/js/JSSnippets.js',
 
 		//modules
+		'//resources/wikia/libraries/mustache/mustache.js',
 		'//resources/wikia/libraries/sloth/sloth.js',
 		'//resources/wikia/modules/thumbnailer.js',
 		'//extensions/wikia/WikiaMobile/js/lazyload.js',
 		'//extensions/wikia/WikiaMobile/js/track.js',
+		'//extensions/wikia/WikiaMobile/js/infobox.js',
 		'//extensions/wikia/WikiaMobile/js/events.js',
+		'//extensions/wikia/WikiaMobile/js/topbar.js',
+		'//extensions/wikia/WikiaMobile/js/sections.js',
+        '//extensions/wikia/TOC/js/modules/toc.js',
 		'//extensions/wikia/WikiaMobile/js/toc.js',
 		'//extensions/wikia/WikiaMobile/js/throbber.js',
 		'//extensions/wikia/WikiaMobile/js/toast.js',
@@ -505,13 +512,10 @@ $config['wikiamobile_js_body_full'] = array(
 		'//extensions/wikia/WikiaMobile/js/modal.js',
 		'//extensions/wikia/WikiaMobile/js/media.class.js',
 		'//extensions/wikia/WikiaMobile/js/media.js',
-		'//extensions/wikia/WikiaMobile/js/sections.js',
 		'//extensions/wikia/WikiaMobile/js/layout.js',
 		'//extensions/wikia/WikiaMobile/js/navigation.wiki.js',
-		'//extensions/wikia/WikiaMobile/js/topbar.js',
-		'//extensions/wikia/WikiaMobile/js/popover.js',
-		'//extensions/wikia/WikiaMobile/js/hide_url_bar.js',
-		'//extensions/wikia/WikiaMobile/js/share.js',
+		'//extensions/wikia/WikiaMobile/js/curtain.js',
+		//'//extensions/wikia/WikiaMobile/js/hide_url_bar.js',
 
 		//entrypoint
 		'//extensions/wikia/WikiaMobile/js/WikiaMobile.js',
@@ -588,14 +592,6 @@ $config['wikiamobile_autocomplete_js'] = array(
 	'skin' => 'wikiamobile',
 	'assets' => array(
 		'//extensions/wikia/WikiaMobile/js/autocomplete.js'
-	)
-);
-
-$config['wikiamobile_scroll_js'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => 'wikiamobile',
-	'assets' => array(
-		'//extensions/wikia/WikiaMobile/js/scroll.wikiamobile.js'
 	)
 );
 

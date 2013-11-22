@@ -3,7 +3,7 @@ var MIN_ZEROTH_SECTION_LENGTH = 700,
 	MIN_PAGE_LENGTH = 2000;
 
 require(['ads', 'sloth', 'jquery', 'JSMessages', 'wikia.window'], function (ads, sloth, $, msg, window) {
-	var $firstSection = $('.collSec').first(),
+	var $firstSection = $('h2[id]').first(),
 		$footer = $('#wkMainCntFtr'),
 		firstSectionTop = ($firstSection.length && $firstSection.offset().top) || 0,
 		showInContent = firstSectionTop > MIN_ZEROTH_SECTION_LENGTH,

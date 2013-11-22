@@ -5,11 +5,9 @@
  * Layout handling of WikiaMobile
  * ie. Sections, Images, Galleries etc.
  */
-require(['sections', 'media', require.optional('wikia.cache'), 'wikia.loader', 'lazyload', 'jquery', 'sloth'], function(sections, media, cache, loader, lazyload, $, sloth) {
+require(['sections', 'media', require.optional('wikia.cache'), 'wikia.loader', 'lazyload', 'jquery', 'sloth', 'topbar'],
+	function(sections, media, cache, loader, lazyload, $, sloth, topbar) {
 	'use strict';
-
-	//init sections
-	sections.init();
 
 	var d = document,
 		images = d.getElementsByClassName('media'),
@@ -68,7 +66,7 @@ require(['sections', 'media', require.optional('wikia.cache'), 'wikia.loader', '
 			loader({
 				type: loader.MULTI,
 				resources: {
-					scripts: 'wikiamobile_tables_js' + (Features.overflow ? '' : ',wikiamobile_scroll_js'),
+					scripts: 'wikiamobile_tables_js',
 					styles: '/extensions/wikia/WikiaMobile/css/tables.scss',
 					ttl: ttl
 				}

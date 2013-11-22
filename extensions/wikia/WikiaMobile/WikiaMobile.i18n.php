@@ -22,6 +22,9 @@ $messages['en'] = array(
 	'wikiamobile-back' => 'Back',
 	'wikiamobile-hide-section' => 'hide',
 	'wikiamobile-profile' => 'Profile',
+	'wikiamobile-last-edited-on' => 'Last edited on $1',
+	'wikiamobile-last-edited-by' => 'by $1',
+	'wikiamobile-anonymous-edited-by' => 'Anonymous',
 
 	//footer
 	'wikiamobile-footer-link-lifestyle' => '[[w:c:www:Lifestyle|Lifestyle]]',
@@ -53,6 +56,9 @@ you should definitely check this out:
  	'wikiamobile-video-views-counter' => '$1 {{PLURAL:$1|view|views}}',
 	'wikiamobile-video-not-friendly-header' => 'Oh snap!',
 	'wikiamobile-video-not-friendly' => 'Sorry, this video isn\'t available on mobile.',
+
+	//toc
+	'wikiamobile-toc-header' => 'table of contents',
 
 	//ad
 	'wikiamobile-ad-label' => 'advertisement',
@@ -95,6 +101,8 @@ $messages['qqq'] = array(
 	'wikiamobile-hide-section' => 'Link to close section on an article that is at the end of a given section',
 	'wikiamobile-profile' => 'Link to a profile page in a top wiki navigation.
 {{Identical|Profile}}',
+	'wikiamobile-last-edited-by' => 'Message displayed under article title indicating who and when last edited a page',
+	'wikiamobile-anonymous-edited-by' => 'Editor name instead of IP address when editor is anonymous',
 	'wikiamobile-footer-link-lifestyle' => 'Interwiki link, please translate only the last parameter after the last "|" if that makes sense',
 	'wikiamobile-footer-link-entertainment' => 'Interwiki link, please translate only the last parameter after the last "|" if that makes sense',
 	'wikiamobile-footer-link-videogames' => 'Interwiki link, please translate only the last parameter after the last "|" if that makes sense',
@@ -128,6 +136,10 @@ $messages['qqq'] = array(
 {{Identical|Free}}',
 	'wikiasmartbanner-view' => 'Message displayed in smart banner promoting on a button that leads to a store.
 {{Identical|View}}',
+	'wikiamobile-toc-header' => 'Message displayed on top of right side bar where table of content is displayed',
+	'wikiamobile-last-edited-on' => 'In a sentance when was the list time an article got edited. "Last edited on September 3, 2013"',
+	'wikiamobile-last-edited-by' => 'indicates by whom the edit has been made. "by Anonymous"',
+	'wikiamobile-anonymous-edited-by' => 'an unknown user'
 );
 
 /** Адыгэбзэ (Адыгэбзэ)
