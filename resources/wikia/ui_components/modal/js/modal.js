@@ -213,9 +213,10 @@ define( 'wikia.ui.modal', [
 	};
 
 	/**
-	 * Closes the modal; removes it from dom or just removes classes - it depends on destroyOnClose flag
+	 * Closes the modal; removes it from dom or just removes classes - it depends on destroyOnClose flag.
+	 * Before closing modal beforeClass event is triggered. One can bind to this event and cancel the close
+	 * action
 	 */
-
 	Modal.prototype.close = function() {
 		this.trigger( 'beforeClose').then( $.proxy( function() {
 			if( !this.destroyOnClose ) {
@@ -227,9 +228,15 @@ define( 'wikia.ui.modal', [
 	};
 
 	/**
-	 * @TODO This is somewhat magical, so document it!
-	 * @param eventName
-	 * @return Promise object
+	 * Triggers listeners attached to specific event. Listeners are run in the same order they were bound. This method
+	 * returns a promise. If one of the listeners returns a deferred which fails, trigger method will stop executing the
+	 * remaining listeners and will reject its result. When everything completes without problems, resolve will be called
+	 * instead on this method's return value.
+	 *
+	 * Any additional parameters passed after eventName will be passed to event listeners.
+	 *
+	 * @param String eventName name of the event to trigger - the same as passed to bind method
+	 * @return {{}} promise which will call its handlers after listeners had been executed
 	 */
 	Modal.prototype.trigger = function ( eventName ) {
 		var deferred = new $.Deferred(),
@@ -255,9 +262,12 @@ define( 'wikia.ui.modal', [
 	};
 
 	/**
-	 * @TODO - document
-	 * @param eventName
-	 * @param callback
+	 * Add an event listener, which will be called every time an event with matching name is triggered. The event
+	 * listener can be synchronous or can return a promise object. In case of promise event propagation in put on hold
+	 * until it's resolved. In case the promise is rejected, remaining event listeners are not called and the
+	 * corresponding trigger call also returns a rejected promise.
+	 * @param String eventName name of the event to bind to
+	 * @param function callback listener
 	 */
 	Modal.prototype.bind = function( eventName, callback ) {
 		if ( typeof( this.listeners[ eventName ] ) === 'undefined' ) {
