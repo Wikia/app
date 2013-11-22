@@ -65,17 +65,18 @@ class VideoHandlerController extends WikiaController {
 		$params = array(
 			'controller' => __CLASS__,
 			'method'     => 'getEmbedCode',
-			'fileTitle'  => $this->getVal('fileTitle', ''),
-			'width'      => $this->getVal('width', ''),
+			'fileTitle'  => $this->getVal( 'fileTitle', '' ),
+			'width'      => $this->getVal( 'width', '' ),
 			'autoplay'   => $this->getVal( 'autoplay', false ),
 		);
 
 		// Call out to the getEmbedCode method in the context of the Video Wiki (WikiaVideoRepoDBName)
-		$response = ApiService::foreignCall( F::app()->wg->WikiaVideoRepoDBName, $params, ApiService::WIKIA );
+		$username = ( $this->wg->User->isLoggedIn() ) ? $this->wg->User->getName() : '';
+		$response = ApiService::foreignCall( F::app()->wg->WikiaVideoRepoDBName, $params, ApiService::WIKIA, $username );
 
 		// Map the foreign call response back to our response
-		foreach ( $response as $key => $val) {
-			$this->setVal($key, $val);
+		foreach ( $response as $key => $val ) {
+			$this->setVal( $key, $val );
 		}
 	}
 
