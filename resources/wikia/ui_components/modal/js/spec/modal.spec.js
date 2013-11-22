@@ -161,4 +161,33 @@ describe( 'Modal events', function() {
 		expect( listeners.onTriggerCancelled ).toHaveBeenCalled();
 	} );
 
+	it( 'allows to mix synchronous and asynchronous listeners', function() {
+		var listeners = {
+			onFoo1: function() {
+				var deferred = new $.Deferred();
+				deferred.resolve();
+				return deferred.promise();
+			},
+			onFoo2: function() {},
+			onTriggerSuccess: function() {}
+		};
+
+		spyOn( listeners, 'onFoo1').andCallThrough();
+		spyOn( listeners, 'onFoo2');
+		spyOn( listeners, 'onTriggerSuccess');
+
+		modal.bind( 'foo', listeners.onFoo2 );
+		modal.bind( 'foo', listeners.onFoo1 );
+		modal.bind( 'foo', listeners.onFoo2 );
+		modal.bind( 'foo', listeners.onFoo1 );
+		modal.trigger( 'foo').then( listeners.onTriggerSuccess );
+
+		expect( listeners.onFoo1 ).toHaveBeenCalled();
+		expect( listeners.onFoo1.calls.length ).toEqual( 2 );
+		expect( listeners.onFoo2 ).toHaveBeenCalled();
+		expect( listeners.onFoo2.calls.length ).toEqual( 2 );
+		expect( listeners.onTriggerSuccess ).toHaveBeenCalled();
+		expect( listeners.onTriggerSuccess.calls.length ).toEqual( 1 );
+	} );
+
 });
