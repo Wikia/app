@@ -1,83 +1,91 @@
 /*global ToolbarCustomize:true*/
-'use strict';
 
-var WikiaFooterApp = {
+(function( window ) {
+	'use strict';
 
-	init: function() {
-		//Variables
-		if( window.wgEnableWikiaBarExt ) {
-		//the admin tool bar is within wikia bar container which is outside the #WikiaPage
-			this.footer = $('#WikiaBarWrapper').find('.wikia-bar');
-		} else {
-		//the admin tool bar is positioned absolutely but in DOM in it's in #WikiaFooter within #WikiaPage
-			this.footer = $('#WikiaFooter');
-		}
-		this.toolbar = this.footer.children('.toolbar');
-		this.gn = $('.global-notification');
-		this.windowObj = $(window);
-		this.originalWidth = this.toolbar.width();
+	var WikiaFooterApp = {
 
-		// avoid stack overflow in IE (RT #98938)
-		if (this.toolbar.exists() || this.gn.exists()) {
-			if(!( navigator.platform in {'iPad':'', 'iPhone':'', 'iPod':''} ||
-				(navigator.userAgent.match(/android/i) !== null))){
-				this.addScrollEvent();
-				this.addResizeEvent();
+		init: function() {
+			//Variables
+			if( window.wgEnableWikiaBarExt ) {
+			//the admin tool bar is within wikia bar container which is outside the #WikiaPage
+				this.footer = $('#WikiaBarWrapper').find('.wikia-bar');
+			} else {
+			//the admin tool bar is positioned absolutely but in DOM in it's in #WikiaFooter within #WikiaPage
+				this.footer = $('#WikiaFooter');
 			}
-			this.tcToolbar = new ToolbarCustomize.Toolbar( this.footer.find('.tools') );
-		}
-	},
-	addScrollEvent: function() {
-		WikiaFooterApp.windowObj.off('scroll.FooterAp'); // GlobalNotifications could be re-binding this event.
-		WikiaFooterApp.windowObj.on('scroll.FooterAp', WikiaFooterApp.resolvePosition).triggerHandler('scroll');
-	},
-	addResizeEvent: function (){
-		WikiaFooterApp.windowObj.on('resize', WikiaFooterApp.centerBar).triggerHandler('resize');
-	},
-	centerBar: function() {
-		var w = WikiaFooterApp.windowObj.width();
-		if(w < WikiaFooterApp.originalWidth && WikiaFooterApp.footer.hasClass('float')) {
-			WikiaFooterApp.toolbar.css('width', w+10);
-			if(!WikiaFooterApp.toolbar.hasClass('small')){
-				WikiaFooterApp.toolbar.addClass('small');
+			this.toolbar = this.footer.children('.toolbar');
+			this.gn = $('.global-notification');
+			this.windowObj = $(window);
+			this.originalWidth = this.toolbar.width();
+
+			// avoid stack overflow in IE (RT #98938)
+			if (this.toolbar.exists() || this.gn.exists()) {
+				if(!( navigator.platform in {'iPad':'', 'iPhone':'', 'iPod':''} ||
+					(navigator.userAgent.match(/android/i) !== null))){
+					this.addScrollEvent();
+					this.addResizeEvent();
+				}
+				this.tcToolbar = new ToolbarCustomize.Toolbar( this.footer.find('.tools') );
 			}
-		} else if(WikiaFooterApp.toolbar.hasClass('small')) {
-			WikiaFooterApp.toolbar.css('width', WikiaFooterApp.originalWidth);
-			WikiaFooterApp.toolbar.removeClass('small');
-		}
-		WikiaFooterApp.resolvePosition();
-	},
-	// this is called while scrolling
-	resolvePosition: function() {
-		// Disable floating for RTE
-		if( window.wgIsEditPage ) {
-			return;
-		}
+		},
+		addScrollEvent: function() {
+			WikiaFooterApp.windowObj.off('scroll.FooterAp'); // GlobalNotifications could be re-binding this event.
+			WikiaFooterApp.windowObj.on('scroll.FooterAp', WikiaFooterApp.resolvePosition).triggerHandler('scroll');
+		},
+		addResizeEvent: function (){
+			WikiaFooterApp.windowObj.on('resize', WikiaFooterApp.centerBar).triggerHandler('resize');
+		},
+		centerBar: function() {
+			var w = WikiaFooterApp.windowObj.width();
+			if(w < WikiaFooterApp.originalWidth && WikiaFooterApp.footer.hasClass('float')) {
+				WikiaFooterApp.toolbar.css('width', w+10);
+				if(!WikiaFooterApp.toolbar.hasClass('small')){
+					WikiaFooterApp.toolbar.addClass('small');
+				}
+			} else if(WikiaFooterApp.toolbar.hasClass('small')) {
+				WikiaFooterApp.toolbar.css('width', WikiaFooterApp.originalWidth);
+				WikiaFooterApp.toolbar.removeClass('small');
+			}
+			WikiaFooterApp.resolvePosition();
+		},
+		// this is called while scrolling
+		resolvePosition: function() {
+			// Disable floating for RTE
+			if( window.wgIsEditPage ) {
+				return;
+			}
 
-		var scrollTop = WikiaFooterApp.windowObj.scrollTop(),
-			scroll = scrollTop + WikiaFooterApp.windowObj.height(),
-			line = 0;
+			var scrollTop = WikiaFooterApp.windowObj.scrollTop(),
+				scroll = scrollTop + WikiaFooterApp.windowObj.height(),
+				line = 0;
 
-		if(WikiaFooterApp.footer.offset()){
-			line = WikiaFooterApp.footer.offset().top + WikiaFooterApp.toolbar.outerHeight();
-		}
+			if(WikiaFooterApp.footer.offset()){
+				line = WikiaFooterApp.footer.offset().top + WikiaFooterApp.toolbar.outerHeight();
+			}
 
-		if (scroll > line && WikiaFooterApp.footer.hasClass('float')) {
-			WikiaFooterApp.footer.removeClass('float');
-			WikiaFooterApp.centerBar();
-		} else if (scroll < line && !WikiaFooterApp.footer.hasClass('float')) {
-			WikiaFooterApp.footer.addClass('float');
-			WikiaFooterApp.centerBar();
-		}
+			if (scroll > line && WikiaFooterApp.footer.hasClass('float')) {
+				WikiaFooterApp.footer.removeClass('float');
+				WikiaFooterApp.centerBar();
+			} else if (scroll < line && !WikiaFooterApp.footer.hasClass('float')) {
+				WikiaFooterApp.footer.addClass('float');
+				WikiaFooterApp.centerBar();
+			}
 
-		// GlobalNotification uses same scroll event for performance reasons (BugId:33365)
-		if(window.GlobalNotification && !window.GlobalNotification.isModal()) {
-			window.GlobalNotification.onScroll(scrollTop);
+			// GlobalNotification uses same scroll event for performance reasons (BugId:33365)
+			if(window.GlobalNotification && !window.GlobalNotification.isModal()) {
+				window.GlobalNotification.onScroll(scrollTop);
+			}
 		}
-	}
-};
+	};
+
+	// export
+	window.WikiaFooterApp = WikiaFooterApp;
+})( window );
 
 (function(){
+	'use strict';
+
 	window.ToolbarCustomize = window.ToolbarCustomize || {};
 	var TC = window.ToolbarCustomize;
 
@@ -303,14 +311,16 @@ var WikiaFooterApp = {
 })();
 
 $(function(){
-	WikiaFooterApp.init();
+	'use strict';
+
+	window.WikiaFooterApp.init();
 
 	// it's nasty way of handling resizing, but it's most efficient and bulletproof
-	if (window.addEventListener) {
-		WikiaFooterApp.tcToolbar.resizeBarAndRebuildOverflowMenu();
+	if (window.addEventListener && window.WikiaFooterApp.tcToolbar) {
+		window.WikiaFooterApp.tcToolbar.resizeBarAndRebuildOverflowMenu();
 		window.addEventListener('resize', $.throttle( 100, function() {
 			// this fires no more than every 100ms
-			WikiaFooterApp.tcToolbar.resizeBarAndRebuildOverflowMenu();
+			window.WikiaFooterApp.tcToolbar.resizeBarAndRebuildOverflowMenu();
 		} ) );
 	}
 });
