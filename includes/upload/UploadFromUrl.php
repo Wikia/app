@@ -155,9 +155,12 @@ class UploadFromUrl extends UploadBase {
 		$this->mRemoveTempFile = true;
 		$this->mFileSize = 0;
 
-		$req = MWHttpRequest::factory( $this->mUrl, array(
-			'followRedirects' => true
-		) );
+		/* Wikia change - begin */
+		$options = array( 'followRedirects' => true );
+		wfRunHooks( 'UploadFromUrlReallyFetchFile', array( &$options ) );
+		$req = MWHttpRequest::factory( $this->mUrl, $options );
+		/* Wikia change - end */
+
 		$req->setCallback( array( $this, 'saveTempFileChunk' ) );
 		$status = $req->execute();
 
