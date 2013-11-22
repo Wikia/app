@@ -81,7 +81,7 @@ class WikiaMobileService extends WikiaService {
 			$this->scssPackages[] = 'wikiamobile_scss_preview';
 		} else {
 			$this->jsBodyPackages[] = 'wikiamobile_js_body_full';
-			$this->scssPackages[] = 'wikiamobile_swikiamobile_scsscss_preview';
+			$this->scssPackages[] = 'wikiamobile_scss';
 		}
 
 		//let extensions manipulate the asset packages (e.g. ArticleComments,
