@@ -57,7 +57,7 @@ class ApiService extends Service {
 		wfDebug(__METHOD__ . ": {$url}\n");
 
 		$options = [];
-		if ( !empty( $setUser ) ) {
+		if ( $setUser ) {
 			$options = self::loginAsUser();
 		}
 
