@@ -1444,7 +1444,7 @@ class CF_Http
             CURLOPT_URL, $url_path);
 
         if (!curl_exec($this->connections[$conn_type]) && curl_errno($this->connections[$conn_type]) !== 0) {
-            $this->error_str = "[{$this->storage_url}] (curl error: "
+            $this->error_str = "[{$this->storage_url}: {$method} <{$url_path}> " . json_encode($headers) . "] (curl error: "
                 . curl_errno($this->connections[$conn_type]) . ") ";
             $this->error_str .= curl_error($this->connections[$conn_type]);
 
@@ -1485,7 +1485,7 @@ class CF_Http
 				$message = $this->error_str;
 			}
 
-			\Wikia\SwiftStorage::log( __CLASS__ . '::retryRequest::' . $retriesLeft, "[{$this->storage_url}] {$message}" );
+			\Wikia\SwiftStorage::log( __CLASS__ . '::retryRequest::' . $retriesLeft, $message );
 
 			// wait a bit before retrying the request
 			usleep( self::RETRY_DELAY * 1000 );
