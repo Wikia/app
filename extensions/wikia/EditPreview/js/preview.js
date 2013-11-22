@@ -16,6 +16,7 @@ define( 'wikia.preview', [
 
 	var $article,
 		$previewTypeDropdown,
+		previewTemplate,
 		// current design of preview has this margins to emulate page margins
 		// TODO: when we will redesign preview to meet darwin design directions - this should be done differently and refactored
 		articleMargin = fluidlayout.getWidthPadding() + fluidlayout.getArticleBorderWidth(),
@@ -145,6 +146,49 @@ define( 'wikia.preview', [
 		}, previewTypes[currentTypeName].skin );
 	}
 
+	function handlePreviewDropdown( template ){
+		var $dialog = $( '#EditPageDialog' ),
+			dialog = $dialog[0],
+			tooltipParams = { placement: 'right' },
+			params = {
+				options: [
+					{
+						value: previewTypes.current.name,
+						name: msg( 'wikia-editor-preview-current-width' )
+					},
+					{
+						value: previewTypes.min.name,
+						name: msg( 'wikia-editor-preview-min-width' )
+					},
+					{
+						value: previewTypes.max.name,
+						name: msg( 'wikia-editor-preview-max-width' )
+					},
+					{
+						value: previewTypes.mobile.name,
+						name: msg( 'wikia-editor-preview-mobile-width' )
+					}
+				],
+				toolTipMessage: msg( 'wikia-editor-preview-type-tooltip' )
+			},
+			html = mustache.render( template, params );
+
+		$( html ).insertAfter( $dialog.find( 'h1:first' ) );
+
+		// attach events to type dropdown
+		$previewTypeDropdown = $( '#previewTypeDropdown' ).on( 'change',function ( event ) {
+			switchPreview( $( event.target ).val() );
+		} ).val( currentTypeName );
+
+		if ( dialog && dialog.style && dialog.style.zIndex ) {
+			// on Chrome when using $.css('z-index') / $.css('zIndex') it returns 2e+9
+			// this vanilla solution works better
+			tooltipParams['z-index'] = parseInt( dialog.style.zIndex, 10 );
+		}
+
+		$( '.tooltip-icon' ).tooltip( tooltipParams );
+	}
+
 	/**
 	 * Display a dialog with article preview. Options passed in the object are:
 	 *  - 'width' - dialog width in pixels
@@ -201,57 +245,20 @@ define( 'wikia.preview', [
 
 			if ( window.wgOasisResponsive ) {
 				// adding type dropdown to preview
-				loader( {
-					type: loader.MULTI,
-					resources: {
-						mustache: 'extensions/wikia/EditPreview/templates/preview_type_dropdown.mustache'
-					}
-				} ).done( function ( response ) {
-						var $dialog = $( '#EditPageDialog' ),
-							dialog = $dialog[0],
-							template = response.mustache[0],
-							tooltipParams = { placement: 'right' },
-							params = {
-								options: [
-									{
-										value: previewTypes.current.name,
-										name: msg( 'wikia-editor-preview-current-width' )
-									},
-									{
-										value: previewTypes.min.name,
-										name: msg( 'wikia-editor-preview-min-width' )
-									},
-									{
-										value: previewTypes.max.name,
-										name: msg( 'wikia-editor-preview-max-width' )
-									},
-									{
-										value: previewTypes.mobile.name,
-										name: msg( 'wikia-editor-preview-mobile-width' )
-									}
-								],
-								toolTipMessage: msg( 'wikia-editor-preview-type-tooltip' )
-							},
-							html = mustache.render( template, params );
-
-						$( html ).insertAfter( $dialog.find( 'h1:first' ) );
-
-						// fire an event once preview is rendered
-						$( window ).trigger( 'EditPageAfterRenderPreview', [$article] );
-
-						// attach events to type dropdown
-						$previewTypeDropdown = $( '#previewTypeDropdown' ).on( 'change',function ( event ) {
-							switchPreview( $( event.target ).val() );
-						} ).val( currentTypeName );
-
-						if ( dialog && dialog.style && dialog.style.zIndex ) {
-							// on Chrome when using $.css('z-index') / $.css('zIndex') it returns 2e+9
-							// this vanilla solution works better
-							tooltipParams['z-index'] = parseInt( dialog.style.zIndex, 10 );
+				if ( !previewTemplate ) {
+					loader( {
+						type: loader.MULTI,
+						resources: {
+							mustache: 'extensions/wikia/EditPreview/templates/preview_type_dropdown.mustache'
 						}
-
-						$( '.tooltip-icon' ).tooltip( tooltipParams );
+					} ).done( function( response ){
+						previewTemplate = response.mustache[0];
+						handlePreviewDropdown( previewTemplate );
 					} );
+				} else {
+					handlePreviewDropdown( previewTemplate );
+				}
+
 			}
 
 		} );
