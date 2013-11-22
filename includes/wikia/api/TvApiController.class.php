@@ -10,7 +10,7 @@ class TvApiController extends WikiaApiController {
 	const API_URL = 'api/v1/Articles/AsSimpleJson?id=';
 	const MINIMAL_WIKIA_SCORE = 0.5;
 	const MINIMAL_ARTICLE_SCORE = 1.7;
-
+	const WIKIA_URL_REGEXP = '~^(http(s?)://)(([^\.]+)\.wikia\.com)~';
 	/**
 	 * @var wikiId
 	 */
@@ -38,6 +38,12 @@ class TvApiController extends WikiaApiController {
 		}
 
 		$responseValues[ 'contentUrl' ] = $this->url . self::API_URL . $responseValues[ 'articleId' ];
+
+		if ( WikiFactory::isCurrentStagingHost() ) {
+			$responseValues[ 'contentUrl' ] = preg_replace_callback( self::WIKIA_URL_REGEXP, array( $this, 'replaceHost' ), $responseValues[ "contentUrl" ] );
+			$responseValues[ 'url' ] = preg_replace_callback( self::WIKIA_URL_REGEXP, array( $this, 'replaceHost' ), $responseValues[ "url" ] );
+		}
+
 		$responseValues = array_merge( [ 'wikiId' => (int) $this->wikiId ], $responseValues );
 
 		$response = $this->getResponse();
@@ -51,6 +57,15 @@ class TvApiController extends WikiaApiController {
 				WikiaResponse::CACHE_TARGET_VARNISH
 			)
 		);
+	}
+
+	/**
+	 * Callback function for preg_replace
+	 * @param $details
+	 * @return string
+	 */
+	private function replaceHost( $details ) {
+		return $details[ 1 ] . WikiFactory::getCurrentStagingHost( $details[ 4 ], $details[ 3 ] );
 	}
 
 	protected function getExactMatch() {
@@ -146,17 +161,6 @@ class TvApiController extends WikiaApiController {
 	protected function getResponseFromConfig( Wikia\Search\Config $searchConfig ) {
 		if (! $searchConfig->getQuery()->hasTerms() ) {
 			throw new InvalidParameterApiException( 'episodeName' );
-		}
-
-		 if(isset($_SERVER['HTTP_X_ORIGINAL_HOST']))
-		 {
-			 $host = $_SERVER['HTTP_X_ORIGINAL_HOST'];
-
-		 }
-		$host = 'sandbox-s1.www.wikia.com';
-		if(!preg_match('/^sandbox-[a-z0-9]{0,3}\.www\.wikia\.com$/',$host))
-		{
-			$host = null;
 		}
 
 		$responseValues = (new Factory)->getFromConfig( $searchConfig )->searchAsApi( [ 'pageid' => 'articleId', 'title', 'url', 'score' ], true );
