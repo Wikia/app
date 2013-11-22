@@ -22,9 +22,10 @@ class OoyalaAsset extends WikiaModel {
 		$options = array(
 			'method' => $method,
 			'postData' => $reqBody,
+			'noProxy' => true,
 		);
 		$req = MWHttpRequest::factory( $url, $options );
-		$status = VideoHandlerHelper::wrapHttpRequest( $req );
+		$status = $req->execute();
 		if ( $status->isGood() ) {
 			$response = $req->getContent();
 			$asset = json_decode( $response, true );
@@ -103,10 +104,11 @@ class OoyalaAsset extends WikiaModel {
 		$options = array(
 			'method' => $method,
 			'postData' => $reqBody,
+			'noProxy' => true,
 		);
 
 		$req = MWHttpRequest::factory( $url, $options );
-		$status = VideoHandlerHelper::wrapHttpRequest( $req );
+		$status = $req->execute();
 		if ( $status->isGood() ) {
 			$meta = json_decode( $req->getContent(), true );
 			$resp = true;
@@ -263,8 +265,8 @@ class OoyalaAsset extends WikiaModel {
 		$url = OoyalaApiWrapper::getApi( $method, $reqPath, $params );
 		//print( "Connecting to $url...\n" );
 
-		$req = MWHttpRequest::factory( $url );
-		$status = VideoHandlerHelper::wrapHttpRequest( $req );
+		$req = MWHttpRequest::factory( $url, array( 'noProxy' => true ) );
+		$status = $req->execute();
 		if ( $status->isGood() ) {
 			$response = json_decode( $req->getContent(), true );
 			$result = !empty( $response['items'] );
@@ -336,8 +338,8 @@ class OoyalaAsset extends WikiaModel {
 		$url = OoyalaApiWrapper::getApi( $method, $reqPath );
 		//print( "Connecting to $url...\n" );
 
-		$req = MWHttpRequest::factory( $url );
-		$status = VideoHandlerHelper::wrapHttpRequest( $req );
+		$req = MWHttpRequest::factory( $url, array( 'noProxy' => true ) );
+		$status = $req->execute();
 		if ( $status->isGood() ) {
 			$response = json_decode( $req->getContent(), true );
 		} else {
@@ -441,10 +443,11 @@ class OoyalaAsset extends WikiaModel {
 		$options = array(
 			'method' => $method,
 			'postData' => $reqBody,
+			'noProxy' => true,
 		);
 
 		$req = MWHttpRequest::factory( $url, $options );
-		$status = VideoHandlerHelper::wrapHttpRequest( $req );
+		$status = $req->execute();
 		if ( $status->isGood() ) {
 			$result = true;
 			print( "Ooyala: sent $reqPath request: \n" );
