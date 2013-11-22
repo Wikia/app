@@ -61,7 +61,7 @@
 
 	.WikiaMainContent {
 		margin-right: -( $width-rail + $width-gutter );
-		position: static;
+		position: relative;
 		width: 100%;
 	}
 
