@@ -9,6 +9,41 @@ describe( 'Modal module', function() {
 		expect( typeof modal ).toBe( 'object' );
 	} );
 
+	it( 'gives nice and clean API', function() {
+		expect( typeof modal.init ).toBe( 'function', 'init' );
+		expect( typeof modal.createComponent ).toBe( 'function', 'init' );
+	} );
+
+	it( 'create instance of Modal class and link it with DOM element ID', function() {
+		var id = 'testModal',
+			selector = '#' + id,
+			modalObject = modal.init( id );
+
+		expect( typeof modalObject ).toBe( 'object' );
+		expect( modalObject.$element.selector ).toBe( selector );
+	} );
+
+	it( 'render modal, append to DOM nad create instance of Modal class', function() {
+		var params = {
+				vars: {
+					id: 'testModal',
+				}
+			},
+			id = params.vars.id,
+			modalSelector = '#' + id,
+			htmlMock = '<div id="' + id + '"></div>',
+			uiComponent = {
+				render: function() {
+					return htmlMock;
+				}
+			},
+			modalObject = modal.createComponent( params, uiComponent);
+
+		expect( document.body.innerHTML.indexOf( htmlMock )).toNotBe( -1 );
+		expect( typeof modalObject ).toBe( 'object' );
+		expect( modalObject.$element.selector ).toBe( modalSelector );
+	} );
+
 });
 
 describe( 'Modal events', function() {
