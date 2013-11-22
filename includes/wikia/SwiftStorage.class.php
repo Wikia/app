@@ -146,7 +146,7 @@ class SwiftStorage {
 		if (!$status->isOK()) {
 			self::log(
 				__METHOD__,
-				sprintf('can\'t set ACL [<%s> returned HTTP %d - %s]', $url, $req->getStatus(), json_encode($status->getErrorsArray()))
+				sprintf('can\'t set ACL [<%s> returned HTTP %d - %s] %s', $url, $req->getStatus(), json_encode($status->getErrorsArray(), json_encode($req->getResponseHeaders())))
 			);
 		}
 
