@@ -3009,7 +3009,7 @@ class User {
 
 		// wikia change begin
 		/**
-		 * @author Krzysztof Krzyzaniak (eloy)
+		 * @author Krzysztof Krzyżaniak (eloy)
 		 * trap for BugId: 4013
 		 */
 		if( $this->mEmail == "devbox@wikia-inc.com" || $this->mEmail == "devbox+test@wikia-inc.com" ) {
@@ -4313,7 +4313,7 @@ class User {
 			// Load from database
 			// wikia change, load always from first cluster when we use
 			// shared users database
-			// @author Krzysztof Krzyzaniak (eloy)
+			// @author Krzysztof Krzyżaniak (eloy)
 			global $wgExternalSharedDB, $wgSharedDB;
 			if( isset( $wgSharedDB ) ) {
 				$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
