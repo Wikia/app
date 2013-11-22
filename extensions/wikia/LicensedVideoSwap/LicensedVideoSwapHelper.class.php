@@ -466,6 +466,8 @@ SQL;
 		$readableTitle = $titleObj->getText();
 		$params = array( 'title' => $readableTitle );
 
+		/* Comment this out until the minseconds/maxseconds params are handled correctly by
+		   the searchVidoesByTitle method (MAIN-1276)
 		$file = wfFindFile( $titleObj );
 		if ( !empty( $file ) ) {
 			$serializedMetadata = $file->getMetadata();
@@ -473,11 +475,12 @@ SQL;
 				$metadata = unserialize( $serializedMetadata );
 				if ( !empty( $metadata['duration'] ) ) {
 					$duration = $metadata['duration'];
-#					$params['minseconds'] = $duration - min( [ $duration, self::DURATION_DELTA ] );
-#					$params['maxseconds'] = $duration + min( [ $duration, self::DURATION_DELTA ] );
+					$params['minseconds'] = $duration - min( [ $duration, self::DURATION_DELTA ] );
+					$params['maxseconds'] = $duration + min( [ $duration, self::DURATION_DELTA ] );
 				}
 			}
 		}
+		*/
 
 		// get search results
 		$videoRows = $this->app->sendRequest( 'WikiaSearchController', 'searchVideosByTitle', $params )
