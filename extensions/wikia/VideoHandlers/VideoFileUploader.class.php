@@ -179,8 +179,8 @@ class VideoFileUploader {
 	protected function uploadBestThumbnail() {
 		wfProfileIn( __METHOD__ );
 
-		// set for video upload
-		F::app()->wg->UploadVideo = true;
+		// disable proxy
+		F::app()->wg->DisableProxy = true;
 
 		// Try to upload the thumbnail for this video
 		$upload = $this->uploadThumbnailFromUrl( $this->getApiWrapper()->getThumbnailUrl() );

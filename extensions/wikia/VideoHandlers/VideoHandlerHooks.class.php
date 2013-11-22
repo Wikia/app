@@ -223,11 +223,11 @@ class VideoHandlerHooks {
 	 * @return true
 	 */
 	public static function onUploadFromUrlReallyFetchFile( &$options ) {
-		// check for video upload
-		if ( F::app()->wg->UploadVideo ) {
+		// check if proxy is disabled
+		if ( !empty( F::app()->wg->DisableProxy ) ) {
 			$options['noProxy'] = true;
 			// reset to default
-			F::app()->wg->UploadVideo = false;
+			F::app()->wg->DisableProxy = false;
 		}
 
 		return true;
