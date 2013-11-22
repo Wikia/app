@@ -1,4 +1,4 @@
-describe( 'UIModal', function() {
+describe( 'Modal module', function() {
 	'use strict';
 
 	var browserDetect = {},
@@ -7,6 +7,18 @@ describe( 'UIModal', function() {
 	it( 'registers AMD module', function() {
 		expect( modal ).toBeDefined();
 		expect( typeof modal ).toBe( 'object' );
+	});
+
+});
+
+describe( 'Modal events', function() {
+	'use strict';
+
+	var browserDetect = {},
+		modal = null;
+
+	beforeEach( function() {
+		modal = modules[ 'wikia.ui.modal' ]( jQuery, window, browserDetect );
 	});
 
 });
