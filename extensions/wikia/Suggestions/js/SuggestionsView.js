@@ -196,17 +196,21 @@ define('SuggestionsView', ['SuggestionsViewModel'], function( viewModel ) {
 	return {
 		init: function( input, target, wikiId ) {
 			var value;
-			searchInput = input;
-			dropdown = target;
-			viewModel.setWiki( wikiId );
-			positionDropdown();
-			bindEvents();
-			value = searchInput.val();
-			if ( value ) {
-				//send first request after loading if input not empty
-				viewModel.setQuery( value );
+			//don't init suggestions if input or target elements are missing
+			if ( input.length && target.length ) {
+				searchInput = input;
+				dropdown = target;
+				viewModel.setWiki( wikiId );
+				positionDropdown();
+				bindEvents();
+				value = searchInput.val();
+				if ( value ) {
+					//send first request after loading if input not empty
+					viewModel.setQuery( value );
+				}
+				return this;
 			}
-			return this;
+			return false;
 		},
 		setAsMainSuggestions: function( name ) {
 			if ( window.Wikia.autocomplete && window.Wikia.autocomplete[name] ) {
