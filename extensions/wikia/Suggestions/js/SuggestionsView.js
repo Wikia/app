@@ -188,6 +188,9 @@ define('SuggestionsView', ['SuggestionsViewModel'], function( viewModel ) {
 		if ( top !== 0 ) {
 			dropdown.css('margin-top', -top);
 		}
+		if ( left !== 0 ) {
+			dropdown.css('right', parseInt(dropdown.css('right'), 10) + left);
+		}
 	}
 
 	return {
