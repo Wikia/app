@@ -134,8 +134,31 @@ describe( 'Modal events', function() {
 		expect( listeners.onFoo ).toHaveBeenCalledWith( 1, 'test', [ 'bar' ] );
 	} );
 
-	it( 'using reject allows to cancel the event call', function() {
+	it( 'allows to use reject for canceling the event call', function() {
+		var listeners = {
+			onFoo1: function() {
+				var deferred = new $.Deferred();
+				deferred.reject();
+				return deferred.promise();
+			},
+			onFoo2: function() {},
+			onTriggerSuccess: function() {},
+			onTriggerCancelled: function() {}
+		};
 
+		spyOn( listeners, 'onFoo1').andCallThrough();
+		spyOn( listeners, 'onFoo2');
+		spyOn( listeners, 'onTriggerSuccess');
+		spyOn( listeners, 'onTriggerCancelled');
+
+		modal.bind( 'foo', listeners.onFoo1 );
+		modal.bind( 'foo', listeners.onFoo2 );
+		modal.trigger( 'foo').then( listeners.onTriggerSuccess, listeners.onTriggerCancelled );
+
+		expect( listeners.onFoo1 ).toHaveBeenCalled();
+		expect( listeners.onFoo2 ).not.toHaveBeenCalled();
+		expect( listeners.onTriggerSuccess ).not.toHaveBeenCalled();
+		expect( listeners.onTriggerCancelled ).toHaveBeenCalled();
 	} );
 
 });
