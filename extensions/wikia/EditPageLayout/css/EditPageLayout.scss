@@ -533,6 +533,7 @@ body {
 //Mobile preview styles
 .mobile-preview {
 	border: 1px solid $color-page-border;
+	box-sizing: border-box;
 	display: block;
 	height: 480px;
 	margin: 0 auto;

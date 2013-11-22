@@ -28,7 +28,8 @@ define( 'wikia.preview', [
 		FIT_SMALL_SCREEN = 80, // pixels to be removed from modal width to fit modal on small screens, won't be needed when new modals will be introduced
 		previewTypes,
 		currentTypeName,
-		editPageOptions;
+		editPageOptions,
+		previewLoaded;
 
 	// show dialog for preview / show changes and scale it to fit viewport's height
 	function renderDialog ( title, options, callback ) {
@@ -103,11 +104,13 @@ define( 'wikia.preview', [
 	 */
 	function loadPreview ( type, opening ) {
 		if ( !opening ) {
+			previewLoaded = false;
 			$previewTypeDropdown.attr( 'disabled', true );
 			$article.parent().startThrobbing();
 		}
 
 		editPageOptions.getPreviewContent( function ( data ) {
+			previewLoaded = true;
 			$previewTypeDropdown.attr( 'disabled', false );
 			$article.parent().stopThrobbing();
 
@@ -122,7 +125,7 @@ define( 'wikia.preview', [
 
 					if ( isRailDropped || isWidePage ) {
 						// set proper preview width for shrinken modal
-						//$article.width( editPageOptions.width - articleMargin * 2 );
+						$article.width( editPageOptions.width - articleMargin * 2 );
 					}
 
 					// set current width of the article
@@ -132,7 +135,9 @@ define( 'wikia.preview', [
 					// subtract scrollbar width to get correct width needed as reference point for scaling
 					articleWrapperWidth = $article.parent().width() - editPageOptions.scrollbarWidth;
 
-					$article.width( previewTypes[currentTypeName].value );
+					if ( currentTypeName ) {
+						$article.width( previewTypes[currentTypeName].value );
+					}
 				}
 
 				// initial scale of article preview
@@ -193,6 +198,10 @@ define( 'wikia.preview', [
 			switchPreview( $( event.target ).val() );
 		} ).val( currentTypeName );
 
+		if ( previewLoaded ) {
+			$previewTypeDropdown.attr( 'disabled', false );
+		}
+
 		if ( dialog && dialog.style && dialog.style.zIndex ) {
 			// on Chrome when using $.css('z-index') / $.css('zIndex') it returns 2e+9
 			// this vanilla solution works better
@@ -243,6 +252,7 @@ define( 'wikia.preview', [
 				) ? options.width : options.width - FIT_SMALL_SCREEN,
 			className: 'preview',
 			onClose: function () {
+				previewLoaded = false;
 				$( window ).trigger( 'EditPagePreviewClosed' );
 			}
 		};
@@ -320,10 +330,10 @@ define( 'wikia.preview', [
 		//load again preview only if changing mobile <-> desktop
 		if ( type === previewTypes.mobile.name || lastTypeName === previewTypes.mobile.name ) {
 			loadPreview( previewTypes[currentTypeName].name );
-		} else {
-			$article.width( previewTypes[currentTypeName].value );
-			scalePreview( currentTypeName );
 		}
+
+		$article.width( previewTypes[currentTypeName].value );
+		scalePreview( currentTypeName );
 
 		tracker.track( {
 			action: Wikia.Tracker.ACTIONS.CLICK,
