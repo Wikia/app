@@ -110,138 +110,124 @@
 	}
 
 	@media screen and (max-width: $breakpoint-small) {
-	// ABTesting: DAR-1859: START
-		html:not(.keep-rail-on-right) {
-			// ABTesting: DAR-1859: END
-			.WikiaArticle {
-				min-height: auto;
-			}
-
-			.WikiaMainContent {
-				float: none;
-				margin-right: 0;
-			}
-
-			.WikiaMainContentContainer {
-				margin-right: 0;
-			}
-
-			.WikiaRail {
-				float: none;
-				padding: 0 10px;
-				width: auto;
-			}
-
-			.WikiaHeader li.start-a-wiki {
-				display: none;
-			}
-
-			.WikiHeader {
-				min-height: 154px;
-				padding-top: 0;
-
-				> nav {
-					left: 0;
-					top: 85px;
-				}
-
-				.buttons {
-					top: 87px;
-				}
-			}
-
-			.WikiNav li.nav-item:first-child {
-				margin-left: 10px;
-			}
-
-			.WikiHeaderSearch {
-				display: block;
-				left: 280px;
-				position: absolute;
-				right: 10px;
-				top: 12px;
-				width: auto;
-
-				input[type="text"] {
-					@include box-sizing( border-box );
-					font-size: 15pt;
-					height: 40px !important;
-					left: 0;
-					margin-right: 0;
-					position: absolute;
-					right: 53px;
-					width: auto;
-					@include width-calc('100% - 53px');
-				}
-
-				.wikia-button {
-					height: 40px !important;
-					position: absolute;
-					right: 0;
-				}
-			}
-
-			// TODO: clean up all the wikinav2/oasis-one-column styles...
-			.wikinav2.oasis-one-column .WikiaPageHeader {
-				padding-right: 0;
-
-				.tally {
-					right: 0;
-				}
-			}
-
-			.WikiaSearchHeader .WikiaSearch,
-			.WikiaRail .WikiaSearch,
-			.WikiaPageHeader .WikiaSearch {
-				display: none;
-			}
-
-			// ABTesting: DAR-1859: START
+		.WikiaArticle {
+			min-height: auto;
 		}
-	// ABTesting: DAR-1859: END
+
+		.WikiaMainContent {
+			float: none;
+			margin-right: 0;
+		}
+
+		.WikiaMainContentContainer {
+			margin-right: 0;
+		}
+
+		.WikiaRail {
+			float: none;
+			padding: 0 10px;
+			width: auto;
+		}
+
+		.WikiaHeader li.start-a-wiki {
+			display: none;
+		}
+
+		.WikiHeader {
+			min-height: 154px;
+			padding-top: 0;
+
+			> nav {
+				left: 0;
+				top: 85px;
+			}
+
+			.buttons {
+				top: 87px;
+			}
+		}
+
+		.WikiNav li.nav-item:first-child {
+			margin-left: 10px;
+		}
+
+		.WikiHeaderSearch {
+			display: block;
+			left: 280px;
+			position: absolute;
+			right: 10px;
+			top: 12px;
+			width: auto;
+
+			input[type="text"] {
+				@include box-sizing( border-box );
+				font-size: 15pt;
+				height: 40px !important;
+				left: 0;
+				margin-right: 0;
+				position: absolute;
+				right: 53px;
+				width: auto;
+				@include width-calc('100% - 53px');
+			}
+
+			.wikia-button {
+				height: 40px !important;
+				position: absolute;
+				right: 0;
+			}
+		}
+
+		// TODO: clean up all the wikinav2/oasis-one-column styles...
+		.wikinav2.oasis-one-column .WikiaPageHeader {
+			padding-right: 0;
+
+			.tally {
+				right: 0;
+			}
+		}
+
+		.WikiaSearchHeader .WikiaSearch,
+		.WikiaRail .WikiaSearch,
+		.WikiaPageHeader .WikiaSearch {
+			display: none;
+		}
 	}
 
 	@media screen and (max-width: $breakpoint-content) {
-	// ABTesting: DAR-1859: START
-		html:not(.keep-rail-on-right) {
-			// ABTesting: DAR-1859: END
+		.WikiHeader .WikiNav {
+			right: 0;
 
-			.WikiHeader .WikiNav {
-				right: 0;
-
-				.navbackground img {
-					display: none;
-				}
+			.navbackground img {
+				display: none;
 			}
-
-			.WikiaHeader .page-width-container {
-				width: auto;
-			}
-
-			.global-notification {
-				width: 100%;
-				&.float {
-					left: 0;
-					margin-left: 0;
-				}
-			}
-
-			.WikiaPage {
-				border: 0;
-				width: auto;
-			}
-
-			.WikiaPageContentWrapper {
-				padding-top: 20px;
-			}
-
-			.WikiaTopAds {
-				width: 100%;
-			}
-
-			// ABTesting: DAR-1859: START
 		}
-	// ABTesting: DAR-1859: END
+
+		.WikiaHeader .page-width-container {
+			width: auto;
+		}
+
+		.global-notification {
+			width: 100%;
+			&.float {
+				left: 0;
+				margin-left: 0;
+			}
+		}
+
+		.WikiaPage {
+			border: 0;
+			width: auto;
+		}
+
+		.WikiaPageContentWrapper {
+			padding-top: 20px;
+		}
+
+		.WikiaTopAds {
+			width: 100%;
+		}
+
 	}
 
 	@media screen and (min-width: $breakpoint-fluid) {
@@ -258,14 +244,3 @@
 			margin: 0 auto;
 		}
 	}
-
-// ABTesting: DAR-1859: START
-	html.keep-rail-on-right {
-		overflow-x: scroll;
-
-		body {
-			min-width: 1058px;
-		}
-	}
-// ABTesting: DAR-1859: END
-}
