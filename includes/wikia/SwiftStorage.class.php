@@ -144,7 +144,10 @@ class SwiftStorage {
 		$status = $req->execute();
 
 		if (!$status->isOK()) {
-			self::log(__METHOD__, 'can\'t set ACL');
+			self::log(
+				__METHOD__,
+				sprintf('can\'t set ACL [<%s> returned HTTP %d - %s]', $url, $req->getStatus(), json_encode($status->getErrorsArray()))
+			);
 		}
 
 		return $container;
@@ -257,7 +260,6 @@ class SwiftStorage {
 	 * @return String $content
 	 */
 	public function read( $remoteFile ) {
-		$content = '';
 		try {
 			$remoteFile = $this->getRemotePath( $remoteFile );
 			$object = $this->container->get_object( $remoteFile );
