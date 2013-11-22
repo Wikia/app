@@ -188,25 +188,26 @@ define('SuggestionsView', ['SuggestionsViewModel'], function( viewModel ) {
 		if ( top !== 0 ) {
 			dropdown.css('margin-top', -top);
 		}
-		if ( left !== 0 ) {
-			dropdown.css('right', parseInt(dropdown.css('right'), 10) + left);
-		}
 	}
 
 	return {
 		init: function( input, target, wikiId ) {
 			var value;
-			searchInput = input;
-			dropdown = target;
-			viewModel.setWiki( wikiId );
-			positionDropdown();
-			bindEvents();
-			value = searchInput.val();
-			if ( value ) {
-				//send first request after loading if input not empty
-				viewModel.setQuery( value );
+			//don't init suggestions if input or target elements are missing
+			if ( input.length && target.length ) {
+				searchInput = input;
+				dropdown = target;
+				viewModel.setWiki( wikiId );
+				positionDropdown();
+				bindEvents();
+				value = searchInput.val();
+				if ( value ) {
+					//send first request after loading if input not empty
+					viewModel.setQuery( value );
+				}
+				return this;
 			}
-			return this;
+			return false;
 		},
 		setAsMainSuggestions: function( name ) {
 			if ( window.Wikia.autocomplete && window.Wikia.autocomplete[name] ) {
