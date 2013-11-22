@@ -113,7 +113,7 @@ ve.ui.MWCategoryWidget.prototype.onLookupMenuItemSelect = function ( item ) {
 			this.categories[value].metaItem.remove();
 		}
 
-		ve.track( {
+		ve.track( 'wikia', {
 			'action': ve.track.actions.ADD,
 			'label': 'dialog-page-settings-category-suggestion'
 		} );

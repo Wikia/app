@@ -63,7 +63,7 @@ ve.ui.Inspector.static.removeable = true;
  */
 ve.ui.Inspector.prototype.onCloseButtonClick = function () {
 	var label = ve.track.nameToLabel( this.constructor.static.name );
-	ve.track( {
+	ve.track( 'wikia', {
 		'action': ve.track.actions.CLICK,
 		'label': 'inspector-' + label + '-button-close'
 	} );
@@ -77,7 +77,7 @@ ve.ui.Inspector.prototype.onCloseButtonClick = function () {
  */
 ve.ui.Inspector.prototype.onRemoveButtonClick = function () {
 	var label = ve.track.nameToLabel( this.constructor.static.name );
-	ve.track( {
+	ve.track( 'wikia', {
 		'action': ve.track.actions.CLICK,
 		'label': 'inspector-' + label + '-button-remove'
 	} );
@@ -155,7 +155,7 @@ ve.ui.Inspector.prototype.setup = function ( data ) {
 	// Parent method
 	OO.ui.Window.prototype.setup.call( this, data );
 
-	ve.track( {
+	ve.track( 'wikia', {
 		'action': ve.track.actions.OPEN,
 		'label': 'inspector-' + ve.track.nameToLabel( this.constructor.static.name )
 	} );
@@ -182,7 +182,7 @@ ve.ui.Inspector.prototype.teardown = function ( data ) {
 	// Parent method
 	OO.ui.Window.prototype.teardown.call( this, data );
 
-	ve.track( {
+	ve.track( 'wikia', {
 		'action': ve.track.actions.CLOSE,
 		'label': 'inspector-' + ve.track.nameToLabel( this.constructor.static.name )
 	} );

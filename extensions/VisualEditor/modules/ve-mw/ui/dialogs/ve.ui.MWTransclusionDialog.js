@@ -427,7 +427,7 @@ ve.ui.MWTransclusionDialog.prototype.getPlaceholderPage = function ( placeholder
 				this.transclusion, addTemplateInput.getValue()
 			);
 
-		ve.track( {
+		ve.track( 'wikia', {
 			'action': ve.track.actions.CLICK,
 			'label': 'dialog-template-button-add-template'
 		} );
@@ -580,7 +580,7 @@ ve.ui.MWTransclusionDialog.prototype.teardown = function ( data ) {
 
 	// Save changes
 	if ( data.action === 'apply' ) {
-		ve.track( {
+		ve.track( 'wikia', {
 			'action': ve.track.actions.CLICK,
 			'label': 'dialog-template-button-save'
 		} );

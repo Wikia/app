@@ -84,7 +84,7 @@ OO.inheritClass( ve.ui.MWCategoryPopupWidget, OO.ui.PopupWidget );
  * @fires removeCategory
  */
 ve.ui.MWCategoryPopupWidget.prototype.onRemoveCategory = function () {
-	ve.track( {
+	ve.track( 'wikia', {
 		'action': ve.track.actions.CLICK,
 		'label': 'dialog-page-settings-button-remove-category'
 	} );
@@ -101,7 +101,7 @@ ve.ui.MWCategoryPopupWidget.prototype.onRemoveCategory = function () {
  * @fires updateSortkey
  */
 ve.ui.MWCategoryPopupWidget.prototype.onSortKeySubmit = function () {
-	ve.track( {
+	ve.track( 'wikia', {
 		'action': ve.track.actions.SUBMIT,
 		'label': 'dialog-page-settings-change-sortkey'
 	} );

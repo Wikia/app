@@ -518,7 +518,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMediaCallback = function (
 			type = 'image';
 		}
 		if ( count ) {
-			ve.track( {
+			ve.track( 'wikia', {
 				'action': ve.track.actions.ADD,
 				'label': 'dialog-media-insert-' + type,
 				'value': count
@@ -527,7 +527,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMediaCallback = function (
 	}
 
 	if ( count.image && count.video ) {
-		ve.track( {
+		ve.track( 'wikia', {
 			'action': ve.track.actions.ADD,
 			'label': 'dialog-media-insert-multiple'
 		} );

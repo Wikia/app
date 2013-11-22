@@ -100,7 +100,7 @@ ve.ui.WikiaSourceModeDialog.prototype.onSerialize = function ( wikitext ) {
  * @method
  */
 ve.ui.WikiaSourceModeDialog.prototype.onApply = function () {
-	ve.track( { 'action': ve.track.actions.CLICK, 'label': 'dialog-source-button-save' } );
+	ve.track( 'wikia', { 'action': ve.track.actions.CLICK, 'label': 'dialog-source-button-save' } );
 	this.$frame.startThrobbing();
 	this.parse();
 };
@@ -148,7 +148,7 @@ ve.ui.WikiaSourceModeDialog.prototype.onParseSuccess = function( response ) {
 		return this.onParseError.call( this );
 	}
 
-	ve.track( { 'action': ve.track.actions.SUCCESS, 'label': 'dialog-parse-success' } );
+	ve.track( 'wikia', { 'action': ve.track.actions.SUCCESS, 'label': 'dialog-source-parse-success' } );
 
 	// TODO: Close is called in this way in order to be synchronous (compare with OO.ui.Dialog.close)
 	// otherwise it was causing problems with stealing the focus from newly created surface.
@@ -195,7 +195,7 @@ ve.ui.WikiaSourceModeDialog.prototype.onParseSuccess = function( response ) {
  * @method
  */
 ve.ui.WikiaSourceModeDialog.prototype.onParseError = function ( ) {
-	ve.track( { 'action': ve.track.actions.ERROR, 'label': 'dialog-parse-error' } );
+	ve.track( 'wikia', { 'action': ve.track.actions.ERROR, 'label': 'dialog-source-parse-error' } );
 	// TODO: error handling?
 };
 

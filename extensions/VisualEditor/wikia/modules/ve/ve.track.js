@@ -6,13 +6,32 @@
 
 require( ['wikia.tracker'], function ( tracker ) {
 	var actions = tracker.ACTIONS,
+		// These are topics used by MediaWiki, consider them reserved. Each topic should contain
+		// any number of actions which should contain tracking parameters as they will be passed
+		// to Wikia.Tracker. If you need to define these parameters dynamically, you may use a
+		// function. Otherwise, a plain Object is fine.
+		mwTopics = {
+			'Edit': {
+				'edit-link-click': {
+					'action': actions.CLICK,
+					'category': 'article',
+					'label': 've-edit'
+				},
+				'section-edit-link-click': {
+					'action': actions.CLICK,
+					'category': 'article',
+					'label': 've-section-edit'
+				}
+			}
+		},
+		// @see {@link nameToLabel} for more information
 		nameToLabelMap = {
 			'meta': 'page-settings',
 			'transclusion': 'template',
 			'wikiaMediaInsert': 'media-insert',
 			'wikiaSourceMode': 'source'
 		},
-		rSpecialChars = /[A-Z]/g;
+		rUppercase = /[A-Z]/g;
 
 	/**
 	 * Convert symbolic names to tracking labels, falling back to the symbolic name if there is
@@ -33,53 +52,31 @@ require( ['wikia.tracker'], function ( tracker ) {
 	 * Editor tracking function.
 	 *
 	 * @method
-	 * @param {string} [name] Used by MediaWiki to distinguish tracking events.
+	 * @param {string} topic Event sub-category (like "tool", "button", etc.); this will be joined
+	 * with data.label to form the whole label for the event.
 	 * @param {Object} data The data to send to our internal tracking function.
 	 */
-	function track( name, data ) {
-		var params = {
-			category: 'editor-ve',
-			trackingMethod: 'both'
-		};
+	function track( topic, data ) {
+		var mwEvent,
+			params = {
+				category: 'editor-ve',
+				trackingMethod: 'both'
+			};
 
-		// Handle MW tracking calls
-		if ( typeof name === 'string' ) {
-			switch( data.action ) {
-				case 'edit-link-click':
-					params.action = actions.CLICK;
-					params.category = 'article';
-					params.label = 've-edit';
-					break;
-				case 'page-edit-impression':
-					params.action = actions.IMPRESSION;
-					params.label = 'edit-page';
-					break;
-				case 'page-save-attempt':
-					params.action = actions.CLICK;
-					params.label = 'button-publish';
-					break;
-				case 'page-save-success':
-					params.action = actions.SUCCESS;
-					params.label = 'publish';
-					params.value = data.latency;
-					break;
-				case 'section-edit-link-click':
-					params.action = actions.CLICK;
-					params.category = 'article';
-					params.label = 've-section-edit';
-					break;
-				default:
-					// Don't track
-					return;
+		// MW events
+		if ( topic !== 'wikia' ) {
+			mwEvent = mwTopics[topic];
+			// Only track things we care about
+			if ( !mwEvent || !( mwEvent = mwEvent[data.action] ) ) {
+				return;
 			}
+			data = $.isFunction( mwEvent ) ? mwEvent( data ) : mwEvent;
 		} else {
-			ve.extendObject( params, name );
-
-			// Normalize label values
-			params.label = params.label.replace( rSpecialChars, upperToHyphenLower );
+			// Normalize tracking labels
+			data.label = data.label.replace( rUppercase, upperToHyphenLower );
 		}
 
-		tracker.track( params );
+		tracker.track( ve.extendObject( params, data ) );
 	}
 
 	/**
@@ -96,5 +93,5 @@ require( ['wikia.tracker'], function ( tracker ) {
 	// Exports
 	ve.track.actions = actions;
 	ve.track.nameToLabel = nameToLabel;
-	ve.trackRegisterHandler( track );
+	ve.trackSubscribeAll( track );
 } );
