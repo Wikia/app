@@ -254,7 +254,7 @@ EOT
 		$wgOut->addWikiText( '*' . wfMessage( 'lookupuser-registration', $registration )->text() );
 		$wgOut->addWikiText( '*' . wfMessage( 'lookupuser-touched', $wgLang->timeanddate( $user->mTouched, true ) )->text() );
 		$wgOut->addWikiText( '*' . wfMessage( 'lookupuser-info-authenticated', $authenticated )->text() );
-		$wgOut->addWikiText( '*' . wfMessage( 'lookupuser-birthdate', $wgLang->timeanddate( $user->mBirthDate, true ) )->text() );
+		$wgOut->addWikiText( '*' . wfMessage( 'lookupuser-birthdate', $wgLang->date( $user->mBirthDate, true ) )->text() );
 
 		$allowedAdoption = $user->getOption( 'AllowAdoption', true );
 		$wgOut->addWikiText( '*' . wfMessage( 'lookupuser-user' . ( !$allowedAdoption ? '-not' : '' ) . '-allowed-adoption' )->plain() );
