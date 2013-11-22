@@ -1030,26 +1030,28 @@ class WallHooksHelper {
 	static public function onChangesListInsertComment($list, $rc, &$comment) {
 		$rcType = $rc->getAttribute('rc_type');
 		$app = F::app();
+		$title = Title::makeTitle( $rc->getAttribute('rc_namespace'), $rc->getAttribute('rc_title') );
+
 		if( in_array($rcType, array(RC_NEW, RC_EDIT, RC_LOG)) && in_array(MWNamespace::getSubject($rc->getAttribute('rc_namespace')), $app->wg->WallNS) ) {
 
 			if( $rcType == RC_EDIT ) {
-				$comment = ' ';
-
 				$summary = $rc->mAttribs['rc_comment'];
 
 				if(empty($summary)) {
-					$msg = wfMsgForContent( static::getMessagePrefix($rc->getAttribute('rc_namespace')).'-edit' );
-				} else {
-					$msg = wfMsgForContent( 'wall-recentchanges-summary', $summary );
+					$summary = wfMessage( static::getMessagePrefix($rc->getAttribute('rc_namespace')).'-edit' )->inContentLanguage()->text();
 				}
 
-				$comment .= Xml::element( 'span', array('class' => 'comment'), $msg );
+				$comment = Linker::commentBlock($summary, $title);
 			} else if( $rcType == RC_LOG && in_array($rc->getAttribute('rc_log_action'), static::$rcWallActionTypes) ) {
 				//this will be deletion/removal/restore summary
 				$text = $rc->getAttribute('rc_comment');
 
-				if( !empty($text) ) $comment = Xml::element('span', array('class' => 'comment'), ' ('.$text.')');
-				else $comment = '';
+				if( !empty($text) ) {
+					$comment = Linker::commentBlock($text, $title);
+				}
+				else {
+					$comment = '';
+				}
 			} else {
 				$comment = '';
 			}
@@ -1648,12 +1650,10 @@ class WallHooksHelper {
 			$summary = $rev->getComment();
 
 			if(empty($summary)) {
-				$msg = wfMsgForContent( static::getMessagePrefix($row->page_namespace).'-edit' );
-			} else {
-				$msg = wfMsgForContent( 'wall-recentchanges-summary', $summary );
+				$summary = wfMessage( static::getMessagePrefix($row->page_namespace).'-edit' )->inContentLanguage()->text();
 			}
 
-			$ret .= ' ' . Xml::openElement('span', array('class' => 'comment')) . $msg . Xml::closeElement('span');
+			$ret .= Linker::commentBlock($summary, $page);
 		}
 
 		wfProfileOut(__METHOD__);
