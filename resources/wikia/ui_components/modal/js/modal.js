@@ -237,6 +237,9 @@ define( 'wikia.ui.modal', [
 			args =  [].slice.call( arguments, 1 ),
 			listeners = this.listeners[ eventName ];
 
+		// in future we may consider ignoring an event if the previous trigger call with the same
+		// eventName did not compete
+
 		( function iterate() {
 			var result;
 			while( listeners && ( i < listeners.length ) ) {
