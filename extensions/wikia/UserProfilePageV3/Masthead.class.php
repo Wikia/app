@@ -638,7 +638,7 @@ class Masthead {
 	 * @param $errorMsg -- optional string containing details on what went wrong if there is an UPLOAD_ERR_EXTENSION.
 	 */
 	private function postProcessImageInternal($sTmpFile, &$errorNo = UPLOAD_ERR_OK, &$errorMsg=''){
-		global $wgAvatarsUseSwiftStorage;
+		global $wgAvatarsUseSwiftStorage, $wgBlogAvatarSwiftContainer, $wgBlogAvatarSwiftPathPrefix;
 
 		wfProfileIn(__METHOD__);
 		$aImgInfo = getimagesize($sTmpFile);
@@ -679,7 +679,7 @@ class Masthead {
 		/**
 		 * generate new image to png format
 		 */
-		$sFilePath = empty( $wgAvatarsUseSwiftStorage ) ? $this->getFullPath() : $this->getTempFile();
+		$sFilePath = empty( $wgAvatarsUseSwiftStorage ) ? $this->getFullPath() : $this->getTempFile(); // either NFS or temp file
 
 		$ioh = new ImageOperationsHelper();
 		$oImg = $ioh->postProcess(  $oImgOrig, $aOrigSize );
@@ -700,7 +700,7 @@ class Masthead {
 		else {
 			$errorNo = UPLOAD_ERR_OK;
 
-			/* remove tmp file */
+			/* remove tmp image */
 			imagedestroy($oImg);
 
 			// store the avatar on Swift
@@ -710,6 +710,25 @@ class Masthead {
 
 				// errors handling
 				$errorNo = $res->isOK() ? UPLOAD_ERR_OK : UPLOAD_ERR_CANT_WRITE;
+				
+				// synchronize between DC
+				if ($res->isOK()) {
+					$mwStorePath = sprintf( 'mwstore://swift-backend/%s%s%s', 
+						$wgBlogAvatarSwiftContainer, $wgBlogAvatarSwiftPathPrefix, $this->getLocalPath() );
+
+					Wikia\SwiftSync\Queue::newFromParams( [
+						'city_id' => null,
+						'op' => 'store',
+						'src' => $sFilePath,
+						'dst' => $mwStorePath
+					] )->add();
+				}
+
+				// sync with NFS
+				global $wgEnableSwithSyncToLocalFS;
+				if (!empty($wgEnableSwithSyncToLocalFS)) {
+					copy($sFilePath, $this->getFullPath());
+				}
 			}
 
 			$sUserText =  $this->mUser->getName();

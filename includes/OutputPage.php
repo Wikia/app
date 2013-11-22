@@ -2585,8 +2585,9 @@ $templates
 	 * @param $extraQuery Array with extra query parameters to add to each request. array( param => value )
 	 * @param $loadCall boolean If true, output an (asynchronous) mw.loader.load() call rather than a <script src="..."> tag
 	 * @return string html <script> and <style> tags
+	 * // Wikia change -- made this public so we could use it to build asset purge links BAC-895
 	 */
-	protected function makeResourceLoaderLink( $modules, $only, $useESI = false, array $extraQuery = array(), $loadCall = false ) {
+	public function makeResourceLoaderLink( $modules, $only, $useESI = false, array $extraQuery = array(), $loadCall = false ) {
 		global $wgResourceLoaderUseESI;
 
 		if ( !count( $modules ) ) {

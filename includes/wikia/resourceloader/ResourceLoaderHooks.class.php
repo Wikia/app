@@ -165,7 +165,7 @@ class ResourceLoaderHooks {
 	 * @return bool
 	 */
 	public static function onResourceLoaderSiteModuleGetPages( $module, $context, &$pages ) {
-		global $wgResourceLoaderAssetsSkinMapping;
+		global $wgResourceLoaderAssetsSkinMapping, $wgOasisLoadCommonCSS;
 
 		// handle skin name changes
 		$skinName = $context->getSkin();
@@ -182,7 +182,7 @@ class ResourceLoaderHooks {
 
 		// Wikia doesn't include Mediawiki:Common.css in Oasis
 		// lower-case skin name is returned by getSkin()
-		if ( $skinName == 'oasis' ) {
+		if ( $skinName == 'oasis' && empty( $wgOasisLoadCommonCSS ) ) {
 			unset($pages['MediaWiki:Common.css']);
 		}
 

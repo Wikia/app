@@ -12,6 +12,7 @@
  * @extends ve.ui.Widget
  * @mixins ve.ui.FlaggableElement
  * @mixins ve.ui.LabeledElement
+ * @mixins ve.ui.IconedElement
  *
  * @constructor
  * @param {Object} [config] Configuration options
@@ -24,6 +25,7 @@ ve.ui.ButtonWidget = function VeUiButtonWidget( config ) {
 	// Mixin constructors
 	ve.ui.FlaggableElement.call( this, config );
 	ve.ui.LabeledElement.call( this, this.$$( '<span>' ), config );
+	ve.ui.IconedElement.call( this, this.$$( '<span>' ), config );
 
 	// Events
 	this.$.on( 'click', ve.bind( this.onClick, this ) );
@@ -35,6 +37,9 @@ ve.ui.ButtonWidget = function VeUiButtonWidget( config ) {
 		'tabIndex': config.tabIndex || 0
 	} );
 	this.$.addClass( 've-ui-buttonWidget' ).append( this.$label );
+	if ( config.icon ) {
+		this.$.prepend( this.$icon );
+	}
 };
 
 /* Inheritance */
@@ -44,6 +49,8 @@ ve.inheritClass( ve.ui.ButtonWidget, ve.ui.Widget );
 ve.mixinClass( ve.ui.ButtonWidget, ve.ui.FlaggableElement );
 
 ve.mixinClass( ve.ui.ButtonWidget, ve.ui.LabeledElement );
+
+ve.mixinClass( ve.ui.ButtonWidget, ve.ui.IconedElement );
 
 /* Events */
 

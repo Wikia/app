@@ -157,7 +157,6 @@ class CloseWikiMaintenance {
 						 * images later without backup
 						 */
 						echo "Can't copy images to remote host. Source {$source} is not defined";
-						die( 1 );
 					}
 				}
 			}

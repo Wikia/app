@@ -93,6 +93,13 @@ $messages['az'] = array(
 	'alert-download-updated-wikis-button-ok' => 'Ok',
 );
 
+/** Bulgarian (български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'window-article-menu-search-label' => 'Търсене',
+);
+
 /** Breton (brezhoneg)
  * @author Fohanno
  * @author Y-M D
@@ -730,12 +737,13 @@ $messages['roa-tara'] = array(
 /** Russian (русский)
  * @author Byulent
  * @author Kuzura
+ * @author Okras
  */
 $messages['ru'] = array(
 	'activityindicator-message' => 'Загрузка...',
 	'window-wikis-title' => 'Wikia Game Guides',
 	'window-wikis-wikilist-search-hint' => 'Поиск в Top Games...',
-	'window-category-load-batch' => 'Более',
+	'window-category-load-batch' => 'Ещё',
 	'window-article-button-close' => 'Закрыть',
 	'window-article-button-back' => 'Назад',
 	'window-article-menu-search-label' => 'Поиск',

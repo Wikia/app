@@ -338,6 +338,13 @@ $messages['ca'] = array(
 	'wikiaquiz-game-mute' => 'Atenuar-se',
 );
 
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'wikiaquiz-game-continue-button' => 'Кхин дӀа',
+);
+
 /** Czech (česky)
  * @author Chmee2
  * @author Vks

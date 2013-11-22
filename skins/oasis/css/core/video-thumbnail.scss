@@ -1,0 +1,168 @@
+@import "skins/oasis/css/mixins/background-opacity";
+
+/**
+ * Style the refactored video thumbnails and allow for responsive and non-responsive thumbnails.
+ */
+
+.wikia-video-thumbnail {
+	display: inline-block;
+	width: 100%;
+	position: relative;
+
+	// Background circle
+	.play-circle {
+		background: black;
+		border: 1px solid #FFF;
+		border-radius: 100px;
+		display: block;
+		left: 50%;
+		opacity: .5;
+		position: absolute;
+		top: 50%;
+
+		// only for medium
+		height: 50px;
+		margin: -25px 0 0 -25px; // half of width and height
+		width: 50px;
+	}
+
+	// Arrow container
+	.play-arrow {
+		display: block;
+		left: 50%;
+		overflow: hidden;
+		position: absolute;
+		top: 50%;
+
+		// only for medium
+		height: 30px;
+		margin: -11px 0 0 -4px;
+		width: 25px;
+	}
+
+	// Arrow is a rotated square that's cut in half
+	.play-arrow:after {
+		background: white;
+		border-radius: 2px;
+		content: "";
+		display: block;
+		transform: rotate( 35deg ) skewX( -15deg );
+		-webkit-transform: rotate( 35deg ) skewX( -15deg );  /* Safari and Chrome */
+		-ms-transform: rotate( 35deg ) skewX( -15deg ); /* IE 9 */
+
+		// only for medium
+		height: 20px;
+		margin: 2px 0 0 -10px;
+		width: 20px;
+	}
+
+	// small sizes are 70% of medium
+	// they are also positioned 10px from the left and bottom instead of center
+	&.small {
+		.play-circle{
+			// sizing
+			height: 35px;
+			width: 35px;
+
+			// positioning
+			bottom: 10px;
+			left: 34px;
+			top: auto;
+		}
+
+		.play-arrow {
+			// sizing
+			height: 21px;
+			width: 17.5px;
+
+			// positioning
+			bottom: 16px;
+			left: 28px;
+			top: auto;
+		}
+
+		.play-arrow:after {
+			height: 14px;
+			margin: 2px 0 0 -7px;
+			width: 14px;
+		}
+	}
+
+	// large sizes are 140% of medium size
+	&.large {
+		.play-circle{
+			height: 70px;
+			margin: -35px 0 0 -35px;
+			width: 70px;
+		}
+
+		.play-arrow {
+			height: 420px;
+			margin: -15.5px 0 0 -5.5px;
+			width: 35px;
+		}
+
+		.play-arrow:after {
+			height: 28px;
+			margin: 2px 0 0 -14px;
+			width: 28px;
+		}
+	}
+
+	// xlarge sizes are 180% of medium size
+	&.xlarge {
+		.play-circle{
+			height: 90px;
+			margin: -45px 0 0 -45px;
+			width: 90px;
+		}
+
+		.play-arrow {
+			height: 54px;
+			margin: -20px 0 0 -7.2px;
+			width: 45px;
+		}
+
+		.play-arrow:after {
+			height: 36px;
+			margin: 3px 0 0 -18px;
+			width: 36px;
+		}
+	}
+
+	&:hover {
+		.play-circle {
+			opacity: .7;
+		}
+	}
+
+	&.hide-play {
+		.play-circle,
+		.play-arrow {
+			display: none;
+		}
+
+		&:hover {
+			.play-circle,
+			.play-arrow {
+				display: block;
+			}
+		}
+	}
+
+	&.responsive .wikia-video-thumb {
+		width: 100%;
+	}
+
+	.duration {
+		@include background-opacity(#000, 70);
+		border-radius: 1px 0 0 0;
+		bottom: 0;
+		color: white;
+		font-size: 12px;
+		line-height: 17px;
+		padding: 0px 6px;
+		position: absolute;
+		right: 0;
+	}
+}

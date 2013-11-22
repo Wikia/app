@@ -174,7 +174,18 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 	}
 
 	protected function loadStructuredData($params) {
-		$apiResponse = $this->app->sendRequest('WAMApi', 'getWAMIndex', $params)->getData();
+
+		try {
+
+			$apiResponse = $this->app->sendRequest('WAMApi', 'getWAMIndex', $params)->getData();
+
+		} catch (WikiaHttpException $e) {
+
+			$logMsg = 'Message: ' . $e->getLogMessage() . ' Details: ' . $e->getDetails();
+			Wikia::log(__METHOD__, false, $logMsg );
+			Wikia::logBacktrace(__METHOD__);
+
+		}
 
 		$data = [
 			'vertical_id' => $params['vertical_id'],

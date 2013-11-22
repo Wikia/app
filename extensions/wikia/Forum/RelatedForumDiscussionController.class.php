@@ -29,11 +29,11 @@ class RelatedForumDiscussionController extends WikiaController {
 
 		$this->content = $content;
 		// common data
-		$this->sectionHeading = wfMsg('forum-related-discussion-heading', $this->wg->Title->getText());
-		$this->newPostButton = wfMsg('forum-related-discussion-new-post-button');
+		$this->sectionHeading = wfMessage( 'forum-related-discussion-heading', $this->wg->Title->getText() )->escaped();
+		$this->newPostButton = wfMessage( 'forum-related-discussion-new-post-button' )->escaped();
 		$topicTitle = Title::newFromText( $this->wg->Title->getPrefixedText(), NS_WIKIA_FORUM_TOPIC_BOARD );
 		$this->newPostUrl = $topicTitle->getFullUrl('openEditor=1');
-		$this->newPostTooltip = wfMsg('forum-related-discussion-new-post-tooltip', $this->wg->Title->getText());
+		$this->newPostTooltip = wfMessage( 'forum-related-discussion-new-post-tooltip', $this->wg->Title->getText() )->escaped();
 		$this->blankImgUrl = wfBlankImgUrl();
 	}
 
@@ -43,11 +43,11 @@ class RelatedForumDiscussionController extends WikiaController {
 		// set template data
 		$topicTitle = Title::newFromText( $this->wg->Title->getPrefixedText(), NS_WIKIA_FORUM_TOPIC_BOARD );
 		$this->seeMoreUrl = $topicTitle->getFullUrl();
-		$this->seeMoreText = wfMsg('forum-related-discussion-see-more');
+		$this->seeMoreText = wfMessage( 'forum-related-discussion-see-more' )->escaped();
 	}
 
 	public function zeroState() {
-		$this->creative = wfMsgExt('forum-related-discussion-zero-state-creative', 'parseinline');
+		$this->creative = wfMessage( 'forum-related-discussion-zero-state-creative' )->parse();
 	}
 
 	public function checkData() {

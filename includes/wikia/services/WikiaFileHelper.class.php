@@ -7,28 +7,16 @@ class WikiaFileHelper extends Service {
 	const maxWideoWidth = 1200;
 
 	/**
-	 * Checks if videos on the wiki are converted to new format (File namespace)
-	 * @return boolean
-	 */
-	public static function isVideoStoredAsFile() {
-		// all videos are already converted and stored as a file
-		return true;
-	}
-
-	/**
 	 * Checks if given File is video
-	 * @param $file WikiaLocalFile object or Title object eventually
+	 * @param WikiaLocalFile|Title $file object or Title object eventually
 	 * @return boolean
 	 */
 	public static function isFileTypeVideo( $file ) {
-		if ( self::isVideoStoredAsFile() ) {
-			// File can be video only when new video logic is enabled for the wiki
-			if ( $file instanceof Title ) {
-				$file = wfFindFile( $file );
-			}
-			return self::isVideoFile( $file );
+		// File can be video only when new video logic is enabled for the wiki
+		if ( $file instanceof Title ) {
+			$file = wfFindFile( $file );
 		}
-		return false;
+		return self::isVideoFile( $file );
 	}
 
 	/**
@@ -54,21 +42,8 @@ class WikiaFileHelper extends Service {
 			return false;
 		}
 
-		if ( self::isVideoStoredAsFile() ) {
-
-			// video-as-file logic
-			if ( self::isFileTypeVideo( $title ) ) {
-
-				return true;
-			}
-			return false;
-
-		} elseif ( ( $title->getNamespace() == NS_VIDEO ) && $allowOld ) {
-
-			return true;
-		}
-
-		return false;
+		// video-as-file logic
+		return self::isFileTypeVideo( $title );
 	}
 
 
@@ -94,8 +69,10 @@ class WikiaFileHelper extends Service {
 	 * @return array $result
 	 */
 	public static function findVideoDuplicates( $provider, $videoId, $isRemoteAsset = false ) {
+		wfProfileIn( __METHOD__ );
+
 		//print "Looking for duplicaes of $provider $videoId\n";
-		$dbr = wfGetDB( DB_MASTER ); // has to be master otherwise there's a chance of getting duplicates
+		$db = wfGetDB( DB_MASTER ); // has to be master otherwise there's a chance of getting duplicates
 
 		// for remote asset, $videoId is string even if it is numeric
 		if ( is_numeric( $videoId ) && !$isRemoteAsset ) {
@@ -120,7 +97,7 @@ class WikiaFileHelper extends Service {
 			$conds[] = "img_metadata LIKE '%s:7:\"videoId\";".$videoStr.";%'";
 		}
 
-		$rows = $dbr->select(
+		$rows = $db->select(
 			'image',
 			'*',
 			$conds,
@@ -129,13 +106,48 @@ class WikiaFileHelper extends Service {
 
 		$result = array();
 
-		while ( $row = $dbr->fetchRow( $rows ) ) {
+		while ( $row = $db->fetchRow( $rows ) ) {
 			$result[] = $row;
 		}
 
-		$dbr->freeResult( $rows );
+		$db->freeResult( $rows );
+
+		wfProfileOut( __METHOD__ );
 
 		return $result;
+	}
+
+	/**
+	 * Get duplicate videos (from video_info table)
+	 * @param string $provider
+	 * @param string $videoId
+	 * @param integer $limit
+	 * @return array $videos
+	 */
+	public static function getDuplicateVideos( $provider, $videoId, $limit = 1 ) {
+		wfProfileIn( __METHOD__ );
+
+		$db = wfGetDB( DB_MASTER );
+
+		$result = $db->select(
+			'video_info',
+			'*',
+			array(
+				'video_id' => $videoId,
+				'provider' => $provider,
+			),
+			__METHOD__,
+			array( 'LIMIT' => $limit )
+		);
+
+		$videos = array();
+		while ( $row = $db->fetchRow( $result ) ) {
+			$videos[] = $row;
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $videos;
 	}
 
 	/**
@@ -289,15 +301,7 @@ class WikiaFileHelper extends Service {
 	 * @return boolean
 	 */
 	public static function useVideoHandlersExtForIngestion() {
-		return static::isVideoStoredAsFile() || !empty( F::app()->wg->ingestVideosUseVideoHandlersExt );
-	}
-
-	/**
-	 * Can VideoHandlers extension be used to embed video
-	 * @return boolean
-	 */
-	public static function useWikiaVideoExtForEmbed() {
-		return !static::isVideoStoredAsFile() && !empty( F::app()->wg->embedVideosUseWikiaVideoExt );
+		return !empty( F::app()->wg->ingestVideosUseVideoHandlersExt );
 	}
 
 	/**
@@ -305,7 +309,7 @@ class WikiaFileHelper extends Service {
 	 * @return boolean
 	 */
 	public static function useVideoHandlersExtForEmbed() {
-		return static::isVideoStoredAsFile() || !empty( F::app()->wg->embedVideosUseVideoHandlersExt );
+		return !empty( F::app()->wg->embedVideosUseVideoHandlersExt );
 	}
 
 	/**

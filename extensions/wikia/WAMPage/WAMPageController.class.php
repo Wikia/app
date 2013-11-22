@@ -197,7 +197,7 @@ class WAMPageController extends WikiaController
 		// because this method is called after this check and isWAMPage() check
 
 		if( $title->isSubpage() && !$currentTabIndex ) {
-			$this->wg->Out->redirect($this->model->getWAMSubpageUrl($title), HTTP_REDIRECT_PERM);
+			$this->wg->Out->redirect($this->model->getWAMSubpageUrl($title), 301);
 		}
 	}
 
@@ -209,7 +209,7 @@ class WAMPageController extends WikiaController
 		$mainWAMPageUrl = $this->model->getWAMMainPageUrl($this->filterParams);
 
 		if( $isFirstTab && !empty($mainWAMPageUrl) ) {
-			$this->wg->Out->redirect($mainWAMPageUrl, HTTP_REDIRECT_PERM);
+			$this->wg->Out->redirect($mainWAMPageUrl, 301);
 		}
 	}
 
@@ -223,7 +223,7 @@ class WAMPageController extends WikiaController
 		$isMisspeledMainPage = !($dbkey === $mainPage);
 
 		if( $isMainPage && $isMisspeledMainPage ) {
-			$this->wg->Out->redirect($this->model->getWAMMainPageUrl(), HTTP_REDIRECT_PERM);
+			$this->wg->Out->redirect($this->model->getWAMMainPageUrl(), 301);
 		}
 	}
 

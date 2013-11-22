@@ -17,11 +17,7 @@ if (WikiaPageType::isWikiaHub()) {
 	echo $app->renderView('Ad', 'Index', array('slotname' => 'TOP_LEADERBOARD'));
 }
 
-if ($wg->EnableTopButtonWide) {
-	echo $app->renderView('Ad', 'Index', array('slotname' => 'TOP_BUTTON_WIDE'));
-} else if ($wg->EnableTopButton) {
-	echo $app->renderView('Ad', 'Index', array('slotname' => 'TOP_BUTTON'));
-}
+echo $app->renderView('Ad', 'Index', array('slotname' => 'TOP_BUTTON_WIDE'));
 
 ?>
 

@@ -252,26 +252,64 @@ class AssetsManager {
 	}
 
 	/**
-	 * attempts to turn a url (http://something.wikia.com/__am/etc/etc/path/to/file.scss) to a local filepath
+	 * attempts to turn a url (http://something.wikia.com/__am/sass/options/path/to/file.scss) to a local filepath
 	 * (path/to/file.scss)
 	 *
 	 * @param string|array $urls the url to try and convert
 	 * @return string|array the resulting filepaths or the original url if filepath can't be determined
 	 */
 	public function getSassFilePath($urls) {
-		if (!is_array($urls)) {
-			$urls = [$urls];
+		global $wgDevelEnvironment;
+
+		/**
+		 * for production urls, where urls are similar to:
+		 * http://slot(1-9).images(1-9).wikia.nocookie.net/__am/sass/options/path/to/file.scss
+		 */
+		$regex = '/^(https?):\/\/(slot[0-9]+\.images([0-9]+))\.wikia.nocookie.net\/(.*)$/';
+		if (!empty($wgDevelEnvironment)) {
+			/**
+			 * for urls in dev, where a url looks like:
+			 * http://i(1-9).nelson.wikia-dev.com/__am/sass/options/path/to/file.scss
+			 */
+			$regex = '/^(https?):\/\/(i[0-9]+\.([a-z0-9]+))\.wikia-dev.com\/(.*)$/';
 		}
 
-		$dummy = $this->getSassCommonURL('');
-		$dummyLength = strlen($dummy);
+		$urls = (array) $urls;
 		$result = [];
-		foreach ($urls as $url) {
-			$position = strpos($url, $dummy);
-			if ($position === 0) {
-				$result[] = substr($url, $dummyLength);
-			} else {
-				$result[] = $url;
+
+		/**
+		 * production - http://slotX.imagesY.wikia.nocookie.net/__am/sass/options/
+		 * preview - http://preview.slot1.wikia.com/__am/sass/options/
+		 * dev - http://iX.nelson.wikia-dev.com/__am/sass/options/
+		 */
+		$dummy = $this->getSassCommonURL('');
+
+		if (preg_match($regex, $dummy, $dummyMatches)) {
+			$dummyPath = $dummyMatches[4]; // will be __am/sass/options/ (no path/to/file.scss - we requested url for empty file)
+			$dummyLength = strlen($dummyPath); // length of sass options all urls have
+			foreach ($urls as $url) {
+				/**
+				 * $matches[4] will be __am/sass/options/path/to/file.scss so we can take diff
+				 * with $dummyPath to find path/to/file.scss
+				 */
+				if (preg_match($regex, $url, $matches) && strpos($matches[4], $dummyPath) === 0) {
+					$result[] = substr($matches[4], $dummyLength);
+				} else {
+					$result[] = $url;
+				}
+			}
+		} else {
+			/**
+			 * fallback since some environments (preview) map everything to the same domain.
+			 * in such cases we can use simple string manipulation
+			 */
+			$dummyLength = strlen($dummy);
+			foreach ($urls as $url) {
+				if (strpos($url, $dummy) === 0) {
+					$result[] = substr($url, $dummyLength);
+				} else {
+					$result[] = $url;
+				}
 			}
 		}
 

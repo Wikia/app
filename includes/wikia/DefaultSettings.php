@@ -998,8 +998,7 @@ if( !isset( $wgUseMedusa ) ) {
 /**
  * Memcached class name
  */
-$wgMemCachedClass = 'MemCachedClientforWiki';
-$wgMoxiTestNodes = ['ap-s44'];
+$wgMemCachedClass = 'MemcacheMoxiCluster';
 
 /**
  * Extra configuration options for memcached when using libmemcached/pecl-memcached
@@ -1154,6 +1153,14 @@ $wgEnableJavaScriptErrorLogging = false;
  * Enables ad engine
  */
 $wgEnableAdEngineExt = true;
+
+/**
+ * @name $wgAdDriverUseSevenOneMedia
+ * Whether to use SevenOne Media ads (true) or the other ads (false)
+ * Null means true for languages within $wgAdDriverUseSevenOneMediaInLanguages
+ */
+$wgAdDriverUseSevenOneMedia = null;
+$wgAdDriverUseSevenOneMediaInLanguages = ['de'];
 
 /**
  * @name $wgAdVideoTargeting

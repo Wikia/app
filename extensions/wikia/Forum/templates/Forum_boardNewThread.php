@@ -3,7 +3,7 @@
 		<?= AvatarService::renderAvatar($username, 50) ?>
 		<blockquote class="message">
 			<div class="message-container">
-				<h4 class="heading"><?= wfMsg('forum-board-new-message-heading') ?></h4>
+				<h4 class="heading"><?= wfMessage( 'forum-board-new-message-heading' )->escaped() ?></h4>
 				<? if($isTopicPage): ?>
 					<div class="board-container">
 						<select class="board-list" id="BoardList">
@@ -11,7 +11,7 @@
 								<option name="boardList" value="<?= $board['value'] ?>"><?= $board['content'] ?></option>
 							<? endforeach; ?>
 						</select>
-						<span class="board-list-error"><?= wfMsg('forum-no-board-selection-error') ?></span>
+						<span class="board-list-error"><?= wfMessage( 'forum-no-board-selection-error' )->escaped() ?></span>
 					</div>
 				<? endif; ?>
 				<? if ($wg->EnableMiniEditorExtForWall): ?>
@@ -23,8 +23,8 @@
 					))->render() ?>
 				<? endif ?>
 				<div class="title-container">
-					<textarea class="title" data-space-type="title" placeholder="<?= wfMsg('forum-discussion-placeholder-title') ?>"></textarea>
-					<span class="no-title-warning"><?= wfMsg('wall-no-title-warning') ?></span>
+					<textarea class="title" data-space-type="title" placeholder="<?= wfMessage( 'forum-discussion-placeholder-title' )->escaped() ?>"></textarea>
+					<span class="no-title-warning"><?= wfMessage( 'wall-no-title-warning' )->escaped() ?></span>
 				</div>
 				<div class="body-container">
 					<? if ($wg->EnableMiniEditorExtForWall): ?>
@@ -34,15 +34,15 @@
 					<? if ($wg->EnableMiniEditorExtForWall): ?>
 						<?= $app->getView('MiniEditorController', 'Editor_Footer')->render() ?>
 					<? endif ?>
-					<div class="buttons" data-space-type="buttons">							
+					<div class="buttons" data-space-type="buttons">
 						<?php if($notify_everyone): ?>
 							<label class="highlight">
-								<input type="checkbox" class="notify-everyone" name="notifyEveryone" value="1" /><?= wfMsg('forum-discussion-highlight') ?>
+								<input type="checkbox" class="notify-everyone" name="notifyEveryone" value="1" /><?= wfMessage( 'forum-discussion-highlight' )->escaped() ?>
 							</label>
 						<?php endif; ?>
-						
-						<button disabled="disabled" class="submit"><?= wfMsg('forum-discussion-post') ?></button>
-						<button disabled="disabled" class="preview secondary"><?= wfMsg('wall-button-to-preview-comment') ?></button>
+
+						<button disabled="disabled" class="submit"><?= wfMessage( 'forum-discussion-post' )->escaped() ?></button>
+						<button disabled="disabled" class="preview secondary"><?= wfMessage( 'wall-button-to-preview-comment' )->escaped() ?></button>
 					</div>
 				</div>
 				<? if ($wg->EnableMiniEditorExtForWall): ?>

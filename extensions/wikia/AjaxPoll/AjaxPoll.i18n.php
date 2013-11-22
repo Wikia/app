@@ -451,6 +451,7 @@ $messages['it'] = array(
 );
 
 /** Japanese (日本語)
+ * @author BryghtShadow
  * @author Fryed-peach
  * @author Shirayuki
  * @author Tommy6
@@ -460,7 +461,7 @@ $messages['ja'] = array(
 	'ajaxpoll-thankyou' => '投票ありがとうございます！',
 	'ajaxpoll-error' => '投票の処理中に問題が発生しました。再投票してください。',
 	'ajaxpoll-summary' => 'この投票は $2 $1 に作成され、これまでに$3人が投票しました。',
-	'ajaxpoll-submit' => '投票',
+	'ajaxpoll-submit' => '投票！',
 	'ajaxpoll-closed' => '投票は既に終了しています。結果をお楽しみください。',
 	'ajaxpoll-submitting' => '投票を送信しています。お待ちください...',
 );
@@ -506,7 +507,10 @@ $messages['lb'] = array(
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
+	'ajaxpoll-thankyou' => 'سی رایتو منمونیم!',
+	'ajaxpoll-error' => 'ایچه یه گل مشگل سی فرایند رای دئینتو پیش اومائه،خواهش می کیم هنی تلاش بکید',
 	'ajaxpoll-submit' => 'رای بئيتو',
+	'ajaxpoll-closed' => 'صنوق رای ایسه بسه بیه. د نتیجه یا علاقه داریتو',
 );
 
 /** Lithuanian (lietuvių)
@@ -609,6 +613,13 @@ $messages['nb'] = array(
 	'ajaxpoll-submit' => 'Stem!',
 	'ajaxpoll-closed' => 'Avstemningen er stengt nå. Nyt resultatene.',
 	'ajaxpoll-submitting' => 'Vennligst vent, sender inn stemmen din...',
+);
+
+/** Nepali (नेपाली)
+ * @author सरोज कुमार ढकाल
+ */
+$messages['ne'] = array(
+	'ajaxpoll-submit' => 'भोट गर्नुहोस !',
 );
 
 /** Dutch (Nederlands)
@@ -717,14 +728,15 @@ $messages['ps'] = array(
 
 /** Portuguese (português)
  * @author Hamilton Abreu
+ * @author Josep Maria 15.
  */
 $messages['pt'] = array(
 	'ajaxpoll-percentVotes' => '$1%&nbsp;de todos os votos',
-	'ajaxpoll-thankyou' => 'Obrigado pelo seu voto!',
-	'ajaxpoll-error' => 'Ocorreu um problema ao processar o seu voto, por favor, tente novamente.',
+	'ajaxpoll-thankyou' => 'Obrigado pelo teu voto!',
+	'ajaxpoll-error' => 'Ocorreu um problema ao processar o teu voto, por favor, tenta-o de novo.',
 	'ajaxpoll-summary' => 'A votação foi criada às $1 de $2 e, até agora, $3 pessoas votaram.',
 	'ajaxpoll-submit' => 'Vote!',
-	'ajaxpoll-closed' => 'A votação foi encerrada. Disfrute dos resultados.',
+	'ajaxpoll-closed' => 'A votação foi encerrada. Desfrute dos resultados.',
 	'ajaxpoll-submitting' => 'Espere, por favor. A submeter o seu voto...',
 );
 

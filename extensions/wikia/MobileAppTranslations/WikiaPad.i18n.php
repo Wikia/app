@@ -387,6 +387,22 @@ $messages['nl'] = array(
 	'browser-loading-message' => 'Bezig met laden…',
 );
 
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'main-tab-discover' => 'Descobrir',
+	'main-tab-personal' => 'Mon Wikia',
+	'main-tab-search' => 'Recercar',
+	'main-tab-offline' => 'Absent',
+	'tab-discover-loading-message' => 'Cargament...',
+	'tab-discover-no-network-dialog-title' => 'Ret indisponibla',
+	'tab-discover-no-network-dialog-message' => 'Cap de connexion ret pas detectada',
+	'tab-discover-no-network-dialog-close-button' => "D'acòrdi",
+	'tab-search-loading-message' => 'Recèrca en cors...',
+	'browser-loading-message' => 'Cargament...',
+);
+
 /** Polish (polski)
  * @author Sovq
  */
@@ -444,7 +460,7 @@ $messages['pt'] = array(
 	'main-tab-offline' => 'Desligado',
 	'tab-discover-loading-message' => 'A carregar…',
 	'tab-discover-no-network-dialog-title' => 'Rede indisponível',
-	'tab-discover-no-network-dialog-message' => 'Não foi detectada uma ligação de rede',
+	'tab-discover-no-network-dialog-message' => 'Não foi detetada uma ligação de rede',
 	'tab-discover-no-network-dialog-close-button' => 'OK',
 	'tab-search-loading-message' => 'A pesquisar...',
 	'browser-loading-message' => 'A carregar…',
@@ -611,6 +627,22 @@ $messages['uk'] = array(
 	'tab-discover-no-network-dialog-close-button' => 'Гаразд',
 	'tab-search-loading-message' => 'Пошук...',
 	'browser-loading-message' => 'Завантаження…',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'main-tab-discover' => 'Khám phá',
+	'main-tab-personal' => 'Wikia của tôi',
+	'main-tab-search' => 'Tìm kiếm',
+	'main-tab-offline' => 'Ngoại tuyến',
+	'tab-discover-loading-message' => 'Đang tải…',
+	'tab-discover-no-network-dialog-title' => 'Mạng không sẵn dùng',
+	'tab-discover-no-network-dialog-message' => 'Không có kết nối mạng được phát hiện',
+	'tab-discover-no-network-dialog-close-button' => 'OK',
+	'tab-search-loading-message' => 'Đang tìm…',
+	'browser-loading-message' => 'Đang tải...',
 );
 
 /** Simplified Chinese (中文（简体）‎)

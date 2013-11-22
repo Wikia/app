@@ -175,9 +175,11 @@ $messages['an'] = array(
 );
 
 /** Old English (Ænglisc)
+ * @author Espreon
  */
 $messages['ang'] = array(
 	'renameuser' => 'Ednemnan brūcend',
+	'userrenametool-new' => 'Nīw brūcendnama:',
 );
 
 /** Arabic (العربية)
@@ -1443,6 +1445,7 @@ Consulter le [[Special:Stafflog|journal du personnel]] pour les historiques.',
 	'userrenametool-error-cannot-rename-account' => 'Le renommage du compte utilisateur sur la base de données globale a échoué.',
 	'userrenametool-error-cannot-create-block' => 'La création d’un blocage Phalanx a échoué.',
 	'userrenametool-error-cannot-rename-unexpected' => 'Une erreur inattendue s’est produite, vérifier les journaux ou réessayez',
+	'userrenametool-error-invalid-ip' => 'Adresses IP fournies non valides.',
 	'userrenametool-warnings-characters' => 'Le nouveau nom d’utilisateur contient des caractères interdits !',
 	'userrenametool-warnings-maxlength' => 'La longueur du nouveau nom d’utilisateur ne peut pas dépasser 255 caractères !',
 	'userrenametool-warn-repeat' => 'Attention ! L’utilisateur « <nowiki>$1</nowiki> » a déjà été renommé « <nowiki>$2</nowiki> ».
@@ -3427,7 +3430,7 @@ $messages['pt'] = array(
 	'userrenametool-reason' => 'Motivo da alteração do nome:',
 	'userrenametool-move' => 'Mover as páginas de utilizador e de discussão do utilizador (e as respectivas subpáginas) para o novo nome',
 	'userrenametool-reserve' => 'Impedir o reuso do antigo nome de utilizador',
-	'userrenametool-notify-renamed' => 'Quando terminar, notificar o utilizador por correio electrónico',
+	'userrenametool-notify-renamed' => 'Quando terminar, notificar o utilizador por correio eletrónico',
 	'userrenametool-warnings' => 'Alertas:',
 	'userrenametool-confirm' => 'Sim, alterar o nome do utilizador',
 	'userrenametool-submit' => 'Alterar o nome do utilizador',
@@ -3461,7 +3464,7 @@ Motivo: "$5".',
 Motivo: "$5".',
 	'userrenametool-info-in-progress' => 'O processo de alteração do nome está em progresso.
 O restante será executado como tarefa de segundo plano.
-Quando este terminar, receberá uma notificação por correio electrónico.',
+Quando este terminar, receberá uma notificação por correio eletrónico.',
 	'userrenametool-success' => 'O nome do utilizador "<nowiki>$1</nowiki>" foi alterado para "<nowiki>$2</nowiki>".',
 	'userrenametool-confirm-intro' => 'Pretende realmente executar esta operação?',
 	'userrenametool-confirm-yes' => 'Sim',
@@ -4703,6 +4706,7 @@ $messages['yue'] = array(
  * @author Gzdavidwong
  * @author Hydra
  * @author Hzy980512
+ * @author Liuxinyu970226
  * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
@@ -4715,7 +4719,7 @@ $messages['zh-hans'] = array(
 	'userrenametool-move' => '移动用户页及其对话页（包括各子页）到新的名字',
 	'userrenametool-reserve' => '封禁旧用户名，使之不能在日后使用',
 	'userrenametool-notify-renamed' => '完成时发邮件给被重命名的用户',
-	'userrenametool-warnings' => '警告:',
+	'userrenametool-warnings' => '警告：',
 	'userrenametool-requested-rename' => '用户$1要求重命名',
 	'userrenametool-did-not-request-rename' => '用户 $1 没有要求重命名',
 	'userrenametool-previously-renamed' => '用户 $1 已经要求了重命名',

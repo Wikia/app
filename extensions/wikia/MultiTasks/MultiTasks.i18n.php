@@ -126,6 +126,7 @@ $messages['en'] = array(
  * @author Siebrand
  */
 $messages['qqq'] = array(
+	'multiwikiedit_button' => '{{Identical|Edit}}',
 	'multiwikiedit_on' => 'Label for dropdown menu where user can select type of wikis to run script on',
 	'multiwikiedit_success_subtitle' => '{{Identical|For $1}}',
 	'multiwikiedit_max_display_size' => 'Parameters:
@@ -612,7 +613,9 @@ $messages['ca'] = array(
  * @author Умар
  */
 $messages['ce'] = array(
+	'multidelete' => 'АгӀонийн гулам дӀабаккхар',
 	'multidelete_title' => 'Дуккха дӀяккхар',
+	'multidelete_processing' => 'агӀонаш дӀаяхар',
 	'multiwikienterpagename' => 'ДӀаязъе агӀона цӀе:',
 );
 
@@ -1595,6 +1598,7 @@ $messages['it'] = array(
 );
 
 /** Japanese (日本語)
+ * @author BryghtShadow
  * @author Shirayuki
  * @author Tommy6
  */
@@ -1700,7 +1704,7 @@ $messages['ja'] = array(
 	'multiwikifinder' => '複数ウィキでのタイトルの検索',
 	'multiwikifindpagenames' => 'ページ名を検索',
 	'multiwikienterpagename' => 'ページ名を入力:',
-	'multiwikirecords' => '$1 のウィキが見つかりました', # Fuzzy
+	'multiwikirecords' => '$1 の{{PLURAL:$1|ウィキ}}が見つかりました',
 );
 
 /** Khmer (ភាសាខ្មែរ)

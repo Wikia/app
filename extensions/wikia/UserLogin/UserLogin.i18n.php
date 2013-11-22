@@ -122,7 +122,8 @@ Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Prefer
 $messages['qqq'] = array(
 	'userlogin-login-heading' => 'Login page heading.
 {{Identical|Log in}}',
-	'userlogin-forgot-password' => 'Link that asks if you forgot your password.',
+	'userlogin-forgot-password' => 'Link that asks if you forgot your password.
+{{Identical|Forgot your password}}',
 	'userlogin-forgot-password-button' => 'Text on button on forgot your password form.
 {{Identical|Continue}}',
 	'userlogin-forgot-password-go-to-login' => 'Text with link to Special:UserLogin page',
@@ -653,6 +654,7 @@ Para comprobar los acontecimientos más recientes en Wikia, visita http://comuni
 );
 
 /** Finnish (suomi)
+ * @author Stryn
  * @author Ville96
  */
 $messages['fi'] = array(
@@ -666,6 +668,7 @@ $messages['fi'] = array(
 	'userlogin-error-nosuchuser' => 'Hm, emme tunnista tätä nimeä. Muista että kirjainkoolla on väliä.',
 	'userlogin-error-wrongpassword' => 'Oho, väärä salasana. Varmista, että caps lock on pois päältä, ja yritä uudelleen.',
 	'userlogin-error-wrongpasswordempty' => 'Oho, täytä salasana-kenttä.',
+	'userlogin-error-resetpass_announce' => 'Näyttää siltä että käytit väliaikaista salasanaa. Valitse uusi salasana jatkaaksesi sisäänkirjautumista.',
 	'userlogin-error-login-throttled' => 'Olet yrittänyt kirjautua sisään väärällä salasanalla liian monta kertaa. Odota hetki ennen kuin yrität uudelleen.',
 	'userlogin-error-login-userblocked' => 'Käyttäjätunnuksesi on estetty eikä sitä voi käyttää sisäänkirjautumiseen.',
 	'userlogin-error-edit-account-closed-flag' => 'Wikia on poistanut tilisi käytöstä.',
@@ -682,7 +685,9 @@ $messages['fi'] = array(
 	'userlogin-oldpassword' => 'Vanha salasana',
 	'userlogin-newpassword' => 'Uusi salasana',
 	'userlogin-retypenew' => 'Kirjoita uusi salasana uudelleen',
+	'userlogin-password-email-greeting' => 'Hei $USERNAME,',
 	'userlogin-provider-or' => 'Tai',
+	'userlogin-loginreqlink' => 'kirjaudu sisään',
 );
 
 /** Faroese (føroyskt)
@@ -1755,7 +1760,7 @@ $messages['pt'] = array(
 	'userlogin-login-heading' => 'Login',
 	'userlogin-forgot-password' => 'Esqueceu a sua senha?',
 	'userlogin-forgot-password-button' => 'Continuar',
-	'userlogin-remembermypassword' => 'Manter-me logado', # Fuzzy
+	'userlogin-remembermypassword' => 'Permanecer ligado',
 	'userlogin-error-noname' => 'Ops, preencha o campo do nome de utilizador.',
 	'userlogin-error-nosuchuser' => 'Hum, nos não reconhecemos este nome. Não se esqueça que os nomes de utilizador são sensíveis a maiúsculas e minúsculas.',
 	'userlogin-error-wrongpassword' => 'Ops, senha incorreta. Certifique-se que o caps lock está desativado e tente novamente.',
@@ -2409,7 +2414,9 @@ $messages['uz'] = array(
 $messages['vi'] = array(
 	'userlogin-login-heading' => 'Đăng nhập',
 	'userlogin-forgot-password' => 'Quên mật khẩu?',
-	'userlogin-remembermypassword' => 'Giữ đăng nhập', # Fuzzy
+	'userlogin-forgot-password-button' => 'Tiếp tục',
+	'userlogin-forgot-password-go-to-login' => 'Có mật khẩu của bạn? [[Special:UserLogin|Đăng nhập]]',
+	'userlogin-remembermypassword' => 'Giữ đăng nhập',
 	'userlogin-error-noname' => 'Rất tiếc, xin vui lòng điền vào trường tên người dùng.',
 	'userlogin-error-sessionfailure' => 'Thời gian đăng nhập của bạn đã hết. Xin vui lòng đăng nhập lại.',
 	'userlogin-error-nosuchuser' => 'Rất tiếc, tên tài khoản bạn vừa mới đăng nhập chưa từng tồn tại, hãy thử lại hoặc bạn có thể đăng ký tài khoản này.',
@@ -2437,6 +2444,7 @@ $messages['vi'] = array(
 	'userlogin-error-mail-error' => 'Rất tiếc, có trục trặc khi gửi email cho bạn. Xin [[Special:Contact/general|liên hệ với chúng tôi]].',
 	'userlogin-password-email-sent' => 'Chúng tôi đã gửi mật khẩu mới đến địa chỉ email của $1.',
 	'userlogin-error-unconfirmed-user' => 'Xin lỗi, bạn chưa xác nhận địa chỉ thư điện tử của bạn. Xin vui lòng xác nhận địa chỉ thư điện tử của bạn trước tiên.',
+	'userlogin-error-confirmation-reminder-already-sent' => 'Xác nhận lời nhắc email đã được gửi.',
 	'userlogin-password-page-title' => 'Đổi mật khẩu',
 	'userlogin-oldpassword' => 'Mật khẩu cũ',
 	'userlogin-newpassword' => 'Mật khẩu mới',
@@ -2447,7 +2455,7 @@ $messages['vi'] = array(
 <br /><br />
 Nếu bạn không yêu cầu mật khẩu mới, đừng lo lắng! Tài khoản của bạn vẫn an toàn và bảo mật. Bạn có thể bỏ qua email này và tiếp tục đăng nhập vào Wikia với mật khẩu hiện tại.
 <br /><br />
-Có câu hỏi hoặc quan tâm? Vui lòng liên hệ với chúng tôi.', # Fuzzy
+Có câu hỏi hoặc quan tâm? Vui lòng l<a href="http://community.wikia.com/wiki/Special:Contact/account-issue">liên hệ</a>. với chúng tôi.',
 	'userlogin-password-email-signature' => 'Cộng đồng Hỗ trợ Wikia',
 	'userlogin-password-email-body' => 'Chào $2,
 
@@ -2461,9 +2469,9 @@ Cộng đồng Hỗ trợ Wikia
 
 ___________________________________________
 
-Để kiểm tra những sự kiện mới nhất trên Wikia, truy cập http://community.wikia.com
-Để nhận được sự hỗ trợ cho ngôn ngữ của bạn, truy cập http://vi.wikia.com
-Muốn kiểm soát email mà bạn nhận được? Đi đến: {{fullurl:{{ns:special}}:Tùy chọn}}', # Fuzzy
+Để kiểm tra những sự kiện mới nhất trên Wikia, truy cập [http://community.wikia.com]
+Để nhận được sự hỗ trợ cho ngôn ngữ của bạn, truy cập [http://vi.wikia.com]
+Muốn kiểm soát email mà bạn nhận được? Đi đến: {{fullurl:{{ns:special}}:Tùy chọn}}',
 	'userlogin-email-footer-line1' => 'Để kiểm tra những sự kiện mới nhất trên Wikia, truy cập <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>
 Để nhận được sự hỗ trợ cho ngôn ngữ của bạn, truy cập <a style="color:#2a87d5;text-decoration:none;" href="http://vi.wikia.com">vi.wikia.com</a>',
 	'userlogin-email-footer-line2' => 'Muốn kiểm soát email mà bạn nhận được? Đi đến <a href="{{fullurl:{{ns:special}}:Tùy chọn}}" style="color:#2a87d5;text-decoration:none;">Tùy chọn</a>',

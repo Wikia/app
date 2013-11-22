@@ -13,7 +13,7 @@
  */
 
 /*global window, document, define, require, setTimeout, setInterval, clearInterval, Features, AdConfig*/
-define('ads', ['wikia.cookies', 'wikia.window', 'wikia.dartmobilehelper'], function (ck, window, dartHelper) {
+define('ads', ['wikia.cookies', 'wikia.window', 'wikia.dartmobilehelper', 'wikia.scriptwriter'], function (ck, window, dartHelper, scriptWriter) {
 	'use strict';
 
 	var STOP_COOKIE_NAME = 'wkStopAd',
@@ -64,15 +64,13 @@ define('ads', ['wikia.cookies', 'wikia.window', 'wikia.dartmobilehelper'], funct
 	 */
 	function setupSlot(options) {
 		if (shouldRequestAd()) {
-			window.postscribe(
+			scriptWriter.injectScriptByUrl(
 				options.wrapper,
-				'<script src="' +
-					dartHelper.getMobileUrl({
-						slotname: options.name,
-						size: options.size,
-						uniqueId: getUniqueId()
-					}) +
-					'"></script>',
+				dartHelper.getMobileUrl({
+					slotname: options.name,
+					size: options.size,
+					uniqueId: getUniqueId()
+				}),
 				findAd(options.wrapper, options.init)
 			);
 		}

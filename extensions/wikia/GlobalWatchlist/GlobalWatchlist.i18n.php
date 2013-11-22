@@ -279,11 +279,12 @@ Wikia
  * @author Centerlink
  * @author Crt
  * @author VezonThunder
+ * @author Ville96
  */
 $messages['fi'] = array(
 	'globalwatchlist-desc' => 'Lähettää viikkokatsaussähköposteja kaikkien wikien seuratuista sivuista',
 	'tog-watchlistdigest' => 'Lähetä minulle viikottainen tarkkailulistatiivistelmä sähköpostitse',
-	'tog-watchlistdigestclear' => 'Merkitse kaikki sivut viikottaiselta tarkkailulistatiivistelmästä vierailluiksi',
+	'tog-watchlistdigestclear' => 'Merkitse kaikki sivut viikottaisesta tarkkailulistatiivistelmästä vierailluiksi',
 	'globalwatchlist-see-more' => 'Tarkista lisämuutokset paikallisilta tarkkailulistoilta',
 	'globalwatchlist-digest-email-subject' => 'Viikottainen tiivistelmä',
 	'globalwatchlist-digest-email-body' => 'Hei $1.
@@ -695,6 +696,16 @@ Groet, Wikia
 * Zie het tabblad "Volglijst" in je voorkeuren om alle pagina\'s uit deze wekelijkse samenvatting als gelezen te markeren.',
 );
 
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'globalwatchlist-digest-email-subject' => 'Somari de la setmana',
+	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|comentari|comentaris}})',
+	'globalwatchlist-no-page-found' => 'Cap de pagina pas trobada.',
+	'globalwatchlist-no-blog-page-found' => 'Cap de pagina de blog pas trobada.',
+);
+
 /** Pälzisch (Pälzisch)
  * @author Manuae
  */
@@ -780,7 +791,7 @@ $messages['ps'] = array(
  */
 $messages['pt'] = array(
 	'globalwatchlist-desc' => 'Envia mensagens mensais de resumo das páginas vigiadas em todas as wikis',
-	'tog-watchlistdigest' => 'Enviar-me, por correio electrónico, uma Compilação Semanal de Mudanças nas Páginas Vigiadas',
+	'tog-watchlistdigest' => 'Enviar-me, por correio eletrónico, uma Compilação Semanal de Mudanças nas Páginas Vigiadas',
 	'tog-watchlistdigestclear' => 'Marcar como visitadas todas as páginas da Compilação Semanal de Mudanças nas Páginas Vigiadas',
 	'globalwatchlist-see-more' => 'Para ver mudanças adicionais, verifique as páginas vigiadas locais',
 	'globalwatchlist-digest-email-subject' => 'Compilação Semanal',

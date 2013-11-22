@@ -10,7 +10,19 @@ var AIC2 = {
 	visible         : false
 };
 
+AIC2.enabled = window.top === window.self
+	&& window.wgEnableAdsInContent
+	&& window.wgShowAds
+	&& !window.wgIsMainpage
+	&& (window.wgIsContentNamespace || window.wikiaPageType === 'search');
+
 AIC2.init = function() {
+	if (!AIC2.enabled || AIC2.called) {
+		return;
+	}
+
+	AIC2.called = true;
+
 	var $window = $(window);
 
 	AIC2.$placeHolder = $('#WikiaAdInContentPlaceHolder');
@@ -171,27 +183,3 @@ AIC2.glueAd = function() {
 
 	$incontentBoxAd.css('visibility', 'visible');
 };
-
-if (Wikia.AbTest && Wikia.AbTest.inGroup('FLOATING_MEDREC_TESTS', 'FLOATER_ENABLED')) {
-	Liftium.d('AB experiment FLOATING_MEDREC_TESTS, group FLOATER_ENABLED: forcing wgEnableAdsInContent = 1', 5);
-	window.wgEnableAdsInContent = 1;
-}
-if (Wikia.AbTest && Wikia.AbTest.inGroup('FLOATING_MEDREC_TESTS', 'FLOATER_DISABLED')) {
-	Liftium.d('AB experiment FLOATING_MEDREC_TESTS, group FLOATER_DISABLED: forcing wgEnableAdsInContent = 0', 5);
-	window.wgEnableAdsInContent = 0;
-}
-
-if (
-	window.top === window.self
-	&& window.wgEnableAdsInContent
-	&& window.wgShowAds
-	&& !window.wgIsMainpage
-	&& (window.wgIsContentNamespace || window.wikiaPageType === 'search')
-) {
-	wgAfterContentAndJS.push(function() {
-		if (!AIC2.called) {
-			AIC2.called = true;
-			AIC2.init();
-		}
-	});
-}

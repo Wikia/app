@@ -68,6 +68,7 @@ $messages['qqq'] = array(
 	'app-tab-search' => '{{Identical|Search}}',
 	'app-tab-sotd' => 'SotD = Song of the Day',
 	'app-async-error-title' => '{{Identical|Oops}}',
+	'login-submit-button' => '{{Identical|Log in}}',
 );
 
 /** Arabic (العربية)
@@ -312,11 +313,12 @@ $messages['de'] = array(
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
+ * @author Gorizon
  */
 $messages['diq'] = array(
 	'app-loading' => 'Bar beno...',
 	'app-tab-search' => 'Cı geyre',
-	'app-tab-about' => 'Heq te cı',
+	'app-tab-about' => 'Heqdé cı',
 	'app-tab-browse' => 'A ra Z',
 	'app-async-error-title' => 'Hoooop',
 	'app-nonetwork-dialog-close-button' => 'TEMAM',
@@ -620,6 +622,13 @@ $messages['it'] = array(
 	'gracenote-takedown' => "Oops! Sfortunatamente non abbiamo la licenza per mostrare il testo completo per questa canzone al momento (questo accade circa per l'1% delle nostre canzoni). Riprova la prossima settimana.",
 	'lyrics-artist-byline' => 'by %s',
 	'ringtone-matcher-by-song' => 'Invia la suoneria di %s sul tuo cellulare',
+);
+
+/** Japanese (日本語)
+ * @author BryghtShadow
+ */
+$messages['ja'] = array(
+	'login-submit-button' => 'ログイン',
 );
 
 /** Khmer (ភាសាខ្មែរ)
@@ -1180,7 +1189,7 @@ $messages['sv'] = array(
 	'login-submit-button' => 'Logga in',
 	'about-heading' => 'LyricWiki',
 	'about-credits' => 'av %s',
-	'about-heading-tips' => 'Sökningar',
+	'about-heading-tips' => 'Söker',
 	'about-tips-0' => 'Auto-complete. Börja skriva in namnet på en artist för att få det kompletterat medan du skiver.',
 	'about-tips-1' => 'Bilderna på huvudsidan är Topp 9-låtarna på iTunes just nu.',
 	'about-heading-licensing' => 'Upphovsrätt',

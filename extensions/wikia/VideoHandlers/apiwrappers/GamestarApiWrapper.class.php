@@ -61,7 +61,7 @@ class GamestarApiWrapper extends ApiWrapper {
 		if ( empty($processedResponse) ) {
 			$req = MWHttpRequest::factory( $apiUrl );
 			$req->setHeader( 'User-Agent', self::$REQUEST_USER_AGENT );
-			$status = $req->execute();
+			$status = VideoHandlerHelper::wrapHttpRequest( $req );
 			if( $status->isOK() ) {
 				$response = $req->getContent();
 				$this->response = $response;	// Only for migration purposes
@@ -124,7 +124,7 @@ class GamestarApiWrapper extends ApiWrapper {
 		$req = MWHttpRequest::factory( $url );
 		$req->setHeader( 'User-Agent', self::$REQUEST_USER_AGENT );
 
-		$status = $req->execute();
+		$status = VideoHandlerHelper::wrapHttpRequest( $req );
 		if( $status->isOK() ) {
 			$response = trim( $req->getContent() );
 			if ( !empty($response) ) {
