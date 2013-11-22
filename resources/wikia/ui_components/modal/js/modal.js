@@ -242,13 +242,12 @@ define( 'wikia.ui.modal', [
 			while( listeners && ( i < listeners.length ) ) {
 				result = listeners[ i++ ].apply( undefined, args );
 				if ( result && ( typeof result.then === 'function' ) ) {
-					result.then( iterate );
+					result.then( iterate, deferred.reject);
 					return;
 				}
 			}
 			deferred.resolve();
 		} )();
-
 		return deferred.promise();
 	};
 
