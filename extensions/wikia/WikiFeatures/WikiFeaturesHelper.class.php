@@ -39,11 +39,11 @@ class WikiFeaturesHelper extends WikiaModel {
 
 	// no need to add feature to $release_date if not require "new" flag
 	public static $release_date = array (
-		'wgEnableChat' => '2011-08-01',					// Chat
-		'wgShowTopListsInCreatePage' => '2012-02-12',	// Top 10 Lists
-		'wgEnableAchievementsExt' => '2012-02-12',		// Achievements
-		'wgEnableForumExt' => '2012-11-29',				// Forum
-		'wgEnableVisualEditorExt' => '2013-12-04',				// Visual Editor
+		'wgEnableChat' => '2011-08-01',
+		'wgShowTopListsInCreatePage' => '2012-02-12',
+		'wgEnableAchievementsExt' => '2012-02-12',
+		'wgEnableForumExt' => '2012-11-29',
+		'wgEnableVisualEditorExt' => '2013-12-04'
 	);
 
 	/**
