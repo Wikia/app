@@ -1,0 +1,9 @@
+@import "WikiaMobile";
+
+a {
+	pointer-events: none;
+}
+
+.thumb a {
+	pointer-events: auto;
+}
