@@ -28,7 +28,7 @@ define( 'wikia.preview', [
 		FIT_SMALL_SCREEN = 80, // pixels to be removed from modal width to fit modal on small screens, won't be needed when new modals will be introduced
 		previewTypes,
 		currentTypeName,
-		options;
+		editPageOptions;
 
 	// show dialog for preview / show changes and scale it to fit viewport's height
 	function renderDialog ( title, options, callback ) {
@@ -67,6 +67,12 @@ define( 'wikia.preview', [
 		$.showCustomModal( title, content, options );
 	}
 
+	/**
+	 * @desc Handles appending mobile preview to modal
+	 *
+	 * This is a separate skin so we're loading it in iframe
+	 * @param {object} data - data that comes from preview api
+	 */
 	function handleMobilePreview ( data ) {
 		var iframe = $article.html( '<iframe class="mobile-preview"></iframe>' ).find( 'iframe' )[0],
 			doc = iframe.document;
@@ -82,12 +88,16 @@ define( 'wikia.preview', [
 		doc.close();
 	}
 
+	/**
+	 * @desc Handles appending desktop preview to modal
+	 * @param {object} data - data that comes from preview api
+	 */
 	function handleDesktopPreview ( data ) {
 		$article.html( data.html + data.catbox + data.interlanglinks );
 	}
 
 	/**
-	 * Function that loads 'desktop' preview and
+	 * @desc Function that loads preview
 	 * @param {string} type - What type of preview to load currently - empty -> Desktop preview, mobile -> Mobile preview
 	 * @param {boolean} opening - whether this is first load and all values should be calculated
 	 */
@@ -97,7 +107,7 @@ define( 'wikia.preview', [
 			$article.parent().startThrobbing();
 		}
 
-		options.getPreviewContent( function ( data ) {
+		editPageOptions.getPreviewContent( function ( data ) {
 			$previewTypeDropdown.attr( 'disabled', false );
 			$article.parent().stopThrobbing();
 
@@ -109,20 +119,19 @@ define( 'wikia.preview', [
 
 			if ( window.wgOasisResponsive ) {
 				if ( opening ) {
+
+					if ( isRailDropped || isWidePage ) {
+						// set proper preview width for shrinken modal
+						//$article.width( editPageOptions.width - articleMargin * 2 );
+					}
+
 					// set current width of the article
 					previewTypes.current.value = previewTypes.mobile.value = $article.width();
 
 					// get width of article Wrapper
-					articleWrapperWidth = $article.parent().width();
-
 					// subtract scrollbar width to get correct width needed as reference point for scaling
-					articleWrapperWidth -= options.scrollbarWidth;
-				}
+					articleWrapperWidth = $article.parent().width() - editPageOptions.scrollbarWidth;
 
-				if ( isRailDropped || isWidePage ) {
-					// set proper preview width for shrinken modal
-					$article.width(options.width - articleMargin * 2);
-				} else {
 					$article.width( previewTypes[currentTypeName].value );
 				}
 
@@ -137,7 +146,7 @@ define( 'wikia.preview', [
 					$this.appendTo( $this.next() );
 				} );
 
-				addEditSummary( $article, options.width, data.summary );
+				addEditSummary( $article, editPageOptions.width, data.summary );
 
 				// fire an event once preview is rendered
 				$( window ).trigger( 'EditPageAfterRenderPreview', [$article] );
@@ -146,6 +155,10 @@ define( 'wikia.preview', [
 		}, previewTypes[currentTypeName].skin );
 	}
 
+	/**
+	 * @desc Function that handles adding preview switch to modal
+	 * @param {string} template - preview dropdown template
+	 */
 	function handlePreviewDropdown( template ){
 		var $dialog = $( '#EditPageDialog' ),
 			dialog = $dialog[0],
@@ -200,11 +213,12 @@ define( 'wikia.preview', [
 	 *    first parameter is the article markup, the second is the edit summary markup
 	 *  Additionally the preview dialog triggers the EditPagePreviewClosed event when the dialog is closed.
 	 *
-	 * @param {object} option - object containing dialog options, see method description for details
+	 * @param {object} options - object containing dialog options, see method description for details
 	 */
-	function renderPreview ( option ) {
-		isRailDropped = !!option.isRailDropped;
-		isWidePage = !!option.isWidePage;
+	function renderPreview ( options ) {
+		editPageOptions = options;
+		isRailDropped = !!options.isRailDropped;
+		isWidePage = !!options.isWidePage;
 		getPreviewTypes( isWidePage );
 
 		var dialogOptions = {
@@ -220,13 +234,13 @@ define( 'wikia.preview', [
 					id: 'publish',
 					defaultButton: true,
 					message: msg( 'savearticle' ),
-					handler: option.onPublishButton
+					handler: options.onPublishButton
 				}
 			],
 			// set modal width based on screen size
 			width: ( (isRailDropped === false && isWidePage === false
 				) || !window.wgOasisResponsive
-				) ? option.width : option.width - FIT_SMALL_SCREEN,
+				) ? options.width : options.width - FIT_SMALL_SCREEN,
 			className: 'preview',
 			onClose: function () {
 				$( window ).trigger( 'EditPagePreviewClosed' );
@@ -239,7 +253,6 @@ define( 'wikia.preview', [
 		renderDialog( msg( 'preview' ), dialogOptions, function ( contentNode ) {
 			// cache selector for other functions in this module
 			$article = contentNode;
-			options = option;
 
 			loadPreview( previewTypes[currentTypeName].name, true );
 
@@ -258,9 +271,7 @@ define( 'wikia.preview', [
 				} else {
 					handlePreviewDropdown( previewTemplate );
 				}
-
 			}
-
 		} );
 	}
 
@@ -329,13 +340,13 @@ define( 'wikia.preview', [
 	 * @param {string} type - type of the preview
 	 */
 
-	function scalePreview(type) {
+	function scalePreview( type ) {
 		var selectedPreviewWidth = previewTypes[type].value,
 			scaleRatio = articleWrapperWidth / selectedPreviewWidth,
 			cssTransform = cssPropHelper.getSupportedProp('transform'),
 			cssTransformOrigin = cssPropHelper.getSupportedProp('transform-origin'),
 			scaleVar = 'scale(' + scaleRatio + ')';
-		console.log(selectedPreviewWidth)
+
 		setClassesForWidePage( type, $article );
 
 		if (selectedPreviewWidth > articleWrapperWidth) {
@@ -403,6 +414,7 @@ define( 'wikia.preview', [
 				mobile: {
 					name: 'mobile',
 					skin: 'wikiamobile',
+					type: 'full',
 					value: null
 				}
 			};

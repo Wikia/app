@@ -15,26 +15,34 @@ class EditPageLayoutAjax {
 				$wikitext = $pageObj->getWikitextFromRequestForPreview($wgRequest->getVal('title', 'empty'));
 				$service = new EditPageService($wgTitle);
 				$html = $pageObj->getOwnPreviewDiff($wikitext, $method);
-				$catbox = null;
-				$interlanglinks = null;
 
-				if($html === false ) {
+				/**
+				 * @val String $type - partial or full - whether to return full skin along with css and js or just a content
+				 */
+				$type = $wgRequest->getVal( 'type', 'partial' );
+
+				$res = [];
+
+				if ( $html === false ) {
 					$html = '';
-					if($method == 'preview') {
+
+					if ( $method == 'preview' ) {
 						list($html, $catbox, $interlanglinks) = $service->getPreview($wikitext);
 
 						if ( F::app()->checkSkin( 'wikiamobile' ) ) {
-							$html = F::app()->renderView( 'WikiaMobileService', 'preview', [ 'content' => $html, 'section' => $section ] );
+							if ( $type === 'full' ) {
+								$res['html'] = F::app()->renderView( 'WikiaMobileService', 'preview', [ 'content' => $html, 'section' => $section ] );
+							} else {
+								$res['html'] = $html;
+							}
 						} else {
+							// allow extensions to modify preview (BugId:8354) - this hook should only be run on article's content
+							wfRunHooks('OutputPageBeforeHTML', array(&$wgOut, &$html));
 
 							// add page title when not in section edit mode
 							if ($section === '') {
 								$html = '<h1 class="pagetitle">' . $wgTitle->getPrefixedText() .  '</h1>' . $html;
 							}
-
-							// allow extensions to modify preview (BugId:8354) - this hook should only be run on article's content
-							wfRunHooks('OutputPageBeforeHTML', array(&$wgOut, &$html));
-
 
 							// allow extensions to modify preview (BugId:6721)
 							wfRunHooks('EditPageLayoutModifyPreview', array($wgTitle, &$html, $wikitext));
@@ -53,25 +61,26 @@ class EditPageLayoutAjax {
 							}
 
 							$html = '<div class="WikiaArticle">'. $html .'</div>';
+
+							$res = [
+								'html' => $html,
+								'catbox' => $catbox,
+								'interlanglinks' => $interlanglinks
+							];
 						}
 
-					} elseif($method == 'diff') {
-						$html = $service->getDiff($wikitext, intval($section));
+					} elseif ( $method == 'diff' ) {
+						$res['html'] = $service->getDiff( $wikitext, intval( $section ) );
 					}
 				}
-
-				$res = array(
-					'html' => $html,
-					'catbox' => $catbox,
-					'interlanglinks' => $interlanglinks
-				);
 
 				wfProfileOut(__METHOD__);
 				return $res;
 			}
 		}
+
 		wfProfileOut(__METHOD__);
-		return array( 'html' => '' );
+		return [ 'html' => '' ];
 	}
 
 	/**

@@ -1,4 +1,3 @@
-
 <?= $globalVariablesScript ;?>
 <?= $jsClassScript ;?>
 <?= $cssLinks ;?>

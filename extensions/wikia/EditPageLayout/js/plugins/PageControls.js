@@ -216,7 +216,7 @@
 			var url = window.wgEditPageHandler.replace( '$1', encodeURIComponent( window.wgEditedTitle ) );
 
 			if ( skin ) {
-				url += '&skin=' + encodeURIComponent( skin );
+				url += '&type=full&skin=' + encodeURIComponent( skin );
 			}
 
 			return jQuery.post(url, params, function(data) {
