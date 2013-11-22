@@ -196,7 +196,12 @@ var WikiaFooterApp = {
 		initialize: function() {
 			this.el.find('.tools-customize').click($.proxy(this.openConfiguration,this));
 			this.menuGroup.add(this.el.find('li.menu'));
-			this.handleOverflowMenu();
+
+			var that = this;
+
+			require(['wikia.fluidlayout'], function(fluidlayout) {
+				that.handleOverflowMenu(fluidlayout.getBreakpointSmall(), 2 * fluidlayout.getAdSkinWidth());
+			});
 		},
 
 		openConfiguration: function( evt ) {
@@ -209,12 +214,19 @@ var WikiaFooterApp = {
 			return this.el.find('.overflow-menu');
 		},
 
-		generateMediaQuery: function (moreable, minWidth) {
+		generateMediaQuery: function (moreable, minWidth, breakpoint, gapWidth) {
 			var firstMediaJSQuery = true,
 				mediaJSQueries = '',
-				moreableCount = moreable.length;
+				moreableCount = moreable.length,
+				alreadyAdded = (minWidth >= breakpoint);
+
 			moreable.each(function (i, v) {
 				var elemWidth = $(v).outerWidth(true);
+
+				if (!alreadyAdded && ((minWidth + elemWidth) >= breakpoint)) {
+					alreadyAdded = true;
+					elemWidth += gapWidth;
+				}
 
 				mediaJSQueries += '@media screen ';
 				if (!firstMediaJSQuery) {
@@ -226,13 +238,19 @@ var WikiaFooterApp = {
 					'.WikiaBarWrapper .tools .overflow-menu .overflow:nth-of-type(-n + ' + (moreableCount - i) +
 					') { display:block; }} ';
 				minWidth += elemWidth;
+
 				firstMediaJSQuery = false;
 			});
+			console.log(moreable, minWidth, breakpoint, gapWidth);
+			console.log(mediaJSQueries);
+
 			return mediaJSQueries;
 		},
 		getMinWidth: function(all) {
 			var arrow = this.el.parents('.wikia-bar:first').find('.arrow'),
-				minWidth = parseInt(this.el.css('padding-left'), 10) + arrow.outerWidth(true),
+				minWidth = parseInt(this.el.css('padding-left'), 10) +
+					parseInt(this.el.css('padding-right'), 10) +
+					arrow.outerWidth(true),
 				notMoreable = all.filter(':not(.overflow)');
 
 			notMoreable.each(function(i,v) {
@@ -269,12 +287,12 @@ var WikiaFooterApp = {
 			styles.html(mediaJsQueries).appendTo('head');
 		},
 
-		handleOverflowMenu: function () {
+		handleOverflowMenu: function (breakpoint, gapWidth) {
 			var all = this.el.children('li'),
 				moreable = all.filter('.overflow'),
 				minWidth = this.getMinWidth(all);
 
-			this.addStyles(this.generateMediaQuery(moreable, minWidth));
+			this.addStyles(this.generateMediaQuery(moreable, minWidth, breakpoint, gapWidth));
 			this.generateSubMenu(moreable);
 		},
 
@@ -314,5 +332,6 @@ var WikiaFooterApp = {
 
 $(function(){
 	'use strict';
+
 	WikiaFooterApp.init();
 });

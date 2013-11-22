@@ -1,5 +1,6 @@
 @import "skins/oasis/css/core/color";
 @import "skins/oasis/css/core/layout";
+@import "skins/oasis/css/core/responsive-variables";
 @import "skins/oasis/css/mixins/menus";
 @import "skins/oasis/css/mixins/box-shadow";
 @import "skins/oasis/css/mixins/gradient";
@@ -283,5 +284,30 @@ body.nowikiabar {
 	margin-bottom: 17px;
 	&.editor {
 		margin-bottom: 0;
+	}
+}
+
+
+
+.WikiaBarWrapper .wikia-bar {
+	margin: auto;
+}
+
+@if ( $responsive-layout-enabled ) {
+
+	@media screen and (min-width: $breakpoint-small) {
+		.WikiaBarWrapper .wikia-bar {
+			width: $breakpoint-small;
+			margin: auto;
+		}
+	}
+
+	@media screen and (min-width: $breakpoint-fluid) {
+		$margin: $width-adskin - 10px; // 10px <- padding
+
+		.WikiaBarWrapper .wikia-bar {
+			margin: 0 $margin;
+			width: auto;
+		}
 	}
 }
