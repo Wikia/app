@@ -241,8 +241,6 @@ var WikiaFooterApp = {
 
 				firstMediaJSQuery = false;
 			});
-			console.log(moreable, minWidth, breakpoint, gapWidth);
-			console.log(mediaJSQueries);
 
 			return mediaJSQueries;
 		},
