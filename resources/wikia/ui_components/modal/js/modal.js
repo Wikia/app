@@ -113,7 +113,7 @@ define( 'wikia.ui.modal', [
 		if ( $( jQuerySelector ).length === 0 && typeof( uiComponent ) !== 'undefined' ) {
 
 			buttons = params.vars.buttons;
-			if ( buttons ) {
+			if ( $.isArray( buttons ) ) {
 				// Create buttons
 				buttons.forEach(function( button, index ) {
 					if ( typeof button === 'object' ) {
