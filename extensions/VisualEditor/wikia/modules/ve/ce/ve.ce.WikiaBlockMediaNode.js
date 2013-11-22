@@ -38,18 +38,15 @@ ve.ce.WikiaBlockMediaNode = function VeCeWikiaBlockMediaNode( model, config ) {
 
 /* Inheritance */
 
-ve.inheritClass( ve.ce.WikiaBlockMediaNode, ve.ce.BranchNode );
+OO.inheritClass( ve.ce.WikiaBlockMediaNode, ve.ce.BranchNode );
 
-ve.mixinClass( ve.ce.WikiaBlockMediaNode, ve.ce.ProtectedNode );
+OO.mixinClass( ve.ce.WikiaBlockMediaNode, ve.ce.ProtectedNode );
 
-ve.mixinClass( ve.ce.WikiaBlockMediaNode, ve.ce.FocusableNode );
+OO.mixinClass( ve.ce.WikiaBlockMediaNode, ve.ce.FocusableNode );
 
-ve.mixinClass( ve.ce.WikiaBlockMediaNode, ve.ce.RelocatableNode );
+OO.mixinClass( ve.ce.WikiaBlockMediaNode, ve.ce.RelocatableNode );
 
-// Need to mixin base class as well
-ve.mixinClass( ve.ce.WikiaBlockMediaNode, ve.ce.ResizableNode );
-
-ve.mixinClass( ve.ce.WikiaBlockMediaNode, ve.ce.MWResizableNode );
+OO.mixinClass( ve.ce.WikiaBlockMediaNode, ve.ce.ResizableNode );
 
 /* Static Properties */
 
@@ -85,7 +82,7 @@ ve.ce.WikiaBlockMediaNode.static.cssClasses = {
  * @returns {jQuery} The properly scoped jQuery object
  */
 ve.ce.WikiaBlockMediaNode.prototype.createAnchor = function () {
-	return this.$$( '<a>' )
+	return this.$( '<a>' )
 		// Images and videos both have this class
 		.addClass( 'image' )
 		.attr( 'href', this.model.getAttribute( 'href' ) );
@@ -98,7 +95,7 @@ ve.ce.WikiaBlockMediaNode.prototype.createAnchor = function () {
  * @returns {jQuery} The properly scoped jQuery object
  */
 ve.ce.WikiaBlockMediaNode.prototype.createImage = function () {
-	return this.$$( '<img>' )
+	return this.$( '<img>' )
 		.attr( 'src', this.model.getAttribute( 'src' ) )
 		.attr( 'height', this.model.getAttribute( 'height' ) )
 		.attr( 'width', this.model.getAttribute( 'width' ) );
@@ -112,7 +109,7 @@ ve.ce.WikiaBlockMediaNode.prototype.createImage = function () {
  */
 ve.ce.WikiaBlockMediaNode.prototype.createMagnify = function () {
 	// It's inside a protected node, so user can't see href/title.
-	return this.$$( '<a>' ).addClass( 'internal sprite details magnify ve-no-shield' );
+	return this.$( '<a>' ).addClass( 'internal sprite details magnify ve-no-shield' );
 };
 
 /**
@@ -122,7 +119,7 @@ ve.ce.WikiaBlockMediaNode.prototype.createMagnify = function () {
  * @returns {jQuery} The properly scoped jQuery object
  */
 ve.ce.WikiaBlockMediaNode.prototype.createRoot = function () {
-	return this.$$( '<div>' ).addClass( 'center' );
+	return this.$( '<div>' ).addClass( 'center' );
 };
 
 /**
@@ -137,11 +134,11 @@ ve.ce.WikiaBlockMediaNode.prototype.createThumb = function () {
 		type = this.model.getAttribute( 'type' );
 
 	if ( type === 'frameless' || type === 'none' ) {
-		$thumb = this.$$( '<div>' ).addClass( this.getCssClass( 'none', align ) );
+		$thumb = this.$( '<div>' ).addClass( this.getCssClass( 'none', align ) );
 
 	// Type "frame" or "thumb"
 	} else {
-		$thumb = this.$$( '<figure>' )
+		$thumb = this.$( '<figure>' )
 			.addClass( 'thumb thumbinner ' + this.getCssClass( 'default', align ) )
 			.css( 'width', parseInt( this.model.getAttribute( 'width' ), 10 ) + 2 );
 	}
@@ -158,7 +155,7 @@ ve.ce.WikiaBlockMediaNode.prototype.getCssClass = function ( type, alignment ) {
 	// TODO use this.model.getAttribute( 'type' ) etc., see bug 52065
 	// Default is different between RTL and LTR wikis:
 	if ( type === 'default' && alignment === 'default' ) {
-		if ( this.$.css( 'direction' ) === 'rtl' ) {
+		if ( this.$element.css( 'direction' ) === 'rtl' ) {
 			return 'tleft';
 		} else {
 			return 'tright';
@@ -218,8 +215,8 @@ ve.ce.WikiaBlockMediaNode.prototype.update = function () {
 		$root = $thumb;
 	}
 	this.emit( 'teardown' );
-	this.$.replaceWith( $root );
-	this.$ = $root;
+	this.$element.replaceWith( $root );
+	this.$element = $root;
 
 	$anchor = this.createAnchor().appendTo( $thumb );
 	$image = this.createImage().appendTo( $anchor );
@@ -236,7 +233,7 @@ ve.ce.WikiaBlockMediaNode.prototype.update = function () {
 		captionModel.connect( this, { 'update': 'onModelUpdate' } );
 		this.children.push( captionView );
 		captionView.attach( this );
-		captionView.$.appendTo( $thumb );
+		captionView.$element.appendTo( $thumb );
 
 		if ( this.live !== captionView.isLive() ) {
 			captionView.setLive( this.live );
@@ -244,9 +241,9 @@ ve.ce.WikiaBlockMediaNode.prototype.update = function () {
 	}
 
 	// Update references for mixins
-	this.$focusable = this.$;
-	this.$phantomable = this.$;
-	this.$relocatable = this.$;
+	this.$focusable = this.$element;
+	this.$phantomable = this.$element;
+	this.$relocatable = this.$element;
 	this.$image = $image;
 	this.$resizable = $image;
 

@@ -21,7 +21,7 @@ ve.ui.WikiaMediaInsertDialog = function VeUiMWMediaInsertDialog( surface, config
 
 /* Inheritance */
 
-ve.inheritClass( ve.ui.WikiaMediaInsertDialog, ve.ui.MWDialog );
+OO.inheritClass( ve.ui.WikiaMediaInsertDialog, ve.ui.MWDialog );
 
 /* Static Properties */
 
@@ -52,27 +52,27 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	// Properties
 	this.cartModel = new ve.dm.WikiaCart();
 	this.cart = new ve.ui.WikiaCartWidget( this.cartModel );
-	this.insertButton = new ve.ui.ButtonWidget( {
-		'$$': this.frame.$$,
+	this.insertButton = new OO.ui.ButtonWidget( {
+		'$': this.$,
 		'label': ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-insert-button' ),
 		'flags': ['primary']
 	} );
 	this.insertionDetails = {};
 	this.license = { 'promise': null, 'html': null };
-	this.pages = new ve.ui.PagedLayout( { '$$': this.frame.$$, 'attachPagesPanel': true } );
+	this.pages = new OO.ui.PagedLayout( { '$': this.$, 'attachPagesPanel': true } );
 	this.query = new ve.ui.WikiaMediaQueryWidget( {
-		'$$': this.frame.$$,
+		'$': this.$,
 		'placeholder': ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' )
 	} );
 	this.queryInput = this.query.getInput();
 	this.queryUpload = this.query.getUpload();
-	this.search = new ve.ui.WikiaMediaResultsWidget( { '$$': this.frame.$$ } );
+	this.search = new ve.ui.WikiaMediaResultsWidget( { '$': this.$ } );
 	this.searchResults = this.search.getResults();
-	this.upload = new ve.ui.WikiaUploadWidget( { '$$': this.frame.$$, 'hideIcon': true } );
+	this.upload = new ve.ui.WikiaUploadWidget( { '$': this.$, 'hideIcon': true } );
 
-	this.$cart = this.$$( '<div>' );
-	this.$content = this.$$( '<div>' );
-	this.$mainPage = this.$$( '<div>' );
+	this.$cart = this.$( '<div>' );
+	this.$content = this.$( '<div>' );
+	this.$mainPage = this.$( '<div>' );
 
 	// Events
 	this.cartModel.connect( this, {
@@ -99,20 +99,20 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	this.queryUpload.connect( this, uploadEvents );
 
 	// Initialization
-	this.upload.$.appendTo( this.$mainPage );
+	this.upload.$element.appendTo( this.$mainPage );
 	this.pages.addPage( 'main', { '$content': this.$mainPage } );
-	this.pages.addPage( 'search', { '$content': this.search.$ } );
+	this.pages.addPage( 'search', { '$content': this.search.$element } );
 
 	this.$cart
 		.addClass( 've-ui-wikiaCartWidget-wrapper' )
-		.append( this.cart.$ );
+		.append( this.cart.$element );
 	this.$content
 		.addClass( 've-ui-wikiaMediaInsertDialog-content' )
-		.append( this.query.$, this.pages.$ );
+		.append( this.query.$, this.pages.$element );
 
 	this.$body.append( this.$content, this.$cart );
 	this.frame.$content.addClass( 've-ui-wikiaMediaInsertDialog' );
-	this.$foot.append( this.insertButton.$ );
+	this.$foot.append( this.insertButton.$element );
 };
 
 /**
@@ -139,7 +139,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.onQueryInputEnter = function () {
 
 /**
  * Handle key up/down for selecting result items.
- * Copied from ve.ui.SearchWidget.js
+ * Copied from OO.ui.SearchWidget.js
  *
  * @method
  * @param {jQuery.Event} e The jQuery event Object.
@@ -240,13 +240,13 @@ ve.ui.WikiaMediaInsertDialog.prototype.onCartModelAdd = function ( items ) {
 	for ( i = 0; i < items.length; i++ ) {
 		item = items[i];
 		isTemporary = item.isTemporary();
-		config = { '$$': this.frame.$$, 'editable': isTemporary };
+		config = { '$': this.$, 'editable': isTemporary };
 		if ( isTemporary ) {
-			config.$license = this.$$( this.license.html );
+			config.$license = this.$( this.license.html );
 		}
 		page = new ve.ui.WikiaMediaPageWidget( item, config );
 		page.connect( this, { 'remove': 'onMediaPageRemove' } );
-		this.pages.addPage( item.title, { '$content': page.$ } );
+		this.pages.addPage( item.title, { '$content': page.$element } );
 	}
 
 	this.searchResults.setChecked( items, true );

@@ -6,7 +6,7 @@
 
 /**
  * @class
- * @extends ve.ui.Widget
+ * @extends OO.ui.Widget
  *
  * @constructor
  * @param {Object} model Page item model
@@ -21,32 +21,32 @@ ve.ui.WikiaMediaPageWidget = function VeUiWikiaMediaPageWidget( model, config ) 
 	config = config || {};
 
 	// Parent constructor
-	ve.ui.Widget.call( this, config );
+	OO.ui.Widget.call( this, config );
 
 	// Properties
 	this.editable = !!config.editable;
-	this.fieldset = new ve.ui.FieldsetLayout( { '$$': this.$$ } );
+	this.fieldset = new OO.ui.FieldsetLayout( { '$': this.$ } );
 	this.image = null;
 	this.model = model;
-	this.removeButton = new ve.ui.ButtonWidget( {
-		'$$': this.$$,
+	this.removeButton = new OO.ui.ButtonWidget( {
+		'$': this.$,
 		'flags': ['destructive'],
 		'label': ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-item-remove-button' )
 	} );
-	this.title = new ve.ui.TextInputWidget( {
-		'$$': this.$$,
+	this.title = new OO.ui.TextInputWidget( {
+		'$': this.$,
 		'readOnly': !this.editable,
 		'value': this.model.basename
 	} );
-	this.titleLabel = new ve.ui.InputLabelWidget( {
-		'$$': this.$$,
+	this.titleLabel = new OO.ui.InputLabelWidget( {
+		'$': this.$,
 		'input': this.title,
 		'label': ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-item-title-label' )
 	} );
 
-	this.$extension = this.$$( '<span>' );
+	this.$extension = this.$( '<span>' );
 	this.$item = null;
-	this.$itemWrapper = this.$$( '<div>' );
+	this.$itemWrapper = this.$( '<div>' );
 	this.$license = null;
 	this.$licenseLabel = null;
 	this.$licenseSelect = null;
@@ -66,15 +66,15 @@ ve.ui.WikiaMediaPageWidget = function VeUiWikiaMediaPageWidget( model, config ) 
 		.addClass( 've-ui-wikiaMediaPageWidget-item-extension' )
 		.text( this.model.extension );
 	this.$itemWrapper.addClass( 've-ui-wikiaMediaPageWidget-item' );
-	this.title.$.append( this.$extension );
-	this.fieldset.$.append( this.titleLabel.$, this.title.$ );
+	this.title.$element.append( this.$extension );
+	this.fieldset.$element.append( this.titleLabel.$, this.title.$element );
 	if ( this.model.type === 'photo' && this.editable ) {
 		this.setupLicense( config.$license );
 	}
-	this.fieldset.$.append( this.removeButton.$ );
-	this.$
+	this.fieldset.$element.append( this.removeButton.$element );
+	this.$element
 		.addClass( 've-ui-wikiaMediaPageWidget ' + this.model.type )
-		.append( this.$itemWrapper, this.fieldset.$ );
+		.append( this.$itemWrapper, this.fieldset.$element );
 
 	this.setupImage();
 	if ( this.model.type === 'video' ) {
@@ -85,7 +85,7 @@ ve.ui.WikiaMediaPageWidget = function VeUiWikiaMediaPageWidget( model, config ) 
 
 /* Inheritance */
 
-ve.inheritClass( ve.ui.WikiaMediaPageWidget, ve.ui.Widget );
+OO.inheritClass( ve.ui.WikiaMediaPageWidget, OO.ui.Widget );
 
 /* Events */
 
@@ -163,7 +163,7 @@ ve.ui.WikiaMediaPageWidget.prototype.onRemoveButtonClick = function () {
  */
 ve.ui.WikiaMediaPageWidget.prototype.setupImage = function () {
 	this.image = new Image();
-	this.$item = this.$$( this.image );
+	this.$item = this.$( this.image );
 
 	require( ['wikia.thumbnailer'], ve.bind( function ( thumbnailer ) {
 		// TODO: (nice to have) be able to calculate the bounding box without hardcoded
@@ -186,8 +186,8 @@ ve.ui.WikiaMediaPageWidget.prototype.setupImage = function () {
  */
 ve.ui.WikiaMediaPageWidget.prototype.setupLicense = function ( $license ) {
 	// Properties
-	this.$license = this.$$( '<div>' );
-	this.$licenseLabel = this.$$( '<label>' );
+	this.$license = this.$( '<div>' );
+	this.$licenseLabel = this.$( '<label>' );
 	this.$licenseSelect = $license;
 
 	// Events
@@ -198,9 +198,9 @@ ve.ui.WikiaMediaPageWidget.prototype.setupLicense = function ( $license ) {
 		.addClass( 've-ui-wikiaMediaPageWidget-item-license' )
 		.append( this.$licenseSelect );
 	this.$licenseLabel
-		.addClass( 've-ui-widget ve-ui-labeledElement-label ve-ui-inputLabelWidget' )
+		.addClass( 'OO.ui.Widget ve-ui-labeledElement-label ve-ui-inputLabelWidget' )
 		.text( ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-item-license-label' ) );
-	this.fieldset.$.append( this.$licenseLabel, this.$license );
+	this.fieldset.$element.append( this.$licenseLabel, this.$license );
 };
 
 /**
@@ -209,10 +209,10 @@ ve.ui.WikiaMediaPageWidget.prototype.setupLicense = function ( $license ) {
  * @method
  */
 ve.ui.WikiaMediaPageWidget.prototype.setupVideoOverlay = function () {
-	this.$overlay = this.$$( '<span>' )
+	this.$overlay = this.$( '<span>' )
 		.addClass( 'play-circle' )
 		.add(
-			this.$$( '<span>' ).addClass( 'play-arrow' )
+			this.$( '<span>' ).addClass( 'play-arrow' )
 		);
 
 	this.$itemWrapper

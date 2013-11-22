@@ -22,7 +22,7 @@ ve.ui.WikiaSourceModeDialog = function VeUiWikiaSourceModeDialog( surface, confi
 
 /* Inheritance */
 
-ve.inheritClass( ve.ui.WikiaSourceModeDialog, ve.ui.MWDialog );
+OO.inheritClass( ve.ui.WikiaSourceModeDialog, ve.ui.MWDialog );
 
 /* Static Properties */
 
@@ -40,16 +40,16 @@ ve.ui.WikiaSourceModeDialog.prototype.initialize = function () {
 
 	// Properties
 	this.openCount = 0;
-	this.sourceModeTextarea = new ve.ui.TextInputWidget({
-		'$$': this.frame.$$,
+	this.sourceModeTextarea = new OO.ui.TextInputWidget({
+		'$': this.$,
 		'multiline': true
 	});
-	this.applyButton = new ve.ui.ButtonWidget( {
-		'$$': this.frame.$$,
+	this.applyButton = new OO.ui.ButtonWidget( {
+		'$': this.$,
 		'label': ve.msg( 'wikia-visualeditor-dialog-wikiasourcemode-apply-button' ),
 		'flags': ['primary']
 	} );
-	this.$helpLink = this.$$('<a>')
+	this.$helpLink = this.$('<a>')
 		.addClass( 've-ui-wikiaSourceModeDialog-helplink' )
 		.attr( {
 			'href': new mw.Title( ve.msg( 'wikia-visualeditor-dialog-wikiasourcemode-help-link' ) ).getUrl(),
@@ -61,8 +61,8 @@ ve.ui.WikiaSourceModeDialog.prototype.initialize = function () {
 	this.applyButton.connect( this, { 'click': [ 'onApply' ] } );
 
 	// Initialization
-	this.$body.append( this.sourceModeTextarea.$ );
-	this.$foot.append( this.$helpLink, this.applyButton.$ );
+	this.$body.append( this.sourceModeTextarea.$element );
+	this.$foot.append( this.$helpLink, this.applyButton.$element );
 	this.frame.$content.addClass( 've-ui-wikiaSourceModeDialog-content' );
 };
 
@@ -150,9 +150,9 @@ ve.ui.WikiaSourceModeDialog.prototype.onParseSuccess = function( response ) {
 
 	ve.track( { 'action': ve.track.actions.SUCCESS, 'label': 'dialog-parse-success' } );
 
-	// TODO: Close is called in this way in order to be synchronous (compare with ve.ui.Dialog.close)
+	// TODO: Close is called in this way in order to be synchronous (compare with OO.ui.Dialog.close)
 	// otherwise it was causing problems with stealing the focus from newly created surface.
-	ve.ui.Window.prototype.close.call( this );
+	OO.ui.Window.prototype.close.call( this );
 	$( window ).off( 'mousewheel', this.onWindowMouseWheelHandler );
 	$( document ).off( 'keydown', this.onDocumentKeyDownHandler );
 
