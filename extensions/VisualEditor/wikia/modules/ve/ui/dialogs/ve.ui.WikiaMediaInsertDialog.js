@@ -240,7 +240,10 @@ ve.ui.WikiaMediaInsertDialog.prototype.onCartModelAdd = function ( items ) {
 	for ( i = 0; i < items.length; i++ ) {
 		item = items[i];
 		isTemporary = item.isTemporary();
-		config = { '$$': this.frame.$$, 'editable': isTemporary };
+		config = {
+			'$$': this.frame.$$,
+			'editable': ( isTemporary && item.provider !== 'wikia' )
+		};
 		if ( isTemporary ) {
 			config.$license = this.$$( this.license.html );
 		}

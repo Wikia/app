@@ -51,14 +51,12 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 		);
 
 		do {
-			$numVideos = 0;
-
 			// connect to provider API
 			$url = $this->initFeedUrl( $apiParams, $nextPage );
 			print( "Connecting to $url...\n" );
 
-			$req = MWHttpRequest::factory( $url );
-			$status = VideoHandlerHelper::wrapHttpRequest( $req );
+			$req = MWHttpRequest::factory( $url, array( 'noProxy' => true ) );
+			$status = $req->execute();
 			if ( $status->isGood() ) {
 				$response = $req->getContent();
 			} else {

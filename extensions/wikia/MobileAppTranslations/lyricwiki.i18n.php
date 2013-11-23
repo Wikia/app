@@ -68,6 +68,7 @@ $messages['qqq'] = array(
 	'app-tab-search' => '{{Identical|Search}}',
 	'app-tab-sotd' => 'SotD = Song of the Day',
 	'app-async-error-title' => '{{Identical|Oops}}',
+	'login-submit-button' => '{{Identical|Log in}}',
 );
 
 /** Arabic (العربية)
@@ -621,6 +622,13 @@ $messages['it'] = array(
 	'gracenote-takedown' => "Oops! Sfortunatamente non abbiamo la licenza per mostrare il testo completo per questa canzone al momento (questo accade circa per l'1% delle nostre canzoni). Riprova la prossima settimana.",
 	'lyrics-artist-byline' => 'by %s',
 	'ringtone-matcher-by-song' => 'Invia la suoneria di %s sul tuo cellulare',
+);
+
+/** Japanese (日本語)
+ * @author BryghtShadow
+ */
+$messages['ja'] = array(
+	'login-submit-button' => 'ログイン',
 );
 
 /** Khmer (ភាសាខ្មែរ)

@@ -53,19 +53,20 @@ Parameters:
 /** Arabic (العربية)
  * @author Achraf94
  * @author Alexknight12
+ * @author Claw eg
  */
 $messages['ar'] = array(
 	'comboajaxlogin-desc' => 'صندوق ديناميكي يسمح للمستخدمين بتسجيل الدخول كما يذكرهم بكلمة السر و المستخدمين المسجلين.',
 	'comboajaxlogin-createlog' => 'تسجيل الدخول أو إنشاء حساب',
 	'comboajaxlogin-actionmsg' => 'لكي تقوم بهذه العملية يجب عليك أولا تسجيل الدخول أو إنشاء حساب',
-	'comboajaxlogin-actionmsg-protected' => 'لتنفيذ هذا الإجراء، تحتاج أولاً لتسجيل الدخول أو إنشاء حساب.',
+	'comboajaxlogin-actionmsg-protected' => 'لكي تقوم بهذه العملية يجب عليك أولا تسجيل الدخول أو إنشاء حساب',
 	'comboajaxlogin-connectmarketing' => '<h1>اربط حساباتك</h1>
 <ul>
 <li>حافظ على اسم المستخدم الحالي, تاريخ المساهمات, التعديلات... لا شيء يتغير إلا كيفية تسجيل الدخول</li>
 <li>شارك نشاطك في ويكيا مع أصدقائك في الفيسبوك</li>
 <li>تحكم فيما ينشر على الفيسبوك الخاص بك</li>
 </ul>',
-	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>سجل الدخول عبر فيسبوك كونيكت</h1>',
+	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>سجل الدخول عبر الاتصال بفيسبوك</h1>',
 	'comboajaxlogin-connectmarketing-oasis' => '<h1>قم بربط حسابك في ويكيا مع حسابك في الفيسبوك</h1>
 <ul>
 <li>حافظ على اسم المستخدم الحالي, تاريخ المساهمات, التعديلات... لا شيء يتغير إلا كيفية تسجيل الدخول</li>

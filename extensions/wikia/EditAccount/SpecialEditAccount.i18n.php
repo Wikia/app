@@ -137,6 +137,13 @@ $messages['af'] = array(
 	'editaccount-nouser' => 'Die gebruiker "$1" bestaan nie.',
 );
 
+/** Old English (Ænglisc)
+ * @author Espreon
+ */
+$messages['ang'] = array(
+	'editaccount-submit-button' => 'Hordian',
+);
+
 /** Arabic (العربية)
  * @author Achraf94
  * @author Claw eg
@@ -176,6 +183,8 @@ $messages['ar'] = array(
 	'editaccount-success-pass' => 'تم تغيير كلمة مرور الحساب $1 بنجاح.',
 	'editaccount-success-realname' => 'تم تغيير الإسم  الحقيقي الخاص بالحساب $1 بنجاح.',
 	'editaccount-success-unsub' => 'ألغي بنجاح الاشتراك قليلاً للحساب $1.',
+	'editaccount-success-disable' => 'ألغي بنجاح الاشتراك قليلاً للحساب $1.',
+	'editaccount-success-toggleadopt' => 'تم تثبيت حالة اعتماد أهلية بنجاح لحساب $1.',
 	'editaccount-success-close' => 'تم تعطيل الحساب $1 بنجاح.',
 	'editaccount-error-email' => 'لم يتم تغيير البريد الإلكتروني. حاول مرة أخرى أو اتصل "بالفريق التقني".',
 	'editaccount-error-pass' => 'لم يتم تغيير كلمة المرور. حاول مرة أخرى أو اتصل "بالفريق التقني".',
@@ -193,6 +202,8 @@ $messages['ar'] = array(
 	'editaccount-status-unconfirmed' => 'لم يتم التأكيد',
 	'editaccount-status-realuser' => 'المستخدم الحقيقي',
 	'editaccount-status-tempuser' => 'المستخدم المؤقت',
+	'editaccount-error-tempuser-email' => 'المستخدمون المؤقتون لا يمكن أن يكون لديهم حقل عنوان البريد الإلكتروني فارغاً، الرجاء إدخال عنوان بريد إلكتروني.',
+	'editaccount-email-change-requested' => 'طلب المستخدم بتغيير البريد الإلكتروني عبر التفضيلات إلى $1 . لتأكيد تغيير عنوان البريد الإلكتروني المطلوب للمستخدم، أدخل عنوان البريد الإلكتروني المطلوب في الحقل أدناه وانقر "حفظ وتأكيد".',
 	'editaccount-log' => 'سجل حسابات المستخدم',
 	'editaccount-log-header' => 'هذه الصفحة تسرد التغييرات التي تم إجراؤها على معلومات المستخدم من قبل موظفي ويكيا.',
 	'editaccount-log-entry-email' => 'قام بتغيير  بريد المستخدم $2 الإلكتروني',
@@ -256,6 +267,7 @@ $messages['bg'] = array(
 	'editaccount-submit-pass' => 'Съхраняване на паролата',
 	'editaccount-submit-button' => 'Съхраняване',
 	'editaccount-invalid-email' => '"$1" не е валиден адрес за електронна поща!',
+	'editaccount-status-tempuser' => 'Временен потребител',
 	'right-editaccount' => 'Редактиране на настройките на други потребители',
 );
 
@@ -1164,6 +1176,16 @@ $messages['it'] = array(
 	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">Questo account è stato globalmente disattivato da Wikia.</div>',
 	'right-editaccount' => 'Modifica le preferenze degli altri utenti',
 	'action-editaccount' => 'modificare le informazioni di altri utenti',
+);
+
+/** Japanese (日本語)
+ * @author BryghtShadow
+ */
+$messages['ja'] = array(
+	'editaccount-label-reason' => '理由:',
+	'editaccount-submit-button' => '保存',
+	'editaccount-invalid-email' => "''$1'' は有効なメールアドレスではありません。",
+	'editaccount-labal-account-status' => 'アカウントの状態',
 );
 
 /** Khmer (ភាសាខ្មែរ)
@@ -2510,6 +2532,8 @@ $messages['vi'] = array(
 	'editaccount-status-unconfirmed' => 'Chưa được xác nhận',
 	'editaccount-status-realuser' => 'Người sử dụng thực tế',
 	'editaccount-status-tempuser' => 'Người sử dụng tạm thời',
+	'editaccount-error-tempuser-email' => 'Người sử dụng tạm thời không thể có email trống trường địa chỉ, xin vui lòng nhập một địa chỉ email.',
+	'editaccount-email-change-requested' => 'Yêu cầu người dùng thay đổi email thông qua các tùy chọn để  $1 . Để xác nhận thay đổi địa chỉ thư điện tử được yêu cầu cho người dùng, nhập địa chỉ email yêu cầu vào trường dưới đây và nhấp vào "Lưu và xác nhận."',
 	'editaccount-log' => 'Nhật trình Tài khoản người dùng',
 	'editaccount-log-header' => 'Trang này liệt kê những thay đổi thông tin người dùng được thực hiện bởi Nhân viên Wikia',
 	'editaccount-log-entry-email' => 'thư điện tử đã thay đổi cho người dùng $2',
@@ -2518,6 +2542,7 @@ $messages['vi'] = array(
 	'editaccount-log-entry-close' => 'vô hiệu hóa tài khoản $2',
 	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">Tài khoản này đã bị vô hiệu hoá trên toàn cầu bởi Wikia.</div>',
 	'right-editaccount' => 'Sửa đổi thông tin người dùng khác',
+	'action-editaccount' => 'chỉnh sửa thông tin của người dùng khác',
 );
 
 /** Simplified Chinese (中文（简体）‎)

@@ -181,6 +181,15 @@ $messages['uk'] = array(
 	'wikiastyleguide-dropdown-selected-items-list' => '$1 і ще $2',
 );
 
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'wikiastyleguide-dropdown-all' => 'Tất cả',
+	'wikiastyleguide-dropdown-select-all' => 'Chọn tất cả',
+	'wikiastyleguide-dropdown-selected-items-list' => '$1 và $2 thêm',
+);
+
 /** Simplified Chinese (中文（简体）‎)
  * @author Liuxinyu970226
  */

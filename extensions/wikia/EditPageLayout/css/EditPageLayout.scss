@@ -461,6 +461,9 @@ body {
 				#wpSummaryLabel {
 					clear: none;
 				}
+				.EditPageToolbar {
+					height: 70px;
+				}
 				.EditPageRail {
 					.module_page_controls {
 						.wikia-menu-button {
@@ -482,7 +485,7 @@ body {
 							float: right;
 							margin: 0 0 0 10px;
 							position: static;
-							width: 380px;
+							width: 350px;
 						}
 					}
 				}
