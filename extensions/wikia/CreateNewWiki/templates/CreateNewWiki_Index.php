@@ -205,16 +205,7 @@
 	<img class="awesome-box" src="<?= $wg->ExtensionsPath ?>/wikia/CreateNewWiki/images/box_art.png">
 </section>
 <script>
-	WikiBuilderCfg = {
-		'name-wiki-submit-error':'<?= wfMessage('cnw-name-wiki-submit-error')->escaped() ?>',
-		'desc-wiki-submit-error':'<?= wfMessage('cnw-desc-wiki-submit-error')->escaped() ?>',
-		'currentstep':'<?= $currentStep ?>',
-		'skipwikiaplus':'<?= $skipWikiaPlus ?>',
-		'descriptionplaceholder':'<?= wfMessage('cnw-desc-placeholder')->escaped() ?>',
-		'cnw-error-general':'<?= wfMessage('cnw-error-general')->escaped() ?>',
-		'cnw-error-general-heading':'<?= wfMessage('cnw-error-general-heading')->escaped() ?>',
-		'cnw-keys': <?= json_encode($keys) ?>
-	};
+	window.WikiBuilderCfg = <?= json_encode( $wikiBuilderCfg ) ?>;
 	var themes = <?= json_encode($wg->OasisThemes) ?>;
 	var applicationThemeSettings = <?= json_encode($applicationThemeSettings) ?>;
 </script>

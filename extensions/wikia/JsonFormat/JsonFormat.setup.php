@@ -57,6 +57,3 @@ $wgAutoloadClasses[ 'TruebloodScrollWrapperVisitor' ] =         $dir . "/visitor
 $wgAutoloadClasses[ 'AmericandadWrapperVisitor' ] =             $dir . "/visitors/AmericandadWrapperVisitor.php";
 
 $wgAutoloadClasses[ 'DomHelper' ] =                             $dir . "/util/DomHelper.php";
-
-$wgAutoloadClasses[ 'JsonFormatApiController' ] =               $dir . "/JsonFormatApiController.php";
-$wgWikiaApiControllers[ 'JsonFormatApiController' ] =           $dir . "/JsonFormatApiController.php";

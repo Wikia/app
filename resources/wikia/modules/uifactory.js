@@ -109,9 +109,7 @@ define('wikia.ui.factory', [
 			components = [];
 
 		if (!(componentName instanceof Array)) {
-			var a = [];
-			a.push(componentName);
-			componentName = a;
+			componentName = [ componentName ];
 		}
 
 		getComponentsConfig(componentName).done(function(data) {
@@ -147,15 +145,17 @@ define('wikia.ui.factory', [
 				resources: cssAssets
 			});
 
+			function resolveDeferred() {
+				deferred.resolve.apply(null, components);
+			}
+
 			if (jsAssets.length > 0) {
 				loader({
 					type: loader.JS,
 					resources: jsAssets
-				}).done(function() {
-					deferred.resolve((components.length == 1) ? components[0] : components);
-				});
+				}).done(resolveDeferred);
 			} else {
-				deferred.resolve((components.length == 1) ? components[0] : components);
+				resolveDeferred();
 			}
 
 		}).fail(function(data) {

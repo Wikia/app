@@ -51,11 +51,10 @@ class ApiWrapperFactory {
 
 		if ( empty( F::app()->wg->allowNonPremiumVideos ) ) {
 			wfProfileOut( __METHOD__ );
-			// throw new WikiaException(wfMessage("videohandler-non-premium")->parse()); //TODO: re-instate html links once VETUpgrade branch is merged into trunk (Liz)
-			throw new WikiaException(wfMessage("videohandler-non-premium-with-links")->parse());
+			throw new WikiaException( wfMessage( "videohandler-non-premium-with-links" )->parse() );
 		}
 
-		$url = trim($url);
+		$url = trim( $url );
 		$parsed = parse_url( strtolower( $url ) );
 
 		if ( ( FALSE === $parsed ) || ( empty( $parsed['scheme'] ) ) || ( !in_array( $parsed['scheme'], array( 'http', 'https' ) ) ) ) {
