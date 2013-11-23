@@ -24,3 +24,46 @@ ve.ui.MWDialog = function VeUiMWDialog( windowSet, config ) {
 /* Inheritance */
 
 OO.inheritClass( ve.ui.MWDialog, ve.ui.Dialog );
+
+/* Methods */
+
+/**
+ * @inheritdoc
+ */
+ve.ui.MWDialog.prototype.onCloseButtonClick = function () {
+	var label = ve.track.nameToLabel( this.constructor.static.name );
+
+	ve.ui.Dialog.prototype.onCloseButtonClick.apply( this, arguments );
+
+	ve.track( 'wikia', {
+		'action': ve.track.actions.CLICK,
+		'label': 'dialog-' + label + '-button-close'
+	} );
+};
+
+/**
+ * @inheritdoc
+ */
+ve.ui.MWDialog.prototype.setup = function () {
+	var label = ve.track.nameToLabel( this.constructor.static.name ),
+		params = { 'action': ve.track.actions.OPEN, 'label': 'dialog-' + label };
+
+	ve.ui.Dialog.prototype.setup.apply( this, arguments );
+
+	if ( this.openCount ) {
+		params.value = this.openCount;
+	}
+
+	ve.track( 'wikia', params );
+};
+
+/**
+ * @inheritdoc
+ */
+ve.ui.MWDialog.prototype.teardown = function () {
+	var label = ve.track.nameToLabel( this.constructor.static.name );
+
+	ve.ui.Dialog.prototype.teardown.apply( this, arguments );
+
+	ve.track( 'wikia', { 'action': ve.track.actions.CLOSE, 'label': 'dialog-' + label } );
+};
