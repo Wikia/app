@@ -7,9 +7,9 @@ class CoppaImageReviewHelper extends WikiaModel {
 	/**
 	 * Get image list
 	 *
-	 * @param Int $userId ID of the user to get the list for
-	 * @param Int $from Timestamp to get images before
-	 * @return array List of images
+	 * @param  integer $userId ID of the user to get the list for
+	 * @param  string  $from   Timestamp to get images before
+	 * @return array           List of images
 	 */
 	public function getImageList( $userId, $from = null ) {
 		wfProfileIn( __METHOD__ );
@@ -23,7 +23,8 @@ class CoppaImageReviewHelper extends WikiaModel {
 			'state != ' . ImageReviewStatuses::STATE_DELETED . ' AND state != ' . ImageReviewStatuses::STATE_WIKI_DISABLED,
 		];
 
-		if ( $from !== null ) {
+		$from = wfTimestampOrNull( TS_DB, $from );
+		if ( !empty( $from ) ) {
 			$where[] = 'last_edited < ' . $db->addQuotes( $from );
 		}
 
@@ -88,8 +89,8 @@ class CoppaImageReviewHelper extends WikiaModel {
 	/**
 	 * Delete images that have been marked for deletion
 	 *
-	 * @param array $images
-	 * @param int $userId
+	 * @param  array   $images List of images to process
+	 * @param  integer $userId ID of the user reviewing the images
 	 */
 	public function updateImageState( $images, $userId ) {
 		wfProfileIn( __METHOD__ );
