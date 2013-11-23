@@ -9,9 +9,9 @@
 	</h3>
 
 	<div class="representation<?= !empty($feature['new']) ? ' promotion' : '' ?>">
-		<? if(!empty($feature['new'])) { ?>
+		<? if(!empty($feature['new'])): ?>
 		<div class="feature-image-wrapper">
-			<img src="<?= $wg->ExtensionsPath ?>/wikia/WikiFeatures/images/<?= $feature['name'] . '.' . $feature['imageExtension'] ?>" >
+			<img src="<?= $wg->ExtensionsPath ?>/wikia/WikiFeatures/images/<?= $feature['name'] . $feature['imageExtension'] ?>" >
 		</div>
 		<span class="promo-text"><?= wfMsg('wikifeatures-promotion-new') ?></span>
 		<? endif; ?>
