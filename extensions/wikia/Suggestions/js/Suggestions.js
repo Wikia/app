@@ -7,7 +7,11 @@ require( [ 'jquery', 'wikia.log', 'SuggestionsView' ], function( $, log, view ) 
 			$('#WikiaSearch').nextAll('ul.search-suggest').first(),
 			window.wgCityId
 		);
-		log('New search suggestions loaded!', log.levels.info, 'suggestions');
-		window.Wikia.newSearchSuggestions.setAsMainSuggestions( 'search' );
+		if ( window.Wikia.newSearchSuggestions ) {
+			window.Wikia.newSearchSuggestions.setAsMainSuggestions( 'search' );
+			log('New search suggestions loaded!', log.levels.info, 'suggestions');
+		} else {
+			log('New search suggestions failed!', log.levels.info, 'suggestions');
+		}
 	});
 });

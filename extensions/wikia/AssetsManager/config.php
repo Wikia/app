@@ -51,6 +51,7 @@ $config['adengine2_js'] = array(
 		'//extensions/wikia/AdEngine/js/Krux.js',
 		'//extensions/wikia/AdEngine/js/SlotTweaker.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.js',
+		'//extensions/wikia/AdEngine/js/AdTracker.js',
 
 		// high prio
 		'//extensions/wikia/AdEngine/js/OoyalaTracking.js',
@@ -77,16 +78,6 @@ $config['adengine2_js'] = array(
 
 		// low prio
 		// not here! @see adengine2 low prio section someplace else
-	),
-);
-
-$config['adengine2_sevenonemedia_js'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		'//extensions/wikia/AdEngine/SevenOneMedia/my_ad_integration_css.js',
-		'//extensions/wikia/AdEngine/SevenOneMedia/my_ad_integration.js',
-		'//extensions/wikia/AdEngine/SevenOneMedia/wikia.js',
-		'//extensions/wikia/AdEngine/SevenOneMedia/globalV6.js',
 	),
 );
 
@@ -1399,6 +1390,7 @@ $config['file_page_tabbed_css'] = array(
 /* LyricFind */
 $config['LyricsFindTracking'] = array(
 	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis', 'wikiamobile', 'monobook'],
 	'assets' => array(
 		'//extensions/3rdparty/LyricWiki/LyricFind/js/modules/LyricFind.Tracker.js',
 		'//extensions/3rdparty/LyricWiki/LyricFind/js/tracking.js',

@@ -94,6 +94,8 @@ $messages['bg'] = array(
 	'video-page-add-description-link-text' => 'Добавне на описание.',
 	'video-page-default-description-header-and-text' => '== Описание ==
 Въведете описанието тук.',
+	'video-page-file-list-pagination' => '$1 от $2',
+	'file-page-tab-metadata' => 'Метаданни',
 );
 
 /** Breton (brezhoneg)
@@ -376,6 +378,13 @@ Masukkan deskripsi di sini.',
  */
 $messages['it'] = array(
 	'video-page-description-heading' => 'Descrizione',
+);
+
+/** Japanese (日本語)
+ * @author BryghtShadow
+ */
+$messages['ja'] = array(
+	'video-page-file-list-pagination' => '$2 の $1',
 );
 
 /** Georgian (ქართული)
@@ -806,6 +815,24 @@ $messages['ur'] = array(
  * @author Baonguyen21022003
  */
 $messages['vi'] = array(
+	'filepage-desc' => 'Các sửa đổi của tiêu chuẩn MediaWiki tập tin trang để hỗ trợ video',
+	'video-page-file-list-header' => 'Xuất hiện trên các trang này',
+	'video-page-global-file-list-header' => 'Xuất hiện trên các wiki',
+	'video-page-from-provider' => 'Từ $1',
+	'video-page-expires' => 'Nội dung hết hạn trên $1',
+	'video-page-views' => '$1 {{PLURAL:$1|lượt truy cập|lượt truy cập}}',
+	'video-page-see-more-info' => 'Hiển thị thêm thông tin',
+	'video-page-see-less-info' => 'Hiển thị thông tin ít',
+	'video-page-description-heading' => 'Miêu tả',
+	'video-page-description-zero-state' => 'Không có mô tả nào.',
+	'video-page-add-description-link-text' => 'Thêm một mô tả.',
+	'video-page-default-description-header-and-text' => '==Mô tả==
+Nhập mô tả ở đây.',
+	'video-page-file-list-pagination' => '$1 trong $2',
+	'file-page-replace-button' => 'Thay thế',
+	'file-page-tab-about' => 'Giới thiệu',
+	'file-page-tab-history' => 'Lịch sử tập tin',
+	'file-page-tab-metadata' => 'Siêu dữ liệu',
 	'file-page-more-links' => 'Xem danh sách đầy đủ',
 );
 

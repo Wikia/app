@@ -600,6 +600,7 @@ class WikiaFileHelper extends Service {
 	/**
 	 * Get file from title (Please be careful when using $force)
 	 * @param Title|string $title
+	 * @param bool $force
 	 * @return File|null $file
 	 */
 	public static function getFileFromTitle( &$title, $force = false ) {
@@ -625,6 +626,7 @@ class WikiaFileHelper extends Service {
 	/**
 	 * Get video file from title (Please be careful when using $force)
 	 * @param Title|string $title
+	 * @param bool $force
 	 * @return File|null $file
 	 */
 	public static function getVideoFileFromTitle( &$title, $force = false ) {

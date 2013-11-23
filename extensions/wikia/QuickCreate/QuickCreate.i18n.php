@@ -349,6 +349,14 @@ $messages['uk'] = array(
 	'quickcreate' => 'надіслати свій рецепт',
 );
 
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'quickcreate-desc' => 'Thêm một nút tạo trang mới với yêu cầu đăng nhập cho người dùng vô danh',
+	'quickcreate' => 'gửi công thức của bạn',
+);
+
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Hydra

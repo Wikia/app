@@ -232,7 +232,7 @@ class CF_Http
 		curl_setopt( $curl_ch, CURLOPT_TIMEOUT, 10 );
 		curl_setopt( $curl_ch, CURLOPT_URL, $url );
 		if ( curl_exec( $curl_ch ) === false ) {
-			$this->response_reason = "(curl error: " . curl_errno( $curl_ch ) . ") ";
+			$this->response_reason = "[{$host}] (curl error: " . curl_errno( $curl_ch ) . ") ";
 			$this->response_reason .= curl_error( $curl_ch );
 		}
 		curl_close( $curl_ch );
@@ -1444,7 +1444,7 @@ class CF_Http
             CURLOPT_URL, $url_path);
 
         if (!curl_exec($this->connections[$conn_type]) && curl_errno($this->connections[$conn_type]) !== 0) {
-            $this->error_str = "(curl error: "
+            $this->error_str = "[{$this->storage_url}: {$method} <{$url_path}> " . json_encode($headers) . "] (curl error: "
                 . curl_errno($this->connections[$conn_type]) . ") ";
             $this->error_str .= curl_error($this->connections[$conn_type]);
 

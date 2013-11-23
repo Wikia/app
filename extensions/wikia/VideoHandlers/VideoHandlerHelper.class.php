@@ -23,7 +23,7 @@ class VideoHandlerHelper extends WikiaModel {
 
 		$status = false;
 		if ( $title instanceof Title && !$title->exists() ) {
-			if ( is_integer($user) ) {
+			if ( !is_object($user) ) {
 				$user = User::newFromId( $user );
 			}
 
@@ -453,46 +453,6 @@ class VideoHandlerHelper extends WikiaModel {
 		wfProfileOut( __METHOD__ );
 
 		return $status;
-	}
-
-	/**
-	 * Reset proxy before sending request
-	 * @param Request $req
-	 * @return Status $status
-	 */
-	public static function wrapHttpRequest( &$req ) {
-		$app = F::app();
-
-		// reset proxy to blank
-		$originalProxy = $app->wg->HTTPProxy;
-		$app->wg->HTTPProxy = '';
-
-		$status = $req->execute();
-
-		// set proxy to original value
-		$app->wg->HTTPProxy = $originalProxy;
-
-		return $status;
-	}
-
-	/**
-	 * Reset proxy before sending Http::get
-	 * @param Request $req
-	 * @return type
-	 */
-	public static function wrapHttpGet( $url ) {
-		$app = F::app();
-
-		// reset proxy to blank
-		$originalProxy = $app->wg->HTTPProxy;
-		$app->wg->HTTPProxy = '';
-
-		$result = Http::get( $url );
-
-		// set proxy to original value
-		$app->wg->HTTPProxy = $originalProxy;
-
-		return $result;
 	}
 
 }

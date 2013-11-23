@@ -100,8 +100,7 @@ class VideoService extends WikiaModel {
 		foreach( $wikis as $wikiId => $wiki ) {
 			$result[$wikiId] = true;
 			if ( !empty( $wiki['d'] ) ) {
-				$userName = $this->wg->User->getName();
-				$response = ApiService::foreignCall( $wiki['d'], $params, ApiService::WIKIA, $userName );
+				$response = ApiService::foreignCall( $wiki['d'], $params, ApiService::WIKIA, true );
 				if ( !empty( $response['error'] ) ) {
 					Wikia::log( __METHOD__, false, "Error: Cannot add video to wiki $wikiId ($response[error])", true, true);
 					$result[$wikiId] = false;
