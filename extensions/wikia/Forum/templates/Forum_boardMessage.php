@@ -1,4 +1,4 @@
-<li class="SpeechBubble message<?php echo ($removedOrDeletedMessage ? ' hide ':'') . ($showRemovedBox?' message-removed':''); ?> <? echo 'message-'.$linkid ?>" id="<? echo $linkid ?>" data-user="<? echo $username ?>" data-id="<? echo $id ?>" data-is-reply="<?= $isreply == true ?>" <? if($hide):?> style="display:none" <? endif;?> >
+<li class="SpeechBubble message <?php echo ($removedOrDeletedMessage ? 'hide ':'') . ($showRemovedBox?' message-removed':''); ?> <? echo 'message-'.$linkid ?>" id="<? echo $linkid ?>" data-id="<? echo $id ?>" data-is-reply="<?= $isreply == true ?>" <? if($hide):?> style="display:none" <? endif;?> >
 	THIS IS FORUM BOARD TEMAPLTE (Forum_boardMessage.php)
 	<?php if(($showDeleteOrRemoveInfo) && (!empty($deleteOrRemoveInfo) )): ?>
 		<div class="deleteorremove-infobox" >
