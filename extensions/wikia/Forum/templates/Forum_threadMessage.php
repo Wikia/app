@@ -1,4 +1,4 @@
-<div id="ForumThreadMessage" class="ForumThreadMessage DiscussionBox" data-user="<? echo $username ?>" data-id="<?= $id ?>">
+<div id="ForumThreadMessage" class="ForumThreadMessage DiscussionBox" data-id="<?= $id ?>">
 	<div class="avatar">
 		<a href="<?= $user_author_url ?>"><?= AvatarService::renderAvatar($username, 50) ?></a>
 	</div>
