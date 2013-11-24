@@ -196,6 +196,8 @@ If you prefer to use regular e-mail or have attachments, you can contact us at [
 	'specialcontact-label-additionalscreenshot' => 'If you have another screenshot please upload it here.',
 	'specialcontact-label-bad-ad-description' => 'Please describe the problem with the ad',
 	'specialcontact-label-bad-ad-link' => 'Please provide the URL of the page where you saw the bad ad',
+	'specialcontact-label-bad-ad-url' => 'Please provide the URL the ad links to. See the [[{{int:specialcontact-label-bad-ad-help-page}}|help page]] for information on how to find this link.',
+	'specialcontact-label-bad-ad-help-page' => 'Help:Bad advertisements',
 	'specialcontact-label-bug-link' => 'Please provide the URL of the page where you are having the problem',
 	'specialcontact-label-bug-feature' => 'What feature is this related to?',
 	'specialcontact-label-bug-description' => 'Please describe the problem you are having',
