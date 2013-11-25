@@ -97,7 +97,7 @@ var WikiFeatures = {
 									event.preventDefault();
 									WikiFeatures.toggleFeature( featureName, false );
 									el.toggleClass( 'on' );
-									deactivateModal.close();
+									deactivateModal.trigger( 'close' );
 								});
 								deactivateModal.show();
 							});
