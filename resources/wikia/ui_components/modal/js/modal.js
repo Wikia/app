@@ -149,7 +149,7 @@ define( 'wikia.ui.modal', [
 		});
 
 		// trigger custom buttons events based on button 'data-event' attribute
-		this.$element.find( 'footer button' ).click( $.proxy( function( event ) {
+		this.$element.find( 'button' ).click( $.proxy( function( event ) {
 			var modalEventName = $( event.target ).data( 'event' );
 			if ( modalEventName ) {
 				this.trigger( modalEventName, event );
