@@ -211,7 +211,7 @@ ve.ui.WikiaMediaQueryWidget.prototype.onRequestVideoDone = function ( data ) {
 
 	// Send errors to the user
 	if ( data.error ) {
-		errorMsg = ( data.error.code in this.displayMessages ) ? this.displayMessages[data.error.code] : this.displayMessages['media-query-failed'];
+		errorMsg = ( data.error.code in this.displayMessages ) ? this.displayMessages[data.error.code] : this.displayMessages['mediaqueryfailed'];
 
 		mw.config.get( 'GlobalNotification' ).show(
 			errorMsg,
@@ -250,7 +250,7 @@ ve.ui.WikiaMediaQueryWidget.prototype.hideUpload = function () {
  */
 ve.ui.WikiaMediaQueryWidget.prototype.displayMessages = {
 	'mustbeloggedin': ve.msg( 'wikia-visualeditor-notification-media-must-be-logged-in' ),
-	'only-allow-premium': ve.msg( 'wikia-visualeditor-notification-media-only-premium-videos-allowed' ),
+	'onlyallowpremium': ve.msg( 'wikia-visualeditor-notification-media-only-premium-videos-allowed' ),
 	'permissiondenied' : ve.msg( 'wikia-visualeditor-notification-media-permission-denied' ),
-	'media-query-failed': ve.msg( 'wikia-visualeditor-notification-media-query-failed' )
+	'mediaqueryfailed': ve.msg( 'wikia-visualeditor-notification-media-query-failed' )
 };

@@ -190,7 +190,7 @@ class ApiTempUpload extends ApiBase {
 		} else {
 
 			if ( empty( F::app()->wg->allowNonPremiumVideos ) ) {
-				$this->dieUsage( 'Only premium videos are allowed', 'only-allow-premium' );
+				$this->dieUsage( 'Only premium videos are allowed', 'onlyallowpremium' );
 			}
 
 			// Handle urls from supported 3rd parties (like youtube)
