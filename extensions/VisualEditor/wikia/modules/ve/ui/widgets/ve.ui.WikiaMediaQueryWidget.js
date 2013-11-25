@@ -243,6 +243,11 @@ ve.ui.WikiaMediaQueryWidget.prototype.hideUpload = function () {
 	this.$uploadWrapper.hide();
 };
 
+/**
+ * Map API error message to human readable messages
+ *
+ * @property
+ */
 ve.ui.WikiaMediaQueryWidget.prototype.displayMessages = {
 	'mustbeloggedin': ve.msg( 'wikia-visualeditor-notification-media-must-be-logged-in' ),
 	'only-allow-premium': ve.msg( 'wikia-visualeditor-notification-media-only-premium-videos-allowed' ),
