@@ -1,6 +1,7 @@
 var WikiFeatures = {
 	lockedFeatures: {},
 	init: function() {
+<<<<<<< HEAD
 		WikiFeatures.feedbackDialogPrototype = $('.FeedbackDialog');
 		WikiFeatures.deactivateDialogPrototype = $('.DeactivateDialog');
 		WikiFeatures.sliders = $('#WikiFeatures .slider');
@@ -28,14 +29,92 @@ var WikiFeatures = {
 							el.toggleClass('on');
 						}
 						modal.closeModal();
+=======
+		WikiFeatures.feedbackDialogPrototype = $( '.FeedbackDialog' );
+		WikiFeatures.sliders = $( '#WikiFeatures .slider' );
+		
+		if( !Modernizr.csstransforms ) {
+			$( '.representation' ).removeClass( 'promotion' );
+		}
+		
+		WikiFeatures.sliders.click( function( e ) {
+			var el = $( this ),
+				feature = el.closest( '.feature' ),
+				featureName = feature.data( 'name' ),
+				isEnabled,
+				modalTitle;
+			
+			if( !WikiFeatures.lockedFeatures[ featureName ] ) {
+				isEnabled = el.hasClass( 'on' );
+
+				if( isEnabled ) {
+					modalTitle = $.msg( 'wikifeatures-deactivate-heading', feature.find( 'h3' ).text().trim() );
+
+					require( [ 'wikia.ui.factory' ], function( uiFactory ) {
+						uiFactory.init( [ 'modal' ] ).then( function( uiModal ) {
+							var deactivateModalConfig = {
+								vars: {
+									id: 'DeactivateDialog',
+									size: 'small',
+									title: modalTitle,
+									content: [
+										'<p>',
+										$.msg( 'wikifeatures-deactivate-description' ),
+										'</p><p>',
+										$.msg( 'wikifeatures-deactivate-notification' ),
+										'</p>'
+									].join(''),
+									buttons: [
+										{
+											vars: {
+												value: $.msg( 'wikifeatures-deactivate-confirm-button' ),
+												classes: [ 'normal', 'primary' ],
+												data: [
+													{
+														key: 'event',
+														value: 'confirm'
+													}
+												]
+											}
+										},
+										{
+											vars: {
+												value: $.msg( 'wikifeatures-deactivate-cancel-button' ),
+												data: [
+													{
+														key: 'event',
+														value: 'close'
+													}
+												]
+											}
+										}
+									]
+								}
+							};
+
+							uiModal.createComponent( deactivateModalConfig, function ( deactivateModal ) {
+								deactivateModal.bind( 'confirm', function ( event ) {
+									event.preventDefault();
+									WikiFeatures.toggleFeature( featureName, false );
+									el.toggleClass( 'on' );
+									deactivateModal.close();
+								});
+								deactivateModal.show();
+							});
+						});
+>>>>>>> Converted "Disable feature" modal
 					});
 				} else {
-					WikiFeatures.toggleFeature(featureName, true);
-					el.toggleClass('on');
+					WikiFeatures.toggleFeature( featureName, true );
+					el.toggleClass( 'on' );
 				}
 			}
+<<<<<<< HEAD
 
+=======
+>>>>>>> Converted "Disable feature" modal
 		});
+
 		$('#WikiFeatures .feedback').click(function(e) {
 			e.preventDefault();
 			var feature = $(this).closest('.feature');
