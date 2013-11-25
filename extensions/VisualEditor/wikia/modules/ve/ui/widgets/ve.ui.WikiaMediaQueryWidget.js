@@ -251,5 +251,6 @@ ve.ui.WikiaMediaQueryWidget.prototype.hideUpload = function () {
 ve.ui.WikiaMediaQueryWidget.prototype.displayMessages = {
 	'mustbeloggedin': ve.msg( 'wikia-visualeditor-notification-media-must-be-logged-in' ),
 	'only-allow-premium': ve.msg( 'wikia-visualeditor-notification-media-only-premium-videos-allowed' ),
+	'permissiondenied' : ve.msg( 'wikia-visualeditor-notification-media-permission-denied' ),
 	'media-query-failed': ve.msg( 'wikia-visualeditor-notification-media-query-failed' )
 };
