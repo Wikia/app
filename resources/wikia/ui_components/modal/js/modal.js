@@ -173,7 +173,24 @@ define( 'wikia.ui.modal', [
 
 		// object containing modal event listeners
 		this.listeners = {
-			'close': [ $.proxy( this.close, that ) ]
+			'close': [
+				function() {
+					/**
+					 * Closes the modal; removes it from dom or just removes classes - it depends on destroyOnClose flag.
+					 * Before closing modal beforeClass event is triggered. One can bind to this event and cancel the close
+					 * action.
+					 * You should trigger the 'close' event on the modal to close it. This implementation is made private
+					 * to make it more explicit that closing is asynchronous and event based.
+					*/
+					that.trigger( 'beforeClose').then( $.proxy( function() {
+						if( !that.destroyOnClose ) {
+							that.$blackout.removeClass( BLACKOUT_VISIBLE_CLASS );
+						} else {
+							that.$blackout.remove();
+						}
+					}, that ) );
+				}
+			]
 		};
 
 		// allow to override the default value
@@ -210,21 +227,6 @@ define( 'wikia.ui.modal', [
 				ieFlexboxFallback( this );
 			}, this ) );
 		}
-	};
-
-	/**
-	 * Closes the modal; removes it from dom or just removes classes - it depends on destroyOnClose flag.
-	 * Before closing modal beforeClass event is triggered. One can bind to this event and cancel the close
-	 * action
-	 */
-	Modal.prototype.close = function() {
-		this.trigger( 'beforeClose').then( $.proxy( function() {
-			if( !this.destroyOnClose ) {
-				this.$blackout.removeClass( BLACKOUT_VISIBLE_CLASS );
-			} else {
-				this.$blackout.remove();
-			}
-		}, this ) );
 	};
 
 	/**

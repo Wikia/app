@@ -215,7 +215,7 @@ var ChatEntryPoint = {
 		var pageLink = $( '#modal-join-chat-button').data('chat-page' );
 		window.open( pageLink, 'wikiachat', window.wgWikiaChatWindowFeatures );
 		if( chatLaunchModal ) {
-			chatLaunchModal.close();
+			chatLaunchModal.trigger( 'close' );
 		}
 		ChatEntryPoint.reloadPage();
 	}
