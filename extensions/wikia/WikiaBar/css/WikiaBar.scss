@@ -308,14 +308,12 @@ body.nowikiabar {
 	}
 
 	@media screen and (min-width: $breakpoint-fluid) {
-		$margin: $width-adskin - 10px; // 10px <- wikia-bar padding
-
 		.WikiaBarWrapper .wikia-bar {
-			margin: 0 $margin;
+			margin: 0 $width-adskin;
 			width: auto;
 
 			&.wikia-bar-anon {
-				margin: 0 $margin;
+				margin: 0 $width-adskin;
 				width: auto;
 			}
 		}
