@@ -173,7 +173,7 @@ class MigrateImagesBetweenSwiftDC extends Maintenance {
 		/* read source file to string (src here is tmp file, so dst should be set here) */
 		$remoteFile = $this->getRemotePath( $this->imageSyncQueue->dst );
 		
-		$this->output( "\tRemote file: {$remoteFile} \n" );
+		$this->output( "\tRemote file: {$remoteFile} (Swift: " . $srcStorage->getSwiftServer() . " ) \n" );
 
 		if ( !$srcStorage->exists( $remoteFile ) ) {
 			$this->output( "\tCannot find image to sync \n" );
@@ -192,6 +192,8 @@ class MigrateImagesBetweenSwiftDC extends Maintenance {
 				/* connect to destination Ceph/Swift */
 				$dstStorage = $this->destConn();							
 
+				$this->output( "\tConnect to dest Swift server: " . $dstStorage->getSwiftServer() . " \n" );
+				
 				$magic = MimeMagic::singleton();
 				$ext = pathinfo( basename( $remoteFile ), PATHINFO_EXTENSION );
 				$mime_type = $magic->guessTypesForExtension( $ext );
@@ -217,12 +219,14 @@ class MigrateImagesBetweenSwiftDC extends Maintenance {
 		/* read source file to string (src here is tmp file, so dst should be set here) */
 		$remoteFile = $this->getRemotePath( $this->imageSyncQueue->dst );
 		
-		$this->output( "\tRemote file: {$remoteFile} \n" );
+		$this->output( "\tRemote file: {$remoteFile} (Swift: " . $srcStorage->getSwiftServer() . " ) \n" );
 		
 		if ( !$srcStorage->exists( $remoteFile ) ) {
 			/* connect to destination Ceph/Swift */
 			$dstStorage = $this->destConn();							
 			
+			$this->output( "\tConnect to dest Swift server: " . $dstStorage->getSwiftServer() . " \n" );
+				
 			/* store image in destination path */
 			if ( $dstStorage->exists( $remoteFile ) ) {
 				$result = $dstStorage->remove( $remoteFile )->isOK();

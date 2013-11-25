@@ -183,17 +183,18 @@ body.skin-oasis .ChatMonobookEntryPoint {
 	position: relative;
 	width: 284px;
 	word-wrap: break-word;
+
+	// use full width on main pages using grid (BugId:51408 and DAR-2321)
+	.main-page-tag-lcs &,
+	.main-page-tag-rcs & {
+		display: block;
+		width: auto;
+	}
 }
 
 // don't show the chat module if the content hasn't been rendered yet
 .ChatModuleUninitialized .chat-contents {
 	visibility: hidden;
-}
-
-// use full width on main pages using grid (BugId:51408)
-.main-page-tag-lcs .ChatEntryPoint,
-.main-page-tag-rcs .ChatEntryPoint {
-	width: auto;
 }
 
 /* IE7 hackery */

@@ -470,14 +470,16 @@ $messages['ps'] = array(
 
 /** Portuguese (português)
  * @author Hamilton Abreu
+ * @author Josep Maria 15.
  * @author Luckas
  */
 $messages['pt'] = array(
-	'imgplc-add-image' => 'Adicionar Imagem',
+	'imgplc-add-image' => 'Adicionar imagem',
 	'imgplc-add-video' => 'Adicionar vídeo',
 	'imgplc-placeholder' => 'Espaço reservado',
 	'imgplc-image' => 'Imagem',
-	'imgplc-notinhistory' => 'Não pode adicionar uma imagem no modo histórico.',
+	'imgplc-notinhistory' => 'Não podes adicionar uma imagem no modo histórico.',
+	'imgplc-notinhistory-video' => 'Não podes adicionar um vídeo no modo histórico.',
 );
 
 /** Brazilian Portuguese (português do Brasil)

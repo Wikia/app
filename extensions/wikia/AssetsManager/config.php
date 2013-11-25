@@ -51,6 +51,7 @@ $config['adengine2_js'] = array(
 		'//extensions/wikia/AdEngine/js/Krux.js',
 		'//extensions/wikia/AdEngine/js/SlotTweaker.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.js',
+		'//extensions/wikia/AdEngine/js/AdTracker.js',
 
 		// high prio
 		'//extensions/wikia/AdEngine/js/OoyalaTracking.js',
@@ -77,16 +78,6 @@ $config['adengine2_js'] = array(
 
 		// low prio
 		// not here! @see adengine2 low prio section someplace else
-	),
-);
-
-$config['adengine2_sevenonemedia_js'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		'//extensions/wikia/AdEngine/SevenOneMedia/my_ad_integration_css.js',
-		'//extensions/wikia/AdEngine/SevenOneMedia/my_ad_integration.js',
-		'//extensions/wikia/AdEngine/SevenOneMedia/wikia.js',
-		'//extensions/wikia/AdEngine/SevenOneMedia/globalV6.js',
 	),
 );
 
@@ -230,8 +221,6 @@ $config['oasis_jquery'] = array(
 		'//extensions/wikia/Search/js/SearchAbTest.Context.js',
 		'//extensions/wikia/Search/js/SearchAbTest.js',
 
-		// Darwin A/B testing
-		'//skins/oasis/js/DarwinAbTesting.js',
 		// Fixed global nav ABTesting
 		'//skins/oasis/js/GlobalHeader.js',
 	)
@@ -1399,6 +1388,7 @@ $config['file_page_tabbed_css'] = array(
 /* LyricFind */
 $config['LyricsFindTracking'] = array(
 	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis', 'wikiamobile', 'monobook'],
 	'assets' => array(
 		'//extensions/3rdparty/LyricWiki/LyricFind/js/modules/LyricFind.Tracker.js',
 		'//extensions/3rdparty/LyricWiki/LyricFind/js/tracking.js',
@@ -1525,3 +1515,20 @@ $config['api_docs_scss'] = array(
 	)
 );
 
+$config['suggestions_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/Suggestions/js/SuggestionsMatcher.js',
+		'//extensions/wikia/Suggestions/js/SuggestionsClient.js',
+		'//extensions/wikia/Suggestions/js/SuggestionsViewModel.js',
+		'//extensions/wikia/Suggestions/js/SuggestionsView.js',
+		'//extensions/wikia/Suggestions/js/Suggestions.js',
+	)
+);
+
+$config['suggestions_scss'] = array(
+	'type' => AssetsManager::TYPE_SCSS,
+	'assets' => array(
+		'//extensions/wikia/Suggestions/css/Suggestions.scss',
+	)
+);
