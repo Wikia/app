@@ -23,6 +23,11 @@ class TvApiController extends WikiaApiController {
 
 	public function getEpisode() {
 
+		if( $this->getApiVersion() !== 'test')
+		{
+			throw new NotFoundApiException();
+		}
+
 		if ( !$this->setWikiVariables() ) {
 			throw new NotFoundApiException();
 		}

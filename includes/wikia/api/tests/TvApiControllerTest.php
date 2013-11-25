@@ -19,7 +19,7 @@ class TvApiControllerTest extends \WikiaBaseTest {
 
 		$mock = $this->getMockBuilder( "\TvApiController" )
 			->disableOriginalConstructor()
-			->setMethods( ['__construct', 'getExactMatch','getResponse','setWikiVariables'] )
+			->setMethods( ['__construct', 'getExactMatch','getResponse','setWikiVariables','getApiVersion'] )
 			->getMock();
 
 		$mock->expects( $this->any() )
@@ -29,6 +29,10 @@ class TvApiControllerTest extends \WikiaBaseTest {
 		$mock->expects( $this->any() )
 			->method( 'setWikiVariables' )
 			->will( $this->returnValue(true));
+
+		$mock->expects( $this->any() )
+			->method( 'getApiVersion' )
+			->will( $this->returnValue('test'));
 
 		$this->getStaticMethodMock('\WikiFactory','getCurrentStagingHost')
 					->expects($this->any())
@@ -75,9 +79,6 @@ class TvApiControllerTest extends \WikiaBaseTest {
 		$this->responseValues = $values;
 	}
 
-	/*
-
-
 	public function testGetTitle() {
 
 		$mock = $this->getMockBuilder( "\TvApiController" )
@@ -123,7 +124,7 @@ class TvApiControllerTest extends \WikiaBaseTest {
 
 		return $this->mockGlobalTitle;
 	}
-*/
+
 	private function setMockVariables( $exists, $id, $title, $url, $ns, $redirect ) {
 		$this->mockGlobalTitle = $this->getMockBuilder( '\GlobalTitle' )
 			->disableOriginalConstructor()
