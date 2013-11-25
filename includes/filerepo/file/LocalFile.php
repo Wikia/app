@@ -1048,6 +1048,7 @@ class LocalFile extends File {
 				# and pass an empty $oldver. Allow this bogus value so we can displace the
 				# `image` row to `oldimage`, leaving room for the new current file `image` row.
 				#throw new MWException( "Empty oi_archive_name. Database and storage out of sync?" );
+				Wikia::logBacktrace(__METHOD__ . "::oi_archive_name - [{$this->getName()}]"); // Wikia change (BAC-1068)
 			}
 			$reupload = true;
 			# Collision, this is an update of a file
