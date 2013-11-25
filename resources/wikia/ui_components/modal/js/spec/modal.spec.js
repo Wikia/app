@@ -231,11 +231,8 @@ describe( 'Modal buttons', function() {
 	'use strict';
 
 	var browserDetect = {},
-		wrap = function ( text ) {
-			return '<div>' + text + '</div>';
-		},
 		renderFunction = function( params ) {
-			return wrap(params);
+			return params;
 		},
 		button = {
 			type : 'button',
@@ -289,11 +286,50 @@ describe( 'Modal buttons', function() {
 	});
 
 	it( 'skips buttons if non array is passed', function () {
-		// TODO:
+		var params = {
+				vars: {
+					title: 'Test',
+					size: 'small',
+					buttons: "button"
+				}
+			},
+			modalObject;
+
+		spyOn( subComponent, 'render' );
+
+		modalObject = modal.createComponent( params, uiComponent);
+		expect( subComponent.render ).not.toHaveBeenCalledWith( button );
 	});
 
-	it( 'replaces default button classes if new ones are passed', function () {
-		// TODO:
+	it( 'renders buttons', function() {
+		var params = {
+				vars: {
+					title: 'Test',
+					size: 'small',
+					buttons: [ button, '<button>' ]
+				}
+			},
+			modal = modules[ 'wikia.ui.modal' ]( jQuery, window, browserDetect ),
+			renderResult = {
+				type : 'default',
+				vars : {
+					closeText : 'close',
+					title : 'Test',
+					size : 'small',
+					buttons : [
+						{ type : 'button',
+							vars : {
+								type : 'button',
+								classes : [ 'normal', 'secondary' ]
+							}
+						},
+						'<button>'
+					]
+				}
+			};
+		spyOn( jQuery.fn, 'append' );
+		modal.createComponent( params, uiComponent);
+		expect( jQuery.fn.append ).toHaveBeenCalledWith( renderResult );
 	});
 
 });
