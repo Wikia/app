@@ -16,20 +16,21 @@ $(function() {
 			format: 'json',
 			callback: function(data) {
 				var zidConfig = {minColumnWidth: 350, selector: '.module, .wikia-ad'};
-				require(['wikia.loader'], function(loader) {
-					loader({
-						type: loader.CSS,
-						resources: data.css
-					}).done(function() {
-						rail.zid(zidConfig);
-					});
-				});
 
 				rail.find('.loading').remove().end().append(data.railLazyContent + data.js);
 
 				if ( data.css.length === 0 ) {
 					// we can enable zid immediately when there are no styles to load
 					rail.zid(zidConfig);
+				} else {
+					require(['wikia.loader'], function(loader) {
+						loader({
+							type: loader.CSS,
+							resources: data.css
+						}).done(function() {
+							rail.zid(zidConfig);
+						});
+					});
 				}
 
 				if( LAZY_LOADING_SAMPLING_RATIO >= Math.floor( (Math.random() * 100 + 1) ) ) {
