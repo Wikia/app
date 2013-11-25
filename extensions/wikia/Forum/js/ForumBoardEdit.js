@@ -4,7 +4,7 @@
 	/* dom cache */
 	var createNewBoardButton = $( '#CreateNewBoardButton' ),
 		boardList = $( '#ForumBoardEdit .boards' );
-		
+
 	function makeBoardModal( modalMethod, modalData, submissionMethod, submissionData ) {
 		var deferred = $.Deferred();
 		$.nirvana.sendRequest({
@@ -90,17 +90,17 @@
 				});
 			}
 		});
-		
+
 		return deferred.promise();
 	}
-	
+
 	/* Board edit event handlers */
 	function handleCreateNewBoardButtonClick( /* e */ ) {
 		$.when( makeBoardModal( 'createNewBoardModal', {}, 'createNewBoard', {} ) ).done(function( /* dialog */ ) {
 			// done
 		});
 	}
-	
+
 	function handleEditBoardButtonClick( e ) {
 		var boardItem = $( e.target ).closest( '.board' ),
 			boardId = boardItem.data( 'id' );
@@ -109,7 +109,7 @@
 				// done
 			});
 	}
-	
+
 	/* boardId1 should always be before boardId2 */
 	function swapBoards( boardId1, boardId2 ) {
 		var deferred = $.Deferred();
@@ -128,10 +128,10 @@
 				}
 			}
 		});
-		
+
 		return deferred.promise();
 	}
-	
+
 	function handleMoveUpClick( e ) {
 		var boardItem = $( e.target ).closest( '.board' ),
 			previousItem = boardItem.prev(),
@@ -144,7 +144,7 @@
 			boardItem.insertBefore( previousItem );
 		}
 	}
-	
+
 	function handleMoveDownClick( e ) {
 		var boardItem = $( e.target ).closest( '.board' ),
 			nextItem = boardItem.next(),
@@ -170,12 +170,13 @@
 			// done
 		});
 	}
-	
+
 	/* Board edit event bindings */
 	createNewBoardButton.on( 'click.CreateNewBoard', '', handleCreateNewBoardButtonClick );
 	boardList.on( 'click.editBoard', '.board .edit-pencil', handleEditBoardButtonClick )
 		.on( 'click.editBoard', '.board .trash', handleRemoveBoardButtonClick )
 		.on( 'click.editBoard', '.board .moveup', handleMoveUpClick )
 		.on( 'click.editBoard', '.board .movedown', handleMoveDownClick );
-	
+
 })( window, jQuery );
+

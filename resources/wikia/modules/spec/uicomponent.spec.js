@@ -36,20 +36,20 @@ describe( 'UIComponent', function() {
 	it( 'gives nice and clean API', function() {
 		var uiComponent = new uicomponent;
 
-		expect( typeof uiComponent.render ).toBe( 'function', 'render' );
-		expect( typeof uiComponent.setComponentsConfig ).toBe( 'function', 'setComponentsConfig' );
-		expect( typeof uiComponent.getSubComponent ).toBe( 'function', 'getSubComponent' );
-		expect( typeof uiComponent.createComponent ).toBe( 'function', 'createComponent' );
+		expect( typeof uiComponent.render ).toBe( 'function' );
+		expect( typeof uiComponent.setComponentsConfig ).toBe( 'function' );
+		expect( typeof uiComponent.getSubComponent ).toBe( 'function' );
+		expect( typeof uiComponent.createComponent ).toBe( 'function' );
 	});
 
 	it( 'calling without a "new" returns a new instance of UIComponent', function() {
 		var uiComponent1 = uicomponent(),
 			uiComponent2 = uicomponent();
 
-		expect( typeof uiComponent1.render ).toBe( 'function', 'render' );
-		expect( typeof uiComponent1.setComponentsConfig ).toBe( 'function', 'setComponentsConfig' );
-		expect( typeof uiComponent2.render ).toBe( 'function', 'render' );
-		expect( typeof uiComponent2.setComponentsConfig ).toBe( 'function', 'setComponentsConfig' );
+		expect( typeof uiComponent1.render ).toBe( 'function' );
+		expect( typeof uiComponent1.setComponentsConfig ).toBe( 'function' );
+		expect( typeof uiComponent2.render ).toBe( 'function' );
+		expect( typeof uiComponent2.setComponentsConfig ).toBe( 'function' );
 		expect( uiComponent1 === uiComponent2 ).toBe( false );
 	});
 
@@ -112,16 +112,14 @@ describe( 'UIComponent', function() {
 	});
 
 	it( 'returns UIComponent if jsWrapperModule is not set', function() {
-		var componentId = 'xxx',
-			uiComponent1 = uicomponent();
-		uiComponent1.createComponent( paramsToRender, function (uiComponent2) {
+		var uiComponent1 = uicomponent();
+		uiComponent1.createComponent( paramsToRender, function ( uiComponent2 ) {
 			expect( uiComponent1 === uiComponent2 ).toBe( true );
 		});
 	});
 
 	it( 'returns Custom object if jsWrapperModule is set', function() {
-		var componentId = 'xxx',
-			uiComponent1 = uicomponent(),
+		var uiComponent1 = uicomponent(),
 			componentConfig = {
 				templates: {
 					link: '<a href="{{href}}" titile="{{title}}">{{value}}</a>'
