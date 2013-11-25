@@ -126,7 +126,10 @@ $(function() {
 	require( [ 'wikia.browserDetect', 'wikia.window' ], function( browserDetect, w ) {
 		if ( browserDetect.isIPad() ) {
 			w.addEventListener( 'pageshow', function() {
-				$.proxy( ImgLzy.checkAndLoad, ImgLzy );
+				// Safari iOS doesn't trigger scroll event after page refresh.
+				// This is a hack to manually lazy-load images after browser scroll the page after refreshing.
+				// Should be fixed if we found better solution
+				w.setTimeout( $.proxy( ImgLzy.checkAndLoad, ImgLzy ), 0 );
 			} );
 		}
 
