@@ -1,12 +1,12 @@
-var AdProviderLater = function(log, queueForLateAds) {
+/*exported AdProviderLater*/
+var AdProviderLater = function (log, queueForLateAds) {
 	'use strict';
 
-	var fillInSlot = function(slotname) {
-		log('fillInSlot', 5, 'AdProviderLater');
-		log(slotname, 5, 'AdProviderLater');
-
+	function fillInSlot(slotname, success) {
+		log(['fillInSlot', slotname, success], 5, 'AdProviderLater');
 		queueForLateAds.push([slotname]);
-	};
+		success();
+	}
 
 	return {
 		name: 'Later',

@@ -43,7 +43,7 @@ var AdProviderLiftium2Dom = function (log, document, slotTweaker, Liftium, scrip
 		return false;
 	};
 
-	fillInSlot = function(slotname) {
+	fillInSlot = function(slotname, success) {
 		log(['fillInSlot', slotname], 5, logGroup);
 
 		// TOP_BUTTON after TOP_LEADERBOARD hack:
@@ -100,6 +100,9 @@ var AdProviderLiftium2Dom = function (log, document, slotTweaker, Liftium, scrip
 
 			slotTweaker.removeDefaultHeight(slotname);
 		}
+
+		// Fake success, because we don't have the success event in Liftium
+		success();
 	};
 
 	return {

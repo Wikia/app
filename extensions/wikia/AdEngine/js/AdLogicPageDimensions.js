@@ -96,7 +96,7 @@ var AdLogicPageDimensions = function (window, document, log, slotTweaker) {
 				log(['Loading ad in slot ' + ad.slotname, ad], 'info', logGroup);
 
 				slotTweaker.show(ad.slotname, true);
-				ad.provider.fillInSlot(ad.slotname);
+				ad.provider.fillInSlot.apply(ad.provider, ad.args);
 				ad.state = 'shown';
 
 			} else if (ad.state === 'hidden') {
@@ -125,16 +125,17 @@ var AdLogicPageDimensions = function (window, document, log, slotTweaker) {
 	 * Add an ad to the wrappedAds
 	 *
 	 * @param slotname
-	 * @param slotinfo -- the info you pass to fillInSlot
 	 * @param provider -- the original provider for the slot
+	 * @param args -- the arguments to call fillInSlot with
 	 */
-	function add(slotname, provider) {
+	function add(slotname, provider, args) {
 		log(['add', slotname, provider], 'debug', logGroup);
 
 		wrappedAds[slotname] = {
 			slotname: slotname,
 			state: 'none',
-			provider: provider
+			provider: provider,
+			args: args
 		};
 
 		refresh(wrappedAds[slotname]);
@@ -229,7 +230,7 @@ var AdLogicPageDimensions = function (window, document, log, slotTweaker) {
 		function fillInSlot(slotname) {
 			log(['fillInSlot', slotname, provider], 'debug', logGroup);
 
-			add(slotname, provider);
+			add(slotname, provider, [].slice.call(arguments));
 		}
 
 		// Init once
