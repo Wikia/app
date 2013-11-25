@@ -187,6 +187,11 @@ class ApiTempUpload extends ApiBase {
 			) );
 
 		} else {
+
+			if ( empty( F::app()->wg->allowNonPremiumVideos ) ) {
+				$this->dieUsage( 'Only premium videos are allowed', 'only-allow-premium' );
+			}
+
 			// Handle urls from supported 3rd parties (like youtube)
 			// A whole url (including protocol) is necessary for ApiWrapperFactory->getApiWrapper()
 			if ( !preg_match( '/^https?:\/\//', $url ) ) {
@@ -198,11 +203,7 @@ class ApiTempUpload extends ApiBase {
 				$awf = ApiWrapperFactory::getInstance();
 				$apiwrapper = $awf->getApiWrapper( $url );
 			} catch ( Exception $e ) {
-				if ( $e->getMessage() != '' ) {
-					$this->dieUsageMsg( $e->getMessage() );
-				}
-
-				$this->dieUsageMsg( 'The supplied URL is invalid' );
+				$this->dieUsage( 'There was an issue with ApiWrapper', 'apiwrapper-error' );
 			}
 
 			if ( empty( $apiwrapper ) ) {
@@ -214,6 +215,7 @@ class ApiTempUpload extends ApiBase {
 				array(
 					'wpUpload' => 1,
 					'wpSourceType' => 'web',
+					// TODO: try/catch getThumbnailUrl
 					'wpUploadFileURL' => $apiwrapper->getThumbnailUrl()
 				),
 				true

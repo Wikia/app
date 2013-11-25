@@ -119,6 +119,9 @@ $wgResourceModules += array(
 			'wikia-visualeditor-dialog-wikiasourcemode-apply-button',
 			'wikia-visualeditor-dialog-wikiasourcemode-help-link',
 			'wikia-visualeditor-dialog-wikiasourcemode-help-text',
+			'wikia-visualeditor-notification-media-must-be-logged-in',
+			'wikia-visualeditor-notification-media-only-premium-videos-allowed',
+			'wikia-visualeditor-notification-media-query-failed',
 		),
 		'dependencies' => array(
 			'ext.visualEditor.core',

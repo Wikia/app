@@ -33,6 +33,9 @@ $messages['en'] = array(
 	'wikia-visualeditor-dialog-wikiasourcemode-apply-button' => 'Apply changes',
 	'wikia-visualeditor-dialog-wikiasourcemode-help-link' => 'Help:Wikitext',
 	'wikia-visualeditor-dialog-wikiasourcemode-help-text' => 'Formatting help',
+	'wikia-visualeditor-notification-media-must-be-logged-in' => 'You must be logged in to add images and videos.',
+	'wikia-visualeditor-notification-media-only-premium-videos-allowed' => 'This wiki only allows licensed content from <a href="http://video.wikia.com" target="_blank">Wikia Video Library</a> to be added. Please go to <a href="http://video.wikia.com" target="_blank">video.wikia.com</a> to search for videos.',
+	'wikia-visualeditor-notification-media-query-failed' => 'Sorry, we couldn\'t find a supported image or video at that URL.'
 );
 
 $messages['qqq'] = array(
@@ -64,4 +67,7 @@ $messages['qqq'] = array(
 	'wikia-visualeditor-dialog-wikiasourcemode-apply-button' => 'Button text for applying changes made in source mode.',
 	'wikia-visualeditor-dialog-wikiasourcemode-help-link' => 'Link to the user guide for how to use Wikitext',
 	'wikia-visualeditor-dialog-wikiasourcemode-help-text' => 'Text for the link to the user guide for how to use Wikitext',
+	'wikia-visualeditor-notification-media-must-be-logged-in' => 'This error message is shown to users that try to upload an image or video when they are not logged in.',
+	'wikia-visualeditor-notification-media-only-premium-videos-allowed' => 'This error message is shown to users if they try to add a video to a wiki that didn\'t come from the Wikia Video Library',
+	'wikia-visualeditor-notification-media-query-failed' => 'This is a generic error message when something about adding an image or video fails.'
 );
