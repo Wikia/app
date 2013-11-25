@@ -633,7 +633,7 @@ class WallHelper {
 				'articleFullUrl' => $wm->getMessagePageUrl(),
 				'articleTitleVal' => $articleTitleTxt,
 				'articleTitleTxt' => empty( $articleTitleTxt ) ? wfMsg( 'wall-recentchanges-deleted-reply-title' ) : $articleTitleTxt,
-				'wallPageUrl' => $wm->getArticleTitle()->getLocalURL(),
+				'wallPageUrl' => $wm->getArticleTitle()->getPrefixedText(),
 				'wallPageFullUrl' => $wm->getArticleTitle()->getFullUrl(),
 				'wallPageName' => $wm->getArticleTitle()->getText(),
 				'actionUser' => $userText,

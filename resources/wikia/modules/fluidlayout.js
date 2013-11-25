@@ -89,15 +89,6 @@ define('wikia.fluidlayout',  function() {
 	}
 
 	/**
-	 * Return the amount of AdSkin width
-	 *
-	 * @return {number} Width of AdSkin in pixels
-	 */
-	function getAdSkinWidth() {
-		return WIDTH_ADSKIN;
-	}
-
-	/**
 	 * Return the smallest breakpoint, which is at the same time the minimum supported width
 	 *
 	 * @return {number} Breakpoint value in pixels
@@ -137,8 +128,7 @@ define('wikia.fluidlayout',  function() {
 		getBreakpointFluid: getBreakpointFluid,
 		getBreakpointMin: getBreakpointMin,
 		getBreakpointMax: getBreakpointMax,
-		getRightRailWidth: getRightRailWidth,
-		getAdSkinWidth: getAdSkinWidth
+		getRightRailWidth: getRightRailWidth
 	};
 
 });

@@ -67,6 +67,10 @@
 	}
 
 	@media screen and (max-width: $breakpoint-small) {
-		@include minMainPageTags();
+	// ABTesting: DAR-1859: START
+		html:not(.keep-rail-on-right) {
+			// ABTesting: DAR-1859: END
+			@include minMainPageTags();
+		}
 	}
 }

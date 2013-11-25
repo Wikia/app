@@ -10,7 +10,6 @@ $config['oasis_shared_core_js'] = array(
 		'//resources/wikia/libraries/sloth/sloth.js',
 		'//resources/wikia/libraries/mustache/mustache.js',
 		'//resources/wikia/modules/browserDetect.js',
-		'//resources/mediawiki/mediawiki.Uri.js',
 	),
 );
 
@@ -221,6 +220,8 @@ $config['oasis_jquery'] = array(
 		'//extensions/wikia/Search/js/SearchAbTest.Context.js',
 		'//extensions/wikia/Search/js/SearchAbTest.js',
 
+		// Darwin A/B testing
+		'//skins/oasis/js/DarwinAbTesting.js',
 		// Fixed global nav ABTesting
 		'//skins/oasis/js/GlobalHeader.js',
 	)

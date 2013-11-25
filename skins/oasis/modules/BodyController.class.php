@@ -77,9 +77,12 @@ class BodyController extends WikiaController {
 	 * @return Boolean
 	 */
 	public static function isResponsiveLayoutEnabled() {
-		global $wgOasisResponsive;
-
-		return !empty( $wgOasisResponsive );
+		$app = F::app();
+		return !empty( $app->wg->OasisResponsive ) &&
+				// Prevent the responsive layout from being enabled on the
+				// corporate wiki as it will break styling on it.
+				// TODO: remove this check when it's safe to enable there.
+				empty( $app->wg->EnableWikiaHomePageExt );
 	}
 
 	/**

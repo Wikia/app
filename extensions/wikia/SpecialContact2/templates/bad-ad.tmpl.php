@@ -38,11 +38,6 @@ if ( $isLoggedIn ) {
 </p>
 
 <p>
-<label for="wpContactAdUrl"><?= wfMessage( 'specialcontact-label-bad-ad-url' )->parse() ?></label>
-<textarea name="wpContactAdUrl" class="contact-ad-url"></textarea>
-</p>
-
-<p>
 <label for="wpDescription"><?= wfMessage( 'specialcontact-label-bad-ad-description' )->escaped() ?></label>
 <textarea name="wpDescription"></textarea>
 </p>

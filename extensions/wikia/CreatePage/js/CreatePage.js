@@ -1,11 +1,8 @@
-/* global $ */
 var CreatePage = {
 	pageLayout: null,
 	options: {},
 	loading: false,
 	context: null,
-	wgArticlePath: mw.config.get( 'wgArticlePath' ),
-	visualEditorEnabled: !!mw.config.get( 'wgVisualEditor' ),
 
 	checkTitle: function( title ) {
 		'use strict';
@@ -16,15 +13,9 @@ var CreatePage = {
 			title: title
 		},
 		function( response ) {
-			var articlePath;
 			if ( response.result === 'ok' ) {
-				if ( CreatePage.visualEditorEnabled ) {
-					articlePath = CreatePage.wgArticlePath.replace( '$1', encodeURIComponent( title ) );
-					location.href =  articlePath + '?veaction=edit';
-				} else {
-					location.href = CreatePage.options[ CreatePage.pageLayout ].submitUrl
-						.replace( '$1', encodeURIComponent( title ) );
-				}
+				location.href = CreatePage.options[ CreatePage.pageLayout ].submitUrl
+					.replace( '$1', encodeURIComponent( title ) );
 			}
 			else {
 				CreatePage.displayError( response.msg );
@@ -34,10 +25,6 @@ var CreatePage = {
 
 	openDialog: function( e, titleText ) {
 		'use strict';
-
-		if ( CreatePage.visualEditorEnabled && !$( e.target ).hasClass( 'createpage' ) ) {
-			return;
-		}
 
 		// BugId:4941
 		if ( Boolean( window.WikiaEnableNewCreatepage ) === false ) {
@@ -131,18 +118,22 @@ var CreatePage = {
 
 	getTitleFromUrl: function( url ) {
 		'use strict';
-		var uri = new mw.Uri( url );
+		var vars = [],
+			i,
+			hash,
+			hashes = url.slice( url.indexOf( '?' ) + 1 ).split( '&' );
 
-		return uri.path.replace( CreatePage.wgArticlePath.replace( '$1', '' ), '' ).replace( /_/g, ' ' );
+		for ( i = 0; i < hashes.length; i++ ) {
+			hash = hashes[ i ].split( '=' );
+			vars.push( hash[ 0 ] );
+			vars[ hash[ 0 ] ] = hash[ 1 ];
+		}
+
+		return vars.title.replace( /_/g, ' ' );
 	},
 
 	redLinkClick: function( e, titleText ) {
 		'use strict';
-
-		if ( CreatePage.visualEditorEnabled ) {
-			return;
-		}
-
 		var title = titleText.split( ':' ),
 			isContentNamespace = false,
 			i;

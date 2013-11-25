@@ -35,8 +35,8 @@ class ContactForm extends SpecialPage {
 		),
 
 		'bad-ad' => array(
-			'format' => "User %s reports a problem with ad visible here:\n%s\nThe URL the ad links to:\n%s\n\nDescription of the problem:\n%s",
-			'vars' => array( 'wpUserName', 'wpContactWikiName', 'wpContactAdUrl', 'wpDescription' ),
+			'format' => "User %s reports a problem with ad visible here:\n%s\n\nDescription of the problem:\n%s",
+			'vars' => array( 'wpUserName', 'wpContactWikiName', 'wpDescription' ),
 			'subject' => 'Bad ad report by %s at %s',
 		),
 

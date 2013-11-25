@@ -9,21 +9,18 @@ $wgExtensionCredits['other'][] = array(
 
 $dir = dirname( __FILE__ ) . '/';
 
-/* Classes */
-
+// Register files
 $wgAutoloadClasses['VisualEditorWikiaHooks'] = $dir . 'VisualEditor.hooks.php';
 $wgAutoloadClasses['ApiTempUpload'] = $dir . 'ApiTempUpload.php';
 $wgAutoloadClasses['ApiMediaSearch'] = $dir . 'ApiMediaSearch.php';
 $wgAutoloadClasses['ApiPhotoAttribution'] = $dir . 'ApiPhotoAttribution.php';
 
-/* API Modules */
-
+// Register API modules
 $wgAPIModules['apitempupload'] = 'ApiTempUpload';
 $wgAPIModules['apimediasearch'] = 'ApiMediaSearch';
 $wgAPIModules['apiphotoattribution'] = 'ApiPhotoAttribution';
 
-/* Resource Loader Modules */
-
+// Register resource modules
 $wgVisualEditorWikiaResourceTemplate = array(
 	'localBasePath' => $dir . 'modules',
 	'remoteExtPath' => 'VisualEditor/wikia/modules',
@@ -93,16 +90,11 @@ $wgResourceModules += array(
 			'wikia-visualeditor-preference-enable',
 			'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip',
 			'wikia-visualeditor-dialog-wikiamediainsert-insert-button',
-			'wikia-visualeditor-dialog-wikiamediainsert-item-license-label',
-			'wikia-visualeditor-dialog-wikiamediainsert-item-title-label',
-			'wikia-visualeditor-dialog-wikiamediainsert-item-remove-button',
 			'wikia-visualeditor-dialog-wikiamediainsert-upload-label',
 			'wikia-visualeditor-dialog-wikiamediainsert-upload-button',
 			'wikia-visualeditor-dialog-wikiamediainsert-upload-error',
 			'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder',
 			'wikia-visualeditor-dialog-wikiamediainsert-preview-alert',
-			'wikia-visualeditor-dialog-wikiamediainsert-upload-error-size',
-			'wikia-visualeditor-dialog-wikiamediainsert-upload-error-filetype',
 			'wikia-visualeditor-help-label',
 			'wikia-visualeditor-help-link',
 			'wikia-visualeditor-beta-warning',
@@ -135,6 +127,5 @@ $wgExtensionMessagesFiles['VisualEditorWikia'] = $dir . 'VisualEditor.i18n.php';
 
 /* Hooks */
 
-$wgHooks['GetPreferences'][] = 'VisualEditorWikiaHooks::onGetPreferences';
 $wgHooks['ResourceLoaderTestModules'][] = 'VisualEditorWikiaHooks::onResourceLoaderTestModules';
-$wgHooks['MakeGlobalVariablesScript'][] = 'VisualEditorWikiaHooks::onMakeGlobalVariablesScript';
+$wgHooks['GetPreferences'][] = 'VisualEditorWikiaHooks::onGetPreferences';
