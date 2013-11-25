@@ -50,46 +50,81 @@ var CreatePage = {
 				rs: 'wfCreatePageAjaxGetDialog'
 			},
 			function( data ) {
-				var idToken,
-					elm,
-					onElementClick;
-				$.showModal( data.title, data.html, {
-					width: data.width,
-					id: 'CreatePageDialog',
-					callback: function() {
-						CreatePage.loading = false;
-
-						onElementClick = function() {
-							CreatePage.setPageLayout( $( this ).data( 'optionName' ) );
+				require( [ 'wikia.ui.factory' ], function( uiFactory ) {
+					uiFactory.init( [ 'modal' ] ).then( function( uiModal ) {
+						var newPageModalConfig = {
+							vars: {
+								id: 'CreatePageModalDialog',
+								size: 'middle',
+								title: data.title,
+								content: data.html,
+								classes: [ 'modalContent' ],
+								buttons: [
+									{
+										vars: {
+											value: [
+												'<span class="sprite new"></span>',
+												$.msg( 'button-createpage' )
+											].join( '' ),
+											classes: [ 'normal', 'primary' ],
+											data: [
+												{
+													key: 'event',
+													value: 'createpage'
+												}
+											]
+										}
+									}
+								]
+							}
 						};
-
-						for ( var name in CreatePage.options ){
-							idToken = name.charAt( 0 ).toUpperCase() + name.substring( 1 );
-							elm = $( '#CreatePageDialog' + idToken + 'Container' );
-
-							elm.data( 'optionName', name );
-							elm.click( onElementClick );
-						}
-
-						// Titles can be numbers, let's just make them strings for simplicity
-						if ( typeof titleText === 'number' ) {
-							titleText = titleText.toString();
-						}
-
-						if ( titleText ) {
-							$( '#wpCreatePageDialogTitle' ).val( decodeURIComponent( titleText ) );
-						}
-
-						CreatePage.setPageLayout( data.defaultOption );
-
-						$( '#wpCreatePageDialogTitle' ).focus();
-
-						$( '#CreatePageDialogButton' ).find( '.createpage' ).click(function( e ) {
-							e.preventDefault();
-							CreatePage.submitDialog( false );
+						uiModal.createComponent( newPageModalConfig, function( newPageModal ) {
+							newPageModal.show();
+							CreatePage.loading = false;
 						});
-					}
+					});
 				});
+
+//				var idToken,
+//					elm,
+//					onElementClick;
+//				$.showModal( data.title, data.html, {
+//					width: data.width,
+//					id: 'CreatePageDialog',
+//					callback: function() {
+//						CreatePage.loading = false;
+//
+//						onElementClick = function() {
+//							CreatePage.setPageLayout( $( this ).data( 'optionName' ) );
+//						};
+//
+//						for ( var name in CreatePage.options ){
+//							idToken = name.charAt( 0 ).toUpperCase() + name.substring( 1 );
+//							elm = $( '#CreatePageDialog' + idToken + 'Container' );
+//
+//							elm.data( 'optionName', name );
+//							elm.click( onElementClick );
+//						}
+//
+//						// Titles can be numbers, let's just make them strings for simplicity
+//						if ( typeof titleText === 'number' ) {
+//							titleText = titleText.toString();
+//						}
+//
+//						if ( titleText ) {
+//							$( '#wpCreatePageDialogTitle' ).val( decodeURIComponent( titleText ) );
+//						}
+//
+//						CreatePage.setPageLayout( data.defaultOption );
+//
+//						$( '#wpCreatePageDialogTitle' ).focus();
+//
+//						$( '#CreatePageDialogButton' ).find( '.createpage' ).click(function( e ) {
+//							e.preventDefault();
+//							CreatePage.submitDialog( false );
+//						});
+//					}
+//				});
 			});
 		}
 	},
