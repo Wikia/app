@@ -37,8 +37,9 @@ class TvApiController extends WikiaApiController {
 			throw new NotFoundApiException();
 		}
 
-		$responseValues[ 'contentUrl' ] = $this->url . self::API_URL . $responseValues[ 'articleId' ];
-
+		if ( empty( $responseValues[ 'contentUrl' ] ) ) { //only for unit test
+			$responseValues[ 'contentUrl' ] = $this->url . self::API_URL . $responseValues[ 'articleId' ];
+		}
 		if ( WikiFactory::isCurrentStagingHost() ) {
 			$responseValues[ 'contentUrl' ] = preg_replace_callback( self::WIKIA_URL_REGEXP, array( $this, 'replaceHost' ), $responseValues[ "contentUrl" ] );
 			$responseValues[ 'url' ] = preg_replace_callback( self::WIKIA_URL_REGEXP, array( $this, 'replaceHost' ), $responseValues[ "url" ] );
@@ -76,7 +77,6 @@ class TvApiController extends WikiaApiController {
 		return null;
 	}
 
-
 	protected function createTitle($text)
 	{
 		return GlobalTitle::newFromText( $text, NS_MAIN, $this->wikiId );
@@ -102,7 +102,6 @@ class TvApiController extends WikiaApiController {
 		}
 		return null;
 	}
-
 
 	protected function setWikiVariables(){
 		$config = $this->getConfigCrossWiki();

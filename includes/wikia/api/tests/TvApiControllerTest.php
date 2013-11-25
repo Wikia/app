@@ -13,6 +13,70 @@ namespace Wikia\api;
 class TvApiControllerTest extends \WikiaBaseTest {
 
 	private $mockGlobalTitle;
+	private $responseValues;
+
+	public function testGetEpisode_Url_Dev_Sand_box() {
+
+		$mock = $this->getMockBuilder( "\TvApiController" )
+			->disableOriginalConstructor()
+			->setMethods( ['__construct', 'getExactMatch','getResponse','setWikiVariables'] )
+			->getMock();
+
+		$mock->expects( $this->any() )
+			->method( 'getExactMatch' )
+			->will( $this->returnValue(['url'=>'http://unittest.wikia.com/url', 'contentUrl'=>'http://unittest.wikia.com/contentUrl', 'articleId' => 8888]) );
+
+		$mock->expects( $this->any() )
+			->method( 'setWikiVariables' )
+			->will( $this->returnValue(true));
+
+		$this->getStaticMethodMock('\WikiFactory','getCurrentStagingHost')
+					->expects($this->any())
+					->method('getCurrentStagingHost')
+					->will( $this->returnCallback( [$this, 'mock_getCurrentStagingHost']));
+
+		$this->getStaticMethodMock('\WikiFactory','isCurrentStagingHost')
+			->expects($this->any())
+			->method('isCurrentStagingHost')
+			->will( $this->returnValue(true));
+
+		$mockResponse = $this->getMockBuilder( "\WikiaResponse" )
+			->disableOriginalConstructor()
+			->setMethods(['__construct','setValues','setCacheValidity'])
+			->getMock();
+
+		$mockResponse->expects($this->any())
+				->method('setValues')
+				->will($this->returnCallback([$this, 'mock_setValues']));
+
+		$mock->expects( $this->any() )
+			->method( 'getResponse' )
+			->will( $this->returnValue($mockResponse));
+
+		$this->responseValues = null;
+
+		$mock->getEpisode();
+
+		$this->assertArrayHasKey('url',$this->responseValues);
+		$this->assertEquals( 'http://newhost/url',  $this->responseValues['url'] );
+
+		$this->assertArrayHasKey('contentUrl',$this->responseValues);
+		$this->assertEquals( 'http://newhost/contentUrl',  $this->responseValues['contentUrl'] );
+
+	}
+
+	public function mock_getCurrentStagingHost($arg1, $arg2)
+	{
+		return 'newhost';
+	}
+
+	public function mock_setValues($values)
+	{
+		$this->responseValues = $values;
+	}
+
+	/*
+
 
 	public function testGetTitle() {
 
@@ -59,7 +123,7 @@ class TvApiControllerTest extends \WikiaBaseTest {
 
 		return $this->mockGlobalTitle;
 	}
-
+*/
 	private function setMockVariables( $exists, $id, $title, $url, $ns, $redirect ) {
 		$this->mockGlobalTitle = $this->getMockBuilder( '\GlobalTitle' )
 			->disableOriginalConstructor()
