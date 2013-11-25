@@ -163,6 +163,8 @@ $wgAutoloadClasses['StatsApiController'] = "{$IP}/includes/wikia/api/StatsApiCon
 $wgAutoloadClasses['RelatedPagesApiController'] = "{$IP}/includes/wikia/api/RelatedPagesApiController.class.php";
 $wgAutoloadClasses['ActivityApiController'] = "{$IP}/includes/wikia/api/ActivityApiController.class.php";
 $wgAutoloadClasses['UserApiController'] = "{$IP}/includes/wikia/api/UserApiController.class.php";
+$wgAutoloadClasses['TvApiController'] = "{$IP}/includes/wikia/api/TvApiController.class.php";
+
 
 $wgWikiaApiControllers['DiscoverApiController'] = "{$IP}/includes/wikia/api/DiscoverApiController.class.php";
 $wgWikiaApiControllers['NavigationApiController'] = "{$IP}/includes/wikia/api/NavigationApiController.class.php";
@@ -172,6 +174,7 @@ $wgWikiaApiControllers['StatsApiController'] = "{$IP}/includes/wikia/api/StatsAp
 $wgWikiaApiControllers['RelatedPagesApiController'] = "{$IP}/includes/wikia/api/RelatedPagesApiController.class.php";
 $wgWikiaApiControllers['ActivityApiController'] = "{$IP}/includes/wikia/api/ActivityApiController.class.php";
 $wgWikiaApiControllers['UserApiController'] = "{$IP}/includes/wikia/api/UserApiController.class.php";
+$wgWikiaApiControllers['TvApiController'] = "{$IP}/includes/wikia/api/TvApiController.class.php";
 
 //Wikia Api exceptions classes
 $wgAutoloadClasses[ 'BadRequestApiException'] =  "{$IP}/includes/wikia/api/ApiExceptions.php" ;

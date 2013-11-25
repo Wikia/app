@@ -16,6 +16,37 @@ class WikiFactoryTest extends WikiaBaseTest {
 		}
 	}
 
+	public function testIsCurrentStagingHostTrue()
+	{
+		global $wgStagingList;
+		$wgStagingList = ['teststagging'];
+		$this->assertTrue(WikiFactory::isCurrentStagingHost('teststagging'));
+		$this->assertTrue(WikiFactory::isCurrentStagingHost('dev-mtydevbox'));
+	}
+
+	public function testIsCurrentStagingHostFalse()
+	{
+		global $wgStagingList;
+		$wgStagingList = ['teststagging'];
+		$this->assertFalse(WikiFactory::isCurrentStagingHost('production1'));
+	}
+
+	public function testGetCurrentStagingHostSandbox()
+	{
+		global $wgStagingList;
+		$wgStagingList = ['teststagging'];
+		$this->assertEquals('teststagging.muppet.wikia.com',
+			WikiFactory::getCurrentStagingHost('muppet','http://www.muppet.wikia.com/', 'teststagging'));
+	}
+
+	public function testGetCurrentStagingHostDevbox()
+	{
+		global $wgStagingList;
+		$wgStagingList = ['teststagging'];
+		$this->assertEquals('muppet.mydevbox.wikia-dev.com',
+			WikiFactory::getCurrentStagingHost('muppet','http://www.muppet.wikia.com/', 'dev-mydevbox'));
+	}
+
 	/**
 	 * @dataProvider testGetLocalEnvURLDataProvider
 	 */
