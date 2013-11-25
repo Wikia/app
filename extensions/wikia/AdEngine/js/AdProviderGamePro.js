@@ -40,7 +40,7 @@ var AdProviderGamePro = function(adLogicPageLevelParamsLegacy, ScriptWriter, adT
 		return url;
 	}
 
-	function fillInSlot(slotname) {
+	function fillInSlot(slotname, success) {
 		log('fillInSlot', 5, 'AdProviderGamePro');
 		log(slotname, 5, 'AdProviderGamePro');
 
@@ -49,6 +49,7 @@ var AdProviderGamePro = function(adLogicPageLevelParamsLegacy, ScriptWriter, adT
 		ScriptWriter.injectScriptByUrl(slotname, getUrl(slotname), function () {
 			slotTweaker.removeTopButtonIfNeeded(slotname);
 			slotTweaker.removeDefaultHeight(slotname);
+			success();
 		});
 	}
 

@@ -93,7 +93,7 @@ var AdProviderGpt = function (adTracker, log, window, Geo, slotTweaker, cacheSto
 		wikiaGpt.flushAds();
 	}
 
-	function fillInSlot(slotname) {
+	function fillInSlot(slotname, pSuccess, pHop) {
 		log(['fillInSlot', slotname], 5, logGroup);
 
 		if (gptConfig[slotname] === 'flushonly') {
@@ -123,6 +123,8 @@ var AdProviderGpt = function (adTracker, log, window, Geo, slotTweaker, cacheSto
 				}
 
 				window.adslots2.push([slotname, undef, 'Liftium2']);
+
+				pHop();
 			},
 
 			// Do this when filling slot by DART
@@ -136,6 +138,8 @@ var AdProviderGpt = function (adTracker, log, window, Geo, slotTweaker, cacheSto
 					// Track hop time
 					slotTracker.success();
 				}
+
+				pSuccess();
 			};
 
 		if (!isHighValueCountry) {

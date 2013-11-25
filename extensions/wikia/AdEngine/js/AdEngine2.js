@@ -2,31 +2,39 @@
 var AdEngine2 = function (log, LazyQueue) {
 	'use strict';
 
-	var module = 'AdEngine2';
+	var logGroup = 'AdEngine2';
 
 	function run(adConfig, adslots) {
-		log('run', 5, module);
 
-		log('initial queue', 7, module);
-		log(adslots, 7, module);
+		log('run', 'debug', logGroup);
 
-		log('initializing LazyQueue on the queue', 7, module);
+		log('initial queue', 'debug', logGroup);
+		log(adslots, 'debug', logGroup);
+
+		log('initializing LazyQueue on the queue', 7, logGroup);
 		LazyQueue.makeQueue(adslots, function (slot) {
-			log('fillInSlot', 5, module);
-			log(slot, 5, module);
+			log(['fillInSlot', slot], 'debug', logGroup);
 
 			var slotname = slot[0],
 				provider = adConfig.getProvider(slot);
 
-			log('calling ' + provider.name + '.fillInSlot for ' + slotname, 3, module);
+			function success(info) {
+				log(['success', slotname, info], 'debug', logGroup);
+			}
 
-			provider.fillInSlot(slotname);
+			function hop() {
+				log(['hop', slotname], 'debug', logGroup);
+			}
+
+			log('calling ' + provider.name + '.fillInSlot for ' + slotname, 'debug', logGroup);
+
+			provider.fillInSlot(slotname, success, hop);
 		});
 
-		log('launching queue on adslots', 7, module);
+		log('launching queue on adslots', 'debug', logGroup);
 		adslots.start();
 
-		log('initial queue handled', 6, module);
+		log('initial queue handled', 'debug', logGroup);
 	}
 
 	return {run: run};

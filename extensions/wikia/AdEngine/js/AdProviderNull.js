@@ -4,14 +4,14 @@ var AdProviderNull = function (log, slotTweaker) {
 
 	var logGroup = 'AdProviderNull';
 
-	function canHandleSlot(slotname) { // jshint unused:false
+	function canHandleSlot() {
 		return true;
 	}
 
-	function fillInSlot(slotname) {
+	function fillInSlot(slotname, success) {
 		log(['fillInSlot', slotname], 5, logGroup);
 		slotTweaker.hide(slotname);
-		return;
+		success();
 	}
 
 	return {

@@ -174,7 +174,7 @@ var AdProviderEvolve = function (adLogicPageLevelParamsLegacy, scriptWriter, adT
 		window.adslots2.push([slotname, undef, 'Liftium2Dom']);
 	}
 
-	function fillInSlot(slotname) {
+	function fillInSlot(slotname, pSuccess, pHop) {
 		log('fillInSlot', 5, 'AdProviderEvolve');
 		log(slotname, 5, 'AdProviderEvolve');
 
@@ -193,6 +193,7 @@ var AdProviderEvolve = function (adLogicPageLevelParamsLegacy, scriptWriter, adT
 							document.body.style.cssText = document.body.style.cssText.replace(document.body.style.backgroundImage, document.body.style.backgroundImage + ' !important');
 							document.body.style.cssText = document.body.style.cssText.replace(document.body.style.backgroundColor, document.body.style.backgroundColor + ' !important');
 						}
+						pSuccess();
 					});
 				}
 			);
@@ -212,12 +213,15 @@ var AdProviderEvolve = function (adLogicPageLevelParamsLegacy, scriptWriter, adT
 					if (height === undef || height > 1 || hasEmbed(slot)) {
 						// Real success
 						slotTweaker.removeTopButtonIfNeeded(slotname);
-					} else {
-						slotTweaker.addDefaultHeight(slotname);
-						log('Evolve did not hop, but returned 1x1 ad instead for slot ' + slotname, 1, 'AdProviderEvolve');
-						hop(slotname, '1x1');
+						pSuccess();
+						return;
 					}
+					slotTweaker.addDefaultHeight(slotname);
+					log('Evolve did not hop, but returned 1x1 ad instead for slot ' + slotname, 1, 'AdProviderEvolve');
+					hop(slotname, '1x1');
 				}
+
+				pHop();
 			});
 		}
 	}
