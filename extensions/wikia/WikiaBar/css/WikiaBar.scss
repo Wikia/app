@@ -303,11 +303,18 @@ body.nowikiabar {
 	}
 
 	@media screen and (min-width: $breakpoint-fluid) {
-		$margin: $width-adskin - 10px; // 10px <- padding
+		$margin: $width-adskin - 10px; // 10px <- wikia-bar padding
 
 		.WikiaBarWrapper .wikia-bar {
 			margin: 0 $margin;
 			width: auto;
+		}
+	}
+
+	@media screen and (min-width: $breakpoint-max) {
+		.WikiaBarWrapper .wikia-bar {
+			margin: 0 auto;
+			width: $width-outside-max;
 		}
 	}
 }
