@@ -9,7 +9,7 @@
 			</div>
 			<input id="wpCreatePageDialogTitle" name="wpCreatepageDialogTitle" type="text" />
 			<div id="CreatePageDialogTitleErrorMsg" class="CreatePageError hiddenStructure"></div>
-				<?php if( !$useFormatOnly ): ?>
+			<?php if( !$useFormatOnly ): ?>
 				<div id="CreatePageDialogChoose">
 					<?= wfMsg( 'createpage-dialog-choose' ) ?>
 				</div>
@@ -38,11 +38,11 @@
 						<script type="text/javascript">CreatePage.options['<?= $name ;?>'] = <?= json_encode( $params ) ;?>;</script>
 					<? endforeach ;?>
 				</ul>
+			<?php else: ?>
+				<br />
+				<input type="hidden" name="wpCreatePageChoices" value="format" />
+			<?php endif; ?>
 		</div>
-		<?php else: ?>
-			<br />
-			<input type="hidden" name="wpCreatePageChoices" value="format" />
-		<?php endif; ?>
 		<input id="hiddenCreatePageDialogButton" type="submit" style="display: none;" name="hiddenCreatePageDialogButton" value="<?= wfMsg("createpage-dialog-title") ?>" />
 		<div id="CreatePageDialogButton" class="modalToolbar neutral">
 			<?= Wikia::specialPageLink('CreatePage', 'button-createpage', 'wikia-button createpage', 'blank.gif', 'oasis-create-page', 'sprite new'); ?>

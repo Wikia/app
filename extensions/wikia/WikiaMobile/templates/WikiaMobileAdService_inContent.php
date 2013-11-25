@@ -2,12 +2,12 @@
 var MIN_ZEROTH_SECTION_LENGTH = 700,
 	MIN_PAGE_LENGTH = 2000;
 
-require(['ads', 'sloth', 'jquery', 'JSMessages'], function (ads, sloth, $, msg) {
+require(['ads', 'sloth', 'jquery', 'JSMessages', 'wikia.window'], function (ads, sloth, $, msg, window) {
 	var $firstSection = $('.collSec').first(),
 		$footer = $('#wkMainCntFtr'),
 		firstSectionTop = ($firstSection.length && $firstSection.offset().top) || 0,
 		showInContent = firstSectionTop > MIN_ZEROTH_SECTION_LENGTH,
-		showBeforeFooter = document.height > MIN_PAGE_LENGTH || firstSectionTop < MIN_ZEROTH_SECTION_LENGTH,
+		showBeforeFooter = window.document.body.offsetHeight > MIN_PAGE_LENGTH || firstSectionTop < MIN_ZEROTH_SECTION_LENGTH,
 		lazyLoadAd = function(elem, slotName){
 			sloth({
 				on: elem,
@@ -19,7 +19,7 @@ require(['ads', 'sloth', 'jquery', 'JSMessages'], function (ads, sloth, $, msg) 
 						wrapper: adWrapper,
 						init: function onInit(found){
 							if(found) {
-								adWrapper.innerHTML += '<label class="wkAdLabel inContent">' + msg('wikiamobile-ad-label') + '<label>';
+								adWrapper.innerHTML += '<label class="wkAdLabel inContent">' + msg('wikiamobile-ad-label') + '</label>';
 								adWrapper.className += ' show';
 							}
 						}

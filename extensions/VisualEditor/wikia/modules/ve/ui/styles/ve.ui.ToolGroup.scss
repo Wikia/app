@@ -1,8 +1,8 @@
 @import "skins/oasis/css/core/color";
 @import "skins/oasis/css/mixins/box-shadow";
-@import "extensions/VisualEditor/wikia/modules/ve/ui/styles/mixins/ve-icon";
-@import "extensions/VisualEditor/wikia/modules/ve/ui/styles/color";
 
+@import "color";
+@import "mixins/ve-icon";
 
 .ve-ui-popupToolGroup {
 	.ve-ui-toolGroup-tools {
@@ -31,10 +31,11 @@
 .ve-ui-barToolGroup .ve-ui-tool-active:not(.ve-ui-widget-disabled),
 .ve-ui-listToolGroup .ve-ui-tool-active:not(.ve-ui-widget-disabled),
 .ve-ui-popupToolGroup-active:not(.ve-ui-widget-disabled) {
-/*
-	@include box-shadow(-1px, 1px, 2px, $color-ve-button-shadow, true);
-	background-color: $color-ve-button-active;
-*/
-	@include linear-gradient($color-ve-gradient, top, $color-ve-gradient-dark, 0%, $color-ve-gradient-light, 50%, $color-ve-gradient-light, 80%, mix( $color-ve-gradient-light, $color-ve-gradient-dark, 50% ), 100% );
-
+	@include linear-gradient(
+		$color-ve-gradient, top,
+		$color-ve-gradient-dark, 0%,
+		$color-ve-gradient-light, 50%,
+		$color-ve-gradient-light, 80%,
+		mix( $color-ve-gradient-light, $color-ve-gradient-dark, 50% ), 100%
+	);
 }

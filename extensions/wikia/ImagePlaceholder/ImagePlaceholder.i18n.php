@@ -426,9 +426,11 @@ $messages['nn'] = array(
  */
 $messages['oc'] = array(
 	'imgplc-add-image' => 'Apondre un imatge',
+	'imgplc-add-video' => 'Apondre una vidèo',
 	'imgplc-placeholder' => 'Posicionador',
 	'imgplc-image' => 'Imatge',
 	'imgplc-notinhistory' => "Podètz pas apondre cap d'imatge en mòde istoric.",
+	'imgplc-notinhistory-video' => 'Podètz pas apondre cap de vidèo en mòde istoric.',
 );
 
 /** Polish (polski)
@@ -468,14 +470,16 @@ $messages['ps'] = array(
 
 /** Portuguese (português)
  * @author Hamilton Abreu
+ * @author Josep Maria 15.
  * @author Luckas
  */
 $messages['pt'] = array(
-	'imgplc-add-image' => 'Adicionar Imagem',
+	'imgplc-add-image' => 'Adicionar imagem',
 	'imgplc-add-video' => 'Adicionar vídeo',
 	'imgplc-placeholder' => 'Espaço reservado',
 	'imgplc-image' => 'Imagem',
-	'imgplc-notinhistory' => 'Não pode adicionar uma imagem no modo histórico.',
+	'imgplc-notinhistory' => 'Não podes adicionar uma imagem no modo histórico.',
+	'imgplc-notinhistory-video' => 'Não podes adicionar um vídeo no modo histórico.',
 );
 
 /** Brazilian Portuguese (português do Brasil)

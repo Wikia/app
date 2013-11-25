@@ -85,7 +85,7 @@ class RelatedVideosEmbededData extends RelatedVideosNamespaceData {
 			while ( $row = $res->fetchObject( $res ) ) {
 				$sTitle = $row->il_to;
 				$oTitle = Title::newFromText( $sTitle, NS_VIDEO );
-				if ( is_object( $oTitle ) && WikiaFileHelper::isTitleVideo( $oTitle ) ){
+				if ( is_object( $oTitle ) && WikiaFileHelper::isFileTypeVideo( $oTitle ) ){
 					$lists[ self::WHITELIST_MARKER ][] = $this->createEntry( $sTitle );
 				}
 			}

@@ -44,6 +44,13 @@ $messages['qqq'] = array(
 	'places-geolocation-modal-error-title' => '{{Identical|Error}}',
 );
 
+/** Old English (Ænglisc)
+ * @author Espreon
+ */
+$messages['ang'] = array(
+	'places-editor-search' => 'Sēcan',
+);
+
 /** Arabic (العربية)
  * @author Achraf94
  * @author ترجمان05

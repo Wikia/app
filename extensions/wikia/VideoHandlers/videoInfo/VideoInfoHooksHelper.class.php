@@ -14,9 +14,6 @@ class VideoInfoHooksHelper {
 	 * @return true
 	 */
 	public static function onFileUpload( $file, $reupload, $hasDescription ) {
-		if ( !VideoInfoHelper::videoInfoExists() ) {
-			return true;
-		}
 
 		$videoInfoHelper = new VideoInfoHelper();
 		$videoData = $videoInfoHelper->getVideoDataFromFile( $file );
@@ -49,9 +46,6 @@ class VideoInfoHooksHelper {
 	 * @return true
 	 */
 	public static function onAddPremiumVideo( $title ) {
-		if ( !VideoInfoHelper::videoInfoExists() ) {
-			return true;
-		}
 
 		if ( $title instanceof Title ) {
 			$videoInfoHelper = new VideoInfoHelper();
@@ -85,9 +79,6 @@ class VideoInfoHooksHelper {
 	 * @return true
 	 */
 	public static function onRemovePremiumVideo( $title ) {
-		if ( !VideoInfoHelper::videoInfoExists() ) {
-			return true;
-		}
 
 		if ( $title instanceof Title ) {
 			$videoInfo = VideoInfo::newFromTitle( $title->getDBKey() );
@@ -120,9 +111,6 @@ class VideoInfoHooksHelper {
 	 * @return true
 	 */
 	public static function onArticleSaveComplete(&$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
-		if ( !VideoInfoHelper::videoInfoExists() ) {
-			return true;
-		}
 
 		$insertedImages = Wikia::getVar( 'imageInserts' );
 
@@ -156,9 +144,6 @@ class VideoInfoHooksHelper {
 	 * @return true
 	 */
 	public static function onFileDeleteComplete( &$file, $oldimage, $article, $user, $reason ) {
-		if ( !VideoInfoHelper::videoInfoExists() ) {
-			return true;
-		}
 
 		if ( WikiaFileHelper::isFileTypeVideo($file) ) {
 			if ( $file->isLocal() ) {
@@ -185,9 +170,6 @@ class VideoInfoHooksHelper {
 	 * @return true
 	 */
 	public static function onFileUndeleteComplete( $title, $versions, $user, $comment ) {
-		if ( !VideoInfoHelper::videoInfoExists() ) {
-			return true;
-		}
 
 		$videoInfoHelper = new VideoInfoHelper();
 		$videoInfo = $videoInfoHelper->getVideoInfoFromTitle( $title );
@@ -209,9 +191,6 @@ class VideoInfoHooksHelper {
 	 * @return true
 	 */
 	public static function onFileRenameComplete( &$form , &$oldTitle , &$newTitle ) {
-		if ( !VideoInfoHelper::videoInfoExists() ) {
-			return true;
-		}
 
 		$videoInfoHelper = new VideoInfoHelper();
 		$affected = $videoInfoHelper->renameVideo( $oldTitle, $newTitle );
@@ -232,9 +211,6 @@ class VideoInfoHooksHelper {
 	 * @return true
 	 */
 	public static function onArticleDeleteComplete( &$wikiPage, &$user, $reason, $pageId  ) {
-		if ( !VideoInfoHelper::videoInfoExists() ) {
-			return true;
-		}
 
 		$title = $wikiPage->getTitle();
 		if ( $title instanceof Title && $title->getNamespace() == NS_FILE ) {
@@ -272,9 +248,6 @@ class VideoInfoHooksHelper {
 	 * @return true
 	 */
 	public static function onUndeleteComplete( &$title, &$user, $reason ) {
-		if ( !VideoInfoHelper::videoInfoExists() ) {
-			return true;
-		}
 
 		if ( $title instanceof Title && $title->getNamespace() == NS_FILE ) {
 			$videoInfoHelper = new VideoInfoHelper();
@@ -296,9 +269,6 @@ class VideoInfoHooksHelper {
 	 * @return true
 	 */
 	public static function onForeignFileDeleted( $file, &$isDeleted ) {
-		if ( !VideoInfoHelper::videoInfoExists() ) {
-			return true;
-		}
 
 		// Only report this file as deleted when this request is coming from a file page.  In other
 		// instances (search results from the WVL for example) we want to make sure these videos still appear.
@@ -314,6 +284,28 @@ class VideoInfoHooksHelper {
 		if ( WikiaFileHelper::isFileTypeVideo($file) && !$file->isLocal() ) {
 			$videoInfoHelper = new VideoInfoHelper();
 			$isDeleted = $videoInfoHelper->isVideoRemoved( $file->getName() );
+		}
+
+		return true;
+	}
+
+	/**
+	 * Check the file passed and fail if its a ghost file; that is, a file
+	 * that is from the video wiki but doesn't have any local record
+	 *
+	 * @param File $file A file object to check
+	 * @return bool Whether this hook has succeeded
+	 */
+	public static function onCheckGhostFile( &$file ) {
+		# If we're on a file page and we don't have any video_info for the current
+		# title, treat it like a non-existent file
+		if ( $file && WikiaFileHelper::isFileTypeVideo($file) ) {
+			$title = $file->getTitle()->getDBkey();
+			$info = VideoInfo::newFromTitle( $title );
+			if ( empty($info) ) {
+				F::app()->wg->IsGhostVideo = true;
+				$file = null;
+			}
 		}
 
 		return true;

@@ -36,48 +36,8 @@ ve.init.mw.WikiaViewPageTarget.static.toolbarGroups = [
 	{ 'include': [ 'wikiaMediaInsert' ] },
 	{
 		'include': '*',
-		'exclude': [ 'mediaInsert' ]
+		'exclude': [ 'mediaInsert', 'code' ]
 	}
-	/*
-	{
-		'include': [ 'history' ],
-		'promote': [
-			'history/undo',
-			'history/redo'
-		]
-	},
-	{
-		'include': [ 'format' ],
-		'promote': [ 'format/convert' ]
-	},
-	{
-		'include': [ 'textStyle', 'meta', 'utility/clear' ],
-		'promote': [
-			'textStyle/bold',
-			'textStyle/italic',
-			'meta/link'
-		],
-		'demote': [ 'utility/clear' ]
-	},
-	{
-		'include': [ 'structure' ],
-		'promote': [
-			'structure/number',
-			'structure/bullet'
-		],
-		'exclude': [
-			'structure/indent',
-			'structure/outdent'
-		]
-	},
-	{
-		'include': [ 'insertMedia' ]
-	},
-	{
-		'include': [ 'object' ],
-		'exclude': [ 'object/mediaInsert' ]
-	}
-	*/
 ];
 
 ve.init.mw.WikiaViewPageTarget.prototype.setupSkinTabs = function () {

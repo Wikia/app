@@ -79,8 +79,9 @@ class SwiftStorage {
 		$this->wg = \F::app()->wg;
 
 		if ( !is_null( $dataCenter )  ) {
+			$this->swiftServer = $this->wg->FSSwiftDC[ $dataCenter ][ 'servers' ][ array_rand( $this->wg->FSSwiftDC[ $dataCenter ][ 'servers' ] ) ];
 			$this->swiftConfig = $this->wg->FSSwiftDC[ $dataCenter ][ 'config' ];
-			$this->swiftServer = $this->wg->FSSwiftDC[ $dataCenter ][ 'server' ]; 
+			array_walk( $this->swiftConfig, function( &$v, $k, $data ) { $v = sprintf( $v, $data ); }, $this->swiftServer );			 
 		} else {
 			$this->swiftConfig = $this->wg->FSSwiftConfig;
 			$this->swiftServer = $this->wg->FSSwiftServer;
@@ -143,7 +144,10 @@ class SwiftStorage {
 		$status = $req->execute();
 
 		if (!$status->isOK()) {
-			self::log(__METHOD__, 'can\'t set ACL');
+			self::log(
+				__METHOD__,
+				sprintf('can\'t set ACL [<%s> returned HTTP %d - %s] %s', $url, $req->getStatus(), json_encode($status->getErrorsArray(), json_encode($req->getResponseHeaders())))
+			);
 		}
 
 		return $container;
@@ -256,7 +260,6 @@ class SwiftStorage {
 	 * @return String $content
 	 */
 	public function read( $remoteFile ) {
-		$content = '';
 		try {
 			$remoteFile = $this->getRemotePath( $remoteFile );
 			$object = $this->container->get_object( $remoteFile );
@@ -314,4 +317,13 @@ class SwiftStorage {
 	public static function log($method, $msg) {
 		\Wikia::log(self::LOG_GROUP . '-WIKIA', false, $method . ': ' . $msg, true /* $force */);
 	}
+
+	/**
+	 * Return Swift server 
+	 * 
+	 * @param - no params
+	 */
+	public function getSwiftServer() {
+		return $this->swiftServer;
+	} 
 }

@@ -42,6 +42,9 @@
 				// Clicking okay in a confirmation modal
 				CONFIRM: 'confirm',
 
+				// Generic error (generally AJAX)
+				ERROR: 'error',
+
 				// Generic hover
 				HOVER: 'hover',
 

@@ -16,6 +16,7 @@ class UserLoginForm extends LoginForm {
 	function load() {
 		parent::load();
 		$request = $this->mOverrideRequest;
+		// Note: if these change make sure to update UserLoginFacebookForm class also
 		if ( $request->getText( 'userloginext01', '' ) != '' ) {
 			$this->mUsername = $request->getText( 'userloginext01', '' );
 		}
@@ -93,12 +94,6 @@ class UserLoginForm extends LoginForm {
 		// check empty username
 		if ( $this->mUsername == '' ) {
 			$this->mainLoginForm( wfMessage( 'userlogin-error-noname' )->escaped(), 'error', 'username' );
-			return false;
-		}
-
-		// check if exist in tempUser
-		if ( UserLoginHelper::isTempUser( $this->mUsername ) && TempUser::getTempUserFromName( $this->mUsername ) ) {
-			$this->mainLoginForm( wfMessage( 'userlogin-error-userexists' )->escaped(), 'error', 'username' );
 			return false;
 		}
 

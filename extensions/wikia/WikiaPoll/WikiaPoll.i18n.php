@@ -312,12 +312,13 @@ $messages['es'] = array(
 
 /** Basque (euskara)
  * @author An13sa
+ * @author Xabier Armendaritz
  */
 $messages['eu'] = array(
 	'wikiapoll-desc' => 'Bozketak sortzeko eta kudeatzeko erraztasuna ahalbidetzen du',
 	'wikiapoll-people-voted' => '{{PLURAL:$1|pertsona $1-ek bozkatu du|$1 pertsonak bozkatu dute}}',
 	'wikiapoll-question' => '$1?',
-	'wikiapoll-thanks-for-vote' => 'Eskerrikasko!',
+	'wikiapoll-thanks-for-vote' => 'Eskerrik asko!',
 	'wikiapoll-vote' => 'Bozkatu!',
 	'wikiapoll-votes' => '({{PLURAL:$1|bozka $1|$1 bozka}})',
 	'wikiapoll-createpoll-headline' => 'Bozketa sortu',
@@ -466,6 +467,13 @@ $messages['it'] = array(
 	'wikiapoll-publish-label' => 'Pubblica',
 	'wikiapoll-error-duplicate' => 'Un sondaggio con quel nome esiste già.',
 	'wikiapoll-error-invalid-title' => 'Il testo della domanda non è valido.',
+);
+
+/** Japanese (日本語)
+ * @author BryghtShadow
+ */
+$messages['ja'] = array(
+	'wikiapoll-votes' => '{{PLURAL:$1|$1 票}}',
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)

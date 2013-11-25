@@ -113,6 +113,13 @@ $messages['es'] = array(
 	'wikiawidget' => 'Wikia widgets',
 );
 
+/** Basque (euskara)
+ * @author Theklan
+ */
+$messages['eu'] = array(
+	'wikiawidget' => 'Wikia widgetak',
+);
+
 /** Finnish (suomi)
  * @author Centerlink
  */
@@ -395,6 +402,13 @@ $messages['tt-cyrl'] = array(
  */
 $messages['uk'] = array(
 	'wikiawidget' => 'Віджети Wikia',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'wikiawidget' => 'Wikia widget',
 );
 
 /** Simplified Chinese (中文（简体）‎)

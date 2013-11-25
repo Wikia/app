@@ -731,6 +731,7 @@ Vols controlar els correus que reps? Vés a: {{fullurl: {{ns:special}}:Preferèn
  */
 $messages['ce'] = array(
 	'usersignup-confirm-email-update' => 'Карлаяккха',
+	'usersignup-resend-email-heading-success' => 'Керла хаам дӀабахийтина',
 	'usersignup-reconfirmation-email_subject' => 'Бакъде электрони почтан адрес хуьйцуш хилар Вики чохь',
 	'usersignup-welcome-email-learn-basic-button' => 'Дехьа гӀо',
 );
@@ -1033,6 +1034,7 @@ Steuere, welche E-Mails du von uns erhalten willst, auf {{fullurl:{{ns:special}}
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
+ * @author Gorizon
  */
 $messages['diq'] = array(
 	'usersignup-page-title' => 'Dekew Wikia',
@@ -1051,7 +1053,7 @@ $messages['diq'] = array(
 	'usersignup-welcome-email-signature' => 'Taxıma Wikia',
 	'usersignup-heading' => 'Noroc dekewe Wikia',
 	'usersignup-marketing-community-heading' => 'Piyakarkerdış',
-	'usersignup-marketing-global-heading' => 'Vıraze',
+	'usersignup-marketing-global-heading' => 'İycad ke',
 	'usersignup-marketing-creativity-heading' => 'Oricinal be',
 	'usersignup-account-creation-email-greeting' => 'Merheba,',
 	'usersignup-account-creation-email-signature' => 'Taxıma Wikia',

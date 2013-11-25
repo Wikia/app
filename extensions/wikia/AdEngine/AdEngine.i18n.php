@@ -83,6 +83,13 @@ $messages['ca'] = array(
 	'adengine-exitstitial-button' => 'Saltar aquest anunci',
 );
 
+/** Czech (čeština)
+ * @author Chmee2
+ */
+$messages['cs'] = array(
+	'adengine-exitstitial-button' => 'Přeskočit tuto reklamu',
+);
+
 /** German (Deutsch)
  * @author Metalhead64
  */
@@ -280,6 +287,16 @@ $messages['nb'] = array(
 	'adengine-exitstitial-button' => 'Hopp over denne annonsen',
 );
 
+/** Nepali (नेपाली)
+ * @author सरोज कुमार ढकाल
+ */
+$messages['ne'] = array(
+	'adengine-exitstitial-title-template' => 'तपाईँ $1 छोड्दै हुनुहुन्छ…',
+	'adengine-exitstitial-redirecting' => 'तपाईँको ब्राउजरले तपाईँले अनुरोध गर्नुभएको पृष्ठमा केही सेकेन्डमा नै लैजाने छ ।',
+	'adengine-exitstitial-go-back' => 'के पछाडि फर्कने हो ?',
+	'adengine-exitstitial-button' => 'यो विज्ञापन छोड्ने',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -332,9 +349,10 @@ $messages['pt'] = array(
 /** Brazilian Portuguese (português do Brasil)
  * @author Matheus Sousa L.T
  * @author TheGabrielZaum
+ * @author Tuliouel
  */
 $messages['pt-br'] = array(
-	'adengine-exitstitial-title-template' => 'Você está deixando a $1....',
+	'adengine-exitstitial-title-template' => 'Você está deixando $1...',
 	'adengine-exitstitial-redirecting' => 'Seu navegador irá redirecioná-lo à página que você requisitou em alguns segundos.',
 	'adengine-exitstitial-go-back' => 'Deseja voltar?',
 	'adengine-exitstitial-button' => 'Pular este anúncio',

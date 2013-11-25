@@ -61,12 +61,12 @@
  */
 
 // Eliminate the need to set this on the command line
-if ( !getenv('SERVER_ID') ) {
-	putenv("SERVER_ID=177");
+if ( !getenv( 'SERVER_ID' ) ) {
+	putenv( "SERVER_ID=177" );
 }
 
-ini_set('display_errors', 'stderr');
-ini_set('error_reporting', E_NOTICE);
+ini_set( 'display_errors', 'stderr' );
+ini_set( 'error_reporting', E_NOTICE );
 
 require_once( dirname( __FILE__ ) . '/../Maintenance.php' );
 
@@ -104,21 +104,21 @@ class RunOnCluster extends Maintenance {
 	 */
 	public function execute() {
 		// Collect options
-		$this->test    = $this->hasOption('test') ? true : false;
-		$this->verbose = $this->hasOption('verbose') ? true : false;
-		$this->master  = $this->hasOption('master') ? true : false;
-		$this->cluster = $this->getOption('cluster', '1');
-		$this->class   = $this->getOption('class', 'ClusterTestClass');
-		$this->method  = $this->getOption('method', 'testCode');
-		$singleDBname  = $this->getOption('dbname');
-		$file = $this->getOption('file');
+		$this->test    = $this->hasOption( 'test' ) ? true : false;
+		$this->verbose = $this->hasOption( 'verbose' ) ? true : false;
+		$this->master  = $this->hasOption( 'master' ) ? true : false;
+		$this->cluster = $this->getOption( 'cluster', '1' );
+		$this->class   = $this->getOption( 'class' );
+		$this->method  = $this->getOption( 'method', 'run' );
+		$singleDBname  = $this->getOption( 'dbname' );
+		$file = $this->getOption( 'file' );
 
 		$startTime = time();
 
 		if ( $this->test ) {
 			echo "== TEST MODE ==\n";
 		}
-		$this->debug("(debugging output enabled)\n");
+		$this->debug( "(debugging output enabled)\n" );
 
 		if ( $this->master ) {
 			echo "-- RUNNING ON MASTER --\n";
@@ -126,46 +126,66 @@ class RunOnCluster extends Maintenance {
 
 		// If there's an include file, make sure it exists
 		if ( $file ) {
-			if ( !file_exists($file) ) {
+			if ( !file_exists( $file ) ) {
 				die("File '$file' does not exist\n");
 			}
 			require_once($file);
+		} else {
+			if ( $this->class ) {
+				echo "Warning: Argument --class given without --file; this is probably not correct\n";
+			} else {
+				// If there's no file or class given, use the default test class
+				$this->class = 'ClusterTestClass';
+			}
+		}
+
+		// Try to figure out what class was defined in the file given
+		if ( empty( $this->class ) ) {
+			// Look through each declared class
+			foreach ( get_declared_classes() as $class ) {
+				// Figure out where that class was defined
+				$reflector = new ReflectionClass( $class );
+				if ( realpath($file) == $reflector->getFileName() ) {
+					// Bingo, this is the class to use
+					$this->class = $class;
+					break;
+				}
+			}
 		}
 
 		// Make sure the class and method we're using exist
-		if ( !class_exists($this->class) ) {
-			die("Class '".$this->class."' does not exist\n");
+		if ( !class_exists( $this->class ) ) {
+			die( "Class '".$this->class."' does not exist\n" );
 		}
-		if ( !method_exists($this->class, $this->method) ) {
-			die("Method '".$this->method."' does not exist in class '".$this->class."'\n");
+		if ( !method_exists( $this->class, $this->method ) ) {
+			die( "Method '".$this->method."' does not exist in class '".$this->class."'\n" );
 		}
 
 		// Basic cluster sanity check
-		if ( !preg_match('/^[0-9]+$/', $this->cluster) ) {
+		if ( !preg_match( '/^[0-9]+$/', $this->cluster ) ) {
 			die("Argument to --cluster must be an integer\n");
 		}
 
 		// Get all the wiki's on the current cluster
-		if ( $singleDBname ) {
-			$clusterWikis[] = $singleDBname;
-		} else {
-			$clusterWikis = $this->getClusterWikis();
-		}
+		$singleDBname = empty( $singleDBname ) ? '' : $singleDBname;
+		$clusterWikis = $this->getClusterWikis( $singleDBname );
 
 		// Connect to the cluster we will operate on and set $this->db
 		if ( !$this->initDBHandle() ) {
-			die("Could not connect to cluster ".$this->cluster."\n");
+			die( "Could not connect to cluster ".$this->cluster."\n" );
 		}
 
+		echo "Running ".$this->class.'::'.$this->method.' on cluster '.$this->cluster."\n";
+
 		// Loop through each dbname and run our code
-		foreach ( $clusterWikis as $dbname ) {
+		foreach ( $clusterWikis as $cityId => $dbname ) {
 			// Catch connection errors and log them
 			try {
-				$result = $this->db->query("use `$dbname`");
+				$result = $this->db->query( "use `$dbname`" );
 			} catch ( Exception $e ) {
-				fwrite(STDERR, "ERROR: ".$e->getMessage()."\n");
+				fwrite( STDERR, "ERROR: ".$e->getMessage()."\n" );
 			}
-			if ( empty($result) ) {
+			if ( empty( $result ) ) {
 				continue;
 			}
 			$this->debug( "Processing: $dbname\n" );
@@ -173,16 +193,20 @@ class RunOnCluster extends Maintenance {
 			// Call our method passing the connected DB handle and test flag
 			$class = $this->class;
 			$method = $this->method;
+			$params = array(
+				'dbname' => $dbname,
+				'cityId' => $cityId,
+			);
 
 			try {
-				$class::$method( $this->db, $dbname, $this->test );
+				$class::$method( $this->db, $this->test, $this->verbose, $params );
 			} catch ( Exception $e ) {
-				fwrite(STDERR, "Could not run $class::$method for $dbname: ".$e->getMessage()."\n");
+				fwrite( STDERR, "Could not run $class::$method for $dbname: ".$e->getMessage()."\n" );
 			}
 		}
 
 		$delta = F::app()->wg->lang->formatTimePeriod( time() - $startTime );
-		fwrite(STDERR, "Finished in $delta\n");
+		fwrite( STDERR, "Finished in $delta\n" );
 	}
 
 	/**
@@ -190,18 +214,25 @@ class RunOnCluster extends Maintenance {
 	 *
 	 * @return array An array of database names
 	 */
-	private function getClusterWikis() {
-		$db = wfGetDB( DB_SLAVE, array(), 'wikicities');
-		$sql = 'SELECT city_dbname
+	private function getClusterWikis( $dbname = '' ) {
+		$db = wfGetDB( DB_SLAVE, array(), 'wikicities' );
+
+		if ( empty( $dbname ) ) {
+			$sqlWhere = 'city_cluster = '.$db->addQuotes( 'c'.$this->cluster );
+		} else {
+			$sqlWhere = 'city_dbname = '.$db->addQuotes( $dbname );
+		}
+
+		$sql = 'SELECT city_dbname, city_id
 		 		FROM city_list
-		 		WHERE city_cluster = "c'.$this->cluster.'"
-		 		  AND city_public = 1
+				WHERE city_public = 1 AND '.$sqlWhere.'
 		 		ORDER BY city_dbname';
-		$result = $db->query($sql);
+
+		$result = $db->query( $sql, __METHOD__ );
 
 		$wikis = array();
-		while ( $row = $db->fetchObject($result) ) {
-			$wikis[] = $row->city_dbname;
+		while ( $row = $db->fetchObject( $result ) ) {
+			$wikis[$row->city_id] = $row->city_dbname;
 		}
 
 		return $wikis;
@@ -233,11 +264,11 @@ class RunOnCluster extends Maintenance {
 }
 
 class ClusterTestClass {
-	public static function testCode( $db, $dbname, $verbose = false, $test = false ) {
+	public static function run( $db, $verbose = false, $test = false, $params = array() ) {
 		echo "Default code : Running ".__METHOD__."\n";
 		$sql = 'SELECT database() as db';
-		$result = $db->query($sql);
-		while ( $row = $db->fetchObject($result) ) {
+		$result = $db->query( $sql, __METHOD__ );
+		while ( $row = $db->fetchObject( $result ) ) {
 			echo "\tOperating on ".$row->db."\n";
 		}
 	}
