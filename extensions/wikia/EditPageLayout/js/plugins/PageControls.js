@@ -204,16 +204,20 @@
 		},
 
 		// send AJAX request
-		ajax: function(method, params, callback) {
+		ajax: function(method, params, callback, skin) {
 			var editor = typeof RTE == 'object'? RTE.getInstance() : false;
 
 			params = $.extend({
-				page: wgEditPageClass ? wgEditPageClass:"",
+				page: window.wgEditPageClass ? window.wgEditPageClass:"",
 				method: method,
 				mode: editor.mode
 			}, params);
 
-			var url = window.wgEditPageHandler.replace('$1', encodeURIComponent(window.wgEditedTitle));
+			var url = window.wgEditPageHandler.replace( '$1', encodeURIComponent( window.wgEditedTitle ) );
+
+			if ( skin ) {
+				url += '&type=full&skin=' + encodeURIComponent( skin );
+			}
 
 			return jQuery.post(url, params, function(data) {
 				if (typeof callback == 'function') {
@@ -249,7 +253,8 @@
 				attr('href', wgArticlePath.replace('$1', window.wgEditedTitle)).
 				attr('title', $.htmlentities(window.wgEditedTitle)).
 				html(window.wgEditedTitle);
-				$('#EditPageHeader .hiddenTitle').show();
+
+			$('#EditPageHeader' ).find('.hiddenTitle').show();
 		},
 
 		// return true if any of the required fields has no value
@@ -364,7 +369,7 @@
 
 		// internal method, based on the editor content and some extraData, prepare a preview markup for the
 		// preview dialog and pass it to the callback
-		getPreviewContent: function(content, extraData, callback) {
+		getPreviewContent: function(content, extraData, callback, skin) {
 			// add section name when adding new section (BugId:7658)
 			if (window.wgEditPageSection === 'new') {
 				content = '== ' + this.getSummary() + ' ==\n\n' + content;
@@ -382,9 +387,9 @@
 				extraData.categories = this.categories.val();
 			}
 
-			this.ajax('preview', extraData, function(data) {
-				callback(data.html + data.catbox + data.interlanglinks, data.summary);
-			});
+			this.ajax('preview', extraData, function( data ) {
+				callback( data );
+			}, skin);
 		},
 
 		// render "Preview" modal
@@ -392,7 +397,7 @@
 		// Any changes to the article page or modal will break here. Also, get rid
 		// of any widthType/gridLayout settings when the responsive layout goes out
 		// for a global release.
-		renderPreview: function(extraData) {
+		renderPreview: function(extraData, type) {
 			var self = this;
 
 			require( [ 'wikia.fluidlayout' ], function( fluidlayout ) {
@@ -454,9 +459,9 @@
 					onPublishButton: function() {
 						$('#wpSave').click();
 					},
-					getPreviewContent: function(callback) {
-						self.getContent(function(content) {
-							self.getPreviewContent(content, extraData, callback);
+					getPreviewContent: function( callback, skin ) {
+						self.getContent(function( content ) {
+							self.getPreviewContent( content, extraData, callback, skin );
 						});
 					}
 				};

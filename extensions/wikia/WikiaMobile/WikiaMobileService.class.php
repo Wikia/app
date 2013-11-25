@@ -18,9 +18,9 @@ class WikiaMobileService extends WikiaService {
 	 */
 	private $templateObject;
 
-	private $jsBodyPackages = [ 'wikiamobile_js_body_full' ];
+	private $jsBodyPackages = [];
 	private $jsExtensionPackages = [];
-	private $scssPackages = [ 'wikiamobile_scss' ];
+	private $scssPackages = [];
 
 	private $globalVariables = [];
 
@@ -67,7 +67,7 @@ class WikiaMobileService extends WikiaService {
 		wfProfileOut( __METHOD__ );
 	}
 
-	private function handleAssets(){
+	private function handleAssets( $type = '' ){
 		wfProfileIn( __METHOD__ );
 
 		$cssLinks = '';
@@ -75,6 +75,14 @@ class WikiaMobileService extends WikiaService {
 		$jsExtensionFiles = '';
 		$styles = $this->skin->getStyles();
 		$scripts = $this->skin->getScripts();
+
+		if ( $type == 'preview' ) {
+			$this->jsBodyPackages[] = 'wikiamobile_js_preview';
+			$this->scssPackages[] = 'wikiamobile_scss_preview';
+		} else {
+			$this->jsBodyPackages[] = 'wikiamobile_js_body_full';
+			$this->scssPackages[] = 'wikiamobile_scss';
+		}
 
 		//let extensions manipulate the asset packages (e.g. ArticleComments,
 		//this is done to cut down the number or requests)
@@ -191,24 +199,35 @@ class WikiaMobileService extends WikiaService {
 		JSMessages::enqueuePackage( 'WkMbl', JSMessages::INLINE );
 	}
 
-	private function handleContent(){
+	private function handleContent($content = ''){
 		wfProfileIn( __METHOD__ );
 
-		$this->response->setVal( 'wikiaNavigation',
-			$this->app->renderView( 'WikiaMobileNavigationService', 'index' )
-		);
+		if( !empty( $content ) ) {
 
-		$this->response->setVal( 'pageContent',
-			$this->app->renderView( 'WikiaMobileBodyService', 'index', [
-					'bodyText' => $this->templateObject->get( 'bodytext' ),
-					'categoryLinks' => $this->templateObject->get( 'catlinks')
-				]
-			)
-		);
+			$this->response->setVal( 'pageContent',
+				$this->app->renderView( 'WikiaMobileBodyService', 'index', [
+						'bodyText' => $content
+					]
+				)
+			);
 
-		$this->response->setVal( 'wikiaFooter',
-			$this->app->renderView( 'WikiaMobileFooterService', 'index' )
-		);
+		} else {
+			$this->response->setVal( 'wikiaNavigation',
+				$this->app->renderView( 'WikiaMobileNavigationService', 'index' )
+			);
+
+			$this->response->setVal( 'pageContent',
+				$this->app->renderView( 'WikiaMobileBodyService', 'index', [
+						'bodyText' => $this->templateObject->get( 'bodytext' ),
+						'categoryLinks' => $this->templateObject->get( 'catlinks')
+					]
+				)
+			);
+
+			$this->response->setVal( 'wikiaFooter',
+				$this->app->renderView( 'WikiaMobileFooterService', 'index' )
+			);
+		}
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -235,6 +254,21 @@ class WikiaMobileService extends WikiaService {
 		$this->response->setVal( 'headLinks', $this->wg->Out->getHeadLinks() );
 		$this->response->setVal( 'pageTitle', htmlspecialchars( $this->wg->Out->getHTMLTitle() ) );
 		$this->response->setVal( 'bodyClasses', [ 'wkMobile', $this->templateObject->get( 'pageclass' ) ] );
+		$this->response->setVal( 'globalVariablesScript', $this->skin->getTopScripts( $this->globalVariables ) );
+
+		wfProfileOut( __METHOD__ );
+	}
+
+	public function preview() {
+		wfProfileIn( __METHOD__ );
+
+		$content = $this->request->getVal( 'content' );
+
+		$this->handleMessages();
+		$this->handleContent( $content );
+		$this->handleAssets( 'preview' );
+
+		$this->response->setVal( 'jsClassScript', '<script>document.documentElement.className = "js";</script>' );
 		$this->response->setVal( 'globalVariablesScript', $this->skin->getTopScripts( $this->globalVariables ) );
 
 		wfProfileOut( __METHOD__ );

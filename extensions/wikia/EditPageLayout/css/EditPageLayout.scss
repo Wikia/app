@@ -333,6 +333,7 @@ body {
 				overflow-y: scroll;
 				min-height: 320px;
 				padding: 10px;
+				position: relative;
 				.global-notification {
 					// FB#48494 - change nav2 error styling for modal preview
 					width: auto;
@@ -530,4 +531,15 @@ body {
 		width: $width-rail;
 	}
 // END - edit page fixes
+}
+
+//Mobile preview styles
+.mobile-preview {
+	border: 1px solid $color-page-border;
+	box-sizing: border-box;
+	display: block;
+	height: 480px;
+	margin: 0 auto;
+	max-height: 100%;
+	width: 320px;
 }
