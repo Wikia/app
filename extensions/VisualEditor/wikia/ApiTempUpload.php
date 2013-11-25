@@ -166,6 +166,7 @@ class ApiTempUpload extends ApiBase {
 	private function executeTemporaryVideo() {
 		// First check permission to upload
 		$this->mUpload = new UploadFromUrl();
+		// TODO: if user is not logged in they should still still be able to add existing images/videos
 		$this->checkPermissions( $this->mUser );
 
 		$url = $this->mParams['url'];
@@ -187,6 +188,11 @@ class ApiTempUpload extends ApiBase {
 			) );
 
 		} else {
+
+			if ( empty( F::app()->wg->allowNonPremiumVideos ) ) {
+				$this->dieUsage( 'Only premium videos are allowed', 'onlyallowpremium' );
+			}
+
 			// Handle urls from supported 3rd parties (like youtube)
 			// A whole url (including protocol) is necessary for ApiWrapperFactory->getApiWrapper()
 			if ( !preg_match( '/^https?:\/\//', $url ) ) {
@@ -198,11 +204,7 @@ class ApiTempUpload extends ApiBase {
 				$awf = ApiWrapperFactory::getInstance();
 				$apiwrapper = $awf->getApiWrapper( $url );
 			} catch ( Exception $e ) {
-				if ( $e->getMessage() != '' ) {
-					$this->dieUsageMsg( $e->getMessage() );
-				}
-
-				$this->dieUsageMsg( 'The supplied URL is invalid' );
+				$this->dieUsage( 'There was an issue with ApiWrapper', 'apiwrapper-error' );
 			}
 
 			if ( empty( $apiwrapper ) ) {
@@ -214,6 +216,7 @@ class ApiTempUpload extends ApiBase {
 				array(
 					'wpUpload' => 1,
 					'wpSourceType' => 'web',
+					// TODO: try/catch getThumbnailUrl
 					'wpUploadFileURL' => $apiwrapper->getThumbnailUrl()
 				),
 				true
