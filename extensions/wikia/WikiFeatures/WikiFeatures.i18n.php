@@ -61,7 +61,9 @@ $messages['en'] = array(
 	'wikifeatures-feature-description-wgEnableAjaxPollExt' => 'Allow anyone on your wiki to create a poll! With [[w:c:community:Help:Poll|Polls]] enabled your users can use the poll tag to add this neat feature to any page. This feature is a great way to increase contribution on your wiki.',
 	'wikifeatures-feature-heading-wgEnableBlogArticles' => 'Blogs',
 	'wikifeatures-feature-description-wgEnableBlogArticles' => '[[w:c:community:Help:Blogs|Blogs]] allow users on your wiki to create their own blog posts on their profile page and can also be used as a great way to communicate news and events to your wiki community.',
-
+	'wikifeatures-feature-heading-wgEnableVisualEditorExt' => 'The New VisualEditor',
+	'wikifeatures-feature-description-wgEnableVisualEditorExt' => 'Wikia\'s new [[Help:VisualEditor|VisualEditor]] was built from the ground up to make all Wikia contributors more successful, whether they\'re making their first or their thousandth edit. The VisualEditor replaces the existing rich-text editing mode on article pages and retains the ability for all users to use source if they prefer.',
+ 
 	'wikifeatures-feature-heading-wgEnableWallExt' => 'Message Wall',
 	'wikifeatures-feature-description-wgEnableWallExt' => "Communicating with the contributors on your wiki is an essential part of building and maintaining your community. The [[w:c:community:Help:Message Wall|Message Wall]] uses a threaded conversation format and notification system that lets you control which conversations you're interested in following. No more missed messages!",
 

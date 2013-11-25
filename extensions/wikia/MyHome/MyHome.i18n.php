@@ -2062,6 +2062,7 @@ $messages['ka'] = array(
 	'myhome-activity-feed' => 'აქტიურობის არხი',
 	'myhome-watchlist-feed' => 'გვერდები, რომლებსაც თვალს ვადევნებ',
 	'myhome-hot-spots-feed' => 'ცხელი წერტილები',
+	'myhome-hot-spots-newest' => 'ახალი გვერდები',
 	'myhome-feed-created-by' => 'შემქმნელი - $1.',
 	'myhome-feed-edited-by' => 'რედაქტორი - $1.',
 	'myhome-feed-new-page-details' => 'ახალი გვერდი',
@@ -3728,6 +3729,44 @@ $messages['tzm'] = array(
 	'myhome-community-corner-edit' => 'ⴱⴷⴷⴻⵍ ⵜⴰⴱⵔⴰⵜ',
 );
 
+/** Uyghur (Arabic script) (ئۇيغۇرچە)
+ * @author Tel'et
+ */
+$messages['ug-arab'] = array(
+	'myhome' => 'ئۆيۈم',
+	'myhome-watchlist-feed' => 'كۆزەت تىزىملىكى',
+	'myhome-hot-spots-newest' => 'ۋىكىدىكى يېڭى بەتلەر',
+	'prefs-myhome' => 'ئۆيۈم',
+	'myhome-feed-newpage' => 'يېڭى بەت',
+	'myhome-feed-edit' => 'تەھرىر',
+	'myhome-feed-move' => 'بەت يۆتكەلدى',
+	'myhome-feed-delete' => 'ئۆچۈرۈلدى',
+	'myhome-feed-created-by' => '$1 تەرىپىدىن ياسالدى',
+	'myhome-feed-added-by' => '$1 تەرىپىدىن قوشۇلدى',
+	'myhome-feed-edited-by' => '$1 تەرىپىدىن تەھرىرلەندى',
+	'myhome-feed-posted-by' => '$1 تەرىپىدىن يوللاندى',
+	'myhome-feed-comment-by' => '$1 تەرىپىدىن ئىزاھلاندى',
+	'myhome-feed-deleted-by' => '$1 تەرىپىدىن ئۆچۈرۈلدى',
+	'myhome-feed-moved-by' => '$1 تەرىپىدىن يۆتكەلدى',
+	'myhome-feed-article-comment-created-by' => '$1 تەرىپىدىن يېڭى ئىزاھ',
+	'myhome-feed-article-comment-edited-by' => '$1 تەرىپىدىن ئىزاھ تەھرىرلەندى',
+	'myhome-feed-by' => '$1 تەرىپىدىن',
+	'myhome-feed-diff-alt' => 'بۇ بەتنىڭ ئۆزگەرتىلىشىنى كۆرسەت',
+	'myhome-feed-new-page-details' => 'يېڭى بەت',
+	'myhome-feed-summary-details' => 'ئۈزۈندە',
+	'myhome-feed-new-blog-post-details' => 'يېڭى بلوگ',
+	'myhome-feed-new-blog-comment-details' => 'ئىزاھات',
+	'myhome-feed-new-article-comment-details' => 'ئىزاھات',
+	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|قوشۇلغان رەسىم|قوشۇلغان رەسىملەر}}',
+	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|قوشۇلغان سىن|قوشۇلغان سىنلار}}',
+	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|قوشۇلغان تۈر|قوشۇلغان تۈرلەر}}',
+	'myhome-hot-spots-number-of-editors' => 'تەھرىرلىگۈچى',
+	'myhome-namespace-blog' => 'بلوگ',
+	'myhome-community-corner-edit' => 'ئۇچۇر ئۆزگەرتىش',
+	'tooltip-pt-myhome' => 'ئۆيۈمگە بار',
+	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|بىر ئۇچۇر|$1 ئۇچۇر}}',
+);
+
 /** Ukrainian (українська)
  * @author Andriykopanytsia
  * @author Prima klasy4na
@@ -3816,13 +3855,16 @@ $messages['uk'] = array(
 );
 
 /** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
  * @author Xiao Qiao
  * @author XiaoQiaoGrace
  */
 $messages['vi'] = array(
 	'myhome-desc' => 'Trang riêng này dành cho thành viên đã đăng nhập',
+	'myhome' => 'Nhà của tôi',
 	'wikiactivity' => 'Hoạt động của Wiki',
 	'myhome-activity-more' => 'xem nhiều hơn hoạt động gần đây',
+	'myhome-activity-feed' => 'Hoạt động nguồn cấp dữ liệu',
 	'myhome-activity-feed-empty' => "Wiki này đang chờ bạn tham gia.
 Nhấp vào '''[[Special:CreatePage|Tạo trang]]''' để bắt đầu viết!",
 	'myhome-watchlist-feed' => 'Danh sách theo dõi',
@@ -3833,6 +3875,8 @@ Bạn có thể sử dụng danh sách theo dõi để theo dõi các thay đổ
 	'myhome-hot-spots-feed-empty' => "Wiki này đang chờ bạn tham gia.
 Nhấp vào '''[[Special:CreatePage|Tạo trang]]''' để bắt đầu viết!",
 	'myhome-hot-spots-newest' => 'Trang mới trên wiki này',
+	'tog-userlandingpage' => 'Trang giới thiệu',
+	'prefs-myhome' => 'Nhà của tôi',
 	'myhome-feed-newpage' => 'Trang mới',
 	'myhome-feed-edit' => 'sửa đổi',
 	'myhome-feed-move' => 'trang di chuyển',
@@ -3861,6 +3905,7 @@ Nhấp vào '''[[Special:CreatePage|Tạo trang]]''' để bắt đầu viết!"
 	'myhome-feed-new-article-comment-details' => 'Bình luận',
 	'myhome-feed-move-details' => 'Đổi tên',
 	'myhome-feed-redirect-details' => 'Chuyển hướng',
+	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|Thêm photo|thêm hình ảnh}}',
 	'myhome-user-contributions-empty' => 'Bạn có thể tham gia vào wiki này bằng cách nhấp vào "{{int:editthispage}}" trên mọi trang, vào thêm vào đó những gì bạn biết.
 Mọi người đều có thể tạo ra sửa đổi, thêm thông tin và chỉnh sửa lỗi.
 Wiki được xây dựng bởi cộng đồng, và chỉ với một lần nhấp vào nút sửa đổi, bạn đã trở thành một phần của cộng đồng này.

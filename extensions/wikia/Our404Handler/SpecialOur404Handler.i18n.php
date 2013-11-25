@@ -251,6 +251,7 @@ $messages['fa'] = array(
 /** Finnish (suomi)
  * @author Crt
  * @author Jack Phoenix <jack@countervandalism.net>
+ * @author Pxos
  */
 $messages['fi'] = array(
 	'our404handler' => 'Virhe 404: Sivua ei löydy.',
@@ -259,9 +260,9 @@ $messages['fi'] = array(
 
 Artikkelia '''$1''' ei löytynyt.
 
-* Voit yrittää artikkelia [[$2]]
-* Voit käyttää sivun vasemmalla puolella olevaa hakulaatikkoa
-* Mennäksesi tämän sivuston etusivulle, napsauta linkkiä: [{{SERVER}} {{SITENAME}}]",
+* Voit kokeilla artikkelia [[$2]]
+* Voit käyttää sivulla olevaa hakutoimintoa
+* Mene tämän sivuston etusivulle napsauttamalla linkkiä: [{{SERVER}} {{SITENAME}}]",
 );
 
 /** Faroese (føroyskt)

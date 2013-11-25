@@ -8,13 +8,19 @@
 class PopulateVideoId {
 	public static function run( DatabaseMysql $db, $dbname, $test = false, $verbose = false ) {
 
+		// Don't process the video wiki
+		if ( $dbname == 'video151' ) {
+			return true;
+		}
+
 		$str_sql = <<<SQL
 update video_info, image
    set video_id = substring_index(substring_index(SUBSTRING_INDEX(img_metadata, 's:7:"videoId";', -1), '";', 1),':"', -1)
  where premium = 0
    and video_title = img_name
    and video_title is not null
-   and img_metadata like '%s:7:"videoId";s:%';
+   and img_metadata like '%s:7:"videoId";s:%'
+   and video_id = ''
 SQL;
 
 		$int_sql = <<<SQL
@@ -23,7 +29,7 @@ update video_info, image
  where premium = 0
    and video_title = img_name
    and video_title is not null
-   and img_metadata like '%s:7:"videoId";i:%';
+   and img_metadata like '%s:7:"videoId";i:%'
 SQL;
 
 		if ( $verbose ) {

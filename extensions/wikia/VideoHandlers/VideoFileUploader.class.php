@@ -176,14 +176,11 @@ class VideoFileUploader {
 	 *
 	 * @return UploadFromUrl
 	 */
-	protected function uploadBestThumbnail( ) {
-		wfProfileIn(__METHOD__);
+	protected function uploadBestThumbnail() {
+		wfProfileIn( __METHOD__ );
 
-		$app = F::app();
-
-		// reset proxy to blank
-		$originalProxy = $app->wg->HTTPProxy;
-		$app->wg->HTTPProxy = '';
+		// disable proxy
+		F::app()->wg->DisableProxy = true;
 
 		// Try to upload the thumbnail for this video
 		$upload = $this->uploadThumbnailFromUrl( $this->getApiWrapper()->getThumbnailUrl() );
@@ -193,18 +190,16 @@ class VideoFileUploader {
 			$upload = $this->uploadThumbnailFromUrl( LegacyVideoApiWrapper::$THUMBNAIL_URL );
 		}
 
-		// set proxy to original value
-		$app->wg->HTTPProxy = $originalProxy;
-
 		// If we still don't have anything, give up.
-		if ( empty($upload) ) {
-			wfProfileOut(__METHOD__);
+		if ( empty( $upload ) ) {
+			wfProfileOut( __METHOD__ );
 			return null;
 		}
 
 		$this->adjustThumbnailToVideoRatio( $upload );
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
+
 		return $upload;
 	}
 

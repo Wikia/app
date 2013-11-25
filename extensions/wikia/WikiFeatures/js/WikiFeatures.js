@@ -4,20 +4,20 @@ var WikiFeatures = {
 		WikiFeatures.feedbackDialogPrototype = $('.FeedbackDialog');
 		WikiFeatures.deactivateDialogPrototype = $('.DeactivateDialog');
 		WikiFeatures.sliders = $('#WikiFeatures .slider');
-		
+
 		if(!Modernizr.csstransforms) {
 			$('.representation').removeClass('promotion');
 		}
-		
+
 		WikiFeatures.sliders.click(function(e) {
 			var feature = $(this).closest('.feature');
 			var featureName = feature.data('name');
-			
-			if(!WikiFeatures.lockedFeatures[featureName]) {				
+
+			if(!WikiFeatures.lockedFeatures[featureName]) {
 				var el = $(this);
 				var isEnabled = el.hasClass('on');
 				if(isEnabled) {
-					var featureHeading = feature.find('h3').text().replace(/(^[\s\xA0]+|[\s\xA0]+$)/g, '');	//jquery doesn't support trim in IE7
+					var featureHeading = feature.find('h3').contents().eq(0).text().trim();
 					var modalClone = WikiFeatures.deactivateDialogPrototype.clone();
 					var modalHeading = modalClone.find('h1');
 					modalHeading.text(modalHeading.text().replace(/\$1/g, featureHeading));
@@ -34,7 +34,7 @@ var WikiFeatures = {
 					el.toggleClass('on');
 				}
 			}
-			
+
 		});
 		$('#WikiFeatures .feedback').click(function(e) {
 			e.preventDefault();
@@ -53,7 +53,7 @@ var WikiFeatures = {
 			var submitButton = modal.find('input[type=submit]');
 			var statusMsg = modal.find('.status-msg');
 			var msgHandle = false;
-			
+
 			modal.find('form').submit(function(e) {
 				e.preventDefault();
 				submitButton.attr('disabled', 'true');
@@ -74,7 +74,7 @@ var WikiFeatures = {
 					} else if (res['result'] == 'error') {
 						submitButton.removeAttr('disabled');
 						statusMsg.addClass('invalid').text(res['error']).show();
-						msgHandle = setTimeout(function() { 
+						msgHandle = setTimeout(function() {
 							statusMsg.fadeOut(1000);
 						}, 4000);
 					} else {
@@ -83,7 +83,7 @@ var WikiFeatures = {
 					}
 				});
 			});
-			
+
 			comment.bind('keypress keydown keyup paste cut', function(e) {
 				setTimeout(function() {
 					var chars = comment.val().length;

@@ -7,6 +7,13 @@ $messages['en'] = array(
 	'paginator-back'	=> 'Back',
 );
 
+/** Message documentation (Message documentation)
+ * @author Shirayuki
+ */
+$messages['qqq'] = array(
+	'paginator-next' => '{{Identical|Next}}',
+);
+
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */
