@@ -77,11 +77,11 @@ class WikiaMobileService extends WikiaService {
 		$scripts = $this->skin->getScripts();
 
 		if ( $type == 'preview' ) {
-			$this->jsBodyPackages[] = 'wikiamobile_js_preview';
-			$this->scssPackages[] = 'wikiamobile_scss_preview';
+			array_unshift( $this->jsBodyPackages, 'wikiamobile_js_preview' );
+			array_unshift( $this->scssPackages, 'wikiamobile_scss_preview' );
 		} else {
-			$this->jsBodyPackages[] = 'wikiamobile_js_body_full';
-			$this->scssPackages[] = 'wikiamobile_scss';
+			array_unshift( $this->jsBodyPackages, 'wikiamobile_js_body_full' );
+			array_unshift( $this->scssPackages, 'wikiamobile_scss' );
 		}
 
 		//let extensions manipulate the asset packages (e.g. ArticleComments,
@@ -236,9 +236,9 @@ class WikiaMobileService extends WikiaService {
 		wfProfileIn( __METHOD__ );
 
 		$this->handleMessages();
-		$this->handleAds();
 		$this->handleSmartBanner();
 		$this->handleContent();
+		$this->handleAds();
 		$this->handleAssets();
 		$this->handleTracking();
 
