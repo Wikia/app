@@ -63,7 +63,7 @@ ve.ui.WikiaSourceModeDialog.prototype.initialize = function () {
 	// Initialization
 	this.$body.append( this.sourceModeTextarea.$element );
 	this.$foot.append( this.$helpLink, this.applyButton.$element );
-	this.frame.$content.addClass( 've-ui-wikiaSourceModeDialog-content' );
+	this.frame.$content.addClass( 'oo-ui-wikiaSourceModeDialog-content' );
 };
 
 /**
@@ -71,13 +71,13 @@ ve.ui.WikiaSourceModeDialog.prototype.initialize = function () {
  *
  * @method
  */
-ve.ui.WikiaSourceModeDialog.prototype.onOpen = function () {
+ve.ui.WikiaSourceModeDialog.prototype.setup = function () {
 	var doc = this.surface.getModel().getDocument();
 
 	this.openCount++;
 
 	// Parent method
-	ve.ui.MWDialog.prototype.onOpen.call( this );
+	ve.ui.MWDialog.prototype.setup.call( this );
 
 	this.$frame.startThrobbing();
 	this.surface.getTarget().serialize(
@@ -163,9 +163,11 @@ ve.ui.WikiaSourceModeDialog.prototype.onParseSuccess = function( response ) {
 	target.deactivating = true;
 	target.tearDownToolbarButtons();
 	target.detachToolbarButtons();
-	target.resetSaveDialog();
-	target.hideSaveDialog();
-	target.detachSaveDialog();
+	if ( this.saveDialog ) {
+		target.saveDialog.reset();
+		target.saveDialog.close();
+	}
+
 	target.$document.blur();
 	target.$document = null;
 	target.toolbar.destroy();
@@ -185,7 +187,6 @@ ve.ui.WikiaSourceModeDialog.prototype.onParseSuccess = function( response ) {
 		this.setupToolbarButtons();
 		this.setupSaveDialog();
 		this.attachToolbarButtons();
-		this.attachSaveDialog();
 		this.$document[0].focus();
 		this.activating = false;
 	}, target ) );
