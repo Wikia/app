@@ -312,7 +312,7 @@ class Factory {
 		// init component, put config inside and set base template path
 		$component = $this->getComponentInstance();
 		$component->setName( $name );
-		if ( !empty($componentConfig['templateVars']) ) {
+		if ( !empty( $componentConfig['templateVars'] ) ) {
 			$component->setTemplateVarsConfig( $componentConfig['templateVars'] );
 		}
 		$component->setBaseTemplatePath( $this->getComponentsBaseTemplatePath( $name ) );
@@ -341,7 +341,7 @@ class Factory {
 	 * @return array
 	 */
 	public function init( $componentNames, $loadAssets = true, &$dependencies = null ) {
-		if ( !is_array($componentNames ) ) {
+		if ( !is_array( $componentNames ) ) {
 			$componentNames = (array)$componentNames;
 		}
 		
@@ -365,7 +365,7 @@ class Factory {
 				$name = array_shift( $dependenciesToLoad );
 				if ( !isset( $components[$name] ) ) {
 					$components[$name] = $this->initComponent( $name, $assets );
-					$dependenciesToLoad = array_merge($dependenciesToLoad, $components[$name]->getComponentDependencies() );
+					$dependenciesToLoad = array_merge( $dependenciesToLoad, $components[$name]->getComponentDependencies() );
 				}
 				if ( !isset( $dependencies[$name] ) ) {
 					$dependencies[$name] = $components[$name];
@@ -381,7 +381,7 @@ class Factory {
 		}
 
 		// return components
-		return (sizeof($result) == 1) ? $result[0] : $result;
+		return ( sizeof( $result ) == 1 ) ? $result[0] : $result;
 	}
 
 	/**
