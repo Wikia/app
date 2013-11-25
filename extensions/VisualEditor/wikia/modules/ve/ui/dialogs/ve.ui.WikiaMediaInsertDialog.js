@@ -108,7 +108,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 		.append( this.cart.$element );
 	this.$content
 		.addClass( 've-ui-wikiaMediaInsertDialog-content' )
-		.append( this.query.$, this.pages.$element );
+		.append( this.query.$element, this.pages.$element );
 
 	this.$body.append( this.$content, this.$cart );
 	this.frame.$content.addClass( 've-ui-wikiaMediaInsertDialog' );
