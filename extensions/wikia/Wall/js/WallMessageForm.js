@@ -49,7 +49,7 @@
 					uiModal.createComponent( previewModalConfig, function( previewModal ) {
 
 						previewModal.bind( 'publish', function() {
-							previewModal.close();
+							previewModal.trigger( 'close' );
 							publishCallback();
 						});
 
