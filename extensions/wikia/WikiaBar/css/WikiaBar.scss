@@ -291,10 +291,10 @@ body.nowikiabar {
 
 .WikiaBarWrapper .wikia-bar {
 	margin: auto;
+	width: $wikiaheader-width;
 }
 
 @if ( $responsive-layout-enabled ) {
-
 	@media screen and (min-width: $breakpoint-small) {
 		.WikiaBarWrapper .wikia-bar {
 			margin: auto;

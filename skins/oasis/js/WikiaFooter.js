@@ -200,7 +200,8 @@ var WikiaFooterApp = {
 			var that = this;
 
 			require(['wikia.fluidlayout'], function(fluidlayout) {
-				that.handleOverflowMenu(fluidlayout.getBreakpointSmall(), 2 * fluidlayout.getAdSkinWidth());
+				that.handleOverflowMenu(fluidlayout.getBreakpointSmall(), 2 * fluidlayout.getAdSkinWidth(),
+					window.wgOasisResponsive ? false : fluidlayout.getBreakpointSmall());
 			});
 		},
 
@@ -214,14 +215,19 @@ var WikiaFooterApp = {
 			return this.el.find('.overflow-menu');
 		},
 
-		generateMediaQuery: function (moreable, minWidth, breakpoint, gapWidth) {
+		generateMediaQuery: function (moreable, minWidth, breakpoint, gapWidth, nonResponsiveBreakpoint) {
 			var firstMediaJSQuery = true,
 				mediaJSQueries = '',
 				moreableCount = moreable.length,
-				alreadyAdded = (minWidth >= breakpoint);
+				alreadyAdded = (minWidth >= breakpoint),
+				lastMediaQuery = false;
 
 			moreable.each(function (i, v) {
 				var elemWidth = $(v).outerWidth(true);
+
+				if (nonResponsiveBreakpoint !== false && (minWidth + elemWidth > nonResponsiveBreakpoint)) {
+					lastMediaQuery = true;
+				}
 
 				if (!alreadyAdded && ((minWidth + elemWidth) >= breakpoint)) {
 					alreadyAdded = true;
@@ -232,11 +238,20 @@ var WikiaFooterApp = {
 				if (!firstMediaJSQuery) {
 					mediaJSQueries += 'and (min-width:' + minWidth + 'px) ';
 				}
-				mediaJSQueries += 'and (max-width:' + (minWidth + elemWidth) + 'px) ' +
-					'{ .WikiaBarWrapper .tools > .overflow:nth-of-type(n + ' + (i + 1) + ') { display:none; } ' +
+
+				if (!lastMediaQuery) {
+					mediaJSQueries += 'and (max-width:' + (minWidth + elemWidth) + 'px) ';
+				}
+
+				mediaJSQueries += '{ .WikiaBarWrapper .tools > .overflow:nth-of-type(n + ' + (i + 1) + ') { display:none; } ' +
 					'.WikiaBarWrapper .tools .overflow-menu {  display: block; }' +
 					'.WikiaBarWrapper .tools .overflow-menu .overflow:nth-of-type(-n + ' + (moreableCount - i) +
 					') { display:block; }} ';
+
+				if (lastMediaQuery) {
+					return false;
+				}
+
 				minWidth += elemWidth;
 
 				firstMediaJSQuery = false;
@@ -285,12 +300,13 @@ var WikiaFooterApp = {
 			styles.html(mediaJsQueries).appendTo('head');
 		},
 
-		handleOverflowMenu: function (breakpoint, gapWidth) {
+		handleOverflowMenu: function (breakpoint, gapWidth, nonResponsiveBreakpoint) {
 			var all = this.el.children('li'),
 				moreable = all.filter('.overflow'),
 				minWidth = this.getMinWidth(all);
 
-			this.addStyles(this.generateMediaQuery(moreable, minWidth, breakpoint, gapWidth));
+			this.addStyles(this.generateMediaQuery(moreable, minWidth, breakpoint, gapWidth, nonResponsiveBreakpoint));
+
 			this.generateSubMenu(moreable);
 		},
 
