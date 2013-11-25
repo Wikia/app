@@ -166,6 +166,7 @@ class ApiTempUpload extends ApiBase {
 	private function executeTemporaryVideo() {
 		// First check permission to upload
 		$this->mUpload = new UploadFromUrl();
+		// TODO: if user is not logged in they still have permissions to add existing images/videos
 		$this->checkPermissions( $this->mUser );
 
 		$url = $this->mParams['url'];
