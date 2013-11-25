@@ -169,6 +169,15 @@ $messages['ar'] = array(
 فريق ويكيا
 
 يمكنك إلغاء الاشتراك من خلال التغييرات لهذه القائمة هنا: $3',
+	'wikiadoption-mail-first-content-HTML' => 'مرحبا $1،
+
+مرت بضعة أسابيع منذ أن زار إداري #WIKINAME. الإداريون هم جزء لا يتجزأ من #WIKINAME ومن المهم أن يكون لهم حضور في الويكي. إن لم يوجد إداريون نشطون لمدة طويلة سوف يتم طرح هذه الويكي للتبني للسماح لمستخدم آخر لإدارتها.
+
+إذا كنت بحاجة إلى المساعدة في الاهتمام بالويكي، يمكنك السماح لأعضاء المجتمع الآخرين بأن يصبحوا إداريين أيضا عبر زيارة $2. نأمل أن نراكم قريبا في #WIKINAME!
+
+فريق ويكيا
+
+يمكنك إلغاء الاشتراك من خلال التغييرات لهذه القائمة هنا: $3',
 	'wikiadoption-mail-second-subject' => 'سيتم طرح #WIKINAME للتبني في أقرب وقت',
 	'wikiadoption-mail-second-content' => 'مرحبًا $1،
 أوه، لا! مر ما يقرب من 60 يومًا منذ أن كان هناك إداري نشط في #WIKINAME. من المهم أن يظهر الإدرايون بانتظام ويساهمون حتى يمكن للويكي أن تستمر بسلاسة.
@@ -178,16 +187,25 @@ $messages['ar'] = array(
 فريق ويكيا
 
 يمكنك إلغاء الاشتراك من التغييرات إلى هذه القائمة هنا:$3',
-	'wikiadoption-mail-second-content-HTML' => 'مرحبًا $1،<br><br>
-أوه، لا! مر ما يقرب من 60 يومًا منذ أن كان إداري نشط في #WIKINAME. من المهم أن يظهر الإداريون بانتظام ويساهمون حتى يمكن للويكي الاستمرار بسلاسة.<br><br>
+	'wikiadoption-mail-second-content-HTML' => 'مرحبًا $1،
+أوه، لا! مر ما يقرب من 60 يومًا منذ أن كان هناك إداري نشط في #WIKINAME. من المهم أن يظهر الإدرايون بانتظام ويساهمون حتى يمكن للويكي أن تستمر بسلاسة.
 
-نظرًا لعدم ظهور أي إداري حالي منذ أيام، سيتم الآن عرض #WIKINAME للتبني لمحررين آخرين.<br><br>
+نظرًا لمرور عدة أيام منذ أن ظهر إداري الحالي، سيتم الآن تقديم #WIKINAME للتبني لمحررين آخرين.
 
-فريق ويكيا<br><br>
+فريق ويكيا
 
-يمكنك <a href="<span class=" notranslate"="" translate="no">$3 ">إلغاء الاشتراك</a> من التغييرات إلى هذه القائمة.', # Fuzzy
+يمكنك إلغاء الاشتراك من التغييرات إلى هذه القائمة هنا:$3',
 	'wikiadoption-mail-adoption-subject' => 'تم تبني #WIKINAME',
 	'wikiadoption-mail-adoption-content' => 'مرحبًا $1،
+
+لقد تم تبني #WIKINAME. تتم إتاحة الويكي للتبني عند عدم عدم ظهور أي إداري حالي نشط لمدة لمدة 60 يومًا أو أكثر.
+
+وسيتم ترقية المستخدم المتبني للويكي #WIKINAME إلى مشرف وبيروقراطي. لا داعي للقلق، ستحتفظ أيضًا بحالتك الإدارية ومرحب بك للعودة والمساهمة في أي وقت!
+
+فريق ويكيا
+
+يمكنك إلغاء الاشتراك من التغييرات إلى هذه القائمة هنا:$3',
+	'wikiadoption-mail-adoption-content-HTML' => 'مرحبًا $1،
 
 لقد تم تبني #WIKINAME. تتم إتاحة الويكي للتبني عند عدم عدم ظهور أي إداري حالي نشط لمدة لمدة 60 يومًا أو أكثر.
 
@@ -1339,6 +1357,18 @@ $messages['it'] = array(
 	'tog-adoptionmails' => "Mandami una mail se $1 diventa disponibile per l'adozione da parte di altri utenti",
 	'tog-adoptionmails-v2' => "...se la wiki diventa disponibile per l'adozione da parte di altri utenti",
 	'wikiadoption-pref-label' => 'Il cambio di queste preferenze si ripercuoterà solo sulle email da $1.',
+);
+
+/** Japanese (日本語)
+ * @author BryghtShadow
+ */
+$messages['ja'] = array(
+	'wikiadoption' => '自動ウィキ採用',
+	'wikiadoption-header' => 'このウィキを採用する',
+	'wikiadoption-button-adopt' => 'はい、私は{{SITENAME}}を採用したいと思います！',
+	'wikiadoption-adopt-inquiry' => '詳細を調べる！',
+	'wikiadoption-mail-adoption-subject' => '#WIKINAMEが採用されました',
+	'wikiadoption-welcome-header' => 'おめでとうございます！あなたは{{SITENAME}}を採用しました！',
 );
 
 /** Korean (한국어)
@@ -2837,6 +2867,9 @@ $messages['uk'] = array(
  * @author Baonguyen21022003
  */
 $messages['vi'] = array(
+	'wikiadoption' => 'Nhận tự động wiki',
+	'wikiadoption-desc' => 'Một phần mở rộng AutomaticWikiAdoption cho MediaWiki',
+	'wikiadoption-header' => 'Áp dụng wiki này',
 	'wikiadoption-button-adopt' => 'Có, tôi muốn áp dụng {{SITENAME}}!',
 	'wikiadoption-adopt-inquiry' => 'Tìm hiểu thêm',
 	'wikiadoption-description' => '$1, sẵn sàng để áp dụng {{SITENAME}}?
@@ -2853,7 +2886,7 @@ Bạn đã sẵn sàng để thực hiện các bước tiếp theo để giúp 
 	'wikiadoption-not-allowed' => 'Chúng tôi rất tiếc. Bạn không thể áp dụng wiki này ngay bây giờ được.',
 	'wikiadoption-not-enough-edits' => 'Rất tiếc! Bạn cần phải có nhiều hơn 10 sửa đổi mới thông qua wiki này.',
 	'wikiadoption-adopted-recently' => 'Rất tiếc! Bạn đã thông qua một wiki mới. Bạn sẽ cần phải chờ đợi một thời gian nữa trước khi bạn có thể áp dụng một wiki mới.',
-	'wikiadoption-log-reason' => 'Nhận con nuôi tự động Wiki',
+	'wikiadoption-log-reason' => 'Nhận tự động wiki',
 	'wikiadoption-notification' => '{{SITENAME}} là một wiki của bạn. Muốn trở thành một nhà lãnh đạo ở đây? Áp dụng wiki này để bắt đầu!$2',
 	'wikiadoption-mail-first-subject' => 'Chúng tôi đã không nhìn thấy bạn xung quanh trong một thời gian',
 	'wikiadoption-mail-first-content' => 'Xin chào $1,
@@ -2884,6 +2917,36 @@ Kể từ khi nó đã là nhiều ngày kể từ khi một quản trị hiện
 Đội Wikia
 
 Bạn có thể ngừng đăng ký thay đổi vào danh sách này ở đây: $3',
+	'wikiadoption-mail-second-content-HTML' => 'Xin chào $1,
+Ôi, không! Nó đã là gần 60 ngày kể từ khi đã có hoạt động bảo quản viên trên #WIKINAME. Nó là quan trọng là quản trị viên thường xuyênn xuất hiện và đóng góp để wiki có thể tiếp tục chạy trơn tru.
+
+Kể từ khi nó đã là nhiều ngày kể từ khi một quản trị hiện tại đã xuất hiện, #WIKINAME sẽ bây giờ được cung cấp cho cho biên tập viên khác.
+
+Đội Wikia
+
+Bạn có thể ngừng đăng ký thay đổi vào danh sách này ở đây: $3',
+	'wikiadoption-mail-adoption-subject' => '#WIKINAME đã được áp dụng',
+	'wikiadoption-mail-adoption-content' => 'Hi $1,
+
+ #WIKINAME đã được áp dụng.  Wiki có sẵn để được thông qua khi không ai trong số các quản trị viên hiện tại đang hoạt động trong 60 ngày hoặc hơn.
+
+Người dùng chọn #WIKINAME bây giờ sẽ có trạng thái công chức và admin.  Đừng lo lắng, bạn sẽ cũng của bạn giữ lại tình trạng quản trị viên trên wiki này và được chào đón để trở lại và tiếp tục đóng góp bất cứ lúc nào
+
+Đội Wikia
+
+Bạn có thể ngừng đăng ký thay đổi vào danh sách này ở đây:$3',
+	'wikiadoption-mail-adoption-content-HTML' => 'Hi $1,<br /><br />
+
+ #WIKINAME đã được áp dụng.  Wiki có sẵn để được thông qua khi không ai trong số các bảo quản viên hiện tại đang hoạt động cho 60 ngày hoặc nhiều hơn.<br /><br />
+
+Người dùng chọn #WIKINAME bây giờ sẽ có trạng thái công chức và admin.  Đừng lo lắng, bạn sẽ cũng của bạn giữ lại tình trạng bảo quản viên trên wiki này và được chào đón để trở lại và tiếp tục đóng góp bất cứ lúc nào!<br /><br />
+
+Đội Wikia<br /><br />
+
+Bạn có thể <a href="$3">bỏ đăng ký</a> từ các thay đổi vào danh sách này.',
+	'tog-adoptionmails' => 'Gửi email cho tôi nếu $1 sẽ trở thành có sẵn cho người dùng khác để áp dụng',
+	'tog-adoptionmails-v2' => '.. .Nếu wiki sẽ trở thành có sẵn cho người dùng khác để áp dụng',
+	'wikiadoption-pref-label' => 'Thay đổi những tùy chọn sẽ chỉ ảnh hưởng đến email từ $1.',
 	'wikiadoption-welcome-header' => 'Chúc mừng! Bạn đã thông qua {{SITENAME}}!',
 	'wikiadoption-welcome-body' => 'Bạn bây giờ là một công chức wiki này. Với tình trạng mới của bạn, bạn bây giờ có quyền truy cập vào tất cả các công cụ mà sẽ giúp bạn quản lý {{SITENAME}}.
 <br /><br />

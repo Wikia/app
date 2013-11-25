@@ -68,6 +68,7 @@ $messages['en'] = array(
 
 /** Message documentation (Message documentation)
  * @author Shirayuki
+ * @author Siebrand
  */
 $messages['qqq'] = array(
 	'licensedvideoswap' => 'Licensed Video Swap short title (for special page listings)
@@ -81,7 +82,7 @@ $messages['qqq'] = array(
 {{Identical|History}}',
 	'lvs-page-header-back-link' => 'Text for link that brings users back to the Licensed Video Swap page from the history page',
 	'lvs-callout-header' => 'This is some header text that encourages the user to replace unlicensed videos with videos licensed for use on Wikia.  This section is temporary and will go away after a certain number of views. There\'s an optional "<br />" tag between the two sentences for purposes of making the header look nicer.',
-	'lvs-match-stats-description' => 'Description for numerical counter that shows how many total matched videos are available',
+	'lvs-match-stats-description' => 'Description for numerical counter that shows how many total matched videos are available.',
 	'lvs-callout-title-licensed' => 'Title for lvs callout header section.',
 	'lvs-callout-reason-licensed' => 'This is a bullet point that appears below lvs-callout-header. It explains that Wikia videos are licensed for use on Wikia. This section is temporary and will go away after a certain number of views.',
 	'lvs-callout-title-quality' => 'Title for lvs callout header section.',
@@ -137,7 +138,8 @@ $messages['qqq'] = array(
 	'lvs-history-instructions' => 'This is informational text at the top of the LVS history page.',
 	'lvs-no-monobook-support' => 'This message is shown to users who try to access LVS in an unsupported skin. The $1 value is lvs-click-here.',
 	'lvs-click-here' => 'This message is inserted into lvs-no-monobook-support and replaces the $1 value there.',
-	'lvs-new-flag' => 'This message is shown in the new flag when the video has new suggestions',
+	'lvs-new-flag' => 'This message is shown in the new flag when the video has new suggestions.
+{{Identical|New}}',
 );
 
 /** Arabic (العربية)
@@ -173,8 +175,18 @@ $messages['ast'] = array(
 	'lvs-button-no' => 'Non',
 );
 
+/** Bulgarian (български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'lvs-history-button-text' => 'История',
+	'lvs-button-yes' => 'Да',
+	'lvs-button-no' => 'Не',
+);
+
 /** Breton (brezhoneg)
  * @author Fohanno
+ * @author Y-M D
  */
 $messages['br'] = array(
 	'lvs-history-button-text' => 'Istor',
@@ -195,6 +207,7 @@ $messages['br'] = array(
 	'lvs-confirm-undo-keep-message' => "Ha dur oc'h e fell deoc'h adlakaat ar video-mañ e-barzh ar roll ?",
 	'lvs-history-kept' => 'Dalc\'het "$1"',
 	'lvs-click-here' => 'klikañ amañ',
+	'lvs-new-flag' => 'Nevez',
 );
 
 /** Catalan (català)
@@ -308,6 +321,7 @@ $messages['de'] = array(
 	'lvs-history-instructions' => 'Um den Verlauf aller Austausche und Rückgängigmachungen anzusehen, gehe nach $1.',
 	'lvs-no-monobook-support' => 'Diese Seite wird in Monobook nicht unterstützt. Um sie im Wikia-Layout anzusehen, $1. Dies ändert nicht deine Layouteinstellung.',
 	'lvs-click-here' => 'hier klicken',
+	'lvs-new-flag' => 'Neu',
 );
 
 /** Greek (Ελληνικά)
@@ -378,6 +392,7 @@ $messages['es'] = array(
 	'lvs-history-instructions' => 'Para ver el historial de todos los intercambios y modificaciones, ve a $1.',
 	'lvs-no-monobook-support' => 'Esta página no es compatible con el diseño Monobook. Para acceder a ella con el diseño Wikia, $1. Esto no cambiará tus preferencias de diseño.',
 	'lvs-click-here' => 'clic aquí',
+	'lvs-new-flag' => 'Nuevo',
 );
 
 /** Faroese (føroyskt)
@@ -452,11 +467,13 @@ $messages['fr'] = array(
 	'lvs-history-instructions' => 'Pour afficher un historique de toutes les bascules et annulations, aller sur $1.',
 	'lvs-no-monobook-support' => 'Cette page n’est pas prise en charge par Monobook. Pour y accéder dans la disposition de Wikia, $1. Cela ne modifiera pas votre choix de disposition',
 	'lvs-click-here' => 'cliquer ici',
+	'lvs-new-flag' => 'Nouveau',
 );
 
 /** Galician (galego)
  * @author Elisardojm
  * @author Toliño
+ * @author Vivaelcelta
  */
 $messages['gl'] = array(
 	'licensedvideoswap' => 'Intercambio de vídeos con licenza',
@@ -513,6 +530,7 @@ $messages['gl'] = array(
 	'lvs-history-instructions' => 'Para ver o historial de todos os intercambios, vaia a $1.',
 	'lvs-no-monobook-support' => 'Esta páxina non é compatible co deseño Monobook. Para acceder a ela co deseño do Wikia, $1. Isto non cambiará as súas preferencias de deseño',
 	'lvs-click-here' => 'prema aquí',
+	'lvs-new-flag' => 'Novo',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -541,6 +559,7 @@ $messages['lb'] = array(
 	'lvs-confirm-undo-swap-message' => 'Sidd dir sécher datt Dir den Original-Video restauréiere wëllt?',
 	'lvs-log-removed-redirected-link' => 'Viruleedung ewechgeholl',
 	'lvs-click-here' => 'hei klicken',
+	'lvs-new-flag' => 'Nei',
 );
 
 /** لوری (لوری)
@@ -551,6 +570,13 @@ $messages['lrc'] = array(
 	'lvs-undo-swap' => 'انجوم ندی ئن',
 	'lvs-undo-keep' => 'انجوم ندی ئن',
 	'lvs-posted-in-more' => 'بيشتر',
+);
+
+/** Malayalam (മലയാളം)
+ * @author Praveenp
+ */
+$messages['ml'] = array(
+	'lvs-new-flag' => 'പുതിയവ',
 );
 
 /** Malay (Bahasa Melayu)
@@ -607,7 +633,15 @@ $messages['ms'] = array(
 	'lvs-click-here' => 'klik di sini',
 );
 
+/** Nepali (नेपाली)
+ * @author सरोज कुमार ढकाल
+ */
+$messages['ne'] = array(
+	'lvs-new-flag' => 'नयाँ',
+);
+
 /** Dutch (Nederlands)
+ * @author Breghtje
  * @author Flightmare
  * @author Jochempluim
  * @author Siebrand
@@ -622,7 +656,7 @@ $messages['nl'] = array(
 	'lvs-history-button-text' => 'Geschiedenis',
 	'lvs-page-header-back-link' => 'Terug naar Gelicenseerde video wisselen',
 	'lvs-callout-header' => "Er zijn in uw wiki video's gevonden uit Wikia Video.<br />Het vervangen van uw video's door Wikia Video is aan te raden omdat:",
-	'lvs-match-stats-description' => "Video's<br />met Matches",
+	'lvs-match-stats-description' => "Video's met<br />resultaten",
 	'lvs-callout-title-licensed' => '100% gelicenseerd',
 	'lvs-callout-reason-licensed' => "Wikia's Video's hebben een licentie die het mogelijk maakt ze te gebruiken op uw wiki",
 	'lvs-callout-title-quality' => 'Hoge kwaliteit',
@@ -644,15 +678,15 @@ $messages['nl'] = array(
 	'lvs-keep-video-success' => 'U hebt gekozen de huidige video te behouden. Deze video wordt uit de lijst verwijderd. $1',
 	'lvs-restore-video-success' => 'U hebt de video teruggezet in deze lijst.',
 	'lvs-error-permission' => 'U kunt deze video niet wisselen.',
-	'lvs-error-permission-access' => 'U heeft geen toegang tot deze pagina.',
+	'lvs-error-permission-access' => 'U hebt geen toegang tot deze pagina.',
 	'lvs-error-invalid-page-status' => 'U kunt deze video niet terugplaatsen.',
-	'lvs-error-already-swapped' => 'Deze video is al verwisseld.',
-	'lvs-error-already-kept-forever' => 'Deze video is reeds bewaard.',
+	'lvs-error-already-swapped' => 'Deze video is al gewisseld.',
+	'lvs-error-already-kept-forever' => 'Deze video is al behouden.',
 	'lvs-posted-in-label' => 'Huidige video geplaatst in:',
 	'lvs-posted-in-label-none' => "De huidige video is niet opgenomen in pagina's",
 	'lvs-posted-in-more' => 'meer',
 	'lvs-confirm-keep-title' => 'Video behouden',
-	'lvs-confirm-keep-message' => 'Wij voegen voortdurend nieuwe gelicenseerde video\'s toe aan <a href="http://video.wikia.com/" target="_blank">Wikia Video</a>. Zou u graag nieuwe overeenkomsten voor deze video willen zien zodra ze beschikbaar komen?',
+	'lvs-confirm-keep-message' => 'Wij voegen voortdurend nieuwe gelicenseerde video\'s toe aan <a href="http://video.wikia.com/" target="_blank">Wikia Video</a>. Wilt u nieuwe overeenkomsten voor deze video zien zodra ze beschikbaar komen?',
 	'lvs-confirm-undo-swap-title' => 'Ongedaan maken bevestigen',
 	'lvs-confirm-undo-swap-message' => 'Weet u zeker dat u de oorspronkelijke video terug wilt plaatsen?',
 	'lvs-confirm-undo-keep-title' => 'Ongedaan maken bevestigen',
@@ -668,6 +702,7 @@ $messages['nl'] = array(
 	'lvs-history-instructions' => "Als u de geschiedenis van alle wijzigingen en undo's wil zien, gaat u naar $1.",
 	'lvs-no-monobook-support' => 'Deze pagina wordt niet ondersteund in Monobook. Om deze te openen in de indeling van Wikia, $1. Dit zal uw voorkeurs-layout niet aanpassen.',
 	'lvs-click-here' => 'klik hier',
+	'lvs-new-flag' => 'Nieuw',
 );
 
 /** Polish (polski)
@@ -728,6 +763,19 @@ $messages['pl'] = array(
 	'lvs-history-instructions' => 'Aby zobaczyć historię wszystkich podmian, przejdź do $1.',
 	'lvs-no-monobook-support' => 'Ta strona nie jest obsługiwana w Monobooku. Aby przejść do skórki Wikia, $1. Nie zmieni to wybranych przez Ciebie ustawień skórki.',
 	'lvs-click-here' => 'kliknij tutaj',
+	'lvs-new-flag' => 'Nowy',
+);
+
+/** Portuguese (português)
+ * @author Josep Maria 15.
+ */
+$messages['pt'] = array(
+	'licensedvideoswap' => 'Troca de vídeos licenciados',
+	'action-licensedvideoswap' => 'Troca de vídeos sem licença',
+	'lvs-page-title' => 'Troca de vídeos licenciados',
+	'lvs-history-page-title' => 'Histórico da roca de vídeos licenciados',
+	'lvs-tooltip-history' => 'Botão da troca de vídeos licenciados',
+	'lvs-history-button-text' => 'Histórico',
 );
 
 /** Brazilian Portuguese (português do Brasil)
@@ -816,6 +864,7 @@ $messages['ru'] = array(
 	'lvs-history-instructions' => 'Для просмотра истории всех замен и их отмен, перейдите на $1.',
 	'lvs-no-monobook-support' => 'Эта страница не поддерживается в Monobook. Для доступа к ней в макете Wikia $1. Это не изменит тему в настройках',
 	'lvs-click-here' => 'нажмите здесь',
+	'lvs-new-flag' => 'Новое',
 );
 
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)
@@ -892,6 +941,7 @@ $messages['sv'] = array(
 	'lvs-history-instructions' => 'För att se historiken över alla utbytande och ångrande åtgärder, gå till $1.',
 	'lvs-no-monobook-support' => 'Denna sida stöds inte i Monobook. För att komma åt den i Wikia-layout, $1. Detta kommer inte att ändra dina utseendeinställningar.',
 	'lvs-click-here' => 'klicka här',
+	'lvs-new-flag' => 'Ny',
 );
 
 /** Ukrainian (українська)
@@ -952,6 +1002,7 @@ $messages['uk'] = array(
 	'lvs-history-instructions' => 'Для перегляду історії всіх обмінів і відмін дій перейдіть на  $1.',
 	'lvs-no-monobook-support' => 'Ця сторінка не підтримується в Monobook. Для доступу до неї у макеті Вікія,  $1. Це не змінить ваше налаштування макету',
 	'lvs-click-here' => 'натисніть тут',
+	'lvs-new-flag' => 'Нове',
 );
 
 /** Vietnamese (Tiếng Việt)

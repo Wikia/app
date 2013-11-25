@@ -102,6 +102,8 @@ $wgHooks['LinkerMakeThumbLink2FileOriginalSize'][] = 'VideoHandlerHooks::onLinke
 $wgHooks['ParserAfterStrip'][] = 'VideoHandlerHooks::convertOldInterwikiToNewInterwiki';
 $wgHooks['File::checkExtensionCompatibilityResult'][] = 'VideoHandlerHooks::checkExtensionCompatibilityResult';
 $wgHooks['FindRedirectedFile'][] = 'VideoHandlerHooks::onFindRedirectedFile';
+$wgHooks['UploadFromUrlReallyFetchFile'][] = 'VideoHandlerHooks::onUploadFromUrlReallyFetchFile';
+
 
 $wgHooks['FileUpload'][] = 'VideoInfoHooksHelper::onFileUpload';
 $wgHooks['ArticleSaveComplete'][] = 'VideoInfoHooksHelper::onArticleSaveComplete';

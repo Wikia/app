@@ -1529,7 +1529,7 @@ class Wikia {
 	 * @param Array $urls list of URLs to be purged
 	 * @return mixed true - it's a hook
 	 */
-	static public function onTitleGetSquidURLs(Title $title, Array $urls) {
+	static public function onTitleGetSquidURLs(Title $title, Array &$urls) {
 		global $wgUseSiteJs, $wgAllowUserJs, $wgUseSiteCss, $wgAllowUserCss;
 		global $wgOut;
 		wfProfileIn(__METHOD__);

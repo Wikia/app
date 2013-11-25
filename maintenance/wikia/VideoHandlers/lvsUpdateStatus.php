@@ -8,16 +8,16 @@
 
 class LvsStatus {
 
-	public static function lvsUpdateStatus( DatabaseMysql $db, $dbname, $verbose = false, $dryRun = false ) {
-		echo "Wiki: $dbname\n";
+	public static function lvsUpdateStatus( DatabaseMysql $db, $verbose = false, $dryRun = false, $params = array() ) {
+		echo "Wiki: $params[dbname] (ID:$params[cityId])\n";
 
 		if ( !$db->tableExists( 'page_wikia_props' ) ) {
-			echo "ERROR: $dbname: page_wikia_props table not exist.\n\n";
+			echo "ERROR: $params[dbname] (ID:$params[cityId]): page_wikia_props table not exist.\n\n";
 			return;
 		}
 
-		if ( $dbname == F::app()->wg->WikiaVideoRepoDBName ) {
-			echo "SKIP: $dbname\n\n";
+		if ( $params['dbname'] == F::app()->wg->WikiaVideoRepoDBName ) {
+			echo "SKIP: $params[dbname] (ID:$params[cityId])\n\n";
 			return;
 		}
 
@@ -127,7 +127,7 @@ SQL;
 			echo "\n";
 		}
 
-		echo "$dbname: Total Pages: $total, Kept Videos: $kept, Swapped Videos: $swapped, ";
+		echo "$params[dbname] (ID:$params[cityId]): Total Pages: $total, Kept Videos: $kept, Swapped Videos: $swapped, ";
 		echo "Swapped Videos with Exact Match: $swappedExact, Videos with Suggestions: $suggestions, Affected: $totalAffected\n\n";
 	}
 

@@ -245,8 +245,8 @@ class SuggestionsIndexer extends Maintenance {
 			$result[ $id ] = [
 				'title_ngram' => $data[ 'title_en' ],
 				'title_simple' => $data[ 'title_en' ],
-				'title' => $data[ 'title_en' ],
 				'title_prefix_suffix' => $data[ 'title_en' ],
+				'title' => $data[ 'title_en' ],
 				'views_i' => $data[ 'views' ],
 				'abstract_en' => $this->cutSnippet( $data[ 'html_en' ] ),
 				'namespace_i' => $data[ 'ns' ],
@@ -258,6 +258,8 @@ class SuggestionsIndexer extends Maintenance {
 			];
 			if ( !empty( $data[ 'redirect_titles_mv_en' ] ) ) {
 				$result[ $id ]['redirects_ngram_mv'] = array_unique( $data[ 'redirect_titles_mv_en' ] );
+				$result[ $id ]['redirects_prefix_suffix_mv'] = array_unique( $data[ 'redirect_titles_mv_en' ] );
+				$result[ $id ]['redirects_simple_mv'] = array_unique( $data[ 'redirect_titles_mv_en' ] );
 			}
 		}
 		$this->endProfile();

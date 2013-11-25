@@ -241,10 +241,11 @@ $messages['pms'] = array(
 
 /** Portuguese (português)
  * @author Hamilton Abreu
+ * @author Josep Maria 15.
  */
 $messages['pt'] = array(
 	'interwikidispatcher' => 'Expedidor interwikis',
-	'interwikidispatcher-desc' => 'Resolve os links interwikis para reduzir os reencaminhamentos do servidor Apache',
+	'interwikidispatcher-desc' => 'Resolve as ligações interwikis para reduzir os reencaminhamentos do servidor Apache',
 );
 
 /** Brazilian Portuguese (português do Brasil)
@@ -314,6 +315,14 @@ $messages['tt-cyrl'] = array(
 $messages['uk'] = array(
 	'interwikidispatcher' => 'Диспетчер інтервікі',
 	'interwikidispatcher-desc' => 'Виправлення інтервікі з метою зменшення посилань на перенаправлення',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'interwikidispatcher' => 'điều phối Interwiki',
+	'interwikidispatcher-desc' => 'Giải quyết các liên kết interwiki để giảm Apache chuyển hướng',
 );
 
 /** Simplified Chinese (中文（简体）‎)
