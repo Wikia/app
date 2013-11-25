@@ -31,11 +31,11 @@ class TvApiControllerTest extends \WikiaBaseTest {
 
 		$this->setMockVariables( false, 0, 'a0', 'b0', 'c0', false );
 
-		$this->assertEquals( ['id' => 1, 'title' => 'a1', 'url' => 'b1', 'ns' => 'c1'], $refl->invoke( $mock, 'test number one' ) );
+		$this->assertEquals( ['articleId' => 1, 'title' => 'a1', 'url' => 'b1' ], $refl->invoke( $mock, 'test number one' ) );
 
-		$this->assertEquals( ['id' => 2, 'title' => 'a2', 'url' => 'b2', 'ns' => 'c2'], $refl->invoke( $mock, 'test number two' ) );
+		$this->assertEquals( ['articleId' => 2, 'title' => 'a2', 'url' => 'b2'], $refl->invoke( $mock, 'test number two' ) );
 
-		$this->assertEquals( ['id' => 30, 'title' => 'a3', 'url' => 'b3', 'ns' => 'c3'], $refl->invoke( $mock, 'test_redirect' ) );
+		$this->assertEquals( ['articleId' => 30, 'title' => 'a3', 'url' => 'b3'], $refl->invoke( $mock, 'test_redirect' ) );
 
 	}
 

@@ -64,7 +64,7 @@ class TvApiController extends WikiaApiController {
 	 * @param $details
 	 * @return string
 	 */
-	private function replaceHost( $details ) {
+	protected function replaceHost( $details ) {
 		return $details[ 1 ] . WikiFactory::getCurrentStagingHost( $details[ 4 ], $details[ 3 ] );
 	}
 
