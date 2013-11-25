@@ -1029,11 +1029,15 @@ class WikiFactory {
 
 	/**
 	 * Determine if current hostname is devbox or sandbox.
+	 * @param string $host for testing
 	 * @return bool
 	 */
-	public static function isCurrentStagingHost()
+	public static function isCurrentStagingHost($host = null)
 	{
-		$host = gethostname();
+		if($host === null)
+		{
+			$host = gethostname();
+		}
 		global $wgStagingList;
 		if(in_array($host,$wgStagingList)){
 			return true;
@@ -1051,11 +1055,15 @@ class WikiFactory {
 	 * Convert given host to current environment (devbox or sandbox).
 	 * @param string $dbName
 	 * @param string $default if on main wikia
+	 * @param string $host for testing
 	 * @return string changed host or $default
 	 */
-	public static function getCurrentStagingHost($dbName='', $default='')
+	public static function getCurrentStagingHost($dbName='', $default='', $host = null)
 	{
-		$host = gethostname();
+		if($host === null)
+		{
+			$host = gethostname();
+		}
 		global $wgStagingList;
 		if(in_array($host,$wgStagingList)){
 			return $host. '.' . ($dbName ? $dbName : 'www' ).'.wikia.com';
