@@ -211,7 +211,9 @@ ve.ui.WikiaMediaQueryWidget.prototype.onRequestVideoDone = function ( data ) {
 
 	// Send errors to the user
 	if ( data.error ) {
-		errorMsg = ( data.error.code in this.displayMessages ) ? this.displayMessages[data.error.code] : this.displayMessages['mediaqueryfailed'];
+		errorMsg = ( data.error.code in this.displayMessages ) ?
+			this.displayMessages[data.error.code] :
+			this.displayMessages.mediaqueryfailed;
 
 		mw.config.get( 'GlobalNotification' ).show(
 			errorMsg,
