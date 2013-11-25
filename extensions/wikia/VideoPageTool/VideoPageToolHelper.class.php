@@ -118,7 +118,6 @@ class VideoPageToolHelper extends WikiaModel {
 			}
 
 			// get thumbnail
-			// TODO: we no longer need the thumbnail html, only the url
 			$thumb = $file->transform( array( 'width' => self::THUMBNAIL_WIDTH, 'height' => self::THUMBNAIL_HEIGHT ) );
 			$videoThumb = $thumb->toHtml( $thumbOptions );
 			$thumbUrl = $thumb->getUrl();
@@ -311,7 +310,8 @@ class VideoPageToolHelper extends WikiaModel {
 	public function renderAssetsBySection( $program, $section ) {
 		$data = array();
 		if ( $program instanceof VideoPageToolProgram ) {
-			$thumbOptions = array( 'noLightbox' => true );
+			// Added migration flag 'useTemplate' to use template instead of toHtml method
+			$thumbOptions = array( 'noLightbox' => true, 'useTemplate' => true );
 			$assets = $program->getAssetsBySection( $section );
 			foreach ( $assets as $asset ) {
 				$data[] = $asset->getAssetData( $thumbOptions );

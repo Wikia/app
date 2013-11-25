@@ -48,6 +48,119 @@ class VideoHandlerController extends WikiaController {
 		}
 	}
 
+	public function thumbnail() {
+		// use mustache for template
+		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
+
+		$options = $this->getVal( 'options' );
+		$file = $this->getVal( 'file' );
+		$videoTitle = $file->getTitle();
+
+		// flags
+		$rdf = empty( $options[ 'disableRDF' ] );
+
+		// set link attributes
+		$this->linkHref = $videoTitle->getLocalURL();
+		$this->linkClasses = [];
+		$this->size = "medium";
+
+		/*
+		 * TODO: map thumbnail width to play button size:
+		 *
+		 * 200-270 = "small"
+		 * 271-470 = "medium"
+		 * 471-720 = "large"
+		 * > 720 = "xlarge"
+		 *
+		 * ex: $this->size = "medium";
+		 * note: default is medium if no size is specified in template
+		 */
+
+		// set image attributes
+		$this->videoKey = htmlspecialchars( urlencode( $videoTitle->getDBKey() ) );
+		$this->videoName = htmlspecialchars( urlencode( $videoTitle->getText() ) );
+		$this->imgSrc = $this->getVal( 'url' );
+
+		// If responsive flag is not specified, set the width and height of the image
+		// This is not related to wgOasisResponsiv
+		$options[ 'responsive' ] = 1; // just for now
+		if( empty( $options[ 'responsive' ] ) ) {
+			// hard coded width and height - get this from toHtml
+			$this->imgWidth = '300px';
+			$this->imgHeight = '200px';
+		} else {
+			$this->linkClasses[] = 'responsive';
+		}
+
+		// set duration
+		// TODO: hard coded for now
+		$this->duration = '3:46';
+
+		/*
+		 * List of logic that needs to be performed here (was done in ThumbnailVideo:toHtml)
+		 *
+		 * Don't use this if we're in the visual editor (just use image version)
+		 * Add RDF metadata? (see attributes below)
+		 * Link attributes:
+		 *  - href
+		 *  - id
+		 *  - classes:
+		 *      - 'video' (always)
+		 *      - 'lightbox' (unless disabled)
+		 *      - 'hide-play' (if on a video special page, play button will only show on hover)
+		 *      - size string (see above)
+		 *      - anything that is passed by extension
+		 *  - itemprop = 'video' (if RDF)
+		 *  - itemscope = '' (if RDF)
+		 *  - itemtype = 'http://schema.org/VideoObject' (if RDF)
+		 *  - any attributes passed by extension
+		 * Image attributes:
+		 *  - alt
+		 *  - src (sometimes add ?t=[timestamp] for old versions of a file)
+		 *  - width (if not responsive)
+		 *  - height (if not responsive)
+		 *  - data-video-name
+		 *  - data-video-key
+		 *  - itemprop = 'thumbnail' (if RDF)
+		 *  - data-src (if usePreloading)
+		 *  - classes: 'wikia-video-thumb' (always), anything that is passed by extension. (Note: this used to be "Wikia-video-thumb")
+		 *  - style: anything that is passed by extension, although this should be used sparingly
+		 *  - any attributes passed by extension
+		 * 'appendHtmlCrop' only used by Related Videos with constHeight flag. Possibly no longer needed.
+		 * 'addExtraBorder' only used by youtube video thumbnails.  It adds a black line above and below.  We can remove this. (BugId:27910)
+		 * Duration:
+		 *  - can be turned on or off
+		 *  - separate from video info now
+		 *  - includes timer property if RDF
+		 * Video info
+		 *  - probably needs its own template
+		 *  - not always called
+		 *  - sometimes includes caption
+		 * Lazy loading (if enabled)
+		 *
+		 *
+		 * Responsive flag
+		 */
+	}
+
+	/*
+	 * FIXME: Mustache doesn't handle key/value pairs very well, so this is one way we can handle image and link attributes.
+	 * Just messing around for now.
+	 */
+	public function thumbnailAttrs() {
+		$attrs = $this->getVal( 'attrs' );
+		$resp = [];
+
+		foreach( $attrs as $key => $val ) {
+			$curr = [];
+			$curr[ 'property' ] = $key;
+			$curr[ 'value' ] = $val;
+			$resp[] = $curr;
+		}
+
+		$this->attrs = $resp;
+	}
+
 	/**
 	 * Get the embed code for the given title from the video wiki, rather than the local wiki.  This is
 	 * useful when a video of the same name from youtube (or other non-premium provider) exists on the local wiki
