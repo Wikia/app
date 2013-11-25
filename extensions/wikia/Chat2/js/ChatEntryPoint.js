@@ -179,7 +179,7 @@ var ChatEntryPoint = {
 		});
 	},
 
-	onJoinChatFormLoaded: function(html) {
+	onJoinChatFormLoaded: function( html ) {
 		UserLoginModal.dialog.stopThrobbing();
 		UserLoginModal.dialog.closeModal();
 
@@ -194,11 +194,9 @@ var ChatEntryPoint = {
 						}
 					};
 				uiModal.createComponent( joinModalConfig, function ( joinModal ) {
-					joinModal.$content
-						.find( '#modal-join-chat-button' )
-						.bind( 'click', function ( event ) {
-							ChatEntryPoint.launchChatWindow( event, joinModal);
-						});
+					joinModal.bind( 'chat', function ( event ) {
+						ChatEntryPoint.launchChatWindow( event, joinModal);
+					});
 					joinModal.bind( 'close', function() {
 						ChatEntryPoint.reloadPage();
 					});
