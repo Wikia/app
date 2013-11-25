@@ -66,8 +66,8 @@
 								body: body
 							},
 							callback: function( data ) {
-								previewModal.activate();
 								previewModal.$content.find( '.WallPreview .WikiaArticle' ).html( data.body );
+								previewModal.activate();
 							}
 						});
 					});
