@@ -43,9 +43,6 @@ ve.init.mw.ViewPageTarget = function VeInitMwViewPageTarget() {
 	this.$toolbarEditNoticesTool = $( '<div>' )
 		.addClass( 've-init-mw-viewPageTarget-tool' );
 
-	this.$toolbarFeedbackTool = $( '<div>' )
-		.addClass( 've-init-mw-viewPageTarget-tool' );
-
 	this.$toolbarBetaNotice = $( '<div>' )
 		.addClass( 've-init-mw-viewPageTarget-toolbar-betaNotice' );
 	this.$toolbarBetaNoticeTool = $( '<div>' )
@@ -779,25 +776,6 @@ ve.init.mw.ViewPageTarget.prototype.onToolbarBetaNoticeToolClick = function () {
 };
 
 /**
- * Handle clicks on the feedback tool in the toolbar.
- *
- * @method
- * @param {jQuery.Event} e Mouse click event
- */
-ve.init.mw.ViewPageTarget.prototype.onToolbarFeedbackToolClick = function () {
-	this.$toolbarEditNotices.fadeOut( 'fast' );
-	if ( !this.feedback ) {
-		// This can't be constructed until the editor has loaded as it uses special messages
-		this.feedback = new mw.Feedback( {
-			'title': new mw.Title( ve.msg( 'visualeditor-feedback-link' ) ),
-			'bugsLink': new mw.Uri( 'https://bugzilla.wikimedia.org/enter_bug.cgi?product=VisualEditor&component=General' ),
-			'bugsListLink': new mw.Uri( 'https://bugzilla.wikimedia.org/buglist.cgi?query_format=advanced&resolution=---&resolution=LATER&resolution=DUPLICATE&product=VisualEditor&list_id=166234' )
-		} );
-	}
-	this.feedback.launch();
-};
-
-/**
  * Handle the first transaction in the surface model.
  *
  * This handler is removed the first time it's used, but added each time the surface is set up.
@@ -1327,15 +1305,6 @@ ve.init.mw.ViewPageTarget.prototype.setupToolbarButtons = function () {
 		)
 		.append( this.$toolbarBetaNotice )
 		.click( ve.bind( this.onToolbarBetaNoticeToolClick, this ) );
-
-	this.$toolbarFeedbackTool
-		.addClass( 've-ui-icon-comment' )
-		.append(
-			$( '<span>' )
-				.addClass( 've-init-mw-viewPageTarget-tool-label' )
-				.text( ve.msg( 'visualeditor-feedback-tool' ) )
-		)
-		.click( ve.bind( this.onToolbarFeedbackToolClick, this ) );
 };
 
 /**
@@ -1349,7 +1318,6 @@ ve.init.mw.ViewPageTarget.prototype.tearDownToolbarButtons = function () {
 	this.$toolbarMwMetaButton.empty().off( 'click' );
 	this.$toolbarEditNoticesTool.empty().off( 'click' );
 	this.$toolbarBetaNoticeTool.empty().off( 'click' );
-	this.$toolbarFeedbackTool.empty().off( 'click' );
 };
 
 /**
@@ -1360,7 +1328,6 @@ ve.init.mw.ViewPageTarget.prototype.tearDownToolbarButtons = function () {
 ve.init.mw.ViewPageTarget.prototype.attachToolbarButtons = function () {
 	var $target = this.toolbar.$actions;
 	$target.append( this.$toolbarBetaNoticeTool );
-	this.$toolbarBetaNotice.append( this.$toolbarFeedbackTool );
 
 	if ( !ve.isEmptyObject( this.editNotices ) ) {
 		$target.append( this.$toolbarEditNoticesTool );
@@ -1382,7 +1349,6 @@ ve.init.mw.ViewPageTarget.prototype.detachToolbarButtons = function () {
 	this.toolbarSaveButton.$.detach();
 	this.$toolbarMwMetaButton.detach();
 	this.$toolbarEditNoticesTool.detach();
-	this.$toolbarFeedbackTool.detach();
 	this.$toolbarBetaNoticeTool.detach();
 };
 
