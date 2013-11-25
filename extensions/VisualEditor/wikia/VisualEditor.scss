@@ -26,8 +26,8 @@
  * Fixes background colors in inspectors and dialogs
  * Fixes width problems inherited from Oasis responsive breakpoints
  */
-.ve-ui-frame-body,
-.ve-ui-popupWidget-body {
+.oo-ui-frame-body,
+.oo-ui-popupWidget-body {
 	background: $color-page;
 	min-width: 0;
 }
@@ -35,14 +35,14 @@
 /*
  * Fixes link type-ahead positioning due to Oasis margins set on lists
  */
-.WikiaArticle .ve-ui-selectWidget {
+.WikiaArticle .oo-ui-selectWidget {
 	margin: 0;
 }
 
 /*
  * Fixes font size for type-ahead widget. This style is from mw init.
  */
-.ve-init-mw-viewPageTarget-surface .ve-ui-menuWidget {
+.ve-init-mw-viewPageTarget-surface .oo-ui-menuWidget {
 	font-size: .8em;
 }
 
@@ -81,9 +81,11 @@
 	}
 
 }
+
 .ve-init-mw-viewPageTarget-saveDialog-title {
 	color: $color-text;
 }
+
 .ve-init-mw-viewPageTarget-saveDialog-options {
 	background: $color-ve-page-secondary;
 }

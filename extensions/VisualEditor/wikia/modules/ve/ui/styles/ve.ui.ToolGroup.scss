@@ -4,33 +4,33 @@
 @import "color";
 @import "mixins/ve-icon";
 
-.ve-ui-popupToolGroup {
-	.ve-ui-toolGroup-tools {
+.oo-ui-popupToolGroup {
+	.oo-ui-toolGroup-tools {
 		background: $color-page;
 		border-color: $color-page-border;
 	}
 
-	.ve-ui-tool {
-		.ve-ui-labeledElement-label	{
+	.oo-ui-tool {
+		.oo-ui-labeledElement-label	{
 			color: $color-text;
 		}
 	}
 }
 
-.ve-ui-menuToolGroup {
-	.ve-ui-tool:hover {
+.oo-ui-menuToolGroup {
+	.oo-ui-tool:hover {
 		background: $color-ve-hover;
 	}
-	.ve-ui-tool-active {
-		.ve-ui-iconedElement-icon {
+	.oo-ui-tool-active {
+		.oo-ui-iconedElement-icon {
 			@include ve-icon(check, ve);
 		}
 	}
 }
 
-.ve-ui-barToolGroup .ve-ui-tool-active:not(.ve-ui-widget-disabled),
-.ve-ui-listToolGroup .ve-ui-tool-active:not(.ve-ui-widget-disabled),
-.ve-ui-popupToolGroup-active:not(.ve-ui-widget-disabled) {
+.oo-ui-barToolGroup .oo-ui-tool-active:not(.oo-ui-widget-disabled),
+.oo-ui-listToolGroup .oo-ui-tool-active:not(.oo-ui-widget-disabled),
+.oo-ui-popupToolGroup-active:not(.oo-ui-widget-disabled) {
 	@include linear-gradient(
 		$color-ve-gradient, top,
 		$color-ve-gradient-dark, 0%,

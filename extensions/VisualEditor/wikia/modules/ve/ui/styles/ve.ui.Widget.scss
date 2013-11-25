@@ -1,11 +1,11 @@
 @import "skins/oasis/css/core/color";
 
-.ve-ui-popupWidget-body {
+.oo-ui-popupWidget-body {
 	border-color: $color-page-border;
 }
 
-.ve-ui-outlineItemWidget {
-	&.ve-ui-optionWidget-selected {
+.oo-ui-outlineItemWidget {
+	&.oo-ui-optionWidget-selected {
 		background: $color-ve-hover;
 	}
 }
@@ -19,11 +19,11 @@
 	}
 }
 
-.ve-ui-outlineControlsWidget {
+.oo-ui-outlineControlsWidget {
 	background: $color-page;
 }
 
-.ve-ui-popupWidget-callout {
+.oo-ui-popupWidget-callout {
 	background: none;
 	height: 0;
 	width: 0;
@@ -51,6 +51,6 @@
 	}
 }
 
-.ve-ui-surfaceWidget-toolbar .ve-ui-toolbar-bar {
+.ve-ui-surfaceWidget-toolbar .oo-ui-toolbar-bar {
 	border-color: $color-page-border;
 }

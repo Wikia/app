@@ -1,15 +1,15 @@
 // Prevent flickering dialog content when hovering in Chrome
-.ve-ui-frame-body {
+.oo-ui-frame-body {
 	-webkit-backface-visibility: hidden;
 }
 
 // Prevent menu widgets from collapsing
-.ve-ui-frame-body,
-.ve-ui-frame-html {
+.oo-ui-frame-body,
+.oo-ui-frame-html {
 	height: 100%;
 }
 
 // Prevent square corners on dialog when hovering in Chrome
-.ve-ui-frame-html {
+.oo-ui-frame-html {
 	border-radius: 0.5em;
 }
