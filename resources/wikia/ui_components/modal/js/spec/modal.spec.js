@@ -259,7 +259,7 @@ describe( 'Modal buttons', function() {
 					size: 'small'
 				}
 			},
-			modalObject = modal.createComponent( params, uiComponent);
+			modalObject = modal.createComponent( params, uiComponent );
 		expect( typeof modalObject ).toEqual( 'object' );
 	});
 
@@ -276,7 +276,7 @@ describe( 'Modal buttons', function() {
 		spyOn( uiComponent, 'render' );
 		spyOn( subComponent, 'render' );
 
-		modalObject = modal.createComponent( params, uiComponent);
+		modalObject = modal.createComponent( params, uiComponent );
 
 		expect( typeof modalObject ).toEqual( 'object' );
 		expect( typeof uiComponent.render ).toEqual( 'function' );
@@ -290,14 +290,14 @@ describe( 'Modal buttons', function() {
 				vars: {
 					title: 'Test',
 					size: 'small',
-					buttons: "button"
+					buttons: 'button'
 				}
 			},
 			modalObject;
 
 		spyOn( subComponent, 'render' );
 
-		modalObject = modal.createComponent( params, uiComponent);
+		modalObject = modal.createComponent( params, uiComponent );
 		expect( subComponent.render ).not.toHaveBeenCalledWith( button );
 	});
 
@@ -317,7 +317,8 @@ describe( 'Modal buttons', function() {
 					title : 'Test',
 					size : 'small',
 					buttons : [
-						{ type : 'button',
+						{
+							type : 'button',
 							vars : {
 								type : 'button',
 								classes : [ 'normal', 'secondary' ]
@@ -328,8 +329,7 @@ describe( 'Modal buttons', function() {
 				}
 			};
 		spyOn( jQuery.fn, 'append' );
-		modal.createComponent( params, uiComponent);
+		modal.createComponent( params, uiComponent );
 		expect( jQuery.fn.append ).toHaveBeenCalledWith( renderResult );
 	});
-
 });
