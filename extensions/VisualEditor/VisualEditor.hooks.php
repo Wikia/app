@@ -17,8 +17,7 @@ class VisualEditorHooks {
 		if ( is_null( $isAvailable ) ) {
 			$isAvailable = (
 				in_array( $skin->getSkinName(), self::$supportedSkins ) &&
-				$skin->getUser()->getOption( 'visualeditor-enable' ) &&
-				!$skin->getUser()->getOption( 'visualeditor-betatempdisable' )
+				$skin->getUser()->getOption( 'enablerichtext' )
 			);
 		}
 		return $isAvailable;
