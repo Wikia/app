@@ -27,10 +27,7 @@ ve.ce.WikiaBlockMediaNode = function VeCeWikiaBlockMediaNode( model, config ) {
 	ve.ce.BranchNode.call( this, model, config );
 
 	// Mixin constructors
-	ve.ce.ProtectedNode.call( this );
-	ve.ce.FocusableNode.call( this );
-	ve.ce.RelocatableNode.call( this );
-	ve.ce.MWResizableNode.call( this );
+	ve.ce.MWImageNode.call( this, this.$element, this.$image );
 
 	// Initialize
 	this.update();
@@ -40,16 +37,10 @@ ve.ce.WikiaBlockMediaNode = function VeCeWikiaBlockMediaNode( model, config ) {
 
 OO.inheritClass( ve.ce.WikiaBlockMediaNode, ve.ce.BranchNode );
 
-OO.mixinClass( ve.ce.WikiaBlockMediaNode, ve.ce.ProtectedNode );
-
-OO.mixinClass( ve.ce.WikiaBlockMediaNode, ve.ce.FocusableNode );
-
-OO.mixinClass( ve.ce.WikiaBlockMediaNode, ve.ce.RelocatableNode );
-
 // Need to mixin base class as well
-OO.mixinClass( ve.ce.WikiaBlockMediaNode, ve.ce.ResizableNode );
+OO.mixinClass( ve.ce.WikiaBlockMediaNode, ve.ce.GeneratedContentNode );
 
-OO.mixinClass( ve.ce.WikiaBlockMediaNode, ve.ce.MWResizableNode );
+OO.mixinClass( ve.ce.WikiaBlockMediaNode, ve.ce.MWImageNode );
 
 /* Static Properties */
 
@@ -190,6 +181,16 @@ ve.ce.WikiaBlockMediaNode.prototype.setupSlugs = function () {};
  * @method
  */
 ve.ce.WikiaBlockMediaNode.prototype.onSplice = function () {};
+
+/**
+ * Resize the thumb container
+ *
+ * @param {Object} dimensions New dimensions of the image
+ */
+ve.ce.WikiaBlockMediaNode.prototype.onResizableResizing = function ( dimensions ) {
+	ve.ce.ResizableNode.prototype.onResizableResizing.call( this, dimensions );
+	this.$element.css( 'width', dimensions.width + 2 );
+};
 
 /**
  * Creates and updates the view.
