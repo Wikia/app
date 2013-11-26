@@ -1,5 +1,5 @@
 /**
- * jQuery Zid v0.8
+ * jQuery Zid v0.9
  *
  * Terms of Use - Zid
  * under the MIT (http://www.opensource.org/licenses/mit-license.php) License.
@@ -42,7 +42,6 @@
 			this.box = this.element;
 			this.options = $.extend( true, {}, Zid.settings, options );
 			this.itemsArr = $.makeArray( this.box.find( this.options.selector ) );
-			this.isResizing = false;
 			this.minBreakPoint = 1;
 			this.maxBreakPoint = 1;
 			this.onColumnCountChangeCallback = this.options.onColumnCountChangeCallback;
@@ -183,9 +182,7 @@
 			}
 
 			// render items in columns
-			this.isResizing = true;
 			this._renderItems( 'append', this.itemsArr );
-			this.isResizing = false;
 			oldCols.remove();
 		},
 
