@@ -24,6 +24,10 @@ $(function() {
 				var zidConfig = { minColumnWidth: 350, selector: '.module, .wikia-ad',
 					onColumnCountChangeCallback: function ( columnsCount, elements ) {
 
+						// Fix for DAR-2983: We need to hide wikia-ad element BEFORE we re-calculate columns in ZID.
+						// AdEng is already hiding / showing them, but events are being fired in random order and it
+						// cannot be determined. We're hiding/showing container just to be sure.
+
 						$.each( elements, function ( i, v ) {
 							var elem = $(v);
 							if ( elem.hasClass( 'wikia-ad' ) ) {
