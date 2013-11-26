@@ -11,6 +11,7 @@ class TvApiController extends WikiaApiController {
 	const MINIMAL_WIKIA_SCORE = 0.5;
 	const MINIMAL_ARTICLE_SCORE = 1.7;
 	const WIKIA_URL_REGEXP = '~^(http(s?)://)(([^\.]+)\.wikia\.com)~';
+	const RESPONSE_CACHE_VALIDITY = 86400; /* 24h */
 	/**
 	 * @var wikiId
 	 */
@@ -57,8 +58,8 @@ class TvApiController extends WikiaApiController {
 		$response->setValues( $responseValues );
 
 		$response->setCacheValidity(
-			86400 /* 24h */,
-			86400 /* 24h */,
+			self::RESPONSE_CACHE_VALIDITY /* 24h */,
+			self::RESPONSE_CACHE_VALIDITY /* 24h */,
 			array(
 				WikiaResponse::CACHE_TARGET_BROWSER,
 				WikiaResponse::CACHE_TARGET_VARNISH
