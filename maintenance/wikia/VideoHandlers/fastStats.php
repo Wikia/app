@@ -1,7 +1,14 @@
 <?php
 
 class FastStats {
-	public static function lvsStats( DatabaseMysql $db, $dbname, $verbose = false, $test = false ) {
+	public static function run( DatabaseMysql $db, $test = false, $verbose = false, $params ) {
+		$dbname = $params['dbname'];
+
+		// Don't bother getting stats for the video wiki
+		if ( $dbname == 'video151' ) {
+			return;
+		}
+
 		// Get total local videos
 		$sql = 'SELECT COUNT(*) as local_count FROM video_info WHERE premium = 0';
 		$result = $db->query( $sql );
@@ -14,7 +21,7 @@ class FastStats {
 		// Get number of matching videos and total number of matches
 		$sql = 'SELECT page_id, props
 				FROM page_wikia_props
-				WHERE propname = 19';
+				WHERE propname = '.WPP_LVS_SUGGEST;
 		$result = $db->query( $sql );
 
 		$num_matching = 0;
@@ -29,16 +36,26 @@ class FastStats {
 
 		$sql = 'SELECT page_id, props
 				FROM page_wikia_props
-				WHERE propname = 18';
+				WHERE propname = '.WPP_LVS_STATUS_INFO;
 		$result = $db->query( $sql );
+
+/*
+ * Constants made available by LicensedVideoSwapHelper
+		const STATUS_KEEP = 1;            // set bit to 1 = kept video
+		const STATUS_SWAP = 2;            // set bit to 1 = swapped video
+		const STATUS_EXACT = 4;           // set bit to 0 = normal swap, 1 = swap with an exact match
+		const STATUS_SWAPPABLE = 8;       // set bit to 1 = video with suggestions
+		const STATUS_NEW = 16;            // set bit to 1 = video with new suggestions
+		const STATUS_FOREVER = 32;        // set bit to 1 = no more matches
+*/
 
 		$num_keeps = 0;
 		$num_swaps = 0;
 		while ( $row = $db->fetchObject($result) ) {
 			$info = unserialize( $row->props );
-			if ( $info['status'] == 1 ) {
+			if ( $info['status'] & LicensedVideoSwapHelper::STATUS_KEEP ) {
 				$num_keeps++;
-			} else {
+			} else if ( $info['status'] & LicensedVideoSwapHelper::STATUS_SWAP ) {
 				$num_swaps++;
 			}
 
