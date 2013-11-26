@@ -5,6 +5,10 @@
 	width: 570px;
 	height: 875px;
 
+	position: relative;
+	//compensate for wkPage margin
+	left: -3.125%;
+
 	figure{
 		//placeholder moved to image_placeholder.scss
 		position: relative;
