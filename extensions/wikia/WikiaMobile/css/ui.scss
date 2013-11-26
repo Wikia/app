@@ -142,17 +142,21 @@ h2[data-count] {
 	background-repeat: no-repeat;
 }
 
-.wikitable, .sortable {
+.wikitable, .sortable, .article-table {
 	border-collapse: collapse;
-	border:1px solid $border-color;
+	border: 1px solid $border-color;
 }
 
-.wikitable:not(.infobox), .sortable {
-	th, td {
-		border:1px solid $border-color;
+.wikitable:not(.infobox), .sortable, .article-table {
+	td, tr, th, caption {
+		border: 1px solid $border-color;
 		padding: 5px;
 		text-align: left;
 		white-space:nowrap;
+	}
+
+	caption {
+		border-bottom: none;
 	}
 }
 

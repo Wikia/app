@@ -22,22 +22,13 @@ $wide-table-border: 5px solid rgb(215,232,242);
 
 //handling wide Tables
 .bigTable{
+	border: 1px solid $border-color;
+
 	position: relative;
 
 	-webkit-overflow-scrolling: touch;
 
 	max-width: 100%;
-	margin-top: $page-padding;
-
-	border: 1px solid $border-color;
-
-	-webkit-transition: border .2s;
-	-moz-transition: border .2s;
-	-o-transtion: border .2s;
-
-	table {
-		border: none;
-	}
 
 	&.active {
 		table {

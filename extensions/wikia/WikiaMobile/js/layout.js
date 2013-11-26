@@ -34,7 +34,7 @@ require(['sections', 'media', require.optional('wikia.cache'), 'wikia.loader', '
 			}
 
 			require([require.optional('tables')], function(t){
-				t && t.process($(selector).not('.artSec table, table table'));
+				t && t.process($(selector).not('table table, fake'));
 
 				//make it available for sections on open so tables can be processed as well
 				tablesModule = t;
