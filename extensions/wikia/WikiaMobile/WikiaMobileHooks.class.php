@@ -175,7 +175,8 @@ class WikiaMobileHooks {
 			$text = preg_replace( '/<\/?(b|u|i|a|em|strong){1}(\s+[^>]*)*>/im', '', $text );
 
 			//$link contains the section edit link, add it to the next line to put it back
-			//ATM editing is not allowed in WikiaMobile
+			//ATM editing is now allowed in WikiaMobile for logged-in users
+            if(!F::app()->getGlobal('wgUser')->isAnon()){$link = '';}
 			$ret = "<h{$level} id=\"{$anchor}\" {$attribs}{$text}{$link}</h{$level}>";
 		}
 

@@ -35,11 +35,11 @@ class WikiaMobileEditorController extends WikiaController{
 		$app = F::app();
 
 		if ( $app->checkSkin( 'wikiamobile' ) ) {
-			$editPage->editFormTextBottom .= F::app()->renderView( __CLASS__, 'editPage' );
-
 			//We want mobile editing to be as clean as possible
 			WikiaMobileNavigationService::setSkipRendering( true );
 			WikiaMobileFooterService::setSkipRendering( true );
+            $editPage->editFormTextBottom .= F::app()->renderView( __CLASS__, 'editPage' );
+
 		}
 
 		return true;

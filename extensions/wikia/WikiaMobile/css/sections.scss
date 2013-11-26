@@ -72,14 +72,17 @@ h1, h2, h3{
 		top: 13px;
     }
 
-	//TODO:Find it in core and do not print it out in mobile skin
-	.editsection {
-        margin-left:10px;
+	//
+    .editsection{
+      background-image:url('/extensions/wikia/WikiaMobile/images/edit_section.png');
+      display:inline-block;
+      //position:absolute;
+      //right:0px;
 
-      font-size: 0.5em;
-        line-height:1.0em;
-        color: black;
-	}
+      line-height:1.0em;
+      //width:50px;
+      height:50px;
+    }
     .editsection a:active{
       font-size: 1em;
     }

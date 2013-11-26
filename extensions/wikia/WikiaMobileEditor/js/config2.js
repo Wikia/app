@@ -373,7 +373,7 @@ define( 'config', ['editor', 'wikia.mustache', 'wikia.loader', 'toast'], functio
 
             type: loader.MULTI,
             resources: {
-                mustache: '/extensions/wikia/WikiaMobileEditor/templates/WikiaMobileEditorController_tagList.mustache'
+                mustache: '/extensions/wikia/WikiaMobileEditor/templates/WikiaMobileEditorController_preview.mustache'
                 + ',/extensions/wikia/WikiaMobileEditor/templates/WikiaMobileEditorController_customTags.mustache'
                    + ',/extensions/wikia/WikiaMobileEditor/templates/WikiaMobileEditorController_customTag.mustache'
             }
