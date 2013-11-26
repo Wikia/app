@@ -163,10 +163,8 @@ ve.ui.WikiaSourceModeDialog.prototype.onParseSuccess = function( response ) {
 	target.deactivating = true;
 	target.tearDownToolbarButtons();
 	target.detachToolbarButtons();
-	if ( this.saveDialog ) {
-		target.saveDialog.reset();
-		target.saveDialog.close();
-	}
+	target.saveDialog.reset();
+	target.saveDialog.close();
 
 	target.$document.blur();
 	target.$document = null;
