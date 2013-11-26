@@ -20,21 +20,26 @@ $dark-border: #D8D8D8;
 
 	counter-reset: level1, level2, level3;
 
-	z-index: 101;
-
 	&.side-menu-capable {
 		left: 0;
 
-		-webkit-transition: -webkit-transform .1s ease-out;
+
+
 		-webkit-transform: translate(-100%);
 		-moz-transform: translate(-100%);
 		transform: translate(-100%);
 	}
 
 	&.active {
+		-webkit-transition: -webkit-transform .1s ease-out;
+		-moz-transition: -moz-transform .1s ease-out;
+		transition: transform .1s ease-out;
+
 		-webkit-transform: translate(0);
 		-moz-transform: translate(0);
 		transform: translate(0);
+
+		z-index: 11;
 	}
 
 	header {
