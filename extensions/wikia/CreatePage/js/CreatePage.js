@@ -82,10 +82,9 @@ var CreatePage = {
 								onElementClick,
 								name;
 
-							createPageModal.show();
-
-							createPageModal.bind( 'create', function() {
-								e.preventDefault();
+							createPageModal.bind( 'create', function( event ) {
+								event.preventDefault();
+								createPageModal.deactivate();
 								CreatePage.submitDialog( false );
 							});
 
@@ -113,6 +112,8 @@ var CreatePage = {
 							CreatePage.setPageLayout( data.defaultOption );
 
 							$( '#wpCreatePageDialogTitle' ).focus();
+
+							createPageModal.show();
 
 							CreatePage.loading = false;
 						});
