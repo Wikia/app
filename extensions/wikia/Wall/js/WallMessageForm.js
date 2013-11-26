@@ -14,7 +14,7 @@
 				uiFactory.init( [ 'modal' ] ).then( function( uiModal ) {
 					var previewModalConfig = {
 							vars: {
-								id: 'ForumPoliciesModal',
+								id: 'WallPreviewModal',
 								size: 'medium',
 								content: '<div class="WallPreview"><div class="WikiaArticle"></div></div>',
 								title: $.msg( 'preview' ),
