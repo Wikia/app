@@ -2,10 +2,10 @@
 
 // Toolbar icons
 .oo-ui-icon-undo {
-	@include ve-icon(arched-arrow-rtl, ve);
+	@include ve-icon(arched-arrow-rtl, oo);
 }
 .oo-ui-icon-redo {
-	@include ve-icon(arched-arrow-ltr, ve);
+	@include ve-icon(arched-arrow-ltr, oo);
 }
 .oo-ui-icon-bold-b {
 	@include ve-icon(bold-b, ve);
@@ -14,10 +14,10 @@
 	@include ve-icon(italic-i, ve);
 }
 .oo-ui-icon-link {
-	@include ve-icon(link, ve);
+	@include ve-icon(link, oo);
 }
 .oo-ui-icon-clear {
-	@include ve-icon(clear, ve);
+	@include ve-icon(clear, oo);
 }
 .oo-ui-icon-number-list {
 	@include ve-icon(number-list-ltr, ve);
@@ -29,13 +29,13 @@
 	@include ve-icon(media, wikia);
 }
 .oo-ui-icon-help {
-	@include ve-icon(help, ve);
+	@include ve-icon(help, oo);
 }
 .oo-ui-icon-settings {
-	@include ve-icon(settings, ve);
+	@include ve-icon(settings, oo);
 }
 .oo-ui-icon-code {
-	@include ve-icon(code, ve);
+	@include ve-icon(code, mw);
 }
 .oo-ui-icon-strikethrough-s {
 	@include ve-icon(strikethrough-s, ve);
@@ -65,31 +65,31 @@
 	@include ve-icon(template, mw);
 }
 .oo-ui-icon-comment {
-	@include ve-icon(comment, ve);
+	@include ve-icon(comment, oo);
 }
 .oo-ui-icon-close {
-	@include ve-icon(close, ve);
+	@include ve-icon(close, oo);
 }
 .oo-ui-icon-tag {
-	@include ve-icon(tag, ve);
+	@include ve-icon(tag, oo);
 }
 .oo-ui-icon-language {
 	@include ve-icon(language, ve);
 }
 .oo-ui-icon-remove {
-	@include ve-icon(remove, ve);
+	@include ve-icon(remove, oo);
 }
 .oo-ui-icon-previous {
-	@include ve-icon(move-rtl, ve);
+	@include ve-icon(move-rtl, oo);
 }
 .ve-init-mw-viewPageTarget-saveDialog-prevButton {
-	@include ve-icon(move-rtl, ve);
+	@include ve-icon(move-rtl, oo);
 }
 .ve-init-mw-viewPageTarget-saveDialog-closeButton {
 	@include ve-icon(collapse, ve);
 }
 .oo-ui-icon-add-item {
-	@include ve-icon(add-item, ve);
+	@include ve-icon(add-item, oo);
 }
 .oo-ui-icon-template {
 	@include ve-icon(template, mw);
@@ -98,10 +98,10 @@
 	@include ve-icon(source, mw);
 }
 .oo-ui-icon-expand {
-	@include ve-icon(expand, ve);
+	@include ve-icon(expand, oo);
 }
 .oo-ui-icon-down {
-	@include ve-icon(down, ve);
+	@include ve-icon(down, oo);
 }
 .oo-ui-icon-upload {
 	@include ve-icon(upload, wikia);
@@ -116,4 +116,3 @@
 .oo-ui-icon-checked {
 	@include ve-icon(checked, wikia);
 }
-
