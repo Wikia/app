@@ -50,15 +50,19 @@ require( ['ads', 'sloth', 'jquery', 'JSMessages', 'wikia.window', 'wikia.log'], 
 		}
 	} );
 
-	if ( showInContent ) {
-		$firstSection.before( '<div id=wkAdInContent class=ad-in-content />' );
-		lazyLoadAd( doc.getElementById( 'wkAdInContent' ), 'MOBILE_IN_CONTENT' );
+	if ( window.wgArticleId ) {
+		if ( showInContent ) {
+			$firstSection.before( '<div id=wkAdInContent class=ad-in-content />' );
+			lazyLoadAd( doc.getElementById( 'wkAdInContent' ), 'MOBILE_IN_CONTENT' );
+		}
+
+		if ( showBeforeFooter ) {
+			$footer.after( '<div id=wkAdBeforeFooter class=ad-in-content />' );
+			lazyLoadAd( doc.getElementById( 'wkAdBeforeFooter' ), 'MOBILE_PREFOOTER' );
+		}
 	}
 
-	if ( showBeforeFooter ) {
-		$footer.after( '<div id=wkAdBeforeFooter class=ad-in-content />' );
-		lazyLoadAd( doc.getElementById( 'wkAdBeforeFooter' ), 'MOBILE_PREFOOTER' );
-	}
+
 
 	sloth();
 } );
