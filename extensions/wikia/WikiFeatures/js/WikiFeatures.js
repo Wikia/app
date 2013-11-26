@@ -1,35 +1,6 @@
 var WikiFeatures = {
 	lockedFeatures: {},
 	init: function() {
-<<<<<<< HEAD
-		WikiFeatures.feedbackDialogPrototype = $('.FeedbackDialog');
-		WikiFeatures.deactivateDialogPrototype = $('.DeactivateDialog');
-		WikiFeatures.sliders = $('#WikiFeatures .slider');
-
-		if(!Modernizr.csstransforms) {
-			$('.representation').removeClass('promotion');
-		}
-
-		WikiFeatures.sliders.click(function(e) {
-			var feature = $(this).closest('.feature');
-			var featureName = feature.data('name');
-
-			if(!WikiFeatures.lockedFeatures[featureName]) {
-				var el = $(this);
-				var isEnabled = el.hasClass('on');
-				if(isEnabled) {
-					var featureHeading = feature.find('h3').contents().eq(0).text().trim();
-					var modalClone = WikiFeatures.deactivateDialogPrototype.clone();
-					var modalHeading = modalClone.find('h1');
-					modalHeading.text(modalHeading.text().replace(/\$1/g, featureHeading));
-					var modal = modalClone.makeModal({width:670});
-					modal.find('.cancel, .confirm').click(function() {
-						if($(this).hasClass('confirm')) {
-							WikiFeatures.toggleFeature(featureName, false);
-							el.toggleClass('on');
-						}
-						modal.closeModal();
-=======
 		WikiFeatures.feedbackDialogPrototype = $( '.FeedbackDialog' );
 		WikiFeatures.sliders = $( '#WikiFeatures .slider' );
 		
@@ -102,17 +73,12 @@ var WikiFeatures = {
 								deactivateModal.show();
 							});
 						});
->>>>>>> Converted "Disable feature" modal
 					});
 				} else {
 					WikiFeatures.toggleFeature( featureName, true );
 					el.toggleClass( 'on' );
 				}
 			}
-<<<<<<< HEAD
-
-=======
->>>>>>> Converted "Disable feature" modal
 		});
 
 		$('#WikiFeatures .feedback').click(function(e) {
