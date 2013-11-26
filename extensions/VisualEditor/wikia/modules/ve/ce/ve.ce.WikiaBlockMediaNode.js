@@ -12,10 +12,7 @@
  * @abstract
  * @class
  * @extends ve.ce.BranchNode
- * @mixins ve.ce.ProtectedNode
- * @mixins ve.ce.FocusableNode
- * @mixins ve.ce.RelocatableNode
- * @mixins ve.ce.MWResizableNode
+ * @mixins ve.ce.MWImageNode
  *
  * @constructor
  * @param {ve.dm.WikiaBlockMediaNode} model Model to observe
