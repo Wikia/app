@@ -22,6 +22,7 @@ class TvApiController extends WikiaApiController {
 	private $url;
 
 	public function getEpisode() {
+		global $wgStagingEnvironment, $wgDevelEnvironment;
 
 		if( $this->getApiVersion() !== 'test')
 		{
@@ -45,7 +46,7 @@ class TvApiController extends WikiaApiController {
 		if ( empty( $responseValues[ 'contentUrl' ] ) ) { //only for unit test
 			$responseValues[ 'contentUrl' ] = $this->url . self::API_URL . $responseValues[ 'articleId' ];
 		}
-		if ( WikiFactory::isCurrentStagingHost() ) {
+		if ( $wgStagingEnvironment || $wgDevelEnvironment ) {
 			$responseValues[ 'contentUrl' ] = preg_replace_callback( self::WIKIA_URL_REGEXP, array( $this, 'replaceHost' ), $responseValues[ "contentUrl" ] );
 			$responseValues[ 'url' ] = preg_replace_callback( self::WIKIA_URL_REGEXP, array( $this, 'replaceHost' ), $responseValues[ "url" ] );
 		}

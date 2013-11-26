@@ -26,17 +26,6 @@ class WikiFactoryTest extends WikiaBaseTest {
 		}
 	}
 
-	public function testIsCurrentStagingHostTrue()
-	{
-		$this->assertTrue(WikiFactory::isCurrentStagingHost('teststagging'));
-		$this->assertTrue(WikiFactory::isCurrentStagingHost('dev-mtydevbox'));
-	}
-
-	public function testIsCurrentStagingHostFalse()
-	{
-		$this->assertFalse(WikiFactory::isCurrentStagingHost('production1'));
-	}
-
 	public function testGetCurrentStagingHostSandbox()
 	{
 		$this->assertEquals('teststagging.muppet.wikia.com',

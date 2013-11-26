@@ -1028,30 +1028,6 @@ class WikiFactory {
 
 
 	/**
-	 * Determine if current hostname is devbox or sandbox.
-	 * @param string $host for testing
-	 * @return bool
-	 */
-	public static function isCurrentStagingHost($host = null)
-	{
-		if($host === null)
-		{
-			$host = gethostname();
-		}
-		global $wgStagingList;
-		if(in_array($host,$wgStagingList)){
-			return true;
-		}
-
-		if(preg_match('/^dev-([a-z0-9]+)$/i',$host,$m))
-		{
-			return true;
-		}
-
-		return false;
-	}
-
-	/**
 	 * Convert given host to current environment (devbox or sandbox).
 	 * @param string $dbName
 	 * @param string $default if on main wikia

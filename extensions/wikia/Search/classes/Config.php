@@ -886,7 +886,6 @@ class Config
 	 */
 	public function setWikiId( $id ) {
 		$this->wikiId = $id;
-		//die("wikiid:$id");
 		return $this;
 	}
 
