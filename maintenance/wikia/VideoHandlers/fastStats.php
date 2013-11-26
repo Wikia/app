@@ -4,6 +4,11 @@ class FastStats {
 	public static function run( DatabaseMysql $db, $test = false, $verbose = false, $params ) {
 		$dbname = $params['dbname'];
 
+		// Don't bother getting stats for the video wiki
+		if ( $dbname == 'video151' ) {
+			return;
+		}
+
 		// Get total local videos
 		$sql = 'SELECT COUNT(*) as local_count FROM video_info WHERE premium = 0';
 		$result = $db->query( $sql );
