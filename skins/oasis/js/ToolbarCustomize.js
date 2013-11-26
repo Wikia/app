@@ -71,11 +71,11 @@
 		},
 
 		addIcons: function( html ) {
-			html += '<img src="'+wgBlankImgUrl+'" class="sprite edit-pencil">' +
-				'<img src="'+wgBlankImgUrl+'" class="sprite trash">';
+			html += '<img src="' + wgBlankImgUrl + '" class="sprite edit-pencil">' +
+				'<img src="' + wgBlankImgUrl + '" class="sprite trash">';
 
 			if( !isIPad ) {
-				html += '<img src="'+wgBlankImgUrl+'" class="sprite drag">';
+				html += '<img src="' + wgBlankImgUrl + '" class="sprite drag">';
 			}
 
 			return html;
@@ -313,8 +313,8 @@
 				.keypress(function(e){if (e.which == 13) {return false;}});
 
 			// Toolbar list
-			var optionList = this.w.find('.options-list');
-			this.tree = new TC.OptionsTree(optionList);
+			var optionList = this.w.find( '.options-list' );
+			this.tree = new TC.OptionsTree( optionList );
 
 			// temporary fix drag and drop issues on iPad
 			// TODO: drag and drop functionality should be refactored when replacing this modal
@@ -404,13 +404,13 @@
 		initItem: function( tree, item, el ) {
 			// add highlighting on iPad
 			if ( isIPad ) {
-				el.click(function (event) {
+				el.click(function( event ) {
 					tree.el.children().removeClass( 'hover' );
 					$( event.currentTarget ).addClass( 'hover' );
 				});
 			}
-			el.find('.edit-pencil').click($.proxy(this.renameItem,this));
-			el.find('.trash').click($.proxy(this.deleteItem,this));
+			el.find( '.edit-pencil' ).click( $.proxy( this.renameItem,this ) );
+			el.find( '.trash' ).click( $.proxy( this.deleteItem,this ) );
 		},
 
 		renameItem: function( evt ) {
