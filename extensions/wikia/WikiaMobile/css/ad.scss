@@ -29,6 +29,8 @@ $slotZIndex: 4000;
 
 		position: relative;
 		margin: 0 auto;
+		//compensate for wkPage margin
+		left: -3.125%;
 
 		padding: 15px 0;
 		height: 270px;
