@@ -1,7 +1,9 @@
 <?php
 
 class FastStats {
-	public static function lvsStats( DatabaseMysql $db, $dbname, $verbose = false, $test = false ) {
+	public static function run( DatabaseMysql $db, $test = false, $verbose = false, $params ) {
+		$dbname = $params['dbname'];
+
 		// Get total local videos
 		$sql = 'SELECT COUNT(*) as local_count FROM video_info WHERE premium = 0';
 		$result = $db->query( $sql );
