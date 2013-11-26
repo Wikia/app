@@ -62,7 +62,7 @@ var CreatePage = {
 								buttons: [
 									{
 										vars: {
-											value: data.add_page_label,
+											value: data.addPageLabel,
 											classes: [ 'normal', 'primary' ],
 											image_class: 'new',
 											data: [

@@ -205,7 +205,7 @@ function wfCreatePageAjaxGetDialog() {
 	$body['width'] = $wgCreatePageDialogWidth;
 	$body['defaultOption'] = $defaultLayout;
 	$body['title'] = wfMsg( 'createpage-dialog-title' );
-	$body['add_page_label'] = wfMsg( 'button-createpage' );
+	$body['addPageLabel'] = wfMsg( 'button-createpage' );
 
 	$response = new AjaxResponse( json_encode( $body ) );
 	$response->setCacheDuration( 0 ); // no caching
