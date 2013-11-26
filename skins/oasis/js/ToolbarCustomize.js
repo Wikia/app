@@ -71,15 +71,11 @@
 		},
 
 		addIcons: function( html ) {
+			html += '<img src="'+wgBlankImgUrl+'" class="sprite edit-pencil">' +
+				'<img src="'+wgBlankImgUrl+'" class="sprite trash">';
+
 			if( !isIPad ) {
-				html +=
-					'<img src="'+wgBlankImgUrl+'" class="sprite edit-pencil">'
-					+'<img src="'+wgBlankImgUrl+'" class="sprite trash">'
-					+'<img src="'+wgBlankImgUrl+'" class="sprite drag">';
-			} else {
-				html +=
-					'<img src="'+wgBlankImgUrl+'" class="sprite edit-pencil">'
-					+'<img src="'+wgBlankImgUrl+'" class="sprite trash">';
+				html += '<img src="'+wgBlankImgUrl+'" class="sprite drag">';
 			}
 
 			return html;
@@ -319,12 +315,15 @@
 			// Toolbar list
 			var optionList = this.w.find('.options-list');
 			this.tree = new TC.OptionsTree(optionList);
-			if( isIPad ) {
+
+			// temporary fix drag and drop issues on iPad
+			// TODO: drag and drop functionality should be refactored when replacing this modal
+			if ( isIPad ) {
 				optionList.addClass( 'on-ipad' );
-				this.tree.on('itembuild',$.proxy(this.initItemForIPad,this));
 			} else {
-				this.tree.on('itembuild',$.proxy(this.initItem,this));
+				optionList.addClass( 'no-ipad' );
 			}
+			this.tree.on('itembuild',$.proxy(this.initItem,this));
 			this.tree.load(this.data.options);
 			this.w.find('.reset-defaults a').click($.proxy(this.loadDefaults,this));
 
@@ -403,17 +402,15 @@
 		},
 
 		initItem: function( tree, item, el ) {
+			// add highlighting on iPad
+			if ( isIPad ) {
+				el.click(function (event) {
+					tree.el.children().removeClass( 'hover' );
+					$( event.currentTarget ).addClass( 'hover' );
+				});
+			}
 			el.find('.edit-pencil').click($.proxy(this.renameItem,this));
 			el.find('.trash').click($.proxy(this.deleteItem,this));
-		},
-
-		initItemForIPad: function( tree, item, el ) {
-			el.click( function( e ) {
-				e.preventDefault();
-				tree.el.children().removeClass( 'hover' );
-				$(this).addClass( 'hover' );
-			} );
-			this.initItem( tree, item, el );
 		},
 
 		renameItem: function( evt ) {
