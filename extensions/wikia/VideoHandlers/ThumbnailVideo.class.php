@@ -111,17 +111,17 @@ class ThumbnailVideo extends ThumbnailImage {
 	function toHtml( $options = array() ) {
 		$app = F::app();
 
+		if ( count( func_get_args() ) == 2 ) {
+			throw new MWException( __METHOD__ .' called in the old style' );
+		}
+
 		// Migrate to new system which uses a template instead of this toHtml method
 		if( !empty( $options[ 'useTemplate' ] ) ) {
-			return $app->renderView( 'VideoHandler', 'thumbnail', [
+			return $app->renderView( 'VideoThumbnailController', 'thumbnail',  [
 				'options' => $options,
 				'file' => $this->file,
 				'url' => $this->url,
 			] );
-		}
-
-		if ( count( func_get_args() ) == 2 ) {
-			throw new MWException( __METHOD__ .' called in the old style' );
 		}
 
 		// Check if the editor is requesting, if so, render image thumbnail instead
