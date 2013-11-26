@@ -64,6 +64,7 @@ var CreatePage = {
 										vars: {
 											value: data.add_page_label,
 											classes: [ 'normal', 'primary' ],
+											image_class: 'new',
 											data: [
 												{
 													key: 'event',

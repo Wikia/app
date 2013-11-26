@@ -57,8 +57,12 @@
 						"value": "string"
 					},
 					"description" : "styleguide-description-link-button-data"
+				},
+				"image_class": {
+					"templateVar" : "image_class",
+					"type" : "string",
+					"description" : "styleguide-description-link-button-image_class"
 				}
-
 			}
 		},
 		"input" : {
@@ -184,6 +188,11 @@
 						"value": "string"
 					},
 					"description" : "styleguide-description-simple-button-data"
+				},
+				"image_class": {
+					"templateVar" : "image_class",
+					"type" : "string",
+					"description" : "styleguide-description-simple-button-image_class"
 				}
 			}
 		}
