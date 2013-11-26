@@ -37,7 +37,7 @@ define('tables', ['events', 'track', 'wikia.window', 'jquery', 'sloth'], functio
 
 	function process(tables){
 		//if the table width is bigger than any screen dimension (device can rotate)
-		//or taller than the allowed vertical size, then wrap it and/or add it to
+		//then wrap it and add it to
 		//the list of handled tables for speeding up successive calls
 		handledTables = tables.add(handledTables);
 
