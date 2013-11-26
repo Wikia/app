@@ -1036,18 +1036,18 @@ class WikiFactory {
 	 */
 	public static function getCurrentStagingHost($dbName='', $default='', $host = null)
 	{
-		if($host === null)
-		{
+		global $wgStagingList;
+
+		if ( $host === null ) {
 			$host = gethostname();
 		}
-		global $wgStagingList;
-		if(in_array($host,$wgStagingList)){
-			return $host. '.' . ($dbName ? $dbName : 'www' ).'.wikia.com';
+
+		if ( in_array( $host, $wgStagingList ) ) {
+			return $host . '.' . ( $dbName ? $dbName : 'www' ) . '.wikia.com';
 		}
 
-		if(preg_match('/^dev-([a-z0-9]+)$/i',$host,$m))
-		{
-			return $dbName.'.'.$m[1].'.wikia-dev.com';
+		if ( preg_match( '/^dev-([a-z0-9]+)$/i', $host, $m ) ) {
+			return $dbName . '.' . $m[ 1 ] . '.wikia-dev.com';
 		}
 
 		return $default;

@@ -66,7 +66,13 @@ abstract class AbstractSelect
 	 * @var string
 	 */
 	const SOLR_CORE_CROSSWIKI = 'xwiki';
-	
+
+	/**
+	 * Number of articles found to set WikiMatch
+	 * @var int
+	 */
+	const ARTICLES_NUM_WIKIMATCH = 50;
+
 	/**
 	 * Used for tracking
 	 * @var string
@@ -428,7 +434,7 @@ abstract class AbstractSelect
 			( !( $config->getCommercialUse() ) ||  (new \LicensedWikisService)->isCommercialUseAllowedById($wikiMatch->getId()) ) ) {
 			$result = $wikiMatch->getResult();
 			$hub = $config->getHub();
-			if ( $result['articles_i'] >= 50 &&
+			if ( $result['articles_i'] >= self::ARTICLES_NUM_WIKIMATCH &&
 				( $hub === null || strtolower($hub) === strtolower( $result['hub_s'] ) ) ) {
 				$config->setWikiMatch( $wikiMatch );
 			}
