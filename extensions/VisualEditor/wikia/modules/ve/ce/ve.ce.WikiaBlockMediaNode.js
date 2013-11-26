@@ -37,7 +37,6 @@ ve.ce.WikiaBlockMediaNode = function VeCeWikiaBlockMediaNode( model, config ) {
 
 OO.inheritClass( ve.ce.WikiaBlockMediaNode, ve.ce.BranchNode );
 
-// Need to mixin base class as well
 OO.mixinClass( ve.ce.WikiaBlockMediaNode, ve.ce.GeneratedContentNode );
 
 OO.mixinClass( ve.ce.WikiaBlockMediaNode, ve.ce.MWImageNode );
