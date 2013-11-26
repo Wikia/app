@@ -16,6 +16,10 @@ function ( sections, window, $, mustache, toc ) {
 		tocScroll,
 		inPageToc;
 
+	if ( sideMenuCapable ) {
+		$toc.addClass( 'side-menu-capable' );
+	}
+
 	/**
 	 * @desc Renders toc for a given page
 	 * @returns HTML String

@@ -12,7 +12,7 @@ $dark-border: #D8D8D8;
 
 #wkTOC {
 	position: fixed;
-	left: 0;
+	left: -260px;
 	top: 0;
 	bottom:0;
 	width: 260px;
@@ -20,12 +20,16 @@ $dark-border: #D8D8D8;
 
 	counter-reset: level1, level2, level3;
 
-	-webkit-transition: -webkit-transform .1s ease-out;
-	-webkit-transform: translate(-100%);
-	-moz-transform: translate(-100%);
-	transform: translate(-100%);
-
 	z-index: 101;
+
+	&.side-menu-capable {
+		left: 0;
+
+		-webkit-transition: -webkit-transform .1s ease-out;
+		-webkit-transform: translate(-100%);
+		-moz-transform: translate(-100%);
+		transform: translate(-100%);
+	}
 
 	&.active {
 		-webkit-transform: translate(0);
@@ -92,13 +96,17 @@ $level0-border-left-width: 5px;
 
 #scroller {
 	position: absolute;
-	-webkit-tap-highlight-color: rgba(0,0,0,0);
 	width: 100%;
 	min-height: 101%;
 	-webkit-transform: translateZ(0);
 	-moz-transform: translateZ(0);
 	-ms-transform: translateZ(0);
 	transform: translateZ(0);
+}
+
+#scroller, #wkTOCHandle {
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+
 	-webkit-touch-callout: none;
 	-webkit-user-select: none;
 	-moz-user-select: none;
