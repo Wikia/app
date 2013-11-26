@@ -93,8 +93,6 @@ define('modal', ['throbber', 'jquery'], function modal(throbber, $){
 
 		!created && setup();
 
-		$.event.trigger('ads:unfix');
-
 		var con = options.content,
 			tool = options.toolbar,
 			cap = options.caption,
@@ -216,8 +214,6 @@ define('modal', ['throbber', 'jquery'], function modal(throbber, $){
 						onClose();
 					}
 				},310);
-
-				$.event.trigger('ads:fix');
 			},10);
 
 			opened = false;

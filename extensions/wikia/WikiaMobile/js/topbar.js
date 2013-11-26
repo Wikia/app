@@ -233,13 +233,10 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'jquery', 'track', 'throb
 	}
 
 	function hidePage(){
-		$.event.trigger('ads:unfix');
 		$.event.trigger('curtain:show');
 	}
 
 	function showPage(){
-		$.event.trigger('ads:fix');
-
 		$navBar.removeClass();
 		$.event.trigger('curtain:hide');
 	}

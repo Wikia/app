@@ -5,21 +5,13 @@ function ( sections, window, $, mustache, toc ) {
 	'use strict';
 
 	//private
-	var bottom = 'bottom',
-		fixed = 'fixed',
-		disabled = 'disabled',
-		open = 'open',
+	var open = 'open',
 		active = 'active',
 		$document = $( window.document ),
 		$anchors,
-		$openOl,
-		timeout,
-		state,
-		$parent,
-		sideMenuCapable = (Features.positionfixed && Features.overflow),
+		sideMenuCapable = ( Features.positionfixed && Features.overflow ),
 		$ol,
 		inited,
-		lineHeight = 45,
 		$toc = $( '#wkTOC' ),
 		tocScroll,
 		inPageToc;
@@ -65,59 +57,13 @@ function ( sections, window, $, mustache, toc ) {
 		var isTogglable = $li.is( '.first-children' );
 
 		if ( isTogglable ) {
-			$li.siblings().removeClass( fixed + ' ' + bottom + ' ' + open );
-
-			if ( $li.toggleClass( open, force ).hasClass( open ) ) {
-				$openOl = $li.find( 'ol' ).first();
-				$parent = $openOl.parent();
-
-				//handleFixingLiElement();
-			} else {
-				state = null;
-				$li.removeClass( fixed + ' ' + bottom );
-
-				$openOl = null;
-			}
+			$li.toggleClass( open, force ).siblings().removeClass( open );
 
 			tocScroll.refresh();
 			tocScroll.scrollToElement( $li[0] );
 		}
 
 		return isTogglable;
-	}
-
-	/**
-	 * @desc Handles fixing and unfixing a section header in TOC
-	 * Fires on every scroll of a main ol of TOC
-	 */
-	function handleFixingLiElement () {
-		if ( !timeout && $openOl ) {
-			timeout = setTimeout( function () {
-				var scrollTop = $ol.scrollTop() + ( lineHeight * 2 ),
-					//when at the bottom I need to compensate for the fact it is getting position absolute
-					offsetTop = $openOl[0].offsetTop + (state === bottom ? lineHeight : 0);
-
-				//scroll is above current open section
-				if ( state !== disabled && scrollTop < offsetTop ) {
-					state = disabled;
-					$parent.removeClass( fixed );
-				} else if ( scrollTop >= offsetTop ) {
-					//scroll is on current open section
-					if ( offsetTop + $openOl.height() - scrollTop >= 0 ) {
-						if ( state !== fixed ) {
-							state = fixed;
-							$parent.removeClass( bottom ).addClass( fixed );
-						}
-					//scroll is under current open section
-					} else if ( state !== bottom ) {
-						state = bottom;
-						$parent.addClass( bottom );
-					}
-				}
-
-				timeout = null;
-			}, 75 );
-		}
 	}
 
 	/**
@@ -209,7 +155,6 @@ function ( sections, window, $, mustache, toc ) {
 
 		onSectionChange( null, sections.current()[0], true );
 		$.event.trigger( 'curtain:show' );
-		$.event.trigger( 'ads:unfix' );
 	}
 
 	/**
@@ -218,9 +163,7 @@ function ( sections, window, $, mustache, toc ) {
 	function onClose () {
 		$document.off( 'section:changed', onSectionChange );
 		$.event.trigger( 'curtain:hide' );
-		$.event.trigger( 'ads:fix' );
 	}
-
 
 	$document.on( 'curtain:hidden', function () {
 		$toc.removeClass( active );

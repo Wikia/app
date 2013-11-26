@@ -59,9 +59,6 @@
 </div>
 <?= $jsBodyFiles ;?>
 <?= $jsExtensionPackages ?>
-<?= $inContentAd ;?>
-<?= $modalInterstitial ;?>
-<?= $floatingAd ;?>
 <?= $trackingCode ;?>
 </body>
 </html>

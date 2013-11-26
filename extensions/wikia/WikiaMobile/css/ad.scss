@@ -11,57 +11,14 @@ $slotFooterColor: #666;
 //and low enough so expandables can be above it
 $slotZIndex: 4000;
 
-#wkFloatingAd {
-	position: relative;
-	-webkit-tap-highlight-color: rgba( 0,0,0,0 );
-	-webkit-focus-ring-color: rgba( 0,0,0,0 );
-
-	text-align: center;
-
-	max-height: $slotFooterHeight;
-
-	&.over {
-		z-index: $slotZIndex;
-	}
-
-	&.fixed {
-		position: fixed;
-		bottom: 0;
-
-		margin: 0;
-		padding: 0;
-
-		width: 100%;
-
-		background-color: $slotFooterColor;
-	}
-
-	&.jsfix {
-		position: absolute;
-	}
-
-	> * {
-		//Footer Ad
-		//force Ad content to stick in place
-		//and don't exceed allowed dimensions
-		margin: $slotFooterMargin auto;
-		max-width: $slotFooterWidthMax;
-		max-height: $slotFooterHeight;
-	}
-}
-
 #wkAdTopLeader {
-	visibility: hidden;
+	background-color: white;
 
-	&.show {
-		visibility: visible;
+	width: $slotFooterWidthMax;
+	height: $slotFooterHeight;
 
-		width: $slotFooterWidthMax;
-		height: $slotFooterHeight;
-
-		margin: 0 auto;
-		text-align: center;
-	}
+	margin: 0 auto;
+	text-align: center;
 }
 
 .ad-in-content {
@@ -109,11 +66,4 @@ $slotZIndex: 4000;
 		font-size: 9px;
 		color: $ad-label-color;
 	}
-}
-
-//when ads are loaded and "floating" at the bottom
-//then make sure there's enough space to host them
-//without getting the adslot overlaying the links
-.ads {
-	padding-bottom: 60px;
 }

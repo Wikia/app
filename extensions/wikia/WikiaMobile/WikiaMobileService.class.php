@@ -38,31 +38,21 @@ class WikiaMobileService extends WikiaService {
 	private function handleAds(){
 		wfProfileIn( __METHOD__ );
 
-		$floatingAd = '';
 		$topLeaderBoardAd = '';
-		$inContentAd = '';
-		$modalInterstitial = '';
 
 		$mobileAdService = new WikiaMobileAdService();
 
-		if ($mobileAdService->shouldLoadAssets()) {
+		if ( $mobileAdService->shouldLoadAssets() ) {
 			$this->jsBodyPackages[] = 'wikiamobile_js_ads';
 
-			if ($mobileAdService->shouldShowAds()) {
-				$floatingAd = $this->app->renderView( 'WikiaMobileAdService', 'floating' );
+			if ( $mobileAdService->shouldShowAds() ) {
 				$topLeaderBoardAd = $this->app->renderView( 'WikiaMobileAdService', 'topLeaderBoard' );
-				$inContentAd = $this->app->renderView( 'WikiaMobileAdService', 'inContent' );
-				$modalInterstitial = $this->app->renderView( 'WikiaMobileAdService', 'modalInterstitial' );
 				$this->globalVariables['wgShowAds'] = true;
 				$this->globalVariables['wgUsePostScribe'] = true; /** @see ADEN-666 */
 			}
 		}
 
-		//Ad units
-		$this->response->setVal( 'floatingAd', $floatingAd );
 		$this->response->setVal( 'topLeaderBoardAd', $topLeaderBoardAd );
-		$this->response->setVal( 'inContentAd', $inContentAd );
-		$this->response->setVal( 'modalInterstitial', $modalInterstitial );
 
 		wfProfileOut( __METHOD__ );
 	}
