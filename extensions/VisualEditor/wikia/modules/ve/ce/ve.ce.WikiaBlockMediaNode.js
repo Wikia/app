@@ -188,7 +188,7 @@ ve.ce.WikiaBlockMediaNode.prototype.onSplice = function () {};
  */
 ve.ce.WikiaBlockMediaNode.prototype.onResizableResizing = function ( dimensions ) {
 	ve.ce.ResizableNode.prototype.onResizableResizing.call( this, dimensions );
-	this.$element.css( 'width', dimensions.width + 2 );
+	this.$thumb.css( 'width', dimensions.width + 2 );
 };
 
 /**
@@ -249,6 +249,7 @@ ve.ce.WikiaBlockMediaNode.prototype.update = function () {
 	this.$relocatable = this.$element;
 	this.$image = $image;
 	this.$resizable = $image;
+	this.$thumb = $thumb;
 
 	// This should be called last so the listeners will get the same DOM
 	// structure and jQuery object references they do on initialization.
