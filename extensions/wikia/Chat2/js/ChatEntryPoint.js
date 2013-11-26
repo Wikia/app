@@ -190,7 +190,7 @@ var ChatEntryPoint = {
 							id: 'JoinChatModal',
 							size: 'small',
 							content: html,
-							title: $.msg( 'chat-start-a-chat' ),
+							title: $.msg( 'chat-start-a-chat' )
 						}
 					};
 				uiModal.createComponent( joinModalConfig, function ( joinModal ) {
