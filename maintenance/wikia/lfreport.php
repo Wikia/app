@@ -153,6 +153,10 @@ class LyricFindReport extends Maintenance {
 					
 					list( $song, $artist, $amgid, $gn_id ) = $this->extractParams( $title_name, $page->getContent() );
 					
+					if ( empty( $amgid ) ) {
+						$amgid = 0;
+					}
+				
 					if ( $song && $artist ) {
 						$key = sprintf( "%s:%s", $artist, $song );
 						
@@ -166,6 +170,8 @@ class LyricFindReport extends Maintenance {
 						];
 						if ( $this->namespaceId == 220 ) {
 							$csvrow[ $key ][ 6 ] = $gn_id;
+						} else {
+							$csvrow[ $key ][ 6 ] = 0;
 						}
 					}
 				}
