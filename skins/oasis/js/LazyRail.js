@@ -21,7 +21,20 @@ $(function() {
 			type: 'get',
 			format: 'json',
 			callback: function(data) {
-				var zidConfig = {minColumnWidth: 350, selector: '.module, .wikia-ad'};
+				var zidConfig = { minColumnWidth: 350, selector: '.module, .wikia-ad',
+					onColumnCountChangeCallback: function ( columnsCount, elements ) {
+
+						$.each( elements, function ( i, v ) {
+							var elem = $(v);
+							if ( elem.hasClass( 'wikia-ad' ) ) {
+								if ( columnsCount > 1 ) {
+									elem.hide();
+								} else {
+									elem.show();
+								}
+							}
+						} );
+					} };
 
 				rail.find('.loading').remove().end().append(data.railLazyContent + data.js);
 

@@ -25,7 +25,8 @@
 		selector: '.item',
 		minColumnWidth: 225,
 		gutter: 20,
-		ThrottleThreshold: 50
+		ThrottleThreshold: 50,
+		onColumnCountChangeCallback: null
 	};
 
 	Zid.prototype = {
@@ -44,6 +45,7 @@
 			this.isResizing = false;
 			this.minBreakPoint = 1;
 			this.maxBreakPoint = 1;
+			this.onColumnCountChangeCallback = this.options.onColumnCountChangeCallback;
 
 			this.columns = [];
 
@@ -54,8 +56,8 @@
 			// add class 'zid' to container
 			$( this.box ).addClass( 'zid' );
 			// bind on resize
-			$( window ).on( 'resize', $.throttle( this.options.ThrottleThreshold, $.proxy( container.resize, this ) ) );
-			$( window ).on( 'orientationchange', $.proxy( container.resize, this ));
+			$( window ).on( 'resize', $.throttle( this.options.ThrottleThreshold, $.proxy( container.resize, this ) ) )
+				.on( 'orientationchange', $.proxy( container.resize, this ));
 		},
 
 		/**
@@ -175,6 +177,11 @@
 			this.columns = [];
 			// build columns
 			this._setCols();
+
+			if ( typeof this.onColumnCountChangeCallback === 'function' ) {
+				this.onColumnCountChangeCallback(this.cols, this.itemsArr);
+			}
+
 			// render items in columns
 			this.isResizing = true;
 			this._renderItems( 'append', this.itemsArr );
