@@ -52,7 +52,7 @@ var CreatePage = {
 			function( data ) {
 				require( [ 'wikia.ui.factory' ], function( uiFactory ) {
 					uiFactory.init( [ 'modal' ] ).then( function( uiModal ) {
-						var newPageModalConfig = {
+						var createPageModalConfig = {
 							vars: {
 								id: 'CreatePageModalDialog',
 								size: 'medium',
@@ -64,11 +64,11 @@ var CreatePage = {
 										vars: {
 											value: data.addPageLabel,
 											classes: [ 'normal', 'primary' ],
-											image_class: 'new',
+											imageClass: 'new',
 											data: [
 												{
 													key: 'event',
-													value: 'createpage'
+													value: 'create'
 												}
 											]
 										}
@@ -76,15 +76,15 @@ var CreatePage = {
 								]
 							}
 						};
-						uiModal.createComponent( newPageModalConfig, function( newPageModal ) {
+						uiModal.createComponent( createPageModalConfig, function( createPageModal ) {
 							var idToken,
 								elm,
 								onElementClick,
 								name;
 
-							newPageModal.show();
+							createPageModal.show();
 
-							newPageModal.bind( 'createpage', function() {
+							createPageModal.bind( 'create', function() {
 								e.preventDefault();
 								CreatePage.submitDialog( false );
 							});
