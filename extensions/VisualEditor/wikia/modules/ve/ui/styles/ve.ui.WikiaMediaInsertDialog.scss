@@ -1,9 +1,9 @@
 @import "skins/oasis/css/core/color";
 @import "skins/oasis/css/core/layout";
+@import "skins/oasis/css/helpers/table-layout";
 @import "skins/oasis/css/mixins/box-sizing";
 @import "skins/oasis/css/mixins/clearfix";
 @import "skins/oasis/css/mixins/gradient";
-
 @import "mixins/ve-icon";
 
 $size-cart-item: 60px;
@@ -116,6 +116,14 @@ $width-cart: 101px;
 		margin-left: $width-media-item-max + $width-gutter;
 	}
 
+	.ve-ui-labeledElement-label {
+		padding-top: 0;
+	}
+
+	.ve-ui-textInputWidget {
+		@extend .table-layout;
+	}
+
 	.ve-ui-wikiaMediaPageWidget-item {
 		float: left;
 		text-align: center;
@@ -130,17 +138,17 @@ $width-cart: 101px;
 	}
 
 	.ve-ui-wikiaMediaPageWidget-item-extension {
-		margin-left: $width-gutter / 4;
-		vertical-align: middle;
+		padding-left: $width-gutter / 4;
 	}
 
-	.ve-ui-textInputWidget {
+	.ve-ui-textInputWidget,
+	.ve-ui-wikiaMediaPageWidget-item-license {
 		margin-bottom: $width-gutter;
 		width: 100%;
 	}
 
-	&.photo .ve-ui-textInputWidget input {
-		width: 85%;
+	.ve-ui-wikiaMediaPageWidget-item-license select {
+		width: 100%;
 	}
 
 	&.video {
@@ -176,12 +184,7 @@ $width-cart: 101px;
 }
 
 .ve-ui-wikiaMediaQueryWidget-wrapper {
-	display: table;
-	width: 100%;
-	> div {
-		display: table-cell;
-		vertical-align: middle;
-	}
+	@extend .table-layout;
 }
 
 .ve-ui-wikiaMediaQueryWidget-queryWrapper {
