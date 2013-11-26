@@ -1,14 +1,6 @@
 @import "skins/oasis/css/core/color";
 
-.oo-ui-popupWidget-body {
-	border-color: $color-page-border;
-}
-
-.oo-ui-outlineItemWidget {
-	&.oo-ui-optionWidget-selected {
-		background: $color-ve-hover;
-	}
-}
+/* Categories */
 
 .ve-ui-mwCategoryItemButton {
 	background: $color-ve-hover;
@@ -19,11 +11,30 @@
 	}
 }
 
+/* Outline */
+
 .oo-ui-outlineControlsWidget {
 	background: $color-page;
 }
 
-.oo-ui-popupWidget-callout {
+.oo-ui-outlineItemWidget {
+	&.oo-ui-optionWidget-selected {
+		background: $color-ve-hover;
+	}
+}
+
+/* Popup */
+
+.oo-ui-popupWidget-body {
+	background-color: $color-page;
+}
+
+.oo-ui-popupWidget-popup {
+	background-color: $color-ve-gradient-light;
+	border-color: $color-page-border;
+}
+
+.oo-ui-popupWidget-tailed .oo-ui-popupWidget-tail {
 	background: none;
 	height: 0;
 	width: 0;
@@ -50,6 +61,8 @@
 		margin-top: -4px;
 	}
 }
+
+/* Surface Toolbar */
 
 .ve-ui-surfaceWidget-toolbar .oo-ui-toolbar-bar {
 	border-color: $color-page-border;
