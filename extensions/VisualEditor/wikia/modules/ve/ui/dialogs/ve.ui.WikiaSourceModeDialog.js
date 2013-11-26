@@ -63,7 +63,7 @@ ve.ui.WikiaSourceModeDialog.prototype.initialize = function () {
 	// Initialization
 	this.$body.append( this.sourceModeTextarea.$element );
 	this.$foot.append( this.$helpLink, this.applyButton.$element );
-	this.frame.$content.addClass( 'oo-ui-wikiaSourceModeDialog-content' );
+	this.frame.$content.addClass( 've-ui-wikiaSourceModeDialog-content' );
 };
 
 /**
