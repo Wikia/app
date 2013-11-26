@@ -20,8 +20,8 @@ function ( sections, window, $, mustache, toc ) {
 		$toc.addClass( 'side-menu-capable' );
 	}
 
-	if ( !window.wgArticleId ) {
-		$toc.addClass( 'disable' );
+	if ( window.wgArticleId ) {
+		$toc.addClass( 'enable' );
 	}
 
 	/**
