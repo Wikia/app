@@ -40,6 +40,10 @@ $dark-border: #D8D8D8;
 		z-index: 11;
 	}
 
+	&.disable {
+		display: none;
+	}
+
 	header {
 		background: $toc-background;
 		border-bottom: 1px solid $border-color;
