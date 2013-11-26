@@ -10,6 +10,7 @@ var SevenOneMediaHelper = function (adLogicPageLevelParams, scriptWriter, log, w
 		myAd,
 		initialized = false,
 		pageLevelParams = adLogicPageLevelParams.getPageLevelParams(),
+		targetingParamKeys = ['pform', 'media', 'gnre', 'egnre'],
 		slotVars = {
 			'popup1': {
 				SOI_PU1: true,
@@ -165,9 +166,21 @@ var SevenOneMediaHelper = function (adLogicPageLevelParams, scriptWriter, log, w
 		);
 	}
 
+	function generateSoiKeyValue() {
+		var i, len, key, ret = {};
+		for (i = 0, len = targetingParamKeys.length; i < len; i += 1) {
+			key = targetingParamKeys[i];
+			if (pageLevelParams[key] && pageLevelParams[key][0]) {
+				ret[key] = pageLevelParams[key][0].substr(0, 10);
+			}
+		}
+		return ret;
+	}
+
 	function initialize(firstSlotname) {
-		var s0 = pageLevelParams.s0,
-			s1 = pageLevelParams.s1.replace('_', '');
+		var subsite = window.cscoreCat && window.cscoreCat.toLowerCase(),
+			sub2site = pageLevelParams.s1.replace('_', ''),
+			sub3site = subsite === 'lifestyle' && window.cityShort;
 
 		initialized = true;
 
@@ -175,12 +188,14 @@ var SevenOneMediaHelper = function (adLogicPageLevelParams, scriptWriter, log, w
 
 		setVars({
 			SOI_SITE: 'wikia',
-			SOI_SUBSITE: s0,
-			SOI_SUB2SITE: s1,
-			SOI_SUB3SITE: '',
+			SOI_SUBSITE: subsite,
+			SOI_SUB2SITE: sub2site,
+			SOI_SUB3SITE: sub3site,
 			SOI_CONTENT: 'content',
 			SOI_WERBUNG: true
 		});
+
+		setVars({SOI_KEYVALUE: generateSoiKeyValue()});
 
 		$postponedContainer = $('<div/>').attr('id', postponedContainerId).hide();
 		$('body').append($postponedContainer);

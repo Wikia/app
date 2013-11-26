@@ -94,7 +94,7 @@ class VideoEmbedTool {
 			$nonPremiumException = $e;
 		}
 
-		if( !empty($apiwrapper) ) { // try ApiWrapper first - is it from partners?
+		if( !empty($apiwrapper) ) { // try ApiWrapper first - is it from a supported 3rd party (non-premium) provider?
 			$provider = $apiwrapper->getMimeType();
 
 			$file = new WikiaLocalFile( $title, RepoGroup::singleton()->getLocalRepo() );
@@ -113,7 +113,7 @@ class VideoEmbedTool {
 
 			$embed_code = $file->getEmbedCode(VIDEO_PREVIEW, false, false, true);
 			$props['code'] = json_encode($embed_code);
-		} else { // if not a partner video try to parse link for File:
+		} else { // if not a supported 3rd party (non-premium) video, try to parse link for File:
 			$file = null;
 			// get the video name
 			$nsFileTranslated = $wgContLang->getNsText(NS_FILE);

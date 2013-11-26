@@ -286,11 +286,6 @@ class LocalFile extends File {
 		if ( $row ) {
 			$this->loadFromRow( $row );
 		} else {
-			/* Wikia Change Start @author garthwebb */
-			$info = 'URI: '.(empty($_SERVER["REQUEST_URI"]) ? 'N/A' : $_SERVER["REQUEST_URI"]).
-				 ' - REF: '.(empty($_SERVER['HTTP_REFERER']) ? 'N/A' : $_SERVER['HTTP_REFERER']);
-			Wikia::Log(__METHOD__, false, "[$info] Setting fileExists to false for '".$this->getName()."'");
-			/* Wikia Change End */
 			$this->fileExists = false;
 		}
 
@@ -1053,6 +1048,7 @@ class LocalFile extends File {
 				# and pass an empty $oldver. Allow this bogus value so we can displace the
 				# `image` row to `oldimage`, leaving room for the new current file `image` row.
 				#throw new MWException( "Empty oi_archive_name. Database and storage out of sync?" );
+				Wikia::logBacktrace(__METHOD__ . "::oi_archive_name - [{$this->getName()}]"); // Wikia change (BAC-1068)
 			}
 			$reupload = true;
 			# Collision, this is an update of a file
