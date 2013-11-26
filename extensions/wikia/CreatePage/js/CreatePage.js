@@ -84,7 +84,6 @@ var CreatePage = {
 
 							createPageModal.bind( 'create', function( event ) {
 								event.preventDefault();
-								createPageModal.deactivate();
 								CreatePage.submitDialog( false );
 							});
 
