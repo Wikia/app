@@ -15,7 +15,25 @@ class TvApiControllerTest extends \WikiaBaseTest {
 	private $mockGlobalTitle;
 	private $responseValues;
 
-	public function testGetEpisode_Url_Dev_Sand_box() {
+	/**
+	 * @var Boolean
+	 */
+	private $org_wgDevelEnvironment;
+
+	public function setUp() {
+		global $wgDevelEnvironment;
+		$this->org_wgDevelEnvironment = $wgDevelEnvironment;
+		$wgDevelEnvironment = true;
+		parent::setUp();
+	}
+
+	public function tearDown() {
+		global $wgDevelEnvironment;
+		$wgDevelEnvironment = $this->org_wgDevelEnvironment;
+		parent::tearDown();
+	}
+
+	public function testGetEpisodeUrlDevOrSandbox() {
 
 		$mock = $this->getMockBuilder( "\TvApiController" )
 			->disableOriginalConstructor()
@@ -38,11 +56,6 @@ class TvApiControllerTest extends \WikiaBaseTest {
 					->expects($this->any())
 					->method('getCurrentStagingHost')
 					->will( $this->returnCallback( [$this, 'mock_getCurrentStagingHost']));
-
-		$this->getStaticMethodMock('\WikiFactory','isCurrentStagingHost')
-			->expects($this->any())
-			->method('isCurrentStagingHost')
-			->will( $this->returnValue(true));
 
 		$mockResponse = $this->getMockBuilder( "\WikiaResponse" )
 			->disableOriginalConstructor()
