@@ -1423,7 +1423,7 @@ ve.init.mw.ViewPageTarget.prototype.setUpToolbar = function ( suppressAnimations
 		}
 	}, this );
 
-	if( suppressAnimations ) {
+	if ( suppressAnimations ) {
 		setup();
 	} else {
 		this.toolbar.$bar.slideDown( 'fast', setup );
