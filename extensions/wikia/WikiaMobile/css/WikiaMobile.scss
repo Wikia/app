@@ -43,7 +43,7 @@
 	margin-bottom: 25px;
 	position: relative;
 
-	&.has-edit-button {
+	.edit-enabled & {
 		h1 {
 			margin-right: 40px;
 		}
@@ -168,9 +168,14 @@ blockquote, .quote {
 	background-size: 20px;
 	background-repeat: no-repeat;
 	background-position: center 3px;
+	display: none;
 	height: 100%;
 	position: absolute;
 	right: 0;
 	top: 0;
 	width: 20px;
+
+	.edit-enabled & {
+		display: inline-block;
+	}
 }

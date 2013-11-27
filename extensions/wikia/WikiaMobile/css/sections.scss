@@ -2,6 +2,10 @@
 
 h2, h3, h4, h5, h6{
 	margin: 25px 0 10px 0;
+
+	.edit-enabled & {
+		padding-right: 40px;
+	}
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -11,8 +15,6 @@ h1, h2, h3, h4, h5, h6 {
 	word-break: break-word;
 
 	position: relative;
-
-	padding-right: 40px;
 
 	//a nicer way to display images in sections header
 	figure {
