@@ -63,7 +63,7 @@ ve.ui.WikiaSourceModeDialog.prototype.initialize = function () {
 	// Initialization
 	this.$body.append( this.sourceModeTextarea.$element );
 	this.$foot.append( this.$helpLink, this.applyButton.$element );
-	this.frame.$content.addClass( 'oo-ui-wikiaSourceModeDialog-content' );
+	this.frame.$content.addClass( 've-ui-wikiaSourceModeDialog-content' );
 };
 
 /**
@@ -163,19 +163,10 @@ ve.ui.WikiaSourceModeDialog.prototype.onParseSuccess = function( response ) {
 	target.deactivating = true;
 	target.tearDownToolbarButtons();
 	target.detachToolbarButtons();
-	if ( this.saveDialog ) {
-		target.saveDialog.reset();
-		target.saveDialog.close();
-	}
+	target.saveDialog.reset();
+	target.saveDialog.close();
 
-	target.$document.blur();
-	target.$document = null;
-	target.toolbar.destroy();
-	target.toolbar = null;
-	target.surface.destroy();
-	target.surface = null;
-	target.active = false;
-	target.deactivating = false;
+	target.tearDownSurface( true );
 
 	target.wikitext = this.sourceModeTextarea.getValue();
 
@@ -189,7 +180,7 @@ ve.ui.WikiaSourceModeDialog.prototype.onParseSuccess = function( response ) {
 		this.attachToolbarButtons();
 		this.$document[0].focus();
 		this.activating = false;
-	}, target ) );
+	}, target ), true );
 };
 
 /**
