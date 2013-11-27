@@ -852,7 +852,7 @@ class SQL {
 			$result = $cache->get($cacheKey);
 		}
 
-		if ($result === false) {
+		if ($result === false || $result === null) {
 			$result = $this->query($db, $breakDown, $recordProcessor, $autoIterate);
 
 			if ($this->cacheEnabled() && $result) {
