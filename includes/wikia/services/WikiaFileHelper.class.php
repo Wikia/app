@@ -553,17 +553,10 @@ class WikiaFileHelper extends Service {
 	 * @return string $hms
 	 */
 	public static function formatDuration( $sec ) {
-		$hms = "";
-		$hours = intval( intval( $sec ) / 3600 );
-		if ( $hours > 0 ) {
-			$hms .= str_pad( $hours, 2, "0", STR_PAD_LEFT ). ":";
-		}
+		$sec = intval( $sec );
 
-		$minutes = intval( ( $sec / 60 ) % 60 );
-		$hms .= str_pad( $minutes, 2, "0", STR_PAD_LEFT ). ":";
-
-		$seconds = intval( $sec % 60 );
-		$hms .= str_pad( $seconds, 2, "0", STR_PAD_LEFT );
+		$format = ( $sec >= 3600 ) ? 'H:i:s' : 'i:s';
+		$hms = gmdate( $format, $sec );
 
 		return $hms;
 	}

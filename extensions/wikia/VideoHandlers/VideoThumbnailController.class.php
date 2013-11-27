@@ -38,22 +38,38 @@ class VideoThumbnailController extends WikiaController {
 		$this->duration = '3:46';
 	}
 
-	/*
-	 * FIXME: Mustache doesn't handle key/value pairs very well, so this is one way we can handle image and link attributes.
-	 * Just messing around for now.
+	/**
+	 * Get attributes for mustache template
+	 * @param array $attrs [ array( key => value ) ]
+	 * @return array $attribs [ array( "key='value'" ) ]
 	 */
-	public function thumbnailAttrs() {
-		$attrs = $this->getVal( 'attrs' );
-		$resp = [];
-
-		foreach( $attrs as $key => $val ) {
-			$curr = [];
-			$curr[ 'property' ] = $key;
-			$curr[ 'value' ] = $val;
-			$resp[] = $curr;
+	protected function getAttribs( $attrs ) {
+		$attribs = [];
+		foreach ( $attrs as $key => $value ) {
+			$attribs[] = "$key='$value'";
 		}
 
-		$this->attrs = $resp;
+		return $attribs;
+	}
+
+	/**
+	 * Get thumbnail size
+	 * @param integer $width
+	 * @return string $size
+	 */
+	protected function getThumbnailSize( $width = 0 ) {
+		$size = 'medium';
+		if ( $width > 200 && $width <= 270 ) {
+			$size = 'small';
+		} else if ( $width > 270 && $width <= 470 ) {
+			$size = 'medium';
+		} else if ( $width > 470 && $width <= 720 ) {
+			$size = 'large';
+		} else if ( $width > 720 ) {
+			$size = 'xlarge';
+		}
+
+		return $size;
 	}
 
 }
