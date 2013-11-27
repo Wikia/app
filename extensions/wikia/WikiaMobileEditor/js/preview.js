@@ -14,30 +14,22 @@ require( ['modal', 'wikia.loader', 'wikia.mustache', 'jquery', 'toast'], functio
 		newArticle = 'You are starting a brand new article (section).';
 
 	//loads container markup for holding preview in modal
-	function load () {
-		if ( !markup ) {
-			loader( {
-				type: loader.MULTI,
-				resources: {
-					mustache: '/extensions/wikia/WikiaMobileEditor/templates/WikiaMobileEditorController_preview.mustache'
-				}
-			} ).done( function ( resp ) {
-				markup = mustache.render( resp.mustache[0] );
-				show( markup );
-			} );
-		}
-		else {
-			show( markup );
-		}
-	}
+		loader( {
+			type: loader.MULTI,
+			resources: {
+				mustache: '/extensions/wikia/WikiaMobileEditor/templates/WikiaMobileEditorController_preview.mustache'
+			}
+		} ).done( function ( resp ) {
+			markup = mustache.render( resp.mustache[0] );
+		} );
 
 	//opens modal with preview container markup
 	function show ( content ) {
 		modal.open();
 		modal.setContent( content );
-		previewWindow = document.getElementById( 'wpPreviewWindow' );
-		saveButton = document.getElementById( 'wpSave' );
-		continueButton = document.getElementById( 'wpContinueEditing' );
+		previewWindow = document.getElementById( 'wkPreviewWindow' );
+		saveButton = document.getElementById( 'wkSave' );
+		continueButton = document.getElementById( 'wkContinueEditing' );
 		summary = document.getElementById( 'wpSummary' );
 
 		saveButton.addEventListener( 'click', function () {
@@ -68,7 +60,8 @@ require( ['modal', 'wikia.loader', 'wikia.mustache', 'jquery', 'toast'], functio
                 page: 'SpecialCustomEditPage',
                 method: 'preview',
                 mode: 'wysiwyg',
-                content: textBox.value},
+                content: textBox.value
+			},
             success: function( resp ) {
 				if ( previewWindow ) {
 					previewWindow.innerHTML = resp.html;
@@ -89,30 +82,33 @@ require( ['modal', 'wikia.loader', 'wikia.mustache', 'jquery', 'toast'], functio
     }
 
     function publish(){
-        var form = document.getElementsByTagName('form')[0],
-            summaryField = '<input type=\'text\' name=\'wpSummary\' id=\'wpSum\' value=\'' +
-            summary.value + '\'>',
-            saveField = '<input type=\'submit\' value=\'publish\' id=\'wpSave\' name=\'wpSave\'>';
-        form.innerHTML = form.innerHTML + summaryField + saveField;
-        debugger;
+        var form = document.getElementsByTagName('form')[0];
+
+		//form.innerHTML += '<input type="hidden" name="wpSummary" value="' + summary.value + '">';
+		//form.querySelector( 'input[name=wpSummary]' ).value = summary.value;
+
         form.submit();
-        form.removeChild(document.getElementById('wpSum'));
-        form.removeChild(document.getElementById('wpSave'));
     }
 
+	document.getElementsByTagName('form')[0].addEventListener('submit', function( event ){
+		//event.preventDefault();
+
+	});
 
 	if(document.getElementsByClassName('mw-newarticletextanon')[0]){
 		toast.show( newArticle );
 	}
-	previewButton = document.getElementById( 'wpPreview' );
+
+	previewButton = document.getElementById( 'wkPreview' );
 	textBox = document.getElementById( 'wpTextbox1' );
 
 	previewButton.addEventListener( 'click', function(){
 		//reset preview markup and render new from edited wikitext
 		event.preventDefault();
-		if(!loading){
+
+		if ( !loading ) {
 			loading = true;
-			load();
+			show( markup );
 			render();
 		}
 	} );

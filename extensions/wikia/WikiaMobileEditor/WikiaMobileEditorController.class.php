@@ -37,8 +37,8 @@ class WikiaMobileEditorController extends WikiaController{
 			//We want mobile editing to be as clean as possible
 			WikiaMobileNavigationService::setSkipRendering( true );
 			WikiaMobileFooterService::setSkipRendering( true );
-            $articleUrl = $app->wg->title->getLocalUrl();
-            $editPage->editFormTextBottom .= $app->renderView(__CLASS__, 'editPage');
+
+            $editPage->editFormTextBottom .= $app->renderView( __CLASS__, 'editPage' );
 		}
 		return true;
 	}
@@ -54,7 +54,7 @@ class WikiaMobileEditorController extends WikiaController{
 	 * @param $watchthis
 	 * @param $sectionanchor
 	 * @param $flags
-	 * @param $revision
+	 * @param $revision Revision
 	 * @param $status
 	 * @param $baseRevId
 	 */
@@ -66,7 +66,7 @@ class WikiaMobileEditorController extends WikiaController{
 			ChangeTags::addTags(
 				'mobileedit',
 				null,
-				$revision,
+				$revision->getId(),
 				null
 			);
 
@@ -77,7 +77,11 @@ class WikiaMobileEditorController extends WikiaController{
 	}
 
 	public function editPage(){
-        $this->response->setVal('articleUrl', $this->app->wg->title->getLocalUrl());
 		$this->response->setTemplateEngine( self::TEMPLATE_ENGINE );
+
+        $this->response->setVal( 'articleUrl', $this->app->wg->Title->getLocalUrl() );
+        $this->response->setVal( 'cancel', wfMessage('wikiamobileeditor-cancel')->text() );
+        $this->response->setVal( 'preview', wfMessage('wikiamobileeditor-preview')->text() );
+
 	}
 }

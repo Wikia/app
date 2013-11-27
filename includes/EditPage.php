@@ -1895,21 +1895,19 @@ class EditPage {
 
 		$wgOut->addHTML( $this->editFormTextAfterContent );
 
-        //if(!$isMobile)
-            $wgOut->addWikiText( $this->getCopywarn() );
+		$wgOut->addWikiText( $this->getCopywarn() );
 
 		$wgOut->addHTML( $this->editFormTextAfterWarn );
 
-        if(!$isMobile)
-            $this->showStandardInputs();
+		$this->showStandardInputs();
+		$this->showFormAfterText();
+		$this->showTosSummary();
 
-        //if(!$isMobile)
-            $this->showFormAfterText();
-
-        //if(!$isMobile)
-            $this->showTosSummary();
-
-		//if(!$isMobile) $this->showEditTools();
+		// wikia change begin
+		if ( !$isMobile ) {
+			$this->showEditTools();
+		}
+		// wikia change end
 
 		$wgOut->addHTML( $this->editFormTextAfterTools . "\n" );
 

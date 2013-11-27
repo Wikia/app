@@ -1,216 +1,202 @@
-body{
-  background-color:#fff;
-  padding:0px;
+.wkButn {
+	-webkit-appearance: button;
+	margin-right: 6px;
+
+	padding: 12px 20px;
+
+	height: 36px;
+	color: #fff;
+
+	font-size: 13px;
+	border-radius: 2px;
+	border: none;
+
+	&.gray {
+		background-color: #c0c0c0;
+	}
+
+	&.blue {
+		background-color: #0c4c88;
+	}
 }
 
- #wkTopNav, #wkShrPag, #wkFtr, #wkMainCntFtr{
-    display:none;
-  }
-
- #wkPage{
-    padding:0 18px 0 18px;
-  }
-
- .wkButn{
-  -webkit-appearance:button;
-  margin-right:6px;
-
-  padding: 12px 20px 12px 20px;
-
-  height:36px;
-  color: #fff;
-
-  font-size:13px;
-  border-radius:2px;
-  border:none;
-
-   &.gray{
-     background-color:#c0c0c0;
-   }
-
-   &.blue{
-     background-color:#0c4c88;
-   }
-
- }
-
-#wkPage{
-  padding: 18px;
+#wkPage {
+	padding: 18px;
 }
 
-#wpTextbox1{
-  margin-top: 18px;
+#wpTextbox1 {
+	margin-top: 18px;
 
-  width: 100%;
-  padding: 10px;
+	width: 100%;
+	padding: 10px;
 
-  border-radius: 2px;
-  border-color: #c0c0c0;
+	border-radius: 2px;
+	border-color: #c0c0c0;
 
-  font-family: inherit;
-  font-size: 13px;
-  color: #333;
+	font-family: inherit;
+	font-size: 13px;
+	color: #333;
 }
 
-#wkMdlCnt{
-  background-color:#fff;
+#wkMdlCnt {
+	background-color: #fff;
 }
 
-#wkMainCnt{
-  padding-top:0;
-  border-top: 1px solid #e3e3e3;
+#wkMainCnt {
+	padding-top: 0;
+	border-top: 1px solid #e3e3e3;
+
+	&:after {
+		content: '';
+		display: block;
+	}
 }
 
-#wkMdlCnt:after{
-  content: "";
-  display: block;
+.preview-loader {
+	display: block;
+	background-image: url('/extensions/wikia/WikiaMobile/images/spinner_big.gif');
+	height: 100%;
+	background-repeat: no-repeat;
+	background-position: center;
 }
 
-.preview-loader{
-  display:block;
-  background-image:url('/extensions/wikia/WikiaMobile/images/spinner_big.gif');
-  height: 100%;
-  background-repeat: no-repeat;
-  background-position: center;
+#wkPreviewWindow{
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding-bottom: 187px;
+	
+	//will be obsolete with the merged wm4.0
+	color:#333333;
+
+	#mw-content-text{
+		width: 100%;
+		padding: 0 18px 0 18px;
+		padding-top: 24px;
+		overflow-y: scroll;
+		overflow-x: hidden;
+		height: 100%;
+	}
+
+	h2 {
+		margin-top: 0px;
+	}
 }
 
-#wpPreviewWindow{
-  width:100%;
-  height:100%;
-  margin:0px;
-  padding-bottom:187px;
-  //padding:24px 18px 0px 18px;
+#wkPreviewActions {
+	position: absolute;
 
-  //will be obsolete with the merged wm4.0
-  color:#333333;
-
-  #mw-content-text{
-    width:100%;
-    padding:0 18px 0 18px;
-    padding-top: 24px;
-    overflow-y:scroll;
-    overflow-x: hidden;
-    height:100%;
-  }
+	p {
+		font-size: 12px;
+	}
 }
 
-#wpPreviewWindow h2{
-  margin-top: 0px;
+#wkMdlTB {
+	display: none;
 }
 
-#wpPreviewActions{
-  position:absolute;
+#wkSummary {
+	display: inline-block;
+
+	height: 36px;
+	width: 100%;
+	margin-bottom: 14px;
+	padding: 10px;
+
+	border: 1px solid #999999;
+	border-radius: 2px;
+
+	font-size: 13px;
+	color: #999999;
 }
 
-#wpPreviewActions p{
-  font-size:12px;
+.striped-title {
+	top: 0px;
+
+	width: 100%;
+	height: 22px;
+	margin: 0;
+	vertical-align:middle;
+	line-height:12px;
+
+	background-color: #f0f0f0;
+	background-image: url('/extensions/wikia/WikiaMobileEditor/images/preview_stripe.png'); /* base64 */
+	background-repeat: repeat-x;
+	background-position: 0 50%;
+
+	color:#606060;
+	font-size:12px;
+	font-weight:bold;
+	text-align:center;
+	
+	span{
+		padding: 0 8px;
+		background-color:#f0f0f0;
+		line-height:24px;
+	}
 }
 
-#wkMdlTB{
-  display:none;
+.action-box {
+	position: fixed;
+	left: 0px;
+	bottom: 0px;
+
+	padding: 18px;
+	width: 100%;
+	text-align: center;
+
+	background-color: #f0f0f0;
+	font-size: 13px;
+	color: #333333;
 }
 
-#wpSummary{
-  display:inline-block;
+.license-brief {
+	margin-bottom: 0px;
 
-  height:36px;
-  width:100%;
-  margin-bottom:14px;
-  padding:10px;
-
-  border: 1px solid #999999;
-  border-radius:2px;
-
-  font-size:13px;
-  color:#999999;
+	font-size: 12px;
 }
 
-.striped-title{
-  top:0px;
+#summaryTitle {
+	margin: 0 0 6px 0;
 
-  width:100%;
-  height:22px;
-  margin:0;
-  vertical-align:middle;
-  line-height:12px;
-
-  background-color:#f0f0f0;
-  background-image:url('/extensions/wikia/WikiaMobileEditor/images/preview_stripe.png');/* base64 */
-  background-repeat:repeat-x;
-  background-position:0 50%;
-
-  color:#606060;
-  font-size:12px;
-  font-weight:bold;
-  text-align:center;
-
-  span{
-    padding: 0 8px;
-    background-color:#f0f0f0;
-    line-height:24px;
-  }
+	text-align: left;
 }
 
-.action-box{
-  position:fixed;
-  left:0px;
-  bottom:0px;
-
-  padding:18px;
-  width:100%;
-  text-align: center;
-
-  background-color:#f0f0f0;
-  font-size:13px;
-  color:#333333;
-}
-
-.license-brief{
-  margin-bottom:0px;
-
-  font-size:12px;
-}
-
-#summaryTitle{
-  margin:0 0 6px 0;
-
-  text-align:left;
-}
-
-#wkMobileCancel{
-  -webkit-appearance: none;
-  display: inline-block;
-  line-height:13px;
+#wkMobileCancel {
+	-webkit-appearance: none;
+	display: inline-block;
+	line-height: 13px;
 }
 
 @media (min-width: 479px){
-  #wpPreviewWindow{
-    padding-bottom:129px;
-  }
+	#wkPreviewWindow{
+		padding-bottom:129px;
+	}
+	
+	#wkSummary{
+		margin-bottom: 0;
+		margin-left: 0;
+		min-width: 200px;
 
-  #wpSummary{
-    margin-bottom:0;
-    margin-left:0px;
-    min-width:50%;
+		float: left;
 
-    float:left;
+		width: auto;
+	}
 
-    width:auto;
-  }
-  #wpPreviewActions{
-    text-align:right;
-  }
-  .summary-title{
-    display:inline-block;
-  }
-  #wpSave{
-    margin-right:0px;
-  }
+	#wkPreviewActions {
+		text-align: right;
+	}
+
+	.summary-title {
+		display: inline-block;
+	}
+
+	#wkSave {
+		margin-right: 0px;
+	}
 }
-
 
 //Hiding Unnecesarry elements to make mobile edit as clean as possible
-#wkMainCntHdr div, .mw-newarticletextanon, .mw-newarticletext, #mw-anon-edit-warning{
-  display:none;
+#wkMainCntHdr div, .mw-newarticletextanon, .mw-newarticletext, #mw-anon-edit-warning, .editOptions, #editpage-copywarn {
+	display: none;
 }
-
