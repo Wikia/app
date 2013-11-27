@@ -1,6 +1,7 @@
 (function( window, $ ) {
 	'use strict';
 
+
 	Wall.MessageForm = $.createClass( Observable, {
 		constructor: function( page, model ) {
 			Wall.MessageForm.superclass.constructor.apply( this,arguments );
