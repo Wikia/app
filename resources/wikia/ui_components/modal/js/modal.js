@@ -15,8 +15,6 @@ define( 'wikia.ui.modal', [
 		CLOSE_CLASS = 'close',
 		INACTIVE_CLASS = 'inactive',
 
-		destroyOnClose,
-
 		// vars required for disable scroll behind modal
 		$bodyElm = $( 'body' ),
 		$win = $( w ),
@@ -115,8 +113,6 @@ define( 'wikia.ui.modal', [
 	function unblockPageScrolling() {
 		$bodyElm.removeClass( 'with-blackout fake-scrollbar' );
 		$win.scrollTop( wScrollTop );
-
-		console.log('test');
 	}
 
 	/**
