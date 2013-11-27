@@ -1,22 +1,47 @@
 var WikiWelcome = {
-	doptions: {persistent: false, width:400},
+
 	init: function () {
-		$.nirvana.sendRequest({
+		'use strict';
+
+		$.nirvana.sendRequest( {
 			controller: 'FinishCreateWiki',
 			method: 'WikiWelcomeModal',
 			format: 'html',
 			type: 'get',
-			callback: function(html) {
-				WikiWelcome.d = $(html).makeModal(WikiWelcome.doptions);
-				WikiWelcome.d.find('.createpage').click(function(e) {
-					CreatePage.openDialog(e);
-					WikiWelcome.d.closeModal();
-				});
-			}
-		});
+			callback: this.renderModal
+		} );
+	},
+
+	renderModal: function ( html ) {
+		'use strict';
+
+		var modalHtml = html;
+		require( [ 'wikia.ui.factory' ], function ( uiFactory ) {
+			uiFactory.init( [ 'modal' ] ).then( function ( uiModal ) {
+				var modalConfig = {
+					vars: {
+						id: 'WikiWelcomeModal',
+						size: 'small',
+						content: modalHtml
+					}
+				};
+
+				uiModal.createComponent( modalConfig, function ( wikiWelcomeModal ) {
+					wikiWelcomeModal.bind( 'createpage', function ( event ) {
+						event.preventDefault();
+						window.CreatePage.openDialog( event );
+						wikiWelcomeModal.trigger( 'close' );
+						return false;
+					} );
+					wikiWelcomeModal.show();
+				} );
+			} );
+		} );
 	}
 };
 
-$(function() {
+$( function () {
+	'use strict';
+
 	WikiWelcome.init();
-});
+} );
