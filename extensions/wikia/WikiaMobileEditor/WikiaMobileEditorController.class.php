@@ -32,24 +32,20 @@ class WikiaMobileEditorController extends WikiaController{
 	 * @return true
 	 */
 	public static function onEditPageInitial( EditPage $editPage ) {
-		$app = F::app();
-
+        $app = F::app();
 		if ( $app->checkSkin( 'wikiamobile' ) ) {
 			//We want mobile editing to be as clean as possible
 			WikiaMobileNavigationService::setSkipRendering( true );
 			WikiaMobileFooterService::setSkipRendering( true );
-            $editPage->editFormTextBottom .= F::app()->renderView( __CLASS__, 'editPage' );
-
+            $articleUrl = $app->wg->title->getLocalUrl();
+            $editPage->editFormTextBottom .= $app->renderView(__CLASS__, 'editPage');
 		}
 
 		return true;
 	}
 
 	public function editPage(){
-		$this->response->setTemplateEngine( self::TEMPLATE_ENGINE );
-	}
-
-	public function tagList(){
+        $this->response->setVal('articleUrl', $this->app->wg->title->getLocalUrl());
 		$this->response->setTemplateEngine( self::TEMPLATE_ENGINE );
 	}
 }

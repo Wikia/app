@@ -89,6 +89,10 @@ body{
   color:#333333;
 }
 
+#wpPreviewWindow h2{
+  margin-top: 0px;
+}
+
 #wpPreviewActions{
   position:absolute;
 }
@@ -159,11 +163,17 @@ body{
   text-align:left;
 }
 
-@media (orientation: landscape), (min-width: 500px){
+#wkMobileCancel{
+  -webkit-appearance: none;
+  display: inline-block;
+  line-height:14px;
+}
+
+@media /*(orientation: landscape),*/ (min-width: 450px){
   #wpSummary{
     margin-bottom:0;
     margin-left:0px;
-    min-width:250px;
+    min-width:200px;
 
     float:left;
 
