@@ -249,15 +249,7 @@ class ArticleComment {
 
 		$head = $parser->parse( $rawtext, $this->mTitle, ParserOptions::newFromContext( RequestContext::getMain() ) );
 
-		$this->mText = $head->getText();
-		// Repair malformed HTML without making semantic changes (ie, changing tags to more closely follow the HTML spec.
-		// Refs DAR-985 and VID-1011)
-		$dom_document = new DOMDocument();
-		// Silence errors when loading html into DOMDocument (it complains when receiving malformed html - which is
-		// what we're using it to fix) see: http://www.php.net/manual/en/domdocument.loadhtml.php#95463
-		libxml_use_internal_errors(true);
-		$dom_document->loadHTML($this->mText);
-		$this->mText = preg_replace( array( '/^.*?<body>/si', '/<\/body><\/html>$/si'), '', $dom_document->saveHTML());
+		$this->mText = wfFixMalformedHTML( $head->getText() );
 
 		$this->mHeadItems = $head->getHeadItems();
 
