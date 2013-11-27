@@ -82,7 +82,7 @@ body{
   width:100%;
   height:100%;
   margin:0px;
-  padding:0 18px 197px 18px;
+  padding:24px 18px 197px 18px;
   overflow:scroll;
 
   //will be obsolete with the merged wm4.0
@@ -93,12 +93,16 @@ body{
   position:absolute;
 }
 
+#wpPreviewActions p{
+  font-size:12px;
+}
+
 #wkMdlTB{
   display:none;
 }
 
 #wpSummary{
-  display:block;
+  display:inline-block;
 
   height:36px;
   width:100%;
@@ -117,11 +121,12 @@ body{
 
   width:100%;
   height:22px;
-  margin:0 0 24px 0;
+  margin:0;
 
-  background-image:url('/extensions/wikia/WikiaMobile/images/edit_section.png');
+  background-color:#f0f0f0;
+  background-image:url('/extensions/wikia/WikiaMobileEditor/images/preview_stripe.png');/* base64 */
   background-repeat:repeat-x;
-  background-color:#000;
+  background-position:0 50%;
 
   color:#606060;
   font-size:12px;
@@ -148,4 +153,22 @@ body{
   margin-bottom:0px;
 
   font-size:12px;
+}
+
+#summaryTitle{
+  margin:0 0 6px 0;
+
+  text-align:left;
+}
+
+@media (orientation: landscape), (min-width: 500px){
+  #wpSummary{
+    width:auto;
+  }
+  #wpPreviewActions{
+    text-align:right;
+  }
+  .summary-title{
+    display:inline-block;
+  }
 }

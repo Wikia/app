@@ -7,6 +7,7 @@ define( 'preview', ['modal', 'wikia.loader', 'wikia.mustache'], function(modal, 
         wikitext,
         previewButton,
         continueButton,
+        summary,
         textBox;
 
     //loads container markup for holding preview in modal
@@ -34,8 +35,9 @@ define( 'preview', ['modal', 'wikia.loader', 'wikia.mustache'], function(modal, 
         previewWindow = document.getElementById('wpPreviewWindow');
         saveButton = document.getElementById('wpSave');
         continueButton = document.getElementById('wpContinueEditing');
+        summary = document.getElementById('wpSummary');
         saveButton.addEventListener('click', function(){
-            //submit attempt
+            publish();
         });
         continueButton.addEventListener('click', function(){
             modal.close();
@@ -55,10 +57,9 @@ define( 'preview', ['modal', 'wikia.loader', 'wikia.mustache'], function(modal, 
             data: {
                 action: 'ajax',
                 rs: 'EditPageLayoutAjax',
-                title: 'Serenity',
+                title: wgTitle,
                 skin: 'wikiamobile',
                 type: 'partial',
-                section: '3',
                 page: 'SpecialCustomEditPage',
                 method: 'preview',
                 mode: 'wysiwyg',
@@ -76,6 +77,13 @@ define( 'preview', ['modal', 'wikia.loader', 'wikia.mustache'], function(modal, 
                 showMarkup(parsed);
             }
         });
+    }
+
+    function publish(){
+        $.post( "/wiki/Serenity?action=submit", {
+            wpTextbox1: textbox.value,
+            wpSummary: summary.value
+        } );
     }
 
     function init(){
