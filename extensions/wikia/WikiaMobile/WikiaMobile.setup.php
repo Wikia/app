@@ -104,6 +104,7 @@ $wgHooks['MakeHeadline'][] = 'WikiaMobileHooks::onMakeHeadline';
 $wgHooks['LinkBegin'][] = 'WikiaMobileHooks::onLinkBegin';
 $wgHooks['CategoryPageView'][] = 'WikiaMobileHooks::onCategoryPageView';
 $wgHooks['ArticlePurge'][] = 'WikiaMobileHooks::onArticlePurge';
+$wgHooks['DoEditSectionLink'][] = 'WikiaMobileHooks::onDoEditSectionLink';
 
 //404 Pages
 $wgHooks['BeforeDisplayNoArticleText'][] = 'WikiaMobileHooks::onBeforeDisplayNoArticleText';

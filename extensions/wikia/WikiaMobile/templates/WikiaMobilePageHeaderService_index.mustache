@@ -1,1 +1,5 @@
-<header id=wkMainCntHdr><h1>{{{pageTitle}}}</h1>{{editPage}}{{#lastEditedOn}}<div>{{{lastEditedOn}}}</div>{{/lastEditedOn}}{{#lastEditedBy}}<div>{{{lastEditedBy}}}</div>{{/lastEditedBy}}</header>
+<header id=wkMainCntHdr{{#editLink}} class=has-edit-button{{/editLink}}><h1>{{{pageTitle}}}</h1>
+	{{#editLink}}<a href="{{editLink}}" class=editsection></a>{{/editLink}}
+	{{#lastEditedOn}}<div>{{{lastEditedOn}}}</div>{{/lastEditedOn}}
+	{{#lastEditedBy}}<div>{{{lastEditedBy}}}</div>{{/lastEditedBy}}
+</header>

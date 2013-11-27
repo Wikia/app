@@ -4,6 +4,10 @@ require(['wikia.querystring', require.optional('wikia.cookies'), 'track', 'wikia
 
 		var d = window.document;
 
+		if ( window.wgUserName ) {
+			$( 'body' ).addClass( 'edit-enabled' );
+		}
+
 		//used to handle close tracking on Read More section
 		$(d.getElementById('wkRelPag')).on('click', '.open', function(){
 			if (this.children[0].className.indexOf('open') > -1) {

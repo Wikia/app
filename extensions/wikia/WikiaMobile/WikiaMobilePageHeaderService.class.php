@@ -30,30 +30,28 @@ class  WikiaMobilePageHeaderService extends WikiaService {
 	 *
 	 * @return string
 	 */
-	function getTitleText( $title, $namespace ){
+	private function getTitleText( $title, $namespace ){
 		if ( in_array( $namespace, $this->namespaces ) ) {
 			$titleParts = explode( '/', $title );
 			array_shift( $titleParts );
+
 			return implode( '/', $titleParts );
 		}
 
 		return $title;
 	}
 
-    public function getTitleEditUrl(){
+    private function getTitleEditUrl(){
         $editLink = '';
-        $isLoggedIn = !F::app()->getGlobal( 'wgUser' )->isAnon();
-        $wgRequest = F::app()->getGlobal( 'wgRequest' );
-        $isEditPage = $wgRequest->getVal('action');
-        $isPreview = ($wgRequest->getVal('method') == 'preview' );
+		$wg = $this->wg;
 
-
-        if( $isLoggedIn && !$isEditPage && !$isPreview){
-            $editLink = '<a href=\'';
-            $editLink .= F::app()->getGlobal( 'wgTitle' )->getEditUrl();
-            $editLink .= '&section=0';
-            $editLink .= '\' class=\'edit-link\'>Edit</a>';
+		if ( $wg->Request->getVal( 'action', 'view' ) == 'view' &&
+			$wg->Title->getArticleId() != 0 &&
+			$wg->User->isLoggedIn()
+		) {
+            $editLink = $wg->Title->getLocalURL( [ 'section' => 0, 'action' => 'edit' ] );
         }
+
         return $editLink;
     }
 
@@ -105,7 +103,7 @@ class  WikiaMobilePageHeaderService extends WikiaService {
 			}
 		}
 
-		$this->response->setVal( 'editButton', $this->getTitleEditUrl() );
+		$this->response->setVal( 'editLink', $this->getTitleEditUrl() );
 
 		return true;
 	}

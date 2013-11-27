@@ -29,8 +29,6 @@ class WikiaMobileHooks {
 			$matches = array();
 			$translatedNs = self::getLocalizedMediaNsString();
 
-			$text .= '__NOTOC__';
-
 			//capture all the clusters (more than one consecuteive item) of wikitext media tags
 			//and convert them to gallery tags (i.e. media grouping)
 			if (
@@ -176,13 +174,37 @@ class WikiaMobileHooks {
 			//remove bold, italics, underline and anchor tags from section headings (also optimizes output size)
 			$text = preg_replace( '/<\/?(b|u|i|a|em|strong){1}(\s+[^>]*)*>/im', '', $text );
 
-			//$link contains the section edit link, add it to the next line to put it back
-			//ATM editing is now allowed in WikiaMobile for logged-in users
-            if(!F::app()->getGlobal('wgUser')->isAnon()){$link = '';}
-			$ret = "<h{$level} id=\"{$anchor}\" {$attribs}{$text}{$link}</h{$level}>";
+            if ( F::app()->wg->User->isAnon() ) {
+				$link = '';
+			}
+
+			$ret = "<h{$level} id='{$anchor}' {$attribs}{$text}{$link}</h{$level}>";
 		}
 
 		wfProfileOut( __METHOD__ );
+		return true;
+	}
+
+	/**
+	 * @param $skin Skin
+	 * @param $title Title
+	 * @param $section Integer
+	 * @param $tooltip
+	 * @param $result
+	 * @param bool $lang
+	 */
+	public static function onDoEditSectionLink( $skin, $nt, $section, $tooltip, &$result, $lang ) {
+		if ( F::app()->checkSkin( 'wikiamobile', $skin ) ) {
+			$link = F::app()->wg->Title->getLocalURL( [
+				'section' => $section,
+				'action' => 'edit'
+			] );
+
+			$result = "<a href='$link' class='editsection'></a>";
+
+			return false;
+		}
+
 		return true;
 	}
 
