@@ -7,7 +7,11 @@ $messages['en'] = array(
 
 	'wikiamobileeditor-cancel' => 'Cancel',
 	'wikiamobileeditor-publish' => 'Publish',
-	'wikiamobileeditor-preview' => 'Preview'
+	'wikiamobileeditor-preview' => 'Preview',
+	'wikiamobileeditor-summary-placeholder' => 'What did you change (Optional)?',
+	'wikiamobileeditor-licensing' => 'Contributions licensed as',
+	'wikiamobileeditor-licensing-type' => 'CC-BY-SA',
+	'wikiamobileeditor-keep-editing' => 'Keep Editing'
 );
 
 $messages['qqq'] = array(
@@ -15,6 +19,11 @@ $messages['qqq'] = array(
 	'tag-mobileedit-description' => 'Long description of the visualeditor tag.',
 
 	'wikiamobileeditor-cancel' => 'Message on mobile edit page that closses edit page and go back to an article',
-	'wikiamobileeditor-publish' => 'Publish'
+	'wikiamobileeditor-publish' => 'Publish',
+	'wikiamobileeditor-preview' => 'Preview',
+	'wikiamobileeditor-summary' => 'What did you change (Optional)?',
+	'wikiamobileeditor-licensing' => 'Contributions licensed as',
+	'wikiamobileeditor-licensing-type' => 'CC-BY-SA',
+	'wikiamobileeditor-keep-editing' => 'Keep Editing'
 );
 

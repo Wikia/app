@@ -217,7 +217,7 @@ define('modal', ['throbber', 'jquery'], function modal(throbber, $){
 			},10);
 
 			opened = false;
-            ismobile}
+		}
 	}
 
 	function setContent(con){

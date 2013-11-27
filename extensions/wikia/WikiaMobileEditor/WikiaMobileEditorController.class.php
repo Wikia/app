@@ -80,8 +80,14 @@ class WikiaMobileEditorController extends WikiaController{
 		$this->response->setTemplateEngine( self::TEMPLATE_ENGINE );
 
         $this->response->setVal( 'articleUrl', $this->app->wg->Title->getLocalUrl() );
+
         $this->response->setVal( 'cancel', wfMessage('wikiamobileeditor-cancel')->text() );
         $this->response->setVal( 'preview', wfMessage('wikiamobileeditor-preview')->text() );
+        $this->response->setVal( 'publish', wfMessage('wikiamobileeditor-publish')->text() );
+        $this->response->setVal( 'keepEditing', wfMessage('wikiamobileeditor-keep-editing')->text() );
+        $this->response->setVal( 'summaryPlaceholder', wfMessage('wikiamobileeditor-summary-placeholder')->escaped() );
+        $this->response->setVal( 'licensing', wfMessage('wikiamobileeditor-licensing')->text() );
+        $this->response->setVal( 'licensingType', wfMessage('wikiamobileeditor-licensing-type')->text() );
 
 	}
 }

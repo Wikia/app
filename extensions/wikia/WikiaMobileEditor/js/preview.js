@@ -1,7 +1,8 @@
-require( ['modal', 'wikia.loader', 'wikia.mustache', 'jquery', 'toast'], function ( modal, loader, mustache, $, toast ) {
+require( ['modal', 'wikia.loader', 'wikia.mustache', 'jquery', 'toast', 'sloth', 'lazyload'],
+	function ( modal, loader, mustache, $, toast, sloth, lazyload ) {
 	'use strict';
 
-    var markup,
+    var markup = $( '#previewTemplate' ).remove().children(),
         parsed,
         previewWindow,
         wikitext,
@@ -13,32 +14,21 @@ require( ['modal', 'wikia.loader', 'wikia.mustache', 'jquery', 'toast'], functio
         textBox,
 		newArticle = 'You are starting a brand new article (section).';
 
-	//loads container markup for holding preview in modal
-		loader( {
-			type: loader.MULTI,
-			resources: {
-				mustache: '/extensions/wikia/WikiaMobileEditor/templates/WikiaMobileEditorController_preview.mustache'
-			}
-		} ).done( function ( resp ) {
-			markup = mustache.render( resp.mustache[0] );
-		} );
-
 	//opens modal with preview container markup
-	function show ( content ) {
-		modal.open();
-		modal.setContent( content );
-		previewWindow = document.getElementById( 'wkPreviewWindow' );
-		saveButton = document.getElementById( 'wkSave' );
-		continueButton = document.getElementById( 'wkContinueEditing' );
-		summary = document.getElementById( 'wpSummary' );
+	function show () {
+		modal.open({
+			content: '',
+			toolbar: markup[0].outerHTML,
+			caption: markup[1].outerHTML,
+			stopHiding: true,
+			scrollable: true,
+			classes: 'preview',
+			onOpen: function( content ){
+				modal.addClass( 'loading' );
 
-		saveButton.addEventListener( 'click', function () {
-			publish();
-		} );
-
-		continueButton.addEventListener( 'click', function () {
-			modal.close();
-		} );
+				render( content );
+			}
+		});
 	}
 
 	//closes modal
@@ -47,7 +37,7 @@ require( ['modal', 'wikia.loader', 'wikia.mustache', 'jquery', 'toast'], functio
 	}
 	
     //displays loader and preview after fetching it from parser
-    function render(){
+    function render( content ){
         $.ajax({
             url: 'index.php',
             type: 'post',
@@ -63,20 +53,28 @@ require( ['modal', 'wikia.loader', 'wikia.mustache', 'jquery', 'toast'], functio
                 content: textBox.value
 			},
             success: function( resp ) {
-				if ( previewWindow ) {
-					previewWindow.innerHTML = resp.html;
+				content.innerHTML = resp.html;
 
-					previewWindow.addEventListener('click', function( event ){
-						var t = event.target;
+//				content.addEventListener('click', function( event ){
+//					var t = event.target;
+//
+//					if ( t.nodeName === 'A' ) {
+//						t.setAttribute( 'target', '_blank' );
+//					}
+//				});
 
-						if ( t.nodeName === 'A' ) {
-							t.setAttribute( 'target', '_blank' );
-						}
+				sloth( {
+					on: document.getElementsByClassName( 'lazy' ),
+					threshold: 300,
+					callback: lazyload
+				} );
 
-					})
-				}
-				
-                if(markup) loading = false;
+				summary = document.getElementById( 'wkSummary' );
+
+				$( '#wkSave' ).on( 'click', publish );
+				$( '#wkContinueEditing' ).on( 'click', modal.close );
+
+				modal.removeClass( 'loading' );
             }
         });
     }
@@ -106,10 +104,6 @@ require( ['modal', 'wikia.loader', 'wikia.mustache', 'jquery', 'toast'], functio
 		//reset preview markup and render new from edited wikitext
 		event.preventDefault();
 
-		if ( !loading ) {
-			loading = true;
-			show( markup );
-			render();
-		}
+		show();
 	} );
 } );
