@@ -11,7 +11,6 @@ $dark-border: #D8D8D8;
 }
 
 #wkTOC {
-	display: none;
 	position: fixed;
 	left: -260px;
 	top: 0;
@@ -39,10 +38,6 @@ $dark-border: #D8D8D8;
 		transform: translate(0);
 
 		z-index: 11;
-	}
-
-	&.enable {
-		display: block;
 	}
 
 	header {

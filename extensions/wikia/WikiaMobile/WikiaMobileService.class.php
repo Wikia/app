@@ -222,6 +222,22 @@ class WikiaMobileService extends WikiaService {
 		wfProfileOut( __METHOD__ );
 	}
 
+	private function handleToc(){
+		$toc = '';
+
+		//Enable TOC only on view action and on real articles
+		if ( $this->wg->Request->getVal( 'action', 'view' ) == 'view' &&
+			$this->wg->Title->getArticleId() != 0
+		) {
+			$this->jsExtensionPackages[] = 'wikiamobile_js_toc';
+			$this->scssPackages[] = 'wikiamobile_scss_toc';
+
+			$toc = $this->app->renderPartial( 'WikiaMobileService', 'toc' );
+		}
+
+		$this->response->setVal( 'toc', $toc );
+	}
+
 	public function index() {
 		wfProfileIn( __METHOD__ );
 
@@ -229,6 +245,7 @@ class WikiaMobileService extends WikiaService {
 		$this->handleSmartBanner();
 		$this->handleContent();
 		$this->handleAds();
+		$this->handleToc();
 		$this->handleAssets();
 		$this->handleTracking();
 

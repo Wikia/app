@@ -521,8 +521,6 @@ $config['wikiamobile_js_body_full'] = array(
 		'//extensions/wikia/WikiaMobile/js/events.js',
 		'//extensions/wikia/WikiaMobile/js/topbar.js',
 		'//extensions/wikia/WikiaMobile/js/sections.js',
-        '//extensions/wikia/TOC/js/modules/toc.js',
-		'//extensions/wikia/WikiaMobile/js/toc.js',
 		'//extensions/wikia/WikiaMobile/js/throbber.js',
 		'//extensions/wikia/WikiaMobile/js/toast.js',
 		'//extensions/wikia/WikiaMobile/js/pager.js',
@@ -544,6 +542,23 @@ $config['wikiamobile_js_preview'] = array(
 	'skin' => 'wikiamobile',
 	'assets' => array(
 		'#group_wikiamobile_js_body_full',
+	)
+);
+
+$config['wikiamobile_js_toc'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => 'wikiamobile',
+	'assets' => array(
+		'//extensions/wikia/TOC/js/modules/toc.js',
+		'//extensions/wikia/WikiaMobile/js/toc.js',
+	)
+);
+
+$config['wikiamobile_scss_toc'] = array(
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => 'wikiamobile',
+	'assets' => array(
+		'//extensions/wikia/WikiaMobile/css/toc.scss',
 	)
 );
 

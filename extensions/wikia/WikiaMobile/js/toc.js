@@ -20,10 +20,6 @@ function ( sections, window, $, mustache, toc ) {
 		$toc.addClass( 'side-menu-capable' );
 	}
 
-	if ( window.wgArticleId ) {
-		$toc.addClass( 'enable' );
-	}
-
 	/**
 	 * @desc Renders toc for a given page
 	 * @returns HTML String
@@ -109,7 +105,7 @@ function ( sections, window, $, mustache, toc ) {
 	 * @desc Handles appending the toc to a side menu
 	 */
 	function init () {
-		if ( !inited && window.wgArticleId ) {
+		if ( !inited ) {
 			$toc.on( 'click', 'header', function () {
 					onClose();
 					window.scrollTo( 0, 0 );
@@ -178,7 +174,7 @@ function ( sections, window, $, mustache, toc ) {
 		onClose();
 	} );
 
-	if ( !sideMenuCapable && window.wgArticleId ) {
+	if ( !sideMenuCapable ) {
 		$ol = $document.find('#mw-content-text')
 			.append( '<div class="in-page-toc"><h2>' + $toc.find( 'header' ).text() + '</h2>' + renderToc() + '</div>' )
 			.find('.level');
