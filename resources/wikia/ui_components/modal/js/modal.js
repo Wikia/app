@@ -1,11 +1,69 @@
-define( 'wikia.ui.modal', [ 'jquery', 'wikia.window', 'wikia.browserDetect' ], function( $, w, browserDetect ) {
+define( 'wikia.ui.modal', [
+	'jquery',
+	'wikia.window',
+	'wikia.browserDetect'
+], function(
+	$,
+	w,
+	browserDetect
+) {
 	'use strict';
 
+	// constants for modal component
 	var BLACKOUT_ID = 'blackout',
 		BLACKOUT_VISIBLE_CLASS = 'visible',
 		CLOSE_CLASS = 'close',
 		INACTIVE_CLASS = 'inactive',
-		destroyOnClose;
+
+		// default modal rendering params
+		modalDefaults = {
+			type: 'default',
+			vars: {
+				closeText: $.msg( 'close' )
+			}
+		},
+		// default modal buttons rendering params
+		btnConfig = {
+			type: 'button',
+			vars: {
+				type: 'button',
+				classes: [ 'normal', 'secondary' ]
+			}
+		},
+		
+		// reference to UI component instance
+		uiComponent;
+
+	/**
+	 * THIS FUNCTION IS REQUIRED FOR EACH COMPONENT WITH AMD JS WRAPPER !!!!
+	 *
+	 * It's used by UI Component class 'createComponent' method as a shortcut for rendering, appending to DOM
+	 * and initializing component with a single function call.
+	 *
+	 * Sets a reference to UI component object configured for rendering / creating modals
+	 * and creates new instance of modal class passing mustache params to constructor call.
+	 *
+	 * @param {Object} params - mustache params for rendering modal
+	 * @param {Object} component - UI Component configured for creating modal
+	 * @returns {Object} - new instance of Modal object
+	 */
+
+	function createComponent( params, component ) {
+		uiComponent = component; // set reference to UI Component
+
+		return new Modal( params );
+	}
+
+	/**
+	 * Simple initializing new modal object based on the DOM element id passed as parameter
+	 *
+	 * @param {String} id - id of modal DOM element
+	 * @returns {Object} - new instance of modal object
+	 */
+
+	function init( id ) {
+		return new Modal( id );
+	}
 
 	/**
 	 * IE 9 doesn't support flex-box. IE-10 and IE-11 has some bugs in implementation:
@@ -28,71 +86,128 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window', 'wikia.browserDetect' ], f
 	}
 
 	/**
-	 * Initializes a modal
+	 * Constructor function for Modal class which creates a new instance of modal,
 	 *
-	 * Checks if element with given id exists in DOM and if not creates it
-	 * and appends it to body; adds event handlers for blackout and close button;
-	 * sets flags depending on data- attributes:
-	 * - data-destroy-on-close -- if false value passed the modal will remain in DOM after closing it
+	 * OPTION 1 ( if called with 'params' type = string )
+	 * - link it with DOM element ID passed as params
 	 *
-	 * @param {String} id
-	 * @param {Object} modalMarkup (optional) jQuery wrapper for existing in DOM modal markup
+	 * OPTION 2: ( if called 'params' type = object )
+	 * - renders modal component based on passed params object
+	 * - append markup to DOM
+	 * - link new modal instance with ID of the appended element
+	 *
+	 * Finally attach event handlers for modal component
+	 *
 	 * @constructor
+	 * @param {String|Object} params - ID of modal element in DOM or object with mustache params
 	 */
 
-	function Modal( id, modalMarkup ) {
+	function Modal( params ) {
 		var that = this,
-			jQuerySelector = '#' + id;
+			id = ( typeof params === 'object' ) ? params.vars.id : params, // modal ID
+			jQuerySelector = '#' + id,
+			buttons, // array of objects with params for rendering modal buttons
+			blackoutId = BLACKOUT_ID + '_' + id;
 
+		// In case the modal already exists in DOM - skip rendering part
+		if ( $( jQuerySelector ).length === 0 && typeof( uiComponent ) !== 'undefined' ) {
+
+			buttons = params.vars.buttons;
+			if ( $.isArray( buttons ) ) {
+				// Create buttons
+				buttons.forEach(function( button, index ) {
+					if ( typeof button === 'object' ) {
+
+						// Extend the button param with the modal default, get the button uicomponent,
+						// and render the params then replace the button params with the rendered html
+						buttons[ index ] = uiComponent.getSubComponent( 'button' ).render(
+							$.extend( true, {}, btnConfig, button )
+						);
+					}
+				});
+			}
+
+			// extend default modal params with the one passed in constructor call
+			params = $.extend( true, {}, modalDefaults, params );
+
+			// render modal markup and append to DOM
+			$( 'body' ).append( uiComponent.render( params ) );
+
+		}
+
+		// cache jQuery selectors for different parts of modal
 		this.$element = $( jQuerySelector );
-		if ( !this.$element.exists() && typeof( modalMarkup ) !== 'undefined' ) {
-			$( 'body' ).append( modalMarkup );
-			this.$element = $( jQuerySelector );
-		}
+		this.$content = this.$element.children( 'section' );
+		this.$close = this.$element.find( '.' + CLOSE_CLASS );
+		this.$blackout = $( '#' + blackoutId );
 
-		/**
-		 * Wraps with jQuery blackout div, adds click event handler and returns it
-		 *
-		 * @returns {Object} jQuery wrapped blackout markup
-		 */
+		/** ATTACHING EVENT HANDLERS TO MODAL */
 
-		function getBlackout() {
-			var blackoutId = BLACKOUT_ID + '_' + id,
-				$blackout = $('#' + blackoutId );
-
-			$blackout.click( $.proxy(function( event ) {
-				event.preventDefault();
-
-				if ( this.isShown() && this.isActive() ) {
-					this.close();
-				}
-			}, that) );
-
-			return $blackout;
-		}
-
-		this.$element.click( function( event ) {
+		this.$element.click(function( event ) {
 			// when click happens inside the modal, stop the propagation so it won't be handled by the blackout
 			event.stopPropagation();
-		} );
+		});
 
-		this.$blackout = getBlackout();
-		this.$close = this.$element.find( '.' + CLOSE_CLASS );
-
-		this.$close.click( $.proxy( function( event ) {
-			event.preventDefault();
-
-			this.close();
+		// trigger custom buttons events based on button 'data-event' attribute
+		this.$element.on( 'click', 'button', $.proxy( function( event ) {
+			var modalEventName = $( event.target ).data( 'event' );
+			if ( modalEventName ) {
+				this.trigger( modalEventName, event );
+			}
 		}, that ) );
 
-		destroyOnClose = this.$element.data( 'destroy-on-close' );
-		destroyOnClose = ( typeof( destroyOnClose ) === 'undefined' ) ? true : destroyOnClose;
+		// clicking outside modal triggers the close action
+		this.$blackout.click( $.proxy(function( event ) {
+			event.preventDefault();
+
+			if ( this.isShown() && this.isActive() ) {
+				this.trigger( 'close', event );
+			}
+		}, that ) );
+
+		// attach close event to X icon in modal header
+		this.$close.click( $.proxy( function( event ) {
+			event.preventDefault();
+			this.trigger( 'close', event );
+		}, that ) );
+
+		// object containing modal event listeners
+		this.listeners = {
+			'close': [
+				function() {
+					/**
+					 * Closes the modal; removes it from dom or just removes classes - it depends on destroyOnClose flag.
+					 * Before closing modal beforeClass event is triggered. One can bind to this event and cancel the close
+					 * action.
+					 * You should trigger the 'close' event on the modal to close it. This implementation is made private
+					 * to make it more explicit that closing is asynchronous and event based.
+					*/
+					that.trigger( 'beforeClose').then( $.proxy( function() {
+						if( !that.destroyOnClose ) {
+							that.$blackout.removeClass( BLACKOUT_VISIBLE_CLASS );
+						} else {
+							that.$blackout.remove();
+						}
+					}, that ) );
+				}
+			]
+		};
+
+		// allow to override the default value
+		if ( ( typeof( this.$element.data( 'destroy-on-close' ) ) !== 'undefined' ) ) {
+			this.destroyOnClose = this.$element.data( 'destroy-on-close' );
+		}
 	}
+
+	/**
+	 * When set to true (default), destroys the modal when close action is triggered
+	 * @type {boolean}
+	 */
+	Modal.prototype.destroyOnClose = true;
 
 	/**
 	 * Shows modal; adds shown class to modal and visible class to blackout
 	 */
-
 	Modal.prototype.show = function() {
 		// fix iOS Safari position: fixed - virtual keyboard bug
 		if ( browserDetect.isIPad() ) {
@@ -102,7 +217,7 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window', 'wikia.browserDetect' ], f
 		this.$blackout.addClass( BLACKOUT_VISIBLE_CLASS );
 
 		// IE flex-box fallback for small and medium modals
-		if ( this.$element.hasClass('large') === false && browserDetect.isIE() ) {
+		if ( this.$element.hasClass( 'large' ) === false && browserDetect.isIE() ) {
 
 			this.$blackout.addClass( 'IE-flex-fix' );
 			ieFlexboxFallback( this );
@@ -115,27 +230,56 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window', 'wikia.browserDetect' ], f
 	};
 
 	/**
-	 * Closes the modal; removes it from dom or just removes classes - it depends on destroyOnClose flag
+	 * Triggers listeners attached to specific event. Listeners are run in the same order they were bound. This method
+	 * returns a promise. If one of the listeners returns a deferred which fails, trigger method will stop executing the
+	 * remaining listeners and will reject its result. When everything completes without problems, resolve will be called
+	 * instead on this method's return value.
+	 *
+	 * Any additional parameters passed after eventName will be passed to event listeners.
+	 *
+	 * @param String eventName name of the event to trigger - the same as passed to bind method
+	 * @return {{}} promise which will call its handlers after listeners had been executed
 	 */
+	Modal.prototype.trigger = function ( eventName ) {
+		var deferred = new $.Deferred(),
+			i = 0,
+			args =  [].slice.call( arguments, 1 ),
+			listeners = this.listeners[ eventName ];
 
-	Modal.prototype.close = function() {
-		if( !destroyOnClose ) {
-			this.$blackout.removeClass( BLACKOUT_VISIBLE_CLASS );
-		} else {
-			this.$blackout.remove();
-		}
+		// in future we may consider ignoring an event if the previous trigger call with the same
+		// eventName did not compete
 
-		this.onClose();
+		( function iterate() {
+			var result;
+			while( listeners && ( i < listeners.length ) ) {
+				result = listeners[ i++ ].apply( undefined, args );
+				if ( result && ( typeof result.then === 'function' ) ) {
+					result.then( iterate, deferred.reject );
+					return;
+				}
+			}
+			deferred.resolve();
+		} )();
+		return deferred.promise();
 	};
 
 	/**
-	 * Hook method
+	 * Add an event listener, which will be called every time an event with matching name is triggered. The event
+	 * listener can be synchronous or can return a promise object. In case of promise event propagation in put on hold
+	 * until it's resolved. In case the promise is rejected, remaining event listeners are not called and the
+	 * corresponding trigger call also returns a rejected promise.
+	 * @param String eventName name of the event to bind to
+	 * @param function callback listener
 	 */
-
-	Modal.prototype.onClose = function() {};
+	Modal.prototype.bind = function( eventName, callback ) {
+		if ( typeof( this.listeners[ eventName ] ) === 'undefined' ) {
+			this.listeners[ eventName ] = [];
+		}
+		this.listeners[ eventName ].push( callback );
+	};
 
 	/**
-	 * Disables all modal's buttons, adds inactive class to the modal
+	 * Disables all modal buttons, adds inactive class to the modal
 	 * and runs jQuery $.startThrobbing() method on it
 	 */
 
@@ -179,11 +323,18 @@ define( 'wikia.ui.modal', [ 'jquery', 'wikia.window', 'wikia.browserDetect' ], f
 		return !this.$element.hasClass( INACTIVE_CLASS );
 	};
 
+	/**
+	 * Sets modal's content
+	 * @param content HTML text
+	 */
+	Modal.prototype.setContent = function( content ) {
+		this.$content.html( content );
+	};
+
 	/** Public API */
 	
 	return {
-		init: function( id, modalMarkup ) {
-			return new Modal( id, modalMarkup );
-		}
+		init: init,
+		createComponent: createComponent
 	};
 });
