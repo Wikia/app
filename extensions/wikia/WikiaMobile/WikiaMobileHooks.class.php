@@ -29,6 +29,8 @@ class WikiaMobileHooks {
 			$matches = array();
 			$translatedNs = self::getLocalizedMediaNsString();
 
+			$text .= '__NOTOC__';
+
 			//capture all the clusters (more than one consecuteive item) of wikitext media tags
 			//and convert them to gallery tags (i.e. media grouping)
 			if (
@@ -233,7 +235,7 @@ class WikiaMobileHooks {
 			}
 
 			//set proper titles for a page
-			$out->setPageTitle( $text . ' <span id=catTtl>' . wfMessage( 'wikiamobile-categories-tagline' )->inContentLanguage()->plain() . '</span>');
+			$out->setPageTitle( $text . ' <div id=catTtl>' . wfMessage( 'wikiamobile-categories-tagline' )->inContentLanguage()->plain() . '</div>');
 			$out->setHTMLTitle( $text );
 
 			//render lists: exhibition and alphabetical

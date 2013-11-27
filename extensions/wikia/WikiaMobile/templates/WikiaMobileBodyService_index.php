@@ -11,7 +11,7 @@
  */
 ?>
 <section id=wkPage>
-	<?= $pageHeaderContent ;?>
+	<?= !empty( $pageHeaderContent ) ? $pageHeaderContent : ''; ?>
 	<article id=wkMainCnt>
 		<?= $bodyContent ;?>
 		<footer id=wkMainCntFtr>

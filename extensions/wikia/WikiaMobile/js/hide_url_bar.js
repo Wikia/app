@@ -42,9 +42,6 @@ require(['jquery', 'wikia.window'], function ($, w) {
 				setTimeout(function(){
 					//reset to hide addr bar at onload
 					w.scrollTo( 0, scrollTop === 1 ? 0 : 1 );
-
-					//make sure ad is fixed
-					$.event.trigger('ads:fix');
 				}, 0);
 			}
 		});

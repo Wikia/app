@@ -5,12 +5,6 @@ $itemHeight: 50px;
 $itemPadding: 6px;
 
 #wkRelPag {
-	display: none;
-
-	&.show {
-		display: block;
-	}
-
 	ul {
 		margin: 10px 0;
 	}

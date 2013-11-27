@@ -1,5 +1,5 @@
 /* global Features */
-define('tables', ['events', 'track', 'wikia.window', 'jquery'], function(ev, track, w, $){
+define('tables', ['events', 'track', 'wikia.window', 'jquery', 'sloth'], function(ev, track, w, $, sloth){
 	'use strict';
 
 	var d = w.document,
@@ -37,7 +37,7 @@ define('tables', ['events', 'track', 'wikia.window', 'jquery'], function(ev, tra
 
 	function process(tables){
 		//if the table width is bigger than any screen dimension (device can rotate)
-		//or taller than the allowed vertical size, then wrap it and/or add it to
+		//then wrap it and add it to
 		//the list of handled tables for speeding up successive calls
 		handledTables = tables.add(handledTables);
 
@@ -78,9 +78,11 @@ define('tables', ['events', 'track', 'wikia.window', 'jquery'], function(ev, tra
 					var table = this.getElementsByTagName('table')[0];
 
 					if(!table.wkScroll) {
-						table.wkScroll = new w.iScroll(this, function(){
-							track.event('tables', track.SWIPE);
-						});
+						table.wkScroll = new w.IScroll( this, {
+							click: true,
+							scrollY: false,
+							scrollX: true
+						} );
 						this.className += ' active';
 					}
 				});
