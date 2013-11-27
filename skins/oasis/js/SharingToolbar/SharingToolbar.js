@@ -1,192 +1,193 @@
-(function( window, $ ) {
+(function ( window, $ ) {
+	'use strict';
 
-var $window = $( window ),
-	scroll = 'scroll.SharingToolbar',
-	Wikia = window.Wikia || {};
+	var $window = $( window ),
+		scroll = 'scroll.SharingToolbar',
+		Wikia = window.Wikia || {};
 
-var SharingToolbar = {
-	buttonHeight: 0,
-	init: function( options ) {
-		this.$button = options.button;
-		this.$toolbar = options.toolbar;
-		this.buttonHeight = this.$button.height();
+	var SharingToolbar = {
+		buttonHeight: 0,
+		init: function ( options ) {
+			this.$button = options.button;
+			this.$toolbar = options.toolbar;
+			this.buttonHeight = this.$button.height();
 
-		// Bind events
-		this.$button.bind('click', $.proxy(this.toggleToolbar, this));
-		this.$toolbar.find('.email-link').bind('click', this.onEmailClick);
-	},
-	onScroll: function() {
-		var fixed = $window.scrollTop() >= this.$button.offset().top - this.buttonHeight;
-		this.$toolbar.toggleClass('fixed', fixed);
-	},
-	onEmailClick: function(ev) {
-		var node = $(this),
-		lightboxShareEmailLabel = node.attr('data-lightboxShareEmailLabel'),
-		lightboxSend = node.attr('data-lightboxSend'),
-		lightboxShareEmailLabelAddress = node.attr('data-lightboxShareEmailLabelAddress'),
-		lightboxCancel = node.attr('data-lightboxcancel');
+			// Bind events
+			this.$button.bind( 'click', $.proxy( this.toggleToolbar, this ) );
+			this.$toolbar.find( '.email-link' ).bind( 'click', this.onEmailClick );
+		},
+		onScroll: function () {
+			var fixed = $window.scrollTop() >= this.$button.offset().top - this.buttonHeight;
+			this.$toolbar.toggleClass( 'fixed', fixed );
+		},
+		onEmailClick: function ( ev ) {
+			var node = $( this ),
+				lightboxShareEmailLabel = node.attr( 'data-lightboxShareEmailLabel' ),
+				lightboxSend = node.attr( 'data-lightboxSend' ),
+				lightboxShareEmailLabelAddress = node.attr( 'data-lightboxShareEmailLabelAddress' ),
+				lightboxCancel = node.attr( 'data-lightboxcancel' );
 
-		var showEmailModal = function() {
-			SharingToolbar.showEmailModal(lightboxShareEmailLabel, lightboxSend, lightboxShareEmailLabelAddress, lightboxCancel);
-		};
+			var showEmailModal = function () {
+				SharingToolbar.showEmailModal( lightboxShareEmailLabel, lightboxSend, lightboxShareEmailLabelAddress, lightboxCancel );
+			};
 
-		if ( window.wgUserName == null ) {
-			if (window.wgComboAjaxLogin) {
-				showComboAjaxForPlaceHolder(false, false, function () {
-					AjaxLogin.doSuccess = function () {
-						$('#AjaxLoginBoxWrapper').closest('.modalWrapper').closeModal();
-						showEmailModal();
-					};
-					AjaxLogin.close = function () {
-						$('#AjaxLoginBoxWrapper').closeModal();
-					};
-				}, false, true);
-			} else {
-				UserLoginModal.show({
-					callback: function() {
-						UserLogin.forceLoggedIn = true;
-						showEmailModal();
-					}
-				});
+			if ( window.wgUserName == null ) {
+				if ( window.wgComboAjaxLogin ) {
+					showComboAjaxForPlaceHolder( false, false, function () {
+						AjaxLogin.doSuccess = function () {
+							$( '#AjaxLoginBoxWrapper' ).closest( '.modalWrapper' ).closeModal();
+							showEmailModal();
+						};
+						AjaxLogin.close = function () {
+							$( '#AjaxLoginBoxWrapper' ).closeModal();
+						};
+					}, false, true );
+				} else {
+					UserLoginModal.show( {
+						callback: function () {
+							UserLogin.forceLoggedIn = true;
+							showEmailModal();
+						}
+					} );
+				}
+				return false;
 			}
-			return false;
-		}
-		else {
-			showEmailModal();
-		}
-	},
-	showEmailModal: function(lightboxShareEmailLabel, lightboxSend, lightboxShareEmailLabelAddress, lightboxCancel) {
-		require( [ 'wikia.ui.factory' ], function ( uiFactory ) {
-			uiFactory.init( [ 'modal' ] ).then( function ( uiModal ) {
-				var shareEmailModalConfig = {
-					vars: {
-						id: 'ShareEmailModal',
-						size: 'small',
-						content: '<label>' + lightboxShareEmailLabelAddress + '<br/>' +
-							'<input type="text" id="lightbox-share-email-text" /></label>',
-						title: lightboxShareEmailLabel,
-						buttons: [
-							{
-								vars: {
-									value: lightboxSend,
-									classes: [ 'normal', 'primary' ],
-									data: [
-										{
-											key: 'event',
-											value: 'send'
-										}
-									]
+			else {
+				showEmailModal();
+			}
+		},
+		showEmailModal: function ( lightboxShareEmailLabel, lightboxSend, lightboxShareEmailLabelAddress, lightboxCancel ) {
+			require( [ 'wikia.ui.factory' ], function ( uiFactory ) {
+				uiFactory.init( [ 'modal' ] ).then( function ( uiModal ) {
+					var shareEmailModalConfig = {
+						vars: {
+							id: 'ShareEmailModal',
+							size: 'small',
+							content: '<label>' + lightboxShareEmailLabelAddress + '<br/>' +
+								'<input type="text" id="lightbox-share-email-text" /></label>',
+							title: lightboxShareEmailLabel,
+							buttons: [
+								{
+									vars: {
+										value: lightboxSend,
+										classes: [ 'normal', 'primary' ],
+										data: [
+											{
+												key: 'event',
+												value: 'send'
+											}
+										]
+									}
+								},
+								{
+									vars: {
+										value: lightboxCancel,
+										data: [
+											{
+												key: 'event',
+												value: 'close'
+											}
+										]
+									}
 								}
-							},
-							{
-								vars: {
-									value: lightboxCancel,
-									data: [
-										{
-											key: 'event',
-											value: 'close'
-										}
-									]
-								}
-							}
-						]
-					}
-				};
+							]
+						}
+					};
 
-				uiModal.createComponent( shareEmailModalConfig, function ( shareEmailModal ) {
-					shareEmailModal.bind( 'send', function ( event ) {
-						event.preventDefault();
+					uiModal.createComponent( shareEmailModalConfig, function ( shareEmailModal ) {
+						shareEmailModal.bind( 'send', function ( event ) {
+							event.preventDefault();
 
-						$.nirvana.sendRequest({
-							controller: 'SharingToolbarController',
-							method: 'sendMail',
-							format: 'json',
-							data: {
-								pageName: wgPageName,
-								addresses: $('#shareEmailModal #lightbox-share-email-text').val(),
-								messageId: 1
-							},
-							callback: function(data) {
-								var result = data.result,
-									afterShareEmailModalConfig = {
-										vars: {
-											id: 'AfterShareEmailModal',
-											size: 'small',
-											content: result['info-content'],
-											title: result['info-caption']
-										}
-									};
+							$.nirvana.sendRequest( {
+								controller: 'SharingToolbarController',
+								method: 'sendMail',
+								format: 'json',
+								data: {
+									pageName: wgPageName,
+									addresses: $( '#shareEmailModal #lightbox-share-email-text' ).val(),
+									messageId: 1
+								},
+								callback: function ( data ) {
+									var result = data.result,
+										afterShareModalConfig = {
+											vars: {
+												id: 'AfterShareEmailModal',
+												size: 'small',
+												content: result[ 'info-content' ],
+												title: result[ 'info-caption' ]
+											}
+										};
 
-								uiModal.createComponent( afterShareEmailModalConfig, function ( afterShareEmailModal ) {
-									afterShareEmailModal.bind( 'close', function ( event ) {
-										event.preventDefault();
+									uiModal.createComponent( afterShareModalConfig, function ( afterShareEmailModal ) {
+										afterShareEmailModal.bind( 'close', function ( event ) {
+											event.preventDefault();
 
-										if (result.success) {
-											UserLogin.refreshIfAfterForceLogin();
-										}
+											if ( result.success ) {
+												UserLogin.refreshIfAfterForceLogin();
+											}
+										} );
+										afterShareEmailModal.show();
 									} );
-									afterShareEmailModal.show();
-								} );
 
-								// close email modal when share is successful (BugId:16061)
-								if (result.success) {
-									$('#ShareEmailModal').trigger('close');
+									// close email modal when share is successful (BugId:16061)
+									if ( result.success ) {
+										$( '#ShareEmailModal' ).trigger( 'close' );
 
-									UserLogin.refreshIfAfterForceLogin();
+										UserLogin.refreshIfAfterForceLogin();
+									}
 								}
-							}
-						});
-					} );
+							} );
+						} );
 
-					shareEmailModal.bind( 'close', function ( ) {
-						UserLogin.refreshIfAfterForceLogin();
-					} );
+						shareEmailModal.bind( 'close', function () {
+							UserLogin.refreshIfAfterForceLogin();
+						} );
 
-					shareEmailModal.show();
+						shareEmailModal.show();
+					} );
 				} );
 			} );
-		});
-	},
-	checkWidth: function() {
-		var maxWidth = 0,
-			nodes = this.$toolbar.children();
+		},
+		checkWidth: function () {
+			var maxWidth = 0,
+				nodes = this.$toolbar.children();
 
-		$.each(nodes, function(key, value) {
-			var node = $(value),
-				elementWidth = Math.max(node.outerWidth(), node.children().outerWidth());
+			$.each( nodes, function ( key, value ) {
+				var node = $( value ),
+					elementWidth = Math.max( node.outerWidth(), node.children().outerWidth() );
 
-			maxWidth = Math.max(elementWidth, maxWidth);
-		});
+				maxWidth = Math.max( elementWidth, maxWidth );
+			} );
 
-		this.$toolbar.css('width', maxWidth);
-	},
-	toggleToolbar: function(event) {
-		var show = this.$toolbar.hasClass('loading');
+			this.$toolbar.css( 'width', maxWidth );
+		},
+		toggleToolbar: function ( event ) {
+			var show = this.$toolbar.hasClass( 'loading' );
 
-		event.preventDefault();
+			event.preventDefault();
 
-		if (show) {
-			this.$toolbar.removeClass('loading');
+			if ( show ) {
+				this.$toolbar.removeClass( 'loading' );
 
-		} else {
-			show = this.$toolbar.hasClass('hidden');
+			} else {
+				show = this.$toolbar.hasClass( 'hidden' );
+			}
+
+			this.$button.toggleClass( 'share-enabled', show );
+			this.$toolbar.toggleClass( 'hidden', !show );
+
+			if ( show ) {
+				$window.on( scroll, $.proxy( this.onScroll, this ) );
+
+			} else {
+				this.checkWidth();
+				$window.off( scroll );
+			}
 		}
-
-		this.$button.toggleClass('share-enabled', show);
-		this.$toolbar.toggleClass('hidden', !show);
-
-		if (show) {
-			$window.on(scroll, $.proxy(this.onScroll, this));
-
-		} else {
-			this.checkWidth();
-			$window.off(scroll);
-		}
-	}
-};
+	};
 
 // Exports
-Wikia.SharingToolbar = SharingToolbar;
-window.Wikia = Wikia;
+	Wikia.SharingToolbar = SharingToolbar;
+	window.Wikia = Wikia;
 
 })( window, jQuery );
