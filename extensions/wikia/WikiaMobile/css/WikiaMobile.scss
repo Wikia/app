@@ -41,6 +41,17 @@
 
 #wkMainCntHdr {
 	margin-bottom: 25px;
+	position: relative;
+
+	&.has-edit-button {
+		h1 {
+			margin-right: 40px;
+		}
+	}
+
+	.editsection {
+		background-position-y: 10px;
+	}
 
 	h1{
 		margin: 0;
@@ -150,4 +161,16 @@ blockquote, .quote {
 	text-transform: none;
 	font-size: small;
 	float: right;
+}
+
+.editsection {
+	background-image: url(/extensions/wikia/WikiaMobileEditor/images/edit_button.png);
+	background-size: 20px;
+	background-repeat: no-repeat;
+	background-position: center 3px;
+	height: 100%;
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 20px;
 }
