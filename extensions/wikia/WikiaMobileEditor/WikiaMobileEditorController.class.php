@@ -40,9 +40,17 @@ class WikiaMobileEditorController extends WikiaController{
             $articleUrl = $app->wg->title->getLocalUrl();
             $editPage->editFormTextBottom .= $app->renderView(__CLASS__, 'editPage');
 		}
-
 		return true;
 	}
+
+    public static function onArticleSaveComplete(){
+        $app = F::app();
+        if($app->checkskin('wikiamobile')){
+            $app->wg->out->addScript( "<script src='{$app->wg->ExtensionsPath}/wikia/WikiaMobileEditor/articleSaved.js'></script>" );
+
+        }
+        return true;
+    }
 
 	public function editPage(){
         $this->response->setVal('articleUrl', $this->app->wg->title->getLocalUrl());

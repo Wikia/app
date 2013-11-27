@@ -1,7 +1,6 @@
 define( 'preview', ['modal', 'wikia.loader', 'wikia.mustache', 'toast'], function(modal, loader, mustache, toast){
 
     var markup,
-        placeholder = '<span class=\'preview-loader\'>waiting for preview</span>',
         parsed,
         loading,
         previewWindow,
@@ -53,7 +52,6 @@ define( 'preview', ['modal', 'wikia.loader', 'wikia.mustache', 'toast'], functio
 
     //displays loader and preview after fetching it from parser
     function render(){
-        debugger;
         $.ajax({
             url: 'index.php',
             type: 'post',
@@ -67,19 +65,19 @@ define( 'preview', ['modal', 'wikia.loader', 'wikia.mustache', 'toast'], functio
                 method: 'preview',
                 mode: 'wysiwyg',
                 content: textBox.value},
-            success: function( resp ) {
-                parsed = resp.html;
-                function showMarkup( myhtml ){
-                    if(previewWindow){
-                        previewWindow.innerHTML = myhtml;
+                success: function( resp ) {
+                    parsed = resp.html;
+                    function showMarkup( myhtml ){
+                        if(previewWindow){
+                            previewWindow.innerHTML = myhtml;
+                        }
+                        else{
+                            setTimeout(function(){showMarkup(myhtml);}, 50);
+                        }
                     }
-                    else{
-                        setTimeout(function(){showMarkup(myhtml);}, 50);
-                    }
+                    showMarkup(parsed);
+                    if(markup) loading = false;
                 }
-                showMarkup(parsed);
-                if(markup) loading = false;
-            }
         });
     }
 
@@ -89,7 +87,8 @@ define( 'preview', ['modal', 'wikia.loader', 'wikia.mustache', 'toast'], functio
             summary.value + '\'>',
             saveField = '<input type=\'submit\' value=\'publish\' id=\'wpSave\' name=\'wpSave\'>';
         form.innerHTML = form.innerHTML + summaryField + saveField;
-        debugger;
+        //ToDo: there MUST be another solution for this
+        textBox.innerHTML = textBox.value;
         form.submit();
         form.removeChild(document.getElementById('wpSum'));
         form.removeChild(document.getElementById('wpSave'));
@@ -101,7 +100,6 @@ define( 'preview', ['modal', 'wikia.loader', 'wikia.mustache', 'toast'], functio
         }
         previewButton = document.getElementById( 'wpPreview' );
         textBox = document.getElementById( 'wpTextbox1' );
-        debugger;
         previewButton.addEventListener( 'click', function(){
             //reset preview markup and render new from edited wikitext
             event.preventDefault();

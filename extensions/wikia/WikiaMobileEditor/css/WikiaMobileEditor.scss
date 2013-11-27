@@ -11,10 +11,6 @@ body{
     padding:0 18px 0 18px;
   }
 
- #wkMobileInputs{
-  margin-left:-18px;
-}
-
  .wkButn{
   -webkit-appearance:button;
   margin-right:6px;
@@ -142,6 +138,7 @@ body{
 
 .action-box{
   position:fixed;
+  left:0px;
   bottom:0px;
 
   padding:18px;

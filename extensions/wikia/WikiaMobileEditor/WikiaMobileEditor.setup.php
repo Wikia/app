@@ -18,6 +18,7 @@ $wgAutoloadClasses['WikiaMobileEditorController'] =  $dir . 'WikiaMobileEditorCo
  */
 $wgHooks['WikiaMobileAssetsPackages'][] = 'WikiaMobileEditorController::onWikiaMobileAssetsPackages';
 $wgHooks['EditPage::showEditForm:initial'][] = 'WikiaMobileEditorController::onEditPageInitial';
+$wgHooks['ArticleSaveComplete'][] = 'WikiaMobileEditorController::onArticleSaveComplete';
 
 /**
  * message files
