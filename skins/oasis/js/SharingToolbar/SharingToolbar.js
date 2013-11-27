@@ -56,16 +56,47 @@ var SharingToolbar = {
 		}
 	},
 	showEmailModal: function(lightboxShareEmailLabel, lightboxSend, lightboxShareEmailLabelAddress, lightboxCancel) {
-		$.showCustomModal(
-			lightboxShareEmailLabel,
-			'<label>'+lightboxShareEmailLabelAddress+'<br/>'
-			+'<input type="text" id="lightbox-share-email-text" /></label>',
-			{
-				id: 'shareEmailModal',
-				width: 690,
-				showCloseButton: true,
-				buttons: [
-					{id:'ok', defaultButton:true, message:lightboxSend, handler:function(){
+		require( [ 'wikia.ui.factory' ], function ( uiFactory ) {
+			uiFactory.init( [ 'modal' ] ).then( function ( uiModal ) {
+				var shareEmailModalConfig = {
+					vars: {
+						id: 'ShareEmailModal',
+						size: 'small',
+						content: '<label>' + lightboxShareEmailLabelAddress + '<br/>' +
+							'<input type="text" id="lightbox-share-email-text" /></label>',
+						title: lightboxShareEmailLabel,
+						buttons: [
+							{
+								vars: {
+									value: lightboxSend,
+									classes: [ 'normal', 'primary' ],
+									data: [
+										{
+											key: 'event',
+											value: 'send'
+										}
+									]
+								}
+							},
+							{
+								vars: {
+									value: lightboxCancel,
+									data: [
+										{
+											key: 'event',
+											value: 'close'
+										}
+									]
+								}
+							}
+						]
+					}
+				};
+
+				uiModal.createComponent( shareEmailModalConfig, function ( shareEmailModal ) {
+					shareEmailModal.bind( 'send', function ( event ) {
+						event.preventDefault();
+
 						$.nirvana.sendRequest({
 							controller: 'SharingToolbarController',
 							method: 'sendMail',
@@ -76,30 +107,45 @@ var SharingToolbar = {
 								messageId: 1
 							},
 							callback: function(data) {
-								var result = data.result;
-								$.showModal(result['info-caption'], result['info-content'], {
-									onClose: function() {
+								var result = data.result,
+									afterShareEmailModalConfig = {
+										vars: {
+											id: 'AfterShareEmailModal',
+											size: 'small',
+											content: result['info-content'],
+											title: result['info-caption']
+										}
+									};
+
+								uiModal.createComponent( afterShareEmailModalConfig, function ( afterShareEmailModal ) {
+									afterShareEmailModal.bind( 'close', function ( event ) {
+										event.preventDefault();
+
 										if (result.success) {
 											UserLogin.refreshIfAfterForceLogin();
 										}
-									}
-								});
+									} );
+									afterShareEmailModal.show();
+								} );
+
 								// close email modal when share is successful (BugId:16061)
 								if (result.success) {
-									$('#shareEmailModal').closeModal();
+									$('#ShareEmailModal').trigger('close');
+
 									UserLogin.refreshIfAfterForceLogin();
 								}
 							}
 						});
-					}},
-					{id:'cancel', message:'Cancel', handler:function(){
-						$('#shareEmailModal').hideModal();
+					} );
+
+					shareEmailModal.bind( 'close', function ( ) {
 						UserLogin.refreshIfAfterForceLogin();
-					}}
-				],
-				onClose: $.proxy(UserLogin.refreshIfAfterForceLogin, UserLogin)
-			}
-		);
+					} );
+
+					shareEmailModal.show();
+				} );
+			} );
+		});
 	},
 	checkWidth: function() {
 		var maxWidth = 0,
