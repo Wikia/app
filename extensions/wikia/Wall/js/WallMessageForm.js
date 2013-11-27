@@ -15,7 +15,7 @@
 				uiFactory.init( [ 'modal' ] ).then( function( uiModal ) {
 					var previewModalConfig = {
 							vars: {
-                                id: 'WallPreviewModal',
+								id: 'WallPreviewModal',
 								size: 'medium',
 								content: '<div class="WallPreview"><div class="WikiaArticle"></div></div>',
 								title: $.msg( 'preview' ),
@@ -67,7 +67,7 @@
 								body: body
 							},
 							callback: function( data ) {
-                                previewModal.$content.find( '.WallPreview .WikiaArticle' ).html( data.body );
+								previewModal.$content.find( '.WallPreview .WikiaArticle' ).html( data.body );
 								previewModal.activate();
 							}
 						});
