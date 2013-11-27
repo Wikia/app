@@ -250,7 +250,6 @@ class ArticleComment {
 		$head = $parser->parse( $rawtext, $this->mTitle, ParserOptions::newFromContext( RequestContext::getMain() ) );
 
 		$this->mText = $head->getText();
-
 		// Repair malformed HTML without making semantic changes (ie, changing tags to more closely follow the HTML spec.
 		// Refs DAR-985 and VID-1011)
 		$dom_document = new DOMDocument();
@@ -258,15 +257,7 @@ class ArticleComment {
 		// what we're using it to fix) see: http://www.php.net/manual/en/domdocument.loadhtml.php#95463
 		libxml_use_internal_errors(true);
 		$dom_document->loadHTML($this->mText);
-		// Isolate and return the <body> element, otherwise saveHTML would return an HTML doc which includes the
-		// html declaration, <html> tags, and <head> tags. saveHTML is what closes malformed tags.
-		$body_element = $dom_document->getElementsByTagName("body")->item(0);
-		$this->mText = $dom_document->saveHTML($body_element);
-		// Sanity check to make sure <body> is the outermost tag which we'll be stripping off (it should always be)
-		if (preg_match("/^<body>(.*)<\/body>$/s", $this->mText, $matches)) {
-			// Assign $mtext to everything inside of <body></body>
-			$this->mText = $matches[1];
-		}
+		$this->mText = preg_replace( array( '/^.*?<body>/si', '/<\/body><\/html>$/si'), '', $dom_document->saveHTML());
 
 		$this->mHeadItems = $head->getHeadItems();
 
