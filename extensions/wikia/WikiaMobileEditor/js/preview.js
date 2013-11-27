@@ -5,6 +5,7 @@ require( ['modal', 'wikia.loader', 'wikia.mustache', 'jquery', 'toast'], functio
         parsed,
         previewWindow,
         wikitext,
+		loading,
         previewButton,
         continueButton,
 		saveButton,
@@ -93,8 +94,7 @@ require( ['modal', 'wikia.loader', 'wikia.mustache', 'jquery', 'toast'], functio
             summary.value + '\'>',
             saveField = '<input type=\'submit\' value=\'publish\' id=\'wpSave\' name=\'wpSave\'>';
         form.innerHTML = form.innerHTML + summaryField + saveField;
-        //ToDo: there MUST be another solution for this
-        textBox.innerHTML = textBox.value;
+        debugger;
         form.submit();
         form.removeChild(document.getElementById('wpSum'));
         form.removeChild(document.getElementById('wpSave'));

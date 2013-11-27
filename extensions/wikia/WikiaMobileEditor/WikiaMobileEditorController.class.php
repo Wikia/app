@@ -43,14 +43,38 @@ class WikiaMobileEditorController extends WikiaController{
 		return true;
 	}
 
-    public static function onArticleSaveComplete(){
-        $app = F::app();
-        if($app->checkskin('wikiamobile')){
-            $app->wg->out->addScript( "<script src='{$app->wg->ExtensionsPath}/wikia/WikiaMobileEditor/articleSaved.js'></script>" );
+	/**
+	 * @desc Mark all edits made via mobile skin with a mobileedit tag
+	 *
+	 * @param $article
+	 * @param $user
+	 * @param $text
+	 * @param $summary
+	 * @param $minoredit
+	 * @param $watchthis
+	 * @param $sectionanchor
+	 * @param $flags
+	 * @param $revision
+	 * @param $status
+	 * @param $baseRevId
+	 */
+	public static function onArticleSaveComplete( &$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId ) {
+		$app = F::app();
 
-        }
-        return true;
-    }
+		//Add Mobile Edit tag when an article was saved via mobile skin
+		if ( $app->checkSkin( 'wikiamobile' ) && !is_null( $revision ) ) {
+			ChangeTags::addTags(
+				'mobileedit',
+				null,
+				$revision,
+				null
+			);
+
+			$app->wg->Out->addScript( "<script src='{$app->wg->ExtensionsPath}/wikia/WikiaMobileEditor/articleSaved.js'></script>" );
+		}
+
+		return true;
+	}
 
 	public function editPage(){
         $this->response->setVal('articleUrl', $this->app->wg->title->getLocalUrl());
