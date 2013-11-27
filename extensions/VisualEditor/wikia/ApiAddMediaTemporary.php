@@ -60,7 +60,7 @@ class ApiAddMediaTemporary extends ApiAddMedia {
 	private function executeWikiaVideo( $wikiaFilename ) {
 		$wikiaFile = wfFindFile( $wikiaFilename );
 		if ( !$wikiaFile ) {
-			$this->dieUsage( 'Valid Wikia video URL, but video is missing' 'wikia-video-missing' );
+			$this->dieUsage( 'Valid Wikia video URL, but video is missing', 'wikia-video-missing' );
 		}
 		return array(
 			'title' => $wikiaFile->getTitle()->getText(),

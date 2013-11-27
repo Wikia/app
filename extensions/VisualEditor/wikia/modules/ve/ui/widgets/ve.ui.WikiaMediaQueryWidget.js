@@ -112,8 +112,7 @@ ve.ui.WikiaMediaQueryWidget.prototype.requestVideo = function () {
 		'url': mw.util.wikiScript( 'api' ),
 		'data': {
 			'format': 'json',
-			'action': 'apitempupload',
-			'type': 'temporary',
+			'action': 'addmediatemporary',
 			'url': this.value
 		}
 	} )
@@ -223,7 +222,7 @@ ve.ui.WikiaMediaQueryWidget.prototype.onRequestVideoDone = function ( data ) {
 
 		this.requestSearch();
 	} else {
-		this.emit( 'requestVideoDone', data.apitempupload );
+		this.emit( 'requestVideoDone', data.addmediatemporary );
 	}
 };
 
