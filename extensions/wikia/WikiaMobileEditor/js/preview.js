@@ -1,14 +1,16 @@
-define( 'preview', ['modal', 'wikia.loader', 'wikia.mustache'], function(modal, loader, mustache){
+define( 'preview', ['modal', 'wikia.loader', 'wikia.mustache', 'toast'], function(modal, loader, mustache, toast){
 
     var markup,
         placeholder = '<span class=\'preview-loader\'>waiting for preview</span>',
         parsed,
+        loading,
         previewWindow,
         wikitext,
         previewButton,
         continueButton,
         summary,
-        textBox;
+        textBox,
+        newArticle = 'You are starting a brand new article (section).';
 
     //loads container markup for holding preview in modal
     function load(){
@@ -75,25 +77,36 @@ define( 'preview', ['modal', 'wikia.loader', 'wikia.mustache'], function(modal, 
                     }
                 }
                 showMarkup(parsed);
+                if(markup) loading = false;
             }
         });
     }
 
     function publish(){
-        $.post( "/wiki/Serenity?action=submit", {
-            wpTextbox1: textbox.value,
-            wpSummary: summary.value
-        } );
+        var form = document.getElementsByTagName('form')[0],
+            summaryField = '<input type=\'text\' name=\'wpSummary\' id=\'wpSum\' value=\'' +
+            summary.value + '\'>',
+            saveField = '<input type=\'submit\' value=\'publish\' id=\'wpSave\' name=\'wpSave\'>';
+        form.innerHTML += summaryField + saveField;
+        form.submit();
+        form.removeChild(document.getElementById('wpSum'));
+        form.removeChild(document.getElementById('wpSave'));
     }
 
     function init(){
+        if(document.getElementsByClassName('mw-newarticletextanon')[0]){
+            toast.show( newArticle );
+        }
         previewButton = document.getElementById( 'wpPreview' );
         textBox = document.getElementById( 'wpTextbox1' );
         previewButton.addEventListener( 'click', function(){
             //reset preview markup and render new from edited wikitext
             event.preventDefault();
-            load();
-            render();
+            if(!loading){
+                loading = true;
+                load();
+                render();
+            }
         } );
     }
 

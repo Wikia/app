@@ -1895,17 +1895,21 @@ class EditPage {
 
 		$wgOut->addHTML( $this->editFormTextAfterContent );
 
-        if(!$isMobile) $wgOut->addWikiText( $this->getCopywarn() );
+        //if(!$isMobile)
+            $wgOut->addWikiText( $this->getCopywarn() );
 
 		$wgOut->addHTML( $this->editFormTextAfterWarn );
 
-        if(!$isMobile) $this->showStandardInputs();
+        if(!$isMobile)
+            $this->showStandardInputs();
 
-        if(!$isMobile) $this->showFormAfterText();
+        //if(!$isMobile)
+            $this->showFormAfterText();
 
-        if(!$isMobile) $this->showTosSummary();
+        //if(!$isMobile)
+            $this->showTosSummary();
 
-		if(!$isMobile) $this->showEditTools();
+		//if(!$isMobile) $this->showEditTools();
 
 		$wgOut->addHTML( $this->editFormTextAfterTools . "\n" );
 
