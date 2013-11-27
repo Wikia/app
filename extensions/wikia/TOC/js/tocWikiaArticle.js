@@ -33,7 +33,7 @@ require( ['jquery', 'wikia.toc', 'wikia.mustache'], function ( $, toc, mustache 
 
 		header = $( header ).children( '.mw-headline' );
 
-		if ( header.length === 0 ) {
+		if ( header.length === 0 || header.is( ':hidden' ) ) {
 			return false;
 		}
 
