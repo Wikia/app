@@ -1,0 +1,174 @@
+body{
+  background-color:#fff;
+  padding:0px;
+}
+
+ #wkTopNav, #wkShrPag, #wkFtr, #wkMainCntFtr{
+    display:none;
+  }
+
+ #wkPage{
+    padding:0 18px 0 18px;
+  }
+
+ #wkMobileInputs{
+  margin-left:-18px;
+}
+
+ .wkButn{
+  -webkit-appearance:button;
+  margin-right:6px;
+
+  padding: 12px 20px 12px 20px;
+
+  height:36px;
+  color: #fff;
+
+  font-size:12px;
+  font-weight:regular;
+  border-radius:2px;
+  border:none;
+
+   &.gray{
+     background-color:#c0c0c0;
+   }
+
+   &.blue{
+     background-color:#0c4c88;
+   }
+
+ }
+
+#wkPage{
+  padding: 18px;
+}
+
+#wpTextbox1{
+  margin-top: 18px;
+
+  width: 100%;
+  padding: 10px;
+
+  border-radius: 2px;
+  border-color: #c0c0c0;
+
+  font-family: inherit;
+  font-size: 13px;
+  color: #333;
+}
+
+#wkMdlCnt{
+  background-color:#fff;
+}
+
+#wkMainCntHdr{
+  padding-top:0;
+}
+
+#wkMdlCnt:after{
+  content: "";
+  display: block;
+}
+
+.preview-loader{
+  display:block;
+  background-image:url('/extensions/wikia/WikiaMobile/images/spinner_big.gif');
+  height: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+#wpPreviewWindow{
+  width:100%;
+  height:100%;
+  margin:0px;
+  padding:24px 18px 197px 18px;
+  overflow:scroll;
+
+  //will be obsolete with the merged wm4.0
+  color:#333333;
+}
+
+#wpPreviewActions{
+  position:absolute;
+}
+
+#wpPreviewActions p{
+  font-size:12px;
+}
+
+#wkMdlTB{
+  display:none;
+}
+
+#wpSummary{
+  display:inline-block;
+
+  height:36px;
+  width:100%;
+  margin-bottom:14px;
+  padding:10px;
+
+  border: 1px solid #999999;
+  border-radius:2px;
+
+  font-size:13px;
+  color:#999999;
+}
+
+.striped-title{
+  top:0px;
+
+  width:100%;
+  height:22px;
+  margin:0;
+
+  background-color:#f0f0f0;
+  background-image:url('/extensions/wikia/WikiaMobileEditor/images/preview_stripe.png');/* base64 */
+  background-repeat:repeat-x;
+  background-position:0 50%;
+
+  color:#606060;
+  font-size:12px;
+  font-weight:bold;
+  text-align:center;
+}
+
+.action-box{
+  position:fixed;
+  bottom:0px;
+
+  margin-top:14px;
+  padding-bottom:18px;
+  padding:18px;
+  width:100%;
+  text-align: center;
+
+  background-color:#f0f0f0;
+  font-size:13px;
+  color:#333333;
+}
+
+.license-brief{
+  margin-bottom:0px;
+
+  font-size:12px;
+}
+
+#summaryTitle{
+  margin:0 0 6px 0;
+
+  text-align:left;
+}
+
+@media (orientation: landscape), (min-width: 500px){
+  #wpSummary{
+    width:auto;
+  }
+  #wpPreviewActions{
+    text-align:right;
+  }
+  .summary-title{
+    display:inline-block;
+  }
+}

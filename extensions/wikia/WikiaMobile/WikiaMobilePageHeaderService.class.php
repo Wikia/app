@@ -40,6 +40,23 @@ class  WikiaMobilePageHeaderService extends WikiaService {
 		return $title;
 	}
 
+    public function getTitleEditUrl(){
+        $editLink = '';
+        $isLoggedIn = !F::app()->getGlobal( 'wgUser' )->isAnon();
+        $wgRequest = F::app()->getGlobal( 'wgRequest' );
+        $isEditPage = $wgRequest->getVal('action');
+        $isPreview = ($wgRequest->getVal('method') == 'preview' );
+
+
+        if( $isLoggedIn && !$isEditPage && !$isPreview){
+            $editLink = '<a href=\'';
+            $editLink .= F::app()->getGlobal( 'wgTitle' )->getEditUrl();
+            $editLink .= '&section=0';
+            $editLink .= '\' class=\'edit-link\'>Edit</a>';
+        }
+        return $editLink;
+    }
+
 	public function index() {
 		if ( self::$skipRendering ) {
 			return false;
@@ -87,6 +104,8 @@ class  WikiaMobilePageHeaderService extends WikiaService {
 				);
 			}
 		}
+
+		$this->response->setVal( 'editButton', $this->getTitleEditUrl() );
 
 		return true;
 	}
