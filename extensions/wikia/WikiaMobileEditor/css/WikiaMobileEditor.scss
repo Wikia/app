@@ -78,11 +78,20 @@ body{
   width:100%;
   height:100%;
   margin:0px;
-  padding:24px 18px 197px 18px;
-  overflow:scroll;
+  padding-bottom:187px;
+  //padding:24px 18px 0px 18px;
 
   //will be obsolete with the merged wm4.0
   color:#333333;
+
+  #mw-content-text{
+    width:100%;
+    padding:0 18px 0 18px;
+    padding-top: 24px;
+    overflow-y:scroll;
+    overflow-x: hidden;
+    height:100%;
+  }
 }
 
 #wpPreviewWindow h2{
@@ -122,7 +131,7 @@ body{
   width:100%;
   height:22px;
   margin:0;
-  padding-top:5px;
+  vertical-align:middle;
   line-height:12px;
 
   background-color:#f0f0f0;
@@ -134,6 +143,12 @@ body{
   font-size:12px;
   font-weight:bold;
   text-align:center;
+
+  span{
+    padding: 0 8px;
+    background-color:#f0f0f0;
+    line-height:24px;
+  }
 }
 
 .action-box{
@@ -165,14 +180,18 @@ body{
 #wkMobileCancel{
   -webkit-appearance: none;
   display: inline-block;
-  line-height:14px;
+  line-height:13px;
 }
 
-@media /*(orientation: landscape),*/ (min-width: 450px){
+@media (min-width: 479px){
+  #wpPreviewWindow{
+    padding-bottom:129px;
+  }
+
   #wpSummary{
     margin-bottom:0;
     margin-left:0px;
-    min-width:200px;
+    min-width:50%;
 
     float:left;
 
