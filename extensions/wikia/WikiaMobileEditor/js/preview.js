@@ -53,6 +53,7 @@ define( 'preview', ['modal', 'wikia.loader', 'wikia.mustache', 'toast'], functio
 
     //displays loader and preview after fetching it from parser
     function render(){
+        debugger;
         $.ajax({
             url: 'index.php',
             type: 'post',
@@ -87,7 +88,8 @@ define( 'preview', ['modal', 'wikia.loader', 'wikia.mustache', 'toast'], functio
             summaryField = '<input type=\'text\' name=\'wpSummary\' id=\'wpSum\' value=\'' +
             summary.value + '\'>',
             saveField = '<input type=\'submit\' value=\'publish\' id=\'wpSave\' name=\'wpSave\'>';
-        form.innerHTML += summaryField + saveField;
+        form.innerHTML = form.innerHTML + summaryField + saveField;
+        debugger;
         form.submit();
         form.removeChild(document.getElementById('wpSum'));
         form.removeChild(document.getElementById('wpSave'));
@@ -99,6 +101,7 @@ define( 'preview', ['modal', 'wikia.loader', 'wikia.mustache', 'toast'], functio
         }
         previewButton = document.getElementById( 'wpPreview' );
         textBox = document.getElementById( 'wpTextbox1' );
+        debugger;
         previewButton.addEventListener( 'click', function(){
             //reset preview markup and render new from edited wikitext
             event.preventDefault();
