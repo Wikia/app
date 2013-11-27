@@ -199,7 +199,7 @@ ve.init.mw.ViewPageTarget.prototype.deactivate = function ( override ) {
 			// Check we got as far as setting up the surface
 			if ( this.active ) {
 				// If we got as far as setting up the surface, tear that down
-				this.tearDownSurface();
+				this.tearDownSurface( true );
 			}
 
 			// Show/restore components that are otherwise handled by tearDownSurface
@@ -242,7 +242,7 @@ ve.init.mw.ViewPageTarget.prototype.onLoad = function ( doc ) {
 			}
 			ve.track( 'performance.system.activation', { 'duration': ve.now() - this.timings.activationStart } );
 			mw.hook( 've.activationComplete' ).fire();
-		}, this ), false );
+		}, this ), true );
 	}
 };
 
@@ -955,9 +955,9 @@ ve.init.mw.ViewPageTarget.prototype.getSaveOptions = function () {
  * @method
  * @param {HTMLDocument} doc HTML DOM to edit
  * @param {Function} [callback] Callback to call when done
- * @param {bool} suppressAnimations
+ * @param {bool} animate
  */
-ve.init.mw.ViewPageTarget.prototype.setUpSurface = function ( doc, callback, suppressAnimations ) {
+ve.init.mw.ViewPageTarget.prototype.setUpSurface = function ( doc, callback, animate ) {
 	var target = this;
 	setTimeout( function () {
 		// Build linmod
@@ -987,7 +987,7 @@ ve.init.mw.ViewPageTarget.prototype.setUpSurface = function ( doc, callback, sup
 						'history': 'updateToolbarSaveButtonState'
 					} );
 					target.$element.append( target.surface.$element );
-					target.setUpToolbar( suppressAnimations );
+					target.setUpToolbar( animate );
 					target.transformPageTitle();
 					target.changeDocumentTitle();
 
@@ -1119,16 +1119,16 @@ ve.init.mw.ViewPageTarget.prototype.onToolbarPosition = function ( $bar, update 
 /**
  * Switch to viewing mode.
  *
- * @param {bool} suppressAnimations
+ * @param {bool} animate
  * @method
  */
-ve.init.mw.ViewPageTarget.prototype.tearDownSurface = function ( suppressAnimations ) {
+ve.init.mw.ViewPageTarget.prototype.tearDownSurface = function ( animate ) {
 	// Update UI
 	if ( this.$document ) {
 		this.$document.blur();
 		this.$document = null;
 	}
-	this.tearDownToolbar( suppressAnimations );
+	this.tearDownToolbar( animate );
 	this.restoreDocumentTitle();
 	// Destroy surface
 	if ( this.surface ) {
@@ -1396,10 +1396,10 @@ ve.init.mw.ViewPageTarget.prototype.hideTableOfContents = function () {
  *
  * This also transplants the toolbar to a new location.
  *
- * @param {bool} suppressAnimations
+ * @param {bool} animate
  * @method
  */
-ve.init.mw.ViewPageTarget.prototype.setUpToolbar = function ( suppressAnimations ) {
+ve.init.mw.ViewPageTarget.prototype.setUpToolbar = function ( animate ) {
 	var setup;
 
 	this.toolbar = new ve.ui.TargetToolbar( this, this.surface, { 'shadow': true, 'actions': true } );
@@ -1423,29 +1423,29 @@ ve.init.mw.ViewPageTarget.prototype.setUpToolbar = function ( suppressAnimations
 		}
 	}, this );
 
-	if ( suppressAnimations ) {
-		setup();
-	} else {
+	if ( animate ) {
 		this.toolbar.$bar.slideDown( 'fast', setup );
+	} else {
+		setup();
 	}
 };
 
 /**
  * Hide the toolbar.
  *
- * @param {bool} suppressAnimations
+ * @param {bool} animate
  * @method
  */
-ve.init.mw.ViewPageTarget.prototype.tearDownToolbar = function ( suppressAnimations ) {
+ve.init.mw.ViewPageTarget.prototype.tearDownToolbar = function ( animate ) {
 	var tearDown = ve.bind( function () {
 		this.toolbar.destroy();
 		this.toolbar = null;
 	}, this );
 
-	if ( suppressAnimations ) {
-		tearDown();
-	} else {
+	if ( animate ) {
 		this.toolbar.$bar.slideUp( 'fast', tearDown );
+	} else {
+		tearDown();
 	}
 };
 

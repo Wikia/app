@@ -166,7 +166,7 @@ ve.ui.WikiaSourceModeDialog.prototype.onParseSuccess = function( response ) {
 	target.saveDialog.reset();
 	target.saveDialog.close();
 
-	target.tearDownSurface( true );
+	target.tearDownSurface( false );
 
 	target.wikitext = this.sourceModeTextarea.getValue();
 
@@ -180,7 +180,7 @@ ve.ui.WikiaSourceModeDialog.prototype.onParseSuccess = function( response ) {
 		this.attachToolbarButtons();
 		this.$document[0].focus();
 		this.activating = false;
-	}, target ), true );
+	}, target ), false );
 };
 
 /**
