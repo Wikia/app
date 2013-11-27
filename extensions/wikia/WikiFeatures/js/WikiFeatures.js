@@ -1,41 +1,86 @@
 var WikiFeatures = {
 	lockedFeatures: {},
 	init: function() {
-		WikiFeatures.feedbackDialogPrototype = $('.FeedbackDialog');
-		WikiFeatures.deactivateDialogPrototype = $('.DeactivateDialog');
-		WikiFeatures.sliders = $('#WikiFeatures .slider');
-
-		if(!Modernizr.csstransforms) {
-			$('.representation').removeClass('promotion');
+		WikiFeatures.feedbackDialogPrototype = $( '.FeedbackDialog' );
+		WikiFeatures.sliders = $( '#WikiFeatures .slider' );
+		
+		if( !Modernizr.csstransforms ) {
+			$( '.representation' ).removeClass( 'promotion' );
 		}
+		
+		WikiFeatures.sliders.click( function( e ) {
+			var el = $( this ),
+				feature = el.closest( '.feature' ),
+				featureName = feature.data( 'name' ),
+				isEnabled,
+				modalTitle;
+			
+			if( !WikiFeatures.lockedFeatures[ featureName ] ) {
+				isEnabled = el.hasClass( 'on' );
 
-		WikiFeatures.sliders.click(function(e) {
-			var feature = $(this).closest('.feature');
-			var featureName = feature.data('name');
+				if( isEnabled ) {
+					modalTitle = $.msg( 'wikifeatures-deactivate-heading', feature.find( 'h3' ).text().trim() );
 
-			if(!WikiFeatures.lockedFeatures[featureName]) {
-				var el = $(this);
-				var isEnabled = el.hasClass('on');
-				if(isEnabled) {
-					var featureHeading = feature.find('h3').contents().eq(0).text().trim();
-					var modalClone = WikiFeatures.deactivateDialogPrototype.clone();
-					var modalHeading = modalClone.find('h1');
-					modalHeading.text(modalHeading.text().replace(/\$1/g, featureHeading));
-					var modal = modalClone.makeModal({width:670});
-					modal.find('.cancel, .confirm').click(function() {
-						if($(this).hasClass('confirm')) {
-							WikiFeatures.toggleFeature(featureName, false);
-							el.toggleClass('on');
-						}
-						modal.closeModal();
+					require( [ 'wikia.ui.factory' ], function( uiFactory ) {
+						uiFactory.init( [ 'modal' ] ).then( function( uiModal ) {
+							var deactivateModalConfig = {
+								vars: {
+									id: 'DeactivateDialog',
+									size: 'small',
+									title: modalTitle,
+									content: [
+										'<p>',
+										$.msg( 'wikifeatures-deactivate-description' ),
+										'</p><p>',
+										$.msg( 'wikifeatures-deactivate-notification' ),
+										'</p>'
+									].join(''),
+									buttons: [
+										{
+											vars: {
+												value: $.msg( 'wikifeatures-deactivate-confirm-button' ),
+												classes: [ 'normal', 'primary' ],
+												data: [
+													{
+														key: 'event',
+														value: 'confirm'
+													}
+												]
+											}
+										},
+										{
+											vars: {
+												value: $.msg( 'wikifeatures-deactivate-cancel-button' ),
+												data: [
+													{
+														key: 'event',
+														value: 'close'
+													}
+												]
+											}
+										}
+									]
+								}
+							};
+
+							uiModal.createComponent( deactivateModalConfig, function ( deactivateModal ) {
+								deactivateModal.bind( 'confirm', function ( event ) {
+									event.preventDefault();
+									WikiFeatures.toggleFeature( featureName, false );
+									el.toggleClass( 'on' );
+									deactivateModal.trigger( 'close' );
+								});
+								deactivateModal.show();
+							});
+						});
 					});
 				} else {
-					WikiFeatures.toggleFeature(featureName, true);
-					el.toggleClass('on');
+					WikiFeatures.toggleFeature( featureName, true );
+					el.toggleClass( 'on' );
 				}
 			}
-
 		});
+
 		$('#WikiFeatures .feedback').click(function(e) {
 			e.preventDefault();
 			var feature = $(this).closest('.feature');

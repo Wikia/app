@@ -437,6 +437,9 @@ body {
 	.editor .WikiaMainContent {
 		float: none;
 		width: 100%;
+		.editform {
+			z-index: 1;
+		}
 	}
 
 	.editpage-sourcewidemode.mode-source {

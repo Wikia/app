@@ -121,7 +121,7 @@ class WikiaApiController extends WikiaController {
 	 */
 	
 	public function hideNonCommercialContent() {
-		return stripos($this->request->getScriptUrl(), "/api/")===0;
+		return stripos($this->request->getScriptUrl(), "/api/v1")===0;
 	}
 		
 	/** Block content if this wiki is does not allow commercial use of it's content outside of Wikia

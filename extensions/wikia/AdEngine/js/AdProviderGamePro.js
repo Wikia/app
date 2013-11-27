@@ -53,6 +53,7 @@ var AdProviderGamePro = function(adLogicPageLevelParamsLegacy, ScriptWriter, adT
 
 		ScriptWriter.injectScriptByUrl(slotname, getUrl(slotname), function () {
 			slotTweaker.removeTopButtonIfNeeded(slotname);
+			slotTweaker.removeDefaultHeight(slotname);
 		});
 	}
 
