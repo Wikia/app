@@ -61,7 +61,7 @@ var ChatBanModal = function( title, okCallback, options ) {
 
 						okCallback( expires, reason );
 
-						banModal.close();
+						banModal.trigger( 'close' );
 					}
 
 					reasonInput.placeholder().keydown(function( e ) {

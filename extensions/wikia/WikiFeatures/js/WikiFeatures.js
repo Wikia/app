@@ -98,7 +98,7 @@ var WikiFeatures = {
 			var submitButton = modal.find('input[type=submit]');
 			var statusMsg = modal.find('.status-msg');
 			var msgHandle = false;
-			
+
 			modal.find('form').submit(function(e) {
 				e.preventDefault();
 				submitButton.attr('disabled', 'true');
@@ -119,7 +119,7 @@ var WikiFeatures = {
 					} else if (res['result'] == 'error') {
 						submitButton.removeAttr('disabled');
 						statusMsg.addClass('invalid').text(res['error']).show();
-						msgHandle = setTimeout(function() { 
+						msgHandle = setTimeout(function() {
 							statusMsg.fadeOut(1000);
 						}, 4000);
 					} else {
@@ -128,7 +128,7 @@ var WikiFeatures = {
 					}
 				});
 			});
-			
+
 			comment.bind('keypress keydown keyup paste cut', function(e) {
 				setTimeout(function() {
 					var chars = comment.val().length;

@@ -109,7 +109,11 @@ module.exports = function(config) {
 
 			// Video
 			'extensions/wikia/VideoPageTool/js/views/jquery.switcher.js',
-			'extensions/wikia/VideoPageTool/js/spec/*.spec.js'
+			'extensions/wikia/VideoPageTool/js/spec/*.spec.js',
+
+			// LyricFind PV tracking
+			'extensions/3rdparty/LyricWiki/LyricFind/js/modules/LyricFind.Tracker.js',
+			'extensions/3rdparty/LyricWiki/LyricFind/js/spec/*.spec.js'
 		]
 	});
 };

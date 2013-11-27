@@ -306,6 +306,13 @@ $messages['uk'] = array(
 	'healthcheck-desc' => '[[Special:HealthCheck|Спеціальна сторінка]] для перевірки стану сервера',
 );
 
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'healthcheck-desc' => 'Một [[Special:HealthCheck|trang đặc biệt]] cho máy chủ nhà nước kiểm tra',
+);
+
 /** Simplified Chinese (中文（简体）‎)
  * @author Hydra
  */

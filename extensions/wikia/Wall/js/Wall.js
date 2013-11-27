@@ -558,7 +558,7 @@ var Wall = $.createClass(Object, {
 
 					if( typeof( modal ) !== 'undefined' ) {
 					// VSTF can delete without confirmation modal
-						modal.close();
+						modal.trigger( 'close' );
 					}
 				}
 			})

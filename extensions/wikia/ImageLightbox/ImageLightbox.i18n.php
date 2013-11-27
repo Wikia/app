@@ -96,6 +96,13 @@ $messages['az'] = array(
 	'lightbox-share-button-email' => 'E-məktub',
 );
 
+/** Bulgarian (български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'lightbox-share-email-error-caption' => 'Грешка',
+);
+
 /** Breton (brezhoneg)
  * @author Fohanno
  * @author Y-M D
@@ -528,6 +535,7 @@ $messages['id'] = array(
 	'lightbox-standard-link' => 'Pranala standar',
 	'lightbox-send' => 'Kirim',
 	'lightbox-share-description' => 'Foto dalam $1 pada $2',
+	'lightbox-share-email-subject' => '$1 telah mengirim sebuah foto kepada Anda di Wikia.',
 	'lightbox-share-email-body' => 'Hai,
 
 Seseorang ingin menunjukkan sebuah foto kepada Anda pada Wikia. Lihatlah:
@@ -850,6 +858,7 @@ $messages['ps'] = array(
 
 /** Portuguese (português)
  * @author Hamilton Abreu
+ * @author Josep Maria 15.
  * @author Luckas
  * @author SandroHc
  */
@@ -860,13 +869,28 @@ $messages['pt'] = array(
 	'lightbox-blog-link' => 'Link de blogue',
 	'lightbox-send' => 'Enviar',
 	'lightbox-share-description' => 'Fotografia em $1 na wiki $2',
-	'lightbox-share-email-subject' => '$1 enviou-lhe uma foto na Wikia',
+	'lightbox-share-email-subject' => '$1 enviou-te uma foto na Wikia',
+	'lightbox-share-email-body' => 'Olá,
+
+Alguém queria mostrar-te uma foto na Wikia. Olha:
+
+$1
+
+-A equipa de Wikia',
 	'lightbox-share-button-email' => 'E-mail',
 	'lightbox-share-button-www' => 'Partilhar',
 	'lightbox-share-button-embed' => 'Incorporar',
+	'lightbox-share-email-label' => 'Enviar esta imagem para o e-mail dum amigo',
+	'lightbox-share-email-page-label' => 'Enviar esta página para o e-mail dum amigo',
 	'lightbox-share-email-page-label-address' => 'Correio eletrónico',
 	'lightbox-share-email-ok-caption' => 'Confirmação',
+	'lightbox-share-email-ok-content' => '{{PLURAL:$1|O e-mail foi enviado|Os e-mails foram enviados}}.',
 	'lightbox-share-email-error-caption' => 'Erro',
+	'lightbox-share-email-error-content' => 'Erro a enviar {{PLURAL:$1|o email|os emails}}.
+Detalhes: $2',
+	'lightbox-share-email-error-login' => 'Para enviar e-mails precisas entrar com um nome de utilizador.',
+	'lightbox-share-email-error-noaddress' => 'Não tens especificado nenhum endereço.',
+	'lightbox-visit-the-wiki' => 'Visita o wiki:',
 );
 
 /** Brazilian Portuguese (português do Brasil)

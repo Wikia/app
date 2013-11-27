@@ -179,7 +179,7 @@ var ChatEntryPoint = {
 		});
 	},
 
-	onJoinChatFormLoaded: function(html) {
+	onJoinChatFormLoaded: function( html ) {
 		UserLoginModal.dialog.stopThrobbing();
 		UserLoginModal.dialog.closeModal();
 
@@ -190,15 +190,13 @@ var ChatEntryPoint = {
 							id: 'JoinChatModal',
 							size: 'small',
 							content: html,
-							title: $.msg( 'chat-start-a-chat' ),
+							title: $.msg( 'chat-start-a-chat' )
 						}
 					};
 				uiModal.createComponent( joinModalConfig, function ( joinModal ) {
-					joinModal.$content
-						.find( '#modal-join-chat-button' )
-						.bind( 'click', function ( event ) {
-							ChatEntryPoint.launchChatWindow( event, joinModal);
-						});
+					joinModal.bind( 'chat', function ( event ) {
+						ChatEntryPoint.launchChatWindow( event, joinModal);
+					});
 					joinModal.bind( 'close', function() {
 						ChatEntryPoint.reloadPage();
 					});
@@ -217,7 +215,7 @@ var ChatEntryPoint = {
 		var pageLink = $( '#modal-join-chat-button').data('chat-page' );
 		window.open( pageLink, 'wikiachat', window.wgWikiaChatWindowFeatures );
 		if( chatLaunchModal ) {
-			chatLaunchModal.close();
+			chatLaunchModal.trigger( 'close' );
 		}
 		ChatEntryPoint.reloadPage();
 	}

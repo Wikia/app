@@ -45,7 +45,8 @@
 					"objectVar" : {
 						"id": "string",
 						"href": "string",
-						"text": "string"
+						"text": "string",
+						"title": "string"
 					},
 					"description" : "styleguide-description-modal-alt-link"
 				},

@@ -1,6 +1,7 @@
 (function( window, $ ) {
 	'use strict';
 
+
 	Wall.MessageForm = $.createClass( Observable, {
 		constructor: function( page, model ) {
 			Wall.MessageForm.superclass.constructor.apply( this,arguments );
@@ -14,7 +15,7 @@
 				uiFactory.init( [ 'modal' ] ).then( function( uiModal ) {
 					var previewModalConfig = {
 							vars: {
-								id: 'ForumPoliciesModal',
+                                id: 'WallPreviewModal',
 								size: 'medium',
 								content: '<div class="WallPreview"><div class="WikiaArticle"></div></div>',
 								title: $.msg( 'preview' ),
@@ -66,8 +67,8 @@
 								body: body
 							},
 							callback: function( data ) {
+                                previewModal.$content.find( '.WallPreview .WikiaArticle' ).html( data.body );
 								previewModal.activate();
-								previewModal.$content.find( '.WallPreview .WikiaArticle' ).html( data.body );
 							}
 						});
 					});

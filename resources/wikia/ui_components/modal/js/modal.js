@@ -113,7 +113,7 @@ define( 'wikia.ui.modal', [
 		if ( $( jQuerySelector ).length === 0 && typeof( uiComponent ) !== 'undefined' ) {
 
 			buttons = params.vars.buttons;
-			if ( buttons ) {
+			if ( $.isArray( buttons ) ) {
 				// Create buttons
 				buttons.forEach(function( button, index ) {
 					if ( typeof button === 'object' ) {
@@ -149,7 +149,7 @@ define( 'wikia.ui.modal', [
 		});
 
 		// trigger custom buttons events based on button 'data-event' attribute
-		this.$element.find( 'footer button' ).click( $.proxy( function( event ) {
+		this.$element.on( 'click', 'button', $.proxy( function( event ) {
 			var modalEventName = $( event.target ).data( 'event' );
 			if ( modalEventName ) {
 				this.trigger( modalEventName, event );
@@ -173,7 +173,24 @@ define( 'wikia.ui.modal', [
 
 		// object containing modal event listeners
 		this.listeners = {
-			'close': [ $.proxy( this.close, that ) ]
+			'close': [
+				function() {
+					/**
+					 * Closes the modal; removes it from dom or just removes classes - it depends on destroyOnClose flag.
+					 * Before closing modal beforeClass event is triggered. One can bind to this event and cancel the close
+					 * action.
+					 * You should trigger the 'close' event on the modal to close it. This implementation is made private
+					 * to make it more explicit that closing is asynchronous and event based.
+					*/
+					that.trigger( 'beforeClose').then( $.proxy( function() {
+						if( !that.destroyOnClose ) {
+							that.$blackout.removeClass( BLACKOUT_VISIBLE_CLASS );
+						} else {
+							that.$blackout.remove();
+						}
+					}, that ) );
+				}
+			]
 		};
 
 		// allow to override the default value
@@ -213,23 +230,15 @@ define( 'wikia.ui.modal', [
 	};
 
 	/**
-	 * Closes the modal; removes it from dom or just removes classes - it depends on destroyOnClose flag
-	 */
-
-	Modal.prototype.close = function() {
-		this.trigger( 'beforeClose').then( $.proxy( function() {
-			if( !this.destroyOnClose ) {
-				this.$blackout.removeClass( BLACKOUT_VISIBLE_CLASS );
-			} else {
-				this.$blackout.remove();
-			}
-		}, this ) );
-	};
-
-	/**
-	 * @TODO This is somewhat magical, so document it!
-	 * @param eventName
-	 * @return Promise object
+	 * Triggers listeners attached to specific event. Listeners are run in the same order they were bound. This method
+	 * returns a promise. If one of the listeners returns a deferred which fails, trigger method will stop executing the
+	 * remaining listeners and will reject its result. When everything completes without problems, resolve will be called
+	 * instead on this method's return value.
+	 *
+	 * Any additional parameters passed after eventName will be passed to event listeners.
+	 *
+	 * @param String eventName name of the event to trigger - the same as passed to bind method
+	 * @return {{}} promise which will call its handlers after listeners had been executed
 	 */
 	Modal.prototype.trigger = function ( eventName ) {
 		var deferred = new $.Deferred(),
@@ -237,25 +246,30 @@ define( 'wikia.ui.modal', [
 			args =  [].slice.call( arguments, 1 ),
 			listeners = this.listeners[ eventName ];
 
+		// in future we may consider ignoring an event if the previous trigger call with the same
+		// eventName did not compete
+
 		( function iterate() {
 			var result;
 			while( listeners && ( i < listeners.length ) ) {
 				result = listeners[ i++ ].apply( undefined, args );
 				if ( result && ( typeof result.then === 'function' ) ) {
-					result.then( iterate );
+					result.then( iterate, deferred.reject );
 					return;
 				}
 			}
 			deferred.resolve();
 		} )();
-
 		return deferred.promise();
 	};
 
 	/**
-	 * @TODO - document
-	 * @param eventName
-	 * @param callback
+	 * Add an event listener, which will be called every time an event with matching name is triggered. The event
+	 * listener can be synchronous or can return a promise object. In case of promise event propagation in put on hold
+	 * until it's resolved. In case the promise is rejected, remaining event listeners are not called and the
+	 * corresponding trigger call also returns a rejected promise.
+	 * @param String eventName name of the event to bind to
+	 * @param function callback listener
 	 */
 	Modal.prototype.bind = function( eventName, callback ) {
 		if ( typeof( this.listeners[ eventName ] ) === 'undefined' ) {
