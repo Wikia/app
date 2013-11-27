@@ -24,7 +24,7 @@ body{
   height:36px;
   color: #fff;
 
-  font-size:12px;
+  font-size:13px;
   font-weight:regular;
   border-radius:2px;
   border:none;
@@ -138,8 +138,6 @@ body{
   position:fixed;
   bottom:0px;
 
-  margin-top:14px;
-  padding-bottom:18px;
   padding:18px;
   width:100%;
   text-align: center;
@@ -163,6 +161,12 @@ body{
 
 @media (orientation: landscape), (min-width: 500px){
   #wpSummary{
+    margin-bottom:0;
+    margin-left:0px;
+    min-width:250px;
+
+    float:left;
+
     width:auto;
   }
   #wpPreviewActions{
@@ -170,5 +174,8 @@ body{
   }
   .summary-title{
     display:inline-block;
+  }
+  #wpSave{
+    margin-right:0px;
   }
 }
