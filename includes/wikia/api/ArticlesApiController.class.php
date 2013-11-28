@@ -4,6 +4,7 @@
  *
  * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
  */
+use Wikia\Search\Config, Wikia\Search\QueryService\Factory, Wikia\Search\QueryService\DependencyContainer;
 
 class ArticlesApiController extends WikiaApiController {
 
@@ -13,6 +14,7 @@ class ArticlesApiController extends WikiaApiController {
 	const ITEMS_PER_BATCH = 25;
 	const TOP_WIKIS_FOR_HUB = 10;
 	const LANGUAGES_LIMIT = 10;
+	const MAX_NEW_ARTICLES_LIMIT = 20;
 
 	const PARAMETER_ARTICLES = 'ids';
 	const PARAMETER_TITLES = 'titles';
@@ -28,12 +30,14 @@ class ArticlesApiController extends WikiaApiController {
 	const DEFAULT_WIDTH = 200;
 	const DEFAULT_HEIGHT = 200;
 	const DEFAULT_ABSTRACT_LEN = 100;
+	const DEFAULT_SEARCH_NAMESPACE = 0;
 
 	const CLIENT_CACHE_VALIDITY = 86400;//24h
 	const CATEGORY_CACHE_ID = 'category';
 	const ARTICLE_CACHE_ID = 'article';
 	const DETAILS_CACHE_ID = 'details';
 	const PAGE_CACHE_ID = 'page';
+	const NEW_ARTICLES_CACHE_ID  = 'new-articles';
 
 	const ARTICLE_TYPE = 'article';
 	const VIDEO_TYPE = 'video';
@@ -41,7 +45,8 @@ class ArticlesApiController extends WikiaApiController {
 	const CATEGORY_TYPE = 'category';
 	const UNKNOWN_PROVIDER = 'unknown';
 
-
+	const NEW_ARTICLES_SQL_CACHE_EXPIRATION = 86400;
+	const NEW_ARTICLES_VARNISH_CACHE_EXPIRATION = 86400; //24 hours
 	const SIMPLE_JSON_VARNISH_CACHE_EXPIRATION = 86400; //24 hours
 	const SIMPLE_JSON_ARTICLE_ID_PARAMETER_NAME = "id";
 
@@ -293,6 +298,67 @@ class ArticlesApiController extends WikiaApiController {
 			throw new BadRequestApiException();
 		}
 	}
+
+
+	public function getNew(){
+		wfProfileIn( __METHOD__ );
+
+		$ns = $this->request->getArray( self::PARAMETER_NAMESPACES );
+		if ( empty( $ns ) ) {
+			$ns = [ self::DEFAULT_SEARCH_NAMESPACE ];
+		}
+		else {
+			/*
+			 * cast all namespaces to integer,
+			 * remove duplicates and sort
+			 * to have good cache
+			 */
+			$tmpNS = [ ];
+			foreach ( $ns as $k => &$v ) {
+				$v = (int)$v;
+				if ( $v >= NS_MAIN && $v <= NS_CATEGORY_TALK ) {
+					$tmpNS[ $v ] = true;
+				}
+			}
+			ksort( $tmpNS );
+			$ns = array_keys( $tmpNS );
+			unset( $tmpNS );
+		}
+
+		$key = self::getCacheKey( implode( '-', $ns ), self::NEW_ARTICLES_CACHE_ID );
+		$results = $this->wg->Memc->get( $key );
+		$results = null;
+		if ( $results === null ) {
+			$searchConfig = new Wikia\Search\Config;
+			$searchConfig->setQuery( '*' )
+				->setLimit( self::MAX_NEW_ARTICLES_LIMIT )
+				->setRank( 'default' )
+				->setOnWiki( true )
+				//->setCommercialUse(  false)
+				->setWikiId( $this->wg->wgCityId )
+				->setNamespaces( $ns )
+				->setRank( \Wikia\Search\Config::RANK_NEWEST_PAGE_ID );
+
+			$results = ( new Factory )->getFromConfig( $searchConfig )->searchAsApi( [ 'pageid', 'ns', 'title_en', 'url', 'text', 'created', 'id' ], false );
+			$this->wg->Memc->set( $key, $results, self::CLIENT_CACHE_VALIDITY );
+		}
+
+		$response = $this->getResponse();
+		$response->setValues( $results );
+
+		$response->setCacheValidity(
+			self::NEW_ARTICLES_VARNISH_CACHE_EXPIRATION /* 24h */,
+			self::NEW_ARTICLES_VARNISH_CACHE_EXPIRATION /* 24h */,
+			array(
+				WikiaResponse::CACHE_TARGET_BROWSER,
+				WikiaResponse::CACHE_TARGET_VARNISH
+			)
+		);
+
+		wfProfileOut( __METHOD__ );
+	}
+
+
 
 	/**
 	 * Get Articles under a category
