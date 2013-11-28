@@ -532,5 +532,12 @@ body {
 	.EditPageRail {
 		width: $width-rail;
 	}
+
+	// fix for wiki nav bug - DAR-2884
+	.preview .WikiaArticle {
+		overflow: inherit;
+	}
+
+
 // END - edit page fixes
 }
