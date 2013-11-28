@@ -337,24 +337,23 @@ class ArticlesApiController extends WikiaApiController {
 				->setWikiId( $this->wg->wgCityId )
 				->setNamespaces( $ns )
 				->setRank( \Wikia\Search\Config::RANK_NEWEST_PAGE_ID )
-				 ->setRequestedFields(['html_en']);
+				->setRequestedFields( [ 'html_en' ] );
 
 			$results = ( new Factory )->getFromConfig( $searchConfig )->searchAsApi(
-					[ 'pageid', 'ns', 'title_en'=>'title' ,  'html_en', 'created', 'id' ],
+				[ 'pageid', 'ns', 'title_en' => 'title', 'html_en', 'created', 'id' ],
 				false );
 
-			foreach($results as &$item)
-			{
-				$title = Title::newFromText($item['title']);
-				$item['title'] = $title->getText();
-				$item['url']   = $title->getLocalURL();
+			foreach ( $results as &$item ) {
+				$title = Title::newFromText( $item[ 'title' ] );
+				$item[ 'title' ] = $title->getText();
+				$item[ 'url' ] = $title->getLocalURL();
 			}
 
 			$this->wg->Memc->set( $key, $results, self::CLIENT_CACHE_VALIDITY );
 		}
 
 		$response = $this->getResponse();
-		$response->setValues( ['items'=>$results,'basepath'=>$this->wg->Server ] );
+		$response->setValues( [ 'items' => $results, 'basepath' => $this->wg->Server ] );
 
 		$response->setCacheValidity(
 			self::NEW_ARTICLES_VARNISH_CACHE_EXPIRATION /* 24h */,
