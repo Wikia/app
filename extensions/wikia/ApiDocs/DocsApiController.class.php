@@ -69,9 +69,10 @@ class DocsApiController extends WikiaController {
 				}
 			}
 		}
-		usort($thisWikiDocs, function ($a, $b) {
-			return strcasecmp($a['readableName'],$b['readableName']);
-	    });
+
+		usort( $thisWikiDocs, function ( $a, $b ) {
+			return strcasecmp( $a[ 'readableName' ], $b[ 'readableName' ] );
+		} );
 
  		$docs['apis'] = $thisWikiDocs;
 
