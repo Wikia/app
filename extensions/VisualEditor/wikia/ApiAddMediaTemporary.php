@@ -24,7 +24,7 @@ class ApiAddMediaTemporary extends ApiAddMedia {
 		$duplicate = $this->getFileDuplicate( $this->mRequest->getFileTempName( 'file' ) );
 		if ( $duplicate ) {
 			return array(
-				'title' => $duplicate->getTitle()->getPrefixedText(),
+				'title' => $duplicate->getTitle()->getText(),
 				'url' => $duplicate->getUrl()
 			);
 		} else {
@@ -41,7 +41,7 @@ class ApiAddMediaTemporary extends ApiAddMedia {
 			$this->verifyUpload();
 			$tempFile = $this->createTempFile( $this->mRequest->getFileTempName( 'file' ) );
 			return array(
-				'title' => $this->mUpload->getTitle()->getPrefixedText(),
+				'title' => $this->mUpload->getTitle()->getText(),
 				'tempUrl' => $tempFile->getUrl(),
 				'tempName' => $tempFile->getName()
 			);
@@ -63,7 +63,7 @@ class ApiAddMediaTemporary extends ApiAddMedia {
 			$this->dieUsage( 'Valid Wikia video URL, but video is missing', 'wikia-video-missing' );
 		}
 		return array(
-			'title' => $wikiaFile->getTitle()->getPrefixedText(),
+			'title' => $wikiaFile->getTitle()->getText(),
 			'url' => $wikiaFile->getUrl(),
 			'provider' => 'wikia'
 		);
@@ -93,7 +93,7 @@ class ApiAddMediaTemporary extends ApiAddMedia {
 			'videoId' => $apiwrapper->getVideoId()
 		);
 		if ( $duplicate ) {
-			$result[ 'title' ] = $duplicate->getTitle()->getPrefixedText();
+			$result[ 'title' ] = $duplicate->getTitle()->getText();
 			$result[ 'url' ] = $duplicate->getUrl();
 		} else {
 			// Check whether upload is enabled
@@ -113,7 +113,7 @@ class ApiAddMediaTemporary extends ApiAddMedia {
 			$this->mUpload->fetchFile();
 			$this->verifyUpload();
 			$tempFile = $this->createTempFile( $this->mUpload->getTempPath() );
-			$result[ 'title' ] = $apiwrapper->getPrefixedText();
+			$result[ 'title' ] = $apiwrapper->getText();
 			$result[ 'tempUrl' ] = $tempFile->getUrl();
 			$result[ 'tempName' ] = $tempFile->getName();				
 		}
