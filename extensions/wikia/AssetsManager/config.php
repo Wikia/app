@@ -438,6 +438,7 @@ $config['wikiamobile_editor_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'wikiamobile',
 	'assets' => array(
+		'#group_wikiamobile_tables_js',
 		'//resources/wikia/libraries/mustache/mustache.js',
 		'//extensions/wikia/WikiaMobileEditor/js/preview.js'
 	)

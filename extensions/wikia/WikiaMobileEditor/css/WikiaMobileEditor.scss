@@ -1,3 +1,5 @@
+@import '../../WikiaMobile/css/tables.scss';
+
 .wkButn {
 	-webkit-appearance: button;
 	margin-left: 6px;
@@ -214,19 +216,11 @@
 	}
 
     .flex-wrapper{
-      width:100%;
-      text-align:right;
-      display: box;
-      display: -webkit-box;
-      display: -webkit-flex;
-      display: flex;
-      -webkit-flex-direction: row;
-      -webkit-box-direction: row;
-      -webkit-flex-wrap: wrap;
-      -webkit-box-wrap: wrap;
-      -webkit-justify-content: flex-end;
-      -webkit-box-orient: horizontal;
-      box-orient: horizontal;
+		display: -webkit-box;/* OLD - iOS 6-, Safari 3.1-6 */
+		display: -moz-box;/* OLD - Firefox 19- (buggy but mostly works) */
+		display: -ms-flexbox;/* TWEENER - IE 10 */
+		display: -webkit-flex;/* NEW - Chrome */
+		display: flex;/* NEW, Spec - Opera 12.1, Firefox 20+ */
     }
 
     .license-brief{

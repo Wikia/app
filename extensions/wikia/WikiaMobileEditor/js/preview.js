@@ -1,5 +1,5 @@
-require( [ 'modal', 'wikia.loader', 'wikia.mustache', 'jquery', 'toast', 'sloth', 'lazyload', 'JSMessages', 'wikia.window' ],
-	function ( modal, loader, mustache, $, toast, sloth, lazyload, msg, window ) {
+require( [ 'modal', 'wikia.loader', 'wikia.mustache', 'jquery', 'toast', 'sloth', 'lazyload', 'JSMessages', 'wikia.window', 'tables' ],
+	function ( modal, loader, mustache, $, toast, sloth, lazyload, msg, window, tables ) {
 	'use strict';
 
     var markup = $( '#previewTemplate' ).remove().children(),
@@ -47,7 +47,7 @@ require( [ 'modal', 'wikia.loader', 'wikia.mustache', 'jquery', 'toast', 'sloth'
 	function isOnline(){
 		return hasOnline ? window.navigator.onLine : true;
 	}
-	
+
     //displays loader and preview after fetching it from parser
     function render( content ){
         $.ajax({
@@ -66,17 +66,27 @@ require( [ 'modal', 'wikia.loader', 'wikia.mustache', 'jquery', 'toast', 'sloth'
 			if ( resp && resp.html ) {
 				content.innerHTML = resp.html;
 
-				new window.IScroll(
+				var scroller = new window.IScroll(
 					'#wkMdlCnt', {
 					click: false,
 					scrollY: true,
 					scrollX: false
 				});
 
+				tables.process( $( content ).find( 'table:not(.toc):not(.infobox)' ) );
+
 				sloth( {
 					on: document.getElementsByClassName( 'lazy' ),
 					threshold: 100,
 					callback: lazyload
+				} );
+
+				scroller.on( 'scrollEnd', function(){
+					//using IScroll and sloth is tricky so we need to help sloth
+					window.scrollY = -this.y;
+
+					sloth();
+					this.refresh();
 				} );
 
 				$( '#wkSave' ).attr( 'disabled', false ).on( 'click', publish );
@@ -103,7 +113,7 @@ require( [ 'modal', 'wikia.loader', 'wikia.mustache', 'jquery', 'toast', 'sloth'
 		}
     }
 
-	if ( document.getElementsByClassName( 'mw-newarticletextanon' )[0] ) {
+	if ( window.wgArticleId === 0 ) {
 		toast.show( newArticleMsg );
 	}
 
