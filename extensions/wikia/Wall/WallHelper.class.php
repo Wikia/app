@@ -305,12 +305,12 @@ class WallHelper {
 
 			if( $user ) {
 				$items[$i]['real-name'] = $user->getName();
-				if (F::app()->wg->EnableWallExt) {
-					$userWallTitle = Title::newFromText( $user->getName(), NS_USER_WALL );
+				if ( !empty( F::app()->wg->EnableWallExt ) ) {
+					$userLinkTitle = Title::newFromText( $user->getName(), NS_USER_WALL );
 				} else {
-					$userWallTitle = Title::newFromText( $user->getName(), NS_USER_TALK );
+					$userLinkTitle = Title::newFromText( $user->getName(), NS_USER );
 				}
-				$items[$i]['user-profile-url'] = $userWallTitle->getFullUrl();
+				$items[$i]['user-profile-url'] = $userLinkTitle->getFullUrl();
 			} else {
 				$items[$i]['real-name'] = '';
 			}
