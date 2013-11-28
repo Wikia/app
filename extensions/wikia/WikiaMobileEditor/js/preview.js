@@ -104,14 +104,13 @@ require( [ 'modal', 'wikia.loader', 'wikia.mustache', 'jquery', 'toast', 'sloth'
 		//currently wikiamobile displayes this in a different place so we need to copy the value of summary
 		summaryForm.value = document.getElementById( 'wkSummary' ).value;
 
-		if ( isOnline() ) {
+		if ( isOnline() || window.confirm( internetMsg ) ) {
+			modal.addClass( 'loading' );
+			$( '#wkMdlTlBar' ).find( 'span' ).text( msg( 'wikiamobileeditor-saving' ) );
+
 			form.submit();
-		} else {
-			if ( window.confirm( internetMsg ) ) {
-				form.submit();
-			}
 		}
-    }
+	}
 
 	if ( window.wgArticleId === 0 ) {
 		toast.show( newArticleMsg );

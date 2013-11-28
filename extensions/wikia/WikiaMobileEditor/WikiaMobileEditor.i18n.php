@@ -14,6 +14,7 @@ $messages['en'] = array(
 	'wikiamobileeditor-keep-editing' => 'Keep Editing',
 
 	'wikiamobileeditor-on-save' => 'Success! Your edit was published.',
+	'wikiamobileeditor-saving' => 'Saving',
 	'wikiamobileeditor-on-new' => 'You are starting a brand new article (section).',
 	'wikiamobileeditor-wrong' => 'Something went wrong.',
 	'wikiamobileeditor-internet' => 'Do you have internet connection ?'

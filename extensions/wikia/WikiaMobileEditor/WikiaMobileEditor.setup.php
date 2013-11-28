@@ -28,7 +28,8 @@ $wgExtensionMessagesFiles[ 'WikiaMobileEditor' ] = $dir . 'WikiaMobileEditor.i18
 JSMessages::registerPackage( 'wikiamobileeditor', [
 	'wikiamobileeditor-on-new',
 	'wikiamobileeditor-wrong',
-	'wikiamobileeditor-internet'
+	'wikiamobileeditor-internet',
+	'wikiamobileeditor-saving'
 ] );
 
 JSMessages::registerPackage( 'wikiamobileeditor_on_save', [
