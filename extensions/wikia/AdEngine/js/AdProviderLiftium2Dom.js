@@ -1,5 +1,6 @@
 /*exported AdProviderLiftium2Dom*/
 /*jshint maxparams:false*/
+/*global setTimeout*/
 
 var AdProviderLiftium2Dom = function (log, document, slotTweaker, Liftium, scriptWriter, window) {
 	'use strict';
@@ -102,7 +103,7 @@ var AdProviderLiftium2Dom = function (log, document, slotTweaker, Liftium, scrip
 		}
 
 		// Fake success, because we don't have the success event in Liftium
-		success();
+		setTimeout(success, 0);
 	};
 
 	return {
