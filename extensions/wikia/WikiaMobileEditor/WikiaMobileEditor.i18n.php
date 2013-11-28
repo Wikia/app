@@ -11,19 +11,29 @@ $messages['en'] = array(
 	'wikiamobileeditor-summary-placeholder' => 'What did you change (Optional)?',
 	'wikiamobileeditor-licensing' => 'Contributions licensed as',
 	'wikiamobileeditor-licensing-type' => 'CC-BY-SA',
-	'wikiamobileeditor-keep-editing' => 'Keep Editing'
+	'wikiamobileeditor-keep-editing' => 'Keep Editing',
+
+	'wikiamobileeditor-on-save' => 'Success! Your edit was published.',
+	'wikiamobileeditor-on-new' => 'You are starting a brand new article (section).',
+	'wikiamobileeditor-wrong' => 'Something went wrong.',
+	'wikiamobileeditor-internet' => 'Do you have internet connection ?'
 );
 
 $messages['qqq'] = array(
 	'tag-mobileedit' => 'Shown on lists of changes (history, recentchanges, etc.) for each edit made using mobile skin.',
-	'tag-mobileedit-description' => 'Long description of the visualeditor tag.',
+	'tag-mobileedit-description' => 'Long description of the mobileedit tag.',
 
 	'wikiamobileeditor-cancel' => 'Message on mobile edit page that closses edit page and go back to an article',
-	'wikiamobileeditor-publish' => 'Publish',
-	'wikiamobileeditor-preview' => 'Preview',
-	'wikiamobileeditor-summary' => 'What did you change (Optional)?',
-	'wikiamobileeditor-licensing' => 'Contributions licensed as',
+	'wikiamobileeditor-publish' => 'message on a button to publish an edit',
+	'wikiamobileeditor-preview' => 'message on a button to open a modal with preview of an aricle',
+	'wikiamobileeditor-summary' => 'Placeholder on an input that prompts for an edit summary',
+	'wikiamobileeditor-licensing' => 'message explaining under what license an edit is being made. visible in preview modal under publish button',
 	'wikiamobileeditor-licensing-type' => 'CC-BY-SA',
-	'wikiamobileeditor-keep-editing' => 'Keep Editing'
+	'wikiamobileeditor-keep-editing' => 'message on a button that closes preview modal',
+
+	'wikiamobileeditor-on-success' => 'massage visible in a small toast that indicates that edit is saved',
+	'wikiamobileeditor-on-new' => 'You are starting a brand new article (section).',
+	'wikiamobileeditor-wrong' => 'Something went wrong.',
+	'wikiamobileeditor-internet' => 'Do you have internet connection ?'
 );
 

@@ -11,16 +11,26 @@ $dir = dirname(__FILE__) . '/';
 /**
  * classes
  */
-$wgAutoloadClasses['WikiaMobileEditorController'] =  $dir . 'WikiaMobileEditorController.class.php';
+$wgAutoloadClasses[ 'WikiaMobileEditorController' ] = $dir . 'WikiaMobileEditorController.class.php';
 
 /**
  * hooks
  */
-$wgHooks['WikiaMobileAssetsPackages'][] = 'WikiaMobileEditorController::onWikiaMobileAssetsPackages';
-$wgHooks['EditPage::showEditForm:initial'][] = 'WikiaMobileEditorController::onEditPageInitial';
-$wgHooks['ArticleSaveComplete'][] = 'WikiaMobileEditorController::onArticleSaveComplete';
+$wgHooks[ 'WikiaMobileAssetsPackages' ][] = 'WikiaMobileEditorController::onWikiaMobileAssetsPackages';
+$wgHooks[ 'EditPage::showEditForm:initial' ][] = 'WikiaMobileEditorController::onEditPageInitial';
+$wgHooks[ 'ArticleSaveComplete' ][] = 'WikiaMobileEditorController::onArticleSaveComplete';
 
 /**
  * message files
  */
-$wgExtensionMessagesFiles['WikiaMobileEditor'] = $dir . 'WikiaMobileEditor.i18n.php';
+$wgExtensionMessagesFiles[ 'WikiaMobileEditor' ] = $dir . 'WikiaMobileEditor.i18n.php';
+
+JSMessages::registerPackage( 'wikiamobileeditor', [
+	'wikiamobileeditor-on-new',
+	'wikiamobileeditor-wrong',
+	'wikiamobileeditor-internet'
+] );
+
+JSMessages::registerPackage( 'wikiamobileeditor_on_save', [
+	'wikiamobileeditor-on-success'
+] );

@@ -231,6 +231,10 @@
     }
 }
 
+#editform {
+	margin-bottom: 80px;
+}
+
 //Hiding Unnecesarry elements to make mobile edit as clean as possible
 #wkMainCntHdr div, .mw-newarticletextanon, .mw-newarticletext, #mw-anon-edit-warning, .editOptions, #editpage-copywarn, #previewTemplate {
 	display: none;

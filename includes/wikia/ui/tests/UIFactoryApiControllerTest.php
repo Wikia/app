@@ -31,19 +31,21 @@ class UIFactoryApiControllerTest extends WikiaBaseTest {
 		$requestMock = $this->getMock( 'WikiaRequest', [ 'getArray' ], [], '', false );
 		$requestMock->expects( $this->any() )
 			->method( 'getArray' )
+			->with( 'components' )
 			->will( $this->returnValue( $componentNames ) );
-		$requestMock->expects( $this->any() )
-			->method( 'setVal' );
 
 		$responseMock = $this->getMock( 'WikiaResponse', [ 'setCacheValidity' ], [], '', false );
 		$responseMock->expects( $this->once() )
 			->method( 'setCacheValidity' );
 
-		$apiMock = $this->getMock( 'Wikia\UI\UIFactoryApiController', [ 'setVal' ] );
-		$apiMock->setRequest( $requestMock );
-		$apiMock->setResponse( $responseMock );
+		$api = new Wikia\UI\UIFactoryApiController();
+		$api->setRequest( $requestMock );
+		$api->setResponse( $responseMock );
 
-		$apiMock->getComponentsConfig();
+		$api->getComponentsConfig();
+
+		$this->assertEquals( [], $responseMock->getVal( 'components' )  );
+		$this->assertEquals( [], $responseMock->getVal( 'dependencies' )  );
 	}
 
 }

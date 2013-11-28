@@ -63,45 +63,73 @@ var CreatePage = {
 				rs: 'wfCreatePageAjaxGetDialog'
 			},
 			function( data ) {
-				var idToken,
-					elm,
-					onElementClick;
-				$.showModal( data.title, data.html, {
-					width: data.width,
-					id: 'CreatePageDialog',
-					callback: function() {
-						CreatePage.loading = false;
-
-						onElementClick = function() {
-							CreatePage.setPageLayout( $( this ).data( 'optionName' ) );
+				require( [ 'wikia.ui.factory' ], function( uiFactory ) {
+					uiFactory.init( [ 'modal' ] ).then( function( uiModal ) {
+						var createPageModalConfig = {
+							vars: {
+								id: 'CreatePageModalDialog',
+								size: 'medium',
+								title: data.title,
+								content: data.html,
+								classes: [ 'modalContent' ],
+								buttons: [
+									{
+										vars: {
+											value: data.addPageLabel,
+											classes: [ 'normal', 'primary' ],
+											imageClass: 'new',
+											data: [
+												{
+													key: 'event',
+													value: 'create'
+												}
+											]
+										}
+									}
+								]
+							}
 						};
+						uiModal.createComponent( createPageModalConfig, function( createPageModal ) {
+							var idToken,
+								elm,
+								onElementClick,
+								name;
 
-						for ( var name in CreatePage.options ){
-							idToken = name.charAt( 0 ).toUpperCase() + name.substring( 1 );
-							elm = $( '#CreatePageDialog' + idToken + 'Container' );
+							createPageModal.bind( 'create', function( event ) {
+								event.preventDefault();
+								CreatePage.submitDialog( false );
+							});
 
-							elm.data( 'optionName', name );
-							elm.click( onElementClick );
-						}
+							onElementClick = function() {
+								CreatePage.setPageLayout( $( this ).data( 'optionName' ) );
+							};
 
-						// Titles can be numbers, let's just make them strings for simplicity
-						if ( typeof titleText === 'number' ) {
-							titleText = titleText.toString();
-						}
+							for ( name in CreatePage.options ){
+								idToken = name.charAt( 0 ).toUpperCase() + name.substring( 1 );
+								elm = $( '#CreatePageDialog' + idToken + 'Container' );
 
-						if ( titleText ) {
-							$( '#wpCreatePageDialogTitle' ).val( decodeURIComponent( titleText ) );
-						}
+								elm.data( 'optionName', name );
+								elm.click( onElementClick );
+							}
 
-						CreatePage.setPageLayout( data.defaultOption );
+							// Titles can be numbers, let's just make them strings for simplicity
+							if ( typeof titleText === 'number' ) {
+								titleText = titleText.toString();
+							}
 
-						$( '#wpCreatePageDialogTitle' ).focus();
+							if ( titleText ) {
+								$( '#wpCreatePageDialogTitle' ).val( decodeURIComponent( titleText ) );
+							}
 
-						$( '#CreatePageDialogButton' ).find( '.createpage' ).click(function( e ) {
-							e.preventDefault();
-							CreatePage.submitDialog( false );
+							CreatePage.setPageLayout( data.defaultOption );
+
+							$( '#wpCreatePageDialogTitle' ).focus();
+
+							createPageModal.show();
+
+							CreatePage.loading = false;
 						});
-					}
+					});
 				});
 			});
 		}
