@@ -572,12 +572,7 @@ class ArticlesApiController extends WikiaApiController {
 		//make the thumbnail's size parametrical without
 		//invalidating the titles details' cache
 		//or the need to duplicate it
-		if ( $width > 0 && $height > 0 ) {
-			$is = new ImageServing( $articles, $width, $height );
-			$thumbnails = $is->getImages( 1 );
-		} else {
-			$thumbnails = array();
-		}
+		$thumbnails = $this->getArticlesThumbnails( $articles, $width, $height );
 
 		$articles = null;
 
@@ -595,8 +590,7 @@ class ArticlesApiController extends WikiaApiController {
 			}
 
 			$details['abstract'] = $snippet;
-			$details['thumbnail'] = ( array_key_exists( $id, $thumbnails ) ) ? $thumbnails[$id][0]['url'] : null;
-			$details['original_dimensions'] = ( array_key_exists( $id, $thumbnails ) && isset( $thumbnails[$id][0]['original_dimensions'] ) ) ? $thumbnails[$id][0]['original_dimensions'] : null;
+			$details = array_merge( $details, $thumbnails[ $id ] );
 		}
 
 		$thumbnails = null;
@@ -611,6 +605,30 @@ class ArticlesApiController extends WikiaApiController {
 		}
 
 		return $collection;
+	}
+
+	protected function getArticlesThumbnails( $articles, $width = self::DEFAULT_WIDTH, $height = self::DEFAULT_HEIGHT ) {
+		$ids = !is_array( $articles ) ? [ $articles ] : $articles;
+		$result = [];
+		if ( $width > 0 && $height > 0 ) {
+			$is = $this->getImageServing( $ids, $width, $height );
+			//only one image max is returned
+			$images = $is->getImages( 1 );
+			//parse results
+			foreach( $ids as $id ) {
+				$data = [ 'thumbnail' => null, 'original_dimensions' => null ];
+				if ( isset( $images[ $id ] ) ) {
+					$data['thumbnail'] = $images[$id][0]['url'];
+					$data['original_dimensions'] = $images[$id][0]['original_dimensions'];
+				}
+				$result[ $id ] = $data;
+			}
+		}
+		return $result;
+	}
+
+	protected function getImageServing( $ids, $width, $height ) {
+		return new ImageServing( $ids, $width, $height );
 	}
 
 	protected function getFromFile( $title ) {
