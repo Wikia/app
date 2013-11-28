@@ -69,10 +69,6 @@ class WikiaMobileEditorController extends WikiaController{
 				$revision->getId(),
 				null
 			);
-
-			JSMessages::enqueuePackage( 'wikiamobileeditor_on_save', JSMessages::EXTERNAL );
-
-			$app->wg->Out->addInlineScript( "<script src='{$app->wg->ExtensionsPath}/wikia/WikiaMobileEditor/articleSaved.js'></script>" );
 		}
 
 		return true;
