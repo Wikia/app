@@ -188,38 +188,33 @@
     #wkMdlCnt #mw-content-text{
         padding-bottom:100px;
     }
-
-    #wk
-
-    #wkSave{
-      -webkit-box-flex: 0;
-      -moz-box-flex: 0;
-      -webkit-flex: 0;
-      flex: 0;
-    }
 	
 	#wkSummary {
 		margin-bottom: 0;
-		margin-left: 0;
-		min-width: 200px;
-
-		float: left;
-
+		min-width: 210px;
 		width: auto;
-        //-webkit-flex-grow: 1;
-        -webkit-align-self: stretch;
 
-        -webkit-box-flex: 1;
-        -moz-box-flex: 1;
-        -webkit-flex: 1;
-        flex: 1;
+        -webkit-box-flex: 1 0;
+        -webkit-flex: 1 0;
+        flex: 1 0;
 	}
+
+    #wkSave{
+        margin-right: 0;
+    }
 
 	#wkPreviewActions {
 		text-align: right;
+        float:right;
+        box-pack: right;
+        -webkit-box-pack: right;
+        box-align: right;
+        -webkit-box-align: right;
 	}
 
     .flex-wrapper{
+      width:100%;
+      text-align:right;
       display: box;
       display: -webkit-box;
       display: -webkit-flex;
@@ -229,18 +224,10 @@
       -webkit-flex-wrap: wrap;
       -webkit-box-wrap: wrap;
       -webkit-justify-content: flex-end;
-      -moz-box-orient: horizontal;
       -webkit-box-orient: horizontal;
       box-orient: horizontal;
     }
 
-	.summary-title {
-		width:100%;
-	}
-
-	#wkSave { 
-		margin-right: 0px;
-	}
     .license-brief{
         display: block;
         width: 100%;
