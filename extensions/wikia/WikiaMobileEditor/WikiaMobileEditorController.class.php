@@ -70,7 +70,9 @@ class WikiaMobileEditorController extends WikiaController{
 				null
 			);
 
-			$app->wg->Out->addScript( "<script src='{$app->wg->ExtensionsPath}/wikia/WikiaMobileEditor/articleSaved.js'></script>" );
+			JSMessages::enqueuePackage( 'wikiamobileeditor_on_save', 'external' );
+
+			$app->wg->Out->addInlineScript( "<script src='{$app->wg->ExtensionsPath}/wikia/WikiaMobileEditor/articleSaved.js'></script>" );
 		}
 
 		return true;
@@ -80,6 +82,8 @@ class WikiaMobileEditorController extends WikiaController{
 		$this->response->setTemplateEngine( self::TEMPLATE_ENGINE );
 
         $this->response->setVal( 'articleUrl', $this->app->wg->Title->getLocalUrl() );
+
+		JSMessages::enqueuePackage( 'wikiamobileeditor', 'inline' );
 
         $this->response->setVal( 'cancel', wfMessage('wikiamobileeditor-cancel')->text() );
         $this->response->setVal( 'preview', wfMessage('wikiamobileeditor-preview')->text() );

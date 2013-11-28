@@ -11,7 +11,12 @@ $messages['en'] = array(
 	'wikiamobileeditor-summary-placeholder' => 'What did you change (Optional)?',
 	'wikiamobileeditor-licensing' => 'Contributions licensed as',
 	'wikiamobileeditor-licensing-type' => 'CC-BY-SA',
-	'wikiamobileeditor-keep-editing' => 'Keep Editing'
+	'wikiamobileeditor-keep-editing' => 'Keep Editing',
+
+	'wikiamobileeditor-on-save' => 'Success! Your edit was published.',
+	'wikiamobileeditor-on-new' => 'You are starting a brand new article (section).',
+	'wikiamobileeditor-wrong' => 'Something went wrong.',
+	'wikiamobileeditor-internet' => 'Do you have internet connection ?'
 );
 
 $messages['qqq'] = array(
@@ -24,6 +29,11 @@ $messages['qqq'] = array(
 	'wikiamobileeditor-summary' => 'What did you change (Optional)?',
 	'wikiamobileeditor-licensing' => 'Contributions licensed as',
 	'wikiamobileeditor-licensing-type' => 'CC-BY-SA',
-	'wikiamobileeditor-keep-editing' => 'Keep Editing'
+	'wikiamobileeditor-keep-editing' => 'Keep Editing',
+
+	'wikiamobileeditor-on-save' => 'Success! Your edit was published.',
+	'wikiamobileeditor-on-new' => 'You are starting a brand new article (section).',
+	'wikiamobileeditor-wrong' => 'Something went wrong.',
+	'wikiamobileeditor-internet' => 'Do you have internet connection ?'
 );
 

@@ -1,13 +1,16 @@
-require( ['modal', 'wikia.loader', 'wikia.mustache', 'jquery', 'toast', 'sloth', 'lazyload'],
-	function ( modal, loader, mustache, $, toast, sloth, lazyload ) {
+require( [ 'modal', 'wikia.loader', 'wikia.mustache', 'jquery', 'toast', 'sloth', 'lazyload', 'JSMessages', 'wikia.window' ],
+	function ( modal, loader, mustache, $, toast, sloth, lazyload, msg, window ) {
 	'use strict';
 
     var markup = $( '#previewTemplate' ).remove().children(),
-		loading,
-        previewButton,
-        summary,
-        textBox,
-		newArticle = 'You are starting a brand new article (section).';
+        previewButton = document.getElementById( 'wkPreview' ),
+        summaryText = '',
+		textBox = document.getElementById( 'wpTextbox1' ),
+		form = document.getElementsByTagName('form')[0],
+		summaryForm = form.querySelector( '#wpSummary' ),
+		newArticleMsg = msg( 'wikiamobileeditor-on-new' ),
+		wrongMsg = msg( 'wikiamobileeditor-wrong' ),
+		internetMsg = msg( 'wikiamobileeditor-internet' );
 
 	//opens modal with preview container markup
 	function show () {
@@ -21,17 +24,23 @@ require( ['modal', 'wikia.loader', 'wikia.mustache', 'jquery', 'toast', 'sloth',
 			onOpen: function( content ){
 				modal.addClass( 'loading' );
 
-				$( '#wkContinueEditing' ).on( 'click', modal.close );
+				var summaryInput = document.getElementById( 'wkSummary' );
+
+				//Restore previous summary
+				if ( summaryText ) {
+					summaryInput.value = summaryText;
+				}
+
+				$( '#wkContinueEditing' ).on( 'click', function(){
+					summaryText = summaryInput.value;
+					modal.close();
+				} );
+
 				$( '#wkSave' ).attr( 'disabled', true );
 
 				render( content );
 			}
 		});
-	}
-
-	//closes modal
-	function hide(){
-		modal.close();
 	}
 	
     //displays loader and preview after fetching it from parser
@@ -40,57 +49,50 @@ require( ['modal', 'wikia.loader', 'wikia.mustache', 'jquery', 'toast', 'sloth',
             url: 'index.php',
             type: 'post',
             data: {
-                action: 'ajax',
-                rs: 'EditPageLayoutAjax',
-                title: wgTitle,
-                skin: 'wikiamobile',
-                type: 'partial',
-                page: 'SpecialCustomEditPage',
-                method: 'preview',
-                mode: 'wysiwyg',
-                content: textBox.value
-			},
-            success: function( resp ) {
+				action: 'ajax',
+				rs: 'EditPageLayoutAjax',
+				skin: 'wikiamobile',
+				type: 'partial',
+				page: 'SpecialCustomEditPage',
+				method: 'preview',
+				content: textBox.value
+			}
+        } ).done( function( resp ) {
+			if ( resp && resp.html ) {
 				content.innerHTML = resp.html;
 
 				sloth( {
 					on: document.getElementsByClassName( 'lazy' ),
-					threshold: 300,
+					threshold: 100,
 					callback: lazyload
 				} );
 
-				summary = document.getElementById( 'wkSummary' );
-
 				$( '#wkSave' ).attr( 'disabled', false ).on( 'click', publish );
+			} else {
+				toast.show( wrongMsg );
+			}
+		} ).fail(function(){
+			var hasOnline = window.navigator && window.navigator.onLine !== undefined,
+				online =  hasOnline ? window.navigator.onLine : true;
 
-				modal.removeClass( 'loading' );
-            }
-        });
+			toast.show( wrongMsg + ( !online ? '' : ' ' + internetMsg ) );
+		}).always( function() {
+			modal.removeClass( 'loading' );
+		});
     }
 
     function publish(){
-        var form = document.getElementsByTagName('form')[0];
-
-		form.innerHTML += '<input type="hidden" name="wpSummary" value="' + summary.value + '">';
-		form.querySelector( 'input[name=wpSummary]' ).value = summary.value;
+		//currently wikiamobile displayes this in a different place so we need to copy the value of summary
+		summaryForm.value = document.getElementById( 'wkSummary' ).value;
 
         form.submit();
     }
 
-	document.getElementsByTagName('form')[0].addEventListener('submit', function( event ){
-		//event.preventDefault();
-
-	});
-
-	if(document.getElementsByClassName('mw-newarticletextanon')[0]){
-		toast.show( newArticle );
+	if ( document.getElementsByClassName( 'mw-newarticletextanon' )[0] ) {
+		toast.show( newArticleMsg );
 	}
 
-	previewButton = document.getElementById( 'wkPreview' );
-	textBox = document.getElementById( 'wpTextbox1' );
-
 	previewButton.addEventListener( 'click', function(){
-		//reset preview markup and render new from edited wikitext
 		event.preventDefault();
 
 		show();
