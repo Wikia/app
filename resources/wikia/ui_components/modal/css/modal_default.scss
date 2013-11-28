@@ -29,6 +29,7 @@ $large-modal-margin: 50px;
 	@include box-shadow( 1px, 2px, 5px, rgba(0, 0, 0, .7) );
 	@include flexbox();
 	@include flex-direction(column);
+	@include box-sizing-border-box;
 
 	background-color: $color-page;
 	border-radius: 2px;
@@ -119,7 +120,14 @@ $large-modal-margin: 50px;
 		@include height-calc('100% - #{$large-modal-margin}');
 		@include width-calc('100% - #{$large-modal-margin}');
 		display: block;
+		max-height: none;
+		min-height: none;
+		padding-bottom: $header-footer-height;
 		position: relative;
+
+		> section {
+			@include height-calc('100% - #{$header-footer-height}');
+		}
 
 		> footer {
 			bottom: 0;
@@ -170,6 +178,11 @@ $large-modal-margin: 50px;
 
 	> .medium {
 		margin-left: -$medium-modal-width / 2;
+	}
+
+	> .large {
+		left: 25px;
+		top: 25px;
 	}
 
 }
