@@ -3,7 +3,7 @@ require( [ 'modal', 'wikia.loader', 'wikia.mustache', 'jquery', 'toast', 'sloth'
 	'use strict';
 
     var markup = $( '#previewTemplate' ).remove().children(),
-        previewButton = document.getElementById( 'wkPreview' ),
+        $previewButton = $( '#wkPreview' ),
         summaryText = '',
 		textBox = document.getElementById( 'wpTextbox1' ),
 		form = document.getElementsByTagName('form')[0],
@@ -116,7 +116,7 @@ require( [ 'modal', 'wikia.loader', 'wikia.mustache', 'jquery', 'toast', 'sloth'
 		toast.show( newArticleMsg );
 	}
 
-	previewButton.addEventListener( 'click', function(){
+	$previewButton.on( 'click', function( event ){
 		event.preventDefault();
 
 		show();
