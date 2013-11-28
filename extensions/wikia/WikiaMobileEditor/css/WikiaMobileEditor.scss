@@ -1,12 +1,13 @@
 .wkButn {
 	-webkit-appearance: button;
-	margin-right: 6px;
+	margin-left: 6px;
 
 	padding: 12px 20px;
 
 	height: 36px;
 	color: #fff;
 
+    line-height:13px;
 	font-size: 13px;
 	border-radius: 2px;
 	border: none;
@@ -56,7 +57,6 @@
 
 	pointer-events: none;
 
-	//will be obsolete with the merged wm4.0
 	color:#333333;
 
 	#mw-content-text{
@@ -69,7 +69,7 @@
 }
 
 #wkPreviewActions {
-	position: absolute;
+	position: fixed;
 
 	p {
 		font-size: 12px;
@@ -103,23 +103,23 @@
 #wkMdlTB {
 	height: 22px;
 	margin: 0;
-	vertical-align:middle;
-	line-height:12px;
+	vertical-align: middle;
+	line-height:  12px;
 
 	background-color: #f0f0f0;
 	background-image: url('/extensions/wikia/WikiaMobileEditor/images/preview_stripe.png'); /* base64 */
 	background-repeat: repeat-x;
 	background-position: 0 50%;
 
-	color:#606060;
-	font-size:12px;
-	font-weight:bold;
+	color: #606060;
+	font-size: 12px;
+	font-weight:  bold;
 	text-align:center;
 
 	span {
 		padding: 0 8px;
-		background-color:#f0f0f0;
-		line-height:24px;
+		background-color: #f0f0f0;
+		line-height: 24px;
 	}
 
 	.loading & {
@@ -131,7 +131,7 @@
 
 @-webkit-keyframes loading {
 	0% {
-		background-position-x:0;
+		background-position-x: 0;
 	}
 	100% {
 		background-position-x: 16px;
@@ -140,7 +140,7 @@
 
 @-moz-keyframes loading {
 	0% {
-		background-position-x:0;
+		background-position-x: 0;
 	}
 	100% {
 		background-position-x: 16px;
@@ -149,7 +149,7 @@
 
 @keyframes loading {
 	0% {
-		background-position-x:0;
+		background-position-x: 0;
 	}
 	100% {
 		background-position-x: 16px;
@@ -173,13 +173,10 @@
 .license-brief {
 	margin-bottom: 0px;
 
+    line-height: 12px;
+    padding-top: 14px;
+
 	font-size: 12px;
-}
-
-#summaryTitle {
-	margin: 0 0 6px 0;
-
-	text-align: left;
 }
 
 #wkMobileCancel {
@@ -189,9 +186,10 @@
 }
 
 @media (min-width: 479px) {
-	#wkPreviewWindow{
-		padding-bottom:129px;
-	}
+
+    #wkMdlCnt #mw-content-text{
+        padding-bottom:100px;
+    }
 	
 	#wkSummary {
 		margin-bottom: 0;
@@ -201,19 +199,36 @@
 		float: left;
 
 		width: auto;
+        //-webkit-flex-grow: 1;
+        -webkit-align-self: stretch;
+
+        -webkit-box-flex: 1 0 auto;
+        -moz-box-flex: 1 0 auto;
+        -webkit-flex: 1 0 auto;
+        flex: 1 0 auto;
 	}
 
 	#wkPreviewActions {
 		text-align: right;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-flex-direction: row;
+        -webkit-flex-wrap: wrap;
+        -webkit-justify-content: flex-end;
 	}
 
 	.summary-title {
-		display: inline-block;
+		width:100%;
 	}
 
-	#wkSave {
+	#wkSave { 
 		margin-right: 0px;
 	}
+    .license-brief{
+        display: block;
+        width: 100%;
+    }
 }
 
 //Hiding Unnecesarry elements to make mobile edit as clean as possible
