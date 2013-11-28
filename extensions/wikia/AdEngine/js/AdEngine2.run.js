@@ -4,7 +4,7 @@
  */
 
 /*global document, window */
-/*global Geo, Wikia, Krux, AdTracker */
+/*global Geo, Wikia, Krux, AdTracker, SlotTracker */
 /*global AdConfig2, AdEngine2, DartUrl, EvolveHelper, SlotTweaker, ScriptWriter */
 /*global WikiaDartHelper, WikiaFullGptHelper */
 /*global AdProviderEvolve, AdProviderGpt, AdProviderGamePro, AdProviderLater, AdProviderNull */
@@ -21,6 +21,7 @@
 		adConfig,
 		adEngine,
 		adTracker,
+		slotTracker,
 		adLogicDartSubdomain,
 		adLogicHighValueCountry,
 		adLogicPageLevelParams,
@@ -47,8 +48,10 @@
 	// Use PostScribe for ScriptWriter implementation when SevenOne Media ads are enabled
 	window.wgUsePostScribe = window.wgUsePostScribe || window.wgAdDriverUseSevenOneMedia;
 
+	slotTracker = SlotTracker(log);
+
 	// Construct Ad Engine
-	adEngine = AdEngine2(log, LazyQueue);
+	adEngine = AdEngine2(log, LazyQueue, slotTracker);
 
 	// Construct various helpers
 	adTracker = AdTracker(log, tracker);
