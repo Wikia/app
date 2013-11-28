@@ -56,10 +56,11 @@
 	margin: 0;
 	width: 100%;
 	
-	#mw-content-text{
+	#mw-content-text {
 		padding: 40px 6.25% 145px 6.25%;
 		position: absolute;
 		min-height: 101%;
+		max-width: 100%;
 		-webkit-transform: translateZ(0);
 		-moz-transform: translateZ(0);
 		-ms-transform: translateZ(0);
