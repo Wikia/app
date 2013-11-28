@@ -83,10 +83,10 @@ var UserProfilePage = {
 					}
 				});
 
-                // show a message when avatars upload is disabled (BAC-1046)
-                if (data.avatarsDisabled === true) {
-                    GlobalNotification.show(data.avatarsDisabledMsg, 'error');
-                }
+				// show a message when avatars upload is disabled (BAC-1046)
+				if (data.avatarsDisabled === true) {
+					GlobalNotification.show(data.avatarsDisabledMsg, 'error');
+				}
 
 				UserProfilePage.isLightboxGenerating = false;
 			}).error(function(data) {
