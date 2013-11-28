@@ -79,7 +79,6 @@ define('tables', ['events', 'track', 'wikia.window', 'jquery', 'sloth'], functio
 
 					if(!table.wkScroll) {
 						table.wkScroll = new w.IScroll( this, {
-							eventPassthrough: true,
 							click: true,
 							scrollY: false,
 							scrollX: true

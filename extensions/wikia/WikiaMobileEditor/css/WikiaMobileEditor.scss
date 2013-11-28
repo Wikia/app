@@ -186,8 +186,7 @@
 	line-height: 13px;
 }
 
-@media (min-width: 479px) {
-
+@media (min-width: 480px) {
     #wkMdlCnt #mw-content-text{
         padding-bottom:100px;
     }
@@ -195,11 +194,7 @@
 	#wkSummary {
 		margin-bottom: 0;
 		min-width: 210px;
-		width: auto;
-
-        -webkit-box-flex: 1 0;
-        -webkit-flex: 1 0;
-        flex: 1 0;
+		width: 45%;
 	}
 
     #wkSave{
@@ -215,15 +210,7 @@
         -webkit-box-align: right;
 	}
 
-    .flex-wrapper{
-		display: -webkit-box;/* OLD - iOS 6-, Safari 3.1-6 */
-		display: -moz-box;/* OLD - Firefox 19- (buggy but mostly works) */
-		display: -ms-flexbox;/* TWEENER - IE 10 */
-		display: -webkit-flex;/* NEW - Chrome */
-		display: flex;/* NEW, Spec - Opera 12.1, Firefox 20+ */
-    }
-
-    .license-brief{
+    .license-brief {
         display: block;
         width: 100%;
     }
