@@ -3,13 +3,8 @@ require( ['modal', 'wikia.loader', 'wikia.mustache', 'jquery', 'toast', 'sloth',
 	'use strict';
 
     var markup = $( '#previewTemplate' ).remove().children(),
-        parsed,
-        previewWindow,
-        wikitext,
 		loading,
         previewButton,
-        continueButton,
-		saveButton,
         summary,
         textBox,
 		newArticle = 'You are starting a brand new article (section).';
@@ -76,8 +71,8 @@ require( ['modal', 'wikia.loader', 'wikia.mustache', 'jquery', 'toast', 'sloth',
     function publish(){
         var form = document.getElementsByTagName('form')[0];
 
-		//form.innerHTML += '<input type="hidden" name="wpSummary" value="' + summary.value + '">';
-		//form.querySelector( 'input[name=wpSummary]' ).value = summary.value;
+		form.innerHTML += '<input type="hidden" name="wpSummary" value="' + summary.value + '">';
+		form.querySelector( 'input[name=wpSummary]' ).value = summary.value;
 
         form.submit();
     }
