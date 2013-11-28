@@ -26,6 +26,9 @@ require( ['modal', 'wikia.loader', 'wikia.mustache', 'jquery', 'toast', 'sloth',
 			onOpen: function( content ){
 				modal.addClass( 'loading' );
 
+				$( '#wkContinueEditing' ).on( 'click', modal.close );
+				$( '#wkSave' ).attr( 'disabled', true );
+
 				render( content );
 			}
 		});
@@ -55,14 +58,6 @@ require( ['modal', 'wikia.loader', 'wikia.mustache', 'jquery', 'toast', 'sloth',
             success: function( resp ) {
 				content.innerHTML = resp.html;
 
-//				content.addEventListener('click', function( event ){
-//					var t = event.target;
-//
-//					if ( t.nodeName === 'A' ) {
-//						t.setAttribute( 'target', '_blank' );
-//					}
-//				});
-
 				sloth( {
 					on: document.getElementsByClassName( 'lazy' ),
 					threshold: 300,
@@ -71,8 +66,7 @@ require( ['modal', 'wikia.loader', 'wikia.mustache', 'jquery', 'toast', 'sloth',
 
 				summary = document.getElementById( 'wkSummary' );
 
-				$( '#wkSave' ).on( 'click', publish );
-				$( '#wkContinueEditing' ).on( 'click', modal.close );
+				$( '#wkSave' ).attr( 'disabled', false ).on( 'click', publish );
 
 				modal.removeClass( 'loading' );
             }
