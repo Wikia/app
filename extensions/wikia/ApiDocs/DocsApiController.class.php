@@ -69,7 +69,11 @@ class DocsApiController extends WikiaController {
 				}
 			}
 		}
-		$docs['apis'] = $thisWikiDocs;
+		usort($thisWikiDocs, function ($a, $b) {
+			return strcasecmp($a['readableName'],$b['readableName']);
+	    });
+
+ 		$docs['apis'] = $thisWikiDocs;
 
 		$this->getResponse()->setFormat("json");
 		$this->getResponse()->setData( $docs );
