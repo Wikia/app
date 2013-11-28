@@ -61,14 +61,26 @@
 					uiFactory.init( [ 'modal' ] ).then( function ( uiModal ) {
 							var modalTemplate = '<label>{{label}}<br/>' +
 									'<input type="text" id="lightbox-share-email-text" /></label>',
-								modalContent = window.Mustache.to_html( modalTemplate, { label: labelShareEmail } ),
+								modalContent = window.Mustache.to_html( modalTemplate,
+									{ label: labelShareEmailAddress} ),
 								shareEmailModalConfig = {
 									vars: {
 										id: 'ShareEmailModal',
 										size: 'small',
 										content: modalContent,
-										title: labelShareEmailAddress,
+										title: labelShareEmail,
 										buttons: [
+											{
+												vars: {
+													value: labelCancel,
+													data: [
+														{
+															key: 'event',
+															value: 'close'
+														}
+													]
+												}
+											},
 											{
 												vars: {
 													value: labelSend,
@@ -77,17 +89,6 @@
 														{
 															key: 'event',
 															value: 'send'
-														}
-													]
-												}
-											},
-											{
-												vars: {
-													value: labelCancel,
-													data: [
-														{
-															key: 'event',
-															value: 'close'
 														}
 													]
 												}
