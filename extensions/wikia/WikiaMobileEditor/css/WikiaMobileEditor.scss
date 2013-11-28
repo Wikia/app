@@ -12,12 +12,12 @@
 	border-radius: 2px;
 	border: none;
 
-	&.gray {
-		background-color: #c0c0c0;
-	}
-
 	&.blue {
 		background-color: #0c4c88;
+	}
+
+	&.gray, &[disabled] {
+		background-color: #c0c0c0;
 	}
 }
 
@@ -49,18 +49,21 @@
 	}
 }
 
-#wkMdlCnt{
+#wkMdlCnt {
 	background-color: #fff;
-	width: 100%;
+	color:#333333;
 	height: 100%;
 	margin: 0;
-
-	pointer-events: none;
-
-	color:#333333;
-
+	width: 100%;
+	
 	#mw-content-text{
 		padding: 40px 6.25% 145px 6.25%;
+		position: absolute;
+		min-height: 101%;
+		-webkit-transform: translateZ(0);
+		-moz-transform: translateZ(0);
+		-ms-transform: translateZ(0);
+		transform: translateZ(0);
 	}
 
 	h2 {
@@ -89,11 +92,6 @@
 
 	font-size: 13px;
 	color: #999999;
-}
-
-#wkMdlWrp.preview {
-	overflow-y: scroll;
-	-webkit-overflow-scrolling: touch;
 }
 
 #wkMdlClo {

@@ -10,7 +10,8 @@ require( [ 'modal', 'wikia.loader', 'wikia.mustache', 'jquery', 'toast', 'sloth'
 		summaryForm = form.querySelector( '#wpSummary' ),
 		newArticleMsg = msg( 'wikiamobileeditor-on-new' ),
 		wrongMsg = msg( 'wikiamobileeditor-wrong' ),
-		internetMsg = msg( 'wikiamobileeditor-internet' );
+		internetMsg = msg( 'wikiamobileeditor-internet' ),
+		hasOnline = window.navigator && window.navigator.onLine !== undefined;
 
 	//opens modal with preview container markup
 	function show () {
@@ -42,6 +43,10 @@ require( [ 'modal', 'wikia.loader', 'wikia.mustache', 'jquery', 'toast', 'sloth'
 			}
 		});
 	}
+
+	function isOnline(){
+		return hasOnline ? window.navigator.onLine : true;
+	}
 	
     //displays loader and preview after fetching it from parser
     function render( content ){
@@ -61,6 +66,13 @@ require( [ 'modal', 'wikia.loader', 'wikia.mustache', 'jquery', 'toast', 'sloth'
 			if ( resp && resp.html ) {
 				content.innerHTML = resp.html;
 
+				new window.IScroll(
+					'#wkMdlCnt', {
+					click: false,
+					scrollY: true,
+					scrollX: false
+				});
+
 				sloth( {
 					on: document.getElementsByClassName( 'lazy' ),
 					threshold: 100,
@@ -72,10 +84,7 @@ require( [ 'modal', 'wikia.loader', 'wikia.mustache', 'jquery', 'toast', 'sloth'
 				toast.show( wrongMsg );
 			}
 		} ).fail(function(){
-			var hasOnline = window.navigator && window.navigator.onLine !== undefined,
-				online =  hasOnline ? window.navigator.onLine : true;
-
-			toast.show( wrongMsg + ( online ? '' : ' ' + internetMsg ) );
+			toast.show( wrongMsg + ( isOnline() ? '' : ' ' + internetMsg ), { error: true } );
 		}).always( function() {
 			modal.removeClass( 'loading' );
 		});
@@ -85,7 +94,13 @@ require( [ 'modal', 'wikia.loader', 'wikia.mustache', 'jquery', 'toast', 'sloth'
 		//currently wikiamobile displayes this in a different place so we need to copy the value of summary
 		summaryForm.value = document.getElementById( 'wkSummary' ).value;
 
-        form.submit();
+		if ( isOnline() ) {
+			form.submit();
+		} else {
+			if ( window.confirm( internetMsg ) ) {
+				form.submit();
+			}
+		}
     }
 
 	if ( document.getElementsByClassName( 'mw-newarticletextanon' )[0] ) {
