@@ -327,7 +327,6 @@ class ArticlesApiController extends WikiaApiController {
 
 		$key = self::getCacheKey( implode( '-', $ns ), self::NEW_ARTICLES_CACHE_ID );
 		$results = $this->wg->Memc->get( $key );
-		$results = null;
 		if ( $results === null ) {
 			$searchConfig = new Wikia\Search\Config;
 			$searchConfig->setQuery( '*' )
@@ -337,14 +336,25 @@ class ArticlesApiController extends WikiaApiController {
 				//->setCommercialUse(  false)
 				->setWikiId( $this->wg->wgCityId )
 				->setNamespaces( $ns )
-				->setRank( \Wikia\Search\Config::RANK_NEWEST_PAGE_ID );
+				->setRank( \Wikia\Search\Config::RANK_NEWEST_PAGE_ID )
+				 ->setRequestedFields(['html_en']);
 
-			$results = ( new Factory )->getFromConfig( $searchConfig )->searchAsApi( [ 'pageid', 'ns', 'title_en', 'url', 'text', 'created', 'id' ], false );
+			$results = ( new Factory )->getFromConfig( $searchConfig )->searchAsApi(
+					[ 'pageid', 'ns', 'title_en'=>'title' ,  'html_en', 'created', 'id' ],
+				false );
+
+			foreach($results as &$item)
+			{
+				$title = Title::newFromText($item['title']);
+				$item['title'] = $title->getText();
+				$item['url']   = $title->getLocalURL();
+			}
+
 			$this->wg->Memc->set( $key, $results, self::CLIENT_CACHE_VALIDITY );
 		}
 
 		$response = $this->getResponse();
-		$response->setValues( $results );
+		$response->setValues( ['items'=>$results,'basepath'=>$this->wg->Server ] );
 
 		$response->setCacheValidity(
 			self::NEW_ARTICLES_VARNISH_CACHE_EXPIRATION /* 24h */,
