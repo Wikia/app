@@ -190,6 +190,15 @@
     #wkMdlCnt #mw-content-text{
         padding-bottom:100px;
     }
+
+    #wk
+
+    #wkSave{
+      -webkit-box-flex: 0;
+      -moz-box-flex: 0;
+      -webkit-flex: 0;
+      flex: 0;
+    }
 	
 	#wkSummary {
 		margin-bottom: 0;
@@ -202,21 +211,30 @@
         //-webkit-flex-grow: 1;
         -webkit-align-self: stretch;
 
-        -webkit-box-flex: 1 0 auto;
-        -moz-box-flex: 1 0 auto;
-        -webkit-flex: 1 0 auto;
-        flex: 1 0 auto;
+        -webkit-box-flex: 1;
+        -moz-box-flex: 1;
+        -webkit-flex: 1;
+        flex: 1;
 	}
 
 	#wkPreviewActions {
 		text-align: right;
-        display: -webkit-box;
-        display: -webkit-flex;
-        display: flex;
-        -webkit-flex-direction: row;
-        -webkit-flex-wrap: wrap;
-        -webkit-justify-content: flex-end;
 	}
+
+    .flex-wrapper{
+      display: box;
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-direction: row;
+      -webkit-box-direction: row;
+      -webkit-flex-wrap: wrap;
+      -webkit-box-wrap: wrap;
+      -webkit-justify-content: flex-end;
+      -moz-box-orient: horizontal;
+      -webkit-box-orient: horizontal;
+      box-orient: horizontal;
+    }
 
 	.summary-title {
 		width:100%;
