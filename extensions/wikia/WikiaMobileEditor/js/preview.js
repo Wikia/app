@@ -75,7 +75,7 @@ require( [ 'modal', 'wikia.loader', 'wikia.mustache', 'jquery', 'toast', 'sloth'
 			var hasOnline = window.navigator && window.navigator.onLine !== undefined,
 				online =  hasOnline ? window.navigator.onLine : true;
 
-			toast.show( wrongMsg + ( !online ? '' : ' ' + internetMsg ) );
+			toast.show( wrongMsg + ( online ? '' : ' ' + internetMsg ) );
 		}).always( function() {
 			modal.removeClass( 'loading' );
 		});
