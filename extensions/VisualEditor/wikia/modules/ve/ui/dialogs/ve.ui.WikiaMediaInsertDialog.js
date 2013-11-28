@@ -383,7 +383,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertMedia = function ( cartItems ) {
 	function temporaryToPermanentCallback( cartItem, name ) {
 		cartItem.temporaryFileName = null;
 		cartItem.url = null;
-		cartItem.title = 'File:' + name;
+		cartItem.title = name;
 	}
 
 	for ( i = 0; i < cartItems.length; i++ ) {
@@ -419,6 +419,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMedia = function ( cartIte
 	// Populates attributes, items.video and items.photo
 	for ( i = 0; i < cartItems.length; i++ ) {
 		cartItem = cartItems[i];
+		cartItem.title = 'File:' + cartItem.title;
 		items[ cartItem.title ] = {
 			'title': cartItem.title,
 			'type': cartItem.type

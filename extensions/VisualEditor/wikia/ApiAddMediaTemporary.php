@@ -24,7 +24,7 @@ class ApiAddMediaTemporary extends ApiAddMedia {
 		$duplicate = $this->getFileDuplicate( $this->mRequest->getFileTempName( 'file' ) );
 		if ( $duplicate ) {
 			return array(
-				'title' => $duplicate->getTitle()->getText(),
+				'title' => $duplicate->getTitle()->getPrefixedText(),
 				'url' => $duplicate->getUrl()
 			);
 		} else {
@@ -41,7 +41,7 @@ class ApiAddMediaTemporary extends ApiAddMedia {
 			$this->verifyUpload();
 			$tempFile = $this->createTempFile( $this->mRequest->getFileTempName( 'file' ) );
 			return array(
-				'title' => $this->mUpload->getTitle()->getText(),
+				'title' => $this->mUpload->getTitle()->getPrefixedText(),
 				'tempUrl' => $tempFile->getUrl(),
 				'tempName' => $tempFile->getName()
 			);
@@ -63,7 +63,7 @@ class ApiAddMediaTemporary extends ApiAddMedia {
 			$this->dieUsage( 'Valid Wikia video URL, but video is missing', 'wikia-video-missing' );
 		}
 		return array(
-			'title' => $wikiaFile->getTitle()->getText(),
+			'title' => $wikiaFile->getTitle()->getPrefixedText(),
 			'url' => $wikiaFile->getUrl(),
 			'provider' => 'wikia'
 		);
@@ -93,7 +93,7 @@ class ApiAddMediaTemporary extends ApiAddMedia {
 			'videoId' => $apiwrapper->getVideoId()
 		);
 		if ( $duplicate ) {
-			$result[ 'title' ] = $duplicate->getTitle()->getText();
+			$result[ 'title' ] = $duplicate->getTitle()->getPrefixedText();
 			$result[ 'url' ] = $duplicate->getUrl();
 		} else {
 			// Check whether upload is enabled
@@ -113,7 +113,7 @@ class ApiAddMediaTemporary extends ApiAddMedia {
 			$this->mUpload->fetchFile();
 			$this->verifyUpload();
 			$tempFile = $this->createTempFile( $this->mUpload->getTempPath() );
-			$result[ 'title' ] = $apiwrapper->getTitle();
+			$result[ 'title' ] = $apiwrapper->getPrefixedText();
 			$result[ 'tempUrl' ] = $tempFile->getUrl();
 			$result[ 'tempName' ] = $tempFile->getName();				
 		}
@@ -142,7 +142,7 @@ class ApiAddMediaTemporary extends ApiAddMedia {
 	protected function checkPermissions() {
 		// Check whether the user has the appropriate permissions to upload anyway
 		if ( $this->mUpload->isAllowed( $this->mUser ) !== true ) {
-			if ( !$user->isLoggedIn() ) {
+			if ( !$this->mUser->isLoggedIn() ) {
 				$this->dieUsageMsg( array( 'mustbeloggedin', 'upload' ) );
 			} else {
 				$this->dieUsageMsg( 'badaccess-groups' );
