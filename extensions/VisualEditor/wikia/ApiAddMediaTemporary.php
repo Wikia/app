@@ -113,7 +113,7 @@ class ApiAddMediaTemporary extends ApiAddMedia {
 			$this->mUpload->fetchFile();
 			$this->verifyUpload();
 			$tempFile = $this->createTempFile( $this->mUpload->getTempPath() );
-			$result[ 'title' ] = $apiwrapper->getText();
+			$result[ 'title' ] = $apiwrapper->getTitle();
 			$result[ 'tempUrl' ] = $tempFile->getUrl();
 			$result[ 'tempName' ] = $tempFile->getName();				
 		}
