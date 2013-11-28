@@ -41,17 +41,6 @@ class UserLoginHooksHelper {
 		return true;
 	}
 
-	// save temp user and map temp user to user when mail password
-	public static function onMailPasswordTempUser( &$u, &$tempUser ) {
-		$tempUser = TempUser::getTempUserFromName( $u->getName() );
-		if ( $tempUser ) {
-			$tempUser->saveSettingsTempUserToUser( $u );
-			$u = $tempUser->mapTempUserToUser();
-		}
-
-		return true;
-	}
-
 	// show request form for Special:ConfirmEmail
 	public static function onConfirmEmailShowRequestForm( &$pageObj, &$show ) {
 		$show = false;

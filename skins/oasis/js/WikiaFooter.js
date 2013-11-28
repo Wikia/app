@@ -2,22 +2,26 @@
 var WikiaFooterApp = {
 
 	init: function() {
+		'use strict';
 		//Variables
 		if( window.wgEnableWikiaBarExt ) {
 		//the admin tool bar is within wikia bar container which is outside the #WikiaPage
-			this.footer = $("#WikiaBarWrapper .wikia-bar");
+			this.footer = $('#WikiaBarWrapper').find('.wikia-bar');
 		} else {
 		//the admin tool bar is positioned absolutely but in DOM in it's in #WikiaFooter within #WikiaPage
-			this.footer = $("#WikiaFooter");
+			this.footer = $('#WikiaFooter');
 		}
-		this.toolbar = this.footer.children(".toolbar");
+		this.toolbar = this.footer.children('.toolbar');
 		this.gn = $('.global-notification');
 		this.windowObj = $(window);
 		this.originalWidth = this.toolbar.width();
 
 		// avoid stack overflow in IE (RT #98938)
 		if (this.toolbar.exists() || this.gn.exists()) {
-			if(!( navigator.platform in {'iPad':'', 'iPhone':'', 'iPod':''} || (navigator.userAgent.match(/android/i) != null))){
+			if (
+				!( navigator.platform in {'iPad':'', 'iPhone':'', 'iPod':''} ||
+					(navigator.userAgent.match(/android/i) !== null))
+			) {
 				this.addScrollEvent();
 				this.addResizeEvent();
 			}
@@ -25,13 +29,16 @@ var WikiaFooterApp = {
 		}
 	},
 	addScrollEvent: function() {
+		'use strict';
 		WikiaFooterApp.windowObj.off('scroll.FooterAp'); // GlobalNotifications could be re-binding this event.
 		WikiaFooterApp.windowObj.on('scroll.FooterAp', WikiaFooterApp.resolvePosition).triggerHandler('scroll');
 	},
 	addResizeEvent: function (){
+		'use strict';
 		WikiaFooterApp.windowObj.on('resize', WikiaFooterApp.centerBar).triggerHandler('resize');
 	},
 	centerBar: function() {
+		'use strict';
 		var w = WikiaFooterApp.windowObj.width();
 		if(w < WikiaFooterApp.originalWidth && WikiaFooterApp.footer.hasClass('float')) {
 			WikiaFooterApp.toolbar.css('width', w+10);
@@ -46,6 +53,7 @@ var WikiaFooterApp = {
 	},
 	// this is called while scrolling
 	resolvePosition: function() {
+		'use strict';
 		// Disable floating for RTE
 		if( window.wgIsEditPage ) {
 			return;
@@ -59,26 +67,27 @@ var WikiaFooterApp = {
 			line = WikiaFooterApp.footer.offset().top + WikiaFooterApp.toolbar.outerHeight();
 		}
 
-		if (scroll > line && WikiaFooterApp.footer.hasClass("float")) {
-			WikiaFooterApp.footer.removeClass("float");
+		if (scroll > line && WikiaFooterApp.footer.hasClass('float')) {
+			WikiaFooterApp.footer.removeClass('float');
 			WikiaFooterApp.centerBar();
-		} else if (scroll < line && !WikiaFooterApp.footer.hasClass("float")) {
-			WikiaFooterApp.footer.addClass("float");
+		} else if (scroll < line && !WikiaFooterApp.footer.hasClass('float')) {
+			WikiaFooterApp.footer.addClass('float');
 			WikiaFooterApp.centerBar();
 		}
 
 		// GlobalNotification uses same scroll event for performance reasons (BugId:33365)
 		if(window.GlobalNotification && !window.GlobalNotification.isModal()) {
-			GlobalNotification.onScroll(scrollTop);
+			window.GlobalNotification.onScroll(scrollTop);
 		}
 	}
 };
 
 (function(){
+	'use strict';
 	window.ToolbarCustomize = window.ToolbarCustomize || {};
 	var TC = window.ToolbarCustomize;
 
-	TC.MenuGroup = $.createClass(Observable,{
+	TC.MenuGroup = $.createClass(window.Observable,{
 
 		showTimer: false,
 		hideTimer: false,
@@ -91,8 +100,8 @@ var WikiaFooterApp = {
 
 		constructor: function() {
 			TC.MenuGroup.superclass.constructor.call(this);
-			this.showTimer = Timer.create($.proxy(this.show,this),this.showTimeout);
-			this.hideTimer = Timer.create($.proxy(this.hide,this),this.hideTimeout);
+			this.showTimer = window.Timer.create($.proxy(this.show,this),this.showTimeout);
+			this.hideTimer = window.Timer.create($.proxy(this.hide,this),this.hideTimeout);
 		},
 
 		add: function( el ) {
@@ -113,10 +122,10 @@ var WikiaFooterApp = {
 					.unbind('.menugroup');
 		},
 
-		show: function( evt ) {
+		show: function() {
 			this.hideTimer.stop();
 			this.showTimer.stop();
-			if (!this.showing || this.visible == this.showing) {
+			if (!this.showing || this.visible === this.showing) {
 				return;
 			}
 
@@ -147,7 +156,7 @@ var WikiaFooterApp = {
 			this.show(evt);
 		},
 
-		hide: function( evt ) {
+		hide: function() {
 			this.hideTimer.stop();
 			this.showTimer.stop();
 			if (this.visible) {
@@ -157,7 +166,7 @@ var WikiaFooterApp = {
 			}
 		},
 
-		delayedHide: function( evt ) {
+		delayedHide: function() {
 			this.hideTimer.stop();
 			if (this.visible) {
 				this.hideTimer.start();
@@ -187,7 +196,13 @@ var WikiaFooterApp = {
 		initialize: function() {
 			this.el.find('.tools-customize').click($.proxy(this.openConfiguration,this));
 			this.menuGroup.add(this.el.find('li.menu'));
-			this.handleOverflowMenu();
+
+			var that = this;
+
+			require(['wikia.fluidlayout'], function(fluidlayout) {
+				that.handleOverflowMenu(fluidlayout.getBreakpointSmall(), 2 * fluidlayout.getAdSkinWidth(),
+					window.wgOasisResponsive ? false : fluidlayout.getBreakpointSmall());
+			});
 		},
 
 		openConfiguration: function( evt ) {
@@ -197,47 +212,102 @@ var WikiaFooterApp = {
 		},
 
 		buildOveflowItem: function () {
-			return this.el.find('.overflow-menu').css('display','');
+			return this.el.find('.overflow-menu');
 		},
 
-		handleOverflowMenu: function () {
-			var all = this.el.children('li'),
-				moreable = all.filter('.overflow'),
-				where = moreable.last().next(),
-				width = 0,
-				mwidth = 0,
-				fwidth = this.el.width();
+		generateMediaQuery: function (moreable, minWidth, breakpoint, gapWidth, nonResponsiveBreakpoint) {
+			var firstMediaJSQuery = true,
+				mediaJSQueries = '',
+				moreableCount = moreable.length,
+				alreadyAdded = (minWidth >= breakpoint),
+				lastMediaQuery = false;
 
-			all.each(function(i,v) {
-				width += $(v).outerWidth(true);
+			moreable.each(function (i, v) {
+				var elemWidth = $(v).outerWidth(true);
+
+				if (nonResponsiveBreakpoint !== false && (minWidth + elemWidth > nonResponsiveBreakpoint)) {
+					lastMediaQuery = true;
+				}
+
+				if (!alreadyAdded && ((minWidth + elemWidth) >= breakpoint)) {
+					alreadyAdded = true;
+					elemWidth += gapWidth;
+				}
+
+				mediaJSQueries += '@media screen ';
+				if (!firstMediaJSQuery) {
+					mediaJSQueries += 'and (min-width:' + minWidth + 'px) ';
+				}
+
+				if (!lastMediaQuery) {
+					mediaJSQueries += 'and (max-width:' + (minWidth + elemWidth) + 'px) ';
+				}
+
+				mediaJSQueries += '{ .WikiaBarWrapper .tools > .overflow:nth-of-type(n + ' + (i + 1) + ') { display:none; } ' +
+					'.WikiaBarWrapper .tools .overflow-menu {  display: block; }' +
+					'.WikiaBarWrapper .tools .overflow-menu .overflow:nth-of-type(-n + ' + (moreableCount - i) +
+					') { display:block; }} ';
+
+				if (lastMediaQuery) {
+					return false;
+				}
+
+				minWidth += elemWidth;
+
+				firstMediaJSQuery = false;
 			});
-			moreable.each(function(i,v) {
-				mwidth += $(v).outerWidth(true);
+
+			return mediaJSQueries;
+		},
+		getMinWidth: function(all) {
+			var arrow = this.el.parents('.wikia-bar:first').find('.arrow'),
+				minWidth = parseInt(this.el.css('padding-left'), 10) +
+					parseInt(this.el.css('padding-right'), 10) +
+					arrow.outerWidth(true),
+				notMoreable = all.filter(':not(.overflow)');
+
+			notMoreable.each(function(i,v) {
+				minWidth += $(v).outerWidth(true);
 			});
 
-			if (width < fwidth) {
-				return;
-			}
+			return minWidth;
+		},
 
-			var li_more = this.buildOveflowItem();
+		generateSubMenu: function(moreable) {
+			var where = moreable.last().next(),
+				liMore = this.buildOveflowItem(),
+				more = liMore.children('ul').empty();
 
 			if (where.exists()) {
-				where.before(li_more);
+				where.before(liMore);
+			} else {
+				this.el.append(liMore);
 			}
-			else {
-				this.el.append(li_more);
-			}
-			var more = li_more.children('ul');
-			var moreWidth = li_more.outerWidth(true) + 5;
 
-			var rwidth = fwidth - moreWidth - (width - mwidth);
-			moreable.each(function(i,v){
-				rwidth -= $(v).outerWidth(true);
-				if (rwidth < 0) {
-					$(v).prependTo(more);
-				}
+			moreable.each(function (i, v) {
+				$(v).clone().prependTo(more);
 			});
-			this.menuGroup.add(li_more,$.proxy(this.onShowMenu,this));
+			this.menuGroup.add(liMore,$.proxy(this.onShowMenu,this));
+		},
+		addStyles: function(mediaJsQueries) {
+			var styles = $('#WikiaFooterMediaQueries');
+			if (!styles.exists()) {
+				styles = $(document.createElement('style')).attr({
+					type: 'text/css',
+					id: 'WikiaFooterMediaQueries'
+				});
+			}
+			styles.html(mediaJsQueries).appendTo('head');
+		},
+
+		handleOverflowMenu: function (breakpoint, gapWidth, nonResponsiveBreakpoint) {
+			var all = this.el.children('li'),
+				moreable = all.filter('.overflow'),
+				minWidth = this.getMinWidth(all);
+
+			this.addStyles(this.generateMediaQuery(moreable, minWidth, breakpoint, gapWidth, nonResponsiveBreakpoint));
+
+			this.generateSubMenu(moreable);
 		},
 
 		onShowMenu: function( mgroup, li, ul ) {
@@ -261,7 +331,7 @@ var WikiaFooterApp = {
 
 		show: function() {
 			$.loadLibrary('ToolbarCustomize',
-				stylepath + '/oasis/js/ToolbarCustomize.js',
+				window.stylepath + '/oasis/js/ToolbarCustomize.js',
 				typeof TC.Configuration,
 				$.proxy(function(){
 					var c = new TC.Configuration(this.toolbar);
@@ -275,5 +345,7 @@ var WikiaFooterApp = {
 })();
 
 $(function(){
+	'use strict';
+
 	WikiaFooterApp.init();
 });

@@ -36,7 +36,7 @@ ve.inheritClass( ve.ui.MWTransclusionDialog, ve.ui.MWDialog );
 
 ve.ui.MWTransclusionDialog.static.name = 'transclusion';
 
-ve.ui.MWTransclusionDialog.static.titleMessage = 'visualeditor-dialog-transclusion-title';
+ve.ui.MWTransclusionDialog.static.titleMessage = 'wikia-visualeditor-dialog-transclusion-title';
 
 ve.ui.MWTransclusionDialog.static.icon = 'template';
 
@@ -114,6 +114,10 @@ ve.ui.MWTransclusionDialog.prototype.onClose = function ( action ) {
 
 	// Save changes
 	if ( action === 'apply' ) {
+		ve.track( {
+			'action': ve.track.actions.CLICK,
+			'label': 'dialog-template-button-save'
+		} );
 		if ( this.node instanceof ve.ce.MWTransclusionNode ) {
 			if ( obj !== null ) {
 				surfaceModel.getFragment().changeAttributes( { 'mw': obj } );
@@ -543,6 +547,10 @@ ve.ui.MWTransclusionDialog.prototype.getPlaceholderPage = function ( placeholder
 				this.transclusion, addTemplateInput.getValue()
 			);
 
+		ve.track( {
+			'action': ve.track.actions.CLICK,
+			'label': 'dialog-template-button-add-template'
+		} );
 		this.transclusion.addPart( part, ve.indexOf( placeholder, parts ) );
 		this.pending.push( { 'part': part, 'placeholder': placeholder } );
 		addTemplateInput.pushPending();

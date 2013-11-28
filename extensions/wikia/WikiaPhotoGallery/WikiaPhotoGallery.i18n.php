@@ -1147,6 +1147,7 @@ Alternativament, pot fer clic " $2 " per veure la pàgina en la seva forma d\'ac
 $messages['ce'] = array(
 	'wikiaPhotoGallery-error-user-rights' => 'Декъашхочун тӀекхачаре бакъона гӀалат.',
 	'wikiaPhotoGallery-upload-findbutton' => 'Каро',
+	'wikiaPhotoGallery-preview-saving-title' => 'ДӀадоьду Ӏалашяр',
 	'wikiaPhotoGallery-slideshow-view-link-overlay' => 'Дехьа гӀо $1',
 );
 
@@ -1679,9 +1680,13 @@ $messages['el'] = array(
  * @author Shirayuki
  */
 $messages['en-gb'] = array(
+	'wikiaPhotoGallery-preview-position-center' => 'Centre',
+	'wikiaPhotoGallery-preview-captionalignment-center' => 'Centre',
 	'wikiaPhotoGallery-preview-captioncolor' => 'Caption colour',
 	'wikiaPhotoGallery-preview-bordercolor' => 'Photo border colour',
 	'wikiaPhotoGallery-preview-colorpicker-title' => 'Colour picker',
+	'wikiaPhotoGallery-preview-captions-center' => 'Centre',
+	'wikiaPhotoGallery-slideshowpreview-position-center' => 'Centre',
 );
 
 /** Esperanto (Esperanto)
@@ -6284,6 +6289,7 @@ $messages['uz'] = array(
 );
 
 /** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
  * @author Tuankiet65
  * @author Xiao Qiao
  * @author XiaoQiaoGrace
@@ -6307,7 +6313,7 @@ Xin vui lòng làm mới trang và thử lại.',
 	'wikiaPhotoGallery-upload-info-choose-list' => "''' Hoặc ''' lựa chọn:",
 	'wikiaPhotoGallery-upload-info-images-label' => 'hình ảnh từ trang này',
 	'wikiaPhotoGallery-upload-info-upload' => "'''Hoặc''' tải lên một hình ảnh từ máy tính của bạn",
-	'wikiaPhotoGallery-upload-info-uploaded-label' => 'hình ảnh mới nhất',
+	'wikiaPhotoGallery-upload-info-uploaded-label' => 'các hình ảnh mới nhất',
 	'wikiaPhotoGallery-upload-findtitle' => 'Tìm kiếm',
 	'wikiaPhotoGallery-upload-findbutton' => 'Tìm kiếm',
 	'wikiaPhotoGallery-upload-filestitle-pre' => 'Tập tin được tải lên gần đây',
@@ -6323,7 +6329,7 @@ Hãy đổi tên tệp và thử lại.',
 	'wikiaPhotoGallery-upload-error-filetype missing' => 'Tập tin bị thiếu phần mở rộng.',
 	'wikiaPhotoGallery-upload-error-readonly' => 'Bạn hiện đang không thể tải lên hình ảnh, như wiki ở trong trạng thái chỉ có thể đọc.',
 	'wikiaPhotoGallery-upload-error-conflict-intro' => 'Tập tin với tên này đã tồn tại!
-Bạn muốn làm gì?',
+Bạn muốn làm gì với 2 loại ảnh này?',
 	'wikiaPhotoGallery-upload-error-filetype-missing' => 'Tập tin được tải lên thiếu phần mở rộng',
 	'wikiaPhotoGallery-upload-error-conflict-rename' => 'Đổi tên ảnh của bạn',
 	'wikiaPhotoGallery-upload-error-conflict-reuse' => 'Dùng các hình ảnh tồn tại',

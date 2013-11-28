@@ -35,8 +35,8 @@ class ContactForm extends SpecialPage {
 		),
 
 		'bad-ad' => array(
-			'format' => "User %s reports a problem with ad visible here:\n%s\n\nDescription of the problem:\n%s",
-			'vars' => array( 'wpUserName', 'wpContactWikiName', 'wpDescription' ),
+			'format' => "User %s reports a problem with ad visible here:\n%s\nThe URL the ad links to:\n%s\n\nDescription of the problem:\n%s",
+			'vars' => array( 'wpUserName', 'wpContactWikiName', 'wpContactAdUrl', 'wpDescription' ),
 			'subject' => 'Bad ad report by %s at %s',
 		),
 
@@ -634,14 +634,6 @@ class ContactForm extends SpecialPage {
 		global $wgWikiaMaxNameChars;
 		if ( $userName == '' ) {
 			$this->err[] = wfMsg( 'userlogin-error-noname' );
-			$this->errInputs['wpUserNameNew'] = true;
-			return false;
-		}
-
-		// check if exist in tempUser
-		// @TODO get rid of TempUser handling when it will be globally disabled
-		if ( TempUser::getTempUserFromName( $userName ) ) {
-			$this->err[] = wfMsg( 'userlogin-error-userexists' );
 			$this->errInputs['wpUserNameNew'] = true;
 			return false;
 		}

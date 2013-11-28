@@ -55,6 +55,13 @@ $messages['qqq'] = array(
 	'action-stafflog' => '{{doc-action|stafflog}}',
 );
 
+/** Old English (Ænglisc)
+ * @author Espreon
+ */
+$messages['ang'] = array(
+	'stafflog-filter-user' => 'Brūcend:',
+);
+
 /** Arabic (العربية)
  * @author Achraf94
  */

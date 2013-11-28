@@ -11,8 +11,13 @@
 <? } else { ?>
 	<div id="close-title"><?= wfMsg('closed-wiki-info') ?></div>
 	<div id="close-info">
-<?= ($dbDumpExist === true) ? wfMsgExt('closed-wiki-dump-exists', "parse", $dbDumpUrl)
-	: ( ($dbDumpExist === false) ? wfMsg('closed-wiki-dump-noexists') :  "" )
+<?php
+if ( $bShowDumps ) {
+	echo wfMsg('closed-wiki-dump-exists');
+	echo wfMsgExt( 'closed-wiki-dump-links', 'parse', $aDumps['pages_current'], $aDumps['pages_full'], $aDumps['images'] );
+} else {
+	echo wfMsg('closed-wiki-dump-noexists');
+}
 ?>
 	</div>
 <? } ?>

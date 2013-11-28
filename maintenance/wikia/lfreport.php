@@ -2,6 +2,8 @@
 
 require_once( dirname(__FILE__) . '/../Maintenance.php' );
 
+ini_set('memory_limit','256M');
+
 class LyricFindReport extends Maintenance {
 	const LF_SERVICE_ID = 21509;
 	const LF_CLIENT_NAME = 'WIKIA';
@@ -20,7 +22,7 @@ class LyricFindReport extends Maintenance {
 	private $condition = array();
 	private $time_id = '';
 	
-	private $allowedNamespaces = [220, 222];
+	private $allowedNamespaces = [220, 222, 0];
 	
 	/**
 	 * Class constructor
@@ -93,19 +95,19 @@ class LyricFindReport extends Maintenance {
 		foreach ( $months as $this->month ) {
 			list ( $_year, $_month ) = explode( "-", $this->month );
 			$this->time_id = sprintf( '%s-01', $this->month );
-			$csvrow = [];
 							
 			$this->dbr = wfGetDB(DB_SLAVE, array(), $wgDWStatsDB);
 			$this->output( sprintf( "Run script for month: %s ... \n", $this->month ) );
+			$csvrow = [];
 			foreach ( $namespaces as $this->namespaceId ) {
 				$this->output( sprintf( "Run script for namespace: %d ... \n", $this->namespaceId ) );
 
 				if ( !in_array( $this->namespaceId, $this->allowedNamespaces ) ) {
 					$this->output( "\tThis namespace is not allowed here\n" );
 					continue;
-				}
-
-				$this->filename = sprintf( '%s_%02d_%04d_DISPLAY%s.csv', self::LF_CLIENT_NAME, $_month, $_year, ( $this->namespaceId == 220 ) ? 'GN' : '' );
+				} 
+				
+				$this->filename = sprintf( '%s_%02d_%04d_DISPLAY.csv', self::LF_CLIENT_NAME, $_month, $_year );
 				$this->file = sprintf( "%s/%s", $this->dir, $this->filename );
 				
 				# remove current file if exists 
@@ -144,45 +146,56 @@ class LyricFindReport extends Maintenance {
 						$this->output( "\tPage doesn't exist" );
 						continue;
 					}
+					$title_name = $page->getTitle()->getText();
 					if ( $this->debug ) {
-						$this->output( "\tParse page: " . $page->getTitle()->getText() . "\n" );
+						$this->output( "\tParse page: " . $title_name . "\n" );
 					}
 					
-					list( $song, $artist, $amgid, $gn_id ) = $this->extractParams( $page->getContent() );
+					list( $song, $artist, $amgid, $gn_id ) = $this->extractParams( $title_name, $page->getContent() );
 					
-					if ( $song && $artist && $amgid ) {
-						$csvrow = [
+					if ( empty( $amgid ) ) {
+						$amgid = 0;
+					}
+				
+					if ( $song && $artist ) {
+						$key = sprintf( "%s:%s", $artist, $song );
+						
+						$csvrow[ $key ] = [
 							self::LF_SERVICE_ID,
 							$this->time_id,
 							$artist,
 							$song,
-							$row->pageviews,
-							$amgid
+							( empty( $csvrow[ $key ][ 4 ] ) ) ? $row->pageviews : intval($csvrow[ $key ][ 4 ]) + $row->pageviews,
+							( empty( $csvrow[ $key ][ 5 ] ) ) ? $amgid : $csvrow[ $key ][ 5 ]
 						];
 						if ( $this->namespaceId == 220 ) {
-							array_push( $csvrow, $gn_id );
+							$csvrow[ $key ][ 6 ] = $gn_id;
+						} else {
+							$csvrow[ $key ][ 6 ] = 0;
 						}
 					}
-					
-					$this->addToReport( $csvrow );
-					unset( $csvrow );
-					$csvrow = [];
 				}
 				$this->dbr->freeResult( $result );
-			
-				$this->compressReport();
-				#$this->putToFTPServer();
 				
-				if ( !empty( $emails ) ) {
-					$this->sendEmail( $emails );
-				}
-				
-				# remove tmp files
-				@unlink( $this->file );
-				@unlink( $this->zipfile );
-				
-				$this->output( sprintf( "\nReport for month %s and namespace %d generated\n", $this->month, $this->namespaceId ) );
+				$this->output( sprintf( "\nReport for month %s and namespace %d parsed\n", $this->month, $this->namespaceId ) );
 			}
+			
+			if ( !empty( $csvrow ) ) {
+				foreach ( $csvrow as $key => $data ) {
+					$this->addToReport( $data );
+				}
+			}
+				
+			$this->compressReport();
+			#$this->putToFTPServer();
+			
+			if ( !empty( $emails ) ) {
+				$this->sendEmail( $emails );
+			}
+			
+			# remove tmp files
+			@unlink( $this->file );
+			@unlink( $this->zipfile );
 		}
 		$this->output( "Script finished after: " . date( "H:i:s", microtime(true) - $tStart ) . "\n" );
 	}
@@ -318,39 +331,52 @@ class LyricFindReport extends Maintenance {
 	 * @param String|string $text - page content 
 	 * 
 	 */
-	private function extractParams( $text ) {
-		if ( $this->namespaceId == 222 /*LyricFind*/ ) {
+	private function extractParams( $title_name, $text ) {
+		if ( strpos( $title_name, ':' ) === false ) {
+			$artist = ''; $song = $title_name;
+		} else {
+			list( $artist, $song ) = @explode( ":", $title_name, 2 );
+		}
+		if ( $this->namespaceId == 0 /* Main namespace */ ) {
+			$result = [
+				$song,
+				$artist,
+				0, //amgid
+				0  //gnid
+			];
+		} elseif ( $this->namespaceId == 222 /*LyricFind*/ ) {
 			preg_match_all( '/(song|artist|amgid)\s*=(\d+|\s*[\"\'](.*?)[\"\'])/is', $text, $matches );
 			
-			$result = [];
+			$result = $keys = [];
 			if ( !empty( $matches ) ) {
 				$keys = array_flip( $matches[1] );
-				$result = [
-					$matches[2][$keys['song']],
-					$matches[2][$keys['artist']],
-					$matches[2][$keys['amgid']],
-					0
-				];
-			}
+			}	
+
+			$result = [
+				( !empty( $keys['song'] ) && !empty( $matches[2][ $keys['song'] ] ) ) ? $matches[2][ $keys['song'] ] : $song,
+				( !empty( $keys['artist'] ) && !empty( $matches[2][ $keys['artist'] ] ) ) ? $matches[2][ $keys['artist'] ] : $artist,
+				( !empty( $keys['amgid'] ) && !empty( $matches[2][$keys['amgid']] ) ) ? $matches[2][ $keys['amgid'] ] : 0,
+				0
+			];
 		} elseif ( $this->namespaceId == 220 /*Gracenote*/ ) {
 			preg_match_all( '/(song|artist|gracenoteid)\s*=\s*(\d+|[\"\'](.*?)[\"\']|\s*(.*?))\n/is', $text, $matches );
 
-			$result = [];
+			$result = $keys = [];
 			if ( !empty( $matches ) ) {
 				$keys = array_flip( $matches[1] );
-				
-				$amgid = 0;
-				if ( !empty( $matches[2][$keys['gracenoteid']] ) ) {
-					$amgid = $this->getTrackIdFromGNId( $matches[2][$keys['gracenoteid']] );
-				}
-				
-				$result = [
-					$matches[2][$keys['song']],
-					$matches[2][$keys['artist']],
-					$amgid,
-					$matches[2][$keys['gracenoteid']]
-				];
 			}
+
+			$amgid = 0;
+			if ( !empty( $keys['gracenoteid'] ) && !empty( $matches[2][$keys['gracenoteid']] ) ) {
+				$amgid = $this->getTrackIdFromGNId( $matches[2][$keys['gracenoteid']] );
+			}
+		
+			$result = [
+				( !empty( $keys['song'] ) && !empty( $matches[2][ $keys['song'] ] ) ) ? $matches[2][ $keys['song'] ] : $song,
+				( !empty( $keys['artist'] ) && !empty( $matches[2][ $keys['artist'] ] ) ) ? $matches[2][ $keys['artist'] ] : $artist,
+				$amgid,
+				( !empty( $keys['gracenoteid'] ) && !empty( $matches[2][$keys['gracenoteid']] ) ) ? $matches[2][$keys['gracenoteid']] : 0
+			];
 		}
 
 		return $result;

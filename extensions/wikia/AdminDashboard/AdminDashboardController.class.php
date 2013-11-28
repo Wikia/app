@@ -7,7 +7,7 @@ class AdminDashboardController extends WikiaController {
 		global $wgRequest, $wgTitle;
 
 		$this->tab = $wgRequest->getVal("tab", "");
-		if(empty($this->tab) && $this->isAdminDashboard) {
+		if(empty($this->tab) && $this->isAdminDashboardTitle()) {
 			$this->tab = 'general';
 		} else if(AdminDashboardLogic::isGeneralApp(array_shift(SpecialPageFactory::resolveAlias($wgTitle->getDBKey())))) {
 			$this->tab = 'general';

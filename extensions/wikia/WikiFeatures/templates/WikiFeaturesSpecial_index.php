@@ -66,12 +66,3 @@
 
 	
 </div>
-<div id="DeactivateDialog" class="DeactivateDialog">
-	<h1><?= wfMsg('wikifeatures-deactivate-heading') ?></h1>
-	<p><?= wfMsg('wikifeatures-deactivate-description') ?></p>
-	<p><?= wfMsg('wikifeatures-deactivate-notification') ?></p>
-	<nav>
-		<button class="cancel secondary"><?= wfMsg('wikifeatures-deactivate-cancel-button') ?></button>
-		<button class="confirm"><?= wfMsg('wikifeatures-deactivate-confirm-button') ?></button>
-	</nav>
-</div>

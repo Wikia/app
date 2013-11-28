@@ -169,6 +169,7 @@ Referred to in:
 	'swm-button-new' => '{{Identical|New}}',
 	'swm-msg-sent-task' => 'Message to display when a task is created in order to send a message. $1 is a link to the created task.',
 	'swm-expire-info' => '',
+	'swm-list-table-id' => '{{Identical|ID}}',
 	'swm-list-table-wiki' => '{{Identical|Wiki}}',
 	'swm-list-table-group' => '{{Identical|Group}}',
 	'swm-list-table-removed' => 'Column heading of a table with one message per line. The column contains either yes or no if the message was removed or not.
@@ -285,6 +286,13 @@ $messages['an'] = array(
 	'swm-list-table-lang' => 'Idiomas',
 	'swm-yes' => 'Sí',
 	'swm-no' => 'No',
+);
+
+/** Old English (Ænglisc)
+ * @author Espreon
+ */
+$messages['ang'] = array(
+	'swm-label-edit' => 'Adihtan',
 );
 
 /** Arabic (العربية)
@@ -958,12 +966,13 @@ $messages['de-formal'] = array(
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
+ * @author Gorizon
  * @author Mirzali
  */
 $messages['diq'] = array(
 	'swm-label-preview' => 'Verqayt',
 	'swm-label-edit' => 'Bıvurne',
-	'swm-label-remove' => 'Wedarne',
+	'swm-label-remove' => 'Hewad',
 	'swm-label-sent' => 'Bırş',
 	'swm-label-list' => 'Liste',
 	'swm-label-recipient-wikis' => 'Wikiy',

@@ -8,7 +8,7 @@
 ////
 
 
-define('NS_GRACENOTE', 220);
+if (!defined('NS_GRACENOTE')) define('NS_GRACENOTE', 220);
 define('NS_GRACENOTE_TALK', 221);
 $wgExtraNamespaces[NS_GRACENOTE] = "Gracenote";
 $wgExtraNamespaces[NS_GRACENOTE_TALK] = "Gracenote_talk";

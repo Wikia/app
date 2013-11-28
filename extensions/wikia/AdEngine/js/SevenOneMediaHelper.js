@@ -1,4 +1,5 @@
-/*global require*/
+/* exported SevenOneMediaHelper */
+/* jshint camelcase:false, maxparams:false */
 
 var SevenOneMediaHelper = function (adLogicPageLevelParams, scriptWriter, log, window, $, tracker) {
 	'use strict';
@@ -8,15 +9,13 @@ var SevenOneMediaHelper = function (adLogicPageLevelParams, scriptWriter, log, w
 		$postponedContainer,
 		myAd,
 		initialized = false,
-		flushCalled = false,
-		allLoaded = false,
 		pageLevelParams = adLogicPageLevelParams.getPageLevelParams(),
-		firstSlotname,
+		targetingParamKeys = ['pform', 'media', 'gnre', 'egnre'],
 		slotVars = {
 			'popup1': {
 				SOI_PU1: true,
 				SOI_PL: true,    // powerlayer
-				SOI_PU: false,   // popunder,
+				SOI_PU: false,   // popunder
 				SOI_FA: false    // baseboard
 			},
 			'fullbanner2': {
@@ -56,73 +55,64 @@ var SevenOneMediaHelper = function (adLogicPageLevelParams, scriptWriter, log, w
 			ga_action: action,
 			trackingMethod: 'ad'
 		});
-
-		tracker.track({
-			eventName: 'liftium.71m',
-			ga_category: '71m',
-			ga_action: 'success', // for trackingMethod ga Wikia.Tracker requires ga_action to be one from a limited set
-			ga_label: action,
-			trackingMethod: 'ga'
-		});
 	}
 
-	function shiftQueue() {
-		var item = slotsQueue.shift(),
-			slotname,
+	function insertAd(item) {
+		var slotname,
 			beforeFinish,
 			afterFinish,
 			postponedSlotId,
-			$postponedSlot;
-
-		if (!item) {
-			log(['shiftQueue', 'queue over'], 'info', logGroup);
-			return;
-		}
+			$postponedSlot,
+			script;
 
 		slotname = item.slotname;
 		beforeFinish = item.params && item.params.beforeFinish;
 		afterFinish = item.params && item.params.afterFinish;
 
-		log(['shiftQueue', slotname], 'info', logGroup);
+		log(['insertAd', slotname], 'info', logGroup);
 
 		// Create the postponed div
 		postponedSlotId = 'ad-' + slotname + '-postponed';
-		$postponedSlot = $('<div></div>').attr('id', postponedSlotId);
+		$postponedSlot = $('<div/>').attr('id', postponedSlotId);
 		$postponedContainer.append($postponedSlot);
 
 		if (slotname === 'trackEnd') {
-			scriptWriter.injectScriptByText(postponedSlotId, '', function () {
-				track('stage/ads');
-				shiftQueue();
-			});
-			return;
+			script = '';
+		} else {
+			script = 'window.myAd && myAd.insertAd(' + JSON.stringify(slotname) + ');';
 		}
 
 		scriptWriter.injectScriptByText(
 			postponedSlotId,
-			'myAd.insertAd(' + JSON.stringify(slotname) + ');',
+			script,
 			function () {
-				log(['shiftQueue', slotname, 'myAd.insertAd done'], 'info', logGroup);
+				if (!myAd) {
+					return;
+				}
+
+				log(['insertAd', slotname, 'myAd.insertAd done'], 'debug', logGroup);
 
 				if (typeof beforeFinish === 'function') {
-					log(['shiftQueue', slotname, 'calling beforeFinish'], 'info', logGroup);
+					log(['insertAd', slotname, 'calling beforeFinish'], 'debug', logGroup);
 					beforeFinish({slotname: slotname});
 				}
 
-				log(['shiftQueue', slotname, 'calling myAd.finishAd'], 'info', logGroup);
-				myAd.finishAd(slotname, 'move');
-				log(['shiftQueue', slotname, 'myAd.finishAd done'], 'info', logGroup);
+				if (slotname !== 'trackEnd') {
+					log(['insertAd', slotname, 'calling myAd.finishAd'], 'debug', logGroup);
+					myAd.finishAd(slotname, 'move');
+					log(['insertAd', slotname, 'myAd.finishAd done'], 'debug', logGroup);
+				}
 
 				if (typeof afterFinish === 'function') {
 					var info = {
 						slotname: slotname,
 						isSpecialAd: myAd.isSpecialAd(slotname)
 					};
-					log(['shiftQueue', slotname, 'calling afterFinish', info], 'info', logGroup);
+					log(['insertAd', slotname, 'calling afterFinish', info], 'debug', logGroup);
 					afterFinish(info);
 				}
 
-				shiftQueue();
+				log(['insertAd', slotname, 'myAd.insertAd done callback executed'], 'debug', logGroup);
 			}
 		);
 	}
@@ -139,139 +129,108 @@ var SevenOneMediaHelper = function (adLogicPageLevelParams, scriptWriter, log, w
 		}
 	}
 
-	function initialize() {
-		var vars,
-			s0 = pageLevelParams.s0,
-			s1 = pageLevelParams.s1.replace('_', '');
+	function injectJavaScripts(slotname, done, error) {
+		var javaScriptsPlaceHolder = 'ad-' + slotname;
+
+		scriptWriter.injectScriptByUrl(
+			javaScriptsPlaceHolder,
+			window.wgAdDriverSevenOneMediaCombinedUrl,
+			function () {
+				if (!window.SEVENONEMEDIA_CSS) {
+					error('sevenonemedia_css');
+					return;
+				}
+				if (!window.myAd) {
+					error('my_ad_integration');
+					return;
+				}
+				log('myAd loaded', 'info', logGroup);
+				myAd = window.myAd;
+
+				if (window.SOI_IDENTIFIER !== 'wikia') {
+					error('wikia');
+					return;
+				}
+				log('Sites/wikia.js loaded', 'info', logGroup);
+				myAd.loaded.site = true;
+
+				if (!window.SoiAP) {
+					error('globalV6');
+					return;
+				}
+				log('globalV6.js loaded', 'info', logGroup);
+				myAd.loaded.global = true;
+
+				done();
+			}
+		);
+	}
+
+	function generateSoiKeyValue() {
+		var i, len, key, ret = {};
+		for (i = 0, len = targetingParamKeys.length; i < len; i += 1) {
+			key = targetingParamKeys[i];
+			if (pageLevelParams[key] && pageLevelParams[key][0]) {
+				ret[key] = pageLevelParams[key][0].substr(0, 10);
+			}
+		}
+		return ret;
+	}
+
+	function initialize(firstSlotname) {
+		var subsite = window.cscoreCat && window.cscoreCat.toLowerCase(),
+			sub2site = pageLevelParams.s1.replace('_', ''),
+			sub3site = subsite === 'lifestyle' && window.cityShort;
 
 		initialized = true;
 
 		log(['initialize'], 'debug', logGroup);
 
-		vars = {
+		setVars({
 			SOI_SITE: 'wikia',
-			SOI_SUBSITE: s0,
-			SOI_SUB2SITE: s1,
-			SOI_SUB3SITE: '',
+			SOI_SUBSITE: subsite,
+			SOI_SUB2SITE: sub2site,
+			SOI_SUB3SITE: sub3site,
 			SOI_CONTENT: 'content',
 			SOI_WERBUNG: true
-		};
-
-		setVars(vars);
-
-		$postponedContainer = $('<div></div>').attr('id', postponedContainerId).hide();
-		$('body').append($postponedContainer);
-	}
-
-	function injectStyles(done) {
-		require(['wikia.loader'], function (loader) {
-			loader('/extensions/wikia/AdEngine/SevenOneMedia/my_ad_integration.css').done(
-				function () {
-					$('#WikiaTopAds').hide();
-					done();
-				}
-			);
 		});
-	}
 
-	function injectJavaScripts(slotname, done, error) {
-		var javaScriptsPlaceHolder = 'ad-' + slotname,
-			myAdJsUrl = window.wgCdnRootUrl + window.wgAssetsManagerQuery.
-				replace('%1$s', 'one').
-				replace('%2$s', 'extensions/wikia/AdEngine/SevenOneMedia/my_ad_integration.js').
-				replace('%3$s', '-').
-				replace('%4$d', window.wgStyleVersion);
+		setVars({SOI_KEYVALUE: generateSoiKeyValue()});
 
-		scriptWriter.injectScriptByUrl(
-			javaScriptsPlaceHolder,
-			myAdJsUrl,
-			function () {
-				if (!window.myAd) {
-					error('my_ad_integration');
-					return;
-				}
+		$postponedContainer = $('<div/>').attr('id', postponedContainerId).hide();
+		$('body').append($postponedContainer);
 
-				log('myAd loaded', 'info', logGroup);
-				myAd = window.myAd;
+		track('stage/init');
 
-				scriptWriter.injectScriptByText(
-					javaScriptsPlaceHolder,
-					'myAd.loadScript("site");',
-					function () {
-						if (window.SOI_IDENTIFIER !== 'wikia') {
-							error('wikia');
-							return;
-						}
+		injectJavaScripts(firstSlotname, function () {
+			/* done: */
 
-						log('Sites/wikia.js loaded', 'info', logGroup);
+			log('injectJavaScript success', 'info', logGroup);
+			track('stage/scripts');
 
-						scriptWriter.injectScriptByText(
-							javaScriptsPlaceHolder,
-							'myAd.loadScript("global");',
-							function () {
-								if (!window.SoiAP) {
-									error('globalV6');
-									return;
-								}
+			// Apply CSS
+			$('head').append('<style>' + window.SEVENONEMEDIA_CSS + '</style>');
+			$('#WikiaTopAds').hide();
 
-								log('globalV6.js loaded', 'info', logGroup);
+		}, function (what) {
+			/* error: */
 
-								done();
-							}
-						);
-					}
-				);
-			}
-		);
+			log(['injectJavaScript failed', what], 'error', logGroup);
+			track('error/scripts1');
+		});
 	}
 
 	/**
 	 * Flush pushed ads
 	 */
 	function flushAds() {
-		var retries = 0;
-
-		// Styles and scripts are loading, the ads will be flushed eventually
-		if (!firstSlotname) {
-			log('No ads pushed to queue, not flushing', 'warn', logGroup);
+		if (!initialized) {
 			return;
 		}
 
-		if (flushCalled) {
-			if (allLoaded) {
-				// A whole flush batch had been processed before this flush was called.
-				// We need to process another batch now
-				shiftQueue();
-			}
-
-			return;
+		while (slotsQueue.length > 0) {
+			insertAd(slotsQueue.shift());
 		}
-
-		track('stage/init');
-
-		flushCalled = true;
-
-		function tryInjectJavaScripts() {
-			injectJavaScripts(firstSlotname, function () {
-				// DONE
-				allLoaded = true;
-				log('injectJavaScript success', 'info', logGroup);
-				track('stage/scripts');
-				shiftQueue();
-			}, function (what) {
-				// ERROR
-				log(['injectJavaScript failed', what], 'error', logGroup);
-				if (retries === 3) {
-					log(['injectJavaScript failed after 3 retries. Quiting', what], 'error', logGroup);
-				}
-				retries += 1;
-				track('error/scripts' + retries);
-				tryInjectJavaScripts();
-			});
-		}
-
-		injectStyles(tryInjectJavaScripts);
-
 	}
 
 	/**
@@ -284,20 +243,23 @@ var SevenOneMediaHelper = function (adLogicPageLevelParams, scriptWriter, log, w
 	 * @param params {beforeFinish: callback, afterFinish: callback}
 	 */
 	function pushAd(slotname, params) {
-		log(['registerSlot', slotname], 'info', logGroup);
+		log(['pushAd', slotname, params], 'info', logGroup);
 
 		if (!initialized) {
-			initialize();
-			firstSlotname = slotname;
+			initialize(slotname);
 		}
 
 		setVars(slotVars[slotname]);
 		slotsQueue.push({slotname: slotname, params: params});
 	}
 
-	function trackEnd(slotname) {
+	function trackEnd() {
 		log('trackEnd', 'info', logGroup);
-		slotsQueue.push({slotname: 'trackEnd'});
+		insertAd({slotname: 'trackEnd', params: {
+			afterFinish: function () {
+				track('stage/ads');
+			}
+		}});
 	}
 
 	return {
