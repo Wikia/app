@@ -4,7 +4,7 @@ var AdEngine2 = function (log, LazyQueue, slotTracker) {
 
 	var logGroup = 'AdEngine2';
 
-	function run(adConfig, adslots) {
+	function run(adConfig, adslots, queueName) {
 
 		log('run', 'debug', logGroup);
 
@@ -17,7 +17,7 @@ var AdEngine2 = function (log, LazyQueue, slotTracker) {
 
 			var slotname = slot[0],
 				provider = adConfig.getProvider(slot),
-				aSlotTracker = slotTracker(provider.name, slotname);
+				aSlotTracker = slotTracker(provider.name, slotname, queueName);
 
 			function success(info) {
 				log(['success', slotname, info], 'debug', logGroup);

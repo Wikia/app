@@ -31,7 +31,7 @@ var SlotTracker = function (log) {
 		return 'invalid';
 	}
 
-	function slotTracker(provider, slotname) {
+	function slotTracker(provider, slotname, source) {
 		var timeStart = new Date().getTime(),
 			eventsTracked = [],
 			lastEventTime,
@@ -57,7 +57,7 @@ var SlotTracker = function (log) {
 				timeBucket = getTimeBucket(timeElapsed);
 
 			eventsTracked.push(eventName);
-			lastEventTime = timeElapsed || lastEventTime;
+			lastEventTime = timeElapsed;
 			log([
 				'event: ' + eventName,
 				'provider: ' + provider,
@@ -68,7 +68,7 @@ var SlotTracker = function (log) {
 			], 'debug', logGroup);
 		}
 
-		track('register');
+		track('register', {source: source});
 
 		for (i = 0, len = timeCheckpoints.length; i < len; i += 1) {
 			trackState(timeCheckpoints[i]);
