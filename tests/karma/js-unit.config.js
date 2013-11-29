@@ -73,7 +73,7 @@ module.exports = function(config) {
 			'extensions/wikia/AdEngine/js/AdProviderGamePro.js',
 			'extensions/wikia/AdEngine/js/AdProviderGpt.js',
 			'extensions/wikia/AdEngine/js/AdProviderLater.js',
-			'extensions/wikia/AdEngine/js/AdProviderLiftium2Dom.js',
+			'extensions/wikia/AdEngine/js/AdProviderLiftium.js',
 			'extensions/wikia/AdEngine/js/AdProviderNull.js',
 			'extensions/wikia/AdEngine/js/DartUrl.js',
 			'extensions/wikia/AdEngine/js/EvolveHelper.js',
