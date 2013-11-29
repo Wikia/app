@@ -344,15 +344,20 @@ class ArticlesApiController extends WikiaApiController {
 				[ 'pageid' => 'id', 'ns', 'title_en' => 'title', 'html_en' => 'abstract' ],
 				false, 'pageid' );
 
-			foreach ( $results as &$item ) {
+			$ids = array_keys( $results );
+			$creators = $this->getUserDataForArticles( $ids );
+
+			$collection = [];
+			foreach ( $results as $id => $item ) {
 				$title = Title::newFromText( $item[ 'title' ] );
 				$item[ 'title' ] = $title->getText();
 				$item[ 'url' ] = $title->getLocalURL();
+				$item[ 'creator' ] = $creators[ $id ];
+				$collection[] = $item;
 			}
-
+			$results = $collection;
 			$this->wg->Memc->set( $key, $results, self::CLIENT_CACHE_VALIDITY );
 		}
-
 		$response = $this->getResponse();
 		$response->setValues( [ 'items' => $results, 'basepath' => $this->wg->Server ] );
 
@@ -703,8 +708,12 @@ class ArticlesApiController extends WikiaApiController {
 			foreach( $users as $user ) {
 				$userData[ $user->getId() ] = [ 'avatar' => AvatarService::getAvatarUrl( $user->getName(), self::DEFAULT_AVATAR_SIZE ), 'name' => $user->getName() ];
 			}
-			foreach( $userIds as $pageId => $userId ) {
-				$result[ $pageId ] = isset( $userData[ $userId ] ) ? $userData[ $userId ] : [ 'avatar' => null, 'name' => null ];
+		}
+		foreach( $ids as $pageId ) {
+			if ( isset( $userIds[ $pageId ] ) && isset( $userData[ $userIds[ $pageId ] ] ) ){
+				$result[ $pageId ] = $userData[ $userIds[ $pageId ] ];
+			} else {
+				$result[ $pageId ] = [ 'avatar' => null, 'name' => null ];
 			}
 		}
 		return $result;
