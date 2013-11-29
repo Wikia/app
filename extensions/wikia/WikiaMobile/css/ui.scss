@@ -177,6 +177,11 @@ dd {
 	margin: 0;
 }
 
-strong {
+strong, b {
 	font-weight: bold;
+}
+
+a.new {
+	color: $color;
+	pointer-events: none;
 }
