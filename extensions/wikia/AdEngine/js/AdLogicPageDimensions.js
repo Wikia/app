@@ -1,3 +1,5 @@
+/*jshint camelcase:false, maxdepth:5*/
+/*exported AdLogicPageDimensions*/
 var AdLogicPageDimensions = function (window, document, log, slotTweaker) {
 	'use strict';
 
@@ -241,7 +243,8 @@ var AdLogicPageDimensions = function (window, document, log, slotTweaker) {
 
 		// Return the provider interface
 		return {
-			name: 'WindowSizeProviderProxy',
+			name: provider.name,
+			ownName: 'WindowSizeProviderProxy',
 			wrappedProvider: provider,
 			canHandleSlot: canHandleSlot,
 			fillInSlot: fillInSlot
