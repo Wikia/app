@@ -6,6 +6,7 @@ class UserStatsService extends WikiaModel {
 
 	private $userId;
 	private $user;
+	private $optionsAllWikis;
 
 	/**
 	 * Pass user ID of user you want to get data about
@@ -13,6 +14,7 @@ class UserStatsService extends WikiaModel {
 	function __construct($userId) {
 		$this->userId = intval($userId);
 		$this->user = null;
+		$this->optionsAllWikis = array();
 		parent::__construct();
 	}
 
@@ -35,26 +37,6 @@ class UserStatsService extends WikiaModel {
 	}
 
 	/**
-	 * Refresh cache when article is edited
-	 */
-	static function onArticleSaveComplete(&$article, &$user, $text, $summary,
-		$minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
-
-		wfProfileIn(__METHOD__);
-		
-		if ($revision !== NULL) {	// // do not count null edits
-			// tell service to update cached data for user who edited the page
-			if (!$user->isAnon()) {
-				$service = new UserStatsService($user->getId());
-				$service->increaseEditsCount();
-			}
-		}
-
-		wfProfileOut(__METHOD__);
-		return true;
-	}
-
-	/**
 	 * Counts contributions from revision and archive
 	 * and resets value in wikia_user_properties table
 	 * for specified wiki.
@@ -66,6 +48,7 @@ class UserStatsService extends WikiaModel {
 	 * @return Int Number of edits
 	 */
 	public function resetEditCountWiki( $wikiId = 0 ) {
+		wfProfileIn(__METHOD__);
 		$dbName = ( $wikiId != $this->wg->CityId || empty( $wikiId ) ) ? WikiFactory::IDtoDB( $wikiId ) : false;
 		$dbr = $this->getWikiDB( DB_SLAVE, $dbName );
 		$userName = $this->getUser()->getName();
@@ -85,6 +68,7 @@ class UserStatsService extends WikiaModel {
 		// Store editcount value
 		$this->setOptionWiki( 'editcount', $editCount, $wikiId );
 
+		wfProfileOut(__METHOD__);
 		return $editCount;
 	}
 
@@ -93,9 +77,9 @@ class UserStatsService extends WikiaModel {
 	 * @since Feb 2013
 	 * @author Kamil Koterba
 	 *
-	 * @param $userId Integer Id of user
-	 * @param $wikiId Integer Id of wiki - specifies wiki from which to get editcount, 0 for current wiki
-	 * @param $skipCache boolean On true ignores cache
+	 * @param Int $userId  Id of user
+	 * @param Int $wikiId  Id of wiki - specifies wiki from which to get editcount, 0 for current wiki
+	 * @param Boolean $skipCache  On true ignores cache
 	 * @return Int Number of edits
 	 */
 	public function getEditCountWiki( $wikiId = 0, $skipCache = false ) {
@@ -153,7 +137,7 @@ class UserStatsService extends WikiaModel {
 		if( $field === null ) { // it has not been initialized. do so.
 
 			$userName = $this->getUser()->getName();
-			
+
 			//count revisions
 			$editCount = $dbr->selectField(
 				'revision', 'count(*)',
@@ -165,7 +149,7 @@ class UserStatsService extends WikiaModel {
 				array( 'ar_user' => $userName ),
 				__METHOD__
 			);
-			
+
 			$wikiId = ( empty($wikiId) ) ? $this->wg->CityId : $wikiId ;
 			$dbname = ( $wikiId != $this->wg->CityId ) ? WikiFactory::IDtoDB( $wikiId ) : false;
 			$dbw = wfGetDB( DB_MASTER, array(), $dbname );
@@ -188,13 +172,83 @@ class UserStatsService extends WikiaModel {
 		return $editCount;
 	}
 
+
 	/**
-	 * Update service cache for current user
+	 * Get user options localized per wiki, load if necessary
+	 * @since Nov 2013
+	 * @author Kamil Koterba
+	 *
+	 * @param Integer $wikiId Id of wiki - specifies wiki from which to get editcount, 0 for current wiki
+	 * @param bool $skipCache skip cache, reload from DB
+	 * @return array
+	 */
+	public function getOptionsWiki( $wikiId, $skipCache = false ) {
+		wfProfileIn(__METHOD__);
+
+		if ( !empty( $this->optionsAllWikis[ $wikiId ] ) ) {
+			wfProfileOut( __METHOD__ );
+			return $this->optionsAllWikis[ $wikiId ];
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $this->loadOptionsWiki( $wikiId, $skipCache );
+	}
+
+
+	/**
+	 * Load user options loaclized per wiki from DB
+	 * (wikia_user_properties table)
+	 * @since Nov 2013
+	 * @author Kamil Koterba
+	 *
+	 * @param $wikiId Integer $wikiId Id of wiki - specifies wiki from which to load editcount, 0 for current wiki
+	 * @param bool $skipCache, skip cache, reload from DB
+	 * @return array
+	 */
+	private function loadOptionsWiki( $wikiId, $skipCache = false ) {
+		wfProfileIn(__METHOD__);
+		$wikiId = ( empty($wikiId) ) ? $this->wg->CityId : $wikiId ;
+
+		/* Get option value from memcache */
+		$key = wfSharedMemcKey( 'optionsWiki', $wikiId, $this->userId );
+		$this->optionsAllWikis[ $wikiId ] = $this->wg->Memc->get( $key );
+
+		if ( !empty( $this->optionsAllWikis[ $wikiId ] ) && !$skipCache ) {
+			wfProfileOut( __METHOD__ );
+			return $this->optionsAllWikis[ $wikiId ];
+		}
+
+		$dbName = ( $wikiId != $this->wg->CityId ) ? WikiFactory::IDtoDB( $wikiId ) : false;
+
+		/* Get option value from wiki specific user properties */
+		$dbr = $this->getWikiDB( DB_SLAVE, $dbName );
+		$res = $dbr->select(
+			'wikia_user_properties',
+			array ( 'wup_property', 'wup_value' ),
+			array(
+				'wup_user' => $this->userId
+			),
+			__METHOD__
+		);
+		$this->optionsAllWikis[ $wikiId ] = array();
+		foreach( $res as $row ) {
+			$this->optionsAllWikis[ $wikiId ][ $row->wup_property ] = $row->wup_value;
+		}
+		$this->wg->Memc->set( $key, $this->optionsAllWikis[ $wikiId ], self::CACHE_TTL );
+
+		wfProfileOut( __METHOD__ );
+		return $this->optionsAllWikis[ $wikiId ];
+	}
+
+
+	/**
+	 * Update localized value of editcount in wikia_user_properties
+	 * and bump mcached values for stats and localized user options
 	 */
 	function increaseEditsCount() {
 		wfProfileIn(__METHOD__);
 
-		// update edit counts
+		// update edit counts in stats
 		$key = $this->getKey('stats4');
 		$stats = $this->wg->Memc->get($key);
 
@@ -211,9 +265,30 @@ class UserStatsService extends WikiaModel {
 			wfDebug(__METHOD__ . ": user #{$this->userId}\n");
 		}
 
+		//update edit counts in options
+		$dbw = wfGetDB( DB_MASTER );
+		$dbw->update( 'wikia_user_properties',
+			array( 'wup_value=wup_value+1' ),
+			array( 'wup_user' => $this->userId,
+				'wup_property' => 'editcount' ),
+			__METHOD__ );
+
+		if ($dbw->affectedRows() == 1) {
+			//increment memcache also
+			$key = wfSharedMemcKey( 'optionsWiki', $this->wg->CityId, $this->userId );
+			$optionsWiki = $this->wg->Memc->get( $key );
+
+			$optionsWiki[ 'editcount' ]++;
+			$this->wg->Memc->set( $key, $optionsWiki, self::CACHE_TTL );
+		} else {
+			//initialize editcount skipping memcache
+			$this->getEditCountLocal( 0, true );
+		}
+
 		wfProfileOut(__METHOD__);
 		return true;
 	}
+
 
 	/**
 	 * Get likes count, edit points and date of first edit done by the user
@@ -301,50 +376,38 @@ class UserStatsService extends WikiaModel {
 
 	/**
 	 * Retrives wiki specific user option
-	 * from wikia_user_properties table from wiki DB
+	 * @since Nov 2013
+	 * @author Kamil Koterba
 	 *
 	 * @param String $optionName  name of wiki specific user option
-	 * @param int $wikiId Integer Id of wiki - specifies wiki from which to get editcount, 0 for current wiki
-	 * @param $skipCache boolean On true ignores cache
-	 * @return $optionVal string|null
+	 * @param int $wikiId Id of wiki - specifies wiki from which to get editcount, 0 for current wiki
+	 * @param boolean $skipCache On true ignores cache
+	 * @return String|null $optionVal
 	 */
 	public function getOptionWiki( $optionName, $wikiId = 0, $skipCache = false ) {
 		wfProfileIn( __METHOD__ );
 
 		$wikiId = ( empty($wikiId) ) ? $this->wg->CityId : $wikiId ;
 
-		/* Get option value from memcache */
-		$key = wfSharedMemcKey( $optionName, $wikiId, $this->userId );
-		$optionVal = $this->wg->Memc->get( $key );
+		// Get all options for wiki
+		$optionsWiki = $this->getOptionsWiki( $wikiId, $skipCache );
 
-		if ( !empty( $optionVal ) && !$skipCache ) {
+		// Return specific option
+		if ( isset( $optionsWiki[ $optionName ] ) ) {
 			wfProfileOut( __METHOD__ );
-			return $optionVal;
+			return $optionsWiki[ $optionName ];
 		}
 
-		$dbName = ( $wikiId != $this->wg->CityId ) ? WikiFactory::IDtoDB( $wikiId ) : false;
-
-		/* Get option value from wiki specific user properties */
-		$dbr = $this->getWikiDB( DB_SLAVE, $dbName );
-		$optionVal = $dbr->selectField(
-			'wikia_user_properties',
-			'wup_value',
-			array( 'wup_user' => $this->userId,
-				'wup_property' => $optionName ),
-			__METHOD__
-		);
-
-		$this->wg->Memc->set( $key, $optionVal, 86400 );
-
 		wfProfileOut( __METHOD__ );
-		return $optionVal;
+		return null;
 	}
-
 
 
 	/**
 	 * Sets wiki specific user option
 	 * into wikia_user_properties table from wiki DB
+	 * @since Nov 2013
+	 * @author Kamil Koterba
 	 *
 	 * @param String $optionName name of wiki specific user option
 	 * @param String $optionValue option value to be set
@@ -352,11 +415,13 @@ class UserStatsService extends WikiaModel {
 	 * @return $optionVal string|null
 	 */
 	public function setOptionWiki( $optionName, $optionVal, $wikiId = 0 ) {
+
 		wfProfileIn( __METHOD__ );
 
 		$wikiId = ( empty($wikiId) ) ? $this->wg->CityId : $wikiId ;
-
 		$dbName = ( $wikiId != $this->wg->CityId ) ? WikiFactory::IDtoDB( $wikiId ) : false;
+
+		$this->getOptionsWiki( $wikiId ); // checks if isset and loads if empty (to make sure we don't loose anything
 
 		$dbw = $this->getWikiDB( DB_MASTER, $dbName );
 		$dbw->replace(
@@ -368,8 +433,10 @@ class UserStatsService extends WikiaModel {
 			__METHOD__
 		);
 
-		$key = wfSharedMemcKey( $optionName, $wikiId, $this->userId );
-		$this->wg->Memc->set( $key, $optionVal, 86400 );
+		$this->optionsAllWikis[ $wikiId ][ $optionName ] = $optionVal;
+
+		$key = wfSharedMemcKey( 'optionsWiki', $wikiId, $this->userId );
+		$this->wg->Memc->set( $key, $this->optionsAllWikis[ $wikiId ], self::CACHE_TTL );
 
 		wfProfileOut( __METHOD__ );
 		return $optionVal;
