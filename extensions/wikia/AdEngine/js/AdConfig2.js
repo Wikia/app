@@ -68,10 +68,7 @@ var AdConfig2 = function (
 		if (slot[2] === 'AdDriver') {
 			return adProviderGpt;
 		}
-		if (slot[2] === 'Liftium2') {
-			return adProviderLater;
-		}
-		if (slot[2] === 'Liftium2Dom') {
+		if (slot[2] === 'Liftium') {
 			return adProviderLater;
 		}
 

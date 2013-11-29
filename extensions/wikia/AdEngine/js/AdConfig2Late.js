@@ -5,7 +5,7 @@ var AdConfig2Late = function (
 
 	// AdProviders
 	adProviderGamePro,
-	adProviderLiftium2Dom,
+	adProviderLiftium,
 	adProviderNull,
 	adProviderSevenOneMedia
 ) {
@@ -27,11 +27,11 @@ var AdConfig2Late = function (
 		log('getProvider', 5, logGroup);
 		log(slot, 5, logGroup);
 
-		if (slot[2] === 'Liftium2' || slot[2] === 'Liftium2Dom') {
-			if (adProviderLiftium2Dom.canHandleSlot(slot)) {
-				return adProviderLiftium2Dom;
+		if (slot[2] === 'Liftium') {
+			if (adProviderLiftium.canHandleSlot(slot)) {
+				return adProviderLiftium;
 			}
-			log('#' + slotname + ' disabled. Forced Liftium2, but it can\'t handle it', 7, logGroup);
+			log('#' + slotname + ' disabled. Forced Liftium, but it can\'t handle it', 7, logGroup);
 			return adProviderNull;
 		}
 
@@ -51,8 +51,8 @@ var AdConfig2Late = function (
 			tryLiftium = true;
 		}
 
-		if (tryLiftium && adProviderLiftium2Dom.canHandleSlot(slotname)) {
-			return adProviderLiftium2Dom;
+		if (tryLiftium && adProviderLiftium.canHandleSlot(slotname)) {
+			return adProviderLiftium;
 		}
 
 		return adProviderNull;

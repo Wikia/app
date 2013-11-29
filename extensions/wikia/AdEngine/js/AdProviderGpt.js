@@ -13,8 +13,7 @@ var AdProviderGpt = function (adTracker, log, window, Geo, slotTweaker, cacheSto
 		isHighValueCountry,
 		leaderboardCalled = false, // save if leaderboard was called, so we know whether to call INVISIBLE slot as well
 		gptConfig,
-		gptFlushed = false,
-		undef;
+		gptFlushed = false;
 
 	maxCallsToDART = adLogicHighValueCountry.getMaxCallsToDART(country);
 	isHighValueCountry = adLogicHighValueCountry.isHighValueCountry(country);
@@ -122,7 +121,7 @@ var AdProviderGpt = function (adTracker, log, window, Geo, slotTweaker, cacheSto
 					slotTracker.hop();
 				}
 
-				window.adslots2.push([slotname, undef, 'Liftium2']);
+				window.adslots2.push([slotname, undef, 'Liftium']);
 
 				pHop();
 			},

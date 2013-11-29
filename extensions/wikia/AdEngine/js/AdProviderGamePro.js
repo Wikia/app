@@ -1,6 +1,6 @@
 /*exported AdProviderGamePro*/
 /*jshint maxparams:false*/
-var AdProviderGamePro = function(adLogicPageLevelParamsLegacy, ScriptWriter, adTracker, log, window, slotTweaker) {
+var AdProviderGamePro = function (adLogicPageLevelParamsLegacy, ScriptWriter, adTracker, log, window, slotTweaker) {
 	'use strict';
 
 	var ord = Math.round(Math.random() * 23456787654),
