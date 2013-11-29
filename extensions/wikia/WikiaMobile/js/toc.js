@@ -9,7 +9,7 @@ function ( sections, window, $, mustache, toc ) {
 		active = 'active',
 		$document = $( window.document ),
 		$anchors,
-		sideMenuCapable = ( Features.positionfixed && Features.overflow ),
+		sideMenuCapable = true || ( Features.positionfixed && Features.overflow ),
 		$ol,
 		inited,
 		$toc = $( '#wkTOC' ),
@@ -45,7 +45,7 @@ function ( sections, window, $, mustache, toc ) {
 				}
 			);
 
-		return  mustache.render( wrap, tocData, {
+		return mustache.render( wrap, tocData, {
 			ol: ol,
 			lis: lis
 		} );
@@ -185,6 +185,7 @@ function ( sections, window, $, mustache, toc ) {
 
 	$( '#wkTOCHandle' ).on( 'click', function () {
 		if ( sideMenuCapable ) {
+			console.log('lol')
 			if ( $toc.toggleClass( active ).hasClass( active ) ) {
 				onOpen();
 			} else {

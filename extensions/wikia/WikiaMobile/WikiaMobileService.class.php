@@ -225,8 +225,10 @@ class WikiaMobileService extends WikiaService {
 	private function handleToc(){
 		$toc = '';
 
-		//Enable TOC only on view action and on real articles
-		if ( $this->wg->Request->getVal( 'action', 'view' ) == 'view' &&
+		$action = $this->wg->Request->getVal( 'action', 'view' );
+
+		//Enable TOC only on view action and on real articles and preview
+		if ( ( $action == 'view' || $action == 'ajax' ) &&
 			$this->wg->Title->getArticleId() != 0
 		) {
 			$this->jsExtensionPackages[] = 'wikiamobile_js_toc';
@@ -272,6 +274,7 @@ class WikiaMobileService extends WikiaService {
 		$content = $this->request->getVal( 'content' );
 
 		$this->handleMessages();
+		$this->handleToc();
 		$this->handleContent( $content );
 		$this->handleAssets( 'preview' );
 

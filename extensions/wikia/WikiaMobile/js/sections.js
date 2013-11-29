@@ -8,11 +8,12 @@
 define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 	'use strict';
 
-	var d = document,
-		sections = $( 'h2[id],h3[id],h4[id]', document.getElementById( 'wkPage' ) ).toArray(),
+	var d = window.document,
+		sections = $( 'h2[id],h3[id],h4[id]', d.getElementById( 'wkPage' ) ).toArray(),
 		l = sections.length,
 		lastSection,
-		escapeRegExp = /[()\.]/g;
+		escapeRegExp = /[()\.]/g,
+		offset = 5;
 
 	/**
 	 * @desc Function that lets you scroll viewport to a given section
@@ -25,7 +26,7 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 			ret;
 
 		if ( h ) {
-			h.scrollIntoView();
+			window.scrollTo( 0, $(h).offset().top - offset - 1);
 			ret = true;
 		}
 
@@ -41,7 +42,7 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 			i = 0;
 
 		for ( ; i < l; i++ ) {
-			if ( sections[i].offsetTop - 5 > top ) {
+			if ( sections[i].offsetTop - offset > top ) {
 				break;
 			}
 		}

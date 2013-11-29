@@ -418,14 +418,6 @@ $config['wikiamobile_scss'] = array(
 	)
 );
 
-$config['wikiamobile_scss_preview'] = array(
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => 'wikiamobile',
-	'assets' => array(
-		'//extensions/wikia/WikiaMobile/css/WikiaMobile.preview.scss',
-	)
-);
-
 $config['wikiamobile_editor_scss'] = array(
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => 'wikiamobile',
@@ -554,6 +546,14 @@ $config['wikiamobile_js_preview'] = array(
 	'skin' => 'wikiamobile',
 	'assets' => array(
 		'#group_wikiamobile_js_body_full',
+	)
+);
+
+$config['wikiamobile_scss_preview'] = array(
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => 'wikiamobile',
+	'assets' => array(
+		'//extensions/wikia/WikiaMobile/css/WikiaMobile.preview.scss'
 	)
 );
 
