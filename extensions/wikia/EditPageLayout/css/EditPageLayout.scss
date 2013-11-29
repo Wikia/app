@@ -538,11 +538,21 @@ body {
 
 //Mobile preview styles
 .mobile-preview {
-	border: 1px solid $color-page-border;
-	box-sizing: border-box;
-	display: block;
 	height: 480px;
-	margin: 0 auto;
-	max-height: 100%;
 	width: 320px;
+	overflow-y: scroll;
+	margin: 0 auto;
+	-webkit-overflow-scrolling: touch;
+	-webkit-transform: translate3d(0,0,0);
+
+	iframe {
+		border: 1px solid $color-page-border;
+		box-sizing: border-box;
+		display: block;
+		height: 480px;
+		margin: 0 auto;
+		max-height: 100%;
+		width: 320px;
+	}
+
 }

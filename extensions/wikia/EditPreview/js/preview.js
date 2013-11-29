@@ -75,7 +75,7 @@ define( 'wikia.preview', [
 	 * @param {object} data - data that comes from preview api
 	 */
 	function handleMobilePreview ( data ) {
-		var iframe = $article.html( '<iframe class="mobile-preview"></iframe>' ).find( 'iframe' )[0],
+		var iframe = $article.html( '<div class="mobile-preview"><iframe></iframe></div>' ).find( 'iframe' )[0],
 			doc = iframe.document;
 
 		if ( iframe.contentDocument ) {
