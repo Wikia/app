@@ -474,7 +474,7 @@ use Swagger\Annotations as SWG;
  * 				),
  * 				@SWG\Parameter(
  * 					name="limit",
- * 					description="Limit the number of result - maxiumum limit is 100",
+ * 					description="Limit the number of result - maximum limit is 100",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="false",
