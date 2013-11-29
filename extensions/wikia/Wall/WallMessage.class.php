@@ -416,11 +416,16 @@ class WallMessage {
 		return true;
 	}
 
-
-	public function getWallOwnerName() {
-		$title = $this->getWallTitle();
-		$parts = explode( '/', $title->getText() );
-		$wallOwnerName = $parts[0];
+    /**
+     * Wall trrap warning!
+     * Method name suggests it returns the name of the wall owner, so it's a user name. But as this is used also by Forum,
+     * the WallMessageGetWallOwnerName hook overrides this and the returned value is in that case the Forum board title.
+     * So this method actually gets the name of the message wall/forum board, not the wall owner name.
+     */
+    public function getWallOwnerName() {
+        $title = $this->getWallTitle();
+        $parts = explode( '/', $title->getText() );
+        $wallOwnerName = $parts[0];
 
 		wfRunHooks( 'WallMessageGetWallOwnerName', array( $title, &$wallOwnerName ) );
 
@@ -428,20 +433,24 @@ class WallMessage {
 	}
 
 	public function getWallOwner( $master = false ) {
-		$parts = explode( '/', $this->getWallTitle( $master )->getText() );
-		$userName = $parts[0];
-		/*
-		// mech: I'm not sure we have to create wall title doing db queries on both, page and comments_index tables.
-		// as the user name is the first part on comment's title. But I'm not able to go through all wall/forum
-		// usecases. I'm going to check production logs for the next 2-3 sprints and make sure the result is
-		// always correct
-		$titleText = $this->title->getText();
-		$parts = explode( '/', $titleText );
-		if ( $parts[0] != $userName ) {
-			Wikia::log( __METHOD__, false, 'WALL_PERF article title owner does not match ci username (' . $userName .
-				' vs ' . $parts[0] . ') for ' . $this->getId() . ' (title is ' . $titleText. ')', true );
-		}
-		*/
+        $parts = explode( '/', $this->getWallTitle( $master )->getText() );
+        $userName = $parts[0];
+        // mech: I'm not sure we have to create wall title doing db queries on both, page and comments_index tables.
+        // as the user name is the first part on comment's title. But I'm not able to go through all wall/forum
+        // usecases. I'm going to check production logs for the next 2-3 sprints and make sure the result is
+        // always correct
+        $titleText = $this->title->getText();
+        $parts = explode( '/', $titleText );
+        if ( $parts[0] != $userName ) {
+            Wikia::log( __METHOD__, false, 'WALL_PERF article title owner does not match ci username (' . $userName .
+                ' vs ' . $parts[0] . ') for ' . $this->getId() . ' (title is ' . $titleText. ')', true );
+        }
+        // mech: when the wall message is not in the db yet, the getWallTitle will return 'Empty' as is cannot find
+        // the row in comments_index. After I'll make sure that call to getWallTitle is not needed, the check below
+        // can be safely removed
+        if ( $userName == 'Empty' && !empty( $parts[0] ) ) {
+            $userName = $parts[0];
+        }
 
 		$wall_owner = User::newFromName( $userName, false );
 
