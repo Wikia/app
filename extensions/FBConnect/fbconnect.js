@@ -78,6 +78,8 @@ window.onFBloaded = function() {
  * jQuery code to be run when the DOM is ready to be manhandled.
  */
 $(function() {
+	var wpCancelClicked = false;
+
 	// Add a pretty logo to Facebook links
 	$('#pt-fbconnect,#pt-fblink,#pt-fbconvert').addClass('mw-fblink');
 
@@ -90,6 +92,26 @@ $(function() {
 			FB.logout(function(response) {
 				window.location = window.fbLogoutURL;
 			});
+		}
+	});
+
+
+	$('#wpCancel').click(function(){
+		if (!wpCancelClicked) {
+			wpCancelClicked = true;
+			window.FB.getLoginStatus(function(response){
+				if (response.status === 'connected' ) {
+					window.FB.logout(function(){
+						$('#wpCancel').click();
+					});
+				} else {
+					$('#wpCancel').click();
+				}
+			});
+
+			return false;
+		} else {
+			return true;
 		}
 	});
 
