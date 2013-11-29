@@ -114,7 +114,7 @@
 			trackingMethod: 'ad'
 		});
 		window.adslots2 = window.adslots2 || [];
-		adEngine.run(adConfig, window.adslots2);
+		adEngine.run(adConfig, window.adslots2, 'queue.early');
 	});
 
 	// DART API for Liftium
@@ -157,7 +157,7 @@
 				ga_label: 'adengine2 late',
 				trackingMethod: 'ad'
 			});
-			adEngine.run(adConfigForLateAds, queueForLateAds);
+			adEngine.run(adConfigForLateAds, queueForLateAds, 'queue.late');
 		} else {
 			log('ERROR, AdEngine_loadLateAds called before AdEngine_setLateConfig!', 1, module);
 			tracker.track({
