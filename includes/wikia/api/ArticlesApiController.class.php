@@ -327,6 +327,7 @@ class ArticlesApiController extends WikiaApiController {
 
 		$key = self::getCacheKey( implode( '-', $ns ), self::NEW_ARTICLES_CACHE_ID );
 		$results = $this->wg->Memc->get( $key );
+		$results = false;
 		if ( $results === false ) {
 			$searchConfig = new Wikia\Search\Config;
 			$searchConfig->setQuery( '*' )
@@ -343,15 +344,13 @@ class ArticlesApiController extends WikiaApiController {
 				[ 'pageid' => 'id', 'ns', 'title_en' => 'title', 'html_en' => 'abstract' ],
 				false, 'pageid' );
 
-			$articles = [];
 			foreach ( $results as &$item ) {
 				$title = Title::newFromText( $item[ 'title' ] );
 				$item[ 'title' ] = $title->getText();
 				$item[ 'url' ] = $title->getLocalURL();
-				$articles[] = $item['id'];
 			}
 
-			$thumbs = $this->getArticlesThumbnails( $articles );
+			$thumbs = $this->getArticlesThumbnails( array_keys($results) );
 			foreach ( $results as &$item ) {
 				if ( isset( $thumbs[ $item[ 'id' ] ] ) ) {
 					$item[ 'thumbnail' ] = $thumbs[ $item[ 'id' ] ];
