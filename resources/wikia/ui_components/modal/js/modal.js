@@ -210,7 +210,7 @@ define( 'wikia.ui.modal', [
 			'close': [
 				function() {
 					that.trigger( 'beforeClose').then( $.proxy( function() {
-                        that.$blackout.remove();
+						that.$blackout.remove();
 						unblockPageScrolling();
 					}, that ) );
 				}
