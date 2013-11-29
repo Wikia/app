@@ -14,7 +14,8 @@ class ArticlesApiController extends WikiaApiController {
 	const ITEMS_PER_BATCH = 25;
 	const TOP_WIKIS_FOR_HUB = 10;
 	const LANGUAGES_LIMIT = 10;
-	const MAX_NEW_ARTICLES_LIMIT = 20;
+	const MAX_NEW_ARTICLES_LIMIT = 100;
+	const DEFAULT_NEW_ARTICLES_LIMIT = 20;
 
 	const PARAMETER_ARTICLES = 'ids';
 	const PARAMETER_TITLES = 'titles';
@@ -26,6 +27,7 @@ class ArticlesApiController extends WikiaApiController {
 	const PARAMETER_HEIGHT = 'height';
 	const PARAMETER_EXPAND = 'expand';
 	const PARAMETER_LANGUAGES = 'lang';
+	const PARAMETER_LIMIT = 'limit';
 
 	const DEFAULT_WIDTH = 200;
 	const DEFAULT_HEIGHT = 200;
@@ -304,6 +306,16 @@ class ArticlesApiController extends WikiaApiController {
 		wfProfileIn( __METHOD__ );
 
 		$ns = $this->request->getArray( self::PARAMETER_NAMESPACES );
+		$limit = $this->request->getInt(self::PARAMETER_LIMIT);
+
+		if ( $limit < 1 ) {
+			$limit = self::DEFAULT_NEW_ARTICLES_LIMIT;
+		}
+
+		if ( $limit > self::MAX_NEW_ARTICLES_LIMIT ) {
+			$limit = self::MAX_NEW_ARTICLES_LIMIT;
+		}
+
 		if ( empty( $ns ) ) {
 			$ns = [ self::DEFAULT_SEARCH_NAMESPACE ];
 		}
@@ -325,12 +337,12 @@ class ArticlesApiController extends WikiaApiController {
 			unset( $tmpNS );
 		}
 
-		$key = self::getCacheKey( implode( '-', $ns ), self::NEW_ARTICLES_CACHE_ID );
+		$key = self::getCacheKey( self::NEW_ARTICLES_CACHE_ID, '', [ implode( '-', $ns ), $limit ] );
 		$results = $this->wg->Memc->get( $key );
-		if ( $results === null ) {
+		if ( $results === false ) {
 			$searchConfig = new Wikia\Search\Config;
 			$searchConfig->setQuery( '*' )
-				->setLimit( self::MAX_NEW_ARTICLES_LIMIT )
+				->setLimit( $limit )
 				->setRank( 'default' )
 				->setOnWiki( true )
 				//->setCommercialUse(  false)
