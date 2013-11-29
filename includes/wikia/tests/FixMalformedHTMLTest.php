@@ -7,11 +7,11 @@ class FixMalformedHTMLTest extends WikiaBaseTest {
 	 * we use at Wikia.
 	 *
 	 * @param string $testCaseName description of the testcase data
-	 * @param string $text valid html snippet
+	 * @param string $html valid html snippet
 	 * @dataProvider validWikiaHTMLDataProvider
 	 */
-	function testValidHTMLIsNotChanged($testCaseName, $text) {
-		$this->assertEquals( $text, str_replace( "\n", "", wfFixMalformedHTML( $text ) ), $testCaseName );
+	function testValidHTMLIsNotChanged($testCaseName, $html) {
+		$this->assertEquals( $html, str_replace( "\n", "", wfFixMalformedHTML( $html ) ), $testCaseName );
 	}
 
 	function validWikiaHTMLDataProvider() {
@@ -40,10 +40,16 @@ class FixMalformedHTMLTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * Checking if wfFixMalformedHTML can deal with unclosed tags, so we don't break
+	 * the whole page inserting an HTML snippet (like an article comment)
+	 *
+	 * @param string $testCaseName description of the testcase data
+	 * @param string $html HTML snippet with some unmatched tags
+	 * @param string $expected fixed HTML markup we're expecting to get
 	 * @dataProvider malformedHTMLDataProvider
 	 */
-	function testMalformedHTML($testCaseName, $text, $expected) {
-		$this->assertEquals( $expected, str_replace( "\n", "", wfFixMalformedHTML( $text ) ), $testCaseName );
+	function testMalformedHTML($testCaseName, $html, $expected) {
+		$this->assertEquals( $expected, str_replace( "\n", "", wfFixMalformedHTML( $html ) ), $testCaseName );
 
 	}
 
