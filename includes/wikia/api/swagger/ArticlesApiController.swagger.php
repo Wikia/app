@@ -328,6 +328,12 @@ use Swagger\Annotations as SWG;
  * 		description="A snippet of text from the beginning of the article"
  * 	)
  * 	@SWG\Property(
+ * 		name="creation_date",
+ * 		type="string",
+ * 		required="true",
+ * 		description="Date of the first revision of the article"
+ * 	)
+ * 	@SWG\Property(
  * 		name="thumbnail",
  * 		type="string",
  * 		description="The absolute URL of the thumbnail"
