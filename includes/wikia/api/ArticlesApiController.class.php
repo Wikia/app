@@ -313,7 +313,7 @@ class ArticlesApiController extends WikiaApiController {
 		}
 
 		if ( $limit > self::MAX_NEW_ARTICLES_LIMIT ) {
-			throw new LimitExceededApiException( self::PARAMETER_LIMIT , self::MAX_NEW_ARTICLES_LIMIT);
+			throw new LimitExceededApiException( self::PARAMETER_LIMIT , self::MAX_NEW_ARTICLES_LIMIT );
 		}
 
 		if ( empty( $ns ) ) {
