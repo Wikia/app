@@ -320,9 +320,9 @@ class ArticlesApiController extends WikiaApiController {
 			$ns = [ self::DEFAULT_SEARCH_NAMESPACE ];
 		}
 		else {
-			$ns = self::processNamespaces($ns, __METHOD__);
-			sort($ns);
-			$ns = array_unique($ns);
+			$ns = self::processNamespaces( $ns, __METHOD__ );
+			sort( $ns );
+			$ns = array_unique( $ns );
 		}
 
 		$key = self::getCacheKey( self::NEW_ARTICLES_CACHE_ID, '', [ implode( '-', $ns ), $limit ] );
