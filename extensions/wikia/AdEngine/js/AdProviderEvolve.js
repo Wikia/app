@@ -2,6 +2,7 @@
 /*jshint maxparams: false*/
 /*jshint maxlen:false*/
 /*jshint quotmark:false*/
+/*global setTimeout*/
 
 var AdProviderEvolve = function (adLogicPageLevelParamsLegacy, scriptWriter, adTracker, log, window, document, Krux, evolveHelper, slotTweaker) {
 	'use strict';
@@ -171,7 +172,9 @@ var AdProviderEvolve = function (adLogicPageLevelParamsLegacy, scriptWriter, adT
 		hoppedSlots[slotname] = true;
 		slotTrackers[slotname].hop(method);
 
-		window.adslots2.push([slotname, undef, 'Liftium']);
+		setTimeout(function () {
+			window.adslots2.push([slotname, undef, 'Liftium']);
+		}, 0);
 	}
 
 	function fillInSlot(slotname, pSuccess, pHop) {
@@ -219,9 +222,10 @@ var AdProviderEvolve = function (adLogicPageLevelParamsLegacy, scriptWriter, adT
 					slotTweaker.addDefaultHeight(slotname);
 					log('Evolve did not hop, but returned 1x1 ad instead for slot ' + slotname, 1, 'AdProviderEvolve');
 					hop(slotname, '1x1');
+					return pHop({method: '1x1'});
 				}
 
-				pHop();
+				pHop({method: 'evolve_hop'});
 			});
 		}
 	}
