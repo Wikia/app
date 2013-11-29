@@ -19,14 +19,14 @@ var AdEngine2 = function (log, LazyQueue, slotTracker) {
 				provider = adConfig.getProvider(slot),
 				aSlotTracker = slotTracker(provider.name, slotname, queueName);
 
-			function success(info) {
-				log(['success', slotname, info], 'debug', logGroup);
+			function success(extra) {
+				log(['success', slotname, extra], 'debug', logGroup);
 				aSlotTracker.track('success');
 			}
 
-			function hop() {
-				log(['hop', slotname], 'debug', logGroup);
-				aSlotTracker.track('hop');
+			function hop(extra) {
+				log(['hop', slotname, extra], 'debug', logGroup);
+				aSlotTracker.track('hop', extra);
 			}
 
 			log('calling ' + provider.name + '.fillInSlot for ' + slotname, 'debug', logGroup);
