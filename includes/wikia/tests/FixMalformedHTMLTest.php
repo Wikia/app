@@ -33,7 +33,7 @@ class FixMalformedHTMLTest extends WikiaBaseTest {
 				'<figure class="thumb tright thumbinner" style="width:182px;"><a href="http://static.mech.wikia-dev.com/800wi.gif" class="image"><img alt="800wi" src="http://static.mech.wikia-dev.com/800wi.gif" width="180" height="176" class="thumbimage"></a><a href="/wiki/File:800wi.gif" class="internal sprite details magnify" title="Enlarge"></a><figcaption class="thumbcaption"><div class="picture-attribution"><img src="http://static.mech.wikia-dev.com/20px-4807210.png" width="16" class="avatar">Added by <a href="/wiki/User:QATest">QATest</a></div></figcaption></figure>'
 			],
 			[
-				'video makrup',
+				'video markup',
 				'<div class="floatright"><a href="/wiki/File:Surprise_BJJ_attack_-_submission_from_underneath_side_control-0" itemprop="video" itemscope="" itemtype="http://schema.org/VideoObject" class="video image lightbox"><div class="Wikia-video-play-button" style="line-height:218px;width:335px;"><img class="sprite play " src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D"></div><img alt="" src="http://static.mech.wikia-dev.com/Surprise_BJJ_attack.jpg" width="335" height="188" itemprop="thumbnail" class="Wikia-video-thumb" style="border-top: 15px solid black; border-bottom: 15px solid black;"><span class="info-overlay" style="width: 335px;"><span class="info-overlay-title" style="max-width:275px;" itemprop="name">Surprise BJJ attack - submission from underneath side control-0</span><meta itemprop="duration" content="PT02M40S"><span class="info-overlay-duration" itemprop="duration">(02:40)</span><br><span class="info-overlay-views">0 views</span><meta itemprop="interactionCount" content="UserPlays:0"></span></a></div>'
 			],
 		];
