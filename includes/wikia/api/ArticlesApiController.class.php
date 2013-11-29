@@ -315,7 +315,6 @@ class ArticlesApiController extends WikiaApiController {
 
 		$key = self::getCacheKey( implode( '-', $ns ), self::NEW_ARTICLES_CACHE_ID );
 		$results = $this->wg->Memc->get( $key );
-		$results = false;
 		if ( $results === false ) {
 			$searchConfig = new Wikia\Search\Config;
 			$searchConfig->setQuery( '*' )
