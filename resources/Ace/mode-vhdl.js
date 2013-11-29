@@ -40,7 +40,7 @@ var Mode = function() {
     this.HighlightRules = VHDLHighlightRules;
 };
 oop.inherits(Mode, TextMode);
- 
+
 (function() {
 
     this.lineCommentStart = "--";
