@@ -555,6 +555,19 @@ class Article extends Page {
 					# This will set $this->mRevision if needed
 					$this->fetchContent();
 
+					// Wikia change - begin
+					// @author macbre
+					// return status different than HTTP 200 when revision is missing (BAC-630)
+					if ( !$this->mRevision instanceof Revision ) {
+						global $wgEnableParserCache;
+						wfDebug( __METHOD__ . ": no revision found - returning 404\n" );
+
+						$wgOut->setStatusCode( 404 );
+						$useParserCache = false;
+						$wgEnableParserCache = false;
+					}
+					// Wikia change - end
+
 					# Are we looking at an old revision
 					if ( $oldid && $this->mRevision ) {
 						$this->setOldSubtitle( $oldid );
