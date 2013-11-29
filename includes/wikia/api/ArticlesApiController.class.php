@@ -308,7 +308,7 @@ class ArticlesApiController extends WikiaApiController {
 			$ns = [ self::DEFAULT_SEARCH_NAMESPACE ];
 		}
 		else {
-			$ns = self::processNamespaces($ns, __METHOD__);
+			$ns = self::processNamespaces( $ns, __METHOD__ );
 			sort($ns);
 			$ns = array_unique($ns);
 		}
