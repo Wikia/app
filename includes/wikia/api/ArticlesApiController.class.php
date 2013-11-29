@@ -341,8 +341,8 @@ class ArticlesApiController extends WikiaApiController {
 				->setRequestedFields( [ 'html_en' ] );
 
 			$results = ( new Factory )->getFromConfig( $searchConfig )->searchAsApi(
-				[ 'pageid', 'ns', 'title_en' => 'title', 'html_en', 'created', 'id' ],
-				false );
+				[ 'pageid' => 'id', 'ns', 'title_en' => 'title', 'html_en' => 'abstract' ],
+				false, 'pageid' );
 
 			foreach ( $results as &$item ) {
 				$title = Title::newFromText( $item[ 'title' ] );
