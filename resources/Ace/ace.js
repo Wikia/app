@@ -14992,7 +14992,7 @@ exports.ScrollBarV = ScrollBarV;
 exports.ScrollBarH = ScrollBarH;
 });
 
-define('ace/layer/mobilescroll', ['require', 'exports', 'module' , 'ace/lib/dom'],function(require, exports, module) {
+ace.define('ace/layer/mobilescroll', ['require', 'exports', 'module' , 'ace/lib/dom'],function(require, exports, module) {
 "use strict";
 
 var dom = require("../lib/dom");
