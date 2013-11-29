@@ -1,12 +1,12 @@
 require( [ 'modal', 'wikia.loader', 'wikia.mustache', 'jquery', 'toast', 'sloth', 'lazyload', 'JSMessages', 'wikia.window', 'tables' ],
-	function ( modal, loader, mustache, $, toast, sloth, lazyload, msg, window, tables ) {
+function ( modal, loader, mustache, $, toast, sloth, lazyload, msg, window, tables ) {
 	'use strict';
 
-    var markup = $( '#previewTemplate' ).remove().children(),
-        $previewButton = $( '#wkPreview' ),
-        summaryText = '',
+	var markup = $( '#previewTemplate' ).remove().children(),
+		$previewButton = $( '#wkPreview' ),
+		summaryText = '',
 		textBox = document.getElementById( 'wpTextbox1' ),
-		form = document.getElementsByTagName('form')[0],
+		form = document.getElementsByTagName( 'form' )[0],
 		summaryForm = form.querySelector( '#wpSummary' ),
 		newArticleMsg = msg( 'wikiamobileeditor-on-new' ),
 		wrongMsg = msg( 'wikiamobileeditor-wrong' ),
@@ -15,14 +15,14 @@ require( [ 'modal', 'wikia.loader', 'wikia.mustache', 'jquery', 'toast', 'sloth'
 
 	//opens modal with preview container markup
 	function show () {
-		modal.open({
+		modal.open( {
 			content: '',
 			toolbar: markup[0].outerHTML,
 			caption: markup[1].outerHTML,
 			stopHiding: true,
 			scrollable: true,
 			classes: 'preview',
-			onOpen: function( content ){
+			onOpen: function ( content ) {
 				modal.addClass( 'loading' );
 
 				var summaryInput = document.getElementById( 'wkSummary' );
@@ -32,7 +32,7 @@ require( [ 'modal', 'wikia.loader', 'wikia.mustache', 'jquery', 'toast', 'sloth'
 					summaryInput.value = summaryText;
 				}
 
-				$( '#wkContinueEditing' ).on( 'click', function(){
+				$( '#wkContinueEditing' ).on( 'click', function () {
 					summaryText = summaryInput.value;
 					modal.close();
 				} );
@@ -41,19 +41,19 @@ require( [ 'modal', 'wikia.loader', 'wikia.mustache', 'jquery', 'toast', 'sloth'
 
 				render( content );
 			}
-		});
+		} );
 	}
 
-	function isOnline(){
+	function isOnline () {
 		return hasOnline ? window.navigator.onLine : true;
 	}
 
-    //displays loader and preview after fetching it from parser
-    function render( content ){
-        $.ajax({
-            url: 'index.php',
-            type: 'post',
-            data: {
+	//displays loader and preview after fetching it from parser
+	function render ( content ) {
+		$.ajax( {
+			url: 'index.php',
+			type: 'post',
+			data: {
 				action: 'ajax',
 				rs: 'EditPageLayoutAjax',
 				skin: 'wikiamobile',
@@ -62,16 +62,16 @@ require( [ 'modal', 'wikia.loader', 'wikia.mustache', 'jquery', 'toast', 'sloth'
 				method: 'preview',
 				content: textBox.value
 			}
-        } ).done( function( resp ) {
+		} ).done( function ( resp ) {
 			if ( resp && resp.html ) {
 				content.innerHTML = resp.html;
 
 				var scroller = new window.IScroll(
 					'#wkMdlCnt', {
-					click: false,
-					scrollY: true,
-					scrollX: false
-				});
+						click: false,
+						scrollY: true,
+						scrollX: false
+					} );
 
 				tables.process( $( content ).find( 'table:not(.toc):not(.infobox)' ) );
 
@@ -81,7 +81,7 @@ require( [ 'modal', 'wikia.loader', 'wikia.mustache', 'jquery', 'toast', 'sloth'
 					callback: lazyload
 				} );
 
-				scroller.on( 'scrollEnd', function(){
+				scroller.on( 'scrollEnd', function () {
 					//using IScroll and sloth is tricky so we need to help sloth
 					window.scrollY = -this.y;
 
@@ -93,14 +93,14 @@ require( [ 'modal', 'wikia.loader', 'wikia.mustache', 'jquery', 'toast', 'sloth'
 			} else {
 				toast.show( wrongMsg );
 			}
-		} ).fail(function(){
+		} ).fail(function () {
 			toast.show( wrongMsg + ( isOnline() ? '' : ' ' + internetMsg ), { error: true } );
-		}).always( function() {
+		} ).always( function () {
 			modal.removeClass( 'loading' );
-		});
-    }
+		} );
+	}
 
-    function publish(){
+	function publish () {
 		//currently wikiamobile displayes this in a different place so we need to copy the value of summary
 		summaryForm.value = document.getElementById( 'wkSummary' ).value;
 
@@ -116,7 +116,7 @@ require( [ 'modal', 'wikia.loader', 'wikia.mustache', 'jquery', 'toast', 'sloth'
 		toast.show( newArticleMsg );
 	}
 
-	$previewButton.on( 'click', function( event ){
+	$previewButton.on( 'click', function ( event ) {
 		event.preventDefault();
 
 		show();

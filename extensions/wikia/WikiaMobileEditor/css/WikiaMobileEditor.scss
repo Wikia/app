@@ -1,4 +1,10 @@
-@import '../../WikiaMobile/css/tables.scss';
+@import '../../WikiaMobile/css/variables';
+@import '../../WikiaMobile/css/tables';
+
+$editor-blue: #0C4C88;
+$editor-grey: #C0C0C0;
+$color: #333;
+$summary-text: #999;
 
 .wkButn {
 	-webkit-appearance: button;
@@ -7,19 +13,19 @@
 	padding: 12px 20px;
 
 	height: 36px;
-	color: #fff;
+	color: $page-background-color;
 
-    line-height:13px;
+	line-height: 13px;
 	font-size: 13px;
 	border-radius: 2px;
 	border: none;
 
 	&.blue {
-		background-color: #0c4c88;
+		background-color: $editor-blue;
 	}
 
 	&.gray, &[disabled] {
-		background-color: #c0c0c0;
+		background-color: $editor-grey;
 	}
 }
 
@@ -27,37 +33,32 @@
 	padding: 18px;
 }
 
-#wpTextbox1 {
+textarea {
 	margin-top: 18px;
 
 	width: 100%;
 	padding: 10px;
 
 	border-radius: 2px;
-	border-color: #c0c0c0;
+	border-color: $editor-grey;
 
 	font-family: inherit;
-	font-size: 13px;
-	color: #333;
+	font-size: 1rem;
+	color: $color;
 }
 
 #wkMainCnt {
 	padding-top: 0;
-	border-top: 1px solid #e3e3e3;
-
-	&:after {
-		content: '';
-		display: block;
-	}
+	border-top: 1px solid #E3E3E3;
 }
 
 #wkMdlCnt {
-	background-color: #fff;
-	color:#333333;
+	background-color: #FFF;
+	color: $color;
 	height: 100%;
 	margin: 0;
 	width: 100%;
-	
+
 	#mw-content-text {
 		padding: 40px 6.25% 145px 6.25%;
 		position: absolute;
@@ -74,14 +75,6 @@
 	}
 }
 
-#wkPreviewActions {
-	position: fixed;
-
-	p {
-		font-size: 12px;
-	}
-}
-
 #wkSummary {
 	display: inline-block;
 
@@ -90,94 +83,108 @@
 	margin-bottom: 14px;
 	padding: 10px;
 
-	border: 1px solid #999999;
+	border: 1px solid $summary-text;
 	border-radius: 2px;
 
 	font-size: 13px;
-	color: #999999;
+	color: $summary-text;
 }
 
-#wkMdlClo {
-	display: none;
-}
+$bar-color: #F0F0F0;
+$topbar-text-color: #606060;
 
 #wkMdlTB {
 	height: 22px;
 	margin: 0;
 	vertical-align: middle;
-	line-height:  12px;
+	line-height: 12px;
 
-	background-color: #f0f0f0;
+	background-color: $bar-color;
 	background-image: url('/extensions/wikia/WikiaMobileEditor/images/preview_stripe.png'); /* base64 */
 	background-repeat: repeat-x;
 	background-position: 0 50%;
 
-	color: #606060;
+	color: $topbar-text-color;
 	font-size: 12px;
-	font-weight:  bold;
-	text-align:center;
+	font-weight: bold;
+	text-align: center;
 
 	span {
 		padding: 0 8px;
-		background-color: #f0f0f0;
+		background-color: $bar-color;
 		line-height: 24px;
 	}
 
 	.loading & {
 		-webkit-animation: loading .5s infinite linear forwards;
 		-moz-animation: loading .5s infinite linear forwards;
+		-ms-animation: loading .5s infinite linear forwards;
+		-o-animation: loading .5s infinite linear forwards;
 		animation: loading .5s infinite linear forwards;
 	}
 }
 
 @-webkit-keyframes loading {
-	0% {
-		background-position-x: 0;
-	}
 	100% {
 		background-position-x: 16px;
 	}
 }
 
 @-moz-keyframes loading {
-	0% {
-		background-position-x: 0;
+	100% {
+		background-position-x: 16px;
 	}
+}
+
+@-ms-keyframes loading {
+	100% {
+		background-position-x: 16px;
+	}
+}
+
+@-o-keyframes loading {
 	100% {
 		background-position-x: 16px;
 	}
 }
 
 @keyframes loading {
-	0% {
-		background-position-x: 0;
-	}
 	100% {
 		background-position-x: 16px;
 	}
 }
 
 .action-box {
-	position: fixed;
-	left: 0px;
-	bottom: 0px;
-
 	padding: 18px;
 	width: 100%;
 	text-align: center;
 
-	background-color: #f0f0f0;
+	background-color: $bar-color;
 	font-size: 13px;
-	color: #333333;
+	color: $color;
+
+	&.fixed {
+		position: fixed;
+		left: 0;
+		bottom: 0;
+	}
 }
 
 .license-brief {
 	margin-bottom: 0px;
 
-    line-height: 12px;
-    padding-top: 14px;
+	line-height: 12px;
+	padding-top: 14px;
 
 	font-size: 12px;
+}
+
+#wkMdlClo {
+	display: none;
+}
+
+#wkMdlFtr {
+	padding: 0;
 }
 
 #wkMobileCancel {
@@ -187,40 +194,37 @@
 }
 
 @media (min-width: 480px) {
-    #wkMdlCnt #mw-content-text{
-        padding-bottom:100px;
-    }
-	
+	#wkMdlCnt #mw-content-text {
+		padding-bottom: 100px;
+	}
+
 	#wkSummary {
 		margin-bottom: 0;
 		min-width: 210px;
 		width: 45%;
 	}
 
-    #wkSave{
-        margin-right: 0;
-    }
-
-	#wkPreviewActions {
-		text-align: right;
-        float:right;
-        box-pack: right;
-        -webkit-box-pack: right;
-        box-align: right;
-        -webkit-box-align: right;
+	#wkSave {
+		margin-right: 0;
 	}
 
-    .license-brief {
-        display: block;
-        width: 100%;
-    }
+	.license-brief {
+		display: block;
+		width: 100%;
+	}
 }
 
 #editform {
 	margin-bottom: 80px;
 }
 
-//Hiding Unnecesarry elements to make mobile edit as clean as possible
-#wkMainCntHdr div, .mw-newarticletextanon, .mw-newarticletext, #mw-anon-edit-warning, .editOptions, #editpage-copywarn, #previewTemplate {
+//Hiding unnecesarry elements to make mobile edit as clean as possible
+#wkMainCntHdr div,
+.mw-newarticletextanon,
+.mw-newarticletext,
+#mw-anon-edit-warning,
+.editOptions,
+#editpage-copywarn,
+#previewTemplate {
 	display: none;
 }

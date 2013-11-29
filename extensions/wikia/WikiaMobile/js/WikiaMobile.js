@@ -4,7 +4,7 @@ require(['wikia.querystring', require.optional('wikia.cookies'), 'track', 'wikia
 
 		var d = window.document;
 
-		if ( window.wgUserName ) {
+		if ( window.wgUserName && window.wgAction === 'view' ) {
 			$( 'body' ).addClass( 'edit-enabled' );
 		}
 

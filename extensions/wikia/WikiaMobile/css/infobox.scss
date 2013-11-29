@@ -8,6 +8,7 @@ table[class*="infobox"] {
 	margin: 20px auto;
 	max-width: 100%;
 	width: 100%;
+	word-break: break-word;
 
 	figure {
 		margin: 0 auto;
@@ -26,10 +27,16 @@ table[class*="infobox"] {
 		text-align: left;
 	}
 
+	//There is already enough spacing
+	ul, ol {
+		padding: 0;
+	}
+
 	th, td {
 		padding: 5px;
 		line-height: 1.25rem;
 		vertical-align: top;
+		width: 50%;
 
 		&[colspan='2']{
 			text-align: center;

@@ -170,6 +170,7 @@ if ( empty( $wgWikiaMobileIncludeJSGlobals ) ) {
 			'wgPageName',
 			'wgTitle',
 			'wgRevisionId',
+			'wgAction',
 
 			//user
 			'wgUserName',
