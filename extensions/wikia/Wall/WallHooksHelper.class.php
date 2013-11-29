@@ -15,8 +15,8 @@ class WallHooksHelper {
 	static public function onUserIsBlockedFrom($user, $title, &$blocked, &$allowUsertalk) {
 
 		if ( !$user->mHideName && $allowUsertalk && $title->getNamespace() == NS_USER_WALL_MESSAGE ) {
-            $wm = new WallMessage( $title );
-            $owner = $wm->getWallOwner();
+			$wm = new WallMessage( $title );
+			$owner = $wm->getWallOwner();
 			if ( $owner->getName() === $user->getName() ) {
 				$blocked = false;
 				wfDebug( __METHOD__ . ": self-user wall page, ignoring any blocks\n" );
@@ -625,8 +625,8 @@ class WallHooksHelper {
 		}
 
 		if( $title->getNamespace() === NS_USER_WALL_MESSAGE ) {
-            $wm = new WallMessage( $title );
-            $owner = $wm->getWallOwner();
+			$wm = new WallMessage( $title );
+			$owner = $wm->getWallOwner();
 
 			$title = Title::newFromText($owner->getName(), NS_USER_WALL);
 			$app->wg->Out->redirect($title->getFullUrl(), 301);
@@ -1423,8 +1423,8 @@ class WallHooksHelper {
 		if( $title->getNamespace() == NS_USER_WALL_MESSAGE_GREETING ) {
 			$result = array();
 
-            $wm = new WallMessage( $title );
-            $owner = $wm->getWallOwner();
+			$wm = new WallMessage( $title );
+			$owner = $wm->getWallOwner();
 
 			if( $user->isAllowed('walledit') || $user->getName() == $owner->getName() ) {
 				$result = null;
