@@ -58,6 +58,7 @@ function ( modal, loader, mustache, $, toast, sloth, lazyload, msg, window, tabl
 				rs: 'EditPageLayoutAjax',
 				skin: 'wikiamobile',
 				type: 'partial',
+				title: window.wgTitle,
 				page: 'SpecialCustomEditPage',
 				method: 'preview',
 				content: textBox.value

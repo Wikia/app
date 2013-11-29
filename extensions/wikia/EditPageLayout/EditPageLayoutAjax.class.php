@@ -29,6 +29,9 @@ class EditPageLayoutAjax {
 					if ( $method == 'preview' ) {
 						list($html, $catbox, $interlanglinks) = $service->getPreview($wikitext);
 
+						// allow extensions to modify preview (BugId:8354) - this hook should only be run on article's content
+						wfRunHooks('OutputPageBeforeHTML', array(&$wgOut, &$html));
+
 						if ( F::app()->checkSkin( 'wikiamobile' ) ) {
 							if ( $type === 'full' ) {
 								$res['html'] = F::app()->renderView( 'WikiaMobileService', 'preview', [ 'content' => $html, 'section' => $section ] );
@@ -36,9 +39,6 @@ class EditPageLayoutAjax {
 								$res['html'] = $html;
 							}
 						} else {
-							// allow extensions to modify preview (BugId:8354) - this hook should only be run on article's content
-							wfRunHooks('OutputPageBeforeHTML', array(&$wgOut, &$html));
-
 							// add page title when not in section edit mode
 							if ($section === '') {
 								$html = '<h1 class="pagetitle">' . $wgTitle->getPrefixedText() .  '</h1>' . $html;
