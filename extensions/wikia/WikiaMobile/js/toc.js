@@ -9,7 +9,7 @@ function ( sections, window, $, mustache, toc ) {
 		active = 'active',
 		$document = $( window.document ),
 		$anchors,
-		sideMenuCapable = true || ( Features.positionfixed && Features.overflow ),
+		sideMenuCapable = ( Features.positionfixed && Features.overflow ),
 		$ol,
 		inited,
 		$toc = $( '#wkTOC' ),
