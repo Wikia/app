@@ -308,21 +308,9 @@ class ArticlesApiController extends WikiaApiController {
 			$ns = [ self::DEFAULT_SEARCH_NAMESPACE ];
 		}
 		else {
-			/*
-			 * cast all namespaces to integer,
-			 * remove duplicates and sort
-			 * to have good cache
-			 */
-			$tmpNS = [ ];
-			foreach ( $ns as $k => &$v ) {
-				$v = (int)$v;
-				if ( $v >= NS_MAIN && $v <= NS_CATEGORY_TALK ) {
-					$tmpNS[ $v ] = true;
-				}
-			}
-			ksort( $tmpNS );
-			$ns = array_keys( $tmpNS );
-			unset( $tmpNS );
+			$ns = self::processNamespaces($ns, __METHOD__);
+			sort($ns);
+			$ns = array_unique($ns);
 		}
 
 		$key = self::getCacheKey( implode( '-', $ns ), self::NEW_ARTICLES_CACHE_ID );
@@ -333,7 +321,6 @@ class ArticlesApiController extends WikiaApiController {
 				->setLimit( self::MAX_NEW_ARTICLES_LIMIT )
 				->setRank( 'default' )
 				->setOnWiki( true )
-				//->setCommercialUse(  false)
 				->setWikiId( $this->wg->wgCityId )
 				->setNamespaces( $ns )
 				->setRank( \Wikia\Search\Config::RANK_NEWEST_PAGE_ID )
