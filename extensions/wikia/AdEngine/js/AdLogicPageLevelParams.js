@@ -1,3 +1,4 @@
+/*jshint camelcase:false*/
 var AdLogicPageLevelParams = function (
 	log,
 	window,
