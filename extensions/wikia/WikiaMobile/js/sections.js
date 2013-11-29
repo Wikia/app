@@ -26,7 +26,7 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 			ret;
 
 		if ( h ) {
-			window.scrollTo( 0, $(h).offset().top - offset - 1);
+			window.scrollTo( 0, $(h).offset().top - offset + 1);
 			ret = true;
 		}
 
