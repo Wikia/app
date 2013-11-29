@@ -3,6 +3,11 @@
 class FixMalformedHTMLTest extends WikiaBaseTest {
 
 	/**
+	 * Testing if wfFixMalformedHTML does not modify valid HTML snippet
+	 * we use at Wikia.
+	 *
+	 * @param string $testCaseName description of the testcase data
+	 * @param string $text valid html snippet
 	 * @dataProvider validWikiaHTMLDataProvider
 	 */
 	function testValidHTMLIsNotChanged($testCaseName, $text) {
