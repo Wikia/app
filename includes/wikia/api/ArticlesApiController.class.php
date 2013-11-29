@@ -309,11 +309,11 @@ class ArticlesApiController extends WikiaApiController {
 		$limit = $this->request->getInt(self::PARAMETER_LIMIT);
 
 		if ( $limit < 1 ) {
-			$limit = self::DEFAULT_NEW_ARTICLES_LIMIT;
+			throw new InvalidParameterApiException( self::PARAMETER_LIMIT );
 		}
 
 		if ( $limit > self::MAX_NEW_ARTICLES_LIMIT ) {
-			$limit = self::MAX_NEW_ARTICLES_LIMIT;
+			throw new LimitExceededApiException( self::PARAMETER_LIMIT , self::MAX_NEW_ARTICLES_LIMIT);
 		}
 
 		if ( empty( $ns ) ) {
