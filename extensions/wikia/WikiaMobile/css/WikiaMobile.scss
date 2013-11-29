@@ -44,16 +44,6 @@
 	margin-bottom: 25px;
 	position: relative;
 
-	.edit-enabled & {
-		h1 {
-			margin-right: 40px;
-		}
-	}
-
-	.editsection {
-		background-position-y: 10px;
-	}
-
 	h1{
 		margin: 0;
 
@@ -165,18 +155,5 @@ blockquote, .quote {
 }
 
 .editsection {
-	background-image: url(/extensions/wikia/WikiaMobileEditor/images/edit_button.png);
-	background-size: 20px;
-	background-repeat: no-repeat;
-	background-position: center 3px;
 	display: none;
-	height: 100%;
-	position: absolute;
-	right: 0;
-	top: 0;
-	width: 20px;
-
-	.edit-enabled & {
-		display: inline-block;
-	}
 }

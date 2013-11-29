@@ -444,6 +444,14 @@ $config['wikiamobile_editor_js'] = array(
 	)
 );
 
+$config['wikiamobile_editor_view_scss'] = array(
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => 'wikiamobile',
+	'assets' => array(
+		'//extensions/wikia/WikiaMobileEditor/css/WikiaMobileEditor.edit.scss'
+	)
+);
+
 $config['wikiamobile_404_scss'] = array(
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => 'wikiamobile',
