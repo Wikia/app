@@ -42,6 +42,7 @@ class OasisController extends WikiaController {
 		$this->ivw = null;
 		$this->amazonDirectTargetedBuy = null;
 		$this->dynamicYield = null;
+		$this->ivw2 = null;
 
 		wfProfileOut(__METHOD__);
 	}
@@ -117,6 +118,7 @@ class OasisController extends WikiaController {
 
 		// TODO: move to CreateNewWiki extension - this code should use a hook
 		$wikiWelcome = $wgRequest->getVal('wiki-welcome');
+		$wikiWelcome = true;
 
 		if(!empty($wikiWelcome)) {
 			$wgOut->addStyle( $this->assetsManager->getSassCommonURL( 'extensions/wikia/CreateNewWiki/css/WikiWelcome.scss' ) );
@@ -266,6 +268,7 @@ class OasisController extends WikiaController {
 			$this->ivw = AnalyticsEngine::track('IVW', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->amazonDirectTargetedBuy = AnalyticsEngine::track('AmazonDirectTargetedBuy', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->dynamicYield = AnalyticsEngine::track('DynamicYield', AnalyticsEngine::EVENT_PAGEVIEW);
+			$this->ivw2 = AnalyticsEngine::track('IVW2', AnalyticsEngine::EVENT_PAGEVIEW);
 		}
 
 		if (!empty($wgEnableAdminDashboardExt) && AdminDashboardLogic::displayAdminDashboard($this->app, $wgTitle)) {
