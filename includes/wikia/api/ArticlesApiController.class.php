@@ -327,7 +327,7 @@ class ArticlesApiController extends WikiaApiController {
 
 		$key = self::getCacheKey( implode( '-', $ns ), self::NEW_ARTICLES_CACHE_ID );
 		$results = $this->wg->Memc->get( $key );
-		if ( $results === null ) {
+		if ( $results === false ) {
 			$searchConfig = new Wikia\Search\Config;
 			$searchConfig->setQuery( '*' )
 				->setLimit( self::MAX_NEW_ARTICLES_LIMIT )
