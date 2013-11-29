@@ -86,6 +86,7 @@ if(Math.random()<0.01){
 <?= $ivw ?>
 <?= $amazonDirectTargetedBuy ?>
 <?= $dynamicYield ?>
+<?= $ivw2 ?>
 <?= $body ?>
 
 <?php
