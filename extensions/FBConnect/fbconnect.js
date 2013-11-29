@@ -181,10 +181,7 @@ function sendToConnectOnLoginForSpecificForm(formName){
 		$('#fbConnectModalWrapper').remove();
 		$.postJSON(window.wgScript + '?action=ajax&rs=SpecialConnect::checkCreateAccount&cb='+wgStyleVersion, function(data) {
 			if(data.status == "ok") {
-				$().getModal(window.wgScript + '?action=ajax&rs=SpecialConnect::ajaxModalChooseName&returnto=' + encodeURIComponent(wgPageName) + '&returntoquery=' + encodeURIComponent(window.wgPageQuery || ''),  "#fbConnectModal", {
-			        id: "fbConnectModalWrapper",
-			        width: 600
-				});
+				location.reload();
 			} else {
 				window.location.href = destUrl;
 			}
