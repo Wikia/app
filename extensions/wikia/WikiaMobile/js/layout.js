@@ -56,4 +56,8 @@ function ( sections, media, cache, loader, lazyload, $, sloth, topbar ) {
 		threshold: 300,
 		callback: lazyload
 	} );
+
+	$(function(){
+		sloth();
+	});
 } );

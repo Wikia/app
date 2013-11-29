@@ -12,14 +12,20 @@ require(['throbber', 'wikia.querystring', 'wikia.loader', 'wikia.nirvana', 'slot
 	'use strict';
 
 	var hash = qs().getHash(),
-		wkArtCom,
+		wkArtCom = document.getElementById('wkArtCom' ),
 		open,
-		wkComm,
+		wkComm = document.getElementById('wkComm' ),
 		clickEvent = 'click';
 
 	if(hash.indexOf('comm-') > -1){
 		open = hash.slice(5);
 	}
+
+	sloth({
+		on: wkArtCom,
+		threshold: 1000,
+		callback: init
+	});
 
 	function show(commentsHTML, assets){
 		throbber.remove(wkArtCom);
@@ -74,15 +80,4 @@ require(['throbber', 'wikia.querystring', 'wikia.loader', 'wikia.nirvana', 'slot
 			})
 		).done(show);
 	}
-
-	$(function(){
-		wkArtCom = document.getElementById('wkArtCom');
-		wkComm = document.getElementById('wkComm');
-
-		sloth({
-			on: wkArtCom,
-			threshold: 100,
-			callback: init
-		});
-	});
 });

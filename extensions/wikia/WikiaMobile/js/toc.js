@@ -185,7 +185,6 @@ function ( sections, window, $, mustache, toc ) {
 
 	$( '#wkTOCHandle' ).on( 'click', function () {
 		if ( sideMenuCapable ) {
-			console.log('lol')
 			if ( $toc.toggleClass( active ).hasClass( active ) ) {
 				onOpen();
 			} else {

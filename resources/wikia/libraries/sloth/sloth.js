@@ -41,14 +41,15 @@
 				context.removeEventListener( 'scroll', execute );
 			},
 			lock = 0,
-			execute = function () {
-				var i = branches.length, branch;
+			execute = function ( force ) {
+				var i = branches.length,
+					branch;
 
 				if ( debounce ) {
 					removeEvent();
 				}
 
-				if ( i && !lock ) {
+				if ( i && ( force || !lock ) ) {
 					if ( debounce ) {
 						lock = delegate( function () {
 							lock = 0;
@@ -114,7 +115,7 @@
 				}
 			}
 
-			execute();
+			execute( true );
 		};
 	};
 
