@@ -28,6 +28,7 @@ class ArticlesApiController extends WikiaApiController {
 	const DEFAULT_WIDTH = 200;
 	const DEFAULT_HEIGHT = 200;
 	const DEFAULT_ABSTRACT_LEN = 100;
+	const DEFAULT_AVATAR_SIZE = 20;
 
 	const CLIENT_CACHE_VALIDITY = 86400;//24h
 	const CATEGORY_CACHE_ID = 'category';
@@ -440,7 +441,7 @@ class ArticlesApiController extends WikiaApiController {
 		);
 
 		wfProfileOut( __METHOD__ );
-	}	
+	}
 
 	/**
 	 * Get details about one or more articles, , those in the Special namespace (NS_SPECIAL) won't produce any result
@@ -611,6 +612,27 @@ class ArticlesApiController extends WikiaApiController {
 		}
 
 		return $collection;
+	}
+
+	protected function getUserDataForArticles( $articles ) {
+		$ids = !is_array( $articles ) ? [ $articles ] : $articles;
+		$result = [];
+
+		$rev = new RevisionService();
+		$revisions = $rev->getFirstRevisionByArticleId( $ids );
+		foreach( $revisions as $rev ) {
+			$userIds[ $rev['rev_page'] ] = $rev[ 'rev_user' ];
+		}
+		if( !empty( $userIds ) ) {
+			$users = (new UserService())->getUsers( $userIds );
+			foreach( $users as $user ) {
+				$userData[ $user->getId() ] = [ 'avatar' => AvatarService::getAvatarUrl( $user->getName(), self::DEFAULT_AVATAR_SIZE ), 'name' => $user->getName() ];
+			}
+			foreach( $userIds as $pageId => $userId ) {
+				$result[ $pageId ] = isset( $userData[ $userId ] ) ? $userData[ $userId ] : [ 'avatar' => null, 'name' => null ];
+			}
+		}
+		return $result;
 	}
 
 	protected function getFromFile( $title ) {
