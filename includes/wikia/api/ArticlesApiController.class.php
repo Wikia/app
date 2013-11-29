@@ -341,7 +341,7 @@ class ArticlesApiController extends WikiaApiController {
 
 			$results = ( new Factory )->getFromConfig( $searchConfig )->searchAsApi(
 				[ 'pageid' => 'id', 'ns', 'title_en' => 'title', 'html_en' => 'abstract' ],
-				false );
+				false, 'pageid' );
 
 			$articles = [];
 			foreach ( $results as &$item ) {
