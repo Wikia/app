@@ -1,10 +1,15 @@
 var UserLoginModal = {
 	loginAjaxForm: false,
 	isInitializationStarted: false,
+	uiFactory: false,
+	packagesData: false,
 	$modal: false,
 
 	initModal: function ( options ) {
 		'use strict';
+
+		var that = this;
+
 		$.when(
 				Wikia.getMultiTypePackage( {
 					templates: [
@@ -21,73 +26,84 @@ var UserLoginModal = {
 				require( [ 'wikia.ui.factory', 'wikia.loader' ], function ( uiFactory, loader ) {
 					loader.processStyle( packagesData.styles );
 
-					uiFactory.init( 'modal' ).then( function ( uiModal ) {
-						var modalConfig = {
-							type: 'default',
-							vars: {
-								id: 'userForceLoginModal',
-								size: 'medium',
-								content: packagesData.templates.UserLoginSpecial_modal,
-								title: $.msg( 'userlogin-login-heading' ),
-								closeButton: true,
-								destroyOnClose: false
-							}
-						};
+					that.uiFactory = uiFactory;
+					that.packagesData = packagesData;
 
-						uiModal.createComponent( modalConfig, function ( loginModal ) {
-							UserLoginModal.$modal = loginModal;
+					window.UserLoginFacebook.init();
 
-							UserLoginModal.loginAjaxForm = new window.UserLoginAjaxForm( loginModal.$element, {
-								ajaxLogin: true,
-								callback: function ( res ) {
-									window.wgUserName = res.username;
-									var callback = options.callback;
-									if ( callback && typeof callback === 'function' ) {
-										if ( !options.persistModal ) {
-											UserLoginModal.$modal.hide();
-										}
-										callback();
-									} else {
-										UserLoginModal.loginAjaxForm.reloadPage();
-									}
-								},
-								resetpasscallback: function () {
-									$.nirvana.sendRequest( {
-										controller: 'UserLoginSpecial',
-										method: 'changePassword',
-										format: 'html',
-										data: {
-											username: UserLoginModal.loginAjaxForm.inputs.username.val(),
-											password: UserLoginModal.loginAjaxForm.inputs.password.val(),
-											returnto: UserLoginModal.loginAjaxForm.inputs.returnto.val(),
-											fakeGet: 1
-										},
-										callback: function ( html ) {
-											var content = $( '<div style="display:none" />' ).append( html ),
-												heading = content.find( 'h1' ),
-												contentBlock = UserLoginModal.$modal.$element.find( '.UserLoginModal' );
-
-											UserLoginModal.$modal.$element.find( 'header h3' ).text( heading.text() );
-											heading.remove();
-
-											contentBlock.slideUp( 400, function () {
-												contentBlock.html( '' ).html( content );
-												content.show();
-												contentBlock.slideDown( 400 );
-											} );
-										}
-									} );
-								}
-							} );
-							window.UserLoginFacebook.init();
-
-							if ( options.modalInitCallback && typeof options.modalInitCallback === 'function' ) {
-								options.modalInitCallback();
-							}
-						} );
-					} );
+					that.buildModal( options );
 				} );
 			} );
+	},
+
+	buildModal: function(options) {
+		'use strict';
+
+		var that = this;
+
+		this.uiFactory.init( 'modal' ).then( function ( uiModal ) {
+			var modalConfig = {
+				type: 'default',
+				vars: {
+					id: 'userForceLoginModal',
+					size: 'medium',
+					content: that.packagesData.templates.UserLoginSpecial_modal,
+					title: $.msg( 'userlogin-login-heading' ),
+					closeButton: true
+				}
+			};
+
+			uiModal.createComponent( modalConfig, function ( loginModal ) {
+				UserLoginModal.$modal = loginModal;
+
+				UserLoginModal.loginAjaxForm = new window.UserLoginAjaxForm( loginModal.$element, {
+					ajaxLogin: true,
+					callback: function ( res ) {
+						window.wgUserName = res.username;
+						var callback = options.callback;
+						if ( callback && typeof callback === 'function' ) {
+							if ( !options.persistModal ) {
+								UserLoginModal.$modal.toggle('close');
+							}
+							callback();
+						} else {
+							UserLoginModal.loginAjaxForm.reloadPage();
+						}
+					},
+					resetpasscallback: function () {
+						$.nirvana.sendRequest( {
+							controller: 'UserLoginSpecial',
+							method: 'changePassword',
+							format: 'html',
+							data: {
+								username: UserLoginModal.loginAjaxForm.inputs.username.val(),
+								password: UserLoginModal.loginAjaxForm.inputs.password.val(),
+								returnto: UserLoginModal.loginAjaxForm.inputs.returnto.val(),
+								fakeGet: 1
+							},
+							callback: function ( html ) {
+								var content = $( '<div style="display:none" />' ).append( html ),
+									heading = content.find( 'h1' ),
+									contentBlock = UserLoginModal.$modal.$element.find( '.UserLoginModal' );
+
+								UserLoginModal.$modal.$element.find( 'header h3' ).text( heading.text() );
+								heading.remove();
+
+								contentBlock.slideUp( 400, function () {
+									contentBlock.html( '' ).html( content );
+									content.show();
+									contentBlock.slideDown( 400 );
+								} );
+							}
+						} );
+					}
+				} );
+
+				if ( options.modalInitCallback && typeof options.modalInitCallback === 'function' ) {
+					options.modalInitCallback();
+				}
+			} );
+		} );
 	},
 
 	/**
@@ -101,19 +117,9 @@ var UserLoginModal = {
 		if ( !window.wgComboAjaxLogin && window.wgEnableUserLoginExt ) {
 			options = options || {};
 
-			var openModal = $.proxy( function () {
-				this.$modal.show();
-			}, this );
+			options.modalInitCallback = $.proxy( function () { this.$modal.show(); }, this );
+			this.initModal( options );
 
-			if ( this.$modal ) {
-				openModal();
-			} else {
-				if ( !this.isInitializationStarted ) {
-					this.isInitializationStarted = true;
-					options.modalInitCallback = openModal;
-					this.initModal( options );
-				}
-			}
 			return true;
 		} else if ( window.wgComboAjaxLogin ) {
 			/* 1st, 2nd, 4th, and 5th vars in this method is not used outside of ajaxlogin itself*/
