@@ -343,10 +343,19 @@ class ArticlesApiController extends WikiaApiController {
 				[ 'pageid' => 'id', 'ns', 'title_en' => 'title', 'html_en' => 'abstract' ],
 				false );
 
+			$articles = [];
 			foreach ( $results as &$item ) {
 				$title = Title::newFromText( $item[ 'title' ] );
 				$item[ 'title' ] = $title->getText();
 				$item[ 'url' ] = $title->getLocalURL();
+				$articles[] = $item['id'];
+			}
+
+			$thumbs = $this->getArticlesThumbnails( $articles );
+			foreach ( $results as &$item ) {
+				if ( isset( $thumbs[ $item[ 'id' ] ] ) ) {
+					$item[ 'thumbnail' ] = $thumbs[ $item[ 'id' ] ];
+				}
 			}
 
 			$this->wg->Memc->set( $key, $results, self::CLIENT_CACHE_VALIDITY );
