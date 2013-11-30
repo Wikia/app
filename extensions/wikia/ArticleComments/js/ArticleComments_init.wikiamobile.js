@@ -21,12 +21,6 @@ require(['throbber', 'wikia.querystring', 'wikia.loader', 'wikia.nirvana', 'slot
 		open = hash.slice(5);
 	}
 
-	sloth({
-		on: wkArtCom,
-		threshold: 1000,
-		callback: init
-	});
-
 	function show(commentsHTML, assets){
 		throbber.remove(wkArtCom);
 
@@ -80,4 +74,9 @@ require(['throbber', 'wikia.querystring', 'wikia.loader', 'wikia.nirvana', 'slot
 			})
 		).done(show);
 	}
+
+	sloth({
+		on: wkArtCom,
+		callback: init
+	});
 });
