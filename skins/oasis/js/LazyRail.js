@@ -39,6 +39,8 @@ $(function() {
 								}
 							}
 						} );
+
+						rail.append($('#WikiaAdInContentPlaceHolder'));
 					} };
 
 				rail.find('.loading').remove().end().append(data.railLazyContent + data.js);
