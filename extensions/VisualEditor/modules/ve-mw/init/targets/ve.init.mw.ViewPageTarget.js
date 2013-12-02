@@ -955,7 +955,7 @@ ve.init.mw.ViewPageTarget.prototype.getSaveOptions = function () {
  * @method
  * @param {HTMLDocument} doc HTML DOM to edit
  * @param {Function} [callback] Callback to call when done
- * @param {bool} animate
+ * @param {boolean} animate Should elements like the toolbar animate when hiding and showing.
  */
 ve.init.mw.ViewPageTarget.prototype.setUpSurface = function ( doc, callback, animate ) {
 	var target = this;
@@ -1119,7 +1119,7 @@ ve.init.mw.ViewPageTarget.prototype.onToolbarPosition = function ( $bar, update 
 /**
  * Switch to viewing mode.
  *
- * @param {bool} animate
+ * @param {boolean} animate Should elements like the toolbar animate when hiding and showing.
  * @method
  */
 ve.init.mw.ViewPageTarget.prototype.tearDownSurface = function ( animate ) {
@@ -1396,7 +1396,7 @@ ve.init.mw.ViewPageTarget.prototype.hideTableOfContents = function () {
  *
  * This also transplants the toolbar to a new location.
  *
- * @param {bool} animate
+ * @param {boolean} animate Whether or not to animate the toolbar's hiding and showing.
  * @method
  */
 ve.init.mw.ViewPageTarget.prototype.setUpToolbar = function ( animate ) {
@@ -1433,7 +1433,7 @@ ve.init.mw.ViewPageTarget.prototype.setUpToolbar = function ( animate ) {
 /**
  * Hide the toolbar.
  *
- * @param {bool} animate
+ * @param {boolean} animate Whether or not to animate the toolbar's hiding and showing.
  * @method
  */
 ve.init.mw.ViewPageTarget.prototype.tearDownToolbar = function ( animate ) {
