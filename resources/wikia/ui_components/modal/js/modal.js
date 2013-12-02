@@ -349,7 +349,7 @@ define( 'wikia.ui.modal', [
 
 	/**
 	 * Sets modal's content
-	 * @param content HTML text
+	 * @param {String} content HTML text
 	 */
 	Modal.prototype.setContent = function( content ) {
 		this.$content.html( content );
@@ -357,7 +357,7 @@ define( 'wikia.ui.modal', [
 
 	/**
 	 * Sets modal's title
-	 * @param title text
+	 * @param {String} title text
 	 */
 	Modal.prototype.setTitle = function( title ) {
 		this.$element.find( 'header h3' ).text( title );
