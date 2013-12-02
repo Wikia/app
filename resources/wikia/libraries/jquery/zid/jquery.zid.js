@@ -50,6 +50,11 @@
 
 			// build columns
 			this._setCols();
+
+			if ( typeof this.onColumnCountChangeCallback === 'function' ) {
+				this.onColumnCountChangeCallback(this.cols, this.itemsArr);
+			}
+
 			// render items in columns
 			this._renderItems( 'append', this.itemsArr );
 			// add class 'zid' to container
