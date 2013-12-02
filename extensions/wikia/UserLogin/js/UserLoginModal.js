@@ -29,14 +29,14 @@ var UserLoginModal = {
 					that.uiFactory = uiFactory;
 					that.packagesData = packagesData;
 
-					window.UserLoginFacebook.init();
+					window.UserLoginFacebook && window.UserLoginFacebook.init();
 
 					that.buildModal( options );
 				} );
 			} );
 	},
 
-	buildModal: function ( options ) {
+	buildModal: function(options) {
 		'use strict';
 
 		var that = this;
@@ -63,7 +63,7 @@ var UserLoginModal = {
 						var callback = options.callback;
 						if ( callback && typeof callback === 'function' ) {
 							if ( !options.persistModal ) {
-								UserLoginModal.$modal.toggle( 'close' );
+								UserLoginModal.$modal.toggle('close');
 							}
 							callback();
 						} else {
@@ -117,9 +117,7 @@ var UserLoginModal = {
 		if ( !window.wgComboAjaxLogin && window.wgEnableUserLoginExt ) {
 			options = options || {};
 
-			options.modalInitCallback = $.proxy( function () {
-				this.$modal.show();
-			}, this );
+			options.modalInitCallback = $.proxy( function () { this.$modal.show(); }, this );
 			this.initModal( options );
 
 			return true;
@@ -138,7 +136,8 @@ var UserLoginModal = {
 	},
 	isPreventingForceLogin: function ( element ) {
 		'use strict';
-		if ( !( element.closest( 'span' ).hasClass( 'drop' ) ) && !( element.closest( 'ul' ).hasClass( 'WikiaMenuElement' ) ) ) {
+		if ( !( element.closest( 'span' ).hasClass( 'drop' ) ) &&
+			!( element.closest( 'ul' ).hasClass( 'WikiaMenuElement' ) ) ) {
 			return false;
 		}
 		return true;
