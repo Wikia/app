@@ -862,10 +862,13 @@ $messages['tl'] = array(
 
 /** Turkish (Türkçe)
  * @author Gizemb
+ * @author Incelemeelemani
  */
 $messages['tr'] = array(
+	'ajaxpoll-percentVotes' => 'Tüm oylarda:&nbsp;$1%',
 	'ajaxpoll-thankyou' => 'Oy verdiğiniz için teşekkür ederiz!',
 	'ajaxpoll-error' => 'Oyunuz işleme alınırken bir sorun oluştu, lütfen tekrar deneyiniz.',
+	'ajaxpoll-summary' => '$2 üzerinde $1 anketi oluşturuldu ve $3 kişi oy verdi.',
 	'ajaxpoll-submit' => 'Oy ver!',
 	'ajaxpoll-closed' => 'Anket kapandı. Sonuçların tadını çıkarın.',
 	'ajaxpoll-submitting' => 'Lütfen bekleyin, oyunuz kaydediliyor...',

@@ -355,6 +355,14 @@ $messages['tl'] = array(
 	'randomwiki' => 'Alinmang Wiki',
 );
 
+/** Turkish (Türkçe)
+ * @author Incelemeelemani
+ */
+$messages['tr'] = array(
+	'randomwiki-desc' => 'Kullanıcıların rastgele bir wiki keşfetmesini sağlar',
+	'randomwiki' => 'Rastgele Wiki',
+);
+
 /** Tatar (Cyrillic script) (татарча)
  * @author Zahidulla
  * @author Ильнар

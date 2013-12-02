@@ -5,12 +5,11 @@
  * @author Jakub "Student" Olek
  */
 
-define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', 'jquery', 'track', 'throbber', 'wikia.window'],
-	function (qs, loader, toc, $, track, throbber, w) {
+define('topbar', ['wikia.querystring', 'wikia.loader', 'jquery', 'track', 'throbber', 'wikia.window'],
+	function (qs, loader, $, track, throbber, w) {
 	'use strict';
 
-	var	$html = $('html'),
-		d = w.document,
+	var	d = w.document,
 		wkPrfTgl = d.getElementById('wkPrfTgl'),
 		navBar = d.getElementById('wkTopNav'),
 		$navBar = $(navBar),
@@ -52,7 +51,6 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', 'jquery', 'track',
 	function reset(stopScrolling){
 		!barSetUp && setupTopBar();
 		!stopScrolling && wkPrfTgl.scrollIntoView();
-		toc.close();
 
 		$.event.trigger('nav:close');
 
@@ -218,29 +216,29 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', 'jquery', 'track',
 		}
 	}
 
+	$(d).on('curtain:hidden', function(){
+		showPage();
+	});
+
 	function close() {
 		showPage();
 
 		if(qs().getHash() === '#topbar') {
 			var pos = w.scrollY;
 			w.history.back();
-			w.scrollTo(0,pos);
+			w.scrollTo(0, pos);
 		}
 
 		$.event.trigger('topbar:close');
 	}
 
 	function hidePage(){
-		$.event.trigger('ads:unfix');
-
-		$html.addClass('hidden');
+		$.event.trigger('curtain:show');
 	}
 
 	function showPage(){
-		$.event.trigger('ads:fix');
-
 		$navBar.removeClass();
-		$html.removeClass('hidden');
+		$.event.trigger('curtain:hide');
 	}
 
 	return {

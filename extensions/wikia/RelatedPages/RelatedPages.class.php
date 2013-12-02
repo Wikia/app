@@ -424,14 +424,19 @@ class RelatedPages {
 	 * @return bool
 	 */
 	public static function onWikiaMobileAssetsPackages( &$jsStaticPackages, &$jsExtensionPackages, &$scssPackages) {
-		$jsStaticPackages[] = 'relatedpages_js';
-		//css is in WikiaMobile.scss as AM can't concatanate scss files currently
+		if ( F::app()->wg->Request->getVal( 'action', 'view' ) == 'view' ) {
+			$jsStaticPackages[] = 'relatedpages_js';
+			//css is in WikiaMobile.scss as AM can't concatanate scss files currently
+		}
 
 		return true;
 	}
 
 	public static function onSkinAfterContent( &$text ){
-		$text = '<!-- RelatedPages -->';
+		if ( !F::app()->checkSkin( 'wikiamobile' ) ){
+			$text = '<!-- RelatedPages -->';
+		}
+
 		return true;
 	}
 }
