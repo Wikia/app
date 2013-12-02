@@ -1,6 +1,4 @@
 <div id="UPPLightbox" class="UPPLightbox">
-	<h1><?= wfMsg('userprofilepage-edit-modal-header'); ?></h1>
-	
 	<div id="errorBox">
 		<div id="wpError"></div>
 	</div>
@@ -143,9 +141,4 @@
 			</form>
 		</li>
 	</ul>
-	
-	<div class="modalToolbar">
-		<button class="cancel secondary"><?= wfMsg('user-identity-box-avatar-cancel'); ?></button>
-		<button class="save"><?= wfMsg('user-identity-box-avatar-save'); ?></button>
-	</div>
 </div>

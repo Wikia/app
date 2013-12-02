@@ -47,6 +47,7 @@ var UserProfilePage = {
 	},
 
 	renderLightbox: function(tabName) {
+		'use strict';
 		if( !UserProfilePage.isLightboxGenerating ) {
 			//if lightbox is generating we don't want to let user open second one
 			UserProfilePage.isLightboxGenerating = true;
@@ -60,35 +61,78 @@ var UserProfilePage = {
 				userId: UserProfilePage.userId,
 				rand: Math.floor(Math.random()*100001) // is cache buster really needed here?
 			}, function(data) {
-				UserProfilePage.modal = $(data.body).makeModal({width : 750, onClose: UserProfilePage.closeModal, closeOnBlackoutClick: UserProfilePage.closeModal});
-				var modal = UserProfilePage.modal;
+				require( [ 'wikia.ui.factory' ], function( uiFactory ) {
+					uiFactory.init( [ 'modal' ] ).then(function( modal ) {
+						var id = $(data.body).attr('id') + 'Wrapper',
+							modalConfig = {
+							vars: {
+								id: id,
+								content: data.body,
+								size: 'medium',
+								title: $.msg( 'userprofilepage-edit-modal-header' ),
+								buttons: [
+									{
+										vars: {
+											value: $.msg( 'user-identity-box-avatar-save' ),
+											classes: [ 'normal', 'primary' ],
+											data: [
+												{
+													key: 'event',
+													value: 'save'
+												}
+											]
+										}
+									},
+									{
+										vars: {
+											value: $.msg( 'user-identity-box-avatar-cancel' ),
+											data: [
+												{
+													key: 'event',
+													value: 'close'
+												}
+											]
+										}
+									}
+								]
+							}
+						};
+						modal.createComponent( modalConfig, function( editProfileModal ) {
+							//UserProfilePage.modal = $(data.body).makeModal({width : 750, onClose: UserProfilePage.closeModal, closeOnBlackoutClick: UserProfilePage.closeModal});
+							UserProfilePage.modal = editProfileModal.$element;
+							var modal = UserProfilePage.modal;
 
-				UserProfilePage.renderAvatarLightbox(modal);
-				UserProfilePage.renderAboutMeLightbox(modal);
-				//UserProfilePage.renderInterviewLightbox(modal);
+							UserProfilePage.renderAvatarLightbox(modal);
+							UserProfilePage.renderAboutMeLightbox(modal);
+							//UserProfilePage.renderInterviewLightbox(modal);
 
-				var tab = modal.find('.tabs a');
-				tab.click(function(event) {
-					event.preventDefault();
-					UserProfilePage.switchTab($(this).closest('li'));
+							var tab = modal.find('.tabs a');
+							tab.click(function(event) {
+								event.preventDefault();
+								UserProfilePage.switchTab($(this).closest('li'));
+							});
+
+							// Synthesize a click on the tab to hide/show the right panels
+							$('[data-tab=' + tabName + '] a').click();
+
+							$.loadFacebookAPI(function() {
+								if(window.FB && FB.XFBML) {
+									// parse FBXML login button
+									FB.XFBML.parse(document.getElementById('UPPLightboxWrapper'));
+								}
+							});
+
+							// show a message when avatars upload is disabled (BAC-1046)
+							if (data.avatarsDisabled === true) {
+								GlobalNotification.show(data.avatarsDisabledMsg, 'error');
+							}
+
+							UserProfilePage.isLightboxGenerating = false;
+
+							editProfileModal.show();
+						});
+					});
 				});
-
-				// Synthesize a click on the tab to hide/show the right panels
-				$('[data-tab=' + tabName + '] a').click();
-
-				$.loadFacebookAPI(function() {
-					if(window.FB && FB.XFBML) {
-						// parse FBXML login button
-						FB.XFBML.parse(document.getElementById('UPPLightboxWrapper'));
-					}
-				});
-
-				// show a message when avatars upload is disabled (BAC-1046)
-				if (data.avatarsDisabled === true) {
-					GlobalNotification.show(data.avatarsDisabledMsg, 'error');
-				}
-
-				UserProfilePage.isLightboxGenerating = false;
 			}).error(function(data) {
 				var response = JSON.parse(data.responseText);
 				$.showModal('Error', response.exception.message);
