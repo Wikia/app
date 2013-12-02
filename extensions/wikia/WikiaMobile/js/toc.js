@@ -107,22 +107,22 @@ function ( sections, window, $, mustache, toc ) {
 	function init () {
 		if ( !inited ) {
 			$toc.on( 'click', 'header', function () {
+				onClose();
+				window.scrollTo( 0, 0 );
+			} )
+			.on( 'click', 'li', function ( event ) {
+				var $li = $( this ),
+					$a = $li.find( 'a' ).first();
+
+				event.stopPropagation();
+				event.preventDefault();
+
+				if ( !toggleLi( $li ) ) {
 					onClose();
-					window.scrollTo( 0, 0 );
-				} )
-				.on( 'click', 'li', function ( event ) {
-					var $li = $( this ),
-						$a = $li.find( 'a' ).first();
+				}
 
-					event.stopPropagation();
-					event.preventDefault();
-
-					if ( !toggleLi( $li ) ) {
-						onClose();
-					}
-
-					sections.scrollTo( $a.attr( 'href' ) );
-				} );
+				sections.scrollTo( $a.attr( 'href' ) );
+			} );
 
 			$ol = $toc
 				.append( renderToc() )
@@ -136,8 +136,6 @@ function ( sections, window, $, mustache, toc ) {
 				scrollX: false
 			});
 
-			window.lol = tocScroll;
-
 			inited = true;
 		}
 	}
@@ -145,7 +143,7 @@ function ( sections, window, $, mustache, toc ) {
 	/**
 	 * @desc Used in fallback mode
 	 */
-	function onTap(){
+	function onTap (){
 		inPageToc.scrollIntoView();
 	}
 
@@ -180,17 +178,17 @@ function ( sections, window, $, mustache, toc ) {
 			.find('.level');
 
 		inPageToc = document.getElementsByClassName('in-page-toc')[0];
-
 	}
 
-	$( '#wkTOCHandle' ).on( 'click', function () {
+	$( '#wkTOCHandle' ).on( 'click', function ( event ) {
+		event.stopPropagation();
+
 		if ( sideMenuCapable ) {
 			if ( $toc.toggleClass( active ).hasClass( active ) ) {
 				onOpen();
 			} else {
 				onClose();
 			}
-
 		} else {
 			onTap();
 		}
