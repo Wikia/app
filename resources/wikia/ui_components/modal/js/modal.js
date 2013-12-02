@@ -355,6 +355,14 @@ define( 'wikia.ui.modal', [
 		this.$content.html( content );
 	};
 
+	/**
+	 * Sets modal's title
+	 * @param title text
+	 */
+	Modal.prototype.setTitle = function( title ) {
+		this.$element.find( 'header h3' ).text( title );
+	};
+
 	/** Public API */
 	
 	return {
