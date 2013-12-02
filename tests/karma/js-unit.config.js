@@ -38,10 +38,6 @@ module.exports = function(config) {
 			'extensions/wikia/WikiaMobile/js/track.js',
 			'extensions/wikia/WikiaMobile/js/spec/*.spec.js',
 
-			//WikiaMobile WikiText Editor
-			'extensions/wikia/WikiaMobileEditor/js/config.js',
-			'extensions/wikia/WikiaMobileEditor/js/spec/*',
-
 			//core modules
 			'resources/wikia/modules/aim.js',
 			'resources/wikia/modules/cache.js',
