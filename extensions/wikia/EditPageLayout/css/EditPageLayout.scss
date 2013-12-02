@@ -531,23 +531,23 @@ body {
 
 //Mobile preview styles
 .mobile-preview {
+	border: 1px solid $color-page-border;
+	height: 480px;
 	width: 320px;
-	overflow-y: scroll;
+	overflow: auto;
 	margin: 0 auto;
+
 	-webkit-overflow-scrolling: touch;
 	-webkit-transform: translate3d(0, 0, 0);
 
-	iframe {
-		border: 1px solid $color-page-border;
-		-webkit-box-sizing: border-box;
-		-moz-box-sizing: border-box;
-		box-sizing: border-box;
-		display: block;
-		height: 480px;
-		max-height: 100%;
-		margin: 0 auto;
-		overflow-x: hidden;
-		width: 320px;
-	}
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
 
+	iframe {
+		display: block;
+		height: 100%;
+		margin: 0 auto;
+		width: 100%;
+	}
 }
