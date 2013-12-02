@@ -12634,6 +12634,9 @@ var VirtualRenderer = function(container, theme) {
         this.scroller.className = "ace_scroller";
 
         this.$cursorLayer.setSession(session);
+		if ( useragent.isIPad ) {
+			this.$mobileScrollLayer.setSession(session);
+		}
         this.$markerBack.setSession(session);
         this.$markerFront.setSession(session);
         this.$gutterLayer.setSession(session);
@@ -14992,7 +14995,7 @@ exports.ScrollBarV = ScrollBarV;
 exports.ScrollBarH = ScrollBarH;
 });
 
-ace.define('ace/layer/mobilescroll', ['require', 'exports', 'module' , 'ace/lib/dom'],function(require, exports, module) {
+ace.define('ace/layer/mobilescroll', ['require', 'exports', 'module' , 'ace/lib/dom', 'ace/edit_session'],function(require, exports, module) {
 "use strict";
 
 var dom = require("../lib/dom");
