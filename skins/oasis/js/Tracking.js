@@ -246,8 +246,11 @@ jQuery(function($){
 			$searchSuggestions = $('.search-suggest'),
 			$noResults = $('.results-wrapper .no-result');
 
-		//tracking for new search suggestions
-		$searchSuggestions.on('mousedown', 'li:not(.all)', {
+		/**
+		 * Search suggestions tracking
+		 */
+		//tracking for new search suggestions, mousedown event is not propagated for this one, so we use click
+		$searchSuggestions.on('click', 'li:not(.all)', {
 			category: category,
 			label: 'new-search-suggest'
 		}, trackWithEventData).on('newSuggestionsEnter', {
@@ -320,6 +323,10 @@ jQuery(function($){
 			}
 		);
 
+		/**
+		 * Special:Search tracking
+		 */
+		category = 'special-search';
 		if ($body.hasClass('page-Special_Search')) {
 			if($noResults.length) {
 				track({

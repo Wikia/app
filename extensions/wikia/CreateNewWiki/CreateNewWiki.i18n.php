@@ -78,6 +78,8 @@ $messages['en'] = array(
 	'cnw-error-wiki-limit' => 'Hi, you are limited to {{PLURAL:$1|$1 wiki creation|$1 wiki creations}} per day. Wait 24 hours before creating another wiki.',
 	'cnw-error-blocked-header' => 'Account blocked',
 	'cnw-error-blocked' => 'You have been blocked by $1. The reason given was: $2. (Block ID for reference: $3)',
+	'cnw-error-anon-user-header' => 'Please log in',
+	'cnw-error-anon-user' => 'Creating wikis for anons is disabled. Please [[Special:UserLogin|log in]] and try again.',
 	'cnw-error-torblock' => 'Creating wikis via the Tor Network is not allowed.',
 	'cnw-error-bot' => 'We have detected that you may be a bot.  If we made a mistake, please contact us describing that you have been falsely detected as a bot, and we will aid you in creating your wiki: [http://www.wikia.com/Special:Contact/general Contact Us]',
 	'cnw-error-bot-header' => 'You have been detected as a bot',
@@ -160,6 +162,9 @@ Be carefull to keep it short as there are 3 successive balloon tips to display i
 * $1 is a username
 * $2 is a block reason
 * $3 is a block ID',
+	'cnw-error-anon-user-header' => 'Header for error dialog, displayed when when anon user tries to create new wiki.
+{{Identical|Please log in}}',
+	'cnw-error-anon-user' => 'Error message when anon user tries to create new wiki.',
 	'cnw-error-bot' => 'Message describing you may be a bot and link to contact page',
 	'cnw-error-bot-header' => 'Message header for modal box',
 );
@@ -252,14 +257,16 @@ $messages['ar'] = array(
 	'cnw-welcome-instruction1' => 'انقر الزر أدناه لبدء إضافة صفحات في الويكي الخاص بك.',
 	'cnw-welcome-instruction2' => 'سوف ترى هذا الزر في جميع أنحاء الويكي الخاصة بك، استخدمه في أي وقت تريد أن تضيف صفحة جديدة.',
 	'cnw-welcome-help' => 'إبحث عن إجابات و نصائح و معلومات أكثر في  <a href="http://ar.wikia.com"> مركز ويكيا</a>.',
-	'cnw-error-general' => 'عفوا! حدث خطأ من جهتنا! الرجاء المحاولة مرة أخرى أو [[Special:Contact|الاتصال بنا]] للحصول على المساعدة.', # Fuzzy
-	'cnw-error-general-heading' => 'نحن نعتذر', # Fuzzy
+	'cnw-error-general' => 'عفوا! حدث خطأ من جهتنا! الرجاء المحاولة مرة أخرى أو [[Special:Contact|الاتصال بنا]] للحصول على المساعدة.',
+	'cnw-error-general-heading' => 'نحن نعتذر',
 	'cnw-badword-header' => 'قف هناك',
 	'cnw-badword-msg' => 'مرحبا، يرجى عدم استعمال الكلمات السيئة والعبارات المحظورة هذه في وصف الويكي: $1',
 	'cnw-error-wiki-limit-header' => 'لقد وصلت للحد الأعلى للويكي',
 	'cnw-error-wiki-limit' => 'مرحبا، ليس بإمكانك إلا {{PLURAL:$1|إنشاء ويكي $1|إنشاء $1 ويكي}} في اليوم الواحد. انتظر لمدة ٢٤ ساعة قبل إنشاء ويكي آخر.',
 	'cnw-error-blocked-header' => 'الحساب محظور',
 	'cnw-error-blocked' => 'لقد تم حظرك من قبل $1. السبب الذي قدم هو: $2. (رقم الحظر المرجعي: $3)',
+	'cnw-error-anon-user-header' => 'من فضلك سجل الدخول',
+	'cnw-error-anon-user' => 'إنشاء الويكي للمجهولين معطل. من فضلط [[Special:UserLogin|سجل الدخول]] وحاول مجددًا.',
 	'cnw-error-torblock' => 'إنشاء الويكي عن طريق شبكة تور غير مسموح.',
 	'cnw-error-bot' => 'لقد اكتشفنا بأنك بوت. إذا ارتكبنا خطأ الرجاء الاتصال بنا لإعلامنا بأنه تم رصدك كبوت بالخطأ، و سوف نساعدك في إنشاء الويكي: [http://www.wikia.com/Special:Contact/general إتصل بنا]',
 	'cnw-error-bot-header' => 'لقد تم رصدك بأنك بوت (مستخدم أوتوماتيكي)',
@@ -480,6 +487,7 @@ $messages['br'] = array(
 );
 
 /** Catalan (català)
+ * @author Fitoschido
  * @author Marcmpujol
  */
 $messages['ca'] = array(
@@ -527,7 +535,7 @@ $messages['ca'] = array(
 	'cnw-desc-default-lang' => 'El teu wiki serà en $1',
 	'cnw-desc-change-lang' => 'canviar',
 	'cnw-desc-lang' => 'Llengua',
-	'cnw-desc-wiki-submit-error' => 'Si us plau, tria una categoria',
+	'cnw-desc-wiki-submit-error' => 'Trieu una categoria',
 	'cnw-theme-headline' => 'Tria un tema',
 	'cnw-theme-creative' => "Tria un tema que s'ajusti al teu wiki.",
 	'cnw-theme-instruction' => 'Pots canviar el tema o dissenyar el teu propi en qualsevol moment utilitzant "Les meves Eines" situat en la barra d\'eines en la part inferior de la pàgina.',
@@ -556,7 +564,7 @@ $messages['ce'] = array(
 	'cnw-desc-lang' => 'Мотт',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Chmee2
  * @author Jezevec
  * @author Reaperman
@@ -589,6 +597,7 @@ $messages['cs'] = array(
 	'cnw-desc-tip2' => 'Pššt',
 	'cnw-desc-choose' => 'Zvolte kategorii',
 	'cnw-desc-select-one' => 'Jeden vyberte',
+	'cnw-desc-all-ages' => 'Všechny stránky',
 	'cnw-desc-change-lang' => 'změnit',
 	'cnw-desc-lang' => 'Jazyk',
 	'cnw-theme-headline' => 'Zvolte téma',
@@ -672,8 +681,8 @@ $messages['de'] = array(
 	'cnw-welcome-instruction1' => 'Klick auf die Schaltfläche unten, um Seiten zu deinem Wiki hinzufügen.',
 	'cnw-welcome-instruction2' => 'Du wirst diese Schaltfläche in deinem ganzen Wiki sehen, nutze sie jedes Mal wenn du eine neue Seite hinzufügen willst.',
 	'cnw-welcome-help' => 'Finde Antworten, Ratschläge und mehr auf <a href="http://community.wikia.com">Community Central</a>.',
-	'cnw-error-general' => 'Huch! Etwas ist auf unserer Website schief gelaufen. Bitte versuche es erneut oder [[Special:Contact|kontaktiere uns]], wenn du Hilfe brauchst.', # Fuzzy
-	'cnw-error-general-heading' => 'Wir bitten um Entschuldigung', # Fuzzy
+	'cnw-error-general' => 'Huch! Etwas ist unsererseits schief gelaufen. Bitte versuche es erneut oder [[Special:Contact|kontaktiere uns]], wenn du Hilfe brauchst.',
+	'cnw-error-general-heading' => 'Wir bitten um Entschuldigung',
 	'cnw-badword-header' => 'Ganz ruhig',
 	'cnw-badword-msg' => 'Hallo, bitte verwende keines der folgenden Schimpfwörter oder unerlaubten Begriffe in deiner Wiki-Beschreibung: $1',
 	'cnw-error-wiki-limit-header' => 'Wiki Limit erreicht',
@@ -735,6 +744,7 @@ $messages['diq'] = array(
 /** Spanish (español)
  * @author Benfutbol10
  * @author Ciencia Al Poder
+ * @author Fitoschido
  * @author Geitost
  * @author VegaDark
  */
@@ -791,14 +801,16 @@ $messages['es'] = array(
 	'cnw-welcome-instruction1' => 'Ahora haz clic al botón de abajo para empezar a llenar tu wiki con información.',
 	'cnw-welcome-instruction2' => 'Verás este botón a través de tu wiki. Úsalo en cualquier momento cuando quieras agregar una página nueva.',
 	'cnw-welcome-help' => 'Encuentra respuestas, consejos, y más en la <a href="http://es.wikia.com">Comunidad Central</a>.',
-	'cnw-error-general' => '¡Algo salió mal en nuestro sistema! Por favor inténtalo de nuevo o [[Special:Contact|contáctanos]] para obtener ayuda.', # Fuzzy
-	'cnw-error-general-heading' => 'Lo sentimos', # Fuzzy
+	'cnw-error-general' => '¡Algo salió mal en nuestro sistema! Por favor inténtalo de nuevo o [[Special:Contact|contáctanos]] para obtener ayuda.',
+	'cnw-error-general-heading' => 'Lo sentimos',
 	'cnw-badword-header' => '¡Oops!',
 	'cnw-badword-msg' => 'Hola, por favor abstente de usar estas malas palabras o palabras prohibidas en la descripción de tu wiki: $1',
 	'cnw-error-wiki-limit-header' => 'Has alcanzado el límite de wikis',
 	'cnw-error-wiki-limit' => 'Hola, estás limitado a {{PLURAL:$1|$1 creación|$1 creaciones}} de wikis por día. Espera 24 horas antes de crear otro wiki.',
 	'cnw-error-blocked-header' => 'Cuenta bloqueada',
 	'cnw-error-blocked' => 'Tu usuario ha sido bloqueado por $1. El motivo proporcionado fue: $2. (Identificador del bloqueo para referencia: $3)',
+	'cnw-error-anon-user-header' => 'Inicia sesión',
+	'cnw-error-anon-user' => 'Se ha desactivado la creación de wikis por parte de anónimos. [[Special:UserLogin|Inicia sesión]] e inténtalo de nuevo.',
 	'cnw-error-torblock' => 'No está permitido crear wikis a través de la red Tor.',
 	'cnw-error-bot' => 'Hemos detectado que puedes ser un bot. Si hemos cometido un error, por favor contáctanos y describe que has sido detectado como si fueras un bot y te ayuderamos en crear tu wiki: [http://www.wikia.com/Special:Contact/general Contáctanos]',
 	'cnw-error-bot-header' => 'Has sido detectado como un bot',
@@ -1000,14 +1012,16 @@ $messages['fr'] = array(
 	'cnw-welcome-instruction1' => 'Cliquez sur le bouton ci-dessous pour commencer à ajouter des pages à votre wiki.',
 	'cnw-welcome-instruction2' => 'Vous verrez ce bouton partout sur votre wiki, utilisez-le chaque fois que vous souhaitez ajouter une nouvelle page.',
 	'cnw-welcome-help' => 'Trouvez des réponses, conseils et plus sur sur <a href="http://community.wikia.com">Community Central</a>.',
-	'cnw-error-general' => 'Oups, quelque chose s’est mal passé de notre côté ! Veuillez réessayer plus tard ou [[Special:Contact|nous contacter]] pour obtenir de l’aide.', # Fuzzy
-	'cnw-error-general-heading' => 'Toutes nos excuses', # Fuzzy
+	'cnw-error-general' => 'Oups, quelque chose s’est mal passé de notre côté ! Veuillez réessayer plus tard ou [[Special:Contact|nous contacter]] pour obtenir de l’aide.',
+	'cnw-error-general-heading' => 'Toutes nos excuses',
 	'cnw-badword-header' => 'Eh Oh',
 	'cnw-badword-msg' => 'Bonjour, veuillez éviter d’utiliser des mots grossiers ou interdits dans la description de votre wiki : $1',
 	'cnw-error-wiki-limit-header' => 'Limite de wikis atteinte',
 	'cnw-error-wiki-limit' => 'Bonjour, vous êtes limité à la création de {{PLURAL:$1|$1 wiki|$1 wikis}} par jour. Attendez 24 heures avant de créer un autre wiki.',
 	'cnw-error-blocked-header' => 'Compte bloqué',
 	'cnw-error-blocked' => 'Vous avez été bloqué par $1. La raison invoquée était : $2. (ID de blocage pour référence : $3)',
+	'cnw-error-anon-user-header' => 'Veuillez vous connecter',
+	'cnw-error-anon-user' => 'Créer des wikis est désactivés pour les utilisateurs anonymes. Veuillez [[Special:UserLogin|vous connecter]] et réessayer.',
 	'cnw-error-torblock' => "Créer des wikis via le réseau Tor n'est pas autorisé.",
 	'cnw-error-bot' => 'Nous avons détecté que vous pouvez être un robot. Si nous nous sommes trompés, veuillez nous contacter en indiquant que vous avez été pris à tort pour un robot, nous vous aiderons alors à créer votre wiki : [http://www.wikia.com/Special:Contact/general Nous contacter].',
 	'cnw-error-bot-header' => 'Vous avez été détecté comme étant un robot',
@@ -1015,6 +1029,7 @@ $messages['fr'] = array(
 
 /** Galician (galego)
  * @author Toliño
+ * @author Vivaelcelta
  */
 $messages['gl'] = array(
 	'createnewwiki-desc' => '[[Special:CreateNewWiki|Asistente para a creación de wikis]]',
@@ -1069,14 +1084,16 @@ $messages['gl'] = array(
 	'cnw-welcome-instruction1' => 'Prema no botón que hai a continuación para comezar a engadir páxinas ao seu wiki.',
 	'cnw-welcome-instruction2' => 'Verá este botón ao longo do wiki; úseo cada vez que queira engadir unha nova páxina.',
 	'cnw-welcome-help' => 'Atope respostas, consellos e máis cousas na <a href="http://community.wikia.com">central da comunidade</a>.',
-	'cnw-error-general' => 'Vaites! Fixemos algo mal pola nosa parte! Inténteo de novo ou [[Special:Contact|póñase en contacto con nós]] para solicitar axuda.', # Fuzzy
-	'cnw-error-general-heading' => 'Sentímolo', # Fuzzy
+	'cnw-error-general' => 'Vaites! Fixemos algo mal pola nosa parte! Inténtea de novo ou [[Special:Contact|ponte en contacto con nós]] para solicitar axuda.',
+	'cnw-error-general-heading' => 'As nosas desculpas',
 	'cnw-badword-header' => 'Vaites!',
 	'cnw-badword-msg' => 'Por favor, abstéñase de empregar palabras groseiras na descrición do seu wiki: $1',
 	'cnw-error-wiki-limit-header' => 'Alcanzouse o límite de wikis',
 	'cnw-error-wiki-limit' => 'Desculpe, hai un límite que impide crear máis {{PLURAL:$1|de $1 wiki|de $1 wikis}} ao día. Agarde 24 horas antes de crear outro wiki.',
 	'cnw-error-blocked-header' => 'Conta bloqueada',
 	'cnw-error-blocked' => 'Foi bloqueado por $1. A razón que deu foi: $2. (ID do bloqueo para referencia: $3)',
+	'cnw-error-anon-user-header' => 'Inicia sesión',
+	'cnw-error-anon-user' => 'Desactivouse a creación de wikis para os anónimos. Por favor,[[Special:UserLogin|inicia sesión]] e inténtao outra vez.',
 	'cnw-error-torblock' => 'Non está permitido crear wikis a través da rede Tor.',
 	'cnw-error-bot' => 'Detectamos que pode ser un bot. Se estamos equivocados, póñase en contacto con nós indicando que foi detectado de xeito erróneo como un bot e axudarémolo a crear o seu wiki: [http://www.wikia.com/Special:Contact/general Contacte con nós]',
 	'cnw-error-bot-header' => 'Detectamos que é un bot',
@@ -1203,6 +1220,13 @@ $messages['hu'] = array(
 	'cnw-error-bot-header' => 'Botként azonosítva',
 );
 
+/** Armenian (Հայերեն)
+ * @author M hamlet
+ */
+$messages['hy'] = array(
+	'cnw-error-anon-user-header' => 'Խնդրում ենք, մուտք գործեք',
+);
+
 /** Interlingua (interlingua)
  * @author McDutchie
  */
@@ -1290,6 +1314,14 @@ $messages['id'] = array(
 	'cnw-error-general' => 'Ups, ada sesuatu yang salah di pihak kami! Silakan coba lagi, atau [[Special:Contact|hubungi kami]] untuk bantuan.', # Fuzzy
 	'cnw-error-wiki-limit-header' => 'Wiki telah mencapai batas',
 	'cnw-error-blocked-header' => 'Akun diblokir',
+);
+
+/** Interlingue (Interlingue)
+ * @author Makuba
+ */
+$messages['ie'] = array(
+	'cnw-error-anon-user-header' => 'Ples inregistrar.',
+	'cnw-error-anon-user' => 'Li creation de wikis por anonym usatores ha esset desactivat. Ples [[Special:UserLogin|inregistrar]] e prova denov.',
 );
 
 /** Ingush (ГӀалгӀай)
@@ -1573,6 +1605,7 @@ $messages['lb'] = array(
 	'cnw-desc-change-lang' => 'änneren',
 	'cnw-desc-lang' => 'Sprooch',
 	'cnw-error-blocked-header' => 'Benotzerkont gespaart',
+	'cnw-error-anon-user-header' => 'Loggt Iech w.e.g. an',
 );
 
 /** Lingua Franca Nova (Lingua Franca Nova)
@@ -2068,7 +2101,7 @@ $messages['pl'] = array(
 	'cnw-welcome-instruction1' => 'Kliknij na poniższy przycisk aby zacząć dodawanie stron do Twojej wiki',
 	'cnw-welcome-instruction2' => 'Znajdziesz ten przycisk w wielu miejscach na Twojej wiki, użyj go, jeżeli chcesz dodać nową stronę.',
 	'cnw-welcome-help' => 'Znajdź odpowiedzi, porady i więcej w <a href="http://spolecznosc.wikia.com">Centrum Społeczności</a>.',
-	'cnw-error-general' => 'Coś poszło nie tak podczas tworzenia wiki. Spróbuj ponownie później lub [[Special:Contact|skontaktuj się z nami]].', # Fuzzy
+	'cnw-error-general' => 'Ups, coś poszło nie tak po naszej stronie! Spróbuj ponownie, lub [[Special:Contact|napisz do nas]].',
 	'cnw-error-general-heading' => 'Przepraszamy',
 	'cnw-badword-header' => 'Uwaga',
 	'cnw-badword-msg' => 'Witaj, proszę nie używaj tych niedozwolonych słów w opisie wiki: $1',
@@ -2473,7 +2506,7 @@ $messages['ru'] = array(
 	'cnw-welcome-instruction1' => 'Нажмите на кнопку ниже, чтобы начать добавлять страницы на вики.',
 	'cnw-welcome-instruction2' => 'Вы будете видеть эту кнопку всегда и можете использовать её в любое время, когда захотите добавить новую страницу.',
 	'cnw-welcome-help' => 'Найти ответы, советы и многое другое на <a href="http://community.wikia.com">Центральной вики</a>.',
-	'cnw-error-general' => 'Оппаньки, что-то тут не сработало с нашей стороны!  Пожалуйста, попробуйте еще раз или [[Special:Contact|свяжитесь с нами]] для поддержки.', # Fuzzy
+	'cnw-error-general' => 'Оппаньки, что-то тут не сработало на нашей стороне! Пожалуйста, попробуйте еще раз или [[Special:Contact|обратитесь к нам]] за помощью.',
 	'cnw-error-general-heading' => 'Наши извинения',
 	'cnw-badword-header' => 'Эй там',
 	'cnw-badword-msg' => 'Пожалуйста, воздержитесь от использования плохих или запрещенных слов в описании вики: $1',
@@ -2615,7 +2648,7 @@ $messages['sv'] = array(
 	'cnw-welcome-instruction1' => 'Klicka på knappen nedan för att börja lägga till sidor på din wiki.',
 	'cnw-welcome-instruction2' => 'Du kommer att se den här knappen på din wiki, använd den när du vill lägga till en ny sida.',
 	'cnw-welcome-help' => 'Hitta svar, råd och mer på <a href="http://community.wikia.com">Community Central</a> .',
-	'cnw-error-general' => 'Hoppsan, någonting gick fel på vår sida! Var god försök igen eller [[Special:Contact|kontakta oss]] för hjälp.', # Fuzzy
+	'cnw-error-general' => 'Hoppsan, någonting gick fel på vår sida! Var god försök igen eller [[Special:Contact|kontakta oss]] för hjälp.',
 	'cnw-error-general-heading' => 'Vi beklagar',
 	'cnw-badword-header' => 'Hallå där',
 	'cnw-badword-msg' => 'Hej, var god avstå från att använda dessa grova eller fula ord i beskrivningen av din wiki: $1',
@@ -2623,6 +2656,8 @@ $messages['sv'] = array(
 	'cnw-error-wiki-limit' => 'Hej, du är begränsad till {{PLURAL:$1|$1 wikiskapelse|$1 skapelser av wikis}} per dag. Vänta 24 timmar innan du skapar en annan wiki.',
 	'cnw-error-blocked-header' => 'Konto blockerat',
 	'cnw-error-blocked' => 'Du har blivit blockerad av $1. Anledningen var:  $2. (Blockerings-ID för referens: $3)',
+	'cnw-error-anon-user-header' => 'Var god logga in',
+	'cnw-error-anon-user' => 'Anonyma användare kan inte skapa wikis. Var god [[Special:UserLogin|logga in]] och försök igen.',
 	'cnw-error-torblock' => 'Skapa wikis via Tor-nätverket är inte tillåtet.',
 	'cnw-error-bot' => 'Vi har upptäckt att du kan vara en bot. Om vi gjort ett misstag, kontakta oss och beskriv att du har felaktigt identifierats som en bot, och vi kommer att hjälpa dig med att skapa din wiki: [http://www.wikia.com/Special:Contact/general Kontakta oss]',
 	'cnw-error-bot-header' => 'Du har identifierats som en bot',
@@ -2744,6 +2779,7 @@ $messages['tly'] = array(
  * @author Emperyan
  * @author Erdemaslancan
  * @author Incelemeelemani
+ * @author Joseph
  * @author Suelnur
  */
 $messages['tr'] = array(
@@ -2807,6 +2843,7 @@ $messages['tr'] = array(
 	'cnw-error-wiki-limit' => 'Merhaba, günlük {{PLURAL:$1|$1 wiki oluşturma|$1 wiki oluşturma}} limiti bulunmaktadır. Başka bir wiki oluşturmadan önce 24 saat bekleyin.',
 	'cnw-error-blocked-header' => 'Hesabınız engellendi',
 	'cnw-error-blocked' => '$1 tarafından $2 gerekçesiyle engellendiniz. (Başvuru için referans numarası: $3)',
+	'cnw-error-anon-user-header' => 'Lütfen oturum açın',
 	'cnw-error-torblock' => 'Tor ağı üzerinden wikiler oluşturmaya izin verilmemektedir.',
 	'cnw-error-bot' => 'Sizin bir bot olabileceğinizi tespit ettik. Bir hata yaptıysanız, sizin yanlışlıkla bir bot olduğunuzu tespit etmiş olabiliriz. Wiki oluştururken size yardımcı olabilmemiz için bizimle [http://www.wikia.com/Special:Contact/general İletişime] geçin',
 	'cnw-error-bot-header' => 'Sizin bir bot olduğunuz tespit edilmiştir',
@@ -2945,6 +2982,8 @@ $messages['uk'] = array(
 	'cnw-error-wiki-limit' => 'Привіт, ви обмежені створенням {{PLURAL:$1|$1 вікі}} за день. Почекайте 24 години перед створенням іншого вікі..',
 	'cnw-error-blocked-header' => 'Облікований запис заблоковано',
 	'cnw-error-blocked' => 'Ви заблоковані $1. Причиною було: $2. (Для довідки: $3)',
+	'cnw-error-anon-user-header' => 'Будь ласка, увійдіть',
+	'cnw-error-anon-user' => 'Створення вікі для анонімів вимкнено. Будь ласка, [[Special:UserLogin|увійдіть]] і повторіть спробу.',
 	'cnw-error-torblock' => 'Не допускається створення вікі через мережу Tor.',
 	'cnw-error-bot' => 'Нам здається, що ви - бот.  Якщо це не так, звертайтеся [http://www.wikia.com/Special:Contact/general сюди].',
 	'cnw-error-bot-header' => 'Ми вважаємо, що ви бот',
@@ -3019,7 +3058,7 @@ $messages['vi'] = array(
 	'cnw-welcome-instruction1' => 'Nhấn vào nút dưới đây để bắt đầu thêm các trang cho wiki của bạn.',
 	'cnw-welcome-instruction2' => 'Bạn sẽ thấy nút này trong suốt wiki của bạn, sử dụng nó bất cứ lúc nào bạn muốn thêm một trang mới.',
 	'cnw-welcome-help' => 'Tìm câu trả lời, lời khuyên và nhiều hơn trên <a href="http://vi.wikia.com/wiki/Trang_Chính">Wikia Tiếng Việt</a>.',
-	'cnw-error-general' => 'Một cái gì đó đã xảy ra trong khi tạo ra wiki của bạn. Xin vui lòng thử lại sau.', # Fuzzy
+	'cnw-error-general' => 'Rất tiếc, một cái gì đó đi sai về chúng tôi! Xin vui lòng thử lại, hoặc [[Special:Contact|liên lạc chúng tôi]] để được giúp đỡ.',
 	'cnw-error-general-heading' => 'Lỗi tạo Wiki mới',
 	'cnw-badword-header' => 'Whoa có rồi',
 	'cnw-badword-msg' => 'Chào bạn, xin vui lòng tránh sử dụng những từ ngữ xấu hoặc từ bị cấm trong các mô tả Wiki: $1',
@@ -3027,6 +3066,8 @@ $messages['vi'] = array(
 	'cnw-error-wiki-limit' => 'Xin chào, bạn bị giới hạn {{PLURAL:$1|tạo lập $1 wiki|tạo lập $1 wiki}} mỗi ngày. Hãy chờ 24 giờ trước khi tạo lập một wiki khác.',
 	'cnw-error-blocked-header' => 'Tài khoản bị chặn',
 	'cnw-error-blocked' => 'Bạn đã bị cấm bởi $1. Lý do đưa ra là: $2 . (ID cấm để tham khảo: $3 )',
+	'cnw-error-anon-user-header' => 'Xin vui lòng đăng nhập',
+	'cnw-error-anon-user' => 'Tạo wiki cho người dùng vô danh bị vô hiệu hóa. Xin vui lòng [[Special:UserLogin|đăng nhập]] và thử lại.',
 	'cnw-error-torblock' => 'Tạo wiki qua mạng Tor là không được phép.',
 	'cnw-error-bot' => 'Chúng tôi đã phát hiện rằng bạn có thể là một bot. Nếu chúng tôi đã làm sai, hãy liên hệ với chúng tôi mô tả rằng bạn đã được phát hiện sai là một bot, và chúng tôi sẽ hỗ trợ bạn trong việc tạo ra của wiki bạn: [http://www.wikia.com/Special:Contact/general Liên hệ với Chúng tôi]',
 	'cnw-error-bot-header' => 'Bạn đã được phát hiện như một bot',

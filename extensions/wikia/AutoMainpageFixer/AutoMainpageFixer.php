@@ -33,7 +33,10 @@ function fnAutoMWMainpageFixer( &$title, &$newtitle, &$user, $oldid, $newid ) {
 	#we REALLY dont want this to show up
 	$flags = EDIT_UPDATE + EDIT_NEW + EDIT_FORCE_BOT + EDIT_SUPPRESS_RC;
 
-	$article->doEdit($article_text, $edit_summary, $flags);
+	// VOLDEV-14: Non-admins should not be editing a MediaWiki page
+	$fauxUser = User::newFromName( 'Wikia' );
+
+	$article->doEdit( $article_text, $edit_summary, $flags, false, $fauxUser );
 
 	wfProfileOut(__METHOD__);
 	return true;

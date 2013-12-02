@@ -193,9 +193,10 @@ $messages['pms'] = array(
 );
 
 /** Portuguese (português)
+ * @author Josep Maria 15.
  */
 $messages['pt'] = array(
-	'imageserving-desc' => 'Escolhe imagens de um conjunto especificado de páginas com base em requisitos visuais',
+	'imageserving-desc' => 'Escolhe imagens dum conjunto especificado de páginas com base em requisitos visuais.',
 );
 
 /** Brazilian Portuguese (português do Brasil)

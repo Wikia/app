@@ -175,9 +175,11 @@ $messages['an'] = array(
 );
 
 /** Old English (Ænglisc)
+ * @author Espreon
  */
 $messages['ang'] = array(
 	'renameuser' => 'Ednemnan brūcend',
+	'userrenametool-new' => 'Nīw brūcendnama:',
 );
 
 /** Arabic (العربية)

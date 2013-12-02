@@ -100,9 +100,7 @@ class GlobalFile extends WikiaObject {
 		if ( !isset( $this->url ) ) {
 			$this->url = $this->getUploadDir() . '/' . $this->getUrlRel();
 
-			if (!empty($this->app->wg->DevelEnvironment)) {
-				$this->url = wfReplaceImageServer( $this->url, $this->getTimestamp() );
-			}
+			$this->url = wfReplaceImageServer( $this->url, $this->getTimestamp() );
 		}
 		return $this->url;
 	}

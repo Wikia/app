@@ -728,11 +728,12 @@ $messages['ps'] = array(
 
 /** Portuguese (português)
  * @author Hamilton Abreu
+ * @author Josep Maria 15.
  */
 $messages['pt'] = array(
 	'ajaxpoll-percentVotes' => '$1%&nbsp;de todos os votos',
-	'ajaxpoll-thankyou' => 'Obrigado pelo seu voto!',
-	'ajaxpoll-error' => 'Ocorreu um problema ao processar o seu voto, por favor, tente novamente.',
+	'ajaxpoll-thankyou' => 'Obrigado pelo teu voto!',
+	'ajaxpoll-error' => 'Ocorreu um problema ao processar o teu voto, por favor, tenta-o de novo.',
 	'ajaxpoll-summary' => 'A votação foi criada às $1 de $2 e, até agora, $3 pessoas votaram.',
 	'ajaxpoll-submit' => 'Vote!',
 	'ajaxpoll-closed' => 'A votação foi encerrada. Desfrute dos resultados.',
@@ -861,10 +862,13 @@ $messages['tl'] = array(
 
 /** Turkish (Türkçe)
  * @author Gizemb
+ * @author Incelemeelemani
  */
 $messages['tr'] = array(
+	'ajaxpoll-percentVotes' => 'Tüm oylarda:&nbsp;$1%',
 	'ajaxpoll-thankyou' => 'Oy verdiğiniz için teşekkür ederiz!',
 	'ajaxpoll-error' => 'Oyunuz işleme alınırken bir sorun oluştu, lütfen tekrar deneyiniz.',
+	'ajaxpoll-summary' => '$2 üzerinde $1 anketi oluşturuldu ve $3 kişi oy verdi.',
 	'ajaxpoll-submit' => 'Oy ver!',
 	'ajaxpoll-closed' => 'Anket kapandı. Sonuçların tadını çıkarın.',
 	'ajaxpoll-submitting' => 'Lütfen bekleyin, oyunuz kaydediliyor...',

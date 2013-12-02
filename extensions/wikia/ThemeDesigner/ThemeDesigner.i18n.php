@@ -599,7 +599,8 @@ $messages['diq'] = array(
  * @author Shirayuki
  */
 $messages['en-gb'] = array(
-	'themedesigner-color' => 'colour',
+	'themedesigner-color' => 'colour', # Fuzzy
+	'themedesigner-rules-color-middle' => 'Different colour for middle of the page',
 	'themedesigner-tab-customize' => 'Customise',
 	'themedesigner-pick-a-color' => 'Pick a colour',
 	'themedesigner-color-name-or-hex-code' => 'Colour name or hex code',
@@ -851,6 +852,8 @@ $messages['gl'] = array(
 	'themedesigner-background' => 'Fondo',
 	'themedesigner-page' => 'Páxina',
 	'themedesigner-color' => 'principal',
+	'themedesigner-color-middle' => 'medio',
+	'themedesigner-rules-color-middle' => 'Cor diferente para a metade da páxina',
 	'themedesigner-graphic' => 'gráfico',
 	'themedesigner-buttons' => 'botóns',
 	'themedesigner-links' => 'ligazóns',
@@ -862,6 +865,8 @@ $messages['gl'] = array(
 	'themedesigner-large' => 'Grande',
 	'themedesigner-tile-background' => 'mosaico',
 	'themedesigner-fix-background' => 'fixo',
+	'themedesigner-not-split-background' => 'non dividir',
+	'themedesigner-rules-not-split-background' => "Se o gráfico de fondo é máis largo que 2100px, hai unha opción para ''non'' dividir a imaxe.",
 	'themedesigner-transparency' => 'transparencia',
 	'themedesigner-tab-theme' => 'Tema visual',
 	'themedesigner-tab-customize' => 'Personalizar',
@@ -885,8 +890,8 @@ $messages['gl'] = array(
 	'themedesigner-size' => 'tamaño',
 	'themedesigner-button-save' => 'Gardar',
 	'themedesigner-upload-a-graphic' => 'cargar un gráfico',
-	'themedesigner-rules-wordmark' => 'Cargar un ficheiro .png de 250x65 píxeles ou menos.',
-	'themedesigner-rules-favicon' => 'Cargar un ficheiro .ico de 16x16 píxeles. Estes logos son as iconas pequenas que aparecen na lapela do navegador. [http://community.wikia.com/wiki/Help:Favicon Máis información.]',
+	'themedesigner-rules-wordmark' => 'Subir un ficheiro .png de 250x65 píxeles ou menos.',
+	'themedesigner-rules-favicon' => 'Subir un ficheiro .ico de 16x16 píxeles. Estes logos son as iconas pequenas que aparecen na lapela do navegador. [http://community.wikia.com/wiki/Help:Favicon Máis información.]',
 	'themedesigner-dont-use-a-graphic' => 'eliminar',
 	'themedesigner-history-item' => '$1 por $2',
 	'themedesigner-button-change-text' => 'Cambiar o texto',
@@ -1875,13 +1880,14 @@ $messages['sl'] = array(
 );
 
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)
+ * @author Milicevic01
  * @author Rancher
  */
 $messages['sr-ec'] = array(
 	'themedesigner-title' => 'Прављење тема',
 	'themedesigner-background' => 'Позадина',
 	'themedesigner-page' => 'Страница',
-	'themedesigner-color' => 'боја',
+	'themedesigner-color' => 'главни',
 	'themedesigner-graphic' => 'графика',
 	'themedesigner-buttons' => 'дугмићи',
 	'themedesigner-links' => 'везе',
@@ -1928,7 +1934,9 @@ $messages['sv'] = array(
 	'themedesigner-title' => 'Wikias Tema Designer',
 	'themedesigner-background' => 'Bakgrund',
 	'themedesigner-page' => 'Sida',
-	'themedesigner-color' => 'färg',
+	'themedesigner-color' => 'huvud',
+	'themedesigner-color-middle' => 'mellan',
+	'themedesigner-rules-color-middle' => 'Annan färg i mitten på sidan',
 	'themedesigner-graphic' => 'grafik',
 	'themedesigner-buttons' => 'knappar',
 	'themedesigner-links' => 'länkar',
@@ -1940,6 +1948,8 @@ $messages['sv'] = array(
 	'themedesigner-large' => 'Stor',
 	'themedesigner-tile-background' => 'ruta',
 	'themedesigner-fix-background' => 'fix',
+	'themedesigner-not-split-background' => 'dela inte',
+	'themedesigner-rules-not-split-background' => "Om din bakgrundsbild är bredare än 2100px kan du välja att ''inte'' dela upp bilden.",
 	'themedesigner-transparency' => 'genomskinlighet',
 	'themedesigner-tab-theme' => 'Tema',
 	'themedesigner-tab-customize' => 'Anpassa',

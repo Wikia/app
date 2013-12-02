@@ -140,11 +140,12 @@ $messages['ce'] = array(
 	'cloakcheck-process-username' => 'Декъашхочун цӀе: $1',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Chmee2
  */
 $messages['cs'] = array(
 	'cloakcheck-form-username' => 'Uživatelské jméno:',
+	'cloakcheck-form-check' => 'Zkontrolujte uživatelské jméno',
 	'cloakcheck-process-notexist' => 'Uživatelské jméno neexistuje.',
 	'cloakcheck-process-username' => 'Uživatelské jméno:$1',
 	'cloakcheck-process-accountage-yes' => 'Účet je aktivní dostatečně dlouho.',

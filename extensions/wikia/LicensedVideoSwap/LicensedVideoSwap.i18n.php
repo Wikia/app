@@ -473,6 +473,7 @@ $messages['fr'] = array(
 /** Galician (galego)
  * @author Elisardojm
  * @author Toliño
+ * @author Vivaelcelta
  */
 $messages['gl'] = array(
 	'licensedvideoswap' => 'Intercambio de vídeos con licenza',
@@ -513,7 +514,7 @@ $messages['gl'] = array(
 	'lvs-posted-in-label-none' => 'O vídeo actual non está publicado en ningún artigo',
 	'lvs-posted-in-more' => 'máis',
 	'lvs-confirm-keep-title' => 'Manter o vídeo',
-	'lvs-confirm-keep-message' => 'Engadimos constantemente novos vídeos con licenza aos <a href="http://video.wikia.com/" target="_blank">vídeos do Wikia</a>. Quere ver as novas coincidencias para este vídeo en canto estean dispoñibles?',
+	'lvs-confirm-keep-message' => 'Engadimos constantemente novos vídeos con licenza aos <a href="http://video.wikia.com/" target="_blank">vídeos do Wikia</a>. Queres ver as novas coincidencias para este vídeo en canto estean dispoñibles?',
 	'lvs-confirm-undo-swap-title' => 'Confirmar que quere desfacer',
 	'lvs-confirm-undo-swap-message' => 'Está seguro de querer restaurar o vídeo orixinal?',
 	'lvs-confirm-undo-keep-title' => 'Confirmar que quere desfacer',
@@ -529,6 +530,7 @@ $messages['gl'] = array(
 	'lvs-history-instructions' => 'Para ver o historial de todos os intercambios, vaia a $1.',
 	'lvs-no-monobook-support' => 'Esta páxina non é compatible co deseño Monobook. Para acceder a ela co deseño do Wikia, $1. Isto non cambiará as súas preferencias de deseño',
 	'lvs-click-here' => 'prema aquí',
+	'lvs-new-flag' => 'Novo',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -764,6 +766,18 @@ $messages['pl'] = array(
 	'lvs-new-flag' => 'Nowy',
 );
 
+/** Portuguese (português)
+ * @author Josep Maria 15.
+ */
+$messages['pt'] = array(
+	'licensedvideoswap' => 'Troca de vídeos licenciados',
+	'action-licensedvideoswap' => 'Troca de vídeos sem licença',
+	'lvs-page-title' => 'Troca de vídeos licenciados',
+	'lvs-history-page-title' => 'Histórico da roca de vídeos licenciados',
+	'lvs-tooltip-history' => 'Botão da troca de vídeos licenciados',
+	'lvs-history-button-text' => 'Histórico',
+);
+
 /** Brazilian Portuguese (português do Brasil)
  * @author Luckas
  */
@@ -927,6 +941,7 @@ $messages['sv'] = array(
 	'lvs-history-instructions' => 'För att se historiken över alla utbytande och ångrande åtgärder, gå till $1.',
 	'lvs-no-monobook-support' => 'Denna sida stöds inte i Monobook. För att komma åt den i Wikia-layout, $1. Detta kommer inte att ändra dina utseendeinställningar.',
 	'lvs-click-here' => 'klicka här',
+	'lvs-new-flag' => 'Ny',
 );
 
 /** Ukrainian (українська)

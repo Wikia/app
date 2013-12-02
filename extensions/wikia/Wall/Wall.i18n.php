@@ -851,6 +851,19 @@ checkbox on Special:Block',
 	'wall-topic-edit-cancel' => 'Edit Topics - Cancel button',
 );
 
+/** Old English (Ænglisc)
+ * @author Espreon
+ */
+$messages['ang'] = array(
+	'wall-toolbar-history' => 'Stǣr',
+	'wall-button-to-cancel-preview' => 'Adihtan',
+	'wall-message-edit' => 'Adihtan',
+	'wall-message-delete' => 'Forlēosan',
+	'wall-history' => 'Stǣr',
+	'wall-quote-author' => '$1 wrāt:',
+	'wall-topic-edit-save' => 'Hordian',
+);
+
 /** Arabic (العربية)
  * @author Achraf94
  * @author زكريا
@@ -3389,7 +3402,7 @@ A mensaxe orixinal e o seu resumo seguirán aparecendo no historial do wiki.',
 	'wall-action-rev-thread-confirm' => 'Está seguro de querer borrar revisións deste fío e todo o seu historial do wiki? Esta acción non se pode desfacer.',
 	'wall-action-rev-confirm-ok' => 'Si, borrar',
 	'wall-action-move-thread-heading' => 'Trasladar este fío',
-	'wall-action-move-validation-select-wall' => 'Selecciona unha táboa',
+	'wall-action-move-validation-select-wall' => 'Selecciona un taboleiro',
 	'wall-action-move-topics-summary' => 'Fío trasladado',
 	'wall-action-move-thread-ok' => 'Mover o fío',
 	'wall-action-move-board-label' => 'Seleccione a táboa á que mover',
@@ -3441,7 +3454,7 @@ A mensaxe orixinal e o seu resumo seguirán aparecendo no historial do wiki.',
 	'wall-sorting-newest-replies' => 'Respostas máis novas primeiro',
 	'wall-sorting-most-active' => 'Máis activos primeiro',
 	'wall-sorting-archived' => 'Arquivados',
-	'tog-enotifwallthread' => '…alguén responde á mensaxe dun muro que sigo',
+	'tog-enotifwallthread' => '…alguén responde á mensaxe dun muro que estou seguindo',
 	'tog-enotifmywall' => '…alguén deixa unha nova mensaxe no meu muro',
 	'wall-deleted-msg-pagetitle' => 'Mensaxe borrada',
 	'wall-deleted-msg-text' => 'A mensaxe que intenta consultar foi borrada.',

@@ -216,32 +216,33 @@ $messages['an'] = array(
 );
 
 /** Old English (Ænglisc)
+ * @author Espreon
  * @author Gott wisst
  */
 $messages['ang'] = array(
 	'wmu-upload' => 'Forþsendan',
-	'wmu-notlogged' => 'Inmeldian oþþe macian ȝrīman tō forþsendenne biliþ fram þīnum spearctellere',
+	'wmu-notlogged' => 'Inmeldian oþþe macian grīman tō forþsendenne biliþ fram þīnum spearctellere',
 	'wmu-find' => 'Findan',
-	'wmu-thiswiki' => 'Þis ƿiki',
+	'wmu-thiswiki' => 'Þis wiki',
 	'wmu-flickr' => 'Flickr',
 	'wmu-upload-btn' => 'Forþsendan',
 	'wmu-find-btn' => 'Findan',
-	'wmu-flickr-inf' => 'Sēcan þurh rihte forþlǣtnessȝifen uncēap biliþ fram Flickre and inlǣdan hīe in þīn ƿiki.',
-	'wmu-conflict-inf' => '<h1>Oops, ȝeƿithord berende þone naman nū ƿæs ǣr ȝemacod.</h1>Hƿæt ƿilt þū dōn mid <b>$1</b>?',
+	'wmu-flickr-inf' => 'Sēcan þurh rihte forþlǣtnessgifen uncēap biliþ fram Flickre and inlǣdan hīe in þīn wiki.',
+	'wmu-conflict-inf' => '<h1>Oops, gewithord berende þone naman nū wæs ǣr gemacod.</h1>Hwæt wilt þū dōn mid <b>$1</b>?',
 	'wmu-rename' => 'Nemnan þīn biliþ eft',
-	'wmu-existing' => 'Notian ǣr ȝemacod biliþ',
-	'wmu-overwrite' => 'Settan þīn biliþ on stede þæs ǣr ȝemacodan',
-	'wmu-insert' => 'Ȝeþēodan',
-	'wmu-details-inf' => '<h1>Ȝeƿithordes amearcunȝa</h1>. Cēosan naman tō þissum ȝeƿithorde. Macian þone naman tōmearciende.',
+	'wmu-existing' => 'Notian ǣr gemacod biliþ',
+	'wmu-overwrite' => 'Settan þīn biliþ on stede þæs ǣr gemacodan',
+	'wmu-insert' => 'Geþēodan',
+	'wmu-details-inf' => '<h1>Gewithordes amearcunga</h1>. Cēosan naman tō þissum gewithorde. Macian þone naman tōmearciende.',
 	'wmu-name' => 'Nama',
 	'wmu-license' => 'Forþlǣtness',
-	'wmu-details-inf2' => '<h1>Cēosunȝa mid ȝeƿrite</h1>Cēos hū þū ƿilt þæt þis biliþ ætīeƿie on þīnum tramete.',
+	'wmu-details-inf2' => '<h1>Cēosunga mid gewrite</h1>Cēos hū þū wilt þæt þis biliþ ætīewie on þīnum tramete.',
 	'wmu-size' => 'Micelness',
 	'wmu-thumbnail' => 'Biliþincel',
 	'wmu-fullsize' => 'Ful grēat ($1x$1px)',
 	'wmu-width' => 'Brǣdo',
 	'wmu-layout' => 'Endebyrdness',
-	'wmu-caption' => 'Andefen cƿide',
+	'wmu-caption' => 'Andefen cwide',
 	'wmu-link' => 'Hlence',
 	'wmu-optional' => '(cēosendlic)',
 	'wmu-insert2' => 'Ȝeþēodan ȝeƿithord',
@@ -1261,6 +1262,7 @@ $messages['fr'] = array(
 
 /** Galician (galego)
  * @author Toliño
+ * @author Vivaelcelta
  */
 $messages['gl'] = array(
 	'wmu-upload-image' => 'Cargar unha foto',
@@ -1308,7 +1310,7 @@ $messages['gl'] = array(
 	'wmu-imagelink' => '<b>Novo!</b> Engadir imaxes',
 	'wmu-imagebutton' => 'Engadir as imaxes',
 	'wmu-license-cc' => 'Licenciado baixo a licenza Creative Commons recoñecemento compartir igual 3.0',
-	'wmu-bad-extension' => 'Intentou cargar un tipo de ficheiro non permitido. Por favor, probe de novo.',
+	'wmu-bad-extension' => 'Intentou subir un tipo de ficheiro non permitido. Por favor, probe de novo.',
 	'wmu-filetype-missing' => 'Nesta carga falta a extensión do ficheiro',
 	'wmu-filetype-incorrect' => 'A extensión do ficheiro desta carga é incorrecta',
 	'wmu-hide-license-msg' => 'agochar o texto da licenza',

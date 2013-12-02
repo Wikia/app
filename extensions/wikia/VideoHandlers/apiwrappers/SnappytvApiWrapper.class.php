@@ -15,7 +15,7 @@ class SnappytvApiWrapper extends ApiWrapper {
 		wfProfileIn( __METHOD__ );
 
 		$info = self::getInfoFromHtml( $url );
-		if ( !empty($info['videoId']) && !empty($info['eventId']) ) {
+		if ( !empty( $info['videoId'] ) && !empty( $info['eventId'] ) ) {
 			$videoId = $info['videoId'].'_'.$info['eventId'];
 
 			wfProfileOut( __METHOD__ );
@@ -37,7 +37,7 @@ class SnappytvApiWrapper extends ApiWrapper {
 	}
 
 	public function getThumbnailUrl() {
-		if ( !empty($this->interfaceObj['thumb_320x180']) ) {
+		if ( !empty( $this->interfaceObj['thumb_320x180'] ) ) {
 			return $this->interfaceObj['thumb_320x180'];
 		}
 
@@ -45,7 +45,7 @@ class SnappytvApiWrapper extends ApiWrapper {
 	}
 
 	protected function getVideoTitle() {
-		if ( !empty($this->interfaceObj['title']) ) {
+		if ( !empty( $this->interfaceObj['title'] ) ) {
 			return $this->interfaceObj['title'];
 		}
 
@@ -53,7 +53,7 @@ class SnappytvApiWrapper extends ApiWrapper {
 	}
 
 	protected function getAltVideoId() {
-		if ( !empty($this->interfaceObj['short_url']) ) {
+		if ( !empty( $this->interfaceObj['short_url'] ) ) {
 			$embedUrlParts = explode( '/', $this->interfaceObj['short_url'] );
 			return array_pop( $embedUrlParts );
 		}
@@ -62,7 +62,7 @@ class SnappytvApiWrapper extends ApiWrapper {
 	}
 
 	protected function getVideoCategory(){
-		if ( !empty($this->interfaceObj['channel_friendly_name']) ) {
+		if ( !empty( $this->interfaceObj['channel_friendly_name'] ) ) {
 			 return $this->interfaceObj['channel_friendly_name'];
 		}
 
@@ -70,7 +70,7 @@ class SnappytvApiWrapper extends ApiWrapper {
 	}
 
 	protected function getVideoName() {
-		if ( !empty($this->interfaceObj['event_episode_title']) ) {
+		if ( !empty( $this->interfaceObj['event_episode_title'] ) ) {
 			 return $this->interfaceObj['event_episode_title'];
 		}
 
@@ -82,7 +82,7 @@ class SnappytvApiWrapper extends ApiWrapper {
 	}
 
 	protected function getVideoPublished() {
-		if ( !empty($this->interfaceObj['created_at']) ) {
+		if ( !empty( $this->interfaceObj['created_at'] ) ) {
 			return $this->interfaceObj['created_at'];
 		}
 
@@ -90,9 +90,9 @@ class SnappytvApiWrapper extends ApiWrapper {
 	}
 
 	protected function getVideoKeywords() {
-		if ( !empty($this->interfaceObj['tags']) ) {
+		if ( !empty( $this->interfaceObj['tags'] ) ) {
 			$tags = array();
-			foreach( $this->interfaceObj['tags'] as $tag ) {
+			foreach ( $this->interfaceObj['tags'] as $tag ) {
 				$tags[] = $tag['tag'];
 			}
 			return implode( ', ', $tags );
@@ -102,7 +102,7 @@ class SnappytvApiWrapper extends ApiWrapper {
 	}
 
 	protected function getUniqueName() {
-		if ( !empty($this->interfaceObj['friendly_id']) ) {
+		if ( !empty( $this->interfaceObj['friendly_id'] ) ) {
 			return $this->interfaceObj['friendly_id'];
 		}
 
@@ -119,7 +119,7 @@ class SnappytvApiWrapper extends ApiWrapper {
 
 		$apiUrl = $this->getApiUrl();
 
-		if ( empty($this->videoId) ){
+		if ( empty( $this->videoId ) ){
 			wfProfileOut( __METHOD__ );
 			throw new EmptyResponseException( $apiUrl );
 		}
@@ -128,9 +128,9 @@ class SnappytvApiWrapper extends ApiWrapper {
 		$memcKey = wfMemcKey( static::$CACHE_KEY, $this->videoId, static::$CACHE_KEY_VERSION );
 		$processedResponse = F::app()->wg->memc->get( $memcKey );
 		if ( empty( $processedResponse ) ) {
-			$req = MWHttpRequest::factory( $apiUrl );
-			$status = VideoHandlerHelper::wrapHttpRequest( $req );
-			if( $status->isOK() ) {
+			$req = MWHttpRequest::factory( $apiUrl, array( 'noProxy' => true ) );
+			$status = $req->execute();
+			if ( $status->isOK() ) {
 				$response = $req->getContent();
 				$this->response = $response;	// Only for migration purposes
 				if ( empty( $response ) ) {
@@ -155,8 +155,8 @@ class SnappytvApiWrapper extends ApiWrapper {
 
 		$result = '';
 		$return = json_decode( $response, true );
-		if ( !empty($return['tracks']['0']) ) {
-			foreach( $return['tracks']['0'] as $video ) {
+		if ( !empty( $return['tracks']['0'] ) ) {
+			foreach ( $return['tracks']['0'] as $video ) {
 				if ( array_key_exists('id', $video) && $video['id'] == $this->videoId ) {
 					$result = $video;
 					break;
@@ -181,22 +181,23 @@ class SnappytvApiWrapper extends ApiWrapper {
 		}
 	}
 
+	/**
+	 * Get Redirect url
+	 * @param string $url
+	 * @return string $redirectUrl
+	 */
 	public static function getRedirectUrl( $url ) {
 		wfProfileIn( __METHOD__ );
 
 		$app = F::app();
-		$memcKey = wfmemcKey( static::$CACHE_KEY, md5($url), static::$CACHE_KEY_VERSION );
+		$memcKey = wfmemcKey( static::$CACHE_KEY, md5( $url ), static::$CACHE_KEY_VERSION );
 		$redirectUrl = $app->wg->memc->get( $memcKey );
-		if ( empty($redirectUrl) ) {
-			$req = MWHttpRequest::factory( $url );
-			$status = VideoHandlerHelper::wrapHttpRequest( $req );
-			if( $status->isOK() ) {
-				$response = $req->getContent();
-				if ( !empty( $response ) ) {
-					if ( preg_match('/<a href="(.+)">/', $response, $matches) ) {
-						$redirectUrl = trim( $matches[1] );
-						$app->wg->memc->set( $memcKey, $redirectUrl, static::$CACHE_EXPIRY );
-					}
+		if ( empty( $redirectUrl ) ) {
+			$response = Http::request( 'GET', $url, array( 'noProxy' => true ) );
+			if ( !empty( $response ) ) {
+				if ( preg_match( '/<a href="(.+)">/', $response, $matches ) ) {
+					$redirectUrl = trim( $matches[1] );
+					$app->wg->memc->set( $memcKey, $redirectUrl, static::$CACHE_EXPIRY );
 				}
 			}
 		}
@@ -206,23 +207,24 @@ class SnappytvApiWrapper extends ApiWrapper {
 		return $redirectUrl;
 	}
 
+	/**
+	 * Get info from html
+	 * @param string $url
+	 * @return array $info
+	 */
 	public static function getInfoFromHtml( $url ) {
 		wfProfileIn( __METHOD__ );
 
 		$info = array();
 		$url = self::getRedirectUrl( $url );
-		$req = MWHttpRequest::factory( $url );
-		$status = VideoHandlerHelper::wrapHttpRequest( $req );
-		if( $status->isOK() ) {
-			$response = $req->getContent();
-			if ( !empty( $response ) ) {
-				if ( preg_match('/"id":(\d+),/', $response, $matches) ) {
-					$info['videoId'] = trim( $matches[1] );
-				}
+		$response = Http::request( 'GET', $url, array( 'noProxy' => true ) );
+		if ( !empty( $response ) ) {
+			if ( preg_match( '/"id":(\d+),/', $response, $matches ) ) {
+				$info['videoId'] = trim( $matches[1] );
+			}
 
-				if ( preg_match('/"event_id":(\d+),/', $response, $matches) ) {
-					$info['eventId'] = trim( $matches[1] );
-				}
+			if ( preg_match( '/"event_id":(\d+),/', $response, $matches ) ) {
+				$info['eventId'] = trim( $matches[1] );
 			}
 		}
 

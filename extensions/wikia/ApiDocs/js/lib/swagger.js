@@ -7,6 +7,8 @@
 
     SwaggerApi.prototype.discoveryUrl = "http://api.wordnik.com/v4/resources.json";
 
+    SwaggerApi.prototype.mainUrl = "";
+
     SwaggerApi.prototype.debug = false;
 
     SwaggerApi.prototype.api_key = null;
@@ -19,6 +21,9 @@
       }
       if (options.discoveryUrl != null) {
         this.discoveryUrl = options.discoveryUrl;
+      }
+      if (options.mainUrl != null) {
+        this.mainUrl = options.mainUrl;
       }
       if (options.debug != null) {
         this.debug = options.debug;
@@ -51,7 +56,7 @@
     SwaggerApi.prototype.build = function() {
       var _this = this;
       this.progress('fetching resource list: ' + this.discoveryUrl);
-      return jQuery.getJSON(this.discoveryUrl, function(response) {
+      return jQuery.getJSON(this.discoveryUrl + this.mainUrl, function(response) {
         var res, resource, _i, _j, _len, _len1, _ref, _ref1;
         if (response.apiVersion != null) {
           _this.apiVersion = response.apiVersion;

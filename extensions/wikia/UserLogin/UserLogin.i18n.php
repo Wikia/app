@@ -439,7 +439,7 @@ Desitges controlar quins missatges de correu electrònic reps? Vés a: {{fullurl
  * @author Умар
  */
 $messages['ce'] = array(
-	'userlogin-error-throttled-mailpassword' => 'Оха хӀинцале хӀокху декъашхочун дӀаяздаран пароль яийтина {{PLURAL:$1| сахьат|$1 сахьат}} хьалха. Дехар до, хьай электронан почте хьажа.',
+	'userlogin-error-throttled-mailpassword' => 'Оха хӀинцале хӀокху декъашхочун дӀаяздаран пароль яийтина {{PLURAL:$1| сахьт}} хьалха. Дехар до, хьай электронан почте хьажа.',
 );
 
 /** Czech (česky)
@@ -654,6 +654,7 @@ Para comprobar los acontecimientos más recientes en Wikia, visita http://comuni
 );
 
 /** Finnish (suomi)
+ * @author Stryn
  * @author Ville96
  */
 $messages['fi'] = array(
@@ -667,6 +668,7 @@ $messages['fi'] = array(
 	'userlogin-error-nosuchuser' => 'Hm, emme tunnista tätä nimeä. Muista että kirjainkoolla on väliä.',
 	'userlogin-error-wrongpassword' => 'Oho, väärä salasana. Varmista, että caps lock on pois päältä, ja yritä uudelleen.',
 	'userlogin-error-wrongpasswordempty' => 'Oho, täytä salasana-kenttä.',
+	'userlogin-error-resetpass_announce' => 'Näyttää siltä että käytit väliaikaista salasanaa. Valitse uusi salasana jatkaaksesi sisäänkirjautumista.',
 	'userlogin-error-login-throttled' => 'Olet yrittänyt kirjautua sisään väärällä salasanalla liian monta kertaa. Odota hetki ennen kuin yrität uudelleen.',
 	'userlogin-error-login-userblocked' => 'Käyttäjätunnuksesi on estetty eikä sitä voi käyttää sisäänkirjautumiseen.',
 	'userlogin-error-edit-account-closed-flag' => 'Wikia on poistanut tilisi käytöstä.',
@@ -683,7 +685,9 @@ $messages['fi'] = array(
 	'userlogin-oldpassword' => 'Vanha salasana',
 	'userlogin-newpassword' => 'Uusi salasana',
 	'userlogin-retypenew' => 'Kirjoita uusi salasana uudelleen',
+	'userlogin-password-email-greeting' => 'Hei $USERNAME,',
 	'userlogin-provider-or' => 'Tai',
+	'userlogin-loginreqlink' => 'kirjaudu sisään',
 );
 
 /** Faroese (føroyskt)

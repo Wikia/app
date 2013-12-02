@@ -50,15 +50,15 @@ $messages['en'] = array(
 	'wikiahubs-popular-videos' => 'Popular videos',
 
 	// social icons
-	'wikiahubs-social-twitter-link-VideoGames' => 'https://twitter.com/#!/WikiaGames',
+	'wikiahubs-social-twitter-link-VideoGames' => 'https://twitter.com/Wikia',
 	'wikiahubs-social-facebook-link-VideoGames' => 'http://www.facebook.com/Wikia',
 	'wikiahubs-social-googleplus-link-VideoGames' => 'http://gplus.to/wikia',
 
-	'wikiahubs-social-twitter-link-Entertainment' => 'https://twitter.com/#!/WikiaEnt',
+	'wikiahubs-social-twitter-link-Entertainment' => 'https://twitter.com/Wikia',
 	'wikiahubs-social-facebook-link-Entertainment' => 'http://www.facebook.com/Wikia',
 	'wikiahubs-social-googleplus-link-Entertainment' => 'http://gplus.to/wikia',
 
-	'wikiahubs-social-twitter-link-Lifestyle' => 'https://twitter.com/#!/WikiaLifestyle',
+	'wikiahubs-social-twitter-link-Lifestyle' => 'https://twitter.com/Wikia',
 	'wikiahubs-social-facebook-link-Lifestyle' => 'http://www.facebook.com/Wikia',
 	'wikiahubs-social-googleplus-link-Lifestyle' => 'http://gplus.to/wikia',
 );

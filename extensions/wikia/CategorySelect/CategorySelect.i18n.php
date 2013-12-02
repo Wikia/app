@@ -260,7 +260,7 @@ $messages['ckb'] = array(
 	'categoryselect-button-save' => 'پاشەکەوت',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Chmee2
  * @author Darth Daron
  * @author Dontlietome7
@@ -270,12 +270,14 @@ $messages['cs'] = array(
 	'categoryselect-button-add' => 'Přidat kategorii',
 	'categoryselect-button-cancel' => 'Storno',
 	'categoryselect-button-save' => 'Uložit',
-	'categoryselect-category-add' => 'Přidat kategorii', # Fuzzy
-	'categoryselect-category-edit' => 'Možnosti kategorie', # Fuzzy
+	'categoryselect-category-add' => 'Přidat kategorii...',
+	'categoryselect-category-edit' => 'Upravit kategorii',
 	'categoryselect-category-remove' => 'Odstranit kategorii',
 	'categoryselect-edit-summary' => 'Přidávání kategorií',
-	'categoryselect-error-article-doesnt-exist' => 'Článek [id=$1] neexistuje.', # Fuzzy
+	'categoryselect-error-article-doesnt-exist' => 'Stránka [id=$1] neexistuje.',
+	'categoryselect-error-category-name-length' => 'Bylo dosaženo maximální délky názvu kategorie.',
 	'categoryselect-error-db-locked' => 'Databáze je uzamčena.',
+	'categoryselect-error-duplicate-category-name' => 'Kategorie "$1" již existuje.',
 	'categoryselect-error-edit-abort' => 'Změna, o kterou jste se pokusili, byla zrušena rozšířením.', # Fuzzy
 	'categoryselect-error-empty-category-name' => 'Zadejte název kategorie (část před |)', # Fuzzy
 	'categoryselect-error-user-rights' => 'Chyba uživatelských práv.', # Fuzzy
