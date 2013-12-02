@@ -1,20 +1,17 @@
 $(function() {
 	'use strict';
 	var rail = $('#WikiaRail'),
-		LAZY_LOADING_SAMPLING_RATIO = 10, // integer (0-100): 0 - no tracking, 100 - track everything */
-		params = {},
-		lazyLoadingTime;
-
+	LAZY_LOADING_SAMPLING_RATIO = 10; // integer (0-100): 0 - no tracking, 100 - track everything */
 
 	if (rail.find('.loading').exists()) {
-		params = {
+		var params = {
 			'articleTitle': window.wgTitle,
 			'namespace': window.wgNamespaceNumber,
 			'cb': window.wgStyleVersion
 		};
 
-		if (typeof wgSassLoadedScss !== 'undefined') {
-			params.excludeScss = window.wgSassLoadedScss;
+		if (typeof wgSassLoadedScss != 'undefined') {
+			params.excludeScss = wgSassLoadedScss;
 		}
 
 		$.nirvana.sendRequest({
@@ -24,42 +21,17 @@ $(function() {
 			type: 'get',
 			format: 'json',
 			callback: function(data) {
-				var zidConfig = { minColumnWidth: 350, selector: '.module, .wikia-ad',
-					onColumnCountChangeCallback: function ( columnsCount, elements ) {
-						// Event handler managing Ad show/hide races with ZID event handler making
-						// behavior non-deterministic. Ad container is hidden before recalculating
-						// to make sure that behavior is consistent
-						$.each( elements, function ( i, v ) {
-							var elem = $(v);
-							if ( elem.hasClass( 'wikia-ad' ) ) {
-								if ( columnsCount > 1 ) {
-									elem.hide();
-								} else {
-									elem.show();
-								}
-							}
-						} );
-					} };
-
-				rail.find('.loading').remove().end().append(data.railLazyContent + data.js);
-
-				if ( data.css.length === 0 ) {
-					// we can enable zid immediately when there are no styles to load
-					rail.zid(zidConfig);
-				} else {
-					require(['wikia.loader'], function(loader) {
-						loader({
-							type: loader.CSS,
-							resources: data.css
-						}).done(function() {
-							rail.zid(zidConfig);
-						});
+				require(['wikia.loader'], function(loader) {
+					loader({
+						type: loader.CSS,
+						resources: data.css
 					});
-				}
+				});
+
+				$('#WikiaRail').find('.loading').remove().end().append(data.railLazyContent + data.js);
 
 				if( LAZY_LOADING_SAMPLING_RATIO >= Math.floor( (Math.random() * 100 + 1) ) ) {
-					lazyLoadingTime = ( new Date() ) - ( window.wgNow || 0 );
-
+					var lazyLoadingTime = ( new Date() ) - ( window.wgNow || 0 );
 					Wikia.Tracker.track({
 						action: Wikia.Tracker.ACTIONS.IMPRESSION,
 						category: 'right-rail',
@@ -87,8 +59,8 @@ $(function() {
 				}
 
 				if ( window.wgEnableLightboxExt ) {
-					window.LightboxLoader.init();
-					window.LightboxLoader.loadFromURL();
+					LightboxLoader.init();
+					LightboxLoader.loadFromURL();
 				}
 			}
 		});

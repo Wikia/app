@@ -162,7 +162,7 @@ require(['throbber', 'toast', 'modal', 'track', 'JSMessages', 'lazyload', 'jquer
 									label: 'new'
 								});
 							}
-							d.getElementById('wkArtCnt').innerText = json.counter;
+							d.getElementById('wkArtComHeader').setAttribute('data-count', json.counter);
 						} else {
 							onFail();
 						}

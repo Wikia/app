@@ -297,6 +297,15 @@ $messages['uz'] = array(
 	'new-look' => 'Vikia',
 );
 
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'skinchooser-desc' => 'Cho phép người dùng lựa chọn giao diện trong sở thích của họ',
+	'new-look' => 'Wikia',
+	'site-layout' => 'Bố trí trang web',
+);
+
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  */
