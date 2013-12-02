@@ -3958,21 +3958,3 @@ function wfUnpack( $format, $data, $length=false ) {
 	return $result;
 }
 
-/**
- * Repair malformed HTML without making semantic changes (ie, changing tags to more closely follow the HTML spec.)
- * Refs DAR-985 and VID-1011
- *
- * @param string $html - HTML to repair
- * @return string - repaired HTML
- */
-function wfFixMalformedHTML( $html ) {
-	$dom_document = new DOMDocument();
-	// Silence errors when loading html into DOMDocument (it complains when receiving malformed html - which is
-	// what we're using it to fix) see: http://www.php.net/manual/en/domdocument.loadhtml.php#95463
-	libxml_use_internal_errors(true);
-	$dom_document->loadHTML($html);
-	// Strip doctype declaration, <html>, and <body> tags created by saveHTML
-	$html = preg_replace( array( '/^.*?<body>/si', '/<\/body><\/html>$/si'), '', $dom_document->saveHTML());
-
-	return $html;
-}
