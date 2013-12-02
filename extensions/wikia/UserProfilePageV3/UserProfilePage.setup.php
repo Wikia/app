@@ -59,7 +59,7 @@ $wgHooks['ArticleSaveComplete'][] = 'Masthead::userMastheadInvalidateCache';
 $wgExtensionMessagesFiles['UserProfilePageV3'] = $dir . '/UserProfilePage.i18n.php';
 
 //register messages package for JS
-F::build('JSMessages')->registerPackage( 'UserProfilePageV3', array(
+JSMessages::registerPackage( 'UserProfilePageV3', array(
 	'userprofilepage-edit-modal-header',
 	'user-identity-box-avatar-cancel',
 	'user-identity-box-avatar-save'

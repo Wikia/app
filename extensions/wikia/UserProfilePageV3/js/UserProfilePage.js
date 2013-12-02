@@ -53,50 +53,54 @@ var UserProfilePage = {
 			UserProfilePage.isLightboxGenerating = true;
 			UserProfilePage.newAvatar = false;
 
-			$.getResources([$.getSassCommonURL('/extensions/wikia/UserProfilePageV3/css/UserProfilePage_modal.scss')]);
+			$.when(
+				$.getJSON(this.ajaxEntryPoint, {
+					method: 'getLightboxData',
+					tab: tabName,
+					userId: UserProfilePage.userId,
+					rand: Math.floor(Math.random()*100001) // is cache buster really needed here?
+				}),
+				$.getMessages(['UserProfilePageV3']),
+				$.getResources([$.getSassCommonURL('/extensions/wikia/UserProfilePageV3/css/UserProfilePage_modal.scss')])
+			).done(function( getJSONResponse ) {
+				var data = getJSONResponse[0];
 
-			$.getJSON(this.ajaxEntryPoint, {
-				method: 'getLightboxData',
-				tab: tabName,
-				userId: UserProfilePage.userId,
-				rand: Math.floor(Math.random()*100001) // is cache buster really needed here?
-			}, function(data) {
 				require( [ 'wikia.ui.factory' ], function( uiFactory ) {
 					uiFactory.init( [ 'modal' ] ).then(function( modal ) {
 						var id = $(data.body).attr('id') + 'Wrapper',
 							modalConfig = {
-							vars: {
-								id: id,
-								content: data.body,
-								size: 'medium',
-								title: $.msg( 'userprofilepage-edit-modal-header' ),
-								buttons: [
-									{
-										vars: {
-											value: $.msg( 'user-identity-box-avatar-save' ),
-											classes: [ 'normal', 'primary' ],
-											data: [
-												{
-													key: 'event',
-													value: 'save'
-												}
-											]
+								vars: {
+									id: id,
+									content: data.body,
+									size: 'medium',
+									title: $.msg( 'userprofilepage-edit-modal-header' ),
+									buttons: [
+										{
+											vars: {
+												value: $.msg( 'user-identity-box-avatar-save' ),
+												classes: [ 'normal', 'primary' ],
+												data: [
+													{
+														key: 'event',
+														value: 'save'
+													}
+												]
+											}
+										},
+										{
+											vars: {
+												value: $.msg( 'user-identity-box-avatar-cancel' ),
+												data: [
+													{
+														key: 'event',
+														value: 'close'
+													}
+												]
+											}
 										}
-									},
-									{
-										vars: {
-											value: $.msg( 'user-identity-box-avatar-cancel' ),
-											data: [
-												{
-													key: 'event',
-													value: 'close'
-												}
-											]
-										}
-									}
-								]
-							}
-						};
+									]
+								}
+							};
 						modal.createComponent( modalConfig, function( editProfileModal ) {
 							//UserProfilePage.modal = $(data.body).makeModal({width : 750, onClose: UserProfilePage.closeModal, closeOnBlackoutClick: UserProfilePage.closeModal});
 							UserProfilePage.modal = editProfileModal.$element;
@@ -133,9 +137,19 @@ var UserProfilePage = {
 						});
 					});
 				});
-			}).error(function(data) {
-				var response = JSON.parse(data.responseText);
-				$.showModal('Error', response.exception.message);
+			}).fail(function(data) {
+
+				console.log( data );
+
+				var message = '';
+				if( data.responseText ) {
+					var response = JSON.parse(data.responseText);
+					message = response.exception.message;
+				} else {
+					message = data.error;
+				}
+
+				$.showModal('Error', message);
 
 				UserProfilePage.isLightboxGenerating = false;
 			});
