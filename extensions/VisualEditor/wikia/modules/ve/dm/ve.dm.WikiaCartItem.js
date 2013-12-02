@@ -67,17 +67,13 @@ ve.dm.WikiaCartItem.prototype.getTitleParts = function ( title ) {
 /**
  * @method
  * @description Sets title with special case for user-blanked input
- * @param String May be full path (File:Example.jpg) or string for basename
+ * @param {String} title May be full path (File:Example.jpg) or string for basename
  */
 ve.dm.WikiaCartItem.prototype.setTitle = function ( title ) {
 	var parts,
 		prefix,
 		basename,
 		extension;
-
-	if ( typeof title === 'number' ) {
-		title = title.toString();
-	}
 
 	parts = this.getTitleParts( title || mw.config.get( 'wgPageName' ) );
 	prefix = parts[1] || this.prefix || '';
