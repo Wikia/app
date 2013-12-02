@@ -84,9 +84,10 @@ var UserLoginModal = {
 							callback: function ( html ) {
 								var content = $( '<div style="display:none" />' ).append( html ),
 									heading = content.find( 'h1' ),
-									contentBlock = UserLoginModal.$modal.$element.find( '.UserLoginModal' );
+									modal = UserLoginModal.$modal,
+									contentBlock = modal.$element.find( '.UserLoginModal' );
 
-								UserLoginModal.$modal.$element.find( 'header h3' ).text( heading.text() );
+								modal.setTitle( heading.text() );
 								heading.remove();
 
 								contentBlock.slideUp( 400, function () {
