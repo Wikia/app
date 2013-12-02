@@ -60,17 +60,6 @@ define( 'wikia.ui.modal', [
 	}
 
 	/**
-	 * Simple initializing new modal object based on the DOM element id passed as parameter
-	 *
-	 * @param {String} id - id of modal DOM element
-	 * @returns {Object} - new instance of modal object
-	 */
-
-	function init( id ) {
-		return new Modal( id );
-	}
-
-	/**
 	 * IE 9 doesn't support flex-box. IE-10 and IE-11 has some bugs in implementation:
 	 *
 	 * https://connect.microsoft.com/IE/feedback/details/802625/
