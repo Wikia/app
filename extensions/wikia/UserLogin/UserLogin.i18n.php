@@ -439,7 +439,7 @@ Desitges controlar quins missatges de correu electrònic reps? Vés a: {{fullurl
  * @author Умар
  */
 $messages['ce'] = array(
-	'userlogin-error-throttled-mailpassword' => 'Оха хӀинцале хӀокху декъашхочун дӀаяздаран пароль яийтина {{PLURAL:$1| сахьат|$1 сахьат}} хьалха. Дехар до, хьай электронан почте хьажа.',
+	'userlogin-error-throttled-mailpassword' => 'Оха хӀинцале хӀокху декъашхочун дӀаяздаран пароль яийтина {{PLURAL:$1| сахьт}} хьалха. Дехар до, хьай электронан почте хьажа.',
 );
 
 /** Czech (česky)
