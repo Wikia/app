@@ -560,9 +560,10 @@ class Article extends Page {
 					// return status different than HTTP 200 when revision is missing (BAC-630)
 					if ( !$this->mRevision instanceof Revision ) {
 						global $wgEnableParserCache;
-						wfDebug( __METHOD__ . ": no revision found - returning 404\n" );
+						wfDebug( __METHOD__ . ": no revision found - disabling parser cache and returning 404\n" );
 
-						$wgOut->setStatusCode( 404 );
+						$wgOut->getRequest()->response()->header('X-Missing-Revision: 1', true, 404);
+
 						$useParserCache = false;
 						$wgEnableParserCache = false;
 					}
