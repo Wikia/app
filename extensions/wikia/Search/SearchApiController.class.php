@@ -203,7 +203,7 @@ class SearchApiController extends WikiaApiController {
 			]
 		];
 		$phrase = $this->request->getVal('query', '');
-		$query = '+((ns:0) AND +(lang:en)) AND +((title_en:"'.$phrase.'") OR (redirect_titles_mv_en:"'.$phrase.'")) AND -(wid:43339) AND -(wid:11557)';
+		$query = '+((ns:0) AND +(lang:en)) AND +((title_en:"'.$phrase.'") OR (redirect_titles_mv_en:"'.$phrase.'")) AND +(nolang_txt:"'.$phrase.'")';
 
 		$client = new Solarium_Client($config);
 		$select = $client->createSelect();
@@ -218,8 +218,9 @@ class SearchApiController extends WikiaApiController {
 		$select->createFilterQuery( 'words' )->setQuery('words:[10 TO *]');
 		$select->createFilterQuery( 'wam' )->setQuery('-(wam:0)');
 		$select->createFilterQuery( 'dis' )->setQuery('-(title_en:disambiguation)');
+		$select->createFilterQuery( 'banned' )->setQuery('-(wid:43339) AND -(wid:11557)');
 
-		$dismax->setBoostQuery( 'wikititle_en:"'.$phrase.'"^10000' );
+		$dismax->setBoostQuery( 'wikititle_en:"'.$phrase.'"^10000');
 		$dismax->setBoostFunctions( 'words^1.5 revcount^1 page_images^5 activeusers^1' );
 
 		$result = $client->select( $select );
