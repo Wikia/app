@@ -1,11 +1,7 @@
 require( ['jquery', 'wikia.toc', 'wikia.mustache'], function ( $, toc, mustache ) {
 	'use strict';
 
-	/**
-	 * map container identifier as key, true/false values that determine if TOC was generated for that container
-	 * @type {Object}
-	 */
-	var containerHasTOC = {},
+	var hasTOC = false, // flag - TOC is already created
 		cacheKey = 'TOCAssets'; // Local Storage key
 
 	/**
@@ -102,8 +98,7 @@ require( ['jquery', 'wikia.toc', 'wikia.mustache'], function ( $, toc, mustache 
 
 	function renderTOC( $target ) {
 		var $container = $target.parents( '#toc' ).children( 'ol' ),
-			$contentContainer = getContentContainer( $target ),
-			$headers = $contentContainer.find( 'h1, h2, h3, h4, h5, h6' ),
+			$headers = $target.parents( '#mw-content-text' ).find( 'h1, h2, h3, h4, h5, h6' ),
 			data = toc.getData( $headers, createTOCSection );
 
 		data.wrapper = wrapper;
@@ -111,7 +106,7 @@ require( ['jquery', 'wikia.toc', 'wikia.mustache'], function ( $, toc, mustache 
 		loadTemplate().done( function ( template ) {
 			$container.append( mustache.render( template, data ) );
 
-			setHasTOC( $target, true );
+			hasTOC = true;
 		} );
 	}
 
@@ -173,50 +168,10 @@ require( ['jquery', 'wikia.toc', 'wikia.mustache'], function ( $, toc, mustache 
 	 */
 	function initTOC() {
 		var $showLink = $( '#togglelink' );
-		if ( !hasTOC( $showLink ) ) {
+		if ( !hasTOC ) {
 			renderTOC( $showLink );
 		}
 		showHideTOC( $showLink );
-	}
-
-	/**
-	 * Checks if TOC was generated already
-	 * @param {Object} $target (jquery collection) TOC open link
-	 * @returns {boolean}
-	 */
-	function hasTOC( $target ) {
-		var containerIdentifier = getContainerIdentifier( $target );
-
-		return typeof containerHasTOC[containerIdentifier] !== 'undefined' && containerHasTOC[containerIdentifier];
-	}
-
-	/**
-	 * Sets that toc was generated or not for selected TOC
-	 * @param {Object} $target (jquery collection) TOC open link
-	 * @param {boolean} value
-	 */
-	function setHasTOC( $target, value ) {
-		var containerIdentifier = getContainerIdentifier( $target );
-		containerHasTOC[containerIdentifier] = value;
-	}
-
-	/**
-	 * Gets TOC container
-	 * @param {Object} $target (jquery collection) TOC open link
-	 * @returns {Object} jquery collection
-	 */
-	function getContentContainer( $target ) {
-		// if tabviewer is on site use content from one tab only
-		return $target.parents( '.tabBody, #mw-content-text' ).first();
-	}
-
-	/**
-	 * Get TOC container identifier - used for setting that TOC was already rendered for that container
-	 * @param {Object} $target (jquery collection) TOC open link
-	 * @returns {string}
-	 */
-	function getContainerIdentifier( $target ) {
-		return getContentContainer( $target ).data( 'tab-body' ) || 'main';
 	}
 
 	$( function () {
@@ -227,7 +182,7 @@ require( ['jquery', 'wikia.toc', 'wikia.mustache'], function ( $, toc, mustache 
 			if ( isNewTOC() ) {
 				var $target = $( event.target );
 
-				if ( !hasTOC( $target ) ) {
+				if ( !hasTOC ) {
 					renderTOC( $target );
 				}
 
@@ -235,9 +190,9 @@ require( ['jquery', 'wikia.toc', 'wikia.mustache'], function ( $, toc, mustache 
 			}
 		} );
 
-		// reset containerHasTOC flags for each time preview modal is opened
+		// reset hasTOC flag for each time preview modal is opened
 		$( window ).on( 'EditPageAfterRenderPreview', function () {
-			containerHasTOC = {};
+			hasTOC = false;
 			if ( isNewTOC() && window.wgUserName !== null ) {
 				initTOC();
 			}

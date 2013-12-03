@@ -3906,42 +3906,16 @@ Nhấp vào '''[[Special:CreatePage|Tạo trang]]''' để bắt đầu viết!"
 	'myhome-feed-move-details' => 'Đổi tên',
 	'myhome-feed-redirect-details' => 'Chuyển hướng',
 	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|Thêm photo|thêm hình ảnh}}',
-	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|Thêm video|Thêm video}}',
-	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Thể loại ẩn|Thể loại}}',
 	'myhome-user-contributions-empty' => 'Bạn có thể tham gia vào wiki này bằng cách nhấp vào "{{int:editthispage}}" trên mọi trang, vào thêm vào đó những gì bạn biết.
 Mọi người đều có thể tạo ra sửa đổi, thêm thông tin và chỉnh sửa lỗi.
 Wiki được xây dựng bởi cộng đồng, và chỉ với một lần nhấp vào nút sửa đổi, bạn đã trở thành một phần của cộng đồng này.
 Hãy thử xem!',
 	'myhome-hot-spots-number-of-editors' => 'biên tập viên',
-	'myhome-log-in' => "<center>Tính năng My Home là chỉ khả dụng nếu bạn đang đăng nhập.<br /><br /><big>'''[{{fullurl:Special:Signup|$1}} Xin vui lòng đăng nhập để xem trang này!]'' '</big></center>",
-	'myhome-switch-to-monaco' => "Tính năng WikiActivity là chỉ khả dụng nếu bạn đang sử dụng giao diện Wikia.
-Nếu bạn muốn xem My Home, vui lòng truy cập '''[[Special:Preferences|tùy chọn của bạn]]'' ' để thay đổi giao diện của bạn.",
 	'myhome-namespace-blog' => 'Blog',
 	'myhome-community-corner-header' => 'Thông điệp cộng đồng',
 	'oasis-myhome-community-corner-edit' => 'sửa đổi thông điệp &gt;',
 	'myhome-community-corner-edit' => 'sửa đổi thông điệp',
-	'community-corner' => "''' Chào mừng đến với trang chủ của tôi!'' '
-
-Trang này sẽ giúp bạn ở lại đến ngày với những gì đang xảy ra trên wiki.
-
-Nếu bạn là người sáng lập hoặc là quản trị viên trên wiki này, bạn có thể thay đổi thông báo này để nói chuyện với cộng đồng về điều quan trọng xảy ra trên trang web.
-Ví dụ, bạn có thể:
-
- * Tổ chức một dự án để xây dựng một khu vực của wiki
-
- * Hiển thị ra một số trang mới tất cả mọi người sẽ thấy
-
- * Có được những người tham gia vào một cuộc thảo luận đang xảy ra trên trang web
-
- * Cung cấp cho một shout-out để một cộng tác viên người có thêm một cái gì đó đặc biệt để wiki
-
- * Hoặc chỉ cần đăng một số từ khuyến khích!",
 	'myhome-hot-spots-definition' => 'Các trang với nhiều biên tập viên nhất trong {{PLURAL:$1|ngày hôm nay|$1 ngày qua}}.',
-	'myhome-default-view-checkbox' => 'Làm cho $1 độ xem mặc định của tôi',
-	'myhome-default-view-success' => 'Được rồi, đây là mặc định của bạn bây giờ',
-	'tooltip-pt-myhome' => 'Đi đến nhà của tôi',
-	'activityfeed' => 'Hoạt động nguồn cấp dữ liệu',
-	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|Một thông điệp|$1 thông điệp}}',
 );
 
 /** Chinese (中文)

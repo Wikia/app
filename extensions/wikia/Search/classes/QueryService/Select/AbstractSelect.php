@@ -435,7 +435,7 @@ abstract class AbstractSelect
 			$result = $wikiMatch->getResult();
 			$hub = $config->getHub();
 			if ( $result['articles_i'] >= self::ARTICLES_NUM_WIKIMATCH &&
-				( empty($hub) || strtolower($hub) === strtolower( $result['hub_s'] ) ) ) {
+				( $hub === null || strtolower($hub) === strtolower( $result['hub_s'] ) ) ) {
 				$config->setWikiMatch( $wikiMatch );
 			}
 		}

@@ -313,13 +313,6 @@ $messages['tl'] = array(
 	'signup' => 'Magpatala',
 );
 
-/** Turkish (Türkçe)
- * @author Incelemeelemani
- */
-$messages['tr'] = array(
-	'signup' => 'Hesap oluştur',
-);
-
 /** Tatar (Cyrillic script) (татарча)
  * @author Zahidulla
  */

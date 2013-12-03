@@ -27,13 +27,10 @@ class WikiEntitiesService
 		$topics = $this->getLdaTopics();
 		if ( count( $topics ) ) {
 			$keyValues = explode( ';', $mwService->getGlobalWithDefault( 'wgDartCustomKeyValues', '' ) );
-			if ( end($keyValues) === '' ) {
-				$keyValues = array_slice( $keyValues, 0, -1 );
-			}
 			foreach ( $topics as &$topic ) {
 				$topic = 'wtpx='.$topic;
 			}
-			$mwService->setGlobal( 'wgDartCustomKeyValues', implode( ';', array_merge( $keyValues, array_slice( $topics, 0, 5 ) ) ) . ';' );
+			$mwService->setGlobal( 'wgDartCustomKeyValues', implode( ';', array_merge( $keyValues, array_slice( $topics, 0, 5 ) ) ) );
 		}
 		return true;
 	}

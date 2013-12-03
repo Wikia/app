@@ -493,19 +493,6 @@ $messages['uk'] = array(
 	'action-taskmanager' => 'показ і управління фоновими завданнями',
 );
 
-/** Vietnamese (Tiếng Việt)
- * @author Baonguyen21022003
- */
-$messages['vi'] = array(
-	'taskmanager' => 'Hiển thị và quản lý công việc giao diện',
-	'taskmanager_title' => 'Hiển thị và quản lý công việc giao diện',
-	'taskmanager_tasklist' => 'Trở về danh sách công việc',
-	'right-taskmanager' => 'Có thể hiển thị tác vụ nền',
-	'right-taskmanager-action' => 'Có thể quản lý tác vụ nền',
-	'taskmanager-invert' => 'Đảo ngược lựa chọn',
-	'action-taskmanager' => 'Hiển thị và quản lý công việc giao diện',
-);
-
 /** Simplified Chinese (中文（简体）‎)
  * @author Yfdyh000
  */

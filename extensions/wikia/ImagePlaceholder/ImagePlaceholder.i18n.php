@@ -588,15 +588,9 @@ $messages['uk'] = array(
 );
 
 /** Vietnamese (Tiếng Việt)
- * @author Baonguyen21022003
  */
 $messages['vi'] = array(
-	'imgplc-add-image' => 'Thêm hình ảnh',
 	'imgplc-add-video' => 'Thêm đoạn phim',
-	'imgplc-placeholder' => 'Giữ chỗ',
-	'imgplc-image' => 'Hình ảnh',
-	'imgplc-notinhistory' => 'Bạn không thể thêm một hình ảnh trong chế độ lịch sử.',
-	'imgplc-notinhistory-video' => 'Bạn không thể thêm một video ở chế độ lịch sử.',
 );
 
 /** Simplified Chinese (中文（简体）‎)

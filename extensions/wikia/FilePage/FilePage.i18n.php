@@ -190,11 +190,10 @@ $messages['eo'] = array(
 );
 
 /** Spanish (español)
- * @author Fitoschido
  * @author VegaDark
  */
 $messages['es'] = array(
-	'filepage-desc' => 'Modificación de la página de archivo de MediaWiki para añadir compatibilidad con vídeos',
+	'filepage-desc' => 'Modificación del espacio MediaWiki de archivos para soporte de vídeo',
 	'video-page-file-list-header' => 'Aparece en estas páginas',
 	'video-page-global-file-list-header' => 'Aparece en estos wikis',
 	'video-page-from-provider' => 'De $1',

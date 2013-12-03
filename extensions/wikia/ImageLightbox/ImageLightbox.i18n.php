@@ -1093,40 +1093,6 @@ $1
 	'lightbox-visit-the-wiki' => 'Відвідати вікі:',
 );
 
-/** Vietnamese (Tiếng Việt)
- * @author Baonguyen21022003
- */
-$messages['vi'] = array(
-	'lightbox_details_tooltip' => 'Xem hình ảnh chi tiết',
-	'lightbox-forum' => 'Diễn đàn',
-	'lightbox-standard-link' => 'Liên kết tiêu chuẩn',
-	'lightbox-blog-link' => 'Liên kết blog',
-	'lightbox-send' => 'Gửi',
-	'lightbox-share-description' => 'Ảnh trong $1 ngày $2',
-	'lightbox-share-email-subject' => '$1 đã gửi cho bạn một hình ảnh trên Wikia',
-	'lightbox-share-email-body' => 'Chào bạn
-
-Ai đó muốn hiển thị cho bạn một hình ảnh về Wikia. Kiểm tra xem nó:
-
-$1
-
--Wikia Team',
-	'lightbox-share-button-email' => 'Thư điện tử',
-	'lightbox-share-button-www' => 'Chia sẻ',
-	'lightbox-share-button-embed' => 'Nhúng',
-	'lightbox-share-email-label' => 'Gửi email cho hình ảnh này cho bạn bè',
-	'lightbox-share-email-page-label' => 'Email trang này cho bạn bè',
-	'lightbox-share-email-page-label-address' => 'Địa chỉ thư điện tử:',
-	'lightbox-share-email-ok-caption' => 'Sự xác nhận',
-	'lightbox-share-email-ok-content' => '{{PLURAL:$1|Thư điện tử|Email đã}} được gửi.',
-	'lightbox-share-email-error-caption' => 'Lỗi',
-	'lightbox-share-email-error-content' => 'Lỗi gửi {{PLURAL:$1|email|thư điện tử}}.
-Thông tin chi tiết:$2',
-	'lightbox-share-email-error-login' => 'Để gửi email, bạn phải đăng nhập.',
-	'lightbox-share-email-error-noaddress' => 'Không có địa chỉ đã được xác định.',
-	'lightbox-visit-the-wiki' => 'Ghé qua wiki:',
-);
-
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Hydra

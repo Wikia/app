@@ -140,13 +140,6 @@ $messages['fa'] = array(
 	'adengine-exitstitial-button' => 'ردشدن از این تبلیغ',
 );
 
-/** Finnish (suomi)
- * @author Silvonen
- */
-$messages['fi'] = array(
-	'adengine-exitstitial-button' => 'Ohita tämä mainos',
-);
-
 /** Faroese (føroyskt)
  * @author EileenSanda
  */

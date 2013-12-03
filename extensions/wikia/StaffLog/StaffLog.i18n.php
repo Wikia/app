@@ -644,28 +644,6 @@ $messages['uk'] = array(
 	'action-stafflog' => 'переглядати журнал централізованого персоналу',
 );
 
-/** Vietnamese (Tiếng Việt)
- * @author Baonguyen21022003
- */
-$messages['vi'] = array(
-	'stafflog-desc' => 'Chức năng ghi tập trung cho nhân viên',
-	'stafflog' => 'StaffLog',
-	'stafflog-blockmsg' => '$1 $2 cố gắng để chặn nhân viên người dùng $3 trên wiki $4 .Lý do: $5',
-	'stafflog-piggybackloginmsg' => '$1 Piggyback – người sử dụng $2 đăng nhập như $3',
-	'stafflog-piggybacklogoutmsg' => '$1 Piggyback – người dùng $2 đăng xuất từ tài khoản $3',
-	'right-stafflog' => 'Có thể xem stafflog',
-	'stafflog-wiki-status-change' => '$1 thay đổi trạng thái của $2 để $3. Lý do:$4',
-	'stafflog-filter-label' => 'Bộ lọc',
-	'stafflog-filter-user' => 'Thành viên:',
-	'stafflog-filter-type' => 'Loại:',
-	'stafflog-filter-apply' => 'Áp dụng bộ lọc',
-	'stafflog-filter-type-block' => 'Cấm',
-	'stafflog-filter-type-piggyback' => 'Piggyback',
-	'stafflog-filter-type-renameuser' => 'Tên người dùng:',
-	'stafflog-filter-type-wikifactory' => 'Tình trạng wiki',
-	'action-stafflog' => 'Xem sổ ghi tập trung nhân viên',
-);
-
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author StephDC

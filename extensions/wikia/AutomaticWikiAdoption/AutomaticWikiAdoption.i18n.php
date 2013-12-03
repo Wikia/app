@@ -1373,14 +1373,13 @@ $messages['ja'] = array(
 
 /** Korean (한국어)
  * @author Hym411
- * @author 아라
  */
 $messages['ko'] = array(
 	'wikiadoption' => '자동 위키 합치기',
 	'wikiadoption-desc' => '미디어위키를 위한 자동 위키 합치기 확장기능',
 	'wikiadoption-header' => '이 위키 합치기',
 	'wikiadoption-button-adopt' => '네, {{SITENAME}}을 합칩니다',
-	'wikiadoption-adopt-inquiry' => '자세히 찾기!',
+	'wikiadoption-adopt-inquiry' => '자세히 찾기',
 	'wikiadoption-know-more-header' => '더 알고 싶나요?',
 	'wikiadoption-know-more-description' => '자세한 내용은 이 링크를 확인하십시오. 당연히, 질문이 있다면 자유롭게 저희에게 연락하십시오!',
 	'wikiadoption-adoption-successed' => '축하합니다! 당신은 이제 이 위키의 관리자입니다!',

@@ -407,7 +407,6 @@ $messages['fr'] = array(
 );
 
 /** Galician (galego)
- * @author Fitoschido
  * @author Toliño
  * @author Vivaelcelta
  */
@@ -423,7 +422,7 @@ $messages['gl'] = array(
 	'preferences-v2-fancysig-help-page-name' => 'Help:Sinatura',
 	'prefs-appearance' => 'Aparencia',
 	'preferences-v2-date' => 'Formato da data:',
-	'preferences-v2-time' => 'Fuso horario:',
+	'preferences-v2-time' => 'Zona horaria:',
 	'preferences-v2-skin' => 'Disposición:',
 	'prefs-emailv2' => 'Correo electrónico',
 	'prefs-email-me-v2' => 'Enviádeme un correo electrónico cando...',
@@ -436,13 +435,13 @@ $messages['gl'] = array(
 	'prefs-wikiemail' => 'Opcións de {{SITENAME}}. Enviádeme un correo electrónico cando...',
 	'prefs-email-unsubscribe' => 'Desactivar todos os correos electrónicos',
 	'unsubscribe-preferences-toggle-v2' => 'Desactivar todos os correos electrónicos de Wikia (anula todas as outras opcións)',
-	'tog-watchlistdigest-v2' => '...haxa un boletín semanal dos cambios realizados nas páxinas que estou seguindo',
+	'tog-watchlistdigest-v2' => '...estea preparado un boletín semanal de cambios nas miñas páxinas seguidas',
 	'tog-justify-v2' => 'Amosar os parágrafos xustificados',
 	'preferences-v2-user-landing-page' => 'Páxina de destino:',
 	'preferences-v2-redirect-wiki-activity' => 'Actividade no wiki',
 	'preferences-v2-redirect-main-page' => 'Portada',
 	'preferences-v2-redirect-recent-changes' => 'Cambios recentes',
-	'preferences-v2-redirect-explanation' => 'A opción da páxina de destino permite elixir a onde ir cando escribes "$1" no teu navegador.',
+	'preferences-v2-redirect-explanation' => 'A opción da páxina de destino permite elixir a onde ir cando escribe "$1" no seu navegador.',
 	'prefs-monobookv2' => 'MonoBook',
 	'prefs-under-the-hood' => 'Para detallistas',
 	'prefs-recent-changesv2' => 'Cambios recentes, historiais e rexistros',

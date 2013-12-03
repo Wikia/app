@@ -176,7 +176,6 @@ $messages['br'] = array(
 
 /** Catalan (català)
  * @author Alvaro Vidal-Abarca
- * @author Fitoschido
  * @author Roxas Nobody 15
  */
 $messages['ca'] = array(
@@ -210,7 +209,7 @@ $messages['ca'] = array(
 	'about-feedback-0' => 'Vols dir-nos alguna cosa sobre l\'aplicació? Envia\'m un correu electrònic: <span class="notranslate" traduir="no">%s</span>',
 	'about-heading-rate' => "Valorar l'app si us plau!",
 	'about-rate-0-android' => "Si t'agrada aquest app, si us plau puntua amb 5 estrelles a l'Android Market!",
-	'about-rate-0-ios' => 'Si us agrada aquesta aplicació, puntueu-la amb cinc estels a la App Store!',
+	'about-rate-0-ios' => "Si t'agrada aquest app, si us plau puntua amb 5 estrelles a la Botiga App!",
 	'gracenote-takedown' => "Doh! Malauradament, no ens estan autoritzats per a mostrar la lletra completa d'aquesta cançó en el moment (això passa per menys de 1% de les nostres cançons). Si us plau provar una altra vegada la setmana que ve.",
 	'lyrics-artist-byline' => 'per%s',
 	'ringtone-matcher-by-song' => 'Enviar  %s  to de trucada per mòbil',

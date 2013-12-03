@@ -84,8 +84,7 @@ $messages['qqq'] = array(
 	'wikiaquiz-moreinfoheading-label' => 'Form Label for More Info Heading.',
 	'wikiaquiz-requireemail-label' => 'Label for checkbox for required email address.',
 	'wikiaquiz-moreinfolinks-label' => 'Form Label for More Info Links.',
-	'wikiaquiz-moreinfoarticle-label' => 'Form Label for More info Article.
-{{Identical|Article}}',
+	'wikiaquiz-moreinfoarticle-label' => 'Form Label for More info Article.',
 	'wikiaquiz-moreinfolinktext-label' => 'Form Label for More info Link Text.',
 	'wikiaquiz-question-label' => 'Form Label for Question.
 {{Identical|Question}}',
@@ -100,10 +99,8 @@ $messages['qqq'] = array(
 {{Identical|Answer}}',
 	'wikiaquiz-correct-label' => 'Form Label for Correct.',
 	'wikiaquiz-addnewitem-label' => 'Special Page text next to button for a new item to a quiz.',
-	'wikiaquiz-cancel-label' => 'Cancel button label.
-{{Identical|Cancel}}',
-	'wikiaquiz-publish-label' => 'Create/Edit Quiz button label for confirming changes.
-{{Identical|Publish}}',
+	'wikiaquiz-cancel-label' => 'Cancel button label.',
+	'wikiaquiz-publish-label' => 'Create/Edit Quiz button label for confirming changes.',
 	'wikiaquiz-error-duplicate-quiz' => 'Error message when user tries to create a quiz that already exists.',
 	'wikiaquiz-error-duplicate-question' => 'Error message when user tries to create a question that already exists.',
 	'wikiaquiz-error-invalid-question' => 'Error message when question is invalid/empty.',

@@ -10,6 +10,7 @@ $config['oasis_shared_core_js'] = array(
 		'//resources/wikia/libraries/sloth/sloth.js',
 		'//resources/wikia/libraries/mustache/mustache.js',
 		'//resources/wikia/modules/browserDetect.js',
+		'//resources/wikia/libraries/jquery/zid/jquery.zid.js',
 		'//resources/mediawiki/mediawiki.Uri.js',
 	),
 );

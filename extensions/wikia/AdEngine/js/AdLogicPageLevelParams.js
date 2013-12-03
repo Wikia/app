@@ -112,10 +112,8 @@ var AdLogicPageLevelParams = function (
 				kv = kvs[i].split('=');
 				key = kv[0];
 				value = kv[1];
-				if (key && value) {
-					params[key] = params[key] || [];
-					params[key].push(value);
-				}
+				params[key] = params[key] || [];
+				params[key].push(value);
 			}
 		}
 

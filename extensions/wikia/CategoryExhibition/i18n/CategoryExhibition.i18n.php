@@ -105,7 +105,6 @@ $messages['br'] = array(
 );
 
 /** Catalan (català)
- * @author Fitoschido
  * @author Marcmpujol
  */
 $messages['ca'] = array(
@@ -115,7 +114,7 @@ $messages['ca'] = array(
 	'category-exhibition-recentedits' => 'Editades recentement',
 	'category-exhibition-page-header' => 'Pàgines en la categoraa "$1"',
 	'category-exhibition-subcategories-header' => 'Subcategories',
-	'category-exhibition-media-header' => 'Multimèdia en la categoria «$1»',
+	'category-exhibition-media-header' => 'Multimèdia en la categoria "$1"',
 	'category-exhibition-blogs-header' => 'Entrades de bloc',
 	'category-exhibition-display-old' => 'Visualització de la llista de categories',
 	'category-exhibition-display-new' => "Visualització d'exposició de la categoria",

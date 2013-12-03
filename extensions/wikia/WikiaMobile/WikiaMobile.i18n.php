@@ -97,14 +97,12 @@ $messages['qqq'] = array(
 	'wikiamobile-menu' => 'Header on wiki menu',
 	'wikiamobile-article-categories' => 'Message displayed on category section on an article',
 	'wikiamobile-feedback' => 'Link to a feedback form',
-	'wikiamobile-back' => 'Label on a button to go back one level on wiki navigation.
-{{Identical|Back}}',
+	'wikiamobile-back' => 'Label on a button to go back one level on wiki navigation',
 	'wikiamobile-hide-section' => 'Link to close section on an article that is at the end of a given section',
 	'wikiamobile-profile' => 'Link to a profile page in a top wiki navigation.
 {{Identical|Profile}}',
-	'wikiamobile-last-edited-on' => 'In a sentance when was the list time an article got edited. "Last edited on September 3, 2013"',
-	'wikiamobile-last-edited-by' => 'indicates by whom the edit has been made. "by Anonymous"',
-	'wikiamobile-anonymous-edited-by' => 'an unknown user',
+	'wikiamobile-last-edited-by' => 'Message displayed under article title indicating who and when last edited a page',
+	'wikiamobile-anonymous-edited-by' => 'Editor name instead of IP address when editor is anonymous',
 	'wikiamobile-footer-link-lifestyle' => 'Interwiki link, please translate only the last parameter after the last "|" if that makes sense',
 	'wikiamobile-footer-link-entertainment' => 'Interwiki link, please translate only the last parameter after the last "|" if that makes sense',
 	'wikiamobile-footer-link-videogames' => 'Interwiki link, please translate only the last parameter after the last "|" if that makes sense',
@@ -112,8 +110,7 @@ $messages['qqq'] = array(
 	'mobile-full-site' => 'Link to reload a page and load desktop skin',
 	'wikiamobile-categories-tagline' => 'Tagline that appears next to the category page title, please keep it really short',
 	'wikiamobile-categories-items-total' => 'Message above list of articles in a category. $1 is the total number of articles in the category',
-	'wikiamobile-category-items-more' => 'Label on a button to load more articles under given letter on category page.
-{{Identical|Load more}}',
+	'wikiamobile-category-items-more' => 'Label on a button to load more articles under given letter on category page',
 	'wikiamobile-category-items-prev' => 'Label on a button to load previous articles under given letter on category page',
 	'wikiamobile-categories-expand' => 'Label on a button to expand/collapse all articles on category.
 {{Identical|Show all}}',
@@ -128,7 +125,6 @@ $messages['qqq'] = array(
 	'wikiamobile-video-views-counter' => 'Counter for the number of views for a video, $1 is an integer number, minimum 0; possibly it should be no more than 1 or 2 words',
 	'wikiamobile-video-not-friendly-header' => 'Friendly message on a screen with a not supported video',
 	'wikiamobile-video-not-friendly' => "Message displayed in modal - to indicate that this video won't be loaded in mobile skin",
-	'wikiamobile-toc-header' => 'Message displayed on top of right side bar where table of content is displayed',
 	'wikiamobile-ad-label' => 'Message shown to a user on page next to advertisement - to distinguish that below is an ad',
 	'wikiamobile-image-not-loaded' => 'This is a message shown to a user when an image could not be loaded in the modal',
 	'wikiamobile-shared-file-not-available' => 'Message displayed when user opens a link to particular media on an article and this media is not available anymore.',
@@ -140,6 +136,10 @@ $messages['qqq'] = array(
 {{Identical|Free}}',
 	'wikiasmartbanner-view' => 'Message displayed in smart banner promoting on a button that leads to a store.
 {{Identical|View}}',
+	'wikiamobile-toc-header' => 'Message displayed on top of right side bar where table of content is displayed',
+	'wikiamobile-last-edited-on' => 'In a sentance when was the list time an article got edited. "Last edited on September 3, 2013"',
+	'wikiamobile-last-edited-by' => 'indicates by whom the edit has been made. "by Anonymous"',
+	'wikiamobile-anonymous-edited-by' => 'an unknown user'
 );
 
 /** Адыгэбзэ (Адыгэбзэ)
@@ -722,11 +722,10 @@ $messages['kn'] = array(
 /** Korean (한국어)
  * @author Hym411
  * @author Jytim
- * @author 아라
  */
 $messages['ko'] = array(
-	'wikiamobile-search' => '검색',
-	'wikiamobile-search-this-wiki' => '이 위키 검색',
+	'wikiamobile-search' => '찾기',
+	'wikiamobile-search-this-wiki' => '이 위키 찾기',
 	'wikiamobile-search-wiki' => '위키',
 	'wikiamobile-search-wikia' => '위키아',
 	'wikiamobile-login' => '로그인',
@@ -1375,56 +1374,22 @@ $messages['th'] = array(
 
 /** Turkish (Türkçe)
  * @author Bilalokms
- * @author Incelemeelemani
- * @author Joseph
  * @author Talha Samil Cakir
  */
 $messages['tr'] = array(
 	'wikiamobile-search' => 'Ara',
-	'wikiamobile-search-this-wiki' => "Bu wiki'de ara",
 	'wikiamobile-search-wiki' => 'Viki',
-	'wikiamobile-search-wikia' => 'Wikia',
 	'wikiamobile-login' => 'Giriş',
-	'wikiamobile-password' => 'Parola',
-	'wikiamobile-login-submit' => 'Oturum aç',
 	'wikiamobile-menu' => 'Menü',
 	'wikiamobile-article-categories' => 'Kategoriler',
-	'wikiamobile-feedback' => 'Geri bildirim',
 	'wikiamobile-back' => 'Geri',
 	'wikiamobile-hide-section' => 'gizle',
-	'wikiamobile-profile' => 'Profil',
-	'wikiamobile-footer-link-lifestyle' => '[[w:c:www:Lifestyle|Yaşam tarzı]]',
-	'wikiamobile-footer-link-entertainment' => '[[w:c:www:Entertainment|Eğlence]]',
-	'wikiamobile-footer-link-videogames' => '[[w:c:www:Video_Games|Video Oyunları]]',
-	'wikiamobile-footer-link-licencing' => '[[w:Wikia:Licensing|Lisans]]',
-	'mobile-full-site' => 'Tam site',
 	'wikiamobile-categories-tagline' => 'Kategori Sayfası',
-	'wikiamobile-categories-items-total' => '$1 {{PLURAL:$1|makale|makale}}',
-	'wikiamobile-category-items-more' => 'Daha fazla',
-	'wikiamobile-category-items-prev' => 'Öncekileri yükle',
 	'wikiamobile-categories-expand' => 'Hepsini Göster',
 	'wikiamobile-categories-collapse' => 'Tümünü Gizle',
 	'wikiamobile-sharing-media-image' => 'Resim',
-	'wikiamobile-sharing-page-text' => '$2 - $1',
-	'wikiamobile-sharing-modal-text' => '$3 - $1 makalesinde $2',
-	'wikiamobile-sharing-email-text' => 'Hey,
-kesinlikle bu kontrol etmelisiniz:
-
- $1',
-	'wikiamobile-media-group-footer' => '$1 için 1',
-	'wikiamobile-unsupported-video-download' => 'Tarayıcınız bu video formatını desteklemiyor, <a href="$1">buraya tıklamayı</a> deneyin',
-	'wikiamobile-video-views-counter' => '$1 {{PLURAL:$1|izlenme|izlenme}}',
-	'wikiamobile-video-not-friendly-header' => 'Tüh!',
-	'wikiamobile-video-not-friendly' => 'Üzgünüz, bu video mobil sürüme uygun değil.',
 	'wikiamobile-ad-label' => 'reklam',
-	'wikiamobile-image-not-loaded' => 'Görüntü mevcut değil',
-	'wikiamobile-shared-file-not-available' => "Üzgünüz, bu öge artık yok. Fakat burada olduğuna göre wiki'yi keşfedebilirsin!",
-	'wikiamobile-page-not-found' => 'Üzgünüz! <b>$1</b> bulunamıyor.',
-	'wikiamobile-page-not-found-tap' => 'Ulaşamama nedenlerini görmek için ögeye dokunun.',
-	'wikiasmartbanner-appstore' => "App Store'da",
-	'wikiasmartbanner-googleplay' => "Google Play'de",
 	'wikiasmartbanner-price' => 'ücretsiz',
-	'wikiasmartbanner-view' => 'görüntüle',
 );
 
 /** Ukrainian (українська)
@@ -1438,7 +1403,7 @@ $messages['uk'] = array(
 	'wikiamobile-search-wikia' => 'Вікія',
 	'wikiamobile-login' => 'Увійти',
 	'wikiamobile-password' => 'Пароль',
-	'wikiamobile-login-submit' => 'Надіслати',
+	'wikiamobile-login-submit' => 'Увійти',
 	'wikiamobile-menu' => 'Меню',
 	'wikiamobile-article-categories' => 'Категорії',
 	'wikiamobile-feedback' => "Зворотний зв'язок",

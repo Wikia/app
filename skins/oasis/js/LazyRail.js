@@ -1,17 +1,20 @@
 $(function() {
 	'use strict';
 	var rail = $('#WikiaRail'),
-	LAZY_LOADING_SAMPLING_RATIO = 10; // integer (0-100): 0 - no tracking, 100 - track everything */
+		LAZY_LOADING_SAMPLING_RATIO = 10, // integer (0-100): 0 - no tracking, 100 - track everything */
+		params = {},
+		lazyLoadingTime;
+
 
 	if (rail.find('.loading').exists()) {
-		var params = {
+		params = {
 			'articleTitle': window.wgTitle,
 			'namespace': window.wgNamespaceNumber,
 			'cb': window.wgStyleVersion
 		};
 
-		if (typeof wgSassLoadedScss != 'undefined') {
-			params.excludeScss = wgSassLoadedScss;
+		if (typeof wgSassLoadedScss !== 'undefined') {
+			params.excludeScss = window.wgSassLoadedScss;
 		}
 
 		$.nirvana.sendRequest({
@@ -54,12 +57,11 @@ $(function() {
 							rail.zid(zidConfig);
 						});
 					});
-				});
-
-				$('#WikiaRail').find('.loading').remove().end().append(data.railLazyContent + data.js);
+				}
 
 				if( LAZY_LOADING_SAMPLING_RATIO >= Math.floor( (Math.random() * 100 + 1) ) ) {
-					var lazyLoadingTime = ( new Date() ) - ( window.wgNow || 0 );
+					lazyLoadingTime = ( new Date() ) - ( window.wgNow || 0 );
+
 					Wikia.Tracker.track({
 						action: Wikia.Tracker.ACTIONS.IMPRESSION,
 						category: 'right-rail',
@@ -87,8 +89,8 @@ $(function() {
 				}
 
 				if ( window.wgEnableLightboxExt ) {
-					LightboxLoader.init();
-					LightboxLoader.loadFromURL();
+					window.LightboxLoader.init();
+					window.LightboxLoader.loadFromURL();
 				}
 			}
 		});

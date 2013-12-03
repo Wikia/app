@@ -354,16 +354,6 @@ $messages['uk'] = array(
 	'performancestat-cpu' => 'ЦП: $1s',
 );
 
-/** Vietnamese (Tiếng Việt)
- * @author Baonguyen21022003
- */
-$messages['vi'] = array(
-	'showperformancestats-desc' => 'Trả về số liệu thống kê hiệu suất có thể đọc được con người',
-	'performancestat-total' => 'Tổng số: $1s',
-	'performancestat-apache' => 'Apache: $1s',
-	'performancestat-cpu' => 'CPU: $1s',
-);
-
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Hydra
