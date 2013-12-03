@@ -184,16 +184,17 @@ SQL;
 	}
 
 	/**
-	 * Get the total number of unswapped videos
+	 * Get the total number of unswapped videos.
 	 * @param boolean $useMaster - Whether to use the master DB to do this query
-	 * @return int - The number of unswapped videos
+	 * @return array - The number of total unswapped videos, and the number of unswapped videos that actually
+	 * have suggested premium videos.
 	 */
 	public function getUnswappedVideoTotal( $useMaster = false ) {
 		wfProfileIn( __METHOD__ );
 
 		$memcKey = $this->getMemcKeyTotalVideos();
-		$total = $this->wg->Memc->get( $memcKey );
-		if ( !is_numeric( $total ) ) {
+		$unswappedVideos = $this->wg->Memc->get( $memcKey );
+		if ( !is_array( $unswappedVideos ) ) {
 			if ( $useMaster ) {
 				$db = wfGetDB( DB_MASTER );
 			} else {
@@ -223,19 +224,27 @@ SQL;
 				$titles[] = $row->video_title;
 			}
 
-			$total = 0;
+			// We need to store 2 values: the total returned videos, and the total returned videos which have
+			// suggested premium videos. The total is used for pagination purposes and the total with suggested
+			// premium videos for displaying the "N Videos with Matches" figure on the LVS page. This is because,
+			// if there are 11 total videos but only 8 which have suggestions, we can't guarantee all 8 will show
+			// up in the query for the first 1-10 listings. Of the 10 titles returned, 7 might actually
+			// have video suggestions, we'd only get the last video after doing the second page query which returns
+			// listings for 11-20
+			$unswappedVideos = array("total" => 0, "withSuggestedVideos" => 0);
 			foreach($titles as $title) {
 				if ($this->getVideoSuggestions($title)) {
-					$total++;
+					$unswappedVideos["withSuggestedVideos"]++;
 				}
+				$unswappedVideos["total"]++;
 			}
 
-			$this->wg->Memc->set( $memcKey, $total, 60*60*24 );
+			$this->wg->Memc->set( $memcKey, $unswappedVideos, 60*60*24 );
 		}
 
 		wfProfileOut( __METHOD__ );
 
-		return $total;
+		return $unswappedVideos;
 	}
 
 	/**
