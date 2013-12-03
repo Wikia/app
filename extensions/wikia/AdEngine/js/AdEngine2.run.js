@@ -59,7 +59,7 @@
 		window.wgEnableKruxTargeting = false;
 	}
 
-	slotTracker = SlotTracker(log);
+	slotTracker = SlotTracker(log, tracker);
 
 	// Construct Ad Engine
 	adEngine = AdEngine2(log, LazyQueue, slotTracker);
