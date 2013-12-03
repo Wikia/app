@@ -110,7 +110,7 @@ var AdProviderGpt = function (adTracker, log, window, Geo, slotTweaker, cacheSto
 			slotTracker = adTracker.trackSlot('addriver2', slotname),
 
 			// Do this when DART hops or doesn't handle
-			error = function () {
+			error = function (method) {
 				log(slotname + ' was not filled by DART', 2, logGroup);
 				cacheStorage.set(noAdStorageKey, true, forgetAdsShownAfterTime, now);
 
@@ -123,7 +123,7 @@ var AdProviderGpt = function (adTracker, log, window, Geo, slotTweaker, cacheSto
 
 				window.adslots2.push([slotname, undef, 'Liftium']);
 
-				pHop();
+				pHop({method: method || 'hop'});
 			},
 
 			// Do this when filling slot by DART
@@ -142,7 +142,7 @@ var AdProviderGpt = function (adTracker, log, window, Geo, slotTweaker, cacheSto
 			};
 
 		if (!isHighValueCountry) {
-			error();
+			error('internal');
 			return;
 		}
 
@@ -167,7 +167,7 @@ var AdProviderGpt = function (adTracker, log, window, Geo, slotTweaker, cacheSto
 			if (gptConfig[slotname] === 'flush') {
 				flushGpt();
 			}
-			error();
+			error('internal');
 			return;
 		}
 
