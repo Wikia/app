@@ -75,9 +75,18 @@ var AdTracker = function (log, tracker) {
 	}
 
 	function trackEnd(provider, category, slotname, hopTime, reason) {
-		log(['trackEnd', category, slotname, hopTime], 'debug', logGroup);
+		var timeBucket = formatTrackTime(hopTime),
+			labelPrefix = '';
 
-		var labelPrefix = '';
+		log([
+			'event: ' + category,
+			'provider: ' + provider,
+			'slotname: ' + slotname,
+			'timeBucket: ' + timeBucket,
+			'extraParams: ', {},
+			'value: 0',
+			'[NOT TRACKED hopTime: ' + (hopTime / 1000) + ']'
+		], 'debug', logGroup);
 
 		if (reason) {
 			labelPrefix = reason + '/';
