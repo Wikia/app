@@ -240,15 +240,18 @@ define( 'wikia.ui.modal', [
 		this.$blackout.addClass( BLACKOUT_VISIBLE_CLASS );
 
 		// IE flex-box fallback for small and medium modals
-		if ( this.$element.hasClass( 'large' ) === false && browserDetect.isIE() ) {
+		if ( browserDetect.isIE() ) {
 
 			this.$blackout.addClass( 'IE-flex-fix' );
-			ieFlexboxFallback( this );
 
-			// update modal section max-height on window resize
-			$( w ).on( 'resize', $.proxy( function() {
+			if ( this.$element.hasClass( 'large' ) === false ) {
 				ieFlexboxFallback( this );
-			}, this ) );
+
+				// update modal section max-height on window resize
+				$( w ).on( 'resize', $.proxy( function() {
+					ieFlexboxFallback( this );
+				}, this ) );
+			}
 		}
 	};
 
