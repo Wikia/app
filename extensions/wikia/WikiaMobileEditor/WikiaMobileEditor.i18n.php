@@ -29,12 +29,12 @@ $messages['qqq'] = array(
 	'wikiamobileeditor-preview' => 'message on a button to open a modal with preview of an aricle',
 	'wikiamobileeditor-summary' => 'Placeholder on an input that prompts for an edit summary',
 	'wikiamobileeditor-licensing' => 'message explaining under what license an edit is being made. visible in preview modal under publish button',
-	'wikiamobileeditor-licensing-type' => 'CC-BY-SA',
+	'wikiamobileeditor-licensing-type' => 'Licence name',
 	'wikiamobileeditor-keep-editing' => 'message on a button that closes preview modal',
 
 	'wikiamobileeditor-on-success' => 'massage visible in a small toast that indicates that edit is saved',
-	'wikiamobileeditor-on-new' => 'You are starting a brand new article (section).',
-	'wikiamobileeditor-wrong' => 'Something went wrong.',
-	'wikiamobileeditor-internet' => 'Do you have internet connection ?'
+	'wikiamobileeditor-on-new' => 'Massage displayed in a toast pop up, explaining that user is creating a new article',
+	'wikiamobileeditor-wrong' => 'Message displaed in a toast, indicating to user that something went wrong with displaying a preview',
+	'wikiamobileeditor-internet' => 'If no Internet connection is detected, this question is displaed next to wikiamobileeditor-wrong message'
 );
 

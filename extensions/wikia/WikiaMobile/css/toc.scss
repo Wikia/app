@@ -50,7 +50,6 @@ $dark-border: #D8D8D8;
 		font-weight: 600;
 		z-index: 1;
 	}
-
 }
 
 #wkTOCHandle {
@@ -118,10 +117,9 @@ $level0-border-left-width: 5px;
 }
 
 .level {
-	padding: 0 0 $line-height 0;
-
+	//on iOS7 clicking on bottom of a screen opens it's bottom bar...
+	padding: 0 0 $line-height*2 0;
 	line-height: $line-height;
-
 	height: 100%;
 
 	> li {

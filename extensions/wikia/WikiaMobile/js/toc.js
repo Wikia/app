@@ -13,8 +13,10 @@ function ( sections, window, $, mustache, toc ) {
 		$ol,
 		inited,
 		$toc = $( '#wkTOC' ),
+		$tocHandle = $( '#wkTOCHandle' ),
 		tocScroll,
-		inPageToc;
+		inPageToc,
+		tocTemplate;
 
 	if ( sideMenuCapable ) {
 		$toc.addClass( 'side-menu-capable' );
@@ -45,10 +47,14 @@ function ( sections, window, $, mustache, toc ) {
 				}
 			);
 
-		return mustache.render( wrap, tocData, {
-			ol: ol,
-			lis: lis
-		} );
+		if ( tocData.sections.length ) {
+			return mustache.render( wrap, tocData, {
+				ol: ol,
+				lis: lis
+			} );
+		} else {
+			return '';
+		}
 	}
 
 	/**
@@ -107,22 +113,22 @@ function ( sections, window, $, mustache, toc ) {
 	function init () {
 		if ( !inited ) {
 			$toc.on( 'click', 'header', function () {
+				onClose();
+				window.scrollTo( 0, 0 );
+			} )
+			.on( 'click', 'li', function ( event ) {
+				var $li = $( this ),
+					$a = $li.find( 'a' ).first();
+
+				event.stopPropagation();
+				event.preventDefault();
+
+				if ( !toggleLi( $li ) ) {
 					onClose();
-					window.scrollTo( 0, 0 );
-				} )
-				.on( 'click', 'li', function ( event ) {
-					var $li = $( this ),
-						$a = $li.find( 'a' ).first();
+				}
 
-					event.stopPropagation();
-					event.preventDefault();
-
-					if ( !toggleLi( $li ) ) {
-						onClose();
-					}
-
-					sections.scrollTo( $a.attr( 'href' ) );
-				} );
+				sections.scrollTo( $a.attr( 'href' ) );
+			} );
 
 			$ol = $toc
 				.append( renderToc() )
@@ -136,8 +142,6 @@ function ( sections, window, $, mustache, toc ) {
 				scrollX: false
 			});
 
-			window.lol = tocScroll;
-
 			inited = true;
 		}
 	}
@@ -145,7 +149,7 @@ function ( sections, window, $, mustache, toc ) {
 	/**
 	 * @desc Used in fallback mode
 	 */
-	function onTap(){
+	function onTap (){
 		inPageToc.scrollIntoView();
 	}
 
@@ -175,22 +179,29 @@ function ( sections, window, $, mustache, toc ) {
 	} );
 
 	if ( !sideMenuCapable ) {
-		$ol = $document.find('#mw-content-text')
-			.append( '<div class="in-page-toc"><h2>' + $toc.find( 'header' ).text() + '</h2>' + renderToc() + '</div>' )
-			.find('.level');
+		tocTemplate = renderToc();
 
-		inPageToc = document.getElementsByClassName('in-page-toc')[0];
+		if ( tocTemplate ) {
+			$ol = $document.find('#mw-content-text')
+				.append(
+					'<div class="in-page-toc"><h2>' + $toc.find( 'header' ).text() + '</h2>' + tocTemplate + '</div>'
+				).find('.level');
 
+			inPageToc = document.getElementsByClassName('in-page-toc')[0];
+		} else {
+			$tocHandle.hide();
+		}
 	}
 
-	$( '#wkTOCHandle' ).on( 'click', function () {
+	$tocHandle.on( 'click', function ( event ) {
+		event.stopPropagation();
+
 		if ( sideMenuCapable ) {
 			if ( $toc.toggleClass( active ).hasClass( active ) ) {
 				onOpen();
 			} else {
 				onClose();
 			}
-
 		} else {
 			onTap();
 		}
