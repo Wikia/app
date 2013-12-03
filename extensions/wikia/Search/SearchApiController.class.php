@@ -192,57 +192,5 @@ class SearchApiController extends WikiaApiController {
 		;
 		return $searchConfig;
 	}
-
-	public function getPhraseSearch() {
-		$config = [
-			'adapteroptions' => [
-				'host' => 'search-s10',
-				'port' => 8983,
-				'path' => '/solr/',
-				'core' => 'main'
-			]
-		];
-		$phrase = $this->request->getVal('query', '');
-		$query = '+((ns:0) AND +(lang:en)) AND +((title_en:"'.$phrase.'") OR (redirect_titles_mv_en:"'.$phrase.'")) AND +(nolang_txt:"'.$phrase.'")';
-
-		$client = new Solarium_Client($config);
-		$select = $client->createSelect();
-		$dismax = $select->getDisMax();
-		$dismax->setQueryParser('edismax');
-
-		$select->setRows(5);
-		$select->setQuery( $query );
-		//add filters
-		$select->createFilterQuery( 'users' )->setQuery('activeusers:[0 TO *]');
-		$select->createFilterQuery( 'pages' )->setQuery('wikipages:[500 TO *]');
-		$select->createFilterQuery( 'words' )->setQuery('words:[10 TO *]');
-		$select->createFilterQuery( 'wam' )->setQuery('-(wam:0)');
-		$select->createFilterQuery( 'dis' )->setQuery('-(title_en:disambiguation)');
-		$select->createFilterQuery( 'banned' )->setQuery('-(wid:43339) AND -(wid:11557)');
-
-		$dismax->setBoostQuery( 'wikititle_en:"'.$phrase.'"^10000');
-		$dismax->setBoostFunctions( 'words^1.5 revcount^1 page_images^5 activeusers^1' );
-
-		$result = $client->select( $select );
-
-
-		$response = $this->getResponse();
-		$response->setValues( [ 'articles' => $this->parseResults( $result ) ] );
-	}
-
-	protected function parseResults( $searchResults ) {
-		$result = [];
-		foreach( $searchResults as $doc ) {
-			$result[] = [
-				'wikiId' => $doc->wid,
-				'articleId' => $doc->pageid,
-				'title' => $doc->title_en,
-				'url' => $doc->url,
-				'lang' => $doc->lang,
-				'snippet' => substr( $doc->html_en, 0, 200 ),
-				'image' => 'no_image_for_now'
-			];
-		}
-		return $result;
-	}
 }
+

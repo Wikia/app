@@ -1,12 +1,15 @@
 <?php
 
 namespace Wikia\Search\Services;
+use Wikia\Search\Test\ResultSet\AbstractResultSetTest;
 use WikiService;
 use Wikia\Measurements\Time;
 use Wikia\Search\Config;
 use Wikia\Search\Field\Field;
 use Wikia\Search\QueryService\Factory;
 use Wikia\Search\Utilities;
+use Sanitizer;
+use Solarium_Query_Helper;
 
 class CombinedSearchService {
 	const CROSS_WIKI_RESULTS = 3;
@@ -63,22 +66,17 @@ class CombinedSearchService {
 		$timer = Time::start([__CLASS__, __METHOD__]);
 		$wikias = $this->searchForWikias($query, $langs, $hubs);
 
+		$result = [];
 		$limit = ( $limit !== null ) ? $limit : self::MAX_TOTAL_ARTICLES;
 		if ( !empty( $wikias ) ) {
-			//set only if we have any wikis to check
-			$maxArticlesPerWiki = min ( (int)ceil( $limit / count( $wikias ) ), self::MAX_ARTICLES_PER_WIKI );
-			$articles = $this->searchForArticles($query, $namespaces, $wikias, $maxArticlesPerWiki);
 			$timer->stop();
-			return [
-				"wikias" => $wikias,
-				"articles" => array_slice( $articles, 0, $limit )
-			];
+			$result[ 'wikias' ] = $wikias;
 		} else {
-			return [
-				"wikias" => [],
-				"articles" => []
-			];
+			$result[ 'wikias' ] = [];
 		}
+		$articles = $this->searchPhrasedForArticles($query, $namespaces, $langs);
+		$result['articles'] = array_slice( $articles, 0, $limit );
+		return $result;
 	}
 
 	/**
@@ -95,6 +93,22 @@ class CombinedSearchService {
 			$currentResults = $this->querySolrForArticles($query, $namespaces, $maxArticlesPerWiki, $wiki['wikiId'], $wiki['lang']);
 			foreach ($currentResults as $article) {
 				$articles[] = $this->processArticle($article);
+			}
+		}
+		$timer->stop();
+		return $articles;
+	}
+
+	public function searchPhrasedForArticles($query, $namespaces, $langs) {
+		$timer = Time::start([__CLASS__, __METHOD__]);
+		$articles = [];
+		foreach( $langs as $lang ) {
+			$currentResults = $this->queryPhraseSolrForArticles($query, $namespaces, $lang);
+			foreach ($currentResults as $article) {
+				$articles[] = $this->processArticle($article);
+			}
+			if ( count($articles) >= self::MAX_TOTAL_ARTICLES ) {
+				break;
 			}
 		}
 		$timer->stop();
@@ -124,6 +138,91 @@ class CombinedSearchService {
 		$resultSet = (new Factory)->getFromConfig($searchConfig)->search();
 		$currentResults = $resultSet->toArray($requestedFields);
 		return $currentResults;
+	}
+
+	/**
+	 * This is a temporary solution
+	 * @param $query
+	 * @param $namespaces
+	 * @param $lang
+	 */
+	protected function queryPhraseSolrForArticles( $query, $namespaces, $lang ) {
+		$requestedFields = ['title' => Utilities::field('title', $lang), "url", "id", "score", "pageid", "lang", "wid", Utilities::field('html', $lang)];
+
+		$config = (new Factory())->getSolariumClientConfig();
+		$client = new \Solarium_Client($config);
+
+		$phrase = $this->sanitizeQuery( $query );
+		$query = $this->prepareQuery( $phrase, $namespaces, $lang );
+
+		$select = $client->createSelect();
+		$dismax = $select->getDisMax();
+		$dismax->setQueryParser('edismax');
+
+		$select->setRows(self::MAX_TOTAL_ARTICLES);
+		$select->setQuery( $query );
+		//add filters
+		$select->createFilterQuery( 'users' )->setQuery('activeusers:[0 TO *]');
+		$select->createFilterQuery( 'pages' )->setQuery('wikipages:[500 TO *]');
+		$select->createFilterQuery( 'words' )->setQuery('words:[10 TO *]');
+		$select->createFilterQuery( 'wam' )->setQuery('-(wam:0)');
+		$select->createFilterQuery( 'dis' )->setQuery('-(title_en:disambiguation)');
+		//speedydeletion: 547090, scratchpad: 95, lyrics:43339,
+		$select->createFilterQuery( 'banned' )->setQuery('-(wid:547090) AND -(wid:95) AND -(wid:43339) AND -(host:*answers.wikia.com)');
+
+		$dismax->setBoostQuery( 'wikititle_en:"'.$phrase.'"^10000');
+		$dismax->setBoostFunctions( 'words^1.5 revcount^1 page_images^5 activeusers^1' );
+
+		$result = $client->select( $select );
+		return $this->extractData( $result, $requestedFields );
+	}
+
+	protected function extractData( $searchResult, $requestedFields ) {
+		$result = [];
+		foreach( $searchResult->getDocuments() as $doc ) {
+			$item = [];
+			foreach( $requestedFields as $key => $field ) {
+				$keyValue = !is_numeric( $key ) ? $key : $field;
+				$value = $doc->{$field};
+				if ( !empty( $value ) ) {
+					$item[ $keyValue ] = $value;
+				}
+			}
+			$result[] = $item;
+		}
+		return $result;
+	}
+
+	protected function prepareQuery( $query, $namespaces, $lang ) {
+		$nsArr = [];
+		foreach( $namespaces as $ns ) {
+			$nsArr[] = "(ns:$ns)";
+		}
+		$query = '+(' . implode(' AND ', $nsArr ) . ' AND +(lang:' . $lang .
+			')) AND +((title_en:"'.$query.'") OR (redirect_titles_mv_en:"'.$query.'")) AND +(nolang_txt:"'.$query.'")';
+		return $query;
+	}
+
+	/**
+	 * @param $query
+	 * @return mixed|string
+	 */
+	protected function sanitizeQuery( $query ) {
+		$sanitizedQuery = html_entity_decode( (new Sanitizer)->StripAllTags( $query ), \ENT_COMPAT, 'UTF-8');
+		// non-indexed number-string phrases issue workaround (RT #24790)
+		$query = preg_replace( '/(\d+)([a-zA-Z]+)/i', '$1 $2', $sanitizedQuery );
+
+		// escape all lucene special characters: + - && || ! ( ) { } [ ] ^ " ~ * ? : \ (RT #25482)
+		$query = (new Solarium_Query_Helper)->escapeTerm( $query,  ENT_COMPAT, 'UTF-8' );
+
+		if (! empty( $wordLimit ) ) {
+			// this is actually a micro-optimization.
+			// i could just as easily apply no preg_split limit and impose the limit on array_slice.
+			$split = preg_split( '/\s+/', $query, $wordLimit + 1 );
+			$query = implode( ' ', array_slice( $split, 0, $wordLimit ) );
+		}
+
+		return $query;
 	}
 
 	/**
