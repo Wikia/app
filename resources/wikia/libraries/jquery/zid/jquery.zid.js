@@ -134,13 +134,15 @@
 			// push out the items to the columns
 			$.each( arr, $.proxy(
 				function( index, value ) {
-					var item = $( value ),
-						col = this._getShortestColumn();
+					var col = this._getShortestColumn(),
+						colElem = col.get( 0 );
 					// prepend on append to column
+					// do not use jquery for append/prepend to avoid scripts re-execution
 					if ( method === 'prepend' ) {
-						col.prepend( item );
+						console.log(colElem);
+						colElem.insertBefore( value, colElem.firstChild );
 					} else {
-						col.append( item );
+						colElem.appendChild( value );
 					}
 				},
 				this
