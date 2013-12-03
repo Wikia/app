@@ -206,7 +206,7 @@ SQL;
 			$canSwapProps = $this->canSwapPropLogic();
 
 			$sql = <<<SQL
-				SELECT count(*) as total
+				SELECT video_title
 				FROM video_info
 				JOIN page ON video_title = page_title AND page_namespace = $pageNS
 				LEFT JOIN page_wikia_props ON page.page_id = page_wikia_props.page_id
@@ -217,13 +217,17 @@ SQL;
 			// Select video info making sure to skip videos that have entries in the video_swap table
 			$result = $db->query( $sql, __METHOD__ );
 
-			// Get the total count of relavent videos
-			$total = 0;
+			// Get the titles of all relevant titles
+			$titles = array();
 			while ( $row = $db->fetchObject( $result ) ) {
-				$total = $row->total;
+				$titles[] = $row->video_title;
+			}
 
-				// Should only be one result
-				break;
+			$total = 0;
+			foreach($titles as $title) {
+				if ($this->getVideoSuggestions($title)) {
+					$total++;
+				}
 			}
 
 			$this->wg->Memc->set( $memcKey, $total, 60*60*24 );
