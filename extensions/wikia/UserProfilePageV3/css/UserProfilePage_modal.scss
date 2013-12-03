@@ -1,56 +1,70 @@
-@import "../../../../skins/oasis/css/core/color";
-@import "../../../../skins/oasis/css/mixins/border-radius";
-@import "../../../../skins/oasis/css/mixins/clearfix";
+@import "skins/oasis/css/core/color";
+@import "skins/oasis/css/mixins/border-radius";
+@import "skins/oasis/css/mixins/clearfix";
+@import "skins/oasis/css/core/responsive-variables";
+@import "skins/oasis/css/mixins/box-sizing-border-box";
 
 .UPPLightbox {
-		
-	.tab-content li {
-		@include clearfix;
-		font-size: 14px;
-	}
-	
-	.column {
-		float: left;
-		padding: 0 10px;
-		width: 350px;
-		label:first-child {
-			margin-top: 0;
-		}
-		&.avatar {
-			width: 150px;
-		}
-		&.avatar-options {
-			width: 540px;
+
+	.tab-content {
+		padding-top: 20px;
+
+		li {
+			border: none;
 		}
 	}
-	
-	label {
+
+	.input-group {
+		float: none;
+		position: relative;
+
+		input[type="text"],
+		.favorite-wikis {
+			@include box-sizing-border-box;
+			width: 100%;
+		}
+	}
+
+	img.avatar {
 		display: block;
-		margin-top: 20px;
+		float: left;
+		margin-right: 60px;
 	}
-	
-	input[type=text] {
-		font-size: 14px;
-		padding: 3px;
-		width: 250px;
+
+	.sample-avatars {
+		overflow: hidden;
+
+		li {
+			float: left;
+
+			margin-right: 10px;
+
+		}
 	}
 
 	.tweet-at {
+		font-family: 'Lucida Grande', sans-serif;
+		left: 15px;
 		position: absolute;
-		margin: 5px 0 0 3px;
+		top: 35px;
+
+		+ input[type="text"] {
+			padding-left: 20px;
+		}
 	}
-	input[name="twitter"] {
-		padding-left: 15px;
-		width: 235px;
-	}
-	
+
 	.favorite-wikis {
 		@include clearfix;
 		-webkit-appearance: textfield;
 		-moz-appearance: textfield;
 		border: 1px solid $color-page-border;
+		margin-bottom: 5px;
 		padding: 3px;
-		width: 250px;
+
+		+ label {
+			text-align: right;
+		}
+
 		li {
 			@include border-radius(5px);
 			background: mix($color-page, $color-text, 92%);
@@ -83,31 +97,35 @@
 		}
 	}
 	.favorite-wikis-refresh {
-		position: absolute;
-		margin-left: 265px;
 		background-color: $color-buttons;
+		position: absolute;
+		top: 72px;
+
 		img {
 			background: url(/extensions/wikia/UserProfilePageV3/images/icon-return.png); /* $wgCdnStylePath */
 			height: 12px;
-			left: 3px;
-			top: 3px;
 			width: 14px;		
 		}
 	}
 	
-	#facebookPage a, #hideEditsWikis {
+	#facebookPage a {
 		display: block;
 		font-size: 11px;
 		line-height: 11px;
 		text-align: right;
 		width: 260px;
 	}
-	
-	#facebookConnectAvatar label {
-		margin-top: 20px;
-	}
-	.sample-avatars li {
-		float: left;
-		margin-right: 10px;
+
+	@media screen and (max-width: $breakpoint-min) {
+
+		// prevent layout errors while 'connect with facebook' button is loading
+		.avatar-options {
+			overflow: hidden;
+			width: 248px;
+		}
+
+		input[type="file"] {
+			width: 230px;
+		}
 	}
 }
