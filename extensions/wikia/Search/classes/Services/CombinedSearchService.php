@@ -1,6 +1,7 @@
 <?php
 
 namespace Wikia\Search\Services;
+use Wikia\Search\Query\Select;
 use Wikia\Search\Test\ResultSet\AbstractResultSetTest;
 use WikiService;
 use Wikia\Measurements\Time;
@@ -208,21 +209,8 @@ class CombinedSearchService {
 	 * @return mixed|string
 	 */
 	protected function sanitizeQuery( $query ) {
-		$sanitizedQuery = html_entity_decode( (new Sanitizer)->StripAllTags( $query ), \ENT_COMPAT, 'UTF-8');
-		// non-indexed number-string phrases issue workaround (RT #24790)
-		$query = preg_replace( '/(\d+)([a-zA-Z]+)/i', '$1 $2', $sanitizedQuery );
-
-		// escape all lucene special characters: + - && || ! ( ) { } [ ] ^ " ~ * ? : \ (RT #25482)
-		$query = (new Solarium_Query_Helper)->escapeTerm( $query,  ENT_COMPAT, 'UTF-8' );
-
-		if (! empty( $wordLimit ) ) {
-			// this is actually a micro-optimization.
-			// i could just as easily apply no preg_split limit and impose the limit on array_slice.
-			$split = preg_split( '/\s+/', $query, $wordLimit + 1 );
-			$query = implode( ' ', array_slice( $split, 0, $wordLimit ) );
-		}
-
-		return $query;
+		$select = new Select( $query );
+		return $select->getSolrQuery( 10 );
 	}
 
 	/**
