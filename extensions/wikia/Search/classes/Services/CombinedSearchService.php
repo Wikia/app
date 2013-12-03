@@ -1,6 +1,7 @@
 <?php
 
 namespace Wikia\Search\Services;
+use Wikia\Search\Query\Select;
 use WikiService;
 use Wikia\Measurements\Time;
 use Wikia\Search\Config;
@@ -63,22 +64,17 @@ class CombinedSearchService {
 		$timer = Time::start([__CLASS__, __METHOD__]);
 		$wikias = $this->searchForWikias($query, $langs, $hubs);
 
+		$result = [];
 		$limit = ( $limit !== null ) ? $limit : self::MAX_TOTAL_ARTICLES;
 		if ( !empty( $wikias ) ) {
-			//set only if we have any wikis to check
-			$maxArticlesPerWiki = min ( (int)ceil( $limit / count( $wikias ) ), self::MAX_ARTICLES_PER_WIKI );
-			$articles = $this->searchForArticles($query, $namespaces, $wikias, $maxArticlesPerWiki);
 			$timer->stop();
-			return [
-				"wikias" => $wikias,
-				"articles" => array_slice( $articles, 0, $limit )
-			];
+			$result[ 'wikias' ] = $wikias;
 		} else {
-			return [
-				"wikias" => [],
-				"articles" => []
-			];
+			$result[ 'wikias' ] = [];
 		}
+		$articles = $this->phraseSearchForArticles($query, $namespaces, $langs, $hubs);
+		$result['articles'] = array_slice( $articles, 0, $limit );
+		return $result;
 	}
 
 	/**
@@ -95,6 +91,22 @@ class CombinedSearchService {
 			$currentResults = $this->querySolrForArticles($query, $namespaces, $maxArticlesPerWiki, $wiki['wikiId'], $wiki['lang']);
 			foreach ($currentResults as $article) {
 				$articles[] = $this->processArticle($article);
+			}
+		}
+		$timer->stop();
+		return $articles;
+	}
+
+	public function phraseSearchForArticles($query, $namespaces, $langs, $hubs = null) {
+		$timer = Time::start([__CLASS__, __METHOD__]);
+		$articles = [];
+		foreach( $langs as $lang ) {
+			$currentResults = $this->queryPhraseSolrForArticles($query, $namespaces, $lang, $hubs);
+			foreach ($currentResults as $article) {
+				$articles[] = $this->processArticle($article);
+			}
+			if ( count($articles) >= self::MAX_TOTAL_ARTICLES ) {
+				break;
 			}
 		}
 		$timer->stop();
@@ -124,6 +136,86 @@ class CombinedSearchService {
 		$resultSet = (new Factory)->getFromConfig($searchConfig)->search();
 		$currentResults = $resultSet->toArray($requestedFields);
 		return $currentResults;
+	}
+
+	/**
+	 * This is a temporary solution
+	 * @param $query
+	 * @param $namespaces
+	 * @param $lang
+	 */
+	protected function queryPhraseSolrForArticles( $query, $namespaces, $lang, $hubs = null ) {
+		$requestedFields = ['title' => Utilities::field('title', $lang), "url", "id", "score", "pageid", "lang", "wid", Utilities::field('html', $lang)];
+
+		$config = (new Factory())->getSolariumClientConfig();
+		$client = new \Solarium_Client($config);
+
+		$phrase = $this->sanitizeQuery( $query );
+		$query = $this->prepareQuery( $phrase, $namespaces, $lang, $hubs );
+
+		$select = $client->createSelect();
+		$dismax = $select->getDisMax();
+		$dismax->setQueryParser('edismax');
+
+		$select->setRows(self::MAX_TOTAL_ARTICLES);
+		$select->setQuery( $query );
+		//add filters
+		$select->createFilterQuery( 'users' )->setQuery('activeusers:[0 TO *]');
+		$select->createFilterQuery( 'pages' )->setQuery('wikipages:[500 TO *]');
+		$select->createFilterQuery( 'words' )->setQuery('words:[10 TO *]');
+		$select->createFilterQuery( 'wam' )->setQuery('-(wam:0)');
+		$select->createFilterQuery( 'dis' )->setQuery('-(title_en:disambiguation)');
+		//speedydeletion: 547090, scratchpad: 95, lyrics:43339,
+		$select->createFilterQuery( 'banned' )->setQuery('-(wid:547090) AND -(wid:95) AND -(wid:43339) AND -(host:*answers.wikia.com)');
+
+		$dismax->setBoostQuery( 'wikititle_en:"'.$phrase.'"^10000');
+		$dismax->setBoostFunctions( 'words^1.5 revcount^1 page_images^5 activeusers^1' );
+
+		$result = $client->select( $select );
+		return $this->extractData( $result, $requestedFields );
+	}
+
+	protected function extractData( $searchResult, $requestedFields ) {
+		$result = [];
+		foreach( $searchResult->getDocuments() as $doc ) {
+			$item = [];
+			foreach( $requestedFields as $key => $field ) {
+				$keyValue = !is_numeric( $key ) ? $key : $field;
+				$value = $doc->{$field};
+				if ( !empty( $value ) ) {
+					$item[ $keyValue ] = $value;
+				}
+			}
+			$result[] = $item;
+		}
+		return $result;
+	}
+
+	protected function prepareQuery( $query, $namespaces, $lang, $hubs = null ) {
+		$nsArr = [];
+		$hubQuery = '';
+		if( !empty( $hubs ) ) {
+			$hubsArr = [];
+			foreach($hubs as $hub ) {
+				$hubsArr[] = "(hub:$hub)";
+			}
+			$hubQuery = '(' . implode(' OR ', $hubsArr ) . ') AND ';
+		}
+		foreach( $namespaces as $ns ) {
+			$nsArr[] = "(ns:$ns)";
+		}
+		$query = '+(' . $hubQuery . '(' . implode(' OR ', $nsArr ) . ') AND (lang:' . $lang .
+			')) AND +((title_en:"'.$query.'") OR (redirect_titles_mv_en:"'.$query.'")) AND +(nolang_txt:"'.$query.'")';
+		return $query;
+	}
+
+	/**
+	 * @param $query
+	 * @return mixed|string
+	 */
+	protected function sanitizeQuery( $query ) {
+		$select = new Select( $query );
+		return $select->getSolrQuery( 10 );
 	}
 
 	/**
@@ -224,7 +316,8 @@ class CombinedSearchService {
 						self::IMAGE_SIZE,
 						$db
 					);
-					$images = $imageServing->getImages(1)[$articleId];
+					$isResult = $imageServing->getImages(1);
+					$images = isset($isResult[$articleId]) ? $isResult[$articleId] : false;
 					if ($images && sizeof($images) > 0) {
 						$imageName = $images[0]['name'];
 						$file = \GlobalFile::newFromText($imageName, $wikiId);

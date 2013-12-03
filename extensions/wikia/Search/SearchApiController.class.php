@@ -193,3 +193,4 @@ class SearchApiController extends WikiaApiController {
 		return $searchConfig;
 	}
 }
+
