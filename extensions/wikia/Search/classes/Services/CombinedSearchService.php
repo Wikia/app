@@ -72,7 +72,7 @@ class CombinedSearchService {
 		} else {
 			$result[ 'wikias' ] = [];
 		}
-		$articles = $this->phraseSearchForArticles($query, $namespaces, $langs);
+		$articles = $this->phraseSearchForArticles($query, $namespaces, $langs, $hubs);
 		$result['articles'] = array_slice( $articles, 0, $limit );
 		return $result;
 	}
@@ -97,11 +97,11 @@ class CombinedSearchService {
 		return $articles;
 	}
 
-	public function phraseSearchForArticles($query, $namespaces, $langs) {
+	public function phraseSearchForArticles($query, $namespaces, $langs, $hubs = null) {
 		$timer = Time::start([__CLASS__, __METHOD__]);
 		$articles = [];
 		foreach( $langs as $lang ) {
-			$currentResults = $this->queryPhraseSolrForArticles($query, $namespaces, $lang);
+			$currentResults = $this->queryPhraseSolrForArticles($query, $namespaces, $lang, $hubs);
 			foreach ($currentResults as $article) {
 				$articles[] = $this->processArticle($article);
 			}
@@ -144,14 +144,15 @@ class CombinedSearchService {
 	 * @param $namespaces
 	 * @param $lang
 	 */
-	protected function queryPhraseSolrForArticles( $query, $namespaces, $lang ) {
+	protected function queryPhraseSolrForArticles( $query, $namespaces, $lang, $hubs = null ) {
 		$requestedFields = ['title' => Utilities::field('title', $lang), "url", "id", "score", "pageid", "lang", "wid", Utilities::field('html', $lang)];
 
 		$config = (new Factory())->getSolariumClientConfig();
 		$client = new \Solarium_Client($config);
 
 		$phrase = $this->sanitizeQuery( $query );
-		$query = $this->prepareQuery( $phrase, $namespaces, $lang );
+		$query = $this->prepareQuery( $phrase, $namespaces, $lang, $hubs );
+		dd($query);
 
 		$select = $client->createSelect();
 		$dismax = $select->getDisMax();
@@ -191,12 +192,20 @@ class CombinedSearchService {
 		return $result;
 	}
 
-	protected function prepareQuery( $query, $namespaces, $lang ) {
+	protected function prepareQuery( $query, $namespaces, $lang, $hubs = null ) {
 		$nsArr = [];
+		$hubQuery = '';
+		if( !empty( $hubs ) ) {
+			$hubsArr = [];
+			foreach($hubs as $hub ) {
+				$hubsArr[] = "(hub:$hub)";
+			}
+			$hubQuery = '(' . implode(' OR ', $hubsArr ) . ') AND ';
+		}
 		foreach( $namespaces as $ns ) {
 			$nsArr[] = "(ns:$ns)";
 		}
-		$query = '+(' . implode(' AND ', $nsArr ) . ' AND +(lang:' . $lang .
+		$query = '+(' . $hubQuery . '(' . implode(' OR ', $nsArr ) . ') AND (lang:' . $lang .
 			')) AND +((title_en:"'.$query.'") OR (redirect_titles_mv_en:"'.$query.'")) AND +(nolang_txt:"'.$query.'")';
 		return $query;
 	}
