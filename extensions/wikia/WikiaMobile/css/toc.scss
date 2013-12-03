@@ -97,8 +97,6 @@ $level0-border-left-width: 5px;
 }
 
 #scroller {
-	//on iOS7 clicking on bottom of a screen opens it's bottom bar...
-	margin-bottom: $line-height;
 	position: absolute;
 	width: 100%;
 	min-height: 101%;
@@ -119,7 +117,8 @@ $level0-border-left-width: 5px;
 }
 
 .level {
-	padding: 0 0 $line-height 0;
+	//on iOS7 clicking on bottom of a screen opens it's bottom bar...
+	padding: 0 0 $line-height*2 0;
 	line-height: $line-height;
 	height: 100%;
 
