@@ -258,7 +258,7 @@ class WikiaMobileHooks {
 			}
 
 			//set proper titles for a page
-			$out->setPageTitle( $text . ' <div id=catTtl>' . wfMessage( 'wikiamobile-categories-tagline' )->inContentLanguage()->plain() . '</div>');
+			$out->setPageTitle( $text );
 			$out->setHTMLTitle( $text );
 
 			//render lists: exhibition and alphabetical
