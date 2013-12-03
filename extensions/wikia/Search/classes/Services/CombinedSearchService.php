@@ -2,15 +2,12 @@
 
 namespace Wikia\Search\Services;
 use Wikia\Search\Query\Select;
-use Wikia\Search\Test\ResultSet\AbstractResultSetTest;
 use WikiService;
 use Wikia\Measurements\Time;
 use Wikia\Search\Config;
 use Wikia\Search\Field\Field;
 use Wikia\Search\QueryService\Factory;
 use Wikia\Search\Utilities;
-use Sanitizer;
-use Solarium_Query_Helper;
 
 class CombinedSearchService {
 	const CROSS_WIKI_RESULTS = 3;
@@ -75,7 +72,7 @@ class CombinedSearchService {
 		} else {
 			$result[ 'wikias' ] = [];
 		}
-		$articles = $this->searchPhrasedForArticles($query, $namespaces, $langs);
+		$articles = $this->phraseSearchForArticles($query, $namespaces, $langs);
 		$result['articles'] = array_slice( $articles, 0, $limit );
 		return $result;
 	}
@@ -100,7 +97,7 @@ class CombinedSearchService {
 		return $articles;
 	}
 
-	public function searchPhrasedForArticles($query, $namespaces, $langs) {
+	public function phraseSearchForArticles($query, $namespaces, $langs) {
 		$timer = Time::start([__CLASS__, __METHOD__]);
 		$articles = [];
 		foreach( $langs as $lang ) {
