@@ -54,7 +54,7 @@ $(function() {
 							rail.zid(zidConfig);
 						});
 					});
-				}
+				});
 
 				$('#WikiaRail').find('.loading').remove().end().append(data.railLazyContent + data.js);
 
