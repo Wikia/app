@@ -535,7 +535,7 @@ class ConfigTest extends BaseTest {
         $this->getStaticMethodMock('SearchEngine', 'namespacesAsText')
             ->expects   	( $this->any() )
             ->method		( 'namespacesAsText' )
-            ->will			( $this->returnValue( 'Article', 'Category' ) )
+            ->will			( $this->returnValue( array( 'Article', 'Category' ) ) )
         ;
 
 
