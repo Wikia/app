@@ -86,29 +86,39 @@ $(function() {
 	});
 
 	$('#showChanges').click(function() {
-		// use loading indicator before real content will be fetched
-		var content = $('#SpecialCssLoading').mustache({stylepath: stylepath});
-		var options = {
-			callback: function(modal) {
-				$.when(
-						$.nirvana.sendRequest({
-							controller: 'SpecialCss',
-							method: 'getDiff',
-							type: 'post',
-							data: {
-								wikitext: editor.getSession().getValue()
-							}
-						}),
+		require( [ 'wikia.ui.factory' ], function( uiFactory ) {
+			uiFactory.init( ['modal']).then( function( uiModal ) {
+				var showChangesModalConfig = {
+					vars: {
+						id: 'ShowChangesModal',
+						title: $.msg('special-css-diff-modal-title'),
+						size: 'large',
+						content: '<div class="diffContent"></div>'
+					}
+				};
 
-						// load CSS for diff
-						mw.loader.use('mediawiki.action.history.diff')
-					).done(function(ajaxData) {
-						modal.find('.modalContent').html(ajaxData[0].diff);
-					});
-			}
-		};
-		$.showModal($.msg('special-css-diff-modal-title'), content, options);
-		return false;
+				uiModal.createComponent( showChangesModalConfig, function( showChangesModal ) {
+					showChangesModal.deactivate();
+					$.when(
+							$.nirvana.sendRequest({
+								controller: 'SpecialCss',
+								method: 'getDiff',
+								type: 'post',
+								data: {
+									wikitext: editor.getSession().getValue()
+								}
+							}),
+
+							// load CSS for diff
+							mw.loader.use('mediawiki.action.history.diff')
+						).done(function( ajaxData ) {
+							showChangesModal.$content.find( '.diffContent' ).html( ajaxData[ 0 ].diff );
+							showChangesModal.activate();
+						});
+					showChangesModal.show();
+				});
+			});
+		});
 	});
 
 	//noinspection FunctionWithInconsistentReturnsJS,JSUnusedLocalSymbols
