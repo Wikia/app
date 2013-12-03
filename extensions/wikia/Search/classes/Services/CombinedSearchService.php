@@ -152,7 +152,6 @@ class CombinedSearchService {
 
 		$phrase = $this->sanitizeQuery( $query );
 		$query = $this->prepareQuery( $phrase, $namespaces, $lang, $hubs );
-		dd($query);
 
 		$select = $client->createSelect();
 		$dismax = $select->getDisMax();
