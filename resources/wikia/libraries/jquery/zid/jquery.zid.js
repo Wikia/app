@@ -139,7 +139,6 @@
 					// prepend on append to column
 					// do not use jquery for append/prepend to avoid scripts re-execution
 					if ( method === 'prepend' ) {
-						console.log(colElem);
 						colElem.insertBefore( value, colElem.firstChild );
 					} else {
 						colElem.appendChild( value );
