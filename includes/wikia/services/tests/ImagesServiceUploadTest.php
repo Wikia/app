@@ -8,9 +8,9 @@
 class ImagesServiceUploadTest extends WikiaBaseTest {
 
 	const URL = 'http://upload.wikimedia.org/wikipedia/commons/d/d9/Eldfell%2C_Helgafell_and_the_fissure.jpg';
-	const REUPLOAD_URL = 'http://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Reykjavik%2C_Iceland-13July2011.jpg/800px-Reykjavik%2C_Iceland-13July2011.jpg';
+	const REUPLOAD_URL = 'http://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Atlantic_Puffin.jpg/320px-Atlantic_Puffin.jpg';
 	const PREFIX = 'QAImage';
-	const FILENAME = 'Test-$1.jpg';
+	const FILENAME = 'Test%-$1.jpg';
 
 	private $origUser;
 	private $fileName;
@@ -45,7 +45,7 @@ class ImagesServiceUploadTest extends WikiaBaseTest {
 		$url = $image->getUrl();
 
 		$this->assertStringEndsWith(
-			sprintf( '/%s/images/%s/%s/%s', $this->app->wg->DBname, $hash { 0 } , $hash { 0 } . $hash { 1 } , $image->getName() ),
+			sprintf( '/%s/images/%s/%s/%s', $this->app->wg->DBname, $hash { 0 } , $hash { 0 } . $hash { 1 } , urlencode($image->getName()) ),
 			$url,
 			'Path should contain a valid hash'
 		);
@@ -63,13 +63,13 @@ class ImagesServiceUploadTest extends WikiaBaseTest {
 		$thumb = $image->createThumb( 120 );
 
 		$this->assertContains(
-			sprintf( '/%s/images/thumb/%s/%s/%s/120px-', $this->app->wg->DBname, $hash { 0 } , $hash { 0 } . $hash { 1 } , $image->getName() ),
+			sprintf( '/%s/images/thumb/%s/%s/%s/120px-', $this->app->wg->DBname, $hash { 0 } , $hash { 0 } . $hash { 1 } , urlencode($image->getName()) ),
 			$thumb,
 			'Path should contain a valid hash'
 		);
 
 		$this->assertStringEndsWith(
-			$image->getName(),
+			urlencode($image->getName()),
 			$thumb,
 			'Path should end with file name'
 		);
@@ -106,7 +106,12 @@ class ImagesServiceUploadTest extends WikiaBaseTest {
 	 */
 	private function uploadFromUrl( $file, $url, $comment ) {
 		$tmpFile = tempnam( wfTempDir(), 'upload' );
-		file_put_contents( $tmpFile, Http::get( $url, 'default', ['noProxy' => true] ) );
+
+		// fetch an asset
+		$res = Http::get( $url, 'default', ['noProxy' => true] );
+		$this->assertTrue($res !== false, 'File from <' . $url . '> should be uploaded');
+
+		file_put_contents( $tmpFile, $res );
 
 		$res = $file->upload( $tmpFile, $comment, '' );
 
