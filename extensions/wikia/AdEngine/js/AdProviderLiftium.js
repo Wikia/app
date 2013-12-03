@@ -103,7 +103,7 @@ var AdProviderLiftium = function (log, document, slotTweaker, Liftium, scriptWri
 		}
 
 		// Fake success, because we don't have the success event in Liftium
-		setTimeout(success, 0);
+		success();
 	};
 
 	return {
