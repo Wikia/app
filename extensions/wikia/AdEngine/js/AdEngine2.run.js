@@ -49,7 +49,7 @@
 	// Use PostScribe for ScriptWriter implementation when SevenOne Media ads are enabled
 	window.wgUsePostScribe = window.wgUsePostScribe || window.wgAdDriverUseSevenOneMedia;
 
-	slotTracker = SlotTracker(log);
+	slotTracker = SlotTracker(log, tracker);
 
 	// Construct Ad Engine
 	adEngine = AdEngine2(log, LazyQueue, slotTracker);
