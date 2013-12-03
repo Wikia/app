@@ -108,6 +108,13 @@
 		adEngine.run(adConfig, window.adslots2, 'queue.early');
 	});
 
+	window.AdEngine_getTrackerStats = function () {
+		return {
+			'old': adTracker.getStats(),
+			'new': slotTracker.getStats()
+		};
+	}
+
 	// DART API for Liftium
 	window.LiftiumDART = {
 		getUrl: function (slotname, slotsize) {
