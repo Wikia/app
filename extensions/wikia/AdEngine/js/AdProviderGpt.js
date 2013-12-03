@@ -121,9 +121,7 @@ var AdProviderGpt = function (adTracker, log, window, Geo, slotTweaker, cacheSto
 					slotTracker.hop();
 				}
 
-				window.adslots2.push([slotname, undef, 'Liftium']);
-
-				pHop({method: method || 'hop'});
+				pHop({method: method || 'hop'}, 'Liftium');
 			},
 
 			// Do this when filling slot by DART

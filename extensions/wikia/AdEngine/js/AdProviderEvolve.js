@@ -12,7 +12,7 @@ var AdProviderEvolve = function (adLogicPageLevelParamsLegacy, scriptWriter, adT
 		ord = Math.round(Math.random() * 23456787654),
 		slotForSkin = 'INVISIBLE_1',
 		hoppedSlots = {},
-		slotTrackers = {},
+		hopTo = 'Liftium',
 		iface,
 		undef;
 
@@ -162,27 +162,17 @@ var AdProviderEvolve = function (adLogicPageLevelParamsLegacy, scriptWriter, adT
 		return out;
 	}
 
-	function hop(slotname, method) {
-		method = method || 'hop';
-
+	function hop(slotname) {
 		log(['hop', slotname], 5, 'AdProviderEvolve');
-
-		slotname = sanitizeSlotname(slotname);
-
-		hoppedSlots[slotname] = true;
-		slotTrackers[slotname].hop(method);
-
-		setTimeout(function () {
-			window.adslots2.push([slotname, undef, 'Liftium']);
-		}, 0);
+		hoppedSlots[sanitizeSlotname(slotname)] = true;
 	}
 
 	function fillInSlot(slotname, pSuccess, pHop) {
 		log('fillInSlot', 5, 'AdProviderEvolve');
 		log(slotname, 5, 'AdProviderEvolve');
 
-		slotTrackers[slotname] = adTracker.trackSlot('evolve', slotname);
-		slotTrackers[slotname].init();
+		var slotTracker = adTracker.trackSlot('evolve', slotname);
+		slotTracker.init();
 
 		if (slotname === slotForSkin) {
 			scriptWriter.injectScriptByUrl(
@@ -205,27 +195,30 @@ var AdProviderEvolve = function (adLogicPageLevelParamsLegacy, scriptWriter, adT
 				var slot = document.getElementById(slotname),
 					height;
 
-				// Don't rely completely on Evolve hop
-				if (!hoppedSlots[slotname]) {
-					slotTweaker.removeDefaultHeight(slotname);
-					height = getHeight(slot);
-
-					// Only assume success if > 1x1 ad is returned or there's embed
-					// in the slot (it seems Evolves returns an embed that causes
-					// more HTML to appear after GhostWriter calls finish callback).
-					if (height === undef || height > 1 || hasEmbed(slot)) {
-						// Real success
-						slotTweaker.removeTopButtonIfNeeded(slotname);
-						pSuccess();
-						return;
-					}
-					slotTweaker.addDefaultHeight(slotname);
-					log('Evolve did not hop, but returned 1x1 ad instead for slot ' + slotname, 1, 'AdProviderEvolve');
-					hop(slotname, '1x1');
-					return pHop({method: '1x1'});
+				if (hoppedSlots[slotname]) {
+					slotTracker.hop('hop');
+					pHop({method: 'hop'}, hopTo);
+					return;
 				}
 
-				pHop({method: 'evolve_hop'});
+				// Don't rely completely on Evolve hop
+				slotTweaker.removeDefaultHeight(slotname);
+				height = getHeight(slot);
+
+				// Only assume success if > 1x1 ad is returned or there's embed
+				// in the slot (it seems Evolves returns an embed that causes
+				// more HTML to appear after GhostWriter calls finish callback).
+				if (height === undef || height > 1 || hasEmbed(slot)) {
+					// Real success
+					slotTweaker.removeTopButtonIfNeeded(slotname);
+					pSuccess();
+					return;
+				}
+
+				slotTweaker.addDefaultHeight(slotname);
+				log('Evolve did not hop, but returned 1x1 ad instead for slot ' + slotname, 1, 'AdProviderEvolve');
+				slotTracker.hop('1x1');
+				pHop({method: '1x1'}, hopTo);
 			});
 		}
 	}

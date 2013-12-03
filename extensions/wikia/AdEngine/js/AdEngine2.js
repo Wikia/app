@@ -2,7 +2,8 @@
 var AdEngine2 = function (log, LazyQueue, slotTracker) {
 	'use strict';
 
-	var logGroup = 'AdEngine2';
+	var logGroup = 'AdEngine2',
+		undef;
 
 	function run(adConfig, adslots, queueName) {
 
@@ -24,9 +25,12 @@ var AdEngine2 = function (log, LazyQueue, slotTracker) {
 				aSlotTracker.track('success');
 			}
 
-			function hop(extra) {
+			function hop(extra, hopTo) {
 				log(['hop', slotname, extra], 'debug', logGroup);
 				aSlotTracker.track('hop', extra);
+				if (hopTo) {
+					adslots.push([slotname, undef, hopTo]);
+				}
 			}
 
 			log('calling ' + provider.name + '.fillInSlot for ' + slotname, 'debug', logGroup);
