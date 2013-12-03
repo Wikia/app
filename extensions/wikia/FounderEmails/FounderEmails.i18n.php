@@ -411,6 +411,7 @@ $messages['af'] = array(
 
 /** Arabic (العربية)
  * @author Achraf94
+ * @author Claw eg
  * @author Kuwaity26
  * @author Mutarjem horr
  */
@@ -418,11 +419,70 @@ $messages['ar'] = array(
 	'founderemails-desc' => 'يساعد على إعلام المؤسسين حول التغييرات في الويكي الخاصة بهم',
 	'tog-founderemailsenabled' => 'أرسل لي بريدا إلكترونيا حول التحديثات عما يقوم به الأشخاص الآخرون (للمؤسسين فقط)',
 	'founderemails-email-user-registered-subject' => 'لقد انضم شخص جديد إلى $WIKINAME',
+	'founderemails-email-user-registered-body' => 'مرحبًا $USERNAME،
+
+تهانينا! $EDITORNAME قد انضم للتو إلى $WIKINAME.
+
+انتهز هذه الفرصة للترحيب بهم على الويكي الخاصة بك وتشجيعهم على المساعدة بالتحرير. كلما زادت الفرحة، كلما نمت الويكي الخاصة بك أسرع.
+
+$EDITORPAGEURL
+
+فريق ويكيا',
 	'founderemails-email-user-registered-greeting' => 'مرحبا يا $USERNAME،',
+	'founderemails-email-user-registered-headline' => 'تهانينا! $EDITORNAME قد {{GERNDER:$EDITORNAME|انضم|انضمت|انضم}} إلى $WIKINAME.',
+	'founderemails-email-user-registered-content' => 'انتهز هذه الفرصة للترحيب بهم في الويكي الخاصة بك وتشجيعهم على المساعدة بالتحرير. كلما زادت الفرحة، كلما نمت الويكي الخاصة بك أسرع.',
 	'founderemails-email-user-registered-signature' => 'فريق ويكيا',
 	'founderemails-email-user-registered-button' => 'رحب بهم',
+	'founderemails-email-user-registered-body-HTML' => 'مرحبًا $USERNAME،<br /><br />
+يبدو أن $EDITORNAME قد {{GENDER:$EDITORNAME|سجل|سجلت|سجل}} على الويكي الخاصة بك! لمَ لا تزور <a href="$EDITORTALKPAGEURL"> صفحة {{GENDER:$EDITORNAME|نقاشه|نقاشها|نقاشه}}</a> للترحيب؟<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- فريق ويكيا</div>',
 	'founderemails-email-0-days-passed-subject' => 'مرحبا بك في ويكيا!',
+	'founderemails-email-0-days-passed-body' => 'تشرفت بمقابلتك يا $USERNAME،
+
+تهانينا على إنشاء $WIKINAME، $WIKIURL.
+
+إليك عدة نصائح للبدأ:
+
+أضف صفحات. الويكي هي عبارة عن مشاركة المعلومات عن موضوعك الفريد من نوعه.
+
+أضف صورًا. الصفحات أفضل دائمًا عندما يكون بها صورًا! أضف صورًا إلى صفحاتك وصفحتك الرئيسية.
+
+خصص مظهر الويكي. خصص مظهر الويكي الخاصة بك وشعارها لجعل الويكي تبرز! استخدم مصمم المظهر لإضافة ألوان مخصصة إلى الويكي وجعلها فريدة للموضوع الخاص بها.
+
+لن نتركك بالبرد. إننا موجودون لنساعدك لجعل $WIKINAME ناجحة بكل خطوة تخطوها. قم بزيارة http://community.wikia.com للمنتديات والنصيحة والمساعدة، أو راسلنا بأسئلتك!
+
+نتمنى لك إنشاء ويكي سعيد! فريق ويكيا
+
+___________________________________________
+
+لمتابعة آخر الأحداث على ويكيا، قم بزيارة http://community.wikia.com
+تريد أن تتحكم بأي الرسائل الإلكترونية تصلك؟ اذهب إلى: http://messaging.wikia.com/wiki/Special:Preferences.
+قم بالضغط على الرابط التالي لإلغاء الاشتراك من كل رسائل ويكيا الإلكترونية: $UNSUBSCRIBEURL',
+	'founderemails-email-0-days-passed-body-HTML' => 'تهانينا لإنشاء <strong>$WIKINAME</strong> - أنت الآن جزء من مجتمع ويكيا!<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- فريق ويكيا</div>',
 	'founderemails-email-3-days-passed-subject' => 'كيف تسير الأمور في الويكي الخاصة بك',
+	'founderemails-email-3-days-passed-body' => 'مرحبًا $USERNAME،
+
+أردنا التحقق ورؤية كيف تسير الأمور على $WIKINAME، $WIKIURL.
+
+مرت 3 أيام منذ أن بدأت وظننا أنه يجب نمر عليك ونعرض عليك بعض النصائح لبناء الويكي الخاصة بك:
+
+قم بتنظيم صفحتك الرئيسية. الصفحة الرئيسية هي إحدى أول الأشياء التي يراها الناس عندما يزورون $WIKINAME. اصنع أول انطباع بواسطة كتابة ملخص مفصل عن موضوعك وقم بإضافة عرض شرائح أو معرض صور أو منزلق صور.
+  
+إضافة المزيد من الصور. إحدى أفضل الطرق لجعل الصفحات مدهشة لكي "تضيف بعض الصور".
+  
+العثور على الإلهام. لا تقلق من فحص ويكي أخرى لرؤية كيف صنعوا صفحتها الرئيسية، ومقالاتها والمزيد. إليك بعض بعض المفضلة: موبت ويكي، بوب تارتس ويكي، ومونستر هاي ويكي.
+
+أتحتاج مساعدة لمعرفة كيفية عمل شيء ما؟ إننا جميعا موجودون لأجلك! 
+تعالَ اطلب منا النصيحة والمساعدة في http://community.wikia.com.
+
+استمر بالعمل الرائع!
+فريق ويكيا
+
+
+لمعرفة آخر الأحداث على ويكيا، قم بزيارة community.wikia.com
+تود التحكم بالرسائل الإلكترونية التي تصلك؟ اذهب إلى
+http://community.wikia.com/wiki/Special:Preferences',
 	'founderemails-email-10-days-passed-subject' => 'ذكرى يوم 10 سعيد!',
 	'founderemails-email-page-edited-reg-user-first-edit-subject' => 'هناك تعديل جديد في $WIKINAME !',
 	'founderemails-email-first-edit-greeting' => 'مرحباً $USERNAME,',
@@ -475,6 +535,7 @@ $messages['ar'] = array(
 	'founderemails-email-views-digest-button' => 'أضف المزيد من الصفحات',
 	'founderemails-email-complete-digest-subject' => 'النشاط الأخير في $WIKINAME',
 	'founderemails-email-complete-digest-greeting' => 'مرحباً $USERNAME,',
+	'founderemails-email-complete-digest-content-heading1' => '$1 {{PLURAL:$1|شخص|أشخاص}} شاهدوا الويكي الخاصة بك.',
 	'founderemails-email-complete-digest-signature' => 'فريق ويكيا',
 	'founderemails-email-complete-digest-button' => 'مشاهدة نشاط الويكي',
 	'founderemails-pref-joins' => 'أرسل لي بريدا الكترونيا عندما ينضم شخص ما إلى $1',
