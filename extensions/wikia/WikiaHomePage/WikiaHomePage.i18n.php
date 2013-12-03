@@ -603,6 +603,134 @@ __NOEDITSECTION__",
 	'wikiahome-hub-current-day' => '{{CURRENTDAY}} {{CURRENTMONTHNAME}} {{CURRENTYEAR}}',
 );
 
+$messages['ja'] = array(
+	'wikiahome-page-header-heading' => 'クリエイト コラボレート オリジナルで',
+	'wikiahome-page-header-subheading' => 'あなたの知識とお気に入りをシェアしてください',
+	'wikiahome-page-header-create-wiki-button' => 'ウィキアを始める',
+	'wikiahome-page-header-create-wiki-button-destination' => 'http://www.wikia.com/Special:CreateWiki?uselang=ja',
+
+	'wikiahome-visualisation-remix-mixitup' => 'ミックスアップ!',
+	'wikiahome-visualisation-remix-mixituptext' => '何千ものコミュニティーに簡単にアクセスできます。リミックスしてウィキア内を探求しましょう!',
+	'wikiahome-visualisation-remix-button' => 'リミックス',
+
+	'wikiahome-stats-heading' => 'コラボ中です',
+	'wikiahome-stats-visitors' => '月の訪問者',
+	'wikiahome-stats-visitors-tooltip' => '月の訪問者の数はクオントキャストのグローバル「PEOPLE」スコアで測定しており、その構成はオンラインとモバイルウェブから成り立っています。',
+	'wikiahome-stats-mobile-visitors' => 'ひと月のモバイルからの訪問者',
+	'wikiahome-stats-mobile-percentage' => '% モバイルからの訪問者',
+	'wikiahome-stats-mobile-percentage-value' => '$1%',
+	'wikiahome-stats-edits' => '本日の変更',
+	'wikiahome-stats-communities' => 'コミュニティーの合計数',
+	'wikiahome-stats-new-communities' => '本日のコミュニティー',
+	'wikiahome-stats-totalpages' => '合計のページ数',
+
+	'wikia-home-page-preview' => 'プレビュー',
+	'wikia-home-page-visit' => '訪問',
+
+	'wikia-home-parse-source-empty-exception' => 'メディアウィキメッセージは空です。',
+	'wikia-home-parse-vertical-invalid-data' => '無効な個別データ',
+	'wikia-home-parse-wiki-too-few-parameters' => '無効なウィキデータ - パラメータが必要',
+
+	'wikiahome-hubs-videogames-heading' => 'ゲーム',
+	'wikiahome-hubs-videogames-url' => 'http://www.ja.wikia.com/ゲーム',
+	'wikiahome-hubs-videogames-creative' => 'ウィキアではゲームカルチャーを作り上げ基盤となる場所です。楽しみにしていて！',
+	'wikiahome-hubs-videogames-more-heading' => 'ゲームをもっと見る',
+	'wikiahome-hubs-videogames-more-list' => '
+*[http://www.wikia.com/ゲーム ゲームガイド]
+*[http://ja.gaming.wikia.com/wiki/メインページ]',
+
+	'wikiahome-hubs-entertainment-heading' => 'エンターテイメント',
+	'wikiahome-hubs-entertainment-url' => 'http://www.ja.wikia.com/エンターテイメント',
+	'wikiahome-hubs-entertainment-creative' => 'ウィキアとは詳しいコミュニティーから直にフレッシュなエンタテインメントニュースを得られる唯一の場所です。',
+	'wikiahome-hubs-entertainment-more-heading' => 'エンターテイメントをもっと見る',
+	'wikiahome-hubs-entertainment-more-list' => '
+*[http://www.wikia.com/映画 映画]
+*[http://www.wikia.com/テレビ テレビ]
+*[http://www.wikia.com/ミュージック ミュージック].
+*[http://www.wikia.com/エンターテイメント_トレンド]',
+
+	'wikiahome-hubs-lifestyle-heading' => 'ライフスタイル、ニュース & カルチャー',
+	'wikiahome-hubs-lifestyle-url' => 'http://www.ja.wikia.com/ライフスタイル',
+	'wikiahome-hubs-lifestyle-creative' => '熱狂的で情報を持っているコミュニティーを発見しよう。',
+	'wikiahome-hubs-lifestyle-more-heading' => 'ライフスタイル、ニュース & カルチャーをもって見る',
+	'wikiahome-hubs-lifestyle-more-list' => '
+*[http://www.wikia.com/recepi フード & ドリンク]
+*[http://www.wikia.com/DIY DIY]
+*[http://www.wikia.com/sports スポーツ]
+*[http://www.wikia.com/lifestyle 特集記事]',
+
+	'wikiahome-community-column1-heading' => 'コミュニティーリソース',
+	'wikiahome-community-column1-link' => 'http://ja.community.wikia.com',
+	'wikiahome-community-column1-creative' => 'ウィキアにはあなたがコミュニティーを始め成長させるための必要な情報はそろっています。ヒントやツール、そしてニュースをチェックしてみて下さい。それでも疑問がある場合は親切な人々に連絡をすることができます。',
+	'wikiahome-community-column2-heading' => 'ウィキアの改革',
+	'wikiahome-community-column2-link' => 'http://www.wikia.com/モバイル',
+	'wikiahome-community-column2-creative' => 'ウィキアからマイウィキアとゲームガイドという公式モバイルアプリをご紹介させていただきます。各それぞれのアプリにはウィキアコミュニティーユーザーによって創られた上質で生き生きとしたコンテンツを数多く見る事が出来ます。ダウンロードは[[モバイル|こちら]]から。',
+	'wikiahome-community-column3-heading' => 'フォローしてね',
+	'wikiahome-community-social-wikia-blog' => 'ウィキアブログ',
+	'wikiahome-community-social-wikia-blog-link' => 'http://ja.community.wikia.com/wiki/Blog:カテゴリ:スタッフブログ',
+	'wikiahome-community-social-twitter' => 'ツイッター',
+	'wikiahome-community-social-facebook' => 'フェイスブック',
+	'wikiahome-community-social-googleplus' => 'グーグル+',
+
+	'wikiahome-footer-wikiainc' => '===Wikia, Inc.===
+*[http://www.wikia.com/About_Us ウィキアについて]
+*[http://www.wikia.com/Special:Contact お問い合わせ]
+*[http://www.wikia.com/Careers 人材募集]
+*[http://www.wikia.com/Press プレスリリース]
+__NOEDITSECTION__',
+	'wikiahome-footer-get-started-heading' => '===始めよう===
+__NOEDITSECTION__',
+	'wikiahome-footer-get-started-creative' => 'コミュニティーを見つけて<br />始めよう',
+	'wikiahome-footer-get-started-button' => 'http://www.wikia.com/Special:CreateNewWiki?uselang=ja', // FIXME: why is this in a message?! -- we need to pass there Wikia "button" class
+	'wikiahome-footer-follow-us' => '===フォローしてね===
+*[http://ja.community.wikia.com/wiki/Blog:Blog:カテゴリ:スタッフブログ]
+*[http://www.facebook.com/Wikia フェイスブック]
+*[http://www.twitter.com/ウィキア ツイッター]
+__NOEDITSECTION__',
+	'wikiahome-footer-community' => '===コミュニティー===
+*[http://www.ja.community.wikia.com コミュニティーセントラルl]
+*[http://ja.community.wikia.com/wiki/ヘルプ:ユーザー権限 ヘルプ:ユーザー権限]
+*[http://www.wikia.com/Special:Contact Contact Support]$1
+*[http://www.wikia.com/Stars ウィキアスター]
+*[http://ja.community.wikia.com/wiki/ヘルプ:コンテンツ ヘルプ]
+
+__NOEDITSECTION__',
+	'wikiahome-footer-everywhere' => '===どこでもウィキア===
+*[http://www.wikia.com/Mobile ウィキアモバイル]
+*[http://www.wikia.com/Mobile/GameGuides ゲームアプリ]
+*[http://www.wikia.com/Mobile/PhotoPop エンターテイメントアプリ]
+*[http://api.wikia.com/wiki/Wikia_API_Wiki API]
+__NOEDITSECTION__',
+	'wikiahome-footer-partner' => "===パートナー===
+*[http://www.mediakit.wikia.com メディアキット]
+*'''[http://mediakit.wikia.com/wiki/Contact 広告を載せる]'''
+__NOEDITSECTION__",
+	'wikiahome-footer-community-wam' =>'*[$1 WAM スコア]',
+
+	'wikia-home-page-hot' => 'ホット',
+	'wikia-home-page-new' => 'ニュー',
+
+	'wikiahome-preview-stats-wam-empty-label' => 'WAM',
+	'wikiahome-preview-stats-wam' => "'''$1''' WAM スコア",
+	'wikiahome-preview-stats-page' => "{{PLURAL:$1|'''1''' ページ|'''$1''' ページ}}",
+	'wikiahome-preview-stats-photos' => "{{PLURAL:$1|'''1''' 画像|'''$1''' 画像}}",
+	'wikiahome-preview-stats-videos' => "{{PLURAL:$1|'''1''' 動画|'''$1''' 動画}}",
+	'wikiahome-preview-user-edits' => "{{PLURAL:$1|1 編集|$1 編集}}",
+	'wikiahome-preview-description-heading' => "$1",
+	'wikiahome-preview-admins-heading' => '管理者',
+	'wikiahome-preview-contributors-heading' => 'トップ投稿者',
+	'wikiahome-preview-user-profile-link-label' => 'ユーザープロフィールser Profile',
+	'wikiahome-preview-user-contributions-link-label' => '投稿',
+	'wikiahome-preview-go-to-wiki-label' => 'コミュニティーを見る',
+	'wikiahome-preview-error' => 'Interstitial error',
+	'wikiahome-preview-user-member-since' => " $1 からメンバー",
+
+	'wikiahome-import-script-no-description' => '詳細はありません',
+
+	'wikiahome-hub-current-day' => '{{CURRENTDAY}} {{CURRENTMONTHNAME}} {{CURRENTYEAR}}',
+);
+
+
 $messages['qqq'] = array(
 	'wikiahome-page-header-heading' => 'The page title text in H1 tag on the top of the page',
 	'wikiahome-page-header-subheading' => 'The page subtitle text in H4 tag below H1 tag',
