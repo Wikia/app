@@ -241,7 +241,7 @@ describe('AdConfig2', function(){
 		);
 
 		adConfig.getProvider(['foo']);
-		expect(adLogicPageDimensionsCalledWithSlot).toEqual(['foo']);
+		expect(adLogicPageDimensionsCalledWithSlot).toEqual('foo');
 	});
 
 	it('getProvider returns WindowSizeProviderProxy if AdLogicPageDimensions say so', function() {
