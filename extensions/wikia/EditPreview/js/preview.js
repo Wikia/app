@@ -189,6 +189,9 @@ define( 'wikia.preview', [
 
 						$('.tooltip-icon').tooltip( tooltipParams );
 					});
+				} else {
+					// fire an event once preview is rendered
+					$(window).trigger('EditPageAfterRenderPreview', [contentNode]);
 				}
 
 				// move "edit" link to the right side of heading names
@@ -197,10 +200,6 @@ define( 'wikia.preview', [
 				});
 
 				addEditSummary( contentNode, options.width, summary );
-
-				// fire an event once preview is rendered
-				$(window).trigger('EditPageAfterRenderPreview', [contentNode]);
-
 			});
 		});
 	}
