@@ -1,6 +1,5 @@
 /*exported AdProviderLiftium*/
 /*jshint maxparams:false*/
-/*global setTimeout*/
 
 var AdProviderLiftium = function (log, document, slotTweaker, Liftium, scriptWriter, window) {
 	'use strict';

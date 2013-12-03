@@ -13,6 +13,7 @@
 /*global require*/
 /*jslint newcap:true */
 /*jshint camelcase:false */
+/*jshint maxlen:200*/
 
 (function (log, tracker, window, document, Geo, LazyQueue, Cookies, Cache, Krux, abTest) {
 	'use strict';
