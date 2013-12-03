@@ -141,12 +141,14 @@
 				function( index, value ) {
 					var col = this._getShortestColumn(),
 						colElem = col.get( 0 );
-					// prepend on append to column
-					// do not use jquery for append/prepend to avoid scripts re-execution
-					if ( method === 'prepend' ) {
-						colElem.insertBefore( value, colElem.firstChild );
-					} else {
-						colElem.appendChild( value );
+					if (colElem) {
+						// prepend on append to column
+						// do not use jquery for append/prepend to avoid scripts re-execution
+						if ( method === 'prepend' ) {
+							colElem.insertBefore( value, colElem.firstChild );
+						} else {
+							colElem.appendChild( value );
+						}
 					}
 				},
 				this
