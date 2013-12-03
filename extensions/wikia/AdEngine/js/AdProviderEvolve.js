@@ -2,7 +2,6 @@
 /*jshint maxparams: false*/
 /*jshint maxlen:false*/
 /*jshint quotmark:false*/
-/*global setTimeout*/
 
 var AdProviderEvolve = function (adLogicPageLevelParamsLegacy, scriptWriter, adTracker, log, window, document, Krux, evolveHelper, slotTweaker) {
 	'use strict';

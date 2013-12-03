@@ -1,3 +1,4 @@
+/*exported AdConfig2Late*/
 var AdConfig2Late = function (
 	// regular dependencies
 	log,
