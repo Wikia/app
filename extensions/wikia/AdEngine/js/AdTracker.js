@@ -32,6 +32,10 @@ var AdTracker = function (log, tracker) {
 			TOP_LEADERBOARD:       '728x90',
 			TOP_RIGHT_BOXAD:       '300x250',
 			WIKIA_BAR_BOXAD_1:     '320x50'
+		},
+		stats = {
+			allEvents: 0,
+			interestingEvents: 0
 		};
 
 	function formatTrackTime(t) {
@@ -65,6 +69,13 @@ var AdTracker = function (log, tracker) {
 	function trackInit(provider, slotname, slotsize) {
 		log(['trackInit', slotname, slotsize], 'debug', logGroup);
 
+		log([
+			'event: ' + 'register',
+			'provider: ' + provider,
+			'slotname: ' + slotname,
+			'value: 0'
+		], 'debug', logGroup);
+
 		tracker.track({
 			eventName: 'liftium.slot3',
 			ga_category: 'slot3/' + slotsize.split(',')[0],
@@ -72,25 +83,30 @@ var AdTracker = function (log, tracker) {
 			ga_label: provider,
 			trackingMethod: 'ad'
 		});
+
+		stats.allEvents += 1;
+		stats.interestingEvents += 1;
 	}
 
 	function trackEnd(provider, category, slotname, hopTime, reason) {
 		var timeBucket = formatTrackTime(hopTime),
-			labelPrefix = '';
-
-		log([
-			'event: ' + category,
-			'provider: ' + provider,
-			'slotname: ' + slotname,
-			'timeBucket: ' + timeBucket,
-			'extraParams: ', {},
-			'value: 0',
-			'[NOT TRACKED hopTime: ' + (hopTime / 1000) + ']'
-		], 'debug', logGroup);
+			labelPrefix = '',
+			toLog = [
+				'event: ' + category,
+				'provider: ' + provider,
+				'slotname: ' + slotname,
+				'timeBucket: ' + timeBucket,
+				'extraParams: ', {}
+			];
 
 		if (reason) {
 			labelPrefix = reason + '/';
+			toLog.reason = reason;
 		}
+
+		toLog.push('value: 0');
+		toLog.push('[NOT TRACKED hopTime: ' + (hopTime / 1000) + ']');
+		log(toLog, 'debug', logGroup);
 
 		tracker.track({
 			eventName: 'liftium.hop3',
@@ -99,6 +115,9 @@ var AdTracker = function (log, tracker) {
 			ga_label: labelPrefix + formatTrackTime(hopTime),
 			trackingMethod: 'ad'
 		});
+
+		stats.allEvents += 1;
+		stats.interestingEvents += 1;
 	}
 
 	function trackSlot(provider, slotname) {
@@ -128,7 +147,12 @@ var AdTracker = function (log, tracker) {
 		};
 	}
 
+	function getStats() {
+		return stats;
+	}
+
 	return {
-		trackSlot: trackSlot
+		trackSlot: trackSlot,
+		getStats: getStats
 	};
 };

@@ -2,12 +2,16 @@
 /*global setTimeout*/
 /*jshint camelcase:false, maxparams:5*/
 
-var SlotTracker = function (log, tracker) {
+var SlotTracker = function (log/*, tracker*/) {
 	'use strict';
 
 	var logGroup = 'SlotTracker',
 		timeBuckets = [0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.5, 5.0, 8.0],
-		timeCheckpoints = [2.0, 5.0, 8.0];
+		timeCheckpoints = [2.0, 5.0, 8.0],
+		stats = {
+			allEvents: 0,
+			interestingEvents: 0
+		};
 
 	// The filtering function
 	function isInteresting(eventName, data) {
@@ -38,10 +42,11 @@ var SlotTracker = function (log, tracker) {
 
 	function trackEvent(eventName, data, value) {
 		var toLog = [
-			'event: ' + eventName,
-			'provider: ' + data.provider,
-			'slotname: ' + data.slotname
-		];
+				'event: ' + eventName,
+				'provider: ' + data.provider,
+				'slotname: ' + data.slotname
+			],
+			interesting = isInteresting(eventName, data);
 
 		if (eventName.match(/^state/)) {
 			toLog.push('state: ' + data.state);
@@ -52,9 +57,15 @@ var SlotTracker = function (log, tracker) {
 		}
 
 		toLog.push('value: ' + value);
-		toLog.push('interesting: ' + isInteresting(eventName, data) || 'false');
+		toLog.push('interesting: ' + interesting || 'false');
 
+		// TODO: track instead of log :-)
 		log(toLog, 'debug', logGroup);
+
+		stats.allEvents += 1;
+		if (interesting) {
+			stats.interestingEvents += 1;
+		}
 	}
 
 	function getTimeBucket(time) {
@@ -93,7 +104,7 @@ var SlotTracker = function (log, tracker) {
 					{
 						provider: provider,
 						slotname: slotname,
-						state: {eventsTracked: eventsTracked.join(',')}
+						state: eventsTracked.join(',')
 					},
 					lastEventTime
 				);
@@ -129,6 +140,12 @@ var SlotTracker = function (log, tracker) {
 			track: track
 		};
 	}
+
+	function getStats() {
+		return stats;
+	}
+
+	slotTracker.getStats = getStats;
 
 	return slotTracker;
 };
