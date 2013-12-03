@@ -31,7 +31,7 @@ class  WikiaMobilePageHeaderService extends WikiaService {
 	 * @return string
 	 */
 	private function getTitleText( $title, $namespace ){
-		if ( in_array( $namespace, $this->namespaces ) ) {
+		if ( defined( 'NS_BLOG_ARTICLE' ) && in_array( $namespace, $this->namespaces ) ) {
 			$titleParts = explode( '/', $title );
 			array_shift( $titleParts );
 
@@ -84,7 +84,7 @@ class  WikiaMobilePageHeaderService extends WikiaService {
 					$userName = wfMessage( 'wikiamobile-anonymous-edited-by' )->text();
 				} else {
 					//Wrap username in a link to user page
-					$userName = '<a href="' . $user->getUserPage()->getFullURL() . '">' . $userName . '</a>';
+					$userName = "<a href='{$user->getUserPage()->getLocalUrl()}'>{$userName}</a>";
 				}
 
 				$this->response->setVal(
@@ -104,6 +104,10 @@ class  WikiaMobilePageHeaderService extends WikiaService {
 		}
 
 		$this->response->setVal( 'editLink', $this->getTitleEditUrl() );
+
+		if ( $namespace == NS_CATEGORY ) {
+			$this->response->setVal( 'categoryPage', wfMessage( 'wikiamobile-categories-tagline' )->inContentLanguage()->plain() );
+		}
 
 		return true;
 	}
