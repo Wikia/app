@@ -114,9 +114,9 @@ class VideoThumbnailController extends WikiaController {
 		$imgAttribs['alt'] = empty( $options['alt'] ) ? '' : $options['alt'];
 
 		// lazy loading
-		if ( !empty($options['usePreloading']) ) {
-            $imgAttribs['data-src'] = $imgSrc;
-        }
+		if ( !empty( $options['usePreloading'] ) ) {
+			$imgAttribs['data-src'] = $imgSrc;
+		}
 
 		// set valign for img tag
 		$imgAttribs['style'] = '';
@@ -169,7 +169,7 @@ class VideoThumbnailController extends WikiaController {
 		}
 
 		// check responsive
-		if( empty( $options[ 'responsive' ] ) ) {
+		if ( empty( $options[ 'responsive' ] ) ) {
 			$width = $width.'px';
 			$height = $height.'px';
 		} else {
@@ -197,7 +197,7 @@ class VideoThumbnailController extends WikiaController {
 
 		// set duration
 		$this->duration = WikiaFileHelper::formatDuration( $duration );
-		$this->durationAttrs = $this->getAttribs( $durationAttribs );;
+		$this->durationAttrs = $this->getAttribs( $durationAttribs );
 
 		// set meta
 		$this->metaAttrs = $metaAttribs;
@@ -227,11 +227,11 @@ class VideoThumbnailController extends WikiaController {
 	protected function getThumbnailSize( $width = 0 ) {
 		if ( $width < 200 ) {
 			$size = 'xsmall';
-		} else if ( $width >= 200 && $width < 270 ) {
+		} else if ( $width < 270 ) {
 			$size = 'small';
-		} else if ( $width >= 270 && $width < 470 ) {
+		} else if ( $width < 470 ) {
 			$size = 'medium';
-		} else if ( $width >= 470 && $width < 720 ) {
+		} else if ( $width < 720 ) {
 			$size = 'large';
 		} else {
 			$size = 'xlarge';

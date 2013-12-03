@@ -203,13 +203,13 @@ class WikiaFileHelper extends Service {
 				if ( $fileMetadata ) {
 					$fileMetadata = unserialize( $fileMetadata );
 					if ( array_key_exists( 'duration', $fileMetadata ) ) {
-						$duration = self::formatDuration( $fileMetadata['duration'] );
+						$duration = $fileMetadata['duration'];
 						$isoDuration = self::getISO8601Duration( $duration );
 						$content .= '<meta itemprop="duration" content="'.$isoDuration.'">';
 					}
 				}
 
-				$content .= self::videoOverlayDuration( $duration );
+				$content .= self::videoOverlayDuration( self::formatDuration( $duration ) );
 				$content .= '<br />';
 
 				// video views
@@ -562,23 +562,21 @@ class WikiaFileHelper extends Service {
 	}
 
 	/**
-	 * Get the duration in ISO 8601 format for meta tag
-	 * @param $hms
-	 * @return string
+	 * Get duration in ISO 8601 format for meta tag
+	 * @param integer $sec
+	 * @return string $result
 	 */
-	public static function getISO8601Duration( $hms ) {
-		if ( !empty( $hms ) ) {
-			$segments = explode( ':', $hms );
-			$ret = "PT";
-			if ( count( $segments ) == 3 ) {
-				$ret .= array_shift( $segments ) . 'H';
-			}
-			$ret .= array_shift( $segments ) . 'M';
-			$ret .= array_shift( $segments ) . 'S';
+	public static function getISO8601Duration( $sec ) {
+		if ( empty( $sec ) ) {
+			$result = '';
+		} else {
+			$sec = intval( $sec );
 
-			return $ret;
+			$format = ( $sec >= 3600 ) ? '\P\TH\Hi\Ms\S' : '\P\Ti\Ms\S';
+			$result = gmdate( $format, $sec );
 		}
-		return '';
+
+		return $result;
 	}
 
 	/**
