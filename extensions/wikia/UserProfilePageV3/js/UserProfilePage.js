@@ -138,9 +138,6 @@ var UserProfilePage = {
 					});
 				});
 			}).fail(function(data) {
-
-				console.log( data );
-
 				var message = '';
 				if( data.responseText ) {
 					var response = JSON.parse(data.responseText);
