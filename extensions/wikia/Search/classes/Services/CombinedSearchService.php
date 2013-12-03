@@ -316,7 +316,8 @@ class CombinedSearchService {
 						self::IMAGE_SIZE,
 						$db
 					);
-					$images = $imageServing->getImages(1)[$articleId];
+					$isResult = $imageServing->getImages(1);
+					$images = isset($isResult[$articleId]) ? $isResult[$articleId] : false;
 					if ($images && sizeof($images) > 0) {
 						$imageName = $images[0]['name'];
 						$file = \GlobalFile::newFromText($imageName, $wikiId);
