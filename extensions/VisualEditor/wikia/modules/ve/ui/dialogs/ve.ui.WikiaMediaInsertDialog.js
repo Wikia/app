@@ -172,6 +172,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.onQueryRequestSearchDone = function ( ite
 };
 
 ve.ui.WikiaMediaInsertDialog.prototype.onQueryRequestVideoDone = function ( data ) {
+	var cartSize = this.cartModel.items.length;
 	this.queryInput.setValue( '' );
 	this.cartModel.addItems( [
 		new ve.dm.WikiaCartItem(
@@ -180,10 +181,13 @@ ve.ui.WikiaMediaInsertDialog.prototype.onQueryRequestVideoDone = function ( data
 			'video',
 			data.tempName || undefined,
 			data.provider,
-			data.videoId || undefined
+			data.videoId || undefined,
+			undefined,
+			'veid-' + ( cartSize === 0 ? cartSize : cartSize++ )
 		)
 	] );
 	this.setPage( data.title );
+	this.cart.selectItem( this.cart.getItemFromData( data.title ) );
 };
 
 /**
@@ -223,8 +227,11 @@ ve.ui.WikiaMediaInsertDialog.prototype.onSearchCheck = function ( item ) {
  * selected.
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onCartSelect = function ( item ) {
+	var model, key;
 	if ( item !== null ) {
-		this.setPage( item.getModel().title );
+		model = item.getModel();
+		key = model.id ? model.id : model.title;
+		this.setPage( key );
 	}
 };
 
@@ -249,7 +256,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.onCartModelAdd = function ( items ) {
 		}
 		page = new ve.ui.WikiaMediaPageWidget( item, config );
 		page.connect( this, { 'remove': 'onMediaPageRemove' } );
-		this.pages.addPage( item.title, { '$content': page.$ } );
+		this.pages.addPage( item.id || item.title, { '$content': page.$ } );
 	}
 
 	this.searchResults.setChecked( items, true );
@@ -300,6 +307,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.getDefaultPage = function () {
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onMediaPageRemove = function ( item ) {
 	this.cartModel.removeItems( [ item ] );
+	this.pages.removePage( item.id || item.title );
 	this.setPage( this.getDefaultPage() );
 };
 
@@ -338,6 +346,9 @@ ve.ui.WikiaMediaInsertDialog.prototype.onClose = function ( action ) {
 		this.insertMedia( ve.copy( this.cartModel.getItems() ) );
 	}
 	this.cartModel.clearItems();
+	// this.pages.clearPages();
+	// this.pages.addPage( 'main', { '$content': this.$mainPage } );
+	// this.pages.addPage( 'search', { '$content': this.search.$ } );
 	this.queryInput.setValue( '' );
 };
 
@@ -653,6 +664,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.onUploadChange = function () {
  * @param {Object} data The uploaded file information
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onUploadSuccess = function ( data ) {
+	var cartSize = this.cartModel.items.length;
 	if ( !this.license.html ) {
 		this.license.promise.done( ve.bind( this.onUploadSuccess, this, data ) );
 	} else {
@@ -661,7 +673,11 @@ ve.ui.WikiaMediaInsertDialog.prototype.onUploadSuccess = function ( data ) {
 				data.title,
 				data.tempUrl || data.url,
 				'photo',
-				data.tempName || undefined
+				data.tempName || undefined,
+				undefined,
+				undefined,
+				undefined,
+				'veid-' + ( cartSize === 0 ? cartSize : cartSize++ )
 			)
 		] );
 		this.cart.selectItem( this.cart.getItemFromData( data.title ) );

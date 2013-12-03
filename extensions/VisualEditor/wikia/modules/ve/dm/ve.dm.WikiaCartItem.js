@@ -18,7 +18,8 @@ ve.dm.WikiaCartItem = function VeDmWikiaCartItem(
 	temporaryFileName,
 	provider,
 	videoId,
-	license
+	license,
+	id
 ) {
 	var titleParts = this.getTitleParts( title );
 
@@ -33,6 +34,7 @@ ve.dm.WikiaCartItem = function VeDmWikiaCartItem(
 	this.prefix = titleParts[1];
 	this.basename = titleParts[2];
 	this.extension = titleParts[3];
+	this.id = id;
 };
 
 /**
