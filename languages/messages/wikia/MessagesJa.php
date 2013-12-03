@@ -143,4 +143,11 @@ $messages = array_merge( $messages , array(
 'see_more' => '更に詳しくは',
 'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
 'addnewtalksection-link' => '新しいセクションを開始する',
+
+	// hubs
+'hub-Entertainment' => 'エンターテイメント',
+'hub-Gaming' => 'ゲーム',
+'hub-Video_Games' => 'ゲーム',
+'hub-Lifestyle' => 'ライフスタイル',
+'hub-Wikia' => 'Wikia',
 ));

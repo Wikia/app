@@ -312,11 +312,11 @@ $messages['ja'] = array(
 
 	// from the community
 	'wikiahubs-from-community-promoted' => '宣伝する',
-	'wikiahubs-from-community-caption' => ' [$1 $2] から[$3 $4]',
+	'wikiahubs-from-community-caption' => '[$1 $2] から[$3 $4]',
 	'wikiahubs-from-community-headline' => 'コミュニティーから',
 
 	//featured video
-	'wikiahubs-sponsored-by' => ' $1によって提供されました。',
+	'wikiahubs-sponsored-by' => '$1によって提供されました。',
 
 	// 404 page
 	'wikiahubs-404-title' => 'お探しのページは見つかりませんでした。',
