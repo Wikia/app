@@ -36,7 +36,7 @@ ve.init.mw.WikiaViewPageTarget.static.toolbarGroups = [
 	{ 'include': [ 'wikiaMediaInsert' ] },
 	{
 		'include': '*',
-		'exclude': [ 'mediaInsert', 'code' ]
+		'exclude': [ 'mediaInsert', 'code', 'wikiaSourceMode' ]
 	}
 ];
 
@@ -45,7 +45,7 @@ ve.init.mw.WikiaViewPageTarget.static.actionsToolbarConfig = [
 	{
 		'type': 'list',
 		'icon': 'menu',
-		'include': [ 'meta', 'categories', 'languages' ] }
+		'include': [ 'meta', 'categories', 'languages', 'wikiaSourceMode' ] }
 ];
 
 ve.init.mw.WikiaViewPageTarget.prototype.setupSkinTabs = function () {
