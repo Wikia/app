@@ -40,6 +40,14 @@ ve.init.mw.WikiaViewPageTarget.static.toolbarGroups = [
 	}
 ];
 
+ve.init.mw.WikiaViewPageTarget.static.actionsToolbarConfig = [
+	{ 'include': [ 'help', 'notices' ] },
+	{
+		'type': 'list',
+		'icon': 'menu',
+		'include': [ 'meta', 'categories', 'languages' ] }
+];
+
 ve.init.mw.WikiaViewPageTarget.prototype.setupSkinTabs = function () {
 	// Intentionally left empty
 };
