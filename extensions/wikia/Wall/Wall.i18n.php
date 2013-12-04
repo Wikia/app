@@ -374,7 +374,6 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 	'wall-quote-author' => '$1 wrote:',
 	'wall-quote-reply-to' => 'reply to #$1',
 
-	'wall-preview-modal-button-back' => 'Back',
 	'wall-preview-modal-button-publish' => 'Publish',
 
 	'wall-topic-input-heading' => 'Topic',
