@@ -199,7 +199,7 @@ ve.init.mw.ViewPageTarget.prototype.deactivate = function ( override ) {
 			// Check we got as far as setting up the surface
 			if ( this.active ) {
 				// If we got as far as setting up the surface, tear that down
-				this.tearDownSurface();
+				this.tearDownSurface( true );
 			}
 
 			// Show/restore components that are otherwise handled by tearDownSurface
@@ -242,7 +242,7 @@ ve.init.mw.ViewPageTarget.prototype.onLoad = function ( doc ) {
 			}
 			ve.track( 'performance.system.activation', { 'duration': ve.now() - this.timings.activationStart } );
 			mw.hook( 've.activationComplete' ).fire();
-		}, this ) );
+		}, this ), true );
 	}
 };
 
@@ -955,8 +955,9 @@ ve.init.mw.ViewPageTarget.prototype.getSaveOptions = function () {
  * @method
  * @param {HTMLDocument} doc HTML DOM to edit
  * @param {Function} [callback] Callback to call when done
+ * @param {boolean} animate Should elements like the toolbar animate when hiding and showing.
  */
-ve.init.mw.ViewPageTarget.prototype.setUpSurface = function ( doc, callback ) {
+ve.init.mw.ViewPageTarget.prototype.setUpSurface = function ( doc, callback, animate ) {
 	var target = this;
 	setTimeout( function () {
 		// Build linmod
@@ -986,7 +987,7 @@ ve.init.mw.ViewPageTarget.prototype.setUpSurface = function ( doc, callback ) {
 						'history': 'updateToolbarSaveButtonState'
 					} );
 					target.$element.append( target.surface.$element );
-					target.setUpToolbar();
+					target.setUpToolbar( animate );
 					target.transformPageTitle();
 					target.changeDocumentTitle();
 
@@ -1118,15 +1119,16 @@ ve.init.mw.ViewPageTarget.prototype.onToolbarPosition = function ( $bar, update 
 /**
  * Switch to viewing mode.
  *
+ * @param {boolean} animate Should elements like the toolbar animate when hiding and showing.
  * @method
  */
-ve.init.mw.ViewPageTarget.prototype.tearDownSurface = function () {
+ve.init.mw.ViewPageTarget.prototype.tearDownSurface = function ( animate ) {
 	// Update UI
 	if ( this.$document ) {
 		this.$document.blur();
 		this.$document = null;
 	}
-	this.tearDownToolbar();
+	this.tearDownToolbar( animate );
 	this.restoreDocumentTitle();
 	// Destroy surface
 	if ( this.surface ) {
@@ -1394,9 +1396,12 @@ ve.init.mw.ViewPageTarget.prototype.hideTableOfContents = function () {
  *
  * This also transplants the toolbar to a new location.
  *
+ * @param {boolean} animate Whether or not to animate the toolbar's hiding and showing.
  * @method
  */
-ve.init.mw.ViewPageTarget.prototype.setUpToolbar = function () {
+ve.init.mw.ViewPageTarget.prototype.setUpToolbar = function ( animate ) {
+	var setup;
+
 	this.toolbar = new ve.ui.TargetToolbar( this, this.surface, { 'shadow': true, 'actions': true } );
 	this.toolbar.connect( this, { 'position': 'onToolbarPosition' } );
 	this.toolbar.setup( this.constructor.static.toolbarGroups );
@@ -1408,26 +1413,40 @@ ve.init.mw.ViewPageTarget.prototype.setUpToolbar = function () {
 		.addClass( 've-init-mw-viewPageTarget-toolbar' )
 		//.insertBefore( '#firstHeading' );
 		.insertAfter( '#WikiaPageHeader' );
-	this.toolbar.$bar.slideDown( 'fast', ve.bind( function () {
+
+	setup = ve.bind( function () {
 		// Check the surface wasn't torn down while the toolbar was animating
 		if ( this.surface ) {
 			this.toolbar.initialize();
 			this.surface.emit( 'position' );
 			this.surface.getContext().update();
 		}
-	}, this ) );
+	}, this );
+
+	if ( animate ) {
+		this.toolbar.$bar.slideDown( 'fast', setup );
+	} else {
+		setup();
+	}
 };
 
 /**
  * Hide the toolbar.
  *
+ * @param {boolean} animate Whether or not to animate the toolbar's hiding and showing.
  * @method
  */
-ve.init.mw.ViewPageTarget.prototype.tearDownToolbar = function () {
-	this.toolbar.$bar.slideUp( 'fast', ve.bind( function () {
+ve.init.mw.ViewPageTarget.prototype.tearDownToolbar = function ( animate ) {
+	var tearDown = ve.bind( function () {
 		this.toolbar.destroy();
 		this.toolbar = null;
-	}, this ) );
+	}, this );
+
+	if ( animate ) {
+		this.toolbar.$bar.slideUp( 'fast', tearDown );
+	} else {
+		tearDown();
+	}
 };
 
 /**

@@ -71,13 +71,13 @@ ve.ui.WikiaSourceModeDialog.prototype.initialize = function () {
  *
  * @method
  */
-ve.ui.WikiaSourceModeDialog.prototype.onOpen = function () {
+ve.ui.WikiaSourceModeDialog.prototype.setup = function () {
 	var doc = this.surface.getModel().getDocument();
 
 	this.openCount++;
 
 	// Parent method
-	ve.ui.MWDialog.prototype.onOpen.call( this );
+	ve.ui.MWDialog.prototype.setup.call( this );
 
 	this.$frame.startThrobbing();
 	this.surface.getTarget().serialize(
@@ -163,17 +163,10 @@ ve.ui.WikiaSourceModeDialog.prototype.onParseSuccess = function( response ) {
 	target.deactivating = true;
 	target.tearDownToolbarButtons();
 	target.detachToolbarButtons();
-	target.resetSaveDialog();
-	target.hideSaveDialog();
-	target.detachSaveDialog();
-	target.$document.blur();
-	target.$document = null;
-	target.toolbar.destroy();
-	target.toolbar = null;
-	target.surface.destroy();
-	target.surface = null;
-	target.active = false;
-	target.deactivating = false;
+	target.saveDialog.reset();
+	target.saveDialog.close();
+
+	target.tearDownSurface( false );
 
 	target.wikitext = this.sourceModeTextarea.getValue();
 
@@ -185,10 +178,9 @@ ve.ui.WikiaSourceModeDialog.prototype.onParseSuccess = function( response ) {
 		this.setupToolbarButtons();
 		this.setupSaveDialog();
 		this.attachToolbarButtons();
-		this.attachSaveDialog();
 		this.$document[0].focus();
 		this.activating = false;
-	}, target ) );
+	}, target ), false );
 };
 
 /**
