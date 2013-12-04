@@ -341,9 +341,6 @@ ve.ui.WikiaMediaInsertDialog.prototype.onClose = function ( action ) {
 		this.insertMedia( ve.copy( this.cartModel.getItems() ) );
 	}
 	this.cartModel.clearItems();
-	// this.pages.clearPages();
-	// this.pages.addPage( 'main', { '$content': this.$mainPage } );
-	// this.pages.addPage( 'search', { '$content': this.search.$ } );
 	this.queryInput.setValue( '' );
 };
 
