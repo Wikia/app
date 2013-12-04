@@ -23,11 +23,11 @@ ve.ce.WikiaBlockMediaNode = function VeCeWikiaBlockMediaNode( model, config ) {
 	// Parent constructor
 	ve.ce.BranchNode.call( this, model, config );
 
+	// Initialize
+	this.rebuild();
+
 	// Mixin constructors
 	ve.ce.MWImageNode.call( this, this.$element, this.$image );
-
-	// Initialize
-	this.update();
 };
 
 /* Inheritance */
@@ -161,7 +161,7 @@ ve.ce.WikiaBlockMediaNode.prototype.getCssClass = function ( type, alignment ) {
  * @method
  */
 ve.ce.WikiaBlockMediaNode.prototype.onAttributeChange = function () {
-	this.update();
+	this.rebuild();
 };
 
 /**
@@ -204,7 +204,7 @@ ve.ce.WikiaBlockMediaNode.prototype.onResizableResizing = function ( dimensions 
  *
  * @method
  */
-ve.ce.WikiaBlockMediaNode.prototype.update = function () {
+ve.ce.WikiaBlockMediaNode.prototype.rebuild = function () {
 	var $anchor, $image, $root, $thumb, captionModel, captionView,
 		type = this.model.getAttribute( 'type' );
 
