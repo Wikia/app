@@ -12,10 +12,7 @@
  * @abstract
  * @class
  * @extends ve.ce.BranchNode
- * @mixins ve.ce.ProtectedNode
- * @mixins ve.ce.FocusableNode
- * @mixins ve.ce.RelocatableNode
- * @mixins ve.ce.MWResizableNode
+ * @mixins ve.ce.MWImageNode
  *
  * @constructor
  * @param {ve.dm.WikiaBlockMediaNode} model Model to observe
@@ -26,30 +23,20 @@ ve.ce.WikiaBlockMediaNode = function VeCeWikiaBlockMediaNode( model, config ) {
 	// Parent constructor
 	ve.ce.BranchNode.call( this, model, config );
 
-	// Mixin constructors
-	ve.ce.ProtectedNode.call( this );
-	ve.ce.FocusableNode.call( this );
-	ve.ce.RelocatableNode.call( this );
-	ve.ce.MWResizableNode.call( this );
-
 	// Initialize
-	this.update();
+	this.rebuild();
+
+	// Mixin constructors
+	ve.ce.MWImageNode.call( this, this.$element, this.$image );
 };
 
 /* Inheritance */
 
 OO.inheritClass( ve.ce.WikiaBlockMediaNode, ve.ce.BranchNode );
 
-OO.mixinClass( ve.ce.WikiaBlockMediaNode, ve.ce.ProtectedNode );
+OO.mixinClass( ve.ce.WikiaBlockMediaNode, ve.ce.GeneratedContentNode );
 
-OO.mixinClass( ve.ce.WikiaBlockMediaNode, ve.ce.FocusableNode );
-
-OO.mixinClass( ve.ce.WikiaBlockMediaNode, ve.ce.RelocatableNode );
-
-// Need to mixin base class as well
-OO.mixinClass( ve.ce.WikiaBlockMediaNode, ve.ce.ResizableNode );
-
-OO.mixinClass( ve.ce.WikiaBlockMediaNode, ve.ce.MWResizableNode );
+OO.mixinClass( ve.ce.WikiaBlockMediaNode, ve.ce.MWImageNode );
 
 /* Static Properties */
 
@@ -174,7 +161,7 @@ ve.ce.WikiaBlockMediaNode.prototype.getCssClass = function ( type, alignment ) {
  * @method
  */
 ve.ce.WikiaBlockMediaNode.prototype.onAttributeChange = function () {
-	this.update();
+	this.rebuild();
 };
 
 /**
@@ -192,6 +179,16 @@ ve.ce.WikiaBlockMediaNode.prototype.setupSlugs = function () {};
 ve.ce.WikiaBlockMediaNode.prototype.onSplice = function () {};
 
 /**
+ * Resize the thumb container
+ *
+ * @param {Object} dimensions New dimensions of the image
+ */
+ve.ce.WikiaBlockMediaNode.prototype.onResizableResizing = function ( dimensions ) {
+	ve.ce.ResizableNode.prototype.onResizableResizing.call( this, dimensions );
+	this.$thumb.css( 'width', dimensions.width + 2 );
+};
+
+/**
  * Creates and updates the view.
  *
  * @description
@@ -207,7 +204,7 @@ ve.ce.WikiaBlockMediaNode.prototype.onSplice = function () {};
  *
  * @method
  */
-ve.ce.WikiaBlockMediaNode.prototype.update = function () {
+ve.ce.WikiaBlockMediaNode.prototype.rebuild = function () {
 	var $anchor, $image, $root, $thumb, captionModel, captionView,
 		type = this.model.getAttribute( 'type' );
 
@@ -249,6 +246,7 @@ ve.ce.WikiaBlockMediaNode.prototype.update = function () {
 	this.$relocatable = this.$element;
 	this.$image = $image;
 	this.$resizable = $image;
+	this.$thumb = $thumb;
 
 	// This should be called last so the listeners will get the same DOM
 	// structure and jQuery object references they do on initialization.
