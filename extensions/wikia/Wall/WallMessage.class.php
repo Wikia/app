@@ -646,13 +646,19 @@ class WallMessage {
 		return false;
 	}
 
+	/**
+	 * Checks if the user passed as an argument is the owner of the Wall containing current WallMessage
+	 *
+	 * @param User $user instance of the user class
+	 * @return bool true when the user is the owner
+	 */
 	public function isWallOwner(User $user) {
 		$wallUser = $this->getWallOwner();
 		if(empty($wallUser)) {
 			return false;
 		}
 
-		return $wallUser->getId() == $user->getId();
+		return $wallUser->getName() == $user->getName();
 	}
 
 	public function load($master = false) {

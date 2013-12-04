@@ -16,8 +16,7 @@ class WallHooksHelper {
 
 		if ( !$user->mHideName && $allowUsertalk && $title->getNamespace() == NS_USER_WALL_MESSAGE ) {
 			$wm = new WallMessage( $title );
-			$owner = $wm->getWallOwner();
-			if ( $owner->getName() === $user->getName() ) {
+			if ( $wm->isWallOwner( $user ) ) {
 				$blocked = false;
 				wfDebug( __METHOD__ . ": self-user wall page, ignoring any blocks\n" );
 			}
@@ -1424,9 +1423,8 @@ class WallHooksHelper {
 			$result = array();
 
 			$wm = new WallMessage( $title );
-			$owner = $wm->getWallOwner();
 
-			if( $user->isAllowed('walledit') || $user->getName() == $owner->getName() ) {
+			if( $user->isAllowed('walledit') || $wm->isWallOwner( $user ) ) {
 				$result = null;
 				return true;
 			} else {
