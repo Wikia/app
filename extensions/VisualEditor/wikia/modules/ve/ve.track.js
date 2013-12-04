@@ -22,6 +22,21 @@ require( ['wikia.tracker'], function ( tracker ) {
 					'category': 'article',
 					'label': 've-section-edit'
 				}
+			},
+			// TODO: support regex match or exploding on "." so we can track across "performance" etc.
+			'performance.system.activation': function ( data ) {
+				return {
+					'action': actions.IMPRESSION,
+					'label': 'edit-page',
+					'value': data.duration
+				};
+			},
+			'performance.user.saveComplete': function ( data ) {
+				return {
+					'action': actions.SUCCESS,
+					'label': 'publish',
+					'value': data.duration
+				};
 			}
 		},
 		// @see {@link nameToLabel} for more information
@@ -67,7 +82,7 @@ require( ['wikia.tracker'], function ( tracker ) {
 		if ( topic !== 'wikia' ) {
 			mwEvent = mwTopics[topic];
 			// Only track things we care about
-			if ( !mwEvent || !( mwEvent = mwEvent[data.action] ) ) {
+			if ( !mwEvent || ( data.action && !( mwEvent = mwEvent[data.action] ) ) ) {
 				return;
 			}
 			data = $.isFunction( mwEvent ) ? mwEvent( data ) : mwEvent;
