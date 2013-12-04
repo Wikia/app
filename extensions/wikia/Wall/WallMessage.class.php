@@ -649,6 +649,8 @@ class WallMessage {
 			return false;
 		}
 
+		// we're using names instead of ids, as ids for anonymous users are equal 0. This will cause bugs
+		// while verifying anonymous wall owners
 		return $wallUser->getName() == $user->getName();
 	}
 
