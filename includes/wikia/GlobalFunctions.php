@@ -1811,10 +1811,10 @@ function wfFixMalformedHTML( $html ) {
 	$dom_document = new DOMDocument();
 	// Silence errors when loading html into DOMDocument (it complains when receiving malformed html - which is
 	// what we're using it to fix) see: http://www.php.net/manual/en/domdocument.loadhtml.php#95463
-	libxml_use_internal_errors(true);
-	$dom_document->loadHTML($html);
+	libxml_use_internal_errors( true );
+	$dom_document->loadHTML( $html );
 	// Strip doctype declaration, <html>, and <body> tags created by saveHTML
-	$html = preg_replace( array( '/^.*?<body>/si', '/<\/body><\/html>$/si'), '', $dom_document->saveHTML());
+	$html = preg_replace( array( '/^.*?<body>/si', '/<\/body><\/html>$/si' ), '', $dom_document->saveHTML() );
 
 	return $html;
 }
