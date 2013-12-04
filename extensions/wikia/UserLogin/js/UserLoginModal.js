@@ -63,7 +63,7 @@ var UserLoginModal = {
 						var callback = options.callback;
 						if ( callback && typeof callback === 'function' ) {
 							if ( !options.persistModal ) {
-								UserLoginModal.$modal.toggle('close');
+								UserLoginModal.$modal.trigger('close');
 							}
 							callback();
 						} else {
