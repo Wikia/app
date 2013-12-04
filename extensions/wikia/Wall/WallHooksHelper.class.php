@@ -890,10 +890,10 @@ class WallHooksHelper {
 
 				$title = $wm->getMetaTitle();
 				$wallUrl = $wm->getWallPageUrl();
-				$wallOwner = $wm->getWallOwnerName();
+				$pageText = $wm->getMainPageText();
 				$class = '';
 
-				$articleLink = ' <a href="'.$link.'" class="'.$class.'" >'.$title.'</a> '.wfMsg(static::getMessagePrefix($rc->getAttribute('rc_namespace')) . '-new-message', array($wallUrl, $wallOwner));
+				$articleLink = ' <a href="'.$link.'" class="'.$class.'" >'.$title.'</a> '.wfMsg(static::getMessagePrefix($rc->getAttribute('rc_namespace')) . '-new-message', array($wallUrl, $pageText));
 
 				# Bolden pages watched by this user
 				# Check if the user is following the thread or the board
@@ -1295,7 +1295,7 @@ class WallHooksHelper {
 			$wm = new WallMessage($oTitle);
 			$wallMsgUrl = $wm->getMessagePageUrl();
 			$wallUrl = $wm->getWallUrl();
-			$wallOwnerName = $wm->getWallOwnerName();
+			$pageText = $wm->getMainPageText();
 			$parent = $wm->getTopParentObj();
 			$isMain = is_null($parent);
 
@@ -1306,7 +1306,7 @@ class WallHooksHelper {
 
 			$wm->load();
 			$wallMsgTitle = $wm->getMetaTitle();
-			$headerTitle = wfMsg(static::getMessagePrefix($namespace).'-thread-group', array(Xml::element('a', array('href' => $wallMsgUrl), $wallMsgTitle), $wallUrl, $wallOwnerName));
+			$headerTitle = wfMsg(static::getMessagePrefix($namespace).'-thread-group', array(Xml::element('a', array('href' => $wallMsgUrl), $wallMsgTitle), $wallUrl, $pageText));
 		}
 
 		wfProfileOut(__METHOD__);

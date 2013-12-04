@@ -417,12 +417,9 @@ class WallMessage {
 	}
 
 	/**
-	 * Wall trap warning!
-	 * Method name suggests it returns the name of the wall owner, so it's a user name. But as this is used also by Forum,
-	 * the WallMessageGetWallOwnerName hook overrides this and the returned value is in that case the Forum board title.
-	 * So this method actually gets the name of the message wall/forum board, not the wall owner name.
+	 * This method is used by on Wall and Forum messages to get the name of the main page (wall owner or forum board)
 	 */
-	public function getWallOwnerName() {
+	public function getMainPageText() {
 		$title = $this->getArticleTitle();
 		$parts = explode( '/', $title->getText() );
 		$wallOwnerName = $parts[0];
