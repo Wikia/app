@@ -326,9 +326,9 @@ class ArticlesApiController extends WikiaApiController {
 
 		$key = self::getCacheKey( self::NEW_ARTICLES_CACHE_ID, '', [ implode( '-', $ns ), $limit ] );
 		$results = $this->wg->Memc->get( $key );
-		$results = false;
+
 		if ( $results === false ) {
-			$results = $this->getNewArticlesFromSolr( $ns, self::MAX_NEW_ARTICLES_LIMIT );
+			$results = $this->getNewArticlesFromSolr( $ns, $limit );
 			foreach ( $results as &$item ) {
 				$title = Title::newFromText( $item[ 'title' ] );
 				$item[ 'title' ] = $title->getText();
