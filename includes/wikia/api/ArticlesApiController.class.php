@@ -318,11 +318,15 @@ class ArticlesApiController extends WikiaApiController {
 
 		if ( $results === false ) {
 			$solrResults = $this->getNewArticlesFromSolr( $ns, self::MAX_NEW_ARTICLES_LIMIT );
+			$articles = array_keys( $solrResults );
+			$creators = $this->getUserDataForArticles( $articles );
+
 			$results = [];
-			foreach ( $solrResults as $item ) {
+			foreach ( $solrResults as $id => $item ) {
 				$title = Title::newFromText( $item[ 'title' ] );
 				$item[ 'title' ] = $title->getText();
 				$item[ 'url' ] = $title->getLocalURL();
+				$item[ 'creator' ] = $creators[ $id ];
 				$results[] = $item;
 			}
 
