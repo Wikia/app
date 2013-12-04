@@ -442,6 +442,7 @@ class WallMessage {
 			Wikia::log( __METHOD__, false, 'WALL_PERF article title owner does not match ci username (' . $userName .
 				' vs ' . $parts[0] . ') for ' . $this->getId() . ' (title is ' . $titleText. ')', true );
 		}
+
 		// mech: when the wall message is not in the db yet, the getWallTitle will return 'Empty' as is cannot find
 		// the row in comments_index. After I'll make sure that call to getWallTitle is not needed, the check below
 		// can be safely removed

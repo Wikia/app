@@ -401,6 +401,18 @@ $messages['uk'] = array(
 	'minieditor-placeholder-reply' => 'Відповідь на повідомлення тут',
 );
 
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'minieditor-specialpage-title' => 'Trang thử nghiệm miniEditor',
+	'minieditor-new-heading' => 'Gửi một tin nhắn mới',
+	'minieditor-placeholder-new' => 'Nhập tin nhắn của bạn vào đây',
+	'minieditor-message-edit' => 'Đây là một bài viết sẵn có',
+	'minieditor-reply' => 'Trả lời',
+	'minieditor-placeholder-reply' => 'Trả lời tin nhắn ở đây',
+);
+
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Hydra

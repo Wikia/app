@@ -31,9 +31,6 @@ class AnalyticsProviderIVW2Test extends WikiaBaseTest {
 	public static function analyticsDataProvider()
 	{
 		return array(
-// de.wikia and de.gta tests passed @dev-ppiotr
-// uncomment & re-test all when code goes live
-/*
 			array('http://de.wikia.com/Wikia', 'RC_WIKIA_HOME'),
 
 			array('http://de.wikia.com/Spezial:Kontakt', 'RC_WIKIA_SVCE'),
@@ -71,7 +68,6 @@ class AnalyticsProviderIVW2Test extends WikiaBaseTest {
 			array('http://de.naruto.wikia.com/wiki/Narutopedia', 'RC_WIKIA_UGCANIME'),
 
 			array('http://de.wikia.com/Entertainment/Anime', 'RC_WIKIA_START'),
-*/
 		);
 	}
 
@@ -83,6 +79,9 @@ class AnalyticsProviderIVW2Test extends WikiaBaseTest {
 	 * @dataProvider analyticsDataProvider
 	 */
 	public function testAnalyticsProviderIVW2($url, $result) {
+		// de.wikia and de.gta tests passed @dev-ppiotr
+		$this->markTestSkipped('uncomment & re-test all when code goes live');
+
 		$this->assertEquals($result, $this->getAnalyticsProviderIVW2Code($url));
 	}
 }

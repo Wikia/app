@@ -8,28 +8,13 @@
 require(['throbber', 'track', 'wikia.nirvana', 'wikia.window'], function (throbber, track, nirvana, window) {
 	'use strict';
 
-	var d = window.document,
-		expAll = $(d.getElementById('expAll')),
-		elements;
-
-	if (expAll.length) {
-		elements = $('.alphaSec .artSec, .collSec, .catlinks');
-
-		expAll.on('click', function(){
-			if($(this).toggleClass('exp').hasClass('exp')) {
-				elements.addClass('open');
-			}else {
-				elements.removeClass('open');
-			}
-		});
-	}
+	var d = window.document;
 
 	$(d.getElementById('wkCatExh')).on('click', 'a', function(event){
 		track.event('category', track.IMAGE_LINK, {
 			label: 'exhibition',
 			href: this.href
 		}, event);
-		console.log('a')
 	});
 
 	$(d.getElementsByClassName('alphaSec'))
@@ -73,7 +58,7 @@ require(['throbber', 'track', 'wikia.nirvana', 'wikia.window'], function (throbb
 				category: wgTitle,
 				batch: batch,
 				//this is already encoded and $.ajax encode all data
-				index: decodeURIComponent(id.slice(8))
+				index: decodeURIComponent(id)
 			}
 		}).done(
 			function (result) {
