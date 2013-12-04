@@ -245,7 +245,7 @@ Our whitespace guidelines are based on the [jQuery Style Guide](http://contribut
 
 - Indentation with tabs.
 - No whitespace at the end of line or on blank lines.
-- Lines should be no longer than 80 characters, and must not exceed 100 (counting tabs as 4 spaces).
+- Lines should be no longer than 120 characters (counting tabs as 4 spaces).
 - `if`/`else`/`for`/`while`/`try` always have braces and always go on multiple lines.
 - Unary special-character operators (e.g., `!`, `++`) must not have space next to their operand.
 - Any `,` and `;` must not have preceding space.
