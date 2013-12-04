@@ -11,6 +11,9 @@ var UserProfilePage = {
 	forceRedirect: false,
 	reloadUrl: false,
 
+	// reference to modal UI component
+	modalComponent: {},
+
 	init: function() {
 		UserProfilePage.userId = $('#user').val();
 		UserProfilePage.reloadUrl = $('#reloadUrl').val();
@@ -67,6 +70,10 @@ var UserProfilePage = {
 
 				require( [ 'wikia.ui.factory' ], function( uiFactory ) {
 					uiFactory.init( [ 'modal' ] ).then(function( modal ) {
+
+						// set reference to modal UI component for easy creation of confirmation modal
+						UserProfilePage.modalComponent = modal;
+
 						var id = $(data.body).attr('id') + 'Wrapper',
 							modalConfig = {
 								vars: {
@@ -102,15 +109,23 @@ var UserProfilePage = {
 								}
 							};
 						modal.createComponent( modalConfig, function( editProfileModal ) {
-							//UserProfilePage.modal = $(data.body).makeModal({width : 750, onClose: UserProfilePage.closeModal, closeOnBlackoutClick: UserProfilePage.closeModal});
 							UserProfilePage.modal = editProfileModal.$element;
-							var modal = UserProfilePage.modal;
 
-							UserProfilePage.renderAvatarLightbox(modal);
-							UserProfilePage.renderAboutMeLightbox(modal);
-							//UserProfilePage.renderInterviewLightbox(modal);
+							var modal = editProfileModal.$element,
+								tab = modal.find( '.tabs a' );
 
-							var tab = modal.find('.tabs a');
+							UserProfilePage.renderAvatarLightbox( modal );
+							UserProfilePage.renderAboutMeLightbox( modal );
+
+							editProfileModal.bind( 'beforeClose', UserProfilePage.beforeClose );
+
+							editProfileModal.bind( 'save', function() {
+								UserProfilePage.closeModal( editProfileModal );
+								window.location = UserProfilePage.reloadUrl;
+							});
+
+
+							// adding handler for tab switching
 							tab.click(function(event) {
 								event.preventDefault();
 								UserProfilePage.switchTab($(this).closest('li'));
@@ -119,6 +134,7 @@ var UserProfilePage = {
 							// Synthesize a click on the tab to hide/show the right panels
 							$('[data-tab=' + tabName + '] a').click();
 
+							// load facebook API
 							$.loadFacebookAPI(function() {
 								if(window.FB && FB.XFBML) {
 									// parse FBXML login button
@@ -153,6 +169,25 @@ var UserProfilePage = {
 		}
 	},
 
+	beforeClose: function() {
+		'use strict';
+
+		var deferred = new $.Deferred();
+
+		if( UserProfilePage.wasDataChanged === true ) {
+			if( $( '#UPPLightboxCloseWrapper' ).length === 0 ) {
+				setTimeout(function() {
+					UserProfilePage.displayClosingPopup();
+				}, 50 );
+			}
+			deferred.reject();
+		} else {
+			deferred.resolve();
+		}
+
+		return deferred.promise();
+	},
+
 	switchTab: function(tab) {
 	/*	if( true === UserProfilePage.wasDataChanged ) {
 			UserProfilePage.saveUserData(false);
@@ -184,19 +219,6 @@ var UserProfilePage = {
 			avatarForm = modal.find('#usersAvatar');
 		avatarUploadInput.change(function(e) {
 			UserProfilePage.saveAvatarAIM(avatarForm);
-		});
-
-		modal.find('.modalToolbar .save').unbind('click').click(function(e) {
-			UserProfilePage.closeModal(modal);
-
-			window.location = UserProfilePage.reloadUrl;
-
-			e.preventDefault();
-		});
-
-		modal.find('.modalToolbar .cancel').unbind('click').click(function(e) {
-			UserProfilePage.closeModal(modal);
-			e.preventDefault();
 		});
 
 		var sampleAvatars = modal.find('.sample-avatars img');
@@ -270,14 +292,6 @@ var UserProfilePage = {
 	},
 
 	renderAboutMeLightbox: function(modal) {
-		modal.find('.modalToolbar .save').unbind('click').click(function() {
-			UserProfilePage.saveUserData();
-		});
-
-		modal.find('.modalToolbar .cancel').unbind('click').click(function() {
-			UserProfilePage.closeModal(modal);
-		});
-
 		var fbUnsyncButton = modal.find('#facebookUnsync');
 		fbUnsyncButton.click(function() {
 			UserProfilePage.removeFbProfileUrl();
@@ -314,37 +328,6 @@ var UserProfilePage = {
 			event.preventDefault();
 			window.open($(this).attr('href'));
 		});
-	},
-
-	renderInterviewLightbox: function(modal) {
-
-		modal.find('.modalToolbar .save').unbind('click').click(function() {
-			UserProfilePage.storeCurrAnswer();
-			UserProfilePage.saveInterviewAnswers();
-		});
-
-		modal.find('.modalToolbar .cancel').unbind('click').click(function() {
-			UserProfilePage.closeModal(modal);
-		});
-
-		var nextButton = modal.find('#UPPLightboxNextQuestionBtn');
-		var prevButton = modal.find('#UPPLightboxPrevQuestionBtn');
-
-		nextButton.click(function() {
-			UserProfilePage.storeCurrAnswer();
-			UserProfilePage.currQuestionIndex++;
-			UserProfilePage.renderCurrQuestion(nextButton, prevButton);
-		});
-
-		prevButton.click(function() {
-			UserProfilePage.storeCurrAnswer();
-			UserProfilePage.currQuestionIndex--;
-			UserProfilePage.renderCurrQuestion(nextButton, prevButton);
-		});
-
-		//where does data come from?
-		//UserProfilePage.questions = data.interviewQuestions;
-		UserProfilePage.renderCurrQuestion(nextButton, prevButton);
 	},
 
 	storeCurrAnswer: function() {
@@ -603,12 +586,12 @@ var UserProfilePage = {
 		}
 	},
 
-	closeModal: function(modal, resetDataChangedFlag) {
-		if( typeof(modal.closeModal) === 'function' ) {
+	closeModal: function( modal, resetDataChangedFlag ) {
+		if( typeof( modal.closeModal ) === 'function' ) {
 			modal.closeModal();
 		} else {
 			if( UserProfilePage.wasDataChanged === true ) {
-				if( $('#UPPLightboxCloseWrapper').length == 0 ) {
+				if( $( '#UPPLightboxCloseWrapper' ).length === 0 ) {
 					setTimeout(function() {
 						UserProfilePage.displayClosingPopup();
 					}, 50 );
@@ -617,7 +600,7 @@ var UserProfilePage = {
 			}
 		}
 
-		if( typeof(resetDataChangedFlag) === 'undefined' || resetDataChangedFlag === true ) {
+		if( typeof( resetDataChangedFlag ) === 'undefined' || resetDataChangedFlag === true ) {
 			//changing it for next lightbox openings
 			UserProfilePage.wasDataChanged = false;
 		}
@@ -628,25 +611,70 @@ var UserProfilePage = {
 	},
 
 	displayClosingPopup: function() {
-		$.getJSON( this.ajaxEntryPoint, { method: 'getClosingModal', userId: UserProfilePage.userId, rand: Math.floor(Math.random()*100001) }, function(data) {
+		$.getJSON( this.ajaxEntryPoint, {
+			method: 'getClosingModal',
+			userId: UserProfilePage.userId,
+			rand: Math.floor( Math.random() * 100001 )
+		}, function( data ) {
+			var id = $( data.body ).attr( 'id' ) + 'Wrapper',
+				modalConfig = {
+				vars: {
+					id: id,
+					content: data.body,
+					size: 'medium',
+					title: $.msg( 'userprofilepage-closing-popup-header' ),
+					buttons: [
+						{
+							vars: {
+								value: $.msg( 'userprofilepage-closing-popup-save-and-quit' ),
+								classes: [ 'normal', 'primary' ],
+								data: [
+									{
+										key: 'event',
+										value: 'save'
+									}
+								]
+							}
+						},
+						{
+							vars: {
+								value: $.msg( 'userprofilepage-closing-popup-discard-and-quit' ),
+								data: [
+									{
+										key: 'event',
+										value: 'quit'
+									}
+								]
+							}
+						},
+						{
+							vars: {
+								value: $.msg( 'userprofilepage-closing-popup-cancel' ),
+								data: [
+									{
+										key: 'event',
+										value: 'close'
+									}
+								]
+							}
+						}
+					]
+				}
+			};
 
-			UserProfilePage.closingPopup = $(data.body).makeModal({width: 500, showCloseButton: false, closeOnBlackoutClick: false});
+			UserProfilePage.modalComponent.createComponent( modalConfig, function( confirmationModal ) {
 
-			var modal = UserProfilePage.closingPopup;
-			var save = modal.find('.save');
-			save.click(function() {
-				UserProfilePage.saveUserData(true, modal);
-			});
+				// attaching handlers to button events
+				confirmationModal.bind( 'save', function() {
+					UserProfilePage.saveUserData( true, confirmationModal.$element );
+				});
+				confirmationModal.bind('quit', function() {
+					UserProfilePage.modal.trigger('close');
+					confirmationModal.trigger('close');
+				});
 
-			var quit = modal.find('.quit');
-			quit.click(function() {
-				UserProfilePage.modal.closeModal();
-				modal.closeModal();
-			});
+				confirmationModal.show();
 
-			var cancel = modal.find('.cancel');
-			cancel.click(function() {
-				modal.closeModal();
 			});
 		});
 	},
