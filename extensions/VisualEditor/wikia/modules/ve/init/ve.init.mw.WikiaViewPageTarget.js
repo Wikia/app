@@ -40,6 +40,31 @@ ve.init.mw.WikiaViewPageTarget.static.toolbarGroups = [
 	}
 ];
 
+ve.init.mw.WikiaViewPageTarget.prototype.onSaveDialogSave = function () {
+	ve.track( 'wikia', { 'action': ve.track.actions.CLICK, 'label': 'dialog-save-publish' } );
+	ve.init.mw.ViewPageTarget.prototype.onSaveDialogSave.call( this );
+};
+
+ve.init.mw.WikiaViewPageTarget.prototype.onSaveDialogReview = function () {
+	ve.track( 'wikia', { 'action': ve.track.actions.CLICK, 'label': 'dialog-save-review-changes' } );
+	ve.init.mw.ViewPageTarget.prototype.onSaveDialogReview.call( this );
+};
+
+ve.init.mw.WikiaViewPageTarget.prototype.onToolbarCancelButtonClick = function () {
+	ve.track( 'wikia', { 'action': ve.track.actions.CLICK, 'label': 'button-cancel' } );
+	ve.init.mw.ViewPageTarget.prototype.onToolbarCancelButtonClick.call( this );
+};
+
+ve.init.mw.WikiaViewPageTarget.prototype.onToolbarMetaButtonClick = function () {
+	ve.track( 'wikia', { 'action': ve.track.actions.CLICK, 'label': 'tool-page-settings' } );
+	ve.init.mw.ViewPageTarget.prototype.onToolbarMetaButtonClick.call( this );
+};
+
+ve.init.mw.WikiaViewPageTarget.prototype.onToolbarSaveButtonClick = function () {
+	ve.track( 'wikia', { 'action': ve.track.actions.CLICK, 'label': 'button-publish' } );
+	ve.init.mw.ViewPageTarget.prototype.onToolbarSaveButtonClick.call( this );
+};
+
 ve.init.mw.WikiaViewPageTarget.prototype.setupSkinTabs = function () {
 	// Intentionally left empty
 };

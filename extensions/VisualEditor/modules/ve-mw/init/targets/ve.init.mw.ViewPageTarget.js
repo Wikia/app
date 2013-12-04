@@ -678,7 +678,6 @@ ve.init.mw.ViewPageTarget.prototype.onToolbarSaveButtonClick = function () {
  * @param {jQuery.Event} e Mouse click event
  */
 ve.init.mw.ViewPageTarget.prototype.onToolbarCancelButtonClick = function () {
-	ve.track( 'wikia', { 'action': ve.track.actions.CLICK, 'label': 'button-cancel' } );
 	this.deactivate();
 };
 
@@ -689,7 +688,6 @@ ve.init.mw.ViewPageTarget.prototype.onToolbarCancelButtonClick = function () {
  * @param {jQuery.Event} e Mouse click event
  */
 ve.init.mw.ViewPageTarget.prototype.onToolbarMetaButtonClick = function () {
-	ve.track( 'wikia', { 'action': ve.track.actions.CLICK, 'label': 'tool-page-settings' } );
 	this.surface.getDialogs().getWindow( 'meta' ).open();
 };
 
@@ -774,7 +772,6 @@ ve.init.mw.ViewPageTarget.prototype.updateToolbarSaveButtonState = function () {
  */
 ve.init.mw.ViewPageTarget.prototype.onSaveDialogReview = function () {
 	var doc = this.surface.getModel().getDocument();
-	ve.track( 'wikia', { 'action': ve.track.actions.CLICK, 'label': 'dialog-save-review-changes' } );
 	this.sanityCheckVerified = true;
 	this.saveDialog.setSanityCheck( this.sanityCheckVerified );
 
@@ -808,7 +805,6 @@ ve.init.mw.ViewPageTarget.prototype.onSaveDialogReview = function () {
  * @method
  */
 ve.init.mw.ViewPageTarget.prototype.onSaveDialogSave = function () {
-	ve.track( 'wikia', { 'action': ve.track.actions.CLICK, 'label': 'dialog-save-publish' } );
 	this.timings.saveDialogSave = ve.now();
 	this.timings.saveRetries = 0;
 	ve.track( 'behavior.saveDialogOpenTillSave', {
