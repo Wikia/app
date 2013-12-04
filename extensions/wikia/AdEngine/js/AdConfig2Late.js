@@ -64,6 +64,7 @@ var AdConfig2Late = function (
 	}
 
 	return {
+		getDecorators: function () {},
 		getProvider: getProvider
 	};
 };

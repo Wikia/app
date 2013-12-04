@@ -1,9 +1,9 @@
-/*jshint camelcase:false, maxdepth:5*/
-/*exported AdLogicPageDimensions*/
-var AdLogicPageDimensions = function (window, document, log, slotTweaker) {
+/*jshint camelcase:false*/
+/*exported AdDecoratorPageDimensions*/
+var AdDecoratorPageDimensions = function (window, document, log, slotTweaker) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adengine.logic.shortpage',
+	var logGroup = 'ext.wikia.adengine.decorator.shortpage',
 		initCalled = false,
 		wrappedAds = {},
 
@@ -98,7 +98,7 @@ var AdLogicPageDimensions = function (window, document, log, slotTweaker) {
 				log(['Loading ad in slot ' + ad.slotname, ad], 'info', logGroup);
 
 				slotTweaker.show(ad.slotname, true);
-				ad.provider.fillInSlot.apply(ad.provider, ad.args);
+				ad.loadCallback();
 				ad.state = 'shown';
 
 			} else if (ad.state === 'hidden') {
@@ -127,17 +127,15 @@ var AdLogicPageDimensions = function (window, document, log, slotTweaker) {
 	 * Add an ad to the wrappedAds
 	 *
 	 * @param slotname
-	 * @param provider -- the original provider for the slot
-	 * @param args -- the arguments to call fillInSlot with
+	 * @param loadCallback -- the function to call when an ad shows up the first time
 	 */
-	function add(slotname, provider, args) {
-		log(['add', slotname, provider], 'debug', logGroup);
+	function add(slotname, loadCallback) {
+		log(['add', slotname, loadCallback], 'debug', logGroup);
 
 		wrappedAds[slotname] = {
 			slotname: slotname,
 			state: 'none',
-			provider: provider,
-			args: args
+			loadCallback: loadCallback
 		};
 
 		refresh(wrappedAds[slotname]);
@@ -207,53 +205,37 @@ var AdLogicPageDimensions = function (window, document, log, slotTweaker) {
 	 * Check if page should have prefooters (note it can change later)
 	 *
 	 * @returns {boolean}
-	 */
+	 *
 	function hasPreFooters() {
 		log('hasPreFooters', 'debug', logGroup);
 		return pageHeight < preFootersThreshold;
-	}
+	}*/
 
 	/**
-	 * Get proxy for given provider delaying fillInSlot to the time screen dimensions criteria
-	 * are met. It'll hide and reshow the slots when screen dimensions change in case it affects
-	 * their desired presence
+	 * fillInSlot decorator. Returns function to call instead.
 	 *
-	 * @param provider
-	 * @returns {{name: string, wrappedProvider: *, canHandleSlot: Function, fillInSlot: Function}}
+	 * @returns {function}
 	 */
-	function getProxy(provider) {
-		log(['getProxy', provider], 'debug', logGroup);
+	function decorator(fillInSlot) {
+		return function (slot) {
+			var slotname = slot[0];
 
-		function canHandleSlot(slotinfo) {
-			log(['canHandleSlot', slotinfo, provider], 'debug', logGroup);
-			return provider.canHandleSlot(slotinfo);
-		}
+			if (isApplicable(slotname)) {
+				// Init once
+				if (!initCalled) {
+					initCalled = true;
+					init();
+				}
 
-		function fillInSlot(slotname) {
-			log(['fillInSlot', slotname, provider], 'debug', logGroup);
+				add(slotname, function () {
+					fillInSlot(slot);
+				});
+				return function () {};
+			}
 
-			add(slotname, provider, [].slice.call(arguments));
-		}
-
-		// Init once
-		if (!initCalled) {
-			initCalled = true;
-			init();
-		}
-
-		// Return the provider interface
-		return {
-			name: provider.name,
-			ownName: 'WindowSizeProviderProxy',
-			wrappedProvider: provider,
-			canHandleSlot: canHandleSlot,
-			fillInSlot: fillInSlot
+			return fillInSlot(slot);
 		};
 	}
 
-	return {
-		isApplicable: isApplicable,
-		hasPreFooters: hasPreFooters,
-		getProxy: getProxy
-	};
+	return decorator;
 };

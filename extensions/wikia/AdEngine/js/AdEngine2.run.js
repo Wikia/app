@@ -8,7 +8,7 @@
 /*global AdConfig2, AdEngine2, DartUrl, EvolveHelper, SlotTweaker, ScriptWriter */
 /*global WikiaDartHelper, WikiaFullGptHelper */
 /*global AdProviderEvolve, AdProviderGpt, AdProviderGamePro, AdProviderLater, AdProviderNull */
-/*global AdLogicDartSubdomain, AdLogicHighValueCountry, AdLogicPageDimensions, AdLogicPageLevelParams */
+/*global AdLogicDartSubdomain, AdLogicHighValueCountry, AdDecoratorPageDimensions, AdLogicPageLevelParams */
 /*global AdLogicPageLevelParamsLegacy */
 /*global require*/
 /*jslint newcap:true */
@@ -27,7 +27,7 @@
 		adLogicHighValueCountry,
 		adLogicPageLevelParams,
 		adLogicPageLevelParamsLegacy,
-		adLogicPageDimensions,
+		adDecoratorPageDimensions,
 		scriptWriter,
 		dartUrl,
 		wikiaDart,
@@ -60,8 +60,8 @@
 	dartUrl = DartUrl();
 	adLogicDartSubdomain = AdLogicDartSubdomain(Geo);
 	adLogicHighValueCountry = AdLogicHighValueCountry(window);
-	adLogicPageDimensions = AdLogicPageDimensions(window, document, log, slotTweaker);
-	adLogicPageLevelParams = AdLogicPageLevelParams(log, window, Krux, adLogicPageDimensions, abTest);
+	adDecoratorPageDimensions = AdDecoratorPageDimensions(window, document, log, slotTweaker);
+	adLogicPageLevelParams = AdLogicPageLevelParams(log, window, Krux, abTest);
 	adLogicPageLevelParamsLegacy = AdLogicPageLevelParamsLegacy(log, window, adLogicPageLevelParams, Krux, dartUrl);
 	scriptWriter = ScriptWriter(document, log, window);
 	wikiaDart = WikiaDartHelper(log, adLogicPageLevelParams, dartUrl, adLogicDartSubdomain);
@@ -84,15 +84,15 @@
 		window,
 		document,
 		Geo,
-		adLogicPageDimensions,
 		abTest,
+
+		adDecoratorPageDimensions,
 
 		// AdProviders:
 		adProviderGpt,
 		adProviderEvolve,
 		adProviderGamePro,
-		adProviderLater,
-		adProviderNull
+		adProviderLater
 	);
 
 	window.wgAfterContentAndJS.push(function () {
@@ -113,7 +113,7 @@
 			'old': adTracker.getStats(),
 			'new': slotTracker.getStats()
 		};
-	}
+	};
 
 	// DART API for Liftium
 	window.LiftiumDART = {
