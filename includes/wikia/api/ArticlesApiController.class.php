@@ -316,11 +316,13 @@ class ArticlesApiController extends WikiaApiController {
 		$results = $this->wg->Memc->get( $key );
 
 		if ( $results === false ) {
-			$results = $this->getNewArticlesFromSolr( $ns, self::MAX_NEW_ARTICLES_LIMIT );
-			foreach ( $results as &$item ) {
+			$solrResults = $this->getNewArticlesFromSolr( $ns, self::MAX_NEW_ARTICLES_LIMIT );
+			$results = [];
+			foreach ( $solrResults as $item ) {
 				$title = Title::newFromText( $item[ 'title' ] );
 				$item[ 'title' ] = $title->getText();
 				$item[ 'url' ] = $title->getLocalURL();
+				$results[] = $item;
 			}
 
 			$thumbs = $this->getArticlesThumbnails( array_keys($results) );
