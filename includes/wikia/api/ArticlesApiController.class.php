@@ -46,7 +46,6 @@ class ArticlesApiController extends WikiaApiController {
 	const CATEGORY_TYPE = 'category';
 	const UNKNOWN_PROVIDER = 'unknown';
 
-	const NEW_ARTICLES_SQL_CACHE_EXPIRATION = 86400;
 	const NEW_ARTICLES_VARNISH_CACHE_EXPIRATION = 86400; //24 hours
 	const SIMPLE_JSON_VARNISH_CACHE_EXPIRATION = 86400; //24 hours
 	const SIMPLE_JSON_ARTICLE_ID_PARAMETER_NAME = "id";
@@ -309,55 +308,27 @@ class ArticlesApiController extends WikiaApiController {
 			$ns = [ self::DEFAULT_SEARCH_NAMESPACE ];
 		}
 		else {
-			/*
-			 * cast all namespaces to integer,
-			 * remove duplicates and sort
-			 * to have good cache
-			 */
-			$tmpNS = [ ];
-			foreach ( $ns as $k => &$v ) {
-				$v = (int)$v;
-				if ( $v >= NS_MAIN && $v <= NS_CATEGORY_TALK ) {
-					$tmpNS[ $v ] = true;
-				}
-			}
-			ksort( $tmpNS );
-			$ns = array_keys( $tmpNS );
-			unset( $tmpNS );
+			$ns = self::processNamespaces( $ns, __METHOD__ );
+			sort( $ns );
+			$ns = array_unique( $ns );
 		}
 
 		$key = self::getCacheKey( implode( '-', $ns ), self::NEW_ARTICLES_CACHE_ID );
 		$results = $this->wg->Memc->get( $key );
+
 		if ( $results === false ) {
-			$searchConfig = new Wikia\Search\Config;
-			$searchConfig->setQuery( '*' )
-				->setLimit( self::MAX_NEW_ARTICLES_LIMIT )
-				->setRank( 'default' )
-				->setOnWiki( true )
-				//->setCommercialUse(  false)
-				->setWikiId( $this->wg->wgCityId )
-				->setNamespaces( $ns )
-				->setRank( \Wikia\Search\Config::RANK_NEWEST_PAGE_ID )
-				->setRequestedFields( [ 'html_en' ] );
-
-			$results = ( new Factory )->getFromConfig( $searchConfig )->searchAsApi(
-				[ 'pageid' => 'id', 'ns', 'title_en' => 'title', 'html_en' => 'abstract' ],
-				false, 'pageid' );
-
-			$ids = array_keys( $results );
-			$creators = $this->getUserDataForArticles( $ids );
-
-			$collection = [];
-			foreach ( $results as $id => $item ) {
+			$solrResults = $this->getNewArticlesFromSolr( $ns, self::MAX_NEW_ARTICLES_LIMIT );
+			$results = [];
+			foreach ( $solrResults as $item ) {
 				$title = Title::newFromText( $item[ 'title' ] );
 				$item[ 'title' ] = $title->getText();
 				$item[ 'url' ] = $title->getLocalURL();
-				$item[ 'creator' ] = $creators[ $id ];
-				$collection[] = $item;
+				$results[] = $item;
 			}
-			$results = $collection;
+
 			$this->wg->Memc->set( $key, $results, self::CLIENT_CACHE_VALIDITY );
 		}
+
 		$response = $this->getResponse();
 		$response->setValues( [ 'items' => $results, 'basepath' => $this->wg->Server ] );
 
@@ -373,6 +344,24 @@ class ArticlesApiController extends WikiaApiController {
 		wfProfileOut( __METHOD__ );
 	}
 
+
+	protected function getNewArticlesFromSolr( $ns, $limit ) {
+		$searchConfig = new Wikia\Search\Config;
+		$searchConfig->setQuery( '*' )
+			->setLimit( $limit )
+			->setRank( 'default' )
+			->setOnWiki( true )
+			->setWikiId( $this->wg->wgCityId )
+			->setNamespaces( $ns )
+			->setRank( \Wikia\Search\Config::RANK_NEWEST_PAGE_ID )
+			->setRequestedFields( [ 'html_en' ] );
+
+		$results = ( new Factory )->getFromConfig( $searchConfig )->searchAsApi(
+			[ 'pageid' => 'id', 'ns', 'title_en' => 'title', 'html_en' => 'abstract' ],
+			false, 'pageid' );
+
+		return $results;
+	}
 
 
 	/**
