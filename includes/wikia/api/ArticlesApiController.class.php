@@ -314,22 +314,19 @@ class ArticlesApiController extends WikiaApiController {
 
 		$key = self::getCacheKey( implode( '-', $ns ), self::NEW_ARTICLES_CACHE_ID );
 		$results = $this->wg->Memc->get( $key );
-
 		if ( $results === false ) {
 			$solrResults = $this->getNewArticlesFromSolr( $ns, self::MAX_NEW_ARTICLES_LIMIT );
+			$thumbs = $this->getArticlesThumbnails( array_keys($solrResults) );
 			$results = [];
 			foreach ( $solrResults as $item ) {
+				if ( isset( $thumbs[ $item[ 'id' ] ] ) ) {
+					$item[ 'thumbnail' ] = $thumbs[ $item[ 'id' ] ];
+				}
+
 				$title = Title::newFromText( $item[ 'title' ] );
 				$item[ 'title' ] = $title->getText();
 				$item[ 'url' ] = $title->getLocalURL();
 				$results[] = $item;
-			}
-
-			$thumbs = $this->getArticlesThumbnails( array_keys($results) );
-			foreach ( $results as &$item ) {
-				if ( isset( $thumbs[ $item[ 'id' ] ] ) ) {
-					$item[ 'thumbnail' ] = $thumbs[ $item[ 'id' ] ];
-				}
 			}
 
 			$this->wg->Memc->set( $key, $results, self::CLIENT_CACHE_VALIDITY );
