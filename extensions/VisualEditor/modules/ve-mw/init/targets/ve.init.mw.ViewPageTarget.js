@@ -122,6 +122,14 @@ OO.inheritClass( ve.init.mw.ViewPageTarget, ve.init.mw.Target );
 
 /* Static Properties */
 
+ve.init.mw.ViewPageTarget.static.actionsToolbarConfig = [
+	{ 'include': [ 'help', 'notices' ] },
+	{
+		'type': 'list',
+		'icon': 'menu',
+		'include': [ 'meta', 'categories', 'languages', 'editModeSource' ] }
+];
+
 /**
  * Compatibility map used with jQuery.client to black-list incompatible browsers.
  *
@@ -1203,13 +1211,7 @@ ve.init.mw.ViewPageTarget.prototype.attachToolbarButtons = function () {
 		$pushButtons = $( '<div>' ),
 		actions = new ve.ui.TargetToolbar( this, this.surface );
 
-	actions.setup( [
-		{ 'include': [ 'help', 'notices' ] },
-		{
-			'type': 'list',
-			'icon': 'menu',
-			'include': [ 'meta', 'categories', 'languages', 'editModeSource' ] }
-	] );
+	actions.setup( this.constructor.static.actionsToolbarConfig );
 
 	$actionTools
 		.addClass( 've-init-mw-viewPageTarget-toolbar-utilites' )
