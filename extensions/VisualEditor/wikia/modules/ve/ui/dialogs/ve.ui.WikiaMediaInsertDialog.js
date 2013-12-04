@@ -172,22 +172,18 @@ ve.ui.WikiaMediaInsertDialog.prototype.onQueryRequestSearchDone = function ( ite
 };
 
 ve.ui.WikiaMediaInsertDialog.prototype.onQueryRequestVideoDone = function ( data ) {
-	var cartSize = this.cartModel.items.length;
+	var model = new ve.dm.WikiaCartItem(
+		data.title,
+		data.tempUrl || data.url,
+		'video',
+		data.tempName || undefined,
+		data.provider,
+		data.videoId || undefined
+		);
 	this.queryInput.setValue( '' );
-	this.cartModel.addItems( [
-		new ve.dm.WikiaCartItem(
-			data.title,
-			data.tempUrl || data.url,
-			'video',
-			data.tempName || undefined,
-			data.provider,
-			data.videoId || undefined,
-			undefined,
-			'veid-' + ( cartSize === 0 ? cartSize : cartSize++ )
-		)
-	] );
-	this.setPage( data.title );
-	this.cart.selectItem( this.cart.getItemFromData( data.title ) );
+	this.cartModel.addItems( [ model ] );
+	this.setPage( model.getId() );
+	this.cart.selectItem( this.cart.getItemFromData( model.getId() ) );
 };
 
 /**
@@ -230,8 +226,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.onCartSelect = function ( item ) {
 	var model, key;
 	if ( item !== null ) {
 		model = item.getModel();
-		key = model.id ? model.id : model.title;
-		this.setPage( key );
+		this.setPage( model.getId() );
 	}
 };
 
@@ -256,7 +251,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.onCartModelAdd = function ( items ) {
 		}
 		page = new ve.ui.WikiaMediaPageWidget( item, config );
 		page.connect( this, { 'remove': 'onMediaPageRemove' } );
-		this.pages.addPage( item.id || item.title, { '$content': page.$ } );
+		this.pages.addPage( item.getId(), { '$content': page.$ } );
 	}
 
 	this.searchResults.setChecked( items, true );
@@ -307,7 +302,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.getDefaultPage = function () {
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onMediaPageRemove = function ( item ) {
 	this.cartModel.removeItems( [ item ] );
-	this.pages.removePage( item.id || item.title );
+	this.pages.removePage( item.getId() );
 	this.setPage( this.getDefaultPage() );
 };
 
@@ -664,23 +659,17 @@ ve.ui.WikiaMediaInsertDialog.prototype.onUploadChange = function () {
  * @param {Object} data The uploaded file information
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onUploadSuccess = function ( data ) {
-	var cartSize = this.cartModel.items.length;
+	var model = new ve.dm.WikiaCartItem(
+		data.title,
+		data.tempUrl || data.url,
+		'photo',
+		data.tempName || undefined
+	);
 	if ( !this.license.html ) {
 		this.license.promise.done( ve.bind( this.onUploadSuccess, this, data ) );
 	} else {
-		this.cartModel.addItems( [
-			new ve.dm.WikiaCartItem(
-				data.title,
-				data.tempUrl || data.url,
-				'photo',
-				data.tempName || undefined,
-				undefined,
-				undefined,
-				undefined,
-				'veid-' + ( cartSize === 0 ? cartSize : cartSize++ )
-			)
-		] );
-		this.cart.selectItem( this.cart.getItemFromData( data.title ) );
+		this.cartModel.addItems( [ model ] );
+		this.cart.selectItem( this.cart.getItemFromData( model.getId() ) );
 	}
 };
 

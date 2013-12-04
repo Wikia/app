@@ -84,3 +84,13 @@ ve.dm.WikiaCartItem.prototype.setTitle = function ( title ) {
 
 	this.title = prefix + basename + extension;
 };
+
+/**
+ * @method
+ * @description Gets the ID based on temporary or permanent file
+ * @returns {String} Id string, either the temporary filename or the title
+ */
+ve.dm.WikiaCartItem.prototype.getId = function () {
+	return this.isTemporary() ? this.temporaryFileName : this.title;
+};
+
