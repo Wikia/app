@@ -186,7 +186,10 @@ JSMessages::registerPackage('Wall', array(
 	'wall-action-*',
 	'wall-message-source',
 	'wall-confirm-monobook-*',
-	'wall-preview-modal-title'
+	'wall-preview-modal-title',
+	'preview',
+	'savearticle',
+	'back',
 ));
 
 /**
