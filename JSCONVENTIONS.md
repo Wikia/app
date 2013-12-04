@@ -373,7 +373,7 @@ var html = '<p>The sum of ' + a + ' and ' + b + ' plus ' + c +
 Lines should be broken into logical groups if it improves readability, such as splitting each expression of a ternary operator onto its own line even if both will fit on a single line.
 
 ```js
-var firstCondition( foo ) && secondCondition( bar ) ?
+var baz = firstCondition( foo ) && secondCondition( bar ) ?
 	doStuff( foo, bar ) :
 	doOtherStuff( foo, bar );
 ```
@@ -381,10 +381,10 @@ var firstCondition( foo ) && secondCondition( bar ) ?
 When a conditional is too long to fit on one line, successive lines must be indented one extra level to distinguish them from the body.
 
 ```js
-	if ( fistCondition() && secondCondition() &&
-			thirdCondition() ) {
-		doStuff();
-	}
+if ( fistCondition() && secondCondition() &&
+		thirdCondition() ) {
+	doStuff();
+}
 ```
 
 #### Chained Method Calls
