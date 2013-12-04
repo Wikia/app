@@ -47,7 +47,6 @@ class ArticlesApiController extends WikiaApiController {
 	const CATEGORY_TYPE = 'category';
 	const UNKNOWN_PROVIDER = 'unknown';
 
-	const NEW_ARTICLES_SQL_CACHE_EXPIRATION = 86400;
 	const NEW_ARTICLES_VARNISH_CACHE_EXPIRATION = 86400; //24 hours
 	const SIMPLE_JSON_VARNISH_CACHE_EXPIRATION = 86400; //24 hours
 	const SIMPLE_JSON_ARTICLE_ID_PARAMETER_NAME = "id";
@@ -327,21 +326,9 @@ class ArticlesApiController extends WikiaApiController {
 
 		$key = self::getCacheKey( self::NEW_ARTICLES_CACHE_ID, '', [ implode( '-', $ns ), $limit ] );
 		$results = $this->wg->Memc->get( $key );
+		$results = false;
 		if ( $results === false ) {
-			$searchConfig = new Wikia\Search\Config;
-			$searchConfig->setQuery( '*' )
-				->setLimit( $limit )
-				->setRank( 'default' )
-				->setOnWiki( true )
-				->setWikiId( $this->wg->wgCityId )
-				->setNamespaces( $ns )
-				->setRank( \Wikia\Search\Config::RANK_NEWEST_PAGE_ID )
-				->setRequestedFields( [ 'html_en' ] );
-
-			$results = ( new Factory )->getFromConfig( $searchConfig )->searchAsApi(
-				[ 'pageid' => 'id', 'ns', 'title_en' => 'title', 'html_en' => 'abstract' ],
-				false, 'pageid' );
-
+			$results = $this->getNewArticlesFromSolr( $ns, self::MAX_NEW_ARTICLES_LIMIT );
 			foreach ( $results as &$item ) {
 				$title = Title::newFromText( $item[ 'title' ] );
 				$item[ 'title' ] = $title->getText();
@@ -366,6 +353,24 @@ class ArticlesApiController extends WikiaApiController {
 		wfProfileOut( __METHOD__ );
 	}
 
+
+	protected function getNewArticlesFromSolr( $ns, $limit ) {
+		$searchConfig = new Wikia\Search\Config;
+		$searchConfig->setQuery( '*' )
+			->setLimit( $limit )
+			->setRank( 'default' )
+			->setOnWiki( true )
+			->setWikiId( $this->wg->wgCityId )
+			->setNamespaces( $ns )
+			->setRank( \Wikia\Search\Config::RANK_NEWEST_PAGE_ID )
+			->setRequestedFields( [ 'html_en' ] );
+
+		$results = ( new Factory )->getFromConfig( $searchConfig )->searchAsApi(
+			[ 'pageid' => 'id', 'ns', 'title_en' => 'title', 'html_en' => 'abstract' ],
+			false, 'pageid' );
+
+		return $results;
+	}
 
 
 	/**
