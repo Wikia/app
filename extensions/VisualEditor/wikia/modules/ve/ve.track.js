@@ -23,7 +23,6 @@ require( ['wikia.tracker'], function ( tracker ) {
 					'label': 've-section-edit'
 				}
 			},
-			// TODO: support regex match or exploding on "." so we can track across "performance" etc.
 			'performance.system.activation': function ( data ) {
 				return {
 					'action': actions.IMPRESSION,
@@ -72,7 +71,7 @@ require( ['wikia.tracker'], function ( tracker ) {
 	 * @param {Object} data The data to send to our internal tracking function.
 	 */
 	function track( topic, data ) {
-		var mwEvent,
+		var i, mwEvent, topics,
 			params = {
 				category: 'editor-ve',
 				trackingMethod: 'both'
@@ -80,12 +79,21 @@ require( ['wikia.tracker'], function ( tracker ) {
 
 		// MW events
 		if ( topic !== 'wikia' ) {
-			mwEvent = mwTopics[topic];
+			// MW events are categorized in dot notation (like "performance.system.activation")
+			// This allows us to follow an entire topic ("performance") without having to track
+			// all the sub-topics separately.
+			topics = topic.split( '.' );
+			for ( i = 0; i < topics.length; i++ ) {
+				topic = ( i === 0 ? '' : topic + '.' ) + topics[i];
+				if ( ( mwEvent = mwTopics[topic] ) ) {
+					break;
+				}
+			}
 			// Only track things we care about
 			if ( !mwEvent || ( data.action && !( mwEvent = mwEvent[data.action] ) ) ) {
 				return;
 			}
-			data = $.isFunction( mwEvent ) ? mwEvent( data ) : mwEvent;
+			data = $.isFunction( mwEvent ) ? mwEvent( data, topics ) : mwEvent;
 		} else {
 			// Normalize tracking labels
 			data.label = data.label.replace( rUppercase, upperToHyphenLower );
