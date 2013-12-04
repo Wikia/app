@@ -68,7 +68,7 @@ module.exports = function(config) {
 			'extensions/wikia/AdEngine/js/AdLogicHighValueCountry.js',
 			'extensions/wikia/AdEngine/js/AdLogicPageLevelParams.js',
 			'extensions/wikia/AdEngine/js/AdLogicPageLevelParamsLegacy.js',
-			'extensions/wikia/AdEngine/js/AdLogicPageDimensions.js',
+			'extensions/wikia/AdEngine/js/AdDecoratorPageDimensions.js',
 			'extensions/wikia/AdEngine/js/AdProviderEvolve.js',
 			'extensions/wikia/AdEngine/js/AdProviderGamePro.js',
 			'extensions/wikia/AdEngine/js/AdProviderGpt.js',

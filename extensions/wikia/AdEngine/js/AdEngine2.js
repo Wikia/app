@@ -5,15 +5,24 @@ var AdEngine2 = function (log, LazyQueue, slotTracker) {
 	var logGroup = 'AdEngine2',
 		undef;
 
+	function decorate(func, decorators) {
+		log(['decorate', func, decorators], 'debug', logGroup);
+
+		var i, len;
+
+		if (decorators && decorators.length) {
+			for (i = 0, len = decorators.length; i < len; i += 1) {
+				func = decorators[i](func);
+			}
+		}
+
+		return func;
+	}
+
 	function run(adConfig, adslots, queueName) {
+		var decorators = adConfig.getDecorators();
 
-		log('run', 'debug', logGroup);
-
-		log('initial queue', 'debug', logGroup);
-		log(adslots, 'debug', logGroup);
-
-		log('initializing LazyQueue on the queue', 7, logGroup);
-		LazyQueue.makeQueue(adslots, function (slot) {
+		function fillInSlot(slot) {
 			log(['fillInSlot', slot], 'debug', logGroup);
 
 			var slotname = slot[0],
@@ -36,7 +45,15 @@ var AdEngine2 = function (log, LazyQueue, slotTracker) {
 			log('calling ' + provider.name + '.fillInSlot for ' + slotname, 'debug', logGroup);
 
 			provider.fillInSlot(slotname, success, hop);
-		});
+		}
+
+		log('run', 'debug', logGroup);
+
+		log('initial queue', 'debug', logGroup);
+		log(adslots, 'debug', logGroup);
+
+		log('initializing LazyQueue on the queue', 7, logGroup);
+		LazyQueue.makeQueue(adslots, decorate(fillInSlot, decorators));
 
 		log('launching queue on adslots', 'debug', logGroup);
 		adslots.start();

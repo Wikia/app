@@ -1,7 +1,7 @@
 describe('AdEngine2', function(){
 	it('Doesn\'t throw with empty queue, but throws with undefined queue', function() {
 		var logMock = function() {},
-			adConfigMock,
+			adConfigMock = {getDecorators: function () {}},
 			lazyQueueMock = {makeQueue: function (queue) {queue.start = function() {}}},
 			slotTrackerMock,
 			adEngine,
@@ -20,7 +20,7 @@ describe('AdEngine2', function(){
 
 	it('Makes LazyQueue from run parameter and starts it', function() {
 		var logMock = function() {},
-			adConfigMock,
+			adConfigMock = {getDecorators: function () {}},
 			slotsMock,
 			lazyQueueMock,
 			slotTrackerMock,
@@ -73,7 +73,8 @@ describe('AdEngine2', function(){
 						fillInSlotCalledFor.push(slotname);
 					}
 				};
-			}
+			},
+			getDecorators: noop
 		};
 
 		adEngine = AdEngine2(logMock, lazyQueueMock, slotTrackerMock);

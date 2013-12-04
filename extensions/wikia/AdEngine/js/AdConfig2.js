@@ -5,15 +5,15 @@ var AdConfig2 = function (
 	window,
 	document,
 	Geo,
-	adLogicPageDimensions,
 	abTest,
+
+	adDecoratorPageDimensions,
 
 	// adProviders
 	adProviderGpt,
 	adProviderEvolve,
 	adProviderGamePro,
-	adProviderLater,
-	adProviderNull
+	adProviderLater
 ) {
 	'use strict';
 
@@ -22,7 +22,8 @@ var AdConfig2 = function (
 		country = Geo.getCountryCode(),
 		defaultHighValueSlots,
 		highValueSlots,
-		useSevenOneMedia = window.wgAdDriverUseSevenOneMedia;
+		useSevenOneMedia = window.wgAdDriverUseSevenOneMedia,
+		decorators = [adDecoratorPageDimensions];
 
 	defaultHighValueSlots = {
 		'CORP_TOP_LEADERBOARD': true,
@@ -50,7 +51,7 @@ var AdConfig2 = function (
 
 	highValueSlots = defaultHighValueSlots;
 
-	function getBackEndProvider(slot) {
+	function getProvider(slot) {
 		var slotname = slot[0];
 
 		log('getProvider', 5, logGroup);
@@ -108,23 +109,8 @@ var AdConfig2 = function (
 		return adProviderLater;
 	}
 
-	function getProvider(slot) {
-		var provider = getBackEndProvider(slot);
-
-		// No page length checking logic for Null provider
-		if (provider === adProviderNull) {
-			return provider;
-		}
-
-		// Check if we should apply page length checking for that slot
-		if (provider !== adProviderNull && adLogicPageDimensions.isApplicable(slot[0])) {
-			return adLogicPageDimensions.getProxy(provider);
-		}
-
-		return provider;
-	}
-
 	return {
+		getDecorators: function () {return decorators;},
 		getProvider: getProvider
 	};
 };
