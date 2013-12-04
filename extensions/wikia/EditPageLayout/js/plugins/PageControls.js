@@ -474,7 +474,7 @@
 		renderChanges: function () {
 			var self = this;
 			require( [ 'wikia.ui.factory' ], function( uiFactory ){
-				uiFactory.init( [ 'modal' ] ).then( function( uiModal ) {
+				uiFactory.init( [ 'modal' ] ).then(function( uiModal ) {
 					var previewModalConfig = {
 						vars: {
 							id: 'EditPageDialog',
@@ -492,27 +492,28 @@
 						});
 
 						self.getContent(function( content ) {
-							var extraData = {
-								content: content,
-								section: parseInt( $.getUrlVar( 'section' ) || 0, 10 )
-							};
+							var section = $.getUrlVar( 'section' ) || 0,
+								extraData = {
+									content: content,
+									section: parseInt( section, 10 )
+								};
 
 							if ( self.categories.length ) {
 								extraData.categories = self.categories.val();
 							}
 
 							$.when(
-									// get wikitext diff
-									self.ajax( 'diff' , extraData ),
+								// get wikitext diff
+								self.ajax( 'diff' , extraData ),
 
-									// load CSS for diff
-									mw.loader.use( 'mediawiki.action.history.diff' )
-								).done(function( ajaxData ) {
-									var data = ajaxData[ 0 ],
-										html = '<h1 class="pagetitle">' + window.wgEditedTitle + '</h1>' + data.html;
-									previewModal.$content.find( '.ArticlePreview .ArticlePreviewInner' ).html( html );
-									previewModal.activate();
-								});
+								// load CSS for diff
+								mw.loader.use( 'mediawiki.action.history.diff' )
+							).done(function( ajaxData ) {
+								var data = ajaxData[ 0 ],
+									html = '<h1 class="pagetitle">' + window.wgEditedTitle + '</h1>' + data.html;
+								previewModal.$content.find( '.ArticlePreview .ArticlePreviewInner' ).html( html );
+								previewModal.activate();
+							});
 						});
 
 						previewModal.show();
