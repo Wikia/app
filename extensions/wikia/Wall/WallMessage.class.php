@@ -225,7 +225,7 @@ class WallMessage {
 
 	public function addNewReply($body, $user) {
 		wfProfileIn( __METHOD__ );
-		$out = self::buildNewMessageAndPost($body, $this->getWallTitle(), $user, '', $this );
+		$out = self::buildNewMessageAndPost($body, $this->getArticleTitle(), $user, '', $this );
 		wfProfileOut( __METHOD__ );
 		return $out;
 	}
@@ -423,7 +423,7 @@ class WallMessage {
 	 * So this method actually gets the name of the message wall/forum board, not the wall owner name.
 	 */
 	public function getWallOwnerName() {
-		$title = $this->getWallTitle();
+		$title = $this->getArticleTitle();
 		$parts = explode( '/', $title->getText() );
 		$wallOwnerName = $parts[0];
 
@@ -433,7 +433,7 @@ class WallMessage {
 	}
 
 	public function getWallOwner( $master = false ) {
-		$parts = explode( '/', $this->getWallTitle( $master )->getText() );
+		$parts = explode( '/', $this->getArticleTitle( $master )->getText() );
 		$userName = $parts[0];
 		// mech: I'm not sure we have to create wall title doing db queries on both, page and comments_index tables.
 		// as the user name is the first part on comment's title. But I'm not able to go through all wall/forum
@@ -461,13 +461,7 @@ class WallMessage {
 	}
 
 	public function getWallPageUrl() {
-		return $this->getWallTitle()->getFullUrl();
-	}
-
-
-	//TODO: remove get wall title
-	public function getWallTitle( $master = false ){
-		return $this->getArticleTitle( $master );
+		return $this->getArticleTitle()->getFullUrl();
 	}
 
 	public function getArticleTitle( $master = false ){
@@ -508,7 +502,7 @@ class WallMessage {
 	 * @return Wall
 	 */
 	public function getWall() {
-		$wall = Wall::newFromTitle( $this->getWallTitle() );
+		$wall = Wall::newFromTitle( $this->getArticleTitle() );
 		return $wall;
 	}
 
@@ -845,7 +839,7 @@ class WallMessage {
 	}
 
 	public function isWallWatched(User $user) {
-		return $user->isWatched( $this->getWallTitle() );
+		return $user->isWatched( $this->getArticleTitle() );
 	}
 
 	public function isWatched(User $user) {

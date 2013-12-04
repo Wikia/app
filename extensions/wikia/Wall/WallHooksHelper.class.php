@@ -76,7 +76,7 @@ class WallHooksHelper {
 							($wallMessage->canViewDeletedMessage($app->wg->User) && $app->wg->Request->getVal('show') == '1')
 					) {
 						if(wfRunHooks('WallBeforeRenderThread', array($mainTitle, $wallMessage))) {
-							$app->wg->Out->addHTML($app->renderView('WallController', 'thread',  array('id' => $title->getText(),  'title' => $wallMessage->getWallTitle() )));
+							$app->wg->Out->addHTML($app->renderView('WallController', 'thread',  array('id' => $title->getText(),  'title' => $wallMessage->getArticleTitle() )));
 						}
 					} else {
 						$app->wg->Out->addHTML($app->renderView('WallController', 'messageDeleted', array( 'title' =>wfMsg( 'wall-deleted-msg-pagetitle' ) ) ));
