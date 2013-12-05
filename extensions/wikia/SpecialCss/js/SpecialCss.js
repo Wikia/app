@@ -94,7 +94,9 @@ $(function() {
 		}, 100 );
 	});
 
-	$( '#showChanges' ).click(function() {
+	$( '#showChanges' ).click(function( event ) {
+		event.preventDefault();
+
 		require( [ 'wikia.ui.factory' ], function( uiFactory ) {
 			uiFactory.init( [ 'modal' ] ).then( function( uiModal ) {
 				var showChangesModalConfig = {
