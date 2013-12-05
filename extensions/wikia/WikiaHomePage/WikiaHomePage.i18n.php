@@ -654,7 +654,7 @@ $messages['ja'] = array(
 	'wikiahome-hubs-lifestyle-creative' => '熱狂的で情報を持っているコミュニティーを発見しよう。',
 	'wikiahome-hubs-lifestyle-more-heading' => 'ライフスタイル、ニュース & カルチャーをもって見る',
 	'wikiahome-hubs-lifestyle-more-list' => '
-*[http://www.wikia.com/recepi フード & ドリンク]
+*[http://www.wikia.com/Recipes フード & ドリンク]
 *[http://www.wikia.com/DIY DIY]
 *[http://www.wikia.com/sports スポーツ]
 *[http://www.wikia.com/lifestyle 特集記事]',
