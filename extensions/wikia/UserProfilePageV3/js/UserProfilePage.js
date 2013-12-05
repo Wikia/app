@@ -242,17 +242,6 @@ var UserProfilePage = {
 		});
 	},
 
-	// TODO: is this used anywhere
-	saveAvatarData: function(avatarForm) {
-		'use strict';
-
-		var file = $('#UPPLightboxAvatar').val();
-
-		if( file !== '' ) {
-			avatarForm.submit();
-		}
-	},
-
 	sampleAvatarChecked: function( img ) {
 		'use strict';
 
@@ -278,11 +267,7 @@ var UserProfilePage = {
 	saveAvatarAIM: function( form ) {
 		'use strict';
 
-		// TODO: do we need these unused variables ???
-		var inputs = $(form).find('button, input[type=file]'),
-			handler = form.onsubmit,
-
-			$modal = UserProfilePage.modal.$element;
+		var $modal = UserProfilePage.modal.$element;
 
 		$.AIM.submit( form, {
 			onStart: function() {
@@ -446,6 +431,8 @@ var UserProfilePage = {
 	},
 
 	// TODO: is this used anywhere
+	// nAndy: it was used to pull data from facebook account to our user profile page
+	// i've just checked it on production and it doesn't work there as well...
 	fbConnect: function() {
 		$.postJSON( this.ajaxEntryPoint, { method: 'onFacebookConnect', cb: wgStyleVersion }, function(data) {
 			if( data.result.success === true && typeof(data.result.fbUser) !== 'undefined' ) {
@@ -479,6 +466,8 @@ var UserProfilePage = {
 	},
 
 	// TODO: is this used anywhere
+	// nAndy: it was used to pull avatar from facebook account to our user profile page
+	// i've just checked it on production and it doesn't work there as well...
 	fbConnectAvatar: function() {
 		UserProfilePage.modal.$element.find('img.avatar').hide();
 		UserProfilePage.modal.$element.startThrobbing();
@@ -562,8 +551,8 @@ var UserProfilePage = {
 					});
 				});
 		} else {
-			//TODO: why it's no logic here !!!!! ??????
-			//failed to recive wikiId
+			// basically it shouldn't happen but i imagine it can happen during development
+			$().log( 'Unexpected error wikiId <= 0' );
 		}
 	},
 
