@@ -637,7 +637,7 @@ $messages['ja'] = array(
 	'wikiahome-hubs-videogames-more-heading' => 'ゲームをもっと見る',
 	'wikiahome-hubs-videogames-more-list' => '
 *[http://www.wikia.com/ゲーム ゲームガイド]
-*[http://ja.gaming.wikia.com/wiki/メインページ]',
+*[http://ja.gaming.wikia.com/wiki/メインページ メインページ]',
 
 	'wikiahome-hubs-entertainment-heading' => 'エンターテイメント',
 	'wikiahome-hubs-entertainment-url' => 'http://www.ja.wikia.com/エンターテイメント',
@@ -647,7 +647,7 @@ $messages['ja'] = array(
 *[http://www.wikia.com/映画 映画]
 *[http://www.wikia.com/テレビ テレビ]
 *[http://www.wikia.com/ミュージック ミュージック].
-*[http://www.wikia.com/エンターテイメント_トレンド]',
+*[http://www.wikia.com/エンターテイメント_トレンド エンターテイメント_トレンド]',
 
 	'wikiahome-hubs-lifestyle-heading' => 'ライフスタイル、ニュース & カルチャー',
 	'wikiahome-hubs-lifestyle-url' => 'http://www.ja.wikia.com/ライフスタイル',
