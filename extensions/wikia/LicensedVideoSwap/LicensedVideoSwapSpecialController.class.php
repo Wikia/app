@@ -79,11 +79,10 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$this->thumbHeight = LicensedVideoSwapHelper::THUMBNAIL_HEIGHT;
 
 		// get total videos with suggestions
-		$unswappedVideos = $helper->getUnswappedVideoTotal();
-		$this->totalVideos = $unswappedVideos["withSuggestedVideos"];
+		$this->totalVideos = $helper->getUnswappedVideoTotal();
 
 		// Set up pagination
-		$this->pagination = $helper->getPagination( $unswappedVideos["total"], $currentPage, $sort );
+		$this->pagination = $helper->getPagination( $this->totalVideos, $currentPage, $sort );
 	}
 
 	/**
