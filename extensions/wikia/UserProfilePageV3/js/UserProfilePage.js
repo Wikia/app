@@ -242,17 +242,6 @@ var UserProfilePage = {
 		});
 	},
 
-	// TODO: is this used anywhere
-	saveAvatarData: function(avatarForm) {
-		'use strict';
-
-		var file = $('#UPPLightboxAvatar').val();
-
-		if( file !== '' ) {
-			avatarForm.submit();
-		}
-	},
-
 	sampleAvatarChecked: function( img ) {
 		'use strict';
 
