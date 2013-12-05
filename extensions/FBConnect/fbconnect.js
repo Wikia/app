@@ -98,7 +98,7 @@ $(function() {
 
 	$('#wpCancel').click(function(){
 		if (!wpCancelClicked) {
-			var logout = confirm(window.wgLogoutConfirm);
+			var logout = confirm($.msg('fbconnect-logout-confirm'));
 			if (logout) {
 				wpCancelClicked = true;
 				window.FB.getLoginStatus(function(response){

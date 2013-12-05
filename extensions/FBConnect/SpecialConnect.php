@@ -155,9 +155,7 @@ class SpecialConnect extends SpecialPage {
 			}
 		}
 
-		$wgOut->addJsConfigVars(
-			'wgLogoutConfirm', wfMessage('fbconnect-logout-confirm')->plain()
-		);
+		JSMessages::enqueuePackage('FBConnect', JSMessages::EXTERNAL);
 
 		switch ( $par ) {
 		case 'ChooseName':
