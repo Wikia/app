@@ -267,11 +267,7 @@ var UserProfilePage = {
 	saveAvatarAIM: function( form ) {
 		'use strict';
 
-		// TODO: do we need these unused variables ???
-		var inputs = $(form).find('button, input[type=file]'),
-			handler = form.onsubmit,
-
-			$modal = UserProfilePage.modal.$element;
+		var $modal = UserProfilePage.modal.$element;
 
 		$.AIM.submit( form, {
 			onStart: function() {
