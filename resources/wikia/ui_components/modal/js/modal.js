@@ -15,8 +15,6 @@ define( 'wikia.ui.modal', [
 		CLOSE_CLASS = 'close',
 		INACTIVE_CLASS = 'inactive',
 
-		destroyOnClose,
-
 		// vars required for disable scroll behind modal
 		$bodyElm = $( 'body' ),
 		$win = $( w ),
@@ -113,7 +111,7 @@ define( 'wikia.ui.modal', [
 	 */
 
 	function unblockPageScrolling() {
-		$bodyElm.removeClass( 'with-blackout fake-scrollbar' );
+		$bodyElm.removeClass( 'with-blackout fake-scrollbar').css('top', 'auto');
 		$win.scrollTop( wScrollTop );
 	}
 
@@ -214,6 +212,7 @@ define( 'wikia.ui.modal', [
 						} else {
 							that.$blackout.remove();
 						}
+						unblockPageScrolling();
 					}, that ) );
 				}
 			]
@@ -251,24 +250,6 @@ define( 'wikia.ui.modal', [
 				ieFlexboxFallback( this );
 			}, this ) );
 		}
-	};
-
-	/**
-	 * Closes the modal; removes it from dom or just removes classes - it depends on destroyOnClose flag.
-	 * Before closing modal beforeClose event is triggered. One can bind to this event and cancel the close
-	 * action.
-	 * You should trigger the 'close' event on the modal to close it. This implementation is made private
-	 * to make it more explicit that closing is asynchronous and event based.
-	 */
-
-	Modal.prototype.close = function() {
-		if( !destroyOnClose ) {
-			this.$blackout.removeClass( BLACKOUT_VISIBLE_CLASS );
-		} else {
-			this.$blackout.remove();
-		}
-
-		unblockPageScrolling();
 	};
 
 	/**

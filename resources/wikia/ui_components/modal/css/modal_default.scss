@@ -192,11 +192,15 @@ $large-modal-margin: 50px;
 }
 
 // styles required to disable scrolling behind modal
-body.with-blackout {
-	position: fixed;
-	width: 100%;
+body,
+body.background-dynamic {
+	&.with-blackout {
+		position: fixed;
+		width: 100%;
 
-	&.fake-scrollbar {
-		overflow-y: scroll;
+		&.fake-scrollbar {
+			overflow-y: scroll;
+		}
 	}
 }
+
