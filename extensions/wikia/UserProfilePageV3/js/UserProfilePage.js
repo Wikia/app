@@ -431,6 +431,8 @@ var UserProfilePage = {
 	},
 
 	// TODO: is this used anywhere
+	// nAndy: it was used to pull data from facebook account to our user profile page
+	// i've just checked it on production and it doesn't work there as well...
 	fbConnect: function() {
 		$.postJSON( this.ajaxEntryPoint, { method: 'onFacebookConnect', cb: wgStyleVersion }, function(data) {
 			if( data.result.success === true && typeof(data.result.fbUser) !== 'undefined' ) {
@@ -464,6 +466,8 @@ var UserProfilePage = {
 	},
 
 	// TODO: is this used anywhere
+	// nAndy: it was used to pull avatar from facebook account to our user profile page
+	// i've just checked it on production and it doesn't work there as well...
 	fbConnectAvatar: function() {
 		UserProfilePage.modal.$element.find('img.avatar').hide();
 		UserProfilePage.modal.$element.startThrobbing();
