@@ -38,5 +38,4 @@ class MastheadTest extends WikiaBaseTest {
 			],
 		];
 	}
-
 }
