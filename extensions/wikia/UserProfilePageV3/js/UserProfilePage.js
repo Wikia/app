@@ -551,8 +551,8 @@ var UserProfilePage = {
 					});
 				});
 		} else {
-			//TODO: why it's no logic here !!!!! ??????
-			//failed to recive wikiId
+			// basically it shouldn't happen but i imagine it can happen on devbox because not all wikis are imported there
+			GlobalNotification.show( $.msg( 'userprofilepage-edit-modal-error' ), 'error' );
 		}
 	},
 
