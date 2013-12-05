@@ -217,7 +217,7 @@ OpenID preferences tab title',
 										   to an existing account.',
 	'fbconnect-connect-next' => 'This text appears on the button in the login-and-connect dialog.  After a user enters their username/password, this will slide them over to the next screen which is the Facebook Connect button.',
 	'fbconnect-disconnect-info-existing' => 'Confirmation message shown to users who have disconnected their account from Facebook but had a regular Wikia account.',
-	'fbconnect-logout-confirm' => 'This message is shown when user canceled process connecting account with Facebook account. Inform user that will be logout from Facebook and ask for confirmation.'
+	'fbconnect-logout-confirm' => 'Message shown if a user attempts to cancel process of connecting Wikia account with Facebook account. It informs the user that proceeding with this action will result in logout from Facebook and asks for confirmation.'
 );
 /**/
 
