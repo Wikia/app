@@ -23,7 +23,7 @@ var UserProfilePage = {
 		UserProfilePage.reloadUrl = $( '#reloadUrl' ).val();
 
 		if ( UserProfilePage.reloadUrl === '' || UserProfilePage.reloadUrl === false ) {
-			UserProfilePage.reloadUrl = wgScript + '?title=' + wgPageName; //+ '&action=purge';
+			UserProfilePage.reloadUrl = window.wgScript + '?title=' + window.wgPageName; //+ '&action=purge';
 		}
 
 		$userIdentityBoxEdit.click(function( event ) {
@@ -137,15 +137,15 @@ var UserProfilePage = {
 
 							// load facebook API
 							$.loadFacebookAPI(function() {
-								if ( window.FB && FB.XFBML ) {
+								if ( window.FB && window.FB.XFBML ) {
 									// parse FBXML login button
-									FB.XFBML.parse( document.getElementById( 'UPPLightboxWrapper' ) );
+									window.FB.XFBML.parse( document.getElementById( 'UPPLightboxWrapper' ) );
 								}
 							});
 
 							// show a message when avatars upload is disabled (BAC-1046)
 							if ( data.avatarsDisabled === true ) {
-								GlobalNotification.show( data.avatarsDisabledMsg, 'error' );
+								window.GlobalNotification.show( data.avatarsDisabledMsg, 'error' );
 							}
 
 							UserProfilePage.isLightboxGenerating = false;
@@ -285,10 +285,10 @@ var UserProfilePage = {
 							userId: UserProfilePage.userId
 						};
 						UserProfilePage.wasDataChanged = true;
-						GlobalNotification.hide();
+						window.GlobalNotification.hide();
 					} else {
 						if ( typeof( response.result.error ) !== 'undefined' ) {
-							GlobalNotification.show( response.result.error, 'error' );
+							window.GlobalNotification.show( response.result.error, 'error' );
 						}
 					}
 					$modal.stopThrobbing();
@@ -369,7 +369,7 @@ var UserProfilePage = {
 			data: 'userId=' + UserProfilePage.userId + '&data=' + JSON.stringify( userData ),
 			success: function( data ) {
 				if( data.status === 'error' ) {
-					GlobalNotification.show( data.errorMsg, 'warn') ;
+					window.GlobalNotification.show( data.errorMsg, 'warn') ;
 				} else {
 					UserProfilePage.userData = null;
 					UserProfilePage.wasDataChanged = false;
@@ -434,7 +434,9 @@ var UserProfilePage = {
 	// nAndy: it was used to pull data from facebook account to our user profile page
 	// i've just checked it on production and it doesn't work there as well...
 	fbConnect: function() {
-		$.postJSON( this.ajaxEntryPoint, { method: 'onFacebookConnect', cb: wgStyleVersion }, function(data) {
+		'use strict';
+
+		$.postJSON( this.ajaxEntryPoint, { method: 'onFacebookConnect', cb: window.wgStyleVersion }, function(data) {
 			if( data.result.success === true && typeof(data.result.fbUser) !== 'undefined' ) {
 				var userData = {
 					name: 'name',
@@ -445,9 +447,9 @@ var UserProfilePage = {
 					fbPage: 'profile_url',
 					twitter: null,
 					day: 'birthday_date'
-				};
+				},
+				changed = false;
 
-				var changed = false;
 				for(var i in userData) {
 					if( typeof($(document.userData[i]).val()) !== 'undefined' ) {
 						var key = userData[i];
@@ -460,7 +462,9 @@ var UserProfilePage = {
 				$('#facebookConnect').hide();
 				$('#facebookPage').show();
 
-				if( changed === true ) UserProfilePage.wasDataChanged = true;
+				if( changed === true ) {
+					UserProfilePage.wasDataChanged = true;
+				}
 			}
 		});
 	},
@@ -469,16 +473,22 @@ var UserProfilePage = {
 	// nAndy: it was used to pull avatar from facebook account to our user profile page
 	// i've just checked it on production and it doesn't work there as well...
 	fbConnectAvatar: function() {
+		'use strict';
+
 		UserProfilePage.modal.$element.find('img.avatar').hide();
 		UserProfilePage.modal.$element.startThrobbing();
-		$.postJSON( this.ajaxEntryPoint, { method: 'onFacebookConnectAvatar', avatar: true, cb: wgStyleVersion }, function(data) {
+		$.postJSON( this.ajaxEntryPoint, { method: 'onFacebookConnectAvatar', avatar: true, cb: window.wgStyleVersion }, function(data) {
 			if( data.result.success === true ) {
 				$('#facebookConnectAvatar').hide();
 				var avatarImg = UserProfilePage.modal.$element.find('img.avatar');
 				avatarImg.attr('src', data.result.avatar).show();
 				UserProfilePage.modal.$element.stopThrobbing();
 				UserProfilePage.wasDataChanged = true;
-				UserProfilePage.newAvatar = {file: data.result.avatar, source: 'facebook', userId: UserProfilePage.userId };
+				UserProfilePage.newAvatar = {
+					file: data.result.avatar,
+					source: 'facebook',
+					userId: UserProfilePage.userId
+				};
 			}
 		});
 	},
@@ -532,7 +542,7 @@ var UserProfilePage = {
 						method: 'onHideWiki',
 						userId: UserProfilePage.userId,
 						wikiId: wikiId,
-						cb: wgStyleVersion
+						cb: window.wgStyleVersion
 					}, function( data ) {
 						if ( data.result.success === true ) {
 							// add the next wiki
@@ -541,7 +551,7 @@ var UserProfilePage = {
 									//found the wiki to add. now do it.
 									$modal.find( '.join-more-wikis' )
 										.before( '<li data-wiki-id="' + value.id + '"><span>' + value.wikiName +
-											'</span> <img src="' + wgBlankImgUrl +
+											'</span> <img src="' + window.wgBlankImgUrl +
 											'" class="sprite-small delete"></li>' );
 
 								}
@@ -562,7 +572,7 @@ var UserProfilePage = {
 		$.postJSON( this.ajaxEntryPoint, {
 			method: 'onRefreshFavWikis',
 			userId: UserProfilePage.userId,
-			cb: wgStyleVersion
+			cb: window.wgStyleVersion
 		}, function( data ) {
 			if ( data.result.success === true ) {
 				var favWikisList = UserProfilePage.modal.$element.find( '.favorite-wikis'),
@@ -575,7 +585,7 @@ var UserProfilePage = {
 				// add items
 				for ( i in data.result.wikis ) {
 					favWikis += '<li data-wiki-id="' + data.result.wikis[ i ].id  + '"><span>' +
-						data.result.wikis[ i ].wikiName + '</span> <img src="' + wgBlankImgUrl +
+						data.result.wikis[ i ].wikiName + '</span> <img src="' + window.wgBlankImgUrl +
 						'" class="sprite-small delete"></li>';
 				}
 				favWikisList.prepend( favWikis );
@@ -677,7 +687,7 @@ var UserProfilePage = {
 	removeAvatar: function( name, question ) {
 		'use strict';
 
-		var answer = confirm( question );
+		var answer = window.confirm( question );
 
 		if ( answer ) {
 			$.nirvana.sendRequest({
