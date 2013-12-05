@@ -15,58 +15,61 @@ var UserProfilePage = {
 	modalComponent: {},
 
 	init: function() {
-		UserProfilePage.userId = $('#user').val();
-		UserProfilePage.reloadUrl = $('#reloadUrl').val();
+		'use strict';
 
-		if( UserProfilePage.reloadUrl == '' || UserProfilePage.reloadUrl === false ) {
+		var $userIdentityBoxEdit = $( '#userIdentityBoxEdit' );
+
+		UserProfilePage.userId = $( '#user' ).val();
+		UserProfilePage.reloadUrl = $( '#reloadUrl' ).val();
+
+		if ( UserProfilePage.reloadUrl === '' || UserProfilePage.reloadUrl === false ) {
 			UserProfilePage.reloadUrl = wgScript + '?title=' + wgPageName; //+ '&action=purge';
 		}
 
-		$('#UPPAnswerQuestions').click(function(event) {
-			event.preventDefault();
-			UserProfilePage.renderLightbox('interview');
-		});
-
-		$('#userIdentityBoxEdit').click(function(event) {
+		$userIdentityBoxEdit.click(function( event ) {
 			event.preventDefault();
 			UserProfilePage.renderLightbox('about');
 		});
 
-		$('#UserAvatarRemove').click(function(event) {
+		$( '#UserAvatarRemove' ).click(function( event ) {
 			event.preventDefault();
-			UserProfilePage.removeAvatar($(event.target).attr('data-name'), $(event.target).attr('data-confirm'));
+			UserProfilePage.removeAvatar( $( event.target ).attr( 'data-name' ),
+				$( event.target ).attr( 'data-confirm' ) );
 		});
 
-		$('#userAvatarEdit').click(function(event) {
+		$( '#userAvatarEdit' ).click(function( event ) {
 			event.preventDefault();
-			UserProfilePage.renderLightbox('avatar');
+			UserProfilePage.renderLightbox( 'avatar' );
 		});
 
 		// for touch devices (without hover state) make sure that Edit is always
 		// visible
 		if ( $().isTouchscreen() ) {
-			$('#userIdentityBoxEdit').show();
+			$userIdentityBoxEdit.show();
 		}
 	},
 
-	renderLightbox: function(tabName) {
+	renderLightbox: function( tabName ) {
 		'use strict';
-		if( !UserProfilePage.isLightboxGenerating ) {
+
+		if ( !UserProfilePage.isLightboxGenerating ) {
 			//if lightbox is generating we don't want to let user open second one
 			UserProfilePage.isLightboxGenerating = true;
 			UserProfilePage.newAvatar = false;
 
 			$.when(
-				$.getJSON(this.ajaxEntryPoint, {
+				$.getJSON( this.ajaxEntryPoint, {
 					method: 'getLightboxData',
 					tab: tabName,
 					userId: UserProfilePage.userId,
-					rand: Math.floor(Math.random()*100001) // is cache buster really needed here?
+					rand: Math.floor( Math.random()*100001 ) // is cache buster really needed here?
 				}),
-				$.getMessages(['UserProfilePageV3']),
-				$.getResources([$.getSassCommonURL('/extensions/wikia/UserProfilePageV3/css/UserProfilePage_modal.scss')])
+				$.getMessages( [ 'UserProfilePageV3' ] ),
+				$.getResources( [
+					$.getSassCommonURL( '/extensions/wikia/UserProfilePageV3/css/UserProfilePage_modal.scss' )
+				] )
 			).done(function( getJSONResponse ) {
-				var data = getJSONResponse[0];
+				var data = getJSONResponse[ 0 ];
 
 				require( [ 'wikia.ui.factory' ], function( uiFactory ) {
 					uiFactory.init( [ 'modal' ] ).then(function( modal ) {
@@ -74,7 +77,7 @@ var UserProfilePage = {
 						// set reference to modal UI component for easy creation of confirmation modal
 						UserProfilePage.modalComponent = modal;
 
-						var id = $(data.body).attr('id') + 'Wrapper',
+						var id = $( data.body ).attr( 'id' ) + 'Wrapper',
 							modalConfig = {
 								vars: {
 									id: id,
@@ -109,7 +112,7 @@ var UserProfilePage = {
 								}
 							};
 						modal.createComponent( modalConfig, function( editProfileModal ) {
-							UserProfilePage.modal = editProfileModal.$element;
+							UserProfilePage.modal = editProfileModal;
 
 							var modal = editProfileModal.$element,
 								tab = modal.find( '.tabs a' );
@@ -117,34 +120,32 @@ var UserProfilePage = {
 							UserProfilePage.renderAvatarLightbox( modal );
 							UserProfilePage.renderAboutMeLightbox( modal );
 
-							editProfileModal.bind( 'beforeClose', UserProfilePage.beforeClose );
-
-							editProfileModal.bind( 'save', function() {
-								UserProfilePage.closeModal( editProfileModal );
-								window.location = UserProfilePage.reloadUrl;
-							});
-
+							// attach handlers to modal events
+							editProfileModal.bind( 'beforeClose',
+								$.proxy( UserProfilePage.beforeClose, UserProfilePage ) );
+							editProfileModal.bind( 'save',
+								$.proxy( UserProfilePage.saveUserData, UserProfilePage ) );
 
 							// adding handler for tab switching
-							tab.click(function(event) {
+							tab.click(function( event ) {
 								event.preventDefault();
-								UserProfilePage.switchTab($(this).closest('li'));
+								UserProfilePage.switchTab( $( this ).closest( 'li' ) );
 							});
 
 							// Synthesize a click on the tab to hide/show the right panels
-							$('[data-tab=' + tabName + '] a').click();
+							$( '[data-tab=' + tabName + '] a' ).click();
 
 							// load facebook API
 							$.loadFacebookAPI(function() {
-								if(window.FB && FB.XFBML) {
+								if ( window.FB && FB.XFBML ) {
 									// parse FBXML login button
-									FB.XFBML.parse(document.getElementById('UPPLightboxWrapper'));
+									FB.XFBML.parse( document.getElementById( 'UPPLightboxWrapper' ) );
 								}
 							});
 
 							// show a message when avatars upload is disabled (BAC-1046)
-							if (data.avatarsDisabled === true) {
-								GlobalNotification.show(data.avatarsDisabledMsg, 'error');
+							if ( data.avatarsDisabled === true ) {
+								GlobalNotification.show( data.avatarsDisabledMsg, 'error' );
 							}
 
 							UserProfilePage.isLightboxGenerating = false;
@@ -153,21 +154,38 @@ var UserProfilePage = {
 						});
 					});
 				});
+<<<<<<< HEAD
 			}).fail(function(data) {
 				var message = '';
+=======
+			}).fail(function( data ) {
+
+				console.log( data );
+
+				var message = '',
+					response = '';
+
+>>>>>>> DAR-2560, cleanup and refactoring
 				if( data.responseText ) {
-					var response = JSON.parse(data.responseText);
+					response = JSON.parse( data.responseText );
 					message = response.exception.message;
 				} else {
 					message = data.error;
 				}
 
-				$.showModal('Error', message);
+				$.showModal( 'Error', message );
 
 				UserProfilePage.isLightboxGenerating = false;
 			});
 		}
 	},
+
+	/**
+	 * Checks if anything data was changes before closing modal and if true opens confirmation modal.
+	 * Rejected promise stops execution other event handlers in the queue
+	 *
+	 * @returns {promise|*}
+	 */
 
 	beforeClose: function() {
 		'use strict';
@@ -188,25 +206,22 @@ var UserProfilePage = {
 		return deferred.promise();
 	},
 
-	switchTab: function(tab) {
-	/*	if( true === UserProfilePage.wasDataChanged ) {
-			UserProfilePage.saveUserData(false);
-			UserProfilePage.forceRedirect = true;
-			UserProfilePage.wasDataChanged = false;
-		} */
+	switchTab: function( tab ) {
+		'use strict';
 
 		// Move 'selected' class to the right tab
-		var tabs = tab.closest('ul');
-		tabs.children('li').each(function(){
-			$(this).removeClass('selected');
+		var tabs = tab.closest( 'ul' ),
+			tabName = tab.data( 'tab' );
+
+		tabs.children( 'li' ).each( function() {
+			$( this ).removeClass( 'selected' );
 		});
-		tab.addClass('selected');
+		tab.addClass( 'selected' );
 
 		// Show correct tab content
-		var tabName = tab.data('tab');
-		$('.tab-content > li').each(function() {
-			var currentItem = $(this);
-			if( currentItem.attr('class') === tabName ) {
+		$( '.tab-content > li' ).each(function() {
+			var currentItem = $( this );
+			if( currentItem.attr( 'class' ) === tabName ) {
 				currentItem.show();
 			} else {
 				currentItem.hide();
@@ -214,22 +229,28 @@ var UserProfilePage = {
 		});
 	},
 
-	renderAvatarLightbox: function(modal) {
-		var avatarUploadInput = modal.find('#UPPLightboxAvatar'),
-			avatarForm = modal.find('#usersAvatar');
-		avatarUploadInput.change(function(e) {
-			UserProfilePage.saveAvatarAIM(avatarForm);
+	renderAvatarLightbox: function( modal ) {
+		'use strict';
+
+		var $avatarUploadInput = modal.find( '#UPPLightboxAvatar' ),
+			$avatarForm = modal.find( '#usersAvatar' ),
+			$sampleAvatars = modal.find( '.sample-avatars img' );
+
+		$avatarUploadInput.change(function() {
+			UserProfilePage.saveAvatarAIM( $avatarForm );
 		});
 
-		var sampleAvatars = modal.find('.sample-avatars img');
-		sampleAvatars.each(function(i, val){
-			$(val).click(function() {
-				UserProfilePage.sampleAvatarChecked(this);
+		$sampleAvatars.each( function( i, val ) {
+			$( val ).click(function() {
+				UserProfilePage.sampleAvatarChecked( this );
 			});
 		});
 	},
 
+	// TODO: is this used anywhere
 	saveAvatarData: function(avatarForm) {
+		'use strict';
+
 		var file = $('#UPPLightboxAvatar').val();
 
 		if( file !== '' ) {
@@ -237,50 +258,67 @@ var UserProfilePage = {
 		}
 	},
 
-	sampleAvatarChecked: function(img) {
-		UserProfilePage.modal.find('img.avatar').hide();
-		UserProfilePage.modal.startThrobbing();
+	sampleAvatarChecked: function( img ) {
+		'use strict';
 
-		var image = $(img);
-		UserProfilePage.newAvatar = {file: image.attr('class'), source: 'sample', userId: UserProfilePage.userId };
+		var image = $( img ),
+			$modal = UserProfilePage.modal.$element,
+			avatarImg = $modal.find( 'img.avatar' );
+
+		$modal.find( 'img.avatar' ).hide();
+		$modal.startThrobbing();
+
+		UserProfilePage.newAvatar = {
+			file: image.attr( 'class' ),
+			source: 'sample',
+			userId: UserProfilePage.userId
+		};
 		UserProfilePage.wasDataChanged = true;
 
-		var avatarImg = UserProfilePage.modal.find('img.avatar');
-		avatarImg.attr('src', image.attr('src'));
-		UserProfilePage.modal.stopThrobbing();
+		avatarImg.attr( 'src', image.attr( 'src' ) );
+		$modal.stopThrobbing();
 		avatarImg.show();
 	},
 
-	saveAvatarAIM: function(form) {
-		var inputs = $(form).find('button, input[type=file]');
-		var handler = form.onsubmit;
+	saveAvatarAIM: function( form ) {
+		'use strict';
 
-		$.AIM.submit(form, {
+		// TODO: do we need these unused variables ???
+		var inputs = $(form).find('button, input[type=file]'),
+			handler = form.onsubmit,
+
+			$modal = UserProfilePage.modal.$element;
+
+		$.AIM.submit( form, {
 			onStart: function() {
-				UserProfilePage.modal.startThrobbing();
+				$modal.startThrobbing();
 			},
-			onComplete: function(response) {
+			onComplete: function( response ) {
 				try {
-					response = JSON.parse(response);
-					var avatarImg = UserProfilePage.modal.find('img.avatar');
-					if( response.result.success === true ) {
-						avatarImg.attr('src', response.result.avatar);
-						UserProfilePage.newAvatar = { file: response.result.avatar , source: 'uploaded', userId: UserProfilePage.userId };
+					response = JSON.parse( response );
+					var avatarImg = $modal.find( 'img.avatar' );
+					if ( response.result.success === true ) {
+						avatarImg.attr( 'src', response.result.avatar );
+						UserProfilePage.newAvatar = {
+							file: response.result.avatar,
+							source: 'uploaded',
+							userId: UserProfilePage.userId
+						};
 						UserProfilePage.wasDataChanged = true;
 						GlobalNotification.hide();
 					} else {
-						if( typeof(response.result.error) !== 'undefined' ) {
-							GlobalNotification.show(response.result.error, 'error');
+						if ( typeof( response.result.error ) !== 'undefined' ) {
+							GlobalNotification.show( response.result.error, 'error' );
 						}
 					}
-					UserProfilePage.modal.stopThrobbing();
+					$modal.stopThrobbing();
 
-					if( typeof(form[0]) !== 'undefined' ) {
-						form[0].reset();
+					if ( typeof( form[ 0 ] ) !== 'undefined' ) {
+						form[ 0 ].reset();
 					}
-				} catch(e) {
-					UserProfilePage.modal.stopThrobbing();
-					form[0].reset();
+				} catch( e ) {
+					$modal.stopThrobbing();
+					form[ 0 ].reset();
 				}
 			}
 		});
@@ -288,106 +326,59 @@ var UserProfilePage = {
 		//unbind original html element handler to avoid loops
 		form.onsubmit = null;
 
-		$(form).submit();
+		$( form ).submit();
 	},
 
-	renderAboutMeLightbox: function(modal) {
-		var fbUnsyncButton = modal.find('#facebookUnsync');
-		fbUnsyncButton.click(function() {
+	renderAboutMeLightbox: function( modal ) {
+		'use strict';
+
+		var $fbUnsyncButton = modal.find( '#facebookUnsync'),
+			$monthSelectBox = modal.find( '#userBDayMonth' ),
+			$daySelectBox = modal.find( '#userBDayDay'),
+			$formFields = modal.find('input[type="text"], select'),
+
+			change = function() {
+			UserProfilePage.wasDataChanged = true;
+		};
+
+		$fbUnsyncButton.click(function() {
 			UserProfilePage.removeFbProfileUrl();
 		});
 
-		var monthSelectBox = modal.find('#userBDayMonth'),
-			daySelectBox = modal.find('#userBDayDay');
-
-		monthSelectBox.change(function() {
-			UserProfilePage.refillBDayDaySelectbox({month:monthSelectBox, day:daySelectBox});
+		$monthSelectBox.change(function() {
+			UserProfilePage.refillBDayDaySelectbox({
+				month: $monthSelectBox,
+				day: $daySelectBox
+			});
 		});
 
-		$('.favorite-wikis').on('click', '.delete', function() {
-			UserProfilePage.hideFavWiki($(this).closest('li').data('wiki-id'));
+		$( '.favorite-wikis' ).on( 'click', '.delete', function() {
+			UserProfilePage.hideFavWiki( $( this ).closest( 'li' ).data( 'wiki-id' ) );
 		});
 
-		modal.find('.favorite-wikis-refresh').click(function(event) {
+		modal.find( '.favorite-wikis-refresh' ).click(function( event ) {
 			event.preventDefault();
 			UserProfilePage.refreshFavWikis();
 		});
 
-		var formFields = modal.find('input[type="text"], select');
-		var change = function() {
-			UserProfilePage.wasDataChanged = true;
-		};
-
-		formFields.change(change);
-		formFields.keypress(change);
+		$formFields.change(change);
+		$formFields.keypress(change);
 
 		UserProfilePage.toggleJoinMoreWikis();
 
 		// Make 'feed preferences' link open in a new page
-		$('#facebookPage a').click(function(event) {
+		$( '#facebookPage a' ).click(function( event ) {
 			event.preventDefault();
-			window.open($(this).attr('href'));
+			window.open( $( this ).attr( 'href' ) );
 		});
 	},
 
-	storeCurrAnswer: function() {
-		var currAnswerBody = UserProfilePage.modal.find('#UPPLightboxCurrQuestionAnswerBody').val();
-		this.questions[this.currQuestionIndex].answerBody = currAnswerBody;
-	},
-
-	saveInterviewAnswers: function() {
-		$.ajax({
-			type: "POST",
-			url: this.ajaxEntryPoint+'&method=saveInterviewAnswers',
-			dataType: "json",
-			data: "answers="+JSON.stringify(this.questions),
-			success: function(data) {
-				if( data.status == "error" ) {
-					GlobalNotification.show(data.errorMsg, 'error');
-				} else {
-					UserProfilePage.closeModal(UserProfilePage.modal);
-
-					window.location = UserProfilePage.reloadUrl;
-				}
-			}
-		});
-	},
-
-	renderCurrQuestion: function(nextButton, prevButton) {
-		var question = this.questions[this.currQuestionIndex];
-
-		if( question != null ) {
-			UserProfilePage.modal.find('#UPPLightboxCurrQuestionCaption').html(question.caption);
-			UserProfilePage.modal.find('#UPPLightboxCurrQuestionBody').html(question.body);
-			UserProfilePage.modal.find('#UPPLightboxCurrQuestionAnswerBody').val(question.answerBody);
-
-			if(this.currQuestionIndex == 0) {
-				prevButton.attr('disabled', 'disabled');
-				//nextButton.attr('disabled', '');
-			}
-			else {
-				prevButton.attr('disabled', '');
-			}
-
-			if(this.currQuestionIndex == (this.questions.length - 1)) {
-				nextButton.attr('disabled', 'disabled');
-			}
-			else {
-				nextButton.attr('disabled', '');
-			}
-		}
-	},
-
-	//updatePrevNextButtons
-
-	saveUserData: function(doRedirect, modal) {
-		if( typeof(doRedirect) === 'undefined' ) {
-			doRedirect = true;
-		}
+	saveUserData: function() {
+		'use strict';
 
 		var userData = UserProfilePage.getFormData();
 
-		if(UserProfilePage.newAvatar) {
+		if ( UserProfilePage.newAvatar ) {
 			userData.avatarData = UserProfilePage.newAvatar;
 		}
 
@@ -395,28 +386,24 @@ var UserProfilePage = {
 			type: 'POST',
 			url: this.ajaxEntryPoint+'&method=saveUserData',
 			dataType: 'json',
-			data: 'userId=' + UserProfilePage.userId + '&data=' + JSON.stringify(userData),
-			success: function(data) {
-				if( data.status == "error" ) {
-					GlobalNotification.show(data.errorMsg, 'warn');
+			data: 'userId=' + UserProfilePage.userId + '&data=' + JSON.stringify( userData ),
+			success: function( data ) {
+				if( data.status === 'error' ) {
+					GlobalNotification.show( data.errorMsg, 'warn') ;
 				} else {
 					UserProfilePage.userData = null;
+					UserProfilePage.wasDataChanged = false;
+					UserProfilePage.modal.trigger( 'close' );
+					window.location = UserProfilePage.reloadUrl;
 
-					if( true === doRedirect ) {
-						if( typeof(modal) !== 'undefined' ) {
-							UserProfilePage.closeModal(modal);
-						} else {
-							UserProfilePage.closeModal(UserProfilePage.modal);
-						}
-
-						window.location = UserProfilePage.reloadUrl;
-					}
 				}
 			}
 		});
 	},
 
 	getFormData: function() {
+		'use strict';
+
 		var userData = {
 			name: null,
 			location: null,
@@ -428,34 +415,42 @@ var UserProfilePage = {
 			year: null,
 			month: null,
 			day: null
-		};
-		for(var i in userData) {
-			var userDataItem = $(document.userData[i]).val();
-			if( typeof(userDataItem) !== 'undefined' ) {
-				userData[i] = userDataItem;
+			},
+			i,
+			userDataItem;
+
+
+		for( i in userData ) {
+			userDataItem = $( document.userData[ i ] ).val();
+			if( typeof( userDataItem ) !== 'undefined' ) {
+				userData[ i ] = userDataItem;
 			}
 		}
-		if (document.userData['hideEditsWikis'].checked) {
-			userData['hideEditsWikis'] = 1;
+		if ( document.userData.hideEditsWikis.checked ) {
+			userData.hideEditsWikis = 1;
 		}
 
 		return userData;
 	},
 
-	refillBDayDaySelectbox: function(selectboxes) {
-		selectboxes.day.html("");
-		var options = '',
-			daysInMonth = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
-			selectedMonth = selectboxes.month.val();
+	refillBDayDaySelectbox: function( selectboxes ) {
+		'use strict';
 
-		for(var i = 1; i <= daysInMonth[selectedMonth - 1]; i++) {
+		selectboxes.day.html('');
+		var options = '',
+			daysInMonth = [ 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ],
+			selectedMonth = selectboxes.month.val(),
+			i;
+
+		for ( i = 1; i <= daysInMonth[ selectedMonth - 1 ]; i++ ) {
 			options += '<option value="'+ i + '">' + i + '</option>';
 		}
 		options = '<option value="0">--</option>' + options;
 
-		selectboxes.day.html(options);
+		selectboxes.day.html( options );
 	},
 
+	// TODO: is this used anywhere
 	fbConnect: function() {
 		$.postJSON( this.ajaxEntryPoint, { method: 'onFacebookConnect', cb: wgStyleVersion }, function(data) {
 			if( data.result.success === true && typeof(data.result.fbUser) !== 'undefined' ) {
@@ -488,63 +483,82 @@ var UserProfilePage = {
 		});
 	},
 
+	// TODO: is this used anywhere
 	fbConnectAvatar: function() {
-		UserProfilePage.modal.find('img.avatar').hide();
-		UserProfilePage.modal.startThrobbing();
+		UserProfilePage.modal.$element.find('img.avatar').hide();
+		UserProfilePage.modal.$element.startThrobbing();
 		$.postJSON( this.ajaxEntryPoint, { method: 'onFacebookConnectAvatar', avatar: true, cb: wgStyleVersion }, function(data) {
 			if( data.result.success === true ) {
 				$('#facebookConnectAvatar').hide();
-				var avatarImg = UserProfilePage.modal.find('img.avatar');
+				var avatarImg = UserProfilePage.modal.$element.find('img.avatar');
 				avatarImg.attr('src', data.result.avatar).show();
-				UserProfilePage.modal.stopThrobbing();
+				UserProfilePage.modal.$element.stopThrobbing();
 				UserProfilePage.wasDataChanged = true;
 				UserProfilePage.newAvatar = {file: data.result.avatar, source: 'facebook', userId: UserProfilePage.userId };
 			}
 		});
 	},
 
-	fillFieldsWithFbData: function(i, key, fbData) {
-		if( typeof(fbData[key]) === 'string' ) {
-			switch(key) {
+	fillFieldsWithFbData: function( i, key, fbData ) {
+		'use strict';
+
+		if ( typeof( fbData[ key ] ) === 'string' ) {
+			switch( key ) {
 				case 'birthday_date':
-					UserProfilePage.extractFbDateAndFill(fbData['birthday_date']);
+					UserProfilePage.extractFbDateAndFill( fbData.birthday_date );
 					break;
 				default:
-					$(document.userData[i]).val(fbData[key]);
+					$( document.userData[ i ] ).val( fbData[ key ] );
 					break;
 			}
 		}
 	},
 
-	extractFbDateAndFill: function(date) {
-		if( typeof(date) === 'string' ) {
-			var dateArray = date.split('/');
-			var monthSelectBox = $('#userBDayMonth'),
+	extractFbDateAndFill: function( date ) {
+		'use strict';
+		if ( typeof( date ) === 'string' ) {
+			var dateArray = date.split('/'),
+				monthSelectBox = $('#userBDayMonth'),
 				daySelectBox = $('#userBDayDay');
 
-			if( typeof(dateArray[0]) !== 'undefined' ) {
-				monthSelectBox.val( parseInt(dateArray[0], 10) );
+			if ( typeof( dateArray[ 0 ] ) !== 'undefined' ) {
+				monthSelectBox.val( parseInt( dateArray[ 0 ], 10 ) );
 			}
 
-			if( typeof(dateArray[1]) !== 'undefined' ) {
-				UserProfilePage.refillBDayDaySelectbox({month:monthSelectBox, day:daySelectBox});
-				daySelectBox.val( parseInt(dateArray[1], 10) );
+			if ( typeof( dateArray[ 1 ] ) !== 'undefined' ) {
+				UserProfilePage.refillBDayDaySelectbox({
+					month:monthSelectBox,
+					day:daySelectBox
+				});
+				daySelectBox.val( parseInt( dateArray[ 1 ], 10 ) );
 			}
 		}
 	},
 
-	hideFavWiki: function(wikiId) {
-		if( wikiId >= 0 ) {
-			UserProfilePage.modal.find('.favorite-wikis [data-wiki-id="' + wikiId + '"]')
-				.fadeOut('fast', function() {
-					$(this).remove();
-					$.postJSON( UserProfilePage.ajaxEntryPoint, { method: 'onHideWiki', userId: UserProfilePage.userId, wikiId: wikiId, cb: wgStyleVersion }, function(data) {
-						if( data.result.success === true ) {
+	hideFavWiki: function( wikiId ) {
+		'use strict';
+
+		var $modal = UserProfilePage.modal.$element;
+
+		if ( wikiId >= 0 ) {
+			$modal.find( '.favorite-wikis [data-wiki-id="' + wikiId + '"]' )
+				.fadeOut( 'fast' , function() {
+					$( this ).remove();
+					$.postJSON( UserProfilePage.ajaxEntryPoint, {
+						method: 'onHideWiki',
+						userId: UserProfilePage.userId,
+						wikiId: wikiId,
+						cb: wgStyleVersion
+					}, function( data ) {
+						if ( data.result.success === true ) {
 							// add the next wiki
-							$.each(data.result.wikis, function(index, value) {
-								if(UserProfilePage.modal.find('.favorite-wikis [data-wiki-id="' + value.id + '"]').length == 0) {
+							$.each( data.result.wikis, function( index, value ) {
+								if ( $modal.find( '.favorite-wikis [data-wiki-id="' + value.id + '"]' ).length === 0 ) {
 									//found the wiki to add. now do it.
-									UserProfilePage.modal.find('.join-more-wikis').before('<li data-wiki-id="' + value.id + '"><span>' + value.wikiName + '</span> <img src="' + wgBlankImgUrl + '" class="sprite-small delete"></li>');
+									$modal.find( '.join-more-wikis' )
+										.before( '<li data-wiki-id="' + value.id + '"><span>' + value.wikiName +
+											'</span> <img src="' + wgBlankImgUrl +
+											'" class="sprite-small delete"></li>' );
 
 								}
 							});
@@ -553,24 +567,34 @@ var UserProfilePage = {
 					});
 				});
 		} else {
+			//TODO: why it's no logic here !!!!! ??????
 			//failed to recive wikiId
 		}
 	},
 
 	refreshFavWikis: function() {
-		$.postJSON( this.ajaxEntryPoint, {method: 'onRefreshFavWikis', userId: UserProfilePage.userId, cb: wgStyleVersion}, function(data) {
-			if( data.result.success === true ) {
-				var favWikisList = UserProfilePage.modal.find('.favorite-wikis');
+		'use strict';
+
+		$.postJSON( this.ajaxEntryPoint, {
+			method: 'onRefreshFavWikis',
+			userId: UserProfilePage.userId,
+			cb: wgStyleVersion
+		}, function( data ) {
+			if ( data.result.success === true ) {
+				var favWikisList = UserProfilePage.modal.$element.find( '.favorite-wikis'),
+					favWikis = '',
+					i;
 
 				// empty the list
 				favWikisList.children().not('.join-more-wikis').remove();
 
 				// add items
-				var favWikis = '';
-				for(i in data.result.wikis) {
-					favWikis += '<li data-wiki-id="' + data.result.wikis[i].id  + '"><span>' + data.result.wikis[i].wikiName + '</span> <img src="' + wgBlankImgUrl + '" class="sprite-small delete"></li>';
+				for ( i in data.result.wikis ) {
+					favWikis += '<li data-wiki-id="' + data.result.wikis[ i ].id  + '"><span>' +
+						data.result.wikis[ i ].wikiName + '</span> <img src="' + wgBlankImgUrl +
+						'" class="sprite-small delete"></li>';
 				}
-				favWikisList.prepend(favWikis);
+				favWikisList.prepend( favWikis );
 
 				UserProfilePage.toggleJoinMoreWikis();
 			}
@@ -578,39 +602,24 @@ var UserProfilePage = {
 	},
 
 	toggleJoinMoreWikis: function() {
-		var joinMoreWikis = UserProfilePage.modal.find('.join-more-wikis');
-		if (UserProfilePage.modal.find('.favorite-wikis').children().not('.join-more-wikis').length == 4) {
+		'use strict';
+
+		var $modal =UserProfilePage.modal.$element,
+			joinMoreWikis = $modal.find( '.join-more-wikis' );
+		if ( $modal.find( '.favorite-wikis' ).children().not( '.join-more-wikis' ).length === 4 ) {
 			joinMoreWikis.hide();
 		} else {
 			joinMoreWikis.show();
 		}
 	},
 
-	closeModal: function( modal, resetDataChangedFlag ) {
-		if( typeof( modal.closeModal ) === 'function' ) {
-			modal.closeModal();
-		} else {
-			if( UserProfilePage.wasDataChanged === true ) {
-				if( $( '#UPPLightboxCloseWrapper' ).length === 0 ) {
-					setTimeout(function() {
-						UserProfilePage.displayClosingPopup();
-					}, 50 );
-				}
-				return false
-			}
-		}
-
-		if( typeof( resetDataChangedFlag ) === 'undefined' || resetDataChangedFlag === true ) {
-			//changing it for next lightbox openings
-			UserProfilePage.wasDataChanged = false;
-		}
-
-		if( UserProfilePage.forceRedirect === true ) {
-			window.location = UserProfilePage.reloadUrl;
-		}
-	},
+	/**
+	 * Display confirmation modal when trying to close edit profile modal with unsaved changes
+	 */
 
 	displayClosingPopup: function() {
+		'use strict';
+
 		$.getJSON( this.ajaxEntryPoint, {
 			method: 'getClosingModal',
 			userId: UserProfilePage.userId,
@@ -666,11 +675,13 @@ var UserProfilePage = {
 
 				// attaching handlers to button events
 				confirmationModal.bind( 'save', function() {
-					UserProfilePage.saveUserData( true, confirmationModal.$element );
-				});
-				confirmationModal.bind('quit', function() {
-					UserProfilePage.modal.trigger('close');
 					confirmationModal.trigger('close');
+					UserProfilePage.saveUserData();
+				});
+				confirmationModal.bind( 'quit', function() {
+					UserProfilePage.wasDataChanged = false;
+					UserProfilePage.modal.trigger( 'close' );
+					confirmationModal.trigger( 'close' );
 				});
 
 				confirmationModal.show();
@@ -679,10 +690,12 @@ var UserProfilePage = {
 		});
 	},
 
-	removeAvatar: function(name, question) {
-		var answer = confirm(question);
+	removeAvatar: function( name, question ) {
+		'use strict';
 
-		if(answer){
+		var answer = confirm( question );
+
+		if ( answer ) {
 			$.nirvana.sendRequest({
 				controller: 'UserProfilePage',
 				method: 'removeavatar',
@@ -690,18 +703,19 @@ var UserProfilePage = {
 				data: {
 					av_user: name
 				},
-				callback: function(data) {
-					if(data.status == "ok") {
+				callback: function( data ) {
+					if(data.status === 'ok' ) {
 						window.location.reload();
 					} else {
-						alert(data.error);
+						window.alert( data.error );
 					}
 				}
 			});
 		}
 	}
-}
+};
 
-$(function() {
+$( function() {
+	'use strict';
 	UserProfilePage.init();
 });
