@@ -4,6 +4,7 @@
  *
  * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
  */
+use Wikia\Search\Config, Wikia\Search\QueryService\Factory, Wikia\Search\QueryService\DependencyContainer;
 
 class ArticlesApiController extends WikiaApiController {
 
@@ -13,6 +14,7 @@ class ArticlesApiController extends WikiaApiController {
 	const ITEMS_PER_BATCH = 25;
 	const TOP_WIKIS_FOR_HUB = 10;
 	const LANGUAGES_LIMIT = 10;
+	const MAX_NEW_ARTICLES_LIMIT = 20;
 
 	const PARAMETER_ARTICLES = 'ids';
 	const PARAMETER_TITLES = 'titles';
@@ -28,12 +30,14 @@ class ArticlesApiController extends WikiaApiController {
 	const DEFAULT_WIDTH = 200;
 	const DEFAULT_HEIGHT = 200;
 	const DEFAULT_ABSTRACT_LEN = 100;
+	const DEFAULT_SEARCH_NAMESPACE = 0;
 
 	const CLIENT_CACHE_VALIDITY = 86400;//24h
 	const CATEGORY_CACHE_ID = 'category';
 	const ARTICLE_CACHE_ID = 'article';
 	const DETAILS_CACHE_ID = 'details';
 	const PAGE_CACHE_ID = 'page';
+	const NEW_ARTICLES_CACHE_ID  = 'new-articles';
 
 	const ARTICLE_TYPE = 'article';
 	const VIDEO_TYPE = 'video';
@@ -41,7 +45,7 @@ class ArticlesApiController extends WikiaApiController {
 	const CATEGORY_TYPE = 'category';
 	const UNKNOWN_PROVIDER = 'unknown';
 
-
+	const NEW_ARTICLES_VARNISH_CACHE_EXPIRATION = 86400; //24 hours
 	const SIMPLE_JSON_VARNISH_CACHE_EXPIRATION = 86400; //24 hours
 	const SIMPLE_JSON_ARTICLE_ID_PARAMETER_NAME = "id";
 
@@ -293,6 +297,74 @@ class ArticlesApiController extends WikiaApiController {
 			throw new BadRequestApiException();
 		}
 	}
+
+
+	public function getNew(){
+		wfProfileIn( __METHOD__ );
+
+		$ns = $this->request->getArray( self::PARAMETER_NAMESPACES );
+		if ( empty( $ns ) ) {
+			$ns = [ self::DEFAULT_SEARCH_NAMESPACE ];
+		}
+		else {
+			$ns = self::processNamespaces( $ns, __METHOD__ );
+			sort( $ns );
+			$ns = array_unique( $ns );
+		}
+
+		$key = self::getCacheKey( implode( '-', $ns ), self::NEW_ARTICLES_CACHE_ID );
+		$results = $this->wg->Memc->get( $key );
+		if ( $results === false ) {
+			$solrResults = $this->getNewArticlesFromSolr( $ns, self::MAX_NEW_ARTICLES_LIMIT );
+			$thumbs = $this->getArticlesThumbnails( array_keys($solrResults) );
+			$results = [];
+			foreach ( $solrResults as $item ) {
+				if ( isset( $thumbs[ $item[ 'id' ] ] ) ) {
+					$item[ 'thumbnail' ] = $thumbs[ $item[ 'id' ] ];
+				}
+
+				$title = Title::newFromText( $item[ 'title' ] );
+				$item[ 'title' ] = $title->getText();
+				$item[ 'url' ] = $title->getLocalURL();
+				$results[] = $item;
+			}
+
+			$this->wg->Memc->set( $key, $results, self::CLIENT_CACHE_VALIDITY );
+		}
+		$response = $this->getResponse();
+		$response->setValues( [ 'items' => $results, 'basepath' => $this->wg->Server ] );
+
+		$response->setCacheValidity(
+			self::NEW_ARTICLES_VARNISH_CACHE_EXPIRATION /* 24h */,
+			self::NEW_ARTICLES_VARNISH_CACHE_EXPIRATION /* 24h */,
+			array(
+				WikiaResponse::CACHE_TARGET_BROWSER,
+				WikiaResponse::CACHE_TARGET_VARNISH
+			)
+		);
+
+		wfProfileOut( __METHOD__ );
+	}
+
+
+	protected function getNewArticlesFromSolr( $ns, $limit ) {
+		$searchConfig = new Wikia\Search\Config;
+		$searchConfig->setQuery( '*' )
+			->setLimit( $limit )
+			->setRank( 'default' )
+			->setOnWiki( true )
+			->setWikiId( $this->wg->wgCityId )
+			->setNamespaces( $ns )
+			->setRank( \Wikia\Search\Config::RANK_NEWEST_PAGE_ID )
+			->setRequestedFields( [ 'html_en' ] );
+
+		$results = ( new Factory )->getFromConfig( $searchConfig )->searchAsApi(
+			[ 'pageid' => 'id', 'ns', 'title_en' => 'title', 'html_en' => 'abstract' ],
+			false, 'pageid' );
+
+		return $results;
+	}
+
 
 	/**
 	 * Get Articles under a category
@@ -572,12 +644,7 @@ class ArticlesApiController extends WikiaApiController {
 		//make the thumbnail's size parametrical without
 		//invalidating the titles details' cache
 		//or the need to duplicate it
-		if ( $width > 0 && $height > 0 ) {
-			$is = new ImageServing( $articles, $width, $height );
-			$thumbnails = $is->getImages( 1 );
-		} else {
-			$thumbnails = array();
-		}
+		$thumbnails = $this->getArticlesThumbnails( $articles, $width, $height );
 
 		$articles = null;
 
@@ -595,8 +662,7 @@ class ArticlesApiController extends WikiaApiController {
 			}
 
 			$details['abstract'] = $snippet;
-			$details['thumbnail'] = ( array_key_exists( $id, $thumbnails ) ) ? $thumbnails[$id][0]['url'] : null;
-			$details['original_dimensions'] = ( array_key_exists( $id, $thumbnails ) && isset( $thumbnails[$id][0]['original_dimensions'] ) ) ? $thumbnails[$id][0]['original_dimensions'] : null;
+			$details = array_merge( $details, $thumbnails[ $id ] );
 		}
 
 		$thumbnails = null;
@@ -611,6 +677,30 @@ class ArticlesApiController extends WikiaApiController {
 		}
 
 		return $collection;
+	}
+
+	protected function getArticlesThumbnails( $articles, $width = self::DEFAULT_WIDTH, $height = self::DEFAULT_HEIGHT ) {
+		$ids = !is_array( $articles ) ? [ $articles ] : $articles;
+		$result = [];
+		if ( $width > 0 && $height > 0 ) {
+			$is = $this->getImageServing( $ids, $width, $height );
+			//only one image max is returned
+			$images = $is->getImages( 1 );
+			//parse results
+			foreach( $ids as $id ) {
+				$data = [ 'thumbnail' => null, 'original_dimensions' => null ];
+				if ( isset( $images[ $id ] ) ) {
+					$data['thumbnail'] = $images[$id][0]['url'];
+					$data['original_dimensions'] = $images[$id][0]['original_dimensions'];
+				}
+				$result[ $id ] = $data;
+			}
+		}
+		return $result;
+	}
+
+	protected function getImageServing( $ids, $width, $height ) {
+		return new ImageServing( $ids, $width, $height );
 	}
 
 	protected function getFromFile( $title ) {
