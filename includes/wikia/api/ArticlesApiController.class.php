@@ -319,7 +319,9 @@ class ArticlesApiController extends WikiaApiController {
 		if ( $results === false ) {
 			$solrResults = $this->getNewArticlesFromSolr( $ns, self::MAX_NEW_ARTICLES_LIMIT );
 			$articles = array_keys( $solrResults );
-			$creators = $this->getUserDataForArticles( $articles );
+			$rev = new RevisionService();
+			$revisions = $rev->getFirstRevisionByArticleId( $articles );
+			$creators = $this->getUserDataForArticles( $articles, $revisions );
 
 			$results = [];
 			foreach ( $solrResults as $id => $item ) {
@@ -327,6 +329,7 @@ class ArticlesApiController extends WikiaApiController {
 				$item[ 'title' ] = $title->getText();
 				$item[ 'url' ] = $title->getLocalURL();
 				$item[ 'creator' ] = $creators[ $id ];
+				$item[ 'creation_date' ] = isset($revisions[ $id ]) ? $revisions[ $id ][ 'rev_timestamp' ] : null ;
 				$results[] = $item;
 			}
 
@@ -687,12 +690,10 @@ class ArticlesApiController extends WikiaApiController {
 		return $collection;
 	}
 
-	protected function getUserDataForArticles( $articles ) {
+	protected function getUserDataForArticles( $articles, $revisions ) {
 		$ids = !is_array( $articles ) ? [ $articles ] : $articles;
 		$result = [];
 
-		$rev = new RevisionService();
-		$revisions = $rev->getFirstRevisionByArticleId( $ids );
 		foreach( $revisions as $rev ) {
 			$userIds[ $rev['rev_page'] ] = $rev[ 'rev_user' ];
 		}

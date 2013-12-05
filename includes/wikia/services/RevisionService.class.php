@@ -39,12 +39,12 @@ class RevisionService {
 		$dbr = wfGetDB( DB_SLAVE );
 		$res = $dbr->select(
 			[ 'revision' ],
-			[ 'rev_id', 'rev_page', 'rev_user' ],
+			[ 'rev_id', 'rev_page', 'rev_user', 'rev_timestamp' ],
 			[ 'rev_page' => $ids, 'rev_parent_id = 0' ],
 			'RevisionService::getFirstRevisionByArticleId'
 		);
 		while ( $row = $res->fetchRow() ) {
-			$result[] = $row;
+			$result[ $row[ 'rev_id' ] ] = $row;
 		}
 		return $result;
 	}
