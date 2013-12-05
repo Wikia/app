@@ -337,15 +337,13 @@ class ArticlesApiController extends WikiaApiController {
 			
 			$results = [];
 			foreach ( $solrResults as $id => $item ) {
-				if ( isset( $thumbs[ $id ] ) ) {
-					$item[ 'thumbnail' ] = $thumbs[ $id ];
-				}
-
 				$title = Title::newFromText( $item[ 'title' ] );
 				$item[ 'title' ] = $title->getText();
 				$item[ 'url' ] = $title->getLocalURL();
 				$item[ 'creator' ] = $creators[ $id ];
 				$item[ 'creation_date' ] = isset($revisions[ $id ]) ? $revisions[ $id ][ 'rev_timestamp' ] : null ;
+
+				$item = array_merge($item, $thumbs[ $id ]);
 				$results[] = $item;
 			}
 
