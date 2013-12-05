@@ -9,6 +9,7 @@
 
 'use strict';
 
+// Make global so JSSnippets can pick it up
 window.MediaPlaceholder = {
 
 	init: function() {
@@ -56,13 +57,17 @@ window.MediaPlaceholder = {
 					).done( function() {
 						self.imageLoaded = true;
 						$this.stopThrobbing();
-						window.WMU_show( window.event, -2, props.placeholderIndex, props.align, props.thumb,
-							props.width, props.caption, props.link );
+						window.WMU_show( // jshint ignore:line
+							window.event, -2, props.placeholderIndex, props.align, props.thumb,
+							props.width, props.caption, props.link
+						);
 					} );
 			} else {
 				$this.stopThrobbing();
-				window.WMU_show( window.event, -2, props.placeholderIndex, props.align, props.thumb, props.width,
-					props.caption, props.link );
+				window.WMU_show( // jshint ignore:line
+					window.event, -2, props.placeholderIndex, props.align, props.thumb, props.width,
+					props.caption, props.link
+				);
 			}
 		} );
 	},
