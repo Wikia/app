@@ -33,6 +33,7 @@ class ArticlesApiController extends WikiaApiController {
 	const DEFAULT_HEIGHT = 200;
 	const DEFAULT_ABSTRACT_LEN = 100;
 	const DEFAULT_SEARCH_NAMESPACE = 0;
+	const DEFAULT_AVATAR_SIZE = 20;
 
 	const CLIENT_CACHE_VALIDITY = 86400;//24h
 	const CATEGORY_CACHE_ID = 'category';
@@ -327,23 +328,30 @@ class ArticlesApiController extends WikiaApiController {
 		$key = self::getCacheKey( self::NEW_ARTICLES_CACHE_ID, '', [ implode( '-', $ns ), $limit ] );
 		$results = $this->wg->Memc->get( $key );
 		if ( $results === false ) {
-			$solrResults = $this->getNewArticlesFromSolr( $ns, $limit );
+			$solrResults = $this->getNewArticlesFromSolr( $ns, self::MAX_NEW_ARTICLES_LIMIT );
+			$articles = array_keys( $solrResults );
+			$rev = new RevisionService();
+			$revisions = $rev->getFirstRevisionByArticleId( $articles );
+			$creators = $this->getUserDataForArticles( $articles, $revisions );
 			$thumbs = $this->getArticlesThumbnails( array_keys($solrResults) );
 			
 			$results = [];
-			foreach ( $solrResults as $item ) {
-				if ( isset( $thumbs[ $item[ 'id' ] ] ) ) {
-					$item[ 'thumbnail' ] = $thumbs[ $item[ 'id' ] ];
+			foreach ( $solrResults as $id => $item ) {
+				if ( isset( $thumbs[ $id ] ) ) {
+					$item[ 'thumbnail' ] = $thumbs[ $id ];
 				}
 
 				$title = Title::newFromText( $item[ 'title' ] );
 				$item[ 'title' ] = $title->getText();
 				$item[ 'url' ] = $title->getLocalURL();
+				$item[ 'creator' ] = $creators[ $id ];
+				$item[ 'creation_date' ] = isset($revisions[ $id ]) ? $revisions[ $id ][ 'rev_timestamp' ] : null ;
 				$results[] = $item;
 			}
 
 			$this->wg->Memc->set( $key, $results, self::CLIENT_CACHE_VALIDITY );
 		}
+
 		$response = $this->getResponse();
 		$response->setValues( [ 'items' => $results, 'basepath' => $this->wg->Server ] );
 
@@ -690,6 +698,29 @@ class ArticlesApiController extends WikiaApiController {
 		}
 
 		return $collection;
+	}
+
+	protected function getUserDataForArticles( $articles, $revisions ) {
+		$ids = !is_array( $articles ) ? [ $articles ] : $articles;
+		$result = [];
+
+		foreach( $revisions as $rev ) {
+			$userIds[ $rev['rev_page'] ] = $rev[ 'rev_user' ];
+		}
+		if( !empty( $userIds ) ) {
+			$users = (new UserService())->getUsers( $userIds );
+			foreach( $users as $user ) {
+				$userData[ $user->getId() ] = [ 'avatar' => AvatarService::getAvatarUrl( $user->getName(), self::DEFAULT_AVATAR_SIZE ), 'name' => $user->getName() ];
+			}
+		}
+		foreach( $ids as $pageId ) {
+			if ( isset( $userIds[ $pageId ] ) && isset( $userData[ $userIds[ $pageId ] ] ) ){
+				$result[ $pageId ] = $userData[ $userIds[ $pageId ] ];
+			} else {
+				$result[ $pageId ] = [ 'avatar' => null, 'name' => null ];
+			}
+		}
+		return $result;
 	}
 
 	protected function getArticlesThumbnails( $articles, $width = self::DEFAULT_WIDTH, $height = self::DEFAULT_HEIGHT ) {
