@@ -154,10 +154,6 @@ var UserProfilePage = {
 						});
 					});
 				});
-<<<<<<< HEAD
-			}).fail(function(data) {
-				var message = '';
-=======
 			}).fail(function( data ) {
 
 				console.log( data );
@@ -165,7 +161,6 @@ var UserProfilePage = {
 				var message = '',
 					response = '';
 
->>>>>>> DAR-2560, cleanup and refactoring
 				if( data.responseText ) {
 					response = JSON.parse( data.responseText );
 					message = response.exception.message;
