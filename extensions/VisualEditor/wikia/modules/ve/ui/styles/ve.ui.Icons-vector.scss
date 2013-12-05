@@ -1,6 +1,9 @@
 @import "mixins/ve-icon";
 
 // Toolbar icons
+.oo-ui-icon-alert {
+	@include ve-icon(alert, oo);
+}
 .oo-ui-icon-undo {
 	@include ve-icon(arched-arrow-rtl, oo);
 }
@@ -28,6 +31,9 @@
 .oo-ui-icon-media {
 	@include ve-icon(media, wikia);
 }
+.oo-ui-icon-menu {
+	@include ve-icon(menu, oo);
+}
 .oo-ui-icon-help {
 	@include ve-icon(help, oo);
 }
@@ -35,7 +41,7 @@
 	@include ve-icon(settings, oo);
 }
 .oo-ui-icon-code {
-	@include ve-icon(code, mw);
+	@include ve-icon(code, oo);
 }
 .oo-ui-icon-strikethrough-s {
 	@include ve-icon(strikethrough-s, ve);
@@ -115,4 +121,7 @@
 }
 .oo-ui-icon-checked {
 	@include ve-icon(checked, wikia);
+}
+.oo-ui-icon-parameter {
+	@include ve-icon(parameter, mw);
 }

@@ -11,6 +11,12 @@
 	}
 }
 
+/* Options */
+
+.oo-ui-optionWidget-highlighted {
+	background-color: $color-ve-gradient-light;
+}
+
 /* Outline */
 
 .oo-ui-outlineControlsWidget {
@@ -21,6 +27,13 @@
 	&.oo-ui-optionWidget-selected {
 		background: $color-ve-hover;
 	}
+}
+
+/* Parameter Results */
+
+.ve-ui-mwParameterResultWidget-name {
+	background-color: $color-page;
+	border-color: $color-page-border;
 }
 
 /* Popup */
