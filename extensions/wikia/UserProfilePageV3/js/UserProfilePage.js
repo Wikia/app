@@ -695,7 +695,7 @@ var UserProfilePage = {
 				method: 'removeavatar',
 				format: 'json',
 				data: {
-					av_user: name
+					avUser: name
 				},
 				callback: function( data ) {
 					if(data.status === 'ok' ) {
