@@ -514,7 +514,7 @@ $messages['gl'] = array(
 	'lvs-posted-in-label-none' => 'O vídeo actual non está publicado en ningún artigo',
 	'lvs-posted-in-more' => 'máis',
 	'lvs-confirm-keep-title' => 'Manter o vídeo',
-	'lvs-confirm-keep-message' => 'Engadimos constantemente novos vídeos con licenza aos <a href="http://video.wikia.com/" target="_blank">vídeos do Wikia</a>. Quere ver as novas coincidencias para este vídeo en canto estean dispoñibles?',
+	'lvs-confirm-keep-message' => 'Engadimos constantemente novos vídeos con licenza aos <a href="http://video.wikia.com/" target="_blank">vídeos do Wikia</a>. Queres ver as novas coincidencias para este vídeo en canto estean dispoñibles?',
 	'lvs-confirm-undo-swap-title' => 'Confirmar que quere desfacer',
 	'lvs-confirm-undo-swap-message' => 'Está seguro de querer restaurar o vídeo orixinal?',
 	'lvs-confirm-undo-keep-title' => 'Confirmar que quere desfacer',

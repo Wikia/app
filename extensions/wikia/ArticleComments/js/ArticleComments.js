@@ -625,6 +625,7 @@ if (ArticleComments.loadOnDemand) {
 		if (!permalink && belowTheFold()) {
 			$window.on('scrollstop.ArticleCommentsLoadOnDemand', function(event) {
 				if (!belowTheFold()) {
+					$comments.addClass('loading');
 					$window.off('scrollstop.ArticleCommentsLoadOnDemand');
 					loadAssets();
 				}

@@ -1046,6 +1046,37 @@ Wikia
 	'globalwatchlist-no-blog-page-found' => 'Сторінки блогу не знайдено.',
 );
 
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'globalwatchlist-desc' => 'Sẽ gửi hàng tuần tiêu hóa email với các trang watchlisted trên tất cả các wiki',
+	'tog-watchlistdigest' => 'E-mail tôi một Watchlist Weekly Digest',
+	'tog-watchlistdigestclear' => 'Đánh dấu tất cả các trang từ tôi tiêu hóa Watchlist lượt truy cập',
+	'globalwatchlist-see-more' => 'Vui lòng kiểm tra của bạn watchlists địa phương cho biết thêm thay đổi',
+	'globalwatchlist-digest-email-subject' => 'Tóm tắt hàng tuần',
+	'globalwatchlist-digest-email-body' => 'Dear $1,
+
+Đây là một danh sách các trang ngày của bạn watchlist Wikia đã được chỉnh sửa kể từ khi bạn cuối truy cập chúng.
+
+$2
+
+
+Đây là một danh sách các trang blog trên của bạn watchlist Wikia đã được chỉnh sửa hoặc nhận xét kể từ khi bạn cuối truy cập chúng.
+
+$3
+
+Xin vui lòng truy cập và chỉnh sửa thường...
+
+Wikia
+
+* Để thay đổi sở thích của bạn cho các thông báo watchlist, vui lòng truy cập http://www.wikia.com/wiki/Special:Preferences.
+* Để đánh dấu tất cả các trang từ này Weekly Digest như truy cập, hãy xem các tùy chọn trong tab "Watchlist" của trang tuỳ chọn của bạn',
+	'globalwatchlist-blog-page-title-comment' => '$1($2 {{PLURAL:$2|bình luận|bình luận}})',
+	'globalwatchlist-no-page-found' => 'Trang không tìm thấy.',
+	'globalwatchlist-no-blog-page-found' => 'Không có trang blog tìm thấy.',
+);
+
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Yfdyh000
