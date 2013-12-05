@@ -81,9 +81,6 @@
 		li {
 			padding: 6px 60px 6px 5px;
 			position: relative;
-			&.no-ipad:hover {
-				background: $color-menu-highlight;
-			}
 			img.sprite {
 				position: absolute;
 				top: .4em;
@@ -98,11 +95,6 @@
 
 			.edit-pencil, .trash, .drag {
 				display: none;
-			}
-			&.no-ipad:hover {
-				.edit-pencil, .trash, .drag {
-					display: block;
-				}
 			}
 			.edit-pencil {
 				cursor: pointer;
@@ -149,6 +141,15 @@
 				height: 1px;
 				width: 8px;
 				background-color: $color-text;
+			}
+		}
+	}
+
+	.options-list.no-ipad {
+		li:hover {
+			background: $color-menu-highlight;
+			.edit-pencil, .trash, .drag {
+				display: block;
 			}
 		}
 	}
