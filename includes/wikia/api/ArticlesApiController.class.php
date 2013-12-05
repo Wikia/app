@@ -328,7 +328,7 @@ class ArticlesApiController extends WikiaApiController {
 		$results = $this->wg->Memc->get( $key );
 
 		if ( $results === false ) {
-			$solrResults = $this->getNewArticlesFromSolr( $ns, self::MAX_NEW_ARTICLES_LIMIT );
+			$solrResults = $this->getNewArticlesFromSolr( $ns, $limit );
 			$results = [];
 			foreach ( $solrResults as $item ) {
 				$title = Title::newFromText( $item[ 'title' ] );
