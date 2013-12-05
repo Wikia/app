@@ -326,7 +326,6 @@ class ArticlesApiController extends WikiaApiController {
 
 		$key = self::getCacheKey( self::NEW_ARTICLES_CACHE_ID, '', [ implode( '-', $ns ), $limit ] );
 		$results = $this->wg->Memc->get( $key );
-		$results = false;
 		if ( $results === false ) {
 			$solrResults = $this->getNewArticlesFromSolr( $ns, $limit );
 			$thumbs = $this->getArticlesThumbnails( array_keys($solrResults) );
