@@ -73,7 +73,8 @@ define( 'lvs.videocontrols', [
 				nonPremiumTitle;
 
 			$newFlag = $row.find( '.new' );
-			nonPremiumTitle = $row.find( '.non-premium img[data-video-key]' ).data().videoKey;
+			nonPremiumTitle = $row.find( '.keep-button' ).attr('data-video-keep');
+
 			/*
 			 * For all premium video plays that are 'new' to user, including plays from the 'more suggestions' thumbs
 			 * send a call to backend to persist and track user interaction, then hide 'New' flag
