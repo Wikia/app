@@ -155,7 +155,7 @@ class SpecialConnect extends SpecialPage {
 			}
 		}
 
-		JSMessages::enqueuePackage('FBConnect', JSMessages::EXTERNAL);
+		JSMessages::enqueuePackage('FBConnect', JSMessages::INLINE);
 
 		switch ( $par ) {
 		case 'ChooseName':
