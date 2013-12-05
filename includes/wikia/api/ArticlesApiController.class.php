@@ -305,7 +305,7 @@ class ArticlesApiController extends WikiaApiController {
 		wfProfileIn( __METHOD__ );
 
 		$ns = $this->request->getArray( self::PARAMETER_NAMESPACES );
-		$limit = $this->request->getInt(self::PARAMETER_LIMIT);
+		$limit = $this->request->getInt(self::PARAMETER_LIMIT, self::DEFAULT_NEW_ARTICLES_LIMIT);
 
 		if ( $limit < 1 ) {
 			throw new InvalidParameterApiException( self::PARAMETER_LIMIT );
