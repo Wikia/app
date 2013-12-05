@@ -1,5 +1,29 @@
-require( [ 'modal', 'wikia.loader', 'wikia.mustache', 'jquery', 'toast', 'sloth', 'lazyload', 'JSMessages', 'wikia.window', 'tables' ],
-function ( modal, loader, mustache, $, toast, sloth, lazyload, msg, window, tables ) {
+require( [
+	'modal',
+	'wikia.loader',
+	'wikia.mustache',
+	'jquery',
+	'toast',
+	'sloth',
+	'lazyload',
+	'JSMessages',
+	'wikia.window',
+	'tables',
+	'track'
+],
+function (
+	modal,
+	loader,
+	mustache,
+	$,
+	toast,
+	sloth,
+	lazyload,
+	msg,
+	window,
+	tables,
+	track
+) {
 	'use strict';
 
 	var markup = $( '#previewTemplate' ).remove().children(),
@@ -11,7 +35,8 @@ function ( modal, loader, mustache, $, toast, sloth, lazyload, msg, window, tabl
 		newArticleMsg = msg( 'wikiamobileeditor-on-new' ),
 		wrongMsg = msg( 'wikiamobileeditor-wrong' ),
 		internetMsg = msg( 'wikiamobileeditor-internet' ),
-		hasOnline = window.navigator && window.navigator.onLine !== undefined;
+		hasOnline = window.navigator && window.navigator.onLine !== undefined,
+		trackCategory = 'editor';
 
 	//opens modal with preview container markup
 	function show () {
@@ -35,6 +60,10 @@ function ( modal, loader, mustache, $, toast, sloth, lazyload, msg, window, tabl
 				$( '#wkContinueEditing' ).on( 'click', function () {
 					summaryText = summaryInput.value;
 					modal.close();
+
+					track.event( trackCategory, track.CLICK, {
+						label: 'continue'
+					});
 				} );
 
 				$( '#wkSave' ).attr( 'disabled', true );
@@ -42,6 +71,10 @@ function ( modal, loader, mustache, $, toast, sloth, lazyload, msg, window, tabl
 				render( content );
 			}
 		} );
+
+		track.event( trackCategory, track.CLICK, {
+			label: 'preview'
+		});
 	}
 
 	function isOnline () {
@@ -110,11 +143,19 @@ function ( modal, loader, mustache, $, toast, sloth, lazyload, msg, window, tabl
 			$( '#wkMdlTlBar' ).find( 'span' ).text( msg( 'wikiamobileeditor-saving' ) );
 
 			form.submit();
+
+			track.event( trackCategory, track.SUBMIT, {
+				label: 'publish'
+			});
 		}
 	}
 
 	if ( window.wgArticleId === 0 ) {
 		toast.show( newArticleMsg );
+
+		track.event( trackCategory, track.IMPRESSION, {
+			label: 'new-article'
+		});
 	}
 
 	$previewButton.on( 'click', function ( event ) {
@@ -122,4 +163,12 @@ function ( modal, loader, mustache, $, toast, sloth, lazyload, msg, window, tabl
 
 		show();
 	} );
+
+	$( '#wkMobileCancel' ).on( 'click', function( event ){
+		track.event( trackCategory, track.CLICK, {
+			label: 'cancel',
+			href: this.href,
+			event: event
+		});
+	});
 } );
