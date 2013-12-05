@@ -176,10 +176,10 @@ ve.ui.WikiaMediaInsertDialog.prototype.onQueryRequestVideoDone = function ( data
 		data.title,
 		data.tempUrl || data.url,
 		'video',
-		data.tempName || undefined,
+		data.tempName,
 		data.provider,
-		data.videoId || undefined
-		);
+		data.videoId
+	);
 	this.queryInput.setValue( '' );
 	this.cartModel.addItems( [ model ] );
 	this.setPage( model.getId() );
@@ -223,10 +223,8 @@ ve.ui.WikiaMediaInsertDialog.prototype.onSearchCheck = function ( item ) {
  * selected.
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onCartSelect = function ( item ) {
-	var model, key;
 	if ( item !== null ) {
-		model = item.getModel();
-		this.setPage( model.getId() );
+		this.setPage( item.getModel().getId() );
 	}
 };
 
@@ -302,7 +300,6 @@ ve.ui.WikiaMediaInsertDialog.prototype.getDefaultPage = function () {
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onMediaPageRemove = function ( item ) {
 	this.cartModel.removeItems( [ item ] );
-	this.pages.removePage( item.getId() );
 	this.setPage( this.getDefaultPage() );
 };
 
@@ -660,7 +657,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.onUploadSuccess = function ( data ) {
 		data.title,
 		data.tempUrl || data.url,
 		'photo',
-		data.tempName || undefined
+		data.tempName
 	);
 	if ( !this.license.html ) {
 		this.license.promise.done( ve.bind( this.onUploadSuccess, this, data ) );
