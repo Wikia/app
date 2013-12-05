@@ -479,7 +479,8 @@
 						vars: {
 							id: 'EditPageDialog',
 							title: $.msg( 'editpagelayout-pageControls-changes' ),
-							content: '<div class="ArticlePreview modalContent"><div class="ArticlePreviewInner">',
+							content: '<div class="ArticlePreview modalContent"><div class="ArticlePreviewInner">' +
+								'</div></div>',
 							size: 'large'
 						}
 					};
