@@ -79,7 +79,7 @@ class SpecialConnect extends SpecialPage {
 	 * Performs any necessary execution and outputs the resulting Special page.
 	 */
 	function execute( $par ) {
-		global $wgUser, $wgRequest;
+		global $wgUser, $wgRequest, $wgOut;
 
 		if ( $wgRequest->getVal("action", "") == "disconnect_reclamation" ) {
 			self::disconnectReclamationAction();
@@ -154,6 +154,10 @@ class SpecialConnect extends SpecialPage {
 				return;
 			}
 		}
+
+		$wgOut->addJsConfigVars(
+			'wgLogoutConfirm', wfMessage('fbconnect-logout-confirm')->plain()
+		);
 
 		switch ( $par ) {
 		case 'ChooseName':

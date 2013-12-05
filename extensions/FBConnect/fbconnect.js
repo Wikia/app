@@ -98,17 +98,19 @@ $(function() {
 
 	$('#wpCancel').click(function(){
 		if (!wpCancelClicked) {
-			wpCancelClicked = true;
-			window.FB.getLoginStatus(function(response){
-				if (response.status === 'connected' ) {
-					window.FB.logout(function(){
+			var logout = confirm(window.wgLogoutConfirm);
+			if (logout) {
+				wpCancelClicked = true;
+				window.FB.getLoginStatus(function(response){
+					if (response.status === 'connected' ) {
+						window.FB.logout(function(){
+							$('#wpCancel').click();
+						});
+					} else {
 						$('#wpCancel').click();
-					});
-				} else {
-					$('#wpCancel').click();
-				}
-			});
-
+					}
+				});
+			}
 			return false;
 		} else {
 			return true;
