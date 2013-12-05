@@ -1061,18 +1061,19 @@ $messages['tr'] = array(
  * @author Andriykopanytsia
  * @author Steve.rusyn
  * @author SteveR
+ * @author Ua2004
  */
 $messages['uk'] = array(
-	'lightbox_details_tooltip' => 'Перегляд відомостей про фото',
+	'lightbox_details_tooltip' => 'Переглянути деталі фото',
 	'lightbox-forum' => 'Форум',
 	'lightbox-standard-link' => 'Стандартне посилання',
 	'lightbox-blog-link' => 'Посилання на блог',
 	'lightbox-send' => 'Надіслати',
 	'lightbox-share-description' => 'Фото в $1 на $2',
 	'lightbox-share-email-subject' => '$1 відправив вам фото на Вікії',
-	'lightbox-share-email-body' => 'Привіт
+	'lightbox-share-email-body' => 'Привіт!
 
-Хтось хотів показати вам фотографії на Вікія. Перегляньте  його тут:
+Хтось захотів поділитися з вами фотографією на Вікії. Переглянути її можна тут:
 
 $1
 
@@ -1080,17 +1081,17 @@ $1
 	'lightbox-share-button-email' => 'Email',
 	'lightbox-share-button-www' => 'Поділитися',
 	'lightbox-share-button-embed' => 'Вставити',
-	'lightbox-share-email-label' => 'Відіслати це зображення другові',
-	'lightbox-share-email-page-label' => 'Надіслати цю сторінку другу',
+	'lightbox-share-email-label' => 'Надіслати це зображення другові',
+	'lightbox-share-email-page-label' => 'Надіслати цю сторінку другові',
 	'lightbox-share-email-page-label-address' => 'Адреса електронної пошти',
-	'lightbox-share-email-ok-caption' => 'Підтвердження',
-	'lightbox-share-email-ok-content' => '{{PLURAL:$1|лист вже відправлений|листи вже відправлені|листів вже відправлено}}.',
+	'lightbox-share-email-ok-caption' => 'Готово',
+	'lightbox-share-email-ok-content' => '{{PLURAL:$1|Лист|Листи}} успішно надіслано.',
 	'lightbox-share-email-error-caption' => 'Помилка',
-	'lightbox-share-email-error-content' => 'Помилка надсилання {{PLURAL:$1|листа|листів}}.
-Детальна інформація: $2',
-	'lightbox-share-email-error-login' => 'Для надсилання листів вам необхідно увійти на сайт',
-	'lightbox-share-email-error-noaddress' => 'Жодної адреси не вказано.',
-	'lightbox-visit-the-wiki' => 'Відвідати вікі:',
+	'lightbox-share-email-error-content' => 'Не вдалося надіслати {{PLURAL:$1|листа|листи}}.
+Подробиці: $2',
+	'lightbox-share-email-error-login' => 'Вам слід авторизуватися на сайті, щоб надсилати листи',
+	'lightbox-share-email-error-noaddress' => 'Ви не вказали жодної адреси.',
+	'lightbox-visit-the-wiki' => 'Відвідайте вікі:',
 );
 
 /** Vietnamese (Tiếng Việt)

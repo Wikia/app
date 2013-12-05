@@ -176,9 +176,10 @@ $messages['de'] = array(
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
+ * @author Marmase
  */
 $messages['diq'] = array(
-	'partner-feed-recent-changes' => 'Vurnayışê peyêni',
+	'partner-feed-recent-changes' => 'Vırnayışé bahdoyéni',
 	'feed-title-recent-images' => 'Vurnayışê resiman',
 	'all-blog-posts' => 'kategoriy pêro',
 	'feed-title-blogcomments' => 'Vatışê - ($1)',

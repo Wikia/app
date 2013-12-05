@@ -3002,6 +3002,15 @@ $messages['uz'] = array(
 	'phalanx-label-lang' => 'Til:',
 );
 
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'phalanx-stats-table-language' => 'Ngôn ngữ',
+	'phalanx-stats-table-text' => 'Văn bản',
+	'phalanx-stats-table-reason' => 'Lý do',
+);
+
 /** Simplified Chinese (中文（简体）‎)
  * @author Hydra
  * @author Reasno

@@ -6275,6 +6275,7 @@ $messages['ps'] = array(
 
 /** Portuguese (português)
  * @author Hamilton Abreu
+ * @author Josep Maria 15.
  * @author Luckas
  * @author Malafaya
  * @author Rhaijin
@@ -6525,8 +6526,8 @@ Há muitas coisas a acontecer hoje na sua wiki! Passe por $MYHOMEURL para ver o 
 	'founderemails-email-0-day-addpages-button' => 'Adicionar uma Página',
 	'founderemails-email-0-day-addphotos-heading' => 'Adicionar fotos.',
 	'founderemails-email-0-day-addphotos-content' => 'As páginas ficam sempre melhores com elementos visuais! Adicione imagens às páginas individuais e à página principal. Pode clicar <a style="color:#2a87d5;text-decoration:none;" href="$ADDAPHOTOURL">"Adicionar uma Foto"</a> para acrescentar uma fotografia, uma galeria de fotografias, ou uma apresentação de slides.',
-	'founderemails-email-0-day-addphotos-button' => 'Adicionar uma Foto',
-	'founderemails-email-0-day-customizetheme-heading' => 'Personalize o seu tema.',
+	'founderemails-email-0-day-addphotos-button' => 'Adicionar uma foto',
+	'founderemails-email-0-day-customizetheme-heading' => 'Personaliza o teu tema.',
 	'founderemails-email-0-day-customizetheme-content' => 'Pode personalizar o tema e o símbolo da sua wiki, para destacá-la! Use o <a style="color:#2a87d5;text-decoration:none;" href="$CUSTOMIZETHEMEURL">Compositor de Variantes do Tema</a> para personalizar as cores da wiki e torná-la única e específica para o seu tema.',
 	'founderemails-email-0-day-customizetheme-button' => 'Personalizar',
 	'founderemails-email-0-day-wikiahelps-text' => '<span style="color:#2a87d5;font-weight:bold">Não está só.</span> Estamos aqui para ajudar a cada passo a tornar a $WIKINAME num sucesso. Visite <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>, onde pode encontrar fóruns, conselhos e ajuda, e enviar-nos perguntas por <a style="color:#2a87d5;text-decoration:none;" href="http://www.wikia.com/Special:Contact">correio eletrónico</a>!',
@@ -6563,7 +6564,7 @@ Há muitas coisas a acontecer hoje na sua wiki! Passe por $MYHOMEURL para ver o 
 	'founderemails-email-complete-digest-subject' => 'A última atividade em $WIKINAME',
 	'founderemails-email-complete-digest-greeting' => 'Olá, $USERNAME,',
 	'founderemails-email-complete-digest-content-heading1' => '$1 {{PLURAL:$1|pessoa|pessoas}} viram a sua wiki.',
-	'founderemails-email-complete-digest-content-heading3' => '$1 {{PLURAL:$1|pessoa|pessoas}} juntaram-se á sua wiki.',
+	'founderemails-email-complete-digest-content-heading3' => '$1 {{PLURAL:$1|pessoa|pessoas}} juntaram-se à tua wiki.',
 	'founderemails-email-complete-digest-signature' => 'A Equipa da Wikia',
 	'founderemails-pref-joins' => 'Enviar-me um e-mail quando alguém se juntar a $1',
 	'founderemails-pref-edits' => 'Enviar-me um e-mail quando alguém editar a $1',
@@ -8755,7 +8756,7 @@ Wikia团队',
 
 Wikia团队',
 	'founderemails-email-complete-digest-greeting' => '嗨，$USERNAME，',
-	'founderemails-email-complete-digest-content-heading1' => '$1{{PLURAL:$1|人|人}}次访问了你的维基。',
+	'founderemails-email-complete-digest-content-heading1' => '$1人次访问了你的wiki。',
 	'founderemails-email-complete-digest-content-heading2' => '已做出$1 {{PLURAL:$1|处编辑|处编辑}}。',
 	'founderemails-email-complete-digest-content-heading3' => '$1人加入了你的维基。',
 	'founderemails-email-complete-digest-signature' => 'Wikia团队',

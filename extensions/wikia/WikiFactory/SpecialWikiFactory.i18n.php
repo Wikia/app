@@ -5327,6 +5327,19 @@ $messages['uz'] = array(
 	'wikifactory-label-info' => "Ma'lumot",
 );
 
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'closewiki' => 'Xóa Wiki',
+	'wf_city_url' => 'Địa chỉ',
+	'wf_city_id' => 'id',
+	'wf_city_title' => 'Tiêu đề',
+	'wf_city_created' => 'Khởi tạo',
+	'wf_city_founding_user' => 'Sáng lập viên',
+	'wf_city_founding_email' => 'Người sáng lập email',
+);
+
 /** Wu (吴语)
  */
 $messages['wuu'] = array(

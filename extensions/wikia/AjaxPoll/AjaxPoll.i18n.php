@@ -498,6 +498,7 @@ $messages['ksh'] = array(
 $messages['lb'] = array(
 	'ajaxpoll-percentVotes' => '$1%&nbsp; vun alle Stëmmen',
 	'ajaxpoll-thankyou' => 'Merci fir Är Stëmm!',
+	'ajaxpoll-error' => 'Et gouf e Problem beim Verschaffe vun Ärer Stëmm, probéiert et w.e.g. nach eng Kéier.',
 	'ajaxpoll-submit' => 'Ofstëmmen!',
 	'ajaxpoll-closed' => "D'Ëmfro ass ofgeschloss. Kuckt d'Resultater.",
 	'ajaxpoll-submitting' => 'Waart w.e.g., Är Stëmm gëtt elo geschéckt ...',

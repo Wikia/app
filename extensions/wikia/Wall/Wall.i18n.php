@@ -2314,6 +2314,7 @@ ___________________________________________<br />
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
  * @author Gorizon
+ * @author Marmase
  * @author Mirzali
  */
 $messages['diq'] = array(
@@ -2322,7 +2323,7 @@ $messages['diq'] = array(
 	'wall-message-wall' => 'Mesacê Dêsi',
 	'wall-message-wall-shorten' => 'dês',
 	'wall-message-unfollow' => 'Mepaw',
-	'wall-message-undoremove' => 'peyser bia',
+	'wall-message-undoremove' => 'Peyser biya',
 	'wall-message-edited' => '<a href="$3" >Vurnerê</a> <a class="namey karberi" href="$1">$2</a>',
 	'wall-message-edited-summary' => '<a href="$4" >$1 by </a><a class="username" href="$2">$3</a>',
 	'wall-message-update-highlight-summary' => 'Xulaseya',
@@ -3533,7 +3534,7 @@ A mensaxe orixinal e o seu resumo seguirán aparecendo no historial do wiki.',
 	'mail-notification-reply-his' => '$AUTHOR_NAME respondeu a unha mensaxe en $WIKI.',
 	'mail-notification-reply-someone' => '$AUTHOR_NAME respondeu á mensaxe de $PARENT_AUTHOR_NAME en $WIKI.',
 	'mail-notification-html-greeting' => 'Boas, $1:',
-	'mail-notification-html-button' => 'Ollar a conversa',
+	'mail-notification-html-button' => 'Ver a conversa',
 	'mail-notification-subject' => '$1 -- $2',
 	'mail-notification-html-footer-line3' => '<a href="http://www.twitter.com/wikia" style="text-decoration:none">
 <img alt="twitter" src="http://images4.wikia.nocookie.net/wikianewsletter/images/f/f7/Twitter.png" style="border:none">
@@ -6242,6 +6243,7 @@ $messages['ps'] = array(
 
 /** Portuguese (português)
  * @author Hamilton Abreu
+ * @author Josep Maria 15.
  * @author Luckas
  * @author Malafaya
  * @author SandroHc
@@ -6316,7 +6318,7 @@ $messages['pt'] = array(
 	'wall-notifications-empty' => 'Não existem notificações',
 	'wall-notifications-loading' => 'A carregar notificações',
 	'wall-notifications-reminder' => 'Você tem <span>$1</span> {{PLURAL:$1|notificação|notificações}} por ler',
-	'wn-user1-reply-self-a-wall' => '$1 respondeu á mensagem',
+	'wn-user1-reply-self-a-wall' => '$1 respondeu à mensagem',
 	'wn-newmsg' => 'Você deixou uma nova mensagem no mural de $1',
 	'wn-admin-thread-deleted' => 'Tópico removido do mural de $1',
 	'wall-sorting-newest-threads' => 'Tópicos mais recentes',
@@ -6377,9 +6379,9 @@ $messages['pt'] = array(
 	'wall-message-not-found-in-db' => 'Não conseguimos encontrar esta mural de mensagens na nossa base de dados.',
 	'mail-notification-new-someone' => '$AUTHOR_NAME escreveu uma nova mensagem na $WIKI.',
 	'mail-notification-new-your' => '$AUTHOR_NAME deixou-te uma nova mensagem na $WIKI.',
-	'mail-notification-reply-your' => '$AUTHOR_NAME respondeu á tua mensagem na $WIKI.',
+	'mail-notification-reply-your' => '$AUTHOR_NAME respondeu à tua mensagem na $WIKI.',
 	'mail-notification-reply-his' => '$AUTHOR_NAME respondeu a uma mensagem na $WIKI.',
-	'mail-notification-reply-someone' => '$AUTHOR_NAME respondeu á mensagem de $PARENT_AUTHOR_NAME na $WIKI.',
+	'mail-notification-reply-someone' => '$AUTHOR_NAME respondeu à mensagem de $PARENT_AUTHOR_NAME na $WIKI.',
 	'mail-notification-html-greeting' => 'Olá $1,',
 	'mail-notification-html-button' => 'Ver a conversação',
 	'mail-notification-body' => 'Olá $WATCHER,

@@ -331,6 +331,13 @@ $messages['diq'] = array(
 	'about-heading-tips' => 'Geyreno cı',
 );
 
+/** British English (British English)
+ * @author Shirayuki
+ */
+$messages['en-gb'] = array(
+	'gracenote-takedown' => 'Doh! Unfortunately, we are not licenced to display the full lyrics for this song at the moment (this happens for less than 1% of our songs). Please try again next week.',
+);
+
 /** Spanish (español)
  * @author Fitoschido
  * @author VegaDark
@@ -1318,6 +1325,21 @@ $messages['uk'] = array(
 	'gracenote-takedown' => 'Ой! На жаль, зараз ми не маємо дозволу показувати повний текст цієї пісні (таке буває з 1% наших пісень). Будь ласка, спробуйте ще раз через тиждень.',
 	'lyrics-artist-byline' => '%s',
 	'ringtone-matcher-by-song' => 'Отримати рінгтон %s для вашого мобільного',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'login-username-hint' => 'Tên người dùng',
+	'login-password-hint' => 'Mật khẩu',
+	'login-submit-button' => 'Đăng nhập',
+	'about-heading-rate' => 'Xin vui lòng đánh giá ứng dụng!',
+	'about-rate-0-android' => 'Nếu bạn thích ứng dụng này, xin vui lòng đánh giá 5 sao trên Android Market!',
+	'about-rate-0-ios' => 'Nếu bạn thích ứng dụng này, xin vui lòng đánh giá 5 sao trong App Store!',
+	'gracenote-takedown' => 'Oh! Thật không may, chúng tôi không được cấp phép để hiển thị các lời bài hát đầy đủ cho bài hát này tại thời điểm này (điều này xảy ra ít hơn 1% của bài hát của chúng tôi). Hãy thử một lần nữa trong tuần tới.',
+	'lyrics-artist-byline' => 'bởi %s',
+	'ringtone-matcher-by-song' => 'Gửi %s nhạc chuông cho điện thoại của bạn',
 );
 
 /** Simplified Chinese (中文（简体）‎)

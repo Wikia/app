@@ -959,7 +959,7 @@ $messages['el'] = array(
 	'article-comments-page-spacer' => '&#160...&#160',
 	'article-comments-delete-reason' => 'Το κύριο άρθρο/κύριο σχόλιο έχει διαγραφεί.',
 	'article-comments-empty-comment' => "Δεν μπορείτε να δημοσιεύσετε ένα κενό σχόλιο. <a href='$1'>Αντ'αυτού να το διαγράψετε;</a>",
-	'wikiamobile-article-comments-header' => 'σχόλια',
+	'wikiamobile-article-comments-header' => 'Σχόλια',
 	'wikiamobile-article-comments-more' => 'Φορτώστε περισσότερα',
 	'wikiamobile-article-comments-prev' => 'Φορτώστε τα προηγούμενα',
 	'wikiamobile-article-comments-none' => 'Δεν υπάρχουν σχόλια',
@@ -1377,7 +1377,7 @@ $messages['gl'] = array(
 	'article-comments-page-spacer' => '&#160...&#160',
 	'article-comments-delete-reason' => 'O artigo ou comentario raíz foi borrado.',
 	'article-comments-empty-comment' => "Non pode enviar un comentario baleiro. <a href='$1'>Quere borralo?</a>",
-	'wikiamobile-article-comments-header' => 'comentarios',
+	'wikiamobile-article-comments-header' => 'Comentarios',
 	'wikiamobile-article-comments-more' => 'Cargar máis',
 	'wikiamobile-article-comments-prev' => 'Cargar os anteriores',
 	'wikiamobile-article-comments-none' => 'Sen comentarios',
@@ -1924,6 +1924,7 @@ $messages['ky'] = array(
  * @author Soued031
  */
 $messages['lb'] = array(
+	'article-comments-file-page' => "<a href='$1'>Bemierkung vum $2</a> iwwer <a href='$3'>$4</a>",
 	'article-comments-anonymous' => 'Anonyme Benotzer',
 	'article-comments-comments' => 'Bemierkungen ($1)',
 	'article-comments-post' => 'Bemierkung derbäisetzen',
@@ -1943,12 +1944,12 @@ $messages['lb'] = array(
 	'article-comments-prev-page' => 'Vireg',
 	'article-comments-next-page' => 'Nächst',
 	'article-comments-page-spacer' => '&#160...&#160',
+	'wikiamobile-article-comments-header' => 'Bemierkungen',
 	'wikiamobile-article-comments-more' => 'Méi lueden',
 	'wikiamobile-article-comments-prev' => 'Virege lueden',
 	'wikiamobile-article-comments-none' => 'Keng Bemierkungen',
 	'wikiamobile-article-comments-view' => 'Äntwerte kucken',
 	'wikiamobile-article-comments-replies' => 'Äntwerten',
-	'wikiamobile-article-comments-show' => 'Weisen',
 	'wikiamobile-article-comments-post-fail' => "D'Bemierkung konnt net gespäichert ginn, probéiert w.e.g. méi spéit nach eng Kéier",
 );
 
@@ -2230,12 +2231,12 @@ $messages['mr'] = array(
 	'article-comments-show-all' => 'सर्व अभिप्राय दाखवा',
 	'article-comments-prev-page' => 'मागील',
 	'article-comments-next-page' => 'पुढील',
+	'wikiamobile-article-comments-header' => 'शेरे',
 	'wikiamobile-article-comments-more' => 'अधिक प्रभारण करा',
 	'wikiamobile-article-comments-prev' => 'मागील प्रभारण',
 	'wikiamobile-article-comments-none' => 'अभिप्राय नाहीत',
 	'wikiamobile-article-comments-view' => 'उत्तरे दर्शवा',
 	'wikiamobile-article-comments-replies' => 'उत्तरे',
-	'wikiamobile-article-comments-show' => 'दाखवा',
 );
 
 /** Malay (Bahasa Melayu)
@@ -2484,7 +2485,7 @@ $messages['nl'] = array(
 	'article-comments-page-spacer' => '&#160...&#160',
 	'article-comments-delete-reason' => 'De bovenliggende pagina is verwijderd.',
 	'article-comments-empty-comment' => "U kunt geen opmerking zonder inhoud plaatsen. <a href='$1'>In plaats daarvan verwijderen?</a>",
-	'wikiamobile-article-comments-header' => 'opmerkingen',
+	'wikiamobile-article-comments-header' => 'Reacties',
 	'wikiamobile-article-comments-more' => 'Meer laden',
 	'wikiamobile-article-comments-prev' => 'Vorige laden',
 	'wikiamobile-article-comments-none' => 'Geen reacties',

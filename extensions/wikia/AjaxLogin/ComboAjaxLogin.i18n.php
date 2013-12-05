@@ -632,23 +632,24 @@ Veuillez essayer à nouveau ou [[Special:Contact|le signaler]].',
 
 /** Galician (galego)
  * @author Toliño
+ * @author Vivaelcelta
  */
 $messages['gl'] = array(
-	'comboajaxlogin-desc' => 'Caixa dinámica que permite aos usuarios acceder ao sistema, lembrar o contrasinal e rexistrar novas contas',
+	'comboajaxlogin-desc' => 'Caixa dinámica que permite aos usuarios iniciar sesión, lembrar o contrasinal e rexistrar novas contas',
 	'comboajaxlogin-createlog' => 'Iniciar a sesión ou crear unha conta',
-	'comboajaxlogin-actionmsg' => 'Para realizar esta acción ten que primeiro acceder ao sistema ou crear unha conta',
-	'comboajaxlogin-actionmsg-protected' => 'Para editar esta páxina protexida ten que primeiro acceder ao sistema ou crear unha conta.',
-	'comboajaxlogin-connectmarketing' => '<h1>Conecte as súas contas</h1>
+	'comboajaxlogin-actionmsg' => 'Para realizar esta acción primeiro tes que iniciar sesión ou crear unha conta',
+	'comboajaxlogin-actionmsg-protected' => 'Para editar esta páxina protexida tes que primeiro iniciar sesión ou crear unha conta.',
+	'comboajaxlogin-connectmarketing' => '<h1>Conecta as túas contas</h1>
 <ul>
-<li>Manteña o seu nome de usuario actual, o historial, as edicións... Non cambia nada, agás o xeito de acceder ao sistema</li>
-<li>Comparta a súa actividade en Wikia cos seus amigos do Facebook</li>
+<li>Mantén o teu nome de usuario actual, o historial, as edicións... Non cambia nada, agás o xeito de acceder ao sistema</li>
+<li>Comparte a túa actividade en Wikia cos teus amigos do Facebook</li>
 <li>Control total do que se publica</li>
 </ul>',
 	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>Identificarse co Facebook Connect</h1>',
-	'comboajaxlogin-connectmarketing-oasis' => '<h1>Conecte a súa conta de Wikia coa do Facebook</h1>
+	'comboajaxlogin-connectmarketing-oasis' => '<h1>Conecta a túa conta de Wikia coa do Facebook</h1>
 <ul>
-<li>Manteña o seu nome de usuario actual, o historial, as edicións... Non cambia nada, agás o xeito de acceder ao sistema</li>
-<li>Comparta a súa actividade en Wikia cos seus amigos do Facebook, con control total do que se publica</li>
+<li>Mantén o seu nome de usuario actual, o historial, as edicións... Non cambia nada, agás o xeito de acceder ao sistema</li>
+<li>Comparte a túa actividade en Wikia cos teus amigos do Facebook, con control total do que se publica</li>
 </ul>',
 	'comboajaxlogin-connectmarketing-back' => '&laquo; Volver',
 	'comboajaxlogin-connectmarketing-forward' => 'Comezar »',
@@ -910,9 +911,11 @@ $messages['ky'] = array(
 $messages['lb'] = array(
 	'comboajaxlogin-createlog' => 'Loggt Iech an oder Maacht en neie Benotzerkont op',
 	'comboajaxlogin-actionmsg' => "Fir dës Aktioun ze maache musst Dir Iech d'éischt aloggen oder e Benotzerkont opmaachen",
+	'comboajaxlogin-actionmsg-protected' => "Fir dës Aktioun ze maache musst Dir Iech d'éischt aloggen oder e Benotzerkont opmaachen.",
 	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>Mat Facebook Connect aloggen</h1>',
 	'comboajaxlogin-connectmarketing-back' => '&laquo; Zréck',
 	'comboajaxlogin-connectmarketing-forward' => 'Ufänken &raquo;',
+	'comboajaxlogin-ajaxerror' => 'Wikia äntwert net. Kuckt w.e.g. Är Verbindung mam Reseau no.',
 );
 
 /** لوری (لوری)

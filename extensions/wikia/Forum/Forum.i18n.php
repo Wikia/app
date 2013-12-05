@@ -1192,12 +1192,12 @@ $messages['gl'] = array(
 	'forum-discussion-placeholder-message-short' => 'Publicar unha nova mensaxe',
 	'forum-notification-user1-reply-to-your' => '$1 {{GENDER:$1|respondeu}} ó teu fío no taboleiro "$3"',
 	'forum-notification-user2-reply-to-your' => '$1 e $2 responderon ó teu fío no taboleiro "$3"',
-	'forum-notification-user3-reply-to-your' => '$1 e outras persoas responderon ó teu fío no taboleiro $3',
+	'forum-notification-user3-reply-to-your' => '$1 e outras persoas responderon ó teu fío no taboleiro "$3"',
 	'forum-notification-user1-reply-to-someone' => '$1 {{GENDER:$1|respondeu}} no taboleiro "$3"',
 	'forum-notification-user2-reply-to-someone' => '$1 e $2 responderon no taboleiro "$3"',
 	'forum-notification-user3-reply-to-someone' => '$1 e outras persoas responderon no taboleiro "$3"',
 	'forum-notification-newmsg-on-followed-wall' => '$1 {{GENDER:$1|deixou}} unha nova mensaxe no taboleiro "$2"',
-	'forum-mail-notification-html-greeting' => 'Ola $1,',
+	'forum-mail-notification-html-greeting' => 'Ola, $1:',
 	'forum-mail-notification-html-button' => 'Ver a conversa',
 	'forum-mail-notification-subject' => '$1 -- $2',
 	'forum-wiki-activity-msg' => 'en "$1"',
@@ -1331,6 +1331,14 @@ $messages['ja'] = array(
 	'forum-confirmation-board-deleted' => '「$1」を削除しました。',
 );
 
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'forum-specialpage-heading' => 'Forum',
+	'forum-thread-reply-post' => 'Äntwerten',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -1361,6 +1369,13 @@ $messages['nl'] = array(
 	'forum-mail-notification-html-greeting' => 'Hallo $1,',
 	'forum-mail-notification-html-button' => 'Zie het gesprek',
 	'forum-mail-notification-subject' => '$1 - $2',
+);
+
+/** Polish (polski)
+ * @author Chrumps
+ */
+$messages['pl'] = array(
+	'forum-forum-title' => 'Forum',
 );
 
 /** Russian (русский)
