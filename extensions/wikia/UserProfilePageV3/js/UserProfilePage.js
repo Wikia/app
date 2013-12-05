@@ -448,11 +448,13 @@ var UserProfilePage = {
 					twitter: null,
 					day: 'birthday_date'
 				},
-				changed = false;
+				changed = false,
+				i,
+				key;
 
-				for(var i in userData) {
+				for(i in userData) {
 					if( typeof($(document.userData[i]).val()) !== 'undefined' ) {
-						var key = userData[i];
+						key = userData[i];
 
 						UserProfilePage.fillFieldsWithFbData(i, key, data.result.fbUser);
 						changed = true;
@@ -477,20 +479,24 @@ var UserProfilePage = {
 
 		UserProfilePage.modal.$element.find('img.avatar').hide();
 		UserProfilePage.modal.$element.startThrobbing();
-		$.postJSON( this.ajaxEntryPoint, { method: 'onFacebookConnectAvatar', avatar: true, cb: window.wgStyleVersion }, function(data) {
-			if( data.result.success === true ) {
-				$('#facebookConnectAvatar').hide();
-				var avatarImg = UserProfilePage.modal.$element.find('img.avatar');
-				avatarImg.attr('src', data.result.avatar).show();
-				UserProfilePage.modal.$element.stopThrobbing();
-				UserProfilePage.wasDataChanged = true;
-				UserProfilePage.newAvatar = {
-					file: data.result.avatar,
-					source: 'facebook',
-					userId: UserProfilePage.userId
-				};
+		$.postJSON(
+			this.ajaxEntryPoint,
+			{ method: 'onFacebookConnectAvatar', avatar: true, cb: window.wgStyleVersion },
+			function(data) {
+				if( data.result.success === true ) {
+					$('#facebookConnectAvatar').hide();
+					var avatarImg = UserProfilePage.modal.$element.find('img.avatar');
+					avatarImg.attr('src', data.result.avatar).show();
+					UserProfilePage.modal.$element.stopThrobbing();
+					UserProfilePage.wasDataChanged = true;
+					UserProfilePage.newAvatar = {
+						file: data.result.avatar,
+						source: 'facebook',
+						userId: UserProfilePage.userId
+					};
+				}
 			}
-		});
+		);
 	},
 
 	fillFieldsWithFbData: function( i, key, fbData ) {
