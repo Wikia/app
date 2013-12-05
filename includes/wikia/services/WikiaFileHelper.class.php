@@ -204,7 +204,7 @@ class WikiaFileHelper extends Service {
 					$fileMetadata = unserialize( $fileMetadata );
 					if ( array_key_exists( 'duration', $fileMetadata ) ) {
 						$duration = $fileMetadata['duration'];
-						$isoDuration = self::getISO8601Duration( $duration );
+						$isoDuration = self::formatDurationISO8601( $duration );
 						$content .= '<meta itemprop="duration" content="'.$isoDuration.'">';
 					}
 				}
@@ -562,11 +562,11 @@ class WikiaFileHelper extends Service {
 	}
 
 	/**
-	 * Get duration in ISO 8601 format for meta tag
+	 * Format duration from second to ISO 8601 format for meta tag
 	 * @param integer $sec
 	 * @return string $result
 	 */
-	public static function getISO8601Duration( $sec ) {
+	public static function formatDurationISO8601( $sec ) {
 		if ( empty( $sec ) ) {
 			$result = '';
 		} else {

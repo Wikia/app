@@ -14,7 +14,7 @@ class VideoThumbnailController extends WikiaController {
 	 * @responseParam string linkHref
 	 * @responseParam array linkClasses
 	 * @responseParam array linkAttrs
-	 * @responseParam string size
+	 * @responseParam string size [ xsmall, small, medium, large, xlarge ]
 	 * @responseParam string imgSrc
 	 * @responseParam string videoKey
 	 * @responseParam string videoName
@@ -163,7 +163,7 @@ class VideoThumbnailController extends WikiaController {
 				$durationAttribs['itemprop'] = 'duration';
 				$metaAttribs[] = [
 					'itemprop' => 'duration',
-					'content' => WikiaFileHelper::getISO8601Duration( $duration ),
+					'content' => WikiaFileHelper::formatDurationISO8601( $duration ),
 				];
 			}
 		}
