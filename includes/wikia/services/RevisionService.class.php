@@ -44,7 +44,7 @@ class RevisionService {
 			'RevisionService::getFirstRevisionByArticleId'
 		);
 		while ( $row = $res->fetchRow() ) {
-			$result[ $row[ 'rev_id' ] ] = $row;
+			$result[ $row[ 'rev_page' ] ] = $row;
 		}
 		return $result;
 	}
