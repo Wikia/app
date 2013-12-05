@@ -9,19 +9,47 @@ class VideoThumbnailController extends WikiaController {
 	 * @requestParam string width
 	 * @requestParam string height
 	 * @requestParam array options
+	 *	Keys:
+	 *		id - id for link,
+	 *		linkAttribs - link attributes [ array( 'class' => 'video' ) ]
+	 *		noLightbox - not show image or video in lightbox,
+	 *		hidePlayButton - hide play button
+	 *		src - source for image
+	 *		img-class - class for image
+	 *		alt - alt for image
+	 *		usePreloading - for lazy loading
+	 *		valign - valign for image
+	 *		imgExtraStyle - extra style for image
+	 *		disableRDF - disable RDF metadata
+	 *		responsive
 	 * @responseParam string width
 	 * @responseParam string height
 	 * @responseParam string linkHref
 	 * @responseParam array linkClasses
 	 * @responseParam array linkAttrs
+	 *	Keys:
+	 *		id - id attribute for link,
+	 *		class - class of link attributes
+	 *		data-timestamp - timestamp of the file
+	 *		itemprop - for RDF metadata
+	 *		itemscope - for RDF metadata
+	 *		itemtype - for RDF metadata
 	 * @responseParam string size [ xsmall, small, medium, large, xlarge ]
 	 * @responseParam string imgSrc
 	 * @responseParam string videoKey
 	 * @responseParam string videoName
 	 * @responseParam array imgClasses
 	 * @responseParam array imgAttrs
-	 * @responseParam string duration
-	 * @responseParam array metaAttrs
+	 *	Keys:
+	 *		alt - alt for image
+	 *		data-src - source of image for lazy loading
+	 *		style - style for image
+	 *		itemprop - for RDF metadata
+	 * @responseParam string duration (HH:MM:SS)
+	 * @responseParam array durationAttrs
+	 *	Keys:
+	 *		itemprop - for RDF metadata
+	 * @responseParam array metaAttrs - for RDF metadata [ array( array( 'itemprop' => '', 'content' => '' ) ) ]
 	 */
 	public function thumbnail() {
 		wfProfileIn( __METHOD__ );
@@ -131,7 +159,7 @@ class VideoThumbnailController extends WikiaController {
 		}
 
 		// set duration
-		$duration = empty( $options['duration'] ) ? 0 : $file->getMetadataDuration();
+		$duration = $file->getMetadataDuration();
 		$durationAttribs = [];
 
 		$metaAttribs = [];
