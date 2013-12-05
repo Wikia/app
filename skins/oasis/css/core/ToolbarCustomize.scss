@@ -143,37 +143,34 @@
 				background-color: $color-text;
 			}
 		}
-	}
-
-	.options-list.no-ipad {
-		li:hover {
-			background: $color-menu-highlight;
-			.edit-pencil, .trash, .drag {
-				display: block;
+		&.no-ipad {
+			li:hover {
+				background: $color-menu-highlight;
+				.edit-pencil, .trash, .drag {
+					display: block;
+				}
+		  	}
+		}
+		&.on-ipad {
+			li:hover {
+				background: none;
+				.edit-pencil, .trash, .drag {
+					display: none;
+				}
 			}
-		}
-	}
-
-	.options-list.on-ipad {
-		li:hover {
-			background: none;
-			.edit-pencil, .trash, .drag {
-				display: none;
+			li.hover {
+				background: $color-menu-highlight;
+				.edit-pencil, .trash, .drag {
+					display: block;
+				}
 			}
-		}
-		li.hover {
-			background: $color-menu-highlight;
-			.edit-pencil, .trash, .drag {
-				display: block;
+			// changing position of these icons because on iPads there is no third icon
+			.edit-pencil {
+				right: 26px
 			}
-		}
-		.edit-pencil {
-			cursor: pointer;
-			right: 26px
-		}
-		.trash {
-			cursor: pointer;
-			right: 6px;
+			.trash {
+				right: 6px;
+			}
 		}
 	}
 
