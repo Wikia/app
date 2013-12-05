@@ -48,18 +48,6 @@ class VideoThumbnailController extends WikiaController {
 			$linkAttribs = array_merge( $linkAttribs, $options['linkAttribs'] );
 		}
 
-		// get style for a tag
-		if ( array_key_exists( 'constHeight', $options ) ) {
-			$linkAttribs['style'] = empty( $linkAttribs['style'] ) ? '' : 'overlay:hidden;';
-			if ( $height <= $options['constHeight'] ) {
-				$linkAttribs['style'] .= "height:{$height}px;";
-				$linkAttribs['style'] .= 'margin-bottom:'.( $options['constHeight'] - $height )."px;";
-				$linkAttribs['style'] .= 'padding-top:'.floor( ( $options['constHeight'] - $height )/2 )."px;";
-			} else {
-				$linkAttribs['style'] .= "height:{$options['constHeight']}px;";
-			}
-		}
-
 		// get class for a tag
 		$linkClasses = ['video'];
 		if ( empty( $options['noLightbox'] ) ) {
@@ -77,7 +65,7 @@ class VideoThumbnailController extends WikiaController {
 		}
 
 		// hide play button
-		if ( !empty( $options['hideOverlay'] ) ) {
+		if ( !empty( $options['hidePlayButton'] ) ) {
 			$linkClasses[] = 'hide-play';
 		}
 
