@@ -551,8 +551,8 @@ var UserProfilePage = {
 					});
 				});
 		} else {
-			// basically it shouldn't happen but i imagine it can happen on devbox because not all wikis are imported there
-			GlobalNotification.show( $.msg( 'userprofilepage-edit-modal-error' ), 'error' );
+			// basically it shouldn't happen but i imagine it can happen during development
+			$().log( 'Unexpected error wikiId <= 0' );
 		}
 	},
 
