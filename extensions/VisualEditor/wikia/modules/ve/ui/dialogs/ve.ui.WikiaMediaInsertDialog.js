@@ -653,15 +653,16 @@ ve.ui.WikiaMediaInsertDialog.prototype.onUploadChange = function () {
  * @param {Object} data The uploaded file information
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onUploadSuccess = function ( data ) {
-	var model = new ve.dm.WikiaCartItem(
-		data.title,
-		data.tempUrl || data.url,
-		'photo',
-		data.tempName
-	);
+	var model;
 	if ( !this.license.html ) {
 		this.license.promise.done( ve.bind( this.onUploadSuccess, this, data ) );
 	} else {
+		model = new ve.dm.WikiaCartItem(
+			data.title,
+			data.tempUrl || data.url,
+			'photo',
+			data.tempName
+		);
 		this.cartModel.addItems( [ model ] );
 		this.cart.selectItem( this.cart.getItemFromData( model.getId() ) );
 	}
