@@ -51,10 +51,12 @@ class ImagesServiceUploadTest extends WikiaBaseTest {
 		);
 
 		// verify that it's accessible via HTTP
-		$res = Http::get( $url, 'default', ['noProxy' => true] );
+		$req = MWHttpRequest::factory( $url, ['noProxy' => true] );
+		$req->execute();
 
-		$this->assertTrue( $res !== false, 'Uploaded image should return HTTP 200 - ' . $url );
-		$this->assertEquals( $fileHash, md5( $res ), 'Uploaded image hash should match - ' . $url );
+		$this->assertEquals( 200, $req->getStatus(), 'Uploaded image should return HTTP 200 - ' . $url );
+		$this->assertEquals( $fileHash, md5( $req->getContent() ), 'Uploaded image hash should match - ' . $url );
+		$this->assertEquals( 'image/jpeg', $req->getResponseHeader( 'Content-Type' ), 'Uploaded image should be JPEG' );
 	}
 
 	// check the path - /firefly/images/thumb/5/53/Test-1378979336.jpg/120px-0%2C451%2C0%2C294-Test-1378979336.jpg
