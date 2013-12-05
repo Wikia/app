@@ -137,6 +137,9 @@ define( 'wikia.ui.modal', [
 			throw 'Need uiComponent to render modal with id ' + id;
 		}
 
+		// extend default modal params with the one passed in constructor call
+		params = $.extend( true, {}, modalDefaults, params );
+
 		buttons = params.vars.buttons;
 		if ( $.isArray( buttons ) ) {
 			// Create buttons
@@ -151,9 +154,6 @@ define( 'wikia.ui.modal', [
 				}
 			});
 		}
-
-		// extend default modal params with the one passed in constructor call
-		params = $.extend( true, {}, modalDefaults, params );
 
 		// render modal markup and append to DOM
 		$( 'body' ).append( uiComponent.render( params ) );

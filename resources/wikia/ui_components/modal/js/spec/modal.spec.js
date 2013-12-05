@@ -2,7 +2,10 @@ describe( 'Modal module', function() {
 	'use strict';
 
 	var browserDetect = {},
-		modal = modules[ 'wikia.ui.modal' ]( jQuery, window, browserDetect );
+		modal = modules[ 'wikia.ui.modal' ]( jQuery, window, browserDetect ),
+		uiComponent = {
+			render: function(){}
+		};
 
 	it( 'registers AMD module', function() {
 		expect( modal ).toBeDefined();
@@ -10,14 +13,16 @@ describe( 'Modal module', function() {
 	} );
 
 	it( 'gives nice and clean API', function() {
-		expect( typeof modal.init ).toBe( 'function', 'init' );
-		expect( typeof modal.createComponent ).toBe( 'function', 'init' );
+		expect( typeof modal.createComponent ).toBe( 'function' );
 	} );
 
 	it( 'create instance of Modal class and link it with DOM element ID', function() {
 		var id = 'testModal',
 			selector = '#' + id,
-			modalObject = modal.init( id );
+			uiComponent = {
+				render: function(){}
+			},
+			modalObject = modal.createComponent( id, uiComponent );
 
 		expect( typeof modalObject ).toBe( 'object' );
 		expect( modalObject.$element.selector ).toBe( selector );
@@ -50,11 +55,14 @@ describe( 'Modal events', function() {
 	'use strict';
 
 	var browserDetect = {},
-		module = modules[ 'wikia.ui.modal' ]( jQuery, window, browserDetect),
+		module = modules[ 'wikia.ui.modal' ]( jQuery, window, browserDetect ),
+		uiComponent = {
+			render: function(){}
+		},
 		modal = null;
 
 	beforeEach( function() {
-		modal = module.init( 'test' );
+		modal = module.createComponent( 'test', uiComponent );
 	} );
 
 	it( 'triggers the event listener exactly once', function() {
