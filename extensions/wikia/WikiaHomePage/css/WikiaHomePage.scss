@@ -978,6 +978,9 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 		&.pl .sprite.edit-pencil {
 			background-position: -96px -179px;
 		}
+		&.ja .sprite.edit-pencil {
+			background-position: -120px -179px;
+		}
 		a {
 			display: block;
 			height: 18px;
@@ -997,6 +1000,9 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 			}
 			&.pl {
 				background-position: -96px -179px;
+			}
+			&.ja {
+				background-position: -120px -179px;
 			}
 		}
 		li {
