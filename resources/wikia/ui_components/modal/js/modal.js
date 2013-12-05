@@ -133,7 +133,7 @@ define( 'wikia.ui.modal', [
 			throw 'Cannot create new modal with id ' + id + ' as it already exists in DOM';
 		}
 
-		if ( typeof( uiComponent ) !== 'undefined' ) {
+		if ( typeof( uiComponent ) === 'undefined' ) {
 			throw 'Need uiComponent to render modal with id ' + id;
 		}
 
@@ -336,7 +336,6 @@ define( 'wikia.ui.modal', [
 	/** Public API */
 	
 	return {
-		init: init,
 		createComponent: createComponent
 	};
 });
