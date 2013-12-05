@@ -921,8 +921,6 @@ function WMU_insertPlaceholder( box ) {
 	WMU_box_filled.push(box);
 	var to_update = $( '#WikiaImagePlaceholder' + box );
 	to_update.html($( '#ImageUploadCode' ).html());
-	//the class would need to be different if we had here the full-size...
-	to_update.className = '';
 	$.post(wgServer + wgScript + '?title=' + wgPageName  +'&action=purge');
 }
 
