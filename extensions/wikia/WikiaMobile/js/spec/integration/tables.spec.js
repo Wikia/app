@@ -14,7 +14,7 @@ describe("Tables module", function () {
 		},
 		{
 			Features: {},
-			iScroll: function(){},
+			IScroll: function(){},
 			addEventListener: function(){
 
 			},
@@ -55,7 +55,7 @@ describe("Tables module", function () {
 		expect(table.parentElement.className).toBe('bigTable');
 	});
 
-	it('should add wkScroll to bitTable', function(){
+	it('should add wkScroll to bigTable', function(){
 		var foundTables = $(body).find('table');
 
 		tables.process(foundTables);

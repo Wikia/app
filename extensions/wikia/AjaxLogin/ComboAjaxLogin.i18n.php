@@ -1501,6 +1501,9 @@ Försök igen eller [[Special:Contact|anmäl det här]].',
 $messages['szl'] = array(
 	'comboajaxlogin-connectmarketing-back' => '« Nazod',
 	'comboajaxlogin-connectmarketing-forward' => 'Sztartuj &raquo;',
+	'comboajaxlogin-connectdirections' => 'Wszkryflej sam swoje mjano używocza a hasło na Wikii – Twoje kůnta na Wikii a Facebooku bydům wspůłdźelůne.
+
+Kej skůńczysz, bydźesz mjoł mogebność logowańo śe bez knefel „Facebook Connect”.',
 );
 
 /** Telugu (తెలుగు)
