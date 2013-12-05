@@ -179,17 +179,14 @@ ve.ui.WikiaMediaInsertDialog.prototype.onQueryRequestSearchDone = function ( ite
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onQueryRequestVideoDone = function ( data ) {
 	this.queryInput.setValue( '' );
-	this.cartModel.addItems( [
-		new ve.dm.WikiaCartItem(
-			data.title,
-			data.tempUrl || data.url,
-			'video',
-			data.tempName || undefined,
-			data.provider,
-			data.videoId || undefined
-		)
-	] );
-	this.setPage( data.title );
+	this.addCartItem( new ve.dm.WikiaCartItem(
+		data.title,
+		data.tempUrl || data.url,
+		'video',
+		data.tempName,
+		data.provider,
+		data.videoId
+	), true );
 };
 
 /**
@@ -210,14 +207,14 @@ ve.ui.WikiaMediaInsertDialog.prototype.onSearchNearingEnd = function () {
  * @param {Object} item The search result item data.
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onSearchCheck = function ( item ) {
-	var cartItem, cartItemModel;
+	var cartItem;
 
 	cartItem = this.cart.getItemFromData( item.title );
+
 	if ( cartItem ) {
 		this.cartModel.removeItems( [ cartItem.getModel() ] );
 	} else {
-		cartItemModel = new ve.dm.WikiaCartItem( item.title, item.url, item.type );
-		this.cartModel.addItems( [ cartItemModel ] );
+		this.addCartItem( new ve.dm.WikiaCartItem( item.title, item.url, item.type ) );
 	}
 };
 
@@ -286,6 +283,20 @@ ve.ui.WikiaMediaInsertDialog.prototype.setPage = function ( name ) {
 	}
 
 	this.pages.setPage( isCartItemToggle ? this.getDefaultPage() : name );
+};
+
+/**
+ * Add an item to the cart, optionally selecting it.
+ *
+ * @method
+ * @param {ve.dm.WikiaCartItem} item The cart item's data model.
+ * @param {boolean} [select] Whether to select the cart item.
+ */
+ve.ui.WikiaMediaInsertDialog.prototype.addCartItem = function ( item, select ) {
+	this.cartModel.addItems( [ item ] );
+	if ( select ) {
+		this.cart.selectItem( this.cart.getItemFromData( item.getId() ) );
+	}
 };
 
 /**
@@ -661,15 +672,12 @@ ve.ui.WikiaMediaInsertDialog.prototype.onUploadSuccess = function ( data ) {
 	if ( !this.license.html ) {
 		this.license.promise.done( ve.bind( this.onUploadSuccess, this, data ) );
 	} else {
-		this.cartModel.addItems( [
-			new ve.dm.WikiaCartItem(
-				data.title,
-				data.tempUrl || data.url,
-				'photo',
-				data.tempName || undefined
-			)
-		] );
-		this.cart.selectItem( this.cart.getItemFromData( data.title ) );
+		this.addCartItem( new ve.dm.WikiaCartItem(
+			data.title,
+			data.tempUrl || data.url,
+			'photo',
+			data.tempName
+		), true );
 	}
 };
 
