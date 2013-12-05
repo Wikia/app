@@ -64,6 +64,8 @@
 	//I want page to be at least 405px long to be able to show share and search suggestions
 	min-height: 80%;
 	padding: $page-padding+5px 6.25%;
+	//during loading tables might strech horizontally window - lets not show it to user
+	overflow-x: hidden;
 }
 
 //fixes for fluid content

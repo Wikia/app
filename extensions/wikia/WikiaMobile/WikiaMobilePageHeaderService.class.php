@@ -13,16 +13,6 @@ class  WikiaMobilePageHeaderService extends WikiaService {
 	}
 
 	/**
-	 * @var array Holding namespaces for which first part of title should not be displayed
-	 * ie Blog:Me/Test -> Test
-	 */
-	private $namespaces = [
-		NS_BLOG_ARTICLE,
-		NS_BLOG_ARTICLE_TALK,
-		NS_BLOG_LISTING,
-		NS_BLOG_LISTING_TALK
-	];
-	/**
 	 * Function to remove first part of title
 	 * ie Blog:Me/Test -> Test
 	 *
@@ -31,7 +21,17 @@ class  WikiaMobilePageHeaderService extends WikiaService {
 	 * @return string
 	 */
 	private function getTitleText( $title, $namespace ){
-		if ( in_array( $namespace, $this->namespaces ) ) {
+		/**
+		 * @var array Holding namespaces for which first part of title should not be displayed
+		 * ie Blog:Me/Test -> Test
+		 */
+		if ( defined( 'NS_BLOG_ARTICLE' ) && in_array( $namespace, [
+				NS_BLOG_ARTICLE,
+				NS_BLOG_ARTICLE_TALK,
+				NS_BLOG_LISTING,
+				NS_BLOG_LISTING_TALK
+			] )
+		) {
 			$titleParts = explode( '/', $title );
 			array_shift( $titleParts );
 
@@ -84,7 +84,7 @@ class  WikiaMobilePageHeaderService extends WikiaService {
 					$userName = wfMessage( 'wikiamobile-anonymous-edited-by' )->text();
 				} else {
 					//Wrap username in a link to user page
-					$userName = '<a href="' . $user->getUserPage()->getFullURL() . '">' . $userName . '</a>';
+					$userName = "<a href='{$user->getUserPage()->getLocalUrl()}'>{$userName}</a>";
 				}
 
 				$this->response->setVal(
@@ -104,6 +104,10 @@ class  WikiaMobilePageHeaderService extends WikiaService {
 		}
 
 		$this->response->setVal( 'editLink', $this->getTitleEditUrl() );
+
+		if ( $namespace == NS_CATEGORY ) {
+			$this->response->setVal( 'categoryPage', wfMessage( 'wikiamobile-categories-tagline' )->inContentLanguage()->plain() );
+		}
 
 		return true;
 	}
