@@ -325,7 +325,7 @@ class ArticlesApiController extends WikiaApiController {
 			$ns = array_unique( $ns );
 		}
 
-		$key = self::getCacheKey( self::NEW_ARTICLES_CACHE_ID, '', [ implode( '-', $ns ), $limit ] );
+		$key = self::getCacheKey( self::NEW_ARTICLES_CACHE_ID, '', [ implode( '-', $ns ) ] );
 		$results = $this->wg->Memc->get( $key );
 		if ( $results === false ) {
 			$solrResults = $this->getNewArticlesFromSolr( $ns, self::MAX_NEW_ARTICLES_LIMIT );
@@ -351,7 +351,7 @@ class ArticlesApiController extends WikiaApiController {
 		}
 
 		$response = $this->getResponse();
-		$response->setValues( [ 'items' => $results, 'basepath' => $this->wg->Server ] );
+		$response->setValues( [ 'items' => array_slice( $results, 0, $limit ), 'basepath' => $this->wg->Server ] );
 
 		$response->setCacheValidity(
 			self::NEW_ARTICLES_VARNISH_CACHE_EXPIRATION /* 24h */,
