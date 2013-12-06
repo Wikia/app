@@ -203,7 +203,7 @@ define( 'wikia.ui.modal', [
 				function() {
 					that.trigger( 'beforeClose').then( $.proxy( function() {
 						// number of active modals on page
-						var activeModalsNumb = $bodyElm.children('modal-blackout').length;
+						var activeModalsNumb = $bodyElm.children( '.modal-blackout' ).length;
 
 						that.$blackout.remove();
 
@@ -224,7 +224,7 @@ define( 'wikia.ui.modal', [
 	Modal.prototype.show = function() {
 
 		// block background only if not modal in scenario
-		if ($bodyElm.hasClass( 'fake-scrollbar' ) === false ) {
+		if ( $bodyElm.hasClass( 'fake-scrollbar' ) === false ) {
 			blockPageScrolling();
 		}
 

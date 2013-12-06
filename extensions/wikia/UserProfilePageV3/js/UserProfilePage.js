@@ -28,7 +28,7 @@ var UserProfilePage = {
 
 		$userIdentityBoxEdit.click(function( event ) {
 			event.preventDefault();
-			UserProfilePage.renderLightbox('about');
+			UserProfilePage.renderLightbox( 'about' );
 		});
 
 		$( '#UserAvatarRemove' ).click(function( event ) {
@@ -168,7 +168,22 @@ var UserProfilePage = {
 					message = data.error;
 				}
 
-				$.showModal( 'Error', message );
+				require( [ 'wikia.ui.factory' ], function( uiFactory ) {
+					uiFactory.init( [ 'modal' ] ).then(function( modal ) {
+						var modalConfig = {
+							vars: {
+								id: 'UPPModalError',
+								content: message,
+								size: 'small',
+								title: $.msg( 'userprofilepage-edit-modal-error' )
+							}
+						};
+
+						modal.createComponent(modalConfig, function( errorModal ) {
+							errorModal.show();
+						});
+					});
+				});
 
 				UserProfilePage.isLightboxGenerating = false;
 			});
@@ -229,16 +244,15 @@ var UserProfilePage = {
 
 		var $avatarUploadInput = modal.find( '#UPPLightboxAvatar' ),
 			$avatarForm = modal.find( '#usersAvatar' ),
-			$sampleAvatars = modal.find( '.sample-avatars img' );
+			$sampleAvatars = modal.find( '.sample-avatars' );
 
 		$avatarUploadInput.change(function() {
 			UserProfilePage.saveAvatarAIM( $avatarForm );
 		});
 
-		$sampleAvatars.each( function( i, val ) {
-			$( val ).click(function() {
-				UserProfilePage.sampleAvatarChecked( this );
-			});
+
+		$sampleAvatars.on('click', 'img', function( event ) {
+			UserProfilePage.sampleAvatarChecked( $( event.target ) );
 		});
 	},
 
@@ -312,10 +326,10 @@ var UserProfilePage = {
 	renderAboutMeLightbox: function( modal ) {
 		'use strict';
 
-		var $fbUnsyncButton = modal.find( '#facebookUnsync'),
+		var $fbUnsyncButton = modal.find( '#facebookUnsync' ),
 			$monthSelectBox = modal.find( '#userBDayMonth' ),
-			$daySelectBox = modal.find( '#userBDayDay'),
-			$formFields = modal.find('input[type="text"], select'),
+			$daySelectBox = modal.find( '#userBDayDay' ),
+			$formFields = modal.find( 'input[type="text"], select' ),
 
 			change = function() {
 			UserProfilePage.wasDataChanged = true;
@@ -341,8 +355,8 @@ var UserProfilePage = {
 			UserProfilePage.refreshFavWikis();
 		});
 
-		$formFields.change(change);
-		$formFields.keypress(change);
+		$formFields.change( change ) ;
+		$formFields.keypress( change );
 
 		UserProfilePage.toggleJoinMoreWikis();
 
@@ -364,12 +378,12 @@ var UserProfilePage = {
 
 		$.ajax({
 			type: 'POST',
-			url: this.ajaxEntryPoint+'&method=saveUserData',
+			url: this.ajaxEntryPoint + '&method=saveUserData',
 			dataType: 'json',
 			data: 'userId=' + UserProfilePage.userId + '&data=' + JSON.stringify( userData ),
 			success: function( data ) {
 				if( data.status === 'error' ) {
-					window.GlobalNotification.show( data.errorMsg, 'warn') ;
+					window.GlobalNotification.show( data.errorMsg, 'warn' ) ;
 				} else {
 					UserProfilePage.userData = null;
 					UserProfilePage.wasDataChanged = false;
@@ -395,7 +409,7 @@ var UserProfilePage = {
 			year: null,
 			month: null,
 			day: null
-			},
+		},
 			i,
 			userDataItem;
 
@@ -416,7 +430,7 @@ var UserProfilePage = {
 	refillBDayDaySelectbox: function( selectboxes ) {
 		'use strict';
 
-		selectboxes.day.html('');
+		selectboxes.day.html( '' );
 		var options = '',
 			daysInMonth = [ 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ],
 			selectedMonth = selectboxes.month.val(),
@@ -430,14 +444,16 @@ var UserProfilePage = {
 		selectboxes.day.html( options );
 	},
 
-	// TODO: is this used anywhere
 	// nAndy: it was used to pull data from facebook account to our user profile page
 	// i've just checked it on production and it doesn't work there as well...
 	fbConnect: function() {
 		'use strict';
 
-		$.postJSON( this.ajaxEntryPoint, { method: 'onFacebookConnect', cb: window.wgStyleVersion }, function(data) {
-			if( data.result.success === true && typeof(data.result.fbUser) !== 'undefined' ) {
+		$.postJSON( this.ajaxEntryPoint, {
+			method: 'onFacebookConnect',
+			cb: window.wgStyleVersion
+		}, function( data ) {
+			if ( data.result.success === true && typeof ( data.result.fbUser ) !== 'undefined' ) {
 				var userData = {
 					name: 'name',
 					location: 'current_location',
@@ -452,51 +468,52 @@ var UserProfilePage = {
 				i,
 				key;
 
-				for(i in userData) {
-					if( typeof($(document.userData[i]).val()) !== 'undefined' ) {
-						key = userData[i];
+				for ( i in userData ) {
+					if ( typeof ( $( document.userData[ i ] ).val() ) !== 'undefined' ) {
+						key = userData[ i ];
 
-						UserProfilePage.fillFieldsWithFbData(i, key, data.result.fbUser);
+						UserProfilePage.fillFieldsWithFbData( i, key, data.result.fbUser );
 						changed = true;
 					}
 				}
 
-				$('#facebookConnect').hide();
-				$('#facebookPage').show();
+				$( '#facebookConnect' ).hide();
+				$( '#facebookPage' ).show();
 
-				if( changed === true ) {
+				if ( changed === true ) {
 					UserProfilePage.wasDataChanged = true;
 				}
 			}
 		});
 	},
 
-	// TODO: is this used anywhere
 	// nAndy: it was used to pull avatar from facebook account to our user profile page
 	// i've just checked it on production and it doesn't work there as well...
 	fbConnectAvatar: function() {
 		'use strict';
 
-		UserProfilePage.modal.$element.find('img.avatar').hide();
-		UserProfilePage.modal.$element.startThrobbing();
-		$.postJSON(
-			this.ajaxEntryPoint,
-			{ method: 'onFacebookConnectAvatar', avatar: true, cb: window.wgStyleVersion },
-			function(data) {
-				if( data.result.success === true ) {
-					$('#facebookConnectAvatar').hide();
-					var avatarImg = UserProfilePage.modal.$element.find('img.avatar');
-					avatarImg.attr('src', data.result.avatar).show();
-					UserProfilePage.modal.$element.stopThrobbing();
-					UserProfilePage.wasDataChanged = true;
-					UserProfilePage.newAvatar = {
-						file: data.result.avatar,
-						source: 'facebook',
-						userId: UserProfilePage.userId
-					};
-				}
+		var $modal = UserProfilePage.modal.$element;
+
+		$modal.find( 'img.avatar' ).hide();
+		$modal.startThrobbing();
+		$.postJSON( this.ajaxEntryPoint, {
+			method: 'onFacebookConnectAvatar',
+			avatar: true,
+			cb: window.wgStyleVersion
+		}, function( data ) {
+			if ( data.result.success === true ) {
+				$( '#facebookConnectAvatar' ).hide();
+				var avatarImg = $modal.find( 'img.avatar' );
+				avatarImg.attr( 'src', data.result.avatar ).show();
+				$modal.stopThrobbing();
+				UserProfilePage.wasDataChanged = true;
+				UserProfilePage.newAvatar = {
+					file: data.result.avatar,
+					source: 'facebook',
+					userId: UserProfilePage.userId
+				};
 			}
-		);
+		});
 	},
 
 	fillFieldsWithFbData: function( i, key, fbData ) {
@@ -516,16 +533,16 @@ var UserProfilePage = {
 
 	extractFbDateAndFill: function( date ) {
 		'use strict';
-		if ( typeof( date ) === 'string' ) {
-			var dateArray = date.split('/'),
-				monthSelectBox = $('#userBDayMonth'),
-				daySelectBox = $('#userBDayDay');
+		if ( typeof ( date ) === 'string' ) {
+			var dateArray = date.split( '/' ),
+				monthSelectBox = $( '#userBDayMonth' ),
+				daySelectBox = $( '#userBDayDay' );
 
-			if ( typeof( dateArray[ 0 ] ) !== 'undefined' ) {
+			if ( typeof ( dateArray[ 0 ] ) !== 'undefined' ) {
 				monthSelectBox.val( parseInt( dateArray[ 0 ], 10 ) );
 			}
 
-			if ( typeof( dateArray[ 1 ] ) !== 'undefined' ) {
+			if ( typeof ( dateArray[ 1 ] ) !== 'undefined' ) {
 				UserProfilePage.refillBDayDaySelectbox({
 					month:monthSelectBox,
 					day:daySelectBox
@@ -581,12 +598,12 @@ var UserProfilePage = {
 			cb: window.wgStyleVersion
 		}, function( data ) {
 			if ( data.result.success === true ) {
-				var favWikisList = UserProfilePage.modal.$element.find( '.favorite-wikis'),
+				var favWikisList = UserProfilePage.modal.$element.find( '.favorite-wikis' ),
 					favWikis = '',
 					i;
 
 				// empty the list
-				favWikisList.children().not('.join-more-wikis').remove();
+				favWikisList.children().not( '.join-more-wikis' ).remove();
 
 				// add items
 				for ( i in data.result.wikis ) {
@@ -604,9 +621,10 @@ var UserProfilePage = {
 	toggleJoinMoreWikis: function() {
 		'use strict';
 
-		var $modal =UserProfilePage.modal.$element,
+		var $modal = UserProfilePage.modal.$element,
+			minNumOfJoinedWikis = 4,
 			joinMoreWikis = $modal.find( '.join-more-wikis' );
-		if ( $modal.find( '.favorite-wikis' ).children().not( '.join-more-wikis' ).length === 4 ) {
+		if ( $modal.find( '.favorite-wikis' ).children().not( '.join-more-wikis' ).length === minNumOfJoinedWikis ) {
 			joinMoreWikis.hide();
 		} else {
 			joinMoreWikis.show();
@@ -675,7 +693,7 @@ var UserProfilePage = {
 
 				// attaching handlers to button events
 				confirmationModal.bind( 'save', function() {
-					confirmationModal.trigger('close');
+					confirmationModal.trigger( 'close' );
 					UserProfilePage.saveUserData();
 				});
 				confirmationModal.bind( 'quit', function() {
@@ -704,7 +722,7 @@ var UserProfilePage = {
 					avUser: name
 				},
 				callback: function( data ) {
-					if(data.status === 'ok' ) {
+					if ( data.status === 'ok' ) {
 						window.location.reload();
 					} else {
 						window.alert( data.error );

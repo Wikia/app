@@ -66,7 +66,8 @@ JSMessages::registerPackage( 'UserProfilePageV3', array(
 	'userprofilepage-closing-popup-header',
 	'userprofilepage-closing-popup-save-and-quit',
 	'userprofilepage-closing-popup-discard-and-quit',
-	'userprofilepage-closing-popup-cancel'
+	'userprofilepage-closing-popup-cancel',
+	'userprofilepage-edit-modal-error'
 ) );
 /**
  * extension related configuration

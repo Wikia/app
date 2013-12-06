@@ -17,8 +17,7 @@
 	<ul class="tab-content">
 		<li class="avatar">
 			<form id="usersAvatar" class="WikiaForm" name="usersAvatar" method="post" enctype="multipart/form-data"
-			action="/wikia
-			.php?controller=UserProfilePage&method=onSubmitUsersAvatar&format=json&userId=<?= $userId; ?>">
+			action="/wikia.php?controller=UserProfilePage&method=onSubmitUsersAvatar&format=json&userId=<?= $userId; ?>">
 
 				<?= $avatar; ?>
 
