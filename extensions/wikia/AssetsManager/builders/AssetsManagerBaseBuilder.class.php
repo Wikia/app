@@ -42,8 +42,8 @@ class AssetsManagerBaseBuilder {
 			}
 
 			if ( $this->mContentType == AssetsManager::TYPE_CSS ) {
-				$newContent = $this->minifyCSS( $this->mContent );
-
+//				$newContent = $this->minifyCSS( $this->mContent ); temp band aid for perf problems
+					$newContent = $this->mContent;
 			} else if ( $this->mContentType == AssetsManager::TYPE_JS ) {
 				$newContent = self::minifyJS( $this->mContent, ( $this->mOid == 'oasis_shared_js' || $this->mOid == 'rte' ) ? true : false );
 			}

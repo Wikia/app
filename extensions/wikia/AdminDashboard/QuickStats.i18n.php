@@ -489,9 +489,10 @@ $messages['fr'] = array(
 
 /** Galician (galego)
  * @author Toliño
+ * @author Vivaelcelta
  */
 $messages['gl'] = array(
-	'quickstats-header-label' => 'Estatísticas rápidas',
+	'quickstats-header-label' => 'Estadísticas rápidas',
 	'quickstats-header-date' => 'Data',
 	'quickstats-header-views' => 'Visitas',
 	'quickstats-header-edits' => 'Edicións',
@@ -1161,6 +1162,8 @@ $messages['szl'] = array(
 	'quickstats-header-views' => 'Podglůndy',
 	'quickstats-header-edits' => 'Sprowjyńa',
 	'quickstats-header-photos' => 'Uobrozy',
+	'quickstats-header-likes' => 'Przaja tymu',
+	'quickstats-totals-label' => 'Cuzamyn',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Wjyncyj sztatystyk]]',
 	'quickstats-number-shortening' => '$1 tyś.',
 	'quickstats-number-shortening-millions' => '$1 mln',

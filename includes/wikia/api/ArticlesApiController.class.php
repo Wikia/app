@@ -615,7 +615,7 @@ class ArticlesApiController extends WikiaApiController {
 
 	protected function getFromFile( $title ) {
 		$file = wfFindFile( $title );
-		if ( $file instanceof WikiaLocalFile ) {
+		if ( $file instanceof LocalFile ) {
 			//media type: photo, video
 			if ( WikiaFileHelper::isFileTypeVideo( $file ) ) {
 				$handler = VideoHandler::getHandler( $file->getMimeType() );

@@ -723,8 +723,10 @@ $messages['ce'] = array(
 	'swm-label-preview' => 'Хьалха муха ю хьажа',
 	'swm-label-list' => 'МогӀа',
 	'swm-label-mode-users-active' => 'Жигара декъашхой',
+	'swm-label-content' => 'Чулацам',
 	'swm-label-language' => 'Мотт',
 	'swm-list-table-expire' => 'Чекхйолу',
+	'swm-list-table-content' => 'Чулацам',
 	'swm-list-table-tools' => 'ГӀирсаш',
 	'swm-list-table-lang' => 'Меттанаш',
 	'swm-error-empty-group' => 'ДӀаязъе тобан цӀе.',
@@ -3486,6 +3488,19 @@ $messages['uk'] = array(
 	'swm-mode-wikis-created-between' => 'Між',
 	'swm-label-mode-wikis-created-hint' => '<i>Дати мають бути у вигляді 2012-04-01 00:00:00</i>',
 	'swm-error-created-tobeforefrom' => 'Кінцева дата створення вікі є ранішою за початкову дату.',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'swm-label-mode-users-registration-hint' => '<i>Ngày phải trong các hình thức 2012-04-01 00:00:00</i>',
+	'swm-error-registered-tobeforefrom' => 'Người dùng đăng ký ngày kết thúc là ngày trước khi bắt đầu.',
+	'swm-label-mode-users-editcount' => 'Số lần sửa đổi',
+	'swm-mode-users-editcount-more' => 'Nhiều hơn',
+	'swm-mode-users-editcount-less' => 'Ít',
+	'swm-mode-users-editcount-between' => 'Giữa',
+	'swm-error-editcount-tolessthanfrom' => 'Người dùng chỉnh sửa tính giới hạn trên là ít hơn so với giới hạn dưới.',
 );
 
 /** Volapük (Volapük)

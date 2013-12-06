@@ -526,7 +526,7 @@ $messages['nl'] = array(
 	'enablerichtexteditor' => 'Uitgebreide tekstverwerker inschakelen (in aanvulling op broncodemodus)',
 	'rte-enablerichtexteditormessage' => 'De uitgebreide tekstverwerker is ingeschakeld.',
 	'rte-first-run-notice' => 'We hebben een aantal verbeteringen gemaakt aan de tekstverwerker. [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news Lees ook de aankondiging].',
-	'prefs-rte' => 'Uitgebreide tekstverwerker',
+	'prefs-rte' => 'Uitgebreide tekstbewerker',
 );
 
 /** Nederlands (informeel)‎ (Nederlands (informeel)‎)

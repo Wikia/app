@@ -617,6 +617,13 @@ $messages['uk'] = array(
 	'iwedit-success' => '<p>Посилання успішно створено.</p>',
 );
 
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'iwedit-update' => 'Cập nhật',
+);
+
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Hydra

@@ -328,6 +328,7 @@ $messages['ce'] = array(
 	'lookupcontribswikioptions' => 'Параметраш',
 	'lookupcontribscontribslink' => 'Къинхьегаме хьажораг',
 	'lookupcontribscontribs' => 'къинхьегам',
+	'lookupcontribscontent' => 'чулацам',
 	'lookupcontribsall' => 'массо',
 );
 

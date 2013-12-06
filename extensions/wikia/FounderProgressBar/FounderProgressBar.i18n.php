@@ -488,6 +488,7 @@ $messages['en-gb'] = array(
  * @author DJ Nietzsche
  * @author Geitost
  * @author VegaDark
+ * @author Vivaelcelta
  */
 $messages['es'] = array(
 	'founderprogressbar-credits' => 'Un centro de trabajo y guías para nuevos fundadores de wikis',
@@ -552,8 +553,8 @@ $messages['es'] = array(
 	'founderprogressbar-user-add5-description' => 'Un gran wiki está respaldado por una gran comunidad. Los mejores wikis tienen gran cantidad de usuarios editándolos, ¡consigue 5 personas para que editen tu wiki es un comienzo fantástico!',
 	'founderprogressbar-recentchanges-visit-label' => 'Visita los Cambios Recientes',
 	'founderprogressbar-recentchanges-visit-description' => 'Los Cambios Recientes es una versión avanzada de Wiki Actividad. Puedes ver "difs" que detallan un cambio exacto hecho en una página, hacer reversiones a cambios, y ver con más detalle de lo que puedes ver en Wiki Actividad. Es una gran herramienta de administración cuando necesitas más información.',
-	'founderprogressbar-wordmark-edit-label' => 'Sube un wordmark',
-	'founderprogressbar-wordmark-edit-description' => 'El wordmark es una característica emblemática de tu wiki, es visible en cada página y puede ayudar a los usuarios a tener una idea acerca de tu wiki. Personalizar el wordmark es una excelente manera para que la marca de tu wiki destaque aún más.',
+	'founderprogressbar-wordmark-edit-label' => 'Subir un logotipo',
+	'founderprogressbar-wordmark-edit-description' => 'El logotipo es una característica emblemática de tu wiki, es visible en cada página y puede ayudar a los usuarios a tener una idea acerca de tu wiki. Subir tu propio logotipo gráfico es una excelente manera para que la marca de tu wiki destaque aún más.',
 	'founderprogressbar-mostvisited-visit-label' => 'Mira tus páginas más visitadas',
 	'founderprogressbar-mostvisited-visit-description' => 'Una vez que tu wiki va yendo bien, es útil saber cuáles son las páginas más visitadas para que puedas mejorarlas y añadir más enlaces a otras páginas de menor visita. ¡Ver las páginas más visitadas para tener una idea de lo que funciona mejor en tu wiki y podrás hacer mejoras similares en otras páginas!',
 	'founderprogressbar-toptenlist-add-label' => 'Añade una lista de los diez mejores',
@@ -740,6 +741,7 @@ $messages['fr'] = array(
 
 /** Galician (galego)
  * @author Toliño
+ * @author Vivaelcelta
  */
 $messages['gl'] = array(
 	'founderprogressbar-credits' => 'Un centro de tarefas e guías para os fundadores de novos wikis',
@@ -804,8 +806,8 @@ $messages['gl'] = array(
 	'founderprogressbar-user-add5-description' => 'Un gran wiki está respaldado por unha gran comunidade. Os mellores wikis teñen moita xente editándoos. Contar con 5 persoas que editen o seu wiki é un excelente comezo!',
 	'founderprogressbar-recentchanges-visit-label' => 'Visitar os cambios recentes',
 	'founderprogressbar-recentchanges-visit-description' => 'Os cambios recentes son unha versión máis avanzada da actividade do wiki. Pode ollar as "diferenzas", que detallan os cambios exactos que se fixeron nas páxinas, pode reverter páxinas e tamén pode ver en máis detalle outros aspectos que non se mostran na actividade do wiki. É unha fantástica ferramenta de xestión cando necesita máis información.',
-	'founderprogressbar-wordmark-edit-label' => 'Cargar un logotipo',
-	'founderprogressbar-wordmark-edit-description' => 'O logotipo do wiki é un distintivo moi importante: é visible en todas as páxinas e pode axudar aos usuarios a ter unha idea acerca do tema, ademais de achegar un chisco de estilo ao wiki. Cargar o seu propio logotipo gráfico é un bo xeito de crear unha marca para o seu wiki.',
+	'founderprogressbar-wordmark-edit-label' => 'Subir un logotipo',
+	'founderprogressbar-wordmark-edit-description' => 'O logotipo do wiki é un distintivo moi importante: é visible en todas as páxinas e pode axudar aos usuarios a ter unha idea acerca do tema, ademais de achegar un chisco de estilo ao wiki. Subir o teu propio logotipo gráfico é un bo xeito de crear unha marca para o teu wiki.',
 	'founderprogressbar-mostvisited-visit-label' => 'Ollar as súas páxinas máis visitadas',
 	'founderprogressbar-mostvisited-visit-description' => 'Unha vez que o wiki vaia ben, é de gran axuda ver as páxinas máis populares para podelas mellorar e engadir máis ligazóns cara a outras páxinas con menos tráfico. Olle as páxinas máis visitadas para comprobar o que mellor funciona no wiki e así facer melloras similares noutras páxinas!',
 	'founderprogressbar-toptenlist-add-label' => 'Engadir unha lista dos dez mellores',
@@ -1567,6 +1569,7 @@ $messages['ps'] = array(
 
 /** Portuguese (português)
  * @author Hamilton Abreu
+ * @author Josep Maria 15.
  * @author Luckas
  * @author Malafaya
  * @author Rhaijin
@@ -1586,7 +1589,7 @@ $messages['pt'] = array(
 	'founderprogressbar-list-bonus-task-label' => 'Tarefas Bónus',
 	'founderprogressbar-task-call-to-action' => 'Ir para tarefa',
 	'founderprogressbar-page-add10-label' => 'Atingir $1 {{PLURAL:$1|página|páginas}}',
-	'founderprogressbar-themedesigner-visit-label' => 'Personalizar seu tema',
+	'founderprogressbar-themedesigner-visit-label' => 'Personaliza o teu tema',
 	'founderprogressbar-photo-add10-label' => 'Atingir $1 {{PLURAL:$1|Imagem|Imagens}}',
 	'founderprogressbar-category-add3-label' => 'Atingir $1 {{PLURAL:$1|Categoria|Categorias}}',
 	'founderprogressbar-wikiactivity-visit-label' => 'Visitar a Atividade da Wiki',

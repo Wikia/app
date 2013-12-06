@@ -100,6 +100,13 @@ $messages['diq'] = array(
 	'campfire-page-header' => '$1 ra $2',
 );
 
+/** British English (British English)
+ * @author Shirayuki
+ */
+$messages['en-gb'] = array(
+	'campfire-licensed-under' => 'Licenced under $1',
+);
+
 /** Spanish (español)
  * @author VegaDark
  */

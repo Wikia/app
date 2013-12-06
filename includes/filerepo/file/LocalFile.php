@@ -1003,12 +1003,6 @@ class LocalFile extends File {
 		$props['timestamp'] = wfTimestamp( TS_MW, $timestamp ); // DB -> TS_MW
 		$this->setProps( $props );
 
-		# Delete thumbnails
-		$this->purgeThumbnails();
-
-		# The file is already on its final location, remove it from the squid cache
-		SquidUpdate::purge( array( $this->getURL() ) );
-
 		# Fail now if the file isn't there
 		if ( !$this->fileExists ) {
 			wfDebug( __METHOD__ . ": File " . $this->getRel() . " went missing!\n" );
@@ -1048,6 +1042,7 @@ class LocalFile extends File {
 				# and pass an empty $oldver. Allow this bogus value so we can displace the
 				# `image` row to `oldimage`, leaving room for the new current file `image` row.
 				#throw new MWException( "Empty oi_archive_name. Database and storage out of sync?" );
+				Wikia::logBacktrace(__METHOD__ . "::oi_archive_name - [{$this->getName()}]"); // Wikia change (BAC-1068)
 			}
 			$reupload = true;
 			# Collision, this is an update of a file
@@ -1151,6 +1146,16 @@ class LocalFile extends File {
 		# which in fact doesn't really exist (bug 24978)
 		$this->saveToCache();
 
+		if ( $reupload ) {
+			# Delete old thumbnails
+			wfProfileIn( __METHOD__ . '-purge' );
+			$this->purgeThumbnails();
+			wfProfileOut( __METHOD__ . '-purge' );
+
+			# Remove the old file from the squid cache
+			SquidUpdate::purge( array( $this->getURL() ) );
+		}
+		
 		# Hooks, hooks, the magic of hooks...
 		wfRunHooks( 'FileUpload', array( $this, $reupload, $descTitle->exists() ) );
 
@@ -1252,14 +1257,17 @@ class LocalFile extends File {
 
 		$batch = new LocalFileMoveBatch( $this, $target );
 		$batch->addCurrent();
-		$batch->addOlds();
-
+		$archiveNames = $batch->addOlds();
 		$status = $batch->execute();
+		$this->unlock(); // done
+
 		wfDebugLog( 'imagemove', "Finished moving {$this->name}" );
 
 		$this->purgeEverything();
-		$this->unlock(); // done
-
+		foreach ( $archiveNames as $archiveName ) {
+			$this->purgeOldThumbnails( $archiveName );
+		}
+		
 		if ( $status->isOk() ) {
 			// Now switch the object
 			$this->title = $target;
@@ -1298,12 +1306,15 @@ class LocalFile extends File {
 
 		# Get old version relative paths
 		$dbw = $this->repo->getMasterDB();
-		$result = $dbw->select( 'oldimage',
+		$result = $dbw->select( 
+			'oldimage', 
 			array( 'oi_archive_name' ),
-			array( 'oi_name' => $this->getName() ) );
+			array( 'oi_name' => $this->getName() ) 
+		);
+		$archiveNames = [];
 		foreach ( $result as $row ) {
 			$batch->addOld( $row->oi_archive_name );
-			$this->purgeOldThumbnails( $row->oi_archive_name );
+			$archiveNames[] = $row->oi_archive_name;
 		}
 		$status = $batch->execute();
 
@@ -1311,18 +1322,23 @@ class LocalFile extends File {
 			// Update site_stats
 			$site_stats = $dbw->tableName( 'site_stats' );
 			$dbw->query( "UPDATE $site_stats SET ss_images=ss_images-1", __METHOD__ );
-			$this->purgeEverything();
 		}
-
 		$this->unlock(); // done
-
-		if ( $wgUseSquid ) {
-			// Purge the squid
-			$purgeUrls = array();
-			foreach ($archiveNames as $archiveName ) {
-				$purgeUrls[] = $this->getArchiveUrl( $archiveName );
+		
+		if ( $status->ok ) {
+			$this->purgeEverything();
+			foreach ( $archiveNames as $archiveName ) {
+				$this->purgeOldThumbnails( $archiveName );
 			}
-			SquidUpdate::purge( $purgeUrls );
+
+			if ( $wgUseSquid ) {
+				// Purge the squid
+				$purgeUrls = array();
+				foreach ( $archiveNames as $archiveName ) {
+					$purgeUrls[] = $this->getArchiveUrl( $archiveName );
+				}
+				SquidUpdate::purge( $purgeUrls );
+			}
 		}
 
 		return $status;
@@ -2218,6 +2234,7 @@ class LocalFileMoveBatch {
 		$archiveBase = 'archive';
 		$this->olds = array();
 		$this->oldCount = 0;
+		$archiveNames = array();
 
 		$result = $this->db->select( 'oldimage',
 			array( 'oi_archive_name', 'oi_deleted' ),
@@ -2226,6 +2243,7 @@ class LocalFileMoveBatch {
 		);
 
 		foreach ( $result as $row ) {
+			$archiveNames[] = $row->oi_archive_name;
 			$oldName = $row->oi_archive_name;
 			$bits = explode( '!', $oldName, 2 );
 
@@ -2253,6 +2271,8 @@ class LocalFileMoveBatch {
 				"{$archiveBase}/{$this->newHash}{$timestamp}!{$this->newName}"
 			);
 		}
+		
+		return $archiveNames;
 	}
 
 	/**

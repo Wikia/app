@@ -305,8 +305,12 @@ class WallHelper {
 
 			if( $user ) {
 				$items[$i]['real-name'] = $user->getName();
-				$userWallTitle = Title::newFromText( $user->getName(), NS_USER_WALL );
-				$items[$i]['user-profile-url'] = $userWallTitle->getFullUrl();
+				if ( !empty( F::app()->wg->EnableWallExt ) ) {
+					$userLinkTitle = Title::newFromText( $user->getName(), NS_USER_WALL );
+				} else {
+					$userLinkTitle = Title::newFromText( $user->getName(), NS_USER );
+				}
+				$items[$i]['user-profile-url'] = $userLinkTitle->getFullUrl();
 			} else {
 				$items[$i]['real-name'] = '';
 			}
@@ -633,7 +637,7 @@ class WallHelper {
 				'articleFullUrl' => $wm->getMessagePageUrl(),
 				'articleTitleVal' => $articleTitleTxt,
 				'articleTitleTxt' => empty( $articleTitleTxt ) ? wfMsg( 'wall-recentchanges-deleted-reply-title' ) : $articleTitleTxt,
-				'wallPageUrl' => $wm->getArticleTitle()->getPrefixedText(),
+				'wallPageUrl' => $wm->getArticleTitle()->getLocalURL(),
 				'wallPageFullUrl' => $wm->getArticleTitle()->getFullUrl(),
 				'wallPageName' => $wm->getArticleTitle()->getText(),
 				'actionUser' => $userText,

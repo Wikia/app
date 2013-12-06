@@ -315,6 +315,12 @@ class UserProfilePageController extends WikiaController {
 			$this->profilePage = new UserProfilePage($sessionUser);
 
 			$this->setVal('body', (string)$this->sendSelfRequest('renderLightbox', array('tab' => $selectedTab, 'userId' => $userId)));
+
+			if (!empty($this->wg->AvatarsMaintenance)) {
+				$this->setVal('avatarsDisabled', true);
+				$this->setVal('avatarsDisabledMsg', wfMessage('user-identity-avatars-maintenance')->text());
+			}
+
 			//we'll implement interview section later
 			//$this->setVal( 'interviewQuestions', $this->profilePage->getInterviewQuestions( $wikiId, false, true ) );
 		}
