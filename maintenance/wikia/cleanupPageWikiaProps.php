@@ -78,25 +78,15 @@ class CleanupPageWikiaProps {
 		$page_ids = array();
 		while ( $row = $db->fetchObject( $result ) ) {
 			$page_ids[] = $row->page_id;
-			// Send MySQL pages to be deleted in batches of 100
-			if ( count($page_ids) == 100 ) {
-				if ( $verbose ) {
-					echo "Deleted pages found in $dbname. Deleting " . count($page_ids) . " records from page_wikia_props\n";
-				}
-				if ( !$test ) {
-					$db->query( "DELETE FROM page_wikia_props WHERE IN (" . implode(",", $page_ids) . ")" );
-				}
-				$page_ids = array();
-			}
 		}
 
-		// Make sure to delete the last batch since it's probably less than 100.
-		if ( count($page_ids) ) {
+		// Send MySQL pages to be deleted in batches of 100
+		while ( $chunk = array_chunk( $page_ids, 100 ) ) {
 			if ( $verbose ) {
-				echo "Deleted pages found in $dbname. Deleting " . count($page_ids) . " records from page_wikia_props\n";
+				echo "Deleted pages found in $dbname. Deleting " . count($chunk) . " records from page_wikia_props\n";
 			}
 			if ( !$test ) {
-				$db->query( "DELETE FROM page_wikia_props WHERE IN (" . implode(",", $page_ids) . ")" );
+				$db->query( "DELETE FROM page_wikia_props WHERE IN (" . implode(",", $chunk) . ")" );
 			}
 		}
 
