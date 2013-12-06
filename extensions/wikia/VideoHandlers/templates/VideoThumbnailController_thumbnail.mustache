@@ -15,5 +15,7 @@
 		{{# imgHeight }} height="{{ imgHeight }}" {{/ imgHeight}}
 		{{# imgAttrs }}{{ . }} {{/ imgAttrs }}>
 
-	<span class="duration">{{ duration }}</span>
+	<span class="duration" {{# durationAttrs }}{{ . }} {{/ durationAttrs }}>{{ duration }}</span>
+
+	{{# metaAttrs }}<meta itemprop="{{itemprop}}" content="{{content}}">{{/ metaAttrs }}
 </a>

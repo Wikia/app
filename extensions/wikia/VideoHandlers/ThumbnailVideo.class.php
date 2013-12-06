@@ -111,15 +111,6 @@ class ThumbnailVideo extends ThumbnailImage {
 	function toHtml( $options = array() ) {
 		$app = F::app();
 
-		// Migrate to new system which uses a template instead of this toHtml method
-		if( !empty( $options[ 'useTemplate' ] ) ) {
-			return $app->renderView( 'VideoHandler', 'thumbnail', [
-				'options' => $options,
-				'file' => $this->file,
-				'url' => $this->url,
-			] );
-		}
-
 		if ( count( func_get_args() ) == 2 ) {
 			throw new MWException( __METHOD__ .' called in the old style' );
 		}
@@ -130,6 +121,21 @@ class ThumbnailVideo extends ThumbnailImage {
 		}
 
 		wfProfileIn( __METHOD__ );
+
+		// Migrate to new system which uses a template instead of this toHtml method
+		if( !empty( $options[ 'useTemplate' ] ) ) {
+			$html = $app->renderView( 'VideoThumbnailController', 'thumbnail',  [
+				'file' => $this->file,
+				'url' => $this->url,
+				'width' => $this->width,
+				'height' => $this->height,
+				'options' => $options,
+			] );
+
+			wfProfileOut( __METHOD__ );
+
+			return $html;
+		}
 
 		$alt = empty( $options['alt'] ) ? '' : $options['alt'];
 
@@ -213,12 +219,16 @@ class ThumbnailVideo extends ThumbnailImage {
 			$extraBorder = $this->file->addExtraBorder( $this->width );
 		}
 		if ( !empty( $extraBorder ) ) {
-			if ( !isset( $attribs['style'] ) ) $attribs['style'] = '';
+			if ( !isset( $attribs['style'] ) ) {
+				$attribs['style'] = '';
+			}
 			$attribs['style'] .= 'border-top: 15px solid black; border-bottom: '.$extraBorder.'px solid black;';
 		}
 
 		if ( isset( $options['imgExtraStyle'] ) ) {
-			if ( !isset( $attribs['style'] ) ) $attribs['style'] = '';
+			if ( !isset( $attribs['style'] ) ) {
+				$attribs['style'] = '';
+			}
 			$attribs['style'] .= $options['imgExtraStyle'];
 		}
 
@@ -232,7 +242,7 @@ class ThumbnailVideo extends ThumbnailImage {
 
 		$html = Xml::openElement( 'a', $linkAttribs );
 
-		if ( isset( $duration ) && !empty( $duration ) ) {
+		if ( !empty( $duration ) ) {
 			$timerProp = array( 'class'=>'timer' );
 			if ( $useRDFData ) {
 				$timerProp['itemprop'] = 'duration';
@@ -253,6 +263,7 @@ class ThumbnailVideo extends ThumbnailImage {
 
 		//give extensions a chance to modify the markup
 		wfRunHooks( 'ThumbnailVideoHTML', array( $options, $linkAttribs, $attribs, $this->file,  &$html ) );
+
 		wfProfileOut( __METHOD__ );
 
 		return $html;
