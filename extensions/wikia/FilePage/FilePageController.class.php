@@ -17,27 +17,29 @@ class FilePageController extends WikiaController {
 	 *                                      Determines whether this collects a local or global file usage data
 	 */
 	public function fileUsage() {
+		wfProfileIn( __METHOD__ );
+
 		$app = F::app();
 
 		$seeMoreLink = '';
 		$seeMoreText = '';
 		$shortenedSummary = array(); // A subset of the data returned to show immediately
 
-		$type = $this->getVal('type', 'local');
+		$type = $this->getVal( 'type', 'local' );
 
 		// Based on $type get global or local data
-		if ($type === 'global') {
+		if ( $type === 'global' ) {
 			// The 'limit' parameter is used by both usage methods we forward to as a way to limit
 			// the number of rows returned.  This is a safeguard against extreme cases
-			$this->setVal('limit', 50);
+			$this->setVal( 'limit', 50 );
 
-			$heading = wfMsg('video-page-global-file-list-header');
+			$heading = wfMessage( 'video-page-global-file-list-header' )->plain();
 
 			// Forward to the getGlobalUsage method
-			$summary = $app->sendRequest('FilePageController', 'getGlobalUsage')->getData()['summary'];
+			$summary = $app->sendRequest( 'FilePageController', 'getGlobalUsage' )->getData()['summary'];
 
-			if (array_key_exists($this->wg->DBname, $summary)) {
-				unset($summary[$this->wg->DBname]);
+			if ( array_key_exists( $this->wg->DBname, $summary ) ) {
+				unset( $summary[$this->wg->DBname] );
 			}
 
 			$count = 0;
@@ -45,15 +47,15 @@ class FilePageController extends WikiaController {
 			// Shorten the list to 3 articles.  We'll flesh out these three with full
 			// details to display now and flesh out the others dynamically from JS when
 			// the user pages forward
-			foreach ($summary as $wiki => $articles) {
-				if ($count < 3) {
-					foreach ($articles as $article) {
+			foreach ( $summary as $wiki => $articles ) {
+				if ( $count < 3 ) {
+					foreach ( $articles as $article ) {
 						$dbName = $article['wiki'];
-						if(empty($shortenedSummary[$dbName])) {
+						if ( empty( $shortenedSummary[$dbName] ) ) {
 							$shortenedSummary[$dbName] = array();
 						}
 						$shortenedSummary[$dbName][] = $article;
-						if (++$count > 2) {
+						if ( ++$count > 2 ) {
 							break;
 						}
 					}
@@ -62,26 +64,26 @@ class FilePageController extends WikiaController {
 				}
 			}
 		} else {
-			$heading = wfMsg('video-page-file-list-header');
-			$summary = $app->sendRequest('FilePageController', 'getLocalUsage')->getData()['summary'];
+			$heading = wfMessage( 'video-page-file-list-header' )->plain();
+			$summary = $app->sendRequest( 'FilePageController', 'getLocalUsage' )->getData()['summary'];
 
 			// Shorten the list down to three articles much like above in global, but
 			// here we also need to make the $shortentedSummary structure uniform to match
 			// the global case
-			if ($summary and count($summary)) {
+			if ( $summary && count( $summary ) ) {
 				$dbName = $this->wg->DBname;
-				$shortenedSummary = array($dbName => array_slice($summary, 0, 3));
+				$shortenedSummary = array( $dbName => array_slice( $summary, 0, 3 ) );
 			}
 
-			$seeMoreLink = SpecialPage::getTitleFor("WhatLinksHere")->escapeLocalUrl();
+			$seeMoreLink = SpecialPage::getTitleFor( "WhatLinksHere" )->escapeLocalUrl();
 			$seeMoreLink .= '/'.$app->wg->Title->getPrefixedDBkey();
-			$seeMoreText = wfMessage( 'file-page-more-links' );
+			$seeMoreText = wfMessage( 'file-page-more-links' )->plain();
 		}
 
 		// Send the $shortenedSummary to fileList to flesh out the details
-		$params = array('summary' => $shortenedSummary, 'type' => $type);
+		$params = array( 'summary' => $shortenedSummary, 'type' => $type );
 		$data = $app->sendRequest( 'FilePageController', 'fileList', $params )->getData();
-		$fileList = empty($data['fileList']) ? array() : $data['fileList'];
+		$fileList = empty( $data['fileList'] ) ? array() : $data['fileList'];
 
 		// Set template variables
 		$this->heading = $heading;
@@ -90,6 +92,8 @@ class FilePageController extends WikiaController {
 		$this->type = $type;
 		$this->seeMoreLink = $seeMoreLink;
 		$this->seeMoreText = $seeMoreText;
+
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**
@@ -104,25 +108,25 @@ class FilePageController extends WikiaController {
 	 *                                      or from an external wiki
 	 */
 	public function fileList() {
-		$summary = $this->getVal('summary', '');
-		$type = $this->getVal('type', '');
+		wfProfileIn( __METHOD__ );
+
+		$summary = $this->getVal( 'summary', '' );
+		$type = $this->getVal( 'type', '' );
 		$result = array();
-		if ( empty($summary) || empty($type) ) {
+		if ( empty( $summary ) || empty( $type ) ) {
 			$this->result = $result;
 			return;
 		}
 
-		if ($type === 'global') {
-			$expandedSummary = $this->addGlobalSummary($summary);
+		if ( $type === 'global' ) {
+			$expandedSummary = $this->addGlobalSummary( $summary );
 		} else {
-			$expandedSummary = $this->addLocalSummary($summary);
+			$expandedSummary = $this->addLocalSummary( $summary );
 		}
 
-		$result = array();
-
-		foreach($expandedSummary as $wiki => $articles) {
-			foreach($articles as $article) {
-				if ( !empty($article['url']) ) {
+		foreach ( $expandedSummary as $wiki => $articles ) {
+			foreach ( $articles as $article ) {
+				if ( !empty( $article['url'] ) ) {
 					$result[] = $article;
 				}
 			}
@@ -130,11 +134,13 @@ class FilePageController extends WikiaController {
 
 		$this->fileList = $result;
 		$this->type = $type;
+
+		wfProfileOut( __METHOD__ );
 	}
 
 	private function nameToTitle ( $dbName ) {
-		$wikiData = WikiFactory::getWikiByDB($dbName);
-		if ( empty($wikiData) ) {
+		$wikiData = WikiFactory::getWikiByDB( $dbName );
+		if ( empty( $wikiData ) ) {
 			return '';
 		} else {
 			return $wikiData->city_title;
@@ -146,34 +152,40 @@ class FilePageController extends WikiaController {
 	 * the RelatedPages extension to render the final HTML
 	 */
 	public function relatedPages() {
+		wfProfileIn( __METHOD__ );
+
 		$this->text = '';
 
 		if( !class_exists( 'RelatedPages' ) ) {
+			wfProfileOut( __METHOD__ );
 			return;
 		}
 
 		# Find the first page that links to this current file page that has a category
 		$pageId = $this->firstPageWithCategory();
-		if (empty($pageId)) {
+		if ( empty( $pageId ) ) {
+			wfProfileOut( __METHOD__ );
 			return;
 		}
 
 		# Get the title object
-		$title = Title::newFromID($pageId);
+		$title = Title::newFromID( $pageId );
 		if (empty($title)) {
+			wfProfileOut( __METHOD__ );
 			return;
 		}
 
 		# Get the categories for this title
 		$cats = $title->getParentCategories();
-		if (!count($cats)) {
+		if ( !count( $cats ) ) {
+			wfProfileOut( __METHOD__ );
 			return;
 		}
 		$titleCats = array();
 
 		# Construct an array of category names to feed to the RelatedPages extension
-		foreach ($cats as $cat_text => $title_text) {
-			$categoryTitle = Title::newFromText($cat_text);
+		foreach ( $cats as $cat_text => $title_text ) {
+			$categoryTitle = Title::newFromText( $cat_text );
 			$titleCats[] = $categoryTitle->getDBkey();
 		}
 
@@ -181,38 +193,44 @@ class FilePageController extends WikiaController {
 		# categories are set via a hook in the page render process, so we have to
 		# supply our own here.
 		$relatedPages = RelatedPages::getInstance();
-		$relatedPages->setCategories($titleCats);
+		$relatedPages->setCategories( $titleCats );
 
 		# Rendering the RelatedPages index with our alternate title and pre-seeded categories.
 		$this->text = F::app()->renderView( 'RelatedPages', 'section', [ "altTitle" => $title, "anyNS" => true ] );
+
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**
 	 * Controller to display a caption under the video, including provider and views
 	 */
 	public function videoCaption() {
-		global $wgWikiaVideoProviders;
+		wfProfileIn( __METHOD__ );
 
-		$provider = $this->getVal('provider');
-		if ( !empty($provider) ) {
+		$provider = $this->getVal( 'provider' );
+		if ( !empty( $provider ) ) {
 			$providerName = explode( '/', $provider );
 			$provider = array_pop( $providerName );
 		}
 
 		$expireDate = $this->getVal( 'expireDate', '' );
-		if ( !empty($expireDate) ) {
+		if ( !empty( $expireDate ) ) {
 			$date = $this->wg->Lang->date( $expireDate );
 			$expireDate = wfMessage( 'video-page-expires', $date )->text();
 		}
 
-		$this->provider = ucwords($provider);
-		$this->detailUrl = $this->getVal('detailUrl');
-		$this->providerUrl = $this->getVal('providerUrl');
+		$this->provider = ucwords( $provider );
+		$this->detailUrl = $this->getVal( 'detailUrl' );
+		$this->providerUrl = $this->getVal( 'providerUrl' );
 		$this->expireDate = $expireDate;
-		$this->viewCount = $this->getVal('views');
+		$this->viewCount = $this->getVal( 'views' );
+
+		wfProfileOut( __METHOD__ );
 	}
 
 	private function firstPageWithCategory () {
+		wfProfileIn( __METHOD__ );
+
 		$target = $this->wg->Title->getDBkey();
 		$dbr = wfGetDB( DB_SLAVE );
 
@@ -237,7 +255,9 @@ class FilePageController extends WikiaController {
 		);
 
 		$info = $res->fetchObject();
-		$dbr->freeResult($res);
+		$dbr->freeResult( $res );
+
+		wfProfileOut( __METHOD__ );
 
 		return empty($info) ? null : $info->page_id;
 	}
@@ -248,13 +268,15 @@ class FilePageController extends WikiaController {
 	 * possible to reuse there.
 	 */
 	public function getLocalUsage () {
-		$target = $this->getVal('fileTitle', $this->wg->Title->getDBkey());
+		wfProfileIn( __METHOD__ );
+
+		$target = $this->getVal( 'fileTitle', $this->wg->Title->getDBkey() );
 
 		// Put an upper limit on how many of files to show
 		$limit = 100;
 
 		// Do a first pass to get everything that directly points here
-		$res = $this->queryImageLinks( $target, $limit + 1);
+		$res = $this->queryImageLinks( $target, $limit + 1 );
 		$rows = array();
 		$redirects = array();
 		foreach ( $res as $row ) {
@@ -269,8 +291,7 @@ class FilePageController extends WikiaController {
 		// redirects of the current target page
 		$hasMore = $count > $limit;
 		if ( !$hasMore && count( $redirects ) ) {
-			$res = $this->queryImageLinks( array_keys( $redirects ),
-				$limit - count( $rows ) + 1 );
+			$res = $this->queryImageLinks( array_keys( $redirects ), $limit - count( $rows ) + 1 );
 			foreach ( $res as $row ) {
 				$redirects[$row->il_to][] = $row;
 				$count++;
@@ -303,7 +324,7 @@ class FilePageController extends WikiaController {
 			// Iterate over everything to summarize
 			foreach ( $pages as $page ) {
 				// Skip this title if we've already seen it.
-				if (!empty( $seen[$page->page_title] ) ) {
+				if ( !empty( $seen[$page->page_title] ) ) {
 					break;
 				}
 				$seen[$page->page_title] = 1;
@@ -322,6 +343,8 @@ class FilePageController extends WikiaController {
 		}
 
 		$this->summary = $summary;
+
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**
@@ -363,38 +386,40 @@ class FilePageController extends WikiaController {
 	 * Figure out what articles include this file from any wiki
 	 */
 	public function getGlobalUsage () {
+		wfProfileIn( __METHOD__ );
 		if ( empty( $this->wg->EnableGlobalUsageExt ) ) {
 			$this->summary = array();
+			wfProfileOut( __METHOD__ );
 			return;
 		}
 
-		$fileTitle = $this->getVal('fileTitle', '');
-		$titleObj = empty($fileTitle) ? $this->wg->Title : Title::newFromText($fileTitle);
+		$fileTitle = $this->getVal( 'fileTitle', '' );
+		$titleObj = empty( $fileTitle ) ? $this->wg->Title : Title::newFromText( $fileTitle );
 
 		// Query the global usage table to see where the current File title is used
 		$query = new GlobalUsageQuery( $titleObj->getDBkey() );
 
-		$titleObj = null;
-
-		if ( $this->getVal('offset') ) {
-			$query->setOffset( $this->getVal('offset') );
+		if ( $this->getVal( 'offset' ) ) {
+			$query->setOffset( $this->getVal( 'offset' ) );
 		}
-		$query->setLimit( $this->wg->Request->getInt('limit', 50) );
+		$query->setLimit( $this->wg->Request->getInt( 'limit', 50 ) );
 		$query->execute();
 
 		$summary = $query->getSingleImageResult();
 
 		// Translate key names and add some additional data
-		foreach ($summary as $dbName => $articles) {
-			foreach ($articles as $info) {
+		foreach ( $summary as $dbName => $articles ) {
+			foreach ( $articles as $info ) {
 				// Change the 'wiki' key from a db name to a display name
 				//$dbName = $info['wiki'];
-				$info['wiki'] = $this->nameToTitle($dbName);
+				$info['wiki'] = $this->nameToTitle( $dbName );
 				$info['dbName'] = $dbName;
 			}
 		}
 
 		$this->summary = $summary;
+
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**
@@ -402,8 +427,8 @@ class FilePageController extends WikiaController {
 	 * the ArticleSummaryController
 	 */
 	public function addLocalSummary ( $data ) {
-		return $this->addSummary($data, function ($dbName, $articleIds) {
-			$response = $this->app->sendRequest('ArticleSummaryController', 'blurb', array('ids' => implode(',', $articleIds)));
+		return $this->addSummary( $data, function ( $dbName, $articleIds ) {
+			$response = $this->app->sendRequest( 'ArticleSummaryController', 'blurb', array( 'ids' => implode( ',', $articleIds ) ) );
 			return $response->getData();
 		});
 	}
@@ -413,65 +438,69 @@ class FilePageController extends WikiaController {
 	 * to the other wiki URLs
 	 */
 	public function addGlobalSummary( $data ) {
-		return $this->addSummary($data, function ($dbName, $articleIds) {
-			$url = WikiFactory::DBtoURL($dbName);
-			$url = WikiFactory::getLocalEnvURL($url);
+		return $this->addSummary( $data, function ( $dbName, $articleIds ) {
+			$url = WikiFactory::DBtoURL( $dbName );
+			$url = WikiFactory::getLocalEnvURL( $url );
 			$url .= '/wikia.php?controller=ArticleSummaryController&method=blurb&format=json&ids=';
-			$url .= implode(',', $articleIds);
+			$url .= implode( ',', $articleIds );
 
-			$out = Http::get($url);
-			return json_decode($out, true);
+			$out = Http::get( $url );
+			return json_decode( $out, true );
 		});
 	}
 
 	private function addSummary ( $data, $summaryFunc ) {
+		wfProfileIn( __METHOD__ );
+
 		// Copy results into a new array to make sure we only return
 		// wikis that gave full summaries
 		$fullData = array();
 
 		// Iterate through each wiki DB name in the data
-		foreach ($data as $dbName => $articles) {
+		foreach ( $data as $dbName => $articles ) {
 
 			// Get all the article IDs for this wiki so we can make one call to
 			// grab the extra data we need from the ArticleSummaryController
-			$articleIds = array_map(function ($item) { return $item['id']; }, $articles);
+			$articleIds = array_map( function ( $item ) { return $item['id']; }, $articles );
 
 			// This function will fetch the data for us
-			$extraData = $summaryFunc($dbName, $articleIds);
+			$extraData = $summaryFunc( $dbName, $articleIds );
 
-			if (!empty($extraData['summary'])) {
+			if ( !empty( $extraData['summary'] ) ) {
 				// Eliminate the superfluous 'summary' key
 				$extraData = $extraData['summary'];
 
 				// Loop with indexes so we can change $data in place
-				for ($i = 0; $i < count($articles); $i++) {
+				for ( $i = 0; $i < count($articles); $i++ ) {
 					$info = $articles[$i];
 
-					if ( empty($extraData[$info['id']]) ) {
+					if ( empty( $extraData[$info['id']] ) ) {
 						continue;
 					} else {
 						$extraInfo = $extraData[$info['id']];
 					}
 
-					if ( !is_array($extraInfo) ) {
+					if ( !is_array( $extraInfo ) ) {
 						continue;
 					}
 
 					// Let the wall code clean up any links to the user wall or forums
-					wfRunHooks( 'FormatForumLinks', array( &$extraInfo, $info['title'], $info['namespace_id']) );
+					wfRunHooks( 'FormatForumLinks', array( &$extraInfo, $info['title'], $info['namespace_id'] ) );
 
 					// Clean up any type of comment on any article page
-					$cleanedText = preg_replace('/\/@comment-.+-[0-9]+$/', '', $extraInfo['titleText']);
-					if ( !empty($cleanedText) ) {
+					$cleanedText = preg_replace( '/\/@comment-.+-[0-9]+$/', '', $extraInfo['titleText'] );
+					if ( !empty( $cleanedText ) ) {
 						$extraInfo['titleText'] = $cleanedText;
 					}
 
-					$articles[$i] = array_merge($info, $extraInfo);
+					$articles[$i] = array_merge( $info, $extraInfo );
 				}
 
 				$fullData[$dbName] = $articles;
 			}
 		}
+
+		wfProfileOut( __METHOD__ );
 
 		return $fullData;
 	}
