@@ -435,10 +435,11 @@ class WikiaMiniUpload {
 
 		$gallery = $wgRequest->getVal( 'gallery', '' );
 		$title_main = urldecode( $wgRequest->getVal( 'article', '' ) );
-
 		$ns = $wgRequest->getVal( 'ns', '' );
-		$ck = $wgRequest->getVal( 'ck' );
 		$link = urldecode( $wgRequest->getVal( 'link', '' ) );
+
+		// Are we in the ck editor?
+		$ck = $wgRequest->getVal( 'ck' );
 
 		$extraId = $wgRequest->getVal('extraId');
 		$newFile =  true;
