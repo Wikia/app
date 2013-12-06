@@ -16,6 +16,7 @@ class ArticlesApiController extends WikiaApiController {
 	const LANGUAGES_LIMIT = 10;
 	const MAX_NEW_ARTICLES_LIMIT = 100;
 	const DEFAULT_NEW_ARTICLES_LIMIT = 20;
+	const DEFAULT_ABSTRACT_LENGTH = 200;
 
 	const PARAMETER_ARTICLES = 'ids';
 	const PARAMETER_TITLES = 'titles';
@@ -342,7 +343,7 @@ class ArticlesApiController extends WikiaApiController {
 				$item[ 'url' ] = $title->getLocalURL();
 				$item[ 'creator' ] = $creators[ $id ];
 				$item[ 'creation_date' ] = isset($revisions[ $id ]) ? $revisions[ $id ][ 'rev_timestamp' ] : null ;
-
+				$item[ 'abstract' ] = wfShortenText( $item[ 'abstract' ], self::DEFAULT_ABSTRACT_LENGTH, true );
 				$item = array_merge($item, $thumbs[ $id ]);
 				$results[] = $item;
 			}
