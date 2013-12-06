@@ -39,11 +39,7 @@ ve.ui.MWReferenceDialog.static.toolbarGroups = [
 	{ 'include': [ 'undo', 'redo' ] },
 	{ 'include': [ 'bold', 'italic', 'link', 'clear' ] },
 	{ 'include': [ 'number', 'bullet', 'outdent', 'indent' ] },
-	{ 'include': [ 'wikiaMediaInsert' ] },
-	{
-		'include': '*',
-		'exclude': [ { 'group': 'format' }, 'reference', 'referenceList', 'mediaInsert', 'code' ]
-	}
+	{ 'include': '*', 'exclude': [ { 'group': 'format' }, 'reference', 'referenceList' ] }
 ];
 
 ve.ui.MWReferenceDialog.static.surfaceCommands = [
