@@ -80,7 +80,7 @@ var SlotTracker = function (log/*, tracker*/) {
 		}
 
 		if (bucket === len - 1) {
-			return timeBuckets[bucket] + '-';
+			return timeBuckets[bucket] + '+';
 		}
 
 		if (bucket >= 0) {
