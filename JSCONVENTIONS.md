@@ -370,10 +370,12 @@ var html = '<p>The sum of ' + a + ' and ' + b + ' plus ' + c +
 	' is ' + (a + b + c);
 ```
 
-Lines should be broken into logical groups if it improves readability, such as splitting each expression of a ternary operator onto its own line even if both will fit on a single line.
+Lines should be broken into logical groups if it improves readability, such as splitting each expression of a ternary operator onto its own line even if both will fit on a single line. If a definition takes up more than one line, declare the variable first and assign its value later. 
 
 ```js
-var baz = firstCondition( foo ) && secondCondition( bar ) ?
+var baz;
+
+baz = firstCondition( foo ) && secondCondition( bar ) ?
 	doStuff( foo, bar ) :
 	doOtherStuff( foo, bar );
 ```
