@@ -86,7 +86,15 @@ $messages['en'] = array(
 
 	'manage-wikia-home-collection-hero-image-tooltip' => 'This image should be $1px × $2px',
 	'manage-wikia-home-collection-sponsor-image-tooltip' => 'This image should be $1px × $2px',
-	'manage-wikia-home-collection-add-file-button' => 'Add a photo'
+	'manage-wikia-home-collection-add-file-button' => 'Add a photo',
+
+	'manage-wikia-home-stats-header' => 'Corporate main page stats',
+	'manage-wikia-home-stats-visitors-label' => 'Monthly visitors',
+	'manage-wikia-home-stats-mobile-percentage-label' => '% Mobile Visitors',
+	'manage-wikia-home-stats-edits-default-label' => 'Changes today fallback',
+	'manage-wikia-home-stats-total-pages-label' => 'Total Pages fallback',
+	'manage-wikia-home-stats-success' => 'Stats updated successfully!',
+	'manage-wikia-home-stats-failure' => 'Data wasn\'t saved. Please correct errors in form and try again. '
 );
 
 /** Message documentation (Message documentation)

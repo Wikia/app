@@ -1,4 +1,25 @@
 <section class="WikiaHomePageStaffTool" id="WikiaHomePageStaffTool">
+	<?php if( !empty($errorMsg) ): ?>
+		<p class="error">
+			<?= $errorMsg; ?>
+		</p>
+	<?php endif; ?>
+
+	<?php if( !empty($infoMsg) ): ?>
+		<p class="success">
+			<?= $infoMsg; ?>
+		</p>
+	<?php endif; ?>
+
+	<div>
+		<h2><?=wfMessage('manage-wikia-home-stats-header')->text(); ?></h2>
+		<form method="post">
+			<?=$statsForm->renderFormFields(); ?>
+			<input type="submit" name="stats" />
+		</form>
+	</div>
+
+	<hr />
 	<p>
 		<?= wfMessage('manage-wikia-home-visualization-wikis')->text(); ?>
 		<select id="visualizationLanguagesList">
@@ -13,20 +34,6 @@
 		<input type="hidden" id="visualizationLang" name="visualizationLang" value="<?= $visualizationLang ?>" />
 		<input type="hidden" id="visualizationWikiId" name="visualizationWikiId" value="<?= $corpWikiId ?>" />
 	</p>
-
-	<hr />
-
-	<?php if( !empty($errorMsg) ): ?>
-    <p class="error">
-		<?= $errorMsg; ?>
-    </p>
-	<?php endif; ?>
-
-	<?php if( !empty($infoMsg) ): ?>
-    <p class="success">
-		<?= $infoMsg; ?>
-    </p>
-	<?php endif; ?>
 
 	<div class="slots-setup">
 		<h2 class="heading">

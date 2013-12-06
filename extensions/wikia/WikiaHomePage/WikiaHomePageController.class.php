@@ -51,8 +51,6 @@ class WikiaHomePageController extends WikiaController {
 	//failsafe
 	const FAILSAFE_ARTICLE_TITLE = 'Failsafe';
 
-	const HOMEPAGE_MEMC_KEY_VER = '1.04';
-
 	/**
 	 * @var WikiaHomePageHelper
 	 */
@@ -73,6 +71,7 @@ class WikiaHomePageController extends WikiaController {
 		$this->helper = new WikiaHomePageHelper();
 		$this->wg->Out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/WikiaHomePage/css/WikiaHomePage.scss'));
 	}
+
 
 	public function index() {
 		//cache response on varnish for 1h to enable rolling of stats
@@ -145,23 +144,19 @@ class WikiaHomePageController extends WikiaController {
 	public function getStats() {
 		wfProfileIn(__METHOD__);
 
-		$memKey = wfSharedMemcKey('wikiahomepage', 'stats', $this->wg->contLang->getCode(), self::HOMEPAGE_MEMC_KEY_VER);
+		$memKey = $this->helper->getStatsMemcacheKey();
 		$stats = $this->wg->Memc->get($memKey);
 		if (empty($stats)) {
-			$stats['visitors'] = $this->helper->getStatsFromArticle('StatsVisitors');
-			$stats['mobilePercentage'] = $this->helper->getStatsFromArticle('MobilePercentage') / 100.0;
+			$stats = $this->helper->getStatsFromWF();
 
 			$stats['edits'] = $this->helper->getEdits();
-			if (empty($stats['edits'])) {
-				$stats['editsDefault'] = $this->helper->getStatsFromArticle('StatsEdits');
-			}
 
 			$stats['communities'] = $this->helper->getTotalCommunities();
 
-			$defaultTotalPages = $this->helper->getStatsFromArticle('StatsTotalPages');
 			$totalPages = intval(Wikia::get_content_pages());
-			$stats['totalPages'] = ($totalPages > $defaultTotalPages) ? $totalPages : $defaultTotalPages;
-
+			if ($totalPages > $stats['totalPages']) {
+				$stats['totalPages'] = $totalPages;
+			}
 			$stats['newCommunities'] = $this->helper->getLastDaysNewCommunities();
 
 			$this->wg->Memc->set($memKey, $stats, 60 * 60 * 1);
