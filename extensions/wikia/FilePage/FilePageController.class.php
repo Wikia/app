@@ -427,7 +427,7 @@ class FilePageController extends WikiaController {
 	 * the ArticleSummaryController
 	 */
 	public function addLocalSummary ( $data ) {
-		return $this->addSummary( $data, function ( $articleIds ) {
+		return $this->addSummary( $data, function ( $dbName, $articleIds ) {
 			$response = $this->app->sendRequest( 'ArticleSummaryController', 'blurb', array( 'ids' => implode( ',', $articleIds ) ) );
 			return $response->getData();
 		});
