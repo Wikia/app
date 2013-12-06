@@ -437,6 +437,7 @@ class WikiaMiniUpload {
 		$title_main = urldecode( $wgRequest->getVal( 'article', '' ) );
 
 		$ns = $wgRequest->getVal( 'ns', '' );
+		$ck = $wgRequest->getVal( 'ck' );
 		$link = urldecode( $wgRequest->getVal( 'link', '' ) );
 
 		$extraId = $wgRequest->getVal('extraId');
@@ -606,7 +607,7 @@ class WikiaMiniUpload {
 
 		$ns_img = $wgContLang->getFormattedNsText( NS_IMAGE );
 
-		if ( ( -2 == $gallery ) ) {
+		if ( ( -2 == $gallery ) && !$ck ) {
 			// this went in from the single placeholder...
 			$name = $title->getText();
 			$size = $wgRequest->getVal('size');
