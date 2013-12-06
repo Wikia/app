@@ -23,6 +23,7 @@ ve.init.mw.WikiaViewPageTarget = function VeInitMwWikiaViewPageTarget() {
 OO.inheritClass( ve.init.mw.WikiaViewPageTarget, ve.init.mw.ViewPageTarget );
 
 /* Static Properties */
+
 ve.init.mw.WikiaViewPageTarget.static.toolbarGroups = [
 	{ 'include': [ 'undo', 'redo' ] },
 	{
@@ -34,10 +35,7 @@ ve.init.mw.WikiaViewPageTarget.static.toolbarGroups = [
 	{ 'include': [ 'bold', 'italic', 'link', 'clear' ] },
 	{ 'include': [ 'number', 'bullet' ] },
 	{ 'include': [ 'wikiaMediaInsert' ] },
-	{
-		'include': '*',
-		'exclude': [ 'mediaInsert', 'code' ]
-	}
+	{ 'include': '*', 'exclude': [ 'code', 'mediaInsert' ] }
 ];
 
 ve.init.mw.WikiaViewPageTarget.prototype.setupSkinTabs = function () {
