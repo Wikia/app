@@ -251,7 +251,6 @@
 	box-sizing: border-box;
 }
 .oo-ui-frame {
-	display: block;
 	margin: 0;
 	padding: 0;
 }
@@ -1368,7 +1367,7 @@ a.oo-ui-buttonWidget-button {
 }
 
 .oo-ui-window-body {
-	padding: 0 0.75em 0.5em 0.75em;
+	padding: 0 0.75em;
 }
 
 .oo-ui-window-icon {

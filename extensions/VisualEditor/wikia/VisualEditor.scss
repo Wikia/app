@@ -8,7 +8,7 @@
 // VE Mixins
 @import "modules/ve/ui/styles/mixins/ve-icon";
 
-// Wikia VE Imports
+// VE Imports
 @import "modules/ve/ui/styles/color";
 @import "modules/ve/ui/styles/ve.ui.Context";
 @import "modules/ve/ui/styles/ve.ui.Dialog";
@@ -22,6 +22,9 @@
 @import "modules/ve/ui/styles/ve.ui.Widget";
 @import "modules/ve/ui/styles/ve.ui.WikiaMediaInsertDialog";
 @import "modules/ve/ui/styles/ve.ui.WikiaSourceModeDialog";
+
+// OO Imports
+@import "modules/ve/ui/styles/oo.ui.Window";
 
 /*
  * Fixes background colors in inspectors and dialogs
