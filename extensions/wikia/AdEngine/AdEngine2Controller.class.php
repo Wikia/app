@@ -382,13 +382,14 @@ class AdEngine2Controller extends WikiaController {
 	 * @return bool
 	 */
 	static public function onWikiaSkinTopScriptsLegacy(&$vars, &$scripts) {
-		global $wgCityId, $wgEnableKruxTargeting, $wgNoExternals;
+		global $wgCityId, $wgEnableKruxTargeting, $wgNoExternals, $wgEnableWikiaHomePageExt;
 
 		wfProfileIn(__METHOD__);
 
 		// generic type of page: forum/search/article/home/...
 		$vars['wikiaPageType'] = WikiaPageType::getPageType();
 		$vars['wikiaPageIsHub'] = WikiaPageType::isWikiaHub();
+		$vars['wikiaPageIsWikiaHomePage'] = !empty( $wgEnableWikiaHomePageExt ) && WikiaPageType::isMainPage();
 
 		// category/hub
 		$catInfo = HubService::getComscoreCategory($wgCityId);
