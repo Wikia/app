@@ -48,13 +48,11 @@ define('modal', ['throbber', 'jquery'], function modal(throbber, $){
 		ev.stopPropagation();
 		ev.preventDefault();
 		close();
-		w.history.back();
 	}
 
-	function onHashChange(ev){
-		if(opened && w.location.hash === ''){
-			ev.preventDefault();
-			close();
+	function onPopState(ev){
+		if ( opened ) {
+			onCloseClick(ev);
 		}
 	}
 
@@ -93,8 +91,6 @@ define('modal', ['throbber', 'jquery'], function modal(throbber, $){
 
 		!created && setup();
 
-		$.event.trigger('ads:unfix');
-
 		var con = options.content,
 			tool = options.toolbar,
 			cap = options.caption,
@@ -129,14 +125,12 @@ define('modal', ['throbber', 'jquery'], function modal(throbber, $){
 
 			},50);
 
-			//needed for closing modal on back button
-			w.location.hash = 'Modal';
 
 			//hide adress bar on orientation change
 			w.addEventListener('viewportsize', onOrientationChange);
 
 			//handle close on back button
-			w.addEventListener('hashchange', onHashChange);
+			w.addEventListener('popstate', onPopState);
 
 			//close modal on back button
 			closeButton.addEventListener('click', onCloseClick);
@@ -202,7 +196,7 @@ define('modal', ['throbber', 'jquery'], function modal(throbber, $){
 					topBar.className = '';
 
 					w.removeEventListener('viewportsize', onOrientationChange);
-					w.removeEventListener('hashchange', onHashChange);
+					w.removeEventListener('popstate', onPopState);
 					closeButton.removeEventListener('click', onCloseClick);
 					content.removeEventListener('click', onContentClick);
 
@@ -216,8 +210,6 @@ define('modal', ['throbber', 'jquery'], function modal(throbber, $){
 						onClose();
 					}
 				},310);
-
-				$.event.trigger('ads:fix');
 			},10);
 
 			opened = false;

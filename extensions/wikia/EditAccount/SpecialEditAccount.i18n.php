@@ -1270,6 +1270,7 @@ $messages['lb'] = array(
 	'editaccount-log-entry-realname' => 'huet de richtegen Numm vum Benotzer $2 geännert',
 	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">Dëse Benotzerkont gouf global desaktivéiert.</div>',
 	'right-editaccount' => 'Aner Benotzerastellungen änneren',
+	'action-editaccount' => 'anere Benotzer hir Informatiounen änneren',
 );
 
 /** Lithuanian (lietuvių)

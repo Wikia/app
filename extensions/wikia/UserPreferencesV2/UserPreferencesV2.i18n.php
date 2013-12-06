@@ -407,6 +407,7 @@ $messages['fr'] = array(
 );
 
 /** Galician (galego)
+ * @author Fitoschido
  * @author Toliño
  * @author Vivaelcelta
  */
@@ -422,7 +423,7 @@ $messages['gl'] = array(
 	'preferences-v2-fancysig-help-page-name' => 'Help:Sinatura',
 	'prefs-appearance' => 'Aparencia',
 	'preferences-v2-date' => 'Formato da data:',
-	'preferences-v2-time' => 'Zona horaria:',
+	'preferences-v2-time' => 'Fuso horario:',
 	'preferences-v2-skin' => 'Disposición:',
 	'prefs-emailv2' => 'Correo electrónico',
 	'prefs-email-me-v2' => 'Enviádeme un correo electrónico cando...',
@@ -435,13 +436,13 @@ $messages['gl'] = array(
 	'prefs-wikiemail' => 'Opcións de {{SITENAME}}. Enviádeme un correo electrónico cando...',
 	'prefs-email-unsubscribe' => 'Desactivar todos os correos electrónicos',
 	'unsubscribe-preferences-toggle-v2' => 'Desactivar todos os correos electrónicos de Wikia (anula todas as outras opcións)',
-	'tog-watchlistdigest-v2' => '...estea preparado un boletín semanal de cambios nas miñas páxinas seguidas',
+	'tog-watchlistdigest-v2' => '...haxa un boletín semanal dos cambios realizados nas páxinas que estou seguindo',
 	'tog-justify-v2' => 'Amosar os parágrafos xustificados',
 	'preferences-v2-user-landing-page' => 'Páxina de destino:',
 	'preferences-v2-redirect-wiki-activity' => 'Actividade no wiki',
 	'preferences-v2-redirect-main-page' => 'Portada',
 	'preferences-v2-redirect-recent-changes' => 'Cambios recentes',
-	'preferences-v2-redirect-explanation' => 'A opción da páxina de destino permite elixir a onde ir cando escribe "$1" no seu navegador.',
+	'preferences-v2-redirect-explanation' => 'A opción da páxina de destino permite elixir a onde ir cando escribes "$1" no teu navegador.',
 	'prefs-monobookv2' => 'MonoBook',
 	'prefs-under-the-hood' => 'Para detallistas',
 	'prefs-recent-changesv2' => 'Cambios recentes, historiais e rexistros',
@@ -877,6 +878,38 @@ $messages['uk'] = array(
 	'tog-editsectiononrightclick-v2' => 'Редагувати розділи при правому клацанні на назвах розділів',
 	'tog-editondblclick-v2' => 'Редагувати сторінки при подвійному клацанні мишкою',
 	'tog-hidefollowedpages-v2' => 'Приховати мій список відстежуваних сторінок від усіх',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'prefs-personal' => 'Thông tin về tôi',
+	'preferences-v2-username' => 'Tên đăng nhập của tôi:',
+	'preferences-v2-usergroups' => 'Nhóm người dùng của tôi:',
+	'preferences-v2-gender' => 'Giới tính của tôi:',
+	'preferences-v2-password' => 'Mật khẩu:',
+	'preferences-v2-oldsig' => 'Chữ ký hiện tại:',
+	'preferences-v2-nickname' => 'Chữ ký tùy chỉnh:',
+	'preferences-v2-fancysig' => 'Tôi muốn sử dụng mã nguồn trong chữ ký của tôi<br />[[{{MediaWiki:preferences-v2-fancysig-help-page-name}}|Chữ ký là gì?]]',
+	'preferences-v2-fancysig-help-page-name' => 'Help:Chữ ký',
+	'prefs-appearance' => 'Xuất hiện',
+	'preferences-v2-date' => 'Định dạng ngày:',
+	'preferences-v2-time' => 'Múi giờ:',
+	'preferences-v2-redirect-wiki-activity' => 'Hoạt động của Wiki',
+	'preferences-v2-redirect-main-page' => 'Trang Chính',
+	'preferences-v2-redirect-recent-changes' => 'Thay đổi gần đây',
+	'preferences-v2-watchdefault' => 'Sửa đổi',
+	'preferences-v2-watchmoves' => 'Di chuyển',
+	'preferences-v2-watchdeletion' => 'Xóa',
+	'preferences-v2-watchcreations' => 'Tạo',
+	'preferences-v2-showads-enable' => 'Hiển thị tất cả quảng cáo',
+	'preferences-v2-showads-disable' => 'Không hiển thị tất cả quảng cáo',
+	'preferences-v2-my-email-address' => 'Thư điện tử của bạn:',
+	'prefs-patrolled-editsv2' => 'Tuần tra sửa đổi',
+	'tog-editsectiononrightclick-v2' => 'Chỉnh sửa phần bằng cách nhấp phải vào đề mục',
+	'tog-editondblclick-v2' => 'Chỉnh sửa các trang trên nhấp đúp chuột',
+	'tog-hidefollowedpages-v2' => 'Ẩn danh sách theo trang của tôi từ tất cả mọi người',
 );
 
 /** Volapük (Volapük)
