@@ -851,6 +851,19 @@ checkbox on Special:Block',
 	'wall-topic-edit-cancel' => 'Edit Topics - Cancel button',
 );
 
+/** Old English (Ænglisc)
+ * @author Espreon
+ */
+$messages['ang'] = array(
+	'wall-toolbar-history' => 'Stǣr',
+	'wall-button-to-cancel-preview' => 'Adihtan',
+	'wall-message-edit' => 'Adihtan',
+	'wall-message-delete' => 'Forlēosan',
+	'wall-history' => 'Stǣr',
+	'wall-quote-author' => '$1 wrāt:',
+	'wall-topic-edit-save' => 'Hordian',
+);
+
 /** Arabic (العربية)
  * @author Achraf94
  * @author زكريا
@@ -2301,6 +2314,7 @@ ___________________________________________<br />
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
  * @author Gorizon
+ * @author Marmase
  * @author Mirzali
  */
 $messages['diq'] = array(
@@ -2309,7 +2323,7 @@ $messages['diq'] = array(
 	'wall-message-wall' => 'Mesacê Dêsi',
 	'wall-message-wall-shorten' => 'dês',
 	'wall-message-unfollow' => 'Mepaw',
-	'wall-message-undoremove' => 'peyser bia',
+	'wall-message-undoremove' => 'Peyser biya',
 	'wall-message-edited' => '<a href="$3" >Vurnerê</a> <a class="namey karberi" href="$1">$2</a>',
 	'wall-message-edited-summary' => '<a href="$4" >$1 by </a><a class="username" href="$2">$3</a>',
 	'wall-message-update-highlight-summary' => 'Xulaseya',
@@ -3389,7 +3403,7 @@ A mensaxe orixinal e o seu resumo seguirán aparecendo no historial do wiki.',
 	'wall-action-rev-thread-confirm' => 'Está seguro de querer borrar revisións deste fío e todo o seu historial do wiki? Esta acción non se pode desfacer.',
 	'wall-action-rev-confirm-ok' => 'Si, borrar',
 	'wall-action-move-thread-heading' => 'Trasladar este fío',
-	'wall-action-move-validation-select-wall' => 'Selecciona unha táboa',
+	'wall-action-move-validation-select-wall' => 'Selecciona un taboleiro',
 	'wall-action-move-topics-summary' => 'Fío trasladado',
 	'wall-action-move-thread-ok' => 'Mover o fío',
 	'wall-action-move-board-label' => 'Seleccione a táboa á que mover',
@@ -3441,7 +3455,7 @@ A mensaxe orixinal e o seu resumo seguirán aparecendo no historial do wiki.',
 	'wall-sorting-newest-replies' => 'Respostas máis novas primeiro',
 	'wall-sorting-most-active' => 'Máis activos primeiro',
 	'wall-sorting-archived' => 'Arquivados',
-	'tog-enotifwallthread' => '…alguén responde á mensaxe dun muro que sigo',
+	'tog-enotifwallthread' => '…alguén responde á mensaxe dun muro que estou seguindo',
 	'tog-enotifmywall' => '…alguén deixa unha nova mensaxe no meu muro',
 	'wall-deleted-msg-pagetitle' => 'Mensaxe borrada',
 	'wall-deleted-msg-text' => 'A mensaxe que intenta consultar foi borrada.',
@@ -3520,7 +3534,7 @@ A mensaxe orixinal e o seu resumo seguirán aparecendo no historial do wiki.',
 	'mail-notification-reply-his' => '$AUTHOR_NAME respondeu a unha mensaxe en $WIKI.',
 	'mail-notification-reply-someone' => '$AUTHOR_NAME respondeu á mensaxe de $PARENT_AUTHOR_NAME en $WIKI.',
 	'mail-notification-html-greeting' => 'Boas, $1:',
-	'mail-notification-html-button' => 'Ollar a conversa',
+	'mail-notification-html-button' => 'Ver a conversa',
 	'mail-notification-subject' => '$1 -- $2',
 	'mail-notification-html-footer-line3' => '<a href="http://www.twitter.com/wikia" style="text-decoration:none">
 <img alt="twitter" src="http://images4.wikia.nocookie.net/wikianewsletter/images/f/f7/Twitter.png" style="border:none">
@@ -4178,6 +4192,7 @@ $messages['it'] = array(
 );
 
 /** Japanese (日本語)
+ * @author BryghtShadow
  * @author Shirayuki
  * @author Tommy6
  * @author Whym
@@ -4415,7 +4430,7 @@ ___________________________________________
 ___________________________________________<br />
 <p>* フォローの設定を変更する:<br />
 http://ja.wikia.com/wiki/Special:Following</p>',
-	'prefs-email-wall-v2' => 'メッセージウォール', # Fuzzy
+	'prefs-email-wall-v2' => 'メッセージウォールとフォーラム',
 	'tog-enotifwallthread-v2' => 'メール通知の設定',
 	'tog-enotifmywall-every' => 'すべてのメッセージと返信を通知',
 	'tog-enotifmywall-sincevisited' => '各スレッドについて最後の閲覧後に一度だけ通知する',
@@ -4429,7 +4444,7 @@ http://ja.wikia.com/wiki/Special:Following</p>',
 	'wall-message-notifyeveryone-tooltip' => 'このウィキを閲覧している全ての登録利用者に対してこのスレッドに関する通知が行われます', # Fuzzy
 	'wall-votes-modal-title' => 'いいね',
 	'wall-votes-modal-title-desc' => '$1人の利用者がこのメッセージに「いいね」を付けました。',
-	'wall-votes-number' => '$1 いいね', # Fuzzy
+	'wall-votes-number' => '$1 いいね',
 	'wall-votes-number-tooltip' => '誰がこのメッセージに「いいね」を付けたのかをみる。',
 	'wall-votes-vote-tooltip' => 'このメッセージに「いいね」を付ける',
 	'wall-votes-voted-tooltip' => 'このメッセージには既に「いいね」を付けています',
@@ -6228,6 +6243,7 @@ $messages['ps'] = array(
 
 /** Portuguese (português)
  * @author Hamilton Abreu
+ * @author Josep Maria 15.
  * @author Luckas
  * @author Malafaya
  * @author SandroHc
@@ -6302,7 +6318,7 @@ $messages['pt'] = array(
 	'wall-notifications-empty' => 'Não existem notificações',
 	'wall-notifications-loading' => 'A carregar notificações',
 	'wall-notifications-reminder' => 'Você tem <span>$1</span> {{PLURAL:$1|notificação|notificações}} por ler',
-	'wn-user1-reply-self-a-wall' => '$1 respondeu á mensagem',
+	'wn-user1-reply-self-a-wall' => '$1 respondeu à mensagem',
 	'wn-newmsg' => 'Você deixou uma nova mensagem no mural de $1',
 	'wn-admin-thread-deleted' => 'Tópico removido do mural de $1',
 	'wall-sorting-newest-threads' => 'Tópicos mais recentes',
@@ -6363,9 +6379,9 @@ $messages['pt'] = array(
 	'wall-message-not-found-in-db' => 'Não conseguimos encontrar esta mural de mensagens na nossa base de dados.',
 	'mail-notification-new-someone' => '$AUTHOR_NAME escreveu uma nova mensagem na $WIKI.',
 	'mail-notification-new-your' => '$AUTHOR_NAME deixou-te uma nova mensagem na $WIKI.',
-	'mail-notification-reply-your' => '$AUTHOR_NAME respondeu á tua mensagem na $WIKI.',
+	'mail-notification-reply-your' => '$AUTHOR_NAME respondeu à tua mensagem na $WIKI.',
 	'mail-notification-reply-his' => '$AUTHOR_NAME respondeu a uma mensagem na $WIKI.',
-	'mail-notification-reply-someone' => '$AUTHOR_NAME respondeu á mensagem de $PARENT_AUTHOR_NAME na $WIKI.',
+	'mail-notification-reply-someone' => '$AUTHOR_NAME respondeu à mensagem de $PARENT_AUTHOR_NAME na $WIKI.',
 	'mail-notification-html-greeting' => 'Olá $1,',
 	'mail-notification-html-button' => 'Ver a conversação',
 	'mail-notification-body' => 'Olá $WATCHER,
@@ -6894,7 +6910,7 @@ $messages['ru'] = array(
 </a>',
 	'mail-notification-html-footer-line1' => 'Чтобы узнать о последних событиях на Викия, посетите <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
 	'mail-notification-html-footer-line2' => 'Чтобы настроить уведомления по email, перейдите на страницу <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">личных настроек</a>',
-	'mail-notification-body' => 'Hi $WATCHER,
+	'mail-notification-body' => 'Привет, $WATCHER,
 
 $SUBJECT
 
@@ -6934,11 +6950,11 @@ ___________________________________________<br />
 	'wall-message-notifyeveryone' => 'Сообщить всем об этой теме',
 	'wall-message-unnotifyeveryone' => 'Отменить сообщение об этой теме',
 	'wall-message-notifyeveryone-tooltip' => 'Все зарегистрированные участники будут уведомлены об этой теме при следующем визите проекта',
-	'wall-votes-modal-showmore' => 'Посмотреть, кто ещё добавил "Мне нравится"',
+	'wall-votes-modal-showmore' => 'Посмотреть, кто ещё добавил «Мне нравится»',
 	'wall-votes-modal-title' => 'Мне нравится',
-	'wall-votes-modal-title-desc' => '{{PLURAL:$1|Один участник|$1 участника|$1 участников}} добавили "Мне нравится" к этому сообщению',
+	'wall-votes-modal-title-desc' => '{{PLURAL:$1|Один участник|$1 участника|$1 участников}} добавили «Мне нравится» к этому сообщению',
 	'wall-votes-number' => '$1 {{PLURAL:$1|«мне нравится»}}',
-	'wall-votes-number-tooltip' => 'Посмотреть, кто добавил "Мне нравится"',
+	'wall-votes-number-tooltip' => 'Посмотреть, кто добавил «Мне нравится»',
 	'wall-votes-vote-tooltip' => 'Мне нравится это сообщение',
 	'wall-votes-voted-tooltip' => 'Вам понравилось это сообщение!',
 	'wall-quote-author' => 'От $1:',

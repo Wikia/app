@@ -232,7 +232,7 @@ class CF_Http
 		curl_setopt( $curl_ch, CURLOPT_TIMEOUT, 10 );
 		curl_setopt( $curl_ch, CURLOPT_URL, $url );
 		if ( curl_exec( $curl_ch ) === false ) {
-			$this->response_reason = "(curl error: " . curl_errno( $curl_ch ) . ") ";
+			$this->response_reason = "[{$host}] (curl error: " . curl_errno( $curl_ch ) . ") ";
 			$this->response_reason .= curl_error( $curl_ch );
 		}
 		curl_close( $curl_ch );
@@ -970,7 +970,12 @@ class CF_Http
         // Wikia change - end
 
         $hdrs = self::_process_headers($metadata, $headers);
-        $hdrs[DESTINATION] = $destination;
+
+		// Wikia change - begin
+		// @author macbre
+		// BAC-1102 - encode URL in HTTP header as RFC 5987 tells us to
+        $hdrs[DESTINATION] = urlencode($destination);
+		// Wikia change - end
 
         $return_code = $this->_send_request($conn_type,$url_path,$hdrs,"COPY");
         switch ($return_code) {
@@ -1444,7 +1449,7 @@ class CF_Http
             CURLOPT_URL, $url_path);
 
         if (!curl_exec($this->connections[$conn_type]) && curl_errno($this->connections[$conn_type]) !== 0) {
-            $this->error_str = "(curl error: "
+            $this->error_str = "[{$this->storage_url}: {$method} <{$url_path}> " . json_encode($headers) . "] (curl error: "
                 . curl_errno($this->connections[$conn_type]) . ") ";
             $this->error_str .= curl_error($this->connections[$conn_type]);
 

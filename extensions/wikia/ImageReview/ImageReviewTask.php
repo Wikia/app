@@ -49,6 +49,7 @@ class ImageReviewTask extends BatchTask {
 		}
 
 		$data = unserialize($params->task_arguments);
+		$suppress = ( isset( $data['suppress'] ) && $data['suppress'] === true );
 
 		foreach ( $data['page_list'] as $imageData ) {
 			$retval = "";
@@ -86,6 +87,9 @@ class ImageReviewTask extends BatchTask {
 			$sCommand .= "--id " . $imageId . " ";
 			if ( $reason ) {
 				$sCommand .= "-r " . escapeshellarg( $reason ) . " ";
+			}
+			if ( $suppress ) {
+				$sCommand .= '-s ';
 			}
 
 			$actual_title = wfShellExec($sCommand, $retval);
@@ -136,5 +140,5 @@ class ImageReviewTask extends BatchTask {
 
 	function getForm( $title, $errors = false ) {}
 
-	function submitForm() {} 
+	function submitForm() {}
 }

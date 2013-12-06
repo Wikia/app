@@ -2,9 +2,10 @@
 
 ve.ui.WikiaCartItemWidget = function VeUiWikiaCartItemWidget( model, config ) {
 	var size = 60, $image;
-	this.model = model;
-	OO.ui.OptionWidget.call( this, this.model.title, config );
 
+	OO.ui.OptionWidget.call( this, model.getId(), config );
+
+	this.model = model;
 	this.$element.addClass( 've-ui-texture-pending' );
 
 	$image = this.$( '<img>' )

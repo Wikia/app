@@ -731,6 +731,7 @@ Vols controlar els correus que reps? Vés a: {{fullurl: {{ns:special}}:Preferèn
  */
 $messages['ce'] = array(
 	'usersignup-confirm-email-update' => 'Карлаяккха',
+	'usersignup-resend-email-heading-success' => 'Керла хаам дӀабахийтина',
 	'usersignup-reconfirmation-email_subject' => 'Бакъде электрони почтан адрес хуьйцуш хилар Вики чохь',
 	'usersignup-welcome-email-learn-basic-button' => 'Дехьа гӀо',
 );
@@ -3551,6 +3552,7 @@ $messages['ps'] = array(
 );
 
 /** Portuguese (português)
+ * @author Josep Maria 15.
  * @author Luckas
  * @author SandroHc
  */
@@ -3570,7 +3572,7 @@ $messages['pt'] = array(
 	'usersignup-reconfirmation-email-greeting' => 'Olá $USERNAME',
 	'usersignup-reconfirmation-email-signature' => 'A equipe da Wikia',
 	'usersignup-welcome-email-greeting' => 'Olá $USERNAME',
-	'usersignup-welcome-email-edit-profile-heading' => 'Editar seu perfil.',
+	'usersignup-welcome-email-edit-profile-heading' => 'Edita o teu perfil.',
 	'usersignup-welcome-email-learn-basic-heading' => 'Aprenda o básico.',
 	'usersignup-welcome-email-explore-wiki-heading' => 'Explorar mais wikis.',
 	'usersignup-welcome-email-explore-wiki-button' => 'Ir para wikia.com',

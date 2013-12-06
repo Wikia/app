@@ -426,6 +426,22 @@ $messages['uk'] = array(
 	'userdata-no-wf' => 'WikiFactory на цій вікі не увімкнено. Не вдається змінити wgUserData.',
 );
 
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'userdata' => 'Nhận dữ liệu người dùng',
+	'userdata-userid-label' => 'Cung cấp ID người dùng:',
+	'userdata-submit' => 'Lấy dữ liệu',
+	'specialuserdata-desc' => 'Cung cấp một giao diện cho việc thay đổi wgUserData một wiki.',
+	'userdata-header' => 'Tăng wgUserData',
+	'userdata-value' => 'Các giá trị hiện tại của wgUserData là "$1". Bấm nút để đặt nó vào dấu thời gian hiện tại.',
+	'userdata-updated' => 'wgUserData cập Nhật để "$1".',
+	'userdata-not-updated' => 'Thất bại trong việc cập Nhật wgUserData.',
+	'userdata-wf-reason' => 'Giá trị cập nhật thông qua [[Special:UserData|UserData]]',
+	'userdata-no-wf' => 'WikiFactory không được kích hoạt trên wiki này. Không thể thay đổi wgUserData.',
+);
+
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Yfdyh000

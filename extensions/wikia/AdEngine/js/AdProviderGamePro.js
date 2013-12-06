@@ -1,4 +1,6 @@
-var AdProviderGamePro = function(adLogicPageLevelParamsLegacy, ScriptWriter, tracker, log, window, slotTweaker) {
+/*exported AdProviderGamePro*/
+/*jshint maxparams:false*/
+var AdProviderGamePro = function(adLogicPageLevelParamsLegacy, ScriptWriter, adTracker, log, window, slotTweaker) {
 	'use strict';
 
 	var ord = Math.round(Math.random() * 23456787654),
@@ -45,19 +47,13 @@ var AdProviderGamePro = function(adLogicPageLevelParamsLegacy, ScriptWriter, tra
 		log('fillInSlot', 5, 'AdProviderGamePro');
 		log(slot, 5, 'AdProviderGamePro');
 
-		var slotname = slot[0],
-			slotsize = slot[1] || slotMap[slotname].size;
+		var slotname = slot[0];
 
-		tracker.track({
-			eventName: 'liftium.slot2',
-			ga_category: 'slot2/' + slotsize.split(',')[0],
-			ga_action: slotname,
-			ga_label: 'gamepro',
-			trackingMethod: 'ad'
-		});
+		adTracker.trackSlot('gamepro', slotname).init();
 
 		ScriptWriter.injectScriptByUrl(slotname, getUrl(slotname), function () {
 			slotTweaker.removeTopButtonIfNeeded(slotname);
+			slotTweaker.removeDefaultHeight(slotname);
 		});
 	}
 

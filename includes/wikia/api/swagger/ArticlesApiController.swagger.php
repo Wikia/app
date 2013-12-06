@@ -9,6 +9,89 @@ use Swagger\Annotations as SWG;
  * 	basePath="http://www.wikia.com"
  * )
  *
+ * @SWG\Model( id="ContentResult" )
+ * 	@SWG\Property(
+ * 		name="sections",
+ * 		type="Section",
+ * 		required="true",
+ * 		description="Article section data container"
+ * 	)
+ *
+ * @SWG\Model( id="Section" )
+ * 	@SWG\Property(
+ * 		name="title",
+ * 		type="string",
+ * 		required="true",
+ * 		description="Article section title"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="level",
+ * 		type="int",
+ * 		required="true",
+ * 		description="Section nesting level"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="content",
+ * 		type="Array",
+ * 		items="$ref:SectionContent",
+ * 		required="true",
+ * 		description="Section content"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="images",
+ * 		type="Array",
+ * 		items="$ref:SectionImages",
+ * 		required="true",
+ * 		description="Images list in section"
+ * 	)
+ *
+ * @SWG\Model( id="SectionContent" )
+ *	@SWG\Property(
+ * 		name="type",
+ * 		type="string",
+ * 		required="true",
+ * 		description="Content element type can be paragraph or list"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="text",
+ * 		type="string",
+ * 		required="false",
+ * 		description="Cleaned up paragraph text"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="elements",
+ * 		type="Array",
+ * 		items="$ref:ListElement",
+ * 		required="false",
+ * 		description="Array containing list elements"
+ * 	)
+ * @SWG\Model( id="ListElement" )
+ * 	@SWG\Property(
+ * 		name="text",
+ * 		type="string",
+ * 		required="true",
+ * 		description="Cleaned up list element text"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="elements",
+ * 		type="Array",
+ * 		required="true",
+ * 		description="Array containing nested list elements"
+ * 	)
+ * @SWG\Model( id="SectionImages" )
+ * 	@SWG\Property(
+ * 		name="src",
+ * 		type="string",
+ * 		required="true",
+ * 		description="Full image URL"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="caption",
+ * 		type="string",
+ * 		required="true",
+ * 		description="Image description"
+ * 	)
+ *
  * @SWG\Model( id="HubArticleResult" )
  * 	@SWG\Property(
  * 		name="wiki",
@@ -557,6 +640,33 @@ use Swagger\Annotations as SWG;
  * 						allowMultiple="false",
  * 						dataType="int",
  * 						defaultValue="200"
+ * 					)
+ * 				)
+ * 			)
+ * 		)
+ * 	)
+ * @SWG\Api(
+ * 		path="/api/v1/Articles/AsSimpleJson",
+ * 		description="Get simplified article contents in JSON format",
+ * 		@SWG\Operations(
+ * 			@SWG\Operation(
+ * 				httpMethod="GET",
+ * 				summary="Get simplified article contents",
+ * 				nickname="getAsSimpleJson",
+ * 				responseClass="ContentResult",
+ * 				@SWG\ErrorResponses(
+ * 					@SWG\ErrorResponse( code="400", reason="Invalid ID parameter" ),
+ * 					@SWG\ErrorResponse( code="404", reason="Article not found" )
+ * 				),
+ * 				@SWG\Parameters(
+ * 					@SWG\Parameter(
+ * 						name="id",
+ * 						description="A single article ID",
+ * 						paramType="query",
+ * 						required="true",
+ * 						allowMultiple="false",
+ * 						dataType="int",
+ * 						defaultValue="50"
  * 					)
  * 				)
  * 			)

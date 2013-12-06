@@ -404,6 +404,13 @@ $messages['uk'] = array(
 	'wikiawidget' => 'Віджети Wikia',
 );
 
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'wikiawidget' => 'Wikia widget',
+);
+
 /** Simplified Chinese (中文（简体）‎)
  * @author Hydra
  */

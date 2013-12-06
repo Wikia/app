@@ -56,27 +56,26 @@ class QuickStatsController extends WikiaController {
 	public function getDailyEdits (Array &$stats, $cityID) {
 		wfProfileIn( __METHOD__ );
 
-		if ( !empty( $this->wg->StatsDBEnabled ) ) {
-			$today = date( 'Y-m-d', strtotime('-1 day') );
-			$week = date( 'Y-m-d', strtotime('-7 day') );
+		$today = date( 'Y-m-d', strtotime('-1 day') );
+		$week = date( 'Y-m-d', strtotime('-7 day') );
+		$db = wfGetDB(DB_SLAVE, array(), $this->wg->StatsDB);
 
-			$db = wfGetDB(DB_SLAVE, array(), $this->wg->StatsDB);
-
-			$oRes = $db->select(
-				array( 'events' ),
-				array( "date_format(event_date, '%Y-%m-%d') date", 'count(0) as cnt' ),
-				array(  "event_date between '$week 00:00:00' and '$today 23:59:59' ", 'wiki_id' => $cityID ),
-				__METHOD__,
-				array( 'GROUP BY' => 'date WITH ROLLUP' )
-			);
-			while ( $oRow = $db->fetchObject ( $oRes ) ) {
-				if (!$oRow->date) { // rollup row
-					$stats['totals']['edits'] = $oRow->cnt;
-				} else {
-					$stats[ $oRow->date ]['edits'] = $oRow->cnt;
+		(new WikiaSQL())->skipIf(empty($this->wg->StatsDBEnabled))
+			->SELECT("date_format(event_date, '%Y-%m-%d')")->AS_('date')
+				->COUNT(0)->AS_('cnt')
+			->FROM('events')
+			->WHERE('event_date')->BETWEEN("{$week} 00:00:00", "{$today} 23:59:59")
+				->AND_('wiki_id')->EQUAL_TO($cityID)
+			->GROUP_BY('date WITH ROLLUP')
+			->run($db, function($result) use (&$stats) {
+				while ($row = $result->fetchObject()) {
+					if (!$row->date) {
+						$stats['totals']['edits'] = $row->cnt;
+					} else {
+						$stats[$row->date]['edits'] = $row->cnt;
+					}
 				}
-			}
-		}
+			});
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -86,24 +85,24 @@ class QuickStatsController extends WikiaController {
 		wfProfileIn( __METHOD__ );
 
 		$db = wfGetDB(DB_SLAVE, array());
-
 		$today = date( 'Ymd', strtotime('-1 day') ) . '235959';
 		$week = date( 'Ymd', strtotime('-7 day') ) . '000000';
 
-		$oRes = $db->select(
-			array( 'image' ),
-			array( "date_format(img_timestamp, '%Y-%m-%d') date", 'count(0) as cnt' ),
-			array(  "img_timestamp between '$week' and '$today'" ),
-			__METHOD__,
-			array( 'GROUP BY' => 'date WITH ROLLUP')
-		);
-		while ( $oRow = $db->fetchObject ( $oRes ) ) {
-			if (!$oRow->date) { // rollup row
-				$stats['totals']['photos'] = $oRow->cnt;
-			} else {
-				$stats[ $oRow->date ]['photos'] = $oRow->cnt;
-			}
-		}
+		(new WikiaSQL)
+			->SELECT("date_format(img_timestamp, '%Y-%m-%d')")->AS_('date')
+				->COUNT(0)->AS_('cnt')
+			->FROM('image')
+			->WHERE('img_timestamp')->BETWEEN($week, $today)
+			->GROUP_BY('date WITH ROLLUP')
+			->run($db, function($result) use (&$stats) {
+				while ($row = $result->fetchObject()) {
+					if (!$row->date) {
+						$stats['totals']['photos'] = $row->cnt;
+					} else {
+						$stats[$row->date]['photos'] = $row->cnt;
+					}
+				}
+			});
 
 		wfProfileOut( __METHOD__ );
 	}

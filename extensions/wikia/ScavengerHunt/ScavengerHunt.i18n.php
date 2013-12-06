@@ -216,6 +216,15 @@ $messages['af'] = array(
 	'scavengerhunt-entry-form-submit' => 'Stuur inskrywing',
 );
 
+/** Old English (Ænglisc)
+ * @author Espreon
+ */
+$messages['ang'] = array(
+	'scavengerhunt-label-name' => 'Nama:',
+	'scavengerhunt-button-save' => 'Hordian',
+	'scavengerhunt-entry-form-name' => 'Þīn nama:',
+);
+
 /** Arabic (العربية)
  * @author Achraf94
  * @author Meno25
@@ -623,6 +632,7 @@ $messages['de-formal'] = array(
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
+ * @author Marmase
  * @author Mirzali
  */
 $messages['diq'] = array(
@@ -634,7 +644,7 @@ $messages['diq'] = array(
 	'scavengerhunt-label-general' => 'Bıngeh',
 	'scavengerhunt-label-name' => 'Name:',
 	'scavengerhunt-button-save' => 'Star ke',
-	'scavengerhunt-button-disable' => 'Bikefilne',
+	'scavengerhunt-button-disable' => 'Aktif niya',
 	'scavengerhunt-button-enable' => 'Aktif ke',
 	'scavengerhunt-button-delete' => 'Besterne',
 	'scavengerhunt-entry-form-name' => 'Namey şıma',

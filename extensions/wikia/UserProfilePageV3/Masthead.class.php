@@ -225,7 +225,10 @@ class Masthead {
 				/**
 				 * uploaded file, we are adding common/avatars path
 				 */
-				$url = $wgBlogAvatarPath . rtrim($thumb, '/') . $url;
+				// avatars selected from "samples" are stored as full URLs (BAC-1195)
+				if ( strpos( $url, 'http://' ) === false ) {
+					$url = $wgBlogAvatarPath . rtrim($thumb, '/') . $url;
+				}
 			}
 			else {
 				/**
@@ -679,7 +682,7 @@ class Masthead {
 		/**
 		 * generate new image to png format
 		 */
-		$sFilePath = empty( $wgAvatarsUseSwiftStorage ) ? $this->getFullPath() : $this->getTempFile();
+		$sFilePath = empty( $wgAvatarsUseSwiftStorage ) ? $this->getFullPath() : $this->getTempFile(); // either NFS or temp file
 
 		$ioh = new ImageOperationsHelper();
 		$oImg = $ioh->postProcess(  $oImgOrig, $aOrigSize );
@@ -700,7 +703,7 @@ class Masthead {
 		else {
 			$errorNo = UPLOAD_ERR_OK;
 
-			/* remove tmp file */
+			/* remove tmp image */
 			imagedestroy($oImg);
 
 			// store the avatar on Swift
@@ -722,6 +725,12 @@ class Masthead {
 						'src' => $sFilePath,
 						'dst' => $mwStorePath
 					] )->add();
+				}
+
+				// sync with NFS
+				global $wgEnableSwithSyncToLocalFS;
+				if (!empty($wgEnableSwithSyncToLocalFS)) {
+					copy($sFilePath, $this->getFullPath());
 				}
 			}
 

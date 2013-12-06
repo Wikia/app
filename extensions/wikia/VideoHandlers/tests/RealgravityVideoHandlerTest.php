@@ -20,21 +20,17 @@
 		public function testEmbedCode() {
 			// test
 			$url = 'http://api.realgravity.com/v1/widgets/single.json?video_id=124624&player_id=733&api_key='.$this->app->wg->RealgravityApiKey;
-			$req = MWHttpRequest::factory( $url );
-			$status = VideoHandlerHelper::wrapHttpRequest( $req );
-			if( $status->isOK() ) {
-				$response = $req->getContent();
-				$response = json_decode( $response, true );
+			$response_data = Http::request( 'GET', $url, array( 'noProxy' => true ) );
+			if ( $response_data !== false ) {
+				$response = json_decode( $response_data, true );
 				if ( empty($response['widgets']['flash']) ) {
 					$response_data = '';
 				} else {
 					$response_data = trim( preg_replace( '/\n( )*/', '', $response['widgets']['flash'] ) );
 				}
-			} else {
-				$response_data = false;
 			}
 
-			$exp_data = <<<EOT
+			$exp = <<<EOT
 <object id="rg_player_ac330d90-cb46-012e-f91c-12313d18e962" name="rg_player_ac330d90-cb46-012e-f91c-12313d18e962" type="application/x-shockwave-flash"
 width="660" height="360" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" style="visibility: visible;">
 <param name="movie" value="http://anomaly.realgravity.com/flash/player.swf"></param>
@@ -52,7 +48,7 @@ src="http://anomaly.realgravity.com/flash/player.swf"></embed>
 <!--<![endif]-->
 </object>
 EOT;
-			$exp_data = trim( str_replace( "\n", "", $exp_data ) );
+			$exp_data = trim( str_replace( "\n", "", $exp ) );
 
 			$this->assertEquals( $exp_data, $response_data );
 		}

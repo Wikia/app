@@ -700,6 +700,16 @@ class Config
 		return $this->setQueryService( 'Select\\Dismax\\InterWiki', $apply );
 	}
 
+
+	/**
+	 * Synonym function for backward compatbility
+	 * @param  boolean $apply
+	 * @return Wikia\Search\Config provides fluent interface
+	 */
+	public function setOnWiki( $apply ) {
+		return $this->setQueryService( 'Select\\Dismax\\OnWiki', $apply );
+	}
+
 	/**
 	 * Sets (or unsets) video search as query service
 	 * @param bool $apply

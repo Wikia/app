@@ -1011,6 +1011,7 @@ $messages['diq'] = array(
  * @author Shirayuki
  */
 $messages['en-gb'] = array(
+	'rte-ck-justify-center' => 'Align Centre',
 	'rte-ck-link-error-badUrl' => 'We do not recognise that URL - please check it is correct.',
 );
 
@@ -2933,6 +2934,7 @@ $messages['ps'] = array(
  * @author Crazymadlover
  * @author Giro720
  * @author Hamilton Abreu
+ * @author Josep Maria 15.
  * @author Luckas
  * @author Malafaya
  * @author SandroHc
@@ -3036,7 +3038,7 @@ $messages['pt'] = array(
 	'rte-ck-poll-confirmDelete' => 'Tem a certeza de que pretende remover a votação desta página?',
 	'rte-ck-poll-confirmDeleteTitle' => 'Remover esta votação?',
 	'rte-ck-spellchecker-moreSuggestions' => 'Mais sugestões',
-	'rte-ck-pasteText-title' => 'Cole seu texto',
+	'rte-ck-pasteText-title' => 'Cola o teu texto',
 	'rte-ck-format-tag_p' => 'Texto normal',
 );
 
@@ -3876,6 +3878,7 @@ $messages['uk'] = array(
 );
 
 /** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
  * @author NavaRose
  * @author Xiao Qiao
  */
@@ -3941,6 +3944,7 @@ $messages['vi'] = array(
 	'rte-ck-photoGallery-confirmDeleteTitle' => 'Dời bỏ thư viện ảnh?',
 	'rte-ck-photoGallery-tooltip' => 'Đây là một thư viện ảnh.',
 	'rte-ck-photoGallery-tooltipSlideshow' => 'Đây là một khung trình chiếu.',
+	'rte-ck-photoGallery-tooltipSlider' => 'Đây là một thanh trượt.',
 	'rte-ck-poll-add' => 'Thêm một bảng thăm dò',
 	'rte-ck-poll-poll' => 'Bảng thăm dò',
 	'rte-ck-signature-add' => 'Chèn chữ ký của bạn',
@@ -3976,6 +3980,8 @@ $messages['vi'] = array(
 	'rte-ck-videoPlaceholder-confirmDelete' => 'Bạn có chắc rằng muốn dời bỏ mẫu phim từ trang này?',
 	'rte-ck-videoPlaceholder-confirmDeleteTitle' => 'Dời bỏ mẫu phim này?',
 	'rte-ck-videoPlaceholder-tooltip' => 'Đây là một mẫu phim.',
+	'rte-ck-mut-add' => 'Thêm một đoạn video (beta)',
+	'rte-ck-mut-mut' => 'Video (beta)',
 	'rte-ck-widescreen-toggle' => 'Chuyển đổi màn ảnh rộng',
 	'rte-ck-poll-confirmDelete' => 'Bạn có chắc rằng muốn dời bỏ bảng thăm dò từ trang này?',
 	'rte-ck-poll-confirmDeleteTitle' => 'Dời bỏ thăm dò này?',

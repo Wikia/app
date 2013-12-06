@@ -35,7 +35,19 @@ ve.init.mw.WikiaViewPageTarget.static.toolbarGroups = [
 	{ 'include': [ 'bold', 'italic', 'link', 'clear' ] },
 	{ 'include': [ 'number', 'bullet' ] },
 	{ 'include': [ 'wikiaMediaInsert' ] },
-	{ 'include': '*', 'exclude': [ 'code', 'mediaInsert' ] }
+	{
+		'include': '*',
+		'exclude': [ 'mediaInsert', 'code', 'wikiaSourceMode' ]
+	}
+];
+
+ve.init.mw.WikiaViewPageTarget.static.actionsToolbarConfig = [
+	{ 'include': [ 'help', 'notices' ] },
+	{
+		'type': 'list',
+		'icon': 'menu',
+		'include': [ 'meta', 'categories', 'languages', 'wikiaSourceMode' ]
+	}
 ];
 
 ve.init.mw.WikiaViewPageTarget.prototype.setupSkinTabs = function () {

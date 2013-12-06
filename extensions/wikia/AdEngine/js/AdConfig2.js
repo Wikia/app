@@ -75,6 +75,11 @@ var AdConfig2 = function (
 			return adProviderLater;
 		}
 
+		// Prevent passing WIKIA_BAR_BOXAD_1 to Later queue if useSevenOneMedia
+		if (slotname === 'WIKIA_BAR_BOXAD_1' && adProviderGpt.canHandleSlot(slot)) {
+			return adProviderGpt;
+		}
+
 		if (useSevenOneMedia) {
 			// All SevenOne Media ads are handled in the Later queue
 			return adProviderLater;
