@@ -330,25 +330,34 @@ class ArticlesApiController extends WikiaApiController {
 		$results = $this->wg->Memc->get( $key );
 		if ( $results === false ) {
 			$solrResults = $this->getNewArticlesFromSolr( $ns, self::MAX_NEW_ARTICLES_LIMIT );
-			$articles = array_keys( $solrResults );
-			$rev = new RevisionService();
-			$revisions = $rev->getFirstRevisionByArticleId( $articles );
-			$creators = $this->getUserDataForArticles( $articles, $revisions );
-			$thumbs = $this->getArticlesThumbnails( array_keys($solrResults) );
-			
-			$results = [];
-			foreach ( $solrResults as $id => $item ) {
-				$title = Title::newFromText( $item[ 'title' ] );
-				$item[ 'title' ] = $title->getText();
-				$item[ 'url' ] = $title->getLocalURL();
-				$item[ 'creator' ] = $creators[ $id ];
-				$item[ 'creation_date' ] = isset($revisions[ $id ]) ? $revisions[ $id ][ 'rev_timestamp' ] : null ;
-				$item[ 'abstract' ] = wfShortenText( $item[ 'abstract' ], self::DEFAULT_ABSTRACT_LENGTH, true );
-				$item = array_merge($item, $thumbs[ $id ]);
-				$results[] = $item;
-			}
+			if ( empty( $solrResults ) ) {
+				$results = [];
+			} else {
+				$articles = array_keys( $solrResults );
+				$rev = new RevisionService();
+				$revisions = $rev->getFirstRevisionByArticleId( $articles );
+				$creators = $this->getUserDataForArticles( $articles, $revisions );
+				$thumbs = $this->getArticlesThumbnails( array_keys( $solrResults ) );
 
-			$this->wg->Memc->set( $key, $results, self::CLIENT_CACHE_VALIDITY );
+				$results = [];
+				foreach ( $solrResults as $id => $item ) {
+					$title = Title::newFromText( $item[ 'title' ] );
+					$item[ 'title' ] = $title->getText();
+					$item[ 'url' ] = $title->getLocalURL();
+					$item[ 'creator' ] = $creators[ $id ];
+					$item[ 'creation_date' ] = isset( $revisions[ $id ] ) ? $revisions[ $id ][ 'rev_timestamp' ] : null;
+					$item[ 'abstract' ] = wfShortenText( $item[ 'abstract' ], self::DEFAULT_ABSTRACT_LENGTH, true );
+					$item = array_merge( $item, $thumbs[ $id ] );
+					$results[] = $item;
+				}
+
+				$this->wg->Memc->set( $key, $results, self::CLIENT_CACHE_VALIDITY );
+			}
+		}
+
+		if ( empty( $results ) )
+		{
+			throw new NotFoundApiException( 'No members' );
 		}
 
 		$response = $this->getResponse();
