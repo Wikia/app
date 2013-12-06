@@ -470,14 +470,16 @@ $messages['ps'] = array(
 
 /** Portuguese (português)
  * @author Hamilton Abreu
+ * @author Josep Maria 15.
  * @author Luckas
  */
 $messages['pt'] = array(
-	'imgplc-add-image' => 'Adicionar Imagem',
+	'imgplc-add-image' => 'Adicionar imagem',
 	'imgplc-add-video' => 'Adicionar vídeo',
 	'imgplc-placeholder' => 'Espaço reservado',
 	'imgplc-image' => 'Imagem',
-	'imgplc-notinhistory' => 'Não pode adicionar uma imagem no modo histórico.',
+	'imgplc-notinhistory' => 'Não podes adicionar uma imagem no modo histórico.',
+	'imgplc-notinhistory-video' => 'Não podes adicionar um vídeo no modo histórico.',
 );
 
 /** Brazilian Portuguese (português do Brasil)
@@ -586,9 +588,15 @@ $messages['uk'] = array(
 );
 
 /** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
  */
 $messages['vi'] = array(
+	'imgplc-add-image' => 'Thêm hình ảnh',
 	'imgplc-add-video' => 'Thêm đoạn phim',
+	'imgplc-placeholder' => 'Giữ chỗ',
+	'imgplc-image' => 'Hình ảnh',
+	'imgplc-notinhistory' => 'Bạn không thể thêm một hình ảnh trong chế độ lịch sử.',
+	'imgplc-notinhistory-video' => 'Bạn không thể thêm một video ở chế độ lịch sử.',
 );
 
 /** Simplified Chinese (中文（简体）‎)

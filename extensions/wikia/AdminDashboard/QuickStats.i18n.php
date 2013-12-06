@@ -41,6 +41,13 @@ $messages['qqq'] = array(
 	'quickstats-number-shortening-billions' => 'This is a shortend number abbreviation shown in a stats table. Number larger than 1.000.000.000 are rendered using this message (as billions rounded up to the first decimal fraction). B stands for billions (1.000.000.000)',
 );
 
+/** Old English (Ænglisc)
+ * @author Espreon
+ */
+$messages['ang'] = array(
+	'quickstats-header-date' => 'Tælmearc',
+);
+
 /** Arabic (العربية)
  * @author Achraf94
  */
@@ -482,9 +489,10 @@ $messages['fr'] = array(
 
 /** Galician (galego)
  * @author Toliño
+ * @author Vivaelcelta
  */
 $messages['gl'] = array(
-	'quickstats-header-label' => 'Estatísticas rápidas',
+	'quickstats-header-label' => 'Estadísticas rápidas',
 	'quickstats-header-date' => 'Data',
 	'quickstats-header-views' => 'Visitas',
 	'quickstats-header-edits' => 'Edicións',
@@ -621,6 +629,7 @@ $messages['it'] = array(
 );
 
 /** Japanese (日本語)
+ * @author BryghtShadow
  * @author Tommy6
  */
 $messages['ja'] = array(
@@ -632,6 +641,9 @@ $messages['ja'] = array(
 	'quickstats-date-format' => 'n月j日',
 	'quickstats-totals-label' => '合計',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|さらに詳しい統計をみる]]',
+	'quickstats-number-shortening' => '$1K',
+	'quickstats-number-shortening-millions' => '$1M',
+	'quickstats-number-shortening-billions' => '$1B',
 );
 
 /** Korean (한국어)
@@ -1150,6 +1162,8 @@ $messages['szl'] = array(
 	'quickstats-header-views' => 'Podglůndy',
 	'quickstats-header-edits' => 'Sprowjyńa',
 	'quickstats-header-photos' => 'Uobrozy',
+	'quickstats-header-likes' => 'Przaja tymu',
+	'quickstats-totals-label' => 'Cuzamyn',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Wjyncyj sztatystyk]]',
 	'quickstats-number-shortening' => '$1 tyś.',
 	'quickstats-number-shortening-millions' => '$1 mln',

@@ -469,6 +469,13 @@ $messages['it'] = array(
 	'wikiapoll-error-invalid-title' => 'Il testo della domanda non è valido.',
 );
 
+/** Japanese (日本語)
+ * @author BryghtShadow
+ */
+$messages['ja'] = array(
+	'wikiapoll-votes' => '{{PLURAL:$1|$1 票}}',
+);
+
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
  * @author George Animal
  */
@@ -1007,6 +1014,30 @@ $messages['uk'] = array(
 	'wikiamobile-wikiapoll-thanks-voting' => 'Дякуємо за участь у голосуванні!',
 	'wikiamobile-wikiapoll-poll' => 'Опитування',
 	'wikiamobile-wikiapoll-user-voted' => 'Ви проголосували за $1',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'wikiapoll-desc' => 'Cung cấp một cách dễ dàng để tạo và quản lý thăm dò ý kiến',
+	'wikiapoll-people-voted' => '{{PLURAL:$1|$1person|$1 người}} bình chọn',
+	'wikiapoll-question' => '$1?',
+	'wikiapoll-thanks-for-vote' => 'Cảm ơn!',
+	'wikiapoll-vote' => 'Bình chọn!',
+	'wikiapoll-votes' => '{{PLURAL:$1|$1 vote|$1 bình chọn}}',
+	'wikiapoll-createpoll-headline' => 'Tạo thăm dò ý kiến',
+	'wikiapoll-editpoll-headline' => 'Chỉnh sửa thăm dò ý kiến',
+	'wikiapoll-question-label' => 'Câu hỏi',
+	'wikiapoll-addnewitem-label' => 'Thêm mục mới',
+	'wikiapoll-cancel-label' => 'Hủy bỏ',
+	'wikiapoll-publish-label' => 'Đăng',
+	'wikiapoll-error-duplicate' => 'Một thăm dò ý kiến với tên đó đã tồn tại.',
+	'wikiapoll-error-invalid-title' => 'Văn bản câu hỏi là không hợp lệ.',
+	'wikiamobile-wikiapoll-open-poll' => 'Bạn nghĩ gì?',
+	'wikiamobile-wikiapoll-thanks-voting' => 'Cảm ơn bạn đã bỏ phiếu!',
+	'wikiamobile-wikiapoll-poll' => 'Bảng thăm dò',
+	'wikiamobile-wikiapoll-user-voted' => 'Bạn đã bỏ phiếu cho "$1"',
 );
 
 /** Simplified Chinese (中文（简体）‎)

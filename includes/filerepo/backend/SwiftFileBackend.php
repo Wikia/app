@@ -251,7 +251,7 @@ class SwiftFileBackend extends FileBackendStore {
 			// The MD5 here will be checked within Swift against its own MD5.
 			$obj->set_etag( md5_file( $params['src'] ) );
 			// Use the same content type as StreamFile for security
-			$obj->content_type = StreamFile::contentTypeFromPath( $params['dst'] );
+			$obj->content_type = $this->getFileProps($params)['mime']; // Wikia cnange: use the same logic as for DB row (BAC-1199)
 			// Actually write the object in Swift
 			$obj->load_from_filename( $params['src'], True ); // calls $obj->write()
 		} catch ( BadContentTypeException $e ) {
@@ -564,6 +564,11 @@ class SwiftFileBackend extends FileBackendStore {
 	protected function addMissingMetadata( CF_Object $obj, $path ) {
 		if ( $obj->getMetadataValue( 'Sha1base36' ) !== null ) {
 			return true; // nothing to do
+		}
+		
+		# don't check SHA-1 for thumbnailers 
+		if ( $this->isThumbnailer( $path ) ) {
+			return true; //nothing to do
 		}
 		wfProfileIn( __METHOD__ );
 		trigger_error( "$path was not stored with SHA-1 metadata.", E_USER_WARNING );
@@ -879,7 +884,11 @@ class SwiftFileBackend extends FileBackendStore {
 	 * @return string
 	 */
 	private function getCredsCacheKey( $username ) {
-		return wfMemcKey( 'backend', $this->getName(), 'usercreds', $username );
+		// Wikia change - begin
+		global $wgFSSwiftServer;
+		// Wikia change - end
+
+		return wfForeignMemcKey(__CLASS__, $wgFSSwiftServer, 'usercreds', $username );
 	}
 
 	/**
@@ -957,6 +966,8 @@ class SwiftFileBackend extends FileBackendStore {
 	 */
 	protected function logException( Exception $e, $func, $params ) {
 		// Wikia change - begin
+		global $wgFSSwiftServer;
+
 		if ( $e instanceof InvalidResponseException ) { // possibly a stale token
 			$this->closeConnection(); // force a re-connect and re-auth next time
 		}
@@ -967,13 +978,30 @@ class SwiftFileBackend extends FileBackendStore {
 
 		\Wikia\SwiftStorage::log(
 			__CLASS__ . '::exception',
+			"[$wgFSSwiftServer] " .
 			get_class( $e ) . " in '{$func}' (given '" . serialize( $params ) . "')" .
 				( $e instanceof InvalidResponseException
 					? ": {$e->getMessage()}"
 					: ""
 				)
 		);
+
+		\Wikia::logBacktrace(get_class($e) . " [$wgFSSwiftServer]");
 		// Wikia change - end
+	}
+	
+	/**
+	 * Check if image path contains /thumb/ 
+	 *
+	 * @param $path image path
+	 * @return Boolean
+	 */
+	private function isThumbnailer( $path ) {
+		if ( strpos( $path, '/images/thumb/' ) !== false ) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }
 

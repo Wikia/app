@@ -121,6 +121,10 @@
 	&:active, &:hover {
 		background: -webkit-linear-gradient(top, gainsboro 0%, #efefef 100%);
 	}
+
+	span {
+		pointer-events: none;
+	}
 }
 
 .android {

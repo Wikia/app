@@ -83,6 +83,13 @@ $messages['ca'] = array(
 	'adengine-exitstitial-button' => 'Saltar aquest anunci',
 );
 
+/** Czech (čeština)
+ * @author Chmee2
+ */
+$messages['cs'] = array(
+	'adengine-exitstitial-button' => 'Přeskočit tuto reklamu',
+);
+
 /** German (Deutsch)
  * @author Metalhead64
  */
@@ -133,6 +140,13 @@ $messages['fa'] = array(
 	'adengine-exitstitial-button' => 'ردشدن از این تبلیغ',
 );
 
+/** Finnish (suomi)
+ * @author Silvonen
+ */
+$messages['fi'] = array(
+	'adengine-exitstitial-button' => 'Ohita tämä mainos',
+);
+
 /** Faroese (føroyskt)
  * @author EileenSanda
  */
@@ -156,11 +170,12 @@ $messages['fr'] = array(
 
 /** Galician (galego)
  * @author Toliño
+ * @author Vivaelcelta
  */
 $messages['gl'] = array(
-	'adengine-exitstitial-title-template' => 'Está deixando $1…',
-	'adengine-exitstitial-redirecting' => 'O seu navegador irá á páxina solicitada nuns segundos.',
-	'adengine-exitstitial-go-back' => 'Quere regresar?',
+	'adengine-exitstitial-title-template' => 'Estás deixando $1…',
+	'adengine-exitstitial-redirecting' => 'O teu navegador irá á páxina solicitada nuns segundos.',
+	'adengine-exitstitial-go-back' => 'Queres regresar?',
 	'adengine-exitstitial-button' => 'Saltar este anuncio',
 );
 
@@ -342,9 +357,10 @@ $messages['pt'] = array(
 /** Brazilian Portuguese (português do Brasil)
  * @author Matheus Sousa L.T
  * @author TheGabrielZaum
+ * @author Tuliouel
  */
 $messages['pt-br'] = array(
-	'adengine-exitstitial-title-template' => 'Você está deixando a $1....',
+	'adengine-exitstitial-title-template' => 'Você está deixando $1...',
 	'adengine-exitstitial-redirecting' => 'Seu navegador irá redirecioná-lo à página que você requisitou em alguns segundos.',
 	'adengine-exitstitial-go-back' => 'Deseja voltar?',
 	'adengine-exitstitial-button' => 'Pular este anúncio',

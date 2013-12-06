@@ -51,7 +51,6 @@ require( [ 'jquery', 'wikia.ui.modal' ], function( $, modal ) {
 							"content": $.msg( 'styleguide-example-modal-small-over-large-message' ),
 							"class": "styleguide-example-small-over-large",
 							"title": $.msg( 'styleguide-example-modal-small-over-large-title' ),
-							"closeButton": true,
 							"closeText": $.msg( 'styleguide-example-modal-close-text' )
 						}
 					} );

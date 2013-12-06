@@ -14,7 +14,6 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 		print( "Connecting to $url...\n" );
 
 		$xmlContent = $this->getUrlContent( $url );
-
 		if ( !$xmlContent ) {
 			print( "ERROR: problem downloading content!\n" );
 			wfProfileOut( __METHOD__ );

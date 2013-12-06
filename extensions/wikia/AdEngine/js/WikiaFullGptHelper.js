@@ -253,8 +253,6 @@ var WikiaFullGptHelper = function (log, window, document, adLogicPageLevelParams
 		}
 
 		googletag.cmd.push(function () {
-			var i, len, callback;
-
 			log(['flushAds', 'start'], 4, logGroup);
 
 			log(['flushAds', 'refresh', slotQueue], 9, logGroup);
@@ -262,11 +260,6 @@ var WikiaFullGptHelper = function (log, window, document, adLogicPageLevelParams
 			if (slotQueue.length) {
 				googletag.pubads().refresh(slotQueue);
 				slotQueue = [];
-			}
-
-			for (i = 0, len = doneCallbacks.length; i < len; i += 1) {
-				callback = doneCallbacks.shift();
-				callback();
 			}
 
 			log(['flushAds', 'done'], 4, logGroup);

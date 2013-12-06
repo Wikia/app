@@ -21,6 +21,7 @@ $messages['qqq'] = array(
 For an explanation of 'rich information' see [[:w:en:Media richness theory|Wikipedia]].",
 	'contentfeeds-newimages-rss-desc' => 'Outputs information about the source of the feed entry for attribution reasons. $1 is the URL of the page',
 	'contentfeeds-firstfewarticles-tag-title' => '{{Identical|Title}}',
+	'contentfeeds-firstfewarticles-tag-next' => '{{Identical|Next}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -271,6 +272,17 @@ $messages['it'] = array(
 	'contentfeeds-firstfewarticles-tag-next' => 'Successivo',
 	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Errore: Il titolo della pagina è necessario',
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Errore: Il contenuto della pagina è necessario',
+);
+
+/** Japanese (日本語)
+ * @author BryghtShadow
+ */
+$messages['ja'] = array(
+	'contentfeeds-newimages-rss-desc' => '$1からのフィード',
+	'contentfeeds-firstfewarticles-tag-title' => 'タイトル',
+	'contentfeeds-firstfewarticles-tag-next' => '次',
+	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'エラー: ページのタイトルが必要です',
+	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'エラー: ページ本体が必要です',
 );
 
 /** Colognian (Ripoarisch)
