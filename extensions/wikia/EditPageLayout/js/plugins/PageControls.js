@@ -150,11 +150,12 @@
 		},
 
 		// handle "Show changes" button
-		onDiff: function ( ev ) {
+		onDiff: function ( event ) {
+			event.preventDefault();
+			// move the focus to the selected items to prevent iPad from showing the VK and resizing the viewport
+			$( event.target ).focus();
 			this.renderChanges();
 			this.editor.track( 'diff' );
-
-			ev.preventDefault();
 		},
 
 		// handle "Save" button
