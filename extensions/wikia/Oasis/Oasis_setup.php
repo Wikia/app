@@ -107,7 +107,6 @@ global $wgCdnStylePath;
 $wgOasisThemes = array(
 	'oasis' => array(
 		'color-body' => '#BACDD8',
-		'color-body-middle' => '#BACDD8',
 		'color-page' => '#FFFFFF',
 		'color-buttons' => '#006CB0',
 		'color-links' => '#006CB0',
@@ -120,7 +119,6 @@ $wgOasisThemes = array(
 	),
 	'jade' => array(
 		'color-body' => '#003816',
-		'color-body-middle' => '#003816',
 		'color-page' => '#FFFFFF',
 		'color-buttons' => '#25883D',
 		'color-links' => '#2B54B5',
@@ -133,7 +131,6 @@ $wgOasisThemes = array(
 	),
 	'babygirl' => array(
 		'color-body' => '#000000',
-		'color-body-middle' => '#000000',
 		'color-page' => '#FFFFFF',
 		'color-buttons' => '#6F027C',
 		'color-links' => '#6F027C',
@@ -146,7 +143,6 @@ $wgOasisThemes = array(
 	),
 	'carbon' => array(
 		'color-body' => '#1A1A1A',
-		'color-body-middle' => '#1A1A1A',
 		'color-page' => '#474646',
 		'color-buttons' => '#012E59',
 		'color-links' => '#70B8FF',
@@ -158,7 +154,6 @@ $wgOasisThemes = array(
 	),
 	'rockgarden' => array(
 		'color-body' => '#525833',
-		'color-body-middle' => '#525833',
 		'color-page' => '#DFDBC3',
 		'color-buttons' => '#1F5D04',
 		'color-links' => '#1F5D04',
@@ -171,7 +166,6 @@ $wgOasisThemes = array(
 	),
 	'opulence' => array(
 		'color-body' => '#AD3479',
-		'color-body-middle' => '#AD3479',
 		'color-page' => '#FFFFFF',
 		'color-buttons' => '#DE1C4E',
 		'color-links' => '#810484',
@@ -184,7 +178,6 @@ $wgOasisThemes = array(
 	),
 	'bluesteel' => array(
 		'color-body' => '#303641',
-		'color-body-middle' => '#303641',
 		'color-page' => '#FFFFFF',
 		'color-buttons' => '#0A3073',
 		'color-links' => '#0A3073',
@@ -197,7 +190,6 @@ $wgOasisThemes = array(
 	),
 	'creamsicle' => array(
 		'color-body' => '#F8E9AE',
-		'color-body-middle' => '#F8E9AE',
 		'color-page' => '#FBE7B5',
 		'color-buttons' => '#FE7E03',
 		'color-links' => '#AF4200',
@@ -210,7 +202,6 @@ $wgOasisThemes = array(
 	),
 	'plated' => array(
 		'color-body' => '#060606',
-		'color-body-middle' => '#060606',
 		'color-page' => '#474646',
 		'color-buttons' => '#092F71',
 		'color-links' => '#FFD500',
@@ -223,7 +214,6 @@ $wgOasisThemes = array(
 	),
 	'police' => array(
 		'color-body' => '#000000',
-		'color-body-middle' => '#000000',
 		'color-page' => '#0F142F',
 		'color-buttons' => '#1A52AC',
 		'color-links' => '#D6AD0B',
@@ -236,7 +226,6 @@ $wgOasisThemes = array(
 	),
 	'aliencrate' => array(
 		'color-body' => '#484534',
-		'color-body-middle' => '#484534',
 		'color-page' => '#DAD5CB',
 		'color-buttons' => '#653F03',
 		'color-links' => '#02899D',
