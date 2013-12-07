@@ -27,7 +27,7 @@ $width-cart: 101px;
 
 	/* Search Results */
 	.ve-ui-mwMediaResultWidget {
-		.oo-ui-labeledElement-label {
+		> .oo-ui-labeledElement-label {
 			@include linear-gradient( transparent, top, transparent, 0, rgba(0,0,0,0.5), 100% );
 			line-height: 1.4em;
 			padding: 0.5em;
@@ -40,17 +40,15 @@ $width-cart: 101px;
 				content: '';
 			}
 		}
-		&.photo {
-			.ve-ui-labeledElement-label:before {
-				background-image: url(/extensions/VisualEditor/wikia/modules/ve/ui/styles/images/icons/photo.svg); /* $wgCdnStylePath */
-				padding-left: 29px;
-			}
+
+		&.photo > .ve-ui-labeledElement-label:before {
+			background-image: url(/extensions/VisualEditor/wikia/modules/ve/ui/styles/images/icons/photo.svg); /* $wgCdnStylePath */
+			padding-left: 29px;
 		}
-		&.video {
-			.ve-ui-labeledElement-label:before {
-				background-image: url(/extensions/VisualEditor/wikia/modules/ve/ui/styles/images/icons/video.svg); /* $wgCdnStylePath */
-				padding-left: 22px;
-			}
+
+		&.video > .ve-ui-labeledElement-label:before {
+			background-image: url(/extensions/VisualEditor/wikia/modules/ve/ui/styles/images/icons/video.svg); /* $wgCdnStylePath */
+			padding-left: 22px;
 		}
 	}
 
@@ -206,18 +204,24 @@ $width-cart: 101px;
 	right: 0;
 
 	.ve-ui-wikiaMediaOptionWidget-check {
-		background-color: $color-page;
-		height: 32px;
 		position: absolute;
 		right: 5px;
 		top: 5px;
-		width: 32px;
 
-		&.ve-ui-icon-checked {
-			@include ve-icon(checked, wikia, $color-buttons);
-			background-color: $color-buttons;
+		.oo-ui-iconedElement-icon {
+			background-color: $color-page;
+			height: 32px;
+			width: 32px;
+
+			&.oo-ui-icon-checked {
+				@include ve-icon(checked, wikia, $color-buttons);
+				background-color: $color-buttons;
+			}
 		}
 
+		.oo-ui-labeledElement-label {
+			display: none;
+		}
 	}
 }
 
