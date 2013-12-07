@@ -65,11 +65,11 @@ class CleanupPageWikiaProps {
 		foreach ( $suggestionsWithoutSwappableBit as $page_id )   {
 			// First make sure that a status record actually exists for this video
 			$result = $db->query( "SELECT page_id from page_wikia_props where page_id = $page_id and propname = " . WPP_LVS_STATUS );
-			// if not, create it first
-			if (! $db->fetchObject( $result )) {
-				$db->query( "INSERT INTO page_wikia_props (page_id, propname, props) values ($page_id, " . WPP_LVS_STATUS . ", 0)" );
-			}
 			if ( !$test ) {
+				// if not, create it first
+				if ( !$db->fetchObject( $result )) {
+					$db->query( "INSERT INTO page_wikia_props (page_id, propname, props) values ($page_id, " . WPP_LVS_STATUS . ", 0)" );
+				}
 				$db->query("UPDATE page_wikia_props SET props=props | " . LicensedVideoSwapHelper::STATUS_SWAPPABLE .
 					" WHERE page_id = " . $page_id . " AND propname = ". WPP_LVS_STATUS);
 			}
