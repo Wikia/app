@@ -111,7 +111,7 @@
 			} );
 
 			// purge cache of article so video will show up on reload
-			$.post( window.wgScript, {title: window.wgPageName, action: 'purge'} );
+			$.post( window.wgScript, { title: window.wgPageName, action: 'purge' } );
 
 			// re-bind events
 			this.setupVideoPlaceholders();
