@@ -68,11 +68,13 @@ class CleanupPageWikiaProps {
 			if ( !$test ) {
 				// if not, create it first
 				if ( !$db->fetchObject( $result )) {
-					$db->query( "INSERT INTO page_wikia_props (page_id, propname, props) values ($page_id, " . WPP_LVS_STATUS . ", 0)" );
+					$db->query( "INSERT INTO page_wikia_props (page_id, propname, props) values ($page_id, " .
+						WPP_LVS_STATUS . ", " . LicensedVideoSwapHelper::STATUS_SWAPPABLE . ")" );
+				} else {
+					$db->query("UPDATE page_wikia_props SET props=props | " . LicensedVideoSwapHelper::STATUS_SWAPPABLE .
+						" WHERE page_id = " . $page_id . " AND propname = ". WPP_LVS_STATUS);
 				}
-				$db->query("UPDATE page_wikia_props SET props=props | " . LicensedVideoSwapHelper::STATUS_SWAPPABLE .
-					" WHERE page_id = " . $page_id . " AND propname = ". WPP_LVS_STATUS);
-			}
+			}	
 			if ( $verbose ) {
 				echo "Suggestion record found in $dbname without swappable bit turned on in status record. Turning on swappable for $page_id\n";
 			}
