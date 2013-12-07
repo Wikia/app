@@ -26,9 +26,9 @@ ve.ce.WikiaInlineVideoNode = function VeCeWikiaInlineVideoNode( model, config ) 
 
 /* Inheritance */
 
-ve.inheritClass( ve.ce.WikiaInlineVideoNode, ve.ce.MWInlineImageNode );
+OO.inheritClass( ve.ce.WikiaInlineVideoNode, ve.ce.MWInlineImageNode );
 
-ve.mixinClass( ve.ce.WikiaInlineVideoNode, ve.ce.WikiaVideoNode );
+OO.mixinClass( ve.ce.WikiaInlineVideoNode, ve.ce.WikiaVideoNode );
 
 /* Static Properties */
 

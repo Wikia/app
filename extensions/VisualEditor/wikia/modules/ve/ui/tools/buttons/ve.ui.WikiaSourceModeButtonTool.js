@@ -9,7 +9,7 @@
  * @extends ve.ui.IconTextButtonTool
  *
  * @constructor
- * @param {ve.ui.Toolbar} toolbar
+ * @param {OO.ui.Toolbar} toolbar
  * @param {Object} [config] Config options
  */
 ve.ui.WikiaSourceModeButtonTool = function VeUiWikiaSourceModeButtonTool( toolbar, config ) {
@@ -19,7 +19,7 @@ ve.ui.WikiaSourceModeButtonTool = function VeUiWikiaSourceModeButtonTool( toolba
 
 /* Inheritance */
 
-ve.inheritClass( ve.ui.WikiaSourceModeButtonTool, ve.ui.DialogTool );
+OO.inheritClass( ve.ui.WikiaSourceModeButtonTool, ve.ui.DialogTool );
 
 /* Static Properties */
 

@@ -23,7 +23,7 @@ ve.dm.MWNowikiAnnotation = function VeDmMWNowikiAnnotation( element ) {
 
 /* Inheritance */
 
-ve.inheritClass( ve.dm.MWNowikiAnnotation, ve.dm.Annotation );
+OO.inheritClass( ve.dm.MWNowikiAnnotation, ve.dm.Annotation );
 
 /* Static Properties */
 

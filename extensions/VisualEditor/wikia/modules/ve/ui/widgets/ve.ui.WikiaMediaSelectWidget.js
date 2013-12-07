@@ -4,14 +4,14 @@
 
 /**
  * @class
- * @extends ve.ui.SelectWidget
+ * @extends OO.ui.SelectWidget
  *
  * @constructor
  * @param {Object} [config] Configuration options
  */
 ve.ui.WikiaMediaSelectWidget = function VeUiWikiaMediaSelectWidget( config ) {
 	// Parent constructor
-	ve.ui.SelectWidget.call( this, config );
+	OO.ui.SelectWidget.call( this, config );
 
 	// Properties
 
@@ -22,7 +22,7 @@ ve.ui.WikiaMediaSelectWidget = function VeUiWikiaMediaSelectWidget( config ) {
 
 /* Inheritance */
 
-ve.inheritClass( ve.ui.WikiaMediaSelectWidget, ve.ui.SelectWidget );
+OO.inheritClass( ve.ui.WikiaMediaSelectWidget, OO.ui.SelectWidget );
 
 /* Events */
 

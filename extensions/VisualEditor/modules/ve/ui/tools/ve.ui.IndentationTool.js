@@ -10,19 +10,19 @@
  *
  * @abstract
  * @class
- * @extends ve.ui.Tool
+ * @extends OO.ui.Tool
  * @constructor
- * @param {ve.ui.SurfaceToolbar} toolbar
+ * @param {OO.ui.ToolGroup} toolGroup
  * @param {Object} [config] Configuration options
  */
-ve.ui.IndentationTool = function VeUiIndentationTool( toolbar, config ) {
+ve.ui.IndentationTool = function VeUiIndentationTool( toolGroup, config ) {
 	// Parent constructor
-	ve.ui.Tool.call( this, toolbar, config );
+	OO.ui.Tool.call( this, toolGroup, config );
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.ui.IndentationTool, ve.ui.Tool );
+OO.inheritClass( ve.ui.IndentationTool, OO.ui.Tool );
 
 /* Static Properties */
 
@@ -73,13 +73,13 @@ ve.ui.IndentationTool.prototype.onUpdateState = function ( nodes ) {
  * @class
  * @extends ve.ui.IndentationTool
  * @constructor
- * @param {ve.ui.SurfaceToolbar} toolbar
+ * @param {OO.ui.ToolGroup} toolGroup
  * @param {Object} [config] Configuration options
  */
-ve.ui.IncreaseIndentationTool = function VeUiIncreaseIndentationTool( toolbar, config ) {
-	ve.ui.IndentationTool.call( this, toolbar, config );
+ve.ui.IncreaseIndentationTool = function VeUiIncreaseIndentationTool( toolGroup, config ) {
+	ve.ui.IndentationTool.call( this, toolGroup, config );
 };
-ve.inheritClass( ve.ui.IncreaseIndentationTool, ve.ui.IndentationTool );
+OO.inheritClass( ve.ui.IncreaseIndentationTool, ve.ui.IndentationTool );
 ve.ui.IncreaseIndentationTool.static.name = 'indent';
 ve.ui.IncreaseIndentationTool.static.group = 'structure';
 ve.ui.IncreaseIndentationTool.static.icon = 'indent-list';
@@ -95,13 +95,13 @@ ve.ui.toolFactory.register( ve.ui.IncreaseIndentationTool );
  * @class
  * @extends ve.ui.IndentationTool
  * @constructor
- * @param {ve.ui.SurfaceToolbar} toolbar
+ * @param {OO.ui.ToolGroup} toolGroup
  * @param {Object} [config] Configuration options
  */
-ve.ui.DecreaseIndentationTool = function VeUiDecreaseIndentationTool( toolbar, config ) {
-	ve.ui.IndentationTool.call( this, toolbar, config );
+ve.ui.DecreaseIndentationTool = function VeUiDecreaseIndentationTool( toolGroup, config ) {
+	ve.ui.IndentationTool.call( this, toolGroup, config );
 };
-ve.inheritClass( ve.ui.DecreaseIndentationTool, ve.ui.IndentationTool );
+OO.inheritClass( ve.ui.DecreaseIndentationTool, ve.ui.IndentationTool );
 ve.ui.DecreaseIndentationTool.static.name = 'outdent';
 ve.ui.DecreaseIndentationTool.static.group = 'structure';
 ve.ui.DecreaseIndentationTool.static.icon = 'outdent-list';

@@ -11,7 +11,7 @@
  * @class
  * @abstract
  * @extends ve.dm.Model
- * @mixins ve.EventEmitter
+ * @mixins OO.EventEmitter
  *
  * @constructor
  * @param {Object} element Reference to element in meta-linmod
@@ -20,7 +20,7 @@ ve.dm.MetaItem = function VeDmMetaItem( element ) {
 	// Parent constructor
 	ve.dm.Model.call( this, element );
 	// Mixin
-	ve.EventEmitter.call( this );
+	OO.EventEmitter.call( this );
 
 	// Properties
 	this.list = null;
@@ -31,9 +31,9 @@ ve.dm.MetaItem = function VeDmMetaItem( element ) {
 
 /* Inheritance */
 
-ve.inheritClass( ve.dm.MetaItem, ve.dm.Model );
+OO.inheritClass( ve.dm.MetaItem, ve.dm.Model );
 
-ve.mixinClass( ve.dm.MetaItem, ve.EventEmitter );
+OO.mixinClass( ve.dm.MetaItem, OO.EventEmitter );
 
 /* Static members */
 
@@ -41,7 +41,7 @@ ve.mixinClass( ve.dm.MetaItem, ve.EventEmitter );
  * Symbolic name for the group this meta item type will be grouped in in ve.dm.MetaList.
  *
  * @static
- * @property {string} [static.group='misc']
+ * @property
  * @inheritable
  */
 ve.dm.MetaItem.static.group = 'misc';
@@ -62,7 +62,9 @@ ve.dm.MetaItem.prototype.remove = function () {
 /**
  * Replace item with another in-place.
  *
- * @param {ve.dm.MetaItem} item Item to replace this item with
+ * Pass a plain object rather than a MetaItem into this function unless you know what you're doing.
+ *
+ * @param {Object|ve.dm.MetaItem} item Item to replace this item with
  */
 ve.dm.MetaItem.prototype.replaceWith = function ( item ) {
 	var offset = this.getOffset(),
@@ -75,7 +77,7 @@ ve.dm.MetaItem.prototype.replaceWith = function ( item ) {
 
 /**
  * Get the group this meta item belongs to.
- * @see ve.dm.MetaItem#static.group
+ * @see #static-group
  * @returns {string} Group
  */
 ve.dm.MetaItem.prototype.getGroup = function () {

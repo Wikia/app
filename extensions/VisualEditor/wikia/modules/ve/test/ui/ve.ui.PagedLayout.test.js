@@ -5,12 +5,12 @@
 ( function ( QUnit ) {
 	var negativeTestCases = [ 0, null, false, undefined, 'idontexist' ];
 
-	QUnit.module( 've.ui.PagedLayout', {
+	QUnit.module( 'OO.ui.PagedLayout', {
 		setup: function () {
-			var $$ = ve.Element.get$$( document );
-			// FIXME: ve.ui.PanelLayout always assumes it's in a frame (maybe it shouldn't do that).
-			$$.frame = { dir: 'ltr' };
-			this.pagedLayout = new ve.ui.PagedLayout( { '$$': $$ } );
+			var context = ve.Element.getJQuery( document );
+			// FIXME: OO.ui.PanelLayout always assumes it's in a frame (maybe it shouldn't do that).
+			context.frame = { dir: 'ltr' };
+			this.pagedLayout = new OO.ui.PagedLayout( { '$': context } );
 		},
 		teardown: function () {
 			this.pagedLayout = null;
@@ -24,8 +24,8 @@
 
 		this.pagedLayout.on( 'add', function ( name, page ) {
 			assert.equal( name, pageName, 'Page "' + pageName + '"" added' );
-			assert.ok( page instanceof ve.ui.PanelLayout, 'Page is ve.ui.PanelLayout' );
-			assert.ok( page.$.find( '.' + pageName ).length, 'Page contains proper jQuery object' );
+			assert.ok( page instanceof OO.ui.PanelLayout, 'Page is OO.ui.PanelLayout' );
+			assert.ok( page.$element.find( '.' + pageName ).length, 'Page contains proper jQuery object' );
 		} );
 
 		for ( i = 1; i <= count; i++ ) {
@@ -78,8 +78,8 @@
 		for ( i = count; i > 0; i-- ) {
 			pageName = 'page' + i;
 			page = this.pagedLayout.getPage( pageName );
-			assert.ok( page instanceof ve.ui.PanelLayout, 'Got page  "' + pageName + '"' );
-			assert.ok( page.$.find( '.' + pageName ).length, 'Page contains proper jQuery object' );
+			assert.ok( page instanceof OO.ui.PanelLayout, 'Got page  "' + pageName + '"' );
+			assert.ok( page.$element.find( '.' + pageName ).length, 'Page contains proper jQuery object' );
 		}
 
 		for ( i = 0; i < negativeTestCases.length; i++ ) {
@@ -100,9 +100,9 @@
 
 		this.pagedLayout.on( 'remove', function ( pages ) {
 			assert.ok( pages.length === 1, 'One page was removed' );
-			assert.ok( pages[0] instanceof ve.ui.PanelLayout, 'Removed page is ve.ui.PanelLayout' );
+			assert.ok( pages[0] instanceof OO.ui.PanelLayout, 'Removed page is OO.ui.PanelLayout' );
 			assert.ok(
-				pages[0].$.find( '.' + pageName ).length,
+				pages[0].$element.find( '.' + pageName ).length,
 				'Removed page contains proper jQuery object'
 			);
 		} );
@@ -130,8 +130,8 @@
 			pageName;
 
 		this.pagedLayout.on( 'set', function ( page ) {
-			assert.ok( page instanceof ve.ui.PanelLayout, 'Page is ve.ui.PanelLayout' );
-			assert.ok( page.$.find( '.' + pageName ).length, 'Page contains proper jQuery object' );
+			assert.ok( page instanceof OO.ui.PanelLayout, 'Page is OO.ui.PanelLayout' );
+			assert.ok( page.$element.find( '.' + pageName ).length, 'Page contains proper jQuery object' );
 		} );
 
 		for ( i = 1; i <= count; i++ ) {

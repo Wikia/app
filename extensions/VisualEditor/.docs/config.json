@@ -9,6 +9,7 @@
 	"--": [
 		"./external.js",
 		"../modules/oojs",
+		"../modules/oojs-ui",
 		"../modules/unicodejs",
 		"../modules/ve",
 		"../modules/ve-mw"

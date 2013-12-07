@@ -10,8 +10,8 @@
  *
  * @class
  * @abstract
- * @extends ve.ui.Widget
- * @mixin ve.ui.GroupElement
+ * @extends OO.ui.Widget
+ * @mixin OO.ui.GroupElement
  *
  * @constructor
  * @param {Object} [config] Configuration options
@@ -21,20 +21,20 @@ ve.ui.MWCategoryWidget = function VeUiMWCategoryWidget( config ) {
 	config = config || {};
 
 	// Parent constructor
-	ve.ui.Widget.call( this, config );
+	OO.ui.Widget.call( this, config );
 
 	// Mixin constructors
-	ve.ui.GroupElement.call( this, this.$$( '<div>' ), config );
+	OO.ui.GroupElement.call( this, this.$( '<div>' ), config );
 
 	// Properties
 	this.categories = {};
 	this.popupState = false;
 	this.savedPopupState = false;
 	this.popup = new ve.ui.MWCategoryPopupWidget( {
-		'$$': this.$$, 'align': 'right', '$overlay': config.$overlay
+		'$': this.$, '$overlay': config.$overlay
 	} );
 	this.input = new ve.ui.MWCategoryInputWidget( this, {
-		'$$': this.$$, '$overlay': config.$overlay
+		'$': this.$, '$overlay': config.$overlay
 	} );
 
 	// Events
@@ -47,19 +47,19 @@ ve.ui.MWCategoryWidget = function VeUiMWCategoryWidget( config ) {
 	} );
 
 	// Initialization
-	this.$.addClass( 've-ui-mwCategoryWidget' )
+	this.$element.addClass( 've-ui-mwCategoryWidget' )
 		.append(
 			this.$group.addClass( 've-ui-mwCategoryWidget-items' ),
-			this.input.$,
-			this.$$( '<div>' ).css( 'clear', 'both' )
+			this.input.$element,
+			this.$( '<div>' ).css( 'clear', 'both' )
 		);
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.ui.MWCategoryWidget, ve.ui.Widget );
+OO.inheritClass( ve.ui.MWCategoryWidget, OO.ui.Widget );
 
-ve.mixinClass( ve.ui.MWCategoryWidget, ve.ui.GroupElement );
+OO.mixinClass( ve.ui.MWCategoryWidget, OO.ui.GroupElement );
 
 /* Events */
 
@@ -102,7 +102,7 @@ ve.ui.MWCategoryWidget.prototype.onLookupInputKeyDown = function ( e ) {
  * Handle menu item select event.
  *
  * @method
- * @param {ve.ui.MenuItemWidget} item Selected item
+ * @param {OO.ui.MenuItemWidget} item Selected item
  */
 ve.ui.MWCategoryWidget.prototype.onLookupMenuItemSelect = function ( item ) {
 	var value = item && item.getData();
@@ -113,7 +113,7 @@ ve.ui.MWCategoryWidget.prototype.onLookupMenuItemSelect = function ( item ) {
 			this.categories[value].metaItem.remove();
 		}
 
-		ve.track( {
+		ve.track( 'wikia', {
 			'action': ve.track.actions.ADD,
 			'label': 'dialog-page-settings-category-suggestion'
 		} );
@@ -206,7 +206,7 @@ ve.ui.MWCategoryWidget.prototype.addItems = function ( items, index ) {
 		item = items[i];
 
 		// Create a widget using the item data
-		categoryItem = new ve.ui.MWCategoryItemWidget( { '$$': this.$$, 'item': item } );
+		categoryItem = new ve.ui.MWCategoryItemWidget( { '$': this.$, 'item': item } );
 		categoryItem.connect( this, {
 			'savePopupState': 'onSavePopupState',
 			'togglePopupMenu': 'onTogglePopupMenu'
@@ -222,7 +222,7 @@ ve.ui.MWCategoryWidget.prototype.addItems = function ( items, index ) {
 		categoryItems.push( categoryItem );
 	}
 
-	ve.ui.GroupElement.prototype.addItems.call( this, categoryItems, index );
+	OO.ui.GroupElement.prototype.addItems.call( this, categoryItems, index );
 
 	this.fitInput();
 
@@ -246,7 +246,7 @@ ve.ui.MWCategoryWidget.prototype.removeItems = function ( names ) {
 		delete this.categories[names[i]];
 	}
 
-	ve.ui.GroupElement.prototype.removeItems.call( this, items );
+	OO.ui.GroupElement.prototype.removeItems.call( this, items );
 
 	this.fitInput();
 };
@@ -258,7 +258,7 @@ ve.ui.MWCategoryWidget.prototype.removeItems = function ( names ) {
  */
 ve.ui.MWCategoryWidget.prototype.fitInput = function () {
 	var gap, min, $lastItem,
-		$input = this.input.$;
+		$input = this.input.$element;
 
 	if ( !$input.is( ':visible') ) {
 		return;
@@ -268,7 +268,7 @@ ve.ui.MWCategoryWidget.prototype.fitInput = function () {
 	min = $input.outerWidth();
 
 	$input.css( { 'width': '100%' } );
-	$lastItem = this.$.find( '.ve-ui-mwCategoryItemWidget:last' );
+	$lastItem = this.$element.find( '.ve-ui-mwCategoryItemWidget:last' );
 	if ( $lastItem.length ) {
 		// Try to fit to the right of the last item
 		gap = ( $input.offset().left + $input.outerWidth() ) -

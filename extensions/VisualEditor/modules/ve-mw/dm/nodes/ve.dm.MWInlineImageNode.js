@@ -10,17 +10,27 @@
  *
  * @class
  * @extends ve.dm.LeafNode
+ * @mixins ve.dm.MWImageNode
  * @constructor
  * @param {number} [length] Length of content data in document
  * @param {Object} [element] Reference to element in linear model
  */
 ve.dm.MWInlineImageNode = function VeDmMWInlineImageNode( length, element ) {
+	// Parent constructor
 	ve.dm.LeafNode.call( this, 0, element );
+
+	// Mixin constructors
+	ve.dm.MWImageNode.call( this );
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.dm.MWInlineImageNode, ve.dm.LeafNode );
+OO.inheritClass( ve.dm.MWInlineImageNode, ve.dm.LeafNode );
+
+// Need to mixin base class as well
+OO.mixinClass( ve.dm.MWInlineImageNode, ve.dm.GeneratedContentNode );
+
+OO.mixinClass( ve.dm.MWInlineImageNode, ve.dm.MWImageNode );
 
 /* Static Properties */
 
@@ -45,8 +55,9 @@ ve.dm.MWInlineImageNode.static.getMatchRdfaTypes = function () {
 	return Object.keys( this.rdfaToType );
 };
 
-ve.dm.MWInlineImageNode.static.toDataElement = function ( domElements ) {
-	var $span = $( domElements[0] ),
+ve.dm.MWInlineImageNode.static.toDataElement = function ( domElements, converter ) {
+	var dataElement,
+		$span = $( domElements[0] ),
 		$firstChild = $span.children().first(), // could be <span> or <a>
 		$img = $firstChild.children().first(),
 		typeofAttr = $span.attr( 'typeof' ),
@@ -113,9 +124,13 @@ ve.dm.MWInlineImageNode.static.toDataElement = function ( domElements ) {
 	}
 
 	// Store unrecognized classes so we can restore them on the way out
-	attributes.unrecognizedClasses = ve.simpleArrayDifference( classes, recognizedClasses );
+	attributes.unrecognizedClasses = OO.simpleArrayDifference( classes, recognizedClasses );
 
-	return { 'type': this.name, 'attributes': attributes };
+	dataElement = { 'type': this.name, 'attributes': attributes };
+
+	this.storeGeneratedContents( dataElement, dataElement.attributes.src, converter.getStore() );
+
+	return dataElement;
 };
 
 ve.dm.MWInlineImageNode.static.toDomElements = function ( data, doc ) {
@@ -152,7 +167,7 @@ ve.dm.MWInlineImageNode.static.toDomElements = function ( data, doc ) {
 	}
 
 	if ( data.attributes.unrecognizedClasses ) {
-		classes = ve.simpleArrayUnion( classes, data.attributes.unrecognizedClasses );
+		classes = OO.simpleArrayUnion( classes, data.attributes.unrecognizedClasses );
 	}
 
 	if (

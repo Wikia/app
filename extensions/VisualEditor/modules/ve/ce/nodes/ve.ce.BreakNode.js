@@ -19,12 +19,12 @@ ve.ce.BreakNode = function VeCeBreakNode( model, config ) {
 	ve.ce.LeafNode.call( this, model, config );
 
 	// DOM changes
-	this.$.addClass( 've-ce-BreakNode' );
+	this.$element.addClass( 've-ce-BreakNode' );
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.ce.BreakNode, ve.ce.LeafNode );
+OO.inheritClass( ve.ce.BreakNode, ve.ce.LeafNode );
 
 /* Static Properties */
 

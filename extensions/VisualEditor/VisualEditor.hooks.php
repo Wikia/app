@@ -9,14 +9,12 @@
  */
 
 class VisualEditorHooks {
-	/** List of skins VisualEditor integration supports */
-	protected static $supportedSkins = array( 'oasis' );
-
 	public static function isAvailable( $skin ) {
+		global $wgVisualEditorSupportedSkins;
 		static $isAvailable = null;
 		if ( is_null( $isAvailable ) ) {
 			$isAvailable = (
-				in_array( $skin->getSkinName(), self::$supportedSkins ) &&
+				in_array( $skin->getSkinName(), $wgVisualEditorSupportedSkins ) &&
 				$skin->getUser()->getOption( 'enablerichtext' )
 			);
 		}
@@ -34,7 +32,7 @@ class VisualEditorHooks {
 		// parties who attempt to install VisualEditor onto non-alpha wikis, as
 		// this should have no impact on deploying to Wikimedia's wiki cluster.
 		// Is fine for release tarballs because 1.22wmf11 < 1.22alpha < 1.22.0.
-		//wfUseMW( '1.22wmf11' ); #back-compat
+		//wfUseMW( '1.23wmf2' ); #back-compat
 
 		// Add tab messages to the init init module
 		foreach ( $wgVisualEditorTabMessages as $msg ) {
@@ -230,11 +228,13 @@ class VisualEditorHooks {
 	}
 
 	public static function onGetPreferences( $user, &$preferences ) {
-		$preferences['visualeditor-enable'] = array(
-			'type' => 'toggle',
-			'label-message' => 'visualeditor-preference-enable',
-			'section' => 'editing/beta'
-		);
+		if ( !array_key_exists( 'visualeditor-enable', $preferences ) ) {
+			$preferences['visualeditor-enable'] = array(
+				'type' => 'toggle',
+				'label-message' => 'visualeditor-preference-enable',
+				'section' => 'editing/beta'
+			);
+		}
 		$preferences['visualeditor-betatempdisable'] = array(
 			'type' => 'toggle',
 			'label-message' => 'visualeditor-preference-betatempdisable',
@@ -244,16 +244,107 @@ class VisualEditorHooks {
 	}
 
 	public static function onGetBetaPreferences( $user, &$preferences ) {
-		global $wgExtensionAssetsPath;
+		global $wgExtensionAssetsPath, $wgVisualEditorSupportedSkins, $wgVisualEditorBrowserBlacklist;
 
-		$preferences['visualeditor-enable-experimental'] = array(
+		$dir = RequestContext::getMain()->getLanguage()->getDir();
+
+		$preferences['visualeditor-enable'] = array(
 			'version' => '1.0',
-			'label-message' => 'visualeditor-preference-experimental-label',
-			'desc-message' => 'visualeditor-preference-experimental-description',
-			'info-link' => 'visualeditor-preference-experimental-info-link',
-			'discussion-link' => 'visualeditor-preference-experimental-discussion-link',
-			'screenshot' => $wgExtensionAssetsPath . '/VisualEditor/logo-experimental.png',
+			'label-message' => 'visualeditor-preference-core-label',
+			'desc-message' => 'visualeditor-preference-core-description',
+			'screenshot' => $wgExtensionAssetsPath .
+				"/VisualEditor/betafeatures-icon-VisualEditor-$dir.svg",
+			'info-message' => 'visualeditor-preference-core-info-link',
+			'discussion-message' => 'visualeditor-preference-core-discussion-link',
+			'requirements' => array(
+				'javascript' => true,
+				'blacklist' => $wgVisualEditorBrowserBlacklist,
+				'skins' => $wgVisualEditorSupportedSkins,
+			)
 		);
+
+/* Disabling Beta Features option for language for now
+		$preferences['visualeditor-enable-language'] = array(
+			'version' => '1.0',
+			'label-message' => 'visualeditor-preference-language-label',
+			'desc-message' => 'visualeditor-preference-language-description',
+			'screenshot' => $wgExtensionAssetsPath .
+				"/VisualEditor/betafeatures-icon-VisualEditor-language-$dir.svg",
+			'info-message' => 'visualeditor-preference-experimental-info-link',
+			'discussion-message' => 'visualeditor-preference-experimental-discussion-link',
+			'requirements' => array(
+				'betafeatures' => array(
+					'visualeditor-enable',
+				),
+			),
+		);
+*/
+
+/* Disabling Beta Features option for generic content for now
+		$preferences['visualeditor-enable-mwalienextension'] = array(
+			'version' => '1.0',
+			'label-message' => 'visualeditor-preference-mwalienextension-label',
+			'desc-message' => 'visualeditor-preference-mwalienextension-description',
+			'screenshot' => $wgExtensionAssetsPath .
+				"/VisualEditor/betafeatures-icon-VisualEditor-alien-$dir.svg",
+			'info-message' => 'visualeditor-preference-mwalienextension-info-link',
+			'discussion-message' => 'visualeditor-preference-mwalienextension-discussion-link',
+			'requirements' => array(
+				'betafeatures' => array(
+					'visualeditor-enable',
+				),
+			),
+		);
+*/
+
+		$preferences['visualeditor-enable-mwmath'] = array(
+			'version' => '1.0',
+			'label-message' => 'visualeditor-preference-mwmath-label',
+			'desc-message' => 'visualeditor-preference-mwmath-description',
+			'screenshot' => $wgExtensionAssetsPath .
+				"/VisualEditor/betafeatures-icon-VisualEditor-formulae-$dir.svg",
+			'info-message' => 'visualeditor-preference-mwmath-info-link',
+			'discussion-message' => 'visualeditor-preference-mwmath-discussion-link',
+			'requirements' => array(
+				'betafeatures' => array(
+					'visualeditor-enable',
+				),
+			),
+		);
+
+/* Disabling Beta Features option for hieroglyphics for now
+		$preferences['visualeditor-enable-mwhiero'] = array(
+			'version' => '1.0',
+			'label-message' => 'visualeditor-preference-mwhiero-label',
+			'desc-message' => 'visualeditor-preference-mwhiero-description',
+			'screenshot' => $wgExtensionAssetsPath .
+				"/VisualEditor/betafeatures-icon-VisualEditor-hieroglyphics-$dir.svg",
+			'info-message' => 'visualeditor-preference-mwhiero-info-link',
+			'discussion-message' => 'visualeditor-preference-mwhiero-discussion-link',
+			'requirements' => array(
+				'betafeatures' => array(
+					'visualeditor-enable',
+				),
+			),
+		);
+*/
+
+/* Disabling Beta Features option for syntax highlighting for now
+		$preferences['visualeditor-enable-mwsyntaxHighlight'] = array(
+			'version' => '1.0',
+			'label-message' => 'visualeditor-preference-mwsyntaxHighlight-label',
+			'desc-message' => 'visualeditor-preference-mwsyntaxHighlight-description',
+			'screenshot' => $wgExtensionAssetsPath .
+				"/VisualEditor/betafeatures-icon-VisualEditor-syntaxHighlight-$dir.svg",
+			'info-message' => 'visualeditor-preference-mwsyntaxHighlight-info-link',
+			'discussion-message' => 'visualeditor-preference-mwsyntaxHighlight-discussion-link',
+			'requirements' => array(
+				'betafeatures' => array(
+					'visualeditor-enable',
+				),
+			),
+		);
+*/
 	}
 
 	public static function onListDefinedTags( &$tags ) {
@@ -266,15 +357,18 @@ class VisualEditorHooks {
 	 * Adds extra variables to the page config.
 	 */
 	public static function onMakeGlobalVariablesScript( array &$vars, OutputPage $out ) {
-		global $wgStylePath, $wgContLang;
+		global $wgStylePath;
+
+		$pageLanguage = $out->getTitle()->getPageLanguage();
+
 		$vars['wgVisualEditor'] = array(
 			'isPageWatched' => $out->getUser()->isWatched( $out->getTitle() ),
 			// Same as in Linker.php
 			'magnifyClipIconURL' => $wgStylePath .
 				'/common/images/magnify-clip' .
-				( $wgContLang->isRTL() ? '-rtl' : '' ) . '.png',
-			'pageLanguageCode' => $out->getTitle()->getPageLanguage()->getHtmlCode(),
-			'pageLanguageDir' => $out->getTitle()->getPageLanguage()->getDir()
+				( $pageLanguage->isRTL() ? '-rtl' : '' ) . '.png',
+			'pageLanguageCode' => $pageLanguage->getHtmlCode(),
+			'pageLanguageDir' => $pageLanguage->getDir()
 		);
 
 		return true;
@@ -291,6 +385,8 @@ class VisualEditorHooks {
 			$wgVisualEditorPluginModules,
 			$wgVisualEditorTabPosition,
 			$wgVisualEditorTabMessages,
+			$wgVisualEditorBrowserBlacklist,
+			$wgVisualEditorSupportedSkins,
 			$wgVisualEditorShowBetaWelcome;
 
 		$vars['wgVisualEditorConfig'] = array(
@@ -301,9 +397,15 @@ class VisualEditorHooks {
 			'defaultUserOptions' => array(
 				'betatempdisable' => $wgDefaultUserOptions['visualeditor-betatempdisable'],
 				'enable' => $wgDefaultUserOptions['visualeditor-enable'],
-				'experimental' => $wgDefaultUserOptions['visualeditor-enable-experimental'],
+				'enable-experimental' => $wgDefaultUserOptions['visualeditor-enable-experimental'],
+//				'enable-language' => $wgDefaultUserOptions['visualeditor-enable-language'],
+//				'enable-mwalienextension' => $wgDefaultUserOptions['visualeditor-enable-mwalienextension'],
+				'enable-mwmath' => $wgDefaultUserOptions['visualeditor-enable-mwmath'],
+//				'enable-mwhiero' => $wgDefaultUserOptions['visualeditor-enable-mwhiero'],
+//				'enable-mwsyntaxHighlight' => $wgDefaultUserOptions['visualeditor-enable-mwsyntaxHighlight'],
 			),
-			'skins' => self::$supportedSkins,
+			'blacklist' => $wgVisualEditorBrowserBlacklist,
+			'skins' => $wgVisualEditorSupportedSkins,
 			'tabPosition' => $wgVisualEditorTabPosition,
 			'tabMessages' => $wgVisualEditorTabMessages,
 			'showBetaWelcome' => $wgVisualEditorShowBetaWelcome,
@@ -317,9 +419,16 @@ class VisualEditorHooks {
 		ResourceLoader &$resourceLoader
 	) {
 		$testModules['qunit']['ext.visualEditor.test'] = array(
+			'styles' => array(
+				// jsdifflib
+				'jsdifflib/diffview.css',
+			),
 			'scripts' => array(
 				// MW config preload
 				've-mw/test/mw-preload.js',
+				// jsdifflib
+				'jsdifflib/diffview.js',
+				'jsdifflib/difflib.js',
 				// QUnit plugin
 				've/test/ve.qunit.js',
 				// UnicodeJS Tests
@@ -330,11 +439,9 @@ class VisualEditorHooks {
 				've/test/ve.test.utils.js',
 				've/test/ve.test.js',
 				've/test/ve.Document.test.js',
-				've/test/ve.Element.test.js',
 				've/test/ve.Node.test.js',
 				've/test/ve.BranchNode.test.js',
 				've/test/ve.LeafNode.test.js',
-				've/test/ve.Factory.test.js',
 				// VisualEditor DataModel Tests
 				've/test/dm/ve.dm.example.js',
 				've/test/dm/ve.dm.AnnotationSet.test.js',
@@ -369,6 +476,7 @@ class VisualEditorHooks {
 				've/test/ce/ve.ce.Document.test.js',
 				've/test/ce/ve.ce.Surface.test.js',
 				've-mw/test/ce/ve.ce.Document.test.js',
+				've-mw/test/ce/ve.ce.Surface.test.js',
 				've/test/ce/ve.ce.NodeFactory.test.js',
 				've/test/ce/ve.ce.Node.test.js',
 				've/test/ce/ve.ce.BranchNode.test.js',
@@ -393,7 +501,7 @@ class VisualEditorHooks {
 				'ext.visualEditor.viewPageTarget.init',
 				'ext.visualEditor.viewPageTarget',
 			),
-			'localBasePath' => dirname( __FILE__ ) . '/modules',
+			'localBasePath' => __DIR__ . '/modules',
 			'remoteExtPath' => 'VisualEditor/modules',
 		);
 

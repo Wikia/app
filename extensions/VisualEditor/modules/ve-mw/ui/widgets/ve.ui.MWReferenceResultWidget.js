@@ -9,7 +9,7 @@
  * Creates an ve.ui.MWReferenceResultWidget object.
  *
  * @class
- * @extends ve.ui.OptionWidget
+ * @extends OO.ui.OptionWidget
  *
  * @constructor
  * @param {Mixed} data Item data
@@ -21,22 +21,22 @@ ve.ui.MWReferenceResultWidget = function VeUiMWReferenceResultWidget( data, conf
 	config = config || {};
 
 	// Parent constructor
-	ve.ui.OptionWidget.call( this, data, config );
+	OO.ui.OptionWidget.call( this, data, config );
 
 	// Properties
-	this.$shield = this.$$( '<div>' );
+	this.$shield = this.$( '<div>' );
 
 	// Initialization
 	this.$shield.addClass( 've-ui-mwReferenceResultWidget-shield' );
-	this.$
+	this.$element
 		.addClass( 've-ui-mwReferenceResultWidget' )
 		.append( this.$shield );
 	if ( config.divider ) {
-		this.$.addClass( 've-ui-mwReferenceResultWidget-divider' );
+		this.$element.addClass( 've-ui-mwReferenceResultWidget-divider' );
 		this.setDisabled( true );
 	}
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.ui.MWReferenceResultWidget, ve.ui.OptionWidget );
+OO.inheritClass( ve.ui.MWReferenceResultWidget, OO.ui.OptionWidget );

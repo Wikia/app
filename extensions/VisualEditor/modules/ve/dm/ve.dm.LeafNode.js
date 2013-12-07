@@ -27,9 +27,9 @@ ve.dm.LeafNode = function VeDmLeafNode( length, element ) {
 
 /* Inheritance */
 
-ve.inheritClass( ve.dm.LeafNode, ve.dm.Node );
+OO.inheritClass( ve.dm.LeafNode, ve.dm.Node );
 
-ve.mixinClass( ve.dm.LeafNode, ve.LeafNode );
+OO.mixinClass( ve.dm.LeafNode, ve.LeafNode );
 
 /* Static properties */
 

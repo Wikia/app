@@ -9,7 +9,7 @@
  * @extends ve.ui.DialogTool
  *
  * @constructor
- * @param {ve.ui.Toolbar} toolbar
+ * @param {OO.ui.Toolbar} toolbar
  * @param {Object} [config] Config options
  */
 ve.ui.WikiaMediaInsertButtonTool = function VeUiWikiaMediaInsertButtonTool( toolbar, config ) {
@@ -19,7 +19,7 @@ ve.ui.WikiaMediaInsertButtonTool = function VeUiWikiaMediaInsertButtonTool( tool
 
 /* Inheritance */
 
-ve.inheritClass( ve.ui.WikiaMediaInsertButtonTool, ve.ui.DialogTool );
+OO.inheritClass( ve.ui.WikiaMediaInsertButtonTool, ve.ui.DialogTool );
 
 /* Static Properties */
 
