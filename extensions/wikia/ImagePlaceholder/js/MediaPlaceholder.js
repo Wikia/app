@@ -93,9 +93,9 @@ window.MediaPlaceholder = {
 
 	videoEmbedCallback: function( embedData ) {
 		var placeholders = this.WikiaArticle.find( '.wikiaVideoPlaceholder a' ),
-		// get placeholder to turn into a video thumbnail
+			// get placeholder to turn into a video thumbnail
 			toUpdate = placeholders.filter( '[data-id=' + embedData.placeholderIndex + ']' ),
-		// get thumbnail code from hidden div in success modal
+			// get thumbnail code from hidden div in success modal
 			html = $( '#VideoEmbedCode' ).html();
 
 		toUpdate.closest( '.wikiaVideoPlaceholder' ).replaceWith( html );
