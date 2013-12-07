@@ -74,7 +74,7 @@ class CleanupPageWikiaProps {
 					$db->query("UPDATE page_wikia_props SET props=props | " . LicensedVideoSwapHelper::STATUS_SWAPPABLE .
 						" WHERE page_id = " . $page_id . " AND propname = ". WPP_LVS_STATUS);
 				}
-			}	
+			}
 			if ( $verbose ) {
 				echo "Suggestion record found in $dbname without swappable bit turned on in status record. Turning on swappable for $page_id\n";
 			}
@@ -95,7 +95,8 @@ class CleanupPageWikiaProps {
 				echo "Deleted pages found in $dbname. Deleting corresponding LVS rows from page_wikia_props\n";
 			}
 			if ( !$test ) {
-				$db->query( "DELETE FROM page_wikia_props WHERE page_id IN (" . implode(",", $chunk) . ")" );
+				$db->query( "DELETE FROM page_wikia_props WHERE page_id IN (" . implode(",", $chunk) . ") and propname between " .
+					WPP_LVS_STATUS_INFO . " and " . WPP_LVS_STATUS);
 			}
 		}
 	}
