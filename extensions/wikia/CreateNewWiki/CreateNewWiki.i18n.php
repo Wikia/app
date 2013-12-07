@@ -2838,7 +2838,7 @@ $messages['tr'] = array(
 	'cnw-welcome-instruction1' => 'Wikinize sayfalar eklemeye başlamak için aşağıdaki düğmeye tıklayın.',
 	'cnw-welcome-instruction2' => 'Wikide bu düğmeyi, yeni bir sayfa eklemek istediğiniz herhangi bir zaman kullanabilirsiniz.',
 	'cnw-welcome-help' => 'Daha fazla cevap ve öneri bulabilmek için <a href="http://community.wikia.com">Topluluk Merkezini</a> ziyaret edin.',
-	'cnw-error-general' => 'Oops, bizim tarafımızda bir şeyler ters gitti!  Lütfen yeniden deneyin veya yardım için [[Special:Contact|bize ulaşın]] .', # Fuzzy
+	'cnw-error-general' => 'Üzgünüz, ters giden bir şeyler var!  Lütfen tekrar deneyin veya yardım için  bizimle [[Special:Contact|iletişim]] kurun.',
 	'cnw-error-general-heading' => 'Özür dileriz',
 	'cnw-badword-header' => 'Oops!',
 	'cnw-badword-msg' => 'Merhaba, lütfen Wiki tanımınızda $1 gibi kötü kelimeler veya yasaklı kelimeler kullanmaktan kaçının.',

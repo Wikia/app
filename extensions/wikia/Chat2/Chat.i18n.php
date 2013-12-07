@@ -3160,6 +3160,23 @@ Mangyaring makipag-ugnayan sa kanila para sa mas maraming kabatiran.',
 	'chat-status-away' => 'Nasa malayo',
 );
 
+/** Turkish (Türkçe)
+ * @author Incelemeelemani
+ */
+$messages['tr'] = array(
+	'chat-start-a-chat' => 'Sohbeti Başlat',
+	'chat-join-the-chat' => 'Sohbete Katıl',
+	'chat-user-menu-message-wall' => 'Mesaj Duvarı',
+	'chat-user-menu-talk-page' => 'Tartışma Sayfası',
+	'chat-user-menu-contribs' => 'Katkılar',
+	'chat-user-menu-private' => 'Özel Mesaj',
+	'chat-user-menu-kick' => 'At',
+	'chat-user-menu-ban' => 'Yasakla',
+	'chat-user-menu-private-block' => 'Özel Mesajları Engelle',
+	'chat-user-menu-private-allow' => 'Özel Mesajlara İzin Ver',
+	'chat-user-menu-private-close' => 'Özel Odayı Kapat',
+);
+
 /** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  */

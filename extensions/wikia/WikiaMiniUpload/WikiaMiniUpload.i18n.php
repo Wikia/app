@@ -3016,9 +3016,14 @@ $messages['tl'] = array(
 
 /** Turkish (Türkçe)
  * @author Erdemaslancan
+ * @author Incelemeelemani
  */
 $messages['tr'] = array(
 	'wmu-optional' => '(isteğe bağlı)',
+	'wmu-imagebutton' => 'Resim ekle',
+	'wmu-license-cc' => 'Creative Commons Attribution-Share Alike 3.0 lisansı altındadır',
+	'wmu-bad-extension' => 'Geçersiz dosya türü yüklemeye çalıştınız. Lütfen yeniden deneyin.',
+	'wmu-gallery' => 'Galeri',
 	'wmu-alignment' => 'Hizalama',
 );
 

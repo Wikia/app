@@ -554,10 +554,14 @@ Möchtest du deine E-Mail-Einstellungen ändern? Besuche {{fullurl:{{ns:special}
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
+ * @author Marmase
  * @author Mirzali
  */
 $messages['diq'] = array(
 	'userlogin-login-heading' => 'Cı kewe',
+	'userlogin-forgot-password-button' => 'Dewam ke',
+	'userlogin-forgot-password-go-to-login' => 'Zaten Qeyda şıma esta? [[Special:UserLogin|Ronıştış ake]]',
+	'userlogin-remembermypassword' => 'Ronıştışer tım akerde verd',
 	'userlogin-get-account' => 'Hesabê şıma çıniyo? <a href="$1" tabindex="$2">Qeyd be</a>',
 	'userlogin-password-page-title' => 'Parolaya xo bıvurne',
 	'userlogin-oldpassword' => 'Parola verên',
@@ -565,6 +569,7 @@ $messages['diq'] = array(
 	'userlogin-password-email-greeting' => 'Merheba Bırayo $USERNAME,',
 	'userlogin-provider-or' => 'Ya na',
 	'userlogin-loginreqlink' => 'Deqewtış',
+	'wikiamobile-sendpassword-label' => 'Parolaya newi bırşe',
 );
 
 /** British English (British English)
@@ -2283,6 +2288,47 @@ Nais mong kontrolin ang tinatanggap mong mga e-liham? Pumunta sa: {{fullurl:{{ns
 	'userlogin-changepassword-needlogin' => 'Kailangan mong $1 upang mabago ang hudyat mo.',
 	'wikiamobile-sendpassword-label' => 'Ipadala ang bagong hudyat',
 	'wikiamobile-facebook-connect-fail' => 'Paumanhin, ang iyong akawnt ng Facebook ay kasalukuyang hindi nakakawing sa isang akawnt ng Wikia.',
+);
+
+/** Turkish (Türkçe)
+ * @author Incelemeelemani
+ */
+$messages['tr'] = array(
+	'userlogin-login-heading' => 'Oturum aç',
+	'userlogin-forgot-password' => 'Parolanızı mı unuttunuz?',
+	'userlogin-forgot-password-button' => 'Devam et',
+	'userlogin-forgot-password-go-to-login' => 'Zaten kayıtlı mısınız? [[Special:UserLogin|Oturum açın]]',
+	'userlogin-remembermypassword' => 'Oturumumu sürekli açık tut',
+	'userlogin-error-noname' => 'Lütfen kullanıcı adı alanını doldurun.',
+	'userlogin-error-sessionfailure' => 'Oturumunuz zaman aşımına uğradı. Lütfen tekrar giriş yapın.',
+	'userlogin-error-nosuchuser' => 'Bu kullanıcı tanınmıyor. Kullanıcı adlarının büyük, küçük harf duyarlı olduğunu unutmayın.',
+	'userlogin-error-wrongpassword' => 'Hatalı şifre. Caps Lock tuşuna basmadığınızdan emin olun ve tekrar deneyin.',
+	'userlogin-error-wrongpasswordempty' => 'Lütfen parola alanını doldurun.',
+	'userlogin-error-resetpass_announce' => 'Geçici bir parola kullanılarak giriş yapıldı. Oturumunuz ile devam etmek için lütfen yeni bir parola oluşturun.',
+	'userlogin-error-login-throttled' => 'Çok sayıda hatalı parola ile giriş yapmaya çalıştınız. Tekrar denemeden önce lütfen bir süre bekleyin.',
+	'userlogin-error-login-userblocked' => 'Kullanıcı adınız bloke edildi ve artık oturum açmak için kullanılamaz.',
+	'userlogin-error-edit-account-closed-flag' => 'Hesabınız Wikia tarafından devre dışı bırakıldı.',
+	'userlogin-error-cantcreateaccount-text' => 'IP adresinizden yeni hesaplar oluşturmanıza izin verilmemektedir.',
+	'userlogin-error-userexists' => 'Bu kullanıcı adı zaten kullanılıyor. Lütfen farklı bir tane deneyin!',
+	'userlogin-error-invalidemailaddress' => 'Lütfen geçerli bir e-posta adresi girin.',
+	'userlogin-get-account' => 'Hesabınız yok mu? <a href="$1" tabindex="$2">Kaydolun</a>',
+	'userlogin-error-invalid-username' => 'Geçersiz kullanıcı adı',
+	'userlogin-error-userlogin-unable-info' => 'Üzgünüm, şu anda hesap oluşturma mümkün gözükmüyor.',
+	'userlogin-error-user-not-allowed' => 'Bu kullanıcı adına izin verilmiyor.',
+	'userlogin-error-captcha-createaccount-fail' => 'Girdiğiniz kelimeler uyuşmuyor, tekrar deneyin!',
+	'userlogin-error-userlogin-bad-birthday' => 'Lütfen, gün, ay ve yıl bölümlerini doldurun.',
+	'userlogin-error-externaldberror' => 'Üzgünüm! Sitemiz şu anda bir sorun yaşıyor. Lütfen daha sonra tekrar deneyin.',
+	'userlogin-error-noemailtitle' => 'Lütfen geçerli bir e-posta adresi girin.',
+	'userlogin-error-acct_creation_throttle_hit' => 'Üzgünüm, bu IP adresinden bugün çok fazla sayıda hesap oluşturuldu. Lütfen daha sonra tekrar deneyin.',
+	'userlogin-error-resetpass_forbidden' => 'Parolalar değiştirilemiyor',
+	'userlogin-error-blocked-mailpassword' => 'Bu IP adresi Wikia tarafından engellendiğinden dolayı yeni bir parola isteğinde bulunamazsınız.',
+	'userlogin-error-throttled-mailpassword' => 'Biz bu hesabın parolasını hatırlatacak bilgileri son {{PLURAL:$1|saat|$1 saat}} içerisinde gönderdik. Lütfen e-posta adresinizi kontrol edin.',
+	'userlogin-error-mail-error' => 'E-posta gönderiminde bir hata oluştu. Lütfen bizimle [[Special:Contact/general|iletişime geçin]].',
+	'userlogin-provider-or' => 'Veya',
+	'userlogin-provider-tooltip-facebook' => 'Facebook ile oturum açmak için butona tıklayın',
+	'userlogin-provider-tooltip-facebook-signup' => 'Facebook ile kaydolmak için butona tıklayın',
+	'userlogin-loginreqlink' => 'oturum aç',
+	'wikiamobile-sendpassword-label' => 'Yeni parola gönder',
 );
 
 /** Tatar (Cyrillic script) (татарча)

@@ -693,6 +693,23 @@ $messages['tl'] = array(
 	'places-category-switch-off' => 'Paganahin ang paglalagay ng tatak na pangheograpiya',
 );
 
+/** Turkish (Türkçe)
+ * @author Incelemeelemani
+ */
+$messages['tr'] = array(
+	'places-editor-search' => 'Ara',
+	'places-editor-title-create-new' => 'Bir coğrafi etiket ekle',
+	'places-editor-title-edit' => 'Coğrafi etiketi düzenle',
+	'places-editor-show-my-location' => 'Beni konumumu bul',
+	'places-editor-geoposition' => 'Mevcut coğrafi konum:',
+	'places-geolocation-button-label' => 'Konum ekle',
+	'places-geolocation-modal-add-title' => 'Konum ekle',
+	'places-geolocation-modal-error-title' => 'Hata',
+	'places-geolocation-modal-error' => 'Konumunuz belirlenmeye çalışılırken bir hata oluştu:<br />$1',
+	'places-geolocation-modal-not-available' => 'Bu özellik şu anda yalnızca mobil sürümdü kullanılabilir. <br /><br /> Tekrar denemek ister misiniz? Bu sayfayı yalnızca mobil cihazınız ile ziyaret edin.',
+	'places-error-no-article' => 'Bir sayfa belirtmelisiniz',
+);
+
 /** Ukrainian (українська)
  * @author A1
  * @author Andriykopanytsia

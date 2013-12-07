@@ -1058,6 +1058,14 @@ $messages['uk'] = array(
 	'action-multilookup' => 'перегляд відомостей про користувачів в декількох вікі',
 );
 
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'multilookupnoresultfound' => 'Không tìm thấy kết quả',
+	'multilookupwiki' => 'Wiki',
+);
+
 /** Yiddish (ייִדיש)
  * @author פוילישער
  */

@@ -398,10 +398,11 @@ $messages['tl'] = array(
 );
 
 /** Turkish (Türkçe)
+ * @author Incelemeelemani
  * @author Manco Capac
  */
 $messages['tr'] = array(
-	'tog-disablelinksuggest' => 'Bağlantı önermesini gösterme', # Fuzzy
+	'tog-disablelinksuggest' => 'Kaynak modu bağlantısını gösterme',
 );
 
 /** Tatar (Cyrillic script) (татарча)

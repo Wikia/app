@@ -168,6 +168,13 @@ Si prefereixes l'ús regular del correu electrònic amb dades adjuntes, pots con
 	'specialcontact-submitcomplete' => 'Gràcies per contactar amb Wikia.',
 );
 
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'specialcontact-problemdesc' => 'Хааман йоза',
+);
+
 /** Czech (česky)
  * @author Chmee2
  */

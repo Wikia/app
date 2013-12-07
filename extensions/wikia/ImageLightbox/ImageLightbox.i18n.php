@@ -1051,9 +1051,17 @@ Mga detalye: $2',
 );
 
 /** Turkish (Türkçe)
+ * @author Incelemeelemani
  * @author Suelnur
  */
 $messages['tr'] = array(
+	'lightbox-forum' => 'Forum',
+	'lightbox-standard-link' => 'Standart bağlantı',
+	'lightbox-blog-link' => 'Blog bağlantı',
+	'lightbox-send' => 'Gönder',
+	'lightbox-share-button-email' => 'E-posta',
+	'lightbox-share-button-www' => 'Paylaş',
+	'lightbox-share-email-page-label-address' => 'E-posta adresi',
 	'lightbox-share-email-error-caption' => 'Hata',
 );
 

@@ -417,7 +417,9 @@ $messages['ca'] = array(
  */
 $messages['ce'] = array(
 	'themedesigner-header' => 'корта',
+	'themedesigner-preview-mode' => 'Хьалха муха ю хьажа...',
 	'themedesigner-font' => 'шрифт',
+	'themedesigner-wodmark-preview' => 'Хьалха муха ю хьажа',
 );
 
 /** Czech (česky)

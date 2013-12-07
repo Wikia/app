@@ -158,6 +158,29 @@ $messages['de'] = array(
 	'wikia-visualeditor-dialog-wikiasourcemode-help-text' => 'Formatierungshilfe',
 );
 
+/** Zazaki (Zazaki)
+ * @author Marmase
+ */
+$messages['diq'] = array(
+	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Medya dek',
+	'wikia-visualeditor-dialog-wikiamediainsert-insert-button' => 'Medya dek',
+	'wikia-visualeditor-dialog-wikiamediainsert-item-title-label' => 'Sername',
+	'wikia-visualeditor-dialog-wikiamediainsert-item-license-label' => 'Lisans',
+	'wikia-visualeditor-dialog-wikiamediainsert-item-remove-button' => 'Na etiketer wedarne',
+	'wikia-visualeditor-dialog-wikiamediainsert-upload-label' => 'Resima new dek na Wikia',
+	'wikia-visualeditor-dialog-wikiamediainsert-upload-button' => 'Bar ke',
+	'wikia-visualeditor-help-link' => 'Help:VisualEditor',
+	'wikia-visualeditor-dialog-transclusion-title' => 'Şablon',
+	'wikia-visualeditor-dialogbutton-transclusion-tooltip' => 'Şablon',
+	'wikia-visualeditor-savedialog-label-save' => 'Bıhesırne',
+	'wikia-visualeditor-savedialog-label-restore' => 'Verêna perer',
+	'wikia-visualeditor-toolbar-savedialog' => 'Bıhesırne',
+	'wikia-visualeditor-dialogbutton-wikiasourcemode-tooltip' => 'Vırazoğa Çımi',
+	'wikia-visualeditor-dialog-wikiasourcemode-title' => 'Vırazoğa Çımi',
+	'wikia-visualeditor-dialog-wikiasourcemode-help-link' => 'Help:Wikitext',
+	'wikia-visualeditor-dialog-wikiasourcemode-help-text' => 'Format kerdış desteg',
+);
+
 /** British English (British English)
  * @author Shirayuki
  */
@@ -332,6 +355,7 @@ $messages['nl'] = array(
 	'wikia-visualeditor-preference-enable' => 'Beta Visuele tekstbewerker inschakelen',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Media toevoegen',
 	'wikia-visualeditor-dialog-wikiamediainsert-insert-button' => 'Media toevoegen',
+	'wikia-visualeditor-dialog-wikiamediainsert-item-license-label' => 'Licentie',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-label' => 'Nieuwe afbeeldingen toevoegen aan deze Wikia',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-button' => 'Uploaden',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error' => 'Fout tijdens het uploaden van bestand',

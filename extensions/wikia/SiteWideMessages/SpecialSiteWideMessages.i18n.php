@@ -725,6 +725,7 @@ $messages['ce'] = array(
 	'swm-label-mode-users-active' => 'Жигара декъашхой',
 	'swm-label-content' => 'Чулацам',
 	'swm-label-language' => 'Мотт',
+	'swm-button-preview' => '[ Хьалха муха ю хьажа ]',
 	'swm-list-table-expire' => 'Чекхйолу',
 	'swm-list-table-content' => 'Чулацам',
 	'swm-list-table-tools' => 'ГӀирсаш',
@@ -3501,6 +3502,7 @@ $messages['vi'] = array(
 	'swm-mode-users-editcount-less' => 'Ít',
 	'swm-mode-users-editcount-between' => 'Giữa',
 	'swm-error-editcount-tolessthanfrom' => 'Người dùng chỉnh sửa tính giới hạn trên là ít hơn so với giới hạn dưới.',
+	'swm-label-mode-wikis-created-hint' => '<i>Ngày phải trong các hình thức 2012-04-01 00:00:00</i>',
 );
 
 /** Volapük (Volapük)

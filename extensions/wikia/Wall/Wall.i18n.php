@@ -1687,8 +1687,10 @@ $messages['ce'] = array(
 	'wall-message-wall' => 'Декъашхочун дийцаре',
 	'wall-message-wall-shorten' => 'дийцаре',
 	'wall-thread-closed' => 'ДӀачӀагӀа',
+	'wall-button-to-preview-comment' => 'Хьалха муха ю хьажа',
 	'wall-notifications-markasread' => 'Массо билгал йе еша сана',
 	'mail-notification-html-button' => 'Хьажа дийцаре',
+	'wall-preview-modal-title' => 'Хьалха муха ю хьажа',
 );
 
 /** Czech (česky)
@@ -7661,8 +7663,12 @@ $messages['tr'] = array(
 	'wall-action-admin-confirm-ok' => 'Sil',
 	'wall-action-rev-confirm-ok' => 'Evet, sil',
 	'wall-action-move-thread-heading' => 'Bu konuyu taşı',
+	'wall-notifications' => 'Bildirimler',
+	'wall-notifications-all' => 'Tüm Bildirimler',
+	'wall-notifications-markasread' => 'Tümünü okundu olarak işaretle',
 	'wall-notifications-markasread-all-wikis' => 'Tüm wikiler',
 	'wall-notifications-markasread-this-wiki' => 'Bu wiki',
+	'wall-notifications-empty' => 'Herhangi bir bildiriminiz yok',
 	'wall-notifications-loading' => 'Yükleme bildirimleri',
 	'wall-recentchanges-summary' => '($1)',
 );
