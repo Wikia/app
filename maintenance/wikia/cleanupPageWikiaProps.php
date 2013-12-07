@@ -16,7 +16,6 @@ class CleanupPageWikiaProps {
 
 	public static function run ( $db, $test = false, $verbose = false, $params ) {
 		$dbname = $params['dbname'];
-		$helper = new LicensedVideoSwapHelper();
 
 		// Get all pages which have a status record with the swappable
 		// bit turned on, but do not have a corresponding suggestions record
@@ -38,7 +37,8 @@ class CleanupPageWikiaProps {
 		// Turn off the swappable bit in the props column for any page_ids found in the previous query
 		foreach ( $pagesWithoutSuggestions as $page_id )   {
 			if ( !$test ) {
-				$helper->clearFlag( $page_id, $helper::STATUS_SWAPPABLE );
+				$db->query("UPDATE page_wikia_props SET props=props & ~" . LicensedVideoSwapHelper::STATUS_SWAPPABLE .
+					" WHERE page_id = " . $page_id . " AND propname = ". WPP_LVS_STATUS);
 			}
 			if ( $verbose ) {
 				echo "Found status record in $dbname without suggestion record. Turning off swappable bit for page_id: $page_id\n";
@@ -64,7 +64,8 @@ class CleanupPageWikiaProps {
 		// Turn on the swappable bit in the props column for any page_ids found in the previous query
 		foreach ( $suggestionsWithoutSwappableBit as $page_id )   {
 			if ( !$test ) {
-				$helper->setPageStatusSwappable( $page_id );
+				$db->query("UPDATE page_wikia_props SET props=props | " . LicensedVideoSwapHelper::STATUS_SWAPPABLE .
+					" WHERE page_id = " . $page_id . " AND propname = ". WPP_LVS_STATUS);
 			}
 			if ( $verbose ) {
 				echo "Suggestion record found in $dbname without swappable bit turned on in status record. Turning on swappable for $page_id\n";
@@ -81,15 +82,14 @@ class CleanupPageWikiaProps {
 		}
 
 		// Send MySQL pages to be deleted in batches of 100
-		while ( $chunk = array_chunk( $page_ids, 100 ) ) {
+		foreach ( array_chunk( $page_ids, 100 ) as $chunk ) {
 			if ( $verbose ) {
-				echo "Deleted pages found in $dbname. Deleting " . count($chunk) . " records from page_wikia_props\n";
+				echo "Deleted pages found in $dbname. Deleting corresponding LVS rows from page_wikia_props\n";
 			}
 			if ( !$test ) {
-				$db->query( "DELETE FROM page_wikia_props WHERE IN (" . implode(",", $chunk) . ")" );
+				$db->query( "DELETE FROM page_wikia_props WHERE page_id IN (" . implode(",", $chunk) . ")" );
 			}
 		}
-
 	}
 }
 
