@@ -118,14 +118,14 @@
 		},
 
 		// Get data for WMU / VET from placeholder element
-		getProps: function( elem ) {
+		getProps: function( $elem ) {
 			return {
-				placeholderIndex: elem.attr( 'data-id' ),
-				align: elem.attr( 'data-align' ),
-				width: elem.attr( 'data-width' ),
-				thumb: elem.attr( 'data-thumb' ),
-				link: elem.attr( 'data-link' ),
-				caption: elem.attr( 'data-caption' )
+				placeholderIndex: $elem.attr( 'data-id' ),
+				align: $elem.attr( 'data-align' ),
+				width: $elem.attr( 'data-width' ),
+				thumb: $elem.attr( 'data-thumb' ),
+				link: $elem.attr( 'data-link' ),
+				caption: $elem.attr( 'data-caption' )
 			};
 		}
 	};
