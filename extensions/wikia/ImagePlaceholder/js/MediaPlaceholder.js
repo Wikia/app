@@ -37,10 +37,10 @@ window.MediaPlaceholder = {
 
 		// Handle clicks on image placeholders (video placeholders are handled differently)
 		this.WikiaArticle.on( 'click', '.wikiaImagePlaceholder a', function( e ) {
-			e.preventDefault();
-
 			var $this = $( this ),
 				props = self.getProps( $this );
+
+			e.preventDefault();
 
 			// Provide immediate feedback once button is clicked
 			$this.startThrobbing();
@@ -48,20 +48,20 @@ window.MediaPlaceholder = {
 			if ( !self.imageLoaded ) {
 				// open WMU
 				$.when(
-						$.getResources( [
-							$.loadYUI,
-							$.loadJQueryAIM,
-							$.getSassCommonURL( 'extensions/wikia/WikiaMiniUpload/css/WMU.scss' ),
-							window.wgResourceBasePath + '/extensions/wikia/WikiaMiniUpload/js/WMU.js'
-						] )
-					).done( function() {
-						self.imageLoaded = true;
-						$this.stopThrobbing();
-						window.WMU_show( // jshint ignore:line
-							window.event, -2, props.placeholderIndex, props.align, props.thumb,
-							props.width, props.caption, props.link
-						);
-					} );
+					$.getResources( [
+						$.loadYUI,
+						$.loadJQueryAIM,
+						$.getSassCommonURL( 'extensions/wikia/WikiaMiniUpload/css/WMU.scss' ),
+						window.wgResourceBasePath + '/extensions/wikia/WikiaMiniUpload/js/WMU.js'
+					] )
+				).done( function() {
+					self.imageLoaded = true;
+					$this.stopThrobbing();
+					window.WMU_show( // jshint ignore:line
+						window.event, -2, props.placeholderIndex, props.align, props.thumb,
+						props.width, props.caption, props.link
+					);
+				} );
 			} else {
 				$this.stopThrobbing();
 				window.WMU_show( // jshint ignore:line
@@ -75,14 +75,17 @@ window.MediaPlaceholder = {
 		var self = this;
 
 		self.WikiaArticle.find( '.wikiaVideoPlaceholder a' ).each( function() {
-
 			var $this = $( this ),
 				props = self.getProps( $this );
 
 			$this.addVideoButton( {
 				embedPresets: props,
-				insertFinalVideoParams: ['placeholder=1', 'box=' + props.placeholderIndex, 'article=' +
-					encodeURIComponent( window.wgTitle ), 'ns=' + window.wgNamespaceNumber],
+				insertFinalVideoParams: [
+					'placeholder=1',
+					'box=' + props.placeholderIndex,
+					'article=' + encodeURIComponent( window.wgTitle ),
+					'ns=' + window.wgNamespaceNumber
+				],
 				callbackAfterEmbed: $.proxy( self.videoEmbedCallback, self )
 			} );
 		} );
