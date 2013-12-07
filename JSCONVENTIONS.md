@@ -10,26 +10,26 @@ This styleguide defines the JavaScript coding conventions at Wikia. While it is 
 
 * [Tools](#tools)
 * [Language Rules](#language-rules)
-  * [Early returns](#early-returns)
+  * [Early Returns](#early-returns)
   * [Semi-colons](#semi-colons)
-  * [Function-declarations within blocks](#function-declarations-within-blocks)
-  * [Try/catch blocks](#trycatch-blocks)
-  * [Switch statements](#switch-statements)
+  * [Function-declarations Within Blocks](#function-declarations-within-blocks)
+  * [Try/Catch Blocks](#trycatch-blocks)
+  * [Switch Statements](#switch-statements)
   * [Delete Operator](#delete-operator)
-  * [Modifying prototypes of built-in objects](#modifying-prototypes-of-built-in-objects)
+  * [Modifying Prototypes of Built-in Objects](#modifying-prototypes-of-built-in-objects)
   * [Maximum Parameters](#maximum-parameters)
 * [Style Rules](#style-rules)
-  * [White space guidelines](#white-space-guidelines)
-     * [Bad examples](#bad-examples)
-     * [Good examples](#good-examples)
+  * [White Space Guidelines](#white-space-guidelines)
+     * [Bad Examples](#bad-examples)
+     * [Good Examples](#good-examples)
      * [Objects](#objects)
      * [Arrays](#arrays)
      * [Function Calls](#function-calls)
      * [Multi-line Statements](#multi-line-statements)
      * [Chained Method Calls](#chained-method-calls)
-  * [Prefixing jQuery objects](#prefixing-jquery-objects)
+  * [Prefixing jQuery Objects](#prefixing-jquery-objects)
   * [Comments](#comments)
-  * [Naming conventions](#naming-conventions)
+  * [Naming Conventions](#naming-conventions)
      * [Variables](#variables)
      * [Folders](#folders)
      * [AMD Modules](#amd-modules)
@@ -45,7 +45,7 @@ Here at Wikia, we employ a few tools to make compliance with our coding conventi
 
 Wikia uses JSHint to detect errors, prevent potential problems and enforce some of our coding conventions. Our rules are enforced globally in the root level [.jshintrc](https://github.com/Wikia/app/blob/dev/.jshintrc) file. Keep in mind that some extensions have JSHint guidelines of their own.
 
-#### How to use JSHint
+#### How to Use JSHint
 
 Running JSHint can be [performed in a variety of ways](http://jshint.com/install/) though we currently recommend using an editor plugin, if available, but it's also easy to run straight from the command line.
 
@@ -53,7 +53,7 @@ Running JSHint can be [performed in a variety of ways](http://jshint.com/install
 
 Wikia uses EditorConfig to help enforce whitespace consistency across our repository. Our rules are enforced globally in the root level [.editorconfig](https://github.com/Wikia/app/blob/dev/.editorconfig) file.
 
-#### How to use EditorConfig
+#### How to Use EditorConfig
 
 Simply [download a plugin](http://editorconfig.org/#download) for your editor of choice. If your editor is not listed, you will need to configure your editor manually to conform to any of our guidelines. If this is the case, please consider opening an issue (https://github.com/editorconfig/editorconfig/issues) or contributing a plugin (http://editorconfig.org/#contributing) to the EditorConfig project. Don't forget to update when changes to the guidelines get rolled out.
 
@@ -61,7 +61,7 @@ Simply [download a plugin](http://editorconfig.org/#download) for your editor of
 
 Language rules have an impact on functionality. They were chosen based on performance implications and their tendency to reduce bugs.
 
-### Early returns
+### Early Returns
 
 Avoid early returns, they make the flow of the code harder to follow.
 
@@ -101,7 +101,7 @@ var x = y;
 myFunc();
 ```
 
-### Function declarations within blocks
+### Function Declarations Within Blocks
 
 Do not declare functions within blocks such as loops and conditionals. This will often lead to unintended consequences.
 
@@ -121,7 +121,7 @@ while ( condition ) {
 }
 ```
 
-### Try/catch blocks
+### Try/Catch Blocks
 
 Avoid using try/catch blocks in performance critical functions and inside loops.
 
@@ -203,7 +203,7 @@ delete myObj.goodBye;
 myObj.goodBye = false; // or null or '' etc.
 ```
 
-### Modifying prototypes of built-in objects
+### Modifying Prototypes of Built-in Objects
 
 Modifying prototypes is heavily discouraged. For this reason, many JavaScript frameworks, such as jQuery, work on the assumption that no built in Object prototypes are modified.
 
