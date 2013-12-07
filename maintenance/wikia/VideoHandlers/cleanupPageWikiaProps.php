@@ -94,7 +94,7 @@ class CleanupPageWikiaProps {
 			if ( $verbose ) {
 				echo "Deleted pages found in $dbname. Deleting corresponding LVS rows from page_wikia_props\n";
 			}
-			if ( !$test ) {
+			if ( !$test and !empty($chunk) ) {
 				$db->query( "DELETE FROM page_wikia_props WHERE page_id IN (" . implode(",", $chunk) . ") and propname between " .
 					WPP_LVS_STATUS_INFO . " and " . WPP_LVS_STATUS);
 			}
