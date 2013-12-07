@@ -19,11 +19,12 @@ This styleguide defines the JavaScript coding conventions at Wikia. While it is 
   * [Modifying prototypes of built-in objects](#modifying-prototypes-of-built-in-objects)
   * [Maximum Parameters](#maximum-parameters)
 * [Style Rules](#style-rules)
-  * [White space guidelines](#whitespace-guidelines)
+  * [White space guidelines](#white-space-guidelines)
      * [Bad examples](#bad-examples)
      * [Good examples](#good-examples)
      * [Objects](#objects)
-     * [Arrays and Function Calls](#arrays-and-function-calls)
+     * [Arrays](#arrays)
+     * [Function Calls](#function-calls)
      * [Multi-line Statements](#multi-line-statements)
      * [Chained Method Calls](#chained-method-calls)
   * [Prefixing jQuery objects](#prefixing-jquery-objects)
@@ -228,7 +229,7 @@ function bakeCupcakes( ingredients ) {
 
 // exception: AMD
 define( 'bakecupcakes', 
-    [ 'sugar', 'eggs', 'milk', 'icing', 'flour' ],  
+    ['sugar', 'eggs', 'milk', 'icing', 'flour'],  
     function( sugar, eggs, milk, icing, flour ) {
  // ...
 })
@@ -239,7 +240,7 @@ define( 'bakecupcakes',
 
 Style rules help us write easy to read, well documented, and consistant code.
 
-### Whitespace guidelines
+### White Space Guidelines
 
 Our whitespace guidelines are based on the [jQuery Style Guide](http://contribute.jquery.org/style-guide/js/). We have copied them below so we can make changes to them as we see fit. In general, the jQuery style guide encourages liberal spacing for improved human readability. The minification process creates a file that is optimized for browsers to read and process.
 
@@ -254,7 +255,6 @@ Our whitespace guidelines are based on the [jQuery Style Guide](http://contribut
 - The `?` and `:` in a ternary conditional must have space on both sides.
 - No filler spaces in empty constructs (e.g., `{}`, `[]`, `fn()`)
 - New line at the end of each file.
-- If the entire file is wrapped in a closure, the function body is not indented.
 
 #### Bad Examples
 
@@ -285,7 +285,7 @@ while ( !condition ) {
 }
 
 for ( i = 0; i < 100; i++ ) {
-	object[ array[ i ] ] = someFn( i );
+	object[array[i]] = someFn( i );
 }
 
 try {
@@ -315,45 +315,35 @@ var map = {
 };
 ```
 
-#### Arrays and Function Calls
+#### Arrays
 
-Always include extra spaces around elements and arguments:
+We follow MediaWiki's rules when it comes to defining and accessing arrays: no whitespace before the first value or after the last value in an array, unless it spans multiple lines.
 
 ```js
-array = [ '*' ];
+// both are fine
+someArray = [a, b, 'foo'];
 
-array = [ a, b ];
+anotherArray = [
+    moreStuff,
+    maybeAFunctionCall(),
+    'other stuff'
+];
 
+someArray[1];
+```
+
+#### Function Calls
+
+Include extra spaces around elements and arguments:
+
+```js
 foo( arg );
 
 foo( 'string', object );
 
-foo( options, object[ property ] );
+foo( options, object[property] );
 
 foo( node, 'property', 2 );
-```
-
-Exceptions:
-
-```js
-// Function with a callback, object, or array as the sole argument:
-// No space on either side of the argument
-foo({
-	a: 'alpha',
-	b: 'beta'
-});
-
-// Function with a callback, object, or array as the first argument:
-// No space before the first argument
-foo(function() {
-	// Do stuff
-}, options );
-
-// Function with a callback, object, or array as the last argument:
-// No space after after the last argument
-foo( data, function() {
-	// Do stuff
-});
 ```
 
 #### Multi-line Statements
@@ -373,19 +363,32 @@ var html = '<p>The sum of ' + a + ' and ' + b + ' plus ' + c +
 Lines should be broken into logical groups if it improves readability, such as splitting each expression of a ternary operator onto its own line even if both will fit on a single line. If a definition takes up more than one line, declare the variable first and assign its value later. 
 
 ```js
-var baz;
+var foo, baz;
+
+foo = function() {
+	someCode();
+};
 
 baz = firstCondition( foo ) && secondCondition( bar ) ?
 	doStuff( foo, bar ) :
 	doOtherStuff( foo, bar );
 ```
 
-When a conditional is too long to fit on one line, successive lines must be indented one extra level to distinguish them from the body.
+When a conditional is too long to fit on one line, start a new line for the conditions and wrap them as desired. Don't start a new line with an operator. 
 
 ```js
-if ( fistCondition() && secondCondition() &&
-		thirdCondition() ) {
-	doStuff();
+// bad
+if ( fistCondition() && secondCondition() 
+    && thirdCondition() ) {
+    doStuff();
+}
+
+// good
+if ( 
+    fistCondition() && secondCondition() &&
+    thirdCondition() 
+) {
+    doStuff();
 }
 ```
 
@@ -459,6 +462,9 @@ var foo,
 var foo = 'kyle',
 	bar = 'wears',
 	falcor = 'shorts';
+	
+var foo, bar,
+	falcor = 'hairy';
 
 // normal variable casing
 var myVariable;
