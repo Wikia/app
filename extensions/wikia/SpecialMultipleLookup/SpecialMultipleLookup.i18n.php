@@ -47,6 +47,8 @@ $messages['qqq'] = array(
 	'multilookupnext' => '{{Identical|Next}}',
 	'multilookupprevious' => '{{Identical|Previous}}',
 	'multilookupwiki' => '{{Identical|Wiki}}',
+	'multilookuplink' => '{{Identical|Contribution link}}',
+	'multilookupwikidbname' => '{{Identical|Database name}}',
 	'multilookupwikiurl' => '{{Identical|URL}}',
 	'multilookupwikititle' => '{{Identical|Title}}',
 	'right-multilookup' => '{{doc-right|multilookup|ns=Wikia}}',
@@ -213,7 +215,7 @@ $messages['ce'] = array(
 	'multilookupwikioptions' => 'Параметраш',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Chmee2
  */
 $messages['cs'] = array(

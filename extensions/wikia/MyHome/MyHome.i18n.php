@@ -115,6 +115,7 @@ $messages['qqq'] = array(
 	'tog-userlandingpage' => 'Label next to selectbox when user can choose her landing page will be one of: Main Page, WikiActivity, RecentChanges',
 	'myhome-feed-newpage' => '{{Identical|New page}}',
 	'myhome-feed-edit' => '{{Identical|Edit}}',
+	'myhome-feed-blogcomment' => '{{Identical|Blog comment}}',
 	'myhome-feed-delete' => '{{Identical|Deleted}}',
 	'myhome-feed-added-by' => '{{Identical|Added by}}',
 	'myhome-feed-new-page-details' => '{{Identical|New page}}',
@@ -124,6 +125,7 @@ $messages['qqq'] = array(
 	'myhome-feed-redirect-details' => '{{Identical|Redirect}}',
 	'myhome-hot-spots-number-of-editors' => '{{Identical|Editor}}',
 	'myhome-namespace-blog' => '{{Identical|Blog}}',
+	'oasis-myhome-community-corner-edit' => '{{Identical|Edit message}}',
 	'myhome-community-corner-edit' => '{{Identical|Edit message}}',
 	'myhome-default-view-checkbox' => "In the list of recent wiki activity (Special:WikiActivity), this is a checkbox button to toggle between viewing a summary of all activity and a summary of activity in pages on the user's watchlist.
 
@@ -633,7 +635,7 @@ $messages['ce'] = array(
 	'myhome-feed-edit' => 'нисдар',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Darth Daron
  * @author Dontlietome7
  */

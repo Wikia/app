@@ -66,7 +66,7 @@ $messages['ca'] = array(
 	'tog-redirected-from' => '&ndash; redirigit des de $1',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Darth Daron
  * @author Jezevec
  * @author Mormegil

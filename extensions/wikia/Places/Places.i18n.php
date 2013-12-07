@@ -128,7 +128,7 @@ $messages['ce'] = array(
 	'places-editor-search' => 'Лаха',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Chmee2
  */
 $messages['cs'] = array(

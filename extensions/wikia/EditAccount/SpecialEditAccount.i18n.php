@@ -422,7 +422,7 @@ $messages['ca'] = array(
 	'action-editaccount' => "editar la informació d'altes usuaris",
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Chmee2
  * @author Darth Daron
  * @author Dontlietome7

@@ -181,6 +181,17 @@ $messages['diq'] = array(
 	'wikia-visualeditor-dialog-wikiasourcemode-help-text' => 'Format kerdış desteg',
 );
 
+/** Greek (Ελληνικά)
+ * @author Geraki
+ */
+$messages['el'] = array(
+	'wikia-visualeditor-preference-enable' => 'Ενεργοποίηση beta VisualEditor',
+	'wikia-visualeditor-dialog-wikiamediainsert-upload-label' => 'Προσθήκη νέων εικόνων σε αυτό το wikia',
+	'wikia-visualeditor-dialog-wikiamediainsert-upload-button' => 'Ανέβασμα',
+	'wikia-visualeditor-dialog-transclusion-title' => 'Πρότυπο',
+	'wikia-visualeditor-dialog-wikiasourcemode-help-text' => 'Βοήθεια μορφοποίησης',
+);
+
 /** British English (British English)
  * @author Shirayuki
  */
@@ -445,6 +456,17 @@ $messages['ru'] = array(
 	'wikia-visualeditor-dialog-wikiasourcemode-apply-button' => 'Применить изменения',
 	'wikia-visualeditor-dialog-wikiasourcemode-help-link' => 'Help:Wikitext',
 	'wikia-visualeditor-dialog-wikiasourcemode-help-text' => 'Помощь по форматированию',
+);
+
+/** Serbian (Cyrillic script) (српски (ћирилица)‎)
+ * @author Milicevic01
+ */
+$messages['sr-ec'] = array(
+	'wikia-visualeditor-dialog-wikiamediainsert-upload-button' => 'Пошаљи',
+	'wikia-visualeditor-help-link' => 'Help:VisualEditor',
+	'wikia-visualeditor-dialog-transclusion-title' => 'Шаблон',
+	'wikia-visualeditor-dialogbutton-transclusion-tooltip' => 'Шаблон',
+	'wikia-visualeditor-dialog-wikiasourcemode-apply-button' => 'Примени измене',
 );
 
 /** Swedish (svenska)

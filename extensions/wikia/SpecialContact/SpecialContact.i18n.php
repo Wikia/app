@@ -49,7 +49,11 @@ If you prefer to use regular e-mail or have attachments, you can contact us at [
  * @author Shirayuki
  */
 $messages['qqq'] = array(
+	'contact' => '{{Identical|Contact Wikia}}',
+	'specialcontact-wikia' => '{{Identical|Contact Wikia}}',
+	'specialcontact-pagetitle' => '{{Identical|Contact Wikia}}',
 	'specialcontact-username' => '{{Identical|Your username}}',
+	'specialcontact-yourmail' => '{{Identical|E-mail address}}',
 	'specialcontact-problem' => '{{Identical|Subject}}',
 	'specialcontact-problemdesc' => '{{Identical|Message}}',
 );
@@ -175,7 +179,7 @@ $messages['ce'] = array(
 	'specialcontact-problemdesc' => 'Хааман йоза',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Chmee2
  */
 $messages['cs'] = array(

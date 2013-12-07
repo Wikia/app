@@ -147,7 +147,7 @@ $messages['ce'] = array(
 	'iwedit-success' => '<p>Хьажораг кхиамца кхоьллина.</p>',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Dontlietome7
  * @author Utar
  */

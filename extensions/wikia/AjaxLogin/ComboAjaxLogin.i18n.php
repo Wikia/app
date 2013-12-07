@@ -279,7 +279,7 @@ Si us plau, intenteu-ho de nou o [[Special:Contact|informeu d'aquest error]].",
 	'comboajaxlogin-ajaxerror' => 'Wikia no està responent. Si us plau, comproveu la connexió de xarxa.',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Darth Daron
  * @author Dontlietome7
  */

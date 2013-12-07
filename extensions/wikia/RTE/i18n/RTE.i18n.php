@@ -158,7 +158,7 @@ $messages['ce'] = array(
 	'prefs-rte' => 'Визуальни йозан тадар (RTE)',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Darth Daron
  */
 $messages['cs'] = array(

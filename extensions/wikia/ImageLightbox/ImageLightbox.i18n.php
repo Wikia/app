@@ -49,6 +49,7 @@ $messages['qqq'] = array(
 * $1 is a link to the suggested image.',
 	'lightbox-share-button-email' => '{{Identical|Email}}',
 	'lightbox-share-button-www' => '{{Identical|Share}}',
+	'lightbox-share-email-page-label-address' => '{{Identical|E-mail address}}',
 	'lightbox-share-email-error-caption' => '{{Identical|Error}}',
 	'lightbox-share-email-error-content' => 'Parameters:
 * $1 is the number of sent e-mails
@@ -173,7 +174,7 @@ Detalls: $2",
 	'lightbox-visit-the-wiki' => 'Visita el wiki:',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Chmee2
  * @author Darth Daron
  */
