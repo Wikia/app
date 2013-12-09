@@ -1,0 +1,11 @@
+@import "skins/oasis/css/mixins/background-opacity";
+
+.ve-ui-wikiaMediaPreviewWidget-overlay {
+	@include background-opacity( #000, 80 );
+	bottom: 0;
+	left: 0;
+	position: absolute;
+	right: 0;
+	top: 0;
+	z-index: 20000000;
+}

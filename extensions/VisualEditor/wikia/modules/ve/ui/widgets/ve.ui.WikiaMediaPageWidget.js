@@ -134,7 +134,10 @@ ve.ui.WikiaMediaPageWidget.prototype.onImageLoad = function () {
  * @method
  */
 ve.ui.WikiaMediaPageWidget.prototype.onItemClick = function () {
-	window.alert( ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-preview-alert' ) );
+	// TODO: figure out how much is going to be done in widget vs here
+	var preview = new ve.ui.WikiaMediaPreviewWidget( {
+		title: this.model.basename
+	} );
 };
 
 /**
