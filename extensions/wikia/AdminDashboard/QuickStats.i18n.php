@@ -258,7 +258,7 @@ $messages['ckb'] = array(
 	'quickstats-number-shortening-billions' => '$1 بیلیۆن',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Andriykopanytsia
  * @author Chmee2
  * @author Darth Daron
@@ -489,9 +489,10 @@ $messages['fr'] = array(
 
 /** Galician (galego)
  * @author Toliño
+ * @author Vivaelcelta
  */
 $messages['gl'] = array(
-	'quickstats-header-label' => 'Estatísticas rápidas',
+	'quickstats-header-label' => 'Estadísticas rápidas',
 	'quickstats-header-date' => 'Data',
 	'quickstats-header-views' => 'Visitas',
 	'quickstats-header-edits' => 'Edicións',

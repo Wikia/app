@@ -148,6 +148,7 @@ Parameters:
 * $2 - Name of the blog post (ex. First post). This is appears as the link text from the anchor created by $1.
 * $3 - Full URL link to the blog page of the user (ex. User blog:Foo)  whose post (ex. User blog:Foo/First post) includes the file.. This is wrapped in an HTML anchor tag, do not alter.
 * $4 - User name of the user whose blog includes the file. This appears as the link text from the anchor created by $3. In the example, this simply returns "Foo". GENDER is supported.',
+	'createbloglistingpage' => '{{Identical|Create blog listing}}',
 	'create-blog-post-recent-listing-log' => 'Edit summary, maybe.',
 	'create-blog-empty-article-log' => 'Edit summary',
 	'create-blog-invalid-title-error' => '{{Identical|Invalid title}}',
@@ -170,6 +171,7 @@ Parameters:
 	'blog-edited' => 'This is a possible value of $CHANGEDORCREATED in {{msg-mw|enotif_subject}} and {{msg-mw|enotif_body|notext=1}}.',
 	'blog-page' => '{{Identical|Blog}}',
 	'blog-comments' => '{{Identical|Comment}}',
+	'blog-rc-comments' => '{{Identical|Blog comment}}',
 	'blog-comments-label' => 'This is a checkbox label. If checked by the blog author, users will be able to leave comments on the blog.',
 	'blog-voting-label' => 'This is a checkbox label. If checked by the blog author, users will be able to vote on a blog post. Note: The voting functionality was never fully implemented into the Blogs feature. It may be implemented at a later date.',
 	'blog-comments-anonymous' => '{{Identical|Anonymous user}}',
@@ -177,6 +179,7 @@ Parameters:
 	'blog-comment-hide' => '{{Identical|Hide}}',
 	'blog-comment-history' => '{{Identical|History}}',
 	'blog-comment-edit' => '{{Identical|Edit}}',
+	'blog-create-listing-label' => '{{Identical|Create blog listing}}',
 	'blog-refresh-label' => '{{Identical|Refresh}}',
 	'blog-userblog' => 'Appears in an RSS feed.
 Parameters:
@@ -1552,7 +1555,7 @@ $messages['fa'] = array(
 	'blog-subheader' => '$1 از پست‌های ذیل وبلاگ در این رده قرار دارند.',
 	'blog-subheader-all' => 'از میان $2 پست‌های وبلاگ، $1 آن‌ها در این رده قرار دارند.',
 	'blog-invalidparam' => "پارامتر نامعلوم '$1' نادیده گرفته‌شد. لطفا از یکی از پارامترهای در دسترس استفاده کنید: <code>$2</code>",
-	'blog-emptyparam' => 'نام پارامتر نمی تواند خالی باشد',
+	'blog-emptyparam' => 'نام پارامتر نمی‌تواند خالی باشد',
 	'blog-defaulttitle' => 'وبلاگ‌ها',
 	'blog-continuereading' => 'ادامه مطالب &raquo;',
 	'blog-readfullpost' => 'ادامه مطلب',
@@ -2959,6 +2962,7 @@ $messages['lb'] = array(
 	'blog-comment-hide' => 'verstoppen',
 	'blog-comment-unhide' => 'nees weisen',
 	'blog-comment-edit' => 'änneren',
+	'blog-comment-error' => "D'Bemierkung konnt net gespäichert ginn",
 	'blog-avatar-preferences-title' => 'Avatar',
 	'blog-page-rate' => 'Dësen Artikel bewäerten:',
 	'blog-refresh-label' => 'Aktualiséieren',
@@ -5151,10 +5155,19 @@ $messages['tly'] = array(
 );
 
 /** Turkish (Türkçe)
+ * @author Incelemeelemani
  * @author Suelnur
  */
 $messages['tr'] = array(
 	'create-blog-categories-textinput' => 'Yeni kategori ekle',
+	'blog-empty-user-blog' => 'Bu kullanıcı henüz herhangi bir blog yazısı yazmamıştır!',
+	'blog-added' => 'eklendi',
+	'blog-page' => 'Blog',
+	'blog-zero-comments' => 'Henüz yorum yok!',
+	'blog-comment-post' => 'Yorum gönder',
+	'blog-comments' => 'Yorumlar',
+	'blog-rc-comments' => 'Blog yorumları',
+	'blog-comments-new' => 'Yeni blog yorumu',
 	'blog-comments-anonymous' => 'Anonim kullanıcı',
 	'blog-comment-delete' => 'sil',
 	'blog-comment-hide' => 'gizle',

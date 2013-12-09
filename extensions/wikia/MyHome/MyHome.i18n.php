@@ -115,6 +115,7 @@ $messages['qqq'] = array(
 	'tog-userlandingpage' => 'Label next to selectbox when user can choose her landing page will be one of: Main Page, WikiActivity, RecentChanges',
 	'myhome-feed-newpage' => '{{Identical|New page}}',
 	'myhome-feed-edit' => '{{Identical|Edit}}',
+	'myhome-feed-blogcomment' => '{{Identical|Blog comment}}',
 	'myhome-feed-delete' => '{{Identical|Deleted}}',
 	'myhome-feed-added-by' => '{{Identical|Added by}}',
 	'myhome-feed-new-page-details' => '{{Identical|New page}}',
@@ -124,6 +125,7 @@ $messages['qqq'] = array(
 	'myhome-feed-redirect-details' => '{{Identical|Redirect}}',
 	'myhome-hot-spots-number-of-editors' => '{{Identical|Editor}}',
 	'myhome-namespace-blog' => '{{Identical|Blog}}',
+	'oasis-myhome-community-corner-edit' => '{{Identical|Edit message}}',
 	'myhome-community-corner-edit' => '{{Identical|Edit message}}',
 	'myhome-default-view-checkbox' => "In the list of recent wiki activity (Special:WikiActivity), this is a checkbox button to toggle between viewing a summary of all activity and a summary of activity in pages on the user's watchlist.
 
@@ -633,7 +635,7 @@ $messages['ce'] = array(
 	'myhome-feed-edit' => 'нисдар',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Darth Daron
  * @author Dontlietome7
  */
@@ -3598,6 +3600,9 @@ $messages['tr'] = array(
 	'myhome-activity-feed' => 'Etkinlik beslemesi',
 	'myhome-watchlist-feed' => 'İzleme listesi',
 	'myhome-user-contributions-feed' => 'Katkılar',
+	'myhome-hot-spots-newest' => "Wiki'deki yeni sayfalar",
+	'tog-userlandingpage' => 'Açılış sayfam:',
+	'prefs-myhome' => 'Evim',
 	'myhome-feed-newpage' => 'yeni sayfa',
 	'myhome-feed-edit' => 'değiştir',
 	'myhome-feed-move' => 'sayfa taşındı',
@@ -3631,7 +3636,7 @@ $messages['tr'] = array(
 	'myhome-namespace-blog' => 'Günlük',
 	'myhome-community-corner-header' => 'Topluluk Mesajları',
 	'myhome-community-corner-edit' => 'iletiyi değiştir',
-	'myhome-hot-spots-definition' => 'Son $1 günde en fazla editöre sahip sayfalar', # Fuzzy
+	'myhome-hot-spots-definition' => 'Son {{PLURAL:$1|gün|$1 gün}} içinde en çok düzenlenen sayfalar.',
 	'myhome-default-view-checkbox' => '$1 sayfasını varsayılan görünümüm yap',
 	'myhome-default-view-success' => 'Tamam, bu artık sizin varsayılanınız',
 	'tooltip-pt-myhome' => 'Evime git',

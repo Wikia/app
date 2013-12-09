@@ -60,7 +60,7 @@ $messages['ca'] = array(
 	'signup' => 'Registrar-se',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Dontlietome7
  */
 $messages['cs'] = array(

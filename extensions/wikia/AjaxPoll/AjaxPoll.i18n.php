@@ -155,7 +155,7 @@ $messages['ca'] = array(
 	'ajaxpoll-submitting' => "Espera si us plau, s'està processant el teu vot.",
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -498,6 +498,7 @@ $messages['ksh'] = array(
 $messages['lb'] = array(
 	'ajaxpoll-percentVotes' => '$1%&nbsp; vun alle Stëmmen',
 	'ajaxpoll-thankyou' => 'Merci fir Är Stëmm!',
+	'ajaxpoll-error' => 'Et gouf e Problem beim Verschaffe vun Ärer Stëmm, probéiert et w.e.g. nach eng Kéier.',
 	'ajaxpoll-submit' => 'Ofstëmmen!',
 	'ajaxpoll-closed' => "D'Ëmfro ass ofgeschloss. Kuckt d'Resultater.",
 	'ajaxpoll-submitting' => 'Waart w.e.g., Är Stëmm gëtt elo geschéckt ...',
@@ -735,9 +736,9 @@ $messages['pt'] = array(
 	'ajaxpoll-thankyou' => 'Obrigado pelo teu voto!',
 	'ajaxpoll-error' => 'Ocorreu um problema ao processar o teu voto, por favor, tenta-o de novo.',
 	'ajaxpoll-summary' => 'A votação foi criada às $1 de $2 e, até agora, $3 pessoas votaram.',
-	'ajaxpoll-submit' => 'Vote!',
-	'ajaxpoll-closed' => 'A votação foi encerrada. Desfrute dos resultados.',
-	'ajaxpoll-submitting' => 'Espere, por favor. A submeter o seu voto...',
+	'ajaxpoll-submit' => 'Vota!',
+	'ajaxpoll-closed' => 'A votação foi encerrada. Desfruta dos resultados.',
+	'ajaxpoll-submitting' => 'Espera, por favor. A submeter o teu voto…',
 );
 
 /** Brazilian Portuguese (português do Brasil)

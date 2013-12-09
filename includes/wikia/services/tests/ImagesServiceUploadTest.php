@@ -10,7 +10,7 @@ class ImagesServiceUploadTest extends WikiaBaseTest {
 	const URL = 'http://upload.wikimedia.org/wikipedia/commons/d/d9/Eldfell%2C_Helgafell_and_the_fissure.jpg';
 	const REUPLOAD_URL = 'http://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Atlantic_Puffin.jpg/320px-Atlantic_Puffin.jpg';
 	const PREFIX = 'QAImage';
-	const FILENAME = 'Test%-$1.jpg';
+	const FILENAME = 'Test%?ąę!-$1.jpg';
 
 	private $origUser;
 	private $fileName;
