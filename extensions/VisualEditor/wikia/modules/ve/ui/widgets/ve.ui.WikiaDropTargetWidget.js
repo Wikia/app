@@ -1,8 +1,9 @@
 ve.ui.WikiaDropTargetWidget = function VeUiWikiaDropTargetWidget ( config ) {
 	ve.ui.Widget.call( this, config );
-	this.upload = config.upload;
 	this.className = 've-ui-widget-droptarget';
+	this.upload = config.upload;
 	this.$overlay = config.surface.$globalOverlay.find( '.ve-ui-window' );
+	this.$frame = config.frame.$document;
 	this.initialize();
 };
 
@@ -11,6 +12,7 @@ ve.inheritClass( ve.ui.WikiaDropTargetWidget, ve.ui.Widget );
 ve.ui.WikiaDropTargetWidget.prototype.initialize = function() {
 	this.$ = this.$$( '<div>' ).addClass( this.className );
 
+	//TODO: Temporary code
 	this.$.css({
 		height: '1000px',
 		position: 'absolute',
@@ -29,6 +31,8 @@ ve.ui.WikiaDropTargetWidget.prototype.initialize = function() {
 
 	this.$.on( 'dragenter dragover', ve.bind( this.onFileDrag, this ) );
 	this.$.on( 'drop', ve.bind( this.onFileDrop, this ) );
+
+	this.$frame.on( 'dragenter dragover', ve.bind( this.onFileDrag, this ) );
 
 	this.fadeTimeout = null;
 };
@@ -72,5 +76,4 @@ ve.ui.WikiaDropTargetWidget.prototype.onFileDrop = function( e ) {
 	}
 
 	this.upload.$file.trigger( 'change', filesArray[0] );
-	return false;
 };

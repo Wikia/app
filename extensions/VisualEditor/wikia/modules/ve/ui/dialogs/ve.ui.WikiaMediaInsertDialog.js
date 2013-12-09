@@ -73,6 +73,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	this.dropTarget = new ve.ui.WikiaDropTargetWidget({
 		'surface': this.surface,
 		'upload': this.upload,
+		'frame': this.frame,
 		'$$': this.frame.$$
 	});
 
