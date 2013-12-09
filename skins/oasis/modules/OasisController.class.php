@@ -53,7 +53,7 @@ class OasisController extends WikiaController {
 	 * @param array $vars global variables list
 	 * @return boolean return true
 	 */
-	public function onMakeGlobalVariablesScript(Array &$vars) {
+	public static function onMakeGlobalVariablesScript(Array &$vars) {
 		$vars['wgOasisResponsive'] = BodyController::isResponsiveLayoutEnabled();
 		return true;
 	}

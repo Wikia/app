@@ -68,7 +68,7 @@ $messages['ca'] = array(
 	'interwikidispatcher-desc' => 'Resol els enllaços interwiki per reduir els redireccionaments Apache',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Dontlietome7
  */
 $messages['cs'] = array(

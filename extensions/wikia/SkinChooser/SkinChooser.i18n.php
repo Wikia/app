@@ -39,7 +39,7 @@ $messages['ca'] = array(
 	'site-layout' => 'Dissenys del lloc',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Darth Daron
  * @author Dontlietome7
  */
@@ -295,6 +295,15 @@ $messages['uk'] = array(
 $messages['uz'] = array(
 	'skinchooser-desc' => 'Foydalanuvchilarga uz skinlarini tanlashga imkon beradi',
 	'new-look' => 'Vikia',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'skinchooser-desc' => 'Cho phép người dùng lựa chọn giao diện trong sở thích của họ',
+	'new-look' => 'Wikia',
+	'site-layout' => 'Bố trí trang web',
 );
 
 /** Simplified Chinese (中文（简体）‎)

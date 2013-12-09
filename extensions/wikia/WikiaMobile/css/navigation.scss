@@ -3,7 +3,6 @@
 
 //mixins
 @import "mixins/linear-gradient.scss";
-@import "mixins/box-sizing.scss";
 @import "mixins/box-shadow.scss";
 @import "mixins/transition.scss";
 
@@ -89,7 +88,7 @@
 	background-color: white;
 	-webkit-tap-highlight-color: rgba( 0,0,0,0 );
 	-webkit-focus-ring-color: rgba( 0,0,0,0 );
-	@include box-shadow(0 0 5px black);
+	@include box-shadow(0 0 2px black);
 
 	&.nav-open {
 		z-index: $highest-z-index+1;

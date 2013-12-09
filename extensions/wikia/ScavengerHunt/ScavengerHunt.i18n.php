@@ -197,6 +197,7 @@ $messages['qqq'] = array(
 	'scavengerhunt-button-disable' => '{{Identical|Disable}}',
 	'scavengerhunt-button-enable' => '{{Identical|Enable}}',
 	'scavengerhunt-button-delete' => '{{Identical|Delete}}',
+	'scavengerhunt-quit-game-button-cancel' => '{{Identical|Cancel}}',
 	'scavengerhunt-label-clue-size' => '{{Identical|Font size}}',
 	'scavengerhunt-editor-tip-entry-form-email' => '{{doc-singularthey}}',
 	'scavengerhunt-editor-tip-entry-form-username' => '{{doc-singularthey}}',
@@ -430,7 +431,7 @@ $messages['ce'] = array(
 	'scavengerhunt-label-entry-form-username' => 'Декъашхочун цӀе',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Chmee2
  * @author Vks
  */
@@ -632,6 +633,7 @@ $messages['de-formal'] = array(
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
+ * @author Marmase
  * @author Mirzali
  */
 $messages['diq'] = array(
@@ -643,7 +645,7 @@ $messages['diq'] = array(
 	'scavengerhunt-label-general' => 'Bıngeh',
 	'scavengerhunt-label-name' => 'Name:',
 	'scavengerhunt-button-save' => 'Star ke',
-	'scavengerhunt-button-disable' => 'Bikefilne',
+	'scavengerhunt-button-disable' => 'Aktif niya',
 	'scavengerhunt-button-enable' => 'Aktif ke',
 	'scavengerhunt-button-delete' => 'Besterne',
 	'scavengerhunt-entry-form-name' => 'Namey şıma',

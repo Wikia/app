@@ -60,17 +60,6 @@ define( 'wikia.ui.modal', [
 	}
 
 	/**
-	 * Simple initializing new modal object based on the DOM element id passed as parameter
-	 *
-	 * @param {String} id - id of modal DOM element
-	 * @returns {Object} - new instance of modal object
-	 */
-
-	function init( id ) {
-		return new Modal( id );
-	}
-
-	/**
 	 * IE 9 doesn't support flex-box. IE-10 and IE-11 has some bugs in implementation:
 	 *
 	 * https://connect.microsoft.com/IE/feedback/details/802625/
@@ -140,31 +129,34 @@ define( 'wikia.ui.modal', [
 			buttons, // array of objects with params for rendering modal buttons
 			blackoutId = BLACKOUT_ID + '_' + id;
 
-		// In case the modal already exists in DOM - skip rendering part
-		if ( $( jQuerySelector ).length === 0 && typeof( uiComponent ) !== 'undefined' ) {
-
-			buttons = params.vars.buttons;
-			if ( $.isArray( buttons ) ) {
-				// Create buttons
-				buttons.forEach(function( button, index ) {
-					if ( typeof button === 'object' ) {
-
-						// Extend the button param with the modal default, get the button uicomponent,
-						// and render the params then replace the button params with the rendered html
-						buttons[ index ] = uiComponent.getSubComponent( 'button' ).render(
-							$.extend( true, {}, btnConfig, button )
-						);
-					}
-				});
-			}
-
-			// extend default modal params with the one passed in constructor call
-			params = $.extend( true, {}, modalDefaults, params );
-
-			// render modal markup and append to DOM
-			$( 'body' ).append( uiComponent.render( params ) );
-
+		if ( $( jQuerySelector ).length > 0 ) {
+			throw 'Cannot create new modal with id ' + id + ' as it already exists in DOM';
 		}
+
+		if ( typeof( uiComponent ) === 'undefined' ) {
+			throw 'Need uiComponent to render modal with id ' + id;
+		}
+
+		buttons = params.vars.buttons;
+		if ( $.isArray( buttons ) ) {
+			// Create buttons
+			buttons.forEach(function( button, index ) {
+				if ( typeof button === 'object' ) {
+
+					// Extend the button param with the modal default, get the button uicomponent,
+					// and render the params then replace the button params with the rendered html
+					buttons[ index ] = uiComponent.getSubComponent( 'button' ).render(
+						$.extend( true, {}, btnConfig, button )
+					);
+				}
+			});
+		}
+
+		// extend default modal params with the one passed in constructor call
+		params = $.extend( true, {}, modalDefaults, params );
+
+		// render modal markup and append to DOM
+		$( 'body' ).append( uiComponent.render( params ) );
 
 		// cache jQuery selectors for different parts of modal
 		this.$element = $( jQuerySelector );
@@ -207,28 +199,14 @@ define( 'wikia.ui.modal', [
 			'close': [
 				function() {
 					that.trigger( 'beforeClose').then( $.proxy( function() {
-						if( !that.destroyOnClose ) {
-							that.$blackout.removeClass( BLACKOUT_VISIBLE_CLASS );
-						} else {
-							that.$blackout.remove();
-						}
+						that.$blackout.remove();
 						unblockPageScrolling();
 					}, that ) );
 				}
 			]
 		};
 
-		// allow to override the default value
-		if ( ( typeof( this.$element.data( 'destroy-on-close' ) ) !== 'undefined' ) ) {
-			this.destroyOnClose = this.$element.data( 'destroy-on-close' );
-		}
 	}
-
-	/**
-	 * When set to true (default), destroys the modal when close action is triggered
-	 * @type {boolean}
-	 */
-	Modal.prototype.destroyOnClose = true;
 
 	/**
 	 * Shows modal; adds shown class to modal and visible class to blackout
@@ -366,7 +344,6 @@ define( 'wikia.ui.modal', [
 	/** Public API */
 	
 	return {
-		init: init,
 		createComponent: createComponent
 	};
 });
