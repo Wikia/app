@@ -15,7 +15,7 @@ class VideoThumbnailController extends WikiaController {
 	 *		noLightbox - not show image or video in lightbox,
 	 *		hidePlayButton - hide play button
 	 *		src - source for image
-	 *		img-class - class for image
+	 *		imgClass - class for image
 	 *		alt - alt for image
 	 *		usePreloading - for lazy loading
 	 *		valign - valign for image
@@ -118,12 +118,12 @@ class VideoThumbnailController extends WikiaController {
 
 		// get class for img tag
 		$imgClasses = [ 'wikia-video-thumb' ];	// used to be 'Wikia-video-thumb'
-		if ( !empty( $options['img-class'] ) ) {
-			if ( !is_array( $options['img-class'] ) ) {
-				$options['img-class'] = explode( ' ', $options['img-class'] );
+		if ( !empty( $options['imgClass'] ) ) {	// used to be 'img-class'
+			if ( !is_array( $options['imgClass'] ) ) {
+				$options['imgClass'] = explode( ' ', $options['imgClass'] );
 			}
 
-			$imgClasses = array_merge( $imgClasses, $options['img-class'] );
+			$imgClasses = array_merge( $imgClasses, $options['imgClass'] );
 		}
 
 		// get alt for img tag
