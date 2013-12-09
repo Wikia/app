@@ -470,7 +470,7 @@ use Swagger\Annotations as SWG;
  * 			),
  * 			@SWG\Parameters(
  * 				@SWG\Parameter(
- * 					name="ns",
+ * 					name="namespaces",
  * 					description="Page namespace number, see more: http://www.mediawiki.org/wiki/help:namespaces",
  * 					paramType="query",
  * 					required="false",
