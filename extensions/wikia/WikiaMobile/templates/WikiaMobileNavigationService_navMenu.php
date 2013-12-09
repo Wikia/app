@@ -12,8 +12,9 @@
 <nav id=wkNavMenu<? if ( !empty( $parseErrors ) ) :?> data-error="<?= implode( '; ', $parseErrors ) ;?>"<? endif ;?>>
 	<header>
 		<button id=wkNavBack class=wkBtn><?= wfMessage( 'wikiamobile-back' )->text(); ?></button>
-		<h1 class='collSec addChev'></h1>
-		<a id=wkNavLink class=chvRgt></a>
+		<h1 class='collSec addChev'>
+            <a id=wkNavLink class=chvRgt></a>
+		</h1>
 	</header>
 <ul id=lvl1 class=wkLst>
 <?

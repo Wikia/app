@@ -296,8 +296,9 @@
 		}
 
 		h1 {
-			margin: 0 50px;
-		    border-top: none;
+			margin: 0 0;
+			padding-right:50px;
+			border-top: none;
 			text-align: center;
 			font-size: medium;
 			font-weight: bold;
@@ -424,9 +425,9 @@
 	position: absolute;
 	right: 0;
 	top: 0;
-	width: 50px;
 	height: 50px;
-	background-position: center;
+	width: 100%;
+	background-position: right 20px top 50%;
 }
 
 #wkNavBack {
