@@ -151,4 +151,8 @@ class MarketingToolboxModulePopularvideosService extends MarketingToolboxModuleE
 
 		return $videoData;
 	}
+
+	protected function filterCommercialData($data) {
+		return null;
+	}
 }

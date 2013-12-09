@@ -130,8 +130,8 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 						'admins' => [],
 						'wiki_image' => null,
 					],
-					3125 => [
-						'wiki_id' => '3125',
+				113 => [
+						'wiki_id' => '113',
 						'wam'=> '99.5000',
 						'wam_rank' => '17',
 						'hub_wam_rank' => '5',
@@ -141,8 +141,8 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 						'top_1k_weeks' => '62',
 						'first_peak' => '2012-05-04',
 						'last_peak' => '2013-05-07',
-						'title' => 'Call of Duty Wiki',
-						'url' => 'callofduty.wikia.com',
+						'title' => 'Memmory Alpha Wiki',
+						'url' => 'en.memory-alpha.org',
 						'hub_id' => '2',
 						'wam_change' => '-0.1000',
 						'admins' => [],
@@ -168,6 +168,10 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 					return $this->loadStructuredData($params);
 				}
 			);
+		}
+
+		if ( $this->getShouldFilterCommercialData() ) {
+			$structuredData = $this->filterCommercialData( $structuredData );
 		}
 
 		return $structuredData;
@@ -281,5 +285,13 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 		}
 		
 		return null;
+	}
+
+	protected function filterCommercialData($data) {
+		$service = $this->getLicensedWikisService();
+		$data['ranking'] = array_values( array_filter( $data['ranking'], function( $element ) use($service) {
+			return $service->isCommercialUseAllowedByUrl($element['wikiUrl']);
+		} ) );
+		return $data;
 	}
 }

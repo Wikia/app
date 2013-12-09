@@ -285,4 +285,16 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleEditabl
 
 		return $linkgroups;
 	}
+
+	protected function filterCommercialData($data) {
+		$service = $this->getLicensedWikisService();
+		if ( isset($data['linkgroups']) ) {
+			foreach ( $data['linkgroups'] as $i => &$linkgroup ) {
+				$linkgroup['links'] = array_values( array_filter( $linkgroup['links'], function( $element ) use($service) {
+					return $service->isCommercialUseAllowedByUrl($element['href']);
+				} ) );
+			}
+		}
+		return $data;
+	}
 }
