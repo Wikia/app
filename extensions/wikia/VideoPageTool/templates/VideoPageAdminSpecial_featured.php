@@ -18,7 +18,7 @@
 					<?= wfMessage( 'videopagetool-button-add-video' )->text() ?>
 				</button>
 				<p class="video-title <?= $video[ 'videoTitleClass' ] ?>"><?= $video[ 'videoTitle' ]  ?></p>
-				<input type="hidden" name="videoKey[]" class="video-key" id="video-key-<?= $x ?>" value="<?= $video[ 'videoKey' ] ?>">
+				<input type="hidden" name="videoKey[]" class="video-key" id="video-key-<?= $x ?>" value="<?= htmlspecialchars( $video[ 'videoKey' ] ) ?>">
 			</div>
 
 			<div class="video-thumb-wrapper">
