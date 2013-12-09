@@ -17,8 +17,6 @@ class ApiTempUpload extends ApiBase {
 		// Parameter handling
 		$this->mParams = $this->extractRequestParams();
 		$this->mRequest = $this->getMain()->getRequest();
-		gbug('req: ', $this->mRequest);
-		gbug('req2: ', $this->mParams);
 
 		if ( $this->mParams['type'] === 'temporary' ) {
 			$this->executeTemporary();
