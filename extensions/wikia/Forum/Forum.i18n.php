@@ -395,7 +395,8 @@ Parameters:
 * $1 is the thread title
 * $2 is link to the board on which the thread is posted
 * $3 is title of the board on which the thread is posted',
-	'forum-recentchanges-history-link' => 'Link to board history for items about removed and deleted threads on recent changes.',
+	'forum-recentchanges-history-link' => 'Link to board history for items about removed and deleted threads on recent changes.
+{{Identical|Board history}}',
 	'forum-recentchanges-thread-history-link' => 'Link to thread history for items about removed replies on recent changes.',
 	'forum-recentchanges-closed-thread' => 'Recent changes item. Parameters:
 * $2 is thread title
@@ -405,17 +406,22 @@ Parameters:
 * $2 is thread title
 * $4 is thread owner
 * $5 is optional username and you can use it with GENDER parameter',
-	'forum-board-history-title' => 'Heading on the board history page.',
+	'forum-board-history-title' => 'Heading on the board history page.
+{{Identical|Board history}}',
 	'forum-specialpage-oldforum-link' => 'Text of link to old archived forums.',
 	'forum-admin-page-breadcrumb' => 'Breadcrumb heading',
 	'forum-admin-create-new-board-label' => 'Button label to create a new forum board',
 	'forum-admin-create-new-board-modal-heading' => 'Modal heading for create a new board dialog',
-	'forum-admin-create-new-board-title' => 'Form input label for board title',
-	'forum-admin-create-new-board-description' => 'Form input label board description',
+	'forum-admin-create-new-board-title' => 'Form input label for board title.
+{{Identical|Bad title}}',
+	'forum-admin-create-new-board-description' => 'Form input label board description.
+{{Identical|Board description}}',
 	'forum-admin-edit-board-modal-heading' => 'Heading on the board editing modal. Parameters:
 * $1 is the borad title.',
-	'forum-admin-edit-board-title' => 'Text next to the inputbox to edit the board title in the board editing modal.',
-	'forum-admin-edit-board-description' => 'Text next to the inputbox to edit the board description in the board editing modal.',
+	'forum-admin-edit-board-title' => 'Text next to the inputbox to edit the board title in the board editing modal.
+{{Identical|Bad title}}',
+	'forum-admin-edit-board-description' => 'Text next to the inputbox to edit the board description in the board editing modal.
+{{Identical|Board description}}',
 	'forum-admin-delete-and-merge-board-modal-heading' => 'Heading for delete and merge dialog. $1 is board name',
 	'forum-admin-delete-board-title' => 'Label for board name verification for deletion',
 	'forum-admin-merge-board-warning' => 'Help text letting users know that threads under a deleted board needs to be merged to existing board',
@@ -532,6 +538,7 @@ $messages['ar'] = array(
 	'forum-notification-user3-reply-to-someone' => '$1 وآخرون ردوا على لوحة $3',
 	'forum-notification-newmsg-on-followed-wall' => '$1 {{GENDER:$1|ترك|تركت|ترك}} رسالة جديدة على لوحة $2',
 	'forum-mail-notification-new-someone' => '$AUTHOR_NAME {{GENDER:$AUTHOR_NAME|كتب|كتبت|كتب}} موضوعًا جديدًا على لوحة $WIKI $BOARDNAME.',
+	'forum-mail-notification-new-your' => '$AUTHOR_NAME {{GENDER:$AUTHOR_NAME|كتب|كتبت|كتب}} موضوعًا جديدًا على لوحة $WIKI $BOARDNAME.',
 	'forum-mail-notification-reply-your' => '$AUTHOR_NAME {{GENDER:$AUTHOR_NAME|رد|ردت|رد}} موضوعًا جديدًا على لوحة $WIKI $BOARDNAME.',
 	'forum-mail-notification-reply-his' => '$AUTHOR_NAME {{GENDER:$AUTHOR_NAME|رد|ردت|رد}} موضوعًا جديدًا على لوحة $WIKI $BOARDNAME.',
 	'forum-mail-notification-reply-someone' => '$AUTHOR_NAME {{GENDER:$AUTHOR_NAME|رد|ردت|رد}} موضوعًا جديدًا على لوحة $WIKI $BOARDNAME.',
@@ -583,7 +590,7 @@ ___________________________________________<br />
 	'forum-recentchanges-deleted-reply' => 'حذف الرد من  "[[$1|$2]]" من [[$3|جدار $4]]',
 	'forum-recentchanges-deleted-reply-title' => 'رسالة',
 	'forum-recentchanges-namespace-selector-message-wall' => 'لوحة المنتدى',
-	'forum-recentchanges-thread-group' => 'على <a href="$1">$2 لوحة</a>', # Fuzzy
+	'forum-recentchanges-thread-group' => '$1 على <a href="$2">لوحة $3</a>',
 	'forum-recentchanges-history-link' => 'تاريخ اللوحة',
 	'forum-recentchanges-thread-history-link' => 'تاريخ النقاش',
 	'forum-recentchanges-closed-thread' => 'أغلق النقاش "[[$1|$2]]" من [[$3|جدار $4]]',
@@ -617,6 +624,20 @@ ___________________________________________<br />
 	'forum-board-destination-empty' => '(الرجاء تحديد لوحة)',
 	'forum-board-title-validation-invalid' => 'اسم اللوحة يحتوي على أحرف غير صالحة',
 	'forum-board-title-validation-length' => 'اسم اللوحة يجب أن يكون على الأقل 4 أحرف.',
+	'forum-board-title-validation-exists' => 'لوحة موجودة بنفس الاسم فعلاً',
+	'forum-board-validation-count' => 'الحد الأقصى لعدد اللوحات هو $1',
+	'forum-board-description-validation-length' => 'الرجاء كتابة وصف لهذه اللوحة',
+	'forum-board-id-validation-missing' => 'معرف اللوحة مفقود',
+	'forum-board-no-board-warning' => 'لم نستطع إيجاد لوحة بهذا العنوان. إليك قائمة لوحات المنتدى.',
+	'forum-old-notification-message' => 'لقد تم أرشفة هذا المنتدى',
+	'forum-old-notification-navigation-button' => 'قم بزيارة المنتديات الجديدة',
+	'forum-related-discussion-heading' => 'نقاشات حول $1',
+	'forum-related-discussion-new-post-button' => 'ابدأ نقاشًا جديدًا',
+	'forum-related-discussion-new-post-tooltip' => 'ابدأ نقاشًا جديدًا عن $1',
+	'forum-related-discussion-total-replies' => '$1 رسائل',
+	'forum-related-discussion-zero-state-creative' => 'يمكنك إيجاد نقاشات عن كل ما يتعلق بهذه الويكي على [[Special:Forum|منتدى {{SITENAME}}!]]',
+	'forum-related-discussion-see-more' => 'رؤية المزيد من النقاشات',
+	'forum-confirmation-board-deleted' => '"$1" قد حُذفت.',
 );
 
 /** Bulgarian (български)
@@ -824,6 +845,39 @@ abmelden oder deine E-Mail-Einstellungen hier ändern: http://community.wikia.co
 	'forum-related-discussion-zero-state-creative' => 'Du kannst Diskussionen über alles mit Bezug zu diesem Wiki im [[Special:Forum|{{SITENAME}}-Forum]] finden!',
 	'forum-related-discussion-see-more' => 'Weitere Diskussionen ansehen',
 	'forum-confirmation-board-deleted' => '„$1“ wurde gelöscht.',
+);
+
+/** British English (British English)
+ * @author Shirayuki
+ */
+$messages['en-gb'] = array(
+	'forum-policies-and-faq' => "==Forum policies==
+Before contributing to the {{SITENAME}} Forums, please keep in mind a few best practices for conduct:
+
+'''Be nice and treat people with respect.'''
+: People from all around the world read and edit this wiki and its forums. Like any other collaborative project, not everyone will agree all the time. Keep discussions civil and be open minded about differing opinions. We're all here because we love the same topic.
+
+'''Try to find existing discussions first, but don't be afraid to start a new thread.'''
+:Please take a moment to sift through the {{SITENAME}} Forum boards to see if a discussion already exists about something you want to talk about. If you can't find what you're looking for, jump right in and start a new discussion!
+
+'''Ask for help.'''
+:Notice something that doesn't seem right? Or do you have a question? Ask for help here on the forums! If you need help from Wikia staff, please reach out on [[w:c:community|Community Central]] or via [[Special:Contact]].
+
+'''Have fun!'''
+:The {{SITENAME}} community is happy to have you here. We look forward to seeing you around as we discuss this topic we all love.
+
+==Forum FAQ==
+'''How do I stay on top of discussions I'm interested in?'''
+: With a Wikia user account, you can follow specific conversations and then receive notification messages (either on-site or via email) when a discussion has more activity. Be sure to [[Special:UserSignup|sign up for a Wikia account]] if you don't already have one.
+
+'''How do I remove vandalism?'''
+: If you notice some spam or vandalism on a thread, hover your mouse over the offending text. You'll see a \"More\" button appear. Inside the \"More\" menu, you'll find \"Remove\". This will allow you to remove the vandalism and optionally inform an admin.
+
+'''What are Kudos?'''
+: If you find a particular discussion or reply interesting, well thought out, or amusing you can show direct appreciation by giving it Kudos. They can be helpful in voting situations, too.
+
+'''What are Topics?'''
+: Topics allow you to link a forum discussion with a wiki article. It's another way to keep Forums organised and to help people find interesting discussions. For example, a Forum thread tagged with \"Lord Voldemort\" will appear at the bottom of the \"Lord Voldemort\" article.",
 );
 
 /** Spanish (español)
@@ -1192,12 +1246,12 @@ $messages['gl'] = array(
 	'forum-discussion-placeholder-message-short' => 'Publicar unha nova mensaxe',
 	'forum-notification-user1-reply-to-your' => '$1 {{GENDER:$1|respondeu}} ó teu fío no taboleiro "$3"',
 	'forum-notification-user2-reply-to-your' => '$1 e $2 responderon ó teu fío no taboleiro "$3"',
-	'forum-notification-user3-reply-to-your' => '$1 e outras persoas responderon ó teu fío no taboleiro $3',
+	'forum-notification-user3-reply-to-your' => '$1 e outras persoas responderon ó teu fío no taboleiro "$3"',
 	'forum-notification-user1-reply-to-someone' => '$1 {{GENDER:$1|respondeu}} no taboleiro "$3"',
 	'forum-notification-user2-reply-to-someone' => '$1 e $2 responderon no taboleiro "$3"',
 	'forum-notification-user3-reply-to-someone' => '$1 e outras persoas responderon no taboleiro "$3"',
 	'forum-notification-newmsg-on-followed-wall' => '$1 {{GENDER:$1|deixou}} unha nova mensaxe no taboleiro "$2"',
-	'forum-mail-notification-html-greeting' => 'Ola $1,',
+	'forum-mail-notification-html-greeting' => 'Ola, $1:',
 	'forum-mail-notification-html-button' => 'Ver a conversa',
 	'forum-mail-notification-subject' => '$1 -- $2',
 	'forum-wiki-activity-msg' => 'en "$1"',
@@ -1300,14 +1354,48 @@ $messages['ja'] = array(
 	'forum-discussion-placeholder-title' => 'スレッドタイトルを入力',
 	'forum-discussion-placeholder-message' => '$1板に投稿するメッセージを入力',
 	'forum-discussion-placeholder-message-short' => '投稿するメッセージを入力',
+	'forum-mail-notification-new-someone' => '$AUTHOR_NAME が $WIKI の $BOARDNAME板 で新しいスレッドを作成しました。',
+	'forum-mail-notification-new-your' => '$AUTHOR_NAME が $WIKI の $BOARDNAME板 で新しいスレッドを作成しました。',
+	'forum-mail-notification-reply-your' => '$AUTHOR_NAME が $WIKI の $BOARDNAME板で あなたが作成したスレッドに返信を投稿しました。',
+	'forum-mail-notification-reply-his' => '$AUTHOR_NAME が $WIKI の $BOARDNAME板 で返信を投稿しました。',
+	'forum-mail-notification-reply-someone' => '$AUTHOR_NAME が $WIKI の $BOARDNAME板 で返信を投稿しました。',
 	'forum-mail-notification-html-greeting' => '$1 さん、',
 	'forum-mail-notification-html-button' => 'スレッドを見る',
+	'forum-mail-notification-body' => '$WATCHER さん、
+
+$SUBJECT
+
+$METATITLE
+
+$MESSAGE_NO_HTML
+
+-- $AUTHOR
+
+スレッドを見る: ($MESSAGE_LINK)
+
+ウィキア
+___________________________________________
+* ウィキアの最新情報は ja.community.wikia.com で確認できます。	
+* メールの受信に関する設定は以下のページで行えます: http://ja.community.wikia.com/Special:Preferences',
+	'forum-mail-notification-body-HTML' => '$WATCHER さん、
+<p>$SUBJECT</p>
+<p><a href="$MESSAGE_LINK">$METATITLE</a></p>
+<p>$MESSAGE_HTML</p>
+<p>-- $AUTHOR_SIGNATURE<p>
+<p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">スレッドを見る</a></p>
+<p>ウィキア</p>
+___________________________________________<br />
+* ウィキアの最新情報は ja.community.wikia.com で確認できます。<br />	
+* メールの受信に関する設定は以下のページで行えます: http://ja.community.wikia.com/Special:Preferences',
 	'forum-activity-module-posted' => '$1 による返信の投稿: $2',
 	'forum-activity-module-started' => '$1 によるスレッドの作成: $2',
 	'forum-contributions-line' => '$5 ($6 | $7) $8 <a href="$1">$2</a> -- <a href="$3">$4板</a>',
 	'forum-recentchanges-new-message' => '-- <a href="$1">$2板</a>',
+	'forum-recentchanges-edit' => '(メッセージを編集)',
 	'forum-recentchanges-removed-thread' => 'が[[$3|$4板]]からスレッド「[[$1|$2]]」を削除しました',
+	'forum-recentchanges-removed-reply' => 'が[[$3|$4板]]のスレッド「[[$1|$2]]」から返信を削除しました',
 	'forum-recentchanges-restored-thread' => 'が[[$3|$4板]]にスレッド「[[$1|$2]]」を復帰しました',
+	'forum-recentchanges-restored-reply' => 'が[[$3|$4板]]のスレッド「[[$1|$2]]」に返信を復帰しました',
 	'forum-recentchanges-deleted-thread' => 'が[[$3|$4板]]からスレッド「[[$1|$2]]」を削除しました',
 	'forum-recentchanges-history-link' => '板の履歴',
 	'forum-board-history-title' => '板の履歴',
@@ -1329,6 +1417,14 @@ $messages['ja'] = array(
 	'forum-board-title-validation-exists' => '同名の板が既に存在します',
 	'forum-board-description-validation-length' => 'この板の概要を入力してください',
 	'forum-confirmation-board-deleted' => '「$1」を削除しました。',
+);
+
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'forum-specialpage-heading' => 'Forum',
+	'forum-thread-reply-post' => 'Äntwerten',
 );
 
 /** Dutch (Nederlands)
@@ -1361,6 +1457,13 @@ $messages['nl'] = array(
 	'forum-mail-notification-html-greeting' => 'Hallo $1,',
 	'forum-mail-notification-html-button' => 'Zie het gesprek',
 	'forum-mail-notification-subject' => '$1 - $2',
+);
+
+/** Polish (polski)
+ * @author Chrumps
+ */
+$messages['pl'] = array(
+	'forum-forum-title' => 'Forum',
 );
 
 /** Russian (русский)
@@ -1886,4 +1989,21 @@ ___________________________________________<br />
 	'forum-related-discussion-zero-state-creative' => 'Ви можете знайти обговорення всього, що відноситься до цієї вікі, на [[Special:Forum|форумі {{SITENAME}}!]]',
 	'forum-related-discussion-see-more' => 'Переглянути більше обговорень',
 	'forum-confirmation-board-deleted' => '"$1" було видалено.',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'forum-forum-title' => 'Diễn đàn',
+	'forum-active-threads' => '$1 {{PLURAL:$1|Active Discussion|Thảo luận hoạt động}}',
+	'forum-sorting-option-popular-threads' => 'Phổ biến nhất',
+	'forum-sorting-option-most-replies' => 'Tích cực nhất trong 7 ngày',
+	'forum-sorting-option-newest-threads' => 'Luồng mới nhất',
+	'forum-sorting-option-oldest-threads' => 'Luồng cũ nhất',
+	'forum-discussion-post' => 'Gửi',
+	'forum-discussion-highlight' => 'Làm nổi bật cuộc thảo luận này',
+	'forum-discussion-placeholder-title' => 'Những gì bạn muốn nói về?',
+	'forum-discussion-placeholder-message' => 'Gửi một tin nhắn mới đến tường $1 này',
+	'forum-discussion-placeholder-message-short' => 'Gửi một tin nhắn mới',
 );

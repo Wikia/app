@@ -65,7 +65,7 @@ $messages['ca'] = array(
 	'imageserving-desc' => "Selecciona les imatges des d'un conjunt especificat de pàgines basat en les exigències visuals",
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Dontlietome7
  */
 $messages['cs'] = array(
