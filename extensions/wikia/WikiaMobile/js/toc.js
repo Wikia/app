@@ -136,10 +136,10 @@ function ( sections, window, $, mustache, toc ) {
 
 			$anchors = $ol.find( 'li > a' );
 
-			var wrapper = document.getElementById('#tocWrapper');
+			var wrapper = document.getElementById( 'tocWrapper' );
 
 			if ( wrapper ) {
-				tocScroll = new window.IScroll(wrapper, {
+				tocScroll = new window.IScroll( wrapper, {
 					click: true,
 					scrollY: true,
 					scrollX: false
