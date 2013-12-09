@@ -5,5 +5,4 @@
 
 <? if ( $haveProgram ): ?>
 	<?= $featuredContent ?>
-	<?= $categoryContent ?>
 <? endif; ?>
