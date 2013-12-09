@@ -70,6 +70,12 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	this.searchResults = this.search.getResults();
 	this.upload = new ve.ui.WikiaUploadWidget( { '$$': this.frame.$$, 'hideIcon': true } );
 
+	this.dropTarget = new ve.ui.WikiaDropTargetWidget({
+		'surface': this.surface,
+		'upload': this.upload,
+		'$$': this.frame.$$
+	});
+
 	this.$cart = this.$$( '<div>' );
 	this.$content = this.$$( '<div>' );
 	this.$mainPage = this.$$( '<div>' );

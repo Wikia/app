@@ -45,36 +45,6 @@ ve.ui.WikiaUploadWidget = function VeUiWikiaUploadWidget( config ) {
 	this.$.on( 'click', ve.bind( this.onClick, this ) );
 	this.uploadButton.on( 'click', ve.bind( this.onClick, this ) );
 	this.$file.on( 'change', ve.bind( this.onFileChange, this ) );
-	this.$.on( 'dragenter dragover', function(e) {
-		e.preventDefault();
-	});
-	var that = this;
-	this.$.on( 'drop', function(e) {
-		var files,
-				transfer,
-				reader,
-				i,
-				file;
-
-		e.preventDefault();
-
-		transfer = e.originalEvent.dataTransfer;
-		files = transfer.files;
-		for( i = 0; i < files.length; i++ ) {
-			file = files[i];
-			console.log(file);
-			that.$file.trigger('change', function() {
-				console.log(arguments);
-			});
-			// reader = new FileReader();
-
-			// reader.readAsDataURL(file);
-			// reader.addEventListener('loadend', function( e, file ) {
-			// 	console.log(arguments);
-			// });
-		}
-		return false;
-	});
 
 	// Initialization
 	this.$form.append( this.$file );
@@ -146,14 +116,15 @@ ve.ui.WikiaUploadWidget.prototype.onClick = function () {
  * @method
  * @fires success
  */
-ve.ui.WikiaUploadWidget.prototype.onFileChange = function () {
+ve.ui.WikiaUploadWidget.prototype.onFileChange = function ( evt, file ) {
 	var fileErrors;
 
-	if ( !this.$file[0].files[0] ) {
+	file = file || this.$file[0].files[0];
+	if ( !file ) {
 		return;
 	}
 
-	fileErrors = this.constructor.static.validateFile( this.$file[0].files[0] );
+	fileErrors = this.constructor.static.validateFile( file );
 
 	if ( fileErrors.length ) {
 		mw.config.get( 'GlobalNotification' ).show(
@@ -166,13 +137,16 @@ ve.ui.WikiaUploadWidget.prototype.onFileChange = function () {
 			$( '.ve-ui-frame' ).contents().find( '.ve-ui-window-body' )
 		);
 	} else {
+		var form = new FormData( document.createElement('form') );
+		form.append( 'file', file );
+
 		$.ajax( {
 			'url': mw.util.wikiScript( 'api' ) + '?action=addmediatemporary&format=json',
 			'type': 'post',
 			'cache': false,
 			'contentType': false,
 			'processData': false,
-			'data': new FormData( this.$form[0] ),
+			'data': form,
 			'success': ve.bind( this.onUploadSuccess, this ),
 			'error': ve.bind( this.onUploadError, this )
 		} );
