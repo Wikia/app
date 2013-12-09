@@ -166,7 +166,13 @@ class MarketingToolboxModuleFeaturedvideoService extends MarketingToolboxModuleE
 		return $videoData;
 	}
 
-	protected function filterCommercialData($data) {
-		return null;
+	/**
+	 * Don't return any data for commercial usages
+	 * @param $data
+	 * @return null
+	 */
+	protected function filterCommercialData( $data ) {
+		$data['video'] = null;
+		return $data;
 	}
 }

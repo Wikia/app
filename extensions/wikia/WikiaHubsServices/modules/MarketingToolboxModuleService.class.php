@@ -156,7 +156,7 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 	/**
 	 * @param $filterCommercialData
 	 */
-	public function setShouldFilterCommercialData($filterCommercialData) {
+	public function setShouldFilterCommercialData( $filterCommercialData ) {
 		$this->shouldFilterCommercialData = $filterCommercialData;
 	}
 

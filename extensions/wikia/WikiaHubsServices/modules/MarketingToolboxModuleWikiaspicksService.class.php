@@ -143,7 +143,12 @@ class MarketingToolboxModuleWikiaspicksService extends MarketingToolboxModuleEdi
 		return $structuredData;
 	}
 
-	protected function filterCommercialData($data) {
+	/**
+	 * Returns null if imageLink is from restricted wiki.
+	 * @param $data
+	 * @return mixed
+	 */
+	protected function filterCommercialData( $data ) {
 		$service = $this->getLicensedWikisService();
 		if ( isset($data['imageLink']) && !$service->isCommercialUseAllowedByUrl($data['imageLink']) ) {
 			$data = null;

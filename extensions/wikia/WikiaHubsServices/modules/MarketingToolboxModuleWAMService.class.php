@@ -287,7 +287,12 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 		return null;
 	}
 
-	protected function filterCommercialData($data) {
+	/**
+	 * Remove non-commercial wikis.
+	 * @param $data
+	 * @return mixed
+	 */
+	protected function filterCommercialData( $data ) {
 		$service = $this->getLicensedWikisService();
 		$data['ranking'] = array_values( array_filter( $data['ranking'], function( $element ) use($service) {
 			return $service->isCommercialUseAllowedByUrl($element['wikiUrl']);
