@@ -52,7 +52,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	// Properties
 	this.cartModel = new ve.dm.WikiaCart();
 	this.cart = new ve.ui.WikiaCartWidget( this.cartModel );
-	this.insertButton = new OO.ui.ButtonWidget( {
+	this.insertButton = new OO.ui.PushButtonWidget( {
 		'$': this.$,
 		'label': ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-insert-button' ),
 		'flags': ['primary']
@@ -108,7 +108,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 		.append( this.cart.$element );
 	this.$content
 		.addClass( 've-ui-wikiaMediaInsertDialog-content' )
-		.append( this.query.$, this.pages.$element );
+		.append( this.query.$element, this.pages.$element );
 
 	this.$body.append( this.$content, this.$cart );
 	this.frame.$content.addClass( 've-ui-wikiaMediaInsertDialog' );

@@ -77,10 +77,10 @@ $wgResourceModules += array(
 			've/ce/ve.ce.WikiaInlineVideoNode.js',
 
 			// ui
-			've/ui/tools/buttons/ve.ui.WikiaMediaInsertButtonTool.js',
-			've/ui/tools/buttons/ve.ui.WikiaSourceModeButtonTool.js',
 			've/ui/dialogs/ve.ui.WikiaMediaInsertDialog.js',
+			've/ui/dialogs/ve.ui.WikiaReferenceDialog.js',
 			've/ui/dialogs/ve.ui.WikiaSourceModeDialog.js',
+			've/ui/tools/ve.ui.WikiaDialogTool.js',
 			've/ui/widgets/ve.ui.WikiaCartWidget.js',
 			've/ui/widgets/ve.ui.WikiaCartItemWidget.js',
 			've/ui/widgets/ve.ui.WikiaMediaPageWidget.js',
