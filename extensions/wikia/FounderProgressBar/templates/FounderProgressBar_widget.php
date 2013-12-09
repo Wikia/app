@@ -1,4 +1,4 @@
-<section id="FounderProgressList" class="FounderProgressList" style="display:none;">
+<section id="FounderProgressList" class="FounderProgressList module" style="display:none;">
 	<canvas height="45" width="25" class="tail"></canvas>
 	<nav>
 		<a href="#" class="back-to-dash"><?= wfMsg('admindashboard-back-to-dashboard') ?></a>
