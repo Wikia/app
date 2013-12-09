@@ -31,7 +31,6 @@ require(['wikia.window', 'wikia.nirvana', 'track', 'wikia.cache'],
 			$wikiNavHeader = $wkNavMenu.find('header');
 			$wikiNavH1 = $wikiNavHeader.find('h1').removeClass();
 			$wikiNavLink = $(d.getElementById('wkNavLink'));
-            var $wikiNavLinkChev = $wikiNavLink.find('span');
 
 			//add chevrons to all elements that have child lists
 			$wkNavMenu.find('ul ul').parent().addClass('cld');
@@ -56,13 +55,13 @@ require(['wikia.window', 'wikia.nirvana', 'track', 'wikia.cache'],
 						$wikiNavH1.addClass('animNext');
 
 						window.setTimeout(function(){
-							$wikiNavH1.append($element.text());
+							$wikiNavLink.text($element.text());
 						}, ANIMATION_TIME);
 
 					} else {
 						trackLevel(2);
 
-						$wikiNavH1.append($element.text());
+						$wikiNavLink.text($element.text());
 						lvl2Link = href;
 
 						$wkNavMenu.addClass('cur2');
@@ -80,7 +79,7 @@ require(['wikia.window', 'wikia.nirvana', 'track', 'wikia.cache'],
 					$wkNavMenu.removeClass('cur3');
 
 					window.setTimeout(function(){
-						$wikiNavH1.append($wkNavMenu.find('.lvl2.cur').prev().text());
+						$wikiNavLink.text($wkNavMenu.find('.lvl2.cur').prev().text());
 					}, ANIMATION_TIME);
 
 					window.setTimeout(function(){

@@ -13,9 +13,8 @@
 	<header>
 		<button id=wkNavBack class=wkBtn><?= wfMessage( 'wikiamobile-back' )->text(); ?></button>
 		<h1 class='collSec addChev'>
-            <a id=wkNavLink>
-                <span class=chvRgt></span>
-            </a>
+			<a id=wkNavLink></a>
+			<span class=cld></span>
 		</h1>
 	</header>
 <ul id=lvl1 class=wkLst>

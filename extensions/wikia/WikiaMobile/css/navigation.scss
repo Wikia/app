@@ -297,7 +297,6 @@
 
 		h1 {
 			margin: 0 0;
-			padding-right:50px;
 			border-top: none;
 			text-align: center;
 			font-size: medium;
@@ -319,6 +318,16 @@
 			&.animBack {
 				-webkit-animation: slideBack .5s ease;
 				-moz-animation: slideBack .5s ease;
+			}
+			span {
+				background-position: center;
+				position: absolute;
+				right: 0px;
+				top: 0px;
+				display: block;
+				height: 50px;
+				width: 50px;
+				pointer-events: none;
 			}
 		}
 	}
@@ -422,21 +431,10 @@
 }
 
 #wkNavLink {
-	position: absolute;
-	right: 0;
-	top: 0;
-	height: 50px;
-	width: 100%;
-	background: none;
-	span {
-		background-position: 100% 50%;
-		position: absolute;
-		right: 20px;
-		top: 0px;
-		display: block;
-		height: 50px;
-		width: 50px;
-    }
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	padding-right: 50px;
 }
 
 #wkNavBack {
