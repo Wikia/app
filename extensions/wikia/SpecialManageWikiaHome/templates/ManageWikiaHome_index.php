@@ -13,7 +13,8 @@
 
 	<div>
 		<h2><?=wfMessage('manage-wikia-home-stats-header')->text(); ?></h2>
-		<form method="post">
+		<form method="post" class="corp-stats">
+			<p><?= wfMessage('manage-wikia-home-stats-text')->text(); ?></p>
 			<?=$statsForm->renderFormFields(); ?>
 			<input type="submit" name="stats" />
 		</form>
