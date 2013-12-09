@@ -43,8 +43,7 @@ class WikiaHomePageHelper extends WikiaModel {
 	const WAM_SCORE_ROUND_PRECISION = 2;
 
 	const SLIDER_IMAGES_KEY = 'SliderImagesKey';
-	const WIKIA_HOME_PAGE_HELPER_MEMC_VERSION = 'v0.7';
-	const HOMEPAGE_MEMC_KEY_VER = '1.05';
+	const WIKIA_HOME_PAGE_HELPER_MEMC_VERSION = 'v0.8';
 
 	protected $visualizationModel = null;
 	protected $collectionsModel;
@@ -264,31 +263,12 @@ class WikiaHomePageHelper extends WikiaModel {
 		return $newCommunities;
 	}
 
-
-	/**
-	 * get stats from article
-	 * @param string $articleName
-	 * @return integer stats
-	 */
-	public function getStatsFromArticle($articleName) {
-		wfProfileIn(__METHOD__);
-
-		$title = Title::newFromText($articleName);
-		$article = new Article($title);
-		$content = $article->getRawText();
-		$stats = (empty($content)) ? 0 : $content;
-
-		wfProfileOut(__METHOD__);
-
-		return intval($stats);
-	}
-
 	public function getStatsFromWF() {
-		return WikiFactory::getVarValueByName('wgCorpMainPageStats', 177);
+		return WikiFactory::getVarValueByName('wgCorpMainPageStats', Wikia::COMMUNITY_WIKI_ID);
 	}
 
 	public function saveStatsToWF($statsValues) {
-		WikiFactory::setVarByName('wgCorpMainPageStats', 177, $statsValues);
+		WikiFactory::setVarByName('wgCorpMainPageStats', Wikia::COMMUNITY_WIKI_ID, $statsValues);
 		$this->wg->Memc->delete($this->getStatsMemcacheKey());
 	}
 
@@ -946,7 +926,7 @@ class WikiaHomePageHelper extends WikiaModel {
 	 * @return string
 	 */
 	public function getStatsMemcacheKey() {
-		$memKey = wfSharedMemcKey( 'wikiahomepage', 'stats', self::HOMEPAGE_MEMC_KEY_VER );
+		$memKey = wfSharedMemcKey( 'wikiahomepage', 'stats', self::WIKIA_HOME_PAGE_HELPER_MEMC_VERSION );
 
 		return $memKey;
 	}

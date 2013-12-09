@@ -12,10 +12,10 @@
 	<?php endif; ?>
 
 	<div>
-		<h2><?=wfMessage('manage-wikia-home-stats-header')->text(); ?></h2>
+		<h2><?= wfMessage('manage-wikia-home-stats-header')->text(); ?></h2>
 		<form method="post" class="corp-stats">
 			<p><?= wfMessage('manage-wikia-home-stats-text')->text(); ?></p>
-			<?=$statsForm->renderFormFields(); ?>
+			<?= $statsForm->renderFormFields(); ?>
 			<input type="submit" name="stats" />
 		</form>
 	</div>
