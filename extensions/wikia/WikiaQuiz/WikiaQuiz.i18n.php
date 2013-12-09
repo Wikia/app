@@ -348,7 +348,7 @@ $messages['ce'] = array(
 	'wikiaquiz-game-continue-button' => 'Кхин дӀа',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Chmee2
  * @author Vks
  */

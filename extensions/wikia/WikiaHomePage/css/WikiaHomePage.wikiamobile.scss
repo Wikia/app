@@ -25,6 +25,7 @@
 			background-color: #f4f4f4;
 			border-top: 5px solid $color-wikiahome-community;
 			height: 100px;
+			width: 100%;
 			img {
 				background-image: url('/extensions/wikia/WikiaHomePage/images/communitycentral-en-mobile.png'); /* base64 */
 				background-position: 0 0;
@@ -44,26 +45,26 @@
 		}
 		&.wkhome-community-de .wkhome-hero {
 			img {
-				background-image: url('/extensions/wikia/WikiaHomePage/images/communitycentral-de-mobile.png'); /* base64 */
+				background-image: url('/extensions/wikia/WikiaHomePage/images/communitycentral-de-mobile.png');
 				background-position: 0 0;
 				left: 13px;
 			}
 		}
 		&.wkhome-community-fr .wkhome-hero {
 			img {
-				background-image: url('/extensions/wikia/WikiaHomePage/images/communitycentral-fr-mobile.png'); /* base64 */
+				background-image: url('/extensions/wikia/WikiaHomePage/images/communitycentral-fr-mobile.png');
 				background-position: 0 0;
 			}
 		}
 		&.wkhome-community-es .wkhome-hero {
 			img {
-				background-image: url('/extensions/wikia/WikiaHomePage/images/communitycentral-es-mobile.png'); /* base64 */
+				background-image: url('/extensions/wikia/WikiaHomePage/images/communitycentral-es-mobile.png');
 				background-position: 0 0;
 			}
 		}
         &.wkhome-community-pl .wkhome-hero {
             img {
-                background-image: url('/extensions/wikia/WikiaHomePage/images/communitycentral-pl-mobile.png'); /* base64 */
+                background-image: url('/extensions/wikia/WikiaHomePage/images/communitycentral-pl-mobile.png');
                 background-position: 0 0;
             }
         }
@@ -78,7 +79,6 @@
 			float: left;
 			position: relative;
 			margin: 0 10px 10px 0;
-			width: 300px;
 			h2 {
 				background-color: rgba(0, 0, 0, 0.5);
 				bottom: 0;
@@ -90,7 +90,7 @@
 				margin: 0;
 				padding: 10px;
 				position: absolute;
-				width: 300px;
+				width: 100%;
 			}
 			img {
 				display: block;
@@ -114,7 +114,7 @@
 		background-image: url('/extensions/wikia/WikiaHomePage/images/wikialogo-mobile.png'); /* base64 */
 		background-position: 0 0px;
 		background-repeat: no-repeat;
-		content: " ";
+		content: "";
 		display: block;
 		height: 19px;
 		left: 10px;

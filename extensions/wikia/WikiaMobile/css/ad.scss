@@ -1,24 +1,23 @@
 @import 'variables';
-@import 'mixins/transition';
 
 //variables
-$slotFooterWidth: 300px;//some networks use this instead of 320
-$slotFooterWidthMax: 320px;
-$slotFooterHeight: 50px;
-$slotFooterMargin: 0;
-$slotFooterColor: #666;
-//z-index has to be high enough to be above page content
-//and low enough so expandables can be above it
-$slotZIndex: 4000;
+$slotWidth: 300px; //in content width
+$slotWidthMax: 320px; //top leaderboard width
+$slotTopHeight: 50px;
 
 #wkAdTopLeader {
 	background-color: white;
 
-	width: $slotFooterWidthMax;
-	height: $slotFooterHeight;
+	width: $slotWidthMax;
+	height: $slotTopHeight;
 
 	margin: 0 auto;
 	text-align: center;
+
+	//inverted as this ad is to have 100% fill
+	&.hide {
+		display: none;
+	}
 }
 
 .ad-in-content {
@@ -48,7 +47,7 @@ $slotZIndex: 4000;
 	display: inline-block;
 
 	height: 250px;
-	width: 300px;
+	width: $slotWidth;
 
 	background: rgba(0,0,0,.3);
 

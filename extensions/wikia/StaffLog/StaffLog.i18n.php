@@ -127,7 +127,7 @@ $messages['ca'] = array(
 	'action-stafflog' => "mostra l'historial centralitzat",
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Chmee2
  * @author Dontlietome7
  */

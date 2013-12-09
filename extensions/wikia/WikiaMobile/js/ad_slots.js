@@ -6,7 +6,7 @@ require( ['ads', 'sloth', 'jquery', 'JSMessages', 'wikia.window', 'wikia.log'], 
 		doc = window.document,
 		logGroup = 'ad_slots',
 		logLevel = log.levels.info,
-		adWrapper = doc.getElementById( 'wkAdTopLeader' ),
+		topAdWrapper = doc.getElementById( 'wkAdTopLeader' ),
 		$firstSection = $( 'h2[id]' ).first(),
 		$footer = $( '#wkMainCntFtr' ),
 		firstSectionTop = ( $firstSection.length && $firstSection.offset().top ) || 0,
@@ -41,11 +41,11 @@ require( ['ads', 'sloth', 'jquery', 'JSMessages', 'wikia.window', 'wikia.log'], 
 	ads.setupSlot( {
 		name: 'MOBILE_TOP_LEADERBOARD',
 		size: '320x50',
-		wrapper: adWrapper,
+		wrapper: topAdWrapper,
 		init: function ( found ) {
 			log( 'Slot: MOBILE_TOP_LEADERBOARD loaded, found: ' + found, logLevel, logGroup );
-			if ( found ) {
-				adWrapper.className = 'show';
+			if ( !found ) {
+				topAdWrapper.className = 'hide';
 			}
 		}
 	} );

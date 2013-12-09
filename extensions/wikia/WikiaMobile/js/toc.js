@@ -13,8 +13,10 @@ function ( sections, window, $, mustache, toc ) {
 		$ol,
 		inited,
 		$toc = $( '#wkTOC' ),
+		$tocHandle = $( '#wkTOCHandle' ),
 		tocScroll,
-		inPageToc;
+		inPageToc,
+		tocTemplate;
 
 	if ( sideMenuCapable ) {
 		$toc.addClass( 'side-menu-capable' );
@@ -45,10 +47,14 @@ function ( sections, window, $, mustache, toc ) {
 				}
 			);
 
-		return mustache.render( wrap, tocData, {
-			ol: ol,
-			lis: lis
-		} );
+		if ( tocData.sections.length ) {
+			return mustache.render( wrap, tocData, {
+				ol: ol,
+				lis: lis
+			} );
+		} else {
+			return '';
+		}
 	}
 
 	/**
@@ -130,11 +136,15 @@ function ( sections, window, $, mustache, toc ) {
 
 			$anchors = $ol.find( 'li > a' );
 
-			tocScroll = new window.IScroll('#tocWrapper', {
-				click: true,
-				scrollY: true,
-				scrollX: false
-			});
+			var wrapper = document.getElementById( 'tocWrapper' );
+
+			if ( wrapper ) {
+				tocScroll = new window.IScroll( wrapper, {
+					click: true,
+					scrollY: true,
+					scrollX: false
+				});
+			}
 
 			inited = true;
 		}
@@ -173,14 +183,21 @@ function ( sections, window, $, mustache, toc ) {
 	} );
 
 	if ( !sideMenuCapable ) {
-		$ol = $document.find('#mw-content-text')
-			.append( '<div class="in-page-toc"><h2>' + $toc.find( 'header' ).text() + '</h2>' + renderToc() + '</div>' )
-			.find('.level');
+		tocTemplate = renderToc();
 
-		inPageToc = document.getElementsByClassName('in-page-toc')[0];
+		if ( tocTemplate ) {
+			$ol = $document.find('#mw-content-text')
+				.append(
+					'<div class="in-page-toc"><h2>' + $toc.find( 'header' ).text() + '</h2>' + tocTemplate + '</div>'
+				).find('.level');
+
+			inPageToc = document.getElementsByClassName('in-page-toc')[0];
+		} else {
+			$tocHandle.hide();
+		}
 	}
 
-	$( '#wkTOCHandle' ).on( 'click', function ( event ) {
+	$tocHandle.on( 'click', function ( event ) {
 		event.stopPropagation();
 
 		if ( sideMenuCapable ) {
