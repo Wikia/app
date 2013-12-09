@@ -127,7 +127,7 @@ h2[data-count] {
 	background-image: url('/extensions/wikia/WikiaMobile/images/close.png'); /* base64 */
 }
 
-#wkNavLink, .cld {
+#wkNavLink > span, .cld {
 	background-repeat: no-repeat;
 	background-size: 10px;
 	background-image:  url('/extensions/wikia/WikiaMobile/images/chevron-blue-right.png'); /* base64 */

@@ -427,7 +427,16 @@
 	top: 0;
 	height: 50px;
 	width: 100%;
-	background-position: right 20px top 50%;
+	background: none;
+	span{
+		background-position: 100% 50%;
+		position: absolute;
+		right: 20px;
+		top: 0px;
+		display: block;
+		height:50px;
+		width:50px;
+    }
 }
 
 #wkNavBack {

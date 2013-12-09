@@ -31,6 +31,7 @@ require(['wikia.window', 'wikia.nirvana', 'track', 'wikia.cache'],
 			$wikiNavHeader = $wkNavMenu.find('header');
 			$wikiNavH1 = $wikiNavHeader.find('h1').removeClass();
 			$wikiNavLink = $(d.getElementById('wkNavLink'));
+            var $wikiNavLinkChev = $wikiNavLink.find('span');
 
 			//add chevrons to all elements that have child lists
 			$wkNavMenu.find('ul ul').parent().addClass('cld');
