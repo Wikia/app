@@ -44,7 +44,7 @@
 
 			<div class="input-group border">
 				<label for="display-title-<?= $x ?>"><?= wfMessage( 'videopagetool-label-display-title' )->text() ?></label>
-				<input class="display-title" id="display-title-<?= $x ?>" type="text" name="displayTitle[]" value="<?= $video[ 'displayTitle' ] ?>">
+				<input class="display-title" id="display-title-<?= $x ?>" type="text" name="displayTitle[]" value="<?= htmlspecialchars( $video[ 'displayTitle' ] ) ?>">
 			</div>
 
 			<div class="input-group">
