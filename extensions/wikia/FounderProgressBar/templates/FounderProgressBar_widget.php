@@ -1,4 +1,4 @@
-<section id="FounderProgressList" class="FounderProgressList module" style="display:none;">
+<section id="FounderProgressList" class="FounderProgressList" style="display:none;">
 	<canvas height="45" width="25" class="tail"></canvas>
 	<nav>
 		<a href="#" class="back-to-dash"><?= wfMsg('admindashboard-back-to-dashboard') ?></a>
@@ -43,7 +43,7 @@
 	</ul>
 	<div class="shadowColorContainer"></div>	<!-- purposeful empty div for shadowColor.  look at SASS file -->
 </section>
-<section id="FounderProgressWidget">
+<section id="FounderProgressWidget" class="admin-dashboard-module">
 	<h1><?= wfMsg('founderprogressbar-widget-label') ?></h1>
 	<section class="preview">
 		<canvas id="FounderProgressBar" class="founder-progress-bar" height="95" width="95">

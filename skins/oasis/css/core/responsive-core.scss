@@ -139,7 +139,8 @@
 				display: none;
 			}
 
-			.module {
+			.module,
+			.admin-dashboard-module {
 				position: static;
 				@include calc(width, "100% - 35px");
 
