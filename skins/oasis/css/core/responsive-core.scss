@@ -135,7 +135,6 @@
 			-webkit-column-count: 2;
 			column-count: 2;
 
-			.wikia-ad,
 			.SelfServeUrl {
 				display: none;
 			}
@@ -143,11 +142,11 @@
 			.module {
 				position: static;
 
-				-moz-column-break-inside : avoid;
-				-ms-column-break-inside : avoid;
-				-o-column-break-inside : avoid;
-				-webkit-column-break-inside : avoid;
-				column-break-inside : avoid;
+				-moz-column-break-inside: avoid;
+				-ms-column-break-inside: avoid;
+				-o-column-break-inside: avoid;
+				-webkit-column-break-inside: avoid;
+				column-break-inside: avoid;
 
 				// fallback, because column-break-inside is currently NYI
 				display: inline-block;
