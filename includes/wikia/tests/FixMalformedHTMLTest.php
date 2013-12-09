@@ -89,7 +89,7 @@ class FixMalformedHTMLTest extends WikiaBaseTest {
 	function russianTextDataProvider() {
 		return [
 			[
-				'Russian text should be handled properly (ie, not returned as garbage)'
+				'Russian text should be handled properly (ie, not returned as garbage)',
 				'Ед дуо малйж факилиз. Йн лорэм видырэр жкрибэнтур ыюм. Мэль альяквюам пырикюлёз ан, аугюэ аккюсам номинави ед жят. Вэл эи унюм емпэтюсъ инзтруктеор, эи модо конгуы дикырыт дуо',
                 '<p>Ед дуо малйж факилиз. Йн лорэм видырэр жкрибэнтур ыюм. Мэль альяквюам пырикюлёз ан, аугюэ аккюсам номинави ед жят. Вэл эи унюм емпэтюсъ инзтруктеор, эи модо конгуы дикырыт дуо</p>'
 			],
