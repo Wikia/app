@@ -49,7 +49,7 @@ $messages['ca'] = array(
 	'scribeeventsrecords' => 'Registres',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Dontlietome7
  */
 $messages['cs'] = array(

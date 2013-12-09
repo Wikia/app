@@ -875,7 +875,7 @@ class MediaWikiServiceTest extends BaseTest
 	 * @covers \Wikia\Search\MediaWikiService::getRedirectTitlesForPageId
 	 */
 	public function testGetRedirectTitlesForPageID() {
-		$service = $this->service->setMethods( array( 'getTitleKeyFromPageId' ) )->getMock();
+		$service = $this->service->setMethods( array( 'getTitleFromPageId' ) )->getMock();
 		
 		$mockDbr = $this->getMockBuilder( '\DatabaseMysql' )
 		                ->disableOriginalConstructor()
@@ -889,12 +889,17 @@ class MediaWikiServiceTest extends BaseTest
 		                   ->getMock();
 		
 		$mockRow = (object) array( 'page_title' => 'Bar_Foo' );
-		$titleKey = 'Foo_Bar';
+		$titleKey = 'foo_page';
+		$titleNs = 13;
+		$titleMock = $this->getMockBuilder( '\Title' )
+			->disableOriginalConstructor()
+			->setMethods([ 'getDbKey', 'getNamespace' ])
+			->getMock();
 		$method = 'Wikia\Search\MediaWikiService::getRedirectTitlesForPageId';
 		$fields = array( 'redirect', 'page' );
 		$table = array( 'page_title' );
 		$group = array( 'GROUP' => 'rd_title' );
-		$join = array( 'page' => array( 'INNER JOIN', array( 'rd_title' => $titleKey, 'page_id = rd_from' ) ) );
+		$join = array( 'page' => array( 'INNER JOIN', array( 'rd_title' => $titleKey, 'rd_namespace' => $titleNs, 'page_id = rd_from' ) ) );
 		$expectedResult = array( 'Bar Foo' );
 		
 		$mockGetDB
@@ -904,10 +909,20 @@ class MediaWikiServiceTest extends BaseTest
 		    ->will   ( $this->returnValue( $mockDbr ) )
 		;
 		$service
-		    ->expects( $this->once() )
-		    ->method ( 'getTitleKeyFromPageId' )
-		    ->with   ( $this->pageId )
-		    ->will   ( $this->returnValue( $titleKey ) )
+			->expects( $this->once() )
+			->method ( 'getTitleFromPageId' )
+			->with   ( $this->pageId )
+			->will   ( $this->returnValue( $titleMock ) )
+		;
+		$titleMock
+			->expects( $this->once() )
+			->method ( 'getDbKey' )
+			->will   ( $this->returnValue( $titleKey ) )
+		;
+		$titleMock
+			->expects( $this->once() )
+			->method ( 'getNamespace' )
+			->will   ( $this->returnValue( $titleNs ) )
 		;
 		$mockDbr
 		    ->expects( $this->at( 0 ) )

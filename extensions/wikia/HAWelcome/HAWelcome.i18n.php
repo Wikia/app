@@ -66,6 +66,7 @@ If you need help, check out our [[Help:Contents|help pages]] first and then visi
 );
 
 /** Message documentation (Message documentation)
+ * @author Josep Maria 15.
  * @author Lloffiwr
  * @author PtM
  * @author Shirayuki
@@ -78,7 +79,11 @@ $messages['qqq'] = array(
 	'welcome-message-anon-staff' => 'Please translate the link texts but leave the link addresses untranslated. Wikia administrators will localise the link addresses when the localized hubs of the wikis are available.',
 	'welcome-message-wall-user' => '$1 is the name of the page the user edited that tirggered the welcome',
 	'welcome-message-wall-user-staff' => '$1 is the name of the page edited to trigger the welcome',
-	'welcome-message-wall-anon' => '$1 is the name of the page the user edited that tirggered the welcome',
+	'welcome-message-wall-anon' => '$1 is the name of the page the user edited that tirggered the welcome.
+
+$2 is the talk page of the last admin who edited in the wiki.
+
+$3 is the name of the last admin who edited in the wiki.',
 	'welcome-message-wall-anon-staff' => '$1 is the name of the page the user edited that triggered the welcome.
 
 Please translate the link texts but leave the link addresses untranslated. Wikia administrators will localise the link addresses when the localized hubs of the wikis are available.',
@@ -218,7 +223,7 @@ Si necessites ajuda, fes un cop d'ull primer a les nostres [[Help:Contents|pàgi
 	'welcome-description' => 'Envia un missatge de benvinguda als usuaris després de la seva primera edició',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -623,26 +628,31 @@ Si vous avez besoin d’aide, consultez d’abord nos [[Help:Contents|pages d’
 /** Galician (galego)
  * @author Josep Maria 15.
  * @author Toliño
+ * @author Vivaelcelta
  */
 $messages['gl'] = array(
-	'welcome-user-page' => "== Sobre min ==
+	'welcome-user-page' => "==Sobre min==
+
 ''Esta é a túa páxina de usuario. Edita esta páxina para contarlles aos demais o que queiras acerca de ti!''
 
-== As miñas contribucións ==
-* [[Special:Contributions/$1|As miñas contribucións]]
+==As miñas contribucións==
 
-== As miñas páxinas favoritas ==
-* Engade ligazóns cara ás túas páxinas preferidas deste wiki!
+* [[Special:Contributions/$1|Contribucións de usuario]]
+
+==As miñas páxinas favoritas==
+
+* Engade aquí as ligazóns cara ás túas páxinas preferidas deste wiki!
 * Páxina favorita nº2
 * Páxina favorita nº3",
-	'welcome-message-user' => 'Ola, benvido(a) á {{SITENAME}}! Grazas pola túa edición na páxina "[[:$1]]".
+	'welcome-message-user' => 'Ola, dámosche a benvida a {{SITENAME}}! Grazas pola túa edición na páxina "[[:$1]]".
 
-Por favor, deixa unha mensaxe [[$2|na miña páxina de conversa]] se queres que che axude con algunha cousa! $3',
-	'welcome-message-anon' => "Ola, benvido(a) á {{SITENAME}}! Grazas pola túa edición na páxina \"[[:\$1]]\".
+Por favor, deixa unha mensaxe [[$2|na miña páxina de conversa]] se necesitas axuda con algunha cousa! $3',
+	'welcome-message-anon' => "Ola, dámosche a benvida a {{SITENAME}}! Grazas pola túa edición na páxina \"[[:\$1]]\".
 
-Agradeceríache que '''[[Special:Userlogin|te rexistrases]]''' cun nome porque ten moitas vantaxes. A túa identidade real queda sempre salvagardada, pero, ao teres nome, podemos recoñecerte e falar contigo. Tamén é un xeito doado de manter baixo control as túas achegas e axuda á comunicación co resto da comunidade. Ao te rexistrares, terás á túa disposición unha páxina de usuario (na que podes colocar os teus datos) e unha páxina de conversa, na cal escribiremos para nos poñermos en contacto contigo.
+'''Por favor, [[Special:Userlogin|rexístrate e crea unha conta de usuario]]'''.
+É un xeito doado de manter baixo control as túas achegas e axuda á comunicación co resto da comunidade.
 
-Por favor, deixa unha mensaxe [[\$2|na miña páxina de conversa]] se queres que che axude con algunha cousa! \$3",
+Por favor, deixa unha mensaxe [[\$2|na miña páxina de conversa]] se necesitas axuda con algunha cousa! \$3",
 	'welcome-message-log' => 'benvida ao novo colaborador',
 	'welcome-message-user-staff' => '==Reciba a nosa benvida==
 
@@ -658,9 +668,9 @@ Dámoslle a benvida a {{SITENAME}} e agradecemos a súa edición na páxina "[[:
 Se necesita axuda, consulte as [[Help:Contents|páxinas de axuda]] e logo visite a [[w:c:community|central da comunidade]] para aprender máis cousas. Páseo ben! $3',
 	'staffsig-text' => '[[{{ns:user}}:$1|$2]]<staff /> <small>([[w:forums|foro de axuda]] | [[w:sblog|blogue]])</small>',
 	'hawelcomeedit' => 'HAWelcomeEdit',
-	'welcome-message-wall-user' => 'Ola, dámoslle a benvida a {{SITENAME}}! Grazas pola súa edición na páxina "[[:$1]]".
+	'welcome-message-wall-user' => 'Ola, dámosche a benvida a {{SITENAME}}! Grazas pola túa edición na páxina "[[:$1]]".
 
-Por favor, déixeme unha mensaxe se quere que lle axude con algunha cousa!',
+Por favor, déixame unha mensaxe se necesitas axuda con algunha cousa!',
 	'welcome-message-wall-user-staff' => 'Boas:
 
 Dámoslle a benvida a {{SITENAME}} e agradecemos a súa edición na páxina "[[:$1]]". Se necesita axuda, empece consultando as [[Help:Contents|páxinas de axuda]]. Visite a [[w:c:community|central da comunidade]] para informarse a través do [[w:c:community:Blog:Wikia_Staff_Blog|blogue do persoal]], facer preguntas no noso [[w:c:community:Special:Forum|foro comunitario]], participar na nosa [[w:c:community:Help:Webinars|serie webinar]] ou conversar en tempo real con outros compañeiros de Wikia. Páseo ben!',
@@ -1499,10 +1509,9 @@ Bem-vindo à {{SITENAME}} e obrigado pela tua edição na página [[:$1]]. Se pr
 Porque não '''[[Special:Userlogin|crias uma conta e te identificas]]'''?  Desta forma será muito máis fácil saber as páginas que tu editaste e o trabalho será atribuido a ti na wiki, alem do mais será de grande ajuda na hora de comunicar-te com o resto da comunidade.
 
 Por favor, se tiveres alguma dúvida, sente-te a vontade para deixar uma mensagem na [[$2|minha pagina de discussão]] para ver se eu posso-te ajudar com alguma coisa. $3", # Fuzzy
-	'welcome-message-wall-anon-staff' => 'Ola,
-Bem-vindo à {{SITENAME}} e obrigado pela tua edição na página [[:$1]]. Nós encorajamos todos os contribuintes para [[Especial:UserLogin|criar um nome de utilizador]], então vais poder manter o controle das tuas contribuições, acessar aos recursos de Wikia e conhecer o resto da comunidade {{SITENAME}}.
+	'welcome-message-wall-anon-staff' => 'Ola, bem-vindo à {{SITENAME}} e obrigado pela tua edição na página [[:$1]]. Nós encorajamos todos os contribuintes para [[Especial:UserLogin|criar um nome de utilizador]], então vais poder manter o controlo das tuas contribuições, acessar aos recursos de Wikia e conhecer o resto da comunidade {{SITENAME}}.
 !!
-Se precisas de ajuda, primeiro olha as nossas [[ajuda: Contents|páginas de ajuda]] e depois visita a [[w:c:community|Comunidade Central]] para obter mais informações. Boas contribuições!', # Fuzzy
+Se precisas de ajuda, primeiro olha as nossas [[Ajuda:Contents|páginas de ajuda]] e depois visita a [[w:c:community|Comunidade Central]] para obter mais informações. Boas contribuições!', # Fuzzy
 	'welcome-description' => 'Envia uma mensagem de boas-vindas para utilizadores depois das suas primeiras edições',
 );
 
@@ -1877,6 +1886,7 @@ $messages['tt-cyrl'] = array(
  * @author Ast
  * @author Microcell
  * @author Prima klasy4na
+ * @author Ua2004
  * @author Тест
  */
 $messages['uk'] = array(
@@ -1937,7 +1947,7 @@ $messages['uk'] = array(
 Ласкаво просимо на {{SITENAME}} і дякуємо вам за ваше редагування сторінки [[:$1]]. Ми закликаємо всіх учасників [[Special:UserLogin|створити ім'я користувача]], щоб ви могли відслідковувати ваші внески, мати доступ до інших можливостей Вікія та познайомитися з рештою спільноти {{SITENAME}}.
 
 Якщо вам потрібна допомога, то перевірте наші  [[Help:Contents|сторінки довідки]], а потім відвідайте [[w:c:community|Центральну Спільноту]], щоб дізнатися більше. Щасливого редагування!",
-	'welcome-description' => 'Відправляє вітальне повідомлення для користувачів після їх першої правки',
+	'welcome-description' => 'Надсилає привітальне повідомлення новим користувачам після їхнього першого редагування на вікі',
 );
 
 /** Urdu (اردو)

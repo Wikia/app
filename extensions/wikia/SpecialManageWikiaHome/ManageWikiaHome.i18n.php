@@ -393,6 +393,13 @@ $messages['ca'] = array(
 	'manage-wikia-home-collection-add-file-button' => 'Afegir una foto',
 );
 
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'manage-wikia-home-wiki-list-blocked' => 'Блоктоьхна',
+);
+
 /** German (Deutsch)
  * @author Metalhead64
  */
@@ -1077,6 +1084,7 @@ $messages['ps'] = array(
 );
 
 /** Portuguese (português)
+ * @author Hamilton Abreu
  * @author Luckas
  */
 $messages['pt'] = array(
@@ -1092,7 +1100,7 @@ $messages['pt'] = array(
 	'manage-wikia-home-modal-button-no' => 'Não',
 	'manage-wikia-home-modal-button-yes' => 'Sim',
 	'manage-wikia-home-modal-button-okay' => 'Aceitar',
-	'manage-wikia-home-collections-setup-save-button' => 'Salvar',
+	'manage-wikia-home-collections-setup-save-button' => 'Gravar',
 	'manage-wikia-home-collections-name-field-label' => 'Nome da coleção',
 	'manage-wikia-home-collections-sponsor-url-field-label' => 'URL do patrocinador',
 );
