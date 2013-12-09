@@ -61,19 +61,13 @@ ve.ui.WikiaDropTargetWidget.prototype.onFileDragEnd = function( e ) {
 ve.ui.WikiaDropTargetWidget.prototype.onFileDrop = function( e ) {
 	var files,
 			transfer,
-			reader,
-			i,
-			file;
+			i;
 
 	e.preventDefault();
 	this.$.fadeOut();
 
 	transfer = e.originalEvent.dataTransfer;
 	files = transfer.files;
-	var filesArray = [];
-	for( i = 0; i < files.length; i++ ) {
-		filesArray.push( files[i] );
-	}
 
-	this.upload.$file.trigger( 'change', filesArray[0] );
+	this.upload.$file.trigger( 'change', files[0] );
 };
