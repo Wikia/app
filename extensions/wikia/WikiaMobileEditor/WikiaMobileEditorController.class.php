@@ -92,6 +92,6 @@ class WikiaMobileEditorController extends WikiaController {
 		$this->response->setVal( 'keepEditing', wfMessage( 'wikiamobileeditor-keep-editing' )->text() );
 		$this->response->setVal( 'summaryPlaceholder', wfMessage( 'wikiamobileeditor-summary-placeholder' )->escaped() );
 		$this->response->setVal( 'licensing', wfMessage( 'wikiamobileeditor-licensing' )->text() );
-		$this->response->setVal( 'licensingType', wfMessage( 'wikiamobileeditor-licensing-type' )->text() );
+		$this->response->setVal( 'licensingType', F::app()->wg->rightsText );
 	}
 }
