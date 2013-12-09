@@ -286,6 +286,11 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleEditabl
 		return $linkgroups;
 	}
 
+	/**
+	 * Removes commercial wiki links from linkgroups.
+	 * @param $data
+	 * @return mixed
+	 */
 	protected function filterCommercialData( $data ) {
 		$service = $this->getLicensedWikisService();
 		if ( isset($data['linkgroups']) ) {

@@ -178,7 +178,7 @@ class MarketingToolboxModuleSliderService extends MarketingToolboxModuleEditable
 	 * @param $data
 	 * @return mixed
 	 */
-	protected function filterCommercialData($data) {
+	protected function filterCommercialData( $data ) {
 		$service = $this->getLicensedWikisService();
 		$data['slides'] = array_values( array_filter( $data['slides'], function( $element ) use($service) {
 				return $service->isCommercialUseAllowedByUrl($element['url']);
