@@ -11,8 +11,10 @@ $dark-border: #D8D8D8;
 }
 
 //Some simple fixed for RTL languages
-[dir="rtl"] {
+.cont-dir-rtl {
 	.side-menu-capable {
+		direction: ltr; //JanusCSS will change it to rtl
+
 		-webkit-transform: translate(100%);
 		-moz-transform: translate(100%);
 		transform: translate(100%);

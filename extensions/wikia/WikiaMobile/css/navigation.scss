@@ -414,7 +414,7 @@
 	}
 }
 
-#lvl1{
+#lvl1 {
 	margin: 0;
 	padding: 0;
 }
@@ -436,7 +436,9 @@
 	border-radius: 3px;
 }
 
-[dir="rtl"] #wkNavMenu {
+.cont-dir-rtl #wkNavMenu {
+	direction: ltr; //JanusCSS will change it to rtl
+
 	&.cur2 {
 		#lvl1 {
 			-webkit-transform: translate(100%);
