@@ -249,7 +249,6 @@
 	}
 
 	&.cur3 {
-
 		#lvl1 {
 			-webkit-transform: translate(-200%) ;
 			-moz-transform: translate(-200%);
@@ -435,4 +434,22 @@
 	float: left;
 
 	border-radius: 3px;
+}
+
+[dir="rtl"] #wkNavMenu {
+	&.cur2 {
+		#lvl1 {
+			-webkit-transform: translate(100%);
+			-moz-transform: translate(100%);
+			transform: translate(100%);
+		}
+	}
+
+	&.cur3 {
+		#lvl1 {
+			-webkit-transform: translate(200%) ;
+			-moz-transform: translate(200%);
+			transform: translate(200%);
+		}
+	}
 }
