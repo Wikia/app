@@ -74,10 +74,12 @@ define( 'wikia.ui.modal', [
 		var element = modal.$element,
 			HEADER_AND_FOOTER_HEIGHT = 90, // modal header and footer have 45px fixed height
 			winHeight = $( w ).height(),
+			// Using scrollHeight instead of $.height() because in IE10 $.height() returns only the visible height of
+			// the element after onresize is fired but we need the full height of the element.
 			elementHeight = modal.$content[0].scrollHeight,
 			modalMaxHeight = ( 90 / 100 ) * winHeight - HEADER_AND_FOOTER_HEIGHT; // 90% viewport - (header + footer)
 
-		// DAR-3169 - max-height doesn't always work on IE9/10
+		// DAR-3169 - max-height doesn't always work on IE9/10 so we're using height
 		modalMaxHeight = ( modalMaxHeight >= elementHeight ) ?
 			'auto' :
 			modalMaxHeight;
