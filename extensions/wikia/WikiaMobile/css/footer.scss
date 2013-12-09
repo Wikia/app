@@ -31,3 +31,7 @@
 	background-image: url('/extensions/wikia/WikiaMobile/images/wikialogo.png');
 	background-size: 100px 25px;
 }
+
+[dir="rtl"] #wkFtr {
+	@include box-shadow(inset 0 -20px 20px 20px rgba(0,0,0,.4));
+}
