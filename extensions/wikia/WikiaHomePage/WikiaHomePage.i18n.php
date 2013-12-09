@@ -675,7 +675,6 @@ $messages['ja'] = array(
 	'wikiahome-footer-wikiainc' => '===Wikia, Inc.===
 *[http://www.wikia.com/About_Us ウィキアについて]
 *[http://www.wikia.com/Special:Contact お問い合わせ]
-*[http://www.wikia.com/Careers 人材募集]
 *[http://www.wikia.com/Press プレスリリース]
 __NOEDITSECTION__',
 	'wikiahome-footer-get-started-heading' => '===始めよう===
@@ -703,7 +702,6 @@ __NOEDITSECTION__',
 __NOEDITSECTION__',
 	'wikiahome-footer-partner' => "===パートナー===
 *[http://www.mediakit.wikia.com メディアキット]
-*'''[http://mediakit.wikia.com/wiki/Contact 広告を載せる]'''
 __NOEDITSECTION__",
 	'wikiahome-footer-community-wam' =>'*[$1 WAM スコア]',
 
