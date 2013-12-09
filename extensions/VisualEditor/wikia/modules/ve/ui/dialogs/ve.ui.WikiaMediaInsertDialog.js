@@ -67,7 +67,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	this.queryInput = this.query.getInput();
 	this.queryUpload = this.query.getUpload();
 	this.search = new ve.ui.WikiaMediaResultsWidget( { '$': this.$ } );
-	this.searchResults = this.search.getResults();
+	this.results = this.search.getResults();
 	this.upload = new ve.ui.WikiaUploadWidget( { '$': this.$, 'hideIcon': true } );
 
 	this.$cart = this.$( '<div>' );
@@ -122,7 +122,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
  * @param {string} value The query input value
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onQueryInputChange = function ( value ) {
-	this.searchResults.clearItems();
+	this.results.clearItems();
 	if ( value.trim().length === 0 ) {
 		this.pages.setPage( 'main' );
 	}
@@ -134,30 +134,14 @@ ve.ui.WikiaMediaInsertDialog.prototype.onQueryInputChange = function ( value ) {
  * @method
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onQueryInputEnter = function () {
-	this.searchResults.selectItem( this.searchResults.getHighlightedItem() );
+	this.results.selectItem( this.results.getHighlightedItem() );
 };
 
 /**
- * Handle key up/down for selecting result items.
- * Copied from OO.ui.SearchWidget.js
- *
- * @method
- * @param {jQuery.Event} e The jQuery event Object.
+ * @inheritdoc
  */
-ve.ui.WikiaMediaInsertDialog.prototype.onQueryInputKeydown = function ( e ) {
-	var highlightedItem, nextItem,
-		dir = e.which === ve.Keys.DOWN ? 1 : ( e.which === ve.Keys.UP ? -1 : 0 );
-
-	if ( dir ) {
-		highlightedItem = this.searchResults.getHighlightedItem();
-		if ( !highlightedItem ) {
-			highlightedItem = this.searchResults.getSelectedItem();
-		}
-		nextItem = this.searchResults.getRelativeSelectableItem( highlightedItem, dir );
-		this.searchResults.highlightItem( nextItem );
-		nextItem.scrollElementIntoView();
-	}
-};
+ve.ui.WikiaMediaInsertDialog.prototype.onQueryInputKeydown =
+	OO.ui.SearchWidget.prototype.onQueryKeydown;
 
 /**
  * Handle the resulting data from a query media request.
@@ -167,7 +151,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.onQueryInputKeydown = function ( e ) {
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onQueryRequestSearchDone = function ( items ) {
 	this.search.addItems( items );
-	this.searchResults.setChecked( this.cartModel.getItems(), true );
+	this.results.setChecked( this.cartModel.getItems(), true );
 	this.pages.setPage( 'search' );
 };
 
@@ -252,7 +236,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.onCartModelAdd = function ( items ) {
 		this.pages.addPage( item.getId(), { '$content': page.$element } );
 	}
 
-	this.searchResults.setChecked( items, true );
+	this.results.setChecked( items, true );
 };
 
 /**
@@ -262,7 +246,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.onCartModelAdd = function ( items ) {
  * @param {ve.dm.WikiaCartItem[]} items
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onCartModelRemove = function ( items ) {
-	this.searchResults.setChecked( items, false );
+	this.results.setChecked( items, false );
 };
 
 /**
