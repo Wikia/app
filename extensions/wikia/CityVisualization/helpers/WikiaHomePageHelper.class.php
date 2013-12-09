@@ -37,8 +37,10 @@ class WikiaHomePageHelper extends WikiaModel {
 	const INTERSTITIAL_SMALL_IMAGE_WIDTH = 115;
 	const INTERSTITIAL_SMALL_IMAGE_HEIGHT = 65;
 
-	const FAILSAFE_COMMUNITIES_COUNT = 280000;
-	const FAILSAFE_NEW_COMMUNITIES_COUNT = 200;
+	const FAILSAFE_COMMUNITIES_COUNT = 300000;
+	const FAILSAFE_NEW_COMMUNITIES_COUNT = 400;
+	const FAILSAFE_VISITORS = 100000000;
+	const FAILSAFE_MOBILE_PERCENTAGE = 25;
 
 	const WAM_SCORE_ROUND_PRECISION = 2;
 
@@ -261,6 +263,28 @@ class WikiaHomePageHelper extends WikiaModel {
 		}
 		wfProfileOut(__METHOD__);
 		return $newCommunities;
+	}
+
+	public function getStatsIncludingFallbacks() {
+		$stats = $this->getStatsFromWF();
+
+		$stats[ 'edits' ] = $this->getEdits();
+		$stats[ 'communities' ] = $this->getTotalCommunities();
+		$stats[ 'newCommunities' ] = $this->getLastDaysNewCommunities();
+
+		$totalPages = intval( Wikia::get_content_pages() );
+		if ( $totalPages > $stats[ 'totalPages' ] ) {
+			$stats[ 'totalPages' ] = $totalPages;
+		}
+
+		if ( $stats[ 'mobilePercentage' ] < self::FAILSAFE_MOBILE_PERCENTAGE ) {
+			$stats[ 'mobilePercentage' ] = self::FAILSAFE_MOBILE_PERCENTAGE;
+		}
+
+		if ( $stats[ 'visitors' ] < self::FAILSAFE_VISITORS ) {
+			$stats[ 'visitors' ] = self::FAILSAFE_VISITORS;
+		}
+		return $stats;
 	}
 
 	public function getStatsFromWF() {

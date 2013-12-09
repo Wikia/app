@@ -147,18 +147,7 @@ class WikiaHomePageController extends WikiaController {
 		$memKey = $this->helper->getStatsMemcacheKey();
 		$stats = $this->wg->Memc->get($memKey);
 		if (empty($stats)) {
-			$stats = $this->helper->getStatsFromWF();
-
-			$stats['edits'] = $this->helper->getEdits();
-
-			$stats['communities'] = $this->helper->getTotalCommunities();
-
-			$totalPages = intval(Wikia::get_content_pages());
-			if ($totalPages > $stats['totalPages']) {
-				$stats['totalPages'] = $totalPages;
-			}
-			$stats['newCommunities'] = $this->helper->getLastDaysNewCommunities();
-
+			$stats = $this->helper->getStatsIncludingFallbacks();
 			$this->wg->Memc->set($memKey, $stats, 60 * 60 * 1);
 		}
 
