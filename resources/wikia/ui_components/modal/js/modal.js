@@ -35,7 +35,7 @@ define( 'wikia.ui.modal', [
 				classes: [ 'normal', 'secondary' ]
 			}
 		},
-		
+
 		// reference to UI component instance
 		uiComponent;
 
@@ -74,9 +74,15 @@ define( 'wikia.ui.modal', [
 		var element = modal.$element,
 			HEADER_AND_FOOTER_HEIGHT = 90, // modal header and footer have 45px fixed height
 			winHeight = $( w ).height(),
+			elementHeight = modal.$content[0].scrollHeight,
 			modalMaxHeight = ( 90 / 100 ) * winHeight - HEADER_AND_FOOTER_HEIGHT; // 90% viewport - (header + footer)
 
-		element.children( 'section' ).css( 'maxHeight', modalMaxHeight );
+		// DAR-3169 - max-height doesn't always work on IE9/10
+		modalMaxHeight = ( modalMaxHeight >= elementHeight ) ?
+			'auto' :
+			modalMaxHeight;
+
+		element.children( 'section' ).css( 'height', modalMaxHeight );
 	}
 
 	/**
@@ -347,7 +353,7 @@ define( 'wikia.ui.modal', [
 	};
 
 	/** Public API */
-	
+
 	return {
 		createComponent: createComponent
 	};
