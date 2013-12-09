@@ -44,6 +44,7 @@ class WikiaHomePageHelper extends WikiaModel {
 
 	const SLIDER_IMAGES_KEY = 'SliderImagesKey';
 	const WIKIA_HOME_PAGE_HELPER_MEMC_VERSION = 'v0.7';
+	const HOMEPAGE_MEMC_KEY_VER = '1.05';
 
 	protected $visualizationModel = null;
 	protected $collectionsModel;
@@ -280,6 +281,15 @@ class WikiaHomePageHelper extends WikiaModel {
 		wfProfileOut(__METHOD__);
 
 		return intval($stats);
+	}
+
+	public function getStatsFromWF() {
+		return WikiFactory::getVarValueByName('wgCorpMainPageStats', 177);
+	}
+
+	public function saveStatsToWF($statsValues) {
+		WikiFactory::setVarByName('wgCorpMainPageStats', 177, $statsValues);
+		$this->wg->Memc->delete($this->getStatsMemcacheKey());
 	}
 
 	/**
@@ -929,6 +939,16 @@ class WikiaHomePageHelper extends WikiaModel {
 			$wam = null;
 		}
 		return $wam;
+	}
+
+
+	/**
+	 * @return string
+	 */
+	public function getStatsMemcacheKey() {
+		$memKey = wfSharedMemcKey( 'wikiahomepage', 'stats', self::HOMEPAGE_MEMC_KEY_VER );
+
+		return $memKey;
 	}
 
 }

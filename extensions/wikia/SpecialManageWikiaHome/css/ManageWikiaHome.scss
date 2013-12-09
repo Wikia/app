@@ -127,6 +127,22 @@
 	}
 }
 
+.corp-stats {
+	margin-bottom: 50px;
+
+	label {
+		min-width: 175px;
+		displa: block;
+		float: left;
+	}
+	input[type=text] {
+		width: 175px;
+	}
+	input[type=submit] {
+		float: none;
+	}
+}
+
 input[type=submit] {
 	float: right;
 }
