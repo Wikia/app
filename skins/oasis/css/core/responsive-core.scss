@@ -141,6 +141,7 @@
 
 			.module {
 				position: static;
+				@include calc(width, "100% - 35px");
 
 				-moz-column-break-inside: avoid;
 				-ms-column-break-inside: avoid;
@@ -150,7 +151,6 @@
 
 				// fallback, because column-break-inside is currently NYI
 				display: inline-block;
-				width: calc(100% - 35px);
 			}
 		}
 
