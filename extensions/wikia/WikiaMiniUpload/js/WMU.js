@@ -1014,7 +1014,6 @@ function WMU_insertImage(type) {
 		params.push( 'article='+encodeURIComponent( wgTitle ) );
 		params.push( 'ns='+wgNamespaceNumber );
 		if( WMU_refid != null ) {
-			// was fck, updated to ck to be more accurate
 			params.push( 'ck=true' );
 		}
 	}
