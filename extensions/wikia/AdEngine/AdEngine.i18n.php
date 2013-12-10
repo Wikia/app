@@ -140,6 +140,13 @@ $messages['fa'] = array(
 	'adengine-exitstitial-button' => 'ردشدن از این تبلیغ',
 );
 
+/** Finnish (suomi)
+ * @author Silvonen
+ */
+$messages['fi'] = array(
+	'adengine-exitstitial-button' => 'Ohita tämä mainos',
+);
+
 /** Faroese (føroyskt)
  * @author EileenSanda
  */
@@ -163,11 +170,12 @@ $messages['fr'] = array(
 
 /** Galician (galego)
  * @author Toliño
+ * @author Vivaelcelta
  */
 $messages['gl'] = array(
-	'adengine-exitstitial-title-template' => 'Está deixando $1…',
-	'adengine-exitstitial-redirecting' => 'O seu navegador irá á páxina solicitada nuns segundos.',
-	'adengine-exitstitial-go-back' => 'Quere regresar?',
+	'adengine-exitstitial-title-template' => 'Estás deixando $1…',
+	'adengine-exitstitial-redirecting' => 'O teu navegador irá á páxina solicitada nuns segundos.',
+	'adengine-exitstitial-go-back' => 'Queres regresar?',
 	'adengine-exitstitial-button' => 'Saltar este anuncio',
 );
 

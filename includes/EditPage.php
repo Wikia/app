@@ -1748,6 +1748,8 @@ class EditPage {
 	 */
 	function showEditForm( $formCallback = null ) {
 		global $wgOut, $wgUser;
+        //wikia change ***
+        $isMobile = F::app()->checkskin('wikiamobile');
 
 		wfProfileIn( __METHOD__ );
 
@@ -1898,12 +1900,14 @@ class EditPage {
 		$wgOut->addHTML( $this->editFormTextAfterWarn );
 
 		$this->showStandardInputs();
-
 		$this->showFormAfterText();
-
 		$this->showTosSummary();
 
-		$this->showEditTools();
+		// wikia change begin
+		if ( !$isMobile ) {
+			$this->showEditTools();
+		}
+		// wikia change end
 
 		$wgOut->addHTML( $this->editFormTextAfterTools . "\n" );
 

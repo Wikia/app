@@ -28,7 +28,7 @@
 							<span class="Wikia-video-play-button">
 								<img class="sprite medium play" src="<?= $wg->BlankImgUrl ?>">
 							</span>
-							<img data-video-key="<?= $videoData['videoKey'] ?>" src="<?= $videoData['thumbUrl'] ?>">
+							<img data-video-key="<?= htmlspecialchars( $videoData['videoKey'] ) ?>" src="<?= $videoData['thumbUrl'] ?>">
 						</a>
 						<div class="title"><p><?= $videoData['displayTitle'] ?></p></div>
 					</li>

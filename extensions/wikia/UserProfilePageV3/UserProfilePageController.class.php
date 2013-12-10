@@ -315,6 +315,12 @@ class UserProfilePageController extends WikiaController {
 			$this->profilePage = new UserProfilePage($sessionUser);
 
 			$this->setVal('body', (string)$this->sendSelfRequest('renderLightbox', array('tab' => $selectedTab, 'userId' => $userId)));
+
+			if (!empty($this->wg->AvatarsMaintenance)) {
+				$this->setVal('avatarsDisabled', true);
+				$this->setVal('avatarsDisabledMsg', wfMessage('user-identity-avatars-maintenance')->text());
+			}
+
 			//we'll implement interview section later
 			//$this->setVal( 'interviewQuestions', $this->profilePage->getInterviewQuestions( $wikiId, false, true ) );
 		}
@@ -1086,8 +1092,8 @@ class UserProfilePageController extends WikiaController {
 			return true;
 		}
 
-		if ($this->request->getVal('av_user')) {
-			$avUser = User::newFromName($this->request->getVal('av_user'));
+		if ($this->request->getVal('avUser')) {
+			$avUser = User::newFromName($this->request->getVal('avUser'));
 			if ($avUser->getID() !== 0) {
 				$avatar = Masthead::newFromUser($avUser);
 				if ($avatar->removeFile(true)) {

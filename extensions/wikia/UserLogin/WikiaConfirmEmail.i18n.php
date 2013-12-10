@@ -76,7 +76,7 @@ $messages['ce'] = array(
 	'wikiaconfirmemail-username' => 'Декъашхочун цӀе',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Jezevec
  */
 $messages['cs'] = array(

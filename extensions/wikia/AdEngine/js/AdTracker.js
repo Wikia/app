@@ -31,7 +31,7 @@ var AdTracker = function (log, tracker) {
 			TOP_BUTTON_WIDE:      '292x90',
 			TOP_LEADERBOARD:      '728x90',
 			TOP_RIGHT_BOXAD:      '300x250',
-			WIKIA_BAR_BOXAD_1:    '300x50'
+			WIKIA_BAR_BOXAD_1:    '320x50'
 		};
 
 	function formatTrackTime(t) {

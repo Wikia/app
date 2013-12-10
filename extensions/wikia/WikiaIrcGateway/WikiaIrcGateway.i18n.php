@@ -125,7 +125,7 @@ $messages['ca'] = array(
 	'ircgate-channel' => 'Canal:',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Mr. Richard Bolla
  */
 $messages['cs'] = array(

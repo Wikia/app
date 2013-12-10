@@ -315,7 +315,8 @@ Tooltip letting user know they can change their email.  Tooltip is on the same l
 	'usersignup-welcome-email-edit-profile-button' => 'Welcome email first section button label.  Links to preferences in the template, so no linking required from messaging.',
 	'usersignup-welcome-email-learn-basic-heading' => 'Welcome email second section heading.',
 	'usersignup-welcome-email-learn-basic-content' => 'Welcome email second section body.',
-	'usersignup-welcome-email-learn-basic-button' => 'Welcome email second section button label.  Do not be concerned with linking.',
+	'usersignup-welcome-email-learn-basic-button' => 'Welcome email second section button label.  Do not be concerned with linking.
+{{Identical|Check it out}}',
 	'usersignup-welcome-email-explore-wiki-heading' => 'Welcome email third section heading.',
 	'usersignup-welcome-email-explore-wiki-content' => 'Welcome email third section body.  There are links to category pages on hubs.  Those links can be omitted if there are no hub pages for the language.',
 	'usersignup-welcome-email-explore-wiki-button' => 'Welcome email third section button.',
@@ -736,7 +737,7 @@ $messages['ce'] = array(
 	'usersignup-welcome-email-learn-basic-button' => 'Дехьа гӀо',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Chmee2
  * @author Macinosak
  * @author Mormegil
@@ -3552,6 +3553,7 @@ $messages['ps'] = array(
 );
 
 /** Portuguese (português)
+ * @author Josep Maria 15.
  * @author Luckas
  * @author SandroHc
  */
@@ -3571,7 +3573,7 @@ $messages['pt'] = array(
 	'usersignup-reconfirmation-email-greeting' => 'Olá $USERNAME',
 	'usersignup-reconfirmation-email-signature' => 'A equipe da Wikia',
 	'usersignup-welcome-email-greeting' => 'Olá $USERNAME',
-	'usersignup-welcome-email-edit-profile-heading' => 'Editar seu perfil.',
+	'usersignup-welcome-email-edit-profile-heading' => 'Edita o teu perfil.',
 	'usersignup-welcome-email-learn-basic-heading' => 'Aprenda o básico.',
 	'usersignup-welcome-email-explore-wiki-heading' => 'Explorar mais wikis.',
 	'usersignup-welcome-email-explore-wiki-button' => 'Ir para wikia.com',
@@ -4262,8 +4264,10 @@ Nais mo bang tabanan ang kung anong mga e-liham ang matatanggap mo? Magpunta sa:
 
 /** Turkish (Türkçe)
  * @author Erdemaslancan
+ * @author Incelemeelemani
  */
 $messages['tr'] = array(
+	'usersignup-welcome-email-explore-wiki-content' => 'Wikia\'da binlerce wiki bulunmaktadır, ilgilendiğiniz konu hakkında daha fazla wikiye ulaşmak için merkezi başlıkları kullanın: <a style="color:#2C85D5;" href="http://www.wikia.com/Video_Games">Video Oyunları</a>, <a style="color:#2C85D5;" href="http://www.wikia.com/Entertainment">Eğlence</a>, or <a style="color:#2C85D5;" href="http://www.wikia.com/Lifestyle">Yaşam tarzı</a>.',
 	'usersignup-marketing-creativity-heading' => 'Orijinal olmak',
 );
 
