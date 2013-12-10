@@ -3,6 +3,7 @@ var AdLogicPageLevelParams = function (
 	log,
 	window,
 	Krux,             // optional
+	adLogicPageDimensions, // optional
 	abTest            // optional
 ) {
 	'use strict';
@@ -152,6 +153,12 @@ var AdLogicPageLevelParams = function (
 			cat: getCategories(),
 			ab: getAb()
 		};
+
+		if (adLogicPageDimensions && adLogicPageDimensions.hasPreFooters()) {
+			params.hasp = 'yes';
+		} else {
+			params.hasp = 'no';
+		}
 
 		if (Krux && !window.wgWikiDirectedAtChildren) {
 			params.u = Krux.user;

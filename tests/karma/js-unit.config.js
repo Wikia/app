@@ -60,7 +60,7 @@ module.exports = function(config) {
 			//UI components
 			'resources/wikia/ui_components/**/*.js',
 
-			//Advertisment
+			//Advertisement
 			'extensions/wikia/AdEngine/js/AdConfig2.js',
 			'extensions/wikia/AdEngine/js/AdConfig2Late.js',
 			'extensions/wikia/AdEngine/js/AdEngine2.js',
@@ -68,6 +68,7 @@ module.exports = function(config) {
 			'extensions/wikia/AdEngine/js/AdLogicHighValueCountry.js',
 			'extensions/wikia/AdEngine/js/AdLogicPageLevelParams.js',
 			'extensions/wikia/AdEngine/js/AdLogicPageLevelParamsLegacy.js',
+			'extensions/wikia/AdEngine/js/AdLogicPageDimensions.js',
 			'extensions/wikia/AdEngine/js/AdDecoratorPageDimensions.js',
 			'extensions/wikia/AdEngine/js/AdProviderEvolve.js',
 			'extensions/wikia/AdEngine/js/AdProviderGamePro.js',

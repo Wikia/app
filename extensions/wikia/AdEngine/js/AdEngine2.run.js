@@ -27,6 +27,7 @@
 		adLogicHighValueCountry,
 		adLogicPageLevelParams,
 		adLogicPageLevelParamsLegacy,
+		adLogicPageDimensions,
 		adDecoratorPageDimensions,
 		scriptWriter,
 		dartUrl,
@@ -60,8 +61,9 @@
 	dartUrl = DartUrl();
 	adLogicDartSubdomain = AdLogicDartSubdomain(Geo);
 	adLogicHighValueCountry = AdLogicHighValueCountry(window);
-	adDecoratorPageDimensions = AdDecoratorPageDimensions(window, document, log, slotTweaker);
-	adLogicPageLevelParams = AdLogicPageLevelParams(log, window, Krux, abTest);
+	adLogicPageDimensions = AdLogicPageDimensions(window, document, log, slotTweaker);
+	adDecoratorPageDimensions = AdDecoratorPageDimensions(adLogicPageDimensions, log);
+	adLogicPageLevelParams = AdLogicPageLevelParams(log, window, Krux, adLogicPageDimensions, abTest);
 	adLogicPageLevelParamsLegacy = AdLogicPageLevelParamsLegacy(log, window, adLogicPageLevelParams, Krux, dartUrl);
 	scriptWriter = ScriptWriter(document, log, window);
 	wikiaDart = WikiaDartHelper(log, adLogicPageLevelParams, dartUrl, adLogicDartSubdomain);

@@ -18,6 +18,7 @@ describe('WikiaDartMobileHelper', function(){
 				'dmn=exampleorg;' +
 				'hostpre=example;' +
 				'lang=xx;' +
+				'hasp=no;' +
 				'positionfixed=css;' +
 				'src=mobile;' +
 				'mtfIFPath=/extensions/wikia/AdEngine/;mtfInline=true;' +
