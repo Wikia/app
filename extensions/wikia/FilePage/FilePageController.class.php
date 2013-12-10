@@ -431,21 +431,61 @@ class FilePageController extends WikiaController {
 	}
 
 	/**
-	 * Add more detail for global articles to the current $data by making HTTP requests
-	 * to the other wiki URLs
+	 * Add more detail for global articles to the current $data by making HTTP requests to the other wiki URLs
+	 * @param array $data
 	 */
 	public function addGlobalSummary( $data ) {
 		return $this->addSummary( $data, function ( $dbName, $articleIds ) {
-			$params = array(
-				'controller' => 'ArticleSummaryController',
-				'method' => 'blurb',
-				'ids' => implode( ',', $articleIds ),
-			);
+			$ids = array();
+			$result = array();
+			foreach ( $articleIds as $id ) {
+				$memcKey = $this->getMemcKeyGlobalSummary( $dbName, $id );
+				$summary = $this->wg->Memc->get( $memcKey );
+				if ( is_array( $summary ) ) {
+					$result['summary'][$id] = $summary;
+				} else {
+					$ids[] = $id;
+				}
+			}
 
-			$result = ApiService::foreignCall( $dbName, $params, ApiService::WIKIA );
+			if ( !empty( $ids ) ) {
+				$params = array(
+					'controller' => 'ArticleSummaryController',
+					'method' => 'blurb',
+					'ids' => implode( ',', $ids ),
+				);
+
+				$response = ApiService::foreignCall( $dbName, $params, ApiService::WIKIA );
+				foreach ( $response['summary'] as $id => $info ) {
+					if ( !array_key_exists( 'error', $info ) ) {
+						$memcKey = $this->getMemcKeyGlobalSummary( $dbName, $id );
+						$this->wg->Memc->set( $memcKey, $info, 60*60*24 );
+					}
+				}
+
+				$result = array_merge_recursive( $result, $response );
+			}
 
 			return $result;
 		});
+	}
+
+	/**
+	 * Get memcache key for summary of the global usage
+	 * @param string $dbName
+	 * @param integer $pageId
+	 */
+	public function getMemcKeyGlobalSummary( $dbName, $pageId ) {
+		return wfSharedMemcKey( 'filepage', 'globalusage', $dbName, $pageId );
+	}
+
+	/**
+	 * Clear cache for summary of the global usage
+	 * @param string $dbName
+	 * @param integer $pageId
+	 */
+	public function invalidateCacheGlobalSummary( $dbName, $pageId ) {
+		$this->wg->Memc->delete( $this->getMemcKeyGlobalUsage( $dbName, $pageId ) );
 	}
 
 	private function addSummary ( $data, $summaryFunc ) {
