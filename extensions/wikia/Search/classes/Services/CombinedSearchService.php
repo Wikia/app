@@ -227,7 +227,8 @@ class CombinedSearchService {
 			$hubsQuery = '+(' . implode(' OR ', $hubsList ) . ') AND ';
 		}
 		return $hubsQuery . '+(lang_s:' . $lang .
-		') AND +((sitename_txt:"' . $query . '") OR (headline_txt:"' . $query . '") OR (description_txt:"' . $query . '"))';
+		') AND +((sitename_txt:"' . $query . '") OR (headline_txt:"' . $query . '") OR (description_txt:"' . $query .
+		'") OR (domains_txt:"www.' . preg_replace( '|\s*|', '', $query ) . '.wikia.com"))';
 	}
 
 	protected function extractData( $searchResult, $requestedFields ) {
