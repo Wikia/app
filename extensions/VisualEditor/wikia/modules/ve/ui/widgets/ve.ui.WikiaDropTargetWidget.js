@@ -29,12 +29,6 @@ ve.ui.WikiaDropTargetWidget = function VeUiWikiaDropTargetWidget ( config ) {
 	// the frame of the MediaInsertDialog
 	this.$frame = config.frame.$document;
 
-	this.initialize();
-};
-
-ve.inheritClass( ve.ui.WikiaDropTargetWidget, ve.ui.Widget );
-
-ve.ui.WikiaDropTargetWidget.prototype.initialize = function() {
 	//TODO: Temporary code
 	this.$.css({
 		height: '1000px',
@@ -59,6 +53,8 @@ ve.ui.WikiaDropTargetWidget.prototype.initialize = function() {
 
 	this.fadeTimeout = null;
 };
+
+ve.inheritClass( ve.ui.WikiaDropTargetWidget, ve.ui.Widget );
 
 /**
  * Handles dragenter/over & shows drop zone
