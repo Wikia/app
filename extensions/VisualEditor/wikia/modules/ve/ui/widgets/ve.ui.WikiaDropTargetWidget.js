@@ -30,18 +30,10 @@ ve.ui.WikiaDropTargetWidget = function VeUiWikiaDropTargetWidget ( config ) {
 	this.$frame = config.frame.$document;
 
 	//TODO: Temporary code
-	this.$.css({
-		height: '1000px',
-		position: 'absolute',
-		top: 0,
-		left: 0,
-		width: '100%',
-		background: 'salmon',
-		display: 'none'
-	});
+	this.$.removeClass( 've-ui-widget' ).html( '<div>' + ve.msg( 'wikia-visualeditor-dialog-drop-target-callout' ) + '</div>' );
 
 	this.$insertMediaDialog = this.$overlay.find( '.ve-ui-window-frame' );
-	this.$.addClass( this.className ).appendTo( this.$insertMediaDialog );
+	this.$.addClass( this.className ).prependTo( this.$insertMediaDialog );
 
 	this.$overlay.on( 'dragenter dragover', ve.bind( this.onFileDrag, this ) );
 	this.$overlay.on( 'dragleave dragend drop', ve.bind( this.onFileDragEnd, this ) );
