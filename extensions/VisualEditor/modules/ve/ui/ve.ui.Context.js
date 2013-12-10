@@ -54,7 +54,8 @@ ve.ui.Context = function VeUiContext( surface, config ) {
 		'selectionStart': 'onSelectionStart',
 		'selectionEnd': 'onSelectionEnd',
 		'relocationStart': 'onRelocationStart',
-		'relocationEnd': 'onRelocationEnd'
+		'relocationEnd': 'onRelocationEnd',
+		'focus': 'onSurfaceFocus'
 	} );
 	this.inspectors.connect( this, {
 		'opening': 'onInspectorOpening',
@@ -117,6 +118,30 @@ ve.ui.Context.prototype.afterModelSelect = function () {
 		return;
 	}
 	this.update();
+};
+
+/**
+ * Respond to focus events on the surfaceView by hiding the context.
+ *
+ * If there's an inspector open and the user manages to drop the cursor in the surface such that
+ * the selection doesn't change (i.e. the resulting model selection is equal to the previous model
+ * selection), then #onModelSelect won't cause the inspector to be closed, so we do that here.
+ *
+ * Hiding the context immediately on focus also avoids flickering phenomena where the inspector
+ * remains open or the context remains visible in the wrong place while the selection is visually
+ * already moving somewhere else. We deliberately don't call #update to avoid drawing the context
+ * in a place that the selection is about to move away from.
+ *
+ * However, we only do this when clicking out of an inspector. Hiding the context when the document
+ * is focused through other means than closing an inspector is actually harmful.
+ *
+ * We don't have to defer the response to this event because there is no danger that inspectors'
+ * close handlers will end up invoking this handler again.
+ */
+ve.ui.Context.prototype.onSurfaceFocus = function () {
+	if ( this.inspectors.getCurrentWindow() ) {
+		this.hide();
+	}
 };
 
 /**
