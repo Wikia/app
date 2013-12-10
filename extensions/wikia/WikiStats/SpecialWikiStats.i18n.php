@@ -1642,7 +1642,7 @@ $messages['ckb'] = array(
 	'wikistats_search_text' => 'گەڕان',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Chmee2
  * @author Darth Daron
  * @author Dontlietome7
@@ -4272,7 +4272,7 @@ $messages['ja'] = array(
 	'wikistats_anon_wikians_count' => '$1人の匿名利用者が見つかりました',
 	'wikistats_latest_pageviews' => '最終訪問ページ',
 	'wikistats_active_useredits' => '言語の活動',
-	'wikistats_latest_pageviews_subtitle' => '直近$1分間', # Fuzzy
+	'wikistats_latest_pageviews_subtitle' => '直近$1分間',
 	'wikistats_pageviews' => '名前空間別の月ごとのページビュー',
 	'wikistats_article_one_link' => '最低一つの内部リンクを含む記事',
 	'wikistats_recently_active_wikians' => '$1人の活発な登録利用者を投稿数順に並べています',
@@ -9156,7 +9156,7 @@ $messages['tyv'] = array(
 	'wikistats_pviews_notfound' => 'Көөр арыннар чок',
 	'wikistats_invalid_date' => 'Таарышпас үе аразын шилээн',
 	'wikistats_namespace' => 'Ат делгеми',
-	'wikistats_show' => 'Көргүзери',
+	'wikistats_show' => 'Көргүзер',
 );
 
 /** Central Atlas Tamazight (ⵜⴰⵎⴰⵣⵉⵖⵜ)

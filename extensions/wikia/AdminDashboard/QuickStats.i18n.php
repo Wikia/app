@@ -258,7 +258,7 @@ $messages['ckb'] = array(
 	'quickstats-number-shortening-billions' => '$1 بیلیۆن',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Andriykopanytsia
  * @author Chmee2
  * @author Darth Daron

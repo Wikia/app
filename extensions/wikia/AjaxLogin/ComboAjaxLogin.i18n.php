@@ -279,7 +279,7 @@ Si us plau, intenteu-ho de nou o [[Special:Contact|informeu d'aquest error]].",
 	'comboajaxlogin-ajaxerror' => 'Wikia no està responent. Si us plau, comproveu la connexió de xarxa.',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Darth Daron
  * @author Dontlietome7
  */
@@ -519,6 +519,7 @@ Palun proovige uuesti või [[Eri:Ilmuta|teavita sellest]].', # Fuzzy
 /** Persian (فارسی)
  * @author Ebraminio
  * @author Huji
+ * @author Movyn
  * @author پاناروما
  */
 $messages['fa'] = array(
@@ -533,6 +534,11 @@ $messages['fa'] = array(
 <li>کامل‌کردن کنترل آنچه که منتشر شده‌است</li>
 </ul>',
 	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>وارد شدن از طریق فیس بوک</h1>',
+	'comboajaxlogin-connectmarketing-oasis' => '<h1>اتصال حساب ویکیا شما به فیس‌بوک</h1>
+<ul>
+<li>حفظ حساب کاربری کنونی، تاریخچه، ویرایش‌ها و ... هیچ چیز جز نحوه ورود شما تغییر نمی‌کند</li>
+<li>به اشتراک‌گذاری فعالیت‌هایتان در ویکیا، با دوستانتان در فیس‌بوک، با کنترل کامل آنچه که منتشر می‌شود</li>
+</ul>',
 	'comboajaxlogin-connectmarketing-back' => '« بازگشت',
 	'comboajaxlogin-connectmarketing-forward' => 'شروع‌کردن »',
 	'comboajaxlogin-ajaxerror' => 'ویکی پاسخ نمی دهد. لطفاً اتصال شبکه خود را بررسی کنید.',
@@ -1579,6 +1585,11 @@ $messages['tr'] = array(
 Bir kez yaptığınızda kolayca herhangi bir Facebook'a Bağlan düğmesini kullanarak oturum açabilirsiniz.",
 	'comboajaxlogin-post-not-understood' => 'Bu formun düzenlenmesinde bir hata oldu.
 Lütfen yeniden deneyin veya [[Special:Contact|bunu rapor edin]].',
+	'comboajaxlogin-readonlytext' => '<h2>Üzgünüm!</h2>
+<p>Şu anda bir hesap oluşturamazsınız - kısa bir süre tekrar denediğinizde çalışıyor olacaktır. Burada olup bitenler hakkında:<br /><em>$1</em></p>
+<p>Daha fazla bilgi için lütfen <a href="http://twitter.com/wikia">Twitter</a> veya <a href="http://facebook.com/wikia">Facebook</a> sayfalarını kontrol edebilirsiniz.
+<br />
+(Zaten kayıt olduysanız ve bir hesabınız varsa normal olarak <a href="#">giriş yapabilirsiniz</a> ancak düzenlemeler etkin olmayacaktır.)</p>',
 	'comboajaxlogin-ajaxerror' => 'Wikia yanıt vermiyor. Lütfen ağ bağlantınızı denetleyin.',
 );
 

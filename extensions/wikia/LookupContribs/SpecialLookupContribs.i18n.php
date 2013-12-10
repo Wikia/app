@@ -67,14 +67,18 @@ Check given username for possible typos.</p>',
  * @author Umherirrender
  */
 $messages['qqq'] = array(
+	'lookupcontribslinks' => '{{Identical|Contribution link}}',
 	'lookupcontribsgo' => '{{Identical|Go}}',
 	'lookupcontribswiki' => '{{Identical|Wiki}}',
+	'lookupcontribswikidbname' => '{{Identical|Database name}}',
 	'lookupcontribswikiurl' => '{{Identical|URL}}',
 	'lookupcontribswikititle' => '{{Identical|Title}}',
+	'lookupcontribscontribslink' => '{{Identical|Contribution link}}',
 	'lookupcontribsnext' => '{{Identical|Next}}',
 	'lookupcontribsprevious' => '{{Identical|Previous}}',
 	'lookupcontribspageremoved' => '{{Identical|Removed}}',
 	'lookupcontribsrestore' => '{{Identical|Restore}}',
+	'lookupcontribscontribs' => '{{Identical|Contribution}}',
 	'right-lookupcontribs' => '{{doc-right|lookupcontribs|ns=Wikia}}',
 	'lookupcontribsshowpages' => '',
 	'lookupcontribscontent' => '{{Identical|Content}}',
@@ -332,7 +336,7 @@ $messages['ce'] = array(
 	'lookupcontribsall' => 'массо',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Chmee2
  * @author Mormegil
  */

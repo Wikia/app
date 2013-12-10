@@ -98,7 +98,7 @@ $messages['ce'] = array(
 	'spellchecker-info-spellcheck-languages' => 'Мотт',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Darth Daron
  */
 $messages['cs'] = array(

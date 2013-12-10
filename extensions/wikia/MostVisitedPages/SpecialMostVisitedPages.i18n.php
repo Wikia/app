@@ -117,7 +117,7 @@ $messages['ce'] = array(
 	'mostvisitedpagessearchbtn' => 'лаха',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Dontlietome7
  * @author Reaperman
  */

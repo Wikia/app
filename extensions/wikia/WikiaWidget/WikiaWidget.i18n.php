@@ -77,7 +77,7 @@ $messages['ca'] = array(
 	'wikiawidget' => 'Ginys de Wikia',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Mr. Richard Bolla
  */
 $messages['cs'] = array(

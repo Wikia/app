@@ -379,10 +379,13 @@ $messages['qqq'] = array(
 	'founderemails-email-page-edited-reg-user-first-edit-body' => '{{doc-singularthey}}',
 	'founderemails-email-first-edit-headline' => '{{doc-singularthey}}',
 	'founderemails-email-first-edit-content' => '{{doc-singularthey}}',
+	'founderemails-email-first-edit-button' => '{{Identical|Check it out}}',
 	'founderemails-email-page-edited-reg-user-first-edit-body-HTML' => '{{doc-singularthey}}',
 	'founderemails-email-page-edited-reg-user-body' => '{{doc-singularthey}}',
 	'founderemails-email-general-edit-content' => '{{doc-singularthey}}',
+	'founderemails-email-general-edit-button' => '{{Identical|Check it out}}',
 	'founderemails-email-page-edited-reg-user-body-HTML' => '{{doc-singularthey}}',
+	'founderemails-email-anon-edit-button' => '{{Identical|Check it out}}',
 	'founderemails-answers-email-user-registered-body' => '{{doc-singularthey}}',
 	'founderemails-answers-email-user-registered-body-HTML' => '{{doc-singularthey}}',
 	'founderemails-answers-email-page-edited-reg-user-first-edit-body' => '{{doc-singularthey}}',
@@ -1124,7 +1127,7 @@ Sempre pots fer-li un cop d'ull a la Wiki Activitat per a tots els canvis existe
 	'founderemails-pref-complete-digest-v2' => '... un resum diari de les incorporacions, edicions i visites està preparat',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Chmee2
  */
 $messages['cs'] = array(
@@ -8241,17 +8244,18 @@ $3 {{PLURAL:$3|особа приєдналася|особи приєдналис
 );
 
 /** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
  * @author Xiao Qiao
  */
 $messages['vi'] = array(
 	'founderemails-desc' => 'Giúp thông báo cho sáng lập viên về những thay đổi trên wiki của họ',
 	'tog-founderemailsenabled' => 'Gửi thư điện tử cập nhật cho tôi trên những gì người khác đang làm (chỉ sáng lập viên)',
-	'founderemails-email-user-registered-subject' => 'Một ai đó đã tham gia $WIKINAME',
+	'founderemails-email-user-registered-subject' => 'Một người mới vừa tham gia $WIKINAME',
 	'founderemails-email-user-registered-body' => 'Chào $USERNAME,
 
 Chúc mừng! $EDITORNAME đã tham gia $WIKINAME.
 
-Hãy nhân cơ hội này để chào đón họ đến wiki của bạn và khuyến khích họ trợ giúp sửa đổi. Càng nhiều càng tốt, wiki của bạn sẽ phát triển nhanh hơn.
+Hãy nhân cơ hội này để chào đón người đó đến wiki của bạn và khuyến khích người đó trợ giúp sửa đổi. Càng nhiều càng tốt, wiki của bạn sẽ nhanh chóng phát triển và hoàn thiện hơn.
 
 $EDITORPAGEURL
 
@@ -8318,9 +8322,9 @@ Bây giờ bạn đã một vài ngày trên wiki, chúng tôi nghĩ rằng bạ
 	'founderemails-email-10-days-passed-subject' => 'Chúc mừng 10 ngày kỷ niệm!',
 	'founderemails-email-10-days-passed-body' => 'Wiki tiến triển thế nào rồi $USERNAME? 
 
-Whoa, thời gian trôi nhanh thật! Đã là 10 ngày kể từ khi bạn khởi động $WIKINAME, $WIKIURL.
+Whoa, thời gian trôi nhanh thật! Đã là 10 ngày kể từ khi bạn đã thành lập $WIKINAME, $WIKIURL.
 
-Tìm những người khác tham gia vào dự án của bạn và kể ra tất cả những việc tuyệt vời mà bạn đang làm! Đây là một số cách để thực hiện:
+Nhân cơ hội kỷ niệm này để tìm những người khác tham gia cùng vào dự án của bạn và kể ra tất cả những việc tuyệt vời mà bạn đang làm! Đây là một số cách để thực hiện:
 
 Có bao giờ mẹ bạn đã từng bảo bạn phải Chia sẻ? Sử dụng nút Chia sẻ trên trang chính của wiki, bài viết và hình ảnh để chỉ cho bạn bè và những người theo dõi bạn trên Facebook, Twitter và các trang mạng phổ biến khác.
 
@@ -8343,7 +8347,7 @@ Nhấn vào liên kết sau để từ chối mọi email từ Wikia: $UNSUBSCRI
 	'founderemails-email-page-edited-reg-user-first-edit-subject' => '$WIKINAME đã có một sửa đổi mới!',
 	'founderemails-email-page-edited-reg-user-first-edit-body' => 'Chào $USERNAME,
 
-Tất cả tốt chứ! $EDITORNAME đã có những sửa đổi đầu tiên trên $WIKINAME.
+Wiki của bạn đã được $EDITORNAME tạo ra sửa đổi đầu tiên trên $WIKINAME.
 
 Ghé qua $PAGETITLE để kiểm tra những gì họ thêm vào.
 

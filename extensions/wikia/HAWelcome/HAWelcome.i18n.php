@@ -223,7 +223,7 @@ Si necessites ajuda, fes un cop d'ull primer a les nostres [[Help:Contents|pàgi
 	'welcome-description' => 'Envia un missatge de benvinguda als usuaris després de la seva primera edició',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Dontlietome7
  */
 $messages['cs'] = array(

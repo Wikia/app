@@ -277,7 +277,7 @@ hauries de visitar això:
 	'wikiasmartbanner-view' => 'mostra',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Michaelbrabec
  */
 $messages['cs'] = array(

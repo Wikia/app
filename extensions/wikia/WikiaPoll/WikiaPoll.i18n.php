@@ -47,8 +47,10 @@ $messages['qqq'] = array(
 	'wikiapoll-question-label' => 'Form Label for Special Page.
 {{Identical|Question}}',
 	'wikiapoll-addnewitem-label' => 'Special Page text next to button for a new item to a poll',
-	'wikiapoll-cancel-label' => 'Cancel button label',
-	'wikiapoll-publish-label' => 'Create/Edit Poll button label for confirming changes',
+	'wikiapoll-cancel-label' => 'Cancel button label.
+{{Identical|Cancel}}',
+	'wikiapoll-publish-label' => 'Create/Edit Poll button label for confirming changes.
+{{Identical|Publish}}',
 	'wikiapoll-error-duplicate' => 'Error message when user tries to create a poll that already exists',
 	'wikiapoll-error-invalid-title' => 'Error message when title of poll is invalid/empty',
 	'wikiamobile-wikiapoll-open-poll' => 'Text on a button to open poll in a modal',
@@ -206,7 +208,7 @@ $messages['ce'] = array(
 	'wikiapoll-thanks-for-vote' => 'Баркалла!',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Chmee2
  * @author Dontlietome7
  * @author Reaperman

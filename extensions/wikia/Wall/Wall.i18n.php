@@ -432,7 +432,8 @@ $messages['qqq'] = array(
 	'wall-thread-removed' => 'In parentheses at the top of a removed thread page, next to the title.
 {{Identical|Removed}}',
 	'wall-thread-isnotifyeveryone' => 'In parentheses at the top of a highlighted thread page, next to the title',
-	'wall-thread-deleted' => 'In parentheses at the top of a deleted thread page, next to the title',
+	'wall-thread-deleted' => 'In parentheses at the top of a deleted thread page, next to the title.
+{{Identical|Deleted}}',
 	'wall-thread-closed' => 'Label stating the thread is closed.
 {{Identical|Closed}}',
 	'wall-default-title' => "Default title if the user doesn't give a new thread a title",
@@ -455,8 +456,10 @@ $messages['qqq'] = array(
 	'wall-button-to-submit-comment-no-topic' => 'Button to post a new thread after getting an error message for not having a title',
 	'wall-button-save-changes' => 'Button to save edits to a message.
 {{Identical|Save changes}}',
-	'wall-button-cancel-changes' => 'Button to cancel an edit to a message',
-	'wall-button-done-source' => 'Button to close the source view for a message',
+	'wall-button-cancel-changes' => 'Button to cancel an edit to a message.
+{{Identical|Cancel}}',
+	'wall-button-done-source' => 'Button to close the source view for a message.
+{{Identical|Done}}',
 	'wall-message-edit' => 'Menu item to edit a message.
 {{Identical|Edit}}',
 	'wall-message-more' => 'Top of the menu for each message.
@@ -493,7 +496,8 @@ See also:
 * {{msg-mw|ipbwatchuser}}
 * {{msg-mw|ipb-hardblock}}
 * {{msg-mw|ipb-disableusertalk}}',
-	'wall-action-all-confirm-cancel' => 'Button to cancel on a remove or delete message modal box',
+	'wall-action-all-confirm-cancel' => 'Button to cancel on a remove or delete message modal box.
+{{Identical|Cancel}}',
 	'wall-action-all-confirm-notify' => 'Option to notify an admin on a remove or deleted reply modal box',
 	'wall-action-remove-reply-title' => 'Title of the modal box for removing a reply',
 	'wall-action-remove-thread-title' => 'Title of the modal box for removing a thread',
@@ -543,7 +547,8 @@ See also:
 {{Identical|All notifications}}',
 	'wall-notifications-markasread' => 'Option in notification dropdown menu to mark all threads as read.
 {{Identical|Mark all as read}}',
-	'wall-notifications-markasread-all-wikis' => 'Option to mark all cross-wiki notifications as read',
+	'wall-notifications-markasread-all-wikis' => 'Option to mark all cross-wiki notifications as read.
+{{Identical|All wikis}}',
 	'wall-notifications-markasread-this-wiki' => "Option to mark only this wiki's notifications as read",
 	'wall-notifications-empty' => 'Message for empty notification dropdown',
 	'wall-notifications-loading' => 'Message in the notification dropdown while notifications are loading',
@@ -730,7 +735,8 @@ checkbox on Special:Block',
 	'wall-history-summary-label' => 'wall history page, heading for summary item.
 {{Identical|Summary}}',
 	'wall-history-rail-wall' => "wall history page, who's involved box - link to user's wall",
-	'wall-history-rail-contribs' => "wall history page, who's involved box - link to user's contributions list",
+	'wall-history-rail-contribs' => "wall history page, who's involved box - link to user's contributions list.
+{{Identical|Contribution}}",
 	'wall-history-rail-block' => "wall history page, who's involved box - link for admins to block user.
 {{Identical|Block}}",
 	'wall-history-action-view' => 'wall history page, link to view removed thread.
@@ -839,7 +845,8 @@ checkbox on Special:Block',
 {{Identical|Preview}}',
 	'wall-preview-modal-button-back' => 'buton on preview modal.
 {{Identical|Back}}',
-	'wall-preview-modal-button-publish' => 'buton on preview modal',
+	'wall-preview-modal-button-publish' => 'button on preview modal.
+{{Identical|Publish}}',
 	'wall-topic-input-heading' => 'Topic input label.
 {{Identical|Topic}}',
 	'wall-topic-input-placeholder' => 'Adding topic instruction and call to action.  State that it is optional',
@@ -848,7 +855,8 @@ checkbox on Special:Block',
 	'wall-topic-heading' => 'Related Topics section heading',
 	'wall-topic-edit' => 'Edit Topics call to action that brings up modal',
 	'wall-topic-edit-save' => 'Edit Topics - Save button',
-	'wall-topic-edit-cancel' => 'Edit Topics - Cancel button',
+	'wall-topic-edit-cancel' => 'Edit Topics - Cancel button.
+{{Identical|Cancel}}',
 );
 
 /** Old English (Ænglisc)
@@ -1687,11 +1695,13 @@ $messages['ce'] = array(
 	'wall-message-wall' => 'Декъашхочун дийцаре',
 	'wall-message-wall-shorten' => 'дийцаре',
 	'wall-thread-closed' => 'ДӀачӀагӀа',
+	'wall-button-to-preview-comment' => 'Хьалха муха ю хьажа',
 	'wall-notifications-markasread' => 'Массо билгал йе еша сана',
 	'mail-notification-html-button' => 'Хьажа дийцаре',
+	'wall-preview-modal-title' => 'Хьалха муха ю хьажа',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Chmee2
  * @author Darth Daron
  * @author Vks
@@ -7661,8 +7671,12 @@ $messages['tr'] = array(
 	'wall-action-admin-confirm-ok' => 'Sil',
 	'wall-action-rev-confirm-ok' => 'Evet, sil',
 	'wall-action-move-thread-heading' => 'Bu konuyu taşı',
+	'wall-notifications' => 'Bildirimler',
+	'wall-notifications-all' => 'Tüm Bildirimler',
+	'wall-notifications-markasread' => 'Tümünü okundu olarak işaretle',
 	'wall-notifications-markasread-all-wikis' => 'Tüm wikiler',
 	'wall-notifications-markasread-this-wiki' => 'Bu wiki',
+	'wall-notifications-empty' => 'Herhangi bir bildiriminiz yok',
 	'wall-notifications-loading' => 'Yükleme bildirimleri',
 	'wall-recentchanges-summary' => '($1)',
 );
