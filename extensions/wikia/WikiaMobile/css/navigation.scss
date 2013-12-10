@@ -300,6 +300,7 @@
 			text-align: center;
 			font-size: medium;
 			font-weight: bold;
+			overflow: hidden;
 
 			&.anim {
 				-webkit-animation: slideIn .5s ease;
