@@ -229,7 +229,7 @@ var SevenOneMediaHelper = function (adLogicPageLevelParams, scriptWriter, log, w
 	function initialize(firstSlotname) {
 		var subsite = window.cscoreCat && window.cscoreCat.toLowerCase(),
 			sub2site = pageLevelParams.s1.replace('_', ''),
-			sub3site = subsite === 'lifestyle' && window.cityShort;
+			sub3site = subsite === 'lifestyle' ? window.cityShort : '';
 
 		initialized = true;
 
