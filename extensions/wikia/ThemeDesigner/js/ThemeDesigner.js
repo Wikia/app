@@ -32,7 +32,7 @@ var ThemeDesigner = {
 		// min width for dynamic is equal to our breakpoint
 		// TODO: When refactoring ThemeDesigner into AMD module, use wikia.fluidlayout.getBreakpointContent
 		this.minWidthForDynamicBackground = 1030;
-		this.minWidthNotSplitBackground = 2100;
+		this.minWidthNotSplitBackground = 2000;
 
 		this.backgroundType = 0;
 
