@@ -7,7 +7,7 @@ table.TablePager{ clear:both; margin:5px auto; width:100%; }
 .ml_toolbar { padding: 3px 2px 7px 2px; text-align:right; position:relative; float:right;}
 .ml_first { padding-left: 5px; }
 .ml_fieldset { line-height:10px; margin: 1px 0px; padding: 0px 2px 2px; width: auto; white-space: nowrap;float:right; }
-.dataTables_wrapper { clear:both; min-height:302px; position:relative;_height: 302px; zoom: 1; padding:10px 1px 0; }
+.dataTables_wrapper { clear:both; min-height:302px; position:relative;_height: 302px; zoom: 1; padding:10px 1px 0; width: auto; overflow-x: auto; }
 .dttoolbar { border-top-style:none; }
 .dataTables_length { width: 40%; float: left; }
 .dataTables_info { width: 60%; float: left; }

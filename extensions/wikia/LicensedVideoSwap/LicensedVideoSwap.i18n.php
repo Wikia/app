@@ -135,9 +135,13 @@ $messages['qqq'] = array(
 	'lvs-history-swapped' => 'Message shown on the LVS history page for a video that had been swapped for a premium video',
 	'lvs-history-swapped-exact' => 'Message shown on the LVS history page when the new video and the swapped video have exactly the same name',
 	'lvs-history-kept' => 'Message shown on the LVS history page for a video that was kept as is and not swapped',
-	'lvs-history-instructions' => 'This is informational text at the top of the LVS history page.',
-	'lvs-no-monobook-support' => 'This message is shown to users who try to access LVS in an unsupported skin. The $1 value is lvs-click-here.',
-	'lvs-click-here' => 'This message is inserted into lvs-no-monobook-support and replaces the $1 value there.',
+	'lvs-history-instructions' => 'This is informational text at the top of the LVS history page. Parameters:
+* $1 - a link pointing to [[Special:RecentChanges]]',
+	'lvs-no-monobook-support' => 'This message is shown to users who try to access LVS in an unsupported skin.
+
+Parameters:
+* $1 - a link which is labeled {{msg-wikia|Lvs-click-here}}',
+	'lvs-click-here' => 'Used as <code>$1</code> in {{msg-wikia|Lvs-no-monobook-support}}.',
 	'lvs-new-flag' => 'This message is shown in the new flag when the video has new suggestions.
 {{Identical|New}}',
 );
@@ -247,7 +251,7 @@ $messages['ca'] = array(
 	'lvs-posted-in-label-none' => 'Vídeo actual no està publicat a articles',
 	'lvs-posted-in-more' => 'més',
 	'lvs-confirm-keep-title' => 'Mantenir Vídeo',
-	'lvs-confirm-keep-message' => 'Heu seleccionat no substituir el seu vídeo actual amb un vídeo amb llicència de Wikia. Voleu continuar?',
+	'lvs-confirm-keep-message' => 'Heu seleccionat no substituir el seu vídeo actual amb un vídeo amb llicència de Wikia. Voleu continuar?', # Fuzzy
 	'lvs-confirm-undo-swap-title' => 'Confirmar que vols desfer',
 	'lvs-confirm-undo-swap-message' => 'Esteu segur que voleu restaurar el vídeo original?',
 	'lvs-confirm-undo-keep-title' => 'Confirmar que vols desfer?',
@@ -331,6 +335,23 @@ $messages['el'] = array(
 	'lvs-button-yes' => 'Ναι',
 	'lvs-button-no' => 'Όχι',
 	'lvs-error-permission-access' => 'Δεν έχετε πρόσβαση σε αυτή τη σελίδα.',
+);
+
+/** British English (British English)
+ * @author Shirayuki
+ */
+$messages['en-gb'] = array(
+	'licensedvideoswap' => 'Licenced Video Swap',
+	'action-licensedvideoswap' => 'swap unlicenced video',
+	'lvs-page-title' => 'Licenced Video Swap',
+	'lvs-history-page-title' => 'Licenced Video Swap History',
+	'lvs-tooltip-history' => 'Licenced Video Swap Button',
+	'lvs-page-header-back-link' => 'Back to Licenced Video Swap',
+	'lvs-callout-title-licensed' => '100% Licenced',
+	'lvs-callout-reason-licensed' => 'Wikia Videos are licenced for our communities for use on your wikis',
+	'lvs-instructions' => "Many of the videos you embed on your wikis become unavailable when they are removed or taken down for copyright violations. That's why Wikia has licenced [[w:c:video|thousands of videos]] for use on your wikis from several content partners. This Special page is an easy way for you to see if we have a licenced copy of the same or similar videos on your wikis. Please note that often the exact same video may have a different video thumbnail so it's best to review the videos before you make a decision. Happy swapping!",
+	'lvs-best-match-label' => 'Best Licenced Match from Wikia Video',
+	'lvs-confirm-keep-message' => 'We are continuously adding new licenced videos to <a href="http://video.wikia.com/" target="_blank">Wikia Video</a>. Would you like to see new matches for this video as they become available?',
 );
 
 /** Spanish (español)
@@ -514,7 +535,7 @@ $messages['gl'] = array(
 	'lvs-posted-in-label-none' => 'O vídeo actual non está publicado en ningún artigo',
 	'lvs-posted-in-more' => 'máis',
 	'lvs-confirm-keep-title' => 'Manter o vídeo',
-	'lvs-confirm-keep-message' => 'Engadimos constantemente novos vídeos con licenza aos <a href="http://video.wikia.com/" target="_blank">vídeos do Wikia</a>. Quere ver as novas coincidencias para este vídeo en canto estean dispoñibles?',
+	'lvs-confirm-keep-message' => 'Engadimos constantemente novos vídeos con licenza aos <a href="http://video.wikia.com/" target="_blank">vídeos do Wikia</a>. Queres ver as novas coincidencias para este vídeo en canto estean dispoñibles?',
 	'lvs-confirm-undo-swap-title' => 'Confirmar que quere desfacer',
 	'lvs-confirm-undo-swap-message' => 'Está seguro de querer restaurar o vídeo orixinal?',
 	'lvs-confirm-undo-keep-title' => 'Confirmar que quere desfacer',
@@ -615,7 +636,7 @@ $messages['ms'] = array(
 	'lvs-posted-in-label-none' => 'Video semasa tidak terpapar pada sebarang rencana',
 	'lvs-posted-in-more' => 'selanjutnya',
 	'lvs-confirm-keep-title' => 'Simpan Video',
-	'lvs-confirm-keep-message' => 'Anda telah memilih untuk tidak menggantikan video semasa anda dengan Wikia Video yang berlesen. Adakah anda ingin teruskan?',
+	'lvs-confirm-keep-message' => 'Anda telah memilih untuk tidak menggantikan video semasa anda dengan Wikia Video yang berlesen. Adakah anda ingin teruskan?', # Fuzzy
 	'lvs-confirm-undo-swap-title' => 'Sahkan Pengunduran',
 	'lvs-confirm-undo-swap-message' => 'Adakah anda benar-benar mahu memulihkan video asal?',
 	'lvs-confirm-undo-keep-title' => 'Sahkan Pengunduran',
@@ -699,7 +720,7 @@ $messages['nl'] = array(
 	'lvs-history-swapped' => '"$1" is gewisseld met "$2"',
 	'lvs-history-swapped-exact' => '"$1" is gewisseld met een video met dezelfde naam',
 	'lvs-history-kept' => '"$1" is behouden',
-	'lvs-history-instructions' => "Als u de geschiedenis van alle wijzigingen en undo's wil zien, gaat u naar $1.",
+	'lvs-history-instructions' => 'Ga naar $1 om de geschiedenis van wissels en terugwissels te bekijken.',
 	'lvs-no-monobook-support' => 'Deze pagina wordt niet ondersteund in Monobook. Om deze te openen in de indeling van Wikia, $1. Dit zal uw voorkeurs-layout niet aanpassen.',
 	'lvs-click-here' => 'klik hier',
 	'lvs-new-flag' => 'Nieuw',
@@ -942,6 +963,13 @@ $messages['sv'] = array(
 	'lvs-no-monobook-support' => 'Denna sida stöds inte i Monobook. För att komma åt den i Wikia-layout, $1. Detta kommer inte att ändra dina utseendeinställningar.',
 	'lvs-click-here' => 'klicka här',
 	'lvs-new-flag' => 'Ny',
+);
+
+/** Turkish (Türkçe)
+ * @author Rapsar
+ */
+$messages['tr'] = array(
+	'lvs-history-button-text' => 'Geçmiş',
 );
 
 /** Ukrainian (українська)

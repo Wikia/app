@@ -98,7 +98,7 @@ $messages['ce'] = array(
 	'spellchecker-info-spellcheck-languages' => 'Мотт',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Darth Daron
  */
 $messages['cs'] = array(
@@ -630,6 +630,7 @@ $messages['wa'] = array(
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Hydra
+ * @author Liuxinyu970226
  * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
@@ -642,4 +643,5 @@ $messages['zh-hans'] = array(
 	'spellchecker-info-spellcheck-text' => '文本已检查',
 	'spellchecker-info-spellcheck-languages' => '语言',
 	'spellchecker-info-spellcheck-submit' => '拼写检查',
+	'spellchecker-info-spellcheck-suggestions' => '对"$1"的拼写建议：$2',
 );

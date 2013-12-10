@@ -174,12 +174,15 @@ $messages['qqq'] = array(
 	'right-wikifactory' => '{{doc-right|wikifactory|ns=Wikia}}',
 	'action-wikifactory' => '{{doc-action|wikifactory}}',
 	'closewiki-nbr-wiki' => 'Number of wikis. $1 represents a numeric value',
+	'closewiki-dump-url' => '{{Identical|Database dump}}',
 	'closewiki-unknown' => '{{Identical|Unknown}}',
 	'wikifactory-button-save' => '{{Identical|Save changes}}',
 	'wikifactory-public-status-change-default-reason' => 'WikiFactory is a staff tool that allows Wikia to manage per-wiki settings across their network. The "public status" setting determines whether a wiki is available for users or closed and assigned for removal. Staff members usually justify a change of the status of a wiki by filling in the "Reason" field in the form. If no reason is provided, the wikifactory-public-status-change-default-reason is used automatically so it can be deduced where the change had been requested from.',
+	'awc-metrics-all' => '{{Identical|All wikis}}',
 	'awc-metrics-all-languages' => '{{Identical|All languages}}',
 	'awc-metrics-search' => '{{Identical|Search options}}',
 	'awc-metrics-nbr-result' => '{{Identical|Result}}',
+	'awc-metrics-articles' => '{{Identical|Article}}',
 	'awc-metrics-edits' => '{{Identical|Edit}}',
 	'awc-metrics-images' => '{{Identical|Image}}',
 	'awc-metrics-close' => '{{Identical|Close}}',
@@ -971,6 +974,7 @@ $messages['bs'] = array(
 );
 
 /** Catalan (català)
+ * @author Alvaro Vidal-Abarca
  * @author BroOk
  * @author Gemmaa
  * @author Paucabot
@@ -1083,7 +1087,8 @@ $messages['ca'] = array(
 	'closed-wiki' => 'Wiki tancat',
 	'closed-wiki-info' => "S'ha tancat aquest wiki",
 	'disabled-wiki-info' => 'Aquest wiki ha estat inhabilitat',
-	'closed-wiki-dump-exists' => 'Pots recuperar el teu contingut si ho vols.<br />(Si el teu wiki va tancar fa poc, pot trigar una mica la generació dels arxius)', # Fuzzy
+	'closed-wiki-dump-exists' => 'Pots [$1 recuperar el teu contingut] si ho vols.<br />(Si el teu wiki va tancar fa poc, pot trigar una mica la generació dels arxius)', # Fuzzy
+	'closed-wiki-dump-links' => '[$1 Pàgines actuals] (aquesta versió és la millor normalment per a bots)<br />[$2 Pàgines actuals i història] (advertència: aquest fitxer pot ser molt gran)<br />[$3 Imatges] (advertència: aquest fitxer pot ser molt gran)',
 	'closed-wiki-dump-noexists' => "S'ha tancat aquest wiki. La descàrrega de contingut estarà disponible d'aquí 24 hores. Si us plau, comprova-ho una altra vegada més tard.",
 	'closed-wiki-create-wiki' => 'Crear un nou wiki',
 	'closed-wiki-policy' => 'Veure Política de Tancament de Wikia',
@@ -1357,10 +1362,12 @@ $messages['da'] = array(
  * @author Kghbln
  * @author LWChris
  * @author McDutchie
+ * @author Metalhead64
  * @author Mr. Richard Bolla
  * @author MtaÄ
  * @author PtM
  * @author SVG
+ * @author Se4598
  * @author Sebastian Wallroth
  * @author The Evil IP address
  * @author Umherirrender
@@ -1472,7 +1479,8 @@ $messages['de'] = array(
 	'closed-wiki' => 'geschlossenes Wiki',
 	'closed-wiki-info' => 'Dieses Wiki wurde geschlossen',
 	'disabled-wiki-info' => 'Dieses Wiki wurde deaktiviert',
-	'closed-wiki-dump-exists' => 'Du kannst $1 deine Inhalte herunterladen, wenn du möchtest.<br />(Wenn dein Wiki kürzlich geschlossen worden ist, kann es eine kurze Weile dauern, bis die Daten erstellt werden.)', # Fuzzy
+	'closed-wiki-dump-exists' => 'Du kannst deine Inhalte herunterladen, wenn du möchtest.<br />(Wenn dein Wiki kürzlich geschlossen worden ist, kann es eine kurze Weile dauern, bis die Daten erstellt werden.)',
+	'closed-wiki-dump-links' => '[$1 Aktuelle Seiten] (diese Version ist üblicherweise die beste für die Bot-Benutzung)<br />[$2 Aktuelle Seiten und Versionsgeschichten] (Warnung: diese Datei kann sehr groß sein)<br />[$3 Bilder] (Warnung: diese Datei kann sehr groß sein)',
 	'closed-wiki-dump-noexists' => 'Dieses Wiki wurde geschlossen. Der Inhaltsdump wird innerhalb von 24 Stunden zur Verfügung stehen. Bitte sieh dann noch einmal nach.',
 	'closed-wiki-create-wiki' => 'Ein neues Wiki erstellen',
 	'closed-wiki-policy' => 'Zeige Wikias Schließungs-Richtlinie',
@@ -1729,7 +1737,8 @@ $messages['es'] = array(
 	'closed-wiki' => 'Wiki cerrado',
 	'closed-wiki-info' => 'Este wiki ha sido cerrado',
 	'disabled-wiki-info' => 'Este wiki ha sido dishabilitado',
-	'closed-wiki-dump-exists' => 'Puedes recuperar tu contenido, si lo deseas.<br />(Si tu wiki cerró hace poco tiempo, puede tardar algo de tiempo en la generación de los archivos)', # Fuzzy
+	'closed-wiki-dump-exists' => 'Puedes recuperar tu contenido, si lo deseas.<br />(Si tu wiki cerró hace poco tiempo, puede tardar algo de tiempo en la generación de los archivos)',
+	'closed-wiki-dump-links' => '[$1 Páginas actuales] (esta versión es mejor para uso de bot)<br />[$2 Páginas actuales e historial] (advertencia: este archivo puede ser muy grande)<br />[$3 Imágenes] (advertencia: este archivo puede ser muy grande)',
 	'closed-wiki-dump-noexists' => 'Este wiki ha sido cerrado. La descarga del contenido estará disponible en 24 horas. Por favor compruébalo de nuevo más tarde.',
 	'closed-wiki-create-wiki' => 'Crear un nuevo wiki',
 	'closed-wiki-policy' => 'Ver Política de Cierre de Wikia',
@@ -2005,7 +2014,8 @@ $messages['fr'] = array(
 	'closed-wiki' => 'Wiki clôturé',
 	'closed-wiki-info' => 'Ce wiki a été clôturé',
 	'disabled-wiki-info' => 'Ce wiki a été désactivé',
-	'closed-wiki-dump-exists' => 'Vous pouvez récupérer votre contenu si vous voulez.<br />(Si votre wiki a été récemment fermé, cela peut prendre un peu de temps pour que les fichiers soient générés)', # Fuzzy
+	'closed-wiki-dump-exists' => 'Vous pouvez récupérer votre contenu si vous voulez.<br />(Si votre wiki a été récemment fermé, cela peut prendre un peu de temps pour que les fichiers soient générés)',
+	'closed-wiki-dump-links' => '[$1 Pages actuelles] (cette version est en général préférable pour une utilisation de robot)<br />[$2 Pages actuelles et historique] (attention : ce fichier peut être très volumineux)<br />[$3 Images] (attention : ce fichier peut être très volumineux)',
 	'closed-wiki-dump-noexists' => 'Ce wiki a été clôturé. Un dump du contenu sera disponible dans les 24 heures. Revenez voir plus tard.',
 	'closed-wiki-create-wiki' => 'Créer un nouveau wiki',
 	'closed-wiki-policy' => 'Voir la politique de clôture de Wikia',
@@ -2028,6 +2038,7 @@ $messages['fr'] = array(
 
 /** Galician (galego)
  * @author Toliño
+ * @author Vivaelcelta
  */
 $messages['gl'] = array(
 	'wikifactorypagetitle' => 'Configurador da fábrica de wikis',
@@ -2137,7 +2148,7 @@ $messages['gl'] = array(
 	'closed-wiki' => 'Wiki pechado',
 	'closed-wiki-info' => 'Este wiki foi pechado',
 	'disabled-wiki-info' => 'Este wiki foi desactivado',
-	'closed-wiki-dump-exists' => 'Pode recuperar o seu contido, se quere.<br />(Se pecharon o seu wiki hai pouco, poida que a xeración dos ficheiros tarde uns intres)', # Fuzzy
+	'closed-wiki-dump-exists' => 'Podes recuperar o teu contido se queres.<br />(Se pecharon o teu wiki hai pouco, poida que a xeración dos ficheiros tarde uns intres)',
 	'closed-wiki-dump-noexists' => 'Este wiki foi pechado. Haberá dispoñible unha copia do contido nun prazo de 24 horas. Por favor, volva máis adiante.',
 	'closed-wiki-create-wiki' => 'Crear un novo wiki',
 	'closed-wiki-policy' => 'Ollar a política de peche de Wikia',
@@ -3851,7 +3862,8 @@ $messages['pl'] = array(
 	'closed-wiki' => 'Zamknięta wiki',
 	'closed-wiki-info' => 'Ta wiki została zamknięta',
 	'disabled-wiki-info' => 'Ta wiki została wyłączona',
-	'closed-wiki-dump-exists' => 'Możesz pobrać stąd zawartość, jeśli chcesz.<br />(Jeśli wiki została niedawno zamknięta, może upłynąć jakiś czas zanim pliki zostaną wygenerowane)', # Fuzzy
+	'closed-wiki-dump-exists' => 'Możesz pobrać stąd zawartość, jeśli chcesz.<br />(Jeśli wiki została niedawno zamknięta, może upłynąć jakiś czas zanim pliki zostaną wygenerowane)',
+	'closed-wiki-dump-links' => '[$1 Istniejące strony] (to zwykle zalecana wersja)<br />[$2 Istniejące strony i ich historia] (UWAGA: Plik może być bardzo duży)<br />[$3 Obrazy] (UWAGA: Plik może być bardzo duży)',
 	'closed-wiki-dump-noexists' => 'Ta wiki została zamknięta. Zrzut bazy danych będzie dostępny w ciągu 24 godzin. Prosimy spróbować ponownie.',
 	'closed-wiki-create-wiki' => 'Utwórz nową wiki',
 	'closed-wiki-policy' => 'Zobacz politykę Wikii zamykania wiki',
@@ -4574,6 +4586,7 @@ $messages['ru'] = array(
 	'closed-wiki-info' => 'Эта вики закрыта',
 	'disabled-wiki-info' => 'Эта вики отключена',
 	'closed-wiki-dump-exists' => 'Вы можете получить ваше содержимое здесь, если вам оно нравится.<br />(Если ваша вики была закрыта недавно, то создание файла может занять короткий период времени)',
+	'closed-wiki-dump-links' => '[$1 Текущие страницы](эта версия обычно лучше всего подходит для использования ботов)<br />[ $2  Текущие страницы и история](предупреждение: этот файл может быть очень большим)<br />[ $3  Изображения](предупреждение: этот файл может быть очень большим)',
 	'closed-wiki-dump-noexists' => 'Этот вики была закрыт. Снимок содержимого будет доступен в течение 24 часов. Пожалуйста, заходите позже.',
 	'closed-wiki-create-wiki' => 'Создать новую вики',
 	'closed-wiki-policy' => 'Просмотреть правила закрытия Викии',
@@ -4737,6 +4750,7 @@ $messages['sr-ec'] = array(
 
 /** Swedish (svenska)
  * @author Dafer45
+ * @author Jopparn
  * @author Per
  * @author Tobulos1
  * @author WikiPhoenix
@@ -4848,7 +4862,8 @@ $messages['sv'] = array(
 	'closed-wiki' => 'Stängd Wiki',
 	'closed-wiki-info' => 'Denna wiki har stängts',
 	'disabled-wiki-info' => 'Denna wiki har avaktiverats',
-	'closed-wiki-dump-exists' => 'Du kan hämta ditt innehåll om du vill.<br />(Om din wiki avslutades nyligen, kan det ta en kort tid för filer att genereras)', # Fuzzy
+	'closed-wiki-dump-exists' => 'Du kan hämta ditt innehåll om du vill.<br />(Om din wiki avslutades nyligen kan det ta en kort stund för filerna att genereras)',
+	'closed-wiki-dump-links' => '[$1 Aktuella sidor] (denna version är vanligtvis bäst för användning av robotar)<br />[$2 Aktuella sidor och historik] (varning: den här filen kan vara väldigt stor)<br />[$3 Bilder] (varning: den här filen kan vara väldigt stor)',
 	'closed-wiki-dump-noexists' => 'Denna wiki har avslutats. En innehållsdump kommer att finnas tillgänglig inom 24 timmar. Var god kom tillbaka då.',
 	'closed-wiki-create-wiki' => 'Skapa en ny wiki',
 	'closed-wiki-policy' => 'Visa Wikias Stängningspolicy',
@@ -5319,6 +5334,23 @@ $messages['ur'] = array(
  */
 $messages['uz'] = array(
 	'wikifactory-label-info' => "Ma'lumot",
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'closewiki' => 'Xóa Wiki',
+	'wf_city_url' => 'Địa chỉ',
+	'wf_city_id' => 'id',
+	'wf_city_title' => 'Tiêu đề',
+	'wf_city_created' => 'Khởi tạo',
+	'wf_city_founding_user' => 'Sáng lập viên',
+	'wf_city_founding_email' => 'Người sáng lập email',
+	'closed-wiki-info' => 'Wiki này đã bị xóa',
+	'disabled-wiki-info' => 'Wiki này đã bị vô hiệu hoá',
+	'closed-wiki-dump-noexists' => 'Wiki này đã bị xóa. Bãi chứa nội dung sẽ có sẵn trong vòng 24 giờ. Xin vui lòng kiểm tra lại.',
+	'closed-wiki-create-wiki' => 'Tạo wiki mới',
 );
 
 /** Wu (吴语)

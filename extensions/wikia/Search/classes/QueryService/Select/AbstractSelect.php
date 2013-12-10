@@ -184,7 +184,7 @@ abstract class AbstractSelect
 	 * @param array $fields allows us to apply a mapping
 	 * @return array
 	 */
-	public function searchAsApi( $fields = null, $metadata = false ) {
+	public function searchAsApi( $fields = null, $metadata = false, $keyField = null ) {
 		$resultSet = $this->search();
 		$config = $this->getConfig();
 
@@ -197,12 +197,12 @@ abstract class AbstractSelect
 					'batches' => $total > 0 ? $numPages : 0,
 					'currentBatch' => $total > 0 ? $config->getPage() : 0,
 					'next' => $total > 0 ? min( [ $numPages * $limit, $config->getStart() + $limit ] ) : 0,
-					'items' => $resultSet->toArray( $fields )
+					'items' => $resultSet->toArray( $fields, $keyField )
 					];
 		} else if ( $fields ) {
-			$response = $resultSet->toArray( $fields );
+			$response = $resultSet->toArray( $fields, $keyField );
 		} else {
-			$response = $resultSet->toArray();
+			$response = $resultSet->toArray( null, $keyField );
 		}
 		return $response;
 	}
@@ -435,7 +435,7 @@ abstract class AbstractSelect
 			$result = $wikiMatch->getResult();
 			$hub = $config->getHub();
 			if ( $result['articles_i'] >= self::ARTICLES_NUM_WIKIMATCH &&
-				( $hub === null || strtolower($hub) === strtolower( $result['hub_s'] ) ) ) {
+				( empty($hub) || strtolower($hub) === strtolower( $result['hub_s'] ) ) ) {
 				$config->setWikiMatch( $wikiMatch );
 			}
 		}

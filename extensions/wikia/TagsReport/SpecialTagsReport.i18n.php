@@ -139,7 +139,7 @@ $messages['ce'] = array(
 	'tagsreportnoresults' => 'ХӀума ца карийна',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Dontlietome7
  */
 $messages['cs'] = array(
