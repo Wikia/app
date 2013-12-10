@@ -129,11 +129,13 @@
 			padding: 13px 10px 0 10px;
 			width: auto;
 
-			-moz-column-count: 2;
-			-ms-column-count: 2;
-			-o-column-count: 2;
-			-webkit-column-count: 2;
-			column-count: 2;
+			&.loaded {
+				-moz-column-count: 2;
+				-ms-column-count: 2;
+				-o-column-count: 2;
+				-webkit-column-count: 2;
+				column-count: 2;
+			}
 
 			.SelfServeUrl {
 				display: none;

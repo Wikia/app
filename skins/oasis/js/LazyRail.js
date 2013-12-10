@@ -25,7 +25,7 @@ $( function () {
 			format: 'json',
 			callback: function ( data ) {
 				var loadRailContents = function(data) {
-					rail.find( '.loading' ).remove().end().append( data.railLazyContent + data.js );
+					rail.addClass('loaded' ).find( '.loading' ).remove().end().append( data.railLazyContent + data.js );
 
 					if ( LAZY_LOADING_SAMPLING_RATIO >= Math.floor( (Math.random() * 100 + 1) ) ) {
 						lazyLoadingTime = ( new Date() ) - ( window.wgNow || 0 );
