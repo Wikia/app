@@ -296,14 +296,10 @@
 		}
 
 		h1 {
-			margin: 0 0;
-			border-top: none;
+			margin: 0;
 			text-align: center;
 			font-size: medium;
 			font-weight: bold;
-			overflow: hidden;
-			text-overflow: ellipsis;
-			white-space: nowrap;
 
 			&.anim {
 				-webkit-animation: slideIn .5s ease;
@@ -321,12 +317,15 @@
 			}
 			span {
 				background-position: center;
-				position: absolute;
-				right: 0px;
-				top: 0px;
 				display: block;
+
+				position: absolute;
+				right: 0;
+				top: 0;
+
 				height: 50px;
 				width: 50px;
+
 				pointer-events: none;
 			}
 		}
