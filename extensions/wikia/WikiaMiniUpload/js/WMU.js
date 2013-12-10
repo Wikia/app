@@ -1,6 +1,6 @@
 /*
  * Author: Inez Korczynski, Bartek Lapinski
- * Converted from YUI to jQuery by Hyun
+ * Converted from YUI to jQuery by Hyun (except for the slider)
  */
 
 /**
@@ -840,6 +840,7 @@ function WMU_displayDetails(responseText) {
 		}
 		var thumbSize = [image.width(), image.height()];
 		WMU_orgThumbSize = null;
+		// TODO: switch to jQuery slider, remove YUI!
 		WMU_slider = YAHOO.widget.Slider.getHorizSlider('ImageUploadSlider', 'ImageUploadSliderThumb', 0, 200);
 		WMU_slider.initialRound = true;
 		WMU_slider.getRealValue = function() {
