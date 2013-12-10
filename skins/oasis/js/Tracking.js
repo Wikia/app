@@ -246,6 +246,9 @@ jQuery(function($){
 			$searchSuggestions = $('.search-suggest'),
 			$noResults = $('.results-wrapper .no-result');
 
+		if ( $body.hasClass('page-Special_Search') ) {
+			category = 'special-search';
+		}
 		/**
 		 * Search suggestions tracking
 		 */
@@ -326,7 +329,6 @@ jQuery(function($){
 		/**
 		 * Special:Search tracking
 		 */
-		category = 'special-search';
 		if ($body.hasClass('page-Special_Search')) {
 			if($noResults.length) {
 				track({
