@@ -129,7 +129,8 @@
 			padding: 13px 10px 0 10px;
 			width: auto;
 
-			&.loaded {
+			&.loaded,
+			&.AdminDashboardRail {
 				-moz-column-count: 2;
 				-ms-column-count: 2;
 				-o-column-count: 2;
