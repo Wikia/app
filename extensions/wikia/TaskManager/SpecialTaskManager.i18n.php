@@ -23,9 +23,12 @@ $messages['en'] = array(
  * @author Siebrand
  */
 $messages['qqq'] = array(
+	'taskmanager' => '{{Identical|Display and manage background task}}',
+	'taskmanager_title' => '{{Identical|Display and manage background task}}',
 	'right-taskmanager' => '{{doc-right|taskmanager}}',
 	'right-taskmanager-action' => '{{doc-right|taskmanager-action}}',
-	'action-taskmanager' => '{{doc-action|taskmanager}}',
+	'action-taskmanager' => '{{doc-action|taskmanager}}
+{{Identical|Display and manage background task}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -84,7 +87,7 @@ $messages['ca'] = array(
 	'action-taskmanager' => 'Mostra i gestiona les tasques en segon pla',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Dontlietome7
  * @author Jezevec
  */

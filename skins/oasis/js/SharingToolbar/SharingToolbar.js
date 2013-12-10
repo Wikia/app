@@ -20,7 +20,9 @@
 				var fixed = $window.scrollTop() >= this.$button.offset().top - this.buttonHeight;
 				this.$toolbar.toggleClass( 'fixed', fixed );
 			},
-			onEmailClick: function ( ) {
+			onEmailClick: function ( event ) {
+				event.preventDefault();
+
 				var node = $( this ),
 					shareEmailLabel = node.attr( 'data-lightboxShareEmailLabel' ),
 					sendLabel = node.attr( 'data-lightboxSend' ),

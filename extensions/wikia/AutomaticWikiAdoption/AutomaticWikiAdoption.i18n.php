@@ -484,7 +484,7 @@ Eines útils:
 [[Special:UserRights|Gestió de drets]]",
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Chmee2
  * @author Jezevec
  */

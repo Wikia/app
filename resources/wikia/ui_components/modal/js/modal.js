@@ -35,7 +35,7 @@ define( 'wikia.ui.modal', [
 				classes: [ 'normal', 'secondary' ]
 			}
 		},
-		
+
 		// reference to UI component instance
 		uiComponent;
 
@@ -60,17 +60,6 @@ define( 'wikia.ui.modal', [
 	}
 
 	/**
-	 * Simple initializing new modal object based on the DOM element id passed as parameter
-	 *
-	 * @param {String} id - id of modal DOM element
-	 * @returns {Object} - new instance of modal object
-	 */
-
-	function init( id ) {
-		return new Modal( id );
-	}
-
-	/**
 	 * IE 9 doesn't support flex-box. IE-10 and IE-11 has some bugs in implementation:
 	 *
 	 * https://connect.microsoft.com/IE/feedback/details/802625/
@@ -85,9 +74,17 @@ define( 'wikia.ui.modal', [
 		var element = modal.$element,
 			HEADER_AND_FOOTER_HEIGHT = 90, // modal header and footer have 45px fixed height
 			winHeight = $( w ).height(),
+			// Using scrollHeight instead of $.height() because in IE10 $.height() returns only the visible height of
+			// the element after onresize is fired but we need the full height of the element.
+			elementHeight = modal.$content[0].scrollHeight,
 			modalMaxHeight = ( 90 / 100 ) * winHeight - HEADER_AND_FOOTER_HEIGHT; // 90% viewport - (header + footer)
 
-		element.children( 'section' ).css( 'maxHeight', modalMaxHeight );
+		// DAR-3169 - max-height doesn't always work on IE9/10 so we're using height
+		modalMaxHeight = ( modalMaxHeight >= elementHeight ) ?
+			'auto' :
+			modalMaxHeight;
+
+		element.children( 'section' ).css( 'height', modalMaxHeight );
 	}
 
 	/**
@@ -95,6 +92,7 @@ define( 'wikia.ui.modal', [
 	 */
 
 	function blockPageScrolling() {
+
 		// prevent page from jumping to right if vertical scroll bar exist
 		if ( $bodyElm.height() > $win.height() ) {
 			$bodyElm.addClass( 'fake-scrollbar' );
@@ -111,7 +109,7 @@ define( 'wikia.ui.modal', [
 	 */
 
 	function unblockPageScrolling() {
-		$bodyElm.removeClass( 'with-blackout fake-scrollbar').css('top', 'auto');
+		$bodyElm.removeClass( 'with-blackout fake-scrollbar').css( 'top', 'auto' );
 		$win.scrollTop( wScrollTop );
 	}
 
@@ -140,31 +138,34 @@ define( 'wikia.ui.modal', [
 			buttons, // array of objects with params for rendering modal buttons
 			blackoutId = BLACKOUT_ID + '_' + id;
 
-		// In case the modal already exists in DOM - skip rendering part
-		if ( $( jQuerySelector ).length === 0 && typeof( uiComponent ) !== 'undefined' ) {
-
-			buttons = params.vars.buttons;
-			if ( $.isArray( buttons ) ) {
-				// Create buttons
-				buttons.forEach(function( button, index ) {
-					if ( typeof button === 'object' ) {
-
-						// Extend the button param with the modal default, get the button uicomponent,
-						// and render the params then replace the button params with the rendered html
-						buttons[ index ] = uiComponent.getSubComponent( 'button' ).render(
-							$.extend( true, {}, btnConfig, button )
-						);
-					}
-				});
-			}
-
-			// extend default modal params with the one passed in constructor call
-			params = $.extend( true, {}, modalDefaults, params );
-
-			// render modal markup and append to DOM
-			$( 'body' ).append( uiComponent.render( params ) );
-
+		if ( $( jQuerySelector ).length > 0 ) {
+			throw 'Cannot create new modal with id ' + id + ' as it already exists in DOM';
 		}
+
+		if ( typeof( uiComponent ) === 'undefined' ) {
+			throw 'Need uiComponent to render modal with id ' + id;
+		}
+
+		buttons = params.vars.buttons;
+		if ( $.isArray( buttons ) ) {
+			// Create buttons
+			buttons.forEach(function( button, index ) {
+				if ( typeof button === 'object' ) {
+
+					// Extend the button param with the modal default, get the button uicomponent,
+					// and render the params then replace the button params with the rendered html
+					buttons[ index ] = uiComponent.getSubComponent( 'button' ).render(
+						$.extend( true, {}, btnConfig, button )
+					);
+				}
+			});
+		}
+
+		// extend default modal params with the one passed in constructor call
+		params = $.extend( true, {}, modalDefaults, params );
+
+		// render modal markup and append to DOM
+		$( 'body' ).append( uiComponent.render( params ) );
 
 		// cache jQuery selectors for different parts of modal
 		this.$element = $( jQuerySelector );
@@ -207,48 +208,47 @@ define( 'wikia.ui.modal', [
 			'close': [
 				function() {
 					that.trigger( 'beforeClose').then( $.proxy( function() {
-						if( !that.destroyOnClose ) {
-							that.$blackout.removeClass( BLACKOUT_VISIBLE_CLASS );
-						} else {
-							that.$blackout.remove();
+						// number of active modals on page
+						var activeModalsNumb = $bodyElm.children( '.modal-blackout' ).length;
+
+						that.$blackout.remove();
+
+						// unblock background scrolling only if this is the only if it's last active modal on page
+						if (activeModalsNumb === 1) {
+							unblockPageScrolling();
 						}
-						unblockPageScrolling();
 					}, that ) );
 				}
 			]
 		};
 
-		// allow to override the default value
-		if ( ( typeof( this.$element.data( 'destroy-on-close' ) ) !== 'undefined' ) ) {
-			this.destroyOnClose = this.$element.data( 'destroy-on-close' );
-		}
 	}
-
-	/**
-	 * When set to true (default), destroys the modal when close action is triggered
-	 * @type {boolean}
-	 */
-	Modal.prototype.destroyOnClose = true;
 
 	/**
 	 * Shows modal; adds shown class to modal and visible class to blackout
 	 */
 	Modal.prototype.show = function() {
 
-		blockPageScrolling();
+		// block background only if not modal in scenario
+		if ( $bodyElm.hasClass( 'fake-scrollbar' ) === false ) {
+			blockPageScrolling();
+		}
 
 		this.$blackout.addClass( BLACKOUT_VISIBLE_CLASS );
 
 		// IE flex-box fallback for small and medium modals
-		if ( this.$element.hasClass( 'large' ) === false && browserDetect.isIE() ) {
+		if ( browserDetect.isIE() ) {
 
 			this.$blackout.addClass( 'IE-flex-fix' );
-			ieFlexboxFallback( this );
 
-			// update modal section max-height on window resize
-			$( w ).on( 'resize', $.proxy( function() {
+			if ( this.$element.hasClass( 'large' ) === false ) {
 				ieFlexboxFallback( this );
-			}, this ) );
+
+				// update modal section max-height on window resize
+				$( w ).on( 'resize', $.proxy( function() {
+					ieFlexboxFallback( this );
+				}, this ) );
+			}
 		}
 	};
 
@@ -349,16 +349,23 @@ define( 'wikia.ui.modal', [
 
 	/**
 	 * Sets modal's content
-	 * @param content HTML text
+	 * @param {String} content HTML text
 	 */
 	Modal.prototype.setContent = function( content ) {
 		this.$content.html( content );
 	};
 
+	/**
+	 * Sets modal's title
+	 * @param {String} title text
+	 */
+	Modal.prototype.setTitle = function( title ) {
+		this.$element.find( 'header h3' ).text( title );
+	};
+
 	/** Public API */
-	
+
 	return {
-		init: init,
 		createComponent: createComponent
 	};
 });

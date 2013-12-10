@@ -1642,7 +1642,7 @@ $messages['ckb'] = array(
 	'wikistats_search_text' => 'گەڕان',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Chmee2
  * @author Darth Daron
  * @author Dontlietome7
@@ -2418,7 +2418,7 @@ $messages['es'] = array(
 	'wikistats_see_definitions' => 'Ver definiciones',
 	'wikistats_generate_stats_msg' => 'Por favor espere ... generando ...',
 	'wikistats_generate_XLS_file_title' => 'Generar archivos XLS para descarga',
-	'wikistats_language_stats' => 'Estadísticas de idioma',
+	'wikistats_language_stats' => 'Estadísticas del idioma',
 	'wikistats_main_statistics_legend' => 'Estadísticas principales',
 	'wikistats_ns_statistics_legend' => 'Espacio de nombres',
 	'wikistats_other_statistics_legend' => 'Otras estadísticas',
@@ -3078,6 +3078,7 @@ de noms',
 
 /** Galician (galego)
  * @author Toliño
+ * @author Vivaelcelta
  */
 $messages['gl'] = array(
 	'wikistats' => 'Estatísticas de Wikia',
@@ -3141,7 +3142,7 @@ $messages['gl'] = array(
 	'wikistats_video' => 'Vídeo',
 	'wikistats_media' => 'Imaxes e vídeo',
 	'wikistats_video_embeded' => 'incrustado',
-	'wikistats_uploaded_images' => 'cargado',
+	'wikistats_uploaded_images' => 'subido',
 	'wikistats_with_links' => 'con ligazóns',
 	'wikistats_connection_error' => 'Erro de conexión',
 	'wikistats_distrib_edits' => 'Edicións >=',
@@ -3209,9 +3210,9 @@ $messages['gl'] = array(
 	'wikistats_column_F' => 'Novos artigos ao día no mes actual',
 	'wikistats_column_G' => 'Número de edicións en artigos nos espazos de nomes de contido',
 	'wikistats_column_H' => 'Número total de ligazóns cara ás imaxes nos artigos dos espazos de nomes de contido',
-	'wikistats_column_I' => 'Número total de imaxes cargadas',
+	'wikistats_column_I' => 'Número total de imaxes subidas',
 	'wikistats_column_J' => 'Número total de vídeos incorporados nos artigos dos espazos de nomes de contido',
-	'wikistats_column_K' => 'Número total de vídeos cargados',
+	'wikistats_column_K' => 'Número total de vídeos subidos',
 	'wikistats_website' => 'Páxina web',
 	'wikistats_tables' => 'Táboas',
 	'wikistats_charts' => 'Cadros',
@@ -3274,7 +3275,7 @@ $messages['gl'] = array(
 	'wikistats_user_page_edits' => 'Usuario:Edicións de páxinas',
 	'wikistats_user_talk_edits' => 'Usuario:Edicións de conversas',
 	'wikistats_article_daily' => 'Edicións/día',
-	'wikistats_image_uploads' => 'Imaxes cargadas',
+	'wikistats_image_uploads' => 'Imaxes subidas',
 	'wikistats_video_uploads' => 'Vídeos cargados',
 	'wikistats_per_namespace' => 'Datos por espazo de nomes',
 	'wikistats_months_edits' => 'Editores este mes',
@@ -4271,7 +4272,7 @@ $messages['ja'] = array(
 	'wikistats_anon_wikians_count' => '$1人の匿名利用者が見つかりました',
 	'wikistats_latest_pageviews' => '最終訪問ページ',
 	'wikistats_active_useredits' => '言語の活動',
-	'wikistats_latest_pageviews_subtitle' => '直近$1分間', # Fuzzy
+	'wikistats_latest_pageviews_subtitle' => '直近$1分間',
 	'wikistats_pageviews' => '名前空間別の月ごとのページビュー',
 	'wikistats_article_one_link' => '最低一つの内部リンクを含む記事',
 	'wikistats_recently_active_wikians' => '$1人の活発な登録利用者を投稿数順に並べています',
@@ -9155,7 +9156,7 @@ $messages['tyv'] = array(
 	'wikistats_pviews_notfound' => 'Көөр арыннар чок',
 	'wikistats_invalid_date' => 'Таарышпас үе аразын шилээн',
 	'wikistats_namespace' => 'Ат делгеми',
-	'wikistats_show' => 'Көргүзери',
+	'wikistats_show' => 'Көргүзер',
 );
 
 /** Central Atlas Tamazight (ⵜⴰⵎⴰⵣⵉⵖⵜ)
@@ -9475,6 +9476,15 @@ $messages['vi'] = array(
 	'wikistats_active_months' => 'tháng',
 	'wikistats_number_editors' => 'Số lần sửa đổi',
 	'wikistats_number_anons' => 'số thành viên vô danh',
+	'wikistats_wikians' => 'Đăng ký biên tập',
+	'wikistats_articles' => 'Bài viết (excl. chuyển hướng)',
+	'wikistats_articles_text' => 'Bài viết',
+	'wikistats_archived' => 'Lưu trữ',
+	'wikistats_other' => 'Khác',
+	'wikistats_database' => 'Cơ sở dữ liệu',
+	'wikistats_links' => 'Liên kết',
+	'wikistats_reg_users' => 'Biên tập viên đã đăng ký',
+	'wikistats_images' => 'Hình ảnh',
 	'wikistats_video' => 'Video',
 	'wikistats_media' => 'Hình ảnh & Video',
 	'wikistats_video_embeded' => 'embeded',
@@ -9485,6 +9495,39 @@ $messages['vi'] = array(
 	'wikistats_distrib_wikians' => 'Đăng ký biên tập',
 	'wikistats_distrib_edits_total' => 'Tổng số sửa đổi',
 	'wikistats_date' => 'Ngày',
+	'wikistats_namespace' => 'Không gian tên',
+	'wikistats_show' => 'Hiện',
+	'wikistats_stats' => 'Hiển thị %s số liệu thống kê',
+	'wikistats_hide' => 'Ẩn',
+	'wikistats_wikiname' => 'Tên:',
+	'wikistats_wikidbname' => 'DBName:',
+	'wikistats_wikicategory' => 'Thể loại:',
+	'wikistats_wikiid' => 'ID:',
+	'wikistats_mean' => 'có nghĩa là',
+	'wikistats_largerthan' => 'lớn hơn',
+	'wikistats_username' => 'Người dùng',
+	'wikistats_usernames' => 'Người dùng',
+	'wikistats_edits' => 'sửa đổi',
+	'wikistats_bytes' => 'byte',
+	'wikistats_size' => 'dung lượng',
+	'wikistats_words' => 'từ',
+	'wikistats_internal' => 'nội bộ',
+	'wikistats_interwiki' => 'Interwiki',
+	'wikistats_image' => 'hình ảnh',
+	'wikistats_external' => 'bên ngoài',
+	'wikistats_rollups' => 'Rollups',
+	'wikistats_namespaces' => 'Không gian tên',
+	'wikistats_redirects' => 'Đổi hướng',
+	'wikistats_edited_in_namespace' => 'chỉnh sửa trong không gian tên',
+	'wikistats_main_namespace' => 'chính',
+	'wikistats_image_namespace' => 'hình ảnh',
+	'wikistats_first_edit' => 'Chỉnh sửa lần đầu tiên',
+	'wikistats_last_edit' => 'Chỉnh sửa lần cuối',
+	'wikistats_rank' => 'hạng',
+	'wikistats_total' => 'tổng cộng:',
+	'wikistats_new' => 'mới',
+	'wikistats_days_ago' => 'ngày trước',
+	'wikistats_month_ago' => '$1 $2 trước đây',
 	'wikistats_photo_new' => 'Hình ảnh mới',
 	'wikistats_content' => 'nội dung',
 	'wikistats_userns' => 'thành viên',

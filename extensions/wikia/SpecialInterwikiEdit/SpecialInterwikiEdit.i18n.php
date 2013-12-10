@@ -147,7 +147,7 @@ $messages['ce'] = array(
 	'iwedit-success' => '<p>Хьажораг кхиамца кхоьллина.</p>',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Dontlietome7
  * @author Utar
  */
@@ -615,6 +615,13 @@ $messages['uk'] = array(
 	'iwedit-update' => 'Оновити',
 	'iwedit-error' => '<p>Сталася помилка.</p>',
 	'iwedit-success' => '<p>Посилання успішно створено.</p>',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'iwedit-update' => 'Cập nhật',
 );
 
 /** Simplified Chinese (中文（简体）‎)

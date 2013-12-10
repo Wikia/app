@@ -10,7 +10,7 @@ class ImagesServiceUploadTest extends WikiaBaseTest {
 	const URL = 'http://upload.wikimedia.org/wikipedia/commons/d/d9/Eldfell%2C_Helgafell_and_the_fissure.jpg';
 	const REUPLOAD_URL = 'http://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Atlantic_Puffin.jpg/320px-Atlantic_Puffin.jpg';
 	const PREFIX = 'QAImage';
-	const FILENAME = 'Test%-$1.jpg';
+	const FILENAME = 'Test%?ąę!-$1.jpg';
 
 	private $origUser;
 	private $fileName;
@@ -51,10 +51,12 @@ class ImagesServiceUploadTest extends WikiaBaseTest {
 		);
 
 		// verify that it's accessible via HTTP
-		$res = Http::get( $url, 'default', ['noProxy' => true] );
+		$req = MWHttpRequest::factory( $url, ['noProxy' => true] );
+		$req->execute();
 
-		$this->assertTrue( $res !== false, 'Uploaded image should return HTTP 200 - ' . $url );
-		$this->assertEquals( $fileHash, md5( $res ), 'Uploaded image hash should match - ' . $url );
+		$this->assertEquals( 200, $req->getStatus(), 'Uploaded image should return HTTP 200 - ' . $url );
+		$this->assertEquals( $fileHash, md5( $req->getContent() ), 'Uploaded image hash should match - ' . $url );
+		$this->assertEquals( 'image/jpeg', $req->getResponseHeader( 'Content-Type' ), 'Uploaded image should be JPEG' );
 	}
 
 	// check the path - /firefly/images/thumb/5/53/Test-1378979336.jpg/120px-0%2C451%2C0%2C294-Test-1378979336.jpg
