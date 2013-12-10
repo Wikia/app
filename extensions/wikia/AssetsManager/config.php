@@ -684,9 +684,10 @@ $config['special_contact_wikiamobile_js'] = array(
 $config['monobook_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
-		'#group_oasis_wikia_js',
+		'#group_oasis_shared_core_js',
 		'#group_oasis_jquery',
 		'#group_articlecomments_js',
+		'#group_ui_repo_api_js',
 
 		// TODO: remove dependency on YUI (see BugId:3116)
 		'//resources/wikia/libraries/yui/utilities/utilities.js',
