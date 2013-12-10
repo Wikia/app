@@ -1178,7 +1178,7 @@ ve.init.mw.ViewPageTarget.prototype.setupToolbarButtons = function () {
 	this.toolbarCancelButton = new OO.ui.PushButtonWidget( { 'label': ve.msg( 'visualeditor-toolbar-cancel' ) } );
 	this.toolbarCancelButton.$element.addClass( 've-ui-toolbar-cancelButton' );
 	this.toolbarSaveButton = new OO.ui.PushButtonWidget( {
-		'label': ve.msg( 'visualeditor-toolbar-savedialog' ),
+		'label': ve.msg( 'wikia-visualeditor-toolbar-savedialog' ),
 		'flags': ['constructive'],
 		'disabled': !this.restoring
 	} );
