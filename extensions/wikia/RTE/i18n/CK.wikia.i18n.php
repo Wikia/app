@@ -692,6 +692,8 @@ $messages['ce'] = array(
 	'rte-ck-modeSwitch-toWysiwyg' => 'Визуальни тадар',
 	'rte-ck-templateDropDown-label' => 'Кеп',
 	'rte-ck-templateEditor-editor-parameters' => 'Параметраш',
+	'rte-ck-templateEditor-editor-previewButton' => 'Хьалха муха ю хьажа',
+	'rte-ck-templateEditor-editor-previewTitle' => 'Хьалха муха ю хьажа',
 );
 
 /** Sorani Kurdish (کوردی)
@@ -701,7 +703,7 @@ $messages['ckb'] = array(
 	'rte-ck-link-add' => 'بەستەر زیاد بکە',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Chmee2
  * @author Darth Daron
  * @author Mormegil
@@ -1011,6 +1013,7 @@ $messages['diq'] = array(
  * @author Shirayuki
  */
 $messages['en-gb'] = array(
+	'rte-ck-justify-center' => 'Align Centre',
 	'rte-ck-link-error-badUrl' => 'We do not recognise that URL - please check it is correct.',
 );
 
@@ -2933,6 +2936,7 @@ $messages['ps'] = array(
  * @author Crazymadlover
  * @author Giro720
  * @author Hamilton Abreu
+ * @author Josep Maria 15.
  * @author Luckas
  * @author Malafaya
  * @author SandroHc
@@ -3036,7 +3040,7 @@ $messages['pt'] = array(
 	'rte-ck-poll-confirmDelete' => 'Tem a certeza de que pretende remover a votação desta página?',
 	'rte-ck-poll-confirmDeleteTitle' => 'Remover esta votação?',
 	'rte-ck-spellchecker-moreSuggestions' => 'Mais sugestões',
-	'rte-ck-pasteText-title' => 'Cole seu texto',
+	'rte-ck-pasteText-title' => 'Cola o teu texto',
 	'rte-ck-format-tag_p' => 'Texto normal',
 );
 
@@ -3711,6 +3715,7 @@ $messages['tr'] = array(
 	'rte-ck-media-edit' => 'değiştir',
 	'rte-ck-modeSwitch-toSource' => 'Kaynak',
 	'rte-ck-modeSwitch-toWysiwyg' => 'Görsel',
+	'rte-ck-modeSwitch-toSourceTooltip' => 'Kaynak moduna geç',
 	'rte-ck-photoGallery-confirmDelete' => 'Bu galeriyi sayfadan kaldırmak istediğinize emin misiniz?',
 	'rte-ck-photoGallery-confirmDeleteTitle' => 'Galeriyi kaldır?',
 	'rte-ck-photoGallery-tooltip' => 'Bu bir galeridir.',

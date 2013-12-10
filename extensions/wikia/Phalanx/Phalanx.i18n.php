@@ -465,7 +465,7 @@ $messages['ce'] = array(
 	'phalanx-rule-log-details' => 'Литтар: "$1", тайп: "$2", бахьна: "$3"',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Chmee2
  */
 $messages['cs'] = array(
@@ -3000,6 +3000,15 @@ $messages['uk'] = array(
  */
 $messages['uz'] = array(
 	'phalanx-label-lang' => 'Til:',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'phalanx-stats-table-language' => 'Ngôn ngữ',
+	'phalanx-stats-table-text' => 'Văn bản',
+	'phalanx-stats-table-reason' => 'Lý do',
 );
 
 /** Simplified Chinese (中文（简体）‎)

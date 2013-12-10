@@ -117,15 +117,15 @@ $messages['ce'] = array(
 	'timeago-year' => '$1 {{PLURAL:$1|шо}} хьалха',
 	'timeago-month' => '$1 {{PLURAL:$1|бутт}} хьалха',
 	'timeago-day' => '{{PLURAL:$1|$1 де}} хьалха',
-	'timeago-hour' => '{{PLURAL:$1|$1 сахьат}} хьалха',
+	'timeago-hour' => '{{PLURAL:$1|$1 сахьт}} хьалха',
 	'timeago-minute' => '$1 {{PLURAL:$1|минут}} хьалха',
 	'timeago-day-from-now' => '{{PLURAL:$1|$1 де}} хьалха',
-	'timeago-hour-from-now' => '{{PLURAL:$1|$1 сахьат}} хьалха',
+	'timeago-hour-from-now' => '{{PLURAL:$1|$1 сахьт}} хьалха',
 	'timeago-minute-from-now' => '$1 {{PLURAL:$1|минут}} хьалха',
 	'timeago-month-from-now' => '$1 {{PLURAL:$1|бутт}} хьалха',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Darth Daron
  * @author Dontlietome7
  * @author Mormegil

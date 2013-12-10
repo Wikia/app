@@ -439,6 +439,7 @@ $messages['lb'] = array(
 	'cloakcheck-form-username' => 'Benotzernumm:',
 	'cloakcheck-form-check' => 'Benotzernumm nokucken',
 	'cloakcheck-process-empty' => 'De Benotzernumm däerf net eidel sinn.',
+	'cloakcheck-process-notexist' => 'De Benotzernumm gëtt et net.',
 	'cloakcheck-process-username' => 'Benotzernumm: $1',
 	'cloakcheck-process-accountage-yes' => 'De Benotzerkont ass al genuch.',
 	'cloakcheck-process-accountage-no' => 'De Benotzerkont ass ze nei.',

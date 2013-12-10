@@ -51,7 +51,7 @@ $messages['ca'] = array(
 	'centralhelpsearch-placeholder' => 'Buscar en Ajuda...',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Chmee2
  * @author Darth Daron
  */
