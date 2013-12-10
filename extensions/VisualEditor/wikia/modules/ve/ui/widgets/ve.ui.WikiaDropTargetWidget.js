@@ -10,10 +10,10 @@
  * @extends ve.ui.Widget
  *
  * @constructor
- * @param {Object} [config] Configuration options
- * @cfg {Object} [upload] An instance of ve.ui.WikiaUploadWidget
- * @cfg {Object} [surface] Instance of parent dialog surface
- * @cfg {Object} [frame] Instance of parent dialog frame
+ * @param {Object} config Configuration options
+ * @cfg {ve.ui.WikiaUploadWidget} upload An instance of ve.ui.WikiaUploadWidget
+ * @cfg {Object} surface Instance of parent dialog surface
+ * @cfg {Object} frame Instance of parent dialog frame
  */
 ve.ui.WikiaDropTargetWidget = function VeUiWikiaDropTargetWidget ( config ) {
 	// Configuration initialization
@@ -35,9 +35,6 @@ ve.ui.WikiaDropTargetWidget = function VeUiWikiaDropTargetWidget ( config ) {
 ve.inheritClass( ve.ui.WikiaDropTargetWidget, ve.ui.Widget );
 
 ve.ui.WikiaDropTargetWidget.prototype.initialize = function() {
-	// Create drop target
-	this.$ = this.$$( '<div>' ).addClass( this.className );
-
 	//TODO: Temporary code
 	this.$.css({
 		height: '1000px',
@@ -50,7 +47,7 @@ ve.ui.WikiaDropTargetWidget.prototype.initialize = function() {
 	});
 
 	this.$insertMediaDialog = this.$overlay.find( '.ve-ui-window-frame' );
-	this.$.appendTo( this.$insertMediaDialog );
+	this.$.addClass( this.className ).appendTo( this.$insertMediaDialog );
 
 	this.$overlay.on( 'dragenter dragover', ve.bind( this.onFileDrag, this ) );
 	this.$overlay.on( 'dragleave dragend drop', ve.bind( this.onFileDragEnd, this ) );

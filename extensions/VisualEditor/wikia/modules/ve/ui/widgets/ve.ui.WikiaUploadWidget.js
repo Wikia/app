@@ -116,8 +116,9 @@ ve.ui.WikiaUploadWidget.prototype.onClick = function () {
  * @method
  * @fires success
  */
-ve.ui.WikiaUploadWidget.prototype.onFileChange = function ( evt, file ) {
-	var fileErrors;
+ve.ui.WikiaUploadWidget.prototype.onFileChange = function ( event, file ) {
+	var fileErrors,
+			form;
 
 	file = file || this.$file[0].files[0];
 	if ( !file ) {
@@ -137,7 +138,7 @@ ve.ui.WikiaUploadWidget.prototype.onFileChange = function ( evt, file ) {
 			$( '.ve-ui-frame' ).contents().find( '.ve-ui-window-body' )
 		);
 	} else {
-		var form = new FormData( document.createElement('form') );
+		form = new FormData( document.createElement( 'form' ) );
 		form.append( 'file', file );
 
 		$.ajax( {
