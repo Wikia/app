@@ -151,7 +151,7 @@ class VideoPageToolHelper extends WikiaModel {
 
 			$video = array(
 				'videoTitle'    => $videoTitle,
-				'videoKey'      => htmlspecialchars( $title->getDBKey() ),
+				'videoKey'      => $title->getDBKey(),
 				'videoThumb'    => $videoThumb,
 				'largeThumbUrl' => $largeThumbUrl,
 				'altThumbName'  => $altThumbName,
