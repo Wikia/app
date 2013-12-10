@@ -10,7 +10,6 @@ $messages['en'] = array(
 	'wikiamobileeditor-preview' => 'Preview',
 	'wikiamobileeditor-summary-placeholder' => 'What did you change (Optional)?',
 	'wikiamobileeditor-licensing' => 'Contributions licensed as',
-	'wikiamobileeditor-licensing-type' => 'CC-BY-SA',
 	'wikiamobileeditor-keep-editing' => 'Keep Editing',
 
 	'wikiamobileeditor-on-save' => 'Success! Your edit was published.',
