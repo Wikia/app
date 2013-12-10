@@ -17,7 +17,7 @@ class ApiAddMediaTemporary extends ApiAddMedia {
 			$result = $this->executeVideo();
 		}
 
-		$this->getResult()->addValue( null, $this->getModuleName(), $result );	
+		$this->getResult()->addValue( null, $this->getModuleName(), $result );
 	}
 
 	private function executeImage() {
@@ -112,10 +112,21 @@ class ApiAddMediaTemporary extends ApiAddMedia {
 			) );
 			$this->mUpload->fetchFile();
 			$this->verifyUpload();
-			$tempFile = $this->createTempFile( $this->mUpload->getTempPath() );
+
+			// Create a temp image for the thumbnail and a temp video for the preview
+			$tempVideo = $this->createTempFile( $this->mUpload->getTempPath(), true );
+			$tempImage = $this->createTempFile( $this->mUpload->getTempPath() );
+
+			$provider = $apiwrapper->getMimeType();
+			// TODO: ask Saipetch if we really need this
+			$tempVideo->forceMime( $provider );
+			$tempVideo->setVideoId( $apiwrapper->getVideoId() );
+			$tempVideo->setProps( array( 'mime' => $provider ) );
+
 			$result[ 'title' ] = $apiwrapper->getTitle();
-			$result[ 'tempUrl' ] = $tempFile->getUrl();
-			$result[ 'tempName' ] = $tempFile->getName();				
+			$result[ 'tempUrl' ] = $tempImage->getUrl();
+			$result[ 'tempName' ] = $tempVideo->getName();
+			$result[ 'embedCode' ] = json_encode( $tempVideo->getEmbedCode( 728, false, false, true ) );
 		}
 		return $result;
 	}
@@ -129,12 +140,15 @@ class ApiAddMediaTemporary extends ApiAddMedia {
         return null;
     }
 
-	private function createTempFile( $filepath ) {
-		$tempFile = new FakeLocalFile(
+	private function createTempFile( $filepath, $isVideo = false ) {
+		$tempFile = new WikiaLocalFile(
 			Title::newFromText( 'Temp_' . uniqid( '', true ), 6 ),
 			RepoGroup::singleton()->getLocalRepo()
 		);
-		$tempFile->upload( $filepath, '', '' );
+		// Don't need to upload if it's a video file
+		if( !$isVideo ) {
+			$tempFile->upload( $filepath, '', '' );
+		}
 		// TODO: Add to the garbage collector
 		return $tempFile;
 	}
