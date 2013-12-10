@@ -109,7 +109,7 @@ define( 'wikia.ui.modal', [
 	 */
 
 	function unblockPageScrolling() {
-		$bodyElm.removeClass( 'with-blackout fake-scrollbar').css('top', 'auto');
+		$bodyElm.removeClass( 'with-blackout fake-scrollbar').css( 'top', 'auto' );
 		$win.scrollTop( wScrollTop );
 	}
 
