@@ -19,8 +19,6 @@ class FilePageController extends WikiaController {
 	public function fileUsage() {
 		wfProfileIn( __METHOD__ );
 
-		$app = F::app();
-
 		$seeMoreLink = '';
 		$seeMoreText = '';
 		$shortenedSummary = array(); // A subset of the data returned to show immediately
@@ -36,8 +34,7 @@ class FilePageController extends WikiaController {
 			$heading = wfMessage( 'video-page-global-file-list-header' )->plain();
 
 			// Forward to the getGlobalUsage method
-			$summary = $app->sendRequest( 'FilePageController', 'getGlobalUsage' )->getData()['summary'];
-
+			$summary = $this->sendSelfRequest( 'getGlobalUsage' )->getData()['summary'];
 			if ( array_key_exists( $this->wg->DBname, $summary ) ) {
 				unset( $summary[$this->wg->DBname] );
 			}
@@ -65,7 +62,7 @@ class FilePageController extends WikiaController {
 			}
 		} else {
 			$heading = wfMessage( 'video-page-file-list-header' )->plain();
-			$summary = $app->sendRequest( 'FilePageController', 'getLocalUsage' )->getData()['summary'];
+			$summary = $this->sendSelfRequest( 'getLocalUsage' )->getData()['summary'];
 
 			// Shorten the list down to three articles much like above in global, but
 			// here we also need to make the $shortentedSummary structure uniform to match
@@ -75,14 +72,13 @@ class FilePageController extends WikiaController {
 				$shortenedSummary = array( $dbName => array_slice( $summary, 0, 3 ) );
 			}
 
-			$seeMoreLink = SpecialPage::getTitleFor( "WhatLinksHere" )->escapeLocalUrl();
-			$seeMoreLink .= '/'.$app->wg->Title->getPrefixedDBkey();
+			$seeMoreLink = SpecialPage::getTitleFor( "WhatLinksHere" )->escapeLocalUrl().'/'.$this->wg->Title->getPrefixedDBkey();
 			$seeMoreText = wfMessage( 'file-page-more-links' )->plain();
 		}
 
 		// Send the $shortenedSummary to fileList to flesh out the details
 		$params = array( 'summary' => $shortenedSummary, 'type' => $type );
-		$data = $app->sendRequest( 'FilePageController', 'fileList', $params )->getData();
+		$data = $this->sendSelfRequest( 'fileList', $params )->getData();
 		$fileList = empty( $data['fileList'] ) ? array() : $data['fileList'];
 
 		// Set template variables
@@ -196,7 +192,7 @@ class FilePageController extends WikiaController {
 		$relatedPages->setCategories( $titleCats );
 
 		# Rendering the RelatedPages index with our alternate title and pre-seeded categories.
-		$this->text = F::app()->renderView( 'RelatedPages', 'section', [ "altTitle" => $title, "anyNS" => true ] );
+		$this->text = $this->app->renderView( 'RelatedPages', 'section', [ "altTitle" => $title, "anyNS" => true ] );
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -385,8 +381,9 @@ class FilePageController extends WikiaController {
 	/**
 	 * Figure out what articles include this file from any wiki
 	 */
-	public function getGlobalUsage () {
+	public function getGlobalUsage() {
 		wfProfileIn( __METHOD__ );
+
 		if ( empty( $this->wg->EnableGlobalUsageExt ) ) {
 			$this->summary = array();
 			wfProfileOut( __METHOD__ );
@@ -439,13 +436,15 @@ class FilePageController extends WikiaController {
 	 */
 	public function addGlobalSummary( $data ) {
 		return $this->addSummary( $data, function ( $dbName, $articleIds ) {
-			$url = WikiFactory::DBtoURL( $dbName );
-			$url = WikiFactory::getLocalEnvURL( $url );
-			$url .= '/wikia.php?controller=ArticleSummaryController&method=blurb&format=json&ids=';
-			$url .= implode( ',', $articleIds );
+			$params = array(
+				'controller' => 'ArticleSummaryController',
+				'method' => 'blurb',
+				'ids' => implode( ',', $articleIds ),
+			);
 
-			$out = Http::get( $url );
-			return json_decode( $out, true );
+			$result = ApiService::foreignCall( $dbName, $params, ApiService::WIKIA );
+
+			return $result;
 		});
 	}
 
