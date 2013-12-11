@@ -354,6 +354,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.onMediaPageRemove = function ( item ) {
 ve.ui.WikiaMediaInsertDialog.prototype.onOpen = function () {
 	ve.ui.MWDialog.prototype.onOpen.call( this );
 	this.setPage( 'main' );
+	this.dropTarget.setup();
 };
 
 /**
@@ -382,6 +383,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.onClose = function ( action ) {
 	}
 	this.cartModel.clearItems();
 	this.queryInput.setValue( '' );
+	this.dropTarget.teardown();
 };
 
 /**

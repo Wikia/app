@@ -11,7 +11,6 @@
  *
  * @constructor
  * @param {Object} config Configuration options
- * @cfg {ve.ui.WikiaUploadWidget} upload An instance of ve.ui.WikiaUploadWidget
  * @cfg {Object} surface Instance of parent dialog surface
  * @cfg {Object} frame Instance of parent dialog frame
  */
@@ -21,16 +20,12 @@ ve.ui.WikiaDropTargetWidget = function VeUiWikiaDropTargetWidget ( config ) {
 	ve.ui.Widget.call( this, config );
 
 	// Properties
-	this.upload = config.upload;
 	this.$overlay = config.surface.$globalOverlay.find( '.ve-ui-window' );
 	this.$frame = config.frame.$document;
 	this.$insertMediaDialog = this.$overlay.find( '.ve-ui-window-frame' );
 	this.fadeTimeout = null;
 
 	// Events
-	this.$overlay.on( 'dragenter dragover', ve.bind( this.onFileDrag, this ) );
-	this.$overlay.on( 'dragleave dragend drop', ve.bind( this.onFileDragEnd, this ) );
-
 	this.$.on( 'dragenter dragover', ve.bind( this.onFileDrag, this ) );
 	this.$.on( 'drop', ve.bind( this.onFileDrop, this ) );
 
@@ -63,6 +58,7 @@ ve.ui.WikiaDropTargetWidget.prototype.onFileDrag = function( e ) {
 	this.$.fadeIn();
 };
 
+/* Event Handlers */
 /**
  * Handles dragend/leave & hides drop zone
  * @method
@@ -95,3 +91,25 @@ ve.ui.WikiaDropTargetWidget.prototype.onFileDrop = function( e ) {
 	// trigger file upload
 	this.emit( 'upload', files[0] );
 };
+
+/* Methods */
+
+/**
+ * Binds events 
+ * @method
+ */
+ve.ui.WikiaDropTargetWidget.prototype.setup = function( e ) {
+	this.$overlay.on( 'dragenter dragover', ve.bind( this.onFileDrag, this ) );
+	this.$overlay.on( 'dragleave dragend drop', ve.bind( this.onFileDragEnd, this ) );
+};
+
+/**
+ * Unbinds events 
+ * @method
+ */
+ve.ui.WikiaDropTargetWidget.prototype.teardown = function( e ) {
+	this.$overlay.off( 'dragenter dragover' );
+	this.$overlay.off( 'dragleave dragend drop' );
+};
+
+
