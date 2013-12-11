@@ -195,7 +195,7 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 
 	function setupImage( opening ) {
 		var video,
-			imgTitle = currentMedia.name,
+			imgTitle = decodeURIComponent( currentMedia.name ),
 			// cache value for clickSource to prevent race conditions
 			cs = clickSource,
 			// grab the querystring for the current url
