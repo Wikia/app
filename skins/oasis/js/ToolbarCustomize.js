@@ -64,21 +64,21 @@
 				cl += ' list-item-menu';
 			}
 			html = '<li' +
-				' data-tool-id="'+$.htmlentities( item.id )+'"' +
-				' data-default-caption="'+$.htmlentities( item.defaultCaption )+'"' +
-				' data-caption="'+$.htmlentities( item.caption )+'"' +
+				' data-tool-id="' + $.htmlentities( item.id ) + '"' +
+				' data-default-caption="' + $.htmlentities( item.defaultCaption ) + '"' +
+				' data-caption="' + $.htmlentities( item.caption ) + '"' +
 				( cl ? ' class="' + cl + '"' : '' ) + '>';
 			if ( type === 'menu' ) {
 				html += '<img src="' + wgBlankImgUrl + '" class="folder-icon" height="16" width="16" />';
 			}
-			html += '<span class="name">'+$.htmlentities( item.caption )+'</span>';
+			html += '<span class="name">' + $.htmlentities( item.caption ) + '</span>';
 			if ( type === 'item' ) {
 				html += this.addIcons();
 			}
 			html += '</li>';
 
 			itemEl = $( html );
-			this.fire( 'itembuild', this,item, itemEl );
+			this.fire( 'itembuild', this, item, itemEl );
 			return itemEl;
 		},
 
@@ -100,7 +100,7 @@
 			for ( i = 0; i < els.length; i++ ) {
 				this.el.append( this.buildItem( els[i], level ) );
 				if ( els[i].items ) {
-					this.loadLevel( els[i].items,level+1 );
+					this.loadLevel( els[i].items, level + 1 );
 				}
 			}
 		},
@@ -137,7 +137,7 @@
 			this.updateLevels();
 		},
 
-		add: function( item,level ) {
+		add: function( item, level ) {
 			// add to my tools
 			var itemEl = this.buildItem( item, level || 0 ),
 				$mytools;
