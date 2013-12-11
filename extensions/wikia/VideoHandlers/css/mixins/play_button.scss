@@ -1,22 +1,20 @@
-@import "skins/oasis/css/mixins/background-opacity";
+﻿@import "skins/oasis/css/mixins/opacity";
 
-/**
- * Style the refactored video thumbnails and allow for responsive and non-responsive thumbnails.
+/*
+ * Adds a play button to a video thumbnail
+ * If no size class is defined, the default case is .medium
  */
 
-.wikia-video-thumbnail {
-	display: inline-block;
-	width: 100%;
-	position: relative;
+@mixin play-button {
 
 	// Background circle
 	.play-circle {
+		@include opacity( 50 );
 		background: black;
 		border: 1px solid #FFF;
 		border-radius: 100px;
 		display: block;
 		left: 50%;
-		opacity: .5;
 		position: absolute;
 		top: 50%;
 
@@ -46,9 +44,10 @@
 		border-radius: 2px;
 		content: "";
 		display: block;
-		transform: rotate( 35deg ) skewX( -15deg );
 		-webkit-transform: rotate( 35deg ) skewX( -15deg );  /* Safari and Chrome */
 		-ms-transform: rotate( 35deg ) skewX( -15deg ); /* IE 9 */
+		-o-transform: rotate( 35deg ) skewX( -15deg ); /* Opera */
+		-moz-transform: rotate( 35deg ) skewX( -15deg ); /* Firefox */
 
 		// only for medium
 		height: 20px;
@@ -56,41 +55,8 @@
 		width: 20px;
 	}
 
-	// xsmall sizes are 54% of medium
-	// they are also positioned in the bottom/left instead of center
-	&.xsmall {
-		.play-circle{
-			// sizing
-			height: 27px;
-			width: 27px;
-
-			// positioning
-			bottom: 10px;
-			left: 34px;
-			top: auto;
-		}
-
-		.play-arrow {
-			// sizing
-			height: 16.2px;
-			width: 12.96px;
-
-			// positioning
-			bottom: 16px;
-			left: 25px;
-			top: auto;
-		}
-
-		.play-arrow:after {
-			height: 10.8px;
-			margin: 1px 0 0 -5.4px;
-			width: 10.8px;
-		}
-	}
-
-
 	// small sizes are 70% of medium
-	// they are also positioned in the bottom/left instead of center
+	// they are also positioned 10px from the left and bottom instead of center
 	&.small {
 		.play-circle{
 			// sizing
@@ -102,7 +68,6 @@
 			left: 34px;
 			top: auto;
 		}
-
 		.play-arrow {
 			// sizing
 			height: 21px;
@@ -113,7 +78,6 @@
 			left: 28px;
 			top: auto;
 		}
-
 		.play-arrow:after {
 			height: 14px;
 			margin: 2px 0 0 -7px;
@@ -128,13 +92,11 @@
 			margin: -35px 0 0 -35px;
 			width: 70px;
 		}
-
 		.play-arrow {
 			height: 420px;
 			margin: -15.5px 0 0 -5.5px;
 			width: 35px;
 		}
-
 		.play-arrow:after {
 			height: 28px;
 			margin: 2px 0 0 -14px;
@@ -149,13 +111,11 @@
 			margin: -45px 0 0 -45px;
 			width: 90px;
 		}
-
 		.play-arrow {
 			height: 54px;
 			margin: -20px 0 0 -7.2px;
 			width: 45px;
 		}
-
 		.play-arrow:after {
 			height: 36px;
 			margin: 3px 0 0 -18px;
@@ -165,37 +125,18 @@
 
 	&:hover {
 		.play-circle {
-			opacity: .7;
+			@include opacity( 70 );
 		}
 	}
 
 	&.hide-play {
-		.play-circle,
-		.play-arrow {
+		.play-circle, .play-arrow {
 			display: none;
 		}
-
 		&:hover {
-			.play-circle,
-			.play-arrow {
+			.play-circle, .play-arrow {
 				display: block;
 			}
 		}
-	}
-
-	&.responsive .wikia-video-thumb {
-		width: 100%;
-	}
-
-	.duration {
-		@include background-opacity(#000, 70);
-		border-radius: 1px 0 0 0;
-		bottom: 0;
-		color: white;
-		font-size: 12px;
-		line-height: 17px;
-		padding: 0px 6px;
-		position: absolute;
-		right: 0;
 	}
 }
