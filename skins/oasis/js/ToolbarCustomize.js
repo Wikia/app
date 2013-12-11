@@ -1,16 +1,20 @@
-(function(){
-	window.ToolbarCustomize = window.ToolbarCustomize || {};
-	var TC = window.ToolbarCustomize,
-		isIPad = false;
+( function( window ) {
+	'use strict';
 
-	require( [ 'wikia.browserDetect' ], function( browserDetect ) {
+	window.ToolbarCustomize = window.ToolbarCustomize || {};
+
+	var TC = window.ToolbarCustomize,
+		isIPad = false,
+		wgBlankImgUrl = window.wgBlankImgUrl;
+
+	require( ['wikia.browserDetect'], function( browserDetect ) {
 		isIPad = browserDetect.isIPad();
 	} );
 
-	TC.OptionsTree = $.createClass(Observable,{
+	TC.OptionsTree = $.createClass( window.Observable, {
 
-		constructor: function(el) {
-			TC.OptionsTree.superclass.constructor.call(this);
+		constructor: function( el ) {
+			TC.OptionsTree.superclass.constructor.call( this );
 			this.el = el;
 
 			if( !isIPad ) {
@@ -25,92 +29,107 @@
 
 		/* assumes one my tools menu */
 		updateLevels: function() {
-			var all = this.el.children('li');
-			all.removeClass('list-item-indent-1');
-			var level = 0;
-			all.each(function(i,v){
-				if ($(v).hasClass('list-item-menu')) {
+			var $all = this.el.children( 'li' ),
+				level = 0,
+				$ind;
+
+			$all.removeClass( 'list-item-indent-1' );
+
+			$all.each( function( index, element ) {
+				if ( $( element ).hasClass( 'list-item-menu' ) ) {
 					level++;
-				} else if (level > 0) {
-					$(v).addClass('list-item-indent-'+level);
+				} else if ( level > 0 ) {
+					$( element ).addClass( 'list-item-indent-' + level );
 				}
-			});
+			} );
 
-			this.el.find('.tree-visual').remove();
-			var ind = this.el.children('li.list-item-indent-1');
-			ind.prepend('<span class="tree-visual tree-line"></span><span class="tree-visual tree-dash"></span>');
-			ind.last().find('.tree-visual').remove();
-			ind.last().prepend('<span class="tree-visual tree-line-last"></span><span class="tree-visual tree-dash"></span>');
+			this.el.find( '.tree-visual' ).remove();
+			$ind = this.el.children( 'li.list-item-indent-1' );
+			$ind.prepend( '<span class="tree-visual tree-line"></span><span class="tree-visual tree-dash"></span>' );
+			$ind.last().find( '.tree-visual' ).remove();
+			$ind.last().prepend(
+				'<span class="tree-visual tree-line-last"></span><span class="tree-visual tree-dash"></span>'
+			);
 
-			this.fire('update',this);
+			this.fire( 'update', this );
 		},
 
 		buildItem: function( item, level ) {
-			var type = (item.id.substr(0,5) == "Menu:") ? 'menu' : 'item';
-			var cl = level ? 'list-item-indent-'+level : '';
-			if (type == 'menu') {
+			var type = ( item.id.substr( 0,5 ) === 'Menu:' ) ? 'menu' : 'item',
+				cl = level ? 'list-item-indent-' + level : '',
+				html,
+				itemEl;
+
+			if ( type === 'menu' ) {
 				cl += ' list-item-menu';
 			}
-			var html =
-				'<li'
-				+' data-tool-id="'+$.htmlentities(item.id)+'"'
-				+' data-default-caption="'+$.htmlentities(item.defaultCaption)+'"'
-				+' data-caption="'+$.htmlentities(item.caption)+'"'
-				+(cl?' class="'+cl+'"':'')+'>';
-			if (type == 'menu') {
-				html += '<img src="'+wgBlankImgUrl+'" class="folder-icon" height="16" width="16" />';
+			html = '<li' +
+				' data-tool-id="'+$.htmlentities( item.id )+'"' +
+				' data-default-caption="'+$.htmlentities( item.defaultCaption )+'"' +
+				' data-caption="'+$.htmlentities( item.caption )+'"' +
+				( cl ? ' class="' + cl + '"' : '' ) + '>';
+			if ( type === 'menu' ) {
+				html += '<img src="' + wgBlankImgUrl + '" class="folder-icon" height="16" width="16" />';
 			}
-			html += '<span class="name">'+$.htmlentities(item.caption)+'</span>';
-			if (type == 'item') {
-				html = this.addIcons( html );
+			html += '<span class="name">'+$.htmlentities( item.caption )+'</span>';
+			if ( type === 'item' ) {
+				html += this.addIcons();
 			}
 			html += '</li>';
-			var itemEl = $(html);
-			this.fire('itembuild',this,item,itemEl);
+
+			itemEl = $( html );
+			this.fire( 'itembuild', this,item, itemEl );
 			return itemEl;
 		},
 
-		addIcons: function( html ) {
-			html += '<img src="' + wgBlankImgUrl + '" class="sprite edit-pencil">' +
-				'<img src="' + wgBlankImgUrl + '" class="sprite trash">';
+		addIcons: function() {
+			var html = [
+				'<img src="' + wgBlankImgUrl + '" class="sprite edit-pencil">',
+				'<img src="' + wgBlankImgUrl + '" class="sprite trash">'
+			];
 
 			if( !isIPad ) {
-				html += '<img src="' + wgBlankImgUrl + '" class="sprite drag">';
+				html.push( '<img src="' + wgBlankImgUrl + '" class="sprite drag">' );
 			}
 
-			return html;
+			return html.join( '' );
 		},
 
-		loadLevel: function(els,level) {
-			for (var i=0;i<els.length;i++) {
-				this.el.append(this.buildItem(els[i],level));
-				if (els[i].items) {
-					this.loadLevel(els[i].items,level+1);
+		loadLevel: function( els, level ) {
+			var i;
+			for ( i = 0; i < els.length; i++ ) {
+				this.el.append( this.buildItem( els[i], level ) );
+				if ( els[i].items ) {
+					this.loadLevel( els[i].items,level+1 );
 				}
 			}
 		},
 
-		load: function(data) {
+		load: function( data ) {
 			this.el.empty();
-			this.loadLevel(data,0);
+			this.loadLevel( data, 0 );
 			this.updateLevels();
 		},
 
 		save: function() {
-			var all = this.el.children('li');
-			var stack = [[]];
-			var level = 0;
-			all.each(function(i,v){
-				v = $(v);
-				var o = { id: v.attr('data-tool-id'), defaultCaption: v.attr('data-default-caption'), caption: v.attr('data-caption') };
-				stack[level].push(o);
-				if (v.hasClass('list-item-menu')) {
+			var $all = this.el.children( 'li' ),
+				stack = [[]],
+				level = 0;
+			$all.each( function( index, element ) {
+				element = $( element );
+				var o = {
+					id: element.data( 'tool-id' ),
+					defaultCaption: element.data( 'default-caption' ),
+					caption: element.data( 'caption' )
+				};
+				stack[level].push( o );
+				if ( element.hasClass( 'list-item-menu' ) ) {
 					level = 1;
 					o.items = [];
 					o.isMenu = true;
 					stack[level] = o.items;
 				}
-			});
+			} );
 			return stack[0];
 		},
 
@@ -118,101 +137,108 @@
 			this.updateLevels();
 		},
 
-		add: function(item,level) {
+		add: function( item,level ) {
 			// add to my tools
-			var itemEl = this.buildItem(item,level || 0);
-			if (level == 0) {
-				var mytools = this.el.children('.list-item-menu');
-				if (mytools) mytools.before(itemEl);
-				else this.el.append(itemEl);
+			var itemEl = this.buildItem( item, level || 0 ),
+				$mytools;
+			if ( level === 0 ) {
+				$mytools = this.el.children( '.list-item-menu' );
+				if ( $mytools ) {
+					$mytools.before( itemEl );
+				} else {
+					this.el.append( itemEl );
+				}
 			} else {
-				this.el.append(itemEl);
+				this.el.append( itemEl );
 			}
-			this.scrollToItem(itemEl);
+			this.scrollToItem( itemEl );
 			this.updateLevels();
 		},
 
-		scrollToItem: function(itemEl) {
-			var scroll = this.el.scrollTop();
-			var delta = itemEl.offset().top - this.el.offset().top;
-			var max = this.el.innerHeight() - itemEl.outerHeight();
-			var move = 0;
-			if (delta > max) {
+		scrollToItem: function( itemEl ) {
+			var scroll = this.el.scrollTop(),
+				delta = itemEl.offset().top - this.el.offset().top,
+				max = this.el.innerHeight() - itemEl.outerHeight(),
+				move = 0;
+			if ( delta > max ) {
 				move = delta - max;
 			}
-			if (delta < 0) {
+			if ( delta < 0 ) {
 				move = delta;
 			}
-			if (move != 0) {
-				this.el.scrollTop(scroll+move);
+			if ( move !== 0 ) {
+				this.el.scrollTop( scroll + move );
 			}
 		}
+	} );
 
-	});
+	TC.OptionLinks = $.createClass( window.Observable, {
 
-	TC.OptionLinks = $.createClass(Observable,{
-
-		constructor: function(el) {
-			TC.OptionLinks.superclass.constructor.call(this);
+		constructor: function( el ) {
+			TC.OptionLinks.superclass.constructor.call( this );
 			this.el = el;
 		},
 
-		onItemClick: function(evt) {
-			evt.preventDefault();
-			this.fire('itemclick',this,$(evt.target).attr('data-tool-id'));
+		onItemClick: function( event ) {
+			event.preventDefault();
+			this.fire( 'itemclick', this, $( event.target ).attr( 'data-tool-id' ) );
 			return false;
 		},
 
-		buildItem: function(item) {
+		buildItem: function( item ) {
 			var html =
-				'<li>'
-				+ '<a href="#" data-tool-id="'+$.htmlentities(item.id)+'">'
-				+ $.htmlentities(item.defaultCaption)
-				+ '</a></li>';
-			var itemEl = $(html);
-			itemEl.find('a').click($.proxy(this.onItemClick,this));
+				'<li>' +
+				'<a href="#" data-tool-id="' + $.htmlentities( item.id ) + '">' +
+				$.htmlentities( item.defaultCaption ) +
+				'</a></li>',
+				itemEl = $( html );
+
+			itemEl.find( 'a' ).click( $.proxy( this.onItemClick, this ) );
 			return itemEl;
 		},
 
-		load: function(els) {
+		load: function( els ) {
+			var i;
 			this.el.empty();
-			for (var i=0;i<els.length;i++) {
-				this.el.append(this.buildItem(els[i]));
+			for ( i = 0; i < els.length; i++ ) {
+				this.el.append( this.buildItem( els[i] ) );
 			}
 		}
+	} );
 
-	});
-
-	TC.Toggle = $.createClass(Object,{
-		constructor: function(target,buttons,cls) {
+	TC.Toggle = $.createClass( Object, {
+		constructor: function( target, buttons, cls ) {
 			this.target = target;
 			this.buttons = buttons;
 			this.cls = cls;
 			this.state = false;
 
 			this.hide();
-			this.buttons.bind('click.toggle',$.proxy(this.toggle,this));
+			this.buttons.bind( 'click.toggle', $.proxy( this.toggle, this ) );
 		},
 
 		hide: function() {
 			this.target.hide();
 			this.buttons.hide();
-			this.buttons.filter('.'+this.cls).show();
+			this.buttons.filter( '.' + this.cls ).show();
 		},
 
 		show: function() {
 			this.target.show();
 			this.buttons.hide();
-			this.buttons.not('.'+this.cls).show();
+			this.buttons.not( '.' + this.cls ).show();
 		},
 
-		toggle: function( evt ) {
-			this[ $(evt.currentTarget).hasClass(this.cls) ? "show" : "hide" ]();
+		toggle: function( event ) {
+			if ( $( event.currentTarget ).hasClass( this.cls ) ) {
+				this.show();
+			} else {
+				this.hide();
+			}
 		}
+	} );
 
-	});
-
-	TC.Configuration = $.createClass(Object,{
+	TC.Configuration = $.createClass( Object, {
 
 		toolbar: false,
 		data: false,
@@ -222,8 +248,8 @@
 		popular: false,
 		toggle: false,
 
-		constructor: function(toolbar) {
-			TC.Configuration.superclass.constructor.call(this);
+		constructor: function( toolbar ) {
+			TC.Configuration.superclass.constructor.call( this );
 			this.toolbar = toolbar;
 		},
 
@@ -245,16 +271,17 @@
 			fail( $.proxy( this.onLoadFailure, this ) );
 		},
 
-		onDataLoaded: function(data,textStatus,req) {
+		onDataLoaded: function( data ) {
 			this.data = data;
 		},
 
-		onLoadFailure: function( req, textStatus, errorThrown ) {
+		onLoadFailure: function( /*req, textStatus, errorThrown*/ ) {
+			// TODO: Show Error message
 		},
 
 		checkLoad: function() {
 			var self = this;
-			require( [ 'wikia.ui.factory' ], function( uiFactory ) {
+			require( ['wikia.ui.factory'], function( uiFactory ) {
 				uiFactory.init( ['modal'] ).then( function( uiModal ) {
 					var messages = self.data.messages,
 						toolsConfigurationConfig = {
@@ -318,9 +345,9 @@
 							lookup: self.getAutocompleteData(),
 							onSelect: $.proxy( self.addItemFromSearch, self ),
 							selectedClass: 'selected',
-							appendTo: self.w.find('.search-box'),
+							appendTo: self.w.find( '.search-box' ),
 							width: '300px'
-						});
+						} );
 						self.w.find( '.advanced-tools a' ).attr( 'target', '_blank' );
 
 						// Popular tools
@@ -331,13 +358,13 @@
 						self.toggle = new TC.Toggle( $group.children( '.popular-list' ),
 							$group.children( '.popular-toggle' ), 'toggle-1' );
 
-						self.w.find('.popular-toggle').click( $.proxy( self.togglePopular, self ) );
+						self.w.find( '.popular-toggle' ).click( $.proxy( self.togglePopular, self ) );
 
 						toolsConfigModal.bind( 'save', function( event ) {
 							event.preventDefault();
 							toolsConfigModal.deactivate();
 							self.save();
-						});
+						} );
 
 						toolsConfigModal.show();
 					} );
@@ -346,11 +373,13 @@
 		},
 
 		getAutocompleteData: function() {
-			var suggestions = [];
-			var data = [];
-			for (var i=0;i<this.data.allOptions.length;i++) {
-				suggestions.push(this.data.allOptions[i].caption);
-				data.push(this.data.allOptions[i].id);
+			var suggestions = [],
+				data = [],
+				length = this.data.allOptions.length,
+				i;
+			for ( i = 0; i < length; i++ ) {
+				suggestions.push( this.data.allOptions[i].caption );
+				data.push( this.data.allOptions[i].id );
 			}
 			return {
 				suggestions: suggestions,
@@ -359,8 +388,10 @@
 		},
 
 		findOptionByName: function( id ) {
-			for (var i=0;i<this.data.allOptions.length;i++) {
-				if (this.data.allOptions[i].id == id) {
+			var length = this.data.allOptions.length,
+				i;
+			for ( i = 0; i < length; i++ ) {
+				if ( this.data.allOptions[i].id === id ) {
 					return this.data.allOptions[i];
 				}
 			}
@@ -368,40 +399,44 @@
 		},
 
 		findOptionByCaption: function( caption ) {
-			for (var i=0;i<this.data.allOptions.length;i++) {
-				if (this.data.allOptions[i].caption == caption) {
+			var length = this.data.allOptions.length,
+				i;
+			for ( i = 0; i < length; i++ ) {
+				if ( this.data.allOptions[i].caption === caption ) {
 					return this.data.allOptions[i];
 				}
 			}
 			return false;
 		},
 
-		addItemFromSearch: function(value, data) {
-			var item = this.findOptionByName(data);
-			if (item) {
-				this.tree.add(item,0);
+		addItemFromSearch: function( value, data ) {
+			var item = this.findOptionByName( data );
+			if ( item ) {
+				this.tree.add( item, 0 );
 			}
-			this.w.find('.search').val('');
+			this.w.find( '.search' ).val( '' );
 		},
 
 		addPopularOption: function( popular, id ) {
-			var item = this.findOptionByName(id);
-			if (item) this.tree.add(item,0);
+			var item = this.findOptionByName( id );
+			if ( item ) {
+				this.tree.add( item, 0 );
+			}
 			return false;
 		},
 
 		loadDefaults: function() {
-			this.tree.load(this.data.defaultOptions);
+			this.tree.load( this.data.defaultOptions );
 			return false;
 		},
 
 		initItem: function( tree, item, el ) {
 			// add highlighting on iPad
 			if ( isIPad ) {
-				el.click(function( event ) {
+				el.click( function( event ) {
 					tree.el.children().removeClass( 'hover' );
 					$( event.currentTarget ).addClass( 'hover' );
-				});
+				} );
 			}
 			el.find( '.edit-pencil' ).click( $.proxy( this.renameItem,this ) );
 			el.find( '.trash' ).click( $.proxy( this.deleteItem,this ) );
@@ -409,11 +444,11 @@
 
 		renameItem: function( event ) {
 			var self = this,
-				$item = $( event.currentTarget ).closest('li');
+				$item = $( event.currentTarget ).closest( 'li' );
 
 			event.preventDefault();
 
-			require( [ 'wikia.ui.factory' ], function( uiFactory ) {
+			require( ['wikia.ui.factory'], function( uiFactory ) {
 				uiFactory.init( ['modal'] ).then( function( uiModal ) {
 					var messages = self.data.messages,
 						renameItemConfig = {
@@ -450,12 +485,13 @@
 						}
 					};
 
-					uiModal.createComponent( renameItemConfig, function ( renameItemModal ) {
+					uiModal.createComponent( renameItemConfig, function( renameItemModal ) {
 						var $inputBox = renameItemModal.$content.find( '.input-box' );
 
 						$inputBox.val( $item.data( 'caption' ) );
 
 						renameItemModal.bind( 'save', function( event ) {
+							event.preventDefault();
 							var value = $inputBox.val();
 							$item.data( 'caption', value );
 							$item.find( '.name' ).text( value );
@@ -463,18 +499,17 @@
 						} );
 
 						renameItemModal.show();
-					});
+					} );
 				} );
 			} );
 			return false;
 		},
 
-		deleteItem: function( evt ) {
-			$(evt.currentTarget).closest('li').remove();
+		deleteItem: function( event ) {
+			$( event.currentTarget ).closest( 'li' ).remove();
 			this.tree.update();
 			return false;
 		},
-
 
 		save: function() {
 			var toolbar = this.tree.save();
@@ -486,10 +521,10 @@
 					toolbar: toolbar
 				},
 				callback: $.proxy( this.afterSave, this )
-			});
+			} );
 		},
 
-		afterSave: function(data,status,req) {
+		afterSave: function( data, status /*, req*/ ) {
 			if ( status === 'success' && data.status ) {
 				this.toolbar.load( data.toolbar );
 				this.modal.trigger( 'close' );
@@ -498,7 +533,7 @@
 			}
 		}
 
-	});
+	} );
 
 	window.ToolbarCustomize = TC;
-})();
+})( window );
