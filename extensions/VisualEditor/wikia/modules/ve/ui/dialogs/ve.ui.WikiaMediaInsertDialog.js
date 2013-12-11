@@ -113,6 +113,8 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	this.$body.append( this.$content, this.$cart );
 	this.frame.$content.addClass( 've-ui-wikiaMediaInsertDialog' );
 	this.$foot.append( this.insertButton.$element );
+
+	this.pages.setPage( 'main' );
 };
 
 /**

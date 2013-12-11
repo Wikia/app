@@ -41,12 +41,12 @@ $width-cart: 101px;
 			}
 		}
 
-		&.photo > .ve-ui-labeledElement-label:before {
+		&.photo > .oo-ui-labeledElement-label:before {
 			background-image: url(/extensions/VisualEditor/wikia/modules/ve/ui/styles/images/icons/photo.svg); /* $wgCdnStylePath */
 			padding-left: 29px;
 		}
 
-		&.video > .ve-ui-labeledElement-label:before {
+		&.video > .oo-ui-labeledElement-label:before {
 			background-image: url(/extensions/VisualEditor/wikia/modules/ve/ui/styles/images/icons/video.svg); /* $wgCdnStylePath */
 			padding-left: 22px;
 		}
@@ -168,7 +168,7 @@ $width-cart: 101px;
 		width: auto;
 
 		> span,
-		.ve-ui-icon-upload {
+		.oo-ui-icon-upload {
 			display: none;
 		}
 	}
@@ -245,7 +245,7 @@ $width-cart: 101px;
 		display: none;
 	}
 
-	> .ve-ui-icon-upload {
+	> .oo-ui-icon-upload {
 		display: inline-block;
 		height: 32px;
 		margin-bottom: 15px;
