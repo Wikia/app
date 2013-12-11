@@ -10,13 +10,13 @@ use Wikia\Search\Test\BaseTest;
 class CombinedSearchServiceTest extends BaseTest {
 
 	public function testSearch() {
-		$combinedSearchServiceMock = $this->getMock('Wikia\Search\Services\CombinedSearchService', ['searchForWikias', 'phraseSearchForArticles']);
+		$combinedSearchServiceMock = $this->getMock('Wikia\Search\Services\CombinedSearchService', ['phraseSearchForWikias', 'phraseSearchForArticles']);
 
 		$foundWikisMock = [ 'false', 'wiki', 'data' ];
 		$foundArticlesMock = [ 'fake', 'articles' ];
 
 		$combinedSearchServiceMock->expects( $this->exactly(1) )
-			->method ( 'searchForWikias' )
+			->method ( 'phraseSearchForWikias' )
 			->with   ( "foo", ['en', 'de'], ["XYZ"] )
 			->will   ( $this->returnValue($foundWikisMock) );
 
@@ -32,13 +32,13 @@ class CombinedSearchServiceTest extends BaseTest {
 	}
 
 	public function testSearchMaxArticlesPerWikia() {
-		$combinedSearchServiceMock = $this->getMock('Wikia\Search\Services\CombinedSearchService', ['searchForWikias', 'phraseSearchForArticles']);
+		$combinedSearchServiceMock = $this->getMock('Wikia\Search\Services\CombinedSearchService', ['phraseSearchForWikias', 'phraseSearchForArticles']);
 
 		$foundWikisMock = [ 'false', 'wiki', 'data' ];
 		$foundArticlesMock = [ 'fake', 'articles' ];
 
 		$combinedSearchServiceMock->expects( $this->exactly(1) )
-			->method ( 'searchForWikias' )
+			->method ( 'phraseSearchForWikias' )
 			->with   ( "foo", ['en', 'de'], ["XYZ"] )
 			->will   ( $this->returnValue($foundWikisMock) );
 
@@ -54,13 +54,13 @@ class CombinedSearchServiceTest extends BaseTest {
 	}
 
 	public function testSearchMaxArticlesPerWikia2() {
-		$combinedSearchServiceMock = $this->getMock('Wikia\Search\Services\CombinedSearchService', ['searchForWikias', 'phraseSearchForArticles']);
+		$combinedSearchServiceMock = $this->getMock('Wikia\Search\Services\CombinedSearchService', ['phraseSearchForWikias', 'phraseSearchForArticles']);
 
 		$foundWikisMock = [ ];
 		$foundArticlesMock = [ 'fake', 'articles' ];
 
 		$combinedSearchServiceMock->expects( $this->exactly(1) )
-			->method ( 'searchForWikias' )
+			->method ( 'phraseSearchForWikias' )
 			->with   ( "foo", ['en', 'de'], ["XYZ"] )
 			->will   ( $this->returnValue($foundWikisMock) );
 
@@ -125,13 +125,13 @@ class CombinedSearchServiceTest extends BaseTest {
 
 
 	public function testSearchForWikias() {
-		$combinedSearchServiceMock = $this->getMock('Wikia\Search\Services\CombinedSearchService', ['queryForWikias', 'getTopArticles']);
+		$combinedSearchServiceMock = $this->getMock('Wikia\Search\Services\CombinedSearchService', ['queryPhraseForWikias', 'getTopArticles']);
 
 		$foundResultsMockPL = [ [ 'sitename_txt' => 'a', 'url' => 'b', 'id' => '125', 'score' => 3, 'description_txt' => 'lorem ipsum pl', 'lang_s' => 'pl' ] ];
 		$foundResultsMockEN = [ [ 'sitename_txt' => 'w', 'url' => 'x', 'id' => '126', 'score' => 3, 'description_txt' => 'lorem ipsum en', 'lang_s' => 'en' ] ];
 
 		$combinedSearchServiceMock->expects( $this->at(0) )
-			->method ( 'queryForWikias' )
+			->method ( 'queryPhraseForWikias' )
 			->with   ( "foobar", ['FOO'], 'en' )
 			->will   ( $this->returnValue($foundResultsMockEN) );
 
@@ -141,7 +141,7 @@ class CombinedSearchServiceTest extends BaseTest {
 			->will   ( $this->returnValue(['fake1']) );
 
 		$combinedSearchServiceMock->expects( $this->at(2) )
-			->method ( 'queryForWikias' )
+			->method ( 'queryPhraseForWikias' )
 			->with   ( "foobar", ['FOO'], 'pl' )
 			->will   ( $this->returnValue($foundResultsMockPL) );
 
@@ -160,7 +160,7 @@ class CombinedSearchServiceTest extends BaseTest {
 		/** @var $combinedSearchServiceMock CombinedSearchService */
 		$combinedSearchServiceMock->setWikiService( $wikiServiceMock );
 
-		$response = $combinedSearchServiceMock->searchForWikias( 'foobar', ['en', 'pl'], ['FOO']);
+		$response = $combinedSearchServiceMock->phraseSearchForWikias( 'foobar', ['en', 'pl'], ['FOO']);
 
 		$this->assertEquals([
 				[
