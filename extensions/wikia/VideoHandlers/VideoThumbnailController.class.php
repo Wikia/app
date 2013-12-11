@@ -198,7 +198,7 @@ class VideoThumbnailController extends WikiaController {
 		$this->imgSrc = $imgSrc;
 		$this->videoKey = htmlspecialchars( urlencode( $title->getDBKey() ) );
 		$this->videoName = htmlspecialchars( urlencode( $title->getText() ) );
-		$this->imgClass = !empty( $options['imgClass'] ) ? $options['imgClass'] : '';
+		$this->imgClass = empty( $options['imgClass'] ) ? '' : $options['imgClass'];
 		$this->imgAttrs = $this->getAttribs( $imgAttribs );
 
 		// set duration
