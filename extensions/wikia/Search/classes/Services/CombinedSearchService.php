@@ -63,18 +63,6 @@ class CombinedSearchService {
 	public function search($query, $langs, $namespaces, $hubs, $limit = null) {
 		$timer = Time::start([__CLASS__, __METHOD__]);
 		$wikias = $this->phraseSearchForWikias($query, $langs, $hubs);
-//		$missing = self::CROSS_WIKI_RESULTS - count( $phrasedWikis );
-//		$wikias = [];
-//		if ( $missing > 0 ) {
-//			$wikias = $this->searchForWikias($query, $langs, $hubs );
-//			$articles = $this->searchForArticles($query, $namespaces, $wikias, self::TOP_ARTICLES_PER_WIKI);
-//			foreach( $wikias as &$wiki ) {
-//				if ( isset( $articles[ $wiki['wikiId'] ] ) ) {
-//					$wiki['articles'] = $articles[ $wiki['wikiId'] ];
-//				}
-//			}
-//		}
-//		dd(array_merge( $phrasedWikis, $wikias ));
 
 		$result = [];
 		$limit = ( $limit !== null ) ? $limit : self::MAX_TOTAL_ARTICLES;
@@ -84,8 +72,8 @@ class CombinedSearchService {
 		} else {
 			$result[ 'wikias' ] = [];
 		}
-//		$articles = $this->phraseSearchForArticles($query, $namespaces, $langs, $hubs);
-//		$result['articles'] = array_slice( $articles, 0, $limit );
+		$articles = $this->phraseSearchForArticles($query, $namespaces, $langs, $hubs);
+		$result['articles'] = array_slice( $articles, 0, $limit );
 		return $result;
 	}
 
