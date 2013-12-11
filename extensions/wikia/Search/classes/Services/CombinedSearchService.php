@@ -62,7 +62,7 @@ class CombinedSearchService {
 
 	public function search($query, $langs, $namespaces, $hubs, $limit = null) {
 		$timer = Time::start([__CLASS__, __METHOD__]);
-		$wikias = $this->searchForWikias($query, $langs, $hubs);
+		$wikias = $this->phraseSearchForWikias($query, $langs, $hubs);
 
 		$result = [];
 		$limit = ( $limit !== null ) ? $limit : self::MAX_TOTAL_ARTICLES;
@@ -90,7 +90,7 @@ class CombinedSearchService {
 		foreach ($wikias as $wiki) {
 			$currentResults = $this->querySolrForArticles($query, $namespaces, $maxArticlesPerWiki, $wiki['wikiId'], $wiki['lang']);
 			foreach ($currentResults as $article) {
-				$articles[] = $this->processArticle($article);
+				$articles[$article[ 'wid' ]][] = $this->processArticle($article);
 			}
 		}
 		$timer->stop();
@@ -175,6 +175,50 @@ class CombinedSearchService {
 		return $this->extractData( $result, $requestedFields );
 	}
 
+	public function queryPhraseForWikias($query, $hubs, $lang) {
+		$fields = ["url", "lang_s", "sitename_txt", "id", "score", "description_txt"];
+		$config = (new Factory())->getSolariumClientConfig();
+		$config['adapteroptions']['core'] = 'xwiki';
+		$client = new \Solarium_Client($config);
+
+		$phrase = $this->sanitizeQuery( $query );
+		$query = $this->prepareXWikiQuery( $phrase, $hubs, $lang );
+
+		$select = $client->createSelect();
+		$dismax = $select->getDisMax();
+		$dismax->setQueryParser('edismax');
+
+		$select->setQuery( $query );
+		$select->setRows(self::CROSS_WIKI_RESULTS);
+
+		//filter queries
+		$select->createFilterQuery( 'wam' )->setQuery('-(wam_i:0)');
+		$select->createFilterQuery( 'users' )->setQuery('activeusers_i:[0 TO *]');
+		$select->createFilterQuery( 'pages' )->setQuery('articles_i:[50 TO *]');
+		//speedydeletion: 547090, scratchpad: 95, lyrics:43339,
+		$select->createFilterQuery( 'banned' )->setQuery('-(id:547090) AND -(id:95) AND -(id:43339) AND -(hostname_s:*answers.wikia.com)');
+
+		$dismax->setBoostQuery( 'domains_txt:"www.' . preg_replace( '|\s*|', '', $phrase ) . '.wikia.com"^1000' );
+		$dismax->setBoostFunctions( 'wam_i^5 articles_i^0.5' );
+
+		$result = $client->select( $select );
+		return $this->extractData( $result, $fields );
+	}
+
+	protected function prepareXWikiQuery( $query, $hubs, $lang ) {
+		$hubsQuery = '';
+		if ( !empty( $hubs ) ) {
+			$hubsList = [];
+			foreach( $hubs as $hub ) {
+				$hubsList[] = '(hub_s:' . $hub . ')';
+			}
+			$hubsQuery = '+(' . implode(' OR ', $hubsList ) . ') AND ';
+		}
+		return $hubsQuery . '+(lang_s:' . $lang .
+		') AND +((sitename_txt:"' . $query . '") OR (headline_txt:"' . $query . '") OR (description_txt:"' . $query .
+		'") OR (domains_txt:"www.' . preg_replace( '|\s*|', '', $query ) . '.wikia.com"))';
+	}
+
 	protected function extractData( $searchResult, $requestedFields ) {
 		$result = [];
 		foreach( $searchResult->getDocuments() as $doc ) {
@@ -241,6 +285,20 @@ class CombinedSearchService {
 		return $wikias;
 	}
 
+	public function phraseSearchForWikias($query, $langs, $hubs) {
+		$wikias = [];
+		foreach ($langs as $lang) {
+			$crossWikiResults = $this->queryPhraseForWikias($query, $hubs, $lang);
+			foreach ($crossWikiResults as $wikiSearchResult) {
+				$wikias[] = $this->processWiki($wikiSearchResult, true);
+			}
+			if (sizeof($wikias) >= self::CROSS_WIKI_RESULTS) {
+				break;
+			}
+		}
+		return $wikias;
+	}
+
 	/**
 	 * @param $query
 	 * @param $hubs
@@ -264,7 +322,7 @@ class CombinedSearchService {
 		return $crossWikiResults;
 	}
 
-	protected function processWiki( $wikiInfo ) {
+	protected function processWiki( $wikiInfo, $addTopArticles = false ) {
 		$outputModel = [];
 		$outputModel['wikiId'] = (int) $wikiInfo['id'];
 		$outputModel['name'] = $wikiInfo['sitename_txt'][0]; // this is multivalue field
@@ -272,8 +330,11 @@ class CombinedSearchService {
 		$outputModel['lang'] = $wikiInfo['lang_s'];
 		$outputModel['snippet'] = $wikiInfo['description_txt'];
 		$outputModel['wordmark'] = $this->wikiService->getWikiWordmark( $outputModel['wikiId'] );
+//		$images = $this->wikiService->getWikiImages( $outputModel['wikiId'], self::IMAGE_SIZE, self::IMAGE_SIZE );
 
-		$outputModel['topArticles'] = $this->getTopArticles( $outputModel['wikiId'], $outputModel['lang'] );
+		if ( $addTopArticles ) {
+			$outputModel['topArticles'] = $this->getTopArticles( $outputModel['wikiId'], $outputModel['lang'] );
+		}
 
 		return $outputModel;
 	}
