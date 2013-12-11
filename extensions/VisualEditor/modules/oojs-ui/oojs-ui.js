@@ -5909,7 +5909,7 @@ OO.ui.PopupButtonWidget.prototype.onClick = function ( e ) {
  *
  * @constructor
  * @param {Object} [config] Configuration options
-*/
+ */
 OO.ui.PushButtonWidget = function OoUiPushButtonWidget( config ) {
 	// Parent constructor
 	OO.ui.ButtonWidget.call( this, config );
