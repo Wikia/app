@@ -1,6 +1,6 @@
 <a
 	href="{{ linkHref }}"
-	class="video video-from-template {{ size }} {{# linkClasses }}{{ . }} {{/ linkClasses }}"
+	class="video wikia-video-thumbnail {{ size }} {{# linkClasses }}{{ . }} {{/ linkClasses }}"
 	{{# linkAttrs }}{{ . }} {{/ linkAttrs }}>
 
 	<span class="play-circle"></span>
@@ -8,7 +8,7 @@
 
 	<img
 		src="{{ imgSrc }}"
-		class="wikia-video-thumb {{# imgClasses }}{{ . }} {{/ imgClasses }}"
+		{{# imgClass }}class="{{ imgClass }}"{{/ imgClass }}
 		data-video-key="{{ videoKey }}"
 		data-video-name="{{ videoName }}"
 		{{# imgWidth }} width="{{ imgWidth }}" {{/ imgWidth}}

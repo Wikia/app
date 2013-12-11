@@ -157,10 +157,12 @@ class RelatedVideosController extends WikiaController {
 														  'height'=>$video['thumbnailData']['height']) );
 			$videoThumb = $videoThumbObj->toHtml(
 				array(
+					'useTemplate' => true,
 					'linkAttribs' => array(
 						'data-external' => $video['external'],
 						'data-ref' => $video['prefixedUrl']
 					),
+					'imgClass' => 'test test2',
 					'duration' => true,
 					'src' => $preloaded ? false : wfBlankImgUrl(),
 					// This attirbute is deprecated with the new toHtml function.  Remove when refactoring
