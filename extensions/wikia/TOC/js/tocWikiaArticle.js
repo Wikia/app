@@ -33,7 +33,7 @@ require( [ 'jquery', 'wikia.toc', 'wikia.mustache' ], function( $, toc, mustache
 	 *                             or custom TOC single section object.
 	 */
 
-	function createTOCSection( header ) {
+	function createTOCSection( header, level ) {
 
 		header = $( header ).children( '.mw-headline' );
 
@@ -48,6 +48,7 @@ require( [ 'jquery', 'wikia.toc', 'wikia.mustache' ], function( $, toc, mustache
 		return {
 			title: header.text(),
 			id: header.attr( 'id' ),
+			class: 'toclevel-' + level,
 			sections: []
 		};
 	}
