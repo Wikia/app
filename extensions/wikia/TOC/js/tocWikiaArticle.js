@@ -1,4 +1,4 @@
-require( ['jquery', 'wikia.toc', 'wikia.mustache'], function ( $, toc, mustache ) {
+require( [ 'jquery', 'wikia.toc', 'wikia.mustache' ], function( $, toc, mustache ) {
 	'use strict';
 
 	/**
@@ -15,7 +15,7 @@ require( ['jquery', 'wikia.toc', 'wikia.mustache'], function ( $, toc, mustache 
 	 */
 
 	function wrapper() {
-		return function ( text, render ) {
+		return function( text, render ) {
 			if ( text !== '' ) {
 				return '<ol>' + render( text ) + '</ol>';
 			} else {
@@ -37,7 +37,7 @@ require( ['jquery', 'wikia.toc', 'wikia.mustache'], function ( $, toc, mustache 
 
 		header = $( header ).children( '.mw-headline' );
 
-		if ( header.length === 0 ) {
+		if ( header.length === 0 || header.is( ':hidden' ) ) {
 			return false;
 		}
 
@@ -61,34 +61,34 @@ require( ['jquery', 'wikia.toc', 'wikia.mustache'], function ( $, toc, mustache 
 	function loadTemplate() {
 		var dfd = new $.Deferred();
 
-		require( ['wikia.loader', 'wikia.cache'], function ( loader, cache ) {
+		require( [ 'wikia.loader', 'wikia.cache' ], function( loader, cache ) {
 			var template = cache.getVersioned( cacheKey );
 
 			if ( template ) {
 				dfd.resolve( template );
 			} else {
-				require( ['wikia.throbber'], function ( throbber ) {
+				require( [ 'wikia.throbber' ], function( throbber ) {
 					var toc = $( '#toc' );
 
 					throbber.show( toc );
 
-					loader( {
+					loader({
 						type: loader.MULTI,
 						resources: {
 							mustache: 'extensions/wikia/TOC/templates/TOC_articleContent.mustache'
 						}
-					} ).done( function ( data ) {
-							template = data.mustache[0];
+					}).done(function ( data ) {
+						template = data.mustache[0];
 
-							dfd.resolve( template );
+						dfd.resolve( template );
 
-							cache.setVersioned( cacheKey, template, 604800 ); //7days
+						cache.setVersioned( cacheKey, template, 604800 ); //7days
 
-							throbber.remove( toc );
-						} );
-				} );
+						throbber.remove( toc );
+					});
+				});
 			}
-		} );
+		});
 
 		return dfd.promise();
 	}
@@ -108,11 +108,11 @@ require( ['jquery', 'wikia.toc', 'wikia.mustache'], function ( $, toc, mustache 
 
 		data.wrapper = wrapper;
 
-		loadTemplate().done( function ( template ) {
+		loadTemplate().done(function( template ) {
 			$container.append( mustache.render( template, data ) );
 
 			setHasTOC( $target, true );
-		} );
+		});
 	}
 
 	/**
@@ -125,7 +125,7 @@ require( ['jquery', 'wikia.toc', 'wikia.mustache'], function ( $, toc, mustache 
 		$.cookie( 'mw_hidetoc', isHidden, {
 			expires: 30,
 			path: '/'
-		} );
+		});
 	}
 
 	/**
@@ -187,7 +187,7 @@ require( ['jquery', 'wikia.toc', 'wikia.mustache'], function ( $, toc, mustache 
 	function hasTOC( $target ) {
 		var containerIdentifier = getContainerIdentifier( $target );
 
-		return typeof containerHasTOC[containerIdentifier] !== 'undefined' && containerHasTOC[containerIdentifier];
+		return typeof containerHasTOC[ containerIdentifier ] !== 'undefined' && containerHasTOC[ containerIdentifier ];
 	}
 
 	/**
@@ -219,9 +219,9 @@ require( ['jquery', 'wikia.toc', 'wikia.mustache'], function ( $, toc, mustache 
 		return getContentContainer( $target ).data( 'tab-body' ) || 'main';
 	}
 
-	$( function () {
+	$( function() {
 		/** Attach events */
-		$( 'body' ).on( 'click', '#togglelink', function ( event ) {
+		$( 'body' ).on( 'click', '#togglelink', function( event ) {
 			event.preventDefault();
 
 			if ( isNewTOC() ) {
@@ -233,19 +233,19 @@ require( ['jquery', 'wikia.toc', 'wikia.mustache'], function ( $, toc, mustache 
 
 				showHideTOC( $target );
 			}
-		} );
+		});
 
 		// reset containerHasTOC flags for each time preview modal is opened
-		$( window ).on( 'EditPageAfterRenderPreview', function () {
+		$( window ).on( 'EditPageAfterRenderPreview', function() {
 			containerHasTOC = {};
 			if ( isNewTOC() && window.wgUserName !== null ) {
 				initTOC();
 			}
-		} );
+		});
 
 		/** Auto expand TOC in article for logged-in users with hideTOC cookie set to 'null'  */
 		if ( isNewTOC() && window.wgUserName !== null && $.cookie( 'mw_hidetoc' ) === null ) {
 			initTOC();
 		}
-	} );
-} );
+	});
+});

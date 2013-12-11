@@ -178,6 +178,14 @@ ve.ui.WikiaMediaInsertDialog.prototype.onQueryRequestSearchDone = function ( ite
  * @param {Object} data An object containing the data for a video
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onQueryRequestVideoDone = function ( data ) {
+	var model = new ve.dm.WikiaCartItem(
+		data.title,
+		data.tempUrl || data.url,
+		'video',
+		data.tempName,
+		data.provider,
+		data.videoId
+	);
 	this.queryInput.setValue( '' );
 	this.addCartItem( new ve.dm.WikiaCartItem(
 		data.title,
@@ -227,7 +235,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.onSearchCheck = function ( item ) {
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onCartSelect = function ( item ) {
 	if ( item !== null ) {
-		this.setPage( item.getModel().title );
+		this.setPage( item.getModel().getId() );
 	}
 };
 
@@ -252,7 +260,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.onCartModelAdd = function ( items ) {
 		}
 		page = new ve.ui.WikiaMediaPageWidget( item, config );
 		page.connect( this, { 'remove': 'onMediaPageRemove' } );
-		this.pages.addPage( item.title, { '$content': page.$ } );
+		this.pages.addPage( item.getId(), { '$content': page.$ } );
 	}
 
 	this.searchResults.setChecked( items, true );
@@ -640,7 +648,6 @@ ve.ui.WikiaMediaInsertDialog.prototype.getLicense = function () {
 			'data': {
 				'action': 'licenses',
 				'format': 'json',
-				'default': 'Fairuse',
 				'id': 'license',
 				'name': 'license'
 			},
@@ -669,6 +676,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.onUploadChange = function () {
  * @param {Object} data The uploaded file information
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onUploadSuccess = function ( data ) {
+	var model;
 	if ( !this.license.html ) {
 		this.license.promise.done( ve.bind( this.onUploadSuccess, this, data ) );
 	} else {

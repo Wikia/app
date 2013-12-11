@@ -225,7 +225,7 @@ class WallMessage {
 
 	public function addNewReply($body, $user) {
 		wfProfileIn( __METHOD__ );
-		$out = self::buildNewMessageAndPost($body, $this->getWallTitle(), $user, '', $this );
+		$out = self::buildNewMessageAndPost($body, $this->getArticleTitle(), $user, '', $this );
 		wfProfileOut( __METHOD__ );
 		return $out;
 	}
@@ -416,9 +416,11 @@ class WallMessage {
 		return true;
 	}
 
-
-	public function getWallOwnerName() {
-		$title = $this->getWallTitle();
+	/**
+	 * This method is used by on Wall and Forum messages to get the name of the main page (wall owner or forum board)
+	 */
+	public function getMainPageText() {
+		$title = $this->getArticleTitle();
 		$parts = explode( '/', $title->getText() );
 		$wallOwnerName = $parts[0];
 
@@ -428,7 +430,7 @@ class WallMessage {
 	}
 
 	public function getWallOwner( $master = false ) {
-		$parts = explode( '/', $this->getWallTitle( $master )->getText() );
+		$parts = explode( '/', $this->getArticleTitle( $master )->getText() );
 		$userName = $parts[0];
 		// mech: I'm not sure we have to create wall title doing db queries on both, page and comments_index tables.
 		// as the user name is the first part on comment's title. But I'm not able to go through all wall/forum
@@ -441,6 +443,13 @@ class WallMessage {
 				' vs ' . $parts[0] . ') for ' . $this->getId() . ' (title is ' . $titleText. ')', true );
 		}
 
+		// mech: when the wall message is not in the db yet, the getWallTitle will return 'Empty' as is cannot find
+		// the row in comments_index. After I'll make sure that call to getWallTitle is not needed, the check below
+		// can be safely removed
+		if ( $userName == 'Empty' && !empty( $parts[0] ) ) {
+			$userName = $parts[0];
+		}
+
 		$wall_owner = User::newFromName( $userName, false );
 
 		if( empty($wall_owner) ) {
@@ -450,13 +459,7 @@ class WallMessage {
 	}
 
 	public function getWallPageUrl() {
-		return $this->getWallTitle()->getFullUrl();
-	}
-
-
-	//TODO: remove get wall title
-	public function getWallTitle( $master = false ){
-		return $this->getArticleTitle( $master );
+		return $this->getArticleTitle()->getFullUrl();
 	}
 
 	public function getArticleTitle( $master = false ){
@@ -497,7 +500,7 @@ class WallMessage {
 	 * @return Wall
 	 */
 	public function getWall() {
-		$wall = Wall::newFromTitle( $this->getWallTitle() );
+		$wall = Wall::newFromTitle( $this->getArticleTitle() );
 		return $wall;
 	}
 
@@ -635,13 +638,21 @@ class WallMessage {
 		return false;
 	}
 
+	/**
+	 * Checks if the user passed as an argument is the owner of the Wall containing current WallMessage
+	 *
+	 * @param User $user instance of the user class
+	 * @return bool true when the user is the owner
+	 */
 	public function isWallOwner(User $user) {
 		$wallUser = $this->getWallOwner();
 		if(empty($wallUser)) {
 			return false;
 		}
 
-		return $wallUser->getId() == $user->getId();
+		// we're using names instead of ids, as ids for anonymous users are equal 0. This will cause bugs
+		// while verifying anonymous wall owners
+		return $wallUser->getName() == $user->getName();
 	}
 
 	public function load($master = false) {
@@ -828,7 +839,7 @@ class WallMessage {
 	}
 
 	public function isWallWatched(User $user) {
-		return $user->isWatched( $this->getWallTitle() );
+		return $user->isWatched( $this->getArticleTitle() );
 	}
 
 	public function isWatched(User $user) {
