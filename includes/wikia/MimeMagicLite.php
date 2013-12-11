@@ -2,6 +2,15 @@
 
 /**
  * Class MimeMagicCached
+ *
+ * A replacement for MimeMagic's mMediaTypes array.  Constructing a new MimeMagic instance
+ * is heavy, requiring a few files to be read in, cleaned up and parsed.  This class
+ * initializes the media types in PHP which is much faster to read in.
+ *
+ * This class should not extend MimeMagic until the __construct method is overridden.  Without
+ * doing this the speed benefit of modules using this module to get MediaTypes would be nullified
+ *
+ * @author Garth Webb <garth@wikia-inc.com>
  */
 class MimeMagicLite {
 
