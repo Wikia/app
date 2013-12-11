@@ -175,6 +175,8 @@ if (empty($wgRunningUnitTests)) {
 #
 require_once( dirname( $wgWikiaLocalSettingsPath ) . '/../CommonExtensions.php' );
 
+$wgEnableSwiftFileBackend = true; // enable globally on all devboxes (despite production being switched to NFS(
+
 $wgArticlePath = "/wiki/$1";
 
 // Just in case this has been reset somewhere else in here.
