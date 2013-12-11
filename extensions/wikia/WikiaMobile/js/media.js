@@ -733,9 +733,6 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 		getCurrent: function(){
 			return currentNum;
 		},
-		hideShare: function(){
-			if(shareBtn) {shareBtn.style.display = 'none';}
-		},
 		init: init,
 		cleanup: removeZoom,
 		on: function(event, func){
