@@ -124,7 +124,6 @@ if(isset($wgScriptPath))
 	$wgHooks['BeforePageDisplay'][] = "gracenoteLyricsTagCss";
 
 	// This only needs to be included once between the Lyrics tag and the GracenoteLyrics tag.
-	$wgHooks['BeforePageDisplay'][] = "gracenote_installCopyProtection";
 	$wgHooks['BeforePageDisplay'][] = "gracenote_disableEdit";
 	$wgHooks['SkinAfterBottomScripts'][] = 'gracenote_outputGoogleAnalytics';
 

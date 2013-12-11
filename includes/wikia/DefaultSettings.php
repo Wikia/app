@@ -1091,8 +1091,8 @@ $wgEnableMemcachedBulkMode = false;
 /**
  * WikiaSeasons flags
  */
-$wgWikiaSeasonsGlobalHeader = true;
-$wgWikiaSeasonsWikiaBar = true;
+$wgWikiaSeasonsGlobalHeader = false;
+$wgWikiaSeasonsWikiaBar = false;
 $wgWikiaSeasonsPencilUnit = false;
 
 /**
