@@ -249,23 +249,24 @@
 			this.data = data;
 		},
 
-		onLoadFailure: function(req,textStatus,errorThrown) {
+		onLoadFailure: function( req, textStatus, errorThrown ) {
 		},
 
 		checkLoad: function() {
 			var self = this;
 			require( [ 'wikia.ui.factory' ], function( uiFactory ) {
 				uiFactory.init( ['modal'] ).then( function( uiModal ) {
-					var toolsConfigurationConfig = {
+					var messages = self.data.messages,
+						toolsConfigurationConfig = {
 						vars: {
 							id: 'MyToolsConfigurationWrapper',
 							size: 'small',
 							content: self.data.configurationHtml,
-							title: $.msg('oasis-toolbar-edit-title'),
+							title: messages['oasis-toolbar-edit-title'],
 							buttons: [
 								{
 									vars: {
-										value: $.msg( 'oasis-toolbar-edit-save' ),
+										value: messages['oasis-toolbar-edit-save'],
 										classes: ['button', 'primary'],
 										data: [
 											{
@@ -277,7 +278,7 @@
 								},
 								{
 									vars: {
-										value: $.msg( 'oasis-toolbar-edit-cancel' ),
+										value: messages['oasis-toolbar-edit-cancel'],
 										data: [
 											{
 												key: 'event',
@@ -291,6 +292,8 @@
 					};
 					uiModal.createComponent( toolsConfigurationConfig, function( toolsConfigModal ) {
 						self.w = toolsConfigModal.$content;
+						self.modal = toolsConfigModal;
+
 						var $optionList = self.w.find( '.options-list' ),
 							$group = self.w.find( '.popular-tools-group' );
 
@@ -332,65 +335,14 @@
 
 						toolsConfigModal.bind( 'save', function( event ) {
 							event.preventDefault();
-							$.proxy( self.save, self );
+							toolsConfigModal.deactivate();
+							self.save();
 						});
 
 						toolsConfigModal.show();
 					} );
 				} );
 			} );
-return;
-			// Code copy from $.getModal() :-(
-			$('body').append(this.data.configurationHtml);
-			this.w = $("#MyToolsConfiguration").makeModal({
-				width: 710,
-				closeOnBlackoutClick: false
-			});
-			// End of copy
-
-			this.w.find('form')
-				// Disable submitting
-				.submit(function(){return false;})
-				// Disable submission after pressing enter key
-				.keypress(function(e){if (e.which == 13) {return false;}});
-
-			// Toolbar list
-			var optionList = this.w.find( '.options-list' );
-			this.tree = new TC.OptionsTree( optionList );
-
-			// temporary fix drag and drop issues on iPad
-			// TODO: drag and drop functionality should be refactored when replacing this modal
-			if ( isIPad ) {
-				optionList.addClass( 'on-ipad' );
-			} else {
-				optionList.addClass( 'no-ipad' );
-			}
-			this.tree.on('itembuild',$.proxy(this.initItem,this));
-			this.tree.load(this.data.options);
-			this.w.find('.reset-defaults a').click($.proxy(this.loadDefaults,this));
-
-			// Find a tool
-			this.w.find('.search').placeholder();
-			this.w.find('.search').pluginAutocomplete({
-				lookup: this.getAutocompleteData(),
-				onSelect: $.proxy(this.addItemFromSearch,this),
-				selectedClass: 'selected',
-				appendTo: this.w.find('.search-box'),
-				width: '300px'
-			});
-			this.w.find('.advanced-tools').find('a').attr('target','_blank');
-
-			// Popular tools
-			this.popular = new TC.OptionLinks(this.w.find('.popular-list'));
-			this.popular.load(this.data.popularOptions);
-			this.popular.on('itemclick',this.addPopularOption,this);
-			var group = this.w.find('.popular-tools-group');
-			this.toggle = new TC.Toggle(group.children('.popular-list'),group.children('.popular-toggle'),'toggle-1');
-			this.w.find('.popular-toggle').click($.proxy(this.togglePopular,this));
-
-			// Save and cancel
-			this.w.find('input[type=submit]').click($.proxy(this.save,this));
-			this.w.find('input.cancel-button').click($.proxy(this.close,this));
 		},
 
 		getAutocompleteData: function() {
@@ -463,16 +415,17 @@ return;
 
 			require( [ 'wikia.ui.factory' ], function( uiFactory ) {
 				uiFactory.init( ['modal'] ).then( function( uiModal ) {
-					var renameItemConfig = {
+					var messages = self.data.messages,
+						renameItemConfig = {
 						vars: {
 							id: 'MyToolsRenameItem',
 							size: 'small',
 							content: self.data.renameItemHtml,
-							title: $.msg( 'oasis-toolbar-edit-rename-item' ),
+							title: messages['oasis-toolbar-edit-rename-item'],
 							buttons: [
 								{
 									vars: {
-										value: $.msg( 'oasis-toolbar-edit-save' ),
+										value: messages['oasis-toolbar-edit-save'],
 										classes: ['button', 'primary'],
 										data: [
 											{
@@ -484,7 +437,7 @@ return;
 								},
 								{
 									vars: {
-										value: $.msg( 'oasis-toolbar-edit-cancel' ),
+										value: messages['oasis-toolbar-edit-cancel'],
 										data: [
 											{
 												key: 'event',
@@ -525,23 +478,23 @@ return;
 
 		save: function() {
 			var toolbar = this.tree.save();
-			$.nirvana.sendRequest({
+			$.nirvana.sendRequest( {
 				controller: 'Footer',
 				method: 'ToolbarSave',
 				data: {
 					title: window.wgPageName,
 					toolbar: toolbar
 				},
-				callback: $.proxy(this.afterSave,this)
+				callback: $.proxy( this.afterSave, this )
 			});
 		},
 
 		afterSave: function(data,status,req) {
-			if (status == "success" && data.status) {
-				this.toolbar.load(data.toolbar);
-				this.close();
+			if ( status === 'success' && data.status ) {
+				this.toolbar.load( data.toolbar );
+				this.modal.trigger( 'close' );
 			} else {
-				// show error to the user
+				// TODO:show error to the user
 			}
 		}
 
