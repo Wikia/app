@@ -115,6 +115,7 @@ $messages['qqq'] = array(
 	'tog-userlandingpage' => 'Label next to selectbox when user can choose her landing page will be one of: Main Page, WikiActivity, RecentChanges',
 	'myhome-feed-newpage' => '{{Identical|New page}}',
 	'myhome-feed-edit' => '{{Identical|Edit}}',
+	'myhome-feed-blogcomment' => '{{Identical|Blog comment}}',
 	'myhome-feed-delete' => '{{Identical|Deleted}}',
 	'myhome-feed-added-by' => '{{Identical|Added by}}',
 	'myhome-feed-new-page-details' => '{{Identical|New page}}',
@@ -124,6 +125,7 @@ $messages['qqq'] = array(
 	'myhome-feed-redirect-details' => '{{Identical|Redirect}}',
 	'myhome-hot-spots-number-of-editors' => '{{Identical|Editor}}',
 	'myhome-namespace-blog' => '{{Identical|Blog}}',
+	'oasis-myhome-community-corner-edit' => '{{Identical|Edit message}}',
 	'myhome-community-corner-edit' => '{{Identical|Edit message}}',
 	'myhome-default-view-checkbox' => "In the list of recent wiki activity (Special:WikiActivity), this is a checkbox button to toggle between viewing a summary of all activity and a summary of activity in pages on the user's watchlist.
 
@@ -633,7 +635,7 @@ $messages['ce'] = array(
 	'myhome-feed-edit' => 'нисдар',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Darth Daron
  * @author Dontlietome7
  */
@@ -2062,6 +2064,7 @@ $messages['ka'] = array(
 	'myhome-activity-feed' => 'აქტიურობის არხი',
 	'myhome-watchlist-feed' => 'გვერდები, რომლებსაც თვალს ვადევნებ',
 	'myhome-hot-spots-feed' => 'ცხელი წერტილები',
+	'myhome-hot-spots-newest' => 'ახალი გვერდები',
 	'myhome-feed-created-by' => 'შემქმნელი - $1.',
 	'myhome-feed-edited-by' => 'რედაქტორი - $1.',
 	'myhome-feed-new-page-details' => 'ახალი გვერდი',
@@ -3597,6 +3600,9 @@ $messages['tr'] = array(
 	'myhome-activity-feed' => 'Etkinlik beslemesi',
 	'myhome-watchlist-feed' => 'İzleme listesi',
 	'myhome-user-contributions-feed' => 'Katkılar',
+	'myhome-hot-spots-newest' => "Wiki'deki yeni sayfalar",
+	'tog-userlandingpage' => 'Açılış sayfam:',
+	'prefs-myhome' => 'Evim',
 	'myhome-feed-newpage' => 'yeni sayfa',
 	'myhome-feed-edit' => 'değiştir',
 	'myhome-feed-move' => 'sayfa taşındı',
@@ -3630,7 +3636,7 @@ $messages['tr'] = array(
 	'myhome-namespace-blog' => 'Günlük',
 	'myhome-community-corner-header' => 'Topluluk Mesajları',
 	'myhome-community-corner-edit' => 'iletiyi değiştir',
-	'myhome-hot-spots-definition' => 'Son $1 günde en fazla editöre sahip sayfalar', # Fuzzy
+	'myhome-hot-spots-definition' => 'Son {{PLURAL:$1|gün|$1 gün}} içinde en çok düzenlenen sayfalar.',
 	'myhome-default-view-checkbox' => '$1 sayfasını varsayılan görünümüm yap',
 	'myhome-default-view-success' => 'Tamam, bu artık sizin varsayılanınız',
 	'tooltip-pt-myhome' => 'Evime git',
@@ -3728,6 +3734,44 @@ $messages['tzm'] = array(
 	'myhome-community-corner-edit' => 'ⴱⴷⴷⴻⵍ ⵜⴰⴱⵔⴰⵜ',
 );
 
+/** Uyghur (Arabic script) (ئۇيغۇرچە)
+ * @author Tel'et
+ */
+$messages['ug-arab'] = array(
+	'myhome' => 'ئۆيۈم',
+	'myhome-watchlist-feed' => 'كۆزەت تىزىملىكى',
+	'myhome-hot-spots-newest' => 'ۋىكىدىكى يېڭى بەتلەر',
+	'prefs-myhome' => 'ئۆيۈم',
+	'myhome-feed-newpage' => 'يېڭى بەت',
+	'myhome-feed-edit' => 'تەھرىر',
+	'myhome-feed-move' => 'بەت يۆتكەلدى',
+	'myhome-feed-delete' => 'ئۆچۈرۈلدى',
+	'myhome-feed-created-by' => '$1 تەرىپىدىن ياسالدى',
+	'myhome-feed-added-by' => '$1 تەرىپىدىن قوشۇلدى',
+	'myhome-feed-edited-by' => '$1 تەرىپىدىن تەھرىرلەندى',
+	'myhome-feed-posted-by' => '$1 تەرىپىدىن يوللاندى',
+	'myhome-feed-comment-by' => '$1 تەرىپىدىن ئىزاھلاندى',
+	'myhome-feed-deleted-by' => '$1 تەرىپىدىن ئۆچۈرۈلدى',
+	'myhome-feed-moved-by' => '$1 تەرىپىدىن يۆتكەلدى',
+	'myhome-feed-article-comment-created-by' => '$1 تەرىپىدىن يېڭى ئىزاھ',
+	'myhome-feed-article-comment-edited-by' => '$1 تەرىپىدىن ئىزاھ تەھرىرلەندى',
+	'myhome-feed-by' => '$1 تەرىپىدىن',
+	'myhome-feed-diff-alt' => 'بۇ بەتنىڭ ئۆزگەرتىلىشىنى كۆرسەت',
+	'myhome-feed-new-page-details' => 'يېڭى بەت',
+	'myhome-feed-summary-details' => 'ئۈزۈندە',
+	'myhome-feed-new-blog-post-details' => 'يېڭى بلوگ',
+	'myhome-feed-new-blog-comment-details' => 'ئىزاھات',
+	'myhome-feed-new-article-comment-details' => 'ئىزاھات',
+	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|قوشۇلغان رەسىم|قوشۇلغان رەسىملەر}}',
+	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|قوشۇلغان سىن|قوشۇلغان سىنلار}}',
+	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|قوشۇلغان تۈر|قوشۇلغان تۈرلەر}}',
+	'myhome-hot-spots-number-of-editors' => 'تەھرىرلىگۈچى',
+	'myhome-namespace-blog' => 'بلوگ',
+	'myhome-community-corner-edit' => 'ئۇچۇر ئۆزگەرتىش',
+	'tooltip-pt-myhome' => 'ئۆيۈمگە بار',
+	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|بىر ئۇچۇر|$1 ئۇچۇر}}',
+);
+
 /** Ukrainian (українська)
  * @author Andriykopanytsia
  * @author Prima klasy4na
@@ -3816,13 +3860,16 @@ $messages['uk'] = array(
 );
 
 /** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
  * @author Xiao Qiao
  * @author XiaoQiaoGrace
  */
 $messages['vi'] = array(
 	'myhome-desc' => 'Trang riêng này dành cho thành viên đã đăng nhập',
+	'myhome' => 'Nhà của tôi',
 	'wikiactivity' => 'Hoạt động của Wiki',
 	'myhome-activity-more' => 'xem nhiều hơn hoạt động gần đây',
+	'myhome-activity-feed' => 'Hoạt động nguồn cấp dữ liệu',
 	'myhome-activity-feed-empty' => "Wiki này đang chờ bạn tham gia.
 Nhấp vào '''[[Special:CreatePage|Tạo trang]]''' để bắt đầu viết!",
 	'myhome-watchlist-feed' => 'Danh sách theo dõi',
@@ -3833,6 +3880,8 @@ Bạn có thể sử dụng danh sách theo dõi để theo dõi các thay đổ
 	'myhome-hot-spots-feed-empty' => "Wiki này đang chờ bạn tham gia.
 Nhấp vào '''[[Special:CreatePage|Tạo trang]]''' để bắt đầu viết!",
 	'myhome-hot-spots-newest' => 'Trang mới trên wiki này',
+	'tog-userlandingpage' => 'Trang giới thiệu',
+	'prefs-myhome' => 'Nhà của tôi',
 	'myhome-feed-newpage' => 'Trang mới',
 	'myhome-feed-edit' => 'sửa đổi',
 	'myhome-feed-move' => 'trang di chuyển',
@@ -3861,16 +3910,43 @@ Nhấp vào '''[[Special:CreatePage|Tạo trang]]''' để bắt đầu viết!"
 	'myhome-feed-new-article-comment-details' => 'Bình luận',
 	'myhome-feed-move-details' => 'Đổi tên',
 	'myhome-feed-redirect-details' => 'Chuyển hướng',
+	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|Thêm photo|thêm hình ảnh}}',
+	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|Thêm video|Thêm video}}',
+	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Thể loại ẩn|Thể loại}}',
 	'myhome-user-contributions-empty' => 'Bạn có thể tham gia vào wiki này bằng cách nhấp vào "{{int:editthispage}}" trên mọi trang, vào thêm vào đó những gì bạn biết.
 Mọi người đều có thể tạo ra sửa đổi, thêm thông tin và chỉnh sửa lỗi.
 Wiki được xây dựng bởi cộng đồng, và chỉ với một lần nhấp vào nút sửa đổi, bạn đã trở thành một phần của cộng đồng này.
 Hãy thử xem!',
 	'myhome-hot-spots-number-of-editors' => 'biên tập viên',
+	'myhome-log-in' => "<center>Tính năng My Home là chỉ khả dụng nếu bạn đang đăng nhập.<br /><br /><big>'''[{{fullurl:Special:Signup|$1}} Xin vui lòng đăng nhập để xem trang này!]'' '</big></center>",
+	'myhome-switch-to-monaco' => "Tính năng WikiActivity là chỉ khả dụng nếu bạn đang sử dụng giao diện Wikia.
+Nếu bạn muốn xem My Home, vui lòng truy cập '''[[Special:Preferences|tùy chọn của bạn]]'' ' để thay đổi giao diện của bạn.",
 	'myhome-namespace-blog' => 'Blog',
 	'myhome-community-corner-header' => 'Thông điệp cộng đồng',
 	'oasis-myhome-community-corner-edit' => 'sửa đổi thông điệp &gt;',
 	'myhome-community-corner-edit' => 'sửa đổi thông điệp',
+	'community-corner' => "''' Chào mừng đến với trang chủ của tôi!'' '
+
+Trang này sẽ giúp bạn ở lại đến ngày với những gì đang xảy ra trên wiki.
+
+Nếu bạn là người sáng lập hoặc là quản trị viên trên wiki này, bạn có thể thay đổi thông báo này để nói chuyện với cộng đồng về điều quan trọng xảy ra trên trang web.
+Ví dụ, bạn có thể:
+
+ * Tổ chức một dự án để xây dựng một khu vực của wiki
+
+ * Hiển thị ra một số trang mới tất cả mọi người sẽ thấy
+
+ * Có được những người tham gia vào một cuộc thảo luận đang xảy ra trên trang web
+
+ * Cung cấp cho một shout-out để một cộng tác viên người có thêm một cái gì đó đặc biệt để wiki
+
+ * Hoặc chỉ cần đăng một số từ khuyến khích!",
 	'myhome-hot-spots-definition' => 'Các trang với nhiều biên tập viên nhất trong {{PLURAL:$1|ngày hôm nay|$1 ngày qua}}.',
+	'myhome-default-view-checkbox' => 'Làm cho $1 độ xem mặc định của tôi',
+	'myhome-default-view-success' => 'Được rồi, đây là mặc định của bạn bây giờ',
+	'tooltip-pt-myhome' => 'Đi đến nhà của tôi',
+	'activityfeed' => 'Hoạt động nguồn cấp dữ liệu',
+	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|Một thông điệp|$1 thông điệp}}',
 );
 
 /** Chinese (中文)

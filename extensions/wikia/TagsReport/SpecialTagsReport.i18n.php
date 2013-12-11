@@ -23,6 +23,7 @@ $messages['en'] = array(
  * @author Siebrand
  */
 $messages['qqq'] = array(
+	'tagsreportselecttag' => '{{Identical|Select tag}}',
 	'tagsreportgo' => '{{Identical|Show}}',
 	'tagsreportmainnspace' => '{{Identical|Main}}',
 	'tagsreportgenerated' => 'Parameters:
@@ -138,7 +139,7 @@ $messages['ce'] = array(
 	'tagsreportnoresults' => 'ХӀума ца карийна',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -346,6 +347,7 @@ $messages['it'] = array(
 );
 
 /** Japanese (日本語)
+ * @author BryghtShadow
  * @author Tommy6
  */
 $messages['ja'] = array(
@@ -356,7 +358,7 @@ $messages['ja'] = array(
 	'tagsreportnotspecify' => 'まだタグを選択していません',
 	'tagsreportnoresults' => '見つかりませんでした',
 	'tagsreportmainnspace' => '(標準)',
-	'tagsreportpages' => '<strong>$1</strong> のページ',
+	'tagsreportpages' => '(<strong>$1</strong> の{{PLURAL:$1|ページ}})',
 	'tagsreportpagesfound' => '特別なタグ（dpl・youtube など）を含むページが <strong>$1</strong> 見つかりました',
 	'tagsreportgenerated' => '$1 $2 に生成',
 );

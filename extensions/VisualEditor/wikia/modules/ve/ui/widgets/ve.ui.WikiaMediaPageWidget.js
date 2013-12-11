@@ -28,7 +28,7 @@ ve.ui.WikiaMediaPageWidget = function VeUiWikiaMediaPageWidget( model, config ) 
 	this.fieldset = new OO.ui.FieldsetLayout( { '$': this.$ } );
 	this.image = null;
 	this.model = model;
-	this.removeButton = new OO.ui.ButtonWidget( {
+	this.removeButton = new OO.ui.PushButtonWidget( {
 		'$': this.$,
 		'flags': ['destructive'],
 		'label': ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-item-remove-button' )
@@ -192,6 +192,14 @@ ve.ui.WikiaMediaPageWidget.prototype.setupLicense = function ( $license ) {
 
 	// Events
 	this.$licenseSelect.on( 'change', ve.bind( this.onLicenseSelectChange, this ) );
+
+	// Select the first option that isn't 'No license' or a disabled 'heading' option
+	this.$licenseSelect
+		.find( 'option' )
+			.not( ':selected' )
+			.not( ':disabled' )
+		.eq(0)
+			.prop( 'selected', true );
 
 	// Initialization
 	this.$license

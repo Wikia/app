@@ -23,6 +23,7 @@ ve.init.mw.WikiaViewPageTarget = function VeInitMwWikiaViewPageTarget() {
 OO.inheritClass( ve.init.mw.WikiaViewPageTarget, ve.init.mw.ViewPageTarget );
 
 /* Static Properties */
+
 ve.init.mw.WikiaViewPageTarget.static.toolbarGroups = [
 	{ 'include': [ 'undo', 'redo' ] },
 	{
@@ -36,7 +37,16 @@ ve.init.mw.WikiaViewPageTarget.static.toolbarGroups = [
 	{ 'include': [ 'wikiaMediaInsert' ] },
 	{
 		'include': '*',
-		'exclude': [ 'mediaInsert', 'code' ]
+		'exclude': [ 'mediaInsert', 'code', 'wikiaSourceMode' ]
+	}
+];
+
+ve.init.mw.WikiaViewPageTarget.static.actionsToolbarConfig = [
+	{ 'include': [ 'help', 'notices' ] },
+	{
+		'type': 'list',
+		'icon': 'menu',
+		'include': [ 'meta', 'categories', 'languages', 'wikiaSourceMode' ]
 	}
 ];
 

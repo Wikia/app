@@ -12,12 +12,6 @@
 ve.ui.WikiaMediaSelectWidget = function VeUiWikiaMediaSelectWidget( config ) {
 	// Parent constructor
 	OO.ui.SelectWidget.call( this, config );
-
-	// Properties
-
-	// Events
-
-	// Initialization
 };
 
 /* Inheritance */

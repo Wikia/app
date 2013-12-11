@@ -38,10 +38,10 @@ class ApiService extends Service {
 	 * @param string database name
 	 * @param array API query parameters
 	 * @param string endpoint (api.php or wikia.php, generally)
-	 * @param string userName
+	 * @param boolean $setUser
 	 * @return mixed API response
 	 */
-	static function foreignCall( $dbname, Array $params, $endpoint = self::API, $userName  = '' ) {
+	static function foreignCall( $dbname, Array $params, $endpoint = self::API, $setUser = false ) {
 		wfProfileIn(__METHOD__);
 		$hostName = self::getHostByDbName($dbname);
 
@@ -57,8 +57,8 @@ class ApiService extends Service {
 		wfDebug(__METHOD__ . ": {$url}\n");
 
 		$options = [];
-		if ( !empty($userName) ) {
-			$options = self::loginAsUser( $userName );
+		if ( $setUser ) {
+			$options = self::loginAsUser();
 		}
 
 		// send request and parse response
@@ -101,21 +101,16 @@ class ApiService extends Service {
 
 	/**
 	 * get user data
-	 * @param string $userName
 	 * @return array $options
 	 */
-	public static function loginAsUser( $userName ) {
+	public static function loginAsUser() {
 		$app = F::app();
 
 		$options = array();
-
 		if ( $app->wg->User->isLoggedIn() ) {
 			$user = $app->wg->User;
 		} else {
-			$user = User::newFromName( $userName );
-			if ( !($user instanceof User) ) {
-				return $options;
-			}
+			return $options;
 		}
 
 		$params = array(

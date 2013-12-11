@@ -42,6 +42,7 @@ class OasisController extends WikiaController {
 		$this->ivw = null;
 		$this->amazonDirectTargetedBuy = null;
 		$this->dynamicYield = null;
+		$this->ivw2 = null;
 
 		wfProfileOut(__METHOD__);
 	}
@@ -52,7 +53,7 @@ class OasisController extends WikiaController {
 	 * @param array $vars global variables list
 	 * @return boolean return true
 	 */
-	public function onMakeGlobalVariablesScript(Array &$vars) {
+	public static function onMakeGlobalVariablesScript(Array &$vars) {
 		$vars['wgOasisResponsive'] = BodyController::isResponsiveLayoutEnabled();
 		return true;
 	}
@@ -84,7 +85,7 @@ class OasisController extends WikiaController {
 	}
 
 	public function executeIndex($params) {
-		global $wgOut, $wgUser, $wgTitle, $wgRequest, $wgCityId, $wgEnableAdminDashboardExt, $wgAllInOne;
+		global $wgOut, $wgUser, $wgTitle, $wgRequest, $wgCityId, $wgEnableAdminDashboardExt, $wgAllInOne, $wgOasisThemeSettings;
 
 		wfProfileIn(__METHOD__);
 
@@ -161,23 +162,7 @@ class OasisController extends WikiaController {
 		}
 
 		// sets background settings by adding classes to <body>
-		if ( isset($this->wg->OasisThemeSettings['background-fixed'])
-			&& filter_var($this->wg->OasisThemeSettings['background-fixed'], FILTER_VALIDATE_BOOLEAN) )
-		{
-			$bodyClasses[] = 'background-fixed';
-		}
-
-		if ( isset($this->wg->OasisThemeSettings['background-tiled'])
-			&& !filter_var($this->wg->OasisThemeSettings['background-tiled'], FILTER_VALIDATE_BOOLEAN) )
-		{
-			$bodyClasses[] = 'background-not-tiled';
-		}
-
-		if ( isset($this->wg->OasisThemeSettings['background-dynamic'])
-			&& filter_var($this->wg->OasisThemeSettings['background-dynamic'], FILTER_VALIDATE_BOOLEAN) )
-		{
-			$bodyClasses[] = 'background-dynamic';
-		}
+		$bodyClasses = array_merge($bodyClasses, $this->getOasisBackgroundClasses($wgOasisThemeSettings));
 
 		$this->bodyClasses = $bodyClasses;
 
@@ -282,6 +267,7 @@ class OasisController extends WikiaController {
 			$this->ivw = AnalyticsEngine::track('IVW', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->amazonDirectTargetedBuy = AnalyticsEngine::track('AmazonDirectTargetedBuy', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->dynamicYield = AnalyticsEngine::track('DynamicYield', AnalyticsEngine::EVENT_PAGEVIEW);
+			$this->ivw2 = AnalyticsEngine::track('IVW2', AnalyticsEngine::EVENT_PAGEVIEW);
 		}
 
 		if (!empty($wgEnableAdminDashboardExt) && AdminDashboardLogic::displayAdminDashboard($this->app, $wgTitle)) {
@@ -574,6 +560,43 @@ EOT;
 		}
 
 		return '';
+	}
+
+	/**
+	 * Takes $themeSettings ( in $wgOasisThemeSettings format )
+	 * and produces array of strings representing classes
+	 * that should be applied to body element
+	 *
+	 * @param $themeSettings array
+	 * @return array
+	 */
+	protected function getOasisBackgroundClasses($themeSettings) {
+		$bodyClasses = [];
+
+		if ( isset($themeSettings['background-fixed'])
+			&& filter_var($themeSettings['background-fixed'], FILTER_VALIDATE_BOOLEAN) )
+		{
+			$bodyClasses[] = 'background-fixed';
+		}
+
+		if ( isset($themeSettings['background-tiled'])
+			&& !filter_var($themeSettings['background-tiled'], FILTER_VALIDATE_BOOLEAN) )
+		{
+			$bodyClasses[] = 'background-not-tiled';
+
+			if ( (isset($themeSettings['background-dynamic'])
+					&& filter_var($themeSettings['background-dynamic'], FILTER_VALIDATE_BOOLEAN))
+				// old wikis may not have 'background-dynamic' set
+				|| (!isset($themeSettings['background-dynamic'])
+					&& isset($themeSettings['background-image-width'])
+					&& (int)$themeSettings['background-image-width'] >= ThemeSettings::MIN_WIDTH_FOR_SPLIT))
+			{
+
+				$bodyClasses[] = 'background-dynamic';
+			}
+		}
+
+		return $bodyClasses;
 	}
 
 	public static function addBodyParameter($parameter) {

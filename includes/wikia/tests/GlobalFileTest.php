@@ -10,17 +10,23 @@ class GlobalFileTest extends WikiaBaseTest {
 	const MUPPET_CITY_ID = 831; # muppet.wikia.com
 	const POZNAN_CITY_ID = 5915; # poznan.wikia.com
 
+	const DEFAULT_CB = 123456789;
+
 	public function setUp() {
 		parent::setUp();
 
 		// assume we're in production environment
 		$this->mockGlobalVariable('wgDevelEnvironment', false);
+		$this->mockGlobalVariable('wgDevBoxImageServerOverride', false);
+
+		$this->mockGlobalVariable('wgImagesDomainSharding', 'images%s.wikia.nocookie.net');
+		$this->mockGlobalVariable('wgCdnStylePath', sprintf('http://slot1.images.wikia.nocookie.net/__cb%s/common', self::DEFAULT_CB));
 	}
 
 	/**
 	 * @dataProvider newFromTextProvider
 	 */
-	public function testNewFromText($row, $cityId, $path, $exists, $width, $height, $crop, $mime) {
+	public function testNewFromText($row, $cityId, $path, $exists, $width, $height, $crop, $mime, $url) {
 		$mockSelectRow = $this->getMethodMock( 'DatabaseMysql', 'selectRow' );
 		$mockSelectRow
 			->expects( $this->any() )
@@ -40,7 +46,7 @@ class GlobalFileTest extends WikiaBaseTest {
 		$this->assertEquals($exists, $file->exists());
 
 		// original image / crop
-		$this->assertEquals("http://images.wikia.com/{$path}/images/0/06/Gzik.jpg", $file->getUrl());
+		$this->assertEquals($url, $file->getUrl());
 
 		if ($file->exists()) {
 			$this->assertContains("/{$path}/images/thumb/0/06/Gzik.jpg/{$crop}", $file->getCrop(200, 200));
@@ -70,6 +76,7 @@ class GlobalFileTest extends WikiaBaseTest {
 				'height' => 450,
 				'crop' => '200px-76%2C527%2C0%2C450-Gzik.jpg',
 				'mime' => 'image/jpeg',
+				'url' => 'http://images3.wikia.nocookie.net/__cb20111213221641/poznan/pl/images/0/06/Gzik.jpg',
 			],
 			// existing image from Muppet wiki
 			[
@@ -87,6 +94,7 @@ class GlobalFileTest extends WikiaBaseTest {
 				'height' => 300,
 				'crop' => '200px-0%2C301%2C0%2C300-Gzik.jpg',
 				'mime' => 'image/png',
+				'url' => 'http://images4.wikia.nocookie.net/__cb20111213221641/muppet/images/0/06/Gzik.jpg',
 			],
 			// not existing image from Poznań wiki
 			[
@@ -98,6 +106,7 @@ class GlobalFileTest extends WikiaBaseTest {
 				'height' => null,
 				'crop' => null,
 				'mime' => null,
+				'url' => 'http://images3.wikia.nocookie.net/__cb123456791/poznan/pl/images/0/06/Gzik.jpg', // contains default CB
 			]
 		];
 	}

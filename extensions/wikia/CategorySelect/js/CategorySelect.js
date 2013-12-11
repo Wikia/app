@@ -7,7 +7,8 @@
 		properties = [ 'name', 'namespace', 'outertag', 'sortkey', 'type' ],
 		slice = Array.prototype.slice,
 		wgCategorySelect = window.wgCategorySelect,
-		Wikia = window.Wikia || {};
+		Wikia = window.Wikia || {},
+		CategorySelect;
 
 	// Static message cache
 	cached.messages = {
@@ -56,7 +57,7 @@
 	 * @param { Object } options
 	 *        The settings to configure the instance with.
 	 */
-	var CategorySelect = function( element, options ) {
+	CategorySelect = function( element, options ) {
 		var limit,
 			elements = {},
 			self = this;
@@ -284,10 +285,10 @@
 		 *        name of a category or the jQuery or DOM Element for a category.
 		 */
 		editCategory: function( category ) {
-			var modal,
-				self = this,
-				element = self.getCategory( category ),
-				category = element && self.getDatum( element );
+			var self = this,
+				element = self.getCategory( category );
+
+			category = element && self.getDatum( element );
 
 			if ( category !== undefined ) {
 				$.when( CategorySelect.getTemplate( 'categoryEdit' ) ).done(function( template ) {
@@ -297,16 +298,37 @@
 						}
 					});
 
-					modal = $.showCustomModal( cached.messages.categoryEdit, Mustache.render( template.content, data ), {
-						buttons: [
-							{
-								id: 'CategorySelectEditModalSave',
-								defaultButton: true,
-								message: cached.messages.buttonSave,
-								handler: function() {
+					require( [ 'wikia.ui.factory' ], function( uiFactory ) {
+						uiFactory.init( [ 'modal' ] ).then( function( uiModal ) {
+							var categoryEditModalConfig = {
+								vars: {
+									id: 'CategorySelectEditModal',
+									size: 'small',
+									content: Mustache.render( template.content, data ),
+									title: cached.messages.categoryEdit,
+									buttons: [
+										{
+											vars: {
+												value: cached.messages.buttonSave,
+												classes: [ 'normal', 'primary' ],
+												data: [
+													{
+														key: 'event',
+														value: 'save'
+													}
+												]
+											}
+										}
+									]
+								}
+							};
+
+							uiModal.createComponent( categoryEditModalConfig, function( categoryEditModal ) {
+								categoryEditModal.bind( 'save', function() {
+
 									var error,
-										name = modal.find( '[name="categoryName"]' ).val(),
-										sortKey = modal.find( '[name="categorySortKey"]' ).val();
+										name = categoryEditModal.$content.find( '[name="categoryName"]' ).val(),
+										sortKey = categoryEditModal.$content.find( '[name="categorySortKey"]' ).val();
 
 									if ( name === '' ) {
 										error = cached.messages.errorEmptyCategoryName;
@@ -316,7 +338,7 @@
 									}
 
 									if ( error ) {
-										modal
+										categoryEditModal.$content
 											.find( '.categoryName' ).addClass( 'error' )
 											.find( '.error-msg' ).text( error );
 
@@ -343,19 +365,21 @@
 
 											self.trigger( 'update' );
 										}
-
-										modal.closeModal();
+										categoryEditModal.trigger( 'close' );
 									}
-								}
-							}
-						],
-						id: 'CategorySelectEditModal',
-						onClose: function() {
-							CategorySelect.track({
-								label: 'button-edit-close'
+								});
+
+								categoryEditModal.bind( 'close', function( event ) {
+									if ( typeof event !== 'undefined' ) {
+										CategorySelect.track({
+											label: 'button-edit-close'
+										});
+									}
+								});
+
+								categoryEditModal.show();
 							});
-						},
-						width: 500
+						});
 					});
 				});
 			}

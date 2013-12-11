@@ -12,15 +12,18 @@ $dir = dirname( __FILE__ ) . '/';
 /* Classes */
 
 $wgAutoloadClasses['VisualEditorWikiaHooks'] = $dir . 'VisualEditor.hooks.php';
-$wgAutoloadClasses['ApiTempUpload'] = $dir . 'ApiTempUpload.php';
 $wgAutoloadClasses['ApiMediaSearch'] = $dir . 'ApiMediaSearch.php';
 $wgAutoloadClasses['ApiPhotoAttribution'] = $dir . 'ApiPhotoAttribution.php';
+$wgAutoloadClasses['ApiAddMedia'] = $dir . 'ApiAddMedia.php';
+$wgAutoloadClasses['ApiAddMediaTemporary'] = $dir . 'ApiAddMediaTemporary.php';
+$wgAutoloadClasses['ApiAddMediaPermanent'] = $dir . 'ApiAddMediaPermanent.php';
 
 /* API Modules */
 
-$wgAPIModules['apitempupload'] = 'ApiTempUpload';
 $wgAPIModules['apimediasearch'] = 'ApiMediaSearch';
 $wgAPIModules['apiphotoattribution'] = 'ApiPhotoAttribution';
+$wgAPIModules['addmediatemporary'] = 'ApiAddMediaTemporary';
+$wgAPIModules['addmediapermanent'] = 'ApiAddMediaPermanent';
 
 /* Resource Loader Modules */
 
@@ -74,10 +77,10 @@ $wgResourceModules += array(
 			've/ce/ve.ce.WikiaInlineVideoNode.js',
 
 			// ui
-			've/ui/tools/buttons/ve.ui.WikiaMediaInsertButtonTool.js',
-			've/ui/tools/buttons/ve.ui.WikiaSourceModeButtonTool.js',
 			've/ui/dialogs/ve.ui.WikiaMediaInsertDialog.js',
+			've/ui/dialogs/ve.ui.WikiaReferenceDialog.js',
 			've/ui/dialogs/ve.ui.WikiaSourceModeDialog.js',
+			've/ui/tools/ve.ui.WikiaDialogTool.js',
 			've/ui/widgets/ve.ui.WikiaCartWidget.js',
 			've/ui/widgets/ve.ui.WikiaCartItemWidget.js',
 			've/ui/widgets/ve.ui.WikiaMediaPageWidget.js',
@@ -119,6 +122,10 @@ $wgResourceModules += array(
 			'wikia-visualeditor-dialog-wikiasourcemode-apply-button',
 			'wikia-visualeditor-dialog-wikiasourcemode-help-link',
 			'wikia-visualeditor-dialog-wikiasourcemode-help-text',
+			'wikia-visualeditor-notification-media-must-be-logged-in',
+			'wikia-visualeditor-notification-media-only-premium-videos-allowed',
+			'wikia-visualeditor-notification-media-query-failed',
+			'wikia-visualeditor-notification-media-permission-denied',
 		),
 		'dependencies' => array(
 			'ext.visualEditor.core',

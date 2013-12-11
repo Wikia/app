@@ -33,7 +33,7 @@ ve.ui.WikiaUploadWidget = function VeUiWikiaUploadWidget( config ) {
 	this.$uploadLabel = this.$( '<span>' )
 		.text( ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-upload-label' ) );
 
-	this.uploadButton = new OO.ui.ButtonWidget( uploadButtonConfig );
+	this.uploadButton = new OO.ui.PushButtonWidget( uploadButtonConfig );
 
 	this.$form = this.$( '<form>' );
 	this.$file = this.$( '<input>' ).attr( {
@@ -137,7 +137,7 @@ ve.ui.WikiaUploadWidget.prototype.onFileChange = function () {
 		);
 	} else {
 		$.ajax( {
-			'url': mw.util.wikiScript( 'api' ) + '?action=apitempupload&type=temporary&format=json',
+			'url': mw.util.wikiScript( 'api' ) + '?action=addmediatemporary&format=json',
 			'type': 'post',
 			'cache': false,
 			'contentType': false,
@@ -170,7 +170,7 @@ ve.ui.WikiaUploadWidget.prototype.onUploadSuccess = function ( data ) {
 
 	// Success
 	// TODO: this should probably fire 'success' not 'upload'
-	this.emit( 'upload', data.apitempupload );
+	this.emit( 'upload', data.addmediatemporary );
 };
 
 /**

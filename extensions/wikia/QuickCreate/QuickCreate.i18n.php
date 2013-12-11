@@ -64,7 +64,7 @@ $messages['ce'] = array(
 	'quickcreate' => 'дlадахьийта хьай дарб',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Dontlietome7
  * @author Jezevec
  */
@@ -347,6 +347,14 @@ $messages['tt-cyrl'] = array(
 $messages['uk'] = array(
 	'quickcreate-desc' => 'Додає кнопку "Створити нову сторінку" з можливістю авторизації для анонімних користувачів',
 	'quickcreate' => 'надіслати свій рецепт',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'quickcreate-desc' => 'Thêm một nút tạo trang mới với yêu cầu đăng nhập cho người dùng vô danh',
+	'quickcreate' => 'gửi công thức của bạn',
 );
 
 /** Simplified Chinese (中文（简体）‎)

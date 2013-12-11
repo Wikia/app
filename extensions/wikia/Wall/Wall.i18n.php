@@ -374,10 +374,6 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 	'wall-quote-author' => '$1 wrote:',
 	'wall-quote-reply-to' => 'reply to #$1',
 
-	'wall-preview-modal-title' => 'Preview',
-	'wall-preview-modal-button-back' => 'Back',
-	'wall-preview-modal-button-publish' => 'Publish',
-
 	'wall-topic-input-heading' => 'Topic',
 	'wall-topic-input-placeholder' => 'Add a Topic (optional)',
 	'wall-topic-input-error' => 'There is no article named "$1". Please use an existing article name as a Topic.',
@@ -432,7 +428,8 @@ $messages['qqq'] = array(
 	'wall-thread-removed' => 'In parentheses at the top of a removed thread page, next to the title.
 {{Identical|Removed}}',
 	'wall-thread-isnotifyeveryone' => 'In parentheses at the top of a highlighted thread page, next to the title',
-	'wall-thread-deleted' => 'In parentheses at the top of a deleted thread page, next to the title',
+	'wall-thread-deleted' => 'In parentheses at the top of a deleted thread page, next to the title.
+{{Identical|Deleted}}',
 	'wall-thread-closed' => 'Label stating the thread is closed.
 {{Identical|Closed}}',
 	'wall-default-title' => "Default title if the user doesn't give a new thread a title",
@@ -455,8 +452,10 @@ $messages['qqq'] = array(
 	'wall-button-to-submit-comment-no-topic' => 'Button to post a new thread after getting an error message for not having a title',
 	'wall-button-save-changes' => 'Button to save edits to a message.
 {{Identical|Save changes}}',
-	'wall-button-cancel-changes' => 'Button to cancel an edit to a message',
-	'wall-button-done-source' => 'Button to close the source view for a message',
+	'wall-button-cancel-changes' => 'Button to cancel an edit to a message.
+{{Identical|Cancel}}',
+	'wall-button-done-source' => 'Button to close the source view for a message.
+{{Identical|Done}}',
 	'wall-message-edit' => 'Menu item to edit a message.
 {{Identical|Edit}}',
 	'wall-message-more' => 'Top of the menu for each message.
@@ -493,7 +492,8 @@ See also:
 * {{msg-mw|ipbwatchuser}}
 * {{msg-mw|ipb-hardblock}}
 * {{msg-mw|ipb-disableusertalk}}',
-	'wall-action-all-confirm-cancel' => 'Button to cancel on a remove or delete message modal box',
+	'wall-action-all-confirm-cancel' => 'Button to cancel on a remove or delete message modal box.
+{{Identical|Cancel}}',
 	'wall-action-all-confirm-notify' => 'Option to notify an admin on a remove or deleted reply modal box',
 	'wall-action-remove-reply-title' => 'Title of the modal box for removing a reply',
 	'wall-action-remove-thread-title' => 'Title of the modal box for removing a thread',
@@ -543,7 +543,8 @@ See also:
 {{Identical|All notifications}}',
 	'wall-notifications-markasread' => 'Option in notification dropdown menu to mark all threads as read.
 {{Identical|Mark all as read}}',
-	'wall-notifications-markasread-all-wikis' => 'Option to mark all cross-wiki notifications as read',
+	'wall-notifications-markasread-all-wikis' => 'Option to mark all cross-wiki notifications as read.
+{{Identical|All wikis}}',
 	'wall-notifications-markasread-this-wiki' => "Option to mark only this wiki's notifications as read",
 	'wall-notifications-empty' => 'Message for empty notification dropdown',
 	'wall-notifications-loading' => 'Message in the notification dropdown while notifications are loading',
@@ -730,7 +731,8 @@ checkbox on Special:Block',
 	'wall-history-summary-label' => 'wall history page, heading for summary item.
 {{Identical|Summary}}',
 	'wall-history-rail-wall' => "wall history page, who's involved box - link to user's wall",
-	'wall-history-rail-contribs' => "wall history page, who's involved box - link to user's contributions list",
+	'wall-history-rail-contribs' => "wall history page, who's involved box - link to user's contributions list.
+{{Identical|Contribution}}",
 	'wall-history-rail-block' => "wall history page, who's involved box - link for admins to block user.
 {{Identical|Block}}",
 	'wall-history-action-view' => 'wall history page, link to view removed thread.
@@ -835,11 +837,6 @@ checkbox on Special:Block',
 	'wall-votes-voted-tooltip' => 'hover tooltip instructing users they have already voted',
 	'wall-quote-author' => 'part of quoted text, contain information about author of quoted text',
 	'wall-quote-reply-to' => 'link label to quoted text.  $1 is a number such as "reply to 123"',
-	'wall-preview-modal-title' => 'Title of preview modal.
-{{Identical|Preview}}',
-	'wall-preview-modal-button-back' => 'buton on preview modal.
-{{Identical|Back}}',
-	'wall-preview-modal-button-publish' => 'buton on preview modal',
 	'wall-topic-input-heading' => 'Topic input label.
 {{Identical|Topic}}',
 	'wall-topic-input-placeholder' => 'Adding topic instruction and call to action.  State that it is optional',
@@ -848,7 +845,21 @@ checkbox on Special:Block',
 	'wall-topic-heading' => 'Related Topics section heading',
 	'wall-topic-edit' => 'Edit Topics call to action that brings up modal',
 	'wall-topic-edit-save' => 'Edit Topics - Save button',
-	'wall-topic-edit-cancel' => 'Edit Topics - Cancel button',
+	'wall-topic-edit-cancel' => 'Edit Topics - Cancel button.
+{{Identical|Cancel}}',
+);
+
+/** Old English (Ænglisc)
+ * @author Espreon
+ */
+$messages['ang'] = array(
+	'wall-toolbar-history' => 'Stǣr',
+	'wall-button-to-cancel-preview' => 'Adihtan',
+	'wall-message-edit' => 'Adihtan',
+	'wall-message-delete' => 'Forlēosan',
+	'wall-history' => 'Stǣr',
+	'wall-quote-author' => '$1 wrāt:',
+	'wall-topic-edit-save' => 'Hordian',
 );
 
 /** Arabic (العربية)
@@ -1131,9 +1142,6 @@ ___________________________________________<br />
 	'wall-votes-voted-tooltip' => 'لقد قدمت إعجابك لهذه الرسالة',
 	'wall-quote-author' => 'كتب $1:',
 	'wall-quote-reply-to' => 'رد على #$1',
-	'wall-preview-modal-title' => 'عرض مسبق',
-	'wall-preview-modal-button-back' => 'رجوع',
-	'wall-preview-modal-button-publish' => 'نشر',
 	'wall-topic-input-heading' => 'الموضوع',
 	'wall-topic-input-placeholder' => 'إضافة موضوع (اختياري)',
 	'wall-topic-input-error' => 'لا توجد مقالة مسماة "$1". الرجاء استخدام اسم مقالة موجودة كموضوع.',
@@ -1187,9 +1195,6 @@ $messages['bg'] = array(
 	'wall-history-summary-label' => 'Резюме',
 	'mail-notification-html-greeting' => 'Здравейте $1,',
 	'wall-quote-author' => '$1 написа:',
-	'wall-preview-modal-title' => 'Предварителен преглед',
-	'wall-preview-modal-button-back' => 'Назад',
-	'wall-preview-modal-button-publish' => 'Публикуване',
 	'wall-topic-input-heading' => 'Тема',
 	'wall-topic-input-placeholder' => 'Добавяне на тема (незадължително)',
 	'wall-topic-edit-save' => 'Съхраняване',
@@ -1352,9 +1357,6 @@ $messages['br'] = array(
 	'tog-enotifmywall-sincevisited' => 'Unan dre neudennad abaoe ma gweladenn ziwezhañ',
 	'wall-quote-author' => '$1 en deus skrivet :',
 	'wall-quote-reply-to' => 'respont da #$1',
-	'wall-preview-modal-title' => 'Rakwelet',
-	'wall-preview-modal-button-back' => 'Distreiñ',
-	'wall-preview-modal-button-publish' => 'Embann',
 	'wall-topic-input-heading' => 'Tem',
 	'wall-topic-edit-save' => 'Enrollañ',
 	'wall-topic-edit-cancel' => 'Nullañ',
@@ -1654,9 +1656,6 @@ ___________________________________________<br />
 	'wall-votes-voted-tooltip' => "Estàs a favor d'aquest missatge!",
 	'wall-quote-author' => '$1 va escriure:',
 	'wall-quote-reply-to' => 'respondre a #$1',
-	'wall-preview-modal-title' => 'Previsualitzar',
-	'wall-preview-modal-button-back' => 'Enrere',
-	'wall-preview-modal-button-publish' => 'Publicar',
 	'wall-topic-input-heading' => 'Tema',
 	'wall-topic-input-placeholder' => 'Afegeix un Tema (opcional)',
 	'wall-topic-input-error' => 'No hi ha cap article anomenat "$1". Si us plau, utilitza un nom d\'un article existent com a Tema.',
@@ -1674,11 +1673,13 @@ $messages['ce'] = array(
 	'wall-message-wall' => 'Декъашхочун дийцаре',
 	'wall-message-wall-shorten' => 'дийцаре',
 	'wall-thread-closed' => 'ДӀачӀагӀа',
+	'wall-button-to-preview-comment' => 'Хьалха муха ю хьажа',
 	'wall-notifications-markasread' => 'Массо билгал йе еша сана',
 	'mail-notification-html-button' => 'Хьажа дийцаре',
+	'wall-preview-modal-title' => 'Хьалха муха ю хьажа',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Chmee2
  * @author Darth Daron
  * @author Vks
@@ -1959,9 +1960,6 @@ ___________________________________________<br />
 	'wall-votes-voted-tooltip' => 'Zvýšil jste Prestiž této zprávy!',
 	'wall-quote-author' => '$1 napsal:',
 	'wall-quote-reply-to' => 'odpověď na #$1',
-	'wall-preview-modal-title' => 'Náhled',
-	'wall-preview-modal-button-back' => 'Zpět',
-	'wall-preview-modal-button-publish' => 'Publikovat',
 	'wall-topic-input-heading' => 'Téma',
 	'wall-topic-input-placeholder' => 'Přidat téma (volitelné)',
 	'wall-topic-input-error' => 'Neexistuje žádný článek s názvem "$1". Jako téma použijte název existujícího článku.',
@@ -2285,9 +2283,6 @@ ___________________________________________<br />
 	'wall-votes-voted-tooltip' => 'Beitrag gelobt!',
 	'wall-quote-author' => '$1 schrieb:',
 	'wall-quote-reply-to' => 'auf Nr. $1 antworten',
-	'wall-preview-modal-title' => 'Vorschau',
-	'wall-preview-modal-button-back' => 'Zurück',
-	'wall-preview-modal-button-publish' => 'Veröffentlichen',
 	'wall-topic-input-heading' => 'Thema',
 	'wall-topic-input-placeholder' => 'Ein Thema hinzufügen (optional)',
 	'wall-topic-input-error' => 'Es gibt keinen Artikel namens „$1“. Bitte wähle einen vorhandenen Artikeltitel als Thema aus.',
@@ -2301,6 +2296,7 @@ ___________________________________________<br />
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
  * @author Gorizon
+ * @author Marmase
  * @author Mirzali
  */
 $messages['diq'] = array(
@@ -2309,7 +2305,7 @@ $messages['diq'] = array(
 	'wall-message-wall' => 'Mesacê Dêsi',
 	'wall-message-wall-shorten' => 'dês',
 	'wall-message-unfollow' => 'Mepaw',
-	'wall-message-undoremove' => 'peyser bia',
+	'wall-message-undoremove' => 'Peyser biya',
 	'wall-message-edited' => '<a href="$3" >Vurnerê</a> <a class="namey karberi" href="$1">$2</a>',
 	'wall-message-edited-summary' => '<a href="$4" >$1 by </a><a class="username" href="$2">$3</a>',
 	'wall-message-update-highlight-summary' => 'Xulaseya',
@@ -2373,9 +2369,6 @@ $messages['diq'] = array(
 	'wall-votes-number' => 'Namê $1', # Fuzzy
 	'wall-quote-author' => 'Nusnayışê $1:',
 	'wall-quote-reply-to' => 'cewabê #$1',
-	'wall-preview-modal-title' => 'Verasayış',
-	'wall-preview-modal-button-back' => 'Peyser',
-	'wall-preview-modal-button-publish' => 'Vıla ke',
 	'wall-topic-input-heading' => 'Topik:',
 	'wall-topic-edit' => 'Topiki bıvurne',
 );
@@ -2754,9 +2747,6 @@ ___________________________________________<br />
 	'wall-votes-voted-tooltip' => '¡Te gusta este mensaje!',
 	'wall-quote-author' => '$1 escribió:',
 	'wall-quote-reply-to' => 'responder a #$1',
-	'wall-preview-modal-title' => 'Previsualizar',
-	'wall-preview-modal-button-back' => 'Volver',
-	'wall-preview-modal-button-publish' => 'Publicar',
 	'wall-topic-input-heading' => 'Tema',
 	'wall-topic-input-placeholder' => 'Añadir un Tema (opcional)',
 	'wall-topic-input-error' => 'No hay ningún artículo llamado "$1". Por favor usa un nombre de artículo existente como un Tema.',
@@ -2934,8 +2924,6 @@ Tätä ei voi peruuttaa.',
 	'wall-recentchanges-wall-created-title' => 'Loi keskusteluseinän',
 	'wall-removed-reply-undo' => 'Tämä vastaus on poistettu. $1',
 	'wall-removed-reply' => 'Tämä vastaus on poistettu',
-	'wall-preview-modal-title' => 'Esikatselu',
-	'wall-preview-modal-button-back' => 'Takaisin',
 	'wall-topic-input-heading' => 'Aihe',
 	'wall-topic-edit' => 'Muokkaa aiheita',
 	'wall-topic-edit-save' => 'Tallenna',
@@ -3275,9 +3263,6 @@ modifier vos préférence de courriel ici : http://communaute.wikia.com/Special:
 	'wall-votes-voted-tooltip' => 'Vous avez sélectionné ce message !',
 	'wall-quote-author' => '$1 a écrit :',
 	'wall-quote-reply-to' => 'réponse à #$1',
-	'wall-preview-modal-title' => 'Aperçu',
-	'wall-preview-modal-button-back' => 'Retour',
-	'wall-preview-modal-button-publish' => 'Publier',
 	'wall-topic-input-heading' => 'Rubrique',
 	'wall-topic-input-placeholder' => 'Ajouter une rubrique (optionnel)',
 	'wall-topic-input-error' => 'Il n’y aucun article intitulé « $1 ». Veuillez utiliser un nom d’article existant comme rubrique.',
@@ -3389,7 +3374,7 @@ A mensaxe orixinal e o seu resumo seguirán aparecendo no historial do wiki.',
 	'wall-action-rev-thread-confirm' => 'Está seguro de querer borrar revisións deste fío e todo o seu historial do wiki? Esta acción non se pode desfacer.',
 	'wall-action-rev-confirm-ok' => 'Si, borrar',
 	'wall-action-move-thread-heading' => 'Trasladar este fío',
-	'wall-action-move-validation-select-wall' => 'Selecciona unha táboa',
+	'wall-action-move-validation-select-wall' => 'Selecciona un taboleiro',
 	'wall-action-move-topics-summary' => 'Fío trasladado',
 	'wall-action-move-thread-ok' => 'Mover o fío',
 	'wall-action-move-board-label' => 'Seleccione a táboa á que mover',
@@ -3441,7 +3426,7 @@ A mensaxe orixinal e o seu resumo seguirán aparecendo no historial do wiki.',
 	'wall-sorting-newest-replies' => 'Respostas máis novas primeiro',
 	'wall-sorting-most-active' => 'Máis activos primeiro',
 	'wall-sorting-archived' => 'Arquivados',
-	'tog-enotifwallthread' => '…alguén responde á mensaxe dun muro que sigo',
+	'tog-enotifwallthread' => '…alguén responde á mensaxe dun muro que estou seguindo',
 	'tog-enotifmywall' => '…alguén deixa unha nova mensaxe no meu muro',
 	'wall-deleted-msg-pagetitle' => 'Mensaxe borrada',
 	'wall-deleted-msg-text' => 'A mensaxe que intenta consultar foi borrada.',
@@ -3520,7 +3505,7 @@ A mensaxe orixinal e o seu resumo seguirán aparecendo no historial do wiki.',
 	'mail-notification-reply-his' => '$AUTHOR_NAME respondeu a unha mensaxe en $WIKI.',
 	'mail-notification-reply-someone' => '$AUTHOR_NAME respondeu á mensaxe de $PARENT_AUTHOR_NAME en $WIKI.',
 	'mail-notification-html-greeting' => 'Boas, $1:',
-	'mail-notification-html-button' => 'Ollar a conversa',
+	'mail-notification-html-button' => 'Ver a conversa',
 	'mail-notification-subject' => '$1 -- $2',
 	'mail-notification-html-footer-line3' => '<a href="http://www.twitter.com/wikia" style="text-decoration:none">
 <img alt="twitter" src="http://images4.wikia.nocookie.net/wikianewsletter/images/f/f7/Twitter.png" style="border:none">
@@ -3590,9 +3575,6 @@ as preferencias de correo electrónico aquí: http://community.wikia.com/Special
 	'wall-votes-voted-tooltip' => 'Deu o seu eloxio a esta mensaxe!',
 	'wall-quote-author' => '$1 escribiu:',
 	'wall-quote-reply-to' => 'resposta ao nº$1',
-	'wall-preview-modal-title' => 'Vista previa',
-	'wall-preview-modal-button-back' => 'Volver',
-	'wall-preview-modal-button-publish' => 'Publicar',
 	'wall-topic-input-heading' => 'Tema',
 	'wall-topic-input-placeholder' => 'Engadir un tema (opcional)',
 	'wall-topic-input-error' => 'Non hai ningún artigo chamado "$1". Use o nome dun artigo existente como tema.',
@@ -3873,9 +3855,6 @@ ___________________________________________<br />
 	'wall-message-unnotifyeveryone' => 'Beszélgetésfolyam kiemelésének megszüntetése',
 	'wall-message-notifyeveryone-tooltip' => 'Minden bejelentkezett felhasználó ezen a wikin értesítést fog kapni erről a beszélgetésfolyamról, amikor legközelebb ellátogatnak a wikire',
 	'wall-quote-author' => '$1 ezt írta:',
-	'wall-preview-modal-title' => 'Előnézet',
-	'wall-preview-modal-button-back' => 'Vissza',
-	'wall-preview-modal-button-publish' => 'Mentés',
 	'wall-topic-input-heading' => 'Téma',
 	'wall-topic-input-placeholder' => 'Téma megadása (nem kötelező)',
 	'wall-topic-input-error' => 'Nincs "$1" című szócikk. Kérlek, használd egy létező szócikk címét témaként.',
@@ -4146,9 +4125,6 @@ tue preferentias de e-mail: http://community.wikia.com/Special:Preferences',
 	'wall-votes-voted-tooltip' => 'Tu ha date complimentos a iste message!',
 	'wall-quote-author' => '$1 scribeva:',
 	'wall-quote-reply-to' => 'responsa a №$1',
-	'wall-preview-modal-title' => 'Previsualisation',
-	'wall-preview-modal-button-back' => 'Retornar',
-	'wall-preview-modal-button-publish' => 'Publicar',
 );
 
 /** Indonesian (Bahasa Indonesia)
@@ -4178,6 +4154,7 @@ $messages['it'] = array(
 );
 
 /** Japanese (日本語)
+ * @author BryghtShadow
  * @author Shirayuki
  * @author Tommy6
  * @author Whym
@@ -4415,7 +4392,7 @@ ___________________________________________
 ___________________________________________<br />
 <p>* フォローの設定を変更する:<br />
 http://ja.wikia.com/wiki/Special:Following</p>',
-	'prefs-email-wall-v2' => 'メッセージウォール', # Fuzzy
+	'prefs-email-wall-v2' => 'メッセージウォールとフォーラム',
 	'tog-enotifwallthread-v2' => 'メール通知の設定',
 	'tog-enotifmywall-every' => 'すべてのメッセージと返信を通知',
 	'tog-enotifmywall-sincevisited' => '各スレッドについて最後の閲覧後に一度だけ通知する',
@@ -4429,15 +4406,12 @@ http://ja.wikia.com/wiki/Special:Following</p>',
 	'wall-message-notifyeveryone-tooltip' => 'このウィキを閲覧している全ての登録利用者に対してこのスレッドに関する通知が行われます', # Fuzzy
 	'wall-votes-modal-title' => 'いいね',
 	'wall-votes-modal-title-desc' => '$1人の利用者がこのメッセージに「いいね」を付けました。',
-	'wall-votes-number' => '$1 いいね', # Fuzzy
+	'wall-votes-number' => '$1 いいね',
 	'wall-votes-number-tooltip' => '誰がこのメッセージに「いいね」を付けたのかをみる。',
 	'wall-votes-vote-tooltip' => 'このメッセージに「いいね」を付ける',
 	'wall-votes-voted-tooltip' => 'このメッセージには既に「いいね」を付けています',
 	'wall-quote-author' => '$1 曰く:',
 	'wall-quote-reply-to' => '#$1 への返信',
-	'wall-preview-modal-title' => 'プレビュー',
-	'wall-preview-modal-button-back' => '戻る',
-	'wall-preview-modal-button-publish' => '発行',
 );
 
 /** Georgian (ქართული)
@@ -4584,8 +4558,6 @@ $messages['lb'] = array(
 	'wall-notifications-markasread-all-wikis' => 'All Wikiën',
 	'wall-notifications-markasread-this-wiki' => 'Dës Wiki',
 	'wall-history-summary-label' => 'Resumé',
-	'wall-preview-modal-button-back' => 'Zréck',
-	'wall-preview-modal-button-publish' => 'Verëffentlechen',
 	'wall-topic-input-heading' => 'Thema',
 	'wall-topic-input-placeholder' => 'En Thema derbäisetzen (fakultativ)',
 	'wall-topic-edit-save' => 'Späicheren',
@@ -4893,9 +4865,6 @@ ___________________________________________<br />
 	'wall-votes-voted-tooltip' => 'Веќе ви се бендисува поракава!',
 	'wall-quote-author' => '$1 напиша:',
 	'wall-quote-reply-to' => 'одговори на бр. $1',
-	'wall-preview-modal-title' => 'Преглед',
-	'wall-preview-modal-button-back' => 'Назад',
-	'wall-preview-modal-button-publish' => 'Објави',
 	'wall-topic-input-heading' => 'Тема',
 	'wall-topic-input-placeholder' => 'Додај тема (незадолжително)',
 	'wall-topic-input-error' => 'Нема статија со наслов „$1“. Темата мора да има наслов на статија што постои.',
@@ -5207,9 +5176,6 @@ ubah keutamaan e-mel anda di sini: http://community.wikia.com/Special:Preference
 	'wall-votes-voted-tooltip' => 'Anda telah memuji pesanan ini!',
 	'wall-quote-author' => '$1 menulis:',
 	'wall-quote-reply-to' => 'balasan kepada #$1',
-	'wall-preview-modal-title' => 'Pralihat',
-	'wall-preview-modal-button-back' => 'Kembali',
-	'wall-preview-modal-button-publish' => 'Siarkan',
 	'wall-topic-input-heading' => 'Topik',
 	'wall-topic-input-placeholder' => 'Tambahkan Topik (tidak wajib)',
 	'wall-topic-input-error' => 'Tiada rencana bertajuk "$1". Sila gunakan nama rencana yang sedia ada sebagai Topik.',
@@ -5497,9 +5463,6 @@ endre e-post-innstillingene dine her: http://community.wikia.com/Special:Prefere
 	'wall-votes-voted-tooltip' => 'Du har gitt denne meldingen ros!',
 	'wall-quote-author' => '$1 skrev:',
 	'wall-quote-reply-to' => 'svar til #$1',
-	'wall-preview-modal-title' => 'Forhåndsvis',
-	'wall-preview-modal-button-back' => 'Tilbake',
-	'wall-preview-modal-button-publish' => 'Publiser',
 	'wall-topic-input-heading' => 'Emne',
 	'wall-topic-input-placeholder' => 'Legg til et emne (valgfritt)',
 	'wall-topic-input-error' => 'Det finnes ingen artikkel med navnet «$1». Vennligst bruk et eksisterende artikkelnavn som emne.',
@@ -5798,9 +5761,6 @@ e-mailvoorkeuren wijzingen: http://community.wikia.com/Special:Preferences',
 	'wall-votes-voted-tooltip' => 'U heeft Kudos aan dit bericht gegeven!',
 	'wall-quote-author' => '$1 schreef:',
 	'wall-quote-reply-to' => 'reactie op bericht #$1',
-	'wall-preview-modal-title' => 'Voorvertoning',
-	'wall-preview-modal-button-back' => 'Terug',
-	'wall-preview-modal-button-publish' => 'Publiceren',
 	'wall-topic-input-heading' => 'Onderwerp',
 	'wall-topic-input-placeholder' => 'Onderwerp toevoegen (optioneel)',
 	'wall-topic-input-error' => 'Er is geen pagina met de naam "$1". Kies de naam van een bestaande pagina als onderwerp.',
@@ -6145,9 +6105,6 @@ ___________________________________________<br />
 	'wall-votes-voted-tooltip' => 'Przyznano OKejkę tej wiadomości!',
 	'wall-quote-author' => '$1 napisał(a):',
 	'wall-quote-reply-to' => 'odpowiedź na #$1',
-	'wall-preview-modal-title' => 'Podgląd',
-	'wall-preview-modal-button-back' => 'Wstecz',
-	'wall-preview-modal-button-publish' => 'Publikuj',
 	'wall-topic-input-heading' => 'Temat',
 	'wall-topic-input-placeholder' => 'Dodaj temat (opcjonalne)',
 	'wall-topic-input-error' => 'Artykuł o nazwie "$1" nie istnieje. Użyj nazwy istniejącego artykułu.',
@@ -6219,15 +6176,13 @@ $messages['ps'] = array(
 	'tog-enotifwallthread-v2' => 'برېښليک راولېږه…',
 	'wall-quote-author' => '$1 ليکلی:',
 	'wall-quote-reply-to' => '#$1 ته ځواب وييل',
-	'wall-preview-modal-title' => 'مخليدنه',
-	'wall-preview-modal-button-back' => 'پر شا',
-	'wall-preview-modal-button-publish' => 'خپرول',
 	'wall-topic-edit-save' => 'خوندي کول',
 	'wall-topic-edit-cancel' => 'ناگارل',
 );
 
 /** Portuguese (português)
  * @author Hamilton Abreu
+ * @author Josep Maria 15.
  * @author Luckas
  * @author Malafaya
  * @author SandroHc
@@ -6302,7 +6257,7 @@ $messages['pt'] = array(
 	'wall-notifications-empty' => 'Não existem notificações',
 	'wall-notifications-loading' => 'A carregar notificações',
 	'wall-notifications-reminder' => 'Você tem <span>$1</span> {{PLURAL:$1|notificação|notificações}} por ler',
-	'wn-user1-reply-self-a-wall' => '$1 respondeu á mensagem',
+	'wn-user1-reply-self-a-wall' => '$1 respondeu à mensagem',
 	'wn-newmsg' => 'Você deixou uma nova mensagem no mural de $1',
 	'wn-admin-thread-deleted' => 'Tópico removido do mural de $1',
 	'wall-sorting-newest-threads' => 'Tópicos mais recentes',
@@ -6363,9 +6318,9 @@ $messages['pt'] = array(
 	'wall-message-not-found-in-db' => 'Não conseguimos encontrar esta mural de mensagens na nossa base de dados.',
 	'mail-notification-new-someone' => '$AUTHOR_NAME escreveu uma nova mensagem na $WIKI.',
 	'mail-notification-new-your' => '$AUTHOR_NAME deixou-te uma nova mensagem na $WIKI.',
-	'mail-notification-reply-your' => '$AUTHOR_NAME respondeu á tua mensagem na $WIKI.',
+	'mail-notification-reply-your' => '$AUTHOR_NAME respondeu à tua mensagem na $WIKI.',
 	'mail-notification-reply-his' => '$AUTHOR_NAME respondeu a uma mensagem na $WIKI.',
-	'mail-notification-reply-someone' => '$AUTHOR_NAME respondeu á mensagem de $PARENT_AUTHOR_NAME na $WIKI.',
+	'mail-notification-reply-someone' => '$AUTHOR_NAME respondeu à mensagem de $PARENT_AUTHOR_NAME na $WIKI.',
 	'mail-notification-html-greeting' => 'Olá $1,',
 	'mail-notification-html-button' => 'Ver a conversação',
 	'mail-notification-body' => 'Olá $WATCHER,
@@ -6415,9 +6370,6 @@ suas preferências de e-mail aqui: http://community.wikia.com/Special:Preference
 	'wall-votes-voted-tooltip' => 'Você deu um "Gosto" a esta mensagem!',
 	'wall-quote-author' => '$1 escreveu:',
 	'wall-quote-reply-to' => 'responder a #$1',
-	'wall-preview-modal-title' => 'Antever',
-	'wall-preview-modal-button-back' => 'Voltar',
-	'wall-preview-modal-button-publish' => 'Publicar',
 	'wall-topic-input-heading' => 'Tópico',
 	'wall-topic-input-placeholder' => 'Adicionar um tópico (opcional)',
 	'wall-topic-edit' => 'Editar tópicos',
@@ -6580,8 +6532,6 @@ suas preferências de email aqui: http://pt-br.wikia.com/wiki/Especial:Preferên
 	'tog-enotifwallthread-v2' => 'Enviar-me um email...',
 	'wall-quote-author' => '$1 escreveu:',
 	'wall-quote-reply-to' => 'responder a #$1',
-	'wall-preview-modal-button-back' => 'Voltar',
-	'wall-preview-modal-button-publish' => 'Publicar',
 	'wall-topic-input-heading' => 'Tópico',
 	'wall-topic-input-placeholder' => 'Adicionar um tópico (opcional)',
 	'wall-topic-edit' => 'Editar tópicos',
@@ -6894,7 +6844,7 @@ $messages['ru'] = array(
 </a>',
 	'mail-notification-html-footer-line1' => 'Чтобы узнать о последних событиях на Викия, посетите <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
 	'mail-notification-html-footer-line2' => 'Чтобы настроить уведомления по email, перейдите на страницу <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">личных настроек</a>',
-	'mail-notification-body' => 'Hi $WATCHER,
+	'mail-notification-body' => 'Привет, $WATCHER,
 
 $SUBJECT
 
@@ -6934,18 +6884,15 @@ ___________________________________________<br />
 	'wall-message-notifyeveryone' => 'Сообщить всем об этой теме',
 	'wall-message-unnotifyeveryone' => 'Отменить сообщение об этой теме',
 	'wall-message-notifyeveryone-tooltip' => 'Все зарегистрированные участники будут уведомлены об этой теме при следующем визите проекта',
-	'wall-votes-modal-showmore' => 'Посмотреть, кто ещё добавил "Мне нравится"',
+	'wall-votes-modal-showmore' => 'Посмотреть, кто ещё добавил «Мне нравится»',
 	'wall-votes-modal-title' => 'Мне нравится',
-	'wall-votes-modal-title-desc' => '{{PLURAL:$1|Один участник|$1 участника|$1 участников}} добавили "Мне нравится" к этому сообщению',
+	'wall-votes-modal-title-desc' => '{{PLURAL:$1|Один участник|$1 участника|$1 участников}} добавили «Мне нравится» к этому сообщению',
 	'wall-votes-number' => '$1 {{PLURAL:$1|«мне нравится»}}',
-	'wall-votes-number-tooltip' => 'Посмотреть, кто добавил "Мне нравится"',
+	'wall-votes-number-tooltip' => 'Посмотреть, кто добавил «Мне нравится»',
 	'wall-votes-vote-tooltip' => 'Мне нравится это сообщение',
 	'wall-votes-voted-tooltip' => 'Вам понравилось это сообщение!',
 	'wall-quote-author' => 'От $1:',
 	'wall-quote-reply-to' => 'ответ на #$1',
-	'wall-preview-modal-title' => 'Предпросмотр',
-	'wall-preview-modal-button-back' => 'Назад',
-	'wall-preview-modal-button-publish' => 'Сохранить',
 	'wall-topic-input-heading' => 'Topic',
 	'wall-topic-input-placeholder' => 'Add a Topic (optional)',
 	'wall-topic-input-error' => 'There is no article named "$1". Please use an existing article name as a Topic.',
@@ -7258,9 +7205,6 @@ dina e-postinställningar här: http://community.wikia.com/Special:Preferences',
 	'wall-votes-voted-tooltip' => 'Du har givit beröm till detta meddelande!',
 	'wall-quote-author' => '$1 skrev:',
 	'wall-quote-reply-to' => 'svar till #$1',
-	'wall-preview-modal-title' => 'Förhandsgranskning',
-	'wall-preview-modal-button-back' => 'Tillbaka',
-	'wall-preview-modal-button-publish' => 'Publicera',
 	'wall-topic-input-heading' => 'Ämne',
 	'wall-topic-input-placeholder' => 'Lägg till ett ämne (valfritt)',
 	'wall-topic-input-error' => 'Det finns ingen artikel med namnet "$1". Var god använd ett existerande artikelnamn som ämne.',
@@ -7574,9 +7518,6 @@ ang iyong mga kanaisan ng elektronikong liham dito: http://community.wikia.com/S
 	'wall-votes-voted-tooltip' => 'Binigyan mo ng Kudos ang mensaheng ito!',
 	'wall-quote-author' => 'Isinulat ni $1 ang:',
 	'wall-quote-reply-to' => 'tumugon kay #$1',
-	'wall-preview-modal-title' => 'Paunang patanaw',
-	'wall-preview-modal-button-back' => 'Bumalik',
-	'wall-preview-modal-button-publish' => 'Ilathala',
 );
 
 /** толышә зывон (толышә зывон)
@@ -7645,8 +7586,12 @@ $messages['tr'] = array(
 	'wall-action-admin-confirm-ok' => 'Sil',
 	'wall-action-rev-confirm-ok' => 'Evet, sil',
 	'wall-action-move-thread-heading' => 'Bu konuyu taşı',
+	'wall-notifications' => 'Bildirimler',
+	'wall-notifications-all' => 'Tüm Bildirimler',
+	'wall-notifications-markasread' => 'Tümünü okundu olarak işaretle',
 	'wall-notifications-markasread-all-wikis' => 'Tüm wikiler',
 	'wall-notifications-markasread-this-wiki' => 'Bu wiki',
+	'wall-notifications-empty' => 'Herhangi bir bildiriminiz yok',
 	'wall-notifications-loading' => 'Yükleme bildirimleri',
 	'wall-recentchanges-summary' => '($1)',
 );
@@ -7987,9 +7932,6 @@ ___________________________________________<br />
 	'wall-votes-voted-tooltip' => 'Вам сподобалось це повідомлення!',
 	'wall-quote-author' => '$1 написав:',
 	'wall-quote-reply-to' => 'Відповідь на #$1',
-	'wall-preview-modal-title' => 'Попередній перегляд',
-	'wall-preview-modal-button-back' => 'Назад',
-	'wall-preview-modal-button-publish' => 'Зберегти',
 	'wall-topic-input-heading' => 'Тема',
 	'wall-topic-input-placeholder' => 'Додати тему (за бажанням)',
 	'wall-topic-input-error' => 'Немає статті, названої "$1". Будь ласка, використовуйте назву існуючої статті як тему.',
@@ -8297,9 +8239,6 @@ ___________________________________________<br />
 	'wall-votes-voted-tooltip' => 'Bạn đã làm nổi bật tin nhắn này!',
 	'wall-quote-author' => '$1 đã viết:',
 	'wall-quote-reply-to' => 'trả lời #$1',
-	'wall-preview-modal-title' => 'Xem thử',
-	'wall-preview-modal-button-back' => 'Trở lại',
-	'wall-preview-modal-button-publish' => 'Đăng',
 	'wall-topic-input-heading' => 'Chủ đề',
 	'wall-topic-input-placeholder' => 'Thêm một Chủ đề (tùy chọn)',
 	'wall-topic-input-error' => 'Chưa có một bài viết nào tên là "$1". Xin vui lòng sử dụng tên của một bài viết đã có làm chủ đề.',
@@ -8496,8 +8435,6 @@ $messages['zh-hans'] = array(
 	'tog-enotifwallthread-v2' => '邮件通知我…',
 	'tog-enotifmywall-reminder' => '以每日提醒邮件',
 	'tog-enotifmywall-noemail' => '从不。不向我发送任何留言墙或论坛邮件',
-	'wall-preview-modal-title' => '预览',
-	'wall-preview-modal-button-back' => '返回',
 	'wall-topic-edit-cancel' => '取消',
 );
 

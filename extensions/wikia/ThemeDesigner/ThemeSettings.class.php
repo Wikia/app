@@ -8,6 +8,8 @@ class ThemeSettings {
 
 	const HistoryItemsLimit = 10;
 
+	const MIN_WIDTH_FOR_SPLIT = 1030;
+
 	const WordmarkImageName = 'Wiki-wordmark.png';
 	const BackgroundImageName = 'Wiki-background';
 	const FaviconImageName = 'Favicon.ico';
@@ -55,7 +57,7 @@ class ThemeSettings {
 		$this->defaultSettings['banner-image-name'] = '';
 
 		// background
-		$this->defaultSettings['background-image'] = false;
+		$this->defaultSettings['background-image'] = '';
 		$this->defaultSettings['background-image-height'] = null;
 		$this->defaultSettings['background-image-name'] = '';
 		$this->defaultSettings['background-image-width'] = null;
@@ -69,7 +71,7 @@ class ThemeSettings {
 		$settings = $this->defaultSettings;
 		if(!empty($GLOBALS[self::WikiFactorySettings])) {
 			$settings = array_merge($settings, $GLOBALS[self::WikiFactorySettings]);
-			$colorKeys = array( "color-body", "color-body-middle", "color-page", "color-buttons", "color-links", "color-header" );
+			$colorKeys = array( "color-body", "color-page", "color-buttons", "color-links", "color-header" );
 
 			// if any of the user set colors are invalid, use default
 			foreach ($colorKeys as $colorKey) {
@@ -78,6 +80,12 @@ class ThemeSettings {
 					break;
 				}
 			}
+
+			// special check for color-body-middle
+			if (!isset($settings['color-body-middle']) || !ThemeDesignerHelper::isValidColor($settings["color-body-middle"])) {
+				$settings["color-body-middle"] = $settings["color-body"];
+			}
+
 
 			// add variables that might not be saved already in WF
 			if(!isset($settings['background-fixed'])) {

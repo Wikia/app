@@ -1,14 +1,7 @@
 @import "skins/oasis/css/core/color";
+@import "color";
 
-.ve-ui-popupWidget-body {
-	border-color: $color-page-border;
-}
-
-.ve-ui-outlineItemWidget {
-	&.ve-ui-optionWidget-selected {
-		background: $color-ve-hover;
-	}
-}
+/* Categories */
 
 .ve-ui-mwCategoryItemButton {
 	background: $color-ve-hover;
@@ -19,11 +12,47 @@
 	}
 }
 
-.ve-ui-outlineControlsWidget {
+/* Options */
+
+.ve-ui-mwMediaResultWidget {
+	&.oo-ui-optionWidget-highlighted,
+	&.oo-ui-optionWidget-selected {
+		background-color: $color-ve-gradient-light;
+		box-shadow: 0 0 0.3em $color-ve-gradient-light, 0 0 0 $color-page;
+	}
+}
+
+/* Outline */
+
+.oo-ui-outlineControlsWidget {
 	background: $color-page;
 }
 
-.ve-ui-popupWidget-callout {
+.oo-ui-outlineItemWidget {
+	&.oo-ui-optionWidget-selected {
+		background: $color-ve-hover;
+	}
+}
+
+/* Parameter Results */
+
+.ve-ui-mwParameterResultWidget-name {
+	background-color: $color-page;
+	border-color: $color-page-border;
+}
+
+/* Popup */
+
+.oo-ui-popupWidget-body {
+	background-color: $color-page;
+}
+
+.oo-ui-popupWidget-popup {
+	background-color: $color-ve-gradient-light;
+	border-color: $color-page-border;
+}
+
+.oo-ui-popupWidget-tailed .oo-ui-popupWidget-tail {
 	background: none;
 	height: 0;
 	width: 0;
@@ -51,6 +80,8 @@
 	}
 }
 
-.ve-ui-surfaceWidget-toolbar .ve-ui-toolbar-bar {
+/* Surface Toolbar */
+
+.ve-ui-surfaceWidget-toolbar .oo-ui-toolbar-bar {
 	border-color: $color-page-border;
 }

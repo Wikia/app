@@ -145,7 +145,8 @@ $messages['qqq'] = array(
 {{Identical|Wiki}}',
 	'swm-label-recipient-users' => '{{Identical|User}}',
 	'swm-label-mode-wikis-all' => 'Referred to in:
-*{{msg-wikia|Swm-label-mode-users-anon-hint}}',
+*{{msg-wikia|Swm-label-mode-users-anon-hint}}
+{{Identical|All wikis}}',
 	'swm-label-mode-wikis-wiki' => 'Referred to in:
 *{{msg-wikia|Swm-label-mode-users-anon-hint}}',
 	'swm-label-mode-wikis-wiki-multi' => 'Option to select if user wants to send message to users on a list of wikis.
@@ -187,14 +188,16 @@ Referred to in:
 {{Identical|After}}',
 	'swm-mode-users-registration-before' => 'Option to select if user wants to send message to users who registered before the given date.
 {{Identical|Before}}',
-	'swm-mode-users-registration-between' => 'Option to select if user wants to send message to users who registered between two given dates.',
+	'swm-mode-users-registration-between' => 'Option to select if user wants to send message to users who registered between two given dates.
+{{Identical|Between}}',
 	'swm-label-mode-users-registration-hint' => 'Message that lets the user know that dates must be in the form 2012-04-01 00:00:00.',
 	'swm-error-registered-tobeforefrom' => 'Error message when given user registration end date is before start date.',
 	'swm-label-mode-users-editcount' => 'Label for option to select users by edit count',
 	'swm-mode-users-editcount-more' => 'Option to select if user wants to send message to users who have an edit count greater than the given number.
 {{Identical|More}}',
 	'swm-mode-users-editcount-less' => 'Option to select if user wants to send message to users who have an edit count less than the given number.',
-	'swm-mode-users-editcount-between' => 'Option to select if user wants to send message to users who have an edit count between two given numbers.',
+	'swm-mode-users-editcount-between' => 'Option to select if user wants to send message to users who have an edit count between two given numbers.
+{{Identical|Between}}',
 	'swm-error-editcount-tolessthanfrom' => 'Error message when given edit count upper limit is less than lower limit.',
 	'swm-error-editcount-notnumber' => 'Error message when given edit count is not a valid number.',
 	'swm-label-mode-wikis-created' => 'Label for option to select wikis by creation date.',
@@ -202,7 +205,8 @@ Referred to in:
 {{Identical|After}}',
 	'swm-mode-wikis-created-before' => 'Option to select if user wants to send message to wikis created before the given date.
 {{Identical|Before}}',
-	'swm-mode-wikis-created-between' => 'Option to select if user wants to send message to wikis created between two given date.',
+	'swm-mode-wikis-created-between' => 'Option to select if user wants to send message to wikis created between two given date.
+{{Identical|Between}}',
 	'swm-label-mode-wikis-created-hint' => 'Message that lets the user know that dates must be in the form 2012-04-01 00:00:00.',
 	'swm-error-created-tobeforefrom' => 'Error message when given wiki creation end date is before start date.',
 );
@@ -286,6 +290,13 @@ $messages['an'] = array(
 	'swm-list-table-lang' => 'Idiomas',
 	'swm-yes' => 'Sí',
 	'swm-no' => 'No',
+);
+
+/** Old English (Ænglisc)
+ * @author Espreon
+ */
+$messages['ang'] = array(
+	'swm-label-edit' => 'Adihtan',
 );
 
 /** Arabic (العربية)
@@ -716,14 +727,17 @@ $messages['ce'] = array(
 	'swm-label-preview' => 'Хьалха муха ю хьажа',
 	'swm-label-list' => 'МогӀа',
 	'swm-label-mode-users-active' => 'Жигара декъашхой',
+	'swm-label-content' => 'Чулацам',
 	'swm-label-language' => 'Мотт',
+	'swm-button-preview' => '[ Хьалха муха ю хьажа ]',
 	'swm-list-table-expire' => 'Чекхйолу',
+	'swm-list-table-content' => 'Чулацам',
 	'swm-list-table-tools' => 'ГӀирсаш',
 	'swm-list-table-lang' => 'Меттанаш',
 	'swm-error-empty-group' => 'ДӀаязъе тобан цӀе.',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Chmee2
  * @author Darth Daron
  * @author Dontlietome7
@@ -823,7 +837,7 @@ $messages['cs'] = array(
 	'swm-error-created-tobeforefrom' => 'Datum ukončení vytváření wiki je před počátečním datem.',
 );
 
-/** Church Slavic (словѣ́ньскъ / ⰔⰎⰑⰂⰡⰐⰠⰔⰍⰟ)
+/** Church Slavic (словѣньскъ / ⰔⰎⰑⰂⰡⰐⰠⰔⰍⰟ)
  * @author ОйЛ
  */
 $messages['cu'] = array(
@@ -959,12 +973,13 @@ $messages['de-formal'] = array(
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
+ * @author Gorizon
  * @author Mirzali
  */
 $messages['diq'] = array(
 	'swm-label-preview' => 'Verqayt',
 	'swm-label-edit' => 'Bıvurne',
-	'swm-label-remove' => 'Wedarne',
+	'swm-label-remove' => 'Hewad',
 	'swm-label-sent' => 'Bırş',
 	'swm-label-list' => 'Liste',
 	'swm-label-recipient-wikis' => 'Wikiy',
@@ -3478,6 +3493,27 @@ $messages['uk'] = array(
 	'swm-mode-wikis-created-between' => 'Між',
 	'swm-label-mode-wikis-created-hint' => '<i>Дати мають бути у вигляді 2012-04-01 00:00:00</i>',
 	'swm-error-created-tobeforefrom' => 'Кінцева дата створення вікі є ранішою за початкову дату.',
+);
+
+/** Uzbek (oʻzbekcha)
+ * @author CoderSI
+ */
+$messages['uz'] = array(
+	'swm-list-table-lang' => 'Tillar',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'swm-label-mode-users-registration-hint' => '<i>Ngày phải trong các hình thức 2012-04-01 00:00:00</i>',
+	'swm-error-registered-tobeforefrom' => 'Người dùng đăng ký ngày kết thúc là ngày trước khi bắt đầu.',
+	'swm-label-mode-users-editcount' => 'Số lần sửa đổi',
+	'swm-mode-users-editcount-more' => 'Nhiều hơn',
+	'swm-mode-users-editcount-less' => 'Ít',
+	'swm-mode-users-editcount-between' => 'Giữa',
+	'swm-error-editcount-tolessthanfrom' => 'Người dùng chỉnh sửa tính giới hạn trên là ít hơn so với giới hạn dưới.',
+	'swm-label-mode-wikis-created-hint' => '<i>Ngày phải trong các hình thức 2012-04-01 00:00:00</i>',
 );
 
 /** Volapük (Volapük)
