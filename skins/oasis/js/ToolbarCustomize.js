@@ -212,51 +212,6 @@
 
 	});
 
-	TC.ModalBox = $.createClass(Observable,{
-
-		w: false,
-		options: false,
-
-		constructor: function(html,options) {
-			TC.ModalBox.superclass.constructor.call(this);
-			this.html = html;
-			this.options = options || {};
-		},
-
-		show: function() {
-			if (this.w != false)
-				return;
-			this.w = $(this.html).makeModal(this.options);
-		},
-
-		close: function() {
-			this.w.closeModal();
-			this.w = false;
-		}
-
-	});
-
-	TC.InputModalBox = $.createClass(TC.ModalBox,{
-
-		constructor: function(html,options) {
-			TC.InputModalBox.superclass.constructor.call(this,html,options);
-		},
-
-		show: function() {
-			TC.InputModalBox.superclass.show.call(this);
-			this.w.find('.input-box').val(this.options.value);
-			this.w.find('.save-button').click($.proxy(this.save,this));
-			this.w.find('.cancel-button').click($.proxy(this.close,this));
-		},
-
-		save: function() {
-			var value = this.w.find('.input-box').val();
-			this.fire('save',this,value);
-			this.close();
-		}
-
-	});
-
 	TC.Configuration = $.createClass(Object,{
 
 		toolbar: false,
@@ -301,7 +256,7 @@
 			var self = this;
 			require( [ 'wikia.ui.factory' ], function( uiFactory ) {
 				uiFactory.init( ['modal'] ).then( function( uiModal ) {
-					var ToolsConfigurationConfig = {
+					var toolsConfigurationConfig = {
 						vars: {
 							id: 'MyToolsConfigurationWrapper',
 							size: 'small',
@@ -334,14 +289,13 @@
 							]
 						}
 					};
-					uiModal.createComponent( ToolsConfigurationConfig, function( ToolsConfigModal ) {
-debugger;
-						// Toolbar list
-						var $content = ToolsConfigModal.$content,
-							$optionList = $content.find( '.options-list' ),
-							$group = $content.find( '.popular-tools-group' );
+					uiModal.createComponent( toolsConfigurationConfig, function( toolsConfigModal ) {
+						self.w = toolsConfigModal.$content;
+						var $optionList = self.w.find( '.options-list' ),
+							$group = self.w.find( '.popular-tools-group' );
 
-						self.w = $content;
+						// Toolbar list
+
 						self.tree = new TC.OptionsTree( $optionList );
 
 						// temporary fix drag and drop issues on iPad
@@ -353,35 +307,35 @@ debugger;
 						}
 						self.tree.on( 'itembuild', $.proxy( self.initItem, self ) );
 						self.tree.load( self.data.options );
-						$content.find( '.reset-defaults a' ).click( $.proxy( self.loadDefaults, self ) );
+						self.w.find( '.reset-defaults a' ).click( $.proxy( self.loadDefaults, self ) );
 
 						// Find a tool
-						$content.find( '.search' ).placeholder();
-						$content.find( '.search' ).pluginAutocomplete( {
+						self.w.find( '.search' ).placeholder();
+						self.w.find( '.search' ).pluginAutocomplete( {
 							lookup: self.getAutocompleteData(),
 							onSelect: $.proxy( self.addItemFromSearch, self ),
 							selectedClass: 'selected',
-							appendTo: $content.find('.search-box'),
+							appendTo: self.w.find('.search-box'),
 							width: '300px'
 						});
-						$content.find( '.advanced-tools a' ).attr( 'target', '_blank' );
+						self.w.find( '.advanced-tools a' ).attr( 'target', '_blank' );
 
 						// Popular tools
-						self.popular = new TC.OptionLinks( $content.find( '.popular-list' ) );
+						self.popular = new TC.OptionLinks( self.w.find( '.popular-list' ) );
 						self.popular.load( self.data.popularOptions );
 						self.popular.on( 'itemclick', $.proxy( self.addPopularOption, self ) );
 
 						self.toggle = new TC.Toggle( $group.children( '.popular-list' ),
 							$group.children( '.popular-toggle' ), 'toggle-1' );
 
-						$content.find('.popular-toggle').click( $.proxy( self.togglePopular, self ) );
+						self.w.find('.popular-toggle').click( $.proxy( self.togglePopular, self ) );
 
-						ToolsConfigModal.bind( 'save', function( event ) {
+						toolsConfigModal.bind( 'save', function( event ) {
 							event.preventDefault();
 							$.proxy( self.save, self );
 						});
 
-						ToolsConfigModal.show();
+						toolsConfigModal.show();
 					} );
 				} );
 			} );
@@ -501,18 +455,64 @@ return;
 			el.find( '.trash' ).click( $.proxy( this.deleteItem,this ) );
 		},
 
-		renameItem: function( evt ) {
-			var item = $(evt.currentTarget).closest('li');
-			var d = new TC.InputModalBox(this.data.renameItemHtml,{
-				width: 360,
-				topOffset: 150,
-				value: item.attr('data-caption')
-			});
-			d.bind('save',$.proxy(function(dialog,value){
-				item.attr('data-caption',value);
-				item.find('.name').text(value);
-			},this));
-			d.show();
+		renameItem: function( event ) {
+			var self = this,
+				$item = $( event.currentTarget ).closest('li');
+
+			event.preventDefault();
+
+			require( [ 'wikia.ui.factory' ], function( uiFactory ) {
+				uiFactory.init( ['modal'] ).then( function( uiModal ) {
+					var renameItemConfig = {
+						vars: {
+							id: 'MyToolsRenameItem',
+							size: 'small',
+							content: self.data.renameItemHtml,
+							title: $.msg( 'oasis-toolbar-edit-rename-item' ),
+							buttons: [
+								{
+									vars: {
+										value: $.msg( 'oasis-toolbar-edit-save' ),
+										classes: ['button', 'primary'],
+										data: [
+											{
+												key: 'event',
+												value: 'save'
+											}
+										]
+									}
+								},
+								{
+									vars: {
+										value: $.msg( 'oasis-toolbar-edit-cancel' ),
+										data: [
+											{
+												key: 'event',
+												value: 'close'
+											}
+										]
+									}
+								}
+							]
+						}
+					};
+
+					uiModal.createComponent( renameItemConfig, function ( renameItemModal ) {
+						var $inputBox = renameItemModal.$content.find( '.input-box' );
+
+						$inputBox.val( $item.data( 'caption' ) );
+
+						renameItemModal.bind( 'save', function( event ) {
+							var value = $inputBox.val();
+							$item.data( 'caption', value );
+							$item.find( '.name' ).text( value );
+							renameItemModal.trigger( 'close' );
+						} );
+
+						renameItemModal.show();
+					});
+				} );
+			} );
 			return false;
 		},
 
@@ -543,10 +543,6 @@ return;
 			} else {
 				// show error to the user
 			}
-		},
-
-		close: function() {
-			this.w.closeModal();
 		}
 
 	});
