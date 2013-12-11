@@ -235,7 +235,7 @@ function(
 			// cache value for clickSource to prevent race conditions
 			cs = clickSource,
 			// grab the querystring for the current url
-			currQS = qs(),
+			currQS = querystring(),
 			stateAction = opening && !currQS.getVal('file') ? 'pushState' : 'replaceState';
 
 		throbber.remove(currentWrapper);
