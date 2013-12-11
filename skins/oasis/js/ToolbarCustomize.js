@@ -277,17 +277,17 @@
 			$.when(
 				$.loadJQueryAutocomplete(),
 				$.loadJQueryUI(),
-				$.getResources([
-					$.getSassCommonURL("skins/oasis/css/core/ToolbarCustomize.scss")
-				]),
-				$.nirvana.sendRequest({
+				$.getResources( [
+					$.getSassCommonURL( 'skins/oasis/css/core/ToolbarCustomize.scss' )
+				] ),
+				$.nirvana.sendRequest( {
 					controller: 'Footer',
 					method: 'ToolbarConfiguration',
-					callback: $.proxy(this.onDataLoaded,this)
-				})
+					callback: $.proxy( this.onDataLoaded, this )
+				} )
 			).
-			done($.proxy(this.checkLoad,this)).
-			fail($.proxy(this.onLoadFailure,this));
+			done( $.proxy( this.checkLoad, this ) ).
+			fail( $.proxy( this.onLoadFailure, this ) );
 		},
 
 		onDataLoaded: function(data,textStatus,req) {
@@ -298,6 +298,94 @@
 		},
 
 		checkLoad: function() {
+			var self = this;
+			require( [ 'wikia.ui.factory' ], function( uiFactory ) {
+				uiFactory.init( ['modal'] ).then( function( uiModal ) {
+					var ToolsConfigurationConfig = {
+						vars: {
+							id: 'MyToolsConfigurationWrapper',
+							size: 'small',
+							content: self.data.configurationHtml,
+							title: $.msg('oasis-toolbar-edit-title'),
+							buttons: [
+								{
+									vars: {
+										value: $.msg( 'oasis-toolbar-edit-save' ),
+										classes: ['button', 'primary'],
+										data: [
+											{
+												key: 'event',
+												value: 'save'
+											}
+										]
+									}
+								},
+								{
+									vars: {
+										value: $.msg( 'oasis-toolbar-edit-cancel' ),
+										data: [
+											{
+												key: 'event',
+												value: 'close'
+											}
+										]
+									}
+								}
+							]
+						}
+					};
+					uiModal.createComponent( ToolsConfigurationConfig, function( ToolsConfigModal ) {
+debugger;
+						// Toolbar list
+						var $content = ToolsConfigModal.$content,
+							$optionList = $content.find( '.options-list' ),
+							$group = $content.find( '.popular-tools-group' );
+
+						self.w = $content;
+						self.tree = new TC.OptionsTree( $optionList );
+
+						// temporary fix drag and drop issues on iPad
+						// TODO: drag and drop functionality should be refactored when replacing this modal
+						if ( isIPad ) {
+							$optionList.addClass( 'on-ipad' );
+						} else {
+							$optionList.addClass( 'no-ipad' );
+						}
+						self.tree.on( 'itembuild', $.proxy( self.initItem, self ) );
+						self.tree.load( self.data.options );
+						$content.find( '.reset-defaults a' ).click( $.proxy( self.loadDefaults, self ) );
+
+						// Find a tool
+						$content.find( '.search' ).placeholder();
+						$content.find( '.search' ).pluginAutocomplete( {
+							lookup: self.getAutocompleteData(),
+							onSelect: $.proxy( self.addItemFromSearch, self ),
+							selectedClass: 'selected',
+							appendTo: $content.find('.search-box'),
+							width: '300px'
+						});
+						$content.find( '.advanced-tools a' ).attr( 'target', '_blank' );
+
+						// Popular tools
+						self.popular = new TC.OptionLinks( $content.find( '.popular-list' ) );
+						self.popular.load( self.data.popularOptions );
+						self.popular.on( 'itemclick', $.proxy( self.addPopularOption, self ) );
+
+						self.toggle = new TC.Toggle( $group.children( '.popular-list' ),
+							$group.children( '.popular-toggle' ), 'toggle-1' );
+
+						$content.find('.popular-toggle').click( $.proxy( self.togglePopular, self ) );
+
+						ToolsConfigModal.bind( 'save', function( event ) {
+							event.preventDefault();
+							$.proxy( self.save, self );
+						});
+
+						ToolsConfigModal.show();
+					} );
+				} );
+			} );
+return;
 			// Code copy from $.getModal() :-(
 			$('body').append(this.data.configurationHtml);
 			this.w = $("#MyToolsConfiguration").makeModal({
