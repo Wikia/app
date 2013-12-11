@@ -8,6 +8,7 @@
 @import "skins/oasis/css/mixins/multiple-box-shadow";
 @import "skins/oasis/css/mixins/opacity";
 @import "skins/oasis/css/mixins/wordmark";
+@import "skins/oasis/css/mixins/ellipses";
 @import "extensions/wikia/UserLogin/mixins/tooltip-icon";
 // Colors
 @import "core/colors";
@@ -348,15 +349,20 @@ body {
 					list-style: none;
 				}
 			}
+
+			.modalToolbar {
+				display: inline-block;
+				float: right;
+				margin-left: 40px;
+			}
 		}
 	}
 }
 
 #EditPagePreviewEditSummary {
-	display: table-cell;
-	height: 50px;
-	padding-top: 13px;
-	vertical-align: middle;
+	display: inline-block;
+	margin-top: 20px;
+	@include ellipses();
 	> p {
 		line-height: 18px;
 	}
