@@ -13,9 +13,9 @@ abstract class ApiAddMedia extends ApiBase {
 	}
 
 	protected function getVideoDuplicate( $provider, $videoId ) {
-		$duplicates = WikiaFileHelper::findVideoDuplicates( $provider, $videoId );
+		$duplicates = WikiaFileHelper::getDuplicateVideos( $provider, $videoId );
 		if ( count( $duplicates ) > 0 ) {
-			return wfFindFile( $duplicates[0]['img_name'] );
+			return wfFindFile( $duplicates[0]['video_title'] );
 		}
 		return null;
 	}
