@@ -100,7 +100,7 @@ class ThumbnailVideo extends ThumbnailImage {
 
 			$options['img-class'] = "video";
 		}
-		return $thumb->toHtml( array('img-class' => $options['img-class']) );
+		return $thumb->toHtml( array( 'img-class' => $options['img-class'] ) );
 	}
 
 	/**
@@ -175,18 +175,18 @@ class ThumbnailVideo extends ThumbnailImage {
 		}
 
 		$extraClasses = 'video';
-		if ( empty($options['noLightbox']) ) {
+		if ( empty( $options['noLightbox'] ) ) {
 			$extraClasses .= ' image lightbox';
 		}
-		$linkAttribs['class'] = empty($linkAttribs['class']) ? $extraClasses : $linkAttribs['class'] . ' ' . $extraClasses;
+		$linkAttribs['class'] = empty( $linkAttribs['class'] ) ? $extraClasses : $linkAttribs['class'] . ' ' . $extraClasses;
 
 		$attribs = array(
 			'alt' => $alt,
-			'src' => !empty($options['src']) ? $options['src'] : $this->url,
+			'src' => empty( $options['src'] ) ? $this->url : $options['src'] ,
 			'width' => $this->width,
 			'height' => $this->height,
-			'data-video-name' => htmlspecialchars($videoTitle->getText()),
-			'data-video-key' => htmlspecialchars(urlencode($videoTitle->getDBKey())),
+			'data-video-name' => htmlspecialchars( $videoTitle->getText() ),
+			'data-video-key' => htmlspecialchars( urlencode( $videoTitle->getDBKey() ) ),
 		);
 
 		if ( $useRDFData ) {
@@ -194,9 +194,9 @@ class ThumbnailVideo extends ThumbnailImage {
 		}
 
         // lazy loading
-		if ( !empty($options['usePreloading']) ) {
-            $attribs['data-src'] = $this->url;
-        }
+		if ( !empty( $options['usePreloading'] ) ) {
+			$attribs['data-src'] = $this->url;
+		}
 
 		// this is used for video thumbnails on file page history tables to insure you see the older version of a file when thumbnail is clicked.
 		if ( $this->file instanceof OldLocalFile ) {
@@ -236,7 +236,7 @@ class ThumbnailVideo extends ThumbnailImage {
 			$duration = WikiaFileHelper::formatDuration( $this->file->getMetadataDuration() );
 		}
 
-		if ( isset($options['constHeight']) ) {
+		if ( isset( $options['constHeight'] ) ) {
 			$this->appendHtmlCrop($linkAttribs, $options);
 		}
 
@@ -259,7 +259,7 @@ class ThumbnailVideo extends ThumbnailImage {
 			$html .= WikiaFileHelper::videoInfoOverlay( $this->width, $videoTitle );
 		}
 
-		$html .= ( $linkAttribs && isset($linkAttribs['href']) ) ? Xml::closeElement( 'a' ) : '';
+		$html .= ( $linkAttribs && isset( $linkAttribs['href'] ) ) ? Xml::closeElement( 'a' ) : '';
 
 		//give extensions a chance to modify the markup
 		wfRunHooks( 'ThumbnailVideoHTML', array( $options, $linkAttribs, $attribs, $this->file,  &$html ) );
