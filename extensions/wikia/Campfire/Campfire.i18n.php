@@ -77,7 +77,7 @@ $messages['ca'] = array(
 	'campfire-licensed-under' => 'Sota la llicència $1',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Jezevec
  */
 $messages['cs'] = array(

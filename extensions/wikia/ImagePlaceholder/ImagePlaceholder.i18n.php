@@ -91,7 +91,7 @@ $messages['ca'] = array(
 	'imgplc-notinhistory-video' => 'No es pot afegir un vídeo en el mode historial.',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Dontlietome7
  */
 $messages['cs'] = array(

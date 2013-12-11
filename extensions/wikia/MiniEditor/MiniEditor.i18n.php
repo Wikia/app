@@ -60,7 +60,7 @@ $messages['ca'] = array(
 	'minieditor-placeholder-reply' => 'Respondre al missatge aquí',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Jezevec
  */
 $messages['cs'] = array(

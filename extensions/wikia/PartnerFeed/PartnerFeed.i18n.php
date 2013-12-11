@@ -134,7 +134,7 @@ $messages['ce'] = array(
 	'feed-title-recentchanges' => 'Керла нисдарш',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Chmee2
  */
 $messages['cs'] = array(

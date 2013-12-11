@@ -121,7 +121,7 @@ D'aquesta manera no passarà res.
 La resta de la pàgina serà executada sol per a que puguis veure fàcilment si algun nom d'usuari no es pot carregar.",
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Dontlietome7
  * @author Reaperman
  */

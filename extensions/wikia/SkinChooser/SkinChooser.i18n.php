@@ -39,7 +39,7 @@ $messages['ca'] = array(
 	'site-layout' => 'Dissenys del lloc',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Darth Daron
  * @author Dontlietome7
  */

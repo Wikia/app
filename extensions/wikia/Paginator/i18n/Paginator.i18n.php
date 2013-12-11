@@ -12,6 +12,7 @@ $messages['en'] = array(
  */
 $messages['qqq'] = array(
 	'paginator-next' => '{{Identical|Next}}',
+	'paginator-back' => '{{Identical|Back}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -69,7 +70,7 @@ $messages['ce'] = array(
 	'paginator-next' => 'Кхин дӀа',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Dontlietome7
  */
 $messages['cs'] = array(

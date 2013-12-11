@@ -50,7 +50,7 @@ $messages['ca'] = array(
 	'userdata-header' => 'Augmentar wgUserData',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Chmee2
  */
 $messages['cs'] = array(

@@ -121,7 +121,7 @@ $messages['ca'] = array(
 	'category-exhibition-display-new' => "Visualització d'exposició de la categoria",
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Dontlietome7
  */
 $messages['cs'] = array(

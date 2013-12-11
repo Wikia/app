@@ -223,7 +223,7 @@ $messages['ce'] = array(
 	'login-username-hint' => 'Декъашхочун цӀе',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Reaperman
  */
 $messages['cs'] = array(
@@ -685,7 +685,7 @@ $messages['km'] = array(
  */
 $messages['ko'] = array(
 	'app-loading' => '불러오는 중...',
-	'app-tab-search' => '찾기',
+	'app-tab-search' => '검색',
 	'app-tab-about' => '소개',
 	'app-tab-browse' => 'A..Z',
 	'app-tab-sotd' => '오늘의 노래',
@@ -694,10 +694,10 @@ $messages['ko'] = array(
 	'app-nonetwork-dialog-title' => '네트워크 연결이 안되어있습니다.',
 	'app-nonetwork-dialog-message' => '네트워크 연결이 감지되지 않았습니다.',
 	'app-nonetwork-dialog-close-button' => '확인',
-	'search-go' => '찾기!',
+	'search-go' => '검색!',
 	'search-hint-text' => "예 를 들면: 'John Lennon:Imagine'",
 	'search-no-match-found' => '매치가 없습니다',
-	'search-no-match-found-query' => '%s 찾음',
+	'search-no-match-found-query' => '%s에 대해 검색됨',
 	'search-results-title' => '%s 찾으신 결과',
 	'login-label' => '로그인 LyricWiki',
 	'login-username-hint' => '사용자 이름',
@@ -705,7 +705,7 @@ $messages['ko'] = array(
 	'login-submit-button' => '로그인',
 	'about-heading' => 'LyricWiki',
 	'about-credits' => '%s 으로 부터',
-	'about-heading-tips' => '찾기',
+	'about-heading-tips' => '검색하기',
 	'about-tips-0' => '예술가 이름을 타입 하기 시작 하시면 저절로 완성 될 것입니다.',
 	'about-tips-1' => '메인 화면에 있는 사진은 지금 아이튠 상위9위에 드는 노래들입니다.',
 	'about-heading-licensing' => '저작권',
