@@ -27,6 +27,8 @@ require( ['jquery', 'wikia.toc', 'wikia.mustache'], function( $, toc, mustache )
 	/**
 	 *
 	 * @param {Object} header - Node element object for single article header
+	 * @param {String} level - String with an integer which is later being concatenated with 'toclevel-' string and
+	 *                         passed as a class of a list item; the number is taken from <h1>, <h2>, <h3>... tags
 	 *
 	 * @returns {Boolean|Object} - returns false for non Wikia Article related headers
 	 *                             (example lazy loaded discussion thread)
