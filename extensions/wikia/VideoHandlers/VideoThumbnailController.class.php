@@ -15,7 +15,7 @@ class VideoThumbnailController extends WikiaController {
 	 *		noLightbox - not show image or video in lightbox,
 	 *		hidePlayButton - hide play button
 	 *		src - source for image
-	 *		imgClass - class for image
+	 *		imgClass - string of space separated classes for image
 	 *		alt - alt for image
 	 *		usePreloading - for lazy loading
 	 *		valign - valign for image
@@ -38,7 +38,7 @@ class VideoThumbnailController extends WikiaController {
 	 * @responseParam string imgSrc
 	 * @responseParam string videoKey
 	 * @responseParam string videoName
-	 * @responseParam array imgClasses
+	 * @responseParam array imgClass
 	 * @responseParam array imgAttrs
 	 *	Keys:
 	 *		alt - alt for image
@@ -114,16 +114,6 @@ class VideoThumbnailController extends WikiaController {
 		// update src for img tag
 		if ( !empty( $options['src'] ) ) {
 			$imgSrc = $options['src'];
-		}
-
-		// get class for img tag
-		$imgClasses = [ 'wikia-video-thumb' ];	// used to be 'Wikia-video-thumb'
-		if ( !empty( $options['imgClass'] ) ) {	// used to be 'img-class'
-			if ( !is_array( $options['imgClass'] ) ) {
-				$options['imgClass'] = explode( ' ', $options['imgClass'] );
-			}
-
-			$imgClasses = array_merge( $imgClasses, $options['imgClass'] );
 		}
 
 		// get alt for img tag
@@ -208,7 +198,7 @@ class VideoThumbnailController extends WikiaController {
 		$this->imgSrc = $imgSrc;
 		$this->videoKey = htmlspecialchars( urlencode( $title->getDBKey() ) );
 		$this->videoName = htmlspecialchars( urlencode( $title->getText() ) );
-		$this->imgClasses = array_unique( $imgClasses );
+		$this->imgClass = empty( $options['imgClass'] ) ? '' : $options['imgClass'];
 		$this->imgAttrs = $this->getAttribs( $imgAttribs );
 
 		// set duration
