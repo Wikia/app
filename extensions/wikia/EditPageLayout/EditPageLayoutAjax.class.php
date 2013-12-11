@@ -127,7 +127,7 @@ class EditPageLayoutAjax {
 		$summary = preg_replace('/^\s*=+\s*(.*?)\s*=+\s*$/', '$1', $summary);
 
 		if ($summary != '') {
-			$res['summary'] = wfMsgExt('wikia-editor-preview-editSummary', array('parse'), $summary);
+			$res['summary'] = wfMessage( 'wikia-editor-preview-editSummary' )->params( $summary )->parse();
 		}
 
 		wfProfileOut(__METHOD__);
