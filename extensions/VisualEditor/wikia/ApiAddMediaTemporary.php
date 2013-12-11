@@ -118,7 +118,6 @@ class ApiAddMediaTemporary extends ApiAddMedia {
 			$tempImage = $this->createTempFile( $this->mUpload->getTempPath() );
 
 			$provider = $apiwrapper->getMimeType();
-			// TODO: ask Saipetch if we really need this
 			$tempVideo->forceMime( $provider );
 			$tempVideo->setVideoId( $apiwrapper->getVideoId() );
 			$tempVideo->setProps( array( 'mime' => $provider ) );
