@@ -8,12 +8,16 @@
 @import "../mixins/clearfix";
 @import "../mixins/menus";
 
+// rename item modal styles
 .toolbar-edit-rename-item {
-	padding: 10px 0;
+	.input-group {
+		float: none;
 
-	.input-box {
-		border: 1px solid $color-page-border;
-		width: 350px;
+		input[type="text"] {
+			@include box-sizing-border-box;
+			width: 100%;
+
+		}
 	}
 }
 
