@@ -81,9 +81,6 @@
 		li {
 			padding: 6px 60px 6px 5px;
 			position: relative;
-			&:hover {
-				background: $color-menu-highlight;
-			}
 			img.sprite {
 				position: absolute;
 				top: .4em;
@@ -99,12 +96,6 @@
 			.edit-pencil, .trash, .drag {
 				display: none;
 			}
-			&:hover {
-				.edit-pencil, .trash, .drag {
-					display: block;
-				}
-			}
-
 			.edit-pencil {
 				cursor: pointer;
 				right: 46px
@@ -150,6 +141,35 @@
 				height: 1px;
 				width: 8px;
 				background-color: $color-text;
+			}
+		}
+		&.no-ipad {
+			li:hover {
+				background: $color-menu-highlight;
+				.edit-pencil, .trash, .drag {
+					display: block;
+				}
+		  	}
+		}
+		&.on-ipad {
+			li:hover {
+				background: none;
+				.edit-pencil, .trash, .drag {
+					display: none;
+				}
+			}
+			li.hover {
+				background: $color-menu-highlight;
+				.edit-pencil, .trash, .drag {
+					display: block;
+				}
+			}
+			// changing position of these icons because on iPads there is no third icon
+			.edit-pencil {
+				right: 26px
+			}
+			.trash {
+				right: 6px;
 			}
 		}
 	}

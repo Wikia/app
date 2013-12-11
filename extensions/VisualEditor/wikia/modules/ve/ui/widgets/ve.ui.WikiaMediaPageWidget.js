@@ -196,6 +196,14 @@ ve.ui.WikiaMediaPageWidget.prototype.setupLicense = function ( $license ) {
 	// Events
 	this.$licenseSelect.on( 'change', ve.bind( this.onLicenseSelectChange, this ) );
 
+	// Select the first option that isn't 'No license' or a disabled 'heading' option
+	this.$licenseSelect
+		.find( 'option' )
+			.not( ':selected' )
+			.not( ':disabled' )
+		.eq(0)
+			.prop( 'selected', true );
+
 	// Initialization
 	this.$license
 		.addClass( 've-ui-wikiaMediaPageWidget-item-license' )

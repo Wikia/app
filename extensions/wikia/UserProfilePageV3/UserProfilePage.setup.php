@@ -57,9 +57,18 @@ $wgHooks['ArticleSaveComplete'][] = 'Masthead::userMastheadInvalidateCache';
  * messages
  */
 $wgExtensionMessagesFiles['UserProfilePageV3'] = $dir . '/UserProfilePage.i18n.php';
-//register messages package for JS
-//$app->registerExtensionJSMessagePackage('UPP3_modals', array('user-identity-box-about-date-*'));
 
+//register messages package for JS
+JSMessages::registerPackage( 'UserProfilePageV3', array(
+	'userprofilepage-edit-modal-header',
+	'user-identity-box-avatar-cancel',
+	'user-identity-box-avatar-save',
+	'userprofilepage-closing-popup-header',
+	'userprofilepage-closing-popup-save-and-quit',
+	'userprofilepage-closing-popup-discard-and-quit',
+	'userprofilepage-closing-popup-cancel',
+	'userprofilepage-edit-modal-error'
+) );
 /**
  * extension related configuration
  */

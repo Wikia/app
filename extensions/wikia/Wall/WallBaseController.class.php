@@ -523,7 +523,7 @@ class WallBaseController extends WikiaController{
 
 			$wallMessage->load();
 
-			if( $wallMessage->getWallOwner()->getId() == $this->wg->User->getId() ) {
+			if( $wallMessage->isWallOwner( $this->wg->User ) ) {
 				$wallName = wfMsg('wall-message-mywall');
 			} else {
 
