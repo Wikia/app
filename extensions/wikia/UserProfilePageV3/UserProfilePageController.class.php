@@ -1092,8 +1092,8 @@ class UserProfilePageController extends WikiaController {
 			return true;
 		}
 
-		if ($this->request->getVal('av_user')) {
-			$avUser = User::newFromName($this->request->getVal('av_user'));
+		if ($this->request->getVal('avUser')) {
+			$avUser = User::newFromName($this->request->getVal('avUser'));
 			if ($avUser->getID() !== 0) {
 				$avatar = Masthead::newFromUser($avUser);
 				if ($avatar->removeFile(true)) {

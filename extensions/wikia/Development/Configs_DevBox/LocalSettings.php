@@ -175,6 +175,25 @@ if (empty($wgRunningUnitTests)) {
 #
 require_once( dirname( $wgWikiaLocalSettingsPath ) . '/../CommonExtensions.php' );
 
+// enable globally on all devboxes (despite production being switched to NFS)
+$wgEnableSwiftFileBackend = true;
+
+$wgFileBackends['swift-backend'] = array(
+	'name'          => 'swift-backend',
+	'class'         => 'SwiftFileBackend',
+	'lockManager'   => 'nullLockManager',
+	'swiftAuthUrl'  => $wgFSSwiftConfig['swiftAuthUrl'],
+	'swiftUser'     => $wgFSSwiftConfig['swiftUser'],
+	'swiftKey'      => $wgFSSwiftConfig['swiftKey'],
+	'swiftAuthTTL'	=> 120,
+	'swiftTimeout'  => 30,
+	'cacheAuthInfo'	=> true,
+	'wikiId'        => '',
+	'isMultiMaster' => false,
+	'debug'         => false,
+	'url'           => "http://{$wgFSSwiftServer}/swift/v1",
+);
+
 $wgArticlePath = "/wiki/$1";
 
 // Just in case this has been reset somewhere else in here.

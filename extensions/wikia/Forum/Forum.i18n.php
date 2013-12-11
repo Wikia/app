@@ -1466,6 +1466,229 @@ $messages['pl'] = array(
 	'forum-forum-title' => 'Forum',
 );
 
+$messages['pt'] = array(
+	'forum-forum-title' => 'Fórum',
+	'forum-active-threads' => '$1 {{PLURAL:$1|Discussão Ativa|Discussões Ativas}',
+	'forum-active-threads-on-topic' => "$1 {{PLURAL:$1|Discussão Ativa|Discussões Ativas}} sobre: '''[[$2]]'''",
+
+	/* Heading Bar */
+	'forum-header-total-threads' => '<em>$1</em><span>{{PLURAL:$1|Conversa<br />nesse Fórum|Conversas<br />nesse Fórum}}</span>',
+	'forum-header-active-threads' => '<em>$1</em><span>{{PLURAL:$1|Ativa<br />Discussão|Ativas<br />Discussões}}</span>',
+
+	/* Forum:Special (Index) */
+	'forum-specialpage-heading' => 'Fórum',
+	'forum-specialpage-blurb-heading' => '<span style="display:none">forum-specialpage-blurb-heading Você pode editar<span>',
+	'forum-specialpage-blurb' => '',
+	'forum-specialpage-board-threads' => '$1 {{PLURAL:$1|conversa|conversas}}',
+	'forum-specialpage-board-posts' => '$1 {{PLURAL:$1|postagem|postagens}}',
+	'forum-specialpage-board-lastpostby' => 'Última postagem do',
+	'forum-specialpage-policies-edit' => 'Editar',
+	'forum-specialpage-policies' => 'Políticas do Fórum / FAQ',
+	'forum-policies-and-faq' => "==Políticas do Fórum==
+Antes de contribuir nos Fóruns do {{SITENAME}}, por favor, fique ciente dessas condutas:
+
+'''Seja amigável e trate as pessoas com respeito.'''
+: Pessoas do mundo todo lêem e editam essa wiki e os fóruns. Como qualquer outro trabalho colaborativo, nem todo mundo vai concordar o tempo todo. Mantenha as discussões civilizadas e tenha uma mente aberta sobre opiniões diferentes. Nós estamos aqui porque amamos o mesmo tópico.
+
+'''Tente encontrar discussões existentes primeiro, mas não tenha medo de começar uma nova conversa.'''
+:Por favor, dê uma olhada pelos Fóruns do {{SITENAME}} para ver se uma discussão já existe sobre o que você quer falar. Se você não achar nenhuma, vá em frente e comece uma nova discussão!
+
+'''Peça ajuda.'''
+:Viu alguma coisa que não está certa? Ou tem uma pergunta? Peça ajuda aqui nos fóruns! Se você precisar de ajuda da equipe da Wikia, por favor entre em contato com [[w:c:pt-br.comunidade|Comunidade Central]] ou via [[Special:Contact]].
+
+'''Divirta-se!'''
+:A comunidade do {{SITENAME}} fica feliz em tê-lo aqui. Esperamos vê-lo por aqui enquanto discutimos esse tópico que amamos.
+
+==Fórum FAQ==
+'''Como eu posso ficar conectado às discussões que me interessam?'''
+: Com uma conta de usuário da Wikia, você pode seguir conversas específicas e receber mensagens de notificação (no próprio site ou via e-mail) quando a discussão tiver mais atividade. Tenha certeza de [[Special:UserSignup|crie uma conta na Wikia]] se você já não tiver uma.
+
+'''Como eu removo vandalismo?'''
+: Se você notar vandalismo ou spam, passe o mouse por cima do texto ofensivo. Você vai ver o botão \"Mais\" aparecer. Dentro do menu do botão \"Mais\", você vai encontrar \"Remover\". Isso permitirá que você remova o vandalismo e informe o administrador, se quiser.
+
+'''O que são Kudos?'''
+: Se você achar uma certa discussão ou uma resposta interessante, bem pensada ou engraçada, você pode mostrar que gostou distribuindo Kudos. Eles podem ser interessantes para votações, também.
+
+'''O que são tópicos?'''
+: Tópicos permitem que você associe uma discussão do fórum com um artigo da wiki. É uma outra maneira de manter os Fóruns organizados e ajudar as pessoas a encontrar discussões interessantes. Por exemplo, uma conversa no Fórum com a etiqueta \"Lord Voldemort\" vai aparecer embaixo do artigo \"Lord Voldemort\".",
+
+	/* Forum Board */
+
+	'forum-board-title' => '$1 quadro',
+	'forum-board-topic-title' => 'Discussões sobre $1',
+	'forum-board-topics' => 'Tópicos',
+	'forum-board-thread-follow' => 'Seguir',
+	'forum-board-thread-following' => 'Seguindo',
+	'forum-board-thread-kudos' => '$1 Kudos',
+	'forum-board-thread-replies' => '$1 {{PLURAL:$1|Mensagem|Mensagens}}',
+	'forum-board-new-message-heading' => 'Começar uma Discussão',
+
+	'forum-no-board-selection-error' => '← Por favor, selecione um quadro para postar ',
+
+	/* Forum Thread */
+	'forum-thread-reply-placeholder' => 'Postar uma resposta',
+	'forum-thread-reply-post' => 'Responder',
+	'forum-thread-deleted-return-to' => 'Voltar para o quadro $1',
+
+	/* Sorting */
+	'forum-sorting-option-newest-replies' => 'Respostas mais recentes',
+	'forum-sorting-option-popular-threads' => 'Mais Popular',
+	'forum-sorting-option-most-replies' => 'Mais ativo essa semana',
+	'forum-sorting-option-newest-threads' => 'Conversas mais recentes',
+	'forum-sorting-option-oldest-threads' => 'Conversas mais antigas',
+
+	/* New Discussion */
+	'forum-discussion-post' => 'Postar',
+	'forum-discussion-highlight' => 'Destacar essa discussão',
+	'forum-discussion-placeholder-title' => 'sobre o que você quer falar?',
+	'forum-discussion-placeholder-message' => 'Postar uma nova mensagem no quadro $1',
+	'forum-discussion-placeholder-message-short' => 'Postar uma nova mensagem',
+
+	/* Notification */
+	'forum-notification-user1-reply-to-your' => '$1 {{GENDER:$1|respondeu}} à sua converse no quadro $3',
+	'forum-notification-user2-reply-to-your' => '$1 e $2 responderam à sua conversa no quadro $3',
+	'forum-notification-user3-reply-to-your' => '$1 e outros responderam à sua converse no quadro $3',
+	'forum-notification-user1-reply-to-someone' => '$1 {{GENDER:$1|responderam}} no quadro $3',
+	'forum-notification-user2-reply-to-someone' => '$1 e $2 responderam no quadro $3',
+	'forum-notification-user3-reply-to-someone' => '$1 e outros responderam no quadro $3',
+
+	'forum-notification-newmsg-on-followed-wall' => '$1 {{GENDER:$1|deixou}} uma mensagem no quadro $2',
+
+	/* Mail message */ 
+	'forum-mail-notification-new-someone' => '$AUTHOR_NAME começou uma nova conversa no quadro $BOARDNAME $WIKI\.',
+	'forum-mail-notification-new-your' => '$AUTHOR_NAME começou uma nova converse no quadro $BOARDNAME $WIKI\.',
+	'forum-mail-notification-reply-your' => '$AUTHOR_NAME respondeu à sua converse no quadro $BOARDNAME $WIKI\.',
+	'forum-mail-notification-reply-his' => '$AUTHOR_NAME respondeu no quadro $BOARDNAME $WIKI\.',
+	'forum-mail-notification-reply-someone' => '$AUTHOR_NAME respondeu no quadro $BOARDNAME $WIKI\.',
+	'forum-mail-notification-html-greeting' => 'Olá $1,',
+	'forum-mail-notification-html-button' => 'Veja a conversa',
+	'forum-mail-notification-subject' => '$1 -- $2',
+	'forum-mail-notification-body' => 'Olá $WATCHER,
+
+$SUBJECT
+
+$METATITLE
+
+$MESSAGE_NO_HTML
+
+-- $AUTHOR
+
+Veja a conversa: ($MESSAGE_LINK)
+
+Equipe Wikia
+
+___________________________________________
+* Encontre ajuda e conselho na Comunidade Central: http://community.wikia.com
+* Quer receber menos mensagens? Você pode cancelar ou mudar as suas preferências de email aqui: http://community.wikia.com/Special:Preferences',
+
+	'forum-mail-notification-body-HTML' => 'Olá $WATCHER,
+<p>$SUBJECT.</p>
+<p><a href="$MESSAGE_LINK">$METATITLE</a></p>
+<p>$MESSAGE_HTML</p>
+<p>-- $AUTHOR_SIGNATURE<p>
+<p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">Veja a conversa</a></p>
+<p>The Wikia Team</p>
+___________________________________________<br />
+* Encontre ajuda e conselho na Comunidade Central: http://community.wikia.com
+* Quer receber menos mensagens? Você pode cancelar ou mudar as suas preferências de email aqui: http://community.wikia.com/Special:Preferences',
+
+	/* WikiActivity */
+	'forum-wiki-activity-msg' => 'no $1',
+	'forum-wiki-activity-msg-name' => 'quadro $1',
+
+	/* Forum Activity and Related Module */
+	'forum-activity-module-heading' => 'Atividade no Fórum',
+	'forum-related-module-heading' => 'Conversas relacionadas',
+	'forum-activity-module-posted' => '$1 postou uma resposta $2',
+	'forum-activity-module-started' => '$1 começou uma discussão $2',
+
+	/* Contribution/RC */
+	'forum-contributions-line' => '$5 ($6 | $7) $8 <a href="$1">$2</a> no <a href="$3">quadro $4</a>',
+
+	'forum-recentchanges-new-message' => 'no <a href="$1"> Quadro $2</a>',
+	'forum-recentchanges-edit' => '(mensagem editada)',
+	'forum-recentchanges-removed-thread' => 'conversa removida "[[$1|$2]]" no [[$3|$4 Quadro]]',
+	'forum-recentchanges-removed-reply' => 'resposta removida "[[$1|$2]]" no [[$3|$4 Quadro]]',
+	'forum-recentchanges-restored-thread' => 'conversa restaurada "[[$1|$2]]" no [[$3|$4 Quadro]]',
+	'forum-recentchanges-restored-reply' => 'conversa restaurada "[[$1|$2]]" no [[$3|$4 Quadro]]',
+	'forum-recentchanges-deleted-thread' => 'conversa deletada "[[$1|$2]]" no [[$3|$4 Quadro]]',
+	'forum-recentchanges-deleted-reply' => 'resposta deletada "[[$1|$2]]" no [[$3|$4 Quadro]]',
+	'forum-recentchanges-deleted-reply-title' => 'Uma postagem',
+	'forum-recentchanges-namespace-selector-message-wall' => 'Quadro do Fórum',
+	'forum-recentchanges-thread-group' => '$1 no <a href="$2">$3 Quadro</a>',
+	'forum-recentchanges-history-link' => 'histórico do quadro',
+	'forum-recentchanges-thread-history-link' => 'histórico da conversa',
+	'forum-recentchanges-closed-thread' => 'conversa encerrada "[[$1|$2]]" de [[$3|$4]]',
+	'forum-recentchanges-reopened-thread' => 'conversa reaberta"[[$1|$2]]" de [[$3|$4]]',
+
+	/* history */
+	'forum-board-history-title' => 'histórico do quadro',
+
+	/* Old version of forum */
+	'forum-specialpage-oldforum-link' => 'Arquivos antigos do Fórum',
+
+	/* board admin page messages */
+	'forum-admin-page-breadcrumb' => 'Quadro do Admin de Gerência',
+	'forum-admin-create-new-board-label' => 'Criar novo quadro',
+	'forum-admin-create-new-board-modal-heading' => 'Crie um novo quadro',
+	'forum-admin-create-new-board-title' => 'Título do Quadro',
+	'forum-admin-create-new-board-description' => 'Descrição do Quadro',
+
+	'forum-admin-edit-board-modal-heading' => 'Editar Quadro: $1',
+	'forum-admin-edit-board-title' => 'Título do Quadro',
+	'forum-admin-edit-board-description' => 'Descrição do Quadro',
+
+	'forum-admin-delete-and-merge-board-modal-heading' => 'Deletar Quadro: $1',
+	'forum-admin-delete-board-title' => 'Por favor, digite o nome do quadro que você quer deletar para confirmar:',
+	'forum-admin-merge-board-warning' => 'As conversas nesse quadro vão ser incorporadas em um quadro existente.',
+	'forum-admin-merge-board-destination' => 'Escolha um quadro para incorporar:',
+	'forum-admin-delete-and-merge-button-label' => 'Delete e Incorpore',
+
+	'forum-admin-link-label' => 'Gerenciar Quadros',
+
+	'forum-autoboard-title-1' => 'Discussão Geral',
+	'forum-autoboard-body-1' => 'Esse quadro é para conversas gerais sobre a wiki.',
+
+	'forum-autoboard-title-2' => 'Notícias e Anúncios',
+	'forum-autoboard-body-2' => 'Notícias urgentes e informação!',
+
+	'forum-autoboard-title-3' => 'Novos no $1',
+	'forum-autoboard-body-3' => "Quer compartilhar algo que acabou de ser postado nessa wiki, ou parabenizar alguém por um ótima contribuição? Está no lugar certo!",
+
+	'forum-autoboard-title-4' => 'Perguntas e Respostas',
+	'forum-autoboard-body-4' => 'Tem uma pergunta sobre a wiki ou o tópico? Pergunte aqui!',
+
+	'forum-autoboard-title-5' => 'Diversão e Jogos',
+	'forum-autoboard-body-5' => 'Esse quadro é para conversas fora do tópico -- um lugar para se divertir com os seus $1 amigos.',
+
+	/* board creation validation messages */
+	'forum-board-destination-empty' => '(Por favor selecione um quadro)',
+
+	'forum-board-title-validation-invalid' => 'Nome do quadro contém caracteres inválidos',
+	'forum-board-title-validation-length' => 'Nome do quadro deve ter 4 caracteres no mínimo',
+	'forum-board-title-validation-exists' => 'Um Quadro com o mesmo nome já existe.',
+	'forum-board-validation-count' => 'O número máximo de quadros é $1',
+
+	'forum-board-description-validation-length' => 'Por favor, descreva esse quadro',
+	'forum-board-id-validation-missing' => 'Id do quadro está faltando',
+
+	'forum-board-no-board-warning' => 'Nós não conseguimos encontrar um quadro com esse nome. Aqui está a lista dos quadros do fórum.',
+
+	/* old forum notification */
+	'forum-old-notification-message' => 'Este fórum foi arquivado',
+	'forum-old-notification-navigation-button' => 'Visite os novos Fóruns',
+
+	/* messages for Related Discussions Module on Article page */
+	'forum-related-discussion-heading' => 'Discussões sobre $1',
+	'forum-related-discussion-new-post-button' => 'Comece uma Discussão',
+	'forum-related-discussion-new-post-tooltip' => 'Comece uma discussão sobre $1',
+	'forum-related-discussion-total-replies' => '$1 mensagem',
+	'forum-related-discussion-zero-state-creative' => 'Você pode encontrar discussões sobre tudo relacionado a essa wiki [[Special:Forum|{{SITENAME}} Forum!]]',
+	'forum-related-discussion-see-more' => 'Veja mais discussões',
+	'forum-confirmation-board-deleted' => '"$1" foi deletado.',
+);
+
+
 /** Russian (русский)
  * @author Okras
  */
@@ -2006,4 +2229,229 @@ $messages['vi'] = array(
 	'forum-discussion-placeholder-title' => 'Những gì bạn muốn nói về?',
 	'forum-discussion-placeholder-message' => 'Gửi một tin nhắn mới đến tường $1 này',
 	'forum-discussion-placeholder-message-short' => 'Gửi một tin nhắn mới',
+);
+
+/** Chinese
+ * @author Wikia
+ */
+$messages['zh'] = array(
+	'forum-forum-title' => '论坛',
+	'forum-active-threads' => '$1 {{PLURAL:$1|条活跃讨论|条活跃讨论}}',
+	'forum-active-threads-on-topic' => "$1 {{PLURAL:$1|条活跃讨论|条活跃讨论}}关于: '''[[$2]]'''",
+
+	/* Heading Bar */
+	'forum-header-total-threads' => '<em>$1</em><span>{{PLURAL:$1|条帖子<br />在此论坛上|条帖子<br />在此论坛上}}</span>',
+	'forum-header-active-threads' => '<em>$1</em><span>{{PLURAL:$1|条活跃<br />讨论|条活跃<br />讨论}}</span>',
+
+	/* Forum:Special (Index) */
+	'forum-specialpage-heading' => '论坛',
+	'forum-specialpage-blurb-heading' => '<span style="display:none">forum-specialpage-blurb-heading 您可以编辑<span>',
+	'forum-specialpage-blurb' => '',
+	'forum-specialpage-board-threads' => '$1 {{PLURAL:$1|条帖子|条帖子}}',
+	'forum-specialpage-board-posts' => '$1 {{PLURAL:$1|条话题|条话题}}',
+	'forum-specialpage-board-lastpostby' => '最后发帖者',
+	'forum-specialpage-policies-edit' => '编辑',
+	'forum-specialpage-policies' => '论坛公约/问与答',
+	'forum-policies-and-faq' => "==论坛公约==
+在编辑{{SITENAME}}论坛之前,请阅读以下指导内容:
+
+'''请尊重他人.'''
+:全世界的维基用户都可以自由在论坛上进行编辑。就如同编辑许多维基一样，不是每个人都会具有相同的想法。所以请保持开放性的讨论但同时也尊重其他人的观点。不要忘记，我们聚在这里是因为我们为了共同的一个话题。
+
+'''寻找存在的话题或者创建新的话题'''
+:请大致浏览{{SITENAME}}论坛，看看是不是已经有其他人发表过类似的话题。如果没有，那就赶快发起一个新的讨论吧！
+
+'''寻求帮助'''
+:发现有些地方不对劲？或是有问题要问？赶快登陆论坛吧！如果你需要寻求维基员工的帮助，请登陆[[w:c:zh.community|社区中心]]或者[http://zh.community.wikia.com/wiki/Special:Contact 发送邮件]给我们。
+
+'''畅所欲言'''
+:{{SITENAME}}社区非常高兴有你的参与！赶快发起你感兴趣的话题，让大家一起参与讨论吧！
+
+==论坛问与答==
+'''我如何能够关注一个讨论？'''
+: 通过使用维基的帐户，你可以关注某个话题。当这个话题更新以后，你会通过邮件或者在线消息收到通知。请一定确定首先要[[Special:UserSignup|注册一个维基帐户]]。
+
+'''如何删除一些破坏内容?'''
+: 在讨论的页面上，你可以点击\"更多\"按钮，之后点击\"移除\"选项。这允许你删除某个讨论内容同时也会告知管理员这项操作。
+
+'''“赞”是什么？'''
+: 如果你发现某个话题非常有趣，可以通过点“赞”来告诉其他人。
+
+'''话题是什么？'''
+: 话题允许你引导其他用户讨论维基上相同的主题类别或者编辑功能。比如说，以\"哈利波特\"为标签的所有讨论都将在出现在\"哈利波特\"文章\"中。",
+
+	/* Forum Board */
+
+	'forum-board-title' => '$1个论坛条目',
+	'forum-board-topic-title' => '关于$1的讨论',
+	'forum-board-topics' => '话题',
+	'forum-board-thread-follow' => '关注',
+	'forum-board-thread-following' => '已关注',
+	'forum-board-thread-kudos' => '$1赞',
+	'forum-board-thread-replies' => '$1 {{PLURAL:$1|条消息|条消息}}',
+	'forum-board-new-message-heading' => '发起讨论',
+
+	'forum-no-board-selection-error' => '← 请选择你要发布讨论的条目',
+
+	/* Forum Thread */
+	'forum-thread-reply-placeholder' => '发布回复',
+	'forum-thread-reply-post' => '回复',
+	'forum-thread-deleted-return-to' => '返回$1',
+
+	/* Sorting */
+	'forum-sorting-option-newest-replies' => '最新回复',
+	'forum-sorting-option-popular-threads' => '流行帖子',
+	'forum-sorting-option-most-replies' => '7天之内最新回复',
+	'forum-sorting-option-newest-threads' => '新帖',
+	'forum-sorting-option-oldest-threads' => '旧贴',
+
+	/* New Discussion */
+	'forum-discussion-post' => '发布',
+	'forum-discussion-highlight' => '突出此次讨论',
+	'forum-discussion-placeholder-title' => '你想讨论的是？',
+	'forum-discussion-placeholder-message' => '在$1上发布帖子',
+	'forum-discussion-placeholder-message-short' => '发布一条新消息',
+
+	/* Notification */
+	'forum-notification-user1-reply-to-your' => '$1在$3上{{GENDER:$1|回复}}了你的帖子 ',
+	'forum-notification-user2-reply-to-your' => '$1和$2在$3上回复了你的帖子',
+	'forum-notification-user3-reply-to-your' => '$1和其他人在$3上回复了你的帖子',
+	'forum-notification-user1-reply-to-someone' => '$1在$3进行{{GENDER:$1|回复}}',
+	'forum-notification-user2-reply-to-someone' => '$1和$2在$3进行回复',
+	'forum-notification-user3-reply-to-someone' => '$1和其他人在$3上进行回复',
+
+	'forum-notification-newmsg-on-followed-wall' => '$1在$2上{{GENDER:$1|留了}}一条信息',
+
+	/* Mail message */
+	'forum-mail-notification-new-someone' => '$AUTHOR_NAME在$WIKI\的$BOARDNAME上发布了一条帖子',
+	'forum-mail-notification-new-your' => '$AUTHOR_NAME在$WIKI\的$BOARDNAME上发布了一条帖子',
+	'forum-mail-notification-reply-your' => '$AUTHOR_NAME在$WIKI\的$BOARDNAME上回复了你的帖子',
+	'forum-mail-notification-reply-his' => '$AUTHOR_NAME在$WIKI\的$BOARDNAME上有回复',
+	'forum-mail-notification-reply-someone' => '$AUTHOR_NAME在$WIKI\的$BOARDNAME上有回复',
+	'forum-mail-notification-html-greeting' => '您好，$1,',
+	'forum-mail-notification-html-button' => '查看讨论',
+	'forum-mail-notification-subject' => '$1 -- $2',
+	'forum-mail-notification-body' => '您好$WATCHER,
+
+$SUBJECT
+
+$METATITLE
+
+$MESSAGE_NO_HTML
+
+-- $AUTHOR
+
+查看讨论: ($MESSAGE_LINK)
+
+维基团队
+
+___________________________________________
+* 登陆维基中文社区中心寻求帮助: http://zh.community.wikia.com
+* 不希望收到我们的邮件通知？您可以点击这里进行更改: http://community.wikia.com/Special:Preferences',
+
+	'forum-mail-notification-body-HTML' => '您好$WATCHER,
+<p>$SUBJECT.</p>
+<p><a href=\"$MESSAGE_LINK\">$METATITLE</a></p>
+<p>$MESSAGE_HTML</p>
+<p>-- $AUTHOR_SIGNATURE<p>
+<p><a style=\"padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;\" href=\"$MESSAGE_LINK\">查看讨论n</a></p>
+<p>维基团队</p>
+___________________________________________<br />
+* 登陆维基中文社区中心寻求帮助: http://zh.community.wikia.com
+* 不希望收到我们的邮件通知？您可以点击这里进行更改: http://community.wikia.com/Special:Preferences',
+
+	/* WikiActivity */
+	'forum-wiki-activity-msg' => '在$1上',
+	'forum-wiki-activity-msg-name' => '$1',
+
+	/* Forum Activity and Related Module */
+	'forum-activity-module-heading' => '论坛活动',
+	'forum-related-module-heading' => '相关帖子',
+	'forum-activity-module-posted' => '$1回复了$2',
+	'forum-activity-module-started' => '$1发起了话题$2',
+
+	/* Contribution/RC */
+	'forum-contributions-line' => '$5 ($6 | $7) $8 <a href="$1">$2</a>在<a href="$3">$4上</a>',
+
+	'forum-recentchanges-new-message' => '在<a href="$1">$2上</a>',
+	'forum-recentchanges-edit' => '(编辑信息)',
+	'forum-recentchanges-removed-thread' => '从[[$3|$4]]移除"[[$1|$2]]"',
+	'forum-recentchanges-removed-reply' => '从[[$3|$4]]的"[[$1|$2]]"移除回复',
+	'forum-recentchanges-restored-thread' => '恢复[[$3|$4]]上的"[[$1|$2]]"',
+	'forum-recentchanges-restored-reply' => '恢复[[$3|$4]]的"[[$1|$2]]"相关回复',
+	'forum-recentchanges-deleted-thread' => '从[[$3|$4]]上删除帖子"[[$1|$2]]"',
+	'forum-recentchanges-deleted-reply' => '删除[[$3|$4]]的"[[$1|$2]]"的相关回复',
+	'forum-recentchanges-deleted-reply-title' => '一条发布的信息',
+	'forum-recentchanges-namespace-selector-message-wall' => '论坛条目',
+	'forum-recentchanges-thread-group' => '$1在<a href="$2">$3上</a>',
+	'forum-recentchanges-history-link' => '条目创建历史',
+	'forum-recentchanges-thread-history-link' => '帖子创建历史',
+	'forum-recentchanges-closed-thread' => '在[[$3|$4]]上关闭帖子"[[$1|$2]]"',
+	'forum-recentchanges-reopened-thread' => '在[[$3|$4]]上重新开放帖子"[[$1|$2]]"',
+
+	/* history */
+	'forum-board-history-title' => '论坛条目历史',
+
+	/* Old version of forum */
+	'forum-specialpage-oldforum-link' => '旧论坛存档',
+
+	/* board admin page messages */
+	'forum-admin-page-breadcrumb' => '管理员设置',
+	'forum-admin-create-new-board-label' => '创建新的条目',
+	'forum-admin-create-new-board-modal-heading' => '创建新的条目',
+	'forum-admin-create-new-board-title' => '标题',
+	'forum-admin-create-new-board-description' => '描述',
+
+	'forum-admin-edit-board-modal-heading' => '编辑条目: $1',
+	'forum-admin-edit-board-title' => '标题',
+	'forum-admin-edit-board-description' => '描述',
+
+	'forum-admin-delete-and-merge-board-modal-heading' => '删除条目: $1',
+	'forum-admin-delete-board-title' => '请输入条目名称以确认你确实希望删除它:',
+	'forum-admin-merge-board-warning' => '这些帖子将被合并在另外一个条目里.',
+	'forum-admin-merge-board-destination' => '选择条目进行合并:',
+	'forum-admin-delete-and-merge-button-label' => '删除以及合并',
+
+	'forum-admin-link-label' => '管理论坛条目',
+
+	'forum-autoboard-title-1' => '常规讨论',
+	'forum-autoboard-body-1' => '在这里发表与此维基相关的常规话题。',
+
+	'forum-autoboard-title-2' => '公告区',
+	'forum-autoboard-body-2' => '所有最新的消息都在这里!',
+
+	'forum-autoboard-title-3' => '$1新鲜事',
+	'forum-autoboard-body-3' => "想分享这个维基上的最新进展？或者想赞许某位用户的用心编辑？这里是最合适的地方!",
+
+	'forum-autoboard-title-4' => '问与答',
+	'forum-autoboard-body-4' => '对这个维基有疑问？赶快发帖吧。',
+
+	'forum-autoboard-title-5' => '灌水区',
+	'forum-autoboard-body-5' => '来这里认识$1上的新朋友吧！一起灌灌水！',
+
+	/* board creation validation messages */
+	'forum-board-destination-empty' => '(请选择条目)',
+
+	'forum-board-title-validation-invalid' => '条目包含无效字符',
+	'forum-board-title-validation-length' => '条目名称至少四个字符',
+	'forum-board-title-validation-exists' => '同样的条目名称已存在',
+	'forum-board-validation-count' => '最多允许创建$1个条目',
+
+	'forum-board-description-validation-length' => '请描述这个条目',
+	'forum-board-id-validation-missing' => '条目缺失',
+
+	'forum-board-no-board-warning' => '我们找不到相关条目。请查阅论坛条目列表。',
+
+	/* old forum notification */
+	'forum-old-notification-message' => '这个论坛已经被存档',
+	'forum-old-notification-navigation-button' => '访问新的论坛',
+
+	/* messages for Related Discussions Module on Article page */
+	'forum-related-discussion-heading' => '关于$1的讨论',
+	'forum-related-discussion-new-post-button' => '发起讨论',
+	'forum-related-discussion-new-post-tooltip' => '发起关于$1的最新讨论',
+	'forum-related-discussion-total-replies' => '$1条信息',
+	'forum-related-discussion-zero-state-creative' => '你可以在[[Special:Forum|{{SITENAME}}论坛]]上找到所有关于这个维基的讨论！',
+	'forum-related-discussion-see-more' => '查看更多讨论',
+	'forum-confirmation-board-deleted' => '"$1"已经被删除。',
 );
