@@ -541,35 +541,12 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 		setupImage( opening );
 	}
 
-	function getMediaNumber(num, reverse) {
-		var add = 0;
-		//count how many images have to be skipped
-		//to correctly get to an image
-		//also support reverse lookup
-		skip.every(function(val){
-			if(reverse) {
-				if(val < num){
-					add--;
-					return true;
-
-				}
-			}else {
-				if(val <= num){
-					num++;
-					return true;
-				}
-			}
-		});
-
-		return num + add;
-	}
-
 	function openModal(num){
 		var cacheKey = 'mediaGalleryAssets',
 			galleryData,
 			ttl = 604800; //7days
 
-		currentNum = getMediaNumber(~~num);
+		currentNum = ~~num;
 		currentMedia = images[currentNum];
 
 		modal.open({
@@ -755,9 +732,6 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 		},
 		getCurrent: function(){
 			return currentNum;
-		},
-		getCurrentDisplayable: function(){
-			return getMediaNumber(currentNum, true);
 		},
 		hideShare: function(){
 			if(shareBtn) {shareBtn.style.display = 'none';}
