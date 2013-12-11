@@ -104,6 +104,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	} );
 	this.upload.connect( this, uploadEvents );
 	this.queryUpload.connect( this, uploadEvents );
+	this.dropTarget.on( 'upload', ve.bind( this.onFileDropped, this ) );
 
 	// Initialization
 	this.upload.$.appendTo( this.$mainPage );
@@ -121,6 +122,17 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	this.frame.$content.addClass( 've-ui-wikiaMediaInsertDialog' );
 	this.$foot.append( this.insertButton.$ );
 };
+
+/**
+ * Handle drag & drop file uploaded
+ *
+ * @method
+ * @param {Object} file instance of file
+ */
+ve.ui.WikiaMediaInsertDialog.prototype.onFileDropped = function ( file ) {
+	this.upload.$file.trigger( 'change', file );
+};
+
 
 /**
  * Handle query input changes.

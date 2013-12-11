@@ -16,25 +16,18 @@
  * @cfg {Object} frame Instance of parent dialog frame
  */
 ve.ui.WikiaDropTargetWidget = function VeUiWikiaDropTargetWidget ( config ) {
+
 	// Configuration initialization
 	ve.ui.Widget.call( this, config );
 
-	// set classname of element
-	this.className = 've-ui-widget-droptarget';
-
-	// instance of WikiaMediaUploadWidget
+	// Properties
 	this.upload = config.upload;
-	// the full window overlay that sits below modal
 	this.$overlay = config.surface.$globalOverlay.find( '.ve-ui-window' );
-	// the frame of the MediaInsertDialog
 	this.$frame = config.frame.$document;
-
-	//TODO: Temporary code
-	this.$.removeClass( 've-ui-widget' ).html( '<div>' + ve.msg( 'wikia-visualeditor-dialog-drop-target-callout' ) + '</div>' );
-
 	this.$insertMediaDialog = this.$overlay.find( '.ve-ui-window-frame' );
-	this.$.addClass( this.className ).prependTo( this.$insertMediaDialog );
+	this.fadeTimeout = null;
 
+	// Events
 	this.$overlay.on( 'dragenter dragover', ve.bind( this.onFileDrag, this ) );
 	this.$overlay.on( 'dragleave dragend drop', ve.bind( this.onFileDragEnd, this ) );
 
@@ -43,9 +36,15 @@ ve.ui.WikiaDropTargetWidget = function VeUiWikiaDropTargetWidget ( config ) {
 
 	this.$frame.on( 'dragenter dragover', ve.bind( this.onFileDrag, this ) );
 
-	this.fadeTimeout = null;
+	// Initialization
+	this.$
+		.removeClass( 've-ui-widget' )
+		.html( '<div>' + ve.msg( 'wikia-visualeditor-dialog-drop-target-callout' ) + '</div>' );
+
+	this.$.addClass( 've-ui-widget-droptarget' ).prependTo( this.$insertMediaDialog );
 };
 
+/* Inheritance */
 ve.inheritClass( ve.ui.WikiaDropTargetWidget, ve.ui.Widget );
 
 /**
@@ -85,17 +84,14 @@ ve.ui.WikiaDropTargetWidget.prototype.onFileDragEnd = function( e ) {
  * @param {Object} jQuery event
  */
 ve.ui.WikiaDropTargetWidget.prototype.onFileDrop = function( e ) {
-	var files,
-			transfer;
+	var	transfer = e.originalEvent.dataTransfer,
+			files = transfer.files;
 
 	e.preventDefault();
 
 	// fade out the drop zone
 	this.$.fadeOut();
 
-	transfer = e.originalEvent.dataTransfer;
-	files = transfer.files;
-
 	// trigger file upload
-	this.upload.$file.trigger( 'change', files[0] );
+	this.emit( 'upload', files[0] );
 };
