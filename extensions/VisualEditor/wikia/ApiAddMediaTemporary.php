@@ -93,8 +93,8 @@ class ApiAddMediaTemporary extends ApiAddMedia {
 			'videoId' => $apiwrapper->getVideoId()
 		);
 		if ( $duplicate ) {
-			$result[ 'title' ] = $duplicate->getTitle()->getText();
-			$result[ 'url' ] = $duplicate->getUrl();
+			$result['title'] = $duplicate->getTitle()->getText();
+			$result['url'] = $duplicate->getUrl();
 		} else {
 			// Check whether upload is enabled
 			if ( !UploadBase::isEnabled() ) {
@@ -122,9 +122,10 @@ class ApiAddMediaTemporary extends ApiAddMedia {
 			$tempVideo->setVideoId( $apiwrapper->getVideoId() );
 			$tempVideo->setProps( array( 'mime' => $provider ) );
 
-			$result[ 'title' ] = $apiwrapper->getTitle();
-			$result[ 'tempUrl' ] = $tempImage->getUrl();
-			$result[ 'tempName' ] = $tempVideo->getName();
+			$result['title'] = $apiwrapper->getTitle();
+			$result['tempUrl'] = $tempImage->getUrl();
+			$result['tempName'] = $tempVideo->getName();
+
 			$result[ 'embedCode' ] = json_encode( $tempVideo->getEmbedCode( 728, false, false, true ) );
 		}
 		return $result;
