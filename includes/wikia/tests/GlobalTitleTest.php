@@ -21,6 +21,9 @@ class GlobalTitleTest extends PHPUnit_Framework_TestCase {
 		parent::tearDown();
 	}
 
+	/**
+	 * @group UsingDB
+	 */
 	function testNewFromText1() {
 		$title = GlobalTitle::newFromText( "Test", NS_MAIN, 177 );
 		$this->assertTrue( $title->getNamespace() === NS_MAIN );
@@ -31,6 +34,9 @@ class GlobalTitleTest extends PHPUnit_Framework_TestCase {
 		$this->assertTrue( $title->getText() === "Test Ze Spacjami", "Underscores, spaces expected" );
 	}
 
+	/**
+	 * @group UsingDB
+	 */
 	function testNewFromText2() {
 		$title = GlobalTitle::newFromText( "Test", NS_TALK, 177 );
 		$this->assertTrue( $title->getNamespace() === NS_TALK );
