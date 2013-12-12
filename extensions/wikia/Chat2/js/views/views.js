@@ -39,7 +39,7 @@ var ChatUserOptions = {
 		if ( !!this.get( 'sound' ) ) {
 			$( '#button-sound' ).addClass( 'enabled' ).removeClass( 'disabled' ).text( $.msg('chat-option-sound-on') );
 		} else {
-			$( '#button-sound' ).addClass( 'disabled' ).removeClass( 'enabled' ).text( $.msg('chat-option-sound-on') );
+			$( '#button-sound' ).addClass( 'disabled' ).removeClass( 'enabled' ).text( $.msg('chat-option-sound-off') );
 		}
 	},
 
