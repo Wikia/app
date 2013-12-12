@@ -102,18 +102,26 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	}
 
 	protected function processTestRunTime() {
+		global $wgOutputTestSpeedMessages;
+
 		$annotations = $this->getAnnotations();
 
 		if($this->testRunTime > self::SLOW_TEST_THRESHOLD) {
-			echo "\n" . $this->testRunTime . ' ms' . " - SLOW TEST: " . $this->getName() . "\n";
+			if(!empty($wgOutputTestSpeedMessages)) {
+				echo "\n" . $this->testRunTime . ' ms' . " - SLOW TEST: " . $this->getName() . "\n";
+			}
 			$this->processSlowTest( $annotations );
 		} else {
-			echo "\n" . $this->testRunTime . ' ms' . " - GOOD TEST: " . $this->getName() .  "\n";
+			if(!empty($wgOutputTestSpeedMessages)) {
+				echo "\n" . $this->testRunTime . ' ms' . " - GOOD TEST: " . $this->getName() .  "\n";
+			}
 			$this->processFastTest( $annotations );
 		}
 	}
 
 	protected function addSlowTestAnnotation() {
+		global $wgOutputTestSpeedMessages;
+
 		$className = get_class($this);
 		$methodName = $this->getName(false);
 		$regexSlowGroup = '/@group\s+Slow\s*/';
@@ -126,7 +134,9 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 
 		$filePath = $classReflector->getFileName();
 
-		echo "\nAdding slow annotation to " . $className . '::' . $methodName;
+		if(!empty($wgOutputTestSpeedMessages)) {
+			echo "\nAdding slow annotation to " . $className . '::' . $methodName;
+		}
 
 		$slowGroupAnnotation = '@group Slow';
 		$slowTimeAnnotation = '@slowExecutionTime ' . $this->testRunTime . ' ms';
@@ -164,6 +174,8 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	}
 
 	protected function removeSlowTestAnnotation() {
+		global $wgOutputTestSpeedMessages;
+
 		$className = get_class($this);
 		$methodName = $this->getName(false);
 		$regexSlowGroup = '/@group\s+Slow\s*/';
@@ -175,7 +187,9 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 
 		$filePath = $classReflector->getFileName();
 
-		echo "\nRemoving slow annotation to " . get_class($this) . '::' . $this->getName();
+		if(!empty($wgOutputTestSpeedMessages)) {
+			echo "\nRemoving slow annotation to " . get_class($this) . '::' . $this->getName();
+		}
 
 		// FIXME: no implementation, code duplication, hack overfixation
 
