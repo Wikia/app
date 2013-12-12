@@ -260,10 +260,10 @@ function getForcedWikiValue(){
 	}
 
 	if (count(explode(".", $_SERVER['HTTP_HOST'])) == 3) {
-		return '';
+		return 'wikia.com';
 	}
 
-	$site = str_replace($wgDevelEnvironmentName . '.wikia-dev.com', '', $_SERVER['HTTP_HOST']);
+	$site = str_replace('.' . $wgDevelEnvironmentName . '.wikia-dev.com', '', $_SERVER['HTTP_HOST']);
 
 	return "$site.wikia.com";
 } // end getForcedWikiValue()
