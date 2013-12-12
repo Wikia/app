@@ -2538,9 +2538,13 @@ class WikiFactory {
 	 * @return StdObject ($row->cat_id $row->cat_name) or false
 	 */
 	static public function getCategory( $city_id ) {
-
+		global $wgRunningUnitTests;
 		if( ! self::isUsed() ) {
 			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
+			return false;
+		}
+
+		if ($wgRunningUnitTests) {
 			return false;
 		}
 
