@@ -58,7 +58,7 @@
 			<ul id="PrivateChatList" class="PrivateChatList"></ul>
 			<div class="options-box">
 				<h1 class="options-header">Options</h1>
-				<div id="options-mute">mute</div>
+				<div id="button-mute"></div>
 			</div>
 		</div>
 

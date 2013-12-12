@@ -3,6 +3,61 @@
 //Views
 //
 
+var ChatOptions = {
+	init: function() {
+		'use strict';
+
+		this._state = localStorage['chat.options'] && localStorage['chat.options'][0] === '{' && JSON.parse(localStorage['chat.options']) || {
+			sound: true
+		};
+	},
+
+	toggleBool: function(key) {
+		return this.set(key, !this.get(key));
+	},
+
+	get: function(key) {
+		'use strict';
+
+		if (this._state === undefined) this.init();
+
+		return this._state[key];
+	},
+
+	set: function(key, newState) {
+		'use strict';
+
+		this._state[key] = newState;
+
+		localStorage['chat.options'] = JSON.stringify(this._state);
+
+		return newState;
+	},
+
+	stylizeOptionsSoundButton: function() {
+		'use strict';
+
+		if (!!this.get('sound')) {
+			$('#button-mute').removeClass('muted').text('Sound notifications: on');
+		} else {
+			$('#button-mute').addClass('muted').text('Sound notifications: off');
+		}
+	},
+
+	getSoundOption: function() {
+		'use strict';
+
+		return !!this.get('sound');
+	},
+
+	toggleSoundOption: function() {
+		'use strict';
+
+		this.toggleBool('sound');
+		this.stylizeOptionsSoundButton();
+	}
+};
+
 var ChatView = Backbone.View.extend({
 	tagName: 'li',
 	template: _.template( $('#message-template').html() ),
@@ -384,7 +439,7 @@ var NodeChatDiscussion = Backbone.View.extend({
 		this.chatUL.append(view.render().el);
 
 		// play sound on normal messages (not you and not inline)
-		if (!$el.hasClass('you') && !$el.hasClass('inline-alert')) {
+		if (ChatOptions.getSoundOption() && !$el.hasClass('you') && !$el.hasClass('inline-alert')) {
 			document.getElementById('chat-message').play();
 		}
 
@@ -426,6 +481,7 @@ var NodeChatDiscussion = Backbone.View.extend({
 var NodeChatUsers = Backbone.View.extend({
 	actionTemplate: _.template( $('#user-action-template').html() ),
 	actionTemplateNoUrl: _.template( $('#user-action-template-no-url').html() ),
+
 	initialize: function(options) {
 		this.model.users.bind('add', $.proxy(this.addUser,this));
 		this.model.users.bind('remove', $.proxy(this.removeUser, this));
@@ -450,6 +506,13 @@ var NodeChatUsers = Backbone.View.extend({
 		$("#Rail").on("click", '.wordmark', function(event) {
 			event.preventDefault();
 			window.mainRoom.showRoom('main');
+		});
+
+		ChatOptions.stylizeOptionsSoundButton();
+		$('#button-mute' ).on('click', function(e) {
+			e.preventDefault();
+
+			ChatOptions.toggleSoundOption();
 		});
 
 		// Hide/show main chat user list

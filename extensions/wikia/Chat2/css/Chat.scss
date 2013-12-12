@@ -373,6 +373,33 @@ a {
 	.private {
 		display: none;
 	}
+	.options-box {
+		div {
+			cursor: pointer;
+			margin: 5px 0;
+
+			&#button-mute {
+				padding-left: 20px;
+
+				&:after {
+					background-color: transparent;
+					background-image: url('/extensions/wikia/Chat2/images/bell.png'); /* wgCdnStylePath */
+					background-repeat: no-repeat;
+					background-position: -15px 0;
+					width: 15px;
+					height: 16px;
+
+					content: '';
+					position: absolute;
+					left: 2px;
+				}
+
+				&.muted:after {
+					background-position-x: 0;
+				}
+			}
+		}
+	}
 	.selected {
 		@include box-shadow(0, 0, 7px, darken($color-menu-highlight, 50%), true);
 		background: $color-menu-highlight;
