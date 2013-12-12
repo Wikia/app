@@ -48,6 +48,7 @@ class MigrateImagesToSwift extends Maintenance {
 		parent::__construct();
 		$this->addOption( 'force', 'Perform the migration even when $wgEnableSwiftFileBackend = true' );
 		$this->addOption( 'stats-only', 'Show stats (number of files and total size) and then exit' );
+		$this->addOption( 'dry-run', 'Migrate images, but don\'t disable uploads and don\'t switch to Swift backend' );
 		$this->mDescription = 'Copies files from file system to distributed storage';
 	}
 
@@ -264,6 +265,7 @@ class MigrateImagesToSwift extends Maintenance {
 		$dbr = $this->getDB( DB_SLAVE );
 
 		$isForced = $this->hasOption( 'force' );
+		$isDryRun = $this->hasOption( 'dry-run' );
 
 		// one migration is enough
 		global $wgEnableSwiftFileBackend, $wgEnableUploads, $wgDBname;
@@ -327,10 +329,15 @@ class MigrateImagesToSwift extends Maintenance {
 		$dbw->replace( 'city_image_migrate', [ 'city_id' ], [ 'city_id' => $wgCityId, 'locked' => 1 ], __CLASS__ );
 
 		// block uploads via WikiFactory
-		WikiFactory::setVarByName( 'wgEnableUploads',     $wgCityId, false, self::REASON );
-		WikiFactory::setVarByName( 'wgUploadMaintenance', $wgCityId, true,  self::REASON );
+		if (!$isDryRun) {
+			WikiFactory::setVarByName( 'wgEnableUploads',     $wgCityId, false, self::REASON );
+			WikiFactory::setVarByName( 'wgUploadMaintenance', $wgCityId, true,  self::REASON );
 
-		$this->output( "Uploads and image operations disabled\n\n" );
+			$this->output( "Uploads and image operations disabled\n\n" );
+		}
+		else {
+			$this->output( "Performing dry run...\n\n" );
+		}
 
 		// prepare the list of files to migrate to new storage
 		// (a) current revisions of images
@@ -397,6 +404,12 @@ class MigrateImagesToSwift extends Maintenance {
 
 		$this->output( "\n{$report}\n" );
 		self::log( __CLASS__, 'migration completed - ' . $report, self::LOG_MIGRATION_PROGRESS );
+
+		// if running in --dry-run, leave now
+		if ($isDryRun) {
+			$this->output( "\nDry run completed!\n" );
+			return;
+		}
 
 		// unlock the wiki
 		$dbw->ping();
