@@ -9,7 +9,12 @@ require_once('/usr/wikia/devbox/DevBoxVariables.php');
 
 $IP = realpath(__DIR__ . '/../../../..');
 
-$wgWikiaLocalSettingsPath  = '/usr/wikia/docroot/wiki.factory/LocalSettings.php';
+if (getenv('DOCUMENT_ROOT')) {
+	$wgWikiaLocalSettingsPath = getenv('DOCUMENT_ROOT') . "/LocalSettings.php";
+} else {
+	$wgWikiaLocalSettingsPath = "/usr/wikia/docroot/wiki.factory/LocalSettings.php";
+}
+
 $wgWikiaAdminSettingsPath = dirname( $wgWikiaLocalSettingsPath ) . "/../AdminSettings.php";
 
 $wgDevelEnvironment = true;
