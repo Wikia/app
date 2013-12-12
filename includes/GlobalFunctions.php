@@ -3523,8 +3523,8 @@ function wfSplitWikiID( $wiki ) {
  * @return DatabaseBase
  */
 function &wfGetDB( $db, $groups = array(), $wiki = false ) {
-	global $wgRunningUnitTests;
-	if ($wgRunningUnitTests) {
+	global $wgRunningUnitTests, $wgNoDBUnits;
+	if ($wgRunningUnitTests && $wgNoDBUnits) {
 		throw new Exception('No DB in units');
 	}
 	// wikia change begin -- SMW DB separation project, @author Krzysztof Krzyżaniak (eloy)

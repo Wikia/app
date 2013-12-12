@@ -38,7 +38,8 @@ $wgSpecialPageGroups['DevBoxPanel'] = 'wikia';
 // Hooks
 $dir = __DIR__ . '/';
 $wgExtensionMessagesFiles['DevBoxPanel'] = $dir.'Special_DevBoxPanel.i18n.php';
-if ($wgRunningUnitTests) {
+
+if ($wgRunningUnitTests && $wgNoDBUnits) {
 	$wgHooks['WikiFactory::execute'] = ["wfUnitForceWiki"];
 } else {
 	$wgHooks['WikiFactory::execute'][] = "wfDevBoxForceWiki";
