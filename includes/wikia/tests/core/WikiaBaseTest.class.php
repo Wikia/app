@@ -131,15 +131,14 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 		$slowGroupAnnotation = '@group Slow';
 		$slowTimeAnnotation = '@slowExecutionTime ' . $this->testRunTime . ' ms';
 
-		if(!$docComment) {
-			$testFile = file($filePath);
+		$testCode = file_get_contents($filePath);
 
+		if(!$docComment) {
+			$functionStartRegex = '/(.*\s+function\s+' . $methodName . '\s*\()/';
 			$newDocComment = $this->getNewDocblockForSlowTest( $slowGroupAnnotation, $slowTimeAnnotation );
-			$startLine = $methodReflector->getStartLine();
-			array_splice($testFile, $startLine-1+self::$lineOffset, 0, $newDocComment);
-			$updatedTestCode = implode('',$testFile);
+
+			$updatedTestCode = preg_replace( $functionStartRegex, $newDocComment . "\\1", $testCode );
 		} else {
-			$testCode = file_get_contents($filePath);
 			$newDocComment = $docComment;
 
 			if(!preg_match($regexSlowExecTime, $docComment)) {
