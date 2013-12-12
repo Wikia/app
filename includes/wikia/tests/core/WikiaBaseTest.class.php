@@ -42,7 +42,6 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 
 	private static $slowTests = [];
 	private static $fastTests = [];
-	private static $lineOffset = [];
 
 	const SLOW_TEST_THRESHOLD = 0.002; // ms
 
@@ -56,7 +55,6 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 
 		self::$slowTests = [];
 		self::$fastTests = [];
-		self::$lineOffset = 0;
 		self::$testRunTime = microtime(true);
 	}
 
@@ -162,8 +160,6 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 			} else {
 				$newDocComment = preg_replace($regexSlowGroup, $slowGroupAnnotation, $newDocComment);
 			}
-
-			self::$lineOffset += (preg_match_all('/\n/',$newDocComment) - preg_match_all('/\n/',$docComment));
 
 			$updatedTestCode = str_replace($docComment, $newDocComment, $testCode);
 		}
