@@ -52,10 +52,13 @@ abstract class WikiaBaseException extends MWException {
  */
 class WikiaException extends WikiaBaseException {
 	public function __construct($message = '', $code = 0, Exception $previous = null) {
+		global $wgRunningUnitTests;
 		parent::__construct( $message, $code, $previous );
 
-		// log more details (macbre)
-		Wikia::logBacktrace( __METHOD__ );
+		if (!$wgRunningUnitTests) {
+			// log more details (macbre)
+			Wikia::logBacktrace( __METHOD__ );
+		}
 	}
 }
 
