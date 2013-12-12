@@ -441,8 +441,16 @@ if ( $wgCommandLineMode ) {
 wfProfileOut( $fname . '-misc1' );
 wfProfileIn( $fname . '-memcached' );
 
+
+class FakeCache {
+	public function __call($a, $b) {
+		return '';
+	}
+
+}
+
 if ($wgRunningUnitTests && $wgNoDBUnits) {
-	$wgMemc = null;
+	$wgMemc = new FakeCache();
 	$messageMemc = null;
 	$parserMemc = null;
 } else {

@@ -222,6 +222,7 @@
 
 		/**
 		 * @dataProvider shortenNumberDecoratorDataProvider
+		 * @group UsingDB
 		 */
 		public function testShortenNumberDecorator($number,$expected) {
 			$result = QuickStatsController::shortenNumberDecorator($number);

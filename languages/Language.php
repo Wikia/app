@@ -272,10 +272,15 @@ class Language {
 	 * @return LocalisationCache
 	 */
 	public static function getLocalisationCache() {
+		global $wgRunningUnitTests, $wgNoDBUnits;
 		if ( is_null( self::$dataCache ) ) {
 			global $wgLocalisationCacheConf;
-			$class = $wgLocalisationCacheConf['class'];
-			self::$dataCache = new $class( $wgLocalisationCacheConf );
+			if ($wgRunningUnitTests && $wgNoDBUnits) {
+				self::$dataCache = new FakeCache();
+			} else {
+				$class = $wgLocalisationCacheConf['class'];
+				self::$dataCache = new $class( $wgLocalisationCacheConf );
+			}
 		}
 		return self::$dataCache;
 	}
@@ -342,6 +347,9 @@ class Language {
 			$this->namespaceNames = self::$dataCache->getItem( $this->mCode, 'namespaceNames' );
 			$validNamespaces = MWNamespace::getCanonicalNamespaces();
 
+			if ($this->namespaceNames == '') {
+				$this->namespaceNames = [];
+			}
 			$this->namespaceNames = $wgExtraNamespaces + $this->namespaceNames + $validNamespaces;
 
 			$this->namespaceNames[NS_PROJECT] = $wgMetaNamespace;

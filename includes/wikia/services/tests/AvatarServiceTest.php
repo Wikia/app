@@ -3,6 +3,7 @@ class AvatarServiceTest extends WikiaBaseTest {
 
 	/**
 	 * @dataProvider getDefaultAvatarDataProvider
+	 * @group UsingDB
 	 */
 	public function testGetDefaultAvatar($url, $width) {
 			$this->assertStringEndsWith($url, AvatarService::getDefaultAvatar($width));
@@ -27,6 +28,7 @@ class AvatarServiceTest extends WikiaBaseTest {
 
 	/**
 	 * @dataProvider getUrlDataProvider
+	 * @group UsingDB
 	 */
 	public function testGetUrl($url, $userName) {
 		$this->assertStringEndsWith($url, AvatarService::getUrl($userName));
