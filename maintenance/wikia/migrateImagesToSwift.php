@@ -27,8 +27,9 @@ class MigrateImagesToSwift extends Maintenance {
 	const LOG_MIGRATION_PROGRESS = 'swift-migration-progress';
 	const LOG_MIGRATION_ERRORS = 'swift-migration-errors';
 
-	/* @var \Wikia\SwiftStorage $swift */
-	private $swift;
+	// connections to Swift backends images will be migrated to
+	/* @var \Wikia\SwiftStorage[] $swiftBackends */
+	private $swiftBackends;
 
 	private $shortBucketNameFixed = false;
 
@@ -59,10 +60,19 @@ class MigrateImagesToSwift extends Maintenance {
 		global $wgUploadDirectory, $wgDBname, $wgCityId;
 		$this->shortBucketNameFixed = $this->fixShortBucketName();
 
-		$this->swift = \Wikia\SwiftStorage::newFromWiki( $wgCityId );
-		$remotePath = $this->swift->getUrl( '' );
+		$dcs = [
+			'sjc',
+			'res'
+		];
 
-		$this->output( "Migrating images on {$wgDBname} - <{$wgUploadDirectory}> -> <{$remotePath}>...\n" );
+		foreach($dcs as $dc) {
+			$swiftBackend = \Wikia\SwiftStorage::newFromWiki( $wgCityId, $dc );
+
+			$remotePath = $swiftBackend->getUrl( '' );
+			$this->output( "Migrating images on {$wgDBname} - <{$wgUploadDirectory}> -> <{$remotePath}> [dc: {$dc}]...\n" );
+
+			$this->swiftBackends[] = $swiftBackend;
+		}
 	}
 
 	/**
@@ -201,22 +211,19 @@ class MigrateImagesToSwift extends Maintenance {
 			$metadata['Sha1Base36'] = $row['hash'];
 		}
 
-		$res = $this->swift->store( $uploadDir . '/' . $path, $path, $metadata, $mime );
+		$res = Status::newGood();
 
+		// migrate to all requested DCs
+		foreach($this->swiftBackends as $swift) {
+			$res->merge( $swift->store( $uploadDir . '/' . $path, $path, $metadata, $mime ) );
+		}
+
+		// check results
 		if ( !$res->isOK() ) {
 			self::log( __METHOD__, "error storing <{$path}>", self::LOG_MIGRATION_ERRORS );
 			$this->migratedImagesFailedCnt++;
 		}
 		else {
-			$mwStorePath = sprintf( 'mwstore://swift-backend/%s/images/%s', $wgDBname, $path );
-
-			Wikia\SwiftSync\Queue::newFromParams( [
-				'city_id' => $wgCityId,
-				'op' => 'store',
-				'src' => $uploadDir . '/' . $path,
-				'dst' => $mwStorePath
-			] )->add();
-
 			$this->migratedImagesSize += $row['size'];
 			$this->migratedImagesCnt++;
 		}
