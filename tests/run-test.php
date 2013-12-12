@@ -1,4 +1,10 @@
 <?php
+$wgNoDBUnits = false;
+foreach($argv as $arg) {
+	if (strpos($arg, 'UsingDB') !== false) {
+		$wgNoDBUnits = true;
+	}
+}
 
 require_once dirname(__FILE__) . '/bootstrap.php';
 
