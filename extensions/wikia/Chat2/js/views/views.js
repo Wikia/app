@@ -3,57 +3,56 @@
 //Views
 //
 
-var ChatOptions = {
-	init: function() {
+var ChatUserOptions = {
+	init: function () {
 		'use strict';
 
-		this._state = localStorage['chat.options'] && localStorage['chat.options'][0] === '{' && JSON.parse(localStorage['chat.options']) || {
-			sound: true
-		};
+		this._state = localStorage['chat.options'] && localStorage['chat.options'][0] === '{' &&
+			JSON.parse( localStorage['chat.options'] ) || { sound: true };
 	},
 
-	toggleBool: function(key) {
-		return this.set(key, !this.get(key));
+	toggleBool: function ( key ) {
+		return this.set( key, !this.get( key ) );
 	},
 
-	get: function(key) {
+	get: function ( key ) {
 		'use strict';
 
-		if (this._state === undefined) this.init();
+		if ( this._state === undefined ) this.init();
 
 		return this._state[key];
 	},
 
-	set: function(key, newState) {
+	set: function ( key, newState ) {
 		'use strict';
 
 		this._state[key] = newState;
 
-		localStorage['chat.options'] = JSON.stringify(this._state);
+		localStorage['chat.options'] = JSON.stringify( this._state );
 
 		return newState;
 	},
 
-	stylizeOptionsSoundButton: function() {
+	stylizeOptionsSoundButton: function () {
 		'use strict';
 
-		if (!!this.get('sound')) {
-			$('#button-mute').removeClass('muted').text('Sound notifications: on');
+		if ( !!this.get( 'sound' ) ) {
+			$( '#button-sound' ).addClass( 'enabled' ).removeClass( 'disabled' ).text( $.msg('chat-option-sound-on') );
 		} else {
-			$('#button-mute').addClass('muted').text('Sound notifications: off');
+			$( '#button-sound' ).addClass( 'disabled' ).removeClass( 'enabled' ).text( $.msg('chat-option-sound-on') );
 		}
 	},
 
-	getSoundOption: function() {
+	getSoundOption: function () {
 		'use strict';
 
-		return !!this.get('sound');
+		return !!this.get( 'sound' );
 	},
 
-	toggleSoundOption: function() {
+	toggleSoundOption: function () {
 		'use strict';
 
-		this.toggleBool('sound');
+		this.toggleBool( 'sound' );
 		this.stylizeOptionsSoundButton();
 	}
 };
@@ -439,7 +438,7 @@ var NodeChatDiscussion = Backbone.View.extend({
 		this.chatUL.append(view.render().el);
 
 		// play sound on normal messages (not you and not inline)
-		if (ChatOptions.getSoundOption() && !$el.hasClass('you') && !$el.hasClass('inline-alert')) {
+		if (ChatUserOptions.getSoundOption() && $('#chat-sound-message').attr('src' ).length && !$el.hasClass('you') && !$el.hasClass('inline-alert')) {
 			document.getElementById('chat-message').play();
 		}
 
@@ -508,12 +507,16 @@ var NodeChatUsers = Backbone.View.extend({
 			window.mainRoom.showRoom('main');
 		});
 
-		ChatOptions.stylizeOptionsSoundButton();
-		$('#button-mute' ).on('click', function(e) {
-			e.preventDefault();
+		if ( $( '#chat-sound-message' ).attr( 'src' ).length ) {
+			ChatUserOptions.stylizeOptionsSoundButton();
+			$( '#button-sound' ).on( 'click', function ( e ) {
+				e.preventDefault();
 
-			ChatOptions.toggleSoundOption();
-		});
+				ChatUserOptions.toggleSoundOption();
+			} );
+		} else {
+			$( '#button-sound' ).text( $.msg('chat-option-sound-disabled') );
+		}
 
 		// Hide/show main chat user list
 		$('#Rail .chevron').click(function() {

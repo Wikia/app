@@ -25,7 +25,7 @@
 
 </head>
 <body class="<?= $bodyClasses ?> ChatWindow">
-	<audio id="chat-message" src="http://muppet.bartosz.wikia-dev.com/extensions/wikia/Chat2/sounds/Sonar_pings.ogg" preload="auto"></audio
+	<audio id="chat-sound-message" src="http://muppet.bartosz.wikia-dev.com/extensions/wikia/Chat2/sounds/Sonar_pings.ogg" preload="auto"></audio>
 
 	<header id="ChatHeader" class="ChatHeader">
 		<h1 class="public wordmark">
@@ -57,8 +57,8 @@
 			<h1 class="private"><?= wfMsg('chat-private-messages') ?></h1>
 			<ul id="PrivateChatList" class="PrivateChatList"></ul>
 			<div class="options-box">
-				<h1 class="options-header">Options</h1>
-				<div id="button-mute"></div>
+				<h1 class="options-header"><?= wfMessage('chat-options')->text(); ?></h1>
+				<div id="button-sound"></div>
 			</div>
 		</div>
 

@@ -120,11 +120,12 @@ $messages['en'] = array(
     
     'chat-status-away' => 'Away',
 
-	// Special:Preferences
-	'prefs-communication' => 'Communication',
-	'prefs-chat' => 'Chat',
-	'chat-pref-incoming-message-sound' => 'Sound of incoming chat message',
-	'chat-pref-sound-none' => 'None',
+		// Options
+		'chat-options' => 'Options',
+		'chat-option-sound-on' => 'Notifications: on',
+		'chat-option-sound-off' => 'Notifications: off',
+		'chat-option-sound-disabled' => 'Chat sound notifications disabled in user preferences.',
+
 );
 
 /** Message documentation (Message documentation)
@@ -200,6 +201,12 @@ Parameters:
 	'chat-browser-is-notsupported' => 'shown when user broser is not supported',
 	'chat-checkuser-join-action' => 'Shown in CheckUser extension for chat-join events',
 	'chat-status-away' => 'Display when user chnages his status to away',
+
+	// Options
+	'chat-options' => 'Header for options',
+	'chat-option-sound-on' => 'Display when sound notification is turned on',
+	'chat-option-sound-off' => 'Display when sound notification is turned off',
+	'chat-option-sound-disabled' => 'Information displayed when user turned off sound notifications option in user preferences.',
 );
 
 /** Afrikaans (Afrikaans)
@@ -2453,10 +2460,6 @@ $messages['pl'] = array(
 	'chat-browser-is-notsupported' => 'Twoja przeglądarka nie jest obsługiwana. Dla najlepszych rezultatów użyj <a href="http://community.wikia.com/wiki/Help:Supported_browsers">nowszej przeglądarki</a>.',
 	'chat-checkuser-join-action' => 'Dołączył na czat',
 	'chat-status-away' => 'Zaraz wracam',
-	'prefs-communication' => 'Komunikacja',
-	'prefs-chat' => 'Czat',
-	'chat-pref-incoming-message-sound' => 'Dźwięk przychodzącej wiadomości na czacie',
-	'chat-pref-sound-none' => 'Nie chcę dźwięku na czacie',
 );
 
 /** Piedmontese (Piemontèis)

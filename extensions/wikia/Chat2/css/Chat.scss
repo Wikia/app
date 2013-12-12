@@ -378,15 +378,15 @@ a {
 			cursor: pointer;
 			margin: 5px 0;
 
-			&#button-mute {
+			&#button-sound {
 				padding-left: 20px;
 
 				&:after {
 					background-color: transparent;
-					background-image: url('/extensions/wikia/Chat2/images/bell.png'); /* wgCdnStylePath */
+					background-image: url('/extensions/wikia/Chat2/images/speaker.png'); /* wgCdnStylePath */
 					background-repeat: no-repeat;
-					background-position: -15px 0;
-					width: 15px;
+					background-position: 0 0;
+					width: 16px;
 					height: 16px;
 
 					content: '';
@@ -394,8 +394,12 @@ a {
 					left: 2px;
 				}
 
-				&.muted:after {
-					background-position-x: 0;
+				&.enabled:after {
+					background-position-x: -16px;
+				}
+
+				&.disabled:after {
+					background-position-x: -32px;
 				}
 			}
 		}
