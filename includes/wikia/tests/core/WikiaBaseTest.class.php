@@ -525,7 +525,7 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 				}
 			}
 			if ( !$annotatedAsSlow ) {
-				$this->addSlowTestAnnotation();
+				//$this->addSlowTestAnnotation();
 			}
 			self::$slowTests[$this->getName( false )] = true;
 		}

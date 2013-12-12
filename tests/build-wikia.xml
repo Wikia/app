@@ -15,7 +15,7 @@
                        --log-junit ${basedir}/build/logs/phpunit.xml
                        --conf ${localsettings}
                        --configuration ${basedir}/phpunit.xml
-					   --exclude-group Slow,Infrastructure,Integration,Broken,Stub,Monitoring,Hack
+					   --exclude-group Slow,Infrastructure,Integration,Broken,Stub,Monitoring,Hack,UsingDB
                        " />
         </exec>
     </target>

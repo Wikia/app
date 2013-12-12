@@ -9,6 +9,9 @@ class ServiceTest extends WikiaBaseTest {
 		$wgMemc = wfGetCache(CACHE_MEMCACHED);
 	}
 
+	/**
+	 * @group UsingDB
+	 */
 	function testAvatarService() {
 		$anonName = '10.10.10.10';
 		$userName = 'WikiaBot';
@@ -29,6 +32,9 @@ class ServiceTest extends WikiaBaseTest {
 		$this->assertRegExp('/Special:Contributions/', AvatarService::renderLink($anonName));
 	}
 
+	/**
+	 * @group UsingDB
+	 */
 	function testPageStatsService() {
 		global $wgTitle, $wgMemc;
 
@@ -84,6 +90,9 @@ class ServiceTest extends WikiaBaseTest {
 		$this->assertTrue(empty($data));
 	}
 
+	/**
+	 * @group UsingDB
+	 */
 	function testUserStatsService() {
 		global $wgArticle;
 		$user = User::newFromName('QATestsBot');

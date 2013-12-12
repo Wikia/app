@@ -37,7 +37,10 @@ class AssetsManagerTest extends WikiaBaseTest {
 		$this->assertEquals($this->instance->isSassUrl($file), $expected);
 	}
 
-	/** @dataProvider testGetSassFilePathProvider */
+	/**
+	 * @dataProvider testGetSassFilePathProvider
+	 * @group UsingDB
+	 */
 	public function testGetSassFilePath($url, $expected) {
 		$filePath = $this->instance->getSassFilePath($url);
 		$this->assertEquals($filePath, $expected);
@@ -56,6 +59,7 @@ class AssetsManagerTest extends WikiaBaseTest {
 
 	/**
 	 * @dataProvider duplicateAssetsDataProvider
+	 * @group UsingDB
 	 */
 	public function testDuplicateAssets( $setName, $files ) {
 		$counts = array();

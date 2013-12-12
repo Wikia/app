@@ -38,7 +38,12 @@ $wgSpecialPageGroups['DevBoxPanel'] = 'wikia';
 // Hooks
 $dir = __DIR__ . '/';
 $wgExtensionMessagesFiles['DevBoxPanel'] = $dir.'Special_DevBoxPanel.i18n.php';
-$wgHooks['WikiFactory::execute'][] = "wfDevBoxForceWiki";
+if ($wgRunningUnitTests) {
+	$wgHooks['WikiFactory::execute'] = ["wfUnitForceWiki"];
+} else {
+	$wgHooks['WikiFactory::execute'][] = "wfDevBoxForceWiki";
+}
+
 $wgHooks['WikiFactory::executeBeforeTransferToGlobals'][] = "wfDevBoxDisableWikiFactory";
 $wgHooks['PageRenderingHash'][] = 'wfDevBoxSeparateParserCache';
 $wgHooks['ResourceLoaderGetConfigVars'][] = 'wfDevBoxResourceLoaderGetConfigVars';
@@ -179,6 +184,13 @@ function wfDevBoxForceWiki(WikiFactoryLoader $wikiFactoryLoader){
 	}
 	return true;
 } // end wfDevBoxForceWiki()
+
+function wfUnitForceWiki(){
+	global $wgDevelEnvironmentName, $wgDBcluster;
+	$wgDevelEnvironmentName = 'test';
+	$wgDBcluster = '';
+	return false;
+}
 
 /**
  * "Disable" WikiFactory wiki-specific settings when $wgDevboxSkipWikiFactoryVariables = true

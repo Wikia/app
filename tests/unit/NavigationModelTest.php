@@ -314,6 +314,9 @@ class NavigationModelTest extends WikiaBaseTest {
 		}
 	}
 
+	/**
+	 * @group UsingDB
+	 */
 	function testParseErrors() {
 		$model = new NavigationModel();
 		$this->assertEmpty($model->getErrors());

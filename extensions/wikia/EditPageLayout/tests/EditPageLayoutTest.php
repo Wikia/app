@@ -17,6 +17,9 @@ class EditPageLayoutTest extends WikiaBaseTest {
 		return new EditPageLayout($article);
 	}
 
+	/**
+	 * @group UsingDB
+	 */
 	public function testMainPageEdit() {
 		// setup edit page object
 		$title = Title::newMainPage();
@@ -103,6 +106,9 @@ class EditPageLayoutTest extends WikiaBaseTest {
 		$this->assertStringStartsWith('<textarea id="wpSummary" name="wpSummary" placeholder=', $editPage->renderSummaryBox());
 	}
 
+	/**
+	 * @group UsingDB
+	 */
 	public function testPreloadText() {
 		$title = Title::newFromText('NewArticle');
 		$editPage = $this->editPageFactory($title);

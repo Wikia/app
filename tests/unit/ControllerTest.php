@@ -41,6 +41,9 @@ class ControllerTest extends WikiaBaseTest {
 		);
 	}
 
+	/**
+	 * @group UsingDB
+	 */
 	function testWikiaLink() {
 		$this->assertTag (
 			array("tag" => "a"),
