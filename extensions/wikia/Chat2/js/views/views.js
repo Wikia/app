@@ -9,6 +9,22 @@ var ChatUserOptions = {
 
 		this._state = localStorage['chat.options'] && localStorage['chat.options'][0] === '{' &&
 			JSON.parse( localStorage['chat.options'] ) || { sound: true };
+
+		var self = this;
+		$.nirvana.sendRequest( {
+			controller: 'ChatController',
+			method: 'getUserSound',
+			'type': 'GET',
+			'format': 'json',
+			'callback': function( response ) {
+				if( response.sound !== '' ) {
+					var soundFile =  window.wgExtensionsPath + '/wikia/Chat2/sounds/' + response.sound;
+					self._state.soundFile = soundFile;
+					console.log( self._state );
+					$('#chat-sound-message').attr( 'src', soundFile );
+				}
+			}
+		} );
 	},
 
 	toggleBool: function ( key ) {
@@ -438,11 +454,11 @@ var NodeChatDiscussion = Backbone.View.extend({
 		this.chatUL.append(view.render().el);
 
 		// play sound on normal messages (not you and not inline)
+		// Scroll chat to bottom
+
 		if (ChatUserOptions.getSoundOption() && $('#chat-sound-message').attr('src' ).length && !$el.hasClass('you') && !$el.hasClass('inline-alert')) {
 			document.getElementById('chat-sound-message').play();
 		}
-
-		// Scroll chat to bottom
 		if (this.forceScroll) {
 			this.scrollToBottom();
 		}
