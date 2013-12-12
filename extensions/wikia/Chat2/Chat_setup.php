@@ -92,6 +92,7 @@ $wgAutoloadClasses['ChatRailController'] = "$dir/ChatRailController.class.php";
 $wgAutoloadClasses['SpecialChat'] = "$dir/SpecialChat.class.php";
 $wgAutoloadClasses['NodeApiClient'] = "$dir/NodeApiClient.class.php";
 $wgAutoloadClasses['ChatfailoverSpecialController'] = "$dir/ChatfailoverSpecialController.class.php";
+$wgAutoloadClasses['ChatPreferenesHooks'] = "$dir/ChatPreferenesHooks.class.php";
 
 $wgSpecialPages[ 'Chatfailover'] = 'ChatfailoverSpecialController';
 
@@ -114,6 +115,7 @@ $wgHooks[ 'ContributionsToolLinks' ][] = 'ChatHelper::onContributionsToolLinks';
 $wgHooks[ 'LogLine' ][] = 'ChatHelper::onLogLine';
 $wgHooks[ 'UserGetRights' ][] = 'chatAjaxonUserGetRights';
 $wgHooks[ 'GetIP' ][] = 'ChatAjax::onGetIP'; // used for calls from chat nodejs server
+$wgHooks[ 'GetPreferences' ][] = 'ChatPreferenesHooks::onGetPreferences'; // used to add chat options in preferences
 
 // logs
 $wgLogTypes[] = 'chatban';

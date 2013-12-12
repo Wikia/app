@@ -118,7 +118,13 @@ $messages['en'] = array(
     'chat-browser-is-notsupported' => '	Your browser is not supported. For the best experience, use a <a href="http://community.wikia.com/wiki/Help:Supported_browsers">newer browser</a>.',
     'chat-checkuser-join-action' => 'Joined Chat',
     
-    'chat-status-away' => 'Away'
+    'chat-status-away' => 'Away',
+
+	// Special:Preferences
+	'prefs-communication' => 'Communication',
+	'prefs-chat' => 'Chat',
+	'chat-pref-incoming-message-sound' => 'Sound of incoming chat message',
+	'chat-pref-sound-none' => 'None',
 );
 
 /** Message documentation (Message documentation)
@@ -2447,6 +2453,10 @@ $messages['pl'] = array(
 	'chat-browser-is-notsupported' => 'Twoja przeglądarka nie jest obsługiwana. Dla najlepszych rezultatów użyj <a href="http://community.wikia.com/wiki/Help:Supported_browsers">nowszej przeglądarki</a>.',
 	'chat-checkuser-join-action' => 'Dołączył na czat',
 	'chat-status-away' => 'Zaraz wracam',
+	'prefs-communication' => 'Komunikacja',
+	'prefs-chat' => 'Czat',
+	'chat-pref-incoming-message-sound' => 'Dźwięk przychodzącej wiadomości na czacie',
+	'chat-pref-sound-none' => 'Nie chcę dźwięku na czacie',
 );
 
 /** Piedmontese (Piemontèis)
