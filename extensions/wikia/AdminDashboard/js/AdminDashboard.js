@@ -1,40 +1,42 @@
+'use strict';
 var AdminDashboard = {
 	controls: {},
 	section: {},
 	externalComponents: {},
 	init: function() {
 		// precache
-		AdminDashboard.cc = $('#AdminDashboard');
+		AdminDashboard.cc = $( '#AdminDashboard' );
 
-		if(AdminDashboard.cc.length === 0) {
+		if ( AdminDashboard.cc.length === 0 ) {
 			return;
 		}
 
-		AdminDashboard.allControls = AdminDashboard.cc.find('.control');
-		AdminDashboard.tabs = $('#AdminDashboardTabs');
-		AdminDashboard.allTabs = AdminDashboard.tabs.find('.tab');
-		AdminDashboard.generalTab = AdminDashboard.tabs.find('[data-section=general]');
-		AdminDashboard.section.general = $('#AdminDashboardGeneral');
-		AdminDashboard.section.advanced = $('#AdminDashboardAdvanced');
-		AdminDashboard.section.contentarea = $('#AdminDashboardContentArea');
-		AdminDashboard.wikiaArticle = $('#WikiaArticle');
+		AdminDashboard.allControls = AdminDashboard.cc.find( '.control' );
+		AdminDashboard.tabs = $( '#AdminDashboardTabs' );
+		AdminDashboard.allTabs = AdminDashboard.tabs.find( '.tab' );
+		AdminDashboard.generalTab = AdminDashboard.tabs.find( '[data-section=general]' );
+		AdminDashboard.section.general = $( '#AdminDashboardGeneral' );
+		AdminDashboard.section.advanced = $( '#AdminDashboardAdvanced' );
+		AdminDashboard.section.contentarea = $( '#AdminDashboardContentArea' );
+		AdminDashboard.wikiaArticle = $( '#WikiaArticle' );
+		AdminDashboard.rail = $( '#AdminDashboardRail' );
 
 		// events
 		AdminDashboard.allControls.hover(function() {
-			var el = $(this);
-			AdminDashboard.tooltip = el.closest('.control-section').find('header .dashboard-tooltip');
-			AdminDashboard.tooltip.text(el.data('tooltip'));
-		}, function() {
-			AdminDashboard.tooltip.text('');
-		}).click(AdminDashboard.handleControlClick);
+			var el = $( this );
+			AdminDashboard.tooltip = el.closest( '.control-section' ).find( 'header .dashboard-tooltip' );
+			AdminDashboard.tooltip.text( el.data( 'tooltip' ) );
+		},function() {
+			AdminDashboard.tooltip.text( '' );
+		} ).click( AdminDashboard.handleControlClick );
 
 		// init addVideo jQuery plugin
-		var addVideoButton = AdminDashboard.cc.find('.addVideoButton'),
-			addVideoButtonReturnUrl = addVideoButton.data('return-url');
+		var addVideoButton = AdminDashboard.cc.find( '.addVideoButton' ),
+			addVideoButtonReturnUrl = addVideoButton.data( 'return-url' );
 
-		if( $.fn.addVideoButton ) { //FB#68272
-			addVideoButton.addVideoButton({
-				callbackAfterSelect: function(url, VET) {
+		if ( $.fn.addVideoButton ) { //FB#68272
+			addVideoButton.addVideoButton( {
+				callbackAfterSelect: function( url, VET ) {
 					$.nirvana.postJson(
 						// controller
 						'VideosController',
@@ -54,43 +56,48 @@ var AdminDashboard = {
 						},
 						// error callback
 						function() {
-							window.GlobalNotification.show( $.msg('vet-error-while-loading'), 'error' );
+							window.GlobalNotification.show( $.msg( 'vet-error-while-loading' ), 'error' );
 						}
 					);
 					// Don't move on to second VET screen.  We're done.
 					return false;
 				}
-			});
+			} );
 		}
 
-		AdminDashboard.allTabs.click(function(e) {
-			e.preventDefault();
-			var el = $(this);
-			AdminDashboard.ui.resetAll();
-			AdminDashboard.ui.selectTab(el);
-			AdminDashboard.ui.showSection(el.data('section'));
-		});
+		if ( AdminDashboard.rail.find( '> section' ).length >= 2 ) {
+			// Add column based layout for rail only when there are at least 2 modules
+			AdminDashboard.rail.zid( { minColumnWidth: 350, selector: '> section' } );
+		}
 
-		AdminDashboard.cc.on('mousedown', 'a[data-tracking]', function(e) {
-			var t = $(this);
-			AdminDashboard.track(Wikia.Tracker.ACTIONS.CLICK, t.data('tracking'), null, {}, e);
-		});
+		AdminDashboard.allTabs.click( function( e ) {
+			e.preventDefault();
+			var el = $( this );
+			AdminDashboard.ui.resetAll();
+			AdminDashboard.ui.selectTab( el );
+			AdminDashboard.ui.showSection( el.data( 'section' ) );
+		} );
+
+		AdminDashboard.cc.on( 'mousedown', 'a[data-tracking]', function( e ) {
+			var t = $( this );
+			AdminDashboard.track( Wikia.Tracker.ACTIONS.CLICK, t.data( 'tracking' ), null, {}, e );
+		} );
 	},
-	track: function(action, label, value, params, event) {
-		Wikia.Tracker.track({
+	track: function( action, label, value, params, event ) {
+		Wikia.Tracker.track( {
 			category: 'admin-dashboard',
 			action: action,
 			browserEvent: event,
 			label: label,
 			trackingMethod: 'both',
 			value: value
-		}, params);
+		}, params );
 	},
-	handleControlClick: function(e) {
-		var modal = $(this).data('modal');
-		if (modal) {
+	handleControlClick: function( e ) {
+		var modal = $( this ).data( 'modal' );
+		if ( modal ) {
 			e.preventDefault();
-			AdminDashboard.modalLoad['load'+modal]();
+			AdminDashboard.modalLoad['load' + modal]();
 		}
 	},
 	ui: {
@@ -98,37 +105,37 @@ var AdminDashboard = {
 			AdminDashboard.ui.deselectAllTabs();
 			AdminDashboard.ui.hideAllSections();
 			AdminDashboard.section.contentarea.html( $.msg( 'admindashboard-loading' ) );
-			AdminDashboard.wikiaArticle.removeClass('AdminDashboardChromedArticle expanded');
-			$('.AdminDashboardDrawer, .AdminDashboardNavigation, .AdminDashboardArticleHeader').remove();
-			if(typeof FounderProgressList !== 'undefined') {
-				FounderProgressList.hideListModal();
+			AdminDashboard.wikiaArticle.removeClass( 'AdminDashboardChromedArticle expanded' );
+			$( '.AdminDashboardDrawer, .AdminDashboardNavigation, .AdminDashboardArticleHeader' ).remove();
+			if ( window.FounderProgressList ) {
+				window.FounderProgressList.hideListModal();
 			}
 		},
 		hideAllSections: function() {
-			for(var s in AdminDashboard.section) {
-				$(AdminDashboard.section[s]).hide();
+			for ( var s in AdminDashboard.section ) {
+				$( AdminDashboard.section[s] ).hide();
 			}
 		},
-		showSection: function(section) {
+		showSection: function( section ) {
 			AdminDashboard.section[section].show();
 		},
 		deselectAllTabs: function() {
-			AdminDashboard.allTabs.removeClass('active');
+			AdminDashboard.allTabs.removeClass( 'active' );
 		},
-		selectTab: function(tab) {
-			$(tab).addClass('active');
+		selectTab: function( tab ) {
+			$( tab ).addClass( 'active' );
 		}
 	},
 	modalLoad: {
 		loadAddPage: function() {
-			CreatePage.openDialog();
+			window.CreatePage.openDialog();
 		},
 		loadAddPhoto: function() {
-			UploadPhotos.showDialog();
+			window.UploadPhotos.showDialog();
 		}
 	}
 };
 
-$(function() {
+$( function() {
 	AdminDashboard.init();
-});
+} );
