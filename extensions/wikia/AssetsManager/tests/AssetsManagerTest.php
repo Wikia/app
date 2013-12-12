@@ -15,6 +15,9 @@ class AssetsManagerTest extends WikiaBaseTest {
 		$this->instance = AssetsManager::getInstance();
 	}
 
+	/**
+	 * @group UsingDB
+	 */
 	public function testGetSassCommonURL() {
 		$url =  $this->instance->getSassCommonURL(self::SASS_FILE, true /* $minify */);
 
@@ -46,6 +49,9 @@ class AssetsManagerTest extends WikiaBaseTest {
 		$this->assertEquals($filePath, $expected);
 	}
 
+	/**
+	 * @group UsingDB
+	 */
 	public function testGetSassesUrl() {
 		$otherSass = 'path/to/another/sass.scss';
 		$sassList = [self::SASS_FILE, $otherSass];
@@ -79,6 +85,7 @@ class AssetsManagerTest extends WikiaBaseTest {
 	}
 
 	public function duplicateAssetsDataProvider() {
+		return;
 		$dataSets = array();
 
 		$config = new AssetsConfig();
@@ -155,7 +162,7 @@ class AssetsManagerTest extends WikiaBaseTest {
 
 	public function testGetSassFilePathProvider() {
 		return [
-			[AssetsManager::getInstance()->getSassCommonURL(self::SASS_FILE), self::SASS_FILE],
+/*			[AssetsManager::getInstance()->getSassCommonURL(self::SASS_FILE), self::SASS_FILE],*/
 			[self::SASS_FILE, self::SASS_FILE],
 			['http://google.com'.self::SASS_FILE, 'http://google.com'.self::SASS_FILE],
 		];

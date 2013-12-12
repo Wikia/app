@@ -49,6 +49,9 @@ class ShareButtonsTest extends WikiaBaseTest {
 		);
 	}
 
+	/**
+	 * @group UsingDB
+	 */
 	public function testFacebookShareBox() {
 		$facebook = ShareButton::factory( 'Facebook' );
 

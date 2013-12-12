@@ -3523,7 +3523,10 @@ function wfSplitWikiID( $wiki ) {
  * @return DatabaseBase
  */
 function &wfGetDB( $db, $groups = array(), $wiki = false ) {
-
+	global $wgRunningUnitTests;
+	if ($wgRunningUnitTests) {
+		throw new Exception('No DB in units');
+	}
 	// wikia change begin -- SMW DB separation project, @author Krzysztof Krzyżaniak (eloy)
 	global $smwgUseExternalDB, $wgDBname;
 	if( $smwgUseExternalDB === true ) {
