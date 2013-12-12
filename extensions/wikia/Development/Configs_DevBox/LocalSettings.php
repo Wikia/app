@@ -7,7 +7,8 @@ $wgShowExceptionDetails = true;
 // include chef generated variables: $wgWikiaDatacenter
 require_once('/usr/wikia/devbox/DevBoxVariables.php');
 
-$IP = '/usr/wikia/source/wiki';
+$IP = realpath(__DIR__ . '/../../../..'); // code root directory
+
 $wgWikiaLocalSettingsPath  = '/usr/wikia/docroot/wiki.factory/LocalSettings.php';
 $wgWikiaAdminSettingsPath = dirname( $wgWikiaLocalSettingsPath ) . "/../AdminSettings.php";
 
