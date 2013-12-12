@@ -439,7 +439,7 @@ var NodeChatDiscussion = Backbone.View.extend({
 
 		// play sound on normal messages (not you and not inline)
 		if (ChatUserOptions.getSoundOption() && $('#chat-sound-message').attr('src' ).length && !$el.hasClass('you') && !$el.hasClass('inline-alert')) {
-			document.getElementById('chat-message').play();
+			document.getElementById('chat-sound-message').play();
 		}
 
 		// Scroll chat to bottom
