@@ -64,7 +64,7 @@ class ChatPreferenesHooks {
 		);
 
 		$selected = $user->getOption( self::CHAT_INCOMING_MESSAGE_SOUND_KEY, false );
-		$options = [ wfMessage( 'chat-pref-sound-none' )->plain() => false ];
+		$options = [ wfMessage( 'chat-pref-sound-none' )->plain() => '' ];
 		$options = array_merge( $options, self::getSounds() );
 
 		$preferences[self::CHAT_INCOMING_MESSAGE_SOUND_KEY] = [

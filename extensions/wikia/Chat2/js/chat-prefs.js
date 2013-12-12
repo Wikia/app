@@ -1,19 +1,44 @@
 $( function() {
 	'use strict';
 
-	var $chatIncomingMsgSoundsSelect = $( '#chatIncomingMsgSound'),
+	var $chatIncomingMsgSoundsSelect = $( '#chatIncomingMsgSound' ),
 		$play,
 		chatSampleSound,
-		selected;
-
-	$chatIncomingMsgSoundsSelect.after( '<a id="playChatSound">Play</a>' );
-	$play = $( '#playChatSound' );
-	$play.click(function( event ) {
-		event.preventDefault();
+		$target,
 		selected = $chatIncomingMsgSoundsSelect.val();
-		$play.after( '<audio id="chatSampleSound" src="' + wgExtensionsPath + '/wikia/Chat2/sounds/' + selected + '">' );
-		chatSampleSound = document.getElementById( 'chatSampleSound' );
+
+	function getAudioSource( audioFileName ) {
+		return window.wgExtensionsPath + '/wikia/Chat2/sounds/' + audioFileName;
+	}
+
+	$chatIncomingMsgSoundsSelect.after( '<a id="playChatSound" style="display: none;">Play</a>' );
+	$play = $( '#playChatSound' );
+	$play.after( '<audio id="chatSampleSound" />' );
+	chatSampleSound = document.getElementById( 'chatSampleSound' );
+
+	// onload display "Play" link next to selectbox if there is a sound selected
+	if( selected !== '' ) {
+		$play.show();
+		chatSampleSound.src = getAudioSource( selected );
+	}
+
+	// bind click to the play button
+	$play.click( function( event ) {
+		event.preventDefault();
 		chatSampleSound.play();
-		//chatSampleSound.parentNode.removeChild( chatSampleSound );
 	} );
+
+	// if the selected sound changes change also stat of the "Play" link and audio source
+	$chatIncomingMsgSoundsSelect.change( function( event ) {
+		$target = $( event.target );
+		selected = $target.val();
+
+		if( selected === '' ) {
+			$play.hide();
+		} else {
+			chatSampleSound.src = getAudioSource( selected );
+			$play.show();
+		}
+	} );
+
 } );
