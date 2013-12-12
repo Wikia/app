@@ -375,16 +375,24 @@ var NodeChatDiscussion = Backbone.View.extend({
 	},
 
 	addChat: function(chat) {
-		if (chat.attributes.name == wgUserName) this.forceScroll = true;
+		if (chat.attributes.name == wgUserName)  this.forceScroll = true;
 
 		// Add message to chat
-		var view = new ChatView({model: chat});
+		var view = new ChatView({model: chat} ),
+			$el = $(view.el);
+
 		this.chatUL.append(view.render().el);
+
+		// play sound on normal messages (not you and not inline)
+		if (!$el.hasClass('youx') && !$el.hasClass('inline-alert')) {
+			document.getElementById('chat-message').play();
+		}
 
 		// Scroll chat to bottom
 		if (this.forceScroll) {
 			this.scrollToBottom();
 		}
+
 	},
 
 	removeChat: function(chat) {

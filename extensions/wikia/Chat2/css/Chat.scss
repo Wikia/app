@@ -337,6 +337,7 @@ a {
 		line-height: 30px;
 		padding: 3px 0 3px 13px;
 		text-overflow: ellipsis;
+		cursor: pointer;
 		.chevron {
 			border-width: 5px;
 			border-color: black transparent transparent;
@@ -361,13 +362,16 @@ a {
 			vertical-align: middle;
 		}
 	}
-	.private {
+	.private,
+	.options-header {
 		@include linear-gradient($color-rail-headline-bottom, top, $color-rail-headline-top, 0, $color-rail-headline-bottom, 100%);
 		border-top: 1px solid $color-rail-headline-border;
 		border-bottom: 1px solid $color-rail-headline-border;
 		font-size: 11px;
 		padding: 3px 2px 2px;
-		display:none;
+	}
+	.private {
+		display: none;
 	}
 	.selected {
 		@include box-shadow(0, 0, 7px, darken($color-menu-highlight, 50%), true);
