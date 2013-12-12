@@ -52,7 +52,7 @@ class FactoryTest extends WikiaBaseTest {
 
 		$fullPath = $method->invoke( $this->instance, 'component' );
 
-		$this->assertEquals( $fullPath, '/usr/wikia/source/wiki/resources/wikia/ui_components/component/component_config.json' );
+		$this->assertStringEndsWith( $fullPath, '/resources/wikia/ui_components/component/component_config.json' );
 	}
 
 	/**
