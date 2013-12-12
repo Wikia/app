@@ -17,6 +17,10 @@ class WikiaDispatcherTest extends WikiaBaseTest {
 		parent::setUp();
 	}
 
+/**
+ * @group Slow
+ * @slowExecutionTime 0.0028040409088135 ms
+ */
 	public function testDispatchUnknownOrEmptyController() {
 		$app = $this->getMock( 'WikiaApp', array( 'runFunction' ) );
 		$app->expects( $this->any() )
@@ -60,6 +64,10 @@ class WikiaDispatcherTest extends WikiaBaseTest {
 		$this->assertEquals("hello", $response->getVal('wasCalled'));
 	}
 
+/**
+ * @group Slow
+ * @slowExecutionTime 0.0043151378631592 ms
+ */
 	public function testRouting() {
 		$response = $this->object->dispatch( F::app(), new WikiaRequest( array( 'controller' => 'Test', 'method' => 'index' ) ) );
 

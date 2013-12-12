@@ -3,6 +3,8 @@
 class MastheadTest extends WikiaBaseTest {
 
 	/**
+@group Slow
+@slowExecutionTime 0.0021250247955322 ms
 	 * Test Masthead::getPurgeUrl method
 	 *
 	 * @dataProvider getPurgeUrlDataProvider

@@ -10,6 +10,8 @@ use ReflectionProperty, ReflectionMethod, Wikia\Search;
 class QueryServiceTest extends Search\Test\BaseTest {
 	
 	/**
+@group Slow
+@slowExecutionTime 0.084362030029297 ms
 	 * @covers Wikia\Search\QueryService\DependencyContainer::__construct
 	 * @covers Wikia\Search\QueryService\DependencyContainer::getService
 	 * @covers Wikia\Search\QueryService\DependencyContainer::setService
@@ -45,6 +47,8 @@ class QueryServiceTest extends Search\Test\BaseTest {
 	}
 	
 	/**
+@group Slow
+@slowExecutionTime 0.07775616645813 ms
 	 * @covers Wikia\Search\QueryService\Factory::get
 	 */
 	public function testFactoryGet() {
@@ -76,6 +80,8 @@ class QueryServiceTest extends Search\Test\BaseTest {
 	}
 	
 	/**
+@group Slow
+@slowExecutionTime 0.078541040420532 ms
 	 * @covers Wikia\Search\QueryService\Factory::getFromConfig
 	 */
 	public function testFactoryGetFromConfig() {
@@ -87,6 +93,8 @@ class QueryServiceTest extends Search\Test\BaseTest {
 	}
 	
 	/**
+@group Slow
+@slowExecutionTime 0.081946134567261 ms
 	 * @covers Wikia\Search\QueryService\Factory::validateClient
 	 */
 	public function testFactoryValidateClient() {

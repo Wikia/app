@@ -64,6 +64,8 @@ class PhalanxModelTest extends WikiaBaseTest {
 	/* PhalanxUserModel class */
 	/* match_user method */
 	/**
+@group Slow
+@slowExecutionTime 0.0082228183746338 ms
 	 * @dataProvider phalanxUserModelDataProvider
 	 */
 	public function testPhalanxUserModelMatchUser( $isAnon, $userName, $email, $block, $result, $errorMsg ) {
@@ -80,6 +82,8 @@ class PhalanxModelTest extends WikiaBaseTest {
 	/* PhalanxUserModel class */
 	/* match_email method */
 	/**
+@group Slow
+@slowExecutionTime 0.0082228183746338 ms
 	 * @dataProvider phalanxUserModelDataProvider
 	 */
 	public function testPhalanxUserModelMatchEmail( $isAnon, $userName, $email, $block, $result, $errorMsg ) {
@@ -97,6 +101,8 @@ class PhalanxModelTest extends WikiaBaseTest {
 
 	/* wiki_creation method */
 	/**
+@group Slow
+@slowExecutionTime 0.0033669471740723 ms
 	 * @dataProvider phalanxTextModelDataProvider
 	 */
 	public function testPhalanxTextModelWikiCreation( $text, $block, $result ) {
@@ -111,6 +117,8 @@ class PhalanxModelTest extends WikiaBaseTest {
 	/* PhalanxContentModel class */
 	/* match_question_title method */
 	/**
+@group Slow
+@slowExecutionTime 0.036983966827393 ms
 	 * @dataProvider phalanxTitleDataProvider
 	 */
 	public function testPhalanxContentModelQuestionTitle( $title, $block, $language, $result ) {
@@ -126,6 +134,8 @@ class PhalanxModelTest extends WikiaBaseTest {
 	/* PhalanxContentModel class */
 	/* match_summary method */
 	/**
+@group Slow
+@slowExecutionTime 0.036713123321533 ms
 	 * @dataProvider phalanxContentModelDataProvider
 	 */
 	public function testPhalanxContentModelSummary( $title, $text, $summary, $block_text, $block_summary, $result_text, $result_summary ) {
@@ -141,6 +151,8 @@ class PhalanxModelTest extends WikiaBaseTest {
 	/* PhalanxContentModel class */
 	/* match_content method */
 	/**
+@group Slow
+@slowExecutionTime 0.036713123321533 ms
 	 * @dataProvider phalanxContentModelDataProvider
 	 */
 	public function testPhalanxContentModelContent( $title, $text, $summary, $block_text, $block_summary, $result_text, $result_summary ) {
@@ -156,6 +168,8 @@ class PhalanxModelTest extends WikiaBaseTest {
 	/* PhalanxContentModel class */
 	/* match_title method */
 	/**
+@group Slow
+@slowExecutionTime 0.036983966827393 ms
 	 * @dataProvider phalanxTitleDataProvider
 	 */
 	public function testPhalanxContentModelTitle( $title, $block, $language, $result ) {

@@ -60,6 +60,8 @@ class SpecialStyleguideDataModelTest extends WikiaBaseTest {
 	);
 	
 	/**
+@group Slow
+@slowExecutionTime 0.069072961807251 ms
 	 * @dataProvider testGetSectionDataProvider
 	 */
 	public function testGetSectionData( $sectionNamesArray, $expectedResults ) {

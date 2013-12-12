@@ -20,6 +20,8 @@ class MarketingToolboxModulePollsServiceTest extends WikiaBaseTest
 	}
 
 	/**
+@group Slow
+@slowExecutionTime 0.0037760734558105 ms
 	 * @dataProvider getDataStructureDataProvider
 	 */
 	public function testGetStructureData($flatArray, $expectedData) {

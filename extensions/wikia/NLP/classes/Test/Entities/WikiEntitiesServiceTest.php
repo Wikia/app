@@ -19,6 +19,8 @@ class WikiEntitiesServiceTest extends WikiaBaseTest
 	const CLASSNAME = 'Wikia\NLP\Entities\WikiEntitiesService';
 	
 	/**
+@group Slow
+@slowExecutionTime 0.003267765045166 ms
 	 * @covers Wikia\NLP\Entities\WikiEntitiesService::getEntityList
 	 */
 	public function testGetEntityList() {
@@ -72,6 +74,8 @@ class WikiEntitiesServiceTest extends WikiaBaseTest
 	}
 	
 	/**
+@group Slow
+@slowExecutionTime 0.0070140361785889 ms
 	 * @covers Wikia\NLP\Entities\WikiEntitiesService::registerLdaTopicsWithDFP
 	 */
 	public function testLdaTopicsWithDFP() {
@@ -106,6 +110,8 @@ class WikiEntitiesServiceTest extends WikiaBaseTest
 	}
 
 	/**
+@group Slow
+@slowExecutionTime 0.0070140361785889 ms
 	 * @covers Wikia\NLP\Entities\WikiEntitiesService::registerLdaTopicsWithDFP
 	 */
 	public function testLdaTopicsWithDFPNullKeyVals() {
@@ -141,6 +147,8 @@ class WikiEntitiesServiceTest extends WikiaBaseTest
 
 
 	/**
+@group Slow
+@slowExecutionTime 0.0070140361785889 ms
 	 * @covers Wikia\NLP\Entities\WikiEntitiesService::registerLdaTopicsWithDFP
 	 */
 	public function testLdaTopicsWithDFPNoEndingSemicolon() {
@@ -175,6 +183,8 @@ class WikiEntitiesServiceTest extends WikiaBaseTest
 	}
 
 	/**
+@group Slow
+@slowExecutionTime 0.0070140361785889 ms
 	 * @covers Wikia\NLP\Entities\WikiEntitiesService::registerLdaTopicsWithDFP
 	 */
 	public function testLdaTopicsWithDFPNoTopics() {

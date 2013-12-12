@@ -8,6 +8,8 @@ class ComponentTest extends WikiaBaseTest {
 	}
 
 	/**
+@group Slow
+@slowExecutionTime 0.0034670829772949 ms
 	 * @dataProvider testSetTemplatePathDataProvider
 	 */
 	public function testSetTemplatePath( $templateType, $templatePath, $expected ) {
@@ -60,6 +62,8 @@ class ComponentTest extends WikiaBaseTest {
 	}
 
 	/**
+@group Slow
+@slowExecutionTime 0.0030808448791504 ms
 	 * @dataProvider testValidateTemplateVarsDataProvider
 	 */
 	public function testValidateTemplateVars( $tplVarsCfg, $tplValues, $componentType, $expectedException ) {

@@ -29,6 +29,10 @@ class UserProfilePageTest extends WikiaBaseTest {
 		RequestContext::getMain()->setSkin( $this->skinOrg );
 	}
 
+/**
+ * @group Slow
+ * @slowExecutionTime 0.012614965438843 ms
+ */
 	public function testWikiaMobileUserProfilePageTemplate() {
 		$mobileSkin = Skin::newFromKey( 'wikiamobile' );
 

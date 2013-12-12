@@ -33,6 +33,8 @@
 		}
 
 		/**
+@group Slow
+@slowExecutionTime 0.40564489364624 ms
 		 * @dataProvider loginDataProvider
 		 */
 		public function testLogin( $requestParams, $mockLoginFormParams, $mockUserParams, $mockHelperParams, $expResult, $expMsg, $expErrParam='' ) {
@@ -59,6 +61,10 @@
 			$this->assertEquals( $expErrParam, $responseData, 'errParam' );
 		}
 
+/**
+ * @group Slow
+ * @slowExecutionTime 0.43625497817993 ms
+ */
 		public function testWikiaMobileLoginTemplate() {
 			$mobileSkin = Skin::newFromKey( 'wikiamobile' );
 			$this->setUpMockObject( 'User', array( 'getSkin' => $mobileSkin ), true, 'wgUser' );
@@ -77,6 +83,10 @@
 			$this->tearDownMobileSkin();
 		}
 
+/**
+ * @group Slow
+ * @slowExecutionTime 0.47720789909363 ms
+ */
 		public function testWikiaMobileChangePasswordTemplate(){
 			$mobileSkin = Skin::newFromKey( 'wikiamobile' );
 			$this->setUpMockObject( 'User', array( 'getSkin' => $mobileSkin ), true, 'wgUser' );
@@ -270,6 +280,8 @@
 		}
 
 		/**
+@group Slow
+@slowExecutionTime 0.44850206375122 ms
 		 * @dataProvider mailPasswordDataProvider
 		 */
 		public function testMailPassword( $requestParams, $mockWgUserParams, $mockAuthParams, $mockUserParams, $mockLoginFormParams, $expResult, $expMsg, $expErrParam='' ) {
@@ -402,6 +414,8 @@
 		}
 
 		/**
+@group Slow
+@slowExecutionTime 0.50066995620728 ms
 		 * @dataProvider changePasswordDataProvider
 		 */
 		public function testChangePassword($params, $mockWebRequestParams, $mockWgUserParams, $mockAuthParams, $mockUserParams, $mockHelperParams, $expResult, $expMsg) {

@@ -9,6 +9,8 @@ class WallNotificationsControllerTest extends WikiaBaseTest {
 	}
 
 	/**
+@group Slow
+@slowExecutionTime 0.0041389465332031 ms
 	 * @param $isUserLoggedIn
 	 * @param $isUserAllowed
 	 * @param $wgAtCreateNewWikiPageValue

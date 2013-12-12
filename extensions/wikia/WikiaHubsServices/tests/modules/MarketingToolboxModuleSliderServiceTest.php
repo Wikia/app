@@ -136,6 +136,8 @@ WIKI_TEXT;
 
 
 	/**
+@group Slow
+@slowExecutionTime 0.0058159828186035 ms
 	 * @dataProvider getDataStructureDataProvider
 	 */
 	public function testGetStructuredDate($flatArray, $expectedData) {

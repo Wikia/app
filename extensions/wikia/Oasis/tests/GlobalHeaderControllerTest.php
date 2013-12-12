@@ -4,6 +4,8 @@ class GlobalHeaderControllerTest extends WikiaBaseTest
 {
 	
 	/**
+@group Slow
+@slowExecutionTime 0.0095510482788086 ms
 	 * @covers GlobalHeaderController::index
 	 */
 	public function testIndex() {
@@ -97,6 +99,8 @@ class GlobalHeaderControllerTest extends WikiaBaseTest
 	}
 	
 	/**
+@group Slow
+@slowExecutionTime 0.0095510482788086 ms
 	 * @covers GlobalHeaderController::index
 	 */
 	public function testIndexForeignLang() {
@@ -185,6 +189,8 @@ class GlobalHeaderControllerTest extends WikiaBaseTest
 	}
 	
 	/**
+@group Slow
+@slowExecutionTime 0.0095510482788086 ms
 	 * @covers GlobalHeaderController::index
 	 */
 	public function testIndexAlternateLink() {

@@ -20,6 +20,8 @@ class WikiaHubsApiControllerTest extends WikiaBaseTest {
 	}
 
 	/**
+@group Slow
+@slowExecutionTime 0.0064361095428467 ms
 	 * @dataProvider getModuleDataExceptionsProvider
 	 */
 	public function testGetModuleDataExceptions($requestParams, $exceptionDetailsMsg) {

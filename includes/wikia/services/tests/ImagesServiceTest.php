@@ -104,6 +104,8 @@ class ImagesServiceTest extends WikiaBaseTest {
 	}
 
 	/**
+@group Slow
+@slowExecutionTime 0.036165952682495 ms
 	 * @dataProvider getLocalFileThumbUrlAndSizesDataProvider
 	 */
 	public function testGetLocalFileThumbUrlAndSizes($destImageWidth, $image, $results) {

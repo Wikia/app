@@ -4,6 +4,8 @@ class ArticleServiceTest extends WikiaBaseTest {
 	const TEST_CITY_ID = 79860;
 
 	/**
+@group Slow
+@slowExecutionTime 0.034656047821045 ms
 	 * @covers ArticleService::getUncachedSnippetFromArticle
 	 * @covers ArticleService::getTextSnippet
 	 * @dataProvider getTextSnippetDataProvider
@@ -67,6 +69,8 @@ class ArticleServiceTest extends WikiaBaseTest {
 	}
 
 	/**
+@group Slow
+@slowExecutionTime 0.0023810863494873 ms
 	 * @covers ArticleService::getTextSnippet
 	 */
 	public function testGetTextSnippetAsSolrTest() {
@@ -104,6 +108,8 @@ class ArticleServiceTest extends WikiaBaseTest {
 	}
 
 	/**
+@group Slow
+@slowExecutionTime 0.0098221302032471 ms
 	 * @covers ArticleService::getTextFromSolr
 	 */
 	public function testGetTextFromSolr() {

@@ -12,6 +12,8 @@ class MarketingToolboxModuleWAMServiceTest extends WikiaBaseTest {
 	}
 
 	/**
+@group Slow
+@slowExecutionTime 0.0068879127502441 ms
 	 * @dataProvider getStructuredDataProvider
 	 */
 	public function testGetStructuredData($inputData, $expectedData) {

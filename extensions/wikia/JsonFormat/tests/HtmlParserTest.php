@@ -16,6 +16,10 @@ class HtmlParserTest extends WikiaBaseTest {
 		parent::setUp();
 	}
 
+/**
+ * @group Slow
+ * @slowExecutionTime 0.006378173828125 ms
+ */
 	public function testParseSimple() {
 		$htmlParser = new HtmlParser();
 		$node = $htmlParser->parse("<div><a>link</div>");
@@ -48,6 +52,10 @@ class HtmlParserTest extends WikiaBaseTest {
 		$this->assertEquals( 'Section1', $node->getChildren()[1]->getTitle() );
 	}
 
+/**
+ * @group Slow
+ * @slowExecutionTime 0.016942977905273 ms
+ */
 	public function testSectionsSameLevel() {
 		$htmlParser = new HtmlParser();
 		$node = $htmlParser->parse('

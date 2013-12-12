@@ -12,6 +12,8 @@ class CreateNewWikiControllerTest extends WikiaBaseTest {
 	}
 
 	/**
+@group Slow
+@slowExecutionTime 0.082494020462036 ms
 	 * @group hyun
 	 * @dataProvider getCreateWikiDataProvider
 	 */
@@ -86,6 +88,10 @@ class CreateNewWikiControllerTest extends WikiaBaseTest {
 		];
 	}
 
+/**
+ * @group Slow
+ * @slowExecutionTime 0.032166004180908 ms
+ */
 	public function testCheckWikiNameSuccess() {
 
 		$wikiName = 'muppet';

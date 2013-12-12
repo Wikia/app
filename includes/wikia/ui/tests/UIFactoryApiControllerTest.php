@@ -3,6 +3,8 @@
 class UIFactoryApiControllerTest extends WikiaBaseTest {
 
 	/**
+@group Slow
+@slowExecutionTime 0.0020542144775391 ms
 	 * @expectedException MissingParameterApiException
 	 */
 	public function testMissingParameter() {
@@ -18,6 +20,10 @@ class UIFactoryApiControllerTest extends WikiaBaseTest {
 
 	}
 
+/**
+ * @group Slow
+ * @slowExecutionTime 0.033854007720947 ms
+ */
 	public function testFactoryInit() {
 		$componentNames = [ 'button', 'modal' ];
 		$factoryMock = $this->getMock( 'Wikia\UI\Factory', [ 'init', '__wakeup' ], [], '', false );

@@ -31,6 +31,8 @@ class HubRssModelTest extends WikiaBaseTest {
 
 
 	/**
+@group Slow
+@slowExecutionTime 0.0028579235076904 ms
 	 * @covers  HubRssFeedModel::__construct
 	 */
 	public function testConstruct() {
@@ -86,6 +88,8 @@ class HubRssModelTest extends WikiaBaseTest {
 	}
 
 	/**
+@group Slow
+@slowExecutionTime 0.0029599666595459 ms
 	 * @covers  HubRssFeedModel::getServices
 	 */
 	public function testGetServices() {
@@ -119,6 +123,8 @@ class HubRssModelTest extends WikiaBaseTest {
 
 
 	/**
+@group Slow
+@slowExecutionTime 0.0048501491546631 ms
 	 * @covers  HubRssFeedModel::getDataFromModules
 	 */
 	public function testGetDataFromModules() {
@@ -185,6 +191,8 @@ class HubRssModelTest extends WikiaBaseTest {
 	}
 
 	/**
+@group Slow
+@slowExecutionTime 0.0041649341583252 ms
 	 * @covers  HubRssFeedModel::getRealData
 	 */
 	public function testGetRealData() {

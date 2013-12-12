@@ -11,6 +11,10 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 		parent::setUp();
 	}
 
+/**
+ * @group Slow
+ * @slowExecutionTime 0.046915054321289 ms
+ */
 	public function testGetModuleName() {
 		$mockMsg = $this->getGlobalFunctionMock( 'wfMsg' );
 
@@ -48,6 +52,10 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 		}
 	}
 
+/**
+ * @group Slow
+ * @slowExecutionTime 0.044073820114136 ms
+ */
 	public function testGetAvailableSections() {
 		$mockMsg = $this->getGlobalFunctionMock( 'wfMsg' );
 
@@ -63,6 +71,10 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 		$this->assertEquals('test name for hubs section', $sections[MarketingToolboxModel::SECTION_HUBS]);
 	}
 
+/**
+ * @group Slow
+ * @slowExecutionTime 0.043880939483643 ms
+ */
 	public function testGetSectionName() {
 		$mockMsg = $this->getGlobalFunctionMock( 'wfMsg' );
 
@@ -88,6 +100,10 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 		$this->assertArrayHasKey(WikiFactoryHub::CATEGORY_ID_LIFESTYLE, $verticals);
 	}
 
+/**
+ * @group Slow
+ * @slowExecutionTime 0.005173921585083 ms
+ */
 	public function testGetModuleUrl() {
 		$params = array(
 			'moduleId' => MarketingToolboxModuleSliderService::MODULE_ID,
@@ -127,6 +143,10 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 		$this->assertEquals('test returned url', $url);
 	}
 
+/**
+ * @group Slow
+ * @slowExecutionTime 0.013381958007812 ms
+ */
 	public function testGetModulesDataFromDefault() {
 		$params = array(
 			'langCode' => 'pl',
@@ -207,6 +227,10 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 		}
 	}
 
+/**
+ * @group Slow
+ * @slowExecutionTime 0.019064903259277 ms
+ */
 	public function testGetModulesDataWithoutDefaults() {
 		$params = array(
 			'langCode' => 'pl',
@@ -365,6 +389,8 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 	}
 
 	/**
+@group Slow
+@slowExecutionTime 0.049154043197632 ms
 	 * Test saving module when there is no data
 	 */
 	public function testSaveModuleInsert() {
@@ -421,6 +447,8 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 	}
 
 	/**
+@group Slow
+@slowExecutionTime 0.048794984817505 ms
 	 * Test saving module when there is data already saved
 	 */
 	public function testSaveModuleUpdate() {
@@ -514,6 +542,10 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 		);
 	}
 
+/**
+ * @group Slow
+ * @slowExecutionTime 0.049309015274048 ms
+ */
 	public function testGetDataPublished() {
 		$model = new MarketingToolboxModel();
 
@@ -555,6 +587,10 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 		$this->assertEquals($statuses['PUBLISHED'], $data['2012-12-25']);
 	}
 
+/**
+ * @group Slow
+ * @slowExecutionTime 0.047753810882568 ms
+ */
 	public function testGetCalendarDataNotPublished() {
 		$model = new MarketingToolboxModel();
 
@@ -596,6 +632,10 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 		$this->assertEquals($statuses['NOT_PUBLISHED'], $data['2012-12-25']);
 	}
 
+/**
+ * @group Slow
+ * @slowExecutionTime 0.047818899154663 ms
+ */
 	public function testGetCalendarDataEmptyData() {
 
 		$dbMock = $this->getMock('DatabaseMysql', array('makeList', 'select', 'fetchRow'));
@@ -621,6 +661,10 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 		$this->assertEmpty($data);
 	}
 
+/**
+ * @group Slow
+ * @slowExecutionTime 0.048319101333618 ms
+ */
 	public function testGetCalendarDataComplex() {
 		$model = new MarketingToolboxModel();
 
@@ -683,6 +727,8 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 	}
 
 	/**
+@group Slow
+@slowExecutionTime 0.04659104347229 ms
 	 * @dataProvider getDataModulesSavedDataProvider
 	 */
 	public function testCheckModulesSaved($savedModules, $expectedVal) {

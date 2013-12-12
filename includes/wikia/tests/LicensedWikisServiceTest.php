@@ -6,6 +6,10 @@ class LicensedWikisServiceTest extends WikiaBaseTest {
 		parent::setUp();
 	}
 
+/**
+ * @group Slow
+ * @slowExecutionTime 0.0021920204162598 ms
+ */
 	public function testIsCommercialUseAllowedById() {
 
 		$licensedWikisService = $this->getMock('LicensedWikisService', ['getCommercialUseNotAllowedWikis']);
@@ -64,6 +68,8 @@ class LicensedWikisServiceTest extends WikiaBaseTest {
 	}
 
 	/**
+@group Slow
+@slowExecutionTime 0.020370006561279 ms
 	 * @dataProvider wfDataProvider
 	 */
 	public function testGetWikisWithVar( $wikiId, $url, $wikiTitle, $dbName) {

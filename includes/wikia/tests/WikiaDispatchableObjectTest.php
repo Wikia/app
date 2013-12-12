@@ -39,6 +39,10 @@ class WikiaDispatchableObjectTest extends WikiaBaseTest {
 		$this->assertEquals( $requestURI, $className::getUrl( $methodName, $params ) );
 	}
 
+/**
+ * @group Slow
+ * @slowExecutionTime 0.0062649250030518 ms
+ */
 	public function testPurgeUrl() {
 		$className = get_class( $this->dispatchableMock );
 		$serverName = "test-server";

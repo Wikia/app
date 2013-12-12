@@ -10,6 +10,8 @@ class ServiceTest extends WikiaBaseTest {
 	}
 
 	/**
+@group Slow
+@slowExecutionTime 0.003425121307373 ms
 	 * @group UsingDB
 	 */
 	function testAvatarService() {
@@ -33,6 +35,8 @@ class ServiceTest extends WikiaBaseTest {
 	}
 
 	/**
+@group Slow
+@slowExecutionTime 0.003425121307373 ms
 	 * @group UsingDB
 	 */
 	function testPageStatsService() {
@@ -91,6 +95,8 @@ class ServiceTest extends WikiaBaseTest {
 	}
 
 	/**
+@group Slow
+@slowExecutionTime 0.003425121307373 ms
 	 * @group UsingDB
 	 */
 	function testUserStatsService() {
@@ -121,6 +127,10 @@ class ServiceTest extends WikiaBaseTest {
 
 		$stats = $service->getStats();
 		$this->assertEquals($edits+1, $stats['edits']);
+/**
+ * @group Slow
+ * @slowExecutionTime 0.010051965713501 ms
+ */
 	}
 
 	function testCategoriesService() {

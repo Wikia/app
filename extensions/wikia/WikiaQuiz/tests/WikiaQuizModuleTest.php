@@ -6,6 +6,10 @@ class WikiaQuizModuleTest extends WikiaBaseTest {
 		$this->setupFile = dirname(__FILE__) . '/../WikiaQuiz_setup.php';
 	}
 	
+/**
+ * @group Slow
+ * @slowExecutionTime 0.0034418106079102 ms
+ */
 	public function testExecuteGetQuizElement() {
 		$wgRequest = $this->getMock('WebRequest', array('getVal'), array(), '', false);
 		$wgRequest->expects($this->any())

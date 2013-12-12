@@ -2,6 +2,8 @@
 class DateFormatHelperTest extends WikiaBaseTest {
 
 	/**
+@group Slow
+@slowExecutionTime 0.024290800094604 ms
 	 * @dataProvider convertFormatToJqueryUiFormatDataProvider
 	 */
 	public function testConvertFormatToJqueryUiFormat($expected, $inputFormat) {

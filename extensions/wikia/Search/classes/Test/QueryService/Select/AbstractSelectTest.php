@@ -10,6 +10,8 @@ use Wikia, ReflectionProperty, ReflectionMethod, Wikia\Search\Utilities;
 class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 
 	/**
+@group Slow
+@slowExecutionTime 0.093035936355591 ms
 	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::__construct
 	 */
 	public function test__construct() {
@@ -40,6 +42,8 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+@group Slow
+@slowExecutionTime 0.084208011627197 ms
 	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::search
 	 */
 	public function testSearch() {
@@ -96,6 +100,8 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+@group Slow
+@slowExecutionTime 0.079270839691162 ms
 	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::getMatch
 	 */
 	public function testGetMatch() {
@@ -151,6 +157,8 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+@group Slow
+@slowExecutionTime 0.078078031539917 ms
 	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::extractMatch
 	 */
 	public function testExtractMatch() {
@@ -178,6 +186,8 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+@group Slow
+@slowExecutionTime 0.081579208374023 ms
 	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::getSelectQuery
 	 */
 	public function testGetSelectQuery() {
@@ -236,6 +246,8 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+@group Slow
+@slowExecutionTime 0.087482929229736 ms
 	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::registerComponents 
 	 */
 	public function testRegisterComponents() {
@@ -255,6 +267,8 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+@group Slow
+@slowExecutionTime 0.085314989089966 ms
 	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::registerQueryParams 
 	 */
 	public function testRegisterQueryParams() {
@@ -331,6 +345,8 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+@group Slow
+@slowExecutionTime 0.081902980804443 ms
 	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::registerFilterQueries 
 	 */
 	public function testRegisterFilterQueries() {
@@ -384,6 +400,8 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+@group Slow
+@slowExecutionTime 0.07976508140564 ms
 	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::registerFilterQueryForMatch 
 	 */
 	public function testRegisterFilterQueryForMatch() {
@@ -400,6 +418,8 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+@group Slow
+@slowExecutionTime 0.085796117782593 ms
 	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::registerHighlighting 
 	 */
 	public function testRegisterHighlighting() {
@@ -484,6 +504,8 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+@group Slow
+@slowExecutionTime 0.094442129135132 ms
 	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::sendSearchRequestToClient
 	 */
 	public function testSearchWorksFirst() {
@@ -597,6 +619,8 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+@group Slow
+@slowExecutionTime 0.096832990646362 ms
 	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::prepareRequest
 	 */
 	public function testPrepareRequest() {
@@ -638,6 +662,8 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+@group Slow
+@slowExecutionTime 0.10403800010681 ms
 	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::spellcheckResult
 	 */
 	public function testSpellcheckResult() {
@@ -725,6 +751,8 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+@group Slow
+@slowExecutionTime 0.083248853683472 ms
 	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::prepareResponse
 	 */
 	public function testPrepareResponse() {
@@ -928,6 +956,8 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 	}*/
 	
 	/**
+@group Slow
+@slowExecutionTime 0.07927680015564 ms
 	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::searchAsApi
 	 */
 	public function testSearchAsApi() {
@@ -960,6 +990,8 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+@group Slow
+@slowExecutionTime 0.07927680015564 ms
 	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::searchAsApi
 	 */
 	public function testSearchAsApiWithMetadata() {
@@ -1030,6 +1062,8 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+@group Slow
+@slowExecutionTime 0.07927680015564 ms
 	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::searchAsApi
 	 */
 	public function testSearchAsApiWithMetadataNoResults() {
@@ -1080,6 +1114,8 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+@group Slow
+@slowExecutionTime 0.08735990524292 ms
 	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::extractWikiMatch
 	 */
 	public function testExtractWikiMatchWithMatch() {
@@ -1170,6 +1206,8 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+@group Slow
+@slowExecutionTime 0.08735990524292 ms
 	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::extractWikiMatch
 	 */
 	public function testExtractWikiMatchWithMatchUnder50Articles() {
@@ -1258,6 +1296,8 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 	}
 
 	/**
+@group Slow
+@slowExecutionTime 0.08735990524292 ms
 	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::extractWikiMatch
 	 */
 	public function testExtractWikiMatchWithMatchSameWiki() {
@@ -1333,6 +1373,8 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 	}
 
 	/**
+@group Slow
+@slowExecutionTime 0.079895973205566 ms
 	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::getRequestedFields
 	 */
 	public function testGetRequestedFields() {
@@ -1363,6 +1405,8 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+@group Slow
+@slowExecutionTime 0.077972888946533 ms
 	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::getFilterQueryString
 	 */
 	public function testGetFilterQueryString() {
@@ -1379,6 +1423,8 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+@group Slow
+@slowExecutionTime 0.084285020828247 ms
 	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::getConfig
 	 */
 	public function testGetConfig() {
@@ -1399,6 +1445,8 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+@group Slow
+@slowExecutionTime 0.093515872955322 ms
 	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::getService
 	 */
 	public function testGetService() {
@@ -1419,6 +1467,8 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+@group Slow
+@slowExecutionTime 0.081543922424316 ms
 	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::getClient
 	 */
 	public function testGetClient() {
@@ -1461,6 +1511,8 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+@group Slow
+@slowExecutionTime 0.081287145614624 ms
 	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::setCoreInClient
 	 */
 	public function testSetCoreInClient() {

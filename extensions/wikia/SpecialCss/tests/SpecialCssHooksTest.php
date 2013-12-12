@@ -9,6 +9,8 @@ class SpecialCssHooksTest extends WikiaBaseTest {
 	}
 
 	/**
+@group Slow
+@slowExecutionTime 0.0028738975524902 ms
 	 * @dataProvider testShouldRedirectDataProvider
 	 */
 	public function testShouldRedirect( $isExtensionEnabled, $isWikiaCssTitle, $isSkinRight, $isUserAllowed, $isRedirectExpected, $assertionMessage ) {

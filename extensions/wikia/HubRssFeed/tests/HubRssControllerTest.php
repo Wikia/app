@@ -18,6 +18,8 @@ class HubRssControllerTest extends WikiaBaseTest {
 	}
 
 	/**
+@group Slow
+@slowExecutionTime 0.0020599365234375 ms
 	 * @covers  HubRssFeedSpecialController::__construct
 	 */
 	public function testConstruct() {
@@ -35,6 +37,8 @@ class HubRssControllerTest extends WikiaBaseTest {
 	}
 
 	/**
+@group Slow
+@slowExecutionTime 0.0030419826507568 ms
 	 * @covers  HubRssFeedSpecialController::notfound
 	 */
 	public function testNotFound() {
@@ -68,6 +72,8 @@ class HubRssControllerTest extends WikiaBaseTest {
 
 
 	/**
+@group Slow
+@slowExecutionTime 0.0028481483459473 ms
 	 * @covers  HubRssFeedSpecialController::index
 	 */
 	public function testIndexNotFound() {
@@ -97,6 +103,8 @@ class HubRssControllerTest extends WikiaBaseTest {
 
 
 	/**
+@group Slow
+@slowExecutionTime 0.0028481483459473 ms
 	 * @covers  HubRssFeedSpecialController::index
 	 */
 	public function testIndexCached() {
@@ -104,6 +112,8 @@ class HubRssControllerTest extends WikiaBaseTest {
 	}
 
 	/**
+@group Slow
+@slowExecutionTime 0.0028481483459473 ms
 	 * @covers  HubRssFeedSpecialController::index
 	 */
 	public function testIndexNotCached( $cached = false ) {

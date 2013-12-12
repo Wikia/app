@@ -8,6 +8,8 @@ class LyricFindIndexingTest extends WikiaBaseTest {
 	}
 
 	/**
+@group Slow
+@slowExecutionTime 0.1122989654541 ms
 	 * @dataProvider indexPolicyProvider
 	 * @param $ns int namespace
 	 * @param $text string page title
