@@ -164,7 +164,23 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	}
 
 	protected function removeSlowTestAnnotation() {
+		$className = get_class($this);
+		$methodName = $this->getName(false);
+		$regexSlowGroup = '/@group\s+Slow\s*/';
+		$regexSlowExecTime = '/@slowExecutionTime\s+([0-9\.]+\s*(ms?))/';
+
+		$classReflector = new ReflectionClass($className);
+		$methodReflector  = new ReflectionMethod($className, $methodName);
+		$docComment = $methodReflector->getDocComment();
+
+		$filePath = $classReflector->getFileName();
+
 		echo "\nRemoving slow annotation to " . get_class($this) . '::' . $this->getName();
+
+		// FIXME: no implementation, code duplication, hack overfixation
+
+		unset($classReflector);
+		unset($methodReflector);
 
 	}
 
@@ -516,6 +532,8 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	 * @param $annotations
 	 */
 	protected function processSlowTest( $annotations ) {
+		global $wgMarkTestSpeed;
+
 		if ( !isset( self::$slowTests[$this->getName( false )] ) ) {
 			$annotatedAsSlow = false;
 			if ( !empty( $annotations['method'] ) && !empty( $annotations['method']['group'] ) ) {
@@ -523,8 +541,8 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 					$annotatedAsSlow = true;
 				}
 			}
-			if ( !$annotatedAsSlow ) {
-				//$this->addSlowTestAnnotation();
+			if ( !$annotatedAsSlow && !empty($wgMarkTestSpeed)) {
+				$this->addSlowTestAnnotation();
 			}
 			self::$slowTests[$this->getName( false )] = true;
 		}
@@ -534,6 +552,8 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	 * @param $annotations
 	 */
 	protected function processFastTest( $annotations ) {
+		global $wgMarkTestSpeed;
+
 		if ( !isset( self::$fastTests[$this->getName( false )] ) ) {
 			$annotatedAsSlow = false;
 			if ( !empty( $annotations['method'] ) && !empty( $annotations['method']['group'] ) ) {
@@ -541,7 +561,7 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 					$annotatedAsSlow = true;
 				}
 			}
-			if ( $annotatedAsSlow ) {
+			if ( $annotatedAsSlow && !empty($wgMarkTestSpeed)) {
 				$this->removeSlowTestAnnotation();
 			}
 			self::$fastTests[$this->getName( false )] = true;
