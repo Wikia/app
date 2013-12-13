@@ -177,7 +177,7 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 		return $structuredData;
 	}
 
-	protected function loadStructuredData($params) {
+	protected function loadStructuredData($params, $model) {
 
 		try {
 
