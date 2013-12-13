@@ -122,8 +122,8 @@ $messages['en'] = array(
 
 	// Options
 	'chat-options' => 'Options',
-	'chat-option-sound-on' => 'Notifications: on',
-	'chat-option-sound-off' => 'Notifications: off',
+	'chat-option-sound-on' => 'Sound: on',
+	'chat-option-sound-off' => 'Sound: off',
 	'chat-option-sound-disabled' => 'Chat sound notifications disabled in user preferences.',
 
 	// Special:Preferences
@@ -2472,8 +2472,8 @@ $messages['pl'] = array(
 	'chat-checkuser-join-action' => 'Dołączył na czat',
 	'chat-status-away' => 'Zaraz wracam',
 	'chat-options' => 'Opcje',
-	'chat-option-sound-on' => 'Dźwięk: on',
-	'chat-option-sound-off' => 'Dźwięk: off',
+	'chat-option-sound-on' => 'Dźwięk: włączony',
+	'chat-option-sound-off' => 'Dźwięk: wyłączony',
 	'chat-option-sound-disabled' => 'Dźwięk nowej wiadomości na czacie został wyłączony w ustawieniach użytkownika',
 	'prefs-communication' => 'Komunikacja',
 	'prefs-chat' => 'Czat',

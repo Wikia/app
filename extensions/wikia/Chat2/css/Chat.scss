@@ -375,7 +375,6 @@ a {
 	}
 	.options-box {
 		div {
-			cursor: pointer;
 			margin: 5px 0;
 
 			&#button-sound {
@@ -385,7 +384,12 @@ a {
 					background-color: transparent;
 					background-image: url('/extensions/wikia/Chat2/images/speaker.png'); /* wgCdnStylePath */
 					background-repeat: no-repeat;
-					background-position: 0 0;
+					background-position-x: 0;
+					@if $is-dark-wiki {
+						background-position-x: -16px;
+					} @else {
+						background-position-x: 0;
+					}
 					width: 16px;
 					height: 16px;
 
@@ -396,10 +400,12 @@ a {
 
 				&.enabled:after {
 					background-position-x: -16px;
+					cursor: pointer;
 				}
 
 				&.disabled:after {
 					background-position-x: -32px;
+					cursor: pointer;
 				}
 			}
 		}
