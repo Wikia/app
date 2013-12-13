@@ -398,14 +398,17 @@ a {
 					left: 2px;
 				}
 
+				&.enabled,
+				&.disabled {
+					cursor: pointer;
+				}
+
 				&.enabled:after {
 					background-position-x: -16px;
-					cursor: pointer;
 				}
 
 				&.disabled:after {
 					background-position-x: -32px;
-					cursor: pointer;
 				}
 			}
 		}
