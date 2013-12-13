@@ -1426,6 +1426,11 @@ function wfMsgForContentNoTrans( $key ) {
  * @return String: the requested message.
  */
 function wfMsgReal( $key, $args, $useDB = true, $forContent = false, $transform = true ) {
+	global $wgRunningUnitTests, $wgNoDBUnits;
+	if ($wgRunningUnitTests && $wgNoDBUnits) {
+		return '';
+	}
+
 	wfProfileIn( __METHOD__ );
 	wfDeprecated( __METHOD__, '1.18' );
 	$message = wfMsgGetKey( $key, $useDB, $forContent, $transform );
@@ -1554,6 +1559,11 @@ function wfMsgWikiHtml( $key ) {
  * @return String
  */
 function wfMsgExt( $key, $options ) {
+	global $wgRunningUnitTests, $wgNoDBUnits;
+	if ($wgRunningUnitTests && $wgNoDBUnits) {
+		throw new WikiaException('No messaging in unit tests');
+	}
+
 	wfProfileIn(__METHOD__);
 	wfDeprecated( __METHOD__, '1.18' );
 	$args = func_get_args();
