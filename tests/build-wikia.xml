@@ -12,10 +12,10 @@
         <exec executable="php" dir="${basedir}" failonerror="true">
             <env key="SERVER_DBNAME" value="${dbname}" />
             <arg line="run-test.php
-                       --log-junit ${basedir}/build/logs/phpunit.xml
-                       --conf ${localsettings}
-                       --configuration ${basedir}/phpunit.xml
-					   --exclude-group Slow,Infrastructure,Integration,Broken,Stub,Monitoring,Hack,UsingDB
+                       --log-junit=${basedir}/build/logs/phpunit.xml
+                       --conf=${localsettings}
+                       --configuration=${basedir}/phpunit.xml
+					   --exclude-group=Slow,Infrastructure,Integration,Broken,Stub,Monitoring,Hack,UsingDB
                        " />
         </exec>
     </target>

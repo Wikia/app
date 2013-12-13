@@ -1,8 +1,13 @@
 <?php
 $wgNoDBUnits = false;
-foreach($argv as $arg) {
-	if (strpos($arg, 'UsingDB') !== false) {
-		$wgNoDBUnits = true;
+
+$params = getopt('', ['exclude-group::']);
+$excludeGroups = explode(',', $params['exclude-group']);
+if (is_array($excludeGroups)) {
+	foreach($excludeGroups as $group) {
+		if (trim($group) == 'UsingDB') {
+			$wgNoDBUnits = true;
+		}
 	}
 }
 
