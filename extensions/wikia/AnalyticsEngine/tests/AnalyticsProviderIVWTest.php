@@ -17,7 +17,11 @@ class AnalyticsProviderIVWTest extends WikiaBaseTest {
 	 *
 	 */
 	private function getAnalyticsProviderIVWTag($url) {
-		$page = Http::get($url, 'default', array('noProxy' => true));
+		$req = MWHttpRequest::factory( $url, ['noProxy' => true ] );;
+		$req->execute();
+
+		$page = $req->getContent();
+
 		if (preg_match('/<img src="([^">]+)" [^>]+ alt="szmtag"/', $page, $m)) {
 			$path = parse_url($m[1], PHP_URL_PATH);
 			$arr = explode('/', $path);

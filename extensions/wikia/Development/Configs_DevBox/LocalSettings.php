@@ -7,12 +7,26 @@ $wgShowExceptionDetails = true;
 // include chef generated variables: $wgWikiaDatacenter
 require_once('/usr/wikia/devbox/DevBoxVariables.php');
 
-$IP = '/usr/wikia/source/wiki';
-$wgWikiaLocalSettingsPath  = '/usr/wikia/docroot/wiki.factory/LocalSettings.php';
+$IP = realpath(__DIR__ . '/../../../..');
+
+if (getenv('DOCUMENT_ROOT')) {
+	$wgWikiaLocalSettingsPath = getenv('DOCUMENT_ROOT') . "/LocalSettings.php";
+} else {
+	$wgWikiaLocalSettingsPath = "/usr/wikia/docroot/wiki.factory/LocalSettings.php";
+}
+
 $wgWikiaAdminSettingsPath = dirname( $wgWikiaLocalSettingsPath ) . "/../AdminSettings.php";
 
 $wgDevelEnvironment = true;
 $wgWikicitiesReadOnly = false;
+
+if (getenv('wgDevelEnvironmentName')) {
+	$wgDevelEnvironmentName = getenv('wgDevelEnvironmentName');
+} else {
+	$host = gethostname();
+	$host = explode("-", $host);
+	$wgDevelEnvironmentName = trim($host[1]);
+}
 
 require_once("$IP/extensions/wikia/WikiFactory/Loader/WikiFactoryLoader.php");
 
@@ -244,3 +258,4 @@ $recaptcha_private_key = '6LehHs0SAAAAABYaeCiC0ockp0NsY-H7wEiPZk7i';
 $wgConf->localVHosts = array(
 	'wikia-dev.com'
 );
+
