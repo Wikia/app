@@ -272,15 +272,10 @@ class Language {
 	 * @return LocalisationCache
 	 */
 	public static function getLocalisationCache() {
-		global $wgRunningUnitTests, $wgNoDBUnits;
 		if ( is_null( self::$dataCache ) ) {
 			global $wgLocalisationCacheConf;
-			if ($wgRunningUnitTests && $wgNoDBUnits) {
-				self::$dataCache = new FakeCache();
-			} else {
-				$class = $wgLocalisationCacheConf['class'];
-				self::$dataCache = new $class( $wgLocalisationCacheConf );
-			}
+			$class = $wgLocalisationCacheConf['class'];
+			self::$dataCache = new $class( $wgLocalisationCacheConf );
 		}
 		return self::$dataCache;
 	}

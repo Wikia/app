@@ -16,15 +16,6 @@ class MessageStub extends Message {
 	}
 }
 
-class LanguageStub extends Language {
-	public static function getLocalisationCache() {
-		if (is_null(self::$dataCache)) {
-			self::$dataCache = new FakeCache();
-		}
-		return self::$dataCache;
-	}
-}
-
 function wfMsgExtStub() {
 	return '';
 }
@@ -38,8 +29,6 @@ function wfGetDBStub() {
 function sno_callback($className) {
 	if ($className == 'Message') {
 		$className = 'MessageStub';
-	} else if ($className == 'Language') {
-		$className = 'LanguageStub';
 	}
 
 	return $className;
