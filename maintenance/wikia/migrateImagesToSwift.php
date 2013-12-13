@@ -30,6 +30,7 @@ class MigrateImagesToSwift extends Maintenance {
 	// connections to Swift backends images will be migrated to
 	/* @var \Wikia\SwiftStorage[] $swiftBackends */
 	private $swiftBackends;
+	private $timePerDC = [];
 
 	private $shortBucketNameFixed = false;
 
@@ -71,7 +72,8 @@ class MigrateImagesToSwift extends Maintenance {
 			$remotePath = $swiftBackend->getUrl( '' );
 			$this->output( "Migrating images on {$wgDBname} - <{$wgUploadDirectory}> -> <{$remotePath}> [dc: {$dc}]...\n" );
 
-			$this->swiftBackends[] = $swiftBackend;
+			$this->swiftBackends[$dc] = $swiftBackend;
+			$this->timePerDC[$dc] = 0;
 		}
 	}
 
@@ -214,8 +216,10 @@ class MigrateImagesToSwift extends Maintenance {
 		$res = Status::newGood();
 
 		// migrate to all requested DCs
-		foreach($this->swiftBackends as $swift) {
+		foreach($this->swiftBackends as $dc => $swift) {
+			$then = microtime(true);
 			$res->merge( $swift->store( $uploadDir . '/' . $path, $path, $metadata, $mime ) );
+			$this->timePerDC[$dc] += microtime(true) - $then;
 		}
 
 		// check results
@@ -399,14 +403,21 @@ class MigrateImagesToSwift extends Maintenance {
 			$this->copyFile( $path, $row );
 		}
 
+		// stats per DC
+		$statsPerDC = [];
+		foreach ($this->timePerDC as $dc => $time) {
+			$statsPerDC[] = sprintf("%s took %s", $dc, Wikia::timeDuration(round($time)));
+		}
+
 		// summary
-		$report = sprintf( 'Migrated %d files (%d MB) with %d fails in %s (%.2f files/sec, %.2f kB/s)',
+		$report = sprintf( 'Migrated %d files (%d MB) with %d fails in %s (%.2f files/sec, %.2f kB/s) - DCs: %s',
 			$this->migratedImagesCnt,
 			round( $this->migratedImagesSize / 1024 / 1024 ),
 			$this->migratedImagesFailedCnt,
 			Wikia::timeDuration( time() - $this->time ),
 			floor( $this->imagesCnt ) / ( time() - $this->time ),
-			( $this->migratedImagesSize / 1024 ) / ( time() - $this->time )
+			( $this->migratedImagesSize / 1024 ) / ( time() - $this->time ),
+			join(', ', $statsPerDC)
 		);
 
 		$this->output( "\n{$report}\n" );
