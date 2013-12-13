@@ -49,7 +49,7 @@ class ApiAddMediaTemporary extends ApiAddMedia {
 	}
 
 	private function executeVideo() {
-		$wikiaFilename = $this->getWikiaFilename( $this->mParams['url'] );
+		$wikiaFilename = WikiaFileHelper::getWikiaFilename( $this->mParams['url'] );
 		if ( $wikiaFilename ) {
 			return $this->executeWikiaVideo( $wikiaFilename );
 		} else {
@@ -113,36 +113,18 @@ class ApiAddMediaTemporary extends ApiAddMedia {
 			$this->mUpload->fetchFile();
 			$this->verifyUpload();
 
-			// Create a temp image for the thumbnail and a temp video for the preview
-			$tempVideo = $this->createTempFile( $this->mUpload->getTempPath(), true );
-			$tempImage = $this->createTempFile( $this->mUpload->getTempPath() );
-
-			$provider = $apiwrapper->getMimeType();
-			$tempVideo->forceMime( $provider );
-			$tempVideo->setVideoId( $apiwrapper->getVideoId() );
-			$tempVideo->setProps( array( 'mime' => $provider ) );
+			$tempFile = $this->createTempFile( $this->mUpload->getTempPath() );
 
 			$result['title'] = $apiwrapper->getTitle();
-			$result['tempUrl'] = $tempImage->getUrl();
-			$result['tempName'] = $tempVideo->getName();
-
-			$result[ 'embedCode' ] = json_encode( $tempVideo->getEmbedCode( 728, false, false, true ) );
+			$result['tempUrl'] = $tempFile->getUrl();
+			$result['tempName'] = $tempFile->getName();
 		}
 		return $result;
 	}
 
-    private function getWikiaFilename( $url ) {
-        $nsFileTranslated = F::app()->wg->ContLang->getNsText( NS_FILE );
-        $pattern = '/(File|'.$nsFileTranslated.'):(.+)$/';
-        if ( preg_match( $pattern, urldecode( $url ), $matches ) ) {
-        	return $matches[2];
-        }
-        return null;
-    }
-
 	private function createTempFile( $filepath, $isVideo = false ) {
-		$tempFile = new WikiaLocalFile(
-			Title::newFromText( 'Temp_' . uniqid( '', true ), 6 ),
+		$tempFile = new FakeLocalFile(
+			Title::newFromText( uniqid( 'Temp_', true ), 6 ),
 			RepoGroup::singleton()->getLocalRepo()
 		);
 		// Don't need to upload if it's a video file

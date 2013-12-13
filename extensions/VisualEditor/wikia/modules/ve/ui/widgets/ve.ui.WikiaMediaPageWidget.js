@@ -135,9 +135,7 @@ ve.ui.WikiaMediaPageWidget.prototype.onImageLoad = function () {
  */
 ve.ui.WikiaMediaPageWidget.prototype.onItemClick = function () {
 	// TODO: figure out how much is going to be done in widget vs here
-	var preview = new ve.ui.WikiaMediaPreviewWidget( {
-		title: this.model.basename
-	} );
+	var preview = new ve.ui.WikiaMediaPreviewWidget( this.model );
 };
 
 /**

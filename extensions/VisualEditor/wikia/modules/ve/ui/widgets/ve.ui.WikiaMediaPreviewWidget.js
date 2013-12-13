@@ -2,41 +2,60 @@
  * VisualEditor UserInterface WikiaMediaPreviewWidget class.
  */
 
-/* global require */
+/* global mw */
 
 
-ve.ui.WikiaMediaPreviewWidget = function VeUiWikiaMediaPreviewWidget( config ) {
+ve.ui.WikiaMediaPreviewWidget = function VeUiWikiaMediaPreviewWidget( model, config ) {
 	// Configuration initialization
 	config = config || {};
 
 	// Parent constructor
 	ve.ui.Widget.call( this, config );
 
-	console.log( config.title );
+	ve.bind( this.onRequestPreviewDone, this );
 
-	require( ['wikia.nirvana'], function( nirvana ) {
-		nirvana.sendRequest( {
-			controller: 'VideoHandlerController',
-			method: 'getEmbedCode',
-			data: {
-				fileTitle: config.title,
-				width: 700,
-				autoplay: 1
-			},
-			callback: function( data ) {
-				console.log( data );
-			},
-			onErrorCallback: function() {
-				// TODO: fill this in
-			}
-		} );
-	} );
+	this.request = $.ajax( {
+		'url': mw.util.wikiScript( 'api' ),
+		'data': {
+			'format': 'json',
+			'action': 'mediapreview',
+			'provider': model.provider,
+			'videoId': model.videoId,
+			'title': model.title
+		}
+	} )
+		.done( ve.bind( this.onRequestPreviewDone, this ) )
+		.fail( ve.bind( this.onRequestPreviewFail, this ) );
 
+
+	// figure out if it should be $$ or what
 	this.$overlay = this.$$( '<div>' )
 		.addClass( 've-ui-wikiaMediaPreviewWidget-overlay' );
 
 	// TODO: check if there's a different way I should be calling $( 'body' )
 	$( 'body' ).append( this.$overlay );
+};
+
+/* Methods */
+
+/**
+ * Handle video preview request promise.done
+ *
+ * @method
+ */
+
+ve.ui.WikiaMediaPreviewWidget.prototype.onRequestPreviewDone = function() {
+	alert( 'done' );
+};
+
+/**
+ * Handle video preview request promise.error
+ *
+ * @method
+ */
+
+ve.ui.WikiaMediaPreviewWidget.prototype.onRequestPreviewFail = function() {
+	alert( 'error' );
 };
 
 /* Inheritance */

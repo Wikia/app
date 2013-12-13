@@ -17,6 +17,7 @@ $wgAutoloadClasses['ApiPhotoAttribution'] = $dir . 'ApiPhotoAttribution.php';
 $wgAutoloadClasses['ApiAddMedia'] = $dir . 'ApiAddMedia.php';
 $wgAutoloadClasses['ApiAddMediaTemporary'] = $dir . 'ApiAddMediaTemporary.php';
 $wgAutoloadClasses['ApiAddMediaPermanent'] = $dir . 'ApiAddMediaPermanent.php';
+$wgAutoloadClasses['ApiMediaPreview'] = $dir . 'ApiMediaPreview.php';
 
 /* API Modules */
 
@@ -24,6 +25,7 @@ $wgAPIModules['apimediasearch'] = 'ApiMediaSearch';
 $wgAPIModules['apiphotoattribution'] = 'ApiPhotoAttribution';
 $wgAPIModules['addmediatemporary'] = 'ApiAddMediaTemporary';
 $wgAPIModules['addmediapermanent'] = 'ApiAddMediaPermanent';
+$wgAPIModules['mediapreview'] = 'ApiMediaPreview';
 
 /* Resource Loader Modules */
 
