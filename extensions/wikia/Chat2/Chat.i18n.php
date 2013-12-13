@@ -120,12 +120,17 @@ $messages['en'] = array(
     
     'chat-status-away' => 'Away',
 
-		// Options
-		'chat-options' => 'Options',
-		'chat-option-sound-on' => 'Notifications: on',
-		'chat-option-sound-off' => 'Notifications: off',
-		'chat-option-sound-disabled' => 'Chat sound notifications disabled in user preferences.',
+	// Options
+	'chat-options' => 'Options',
+	'chat-option-sound-on' => 'Notifications: on',
+	'chat-option-sound-off' => 'Notifications: off',
+	'chat-option-sound-disabled' => 'Chat sound notifications disabled in user preferences.',
 
+	// Special:Preferences
+	'prefs-communication' => 'Communication',
+	'prefs-chat' => 'Chat',
+	'chat-pref-incoming-message-sound' => 'Sound of incoming chat message',
+	'chat-pref-sound-none' => 'None',
 );
 
 /** Message documentation (Message documentation)
@@ -207,6 +212,12 @@ Parameters:
 	'chat-option-sound-on' => 'Display when sound notification is turned on',
 	'chat-option-sound-off' => 'Display when sound notification is turned off',
 	'chat-option-sound-disabled' => 'Information displayed when user turned off sound notifications option in user preferences.',
+
+	// Special:Preferences
+	'prefs-communication' => 'Communication tab text in Special:Preferences',
+	'prefs-chat' => 'Headline of chat section in Special:Preferences',
+	'chat-pref-incoming-message-sound' => 'Label next to a select box you can select your chat incoming message sound from',
+	'chat-pref-sound-none' => 'Option which is being selected when a user does not want a sound of chat incoming message',
 );
 
 /** Afrikaans (Afrikaans)
@@ -2460,6 +2471,13 @@ $messages['pl'] = array(
 	'chat-browser-is-notsupported' => 'Twoja przeglądarka nie jest obsługiwana. Dla najlepszych rezultatów użyj <a href="http://community.wikia.com/wiki/Help:Supported_browsers">nowszej przeglądarki</a>.',
 	'chat-checkuser-join-action' => 'Dołączył na czat',
 	'chat-status-away' => 'Zaraz wracam',
+	'chat-options' => 'Opcje',
+	'chat-option-sound-on' => 'Dźwięk: on',
+	'chat-option-sound-off' => 'Dźwięk: off',
+	'chat-option-sound-disabled' => 'Dźwięk nowej wiadomości na czacie został wyłączony w ustawieniach użytkownika',
+	'prefs-communication' => 'Komunikacja',
+	'prefs-chat' => 'Czat',
+	'chat-pref-incoming-message-sound' => 'Dźwięk nowej wiadomości',
 );
 
 /** Piedmontese (Piemontèis)
