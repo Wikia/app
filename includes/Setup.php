@@ -441,28 +441,13 @@ if ( $wgCommandLineMode ) {
 wfProfileOut( $fname . '-misc1' );
 wfProfileIn( $fname . '-memcached' );
 
+$wgMemc = wfGetMainCache();
+$messageMemc = wfGetMessageCacheStorage();
+$parserMemc = wfGetParserCacheStorage();
 
-class FakeCache {
-	public function __call($a, $b) {
-		return '';
-	}
-
-}
-
-if ($wgRunningUnitTests && $wgNoDBUnits) {
-	$wgMemc = new FakeCache();
-	$messageMemc = null;
-	$parserMemc = null;
-} else {
-	$wgMemc = wfGetMainCache();
-	$messageMemc = wfGetMessageCacheStorage();
-	$parserMemc = wfGetParserCacheStorage();
-
-	wfDebug( 'CACHES: ' . get_class( $wgMemc ) . '[main] ' .
-		get_class( $messageMemc ) . '[message] ' .
-		get_class( $parserMemc ) . "[parser]\n" );
-}
-
+wfDebug( 'CACHES: ' . get_class( $wgMemc ) . '[main] ' .
+	get_class( $messageMemc ) . '[message] ' .
+	get_class( $parserMemc ) . "[parser]\n" );
 
 wfProfileOut( $fname . '-memcached' );
 

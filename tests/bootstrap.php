@@ -1,7 +1,29 @@
 <?php
 $wgRunningUnitTests = true; // don't include DevBoxSettings when running unit tests
 $wgDevelEnvironment = true;
+
+class FakeCache {
+	public function __call($a, $b) {
+		return '';
+	}
+}
+
 require_once __DIR__ . '/../maintenance/commandLine.inc';
+
+class MessageStub extends Message {
+	public function toString() {
+		throw new WikiaException('No messaging in unit tests');
+	}
+}
+
+class LanguageStub extends Language {
+	public static function getLocalisationCache() {
+		if (is_null(self::$dataCache)) {
+			self::$dataCache = new FakeCache();
+		}
+		return self::$dataCache;
+	}
+}
 
 function wfMsgExtStub() {
 	return '';
@@ -13,6 +35,16 @@ function wfGetDBStub() {
 	throw new WikiaException('No DB in unit tests');
 }
 
+function sno_callback($className) {
+	if ($className == 'Message') {
+		$className = 'MessageStub';
+	} else if ($className == 'Language') {
+		$className = 'LanguageStub';
+	}
+
+	return $className;
+}
+
 if ($wgRunningUnitTests && $wgNoDBUnits) {
 	rename_function('wfMsgExt', 'wfMsgExt_orig');
 	rename_function('wfMsgReal', 'wfMsgReal_orig');
@@ -20,6 +52,12 @@ if ($wgRunningUnitTests && $wgNoDBUnits) {
 	rename_function('wfMsgExtStub', 'wfMsgExt');
 	rename_function('wfMsgRealStub', 'wfMsgReal');
 	rename_function('wfGetDBStub', 'wfGetDB');
+
+	$wgMemc = new FakeCache();
+	$messageMemc = null;
+	$parserMemc = null;
+
+	set_new_overload('sno_callback');
 }
 
 require_once 'Zend/Exception.php';

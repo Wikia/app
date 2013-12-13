@@ -384,11 +384,6 @@ class Message {
 	 * @return String: HTML
 	 */
 	public function toString() {
-		global $wgRunningUnitTests, $wgNoDBUnits;
-		if ($wgRunningUnitTests && $wgNoDBUnits) {
-			throw new WikiaException('No messaging in unit tests');
-		}
-
 		$string = $this->getMessageText();
 
 		# Replace parameters before text parsing
