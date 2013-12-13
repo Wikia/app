@@ -197,7 +197,7 @@ class MigrateImagesToSwift extends Maintenance {
 	 * @param $path array image info
 	 */
 	private function copyFile( $path, Array $row ) {
-		global $wgUploadDirectory, $wgUploadDirectoryNFS, $wgCityId, $wgDBname;
+		global $wgUploadDirectory, $wgUploadDirectoryNFS;
 
 		if ( $path === false ) return;
 
