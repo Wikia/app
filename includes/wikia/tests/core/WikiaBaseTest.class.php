@@ -62,7 +62,7 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	 * Print out time it took to run all tests from current test class
 	 */
 	public static function tearDownAfterClass() {
-		$time = round( (microtime(true) - self::$testRunTime) * 1000 );
+		$time = round( (microtime(true) - self::$testRunTime) * 1000, 2 );
 		echo "done in {$time} ms";
 	}
 
