@@ -167,6 +167,11 @@ sup.reference {
 a {
 	color: $link-color;
 	text-decoration: none;
+
+	&.new {
+		color: $page-text-color;
+		pointer-events: none;
+	}
 }
 
 dd {
@@ -175,9 +180,4 @@ dd {
 
 strong, b {
 	font-weight: bold;
-}
-
-a.new {
-	color: $page-text-color;
-	pointer-events: none;
 }
