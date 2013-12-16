@@ -3,7 +3,7 @@
 var AdLogicPageDimensions = function (window, document, log, slotTweaker) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adengine.logic.shortpage',
+	var logGroup = 'ext.wikia.adengine.logic.pagedimensions',
 		initCalled = false,
 		wrappedAds = {},
 
@@ -200,7 +200,9 @@ var AdLogicPageDimensions = function (window, document, log, slotTweaker) {
 	 */
 	function hasPreFooters() {
 		log('hasPreFooters', 'debug', logGroup);
-		return pageHeight < preFootersThreshold;
+		pageHeight = document.documentElement.scrollHeight;
+		log(['hasPreFooters', {pageHeight: pageHeight, preFootersThreshold: preFootersThreshold}], 'debug', logGroup);
+		return pageHeight > preFootersThreshold;
 	}
 
 	/**
