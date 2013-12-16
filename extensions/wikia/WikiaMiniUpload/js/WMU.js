@@ -1,6 +1,6 @@
 /*
  * Author: Inez Korczynski, Bartek Lapinski
- * Converted from YUI to jQuery by Hyun
+ * Converted from YUI to jQuery by Hyun (except for the slider)
  */
 
 /**
@@ -840,6 +840,7 @@ function WMU_displayDetails(responseText) {
 		}
 		var thumbSize = [image.width(), image.height()];
 		WMU_orgThumbSize = null;
+		// TODO: switch to jQuery slider, remove YUI!
 		WMU_slider = YAHOO.widget.Slider.getHorizSlider('ImageUploadSlider', 'ImageUploadSliderThumb', 0, 200);
 		WMU_slider.initialRound = true;
 		WMU_slider.getRealValue = function() {
@@ -921,8 +922,6 @@ function WMU_insertPlaceholder( box ) {
 	WMU_box_filled.push(box);
 	var to_update = $( '#WikiaImagePlaceholder' + box );
 	to_update.html($( '#ImageUploadCode' ).html());
-	//the class would need to be different if we had here the full-size...
-	to_update.className = '';
 	$.post(wgServer + wgScript + '?title=' + wgPageName  +'&action=purge');
 }
 
@@ -1015,7 +1014,7 @@ function WMU_insertImage(type) {
 		params.push( 'article='+encodeURIComponent( wgTitle ) );
 		params.push( 'ns='+wgNamespaceNumber );
 		if( WMU_refid != null ) {
-			params.push( 'fck=true' );
+			params.push( 'ck=true' );
 		}
 	}
 
