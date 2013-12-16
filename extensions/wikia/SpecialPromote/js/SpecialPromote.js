@@ -417,7 +417,7 @@ SpecialPromote.prototype = {
             modifyRemoveNode;
 
         if (file.imageIndex) {
-            this.current.additionalImagesNames[file.imageIndex] = file.fileName;
+            this.current.additionalImagesNames[file.imageIndex - 1] = file.fileName;
             $('.small-photos img').each(function (key, value) {
                 var valueObject = $(value);
 
