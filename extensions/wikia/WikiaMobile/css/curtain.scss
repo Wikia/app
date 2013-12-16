@@ -9,7 +9,7 @@
 
 	background-color: rgba(0,0,0,.4);
 
-	z-index: 10;
+	z-index: 10002; //For overlaying TOC handle (TOC z-index 10001)
 
 	-webkit-tap-highlight-color: rgba(0,0,0,0);
 
