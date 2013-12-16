@@ -48,9 +48,10 @@ class MigrateImagesToSwift extends Maintenance {
 	 */
 	public function __construct() {
 		parent::__construct();
-		$this->addOption( 'force', 'Perform the migration even when $wgEnableSwiftFileBackend = true' );
+		$this->addOption( 'force', 'Perform the migration even if $wgEnableSwiftFileBackend = true' );
 		$this->addOption( 'stats-only', 'Show stats (number of files and total size) and then exit' );
-		$this->addOption( 'dry-run', 'Migrate images, but don\'t disable uploads and don\'t switch to Swift backend' );
+		$this->addOption( 'dry-run', 'Migrate images, but don\'t disable uploads and don\'t switch wiki to Swift backend' );
+		$this->addOption( 'dc', 'Comma separated list of DCs to migrate images to (defaults to "sjc,res")' );
 		$this->mDescription = 'Copies files from file system to distributed storage';
 	}
 
@@ -61,10 +62,7 @@ class MigrateImagesToSwift extends Maintenance {
 		global $wgUploadDirectory, $wgDBname, $wgCityId;
 		$this->shortBucketNameFixed = $this->fixShortBucketName();
 
-		$dcs = [
-			'sjc',
-			'res'
-		];
+		$dcs = explode(',', $this->getOption('dc', 'sjc,res'));
 
 		foreach($dcs as $dc) {
 			$swiftBackend = \Wikia\SwiftStorage::newFromWiki( $wgCityId, $dc );
@@ -410,11 +408,13 @@ class MigrateImagesToSwift extends Maintenance {
 		}
 
 		// summary
+		$totalTime = time() - $this->time;
+
 		$report = sprintf( 'Migrated %d files (%d MB) with %d fails in %s (%.2f files/sec, %.2f kB/s) - DCs: %s',
 			$this->migratedImagesCnt,
 			round( $this->migratedImagesSize / 1024 / 1024 ),
 			$this->migratedImagesFailedCnt,
-			Wikia::timeDuration( time() - $this->time ),
+			Wikia::timeDuration( $totalTime ),
 			floor( $this->imagesCnt ) / ( time() - $this->time ),
 			( $this->migratedImagesSize / 1024 ) / ( time() - $this->time ),
 			join(', ', $statsPerDC)
@@ -435,7 +435,7 @@ class MigrateImagesToSwift extends Maintenance {
 
 		// update wiki configuration
 		// enable Swift storage via WikiFactory
-		WikiFactory::setVarByName( 'wgEnableSwiftFileBackend', $wgCityId, true, self::REASON );
+		WikiFactory::setVarByName( 'wgEnableSwiftFileBackend', $wgCityId, true, sprintf('%s - migration took %s', self::REASON, Wikia::timeDuration( $totalTime ) ) );
 
 		$this->output( "\nNew storage enabled\n" );
 
