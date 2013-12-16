@@ -31,7 +31,7 @@ ve.ui.WikiaMediaInsertDialog.static.titleMessage = 'visualeditor-dialog-media-in
 
 ve.ui.WikiaMediaInsertDialog.static.icon = 'media';
 
-ve.ui.WikiaMediaInsertDialog.static.pages = [ 'search', 'suggestions' ];
+ve.ui.WikiaMediaInsertDialog.static.pages = [ 'main', 'search' ];
 
 /* Methods */
 
@@ -124,7 +124,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 ve.ui.WikiaMediaInsertDialog.prototype.onQueryInputChange = function ( value ) {
 	this.results.clearItems();
 	if ( value.trim().length === 0 ) {
-		this.pages.setPage( 'main' );
+		this.setPage( 'main' );
 	}
 };
 
@@ -155,19 +155,22 @@ ve.ui.WikiaMediaInsertDialog.prototype.onQueryRequestSearchDone = function ( ite
 	this.pages.setPage( 'search' );
 };
 
+/**
+ * Handle the resulting data from a query video request.
+ *
+ * @method
+ * @param {Object} data An object containing the data for a video
+ */
 ve.ui.WikiaMediaInsertDialog.prototype.onQueryRequestVideoDone = function ( data ) {
-	var model = new ve.dm.WikiaCartItem(
+	this.queryInput.setValue( '' );
+	this.addCartItem( new ve.dm.WikiaCartItem(
 		data.title,
 		data.tempUrl || data.url,
 		'video',
 		data.tempName,
 		data.provider,
 		data.videoId
-	);
-	this.queryInput.setValue( '' );
-	this.cartModel.addItems( [ model ] );
-	this.setPage( model.getId() );
-	this.cart.selectItem( this.cart.getItemFromData( model.getId() ) );
+	), true );
 };
 
 /**
@@ -188,14 +191,14 @@ ve.ui.WikiaMediaInsertDialog.prototype.onSearchNearingEnd = function () {
  * @param {Object} item The search result item data.
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onSearchCheck = function ( item ) {
-	var cartItem, cartItemModel;
+	var cartItem;
 
 	cartItem = this.cart.getItemFromData( item.title );
+
 	if ( cartItem ) {
 		this.cartModel.removeItems( [ cartItem.getModel() ] );
 	} else {
-		cartItemModel = new ve.dm.WikiaCartItem( item.title, item.url, item.type );
-		this.cartModel.addItems( [ cartItemModel ] );
+		this.addCartItem( new ve.dm.WikiaCartItem( item.title, item.url, item.type ) );
 	}
 };
 
@@ -256,14 +259,27 @@ ve.ui.WikiaMediaInsertDialog.prototype.onCartModelRemove = function ( items ) {
  * @param {string} name The name of the page to set as the current page.
  */
 ve.ui.WikiaMediaInsertDialog.prototype.setPage = function ( name ) {
-	if ( this.pages.getPageName() === name ) {
-		// Toggle cart item
-		if ( ve.indexOf( name, ve.ui.WikiaMediaInsertDialog.static.pages ) === -1 ) {
-			this.cart.selectItem( null );
-			this.pages.setPage( this.getDefaultPage() );
-		}
-	} else {
-		this.pages.setPage( name );
+	var isStaticPage = ve.indexOf( name, ve.ui.WikiaMediaInsertDialog.static.pages ) > -1,
+		isCartItemToggle = this.pages.getPageName() === name && !isStaticPage;
+
+	if ( isStaticPage || isCartItemToggle ) {
+		this.cart.selectItem( null );
+	}
+
+	this.pages.setPage( isCartItemToggle ? this.getDefaultPage() : name );
+};
+
+/**
+ * Add an item to the cart, optionally selecting it.
+ *
+ * @method
+ * @param {ve.dm.WikiaCartItem} item The cart item's data model.
+ * @param {boolean} [select] Whether to select the cart item.
+ */
+ve.ui.WikiaMediaInsertDialog.prototype.addCartItem = function ( item, select ) {
+	this.cartModel.addItems( [ item ] );
+	if ( select ) {
+		this.cart.selectItem( this.cart.getItemFromData( item.getId() ) );
 	}
 };
 
@@ -295,7 +311,6 @@ ve.ui.WikiaMediaInsertDialog.prototype.onMediaPageRemove = function ( item ) {
 ve.ui.WikiaMediaInsertDialog.prototype.setup = function () {
 	// Parent method
 	ve.ui.MWDialog.prototype.setup.call( this );
-
 	this.pages.setPage( 'main' );
 };
 
@@ -641,18 +656,15 @@ ve.ui.WikiaMediaInsertDialog.prototype.onUploadChange = function () {
  * @param {Object} data The uploaded file information
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onUploadSuccess = function ( data ) {
-	var model;
 	if ( !this.license.html ) {
 		this.license.promise.done( ve.bind( this.onUploadSuccess, this, data ) );
 	} else {
-		model = new ve.dm.WikiaCartItem(
+		this.addCartItem( new ve.dm.WikiaCartItem(
 			data.title,
 			data.tempUrl || data.url,
 			'photo',
 			data.tempName
-		);
-		this.cartModel.addItems( [ model ] );
-		this.cart.selectItem( this.cart.getItemFromData( model.getId() ) );
+		), true );
 	}
 };
 

@@ -134,6 +134,7 @@ $messages['qqq'] = array(
 	'action-toplists-create-edit-list' => '{{doc-action|toplists-create-edit}}',
 	'toplists-editor-remove-item-tooltip' => '{{Identical|Remove item}}',
 	'toplists-create-button' => '{{Identical|Create list}}',
+	'toplists-cancel-button' => '{{Identical|Cancel}}',
 	'toplits-image-browser-selected-picture' => '$1 is the title of the image page.',
 	'toplists-image-browser-upload-btn' => '{{Identical|Choose}}',
 	'toplists-list-vote-up' => 'Keep this as short as possible. Everything exceeding allowed lenght will be cutted out!',
@@ -379,7 +380,7 @@ $messages['ce'] = array(
 	'toplists-update-button' => 'МогӀам Ӏалашбар',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Chmee2
  * @author Darth Daron
  */

@@ -550,6 +550,7 @@ $messages['br'] = array(
 	'wmu-appearance-in-article' => 'Tres er pennad',
 	'wmu-alignment' => 'Linennadur',
 	'wmu-file-protected' => 'Gwarezet eo ar skeudenn-mañ',
+	'wmu-file-not-found' => "N'eo ket bet kavet ar restr",
 );
 
 /** Catalan (català)
@@ -2210,6 +2211,11 @@ U kunt er geen afbeeldingen aan toevoegen.',
 	'wmu-alignment' => 'Uitlijning',
 	'wmu-file-protected' => 'Deze afbeelding is beveiligd.',
 	'wmu-file-error' => 'Er is een fout opgetreden tijdens het uploadproces. Probeer het opnieuw.',
+	'wmu-file-not-found' => 'Bestand niet gevonden',
+	'wmu-error-exact-height' => 'De afbeeldingshoogte moet precies  $1 px zijn ($2 px opgegeven)',
+	'wmu-error-exact-width' => 'De afbeeldingsbreeste moet precies $1 px zijn ($2 px opgegeven)',
+	'wmu-error-exact-width-height' => 'Afbeeldingsbreedte en -hoogte moeten precies  $1 x $3 px zijn ($2 x $4 px opgegeven)',
+	'wmu-error-bad-aspect-ratio' => 'De beeldverhouding is onjuist ($1 x $2 px)',
 );
 
 /** Nederlands (informeel)‎ (Nederlands (informeel)‎)
@@ -3016,9 +3022,14 @@ $messages['tl'] = array(
 
 /** Turkish (Türkçe)
  * @author Erdemaslancan
+ * @author Incelemeelemani
  */
 $messages['tr'] = array(
 	'wmu-optional' => '(isteğe bağlı)',
+	'wmu-imagebutton' => 'Resim ekle',
+	'wmu-license-cc' => 'Creative Commons Attribution-Share Alike 3.0 lisansı altındadır',
+	'wmu-bad-extension' => 'Geçersiz dosya türü yüklemeye çalıştınız. Lütfen yeniden deneyin.',
+	'wmu-gallery' => 'Galeri',
 	'wmu-alignment' => 'Hizalama',
 );
 

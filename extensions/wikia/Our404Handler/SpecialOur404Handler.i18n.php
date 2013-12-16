@@ -147,7 +147,7 @@ L'article '''$1''' no s'ha trobat.
 * Per anar a la portada d'aquest lloc, fes clic a l'enllaç: [{{SERVER}} {{SITENAME}}]",
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Mormegil
  */
 $messages['cs'] = array(

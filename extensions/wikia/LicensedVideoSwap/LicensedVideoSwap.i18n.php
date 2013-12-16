@@ -251,7 +251,7 @@ $messages['ca'] = array(
 	'lvs-posted-in-label-none' => 'Vídeo actual no està publicat a articles',
 	'lvs-posted-in-more' => 'més',
 	'lvs-confirm-keep-title' => 'Mantenir Vídeo',
-	'lvs-confirm-keep-message' => 'Heu seleccionat no substituir el seu vídeo actual amb un vídeo amb llicència de Wikia. Voleu continuar?',
+	'lvs-confirm-keep-message' => 'Heu seleccionat no substituir el seu vídeo actual amb un vídeo amb llicència de Wikia. Voleu continuar?', # Fuzzy
 	'lvs-confirm-undo-swap-title' => 'Confirmar que vols desfer',
 	'lvs-confirm-undo-swap-message' => 'Esteu segur que voleu restaurar el vídeo original?',
 	'lvs-confirm-undo-keep-title' => 'Confirmar que vols desfer?',
@@ -636,7 +636,7 @@ $messages['ms'] = array(
 	'lvs-posted-in-label-none' => 'Video semasa tidak terpapar pada sebarang rencana',
 	'lvs-posted-in-more' => 'selanjutnya',
 	'lvs-confirm-keep-title' => 'Simpan Video',
-	'lvs-confirm-keep-message' => 'Anda telah memilih untuk tidak menggantikan video semasa anda dengan Wikia Video yang berlesen. Adakah anda ingin teruskan?',
+	'lvs-confirm-keep-message' => 'Anda telah memilih untuk tidak menggantikan video semasa anda dengan Wikia Video yang berlesen. Adakah anda ingin teruskan?', # Fuzzy
 	'lvs-confirm-undo-swap-title' => 'Sahkan Pengunduran',
 	'lvs-confirm-undo-swap-message' => 'Adakah anda benar-benar mahu memulihkan video asal?',
 	'lvs-confirm-undo-keep-title' => 'Sahkan Pengunduran',
@@ -963,6 +963,13 @@ $messages['sv'] = array(
 	'lvs-no-monobook-support' => 'Denna sida stöds inte i Monobook. För att komma åt den i Wikia-layout, $1. Detta kommer inte att ändra dina utseendeinställningar.',
 	'lvs-click-here' => 'klicka här',
 	'lvs-new-flag' => 'Ny',
+);
+
+/** Turkish (Türkçe)
+ * @author Rapsar
+ */
+$messages['tr'] = array(
+	'lvs-history-button-text' => 'Geçmiş',
 );
 
 /** Ukrainian (українська)

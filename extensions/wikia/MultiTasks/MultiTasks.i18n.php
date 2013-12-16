@@ -128,6 +128,7 @@ $messages['en'] = array(
 $messages['qqq'] = array(
 	'multiwikiedit_button' => '{{Identical|Edit}}',
 	'multiwikiedit_on' => 'Label for dropdown menu where user can select type of wikis to run script on',
+	'multiwikiedit_all_wikis' => '{{Identical|All wikis}}',
 	'multiwikiedit_success_subtitle' => '{{Identical|For $1}}',
 	'multiwikiedit_max_display_size' => 'Parameters:
 * $1 is a number of pages.',
@@ -136,6 +137,7 @@ $messages['qqq'] = array(
 	'multidelete_button' => '{{Identical|Delete}}',
 	'multidelete_select_all' => '{{Identical|Select all}}',
 	'multidelete_reason' => 'none',
+	'multidelete_all_wikis' => '{{Identical|All wikis}}',
 	'multidelete_success_subtitle' => '{{Identical|For $1}}',
 	'multidelete_split_results' => 'If number of articles to run the script on exceeds a maximum number, user receives a message informing them that the script will be split up into a number of tasks. 
 Parameters:
@@ -625,7 +627,7 @@ $messages['ckb'] = array(
 	'multidelete_button' => 'سڕینەوە',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Darth Daron
  * @author Dontlietome7
  */

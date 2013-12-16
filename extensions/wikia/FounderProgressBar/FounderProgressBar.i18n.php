@@ -105,6 +105,7 @@ $messages['qqq'] = array(
 
 /** Arabic (العربية)
  * @author Achraf94
+ * @author Claw eg
  * @author Kuwaity26
  */
 $messages['ar'] = array(
@@ -130,6 +131,7 @@ $messages['ar'] = array(
 	'founderprogressbar-themedesigner-visit-label' => 'تخصيص مظهرك',
 	'founderprogressbar-mainpage-edit-label' => 'ملء الصفحة الرئيسية الخاصة بك',
 	'founderprogressbar-photo-add10-label' => 'ابلغ {{PLURAL:$1|صورة|صور}}',
+	'founderprogressbar-category-add3-label' => 'الوصول إلى$1 {{PLURAL:$1|تصنيف|تصنيفات}}',
 	'founderprogressbar-commcentral-visit-label' => 'زيارة مركز المؤسسين والإداريين',
 	'founderprogressbar-wikiactivity-visit-label' => 'زيارة نشاط الويكي',
 	'founderprogressbar-profile-edit-label' => 'ملء صفحتك الشخصية',
@@ -309,7 +311,7 @@ $messages['ce'] = array(
 	'founderprogressbar-browse-page-name' => 'Гучé яккха',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Chmee2
  */
 $messages['cs'] = array(
@@ -2089,6 +2091,12 @@ $messages['vi'] = array(
 	'founderprogressbar-category-add5-description' => 'Bây giờ mà bạn đã thêm vào nhiều trang wiki của bạn, bạn sẽ cần loại khác để giữ cho nó tất cả tổ chức.',
 	'founderprogressbar-gallery-add-label' => 'Thêm thư viện hình ảnh',
 	'founderprogressbar-gallery-add-description' => 'Thêm nhiều hình ảnh là một cách tuyệt vời để giới thiệu nhiều hình ảnh trong một khu vực của một trang. Hơn nữa, nó là thú vị để trộn lên một cách bạn hiển thị hình ảnh trên wiki của bạn để giữ cho nó thú vị cho những người ghé thăm.',
+	'founderprogressbar-topnav-edit-label' => 'Tùy chỉnh điều hướng của bạn',
+	'founderprogressbar-topnav-edit-description' => 'Các trình đơn thả xuống bên cạnh của wiki wordmark là wiki chuyển hướng của bạn. Bạn có thể đặt liên kết đến các trang ở đây để giúp mọi người tìm thấy trang, thể loại, blog và dễ dàng hơn trên wiki của bạn. Truy cập Trung tâm cộng đồng nếu bạn cần trợ giúp chỉnh sửa các menu.',
+	'founderprogressbar-mainpage-addslider-label' => 'Thêm một thanh trượt trang chính',
+	'founderprogressbar-mainpage-addslider-description' => 'Thanh trượt trang chính là một cách tuyệt đẹp để làm cho trang chính của bạn trông chuyên nghiệp và thêm một số hình ảnh tuyệt vời đang tìm kiếm. Mỗi người trong số các bức ảnh có thể liên kết ra đến một trang do đó, nó cũng là một cách tuyệt vời để làm nổi bật các trang wiki bạn đang tự hào nhất. Kiểm tra ra <a href="http://community.wikia.com/wiki/User_blog:Susan_Taylor/Tips_to_spruce_up_your_main_page">Susan Taylor của blog đăng bài</a> nếu bạn cần trợ giúp thay đổi kích thước hình ảnh cho thanh trượt.',
+	'founderprogressbar-commcorner-edit-label' => 'Chỉnh sửa cộng đồng Corner',
+	'founderprogressbar-commcorner-edit-description' => 'Chỉnh sửa cộng đồng góc sẽ tạo một thông báo cho người truy cập vào wiki của bạn. Nó là một nơi tuyệt vời để cho mọi người biết những gì loại của cộng đồng bạn, làm thế nào họ có thể giúp, và để làm cho thông báo.',
 	'founderprogressbar-video-add-label' => 'Thêm một video',
 	'founderprogressbar-video-add-description' => 'Video là một loại phương tiện truyền thông phổ biến sẽ giúp thu hút mọi người trên wiki của bạn. Bạn có thể tìm thấy video tuyệt vời trên YouTube, Hulu và nhiều hơn nữa. Thêm một bằng cách sử dụng tính năng và phương tiện truyền thông nút trong trình soạn thảo.',
 	'founderprogressbar-user-add5-label' => 'Đạt được 5 hồ sơ người dùng',
@@ -2113,6 +2121,9 @@ $messages['vi'] = array(
 	'founderprogressbar-bonus-photo-add10-description' => 'Thêm hình ảnh chi tiết luôn luôn là một cách tuyệt vời để tăng cường wiki của bạn. Thêm mười kiếm được tín chỉ cho công việc một tiền thưởng thêm.',
 	'founderprogressbar-bonus-page-add5-label' => 'Thêm  {{PLURAL:$1|$1 thêm page| $1  thêm trang}}',
 	'founderprogressbar-bonus-page-add5-description' => 'Những gì wiki không hưởng lợi từ thêm nội dung? Thêm 5 trang thêm kiếm được tín chỉ cho một tiền thưởng nhiệm vụ.',
+	'founderprogressbar-bonus-edit50-label' => 'Chỉnh sửa {{PLURAL:$1|$1 thêm trang|$1  thêm trang}}',
+	'founderprogressbar-bonus-edit50-description' => 'Chụp ảnh cho các ngôi sao và nhận được 50 sửa đổi nhiều hơn bạn đã có để hoàn thành nhiệm vụ tiền thưởng này.',
+	'founderprogressbar-browse-page-name' => 'Trình duyệt',
 );
 
 /** Simplified Chinese (中文（简体）‎)
