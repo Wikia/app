@@ -25,9 +25,13 @@ class ImageServingDriverMainNS extends ImageServingDriverBase {
 			'svg'
 		];
 
-		// MimeMagicLite defines all the mMediaTypes in PHP that MimeMagic
-		// defines in text files
-		$mimeTypes = new MimeMagicLite();
+		if ( $this->app->wg->UseMimeMagicLite ) {
+			// MimeMagicLite defines all the mMediaTypes in PHP that MimeMagic
+			// defines in text files
+			$mimeTypes = new MimeMagicLite();
+		} else {
+			$mimeTypes = new MimeMagic();
+		}
 
 		foreach ( ['AUDIO', 'VIDEO'] as $type ) {
 			foreach($mimeTypes->mMediaTypes[$type] as $mime) {
