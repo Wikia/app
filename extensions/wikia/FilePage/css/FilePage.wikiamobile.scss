@@ -12,6 +12,15 @@
 }
 .fullImageLink {
 	margin-top: 10px;
+
+	//Fix for Ooyala Player hardcoded inline width
+	div[id*="ooyalaplayer"]{
+		width: 100% !important;
+
+		.innerWrapper{
+			max-width: 100%;
+		}
+	}
 }
 .filehistory {
 	.videoInfo {
