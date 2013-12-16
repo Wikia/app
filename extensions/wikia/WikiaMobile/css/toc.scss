@@ -17,6 +17,7 @@ $dark-border: #D8D8D8;
 	bottom:0;
 	width: 260px;
 	background: $toc-background;
+	z-index: 10001; //For overlaying Ooyala Videos (z-index 10000)
 
 	counter-reset: level1, level2, level3;
 
@@ -37,7 +38,7 @@ $dark-border: #D8D8D8;
 		-moz-transform: translate(0);
 		transform: translate(0);
 
-		z-index: 11;
+		z-index: 10003; //For overlaying Curtain (z-index 10002)
 	}
 
 	header {
