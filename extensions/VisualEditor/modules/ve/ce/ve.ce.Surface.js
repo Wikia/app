@@ -958,7 +958,7 @@ ve.ce.Surface.prototype.onModelSelect = function ( selection ) {
 			// to a normal selection (in the document node), give the focus back to the
 			// document node.
 			this.documentView.getDocumentNode().$element[0].focus();
-       }
+		}
 	}
 	if ( next ) {
 		next.setFocused( true );
