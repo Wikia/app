@@ -55,7 +55,7 @@ function(
 		currentWrapperStyle,
 		wkMdlImages,
 		qs = querystring(),
-		shrImg = qs.getVal( 'file' ),
+		shrImg = encodeURIComponent( qs.getVal( 'file' ) ),
 		// index of shared file in array of videos/images on page
 		shrImgIdx = -1,
 		shareBtn,
@@ -278,7 +278,7 @@ function(
 								var videoData = data.embedCode;
 
 								if ( videoData.html ) {
-									videoData.html = '<div class=player>' + videoData.html + '</div>';
+									videoData.html = '<div class=player>' + videoData.html.replace(/ (width|height)="\d+"/gi, '') + '</div>';
 								}
 
 								videoCache[imgTitle] = videoData;
