@@ -278,7 +278,7 @@ function(
 								var videoData = data.embedCode;
 
 								if ( videoData.html ) {
-									videoData.html = '<div class=player>' + videoData.html.replace(/ (width|height)="\d+"/gi, '') + '</div>';
+									videoData.html = '<div class=player>' + videoData.html + '</div>';
 								}
 
 								videoCache[imgTitle] = videoData;
