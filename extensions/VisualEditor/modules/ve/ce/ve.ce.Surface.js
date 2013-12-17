@@ -953,6 +953,12 @@ ve.ce.Surface.prototype.onModelSelect = function ( selection ) {
 	if ( previous ) {
 		previous.setFocused( false );
 		this.focusedNode = null;
+		if ( !next ) {
+			// If the selection is moving from a focusable node (in the paste target) back
+			// to a normal selection (in the document node), give the focus back to the
+			// document node.
+			this.documentView.getDocumentNode().$element[0].focus();
+       }
 	}
 	if ( next ) {
 		next.setFocused( true );
