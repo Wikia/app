@@ -74,16 +74,36 @@ class SpecialPromoteController extends WikiaSpecialPageController {
 	}
 
 	public function getUploadForm() {
-		global $wgEnableUploads;
-
-		$this->checkAccess = $this->checkAccess();
-
-		if ( ! empty( $wgEnableUploads ) ) {
-			$this->uploadType = $this->request->getVal( 'uploadType' );
-			$this->imageIndex = $this->request->getVal( 'imageIndex', null );
-		} else {
-			$this->overrideTemplate( 'uploadsDisabled' );
+		if ( !$this->checkAccess() ) {
+			$this->setVal('errorMessage', wfMessage('promote-wrong-rights')->plain() );
+			return;
 		}
+		if ( empty( $this->wg->EnableUploads ) ) {
+			$this->setVal('errorMessage', wfMessage( 'promote-upload-image-uploads-disabled' )->plain() );
+			return;
+		}
+
+		$uploadType = $this->request->getVal( 'uploadType' );
+		$templateData = [
+			'wgScriptPath' => $this->wg->ScriptPath,
+			'uploadType' => $uploadType,
+			'imageIndex' => $this->request->getVal( 'imageIndex', null )
+		];
+
+		if ( $uploadType == 'main' ) {
+			$this->setVal('title', wfMessage('promote-upload-main-image-form-modal-title')->plain() );
+			$templateData['copy'] = wfMessage('promote-upload-main-image-form-modal-copy')->plain();
+		} else {
+			$this->setVal('title', wfMessage('promote-upload-additional-image-form-modal-title')->plain() );
+			$templateData['copy'] = wfMessage('promote-upload-additional-image-form-modal-copy')->plain();
+		}
+
+		$this->setVal('html', ( new Wikia\Template\MustacheEngine )
+			->setPrefix( dirname( __FILE__ ) . '/templates' )
+			->setData( $templateData )
+			->render( 'SpecialPromote_getUploadForm.mustache' ) );
+		$this->setVal('labelSubmit', wfMessage('promote-upload-submit-button')->plain() );
+		$this->setVal('labelCancel', wfMessage('promote-upload-form-modal-cancel')->plain() );
 	}
 
 	public function removeTempImage() {
@@ -135,11 +155,11 @@ class SpecialPromoteController extends WikiaSpecialPageController {
 	}
 
 	public function saveData() {
-		if( !$this->checkAccess() ) {
+		//if( !$this->checkAccess() ) {
 			$this->success = false;
 			$this->error = wfMsg('promote-wrong-rights');
 			return;
-		}
+		//}
 
 		wfProfileIn(__METHOD__);
 
