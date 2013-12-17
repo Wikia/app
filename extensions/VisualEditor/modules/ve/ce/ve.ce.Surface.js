@@ -305,7 +305,12 @@ ve.ce.Surface.prototype.destroy = function () {
  * reapplied.
  */
 ve.ce.Surface.prototype.focus = function () {
-	this.documentView.getDocumentNode().$element[0].focus();
+	// Focus the documentNode for text selections, or the pasteTarget for focusedNode selections
+	if ( this.focusedNode ) {
+		this.$pasteTarget[0].focus();
+	} else {
+		this.documentView.getDocumentNode().$element[0].focus();
+	}
 	// documentOnFocus takes care of the rest
 };
 
@@ -318,7 +323,7 @@ ve.ce.Surface.prototype.focus = function () {
  * @param {Event} e Focus event (native event, NOT a jQuery event!)
  */
 ve.ce.Surface.prototype.documentOnFocus = function ( e ) {
-	if ( e.target === this.documentView.getDocumentNode().$element[0] ) {
+	if ( e.target === this.documentView.getDocumentNode().$element[0] && !this.focusedNode ) {
 		// The document node was focused (as opposed to the paste target)
 		// Restore the selection
 		this.onModelSelect( this.surface.getModel().getSelection() );
@@ -942,27 +947,37 @@ ve.ce.Surface.prototype.onModelSelect = function ( selection ) {
 			next = start;
 		}
 	}
-	// Update nodes if something changed
-	if ( previous !== next ) {
-		if ( previous ) {
-			previous.setFocused( false );
-			this.focusedNode = null;
+	// Update nodes
+	// Even update this if previous === next, because this function is called by the focus handler
+	// to restore a lost selection state
+	if ( previous ) {
+		previous.setFocused( false );
+		this.focusedNode = null;
+		if ( !next ) {
+			// If the selection is moving from a focusable node (in the paste target) back
+			// to a normal selection (in the document node), give the focus back to the
+			// document node.
+			this.documentView.getDocumentNode().$element[0].focus();
 		}
-		if ( next ) {
-			next.setFocused( true );
-			this.focusedNode = start;
-			// As FF won't fire a copy event with nothing selected, make
-			// a dummy selection of one space in the pasteTarget.
-			// onCopy will ignore this native selection and use the DM selection
-			this.$pasteTarget.text( ' ' );
-			rangySel = rangy.getSelection( this.getElementDocument() );
-			rangyRange = rangy.createRange( this.getElementDocument() );
-			rangyRange.setStart( this.$pasteTarget[0], 0 );
-			rangyRange.setEnd( this.$pasteTarget[0], 1 );
-			rangySel.removeAllRanges();
-			this.$pasteTarget[0].focus();
-			rangySel.addRange( rangyRange, false );
-		}
+	}
+	if ( next ) {
+		next.setFocused( true );
+		this.focusedNode = start;
+		// As FF won't fire a copy event with nothing selected, make
+		// a dummy selection of one space in the pasteTarget.
+		// onCopy will ignore this native selection and use the DM selection
+		this.$pasteTarget.text( ' ' );
+		rangySel = rangy.getSelection( this.getElementDocument() );
+		rangyRange = rangy.createRange( this.getElementDocument() );
+		rangyRange.setStart( this.$pasteTarget[0], 0 );
+		rangyRange.setEnd( this.$pasteTarget[0], 1 );
+		rangySel.removeAllRanges();
+		this.$pasteTarget[0].focus();
+		rangySel.addRange( rangyRange, false );
+		// Since the selection is no longer in the documentNode, clear the SurfaceObserver's
+		// selection state. Otherwise, if the user places the selection back into the documentNode
+		// in exactly the same place where it was before, the observer won't consider that a change.
+		this.surfaceObserver.clear();
 	}
 
 	// If there is no focused node, use native selection, but ignore the selection if
