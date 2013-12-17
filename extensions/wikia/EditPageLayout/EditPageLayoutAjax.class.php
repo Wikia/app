@@ -122,10 +122,6 @@ class EditPageLayoutAjax {
 		$summary = $wgRequest->getText( 'summary' );
 		$summary = RequestContext::getMain()->getSkin()->formatComment( $summary, false );
 
-		// taken from EditPage.php
-		# Truncate for whole multibyte characters. +5 bytes for ellipsis
-		$summary = $wgLang->truncate( $summary, 150 );
-
 		if ($summary != '') {
 			$res['summary'] = wfMessage( 'wikia-editor-preview-editSummary' )->params( $summary )->plain();
 		}
