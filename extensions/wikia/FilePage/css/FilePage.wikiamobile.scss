@@ -14,10 +14,10 @@
 	margin-top: 10px;
 
 	//Fix for Ooyala Player hardcoded inline width
-	div[id*="ooyalaplayer"]{
+	div[id*="ooyalaplayer"] {
 		width: 100% !important;
 
-		.innerWrapper{
+		.innerWrapper {
 			max-width: 100%;
 		}
 	}
