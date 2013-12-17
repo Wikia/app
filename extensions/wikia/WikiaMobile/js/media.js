@@ -55,7 +55,7 @@ function(
 		currentWrapperStyle,
 		wkMdlImages,
 		qs = querystring(),
-		shrImg = encodeURIComponent( qs.getVal( 'file' ) ),
+		shrImg = encodeURIComponent( qs.getVal( 'file', '' ) ) || null,
 		// index of shared file in array of videos/images on page
 		shrImgIdx = -1,
 		shareBtn,
