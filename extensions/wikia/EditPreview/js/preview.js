@@ -313,12 +313,10 @@ define( 'wikia.preview', [
 				$articlePreview = contentNode.closest( '.ArticlePreview' ),
 				articlePreviewWidth = $articlePreview.width(),
 				$modalToolbar = $( '.modalToolbar' ),
-				modalToolbarWidth = $modalToolbar.width(),
-				modalToolbarLeftMargin = parseInt( $modalToolbar.css( 'margin-left' ), 10),
-				modalToolbarRightMargin = parseInt( $modalToolbar.css( 'margin-right' ), 10);
+				modalToolbarWidth = $modalToolbar.outerWidth( true );
 
 			$editPagePreviewEditSummary
-				.width( articlePreviewWidth - modalToolbarWidth - ( modalToolbarLeftMargin + modalToolbarRightMargin ) )
+				.width( articlePreviewWidth - modalToolbarWidth )
 				.html( summary );
 
 			$modalToolbar.before( $editPagePreviewEditSummary );
