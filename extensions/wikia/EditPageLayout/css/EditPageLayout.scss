@@ -361,6 +361,7 @@ body {
 
 #EditPagePreviewEditSummary {
 	display: inline-block;
+	float: left;
 	margin-top: 20px;
 	@include ellipses();
 	> p {
