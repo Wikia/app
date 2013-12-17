@@ -781,9 +781,8 @@ HTML
 			$ret = false;
 		}
 
-		// Disable for IE11 (VE-675). RTE should be gone by the time IE12 rolls out, so it's
-		// not necessary to match for future versions. Note that this also disables the use of
-		// IE compatability modes in IE11.
+		// Disable for IE 11 (VE-675). RTE should be gone by the time IE 12 rolls out, so it's
+		// not necessary to match for future versions.
 		if ( strpos( $sAgent, 'Trident/' ) !== false && strpos( $sAgent, 'rv:11.0' ) !== false ) {
 			$ret = false;
 		}
