@@ -781,6 +781,13 @@ HTML
 			$ret = false;
 		}
 
+		// Disable for IE11 (VE-675). RTE should be gone by the time IE12 rolls out, so it's
+		// not necessary to match for future versions. Note that this also disables the use of
+		// IE compatability modes in IE11.
+		if ( strpos( $sAgent, 'Trident/' ) !== false && strpos( $sAgent, 'rv:11.0' ) !== false ) {
+			$ret = false;
+		}
+
 		RTE::log(__METHOD__, $ret ? 'yes' : 'no');
 		wfProfileOut(__METHOD__);
 		return $ret;
