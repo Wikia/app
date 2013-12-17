@@ -1,4 +1,4 @@
-( function( window ) {
+(function( window ) {
 	'use strict';
 
 	window.ToolbarCustomize = window.ToolbarCustomize || {};
@@ -17,7 +17,7 @@
 			TC.OptionsTree.superclass.constructor.call( this );
 			this.el = el;
 
-			if( !isIPad ) {
+			if ( !isIPad ) {
 				this.el.sortable( {
 					axis: 'y',
 					handle: '.drag',
@@ -55,7 +55,7 @@
 		},
 
 		buildItem: function( item, level ) {
-			var type = ( item.id.substr( 0,5 ) === 'Menu:' ) ? 'menu' : 'item',
+			var type = ( item.id.substr( 0, 5 ) === 'Menu:' ) ? 'menu' : 'item',
 				cl = level ? 'list-item-indent-' + level : '',
 				html,
 				itemEl;
@@ -88,7 +88,7 @@
 				'<img src="' + wgBlankImgUrl + '" class="sprite trash">'
 			];
 
-			if( !isIPad ) {
+			if ( !isIPad ) {
 				html.push( '<img src="' + wgBlankImgUrl + '" class="sprite drag">' );
 			}
 
@@ -113,7 +113,9 @@
 
 		save: function() {
 			var $all = this.el.children( 'li' ),
-				stack = [[]],
+				stack = [
+					[]
+				],
 				level = 0;
 			$all.each( function( index, element ) {
 				element = $( element );
@@ -187,10 +189,10 @@
 
 		buildItem: function( item ) {
 			var html =
-				'<li>' +
-				'<a href="#" data-tool-id="' + $.htmlentities( item.id ) + '">' +
-				$.htmlentities( item.defaultCaption ) +
-				'</a></li>',
+					'<li>' +
+						'<a href="#" data-tool-id="' + $.htmlentities( item.id ) + '">' +
+						$.htmlentities( item.defaultCaption ) +
+						'</a></li>',
 				itemEl = $( html );
 
 			itemEl.find( 'a' ).click( $.proxy( this.onItemClick, this ) );
@@ -256,27 +258,27 @@
 		show: function() {
 			// load CSS, JS libraries and make AJAX request in one request
 			$.when(
-				$.loadJQueryAutocomplete(),
-				$.loadJQueryUI(),
-				$.getResources( [
-					$.getSassCommonURL( 'skins/oasis/css/core/ToolbarCustomize.scss' )
-				] ),
-				$.nirvana.sendRequest( {
-					controller: 'Footer',
-					method: 'ToolbarConfiguration',
-					callback: $.proxy( this.onDataLoaded, this )
-				} )
-			).
-			done( $.proxy( this.checkLoad, this ) ).
-			fail( $.proxy( this.onLoadFailure, this ) );
+					$.loadJQueryAutocomplete(),
+					$.loadJQueryUI(),
+					$.getResources( [
+						$.getSassCommonURL( 'skins/oasis/css/core/ToolbarCustomize.scss' )
+					] ),
+					$.nirvana.sendRequest( {
+						controller: 'Footer',
+						method: 'ToolbarConfiguration',
+						callback: $.proxy( this.onDataLoaded, this )
+					} )
+				).
+				done( $.proxy( this.checkLoad, this ) ).
+				fail( $.proxy( this.onLoadFailure, this ) );
 		},
 
 		onDataLoaded: function( data ) {
 			this.data = data;
 		},
 
-		onLoadFailure: function( /*req, textStatus, errorThrown*/ ) {
-			// TODO: Show Error message
+		onLoadFailure: function( req, textStatus, errorThrown ) {
+			window.GlobalNotification.show( errorThrown, 'error' );
 		},
 
 		checkLoad: function() {
@@ -285,38 +287,38 @@
 				uiFactory.init( ['modal'] ).then( function( uiModal ) {
 					var messages = self.data.messages,
 						toolsConfigurationConfig = {
-						vars: {
-							id: 'MyToolsConfigurationWrapper',
-							size: 'small',
-							content: self.data.configurationHtml,
-							title: messages['oasis-toolbar-edit-title'],
-							buttons: [
-								{
-									vars: {
-										value: messages['oasis-toolbar-edit-save'],
-										classes: ['button', 'primary'],
-										data: [
-											{
-												key: 'event',
-												value: 'save'
-											}
-										]
+							vars: {
+								id: 'MyToolsConfigurationWrapper',
+								size: 'small',
+								content: self.data.configurationHtml,
+								title: messages['oasis-toolbar-edit-title'],
+								buttons: [
+									{
+										vars: {
+											value: messages['oasis-toolbar-edit-save'],
+											classes: ['button', 'primary'],
+											data: [
+												{
+													key: 'event',
+													value: 'save'
+												}
+											]
+										}
+									},
+									{
+										vars: {
+											value: messages['oasis-toolbar-edit-cancel'],
+											data: [
+												{
+													key: 'event',
+													value: 'close'
+												}
+											]
+										}
 									}
-								},
-								{
-									vars: {
-										value: messages['oasis-toolbar-edit-cancel'],
-										data: [
-											{
-												key: 'event',
-												value: 'close'
-											}
-										]
-									}
-								}
-							]
-						}
-					};
+								]
+							}
+						};
 					uiModal.createComponent( toolsConfigurationConfig, function( toolsConfigModal ) {
 						self.w = toolsConfigModal.$content;
 						self.modal = toolsConfigModal;
@@ -363,7 +365,7 @@
 						toolsConfigModal.bind( 'save', function( event ) {
 							event.preventDefault();
 							toolsConfigModal.deactivate();
-							self.save();
+							self.save( toolsConfigModal );
 						} );
 
 						toolsConfigModal.show();
@@ -438,8 +440,8 @@
 					$( event.currentTarget ).addClass( 'hover' );
 				} );
 			}
-			el.find( '.edit-pencil' ).click( $.proxy( this.renameItem,this ) );
-			el.find( '.trash' ).click( $.proxy( this.deleteItem,this ) );
+			el.find( '.edit-pencil' ).click( $.proxy( this.renameItem, this ) );
+			el.find( '.trash' ).click( $.proxy( this.deleteItem, this ) );
 		},
 
 		renameItem: function( event ) {
@@ -452,38 +454,38 @@
 				uiFactory.init( ['modal'] ).then( function( uiModal ) {
 					var messages = self.data.messages,
 						renameItemConfig = {
-						vars: {
-							id: 'MyToolsRenameItem',
-							size: 'small',
-							content: self.data.renameItemHtml,
-							title: messages['oasis-toolbar-edit-rename-item'],
-							buttons: [
-								{
-									vars: {
-										value: messages['oasis-toolbar-edit-save'],
-										classes: ['button', 'primary'],
-										data: [
-											{
-												key: 'event',
-												value: 'save'
-											}
-										]
+							vars: {
+								id: 'MyToolsRenameItem',
+								size: 'small',
+								content: self.data.renameItemHtml,
+								title: messages['oasis-toolbar-edit-rename-item'],
+								buttons: [
+									{
+										vars: {
+											value: messages['oasis-toolbar-edit-save'],
+											classes: ['button', 'primary'],
+											data: [
+												{
+													key: 'event',
+													value: 'save'
+												}
+											]
+										}
+									},
+									{
+										vars: {
+											value: messages['oasis-toolbar-edit-cancel'],
+											data: [
+												{
+													key: 'event',
+													value: 'close'
+												}
+											]
+										}
 									}
-								},
-								{
-									vars: {
-										value: messages['oasis-toolbar-edit-cancel'],
-										data: [
-											{
-												key: 'event',
-												value: 'close'
-											}
-										]
-									}
-								}
-							]
-						}
-					};
+								]
+							}
+						};
 
 					uiModal.createComponent( renameItemConfig, function( renameItemModal ) {
 						var $inputBox = renameItemModal.$content.find( '.input-box' );
@@ -511,7 +513,7 @@
 			return false;
 		},
 
-		save: function() {
+		save: function( toolsConfigModal ) {
 			var toolbar = this.tree.save();
 			$.nirvana.sendRequest( {
 				controller: 'Footer',
@@ -520,16 +522,19 @@
 					title: window.wgPageName,
 					toolbar: toolbar
 				},
-				callback: $.proxy( this.afterSave, this )
+				callback: $.proxy( function( data, status ) {
+					this.afterSave( toolsConfigModal, data, status );
+				}, this )
 			} );
 		},
 
-		afterSave: function( data, status /*, req*/ ) {
+		afterSave: function( toolsConfigModal, data, status ) {
+			toolsConfigModal.activate();
 			if ( status === 'success' && data.status ) {
 				this.toolbar.load( data.toolbar );
 				this.modal.trigger( 'close' );
 			} else {
-				// TODO:show error to the user
+				window.GlobalNotification.show( status, 'error' );
 			}
 		}
 
