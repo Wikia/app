@@ -225,7 +225,7 @@ SpecialPromote.prototype = {
 				buttons: [
 					{
 						vars: {
-							value: $.msg('ok'),
+							value: $.msg( 'ok' ),
 							data: [
 								{
 									key: 'event',
@@ -233,7 +233,6 @@ SpecialPromote.prototype = {
 								}
 							]
 						}
-
 					}
 				]
 			}
@@ -242,8 +241,8 @@ SpecialPromote.prototype = {
 		require( [ 'wikia.ui.factory' ], function ( uiFactory ) {
 			uiFactory.init( 'modal' ).then( function ( uiModal ) {
 				uiModal.createComponent( modalConfig, function ( errorModal ) {
-					if ( typeof( onCloseCallback ) === 'function') {
-						errorModal.bind('beforeClose', onCloseCallback);
+					if ( typeof( onCloseCallback ) === 'function' ) {
+						errorModal.bind( 'beforeClose', onCloseCallback );
 					}
 					errorModal.show();
 				} );
@@ -254,7 +253,7 @@ SpecialPromote.prototype = {
 	showImageModal: function ( response ) {
 		'use strict';
 
-		if (response.errorMessage !== undefined && response.errorMessage.length) {
+		if ( response.errorMessage !== undefined && response.errorMessage.length ) {
 			this.showErrorModal( response.errorMessage );
 		} else {
 
@@ -289,7 +288,6 @@ SpecialPromote.prototype = {
 										}
 									]
 								}
-
 							}
 						]
 					}
@@ -301,7 +299,7 @@ SpecialPromote.prototype = {
 					uiModal.createComponent( modalConfig, function ( loginModal ) {
 						SpecialPromote.$modal = loginModal;
 
-						loginModal.bind('submit', $.proxy(that.saveAvatarAIM, that));
+						loginModal.bind( 'submit', $.proxy( that.saveAvatarAIM, that ) );
 						loginModal.show();
 					} );
 				} );
@@ -424,10 +422,10 @@ SpecialPromote.prototype = {
 			that = this;
 
 		$.AIM.submit( form, {
-			onStart: $.proxy(function () {
-				submitBtn.attr('disabled', 'disabled');
-			}, this),
-			onComplete:  $.proxy(function ( response ) {
+			onStart: $.proxy( function () {
+				submitBtn.attr( 'disabled', 'disabled' );
+			}, this ),
+			onComplete: $.proxy( function ( response ) {
 				var errorContainer = $( '#specialPromoteModal .error' ),
 					unknownErrorMsg = $.msg( 'promote-error-upload-unknown-error' );
 
@@ -436,7 +434,7 @@ SpecialPromote.prototype = {
 
 					if ( typeof(response.fileName) !== 'undefined' && typeof(response.fileUrl) !== 'undefined' ) {
 						that.setTempFile( response );
-						SpecialPromote.$modal.trigger('close');
+						SpecialPromote.$modal.trigger( 'close' );
 					} else {
 						if ( typeof(response.errorMessages[0]) === 'undefined' ) {
 							errorContainer.text( unknownErrorMsg );
@@ -449,7 +447,7 @@ SpecialPromote.prototype = {
 					$().log( e );
 				}
 				$( submitBtn ).removeAttr( 'disabled' );
-			}, this)
+			}, this )
 		} );
 
 		form.submit();
@@ -673,7 +671,7 @@ SpecialPromote.prototype = {
 		}
 
 		$.getMessages( 'SpecialPromote', $.proxy( function () {
-			this.showErrorModal( $.msg( msg ), function() {
+			this.showErrorModal( $.msg( msg ), function () {
 				$( '.UploadTool' ).stopThrobbing();
 			} );
 		}, this ) );
