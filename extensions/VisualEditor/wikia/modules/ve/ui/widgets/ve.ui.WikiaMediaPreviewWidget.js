@@ -1,42 +1,56 @@
 /*!
  * VisualEditor UserInterface WikiaMediaPreviewWidget class.
+ *
+ * @todo: fill in rest of docs
  */
 
-/* global mw */
+/* global mw, require */
 
-
-ve.ui.WikiaMediaPreviewWidget = function VeUiWikiaMediaPreviewWidget( model, config ) {
-	// Configuration initialization
-	config = config || {};
-
+ve.ui.WikiaMediaPreviewWidget = function VeUiWikiaMediaPreviewWidget( model ) {
 	// Parent constructor
-	ve.ui.Widget.call( this, config );
+	ve.ui.Widget.call( this );
 
-	ve.bind( this.onRequestPreviewDone, this );
+	this.model = model;
 
-	this.request = $.ajax( {
+	// todo: should we use something that's already built?
+	this.$overlay = this.$$( '<div>' )
+		.addClass( 've-ui-wikiaMediaPreviewWidget-overlay' );
+
+	this.$videoWrapper = this.$$( '<div>' )
+		.addClass( 've-ui-wikiaMediaPreviewWidget-videoWrapper' );
+
+	this.$body = this.$$( 'body' );
+
+	if( model.type === 'video' ) {
+		this.requestVideoPreview();
+	} else {
+		// handle images
+		console.log( model );
+	}
+};
+
+/* Inheritance */
+
+ve.inheritClass( ve.ui.WikiaMediaPreviewWidget, ve.ui.Widget );
+
+/* Methods */
+
+ve.ui.WikiaMediaPreviewWidget.prototype.requestVideoPreview = function() {
+
+	$.ajax( {
 		'url': mw.util.wikiScript( 'api' ),
 		'data': {
 			'format': 'json',
 			'action': 'mediapreview',
-			'provider': model.provider,
-			'videoId': model.videoId,
-			'title': model.title
+			'provider': this.model.provider,
+			'videoId': this.model.videoId,
+			'title': this.model.title
 		}
 	} )
-		.done( ve.bind( this.onRequestPreviewDone, this ) )
-		.fail( ve.bind( this.onRequestPreviewFail, this ) );
+	.done( ve.bind( this.onRequestVideoPreviewDone, this ) )
+	.fail( ve.bind( this.onRequestFail, this ) );
 
-
-	// figure out if it should be $$ or what
-	this.$overlay = this.$$( '<div>' )
-		.addClass( 've-ui-wikiaMediaPreviewWidget-overlay' );
-
-	// TODO: check if there's a different way I should be calling $( 'body' )
-	$( 'body' ).append( this.$overlay );
 };
-
-/* Methods */
 
 /**
  * Handle video preview request promise.done
@@ -44,8 +58,16 @@ ve.ui.WikiaMediaPreviewWidget = function VeUiWikiaMediaPreviewWidget( model, con
  * @method
  */
 
-ve.ui.WikiaMediaPreviewWidget.prototype.onRequestPreviewDone = function() {
-	alert( 'done' );
+ve.ui.WikiaMediaPreviewWidget.prototype.onRequestVideoPreviewDone = function( data ) {
+	console.log( data );
+
+	this.addOverlay();
+	var $wrapper = this.$videoWrapper.appendTo( this.$overlay ),
+		videoInstance;
+
+	require( ['wikia.videoBootstrap'], function( VideoBootstrap ) {
+		videoInstance = new VideoBootstrap( $wrapper[0], window.JSON.parse( data.mediapreview.embedCode ), 've-preview' );
+	} );
 };
 
 /**
@@ -54,10 +76,11 @@ ve.ui.WikiaMediaPreviewWidget.prototype.onRequestPreviewDone = function() {
  * @method
  */
 
-ve.ui.WikiaMediaPreviewWidget.prototype.onRequestPreviewFail = function() {
+ve.ui.WikiaMediaPreviewWidget.prototype.onRequestFail = function() {
 	alert( 'error' );
 };
 
-/* Inheritance */
-
-ve.inheritClass( ve.ui.WikiaMediaPreviewWidget, ve.ui.Widget );
+ve.ui.WikiaMediaPreviewWidget.prototype.addOverlay = function() {
+	// TODO: check if there's a different way I should be adding an overlay
+	this.$body.append( this.$overlay );
+};

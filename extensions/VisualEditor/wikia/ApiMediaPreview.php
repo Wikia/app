@@ -33,11 +33,13 @@ class ApiMediaPreview extends ApiBase {
 			RepoGroup::singleton()->getLocalRepo()
 		);
 
+		// forceMime makes sure the correct File properties are set and sent to the handler when afterSetProps is called
+		$tempVideo->forceMime( 'video/' . $provider );
 		$tempVideo->setVideoId( $videoId );
-		$tempVideo->setProps( array( 'mime' => 'video/' . $provider ) );
+		$tempVideo->afterSetProps();
 
 		return array(
-			'embedCode' => json_encode( $tempVideo->getEmbedCode( self::PREVIEW_WIDTH, false, false, true ) ),
+			'embedCode' => json_encode( $tempVideo->getEmbedCode( self::PREVIEW_WIDTH, true, true, true ) ),
 		);
 	}
 
