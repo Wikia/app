@@ -485,15 +485,16 @@ $messages['tr'] = array(
  * @author Andriykopanytsia
  * @author Steve.rusyn
  * @author SteveR
+ * @author Ua2004
  */
 $messages['uk'] = array(
-	'taskmanager' => 'Показ і управління фоновими завданнями',
-	'taskmanager_title' => 'Показ і управління фоновими завданнями',
+	'taskmanager' => 'Перегляд і керування фоновими завданнями',
+	'taskmanager_title' => 'Перегляд і керування фоновими завданнями',
 	'taskmanager_tasklist' => 'Повернутися до списку завдань',
-	'right-taskmanager' => 'Можна відображати фонові завдання',
-	'right-taskmanager-action' => 'Можна управляти фоновими завданнями',
-	'taskmanager-invert' => 'Інвертувати виділення',
-	'action-taskmanager' => 'показ і управління фоновими завданнями',
+	'right-taskmanager' => 'Переглядати фонові завдання',
+	'right-taskmanager-action' => 'Керувати фоновими завданнями',
+	'taskmanager-invert' => 'Інвертувати виділене',
+	'action-taskmanager' => 'перегляд і керування фоновими завданнями',
 );
 
 /** Vietnamese (Tiếng Việt)

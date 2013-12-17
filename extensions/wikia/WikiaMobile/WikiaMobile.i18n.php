@@ -596,6 +596,7 @@ $1',
 
 /** Galician (galego)
  * @author Toliño
+ * @author Vivaelcelta
  */
 $messages['gl'] = array(
 	'wikiamobile-search' => 'Procurar',
@@ -611,6 +612,7 @@ $messages['gl'] = array(
 	'wikiamobile-back' => 'Volver',
 	'wikiamobile-hide-section' => 'agochar',
 	'wikiamobile-profile' => 'Perfil',
+	'wikiamobile-anonymous-edited-by' => 'Anónimo',
 	'wikiamobile-footer-link-lifestyle' => '[[w:c:www:Lifestyle|Estilo de vida]]',
 	'wikiamobile-footer-link-entertainment' => '[[w:c:www:Entertainment|Lecer]]',
 	'wikiamobile-footer-link-videogames' => '[[w:c:www:Video_Games|Xogos]]',
@@ -634,6 +636,7 @@ deberías botar un ollo a isto:
 	'wikiamobile-video-views-counter' => '$1 {{PLURAL:$1|vista|vistas}}',
 	'wikiamobile-video-not-friendly-header' => 'Vaites!',
 	'wikiamobile-video-not-friendly' => 'Sentímolo, este vídeo non está dispoñible para o móbil.',
+	'wikiamobile-toc-header' => 'táboa de contidos',
 	'wikiamobile-ad-label' => 'anuncio',
 	'wikiamobile-image-not-loaded' => 'A imaxe non está dispoñible',
 	'wikiamobile-shared-file-not-available' => 'Vaites! Este elemento xa non está dispoñible. Pero agora que está aquí, explore o wiki!',
@@ -880,6 +883,7 @@ $messages['mr'] = array(
 
 /** Malay (Bahasa Melayu)
  * @author Anakmalaysia
+ * @author SNN95
  */
 $messages['ms'] = array(
 	'wikiamobile-search' => 'Cari',
@@ -895,6 +899,9 @@ $messages['ms'] = array(
 	'wikiamobile-back' => 'Kembali',
 	'wikiamobile-hide-section' => 'sorokkan',
 	'wikiamobile-profile' => 'Profil',
+	'wikiamobile-last-edited-on' => 'Kemaskini terakhir pada $1',
+	'wikiamobile-last-edited-by' => 'oleh $1',
+	'wikiamobile-anonymous-edited-by' => 'Tanpa nama',
 	'wikiamobile-footer-link-lifestyle' => '[[w:c:www:Lifestyle|Gaya Hidup]]',
 	'wikiamobile-footer-link-entertainment' => '[[w:c:www:Entertainment|Hiburan]]',
 	'wikiamobile-footer-link-videogames' => '[[w:c:www:Video_Games|Permainan]]',
@@ -918,6 +925,7 @@ apa kata anda tengok yang ini pula:
 	'wikiamobile-video-views-counter' => 'Dilihat $1 kali',
 	'wikiamobile-video-not-friendly-header' => 'Maaf!',
 	'wikiamobile-video-not-friendly' => 'Video ini tidak boleh ditonton secara mudah alih.',
+	'wikiamobile-toc-header' => 'jadual isi kandungan',
 	'wikiamobile-ad-label' => 'iklan',
 	'wikiamobile-image-not-loaded' => 'Gambar tidak tersedia',
 	'wikiamobile-shared-file-not-available' => 'Maaf, perkara ini tidak lagi wujud, tetapi memandangkan anda berada di sini, terokailah wiki ini!',
@@ -1319,6 +1327,9 @@ $messages['sv'] = array(
 	'wikiamobile-back' => 'Tillbaka',
 	'wikiamobile-hide-section' => 'dölj',
 	'wikiamobile-profile' => 'Profil',
+	'wikiamobile-last-edited-on' => 'Redigerades senast den $1',
+	'wikiamobile-last-edited-by' => 'av $1',
+	'wikiamobile-anonymous-edited-by' => 'Anonym',
 	'wikiamobile-footer-link-lifestyle' => '[[w:c:www:Lifestyle|Livsstil]]',
 	'wikiamobile-footer-link-entertainment' => '[[w:c:www:Entertainment|Underhållning]]',
 	'wikiamobile-footer-link-videogames' => '[[w:c:www:Video_Games|Spel]]',
@@ -1342,6 +1353,7 @@ $1',
 	'wikiamobile-video-views-counter' => '$1 {{PLURAL:$1|visning|visningar}}',
 	'wikiamobile-video-not-friendly-header' => 'Attans!',
 	'wikiamobile-video-not-friendly' => 'Tyvärr, detta videoklipp är inte tillgänglig för mobiler.',
+	'wikiamobile-toc-header' => 'Innehållsförteckning',
 	'wikiamobile-ad-label' => 'annons',
 	'wikiamobile-image-not-loaded' => 'Bilden är inte tillgänglig',
 	'wikiamobile-shared-file-not-available' => 'Hoppsan, detta objekt finns inte tillgängligt längre, men nu när du är här kan du utforska wikin!',
@@ -1530,6 +1542,9 @@ $messages['vi'] = array(
 	'wikiamobile-back' => 'Quay lại',
 	'wikiamobile-hide-section' => 'Ẩn',
 	'wikiamobile-profile' => 'Hồ sơ',
+	'wikiamobile-last-edited-on' => 'Lần cuối sửa lúc $1',
+	'wikiamobile-last-edited-by' => 'bởi $1',
+	'wikiamobile-anonymous-edited-by' => 'Vô danh',
 	'wikiamobile-footer-link-lifestyle' => '[[w:c:www:Lifestyle|Lối sống]]',
 	'wikiamobile-footer-link-entertainment' => '[[w:c:www:Entertainment|Giải trí]]',
 	'wikiamobile-footer-link-videogames' => '[[w:c:www:Video_Games|Trò chơi điện tử]]',
@@ -1553,6 +1568,7 @@ $1',
 	'wikiamobile-video-views-counter' => '$1 {{PLURAL:$1|lượt truy cập|lượt truy cập}}',
 	'wikiamobile-video-not-friendly-header' => 'Oh lỗi!',
 	'wikiamobile-video-not-friendly' => 'Xin lỗi, video này không có sẵn trên điện thoại di động.',
+	'wikiamobile-toc-header' => 'bảng nội dung',
 	'wikiamobile-ad-label' => 'quảng cáo',
 	'wikiamobile-image-not-loaded' => 'Bức ảnh này không còn tồn tại',
 	'wikiamobile-shared-file-not-available' => 'Rất tiếc, mục này là không còn tồn tại có sẵn, nhưng bây giờ mà bạn đang ở đây, khám phá wiki!',

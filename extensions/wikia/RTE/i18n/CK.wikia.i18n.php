@@ -3764,6 +3764,7 @@ $messages['tt-cyrl'] = array(
  * @author Andriykopanytsia
  * @author Steve.rusyn
  * @author SteveR
+ * @author Ua2004
  * @author Тест
  */
 $messages['uk'] = array(
@@ -3813,10 +3814,10 @@ $messages['uk'] = array(
 	'rte-ck-link-status-external' => 'Зовнішнє посилання',
 	'rte-ck-media-delete' => 'видалити',
 	'rte-ck-media-edit' => 'змінити',
-	'rte-ck-modeSwitch-toSource' => 'Джерело',
+	'rte-ck-modeSwitch-toSource' => 'Вихідний код',
 	'rte-ck-modeSwitch-toWysiwyg' => 'Візуальний',
-	'rte-ck-modeSwitch-toSourceTooltip' => 'Перемикання в режим Джерела',
-	'rte-ck-modeSwitch-toWysiwygTooltip' => 'Перемикання у Візуальний режим',
+	'rte-ck-modeSwitch-toSourceTooltip' => 'Режим вихідного коду',
+	'rte-ck-modeSwitch-toWysiwygTooltip' => 'Візуальний режим',
 	'rte-ck-modeSwitch-error' => 'Сталася помилка під час перемикання режимів. Будь ласка, спробуйте ще раз.',
 	'rte-ck-photoGallery-gallery' => 'Галерея',
 	'rte-ck-photoGallery-slideshow' => 'Показ слайдів',

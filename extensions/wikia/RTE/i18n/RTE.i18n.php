@@ -820,7 +820,7 @@ $messages['uk'] = array(
  */
 $messages['vi'] = array(
 	'rte-edgecase-info-title' => 'Chế độ nguồn yêu cầu',
-	'rte-edgecase-info' => 'Chỉnh sửa nội dung bằng trực quan đã bị vô hiệu do trang chứa mã phức tạp.',
+	'rte-edgecase-info' => 'Chỉnh sửa nội dung bằng chế độ trực quan đã bị vô hiệu hóa do trang chứa nhiều mã phức tạp.',
 );
 
 /** Chinese (中文)

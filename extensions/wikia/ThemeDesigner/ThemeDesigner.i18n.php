@@ -869,7 +869,7 @@ $messages['gl'] = array(
 	'themedesigner-tile-background' => 'mosaico',
 	'themedesigner-fix-background' => 'fixo',
 	'themedesigner-not-split-background' => 'non dividir',
-	'themedesigner-rules-not-split-background' => "Se o gráfico de fondo é máis largo que $1px, hai unha opción para ''non'' dividir a imaxe.",
+	'themedesigner-rules-not-split-background' => "Se o gráfico de fondo é máis largo que $1px, hai unha opción para ''non'' dividir a imaxe.", # Fuzzy
 	'themedesigner-transparency' => 'transparencia',
 	'themedesigner-tab-theme' => 'Tema visual',
 	'themedesigner-tab-customize' => 'Personalizar',
@@ -884,7 +884,7 @@ $messages['gl'] = array(
 	'themedesigner-button-ok' => 'Aceptar',
 	'themedesigner-pick-an-image' => 'Elixir unha imaxe',
 	'themedesigner-dont-use-a-background' => 'Non usar unha imaxe de fondo',
-	'themedesigner-upload-your-own' => 'Subir o seu',
+	'themedesigner-upload-your-own' => 'Subir o teu',
 	'themedesigner-button-upload' => 'Cargar',
 	'themedesigner-button-upload-wordmark' => 'Subir',
 	'themedesigner-rules-background' => 'jpg, gif ou png. O máximo {{PLURAL:$1|é $1|son $1}} kB',
@@ -1271,14 +1271,18 @@ $messages['mn'] = array(
 
 /** Malay (Bahasa Melayu)
  * @author Anakmalaysia
+ * @author SNN95
  */
 $messages['ms'] = array(
+	'action-themedesigner' => 'akses Reka Bentuk Tema',
 	'themedesigner-or' => 'atau',
 	'themedesigner-desc' => 'Membolekan pentadbir wiki mereka bentuk tema untuk wiki',
 	'themedesigner-title' => 'Pereka Tema Wikia',
 	'themedesigner-background' => 'Latar belakang',
 	'themedesigner-page' => 'Laman',
-	'themedesigner-color' => 'warna', # Fuzzy
+	'themedesigner-color' => 'utama',
+	'themedesigner-color-middle' => 'tengah',
+	'themedesigner-rules-color-middle' => 'Warna yang berbeza bagi tengah halaman',
 	'themedesigner-graphic' => 'grafik',
 	'themedesigner-buttons' => 'butang',
 	'themedesigner-links' => 'pautan',
@@ -1290,6 +1294,8 @@ $messages['ms'] = array(
 	'themedesigner-large' => 'Besar',
 	'themedesigner-tile-background' => 'jubin',
 	'themedesigner-fix-background' => 'jangan tatal',
+	'themedesigner-not-split-background' => 'tidak berpecah',
+	'themedesigner-rules-not-split-background' => "Jika grafik latar belakang anda lebih luas daripada $1px, anda diberi pilihan untuk ''tidak'' membahagikan imej.",
 	'themedesigner-transparency' => 'kelutsinaran',
 	'themedesigner-tab-theme' => 'Tema',
 	'themedesigner-tab-customize' => 'Ubah suai',
@@ -1314,7 +1320,7 @@ $messages['ms'] = array(
 	'themedesigner-button-save' => 'Simpan',
 	'themedesigner-upload-a-graphic' => 'muat naik grafik',
 	'themedesigner-rules-wordmark' => 'Muat naik fail .png yang besarnya 250 x 65 piksel ke bawah.',
-	'themedesigner-rules-favicon' => 'Muat naik fail .iko 16x16 piksel. Favikon merupakan ikon kecil yang muncul pada tab pelayar wiki anda. [http://community.wikia.com/wiki/Help:Favicon Ketahui lebih lanjut.]', # Fuzzy
+	'themedesigner-rules-favicon' => 'Muat naik fail .iko 16x16 piksel. Favikon merupakan ikon kecil yang muncul pada tab pelayar wiki anda. [http://community.wikia.com/wiki/Help:Favicon Ketahui lebih lanjut.]',
 	'themedesigner-dont-use-a-graphic' => 'buang',
 	'themedesigner-history-item' => '$1 oleh $2',
 	'themedesigner-button-change-text' => 'Ubah teks',
@@ -1327,6 +1333,7 @@ $messages['ms'] = array(
 	'themedesigner-favicon-heading' => 'Favikon',
 	'themedesigner-wodmark-preview' => 'Pralihat',
 	'themedesigner-wordmark-preview-error' => 'Maaf, tajuk wiki tidak boleh dibiarkan kosong. Sila berikan nama kepada wiki sebelum menyimpan.',
+	'themedesigner-upload-disabled' => 'Maaf, kami menyahdayakan pemuat naik buat sementara waktu. Semak semula selepas ini untuk membuat perubahan',
 );
 
 /** Burmese (မြန်မာဘာသာ)
@@ -1527,7 +1534,7 @@ $messages['pl'] = array(
 	'themedesigner-tile-background' => 'sąsiadująco',
 	'themedesigner-fix-background' => 'nieruchomy',
 	'themedesigner-not-split-background' => 'nie dziel',
-	'themedesigner-rules-not-split-background' => 'Jeśli obraz tła jest szerszy niż $1px, możesz nie dzielić obrazu.',
+	'themedesigner-rules-not-split-background' => 'Jeśli obraz tła jest szerszy niż $1px, możesz nie dzielić obrazu.', # Fuzzy
 	'themedesigner-transparency' => 'przezroczystość',
 	'themedesigner-tab-theme' => 'Motyw',
 	'themedesigner-tab-customize' => 'Dostosuj',
@@ -1953,7 +1960,7 @@ $messages['sv'] = array(
 	'themedesigner-tile-background' => 'ruta',
 	'themedesigner-fix-background' => 'fix',
 	'themedesigner-not-split-background' => 'dela inte',
-	'themedesigner-rules-not-split-background' => "Om din bakgrundsbild är bredare än $1px kan du välja att ''inte'' dela upp bilden.",
+	'themedesigner-rules-not-split-background' => "Om din bakgrundsbild är bredare än $1px kan du välja att ''inte'' dela upp bilden.", # Fuzzy
 	'themedesigner-transparency' => 'genomskinlighet',
 	'themedesigner-tab-theme' => 'Tema',
 	'themedesigner-tab-customize' => 'Anpassa',
@@ -2160,6 +2167,7 @@ $messages['uk'] = array(
  * @author XiaoQiaoGrace
  */
 $messages['vi'] = array(
+	'action-themedesigner' => 'truy cập vào chủ đề thiết kế',
 	'themedesigner-or' => 'hoặc',
 	'themedesigner-desc' => 'Cho phép các bảo quản viên wiki thiết kế chủ đề cho một wiki',
 	'themedesigner-title' => 'Thiết kế Chủ đề Wikia',
@@ -2180,7 +2188,7 @@ $messages['vi'] = array(
 	'themedesigner-tile-background' => 'lặp nền',
 	'themedesigner-fix-background' => 'giữa',
 	'themedesigner-not-split-background' => 'không phân chia',
-	'themedesigner-rules-not-split-background' => "Nếu nền đồ họa của bạn rộng hơn $1px bạn có một tùy chọn ''không'' chia tách một hình ảnh.",
+	'themedesigner-rules-not-split-background' => "Nếu nền đồ họa của bạn rộng hơn $1px bạn có một tùy chọn ''không'' chia tách một hình ảnh.", # Fuzzy
 	'themedesigner-transparency' => 'trong suốt',
 	'themedesigner-tab-theme' => 'Chủ đề',
 	'themedesigner-tab-customize' => 'Tùy chỉnh',
