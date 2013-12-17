@@ -155,11 +155,11 @@ class SpecialPromoteController extends WikiaSpecialPageController {
 	}
 
 	public function saveData() {
-		//if( !$this->checkAccess() ) {
+		if( !$this->checkAccess() ) {
 			$this->success = false;
 			$this->error = wfMsg('promote-wrong-rights');
 			return;
-		//}
+		}
 
 		wfProfileIn(__METHOD__);
 
