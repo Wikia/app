@@ -611,7 +611,7 @@ $messages['ja'] = array(
 
 	'wikiahome-visualisation-remix-mixitup' => 'ミックスアップ!',
 	'wikiahome-visualisation-remix-mixituptext' => '何千ものコミュニティーに簡単にアクセスできます。リミックスしてウィキア内を探求しましょう!',
-	'wikiahome-visualisation-remix-button' => 'リミックス',
+	'wikiahome-visualisation-remix-button' => 'ミックス',
 
 	'wikiahome-stats-heading' => 'コラボ中です',
 	'wikiahome-stats-visitors' => '月の訪問者',
@@ -649,10 +649,10 @@ $messages['ja'] = array(
 *[http://www.wikia.com/ミュージック ミュージック].
 *[http://www.wikia.com/エンターテイメント_トレンド エンターテイメント_トレンド]',
 
-	'wikiahome-hubs-lifestyle-heading' => 'ライフスタイル、ニュース & カルチャー',
+	'wikiahome-hubs-lifestyle-heading' => 'ライフスタイル & カルチャー',
 	'wikiahome-hubs-lifestyle-url' => 'http://www.ja.wikia.com/ライフスタイル',
 	'wikiahome-hubs-lifestyle-creative' => '熱狂的で情報を持っているコミュニティーを発見しよう。',
-	'wikiahome-hubs-lifestyle-more-heading' => 'ライフスタイル、ニュース & カルチャーをもって見る',
+	'wikiahome-hubs-lifestyle-more-heading' => 'ライフスタイル & カルチャーをもっと見る',
 	'wikiahome-hubs-lifestyle-more-list' => '
 *[http://www.wikia.com/Recipes フード & ドリンク]
 *[http://www.wikia.com/DIY DIY]
