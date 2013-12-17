@@ -383,9 +383,28 @@ $messages['it'] = array(
 
 /** Japanese (日本語)
  * @author BryghtShadow
+ * @author Tommy6
  */
 $messages['ja'] = array(
-	'video-page-file-list-pagination' => '$2 の $1',
+	'filepage-desc' => 'MediaWiki標準のファイルページを動画に対応させる',
+	'video-page-file-list-header' => 'このウィキアでの使用状況',
+	'video-page-global-file-list-header' => '全ウィキアでの使用状況',
+	'video-page-from-provider' => '提供元: $1',
+	'video-page-expires' => '有効期限: $1',
+	'video-page-views' => '閲覧数: $1',
+	'video-page-see-more-info' => '詳細を表示',
+	'video-page-see-less-info' => '詳細を非表示',
+	'video-page-description-heading' => '解説',
+	'video-page-description-zero-state' => '解説はありません。',
+	'video-page-add-description-link-text' => '解説を追加する。',
+	'video-page-default-description-header-and-text' => '== 解説 ==
+ここに解説を入力。',
+	'video-page-file-list-pagination' => '$2 件中 $1 件目',
+	'file-page-replace-button' => '差し替え',
+	'file-page-tab-about' => '概要',
+	'file-page-tab-history' => 'ファイルの履歴',
+	'file-page-tab-metadata' => 'メタデータ',
+	'file-page-more-links' => '全て見る',
 );
 
 /** Georgian (ქართული)

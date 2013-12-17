@@ -306,6 +306,7 @@ $messages['qqq'] = array(
 	'wikistats_wikilang' => '{{Identical|Language}}',
 	'wikistats_tables' => '{{Identical|Table}}',
 	'wikistats_back_to_prevpage' => '{{Identical|Back}}',
+	'wikistats_trend_formula' => '{{Identical|Formula}}',
 	'wikistats_trend_ordered' => 'Typo: wiki -> wikis',
 	'wikistats_trend_all_wikia_text' => '{{Identical|All wikis}}',
 	'wikistats_current_dump_stats' => '{{Identical|Current}}',
@@ -4611,6 +4612,7 @@ $messages['km'] = array(
 );
 
 /** Kannada (ಕನ್ನಡ)
+ * @author Dimension10
  * @author Nayvik
  */
 $messages['kn'] = array(
@@ -4655,6 +4657,7 @@ $messages['kn'] = array(
 	'wikistats_language_stats' => 'ಭಾಷಾ ಅಂಕಿಅಂಶಗಳು',
 	'wikistats_search_text' => 'ಹುಡುಕು:',
 	'wikistats_article_total' => 'ಒಟ್ಟು ಲೇಖನಗಳು',
+	'wikistats_blog_comment' => 'ಬ್ಲಾಗ್ ಇಗೆ  ಟಿಪ್ಪಣಿಗಳು',
 	'wikistats_mediawiki_stats' => 'ಮೀಡಿಯಾವಿಕಿ ಅಂಕಿಅಂಶಗಳು:',
 	'wikistats_statistics_information' => 'ಅಂಕಿಅಂಶಗಳ ಮಾಹಿತಿ',
 	'wikistats_current_month' => 'ಪ್ರಸ್ತಕ ತಿಂಗಳು',
@@ -9532,6 +9535,8 @@ $messages['vi'] = array(
 	'wikistats_content' => 'nội dung',
 	'wikistats_userns' => 'thành viên',
 	'wikistats_current_month' => 'Tháng hiện tại',
+	'wikistats_namespaces_maintenance' => 'Bảo trì (MediaWiki, bản mẫu, dự án)',
+	'wikistats_namespace_top' => 'Không gian tên được xác định trước',
 );
 
 /** Wu (吴语)

@@ -864,11 +864,12 @@ $messages['uk'] = array(
 );
 
 /** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
  * @author Vinhtantran
  */
 $messages['vi'] = array(
 	'our404handler' => 'Lỗi 404: Không tìm thấy trang!',
-	'our404handler-oops' => 'Đây không phải là những trang bạn đang tìm kiếm. Xin cứ tiếp tục.',
+	'our404handler-oops' => 'Đây không phải là những trang bạn đang tìm kiếm. Xin đừng tiếp tục.',
 	'message404' => "
 '''Chúng tôi thực sự rất tiếc, nhưng vì lý do nào đó, trang bạn yêu cầu không tồn tại.'''
 

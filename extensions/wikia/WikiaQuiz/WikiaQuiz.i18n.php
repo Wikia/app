@@ -2134,6 +2134,13 @@ $messages['uk'] = array(
 	'wikiaquiz-game-mute' => 'Без звуку',
 );
 
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'wikiaquiz-game-email-placeholder' => 'tênđịachỉemail@wikia.com',
+);
+
 /** Simplified Chinese (中文（简体）‎)
  * @author Hydra
  * @author Hzy980512

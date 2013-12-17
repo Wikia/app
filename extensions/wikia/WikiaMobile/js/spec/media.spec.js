@@ -46,7 +46,6 @@ describe("Media module", function () {
 		expect(typeof media.openModal).toBe('function');
 		expect(typeof media.getMedia).toBe('function');
 		expect(typeof media.getCurrent).toBe('function');
-		expect(typeof media.hideShare).toBe('function');
 		expect(typeof media.init).toBe('function');
 		expect(typeof media.cleanup).toBe('function');
 	});

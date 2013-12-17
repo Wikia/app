@@ -2080,6 +2080,7 @@ $messages['ka'] = array(
 );
 
 /** Kannada (ಕನ್ನಡ)
+ * @author Dimension10
  * @author Nayvik
  */
 $messages['kn'] = array(
@@ -2087,6 +2088,7 @@ $messages['kn'] = array(
 	'myhome-feed-newpage' => 'ಹೊಸ ಪುಟ',
 	'myhome-feed-edit' => 'ಸಂಪಾದಿಸು',
 	'myhome-feed-talkpage' => 'ಚರ್ಚಾ ಪುಟ',
+	'myhome-feed-blogcomment' => 'ಬ್ಲಾಗ್ ಇಗೆ  ಟಿಪ್ಪಣಿ',
 	'myhome-feed-delete' => 'ಅಳಿಸಲಾಗಿದೆ',
 	'myhome-feed-categorization' => 'ವರ್ಗೀಕರಣ',
 	'myhome-hot-spots-number-of-editors' => 'ಸಂಪಾದಕರು',

@@ -2851,10 +2851,49 @@ $messages['km'] = array(
 );
 
 /** Kannada (ಕನ್ನಡ)
+ * @author Dimension10
  * @author Nayvik
  */
 $messages['kn'] = array(
+	'blog-file-page' => "<a href='$1'>$2</a> ಅನ್ನು  <a href='$3'>$4 ಇನ   </a> ಬ್ಲಾಗ್ ಮೇಲೆ ಹಾಕಿ.",
+	'createblogpage' => 'ಬ್ಲಾಗ್ ನಿರ್ಮಾಣ ಮಾದಿ.',
+	'createbloglistingpage' => 'ಬ್ಲಾಗ್ ಲಿಸ್ಟಿಂಗ್ ನಿರ್ಮಾಣ ಮಾಡಿ.',
+	'create-blog-spam' => 'ಸ್ಪ್ಯಾಮ್ ಹಾಗೆ ಕಾನುತದೆ',
+	'create-blog-cant-edit' => 'ಸಂಪಾದನೆ ಮಾಡಲಿಕ್ಕೆ ಆಗಲಿಲ್ಲ.',
+	'create-blog-post-category' => 'ಬ್ಲಾಗ್ ಪೋಸ್ಟ್ ಗಳು',
+	'create-blog-post-recent-listing' => 'ಇತ್ತೀಚಿನ  ಪೋಸ್ಟ್ ಗಳು',
+	'create-blog-post-recent-listing-title' => 'ಇತ್ತೀಚಿನ  ಪೋಸ್ಟ್ ಗಳು',
+	'create-blog-post-recent-listing-log' => 'ಇತ್ತೀಚಿನ ಬ್ಲಾಗ್ ಪೋಸ್ಟ್ ಗಳಿಗೆ ಲೇಖನ ನಿರ್ಮಾಣ ಮಾಡಿದು',
+	'create-blog-post-title' => 'ಹೊಸ ಬ್ಲಾಗ್ ಪೋಸ್ಟ್ ನಿರ್ಮಾಣ ಮಾಡಿ.',
+	'create-blog-post-title-edit' => 'ಒಂದು ಬ್ಲಾಗ್ ಪೋಸ್ಟ್ ಅನ್ನು ಸಂಪಾದನೆ ಮಾದಿ.',
+	'create-blog-form-title' => 'ಬ್ಲಾಗ್ ಪೋಸ್ಟ್ ಅಂದರೆ ಎಂತ?',
+	'create-blog-form-post-text' => 'ಬ್ಲಾಗ್ ಪಥ್ಯ',
+	'blog-nbrcomments' => '{{PLURAL:$1|ಒಂದು ಟಿಪ್ಪಣಿ|$1 ಟಿಪ್ಪಣಿಗಳು}}',
+	'blog-nopostfound' => 'ಒಂದು ಸಹ ಪೋಸ್ಟ್ ಸಿಗಲಿಲ್ಲ',
+	'blog-writeone' => 'ಒಂದು ಬರಿ!',
+	'blog-added' => 'ಹಾಕಿದು',
+	'blog-edited' => 'ಸಂಪಾದನೆ ಮಾಡಿದು',
+	'blog-page' => 'ಬ್ಲಾಗ್',
+	'blog-zero-comments' => 'ಇಲ್ಲಿವರಗೆ ಒಂದು ಟಿಪ್ಪಣಿ ಇಲ್ಲ!',
+	'blog-comment-post' => 'ಟಿಪ್ಪಣಿ ಹಾಕು!',
+	'blog-comments' => 'ಟಿಪ್ಪಣಿಗಳು',
+	'blog-rc-comments' => 'ಬ್ಲಾಗ್ ಇಗೆ  ಟಿಪ್ಪಣಿ',
+	'blog-comments-new' => ' ಬ್ಲಾಗ್ ಅಲ್ಲಿ ಹೊಸ ಟಿಪ್ಪಣಿ',
+	'blog-comments-save' => 'ಬ್ಲಾಗ್ ಅಲ್ಲಿ ಟಿಪ್ಪಣಿ ವನ್ನು ಉಲಿಸಿ',
+	'blog-comments-label' => 'ಟಿಪ್ಪಣಿ ಹಾಕುದು',
+	'blog-voting-label' => 'ಮತ ಕೊಡುದು',
+	'blog-comments-dsc' => 'ಹೊಸತ್ತು ಮೊದಲು',
+	'blog-comments-asc' => 'ಹೊಸತ್ತು ಕ್ನೆಯಗೆ',
+	'blog-comments-anonymous' => 'ಅನಾಮಿಕ ಸದಸ್ಯ',
 	'blog-comment-delete' => 'ಅಳಿಸು',
+	'blog-comment-hide' => '	
+ಮುಚ್ಚು',
+	'blog-comment-unhide' => 'ಮುಚ್ಚಳ ತೇಗಿ',
+	'blog-comment-history' => 'ಇತಿಹಾಸ',
+	'blog-comment-edit' => 'ಸಂಪಾದಿಸಿ',
+	'blog-comment-error' => 'ಟಿಪ್ಪಣಿ ಅನ್ನು ಉಳಿಸಲಿಕ್ಕೆ ಆಗಲಿಲ್ಲ',
+	'blog-avatar-preferences-title' => 'ಅವತಾರ',
+	'blog-create-listing-label' => 'ಬ್ಲಾಗ್ ಲಿಸ್ಟಿಂಗ್ ನಿರ್ಮಾಣ ಮಾಡಿ.',
 );
 
 /** Korean (한국어)

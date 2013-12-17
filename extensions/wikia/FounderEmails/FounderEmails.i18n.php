@@ -4046,13 +4046,14 @@ $EDITORNAME がウィキにアカウントを登録しました。<br /><br />
 );
 
 /** Kannada (ಕನ್ನಡ)
+ * @author Dimension10
  * @author Nayvik
  */
 $messages['kn'] = array(
 	'founderemails-email-user-registered-signature' => 'ವಿಕಿಯಾ ತಂಡ',
 	'founderemails-email-user-registered-button' => 'ಅವರನ್ನು ಸ್ವಾಗತಿಸಿ',
-	'founderemails-email-0-days-passed-subject' => 'ವಿಕಿಯಾಗೆ ಸುಸ್ವಾಗತ!',
-	'founderemails-email-first-edit-signature' => 'ವಿಕಿಯಾ ತಂಡ',
+	'founderemails-email-0-days-passed-subject' => 'ವಿಕಿಯಗೆ ಸುಸ್ವಾಗತ!',
+	'founderemails-email-first-edit-signature' => 'ವಿಕಿಯ ತಂಡ',
 	'founderemails-email-general-edit-signature' => 'ವಿಕಿಯಾ ತಂಡ',
 	'founderemails-email-anon-edit-signature' => 'ವಿಕಿಯಾ ತಂಡ',
 	'founderemails-answers-email-page-edited-reg-user-subject' => 'ನೋಂದಾಯಿತ ಸದಸ್ಯರು ನಿಮ್ಮ ತಾಣವನ್ನು ಬದಲಾಯಿಸಿದರು!',
@@ -8322,9 +8323,9 @@ Bây giờ bạn đã một vài ngày trên wiki, chúng tôi nghĩ rằng bạ
 	'founderemails-email-10-days-passed-subject' => 'Chúc mừng 10 ngày kỷ niệm!',
 	'founderemails-email-10-days-passed-body' => 'Wiki tiến triển thế nào rồi $USERNAME? 
 
-Whoa, thời gian trôi nhanh thật! Đã là 10 ngày kể từ khi bạn đã thành lập $WIKINAME, $WIKIURL.
+Chà, thời gian trôi nhanh thật! Đã là 10 ngày kể từ khi bạn thành lập $WIKINAME, $WIKIURL.
 
-Nhân cơ hội kỷ niệm này để tìm những người khác tham gia cùng vào dự án của bạn và kể ra tất cả những việc tuyệt vời mà bạn đang làm! Đây là một số cách để thực hiện:
+Nhân cơ hội kỷ niệm này để tìm những người bạn khác tham gia cùng vào dự án của bạn và kể ra tất cả những việc tuyệt vời mà bạn đang làm! Đây là một số cách để thực hiện:
 
 Có bao giờ mẹ bạn đã từng bảo bạn phải Chia sẻ? Sử dụng nút Chia sẻ trên trang chính của wiki, bài viết và hình ảnh để chỉ cho bạn bè và những người theo dõi bạn trên Facebook, Twitter và các trang mạng phổ biến khác.
 
@@ -8334,9 +8335,9 @@ Tham gia các trang mạng tương tự. Yêu cầu nhiều người từ các d
 
 Bạn cũng có thể yêu cầu những thành viên Wikia đến giúp wiki của bạn bằng cách gửi thông điệp đến diễn đàn tại http://vi.wikia.com.
 
-Hãy giữ công việc tuyệt vời này!
+Hãy giữ công việc tuyệt vời này nhé!
 
-Wikia Team
+----Wikia Team
 
 ___________________________________________
 
@@ -8355,8 +8356,8 @@ $PAGEURL
 
 Wikia Team',
 	'founderemails-email-first-edit-greeting' => 'Chào $USERNAME,',
-	'founderemails-email-first-edit-headline' => 'Tất cả tốt chứ! $EDITORNAME đã có những sửa đổi đầu tiên trên $WIKINAME.',
-	'founderemails-email-first-edit-content' => 'Ghé qua $PAGETITLE để kiểm tra những gì họ thêm vào.',
+	'founderemails-email-first-edit-headline' => 'Thành viên $EDITORNAME đã có những sửa đổi đầu tiên trên $WIKINAME.',
+	'founderemails-email-first-edit-content' => 'Ghé qua $PAGETITLE để kiểm tra người bạn này sửa đổi gì nào!',
 	'founderemails-email-first-edit-signature' => 'Wikia Team',
 	'founderemails-email-first-edit-button' => 'Kiểm tra ngay!',
 	'founderemails-email-page-edited-reg-user-first-edit-body-HTML' => 'Chào $USERNAME,<br /><br />
@@ -8385,14 +8386,14 @@ Trông giống như $EDITORNAME đã đăng ký tài khoản tại wiki của b�
 
 Một thành viên vô danh đã tạo ra sửa đổi đầu tiên ở trang $PAGETITLE trên $WIKINAME.
 
-Thành viên vô danh là những người dùng tạo ra sửa đổi nhưng không đăng nhập. Đến xem người lạ này đã thêm gì vào!
+Thành viên vô danh là những người dùng tạo ra sửa đổi nhưng không đăng nhập. Đến xem người lạ này đã thêm gì nào!
 
 $PAGEURL
 
 Wikia Team',
 	'founderemails-email-anon-edit-greeting' => 'Chào $USERNAME,',
 	'founderemails-email-anon-edit-headline' => 'Một người dùng vô danh đã tạo ra sửa đổi đầu tiên ở trang $PAGETITLE trên $WIKINAME.',
-	'founderemails-email-anon-edit-content' => 'Người dùng Wikia vô danh là những người dùng chưa đăng nhập tài khoản tạo ra sửa đổi. Đến xem người bạn lạ này đã thêm gì vào!',
+	'founderemails-email-anon-edit-content' => 'Người dùng vô danh Wikia là những người dùng chưa đăng nhập tài khoản tạo ra sửa đổi. Đến xem người bạn lạ này đã thêm gì vào!',
 	'founderemails-email-anon-edit-signature' => 'Wikia Team',
 	'founderemails-email-anon-edit-button' => 'Kiểm tra ngay!',
 	'founderemails-email-page-edited-anon-body-HTML' => 'Chào $USERNAME,<br /><br />
@@ -8491,12 +8492,12 @@ Có rất nhiều thay đổi trên wiki của bạn ngày hôm nay! Hãy ghé q
 	'founderemails-email-0-day-customizetheme-heading' => 'Tùy chỉnh chủ đề màu nền.',
 	'founderemails-email-0-day-customizetheme-content' => 'Tuỳ chỉnh màu nền, chủ đề wiki sao cho thật nổi bật!  Sử dụng <a style="color:#2a87d5;text-decoration:none;" href="$CUSTOMIZETHEMEURL">Thiết kế chủ đề</a> để tùy chỉnh và thêm màu sắc cho wiki và làm cho nó là duy nhất cho nội dung của wiki.',
 	'founderemails-email-0-day-customizetheme-button' => 'Tùy chỉnh',
-	'founderemails-email-0-day-wikiahelps-text' => '<span style="color:#2a87d5;font-weight:bold">Chúng tôi sẽ bỏ lại bạn một mình trong lạnh lẽo.</span> Chúng tôi ở đây để giúp bạn thực hiện $WIKINAME thành công trên mỗi bước. Truy cập <a style="color:#2a87d5;text-decoration:none;" href="http://vi.wikia.com">vi.wikia.com</a> để đến diễn đàn, tư vấn, và hỗ trợ, hoặc <a style="color:#2a87d5;text-decoration:none;" href="http://www.wikia.com/Special:Contact">email cho chúng tôi</a> câu hỏi của bạn!',
+	'founderemails-email-0-day-wikiahelps-text' => '<span style="color:#2a87d5;font-weight:bold">Chúng tôi sẽ không bỏ lại bạn một mình trong lạnh lẽo.</span> Chúng tôi ở đây để giúp bạn thực hiện $WIKINAME thành công trên mỗi bước. Truy cập <a style="color:#2a87d5;text-decoration:none;" href="http://vi.wikia.com">vi.wikia.com</a> để đến diễn đàn, tư vấn, và hỗ trợ, hoặc <a style="color:#2a87d5;text-decoration:none;" href="http://www.wikia.com/Special:Contact">email cho chúng tôi</a> câu hỏi của bạn!',
 	'founderemails-email-0-day-wikiahelps-signature' => 'Xây dựng wiki vui vẻ!<br />-- Wikia Team',
 	'founderemails-email-3-day-heading' => 'Xin chào $USERNAME,',
 	'founderemails-email-3-day-congratulations' => 'Chúng tôi đến kiểm tra và xem sự tiến triển của $HDWIKINAME.',
 	'founderemails-email-3-day-tips-heading' => 'Đã 3 ngày kể từ khi bạn bắt đầu và chúng tôi nghĩ nên ghé qua để cung cấp lời khuyên một số chi tiết xây dựng wiki của bạn:',
-	'founderemails-email-3-day-editmainpage-heading' => 'Làm đẹp trang chính của bạn.',
+	'founderemails-email-3-day-editmainpage-heading' => 'Thiết kế trang chính của bạn.',
 	'founderemails-email-3-day-editmainpage-content' => 'Trang chính là một trong những điều đầu tiên người khác nhìn thấy khi họ truy cập vào <a href="$WIKIURL" style="color:#2a87d5;text-decoration:none;">$WIKINAME</a>.  Tạo một ấn tượng tốt đầu tiên bằng văn bản tóm tắt chi tiết về những nội dung chủ đề của bạn và thêm một thư viện ảnh, hoặc khung trình chiếu.',
 	'founderemails-email-3-day-editmainpage-button' => 'Làm Đẹp Nó',
 	'founderemails-email-3-day-addphotos-heading' => 'Thêm nhiều hình ảnh hơn.',

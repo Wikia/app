@@ -2715,6 +2715,7 @@ $messages['mk'] = array(
 );
 
 /** Malayalam (മലയാളം)
+ * @author Praveenp
  * @author Shijualex
  */
 $messages['ml'] = array(
@@ -2724,7 +2725,7 @@ $messages['ml'] = array(
 	'userrenametool-old' => 'ഇപ്പോഴത്തെ ഉപയോക്തൃനാമം:',
 	'userrenametool-new' => 'പുതിയ ഉപയോക്തൃനാമം:',
 	'userrenametool-reason' => 'ഉപയോക്തൃനാമം മാറ്റാനുള്ള കാരണം:',
-	'userrenametool-move' => 'നിലവിലുള്ള ഉപയോക്തൃതാളും, ഉപയോക്താവിന്റെ സം‌വാദം താളും (സബ് പേജുകള്‍ അടക്കം) പുതിയ നാമത്തിലേക്കു മാറ്റുക.',
+	'userrenametool-move' => 'നിലവിലുള്ള ഉപയോക്തൃതാളും, ഉപയോക്താവിന്റെ സം‌വാദത്താളും (ഉപതാളുകൾ അടക്കം) പുതിയ പേരിലേക്ക് മാറ്റുക.',
 	'userrenametool-reserve' => 'പഴയ ഉപയോക്തൃനാമം ഭാവിയിൽ ഉപയോഗിക്കുന്നതു തടയുക',
 	'userrenametool-warnings' => 'മുന്നറിയിപ്പുകൾ:',
 	'userrenametool-confirm' => 'അതെ, ഉപയോക്താവിനെ പുനർനാമകരണം ചെയ്യുക',
@@ -2794,6 +2795,7 @@ $messages['mr'] = array(
 /** Malay (Bahasa Melayu)
  * @author Anakmalaysia
  * @author Aviator
+ * @author SNN95
  */
 $messages['ms'] = array(
 	'userrenametool' => 'Tukar nama pengguna',
@@ -2833,6 +2835,7 @@ Sila undur dan cuba lagi.',
 	'userrenametool-error-cannot-rename-account' => 'Gagal menukar nama akaun pengguna pada pangkalan data kongsian global.',
 	'userrenametool-error-cannot-create-block' => 'Sekatan Phalanx tidak dapat dibentuk.',
 	'userrenametool-error-cannot-rename-unexpected' => 'Berlakunya ralat tak dijangka; semak log atau cuba lagi.',
+	'userrenametool-error-invalid-ip' => 'Alamat IP tidak sah yang disediakan.',
 	'userrenametool-warnings-characters' => 'Nama pengguna baru mengandungi aksara terlarang!',
 	'userrenametool-warnings-maxlength' => 'Nama pengguna baru tidak boleh melebihi 255 aksara!',
 	'userrenametool-warn-repeat' => 'Perhatian! Pengguna "<nowiki>$1</nowiki>" sudah menukar namanya kepada "<nowiki>$2</nowiki>".
@@ -3398,6 +3401,7 @@ $messages['ps'] = array(
 	'userrenametool-old' => 'اوسنی کارن-نوم:',
 	'userrenametool-new' => 'نوی کارن-نوم:',
 	'userrenametool-reason' => 'د نوم د بدلون سبب:',
+	'userrenametool-move' => 'د کارن او د خبرو اترو مخونه (او د هغوی څېرمه مخونه) نوي نوم ته ورلېږدول',
 	'userrenametool-warnings' => 'ګواښنې:',
 	'userrenametool-submit' => 'کارن-نوم بدلول',
 	'userrenametool-errordoesnotexist' => 'د "<nowiki>$1</nowiki>" په نامه کارونکی نه شته.',
@@ -3585,6 +3589,13 @@ $messages['qu'] = array(
 	'userrenametool-log' => "{{PLURAL:$1|1 llamk'apusqa|$1 llamk'apusqakuna}}, kayrayku: $2",
 	'userrenametool-move-log' => '"[[User:$1|$1]]" ruraqpa sutinta "[[User:$2|$2]]" sutiman hukchaspa kikinmanta ruraqpa p\'anqatapas astan',
 	'right-renameuser' => 'Ruraqpa sutinkunata hukchay',
+);
+
+/** Romansh (rumantsch)
+ * @author Kazu89
+ */
+$messages['rm'] = array(
+	'userrenametool-logpage' => "Protocol da midadas da num d'utilisader",
 );
 
 /** Romani (Romani)
@@ -4537,6 +4548,7 @@ $messages['vep'] = array(
 );
 
 /** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
  * @author Minh Nguyen
  * @author Vinhtantran
  * @author Xiao Qiao
@@ -4568,6 +4580,7 @@ Xem [[Special:Stafflog|Staff log]]',
 	'userrenametool-errorbot' => 'Người dùng <nowiki>$1</nowiki> là một robot.',
 	'userrenametool-error-request' => 'Có trục trặc trong tiếp nhận yêu cầu. Xin hãy quay lại và thử lần nữa.',
 	'userrenametool-error-same-user' => 'Bạn không thể đổi tên thành viên sang tên y hệt như vậy.',
+	'userrenametool-warnings-maxlength' => 'Độ dài tên người dùng mới không thể vượt quá giới hạn 255 ký tự!',
 	'userrenametool-success' => 'Thành viên “<nowiki>$1</nowiki>” đã được đổi tên thành “<nowiki>$2</nowiki>”.',
 	'userrenametool-confirm-yes' => 'Có',
 	'userrenametool-confirm-no' => 'Không',
