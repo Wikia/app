@@ -104,7 +104,7 @@ class EditPageLayoutAjax {
 	 * Parse provided wikitext to HTML using MW parser
 	 */
 	static public function preview() {
-		global $wgRequest, $wgLang;
+		global $wgRequest;
 		wfProfileIn(__METHOD__);
 
 		$skin = $wgRequest->getVal( 'skin' );
@@ -115,15 +115,15 @@ class EditPageLayoutAjax {
 			);
 		}
 
-		$res = self::resolveWikitextFromRequest('preview');
+		$res = self::resolveWikitextFromRequest( 'preview' );
 
 		// parse summary
 		// DAR-2382 -- render edit summary the same way it's rendered on Special:WikiActivity and Special:RecentChanges
 		$summary = $wgRequest->getText( 'summary' );
 		$summary = RequestContext::getMain()->getSkin()->formatComment( $summary, false );
 
-		if ($summary != '') {
-			$res['summary'] = wfMessage( 'wikia-editor-preview-editSummary' )->params( $summary )->plain();
+		if( $summary != '' ) {
+			$res['summary'] = wfMessage( 'wikia-editor-preview-editSummary' )->rawParams( $summary )->parse();
 		}
 
 		wfProfileOut(__METHOD__);
