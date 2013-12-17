@@ -92,3 +92,19 @@ ve.dm.WikiaCartItem.prototype.getId = function () {
 	return this.isTemporary() ? this.temporaryFileName : this.title;
 };
 
+/**
+ * @method
+ * @description Makes a copy of this Wikia cart item
+ * @returns {ve.dm.WikiaCartItem} Copy of Wikia cart item
+ */
+ve.dm.WikiaCartItem.prototype.clone = function () {
+	return new ve.dm.WikiaCartItem (
+		this.title,
+		this.url,
+		this.type,
+		this.temporaryFileName,
+		this.provider,
+		this.videoId,
+		this.license
+	);
+};
