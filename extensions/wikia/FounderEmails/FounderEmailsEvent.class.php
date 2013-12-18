@@ -96,7 +96,7 @@ abstract class FounderEmailsEvent {
 
 	abstract public function process( Array $events );
 
-	public static function register() {
+	public static function register( $object = null ) {
 		return true;
 	}
 
