@@ -241,7 +241,7 @@ SpecialPromote.prototype = {
 		require( [ 'wikia.ui.factory' ], function ( uiFactory ) {
 			uiFactory.init( 'modal' ).then( function ( uiModal ) {
 				uiModal.createComponent( modalConfig, function ( errorModal ) {
-					if ( typeof( onCloseCallback ) === 'function' ) {
+					if ( typeof onCloseCallback === 'function' ) {
 						errorModal.bind( 'beforeClose', onCloseCallback );
 					}
 					errorModal.show();
@@ -253,7 +253,7 @@ SpecialPromote.prototype = {
 	showImageModal: function ( response ) {
 		'use strict';
 
-		if ( response.errorMessage !== undefined && response.errorMessage.length ) {
+		if ( ( typeof response.errorMessage !== 'undefined' ) && response.errorMessage.length ) {
 			this.showErrorModal( response.errorMessage );
 		} else {
 
@@ -376,7 +376,7 @@ SpecialPromote.prototype = {
 		'use strict';
 
 		if ( params.uploadType === 'additional' ) {
-			var selectedByName,
+			var selectedByName = '',
 				removalPromise;
 
 			$.each( $( '.small-photos img.additionalImage' ), function ( i, element ) {
@@ -432,11 +432,11 @@ SpecialPromote.prototype = {
 				try {
 					response = JSON.parse( response );
 
-					if ( typeof(response.fileName) !== 'undefined' && typeof(response.fileUrl) !== 'undefined' ) {
+					if ( typeof response.fileName !== 'undefined' && typeof response.fileUrl !== 'undefined' ) {
 						that.setTempFile( response );
 						SpecialPromote.$modal.trigger( 'close' );
 					} else {
-						if ( typeof(response.errorMessages[0]) === 'undefined' ) {
+						if ( typeof response.errorMessages[0] === 'undefined' ) {
 							errorContainer.text( unknownErrorMsg );
 						} else {
 							errorContainer.text( response.errorMessages.join( '\n' ) );
@@ -476,7 +476,7 @@ SpecialPromote.prototype = {
 			imageNode = mainImgDiv.find( 'img#curMainImageName' ).get( 0 ),
 			image;
 
-		if ( typeof(imageNode) !== 'undefined' ) {
+		if ( typeof imageNode !== 'undefined' ) {
 			$( imageNode )
 				.attr( 'src', file.fileUrl )
 				.data( 'filename', file.fileName )
@@ -570,13 +570,15 @@ SpecialPromote.prototype = {
 	onUploadFormSubmit: function ( e ) {
 		'use strict';
 
+		var uploadTool = $( '.UploadTool' ),
+			doSave = false;
+
 		e.preventDefault();
-		$( '.UploadTool' ).startThrobbing();
+		uploadTool.startThrobbing();
 		if ( !this.validateData() ) {
-			$( '.UploadTool' ).stopThrobbing();
+			uploadTool.stopThrobbing();
 			return false;
 		}
-		var doSave = false;
 
 		$.each( this.current, $.proxy( function ( key ) {
 			if ( this.current[key] !== this.original[key] ) {
