@@ -682,14 +682,14 @@ __NOEDITSECTION__',
 	'wikiahome-footer-get-started-creative' => 'コミュニティーを見つけて<br />始めよう',
 	'wikiahome-footer-get-started-button' => 'http://www.wikia.com/Special:CreateNewWiki?uselang=ja', // FIXME: why is this in a message?! -- we need to pass there Wikia "button" class
 	'wikiahome-footer-follow-us' => '===フォローしてね===
-*[http://ja.community.wikia.com/wiki/Blog:Blog:カテゴリ:スタッフブログ]
+*[http://ja.community.wikia.com/wiki/Blog:Blog:カテゴリ:スタッフブログ スタッフブログ]
 *[http://www.facebook.com/Wikia フェイスブック]
 *[http://www.twitter.com/ウィキア ツイッター]
 __NOEDITSECTION__',
 	'wikiahome-footer-community' => '===コミュニティー===
 *[http://www.ja.community.wikia.com コミュニティーセントラルl]
 *[http://ja.community.wikia.com/wiki/ヘルプ:ユーザー権限 ヘルプ:ユーザー権限]
-*[http://www.wikia.com/Special:Contact Contact Support]$1
+*[http://www.wikia.com/Special:Contact サポートコンタクト]$1
 *[http://www.wikia.com/Stars ウィキアスター]
 *[http://ja.community.wikia.com/wiki/ヘルプ:コンテンツ ヘルプ]
 
