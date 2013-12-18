@@ -6,14 +6,13 @@ class EditPageLayoutAjax {
 	 * Perform reverse parsing on given HTML (when needed)
 	 */
 	static private function resolveWikitext( $content, $mode, $page, $method, $section ) {
-
-
 		global $wgRequest, $wgTitle, $wgOut, $wgEnableSlowPagesBlacklistExt;
 		wfProfileIn(__METHOD__);
 
 		if ( !empty( $wgEnableSlowPagesBlacklistExt) ) {
 			global $wgSlowPagesBlacklist;
 			if ( in_array( $wgTitle->getFullURL(), $wgSlowPagesBlacklist ) ) {
+				wfProfileOut( __METHOD__ );
 				return [
 					'html' => wfMessage( 'slowpagesblacklist-preview-unavailable' )->plain(),
 					'catbox' => '',
