@@ -348,7 +348,8 @@
 							onSelect: $.proxy( self.addItemFromSearch, self ),
 							selectedClass: 'selected',
 							appendTo: self.w.find( '.search-box' ),
-							width: '300px'
+							width: '300px',
+							maxHeight: 'auto'
 						} );
 						self.w.find( '.advanced-tools a' ).attr( 'target', '_blank' );
 
