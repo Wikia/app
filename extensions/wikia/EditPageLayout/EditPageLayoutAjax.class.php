@@ -6,8 +6,21 @@ class EditPageLayoutAjax {
 	 * Perform reverse parsing on given HTML (when needed)
 	 */
 	static private function resolveWikitext( $content, $mode, $page, $method, $section ) {
-		global $wgRequest, $wgTitle, $wgOut;
+
+
+		global $wgRequest, $wgTitle, $wgOut, $wgEnableSlowPagesBlacklistExt;
 		wfProfileIn(__METHOD__);
+
+		if ( !empty( $wgEnableSlowPagesBlacklistExt) ) {
+			global $wgSlowPagesBlacklist;
+			if ( in_array( $wgTitle->getFullURL(), $wgSlowPagesBlacklist ) ) {
+				return [
+					'html' => wfMessage( 'slowpagesblacklist-preview-unavailable' )->plain(),
+					'catbox' => '',
+					'interlanglinks' => ''
+				];
+			}
+		}
 
 		if($wgTitle && class_exists($page)) {
 			$pageObj = new $page();
