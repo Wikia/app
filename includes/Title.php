@@ -351,7 +351,9 @@ class Title {
 	 *
 	 * @return Title the new object
 	 */
-	public static function newMainPage() {
+	/** Wikia change start */
+	public static function newMainPage( $city_id = null ) {
+	/** Wikia change end */
 		$title = Title::newFromText( wfMsgForContent( 'mainpage' ) );
 		// Don't give fatal errors if the message is broken
 		if ( !$title ) {
