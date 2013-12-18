@@ -210,7 +210,9 @@ class Title {
 	 * @param $flags Int use Title::GAID_FOR_UPDATE to use master
 	 * @return Title the new object, or NULL on an error
 	 */
-	public static function newFromID( $id, $flags = 0 ) {
+	/** Wikia change - start */
+	public static function newFromID( $id, $flags = 0, $dbname = "" ) {
+	/** Wikia change - end */
 		/* wikia change here */
 		if ( $id == 0 ) {
 			$title = null;
