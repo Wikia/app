@@ -10,7 +10,7 @@
 namespace FluentSql;
 
 abstract class Cache {
-	public function generateKey(Breakdown $breakDown) {
+	public function generateKey( Breakdown $breakDown, $flag = null ) {
 		return md5($breakDown->getSql().implode(',', $breakDown->getParameters()));
 	}
 
