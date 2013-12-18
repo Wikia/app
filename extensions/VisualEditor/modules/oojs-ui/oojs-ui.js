@@ -3884,6 +3884,7 @@ OO.ui.ButtonWidget = function OoUiButtonWidget( config ) {
 	// Mixin constructors
 	OO.ui.FlaggableElement.call( this, config );
 	OO.ui.LabeledElement.call( this, this.$( '<span>' ), config );
+	OO.ui.IconedElement.call( this, this.$( '<span>' ), config );
 
 	// Properties
 	this.$button = this.$( '<a>' );
@@ -5904,6 +5905,7 @@ OO.ui.PopupButtonWidget.prototype.onClick = function ( e ) {
  *
  * @class
  * @extends OO.ui.ButtonWidget
+ * @mixins OO.ui.IconedElement
  *
  * @constructor
  * @param {Object} [config] Configuration options
@@ -5912,13 +5914,22 @@ OO.ui.PushButtonWidget = function OoUiPushButtonWidget( config ) {
 	// Parent constructor
 	OO.ui.ButtonWidget.call( this, config );
 
+	// Mixin constructors
+	OO.ui.IconedElement.call( this, this.$( '<span>' ), config );
+
 	// Initialization
 	this.$element.addClass( 'oo-ui-pushButtonWidget' );
+	if ( config.icon ) {
+		this.$button.prepend( this.$icon );
+	}
 };
 
 /* Inheritance */
 
 OO.inheritClass( OO.ui.PushButtonWidget, OO.ui.ButtonWidget );
+
+OO.mixinClass( OO.ui.PushButtonWidget, OO.ui.IconedElement );
+
 /**
  * Creates an OO.ui.SearchWidget object.
  *

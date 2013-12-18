@@ -28,7 +28,7 @@ ve.ui.WikiaUploadWidget = function VeUiWikiaUploadWidget( config ) {
 
 	// Properties
 	this.$uploadIcon = this.$( '<span>' )
-		.addClass( 've-ui-icon-upload' );
+		.addClass( 'oo-ui-icon-upload' );
 
 	this.$uploadLabel = this.$( '<span>' )
 		.text( ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-upload-label' ) );

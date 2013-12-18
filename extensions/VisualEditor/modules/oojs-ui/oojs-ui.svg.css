@@ -777,6 +777,7 @@ a.oo-ui-buttonWidget-button {
 	text-shadow: 0 1px 1px rgba(255, 255, 255, 0.5);
 	box-shadow: 0 0.1em 0.25em rgba(0, 0, 0, 0.1);
 	text-align: center;
+	white-space: nowrap;
 
 	/* Animation */
 	-webkit-transition: border-color 100ms;
@@ -878,6 +879,13 @@ a.oo-ui-buttonWidget-button {
 .oo-ui-pushButtonWidget.oo-ui-flaggableElement-primary .oo-ui-buttonWidget-button:hover,
 .oo-ui-pushButtonWidget.oo-ui-flaggableElement-primary .oo-ui-buttonWidget-button:focus {
 	border-color: #84b9d4;
+}
+
+.oo-ui-pushButtonWidget .oo-ui-iconedElement-icon {
+	display: inline-block;
+	height: 2em;
+	width: 2em;
+	vertical-align: middle;
 }
 
 /* OO.ui.SelectWidget */
