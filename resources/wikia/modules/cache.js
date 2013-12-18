@@ -33,11 +33,7 @@
 				return moduleStorage[key];
 			}
 
-			try {
-				return localStorage.getItem(key);
-			} catch (err) {
-				return null;
-			}
+			return localStorage[key] || null;
 		}
 
 		/**
@@ -50,9 +46,7 @@
 		 */
 		function uniSet(key, value) {
 			moduleStorage[key] = value;
-			try {
-				localStorage.setItem(key, value);
-			} catch (err) {}
+			localStorage[key] = value;
 		}
 
 		/**
@@ -64,9 +58,7 @@
 		 */
 		function uniDel(key) {
 			delete moduleStorage[key];
-			try {
-				localStorage.removeItem(key);
-			} catch (err) {}
+			delete localStorage[key];
 		}
 
 		/**
@@ -160,7 +152,7 @@
 		function getVersioned(key, customNow){
 			var vary = uniGet(CACHE_VARY_PREFIX + key);
 
-			if(!vary || vary == window.wgStyleVersion) {
+			if(!vary || vary === window.wgStyleVersion) {
 				return get(key, customNow);
 			}
 
@@ -187,7 +179,9 @@
 	// security exceptions in some browsers like Firefox (BugId:94924)
 	try {
 		storage = context.localStorage;
-	} catch( e ) {}
+	} catch( e ) {
+		storage = {};
+	}
 
 	//namespace
 	context.Wikia.Cache = cache(storage, context);
