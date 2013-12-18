@@ -9,7 +9,7 @@ var AdProviderSevenOneMedia = function (log, window, adTracker, $, sevenOneMedia
 			TOP_RIGHT_BOXAD: 'rectangle1',
 			HOME_TOP_RIGHT_BOXAD: 'rectangle1',
 
-//			PREFOOTER_LEFT_BOXAD: 'promo1',
+			PREFOOTER_LEFT_BOXAD: 'promo1',
 
 			TOP_LEADERBOARD: 'topAds',
 			HOME_TOP_LEADERBOARD: 'topAds',

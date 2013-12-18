@@ -1095,8 +1095,8 @@ $messages['gl'] = array(
 	'cnw-error-wiki-limit' => 'Desculpe, hai un límite que impide crear máis {{PLURAL:$1|de $1 wiki|de $1 wikis}} ao día. Agarde 24 horas antes de crear outro wiki.',
 	'cnw-error-blocked-header' => 'Conta bloqueada',
 	'cnw-error-blocked' => 'Foi bloqueado por $1. A razón que deu foi: $2. (ID do bloqueo para referencia: $3)',
-	'cnw-error-anon-user-header' => 'Inicia sesión',
-	'cnw-error-anon-user' => 'A creación de wikis está desactivada para os anónimos. [[Special:UserLogin|Inicia sesión]] e inténtea de novo.',
+	'cnw-error-anon-user-header' => 'Inicia a sesión',
+	'cnw-error-anon-user' => 'A creación de wikis está desactivada para os anónimos. [[Special:UserLogin|Inicia a sesión]] e inténtao de novo.',
 	'cnw-error-torblock' => 'Non está permitido crear wikis a través da rede Tor.',
 	'cnw-error-bot' => 'Detectamos que pode ser un bot. Se estamos equivocados, póñase en contacto con nós indicando que foi detectado de xeito erróneo como un bot e axudarémolo a crear o seu wiki: [http://www.wikia.com/Special:Contact/general Contacte con nós]',
 	'cnw-error-bot-header' => 'Detectamos que é un bot',
@@ -1782,6 +1782,7 @@ $messages['ml'] = array(
 
 /** Malay (Bahasa Melayu)
  * @author Anakmalaysia
+ * @author SNN95
  */
 $messages['ms'] = array(
 	'createnewwiki-desc' => '[[Special:CreateNewWiki|Pendeta penciptaan Wiki]]',
@@ -1836,7 +1837,7 @@ $messages['ms'] = array(
 	'cnw-welcome-instruction1' => 'Klik butang di bawah untuk mulai membuka laman pada wiki anda.',
 	'cnw-welcome-instruction2' => 'Anda akan melihat butang ini di seluruh wiki. Gunakannya pada bila-bila masa anda ingin menambahkan laman baru.',
 	'cnw-welcome-help' => 'Cari jawapan, nasihat, dan banyak lagi di <a href="http://community.wikia.com">Community Central</a>.',
-	'cnw-error-general' => 'Maaf, kami berdepan dengan maslaah! Sila cuba lagi atau [[Special:Contact|hubungi kami]] untuk meminta tolong.', # Fuzzy
+	'cnw-error-general' => 'Maaf, terdapat masalah di pihak kami! Sila cuba lagi atau [[Special:Contact|hubungi kami]] untuk meminta bantuan.',
 	'cnw-error-general-heading' => 'Harap maaf',
 	'cnw-badword-header' => 'Nanti kejap',
 	'cnw-badword-msg' => 'Hai, sila hindari penggunaan kata-kata kesat/terlarang dalam Penerangan Wiki anda: $1',
@@ -1844,6 +1845,8 @@ $messages['ms'] = array(
 	'cnw-error-wiki-limit' => 'Maaf, anda tidak boleh membuka lebih daripada $1 wiki sehari. Tunggi 24 jam sebelum membuka satu lagi wiki.',
 	'cnw-error-blocked-header' => 'Akaun disekat',
 	'cnw-error-blocked' => 'Anda telah disekat oleh $1. Sebab yang diberikan ialah: $2. (ID sekatan untuk rujukan: $3)',
+	'cnw-error-anon-user-header' => 'Sila log masuk',
+	'cnw-error-anon-user' => 'Pengguna awanama dilarang membuka wiki. Sila [[Special:UserLogin|log masuk]] dan cuba lagi.',
 	'cnw-error-torblock' => 'Pembentukan wiki melalui Tor Network tidak dibenarkan.',
 	'cnw-error-bot' => 'Kami telah mengesan bahawa anda mungkin sebuah bot. Jika kami tersilap, sila hubungi kami untuk menerangkan bahawa anda telah tersalah dikesan sebagai bot, dan kami akan membantu anda untuk membuat wiki anda: [http://www.wikia.com/Special:Contact/general Hubungi Kami]',
 	'cnw-error-bot-header' => 'Anda telah dikesan sebagai bot',

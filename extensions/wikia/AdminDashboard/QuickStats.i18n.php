@@ -492,7 +492,7 @@ $messages['fr'] = array(
  * @author Vivaelcelta
  */
 $messages['gl'] = array(
-	'quickstats-header-label' => 'Estadísticas rápidas',
+	'quickstats-header-label' => 'Estatísticas rápidas',
 	'quickstats-header-date' => 'Data',
 	'quickstats-header-views' => 'Visitas',
 	'quickstats-header-edits' => 'Edicións',
@@ -644,6 +644,23 @@ $messages['ja'] = array(
 	'quickstats-number-shortening' => '$1K',
 	'quickstats-number-shortening-millions' => '$1M',
 	'quickstats-number-shortening-billions' => '$1B',
+);
+
+/** Kannada (ಕನ್ನಡ)
+ * @author Dimension10
+ */
+$messages['kn'] = array(
+	'quickstats-header-label' => 'ತ್ವಿರಿತ ಆನ್ಕಡೆಗಳು',
+	'quickstats-header-date' => 'ದಿನಾಂಕ',
+	'quickstats-header-views' => 'ನೋಟಗಳು',
+	'quickstats-header-edits' => 'ಸಂಪಾದನೆಗಳು',
+	'quickstats-header-photos' => 'ಭಾವಚಿತ್ರಗಳು',
+	'quickstats-header-likes' => 'ಇಷ್ಟಗಳು',
+	'quickstats-totals-label' => 'ಒತ್ತುಗಳು',
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|ಇನ್ನೂ ಆನ್ಕಡೆಗಳನ್ನು ]]',
+	'quickstats-number-shortening' => '$1 ಸಾವಿರ',
+	'quickstats-number-shortening-millions' => '$1 ದಶಲಕ್ಷ',
+	'quickstats-number-shortening-billions' => '$1 ಶತಕೋಟಿ',
 );
 
 /** Korean (한국어)

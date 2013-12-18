@@ -426,6 +426,7 @@ $messages['ca'] = array(
  * @author Умар
  */
 $messages['ce'] = array(
+	'scavengerhunt-button-enable' => 'Юкъадаладе',
 	'scavengerhunt-form-error-no-landing-title' => 'Дехар до, дӀаязъе (URL-адрес) агӀона цӀе.',
 	'scavengerhunt-label-progressBarHintLabel' => 'Координаташ хьехар',
 	'scavengerhunt-label-entry-form-username' => 'Декъашхочун цӀе',
