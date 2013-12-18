@@ -568,11 +568,14 @@ class ArticleComment {
 	 * @returns boolean
 	 */
 	public static function canComment( Title $title = null ) {
-		global $wgTitle;
+		global $wgTitle, $wgArticleCommentsNamespaces;
 
 		$canComment = true;
 		$title = is_null( $title ) ? $wgTitle : $title;
-
+		
+		if ( !in_array( $title->getNamespace(), $wgArticleCommentsNamespaces ) ) {
+			$canComment = false;
+		}
 		if ( self::isBlog( $title ) ) {
 			$props = BlogArticle::getProps( $title->getArticleID() );
 
@@ -770,10 +773,10 @@ class ArticleComment {
 	 * @return Article -- newly created article
 	 */
 	static public function doPost( $text, $user, $title, $parentId = false, $metadata = array() ) {
-		global $wgTitle, $wgEnableArticleCommentsExt;
+		global $wgTitle;
 		wfProfileIn( __METHOD__ );
 
-		if ( !$text || !strlen( $text ) || !$wgEnableArticleCommentsExt) {
+		if ( !$text || !strlen( $text ) ) {
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
