@@ -1,10 +1,10 @@
 <div id="UPPLightbox" class="UPPLightbox">
 	<h1><?= wfMsg('userprofilepage-edit-modal-header'); ?></h1>
-	
+
 	<div id="errorBox">
 		<div id="wpError"></div>
 	</div>
-	
+
 	<ul class="tabs">
 		<?
 		foreach ($tabs as $tab) {
@@ -15,7 +15,7 @@
 				</li>
 		<? } ?>
 	</ul>
-	
+
 	<ul class="tab-content">
 		<li class="interview">
 			<div>
@@ -33,7 +33,7 @@
 			<button id="UPPLightboxInterviewCancelBtn"><?= wfMsg('userprofilepage-lightbox-interview-cancel'); ?></button>
 			<button id="UPPLightboxInterviewSaveBtn"><?= wfMsg('userprofilepage-lightbox-interview-save'); ?></button>
 		</li>
-		
+
 		<li class="avatar">
 			<form id="usersAvatar" name="usersAvatar" method="post" enctype="multipart/form-data" action="/wikia.php?controller=UserProfilePage&method=onSubmitUsersAvatar&format=json&userId=<?= $userId; ?>">
 				<div class="column avatar">
@@ -47,14 +47,14 @@
 						<input type="hidden" name="MAX_FILE_SIZE" value="<?= $avatarMaxSize; ?>">
 						<input type="file" name="UPPLightboxAvatar" id="UPPLightboxAvatar">
 					<? endif; ?>
-					
+
 					<? if( $isUserPageOwner ): ?>
 						<p id="facebookConnectAvatar">
 							<label><?= wfMsg('user-identity-box-avatar-fb-import-avatar'); ?></label>
 							<?= $fbAvatarConnectButton; ?>
 						</p>
 					<? endif; ?>
-					
+
 					<? if( !empty($defaultAvatars) ): ?>
 						<label><?= wfMsg('user-identity-box-avatar-choose-avatar'); ?></label>
 						<ul class="sample-avatars">
@@ -66,16 +66,16 @@
 				</div>
 			</form>
 		</li>
-		
+
 		<li class="about">
 			<form id="userData" name="userData">
 				<div class="column">
 					<label><?= wfMsg('user-identity-box-about-name'); ?></label>
-					<input type="text" name="name" value="<?= strip_tags($user['realName']); ?>" maxlength="<?= $charLimits['name']; ?>" />
-					
+					<input type="text" name="name" value="<?= $user['realName']; ?>" maxlength="<?= $charLimits['name']; ?>" />
+
 					<label><?= wfMsg('user-identity-box-about-location'); ?></label>
-					<input type="text" name="location" value="<?= strip_tags($user['location']); ?>" maxlength="<?= $charLimits['location']; ?>" />
-					
+					<input type="text" name="location" value="<?= $user['location']; ?>" maxlength="<?= $charLimits['location']; ?>" />
+
 					<label><?= wfMsg('user-identity-box-about-birthday'); ?></label>
 					<select id="userBDayMonth" name="month">
 						<option value="0">--</option>
@@ -94,17 +94,17 @@
 							for($i = 1; $i <= $days; $i++) {
 								echo Xml::option( $i, $i, $selectedDay === $i );
 							}
-						} 
+						}
 						?>
 					</select>
-					
+
 					<label><?= wfMsg('user-identity-box-about-occupation'); ?></label>
-					<input type="text" name="occupation" value="<?= strip_tags($user['occupation']); ?>" maxlength="<?= $charLimits['occupation']; ?>" />
-					
+					<input type="text" name="occupation" value="<?= $user['occupation']; ?>" maxlength="<?= $charLimits['occupation']; ?>" />
+
 					<label><?= wfMsg('user-identity-box-about-gender'); ?></label>
-					<input type="text" name="gender" value="<?= strip_tags($user['gender']); ?>" maxlength="<?= $charLimits['gender']; ?>" />
+					<input type="text" name="gender" value="<?= $user['gender']; ?>" maxlength="<?= $charLimits['gender']; ?>" />
 				</div>
-				
+
 				<div class="column">
 					<? if( $isUserPageOwner ): ?>
 						<p id="facebookConnect" <? if( !empty($user['fbPage']) ): ?>style="display: none;"<? endif; ?>>
@@ -117,14 +117,14 @@
 							<a href="<?= $facebookPrefsLink ?>#mw-prefsection-fbconnect-prefstext"><?= wfMsg('user-identity-box-fb-prefs'); ?></a>
 						</p>
 					<? endif; ?>
-					
+
 					<label><?= wfMsg('user-identity-box-about-website'); ?></label>
-					<input type="text" name="website" value="<?= strip_tags($user['website']); ?>">
-					
+					<input type="text" name="website" value="<?= $user['website']; ?>">
+
 					<label><?= wfMsg('user-identity-box-about-tweet'); ?></label>
 					<span class="tweet-at">@</span>
-					<input type="text" name="twitter" value="<?= strip_tags($user['twitter']); ?>">
-					
+					<input type="text" name="twitter" value="<?= $user['twitter']; ?>">
+
 					<label><?= wfMsg('user-identity-box-about-fav-wikis'); ?></label>
 					<a class="favorite-wikis-refresh wikia-chiclet-button" href="#"><img src="<?= $wgBlankImgUrl ?>"></a>
 					<ul class="favorite-wikis">
@@ -138,12 +138,12 @@
 					<p id="hideEditsWikis">
 						<input type="checkbox" name="hideEditsWikis" value="1" <?php if (array_key_exists('hideEditsWikis', $user) && $user['hideEditsWikis']):?>checked="checked"<?php endif;?>/><?= wfMsg('user-identity-box-hide-edits-wikis'); ?>
 					</p>
-					
+
 				</div>
 			</form>
 		</li>
 	</ul>
-	
+
 	<div class="modalToolbar">
 		<button class="cancel secondary"><?= wfMsg('user-identity-box-avatar-cancel'); ?></button>
 		<button class="save"><?= wfMsg('user-identity-box-avatar-save'); ?></button>
