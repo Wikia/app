@@ -8,6 +8,8 @@ class WallHelper {
 	const WA_WALL_COMMENTS_MAX_LEN = 150;
 	const WA_WALL_COMMENTS_EXPIRED_TIME = 259200; // = (3 * 24 * 60 * 60) = 3 days
 
+    const NOTIFICATION_EXPIRE_DAYS = 7;
+
 	const PARSER_CACHE_TTL = 3600; // 60 * 60
 
 	public function __construct() {

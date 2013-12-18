@@ -343,7 +343,7 @@ class WallMessage {
 		$out = (int ) $this->getArticleComment()->getMetadata('notify_everyone');
 		$ageInDays = (time() - $out)/(60*60*24);
 
-		if( $ageInDays < 30  ){
+		if( $ageInDays < WallHelper::NOTIFICATION_EXPIRE_DAYS ){
 			return true;
 		} else {
 			return false;
