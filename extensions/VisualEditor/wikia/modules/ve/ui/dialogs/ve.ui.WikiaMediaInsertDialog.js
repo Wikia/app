@@ -70,6 +70,12 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	this.searchResults = this.search.getResults();
 	this.upload = new ve.ui.WikiaUploadWidget( { '$$': this.frame.$$, 'hideIcon': true } );
 
+	this.dropTarget = new ve.ui.WikiaDropTargetWidget({
+		'surface': this.surface,
+		'frame': this.frame,
+		'$$': this.frame.$$
+	});
+
 	this.$cart = this.$$( '<div>' );
 	this.$content = this.$$( '<div>' );
 	this.$mainPage = this.$$( '<div>' );
@@ -97,6 +103,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	} );
 	this.upload.connect( this, uploadEvents );
 	this.queryUpload.connect( this, uploadEvents );
+	this.dropTarget.on( 'drop', ve.bind( this.onFileDropped, this ) );
 
 	// Initialization
 	this.upload.$.appendTo( this.$mainPage );
@@ -114,6 +121,17 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	this.frame.$content.addClass( 've-ui-wikiaMediaInsertDialog' );
 	this.$foot.append( this.insertButton.$ );
 };
+
+/**
+ * Handle drag & drop file uploaded
+ *
+ * @method
+ * @param {Object} file instance of file
+ */
+ve.ui.WikiaMediaInsertDialog.prototype.onFileDropped = function ( file ) {
+	this.upload.$file.trigger( 'change', file );
+};
+
 
 /**
  * Handle query input changes.
@@ -335,6 +353,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.onMediaPageRemove = function ( item ) {
 ve.ui.WikiaMediaInsertDialog.prototype.onOpen = function () {
 	ve.ui.MWDialog.prototype.onOpen.call( this );
 	this.setPage( 'main' );
+	this.dropTarget.setup();
 };
 
 /**
@@ -363,6 +382,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.onClose = function ( action ) {
 	}
 	this.cartModel.clearItems();
 	this.queryInput.setValue( '' );
+	this.dropTarget.teardown();
 };
 
 /**

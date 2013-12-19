@@ -116,14 +116,16 @@ ve.ui.WikiaUploadWidget.prototype.onClick = function () {
  * @method
  * @fires success
  */
-ve.ui.WikiaUploadWidget.prototype.onFileChange = function () {
-	var fileErrors;
+ve.ui.WikiaUploadWidget.prototype.onFileChange = function ( event, file ) {
+	var fileErrors,
+			form;
 
-	if ( !this.$file[0].files[0] ) {
+	file = file || this.$file[0].files[0];
+	if ( !file ) {
 		return;
 	}
 
-	fileErrors = this.constructor.static.validateFile( this.$file[0].files[0] );
+	fileErrors = this.constructor.static.validateFile( file );
 
 	if ( fileErrors.length ) {
 		mw.config.get( 'GlobalNotification' ).show(
@@ -136,13 +138,16 @@ ve.ui.WikiaUploadWidget.prototype.onFileChange = function () {
 			$( '.ve-ui-frame' ).contents().find( '.ve-ui-window-body' )
 		);
 	} else {
+		form = new FormData( document.createElement( 'form' ) );
+		form.append( 'file', file );
+
 		$.ajax( {
 			'url': mw.util.wikiScript( 'api' ) + '?action=addmediatemporary&format=json',
 			'type': 'post',
 			'cache': false,
 			'contentType': false,
 			'processData': false,
-			'data': new FormData( this.$form[0] ),
+			'data': form,
 			'success': ve.bind( this.onUploadSuccess, this ),
 			'error': ve.bind( this.onUploadError, this )
 		} );
