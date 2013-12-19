@@ -23,7 +23,7 @@ $messages['qqq'] = array(
 $messages['en'] = array(
     'slowpagesblacklist-desc' => 'Blacklist slow pages to prevent them from being rendered.',
     'slowpagesblacklist-title' => 'Page not available',
-    'slowpagesblacklist-content' => 'Sorry, this page is temporarily not available. Try again later.',
-    'slowpagesblacklist-preview-unavailable' => 'Sorry, preview of this page is temporarily not available. Try again later.',
+    'slowpagesblacklist-content' => 'Due to high server load, this page is currently unavailable. Feel free to check back shortly. Sorry for the trouble and thanks for your patience!',
+    'slowpagesblacklist-preview-unavailable' => 'Due to high server load, preview of this page is currently unavailable. Feel free to check back shortly. Sorry for the trouble and thanks for your patience!',
 );
 
