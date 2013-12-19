@@ -13,7 +13,7 @@ class WikiaSQLCache extends FluentSql\Cache {
 	 * @param bool $sharedKey whether or not this memkey is shared amongst wikis
 	 * @return string a memcache key to use
 	 */
-	public function generateKey(\FluentSql\Breakdown $breakDown, $sharedKey) {
+	public function generateKey( \FluentSql\Breakdown $breakDown, $sharedKey = false ) {
 		$stack = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 4);
 		$keyArgs = ['sql-cache'];
 
