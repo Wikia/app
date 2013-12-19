@@ -538,6 +538,7 @@ include_once( "$IP/extensions/wikia/SpecialUnusedVideos/SpecialUnusedVideos.setu
 include_once( "$IP/extensions/wikia/ArticleSummary/ArticleSummary.setup.php" );
 include_once( "$IP/extensions/wikia/FilePage/FilePage.setup.php" );
 include_once( "$IP/extensions/wikia/CityVisualization/CityVisualization.setup.php" );
+include_once( "$IP/extensions/wikia/Logger/WikiaLogger.setup.php" );
 
 /**
  * @name $wgSkipSkins
