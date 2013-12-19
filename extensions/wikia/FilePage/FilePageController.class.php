@@ -5,9 +5,13 @@
  *
  * @author garth@wikia-inc.com
  * @author hyun@wikia-inc.com
+ * @author saipetch@wikia-inc.com
  */
 
 class FilePageController extends WikiaController {
+
+	CONST LIMIT_GLOBAL_USAGE = 50;
+	CONST LIMIT_LOCAL_USAGE = 100;
 
 	/**
 	 * Collects data about what articles the current file appears in, either
@@ -27,10 +31,6 @@ class FilePageController extends WikiaController {
 
 		// Based on $type get global or local data
 		if ( $type === 'global' ) {
-			// The 'limit' parameter is used by both usage methods we forward to as a way to limit
-			// the number of rows returned.  This is a safeguard against extreme cases
-			$this->setVal( 'limit', 50 );
-
 			$heading = wfMessage( 'video-page-global-file-list-header' )->plain();
 
 			// Forward to the getGlobalUsage method
@@ -39,27 +39,10 @@ class FilePageController extends WikiaController {
 				unset( $summary[$this->wg->DBname] );
 			}
 
-			$count = 0;
-
 			// Shorten the list to 3 articles.  We'll flesh out these three with full
 			// details to display now and flesh out the others dynamically from JS when
 			// the user pages forward
-			foreach ( $summary as $wiki => $articles ) {
-				if ( $count < 3 ) {
-					foreach ( $articles as $article ) {
-						$dbName = $article['wiki'];
-						if ( empty( $shortenedSummary[$dbName] ) ) {
-							$shortenedSummary[$dbName] = array();
-						}
-						$shortenedSummary[$dbName][] = $article;
-						if ( ++$count > 2 ) {
-							break;
-						}
-					}
-				} else {
-					break;
-				}
-			}
+			$shortenedSummary = array_slice( $summary, 0, 3 );
 		} else {
 			$heading = wfMessage( 'video-page-file-list-header' )->plain();
 			$summary = $this->sendSelfRequest( 'getLocalUsage' )->getData()['summary'];
@@ -269,7 +252,7 @@ class FilePageController extends WikiaController {
 		$target = $this->getVal( 'fileTitle', $this->wg->Title->getDBkey() );
 
 		// Put an upper limit on how many of files to show
-		$limit = 100;
+		$limit = self::LIMIT_LOCAL_USAGE;
 
 		// Do a first pass to get everything that directly points here
 		$res = $this->queryImageLinks( $target, $limit + 1 );
@@ -393,30 +376,66 @@ class FilePageController extends WikiaController {
 		$fileTitle = $this->getVal( 'fileTitle', '' );
 		$titleObj = empty( $fileTitle ) ? $this->wg->Title : Title::newFromText( $fileTitle );
 
-		// Query the global usage table to see where the current File title is used
-		$query = new GlobalUsageQuery( $titleObj->getDBkey() );
+		$memcKey = $this->getMemcKeyGlobalUsage( $titleObj->getDBkey() );
+		$globalUsage = $this->wg->Memc->get( $memcKey );
+		if ( !is_array( $globalUsage ) ) {
+			// Query the global usage table to see where the current File title is used
+			$db = wfGetDB( DB_SLAVE, array(), $this->wg->GlobalUsageDatabase );
 
-		if ( $this->getVal( 'offset' ) ) {
-			$query->setOffset( $this->getVal( 'offset' ) );
-		}
-		$query->setLimit( $this->wg->Request->getInt( 'limit', 50 ) );
-		$query->execute();
+			$gilTo = $db->addQuotes( $titleObj->getDBkey() );
+			$wiki = $db->addQuotes( $this->wg->DBname );
 
-		$summary = $query->getSingleImageResult();
+			// The 'limit' parameter is used by both usage methods we forward to as a way to limit
+			// the number of rows returned.  This is a safeguard against extreme cases
+			$limit = self::LIMIT_GLOBAL_USAGE;
 
-		// Translate key names and add some additional data
-		foreach ( $summary as $dbName => $articles ) {
-			foreach ( $articles as $info ) {
-				// Change the 'wiki' key from a db name to a display name
-				//$dbName = $info['wiki'];
-				$info['wiki'] = $this->nameToTitle( $dbName );
-				$info['dbName'] = $dbName;
+			$sql = <<<SQL
+				SELECT *
+				FROM (
+					SELECT  *
+					FROM `globalimagelinks`
+					WHERE gil_to = $gilTo AND gil_wiki != $wiki
+					ORDER BY gil_wiki, gil_page_namespace_id
+				) s
+				GROUP BY gil_wiki
+				LIMIT $limit
+
+SQL;
+			$result = $db->query( $sql, __METHOD__ );
+
+			while ( $row = $db->fetchObject( $result ) ) {
+				$globalUsage[$row->gil_wiki][] = [
+					'image' => $row->gil_page_title,
+					'id' => $row->gil_page,
+					'namespace_id' => $row->gil_page_namespace_id,
+					'title' => $row->gil_to,
+					'wiki' => $row->gil_wiki,
+				];
 			}
+
+			$this->wg->Memc->set( $memcKey, $globalUsage, 60*60*24 );
 		}
 
-		$this->summary = $summary;
+		$this->summary = $globalUsage;
 
 		wfProfileOut( __METHOD__ );
+	}
+
+	/**
+	 * Get memcache key for global usage of the video
+	 * @param string $title
+	 * @return string
+	 */
+	public function getMemcKeyGlobalUsage( $title ) {
+		return wfSharedMemcKey( 'filepage', 'globalusage', md5( $title ) );
+	}
+
+	/**
+	 * Clear cache for global usage of the video
+	 * @param string $title
+	 */
+	public function invalidateCacheGlobalUsage( $title ) {
+		$this->wg->Memc->delete( $this->getMemcKeyGlobalUsage( $title ) );
 	}
 
 	/**
@@ -425,7 +444,7 @@ class FilePageController extends WikiaController {
 	 */
 	public function addLocalSummary ( $data ) {
 		return $this->addSummary( $data, function ( $dbName, $articleIds ) {
-			$response = $this->app->sendRequest( 'ArticleSummaryController', 'blurb', array( 'ids' => implode( ',', $articleIds ) ) );
+			$response = $this->sendRequest( 'ArticleSummaryController', 'blurb', array( 'ids' => implode( ',', $articleIds ) ) );
 			return $response->getData();
 		});
 	}
@@ -543,4 +562,5 @@ class FilePageController extends WikiaController {
 
 		return $fullData;
 	}
+
 }
