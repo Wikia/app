@@ -326,7 +326,7 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 
 					if ( empty( $img['src'] ) ) {
 						// if we don't have a thumb by this opint, we still need to display something, fall back to placeholder
-						$globalTitle = GlobalTitle::newFromId( $row->page_id, $row->wiki_id );
+						$globalTitle = GlobalTitle::newFromIdAndCityId( $row->page_id, $row->wiki_id );
 						if ( is_object( $globalTitle ) ) {
 							$img['page'] = $globalTitle->getFullUrl();
 							// @TODO this should be taken from the code instead of being hardcoded

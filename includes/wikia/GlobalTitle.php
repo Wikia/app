@@ -83,7 +83,7 @@ class GlobalTitle extends Title {
 	/**
 	 * static constructor, Create new Title from id of page
 	 */
-	public static function newFromId( $id, $city_id = 0, $dbname = "" ) {
+	public static function newFromIdAndCityId( $id, $city_id, $dbname = "" ) {
 		global $wgMemc;
 		$title = null;
 

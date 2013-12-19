@@ -69,7 +69,7 @@ class ImagesService extends Service {
 		wfProfileIn(__METHOD__);
 
 		$dbname = WikiFactory::IDtoDB($wikiId);
-		$title = GlobalTitle::newFromId($pageId, $wikiId);
+		$title = GlobalTitle::newFromIdAndCityId($pageId, $wikiId);
 
 		$param = array(
 			'action' => 'query',
@@ -279,7 +279,7 @@ class ImagesService extends Service {
 		$app = F::app();
 		wfProfileIn(__METHOD__);
 
-		$title = GlobalTitle::newFromId($pageId, $wikiId);
+		$title = GlobalTitle::newFromIdAndCityId($pageId, $wikiId);
 		$imagePage = ($title instanceof Title) ? $title->getFullURL() : '';
 
 		wfProfileOut(__METHOD__);
