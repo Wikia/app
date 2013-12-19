@@ -19,7 +19,7 @@ class WikiaHomePageCollectionsHooks {
 			$visualization = new CityVisualization();
 			foreach($value as $collectionId => $collection) {
 				$app->wg->Memc->set($visualization->getCollectionCacheKey($collectionId), null);
-				$title = GlobalTitle::newMainPage($city_id);
+				$title = GlobalTitle::newMainPageByCityId($city_id);
 				$title->purgeSquid();
 				Wikia::log(__METHOD__, '', 'Purged memcached for collection #' . $collectionId);
 			}
