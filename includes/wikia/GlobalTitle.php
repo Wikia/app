@@ -47,7 +47,7 @@ class GlobalTitle extends Title {
 	/**
 	 * static constructor, Create new Title from name of page
 	 */
-	public static function newFromText( $text, $namespace, $city_id = null ) {
+	public static function newFromText( $text, $namespace = NS_MAIN, $city_id = null ) {
 
 		$filteredText = Sanitizer::decodeCharReferences( $text );
 		$title = new GlobalTitle();
@@ -77,7 +77,7 @@ class GlobalTitle extends Title {
 	/**
 	 * static constructor, Create new Title from id of page
 	 */
-	public static function newFromId( $id, $city_id, $dbname = "" ) {
+	public static function newFromId( $id, $city_id = 0, $dbname = "" ) {
 		global $wgMemc;
 		$title = null;
 
