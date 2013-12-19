@@ -38,7 +38,7 @@ class FounderEmailsViewsDigestEvent extends FounderEmailsEvent {
 		foreach ($cityList as $cityID) {
 			$user_ids = $wikiService->getWikiAdminIds( $cityID );
 			$foundingWiki = WikiFactory::getWikiById( $cityID );
-			$page_url = GlobalTitle::newFromText( 'Createpage', NS_SPECIAL, $cityID )->getFullUrl( array('modal' => 'AddPage') );
+			$page_url = GlobalTitle::newFromTextAndCityId( 'Createpage', NS_SPECIAL, $cityID )->getFullUrl( array('modal' => 'AddPage') );
 
 			$emailParams = array(
 				'$WIKINAME' => $foundingWiki->city_title,

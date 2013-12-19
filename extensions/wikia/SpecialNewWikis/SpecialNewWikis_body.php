@@ -193,7 +193,7 @@ class NewWikisPage extends AlphabeticPager {
 
 		$name = Xml::tags( 'a', array( 'href' => $row->city_url ), $row->city_title );
 		if ($this->more_details) {
-			$cuTitle = GlobalTitle::newFromText( 'CheckUser', NS_SPECIAL, $row->city_id );
+			$cuTitle = GlobalTitle::newFromTextAndCityId( 'CheckUser', NS_SPECIAL, $row->city_id );
 			$userLink = Xml::tags(
 				'a',
 				array( 'href' => $cuTitle->getFullURL( 'user=' . urlencode( $row->user_name ) ) ),

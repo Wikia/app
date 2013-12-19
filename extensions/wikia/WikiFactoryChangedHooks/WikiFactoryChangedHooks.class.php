@@ -210,7 +210,7 @@ Class WikiFactoryChangedHooks {
 				// parsed resource loader URL
 				$resourceLoaderURL = parse_url($matches[1]);
 				// parsed wiki URL
-				$wikiURL = parse_url(GlobalTitle::newFromText('Version', NS_SPECIAL, $wiki_id )->getFullURL());
+				$wikiURL = parse_url(GlobalTitle::newFromTextAndCityId('Version', NS_SPECIAL, $wiki_id )->getFullURL());
 				// URL to purge (constructed from $resourceLoaderURL and $wikiURL)
 				$purgeURL = $wikiURL['scheme'] . '://' . $wikiURL['host'] . $resourceLoaderURL['path'];
 

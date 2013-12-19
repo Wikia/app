@@ -151,7 +151,7 @@ abstract class FounderEmailsEvent {
 
 	protected static function addParamsUser($wiki_id, $user_name, &$params) {
 		$hash_url = Wikia::buildUserSecretKey($user_name, 'sha256');
-		$unsubscribe_url = GlobalTitle::newFromText('Unsubscribe', NS_SPECIAL, $wiki_id)->getFullURL(array('key' => $hash_url));
+		$unsubscribe_url = GlobalTitle::newFromTextAndCityId('Unsubscribe', NS_SPECIAL, $wiki_id)->getFullURL(array('key' => $hash_url));
 
 		$params['$USERNAME'] = $user_name;
 		$params['$UNSUBSCRIBEURL'] = $unsubscribe_url;

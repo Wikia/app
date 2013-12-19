@@ -21,7 +21,7 @@ class FixWikiMainImage extends Maintenance {
 					var_dump( $wiki['city_id'], $wiki['city_lang_code'] );
 				}
 
-				$t = GlobalTitle::newFromText( 'Wikia-Visualization-Main.png', NS_FILE, $wiki['city_id'] );
+				$t = GlobalTitle::newFromTextAndCityId( 'Wikia-Visualization-Main.png', NS_FILE, $wiki['city_id'] );
 
 				$task = new PromoteImageReviewTask();
 

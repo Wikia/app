@@ -160,9 +160,9 @@ class AutomaticWikiAdoptionGatherData {
 			return;
 		}
 
-		$globalTitleUserRights = GlobalTitle::newFromText('UserRights', -1, $wikiId);
+		$globalTitleUserRights = GlobalTitle::newFromTextAndCityId('UserRights', -1, $wikiId);
 		$specialUserRightsUrl = $globalTitleUserRights->getFullURL();
-		$globalTitlePreferences = GlobalTitle::newFromText('Preferences', -1, $wikiId);
+		$globalTitlePreferences = GlobalTitle::newFromTextAndCityId('Preferences', -1, $wikiId);
 		$specialPreferencesUrl = $globalTitlePreferences->getFullURL();
 
 		//at least one admin has not edited during xx days

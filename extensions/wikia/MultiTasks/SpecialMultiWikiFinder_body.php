@@ -144,7 +144,7 @@ class MultiwikifinderPage {
 			while ( $oRow = $dbr->fetchObject( $oRes ) ) {
 				#- get last edit TS or not
 				if ( $num <= self::ORDER_ROWS ) {
-					$oGTitle = GlobalTitle::newFromText( $this->mPageTitle, $this->mPageNS, $oRow->page_wikia_id );
+					$oGTitle = GlobalTitle::newFromTextAndCityId( $this->mPageTitle, $this->mPageNS, $oRow->page_wikia_id );
 					$data['rows'][ $oRow->page_wikia_id ] = array( $oRow->page_id, $oGTitle->getFullURL(), $oGTitle->getServer() );
 					$data['order'][ $oRow->page_wikia_id ] = $oGTitle->getLastEdit();
 				} else {
@@ -192,7 +192,7 @@ class MultiwikifinderPage {
 					list ($page_id, $page_url, $page_server) = $data['rows'][$city_id];
 					# page url
 					if ( empty($page_url) || empty($page_server) ) {
-						$oGTitle = GlobalTitle::newFromText( $this->mPageTitle, $this->mPageNS, $city_id );
+						$oGTitle = GlobalTitle::newFromTextAndCityId( $this->mPageTitle, $this->mPageNS, $city_id );
 						if ( is_object($oGTitle) ) {
 							$page_url = $oGTitle->getFullURL();
 							$page_server = $oGTitle->getServer();

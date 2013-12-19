@@ -290,7 +290,7 @@ class SpecialCssModel extends WikiaModel {
 	 * @return string
 	 */
 	public function getCssUpdatesUrl() {
-		$title = GlobalTitle::newFromText(
+		$title = GlobalTitle::newFromTextAndCityId(
 			self::UPDATES_CATEGORY,
 			NS_CATEGORY,
 			WikiFactory::DBtoId($this->getCommunityDbName())
@@ -332,13 +332,13 @@ class SpecialCssModel extends WikiaModel {
 		$cssUpdatePost = [];
 		$communityWikiId = WikiFactory::DBtoID( $this->getCommunityDbName() );
 
-		$blogTitle = GlobalTitle::newFromText( $postData['title'], NS_MAIN, $communityWikiId );
+		$blogTitle = GlobalTitle::newFromTextAndCityId( $postData['title'], NS_MAIN, $communityWikiId );
 		$blogTitleText = $blogTitle->getText();
 
 		$lastRevisionUser = isset( $postData['revisions'][0]['user'] ) ? $postData['revisions'][0]['user'] : null;
 		$timestamp = isset( $postData['revisions'][0]['timestamp'] ) ? $postData['revisions'][0]['timestamp'] : null;
 		$blogUser = $this->getUserFromTitleText( $blogTitleText, $lastRevisionUser );
-		$userPage = GlobalTitle::newFromText( $blogUser, NS_USER, $communityWikiId );
+		$userPage = GlobalTitle::newFromTextAndCityId( $blogUser, NS_USER, $communityWikiId );
 
 		if( !is_null( $lastRevisionUser ) &&
 			!is_null( $timestamp ) &&

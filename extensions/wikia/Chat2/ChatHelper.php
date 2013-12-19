@@ -261,7 +261,7 @@ class ChatHelper {
 		} elseif ( $logaction === 'chatconnect'  && !empty($paramArray) ) {
 			$ipLinks = array();
 			if ( $wgUser->isAllowed( 'multilookup' ) ) {
-				$mlTitle = GlobalTitle::newFromText( 'MultiLookup', NS_SPECIAL, 177 );
+				$mlTitle = GlobalTitle::newFromTextAndCityId( 'MultiLookup', NS_SPECIAL, 177 );
 				// Need to make the link manually for this as Linker's normaliseSpecialPage
 				// makes the link local if the special page exists locally, rather than
 				// keeping the global title
@@ -271,7 +271,7 @@ class ChatHelper {
 					wfMessage( 'multilookup' )->escaped()
 				);
 				$ipLinks[] = Linker::makeKnownLinkObj(
-					GlobalTitle::newFromText( 'Phalanx', NS_SPECIAL, 177 ),
+					GlobalTitle::newFromTextAndCityId( 'Phalanx', NS_SPECIAL, 177 ),
 					wfMessage( 'phalanx' )->escaped(),
 					wfArrayToCGI( array( 'type' => '8', 'target' => $paramArray[0], 'wpPhalanxCheckBlocker' => $paramArray[0] ) )
 				);

@@ -58,7 +58,7 @@ class SpecialUserManagementController extends WikiaSpecialPageController {
 
 		}
 
-		$this->emailChangeUrl = GlobalTitle::newFromText( 'EditAccount', NS_SPECIAL, 177 )->getFullUrl() . '/' . $par;
+		$this->emailChangeUrl = GlobalTitle::newFromTextAndCityId( 'EditAccount', NS_SPECIAL, 177 )->getFullUrl() . '/' . $par;
 		$this->emailChangeSubscriptionUrl = $this->emailChangeUrl;
          }
 

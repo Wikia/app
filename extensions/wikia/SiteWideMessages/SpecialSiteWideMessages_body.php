@@ -223,7 +223,7 @@ class SiteWideMessages extends SpecialPage {
 					if ( !empty( $mTaskId ) ) {
 						$mTaskId = intval( $mTaskId );
 						$taskLink = Linker::linkKnown(
-							GlobalTitle::newFromText( 'TaskManager', NS_SPECIAL, 177 ),
+							GlobalTitle::newFromTextAndCityId( 'TaskManager', NS_SPECIAL, 177 ),
 							"#{$mTaskId}",
 							array(),
 							array(

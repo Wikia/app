@@ -125,9 +125,7 @@ class Title {
 	 *   makeTitleSafe().
 	 * @return Title, or null on an error.
 	 */
-	/** Wikia change - start */
-	public static function newFromText( $text, $defaultNamespace = NS_MAIN, $cityId = null ) {
-	/** Wikia change - end */
+	public static function newFromText( $text, $defaultNamespace = NS_MAIN ) {
 		if ( is_object( $text ) ) {
 			throw new MWException( 'Title::newFromText given an object' );
 		}

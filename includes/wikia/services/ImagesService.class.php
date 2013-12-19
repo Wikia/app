@@ -58,7 +58,7 @@ class ImagesService extends Service {
 	}
 
 	protected static function getArticleIdFromTitle( $cityId, $title ) {
-		$title = GlobalTitle::newFromText($title, NS_FILE, $cityId);
+		$title = GlobalTitle::newFromTextAndCityId($title, NS_FILE, $cityId);
 		if ( $title->exists() ) {
 			return $title->getArticleID();
 		}

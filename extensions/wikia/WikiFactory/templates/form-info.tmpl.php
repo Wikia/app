@@ -37,7 +37,7 @@
 		<div>Disabled reason: <?php echo wfMsg('closed-reason')?> (<?php echo $wiki->city_additional?>)</div>
 	</li><?php endif ?>
 	<li>
-		<?php $pstats = GlobalTitle::newFromText("PhalanxStats/wiki/" . $wiki->city_id, NS_SPECIAL, 177);
+		<?php $pstats = GlobalTitle::newFromTextAndCityId("PhalanxStats/wiki/" . $wiki->city_id, NS_SPECIAL, 177);
 		print "<a href=\"". $pstats->getFullURL() ."\">Phalanx activity</a>\n"; ?>
 	</li>
 </ul>

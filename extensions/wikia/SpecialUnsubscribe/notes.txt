@@ -25,7 +25,7 @@ $eparams['token'] = wfGenerateUnsubToken($eparams['email'], $eparams['timestamp'
 for now, for "easier that way" reasons, (also because theres an unsquashed bug with userdata across clusters...)
 we're pointing all unsub links to central, where the master version of 'user' lives.
 
-$unsubTitle = GlobalTitle::newFromText('Unsubscribe', NS_SPECIAL, 177);
+$unsubTitle = GlobalTitle::newFromTextAndCityId('Unsubscribe', NS_SPECIAL, 177);
 
 will give us a title object pointing to http://community.wikia.com/wiki/Special:Unsubscribe
 

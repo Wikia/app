@@ -10,7 +10,7 @@ class RenameUserLogFormatter {
 	static public function getCommunityUser( $name, $noRedirect = false ) {
 		if (is_int($name))
 			$name = User::whoIs($name);
-		$title = GlobalTitle::newFromText($name, NS_USER, COMMUNITY_CENTRAL_CITY_ID);
+		$title = GlobalTitle::newFromTextAndCityId($name, NS_USER, COMMUNITY_CENTRAL_CITY_ID);
 		return Xml::element('a',array('href'=>$title->getFullURL(
 			$noRedirect ? 'redirect=no' : ''
 		)),$name,false);
@@ -18,7 +18,7 @@ class RenameUserLogFormatter {
 
 	static protected function getCommunityTask( $taskId ) {
 		$taskId = intval($taskId);
-		$title = GlobalTitle::newFromText('TaskManager', NS_SPECIAL, COMMUNITY_CENTRAL_CITY_ID);
+		$title = GlobalTitle::newFromTextAndCityId('TaskManager', NS_SPECIAL, COMMUNITY_CENTRAL_CITY_ID);
 		return Xml::element('a',array('href'=>$title->getFullURL(
 			"action=log&id={$taskId}&offset=0"
 		)),"#{$taskId}",false);
