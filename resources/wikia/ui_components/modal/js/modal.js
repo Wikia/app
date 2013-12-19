@@ -171,11 +171,6 @@ define( 'wikia.ui.modal', [
 
 		/** ATTACHING EVENT HANDLERS TO MODAL */
 
-		this.$element.click(function( event ) {
-			// when click happens inside the modal, stop the propagation so it won't be handled by the blackout
-			event.stopPropagation();
-		});
-
 		// trigger custom buttons events based on button 'data-event' attribute
 		this.$element.on( 'click', 'button', $.proxy( function( event ) {
 			var modalEventName = $( event.target ).data( 'event' );
@@ -188,7 +183,13 @@ define( 'wikia.ui.modal', [
 		this.$blackout.click( $.proxy(function( event ) {
 			event.preventDefault();
 
-			if ( this.isShown() && this.isActive() ) {
+			// jQuery only supports event bubbling,
+			// this is a workaround to be sure that click was done on blackout and doesn't bubble up from $element
+			// stopPropagation() on $element it not an option
+			// because we need bubbling for other events in the $elements content
+			var blackoutWasClicked = event.target === event.delegateTarget;
+
+			if ( this.isShown() && this.isActive() && blackoutWasClicked ) {
 				this.trigger( 'close', event );
 			}
 		}, that ) );
