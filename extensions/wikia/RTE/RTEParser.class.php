@@ -194,7 +194,7 @@ class RTEParser extends Parser {
 		// render broken image placeholder
 		if ($isBrokenImage) {
 			// handle not existing images
-			$ret = RTELinkerHooks::makeBrokenImageLinkObj($title, '', '', '', '', false, $wikitextIdx);
+			$ret = RTELinkerHooks::makeBrokenImageLinkObject($title, '', '', '', '', false, $wikitextIdx);
 
 			wfProfileOut(__METHOD__);
 			return $ret;
