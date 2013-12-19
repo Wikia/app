@@ -2625,9 +2625,17 @@ HTML
 	 * @return string
 	 */
 	function getPreviewText() {
-		global $wgOut, $wgUser, $wgParser, $wgRawHtml;
-
 		wfProfileIn( __METHOD__ );
+		global $wgEnableSlowPagesBlacklistExt;
+		if ( !empty( $wgEnableSlowPagesBlacklistExt ) ) {
+			global $wgSlowPagesBlacklist;
+			if ( in_array( $this->mTitle->getFullURL(), $wgSlowPagesBlacklist ) ) {
+				wfProfileOut( __METHOD__ );
+				return sprintf( '<div class="previewnote">%s</div>', wfMessage( 'slowpagesblacklist-preview-unavailable' )->plain() );
+			}
+		}
+
+		global $wgOut, $wgUser, $wgParser, $wgRawHtml;
 
 		// wikia change begin
 		// TODO: remove?
