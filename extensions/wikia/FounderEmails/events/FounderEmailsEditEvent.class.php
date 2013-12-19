@@ -236,7 +236,7 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 		return $recentEditsCount;
 	}
 
-	public static function register( $oRecentChange ) {
+	public static function register( $oRecentChange = null ) {
 		global $wgUser;
 		wfProfileIn( __METHOD__ );
 
