@@ -79,37 +79,34 @@ ve.ui.WikiaDropTargetWidget.prototype.onFileDragEnd = function( e ) {
  * @method
  * @param {Object} jQuery event
  */
-ve.ui.WikiaDropTargetWidget.prototype.onFileDrop = function( e ) {
-	var	transfer = e.originalEvent.dataTransfer,
+ve.ui.WikiaDropTargetWidget.prototype.onFileDrop = function( event ) {
+	var transfer = event.originalEvent.dataTransfer,
 			files = transfer.files;
 
-	e.preventDefault();
+	event.preventDefault();
 
 	// fade out the drop zone
 	this.$.fadeOut();
 
-	// trigger file upload
-	this.emit( 'upload', files[0] );
+	// trigger file drop
+	this.emit( 'drop', files[0] );
 };
 
 /* Methods */
 
 /**
- * Binds events 
+ * Binds events
  * @method
  */
-ve.ui.WikiaDropTargetWidget.prototype.setup = function( e ) {
-	this.$overlay.on( 'dragenter dragover', ve.bind( this.onFileDrag, this ) );
-	this.$overlay.on( 'dragleave dragend drop', ve.bind( this.onFileDragEnd, this ) );
+ve.ui.WikiaDropTargetWidget.prototype.setup = function() {
+	this.$overlay.on( 'dragenter.dropTarget dragover.dropTarget', ve.bind( this.onFileDrag, this ) );
+	this.$overlay.on( 'dragleave.dropTarget dragend.dropTarget drop.dropTarget', ve.bind( this.onFileDragEnd, this ) );
 };
 
 /**
- * Unbinds events 
+ * Unbinds events
  * @method
  */
-ve.ui.WikiaDropTargetWidget.prototype.teardown = function( e ) {
-	this.$overlay.off( 'dragenter dragover' );
-	this.$overlay.off( 'dragleave dragend drop' );
+ve.ui.WikiaDropTargetWidget.prototype.teardown = function() {
+	this.$overlay.off( '.dropTarget' );
 };
-
-
