@@ -17,6 +17,37 @@ class WikiFeaturesSpecialController extends WikiaSpecialPageController {
 
 	}
 
+	public function getFeedbackModal() {
+		if( !$this->wg->User->isLoggedIn() ) {
+			$this->setVal('errorMessage', wfMessage('wikifeatures-error-permission')->text() );
+		}
+
+		$templateData = [
+			'title' => wfMessage('wikifeatures-feedback-heading')->plain(),
+			'featureName' => $this->getVal('featureName', ''),
+			'featureImageUrl' => $this->getVal('featureImageUrl', $this->wg->BlankImgUrl),
+			'description' => wfMessage('wikifeatures-feedback-description')->text(),
+			'typeLabel' => wfMessage('wikifeatures-feedback-type-label')->plain(),
+			'commentLabel' => wfMessage('wikifeatures-feedback-comment-label')->plain(),
+			'typeOptions' => [],
+		];
+
+		foreach (WikiFeaturesHelper::$feedbackCategories as $i => $cat) {
+			$templateData['typeOptions'][] = [
+				'label' => wfMessage($cat['msg'])->text(),
+				'value' => $i,
+			];
+		}
+
+		$this->setVal( 'html', ( new Wikia\Template\MustacheEngine )
+			->setPrefix( dirname( __FILE__ ) . '/templates' )
+			->setData( $templateData )
+			->render( 'WikiFeaturesSpecial_feedback.mustache' ) );
+
+		$this->setVal( 'title', $templateData['title'] );
+		$this->setVal( 'labelSubmit', wfMessage( 'wikifeatures-feedback-submit-button' )->plain() );
+	}
+
 	public function index() {
 		$this->wg->Out->setPageTitle(wfMsg('wikifeatures-title'));
 		if (!$this->wg->User->isAllowed('wikifeaturesview')) {	// show this feature to logged in users only regardless of their rights

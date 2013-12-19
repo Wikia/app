@@ -1,4 +1,4 @@
-<li class="feature" data-name="<?= $feature['name'] ?>">
+<li class="feature" data-name="<?= $feature['name'] ?>" data-heading="<?= wfMsg('wikifeatures-feature-heading-'.$feature['name']) ?>">
 	<h3>
 		<?= wfMsg('wikifeatures-feature-heading-'.$feature['name']) ?>
 		<? if (isset($feature['active'])): ?>
