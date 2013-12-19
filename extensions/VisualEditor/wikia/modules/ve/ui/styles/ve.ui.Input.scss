@@ -1,0 +1,51 @@
+@import "extensions/wikia/EditPageLayout/css/core/colors";
+
+.ve-ui-inputWidget {
+	input, textarea {
+		background-color: $color-epl-input;
+		border-color: $color-epl-input-border;
+		box-shadow: 0 0 0 white, 0 0.1em 0.2em darken($color-epl-input-border, 3%);
+		color: $color-text;
+
+		&:focus {
+			background-color: darken($color-epl-input, 5%);
+			border-color: $color-epl-input-border;
+			box-shadow: 0 0 0 white, 0 0.1em 0.2em $color-epl-input-border;
+			@if $is-dark-wiki {
+				background-color: lighten($color-epl-input, 5%);
+			}
+		}
+
+	}
+}
+
+.ve-ui-menuWidget {
+	border-color: $color-page-border;
+
+	li {
+		background: $color-page;
+		color: $color-text;
+
+		.ve-ui-icon-check {
+			fill: $color-text;
+		}
+
+		&.ve-ui-optionWidget-selected, &.ve-ui-optionWidget-highlighted {
+			background-color: darken($color-page, 10%);
+			@if $is-dark-wiki {
+				background-color: lighten($color-page, 10%);
+			}
+		}
+
+		// &.ve-ui-optionWidget-highlighted {
+		// 	background-color: lighten($color-page, 10%);
+		// 	@if $is-dark-wiki {
+		// 		background-color: darken($color-page, 10%);
+		// 	}
+		// }
+
+		&:hover {
+			background: $color-ve-hover;
+		}
+	}
+}
