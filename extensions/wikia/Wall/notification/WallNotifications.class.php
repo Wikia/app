@@ -12,6 +12,7 @@
  */
 
 class WallNotifications {
+	const CACHE_TIME = 86400;
 	private $cachedUsers = array();
 
 	private $removedEntities;
@@ -142,29 +143,72 @@ class WallNotifications {
 	 */
 	public function getCounts($userId) {
 		wfProfileIn(__METHOD__);
+		$output = array();
+
+		$unreadCounts = WikiaDataAccess::cache(
+			$this->getUnreadCountKey( $userId, $this->app->wg->CityId ),
+			self::CACHE_TIME,
+			function () use ($userId) {
+				return $this->getCountsFromDB($userId);
+			}
+		);
+
+		// Get list of wikis
 		$wikiList = $this->getWikiList($userId);
 
-		// prefetch data
-		$keys = array();
-		$wno = new WallNotificationsOwner;
-		foreach ($wikiList as $wiki) {
-			$keys[] = $this->getKey($userId,$wiki['id']);
-			$keys[] = $wno->getKey($wiki['id'],$userId);
-		}
-		$this->app->wg->Memc->prefetch($keys);
-
-		$output = array();
-		$total = 0;
-		foreach($wikiList as $wiki) {
-			$wiki['unread'] = $this->getCount($userId, $wiki['id'], $wiki['id'] == $this->app->wg->CityId);
-			$total += $wiki['unread'];
+		// Basically rewrite wikiList to output adding uread count
+		foreach( $wikiList as $wiki ) {
+			$wiki['unread'] = $unreadCounts[ $wiki['id'] ];
 			// show only Wikis with unread notifications
 			// current Wiki is an exception (show always)
 			if( $wiki['unread'] > 0 || $wiki['id'] == $this->app->wg->CityId )
-				$output[] = $wiki;
+			$output[] = $wiki;
 		}
+
 		wfProfileOut(__METHOD__);
 		return $output;
+	}
+
+	private function getCountsFromDB( $userId ) {
+		wfProfileIn(__METHOD__);
+		$db = $this->getDB( true );
+
+		// Count unread notifications for all wikis skipping notifyeveryone type
+		$res = $db->select('wall_notification',
+			array( 'wiki_id', 'count(*) as unread_count' ),
+			array(
+				'user_id' => $userId,
+				'is_hidden' => 0,
+				'is_read' => 0,
+				'notifyeveryone' => 0
+			),
+			__METHOD__,
+			array(
+				'GROUP BY' => 'wiki_id',
+			)
+		);
+
+		$unreadCounts = array();
+		while( $row = $db->fetchRow($res) ) {
+			$unreadCounts[ $row[ 'wiki_id' ] ] = $row[ 'unread_count' ];
+		}
+
+		// Count both notifyeveryone and not everyone unread notifications for current wiki
+		$res = $db->selectField('wall_notification',
+			'count(*) as unread_count',
+			array(
+				'user_id' => $userId,
+				'is_hidden' => 0,
+				'is_read' => 0,
+				'wiki_id' => $this->app->wg->CityId
+			),
+			__METHOD__
+		);
+
+		$unreadCounts[ $this->app->wg->CityId ] = $res;
+
+		wfProfileOut(__METHOD__);
+		return $unreadCounts;
 	}
 
 	private function sortByTimestamp($array) {
@@ -183,19 +227,10 @@ class WallNotifications {
 	}
 
 	/**
-	 * Returns number of unread user's notifications for wiki
+	 * Get list of wikis
 	 * @param $userId
-	 * @param $wikiId
-	 * @param bool $notifyeveryone
-	 * @return int
+	 * @return array ('id','wgServer','sitename')
 	 */
-	private function getCount($userId, $wikiId, $notifyeveryone = false) {
-		// fixme
-		// should not to do the whole work of WikiNotifications
-		$notifs = $this->getWikiNotifications($userId, $wikiId, 5, true, $notifyeveryone );
-		return $notifs['unread_count'];
-	}
-
 	private function getWikiList($userId) {
 		// $forceCurrentWiki = true - always return current wiki as part of the list
 		// $forceCurrentWiki = false - return only wikis that ever recived notifications
@@ -972,6 +1007,10 @@ class WallNotifications {
 
 	public function getKey( $userId, $wikiId ){
 		return wfSharedMemcKey( __CLASS__, $userId, $wikiId. 'v30' );
+	}
+
+	public function getUnreadCountKey( $userId, $wikiId ){
+		return wfSharedMemcKey( __CLASS__, $userId, $wikiId. 'unreadCount' );
 	}
 
 	/**
