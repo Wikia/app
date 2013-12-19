@@ -2234,11 +2234,36 @@ function wfNegotiateType( $cprefs, $sprefs ) {
 }
 
 /**
+ * Wikia change start - Garth Webb
+ *
+ * Keeping this code near wfSuppressWarnings since it is related.
+ *
+ * If we're not in a development environment, always suppress warnings
+ */
+if ( empty($wgDevelEnvironment) ) {
+	if( !defined( 'E_DEPRECATED' ) ) {
+		define( 'E_DEPRECATED', 8192 );
+	}
+	if( !defined( 'E_USER_DEPRECATED' ) ) {
+		define( 'E_USER_DEPRECATED', 16384 );
+	}
+	error_reporting( E_ALL & ~( E_WARNING | E_NOTICE | E_USER_WARNING | E_USER_NOTICE | E_DEPRECATED | E_USER_DEPRECATED | E_STRICT ) );
+}
+/** Wikia change end */
+
+/**
  * Reference-counted warning suppression
  *
  * @param $end Bool
  */
 function wfSuppressWarnings( $end = false ) {
+	/** Wikia change start */
+	global $wgDevelEnvironment;
+	if ( empty($wgDevelEnvironment) ) {
+		return;
+	}
+	/** Wikia change end */
+
 	static $suppressCount = 0;
 	static $originalLevel = false;
 
