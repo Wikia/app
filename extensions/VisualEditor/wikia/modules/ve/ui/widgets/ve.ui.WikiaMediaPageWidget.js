@@ -28,6 +28,7 @@ ve.ui.WikiaMediaPageWidget = function VeUiWikiaMediaPageWidget( model, config ) 
 	this.fieldset = new ve.ui.FieldsetLayout( { '$$': this.$$ } );
 	this.image = null;
 	this.model = model;
+	this.mediaPreview = null;
 	this.removeButton = new ve.ui.ButtonWidget( {
 		'$$': this.$$,
 		'flags': ['destructive'],
@@ -134,8 +135,12 @@ ve.ui.WikiaMediaPageWidget.prototype.onImageLoad = function () {
  * @method
  */
 ve.ui.WikiaMediaPageWidget.prototype.onItemClick = function () {
-	// TODO: figure out how much is going to be done in widget vs here
-	var preview = new ve.ui.WikiaMediaPreviewWidget( this.model );
+	if( this.mediaPreview ) {
+		this.mediaPreview.open();
+	} else {
+		this.mediaPreview = new ve.ui.WikiaMediaPreviewWidget( this.model );
+		this.mediaPreview.$.appendTo( $( 'body' ) ); // todo - there's probably a body object created already
+	}
 };
 
 /**

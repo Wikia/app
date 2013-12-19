@@ -8,4 +8,22 @@
 	right: 0;
 	top: 0;
 	z-index: 20000000;
+
+	.ve-ui-wikiaMediaPreviewWidget-closeButton {
+		position: absolute;
+		right: 10px;
+		top: 10px;
+	}
+	.ve-ui-wikiaMediaPreviewWidget-mediaWrapper {
+		bottom: 1em;
+		left: 0;
+		margin: auto;
+		// set to default video height but will update in JS based on media size
+		height: 500px;
+		position: fixed;
+		right: 0;
+		top: 1em;
+		// set to default video width but will update in JS based on media size
+		width: 728px;
+	}
 }
