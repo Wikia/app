@@ -1,0 +1,21 @@
+@import "extensions/wikia/EditPageLayout/css/core/colors";
+
+.ve-ui-inputWidget {
+
+	input, textarea {
+		background-color: $color-epl-input;
+		border-color: $color-epl-input-border;
+		box-shadow: 0 0 0 white, 0 0.1em 0.2em $color-epl-input-border;
+		color: $color-text;
+
+		&:focus {
+			background-color: darken($color-epl-input, 10%);
+			border-color: $color-epl-input-border;
+			box-shadow: 0 0 0 white, 0 0.1em 0.2em $color-epl-input-border;
+			@if $is-dark-wiki {
+				background-color: lighten($color-epl-input, 10%);
+			}
+		}
+
+	}
+}
