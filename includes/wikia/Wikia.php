@@ -407,8 +407,12 @@ class Wikia {
 
 		$method = $sub ? $method . "-" . $sub : $method;
 		if( $wgDevelEnvironment || $wgErrorLog || $always ) {
-			// Currently this goes to syslog1's /var/log/httpd-info.log
-			error_log( $method . ":{$wgDBname}/{$wgCityId}:" . $message );
+			if (class_exists('Wikia\\Logger\\WikiaLogger')) {
+				$method = preg_match('/-WIKIA$/', $method) ? str_replace('-WIKIA', '', $method) : $method;
+				\Wikia\Logger\WikiaLogger::instance()->logger()->debug($message, ['method' => $method]);
+			} else {
+				error_log( $method . ":{$wgDBname}/{$wgCityId}:" . $message );
+			}
 		}
 		/**
 		 * commandline = echo

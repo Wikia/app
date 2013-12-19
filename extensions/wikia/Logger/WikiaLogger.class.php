@@ -1,8 +1,6 @@
 <?php
 /**
- * WikiaErrorHandler
- *
- * <insert description here>
+ * WikiaLogger
  *
  * @author Nelson Monterroso <nelson@wikia-inc.com>
  */

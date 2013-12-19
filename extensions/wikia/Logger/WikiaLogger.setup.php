@@ -134,5 +134,4 @@ spl_autoload_register(function($class) use ($loggerClasses) {
 });
 
 $handler = Wikia\Logger\WikiaLogger::instance();
-set_error_handler([$handler, 'onError'], error_reporting()); // TODO: do only for fatals, warnings, errors
-$handler->logger()->emergency("PHP Warning: SOMETHING IS HELLA BUSTED", ["code1" => "ERRORZ"]);
+set_error_handler([$handler, 'onError'], error_reporting());

@@ -16,15 +16,40 @@ class WebProcessor {
 		if (!isset($_SERVER['REQUEST_URI'])) {
 			return $record;
 		} elseif ($mergeData == null) {
-			global $wgRequest;
+			global $wgRequest, $wgDBname, $wgCityId;
+
+			$ip = !empty($wgRequest) ? $wgRequest->getIP() : null;
+			if ($ip === null) {
+				$ip = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : null;
+			}
 
 			$mergeData = [
 				'url' => $_SERVER['REQUEST_URI'],
-				'ip' => !empty($wgRequest) ? $wgRequest->getIP() : null,
-				'http_method' => isset($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : null,
-				'server' => isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : null,
-				'referrer' => isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : null,
 			];
+
+			if ($ip != null) {
+				$mergeData['ip'] = $ip;
+			}
+
+			if (isset($_SERVER['REQUEST_METHOD'])) {
+				$mergeData['http_method'] = $_SERVER['REQUEST_METHOD'];
+			}
+
+			if (isset($_SERVER['SERVER_NAME'])) {
+				$mergeData['server'] = $_SERVER['SERVER_NAME'];
+			}
+
+			if (isset($_SERVER['HTTP_REFERER'])) {
+				$mergeData['referrer'] = $_SERVER['HTTP_REFERER'];
+			}
+
+			if (!empty($wgDBname)) {
+				$mergeData['db_name'] = $wgDBname;
+			}
+
+			if (!empty($wgCityId)) {
+				$mergeData['city_id'] = $wgCityId;
+			}
 		}
 
 		if (isset($_SERVER['UNIQUE_ID'])) {
