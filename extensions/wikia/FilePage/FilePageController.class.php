@@ -413,7 +413,7 @@ SQL;
 				];
 			}
 
-			$this->wg->Memc->set( $memcKey, $globalUsage, 60*60*24 );
+			$this->wg->Memc->set( $memcKey, $globalUsage, 60*60 );
 		}
 
 		$this->summary = $globalUsage;
@@ -475,14 +475,16 @@ SQL;
 				);
 
 				$response = ApiService::foreignCall( $dbName, $params, ApiService::WIKIA );
-				foreach ( $response['summary'] as $id => $info ) {
-					if ( !array_key_exists( 'error', $info ) ) {
-						$memcKey = $this->getMemcKeyGlobalSummary( $dbName, $id );
-						$this->wg->Memc->set( $memcKey, $info, 60*60*24 );
+				if ( !empty( $response['summary'] ) ) {
+					foreach ( $response['summary'] as $id => $info ) {
+						if ( !array_key_exists( 'error', $info ) ) {
+							$result['summary'][$id] = $info;
+
+							$memcKey = $this->getMemcKeyGlobalSummary( $dbName, $id );
+							$this->wg->Memc->set( $memcKey, $info, 60*60 );
+						}
 					}
 				}
-
-				$result = array_merge_recursive( $result, $response );
 			}
 
 			return $result;
