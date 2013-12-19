@@ -342,13 +342,6 @@
 						self.tree.load( self.data.options );
 						self.w.find( '.reset-defaults a' ).click( $.proxy( self.loadDefaults, self ) );
 
-						// disable form submit on 'enter'
-						$searchInput.on('keypress', function(event) {
-							if ( event.which === 13 ) {
-								event.preventDefault();
-							}
-						});
-
 						// Find a tool
 						$searchInput.placeholder();
 						$searchInput.pluginAutocomplete( {

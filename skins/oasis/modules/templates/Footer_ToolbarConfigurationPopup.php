@@ -1,5 +1,5 @@
 <div id="MyToolsConfiguration" class="MyToolsConfiguration">
-	<form class="toolbar-customize WikiaForm">
+	<div class="toolbar-customize WikiaForm">
 		<div class="column">
 			<label><?= wfMessage('oasis-toolbar-edit-find-a-tool')->plain() ?></label>
 			<span class="advanced-tools"><?= wfMessage('oasis-toolbar-edit-advanced-tools')->parse() ?></span>
@@ -26,5 +26,5 @@
 			<ul class="options-list">
 			</ul>
 		</div>
-	</form>
+	</div>
 </div>
