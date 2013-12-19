@@ -457,9 +457,9 @@ EOT;
 		// $tpl->set( 'headscripts', $out->getHeadScripts() . $out->getHeadItems() );
 		// FIXME: we need to remove head items - i.e. <meta> tags
 		$remove = $this->wg->out->getHeadItemsArray();
-		$remove[] = $this->topScripts;
-		array_walk($remove,'trim');
-		$headScripts = str_replace($remove, '', $tpl->data['headscripts']);
+		$remove[ ] = $this->topScripts;
+		array_walk( $remove, 'trim' );
+		$headScripts = str_replace( $remove, '', $tpl->data[ 'headscripts' ] );
 
 		$this->jsFiles = $headScripts . $jsLoader . $this->jsFiles;
 
