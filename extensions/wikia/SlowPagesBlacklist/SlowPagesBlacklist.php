@@ -52,7 +52,6 @@ function efSlowPagesBlacklist( $oTitle, $unused, $oOutputPage, $oUser, $oWebRequ
 				// If a staff user requested forceview, let through.
 				if ( !$oUser->isAllowed( 'forceview' ) || !$oWebRequest->getInt( 'forceview' ) ) {
 					throw new ErrorPageError( 'slowpagesblacklist-title', 'slowpagesblacklist-content' );
-					return false;
 				}
 				break;
 		}
