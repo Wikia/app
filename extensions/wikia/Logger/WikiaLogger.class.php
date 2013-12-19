@@ -74,4 +74,36 @@ class WikiaLogger {
 
 		return true;
 	}
+
+	public function debug($message, $context=[]) {
+		return $this->logger->debug($message, $context);
+	}
+
+	public function info($message, $context=[]) {
+		return $this->logger->info($message, $context);
+	}
+
+	public function notice($message, $context=[]) {
+		return $this->logger->notice($message, $context);
+	}
+
+	public function warning($message, $context=[]) {
+		return $this->logger->warning($message, $context);
+	}
+
+	public function error($message, $context=[]) {
+		return $this->logger->error($message, $context);
+	}
+
+	public function critical($message, $context=[]) {
+		return $this->logger->critical($message, $context);
+	}
+
+	public function alert($message, $context=[]) {
+		return $this->logger->alert($message, $context);
+	}
+
+	public function emergency($message, $context=[]) {
+		return $this->logger->emergency($message, $context);
+	}
 } 
