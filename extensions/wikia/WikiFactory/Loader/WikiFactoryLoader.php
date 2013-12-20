@@ -629,6 +629,7 @@ class WikiFactoryLoader {
 						/**
 						 * skip this variable
 						 */
+						unset($this->mVariables[ $oRow->cv_name ]);
 						$this->debug( "{$oRow->cv_name} with value {$tUnserVal} skipped" );
 					}
 				}
