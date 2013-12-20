@@ -134,6 +134,7 @@ $messages['qqq'] = array(
 	'action-toplists-create-edit-list' => '{{doc-action|toplists-create-edit}}',
 	'toplists-editor-remove-item-tooltip' => '{{Identical|Remove item}}',
 	'toplists-create-button' => '{{Identical|Create list}}',
+	'toplists-cancel-button' => '{{Identical|Cancel}}',
 	'toplits-image-browser-selected-picture' => '$1 is the title of the image page.',
 	'toplists-image-browser-upload-btn' => '{{Identical|Choose}}',
 	'toplists-list-vote-up' => 'Keep this as short as possible. Everything exceeding allowed lenght will be cutted out!',
@@ -379,7 +380,7 @@ $messages['ce'] = array(
 	'toplists-update-button' => 'МогӀам Ӏалашбар',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Chmee2
  * @author Darth Daron
  */
@@ -879,6 +880,7 @@ Vous pouvez <a href="$4">vous désinscrire</a> des modifications de cette liste.
 
 /** Galician (galego)
  * @author Toliño
+ * @author Vivaelcelta
  * @author Xanocebreiro
  */
 $messages['gl'] = array(
@@ -896,7 +898,7 @@ $messages['gl'] = array(
 	'toplists-error-title-spam' => 'O texto especificado contén algunhas palabras identificadas como spam.',
 	'toplists-error-article-blocked' => 'Non ten permiso para crear unha páxina con ese nome. Sentímolo.',
 	'toplists-error-article-not-exists' => '"$1" non existe. Quere <a href="$2" target="_blank">crealo</a>?',
-	'toplists-error-picture-not-exists' => '"$1" non existe. Quere <a href="$2" target="_blank">cargala</a>?',
+	'toplists-error-picture-not-exists' => '"$1" non existe. Queres <a href="$2" target="_blank">subila</a>?',
 	'toplists-error-duplicated-entry' => 'Non pode usar o mesmo nome máis dunha vez.',
 	'toplists-error-empty-item-name' => 'O nome dun elemento existente non pode estar baleiro.',
 	'toplists-item-cannot-delete' => 'Houbo un erro ao borrar este elemento.',
@@ -904,7 +906,7 @@ $messages['gl'] = array(
 	'toplists-error-add-item-anon' => 'Aos usuarios anónimos non se lles permite engadir elementos ás listas. <a class="ajaxLogin" id="login" href="$1">Acceda ao sistema</a> ou <a href="$2">rexistre unha nova conta</a>.',
 	'toplists-error-add-item-permission' => 'Erro de permisos: A súa conta non ten os dereitos necesarios para crear novos elementos.',
 	'toplists-error-add-item-list-not-exists' => 'A lista dos 10 mellores "$1" non existe.',
-	'toplists-upload-error-unknown' => 'Houbo un erro ao procesar a petición de subida. Inténteo de novo.',
+	'toplists-upload-error-unknown' => 'Houbo un erro ao procesar a petición de subida. Inténtao de novo.',
 	'action-toplists-create-edit-list' => 'crear e editar as páxinas dos 10 mellores',
 	'toplists-editor-title-label' => 'Nome da lista',
 	'toplists-editor-title-placeholder' => 'Escriba un nome para a lista',
@@ -928,7 +930,7 @@ $messages['gl'] = array(
 	'toplits-image-browser-clear-picture' => 'Borrar a imaxe',
 	'toplits-image-browser-selected-picture' => 'Selección actual: $1',
 	'toplists-image-browser-upload-btn' => 'Elixir',
-	'toplists-image-browser-upload-label' => 'Cargar a súa',
+	'toplists-image-browser-upload-label' => 'Subir a túa',
 	'toplists-list-creation-summary' => 'Creando unha lista, $1',
 	'toplists-list-update-summary' => 'Actualizando unha lista, $1',
 	'toplists-item-creation-summary' => 'Creando un elemento da lista',
@@ -1855,6 +1857,7 @@ $messages['ps'] = array(
 /** Portuguese (português)
  * @author GTNS
  * @author Hamilton Abreu
+ * @author Josep Maria 15.
  * @author Luckas
  * @author SandroHc
  * @author Waldir
@@ -1938,7 +1941,7 @@ Pode <a href="$4">cancelar a subscrição</a> de alterações à lista.',
 	'toplists-days' => '$1 {{PLURAL:$1|dia|dias}}',
 	'toplists-weeks' => '$1 {{PLURAL:$1|semana|semanas}}',
 	'toplists-msg-fb-OnRateArticle-short' => 'votou numa lista Top 10 na $WIKINAME!',
-	'toplists-create-heading' => '<em>Novo!</em> Crie o Seu Próprio Top 10',
+	'toplists-create-heading' => '<em>Novo!</em> Cria o teu próprio Top 10',
 	'toplists-create-button-msg' => 'Criar uma lista',
 );
 

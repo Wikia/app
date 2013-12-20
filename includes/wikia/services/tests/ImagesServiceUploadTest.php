@@ -2,15 +2,16 @@
 /**
  * Integration test for file uploads and removals
  *
- * @group Broken
+ * @group Integration
  * @author macbre
  */
 class ImagesServiceUploadTest extends WikiaBaseTest {
 
 	const URL = 'http://upload.wikimedia.org/wikipedia/commons/d/d9/Eldfell%2C_Helgafell_and_the_fissure.jpg';
-	const REUPLOAD_URL = 'http://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Reykjavik%2C_Iceland-13July2011.jpg/800px-Reykjavik%2C_Iceland-13July2011.jpg';
+	const REUPLOAD_URL = 'http://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Atlantic_Puffin.jpg/320px-Atlantic_Puffin.jpg';
 	const PREFIX = 'QAImage';
 	const FILENAME = 'Test-$1.jpg';
+	#const FILENAME = 'Test%?ąę!-$1.jpg';
 
 	private $origUser;
 	private $fileName;
@@ -32,7 +33,8 @@ class ImagesServiceUploadTest extends WikiaBaseTest {
 
 		// use Swift domain
 		global $wgDevelEnvironmentName;
-		$this->mockGlobalVariable( 'wgDevBoxImageServerOverride', "static.{$wgDevelEnvironmentName}.wikia-dev.com" );
+		// Disabling forcing the image domain due to BAC-1136
+		//$this->mockGlobalVariable( 'wgDevBoxImageServerOverride', "static.{$wgDevelEnvironmentName}.wikia-dev.com" );
 
 		// debug
 		global $wgLocalFileRepo;
@@ -45,16 +47,18 @@ class ImagesServiceUploadTest extends WikiaBaseTest {
 		$url = $image->getUrl();
 
 		$this->assertStringEndsWith(
-			sprintf( '/%s/images/%s/%s/%s', $this->app->wg->DBname, $hash { 0 } , $hash { 0 } . $hash { 1 } , $image->getName() ),
+			sprintf( '/%s/images/%s/%s/%s', $this->app->wg->DBname, $hash { 0 } , $hash { 0 } . $hash { 1 } , urlencode($image->getName()) ),
 			$url,
 			'Path should contain a valid hash'
 		);
 
 		// verify that it's accessible via HTTP
-		$res = Http::get( $url, 'default', ['noProxy' => true] );
+		$req = MWHttpRequest::factory( $url, ['noProxy' => true] );
+		$req->execute();
 
-		$this->assertTrue( $res !== false, 'Uploaded image should return HTTP 200 - ' . $url );
-		$this->assertEquals( $fileHash, md5( $res ), 'Uploaded image hash should match - ' . $url );
+		$this->assertEquals( 200, $req->getStatus(), 'Uploaded image should return HTTP 200 - ' . $url );
+		$this->assertEquals( $fileHash, md5( $req->getContent() ), 'Uploaded image hash should match - ' . $url );
+		$this->assertEquals( 'image/jpeg', $req->getResponseHeader( 'Content-Type' ), 'Uploaded image should be JPEG' );
 	}
 
 	// check the path - /firefly/images/thumb/5/53/Test-1378979336.jpg/120px-0%2C451%2C0%2C294-Test-1378979336.jpg
@@ -63,13 +67,13 @@ class ImagesServiceUploadTest extends WikiaBaseTest {
 		$thumb = $image->createThumb( 120 );
 
 		$this->assertContains(
-			sprintf( '/%s/images/thumb/%s/%s/%s/120px-', $this->app->wg->DBname, $hash { 0 } , $hash { 0 } . $hash { 1 } , $image->getName() ),
+			sprintf( '/%s/images/thumb/%s/%s/%s/120px-', $this->app->wg->DBname, $hash { 0 } , $hash { 0 } . $hash { 1 } , urlencode($image->getName()) ),
 			$thumb,
 			'Path should contain a valid hash'
 		);
 
 		$this->assertStringEndsWith(
-			$image->getName(),
+			urlencode($image->getName()),
 			$thumb,
 			'Path should end with file name'
 		);
@@ -106,7 +110,12 @@ class ImagesServiceUploadTest extends WikiaBaseTest {
 	 */
 	private function uploadFromUrl( $file, $url, $comment ) {
 		$tmpFile = tempnam( wfTempDir(), 'upload' );
-		file_put_contents( $tmpFile, Http::get( $url, 'default', ['noProxy' => true] ) );
+
+		// fetch an asset
+		$res = Http::get( $url, 'default', ['noProxy' => true] );
+		$this->assertTrue($res !== false, 'File from <' . $url . '> should be uploaded');
+
+		file_put_contents( $tmpFile, $res );
 
 		$res = $file->upload( $tmpFile, $comment, '' );
 
@@ -124,7 +133,7 @@ class ImagesServiceUploadTest extends WikiaBaseTest {
 		$res = $this->uploadFromUrl( $file, self::URL, __CLASS__ );
 		Wikia::log( __METHOD__ , 'upload', sprintf( 'took %.4f sec', microtime( true ) - $time ) );
 
-		$this->assertTrue( $res->isOK(), 'Upload should end up successfully' );
+		$this->assertTrue( $res->isOK(), 'Upload should end up successfully - ' .json_encode($res->getErrorsArray()) );
 
 		/* @var LocalFile $file */
 		$this->assertInstanceOf( 'LocalFile', $file );

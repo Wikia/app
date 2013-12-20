@@ -106,7 +106,7 @@ $messages['ce'] = array(
 	'contentfeeds-firstfewarticles-tag-next' => 'Кхин дӀа',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -314,6 +314,14 @@ $messages['lb'] = array(
 	'contentfeeds-firstfewarticles-tag-title' => 'Titel',
 	'contentfeeds-firstfewarticles-tag-next' => 'Weider',
 	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Feeler: De Säitentitel ass obligatoresch',
+);
+
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'contentfeeds-newimages-rss-desc' => 'غذا دئن سی $1',
+	'contentfeeds-firstfewarticles-tag-next' => 'نها',
 );
 
 /** Lithuanian (lietuvių)

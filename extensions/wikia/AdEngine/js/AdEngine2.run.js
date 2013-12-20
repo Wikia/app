@@ -39,23 +39,13 @@
 		slotTweaker,
 
 		queueForLateAds,
-		adConfigForLateAds,
-		ie8 = window.navigator && window.navigator.userAgent && window.navigator.userAgent.match(/MSIE [6-8]\./);
+		adConfigForLateAds;
 
 	// Don't have SevenOne Media ads on IE8 (or below)
-	window.wgAdDriverUseSevenOneMedia = !ie8 && window.wgAdDriverUseSevenOneMedia && abTest.inGroup('SEVENONEMEDIA_ADS', 'ENABLED');
+	window.wgAdDriverUseSevenOneMedia = window.wgAdDriverUseSevenOneMedia && abTest.inGroup('SEVENONEMEDIA_ADS', 'ENABLED');
 
 	// Use PostScribe for ScriptWriter implementation when SevenOne Media ads are enabled
 	window.wgUsePostScribe = window.wgUsePostScribe || window.wgAdDriverUseSevenOneMedia;
-
-	/*
-	 * Currently PostScribe conflicts with Krux as it supplies a different version of the lib.
-	 * Here we disable Krux when PostScribe is to be used
-	 * Related ticket: ADEN-666
-	 */
-	if (window.wgUsePostScribe) {
-		window.wgEnableKruxTargeting = false;
-	}
 
 	// Construct Ad Engine
 	adEngine = AdEngine2(log, LazyQueue);

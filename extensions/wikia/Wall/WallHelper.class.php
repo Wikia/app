@@ -63,18 +63,17 @@ class WallHelper {
 	 * It sends request to UserProfilePage controller which should return user object generated
 	 * from passed title.
 	 *
-	 * @param bool $title
 	 * @return User
 	 *
 	 * @author Andrzej 'nAndy' Åukaszewski
 	 */
 	//TODO: remove call to UserProfilePage
-	public function getUser($title = false) {
-		$title = $title ? $title : F::App()->wg->Title;
+	public function getUser() {
+		$title = F::app()->wg->Title;
 		$ns = $title->getNamespace();
-        $user = null;
+		$user = null;
 
-        if( $ns == NS_USER_WALL ) {
+		if( $ns == NS_USER_WALL ) {
 
 			/**
 			 * @var $w Wall
@@ -82,19 +81,31 @@ class WallHelper {
 			$w = Wall::newFromTitle( $title );
 			$user = $w->getUser();
 		} else if( $ns == NS_USER_WALL_MESSAGE) {
+			// title to wall thread is Thread:dddd, which does not exist in the db. this will
+			// result in articleId being 0, which will break the logic later. So we need
+			// to fetch the existing title here (Username/@comment-...)
+			if ( intval( $title->getText() ) > 0 ) {
+				$mainTitle = Title::newFromId( $title->getText() );
+				if ( empty( $mainTitle ) ) {
+					$mainTitle = Title::newFromId( $title->getText(), Title::GAID_FOR_UPDATE );
+				}
+				if ( !empty( $mainTitle ) ) {
+					$title = $mainTitle;
+				}
+			}
 			/**
 			 * @var $wm WallMessage
 			 */
 
 			$wm = WallMessage::newFromTitle( $title );
-            $user = $wm->getWallOwner();
+			$user = $wm->getWallOwner();
 		}
 
-        if( is_null($user) ) {
-            return UserProfilePageHelper::getUserFromTitle($title);
-        }
+		if( is_null( $user ) ) {
+			return UserProfilePageHelper::getUserFromTitle( $title );
+		}
 
-        return $user;
+		return $user;
 	}
 
 	/**

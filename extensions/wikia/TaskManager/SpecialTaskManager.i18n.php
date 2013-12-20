@@ -23,9 +23,12 @@ $messages['en'] = array(
  * @author Siebrand
  */
 $messages['qqq'] = array(
+	'taskmanager' => '{{Identical|Display and manage background task}}',
+	'taskmanager_title' => '{{Identical|Display and manage background task}}',
 	'right-taskmanager' => '{{doc-right|taskmanager}}',
 	'right-taskmanager-action' => '{{doc-right|taskmanager-action}}',
-	'action-taskmanager' => '{{doc-action|taskmanager}}',
+	'action-taskmanager' => '{{doc-action|taskmanager}}
+{{Identical|Display and manage background task}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -84,7 +87,7 @@ $messages['ca'] = array(
 	'action-taskmanager' => 'Mostra i gestiona les tasques en segon pla',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Dontlietome7
  * @author Jezevec
  */
@@ -482,15 +485,16 @@ $messages['tr'] = array(
  * @author Andriykopanytsia
  * @author Steve.rusyn
  * @author SteveR
+ * @author Ua2004
  */
 $messages['uk'] = array(
-	'taskmanager' => 'Показ і управління фоновими завданнями',
-	'taskmanager_title' => 'Показ і управління фоновими завданнями',
+	'taskmanager' => 'Перегляд і керування фоновими завданнями',
+	'taskmanager_title' => 'Перегляд і керування фоновими завданнями',
 	'taskmanager_tasklist' => 'Повернутися до списку завдань',
-	'right-taskmanager' => 'Можна відображати фонові завдання',
-	'right-taskmanager-action' => 'Можна управляти фоновими завданнями',
-	'taskmanager-invert' => 'Інвертувати виділення',
-	'action-taskmanager' => 'показ і управління фоновими завданнями',
+	'right-taskmanager' => 'Переглядати фонові завдання',
+	'right-taskmanager-action' => 'Керувати фоновими завданнями',
+	'taskmanager-invert' => 'Інвертувати виділене',
+	'action-taskmanager' => 'перегляд і керування фоновими завданнями',
 );
 
 /** Vietnamese (Tiếng Việt)

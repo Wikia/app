@@ -139,7 +139,7 @@ $messages['ce'] = array(
 	'tagsreportnoresults' => 'ХӀума ца карийна',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -380,6 +380,14 @@ $messages['lb'] = array(
 	'tagsreportnoresults' => 'Näischt fonnt',
 	'tagsreportpages' => '(<strong>$1</strong>  {{PLURAL:$1|Säit|Säiten}})',
 	'tagsreportpageremoved' => "D'Säit #$1 gouf ewechgeholl",
+);
+
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'tagsreportgo' => 'نشون دئن',
+	'tagsreportmainnspace' => 'اصلی',
 );
 
 /** Latgalian (latgaļu)

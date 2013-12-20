@@ -95,7 +95,7 @@ $messages['ckb'] = array(
 	'wikifactoryreporter' => 'پەیامنێری WikiFactory',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Mr. Richard Bolla
  */
 $messages['cs'] = array(

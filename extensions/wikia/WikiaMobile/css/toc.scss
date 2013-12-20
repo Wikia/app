@@ -10,7 +10,22 @@ $dark-border: #D8D8D8;
 	display: none;
 }
 
-#wkTOC {
+//Some simple fixed for RTL languages
+.cont-dir-rtl {
+	.side-menu-capable {
+		direction: ltr; //JanusCSS will change it to rtl
+
+		-webkit-transform: translate(100%);
+		-moz-transform: translate(100%);
+		transform: translate(100%);
+	}
+
+	#wkTOCHandle {
+		border-radius: 3px 3px 0 0;
+	}
+}
+
+.side-menu {
 	position: fixed;
 	left: -260px;
 	top: 0;
@@ -19,14 +34,6 @@ $dark-border: #D8D8D8;
 	background: $toc-background;
 
 	counter-reset: level1, level2, level3;
-
-	&.side-menu-capable {
-		left: 0;
-
-		-webkit-transform: translate(-100%);
-		-moz-transform: translate(-100%);
-		transform: translate(-100%);
-	}
 
 	&.active {
 		-webkit-transition: -webkit-transform .1s ease-out;
@@ -50,6 +57,14 @@ $dark-border: #D8D8D8;
 		font-weight: 600;
 		z-index: 1;
 	}
+}
+
+.side-menu-capable {
+	left: 0;
+
+	-webkit-transform: translate(-100%);
+	-moz-transform: translate(-100%);
+	transform: translate(-100%);
 }
 
 #wkTOCHandle {
@@ -117,10 +132,9 @@ $level0-border-left-width: 5px;
 }
 
 .level {
-	padding: 0 0 $line-height 0;
-
+	//on iOS7 clicking on bottom of a screen opens it's bottom bar...
+	padding: 0 0 $line-height*2 0;
 	line-height: $line-height;
-
 	height: 100%;
 
 	> li {

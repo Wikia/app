@@ -2024,10 +2024,19 @@ class User {
                     $dbw = wfGetDB( DB_MASTER );
             }
 			#</Wikia>
-			$dbw->update( '`user`',
-				array( 'user_touched' => $dbw->timestamp( $this->mTouched ) ),
-				array( 'user_id' => $this->mId ),
+			
+			$touched = $dbw->timestamp( $this->mTouched );
+			$needsPurge =  $dbw->selectField( 
+				'`user`', '1', 
+				array( 'user_id' => $this->mId, 'user_touched < ' . $dbw->addQuotes( $touched ) ), 
 				__METHOD__ );
+			
+			if ( $needsPurge ) {
+				$dbw->update( '`user`', 
+					array( 'user_touched' => $touched ), array( 'user_id' => $this->mId ), 
+					__METHOD__ );
+			}
+			
 			$this->clearSharedCache();
 		}
 	}

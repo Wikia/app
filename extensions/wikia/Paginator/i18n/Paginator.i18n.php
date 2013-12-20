@@ -12,6 +12,7 @@ $messages['en'] = array(
  */
 $messages['qqq'] = array(
 	'paginator-next' => '{{Identical|Next}}',
+	'paginator-back' => '{{Identical|Back}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -69,7 +70,7 @@ $messages['ce'] = array(
 	'paginator-next' => 'Кхин дӀа',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -174,6 +175,14 @@ $messages['ksh'] = array(
 $messages['lb'] = array(
 	'paginator-next' => 'Weider',
 	'paginator-back' => 'Zréck',
+);
+
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'paginator-next' => 'نها',
+	'paginator-back' => 'دما',
 );
 
 /** Macedonian (македонски)

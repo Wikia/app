@@ -39,7 +39,7 @@ $messages['ca'] = array(
 	'site-layout' => 'Dissenys del lloc',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Darth Daron
  * @author Dontlietome7
  */
@@ -140,6 +140,13 @@ $messages['ja'] = array(
 	'skinchooser-desc' => '利用者の個人設定での外装選択を可能にします。',
 	'new-look' => 'ウィキア',
 	'site-layout' => 'サイトの外装',
+);
+
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'new-look' => 'ويكيا:',
 );
 
 /** Macedonian (македонски)

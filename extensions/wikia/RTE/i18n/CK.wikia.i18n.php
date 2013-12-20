@@ -692,6 +692,8 @@ $messages['ce'] = array(
 	'rte-ck-modeSwitch-toWysiwyg' => 'Визуальни тадар',
 	'rte-ck-templateDropDown-label' => 'Кеп',
 	'rte-ck-templateEditor-editor-parameters' => 'Параметраш',
+	'rte-ck-templateEditor-editor-previewButton' => 'Хьалха муха ю хьажа',
+	'rte-ck-templateEditor-editor-previewTitle' => 'Хьалха муха ю хьажа',
 );
 
 /** Sorani Kurdish (کوردی)
@@ -701,7 +703,7 @@ $messages['ckb'] = array(
 	'rte-ck-link-add' => 'بەستەر زیاد بکە',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Chmee2
  * @author Darth Daron
  * @author Mormegil
@@ -2035,6 +2037,29 @@ $messages['lb'] = array(
 	'rte-ck-unlink' => 'Link ewechhuelen',
 );
 
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'rte-ck-hoverPreview-comment-title' => 'نظر',
+	'rte-ck-hoverPreview-delete' => 'پاك كردن',
+	'rte-ck-hoverPreview-edit' => 'ويرايشت',
+	'rte-ck-image-photo' => 'عسكيا',
+	'rte-ck-link-error-title' => 'خطا',
+	'rte-ck-link-external-linkText' => 'هوم پیوند متنی',
+	'rte-ck-link-external-url' => 'يو آر ال',
+	'rte-ck-link-internal-pageName' => 'نوم بلگه:',
+	'rte-ck-link-internal-tab' => 'هوم پیوند تویئ',
+	'rte-ck-media-delete' => 'ؤرداشتن',
+	'rte-ck-media-edit' => 'آلشت كردن',
+	'rte-ck-modeSwitch-toSource' => 'سرچشمه',
+	'rte-ck-photoGallery-gallery' => 'عسگ دونی',
+	'rte-ck-templateEditor-dialog-insert' => 'نهائن',
+	'rte-ck-templateEditor-dialog-magicWords' => 'كلميا جادويی',
+	'rte-ck-templateEditor-editor-previewButton' => 'پيش سيل',
+	'rte-ck-templateEditor-editor-previewTitle' => 'پيش سيل',
+);
+
 /** Macedonian (македонски)
  * @author Bjankuloski06
  */
@@ -2934,6 +2959,7 @@ $messages['ps'] = array(
  * @author Crazymadlover
  * @author Giro720
  * @author Hamilton Abreu
+ * @author Josep Maria 15.
  * @author Luckas
  * @author Malafaya
  * @author SandroHc
@@ -3037,7 +3063,7 @@ $messages['pt'] = array(
 	'rte-ck-poll-confirmDelete' => 'Tem a certeza de que pretende remover a votação desta página?',
 	'rte-ck-poll-confirmDeleteTitle' => 'Remover esta votação?',
 	'rte-ck-spellchecker-moreSuggestions' => 'Mais sugestões',
-	'rte-ck-pasteText-title' => 'Cole seu texto',
+	'rte-ck-pasteText-title' => 'Cola o teu texto',
 	'rte-ck-format-tag_p' => 'Texto normal',
 );
 
@@ -3712,6 +3738,7 @@ $messages['tr'] = array(
 	'rte-ck-media-edit' => 'değiştir',
 	'rte-ck-modeSwitch-toSource' => 'Kaynak',
 	'rte-ck-modeSwitch-toWysiwyg' => 'Görsel',
+	'rte-ck-modeSwitch-toSourceTooltip' => 'Kaynak moduna geç',
 	'rte-ck-photoGallery-confirmDelete' => 'Bu galeriyi sayfadan kaldırmak istediğinize emin misiniz?',
 	'rte-ck-photoGallery-confirmDeleteTitle' => 'Galeriyi kaldır?',
 	'rte-ck-photoGallery-tooltip' => 'Bu bir galeridir.',
@@ -3760,6 +3787,7 @@ $messages['tt-cyrl'] = array(
  * @author Andriykopanytsia
  * @author Steve.rusyn
  * @author SteveR
+ * @author Ua2004
  * @author Тест
  */
 $messages['uk'] = array(
@@ -3809,10 +3837,10 @@ $messages['uk'] = array(
 	'rte-ck-link-status-external' => 'Зовнішнє посилання',
 	'rte-ck-media-delete' => 'видалити',
 	'rte-ck-media-edit' => 'змінити',
-	'rte-ck-modeSwitch-toSource' => 'Джерело',
+	'rte-ck-modeSwitch-toSource' => 'Вихідний код',
 	'rte-ck-modeSwitch-toWysiwyg' => 'Візуальний',
-	'rte-ck-modeSwitch-toSourceTooltip' => 'Перемикання в режим Джерела',
-	'rte-ck-modeSwitch-toWysiwygTooltip' => 'Перемикання у Візуальний режим',
+	'rte-ck-modeSwitch-toSourceTooltip' => 'Режим вихідного коду',
+	'rte-ck-modeSwitch-toWysiwygTooltip' => 'Візуальний режим',
 	'rte-ck-modeSwitch-error' => 'Сталася помилка під час перемикання режимів. Будь ласка, спробуйте ще раз.',
 	'rte-ck-photoGallery-gallery' => 'Галерея',
 	'rte-ck-photoGallery-slideshow' => 'Показ слайдів',

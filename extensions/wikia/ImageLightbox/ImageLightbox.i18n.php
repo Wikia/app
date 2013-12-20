@@ -49,6 +49,7 @@ $messages['qqq'] = array(
 * $1 is a link to the suggested image.',
 	'lightbox-share-button-email' => '{{Identical|Email}}',
 	'lightbox-share-button-www' => '{{Identical|Share}}',
+	'lightbox-share-email-page-label-address' => '{{Identical|E-mail address}}',
 	'lightbox-share-email-error-caption' => '{{Identical|Error}}',
 	'lightbox-share-email-error-content' => 'Parameters:
 * $1 is the number of sent e-mails
@@ -173,7 +174,7 @@ Detalls: $2",
 	'lightbox-visit-the-wiki' => 'Visita el wiki:',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Chmee2
  * @author Darth Daron
  */
@@ -609,9 +610,13 @@ $messages['lb'] = array(
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
+	'lightbox-standard-link' => 'هوم پیوند استاندارد',
 	'lightbox-send' => 'كل كردن',
 	'lightbox-share-button-email' => 'ايميل',
+	'lightbox-share-button-www' => 'بهر کردن',
 	'lightbox-share-button-embed' => 'مئن رئته',
+	'lightbox-share-email-page-label-address' => 'نشونی ايميل',
+	'lightbox-share-email-ok-caption' => 'مئکم کردن',
 	'lightbox-share-email-error-caption' => 'خطا',
 );
 
@@ -1051,9 +1056,17 @@ Mga detalye: $2',
 );
 
 /** Turkish (Türkçe)
+ * @author Incelemeelemani
  * @author Suelnur
  */
 $messages['tr'] = array(
+	'lightbox-forum' => 'Forum',
+	'lightbox-standard-link' => 'Standart bağlantı',
+	'lightbox-blog-link' => 'Blog bağlantı',
+	'lightbox-send' => 'Gönder',
+	'lightbox-share-button-email' => 'E-posta',
+	'lightbox-share-button-www' => 'Paylaş',
+	'lightbox-share-email-page-label-address' => 'E-posta adresi',
 	'lightbox-share-email-error-caption' => 'Hata',
 );
 
@@ -1061,18 +1074,19 @@ $messages['tr'] = array(
  * @author Andriykopanytsia
  * @author Steve.rusyn
  * @author SteveR
+ * @author Ua2004
  */
 $messages['uk'] = array(
-	'lightbox_details_tooltip' => 'Перегляд відомостей про фото',
+	'lightbox_details_tooltip' => 'Переглянути деталі фото',
 	'lightbox-forum' => 'Форум',
 	'lightbox-standard-link' => 'Стандартне посилання',
 	'lightbox-blog-link' => 'Посилання на блог',
 	'lightbox-send' => 'Надіслати',
 	'lightbox-share-description' => 'Фото в $1 на $2',
 	'lightbox-share-email-subject' => '$1 відправив вам фото на Вікії',
-	'lightbox-share-email-body' => 'Привіт
+	'lightbox-share-email-body' => 'Привіт!
 
-Хтось хотів показати вам фотографії на Вікія. Перегляньте  його тут:
+Хтось захотів поділитися з вами фотографією на Вікії. Переглянути її можна тут:
 
 $1
 
@@ -1080,17 +1094,17 @@ $1
 	'lightbox-share-button-email' => 'Email',
 	'lightbox-share-button-www' => 'Поділитися',
 	'lightbox-share-button-embed' => 'Вставити',
-	'lightbox-share-email-label' => 'Відіслати це зображення другові',
-	'lightbox-share-email-page-label' => 'Надіслати цю сторінку другу',
+	'lightbox-share-email-label' => 'Надіслати це зображення другові',
+	'lightbox-share-email-page-label' => 'Надіслати цю сторінку другові',
 	'lightbox-share-email-page-label-address' => 'Адреса електронної пошти',
-	'lightbox-share-email-ok-caption' => 'Підтвердження',
-	'lightbox-share-email-ok-content' => '{{PLURAL:$1|лист вже відправлений|листи вже відправлені|листів вже відправлено}}.',
+	'lightbox-share-email-ok-caption' => 'Готово',
+	'lightbox-share-email-ok-content' => '{{PLURAL:$1|Лист|Листи}} успішно надіслано.',
 	'lightbox-share-email-error-caption' => 'Помилка',
-	'lightbox-share-email-error-content' => 'Помилка надсилання {{PLURAL:$1|листа|листів}}.
-Детальна інформація: $2',
-	'lightbox-share-email-error-login' => 'Для надсилання листів вам необхідно увійти на сайт',
-	'lightbox-share-email-error-noaddress' => 'Жодної адреси не вказано.',
-	'lightbox-visit-the-wiki' => 'Відвідати вікі:',
+	'lightbox-share-email-error-content' => 'Не вдалося надіслати {{PLURAL:$1|листа|листи}}.
+Подробиці: $2',
+	'lightbox-share-email-error-login' => 'Вам слід авторизуватися на сайті, щоб надсилати листи',
+	'lightbox-share-email-error-noaddress' => 'Ви не вказали жодної адреси.',
+	'lightbox-visit-the-wiki' => 'Відвідайте вікі:',
 );
 
 /** Vietnamese (Tiếng Việt)

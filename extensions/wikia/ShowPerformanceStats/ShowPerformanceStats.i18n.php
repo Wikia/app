@@ -62,7 +62,7 @@ $messages['ca'] = array(
 	'performancestat-cpu' => 'CPU: $1 s',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Dontlietome7
  */
 $messages['cs'] = array(

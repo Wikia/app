@@ -54,7 +54,9 @@ $messages['qqq'] = array(
 	'activityindicator-message' => '{{Identical|Loading}}',
 	'window-category-load-batch' => '{{Identical|More}}',
 	'window-article-button-close' => '{{Identical|Close}}',
+	'window-article-button-back' => '{{Identical|Back}}',
 	'window-article-menu-search-label' => '{{Identical|Search}}',
+	'window-article-menu-cancel-label' => '{{Identical|Cancel}}',
 );
 
 /** Arabic (العربية)
@@ -153,7 +155,7 @@ $messages['ce'] = array(
 	'window-article-button-close' => 'ДӀачӀагӀа',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Chmee2
  * @author Reaperman
  */
@@ -447,17 +449,17 @@ $messages['km'] = array(
 $messages['ko'] = array(
 	'activityindicator-message' => '불러오는 중...',
 	'window-wikis-title' => '위키아 게임 가이드',
-	'window-wikis-wikilist-search-hint' => '상위 게임 찾기...',
+	'window-wikis-wikilist-search-hint' => '우리의 최고 게임 검색...',
 	'window-category-load-batch' => '더 보기',
 	'window-article-button-close' => '닫기',
 	'window-article-button-back' => '뒤로',
-	'window-article-menu-search-label' => '찾기',
+	'window-article-menu-search-label' => '검색',
 	'window-article-menu-dashboard-label' => '도움말 목차',
 	'window-article-menu-cancel-label' => '취소',
 	'searchview-no-results' => '"%s"에 대한 결과가 없습니다',
 	'searchview-button-back-list' => '목록으로 돌아가기',
 	'searchview-button-back-article' => '문서로 돌아가기',
-	'searchbar-hint' => '%s 찾기...',
+	'searchbar-hint' => '%s 검색...',
 	'alert-download-updated-wikis-message' => '사용 가능한 가이드 목록는 업데이트될 것입니다.',
 	'alert-download-updated-wikis-button-ok' => '확인',
 	'error-update-required' => '이 앱에 필요한 업데이트가 있습니다.',
@@ -487,6 +489,18 @@ $messages['lb'] = array(
 	'searchview-button-back-article' => 'Zréck op den Artikel',
 	'searchbar-hint' => 'No "%s" sichen',
 	'alert-download-updated-wikis-button-ok' => 'OK',
+);
+
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'activityindicator-message' => 'د حالت سوار كرد',
+	'window-category-load-batch' => 'بیشتر',
+	'window-article-button-close' => 'بسن',
+	'window-article-button-back' => 'دما',
+	'window-article-menu-search-label' => 'پی جوری',
+	'alert-download-updated-wikis-button-ok' => 'خوئه',
 );
 
 /** Macedonian (македонски)

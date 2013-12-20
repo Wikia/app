@@ -158,7 +158,7 @@ $messages['ce'] = array(
 	'prefs-rte' => 'Визуальни йозан тадар (RTE)',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Darth Daron
  */
 $messages['cs'] = array(
@@ -526,7 +526,7 @@ $messages['nl'] = array(
 	'enablerichtexteditor' => 'Uitgebreide tekstverwerker inschakelen (in aanvulling op broncodemodus)',
 	'rte-enablerichtexteditormessage' => 'De uitgebreide tekstverwerker is ingeschakeld.',
 	'rte-first-run-notice' => 'We hebben een aantal verbeteringen gemaakt aan de tekstverwerker. [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news Lees ook de aankondiging].',
-	'prefs-rte' => 'Uitgebreide tekstverwerker',
+	'prefs-rte' => 'Uitgebreide tekstbewerker',
 );
 
 /** Nederlands (informeel)‎ (Nederlands (informeel)‎)
@@ -766,6 +766,7 @@ $messages['tl'] = array(
 
 /** Turkish (Türkçe)
  * @author Emperyan
+ * @author Incelemeelemani
  * @author Mert.subay
  */
 $messages['tr'] = array(
@@ -783,7 +784,7 @@ $messages['tr'] = array(
 	'rte-edgecase-redirect' => 'yönlendirme',
 	'rte-edgecase-templateintable' => 'şablon tanımlı tablo',
 	'rte-edgecase-unclosed-tags' => 'Kapatılmış HTML etiketi',
-	'enablerichtexteditor' => 'Zengin Metin Düzenleyicisi etkinleştir', # Fuzzy
+	'enablerichtexteditor' => '(Kaynak moduna ek olarak) Görsel modda düzenlemeyi etkinleştir',
 	'rte-enablerichtexteditormessage' => 'Zengin Metin Düzenleyicisi etkin!',
 	'rte-first-run-notice' => 'Düzenleyicide birkaç geliştirme yaptık.Daha fazlasını öğrenmek için, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news read the announcement].',
 );
@@ -812,6 +813,14 @@ $messages['uk'] = array(
 	'rte-enablerichtexteditormessage' => 'Покращений редактор тексту включений!',
 	'rte-first-run-notice' => 'Ми зробили кілька поліпшень в редакторі. Щоб дізнатися більше,[http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news відвідайте сторінку] з описом змін.',
 	'prefs-rte' => 'Візуальний текстовий редактор (RTE)',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'rte-edgecase-info-title' => 'Chế độ nguồn yêu cầu',
+	'rte-edgecase-info' => 'Chỉnh sửa nội dung bằng chế độ trực quan đã bị vô hiệu hóa do trang chứa nhiều mã phức tạp.',
 );
 
 /** Chinese (中文)

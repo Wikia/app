@@ -134,7 +134,7 @@ $messages['ce'] = array(
 	'feed-title-recentchanges' => 'Керла нисдарш',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Chmee2
  */
 $messages['cs'] = array(
@@ -176,9 +176,10 @@ $messages['de'] = array(
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
+ * @author Marmase
  */
 $messages['diq'] = array(
-	'partner-feed-recent-changes' => 'Vurnayışê peyêni',
+	'partner-feed-recent-changes' => 'Vırnayışé bahdoyéni',
 	'feed-title-recent-images' => 'Vurnayışê resiman',
 	'all-blog-posts' => 'kategoriy pêro',
 	'feed-title-blogcomments' => 'Vatışê - ($1)',
@@ -360,6 +361,14 @@ $messages['lb'] = array(
 	'all-blog-posts' => 'all Kategorien',
 	'feed-title-blogcomments' => 'Bemierkungen iwwer $1',
 	'feed-title-recentchanges' => 'Rezent Ännerungen',
+);
+
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'feed-title-recent-images' => 'عسکیا تازه باو',
+	'feed-title-recentchanges' => 'آلشتیا تازه باو',
 );
 
 /** Macedonian (македонски)

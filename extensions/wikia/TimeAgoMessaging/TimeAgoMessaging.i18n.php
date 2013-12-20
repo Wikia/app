@@ -125,7 +125,7 @@ $messages['ce'] = array(
 	'timeago-month-from-now' => '$1 {{PLURAL:$1|бутт}} хьалха',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Darth Daron
  * @author Dontlietome7
  * @author Mormegil

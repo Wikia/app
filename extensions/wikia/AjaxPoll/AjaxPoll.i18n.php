@@ -155,7 +155,7 @@ $messages['ca'] = array(
 	'ajaxpoll-submitting' => "Espera si us plau, s'està processant el teu vot.",
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -466,6 +466,19 @@ $messages['ja'] = array(
 	'ajaxpoll-submitting' => '投票を送信しています。お待ちください...',
 );
 
+/** Kannada (ಕನ್ನಡ)
+ * @author Dimension10
+ */
+$messages['kn'] = array(
+	'ajaxpoll-percentVotes' => 'ಯಲ್ಲ ಮತಗಳ&nbsp;$1%',
+	'ajaxpoll-thankyou' => 'ನಿಮ್ಮ ಮತಕ್ಕೆ ಧನ್ಯವಾದ!',
+	'ajaxpoll-error' => 'ನಿಮ್ಮ ಮತವನ್ನು ಪ್ರಸಂಸಕರಣ ಮಾಡುವಾಗ ಒಂದು ತ್ರುಟಿ ಆಯಿತು. ದೈವಿತ್ತು ಸ್ವಲ್ಪ ಹೊತ್ತು ಆದ ಮೇಲೆ ಪ್ರಯತ್ನ ಮಾದಿ.',
+	'ajaxpoll-summary' => '$2 ಇಗೆ $1 ಅಕ್ಕೆ ಈ ಮತದಾನ ನಿರ್ಮಾಣ ಆಯಿತು. ಇವತ್ತಿನ ವರಗೆ  $3 ಜನರು ಮತ ಕೊತ್ತಿದರೆ.',
+	'ajaxpoll-submit' => 'ಮತ ಕೊಡಿ!',
+	'ajaxpoll-closed' => 'ಮತದಾನ ಈಗ ಮುಚ್ಚಿ ಹೊಗಿದೆ. ಪರಿಣಾಮಗಳನ್ನ ಆನಂದಿಸಿ.',
+	'ajaxpoll-submitting' => 'ದಯವಿಟ್ಟು ಪ್ರತೀಕ್ಷೆ ಮದಿ. ನಿಮ್ಮ ಮತವನ್ನು ನಾವು ಒಪ್ಪಿಸುತ ಇದ್ದೇವೆ.',
+);
+
 /** Korean (한국어)
  * @author Cafeinlove
  * @author 아라
@@ -498,6 +511,7 @@ $messages['ksh'] = array(
 $messages['lb'] = array(
 	'ajaxpoll-percentVotes' => '$1%&nbsp; vun alle Stëmmen',
 	'ajaxpoll-thankyou' => 'Merci fir Är Stëmm!',
+	'ajaxpoll-error' => 'Et gouf e Problem beim Verschaffe vun Ärer Stëmm, probéiert et w.e.g. nach eng Kéier.',
 	'ajaxpoll-submit' => 'Ofstëmmen!',
 	'ajaxpoll-closed' => "D'Ëmfro ass ofgeschloss. Kuckt d'Resultater.",
 	'ajaxpoll-submitting' => 'Waart w.e.g., Är Stëmm gëtt elo geschéckt ...',
@@ -735,9 +749,9 @@ $messages['pt'] = array(
 	'ajaxpoll-thankyou' => 'Obrigado pelo teu voto!',
 	'ajaxpoll-error' => 'Ocorreu um problema ao processar o teu voto, por favor, tenta-o de novo.',
 	'ajaxpoll-summary' => 'A votação foi criada às $1 de $2 e, até agora, $3 pessoas votaram.',
-	'ajaxpoll-submit' => 'Vote!',
-	'ajaxpoll-closed' => 'A votação foi encerrada. Desfrute dos resultados.',
-	'ajaxpoll-submitting' => 'Espere, por favor. A submeter o seu voto...',
+	'ajaxpoll-submit' => 'Vota!',
+	'ajaxpoll-closed' => 'A votação foi encerrada. Desfruta dos resultados.',
+	'ajaxpoll-submitting' => 'Espera, por favor. A submeter o teu voto…',
 );
 
 /** Brazilian Portuguese (português do Brasil)

@@ -348,7 +348,7 @@ $messages['ce'] = array(
 	'wikiaquiz-game-continue-button' => 'Кхин дӀа',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Chmee2
  * @author Vks
  */
@@ -2132,6 +2132,13 @@ $messages['uk'] = array(
 	'wikiaquiz-game-email-error' => 'Виникла помилка під час надсилання на цю електронну пошту: $1',
 	'wikiaquiz-game-challenge' => 'Киньте виклик своїм друзям, щоб грати!',
 	'wikiaquiz-game-mute' => 'Без звуку',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'wikiaquiz-game-email-placeholder' => 'tênđịachỉemail@wikia.com',
 );
 
 /** Simplified Chinese (中文（简体）‎)

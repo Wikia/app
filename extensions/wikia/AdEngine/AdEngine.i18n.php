@@ -170,11 +170,12 @@ $messages['fr'] = array(
 
 /** Galician (galego)
  * @author Toliño
+ * @author Vivaelcelta
  */
 $messages['gl'] = array(
-	'adengine-exitstitial-title-template' => 'Está deixando $1…',
-	'adengine-exitstitial-redirecting' => 'O seu navegador irá á páxina solicitada nuns segundos.',
-	'adengine-exitstitial-go-back' => 'Quere regresar?',
+	'adengine-exitstitial-title-template' => 'Estás deixando $1…',
+	'adengine-exitstitial-redirecting' => 'O teu navegador irá á páxina solicitada nuns segundos.',
+	'adengine-exitstitial-go-back' => 'Queres regresar?',
 	'adengine-exitstitial-button' => 'Saltar este anuncio',
 );
 
@@ -195,6 +196,16 @@ $messages['id'] = array(
 	'adengine-exitstitial-redirecting' => 'Peramban Anda akan mengarahkan Anda ke halaman yang Anda minta dalam beberapa detik.',
 	'adengine-exitstitial-go-back' => 'Ingin kembali?',
 	'adengine-exitstitial-button' => 'Lewati Iklan ini',
+);
+
+/** Kannada (ಕನ್ನಡ)
+ * @author Dimension10
+ */
+$messages['kn'] = array(
+	'adengine-exitstitial-title-template' => 'ನೀವು $1 ಬಿಡುತ ಇದ್ದೀರಿ.',
+	'adengine-exitstitial-redirecting' => 'ನಿಮ್ಮ ಬ್ರೌಸರ್ ನೀವು ಕೇಳಿದ ಪುಟಕ್ಕೆ ನಿಮ್ಮನ ಸ್ವಲ್ಪ ಹೊತ್ತಲ್ಲೇ ಕಲಿಸುತದೆ.',
+	'adengine-exitstitial-go-back' => 'ವಾಪುಸು ಹೋಗ ಬೇಕ?',
+	'adengine-exitstitial-button' => 'ಈ ಎಡನ್ನು ಜಿಗಿ ಬೇಕ?',
 );
 
 /** Korean (한국어)

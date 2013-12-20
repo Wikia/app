@@ -115,6 +115,7 @@ $messages['qqq'] = array(
 	'tog-userlandingpage' => 'Label next to selectbox when user can choose her landing page will be one of: Main Page, WikiActivity, RecentChanges',
 	'myhome-feed-newpage' => '{{Identical|New page}}',
 	'myhome-feed-edit' => '{{Identical|Edit}}',
+	'myhome-feed-blogcomment' => '{{Identical|Blog comment}}',
 	'myhome-feed-delete' => '{{Identical|Deleted}}',
 	'myhome-feed-added-by' => '{{Identical|Added by}}',
 	'myhome-feed-new-page-details' => '{{Identical|New page}}',
@@ -124,6 +125,7 @@ $messages['qqq'] = array(
 	'myhome-feed-redirect-details' => '{{Identical|Redirect}}',
 	'myhome-hot-spots-number-of-editors' => '{{Identical|Editor}}',
 	'myhome-namespace-blog' => '{{Identical|Blog}}',
+	'oasis-myhome-community-corner-edit' => '{{Identical|Edit message}}',
 	'myhome-community-corner-edit' => '{{Identical|Edit message}}',
 	'myhome-default-view-checkbox' => "In the list of recent wiki activity (Special:WikiActivity), this is a checkbox button to toggle between viewing a summary of all activity and a summary of activity in pages on the user's watchlist.
 
@@ -633,7 +635,7 @@ $messages['ce'] = array(
 	'myhome-feed-edit' => 'нисдар',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Darth Daron
  * @author Dontlietome7
  */
@@ -2078,6 +2080,7 @@ $messages['ka'] = array(
 );
 
 /** Kannada (ಕನ್ನಡ)
+ * @author Dimension10
  * @author Nayvik
  */
 $messages['kn'] = array(
@@ -2085,6 +2088,7 @@ $messages['kn'] = array(
 	'myhome-feed-newpage' => 'ಹೊಸ ಪುಟ',
 	'myhome-feed-edit' => 'ಸಂಪಾದಿಸು',
 	'myhome-feed-talkpage' => 'ಚರ್ಚಾ ಪುಟ',
+	'myhome-feed-blogcomment' => 'ಬ್ಲಾಗ್ ಇಗೆ  ಟಿಪ್ಪಣಿ',
 	'myhome-feed-delete' => 'ಅಳಿಸಲಾಗಿದೆ',
 	'myhome-feed-categorization' => 'ವರ್ಗೀಕರಣ',
 	'myhome-hot-spots-number-of-editors' => 'ಸಂಪಾದಕರು',
@@ -2146,6 +2150,25 @@ $messages['lb'] = array(
 	'myhome-feed-new-article-comment-details' => 'Bemierkung',
 	'myhome-feed-redirect-details' => 'Viruleedung',
 	'tooltip-pt-myhome' => 'Op meng Haaptsäit goen',
+);
+
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'myhome' => 'حونه مه',
+	'prefs-myhome' => 'حونه مه',
+	'myhome-feed-newpage' => 'بلگه نو',
+	'myhome-feed-edit' => 'ويرايشت',
+	'myhome-feed-talkpage' => 'بلگه چک چنه',
+	'myhome-feed-delete' => 'پاك بیه',
+	'myhome-feed-by' => 'وا $1',
+	'myhome-feed-new-page-details' => 'بلگه نو',
+	'myhome-feed-summary-details' => 'چكسته',
+	'myhome-feed-new-blog-comment-details' => 'نظر',
+	'myhome-feed-new-article-comment-details' => 'نظر',
+	'myhome-hot-spots-number-of-editors' => 'ویرایشتگریا',
+	'tooltip-pt-myhome' => 'رو د حونه مه',
 );
 
 /** Macedonian (македонски)
@@ -2917,6 +2940,7 @@ $messages['ps'] = array(
 
 /** Portuguese (português)
  * @author Hamilton Abreu
+ * @author Josep Maria 15.
  * @author Luckas
  * @author Malafaya
  * @author SandroHc
@@ -2981,12 +3005,12 @@ Se quer ver A Minha Casa, visite '''[[Special:Preferences|as suas Preferências]
 	'myhome-community-corner-header' => 'Mensagens Comunitárias',
 	'oasis-myhome-community-corner-edit' => 'editar mensagem &gt;',
 	'myhome-community-corner-edit' => 'editar mensagem',
-	'community-corner' => "'''Bem-vindo(a) à A Minha Casa!'''
+	'community-corner' => "'''Bem-vindo(a) à Minha Casa!'''
 
-Esta página ajuda-o a saber o que está a acontecer na wiki.
+Esta página vai ajudar-te a saber o que está a acontecer na wiki.
 
-Se é fundador ou administrador da wiki, pode alterar esta mensagem para comunicar à comunidade coisas importantes que estejam a acontecer no site.
-Pode, por exemplo:
+Se és o fundador ou um administrador da wiki, podes alterar esta mensagem para comunicar à comunidade coisas importantes que estejam a acontecer no site.
+Podes, por exemplo:
 
 * Organizar um projecto para criar uma área da wiki
 
@@ -3598,6 +3622,9 @@ $messages['tr'] = array(
 	'myhome-activity-feed' => 'Etkinlik beslemesi',
 	'myhome-watchlist-feed' => 'İzleme listesi',
 	'myhome-user-contributions-feed' => 'Katkılar',
+	'myhome-hot-spots-newest' => "Wiki'deki yeni sayfalar",
+	'tog-userlandingpage' => 'Açılış sayfam:',
+	'prefs-myhome' => 'Evim',
 	'myhome-feed-newpage' => 'yeni sayfa',
 	'myhome-feed-edit' => 'değiştir',
 	'myhome-feed-move' => 'sayfa taşındı',
@@ -3631,7 +3658,7 @@ $messages['tr'] = array(
 	'myhome-namespace-blog' => 'Günlük',
 	'myhome-community-corner-header' => 'Topluluk Mesajları',
 	'myhome-community-corner-edit' => 'iletiyi değiştir',
-	'myhome-hot-spots-definition' => 'Son $1 günde en fazla editöre sahip sayfalar', # Fuzzy
+	'myhome-hot-spots-definition' => 'Son {{PLURAL:$1|gün|$1 gün}} içinde en çok düzenlenen sayfalar.',
 	'myhome-default-view-checkbox' => '$1 sayfasını varsayılan görünümüm yap',
 	'myhome-default-view-success' => 'Tamam, bu artık sizin varsayılanınız',
 	'tooltip-pt-myhome' => 'Evime git',

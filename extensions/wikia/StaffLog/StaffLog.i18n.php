@@ -127,7 +127,7 @@ $messages['ca'] = array(
 	'action-stafflog' => "mostra l'historial centralitzat",
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Chmee2
  * @author Dontlietome7
  */
@@ -315,6 +315,17 @@ $messages['id'] = array(
 $messages['lb'] = array(
 	'stafflog-desc' => 'Zentraliséiert Logge vun de Staff-Mataarbechter',
 	'stafflog-blockmsg' => '$1 $2 huet versicht de Staff-Mataarbechter $3 op der Wiki $4 ze spären: Grond: $5',
+);
+
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'stafflog-filter-label' => 'فيلتر',
+	'stafflog-filter-user' => 'كارور',
+	'stafflog-filter-type' => 'نوع:',
+	'stafflog-filter-apply' => 'وه كار بردن فيلتر',
+	'stafflog-filter-type-block' => 'بخشیا',
 );
 
 /** Macedonian (македонски)

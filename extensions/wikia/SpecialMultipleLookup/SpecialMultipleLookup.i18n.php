@@ -47,6 +47,8 @@ $messages['qqq'] = array(
 	'multilookupnext' => '{{Identical|Next}}',
 	'multilookupprevious' => '{{Identical|Previous}}',
 	'multilookupwiki' => '{{Identical|Wiki}}',
+	'multilookuplink' => '{{Identical|Contribution link}}',
+	'multilookupwikidbname' => '{{Identical|Database name}}',
 	'multilookupwikiurl' => '{{Identical|URL}}',
 	'multilookupwikititle' => '{{Identical|Title}}',
 	'right-multilookup' => '{{doc-right|multilookup|ns=Wikia}}',
@@ -213,7 +215,7 @@ $messages['ce'] = array(
 	'multilookupwikioptions' => 'Параметраш',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Chmee2
  */
 $messages['cs'] = array(
@@ -534,6 +536,23 @@ $messages['lb'] = array(
 	'multilookuplistwikiainfo' => 'Lëscht vu Wikien op där Säite vu Benotzer mat der IP-Adress <b>$1</b> geännert goufen',
 	'multilookuplastedit' => 'Lescht Ännerung vun dëser IP-Adress:',
 	'multilookupwikititle' => 'Titel',
+);
+
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'multilookupgo' => 'رو',
+	'multilookupnext' => 'نها',
+	'multilookupprevious' => 'وادمايی',
+	'multilookupnoresultfound' => 'هيچ نتيجه يی  جسته نبی',
+	'multilookupwiki' => 'ويكی',
+	'multilookuplink' => 'لینک هومیار',
+	'multilookupdetails' => 'جزيات نشون بيئه',
+	'multilookupwikidbname' => 'نوم دی بی',
+	'multilookupwikiurl' => 'يو آر ال',
+	'multilookupwikititle' => 'سرتال',
+	'multilookupwikioptions' => 'گزينه يا هنی:',
 );
 
 /** Macedonian (македонски)
@@ -1056,6 +1075,14 @@ $messages['uk'] = array(
 	'multilookuprecordspager' => "Показано від '''$1''' до '''$2''' із '''$3''' записів.",
 	'right-multilookup' => 'Переглянути відомості про користувачів в декількох вікі',
 	'action-multilookup' => 'перегляд відомостей про користувачів в декількох вікі',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'multilookupnoresultfound' => 'Không tìm thấy kết quả',
+	'multilookupwiki' => 'Wiki',
 );
 
 /** Yiddish (ייִדיש)

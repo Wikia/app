@@ -147,7 +147,7 @@ $messages['ce'] = array(
 	'iwedit-success' => '<p>Хьажораг кхиамца кхоьллина.</p>',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Dontlietome7
  * @author Utar
  */
@@ -362,6 +362,13 @@ $messages['lb'] = array(
 	'iwedit-update' => 'Aktualiséieren',
 	'iwedit-error' => '<p>Et ass e Feeler geschitt.</p>',
 	'iwedit-success' => '<p>De Linkg gouf ugeluecht</p>',
+);
+
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'iwedit-update' => 'روزآمد كردن',
 );
 
 /** Latgalian (latgaļu)
@@ -615,6 +622,13 @@ $messages['uk'] = array(
 	'iwedit-update' => 'Оновити',
 	'iwedit-error' => '<p>Сталася помилка.</p>',
 	'iwedit-success' => '<p>Посилання успішно створено.</p>',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'iwedit-update' => 'Cập nhật',
 );
 
 /** Simplified Chinese (中文（简体）‎)

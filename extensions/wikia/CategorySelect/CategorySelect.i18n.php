@@ -744,8 +744,16 @@ $messages['lb'] = array(
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
+	'categoryselect-button-add' => 'یه گل دسه اضاف کو',
 	'categoryselect-button-cancel' => 'رد كردن',
 	'categoryselect-button-save' => 'ذخيره كردن',
+	'categoryselect-category-add' => 'یه گل دسه اضاف کو....',
+	'categoryselect-category-edit' => 'ویرایشت دسه',
+	'categoryselect-category-remove' => 'دسه نه جاوه جا کو',
+	'categoryselect-edit-summary' => 'اضاف بیئن دسه یا',
+	'categoryselect-error-article-doesnt-exist' => 'بلگه [id=$1] نیئش.',
+	'categoryselect-error-db-locked' => 'جاگه دونسمنيا بسه بيه',
+	'categoryselect-error-duplicate-category-name' => 'دسه "$1" ایسه هئیش.',
 );
 
 /** Lithuanian (lietuvių)
@@ -895,7 +903,7 @@ $messages['nl'] = array(
 	'categoryselect-modal-category-sortkey' => 'U kunt deze pagina ook in de categoriepagina "$1" ordenen onder de naam:',
 	'categoryselect-tooltip-add' => 'Druk "Enter" of "Return" als u klaar bent.',
 	'tog-disablecategoryselect' => 'Categoriemodule uitschakelen (alleen van toepassing als bewerken in visuele modus is uitgeschakeld)',
-	'tog-disablecategoryselect-v2' => 'Categoriemodule uitschakelen (alleen van toepassing als de visuele tekstverwerker is uitgeschakeld)',
+	'tog-disablecategoryselect-v2' => 'Categoriemodule uitschakelen (alleen van toepassing als de visuele tekstbewerker is uitgeschakeld)',
 );
 
 /** Nederlands (informeel)‎ (Nederlands (informeel)‎)
