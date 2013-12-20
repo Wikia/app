@@ -364,6 +364,13 @@ $messages['lb'] = array(
 	'iwedit-success' => '<p>De Linkg gouf ugeluecht</p>',
 );
 
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'iwedit-update' => 'روزآمد كردن',
+);
+
 /** Latgalian (latgaļu)
  * @author Dark Eagle
  */

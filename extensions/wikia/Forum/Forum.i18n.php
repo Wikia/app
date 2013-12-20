@@ -1251,11 +1251,11 @@ $messages['gl'] = array(
 	'forum-notification-user2-reply-to-someone' => '$1 e $2 responderon no taboleiro "$3"',
 	'forum-notification-user3-reply-to-someone' => '$1 e outras persoas responderon no taboleiro "$3"',
 	'forum-notification-newmsg-on-followed-wall' => '$1 {{GENDER:$1|deixou}} unha nova mensaxe no taboleiro "$2"',
-	'forum-mail-notification-new-someone' => '$AUTHOR_NAME escribiu un novo fío no taboleiro $BOARDNAME de $WIKI.',
-	'forum-mail-notification-new-your' => '$AUTHOR_NAME escribiu un novo fío no taboleiro $BOARDNAME de $WIKI.',
-	'forum-mail-notification-reply-your' => '$AUTHOR_NAME respondeu ó teu fío no taboleiro $BOARDNAME de $WIKI.',
-	'forum-mail-notification-reply-his' => '$AUTHOR_NAME respondeu un no taboleiro $BOARDNAME de $WIKI.',
-	'forum-mail-notification-reply-someone' => '$AUTHOR_NAME respondeu no taboleiro $BOARDNAME de $WIKI.',
+	'forum-mail-notification-new-someone' => '$AUTHOR_NAME escribiu un novo fío no taboleiro "$BOARDNAME" de $WIKI.',
+	'forum-mail-notification-new-your' => '$AUTHOR_NAME escribiu un novo fío no taboleiro "$BOARDNAME" de $WIKI.',
+	'forum-mail-notification-reply-your' => '$AUTHOR_NAME respondeu ó teu fío no taboleiro "$BOARDNAME" de $WIKI',
+	'forum-mail-notification-reply-his' => '$AUTHOR_NAME respondeu no taboleiro "$BOARDNAME" de $WIKI',
+	'forum-mail-notification-reply-someone' => '$AUTHOR_NAME respondeu no taboleiro "$BOARDNAME" de $WIKI',
 	'forum-mail-notification-html-greeting' => 'Boas, $1:',
 	'forum-mail-notification-html-button' => 'Ver a conversa',
 	'forum-mail-notification-subject' => '$1 -- $2',
@@ -1508,6 +1508,16 @@ ___________________________________________<br />
 $messages['lb'] = array(
 	'forum-specialpage-heading' => 'Forum',
 	'forum-thread-reply-post' => 'Äntwerten',
+);
+
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'forum-specialpage-policies-edit' => 'ويرايشت',
+	'forum-board-thread-follow' => 'نهاگردی',
+	'forum-board-thread-following' => 'د حالت نهاگردی',
+	'forum-thread-reply-post' => 'جؤاو ده ئن',
 );
 
 /** Malay (Bahasa Melayu)

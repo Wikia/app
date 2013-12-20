@@ -795,6 +795,9 @@ $messages['lb'] = array(
  */
 $messages['lrc'] = array(
 	'manage-wikia-home-wiki-filter' => 'فيلتر',
+	'manage-wikia-home-wiki-filter-reset' => 'پاك كردن',
+	'manage-wikia-home-wiki-list-headline' => 'نوم ویکی',
+	'manage-wikia-home-wiki-list-blocked' => 'قلف بيه',
 	'manage-wikia-home-wiki-list-blocked-no' => 'نه',
 	'manage-wikia-home-wiki-list-blocked-yes' => 'هری',
 	'manage-wikia-home-wiki-list-promoted-no' => 'نه',

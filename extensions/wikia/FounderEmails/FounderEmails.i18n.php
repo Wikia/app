@@ -4139,8 +4139,12 @@ $messages['lb'] = array(
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
+	'founderemails-email-user-registered-button' => 'خوش اومائین',
+	'founderemails-email-lot-happening-button' => 'کاریا نه بوئنیت',
+	'founderemails-email-0-day-addpages-heading' => 'بلگیا نه اضاف کو',
 	'founderemails-email-0-day-addpages-button' => 'يه گل بلگه اضاف بكيد',
 	'founderemails-email-0-day-addphotos-heading' => 'عسگيا نه اضاف بكيد',
+	'founderemails-email-0-day-addphotos-button' => 'یه گل عسگ اضاف کو',
 	'founderemails-email-3-day-addphotos-button' => 'عسگيا نه اضاف بكيد',
 );
 

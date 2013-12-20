@@ -363,6 +363,14 @@ $messages['lb'] = array(
 	'feed-title-recentchanges' => 'Rezent Ännerungen',
 );
 
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'feed-title-recent-images' => 'عسکیا تازه باو',
+	'feed-title-recentchanges' => 'آلشتیا تازه باو',
+);
+
 /** Macedonian (македонски)
  * @author Bjankuloski06
  */

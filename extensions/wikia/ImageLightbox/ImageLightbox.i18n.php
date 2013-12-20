@@ -610,9 +610,13 @@ $messages['lb'] = array(
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
+	'lightbox-standard-link' => 'هوم پیوند استاندارد',
 	'lightbox-send' => 'كل كردن',
 	'lightbox-share-button-email' => 'ايميل',
+	'lightbox-share-button-www' => 'بهر کردن',
 	'lightbox-share-button-embed' => 'مئن رئته',
+	'lightbox-share-email-page-label-address' => 'نشونی ايميل',
+	'lightbox-share-email-ok-caption' => 'مئکم کردن',
 	'lightbox-share-email-error-caption' => 'خطا',
 );
 

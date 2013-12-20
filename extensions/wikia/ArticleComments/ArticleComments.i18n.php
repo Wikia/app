@@ -2068,6 +2068,7 @@ $messages['lrc'] = array(
 	'article-comments-prev-page' => 'دما',
 	'article-comments-next-page' => 'نيا',
 	'article-comments-page-spacer' => '&#160...&#160',
+	'wikiamobile-article-comments-header' => 'نظریا',
 	'wikiamobile-article-comments-more' => 'بيشتر سواركرد كو',
 	'wikiamobile-article-comments-prev' => 'دمایی نه سوار کو',
 	'wikiamobile-article-comments-none' => 'بی نظر',

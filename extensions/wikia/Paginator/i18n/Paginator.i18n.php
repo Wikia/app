@@ -177,6 +177,14 @@ $messages['lb'] = array(
 	'paginator-back' => 'Zréck',
 );
 
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'paginator-next' => 'نها',
+	'paginator-back' => 'دما',
+);
+
 /** Macedonian (македонски)
  * @author Bjankuloski06
  */

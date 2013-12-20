@@ -436,6 +436,17 @@ Gitt d'Beschreiwung hei an.",
 	'file-page-more-links' => 'Ganz Lëscht weisen',
 );
 
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'video-page-from-provider' => 'د $1',
+	'file-page-replace-button' => 'جاگزينشت',
+	'file-page-tab-about' => 'دباره',
+	'file-page-tab-history' => 'ويرگار فايل',
+	'file-page-tab-metadata' => 'داديا  فره گپ',
+);
+
 /** Lithuanian (lietuvių)
  * @author Mantak111
  */
@@ -862,12 +873,14 @@ Nhập mô tả ở đây.',
  * @author Kuailong
  * @author Liuxinyu970226
  * @author Qiyue2001
+ * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
 	'filepage-desc' => '为了支持视频而修改标准MediaWiki文件页面',
 	'video-page-file-list-header' => '出现在这些页面上',
 	'video-page-global-file-list-header' => '出现在这些 wiki 上',
 	'video-page-from-provider' => '来自$1',
+	'video-page-expires' => '内容过期时间 $1',
 	'video-page-views' => '$1次浏览',
 	'video-page-see-more-info' => '显示更多信息',
 	'video-page-see-less-info' => '显示较少信息',
