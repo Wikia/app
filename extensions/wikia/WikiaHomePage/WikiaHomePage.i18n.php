@@ -635,29 +635,19 @@ $messages['ja'] = array(
 	'wikiahome-hubs-videogames-url' => 'http://www.ja.wikia.com/ゲーム',
 	'wikiahome-hubs-videogames-creative' => 'ウィキアではゲームカルチャーを作り上げ基盤となる場所です。楽しみにしていて！',
 	'wikiahome-hubs-videogames-more-heading' => 'ゲームをもっと見る',
-	'wikiahome-hubs-videogames-more-list' => '
-*[http://www.wikia.com/ゲーム ゲームガイド]
-*[http://ja.gaming.wikia.com/wiki/メインページ メインページ]',
+	'wikiahome-hubs-videogames-more-list' => '',
 
 	'wikiahome-hubs-entertainment-heading' => 'エンターテイメント',
 	'wikiahome-hubs-entertainment-url' => 'http://www.ja.wikia.com/エンターテイメント',
 	'wikiahome-hubs-entertainment-creative' => 'ウィキアとは詳しいコミュニティーから直にフレッシュなエンタテインメントニュースを得られる唯一の場所です。',
 	'wikiahome-hubs-entertainment-more-heading' => 'エンターテイメントをもっと見る',
-	'wikiahome-hubs-entertainment-more-list' => '
-*[http://www.wikia.com/映画 映画]
-*[http://www.wikia.com/テレビ テレビ]
-*[http://www.wikia.com/ミュージック ミュージック].
-*[http://www.wikia.com/エンターテイメント_トレンド エンターテイメント_トレンド]',
+	'wikiahome-hubs-entertainment-more-list' => '',
 
 	'wikiahome-hubs-lifestyle-heading' => 'ライフスタイル & カルチャー',
 	'wikiahome-hubs-lifestyle-url' => 'http://www.ja.wikia.com/ライフスタイル',
 	'wikiahome-hubs-lifestyle-creative' => '熱狂的で情報を持っているコミュニティーを発見しよう。',
 	'wikiahome-hubs-lifestyle-more-heading' => 'ライフスタイル & カルチャーをもっと見る',
-	'wikiahome-hubs-lifestyle-more-list' => '
-*[http://www.wikia.com/Recipes フード & ドリンク]
-*[http://www.wikia.com/DIY DIY]
-*[http://www.wikia.com/sports スポーツ]
-*[http://www.wikia.com/lifestyle 特集記事]',
+	'wikiahome-hubs-lifestyle-more-list' => '',
 
 	'wikiahome-community-column1-heading' => 'コミュニティーリソース',
 	'wikiahome-community-column1-link' => 'http://ja.community.wikia.com',
@@ -673,7 +663,7 @@ $messages['ja'] = array(
 	'wikiahome-community-social-googleplus' => 'グーグル+',
 
 	'wikiahome-footer-wikiainc' => '===Wikia, Inc.===
-*[http://www.wikia.com/About_Us ウィキアについて]
+*[http://sandbox-s5.ja.corporate.wikia.com/wiki/ウィキアについて ウィキアについて]
 *[http://www.wikia.com/Special:Contact お問い合わせ]
 *[http://www.wikia.com/Press プレスリリース]
 __NOEDITSECTION__',
