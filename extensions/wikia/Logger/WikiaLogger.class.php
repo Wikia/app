@@ -13,8 +13,7 @@ class WikiaLogger {
 	/** @var \Psr\Log\LoggerInterface */
 	private $logger;
 
-	private function __construct() {
-		$ident = PHP_SAPI == 'cli' ? 'php' : 'apache2';
+	private function __construct($ident) {
 		$this->logger = new Logger(
 			'default',
 			[new SyslogHandler($ident)],
@@ -22,14 +21,18 @@ class WikiaLogger {
 		);
 	}
 
-	public static function instance() {
-		static $instance = null;
+	public static function instance($ident=null) {
+		static $instances = [];
 
-		if ($instance == null) {
-			$instance = new WikiaLogger();
+		if ($ident == null) {
+			$ident = PHP_SAPI == 'cli' ? 'php' : 'apache2';
 		}
 
-		return $instance;
+		if (!isset($instances[$ident])) {
+			$instances[$ident] = new WikiaLogger($ident);
+		}
+
+		return $instances[$ident];
 	}
 
 	public function logger() {
