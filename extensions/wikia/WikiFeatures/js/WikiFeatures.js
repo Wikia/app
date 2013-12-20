@@ -81,6 +81,24 @@ var WikiFeatures = {
 			}
 		});
 
+//		$('body' ).on('input propertychange', '#feedbackDialogModal [name=comment]', function(elem) {
+//			var $this = $(this),
+//				chars = this.value.length,
+//				elemParent = $this.closest('#feedbackDialogModal'),
+//				$counter = elemParent.find('.comment-character-count' ),
+//				$label = elemParent.find('.comment-group label' );
+//
+//			$counter.html(chars + ' / 1000');
+//
+//			if( chars > 1000 ) {
+//				$this.addClass('invalid');
+//				$label.addClass('invalid');
+//			} else {
+//				$this.removeClass('invalid');
+//				$label.removeClass('invalid');
+//			}
+//		});
+
 		$('#WikiFeatures .feedback').click(function(e) {
 			e.preventDefault();
 
@@ -103,11 +121,13 @@ var WikiFeatures = {
 	},
 
 	openFeedbackModal: function( featureElem, data ) {
+		'use strict';
+
 		require( [ 'wikia.ui.factory' ], function( uiFactory ) {
 			uiFactory.init( [ 'modal' ] ).then( function( uiModal ) {
 				var feedbackModalConfig = {
 					vars: {
-						id: 'feedbackDialog',
+						id: 'feedbackDialogModal',
 						size: 'medium',
 						title: data.title,
 						content: data.html,
@@ -129,66 +149,20 @@ var WikiFeatures = {
 				};
 
 				uiModal.createComponent( feedbackModalConfig, function ( feedbackModal ) {
+					WikiFeatures.feedbackModal = feedbackModal;
+
 					var modal = feedbackModal.$element,
 						commentLabel = modal.find('.comment-group label' ),
 						comment = modal.find('textarea[name=comment]' ),
 						commentCounter = modal.find('.comment-character-count' ),
-						submitButton = modal.find('input[type=submit]' ),
+						submitButton = modal.find('[data-event=submit]' ),
 						statusMsg = modal.find('.status-msg'),
-						msgHandle = false,
-						image = new Image(),
-						imageOriginalWidth,
-						imageOriginalHeight,
-						imageWidth,
-						imageHeight;
+						msgHandle = false;
 
-					imageWidth = modal.find('.feature-highlight img' ).width();
-//					image.src = featureElem.find('.representation img').attr('src');
-//					image.onload = function() {
-//						imageOriginalWidth = image.width;
-//						imageOriginalHeight = image.height;
-//						imageHeight = Math.floor((imageOriginalHeight * imageWidth) / imageOriginalWidth);
-//						modal.find('.feature-highlight img' )
-//							.attr('src', image.src)
-//							.css({height: imageHeight + 'px'});
-//					};
-					//modal.find('.feature-highlight img' ).css({width: 0});
-					//modal.find('.feature-highlight img' ).css({width: '300px'});
-
-//						modal.find('form').submit(function(e) {
-//							e.preventDefault();
-//							submitButton.attr('disabled', 'true');
-//							$.post(wgScriptPath + '/wikia.php', {
-//								controller: 'WikiFeaturesSpecial',
-//								method: 'saveFeedback',
-//								format: 'json',
-//								feature: featureName,
-//								category: modal.find('select[name=feedback] option:selected').val(),
-//								message: comment.val()
-//							}, function(res) {
-//								if(res['result'] == 'ok') {
-//									clearTimeout(msgHandle);
-//									statusMsg.removeClass('invalid').text(res['msg']).show();
-//									setTimeout(function() {
-//										modal.closeModal();
-//									}, 3000);
-//								} else if (res['result'] == 'error') {
-//									submitButton.removeAttr('disabled');
-//									statusMsg.addClass('invalid').text(res['error']).show();
-//									msgHandle = setTimeout(function() {
-//										statusMsg.fadeOut(1000);
-//									}, 4000);
-//								} else {
-//									// TODO: show error message
-//									GlobalNotification.show('Something is wrong', 'error');
-//								}
-//							});
-//						});
-//
-					comment.bind('keypress keydown keyup paste cut', function(e) {
+					comment.bind('keypress keydown keyup paste cut', function() {
 						setTimeout(function() {
 							var chars = comment.val().length;
-							commentCounter.text(chars);
+							commentCounter.html(chars + ' / 1000');
 							if( chars > 1000 ) {
 								comment.addClass('invalid');
 								commentLabel.addClass('invalid');
@@ -199,10 +173,34 @@ var WikiFeatures = {
 						}, 50);
 					});
 
-					feedbackModal.bind( 'confirm', function ( event ) {
+					feedbackModal.bind( 'submit', function ( event ) {
 						event.preventDefault();
-
-						feedbackModal.trigger( 'close' );
+						submitButton.attr('disabled', 'true');
+						$.post(window.wgScriptPath + '/wikia.php', {
+							controller: 'WikiFeaturesSpecial',
+							method: 'saveFeedback',
+							format: 'json',
+							feature: featureElem.data('name'),
+							category: modal.find('select[name=feedback] option:selected').val(),
+							message: comment.val()
+						}, function(res) {
+							if(res.result === 'ok') {
+								clearTimeout(msgHandle);
+								statusMsg.removeClass('invalid').text(res.msg).show();
+								setTimeout(function() {
+									feedbackModal.trigger('close');
+								}, 3000);
+							} else if (res.result === 'error') {
+								submitButton.removeAttr('disabled');
+								statusMsg.addClass('invalid').text(res.error).show();
+								msgHandle = setTimeout(function() {
+									statusMsg.fadeOut(1000);
+								}, 4000);
+							} else {
+								// TODO: show error message
+								GlobalNotification.show('Something is wrong', 'error');
+							}
+						});
 					});
 
 					feedbackModal.show();

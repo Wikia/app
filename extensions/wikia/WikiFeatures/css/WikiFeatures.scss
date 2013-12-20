@@ -185,7 +185,13 @@
 		label {
 			clear: both;
 			float: left;
+			margin: 10px 0;
 		}
+	}
+
+	.comment-character-count {
+		margin-top: 2px;
+		text-align: right;
 	}
 
 	textarea {

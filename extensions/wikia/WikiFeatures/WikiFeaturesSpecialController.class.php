@@ -151,10 +151,11 @@ class WikiFeaturesSpecialController extends WikiaSpecialPageController {
 		$category = $this->getVal('category');
 		$message = $this->getVal('message');
 
-		if( !$user->isLoggedIn() ) {
+		//if( !$user->isLoggedIn() ) {
 			$this->result = 'error';
 			$this->error = wfMsg('wikifeatures-error-permission');
-		}
+			return;
+		//}
 
 		// TODO: validate feature_id
 		if ( !array_key_exists($feature, WikiFeaturesHelper::$feedbackAreaIDs) ) {

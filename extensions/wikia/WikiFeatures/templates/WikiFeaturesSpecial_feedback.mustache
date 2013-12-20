@@ -1,9 +1,9 @@
-<div id="FeedbackDialog" class="FeedbackDialog">
-	<h1>{{title}}</h1>
+<div id="FeedbackDialog" class="FeedbackDialog" style="-webkit-transform: translate3d(0, 0, 0);">
+	<!--<h1>{{title}}</h1>-->
 
 	<div class="feature-highlight">
 		<h2>{{featureName}}</h2>
-		<img src="{{featureImageUrl}}" />
+		<img src="{{featureImageUrl}}" alt="{{featureName}}" >
 	</div>
 
 	<form>
@@ -11,18 +11,18 @@
 
 		<div class="input-group">
 			<label for="feedback">{{typeLabel}}</label>
-			<select name="feedback">
+			<select name="feedback" id="feedback">
 				{{#typeOptions}}
 					<option value="{{value}}">{{label}}</option>
 				{{/typeOptions}}
 			</select>
 		</div>
 
-		<div class="comment-group">
+		<div class="comment-group" style="-webkit-transform: translate3d(0, 0, 0);">
 			<label for="comment">{{commentLabel}}:</label>
-			<textarea name="comment"></textarea>
-			<span class="comment-character-count">0</span>/1000
+			<textarea name="comment" id="comment"></textarea>
 		</div>
+		<div class="comment-character-count" style="-webkit-transform: translate3d(0, 0, 0);">0 / 1000</div>
 
 		<span class="status-msg"></span>
 	</form>
