@@ -120,9 +120,9 @@
 			$all.each( function( index, element ) {
 				element = $( element );
 				var o = {
-					id: element.data( 'tool-id' ),
-					defaultCaption: element.data( 'default-caption' ),
-					caption: element.data( 'caption' )
+					id: element.attr( 'data-tool-id' ),
+					defaultCaption: element.attr( 'data-default-caption' ),
+					caption: element.attr( 'data-caption' )
 				};
 				stack[level].push( o );
 				if ( element.hasClass( 'list-item-menu' ) ) {
@@ -497,7 +497,7 @@
 						renameItemModal.bind( 'save', function( event ) {
 							event.preventDefault();
 							var value = $inputBox.val();
-							$item.data( 'caption', value );
+							$item.attr( 'data-caption', value );
 							$item.find( '.name' ).text( value );
 							renameItemModal.trigger( 'close' );
 						} );
