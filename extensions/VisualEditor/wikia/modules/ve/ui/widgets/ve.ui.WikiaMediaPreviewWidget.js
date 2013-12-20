@@ -6,38 +6,38 @@
 
 /* global mw, require */
 
-ve.ui.WikiaMediaPreviewWidget = function VeUiWikiaMediaPreviewWidget( model, config ) {
+ve.ui.WikiaMediaPreviewWidget = function VeUiWikiaMediaPreviewWidget( model ) {
+
 	// Parent constructor
 	ve.ui.Widget.call( this );
 
+	// Properties
 	this.model = model;
 	this.videoInstance = null;
-
-	// Properties
-	this.$.addClass( 've-ui-wikiaMediaPreviewWidget-overlay' );
-
 	this.closeButton = new ve.ui.IconButtonWidget( {
 		'$$': this.$$,
 		'title': ve.msg( 'visualeditor-dialog-action-close' ),
 		'icon': 'close'
 	} );
+	this.title = this.$$( '<div>' )
+		.text( this.model.title )
+		.addClass( 've-ui-wikiaMediaPreviewWidget-title' )
+		.prependTo( this.$ );
 
 	// Events
 	this.closeButton.connect( this, { 'click': 'onCloseButtonClick' } );
 
+	// DOM
 	this.closeButton.$
 		.addClass( 've-ui-wikiaMediaPreviewWidget-closeButton' )
 		.prependTo( this.$ );
 
+	this.$.addClass( 've-ui-wikiaMediaPreviewWidget-overlay' )
+		.appendTo( $( 'body' ) );
+
+	// Init media
 	if( model.type === 'video' ) {
-		this.$videoWrapper = this.$$( '<div>' )
-			.addClass( 've-ui-wikiaMediaPreviewWidget-videoWrapper' )
-			.appendTo( this.$ );
-
-		$.when( this.getVideoEmbedCode() )
-			.done( ve.bind( this.embedVideo, this ) )
-			.fail( ve.bind( this.onRequestFail, this ) );
-
+		this.handleVideo();
 	} else {
 		this.handleImage();
 	}
@@ -73,6 +73,17 @@ ve.ui.WikiaMediaPreviewWidget.prototype.onImageLoad = function () {
 };
 
 
+ve.ui.WikiaMediaPreviewWidget.prototype.handleVideo = function() {
+	this.$videoWrapper = this.$$( '<div>' )
+		.addClass( 've-ui-wikiaMediaPreviewWidget-videoWrapper' )
+		.appendTo( this.$ );
+
+	$.when( this.getVideoEmbedCode() )
+		.done( ve.bind( this.embedVideo, this ) )
+		.fail( ve.bind( this.onRequestFail, this ) );
+};
+
+
 ve.ui.WikiaMediaPreviewWidget.prototype.getVideoEmbedCode = function() {
 	var ret;
 
@@ -99,7 +110,6 @@ ve.ui.WikiaMediaPreviewWidget.prototype.getVideoEmbedCode = function() {
 
 /**
  * Handle video preview request promise.done
- *
  * @method
  */
 
@@ -110,8 +120,7 @@ ve.ui.WikiaMediaPreviewWidget.prototype.embedVideo = function() {
 };
 
 /**
- * Handle video preview request promise.error
- *
+ * Handle video preview request promise.fail
  * @method
  */
 
@@ -122,6 +131,7 @@ ve.ui.WikiaMediaPreviewWidget.prototype.onRequestFail = function() {
 
 /**
  * Handle subsequent opens
+ * @method
  */
 
 ve.ui.WikiaMediaPreviewWidget.prototype.reOpen = function() {

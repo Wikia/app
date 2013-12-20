@@ -136,10 +136,9 @@ ve.ui.WikiaMediaPageWidget.prototype.onImageLoad = function () {
  */
 ve.ui.WikiaMediaPageWidget.prototype.onItemClick = function () {
 	if( this.mediaPreview ) {
-		this.mediaPreview.open();
+		this.mediaPreview.reOpen();
 	} else {
 		this.mediaPreview = new ve.ui.WikiaMediaPreviewWidget( this.model );
-		this.mediaPreview.$.appendTo( $( 'body' ) ); // todo - there's probably a body object created already
 	}
 };
 
