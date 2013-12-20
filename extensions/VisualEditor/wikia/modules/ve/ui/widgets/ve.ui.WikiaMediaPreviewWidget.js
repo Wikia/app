@@ -6,7 +6,7 @@
 
 /* global mw, require */
 
-ve.ui.WikiaMediaPreviewWidget = function VeUiWikiaMediaPreviewWidget( model ) {
+ve.ui.WikiaMediaPreviewWidget = function VeUiWikiaMediaPreviewWidget( model, config ) {
 	// Parent constructor
 	ve.ui.Widget.call( this );
 
@@ -14,11 +14,12 @@ ve.ui.WikiaMediaPreviewWidget = function VeUiWikiaMediaPreviewWidget( model ) {
 	this.videoInstance = null;
 
 	// Properties
-	// todo: should we use something that's already built?
 	this.$.addClass( 've-ui-wikiaMediaPreviewWidget-overlay' );
 
 	this.closeButton = new ve.ui.IconButtonWidget( {
-		'$$': this.$$, 'title': ve.msg( 'visualeditor-dialog-action-close' ), 'icon': 'close'
+		'$$': this.$$,
+		'title': ve.msg( 'visualeditor-dialog-action-close' ),
+		'icon': 'close'
 	} );
 
 	// Events
@@ -28,21 +29,17 @@ ve.ui.WikiaMediaPreviewWidget = function VeUiWikiaMediaPreviewWidget( model ) {
 		.addClass( 've-ui-wikiaMediaPreviewWidget-closeButton' )
 		.prependTo( this.$ );
 
-	this.$mediaWrapper = this.$$( '<div>' )
-		.addClass( 've-ui-wikiaMediaPreviewWidget-mediaWrapper' )
-		.appendTo( this.$ );
-
 	if( model.type === 'video' ) {
+		this.$videoWrapper = this.$$( '<div>' )
+			.addClass( 've-ui-wikiaMediaPreviewWidget-videoWrapper' )
+			.appendTo( this.$ );
 
 		$.when( this.getVideoEmbedCode() )
 			.done( ve.bind( this.embedVideo, this ) )
 			.fail( ve.bind( this.onRequestFail, this ) );
 
 	} else {
-		// handle images
 		this.handleImage();
-
-		console.log( model );
 	}
 };
 
@@ -53,44 +50,34 @@ ve.inheritClass( ve.ui.WikiaMediaPreviewWidget, ve.ui.Widget );
 /* Methods */
 
 ve.ui.WikiaMediaPreviewWidget.prototype.handleImage = function() {
+	this.maxImgHeight = Math.round( $( window ).height() * 0.95 );
+	this.maxImgWidth = Math.round( $( window ).width() * 0.95 );
+
+	this.$image = $( '<img>' )
+		.addClass( 've-ui-wikiaMediaPreviewWidget-image' );
+
 	require( ['wikia.thumbnailer'], ve.bind( function ( thumbnailer ) {
-		this.maxImgHeight = Math.round( $( window ).height() * 0.95 );
-		this.maxImgWidth = Math.round( $( window ).width() * 0.95 );
-
-		this.image = new Image();
-		this.$item = $( this.image );
-
-		// TODO: (nice to have) be able to calculate the bounding box without hardcoded
-		// values but we would need to know bounding box size up front for that.
-		this.image.src = thumbnailer.getThumbURL( this.model.url, 'nocrop', this.maxImgWidth, this.maxImgHeight );
-
-		this.$item.load( ve.bind( this.onImageLoad, this ) );
-		this.$mediaWrapper
-			.addClass( 've-ui-texture-pending' )
-			.append( this.$item );
+		this.$image.attr( 'src', thumbnailer.getThumbURL( this.model.url, 'nocrop', this.maxImgWidth, this.maxImgHeight ) );
 	}, this ) );
+
+	this.$image.load( ve.bind( this.onImageLoad, this ) )
+		.appendTo( this.$ );
 };
 
 ve.ui.WikiaMediaPreviewWidget.prototype.onImageLoad = function () {
-
-	// TODO: Add image aspect ratio to model (same comment from WikiaMediaPageWidget)
+	// TODO: Add image aspect ratio to model (sorta the same comment from WikiaMediaPageWidget)
 	// thumbnailer.js only let's you restrict by width, not by height, so we'll do that here.
-	if ( this.image.height > this.maxImgHeight ) {
-		this.image.height = this.maxImgHeight;
+	if ( this.$image.height() > this.maxImgHeight ) {
+		this.$image.height( this.maxImgHeight );
 	}
-
-	this.$mediaWrapper
-		.width( this.$item.width() )
-		.height( this.$item.height() )
-		.removeClass( 've-ui-texture-pending' );
 };
 
 
 ve.ui.WikiaMediaPreviewWidget.prototype.getVideoEmbedCode = function() {
 	var ret;
 
-	if( this.model.embedCode ) {
-		ret = this.model.embedCode;
+	if( this.embedCode ) {
+		ret = this.embedCode;
 	} else {
 		ret = $.ajax( {
 			'url': mw.util.wikiScript( 'api' ),
@@ -103,7 +90,7 @@ ve.ui.WikiaMediaPreviewWidget.prototype.getVideoEmbedCode = function() {
 			}
 		} )
 			.done( ve.bind( function( data ) {
-				this.model.embedCode = window.JSON.parse( data.mediapreview.embedCode );
+				this.embedCode = window.JSON.parse( data.mediapreview.embedCode );
 			}, this ) );
 	}
 
@@ -118,7 +105,7 @@ ve.ui.WikiaMediaPreviewWidget.prototype.getVideoEmbedCode = function() {
 
 ve.ui.WikiaMediaPreviewWidget.prototype.embedVideo = function() {
 	require( ['wikia.videoBootstrap'], ve.bind( function( VideoBootstrap ) {
-		this.videoInstance = new VideoBootstrap( this.$videoWrapper[0], this.model.embedCode, 've-preview' );
+		this.videoInstance = new VideoBootstrap( this.$videoWrapper[0], this.embedCode, 've-preview' );
 	}, this ) );
 };
 
@@ -129,11 +116,19 @@ ve.ui.WikiaMediaPreviewWidget.prototype.embedVideo = function() {
  */
 
 ve.ui.WikiaMediaPreviewWidget.prototype.onRequestFail = function() {
+	// TODO: handle error
 	alert( 'error' );
 };
 
-ve.ui.WikiaMediaPreviewWidget.prototype.open = function() {
-	// handle subsequent opens
+/**
+ * Handle subsequent opens
+ */
+
+ve.ui.WikiaMediaPreviewWidget.prototype.reOpen = function() {
+	this.$.show();
+	if( this.model.type === 'video' ){
+		this.embedVideo();
+	}
 };
 
 ve.ui.WikiaMediaPreviewWidget.prototype.onCloseButtonClick = function() {
@@ -141,4 +136,9 @@ ve.ui.WikiaMediaPreviewWidget.prototype.onCloseButtonClick = function() {
 	if( this.videoInstance ) {
 		this.videoInstance.destroy();
 	}
+};
+
+ve.ui.WikiaMediaPreviewWidget.prototype.remove = function() {
+	// TODO: call this when cart items are removed and when the cart is cleared
+	this.$.remove();
 };
