@@ -634,19 +634,19 @@ $messages['ja'] = array(
 	'wikiahome-hubs-videogames-heading' => 'ゲーム',
 	'wikiahome-hubs-videogames-url' => 'http://www.ja.wikia.com/ゲーム',
 	'wikiahome-hubs-videogames-creative' => 'ウィキアではゲームカルチャーを作り上げ基盤となる場所です。楽しみにしていて！',
-	'wikiahome-hubs-videogames-more-heading' => 'ゲームをもっと見る',
+	'wikiahome-hubs-videogames-more-heading' => '',
 	'wikiahome-hubs-videogames-more-list' => '',
 
 	'wikiahome-hubs-entertainment-heading' => 'エンターテイメント',
 	'wikiahome-hubs-entertainment-url' => 'http://www.ja.wikia.com/エンターテイメント',
 	'wikiahome-hubs-entertainment-creative' => 'ウィキアとは詳しいコミュニティーから直にフレッシュなエンタテインメントニュースを得られる唯一の場所です。',
-	'wikiahome-hubs-entertainment-more-heading' => 'エンターテイメントをもっと見る',
+	'wikiahome-hubs-entertainment-more-heading' => '',
 	'wikiahome-hubs-entertainment-more-list' => '',
 
 	'wikiahome-hubs-lifestyle-heading' => 'ライフスタイル & カルチャー',
 	'wikiahome-hubs-lifestyle-url' => 'http://www.ja.wikia.com/ライフスタイル',
 	'wikiahome-hubs-lifestyle-creative' => '熱狂的で情報を持っているコミュニティーを発見しよう。',
-	'wikiahome-hubs-lifestyle-more-heading' => 'ライフスタイル & カルチャーをもっと見る',
+	'wikiahome-hubs-lifestyle-more-heading' => '',
 	'wikiahome-hubs-lifestyle-more-list' => '',
 
 	'wikiahome-community-column1-heading' => 'コミュニティーリソース',
