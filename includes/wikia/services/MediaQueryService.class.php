@@ -503,9 +503,6 @@ class MediaQueryService extends WikiaService {
 		$videoList = $app->wg->Memc->get( $memKeyBase.'-'.$memKeyBucket );
 		if ( !is_array($videoList) || !isset($videoList[$hashTitle]) ) {
 			$viewCount =  VideoInfoHelper::getTotalViewsFromTitle( $title );
-			if ( !is_array($videoList) ) {
-				$videoList = array();
-			}
 			$videoList[$hashTitle] = $viewCount;
 			$app->wg->Memc->set( $memKeyBase.'-'.$memKeyBucket, $videoList, 60*60*2 );
 		}
