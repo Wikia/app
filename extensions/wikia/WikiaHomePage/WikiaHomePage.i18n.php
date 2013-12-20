@@ -663,8 +663,8 @@ $messages['ja'] = array(
 	'wikiahome-community-social-googleplus' => 'グーグル+',
 
 	'wikiahome-footer-wikiainc' => '===Wikia, Inc.===
-*[http://sandbox-s5.ja.corporate.wikia.com/wiki/ウィキアについて ウィキアについて]
-*[http://www.wikia.com/Special:Contact お問い合わせ]
+*[http://ja.wikia.com/ウィキアについて ウィキアについて]
+*[http://ja.wikia.com/Special:Contact お問い合わせ]
 *[http://www.wikia.com/Press プレスリリース]
 __NOEDITSECTION__',
 	'wikiahome-footer-get-started-heading' => '===始めよう===
@@ -679,7 +679,7 @@ __NOEDITSECTION__',
 	'wikiahome-footer-community' => '===コミュニティー===
 *[http://www.ja.community.wikia.com コミュニティーセントラルl]
 *[http://ja.community.wikia.com/wiki/ヘルプ:ユーザー権限 ヘルプ:ユーザー権限]
-*[http://www.wikia.com/Special:Contact サポートコンタクト]$1
+*[http://ja.wikia.com/Special:Contact サポートコンタクト]$1
 *[http://www.wikia.com/Stars ウィキアスター]
 *[http://ja.community.wikia.com/wiki/ヘルプ:コンテンツ ヘルプ]
 
