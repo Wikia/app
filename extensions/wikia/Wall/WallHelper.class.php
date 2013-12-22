@@ -622,6 +622,11 @@ class WallHelper {
 			$articleId = $wm->getId();
 		}
 
+		// XSS vulnerable (MAIN-1412)
+		if ( !empty( $articleTitleTxt ) ) {
+			$articleTitleTxt = strip_tags( $articleTitleTxt );
+		}
+
 		$ci = $wm->getCommentsIndex();
 		if ( empty( $ci ) && ( $row->page_namespace == NS_USER_WALL ) ) {
 			// change in NS_USER_WALL namespace mean that wall page was created (bugid:95249)
