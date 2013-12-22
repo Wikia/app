@@ -118,6 +118,7 @@ class VideoFileUploader {
 		if ( $permErrors || $permErrorsUpload || $permErrorsCreate ) {
 			$permErrors = array_merge( $permErrors, wfArrayDiff2( $permErrorsUpload, $permErrors ) );
 			$permErrors = array_merge( $permErrors, wfArrayDiff2( $permErrorsCreate, $permErrors ) );
+			wfProfileOut( __METHOD__ );
 			throw new Exception( wfMessage( array_shift( $permErrors[0] ), $permErrors[0] )->parse()  );
 		}
 	
