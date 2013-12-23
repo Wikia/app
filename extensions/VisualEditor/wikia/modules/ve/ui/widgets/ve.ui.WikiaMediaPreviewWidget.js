@@ -99,14 +99,14 @@ ve.ui.WikiaMediaPreviewWidget.prototype.getVideoEmbedCode = function() {
 			'url': mw.util.wikiScript( 'api' ),
 			'data': {
 				'format': 'json',
-				'action': 'mediapreview',
+				'action': 'videopreview',
 				'provider': this.model.provider,
 				'videoId': this.model.videoId,
 				'title': this.model.title
 			}
 		} )
 			.done( ve.bind( function( data ) {
-				this.embedCode = window.JSON.parse( data.mediapreview.embedCode );
+				this.embedCode = window.JSON.parse( data.videopreview.embedCode );
 			}, this ) );
 	}
 

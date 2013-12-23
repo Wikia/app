@@ -1,7 +1,7 @@
 <?php
 
 // NOTE: this is only for videos now - might need to change the class name to reflect that
-class ApiMediaPreview extends ApiBase {
+class ApiVideoPreview extends ApiBase {
 	const PREVIEW_WIDTH = 728;
 
 	public function __construct( $main, $action ) {
@@ -51,12 +51,16 @@ class ApiMediaPreview extends ApiBase {
 		}
 
 		return array(
-			'embedCode' => $file->getEmbedCode( self::PREVIEW_WIDTH, false, false, true),
+			'embedCode' => json_encode( $file->getEmbedCode( self::PREVIEW_WIDTH, true, true, true) ),
 		);
 	}
 
 	public function getAllowedParams() {
 		return array(
+			'title' => array(
+				ApiBase::PARAM_TYPE => 'string',
+				ApiBase::PARAM_REQUIRED => false,
+			),
 			'videoId' => array(
 				ApiBase::PARAM_TYPE => 'string',
 				ApiBase::PARAM_REQUIRED => false,
