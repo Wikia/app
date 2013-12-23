@@ -1,8 +1,13 @@
 <?php
 
-// NOTE: this is only for videos now - might need to change the class name to reflect that
+/**
+ * Class ApiVideoPreview
+ *
+ * Get embed code for previewing videos
+ */
+
 class ApiVideoPreview extends ApiBase {
-	const PREVIEW_WIDTH = 728;
+	const EMBED_WIDTH = 728;
 
 	public function __construct( $main, $action ) {
 		parent::__construct( $main, $action );
@@ -39,10 +44,14 @@ class ApiVideoPreview extends ApiBase {
 		$tempVideo->afterSetProps();
 
 		return array(
-			'embedCode' => json_encode( $tempVideo->getEmbedCode( self::PREVIEW_WIDTH, true, true, true ) ),
+			'embedCode' => json_encode( $tempVideo->getEmbedCode( self::EMBED_WIDTH, true, true, true ) ),
 		);
 	}
 
+	/**
+	 * @param string $title Video title
+	 * @return array
+	 */
 	private function executeWikiaVideo( $title ) {
 		$file = wfFindFile( $title );
 
@@ -51,10 +60,13 @@ class ApiVideoPreview extends ApiBase {
 		}
 
 		return array(
-			'embedCode' => json_encode( $file->getEmbedCode( self::PREVIEW_WIDTH, true, true, true) ),
+			'embedCode' => json_encode( $file->getEmbedCode( self::EMBED_WIDTH, true, true, true) ),
 		);
 	}
 
+	/**
+	 * @return array
+	 */
 	public function getAllowedParams() {
 		return array(
 			'title' => array(
@@ -72,6 +84,9 @@ class ApiVideoPreview extends ApiBase {
 		);
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getVersion() {
 		return __CLASS__ . ': $Id$';
 	}
