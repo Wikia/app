@@ -135,11 +135,7 @@ ve.ui.WikiaMediaPageWidget.prototype.onImageLoad = function () {
  * @method
  */
 ve.ui.WikiaMediaPageWidget.prototype.onItemClick = function () {
-	if( this.mediaPreview ) {
-		this.mediaPreview.reOpen();
-	} else {
-		this.mediaPreview = new ve.ui.WikiaMediaPreviewWidget( this.model, { page: this } );
-	}
+	this.mediaPreview = new ve.ui.WikiaMediaPreviewWidget( this.model );
 };
 
 /**
