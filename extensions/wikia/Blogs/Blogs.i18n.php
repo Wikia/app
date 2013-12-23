@@ -3138,11 +3138,13 @@ $messages['ltg'] = array(
 
 /** Latvian (latviešu)
  * @author Papuass
+ * @author Sg ghost
  */
 $messages['lv'] = array(
 	'create-blog-categories-submit' => 'Iesniegt',
 	'create-blog-save' => 'Saglabāt lapu',
 	'blog-comments' => 'Komentāri',
+	'user-blog-url-link' => 'Lietotāja blogs:$1',
 );
 
 /** Maithili (मैथिली)

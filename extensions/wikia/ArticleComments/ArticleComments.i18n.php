@@ -140,6 +140,7 @@ $messages['af'] = array(
 	'article-comments-anonymous' => 'Anonieme gebruiker',
 	'article-comments-comments' => 'Opmerkings ($1)',
 	'article-comments-post' => 'Pos kommentaar',
+	'article-comments-cancel' => 'Kanselleer',
 	'article-comments-delete' => 'skrap',
 	'article-comments-edit' => 'wysig',
 	'article-comments-history' => 'geskiedenis',
@@ -2138,12 +2139,70 @@ $messages['lus'] = array(
 
 /** Latvian (latviešu)
  * @author Papuass
+ * @author Sg ghost
  */
 $messages['lv'] = array(
+	'article-comments-file-page' => "<a href='$1'>Komentārs no $2</a> par<a href='$3'>$4</a>",
+	'article-blog-comments-file-page' => "<a href='$1'>Komentārs no $2 </a> , <a href='$3'> $4 </a> post par <a href='$5'>  $6 ir</a> blog",
+	'article-comments-anonymous' => 'Anonīms lietotājs',
+	'article-comments-comments' => 'Komentāri ( $1 )',
+	'article-comments-post' => 'Publicēt komentāru',
 	'article-comments-cancel' => 'Atcelt',
 	'article-comments-delete' => 'dzēst',
 	'article-comments-edit' => 'labot',
 	'article-comments-history' => 'vēsture',
+	'article-comments-error' => 'Komentēt nevar saglabāt',
+	'article-comments-undeleted-comment' => 'Dzēšana komentārs blogu lapā $1',
+	'article-comments-rc-comment' => 'Panta komentārs (<span class="plainlinks">[$1 $2] </span>)',
+	'article-comments-rc-comments' => 'Panta Komentāri ([[$1]])',
+	'article-comments-fblogin' => 'Lūdzu <a href="<span class=" notranslate"="" translate="no">$1" rel ="nofollow"> pieteikties un izveidot savienojumu ar Facebook</a> post komentāru par šo wiki!',
+	'article-comments-fbconnect' => 'Lūdzu <a href="<span class=" notranslate"="" translate="no">$1"> šī konta savienojumu ar Facebook</a> komentārus!',
+	'article-comments-rc-blog-comment' => 'Panta komentārs (<span class="plainlinks">[$1 $2] </span>)',
+	'article-comments-rc-blog-comments' => 'Blog komentārus ([[$1]])',
+	'article-comments-login' => 'Lūdzu <a href="$1">pieteikties</a> post komentāru par šo viki.',
+	'article-comments-toc-item' => 'Komentāri',
+	'article-comments-comment-cannot-add' => 'Nevar pievienot komentāru rakstu.',
+	'article-comments-vote' => 'Balsot līdz',
+	'article-comments-reply' => 'Atbildēt',
+	'article-comments-show-all' => 'Apskatīt visus komentārus',
+	'article-comments-prev-page' => 'Iepr',
+	'article-comments-next-page' => 'Nākamais',
+	'article-comments-page-spacer' => '&#160...&#160',
+	'article-comments-delete-reason' => 'Mātes raksts / mātes komentārs ir izdzēsts.',
+	'article-comments-empty-comment' => "Jūs nevarat ievietot tukšu komentāru. <a href='$1'>Dzēst tā vietā?</a>",
+	'wikiamobile-article-comments-header' => 'Komentāri',
+	'wikiamobile-article-comments-more' => 'Ielādēt vairāk',
+	'wikiamobile-article-comments-prev' => 'Ielādētu iepriekšēja',
+	'wikiamobile-article-comments-none' => 'Nav komentāru',
+	'wikiamobile-article-comments-view' => 'Apskatīt atbildes',
+	'wikiamobile-article-comments-replies' => 'atbildes',
+	'wikiamobile-article-comments-post-reply' => 'Publicēt atbildi',
+	'wikiamobile-article-comments-post' => 'Publicēt',
+	'wikiamobile-article-comments-placeholder' => 'Publicēt komentāru',
+	'wikiamobile-article-comments-login-post' => 'Lūdzu, piesakieties lai ievietotu komentāru.',
+	'wikiamobile-article-comments-post-fail' => 'Neizdevās saglabāt komentāru, lūdzu, mēģiniet vēlreiz vēlāk',
+	'enotif_subject_article_comment' => '$PAGEEDITOR komentēja ir "$PAGETITLE" uz {{SITENAME}}',
+	'enotif_body_article_comment' => 'Hi $WATCHINGUSERNAME,
+
+Nav jaunu komentāru pie $PAGETITLE par {{SITENAME}}. Izmantojiet šīs saites, lai redzētu visus komentāri: $PAGETITLE_URL#WikiaArticleComments
+
+- Vikija Kopienas
+
+ ______________________
+* Atrast palīdzību un konsultācijas par Kopienas Centrālās: http://community.wikia.com
+* Vēlos saņemt mazāk ziņu no mums? Jūs varat atsaukt vai mainīt savu e-pasta preferences šeit: http://community.wikia.com/Special:Preferences',
+	'enotif_body_article_comment-HTML' => '<p>Hi $WATCHINGUSERNAME,
+<br /><br />
+Nav jaunu komentāru pie $PAGETITLE par {{SITENAME}}. Izmantojiet šīs saites, lai redzētu visus komentāri: $PAGETITLE_URL#WikiaArticleComments
+<br /><br />
+- Vikija Kopienas
+<br /><br />
+ ______________________
+<ul>
+<li>Atrast palīdzību un konsultācijas par Kopienas Centrālās: <a href="http://community.wikia.com">http://community.wikia.com</a><li>
+<li>vai Vēlaties saņemt mazāk ziņu no mums? Jūs varat atsaukt vai mainīt savu e-pasta preferences šeit: <a href="http://community.wikia.com/Special:Preferences">http://community.wikia.com/Special:Preferences</a></li>
+</ul>
+</p>',
 );
 
 /** Basa Banyumasan (Basa Banyumasan)

@@ -461,6 +461,24 @@ $messages['nl'] = array(
 	'wikia-visualeditor-notification-media-permission-denied' => 'Geen toegang',
 );
 
+/** Occitan (occitan)
+ * @author Jfblanc
+ */
+$messages['oc'] = array(
+	'wikia-visualeditor-preference-enable' => "Activar l'Editor Visual beta",
+	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Apondre un mèdi',
+	'wikia-visualeditor-dialog-wikiamediainsert-insert-button' => 'Aprondre un mèdi',
+	'wikia-visualeditor-dialog-wikiamediainsert-item-title-label' => 'Títol',
+	'wikia-visualeditor-dialog-wikiamediainsert-item-license-label' => 'Licéncia',
+	'wikia-visualeditor-dialog-wikiamediainsert-item-remove-button' => "Suprimir l'element",
+	'wikia-visualeditor-dialog-wikiamediainsert-upload-label' => "Apondre d'imatges novèls an aquel wikia",
+	'wikia-visualeditor-dialog-wikiamediainsert-upload-button' => 'Telecargar',
+	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-size' => "Ai! Imatge tròp gròs! Podèm pas prene mai qu'$1 Mo!",
+	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-filetype' => 'Ai! Suportam pas que $1.',
+	'wikia-visualeditor-dialog-wikiamediainsert-upload-error' => 'Error de telecargament del fichièr',
+	'wikia-visualeditor-help-link' => 'Ajuda:VisualEditor', # Fuzzy
+);
+
 /** Polish (polski)
  * @author Chrumps
  * @author Sovq
@@ -661,4 +679,39 @@ $messages['vi'] = array(
 	'wikia-visualeditor-dialog-wikiasourcemode-apply-button' => 'Áp dụng các thay đổi',
 	'wikia-visualeditor-dialog-wikiasourcemode-help-link' => 'Help:Wikitext',
 	'wikia-visualeditor-dialog-wikiasourcemode-help-text' => 'Định dạng trợ giúp',
+);
+
+/** Simplified Chinese (中文（简体）‎)
+ * @author Yfdyh000
+ */
+$messages['zh-hans'] = array(
+	'wikia-visualeditor-preference-enable' => '启用测试版可视化编辑器',
+	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => '添加媒体',
+	'wikia-visualeditor-dialog-wikiamediainsert-insert-button' => '添加媒体',
+	'wikia-visualeditor-dialog-wikiamediainsert-item-title-label' => '标题',
+	'wikia-visualeditor-dialog-wikiamediainsert-item-license-label' => '授权',
+	'wikia-visualeditor-dialog-wikiamediainsert-item-remove-button' => '删除此项目',
+	'wikia-visualeditor-dialog-wikiamediainsert-upload-label' => '添加新图像到此wikia',
+	'wikia-visualeditor-dialog-wikiamediainsert-upload-button' => '上传',
+	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-size' => '哎呀！此图像太大了。我们最多允许上传$1MB大小的图像。',
+	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-filetype' => '哎呀！我们只支持$1',
+	'wikia-visualeditor-dialog-wikiamediainsert-upload-error' => '上载文件时出错',
+	'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' => '搜索东西，或者输入URL',
+	'wikia-visualeditor-dialog-wikiamediainsert-preview-alert' => '预览即将推出 ！',
+	'wikia-visualeditor-help-label' => '已知的问题',
+	'wikia-visualeditor-help-link' => 'Help:VisualEditor',
+	'wikia-visualeditor-dialog-transclusion-title' => '模板',
+	'wikia-visualeditor-dialogbutton-transclusion-tooltip' => '模板',
+	'wikia-visualeditor-savedialog-label-save' => '发布',
+	'wikia-visualeditor-savedialog-label-restore' => '恢复页面',
+	'wikia-visualeditor-toolbar-savedialog' => '发布',
+	'wikia-visualeditor-dialogbutton-wikiasourcemode-tooltip' => '源代码编辑器',
+	'wikia-visualeditor-dialog-wikiasourcemode-title' => '源代码编辑器',
+	'wikia-visualeditor-dialog-wikiasourcemode-apply-button' => '应用更改',
+	'wikia-visualeditor-dialog-wikiasourcemode-help-link' => 'Help:Wikitext',
+	'wikia-visualeditor-dialog-wikiasourcemode-help-text' => '格式帮助',
+	'wikia-visualeditor-notification-media-must-be-logged-in' => '你必须登录才能添加图像和视频。',
+	'wikia-visualeditor-notification-media-only-premium-videos-allowed' => '此wiki只允许添加来自<a href="http://video.wikia.com" target="_blank">Wikia视频库</a>的内容。请进入<a href="http://video.wikia.com" target="_blank">video.wikia.com</a>搜索视频。',
+	'wikia-visualeditor-notification-media-query-failed' => '抱歉，我们无法在此找到支持的图像或视频。',
+	'wikia-visualeditor-notification-media-permission-denied' => '权限被拒绝',
 );

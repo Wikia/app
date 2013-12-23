@@ -1049,6 +1049,7 @@ Du wirst per E-Mail benachrichtigt, wenn alles abgeschlossen ist.',
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
+ * @author Marmase
  * @author Mirzali
  */
 $messages['diq'] = array(
@@ -1059,7 +1060,7 @@ $messages['diq'] = array(
 	'userrenametool-submit' => 'Namey karberi bıvurnê',
 	'userrenametool-errorblocked' => '$3<nowiki>$2</nowiki> Karber <nowiki>$1</nowiki> bloke kerd.',
 	'userrenametool-errorlocked' => 'Karber <nowiki>$1</nowiki> bloke biyo.',
-	'userrenametool-errorbot' => '<nowiki>$1</nowiki>yew boto.',
+	'userrenametool-errorbot' => '<nowiki>$1</nowiki> yew boto.',
 	'userrenametool-confirm-yes' => 'Eya',
 	'userrenametool-confirm-no' => 'Nê',
 	'userrenametool-logentry' => ' $1 nameycı yo newe "$2"o',
@@ -4753,7 +4754,13 @@ $messages['zh-hans'] = array(
 	'userrenametool-error-same-user' => '您不可以更改一位用户是跟之前的东西一样。',
 	'userrenametool-error-extension-abort' => '一个扩展阻碍了重命名进程。',
 	'userrenametool-error-cannot-rename-account' => '在共享的全局数据库重命名用户失败。',
+	'userrenametool-error-invalid-ip' => '提供的IP地址无效。',
+	'userrenametool-warnings-characters' => '新用户名包含非法字符！',
 	'userrenametool-warnings-maxlength' => '新用户名长度不可超过255个字符！',
+	'userrenametool-warn-table-missing' => '“<nowiki>$2</nowiki>”表在数据库“<nowiki>$1</nowiki>”中不存在。',
+	'userrenametool-info-in-progress' => '重命名进程正在进行。
+其余部分将在后台完成。
+完成后你将收到电子邮件通知。',
 	'userrenametool-success' => '用户"<nowiki>$1</nowiki>"已经更名为"<nowiki>$2</nowiki>"',
 	'userrenametool-confirm-intro' => '你真的想这样做呢？',
 	'userrenametool-confirm-yes' => '是',
@@ -4770,6 +4777,7 @@ $messages['zh-hans'] = array(
 	'userrenametool-log' => '拥有$1次编辑。 理由: $2',
 	'userrenametool-move-log' => '当由"[[User:$1|$1]]"重命名作"[[User:$2|$2]]"时已经自动移动用户页',
 	'right-renameuser' => '重新命名用户',
+	'action-renameuser' => '重命名用户',
 );
 
 /** Traditional Chinese (中文（繁體）‎)

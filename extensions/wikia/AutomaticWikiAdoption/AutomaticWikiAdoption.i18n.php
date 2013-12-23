@@ -1497,6 +1497,53 @@ $messages['lt'] = array(
 	'wikiadoption-welcome-header' => '↓Sveikinimai! Jūs įvaikinote {{SITENAME}}!',
 );
 
+/** Latvian (latviešu)
+ * @author Sg ghost
+ */
+$messages['lv'] = array(
+	'wikiadoption' => 'Automātiska wiki pieņemšana',
+	'wikiadoption-desc' => 'Pagarināt AutomaticWikiAdoption MediaWiki',
+	'wikiadoption-header' => 'Pieņemt šo wiki',
+	'wikiadoption-button-adopt' => 'Jā, es gribu pieņemt {{SITENAME}}!',
+	'wikiadoption-adopt-inquiry' => 'Uzzini vairāk!',
+	'wikiadoption-description' => '$1, gatavs pieņemt {{SITENAME}}?
+<br><br>
+Nav bijis aktīvs administrators par {{SITENAME}} uz brīdi, un mēs meklējam jaunu līderi, lai palīdzētu šajā wiki saturu un Kopienas augt! Kā cilvēks, kurš ir veicinājis {{SITENAME}} mēs domājām, ja jūs vēlētos darbu.
+<br><br>
+Pieņemot wiki, tu būs paaugstināts par administratoru un birokrāts, lai dotu jums rīkus jums wiki Kopienas un satura pārvaldība. Jūs arī varēsiet izveidot citus administratorus, palīdzēt, dzēst, atrite, pārvietot un aizsargāt lapu.
+<br><br>
+Vai esat gatavs veikt tālāk minētās darbības, lai palīdzētu {{SITENAME}}', # Fuzzy
+	'wikiadoption-know-more-header' => 'Vēlaties uzzināt vairāk?',
+	'wikiadoption-know-more-description' => 'Pārbaudiet šīs saites, lai iegūtu vairāk informācijas. Un, protams, nekautrējieties sazināties ar mums, ja jums ir kādi jautājumi!',
+	'wikiadoption-adoption-successed' => 'Apsveicam! Jūs esat tagad administrators viki!',
+	'wikiadoption-adoption-failed' => 'Mēs atvainojamies. Mēs centāmies, lai jums administratoru, bet tas nestrādāja out. Lūdzu [http://community.wikia.com/Special:Contact contact us], un mēs centīsimies jums palīdzēt out.',
+	'wikiadoption-not-allowed' => 'Mēs atvainojamies. Jūs nevarat pieņemt šo wiki tiesības tagad.',
+	'wikiadoption-not-enough-edits' => 'Ups! Jums ir nepieciešams, lai būtu vairāk nekā 10 labojumus, lai pieņemtu šo viki.',
+	'wikiadoption-adopted-recently' => 'Ups! Jums jau ir pieņēmušas citu wiki nesen. Jums būs jāgaida kādu laiku, pirms jūs varat pieņemt jaunu viki.',
+	'wikiadoption-log-reason' => 'Automātiska Viki pieņemšana',
+	'wikiadoption-notification' => '{{SITENAME}} ir šo bērnu adopcijai. Ieinteresēti kļūt vadītājs šeit? Pieņem šajā viki, lai sāktu! $2',
+	'wikiadoption-mail-first-subject' => 'Mēs neesam redzējuši ap jums, bet',
+	'wikiadoption-mail-first-content' => 'Sveiki $1,
+
+Tas ir bijis pāris nedēļas, kopš mēs esam redzējuši administrators #WIKINAME. Administratoriem ir neatņemama daļa no #WIKINAME, un ir svarīgi tie ir regulāro klātbūtni. Ja uz ilgu laiku nav aktīvs administratori, šajā wiki var safasēti pieņemšanai atļaut citam lietotājam, lai kļūtu administrators.
+
+Ja jums vajadzīga palīdzība, rūpējoties par wiki, varat ļaut citiem sabiedrības locekļiem kļūt par administratoriem tagad, dodoties uz  $2 .  Cerību uz drīzu par #WIKINAME
+
+Vikija komanda
+
+Jūs varat atrakstīties no izmaiņām šo sarakstu šeit: $3',
+	'wikiadoption-mail-first-content-HTML' => 'Sveiki $1,<br><br>
+
+Tas ir bijis pāris nedēļas, kopš mēs esam redzējuši administrators #WIKINAME. Administratoriem ir neatņemama daļa no #WIKINAME, un ir svarīgi tie ir regulāro klātbūtni. Ja uz ilgu laiku nav aktīvs administratori, šajā wiki var safasēti pieņemšanai atļaut citam lietotājam, lai kļūtu administrators.<br><br>
+
+Ja jums vajadzīga palīdzība, rūpējoties par wiki, varat ļaut citiem sabiedrības locekļiem kļūt par administratoriem tagad, dodoties uz <a href="<span class=" notranslate"="" translate="no">$2 "> lietotāju tiesību pārvaldības</a>.  Hope redzēt jūs #WIKINAME soon!<br><br>
+
+Vikija komanda<br><br>
+
+Jūs varat <a href="<span class=" notranslate"="" translate="no">$3 "> atrakstīties</a> no šā saraksta izmaiņas.', # Fuzzy
+	'wikiadoption-mail-second-subject' => '#WIKINAME tiks safasēti pieņemšanai drīz',
+);
+
 /** Macedonian (македонски)
  * @author Bjankuloski06
  */

@@ -5355,6 +5355,13 @@ $messages['lus'] = array(
 	'wikistats_other_namespace' => 'hminghmun  <br /> dang',
 );
 
+/** Latvian (latviešu)
+ * @author Sg ghost
+ */
+$messages['lv'] = array(
+	'wikistats_namespaces_user' => 'Lietotājs (ietver Lietotāja diskusija)',
+);
+
 /** Maithili (मैथिली)
  * @author Vinitutpal
  */

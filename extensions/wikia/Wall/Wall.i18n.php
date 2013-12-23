@@ -4168,11 +4168,14 @@ $messages['ja'] = array(
 	'wall-message-undoremove' => '取り消す',
 	'wall-message-edited' => '<a class="username" href="$1">$2</a> が<a href="$3" >編集</a>',
 	'wall-message-update-topics-summary' => 'タグを変更',
+	'wall-message-update-highlight-summary' => 'ハイライトを設定',
+	'wall-message-update-removed-highlight-summary' => 'ハイライトを解除',
 	'wall-message-mywall' => '自分のウォール',
 	'wall-toolbar-history' => '履歴',
 	'wall-message-notify' => '管理者に知らせる',
 	'wall-message-remove' => '除去',
 	'wall-message-rev-delete' => '版指定削除',
+	'wall-message-fast-admin-delete-message' => 'VSTFによる削除',
 	'wall-message-quote-button' => '引用',
 	'wall-message-elseswall' => '$1 のウォール',
 	'wall-message-no-permission' => 'メッセージに対してこの操作を行う権限がありません',
@@ -4213,6 +4216,7 @@ $messages['ja'] = array(
 	'wall-delete-reason' => '利用者・管理者の操作',
 	'wall-user-talk-page-archive-anchor' => '会話ページのアーカイブを見る',
 	'wall-user-talk-archive-page-title' => '会話ページアーカイブ',
+	'wall-ipb-disableusertalk' => 'ブロック中のメッセージウォールへの投稿を禁止する',
 	'wall-action-all-confirm-cancel' => '中止',
 	'wall-action-all-confirm-notify' => '管理者に知らせる',
 	'wall-action-remove-reply-title' => 'この返信を除去',
@@ -4309,15 +4313,20 @@ $messages['ja'] = array(
 	'wall-deleted-msg-text' => '閲覧しようとしたメッセージは削除されています。',
 	'wall-deleted-msg-return-to' => '$1 のウォールに戻る',
 	'wall-deleted-msg-view' => '(閲覧/復帰)',
+	'wall-recentchanges-wall-thread' => 'メッセージウォールのスレッド',
 	'wall-recentchanges-new-message' => '-- <a href="$1">$2 のウォール</a>',
 	'wall-recentchanges-edit' => '(メッセージを編集)',
+	'wall-recentchanges-summary' => '($1)',
 	'wall-recentchanges-removed-thread' => 'が [[$3|$4 のウォール]]からスレッド「[[$1|$2]]」を除去しました',
 	'wall-recentchanges-removed-reply' => 'が [[$3|$4 のウォール]]のスレッド「[[$1|$2]]」から返信を除去しました',
 	'wall-recentchanges-restored-thread' => 'が [[$3|$4 のウォール]]にスレッド「[[$1|$2]]」を復帰しました',
 	'wall-recentchanges-restored-reply' => 'が [[$3|$4 のウォール]]のスレッド「[[$1|$2]]」に返信を復帰しました',
 	'wall-recentchanges-deleted-thread' => 'が [[$3|$4 のウォール]]からスレッド「[[$1|$2]]」を削除しました',
 	'wall-recentchanges-deleted-reply' => 'が [[$3|$4 のウォール]]のスレッド「[[$1|$2]]」から返信を削除しました',
+	'wall-recentchanges-closed-thread' => 'が [[$3|$4 のウォール]]のスレッド「[[$1|$2]]」を閉鎖しました',
+	'wall-recentchanges-reopened-thread' => 'が [[$3|$4 のウォール]]のスレッド「[[$1|$2]]」を再開しました',
 	'wall-recentchanges-deleted-reply-title' => 'メッセージウォールでの返信',
+	'wall-recentchanges-wall-created-title' => 'メッセージウォールを作成',
 	'wall-recentchanges-namespace-selector-message-wall' => 'メッセージウォール',
 	'wall-recentchanges-thread-group' => '$1 -- <a href="$2">$3 のウォール</a>',
 	'wall-recentchanges-history-link' => 'ウォールの履歴',
@@ -4338,7 +4347,7 @@ $messages['ja'] = array(
 	'wall-deleted-reply' => 'この返信は削除されました',
 	'wall-history' => '履歴',
 	'wall-history-title' => 'ウォールの履歴',
-	'wall-history-who-involved-wall-title' => 'このウォールに投稿した利用者', # Fuzzy
+	'wall-history-who-involved-wall-title' => 'このウォールに投稿した利用者',
 	'wall-history-who-involved-thread-title' => 'このスレッドに投稿した利用者',
 	'wall-history-thread-created' => '$2 が $1 を作成しました',
 	'wall-history-thread-removed' => '$2 が $1 を除去しました',
@@ -4358,6 +4367,7 @@ $messages['ja'] = array(
 	'wall-thread-history-reply-created' => '$1 $2 が返信を投稿しました',
 	'wall-thread-history-thread-removed' => '$1 $2 がこのスレッドを除去しました',
 	'wall-thread-history-reply-removed' => '$1 $2 が $3 の返信 $5 を除去しました',
+	'wall-thread-history-reply-deleted' => '$1 $2 が $3 の返信を削除しました',
 	'wall-thread-history-thread-restored' => '$1 $2 がこのスレッドを復帰しました',
 	'wall-thread-history-reply-restored' => '$1 $2 が $3 の返信 $5 を復帰しました',
 	'wall-thread-history-thread-deleted' => '$1 $2 がこのスレッドを削除しました',
@@ -4409,13 +4419,14 @@ http://ja.wikia.com/wiki/Special:Following</p>',
 	'tog-enotifmywall-every' => 'すべてのメッセージと返信を通知',
 	'tog-enotifmywall-sincevisited' => '各スレッドについて最後の閲覧後に一度だけ通知する',
 	'tog-enotifmywall-noemail' => 'メッセージウォールおよびフォーラムに関して通知を行わない',
-	'wallshowsource-toggle-v2' => 'メッセージウォールで「{{int:user-action-menu-view-source}}」オプションを有効にする', # Fuzzy
+	'wallshowsource-toggle-v2' => 'スレッドで「{{int:user-action-menu-view-source}}」オプションを有効にする',
 	'wallshowsource-toggle' => 'メッセージウォールで「{{int:user-action-menu-view-source}}」オプションを有効にする',
 	'walldelete-toggle' => 'スレッドに対する版指定削除を有効にする',
 	'wall-notifications-notifyeveryone' => '$1 がハイライトしました',
 	'wall-message-notifyeveryone' => 'このスレッドをハイライトする',
 	'wall-message-unnotifyeveryone' => 'このスレッドのハイライトを解除',
 	'wall-message-notifyeveryone-tooltip' => 'このウィキを閲覧している全ての登録利用者に対して、次回の訪問以降このスレッドに関する通知が行われます',
+	'wall-votes-modal-showmore' => '誰がいいねを付けたのかを見る',
 	'wall-votes-modal-title' => 'いいね',
 	'wall-votes-modal-title-desc' => '$1人の利用者がこのメッセージに「いいね」を付けました。',
 	'wall-votes-number' => '$1 いいね',
@@ -4438,6 +4449,7 @@ http://ja.wikia.com/wiki/Special:Following</p>',
  * @author DevaMK
  */
 $messages['ka'] = array(
+	'wall-message-loadmore' => 'იხილე $1-ვე პასუხი',
 	'wall-message-unfollow' => 'კონტროლის გაუქმება',
 	'wall-message-mywall' => 'ჩემი კედელი',
 	'wall-message-remove' => 'წაშლა',
@@ -4582,6 +4594,17 @@ $messages['lb'] = array(
 	'wall-topic-input-placeholder' => 'En Thema derbäisetzen (fakultativ)',
 	'wall-topic-edit-save' => 'Späicheren',
 	'wall-topic-edit-cancel' => 'Ofbriechen',
+);
+
+/** Latvian (latviešu)
+ * @author Edgars2007
+ * @author Sg ghost
+ */
+$messages['lv'] = array(
+	'wall-message-wall' => 'Lietotāja diskusija',
+	'wall-desc' => 'Lietotāja diskusija lapas nomaiņa',
+	'wall-recentchanges-namespace-selector-message-wall' => 'Lietotāja diskusija',
+	'prefs-email-wall-v2' => 'Lietotāja diskusija un Forums',
 );
 
 /** Macedonian (македонски)
@@ -8397,6 +8420,7 @@ $messages['zh-hans'] = array(
 	'wall-thread-deleted' => '已删除',
 	'wall-thread-closed' => '已关闭',
 	'wall-default-title' => '来自$1的信息',
+	'wall-no-title-warning' => '← 您未指定任何标题',
 	'wall-placeholder-topic' => '这是什么？',
 	'wall-placeholder-reply' => '发表回复',
 	'wall-button-to-preview-comment' => '预览',

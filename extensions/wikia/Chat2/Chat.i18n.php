@@ -1937,6 +1937,13 @@ $messages['lt'] = array(
 	'chat-browser-is-notsupported' => '	Jūsų naršyklė nepalaiko. Geriausiam patyrimui, naudokitės <a href="http://community.wikia.com/wiki/Help:Supported_browsers">naujesnę naršyklė</a>.',
 );
 
+/** Latvian (latviešu)
+ * @author Sg ghost
+ */
+$messages['lv'] = array(
+	'chat-user-menu-message-wall' => 'Lietotāja diskusija',
+);
+
 /** Macedonian (македонски)
  * @author Bjankuloski06
  */

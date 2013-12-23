@@ -233,6 +233,7 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 
 /** Message documentation (Message documentation)
  * @author Shirayuki
+ * @author Siebrand
  */
 $messages['qqq'] = array(
 	'forum-forum-title' => 'The main title for the forum.
@@ -350,17 +351,19 @@ Parameters:
 * $1 is the board title',
 	'forum-activity-module-heading' => 'Forum Activity right rail module heading',
 	'forum-related-module-heading' => 'Related Threads right rail module heading.',
-	'forum-activity-module-posted' => '$1 is username, $2 is url to user page, $3 is a translated time statement such as "20 seconds ago" or "20 hours ago" or "20 days ago"',
+	'forum-activity-module-posted' => 'Parameters:
+* $1 is username,
+* $2 is a translated time statement such as "20 seconds ago" or "20 hours ago" or "20 days ago"',
 	'forum-activity-module-started' => 'Displays user activity in the Forum Activity module. Parameters:
 * $1 is the username
 * $2 is a translated time statement such as "20 seconds ago" or "20 hours ago" or "20 days ago"',
 	'forum-contributions-line' => "Contributions item. Parameters:
+* $2 is the thread title
+* $4 is the board title
 * $5 is the timestamp
 * $6 is the diff link if applicable
 * $7 is the history link
-* $8 is N if it's a new thread
-* $2 is the thread title
-* $4 is the board title",
+* $8 is N if it's a new thread",
 	'forum-recentchanges-new-message' => 'The text added after the article link on recent changes entries. Parameters:
 * $2 is the board title',
 	'forum-recentchanges-edit' => 'Default edit summary text on recent changes',
@@ -1702,8 +1705,12 @@ keutamaan e-mel anda di sini: http://community.wikia.com/Special:Preferences',
  */
 $messages['nl'] = array(
 	'forum-forum-title' => 'Forum',
+	'forum-specialpage-heading' => 'Forum',
+	'forum-specialpage-blurb-heading' => '<span style="display:none">forum-specialpage-blurb-heading U kunt het bewerken<span>',
 	'forum-specialpage-policies-edit' => 'Bewerken',
 	'forum-specialpage-policies' => 'Forumbeleid / FAQ',
+	'forum-board-title' => 'Prikbord $1',
+	'forum-board-topic-title' => 'Discussies over $1',
 	'forum-board-topics' => 'Onderwerpen',
 	'forum-board-thread-follow' => 'Volgen',
 	'forum-board-thread-following' => 'Wordt gevolgd',
@@ -1724,9 +1731,29 @@ $messages['nl'] = array(
 	'forum-discussion-placeholder-title' => 'Waar wilt u over praten?',
 	'forum-discussion-placeholder-message' => 'Nieuw bericht plaatsen op het board $1',
 	'forum-discussion-placeholder-message-short' => 'Nieuw bericht plaatsen',
+	'forum-notification-user1-reply-to-your' => '$1 {{GENDER:$1|heeft}} geantwoord in uw onderwerp op het prikbord $3',
+	'forum-notification-user2-reply-to-your' => '$1 en $2 hebben gereageerd op uw onderwerp op het prikbord $3',
+	'forum-notification-user3-reply-to-your' => '$1 en anderen hebben gereageerd op uw onderwerp op het prikbord $3',
+	'forum-notification-user1-reply-to-someone' => '$1 {{GENDER:$1|heeft}} gereageerd op uw onderwerp op het prikbord $3',
+	'forum-notification-user2-reply-to-someone' => '$1 en $2 hebben gereageerd op het prikbord $3',
+	'forum-notification-user3-reply-to-someone' => '$1 en anderen hebben gereageerd op het prikbord $3',
+	'forum-notification-newmsg-on-followed-wall' => '$1 {{GENDER:$1|heeft}} een nieuw bericht geplaatst op het prikbord $2',
 	'forum-mail-notification-html-greeting' => 'Hallo $1,',
 	'forum-mail-notification-html-button' => 'Zie het gesprek',
 	'forum-mail-notification-subject' => '$1 - $2',
+	'forum-wiki-activity-msg-name' => 'prikbord $1',
+	'forum-activity-module-heading' => 'Forumactiviteit',
+	'forum-related-module-heading' => 'Gerelateerde onderwerpen',
+	'forum-activity-module-posted' => '$1 heeft $2 gereageerd',
+	'forum-activity-module-started' => '$1 heeft $2 een onderwerp geplaatst',
+	'forum-contributions-line' => '$5 ($6 | $7) $8 <a href="$1">$2</a> op het <a href="$3">prikbord $4</a>',
+	'forum-recentchanges-new-message' => 'op het <a href="$1">prikbord $2</a>',
+	'forum-recentchanges-edit' => '(bericht bewerkt)',
+	'forum-recentchanges-deleted-reply-title' => 'Een bericht',
+	'forum-recentchanges-namespace-selector-message-wall' => 'Forumprikbord',
+	'forum-related-discussion-total-replies' => '{{PLURAL:$1|Eén bericht|$1 berichten}}',
+	'forum-related-discussion-see-more' => 'Meer discussies bekijken',
+	'forum-confirmation-board-deleted' => '"$1" is verwijderd.',
 );
 
 /** Polish (polski)
@@ -2682,4 +2709,30 @@ ___________________________________________<br />
 	'forum-related-discussion-zero-state-creative' => '你可以在[[Special:Forum|{{SITENAME}}论坛]]上找到所有关于这个维基的讨论！',
 	'forum-related-discussion-see-more' => '查看更多讨论',
 	'forum-confirmation-board-deleted' => '"$1"已经被删除。',
+);
+
+/** Simplified Chinese (中文（简体）‎)
+ * @author Yfdyh000
+ */
+$messages['zh-hans'] = array(
+	'forum-forum-title' => '论坛',
+	'forum-active-threads' => '$1{{PLURAL:$1|条活跃讨论|条活跃讨论}}',
+	'forum-active-threads-on-topic' => "$1{{PLURAL:$1|条活跃讨论|条活跃讨论}}有关：'''[[$2]]'''",
+	'forum-specialpage-heading' => '论坛',
+	'forum-specialpage-board-lastpostby' => '最后发帖者',
+	'forum-specialpage-policies-edit' => '编辑',
+	'forum-board-thread-follow' => '关注',
+	'forum-board-thread-following' => '关注中',
+	'forum-board-new-message-heading' => '发起讨论',
+	'forum-no-board-selection-error' => '← 请选择你要发布讨论的板块',
+	'forum-thread-reply-placeholder' => '发表回复',
+	'forum-thread-reply-post' => '回复',
+	'forum-thread-deleted-return-to' => '返回$1板块',
+	'forum-sorting-option-newest-replies' => '最新回复',
+	'forum-sorting-option-popular-threads' => '最多回复',
+	'forum-sorting-option-most-replies' => '7天内最活跃',
+	'forum-sorting-option-newest-threads' => '更新的帖子',
+	'forum-sorting-option-oldest-threads' => '更旧的帖子',
+	'forum-discussion-post' => '发布',
+	'forum-discussion-highlight' => '高亮此讨论',
 );

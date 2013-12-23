@@ -179,7 +179,40 @@ $messages['af'] = array(
  * @author Kuwaity26
  */
 $messages['ar'] = array(
+	'wikiamobile-search' => 'ابحث',
+	'wikiamobile-search-this-wiki' => 'البحث في هذا الويكي',
+	'wikiamobile-search-wiki' => 'الويكي',
+	'wikiamobile-search-wikia' => 'ويكيا',
+	'wikiamobile-login' => 'تسجيل الدخول',
+	'wikiamobile-password' => 'كلمة المرور',
+	'wikiamobile-login-submit' => 'تسجيل الدخول',
+	'wikiamobile-menu' => 'قائمة',
+	'wikiamobile-article-categories' => 'تصنيفات',
+	'wikiamobile-feedback' => 'تعليقات',
+	'wikiamobile-back' => 'رجوع',
+	'wikiamobile-hide-section' => 'إخفاء',
+	'wikiamobile-profile' => 'الملف',
+	'wikiamobile-last-edited-on' => 'آخر تعديل في $1',
+	'wikiamobile-last-edited-by' => 'بواسطة $1',
+	'wikiamobile-anonymous-edited-by' => 'مجهول',
 	'wikiamobile-footer-link-videogames' => '[[w:c:www:Video_Games|ألعاب الڤيديو]]',
+	'mobile-full-site' => 'موقع الحاسب',
+	'wikiamobile-categories-tagline' => 'صفحة التصنيف',
+	'wikiamobile-category-items-more' => 'تحميل المزيد',
+	'wikiamobile-category-items-prev' => 'تحميل السابق',
+	'wikiamobile-categories-expand' => 'أظهر الكل',
+	'wikiamobile-categories-collapse' => 'أخفِ الكل',
+	'wikiamobile-sharing-media-image' => 'صورة',
+	'wikiamobile-sharing-page-text' => '$1 - $2',
+	'wikiamobile-video-not-friendly-header' => 'يا للأسف!',
+	'wikiamobile-video-not-friendly' => 'عذرًا، هذا الڤيديو غير متوفر للجوال.',
+	'wikiamobile-toc-header' => 'جدول المحتوى',
+	'wikiamobile-ad-label' => 'إعلان',
+	'wikiamobile-image-not-loaded' => 'الصورة غير متوفرة',
+	'wikiasmartbanner-appstore' => 'في الآپ ستور',
+	'wikiasmartbanner-googleplay' => 'في گوگل پلِي',
+	'wikiasmartbanner-price' => 'مجاني',
+	'wikiasmartbanner-view' => 'أرِني',
 );
 
 /** Azerbaijani (azərbaycanca)
@@ -1585,6 +1618,7 @@ $1',
  * @author Anakmalaysia
  * @author Liuxinyu970226
  * @author Xiaomingyan
+ * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
 	'wikiamobile-search' => '搜索',
@@ -1600,6 +1634,7 @@ $messages['zh-hans'] = array(
 	'wikiamobile-back' => '返回',
 	'wikiamobile-hide-section' => '隐藏',
 	'wikiamobile-profile' => '个人资料',
+	'wikiamobile-anonymous-edited-by' => '匿名用户',
 	'wikiamobile-footer-link-lifestyle' => '[[w:c:www:Lifestyle|生活时尚]]',
 	'wikiamobile-footer-link-entertainment' => '[[w:c:www:Entertainment|影音娱乐]]',
 	'wikiamobile-footer-link-videogames' => '[[w:c:www:Video_Games|电玩游戏]]',
@@ -1621,8 +1656,10 @@ $1',
 	'wikiamobile-media-group-footer' => '$1的1',
 	'wikiamobile-video-views-counter' => '$1次{{PLURAL:$1|浏览|浏览}}',
 	'wikiamobile-video-not-friendly-header' => '哦买糕的！',
+	'wikiamobile-toc-header' => '目录',
 	'wikiamobile-ad-label' => '广告',
 	'wikiamobile-image-not-loaded' => '图像不可用',
+	'wikiamobile-page-not-found' => '啊呀！<b>$1</b>不存在。',
 	'wikiasmartbanner-appstore' => 'App Store',
 	'wikiasmartbanner-googleplay' => 'Google Play',
 	'wikiasmartbanner-price' => '自由',
