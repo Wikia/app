@@ -6,19 +6,22 @@
 
 /* global mw, require */
 
-ve.ui.WikiaMediaPreviewWidget = function VeUiWikiaMediaPreviewWidget( model ) {
+ve.ui.WikiaMediaPreviewWidget = function VeUiWikiaMediaPreviewWidget( model, config ) {
 
 	// Parent constructor
 	ve.ui.Widget.call( this );
 
 	// Properties
 	this.model = model;
+	this.page = config.page;
 	this.videoInstance = null;
+
 	this.closeButton = new ve.ui.IconButtonWidget( {
 		'$$': this.$$,
 		'title': ve.msg( 'visualeditor-dialog-action-close' ),
 		'icon': 'close'
 	} );
+
 	this.title = this.$$( '<div>' )
 		.text( this.model.title )
 		.addClass( 've-ui-wikiaMediaPreviewWidget-title' )
@@ -26,6 +29,8 @@ ve.ui.WikiaMediaPreviewWidget = function VeUiWikiaMediaPreviewWidget( model ) {
 
 	// Events
 	this.closeButton.connect( this, { 'click': 'onCloseButtonClick' } );
+	this.page.on( 'title', ve.bind( this.updateTitle, this ) );
+	this.page.on( 'remove', ve.bind( this.remove, this ) );
 
 	// DOM
 	this.closeButton.$
@@ -141,6 +146,11 @@ ve.ui.WikiaMediaPreviewWidget.prototype.reOpen = function() {
 	}
 };
 
+ve.ui.WikiaMediaPreviewWidget.prototype.updateTitle = function( model ) {
+	this.model.title = model.title;
+	this.title.text( model.title );
+};
+
 ve.ui.WikiaMediaPreviewWidget.prototype.onCloseButtonClick = function() {
 	this.$.hide();
 	if( this.videoInstance ) {
@@ -148,7 +158,9 @@ ve.ui.WikiaMediaPreviewWidget.prototype.onCloseButtonClick = function() {
 	}
 };
 
+/**
+ * Remove the overlay DOM element
+ */
 ve.ui.WikiaMediaPreviewWidget.prototype.remove = function() {
-	// TODO: call this when cart items are removed and when the cart is cleared
 	this.$.remove();
 };

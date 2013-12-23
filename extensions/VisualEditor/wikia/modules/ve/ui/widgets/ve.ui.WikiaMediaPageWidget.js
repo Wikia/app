@@ -79,7 +79,6 @@ ve.ui.WikiaMediaPageWidget = function VeUiWikiaMediaPageWidget( model, config ) 
 
 	this.setupImage();
 	if ( this.model.type === 'video' ) {
-		// TODO: support embdedded video
 		this.setupVideoOverlay();
 	}
 };
@@ -112,6 +111,7 @@ ve.ui.WikiaMediaPageWidget.prototype.getModel = function () {
  */
 ve.ui.WikiaMediaPageWidget.prototype.onTitleKeyup = function () {
 	this.model.setTitle( this.title.$input.val() );
+	this.emit( 'title', this.model );
 };
 
 /**
@@ -138,7 +138,7 @@ ve.ui.WikiaMediaPageWidget.prototype.onItemClick = function () {
 	if( this.mediaPreview ) {
 		this.mediaPreview.reOpen();
 	} else {
-		this.mediaPreview = new ve.ui.WikiaMediaPreviewWidget( this.model );
+		this.mediaPreview = new ve.ui.WikiaMediaPreviewWidget( this.model, { page: this } );
 	}
 };
 
