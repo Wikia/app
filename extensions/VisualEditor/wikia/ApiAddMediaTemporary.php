@@ -122,15 +122,12 @@ class ApiAddMediaTemporary extends ApiAddMedia {
 		return $result;
 	}
 
-	private function createTempFile( $filepath, $isVideo = false ) {
+	private function createTempFile( $filepath ) {
 		$tempFile = new FakeLocalFile(
 			Title::newFromText( uniqid( 'Temp_', true ), 6 ),
 			RepoGroup::singleton()->getLocalRepo()
 		);
-		// Don't need to upload if it's a video file
-		if( !$isVideo ) {
-			$tempFile->upload( $filepath, '', '' );
-		}
+		$tempFile->upload( $filepath, '', '' );
 		// TODO: Add to the garbage collector
 		return $tempFile;
 	}
