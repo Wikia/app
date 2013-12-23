@@ -491,6 +491,18 @@ $messages['lb'] = array(
 	'alert-download-updated-wikis-button-ok' => 'OK',
 );
 
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'activityindicator-message' => 'د حالت سوار كرد',
+	'window-category-load-batch' => 'بیشتر',
+	'window-article-button-close' => 'بسن',
+	'window-article-button-back' => 'دما',
+	'window-article-menu-search-label' => 'پی جوری',
+	'alert-download-updated-wikis-button-ok' => 'خوئه',
+);
+
 /** Macedonian (македонски)
  * @author Bjankuloski06
  */

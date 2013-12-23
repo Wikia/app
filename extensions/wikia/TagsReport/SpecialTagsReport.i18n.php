@@ -382,6 +382,14 @@ $messages['lb'] = array(
 	'tagsreportpageremoved' => "D'Säit #$1 gouf ewechgeholl",
 );
 
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'tagsreportgo' => 'نشون دئن',
+	'tagsreportmainnspace' => 'اصلی',
+);
+
 /** Latgalian (latgaļu)
  * @author Dark Eagle
  */

@@ -538,6 +538,23 @@ $messages['lb'] = array(
 	'multilookupwikititle' => 'Titel',
 );
 
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'multilookupgo' => 'رو',
+	'multilookupnext' => 'نها',
+	'multilookupprevious' => 'وادمايی',
+	'multilookupnoresultfound' => 'هيچ نتيجه يی  جسته نبی',
+	'multilookupwiki' => 'ويكی',
+	'multilookuplink' => 'لینک هومیار',
+	'multilookupdetails' => 'جزيات نشون بيئه',
+	'multilookupwikidbname' => 'نوم دی بی',
+	'multilookupwikiurl' => 'يو آر ال',
+	'multilookupwikititle' => 'سرتال',
+	'multilookupwikioptions' => 'گزينه يا هنی:',
+);
+
 /** Macedonian (македонски)
  * @author Bjankuloski06
  */

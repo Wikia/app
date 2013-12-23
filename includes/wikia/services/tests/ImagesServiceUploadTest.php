@@ -2,7 +2,7 @@
 /**
  * Integration test for file uploads and removals
  *
- * @group Broken
+ * @group Integration
  * @author macbre
  */
 class ImagesServiceUploadTest extends WikiaBaseTest {
@@ -33,7 +33,8 @@ class ImagesServiceUploadTest extends WikiaBaseTest {
 
 		// use Swift domain
 		global $wgDevelEnvironmentName;
-		$this->mockGlobalVariable( 'wgDevBoxImageServerOverride', "static.{$wgDevelEnvironmentName}.wikia-dev.com" );
+		// Disabling forcing the image domain due to BAC-1136
+		//$this->mockGlobalVariable( 'wgDevBoxImageServerOverride', "static.{$wgDevelEnvironmentName}.wikia-dev.com" );
 
 		// debug
 		global $wgLocalFileRepo;

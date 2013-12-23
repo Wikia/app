@@ -1256,7 +1256,7 @@ $messages['gl'] = array(
 	'multiwikiedit' => 'Editar unha manchea de páxinas',
 	'multiwikiedit_button' => 'EDITAR',
 	'multiwikiedit_confirm' => 'CONFIRMAR',
-	'multiwikiedit_help' => 'Editar unha manchea de páxinas. Pode editar as páxinas listadas nunha caixa de texto. Escolle un usuario que se mostrará nos rexistros de borrados. O ficheiro subido deberá conter o nome da páxina e un motivo opcional separado por un carácter "|" en cada liña.',
+	'multiwikiedit_help' => 'Editar unha manchea de páxinas. Podes editar as páxinas listadas nunha caixa de texto. Escolle un usuario que se mostrará nos rexistros de borrados. O ficheiro subido deberá conter o nome da páxina e un motivo opcional separado por un carácter "|" en cada liña.',
 	'multiwikiedit_caption' => 'Lista de páxinas',
 	'multiwikiedit_title' => 'Edición en varios wikis',
 	'multiwikiedit_as' => 'Executar a escritura como',
@@ -1865,7 +1865,10 @@ $messages['lb'] = array(
  */
 $messages['lrc'] = array(
 	'multitasks-link-back-label' => 'ايچه',
+	'multiwikiedit_button' => 'ویرایشت',
+	'multiwikiedit_confirm' => 'مئکم کردن',
 	'multiwikiedit_select_yourself' => 'شما',
+	'multidelete_success_subtitle' => 'سی $1',
 );
 
 /** Macedonian (македонски)

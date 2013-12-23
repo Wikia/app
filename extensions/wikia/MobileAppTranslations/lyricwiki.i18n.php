@@ -743,6 +743,22 @@ $messages['lb'] = array(
 	'login-password-hint' => 'Passwuert',
 );
 
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'app-loading' => 'د حالت سوار كرد',
+	'app-tab-search' => 'پی جوری',
+	'app-tab-about' => 'دباره',
+	'app-tab-browse' => 'آ تا ی',
+	'app-nonetwork-dialog-close-button' => 'خوئه',
+	'search-go' => 'رؤ!',
+	'login-username-hint' => 'نوم كاروری',
+	'login-password-hint' => 'پاسورد',
+	'login-submit-button' => 'اومائن د سیستم',
+	'about-heading-tips' => 'د حالت گشتن',
+);
+
 /** Macedonian (македонски)
  * @author Bjankuloski06
  */
