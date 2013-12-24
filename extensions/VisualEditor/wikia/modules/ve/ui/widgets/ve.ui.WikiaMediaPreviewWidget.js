@@ -25,7 +25,8 @@ ve.ui.WikiaMediaPreviewWidget = function VeUiWikiaMediaPreviewWidget( model ) {
 		.prependTo( this.$ );
 
 	// Events
-	this.closeButton.connect( this, { 'click': 'onCloseButtonClick' } );
+	this.closeButton.connect( this, { 'click': 'onCloseClick' } );
+	this.$.on( 'click', ve.bind( this.onCloseClick, this ) );
 
 	// DOM
 	this.closeButton.$
@@ -145,9 +146,10 @@ ve.ui.WikiaMediaPreviewWidget.prototype.onRequestVideoFail = function() {
 };
 
 /**
- * Remove the preview overlay DOM object, effectively killing this instance.
+ * Remove the preview overlay DOM object and fire event for instance removal.
  * @method
  */
-ve.ui.WikiaMediaPreviewWidget.prototype.onCloseButtonClick = function() {
+ve.ui.WikiaMediaPreviewWidget.prototype.onCloseClick = function() {
 	this.$.remove();
+	this.emit( 'remove' );
 };

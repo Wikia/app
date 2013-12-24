@@ -33,4 +33,7 @@
 		height: 500px;
 		width: 728px;
 	}
+	.ve-ui-icon-close {
+		@include ve-icon(close, ve, #000);
+	}
 }

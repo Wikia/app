@@ -62,7 +62,6 @@ ve.ui.WikiaMediaPageWidget = function VeUiWikiaMediaPageWidget( model, config ) 
 
 	// Initialization
 	this.title.$input.attr( 'maxlength', 200 );
-	this.$itemWrapper.addClass( 've-ui-wikiaMediaPageWidget-item' );
 	this.$extension
 		.addClass( 've-ui-wikiaMediaPageWidget-item-extension' )
 		.text( this.model.extension );
@@ -135,7 +134,12 @@ ve.ui.WikiaMediaPageWidget.prototype.onImageLoad = function () {
  * @method
  */
 ve.ui.WikiaMediaPageWidget.prototype.onItemClick = function () {
-	this.mediaPreview = new ve.ui.WikiaMediaPreviewWidget( this.model );
+	if( !this.mediaPreview ) {
+		this.mediaPreview = new ve.ui.WikiaMediaPreviewWidget( this.model );
+		this.mediaPreview.on( 'remove', ve.bind( function() {
+			this.mediaPreview = null;
+		}, this ) );
+	}
 };
 
 /**
