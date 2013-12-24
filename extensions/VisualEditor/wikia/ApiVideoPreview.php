@@ -15,8 +15,6 @@ class ApiVideoPreview extends ApiBase {
 
 	public function execute() {
 		$this->mParams = $this->extractRequestParams();
-		$this->mRequest = $this->getMain()->getRequest();
-		$this->mUser = $this->getUser();
 
 		if ( $this->mParams['provider'] === 'wikia' ) {
 			$result = $this->executeWikiaVideo( $this->mParams['title'] );
@@ -38,7 +36,7 @@ class ApiVideoPreview extends ApiBase {
 			RepoGroup::singleton()->getLocalRepo()
 		);
 
-		// forceMime makes sure the correct File properties are set and sent to the handler when afterSetProps is called
+		// forceMime makes sure the correct file properties are set and sent to the handler when afterSetProps is called
 		$tempVideo->forceMime( 'video/' . $provider );
 		$tempVideo->setVideoId( $videoId );
 		$tempVideo->afterSetProps();
