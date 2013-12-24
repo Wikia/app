@@ -52,7 +52,6 @@ class ApiVideoPreview extends ApiBase {
 	 */
 	private function executeWikiaVideo( $title ) {
 		$file = wfFindFile( $title );
-
 		if ( !( $file instanceof LocalFile ) ) {
 			$this->dieUsage( 'Wikia video doesn\'t exist', 'wikia-video-missing' );
 		}
