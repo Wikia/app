@@ -87,8 +87,8 @@ ve.ui.WikiaMediaPreviewWidget.prototype.handleVideo = function() {
 			'title': this.model.title
 		}
 	} )
-		.done( ve.bind( this.onRequestDone, this ) )
-		.fail( ve.bind( this.onRequestFail, this ) );
+		.done( ve.bind( this.onRequestVideoDone, this ) )
+		.fail( ve.bind( this.onRequestVideoFail, this ) );
 };
 
 /**
@@ -110,11 +110,11 @@ ve.ui.WikiaMediaPreviewWidget.prototype.embedVideo = function( data ) {
 	}, this ) );
 };
 
-ve.ui.WikiaMediaPreviewWidget.prototype.onRequestDone = function( data ) {
+ve.ui.WikiaMediaPreviewWidget.prototype.onRequestVideoDone = function( data ) {
 	if( data.videopreview ) {
 		this.embedVideo( data );
 	} else {
-		this.onRequestFail( data );
+		this.onRequestVideoFail( data );
 	}
 };
 
@@ -123,7 +123,7 @@ ve.ui.WikiaMediaPreviewWidget.prototype.onRequestDone = function( data ) {
  * @method
  */
 
-ve.ui.WikiaMediaPreviewWidget.prototype.onRequestFail = function() {
+ve.ui.WikiaMediaPreviewWidget.prototype.onRequestVideoFail = function() {
 	mw.config.get( 'GlobalNotification' ).show(
 		ve.msg( 'wikia-visualeditor-notification-video-preview-not-available' ),
 		'error',
