@@ -1,7 +1,5 @@
 /*!
  * VisualEditor UserInterface WikiaMediaPreviewWidget class.
- *
- * @todo: fill in rest of docs
  */
 
 /* global mw, require */
@@ -52,6 +50,10 @@ ve.inheritClass( ve.ui.WikiaMediaPreviewWidget, ve.ui.Widget );
 
 /* Methods */
 
+/**
+ * Get larger image for preview and append it to overlay
+ * @method
+ */
 ve.ui.WikiaMediaPreviewWidget.prototype.handleImage = function() {
 	this.maxImgHeight = Math.round( $( window ).height() * 0.95 );
 	this.maxImgWidth = Math.round( $( window ).width() * 0.95 );
@@ -67,6 +69,10 @@ ve.ui.WikiaMediaPreviewWidget.prototype.handleImage = function() {
 		.appendTo( this.$.show() );
 };
 
+/**
+ * Resize image after it's loaded if it's too tall for the screen
+ * @method
+ */
 ve.ui.WikiaMediaPreviewWidget.prototype.onImageLoad = function () {
 	// TODO: Add image aspect ratio to model (sorta the same comment from WikiaMediaPageWidget)
 	// thumbnailer.js only let's you restrict by width, not by height, so we'll do that here.
@@ -75,7 +81,10 @@ ve.ui.WikiaMediaPreviewWidget.prototype.onImageLoad = function () {
 	}
 };
 
-
+/**
+ * Do ajax request for video embed code
+ * @method
+ */
 ve.ui.WikiaMediaPreviewWidget.prototype.handleVideo = function() {
 	$.ajax( {
 		'url': mw.util.wikiScript( 'api' ),
@@ -92,10 +101,9 @@ ve.ui.WikiaMediaPreviewWidget.prototype.handleVideo = function() {
 };
 
 /**
- * Handle video preview request promise.done
- * @method
+ * Embed video preview
+ * @param {Object} data Response data from ApiVideoPreview
  */
-
 ve.ui.WikiaMediaPreviewWidget.prototype.embedVideo = function( data ) {
 	var $videoWrapper = this.$$( '<div>' )
 		.addClass( 've-ui-wikiaMediaPreviewWidget-videoWrapper' )
@@ -110,6 +118,11 @@ ve.ui.WikiaMediaPreviewWidget.prototype.embedVideo = function( data ) {
 	}, this ) );
 };
 
+
+/**
+ * Handle video preview request promise.done
+ * @method
+ */
 ve.ui.WikiaMediaPreviewWidget.prototype.onRequestVideoDone = function( data ) {
 	if( data.videopreview ) {
 		this.embedVideo( data );
@@ -132,17 +145,9 @@ ve.ui.WikiaMediaPreviewWidget.prototype.onRequestVideoFail = function() {
 };
 
 /**
- * Handle subsequent opens
+ * Remove the preview overlay DOM object, effectively killing this instance.
  * @method
  */
-
-ve.ui.WikiaMediaPreviewWidget.prototype.reOpen = function() {
-	this.$.show();
-	if( this.model.type === 'video' ){
-		this.embedVideo();
-	}
-};
-
 ve.ui.WikiaMediaPreviewWidget.prototype.onCloseButtonClick = function() {
 	this.$.remove();
 };
