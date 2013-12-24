@@ -1,4 +1,5 @@
 @import "skins/oasis/css/mixins/background-opacity";
+@import "mixins/ve-icon";
 
 .ve-ui-wikiaMediaPreviewWidget-overlay {
 	@include background-opacity( #000, 80 );
