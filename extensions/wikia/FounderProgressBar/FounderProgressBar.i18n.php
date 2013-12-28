@@ -1074,6 +1074,13 @@ $messages['lt'] = array(
 	'founderprogressbar-browse-page-name' => 'Naršyti',
 );
 
+/** Latvian (latviešu)
+ * @author Sg ghost
+ */
+$messages['lv'] = array(
+	'founderprogressbar-wikiactivity-visit-label' => 'Apmeklējiet Viki Aktivitātes',
+);
+
 /** Macedonian (македонски)
  * @author Bjankuloski06
  */
@@ -2181,6 +2188,7 @@ $messages['zh-hans'] = array(
 	'founderprogressbar-user-add5-label' => '查看5个用户的档案',
 	'founderprogressbar-recentchanges-visit-label' => '查看最近更改',
 	'founderprogressbar-wordmark-edit-label' => '上载一个字标',
+	'founderprogressbar-mostvisited-visit-label' => '查看最常访问的页面',
 	'founderprogressbar-toptenlist-add-label' => '加入前10名',
 	'founderprogressbar-blogpost-add-label' => '撰写一篇博客',
 	'founderprogressbar-fb-likes3-label' => '达到$1脸书的赞',

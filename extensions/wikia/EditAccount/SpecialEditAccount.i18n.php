@@ -422,6 +422,13 @@ $messages['ca'] = array(
 	'action-editaccount' => "editar la informació d'altes usuaris",
 );
 
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'editaccount-log-entry-pass' => '$2 декъашхочун пароль хийцина',
+);
+
 /** Czech (čeština)
  * @author Chmee2
  * @author Darth Daron

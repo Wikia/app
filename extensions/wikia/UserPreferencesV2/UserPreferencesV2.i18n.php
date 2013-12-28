@@ -592,6 +592,7 @@ $messages['lb'] = array(
  */
 $messages['lv'] = array(
 	'tog-enotifusertalkpages-v2' => '...my lietotāja diskusija lapas tiek mainīts',
+	'preferences-v2-redirect-wiki-activity' => 'Viki Aktivitātes',
 );
 
 /** Malay (Bahasa Melayu)

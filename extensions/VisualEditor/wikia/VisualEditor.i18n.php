@@ -376,6 +376,27 @@ $messages['lb'] = array(
 	'wikia-visualeditor-toolbar-savedialog' => 'Verëffentlechen',
 	'wikia-visualeditor-dialog-wikiasourcemode-apply-button' => 'Ännerungen uwennen',
 	'wikia-visualeditor-dialog-wikiasourcemode-help-link' => 'Help:Wikitext',
+	'wikia-visualeditor-notification-media-permission-denied' => 'Erlaabnes refuséiert',
+);
+
+/** Malayalam (മലയാളം)
+ * @author Praveenp
+ */
+$messages['ml'] = array(
+	'wikia-visualeditor-preference-enable' => 'പരീക്ഷണാടിസ്ഥാനത്തിലുള്ള കണ്ടുതിരുത്തൽ സൗകര്യം സജ്ജമാക്കുക',
+	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'മീഡിയ ചേർക്കുക',
+	'wikia-visualeditor-dialog-wikiamediainsert-insert-button' => 'മീഡിയ ചേർക്കുക',
+	'wikia-visualeditor-dialog-wikiamediainsert-item-title-label' => 'തലക്കെട്ട്',
+	'wikia-visualeditor-dialog-wikiamediainsert-item-license-label' => 'ഉപയോഗാനുമതി',
+	'wikia-visualeditor-dialog-wikiamediainsert-item-remove-button' => 'ഈ ഇനം ഒഴിവാക്കുക',
+	'wikia-visualeditor-dialog-wikiamediainsert-upload-label' => 'ഈ വിക്കിയയിലേക്ക് പുതിയ ചിത്രങ്ങൾ ചേർക്കുക',
+	'wikia-visualeditor-dialog-wikiamediainsert-upload-button' => 'അപ്‌ലോഡ്',
+	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-size' => 'അയ്യോ! ആ ചിത്രം വളരെ വലുതാണ്. $1 എം.ബി. വലിപ്പമാണ് ഞങ്ങൾക്ക് സ്വീകരിക്കാനാവുന്നത് ചേട്ടാ!',
+	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-filetype' => 'അയ്യോ! $1 മാത്രമേ ഞങ്ങൾ പിന്തുണയ്ക്കുന്നുള്ളു',
+	'wikia-visualeditor-dialog-wikiamediainsert-upload-error' => 'പ്രമാണം അപ്‌ലോഡ് ചെയ്യുന്നതിനിടെ പിഴവുണ്ടായി',
+	'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' => 'എന്തിനെങ്കിലും തിരയുക അല്ലെങ്കിൽ യു.ആർ.എൽ. നൽകുക',
+	'wikia-visualeditor-dialog-wikiamediainsert-preview-alert' => 'പ്രിവ്യൂ ഉടനെത്തും!',
+	'wikia-visualeditor-help-label' => 'അറിയാവുന്ന പ്രശ്നങ്ങൾ',
 );
 
 /** Marathi (मराठी)
@@ -519,6 +540,20 @@ $messages['pl'] = array(
  */
 $messages['ps'] = array(
 	'wikia-visualeditor-dialog-wikiamediainsert-item-license-label' => 'منښتليک',
+);
+
+/** Portuguese (português)
+ * @author Vitorvicentevalente
+ */
+$messages['pt'] = array(
+	'wikia-visualeditor-preference-enable' => 'Activar Editor Visual (beta)',
+	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Adicionar média',
+	'wikia-visualeditor-dialog-wikiamediainsert-insert-button' => 'Adicionar média',
+	'wikia-visualeditor-dialog-wikiamediainsert-item-title-label' => 'Título',
+	'wikia-visualeditor-dialog-wikiamediainsert-item-license-label' => 'Licença',
+	'wikia-visualeditor-dialog-wikiamediainsert-item-remove-button' => 'Remover este item',
+	'wikia-visualeditor-dialog-wikiamediainsert-upload-label' => 'Adicionar novas imagens a esta wikia',
+	'wikia-visualeditor-dialog-wikiamediainsert-upload-button' => 'Carregar',
 );
 
 /** Russian (русский)
@@ -679,6 +714,10 @@ $messages['vi'] = array(
 	'wikia-visualeditor-dialog-wikiasourcemode-apply-button' => 'Áp dụng các thay đổi',
 	'wikia-visualeditor-dialog-wikiasourcemode-help-link' => 'Help:Wikitext',
 	'wikia-visualeditor-dialog-wikiasourcemode-help-text' => 'Định dạng trợ giúp',
+	'wikia-visualeditor-notification-media-must-be-logged-in' => 'Bạn phải đăng nhập để thêm hình ảnh và video.',
+	'wikia-visualeditor-notification-media-only-premium-videos-allowed' => 'Wiki này chỉ cho phép lấy nội dung được cấp phép từ <a href="http://video.wikia.com" target="_blank">thư viện Video Wikia</a> được thêm vào. Xin vui lòng đi đến <a href="http://video.wikia.com" target="_blank">video.wikia.com</a> để tìm kiếm video.',
+	'wikia-visualeditor-notification-media-query-failed' => 'Xin lỗi, chúng tôi không thể tìm thấy một hình ảnh được hỗ trợ hoặc video tại URL đó.',
+	'wikia-visualeditor-notification-media-permission-denied' => 'Cho phép đã bị từ chối',
 );
 
 /** Simplified Chinese (中文（简体）‎)

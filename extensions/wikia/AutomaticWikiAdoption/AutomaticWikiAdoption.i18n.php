@@ -1460,10 +1460,16 @@ $messages['ko'] = array(
  */
 $messages['lb'] = array(
 	'wikiadoption-header' => 'Dës Wiki adoptéieren',
+	'wikiadoption-button-adopt' => 'Jo, Ech wëll {{SITENAME}} adoptéieren!',
 	'wikiadoption-adopt-inquiry' => 'Fir méi ze wëssen!',
 	'wikiadoption-know-more-header' => 'Wann Dir méi wësse wëllt.',
+	'wikiadoption-adoption-successed' => 'Gratulatioun! Dir sidd elo en Administrateur op dëser Wiki!',
+	'wikiadoption-not-allowed' => 'Et deet eis leed. Dir kënnt dës Wiki net direkt adoptéieren.',
+	'wikiadoption-not-enough-edits' => 'Ups! Dir musst méi wéi 10 Ännerunge gemaach hu fir dës Wiki adoptéieren ze kënnen.',
+	'wikiadoption-log-reason' => 'Automatesch Wiki-Adoptioun',
 	'wikiadoption-mail-first-subject' => 'Mir hunn Iech schonn eng Zäit net méi gesinn.',
 	'wikiadoption-mail-adoption-subject' => '#WIKINAME gouf adoptéiert',
+	'wikiadoption-welcome-header' => 'Gratulatioun! Dir hutt {{SITENAME}} adoptéiert!',
 );
 
 /** لوری (لوری)
@@ -1507,12 +1513,12 @@ $messages['lv'] = array(
 	'wikiadoption-button-adopt' => 'Jā, es gribu pieņemt {{SITENAME}}!',
 	'wikiadoption-adopt-inquiry' => 'Uzzini vairāk!',
 	'wikiadoption-description' => '$1, gatavs pieņemt {{SITENAME}}?
-<br><br>
+<br /><br />
 Nav bijis aktīvs administrators par {{SITENAME}} uz brīdi, un mēs meklējam jaunu līderi, lai palīdzētu šajā wiki saturu un Kopienas augt! Kā cilvēks, kurš ir veicinājis {{SITENAME}} mēs domājām, ja jūs vēlētos darbu.
-<br><br>
+<br /><br />
 Pieņemot wiki, tu būs paaugstināts par administratoru un birokrāts, lai dotu jums rīkus jums wiki Kopienas un satura pārvaldība. Jūs arī varēsiet izveidot citus administratorus, palīdzēt, dzēst, atrite, pārvietot un aizsargāt lapu.
-<br><br>
-Vai esat gatavs veikt tālāk minētās darbības, lai palīdzētu {{SITENAME}}', # Fuzzy
+<br /><br />
+Vai esat gatavs veikt tālāk minētās darbības, lai palīdzētu {{SITENAME}}',
 	'wikiadoption-know-more-header' => 'Vēlaties uzzināt vairāk?',
 	'wikiadoption-know-more-description' => 'Pārbaudiet šīs saites, lai iegūtu vairāk informācijas. Un, protams, nekautrējieties sazināties ar mums, ja jums ir kādi jautājumi!',
 	'wikiadoption-adoption-successed' => 'Apsveicam! Jūs esat tagad administrators viki!',
@@ -1532,15 +1538,15 @@ Ja jums vajadzīga palīdzība, rūpējoties par wiki, varat ļaut citiem sabied
 Vikija komanda
 
 Jūs varat atrakstīties no izmaiņām šo sarakstu šeit: $3',
-	'wikiadoption-mail-first-content-HTML' => 'Sveiki $1,<br><br>
+	'wikiadoption-mail-first-content-HTML' => 'Sveiki $1,<br /><br />
 
-Tas ir bijis pāris nedēļas, kopš mēs esam redzējuši administrators #WIKINAME. Administratoriem ir neatņemama daļa no #WIKINAME, un ir svarīgi tie ir regulāro klātbūtni. Ja uz ilgu laiku nav aktīvs administratori, šajā wiki var safasēti pieņemšanai atļaut citam lietotājam, lai kļūtu administrators.<br><br>
+Tas ir bijis pāris nedēļas, kopš mēs esam redzējuši administrators #WIKINAME. Administratoriem ir neatņemama daļa no #WIKINAME, un ir svarīgi tie ir regulāro klātbūtni. Ja uz ilgu laiku nav aktīvs administratori, šajā wiki var safasēti pieņemšanai atļaut citam lietotājam, lai kļūtu administrators.<br /><br />
 
-Ja jums vajadzīga palīdzība, rūpējoties par wiki, varat ļaut citiem sabiedrības locekļiem kļūt par administratoriem tagad, dodoties uz <a href="<span class=" notranslate"="" translate="no">$2 "> lietotāju tiesību pārvaldības</a>.  Hope redzēt jūs #WIKINAME soon!<br><br>
+Ja jums vajadzīga palīdzība, rūpējoties par wiki, varat ļaut citiem sabiedrības locekļiem kļūt par administratoriem tagad, dodoties uz <a href="<span class=" notranslate"="" translate="no">$2 "> lietotāju tiesību pārvaldības</a>.  Hope redzēt jūs #WIKINAME soon!<br /><br />
 
-Vikija komanda<br><br>
+Vikija komanda<br /><br />
 
-Jūs varat <a href="<span class=" notranslate"="" translate="no">$3 "> atrakstīties</a> no šā saraksta izmaiņas.', # Fuzzy
+Jūs varat <a href="<span class=" notranslate"="" translate="no">$3 "> atrakstīties</a> no šā saraksta izmaiņas.',
 	'wikiadoption-mail-second-subject' => '#WIKINAME tiks safasēti pieņemšanai drīz',
 );
 

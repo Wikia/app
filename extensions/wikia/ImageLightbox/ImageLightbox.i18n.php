@@ -174,6 +174,13 @@ Detalls: $2",
 	'lightbox-visit-the-wiki' => 'Visita el wiki:',
 );
 
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'lightbox-share-button-embed' => 'Чуйилла',
+);
+
 /** Czech (čeština)
  * @author Chmee2
  * @author Darth Daron

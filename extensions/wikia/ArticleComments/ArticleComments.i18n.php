@@ -620,6 +620,7 @@ ___________________________________________
 $messages['ce'] = array(
 	'article-comments-cancel' => 'Цаоьшу',
 	'article-comments-delete' => 'дӀаяккха',
+	'article-comments-history' => 'истори',
 );
 
 /** Sorani Kurdish (کوردی)

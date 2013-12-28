@@ -691,6 +691,7 @@ $messages['ce'] = array(
 	'rte-ck-media-delete' => 'дӀаяккха',
 	'rte-ck-modeSwitch-toWysiwyg' => 'Визуальни тадар',
 	'rte-ck-templateDropDown-label' => 'Кеп',
+	'rte-ck-templateEditor-dialog-insert' => 'Чуйилла',
 	'rte-ck-templateEditor-editor-parameters' => 'Параметраш',
 	'rte-ck-templateEditor-editor-previewButton' => 'Хьалха муха ю хьажа',
 	'rte-ck-templateEditor-editor-previewTitle' => 'Хьалха муха ю хьажа',

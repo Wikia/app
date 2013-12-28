@@ -150,6 +150,13 @@ Introdueix la descripció aquí.',
 	'file-page-more-links' => 'Veure llista completa',
 );
 
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'video-page-description-heading' => 'Цуьнах лаьцна',
+);
+
 /** Danish (dansk)
  * @author Luckas
  */

@@ -638,8 +638,11 @@ $messages['ca'] = array(
  * @author Умар
  */
 $messages['ce'] = array(
+	'wmu-upload' => 'Чуяккха',
 	'wmu-find' => 'Лаха',
+	'wmu-upload-btn' => 'Чуяккха',
 	'wmu-find-btn' => 'Каро',
+	'wmu-insert' => 'Чуйилла',
 	'wmu-insert2' => 'Файл чуйиллар',
 );
 

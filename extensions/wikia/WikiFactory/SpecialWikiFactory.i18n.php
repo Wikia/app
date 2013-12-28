@@ -1126,6 +1126,7 @@ $messages['ce'] = array(
 	'awc-metrics-two-months' => 'кхоьллина < 2 бутт хьалха',
 	'awc-metrics-three-months' => 'кхоьллина < 3 бутт хьалха',
 	'awc-metrics-half-year' => 'кхоьллина < 6 бутт хьалха',
+	'awc-metrics-edits' => 'Нисдарш',
 	'awc-metrics-close' => 'ДӀачӀагӀа',
 	'awc-metrics-close-action' => 'дӀачӀагӀа',
 	'awc-metrics-close-checked' => 'ДӀачӀагӀа билгал йинарш',

@@ -267,6 +267,13 @@ $messages['ca'] = array(
 	'lvs-click-here' => 'feu clic aquí',
 );
 
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'lvs-history-button-text' => 'Истори',
+);
+
 /** German (Deutsch)
  * @author Metalhead64
  */

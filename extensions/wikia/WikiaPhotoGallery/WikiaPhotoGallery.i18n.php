@@ -1147,6 +1147,7 @@ Alternativament, pot fer clic " $2 " per veure la pàgina en la seva forma d\'ac
 $messages['ce'] = array(
 	'wikiaPhotoGallery-error-user-rights' => 'Декъашхочун тӀекхачаре бакъона гӀалат.',
 	'wikiaPhotoGallery-upload-findbutton' => 'Каро',
+	'wikiaPhotoGallery-upload-error-conflict-insert' => 'Чуйилла',
 	'wikiaPhotoGallery-preview-saving-title' => 'ДӀадоьду Ӏалашяр',
 	'wikiaPhotoGallery-slideshow-view-link-overlay' => 'Дехьа гӀо $1',
 );

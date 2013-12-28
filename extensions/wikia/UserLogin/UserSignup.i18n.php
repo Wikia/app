@@ -4496,6 +4496,23 @@ ___________________________________________
 	'usersignup-facebook-problem' => "Сталася помилка з'єднання з Facebook. Будь ласка, спробуйте ще раз пізніше.",
 );
 
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'usersignup-page-title' => 'Tham gia Wikia',
+	'usersignup-page-captcha-label' => 'Chữ mờ',
+	'usersignup-error-username-length' => 'Rất tiếc, tên người dùng không thể nhiều hơn {{PLURAL:$1|character|$1 ký tự}}.',
+	'usersignup-error-invalid-user' => 'Người dùng không hợp lệ. Xin vui lòng đăng nhập trước tiên.',
+	'usersignup-error-invalid-email' => 'Vui lòng nhập một địa chỉ email hợp lệ.',
+	'usersignup-error-symbols-in-username' => 'Rất tiếc, tên người dùng chỉ có thể chứa chữ cái và số.',
+	'usersignup-error-empty-email' => 'Rất tiếc, xin vui lòng điền vào địa chỉ email của bạn.',
+	'usersignup-error-empty-username' => 'Rất tiếc, xin vui lòng điền vào tên người dùng.',
+	'usersignup-error-already-confirmed' => 'Bạn đã xác nhận địa chỉ email này.',
+	'usersignup-error-throttled-email' => 'Rất tiếc, bạn đã yêu cầu quá nhiều email xác nhận được gửi đến cho bạn hôm nay. Hãy thử lại một lần nữa trong một thời gian ngắn.',
+	'usersignup-error-too-many-changes' => 'Bạn đã đạt đến giới hạn tối đa cho thay đổi email vào ngày hôm nay. Xin vui lòng thử lại sau.',
+);
+
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Sam Wang
