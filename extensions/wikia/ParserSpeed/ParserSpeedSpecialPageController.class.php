@@ -21,6 +21,7 @@ class ParserSpeedSpecialPageController extends WikiaSpecialPageController {
 			return false;
 		}
 
+		$this->specialPage->setHeaders();
 
 		$pager = new ParserSpeedTablePager();
 		$this->setVal('body',$pager->getBody());

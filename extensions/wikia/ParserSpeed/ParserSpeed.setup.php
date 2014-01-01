@@ -12,3 +12,5 @@ $wgSpecialPageGroups['ParserSpeed'] = 'wikia';
 
 $wgGroupPermissions['*']['parserspeed'] = false;
 $wgGroupPermissions['staff']['parserspeed'] = true;
+
+$wgExtensionMessagesFiles['ParserSpeed'] = __DIR__ . '/ParserSpeed.i18n.php';
