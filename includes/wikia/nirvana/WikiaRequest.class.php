@@ -106,6 +106,20 @@ class WikiaRequest {
 	}
 
 	/**
+	 * Fetch a boolean value from the input or return $default if not set.
+	 * Unlike getBool, the string "false" will result in boolean false, which is
+	 * useful when interpreting information sent from JavaScript.
+	 * @see WebRequest::getFuzzyBool
+	 *
+	 * @param $name String
+	 * @param $default Boolean
+	 * @return Boolean
+	 */
+	public function getFuzzyBool( $name, $default = false ) {
+		return $this->getBool( $name, $default ) && strcasecmp( $this->getVal( $name ), 'false' ) !== 0;
+	}
+
+	/**
 	 * Return true if the named value is set in the input, whatever that
 	 * value is (even "0"). Return false if the named value is not set.
 	 * Example use is checking for the presence of check boxes in forms.
