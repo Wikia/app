@@ -44,9 +44,37 @@ $config['liftium_ads_js'] = array(
 	),
 );
 
+$config['adengine_mobile_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	//'skin' => 'wikiamobile',
+	'assets' => array(
+		// deps:
+		'//resources/wikia/modules/cookies.js',
+		'//resources/wikia/modules/document.js',
+		'//resources/wikia/modules/geo.js',
+		'//resources/wikia/modules/lazyqueue.js',
+		'//resources/wikia/modules/log.js',
+		'//resources/wikia/modules/window.js',
+		// AdEngine:
+		'//extensions/wikia/AdEngine/js/AdConfigMobile.js',
+		'//extensions/wikia/AdEngine/js/AdEngine2.js',
+		'//extensions/wikia/AdEngine/js/AdLogicPageLevelParams.js',
+		'//extensions/wikia/AdEngine/js/AdProviderGpt.js',
+		'//extensions/wikia/AdEngine/js/AdProviderNull.js',
+		'//extensions/wikia/AdEngine/js/AdTracker.js',
+		'//extensions/wikia/AdEngine/js/SlotTracker.js',
+		'//extensions/wikia/AdEngine/js/SlotTweaker.js',
+		'//extensions/wikia/AdEngine/js/WikiaFullGptHelper.js',
+		// run:
+		'//extensions/wikia/AdEngine/js/AdEngineMobile.run.js',
+	)
+);
+
 $config['adengine2_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
+		'#group_adengine_mobile_js',
+/*
 		// core
 		'//resources/wikia/modules/scriptwriter.js',
 		'//extensions/wikia/AdEngine/js/Krux.js',
@@ -81,6 +109,7 @@ $config['adengine2_js'] = array(
 
 		// low prio
 		// not here! @see adengine2 low prio section someplace else
+*/
 	),
 );
 
@@ -88,6 +117,7 @@ $config['oasis_ads_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		// ads
+/*
 		'//extensions/wikia/AdEngine/AdMeldAPIClient.js',
 		'//extensions/wikia/AdEngine/AdProviderOpenX.js',
 		'//extensions/wikia/AdEngine/LazyLoadAds.js',
@@ -99,6 +129,7 @@ $config['oasis_ads_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdProviderSevenOneMedia.js',
 		'//extensions/wikia/AdEngine/js/AdConfig2Late.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.configLateAds.js',
+*/
 
 		'#group_liftium_ads_js',
 
@@ -617,6 +648,8 @@ $config['wikiamobile_js_ads'] = array(
 		'//extensions/wikia/AdEngine/js/DartUrl.js',
 		'//extensions/wikia/AdEngine/js/WikiaDartMobileHelper.js',
 		'//extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
+
+		'#group_adengine_mobile_js',
 
 		//modules
 		'//resources/wikia/modules/geo.js',
