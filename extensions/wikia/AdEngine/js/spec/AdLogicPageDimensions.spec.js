@@ -1,7 +1,6 @@
 describe('AdLogicPageDimensions', function(){
 	function adShown(slotName, pageLength, responsiveLayout, matchingMediaQuery) {
-		var slot = [slotName],
-			matchingMediaQueryDict = {},
+		var matchingMediaQueryDict = {},
 			i,
 			len,
 			windowMock = {
@@ -16,9 +15,10 @@ describe('AdLogicPageDimensions', function(){
 			logMock = function() {},
 			documentMock = {documentElement: {scrollHeight: pageLength, scrollWidth: 1280}},
 			slotTweakerMock = {hide: function() {}, show: function() {}},
-			adLogicPageDimensions = AdLogicPageDimensions(windowMock, documentMock, logMock, slotTweakerMock),
+			abTestMock = {getGroup: function () {}},
+			adLogicPageDimensions = AdLogicPageDimensions(windowMock, documentMock, logMock, slotTweakerMock, abTestMock),
 			fillInSlotCalled = false,
-			providerMock = {fillInSlot: function() { fillInSlotCalled = true; }};
+			fillInSlotMock = function () { fillInSlotCalled = true; };
 
 		if (matchingMediaQuery) {
 			for (i = 0, len = matchingMediaQuery.length; i < len; i += 1) {
@@ -26,12 +26,12 @@ describe('AdLogicPageDimensions', function(){
 			}
 		}
 
-		if (!adLogicPageDimensions.isApplicable(slot)) {
+		if (!adLogicPageDimensions.isApplicable(slotName)) {
 			// The proxy would not be used, so ad would be always shown
 			return true;
 		}
 
-		adLogicPageDimensions.getProxy(providerMock).fillInSlot(slot);
+		adLogicPageDimensions.addSlot(slotName, fillInSlotMock);
 
 		if (fillInSlotCalled) {
 			// The ad would be shown
@@ -121,7 +121,7 @@ describe('AdLogicPageDimensions', function(){
 	});
 
 	it('updates the logic when resize event is fired', function() {
-		var slot = ['LEFT_SKYSCRAPER_3'],
+		var slotName = 'LEFT_SKYSCRAPER_3',
 			resizeListener = function () {},
 			isNarrow,
 			windowMock = {
@@ -142,11 +142,12 @@ describe('AdLogicPageDimensions', function(){
 			adShown,
 			adLoadCounter = 0,
 			slotTweakerMock = {hide: function () {adShown = false;}, show: function () {adShown = true;}},
-			adLogicPageDimensions = AdLogicPageDimensions(windowMock, documentMock, logMock, slotTweakerMock),
-			providerMock = {fillInSlot: function () { adLoadCounter += 1; }};
+			abTestMock = {getGroup: function () {}},
+			adLogicPageDimensions = AdLogicPageDimensions(windowMock, documentMock, logMock, slotTweakerMock, abTestMock),
+			fillInSlotMock = function () { adLoadCounter += 1; };
 
 		documentMock.documentElement.scrollHeight = 1000;
-		adLogicPageDimensions.getProxy(providerMock).fillInSlot(slot);
+		adLogicPageDimensions.addSlot(slotName, fillInSlotMock);
 
 		// Page is short and wide
 		documentMock.documentElement.scrollHeight = 1000;
@@ -197,4 +198,3 @@ describe('AdLogicPageDimensions', function(){
 		expect(adShown).toBeFalsy('7) Ad is hidden');
 	});
 });
-
