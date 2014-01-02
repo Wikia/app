@@ -451,7 +451,8 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 	 * @requestParam string categoryName
 	 * @responseParam string $result [ok/error]
 	 * @responseParam string $msg - result message
-	 * @responseParam array $data
+	 * @responseParam array $data - list of videos in the category
+	 * @responseParam integer $total - total number of videos in the category
 	 */
 	public function getCategoryData() {
 		$categoryName = $this->getVal( 'categoryName', '' );
@@ -472,15 +473,10 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 		$helper = new VideoPageToolHelper();
 		$data = $helper->getCategoryData( $title );
 
-		if ( empty( $data ) ) {
-			$this->result = 'error';
-			$this->msg = wfMessage( 'videopagetool-unknown-category' )->plain();
-			$this->data = $data;
-		} else {
-			$this->result = 'ok';
-			$this->msg = '';
-			$this->data = $data;
-		}
+		$this->result = 'ok';
+		$this->msg = '';
+		$this->data = $data;
+		$this->total = count( $data );
 
 	}
 

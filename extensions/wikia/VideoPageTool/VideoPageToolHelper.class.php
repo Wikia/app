@@ -174,7 +174,6 @@ class VideoPageToolHelper extends WikiaModel {
 	public function getCategoryData( $categoryTitle ) {
 		wfProfileIn( __METHOD__ );
 
-		$data = array();
 		if ( class_exists( 'CategoryDataService' ) ) {
 			$memcKey = $this->getMemcKeyCategoryData( $categoryTitle->getText() );
 			$data = $this->wg->memc->get( $memcKey );
@@ -197,6 +196,8 @@ class VideoPageToolHelper extends WikiaModel {
 
 				$this->wg->memc->set( $memcKey, $data, self::CACHE_TTL_CATEGORY_DATA );
 			}
+		} else {
+			$data = array();
 		}
 
 		wfProfileOut( __METHOD__ );
