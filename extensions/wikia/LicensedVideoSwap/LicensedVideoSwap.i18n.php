@@ -267,6 +267,13 @@ $messages['ca'] = array(
 	'lvs-click-here' => 'feu clic aquí',
 );
 
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'lvs-history-button-text' => 'Истори',
+);
+
 /** German (Deutsch)
  * @author Metalhead64
  */
@@ -588,9 +595,15 @@ $messages['lb'] = array(
  */
 $messages['lrc'] = array(
 	'lvs-history-button-text' => 'ويرگار',
+	'lvs-button-keep' => 'واداشتن',
+	'lvs-button-yes' => 'هری',
+	'lvs-button-no' => 'نه',
+	'lvs-more-suggestions' => 'پیشنادیا هنی',
 	'lvs-undo-swap' => 'انجوم ندی ئن',
 	'lvs-undo-keep' => 'انجوم ندی ئن',
 	'lvs-posted-in-more' => 'بيشتر',
+	'lvs-click-here' => 'ایچه بپورنیت',
+	'lvs-new-flag' => 'تازه',
 );
 
 /** Malayalam (മലയാളം)

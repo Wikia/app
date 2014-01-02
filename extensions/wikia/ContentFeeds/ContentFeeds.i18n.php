@@ -316,6 +316,14 @@ $messages['lb'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Feeler: De Säitentitel ass obligatoresch',
 );
 
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'contentfeeds-newimages-rss-desc' => 'غذا دئن سی $1',
+	'contentfeeds-firstfewarticles-tag-next' => 'نها',
+);
+
 /** Lithuanian (lietuvių)
  * @author Eitvys200
  */

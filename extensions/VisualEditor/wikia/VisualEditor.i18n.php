@@ -88,7 +88,8 @@ $messages['qqq'] = array(
 	'wikia-visualeditor-notification-media-must-be-logged-in' => 'This error message is shown to users that try to upload an image or video when they are not logged in.',
 	'wikia-visualeditor-notification-media-only-premium-videos-allowed' => "This error message is shown to users if they try to add a video to a wiki that didn't come from the Wikia Video Library",
 	'wikia-visualeditor-notification-media-query-failed' => 'This is a generic error message when something about adding an image or video fails.',
-	'wikia-visualeditor-notification-media-permission-denied' => 'Error message displayed when user is not allowed to add an image or video',
+	'wikia-visualeditor-notification-media-permission-denied' => 'Error message displayed when user is not allowed to add an image or video.
+{{Identical|Permission denied}}',
 );
 
 /** Breton (brezhoneg)
@@ -375,6 +376,27 @@ $messages['lb'] = array(
 	'wikia-visualeditor-toolbar-savedialog' => 'Verëffentlechen',
 	'wikia-visualeditor-dialog-wikiasourcemode-apply-button' => 'Ännerungen uwennen',
 	'wikia-visualeditor-dialog-wikiasourcemode-help-link' => 'Help:Wikitext',
+	'wikia-visualeditor-notification-media-permission-denied' => 'Erlaabnes refuséiert',
+);
+
+/** Malayalam (മലയാളം)
+ * @author Praveenp
+ */
+$messages['ml'] = array(
+	'wikia-visualeditor-preference-enable' => 'പരീക്ഷണാടിസ്ഥാനത്തിലുള്ള കണ്ടുതിരുത്തൽ സൗകര്യം സജ്ജമാക്കുക',
+	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'മീഡിയ ചേർക്കുക',
+	'wikia-visualeditor-dialog-wikiamediainsert-insert-button' => 'മീഡിയ ചേർക്കുക',
+	'wikia-visualeditor-dialog-wikiamediainsert-item-title-label' => 'തലക്കെട്ട്',
+	'wikia-visualeditor-dialog-wikiamediainsert-item-license-label' => 'ഉപയോഗാനുമതി',
+	'wikia-visualeditor-dialog-wikiamediainsert-item-remove-button' => 'ഈ ഇനം ഒഴിവാക്കുക',
+	'wikia-visualeditor-dialog-wikiamediainsert-upload-label' => 'ഈ വിക്കിയയിലേക്ക് പുതിയ ചിത്രങ്ങൾ ചേർക്കുക',
+	'wikia-visualeditor-dialog-wikiamediainsert-upload-button' => 'അപ്‌ലോഡ്',
+	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-size' => 'അയ്യോ! ആ ചിത്രം വളരെ വലുതാണ്. $1 എം.ബി. വലിപ്പമാണ് ഞങ്ങൾക്ക് സ്വീകരിക്കാനാവുന്നത് ചേട്ടാ!',
+	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-filetype' => 'അയ്യോ! $1 മാത്രമേ ഞങ്ങൾ പിന്തുണയ്ക്കുന്നുള്ളു',
+	'wikia-visualeditor-dialog-wikiamediainsert-upload-error' => 'പ്രമാണം അപ്‌ലോഡ് ചെയ്യുന്നതിനിടെ പിഴവുണ്ടായി',
+	'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' => 'എന്തിനെങ്കിലും തിരയുക അല്ലെങ്കിൽ യു.ആർ.എൽ. നൽകുക',
+	'wikia-visualeditor-dialog-wikiamediainsert-preview-alert' => 'പ്രിവ്യൂ ഉടനെത്തും!',
+	'wikia-visualeditor-help-label' => 'അറിയാവുന്ന പ്രശ്നങ്ങൾ',
 );
 
 /** Marathi (मराठी)
@@ -430,9 +452,13 @@ $messages['nl'] = array(
 	'wikia-visualeditor-preference-enable' => 'Beta Visuele tekstbewerker inschakelen',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Media toevoegen',
 	'wikia-visualeditor-dialog-wikiamediainsert-insert-button' => 'Media toevoegen',
+	'wikia-visualeditor-dialog-wikiamediainsert-item-title-label' => 'Naam',
 	'wikia-visualeditor-dialog-wikiamediainsert-item-license-label' => 'Licentie',
+	'wikia-visualeditor-dialog-wikiamediainsert-item-remove-button' => 'Item verwijderen',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-label' => 'Nieuwe afbeeldingen toevoegen aan deze Wikia',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-button' => 'Uploaden',
+	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-size' => 'Die afbeelding is te groot. $1 megabyte is de maximale grootte.',
+	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-filetype' => 'Alleen de volgende bestandstypen worden ondersteund: $1',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error' => 'Fout tijdens het uploaden van bestand',
 	'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' => 'Zoek naar iets of geef een URL op',
 	'wikia-visualeditor-dialog-wikiamediainsert-preview-alert' => 'Voorvertoning is binnenkort beschikbaar!',
@@ -451,6 +477,27 @@ $messages['nl'] = array(
 	'wikia-visualeditor-dialog-wikiasourcemode-apply-button' => 'Wijzigingen toepassen',
 	'wikia-visualeditor-dialog-wikiasourcemode-help-link' => 'Help:Wikitext',
 	'wikia-visualeditor-dialog-wikiasourcemode-help-text' => 'Hulp bij opmaken',
+	'wikia-visualeditor-notification-media-must-be-logged-in' => "Meld u aan om afbeeldingen en video's te uploaden.",
+	'wikia-visualeditor-notification-media-query-failed' => 'We konden helaas geen ondersteunde afbeelding of video vinden op die URL.',
+	'wikia-visualeditor-notification-media-permission-denied' => 'Geen toegang',
+);
+
+/** Occitan (occitan)
+ * @author Jfblanc
+ */
+$messages['oc'] = array(
+	'wikia-visualeditor-preference-enable' => "Activar l'Editor Visual beta",
+	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Apondre un mèdi',
+	'wikia-visualeditor-dialog-wikiamediainsert-insert-button' => 'Aprondre un mèdi',
+	'wikia-visualeditor-dialog-wikiamediainsert-item-title-label' => 'Títol',
+	'wikia-visualeditor-dialog-wikiamediainsert-item-license-label' => 'Licéncia',
+	'wikia-visualeditor-dialog-wikiamediainsert-item-remove-button' => "Suprimir l'element",
+	'wikia-visualeditor-dialog-wikiamediainsert-upload-label' => "Apondre d'imatges novèls an aquel wikia",
+	'wikia-visualeditor-dialog-wikiamediainsert-upload-button' => 'Telecargar',
+	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-size' => "Ai! Imatge tròp gròs! Podèm pas prene mai qu'$1 Mo!",
+	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-filetype' => 'Ai! Suportam pas que $1.',
+	'wikia-visualeditor-dialog-wikiamediainsert-upload-error' => 'Error de telecargament del fichièr',
+	'wikia-visualeditor-help-link' => 'Ajuda:VisualEditor', # Fuzzy
 );
 
 /** Polish (polski)
@@ -486,6 +533,27 @@ $messages['pl'] = array(
 	'wikia-visualeditor-dialog-wikiasourcemode-apply-button' => 'Zastosuj',
 	'wikia-visualeditor-dialog-wikiasourcemode-help-link' => 'Help:Wikitekst',
 	'wikia-visualeditor-dialog-wikiasourcemode-help-text' => 'Pomoc z formatowaniem',
+);
+
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'wikia-visualeditor-dialog-wikiamediainsert-item-license-label' => 'منښتليک',
+);
+
+/** Portuguese (português)
+ * @author Vitorvicentevalente
+ */
+$messages['pt'] = array(
+	'wikia-visualeditor-preference-enable' => 'Activar Editor Visual (beta)',
+	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Adicionar média',
+	'wikia-visualeditor-dialog-wikiamediainsert-insert-button' => 'Adicionar média',
+	'wikia-visualeditor-dialog-wikiamediainsert-item-title-label' => 'Título',
+	'wikia-visualeditor-dialog-wikiamediainsert-item-license-label' => 'Licença',
+	'wikia-visualeditor-dialog-wikiamediainsert-item-remove-button' => 'Remover este item',
+	'wikia-visualeditor-dialog-wikiamediainsert-upload-label' => 'Adicionar novas imagens a esta wikia',
+	'wikia-visualeditor-dialog-wikiamediainsert-upload-button' => 'Carregar',
 );
 
 /** Russian (русский)
@@ -538,6 +606,7 @@ $messages['sr-ec'] = array(
 );
 
 /** Swedish (svenska)
+ * @author Jopparn
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
@@ -569,6 +638,10 @@ $messages['sv'] = array(
 	'wikia-visualeditor-dialog-wikiasourcemode-apply-button' => 'Verkställ ändringar',
 	'wikia-visualeditor-dialog-wikiasourcemode-help-link' => 'Help:Wikitext',
 	'wikia-visualeditor-dialog-wikiasourcemode-help-text' => 'Formateringshjälp',
+	'wikia-visualeditor-notification-media-must-be-logged-in' => 'Du måste vara inloggad för att lägga till bilder och videor.',
+	'wikia-visualeditor-notification-media-only-premium-videos-allowed' => 'Denna wiki tillåter endast att licensierat innehåll från <a href="http://video.wikia.com" target="_blank">Wikias videobibliotek</a> läggs till. Gå till <a href="http://video.wikia.com" target="_blank">video.wikia.com</a> för att söka efter videor.',
+	'wikia-visualeditor-notification-media-query-failed' => 'Tyvärr, vi kunde inte hitta en bild eller video som stöds på den webbadressen.',
+	'wikia-visualeditor-notification-media-permission-denied' => 'Tillstånd nekad',
 );
 
 /** Ukrainian (українська)
@@ -641,4 +714,43 @@ $messages['vi'] = array(
 	'wikia-visualeditor-dialog-wikiasourcemode-apply-button' => 'Áp dụng các thay đổi',
 	'wikia-visualeditor-dialog-wikiasourcemode-help-link' => 'Help:Wikitext',
 	'wikia-visualeditor-dialog-wikiasourcemode-help-text' => 'Định dạng trợ giúp',
+	'wikia-visualeditor-notification-media-must-be-logged-in' => 'Bạn phải đăng nhập để thêm hình ảnh và video.',
+	'wikia-visualeditor-notification-media-only-premium-videos-allowed' => 'Wiki này chỉ cho phép lấy nội dung được cấp phép từ <a href="http://video.wikia.com" target="_blank">thư viện Video Wikia</a> được thêm vào. Xin vui lòng đi đến <a href="http://video.wikia.com" target="_blank">video.wikia.com</a> để tìm kiếm video.',
+	'wikia-visualeditor-notification-media-query-failed' => 'Xin lỗi, chúng tôi không thể tìm thấy một hình ảnh được hỗ trợ hoặc video tại URL đó.',
+	'wikia-visualeditor-notification-media-permission-denied' => 'Cho phép đã bị từ chối',
+);
+
+/** Simplified Chinese (中文（简体）‎)
+ * @author Yfdyh000
+ */
+$messages['zh-hans'] = array(
+	'wikia-visualeditor-preference-enable' => '启用测试版可视化编辑器',
+	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => '添加媒体',
+	'wikia-visualeditor-dialog-wikiamediainsert-insert-button' => '添加媒体',
+	'wikia-visualeditor-dialog-wikiamediainsert-item-title-label' => '标题',
+	'wikia-visualeditor-dialog-wikiamediainsert-item-license-label' => '授权',
+	'wikia-visualeditor-dialog-wikiamediainsert-item-remove-button' => '删除此项目',
+	'wikia-visualeditor-dialog-wikiamediainsert-upload-label' => '添加新图像到此wikia',
+	'wikia-visualeditor-dialog-wikiamediainsert-upload-button' => '上传',
+	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-size' => '哎呀！此图像太大了。我们最多允许上传$1MB大小的图像。',
+	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-filetype' => '哎呀！我们只支持$1',
+	'wikia-visualeditor-dialog-wikiamediainsert-upload-error' => '上载文件时出错',
+	'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' => '搜索东西，或者输入URL',
+	'wikia-visualeditor-dialog-wikiamediainsert-preview-alert' => '预览即将推出 ！',
+	'wikia-visualeditor-help-label' => '已知的问题',
+	'wikia-visualeditor-help-link' => 'Help:VisualEditor',
+	'wikia-visualeditor-dialog-transclusion-title' => '模板',
+	'wikia-visualeditor-dialogbutton-transclusion-tooltip' => '模板',
+	'wikia-visualeditor-savedialog-label-save' => '发布',
+	'wikia-visualeditor-savedialog-label-restore' => '恢复页面',
+	'wikia-visualeditor-toolbar-savedialog' => '发布',
+	'wikia-visualeditor-dialogbutton-wikiasourcemode-tooltip' => '源代码编辑器',
+	'wikia-visualeditor-dialog-wikiasourcemode-title' => '源代码编辑器',
+	'wikia-visualeditor-dialog-wikiasourcemode-apply-button' => '应用更改',
+	'wikia-visualeditor-dialog-wikiasourcemode-help-link' => 'Help:Wikitext',
+	'wikia-visualeditor-dialog-wikiasourcemode-help-text' => '格式帮助',
+	'wikia-visualeditor-notification-media-must-be-logged-in' => '你必须登录才能添加图像和视频。',
+	'wikia-visualeditor-notification-media-only-premium-videos-allowed' => '此wiki只允许添加来自<a href="http://video.wikia.com" target="_blank">Wikia视频库</a>的内容。请进入<a href="http://video.wikia.com" target="_blank">video.wikia.com</a>搜索视频。',
+	'wikia-visualeditor-notification-media-query-failed' => '抱歉，我们无法在此找到支持的图像或视频。',
+	'wikia-visualeditor-notification-media-permission-denied' => '权限被拒绝',
 );

@@ -4139,8 +4139,12 @@ $messages['lb'] = array(
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
+	'founderemails-email-user-registered-button' => 'خوش اومائین',
+	'founderemails-email-lot-happening-button' => 'کاریا نه بوئنیت',
+	'founderemails-email-0-day-addpages-heading' => 'بلگیا نه اضاف کو',
 	'founderemails-email-0-day-addpages-button' => 'يه گل بلگه اضاف بكيد',
 	'founderemails-email-0-day-addphotos-heading' => 'عسگيا نه اضاف بكيد',
+	'founderemails-email-0-day-addphotos-button' => 'یه گل عسگ اضاف کو',
 	'founderemails-email-3-day-addphotos-button' => 'عسگيا نه اضاف بكيد',
 );
 
@@ -4166,6 +4170,13 @@ $messages['lt'] = array(
 	'founderemails-email-views-digest-signature' => 'Wikia komanda',
 	'founderemails-email-views-digest-button' => 'Pridėti daugiau puslapių',
 	'founderemails-email-complete-digest-signature' => 'Wikia komanda',
+);
+
+/** Latvian (latviešu)
+ * @author Sg ghost
+ */
+$messages['lv'] = array(
+	'founderemails-email-complete-digest-button' => 'Iet uz Viki Aktivitātes',
 );
 
 /** Basa Banyumasan (Basa Banyumasan)
@@ -8293,7 +8304,7 @@ Muốn kiểm soát email mà bạn nhận được? Đi đến: http://vi.wikia
 Nhấn vào liên kết sau để từ chối mọi email từ Wikia: $UNSUBSCRIBEURL',
 	'founderemails-email-0-days-passed-body-HTML' => 'Xin chúc mừng về việc tạo ra <strong>$WIKINAME</strong> - bây giờ bạn đã là một phần của cộng đồng Wikia!<br /><br />
 <div style="font-style: italic; font-size: 120%;">--Wikia Team</div>',
-	'founderemails-email-3-days-passed-subject' => 'Wiki bạn tiến triển thế nào rồi',
+	'founderemails-email-3-days-passed-subject' => 'Wiki bạn tiến triển thế nào rồi?',
 	'founderemails-email-3-days-passed-body' => 'Chào $USERNAME,
 
 Chúng tôi muốn kiểm tra và xem thử những tiến triển trên $WIKINAME, $WIKIURL.
@@ -8677,6 +8688,7 @@ $PAGEURL
 
 Wikia团队',
 	'founderemails-email-anon-edit-greeting' => '嗨，$USERNAME，',
+	'founderemails-email-anon-edit-headline' => '一位匿名贡献者刚刚在$WIKINAME上对$PAGETITLE做出了编辑。',
 	'founderemails-email-anon-edit-signature' => 'Wikia团队',
 	'founderemails-email-anon-edit-button' => '去查看！',
 	'founderemails-answers-email-user-registered-subject' => '某人在您的问答wiki注册了一个账户！',
@@ -8702,6 +8714,16 @@ Wikia团队',
 
 -- Wikia团队',
 	'founderemails-answers-email-page-edited-anon-subject' => '您的站点被人修改过了！',
+	'founderemails-answers-email-page-edited-anon-body' => 'Hey $USERNAME，
+
+似乎已经有人参与编辑你的wiki了~ 不妨去$MYHOMEURL查看一下？
+
+-- Wikia团队',
+	'founderemails-answers-email-page-edited-anon-body-HTML' => 'Hey $USERNAME，<br /><br />
+
+似乎已经有人参与编辑你的wiki了~ 不妨去<a href="$MYHOMEURL">查看</a>一下？<br /><br />
+
+<div style="font-style: italic; font-size: 120%;">-- Wikia团队</div>',
 	'founderemails-lot-happening-subject' => '$WIKINAME正在热力升温！',
 	'founderemails-email-lot-happening-greeting' => '嗨，$USERNAME，',
 	'founderemails-email-lot-happening-headline' => '恭喜您，今天在 $WIKINAME 有很多变动！',
@@ -8738,6 +8760,7 @@ $WIKIURL
 
 Wikia团队',
 	'founderemails-email-views-digest-greeting' => '嗨，$USERNAME，',
+	'founderemails-email-views-digest-headline' => '今天，$WIKINAME已被$1人次浏览',
 	'founderemails-email-views-digest-signature' => 'Wikia团队',
 	'founderemails-email-views-digest-button' => '添加更多页面',
 	'founderemails-email-complete-digest-subject' => '$WIKINAME上的最新活动',

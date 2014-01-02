@@ -542,9 +542,16 @@ $messages['lt'] = array(
 
 /** Latvian (latviešu)
  * @author Papuass
+ * @author Sg ghost
  */
 $messages['lv'] = array(
+	'ajaxpoll-percentVotes' => '$1% no visām balsīm',
+	'ajaxpoll-thankyou' => 'Paldies par jūsu atbalstu!',
+	'ajaxpoll-error' => 'Bija problēmas ar pārstrādes jūsu balsojumu, lūdzu mēģiniet vēlreiz.',
+	'ajaxpoll-summary' => 'Aptaujā tika izveidota $1, $2, un līdz šim $3 cilvēki, kas balsoja.',
 	'ajaxpoll-submit' => 'Balsot!',
+	'ajaxpoll-closed' => 'Aptauja ir slēgta tagad. Baudīt rezultātus.',
+	'ajaxpoll-submitting' => 'Lūdzu, uzgaidiet, iesniedzot jūsu balsojumu...',
 );
 
 /** Basa Banyumasan (Basa Banyumasan)

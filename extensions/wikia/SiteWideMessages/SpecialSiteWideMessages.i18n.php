@@ -817,6 +817,7 @@ $messages['cs'] = array(
 	'swm-error-empty-group' => 'Vložte název skupiny',
 	'swm-error-invalid-time' => 'Zadán neplatný čas.',
 	'swm-lang-other' => 'všechny zbývající jazyky',
+	'action-messagetool' => 'poslat globální zprávu',
 	'swm-label-mode-users-registration' => 'Datum registrace',
 	'swm-mode-users-registration-after' => 'Po',
 	'swm-mode-users-registration-before' => 'Před',
@@ -1896,6 +1897,43 @@ $messages['lb'] = array(
 	'swm-mode-users-editcount-less' => 'Manner',
 	'swm-mode-wikis-created-after' => 'Nom',
 	'swm-mode-wikis-created-before' => 'Virum',
+);
+
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'swm-label-preview' => 'پيش سيل',
+	'swm-label-edit' => 'ويرايشت',
+	'swm-label-remove' => 'ؤرداشتن',
+	'swm-label-sent' => 'كل بيه',
+	'swm-label-list' => 'نوم گه',
+	'swm-label-recipient-wikis' => 'ويكيا:',
+	'swm-label-recipient-users' => 'کاروریا',
+	'swm-label-mode-users-all' => 'همه کاروریا',
+	'swm-label-mode-users-active' => 'کاروریا کارکو',
+	'swm-label-mode-users-user-multi' => 'نوم گه کاروریا',
+	'swm-label-comment' => 'نظر',
+	'swm-label-language' => 'زون',
+	'swm-list-table-id' => 'شناسه',
+	'swm-list-table-sender' => 'فرسنه',
+	'swm-list-table-wiki' => 'ويكی',
+	'swm-list-table-group' => 'گرو',
+	'swm-list-table-removed' => 'ؤرداشته بیه:',
+	'swm-list-table-content' => 'محتويات',
+	'swm-list-table-tools' => 'اوزاريا',
+	'swm-list-table-lang' => 'زونيا',
+	'swm-yes' => 'هری',
+	'swm-no' => 'نه',
+	'swm-mode-users-registration-after' => 'نها',
+	'swm-mode-users-registration-before' => 'دما',
+	'swm-mode-users-registration-between' => 'مینجا',
+	'swm-mode-users-editcount-more' => 'بیشتر',
+	'swm-mode-users-editcount-less' => 'کمتر',
+	'swm-mode-users-editcount-between' => 'مینجا',
+	'swm-mode-wikis-created-after' => 'نها',
+	'swm-mode-wikis-created-before' => 'دما',
+	'swm-mode-wikis-created-between' => 'مینجا',
 );
 
 /** Macedonian (македонски)

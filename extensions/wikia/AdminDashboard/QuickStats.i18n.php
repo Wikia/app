@@ -41,6 +41,16 @@ $messages['qqq'] = array(
 	'quickstats-number-shortening-billions' => 'This is a shortend number abbreviation shown in a stats table. Number larger than 1.000.000.000 are rendered using this message (as billions rounded up to the first decimal fraction). B stands for billions (1.000.000.000)',
 );
 
+/** Afrikaans (Afrikaans)
+ * @author Naudefj
+ */
+$messages['af'] = array(
+	'quickstats-header-date' => 'Datum',
+	'quickstats-header-edits' => 'Wysigings',
+	'quickstats-header-photos' => "Foto's",
+	'quickstats-totals-label' => 'Totale',
+);
+
 /** Old English (Ænglisc)
  * @author Espreon
  */
@@ -766,9 +776,20 @@ $messages['lt'] = array(
 
 /** Latvian (latviešu)
  * @author Papuass
+ * @author Sg ghost
  */
 $messages['lv'] = array(
+	'quickstats-header-label' => 'Vienkārša Statistika',
 	'quickstats-header-date' => 'Datums',
+	'quickstats-header-views' => 'Skatīts',
+	'quickstats-header-edits' => 'Labojumi',
+	'quickstats-header-photos' => 'Fotogrāfijas',
+	'quickstats-header-likes' => 'Patīk',
+	'quickstats-totals-label' => 'Kopsummas',
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Skatīt vairāk stats]]',
+	'quickstats-number-shortening' => '$1K',
+	'quickstats-number-shortening-millions' => '$1M',
+	'quickstats-number-shortening-billions' => '$1B',
 );
 
 /** Basa Banyumasan (Basa Banyumasan)

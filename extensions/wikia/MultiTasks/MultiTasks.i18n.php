@@ -615,6 +615,7 @@ $messages['ca'] = array(
  * @author Умар
  */
 $messages['ce'] = array(
+	'multiwikiedit_from_form' => 'формера',
 	'multidelete' => 'АгӀонийн гулам дӀабаккхар',
 	'multidelete_title' => 'Дуккха дӀяккхар',
 	'multidelete_processing' => 'агӀонаш дӀаяхар',
@@ -1865,7 +1866,10 @@ $messages['lb'] = array(
  */
 $messages['lrc'] = array(
 	'multitasks-link-back-label' => 'ايچه',
+	'multiwikiedit_button' => 'ویرایشت',
+	'multiwikiedit_confirm' => 'مئکم کردن',
 	'multiwikiedit_select_yourself' => 'شما',
+	'multidelete_success_subtitle' => 'سی $1',
 );
 
 /** Macedonian (македонски)

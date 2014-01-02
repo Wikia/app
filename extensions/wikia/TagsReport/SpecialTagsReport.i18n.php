@@ -382,6 +382,14 @@ $messages['lb'] = array(
 	'tagsreportpageremoved' => "D'Säit #$1 gouf ewechgeholl",
 );
 
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'tagsreportgo' => 'نشون دئن',
+	'tagsreportmainnspace' => 'اصلی',
+);
+
 /** Latgalian (latgaļu)
  * @author Dark Eagle
  */
@@ -748,11 +756,19 @@ $messages['vi'] = array(
 /** Simplified Chinese (中文（简体）‎)
  * @author Hydra
  * @author Hzy980512
+ * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
+	'tagsreport' => '标签报告',
+	'tagsreporttitle' => '标签报告',
+	'tagsreportselecttag' => '选择标签：',
 	'tagsreportgo' => '显示',
+	'tagsreportnotspecify' => '你还没选择任何特殊标签',
+	'tagsreportnoresults' => '未找到任何结果',
 	'tagsreportmainnspace' => '主要',
+	'tagsreportpages' => '(<strong>$1</strong>个页面', # Fuzzy
 	'tagsreportpagesfound' => '找到$1个含特殊标签（DPL、YouTube等）的页面。',
+	'tagsreportgenerated' => '生成于 $1 $2',
 	'tagsreportpageremoved' => '页面#$1已被移除',
 );
 
