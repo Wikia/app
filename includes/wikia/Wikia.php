@@ -1529,30 +1529,35 @@ class Wikia {
 	 * @param Array $urls list of URLs to be purged
 	 * @return mixed true - it's a hook
 	 */
-	static public function onTitleGetSquidURLs(Title $title, Array $urls) {
-		global $wgUseSiteCss, $wgAllowUserJs;
+	static public function onTitleGetSquidURLs(Title $title, Array &$urls) {
+		global $wgUseSiteJs, $wgAllowUserJs, $wgUseSiteCss, $wgAllowUserCss;
 		global $wgOut;
 		wfProfileIn(__METHOD__);
 
 		$link = null;
-		if( $wgUseSiteCss && $title->getNamespace() == NS_MEDIAWIKI ) {
-			$text = $title->getText();
-			if( $text == 'Common.js' || $text == 'Wikia.js') {
-				$link = $wgOut->makeResourceLoaderLink( 'site', ResourceLoaderModule::TYPE_SCRIPTS);
+		if( $wgUseSiteJs && $title->getNamespace() == NS_MEDIAWIKI ) {
+			if( $title->getText() == 'Common.js' || $title->getText() == 'Wikia.js') {
+				$wgOut->setAllowedModules( ResourceLoaderModule::TYPE_SCRIPTS, ResourceLoaderModule::ORIGIN_ALL );
+				$link = $wgOut->makeResourceLoaderLink( 'site', ResourceLoaderModule::TYPE_SCRIPTS );
 			}
-			else if( $text == 'Common.css' || $text == 'Wikia.css' ) {
-				$link = $wgOut->makeResourceLoaderLink( 'site', ResourceLoaderModule::TYPE_STYLES);
+		}
+		if ($wgUseSiteCss && $title->getNamespace() == NS_MEDIAWIKI ) {
+			if( $title->getText() == 'Common.css' || $title->getText() == 'Wikia.css' ) {
+				$wgOut->setAllowedModules( ResourceLoaderModule::TYPE_STYLES, ResourceLoaderModule::ORIGIN_ALL );
+				$link = $wgOut->makeResourceLoaderLink( 'site', ResourceLoaderModule::TYPE_STYLES );
 			}
 		}
 		if( $wgAllowUserJs && $title->isJsSubpage() ) {
-			$link = $wgOut->makeResourceLoaderLink( 'user', ResourceLoaderModule::TYPE_SCRIPTS);
+			$wgOut->setAllowedModules( ResourceLoaderModule::TYPE_SCRIPTS, ResourceLoaderModule::ORIGIN_ALL );
+			$link = $wgOut->makeResourceLoaderLink( 'user', ResourceLoaderModule::TYPE_SCRIPTS );
 		}
-		else if( $wgAllowUserJs && $title->isCssSubpage() ) {
-			$link = $wgOut->makeResourceLoaderLink( 'user', ResourceLoaderModule::TYPE_STYLES);
+		if( $wgAllowUserCss && $title->isCssSubpage() ) {
+			$wgOut->setAllowedModules( ResourceLoaderModule::TYPE_STYLES, ResourceLoaderModule::ORIGIN_ALL );
+			$link = $wgOut->makeResourceLoaderLink( 'user', ResourceLoaderModule::TYPE_STYLES );
 		}
 		if ($link != null) {
 			// extract the url from the link src
-			preg_match("/\"(.*)\"/", $link, $matches);
+			preg_match("/.*\"(.*)\"/", $link, $matches);
 			if ( isset($matches[1]) ) {
 				$urls[]= $matches[1];
 			}

@@ -27,8 +27,10 @@ class MigrateImagesToSwift extends Maintenance {
 	const LOG_MIGRATION_PROGRESS = 'swift-migration-progress';
 	const LOG_MIGRATION_ERRORS = 'swift-migration-errors';
 
-	/* @var \Wikia\SwiftStorage $swift */
-	private $swift;
+	// connections to Swift backends images will be migrated to
+	/* @var \Wikia\SwiftStorage[] $swiftBackends */
+	private $swiftBackends;
+	private $timePerDC = [];
 
 	private $shortBucketNameFixed = false;
 
@@ -46,8 +48,10 @@ class MigrateImagesToSwift extends Maintenance {
 	 */
 	public function __construct() {
 		parent::__construct();
-		$this->addOption( 'force', 'Perform the migration even when $wgEnableSwiftFileBackend = true' );
+		$this->addOption( 'force', 'Perform the migration even if $wgEnableSwiftFileBackend = true' );
 		$this->addOption( 'stats-only', 'Show stats (number of files and total size) and then exit' );
+		$this->addOption( 'dry-run', 'Migrate images, but don\'t disable uploads and don\'t switch wiki to Swift backend' );
+		$this->addOption( 'dc', 'Comma separated list of DCs to migrate images to (defaults to "sjc,res")' );
 		$this->mDescription = 'Copies files from file system to distributed storage';
 	}
 
@@ -58,17 +62,31 @@ class MigrateImagesToSwift extends Maintenance {
 		global $wgUploadDirectory, $wgDBname, $wgCityId;
 		$this->shortBucketNameFixed = $this->fixShortBucketName();
 
-		$this->swift = \Wikia\SwiftStorage::newFromWiki( $wgCityId );
-		$remotePath = $this->swift->getUrl( '' );
+		$dcs = explode(',', $this->getOption('dc', 'sjc,res'));
 
-		$this->output( "Migrating images on {$wgDBname} - <{$wgUploadDirectory}> -> <{$remotePath}>...\n" );
+		foreach($dcs as $dc) {
+			$swiftBackend = \Wikia\SwiftStorage::newFromWiki( $wgCityId, $dc );
+
+			$remotePath = $swiftBackend->getUrl( '' );
+			$this->output( "Migrating images on {$wgDBname} - <{$wgUploadDirectory}> -> <{$remotePath}> [dc: {$dc}]...\n" );
+
+			$this->swiftBackends[$dc] = $swiftBackend;
+			$this->timePerDC[$dc] = 0;
+		}
 	}
 
 	/**
 	 * Try to "fix" wikis with too short (less than 3 characters) bucket names
 	 *
-	 * $wgUploadDirectory = '/images/x/x/images'
-	 * wgUploadPath = 'http://images.wikia.com/x/x/images'
+	 * $wgUploadDirectory = '/images/v/vs/pl/images'
+	 * wgUploadPath = 'http://images.wikia.com/vs/pl/images'
+	 *
+	 * Migrate to:
+	 *
+	 * $wgUploadDirectory = '/images/v/vs_/pl/images'
+	 * wgUploadPath = 'http://images.wikia.com/vs_/pl/images'
+	 *
+	 * Container name: "vs_"
 	 *
 	 * This method sets $wgUploadDirectoryNFS WF variable.
 	 * It is used when synchronizing Swift operations back to NFS storage.
@@ -78,26 +96,28 @@ class MigrateImagesToSwift extends Maintenance {
 	private function fixShortBucketName() {
 		global $wgUploadDirectory, $wgUploadPath, $wgUploadDirectoryNFS;
 
-		$parts = explode('/', trim($wgUploadDirectory, '/')); // images, <bucket name>, ...
-		$bucketName = $parts[1];
+		$nfsUploadDirectory = !empty($wgUploadDirectoryNFS) ? $wgUploadDirectoryNFS : $wgUploadDirectory;
+
+		$parts = explode('/', trim($nfsUploadDirectory, '/')); // images, first bucket name letter, <bucket name>, ...
+		$bucketName = $parts[2];
 
 		// bucket name is fine, leave now
 		if (strlen($bucketName) >= self::SWIFT_BUCKET_NAME_MIN_LENGTH) {
-			return false;
+			if (!$this->hasOption('force')) return false;
 		}
 
 		// keep the old path
-		$wgUploadDirectoryNFS = $wgUploadDirectory;
+		$wgUploadDirectoryNFS = $nfsUploadDirectory;
 
 		// fill with underscores
 		$bucketName = str_pad($bucketName, self::SWIFT_BUCKET_NAME_MIN_LENGTH, '_', STR_PAD_RIGHT);
 
 		// update $wgUploadDirectory and wgUploadPath accordingly
-		$parts[1] = $bucketName;
+		$parts[2] = $bucketName;
 		$wgUploadDirectory = '/' . join('/', $parts);
-		$wgUploadPath = 'http://images.wikia.com/' . join('/', array_slice($parts, 1));
+		$wgUploadPath = 'http://images.wikia.com/' . join('/', array_slice($parts, 2)); // remove /images/ and first letter parts
 
-		self::log( __CLASS__, "short bucket name fix applied - '{$bucketName}', <{$wgUploadPath}>, <{$wgUploadDirectory}>" , self::LOG_MIGRATION_PROGRESS );
+		self::log( __CLASS__, "short bucket name fix applied - '{$bucketName}', <{$wgUploadPath}>, <{$wgUploadDirectory}>, NFS: <{$wgUploadDirectoryNFS}>" , self::LOG_MIGRATION_PROGRESS );
 		return true;
 	}
 
@@ -177,7 +197,7 @@ class MigrateImagesToSwift extends Maintenance {
 	 * @param $path array image info
 	 */
 	private function copyFile( $path, Array $row ) {
-		global $wgUploadDirectory, $wgUploadDirectoryNFS, $wgCityId, $wgDBname;
+		global $wgUploadDirectory, $wgUploadDirectoryNFS;
 
 		if ( $path === false ) return;
 
@@ -191,22 +211,21 @@ class MigrateImagesToSwift extends Maintenance {
 			$metadata['Sha1Base36'] = $row['hash'];
 		}
 
-		$res = $this->swift->store( $uploadDir . '/' . $path, $path, $metadata, $mime );
+		$res = Status::newGood();
 
+		// migrate to all requested DCs
+		foreach($this->swiftBackends as $dc => $swift) {
+			$then = microtime(true);
+			$res->merge( $swift->store( $uploadDir . '/' . $path, $path, $metadata, $mime ) );
+			$this->timePerDC[$dc] += microtime(true) - $then;
+		}
+
+		// check results
 		if ( !$res->isOK() ) {
 			self::log( __METHOD__, "error storing <{$path}>", self::LOG_MIGRATION_ERRORS );
 			$this->migratedImagesFailedCnt++;
 		}
 		else {
-			$mwStorePath = sprintf( 'mwstore://swift-backend/%s/images/%s', $wgDBname, $path );
-
-			Wikia\SwiftSync\Queue::newFromParams( [
-				'city_id' => $wgCityId,
-				'op' => 'store',
-				'src' => $uploadDir . '/' . $path,
-				'dst' => $mwStorePath
-			] )->add();
-
 			$this->migratedImagesSize += $row['size'];
 			$this->migratedImagesCnt++;
 		}
@@ -255,6 +274,7 @@ class MigrateImagesToSwift extends Maintenance {
 		$dbr = $this->getDB( DB_SLAVE );
 
 		$isForced = $this->hasOption( 'force' );
+		$isDryRun = $this->hasOption( 'dry-run' );
 
 		// one migration is enough
 		global $wgEnableSwiftFileBackend, $wgEnableUploads, $wgDBname;
@@ -318,10 +338,15 @@ class MigrateImagesToSwift extends Maintenance {
 		$dbw->replace( 'city_image_migrate', [ 'city_id' ], [ 'city_id' => $wgCityId, 'locked' => 1 ], __CLASS__ );
 
 		// block uploads via WikiFactory
-		WikiFactory::setVarByName( 'wgEnableUploads',     $wgCityId, false, self::REASON );
-		WikiFactory::setVarByName( 'wgUploadMaintenance', $wgCityId, true,  self::REASON );
+		if (!$isDryRun) {
+			WikiFactory::setVarByName( 'wgEnableUploads',     $wgCityId, false, self::REASON );
+			WikiFactory::setVarByName( 'wgUploadMaintenance', $wgCityId, true,  self::REASON );
 
-		$this->output( "Uploads and image operations disabled\n\n" );
+			$this->output( "Uploads and image operations disabled\n\n" );
+		}
+		else {
+			$this->output( "Performing dry run...\n\n" );
+		}
 
 		// prepare the list of files to migrate to new storage
 		// (a) current revisions of images
@@ -376,18 +401,33 @@ class MigrateImagesToSwift extends Maintenance {
 			$this->copyFile( $path, $row );
 		}
 
+		// stats per DC
+		$statsPerDC = [];
+		foreach ($this->timePerDC as $dc => $time) {
+			$statsPerDC[] = sprintf("%s took %s", $dc, Wikia::timeDuration(round($time)));
+		}
+
 		// summary
-		$report = sprintf( 'Migrated %d files (%d MB) with %d fails in %s (%.2f files/sec, %.2f kB/s)',
+		$totalTime = time() - $this->time;
+
+		$report = sprintf( 'Migrated %d files (%d MB) with %d fails in %s (%.2f files/sec, %.2f kB/s) - DCs: %s',
 			$this->migratedImagesCnt,
 			round( $this->migratedImagesSize / 1024 / 1024 ),
 			$this->migratedImagesFailedCnt,
-			Wikia::timeDuration( time() - $this->time ),
+			Wikia::timeDuration( $totalTime ),
 			floor( $this->imagesCnt ) / ( time() - $this->time ),
-			( $this->migratedImagesSize / 1024 ) / ( time() - $this->time )
+			( $this->migratedImagesSize / 1024 ) / ( time() - $this->time ),
+			join(', ', $statsPerDC)
 		);
 
 		$this->output( "\n{$report}\n" );
 		self::log( __CLASS__, 'migration completed - ' . $report, self::LOG_MIGRATION_PROGRESS );
+
+		// if running in --dry-run, leave now
+		if ($isDryRun) {
+			$this->output( "\nDry run completed!\n" );
+			return;
+		}
 
 		// unlock the wiki
 		$dbw->ping();
@@ -395,7 +435,7 @@ class MigrateImagesToSwift extends Maintenance {
 
 		// update wiki configuration
 		// enable Swift storage via WikiFactory
-		WikiFactory::setVarByName( 'wgEnableSwiftFileBackend', $wgCityId, true, self::REASON );
+		WikiFactory::setVarByName( 'wgEnableSwiftFileBackend', $wgCityId, true, sprintf('%s - migration took %s', self::REASON, Wikia::timeDuration( $totalTime ) ) );
 
 		$this->output( "\nNew storage enabled\n" );
 

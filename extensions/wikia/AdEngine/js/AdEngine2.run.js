@@ -4,7 +4,7 @@
  */
 
 /*global document, window */
-/*global Geo, Wikia, Krux */
+/*global Geo, Wikia, Krux, AdTracker */
 /*global AdConfig2, AdEngine2, DartUrl, EvolveHelper, SlotTweaker, ScriptWriter */
 /*global WikiaDartHelper, WikiaFullGptHelper */
 /*global AdProviderEvolve, AdProviderGpt, AdProviderGamePro, AdProviderLater, AdProviderNull */
@@ -12,6 +12,7 @@
 /*global AdLogicPageLevelParamsLegacy */
 /*global require*/
 /*jslint newcap:true */
+/*jshint camelcase:false */
 
 (function (log, tracker, window, document, Geo, LazyQueue, Cookies, Cache, Krux, abTest) {
 	'use strict';
@@ -19,6 +20,7 @@
 	var module = 'AdEngine2.run',
 		adConfig,
 		adEngine,
+		adTracker,
 		adLogicDartSubdomain,
 		adLogicHighValueCountry,
 		adLogicPageLevelParams,
@@ -37,33 +39,24 @@
 		slotTweaker,
 
 		queueForLateAds,
-		adConfigForLateAds,
-		ie8 = window.navigator && window.navigator.userAgent && window.navigator.userAgent.match(/MSIE [6-8]\./);
+		adConfigForLateAds;
 
 	// Don't have SevenOne Media ads on IE8 (or below)
-	window.wgAdDriverUseSevenOneMedia = !ie8 && window.wgAdDriverUseSevenOneMedia && abTest.inGroup('SEVENONEMEDIA_ADS', 'ENABLED');
+	window.wgAdDriverUseSevenOneMedia = window.wgAdDriverUseSevenOneMedia && abTest.inGroup('SEVENONEMEDIA_ADS', 'ENABLED');
 
 	// Use PostScribe for ScriptWriter implementation when SevenOne Media ads are enabled
 	window.wgUsePostScribe = window.wgUsePostScribe || window.wgAdDriverUseSevenOneMedia;
-
-	/*
-	 * Currently PostScribe conflicts with Krux as it supplies a different version of the lib.
-	 * Here we disable Krux when PostScribe is to be used
-	 * Related ticket: ADEN-666
-	 */
-	if (window.wgUsePostScribe) {
-		window.wgEnableKruxTargeting = false;
-	}
 
 	// Construct Ad Engine
 	adEngine = AdEngine2(log, LazyQueue);
 
 	// Construct various helpers
+	adTracker = AdTracker(log, tracker);
 	slotTweaker = SlotTweaker(log, document, window);
 	dartUrl = DartUrl();
 	adLogicDartSubdomain = AdLogicDartSubdomain(Geo);
 	adLogicHighValueCountry = AdLogicHighValueCountry(window);
-	adLogicPageDimensions = AdLogicPageDimensions(window, document, log, slotTweaker, abTest);
+	adLogicPageDimensions = AdLogicPageDimensions(window, document, log, slotTweaker);
 	adLogicPageLevelParams = AdLogicPageLevelParams(log, window, Krux, adLogicPageDimensions, abTest);
 	adLogicPageLevelParamsLegacy = AdLogicPageLevelParamsLegacy(log, window, adLogicPageLevelParams, Krux, dartUrl);
 	scriptWriter = ScriptWriter(document, log, window);
@@ -72,9 +65,9 @@
 	evolveHelper = EvolveHelper(log, window);
 
 	// Construct Ad Providers
-	adProviderGpt = AdProviderGpt(tracker, log, window, Geo, slotTweaker, Cache, adLogicHighValueCountry, wikiaFullGpt);
-	adProviderEvolve = AdProviderEvolve(adLogicPageLevelParamsLegacy, scriptWriter, tracker, log, window, document, Krux, evolveHelper, slotTweaker);
-	adProviderGamePro = AdProviderGamePro(adLogicPageLevelParamsLegacy, scriptWriter, tracker, log, window, slotTweaker);
+	adProviderGpt = AdProviderGpt(adTracker, log, window, Geo, slotTweaker, Cache, adLogicHighValueCountry, wikiaFullGpt);
+	adProviderEvolve = AdProviderEvolve(adLogicPageLevelParamsLegacy, scriptWriter, adTracker, log, window, document, Krux, evolveHelper, slotTweaker);
+	adProviderGamePro = AdProviderGamePro(adLogicPageLevelParamsLegacy, scriptWriter, adTracker, log, window, slotTweaker);
 	adProviderNull = AdProviderNull(log, slotTweaker);
 
 	// Special Ad Provider, to deal with the late ads

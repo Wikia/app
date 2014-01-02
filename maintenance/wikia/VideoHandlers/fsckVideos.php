@@ -24,11 +24,13 @@ class FSCKVideos extends Maintenance {
 		$this->mDescription = "Pre-populate LVS suggestions";
 		$this->addOption( 'test', 'Test mode; make no changes', false, false, 't' );
 		$this->addOption( 'verbose', 'Show extra debugging output', false, false, 'v' );
+		$this->addOption( 'title', 'Fix a specific file', false, true, 'i' );
 	}
 
 	public function execute() {
 		$this->test    = $this->hasOption('test');
 		$this->verbose = $this->hasOption('verbose');
+		$title         = $this->getOption('title', '');
 
 		echo "Checking ".F::app()->wg->Server."\n";
 
@@ -42,12 +44,16 @@ class FSCKVideos extends Maintenance {
 		if ( $this->test ) {
 			echo "== TEST MODE ==\n";
 		}
-		$this->debug("(debugging output enabled)\n");
+		$this->debug( "(debugging output enabled)\n" );
 
 		$startTime = time();
 
-		$videos = VideoInfoHelper::getLocalVideoTitles();
-		$this->debug("Found ".count($videos)." video(s)\n");
+		if ( $title ) {
+			$videos = [ $title ];
+		} else {
+			$videos = VideoInfoHelper::getLocalVideoTitles();
+			$this->debug("Found ".count($videos)." video(s)\n");
+		}
 
 		$fix = $this->test ? false : true;
 
@@ -56,7 +62,7 @@ class FSCKVideos extends Maintenance {
 		foreach ( $videos as $title ) {
 			$stats['checked']++;
 
-			$status = $helper->fcskVideoThumbnail( $title, $fix );
+			$status = $helper->fsckVideoThumbnail( $title, $fix );
 			if ( $status->isGood() ) {
 				$result = $status->value;
 				if ( $result['check']  == 'ok' ) {

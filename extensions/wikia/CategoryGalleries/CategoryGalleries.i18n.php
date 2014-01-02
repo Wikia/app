@@ -79,7 +79,7 @@ $messages['ca'] = array(
 	'categorygalleries-desc' => 'Mostra una galeria de pàgines sobre les pàgines de la categoria',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Dontlietome7
  */
 $messages['cs'] = array(

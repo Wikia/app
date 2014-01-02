@@ -771,11 +771,8 @@ class IvaFeedIngester extends VideoFeedIngester {
 
 		print( "Connecting to $url...\n" );
 
-		$req = MWHttpRequest::factory( $url );
-		$status = $req->execute();
-		if ( $status->isOK() ) {
-			$response = $req->getContent();
-		} else {
+		$resp = Http::request( 'GET', $url, array( 'noProxy' => true ) );
+		if ( $resp === false ) {
 			print( "ERROR: problem downloading content.\n" );
 			wfProfileOut( __METHOD__ );
 
@@ -783,7 +780,7 @@ class IvaFeedIngester extends VideoFeedIngester {
 		}
 
 		// parse response
-		$response = json_decode( $response, true );
+		$response = json_decode( $resp, true );
 
 		wfProfileOut( __METHOD__ );
 		return ( empty($response['d']['results']) ) ? array() : $response['d']['results'];

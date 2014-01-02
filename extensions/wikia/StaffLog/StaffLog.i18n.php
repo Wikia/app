@@ -55,6 +55,13 @@ $messages['qqq'] = array(
 	'action-stafflog' => '{{doc-action|stafflog}}',
 );
 
+/** Old English (Ænglisc)
+ * @author Espreon
+ */
+$messages['ang'] = array(
+	'stafflog-filter-user' => 'Brūcend:',
+);
+
 /** Arabic (العربية)
  * @author Achraf94
  */
@@ -120,7 +127,7 @@ $messages['ca'] = array(
 	'action-stafflog' => "mostra l'historial centralitzat",
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Chmee2
  * @author Dontlietome7
  */
@@ -308,6 +315,17 @@ $messages['id'] = array(
 $messages['lb'] = array(
 	'stafflog-desc' => 'Zentraliséiert Logge vun de Staff-Mataarbechter',
 	'stafflog-blockmsg' => '$1 $2 huet versicht de Staff-Mataarbechter $3 op der Wiki $4 ze spären: Grond: $5',
+);
+
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'stafflog-filter-label' => 'فيلتر',
+	'stafflog-filter-user' => 'كارور',
+	'stafflog-filter-type' => 'نوع:',
+	'stafflog-filter-apply' => 'وه كار بردن فيلتر',
+	'stafflog-filter-type-block' => 'بخشیا',
 );
 
 /** Macedonian (македонски)
@@ -637,6 +655,28 @@ $messages['uk'] = array(
 	'action-stafflog' => 'переглядати журнал централізованого персоналу',
 );
 
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'stafflog-desc' => 'Chức năng ghi tập trung cho nhân viên',
+	'stafflog' => 'StaffLog',
+	'stafflog-blockmsg' => '$1 $2 cố gắng để chặn nhân viên người dùng $3 trên wiki $4 .Lý do: $5',
+	'stafflog-piggybackloginmsg' => '$1 Piggyback – người sử dụng $2 đăng nhập như $3',
+	'stafflog-piggybacklogoutmsg' => '$1 Piggyback – người dùng $2 đăng xuất từ tài khoản $3',
+	'right-stafflog' => 'Có thể xem stafflog',
+	'stafflog-wiki-status-change' => '$1 thay đổi trạng thái của $2 để $3. Lý do:$4',
+	'stafflog-filter-label' => 'Bộ lọc',
+	'stafflog-filter-user' => 'Thành viên:',
+	'stafflog-filter-type' => 'Loại:',
+	'stafflog-filter-apply' => 'Áp dụng bộ lọc',
+	'stafflog-filter-type-block' => 'Cấm',
+	'stafflog-filter-type-piggyback' => 'Piggyback',
+	'stafflog-filter-type-renameuser' => 'Tên người dùng:',
+	'stafflog-filter-type-wikifactory' => 'Tình trạng wiki',
+	'action-stafflog' => 'Xem sổ ghi tập trung nhân viên',
+);
+
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author StephDC
@@ -644,10 +684,13 @@ $messages['uk'] = array(
  */
 $messages['zh-hans'] = array(
 	'stafflog-blockmsg' => '$1 $2 试图封禁在维基系统 $4 上面的员工用户 $3，理由为 $5',
+	'right-stafflog' => '可以查看stafflog',
+	'stafflog-wiki-status-change' => '$1 更改 $2 的状态到 $3。理由：$4',
 	'stafflog-filter-label' => '过滤器',
 	'stafflog-filter-user' => '用户：',
 	'stafflog-filter-type' => '类型：',
 	'stafflog-filter-apply' => '应用过滤器',
 	'stafflog-filter-type-renameuser' => '重命名用户',
 	'stafflog-filter-type-wikifactory' => 'Wiki状态',
+	'action-stafflog' => '查看集中式的员工日志',
 );

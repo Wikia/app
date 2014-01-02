@@ -28,7 +28,7 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-define('ace/mode/verilog', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text', 'ace/tokenizer', 'ace/mode/verilog_highlight_rules', 'ace/range'], function(require, exports, module) {
+ace.define('ace/mode/verilog', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text', 'ace/tokenizer', 'ace/mode/verilog_highlight_rules', 'ace/range'], function(require, exports, module) {
 
 
 var oop = require("../lib/oop");
@@ -38,7 +38,7 @@ var VerilogHighlightRules = require("./verilog_highlight_rules").VerilogHighligh
 var Range = require("../range").Range;
 
 var Mode = function() {
-    this.$tokenizer = new Tokenizer(new VerilogHighlightRules().getRules());
+    this.HighlightRules = VerilogHighlightRules;
 };
 oop.inherits(Mode, TextMode);
 
@@ -54,7 +54,7 @@ exports.Mode = Mode;
 });
 
 
-define('ace/mode/verilog_highlight_rules', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text_highlight_rules'], function(require, exports, module) {
+ace.define('ace/mode/verilog_highlight_rules', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text_highlight_rules'], function(require, exports, module) {
 
 
 var oop = require("../lib/oop");

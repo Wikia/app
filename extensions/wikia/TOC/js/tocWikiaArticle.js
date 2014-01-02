@@ -1,7 +1,11 @@
-require(['jquery', 'wikia.toc', 'wikia.mustache'], function($, toc, mustache) {
+require( [ 'jquery', 'wikia.toc', 'wikia.mustache' ], function( $, toc, mustache ) {
 	'use strict';
 
-	var hasTOC = false, // flag - TOC is already created
+	/**
+	 * map container identifier as key, true/false values that determine if TOC was generated for that container
+	 * @type {Object}
+	 */
+	var containerHasTOC = {},
 		cacheKey = 'TOCAssets'; // Local Storage key
 
 	/**
@@ -11,13 +15,13 @@ require(['jquery', 'wikia.toc', 'wikia.mustache'], function($, toc, mustache) {
 	 */
 
 	function wrapper() {
-		return function (text, render) {
-			if (text !== '') {
-				return '<ol>' + render(text) + '</ol>';
+		return function( text, render ) {
+			if ( text !== '' ) {
+				return '<ol>' + render( text ) + '</ol>';
 			} else {
 				return false;
 			}
-		}
+		};
 	}
 
 	/**
@@ -29,16 +33,21 @@ require(['jquery', 'wikia.toc', 'wikia.mustache'], function($, toc, mustache) {
 	 *                             or custom TOC single section object.
 	 */
 
-	function createTOCSection(header) {
-		header = $(header).children('.mw-headline');
+	function createTOCSection( header ) {
 
-		if (header.length === 0) {
+		header = $( header ).children( '.mw-headline' );
+
+		if ( header.length === 0 || header.is( ':hidden' ) ) {
 			return false;
 		}
 
+		// clone node and remove noscript to exclude it from text
+		header = header.clone();
+		header.find( 'noscript' ).remove();
+
 		return {
 			title: header.text(),
-			id: header.attr('id'),
+			id: header.attr( 'id' ),
 			sections: []
 		};
 	}
@@ -52,30 +61,30 @@ require(['jquery', 'wikia.toc', 'wikia.mustache'], function($, toc, mustache) {
 	function loadTemplate() {
 		var dfd = new $.Deferred();
 
-		require(['wikia.loader', 'wikia.cache'], function(loader, cache) {
-			var template = cache.getVersioned(cacheKey);
+		require( [ 'wikia.loader', 'wikia.cache' ], function( loader, cache ) {
+			var template = cache.getVersioned( cacheKey );
 
-			if(template) {
-				dfd.resolve(template);
+			if ( template ) {
+				dfd.resolve( template );
 			} else {
-				require(['wikia.throbber'], function(throbber) {
-					var toc = $('#toc');
+				require( [ 'wikia.throbber' ], function( throbber ) {
+					var toc = $( '#toc' );
 
-					throbber.show(toc);
+					throbber.show( toc );
 
 					loader({
 						type: loader.MULTI,
 						resources: {
 							mustache: 'extensions/wikia/TOC/templates/TOC_articleContent.mustache'
 						}
-					}).done(function(data) {
+					}).done(function ( data ) {
 						template = data.mustache[0];
 
-						dfd.resolve(template);
+						dfd.resolve( template );
 
-						cache.setVersioned(cacheKey, template, 604800); //7days
+						cache.setVersioned( cacheKey, template, 604800 ); //7days
 
-						throbber.remove(toc);
+						throbber.remove( toc );
 					});
 				});
 			}
@@ -91,17 +100,18 @@ require(['jquery', 'wikia.toc', 'wikia.mustache'], function($, toc, mustache) {
 	 *                           which gives a context to either article or preview in the editor.
 	 */
 
-	function renderTOC($target) {
-		var $container = $target.parents('#toc').children('ol'),
-			$headers = $target.parents('#mw-content-text').find('h2, h3, h4, h5'),
-			data = toc.getData($headers, createTOCSection);
+	function renderTOC( $target ) {
+		var $container = $target.parents( '#toc' ).children( 'ol' ),
+			$contentContainer = getContentContainer( $target ),
+			$headers = $contentContainer.find( 'h1, h2, h3, h4, h5, h6' ),
+			data = toc.getData( $headers, createTOCSection );
 
 		data.wrapper = wrapper;
 
-		loadTemplate().done(function(template) {
-			$container.append(mustache.render(template, data));
+		loadTemplate().done(function( template ) {
+			$container.append( mustache.render( template, data ) );
 
-			hasTOC = true;
+			setHasTOC( $target, true );
 		});
 	}
 
@@ -111,8 +121,8 @@ require(['jquery', 'wikia.toc', 'wikia.mustache'], function($, toc, mustache) {
 	 * @param {?Number} isHidden - accepts 'null' or 1
 	 */
 
-	function setTOCCookie(isHidden) {
-		$.cookie('mw_hidetoc', isHidden, {
+	function setTOCCookie( isHidden ) {
+		$.cookie( 'mw_hidetoc', isHidden, {
 			expires: 30,
 			path: '/'
 		});
@@ -125,25 +135,25 @@ require(['jquery', 'wikia.toc', 'wikia.mustache'], function($, toc, mustache) {
 	 *                           which gives a context to either article or preview in the editor.
 	 */
 
-	function showHideTOC($target) {
-		var tocWrapper = $target.parents('#toc'),
+	function showHideTOC( $target ) {
+		var tocWrapper = $target.parents( '#toc' ),
 			targetLabel,
 			tocCookie;
 
-		tocWrapper.toggleClass('show');
+		tocWrapper.toggleClass( 'show' );
 
-		if (tocWrapper.hasClass('show')) {
-			targetLabel = $target.data('hide');
+		if ( tocWrapper.hasClass( 'show' ) ) {
+			targetLabel = $target.data( 'hide' );
 			tocCookie = null;
 		} else {
-			targetLabel = $target.data('show');
+			targetLabel = $target.data( 'show' );
 			tocCookie = 1;
 		}
 
-		$target.text(targetLabel);
-		$target.attr('title', targetLabel);
+		$target.text( targetLabel );
+		$target.attr( 'title', targetLabel );
 
-		setTOCCookie(tocCookie);
+		setTOCCookie( tocCookie );
 	}
 
 	/**
@@ -155,46 +165,86 @@ require(['jquery', 'wikia.toc', 'wikia.mustache'], function($, toc, mustache) {
 	 */
 
 	function isNewTOC() {
-		return $('#toc').is('nav');
+		return $( '#toc' ).is( 'nav' );
 	}
 
 	/**
 	 * Initialized the TOC after an article has been loaded
 	 */
 	function initTOC() {
-		var $showLink = $('#togglelink');
-		if (!hasTOC) {
-			renderTOC($showLink);
+		var $showLink = $( '#togglelink' );
+		if ( !hasTOC( $showLink ) ) {
+			renderTOC( $showLink );
 		}
-		showHideTOC($showLink);
+		showHideTOC( $showLink );
 	}
 
-	$(function() {
+	/**
+	 * Checks if TOC was generated already
+	 * @param {Object} $target (jquery collection) TOC open link
+	 * @returns {boolean}
+	 */
+	function hasTOC( $target ) {
+		var containerIdentifier = getContainerIdentifier( $target );
+
+		return typeof containerHasTOC[ containerIdentifier ] !== 'undefined' && containerHasTOC[ containerIdentifier ];
+	}
+
+	/**
+	 * Sets that toc was generated or not for selected TOC
+	 * @param {Object} $target (jquery collection) TOC open link
+	 * @param {boolean} value
+	 */
+	function setHasTOC( $target, value ) {
+		var containerIdentifier = getContainerIdentifier( $target );
+		containerHasTOC[containerIdentifier] = value;
+	}
+
+	/**
+	 * Gets TOC container
+	 * @param {Object} $target (jquery collection) TOC open link
+	 * @returns {Object} jquery collection
+	 */
+	function getContentContainer( $target ) {
+		// if tabviewer is on site use content from one tab only
+		return $target.parents( '.tabBody, #mw-content-text' ).first();
+	}
+
+	/**
+	 * Get TOC container identifier - used for setting that TOC was already rendered for that container
+	 * @param {Object} $target (jquery collection) TOC open link
+	 * @returns {string}
+	 */
+	function getContainerIdentifier( $target ) {
+		return getContentContainer( $target ).data( 'tab-body' ) || 'main';
+	}
+
+	$( function() {
 		/** Attach events */
-		$('body').on('click', '#togglelink', function(event) {
+		$( 'body' ).on( 'click', '#togglelink', function( event ) {
 			event.preventDefault();
 
-			if(isNewTOC()) {
-				var $target = $(event.target);
+			if ( isNewTOC() ) {
+				var $target = $( event.target );
 
-				if (!hasTOC) {
-					renderTOC($target);
+				if ( !hasTOC( $target ) ) {
+					renderTOC( $target );
 				}
 
-				showHideTOC($target);
+				showHideTOC( $target );
 			}
 		});
 
-		// reset hasTOC flag for each time preview modal is opened
-		$(window).on('EditPageAfterRenderPreview', function() {
-			hasTOC = false;
-			if (isNewTOC() && window.wgUserName !== null) {
+		// reset containerHasTOC flags for each time preview modal is opened
+		$( window ).on( 'EditPageAfterRenderPreview', function() {
+			containerHasTOC = {};
+			if ( isNewTOC() && window.wgUserName !== null ) {
 				initTOC();
 			}
 		});
 
 		/** Auto expand TOC in article for logged-in users with hideTOC cookie set to 'null'  */
-		if (isNewTOC() && window.wgUserName !== null && $.cookie('mw_hidetoc') === null) {
+		if ( isNewTOC() && window.wgUserName !== null && $.cookie( 'mw_hidetoc' ) === null ) {
 			initTOC();
 		}
 	});

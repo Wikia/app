@@ -8,6 +8,16 @@
 
 class VisualEditorWikiaHooks {
 
+	public static function onGetPreferences( $user, &$preferences ) {
+		// Remove core VisualEditor preferences
+		unset(
+			$preferences['visualeditor-enable'],
+			$preferences['visualeditor-betatempdisable']
+		);
+
+		return true;
+	}
+
 	public static function onResourceLoaderTestModules( array &$testModules, ResourceLoader &$resourceLoader ) {
 		global $wgVisualEditorWikiaResourceTemplate;
 
@@ -33,15 +43,19 @@ class VisualEditorWikiaHooks {
 			'dependencies' => array(
 				'ext.visualEditor.test',
 				'ext.visualEditor.wikiaCore',
+				'wikia.stringhelper',
 			)
 		);
 		return true;
 	}
 
-	public static function onGetPreferences( $user, &$preferences ) {
-		unset( $preferences['visualeditor-betatempdisable'] );
-		$preferences['visualeditor-enable']['label-message'] = 'visualeditor-wikiapreference-enable';
-
+	/**
+	 * Adds extra variables to the page config.
+	 */
+	public static function onMakeGlobalVariablesScript( array &$vars, OutputPage $out ) {
+		global $wgMaxUploadSize;
+		$vars[ 'wgMaxUploadSize' ] = $wgMaxUploadSize; 
 		return true;
 	}
+
 }

@@ -163,6 +163,7 @@ class RelatedVideosController extends WikiaController {
 					),
 					'duration' => true,
 					'src' => $preloaded ? false : wfBlankImgUrl(),
+					// This attirbute is deprecated with the new toHtml function.  Remove when refactoring
 					'constHeight' => RelatedVideosService::$height,
 					'usePreloading' => true,
 					'disableRDF' => true

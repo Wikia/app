@@ -41,6 +41,23 @@ $messages['qqq'] = array(
 	'quickstats-number-shortening-billions' => 'This is a shortend number abbreviation shown in a stats table. Number larger than 1.000.000.000 are rendered using this message (as billions rounded up to the first decimal fraction). B stands for billions (1.000.000.000)',
 );
 
+/** Afrikaans (Afrikaans)
+ * @author Naudefj
+ */
+$messages['af'] = array(
+	'quickstats-header-date' => 'Datum',
+	'quickstats-header-edits' => 'Wysigings',
+	'quickstats-header-photos' => "Foto's",
+	'quickstats-totals-label' => 'Totale',
+);
+
+/** Old English (Ænglisc)
+ * @author Espreon
+ */
+$messages['ang'] = array(
+	'quickstats-header-date' => 'Tælmearc',
+);
+
 /** Arabic (العربية)
  * @author Achraf94
  */
@@ -251,7 +268,7 @@ $messages['ckb'] = array(
 	'quickstats-number-shortening-billions' => '$1 بیلیۆن',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Andriykopanytsia
  * @author Chmee2
  * @author Darth Daron
@@ -482,6 +499,7 @@ $messages['fr'] = array(
 
 /** Galician (galego)
  * @author Toliño
+ * @author Vivaelcelta
  */
 $messages['gl'] = array(
 	'quickstats-header-label' => 'Estatísticas rápidas',
@@ -621,6 +639,7 @@ $messages['it'] = array(
 );
 
 /** Japanese (日本語)
+ * @author BryghtShadow
  * @author Tommy6
  */
 $messages['ja'] = array(
@@ -632,6 +651,26 @@ $messages['ja'] = array(
 	'quickstats-date-format' => 'n月j日',
 	'quickstats-totals-label' => '合計',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|さらに詳しい統計をみる]]',
+	'quickstats-number-shortening' => '$1K',
+	'quickstats-number-shortening-millions' => '$1M',
+	'quickstats-number-shortening-billions' => '$1B',
+);
+
+/** Kannada (ಕನ್ನಡ)
+ * @author Dimension10
+ */
+$messages['kn'] = array(
+	'quickstats-header-label' => 'ತ್ವಿರಿತ ಆನ್ಕಡೆಗಳು',
+	'quickstats-header-date' => 'ದಿನಾಂಕ',
+	'quickstats-header-views' => 'ನೋಟಗಳು',
+	'quickstats-header-edits' => 'ಸಂಪಾದನೆಗಳು',
+	'quickstats-header-photos' => 'ಭಾವಚಿತ್ರಗಳು',
+	'quickstats-header-likes' => 'ಇಷ್ಟಗಳು',
+	'quickstats-totals-label' => 'ಒತ್ತುಗಳು',
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|ಇನ್ನೂ ಆನ್ಕಡೆಗಳನ್ನು ]]',
+	'quickstats-number-shortening' => '$1 ಸಾವಿರ',
+	'quickstats-number-shortening-millions' => '$1 ದಶಲಕ್ಷ',
+	'quickstats-number-shortening-billions' => '$1 ಶತಕೋಟಿ',
 );
 
 /** Korean (한국어)
@@ -737,9 +776,20 @@ $messages['lt'] = array(
 
 /** Latvian (latviešu)
  * @author Papuass
+ * @author Sg ghost
  */
 $messages['lv'] = array(
+	'quickstats-header-label' => 'Vienkārša Statistika',
 	'quickstats-header-date' => 'Datums',
+	'quickstats-header-views' => 'Skatīts',
+	'quickstats-header-edits' => 'Labojumi',
+	'quickstats-header-photos' => 'Fotogrāfijas',
+	'quickstats-header-likes' => 'Patīk',
+	'quickstats-totals-label' => 'Kopsummas',
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Skatīt vairāk stats]]',
+	'quickstats-number-shortening' => '$1K',
+	'quickstats-number-shortening-millions' => '$1M',
+	'quickstats-number-shortening-billions' => '$1B',
 );
 
 /** Basa Banyumasan (Basa Banyumasan)
@@ -863,12 +913,17 @@ $messages['nb'] = array(
  * @author सरोज कुमार ढकाल
  */
 $messages['ne'] = array(
+	'quickstats-header-label' => 'छरितो तथ्यंक',
 	'quickstats-header-date' => 'मिति',
 	'quickstats-header-views' => 'अवलोकनहरू',
 	'quickstats-header-edits' => 'सम्पादनहरु',
 	'quickstats-header-photos' => 'चित्र',
 	'quickstats-header-likes' => 'मनपर्दो',
 	'quickstats-totals-label' => 'कुल',
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|थप तथ्याङ्क हेर्नुहोस्]]',
+	'quickstats-number-shortening' => '$1 हजार',
+	'quickstats-number-shortening-millions' => '$1 मिलियन',
+	'quickstats-number-shortening-billions' => '$1 बिलियन',
 );
 
 /** Dutch (Nederlands)
@@ -1145,6 +1200,8 @@ $messages['szl'] = array(
 	'quickstats-header-views' => 'Podglůndy',
 	'quickstats-header-edits' => 'Sprowjyńa',
 	'quickstats-header-photos' => 'Uobrozy',
+	'quickstats-header-likes' => 'Przaja tymu',
+	'quickstats-totals-label' => 'Cuzamyn',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Wjyncyj sztatystyk]]',
 	'quickstats-number-shortening' => '$1 tyś.',
 	'quickstats-number-shortening-millions' => '$1 mln',

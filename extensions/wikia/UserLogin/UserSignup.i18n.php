@@ -315,7 +315,8 @@ Tooltip letting user know they can change their email.  Tooltip is on the same l
 	'usersignup-welcome-email-edit-profile-button' => 'Welcome email first section button label.  Links to preferences in the template, so no linking required from messaging.',
 	'usersignup-welcome-email-learn-basic-heading' => 'Welcome email second section heading.',
 	'usersignup-welcome-email-learn-basic-content' => 'Welcome email second section body.',
-	'usersignup-welcome-email-learn-basic-button' => 'Welcome email second section button label.  Do not be concerned with linking.',
+	'usersignup-welcome-email-learn-basic-button' => 'Welcome email second section button label.  Do not be concerned with linking.
+{{Identical|Check it out}}',
 	'usersignup-welcome-email-explore-wiki-heading' => 'Welcome email third section heading.',
 	'usersignup-welcome-email-explore-wiki-content' => 'Welcome email third section body.  There are links to category pages on hubs.  Those links can be omitted if there are no hub pages for the language.',
 	'usersignup-welcome-email-explore-wiki-button' => 'Welcome email third section button.',
@@ -731,11 +732,12 @@ Vols controlar els correus que reps? Vés a: {{fullurl: {{ns:special}}:Preferèn
  */
 $messages['ce'] = array(
 	'usersignup-confirm-email-update' => 'Карлаяккха',
+	'usersignup-resend-email-heading-success' => 'Керла хаам дӀабахийтина',
 	'usersignup-reconfirmation-email_subject' => 'Бакъде электрони почтан адрес хуьйцуш хилар Вики чохь',
 	'usersignup-welcome-email-learn-basic-button' => 'Дехьа гӀо',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Chmee2
  * @author Macinosak
  * @author Mormegil
@@ -1033,6 +1035,7 @@ Steuere, welche E-Mails du von uns erhalten willst, auf {{fullurl:{{ns:special}}
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
+ * @author Gorizon
  */
 $messages['diq'] = array(
 	'usersignup-page-title' => 'Dekew Wikia',
@@ -1051,7 +1054,7 @@ $messages['diq'] = array(
 	'usersignup-welcome-email-signature' => 'Taxıma Wikia',
 	'usersignup-heading' => 'Noroc dekewe Wikia',
 	'usersignup-marketing-community-heading' => 'Piyakarkerdış',
-	'usersignup-marketing-global-heading' => 'Vıraze',
+	'usersignup-marketing-global-heading' => 'İycad ke',
 	'usersignup-marketing-creativity-heading' => 'Oricinal be',
 	'usersignup-account-creation-email-greeting' => 'Merheba,',
 	'usersignup-account-creation-email-signature' => 'Taxıma Wikia',
@@ -3550,6 +3553,7 @@ $messages['ps'] = array(
 );
 
 /** Portuguese (português)
+ * @author Josep Maria 15.
  * @author Luckas
  * @author SandroHc
  */
@@ -3568,8 +3572,9 @@ $messages['pt'] = array(
 	'usersignup-confirmation-email-greeting' => 'Olá $USERNAME,',
 	'usersignup-reconfirmation-email-greeting' => 'Olá $USERNAME',
 	'usersignup-reconfirmation-email-signature' => 'A equipe da Wikia',
+	'usersignup-welcome-email-subject' => 'Bem-vindo à Wikia, $USERNAME!',
 	'usersignup-welcome-email-greeting' => 'Olá $USERNAME',
-	'usersignup-welcome-email-edit-profile-heading' => 'Editar seu perfil.',
+	'usersignup-welcome-email-edit-profile-heading' => 'Edita o teu perfil.',
 	'usersignup-welcome-email-learn-basic-heading' => 'Aprenda o básico.',
 	'usersignup-welcome-email-explore-wiki-heading' => 'Explorar mais wikis.',
 	'usersignup-welcome-email-explore-wiki-button' => 'Ir para wikia.com',
@@ -4260,8 +4265,10 @@ Nais mo bang tabanan ang kung anong mga e-liham ang matatanggap mo? Magpunta sa:
 
 /** Turkish (Türkçe)
  * @author Erdemaslancan
+ * @author Incelemeelemani
  */
 $messages['tr'] = array(
+	'usersignup-welcome-email-explore-wiki-content' => 'Wikia\'da binlerce wiki bulunmaktadır, ilgilendiğiniz konu hakkında daha fazla wikiye ulaşmak için merkezi başlıkları kullanın: <a style="color:#2C85D5;" href="http://www.wikia.com/Video_Games">Video Oyunları</a>, <a style="color:#2C85D5;" href="http://www.wikia.com/Entertainment">Eğlence</a>, or <a style="color:#2C85D5;" href="http://www.wikia.com/Lifestyle">Yaşam tarzı</a>.',
 	'usersignup-marketing-creativity-heading' => 'Orijinal olmak',
 );
 
@@ -4487,6 +4494,23 @@ ___________________________________________
  Ознайомтеся з останніми подіями на Вікія, відвідавши http://community.wikia.com
 Хочете налаштувати отримання розсилки листів? Перейдіть на:  {{fullurl:{{ns:special}}:Preferences}}",
 	'usersignup-facebook-problem' => "Сталася помилка з'єднання з Facebook. Будь ласка, спробуйте ще раз пізніше.",
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'usersignup-page-title' => 'Tham gia Wikia',
+	'usersignup-page-captcha-label' => 'Chữ mờ',
+	'usersignup-error-username-length' => 'Rất tiếc, tên người dùng không thể nhiều hơn {{PLURAL:$1|character|$1 ký tự}}.',
+	'usersignup-error-invalid-user' => 'Người dùng không hợp lệ. Xin vui lòng đăng nhập trước tiên.',
+	'usersignup-error-invalid-email' => 'Vui lòng nhập một địa chỉ email hợp lệ.',
+	'usersignup-error-symbols-in-username' => 'Rất tiếc, tên người dùng chỉ có thể chứa chữ cái và số.',
+	'usersignup-error-empty-email' => 'Rất tiếc, xin vui lòng điền vào địa chỉ email của bạn.',
+	'usersignup-error-empty-username' => 'Rất tiếc, xin vui lòng điền vào tên người dùng.',
+	'usersignup-error-already-confirmed' => 'Bạn đã xác nhận địa chỉ email này.',
+	'usersignup-error-throttled-email' => 'Rất tiếc, bạn đã yêu cầu quá nhiều email xác nhận được gửi đến cho bạn hôm nay. Hãy thử lại một lần nữa trong một thời gian ngắn.',
+	'usersignup-error-too-many-changes' => 'Bạn đã đạt đến giới hạn tối đa cho thay đổi email vào ngày hôm nay. Xin vui lòng thử lại sau.',
 );
 
 /** Simplified Chinese (中文（简体）‎)

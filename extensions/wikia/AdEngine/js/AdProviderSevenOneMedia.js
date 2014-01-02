@@ -1,6 +1,7 @@
-/*global require*/
+/* exported AdProviderSevenOneMedia */
+/* jshint maxparams:false */
 
-var AdProviderSevenOneMedia = function (log, window, tracker, $, sevenOneMedia) {
+var AdProviderSevenOneMedia = function (log, window, adTracker, $, sevenOneMedia) {
 	'use strict';
 
 	var logGroup = 'AdProviderSevenOneMedia',
@@ -8,7 +9,7 @@ var AdProviderSevenOneMedia = function (log, window, tracker, $, sevenOneMedia) 
 			TOP_RIGHT_BOXAD: 'rectangle1',
 			HOME_TOP_RIGHT_BOXAD: 'rectangle1',
 
-//			PREFOOTER_LEFT_BOXAD: 'promo1',
+			PREFOOTER_LEFT_BOXAD: 'promo1',
 
 			TOP_LEADERBOARD: 'topAds',
 			HOME_TOP_LEADERBOARD: 'topAds',
@@ -67,17 +68,20 @@ var AdProviderSevenOneMedia = function (log, window, tracker, $, sevenOneMedia) 
 
 		var slotname = slot[0],
 			slotDeName = slotMap[slotname],
-			$slot;
+			$slot,
+			slotTracker = adTracker.trackSlot('sevenonemedia', slotname);
 
 		function clearDefaultHeight() {
 			$('#' + slotname).removeClass('default-height');
 		}
 
+		slotTracker.init();
+
 		if (slotDeName === 'topAds') {
 			makeTopAds();
 			sevenOneMedia.pushAd('popup1');
 			sevenOneMedia.pushAd('fullbanner2', {afterFinish: handleTopButton});
-			sevenOneMedia.pushAd('skyscraper1');
+			sevenOneMedia.pushAd('skyscraper1', {afterFinish: slotTracker.success});
 			sevenOneMedia.flushAds();
 		}
 
@@ -85,7 +89,7 @@ var AdProviderSevenOneMedia = function (log, window, tracker, $, sevenOneMedia) 
 			$slot = $('<div class="ad-wrapper" style="display: none"></div>');
 			$slot.attr('id', 'ad-' + slotDeName);
 			$('#' + slotname).append($slot);
-			sevenOneMedia.pushAd(slotDeName, {beforeFinish: clearDefaultHeight});
+			sevenOneMedia.pushAd(slotDeName, {beforeFinish: clearDefaultHeight, afterFinish: slotTracker.success});
 			sevenOneMedia.flushAds();
 		}
 

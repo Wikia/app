@@ -9,7 +9,7 @@ class HubService extends Service {
 	 *
 	 * @deprecated use getCategoryInfoForCity or getCategoryInfoForCurrentPage instead
 	 *
-	 * @param int $city_id city id
+	 * @param int $cityId The wiki ID
 	 *
 	 * @return stdClass ($row->cat_id $row->cat_name)
 	 */

@@ -91,7 +91,7 @@ $messages['ca'] = array(
 	'imgplc-notinhistory-video' => 'No es pot afegir un vídeo en el mode historial.',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -336,6 +336,7 @@ $messages['lb'] = array(
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
+	'imgplc-add-image' => 'اضاف کردن عسگ',
 	'imgplc-image' => 'عسگ',
 );
 
@@ -426,9 +427,11 @@ $messages['nn'] = array(
  */
 $messages['oc'] = array(
 	'imgplc-add-image' => 'Apondre un imatge',
+	'imgplc-add-video' => 'Apondre una vidèo',
 	'imgplc-placeholder' => 'Posicionador',
 	'imgplc-image' => 'Imatge',
 	'imgplc-notinhistory' => "Podètz pas apondre cap d'imatge en mòde istoric.",
+	'imgplc-notinhistory-video' => 'Podètz pas apondre cap de vidèo en mòde istoric.',
 );
 
 /** Polish (polski)
@@ -468,14 +471,16 @@ $messages['ps'] = array(
 
 /** Portuguese (português)
  * @author Hamilton Abreu
+ * @author Josep Maria 15.
  * @author Luckas
  */
 $messages['pt'] = array(
-	'imgplc-add-image' => 'Adicionar Imagem',
+	'imgplc-add-image' => 'Adicionar imagem',
 	'imgplc-add-video' => 'Adicionar vídeo',
 	'imgplc-placeholder' => 'Espaço reservado',
 	'imgplc-image' => 'Imagem',
-	'imgplc-notinhistory' => 'Não pode adicionar uma imagem no modo histórico.',
+	'imgplc-notinhistory' => 'Não podes adicionar uma imagem no modo histórico.',
+	'imgplc-notinhistory-video' => 'Não podes adicionar um vídeo no modo histórico.',
 );
 
 /** Brazilian Portuguese (português do Brasil)
@@ -584,9 +589,15 @@ $messages['uk'] = array(
 );
 
 /** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
  */
 $messages['vi'] = array(
+	'imgplc-add-image' => 'Thêm hình ảnh',
 	'imgplc-add-video' => 'Thêm đoạn phim',
+	'imgplc-placeholder' => 'Giữ chỗ',
+	'imgplc-image' => 'Hình ảnh',
+	'imgplc-notinhistory' => 'Bạn không thể thêm một hình ảnh trong chế độ lịch sử.',
+	'imgplc-notinhistory-video' => 'Bạn không thể thêm một video ở chế độ lịch sử.',
 );
 
 /** Simplified Chinese (中文（简体）‎)

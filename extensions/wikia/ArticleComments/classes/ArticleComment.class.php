@@ -247,14 +247,10 @@ class ArticleComment {
 
 		$parser->ac_metadata = [];
 
-		// Always tidy Article Comment markup to avoid breakage of surrounding markup
-		global $wgAlwaysUseTidy;
-		$oldWgAlwaysUseTidy = $wgAlwaysUseTidy;
-		$wgAlwaysUseTidy = true;
-
 		$head = $parser->parse( $rawtext, $this->mTitle, ParserOptions::newFromContext( RequestContext::getMain() ) );
 
-		$this->mText = $head->getText();
+		$this->mText = wfFixMalformedHTML( $head->getText() );
+
 		$this->mHeadItems = $head->getHeadItems();
 
 		if( isset( $parser->ac_metadata ) ) {
@@ -264,9 +260,6 @@ class ArticleComment {
 		}
 
 		ParserPool::release( $parser );
-
-		// Restore old value of $wgAlwaysUseTidy
-		$wgAlwaysUseTidy = $oldWgAlwaysUseTidy;
 
 		return $this->mText;
 	}
@@ -733,6 +726,8 @@ class ArticleComment {
 
 		$editPage->summary = $summary;
 
+		$editPage->watchthis = $user->isWatched( $article->getTitle() );
+
 		if(!empty($metadata)) {
 			$editPage->textbox1 =  $text. Xml::element( 'ac_metadata', $metadata, ' ' );
 		}
@@ -872,21 +867,19 @@ class ArticleComment {
 		// Purge squid proxy URLs for ajax loaded content if we are lazy loading
 		if ( !empty( $wgArticleCommentsLoadOnDemand ) ) {
 			$urls = array();
-			$pages = $commentList->getCountPages();
 			$articleId = $title->getArticleId();
 
-			for ( $page = 1; $page <= $pages; $page++ ) {
-				$params[ 'page' ] = $page;
-				$urls[] = ArticleCommentsController::getUrl(
-					'Content',
-					array(
-						'format' => 'html',
-						'articleId' => $articleId,
-						'page' => $page,
-						'skin' => 'true'
-					)
-				);
-			}
+			// Only page 1 is cached in varnish when lazy loading is on
+			// Other pages load with action=ajax&rs=ArticleCommentsAjax&method=axGetComments
+			$urls[] = ArticleCommentsController::getUrl(
+				'Content',
+				array(
+					'format' => 'html',
+					'articleId' => $articleId,
+					'page' => 1,
+					'skin' => 'true'
+				)
+			);
 
 			$squidUpdate = new SquidUpdate( $urls );
 			$squidUpdate->doUpdate();

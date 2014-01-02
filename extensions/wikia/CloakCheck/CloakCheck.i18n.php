@@ -41,6 +41,13 @@ $messages['qqq'] = array(
 	'cloakcheck-form-check-self' => "An \"''IRC cloak''\" is a technical measure on an IRC network to hide the IP address of a user.",
 );
 
+/** Old English (Ænglisc)
+ * @author Espreon
+ */
+$messages['ang'] = array(
+	'cloakcheck-process-username' => 'Brūcendnama: $1',
+);
+
 /** Arabic (العربية)
  * @author Achraf94
  * @author Meno25
@@ -133,11 +140,12 @@ $messages['ce'] = array(
 	'cloakcheck-process-username' => 'Декъашхочун цӀе: $1',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Chmee2
  */
 $messages['cs'] = array(
 	'cloakcheck-form-username' => 'Uživatelské jméno:',
+	'cloakcheck-form-check' => 'Zkontrolujte uživatelské jméno',
 	'cloakcheck-process-notexist' => 'Uživatelské jméno neexistuje.',
 	'cloakcheck-process-username' => 'Uživatelské jméno:$1',
 	'cloakcheck-process-accountage-yes' => 'Účet je aktivní dostatečně dlouho.',
@@ -431,6 +439,7 @@ $messages['lb'] = array(
 	'cloakcheck-form-username' => 'Benotzernumm:',
 	'cloakcheck-form-check' => 'Benotzernumm nokucken',
 	'cloakcheck-process-empty' => 'De Benotzernumm däerf net eidel sinn.',
+	'cloakcheck-process-notexist' => 'De Benotzernumm gëtt et net.',
 	'cloakcheck-process-username' => 'Benotzernumm: $1',
 	'cloakcheck-process-accountage-yes' => 'De Benotzerkont ass al genuch.',
 	'cloakcheck-process-accountage-no' => 'De Benotzerkont ass ze nei.',
@@ -443,6 +452,12 @@ $messages['lb'] = array(
  */
 $messages['lrc'] = array(
 	'cloakcheck-form-username' => 'نوم كاروری:',
+	'cloakcheck-process-username' => 'نوم كاروری:$1',
+	'cloakcheck-process-accountage-yes' => 'حساو وه انازه کافی قدیمی نئ',
+	'cloakcheck-process-accountage-no' => 'حساو فره تازه یه',
+	'cloakcheck-process-emailconf-yes' => 'نشونی ایمیل مئکم بیه',
+	'cloakcheck-process-emailconf-no' => 'نشونی ایمیل مئکم نبیه',
+	'cloakcheck-process-edits-yes' => 'کارور ویرایشتیاش خوئن',
 );
 
 /** Lithuanian (lietuvių)
@@ -552,6 +567,13 @@ $messages['nl'] = array(
 	'cloakcheck-process-emailconf-no' => 'Het e-mailadres is niet bevestigd.',
 	'cloakcheck-process-edits-yes' => 'De gebruiker heeft voldoende bewerkingen gemaakt.',
 	'cloakcheck-process-edits-no' => 'De gebruiker heeft onvoldoende bewerkingen gemaakt.',
+);
+
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'cloakcheck-form-username' => "Nom d'utilizaire :",
 );
 
 /** Polish (polski)
@@ -730,6 +752,7 @@ $messages['sr-ec'] = array(
 /** Swedish (svenska)
  * @author Grytolle
  * @author Tobulos1
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
 	'cloakcheck' => 'Kontroll av IRC-masksbehörighet',
@@ -741,7 +764,7 @@ $messages['sv'] = array(
 	'cloakcheck-process-empty' => 'Användarnamnet får inte vara tomt.',
 	'cloakcheck-process-notexist' => 'Användarnamnet finns inte.',
 	'cloakcheck-process-username' => 'Användarnamn: $1',
-	'cloakcheck-process-accountage-yes' => 'Kontot är gammal nog.',
+	'cloakcheck-process-accountage-yes' => 'Kontot är gammalt nog.',
 	'cloakcheck-process-accountage-no' => 'Kontot är för nytt.',
 	'cloakcheck-process-emailconf-yes' => 'E-postadressen bekräftades.',
 	'cloakcheck-process-emailconf-no' => 'E-postadressen bekräftades inte.',
