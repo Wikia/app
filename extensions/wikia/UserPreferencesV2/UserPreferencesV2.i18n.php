@@ -587,6 +587,14 @@ $messages['lb'] = array(
 	'tog-hidefollowedpages-v2' => "D'lëscht vun de Säiten déi ech iwwerwaache viru D'lëscht vun de Säiten déi ech iwwerwaache viru jiddwerengem verstoppen",
 );
 
+/** Latvian (latviešu)
+ * @author Sg ghost
+ */
+$messages['lv'] = array(
+	'tog-enotifusertalkpages-v2' => '...my lietotāja diskusija lapas tiek mainīts',
+	'preferences-v2-redirect-wiki-activity' => 'Viki Aktivitātes',
+);
+
 /** Malay (Bahasa Melayu)
  * @author Anakmalaysia
  * @author SNN95
@@ -1084,20 +1092,33 @@ $messages['vo'] = array(
 /** Simplified Chinese (中文（简体）‎)
  * @author Qiyue2001
  * @author Sora
+ * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
 	'prefs-personal' => '我的信息',
 	'preferences-v2-username' => '我的用户名：',
 	'preferences-v2-usergroups' => '我的用户组：',
 	'preferences-v2-gender' => '我的性别：',
+	'preferences-v2-password' => '我的密码：',
 	'preferences-v2-oldsig' => '现有的签名：',
 	'preferences-v2-nickname' => '自定义签名：',
+	'preferences-v2-fancysig' => '我想在我的签名中使用维基文本<br />[[{{MediaWiki:preferences-v2-fancysig-help-page-name}}|什么是签名？]]',
 	'preferences-v2-fancysig-help-page-name' => 'Help:签名',
 	'prefs-appearance' => '外观',
 	'preferences-v2-date' => '日期格式',
 	'preferences-v2-time' => '时区：',
 	'preferences-v2-skin' => '布局：',
 	'prefs-emailv2' => '电子邮件',
+	'prefs-email-me-v2' => '发邮件通知我，当...',
+	'tog-enotifwatchlistpages-v2' => '...我关注的页面被更改',
+	'tog-enotifusertalkpages-v2' => '...我的用户讨论页被更改',
+	'tog-enotifminoredits-v2' => '...我关注的页面被小修改',
+	'tog-marketingallowed-v2' => '...Wikia的新闻与事件',
+	'prefs-email-advanced-v2' => '高级选项',
+	'tog-htmlemails-v2' => '发送给我HTML电子邮件',
+	'prefs-wikiemail' => '{{SITENAME}}选项。发邮件给我，当...',
+	'prefs-email-unsubscribe' => '禁用所有电子邮件',
+	'unsubscribe-preferences-toggle-v2' => '禁用所有来自Wikia的电子邮件（覆盖所有其他选项）',
 	'tog-justify-v2' => '显示两端对齐的段落',
 	'preferences-v2-user-landing-page' => '着陆页面：',
 	'preferences-v2-redirect-wiki-activity' => 'Wiki活动',
@@ -1105,7 +1126,9 @@ $messages['zh-hans'] = array(
 	'preferences-v2-redirect-recent-changes' => '最近更改',
 	'prefs-monobookv2' => 'MonoBook',
 	'prefs-recent-changesv2' => '最近的变化、历史和日志',
+	'prefs-followed-pagesv2' => '已关注页面的订阅点',
 	'prefs-advanced-displayv2' => '高级显示选项',
+	'tog-highlightbrokenv2' => '显示坏掉的链接为红色，不带问号标记。',
 	'tog-showAdsv2' => '广告：',
 	'prefs-addressv2' => '地址',
 	'preferences-v2-watchdefault' => '编辑',
@@ -1116,4 +1139,7 @@ $messages['zh-hans'] = array(
 	'preferences-v2-showads-disable' => '不显示所有广告',
 	'preferences-v2-my-email-address' => '我的电子邮件地址：',
 	'prefs-patrolled-editsv2' => '已巡逻的编辑',
+	'tog-editsectiononrightclick-v2' => '右击章节标题来编辑章节',
+	'tog-editondblclick-v2' => '双击来编辑页面',
+	'tog-hidefollowedpages-v2' => '对大家隐藏我关注的页面名单',
 );

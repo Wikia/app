@@ -452,6 +452,12 @@ $messages['lb'] = array(
  */
 $messages['lrc'] = array(
 	'cloakcheck-form-username' => 'نوم كاروری:',
+	'cloakcheck-process-username' => 'نوم كاروری:$1',
+	'cloakcheck-process-accountage-yes' => 'حساو وه انازه کافی قدیمی نئ',
+	'cloakcheck-process-accountage-no' => 'حساو فره تازه یه',
+	'cloakcheck-process-emailconf-yes' => 'نشونی ایمیل مئکم بیه',
+	'cloakcheck-process-emailconf-no' => 'نشونی ایمیل مئکم نبیه',
+	'cloakcheck-process-edits-yes' => 'کارور ویرایشتیاش خوئن',
 );
 
 /** Lithuanian (lietuvių)

@@ -360,6 +360,14 @@ $messages['lb'] = array(
 	'places-error-no-article' => 'Dir musst eng Säit uginn',
 );
 
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'places-editor-search' => 'پی جوری',
+	'places-geolocation-modal-error-title' => 'خطا',
+);
+
 /** Macedonian (македонски)
  * @author Bjankuloski06
  */

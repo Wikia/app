@@ -149,6 +149,13 @@ $messages['lb'] = array(
 	'centralhelpsearch-placeholder' => 'An der Hëllef sichen...',
 );
 
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'centralhelpsearch-placeholder' => 'پی جوری هومیاری',
+);
+
 /** Lithuanian (lietuvių)
  * @author Eitvys200
  */

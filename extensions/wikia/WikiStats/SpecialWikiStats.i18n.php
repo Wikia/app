@@ -5355,6 +5355,13 @@ $messages['lus'] = array(
 	'wikistats_other_namespace' => 'hminghmun  <br /> dang',
 );
 
+/** Latvian (latviešu)
+ * @author Sg ghost
+ */
+$messages['lv'] = array(
+	'wikistats_namespaces_user' => 'Lietotājs (ietver Lietotāja diskusija)',
+);
+
 /** Maithili (मैथिली)
  * @author Vinitutpal
  */
@@ -6363,7 +6370,7 @@ $messages['nl'] = array(
 	'wikistats_comparision' => 'Vergelijkingen',
 	'wikistats_showstats_btn' => 'Statistieken weergeven',
 	'wikistats_wikia_information' => 'Informatie over Wikia',
-	'wikiastast_refresh_data' => 'Gegevens verversen',
+	'wikiastast_refresh_data' => 'Gegevens vernieuwen',
 	'wikistats_showcharts' => 'Grafieken weergeven',
 	'wikistats_export_xls' => 'Naar XLS exporteren',
 	'wikistats_panel_close_btn' => 'Sluiten',

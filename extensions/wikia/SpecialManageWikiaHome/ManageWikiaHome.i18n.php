@@ -795,6 +795,9 @@ $messages['lb'] = array(
  */
 $messages['lrc'] = array(
 	'manage-wikia-home-wiki-filter' => 'فيلتر',
+	'manage-wikia-home-wiki-filter-reset' => 'پاك كردن',
+	'manage-wikia-home-wiki-list-headline' => 'نوم ویکی',
+	'manage-wikia-home-wiki-list-blocked' => 'قلف بيه',
 	'manage-wikia-home-wiki-list-blocked-no' => 'نه',
 	'manage-wikia-home-wiki-list-blocked-yes' => 'هری',
 	'manage-wikia-home-wiki-list-promoted-no' => 'نه',
@@ -1428,11 +1431,16 @@ $messages['vi'] = array(
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Liuxinyu970226
+ * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
 	'managewikiahome' => '管理Wikia首页',
+	'manage-wikia-home-wrong-rights' => '您可能已登出，或者您没有权限使用此特殊页面。',
 	'manage-wikia-home-wikis-in-slots-heading' => '插槽部署',
 	'manage-wikia-home-wikis-in-slots-total' => '插槽总计：$1',
+	'manage-wikia-home-wikis-in-slots-success' => '数字插槽已被更改。',
+	'manage-wikia-home-collections-invalid-action' => '此操作不存在。',
+	'manage-wikia-home-verticals-proportions' => '每纵列的wiki数量',
 	'manage-wikia-home-change-button' => '更改',
 	'manage-wikia-home-wikis-in-visualization-heading' => '已实现可视化的维基列表',
 	'manage-wikia-home-wiki-filter' => '过滤器',

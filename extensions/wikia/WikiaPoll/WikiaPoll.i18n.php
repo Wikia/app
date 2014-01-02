@@ -36,7 +36,8 @@ $messages['qqq'] = array(
 * $1 is the number of users that have voted.',
 	'wikiapoll-question' => 'Used as a title. Parameter:
 * $1 is the poll question without a question mark.',
-	'wikiapoll-thanks-for-vote' => 'Thank you to voting user.',
+	'wikiapoll-thanks-for-vote' => 'Thank you to voting user.
+{{Identical|Thank}}',
 	'wikiapoll-vote' => 'Button text to vote in a poll.
 {{Identical|Vote}}',
 	'wikiapoll-votes' => 'Parameter:

@@ -238,6 +238,16 @@ $messages['lrc'] = array(
 	'adengine-exitstitial-button' => 'د ای تبلیغ زی رد با',
 );
 
+/** Latvian (latviešu)
+ * @author Sg ghost
+ */
+$messages['lv'] = array(
+	'adengine-exitstitial-title-template' => 'Jūs atstājot $1...',
+	'adengine-exitstitial-redirecting' => 'Jūsu pārlūkprogramma būs novirzīt jūs uz jūsu pieprasīto lapu pēc dažām sekundēm.',
+	'adengine-exitstitial-go-back' => 'Vēlaties doties atpakaļ?',
+	'adengine-exitstitial-button' => 'Izlaist šo reklāmu',
+);
+
 /** Basa Banyumasan (Basa Banyumasan)
  * @author StefanusRA
  */

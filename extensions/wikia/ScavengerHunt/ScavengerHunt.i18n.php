@@ -1405,6 +1405,23 @@ $messages['lb'] = array(
 	'scavengerhunt-label-entry-form-username' => 'Benotzernumm',
 );
 
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'scavengerhunt-list-edit' => 'ويرايشت',
+	'scavengerhunt-label-general' => 'کلی',
+	'scavengerhunt-label-name' => 'نوم:',
+	'scavengerhunt-button-save' => 'ذخيره كردن',
+	'scavengerhunt-button-disable' => 'د كار ونن',
+	'scavengerhunt-button-enable' => 'قادر بيه',
+	'scavengerhunt-button-delete' => 'پاك كردن',
+	'scavengerhunt-entry-form-name' => 'نومتو',
+	'scavengerhunt-entry-form-email' => 'نشونی ایمیلتو:',
+	'scavengerhunt-quit-game-button-cancel' => 'رد کردن',
+	'scavengerhunt-label-clue-size' => 'انازه فونت',
+);
+
 /** Macedonian (македонски)
  * @author Bjankuloski06
  */
