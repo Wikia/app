@@ -39,8 +39,16 @@
 window.onerror=function(m,u,l){
 var q='//jserrorslog.wikia.com/',i=new Image();
 if(Math.random()<0.01){
-	try{var d=[m,u,l];
-		try{d.push(document.cookie.match(/server.([A-Z]*).cache/)[1])}catch(e){}
+	try{
+		var d={"@message": m, "@fields": {
+			"url": u,
+			"line": l
+		}};
+
+		try{
+			d['server'] = document.cookie.match(/server.([A-Z]*).cache/)[1]
+		} catch (e) {}
+
 		i.src=q+'l?'+JSON.stringify(d)
 	}catch(e){i.src=q+'e?'+e}
 }return!1}

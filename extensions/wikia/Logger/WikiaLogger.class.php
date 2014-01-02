@@ -21,6 +21,10 @@ class WikiaLogger {
 		);
 	}
 
+	/**
+	 * @param string $ident
+	 * @return WikiaLogger
+	 */
 	public static function instance($ident=null) {
 		static $instances = [];
 
