@@ -315,9 +315,9 @@ class WikiService extends WikiaModel {
 			$userInfo['name'] = $username;
 			/** @var $userProfileTitle GlobalTitle */
 			$userProfileTitle = GlobalTitle::newFromTextCached($username, NS_USER, $wikiId);
-			$userInfo['userPageUrl'] = ($userProfileTitle instanceof Title) ? $userProfileTitle->getFullURL() : '#';
+			$userInfo['userPageUrl'] = ($userProfileTitle instanceof GlobalTitle) ? $userProfileTitle->getFullURL() : '#';
 			$userContributionsTitle = GlobalTitle::newFromTextCached('Contributions/' . $username, NS_SPECIAL, $wikiId);
-			$userInfo['userContributionsUrl'] = ($userContributionsTitle instanceof Title) ? $userContributionsTitle->getFullURL() : '#';
+			$userInfo['userContributionsUrl'] = ($userContributionsTitle instanceof GlobalTitle) ? $userContributionsTitle->getFullURL() : '#';
 			$userInfo['userId'] = $userId;
 
 			$userStatsService = new UserStatsService($userId);

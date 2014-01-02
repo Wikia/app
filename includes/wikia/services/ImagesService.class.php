@@ -276,11 +276,10 @@ class ImagesService extends Service {
 	 * @return string image page URL
 	 */
 	public static function getImagePage($wikiId, $pageId) {
-		$app = F::app();
 		wfProfileIn(__METHOD__);
 
 		$title = GlobalTitle::newFromId($pageId, $wikiId);
-		$imagePage = ($title instanceof Title) ? $title->getFullURL() : '';
+		$imagePage = ($title instanceof GlobalTitle) ? $title->getFullURL() : '';
 
 		wfProfileOut(__METHOD__);
 		return $imagePage;

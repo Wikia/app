@@ -568,7 +568,7 @@ class WikiaHomePageController extends WikiaController {
 		$wordmarkUrl = '';
 		try {
 			$title = GlobalTitle::newFromText('Wiki-wordmark.png', NS_FILE, $wikiId);
-			if ( $title !== null ) {
+			if ( $title instanceof GlobalTitle ) {
 				$file = new GlobalFile($title);
 				if ( $file !== null ) {
 					$wordmarkUrl = $file->getUrl();
