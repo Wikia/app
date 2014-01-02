@@ -868,6 +868,7 @@ class Linker {
 			 * Wikia change start
 			 * @author Federico
 			 */
+			$params['useTemplate'] = 1;
 			$origHTML = $thumb->toHtml( $params );
 			$s .= $origHTML;
 			/**
