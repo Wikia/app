@@ -1,6 +1,6 @@
-'use strict';
 var WikiaHubs = {
 	init: function() {
+		'use strict';
 		document.getElementById( 'WikiaHubs' ).addEventListener( 'click', WikiaHubs.clickTrackingHandler, true );
 
 		// Featured Video
@@ -25,6 +25,7 @@ var WikiaHubs = {
 	},
 
 	iframeLinkChanger: function( e ) {
+		'use strict';
 		e.preventDefault();
 		var node = $( e.target ).closest( 'a' );
 		window.top.location = node.attr( 'href' );
@@ -32,6 +33,7 @@ var WikiaHubs = {
 	},
 
 	trackClick: function( category, action, label, value, params, event ) {
+		'use strict';
 		Wikia.Tracker.track( {
 			action: action,
 			browserEvent: event,
@@ -44,6 +46,7 @@ var WikiaHubs = {
 	},
 
 	clickTrackingHandler: function( e ) {
+		'use strict';
 		var node = $( e.target ),
 			startTime = new Date(),
 			url,
@@ -257,6 +260,7 @@ var WikiaHubs = {
 	},
 
 	modalClickTrackingHandler: function( e ) {
+		'use strict';
 		var node = $( e.target );
 
 		if ( node.closest( '.VideoSuggestModal' ).length > 0 ) {
@@ -273,6 +277,7 @@ var WikiaHubs = {
 };
 
 $( function() {
+	'use strict';
 	$( '#carouselContainer' ).carousel();
 	WikiaHubs.init();
 } );
