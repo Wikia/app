@@ -13,6 +13,9 @@ $messages = array();
  */
 $messages['en'] = array(
 	'parserspeed' => 'Parser Speed',
+	'parserspeed-desc' => 'Collects data on parser performance and provides a special page to view this information',
+	'right-parserspeed' => 'View parser performance statistics',
+	'action-parserspeed' => 'view parser performance statistics',
 	'parserspeed-namespace' => 'Namespace',
 	'parserspeed-title' => 'Article',
 	'parserspeed-average' => 'Avg. parsing time',
@@ -31,6 +34,9 @@ $messages['en'] = array(
  */
 $messages['qqq'] = array(
 	'parserspeed' => 'Extension name',
+	'parserspeed-desc' => '{{desc}}',
+	'right-parserspeed' => '{{doc-right|parserspeed}}',
+	'action-parserspeed' => '{{doc-action|parserspeed}}',
 	'parserspeed-namespace' => 'Column name on Parser Speed table.',
 	'parserspeed-title' => 'Column name on Parser Speed table.',
 	'parserspeed-average' => 'Column name on Parser Speed table.',
