@@ -46,7 +46,7 @@ class LVSUpdateSuggestions extends Maintenance {
 			$this->clearSuggestions();
 		}
 
-		$this->processVideoList( );
+		$this->processVideoList();
 
 		$delta = $this->formatDuration(time() - $startTime);
 
@@ -109,9 +109,9 @@ class LVSUpdateSuggestions extends Maintenance {
 			$this->debug("Processing '$title'\n");
 
 			// This sets page_wikia_props for WPP_LVS_SUGGEST_DATE, WPP_LVS_EMPTY_SUGGEST and WPP_LVS_SUGGEST
-			$suggestions = $lvsHelper->suggestionSearch( $title, $this->test );
+			$suggestions = $lvsHelper->suggestionSearch( $title, $this->test, $this->verbose );
 
-			if ( empty( $suggestions ) ) {
+			if ( $suggestions ) {
 				$vidsWithSugggestions++;
 				$totalSuggestions += count($suggestions);
 
@@ -120,6 +120,9 @@ class LVSUpdateSuggestions extends Maintenance {
 				$this->debug("\tNo suggestions found\n");
 			}
 		}
+
+		// clear cache for total videos
+		$lvsHelper->invalidateCacheTotalVideos();
 
 		// clear cache for total new videos
 		$lvsHelper->invalidateCacheTotalNewVideos();

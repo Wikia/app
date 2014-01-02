@@ -14,22 +14,26 @@ class Hooks {
 	/* @String repoName - repo name */
 	static private $repoName = 'local';
 
-	/*
+	/**
 	 * init config for FSFileBackend class
+	 *
+	 * @return \FSFileBackend
 	 */
 	static private function initLocalFS( ) {
-		global $wgUploadDirectory, $wgDeletedDirectory;
+		global $wgUploadDirectory, $wgUploadDirectoryNFS;
 		
 		$repoName = self::$repoName;
+		$directory = ( !empty( $wgUploadDirectoryNFS ) ) ? $wgUploadDirectoryNFS : $wgUploadDirectory;
+		
 		$config = array (
 			'name'           => "{$repoName}-backend",
 			'class'          => 'FSFileBackend',
 			'lockManager'    => 'fsLockManager',
 			'containerPaths' => array(
-				"{$repoName}-public"  => "{$wgUploadDirectory}",
-				"{$repoName}-thumb"   => "{$wgUploadDirectory}/thumb",
-				"{$repoName}-deleted" => "{$wgDeletedDirectory}",
-				"{$repoName}-temp"    => "{$wgUploadDirectory}/temp"
+				"{$repoName}-public"  => "{$directory}",
+				"{$repoName}-thumb"   => "{$directory}/thumb",
+				"{$repoName}-deleted" => "{$directory}",
+				"{$repoName}-temp"    => "{$directory}/temp"
 			),
 			'fileMode'       => 0644,
 		);
@@ -50,12 +54,12 @@ class Hooks {
 	}
 	
 	/* save image into local repo */
-	public static function doStoreInternal( $params, $status ) {
+	public static function doStoreInternal( $params, \Status $status ) {
 		global $wgEnableSwithSyncToLocalFS, $wgDevelEnvironment;
 		
 		wfProfileIn( __METHOD__ );
 		$fsParams = $params;
-		
+
 		if ( !empty( $wgEnableSwithSyncToLocalFS ) ) {
 			if ( !empty( $params['dst'] ) && !empty( $params['src'] ) ) {
 				# replace swift-backend storage URL with local-backend ... 
@@ -63,6 +67,13 @@ class Hooks {
 				
 				# ... and set correct destination path
 				$params['dst'] = str_replace( "swift-backend", sprintf("%s-backend", self::$repoName), $params['dst'] );
+
+				# don't sync dynamically generated timeline files (BAC-1081)
+				if (strpos($params['dst'], '/local-public/timeline/') !== false) {
+					wfDebug(__METHOD__ . ": syncing {$params['dst']} to NFS skipped!\n");
+					wfProfileOut( __METHOD__ );
+					return true;
+				}
 			
 				# init FSFileBackend object
 				$fsBackend = self::initLocalFS();
@@ -76,7 +87,7 @@ class Hooks {
 				} 
 				
 				if ( !$status->isOK() ) {
-					\Wikia\SwiftStorage::log( __METHOD__, 'Cannot save image on local storage' );
+					\Wikia\SwiftStorage::log( __METHOD__, 'Cannot save image on local storage: ' . json_encode( $status ) );
 				}
 			} else {
 				\Wikia\SwiftStorage::log( __METHOD__, 'Destination not defined' );
@@ -93,7 +104,7 @@ class Hooks {
 		return true;
 	}
 	
-	public static function doCopyInternal( $params, $status ) {
+	public static function doCopyInternal( $params, \Status $status ) {
 		global $wgEnableSwithSyncToLocalFS, $wgDevelEnvironment;
 		
 		wfProfileIn( __METHOD__ );
@@ -146,10 +157,15 @@ class Hooks {
 		return true;
 	}
 	
-	public static function doDeleteInternal( $params, $status ) {
+	public static function doDeleteInternal( $params, \Status $status ) {
 		global $wgEnableSwithSyncToLocalFS, $wgDevelEnvironment;
 		
 		wfProfileIn( __METHOD__ );
+		
+		if ( !empty( $params['src'] ) && ( strpos( $params['src'], '/images/thumb' ) !== false ) ) {
+			wfProfileOut( __METHOD__ );
+			return true;
+		}
 		
 		if ( empty( $params['op']  ) ) {
 			$params['op'] = 'delete';

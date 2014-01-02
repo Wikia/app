@@ -13,7 +13,7 @@
  */
 
 /*global window, document, define, require, setTimeout, setInterval, clearInterval, Features, AdConfig*/
-define('ads', ['wikia.cookies', 'wikia.window', 'wikia.dartmobilehelper'], function (ck, window, dartHelper) {
+define('ads', ['wikia.cookies', 'wikia.window', 'wikia.dartmobilehelper', 'wikia.scriptwriter'], function (ck, window, dartHelper, scriptWriter) {
 	'use strict';
 
 	var STOP_COOKIE_NAME = 'wkStopAd',
@@ -35,19 +35,19 @@ define('ads', ['wikia.cookies', 'wikia.window', 'wikia.dartmobilehelper'], funct
 	}
 
 	function getUniqueId() {
-		var wikia_mobile_id = ck.get(ID_COOKIE_NAME);
+		var wikiaMobileId = ck.get(ID_COOKIE_NAME);
 
-		if (!wikia_mobile_id) {
-			wikia_mobile_id = Math.round(Math.random() * 23456787654);
+		if (!wikiaMobileId) {
+			wikiaMobileId = Math.round(Math.random() * 23456787654);
 
-			ck.set(ID_COOKIE_NAME, wikia_mobile_id, {
+			ck.set(ID_COOKIE_NAME, wikiaMobileId, {
 				expires: 1000*60*60*24*180, // 3 months
 				path: window.wgCookiePath,
 				domain: window.wgCookieDomain
 			});
 		}
 
-		return wikia_mobile_id;
+		return wikiaMobileId;
 	}
 
 	/**
@@ -64,15 +64,13 @@ define('ads', ['wikia.cookies', 'wikia.window', 'wikia.dartmobilehelper'], funct
 	 */
 	function setupSlot(options) {
 		if (shouldRequestAd()) {
-			window.postscribe(
+			scriptWriter.injectScriptByUrl(
 				options.wrapper,
-				'<script src="' +
-					dartHelper.getMobileUrl({
-						slotname: options.name,
-						size: options.size,
-						uniqueId: getUniqueId()
-					}) +
-					'"></script>',
+				dartHelper.getMobileUrl({
+					slotname: options.name,
+					size: options.size,
+					uniqueId: getUniqueId()
+				}),
 				findAd(options.wrapper, options.init)
 			);
 		}

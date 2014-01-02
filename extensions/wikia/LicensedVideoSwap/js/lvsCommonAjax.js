@@ -3,7 +3,7 @@
  * and ajax responses for LVS
  */
 define( 'lvs.commonajax', ['wikia.window', 'lvs.tracker'], function( window, tracker ) {
-	"use strict";
+	'use strict';
 
 	var $body,
 		$container;
@@ -11,7 +11,7 @@ define( 'lvs.commonajax', ['wikia.window', 'lvs.tracker'], function( window, tra
 	function init( $elem ) {
 		$body = $( 'body' );
 		$container = $elem;
-	};
+	}
 
 	// add loading graphic
 	function startLoadingGraphic() {
@@ -27,19 +27,26 @@ define( 'lvs.commonajax', ['wikia.window', 'lvs.tracker'], function( window, tra
 
 	// ajax success callback
 	function success( data, trackingLabel ) {
-		if( data.result == 'error' ) {
+		if( data.result === 'error' ) {
 			window.GlobalNotification.show( data.msg, 'error' );
 			stopLoadingGraphic();
 		} else {
 			window.GlobalNotification.show( data.msg, 'confirm' );
 			// update the grid and trigger the reset event for JS garbage collection
 			$container.html( data.html ).trigger( 'contentReset' );
+			$( '.lvs-match-stats' ).find( '.count' ).text( data.totalVideos || 0 );
+
 			stopLoadingGraphic();
 
 			tracker.track({
 				action: tracker.actions.SUCCESS,
 				label: trackingLabel
 			});
+
+			// redirect if user swaps last video on page
+			if ( data.redirect.length ) {
+				window.location = data.redirect;
+			}
 		}
 	}
 
@@ -54,5 +61,5 @@ define( 'lvs.commonajax', ['wikia.window', 'lvs.tracker'], function( window, tra
 		stopLoadingGraphic: stopLoadingGraphic,
 		success: success,
 		failure: failure
-	}
+	};
 });

@@ -83,7 +83,7 @@ $messages['ce'] = array(
 	'mostpopularcategories' => 'Массарел гӀарайаьлла категореш',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Mormegil
  */
 $messages['cs'] = array(

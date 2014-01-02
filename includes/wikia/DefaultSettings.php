@@ -64,6 +64,13 @@ require_once ( $IP."/includes/wikia/Wikia.php" );
 require_once ( $IP."/includes/wikia/WikiaMailer.php" );
 require_once ( $IP."/extensions/Math/Math.php" );
 
+/**
+ * wikia library incudes
+ */
+require_once ( $IP."/lib/wikia/fluent-sql-php/src/init.php");
+
+FluentSql\StaticSQL::setClass("\\WikiaSQL");
+
 global $wgDBname;
 if($wgDBname != 'uncyclo') {
 	include_once( "$IP/extensions/wikia/SkinChooser/SkinChooser.php" );
@@ -163,6 +170,8 @@ $wgAutoloadClasses['StatsApiController'] = "{$IP}/includes/wikia/api/StatsApiCon
 $wgAutoloadClasses['RelatedPagesApiController'] = "{$IP}/includes/wikia/api/RelatedPagesApiController.class.php";
 $wgAutoloadClasses['ActivityApiController'] = "{$IP}/includes/wikia/api/ActivityApiController.class.php";
 $wgAutoloadClasses['UserApiController'] = "{$IP}/includes/wikia/api/UserApiController.class.php";
+$wgAutoloadClasses['TvApiController'] = "{$IP}/includes/wikia/api/TvApiController.class.php";
+
 
 $wgWikiaApiControllers['DiscoverApiController'] = "{$IP}/includes/wikia/api/DiscoverApiController.class.php";
 $wgWikiaApiControllers['NavigationApiController'] = "{$IP}/includes/wikia/api/NavigationApiController.class.php";
@@ -172,6 +181,7 @@ $wgWikiaApiControllers['StatsApiController'] = "{$IP}/includes/wikia/api/StatsAp
 $wgWikiaApiControllers['RelatedPagesApiController'] = "{$IP}/includes/wikia/api/RelatedPagesApiController.class.php";
 $wgWikiaApiControllers['ActivityApiController'] = "{$IP}/includes/wikia/api/ActivityApiController.class.php";
 $wgWikiaApiControllers['UserApiController'] = "{$IP}/includes/wikia/api/UserApiController.class.php";
+$wgWikiaApiControllers['TvApiController'] = "{$IP}/includes/wikia/api/TvApiController.class.php";
 
 //Wikia Api exceptions classes
 $wgAutoloadClasses[ 'BadRequestApiException'] =  "{$IP}/includes/wikia/api/ApiExceptions.php" ;
@@ -252,6 +262,8 @@ $wgAutoloadClasses[ 'Wikia\\Measurements\\Time'       ] = "$IP/includes/wikia/me
 $wgAutoloadClasses[ 'MemcacheMoxiCluster'             ] = "{$IP}/includes/wikia/MemcacheMoxiCluster.class.php";
 $wgAutoloadClasses[ 'MemcacheClientShadower'          ] = "{$IP}/includes/wikia/MemcacheClientShadower.class.php";
 $wgAutoloadClasses[ 'Wikia\\SwiftStorage'             ] = "$IP/includes/wikia/SwiftStorage.class.php";
+$wgAutoloadClasses[ 'WikiaSQL'                        ] = "$IP/includes/wikia/WikiaSQL.class.php";
+$wgAutoloadClasses[ 'WikiaSQLCache'                   ] = "$IP/includes/wikia/WikiaSQLCache.class.php";
 
 /**
  * Resource Loader enhancements
@@ -424,6 +436,7 @@ $wgAutoloadClasses[ "WikiaApiQueryLastEditors"      ] = "$IP/extensions/wikia/Wi
 $wgAutoloadClasses[ "WikiaApiResetPasswordTime"     ] = "$IP/extensions/wikia/WikiaApi/WikiaApiResetPasswordTime.php";
 $wgAutoloadClasses[ "ApiRunJob"                     ] = "$IP/extensions/wikia/WikiaApi/ApiRunJob.php";
 $wgAutoloadClasses[ "ApiFetchBlob"                  ] = "$IP/includes/api/wikia/ApiFetchBlob.php";
+$wgAutoloadClasses[ "ApiLicenses"                   ] = "$IP/includes/wikia/api/ApiLicenses.php";
 
 /**
  * validators
@@ -494,6 +507,7 @@ $wgAPIModules[ "ajaxlogin"         ] = "WikiaApiAjaxLogin";
 $wgAPIModules[ "awcreminder"       ] = "WikiaApiCreatorReminderEmail";
 $wgAPIModules[ "runjob"            ] = "ApiRunJob";
 $wgAPIModules[ "fetchblob"         ] = "ApiFetchBlob";
+$wgAPIModules[ "licenses"          ] = "ApiLicenses";
 $wgAPIModules[ "resetpasswordtime" ] = 'WikiaApiResetPasswordTime';
 
 $wgUseAjax                = true;
@@ -998,8 +1012,7 @@ if( !isset( $wgUseMedusa ) ) {
 /**
  * Memcached class name
  */
-$wgMemCachedClass = 'MemCachedClientforWiki';
-$wgMoxiTestNodes = ['ap-s44'];
+$wgMemCachedClass = 'MemcacheMoxiCluster';
 
 /**
  * Extra configuration options for memcached when using libmemcached/pecl-memcached
@@ -1156,6 +1169,14 @@ $wgEnableJavaScriptErrorLogging = false;
 $wgEnableAdEngineExt = true;
 
 /**
+ * @name $wgAdDriverUseSevenOneMedia
+ * Whether to use SevenOne Media ads (true) or the other ads (false)
+ * Null means true for languages within $wgAdDriverUseSevenOneMediaInLanguages
+ */
+$wgAdDriverUseSevenOneMedia = null;
+$wgAdDriverUseSevenOneMediaInLanguages = ['de'];
+
+/**
  * @name $wgAdVideoTargeting
  * Enables page-level video ad targeting
  */
@@ -1187,3 +1208,9 @@ $wgPagesWithNoAdsForLoggedInUsersOverriden = array();
  * Default is 'corporate' (LB+MR+skin only); 'all' may be useful sometimes
  */
 $wgPagesWithNoAdsForLoggedInUsersOverriden_AD_LEVEL = null;
+
+/**
+ * @name $wgOasisResponsive
+ * Enables the Oasis responsive layout styles
+ */
+$wgOasisResponsive = null;

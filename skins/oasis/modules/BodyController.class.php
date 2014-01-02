@@ -77,12 +77,9 @@ class BodyController extends WikiaController {
 	 * @return Boolean
 	 */
 	public static function isResponsiveLayoutEnabled() {
-		$app = F::app();
-		return !empty( $app->wg->OasisResponsive ) &&
-				// Prevent the responsive layout from being enabled on the
-				// corporate wiki as it will break styling on it.
-				// TODO: remove this check when it's safe to enable there.
-				empty( $app->wg->EnableWikiaHomePageExt );
+		global $wgOasisResponsive;
+
+		return !empty( $wgOasisResponsive );
 	}
 
 	/**
@@ -150,10 +147,14 @@ class BodyController extends WikiaController {
 		if ($wgEnableForumExt && ForumHelper::isForum()) {
 			$railModuleList = array (
 				1500 => array('Search', 'Index', null),
-				1002 => array('Forum', 'forumRelatedThreads', null),
-				1001 => array('Forum', 'forumActivityModule', null),
+				1202 => array('Forum', 'forumRelatedThreads', null),
+				1201 => array('Forum', 'forumActivityModule', null),
 				1490 => array('Ad', 'Index', array('slotname' => 'TOP_RIGHT_BOXAD')),
 			);
+
+			// Include additional modules from other extensions (like chat)
+			wfRunHooks( 'GetRailModuleList', array( &$railModuleList ) );
+
 			wfProfileOut(__METHOD__);
 			return $railModuleList;
 		}

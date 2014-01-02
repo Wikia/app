@@ -29,6 +29,7 @@
 @import "core/reset";
 @import "core/modal";
 @import "core/body";
+@import "core/background";
 @import "core/globalelements";
 @import "core/GlobalHeader";
 @import "core/AccountNavigation";
@@ -50,6 +51,7 @@
 @import "core/GlobalNotification";
 @import "core/WikiaBar";
 @import "core/jquery.ui.autocomplete"; // TODO: load on demand
+@import "core/video-thumbnail";
 
 // Bootstrap
 @import "resources/wikia/libraries/bootstrap/tooltip";
@@ -83,12 +85,9 @@
 }
 
 // load all responsive layout files
-
 // These files should always be loaded after everything else in oasis.scss because
 // they override some of the styles.
 @import "core/responsive-variables";
 @import "core/responsive-font-sizing";
-@import "core/responsive-background";
 @import "core/responsive-core";
 @import "core/responsive-mainpage-tag";
-

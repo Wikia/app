@@ -22,8 +22,8 @@ $wgAutoloadClasses['Wikia\NLP\Entities\WikiEntitiesService'] =  $dir . 'classes/
 $wgAutoloadClasses['Wikia\NLP\Entities\Hooks'] =  $dir . 'classes/Entities/Hooks.php';
 
 // this would be for page_wikia_props -- should move to defines if we use it.
-define( 'PAGE_ENTITIES_KEY', 22 );
+// define( 'PAGE_ENTITIES_KEY', 22 );
 
-if ( $wgEnableEntitiesForDFP ) {
-	$wgHooks['ArticleViewHeader'][] = 'Wikia\NLP\Entities\Hooks::onArticleViewHeader';
+if ( $wgEnableTopicsForDFP ) {
+	$wgHooks['ArticleViewHeader'][] = 'Wikia\\NLP\\Entities\\Hooks::onArticleViewHeader';
 }

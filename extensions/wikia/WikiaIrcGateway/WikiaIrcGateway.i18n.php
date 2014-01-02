@@ -36,11 +36,12 @@ $messages['af'] = array(
 );
 
 /** Old English (Ænglisc)
+ * @author Espreon
  * @author Gott wisst
  */
 $messages['ang'] = array(
 	'ircgate-username' => 'Brūcendnama:',
-	'ircgate-channel' => 'Ƿeȝ:',
+	'ircgate-channel' => 'Weg:',
 );
 
 /** Arabic (العربية)
@@ -124,7 +125,7 @@ $messages['ca'] = array(
 	'ircgate-channel' => 'Canal:',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Mr. Richard Bolla
  */
 $messages['cs'] = array(
@@ -316,6 +317,13 @@ $messages['lb'] = array(
 $messages['ln'] = array(
 	'ircgate-username' => 'Nkómbó ya mosáleli:',
 	'ircgate-channel' => 'Lileko:',
+);
+
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'ircgate-channel' => 'كانال:',
 );
 
 /** Latvian (latviešu)

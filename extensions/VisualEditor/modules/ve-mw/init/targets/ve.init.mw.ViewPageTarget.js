@@ -43,9 +43,6 @@ ve.init.mw.ViewPageTarget = function VeInitMwViewPageTarget() {
 	this.$toolbarEditNoticesTool = $( '<div>' )
 		.addClass( 've-init-mw-viewPageTarget-tool' );
 
-	this.$toolbarFeedbackTool = $( '<div>' )
-		.addClass( 've-init-mw-viewPageTarget-tool' );
-
 	this.$toolbarBetaNotice = $( '<div>' )
 		.addClass( 've-init-mw-viewPageTarget-toolbar-betaNotice' );
 	this.$toolbarBetaNoticeTool = $( '<div>' )
@@ -731,12 +728,13 @@ ve.init.mw.ViewPageTarget.prototype.onToolbarSaveButtonClick = function () {
 };
 
 /**
- * Handle clicks on the save button in the toolbar.
+ * Handle clicks on the cancel button in the toolbar.
  *
  * @method
  * @param {jQuery.Event} e Mouse click event
  */
 ve.init.mw.ViewPageTarget.prototype.onToolbarCancelButtonClick = function () {
+	ve.track( { 'action': ve.track.actions.CLICK, 'label': 'button-cancel' } );
 	this.deactivate();
 };
 
@@ -747,6 +745,7 @@ ve.init.mw.ViewPageTarget.prototype.onToolbarCancelButtonClick = function () {
  * @param {jQuery.Event} e Mouse click event
  */
 ve.init.mw.ViewPageTarget.prototype.onToolbarMwMetaButtonClick = function () {
+	ve.track( { 'action': ve.track.actions.CLICK, 'label': 'tool-page-settings' } );
 	this.surface.getDialogs().open( 'meta' );
 };
 
@@ -770,28 +769,10 @@ ve.init.mw.ViewPageTarget.prototype.onToolbarEditNoticesToolClick = function () 
  * @param {jQuery.Event} e Mouse click event
  */
 ve.init.mw.ViewPageTarget.prototype.onToolbarBetaNoticeToolClick = function () {
+	ve.track( { 'action': ve.track.actions.CLICK, 'label': 'tool-beta-notice' } );
 	this.$toolbarBetaNotice.fadeToggle( 'fast' );
 	this.$toolbarEditNotices.fadeOut( 'fast' );
 	this.$document[0].focus();
-};
-
-/**
- * Handle clicks on the feedback tool in the toolbar.
- *
- * @method
- * @param {jQuery.Event} e Mouse click event
- */
-ve.init.mw.ViewPageTarget.prototype.onToolbarFeedbackToolClick = function () {
-	this.$toolbarEditNotices.fadeOut( 'fast' );
-	if ( !this.feedback ) {
-		// This can't be constructed until the editor has loaded as it uses special messages
-		this.feedback = new mw.Feedback( {
-			'title': new mw.Title( ve.msg( 'visualeditor-feedback-link' ) ),
-			'bugsLink': new mw.Uri( 'https://bugzilla.wikimedia.org/enter_bug.cgi?product=VisualEditor&component=General' ),
-			'bugsListLink': new mw.Uri( 'https://bugzilla.wikimedia.org/buglist.cgi?query_format=advanced&resolution=---&resolution=LATER&resolution=DUPLICATE&product=VisualEditor&list_id=166234' )
-		} );
-	}
-	this.feedback.launch();
 };
 
 /**
@@ -833,8 +814,16 @@ ve.init.mw.ViewPageTarget.prototype.onSurfaceModelChange = function ( tx, range 
 	if ( text.match( /\[\[|\{\{|''|<nowiki|~~~|^==|^\*|^\#/ ) ) {
 		$.showModal(
 			ve.msg( 'visualeditor-wikitext-warning-title' ),
-			$( $.parseHTML( ve.init.platform.getParsedMessage( 'visualeditor-wikitext-warning' ) ) )
-				.filter( 'a' ).attr( 'target', '_blank ' ).end()
+			$( $.parseHTML( ve.init.platform.getParsedMessage( 'wikia-visualeditor-wikitext-warning' ) ) )
+				.filter( 'a' ).attr( 'target', '_blank ' ).end(),
+			{
+				'onClose': function() {
+					ve.track( { 'action': ve.track.actions.CLOSE, 'label': 'modal-wikitext-warning' } );
+				},
+				'onCreate': function() {
+					ve.track( { 'action': ve.track.actions.OPEN, 'label': 'modal-wikitext-warning' } );
+				}
+			}
 		);
 		this.surface.getModel().disconnect( this, { 'change': 'onSurfaceModelChange' } );
 	}
@@ -844,7 +833,7 @@ ve.init.mw.ViewPageTarget.prototype.onSurfaceModelChange = function ( tx, range 
  * Re-evaluate whether the toolbar save button should be disabled or not.
  */
 ve.init.mw.ViewPageTarget.prototype.updateToolbarSaveButtonState = function () {
-	this.edited = this.surface.getModel().hasPastState();
+	this.edited = this.surface.getModel().hasPastState() || this.wikitext !== null;
 	// Disable the save button if we have no history or if the sanity check is not finished
 	this.toolbarSaveButton.setDisabled( ( !this.edited && !this.restoring ) || !this.sanityCheckFinished );
 	this.toolbarSaveButton.$.toggleClass( 've-init-mw-viewPageTarget-waiting', !this.sanityCheckFinished );
@@ -856,6 +845,7 @@ ve.init.mw.ViewPageTarget.prototype.updateToolbarSaveButtonState = function () {
  * @method
  */
 ve.init.mw.ViewPageTarget.prototype.onSaveDialogReviewButtonClick = function () {
+	ve.track( { 'action': ve.track.actions.CLICK, 'label': 'dialog-save-review-changes' } );
 	this.swapSaveDialog( 'review' );
 };
 
@@ -865,6 +855,7 @@ ve.init.mw.ViewPageTarget.prototype.onSaveDialogReviewButtonClick = function () 
  * @method
  */
 ve.init.mw.ViewPageTarget.prototype.onSaveDialogSaveButtonClick = function () {
+	ve.track( { 'action': ve.track.actions.CLICK, 'label': 'dialog-save-publish' } );
 	this.saveDocument();
 };
 
@@ -971,6 +962,7 @@ ve.init.mw.ViewPageTarget.prototype.getSaveOptions = function () {
  * @param {jQuery.Event} e Mouse click event
  */
 ve.init.mw.ViewPageTarget.prototype.onSaveDialogCloseButtonClick = function () {
+	ve.track( { 'action': ve.track.actions.CLICK, 'label': 'dialog-save-close' } );
 	this.hideSaveDialog();
 };
 
@@ -1015,7 +1007,7 @@ ve.init.mw.ViewPageTarget.prototype.setupToolbarBetaNotice = function () {
 	this.$toolbarBetaNotice.empty();
 	this.$toolbarBetaNotice
 		.append( $( '<span>' )
-			.text( ve.msg( 'visualeditor-beta-warning' ) )
+			.text( ve.msg( 'wikia-visualeditor-beta-warning' ) )
 		)
 		.append( $( '<div>' )
 			.addClass( 've-init-mw-viewPageTarget-tool' )
@@ -1024,8 +1016,8 @@ ve.init.mw.ViewPageTarget.prototype.setupToolbarBetaNotice = function () {
 				.append( $( '<a>' )
 					.attr( 'title', ve.msg( 'visualeditor-help-title' ) )
 					.attr( 'target', '_blank' )
-					.attr( 'href', new mw.Title( ve.msg( 'visualeditor-help-link' ) ).getUrl() )
-					.text( ve.msg( 'visualeditor-help-label' ) )
+					.attr( 'href', new mw.Title( ve.msg( 'wikia-visualeditor-help-link' ) ).getUrl() )
+					.text( ve.msg( 'wikia-visualeditor-help-label' ) )
 		) ) );
 	if ( ve.version.id !== false ) {
 		this.$toolbarBetaNotice
@@ -1069,7 +1061,7 @@ ve.init.mw.ViewPageTarget.prototype.setUpSurface = function ( doc, callback ) {
 			var dmDoc = new ve.dm.Document( data, undefined, internalList );
 			setTimeout( function () {
 				// Create ui.Surface (also creates ce.Surface and dm.Surface and builds CE tree)
-				target.surface = new ve.ui.Surface( dmDoc, target.surfaceOptions );
+				target.surface = new ve.ui.Surface( dmDoc, target.surfaceOptions, target );
 				target.surface.$.addClass( 've-init-mw-viewPageTarget-surface' );
 				setTimeout( function () {
 					// Initialize surface
@@ -1269,7 +1261,7 @@ ve.init.mw.ViewPageTarget.prototype.setupToolbarButtons = function () {
 	this.toolbarCancelButton = new ve.ui.ButtonWidget( { 'label': ve.msg( 'visualeditor-toolbar-cancel' ) } );
 	this.toolbarCancelButton.$.addClass( 've-ui-toolbar-cancelButton' );
 	this.toolbarSaveButton = new ve.ui.ButtonWidget( {
-		'label': ve.msg( 'visualeditor-toolbar-savedialog' ),
+		'label': ve.msg( 'wikia-visualeditor-toolbar-savedialog' ),
 		'flags': ['constructive'],
 		'disabled': !this.restoring
 	} );
@@ -1313,15 +1305,6 @@ ve.init.mw.ViewPageTarget.prototype.setupToolbarButtons = function () {
 		)
 		.append( this.$toolbarBetaNotice )
 		.click( ve.bind( this.onToolbarBetaNoticeToolClick, this ) );
-
-	this.$toolbarFeedbackTool
-		.addClass( 've-ui-icon-comment' )
-		.append(
-			$( '<span>' )
-				.addClass( 've-init-mw-viewPageTarget-tool-label' )
-				.text( ve.msg( 'visualeditor-feedback-tool' ) )
-		)
-		.click( ve.bind( this.onToolbarFeedbackToolClick, this ) );
 };
 
 /**
@@ -1335,7 +1318,6 @@ ve.init.mw.ViewPageTarget.prototype.tearDownToolbarButtons = function () {
 	this.$toolbarMwMetaButton.empty().off( 'click' );
 	this.$toolbarEditNoticesTool.empty().off( 'click' );
 	this.$toolbarBetaNoticeTool.empty().off( 'click' );
-	this.$toolbarFeedbackTool.empty().off( 'click' );
 };
 
 /**
@@ -1346,7 +1328,6 @@ ve.init.mw.ViewPageTarget.prototype.tearDownToolbarButtons = function () {
 ve.init.mw.ViewPageTarget.prototype.attachToolbarButtons = function () {
 	var $target = this.toolbar.$actions;
 	$target.append( this.$toolbarBetaNoticeTool );
-	this.$toolbarBetaNotice.append( this.$toolbarFeedbackTool );
 
 	if ( !ve.isEmptyObject( this.editNotices ) ) {
 		$target.append( this.$toolbarEditNoticesTool );
@@ -1368,7 +1349,6 @@ ve.init.mw.ViewPageTarget.prototype.detachToolbarButtons = function () {
 	this.toolbarSaveButton.$.detach();
 	this.$toolbarMwMetaButton.detach();
 	this.$toolbarEditNoticesTool.detach();
-	this.$toolbarFeedbackTool.detach();
 	this.$toolbarBetaNoticeTool.detach();
 };
 
@@ -1384,7 +1364,7 @@ ve.init.mw.ViewPageTarget.prototype.setupSaveDialog = function () {
 	this.saveDialogSaveButton = new ve.ui.ButtonWidget( {
 		'label': ve.msg(
 			 // visualeditor-savedialog-label-restore, visualeditor-savedialog-label-save
-			'visualeditor-savedialog-label-' + ( viewPage.restoring ? 'restore' : 'save' )
+			'wikia-visualeditor-savedialog-label-' + ( viewPage.restoring ? 'restore' : 'save' )
 		),
 		'flags': ['constructive']
 	} );

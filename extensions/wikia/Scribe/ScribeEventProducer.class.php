@@ -398,17 +398,15 @@ class ScribeEventProducer {
 			$images = $oPage->mPreparedEdit->output->getImages();
 			if ( !empty($images) ) {
 				foreach ($images as $iname => $dummy) {
-					if ( WikiaFileHelper::isVideoStoredAsFile() ) {
-						$file = wfFindFile($iname);
-						if ($file instanceof LocalFile) {
-							$mediaType = $file->getMediaType();
-							switch ($mediaType) {
-								case MEDIATYPE_VIDEO:
-									$links['video']++;
-									break;
-								default:
-									$links['image']++;
-							}
+					$file = wfFindFile($iname);
+					if ($file instanceof LocalFile) {
+						$mediaType = $file->getMediaType();
+						switch ($mediaType) {
+							case MEDIATYPE_VIDEO:
+								$links['video']++;
+								break;
+							default:
+								$links['image']++;
 						}
 					}
 					else {

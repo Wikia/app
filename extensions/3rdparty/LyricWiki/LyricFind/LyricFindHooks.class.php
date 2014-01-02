@@ -38,14 +38,17 @@ class LyricFindHooks {
 	}
 
 	/**
-	 * Loads page views tracking code
+	 * Loads page views tracking code (in Oasis, mobile skin and monobook)
 	 *
 	 * @param array $jsAssetGroups AssetsManager groups to load
 	 * @return bool true
 	 */
-	static public function onOasisSkinAssetGroups(Array &$jsAssetGroups) {
+	static public function onSkinAssetGroups(Array &$jsAssetGroups) {
 		$wg = F::app()->wg;
 		if (self::pageIsTrackable($wg->Title)) {
+			// load:
+			// * js/modules/LyricFind.Tracker.js
+			// * js/tracking.js
 			$jsAssetGroups[] = 'LyricsFindTracking';
 		}
 

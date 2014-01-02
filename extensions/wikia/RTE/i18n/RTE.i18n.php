@@ -25,11 +25,14 @@ $messages['en'] = array(
 
 /** Message documentation (Message documentation)
  * @author EugeneZelenko
+ * @author Hamilton Abreu
  * @author Shirayuki
  */
 $messages['qqq'] = array(
+	'rte-edgecase-info-title' => '{{Related|Source mode (wikia)}}',
 	'rte-edgecase-triplecurls' => '{{Identical|Template parameter}}',
 	'rte-edgecase-redirect' => '{{Identical|Redirect}}',
+	'enablerichtexteditor' => '{{Related|Source mode (wikia)}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -155,7 +158,7 @@ $messages['ce'] = array(
 	'prefs-rte' => 'Визуальни йозан тадар (RTE)',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Darth Daron
  */
 $messages['cs'] = array(
@@ -275,9 +278,10 @@ $messages['fa'] = array(
 
 /** Finnish (suomi)
  * @author Centerlink
+ * @author Ville96
  */
 $messages['fi'] = array(
-	'rte-edgecase-info' => 'Rich text-muokkaus on poistettu käytöstä, koska sivu sisältää monimutkaisia koodi.',
+	'rte-edgecase-info' => 'Rich text -muokkaus on poistettu käytöstä, koska sivu sisältää monimutkaista koodia.',
 	'rte-edgecase-comment' => 'HTML-kommentit',
 );
 
@@ -522,7 +526,7 @@ $messages['nl'] = array(
 	'enablerichtexteditor' => 'Uitgebreide tekstverwerker inschakelen (in aanvulling op broncodemodus)',
 	'rte-enablerichtexteditormessage' => 'De uitgebreide tekstverwerker is ingeschakeld.',
 	'rte-first-run-notice' => 'We hebben een aantal verbeteringen gemaakt aan de tekstverwerker. [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news Lees ook de aankondiging].',
-	'prefs-rte' => 'Uitgebreide tekstverwerker',
+	'prefs-rte' => 'Uitgebreide tekstbewerker',
 );
 
 /** Nederlands (informeel)‎ (Nederlands (informeel)‎)
@@ -615,7 +619,7 @@ $messages['pms'] = array(
 $messages['pt'] = array(
 	'rte-desc' => 'Integração do CKeditor no MediaWiki',
 	'rte-no-js-fallback' => 'O editor de texto enriquecido não funciona com o JavaScript desativado. Ative-o nas opções do browser, ou mude as suas [[Special:Preferences|preferências]] para o editor antigo do MediaWiki.',
-	'rte-edgecase-info-title' => 'É necessário o modo de código fonte',
+	'rte-edgecase-info-title' => 'É necessário o modo fonte',
 	'rte-edgecase-info' => 'A edição de texto enriquecido foi desativada porque a página contém código complexo.',
 	'rte-edgecase-comment' => 'comentários HTML',
 	'rte-edgecase-triplecurls' => 'parâmetros de predefinições',
@@ -627,8 +631,8 @@ $messages['pt'] = array(
 	'rte-edgecase-redirect' => 'redirecionamento',
 	'rte-edgecase-templateintable' => 'uma tabela cuja definição chama uma predefinição',
 	'rte-edgecase-unclosed-tags' => 'elemento HTML não foi fechado',
-	'enablerichtexteditor' => 'Activar o Editor de Texto Enriquecido ("Rich Text Editor")', # Fuzzy
-	'rte-enablerichtexteditormessage' => 'O Editor de Texto Enriquecido foi activado!',
+	'enablerichtexteditor' => 'Ativar o editor no modo visual (em adição ao modo fonte)',
+	'rte-enablerichtexteditormessage' => 'O Editor de Texto Enriquecido foi ativado!',
 	'rte-first-run-notice' => 'Fizemos algumas melhorias no editor. Para saber mais, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news leia o anúncio].',
 	'prefs-rte' => 'Editor de Texto Enriquecido',
 );
@@ -762,6 +766,7 @@ $messages['tl'] = array(
 
 /** Turkish (Türkçe)
  * @author Emperyan
+ * @author Incelemeelemani
  * @author Mert.subay
  */
 $messages['tr'] = array(
@@ -779,7 +784,7 @@ $messages['tr'] = array(
 	'rte-edgecase-redirect' => 'yönlendirme',
 	'rte-edgecase-templateintable' => 'şablon tanımlı tablo',
 	'rte-edgecase-unclosed-tags' => 'Kapatılmış HTML etiketi',
-	'enablerichtexteditor' => 'Zengin Metin Düzenleyicisi etkinleştir', # Fuzzy
+	'enablerichtexteditor' => '(Kaynak moduna ek olarak) Görsel modda düzenlemeyi etkinleştir',
 	'rte-enablerichtexteditormessage' => 'Zengin Metin Düzenleyicisi etkin!',
 	'rte-first-run-notice' => 'Düzenleyicide birkaç geliştirme yaptık.Daha fazlasını öğrenmek için, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news read the announcement].',
 );
@@ -810,6 +815,14 @@ $messages['uk'] = array(
 	'prefs-rte' => 'Візуальний текстовий редактор (RTE)',
 );
 
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'rte-edgecase-info-title' => 'Chế độ nguồn yêu cầu',
+	'rte-edgecase-info' => 'Chỉnh sửa nội dung bằng chế độ trực quan đã bị vô hiệu hóa do trang chứa nhiều mã phức tạp.',
+);
+
 /** Chinese (中文)
  */
 $messages['zh'] = array(
@@ -824,6 +837,7 @@ $messages['zh'] = array(
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Anakmalaysia
+ * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
 	'rte-desc' => '为MediaWiki提供的CKeditor整合',
@@ -832,6 +846,7 @@ $messages['zh-hans'] = array(
 	'rte-edgecase-triplecurls' => '模板参数',
 	'rte-edgecase-nowysiwyg' => '“禁用所见即所得”命令',
 	'rte-edgecase-complex-description' => '链接描述之内的外部URL或模板',
+	'rte-edgecase-syntax' => '不允许的语法',
 	'rte-edgecase-redirect' => '重定向',
 	'rte-edgecase-unclosed-tags' => '封闭的HTML标签',
 	'enablerichtexteditor' => '在可视模式下启用编辑（除源模式之外）',

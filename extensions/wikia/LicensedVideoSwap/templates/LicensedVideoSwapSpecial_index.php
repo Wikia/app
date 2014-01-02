@@ -9,6 +9,11 @@
 	<p><?= wfMessage( 'lvs-instructions' )->parse() ?></p>
 </div>
 
+<section class="lvs-match-stats">
+	<div class="count"><?= $totalVideos ?></div>
+	<div class="description"><?= wfMessage( 'lvs-match-stats-description' )->plain() ?></div>
+</section>
+
 <? if ( !empty( $videoList ) ): ?>
 
 	<div class="WikiaGrid LVSGrid" id="LVSGrid">

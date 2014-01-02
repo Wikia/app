@@ -162,7 +162,7 @@ abstract class ApiWrapper {
 		$cacheMe = false;
 		if ( empty( $response ) ){
 			$cacheMe = true;
-			$req = MWHttpRequest::factory( $apiUrl );
+			$req = MWHttpRequest::factory( $apiUrl, array( 'noProxy' => true ) );
 			$status = $req->execute();
 			if( $status->isOK() ) {
 				$response = $req->getContent();

@@ -9,6 +9,89 @@ use Swagger\Annotations as SWG;
  * 	basePath="http://www.wikia.com"
  * )
  *
+ * @SWG\Model( id="ContentResult" )
+ * 	@SWG\Property(
+ * 		name="sections",
+ * 		type="Section",
+ * 		required="true",
+ * 		description="Article section data container"
+ * 	)
+ *
+ * @SWG\Model( id="Section" )
+ * 	@SWG\Property(
+ * 		name="title",
+ * 		type="string",
+ * 		required="true",
+ * 		description="Article section title"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="level",
+ * 		type="int",
+ * 		required="true",
+ * 		description="Section nesting level"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="content",
+ * 		type="Array",
+ * 		items="$ref:SectionContent",
+ * 		required="true",
+ * 		description="Section content"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="images",
+ * 		type="Array",
+ * 		items="$ref:SectionImages",
+ * 		required="true",
+ * 		description="Images list in section"
+ * 	)
+ *
+ * @SWG\Model( id="SectionContent" )
+ *	@SWG\Property(
+ * 		name="type",
+ * 		type="string",
+ * 		required="true",
+ * 		description="Content element type can be paragraph or list"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="text",
+ * 		type="string",
+ * 		required="false",
+ * 		description="Cleaned up paragraph text"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="elements",
+ * 		type="Array",
+ * 		items="$ref:ListElement",
+ * 		required="false",
+ * 		description="Array containing list elements"
+ * 	)
+ * @SWG\Model( id="ListElement" )
+ * 	@SWG\Property(
+ * 		name="text",
+ * 		type="string",
+ * 		required="true",
+ * 		description="Cleaned up list element text"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="elements",
+ * 		type="Array",
+ * 		required="true",
+ * 		description="Array containing nested list elements"
+ * 	)
+ * @SWG\Model( id="SectionImages" )
+ * 	@SWG\Property(
+ * 		name="src",
+ * 		type="string",
+ * 		required="true",
+ * 		description="Full image URL"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="caption",
+ * 		type="string",
+ * 		required="true",
+ * 		description="Image description"
+ * 	)
+ *
  * @SWG\Model( id="HubArticleResult" )
  * 	@SWG\Property(
  * 		name="wiki",
@@ -189,7 +272,21 @@ use Swagger\Annotations as SWG;
  * 		required="true",
  * 		description="Original height of the thumbnail, in pixels"
  * 	)
- * 
+ *
+ * @SWG\Model( id="Creator" )
+ * 	@SWG\Property(
+ * 		name="avatar",
+ * 		type="string",
+ * 		required="true",
+ * 		description="Url for user avatar"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="name",
+ * 		type="string",
+ * 		required="true",
+ * 		description="User name"
+ * 	)
+ *
  * @SWG\Model( id="HubArticleResultSet" )
  * 	@SWG\Property(
  * 		name="items",
@@ -198,7 +295,60 @@ use Swagger\Annotations as SWG;
  * 		items="$ref:HubArticleResult",
  * 		description="Standard container name for element collection (list)"
  * 	)
- * 
+ *
+ * @SWG\Model( id="NewArticleResultSet" )
+ * 	@SWG\Property(
+ * 		name="id",
+ * 		type="int",
+ * 		required="true",
+ * 		description="An internal identification number for Article"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="title",
+ * 		type="string",
+ * 		required="true",
+ * 		description="The title of the article"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="url",
+ * 		type="string",
+ * 		required="true",
+ * 		description="The relative URL of the Article. Absolute URL: obtained from combining relative URL with basepath attribute from response."
+ * 	)
+ * 	@SWG\Property(
+ * 		name="ns",
+ * 		type="int",
+ * 		required="true",
+ * 		description="The namespace value of the given article"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="abstract",
+ * 		type="string",
+ * 		required="true",
+ * 		description="A snippet of text from the beginning of the article"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="creation_date",
+ * 		type="string",
+ * 		required="true",
+ * 		description="Date of the first revision of the article"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="thumbnail",
+ * 		type="string",
+ * 		description="The absolute URL of the thumbnail"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="original_dimensions",
+ * 		type="OriginalDimension",
+ * 		description="The original dimensions of the thumbnail for the article, if available"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="creator",
+ * 		type="Creator",
+ * 		description="Data about the author of the article (creator of the first revision)"
+ * 	)
+ *
  * @SWG\Model( id="UnexpandedListArticleResultSet" )
  * 	@SWG\Property(
  * 		name="items",
@@ -300,6 +450,42 @@ use Swagger\Annotations as SWG;
  * 					allowMultiple="false",
  * 					dataType="string",
  * 					defaultValue=""
+ * 				)
+ * 			)
+ * 		)
+ * 	)
+ * )
+ * @SWG\Api(
+ * 	path="/api/v1/Articles/New",
+ * 	description="Get list of new articles on this wiki",
+ * 	@SWG\Operations(
+ * 		@SWG\Operation(
+ * 			httpMethod="GET",
+ * 			summary="Get list of new articles on this wiki",
+ * 			nickname="getNew",
+ * 			responseClass="NewArticleResultSet",
+ * 			@SWG\ErrorResponses(
+ * 				@SWG\ErrorResponse( code="400", reason="Invalid parameter or category" ),
+ * 				@SWG\ErrorResponse( code="404", reason="Results not found" )
+ * 			),
+ * 			@SWG\Parameters(
+ * 				@SWG\Parameter(
+ * 					name="namespaces",
+ * 					description="Page namespace number, see more: http://www.mediawiki.org/wiki/help:namespaces",
+ * 					paramType="query",
+ * 					required="false",
+ * 					allowMultiple="true",
+ * 					dataType="Array",
+ * 					defaultValue=""
+ * 				),
+ * 				@SWG\Parameter(
+ * 					name="limit",
+ * 					description="Limit the number of result - maximum limit is 100",
+ * 					paramType="query",
+ * 					required="false",
+ * 					allowMultiple="false",
+ * 					dataType="string",
+ * 					defaultValue="20"
  * 				)
  * 			)
  * 		)
@@ -557,6 +743,33 @@ use Swagger\Annotations as SWG;
  * 						allowMultiple="false",
  * 						dataType="int",
  * 						defaultValue="200"
+ * 					)
+ * 				)
+ * 			)
+ * 		)
+ * 	)
+ * @SWG\Api(
+ * 		path="/api/v1/Articles/AsSimpleJson",
+ * 		description="Get simplified article contents in JSON format",
+ * 		@SWG\Operations(
+ * 			@SWG\Operation(
+ * 				httpMethod="GET",
+ * 				summary="Get simplified article contents",
+ * 				nickname="getAsSimpleJson",
+ * 				responseClass="ContentResult",
+ * 				@SWG\ErrorResponses(
+ * 					@SWG\ErrorResponse( code="400", reason="Invalid ID parameter" ),
+ * 					@SWG\ErrorResponse( code="404", reason="Article not found" )
+ * 				),
+ * 				@SWG\Parameters(
+ * 					@SWG\Parameter(
+ * 						name="id",
+ * 						description="A single article ID",
+ * 						paramType="query",
+ * 						required="true",
+ * 						allowMultiple="false",
+ * 						dataType="int",
+ * 						defaultValue="50"
  * 					)
  * 				)
  * 			)

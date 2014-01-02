@@ -44,19 +44,42 @@ class WikiEntitiesServiceTest extends WikiaBaseTest
 		);
 	}
 	
+
 	/**
-	 * @covers Wikia\NLP\Entities\WikiEntitiesService::registerEntitiesWithDFP
+	 * @covers Wikia\NLP\Entities\WikiEntitiesService::getLdaTopics
 	 */
-	public function testRegisterEntitiesWithDFP() {
-		$service = $this->getMock( self::CLASSNAME, [ 'getMwService', 'getEntityList' ] );
+	public function testGetLdaTopics() {
+		$service = $this->getMock( self::CLASSNAME, [ 'getMwService' ] );
+		$mwService = $this->getMock( 'Wikia\Search\MediaWikiService', [ 'getGlobalWithDefault' ] );
+
+		$topics = [ 111, 235, 24 ];
+		
+		$service
+		    ->expects( $this->once() )
+		    ->method ( 'getMwService' )
+		    ->will   ( $this->returnValue( $mwService ) ) 
+		;
+		$mwService
+		    ->expects( $this->once() )
+		    ->method ( 'getGlobalWithDefault' )
+		    ->with   ( 'WikiLdaTopics', [] )
+		    ->will   ( $this->returnValue( $topics ) )
+		;
+		$this->assertEquals(
+				$topics,
+				$service->getLdaTopics()
+		);
+	}
+	
+	/**
+	 * @covers Wikia\NLP\Entities\WikiEntitiesService::registerLdaTopicsWithDFP
+	 */
+	public function testLdaTopicsWithDFP() {
+		$service = $this->getMock( self::CLASSNAME, [ 'getMwService', 'getLdaTopics' ] );
 		$mwService = $this->getMock( 'Wikia\Search\MediaWikiService', [ 'getGlobalWithDefault', 'setGlobal' ] );
 
-		$entities = [ 'foo', 'bar', 'baz' ];
-		$entitiesTruncated = $entities;
-		$entities[] = str_pad('', 22, 'a' );
-		$entitiesTruncated[] = substr( end( $entities ), 0, 20 );
-
-		$kvs = 'foo=bar;baz=qux';
+		$topics = [111, 222, 333, 444, 555, 666];
+		$kvs = 'foo=bar;baz=qux;';
 		
 		$service
 		    ->expects( $this->once() )
@@ -65,8 +88,8 @@ class WikiEntitiesServiceTest extends WikiaBaseTest
 		;
 		$service
 		    ->expects( $this->once() )
-		    ->method ( 'getEntityList' )
-		    ->will   ( $this->returnValue( $entities ) )
+		    ->method ( 'getLdaTopics' )
+		    ->will   ( $this->returnValue( $topics ) )
 		;
 		$mwService
 		    ->expects( $this->once() )
@@ -77,9 +100,107 @@ class WikiEntitiesServiceTest extends WikiaBaseTest
 		$mwService
 		    ->expects( $this->once() )
 		    ->method ( 'setGlobal' )
-		    ->with   ( 'wgDartCustomKeyValues', $kvs . ';wikientities=foo;wikientities=bar;wikientities=baz;wikientities=' . end($entitiesTruncated) )
+		    ->with   ( 'wgDartCustomKeyValues', $kvs . 'wtpx=111;wtpx=222;wtpx=333;wtpx=444;wtpx=555;' )
 		;
-		$this->assertTrue( $service->registerEntitiesWithDFP() );
+		$this->assertTrue( $service->registerLdaTopicsWithDFP() );
 	}
+
+	/**
+	 * @covers Wikia\NLP\Entities\WikiEntitiesService::registerLdaTopicsWithDFP
+	 */
+	public function testLdaTopicsWithDFPNullKeyVals() {
+		$service = $this->getMock( self::CLASSNAME, [ 'getMwService', 'getLdaTopics' ] );
+		$mwService = $this->getMock( 'Wikia\Search\MediaWikiService', [ 'getGlobalWithDefault', 'setGlobal' ] );
+
+		$topics = [111, 222, 333, 444, 555, 666];
+		$kvs = null;
+		
+		$service
+		    ->expects( $this->once() )
+		    ->method ( 'getMwService' )
+		    ->will   ( $this->returnValue( $mwService ) ) 
+		;
+		$service
+		    ->expects( $this->once() )
+		    ->method ( 'getLdaTopics' )
+		    ->will   ( $this->returnValue( $topics ) )
+		;
+		$mwService
+		    ->expects( $this->once() )
+		    ->method ( 'getGlobalWithDefault' )
+		    ->with   ( 'wgDartCustomKeyValues', '' )
+		    ->will   ( $this->returnValue( $kvs ) )
+		;
+		$mwService
+		    ->expects( $this->once() )
+		    ->method ( 'setGlobal' )
+		    ->with   ( 'wgDartCustomKeyValues', 'wtpx=111;wtpx=222;wtpx=333;wtpx=444;wtpx=555;' )
+		;
+		$this->assertTrue( $service->registerLdaTopicsWithDFP() );
+	}
+
+
+	/**
+	 * @covers Wikia\NLP\Entities\WikiEntitiesService::registerLdaTopicsWithDFP
+	 */
+	public function testLdaTopicsWithDFPNoEndingSemicolon() {
+		$service = $this->getMock( self::CLASSNAME, [ 'getMwService', 'getLdaTopics' ] );
+		$mwService = $this->getMock( 'Wikia\Search\MediaWikiService', [ 'getGlobalWithDefault', 'setGlobal' ] );
+
+		$topics = [111, 222, 333, 444, 555, 666];
+		$kvs = 'foo=bar;baz=qux';
+		
+		$service
+		    ->expects( $this->once() )
+		    ->method ( 'getMwService' )
+		    ->will   ( $this->returnValue( $mwService ) ) 
+		;
+		$service
+		    ->expects( $this->once() )
+		    ->method ( 'getLdaTopics' )
+		    ->will   ( $this->returnValue( $topics ) )
+		;
+		$mwService
+		    ->expects( $this->once() )
+		    ->method ( 'getGlobalWithDefault' )
+		    ->with   ( 'wgDartCustomKeyValues', '' )
+		    ->will   ( $this->returnValue( $kvs ) )
+		;
+		$mwService
+		    ->expects( $this->once() )
+		    ->method ( 'setGlobal' )
+		    ->with   ( 'wgDartCustomKeyValues', $kvs . ';wtpx=111;wtpx=222;wtpx=333;wtpx=444;wtpx=555;' )
+		;
+		$this->assertTrue( $service->registerLdaTopicsWithDFP() );
+	}
+
+	/**
+	 * @covers Wikia\NLP\Entities\WikiEntitiesService::registerLdaTopicsWithDFP
+	 */
+	public function testLdaTopicsWithDFPNoTopics() {
+		$service = $this->getMock( self::CLASSNAME, [ 'getMwService', 'getLdaTopics' ] );
+		$mwService = $this->getMock( 'Wikia\Search\MediaWikiService', [ 'getGlobalWithDefault', 'setGlobal' ] );
+
+		$topics = null;
+		$kvs = 'foo=bar;baz=qux';
+		
+		$service
+		    ->expects( $this->once() )
+		    ->method ( 'getMwService' )
+		    ->will   ( $this->returnValue( $mwService ) ) 
+		;
+		$service
+		    ->expects( $this->once() )
+		    ->method ( 'getLdaTopics' )
+		    ->will   ( $this->returnValue( $topics ) )
+		;
+		$mwService
+			->expects( $this->never() )
+			->method ( 'setGlobal' )
+		;
+		$this->assertTrue( $service->registerLdaTopicsWithDFP() );
+	    
+	}
+
 	
 }

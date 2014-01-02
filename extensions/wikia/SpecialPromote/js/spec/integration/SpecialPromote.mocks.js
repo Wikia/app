@@ -6,4 +6,6 @@ $.loadJQueryAIM = function(){
 	};
 };
 
+$.getMessages = function() {return true};
+
 $.fn.log = function(){return true};

@@ -1,4 +1,6 @@
 require([ 'jquery' ], function( $ ) {
+	'use strict';
+
 	$(function() {
 
 		var $toc = $('#styleguideTOC');
@@ -8,7 +10,8 @@ require([ 'jquery' ], function( $ ) {
 
 				var tocOffsetTop = $toc.offset().top,
 					TOC_TOP_MARGIN = 10, // const for top margin of fixed TOC set in CSS
-					tocInstance = new TOC($toc);
+					tocInstance = new TOC($toc),
+					throttled;
 
 				tocInstance.init();
 
@@ -18,8 +21,10 @@ require([ 'jquery' ], function( $ ) {
 				function setTOCPosition() {
 					var scrollTop = $('body').scrollTop();
 
-					// in Chrome $('body').scrollTop() does change when you scroll whereas $('html').scrollTop() doesn't
-					// in Firefox/IE $('html').scrollTop() does change when you scroll whereas $('body').scrollTop() doesn't
+					// in Chrome $('body').scrollTop() does change when you scroll
+					// whereas $('html').scrollTop() doesn't
+					// in Firefox/IE $('html').scrollTop() does change when you scroll
+					// whereas $('body').scrollTop() doesn't
 					scrollTop = ( scrollTop === 0 ) ? $('html').scrollTop() : scrollTop;
 
 					if( scrollTop >= tocOffsetTop - TOC_TOP_MARGIN ) {
@@ -29,7 +34,7 @@ require([ 'jquery' ], function( $ ) {
 					}
 				}
 
-				var throttled = $.throttle( 50, setTOCPosition);
+				throttled = $.throttle( 50, setTOCPosition);
 				$(w).on('scroll', throttled);
 			});
 		}
@@ -37,7 +42,7 @@ require([ 'jquery' ], function( $ ) {
 		/**
 		 * Show hide Style guide section
 		 *
-		 * @param {Object} $target - jQuery selector (show/hide link) that gives context to which element should be show / hide
+		 * @param {Object} $target - show/hide jQuery object that gives context to which element should be shown / hiden
 		 */
 		function showHideSections($target) {
 			var	$section = $target.parent().next(),
@@ -45,7 +50,8 @@ require([ 'jquery' ], function( $ ) {
 
 			$section.toggleClass('shown');
 
-			linkLabel = ($section.hasClass('shown') ? $.msg( 'styleguide-hide-parameters' ) : $.msg( 'styleguide-show-parameters' ));
+			linkLabel = ($section.hasClass('shown') ?
+				$.msg( 'styleguide-hide-parameters' ) : $.msg( 'styleguide-show-parameters' ));
 			$target.text(linkLabel);
 		}
 

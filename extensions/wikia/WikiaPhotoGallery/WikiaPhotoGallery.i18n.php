@@ -1145,7 +1145,11 @@ Alternativament, pot fer clic " $2 " per veure la pàgina en la seva forma d\'ac
  * @author Умар
  */
 $messages['ce'] = array(
+	'wikiaPhotoGallery-error-user-rights' => 'Декъашхочун тӀекхачаре бакъона гӀалат.',
 	'wikiaPhotoGallery-upload-findbutton' => 'Каро',
+	'wikiaPhotoGallery-upload-error-conflict-insert' => 'Чуйилла',
+	'wikiaPhotoGallery-preview-saving-title' => 'ДӀадоьду Ӏалашяр',
+	'wikiaPhotoGallery-slideshow-view-link-overlay' => 'Дехьа гӀо $1',
 );
 
 /** Sorani Kurdish (کوردی)
@@ -1154,7 +1158,7 @@ $messages['ckb'] = array(
 	'wikiaPhotoGallery-preview-hover-delete' => 'سڕینەوە',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Darth Daron
  * @author Dontlietome7
  */
@@ -1677,9 +1681,13 @@ $messages['el'] = array(
  * @author Shirayuki
  */
 $messages['en-gb'] = array(
+	'wikiaPhotoGallery-preview-position-center' => 'Centre',
+	'wikiaPhotoGallery-preview-captionalignment-center' => 'Centre',
 	'wikiaPhotoGallery-preview-captioncolor' => 'Caption colour',
 	'wikiaPhotoGallery-preview-bordercolor' => 'Photo border colour',
 	'wikiaPhotoGallery-preview-colorpicker-title' => 'Colour picker',
+	'wikiaPhotoGallery-preview-captions-center' => 'Centre',
+	'wikiaPhotoGallery-slideshowpreview-position-center' => 'Centre',
 );
 
 /** Esperanto (Esperanto)
@@ -1896,9 +1904,10 @@ $messages['fa'] = array(
  * @author Ville96
  */
 $messages['fi'] = array(
-	'wikiaphotogallery-desc' => 'Tarjoaa käyttöliittymän galleriahallintaan sivuilla', # Fuzzy
+	'wikiaphotogallery-desc' => 'Tarjoaa käyttöliittymän gallerioiden ja diaesitysten hallintaan sivuilla',
+	'wikiaPhotoGallery-back' => 'Takaisin',
 	'wikiaPhotoGallery-finish' => 'Valmis',
-	'wikiaPhotoGallery-add-gallery' => 'Aseta kuvagalleria', # Fuzzy
+	'wikiaPhotoGallery-add-gallery' => 'Aseta kuvagalleria tai diaesitys',
 	'wikiaPhotoGallery-viewmode-addphoto' => 'Lisää kuva tähän galleriaan',
 	'wikiaPhotoGallery-edit-abort' => 'Laajennusriippuvuus keskeytti yrittämäsi muutoksen',
 	'wikiaPhotoGallery-edit-summary' => 'Muokataan galleriaa',
@@ -1906,7 +1915,7 @@ $messages['fi'] = array(
 	'wikiaPhotoGallery-error-outdated' => 'Tätä galleriaa muokattiin, kun katselit sivua.
 Päivitä sivu ja yritä uudelleen.',
 	'wikiaPhotoGallery-error-user-rights' => 'Käyttäjäoikeusvirhe.',
-	'wikiaPhotoGallery-upload-title' => 'Valitse kuva', # Fuzzy
+	'wikiaPhotoGallery-upload-title' => 'Etsi ja Lataa Kuva',
 	'wikiaPhotoGallery-upload-info-images-label' => 'kuvat tältä sivulta',
 	'wikiaPhotoGallery-upload-findtitle' => 'Etsi',
 	'wikiaPhotoGallery-upload-findbutton' => 'Etsi',
@@ -1915,7 +1924,7 @@ Päivitä sivu ja yritä uudelleen.',
 	'wikiaPhotoGallery-upload-page-next' => 'Seuraavat 8',
 	'wikiaPhotoGallery-upload-page-prev' => 'Edelliset 8',
 	'wikiaPhotoGallery-upload-filesinsert' => 'Lisää tämä kuva',
-	'wikiaPhotoGallery-upload-error-title' => 'Lähettämisesi saatiin valmiiksi', # Fuzzy
+	'wikiaPhotoGallery-upload-error-title' => 'Lähettäminen ei onnistunut',
 	'wikiaPhotoGallery-upload-error-bad-extension' => 'Tätä tiedostotyyppiä ei voi käyttää.',
 	'wikiaPhotoGallery-upload-error-filename-incorrect' => 'Tiedostonimi sisältää merkkejä, joita ei sallita sivujen otsikoissa.
 Nimeä tiedosto uudelleen ja yritä uudelleen.',
@@ -2243,6 +2252,7 @@ Décrivez cette photo.",
 
 /** Galician (galego)
  * @author Toliño
+ * @author Vivaelcelta
  */
 $messages['gl'] = array(
 	'wikiaphotogallery-desc' => 'Proporciona unha interface para xestionar galerías e presentacións de diapositivas nas páxinas',
@@ -2259,28 +2269,28 @@ $messages['gl'] = array(
 Actualice a páxina e inténteo de novo.',
 	'wikiaPhotoGallery-error-wrong-title' => 'Non hai ningún título para o identificador de artigo especificado',
 	'wikiaPhotoGallery-error-user-rights' => 'Erro de dereitos de usuario.',
-	'wikiaPhotoGallery-upload-title' => 'Atopar e cargar a imaxe',
+	'wikiaPhotoGallery-upload-title' => 'Atopar e subir unha imaxe',
 	'wikiaPhotoGallery-upload-info-choose-list' => "'''OU''' escolla:",
 	'wikiaPhotoGallery-upload-info-images-label' => 'imaxes desta páxina',
-	'wikiaPhotoGallery-upload-info-upload' => "'''Ou''' cargue unha imaxe desde o seu ordenador",
+	'wikiaPhotoGallery-upload-info-upload' => "'''Ou''' sube unha imaxe desde o teu ordenador",
 	'wikiaPhotoGallery-upload-info-uploaded-label' => 'imaxes máis recentes',
 	'wikiaPhotoGallery-upload-findtitle' => 'Buscar',
 	'wikiaPhotoGallery-upload-findbutton' => 'Buscar',
-	'wikiaPhotoGallery-upload-filestitle-pre' => 'Ficheiros cargados recentemente',
+	'wikiaPhotoGallery-upload-filestitle-pre' => 'Ficheiros subidos recentemente',
 	'wikiaPhotoGallery-upload-filestitle-post' => 'Fotos neste wiki ($1 {{PLURAL:$1|resultado|resultados}})',
 	'wikiaPhotoGallery-upload-page-next' => '8 seguintes',
 	'wikiaPhotoGallery-upload-page-prev' => '8 anteriores',
 	'wikiaPhotoGallery-upload-filesinsert' => 'Inserir esta foto',
-	'wikiaPhotoGallery-upload-error-title' => 'Non se puido completar a carga',
+	'wikiaPhotoGallery-upload-error-title' => 'Non se puido completar a subida',
 	'wikiaPhotoGallery-upload-error-bad-extension' => 'Non se pode usar este tipo de ficheiro.',
 	'wikiaPhotoGallery-upload-error-filename-incorrect' => 'O nome do ficheiro contén caracteres que non se permiten nos títulos de páxinas.
 Déalle un novo nome ao ficheiro e inténteo de novo.',
 	'wikiaPhotoGallery-upload-error-filetype-incorrect' => 'O ficheiro ten unha extensión incorrecta.',
 	'wikiaPhotoGallery-upload-error-filetype missing' => 'Fáltalle a extensión ao ficheiro.',
-	'wikiaPhotoGallery-upload-error-readonly' => 'Non pode cargar imaxes nestes intres, debido a que o wiki se atopa en estado de só lectura.',
+	'wikiaPhotoGallery-upload-error-readonly' => 'Non podes subir imaxes nestes intres, debido a que o wiki se atopa en estado de só lectura.',
 	'wikiaPhotoGallery-upload-error-conflict-intro' => 'Xa existe un ficheiro con ese nome!
 Que quere facer?',
-	'wikiaPhotoGallery-upload-error-filetype-missing' => 'Ao ficheiro cargado fáltalle a extensión.',
+	'wikiaPhotoGallery-upload-error-filetype-missing' => 'Ao ficheiro subido fáltalle a extensión.',
 	'wikiaPhotoGallery-upload-error-conflict-rename' => 'Darlle un novo nome á súa foto',
 	'wikiaPhotoGallery-upload-error-conflict-reuse' => 'Usar a foto existente',
 	'wikiaPhotoGallery-upload-error-conflict-overwrite' => 'Sobrescribir a foto existente coa súa',
@@ -2395,15 +2405,15 @@ Como alternativa, pode premer en "$2" para ollar a páxina actualizada.',
 	'wikiaPhotoGallery-sliderpreview-choosetype-right-tooltip' => 'Miniaturas verticais',
 	'wikiaPhotoGallery-sliderpreview-addphoto' => 'Engadir unha foto',
 	'wikiaPhotoGallery-sliderpreview-title' => 'Construtor de presentacións de diapositivas',
-	'wikiaPhotoGallery-upload-title-slideshow' => 'Construtor de presentacións de diapositivas: Atopar e cargar unha foto',
-	'wikiaPhotoGallery-upload-title-gallery' => 'Construtor de galerías: Atopar e cargar unha foto',
-	'wikiaPhotoGallery-upload-title-slider' => 'Construtor de presentacións de diapositivas: Atopar e cargar unha foto',
+	'wikiaPhotoGallery-upload-title-slideshow' => 'Construtor de presentacións de diapositivas: Atopar e subir unha foto',
+	'wikiaPhotoGallery-upload-title-gallery' => 'Construtor de galerías: Atopar e subir unha foto',
+	'wikiaPhotoGallery-upload-title-slider' => 'Construtor de presentacións de diapositivas: Atopar e subir unha foto',
 	'wikiaPhotoGallery-upload-uploadtitle' => 'Cargar',
-	'wikiaPhotoGallery-upload-uploadtext' => "'''Ou''' cargue unha imaxe desde o seu ordenador",
-	'wikiaPhotoGallery-upload-uploadbutton' => 'Cargar a foto',
+	'wikiaPhotoGallery-upload-uploadtext' => "'''Ou''' sube unha foto desde o teu ordenador",
+	'wikiaPhotoGallery-upload-uploadbutton' => 'Subir a foto',
 	'wikiaPhotoGallery-upload-existingtext' => "'''Ou''' prema para elixir fotos de:",
 	'wikiaPhotoGallery-upload-existingtext-onarticle' => 'esta páxina',
-	'wikiaPhotoGallery-upload-existingtext-recentupload' => 'cargas máis recentes',
+	'wikiaPhotoGallery-upload-existingtext-recentupload' => 'subidas máis recentes',
 	'wikiaPhotoGallery-upload-selectbutton' => 'Seleccionar',
 	'wikiaPhotoGallery-photooptions-title-slideshow' => 'Construtor de presentacións de diapositivas: Engadir pés de foto e ligazóns',
 	'wikiaPhotoGallery-photooptions-title-gallery' => 'Construtor de galerías: Engadir pés de foto e ligazóns',
@@ -3316,6 +3326,7 @@ $messages['ja'] = array(
 );
 
 /** Kannada (ಕನ್ನಡ)
+ * @author Dimension10
  * @author VASANTH S.N.
  */
 $messages['kn'] = array(
@@ -3323,7 +3334,8 @@ $messages['kn'] = array(
 	'wikiaPhotoGallery-error-caption' => 'ದೋಷ',
 	'wikiaPhotoGallery-upload-findtitle' => 'ಹುಡುಕು',
 	'wikiaPhotoGallery-upload-findbutton' => 'ಹುಡುಕು',
-	'wikiaPhotoGallery-upload-error-filename-incorrect' => 'ಫೈಲಿನ ಹೆಸರು "$1" ಶೀರ್ಷಿಕೆಗಳಲ್ಲಿ ನಿಷಿದ್ಧವಾಗಿರುವ ಚಿಹ್ನೆಗಳನ್ನು ಹೊಂದಿದೆ.ದಯವಿಟ್ಟು ಫೈಲಿನ ಹೆಸರನ್ನು ಬದಲಾಯಿಸಿ ಮತ್ತೆ ಅಪ್ಲೋಡ್ ಮಾಡಲು ಪ್ರಯತ್ನಿಸಿ.', # Fuzzy
+	'wikiaPhotoGallery-upload-error-filename-incorrect' => 'ಈ ಫೈಲ್ ಇನ ಹೆಸರಲ್ಲಿ ಅಕ್ರಮ ಅಕ್ಷರಗಳು ಉನ್ತು. 
+ದೈವಿಟ್ಟು ಫೈಲ್ ಇನ ಹೆಸರನ್ನ ಬದಲಾಯಿಸಿ ಪುನಃ ಪ್ರಯತ್ನ ಮಾದಿ.',
 	'wikiaPhotoGallery-preview-hover-delete' => 'ಅಳಿಸಿ',
 	'wikiaPhotoGallery-preview-position-left' => 'ಎಡ',
 	'wikiaPhotoGallery-preview-position-right' => 'ಬಲ',
@@ -3404,7 +3416,7 @@ $messages['lb'] = array(
 	'wikiaPhotoGallery-viewmode-addphoto' => 'Eng Photo an dës Gallerie derbäisetzen',
 	'wikiaPhotoGallery-edit-summary' => 'Eng Galerie änneren',
 	'wikiaPhotoGallery-error-caption' => 'Feeler',
-	'wikiaPhotoGallery-error-user-rights' => 'Feeler bäi de Benotzerrechter.',
+	'wikiaPhotoGallery-error-user-rights' => 'Feeler bei de Benotzerrechter.',
 	'wikiaPhotoGallery-upload-title' => 'Bild fannen an eroplueden',
 	'wikiaPhotoGallery-upload-info-images-label' => 'Biller vun dëser Säit',
 	'wikiaPhotoGallery-upload-findtitle' => 'Sichen',
@@ -4159,7 +4171,7 @@ $messages['nl'] = array(
 	'wikiaPhotoGallery-edit-summary' => 'Galerij bewerken',
 	'wikiaPhotoGallery-error-caption' => 'Fout',
 	'wikiaPhotoGallery-error-outdated' => 'Deze galerij is bewerkt terwijl u de pagina aan het bekijken was.
-Ververs de pagina en probeer het opnieuw.',
+Vernieuw de pagina en probeer het opnieuw.',
 	'wikiaPhotoGallery-error-wrong-title' => 'Er bestaat geen naam voor het opgegeven paginanummer',
 	'wikiaPhotoGallery-error-user-rights' => 'Fout in de gebruikersrechten.',
 	'wikiaPhotoGallery-upload-title' => 'Foto kiezen en uploaden',
@@ -4332,7 +4344,7 @@ Als dit bestand wordt aangeklikt, ga dan naar de opgegeven pagina.",
 $messages['nl-informal'] = array(
 	'wikiaPhotoGallery-edit-abort' => 'De wijziging die je probeerde te maken is afgebroken door een uitbreidingshook',
 	'wikiaPhotoGallery-error-outdated' => 'Deze galerij is bewerkt terwijl je de pagina aan het bekijken was.
-Ververs de pagina en probeer het opnieuw.',
+Vernieuw de pagina en probeer het opnieuw.',
 	'wikiaPhotoGallery-upload-info-upload' => 'Upload een bestand van je computer',
 	'wikiaPhotoGallery-upload-error-title' => 'Je upload is mislukt',
 	'wikiaPhotoGallery-upload-error-readonly' => 'Je kunt geen bestanden uploaden.
@@ -6140,7 +6152,7 @@ $messages['uk'] = array(
 	'wikiaPhotoGallery-upload-error-conflict-insert' => 'Вставити',
 	'wikiaPhotoGallery-upload-select-images' => 'Вибрати',
 	'wikiaPhotoGallery-photooptions-title' => 'Налаштування фотографії',
-	'wikiaPhotoGallery-photooptions-done' => 'Виконано',
+	'wikiaPhotoGallery-photooptions-done' => 'Готово',
 	'wikiaPhotoGallery-preview-no-images' => 'Жодної фотографії не знайдено у обраній стрічці RSS.',
 	'wikiaPhotoGallery-preview-title' => 'Майстер створення галереї',
 	'wikiaPhotoGallery-preview-hover-modify' => 'змінити',
@@ -6152,22 +6164,22 @@ $messages['uk'] = array(
 	'wikiaPhotoGallery-preview-add-link' => 'Додати посилання',
 	'wikiaPhotoGallery-preview-placeholder-caption' => "Підпис з'явиться тут",
 	'wikiaPhotoGallery-preview-link-tooltip' => 'Фотографія посилається на "$1"',
-	'wikiaPhotoGallery-preview-feed-label' => 'Із каналу RSS посилання URL:',
+	'wikiaPhotoGallery-preview-feed-label' => 'З посилання каналу RSS:',
 	'wikiaPhotoGallery-preview-tab-layout' => 'Макет',
 	'wikiaPhotoGallery-preview-px' => 'пкс',
 	'wikiaPhotoGallery-preview-size-smaller' => 'менше',
 	'wikiaPhotoGallery-preview-size-larger' => 'більше',
 	'wikiaPhotoGallery-preview-columns' => 'Кількість стовпців',
 	'wikiaPhotoGallery-preview-columns-dynamic' => 'За розміром сторінки',
-	'wikiaPhotoGallery-preview-position' => 'Позиція галереї',
+	'wikiaPhotoGallery-preview-position' => 'Розташування галереї',
 	'wikiaPhotoGallery-preview-position-left' => 'Ліворуч',
-	'wikiaPhotoGallery-preview-position-center' => 'По центру',
+	'wikiaPhotoGallery-preview-position-center' => 'Посередині',
 	'wikiaPhotoGallery-preview-position-right' => 'Праворуч',
 	'wikiaPhotoGallery-preview-spacing' => 'Інтервал між зображеннями',
-	'wikiaPhotoGallery-preview-spacing-small' => 'Мале',
-	'wikiaPhotoGallery-preview-spacing-medium' => 'Середне',
-	'wikiaPhotoGallery-preview-spacing-large' => 'Велике',
-	'wikiaPhotoGallery-preview-orientation' => 'Орієнтація зображень',
+	'wikiaPhotoGallery-preview-spacing-small' => 'Малий',
+	'wikiaPhotoGallery-preview-spacing-medium' => 'Середній',
+	'wikiaPhotoGallery-preview-spacing-large' => 'Великий',
+	'wikiaPhotoGallery-preview-orientation' => 'Розташування зображень',
 	'wikiaPhotoGallery-preview-orientation-square-tooltip' => 'Обрізати фотографії, щоб зробити їх квадратними',
 	'wikiaPhotoGallery-preview-orientation-landscape-tooltip' => 'Обрізати фотографії, щоб зробити їх альбомними',
 	'wikiaPhotoGallery-preview-orientation-portrait-tooltip' => 'Обрізати фотографії, щоб зробити їх портретними',
@@ -6179,7 +6191,7 @@ $messages['uk'] = array(
 	'wikiaPhotoGallery-preview-captionposition-below' => 'Під зображенням',
 	'wikiaPhotoGallery-preview-captionalignment' => 'Вирівнювання підпису',
 	'wikiaPhotoGallery-preview-captionalignment-left' => 'Ліворуч',
-	'wikiaPhotoGallery-preview-captionalignment-center' => 'По центру',
+	'wikiaPhotoGallery-preview-captionalignment-center' => 'Посередині',
 	'wikiaPhotoGallery-preview-captionalignment-right' => 'Праворуч',
 	'wikiaPhotoGallery-preview-captionsize' => 'Розмір підпису',
 	'wikiaPhotoGallery-preview-captionsize-small' => 'Малий',
@@ -6228,18 +6240,18 @@ $messages['uk'] = array(
 	'wikiaPhotoGallery-choice-slideshow' => 'Створити слайд-шоу',
 	'wikiaPhotoGallery-choice-gallery' => 'Створити галерею',
 	'wikiaPhotoGallery-choice-slider' => 'Створити повзунок на головній сторінці',
-	'wikiaPhotoGallery-slideshowpreview-title' => 'Будівник показу слайдів',
+	'wikiaPhotoGallery-slideshowpreview-title' => 'Конструктор слайд-шоу',
 	'wikiaPhotoGallery-slideshowpreview-optionstitle' => 'Налаштування слайд-шоу',
 	'wikiaPhotoGallery-slideshowpreview-size' => 'Ширина слайд-шоу:',
 	'wikiaPhotoGallery-slideshowpreview-size-smaller' => 'менший',
 	'wikiaPhotoGallery-slideshowpreview-size-larger' => 'більший',
-	'wikiaPhotoGallery-slideshowpreview-crop' => 'Використовувати кмітливе кадрування для усунення білих смуг',
-	'wikiaPhotoGallery-slideshowpreview-recentuploads' => 'Створити автоматично оновлений показ слайдів з новими фотографіями',
+	'wikiaPhotoGallery-slideshowpreview-crop' => 'Використовувати розумне обрізання для усунення білих смуг',
+	'wikiaPhotoGallery-slideshowpreview-recentuploads' => 'Створити автооновлюване слайд-шоу з нових фото',
 	'wikiaPhotoGallery-slideshowpreview-photostitle' => 'Фотографії слайд-шоу',
 	'wikiaPhotoGallery-slideshowpreview-addphoto' => 'Додати фото',
-	'wikiaPhotoGallery-slideshowpreview-position' => 'Розташування показу слайдів',
+	'wikiaPhotoGallery-slideshowpreview-position' => 'Розташування слайд-шоу',
 	'wikiaPhotoGallery-slideshowpreview-position-left' => 'Ліворуч',
-	'wikiaPhotoGallery-slideshowpreview-position-center' => 'По центру',
+	'wikiaPhotoGallery-slideshowpreview-position-center' => 'Посередині',
 	'wikiaPhotoGallery-slideshowpreview-position-right' => 'Праворуч',
 	'wikiaPhotoGallery-sliderpreview-photostitle' => 'Повзунок фотографій',
 	'wikiaPhotoGallery-sliderpreview-optionstitle' => 'Налаштування повзунка',
@@ -6248,24 +6260,24 @@ $messages['uk'] = array(
 	'wikiaPhotoGallery-sliderpreview-choosetype-right-tooltip' => 'Вертикальні ескізи',
 	'wikiaPhotoGallery-sliderpreview-addphoto' => 'Додати фото',
 	'wikiaPhotoGallery-sliderpreview-title' => 'Будівник повзунка',
-	'wikiaPhotoGallery-upload-title-slideshow' => 'Будівник показу слайдів - пошук і завантаження фото',
-	'wikiaPhotoGallery-upload-title-gallery' => 'Будівник галереї - пошук і завантаження фото',
-	'wikiaPhotoGallery-upload-title-slider' => 'Будівник повзунка - пошук і завантаження фото',
+	'wikiaPhotoGallery-upload-title-slideshow' => 'Конструктор слайд-шоу — Пошук і завантаження фото',
+	'wikiaPhotoGallery-upload-title-gallery' => 'Конструктор галереї — Пошук і завантаження фото',
+	'wikiaPhotoGallery-upload-title-slider' => 'Конструктор слайдерів — Пошук і завантаження фото',
 	'wikiaPhotoGallery-upload-uploadtitle' => 'Знайти фото',
-	'wikiaPhotoGallery-upload-uploadtext' => "'''Або''' завантажте фото з вашого комп'ютера",
+	'wikiaPhotoGallery-upload-uploadtext' => "Завантажте фото зі свого комп'ютера",
 	'wikiaPhotoGallery-upload-uploadbutton' => 'Завантажити фото',
-	'wikiaPhotoGallery-upload-existingtext' => '"\'Або"\' натисніть, щоб вибрати фотографію з:',
-	'wikiaPhotoGallery-upload-existingtext-onarticle' => 'цю сторінку',
-	'wikiaPhotoGallery-upload-existingtext-recentupload' => 'найсвіжіші завантаження',
+	'wikiaPhotoGallery-upload-existingtext' => "'''Або''' оберіть фото з:",
+	'wikiaPhotoGallery-upload-existingtext-onarticle' => 'цієї сторінки',
+	'wikiaPhotoGallery-upload-existingtext-recentupload' => 'останніх завантажених',
 	'wikiaPhotoGallery-upload-selectbutton' => 'Вибрати',
-	'wikiaPhotoGallery-photooptions-title-slideshow' => 'Будівник показу слайдів - Додати підпис і посилання',
-	'wikiaPhotoGallery-photooptions-title-gallery' => 'Будівник галереї - Додати підпис і посилання',
+	'wikiaPhotoGallery-photooptions-title-slideshow' => 'Конструктор слайд-шоу — Додавання підпису й посилання',
+	'wikiaPhotoGallery-photooptions-title-gallery' => 'Констуктор галереї — Додавання заголовка і посилання',
 	'wikiaPhotoGallery-photooptions-captiontitle' => "Підпис до фотографії (необов'язково)",
-	'wikiaPhotoGallery-photooptions-captionsub' => 'Опишіть цю фотографію.',
-	'wikiaPhotoGallery-photooptions-linktitle' => 'Посилання на ваші фото (за бажанням)',
+	'wikiaPhotoGallery-photooptions-captionsub' => 'Опишіть цю фотографію',
+	'wikiaPhotoGallery-photooptions-linktitle' => "Посилання на сторінку (необов'язково)",
 	'wikiaPhotoGallery-photooptions-linksub' => 'Після натискання на фото перейдете на цю сторінку.',
-	'wikiaPhotoGallery-photooptions-linktext' => 'Текст для відображення посилання.',
-	'wikiaPhotoGallery-photooptions-linkurl' => 'Посилання на (вставте назву сторінки або URL).',
+	'wikiaPhotoGallery-photooptions-linktext' => 'Текст посилання',
+	'wikiaPhotoGallery-photooptions-linkurl' => 'Введіть назву сторінки або URL-адресу',
 	'wikiaPhotoGallery-photooptions-description' => 'Деталі зображення.',
 	'wikiaPhotoGallery-search-tooltip' => 'Пошук фотографій на цій вікі',
 	'wikiaPhotoGallery-upload-image-size' => 'Фотографії повинні бути 670 на 360 пікселів або більшими',
@@ -6281,6 +6293,7 @@ $messages['uz'] = array(
 );
 
 /** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
  * @author Tuankiet65
  * @author Xiao Qiao
  * @author XiaoQiaoGrace
@@ -6304,7 +6317,7 @@ Xin vui lòng làm mới trang và thử lại.',
 	'wikiaPhotoGallery-upload-info-choose-list' => "''' Hoặc ''' lựa chọn:",
 	'wikiaPhotoGallery-upload-info-images-label' => 'hình ảnh từ trang này',
 	'wikiaPhotoGallery-upload-info-upload' => "'''Hoặc''' tải lên một hình ảnh từ máy tính của bạn",
-	'wikiaPhotoGallery-upload-info-uploaded-label' => 'hình ảnh mới nhất',
+	'wikiaPhotoGallery-upload-info-uploaded-label' => 'các hình ảnh mới nhất',
 	'wikiaPhotoGallery-upload-findtitle' => 'Tìm kiếm',
 	'wikiaPhotoGallery-upload-findbutton' => 'Tìm kiếm',
 	'wikiaPhotoGallery-upload-filestitle-pre' => 'Tập tin được tải lên gần đây',
@@ -6320,7 +6333,7 @@ Hãy đổi tên tệp và thử lại.',
 	'wikiaPhotoGallery-upload-error-filetype missing' => 'Tập tin bị thiếu phần mở rộng.',
 	'wikiaPhotoGallery-upload-error-readonly' => 'Bạn hiện đang không thể tải lên hình ảnh, như wiki ở trong trạng thái chỉ có thể đọc.',
 	'wikiaPhotoGallery-upload-error-conflict-intro' => 'Tập tin với tên này đã tồn tại!
-Bạn muốn làm gì?',
+Bạn muốn làm gì với 2 loại ảnh này?',
 	'wikiaPhotoGallery-upload-error-filetype-missing' => 'Tập tin được tải lên thiếu phần mở rộng',
 	'wikiaPhotoGallery-upload-error-conflict-rename' => 'Đổi tên ảnh của bạn',
 	'wikiaPhotoGallery-upload-error-conflict-reuse' => 'Dùng các hình ảnh tồn tại',

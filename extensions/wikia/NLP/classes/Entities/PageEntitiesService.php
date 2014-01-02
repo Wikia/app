@@ -32,23 +32,6 @@ class PageEntitiesService
 	}
 	
 	/**
-	 * Responsible for storing page entities
-	 * @return bool
-	 */
-	public function registerEntitiesWithDFP() {
-		$mwService = $this->getMwService();
-		$entityList = $this->getEntitiesForPage( $mwService->getGlobal( 'ArticleId' ) );
-		if ( count( $entityList ) ) {
-			$keyValues = explode( ';', $mwService->getGlobalWithDefault( 'wgDartCustomKeyValues', '' ) );
-			foreach ( $entityList as &$val ) {
-				$val = sprintf( 'pageentities=%s', substr( $val, 0, 20 ) );
-			}
-			$mwService->setGlobal( 'wgDartCustomKeyValues', implode( ';', array_merge( $keyValues, $entityList ) ) );
-		}
-		return true;
-	}
-	
-	/**
 	 * Dependency lazy-loader.
 	 * @return \Wikia\Search\MediaWikiService
 	 */

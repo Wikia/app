@@ -59,6 +59,16 @@ $getAllVideos = isset( $options['a'] );
 $remoteAsset  = isset( $options['ra'] );
 $provider     = empty( $args[0] ) ? '' : strtolower($args[0]);
 
+// check if allow to upload file
+if ( $wgEnableUploads === false ) {
+	die( "File upload is disabled.\n" );
+}
+
+// check for read only mode
+if ( wfReadOnly() ) {
+	die( "Read only mode.\n" );
+}
+
 // Make it clear when we're in debug mode
 if ( $debug ) {
 	echo("== DEBUG MODE ==\n");

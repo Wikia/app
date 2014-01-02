@@ -72,11 +72,20 @@ $messages['bcl'] = array(
 );
 
 /** Bulgarian (български)
+ * @author Aquilax
  * @author DCLXVI
  */
 $messages['bg'] = array(
+	'category-exhibition-sorttype' => 'Начин на сортиране:',
+	'category-exhibition-alphabetical' => 'По азбучен ред',
+	'category-exhibition-mostvisited' => 'Най-посещавани',
+	'category-exhibition-recentedits' => 'Последно променени',
 	'category-exhibition-page-header' => 'Страници в категория „$1“',
 	'category-exhibition-subcategories-header' => 'Подкатегории',
+	'category-exhibition-media-header' => 'Медия в категория "$1"',
+	'category-exhibition-blogs-header' => 'Блог постове',
+	'category-exhibition-display-old' => 'Списъчен изглед на категория',
+	'category-exhibition-display-new' => 'Изложбен изглед на категория',
 );
 
 /** Breton (brezhoneg)
@@ -96,6 +105,7 @@ $messages['br'] = array(
 );
 
 /** Catalan (català)
+ * @author Fitoschido
  * @author Marcmpujol
  */
 $messages['ca'] = array(
@@ -105,13 +115,13 @@ $messages['ca'] = array(
 	'category-exhibition-recentedits' => 'Editades recentement',
 	'category-exhibition-page-header' => 'Pàgines en la categoraa "$1"',
 	'category-exhibition-subcategories-header' => 'Subcategories',
-	'category-exhibition-media-header' => 'Multimèdia en la categoria "$1"',
+	'category-exhibition-media-header' => 'Multimèdia en la categoria «$1»',
 	'category-exhibition-blogs-header' => 'Entrades de bloc',
 	'category-exhibition-display-old' => 'Visualització de la llista de categories',
 	'category-exhibition-display-new' => "Visualització d'exposició de la categoria",
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -615,7 +625,7 @@ $messages['sv'] = array(
 	'category-exhibition-alphabetical' => 'Alfabetisk',
 	'category-exhibition-mostvisited' => 'Mest visade',
 	'category-exhibition-recentedits' => 'Nyligen ändrade',
-	'category-exhibition-page-header' => 'Sidor i kategori "$1"',
+	'category-exhibition-page-header' => 'Sidor i kategorin "$1"',
 	'category-exhibition-subcategories-header' => 'Underkategorier',
 	'category-exhibition-media-header' => 'Media i kategorin "$1"',
 	'category-exhibition-blogs-header' => 'Blogg-inlägg',
@@ -678,7 +688,7 @@ $messages['vi'] = array(
 	'category-exhibition-alphabetical' => 'Bảng chữ cái',
 	'category-exhibition-mostvisited' => 'Truy cập nhiều nhất',
 	'category-exhibition-recentedits' => 'Biên tập, sửa đổi gần đây',
-	'category-exhibition-page-header' => 'Các trang trong thể loại “$1”',
+	'category-exhibition-page-header' => 'Trang trong thể loại “$1”',
 	'category-exhibition-subcategories-header' => 'Thể loại con',
 	'category-exhibition-media-header' => 'Các tập tin trong thể loại “$1”',
 	'category-exhibition-blogs-header' => 'Bài đăng trên blog',

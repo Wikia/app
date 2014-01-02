@@ -16,6 +16,7 @@ class UserLoginForm extends LoginForm {
 	function load() {
 		parent::load();
 		$request = $this->mOverrideRequest;
+		// Note: if these change make sure to update UserLoginFacebookForm class also
 		if ( $request->getText( 'userloginext01', '' ) != '' ) {
 			$this->mUsername = $request->getText( 'userloginext01', '' );
 		}
@@ -93,12 +94,6 @@ class UserLoginForm extends LoginForm {
 		// check empty username
 		if ( $this->mUsername == '' ) {
 			$this->mainLoginForm( wfMessage( 'userlogin-error-noname' )->escaped(), 'error', 'username' );
-			return false;
-		}
-
-		// check if exist in tempUser
-		if ( UserLoginHelper::isTempUser( $this->mUsername ) && TempUser::getTempUserFromName( $this->mUsername ) ) {
-			$this->mainLoginForm( wfMessage( 'userlogin-error-userexists' )->escaped(), 'error', 'username' );
 			return false;
 		}
 
@@ -193,6 +188,31 @@ class UserLoginForm extends LoginForm {
 			return false;
 		}
 
+		return true;
+	}
+
+	/**
+	 * Validates email in terms of maximum registrations per email limit
+	 *
+	 * @return bool
+	 */
+	public function initValidationRegsPerEmail() {
+		global $wgAccountsPerEmail, $wgMemc;
+
+		$sEmail = $this->mEmail;
+		if ( isset( $wgAccountsPerEmail )
+			&& is_numeric( $wgAccountsPerEmail )
+			&& !UserLoginHooksHelper::isWikiaEmail( $sEmail )
+		) {
+			$key = wfSharedMemcKey( "UserLogin", "AccountsPerEmail", $sEmail );
+			$count = $wgMemc->get($key);
+			if ( $count !== false
+				&& (int)$count >= (int)$wgAccountsPerEmail
+			) {
+				$this->mainLoginForm( wfMessage( 'userlogin-error-userlogin-unable-info' )->escaped(), 'error', 'email' );
+				return false;
+			}
+		}
 		return true;
 	}
 

@@ -236,6 +236,7 @@ class MarketingToolboxModuleFromthecommunityService extends MarketingToolboxModu
 					'userUrl' => str_replace(' ', '_', $data['usersUrl' . $i]),
 					'wikiUrl' => $data['wikiUrl' . $i],
 					'quote' => $data['quote' . $i],
+					'photoName' => $data['photo'.$i]
 				);
 			}
 		}
@@ -264,5 +265,17 @@ class MarketingToolboxModuleFromthecommunityService extends MarketingToolboxModu
 		
 		return $this->model;
 	}
-	
+
+	/**
+	 * Remove entries from NC licensed wikis.
+	 * @param $data
+	 * @return mixed
+	 */
+	protected function filterCommercialData( $data ) {
+		$service = $this->getLicensedWikisService();
+		$data['entries'] = array_values( array_filter( $data['entries'], function( $element ) use($service) {
+			return $service->isCommercialUseAllowedByUrl($element['articleUrl']);
+		} ) );
+		return $data;
+	}
 }

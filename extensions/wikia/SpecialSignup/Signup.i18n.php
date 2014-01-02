@@ -60,7 +60,7 @@ $messages['ca'] = array(
 	'signup' => 'Registrar-se',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -167,6 +167,13 @@ $messages['ja'] = array(
 $messages['ksh'] = array(
 	'signup-desc' => 'Deiht dä zohsäzlejje Name [[{{#Special:Signup}}]] för [[{{#Special:UserLogin}}/signup]] en et Wiki.',
 	'signup' => 'Aanmälde',
+);
+
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'signup' => 'اومائن د سيستم',
 );
 
 /** Macedonian (македонски)
@@ -304,6 +311,13 @@ $messages['te'] = array(
 $messages['tl'] = array(
 	'signup-desc' => 'Nagdaragdag ng [[{{#Special:Signup}}]] na pang-taguri para sa [[{{#Special:UserLogin}}/signup]]',
 	'signup' => 'Magpatala',
+);
+
+/** Turkish (Türkçe)
+ * @author Incelemeelemani
+ */
+$messages['tr'] = array(
+	'signup' => 'Hesap oluştur',
 );
 
 /** Tatar (Cyrillic script) (татарча)

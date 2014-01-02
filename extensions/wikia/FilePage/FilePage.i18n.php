@@ -85,6 +85,19 @@ $messages['ar'] = array(
 	'file-page-more-links' => 'انظر القائمة الكاملة',
 );
 
+/** Bulgarian (български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'video-page-description-heading' => 'Описание',
+	'video-page-description-zero-state' => 'Все още няма описание.',
+	'video-page-add-description-link-text' => 'Добавне на описание.',
+	'video-page-default-description-header-and-text' => '== Описание ==
+Въведете описанието тук.',
+	'video-page-file-list-pagination' => '$1 от $2',
+	'file-page-tab-metadata' => 'Метаданни',
+);
+
 /** Breton (brezhoneg)
  * @author Gwenn-Ael
  * @author Y-M D
@@ -137,6 +150,13 @@ Introdueix la descripció aquí.',
 	'file-page-more-links' => 'Veure llista completa',
 );
 
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'video-page-description-heading' => 'Цуьнах лаьцна',
+);
+
 /** Danish (dansk)
  * @author Luckas
  */
@@ -177,10 +197,11 @@ $messages['eo'] = array(
 );
 
 /** Spanish (español)
+ * @author Fitoschido
  * @author VegaDark
  */
 $messages['es'] = array(
-	'filepage-desc' => 'Modificación del espacio MediaWiki de archivos para soporte de vídeo',
+	'filepage-desc' => 'Modificación de la página de archivo de MediaWiki para añadir compatibilidad con vídeos',
 	'video-page-file-list-header' => 'Aparece en estas páginas',
 	'video-page-global-file-list-header' => 'Aparece en estos wikis',
 	'video-page-from-provider' => 'De $1',
@@ -217,6 +238,10 @@ $messages['et'] = array(
  * @author Ville96
  */
 $messages['fi'] = array(
+	'video-page-file-list-header' => 'Esiintyy näillä sivuilla',
+	'video-page-global-file-list-header' => 'Esiintyy näissä wikeissä',
+	'video-page-see-more-info' => 'Näytä lisätiedot',
+	'video-page-see-less-info' => 'Näytä vähemmän tietoa',
 	'video-page-description-heading' => 'Kuvaus',
 	'video-page-description-zero-state' => 'Kuvausta ei ole vielä.',
 	'video-page-add-description-link-text' => 'Lisää kuvaus.',
@@ -225,7 +250,7 @@ Lisää kuvaus tähän.',
 	'file-page-replace-button' => 'Korvaa',
 	'file-page-tab-about' => 'Tietoja',
 	'file-page-tab-history' => 'Tiedoston historia',
-	'file-page-tab-metadata' => 'Sisältökuvaukset',
+	'file-page-tab-metadata' => 'Metatiedot',
 	'file-page-more-links' => 'Katso koko lista',
 );
 
@@ -363,6 +388,44 @@ $messages['it'] = array(
 	'video-page-description-heading' => 'Descrizione',
 );
 
+/** Japanese (日本語)
+ * @author BryghtShadow
+ * @author Tommy6
+ */
+$messages['ja'] = array(
+	'filepage-desc' => 'MediaWiki標準のファイルページを動画に対応させる',
+	'video-page-file-list-header' => 'このウィキアでの使用状況',
+	'video-page-global-file-list-header' => '全ウィキアでの使用状況',
+	'video-page-from-provider' => '提供元: $1',
+	'video-page-expires' => '有効期限: $1',
+	'video-page-views' => '閲覧数: $1',
+	'video-page-see-more-info' => '詳細を表示',
+	'video-page-see-less-info' => '詳細を非表示',
+	'video-page-description-heading' => '解説',
+	'video-page-description-zero-state' => '解説はありません。',
+	'video-page-add-description-link-text' => '解説を追加する。',
+	'video-page-default-description-header-and-text' => '== 解説 ==
+ここに解説を入力。',
+	'video-page-file-list-pagination' => '$2 件中 $1 件目',
+	'file-page-replace-button' => '差し替え',
+	'file-page-tab-about' => '概要',
+	'file-page-tab-history' => 'ファイルの履歴',
+	'file-page-tab-metadata' => 'メタデータ',
+	'file-page-more-links' => '全て見る',
+);
+
+/** Georgian (ქართული)
+ * @author DevaMK
+ */
+$messages['ka'] = array(
+	'video-page-file-list-header' => 'გამოყენებულია შემდეგ გვერდებში:',
+	'file-page-replace-button' => 'ჩანაცვლება',
+	'file-page-tab-about' => 'ფაილის შესახებ',
+	'file-page-tab-history' => 'ფაილის ისტორია',
+	'file-page-tab-metadata' => 'მეტამონაცემები',
+	'file-page-more-links' => 'იხილე სრული სია',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
@@ -378,6 +441,17 @@ Gitt d'Beschreiwung hei an.",
 	'file-page-replace-button' => 'Ersetzen',
 	'file-page-tab-about' => 'Iwwer',
 	'file-page-more-links' => 'Ganz Lëscht weisen',
+);
+
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'video-page-from-provider' => 'د $1',
+	'file-page-replace-button' => 'جاگزينشت',
+	'file-page-tab-about' => 'دباره',
+	'file-page-tab-history' => 'ويرگار فايل',
+	'file-page-tab-metadata' => 'داديا  فره گپ',
 );
 
 /** Lithuanian (lietuvių)
@@ -500,6 +574,31 @@ Voeg hier een beschrijving toe.',
 	'file-page-more-links' => 'Volledige lijst bekijken',
 );
 
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'filepage-desc' => 'Modificacion de la pagina de fichièr estandard de MediaWiki pel supòrt de las vidèos',
+	'video-page-file-list-header' => 'Apareis sus aquelas paginas',
+	'video-page-global-file-list-header' => 'Apareis sus aqueles wikis',
+	'video-page-from-provider' => 'De $1',
+	'video-page-expires' => 'Lo contengut expira lo $1',
+	'video-page-views' => '$1 {{PLURAL:$1|Vista|Vistas}}',
+	'video-page-see-more-info' => "Afichar mai d'informacions",
+	'video-page-see-less-info' => "Afichar mens d'informacions",
+	'video-page-description-heading' => 'Descripcion',
+	'video-page-description-zero-state' => 'I a pas encara cap de descripcion.',
+	'video-page-add-description-link-text' => 'Apondre una descripcion.',
+	'video-page-default-description-header-and-text' => '==Descripcion==
+Picatz la descripcion aicí.',
+	'video-page-file-list-pagination' => '$1 sus $2',
+	'file-page-replace-button' => 'Remplaçar',
+	'file-page-tab-about' => 'A prepaus',
+	'file-page-tab-history' => 'Istoric del fichièr',
+	'file-page-tab-metadata' => 'Metadonadas',
+	'file-page-more-links' => 'Afichar la lista',
+);
+
 /** Polish (polski)
  * @author Sovq
  */
@@ -540,8 +639,19 @@ $messages['ps'] = array(
  * @author Luckas
  */
 $messages['pt'] = array(
+	'filepage-desc' => 'Modificação da página padrão do MediaWiki para suporte de vídeo',
+	'video-page-file-list-header' => 'Aparece nestas páginas',
+	'video-page-global-file-list-header' => 'Aparece nestas wikis',
 	'video-page-from-provider' => 'De $1',
+	'video-page-expires' => 'Conteúdo disponível até $1',
+	'video-page-views' => '$1 {{PLURAL:$1|Visionamento|Visionamentos}}',
+	'video-page-see-more-info' => 'Mostrar mais informações',
+	'video-page-see-less-info' => 'Mostrar menos informações',
 	'video-page-description-heading' => 'Descrição',
+	'video-page-description-zero-state' => 'Ainda não tem descrição.',
+	'video-page-add-description-link-text' => 'Inserir uma descrição.',
+	'video-page-default-description-header-and-text' => '==Descrição==
+Insira a descrição aqui.',
 	'video-page-file-list-pagination' => '$1 de $2',
 	'file-page-replace-button' => 'Substituir',
 	'file-page-tab-about' => 'Sobre',
@@ -739,16 +849,45 @@ $messages['ur'] = array(
 	'file-page-more-links' => 'مکمل فہرست دیکھیں',
 );
 
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'filepage-desc' => 'Các sửa đổi của tiêu chuẩn MediaWiki tập tin trang để hỗ trợ video',
+	'video-page-file-list-header' => 'Xuất hiện trên các trang này',
+	'video-page-global-file-list-header' => 'Xuất hiện trên các wiki',
+	'video-page-from-provider' => 'Từ $1',
+	'video-page-expires' => 'Nội dung hết hạn trên $1',
+	'video-page-views' => '$1 {{PLURAL:$1|lượt truy cập|lượt truy cập}}',
+	'video-page-see-more-info' => 'Hiển thị thêm thông tin',
+	'video-page-see-less-info' => 'Hiển thị thông tin ít',
+	'video-page-description-heading' => 'Miêu tả',
+	'video-page-description-zero-state' => 'Không có mô tả nào.',
+	'video-page-add-description-link-text' => 'Thêm một mô tả.',
+	'video-page-default-description-header-and-text' => '==Mô tả==
+Nhập mô tả ở đây.',
+	'video-page-file-list-pagination' => '$1 trong $2',
+	'file-page-replace-button' => 'Thay thế',
+	'file-page-tab-about' => 'Giới thiệu',
+	'file-page-tab-history' => 'Lịch sử tập tin',
+	'file-page-tab-metadata' => 'Siêu dữ liệu',
+	'file-page-more-links' => 'Xem danh sách đầy đủ',
+);
+
 /** Simplified Chinese (中文（简体）‎)
+ * @author Byfserag
  * @author Hzy980512
  * @author Kuailong
  * @author Liuxinyu970226
  * @author Qiyue2001
+ * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
 	'filepage-desc' => '为了支持视频而修改标准MediaWiki文件页面',
 	'video-page-file-list-header' => '出现在这些页面上',
+	'video-page-global-file-list-header' => '出现在这些 wiki 上',
 	'video-page-from-provider' => '来自$1',
+	'video-page-expires' => '内容过期时间 $1',
 	'video-page-views' => '$1次浏览',
 	'video-page-see-more-info' => '显示更多信息',
 	'video-page-see-less-info' => '显示较少信息',

@@ -13,7 +13,6 @@
 	"latedef": true,
 	"maxdepth": 3,
 	"maxlen": 120,
-	"maxparams": 4,
 	"newcap": true,
 	"noarg": true,
 	"noempty": true,
@@ -55,6 +54,7 @@
 	"browser": true,
 	"devel": false,
 	"globals": {
+		"mw": false,
 		"mediaWiki": false,
 		"Wikia": false,
 		"define": false,

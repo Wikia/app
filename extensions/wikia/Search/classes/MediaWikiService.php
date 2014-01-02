@@ -239,6 +239,7 @@ class MediaWikiService
 	 * @return \Wikia\Search\MediaWikiService
 	 */
 	public function setGlobal( $global, $value ) {
+		$global = substr_count( $global, 'wg', 0, 2 ) ? substr( $global, 2 ) : $global;
 		$this->app->wg->{$global} = $value;
 		return $this;
 	}
@@ -335,13 +336,14 @@ class MediaWikiService
 	public function getRedirectTitlesForPageId( $pageId ) {
 		$dbr = wfGetDB(DB_SLAVE);
 		$result = array();
+		$title = $this->getTitleFromPageId( $pageId );
 		$query = $dbr->select(
 				array( 'redirect', 'page' ),
 				array( 'page_title' ),
 				array(),
 				__METHOD__,
 				array( 'GROUP'=>'rd_title' ),
-				array( 'page' => array( 'INNER JOIN', array('rd_title'=> $this->getTitleKeyFromPageId( $pageId ), 'page_id = rd_from' ) ) )
+				array( 'page' => array( 'INNER JOIN', array('rd_title'=> $title->getDbKey(), 'rd_namespace' => $title->getNamespace(), 'page_id = rd_from' ) ) )
 		);
 		while ( $row = $dbr->fetchObject( $query ) ) { 
 				$result[] = str_replace( '_', ' ', $row->page_title );
@@ -1014,7 +1016,7 @@ class MediaWikiService
 	/**
 	 * Gets a title from a page id
 	 * @param int $pageId
-	 * @return Title
+	 * @return \Title
 	 */
 	protected function getTitleFromPageId( $pageId ) {
 		wfProfileIn( __METHOD__ );

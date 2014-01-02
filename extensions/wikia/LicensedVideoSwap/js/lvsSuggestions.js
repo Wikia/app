@@ -3,11 +3,17 @@
  * thumbnails that are additional possible matches for the non-premium
  * video
  */
-define( 'lvs.suggestions', [], function() {
+define( 'lvs.suggestions', [
+	'jquery.ellipses'
+], function() {
 
-	"use strict";
+	'use strict';
 
 	function init( $container ) {
+		$container.find( '.suggestion-title' ).each(function( idx, val) {
+			$( val ).ellipses();
+		});
+
 		$container.on( 'click', '.more-link', function( e ) {
 			e.preventDefault();
 			var $this = $( this ),
@@ -29,5 +35,4 @@ define( 'lvs.suggestions', [], function() {
 	return {
 		init: init
 	};
-
 });

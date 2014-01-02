@@ -88,7 +88,7 @@ $messages['ca'] = array(
 	'communitymessages-notice-msg' => "[[Special:WikiActivity|S'han actualitzat els Missatges de la Comunitat]].",
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Dontlietome7
  * @author Jezevec
  */
@@ -217,6 +217,13 @@ $messages['it'] = array(
 	'communitymessages-notice-msg' => '[[Special:WikiActivity|I messaggi della community sono stati aggiornati]].',
 );
 
+/** Georgian (ქართული)
+ * @author DevaMK
+ */
+$messages['ka'] = array(
+	'communitymessages-notice-msg' => '[[Special:WikiActivity|ერთი ან რამდენიმე განცხადების შინაარსი ან ტექსტი შეიცვალა]].',
+);
+
 /** Colognian (Ripoarisch)
  * @author Purodha
  */
@@ -296,7 +303,7 @@ $messages['ps'] = array(
  */
 $messages['pt'] = array(
 	'communitymessages-desc' => 'Extensão de ajuda para as Mensagens da Comunidade',
-	'communitymessages-notice-msg' => 'As [[Special:WikiActivity|Mensagens da Comunidade foram acualizadas]].',
+	'communitymessages-notice-msg' => '[[Special:WikiActivity|As Mensagens da Comunidade foram atualizadas]].',
 );
 
 /** Brazilian Portuguese (português do Brasil)

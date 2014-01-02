@@ -225,7 +225,10 @@ class Masthead {
 				/**
 				 * uploaded file, we are adding common/avatars path
 				 */
-				$url = $wgBlogAvatarPath . rtrim($thumb, '/') . $url;
+				// avatars selected from "samples" are stored as full URLs (BAC-1195)
+				if ( strpos( $url, 'http://' ) === false ) {
+					$url = $wgBlogAvatarPath . rtrim($thumb, '/') . $url;
+				}
 			}
 			else {
 				/**
@@ -638,7 +641,7 @@ class Masthead {
 	 * @param $errorMsg -- optional string containing details on what went wrong if there is an UPLOAD_ERR_EXTENSION.
 	 */
 	private function postProcessImageInternal($sTmpFile, &$errorNo = UPLOAD_ERR_OK, &$errorMsg=''){
-		global $wgAvatarsUseSwiftStorage;
+		global $wgAvatarsUseSwiftStorage, $wgBlogAvatarSwiftContainer, $wgBlogAvatarSwiftPathPrefix;
 
 		wfProfileIn(__METHOD__);
 		$aImgInfo = getimagesize($sTmpFile);
@@ -679,7 +682,7 @@ class Masthead {
 		/**
 		 * generate new image to png format
 		 */
-		$sFilePath = empty( $wgAvatarsUseSwiftStorage ) ? $this->getFullPath() : $this->getTempFile();
+		$sFilePath = empty( $wgAvatarsUseSwiftStorage ) ? $this->getFullPath() : $this->getTempFile(); // either NFS or temp file
 
 		$ioh = new ImageOperationsHelper();
 		$oImg = $ioh->postProcess(  $oImgOrig, $aOrigSize );
@@ -700,7 +703,7 @@ class Masthead {
 		else {
 			$errorNo = UPLOAD_ERR_OK;
 
-			/* remove tmp file */
+			/* remove tmp image */
 			imagedestroy($oImg);
 
 			// store the avatar on Swift
@@ -710,6 +713,25 @@ class Masthead {
 
 				// errors handling
 				$errorNo = $res->isOK() ? UPLOAD_ERR_OK : UPLOAD_ERR_CANT_WRITE;
+				
+				// synchronize between DC
+				if ($res->isOK()) {
+					$mwStorePath = sprintf( 'mwstore://swift-backend/%s%s%s', 
+						$wgBlogAvatarSwiftContainer, $wgBlogAvatarSwiftPathPrefix, $this->getLocalPath() );
+
+					Wikia\SwiftSync\Queue::newFromParams( [
+						'city_id' => null,
+						'op' => 'store',
+						'src' => $sFilePath,
+						'dst' => $mwStorePath
+					] )->add();
+				}
+
+				// sync with NFS
+				global $wgEnableSwithSyncToLocalFS;
+				if (!empty($wgEnableSwithSyncToLocalFS)) {
+					copy($sFilePath, $this->getFullPath());
+				}
 			}
 
 			$sUserText =  $this->mUser->getName();
@@ -750,62 +772,6 @@ class Masthead {
 
 			SquidUpdate::purge($urls);
 		}
-	}
-
-	static public function getUserStatsData( $userName, $useMasterDb = false ) {
-		global $wgLang, $wgCityId, $wgExternalDatawareDB;
-		wfProfileIn( __METHOD__ );
-
-		$result = array( 'editCount' => 0, 'firstDate' => 0 );
-
-		$destionationUser = User::newFromName($userName);
-		$destionationUserId = $destionationUser ? $destionationUser->getId() : 0;
-		if($destionationUserId != 0) {
-			global $wgMemc, $wgEnableAnswers;
-
-			if(!empty($wgEnableAnswers) && class_exists('AttributionCache')) {
-				// use AttributionCache to get edit points and first edit date
-				$attrCache = AttributionCache::getInstance();
-
-				$editCount = $attrCache->getUserEditPoints($destionationUserId);
-				$firstDate = $wgLang->date(wfTimestamp(TS_MW, $attrCache->getUserFirstEditDateFromCache($destionationUserId)));
-			}
-			else {
-				$mastheadDataEditDateKey = wfMemcKey('mmastheadData-editDate-' . $destionationUserId);
-				$mastheadDataEditCountKey = wfMemcKey('mmastheadData-editCount-' . $destionationUserId);
-				$mastheadDataEditDate = $wgMemc->get($mastheadDataEditDateKey);
-				$mastheadDataEditCount = $wgMemc->get($mastheadDataEditCountKey);
-
-				if(empty($mastheadDataEditCount) || empty($mastheadDataEditDate)) {
-					$dbr = wfGetDB( $useMasterDb ? DB_MASTER : DB_SLAVE );
-
-					/* @TODO FIXME: respect your DB resources, never count on MASTER */
-					$dbResult = $dbr->select(
-						'revision',
-						array('min(rev_timestamp) AS date, count(*) AS edits'),
-						array('rev_user_text' => $destionationUser->getName()),
-						__METHOD__
-					);
-
-					if ($row = $dbr->FetchObject($dbResult)) {
-						$firstDate = $wgLang->date(wfTimestamp(TS_MW, $row->date));
-						$editCount = $row->edits;
-					}
-					if ($dbResult !== false) {
-						$dbr->FreeResult($dbResult);
-					}
-					$wgMemc->set($mastheadDataEditDateKey, $firstDate, 60 * 60);
-					$wgMemc->set($mastheadDataEditCountKey, $editCount, 60 * 60);
-				} else {
-					$firstDate = $mastheadDataEditDate;
-					$editCount = $mastheadDataEditCount;
-				}
-			}
-			$result['editCount'] = $editCount;
-			$result['firstDate'] = $firstDate;
-		}
-		wfProfileOut( __METHOD__ );
-		return $result;
 	}
 
 	/**

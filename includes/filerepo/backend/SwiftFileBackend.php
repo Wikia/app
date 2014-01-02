@@ -89,6 +89,13 @@ class SwiftFileBackend extends FileBackendStore {
 	}
 
 	/**
+	 * @see FileBackendStore::isValidContainerName()
+	 */
+	protected static function isValidContainerName( $container ) {
+		return preg_match( '/^[a-z0-9][a-z0-9-_.]{0,199}$/i', $container );
+	}
+	
+	/**
 	 * @see FileBackendStore::resolveContainerPath()
 	 */
 	protected function resolveContainerPath( $container, $relStoragePath ) {
@@ -244,7 +251,7 @@ class SwiftFileBackend extends FileBackendStore {
 			// The MD5 here will be checked within Swift against its own MD5.
 			$obj->set_etag( md5_file( $params['src'] ) );
 			// Use the same content type as StreamFile for security
-			$obj->content_type = StreamFile::contentTypeFromPath( $params['dst'] );
+			$obj->content_type = $this->getFileProps($params)['mime']; // Wikia cnange: use the same logic as for DB row (BAC-1199)
 			// Actually write the object in Swift
 			$obj->load_from_filename( $params['src'], True ); // calls $obj->write()
 		} catch ( BadContentTypeException $e ) {
@@ -558,6 +565,11 @@ class SwiftFileBackend extends FileBackendStore {
 		if ( $obj->getMetadataValue( 'Sha1base36' ) !== null ) {
 			return true; // nothing to do
 		}
+		
+		# don't check SHA-1 for thumbnailers 
+		if ( $this->isThumbnailer( $path ) ) {
+			return true; //nothing to do
+		}
 		wfProfileIn( __METHOD__ );
 		trigger_error( "$path was not stored with SHA-1 metadata.", E_USER_WARNING );
 		$status = Status::newGood();
@@ -802,6 +814,7 @@ class SwiftFileBackend extends FileBackendStore {
 		)); // Wikia change
 
 		// Note: 10 second timeout consistent with php-cloudfiles
+		/* @var CurlHttpRequest $req */
 		$req = MWHttpRequest::factory( $url, array( 'method' => 'POST', 'timeout' => $this->swiftTimeout, 'noProxy' => true ) );
 		$req->setHeader( 'X-Auth-Token', $creds['auth_token'] );
 		$req->setHeader( 'X-Container-Read', implode( ',', $readGrps ) );
@@ -871,7 +884,11 @@ class SwiftFileBackend extends FileBackendStore {
 	 * @return string
 	 */
 	private function getCredsCacheKey( $username ) {
-		return wfMemcKey( 'backend', $this->getName(), 'usercreds', $username );
+		// Wikia change - begin
+		global $wgFSSwiftServer;
+		// Wikia change - end
+
+		return wfForeignMemcKey(__CLASS__, $wgFSSwiftServer, 'usercreds', $username );
 	}
 
 	/**
@@ -944,11 +961,13 @@ class SwiftFileBackend extends FileBackendStore {
 	 *
 	 * @param $e Exception
 	 * @param $func string
-	 * @param $params Array
+	 * @param $params mixed
 	 * @return void
 	 */
-	protected function logException( Exception $e, $func, array $params ) {
+	protected function logException( Exception $e, $func, $params ) {
 		// Wikia change - begin
+		global $wgFSSwiftServer;
+
 		if ( $e instanceof InvalidResponseException ) { // possibly a stale token
 			$this->closeConnection(); // force a re-connect and re-auth next time
 		}
@@ -959,13 +978,30 @@ class SwiftFileBackend extends FileBackendStore {
 
 		\Wikia\SwiftStorage::log(
 			__CLASS__ . '::exception',
+			"[$wgFSSwiftServer] " .
 			get_class( $e ) . " in '{$func}' (given '" . serialize( $params ) . "')" .
 				( $e instanceof InvalidResponseException
 					? ": {$e->getMessage()}"
 					: ""
 				)
 		);
+
+		\Wikia::logBacktrace(get_class($e) . " [$wgFSSwiftServer]");
 		// Wikia change - end
+	}
+	
+	/**
+	 * Check if image path contains /thumb/ 
+	 *
+	 * @param $path image path
+	 * @return Boolean
+	 */
+	private function isThumbnailer( $path ) {
+		if ( strpos( $path, '/images/thumb/' ) !== false ) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }
 

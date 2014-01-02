@@ -3,18 +3,18 @@
 		<h4><a href="<?= $fullpageurl ?>"><?= $feedtitle ?></a></h4>
 		<p class="last-post">
 			<a href="<?= $user_author_url ?>"><?= AvatarService::renderAvatar( $username, 30 ) ?></a>
-			<?= wfMsg('forum-specialpage-board-lastpostby') ?> <a href="<?= $user_author_url ?>"><?= $displayname ?></a>
+			<?= wfMessage( 'forum-specialpage-board-lastpostby' )->escaped() ?> <a href="<?= $user_author_url ?>"><?= $displayname ?></a>
 			<span class="timestamp timeago" title="<?= $iso_timestamp ?>"><?= $fmt_timestamp ?></span>
 		</p>
 	</div>
 	<div class="thread-right">
 		<ul class="activity">
-			<li class="threads"><?= wfMsgExt( 'forum-board-thread-replies', array('parsemag'), $repliesNumber ) ?></li>
-			<li class="posts"><?= wfMsgExt( 'forum-board-thread-kudos', array('parsemag'), $kudosNumber ) ?></li>
+			<li class="threads"><?= wfMessage( 'forum-board-thread-replies', $wg->Lang->formatNum( $repliesNumber ) )->escaped() ?></li>
+			<li class="posts"><?= wfMessage( 'forum-board-thread-kudos', $wg->Lang->formatNum( $kudosNumber ) )->escaped() ?></li>
 			<? if ($isWatched): ?>
-				<li class="follow following" data-iswatched="1"><?= wfMsg( 'forum-board-thread-following' ) ?></li>
+				<li class="follow following" data-iswatched="1"><?= wfMessage( 'forum-board-thread-following' )->escaped() ?></li>
 			<? else: ?>
-				<li class="follow" data-iswatched="0"><?= wfMsg( 'forum-board-thread-follow' ) ?></li>
+				<li class="follow" data-iswatched="0"><?= wfMessage( 'forum-board-thread-follow' )->escaped() ?></li>
 			<? endif ?>
 		</ul>
 	</div>

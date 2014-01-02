@@ -238,6 +238,22 @@ $messages['ar'] = array(
 	'manage-wikia-home-collection-add-file-button' => 'إضافة صورة',
 );
 
+/** Bulgarian (български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'manage-wikia-home-wiki-list-blocked-no' => 'Не',
+	'manage-wikia-home-wiki-list-blocked-yes' => 'Да',
+	'manage-wikia-home-wiki-list-promoted-no' => 'Не',
+	'manage-wikia-home-wiki-list-promoted-yes' => 'Да',
+	'manage-wikia-home-wiki-list-official-no' => 'Не',
+	'manage-wikia-home-wiki-list-official-yes' => 'Да',
+	'manage-wikia-home-modal-button-no' => 'Не',
+	'manage-wikia-home-modal-button-yes' => 'Да',
+	'manage-wikia-home-modal-button-okay' => 'Добре',
+	'manage-wikia-home-collections-setup-save-button' => 'Съхраняване',
+);
+
 /** Breton (brezhoneg)
  * @author Fohanno
  */
@@ -375,6 +391,13 @@ $messages['ca'] = array(
 	'manage-wikia-home-collection-hero-image-tooltip' => 'Aquesta imatge ha de ser  $1 px ×  $2 px',
 	'manage-wikia-home-collection-sponsor-image-tooltip' => 'Aquesta imatge ha de ser  $1 px ×  $2 px',
 	'manage-wikia-home-collection-add-file-button' => 'Afegir una foto',
+);
+
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'manage-wikia-home-wiki-list-blocked' => 'Блоктоьхна',
 );
 
 /** German (Deutsch)
@@ -767,6 +790,27 @@ $messages['lb'] = array(
 	'manage-wikia-home-collections-setup-save-button' => 'Späicheren',
 );
 
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'manage-wikia-home-wiki-filter' => 'فيلتر',
+	'manage-wikia-home-wiki-filter-reset' => 'پاك كردن',
+	'manage-wikia-home-wiki-list-headline' => 'نوم ویکی',
+	'manage-wikia-home-wiki-list-blocked' => 'قلف بيه',
+	'manage-wikia-home-wiki-list-blocked-no' => 'نه',
+	'manage-wikia-home-wiki-list-blocked-yes' => 'هری',
+	'manage-wikia-home-wiki-list-promoted-no' => 'نه',
+	'manage-wikia-home-wiki-list-promoted-yes' => 'هری',
+	'manage-wikia-home-wiki-list-official-no' => 'نه',
+	'manage-wikia-home-wiki-list-official-yes' => 'هری',
+	'manage-wikia-home-modal-button-no' => 'نه',
+	'manage-wikia-home-modal-button-yes' => 'هری',
+	'manage-wikia-home-modal-button-okay' => 'خوئه',
+	'manage-wikia-home-collections-setup-save-button' => 'ذخيره كردن',
+	'manage-wikia-home-collections-enabled-field-label' => 'قادر بيه',
+);
+
 /** Malay (Bahasa Melayu)
  * @author Anakmalaysia
  */
@@ -1043,6 +1087,7 @@ $messages['ps'] = array(
 );
 
 /** Portuguese (português)
+ * @author Hamilton Abreu
  * @author Luckas
  */
 $messages['pt'] = array(
@@ -1058,7 +1103,7 @@ $messages['pt'] = array(
 	'manage-wikia-home-modal-button-no' => 'Não',
 	'manage-wikia-home-modal-button-yes' => 'Sim',
 	'manage-wikia-home-modal-button-okay' => 'Aceitar',
-	'manage-wikia-home-collections-setup-save-button' => 'Salvar',
+	'manage-wikia-home-collections-setup-save-button' => 'Gravar',
 	'manage-wikia-home-collections-name-field-label' => 'Nome da coleção',
 	'manage-wikia-home-collections-sponsor-url-field-label' => 'URL do patrocinador',
 );
@@ -1371,13 +1416,31 @@ $messages['uk'] = array(
 	'manage-wikia-home-collection-add-file-button' => 'Додати фото',
 );
 
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'manage-wikia-home-wiki-list-promoted' => 'Quảng cáo',
+	'manage-wikia-home-wiki-list-blocked-yes' => 'Có',
+	'manage-wikia-home-wiki-list-promoted-no' => 'Không',
+	'manage-wikia-home-wiki-list-promoted-yes' => 'Có',
+	'manage-wikia-home-wiki-list-official-no' => 'Không',
+	'manage-wikia-home-wiki-list-official-yes' => 'Có',
+	'manage-wikia-home-modal-content-add-promoted' => 'Bạn có muốn thúc đẩy wiki này trong hình dung wiki?',
+);
+
 /** Simplified Chinese (中文（简体）‎)
  * @author Liuxinyu970226
+ * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
 	'managewikiahome' => '管理Wikia首页',
+	'manage-wikia-home-wrong-rights' => '您可能已登出，或者您没有权限使用此特殊页面。',
 	'manage-wikia-home-wikis-in-slots-heading' => '插槽部署',
 	'manage-wikia-home-wikis-in-slots-total' => '插槽总计：$1',
+	'manage-wikia-home-wikis-in-slots-success' => '数字插槽已被更改。',
+	'manage-wikia-home-collections-invalid-action' => '此操作不存在。',
+	'manage-wikia-home-verticals-proportions' => '每纵列的wiki数量',
 	'manage-wikia-home-change-button' => '更改',
 	'manage-wikia-home-wikis-in-visualization-heading' => '已实现可视化的维基列表',
 	'manage-wikia-home-wiki-filter' => '过滤器',

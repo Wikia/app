@@ -21,10 +21,12 @@ $messages['qqq'] = array(
 );
 
 /** Arabic (العربية)
+ * @author Claw eg
  * @author Kuwaity26
  */
 $messages['ar'] = array(
 	'adengine-exitstitial-title-template' => 'أنت تغادر $1...',
+	'adengine-exitstitial-redirecting' => 'المتصفح الخاص بك سيقوم بتحويلك إلى الصفحة التي طلبتها في بضع ثوان.',
 	'adengine-exitstitial-go-back' => 'أتريد أن تعود؟',
 	'adengine-exitstitial-button' => 'تخطَّ هذا الإعلان',
 );
@@ -81,6 +83,13 @@ $messages['ca'] = array(
 	'adengine-exitstitial-button' => 'Saltar aquest anunci',
 );
 
+/** Czech (čeština)
+ * @author Chmee2
+ */
+$messages['cs'] = array(
+	'adengine-exitstitial-button' => 'Přeskočit tuto reklamu',
+);
+
 /** German (Deutsch)
  * @author Metalhead64
  */
@@ -121,6 +130,23 @@ $messages['et'] = array(
 	'adengine-exitstitial-button' => 'Jäta see reklaam vahele',
 );
 
+/** Persian (فارسی)
+ * @author Ebraminio
+ */
+$messages['fa'] = array(
+	'adengine-exitstitial-title-template' => 'شما ترک می‌کند $1....',
+	'adengine-exitstitial-redirecting' => 'مرورگرتان در عرض چند ثانیه شما را به صفحه‌ای که درخواست‌کرده بودید هدایت خواهد کرد.',
+	'adengine-exitstitial-go-back' => 'می‌خواهید برگردید؟',
+	'adengine-exitstitial-button' => 'ردشدن از این تبلیغ',
+);
+
+/** Finnish (suomi)
+ * @author Silvonen
+ */
+$messages['fi'] = array(
+	'adengine-exitstitial-button' => 'Ohita tämä mainos',
+);
+
 /** Faroese (føroyskt)
  * @author EileenSanda
  */
@@ -144,11 +170,12 @@ $messages['fr'] = array(
 
 /** Galician (galego)
  * @author Toliño
+ * @author Vivaelcelta
  */
 $messages['gl'] = array(
-	'adengine-exitstitial-title-template' => 'Está deixando $1…',
-	'adengine-exitstitial-redirecting' => 'O seu navegador irá á páxina solicitada nuns segundos.',
-	'adengine-exitstitial-go-back' => 'Quere regresar?',
+	'adengine-exitstitial-title-template' => 'Estás deixando $1…',
+	'adengine-exitstitial-redirecting' => 'O teu navegador irá á páxina solicitada nuns segundos.',
+	'adengine-exitstitial-go-back' => 'Queres regresar?',
 	'adengine-exitstitial-button' => 'Saltar este anuncio',
 );
 
@@ -171,6 +198,16 @@ $messages['id'] = array(
 	'adengine-exitstitial-button' => 'Lewati Iklan ini',
 );
 
+/** Kannada (ಕನ್ನಡ)
+ * @author Dimension10
+ */
+$messages['kn'] = array(
+	'adengine-exitstitial-title-template' => 'ನೀವು $1 ಬಿಡುತ ಇದ್ದೀರಿ.',
+	'adengine-exitstitial-redirecting' => 'ನಿಮ್ಮ ಬ್ರೌಸರ್ ನೀವು ಕೇಳಿದ ಪುಟಕ್ಕೆ ನಿಮ್ಮನ ಸ್ವಲ್ಪ ಹೊತ್ತಲ್ಲೇ ಕಲಿಸುತದೆ.',
+	'adengine-exitstitial-go-back' => 'ವಾಪುಸು ಹೋಗ ಬೇಕ?',
+	'adengine-exitstitial-button' => 'ಈ ಎಡನ್ನು ಜಿಗಿ ಬೇಕ?',
+);
+
 /** Korean (한국어)
  * @author 아라
  * @author 한글화담당
@@ -190,6 +227,25 @@ $messages['lb'] = array(
 	'adengine-exitstitial-redirecting' => 'Äre Browser leet Iecht an e puer Sekonnen op déi Säit virun déi Dir gefrot hutt.',
 	'adengine-exitstitial-go-back' => 'Wëllt Dir zréckgoen?',
 	'adengine-exitstitial-button' => 'Dës Reklamm iwwersprangen',
+);
+
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'adengine-exitstitial-title-template' => 'شما ها رؤیت د $1...',
+	'adengine-exitstitial-go-back' => 'میهای روئی وا دما؟',
+	'adengine-exitstitial-button' => 'د ای تبلیغ زی رد با',
+);
+
+/** Latvian (latviešu)
+ * @author Sg ghost
+ */
+$messages['lv'] = array(
+	'adengine-exitstitial-title-template' => 'Jūs atstājot $1...',
+	'adengine-exitstitial-redirecting' => 'Jūsu pārlūkprogramma būs novirzīt jūs uz jūsu pieprasīto lapu pēc dažām sekundēm.',
+	'adengine-exitstitial-go-back' => 'Vēlaties doties atpakaļ?',
+	'adengine-exitstitial-button' => 'Izlaist šo reklāmu',
 );
 
 /** Basa Banyumasan (Basa Banyumasan)
@@ -259,6 +315,16 @@ $messages['nb'] = array(
 	'adengine-exitstitial-button' => 'Hopp over denne annonsen',
 );
 
+/** Nepali (नेपाली)
+ * @author सरोज कुमार ढकाल
+ */
+$messages['ne'] = array(
+	'adengine-exitstitial-title-template' => 'तपाईँ $1 छोड्दै हुनुहुन्छ…',
+	'adengine-exitstitial-redirecting' => 'तपाईँको ब्राउजरले तपाईँले अनुरोध गर्नुभएको पृष्ठमा केही सेकेन्डमा नै लैजाने छ ।',
+	'adengine-exitstitial-go-back' => 'के पछाडि फर्कने हो ?',
+	'adengine-exitstitial-button' => 'यो विज्ञापन छोड्ने',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -298,12 +364,23 @@ $messages['ps'] = array(
 	'adengine-exitstitial-button' => 'له دې خبرتيا تېرېدل',
 );
 
+/** Portuguese (português)
+ * @author Hamilton Abreu
+ */
+$messages['pt'] = array(
+	'adengine-exitstitial-title-template' => 'Está a sair da wiki $1...',
+	'adengine-exitstitial-redirecting' => 'O browser vai reencaminhá-lo para a página solicitada dentro de segundos.',
+	'adengine-exitstitial-go-back' => 'Quer regressar?',
+	'adengine-exitstitial-button' => 'Saltar este anúncio',
+);
+
 /** Brazilian Portuguese (português do Brasil)
  * @author Matheus Sousa L.T
  * @author TheGabrielZaum
+ * @author Tuliouel
  */
 $messages['pt-br'] = array(
-	'adengine-exitstitial-title-template' => 'Você está deixando a $1....',
+	'adengine-exitstitial-title-template' => 'Você está deixando $1...',
 	'adengine-exitstitial-redirecting' => 'Seu navegador irá redirecioná-lo à página que você requisitou em alguns segundos.',
 	'adengine-exitstitial-go-back' => 'Deseja voltar?',
 	'adengine-exitstitial-button' => 'Pular este anúncio',
@@ -337,6 +414,16 @@ $messages['sv'] = array(
 	'adengine-exitstitial-redirecting' => 'Din webbläsare kommer att omdirigera dig till den sida du begärt inom några sekunder.',
 	'adengine-exitstitial-go-back' => 'Vill du gå tillbaka?',
 	'adengine-exitstitial-button' => 'Hoppa över denna annons',
+);
+
+/** Silesian (ślůnski)
+ * @author Krol111
+ */
+$messages['szl'] = array(
+	'adengine-exitstitial-title-template' => 'Uopuszczosz $1',
+	'adengine-exitstitial-redirecting' => 'Twojo przeglůndarka przekeruje Ća na właśćiwo zajta za pora sekund.',
+	'adengine-exitstitial-go-back' => 'Chcysz nazod na wiki?',
+	'adengine-exitstitial-button' => 'Uodćepej reklama',
 );
 
 /** Turkish (Türkçe)
@@ -381,7 +468,7 @@ $messages['zh'] = array(
  * @author Liuxinyu970226
  */
 $messages['zh-hans'] = array(
-	'adengine-exitstitial-title-template' => '你要离开 $1 …',
+	'adengine-exitstitial-title-template' => '您将要离开$1......',
 	'adengine-exitstitial-redirecting' => '您的浏览器将在几秒钟后重定向至您请求的页面。',
 	'adengine-exitstitial-go-back' => '想要回去吗？',
 	'adengine-exitstitial-button' => '跳过这个广告',

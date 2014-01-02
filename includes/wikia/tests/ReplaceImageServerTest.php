@@ -13,6 +13,8 @@ class ReplaceImageServerTest extends WikiaBaseTest {
 		parent::setUp();
 
 		$this->mockGlobalVariable('wgCdnStylePath', sprintf('http://slot1.images.wikia.nocookie.net/__cb%s/common', self::DEFAULT_CB));
+		$this->mockGlobalVariable('wgImagesDomainSharding', 'images%s.wikia.nocookie.net');
+
 		$this->mockGlobalVariable('wgAkamaiGlobalVersion', 0);
 		$this->mockGlobalVariable('wgAkamaiLocalVersion', 0);
 	}
@@ -86,6 +88,35 @@ class ReplaceImageServerTest extends WikiaBaseTest {
 				'url' => 'http://images.wikia.com/poznan/pl/images/a/aa/File.ogg',
 				'timestamp' => '20110917091718',
 				'expected' => 'http://images.hakarl.wikia-dev.com/poznan/pl/images/a/aa/File.ogg',
+			],
+		];
+	}
+
+	/** @dataProvider devBoxReplaceAssetServerProvider */
+	public function testDevBoxReplaceAssetServer($url, $regex) {
+		$this->mockGlobalVariable('wgDevelEnvironment', true);
+		$replacedUrl = wfReplaceAssetServer($url);
+
+		if ($regex) {
+			$this->assertEquals(true, preg_match($regex, $replacedUrl));
+		} else {
+			$this->assertEquals($url, $replacedUrl);
+		}
+	}
+
+	public function devBoxReplaceAssetServerProvider() {
+		return [
+			[
+				'http://developer.wikia-dev.com/path/to/some/file.scss',
+				'/^http:\/\/i([0-9])\.developer\.wikia-dev.com\/path\/to\/some\/file\.scss$/'
+			],
+			[
+				'https://slot1.images.wikia.nocookie.net/path/to/file.js',
+				'/^https:\/\/slot1\.images([0-9])\.wikia\.nocookie\.net\/path\/to\/file\.js$/',
+			],
+			[
+				'http://google.com/resource.js',
+				false,
 			],
 		];
 	}

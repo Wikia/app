@@ -17,10 +17,10 @@ class ApiDocsServiceFactory {
 	 */
 	public function getApiDocsService() {
 		global $IP;
-		$swagger = Swagger::discover( $IP . "/includes/wikia/api/" );
+		$swagger = Swagger::discover( $IP . "/includes/wikia/api/swagger" );
 		$docsService = new ApiDocsService(
 			$swagger,
-			function( $x ) { return "/wikia.php?controller=ApiDocs&method=api&api=" . $x; }
+			function( $x ) { return "Docs/Api?name=" . $x; }
 		);
 		return new CachingApiDocsService( $docsService, \F::app()->wg->CacheBuster );
 	}

@@ -98,7 +98,7 @@ $messages['ce'] = array(
 	'spellchecker-info-spellcheck-languages' => 'Мотт',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Darth Daron
  */
 $messages['cs'] = array(
@@ -296,6 +296,9 @@ $messages['mg'] = array(
 	'spellchecker-info-dictionaries' => 'Rakibolana azo ampiasaina',
 	'spellchecker-info-spellcheck-text' => 'Teny tokony hotsaraina',
 	'spellchecker-info-spellcheck-languages' => 'Fiteny',
+	'spellchecker-info-spellcheck-submit' => 'Fanitsiana tsipelina',
+	'spellchecker-info-spellcheck-is-correct' => 'Voatsipelina tsara ny teny "$1"',
+	'spellchecker-info-spellcheck-suggestions' => 'Soso-kevi-tsipelina ho an\'i "$1": $2',
 );
 
 /** Macedonian (македонски)
@@ -374,6 +377,23 @@ $messages['nl'] = array(
 	'spellchecker-info-spellcheck-submit' => 'Spelling controleren',
 	'spellchecker-info-spellcheck-is-correct' => 'Het woord "$1" is correct gespeld',
 	'spellchecker-info-spellcheck-suggestions' => 'Spellingsuggesties voor "$1": $2',
+);
+
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'spellchecker-desc' => 'Provesís una interfàcia de verificacion d’ortografia pel modul PHP enchant',
+	'enablespellchecker' => 'Activar lo corrector ortografic en mòde visual',
+	'spellchecker-info' => 'Informacions del verificador d’ortografia',
+	'spellchecker-info-languages' => 'Lengas disponiblas ($1)',
+	'spellchecker-info-provider' => 'Provesidor',
+	'spellchecker-info-dictionaries' => 'Diccionaris disponibles',
+	'spellchecker-info-spellcheck-text' => 'Tèxte de verificar',
+	'spellchecker-info-spellcheck-languages' => 'Lenga',
+	'spellchecker-info-spellcheck-submit' => 'Verificar l’ortografia',
+	'spellchecker-info-spellcheck-is-correct' => 'Lo mot « $1 » es ortografiat corrèctament',
+	'spellchecker-info-spellcheck-suggestions' => 'Suggestions d’ortografia per « $1 » : $2',
 );
 
 /** Polish (polski)
@@ -610,6 +630,7 @@ $messages['wa'] = array(
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Hydra
+ * @author Liuxinyu970226
  * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
@@ -622,4 +643,5 @@ $messages['zh-hans'] = array(
 	'spellchecker-info-spellcheck-text' => '文本已检查',
 	'spellchecker-info-spellcheck-languages' => '语言',
 	'spellchecker-info-spellcheck-submit' => '拼写检查',
+	'spellchecker-info-spellcheck-suggestions' => '对"$1"的拼写建议：$2',
 );

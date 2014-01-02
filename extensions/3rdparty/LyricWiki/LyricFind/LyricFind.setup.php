@@ -1,19 +1,21 @@
 <?php
 
 /**
- * Provides page views counter for LyricFind namespace
+ * Provides page views counter for namespaces with lyric pages
  *
  * @author macbre
- * @var $app WikiaApp
- */
-
+  */
 $wgExtensionCredits['other'][] = array(
 	'name' => 'LyricFind',
+	'version' => '1.1',
 	'author' => array('Maciej Brencz'),
 	'description' => 'Provides page views tracking and &lt;lyricfind&gt; parser tag'
 );
 
 $dir = __DIR__;
+
+// for backward compatibility
+if (!defined('NS_GRACENOTE')) define('NS_GRACENOTE', 220);
 
 // LyricFind namespace setup
 define('NS_LYRICFIND', 222);
@@ -28,9 +30,16 @@ $wgExtensionMessagesFiles['LyricFind'] = $dir . '/LyricFind.i18n.php';
 // LyricFind page views tracking
 $wgAutoloadClasses['LyricFindController'] =  $dir . '/LyricFindController.class.php';
 $wgAutoloadClasses['LyricFindTrackingService'] =  $dir . '/LyricFindTrackingService.class.php';
-$wgHooks['OasisSkinAssetGroups'][] = 'LyricFindHooks::onOasisSkinAssetGroups';
 
-$wgLyricFindTrackingNamespaces = array(NS_LYRICFIND);
+$wgHooks['OasisSkinAssetGroups'][] = 'LyricFindHooks::onSkinAssetGroups';
+$wgHooks['MonobookSkinAssetGroups'][] = 'LyricFindHooks::onSkinAssetGroups';
+$wgHooks['WikiaMobileAssetsPackages'][] = 'LyricFindHooks::onSkinAssetGroups';
+
+$wgLyricFindTrackingNamespaces = [
+	NS_MAIN,
+	NS_GRACENOTE,
+	NS_LYRICFIND
+];
 
 // LyricFind indexing
 $wgHooks['BeforePageDisplay'][] = 'LyricFindHooks::onBeforePageDisplay';

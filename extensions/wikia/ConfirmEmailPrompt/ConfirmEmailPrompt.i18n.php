@@ -26,6 +26,14 @@ $messages['ar'] = array(
 	'confirmemailprompt-error' => 'هل هذا هو عنوان البريد الإلكتروني الخاص بك: <strong>$1</strong>؟ قم [[$2|بتأكيده]] أو [[$3|تغييره]].',
 );
 
+/** Bulgarian (български)
+ * @author Aquilax
+ */
+$messages['bg'] = array(
+	'confirmemailprompt-desc' => 'Показва предупредитело съобщение ако потребителят има непотвърден e-mail адрес.',
+	'confirmemailprompt-error' => 'Това ли е Вашият email adres: <strong>$1</strong>? [[$2|Потвърдете]] или го [[$3|променете]].',
+);
+
 /** Breton (brezhoneg)
  * @author Fohanno
  * @author Gwenn-Ael
@@ -43,7 +51,7 @@ $messages['ca'] = array(
 	'confirmemailprompt-error' => 'Es aquesta la teva direcció de correu electrònic?: <strong>$1</strong>? [[$2|Confirmar-la]] o [[$3|canvia-la]].',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Jezevec
  */
 $messages['cs'] = array(

@@ -18,8 +18,8 @@ class ForumExternalController extends WallExternalController {
 		return '';
 	}
 
-	public function policies() {		
-		$this->body = wfMsgExt( 'forum-policies-and-faq', array( 'parseinline' ));
+	public function policies() {
+		$this->body = wfMessage( 'forum-policies-and-faq' )->parse();
 	}
 
 	/**
@@ -70,7 +70,7 @@ class ForumExternalController extends WallExternalController {
 
 		if ( $newTitle->exists() ) {
 			$this->status = 'error';
-			$this->errormsg = wfMsg( 'forum-board-title-validation-exists' );
+			$this->errormsg = wfMessage( 'forum-board-title-validation-exists' )->escaped();
 			return true;
 		}
 
@@ -104,14 +104,14 @@ class ForumExternalController extends WallExternalController {
 
 		if ( empty( $boardId ) ) {
 			$this->status = 'error';
-			$this->errormsg = wfMsg( 'forum-board-id-validation-missing' );
+			$this->errormsg = wfMessage( 'forum-board-id-validation-missing' )->escaped();
 			return true;
 		}
 
 		$board = ForumBoard::newFromId( $boardId );
 		if ( empty( $board ) ) {
 			$this->status = 'error';
-			$this->errormsg = wfMsg( 'forum-board-id-validation-missing' );
+			$this->errormsg = wfMessage( 'forum-board-id-validation-missing' )->escaped();
 			return true;
 		}
 
@@ -123,14 +123,14 @@ class ForumExternalController extends WallExternalController {
 		$newTitle = Title::newFromText( $boardTitle, NS_WIKIA_FORUM_BOARD );
 		if ( $newTitle->getArticleId() > 0 && $newTitle->getText() != $board->getTitle()->getText() && $newTitle->getArticleId() != $board->getTitle()->getArticleId() ) {
 			$this->status = 'error';
-			$this->errormsg = wfMsg( 'forum-board-title-validation-exists' );
+			$this->errormsg = wfMessage( 'forum-board-title-validation-exists' )->escaped();
 			return true;
 		}
 
 		$forum = new Forum();
 		if ( $forum->getBoardCount() == Forum::BOARD_MAX_NUMBER ) {
 			$this->status = 'error';
-			$this->errormsg = wfMsg( 'forum-board-validation-count', Forum::BOARD_MAX_NUMBER );
+			$this->errormsg = wfMessage( 'forum-board-validation-count', Forum::BOARD_MAX_NUMBER )->escaped();
 			return true;
 		}
 
@@ -206,14 +206,14 @@ class ForumExternalController extends WallExternalController {
 		$rxTc = Title::getTitleInvalidRegex();
 		if ( preg_match( $rxTc, $boardTitle ) ) {
 			$this->errorfield = 'boardTitle';
-			$this->errormsg = wfMsg( 'forum-board-title-validation-invalid' );
+			$this->errormsg = wfMessage( 'forum-board-title-validation-invalid' )->escaped();
 			return false;
 		}
 
 		$titleLength = strlen( $boardTitle );
 		if ( $titleLength > 40 || $titleLength < 4 ) {
 			$this->errorfield = 'boardTitle';
-			$this->errormsg = wfMsg( 'forum-board-title-validation-length' );
+			$this->errormsg = wfMessage( 'forum-board-title-validation-length' )->escaped();
 			return false;
 		}
 
@@ -221,7 +221,7 @@ class ForumExternalController extends WallExternalController {
 
 		if ( $descriptionLength > 255 || $descriptionLength < 4 ) {
 			$this->errorfield = 'boardDescription';
-			$this->errormsg = wfMsg( 'forum-board-description-validation-length' );
+			$this->errormsg = wfMessage( 'forum-board-description-validation-length' )->escaped();
 			return false;
 		}
 

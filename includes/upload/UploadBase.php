@@ -134,6 +134,7 @@ abstract class UploadBase {
 			return null;
 		}
 
+		/* @var UploadFromFile $handler */
 		$handler = new $className;
 
 		$handler->initializeFromRequest( $request );
@@ -348,10 +349,10 @@ abstract class UploadBase {
 			return $status;
 		}
 
-		if ( $wgVerifyMimeType ) {
 			$this->mFileProps = FSFile::getPropsFromPath( $this->mTempPath, $this->mFinalExtension );
 			$mime = $this->mFileProps['file-mime'];
 
+		if ( $wgVerifyMimeType ) {
 			# XXX: Missing extension will be caught by validateName() via getTitle()
 			if ( $this->mFinalExtension != '' && !$this->verifyExtension( $mime, $this->mFinalExtension ) ) {
 				wfProfileOut( __METHOD__ );
@@ -374,6 +375,14 @@ abstract class UploadBase {
 			wfProfileOut( __METHOD__ );
 			return $status;
 		}
+
+		// Wikia change - begin
+		// if filesize() returns 0, try to get the size from PHP upload info (BAC-773)
+		if ( empty( $this->mFileProps['size'] ) ) {
+			$this->mFileProps['size'] = $this->getFileSize();
+			Wikia::logBacktrace( __METHOD__ . '::sizeFallback::' . $this->getTitle()->getDBkey() );
+		}
+		// Wikia change - end
 
 		wfDebug( __METHOD__ . ": all clear; passing.\n" );
 		wfProfileOut( __METHOD__ );

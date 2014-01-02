@@ -8,6 +8,13 @@ $messages['en'] = array(
 	'tog-redirected-from' => '&ndash; redirected from $1'
 );
 
+/** Message documentation (Message documentation)
+ * @author Hamilton Abreu
+ */
+$messages['qqq'] = array(
+	'tog-disablelinksuggest' => '{{Related|Source mode (wikia)}}',
+);
+
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */
@@ -59,7 +66,7 @@ $messages['ca'] = array(
 	'tog-redirected-from' => '&ndash; redirigit des de $1',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Darth Daron
  * @author Jezevec
  * @author Mormegil
@@ -317,7 +324,7 @@ $messages['ps'] = array(
  * @author Hamilton Abreu
  */
 $messages['pt'] = array(
-	'tog-disablelinksuggest' => 'Não apresentar sugestões de links no modo de Código',
+	'tog-disablelinksuggest' => 'Não apresentar sugestões de links no modo Fonte',
 );
 
 /** Brazilian Portuguese (português do Brasil)
@@ -391,10 +398,11 @@ $messages['tl'] = array(
 );
 
 /** Turkish (Türkçe)
+ * @author Incelemeelemani
  * @author Manco Capac
  */
 $messages['tr'] = array(
-	'tog-disablelinksuggest' => 'Bağlantı önermesini gösterme', # Fuzzy
+	'tog-disablelinksuggest' => 'Kaynak modu bağlantısını gösterme',
 );
 
 /** Tatar (Cyrillic script) (татарча)
@@ -411,6 +419,15 @@ $messages['uk'] = array(
 	'linksuggest-desc' => 'Пропонує редакторам посилання в режимі редагування',
 	'tog-disablelinksuggest' => 'Не показувати пропозицій посилань у режимі Вихідного коду',
 	'tog-redirected-from' => '&ndash; перенаправлено з $1',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'linksuggest-desc' => 'Đề nghị liên kết đến các biên tập viên chỉnh sửa quan',
+	'tog-disablelinksuggest' => 'Không hiển thị các liên kết đề nghị trong chế độ nguồn',
+	'tog-redirected-from' => '&ndash; đổi hướng từ $1',
 );
 
 /** Simplified Chinese (中文（简体）‎)

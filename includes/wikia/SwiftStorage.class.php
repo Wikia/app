@@ -57,12 +57,12 @@ class SwiftStorage {
 	 * @param $pathPrefix string path prefix
 	 * @return SwiftStorage storage instance
 	 */
-	public static function newFromContainer( $containerName, $pathPrefix = '' ) {
+	public static function newFromContainer( $containerName, $pathPrefix = '', $dataCenter = null ) {
 		if ($pathPrefix !== '') {
 			$pathPrefix = '/' . ltrim($pathPrefix, '/');
 		}
 
-		return new self( $containerName,  $pathPrefix );
+		return new self( $containerName,  $pathPrefix, $dataCenter );
 	}
 
 	/**
@@ -79,8 +79,9 @@ class SwiftStorage {
 		$this->wg = \F::app()->wg;
 
 		if ( !is_null( $dataCenter )  ) {
+			$this->swiftServer = $this->wg->FSSwiftDC[ $dataCenter ][ 'servers' ][ array_rand( $this->wg->FSSwiftDC[ $dataCenter ][ 'servers' ] ) ];
 			$this->swiftConfig = $this->wg->FSSwiftDC[ $dataCenter ][ 'config' ];
-			$this->swiftServer = $this->wg->FSSwiftDC[ $dataCenter ][ 'server' ]; 
+			array_walk( $this->swiftConfig, function( &$v, $k, $data ) { $v = sprintf( $v, $data ); }, $this->swiftServer );			 
 		} else {
 			$this->swiftConfig = $this->wg->FSSwiftConfig;
 			$this->swiftServer = $this->wg->FSSwiftServer;
@@ -143,7 +144,10 @@ class SwiftStorage {
 		$status = $req->execute();
 
 		if (!$status->isOK()) {
-			self::log(__METHOD__, 'can\'t set ACL');
+			self::log(
+				__METHOD__,
+				sprintf('can\'t set ACL [<%s> returned HTTP %d - %s] %s', $url, $req->getStatus(), json_encode($status->getErrorsArray()), json_encode($req->getResponseHeaders()))
+			);
 		}
 
 		return $container;
@@ -175,7 +179,7 @@ class SwiftStorage {
 		$remotePath = $this->getRemotePath( $remoteFile );
 		$file = ( is_resource( $localFile ) ) ? get_resource_type( $localFile ) : $localFile; 
 		
-		wfDebug( __METHOD__ . ": {$file} -> {$remotePath}\n" );
+		wfDebug( __METHOD__ . ": {$file} -> {$remotePath} [{$this->swiftServer}]\n" );
 
 		$time = microtime( true );
 
@@ -221,71 +225,7 @@ class SwiftStorage {
 		}
 
 		$time = round( ( microtime( true ) - $time ) * 1000 );
-		wfDebug( __METHOD__ . ": {$localFile} uploaded in {$time} ms\n" );
-
-		return $res;
-	}
-	
-	/**
-	 * Copy remote storage Object to a target Container
-	 * 
-	 * @param $srcFile string remote source file name
-	 * @param $dstFile string remote destination file name
-	 * @return \Status result
-	 */
-	public function copy( $srcFile, $dstFile ) {
-		$res = \Status::newGood();
-
-		$remotePath = $this->getRemotePath( $remoteFile );
-		$file = ( is_resource( $localFile ) ) ? get_resource_type( $localFile ) : $localFile; 
-		
-		wfDebug( __METHOD__ . ": {$file} -> {$remotePath}\n" );
-
-		$time = microtime( true );
-
-		try {
-			if ( !is_resource( $localFile )  ) {
-				$fp = @fopen( $localFile, 'r' );
-				if ( !$fp ) {
-					self::log( __METHOD__ . '::fopen', "<{$localFile}> doesn't exist" );
-					return \Status::newFatal( "{$localFile} doesn't exist" );
-				}
-			} else {
-				$fp = $localFile;
-			}
-
-			// check file size - sending empty file results in "HTTP 411 MissingContentLengh"
-			$size = (float)fstat( $fp )['size'];
-			if ( $size === 0 ) {
-				self::log( __METHOD__ . '::fstat', "<{$file}> is empty" );
-				return \Status::newFatal( "{$file} is empty" );
-			}
-
-			$object = $this->container->create_object( $remotePath );
-
-			// metadata
-			if ( is_string( $mimeType ) ) {
-				$object->content_type = $mimeType;
-			}
-
-			if (!empty($metadata)) {
-				$object->setMetadataValues($metadata);
-			}
-
-			// upload it
-			$object->write( $fp, $size );
-			
-			if ( is_resource( $fp ) ) {
-				fclose( $fp );
-			}
-		}
-		catch ( \Exception $ex ) {
-			self::log( __METHOD__ . '::exception',  $localFile . ' - ' . $ex->getMessage() );
-			return \Status::newFatal( $ex->getMessage() );
-		}
-
-		$time = round( ( microtime( true ) - $time ) * 1000 );
-		wfDebug( __METHOD__ . ": {$localFile} uploaded in {$time} ms\n" );
+		wfDebug( __METHOD__ . ": {$localFile} uploaded in {$time} ms [{$this->swiftServer}]\n" );
 
 		return $res;
 	}
@@ -320,7 +260,6 @@ class SwiftStorage {
 	 * @return String $content
 	 */
 	public function read( $remoteFile ) {
-		$content = '';
 		try {
 			$remoteFile = $this->getRemotePath( $remoteFile );
 			$object = $this->container->get_object( $remoteFile );
@@ -378,4 +317,13 @@ class SwiftStorage {
 	public static function log($method, $msg) {
 		\Wikia::log(self::LOG_GROUP . '-WIKIA', false, $method . ': ' . $msg, true /* $force */);
 	}
+
+	/**
+	 * Return Swift server 
+	 * 
+	 * @param - no params
+	 */
+	public function getSwiftServer() {
+		return $this->swiftServer;
+	} 
 }

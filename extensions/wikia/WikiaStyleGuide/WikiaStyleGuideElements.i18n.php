@@ -136,6 +136,15 @@ $messages['pl'] = array(
 	'wikiastyleguide-dropdown-selected-items-list' => '$1 i $2 więcej',
 );
 
+/** Portuguese (português)
+ * @author Hamilton Abreu
+ */
+$messages['pt'] = array(
+	'wikiastyleguide-dropdown-all' => 'Todos',
+	'wikiastyleguide-dropdown-select-all' => 'Selecionar todos',
+	'wikiastyleguide-dropdown-selected-items-list' => '$1 e mais $2',
+);
+
 /** tarandíne (tarandíne)
  * @author Joetaras
  */
@@ -170,6 +179,15 @@ $messages['uk'] = array(
 	'wikiastyleguide-dropdown-all' => 'Усі',
 	'wikiastyleguide-dropdown-select-all' => 'Вибрати всі',
 	'wikiastyleguide-dropdown-selected-items-list' => '$1 і ще $2',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'wikiastyleguide-dropdown-all' => 'Tất cả',
+	'wikiastyleguide-dropdown-select-all' => 'Chọn tất cả',
+	'wikiastyleguide-dropdown-selected-items-list' => '$1 và $2 thêm',
 );
 
 /** Simplified Chinese (中文（简体）‎)

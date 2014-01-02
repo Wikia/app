@@ -21,6 +21,7 @@ $messages['qqq'] = array(
 For an explanation of 'rich information' see [[:w:en:Media richness theory|Wikipedia]].",
 	'contentfeeds-newimages-rss-desc' => 'Outputs information about the source of the feed entry for attribution reasons. $1 is the URL of the page',
 	'contentfeeds-firstfewarticles-tag-title' => '{{Identical|Title}}',
+	'contentfeeds-firstfewarticles-tag-next' => '{{Identical|Next}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -58,10 +59,16 @@ $messages['az'] = array(
 );
 
 /** Bulgarian (български)
+ * @author Aquilax
  * @author DCLXVI
  */
 $messages['bg'] = array(
+	'contentfeeds-newimages-rss-desc' => 'Бюлетин от $1',
+	'contentfeeds-firstfewarticles-tag-header' => 'Създайте първите си няколко страници!',
 	'contentfeeds-firstfewarticles-tag-title' => 'Заглавие',
+	'contentfeeds-firstfewarticles-tag-next' => 'Следващ',
+	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Грешка: Заглавието на страница е задължително',
+	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Грешка: Тялото на страницата е задължително',
 );
 
 /** Breton (brezhoneg)
@@ -99,7 +106,7 @@ $messages['ce'] = array(
 	'contentfeeds-firstfewarticles-tag-next' => 'Кхин дӀа',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -252,6 +259,7 @@ $messages['ia'] = array(
  */
 $messages['id'] = array(
 	'contentfeeds-desc' => 'Menyediakan informasi yang kaya dan mutakhir melalui berbagai tag atau "umpan balik"',
+	'contentfeeds-firstfewarticles-tag-header' => 'Buatlah beberapa halaman pertama Anda!',
 	'contentfeeds-firstfewarticles-tag-title' => 'Judul',
 	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Kesalahan: Judul halaman disyaratkan',
 );
@@ -264,6 +272,17 @@ $messages['it'] = array(
 	'contentfeeds-firstfewarticles-tag-next' => 'Successivo',
 	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Errore: Il titolo della pagina è necessario',
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Errore: Il contenuto della pagina è necessario',
+);
+
+/** Japanese (日本語)
+ * @author BryghtShadow
+ */
+$messages['ja'] = array(
+	'contentfeeds-newimages-rss-desc' => '$1からのフィード',
+	'contentfeeds-firstfewarticles-tag-title' => 'タイトル',
+	'contentfeeds-firstfewarticles-tag-next' => '次',
+	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'エラー: ページのタイトルが必要です',
+	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'エラー: ページ本体が必要です',
 );
 
 /** Colognian (Ripoarisch)
@@ -295,6 +314,14 @@ $messages['lb'] = array(
 	'contentfeeds-firstfewarticles-tag-title' => 'Titel',
 	'contentfeeds-firstfewarticles-tag-next' => 'Weider',
 	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Feeler: De Säitentitel ass obligatoresch',
+);
+
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'contentfeeds-newimages-rss-desc' => 'غذا دئن سی $1',
+	'contentfeeds-firstfewarticles-tag-next' => 'نها',
 );
 
 /** Lithuanian (lietuvių)
@@ -350,6 +377,14 @@ $messages['nb'] = array(
 	'contentfeeds-firstfewarticles-tag-next' => 'Neste',
 	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Feil: Sidetittel er påkrevd',
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Feil: Sideinnhold er påkrevd',
+);
+
+/** Nepali (नेपाली)
+ * @author सरोज कुमार ढकाल
+ */
+$messages['ne'] = array(
+	'contentfeeds-firstfewarticles-tag-title' => 'शीर्षक',
+	'contentfeeds-firstfewarticles-tag-next' => 'अर्को',
 );
 
 /** Dutch (Nederlands)

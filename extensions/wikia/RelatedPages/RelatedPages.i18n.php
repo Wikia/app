@@ -82,7 +82,7 @@ $messages['ca'] = array(
 	'wikiarelatedpages-heading' => 'Llegir més',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -177,6 +177,13 @@ $messages['it'] = array(
 $messages['ja'] = array(
 	'wikiarelatedpages-desc' => 'ページに関連ページのリストを追加する',
 	'wikiarelatedpages-heading' => 'さらに読む',
+);
+
+/** Georgian (ქართული)
+ * @author DevaMK
+ */
+$messages['ka'] = array(
+	'wikiarelatedpages-heading' => 'წაიკითხე მეტი',
 );
 
 /** Korean (한국어)
