@@ -7,7 +7,7 @@ test( '-- Initial check', function() {
 	// TODO: verify checkboxes == [ 'nsassociated', 'nsinvert' ]
 });
 
-test( '"all" namespace disable checkboxes', function() {
+test( '"all" namespace disable checkboxes', 8, function() {
 
 	// from Special:Recentchanges
 	var select =

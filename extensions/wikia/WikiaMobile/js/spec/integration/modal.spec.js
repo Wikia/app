@@ -18,7 +18,7 @@ describe("Modal module", function () {
 		show: function(){},
 		hide: function(){},
 		remove: function(){}
-	});
+	}, jQuery);
 
 	it('should be defined', function(){
 
@@ -53,8 +53,6 @@ describe("Modal module", function () {
 				close = true;
 			}
 		});
-
-		expect(window.location.hash).toBe('#Modal');
 
 		jasmine.Clock.tick(60);
 
@@ -158,10 +156,10 @@ describe("Modal module", function () {
 		var wrap = document.getElementById('wkMdlWrp');
 
 		modal.addClass('ClassyClass');
-		expect(wrap.className).toMatch(' ClassyClass');
+		expect(wrap.className).toMatch('ClassyClass');
 
 		modal.removeClass('ClassyClass');
-		expect(wrap.className).not.toMatch(' ClassyClass');
+		expect(wrap.className).not.toMatch('ClassyClass');
 	});
 
 	it('should return if modal is open', function(){

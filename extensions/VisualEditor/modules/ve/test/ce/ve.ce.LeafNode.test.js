@@ -1,7 +1,7 @@
-/**
- * VisualEditor content editable LeafNode tests.
+/*!
+ * VisualEditor ContentEditable LeafNode tests.
  *
- * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -11,16 +11,14 @@ QUnit.module( 've.ce.LeafNode' );
 
 ve.ce.LeafNodeStub = function VeCeLeafNodeStub( model ) {
 	// Parent constructor
-	ve.ce.LeafNode.call( this, 'leaf-stub', model );
+	ve.ce.LeafNode.call( this, model );
 };
 
 ve.inheritClass( ve.ce.LeafNodeStub, ve.ce.LeafNode );
 
-ve.ce.LeafNodeStub.rules = {
-	'canBeSplit': false
-};
+ve.ce.LeafNodeStub.static.name = 'leaf-stub';
 
-ve.ce.nodeFactory.register( 'leaf-stub', ve.ce.LeafNodeStub );
+ve.ce.nodeFactory.register( ve.ce.LeafNodeStub );
 
 /* Tests */
 
@@ -34,7 +32,7 @@ QUnit.test( 'canHaveChildren', 1, function ( assert ) {
 	assert.equal( node.canHaveChildren(), false );
 } );
 
-QUnit.test( 'canHaveGrandchildren', 1, function ( assert ) {
+QUnit.test( 'canHaveChildrenNotContent', 1, function ( assert ) {
 	var node = new ve.ce.LeafNodeStub( new ve.dm.LeafNodeStub() );
-	assert.equal( node.canHaveGrandchildren(), false );
+	assert.equal( node.canHaveChildrenNotContent(), false );
 } );

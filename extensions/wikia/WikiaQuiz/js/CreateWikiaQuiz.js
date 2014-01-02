@@ -3,7 +3,7 @@ var CreateWikiaQuiz = {
 	init: function() {
         var node = $("#CreateWikiaQuiz");
         node
-            .on('mousedown', '.drag', function(event) {
+			.on('mousedown', '.drag', function(event) {
                 event.preventDefault();
             })
             .on('click', '.trash', CreateWikiaQuiz.remove)
@@ -117,6 +117,8 @@ var CreateWikiaQuiz = {
 $(function() {
 	if (wgAction != "edit" && wgAction != "submit"){
 		// only init on special page
-		CreateWikiaQuiz.init();
+		$.when(
+			mw.loader.use('jquery.ui.sortable')
+		).done(	CreateWikiaQuiz.init );
 	}
 });

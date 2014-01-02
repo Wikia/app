@@ -1,29 +1,21 @@
 /*global describe, it, runs, waitsFor, expect, require, document*/
-describe("Sections module", function () {
+xdescribe("Sections module", function () {
 	'use strict';
 
-	var sections = modules.sections(
-		function(){
-			return 'TEST';
-		}
-	);
+	var sections = modules.sections(jQuery);
 
 	it('should be defined', function(){
 		expect(sections).toBeDefined();
 		expect(typeof sections).toBe('object');
-		expect(typeof sections.init).toBe('function');
-		expect(typeof sections.toggle).toBe('function');
-		expect(typeof sections.open).toBe('function');
-		expect(typeof sections.close).toBe('function');
-		expect(typeof sections.addEventListener).toBe('function');
-		expect(typeof sections.removeEventListener).toBe('function');
+		expect(typeof sections.scrollTo()).toBe('function');
+		expect(typeof sections.current).toBe('function');
+		expect(typeof sections.list).toBe('object`');
 	});
 
 	it('should init sections', function(){
 
 		getBody().innerHTML = '<div id="wkPage"><div id="mw-content-text"><h2>one</h2><p>test</p>test<p>test</p><p>test</p><h2>two</h2><p>test</p><div>test</div></div></div>';
 
-		sections.init();
 
 		var h2s = document.querySelectorAll('h2');
 
@@ -87,12 +79,13 @@ describe("Sections module", function () {
 
 		var success = false;
 
-		sections.addEventListener('open', function(){
-			sections.close(document.getElementsByTagName('h2')[0]);
-		});
-
-		sections.addEventListener('close', function(){
-			success = true;
+		$(document).on({
+			'sections:open': function(){
+				sections.close(document.getElementsByTagName('h2')[0]);
+			},
+			'sections:close': function(){
+				success = true;
+			}
 		});
 
 		sections.open(document.getElementsByTagName('h2')[0]);

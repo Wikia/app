@@ -137,7 +137,7 @@ $.showModal = function(title, content, options) {
 	/**
 	 *
 	 * @param options Some possible properties of options are: id, title, content, cancelMsg, okMsg,
-	 * callbackBefore, onOk, callback.  Also, anything that is used by $.fn.makeModal
+	 * callbackBefore, onOk, onCancel, callback.  Also, anything that is used by $.fn.makeModal
 	 */
 $.confirm = function(options) {
 	// init options
@@ -179,6 +179,9 @@ $.confirm = function(options) {
 	// handle clicks on Cancel
 	$('#WikiaConfirmCancel').click(function() {
 		$('#WikiaConfirm').closeModal();
+		if (typeof options.onCancel === 'function') {
+			options.onCancel();
+		}
 	});
 
 	dialog.makeModal(options);

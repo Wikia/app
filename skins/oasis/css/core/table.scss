@@ -1,8 +1,70 @@
-/* alternate table styling */
-/* NOTE: main table styling is in _article.scss */
-
 @import "color";
+@import "../mixins/box-shadow";
 @import "../mixins/gradient";
+
+$color-table-overflow-shadow: mix( $color-page-shadow, $color-page, 50% );
+
+// RT #70017: wikitable class for skinning normal tables
+table.wikitable {
+	background: darken($color-page, 2%);
+	border-collapse: collapse;
+	border: 1px $color-page-border solid;
+	color: $color-text;
+	margin: 1em 1em 1em 0;
+
+	th, td {
+		border: 1px darken($color-page, 35%) solid;
+		padding: 0.2em;
+	}
+	td {
+		b, strong {
+			font-weight: bold;
+		}
+		i, em {
+			font-style: italic;
+		}
+	}
+	> tr > th,  > * > tr > th {
+		background: darken($color-page, 5%);
+		text-align: center;
+	}
+	caption {
+		font-weight: bold;
+	}
+}
+
+.WikiaArticle {
+	.table-is-wide {
+		clear: both;
+		margin-top: 1em;
+		position: relative;
+
+		&:before {
+			@include box-shadow( -15px, 0, 20px, $color-table-overflow-shadow, true, -15px );
+			content: "";
+			height: 100%;
+			pointer-events: none;
+			position: absolute;
+			right: 0;
+			width: 20px;
+			z-index: 2;
+		}
+
+		// Wide tables cannot be floated
+		// Must use important here to override inline styles :'(
+		table {
+			float: none !important;
+			margin-top: 0 !important;
+		}
+
+		// This second element is needed because of stacking order rules.
+		// Otherwise, tables with background colors will overlap the box
+		// shadow applied above.
+		.table-scrollable {
+			overflow: auto;
+		}
+	}
+}
 
 .WikiaDataTable {
 	@include linear-gradient($color-module-highlight, top, $color-module-highlight, 40%, $color-module-shadow, 100%);
@@ -72,7 +134,8 @@
 	}
 }
 
-.WikiaTable { // This parallels table.article-table in _article.scss
+.article-table,
+.WikiaTable {
 	background: darken($color-page, 2%);
 	border-collapse: collapse;
 	border: 0px none $color-page-border;
@@ -98,5 +161,3 @@ table.jquery-tablesorter.sortable th.headerSort .chevron {
 		border-color: transparent transparent $color-text;
 	}
 }
-
-

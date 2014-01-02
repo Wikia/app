@@ -555,6 +555,20 @@ class Article extends Page {
 					# This will set $this->mRevision if needed
 					$this->fetchContent();
 
+					// Wikia change - begin
+					// @author macbre
+					// return status different than HTTP 200 when revision is missing (BAC-630)
+					if ( !$this->mRevision instanceof Revision ) {
+						global $wgEnableParserCache;
+						wfDebug( __METHOD__ . ": no revision found - disabling parser cache and returning 404\n" );
+
+						$wgOut->getRequest()->response()->header('X-Missing-Revision: 1', true, 404);
+
+						$useParserCache = false;
+						$wgEnableParserCache = false;
+					}
+					// Wikia change - end
+
 					# Are we looking at an old revision
 					if ( $oldid && $this->mRevision ) {
 						$this->setOldSubtitle( $oldid );
@@ -1344,6 +1358,11 @@ class Article extends Page {
 
 		# Check permissions
 		$permission_errors = $title->getUserPermissionsErrors( 'delete', $user );
+
+		# Wikia change @author nAndy (DAR-1133)
+		wfRunHooks( 'BeforeDeletePermissionErrors', [ &$this, &$title, &$user, &$permission_errors ] );
+		# End of Wikia change
+
 		if ( count( $permission_errors ) ) {
 			throw new PermissionsError( 'delete', $permission_errors );
 		}

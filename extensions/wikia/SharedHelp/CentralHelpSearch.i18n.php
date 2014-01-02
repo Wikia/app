@@ -51,7 +51,7 @@ $messages['ca'] = array(
 	'centralhelpsearch-placeholder' => 'Buscar en Ajuda...',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Chmee2
  * @author Darth Daron
  */
@@ -85,12 +85,21 @@ $messages['fi'] = array(
 	'centralhelpsearch-placeholder' => 'Etsi ohjeita...',
 );
 
+/** Faroese (føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'centralhelpsearch-desc' => 'Loyv innlimanina av einum formulari fyri at leita í Community Central Help',
+	'centralhelpsearch-placeholder' => 'Leita í Help...',
+);
+
 /** French (français)
  * @author Gomoko
+ * @author Wyz
  */
 $messages['fr'] = array(
 	'centralhelpsearch-desc' => "Permet l'inclusion d'un formulaire pour rechercher dans l'Aide centrale de la communauté",
-	'centralhelpsearch-placeholder' => "Rechercher dans l'aide&hellip;",
+	'centralhelpsearch-placeholder' => "Rechercher dans l'aide...",
 );
 
 /** Galician (galego)
@@ -140,6 +149,13 @@ $messages['lb'] = array(
 	'centralhelpsearch-placeholder' => 'An der Hëllef sichen...',
 );
 
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'centralhelpsearch-placeholder' => 'پی جوری هومیاری',
+);
+
 /** Lithuanian (lietuvių)
  * @author Eitvys200
  */
@@ -177,6 +193,14 @@ $messages['nb'] = array(
 $messages['nl'] = array(
 	'centralhelpsearch-desc' => 'Opname van een formulier om Community Central Help te doorzoeken toestaan',
 	'centralhelpsearch-placeholder' => 'Zoek in Help &hellip;',
+);
+
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'centralhelpsearch-desc' => "Permet l'inclusion d'un formulari per recercar dins l'Ajuda centrala de la comunautat",
+	'centralhelpsearch-placeholder' => "Recercar dins l'ajuda&hellip;",
 );
 
 /** Polish (polski)
@@ -259,6 +283,14 @@ $messages['tt-cyrl'] = array(
 $messages['uk'] = array(
 	'centralhelpsearch-desc' => 'Дозволити включення форми для пошуку довідки',
 	'centralhelpsearch-placeholder' => 'Пошук довідки...',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'centralhelpsearch-desc' => 'Cho phép bao gồm một hình thức tìm kiếm cộng đồng Trung tâm trợ giúp',
+	'centralhelpsearch-placeholder' => 'Tìm kiếm trợ giúp...',
 );
 
 /** Simplified Chinese (中文（简体）‎)

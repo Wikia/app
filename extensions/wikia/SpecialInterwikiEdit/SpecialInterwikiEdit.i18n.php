@@ -138,10 +138,16 @@ $messages['ca'] = array(
  * @author Умар
  */
 $messages['ce'] = array(
+	'interwikiedit' => 'Юкъарвикин хьажораш та йе гӀирс',
+	'iwedit-title' => 'Юкъарвикеш та йе гӀирс',
+	'iwedit-language-interwikis' => 'Меттанийн юкъарвикеш бен',
+	'iwedit-all-interwikis' => 'Массо юкъарвикеш',
 	'iwedit-update' => 'Карлаяккха',
+	'iwedit-error' => '<p>ГӀалат даьлла.</p>',
+	'iwedit-success' => '<p>Хьажораг кхиамца кхоьллина.</p>',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Dontlietome7
  * @author Utar
  */
@@ -214,6 +220,19 @@ $messages['fi'] = array(
 	'iwedit-update' => 'Päivitä',
 	'iwedit-error' => '<p>Tapahtui virhe.</p>',
 	'iwedit-success' => '<p>Linkin luominen onnistui.</p>',
+);
+
+/** Faroese (føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'interwikiedit' => 'Interwiki-rættari',
+	'iwedit-title' => 'Interwiki-rættari',
+	'iwedit-language-interwikis' => 'bert mál-interwiki leinkjur',
+	'iwedit-all-interwikis' => 'allar interwiki-leinkjur',
+	'iwedit-update' => 'Dagfør',
+	'iwedit-error' => '<p>Ein feilur hendi.</p>',
+	'iwedit-success' => '<p>Leinkja er upprættað.</p>',
 );
 
 /** French (français)
@@ -345,6 +364,13 @@ $messages['lb'] = array(
 	'iwedit-success' => '<p>De Linkg gouf ugeluecht</p>',
 );
 
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'iwedit-update' => 'روزآمد كردن',
+);
+
 /** Latgalian (latgaļu)
  * @author Dark Eagle
  */
@@ -408,6 +434,7 @@ $messages['nl'] = array(
  * @author Cedric31
  */
 $messages['oc'] = array(
+	'interwikiedit' => 'Editor Interwiki',
 	'iwedit-title' => 'Editor Interwiki',
 	'iwedit-language-interwikis' => 'interwikis de lengas solament',
 	'iwedit-all-interwikis' => 'totes los interwikis',
@@ -595,6 +622,19 @@ $messages['uk'] = array(
 	'iwedit-update' => 'Оновити',
 	'iwedit-error' => '<p>Сталася помилка.</p>',
 	'iwedit-success' => '<p>Посилання успішно створено.</p>',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'interwikiedit' => 'Interwiki biên tập',
+	'iwedit-title' => 'Interwiki biên tập',
+	'iwedit-language-interwikis' => 'ngôn ngữ interwikis chỉ',
+	'iwedit-all-interwikis' => 'Tất cả interwikis',
+	'iwedit-update' => 'Cập nhật',
+	'iwedit-error' => '<p>Lỗi đã xảy ra.</p>',
+	'iwedit-success' => '<p>Tạo liên kết thành công.</p>',
 );
 
 /** Simplified Chinese (中文（简体）‎)

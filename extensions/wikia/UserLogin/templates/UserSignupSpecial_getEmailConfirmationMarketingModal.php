@@ -1,5 +1,5 @@
 <h1>
-	<?= $result !== 'error' ? wfMsg('usersignup-resend-email-heading-success') : wfMsg('usersignup-resend-email-heading-failure') ?>
+	<?= $result !== 'error' ? wfMessage('usersignup-resend-email-heading-success')->escaped() : wfMessage('usersignup-resend-email-heading-failure')->escaped() ?>
 </h1>
 <p>
 	<?= $msg ?>

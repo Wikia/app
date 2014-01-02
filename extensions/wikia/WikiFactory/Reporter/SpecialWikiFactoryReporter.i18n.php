@@ -95,7 +95,7 @@ $messages['ckb'] = array(
 	'wikifactoryreporter' => 'پەیامنێری WikiFactory',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Mr. Richard Bolla
  */
 $messages['cs'] = array(
@@ -270,7 +270,7 @@ $messages['ksh'] = array(
 	'wikifactoryreporter' => 'WikiFactory-Reporter',
 );
 
-/** Kirghiz (Кыргызча)
+/** Kyrgyz (Кыргызча)
  */
 $messages['ky'] = array(
 	'wikifactoryreporter' => 'УикиФабрика баяндамачысы',
@@ -485,6 +485,13 @@ $messages['uk'] = array(
  */
 $messages['vec'] = array(
 	'wikifactoryreporter' => 'WikiFactory Reporter',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'wikifactoryreporter' => 'Phóng viên WikiFactory',
 );
 
 /** Simplified Chinese (中文（简体）‎)

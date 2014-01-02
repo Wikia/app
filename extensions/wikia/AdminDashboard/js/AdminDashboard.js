@@ -6,7 +6,7 @@ var AdminDashboard = {
 		// precache
 		AdminDashboard.cc = $('#AdminDashboard');
 
-		if(AdminDashboard.cc.length == 0) {
+		if(AdminDashboard.cc.length === 0) {
 			return;
 		}
 
@@ -34,31 +34,29 @@ var AdminDashboard = {
 
 		if( $.fn.addVideoButton ) { //FB#68272
 			addVideoButton.addVideoButton({
-				callbackAfterSelect: function(url) {
-					require(['wikia.vet'], function(vet) {
-						$.nirvana.postJson(
-							// controller
-							'VideosController',
-							// method
-							'addVideo',
-							// data
-							{ url: url },
-							// success callback
-							function( formRes ) {
-								GlobalNotification.hide();
-								if ( formRes.error ) {
-									GlobalNotification.show( formRes.error, 'error' );
-								} else {
-									vet.close();
-									window.location = addVideoButtonReturnUrl;
-								}
-							},
-							// error callback
-							function() {
-								GlobalNotification.show( $.msg('vet-error-while-loading'), 'error' );
+				callbackAfterSelect: function(url, VET) {
+					$.nirvana.postJson(
+						// controller
+						'VideosController',
+						// method
+						'addVideo',
+						// data
+						{ url: url },
+						// success callback
+						function( formRes ) {
+							window.GlobalNotification.hide();
+							if ( formRes.error ) {
+								window.GlobalNotification.show( formRes.error, 'error' );
+							} else {
+								VET.close();
+								window.location = addVideoButtonReturnUrl;
 							}
-						);
-					});
+						},
+						// error callback
+						function() {
+							window.GlobalNotification.show( $.msg('vet-error-while-loading'), 'error' );
+						}
+					);
 					// Don't move on to second VET screen.  We're done.
 					return false;
 				}
@@ -73,12 +71,12 @@ var AdminDashboard = {
 			AdminDashboard.ui.showSection(el.data('section'));
 		});
 
- 		$("a[data-tracking]").on("click", function(e) {
+		AdminDashboard.cc.on('mousedown', 'a[data-tracking]', function(e) {
 			var t = $(this);
-			AdminDashboard.track(Wikia.Tracker.ACTIONS.CLICK, t.data('tracking'), null, {href: t.attr('href')}, e);
- 		});
+			AdminDashboard.track(Wikia.Tracker.ACTIONS.CLICK, t.data('tracking'), null, {}, e);
+		});
 	},
-	track: function (action, label, value, params, event) {
+	track: function(action, label, value, params, event) {
 		Wikia.Tracker.track({
 			category: 'admin-dashboard',
 			action: action,
@@ -102,7 +100,7 @@ var AdminDashboard = {
 			AdminDashboard.section.contentarea.html( $.msg( 'admindashboard-loading' ) );
 			AdminDashboard.wikiaArticle.removeClass('AdminDashboardChromedArticle expanded');
 			$('.AdminDashboardDrawer, .AdminDashboardNavigation, .AdminDashboardArticleHeader').remove();
-			if(typeof FounderProgressList != 'undefined') {
+			if(typeof FounderProgressList !== 'undefined') {
 				FounderProgressList.hideListModal();
 			}
 		},

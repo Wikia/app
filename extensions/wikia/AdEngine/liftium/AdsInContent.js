@@ -1,6 +1,6 @@
 // AdsInContent2 a.k.a. AIC2
 var AIC2 = {
-	$placeHolder    : $('#WikiaAdInContentPlaceHolder'),
+	$placeHolder    : false,
 	fingerprint     : 'b',
 	called          : false,
 	startPosition   : 0,
@@ -10,8 +10,22 @@ var AIC2 = {
 	visible         : false
 };
 
+AIC2.enabled = window.top === window.self
+	&& window.wgEnableAdsInContent
+	&& window.wgShowAds
+	&& !window.wgIsMainpage
+	&& (window.wgIsContentNamespace || window.wikiaPageType === 'search');
+
 AIC2.init = function() {
+	if (!AIC2.enabled || AIC2.called) {
+		return;
+	}
+
+	AIC2.called = true;
+
 	var $window = $(window);
+
+	AIC2.$placeHolder = $('#WikiaAdInContentPlaceHolder');
 
 	Liftium.d("AIC2: init", 5);
 
@@ -32,7 +46,10 @@ AIC2.init = function() {
 
 	if (AIC2.startPosition + AIC2.magicNumber < AIC2.stopPosition) {
 		Liftium.d("AIC2: page long enough", 7);
+		// TODO: remove style once SCSS always serves it
+		AIC2.$placeHolder.css('position', 'absolute');
 		AIC2.$placeHolder.append('<div id="INCONTENT_BOXAD_1" class="noprint" style="height: 250px; width: 300px; position: relative;"></div>');
+		// End of TODO
 
 		$window.bind("scroll.AIC2", AIC2.onScroll ); // FIXME: throttle
 		$window.bind("resize.AIC2", AIC2.onScroll ); // FIXME: throttle
@@ -151,7 +168,7 @@ AIC2.glueAd = function() {
 		var bigSpace = parseInt(AIC2.stopPosition - AIC2.startPosition + 10);
 		// bottom
 		$incontentBoxAd.css({
-			'position': 'relative',
+			'position': 'absolute',
 			'top': bigSpace + 'px'
 		});
 	} else {
@@ -166,27 +183,3 @@ AIC2.glueAd = function() {
 
 	$incontentBoxAd.css('visibility', 'visible');
 };
-
-if (Wikia.AbTest && Wikia.AbTest.inGroup('FLOATING_MEDREC_TESTS', 'FLOATER_ENABLED')) {
-	Liftium.d('AB experiment FLOATING_MEDREC_TESTS, group FLOATER_ENABLED: forcing wgEnableAdsInContent = 1', 5);
-	window.wgEnableAdsInContent = 1;
-}
-if (Wikia.AbTest && Wikia.AbTest.inGroup('FLOATING_MEDREC_TESTS', 'FLOATER_DISABLED')) {
-	Liftium.d('AB experiment FLOATING_MEDREC_TESTS, group FLOATER_DISABLED: forcing wgEnableAdsInContent = 0', 5);
-	window.wgEnableAdsInContent = 0;
-}
-
-if (
-	window.top === window.self
-	&& window.wgEnableAdsInContent
-	&& window.wgShowAds
-	&& !window.wgIsMainpage
-	&& (window.wgIsContentNamespace || window.wikiaPageType === 'search')
-) {
-	wgAfterContentAndJS.push(function() {
-		if (!AIC2.called) {
-			AIC2.called = true;
-			AIC2.init();
-		}
-	});
-}

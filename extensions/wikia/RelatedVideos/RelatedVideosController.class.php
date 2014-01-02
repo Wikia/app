@@ -163,6 +163,7 @@ class RelatedVideosController extends WikiaController {
 					),
 					'duration' => true,
 					'src' => $preloaded ? false : wfBlankImgUrl(),
+					// This attirbute is deprecated with the new toHtml function.  Remove when refactoring
 					'constHeight' => RelatedVideosService::$height,
 					'usePreloading' => true,
 					'disableRDF' => true
@@ -173,8 +174,8 @@ class RelatedVideosController extends WikiaController {
 
 			// Add ellipses if title is too long
 			$maxDescriptionLength = 45;
-			$video['truncatedTitle'] = ( strlen( $video['title'] ) > $maxDescriptionLength )
-				? substr( $video['title'], 0, $maxDescriptionLength).'&#8230;'
+			$video['truncatedTitle'] = ( mb_strlen( $video['title'] ) > $maxDescriptionLength )
+				? mb_substr( $video['title'], 0, $maxDescriptionLength).'&#8230;'
 				: $video['title'];
 
 			$video['viewsMsg'] = wfMsg('related-videos-video-views', $this->wg->ContLang->formatNum($video['views']));

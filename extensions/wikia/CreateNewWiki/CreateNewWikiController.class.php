@@ -4,6 +4,8 @@ class CreateNewWikiController extends WikiaController {
 	const DAILY_USER_LIMIT = 2;
 	const WF_WDAC_REVIEW_FLAG_NAME = 'wgWikiDirectedAtChildrenByFounder';
 
+	const LANG_ALL_AGES_OPT = 'en';
+
 	public function index() {
 		global $wgSuppressWikiHeader, $wgSuppressPageHeader, $wgSuppressFooter, $wgSuppressAds, $wgSuppressToolbar, $fbOnLoginJsOverride, $wgRequest, $wgUser;
 		wfProfileIn( __METHOD__ );
@@ -27,9 +29,9 @@ class CreateNewWikiController extends WikiaController {
 		$fbreturn = $wgRequest->getVal('fbreturn');
 		if((!empty($fbconnected) && $fbconnected === '1') || (!empty($fbreturn) && $fbreturn === '1')) {
 			$this->LoadState();
-			$this->currentStep = 'DescWiki';
+			$currentStep = 'DescWiki';
 		} else {
-			$this->currentStep = '';
+			$currentStep = '';
 		}
 
 		// form field values
@@ -58,20 +60,41 @@ class CreateNewWikiController extends WikiaController {
 		$this->isUserLoggedIn = $wgUser->isLoggedIn();
 
 		// remove wikia plus for now for all languages
-		$this->skipWikiaPlus = true;
+		$skipWikiaPlus = true;
 
-		$this->keys = CreateNewWikiObfuscate::generateValidSeeds();
+		$keys = CreateNewWikiObfuscate::generateValidSeeds();
 		$_SESSION['cnw-answer'] = CreateNewWikiObfuscate::generateAnswer($this->keys);
 
+		$this->wg->Out->addJsConfigVars([
+			'wgLangAllAgesOpt' => self::LANG_ALL_AGES_OPT
+		]);
 		// prefill
 		$params['wikiName'] = $wgRequest->getVal('wikiName', '');
 		$params['wikiDomain'] = $wgRequest->getVal('wikiDomain', '');
+		$params['LangAllAgesOpt'] = self::LANG_ALL_AGES_OPT;
 		$this->params = $params;
 		$this->signupUrl = '';
 		if(!empty($this->wg->EnableUserLoginExt)) {
 			$signupTitle = Title::newFromText('UserSignup', NS_SPECIAL);
-			$this->signupUrl = $signupTitle->getFullURL();
+			if ( $wgRequest->getInt( 'nocaptchatest' ) ) {
+				$this->signupUrl = $signupTitle->getFullURL('nocaptchatest=1');
+			} else {
+				$this->signupUrl = $signupTitle->getFullURL();
+			}
 		}
+
+		// Make various parsed messages and status available in JS
+		// Necessary because JSMessages does not support parsing
+		$this->wikiBuilderCfg = array(
+			'name-wiki-submit-error' => wfMessage( 'cnw-name-wiki-submit-error' )->escaped(),
+			'desc-wiki-submit-error' => wfMessage( 'cnw-desc-wiki-submit-error' )->escaped(),
+			'currentstep' => $currentStep,
+			'skipwikiaplus' => $skipWikiaPlus,
+			'descriptionplaceholder' => wfMessage( 'cnw-desc-placeholder' )->escaped(),
+			'cnw-error-general' => wfMessage( 'cnw-error-general' )->parse(),
+			'cnw-error-general-heading' => wfMessage( 'cnw-error-general-heading' )->escaped(),
+			'cnw-keys' => $keys
+		);
 		
 		// theme designer application theme settings
 		$this->applicationThemeSettings = SassUtil::getApplicationThemeSettings();
@@ -89,9 +112,8 @@ class CreateNewWikiController extends WikiaController {
 
 		$name = $wgRequest->getVal('name');
 		$lang = $wgRequest->getVal('lang');
-		$type  = $wgRequest->getVal('type');
 
-		$this->res = AutoCreateWiki::checkDomainIsCorrect($name, $lang, $type);
+		$this->res = AutoCreateWiki::checkDomainIsCorrect($name, $lang);
 
 		wfProfileOut(__METHOD__);
 	}
@@ -123,6 +145,11 @@ class CreateNewWikiController extends WikiaController {
 
 		$params = $wgRequest->getArray('data');
 
+        //CE-315
+        if($params['wLanguage'] != self::LANG_ALL_AGES_OPT ){
+            $params['wAllAges'] = null;
+        }
+
 		if ( !empty($params) &&
 			(!empty($params['wikiName']) && !empty($params['wikiDomain']) ) )
 		{
@@ -145,8 +172,9 @@ class CreateNewWikiController extends WikiaController {
 		{
 			// do nothing
 			$this->status = 'error';
-			$this->statusMsg = wfMsg('cnw-error-general');
-			$this->statusHeader = wfMsg('cnw-error-general-heading');
+			// VOLDEV-10: Parse the HTML in the message
+			$this->statusMsg = wfMessage( 'cnw-error-general' )->parse();
+			$this->statusHeader = wfMessage( 'cnw-error-general-heading' )->escaped();
 		} else {
 			/*
 			$stored_answer = $this->getStoredAnswer();
@@ -157,6 +185,15 @@ class CreateNewWikiController extends WikiaController {
 				return;
 			}
 			*/
+
+			// check if user is logged in
+			if ( !$wgUser->isLoggedIn() ) {
+				$this->status = 'error';
+				$this->statusMsg = wfMessage( 'cnw-error-anon-user' )->parse();
+				$this->statusHeader = wfMessage( 'cnw-error-anon-user-header' )->text();
+				wfProfileOut(__METHOD__);
+				return;
+			}
 
 			// check if user is blocked
 			if ( $wgUser->isBlocked() ) {
@@ -191,8 +228,8 @@ class CreateNewWikiController extends WikiaController {
 			$cityId = $createWiki->getWikiInfo('city_id');
 			if(empty($cityId)) {
 				$this->status = 'backenderror';
-				$this->statusMsg = wfMsg('cnw-error-general');
-				$this->statusHeader = wfMsg('cnw-error-general-heading');
+				$this->statusMsg = wfMessage( 'cnw-error-general' )->parse();
+				$this->statusHeader = wfMessage( 'cnw-error-general-heading' )->escaped();
 				trigger_error("Failed to create new wiki: $error_code " . $params['wName'] . " " . $params['wLanguage'] . " " . $wgRequest->getIP(), E_USER_WARNING);
 			} else {
 				if ( isset($params['wAllAges']) && !empty( $params['wAllAges'] ) ) {

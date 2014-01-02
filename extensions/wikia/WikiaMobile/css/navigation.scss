@@ -3,7 +3,6 @@
 
 //mixins
 @import "mixins/linear-gradient.scss";
-@import "mixins/box-sizing.scss";
 @import "mixins/box-shadow.scss";
 @import "mixins/transition.scss";
 
@@ -89,9 +88,9 @@
 	background-color: white;
 	-webkit-tap-highlight-color: rgba( 0,0,0,0 );
 	-webkit-focus-ring-color: rgba( 0,0,0,0 );
-	@include box-shadow(0 0 5px black);
+	@include box-shadow(0 0 2px black);
 
-	&.fllNav {
+	&.nav-open {
 		z-index: $highest-z-index+1;
 		background-color: white;
 
@@ -183,99 +182,81 @@
 	}
 }
 
-.js {
-	#wkNavBack {
+#wkNavMenu {
+	position: relative;
+
+	ul {
+		border-bottom: 5px solid $searchOpenBackground;
+
+		list-style: none;
+		background-color: white;
+
+		position: absolute;
+		top: 0;
+
+		width: 100%;
+		padding: 0;
+
+		-webkit-transition: -webkit-transform .5s;
+		-moz-transition: -moz-transform .5s;
+		transition: transform .5s;
+
+		-webkit-transform: translateZ(0);
+		-moz-transform: translateZ(0);
+		transform: translateZ(0);
+
+		li {
+			padding-right: 20px;
+
+			//to remove redundancy style for .cld is moved to ui.scss
+			a {
+				font-weight: 800;
+			}
+
+			span {
+				color: $link-color;
+			}
+		}
+	}
+
+	.lvl3 {
+		left: 100%;
+		display: none;
+	}
+
+	.lvl2 {
+		top: 50px;
+		left: 100%;
+		display: none;
+	}
+
+	.cur{
 		display: block;
 	}
 
-	#wkNavMenu {
-		display: none;
-		position: relative;
-
-		ul {
-			border-bottom: 5px solid $searchOpenBackground;
-
-			list-style: none;
-			background-color: white;
-
-			position: absolute;
-			top: 0;
-
-			width: 100%;
-			padding: 0;
-
-			-webkit-transition: -webkit-transform .5s;
-			-moz-transition: -moz-transform .5s;
-			transition: transform .5s;
-
-			-webkit-transform: translateZ(0);
-			-moz-transform: translateZ(0);
-			transform: translateZ(0);
-
-			li {
-				padding-right: 20px;
-
-				//to remove redundancy style for .cld is moved to ui.scss
-				a {
-					font-weight: 800;
-				}
-
-				span {
-					color: $link-color;
-				}
-			}
+	&.cur1 {
+		header a {
+			opacity: 0;
 		}
+	}
 
-		.lvl3 {
-			left: 100%;
-			display: none;
+	&.cur2 {
+		#lvl1 {
+			-webkit-transform: translate(-100%);
+			-moz-transform: translate(-100%);
+			transform: translate(-100%);
 		}
+	}
 
-		.lvl2 {
-			top: 50px;
-			left: 100%;
-			display: none;
-		}
-
-		.cur{
-			display: block;
-		}
-
-		&.cur1 {
-			header a {
-				opacity: 0;
-			}
-		}
-
-		&.cur2 {
-			#lvl1 {
-				-webkit-transform: translate(-100%);
-				-moz-transform: translate(-100%);
-				transform: translate(-100%);
-			}
-		}
-
-		&.cur3 {
-
-			#lvl1 {
-				-webkit-transform: translate(-200%) ;
-				-moz-transform: translate(-200%);
-				transform: translate(-200%);
-			}
-		}
-
-		header {
-			h1 {
-				float: none;
-				font-weight: bold;
-				margin: 0 50px;
-			}
-			a {
-				display: block;
-			}
+	&.cur3 {
+		#lvl1 {
+			-webkit-transform: translate(-200%) ;
+			-moz-transform: translate(-200%);
+			transform: translate(-200%);
 		}
 	}
 }
+
 
 #wkNav {
 	display: none;
@@ -286,7 +267,7 @@
 		pointer-events: none;
 	}
 
-	.fllNav & {
+	.nav-open & {
 		display: block;
 
 		#wkNavMenu {
@@ -306,6 +287,7 @@
 		background: white;
 
 		a {
+			display: block;
 			-webkit-transition: opacity .5s;
 			-moz-transition: opacity .5s;
 			-o-transition: opacity .5s;
@@ -313,14 +295,11 @@
 		}
 
 		h1 {
-		    border-top: none;
+			margin: 0;
 			text-align: center;
 			font-size: medium;
+			font-weight: bold;
 			overflow: hidden;
-			text-overflow: ellipsis;
-			white-space: nowrap;
-			margin: 0;
-			float: left;
 
 			&.anim {
 				-webkit-animation: slideIn .5s ease;
@@ -335,6 +314,19 @@
 			&.animBack {
 				-webkit-animation: slideBack .5s ease;
 				-moz-animation: slideBack .5s ease;
+			}
+			span {
+				background-position: center;
+				display: block;
+
+				position: absolute;
+				right: 0;
+				top: 0;
+
+				height: 50px;
+				width: 50px;
+
+				pointer-events: none;
 			}
 		}
 	}
@@ -389,73 +381,85 @@
 @-moz-keyframes slideIn {
 	0% {
 		opacity: 0;
-		-webkit-transform: translate(30%);
+		-moz-transform: translate(30%);
 	}
 
 	100% {
 		opacity: 1;
-		-webkit-transform: translate(0);
+		-moz-transform: translate(0);
 	}
 }
 
 @-moz-keyframes slide {
 	0% {
-		-webkit-transform: translate(0);
+		-moz-transform: translate(0);
 	}
 	50%{
 		opacity: 0;
-		-webkit-transform: translate(-30%);
+		-moz-transform: translate(-30%);
 	}
 	51%{
 		opacity: 0;
-		-webkit-transform: translate(30%);
+		-moz-transform: translate(30%);
 	}
 	100% {
-		-webkit-transform: translate(0);
+		-moz-transform: translate(0);
 	}
 }
 
 @-moz-keyframes slideBack {
 	0% {
-		-webkit-transform: translate(0);
+		-moz-transform: translate(0);
 	}
 	50%{
 		opacity: 0;
-		-webkit-transform: translate(30%);
+		-moz-transform: translate(30%);
 	}
 	51%{
 		opacity: 0;
-		-webkit-transform: translate(-30%);
+		-moz-transform: translate(-30%);
 	}
 	100% {
-		-webkit-transform: translate(0);
+		-moz-transform: translate(0);
 	}
 }
 
-#lvl1{
+#lvl1 {
 	margin: 0;
 	padding: 0;
 }
 
 #wkNavLink {
-	position: absolute;
-	right: 0;
-	top: 0;
-	width: 50px;
-	height: 50px;
-	background-position: center;
+	overflow: hidden;
+	padding-right: 50px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 
 #wkNavBack {
 	color: inherit;
-	display: none;
 
 	float: left;
 
 	border-radius: 3px;
 }
 
-//default style if js is disabled
-#wkNavMenu header a {
-	display: none;
+.cont-dir-rtl #wkNavMenu {
+	direction: ltr; //JanusCSS will change it to rtl
+
+	&.cur2 {
+		#lvl1 {
+			-webkit-transform: translate(100%);
+			-moz-transform: translate(100%);
+			transform: translate(100%);
+		}
+	}
+
+	&.cur3 {
+		#lvl1 {
+			-webkit-transform: translate(200%) ;
+			-moz-transform: translate(200%);
+			transform: translate(200%);
+		}
+	}
 }

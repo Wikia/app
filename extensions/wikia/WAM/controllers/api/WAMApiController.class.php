@@ -15,7 +15,7 @@ class WAMApiController extends WikiaApiController {
 	const DEFAULT_WIKI_IMAGE_WIDTH = 150;
 	const DEFAULT_WIKI_ADMINS_LIMIT = 5;
 
-	const MEMCACHE_VER = '1.01';
+	const MEMCACHE_VER = '1.02';
 
 	/**
 	 * A method to get WAM index (list of wikis with their WAM ranks)
@@ -152,6 +152,7 @@ class WAMApiController extends WikiaApiController {
 		$options['wikiId'] = $this->request->getInt('wiki_id', null);
 		$options['wikiWord'] = $this->request->getVal('wiki_word', null);
 		$options['excludeBlacklist'] = $this->request->getVal('exclude_blacklist', false);
+		$options['excludeNonCommercial'] = $this->hideNonCommercialContent();
 		$options['fetchAdmins'] = $this->request->getBool('fetch_admins', false);
 		$options['avatarSize'] = $this->request->getInt('avatar_size', self::DEFAULT_AVATAR_SIZE);
 		$options['fetchWikiImages'] = $this->request->getBool('fetch_wiki_images', false);

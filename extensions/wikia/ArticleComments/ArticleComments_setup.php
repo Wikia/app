@@ -93,11 +93,16 @@ if (!empty($wgEnableWallEngine) || !empty($wgEnableArticleCommentsExt) || !empty
 	$wgHooks['BeforePageDisplay'][] = 'ArticleCommentsController::onBeforePageDisplay';
 	$wgHooks['SkinAfterContent'][] = 'ArticleCommentsController::onSkinAfterContent';
 
+	// adding comment_index rows for articles
+	$wgHooks['ArticleDoEdit'][] = 'CommentsIndex::onArticleDoEdit';
+
 	// comments_index table
 	$wgHooks['LoadExtensionSchemaUpdates'][] = 'CommentsIndex::onLoadExtensionSchemaUpdates';
 
 	$wgHooks['FilePageImageUsageSingleLink'][] = 'ArticleCommentInit::onFilePageImageUsageSingleLink';
 }
+
+$wgHooks['BeforeDeletePermissionErrors'][] = 'ArticleComment::onBeforeDeletePermissionErrors';
 
 //JSMEssages setup
 JSMessages::registerPackage( 'ArticleCommentsCounter', array(

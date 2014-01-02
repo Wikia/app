@@ -94,6 +94,23 @@ class AdEngine2Controller extends WikiaController {
 			return $pageLevel;
 		}
 
+		// Override ad level for a (set of) specific page(s)
+		// Use case: sponsor ads on a landing page targeted to Wikia editors (=logged in)
+		if ($wg->Title &&
+			!empty($wg->PagesWithNoAdsForLoggedInUsersOverriden) &&
+			in_array($wg->Title->getDBkey(), $wg->PagesWithNoAdsForLoggedInUsersOverriden))
+		{
+			$pageLevel = self::AD_LEVEL_CORPORATE;
+			if (!empty($wg->PagesWithNoAdsForLoggedInUsersOverriden_AD_LEVEL) &&
+				in_array($wg->PagesWithNoAdsForLoggedInUsersOverriden_AD_LEVEL, array(
+					self::AD_LEVEL_NONE, self::AD_LEVEL_LIMITED, self::AD_LEVEL_CORPORATE, self::AD_LEVEL_ALL
+				)))
+			{
+				$pageLevel = $wg->PagesWithNoAdsForLoggedInUsersOverriden_AD_LEVEL;
+			}
+			return $pageLevel;
+		}
+
 		// And no other ads
 		$pageLevel = self::AD_LEVEL_NONE;
 		return $pageLevel;
@@ -104,7 +121,7 @@ class AdEngine2Controller extends WikiaController {
 			return self::AD_LEVEL_CORPORATE;
 		}
 
-		if (preg_match('/TOP_LEADERBOARD|TOP_RIGHT_BOXAD|GPT_FLUSH/', $slotname)) {
+		if (preg_match('/TOP_LEADERBOARD|TOP_RIGHT_BOXAD|GPT_FLUSH|SEVENONEMEDIA_FLUSH/', $slotname)) {
 			return self::AD_LEVEL_LIMITED;
 		}
 		return self::AD_LEVEL_ALL;
@@ -295,13 +312,10 @@ class AdEngine2Controller extends WikiaController {
 			   $wgUser, $wgEnableWikiAnswers, $wgAdDriverUseCookie, $wgAdDriverUseExpiryStorage,
 			   $wgEnableAdMeldAPIClient, $wgEnableAdMeldAPIClientPixels,
 			   $wgLoadAdDriverOnLiftiumInit, $wgOutboundScreenRedirectDelay,
-			   $wgEnableOutboundScreenExt;
+			   $wgEnableOutboundScreenExt, $wgAdDriverUseSevenOneMedia, $wgOut;
 
 		$wgNoExternals = $wgRequest->getBool('noexternals', $wgNoExternals);
 
-		if (!empty($wgNoExternals)) {
-			$vars["wgNoExternals"] = $wgNoExternals;
-		}
 		if (!empty($wgEnableAdsInContent)) {
 			$vars["wgEnableAdsInContent"] = $wgEnableAdsInContent;
 		}
@@ -334,6 +348,10 @@ class AdEngine2Controller extends WikiaController {
 		if (!empty($wgLoadAdDriverOnLiftiumInit)) {
 			$vars['wgLoadAdDriverOnLiftiumInit'] = $wgLoadAdDriverOnLiftiumInit;
 		}
+		if (!empty($wgAdDriverUseSevenOneMedia)) {
+			$vars['wgAdDriverUseSevenOneMedia'] = $wgAdDriverUseSevenOneMedia;
+			$vars['wgAdDriverSevenOneMediaCombinedUrl'] = ResourceLoader::makeCustomURL($wgOut, ['wikia.ext.adengine.sevenonemedia'], 'scripts');
+		}
 
 		if ($wgUser->getOption('showAds')) {
 			$vars['wgUserShowAds'] = true;
@@ -364,13 +382,14 @@ class AdEngine2Controller extends WikiaController {
 	 * @return bool
 	 */
 	static public function onWikiaSkinTopScriptsLegacy(&$vars, &$scripts) {
-		global $wgCityId, $wgEnableKruxTargeting, $wgNoExternals;
+		global $wgCityId, $wgEnableKruxTargeting, $wgNoExternals, $wgEnableWikiaHomePageExt;
 
 		wfProfileIn(__METHOD__);
 
 		// generic type of page: forum/search/article/home/...
 		$vars['wikiaPageType'] = WikiaPageType::getPageType();
 		$vars['wikiaPageIsHub'] = WikiaPageType::isWikiaHub();
+		$vars['wikiaPageIsWikiaHomePage'] = !empty( $wgEnableWikiaHomePageExt ) && WikiaPageType::isMainPage();
 
 		// category/hub
 		$catInfo = HubService::getComscoreCategory($wgCityId);
@@ -411,9 +430,9 @@ class AdEngine2Controller extends WikiaController {
 		$vars['wgAdsShowableOnPage'] = self::areAdsShowableOnPage();
 		$vars['wgShowAds'] = self::areAdsShowableOnPage();
 
-		$vars['wgAdDriverUseGpt'] = $req->getBool('usegpt', (bool) $wg->AdDriverUseGpt);
 		$vars['wgAdVideoTargeting'] = $req->getBool('videotargeting', (bool) $wg->AdVideoTargeting);
 		$vars['wgAdDriverStartLiftiumOnLoad'] = $req->getBool('liftiumonload', (bool) $wg->LiftiumOnLoad);
+		$vars['wgUsePostScribe'] = $req->getBool('usepostscribe', false);
 
 		// Used to hop by DART ads
 		$vars['adDriverLastDARTCallNoAds'] = array();

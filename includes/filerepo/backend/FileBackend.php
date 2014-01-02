@@ -979,7 +979,6 @@ abstract class FileBackendStore extends FileBackend {
 	 */
 	final protected function doPrepare( array $params ) {
 		wfProfileIn( __METHOD__ );
-
 		$status = Status::newGood();
 		list( $fullCont, $dir, $shard ) = $this->resolveStoragePath( $params['dir'] );
 		if ( $dir === null ) {
@@ -1120,6 +1119,8 @@ abstract class FileBackendStore extends FileBackend {
 	/**
 	 * @see FileBackend::getFileStat()
 	 */
+	// Wikia change - begin
+	// @author Moli
 	final public function getFileStat( array $params ) {
 		wfProfileIn( __METHOD__ );
 		$path = self::normalizeStoragePath( $params['src'] );
@@ -1131,9 +1132,13 @@ abstract class FileBackendStore extends FileBackend {
 		if ( isset( $this->cache[$path]['stat'] ) ) {
 			// If we want the latest data, check that this cached
 			// value was in fact fetched with the latest available data.
-			if ( !$latest || $this->cache[$path]['stat']['latest'] ) {
+			if ( !$latest || !empty( $this->cache[$path]['stat']['latest'] ) ) {
 				wfProfileOut( __METHOD__ );
 				return $this->cache[$path]['stat'];
+			} elseif ( in_array( $this->cache[$path]['stat'], array( 'NOT_EXIST', 'NOT_EXIST_LATEST' ) ) ) {
+				if ( !$latest || $this->cache[$path]['stat'] === 'NOT_EXIST_LATEST' ) {
+					return false;
+				}
 			}
 		}
 		$stat = $this->doGetFileStat( $params );
@@ -1141,10 +1146,16 @@ abstract class FileBackendStore extends FileBackend {
 			$this->trimCache(); // limit memory
 			$this->cache[$path]['stat'] = $stat;
 			$this->cache[$path]['stat']['latest'] = $latest;
+		} elseif ( $stat === false ) { // file does not exist
+			$this->cache[$path]['stat'] = $latest ? 'NOT_EXIST_LATEST' : 'NOT_EXIST';
+			wfDebug( __METHOD__ . ": File $path does not exist.\n" );
+		} else { // an error occurred
+			wfDebug( __METHOD__ . ": Could not stat file $path.\n" );
 		}
 		wfProfileOut( __METHOD__ );
 		return $stat;
 	}
+	// Wikia change - end
 
 	/**
 	 * @see FileBackendStore::getFileStat()
@@ -1328,7 +1339,7 @@ abstract class FileBackendStore extends FileBackend {
 	 * An exception is thrown if an unsupported operation is requested.
 	 * 
 	 * @param $ops Array Same format as doOperations()
-	 * @return Array List of FileOp objects
+	 * @return FileOp[] List of FileOp objects
 	 * @throws MWException
 	 */
 	final public function getOperations( array $ops ) {
@@ -1458,7 +1469,7 @@ abstract class FileBackendStore extends FileBackend {
 	 * @param $container string
 	 * @return bool
 	 */
-	final protected static function isValidContainerName( $container ) {
+	protected static function isValidContainerName( $container ) {
 		// This accounts for Swift and S3 restrictions while leaving room 
 		// for things like '.xxx' (hex shard chars) or '.seg' (segments).
 		// This disallows directory separators or traversal characters.
@@ -1492,7 +1503,7 @@ abstract class FileBackendStore extends FileBackend {
 				if ( $relPath !== null ) {
 					// Prepend any wiki ID prefix to the container name
 					$container = $this->fullContainerName( $container );
-					if ( self::isValidContainerName( $container ) ) {
+					if ( static::isValidContainerName( $container ) ) {
 						// Validate and sanitize the container name (backend-specific)
 						$container = $this->resolveContainerName( "{$container}{$cShard}" );
 						if ( $container !== null ) {

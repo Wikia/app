@@ -1026,6 +1026,33 @@ class WikiFactory {
 		return isset( $oRow->city_dbname ) ? $oRow->city_dbname : false;
 	}
 
+
+	/**
+	 * Convert given host to current environment (devbox or sandbox).
+	 * @param string $dbName
+	 * @param string $default if on main wikia
+	 * @param string $host for testing
+	 * @return string changed host or $default
+	 */
+	public static function getCurrentStagingHost($dbName='', $default='', $host = null)
+	{
+		global $wgStagingList;
+
+		if ( $host === null ) {
+			$host = gethostname();
+		}
+
+		if ( in_array( $host, $wgStagingList ) ) {
+			return $host . '.' . ( $dbName ? $dbName : 'www' ) . '.wikia.com';
+		}
+
+		if ( preg_match( '/^dev-([a-z0-9]+)$/i', $host, $m ) ) {
+			return $dbName . '.' . $m[ 1 ] . '.wikia-dev.com';
+		}
+
+		return $default;
+	}
+
 	/**
 	 * getLocalEnvURL
 	 *
@@ -1040,7 +1067,6 @@ class WikiFactory {
 	 *
 	 * @return string	url pointing to local env
 	 */
-
 	static public function getLocalEnvURL( $url ) {
 		// first - normalize URL
 		$regexp = '/^http:\/\/([^\/]+)\/?(.*)?$/';
@@ -1080,22 +1106,14 @@ class WikiFactory {
 			$server = str_replace( '.wikia.com', '', $server );
 		}
 
-		/*
-		 * commenting out code to reduce number of changes
-		 * that needs to be reviewed for error related to
-		 * preview.video db connections
-		 */
 		// put the address back into shape and return
-		if(empty($_SERVER['SERVER_NAME'])) {
+		if ( empty($_SERVER['SERVER_NAME']) ) {
 			// maintenance script
-			global $wgDevelEnvironment, $wgCityId;
-			$domains = WikiFactory::getDomains($wgCityId);
-			$domains[] = "localhost";
-			if(empty($wgDevelEnvironment)) {
-				return 'http://' . $domains[0] . $address;
+			global $wgDevelEnvironment;
+			if ( empty($wgDevelEnvironment) ) {
+				return 'http://' . $server.'.wikia.com' . $address;
 			} else {
-				$hostname = str_replace('dev-','',gethostname()) . '.wikia-dev.com';
-				$domain = str_replace( 'wikia.com', $hostname, $domains[0] );
+				$domain = $server . '.' . str_replace('dev-','',gethostname()) . '.wikia-dev.com';
 				return 'http://' . $domain . $address;
 			}
 		}

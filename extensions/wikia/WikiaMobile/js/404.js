@@ -1,4 +1,4 @@
-window.addEventListener('DOMContentLoaded', function(){
+$(function(){
 	var link = document.getElementById('wk404');
 
 	if (link) {

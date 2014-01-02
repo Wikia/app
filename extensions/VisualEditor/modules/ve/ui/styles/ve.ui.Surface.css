@@ -1,82 +1,33 @@
-/**
- * VisualEditor user interface Surface styles.
+/*!
+ * VisualEditor Surface styles.
  *
- * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
-.ve-ui-toolbar {
-	border-bottom: solid 1px #ccc;
+.ve-ui-surface {
 	position: relative;
-	/* @embed */
-	background-image: url(images/fade-up.png);
-	background-position: left bottom;
-	background-repeat: repeat-x;
 }
 
-.ve-ui-toolbarGroups,
-.ve-ui-actions,
-.ve-ui-toolbar-shadow {
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	-o-user-select: none;
-	user-select: none;
+.ve-ui-surface:after {
+	content: ".";
+	display: block;
+	clear: both;
+	visibility: hidden;
+	line-height: 0;
+	height: 0;
 }
 
-.ve-ui-toolbar-wrapper.ve-ui-toolbar-wrapper-floating .ve-ui-toolbar {
+.ve-ui-surface-overlay {
+	font-family: sans-serif;
+	line-height: 1.5em;
+	font-size: 1em;
+	position: absolute;
 	top: 0;
-	position: fixed;
-	-webkit-border-radius: 0;
-	-moz-border-radius: 0;
-	-o-border-radius: 0;
-	border-radius: 0;
-	z-index: 100;
-	border-top: none;
+	right: 0;
+	left: 0;
 }
 
-.ve-ui-toolbar-wrapper.ve-ui-toolbar-wrapper-bottom {
-	position: static;
-}
-
-.ve-ui-toolbar-wrapper.ve-ui-toolbar-wrapper-bottom .ve-ui-toolbar {
-	position: absolute;
-	-webkit-border-radius: 0;
-	-moz-border-radius: 0;
-	-o-border-radius: 0;
-	border-radius: 0;
-	z-index: 100;
-	border-top: none;
-}
-
-.ve-ui-toolbar-shadow {
-	/* @embed */
-	background-image: url(images/toolbar-shadow.png);
-	background-position: top left;
-	background-repeat: repeat-x;
-	position: absolute;
-	bottom: -9px;
-	height: 9px;
-	width: 100%;
-	pointer-events: none;
-	-webkit-transition: opacity 500ms ease-in-out;
-	-moz-transition: opacity 500ms ease-in-out;
-	-o-transition: opacity 500ms ease-in-out;
-	transition: opacity 500ms ease-in-out;
-	filter: alpha(opacity=12);
-	opacity: 0.125;
-}
-
-.ve-ui-toolbar.ve-ui-toolbar-wrapper-floating .ve-ui-toolbar-shadow {
-	filter: alpha(opacity=50);
-	opacity: 0.5;
-}
-
-.ve-ui-toolbar .ve-ui-toolbarGroups {
-	float: left;
-}
-
-.ve-ui-actions {
-	float: right;
-	padding: 0.25em;
+.ve-ui-surface-overlay-local {
+	z-index: 1;
 }

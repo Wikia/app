@@ -45,6 +45,22 @@ $messages['az'] = array(
 	'campfire-licensed-under' => '$1 lisenziyası altındadır',
 );
 
+/** Bikol Central (Bikol Central)
+ * @author Geopoet
+ */
+$messages['bcl'] = array(
+	'campfire-page-header' => '$1 gikan sa $2',
+	'campfire-licensed-under' => 'Lisensiyado sa lindong kan $1',
+);
+
+/** Bulgarian (български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'campfire-page-header' => '$1 от $2',
+	'campfire-licensed-under' => 'Лицензирано според условията на $1',
+);
+
 /** Breton (brezhoneg)
  * @author Y-M D
  */
@@ -61,7 +77,7 @@ $messages['ca'] = array(
 	'campfire-licensed-under' => 'Sota la llicència $1',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Jezevec
  */
 $messages['cs'] = array(
@@ -82,6 +98,13 @@ $messages['de'] = array(
  */
 $messages['diq'] = array(
 	'campfire-page-header' => '$1 ra $2',
+);
+
+/** British English (British English)
+ * @author Shirayuki
+ */
+$messages['en-gb'] = array(
+	'campfire-licensed-under' => 'Licenced under $1',
 );
 
 /** Spanish (español)
@@ -105,6 +128,14 @@ $messages['fa'] = array(
 $messages['fi'] = array(
 	'campfire-page-header' => '$1 $2',
 	'campfire-licensed-under' => 'Lisensoitu $1',
+);
+
+/** Faroese (føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'campfire-page-header' => '$1 frá $2',
+	'campfire-licensed-under' => 'Undir lisensinum $1',
 );
 
 /** French (français)
@@ -199,6 +230,7 @@ $messages['nl'] = array(
  */
 $messages['oc'] = array(
 	'campfire-page-header' => '$1 (de $2)',
+	'campfire-licensed-under' => 'Jos licéncia $1',
 );
 
 /** Polish (polski)
@@ -276,6 +308,7 @@ $messages['tt-cyrl'] = array(
 
 /** Ukrainian (українська)
  * @author Steve.rusyn
+ * @author SteveR
  * @author Ua2004
  */
 $messages['uk'] = array(

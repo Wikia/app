@@ -1,0 +1,330 @@
+/*!
+ * VisualEditor MediaWiki Initialization ViewPageTarget styles.
+ *
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @license The MIT License (MIT); see LICENSE.txt
+ */
+
+/* VisualEditor */
+
+.ve-init-mw-viewPageTarget-pageTitle {
+	-webkit-transition: opacity 200ms ease-out;
+	-moz-transition: opacity 200ms ease-out;
+	-ms-transition: opacity 200ms ease-out;
+	-o-transition: opacity 200ms ease-out;
+	transition: opacity 200ms ease-out;
+	cursor: default;
+}
+
+.ve-init-mw-viewPageTarget-loading {
+	width: 128px;
+	height: 15px;
+	float: right;
+}
+
+/* Toolbar */
+
+.ve-ui-toolbar-actions .ve-ui-buttonWidget {
+	margin-left: 0.25em;
+	margin-right: 0.25em;
+	margin-top: 0.2em;
+}
+
+/* Needs to override .ve-ui.widget.ve-ui-widget-disabled */
+.ve-ui-toolbar-actions .ve-init-mw-viewPageTarget-waiting.ve-ui-widget.ve-ui-widget-disabled {
+	cursor: progress;
+}
+
+/* Beta notices */
+
+.ve-init-mw-viewPageTarget-toolbar-betaNotice {
+	display: none;
+	position: absolute;
+	right: -0.5em;
+	top: 30px;
+	width: 20em;
+	font-family: sans-serif;
+	border: solid 1px #ccc;
+	padding: 0.5em 1.25em 0 1.25em;
+	border-radius: 0.25em;
+	background-color: #fff;
+	box-shadow: 0 0.15em 0.5em 0 rgba(0, 0, 0, 0.2);
+	z-index: 3;
+	line-height: 1.5em;
+}
+
+/* Edit notices */
+
+.ve-init-mw-viewPageTarget-toolbar-editNotices {
+	display: none;
+	position: absolute;
+	right: -0.5em;
+	top: 30px;
+	width: 29em;
+	font-family: sans-serif;
+	border: solid 1px #ccc;
+	padding: 0 1.75em 0 0.75em;
+	border-radius: 0.25em;
+	background-color: #fff;
+	box-shadow: 0 0.15em 0.5em 0 rgba(0, 0, 0, 0.2);
+	z-index: 3;
+}
+
+.ve-init-mw-viewPageTarget-toolbar-editNotices-notice {
+	padding: 0.5em 0;
+	line-height: 1.5em;
+	border-top: solid 1px #ccc;
+	margin-top: -1px;
+}
+
+/* Tools */
+
+.ve-init-mw-viewPageTarget-tool {
+	position: relative;
+	display: inline-block;
+	vertical-align: top;
+	line-height: 2.8em;
+	margin-right: 1em;
+	padding-left: 30px;
+	cursor: pointer;
+	background-repeat: no-repeat;
+	background-position: left center;
+}
+
+.ve-init-mw-viewPageTarget-tool-label {
+	color: #555555;
+}
+
+.ve-init-mw-viewPageTarget-tool-beta-label {
+	font-size: 120%;
+	font-variant: small-caps;
+}
+
+.ve-init-mw-viewPageTarget-tool:hover .ve-init-mw-viewPageTarget-tool-label,
+.ve-init-mw-viewPageTarget-subtool-label:hover {
+	text-decoration: underline;
+}
+
+/* Save dialog styles */
+
+.ve-init-mw-viewPageTarget-toolbarTracker {
+	position: absolute;
+	top: 0;
+	height: 0;
+	overflow: visible;
+}
+
+.ve-init-mw-viewPageTarget-toolbarTracker-floating {
+	position: fixed;
+	z-index: 100;
+}
+
+.ve-init-mw-viewPageTarget-saveDialog .ve-ui-buttonWidget {
+	float: right;
+	margin-left: 0.5em;
+	font-size: 0.8em;
+}
+
+.ve-init-mw-viewPageTarget-saveDialog-working {
+	display: none;
+	float: right;
+	height: 2em;
+	width: 128px;
+	margin-right: 1em;
+	background-position: right center;
+	background-repeat: no-repeat;
+}
+
+.ve-init-mw-viewPageTarget-saveDialog {
+	display: none;
+	top: 0.25em;
+	right: 0.5em;
+	width: 29em;
+	min-width: 29em;
+	font-family: sans-serif;
+	position: absolute;
+	border: solid 1px #ccc;
+	border-radius: 0.25em;
+	background-color: #fff;
+	box-shadow: 0 0.15em 0.5em 0 rgba(0, 0, 0, 0.2);
+	padding: 2.5em 0.75em 0.75em 0.75em;
+	margin: 0 0 0 0.5em;
+	z-index: 3;
+
+	/* slide-diff can get quite long, handle overflow */
+	/* max-height set from javascript */
+	overflow-x: auto;
+}
+
+.ve-init-mw-viewPageTarget-saveDialog-head {
+	position: absolute;
+	top: 0.4em;
+	left: 0.5em;
+	right: 0.5em;
+}
+
+.ve-init-mw-viewPageTarget-saveDialog-title {
+	height: 2em;
+	line-height: 2em;
+	color: #333;
+	font-size: 0.9em;
+	float: left;
+	margin: 0 0.5em;
+}
+
+.ve-init-mw-viewPageTarget-saveDialog-prevButton {
+	float: left;
+	position: relative;
+	top: 0.1em;
+	width: 1.5em;
+	height: 1.5em;
+	cursor: pointer;
+	opacity: 0.8;
+	/* @see ve.init.mw.Icons */
+	background-position: left top;
+	background-repeat: no-repeat;
+	padding-right: 0.5em;
+	border-right: 1px solid #eee;
+	margin-right: 0.5em;
+}
+
+.ve-init-mw-viewPageTarget-saveDialog-closeButton {
+	float: right;
+	position: relative;
+	top: 0.1em;
+	width: 1.5em;
+	height: 1.5em;
+	cursor: pointer;
+	opacity: 0.8;
+	/* @see ve.init.mw.Icons */
+	background-position: right top;
+	background-repeat: no-repeat;
+}
+
+.ve-init-mw-viewPageTarget-saveDialog-body {
+	border-top: 1px solid #ddd;
+	padding-top: 1em;
+}
+
+.ve-init-mw-viewPageTarget-saveDialog-slide {
+	display: none;
+}
+
+.ve-init-mw-viewPageTarget-saveDialog-slide-review .ve-init-mw-viewPageTarget-saveDialog-viewer {
+	margin-bottom: 1em;
+}
+
+.ve-init-mw-viewPageTarget-saveDialog-slide-review .ve-init-mw-viewPageTarget-saveDialog-viewer pre {
+	margin: 0;
+}
+
+.ve-init-mw-viewPageTarget-saveDialog-slide-review .ve-init-mw-viewPageTarget-saveDialog-viewer .diff {
+	font-size: 0.8em;
+}
+
+.ve-init-mw-viewPageTarget-saveDialog-foot {
+	padding-top: 1em;
+}
+
+.ve-init-mw-viewPageTarget-saveDialog-dirtymsg,
+.ve-init-mw-viewPageTarget-saveDialog-license,
+.ve-init-mw-viewPageTarget-saveDialog-report-notice {
+	font-size: 0.7em;
+	line-height: 1.25em;
+	padding: 0;
+	margin: 0;
+	color: #999;
+}
+
+
+.ve-init-mw-viewPageTarget-saveDialog-dirtymsg {
+	float: right;
+}
+
+.ve-init-mw-viewPageTarget-saveDialog-summary,
+.ve-init-mw-viewPageTarget-saveDialog-report {
+	background-color: #fff;
+	border: solid 1px #cccccc;
+	padding: 0.5em;
+	border-radius: 0.25em 0.25em 0 0;
+}
+
+.ve-init-mw-viewPageTarget-saveDialog-report {
+	margin-bottom: 1em;
+	border-radius: 0.25em;
+}
+
+.ve-init-mw-viewPageTarget-saveDialog-summary-focused,
+.ve-init-mw-viewPageTarget-saveDialog-report-focused {
+	border-color: #aaa;
+}
+
+.ve-init-mw-viewPageTarget-saveDialog-conflict {
+	margin-bottom: 1em;
+}
+
+.ve-init-mw-viewPageTarget-saveDialog-messages,
+.ve-init-mw-viewPageTarget-saveDialog-conflict,
+.ve-init-mw-viewPageTarget-saveDialog-nochanges {
+	font-size: 0.8em;
+}
+
+.ve-init-mw-viewPageTarget-saveDialog-options {
+	position: relative;
+	background-color: #f7f7f7;
+	margin-bottom: 1em;
+	border: solid 1px #cccccc;
+	border-top: none;
+	border-radius: 0 0 0.25em 0.25em;
+	min-height: 2.25em;
+}
+
+.ve-init-mw-viewPageTarget-saveDialog-body label {
+	font-size: 0.8em;
+	line-height: 3em;
+}
+
+.ve-init-mw-viewPageTarget-saveDialog input[type="checkbox"] {
+	margin: 0 0.5em 0 1em;
+	line-height: 3em;
+}
+
+.ve-init-mw-viewPageTarget-saveDialog-body .ve-init-mw-viewPageTarget-saveDialog-editSummary-label {
+	line-height: 2em;
+}
+
+.ve-init-mw-viewPageTarget-saveDialog-editSummaryCount {
+	position: absolute;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	border-left: solid 1px #eee;
+	line-height: 3em;
+	padding: 0 1em;
+	color: #aaa;
+}
+
+.ve-init-mw-viewPageTarget-saveDialog-editSummary,
+.ve-init-mw-viewPageTarget-saveDialog-problem {
+	border: none;
+	background-color: transparent;
+	margin: 0;
+	padding: 0;
+	resize: none;
+	font-size: 0.8em;
+	font-family: sans-serif;
+	height: 5em;
+}
+
+.ve-init-mw-viewPageTarget-saveDialog-editSummary:focus,
+.ve-init-mw-viewPageTarget-saveDialog-problem:focus {
+	outline: none;
+}
+
+/* Images */
+
+.ve-init-mw-viewPageTarget-loading,
+.ve-init-mw-viewPageTarget-saveDialog-working {
+	/* @embed */
+	background-image: url(images/loading-ltr.gif);
+}

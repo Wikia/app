@@ -10,13 +10,17 @@
  * Constructs a URL to get assets from Ooyala API
  * @param integer $apiPageSize
  * @param integer $nextPage
+ * @param string $extra
  * @return string $url
  */
-function getApiAssets( $apiPageSize, $nextPage ) {
+function getApiAssets( $apiPageSize, $nextPage, $extra ) {
 	$cond = array(
 		"status = 'live'",
-		"labels INCLUDES 'Age gated'",
 	);
+
+	if ( !empty( $extra ) ) {
+		$cond[] = $extra;
+	}
 
 	$params = array(
 		'limit' => $apiPageSize,
@@ -71,6 +75,42 @@ function updateMetadata( $videoId, $metadata ) {
 	}
 
 	return $resp;
+}
+
+/**
+ * remove field from Custom Metadata if the field is empty
+ * @global integer $skipped
+ * @global integer $failed
+ * @global boolean $dryRun
+ * @param array $video
+ * @param string $title
+ * @param string $removedField
+ * @return type
+ */
+function removeCustomMetadata( $video, $title, $removedField ) {
+	global $skipped, $failed, $dryRun;
+
+	$metadata = array( $removedField => null );
+	if ( !array_key_exists( $removedField, $video['metadata'] ) ) {
+		echo "\tSKIP: $title - $removedField not found in Custom Metadata.\n";
+		$skipped++;
+		return;
+	}
+
+	if ( !empty( $video['metadata'][$removedField] ) ) {
+		echo "\tSKIP: $title - $removedField field not empty in Custom Metadata. (value: {$video['metadata'][$removedField]}).\n";
+		$skipped++;
+		return;
+	}
+
+	if ( !$dryRun ) {
+		$resp = updateMetadata( $video['embed_code'], $metadata );
+		if ( !$resp ) {
+			$failed++;
+		}
+	}
+
+	return;
 }
 
 /**
@@ -154,10 +194,12 @@ ini_set( 'display_errors', 1 );
 
 require_once( "commandLine.inc" );
 
-if ( isset($options['help']) ) {
-	die( "Usage: php maintenance.php [--help] [--age=123] [--dry-run] [--player=xyz]
+if ( isset( $options['help'] ) ) {
+	die( "Usage: php maintenance.php [--help] [--age=123] [--dry-run] [--player=xyz] [extra=abc] [--remove=age_required]
 	--age                          set age_required value in metadata
 	--player                       set player id
+	--remove                       remove field from custom metadata (only if the field is empty)
+	--extra                        extra conditions to get video assets from ooyala
 	--dry-run                      dry run
 	--help                         you are reading it right now\n\n" );
 }
@@ -165,6 +207,8 @@ if ( isset($options['help']) ) {
 $dryRun = isset( $options['dry-run'] );
 $ageRequired = isset( $options['age'] ) ? $options['age'] : 0;
 $playerId = isset( $options['player'] ) ? $options['player'] : '';
+$extra = isset( $options['extra'] ) ? $options['extra'] : '';
+$remove = isset( $options['remove'] ) ? $options['remove'] : '';
 
 if ( !is_numeric( $ageRequired ) ) {
 	die( "Invalid age.\n" );
@@ -177,9 +221,17 @@ $total = 0;
 $failed = 0;
 $skipped = 0;
 
+// set condition to get age gated videos
+if ( !empty( $ageRequired ) ) {
+	if ( !empty( $extra ) ) {
+		$extra .= ' AND ';
+	}
+	$extra .= "labels INCLUDES 'Age gated'";
+}
+
 do {
 	// connect to provider API
-	$url = getApiAssets( $apiPageSize, $nextPage );
+	$url = getApiAssets( $apiPageSize, $nextPage, $extra );
 	echo "\nConnecting to $url...\n" ;
 
 	$req = MWHttpRequest::factory( $url );
@@ -214,6 +266,10 @@ do {
 
 		if ( !empty( $playerId ) ) {
 			setPlayerId( $video, $title, $playerId );
+		}
+
+		if ( !empty( $remove ) ) {
+			 removeCustomMetadata( $video, $title, $remove );
 		}
 	}
 

@@ -73,7 +73,7 @@ class WallNotificationsExternalController extends WikiaController {
 
 		$this->response->setVal('html', $this->app->renderView( 'WallNotifications', 'Update', array('notificationCounts' => $all, 'count' => $sum, 'notificationKey' => $notificationKey) ));
 		$this->response->setVal('count', $sum);
-		$this->response->setVal('reminder', wfMsgExt( 'wall-notifications-reminder', array('parsemag'), $sum ) );
+		$this->response->setVal('reminder', wfMessage('wall-notifications-reminder', $sum)->text() );
 		$this->response->setVal('status', true);
 
 		wfProfileOut(__METHOD__);

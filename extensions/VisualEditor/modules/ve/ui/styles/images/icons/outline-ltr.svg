@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="24px"
+	 height="24px" viewBox="0 0 24 24" style="enable-background:new 0 0 24 24;" xml:space="preserve">
+<g id="outline-ltr" style="opacity:0.75;">
+	<path id="text" style="fill-rule:evenodd;clip-rule:evenodd;" d="M5,13h14v6H5V13z"/>
+	<path id="float" style="fill-rule:evenodd;clip-rule:evenodd;" d="M5,5v6h6V5H5z M10,10H6V6h4V10z"/>
+</g>
+</svg>

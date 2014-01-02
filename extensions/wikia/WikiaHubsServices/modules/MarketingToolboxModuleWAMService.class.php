@@ -74,7 +74,7 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 						'hub_id' => '2',
 						'wam_change' => '0.0045',
 						'admins' => [],
-						'wiki_image' => 'http://images1.wikia.nocookie.net/__cb20121004184329/wikiaglobal/images/thumb/8/8b/Wikia-Visualization-Main%2Crunescape.png/150px-Wikia-Visualization-Main%2Crunescape.png',
+						'wiki_image' => ImagesService::overrideThumbnailFormat('http://images1.wikia.nocookie.net/__cb20121004184329/wikiaglobal/images/thumb/8/8b/Wikia-Visualization-Main%2Crunescape.png/150px-Wikia-Visualization-Main%2Crunescape.png', ImagesService::EXT_JPG),
 					],
 					14764 => [
 						'wiki_id' => '14764',
@@ -92,7 +92,7 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 						'hub_id' => '2',
 						'wam_change' => '0.0039',
 						'admins' => [],
-						'wiki_image' => 'http://images4.wikia.nocookie.net/__cb20120828154214/wikiaglobal/images/thumb/e/ea/Wikia-Visualization-Main%2Cleagueoflegends.png/150px-Wikia-Visualization-Main%2Cleagueoflegends.png.jpeg',
+						'wiki_image' => ImagesService::overrideThumbnailFormat('http://images4.wikia.nocookie.net/__cb20120828154214/wikiaglobal/images/thumb/e/ea/Wikia-Visualization-Main%2Cleagueoflegends.png/150px-Wikia-Visualization-Main%2Cleagueoflegends.png.jpeg', ImagesService::EXT_JPG),
 					],
 					1706 => [
 						'wiki_id' => '1706',
@@ -110,7 +110,7 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 						'hub_id' => '2',
 						'wam_change' => '-0.0016',
 						'admins' => [],
-						'wiki_image' => 'http://images1.wikia.nocookie.net/__cb20121214183339/wikiaglobal/images/thumb/d/d4/Wikia-Visualization-Main%2Celderscrolls.png/150px-Wikia-Visualization-Main%2Celderscrolls.png',
+						'wiki_image' => ImagesService::overrideThumbnailFormat('http://images1.wikia.nocookie.net/__cb20121214183339/wikiaglobal/images/thumb/d/d4/Wikia-Visualization-Main%2Celderscrolls.png/150px-Wikia-Visualization-Main%2Celderscrolls.png', ImagesService::EXT_JPG),
 					],
 					3035 => [
 						'wiki_id' => '3035',
@@ -130,8 +130,8 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 						'admins' => [],
 						'wiki_image' => null,
 					],
-					3125 => [
-						'wiki_id' => '3125',
+				113 => [
+						'wiki_id' => '113',
 						'wam'=> '99.5000',
 						'wam_rank' => '17',
 						'hub_wam_rank' => '5',
@@ -141,8 +141,8 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 						'top_1k_weeks' => '62',
 						'first_peak' => '2012-05-04',
 						'last_peak' => '2013-05-07',
-						'title' => 'Call of Duty Wiki',
-						'url' => 'callofduty.wikia.com',
+						'title' => 'Memmory Alpha Wiki',
+						'url' => 'en.memory-alpha.org',
 						'hub_id' => '2',
 						'wam_change' => '-0.1000',
 						'admins' => [],
@@ -170,11 +170,26 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 			);
 		}
 
+		if ( $this->getShouldFilterCommercialData() ) {
+			$structuredData = $this->filterCommercialData( $structuredData );
+		}
+
 		return $structuredData;
 	}
 
 	protected function loadStructuredData($params) {
-		$apiResponse = $this->app->sendRequest('WAMApi', 'getWAMIndex', $params)->getData();
+
+		try {
+
+			$apiResponse = $this->app->sendRequest('WAMApi', 'getWAMIndex', $params)->getData();
+
+		} catch (WikiaHttpException $e) {
+
+			$logMsg = 'Message: ' . $e->getLogMessage() . ' Details: ' . $e->getDetails();
+			Wikia::log(__METHOD__, false, $logMsg );
+			Wikia::logBacktrace(__METHOD__);
+
+		}
 
 		$data = [
 			'vertical_id' => $params['vertical_id'],
@@ -270,5 +285,18 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 		}
 		
 		return null;
+	}
+
+	/**
+	 * Remove non-commercial wikis.
+	 * @param $data
+	 * @return mixed
+	 */
+	protected function filterCommercialData( $data ) {
+		$service = $this->getLicensedWikisService();
+		$data['ranking'] = array_values( array_filter( $data['ranking'], function( $element ) use($service) {
+			return $service->isCommercialUseAllowedByUrl($element['wikiUrl']);
+		} ) );
+		return $data;
 	}
 }

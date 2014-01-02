@@ -1,73 +1,70 @@
-/**
- * VisualEditor content editable HeadingNode class.
+/*!
+ * VisualEditor ContentEditable HeadingNode class.
  *
- * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
 /**
- * ContentEditable node for a heading.
+ * ContentEditable heading node.
  *
  * @class
+ * @extends ve.ce.BranchNode
  * @constructor
- * @extends {ve.ce.BranchNode}
  * @param {ve.dm.HeadingNode} model Model to observe
+ * @param {Object} [config] Configuration options
  */
-ve.ce.HeadingNode = function VeCeHeadingNode( model ) {
+ve.ce.HeadingNode = function VeCeHeadingNode( model, config ) {
 	// Parent constructor
-	ve.ce.BranchNode.call(
-		this, 'heading', model, ve.ce.BranchNode.getDomWrapper( model, 'level' )
-	);
+	ve.ce.ContentBranchNode.call( this, model, config );
 
 	// Events
-	this.model.addListenerMethod( this, 'update', 'onUpdate' );
+	this.model.connect( this, { 'update': 'onUpdate' } );
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.ce.HeadingNode, ve.ce.BranchNode );
+ve.inheritClass( ve.ce.HeadingNode, ve.ce.ContentBranchNode );
 
-/* Static Members */
+/* Static Properties */
 
-/**
- * Node rules.
- *
- * @see ve.ce.NodeFactory
- * @static
- * @member
- */
-ve.ce.HeadingNode.rules = {
-	'canBeSplit': true
-};
+ve.ce.HeadingNode.static.name = 'heading';
 
-/**
- * Mapping of heading level values and DOM wrapper element types.
- *
- * @static
- * @member
- */
-ve.ce.HeadingNode.domWrapperElementTypes = {
-	'1': 'h1',
-	'2': 'h2',
-	'3': 'h3',
-	'4': 'h4',
-	'5': 'h5',
-	'6': 'h6'
-};
+/* Static Properties */
+
+ve.ce.HeadingNode.static.canBeSplit = true;
 
 /* Methods */
 
 /**
- * Responds to model update events.
+ * Get the HTML tag name.
+ *
+ * Tag name is selected based on the model's level attribute.
+ *
+ * @returns {string} HTML tag name
+ * @throws {Error} If level is invalid
+ */
+ve.ce.HeadingNode.prototype.getTagName = function () {
+	var level = this.model.getAttribute( 'level' ),
+		types = { '1': 'h1', '2': 'h2', '3': 'h3', '4': 'h4', '5': 'h5', '6': 'h6' };
+
+	if ( !( level in types ) ) {
+		throw new Error( 'Invalid level' );
+	}
+	return types[level];
+};
+
+/**
+ * Handle model update events.
  *
  * If the level changed since last update the DOM wrapper will be replaced with an appropriate one.
  *
  * @method
  */
 ve.ce.HeadingNode.prototype.onUpdate = function () {
-	this.updateDomWrapper( 'level' );
+	this.updateTagName();
 };
 
 /* Registration */
 
-ve.ce.nodeFactory.register( 'heading', ve.ce.HeadingNode );
+ve.ce.nodeFactory.register( ve.ce.HeadingNode );

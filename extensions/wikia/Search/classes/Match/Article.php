@@ -18,6 +18,7 @@ class Article extends AbstractMatch
 	 * @return Result
 	 */
 	public function createResult() {
+		/**@var $this->service Wikia\Search\MediaWikiService*/
 		$wikiId = $this->service->getWikiId();
 		$pageId = $this->service->getCanonicalPageIdFromPageId( $this->id );
 		$fieldsArray = array(
@@ -25,7 +26,7 @@ class Article extends AbstractMatch
 				'pageid'        => $pageId,
 				'wid'           => $wikiId,
 				'title'         => $this->service->getTitleStringFromPageId( $this->id ),
-				'url'           => urldecode( $this->service->getUrlFromPageId( $this->id ) ),
+				'url'           => $this->service->getUrlFromPageId( $this->id ) ,
 				'score'         => 'PTT',
 				'isArticleMatch'=> true,
 				'ns'            => $this->service->getNamespaceFromPageId( $this->id ),
@@ -33,12 +34,36 @@ class Article extends AbstractMatch
 				'touched'       => $this->service->getLastRevisionTimestampForPageId( $this->id ),
 			);
 		$result = new Result( $fieldsArray );
-		$result->setText( $this->service->getSnippetForPageId( $this->id ) );
+
+		$snippet =  $this->service->getSnippetForPageId( $this->id );
+
+		$result->setText($this->matchFoundText($snippet) );
 		if ( $this->hasRedirect() ) {
 			$result->setVar( 'redirectTitle', $this->service->getNonCanonicalTitleStringFromPageId( $this->id ) );
 			$result->setVar( 'redirectUrl', $this->service->getNonCanonicalUrlFromPageId( $this->id ) );
 		}
 		return $result;
+	}
+
+	protected function matchFoundText( $text ) {
+
+		$list = preg_replace( '/[[:punct:]]/', ' ', $this->term );
+		$list = trim( $list );
+		if ( "" === $list ) {
+			return $text;
+		}
+		$list = preg_replace( '/\s+/', '|', $list );
+
+		$text = preg_replace_callback(
+			'/' . $list . '/i',
+			function ( $matches ) {
+
+				return '<span class="searchmatch">' . $matches[ 0 ] . '</span>';
+			},
+			$text
+		);
+
+		return $text;
 	}
 	
 	/**

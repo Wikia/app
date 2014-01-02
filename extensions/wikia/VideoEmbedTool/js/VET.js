@@ -257,7 +257,7 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 	function VET_loadMain(searchOrder) {
 		var callback = function(data) {
 			$('#VideoEmbedMain').html(data.responseText);
-			$('#VideoEmbedUrl').focus();
+			$('#VideoEmbedUrl').focusNoScroll();
 			VET_updateHeader();
 
 			// macbre: RT #19150
@@ -552,7 +552,7 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 	 */
 	function VET_sendQueryEmbed(query) {
 		// If callbackAfterSelect returns false, end here. Otherwise, move on to the next screen.
-		if(VET_callbackAfterSelect(query) !== false) {
+		if(VET_callbackAfterSelect(query, VET) !== false) {
 			var callback = function(data) {
 				var screenType = VET_jqXHR.getResponseHeader('X-screen-type');
 				if(typeof screenType == "undefined") {

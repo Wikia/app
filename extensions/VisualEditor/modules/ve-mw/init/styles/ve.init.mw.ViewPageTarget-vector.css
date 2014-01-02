@@ -1,0 +1,36 @@
+/*!
+ * VisualEditor MediaWiki Initialization ViewPageTarget Vector skin styles.
+ *
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @license The MIT License (MIT); see LICENSE.txt
+ */
+
+.ve-init-mw-viewPageTarget-surface {
+	margin: 0.8em -1.5em 0 -1.5em;
+}
+
+.ve-init-mw-viewPageTarget-surface .ve-ce-documentNode {
+	font-size: 0.8em;
+	padding: 0 1.875em; /* 1.5/0.8 */
+}
+
+.ve-init-mw-viewPageTarget-surface .ve-ui-menuWidget {
+	font-size: 0.8em;
+}
+
+.ve-init-mw-viewPageTarget-toolbar {
+	margin: -1em;
+	-webkit-transition: margin 200ms ease-out;
+	-moz-transition: margin 200ms ease-out;
+	-o-transition: margin 200ms ease-out;
+	transition: margin 200ms ease-out;
+	position: relative;
+}
+
+.ve-init-mw-viewPageTarget-toolbar .ve-ui-toolbar-bar {
+	display: none;
+}
+
+.ve-ui-surface-overlay-global {
+	z-index: 101; /* #p-personal is z-index 100 in vector :( */
+}

@@ -17,8 +17,8 @@ class HooksTest extends BaseTest {
 		$hooks		= new Hooks;
 
 		$mockTitle	= $this->getMock( 'Title', array( 'isSpecial' ) );
-		$jsHead		= array();
-		$jsBody		= array();
+		$jsStatic		= array();
+		$jsExtension	= array();
 		$cssPkg		= array();
 
 		$mockTitle
@@ -36,7 +36,7 @@ class HooksTest extends BaseTest {
 
 		$this->mockGlobalVariable( 'wgTitle', $mockTitle );
 		$this->assertTrue(
-				$hooks->onWikiaMobileAssetsPackages( $jsHead, $jsBody, $cssPkg ),
+				$hooks->onWikiaMobileAssetsPackages( $jsStatic, $jsExtension, $cssPkg ),
 				'As a hook, Wikia\Search\Hooks::onWikiaMobileAssetsPackages must return true.'
 		);
 		$this->assertEmpty(

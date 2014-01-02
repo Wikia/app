@@ -41,7 +41,7 @@ var uas = (function() {
 			profile: {
 				"name": "msie",
 				"layout": "trident",
-				"layoutVersion": "unknown", // should be able to report 6?
+				"layoutVersion": 6,
 				"platform": "win",
 				"version": "10.0",
 				"versionBase": "10",

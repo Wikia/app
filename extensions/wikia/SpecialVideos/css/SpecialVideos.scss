@@ -60,6 +60,7 @@ $placeholder-bg-color: darken($color-page, 10%);
 	@include clearfix;
 	border-bottom: 1px solid $color-page-border;
 	margin-bottom: 18px;
+	width: $width-outside;
 	// Override article p styles
 	p, p + p {
 		margin: 0;

@@ -145,7 +145,7 @@ var WikiHeader = {
 		var node = $(event.target);
 		if (node.is('a') && node.attr('data-canonical') == 'chat') {
 			event.preventDefault();
-			ChatEntryPoint.onClickChatButton(wgUserName !== null, node.attr('href'));
+			ChatEntryPoint.onClickChatButton(node.attr('href'));
 		}
 	},
 
@@ -333,60 +333,56 @@ jQuery(function($) {
 	if (window.wgIsWikiNavMessage) {
 		// preload messages
 		$.getMessages('Oasis-navigation-v2').done(function() {
-			$('#EditPageRail .module_page_controls .module_content').append(
-				'<div class="preview-validator-desc">' + $.msg('oasis-navigation-v2-validation-caption') + '</div>'
-			);
+			// setup menu in preview mode
+			$(window).bind('EditPageAfterRenderPreview', function(ev, previewNode) {
+				// don't style wiki nav like article content
+				previewNode.removeClass('WikiaArticle');
+				WikiHeader.init(true);
+				var firstMenuValid = WikiHeader.firstMenuValidator(),
+					secondMenuValid = WikiHeader.secondMenuValidator(),
+					menuParseError = !!previewNode.find('nav > ul').attr('data-parse-errors'),
+					errorMessages = [];
+
+				if (menuParseError) {
+					errorMessages.push($.msg('oasis-navigation-v2-magic-word-validation'));
+				}
+
+				if (!firstMenuValid && !secondMenuValid) {
+					errorMessages.push($.msg('oasis-navigation-v2-level12-validation'));
+				}
+				else if (!firstMenuValid) {
+					errorMessages.push($.msg('oasis-navigation-v2-level1-validation'));
+				}
+				else if (!secondMenuValid) {
+					errorMessages.push($.msg('oasis-navigation-v2-level2-validation'));
+				}
+
+				if (errorMessages.length > 0) {
+					$('#publish').remove();
+					// TODO: use mustache and promise pattern along with .getMessages
+					var notifications =
+						'<div class="global-notification error">'
+							+ '<div class="msg">' + errorMessages.join("</br>") + '</div>'
+							+ '</div>';
+
+					$('.modalContent .ArticlePreview').prepend(notifications);
+				}
+				previewNode.find('nav > ul a').click(function() {
+					if ($(this).attr('href') == '#') {
+						return false;
+					}
+				});
+
+				previewNode.find('.msg > a').click(function() {
+					window.location = this.href;
+				});
+
+			});
 		});
 
 		// modify size of preview modal
 		$(window).bind('EditPageRenderPreview', function(ev, options) {
-            options.width = ($('#WikiaPage').width() - 271) /* menu width */ + 32 /* padding */;
-		});
-
-		// setup menu in preview mode
-		$(window).bind('EditPageAfterRenderPreview', function(ev, previewNode) {
-			// don't style wiki nav like article content
-			previewNode.removeClass('WikiaArticle');
-			WikiHeader.init(true);
-			var firstMenuValid = WikiHeader.firstMenuValidator(),
-				secondMenuValid = WikiHeader.secondMenuValidator(),
-				menuParseError = !!previewNode.find('nav > ul').attr('data-parse-errors'),
-				errorMessages = [];
-
-			if (menuParseError) {
-				errorMessages.push($.msg('oasis-navigation-v2-magic-word-validation'));
-			}
-
-			if (!firstMenuValid && !secondMenuValid) {
-				errorMessages.push($.msg('oasis-navigation-v2-level12-validation'));
-			}
-			else if (!firstMenuValid) {
-				errorMessages.push($.msg('oasis-navigation-v2-level1-validation'));
-			}
-			else if (!secondMenuValid) {
-				errorMessages.push($.msg('oasis-navigation-v2-level2-validation'));
-			}
-
-			if (errorMessages.length > 0) {
-				$('#publish').remove();
-				// TODO: use mustache and promise pattern along with .getMessages
-                var notifications =
-                    '<div class="global-notification error">'
-                    + '<div class="msg">' + errorMessages.join("</br>") + '</div>'
-                    + '</div>';
-
-                $('.modalContent .ArticlePreview').prepend(notifications);
-			}
-			previewNode.find('nav > ul a').click(function() {
-				if ($(this).attr('href') == '#') {
-					return false;
-				}
-			});
-
-            previewNode.find('.msg > a').click(function() {
-                window.location = this.href;
-            });
-
+			options.width = ($('#WikiaPage').width() - 271) /* menu width */ + 32 /* padding */;
 		});
 
 		$('#wpPreview').parent().removeClass('secondary');

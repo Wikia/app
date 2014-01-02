@@ -49,21 +49,20 @@ class UserLoginController extends WikiaController {
 	public function executeGeneralMail( $params ) {
 		$this->type = $params['type'];
 		$this->language = $params['language'];
-		$this->msgParams = array( 'parsemag', 'language' => $this->language );
 
 		switch ( $params['type'] ) {
 			case 'password-email':
-				$this->greeting = wfMsgExt( 'userlogin-'.$this->type.'-greeting', $this->msgParams );
-				$this->content = wfMsgExt( 'userlogin-'.$this->type.'-content', $this->msgParams );
-				$this->signature = wfMsgExt( 'userlogin-'.$this->type.'-signature', $this->msgParams );
+				$this->greeting = wfMessage( 'userlogin-'.$this->type.'-greeting' )->inLanguage( $this->language )->text();
+				$this->content = wfMessage( 'userlogin-'.$this->type.'-content' )->inLanguage( $this->language )->text();
+				$this->signature = wfMessage( 'userlogin-'.$this->type.'-signature' )->inLanguage( $this->language )->text();
 				break;
 			case 'confirmation-email':
 			case 'reconfirmation-email':
 			case 'account-creation-email':
 			case 'confirmation-reminder-email' :
-				$this->greeting = wfMsgExt( 'usersignup-'.$this->type.'-greeting', $this->msgParams );
-				$this->content = wfMsgExt( 'usersignup-'.$this->type.'-content', $this->msgParams );
-				$this->signature = wfMsgExt( 'usersignup-'.$this->type.'-signature', $this->msgParams );
+				$this->greeting = wfMessage( 'usersignup-'.$this->type.'-greeting' )->inLanguage( $this->language )->text();
+				$this->content = wfMessage( 'usersignup-'.$this->type.'-content' )->inLanguage( $this->language )->text();
+				$this->signature = wfMessage( 'usersignup-'.$this->type.'-signature' )->inLanguage( $this->language )->text();
 				break;
 			default:
 				$this->greeting = '';
@@ -79,7 +78,6 @@ class UserLoginController extends WikiaController {
 	 */
 	public function executeWelcomeMail( $params ) {
 		$this->language = $params['language'];
-		$this->msgParams = array( 'parsemag', 'language' => $this->language );
 	}
 
 }

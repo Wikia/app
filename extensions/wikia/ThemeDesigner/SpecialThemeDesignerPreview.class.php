@@ -10,6 +10,13 @@ class SpecialThemeDesignerPreview extends UnlistedSpecialPage {
 		wfProfileIn( __METHOD__ );
 		global $wgOut, $wgExtensionsPath;
 
+		// check rights
+		if ( !ThemeDesignerHelper::checkAccess() ) {
+			$this->displayRestrictionError();
+			wfProfileOut( __METHOD__ );
+			return;
+		}
+
 		$wgOut->allowClickjacking();
 
 		$this->setHeaders();

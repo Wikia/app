@@ -51,6 +51,13 @@ $messages['bar'] = array(
 	'categorygalleries-desc' => "Zoagt da'raa Seiten-Galarie auf Kategorieseiten",
 );
 
+/** Bulgarian (български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'categorygalleries-desc' => 'Показване на галерия със страници в страниците на категориите',
+);
+
 /** Breton (brezhoneg)
  * @author Fohanno
  */
@@ -72,7 +79,7 @@ $messages['ca'] = array(
 	'categorygalleries-desc' => 'Mostra una galeria de pàgines sobre les pàgines de la categoria',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -163,7 +170,7 @@ $messages['ksh'] = array(
 	'categorygalleries-desc' => 'Donn en Jalleri vun Sigge op de Sigge vun de Saachjroppe aanzeije.',
 );
 
-/** Kirghiz (Кыргызча)
+/** Kyrgyz (Кыргызча)
  * @author Growingup
  */
 $messages['ky'] = array(
@@ -210,6 +217,13 @@ $messages['nb'] = array(
  */
 $messages['nl'] = array(
 	'categorygalleries-desc' => "Geeft een galerij met pagina's weer op categoriepagina's",
+);
+
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'categorygalleries-desc' => 'Aficha una galariá de paginas sus las paginas de categoria',
 );
 
 /** Polish (polski)

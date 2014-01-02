@@ -1,8 +1,8 @@
 <div class="chat-contents chat-room-<?=
-		($totalInRoom ? 'active' : 'empty')
-	?> chat-user-<?=
-		(!empty($profileAvatarUrl) ? 'logged-in' : 'anonymous')
-	?>">
+($totalInRoom ? 'active' : 'empty')
+?> chat-user-<?=
+(!empty($profileAvatarUrl) ? 'logged-in' : 'anonymous')
+?>">
 	<h1 class="chat-headline">
 		<span class="chat-live"><?= wfMsg('chat-live2') ?></span>
 		<span class="chat-total"><?= $totalInRoom ?></span>
@@ -14,11 +14,9 @@
 		<em><?= wfMsg('chat-read-only') ?></em>
 	<? else: ?>
 		<div class="chat-join">
-			<button onclick="ChatEntryPoint.onClickChatButton(<?=
-					($isLoggedIn ? 'true' : 'false')
-				?>, '<?= $linkToSpecialChat ?>')"<?=
-					($isLoggedIn ? '' : ' class="loginToChat"')
-				?>>
+			<button onclick="ChatEntryPoint.onClickChatButton('<?= $linkToSpecialChat ?>')"<?=
+			($isLoggedIn ? '' : ' class="loginToChat"')
+			?>>
 				<?= wfMsg($totalInRoom ? 'chat-join-the-chat' : 'chat-start-a-chat'); ?>
 			</button>
 		</div>

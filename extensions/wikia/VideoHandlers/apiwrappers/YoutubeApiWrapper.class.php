@@ -59,14 +59,14 @@ class YoutubeApiWrapper extends ApiWrapper {
 
 		return $text;
 	}
-	
+
 	public function getThumbnailUrl() {
 
 		wfProfileIn( __METHOD__ );
 
 		$lowresUrl = '';
 		$hiresUrl = '';
-		
+
 		$thumbnailDatas = $this->getVideoThumbnails();
 		foreach ( $thumbnailDatas as $thumbnailData ) {
 			switch ( $thumbnailData['yt$name'] ) {
@@ -104,86 +104,86 @@ class YoutubeApiWrapper extends ApiWrapper {
 	 */
 	protected function getVideoTitle() {
 		if ( !empty($this->interfaceObj['entry']['title']['$t']) ) {
-			
+
 			return $this->interfaceObj['entry']['title']['$t'];
 		}
-		
+
 		return '';
 	}
-	
+
 	/**
 	 * User-defined description
 	 * @return string
 	 */
 	protected function getOriginalDescription() {
 		if ( !empty($this->interfaceObj['entry']['media$group']['media$description']['$t']) ) {
-			
+
 			return $this->interfaceObj['entry']['media$group']['media$description']['$t'];
 		}
-		
+
 		return '';
 	}
-	
+
 	/**
 	 * User-defined keywords
 	 * @return array
 	 */
 	protected function getVideoKeywords() {
 		if ( !empty($this->interfaceObj['entry']['media$group']['media$keywords']['$t']) ) {
-			
+
 			return $this->interfaceObj['entry']['media$group']['media$keywords']['$t'];
 		}
-		
+
 		return '';
 	}
-	
+
 	/**
 	 * YouTube category
 	 * @return string
 	 */
 	protected function getVideoCategory() {
 		if ( !empty($this->interfaceObj['entry']['media$group']['media$category'][0]['$t']) ) {
-			
+
 			return $this->interfaceObj['entry']['media$group']['media$category'][0]['$t'];
 		}
-		
+
 		return '';
 	}
-	
+
 	/**
 	 * Time that this feed entry was created, in UTC
 	 * @return string
 	 */
 	protected function getVideoPublished() {
 		if ( !empty($this->interfaceObj['entry']['published']['$t']) ) {
-			
+
 			return strtotime($this->interfaceObj['entry']['published']['$t']);
 		}
-		
+
 		return '';
 	}
-	
+
 	/**
 	 * Video duration, in seconds
 	 * @return int
 	 */
 	protected function getVideoDuration() {
 		if ( !empty($this->interfaceObj['entry']['media$group']['yt$duration']['seconds']) ) {
-			
+
 			return $this->interfaceObj['entry']['media$group']['yt$duration']['seconds'];
 		}
-		
+
 		return '';
 	}
-	
+
 	/**
 	 * Is resolution of 720 or higher available
-	 * @return boolean 
+	 * @return boolean
 	 */
 	protected function isHdAvailable() {
 		return isset($this->interfaceObj['entry']['yt$hd']);
 	}
-	
+
 	/**
 	 * Can video be embedded
 	 * @return boolean
@@ -196,10 +196,10 @@ class YoutubeApiWrapper extends ApiWrapper {
 				}
 			}
 		}
-		
+
 		return true;
 	}
-	
+
 	protected function sanitizeVideoId( $videoId ) {
 		if ( ($pos = strpos( $videoId, '?' )) !== false ) {
 			$videoId = substr( $videoId, 0, $pos );

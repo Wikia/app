@@ -1,7 +1,7 @@
-/**
- * VisualEditor data model DocumentSynchronizer tests.
+/*!
+ * VisualEditor DataModel DocumentSynchronizer tests.
  *
- * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -10,13 +10,13 @@ QUnit.module( 've.dm.DocumentSynchronizer' );
 /* Tests */
 
 QUnit.test( 'getDocument', 1, function ( assert ) {
-	var doc = new ve.dm.Document( ve.copyArray( ve.dm.example.data ) ),
+	var doc = ve.dm.example.createExampleDocument(),
 		ds = new ve.dm.DocumentSynchronizer( doc );
 	assert.strictEqual( ds.getDocument(), doc );
 } );
 
 QUnit.test( 'synchronize', 6, function ( assert ) {
-	var doc = new ve.dm.Document( ve.copyArray( ve.dm.example.data ) ),
+	var doc = ve.dm.example.createExampleDocument(),
 		ds = new ve.dm.DocumentSynchronizer( doc ),
 		firstTextNodeUpdates = 0,
 		firstTextNodeAnnotations = 0,
@@ -26,13 +26,15 @@ QUnit.test( 'synchronize', 6, function ( assert ) {
 		secondTextNodeLengthChanges = [];
 
 	// Annotate "a" with bold formatting
-	doc.data[1] = ['a', new ve.AnnotationSet( [ new ve.dm.TextStyleBoldAnnotation() ] )];
+	doc.data[1] = ['a', new ve.dm.AnnotationSet( doc.getStore(),
+		doc.getStore().index( new ve.dm.TextStyleBoldAnnotation() ) )];
 	ds.pushAnnotation( new ve.Range( 1, 2 ) );
 	// Insert "xyz" between "a" and "b"
-	doc.spliceData( 2, 0, [ 'x', 'y', 'z' ] );
+	doc.data.batchSplice( 2, 0, [ 'x', 'y', 'z' ] );
 	ds.pushResize( doc.getDocumentNode().getNodeFromOffset( 2 ), 3 );
 	// Annotate "d" with italic formatting (was at 10, now at 13)
-	doc.data[13] = ['d', new ve.AnnotationSet( [ new ve.dm.TextStyleItalicAnnotation() ] )];
+	doc.data[13] = ['d', new ve.dm.AnnotationSet( doc.getStore(),
+		doc.getStore().index( new ve.dm.TextStyleItalicAnnotation() ) )];
 	ds.pushAnnotation( new ve.Range( 10, 11 ) );
 
 	doc.getDocumentNode().getChildren()[0].getChildren()[0].on( 'update', function () {
@@ -45,11 +47,11 @@ QUnit.test( 'synchronize', 6, function ( assert ) {
 		firstTextNodeLengthChanges.push( diff );
 	} );
 	doc.getDocumentNode().getChildren()[1].getChildren()[0].getChildren()[0].getChildren()[0].getChildren()[0].getChildren()[0]
-		.on( 'update', function ()  {
+		.on( 'update', function () {
 			secondTextNodeUpdates++;
 		} );
 	doc.getDocumentNode().getChildren()[1].getChildren()[0].getChildren()[0].getChildren()[0].getChildren()[0].getChildren()[0]
-		.on( 'annotation', function ()  {
+		.on( 'annotation', function () {
 			secondTextNodeAnnotations++;
 		} );
 	doc.getDocumentNode().getChildren()[1].getChildren()[0].getChildren()[0].getChildren()[0].getChildren()[0].getChildren()[0]

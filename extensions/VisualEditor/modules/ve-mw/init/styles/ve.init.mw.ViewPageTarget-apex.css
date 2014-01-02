@@ -1,0 +1,25 @@
+/*!
+ * VisualEditor MediaWiki Initialization ViewPageTarget Apex skin styles.
+ *
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @license The MIT License (MIT); see LICENSE.txt
+ */
+
+.skin-apex .ve-ui-surface {
+	margin-top: 0.8em;
+}
+
+.ve-init-mw-viewPageTarget-toolbar {
+	margin: -0.6em -3em 0.8em -3em;
+	position: relative;
+	font-size: 1.3em;
+}
+
+.ve-init-mw-viewPageTarget-toolbar .ve-ui-toolbar-bar {
+	display: none;
+	line-height: 1.5em;
+}
+
+.ve-ui-menuWidget-item:hover {
+	background-color: #d5eaed;
+}

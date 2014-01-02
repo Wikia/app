@@ -1,65 +1,44 @@
-/**
- * VisualEditor data model DefinitionListNode class.
+/*!
+ * VisualEditor DataModel DefinitionListNode class.
  *
- * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
 /**
- * DataModel node for a definition list.
+ * DataModel definition list node.
  *
  * @class
+ * @extends ve.dm.BranchNode
  * @constructor
- * @extends {ve.dm.BranchNode}
  * @param {ve.dm.BranchNode[]} [children] Child nodes to attach
- * @param {Object} [attributes] Reference to map of attribute key/value pairs
+ * @param {Object} [element] Reference to element in linear model
  */
-ve.dm.DefinitionListNode = function VeDmDefinitionListNode( children, attributes ) {
+ve.dm.DefinitionListNode = function VeDmDefinitionListNode( children, element ) {
 	// Parent constructor
-	ve.dm.BranchNode.call( this, 'definitionList', children, attributes );
+	ve.dm.BranchNode.call( this, children, element );
 };
 
 /* Inheritance */
 
 ve.inheritClass( ve.dm.DefinitionListNode, ve.dm.BranchNode );
 
-/* Static Members */
+/* Static Properties */
 
-/**
- * Node rules.
- *
- * @see ve.dm.NodeFactory
- * @static
- * @member
- */
-ve.dm.DefinitionListNode.rules = {
-	'isWrapped': true,
-	'isContent': false,
-	'canContainContent': false,
-	'hasSignificantWhitespace': false,
-	'childNodeTypes': ['definitionListItem'],
-	'parentNodeTypes': null
+ve.dm.DefinitionListNode.static.name = 'definitionList';
+
+ve.dm.DefinitionListNode.static.childNodeTypes = [ 'definitionListItem' ];
+
+ve.dm.DefinitionListNode.static.matchTagNames = [ 'dl' ];
+
+ve.dm.DefinitionListNode.static.toDataElement = function () {
+	return { 'type': 'definitionList' };
 };
 
-/**
- * Node converters.
- *
- * @see {ve.dm.Converter}
- * @static
- * @member
- */
-ve.dm.DefinitionListNode.converters = {
-	'domElementTypes': ['dl'],
-	'toDomElement': function () {
-		return document.createElement( 'dl' );
-	},
-	'toDataElement': function () {
-		return {
-			'type': 'definitionList'
-		};
-	}
+ve.dm.DefinitionListNode.static.toDomElements = function ( dataElement, doc ) {
+	return [ doc.createElement( 'dl' ) ];
 };
 
 /* Registration */
 
-ve.dm.nodeFactory.register( 'definitionList', ve.dm.DefinitionListNode );
+ve.dm.modelRegistry.register( ve.dm.DefinitionListNode );

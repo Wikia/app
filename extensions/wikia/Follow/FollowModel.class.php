@@ -4,11 +4,22 @@
  * Data model
  */
 class FollowModel {
-        static public $ajaxListLimit = 600;
-        static public $specialPageListLimit = 15;
+	static public $ajaxListLimit = 600;
+	static public $specialPageListLimit = 15;
+	static private $defaultNamespaces = [
+		NS_CATEGORY => 'wikiafollowedpages-special-heading-category',
+		NS_PROJECT => 'wikiafollowedpages-special-heading-project' ,
+		NS_TEMPLATE => 'wikiafollowedpages-special-heading-templates',
+		NS_USER => 'wikiafollowedpages-special-heading-user',
+		NS_MEDIAWIKI => 'wikiafollowedpages-special-heading-mediawiki',
+		NS_FORUM => 'wikiafollowedpages-special-heading-forum',
+		NS_FILE => 'wikiafollowedpages-special-heading-media',
+		NS_VIDEO => 'wikiafollowedpages-special-heading-media',
+		NS_USER_WALL => 'wikiafollowedpages-special-heading-wall',
+	];
 
-    /**
-	 * getWatchList -- get data for followed pages include see all
+	/**
+	 * getWatchList -- get data for followed pages
 	 *
 	 * @static
 	 * @access public
@@ -16,32 +27,12 @@ class FollowModel {
 	 * @return array
 	 */
 	static function getWatchList($user_id, $from = 0, $limit = 15, $namespace_head = null, $show_deleted_pages = true) {
-		global $wgServer, $wgScript, $wgContentNamespaces, $wgEnableBlogArticles, $wgEnableForumExt;
 		wfProfileIn( __METHOD__ );
-		$db = wfGetDB( DB_SLAVE );
 
-		$namespaces = array(
-			NS_CATEGORY => 'wikiafollowedpages-special-heading-category',
-			NS_PROJECT => 'wikiafollowedpages-special-heading-project' ,
-			NS_TEMPLATE => 'wikiafollowedpages-special-heading-templates',
-			NS_USER => 'wikiafollowedpages-special-heading-user',
-			NS_MEDIAWIKI => 'wikiafollowedpages-special-heading-mediawiki',
-			NS_FORUM => 'wikiafollowedpages-special-heading-forum',
-			NS_FILE => 'wikiafollowedpages-special-heading-media',
-			NS_VIDEO => 'wikiafollowedpages-special-heading-media',
-			NS_USER_WALL => 'wikiafollowedpages-special-heading-wall',
-		);
-
-
-		if ( !empty($wgEnableBlogArticles) ) {
-			$namespaces[NS_BLOG_ARTICLE] = 'wikiafollowedpages-special-heading-blogs';
-			$namespaces[NS_BLOG_LISTING] = 'wikiafollowedpages-special-heading-blogs';
-		}
-
-		if ( !empty( $wgEnableForumExt ) ) {
-			$namespaces[NS_WIKIA_FORUM_BOARD_THREAD] = 'wikiafollowedpages-special-heading-board';
-		}
-
+		$namespaces = static::prepareNamespaces( $namespace_head );
+		$user_id = (int) $user_id;
+		$from = (int) $from;
+		$limit = (int) $limit;
 		$order = array(
 			'wikiafollowedpages-special-heading-category',
 			'wikiafollowedpages-special-heading-article',
@@ -56,34 +47,97 @@ class FollowModel {
 			'wikiafollowedpages-special-heading-board'
 		);
 
-		foreach ($wgContentNamespaces as $value) {
+		$out = static::getWatchListCount(
+			$user_id,
+			$limit,
+			$namespaces,
+			static::getWatchListArray( $user_id, $from, $limit, $show_deleted_pages, $namespaces )
+		);
+
+		foreach ($order as $key => $value) {
+			if (!empty($out[$value]) ) {
+				$order[$key] = $out[$value];
+			} else {
+				unset($order[$key]);
+			}
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $order;
+	}
+
+	/**
+	 * @desc Prepares list of namespaces which should be taken into consideration in selecting the list from DB
+	 *
+	 * @param String $namespace_head
+	 *
+	 * @return Array $namespaces
+	 */
+	private function prepareNamespaces( $namespace_head ) {
+		global $wgContentNamespaces, $wgEnableBlogArticles, $wgEnableForumExt;
+		wfProfileIn( __METHOD__ );
+		$namespaces = static::$defaultNamespaces;
+
+		if ( !empty( $wgEnableBlogArticles ) ) {
+			$namespaces[NS_BLOG_ARTICLE] = 'wikiafollowedpages-special-heading-blogs';
+			$namespaces[NS_BLOG_LISTING] = 'wikiafollowedpages-special-heading-blogs';
+		}
+
+		if ( !empty( $wgEnableForumExt ) ) {
+			$namespaces[NS_WIKIA_FORUM_BOARD_THREAD] = 'wikiafollowedpages-special-heading-board';
+		}
+
+		foreach( $wgContentNamespaces as $value ) {
 			$namespaces[$value] = 'wikiafollowedpages-special-heading-article';
 		}
 
-		if ($namespace_head != null) {
-			foreach ($namespaces as $key => $value) {
+		if( $namespace_head != null ) {
+			foreach( $namespaces as $key => $value ) {
 				if ( $value != $namespace_head ) {
-					unset($namespaces[$key]);
+					unset( $namespaces[$key] );
 				}
 			}
 		}
-		$namespaces_keys = array_keys($namespaces);
 
-		$queryArray = array();
+		wfProfileOut( __METHOD__ );
+		return $namespaces;
+	}
+
+	/**
+	 * @desc Gets pages from watchlist depending on given parameters; The result list is grouped by static::$namespaces
+	 *
+	 * @param Integer $user_id
+	 * @param Integer $from
+	 * @param Integer $limit
+	 * @param Boolean $show_deleted_pages
+	 * @param Array $namespaces
+	 *
+	 * @return Array
+	 */
+	private function getWatchListArray( $user_id, $from, $limit, $show_deleted_pages, $namespaces ) {
+		global $wgServer, $wgScript, $wgContentNamespaces;
+		wfProfileIn( __METHOD__ );
+
+		$db = wfGetDB( DB_SLAVE );
+		$namespaces_keys = array_keys( $namespaces );
+		$queryArray = [];
+		$out_data = [];
+
 		foreach ($namespaces_keys as $value) {
-			$queryArray[] = "(select wl_namespace, wl_title from watchlist where wl_user = ".intval($user_id)." and wl_namespace = ".intval($value)
-					.( intval($value) == NS_USER_WALL ? " and not wl_title like '%/%'  ":"")
-					//THIS hack will be removed after runing script with will clear all notification copy
-					.( intval($value) == NS_USER_WALL ? " and wl_wikia_addedtimestamp > '2012-01-31'  ":"")
-					." ORDER BY wl_wikia_addedtimestamp desc limit ".intval($from).",".intval($limit).")";
+			$value = (int) $value;
+			$isWall = $value == NS_USER_WALL;
+
+			$queryArray[] = "(select wl_namespace, wl_title from watchlist where wl_user = " . $user_id . " and wl_namespace = " . $value
+				// special case for Wall to avoid sub-pages
+				. ( $isWall ? " and not wl_title like '%/%' " : '' )
+				. " ORDER BY wl_wikia_addedtimestamp desc limit " . $from . "," . $limit . ")";
 		}
 
 		$res = $db->query( implode(" union ",$queryArray) );
-		$out_data = array();
 		while ($row =  $db->fetchRow( $res ) ) {
 			$title = Title::makeTitle( $row['wl_namespace'], $row['wl_title'] );
 			$row['url'] = $title->getFullURL();
-			$row['hideurl'] = $wgServer.$wgScript."?action=ajax&rs=wfAjaxWatch&rsargs[]=".$title->getPrefixedURL()."&rsargs[]=u";
+			$row['hideurl'] = $wgServer . $wgScript . "?action=ajax&rs=wfAjaxWatch&rsargs[]=".$title->getPrefixedURL()."&rsargs[]=u";
 			$row['wl_title'] = str_replace("_"," ",$row['wl_title'] );
 			if (defined('NS_BLOG_ARTICLE') && $row['wl_namespace'] == NS_BLOG_ARTICLE) {
 				$explode = explode("/", $row['wl_title']);
@@ -108,19 +162,37 @@ class FollowModel {
 			}
 
 			if ( in_array($row['wl_namespace'], $wgContentNamespaces) && (NS_MAIN != $row['wl_namespace']) ) {
-				$ttile = Title::makeTitle($row['wl_namespace'], "none");
-				$row['other_namespace'] = $ttile->getNsText();
+				$title = Title::makeTitle($row['wl_namespace'], "none");
+				$row['other_namespace'] = $title->getNsText();
 			}
 
 			if( $show_deleted_pages ) {
-				$out_data[$namespaces[ $row['wl_namespace'] ]][] = $row;
+				$out_data[ $namespaces[ $row['wl_namespace'] ]][] = $row;
 			} else {
 				if( $title->isKnown() ||  $title->getNamespace() == NS_USER_WALL) {
-					$out_data[$namespaces[ $row['wl_namespace'] ]][] = $row;
+					$out_data[ $namespaces[ $row['wl_namespace'] ]][] = $row;
 				}
 			}
-
 		}
+
+		wfProfileOut( __METHOD__ );
+		return $out_data;
+	}
+
+	/**
+	 * @desc Gets amount of watchlist elements grouped by static::$namespaces
+	 *
+	 * @param Integer $user_id
+	 * @param Integer $limit
+	 * @param Array $namespaces list of namespaces by which results will be narrowed
+	 * @param Array $watchedPages result array from static::getWatchListArray()
+	 *
+	 * @return array
+	 */
+	private function getWatchListCount( $user_id, $limit, $namespaces, $watchedPages ) {
+		wfProfileIn( __METHOD__ );
+		$db = wfGetDB( DB_SLAVE );
+		$namespaces_keys = array_keys( $namespaces );
 
 		/**
 		 * Wall Logic
@@ -128,17 +200,15 @@ class FollowModel {
 		 * When you fallow tread the fallowing is marked in NS_USER_WALL_MESSAGE, NS_USER_WALL
 		 * so we will skip NS_USER_WALL with are subpage to filter out this.
 		 */
-
-		$con = " wl_user = ".intval($user_id)." and wl_namespace in (".implode(',', $namespaces_keys).")";
-		//special case for Wall to avoid subpages
-		//THIS hack will be removed after runing script with will clear all notification copy
-		$con .= (" and ( not wl_namespace = ".NS_USER_WALL."  or (wl_namespace = ".NS_USER_WALL."  and not wl_title like '%/%' and wl_wikia_addedtimestamp > '2012-01-31' ))");
+		$con = " wl_user = " . $user_id . " and wl_namespace in (" . implode( ',', $namespaces_keys ) . ")";
+		// special case for Wall to avoid sub-pages
+		$con .= ( " and ( not wl_namespace = ".NS_USER_WALL."  or ( wl_namespace = ".NS_USER_WALL."  and not wl_title like '%/%' ) )" );
 
 
 		$res = $db->select(
 			array( 'watchlist' ),
 			array( 'wl_namespace',
-				   'count(wl_title) as cnt' ),
+				'count(wl_title) as cnt' ),
 			$con,
 			__METHOD__,
 			array(
@@ -147,12 +217,13 @@ class FollowModel {
 			)
 		);
 
+		$out = [];
 		while ($row =  $db->fetchRow( $res ) ) {
-			$ns = $namespaces[$row['wl_namespace']];
+			$ns = $namespaces[ $row['wl_namespace'] ];
 			if ( !empty($out[$ns]) ) {
 				$out[$ns]['count'] += $row['cnt'];
 			} else {
-				$out[$ns] = array('ns' => $ns,'count' => $row['cnt'], 'data' => (empty($out_data[$ns]) ? array() : $out_data[$ns]));
+				$out[$ns] = array('ns' => $ns,'count' => $row['cnt'], 'data' => ( empty( $watchedPages[$ns] ) ? array() : $watchedPages[$ns] ) );
 			}
 
 			$out[$ns]['show_more'] = 0;
@@ -161,33 +232,24 @@ class FollowModel {
 			}
 		}
 
-		foreach ($order as $key => $value) {
-			if (!empty($out[$value]) ) {
-				$order[$key] = $out[$value];
-			} else {
-				unset($order[$key]);
-			}
-		}
-
 		wfProfileOut( __METHOD__ );
-		return $order;
+		return $out;
 	}
 
 	/**
-	 * getUserPageWatchList -- getdata for box on user page
+	 * @desc getUserPageWatchList -- getdata for box on user page
+	 *
+	 * @param Integer $user_id
 	 *
 	 * @static
 	 * @access public
 	 *
-	 *
-	 * @return bool
+	 * @return Array
 	 */
-
 	static function getUserPageWatchList($user_id) {
 		global $wgContentNamespaces, $wgEnableBlogArticles;
 
 		$NS = array();
-
 		if ( !empty($wgEnableBlogArticles) ) {
 			$NS[] = NS_BLOG_ARTICLE;
 		}
@@ -210,7 +272,6 @@ class FollowModel {
 		);
 
 		$watchlist = array();
-
 		while ($row = $db->fetchRow( $res ) ) {
 			$title = Title::makeTitle( $row['wl_namespace'], $row['wl_title'] );
 			$row['url'] = $title->getFullURL();
@@ -226,6 +287,7 @@ class FollowModel {
 			}
 			$watchlist[] = $row;
 		}
+
 		wfProfileOut( __METHOD__ );
 		return $watchlist;
 	}

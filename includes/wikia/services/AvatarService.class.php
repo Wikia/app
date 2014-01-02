@@ -5,6 +5,11 @@ class AvatarService extends Service {
 	const AVATAR_SIZE_MEDIUM = 50;
 	const AVATAR_SIZE_LARGE = 150;
 
+	// When avatar's width/height is greater than 20px, it will be smaller
+	// after converting to JPGs from original format (PNGs / GIFs).
+	// It was measured in DAR-1935 (Jira).
+	const PERFORMANCE_JPEG_THRESHOLD = 20;
+
 	/**
 	 * Internal method for getting user object with caching
 	 */
@@ -84,15 +89,19 @@ class AvatarService extends Service {
 
 	/**
 	 * Get URL for avatar
+	 *
+	 * @param string|User $user user name
+	 * @param int $avatarSize
+	 * @return String avatar's URL
 	 */
-	static function getAvatarUrl($user, $avatarSize = 20, $avoidUpscaling = false) {
+	static function getAvatarUrl($user, $avatarSize = 20) {
 		wfProfileIn(__METHOD__);
 
 		static $avatarsCache;
 		if( $user instanceof User ) {
 			$key = "{$user->getName()}::{$avatarSize}";
 		} else {
-		//assumes $user is a string with user name
+			//assumes $user is a string with user name
 			$key = "{$user}::{$avatarSize}";
 		}
 
@@ -112,7 +121,7 @@ class AvatarService extends Service {
 			}
 
 			$masthead = Masthead::newFromUser($user);
-			$avatarUrl = $masthead->getThumbnail($avatarSize, true, $avoidUpscaling);
+			$avatarUrl = $masthead->getThumbnailPurgeUrl($avatarSize);
 
 			// use per-user cachebuster when custom avatar is used
 			$cb = !$masthead->isDefault() ? intval($user->getOption('avatar_rev')) : 0;
@@ -122,6 +131,11 @@ class AvatarService extends Service {
 			// treats them differently o_O  Setting this to string zero matches
 			// the anonymous user behavior (BugId:22190)
 			$avatarUrl = wfReplaceImageServer($avatarUrl,  ($cb > 0) ? $cb : "0");
+
+			// make avatars as JPG intead of PNGs / GIF but only when it will be a gain (most likely)
+			if (intval($avatarSize) > self::PERFORMANCE_JPEG_THRESHOLD) {
+				$avatarUrl = ImagesService::overrideThumbnailFormat($avatarUrl, ImagesService::EXT_JPG);
+			}
 
 			$avatarsCache[$key] = $avatarUrl;
 		}
@@ -133,7 +147,7 @@ class AvatarService extends Service {
 	/**
 	 * Render avatar
 	 */
-	static function renderAvatar($userName, $avatarSize = 20, $avoidUpscaling = false) {
+	static function renderAvatar($userName, $avatarSize = 20) {
 		wfProfileIn(__METHOD__);
 
 		// For performance reasons, we only generate avatars that are of specific sizes.
@@ -146,23 +160,15 @@ class AvatarService extends Service {
 			$allowedSize = self::AVATAR_SIZE_LARGE;
 		}
 
-		$avatarUrl = self::getAvatarUrl($userName, $allowedSize, $avoidUpscaling);
+		$avatarUrl = self::getAvatarUrl($userName, $allowedSize);
 
-		if( $avoidUpscaling ) {
-			$ret = Xml::element('img', array(
-				'src' => $avatarUrl,
-				'class' => 'avatar',
-				'alt' => $userName,
-			));
-		} else {
-			$ret = Xml::element('img', array(
-				'src' => $avatarUrl,
-				'width' => $avatarSize,
-				'height' => $avatarSize,
-				'class' => 'avatar',
-				'alt' => $userName,
-			));
-		}
+		$ret = Xml::element('img', array(
+			'src' => $avatarUrl,
+			'width' => $avatarSize,
+			'height' => $avatarSize,
+			'class' => 'avatar',
+			'alt' => $userName,
+		));
 
 		wfProfileOut(__METHOD__);
 		return $ret;

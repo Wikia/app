@@ -33,7 +33,7 @@ class SpecialRenameuser extends SpecialPage {
 		$oAssetsManager = AssetsManager::getInstance();
 
 		$sSrc = $oAssetsManager->getOneCommonURL( '/extensions/wikia/UserRenameTool/js/NewUsernameUrlEncoder.js' );
-        $wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$sSrc}\"></script>" );
+		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$sSrc}\"></script>" );
 
 		if( wfReadOnly() || !$wgStatsDBEnabled ) {
 			$wgOut->readOnlyPage();
@@ -73,7 +73,7 @@ class SpecialRenameuser extends SpecialPage {
 			$warnings = $process->getWarnings();
 			$errors = $process->getErrors();
 			if ($status) {
-				$infos[] = wfMsgForContent('userrenametool-info-in-progress');
+				$infos[] = wfMessage('userrenametool-info-in-progress')->inContentLanguage()->text();
 			}
 		}
 

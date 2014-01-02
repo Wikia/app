@@ -27,8 +27,7 @@ class ImageMap {
 	const NONE = 4;
 
 	static function render($input, $params, $parser) {
-		global $wgScriptPath, $wgUser, $wgUrlProtocols, $wgNoFollowLinks;
-		wfLoadExtensionMessages('ImageMap');
+		global $wgScriptPath, $wgUrlProtocols, $wgNoFollowLinks;
 
 		$lines = explode("\n", $input);
 
@@ -80,8 +79,9 @@ class ImageMap {
 
 				$domDoc = new DOMDocument();
 				wfSuppressWarnings();
-				$ok = $domDoc->loadXML($imageHTML);
+				$ok = $domDoc->loadHTML($imageHTML);
 				wfRestoreWarnings();
+
 				if (!$ok) {
 					return self::error('imagemap_invalid_image');
 				}

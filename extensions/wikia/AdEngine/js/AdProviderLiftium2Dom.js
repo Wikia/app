@@ -1,13 +1,14 @@
-// TODO: remove Wikia.Tracker dependency
-var AdProviderLiftium2Dom = function (tracker, log, document, slotTweaker, Liftium, scriptWriter) {
+/*exported AdProviderLiftium2Dom*/
+/*jshint maxparams:false*/
+
+var AdProviderLiftium2Dom = function (log, document, slotTweaker, Liftium, scriptWriter, window) {
 	'use strict';
 
-	var logGroup = 'AdProviderLiftium2'
-		, adNum = 200 // TODO global-ize it (move to Liftium?)!
-		, slotMap
-		, canHandleSlot
-		, fillInSlot
-	;
+	var logGroup = 'AdProviderLiftium2',
+		adNum = 200, // TODO global-ize it (move to Liftium?)!
+		slotMap,
+		canHandleSlot,
+		fillInSlot;
 
 	slotMap = {
 		'EXIT_STITIAL_BOXAD_1': {'size':'300x250'},
@@ -20,11 +21,9 @@ var AdProviderLiftium2Dom = function (tracker, log, document, slotTweaker, Lifti
 		'LEFT_SKYSCRAPER_3': {'size':'160x600'},
 		'TEST_TOP_RIGHT_BOXAD': {'size':'300x250'},
 		'TEST_HOME_TOP_RIGHT_BOXAD': {'size':'300x250'},
-		'TOP_BUTTON': {'size':'242x90'},
 		'TOP_BUTTON_WIDE': {'size':'292x90'},
 
 		// TOP_BUTTON after TOP_LEADERBOARD hack:
-		'TOP_BUTTON.force':'hack',
 		'TOP_BUTTON_WIDE.force':'hack',
 
 		'TOP_LEADERBOARD':{'size':'728x90'},
@@ -63,8 +62,8 @@ var AdProviderLiftium2Dom = function (tracker, log, document, slotTweaker, Lifti
 		}
 		if (slot[0].indexOf('LEADERBOARD') !== -1) {
 			log('LEADERBOARD-ish slot handled by Liftium. Running the forced TOP_BUTTON(_WIDE) now', 2, logGroup);
-			fillInSlot(['TOP_BUTTON.force']);
-			fillInSlot(['TOP_BUTTON_WIDE.force']);
+
+			window.adslots2.push(['TOP_BUTTON_WIDE.force', null, 'Liftium2']);
 		}
 		// END of hack
 		if (!document.getElementById(slot[0])) {
@@ -72,23 +71,13 @@ var AdProviderLiftium2Dom = function (tracker, log, document, slotTweaker, Lifti
 			return;
 		}
 
-		var slotname = slot[0]
-			, slotsize = slotMap[slotname].size
-			, useGw = slotMap[slotname].useGw
-			, adDiv = document.createElement("div")
-			, adIframe = document.createElement("iframe")
-			, s = slotsize && slotsize.split('x')
-			, script
-		;
-
-		// not needed, liftium got its own tracking (but pls keep it for reference)
-		//tracker.track({
-		//	eventName: 'liftium.slot2',
-		//	ga_category: 'slot2/' + slotsize.replace(/,.*$/, ''),
-		//	ga_action: slotname,
-		//	ga_label: 'liftium2',
-		//	trackingMethod: 'ad'
-		//});
+		var slotname = slot[0],
+			slotsize = slotMap[slotname].size,
+			useGw = slotMap[slotname].useGw,
+			adDiv = document.createElement('div'),
+			adIframe = document.createElement('iframe'),
+			s = slotsize && slotsize.split('x'),
+			script;
 
 		if (useGw) {
 			log('using ghostwriter for #' + slotname, 6, logGroup);
@@ -102,7 +91,7 @@ var AdProviderLiftium2Dom = function (tracker, log, document, slotTweaker, Lifti
 
 			adIframe.width = s[0];
 			adIframe.height = s[1];
-			adIframe.scrolling = "no";
+			adIframe.scrolling = 'no';
 			adIframe.frameBorder = 0;
 			adIframe.marginHeight = 0;
 			adIframe.marginWidth = 0;
@@ -120,8 +109,8 @@ var AdProviderLiftium2Dom = function (tracker, log, document, slotTweaker, Lifti
 	};
 
 	return {
-		name: 'Liftium2Dom'
-		, canHandleSlot: canHandleSlot
-		, fillInSlot: fillInSlot
+		name: 'Liftium2Dom',
+		canHandleSlot: canHandleSlot,
+		fillInSlot: fillInSlot
 	};
 };

@@ -62,7 +62,7 @@ $messages['ca'] = array(
 	'healthcheck-desc' => "Una [[Special:HealthCheck|pàgina especial]] per verificar l'estat del servidor",
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Mormegil
  */
 $messages['cs'] = array(
@@ -102,6 +102,13 @@ $messages['eu'] = array(
  */
 $messages['fi'] = array(
 	'healthcheck-desc' => '[[Special:HealthCheck|Toimintosivu]] palvelimen tilan tarkastukseen',
+);
+
+/** Faroese (føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'healthcheck-desc' => 'Ein [[Special:HealthCheck|serstøk síða]] fyri at kanna status á ambætaranum',
 );
 
 /** French (français)
@@ -208,6 +215,13 @@ $messages['nl'] = array(
 	'healthcheck-desc' => 'Een [[Special:HealthCheck|speciale pagina]] voor de controle van de serverstatus',
 );
 
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'healthcheck-desc' => "Una [[Special:HealthCheck|pagina especiala]] per verificar l'estat dels servidors",
+);
+
 /** Polish (polski)
  * @author Sp5uhe
  */
@@ -290,6 +304,13 @@ $messages['tt-cyrl'] = array(
  */
 $messages['uk'] = array(
 	'healthcheck-desc' => '[[Special:HealthCheck|Спеціальна сторінка]] для перевірки стану сервера',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'healthcheck-desc' => 'Một [[Special:HealthCheck|trang đặc biệt]] cho máy chủ nhà nước kiểm tra',
 );
 
 /** Simplified Chinese (中文（简体）‎)

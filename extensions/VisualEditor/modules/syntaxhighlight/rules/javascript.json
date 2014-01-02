@@ -1,0 +1,159 @@
+{
+	"highlighter" :
+	[
+		{
+			"match" : "/(\\+|-|\\*|\\/|%|\\!|@|&|\\||\\^|<|>|\\=|,|;|\\?|:|\\.)/g",
+			"style" : "ve-ce-mwSynHi-symbol"
+		},
+		{
+			"match" : "/[\\W|^]((break|case|catch|const|continue|default|delete|do|else|finally|for|function|get|goto|if|in|instanceof|new|prototype|return|set|static|switch|this|throw|try|typeof|var|void))(?!\\w)/gm",
+			"style" : "ve-ce-mwSynHi-keyword"
+		},
+		{
+			"match" : "/[\\W|^]((false|null|true|undefined|NaN|Infinity))(?!\\w)/g",
+			"style" : "ve-ce-mwSynHi-metaconstant"
+		},
+		{
+			"match" : "/[\\W|^]((__proto__|__defineGetter__|__defineSetter__|hasOwnProperty|hasProperty))(?!\\w)/g",
+			"style" : "ve-ce-mwSynHi-magicwords"
+		},
+		{
+			"match" : "/[\\W|^]((Object|Function|Date|Math|String|Number|Boolean|Array))(?!\\w)/g",
+			"style" : "ve-ce-mwSynHi-typeconstructor"
+		},
+		{
+			"match" : "/[\\W|^]((abstract|boolean|byte|char|class|debugger|double|enum|export|extends|final|float|implements|import|int|interface|long|native|short|super|synchronized|throws|transient|volatile))(?!\\w)/g",
+			"style" : "ve-ce-mwSynHi-reserved"
+		},
+		{
+			"match" : "/(\\\\)/g",
+			"style" : "ve-ce-mwSynHi-escape"
+		},
+		{
+			"match" : "/(\\(|\\)|\\[|\\]|\\{|\\})/g",
+			"style" : "ve-ce-mwSynHi-bracket"
+		},
+		{
+			"match" : "/(['\\\"][^]*?['\\\"])/g",
+			"style" : "ve-ce-mwSynHi-string"
+		},
+		{
+			"match" : "/\\W([0-9]+)(?!\\w)/g",
+			"style" : "ve-ce-mwSynHi-number"
+		},
+		{
+			"match" : "/(\\w*)\\(\\)/g",
+			"style" : "ve-ce-mwSynHi-method"
+		},
+		{
+			"match" : "/(\\/\\/.*$)/gm",
+			"style" : "ve-ce-mwSynHi-comment-single"
+		},
+		{
+			"match" : "/(\\/\\*[^]*?\\*\\/)/g",
+			"style" : "ve-ce-mwSynHi-comment-multi"
+		}
+	],
+	"validator" :
+	[
+		{
+			"match" : ["/[^\\=\\!](\\=\\=|\\!\\=)(?!\\=)/g"],
+			"except" : [],
+			"within" : [],
+			"outside" : ["/(\\/\\*[^]*?\\*\\/)/g", "/(\\/\\/.*$)/gm", "/(\\\"[^]*?\\\")/g", "/('[^]*?')/g"],
+			"decisionMaker" : "error",
+			"style" : "ve-ce-mwSynHi-suggestion",
+			"tip" : "Use strict comparison instead"
+		},
+		{
+			"match" : ["/([\\t ]+)$/gm"],
+			"except" : [],
+			"within" : [],
+			"outside" : [],
+			"decisionMaker" : "error",
+			"style" : "ve-ce-mwSynHi-error",
+			"tip" : "Trailing whitespace character"
+		},
+		{
+			"match" : ["/(\\+{3,}|-{3,}|<={2,}|>={2,}|={4,})/g"],
+			"except" : [],
+			"within" : [],
+			"outside" : ["/(\\/\\*[^]*?\\*\\/)/g", "/(\\/\\/.*$)/gm", "/(\\\"[^]*?\\\")/g", "/('[^]*?')/g"],
+			"decisionMaker" : "error",
+			"style" : "ve-ce-mwSynHi-error",
+			"tip" : "Unrecognized operator"
+		},
+		{
+			"match" : ["/[\\W|^]var\\s+([0-9]+[a-zA-Z]+)(?!\\w)/g"],
+			"except" : [],
+			"within" : [],
+			"outside" : ["/(\\/\\*[^]*?\\*\\/)/g", "/(\\/\\/.*$)/gm", "/(\\\"[^]*?\\\")/g", "/('[^]*?')/g"],
+			"decisionMaker" : "error",
+			"style" : "ve-ce-mwSynHi-error",
+			"tip" : "Illegal variable name"
+		},
+		{
+			"match" : ["/(\\\")/g"],
+			"except" : [],
+			"within" : [],
+			"outside" : ["/(\\/\\*[^]*?\\*\\/)/g", "/(\\/\\/.*$)/gm", "/('[^]*?')/g"],
+			"decisionMaker" : "balanceAA",
+			"style" : "ve-ce-mwSynHi-error",
+			"tip" : "Unmatched quote"
+		},
+		{
+			"match" : ["/(')/g"],
+			"except" : [],
+			"within" : [],
+			"outside" : ["/(\\/\\*[^]*?\\*\\/)/g", "/(\\/\\/.*$)/gm", "/(\\\"[^]*?\\\")/g"],
+			"decisionMaker" : "balanceAA",
+			"style" : "ve-ce-mwSynHi-error",
+			"tip" : "Unmatched quote"
+		},
+		{
+			"match" : ["/(\\()/","/(\\))/"],
+			"except" : [],
+			"within" : [],
+			"outside" : ["/(\\/\\*[^]*?\\*\\/)/g", "/(\\/\\/.*$)/gm", "/(\\\"[^]*?\\\")/g", "/('[^]*?')/g"],
+			"decisionMaker" : "balanceAB",
+			"style" : "ve-ce-mwSynHi-error",
+			"tip" : "Unmatched bracket"
+		},
+		{
+			"match" : ["/(\\[)/","/(\\])/"],
+			"except" : [],
+			"within" : [],
+			"outside" : ["/(\\/\\*[^]*?\\*\\/)/g", "/(\\/\\/.*$)/gm", "/(\\\"[^]*?\\\")/g", "/('[^]*?')/g"],
+			"decisionMaker" : "balanceAB",
+			"style" : "ve-ce-mwSynHi-error",
+			"tip" : "Unmatched bracket"
+		},
+		{
+			"match" : ["/(\\{)/","/(\\})/"],
+			"except" : [],
+			"within" : [],
+			"outside" : ["/(\\/\\*[^]*?\\*\\/)/g", "/(\\/\\/.*$)/gm", "/(\\\"[^]*?\\\")/g", "/('[^]*?')/g"],
+			"decisionMaker" : "balanceAB",
+			"style" : "ve-ce-mwSynHi-error",
+			"tip" : "Unmatched bracket"
+		},
+		{
+			"match" : ["/\\W(case)(?!\\w)/","/\\W(break)(?!\\w)/"],
+			"except" : [],
+			"within" : ["/\\Wswitch\\s*?\\(.*?\\)\\s*?\\{([^]*?)\\}/g"],
+			"outside" : ["/(\\/\\*[^]*?\\*\\/)/g", "/(\\/\\/.*$)/gm", "/(\\\"[^]*?\\\")/g", "/('[^]*?')/g"],
+			"decisionMaker" : "matchAB",
+			"style" : "ve-ce-mwSynHi-error",
+			"tip" : "Expecting break after case"
+		},
+		{
+			"match" : ["/(switch)(?!\\w)/","/\\W(default\\s*?:)(?!\\w)/"],
+			"except" : [],
+			"within" : ["/\\W(switch\\s*?\\(.*?\\)\\s*?\\{[^]*?)\\}/g"],
+			"outside" : ["/(\\/\\*[^]*?\\*\\/)/g", "/(\\/\\/.*$)/gm", "/(\\\"[^]*?\\\")/g", "/('[^]*?')/g"],
+			"decisionMaker" : "matchAB",
+			"style" : "ve-ce-mwSynHi-error",
+			"tip" : "Expecting a default case"
+		}
+	]
+}

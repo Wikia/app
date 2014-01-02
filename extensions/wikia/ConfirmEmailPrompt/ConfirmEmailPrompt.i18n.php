@@ -26,10 +26,20 @@ $messages['ar'] = array(
 	'confirmemailprompt-error' => 'هل هذا هو عنوان البريد الإلكتروني الخاص بك: <strong>$1</strong>؟ قم [[$2|بتأكيده]] أو [[$3|تغييره]].',
 );
 
+/** Bulgarian (български)
+ * @author Aquilax
+ */
+$messages['bg'] = array(
+	'confirmemailprompt-desc' => 'Показва предупредитело съобщение ако потребителят има непотвърден e-mail адрес.',
+	'confirmemailprompt-error' => 'Това ли е Вашият email adres: <strong>$1</strong>? [[$2|Потвърдете]] или го [[$3|променете]].',
+);
+
 /** Breton (brezhoneg)
+ * @author Fohanno
  * @author Gwenn-Ael
  */
 $messages['br'] = array(
+	'confirmemailprompt-desc' => "Diskouez ur c'hemenn diwall m'en deus an implijer ur chomlec'h postel ha n'eo ket bet kadarnaet",
 	'confirmemailprompt-error' => "Ho chomlec'h postel eo : <strong>$1</strong>? [[$2|Kadarnit anezhañ]] pe [[$3|kemmit anezhañ]].",
 );
 
@@ -41,7 +51,7 @@ $messages['ca'] = array(
 	'confirmemailprompt-error' => 'Es aquesta la teva direcció de correu electrònic?: <strong>$1</strong>? [[$2|Confirmar-la]] o [[$3|canvia-la]].',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Jezevec
  */
 $messages['cs'] = array(
@@ -71,6 +81,14 @@ $messages['es'] = array(
 $messages['fi'] = array(
 	'confirmemailprompt-desc' => 'Näyttää varoituksen, jos käyttäjällä on vahvistamaton sähköpostiosoite',
 	'confirmemailprompt-error' => 'Onko tämä sähköpostiosoitteesi: <strong>$1</strong>? [[$2|Vahvista se]] tai [[$3|muuta sitä]].',
+);
+
+/** Faroese (føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'confirmemailprompt-desc' => 'Vísir eini ávaringarboð, um ein brúkari hevur eina óváttaða t-post adressu',
+	'confirmemailprompt-error' => 'Er hetta er tín t-post adressa: <strong>$1</strong>? [[$2|Vátta hana]] ella [[$3|broyt hana]].',
 );
 
 /** French (français)
@@ -110,6 +128,7 @@ $messages['ia'] = array(
  */
 $messages['id'] = array(
 	'confirmemailprompt-desc' => 'Tampilkan pesan peringatan jika seorang pengguna memiliki alamat email yang belum dikonfirmasi',
+	'confirmemailprompt-error' => 'Apakah ini alamat surel Anda: <strong>$1</strong>? [[$2|Konfirmasikan]] atau [[$3|ubah]].',
 );
 
 /** Italian (italiano)
@@ -158,6 +177,14 @@ $messages['nb'] = array(
 $messages['nl'] = array(
 	'confirmemailprompt-desc' => 'Geeft een waarschuwing weer als een gebruiker een niet-bevestigd e-mailadres heeft',
 	'confirmemailprompt-error' => 'Is dit uw e-mailadres: <strong>$1</strong>? [[$2|Bevestig het]] of [[$3|wijzig het]].',
+);
+
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'confirmemailprompt-desc' => 'Aficha un messatge d’avertiment se un utilizaire a una adreça de corrièr electronic qu’es pas estada confirmada',
+	'confirmemailprompt-error' => 'Es vòstra adreça de corrièr electronic : <strong>$1</strong> ? [[$2|Confirmar]] o [[$3|la cambiar]].',
 );
 
 /** Polish (polski)

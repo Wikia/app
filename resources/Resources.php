@@ -203,6 +203,7 @@ return array(
 		'scripts' => 'resources/jquery/jquery.tablesorter.js',
 		'styles' => 'resources/jquery/jquery.tablesorter.css',
 		'messages' => array( 'sort-descending', 'sort-ascending' ),
+		'dependencies' => 'jquery.mwExtension',
 	),
 	'jquery.textSelection' => array(
 		'scripts' => 'resources/jquery/jquery.textSelection.js',

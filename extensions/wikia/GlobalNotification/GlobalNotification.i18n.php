@@ -35,6 +35,13 @@ $messages['bn'] = array(
 	'globalnotification-general-ajax-failure' => 'ব্রাউজার উইকিয়ার সাথে সংযোগ করতে পারে নি। দয়া করে পরে আবার চেষ্টা করুন।',
 );
 
+/** Breton (brezhoneg)
+ * @author Fohanno
+ */
+$messages['br'] = array(
+	'globalnotification-general-ajax-failure' => "Ar medeer ne oa ket evit kevreañ ouzh  ar Wikia. Esaeit en-dro diwezhatoc'h.",
+);
+
 /** Catalan (català)
  * @author Marcmpujol
  */
@@ -43,7 +50,7 @@ $messages['ca'] = array(
 	'globalnotification-general-ajax-failure' => 'El navegador no ha pogut connectar-se a Wikia. Intenta-ho més tard.',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Darth Daron
  */
 $messages['cs'] = array(
@@ -74,6 +81,14 @@ $messages['es'] = array(
  */
 $messages['fi'] = array(
 	'globalnotification-general-ajax-failure' => 'Yhteyden muodostaminen Wikian palvelimille epäonnistui. Yritä myöhemmin uudelleen.',
+);
+
+/** Faroese (føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'globalnotification-desc' => 'Vísir boð frá skipanini fyri hendingar sum eitt nú AJAX feilir',
+	'globalnotification-general-ajax-failure' => 'Brovsarin fekk ikki samband við Wikia. Royn aftur seinni.',
 );
 
 /** French (français)
@@ -165,6 +180,14 @@ $messages['nl'] = array(
 	'globalnotification-general-ajax-failure' => 'De browser kon geen verbinding maken met de Wikia. Probeer het later nog opnieuw.',
 );
 
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'globalnotification-desc' => "Extension del sistèma de notificacion de Wikia. Aficha de notificacions del sistèma per d'eveniments tals coma los problèmas de foncionament AJAX",
+	'globalnotification-general-ajax-failure' => 'Lo navigador a pas pogut se connectar a Wikia. Ensajatz tornarmai pus tard.',
+);
+
 /** Polish (polski)
  * @author Sovq
  */
@@ -244,6 +267,14 @@ $messages['tt-cyrl'] = array(
 $messages['uk'] = array(
 	'globalnotification-desc' => 'Відображає системні повідомлення про такі події, як помилки AJAX',
 	'globalnotification-general-ajax-failure' => 'Браузер не зміг підключитися до Wikia. Спробуйте ще раз пізніше.',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'globalnotification-desc' => 'Hiển thị hệ thống thông báo cho các sự kiện như thất bại AJAX',
+	'globalnotification-general-ajax-failure' => 'Trình duyệt không thể kết nối đến Wikia. Thử lại sau.',
 );
 
 /** Simplified Chinese (中文（简体）‎)

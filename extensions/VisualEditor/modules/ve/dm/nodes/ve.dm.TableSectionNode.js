@@ -1,71 +1,61 @@
-/**
- * VisualEditor data model TableSelectionNode class.
+/*!
+ * VisualEditor DataModel TableSelectionNode class.
  *
- * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
 /**
- * DataModel node for a table section.
+ * DataModel table section node.
  *
  * @class
+ * @extends ve.dm.BranchNode
  * @constructor
- * @extends {ve.dm.BranchNode}
  * @param {ve.dm.BranchNode[]} [children] Child nodes to attach
- * @param {Object} [attributes] Reference to map of attribute key/value pairs
+ * @param {Object} [element] Reference to element in linear model
  */
-ve.dm.TableSectionNode = function VeDmTableSectionNode( children, attributes ) {
+ve.dm.TableSectionNode = function VeDmTableSectionNode( children, element ) {
 	// Parent constructor
-	ve.dm.BranchNode.call( this, 'tableSection', children, attributes );
+	ve.dm.BranchNode.call( this, children, element );
 };
 
 /* Inheritance */
 
 ve.inheritClass( ve.dm.TableSectionNode, ve.dm.BranchNode );
 
-/* Static Members */
+/* Static Properties */
 
-/**
- * Node rules.
- *
- * @see ve.dm.NodeFactory
- * @static
- * @member
- */
-ve.dm.TableSectionNode.rules = {
-	'isWrapped': true,
-	'isContent': false,
-	'canContainContent': false,
-	'hasSignificantWhitespace': false,
-	'childNodeTypes': ['tableRow'],
-	'parentNodeTypes': ['table']
+ve.dm.TableSectionNode.static.name = 'tableSection';
+
+ve.dm.TableSectionNode.static.childNodeTypes = [ 'tableRow' ];
+
+ve.dm.TableSectionNode.static.parentNodeTypes = [ 'table' ];
+
+ve.dm.TableSectionNode.static.defaultAttributes = {
+	'style': 'body'
 };
 
-/**
- * Node converters.
- *
- * @see {ve.dm.Converter}
- * @static
- * @member
- */
-ve.dm.TableSectionNode.converters = {
-	'domElementTypes': ['thead', 'tbody', 'tfoot'],
-	'toDomElement': function ( type, element ) {
-		return element.attributes && ( {
-			'header': document.createElement( 'thead' ),
-			'body': document.createElement( 'tbody' ),
-			'footer': document.createElement( 'tfoot' )
-		} )[element.attributes.style];
-	},
-	'toDataElement': function ( tag ) {
-		return ( {
-			'thead': { 'type': 'tableSection', 'attributes': { 'style': 'header' } },
-			'tbody': { 'type': 'tableSection', 'attributes': { 'style': 'body' } },
-			'tfoot': { 'type': 'tableSection', 'attributes': { 'style': 'footer' } }
-		} )[tag];
-	}
+ve.dm.TableSectionNode.static.matchTagNames = [ 'thead', 'tbody', 'tfoot' ];
+
+ve.dm.TableSectionNode.static.toDataElement = function ( domElements ) {
+	var styles = {
+			'thead': 'header',
+			'tbody': 'body',
+			'tfoot': 'footer'
+		},
+		style = styles[domElements[0].nodeName.toLowerCase()] || 'body';
+	return { 'type': 'tableSection', 'attributes': { 'style': style } };
 };
 
+ve.dm.TableSectionNode.static.toDomElements = function ( dataElement, doc ) {
+	var tags = {
+			'header': 'thead',
+			'body': 'tbody',
+			'footer': 'tfoot'
+		},
+		tag = tags[dataElement.attributes && dataElement.attributes.style || 'body'];
+	return [ doc.createElement( tag ) ];
+};
 /* Registration */
 
-ve.dm.nodeFactory.register( 'tableSection', ve.dm.TableSectionNode );
+ve.dm.modelRegistry.register( ve.dm.TableSectionNode );

@@ -41,11 +41,5 @@ $wgAutoloadClasses['BatchAntiSpoof'] = "$dir/maintenance/batchAntiSpoof.php";
 $wgHooks['LoadExtensionSchemaUpdates'][] = 'AntiSpoofHooks::asUpdateSchema';
 $wgHooks['AbortNewAccount'][] = 'AntiSpoofHooks::asAbortNewAccountHook';
 $wgHooks['UserCreateForm'][] = 'AntiSpoofHooks::asUserCreateFormHook';
-/* Wikia change - begin */
-if ( empty($wgEnableUserLoginExt) ) {
-	$wgHooks['AddNewAccount'][] = 'AntiSpoofHooks::asAddNewAccountHook';
-} else {
-	$wgHooks['AddNewAccountTempUser'][] = 'AntiSpoofHooks::asAddNewAccountHook';
-}
-/* Wikia change - end */
+$wgHooks['AddNewAccount'][] = 'AntiSpoofHooks::asAddNewAccountHook';
 $wgHooks['RenameUserComplete'][] = 'AntiSpoofHooks::asAddRenameUserHook';

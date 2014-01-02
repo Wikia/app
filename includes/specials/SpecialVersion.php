@@ -345,12 +345,14 @@ class SpecialVersion extends SpecialPage {
 
 		if ( count( $wgFileExtensions ) ) {
 			$out .= $this->openExtType('File extensions allowed for upload');
-			$out .= '<tr><td colspan="3">' . $this->listToText( $wgFileExtensions ) . "</td></tr>\n";
+			$out .= '<tr><td colspan="4">' . $this->listToText( $wgFileExtensions ) . "</td></tr>\n";
 		}
 
 		if ( count( $wgSkinExtensionFunctions ) ) {
 			$out .= $this->openExtType( wfMsg( 'version-skin-extension-functions' ), 'skin-extension-functions' );
+			// wikia change start
 			$out .= '<tr><td colspan="4">' . $this->listToText( $wgSkinExtensionFunctions ) . "</td></tr>\n";
+			// wikia change end
 		}
 
 		$out .= Xml::closeElement( 'table' );

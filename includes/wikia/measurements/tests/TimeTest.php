@@ -7,7 +7,8 @@ class TimeTest extends \WikiaBaseTest {
 	public function testStop() {
 		$driver = $this->buildMock();
 		$driver->expects( $this->once() )
-			->method( 'measureTime' );
+			->method( 'measureTime' )
+			->with( "foo" );
 
 		$measurements = new Time( "foo", $driver );
 		$measurements->stop();
@@ -16,7 +17,8 @@ class TimeTest extends \WikiaBaseTest {
 	public function testAutoDestroy() {
 		$driver = $this->buildMock();
 		$driver->expects( $this->once() )
-			->method( 'measureTime' );
+			->method( 'measureTime' )
+			->with( 'foo' );
 
 		$measurements = new Time( "foo", $driver );
 	}
@@ -32,10 +34,21 @@ class TimeTest extends \WikiaBaseTest {
 	public function testStart() {
 		$driver = $this->buildMock();
 		$driver->expects( $this->once() )
-			->method( 'measureTime' );
+			->method( 'measureTime' )
+			->with( 'bar' );
 		Drivers::set( $driver );
 
 		Time::start("bar");
+	}
+
+	public function testStartWithArray() {
+		$driver = $this->buildMock();
+		$driver->expects( $this->once() )
+			->method( 'measureTime' )
+			->with( 'foo/bar' );
+		Drivers::set( $driver );
+
+		Time::start( ["foo", "bar"] );
 	}
 
 	protected  function buildMock() {

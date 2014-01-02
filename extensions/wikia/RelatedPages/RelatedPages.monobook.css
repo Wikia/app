@@ -1,4 +1,11 @@
+.RelatedPagesModule a:hover {
+	text-decoration: none;
+}
+
 .RelatedPagesModule ul {
+	display: block;
+	clear: both;
+	height: 115px;
 	list-style: none;
 }
 
@@ -22,7 +29,12 @@
 }
 
 .RelatedPagesModule ul li .articleSnippet {
+	color: #000;
 	height: 100px;
 	overflow: hidden;
 	width: 190px;
+}
+
+.RelatedPagesModule ul li .more:hover {
+	text-decoration: underline;
 }

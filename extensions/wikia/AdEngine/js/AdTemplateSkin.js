@@ -1,5 +1,8 @@
 /*global define*/
-define('ext.wikia.adengine.template.skin', ['wikia.document', 'wikia.window', 'wikia.log'], function (document, window, log) {
+define('ext.wikia.adengine.template.skin',
+	['wikia.document', 'wikia.window', 'wikia.log', 'wikia.backgroundchanger'],
+	function (document, window, log, backgroundchanger)
+	{
 	'use strict';
 
 	var logGroup = 'ext.wikia.adengine.template.skin';
@@ -9,6 +12,7 @@ define('ext.wikia.adengine.template.skin', ['wikia.document', 'wikia.window', 'w
 	 *   skinImage
 	 *   backgroundColor
 	 *   destUrl
+	 *   pixels
 	 * }
 	 */
 	function show(params) {
@@ -21,11 +25,31 @@ define('ext.wikia.adengine.template.skin', ['wikia.document', 'wikia.window', 'w
 			i,
 			len,
 			pixelElement,
-			pixelUrl;
+			pixelUrl,
+			bcParams;
 
 		params = params || {};
 
-		adSkinStyle.background = 'url("' + params.skinImage + '") no-repeat top center #' + params.backgroundColor;
+		if (window.wgOasisResponsive) {
+			bcParams = {
+				skinImage: params.skinImage,
+				skinImageWidth: 1700,
+				skinImageHeight: 800,
+				backgroundTiled: false,
+				backgroundFixed: true,
+				backgroundDynamic: true
+			};
+			if (params.backgroundColor) {
+				bcParams.backgroundColor = '#' + params.backgroundColor;
+			}
+			if (params.middleColor) {
+				bcParams.backgroundMiddleColor = '#' + params.middleColor;
+			}
+			backgroundchanger.load(bcParams);
+		} else {
+			adSkinStyle.background = 'url("' + params.skinImage + '") no-repeat top center #' + params.backgroundColor;
+		}
+
 		adSkinStyle.position = 'fixed';
 		adSkinStyle.height = '100%';
 		adSkinStyle.width = '100%';
@@ -36,7 +60,7 @@ define('ext.wikia.adengine.template.skin', ['wikia.document', 'wikia.window', 'w
 
 		wikiaSkinStyle.opacity = 1;
 
-		adSkin.onclick = function (e) {
+		adSkin.onclick = function () {
 			log('Click on skin', 'user', logGroup);
 			window.open(params.destUrl);
 		};

@@ -28,13 +28,13 @@
 			),
 			array(
 				'type' => 'custom',
-				'output' => '<label>'.wfMsg('yourname').'</label><p class="username">'.htmlspecialchars($username).'</p>'
+				'output' => '<label>'.wfMessage('yourname')->escaped().'</label><p class="username">'.htmlspecialchars($username).'</p>'
 			),
 			array(
 				'type' => 'password',
 				'name' => 'password',
 				'id' => 'password',
-				'label' => wfMsg('userlogin-oldpassword'),
+				'label' => wfMessage('userlogin-oldpassword')->escaped(),
 				'value' => htmlspecialchars($password),
 				'isInvalid' => !empty($errParam) && $errParam === 'password',
 				'errorMsg' => !empty($msg) ? $msg : ''
@@ -43,7 +43,7 @@
 				'type' => 'password',
 				'name' => 'newpassword',
 				'id' => 'newpassword',
-				'label' => wfMsg('userlogin-newpassword'),
+				'label' => wfMessage('userlogin-newpassword')->escaped(),
 				'isInvalid' => !empty($errParam) && $errParam === 'newpassword',
 				'errorMsg' => !empty($msg) ? $msg : ''
 			),
@@ -51,14 +51,14 @@
 				'type' => 'password',
 				'name' => 'retype',
 				'id' => 'retype',
-				'label' => wfMsg('userlogin-retypenew'),
+				'label' => wfMessage('userlogin-retypenew')->escaped(),
 				'isInvalid' => !empty($errParam) && $errParam === 'retype',
 				'errorMsg' => !empty($msg) ? $msg : ''
 			)
 		),
 		'submits' => array(
 			array(
-				'value' => wfMsg('resetpass_submit'),
+				'value' => wfMessage('resetpass_submit')->escaped(),
 				'name' => 'action',
 				'class' => 'big login-button'
 			)

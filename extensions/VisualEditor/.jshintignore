@@ -1,0 +1,6 @@
+docs/**
+node_modules/**
+modules/jquery/**
+modules/jquery.uls/**
+modules/qunit/**
+modules/rangy/**

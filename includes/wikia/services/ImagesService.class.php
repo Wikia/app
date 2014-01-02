@@ -4,6 +4,13 @@ class ImagesService extends Service {
 	const FILE_DATA_COMMENT_OPION_NAME = 'comment';
 	const FILE_DATA_DESC_OPION_NAME = 'description';
 
+	const EXT_JPG  = '.jpg';
+	const EXT_JPEG = '.jpeg';
+	const EXT_PNG  = '.png';
+	const EXT_GIF  = '.gif';
+
+	public static $allowedExtensionsList = [self::EXT_GIF, self::EXT_PNG, self::EXT_JPG, self::EXT_JPEG];
+
 	/**
 	 * get image thumbnail
 	 * @param integer $wikiId
@@ -87,14 +94,105 @@ class ImagesService extends Service {
 	}
 
 	/**
+	 * @desc Check if image file has extension
+	 *
+	 * @param String $imageUrl original image's URL
+	 * @param String $desiredExtension extension
+	 *
+	 * @return Boolean
+	 */
+	public static function imageUrlHasExtension($imageUrl, $desiredExtension) {
+		$fileExt = strtolower( '.' . pathinfo( $imageUrl, PATHINFO_EXTENSION ) );
+		$desiredExtension = strtolower( $desiredExtension );
+
+		static $jpegExtList = [self::EXT_JPG, self::EXT_JPEG];
+
+		// we check if image's extension is in ['.jpeg', '.jpg'] and desired extension is in ['.jpeg', '.jpg'] too - we don't need conversion then
+		return ($fileExt == $desiredExtension) || ( in_array($fileExt, $jpegExtList) && in_array($desiredExtension, $jpegExtList) );
+	}
+
+	/**
+	 * @desc Returns thumbnail's new URL
+	 *
+	 * @param String $thumbUrl original thumb's URL
+	 * @param String $newExtension desired file extension (format). One of: EXT_JPG, EXT_JPEG, EXT_PNG, EXT_GIF
+	 *
+	 * @return String new URL
+	 */
+	public static function overrideThumbnailFormat($thumbUrl, $newExtension) {
+
+		if ( !empty($thumbUrl)
+				&& in_array($newExtension, self::$allowedExtensionsList) // only change extension if it's allowed
+				&& !self::imageUrlHasExtension($thumbUrl, $newExtension) // only change extension if it's different that current one
+			) {
+			$thumbUrl .= $newExtension;
+		}
+
+		return $thumbUrl;
+	}
+
+	/**
+	 * @desc Returns thumbnail's URL made from normal image URL
+	 *
+	 * @param String $imageUrl original image's URL
+	 * @param String|Integer $destSize desitination's size; can be width."px" or width."x".height
+	 * @param String $newExtension desired file extension (format). One of: EXT_JPG, EXT_JPEG, EXT_PNG, EXT_GIF
+	 *
+	 * @return String new URL
+	 */
+	public static function getThumbUrlFromFileUrl($imageUrl, $destSize, $newExtension = null) {
+		if (!empty($imageUrl)) {
+			if ( !self::IsExternalThumbnailUrl($imageUrl) ) {
+				$imageUrl = str_replace('/images/', '/images/thumb/', $imageUrl);
+			} else {
+				$imageUrl = $imageUrl;
+			}
+
+
+			/**
+			 * url is virtual base for thumbnail, so
+			 *
+			 * - get last part of path
+			 * - add it as thumbnail file prefixed with widthpx
+			 */
+			$parts = explode( "/", $imageUrl );
+			$file = array_pop( $parts );
+
+			if ( ctype_digit( (string)$destSize ) ) {
+				$destSize .= 'px';
+			}
+
+			$imageUrl = sprintf( "%s/%s-%s", $imageUrl, $destSize, $file );
+
+			if ( !empty($newExtension) ) {
+				$imageUrl = self::overrideThumbnailFormat($imageUrl, $newExtension);
+			}
+		}
+
+		return $imageUrl;
+	}
+
+	/**
+	 * @desc Checks if given URL is pointing to our external thumbnail service.
+	 *
+	 * @param String $url url to test
+	 *
+	 * @return boolean
+	 */
+	public static function IsExternalThumbnailUrl($url) {
+		return strpos($url, '/images/thumb/') !== false;
+	}
+
+	/**
 	 * @desc Returns image's thumbnail's url and its sizes if $destImageWidth given it can be scaled
 	 *
 	 * @param String $fileName filename with or without namespace string
 	 * @param Integer $imageWidth optional parameter
+	 * @param String $newExtension desired file extension (format). One of: EXT_JPG, EXT_JPEG, EXT_PNG, EXT_GIF
 	 *
 	 * @return stdClass to the image's thumbnail
 	 */
-	public static function getLocalFileThumbUrlAndSizes($fileName, $destImageWidth = 0) {
+	public static function getLocalFileThumbUrlAndSizes($fileName, $destImageWidth = 0, $newExtension = null) {
 		$app = F::app();
 
 		$results = new stdClass();
@@ -124,6 +222,14 @@ class ImagesService extends Service {
 				self::calculateScaledImageSizes($imageWidth, $imageWidth, $foundFile->getHeight());
 
 			$results->url = $foundFile->createThumb($sizes->width);
+
+			if ( !empty($newExtension) ) {
+				if ( !self::IsExternalThumbnailUrl($results->url) ) {
+					$results->url = self::getThumbUrlFromFileUrl($results->url, $sizes->width, $newExtension);
+				} else {
+					$results->url = self::overrideThumbnailFormat($results->url, $newExtension);
+				}
+			}
 
 			$results->width = intval($sizes->width);
 			$results->height = intval($sizes->height);

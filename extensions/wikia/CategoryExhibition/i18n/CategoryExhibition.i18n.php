@@ -41,26 +41,51 @@ $messages['af'] = array(
 /** Arabic (العربية)
  * @author Achraf94
  * @author Mutarjem horr
+ * @author زكريا
  */
 $messages['ar'] = array(
 	'category-exhibition-sorttype' => 'نوع الفرز:',
 	'category-exhibition-alphabetical' => 'أبجديأّ',
 	'category-exhibition-mostvisited' => 'الأكثر مشاهدة',
 	'category-exhibition-recentedits' => 'تحرير مؤخراّ',
-	'category-exhibition-page-header' => 'الصفحات في التصنيف " $1 "',
+	'category-exhibition-page-header' => 'صفحات تصنيف "$1"',
 	'category-exhibition-subcategories-header' => 'التصنيفات الفرعية',
-	'category-exhibition-media-header' => 'الميديا في تصنيف "$1"',
+	'category-exhibition-media-header' => 'ملفات تصنيف "$1"',
 	'category-exhibition-blogs-header' => 'المشاركات في المدونة',
 	'category-exhibition-display-old' => 'عرض قائمة التصنيف',
 	'category-exhibition-display-new' => 'عرض معرض التصنيف',
 );
 
+/** Bikol Central (Bikol Central)
+ * @author Geopoet
+ */
+$messages['bcl'] = array(
+	'category-exhibition-sorttype' => 'Tipo nin pagsasalansan:',
+	'category-exhibition-alphabetical' => 'Alpabitikal',
+	'category-exhibition-mostvisited' => 'Mas na pinagbibisita',
+	'category-exhibition-recentedits' => 'Pinakabaguhon na pinagliwat',
+	'category-exhibition-page-header' => 'Mga pahina sa laog kan kategoriya na "$1"',
+	'category-exhibition-subcategories-header' => 'Mga sub-kategoriya',
+	'category-exhibition-media-header' => 'Midya na yaon sa kategoriya na "$1"',
+	'category-exhibition-blogs-header' => 'Mga paskil sa Blog',
+	'category-exhibition-display-old' => 'Pagtanaw sa Listahan nin Kategorya',
+);
+
 /** Bulgarian (български)
+ * @author Aquilax
  * @author DCLXVI
  */
 $messages['bg'] = array(
+	'category-exhibition-sorttype' => 'Начин на сортиране:',
+	'category-exhibition-alphabetical' => 'По азбучен ред',
+	'category-exhibition-mostvisited' => 'Най-посещавани',
+	'category-exhibition-recentedits' => 'Последно променени',
 	'category-exhibition-page-header' => 'Страници в категория „$1“',
 	'category-exhibition-subcategories-header' => 'Подкатегории',
+	'category-exhibition-media-header' => 'Медия в категория "$1"',
+	'category-exhibition-blogs-header' => 'Блог постове',
+	'category-exhibition-display-old' => 'Списъчен изглед на категория',
+	'category-exhibition-display-new' => 'Изложбен изглед на категория',
 );
 
 /** Breton (brezhoneg)
@@ -80,6 +105,7 @@ $messages['br'] = array(
 );
 
 /** Catalan (català)
+ * @author Fitoschido
  * @author Marcmpujol
  */
 $messages['ca'] = array(
@@ -89,13 +115,13 @@ $messages['ca'] = array(
 	'category-exhibition-recentedits' => 'Editades recentement',
 	'category-exhibition-page-header' => 'Pàgines en la categoraa "$1"',
 	'category-exhibition-subcategories-header' => 'Subcategories',
-	'category-exhibition-media-header' => 'Multimèdia en la categoria "$1"',
+	'category-exhibition-media-header' => 'Multimèdia en la categoria «$1»',
 	'category-exhibition-blogs-header' => 'Entrades de bloc',
 	'category-exhibition-display-old' => 'Visualització de la llista de categories',
 	'category-exhibition-display-new' => "Visualització d'exposició de la categoria",
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -204,6 +230,19 @@ $messages['fi'] = array(
 	'category-exhibition-blogs-header' => 'Blogiartikkelit',
 	'category-exhibition-display-old' => 'Luokkaluettelonäkymä',
 	'category-exhibition-display-new' => 'Luokkanäyttelynäkymä',
+);
+
+/** Faroese (føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'category-exhibition-alphabetical' => 'Í bókstavarøð',
+	'category-exhibition-mostvisited' => 'Mest vitjað',
+	'category-exhibition-recentedits' => 'Nýliga rættað',
+	'category-exhibition-page-header' => 'Síður í bólkinum "$1"',
+	'category-exhibition-subcategories-header' => 'Undirbólkar',
+	'category-exhibition-media-header' => 'Miðlar í bólkinum "$1"',
+	'category-exhibition-blogs-header' => 'Blogginnsløg',
 );
 
 /** French (français)
@@ -431,8 +470,15 @@ $messages['nl'] = array(
  */
 $messages['oc'] = array(
 	'category-exhibition-sorttype' => 'Tipe de triada :',
+	'category-exhibition-alphabetical' => 'Alfabetic',
 	'category-exhibition-mostvisited' => 'Los mai visitats',
 	'category-exhibition-recentedits' => 'Modificats recentament',
+	'category-exhibition-page-header' => 'Paginas dins la categoria « $1 »',
+	'category-exhibition-subcategories-header' => 'Soscategorias',
+	'category-exhibition-media-header' => 'Mèdia dins la categoria « $1 »',
+	'category-exhibition-blogs-header' => 'Article de blog',
+	'category-exhibition-display-old' => 'Afichatge de la categoria en lista',
+	'category-exhibition-display-new' => 'Afichatge de la categoria en exposicion',
 );
 
 /** Polish (polski)
@@ -579,9 +625,9 @@ $messages['sv'] = array(
 	'category-exhibition-alphabetical' => 'Alfabetisk',
 	'category-exhibition-mostvisited' => 'Mest visade',
 	'category-exhibition-recentedits' => 'Nyligen ändrade',
-	'category-exhibition-page-header' => 'Sidor i kategori "$1"',
+	'category-exhibition-page-header' => 'Sidor i kategorin "$1"',
 	'category-exhibition-subcategories-header' => 'Underkategorier',
-	'category-exhibition-media-header' => 'Media i kategori "$1"',
+	'category-exhibition-media-header' => 'Media i kategorin "$1"',
 	'category-exhibition-blogs-header' => 'Blogg-inlägg',
 	'category-exhibition-display-old' => 'Kategori-listvyn',
 	'category-exhibition-display-new' => 'Visning av kategoriutställning',
@@ -632,6 +678,22 @@ $messages['uk'] = array(
 	'category-exhibition-blogs-header' => 'Записи у блозі',
 	'category-exhibition-display-old' => 'Подання категорії списком',
 	'category-exhibition-display-new' => 'Подання категорії піктограмами',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'category-exhibition-sorttype' => 'Phân loại các loại:',
+	'category-exhibition-alphabetical' => 'Bảng chữ cái',
+	'category-exhibition-mostvisited' => 'Truy cập nhiều nhất',
+	'category-exhibition-recentedits' => 'Biên tập, sửa đổi gần đây',
+	'category-exhibition-page-header' => 'Trang trong thể loại “$1”',
+	'category-exhibition-subcategories-header' => 'Thể loại con',
+	'category-exhibition-media-header' => 'Các tập tin trong thể loại “$1”',
+	'category-exhibition-blogs-header' => 'Bài đăng trên blog',
+	'category-exhibition-display-old' => 'Xem danh sách thể loại',
+	'category-exhibition-display-new' => 'Danh mục triển lãm xem',
 );
 
 /** Simplified Chinese (中文（简体）‎)

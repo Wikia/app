@@ -46,11 +46,14 @@ class SpecialPromoteHelper extends WikiaObject {
 		return self::MAX_DESCRIPTION_LENGTH;
 	}
 
-	public function loadWikiInfo() {
-		$this->wikiInfo = $this->homePageHelper->getWikiInfoForSpecialPromote($this->wg->cityId, $this->wg->contLang->getCode());
+	protected function loadWikiInfo() {
+		if (empty($this->wikiInfo)) {
+			$this->wikiInfo = $this->homePageHelper->getWikiInfoForSpecialPromote($this->wg->cityId, $this->wg->contLang->getCode());
+		}
 	}
 
 	public function getWikiHeadline() {
+		$this->loadWikiInfo();
 		if (!empty($this->wikiInfo['headline'])) {
 			return $this->wikiInfo['headline'];
 		} else {
@@ -59,6 +62,7 @@ class SpecialPromoteHelper extends WikiaObject {
 	}
 
 	public function getWikiDesc() {
+		$this->loadWikiInfo();
 		if (!empty($this->wikiInfo['description'])) {
 			return $this->wikiInfo['description'];
 		} else {
@@ -67,6 +71,7 @@ class SpecialPromoteHelper extends WikiaObject {
 	}
 
 	public function getMainImage() {
+		$this->loadWikiInfo();
 		if (!empty($this->wikiInfo['images']) && !empty($this->wikiInfo['images'][0])) {
 			$mainImageName = $this->wikiInfo['images'][0];
 			return $this->homePageHelper->getImageData($mainImageName, self::LARGE_IMAGE_WIDTH, self::LARGE_IMAGE_HEIGHT);
@@ -76,6 +81,7 @@ class SpecialPromoteHelper extends WikiaObject {
 	}
 
 	public function getAdditionalImages() {
+		$this->loadWikiInfo();
 		if (!empty($this->wikiInfo ['images']) && !empty($this->wikiInfo['images'][0])) {
 			$imagesNames = array_slice($this->wikiInfo['images'], 1);
 			$images = array();
@@ -88,34 +94,51 @@ class SpecialPromoteHelper extends WikiaObject {
 		}
 	}
 
-	public function uploadImage($upload) {
-		$uploadStatus = array("status" => "error");
+	public function getAdditionalImagesNames() {
+		$additionalImages = $this->getAdditionalImages();
+		$out = [];
+		if (!empty($additionalImages)) {
+			foreach($additionalImages as $image) {
+				$out[] = $image['image_filename'];
+			}
+		}
+		return $out;
+	}
 
-		$upload->initializeFromRequest($this->wg->request);
-		$permErrors = $upload->verifyPermissions($this->wg->user);
+	public function uploadImage( $upload ) {
+		global $wgEnableUploads;
 
-		if ($permErrors !== true) {
-			$uploadStatus["errors"] = array(wfMsg('badaccess'));
+		$uploadStatus = array( "status" => "error" );
+
+		if ( empty( $wgEnableUploads ) ) {
+			$uploadStatus["errors"] = [ wfMessage( 'promote-upload-image-uploads-disabled' )->plain() ];
 		} else {
-			$details = $upload->verifyUpload();
+			$upload->initializeFromRequest( $this->wg->request );
+			$permErrors = $upload->verifyPermissions( $this->wg->user );
 
-			if ($details['status'] != UploadBase::OK) {
-				$uploadStatus["errors"] = array($this->getUploadErrorMessage($details));
+			if ( $permErrors !== true ) {
+				$uploadStatus["errors"] = array( wfMessage( 'badaccess' )->plain() );
 			} else {
-				$warnings = $upload->checkWarnings();
+				$details = $upload->verifyUpload();
 
-				if (!empty($warnings)) {
-					$uploadStatus["errors"] = $this->getUploadWarningMessages($warnings);
+				if ( $details['status'] != UploadBase::OK ) {
+					$uploadStatus["errors"] = array( $this->getUploadErrorMessage( $details ) );
 				} else {
-					//save temp file
-					$file = $upload->stashFile();
+					$warnings = $upload->checkWarnings();
 
-					$uploadStatus["status"] = "uploadattempted";
-					if ($file instanceof File) {
-						$uploadStatus["isGood"] = true;
-						$uploadStatus["file"] = $file;
+					if ( ! empty( $warnings ) ) {
+						$uploadStatus["errors"] = $this->getUploadWarningMessages( $warnings );
 					} else {
-						$uploadStatus["isGood"] = false;
+						//save temp file
+						$file = $upload->stashFile();
+
+						$uploadStatus["status"] = "uploadattempted";
+						if ( $file instanceof File ) {
+							$uploadStatus["isGood"] = true;
+							$uploadStatus["file"] = $file;
+						} else {
+							$uploadStatus["isGood"] = false;
+						}
 					}
 				}
 			}
@@ -221,10 +244,24 @@ class SpecialPromoteHelper extends WikiaObject {
 	}
 
 	public function removeTempImage($imageName) {
-		$file = RepoGroup::singleton()->getLocalRepo()->getUploadStash()->getFile($imageName);
-		if ($file instanceof File) {
-			$file->remove();
+		global $wgEnableUploads;
+
+		if ( empty( $wgEnableUploads ) ) {
+			throw new Exception('promote-upload-image-uploads-disabled');
 		}
+
+		try {
+			$file = RepoGroup::singleton()->getLocalRepo()->getUploadStash()->getFile( $imageName );
+
+			if ( $file instanceof File ) {
+				$file->remove();
+				return true;
+			}
+		} catch ( Exception $e ) {
+			return false;
+		}
+
+		return false;
 	}
 
 	public function removeImage($imageName) {
@@ -240,20 +277,30 @@ class SpecialPromoteHelper extends WikiaObject {
 	}
 
 	public function saveVisualizationData($data, $langCode) {
+		global $wgEnableUploads;
+
 		wfProfileIn(__METHOD__);
+
+		if ( empty( $wgEnableUploads ) ) {
+			throw new Exception('promote-upload-image-uploads-disabled');
+		}
+
 		$cityId = $this->wg->cityId;
 		$contentLang = $this->wg->contLang->getCode();
 		$files = array('additionalImages' => array());
+		$originalAdditionImagesNames = $this->getAdditionalImagesNames();
 
 		$visualizationModel = new CityVisualization();
+		$isCorpLang = $visualizationModel->isCorporateLang($langCode);
+
 
 		foreach ($data as $fileType => $dataContent) {
 			switch ($fileType) {
 				case 'mainImageName':
 					$fileName = $dataContent;
-					if (strpos($fileName, UploadVisualizationImageFromFile::VISUALIZATION_MAIN_IMAGE_NAME) === false) {
+					if ( strpos( $fileName, UploadVisualizationImageFromFile::VISUALIZATION_MAIN_IMAGE_NAME ) === false ) {
 						$dstFileName = UploadVisualizationImageFromFile::VISUALIZATION_MAIN_IMAGE_NAME;
-						$files['mainImage'] = $this->moveTmpFile($fileName, $dstFileName);
+						$files['mainImage'] = $this->moveTmpFile( $fileName, $dstFileName );
 						$files['mainImage']['modified'] = true;
 					} else {
 						$files['mainImage']['name'] = $fileName;
@@ -283,7 +330,10 @@ class SpecialPromoteHelper extends WikiaObject {
 
 		$modifiedFiles = $this->extractModifiedFiles($files);
 		if (!empty($modifiedFiles)) {
-			$visualizationModel->saveImagesForReview($cityId, $langCode, $modifiedFiles);
+			$imageReviewState = $isCorpLang
+				? ImageReviewStatuses::STATE_UNREVIEWED
+				: ImageReviewStatuses::STATE_AUTO_APPROVED;
+			$visualizationModel->saveImagesForReview($cityId, $langCode, $modifiedFiles, $imageReviewState);
 		}
 
 		$updateData['city_main_image'] = $files['mainImage']['name'];
@@ -292,7 +342,7 @@ class SpecialPromoteHelper extends WikiaObject {
 			foreach( $files['additionalImages'] as $image ) {
 				if( empty($image['deleted']) ) {
 					$additionalImageNames[] = $image['name'];
-				} else {
+				} else if ( in_array($image['deletedname'], $originalAdditionImagesNames) ) {
 					$deletedFiles[$contentLang][$cityId][] = array(
 						'city_id' => $cityId,
 						'name' => $image['deletedname']
@@ -304,16 +354,27 @@ class SpecialPromoteHelper extends WikiaObject {
 		}
 
 		if( !empty($deletedFiles) ) {
-			$this->createRemovalTask($deletedFiles);
+			if ($isCorpLang) {
+				$this->createRemovalTask($deletedFiles);
+			}
 			$visualizationModel->deleteImagesFromReview($cityId, $langCode, $deletedFiles);
 		}
 
 		$visualizationModel->updateWikiPromoteDataCache($cityId, $langCode, $updateData);
 
-		/** @var $helper WikiGetDataForVisualizationHelper */
+		// clear memcache so it's visible on site after edit
 		$helper = new WikiGetDataForVisualizationHelper();
-		$this->wg->memc->set($helper->getMemcKey($cityId, $langCode),null);
-		$visualizationModel->regenerateBatches($visualizationModel->getTargetWikiId($langCode), $langCode);
+		$corpWikiId = $visualizationModel->getTargetWikiId($langCode);
+		// wiki info cache
+		$this->wg->memc->delete($helper->getMemcKey($cityId, $langCode));
+		// wiki list cache
+		$this->wg->memc->delete(
+			$visualizationModel->getVisualizationWikisListDataCacheKey($corpWikiId, $langCode)
+		);
+		// batches cache
+		$this->wg->memc->delete(
+			$visualizationModel->getVisualizationBatchesCacheKey($corpWikiId, $langCode)
+		);
 
 		wfProfileOut(__METHOD__);
 	}
@@ -428,17 +489,20 @@ class SpecialPromoteHelper extends WikiaObject {
 	}
 
 	protected function checkWikiStatus($WikiId, $langCode) {
+		$wikiStatus = [
+			'hasImagesRejected' => false,
+			'hasImagesInReview' => false,
+			'isApproved' => false,
+			'isAutoApproved' => false
+		];
+
 		$visualization = new CityVisualization();
 		$wikiDataVisualization = $visualization->getWikiDataForVisualization($WikiId, $langCode);
 		$mainImage = $this->getMainImage();
 		$additionalImages = $this->getAdditionalImages();
-		$hasImagesRejected = false;
-		$hasImagesInReview = false;
 
 		if (!empty($wikiDataVisualization['main_image'])) {
-			$isFeatured = true;
-		} else {
-			$isFeatured = false;
+			$wikiStatus['isApproved'] = true;
 		}
 
 		$imageStatuses = array();
@@ -454,41 +518,34 @@ class SpecialPromoteHelper extends WikiaObject {
 		foreach($imageStatuses as $status) {
 			switch($status) {
 				case ImageReviewStatuses::STATE_REJECTED:
-					$hasImagesRejected = true;
+					$wikiStatus['hasImagesRejected'] = true;
 					break;
 				case ImageReviewStatuses::STATE_UNREVIEWED:
 				case ImageReviewStatuses::STATE_IN_REVIEW:
 				case ImageReviewStatuses::STATE_QUESTIONABLE:
 				case ImageReviewStatuses::STATE_QUESTIONABLE_IN_REVIEW:
-					$hasImagesInReview = true;
+				$wikiStatus['hasImagesInReview'] = true;
+					break;
+				case ImageReviewStatuses::STATE_AUTO_APPROVED:
+					$wikiStatus['isAutoApproved'] = true;
 					break;
 			}
 		}
 
-		return array(
-			"hasImagesRejected" => $hasImagesRejected,
-			"hasImagesInReview" => $hasImagesInReview,
-			"isFeatured" => $isFeatured
-		);
+		return $wikiStatus;
 	}
 
 	public function getWikiStatusMessage($WikiId, $langCode) {
 		$wikiStatus = $this->checkWikiStatus($WikiId, $langCode);
-
-		if ($wikiStatus["hasImagesRejected"]) {
-			$wikiStatusMessage = wfMsgExt('promote-statusbar-rejected',array('parsemag', 'parseinline'));
-		}
-		elseif ($wikiStatus["hasImagesInReview"]) {
-			$wikiStatusMessage = wfMsgExt('promote-statusbar-inreview',array('parsemag', 'parseinline'));
-		}
-		elseif ($wikiStatus["isFeatured"]) {
-			$wikiStatusMessage = wfMsgExt(
-				'promote-statusbar-approved',
-				array('parsemag', 'parseinline'),
-				$this->wg->Sitename
-			);
-		}
-		else {
+		if ($wikiStatus['isAutoApproved']) {
+			$wikiStatusMessage = wfMessage('promote-statusbar-auto-approved', $this->wg->Sitename)->parse();
+		} else if ($wikiStatus["hasImagesRejected"]) {
+			$wikiStatusMessage = wfMessage('promote-statusbar-rejected')->parse();
+		} else if ($wikiStatus["hasImagesInReview"]) {
+			$wikiStatusMessage = wfMessage('promote-statusbar-inreview')->parse();
+		} else if ($wikiStatus["isApproved"]) {
+			$wikiStatusMessage = wfMessage('promote-statusbar-approved', $this->wg->Sitename)->parse();
+		} else {
 			$wikiStatusMessage = null;
 		}
 		return $wikiStatusMessage;

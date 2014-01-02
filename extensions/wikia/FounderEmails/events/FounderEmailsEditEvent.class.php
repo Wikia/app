@@ -1,6 +1,32 @@
 <?php
 
 class FounderEmailsEditEvent extends FounderEmailsEvent {
+
+	/**
+	 * Prefix for memcache key storing information about whether first edit notification was sent
+	 */
+	const FIRST_EDIT_NOTIFICATION_SENT_MEMC_PREFIX = 'founderemails-first-edit-notification-sent';
+
+	/**
+	 * Period describing how long to throttle of emails; default of 1 hour
+	 */
+	const USER_EMAILS_THROTTLE_EXPIRY_TIME = 3600;
+
+	/**
+	 * Minimum number of non-profile edit revisions needed to determine if user made only
+	 * one edit on a wiki
+	 */
+	const FIRST_EDIT_REVISION_THRESHOLD = 2;
+
+	/**
+	 * Constansts for describing Users edit status for purpose of sending founder notification
+	 * on first edit
+	 */
+	const NO_EDITS = 0;
+	const FIRST_EDIT = 1;
+	const MULTIPLE_EDITS = 2;
+
+
 	public function __construct( Array $data = array() ) {
 		parent::__construct( 'edit' );
 		$this->setData( $data );
@@ -121,8 +147,8 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 					$mailKey = 'anon-edit';
 				}
 
-				// Set flag so this user won't generate edit notifications for 1 hour
-				$wgMemc->set($memcKey, "1", 3600);
+				// Set flag so this user won't generate edit notifications for given period of time
+				$wgMemc->set($memcKey, "1", self::USER_EMAILS_THROTTLE_EXPIRY_TIME);
 
 				// Increment counter for daily notification limit
 				$aWikiCounter[1] = ( $aWikiCounter[1] === 15 ) ? 'full' : $aWikiCounter[1] + 1;
@@ -158,6 +184,58 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 		return false;
 	}
 
+	/**
+	 * Returns whether the user made no edits, first edit
+	 * or multiple edits (excluding profile page edits)
+	 *
+	 * @param User $user
+	 * @param bool $useMasterDb
+	 * @returns int one of:
+	 * 		FounderEmailsEditEvent::NO_EDITS
+	 * 		FounderEmailsEditEvent::FIRST_EDIT
+	 * 		FounderEmailsEditEvent::MULTIPLE_EDITS
+	 */
+	static public function getUserEditsStatus($user, $useMasterDb = false ) {
+		wfProfileIn(__METHOD__);
+
+		$recentEditsCount = 0;
+		$dbr = wfGetDB( $useMasterDb ? DB_MASTER : DB_SLAVE );
+
+		$conditions = [
+			'rev_user' => $user->getId(),
+		];
+
+		$userPageId = $user->getUserPage()->getArticleID();
+
+		if($userPageId) {
+			$conditions[] = "page_id != $userPageId";
+		}
+
+		$dbResult = $dbr->select(
+			[ 'revision', 'page' ],
+			[ 'rev_id' ],
+			$conditions,
+			__METHOD__,
+			[
+				'LIMIT' => self::FIRST_EDIT_REVISION_THRESHOLD,
+				'ORDER BY' => 'rev_timestamp DESC'
+			],
+			[ 'page' => [
+					'left join',
+					[ 'revision.rev_page = page.page_id' ]
+				]
+			]
+		);
+
+		while($row = $dbr->FetchObject($dbResult)) {
+			$recentEditsCount++;
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $recentEditsCount;
+	}
+
 	public static function register( $oRecentChange ) {
 		global $wgUser, $wgCityId;
 		wfProfileIn( __METHOD__ );
@@ -175,10 +253,27 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 			$editor = ( $wgUser->getId() == $oRecentChange->getAttribute( 'rc_user' ) ) ? $wgUser : User::newFromID( $oRecentChange->getAttribute( 'rc_user' ) );
 			$isRegisteredUser = true;
 
-			if ( class_exists( 'Masthead' ) ) {
-				$userStats = Masthead::getUserStatsData( $editor->getName(), true );
-				if ( $userStats['editCount'] == 1 ) {
-					$isRegisteredUserFirstEdit = true;
+			// if first edit email was already sent this is an additional edit
+			$wasNotificationSent = ( static::getFirstEmailSentFlag( $editor->getName() ) === '1' ) ;
+
+			if ( !$wasNotificationSent ) {
+				$userEditStatus = static::getUserEditsStatus( $editor, true );
+				/*
+					If there is at least one edit, flag that we should not send this email anymore;
+					either first email is sent out as a result of this request,
+					or there was more than 1 edit so we will never need to send it again
+				 */
+				switch ( $userEditStatus ) {
+					case self::NO_EDITS:
+						wfProfileOut( __METHOD__ );
+						return true;
+						break;
+					case self::FIRST_EDIT:
+						$isRegisteredUserFirstEdit = true;
+						static::setFirstEmailSentFlag( $editor->getName() );
+						break;
+					case self::MULTIPLE_EDITS:
+						static::setFirstEmailSentFlag( $editor->getName() );
 				}
 			}
 		} else {
@@ -199,6 +294,50 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 			return true;
 		}
 
+		$eventData = static::getEventData( $editor, $oRecentChange, $isRegisteredUser, $isRegisteredUserFirstEdit );
+		FounderEmails::getInstance()->registerEvent( new FounderEmailsEditEvent( $eventData ) );
+
+		wfProfileOut( __METHOD__ );
+		return true;
+	}
+
+	/**
+	 * @desc Sets flag that founder received first edit notification for a given user
+	 *
+	 * @param $userName
+	 */
+	public static function setFirstEmailSentFlag( $userName ) {
+		global $wgMemc;
+		$wgMemc->set( static::getFirstEmailSentFlagMemcKey( $userName ), '1' );
+	}
+
+	public static function getFirstEmailSentFlag( $userName ) {
+		global $wgMemc;
+		return $wgMemc->get( static::getFirstEmailSentFlagMemcKey( $userName ) );
+	}
+
+	/**
+	 * @desc Returns memecache key for storing email sent flag
+	 *
+	 * @param $userName
+	 * @return String
+	 */
+	public static function getFirstEmailSentFlagMemcKey( $userName ) {
+		return wfMemcKey( self::FIRST_EDIT_NOTIFICATION_SENT_MEMC_PREFIX, $userName );
+	}
+
+	/**
+	 * Generates and returns data for edit event to be processed
+	 *
+	 * @param $editor User
+	 * @param $oRecentChange RecentChange
+	 * @param $isRegisteredUser boolean
+	 * @param $isRegisteredUserFirstEdit boolean
+	 * @return array
+	 */
+	public static function getEventData( $editor, $oRecentChange, $isRegisteredUser, $isRegisteredUserFirstEdit ) {
+		wfProfileIn(__METHOD__);
+
 		$oTitle = Title::makeTitle( $oRecentChange->getAttribute( 'rc_namespace' ), $oRecentChange->getAttribute( 'rc_title' ) );
 		$eventData = array(
 			'titleText' => $oTitle->getText(),
@@ -211,9 +350,7 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 			'myHomeUrl' => Title::newFromText( 'WikiActivity', NS_SPECIAL )->getFullUrl()
 		);
 
-		FounderEmails::getInstance()->registerEvent( new FounderEmailsEditEvent( $eventData ) );
-
 		wfProfileOut( __METHOD__ );
-		return true;
+		return $eventData;
 	}
 }

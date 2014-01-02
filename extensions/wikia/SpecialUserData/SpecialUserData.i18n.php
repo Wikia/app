@@ -39,7 +39,18 @@ $messages['br'] = array(
 	'userdata-submit' => 'Tapout roadennoù',
 );
 
-/** Czech (česky)
+/** Catalan (català)
+ * @author Marcmpujol
+ */
+$messages['ca'] = array(
+	'userdata' => "Obtenir dades d'usuari",
+	'userdata-userid-label' => "Proporciona l'ID d'usuari:",
+	'userdata-submit' => 'Obtenir dades',
+	'specialuserdata-desc' => 'Proporciona una interfície per canviar wgUserData per wiki.',
+	'userdata-header' => 'Augmentar wgUserData',
+);
+
+/** Czech (čeština)
  * @author Chmee2
  */
 $messages['cs'] = array(
@@ -84,6 +95,20 @@ $messages['es'] = array(
 	'userdata-not-updated' => 'Error al actualizar wgUserData.',
 	'userdata-wf-reason' => 'Valor actualizado a través de [[Special:UserData|UserData]]',
 	'userdata-no-wf' => 'WikiFactory no está habilitado en esta wiki. No se puede alterar wgUserData.',
+);
+
+/** Faroese (føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'userdata' => 'Heinta brúkaradáta',
+	'userdata-userid-label' => 'Skriva brúkara-ID:',
+	'userdata-submit' => 'Heinta dáta',
+	'specialuserdata-desc' => 'Gevur eitt markamót til at broyta wgUserData per wiki.',
+	'userdata-header' => 'Øk um wgUserData',
+	'userdata-updated' => 'wgUserData dagført til "$1".',
+	'userdata-not-updated' => 'Tað bar ikki til at dagføra wgUserData.',
+	'userdata-wf-reason' => 'Virði er dagført við [[Special:UserData|UserData]]',
 );
 
 /** French (français)
@@ -151,6 +176,22 @@ $messages['ia'] = array(
 	'userdata-not-updated' => 'Actualisation de wgUserData fallite.',
 	'userdata-wf-reason' => 'Valor actualisate via [[Special:UserData|UserData]]',
 	'userdata-no-wf' => 'WikiFactory non es activate in iste wiki. Impossibile alterar wgUserData.',
+);
+
+/** Colognian (Ripoarisch)
+ * @author Purodha
+ */
+$messages['ksh'] = array(
+	'userdata' => 'Metmaacherdaate holle',
+	'userdata-userid-label' => 'Däm Metmaacher sing Kännong:',
+	'userdata-submit' => 'Daate holle!',
+	'specialuserdata-desc' => 'Brängk en Schnetschtäll, öm de <code lang="en">wgUserData</code> en enem einzelne Wiki ze verändere.',
+	'userdata-header' => 'De <code lang="en">wgUserData</code> jrüüßer maache',
+	'userdata-value' => 'Dä Wäät vun <code lang="en" xml:lang="en">wgUserData</code> es jiz „$1“. Klegg op dä Kobb omm en op di Zigg vun jraad jäz ze säze.',
+	'userdata-updated' => 'De <code lang="en" xml:lang="en">wgUserData</code> es op „$1“ jesaz',
+	'userdata-not-updated' => 'Mer kunnte de <code lang="en" xml:lang="en">wgUserData</code> nit verändere',
+	'userdata-wf-reason' => 'Dä Wäät wood övver de [[Special:UserData|MetmaacherDaate]] aanjepaß.',
+	'userdata-no-wf' => '<i lang="en" xml:lang="en">WikiFactory</i> es en heh däm Wikki nit aanjeschalldt. Mer künne de <code lang="en" xml:lang="en">wgUserData</code> nit verändere.',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -368,11 +409,37 @@ $messages['tl'] = array(
 );
 
 /** Ukrainian (українська)
+ * @author Andriykopanytsia
  * @author Steve.rusyn
+ * @author SteveR
  */
 $messages['uk'] = array(
 	'userdata' => 'Отримати дані користувача',
+	'userdata-userid-label' => 'Надати ID користувача:',
 	'userdata-submit' => 'Отримати дані',
+	'specialuserdata-desc' => 'Надає інтерфейс для зміни wgUserData у вікі.',
+	'userdata-header' => 'Збільшити wgUserData',
+	'userdata-value' => 'Поточне значення wgUserData є " $1 ". Натисніть кнопку, щоб встановити поточну позначку часу.',
+	'userdata-updated' => 'wgUserData оновлено до "$1".',
+	'userdata-not-updated' => 'Не вдалося оновити wgUserData.',
+	'userdata-wf-reason' => 'Значення оновлені за допомогою [[Special:UserData|UserData]]',
+	'userdata-no-wf' => 'WikiFactory на цій вікі не увімкнено. Не вдається змінити wgUserData.',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'userdata' => 'Nhận dữ liệu người dùng',
+	'userdata-userid-label' => 'Cung cấp ID người dùng:',
+	'userdata-submit' => 'Lấy dữ liệu',
+	'specialuserdata-desc' => 'Cung cấp một giao diện cho việc thay đổi wgUserData một wiki.',
+	'userdata-header' => 'Tăng wgUserData',
+	'userdata-value' => 'Các giá trị hiện tại của wgUserData là "$1". Bấm nút để đặt nó vào dấu thời gian hiện tại.',
+	'userdata-updated' => 'wgUserData cập Nhật để "$1".',
+	'userdata-not-updated' => 'Thất bại trong việc cập Nhật wgUserData.',
+	'userdata-wf-reason' => 'Giá trị cập nhật thông qua [[Special:UserData|UserData]]',
+	'userdata-no-wf' => 'WikiFactory không được kích hoạt trên wiki này. Không thể thay đổi wgUserData.',
 );
 
 /** Simplified Chinese (中文（简体）‎)

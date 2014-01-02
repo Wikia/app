@@ -1,6 +1,19 @@
+/*!
+ * VisualEditor plugin for QUnit.
+ *
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @license The MIT License (MIT); see LICENSE.txt
+ */
 ( function ( QUnit ) {
 
 QUnit.config.requireExpects = true;
+
+/**
+ * Plugin for QUnit.
+ *
+ * @class ve.QUnit
+ * @extends QUnit
+ */
 
 /**
  * Builds a summary of a node tree.
@@ -9,8 +22,9 @@ QUnit.config.requireExpects = true;
  * each child recursively. It's simple and fast to use deepEqual on this.
  *
  * @method
+ * @private
  * @param {ve.Node} node Node tree to summarize
- * @param {Boolean} [shallow] Do not summarize each child recursively
+ * @param {boolean} [shallow] Do not summarize each child recursively
  * @returns {Object} Summary of node tree
  */
 function getNodeTreeSummary( node, shallow ) {
@@ -19,14 +33,15 @@ function getNodeTreeSummary( node, shallow ) {
 			'getType': node.getType(),
 			'getLength': node.getLength(),
 			'getOuterLength': node.getOuterLength(),
-			'attributes': node.attributes
-		};
+			'element': node.element
+		},
+		numChildren;
 
 	if ( node.children !== undefined ) {
-		summary['children.length'] = node.children.length;
+		numChildren = node.children.length;
 		if ( !shallow ) {
 			summary.children = [];
-			for ( i = 0; i < node.children.length; i++ ) {
+			for ( i = 0; i < numChildren; i++ ) {
 				summary.children.push( getNodeTreeSummary( node.children[i] ) );
 			}
 		}
@@ -41,6 +56,7 @@ function getNodeTreeSummary( node, shallow ) {
  * within parent and node ranges for each result. It's simple and fast to use deepEqual on this.
  *
  * @method
+ * @private
  * @param {Object[]} selection Selection to summarize
  * @returns {Object} Summary of selection
  */
@@ -68,35 +84,28 @@ function getNodeSelectionSummary( selection ) {
 }
 
 /**
- * Builds a summary of an HTML element.
+ * Callback for ve#copy to convert nodes to a comparable summary.
  *
- * Summaries include node name, text, attributes and recursive summaries of children.
- *
- * @method
- * @param {HTMLElement} element Element to summarize.
- * @returns {Object} Summary of element.
+ * @private
+ * @param {ve.dm.Node|Object} value Value in the object/array
+ * @returns {Object} Node summary if value is a node, otherwise just the value
  */
-function getDomElementSummary( element ) {
-	var i,
-		$element = $( element ),
-		summary = {
-			'type': element.nodeName.toLowerCase(),
-			'text': $element.text(),
-			'attributes': {},
-			'children': []
-		};
-
-	// Gather attributes
-	for ( i = 0; i < element.attributes.length; i++ ) {
-		summary.attributes[element.attributes[i].name] = element.attributes[i].value;
-	}
-	// Summarize children
-	for ( i = 0; i < element.children.length; i++ ) {
-		summary.children.push( getDomElementSummary( element.children[i] ) );
-	}
-	return summary;
+function convertNodes( value ) {
+	return value instanceof ve.dm.Node || value instanceof ve.ce.Node ?
+		getNodeTreeSummary( value ) :
+		value;
 }
 
+/**
+ * Assertion helpers for VisualEditor test suite.
+ * @class ve.QUnit.assert
+ */
+
+/**
+ * Assert that summaries of two node trees are equal.
+ * @method
+ * @static
+ */
 QUnit.assert.equalNodeTree = function ( actual, expected, shallow, message ) {
 	if ( typeof shallow === 'string' && arguments.length === 3 ) {
 		message = shallow;
@@ -109,6 +118,10 @@ QUnit.assert.equalNodeTree = function ( actual, expected, shallow, message ) {
 	);
 };
 
+/**
+ * @method
+ * @static
+ */
 QUnit.assert.equalNodeSelection = function ( actual, expected, message ) {
 	var i,
 		actualSummary = getNodeSelectionSummary( actual ),
@@ -127,13 +140,73 @@ QUnit.assert.equalNodeSelection = function ( actual, expected, message ) {
 	);
 };
 
+/**
+ * @method
+ * @static
+ */
 QUnit.assert.equalDomElement = function ( actual, expected, message ) {
-	var actualSummary = getDomElementSummary( actual ),
-		expectedSummary = getDomElementSummary( expected );
+	var actualSummary = ve.getDomElementSummary( actual ),
+		expectedSummary = ve.getDomElementSummary( expected ),
+		actualSummaryHtml = ve.getDomElementSummary( actual, true ),
+		expectedSummaryHtml = ve.getDomElementSummary( expected, true );
 
 	QUnit.push(
-		QUnit.equiv( actualSummary, expectedSummary ), actualSummary, expectedSummary, message
+		QUnit.equiv( actualSummary, expectedSummary ), actualSummaryHtml, expectedSummaryHtml, message
 	);
+};
+
+/**
+ * Assert that two objects have the same DOM structure.
+ * @method
+ * @static
+ * @param {jQuery|Element|String} actual jQuery object, DOM Element or HTML string
+ * @param {jQuery|Element|String} expected jQuery object, DOM Element or HTML string
+ * @param {String} message Assertion message
+ */
+QUnit.assert.equalDomStructure = function ( actual, expected, message ) {
+	QUnit.assert.equalDomElement( $( actual )[0], $( expected )[0], message );
+};
+
+/**
+ * Assert that two objects which may contain dom elements are equal.
+ * @method
+ * @static
+ */
+QUnit.assert.deepEqualWithDomElements = function ( actual, expected, message ) {
+	// Recursively copy objects or arrays, converting any dom elements found to comparable summaries
+	actual = ve.copy( actual, ve.convertDomElements );
+	expected = ve.copy( expected, ve.convertDomElements );
+
+	QUnit.push( QUnit.equiv(actual, expected), actual, expected, message );
+};
+
+/**
+ * Assert that two objects which may contain dom elements are equal.
+ * @method
+ * @static
+ */
+QUnit.assert.deepEqualWithNodeTree = function ( actual, expected, message ) {
+	// Recursively copy objects or arrays, converting any dom elements found to comparable summaries
+	actual = ve.copy( actual, convertNodes );
+	expected = ve.copy( expected, convertNodes );
+
+	QUnit.push( QUnit.equiv(actual, expected), actual, expected, message );
+};
+
+QUnit.assert.equalRange = function ( actual, expected, message ) {
+	actual = {
+		start: actual.start,
+		end: actual.end,
+		from: actual.from,
+		to: actual.to
+	};
+	expected = {
+		start: expected.start,
+		end: expected.end,
+		from: expected.from,
+		to: expected.to
+	};
+	QUnit.push( QUnit.equiv(actual, expected), actual, expected, message );
 };
 
 }( QUnit ) );

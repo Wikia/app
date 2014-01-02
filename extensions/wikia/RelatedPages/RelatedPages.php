@@ -22,8 +22,8 @@ $dir = dirname(__FILE__) . '/';
 global $wgHooks;
 
 array_splice( $wgHooks['OutputPageBeforeHTML'], 0, 0, 'RelatedPages::onOutputPageBeforeHTML' );
-$wgHooks['ArticleSaveComplete'][] = 'RelatedPagesController::onArticleSaveComplete';
-$wgHooks['WikiaMobileAssetsPackages'][] = 'RelatedPagesController::onWikiaMobileAssetsPackages';
+$wgHooks['WikiaMobileAssetsPackages'][] = 'RelatedPages::onWikiaMobileAssetsPackages';
+$wgHooks['SkinAfterContent'][] = 'RelatedPages::onSkinAfterContent';
 
 // classes
 $wgAutoloadClasses['RelatedPages'] = $dir . 'RelatedPages.class.php';
@@ -31,3 +31,4 @@ $wgAutoloadClasses['RelatedPagesController'] = $dir . 'RelatedPagesController.cl
 
 // messages
 $wgExtensionMessagesFiles['RelatedPages'] = $dir . 'RelatedPages.i18n.php';
+JSMessages::registerPackage( 'RelatedPages', [ 'wikiarelatedpages-heading' ] );

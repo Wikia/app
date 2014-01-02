@@ -41,7 +41,6 @@ class VideoHandlerHooks {
 		return $result;
 	}
 
-
 	/**
 	 * Preserves video mime types. Needed to fix MW 1.16 bug
 	 *
@@ -86,17 +85,16 @@ class VideoHandlerHooks {
 			'class' => 'WikiaLocalRepo',
 			'name' => 'local',
 			'directory' => $wgUploadDirectory,
-			//'scriptDirUrl' => $wgScriptPath,
-			//'scriptExtension' => $wgScriptExtension,
 			'url' => $wgUploadBaseUrl ? $wgUploadBaseUrl . $wgUploadPath : $wgUploadPath,
 			'hashLevels' => $wgHashedUploadDirectory ? 2 : 0,
 			'thumbScriptUrl' => $wgThumbnailScriptPath,
 			'transformVia404' => !$wgGenerateThumbnailOnParse,
 			'deletedDir' => $wgDeletedDirectory, // TODO: check me
 			'deletedHashLevels' => $wgLocalFileRepo['deletedHashLevels'], // TODO: check me,
-			'backend' => 'local-backend'
+			'backend' => 'local-backend',
 		);
 
+		wfRunHooks( 'AfterSetupLocalFileRepo', [&$wgLocalFileRepo] );
 		return true;
 	}
 
@@ -203,7 +201,7 @@ class VideoHandlerHooks {
 	 * @param File $cacheEntry
 	 * @return true
 	 */
-	public function onFindRedirectedFile( $repos, $title, $options, $useCache, &$file, &$cacheEntry ) {
+	public static function onFindRedirectedFile( $repos, $title, $options, $useCache, &$file, &$cacheEntry ) {
 		$redirect = RepoGroup::singleton()->getLocalRepo()->checkRedirect( $title );
 		if ( $redirect instanceof Title && $redirect->getNamespace() == NS_FILE && $title->getDBKey() != $redirect->getDBKey() ) {
 			foreach ( $repos as $repo ) {
@@ -214,6 +212,22 @@ class VideoHandlerHooks {
 					}
 				}
 			}
+		}
+
+		return true;
+	}
+
+	/**
+	 * Hook: update options for Http request (uploading video only)
+	 * @param array $options
+	 * @return true
+	 */
+	public static function onUploadFromUrlReallyFetchFile( &$options ) {
+		// check if proxy is disabled
+		if ( !empty( F::app()->wg->DisableProxy ) ) {
+			$options['noProxy'] = true;
+			// reset to default
+			F::app()->wg->DisableProxy = false;
 		}
 
 		return true;

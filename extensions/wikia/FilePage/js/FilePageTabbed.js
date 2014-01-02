@@ -1,4 +1,5 @@
 $(function() {
+	'use strict';
 
 	var Paginator,
 		FilePageTabbed,
@@ -168,8 +169,8 @@ $(function() {
 		initPagination: function() {
 			$('.page-list-pagination')
 				.each(function() {
-				new Paginator($(this));
-			});
+					new Paginator($(this));
+				});
 		},
 		/**
 		 *	Bind event when the "remove" button is clicked in the edit menu
@@ -183,8 +184,7 @@ $(function() {
 
 				$.showCustomModal($.msg('videohandler-remove-video-modal-title'), '', {
 					id: 'remove-video-modal',
-					buttons: [
-						{
+					buttons: [{
 							id: 'ok',
 							defaultButton: true,
 							message: $.msg('videohandler-remove-video-modal-ok'),
@@ -198,22 +198,21 @@ $(function() {
 										title: window.wgTitle
 									},
 									callback: function(json) {
-										if (json['result'] === 'ok') {
-											window.location = json['redirectUrl'];
+										if (json.result === 'ok') {
+											window.location = json.redirectUrl;
 										} else {
-											window.GlobalNotification.show(json['msg'], 'error');
+											window.GlobalNotification.show(json.msg, 'error');
 										}
 									}
 								});
 							}
-							},
-						{
+						}, {
 							id: 'cancel',
 							message: $.msg('videohandler-remove-video-modal-cancel'),
 							handler: function() {
 								self.removeVideoModal.closeModal();
 							}
-							}
+						}
 					],
 					callback: function() {
 						self.removeVideoModal = $('#remove-video-modal');
@@ -230,20 +229,18 @@ $(function() {
 				$parent;
 
 			elements = [
-			'.page-listing-title a',
-			'.page-listing-image',
-			'.page-listing-wiki',
-			'.see-more-link'
+					'.page-listing-title a',
+					'.page-listing-image',
+					'.page-listing-wiki',
+					'.see-more-link'
 			];
 
 			$pageListings = $('.page-listings');
 
-			$pageListings.on('click', elements.join(', '), function(evt) {
+			$pageListings.on('mousedown', elements.join(', '), function(evt) {
 				evt.preventDefault();
-				var node = evt.target,
-					$node = $(node),
-					prefix,
-					url = node.href;
+				var $node = $(this).closest('a'),
+						prefix;
 
 				$parent = $node.closest('.page-listings');
 
@@ -252,16 +249,14 @@ $(function() {
 				if ($node.hasClass('see-more-link')) {
 					track({
 						label: 'see-more',
-						action: globalTracker.ACTIONS.CLICK,
+						action: globalTracker.ACTIONS.CLICK
 					});
 				} else {
 					track({
 						label: prefix + '-usage',
-						action: globalTracker.ACTIONS.CLICK,
+						action: globalTracker.ACTIONS.CLICK
 					});
 				}
-
-				window.location = url;
 			});
 		}
 	};
@@ -271,7 +266,7 @@ $(function() {
 	 * @private function
 	 *
 	 * @description Checks node for data-attr 'listingType' value
-	 * @param jQuery object containing node with data-attr 'listingType'
+	 * @param $node jQuery object containing node with data-attr 'listingType'
 	 * @returns String
 	 */
 

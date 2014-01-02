@@ -1,40 +1,36 @@
-/**
- * VisualEditor content editable PreformattedNode class.
+/*!
+ * VisualEditor ContentEditable PreformattedNode class.
  *
- * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
 /**
- * ContentEditable node for preformatted content.
+ * ContentEditable preformatted node.
  *
  * @class
+ * @extends ve.ce.BranchNode
  * @constructor
- * @extends {ve.ce.BranchNode}
  * @param {ve.dm.PreformattedNode} model Model to observe
+ * @param {Object} [config] Configuration options
  */
-ve.ce.PreformattedNode = function VeCePreformattedNode( model ) {
+ve.ce.PreformattedNode = function VeCePreformattedNode( model, config ) {
 	// Parent constructor
-	ve.ce.BranchNode.call( this, 'preformatted', model, $( '<pre>' ) );
+	ve.ce.ContentBranchNode.call( this, model, config );
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.ce.PreformattedNode, ve.ce.BranchNode );
+ve.inheritClass( ve.ce.PreformattedNode, ve.ce.ContentBranchNode );
 
-/* Static Members */
+/* Static Properties */
 
-/**
- * Node rules.
- *
- * @see ve.ce.NodeFactory
- * @static
- * @member
- */
-ve.ce.PreformattedNode.rules = {
-	'canBeSplit': true
-};
+ve.ce.PreformattedNode.static.name = 'preformatted';
+
+ve.ce.PreformattedNode.static.tagName = 'pre';
+
+ve.ce.PreformattedNode.static.canBeSplit = true;
 
 /* Registration */
 
-ve.ce.nodeFactory.register( 'preformatted', ve.ce.PreformattedNode );
+ve.ce.nodeFactory.register( ve.ce.PreformattedNode );

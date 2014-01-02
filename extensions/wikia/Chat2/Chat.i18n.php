@@ -123,6 +123,7 @@ $messages['en'] = array(
 
 /** Message documentation (Message documentation)
  * @author Aldnonymous
+ * @author BryghtShadow
  * @author Claudia Hattitten
  * @author Lloffiwr
  * @author Sean Colombo
@@ -160,7 +161,8 @@ $messages['qqq'] = array(
 	'chat-ban-undolink' => '{{Identical|Undo}}',
 	'chat-ban-modal-button-ok' => 'Button text to submit the form inside a modal, banning a user from chat.',
 	'chat-ban-modal-button-change-ban' => "Button text to submit the form inside a modal, changing a user's ban from chat.",
-	'chat-ban-modal-button-cancel' => 'Button text to cancel the modal that bans a user from chat.',
+	'chat-ban-modal-button-cancel' => 'Button text to cancel the modal that bans a user from chat.
+{{Identical|Cancel}}',
 	'chat-ban-modal-change-ban-heading' => "Heading text for the modal for changing or ending a user's ban.",
 	'chat-ban-modal-change-ban-label' => 'This is the form label displayed when an admin user wants to change a chat ban of another user.',
 	'chat-ban-modal-end-ban' => "Option inside a select menu.  Choose this option if you want the end a user's ban.",
@@ -168,6 +170,10 @@ $messages['qqq'] = array(
 	'chat-log-reason-banremove' => '{{Identical|No reason given}}',
 	'chat-you-are-banned' => '{{Identical|Permission error}}',
 	'chat-kick-log-reason' => '{{doc-singularthey}}',
+	'chat-start-a-chat' => 'Text of button to join a Wikia chat room.
+Displayed only when chat room is empty; otherwise, {{msg-w|Chat-join-the-chat}} is displayed.
+
+Refers to {{msg-w|Chat-live2}} rail module.',
 	'chat-edit-count' => '$1 is the number of edits made by the user',
 	'chat-member-since' => '$1 tells both the month and the year, month abbreviated. E.g. "Apr 2008".',
 	'chat-user-menu-contribs' => '{{Identical|Contribution}}',
@@ -182,8 +188,9 @@ $messages['qqq'] = array(
 	'chat-chatconnect-log' => 'Name for Chat connection log entry',
 	'chat-chatconnect-log-entry' => 'Chat connection log entry description; $1 is the Chat page url, $2 is the user address',
 	'chat-contributions-ban-notice' => 'When going to a contributions page for a banned user, this message informs the reader that the user is currently banned from chat. It then prints the log data about the chat ban. 
-Paramaters:
-* $1 - User name is passed to the message for gender purposes.',
+
+Parameters:
+* $1 - User name is passed to the message for gender purposes',
 	'chat-browser-is-notsupported' => 'shown when user broser is not supported',
 	'chat-checkuser-join-action' => 'Shown in CheckUser extension for chat-join events',
 	'chat-status-away' => 'Display when user chnages his status to away',
@@ -398,6 +405,9 @@ $messages['bg'] = array(
 	'chat-desc' => '[[Special:Chat|Чат]]',
 	'chat-ban-modal-label-reason' => 'Причина',
 	'chat-ban-modal-button-cancel' => 'Отказване',
+	'chat-log-reason-banchange' => 'Не е указана причина.',
+	'chat-log-reason-banremove' => 'Не е указана причина.',
+	'chat-edit-count' => '{{PLURAL:$1|$1 редакция|$1 редакции}}',
 );
 
 /** Bengali (বাংলা)
@@ -421,6 +431,7 @@ $messages['bn'] = array(
 );
 
 /** Breton (brezhoneg)
+ * @author Fohanno
  * @author Fulup
  * @author Gwenn-Ael
  * @author Y-M D
@@ -441,16 +452,23 @@ $messages['br'] = array(
 	'chat-kick-cant-kick-moderator' => "N'hallit ket skarzhañ ur merour all eus ar flap.",
 	'chat-user-was-kicked' => 'Skarzhet eo bet $1 gant $2.',
 	'chat-you-were-kicked' => "Skarzhet oc'h bet gant $1.",
+	'chat-user-was-banned' => '$1 zo bet forbannet gant $2 $3.',
+	'chat-you-were-banned' => "Forbannet oc'h bet gant $1.",
 	'chat-user-permanently-disconnected' => "Digevreet oc'h bet, gwiriit ho kevreadur Kenrouedad ha freskait prenestr ho merdeer",
 	'chat-inlinealert-a-made-b-chatmod' => 'Lakaet eo bet <strong>$2</strong> da verour ar flap gant $1.',
 	'chat-err-connected-from-another-browser' => "Kevreet oc'h gant ur merdeer all. Klozet e vo ar c'hevreadur-mañ.",
+	'chat-err-communicating-with-mediawiki' => 'Fazi kehentiñ gant ar servijer MediaWiki.',
+	'chat-ban-contributions-heading' => 'Forbannañ eus ar flap',
+	'chat-ban-modal-heading' => 'Forbannañ an implijer-mañ eus ar flap',
 	'chat-ban-modal-label-expires' => "A ya d'e dermen",
 	'chat-ban-modal-label-reason' => 'Abeg',
 	'chat-log-reason-banadd' => "Emzalc'h direizh er flap",
 	'chat-log-reason-undo' => 'dizober',
 	'chat-ban-undolink' => 'dizober',
+	'chat-ban-modal-button-ok' => 'Forbannañ an implijer-mañ',
 	'chat-ban-modal-button-cancel' => 'Nullañ',
 	'chat-ban-modal-change-ban-label' => 'Kemmañ e',
+	'chat-ban-modal-end-ban' => 'Lemel ar forbanerezh',
 	'chat-log-reason-banchange' => "N'eus bet roet abeg ebet",
 	'chat-log-reason-banremove' => "N'eus bet roet abeg ebet",
 	'chat-ban-cant-ban-moderator' => "N'hallit ket skarzhañ/stankañ ur merour all eus ar flap.",
@@ -614,7 +632,7 @@ $messages['ce'] = array(
 	'chat-ban-option-list' => '2 сахьат:2 hours,1 де:1 day,3 де:3 days,1 кӀиран:1 week,2 кӀиран:2 weeks,1 бутт:1 month,3 бутт:3 months,6 бутт:6 months,1 шо:1 year,цlкъа:infinite',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Chmee2
  * @author Macinosak
  * @author Mormegil
@@ -819,14 +837,18 @@ $messages['diq'] = array(
  * @author Glavkos
  */
 $messages['el'] = array(
+	'chat-ban-modal-label-expires' => 'Λήγει',
+	'chat-ban-modal-label-reason' => 'Λόγος',
 	'chat-log-reason-undo' => 'αναίρεση',
 	'chat-ban-undolink' => 'αναίρεση',
 	'chat-ban-modal-button-ok' => 'Φραγή αυτού του χρήστη',
+	'chat-ban-modal-button-change-ban' => 'Αλλαγή Φραγής',
 	'chat-ban-modal-button-cancel' => 'Ακύρωση',
 	'chat-ban-modal-change-ban-label' => 'Αλλαγή σε',
 	'chat-ban-modal-end-ban' => 'Τέλος Φραγής',
 	'chat-log-reason-banchange' => 'Δεν δόθηκε καμία αιτιολογία',
 	'chat-log-reason-banremove' => 'Δεν δόθηκε καμία αιτιολογία',
+	'chat-you-are-banned' => 'Σφάλμα αδειών.',
 	'chat-join-the-chat' => 'Μπείτε στο Chat',
 	'chat-user-menu-talk-page' => 'Σελίδα συζήτησης',
 	'chat-user-menu-contribs' => 'Συνεισφορές',
@@ -1104,6 +1126,76 @@ $messages['fi'] = array(
 	'chat-chatconnect-log' => 'Juttelukanavan yhteysloki',
 	'chat-checkuser-join-action' => 'Liittyi keskusteluun',
 	'chat-status-away' => 'Poissa',
+);
+
+/** Faroese (føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'chat' => 'Kjatt',
+	'chat-desc' => '[[Special:Chat|Beinleiðis kjatt]]',
+	'chat-no-login' => 'Tú mást vera innritað/ur til kjattið.',
+	'chat-no-login-text' => 'Vinarliga rita inn fyri at kjatta.',
+	'chat-default-topic' => 'Vælkomin til $1 kjattið',
+	'chat-welcome-message' => 'Vælkomin til $1 kjattið',
+	'chat-user-joined' => '$1 luttekur nú í kjattinum.',
+	'chat-private-messages' => 'Privat boð',
+	'chat-user-parted' => '$1 er farin úr kjattinum.',
+	'chat-user-blocked' => '$1 hevur sperrað $2.',
+	'chat-user-allow' => '$1 hevur loyvt $2.',
+	'chat-kick-you-need-permission' => 'Tú hevur ikki loyvi til at sparka ein brúkara út.',
+	'chat-kick-cant-kick-moderator' => 'Tú kanst ikki sparka ein annan Kjatt umsitara.',
+	'chat-user-was-kicked' => '$1 er blivin sparkaður av $2.',
+	'chat-you-were-kicked' => 'Tú ert blivin sparkað/ur út av $1.',
+	'chat-user-was-banned' => '$1 er blivin bannað/ur av $2 $3.',
+	'chat-you-were-banned' => 'Tú ert blivin sperrað/ur $1.',
+	'chat-user-was-unbanned' => '$2 hevur tikið burtur Kjatt-sperringina fyri $1.',
+	'chat-ban-cannt-undo' => 'Sperringin er longu tikin burtur',
+	'chat-user-permanently-disconnected' => 'Tú hevur mist sambandið, kannað títt internetsamband og dagfør títt brovsaravindeyga',
+	'chat-inlinealert-a-made-b-chatmod' => '$1 hevur gjørt <strong>$2</strong> til ein kjatt umsitara.',
+	'chat-err-connected-from-another-browser' => 'Tú hevur fingið samband við einum øðrum internetkaga (brovsara). Hetta sambandið verður latið aftur.',
+	'chat-err-communicating-with-mediawiki' => 'Ein feilur uppstóð meðan tú samskifti við MediaWiki servaran.',
+	'chat-ban-contributions-heading' => 'Sperra atgongdina til kjattið',
+	'chat-ban-modal-heading' => 'Sperra henda brúkaran frá kjattinum',
+	'chat-ban-modal-label-expires' => 'Gongur út',
+	'chat-ban-modal-label-reason' => 'Orsøk',
+	'chat-log-reason-banadd' => 'Uppførdi seg illa í kjattinum',
+	'chat-log-reason-undo' => 'angra',
+	'chat-ban-undolink' => 'angra',
+	'chat-ban-modal-button-ok' => 'Sperra henda brúkaran',
+	'chat-ban-modal-button-change-ban' => 'Broyt Sperring',
+	'chat-ban-modal-button-cancel' => 'Angra',
+	'chat-ban-modal-change-ban-heading' => 'Broyt kjatt sperringina hjá hesum brúkaranum',
+	'chat-ban-modal-change-ban-label' => 'Broyt til',
+	'chat-ban-modal-end-ban' => 'Enda Sperring',
+	'chat-log-reason-banchange' => 'Ongin orsøk varð nevnd',
+	'chat-log-reason-banremove' => 'Ongin orsøk er nevnd',
+	'chat-ban-cant-ban-moderator' => 'Tú kanst ikki sparka/sperra ein annan Kjatt Umsitara.',
+	'chat-ban-already-banned' => '$1 er longu sperrað/ur frá at kjatta á hesi wiki.',
+	'chat-live2' => 'Live! Kjatt',
+	'chat-start-a-chat' => 'Byrja eitt Kjatt',
+	'chat-join-the-chat' => 'Luttak í Kjattinum',
+	'chat-edit-count' => '{{PLURAL:$1|$1 rætting|$1 rættingar}}',
+	'chat-member-since' => 'Limur síðan $1',
+	'chat-great-youre-logged-in' => 'Fínasta slag! Tú ert innritað/ur.',
+	'chat-user-menu-message-wall' => 'Veggur til Boð',
+	'chat-user-menu-talk-page' => 'Kjaksíða',
+	'chat-user-menu-contribs' => 'Íkøst',
+	'chat-user-menu-private' => 'Privat boð',
+	'chat-user-menu-give-chat-mod' => 'Gev KjakUms Status',
+	'chat-user-menu-kick' => 'Sparka út',
+	'chat-user-menu-ban' => 'Sperra',
+	'chat-user-menu-private-block' => 'Sperrað atgongd til Privat boð',
+	'chat-user-menu-private-allow' => 'Loyv Privatum boðum',
+	'chat-user-menu-private-close' => 'Lat aftur Privat rúm',
+	'chat-private-headline' => 'Privat kjatt við $1',
+	'right-chatmoderator' => 'Tú kanst sparka út/sperra brúkarar frá [[Help:Chat|Kjattinum]]',
+	'group-chatmoderator' => 'Kjatt umsitarar',
+	'group-chatmoderator-member' => 'Kjatt umsitari',
+	'group-bannedfromchat' => 'Sperrað/ur frá kjattinum',
+	'group-bannedfromchat-member' => 'Atgongd til kjattið er sperrað',
+	'chat-ban-option-list' => '2 tímar:2 hours,1 dag:1 day,3 dagar:3 days,1 viku:1 week,2 vikur:2 weeks,1 mánað:1 month,3 mánaðir:3 months,6 mánaðir:6 months,1 ár:1 year,fyri altíð:infinite',
+	'chat-ban-log-change-ban-link' => 'broyt sperring',
 );
 
 /** French (français)
@@ -1462,6 +1554,7 @@ $messages['id'] = array(
 	'chat-no-login-text' => 'Silahkan login untuk chatting.',
 	'chat-default-topic' => 'Selamat datang di $1 chatting',
 	'chat-read-only' => 'Chat sementara tidak tersedia saat wiki berada pada mode baca-saja.',
+	'chat-private-messages' => 'Pesan Pribadi',
 	'chat-user-parted' => '$1 telah meninggalkan obrolan.',
 	'chat-user-blocked' => '$1 telah memblokir  $2 .',
 	'chat-user-allow' => '$1 telah memperbolehkan $2 .',
@@ -1482,11 +1575,14 @@ $messages['id'] = array(
 	'chat-err-no-permission-to-add-chatmod' => 'Kesalahan: Anda tidak memiliki izin untuk menambahkan grup "$1" kepada pengguna ini.',
 	'chat-err-invalid-username-chatmod' => 'Kesalahan: Tidak dapat menemukan pengguna "$1"',
 	'chat-you-are-banned' => 'Kesalahan hak akses.',
+	'chat-member-since' => 'Anggota sejak $1',
 	'chat-user-menu-message-wall' => 'Dinding Pesan',
 	'chat-user-menu-talk-page' => 'Halaman Pembicaraan',
 	'group-bannedfromchat' => 'Disekat dari chat',
 	'chat-ban-option-list' => '2 jam:2 jam, 1 hari:1 hari, 3 hari:3 hari, 2 minggu:2 minggu, 1 bulan:1 bulan, 3 bulan:3 bulan, 6 bulan:6 bulan, 1 tahun:1 tahun, tak terbatas:tak terbatas',
+	'chat-chatconnect-log' => 'Log koneksi chat',
 	'chat-contributions-ban-notice' => '{{GENDER:$1|Pengguna ini}} saat ini disekat dari chat. Entri log sekat chat terakhir disediakan di bawah ini untuk referensi:',
+	'chat-checkuser-join-action' => 'Bergabung dengan Chat',
 );
 
 /** Italian (italiano)
@@ -1584,6 +1680,7 @@ $1 è stato bannato da $2 $3.',
 );
 
 /** Japanese (日本語)
+ * @author BryghtShadow
  * @author Shirayuki
  * @author Tommy6
  */
@@ -1662,14 +1759,14 @@ $messages['ja'] = array(
 	'group-bannedfromchat' => 'チャットから追放された利用者',
 	'group-bannedfromchat-member' => 'チャットから追放された利用者',
 	'chat-ban-option-list' => '2時間:2 hours,1日:1 day,3日:3 days,1週間:1 week,2週間:2 weeks,1か月:1 month,3か月:3 months,6か月:6 months,1年:1 year,無期限:infinite',
-	'chat-ban-log-change-ban-link' => '設定を変更',
+	'chat-ban-log-change-ban-link' => '追放を変更',
 	'chat-chatconnect-log' => 'チャット接続記録',
 	'chat-chatconnect-log-entry' => 'アドレス $2 から $1 に接続しました',
 	'chat-chatban-log' => 'チャット追放記録',
 	'chat-chatbanadd-log-entry' => '$1 を$3までの$2チャットから追放しました。',
 	'chat-chatbanremove-log-entry' => '$1 の追放を解除しました。',
 	'chat-chatbanchange-log-entry' => '$1 のチャット追放設定を$3までの$2に変更しました。',
-	'chat-contributions-ban-notice' => 'この利用者は現在チャットから追放されています。 参考のために最新のブロック記録を以下に表示します：', # Fuzzy
+	'chat-contributions-ban-notice' => '{{GENDER:$1|この利用者}}は現在チャットから追放されています。 参考のために最新のブロック記録を以下に表示します：',
 	'chat-browser-is-notsupported' => 'お使いのブラウザはサポートされていません。より快適にご利用いただくために、<a href="http://community.wikia.com/wiki/Help:Supported_browsers">最新のブラウザ</a>への変更をお勧めいたします。',
 	'chat-checkuser-join-action' => 'チャットに参加',
 	'chat-status-away' => '退席中',
@@ -1707,7 +1804,7 @@ $messages['ko'] = array(
 	'chat-user-menu-message-wall' => '메시지 담벼락',
 );
 
-/** Kirghiz (Кыргызча)
+/** Kyrgyz (Кыргызча)
  * @author Growingup
  */
 $messages['ky'] = array(
@@ -1724,10 +1821,16 @@ $messages['ky'] = array(
  */
 $messages['lb'] = array(
 	'chat' => 'Chat',
+	'chat-desc' => '[[Special:Chat|Live chat]]',
+	'chat-no-login' => 'Dir musst ageloggt si fir ze chatten.',
+	'chat-no-login-text' => 'Loggt Iech w.e.g. a fir ze chatten.',
 	'chat-default-topic' => 'Wëllkomm am $1-Chat',
+	'chat-welcome-message' => 'Wëllkomm am $1-Chat',
 	'chat-private-messages' => 'Privat Messagen',
 	'chat-user-blocked' => '$1 huet $2 gespaart.',
+	'chat-user-allow' => '$1 huet $2 erlaabt.',
 	'chat-ban-modal-label-reason' => 'Grond',
+	'chat-ban-modal-button-ok' => 'De Benotzer spären',
 	'chat-ban-modal-button-cancel' => 'Ofbriechen',
 	'chat-log-reason-banchange' => 'Kee Grond uginn',
 	'chat-log-reason-banremove' => 'Kee Grond uginn',
@@ -1737,9 +1840,42 @@ $messages['lb'] = array(
 	'chat-edit-count' => '{{PLURAL:$1|Eng Ännerung|$1 Ännerungen}}',
 	'chat-member-since' => 'Member zënter $1',
 	'chat-user-menu-talk-page' => 'Diskussiounssäit',
+	'chat-user-menu-contribs' => 'Kontributiounen',
 	'chat-user-menu-private' => 'Private Message',
 	'chat-user-menu-private-block' => 'Privat Message spären',
 	'chat-user-menu-private-allow' => 'Privat Messagen erlaben',
+	'chat-ban-option-list' => '2 Stonnen:2 hours,1 Dag:1 day,3 Deeg:3 days,1 Woch:1 week,2 Wochen:2 weeks,1 Mount:1 month,3 Méint:3 months,6 Méint:6 months,1 Joer:1 year,onbegrenzt:infinite',
+	'chat-status-away' => 'Net do',
+);
+
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'chat' => 'گپ زئن',
+	'chat-no-login' => 'شما سی چک چنه با وارد سیستم بویئیت',
+	'chat-no-login-text' => 'لطفا سی چک چنه وارد سیستم بویئت',
+	'chat-ban-contributions-heading' => 'جلؤگری د چک چنه',
+	'chat-ban-modal-label-expires' => 'تموم بیه آ',
+	'chat-ban-modal-label-reason' => 'دليل',
+	'chat-log-reason-undo' => 'انجوم ندی ئن',
+	'chat-ban-undolink' => 'انجوم ندی ئن',
+	'chat-ban-modal-button-ok' => 'جلۈ ای كارور بيئر',
+	'chat-ban-modal-button-cancel' => 'رد كردن',
+	'chat-ban-modal-change-ban-label' => 'آلشت بیه سی',
+	'chat-log-reason-banchange' => 'هیژ دلیلی دئه نبیه',
+	'chat-log-reason-banremove' => 'هیژ دلیلی دئه نبیه',
+	'chat-live2' => 'گپ زئن زنه!',
+	'chat-start-a-chat' => 'شرو د گپ زئن',
+	'chat-join-the-chat' => 'اومائن د گپ زئن',
+	'chat-member-since' => 'اندوم د $1',
+	'chat-great-youre-logged-in' => 'عالیه!شما اومایئت د سیستم',
+	'chat-user-menu-talk-page' => 'بلگه چك چنه',
+	'chat-user-menu-contribs' => 'هوميارا',
+	'chat-user-menu-private' => 'هوال خصوصی',
+	'chat-user-menu-kick' => 'حيرد كردن',
+	'chat-user-menu-ban' => 'جلوگری',
+	'chat-status-away' => 'دير',
 );
 
 /** Lithuanian (lietuvių)
@@ -1799,6 +1935,13 @@ $messages['lt'] = array(
 	'group-chatmoderator' => 'Pokalbių moderatoriai',
 	'group-chatmoderator-member' => 'Pokalbių moderatorius',
 	'chat-browser-is-notsupported' => '	Jūsų naršyklė nepalaiko. Geriausiam patyrimui, naudokitės <a href="http://community.wikia.com/wiki/Help:Supported_browsers">naujesnę naršyklė</a>.',
+);
+
+/** Latvian (latviešu)
+ * @author Sg ghost
+ */
+$messages['lv'] = array(
+	'chat-user-menu-message-wall' => 'Lietotāja diskusija',
 );
 
 /** Macedonian (македонски)
@@ -2091,6 +2234,18 @@ $messages['nb'] = array(
 	'chat-status-away' => 'Borte',
 );
 
+/** Nepali (नेपाली)
+ * @author सरोज कुमार ढकाल
+ */
+$messages['ne'] = array(
+	'chat-ban-modal-label-reason' => 'कारण',
+	'chat-log-reason-undo' => 'रद्द गर्ने',
+	'chat-ban-undolink' => 'रद्द गर्ने',
+	'chat-ban-modal-button-cancel' => 'रद्द',
+	'chat-log-reason-banchange' => 'कारण दिइएको छैन',
+	'chat-log-reason-banremove' => 'कारण दिइएको छैन',
+);
+
 /** Dutch (Nederlands)
  * @author AvatarTeam
  * @author SPQRobin
@@ -2118,7 +2273,7 @@ $messages['nl'] = array(
 	'chat-you-were-banned' => 'U bent verbannen door $1.',
 	'chat-user-was-unbanned' => '$2 heeft de ban voor $1 beëindigd.',
 	'chat-ban-cannt-undo' => 'De verbanning is al ongedaan gemaakt',
-	'chat-user-permanently-disconnected' => 'U hebt niet langer een verbinding. Controleer uw internetverbinding en ververs de inhoud van uw webbrowser.',
+	'chat-user-permanently-disconnected' => 'U hebt niet langer een verbinding. Controleer uw internetverbinding en vernieuw de inhoud van uw webbrowser.',
 	'chat-inlinealert-a-made-b-chatmod' => '$1 heeft <strong>$2</strong> chatmoderator gemaakt.',
 	'chat-err-connected-from-another-browser' => 'U bent verbonden via een andere browser. Deze verbinding wordt nu gesloten.',
 	'chat-err-communicating-with-mediawiki' => 'Er is een fout opgetreden in de verbinding met de MediaWiki-server.',
@@ -2197,6 +2352,22 @@ $messages['nl-informal'] = array(
 	'chat-ban-you-need-permission' => 'Je hebt het recht "$1" niet wat nodig is om een gebruiker te kicken of te verbannen.',
 	'chat-you-are-banned-text' => 'Je mag niet langer deelnemen aan de chat. Als je denkt dat dit niet klopt, of als je wilt vragen uw blokkade op te heffen, neem dan contact op met een beheerder.',
 	'chat-room-is-not-on-this-wiki' => 'De chatroom waar je probeert binnen te komen bestaat niet op deze wiki.',
+);
+
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'chat' => 'Chat',
+	'chat-ban-modal-label-expires' => 'Expira',
+	'chat-ban-modal-label-reason' => 'Rason',
+	'chat-log-reason-undo' => 'anullar',
+	'chat-ban-undolink' => 'anullar',
+	'chat-ban-modal-button-cancel' => 'Anullar',
+	'chat-ban-modal-change-ban-label' => 'Modificar en',
+	'chat-user-menu-kick' => 'Expulsar',
+	'chat-user-menu-ban' => 'Bandir',
+	'chat-status-away' => 'Absent',
 );
 
 /** Polish (polski)
@@ -2396,7 +2567,7 @@ $messages['ps'] = array(
 	'chat-no-login-text' => 'د بانډار لپاره غونډال ته ورننوځۍ.',
 	'chat-default-topic' => 'د $1 بانډار ته ښه راغلۍ',
 	'chat-welcome-message' => 'د $1 بانډار ته ښه راغلۍ',
-	'chat-user-joined' => '$1 بانډار کې ورګډ شو.',
+	'chat-user-joined' => '$1 بانډار کې ورگډ شو.',
 	'chat-private-messages' => 'شخصي پيغامونه',
 	'chat-user-parted' => '$1 له بانډاره وواته.',
 	'chat-user-blocked' => '$1 په $2 بنديز ولګاوه.',
@@ -2405,9 +2576,9 @@ $messages['ps'] = array(
 	'chat-ban-modal-label-reason' => 'سبب',
 	'chat-log-reason-undo' => 'ناکړل',
 	'chat-ban-undolink' => 'ناکړ',
-	'chat-ban-modal-button-ok' => 'پر دې کارن بنديز لګول',
+	'chat-ban-modal-button-ok' => 'پر دې کارن بنديز لگول',
 	'chat-ban-modal-button-change-ban' => 'بنديز بدلول',
-	'chat-ban-modal-button-cancel' => 'ناګارل',
+	'chat-ban-modal-button-cancel' => 'ناگارل',
 	'chat-ban-modal-change-ban-heading' => 'د دې کارن د بانډار بنديز بدلول',
 	'chat-log-reason-banchange' => 'هېڅ سبب نه دی ورکړ شوی',
 	'chat-log-reason-banremove' => 'هېڅ سبب نه دی ورکړ شوی',
@@ -2421,12 +2592,12 @@ $messages['ps'] = array(
 	'chat-user-menu-contribs' => 'ونډې',
 	'chat-user-menu-private' => 'شخصي پيغام',
 	'chat-user-menu-kick' => 'شړل',
-	'chat-user-menu-ban' => 'بنديز لګول',
+	'chat-user-menu-ban' => 'بنديز لگول',
 	'chat-user-menu-private-block' => 'شخصي پيغامونه بندول',
 	'chat-user-menu-private-allow' => 'شخصي پيغامونه پرېښودل',
 	'chat-user-menu-private-close' => 'شخصي کوټه بندول',
 	'chat-private-headline' => 'د $1 سره شخصي بانډار',
-	'chat-checkuser-join-action' => 'بانډار کې ورګډ شو',
+	'chat-checkuser-join-action' => 'بانډار کې ورگډ شو',
 	'chat-status-away' => 'ليرې دی',
 );
 
@@ -2437,41 +2608,41 @@ $messages['ps'] = array(
  * @author SandroHc
  */
 $messages['pt'] = array(
-	'chat' => 'Chat',
+	'chat' => 'Conversação ao vivo',
 	'chat-desc' => '[[Special:Chat|Conversação ao vivo]]',
 	'chat-no-login' => 'Para conversar tem de autenticar-se.',
 	'chat-no-login-text' => 'Autentique-se para conversar, por favor.',
-	'chat-default-topic' => 'Bem-vindo(a) à sala de conversação $1',
-	'chat-welcome-message' => 'Bem vindo ao chat da $1',
+	'chat-default-topic' => 'Bem-vindo(a) à conversação ao vivo da $1',
+	'chat-welcome-message' => 'Bem-vindo(a) à conversação ao vivo da $1',
 	'chat-user-joined' => '$1 entrou.',
-	'chat-read-only' => 'O chat está temporariamente indisponível porque a wiki está em modo de apenas-leitura.',
+	'chat-read-only' => 'A conversação ao vivo está temporariamente indisponível porque a wiki está em modo de leitura.',
 	'chat-private-messages' => 'Mensagens Privadas',
 	'chat-user-parted' => '$1 saiu.',
 	'chat-user-blocked' => '$1 bloqueou $2.',
 	'chat-user-allow' => '$1 permitiu $2.',
-	'chat-kick-you-need-permission' => 'Você não tem permissões para expulsar um utilizador.',
-	'chat-kick-cant-kick-moderator' => 'Você não pode expulsar outro Moderador do Chat.',
+	'chat-kick-you-need-permission' => 'Não tem permissões para expulsar um utilizador.',
+	'chat-kick-cant-kick-moderator' => 'Não pode expulsar outro Moderador.',
 	'chat-user-was-kicked' => '$1 foi expulso por $2.',
-	'chat-you-were-kicked' => 'Você foi expulso por $1.',
+	'chat-you-were-kicked' => 'Foi expulso por $1.',
 	'chat-user-was-banned' => '$1 foi banido por $2 $3.',
-	'chat-you-were-banned' => 'Você foi banido por $1.',
+	'chat-you-were-banned' => 'Foi banido por $1.',
 	'chat-user-was-unbanned' => '$2 terminou o banimento de $1.',
 	'chat-ban-cannt-undo' => 'O banimento já foi cancelado',
-	'chat-user-permanently-disconnected' => 'Você foi desconectado, verifique a sua conexão à Internet e atualize a página do navegador',
+	'chat-user-permanently-disconnected' => 'Está desligado, verifique a sua ligação à Internet e recarregue a página',
 	'chat-inlinealert-a-made-b-chatmod' => '$1 tornou <strong>$2</strong> moderador.',
 	'chat-err-connected-from-another-browser' => 'Ligou-se a partir de outro browser. Esta ligação será fechada.',
 	'chat-err-communicating-with-mediawiki' => 'Erro de comunicação com o servidor do MediaWiki.',
-	'chat-ban-contributions-heading' => 'Banir do chat',
-	'chat-ban-modal-heading' => 'Banir este utilizador do chat',
+	'chat-ban-contributions-heading' => 'Banir da conversação',
+	'chat-ban-modal-heading' => 'Banir este utilizador da conversação ao vivo',
 	'chat-ban-modal-label-expires' => 'Expira',
 	'chat-ban-modal-label-reason' => 'Motivo',
-	'chat-log-reason-banadd' => 'Mau comportamento no chat',
+	'chat-log-reason-banadd' => 'Mau comportamento',
 	'chat-log-reason-undo' => 'desfazer',
 	'chat-ban-undolink' => 'desfazer',
 	'chat-ban-modal-button-ok' => 'Banir este utilizador',
 	'chat-ban-modal-button-change-ban' => 'Alterar Banimento',
 	'chat-ban-modal-button-cancel' => 'Cancelar',
-	'chat-ban-modal-change-ban-heading' => 'Alterar o banimento do chat deste utilizador',
+	'chat-ban-modal-change-ban-heading' => 'Alterar o banimento da conversação deste utilizador',
 	'chat-ban-modal-change-ban-label' => 'Alterar para',
 	'chat-ban-modal-end-ban' => 'Remover Banimento',
 	'chat-log-reason-banchange' => 'Nenhum motivo especificado',
@@ -2488,12 +2659,12 @@ $messages['pt'] = array(
 	'chat-you-are-banned-text' => 'Desculpe, mas não tem permissões para usar a sala de conversação nesta wiki. Se acredita que a falta de permissões resulta de um erro ou pretende que o assunto seja reconsiderado, contacte um administrador, por favor.',
 	'chat-room-is-not-on-this-wiki' => 'A sala de conversação onde está tentando entrar não parece existir nesta wiki.',
 	'chat-kick-log-reason' => 'Banido da sala de conversação desta wiki por $1. Contacte o utilizador para mais informações.',
-	'chat-live2' => 'Chat ao vivo!',
-	'chat-start-a-chat' => 'Iniciar uma conversa',
-	'chat-join-the-chat' => 'Entrar na sala',
+	'chat-live2' => 'Conversação ao vivo!',
+	'chat-start-a-chat' => 'Iniciar',
+	'chat-join-the-chat' => 'Entrar',
 	'chat-edit-count' => '{{PLURAL:$1|$1 edição|$1 edições}}',
 	'chat-member-since' => 'Membro desde $1',
-	'chat-great-youre-logged-in' => 'Óptimo! Está ligado.',
+	'chat-great-youre-logged-in' => 'Ótimo! Está ligado.',
 	'chat-user-menu-message-wall' => 'Mural de Mensagens',
 	'chat-user-menu-talk-page' => 'Página de Discussão',
 	'chat-user-menu-contribs' => 'Contribuições',
@@ -2505,22 +2676,22 @@ $messages['pt'] = array(
 	'chat-user-menu-private-allow' => 'Permitir Mensagens Privadas',
 	'chat-user-menu-private-close' => 'Fechar Sala Privada',
 	'chat-private-headline' => 'Conversa privada com $1',
-	'right-chatmoderator' => 'Pode expulsar/banir utilizadores do [[Help:Chat|Chat]]',
-	'group-chatmoderator' => 'Moderadores do chat',
-	'group-chatmoderator-member' => 'Moderador do chat',
-	'group-bannedfromchat' => 'Banido do chat',
-	'group-bannedfromchat-member' => 'Banido do chat',
+	'right-chatmoderator' => 'Pode expulsar ou banir utilizadores da [[Help:Chat|Conversação ao vivo]]',
+	'group-chatmoderator' => 'Moderadores de conversação',
+	'group-chatmoderator-member' => 'Moderador de conversação',
+	'group-bannedfromchat' => 'Banido da conversação ao vivo',
+	'group-bannedfromchat-member' => 'Banido da conversação ao vivo',
 	'chat-ban-option-list' => '2 horas:2 hours,1 dia:1 day,3 dias:3 days,1 semana:1 week,2 semanas:2 weeks,1 mês:1 month,3 meses:3 months,6 meses:6 months,1 ano:1 year,infinito:infinite',
 	'chat-ban-log-change-ban-link' => 'alterar banimento',
-	'chat-chatconnect-log' => 'Registro de conexão com o Chat',
-	'chat-chatconnect-log-entry' => 'conectado a $1 a partir do endereço $2',
-	'chat-chatban-log' => 'Registo de banimento do chat',
-	'chat-chatbanadd-log-entry' => 'banido $1 do chat por $2, terminando em $3',
-	'chat-chatbanremove-log-entry' => 'desbanido $1 do chat',
+	'chat-chatconnect-log' => 'Registo de ligação à conversação ao vivo',
+	'chat-chatconnect-log-entry' => 'ligado a $1 a partir do endereço $2',
+	'chat-chatban-log' => 'Registo de banimento da conversação',
+	'chat-chatbanadd-log-entry' => 'baniu $1 da conversação por $2, terminando em $3',
+	'chat-chatbanremove-log-entry' => 'desfez o banimento de $1 da conversação ao vivo',
 	'chat-chatbanchange-log-entry' => 'mudou o ban de $1 por $2, terminando em $3',
-	'chat-contributions-ban-notice' => 'Este utilizador está atualmente banido do chat. A última entrada no registo do banimento do chat é providenciada abaixo para referência:', # Fuzzy
-	'chat-browser-is-notsupported' => 'O seu navegador não é suportado. Para uma melhor experiência, use um <a href="http://community.wikia.com/wiki/Help:Supported_browsers">navegador mais recente</a>.',
-	'chat-checkuser-join-action' => 'Entrou no chat',
+	'chat-contributions-ban-notice' => '{{GENDER:$1|Este utilizador|Esta utilizadora}} está atualmente {{GENDER:$1|banido|banida}} da conversação ao vivo. A última entrada no registo de banimentos da conversação é apresentada abaixo para referência:',
+	'chat-browser-is-notsupported' => 'O seu browser não é suportado. Para uma melhor experiência de navegação, use um <a href="http://community.wikia.com/wiki/Help:Supported_browsers">browser mais recente</a>.',
+	'chat-checkuser-join-action' => 'Entrou na conversação ao vivo',
 	'chat-status-away' => 'Ausente',
 );
 
@@ -2670,6 +2841,7 @@ $messages['roa-tara'] = array(
 /** Russian (русский)
  * @author DCamer
  * @author Kuzura
+ * @author Okras
  */
 $messages['ru'] = array(
 	'chat' => 'Чат',
@@ -2753,7 +2925,7 @@ $messages['ru'] = array(
 	'chat-chatbanadd-log-entry' => '$1 забанен в чате на $2, оканчивается $3',
 	'chat-chatbanremove-log-entry' => '$1 разбанен в чате',
 	'chat-chatbanchange-log-entry' => 'изменены настройки бана для $1 на срок $2, заканчивается $3',
-	'chat-contributions-ban-notice' => '{{GENDER:$1|Этот участник}} в данный момент забанен в чате. Ниже приведена последняя запись из журнала банов в чате:',
+	'chat-contributions-ban-notice' => '{{GENDER:$1|Этот участник|Эта участница}} в данный момент {{GENDER:$1|забанен|забанена}} в чате. Ниже для справки приведена последняя запись из журнала банов в чате:',
 	'chat-browser-is-notsupported' => 'Ваш браузер не поддерживается. Используйте <a href="http://community.wikia.com/wiki/Help:Supported_browsers">другой браузер или другую версию браузера</a>.',
 	'chat-checkuser-join-action' => 'Присоединиться',
 	'chat-status-away' => 'Отсутствует',
@@ -3007,6 +3179,23 @@ Mangyaring makipag-ugnayan sa kanila para sa mas maraming kabatiran.',
 	'chat-status-away' => 'Nasa malayo',
 );
 
+/** Turkish (Türkçe)
+ * @author Incelemeelemani
+ */
+$messages['tr'] = array(
+	'chat-start-a-chat' => 'Sohbeti Başlat',
+	'chat-join-the-chat' => 'Sohbete Katıl',
+	'chat-user-menu-message-wall' => 'Mesaj Duvarı',
+	'chat-user-menu-talk-page' => 'Tartışma Sayfası',
+	'chat-user-menu-contribs' => 'Katkılar',
+	'chat-user-menu-private' => 'Özel Mesaj',
+	'chat-user-menu-kick' => 'At',
+	'chat-user-menu-ban' => 'Yasakla',
+	'chat-user-menu-private-block' => 'Özel Mesajları Engelle',
+	'chat-user-menu-private-allow' => 'Özel Mesajlara İzin Ver',
+	'chat-user-menu-private-close' => 'Özel Odayı Kapat',
+);
+
 /** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  */
@@ -3022,8 +3211,10 @@ $messages['tzm'] = array(
 );
 
 /** Ukrainian (українська)
+ * @author Andriykopanytsia
  * @author Kerm68
  * @author Steve.rusyn
+ * @author SteveR
  * @author Ua2004
  * @author Wildream
  */
@@ -3072,8 +3263,13 @@ $messages['uk'] = array(
 	'chat-ban-you-need-permission' => 'У вас немає статусу $1, який необхідний, щоб забанити користувача.',
 	'chat-missing-required-parameter' => '"$1" вимагається, але немає в запиті.',
 	'chat-err-already-chatmod' => 'Помилка: "$1" уже є в групі "$2".',
+	'chat-err-no-permission-to-add-chatmod' => 'Помилка: Ви не маєте дозволу для додавання до групи "$1"  цього користувача.',
+	'chat-userrightslog-a-made-b-chatmod' => '$1 присвоїв $2 статус модератора чату на цій вікі.',
 	'chat-err-invalid-username-chatmod' => 'Помилка: не вдалося знайти користувача "$1"',
 	'chat-you-are-banned' => 'Помилка доступу.',
+	'chat-you-are-banned-text' => 'На жаль, ви не маєте дозволу для спілкування на цій вікі.  Якщо ви думаєте, що це була помилка, або хочете, щоб заборона була переглянута, то, будь ласка, зверніться до адміністратора.',
+	'chat-room-is-not-on-this-wiki' => 'Чат-кімната, яку ви намагаєтеся ввести, мабуть, не існує на цій вікі.',
+	'chat-kick-log-reason' => "$1 заборонив чат на цій вікі. Будь ласка, зв'яжіться з ним для отримання додаткової інформації.",
 	'chat-live2' => 'Live! Чат',
 	'chat-start-a-chat' => 'Розпочати чат',
 	'chat-join-the-chat' => 'Приєднатися',
@@ -3096,9 +3292,16 @@ $messages['uk'] = array(
 	'group-chatmoderator-member' => 'Модератор чату',
 	'group-bannedfromchat' => 'Забанений у чаті',
 	'group-bannedfromchat-member' => 'Забанений у чаті',
+	'chat-ban-option-list' => '2 години:2 hours,1 день:1 day,3 дні:3 days,1 тиждень:1 week,2 тижні:2 weeks,1 місяць:1 month,3 місяці:3 months,6 місяців:6 months,1 рік:1 year,назавжди:infinite',
 	'chat-ban-log-change-ban-link' => 'змінити бан',
 	'chat-chatconnect-log' => "Журнал з'єднань у чаті",
+	'chat-chatconnect-log-entry' => 'підключений до $1 з адреси $2',
 	'chat-chatban-log' => 'Журнал банів у чаті',
+	'chat-chatbanadd-log-entry' => '$1 заборонено чат на $2, завершується $3',
+	'chat-chatbanremove-log-entry' => '$1 розблокований у чаті',
+	'chat-chatbanchange-log-entry' => 'змінено параметри заборони для $1 на термін $2, завершується $3',
+	'chat-contributions-ban-notice' => '{{GENDER:$1|Цей користувач заблокований|Ця користувачка заблокована}} на даний час у чаті. Ниже наведено останній запис із журналу блокувань у чаті:',
+	'chat-browser-is-notsupported' => 'Ваш браузер не підтримується. Для найкращого результату використовуйте <a href="http://community.wikia.com/wiki/Help:Supported_browsers">новий браузер</a>.',
 	'chat-checkuser-join-action' => 'Приєднатися',
 	'chat-status-away' => 'Відсутній',
 );
@@ -3211,6 +3414,7 @@ $messages['vi'] = array(
  * @author Dimension
  * @author Hydra
  * @author Liangent
+ * @author Liuxinyu970226
  * @author Sam Wang
  * @author Yanmiao liu
  * @author Yfdyh000
@@ -3235,6 +3439,8 @@ $messages['zh-hans'] = array(
 	'chat-you-were-kicked' => '您已被 $1 踢出了。',
 	'chat-user-was-banned' => '$1已被$2封禁   $3.',
 	'chat-you-were-banned' => '您已被$1封禁',
+	'chat-user-was-unbanned' => '$2已经解除了对$1的禁止聊天。',
+	'chat-ban-cannt-undo' => '禁令已经被撤消',
 	'chat-user-permanently-disconnected' => '您已经断开，检查网络连接并刷新浏览器窗口',
 	'chat-inlinealert-a-made-b-chatmod' => '$1 升级 <strong>$2</strong> 为聊天主持人。',
 	'chat-err-connected-from-another-browser' => '您已从另一个浏览器连接。此连接将被关闭。',
@@ -3246,7 +3452,7 @@ $messages['zh-hans'] = array(
 	'chat-log-reason-banadd' => '在聊天室中打乱',
 	'chat-log-reason-undo' => '还原',
 	'chat-ban-undolink' => '还原',
-	'chat-ban-modal-button-ok' => '封禁该用户',
+	'chat-ban-modal-button-ok' => '禁止此用户',
 	'chat-ban-modal-button-change-ban' => '改变封禁',
 	'chat-ban-modal-button-cancel' => '取消',
 	'chat-ban-modal-change-ban-heading' => '更改此用户的聊天室禁令',
@@ -3288,9 +3494,16 @@ $messages['zh-hans'] = array(
 	'group-chatmoderator-member' => '聊天主持人',
 	'group-bannedfromchat' => '从聊天中禁止',
 	'group-bannedfromchat-member' => '从聊天中禁止',
+	'chat-ban-option-list' => '2小时:2 hours,1天:1 day,3天:3 days,1周:1 week,2周:2 weeks,1个月:1 month,3个月:3 months,6个月:6 months,1年:1 year,无限期:infinite',
 	'chat-ban-log-change-ban-link' => '改变封禁',
+	'chat-chatconnect-log' => '聊天连接日志',
+	'chat-chatconnect-log-entry' => '连接至$1从地址$2',
 	'chat-chatban-log' => '聊天封禁日志',
+	'chat-chatbanadd-log-entry' => '禁止$1聊天由$2起至$3',
+	'chat-chatbanremove-log-entry' => '$1已被解禁',
+	'chat-chatbanchange-log-entry' => '更改$1的禁止设置从$2至$3',
 	'chat-contributions-ban-notice' => '{{GENDER:$1|该用户}}目前被禁止发言。请参见最新的禁言日志：',
+	'chat-browser-is-notsupported' => '您的浏览器不支持。为了获得最佳体验，请使用<a href="http://community.wikia.com/wiki/Help:Supported_browsers">较新的浏览器</a>。',
 	'chat-checkuser-join-action' => '加入聊天',
 	'chat-status-away' => '不在',
 );

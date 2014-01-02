@@ -100,6 +100,13 @@
 	&.grid-2 {
 		padding: 0;
 	}
+	.loading {
+		background: url(/skins/common/images/ajax.gif) no-repeat 50% 50%; /* $wgCdnStylePath */
+		height: 48px;
+		margin: 10px;
+		padding-top: 10px;
+	}
+
 	.module {
 		@include clearfix;
 		background: $color-page;

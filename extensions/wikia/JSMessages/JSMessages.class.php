@@ -192,6 +192,8 @@ class JSMessages {
 				}
 				// single message
 				else {
+					//@todo - this removes the {{PLURAL prefix, so plurals won't work in JS
+					//on the other hand we cannot simply set $transform to true, as we want the wiki links to be parsed
 					$msg = wfMsgGetKey($message, true /* $useDB */);
 
 					// check for not existing message

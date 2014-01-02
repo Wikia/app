@@ -19,7 +19,6 @@ $wgAutoloadClasses['UserSignupSpecialController'] =  $dir . 'UserSignupSpecialCo
 $wgAutoloadClasses['WikiaConfirmEmailSpecialController'] =  $dir . 'WikiaConfirmEmailSpecialController.class.php';
 $wgAutoloadClasses['UserLoginController'] =  $dir . 'UserLoginController.class.php';
 $wgAutoloadClasses['UserLoginHelper'] =  $dir . 'UserLoginHelper.class.php';
-$wgAutoloadClasses['TempUser'] =  $dir . 'TempUser.class.php';
 $wgAutoloadClasses['UserLoginForm'] =  $dir . 'UserLoginForm.class.php';
 $wgAutoloadClasses['UserLoginFacebookForm'] =  $dir . 'UserLoginFacebookForm.class.php';
 $wgAutoloadClasses['UserLoginHooksHelper'] =  $dir . 'UserLoginHooksHelper.class.php';
@@ -29,18 +28,20 @@ $wgHooks['MakeGlobalVariablesScript'][] = 'UserLoginHooksHelper::onMakeGlobalVar
 $wgHooks['Preferences::SetUserEmail'][] = 'UserLoginHooksHelper::onSetUserEmail';
 $wgHooks['UserSendReConfirmationMail'][] = 'UserLoginHooksHelper::onUserSendReConfirmationMail';
 $wgHooks['AbortNewAccountErrorMessage'][] = 'UserLoginHooksHelper::onAbortNewAccountErrorMessage';
-$wgHooks['MailPasswordTempUser'][] = 'UserLoginHooksHelper::onMailPasswordTempUser';
 $wgHooks['ConfirmEmailShowRequestForm'][] = 'UserLoginHooksHelper::onConfirmEmailShowRequestForm';
 $wgHooks['UserSendConfirmationMail'][] = 'UserLoginHooksHelper::onUserSendConfirmationMail';
 $wgHooks['PreferencesGetEmailAuthentication'][] = 'UserLoginHooksHelper::onGetEmailAuthentication';
 $wgHooks['isValidEmailAddr'][] = 'UserLoginHooksHelper::isValidEmailAddr';
 $wgHooks['SavePreferences'][] = 'UserLoginHooksHelper::onSavePreferences';
 $wgHooks['AddNewAccount'][] = 'UserLoginHooksHelper::onAddNewAccount';
+$wgHooks['ConfirmEmailComplete'][] = 'UserLoginHooksHelper::onConfirmEmailComplete';
 // i18n mapping
 $wgExtensionMessagesFiles['UserLogin'] = $dir . 'UserLogin.i18n.php';
 $wgExtensionMessagesFiles['UserSignup'] = $dir . 'UserSignup.i18n.php';
 $wgExtensionMessagesFiles['UserSignupAliases'] = $dir . 'UserSignup.alias.php';
 $wgExtensionMessagesFiles['WikiaConfirmEmail'] = $dir . 'WikiaConfirmEmail.i18n.php';
+
+JSMessages::registerPackage('UserLogin', array('userlogin-login-*'));
 
 // special pages
 $wgSpecialPages['Userlogin'] = 'UserLoginSpecialController';

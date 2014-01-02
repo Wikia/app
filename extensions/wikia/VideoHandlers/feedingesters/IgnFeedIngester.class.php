@@ -6,7 +6,7 @@
 class IgnFeedIngester extends VideoFeedIngester {
 	protected static $API_WRAPPER = 'IgnApiWrapper';
 	protected static $PROVIDER = 'ign';
-	protected static $FEED_URL = 'http://apis.ign.com/partners/v3/wikia?fromDate=$1&toDate=$2';
+	protected static $FEED_URL = 'http://apis.ign.com/partners/v3/wikia?fromDate=$1&toDate=$2&app_id=$3&app_key=$4';
 	protected static $CLIP_TYPE_BLACKLIST = array();
 	protected static $CLIP_FILTER = array(
 		'*' => array(
@@ -29,7 +29,6 @@ class IgnFeedIngester extends VideoFeedIngester {
 		print("Connecting to $url...\n");
 
 		$content = $this->getUrlContent( $url );
-
 		if ( !$content ) {
 			print( "ERROR: problem downloading content!\n" );
 			wfProfileOut( __METHOD__ );
@@ -190,12 +189,6 @@ class IgnFeedIngester extends VideoFeedIngester {
 		echo( "Creating request\n" );
 		$req = curl_init();
 		curl_setopt( $req, CURLOPT_URL, $url );
-		curl_setopt( $req, CURLOPT_HTTPHEADER,
-			array(
-				 "X-App-Id: ".$wgIgnApiConfig['AppId'],
-				 "X-App-Key: ".$wgIgnApiConfig['AppKey']
-			)
-		);
 		curl_setopt( $req, CURLOPT_RETURNTRANSFER, 1 );
 		curl_setopt( $req, CURLOPT_VERBOSE, 1 );
 		curl_setopt( $req, CURLOPT_STDERR, STDOUT );
@@ -218,8 +211,13 @@ class IgnFeedIngester extends VideoFeedIngester {
 	 * @return string - Return a valid feed URL
 	 */
 	private function initFeedUrl( $startDate, $endDate ) {
+		global $wgIgnApiConfig;
+
 		$url = str_replace( '$1', $startDate, static::$FEED_URL );
 		$url = str_replace( '$2', $endDate, $url );
+		$url = str_replace( '$3', $wgIgnApiConfig['AppId'], $url );
+		$url = str_replace( '$4', $wgIgnApiConfig['AppKey'], $url );
+
 		return $url;
 	}
 }

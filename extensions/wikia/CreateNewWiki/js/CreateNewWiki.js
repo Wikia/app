@@ -28,6 +28,7 @@ var WikiBuilder = {
 		this.wikiLanguage = $('#NameWiki select[name=wiki-language]');
 		this.wikiCategory = $('#DescWiki select[name=wiki-category]');
 		this.wikiAllAges = $('#DescWiki input[name=all-ages]');
+		this.allAgesDiv = $('#all-ages-div');
 		this.descWikiSubmitError = $('#DescWiki .submit-error');
 		this.nextButtons = this.wb.find('nav .next');
 		this.finishSpinner = $('#CreateNewWiki .finish-status');
@@ -107,7 +108,18 @@ var WikiBuilder = {
 			that.checkWikiName();
 			that.checkDomain();
 			var selected = that.wikiLanguage.find('option:selected').val();
-			that.wikiDomainCountry.html((selected && selected !== 'en') ? selected + '.' : '');
+
+            if (selected && selected !== wgLangAllAgesOpt )
+            {
+                that.wikiDomainCountry.html( selected + '.');
+                that.allAgesDiv.hide();
+            }
+            else
+            {
+                that.wikiDomainCountry.html('');
+                that.allAgesDiv.show();
+            }
+
 		});
 		$('#ChangeLang').click(function(e) {
 			e.preventDefault();
@@ -229,7 +241,9 @@ var WikiBuilder = {
 					});
 			});
 		}
-		$('#Auth, #CreateNewWiki').width(700);
+		if ( !window.wgOasisResponsive ) {
+			$('#Auth, #CreateNewWiki').width(700);
+		}
 		this.signupEntities.hide();
 		this.loginEntities.show();
 	},
@@ -237,7 +251,9 @@ var WikiBuilder = {
 	handleLogin: function() {
 		AjaxLogin.showLogin();
 		AjaxLogin.init($('#AjaxLoginLoginForm form:first'));
-		$('#Auth, #CreateNewWiki').width(600);
+		if ( !window.wgOasisResponsive ) {
+			$('#Auth, #CreateNewWiki').width(600);
+		}
 		this.signupEntities.show();
 		this.loginEntities.hide();
 	},
@@ -291,8 +307,7 @@ var WikiBuilder = {
 				method: 'CheckDomain',
 				data: {
 					name: wd,
-					lang: lang,
-					type: ''
+					lang: lang
 				},
 				callback: function(res) {
 					if(res) {
@@ -490,7 +505,14 @@ $(function() {
 	$('#AjaxLoginButtons').hide();
 	$('#AjaxLoginLoginForm').show();
 
-	ThemeDesigner.slideByDefaultWidth = 608;
-	ThemeDesigner.slideByItems = 4;
+	if ( window.wgOasisResponsive )
+	{
+		ThemeDesigner.slideByDefaultWidth = 500;
+		ThemeDesigner.slideByItems = 3;
+
+	} else {
+		ThemeDesigner.slideByDefaultWidth = 608;   
+		ThemeDesigner.slideByItems = 4;
+	}
 	ThemeDesigner.themeTabInit();
 });

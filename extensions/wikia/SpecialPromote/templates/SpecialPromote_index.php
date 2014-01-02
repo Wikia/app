@@ -3,7 +3,7 @@
 		<div class="status-bar plainlinks">
 			<div class="status-wrapper">
 				<span class="status-icon">
-					<?= wfMsg('promote-statusbar-icon') ?>
+					<?= wfMessage('promote-statusbar-icon')->text() ?>
 				</span>
 				<span class="status-arrow"></span>
 			</div>
@@ -11,60 +11,70 @@
 		</div>
 	<? endif; ?>
 	<p class='introduction plainlinks'>
-		<strong><?= wfMsg('promote-introduction-header'); ?></strong><br/>
-		<?= wfMsgExt('promote-introduction-copy',array('parseinline')); ?>
+		<strong>
+			<? if ($isCorpLang) : ?>
+				<?= wfMessage('promote-introduction-header')->text(); ?>
+			<? else: ?>
+				<?= wfMessage('promote-nocorp-introduction-header', $wg->Sitename)->text(); ?>
+			<? endif ?>
+		</strong><br/>
+		<? if ($isCorpLang) : ?>
+			<?= wfMessage('promote-introduction-copy')->parse(); ?>
+		<? else: ?>
+			<?= wfMessage('promote-nocorp-introduction-copy')->parse(); ?>
+		<? endif ?>
 	</p>
 	<fieldset>
-		<legend><?= wfMsg('promote-description'); ?></legend>
+		<legend><?= wfMessage('promote-description')->text(); ?></legend>
 
 		<div class='input-group required'>
-			<label><?= wfMsg('promote-description-header'); ?></label>
+			<label><?= wfMessage('promote-description-header')->text(); ?></label>
 			<div class="headline-wrapper">
 				<input data-min='<?= $minHeaderLength; ?>' data-max='<?= $maxHeaderLength; ?>' type='text' name='title'
 					   value="<?= htmlspecialchars($wikiHeadline); ?>"
-					   placeholder='<?= wfMsg('promote-description-header'); ?>'>
+					   placeholder='<?= wfMessage('promote-description-header')->text(); ?>'>
 				<p class="headline-character-counter"></p>
 				<p class="error error-msg"></p>
 			</div>
+			<span class='explanatory-copy'><?= wfMessage('promote-description-header-explanation')->text(); ?></span>
 		</div>
-		<span class='explanatory-copy'><?= wfMsg('promote-description-header-explanation'); ?></span>
 		<div class='input-group required'>
-			<label><?= wfMsg('promote-description-about'); ?></label>
+			<label><?= wfMessage('promote-description-about')->text(); ?></label>
 			<div class="description-wrapper">
 				<textarea data-min='<?= $minDescriptionLength; ?>' data-max='<?= $maxDescriptionLength; ?>' type='text'
 						  name='description'
-						  placeholder="<?= wfMsg('promote-description-about'); ?>"><?= htmlspecialchars($wikiDesc); ?></textarea>
+						  placeholder="<?= wfMessage('promote-description-about')->text(); ?>"><?= htmlspecialchars($wikiDesc); ?></textarea>
 				<p class="character-counter"></p>
 				<p class="error error-msg"></p>
 			</div>
+			<span class='explanatory-copy'><?= wfMessage('promote-description-about-explanation')->text(); ?></span>
 		</div>
-		<span class='explanatory-copy'><?= wfMsg('promote-description-about-explanation'); ?></span>
 	</fieldset>
 
 	<fieldset>
-		<legend><?= wfMsg('promote-upload'); ?></legend>
+		<legend><?= wfMessage('promote-upload')->text(); ?></legend>
 
 		<div class='input-group main-image required'>
-			<label><?= wfMsg('promote-upload-main-photo-header'); ?></label>
-			<a href="#" data-image-type="main" class="wikia-button upload-button" title="<?= wfMsg('promote-add-photo'); ?>">
+			<label><?= wfMessage('promote-upload-main-photo-header')->text(); ?></label>
+			<a href="#" data-image-type="main" class="wikia-button upload-button" title="<?= wfMessage('promote-add-photo')->text(); ?>">
 				<img src="<?= $wg->BlankImgUrl; ?>" class="sprite photo" />
-				<?= wfMsg('promote-add-photo'); ?>
+				<?= wfMessage('promote-add-photo')->text(); ?>
 			</a>
 			<br class="clear" />
 			<div class='large-photo'>
 				<div class="modify-remove">
-					<a class="modify" href="#"><?= wfMsg('promote-modify-photo'); ?></a>
+					<a class="modify" href="#"><?= wfMessage('promote-modify-photo')->text(); ?></a>
 				</div>
 				<?php if (!empty($mainImage)): ?>
 					<div class="status">
 						<div class="rejected<?= ($mainImage['review_status'] == ImageReviewStatuses::STATE_REJECTED) ? '' : ' hidden' ?>">
 							<p><span>
-								<?= wfMsg('promote-image-rejected');?> <img src="<?= $wg->BlankImgUrl ?>" class="error">
+								<?= wfMessage('promote-image-rejected')->text();?> <img src="<?= $wg->BlankImgUrl ?>" class="error">
 							</span></p>
 						</div>
 						<div class="accepted<?= ($mainImage['review_status'] == ImageReviewStatuses::STATE_APPROVED) ? '' : ' hidden' ?>">
 							<p><span>
-								<?= wfMsg('promote-image-accepted');?> <img src="<?= $wg->BlankImgUrl ?>" class="ok">
+								<?= wfMessage('promote-image-accepted')->text();?> <img src="<?= $wg->BlankImgUrl ?>" class="ok">
 							</span></p>
 						</div>
 						<div class="reviewed<?=
@@ -76,7 +86,7 @@
 							)) ? '' : ' hidden'
 							?>">
 							<p><span>
-								<?= wfMsg('promote-image-in-review');?>
+								<?= wfMessage('promote-image-in-review')->text();?>
 							</span></p>
 						</div>
 					</div>
@@ -87,13 +97,19 @@
 						data-image-type="main" />
 				<? endif; ?>
 			</div>
-			<span class='explanatory-copy'><?= wfMsg('promote-upload-main-photo-explanation'); ?></span>
+			<span class='explanatory-copy'>
+				<? if ($isCorpLang) : ?>
+					<?= wfMessage('promote-upload-main-photo-explanation')->text(); ?>
+				<? else: ?>
+					<?= wfMessage('promote-nocorp-upload-main-photo-explanation')->text(); ?>
+				<? endif ?>
+			</span>
 		</div>
 		<div class='input-group more-images required'>
-			<label><?= wfMsg('promote-upload-additional-photos-header'); ?></label>
-			<a href="#" data-image-type="additional" class="wikia-button upload-button" title="<?= wfMsg('promote-add-photo'); ?>">
+			<label><?= wfMessage('promote-upload-additional-photos-header')->text(); ?></label>
+			<a href="#" data-image-type="additional" class="wikia-button upload-button" title="<?= wfMessage('promote-add-photo')->text(); ?>">
 				<img src="<?= $wg->BlankImgUrl; ?>" class="sprite photo" />
-				<?= wfMsg('promote-add-photo'); ?>
+				<?= wfMessage('promote-add-photo')->text(); ?>
 			</a>
 			<br class="clear" />
 			<div class='small-photos'>
@@ -101,18 +117,18 @@
 					<? $i=1; foreach ($additionalImages as $image): ?>
 						<div class="small-photos-wrapper">
 							<div class="modify-remove">
-								<a class="modify" href="#"><?= wfMsg('promote-modify-photo') ?></a>
-								<a class="remove" href="#"><?= wfMsg('promote-remove-photo') ?></a>
+								<a class="modify" href="#"><?= wfMessage('promote-modify-photo')->text() ?></a>
+								<a class="remove" href="#"><?= wfMessage('promote-remove-photo')->text() ?></a>
 							</div>
 							<div class="status">
 								<div class="rejected<?= ($image['review_status'] == ImageReviewStatuses::STATE_REJECTED) ? '' : ' hidden' ?>">
 									<p><span>
-										<?= wfMsg('promote-image-rejected');?> <img src="<?= $wg->BlankImgUrl ?>" class="error">
+										<?= wfMessage('promote-image-rejected')->text();?> <img src="<?= $wg->BlankImgUrl ?>" class="error">
 									</span></p>
 								</div>
 								<div class="accepted<?= ($image['review_status'] == ImageReviewStatuses::STATE_APPROVED) ? '' : ' hidden' ?>">
 									<p><span>
-										<?= wfMsg('promote-image-accepted');?> <img src="<?= $wg->BlankImgUrl ?>" class="ok">
+										<?= wfMessage('promote-image-accepted')->text();?> <img src="<?= $wg->BlankImgUrl ?>" class="ok">
 									</span></p>
 								</div>
 								<div class="reviewed<?=
@@ -124,7 +140,7 @@
 									)) ? '' : ' hidden'
 									?>">
 									<p><span>
-										<?= wfMsg('promote-image-in-review');?>
+										<?= wfMessage('promote-image-in-review')->text();?>
 									</span></p>
 								</div>
 							</div>
@@ -139,12 +155,12 @@
 					<? $i++; endforeach; ?>
 				<? endif; ?>
 			</div>
-			<span class='explanatory-copy'><?= wfMsg('promote-upload-additional-photos-explanation'); ?></span>
+			<span class='explanatory-copy'><?= wfMessage('promote-upload-additional-photos-explanation')->text(); ?></span>
 			<p class="error error-msg"></p>
 		</div>
 	</fieldset>
 
 	<div class='submits'>
-		<input type='submit' value='<?= wfMsg('promote-publish'); ?>' class='button big' name='publish'>
+		<input type='submit' value='<?= wfMessage('promote-publish')->text(); ?>' class='button big' name='publish'>
 	</div>
 </form>

@@ -47,6 +47,8 @@ $messages['qqq'] = array(
 	'multilookupnext' => '{{Identical|Next}}',
 	'multilookupprevious' => '{{Identical|Previous}}',
 	'multilookupwiki' => '{{Identical|Wiki}}',
+	'multilookuplink' => '{{Identical|Contribution link}}',
+	'multilookupwikidbname' => '{{Identical|Database name}}',
 	'multilookupwikiurl' => '{{Identical|URL}}',
 	'multilookupwikititle' => '{{Identical|Title}}',
 	'right-multilookup' => '{{doc-right|multilookup|ns=Wikia}}',
@@ -191,9 +193,13 @@ $messages['bs'] = array(
 );
 
 /** Catalan (català)
+ * @author Light of Cosmos
  * @author SMP
  */
 $messages['ca'] = array(
+	'multilookup' => 'Revisió múltiple',
+	'multilookupstitle' => 'Revisió múltiple',
+	'multilookupselectuser' => 'Cerca de comptes amb la mateixa IP entre múltiples wikis',
 	'right-multilookup' => "Cercar informació d'usuaris en múltiples wikis",
 );
 
@@ -202,12 +208,14 @@ $messages['ca'] = array(
  * @author Умар
  */
 $messages['ce'] = array(
+	'multilookupgo' => 'Дехьа гӀо',
 	'multilookupnoresultfound' => 'ХӀума ца карийна',
-	'multilookuplink' => 'Къинхьегаме хьажориг',
+	'multilookuplink' => 'Къинхьегаме хьажораг',
 	'multilookupwikititle' => 'Корта',
+	'multilookupwikioptions' => 'Параметраш',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Chmee2
  */
 $messages['cs'] = array(
@@ -528,6 +536,23 @@ $messages['lb'] = array(
 	'multilookuplistwikiainfo' => 'Lëscht vu Wikien op där Säite vu Benotzer mat der IP-Adress <b>$1</b> geännert goufen',
 	'multilookuplastedit' => 'Lescht Ännerung vun dëser IP-Adress:',
 	'multilookupwikititle' => 'Titel',
+);
+
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'multilookupgo' => 'رو',
+	'multilookupnext' => 'نها',
+	'multilookupprevious' => 'وادمايی',
+	'multilookupnoresultfound' => 'هيچ نتيجه يی  جسته نبی',
+	'multilookupwiki' => 'ويكی',
+	'multilookuplink' => 'لینک هومیار',
+	'multilookupdetails' => 'جزيات نشون بيئه',
+	'multilookupwikidbname' => 'نوم دی بی',
+	'multilookupwikiurl' => 'يو آر ال',
+	'multilookupwikititle' => 'سرتال',
+	'multilookupwikioptions' => 'گزينه يا هنی:',
 );
 
 /** Macedonian (македонски)
@@ -1019,20 +1044,45 @@ $messages['ttt'] = array(
 );
 
 /** Ukrainian (українська)
+ * @author Andriykopanytsia
  * @author Steve.rusyn
+ * @author SteveR
  * @author Тест
  */
 $messages['uk'] = array(
+	'specialmultiplelookup-desc' => 'Забезпечує пошук інформації про користувачів з декількох вікі',
+	'multilookup' => 'Множинний пошук',
+	'multilookupstitle' => 'Множинний пошук',
+	'multilookupselectuser' => 'Шукати облікові записи за цією IP-адресу на декількох вікі',
 	'multilookupgo' => 'Перейти',
+	'multilookupnotspecify' => 'Ви ще не вказали IP-адресу.',
 	'multilookupnext' => 'наступні',
 	'multilookupprevious' => 'попередні',
 	'multilookupnbrresult' => 'Кількість результатів:',
+	'multilookupinvalidresults' => 'Неприпустимі результати!',
 	'multilookupnoresultfound' => 'Нічого не знайдено!',
 	'multilookupwiki' => 'Вікі',
+	'multilookuplink' => 'Посилання на внески',
+	'multilookupdetails' => 'Докладніше див.',
+	'multilookuplistwikiainfo' => 'Перелік вікі, де сторінки змінено користувачами з IP-адресами<b>$1</b>',
+	'multilookupinvaliduser' => '<p class="error">IP „<b>$1</b>“ не існує. Перевірте вказану IP на можливі одруківки.</p>',
+	'multilookuplastedit' => 'Останнє редагування з цієї IP-адреси:',
+	'multilookupwikidbname' => 'Назва БД',
 	'multilookupwikiurl' => 'URL',
 	'multilookupwikititle' => 'Назва',
 	'multilookupwikioptions' => 'Параметри',
 	'multilookuplastedithdr' => 'Останнє редагування',
+	'multilookuprecordspager' => "Показано від '''$1''' до '''$2''' із '''$3''' записів.",
+	'right-multilookup' => 'Переглянути відомості про користувачів в декількох вікі',
+	'action-multilookup' => 'перегляд відомостей про користувачів в декількох вікі',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'multilookupnoresultfound' => 'Không tìm thấy kết quả',
+	'multilookupwiki' => 'Wiki',
 );
 
 /** Yiddish (ייִדיש)
@@ -1044,15 +1094,32 @@ $messages['yi'] = array(
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Hydra
+ * @author Hzy980512
  * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
 	'specialmultiplelookup-desc' => '在多个wiki上提供用户信息查阅',
+	'multilookup' => '查询多个',
+	'multilookupstitle' => '查询多个',
+	'multilookupselectuser' => '搜索多个wiki上的同一IP地址的账户',
 	'multilookupgo' => '去',
+	'multilookupnotspecify' => '您尚未指定IP地址。',
 	'multilookupnext' => '下一步',
 	'multilookupprevious' => '前一步',
+	'multilookupnbrresult' => '结果数量：',
+	'multilookupinvalidresults' => '无效的结果！',
+	'multilookupnoresultfound' => '找不到结果！',
 	'multilookupwiki' => '维基',
+	'multilookuplink' => '贡献链接',
 	'multilookupdetails' => '查看资讯',
+	'multilookupinvaliduser' => '<p class="error">IP地址“<b>$1</b>”不存在。请检查IP地址是否存在错误。</p>',
+	'multilookuplastedit' => '最后来自此IP地址的编辑：',
+	'multilookupwikidbname' => '数据库名称',
+	'multilookupwikiurl' => 'URL',
 	'multilookupwikititle' => '标题',
 	'multilookupwikioptions' => '选择',
+	'multilookuplastedithdr' => '最后编辑',
+	'multilookuprecordspager' => "显示'''$1'''至'''$2'''项，总共'''$3'''项记录。",
+	'right-multilookup' => '查询用户在多个wiki上的信息',
+	'action-multilookup' => '查询用户在多个wiki上的信息',
 );

@@ -1,0 +1,51 @@
+/*!
+ * VisualEditor MediaWiki UserInterface raster icon styles.
+ *
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @license The MIT License (MIT); see LICENSE.txt
+ */
+
+.ve-ui-icon-alienextension {
+	/* @embed */
+	background-image: url(images/icons/alienextension.png);
+}
+
+.ve-ui-icon-hiero {
+	/* @embed */
+	background-image: url(images/icons/hiero.png);
+}
+
+.ve-ui-icon-math {
+	/* @embed */
+	background-image: url(images/icons/math.png);
+}
+
+.ve-ui-icon-parameter {
+	/* @embed */
+	background-image: url(images/icons/parameter.png);
+}
+
+.ve-ui-icon-parameter-set {
+	/* @embed */
+	background-image: url(images/icons/parameter-set.png);
+}
+
+.ve-ui-icon-reference {
+	/* @embed */
+	background-image: url(images/icons/reference.png);
+}
+
+.ve-ui-icon-references {
+	/* @embed */
+	background-image: url(images/icons/references.png);
+}
+
+.ve-ui-icon-source {
+	/* @embed */
+	background-image: url(images/icons/source.png);
+}
+
+.ve-ui-icon-template {
+	/* @embed */
+	background-image: url(images/icons/template.png);
+}

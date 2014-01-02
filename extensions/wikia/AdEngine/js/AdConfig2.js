@@ -1,70 +1,59 @@
 var AdConfig2 = function (
 	// regular dependencies
-	log, window, document, Geo, adLogicShortPage, abTest
+	log,
+	window,
+	document,
+	Geo,
+	adLogicPageDimensions,
+	abTest,
 
 	// adProviders
-	, adProviderAdDriver2
-	, adProviderEvolve
-	, adProviderGamePro
-	, adProviderLater
-	, adProviderNull
+	adProviderGpt,
+	adProviderEvolve,
+	adProviderGamePro,
+	adProviderLater,
+	adProviderNull
 ) {
 	'use strict';
 
-	var log_group = 'AdConfig2'
-		, city_lang = window.wgContentLanguage
-		, country = Geo.getCountryCode()
-		, defaultHighValueSlots, highValueSlots
-		, slotsOnlyOnLongPages
-		, getProvider;
+	var logGroup = 'AdConfig2',
+		cityLang = window.wgContentLanguage,
+		country = Geo.getCountryCode(),
+		defaultHighValueSlots,
+		highValueSlots,
+		useSevenOneMedia = window.wgAdDriverUseSevenOneMedia;
 
 	defaultHighValueSlots = {
-		'CORP_TOP_LEADERBOARD':true,
-		'CORP_TOP_RIGHT_BOXAD':true,
-		'EXIT_STITIAL_BOXAD_1':true,
-		'HOME_TOP_LEADERBOARD':true,
-		'HOME_TOP_RIGHT_BOXAD':true,
-		'HUB_TOP_LEADERBOARD':true,
-		'INVISIBLE_SKIN':true,
-		'LEFT_SKYSCRAPER_2':true,
-		'MIDDLE_RIGHT_BOXAD':true,
-		'MODAL_RECTANGLE':true,
-		'MODAL_INTERSTITIAL':true,
-		'MODAL_INTERSTITIAL_1':true,
-		'MODAL_INTERSTITIAL_2':true,
-		'MODAL_INTERSTITIAL_3':true,
-		'MODAL_INTERSTITIAL_4':true,
-		'TEST_HOME_TOP_RIGHT_BOXAD':true,
-		'TEST_TOP_RIGHT_BOXAD':true,
-		'TOP_LEADERBOARD':true,
-		'TOP_RIGHT_BOXAD':true,
-		'WIKIA_BAR_BOXAD_1':true,
-		'GPT_FLUSH':true
-	};
-
-	// Map of slots present only on long pages
-	// key: slot name
-	// value: minimal height needed to show the ad (in pixels)
-	slotsOnlyOnLongPages = {
-		LEFT_SKYSCRAPER_2: 2400,
-		LEFT_SKYSCRAPER_3: 4000,
-		PREFOOTER_LEFT_BOXAD: 2400,
-		PREFOOTER_RIGHT_BOXAD: 2400
+		'CORP_TOP_LEADERBOARD': true,
+		'CORP_TOP_RIGHT_BOXAD': true,
+		'EXIT_STITIAL_BOXAD_1': true,
+		'HOME_TOP_LEADERBOARD': true,
+		'HOME_TOP_RIGHT_BOXAD': true,
+		'HUB_TOP_LEADERBOARD': true,
+		'INVISIBLE_SKIN': true,
+		'LEFT_SKYSCRAPER_2': true,
+		'MIDDLE_RIGHT_BOXAD': true,
+		'MODAL_RECTANGLE': true,
+		'MODAL_INTERSTITIAL': true,
+		'MODAL_INTERSTITIAL_1': true,
+		'MODAL_INTERSTITIAL_2': true,
+		'MODAL_INTERSTITIAL_3': true,
+		'MODAL_INTERSTITIAL_4': true,
+		'TEST_HOME_TOP_RIGHT_BOXAD': true,
+		'TEST_TOP_RIGHT_BOXAD': true,
+		'TOP_LEADERBOARD': true,
+		'TOP_RIGHT_BOXAD': true,
+		'WIKIA_BAR_BOXAD_1': true,
+		'GPT_FLUSH': true
 	};
 
 	highValueSlots = defaultHighValueSlots;
 
-	getProvider = function(slot) {
+	function getBackEndProvider(slot) {
 		var slotname = slot[0];
 
-		log('getProvider', 5, log_group);
-		log(slot, 5, log_group);
-
-		// Check if page is too short for that slot
-		if (adLogicShortPage.isPageTooShortForSlot(slotname)) {
-			log('#' + slotname + ' disabled. Page too short', 7, log_group);
-			return adProviderNull;
-		}
+		log('getProvider', 5, logGroup);
+		log(slot, 5, logGroup);
 
 		// Force providers:
 		if (slot[2] === 'GamePro') {
@@ -74,10 +63,10 @@ var AdConfig2 = function (
 			return adProviderEvolve;
 		}
 		if (slot[2] === 'AdDriver2') {
-			return adProviderAdDriver2;
+			return adProviderGpt;
 		}
 		if (slot[2] === 'AdDriver') {
-			return adProviderAdDriver2;
+			return adProviderGpt;
 		}
 		if (slot[2] === 'Liftium2') {
 			return adProviderLater;
@@ -86,17 +75,20 @@ var AdConfig2 = function (
 			return adProviderLater;
 		}
 
-		if (abTest && abTest.inGroup('PERFORMANCE_V_PREFOOTERS', 'PREFOOTERS_DISABLED')
-			&& (slotname === 'PREFOOTER_LEFT_BOXAD' || slotname === 'PREFOOTER_RIGHT_BOXAD')
-		) {
-			log('AB experiment PERFORMANCE_V_PREFOOTERS, group PREFOOTERS_DISABLED: ' + slotname + ' disabled', 5, log_group);
-			return adProviderNull;
+		// Prevent passing WIKIA_BAR_BOXAD_1 to Later queue if useSevenOneMedia
+		if (slotname === 'WIKIA_BAR_BOXAD_1' && adProviderGpt.canHandleSlot(slot)) {
+			return adProviderGpt;
+		}
+
+		if (useSevenOneMedia) {
+			// All SevenOne Media ads are handled in the Later queue
+			return adProviderLater;
 		}
 
 		// TODO refactor highValueSlots check to the top of the whole config
 		if (highValueSlots[slotname]) {
 			// First ask GamePro (german lang wiki)
-			if (city_lang === 'de') {
+			if (cityLang === 'de') {
 				if (adProviderGamePro.canHandleSlot(slot)) {
 					return adProviderGamePro;
 				}
@@ -111,12 +103,28 @@ var AdConfig2 = function (
 		}
 
 		// Non-high-value slots goes to ad provider Later, so GamePro can grab them later
-		if (highValueSlots[slotname] && adProviderAdDriver2.canHandleSlot(slot)) {
-			return adProviderAdDriver2;
+		if (highValueSlots[slotname] && adProviderGpt.canHandleSlot(slot)) {
+			return adProviderGpt;
 		}
 
 		return adProviderLater;
-	};
+	}
+
+	function getProvider(slot) {
+		var provider = getBackEndProvider(slot);
+
+		// No page length checking logic for Null provider
+		if (provider === adProviderNull) {
+			return provider;
+		}
+
+		// Check if we should apply page length checking for that slot
+		if (provider !== adProviderNull && adLogicPageDimensions.isApplicable(slot)) {
+			return adLogicPageDimensions.getProxy(provider);
+		}
+
+		return provider;
+	}
 
 	return {
 		getProvider: getProvider

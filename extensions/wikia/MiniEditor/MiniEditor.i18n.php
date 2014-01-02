@@ -40,9 +40,12 @@ $messages['ar'] = array(
  * @author Fohanno
  */
 $messages['br'] = array(
+	'minieditor-specialpage-title' => 'Pakenn diskouez MiniEditor',
 	'minieditor-new-heading' => 'Krouiñ ur gemennadenn nevez',
 	'minieditor-placeholder-new' => 'Skrivit ho kemennadenn amañ',
+	'minieditor-message-edit' => 'Homañ zo ur gemennadenn a zo anezhi dija',
 	'minieditor-reply' => 'Respont',
+	'minieditor-placeholder-reply' => "Respont d'ar gemennadenn amañ",
 );
 
 /** Catalan (català)
@@ -57,7 +60,7 @@ $messages['ca'] = array(
 	'minieditor-placeholder-reply' => 'Respondre al missatge aquí',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Jezevec
  */
 $messages['cs'] = array(
@@ -102,6 +105,17 @@ $messages['fi'] = array(
 	'minieditor-message-edit' => 'Tämä on olemassa oleva viesti',
 	'minieditor-reply' => 'Vastaus',
 	'minieditor-placeholder-reply' => 'Vastaa viestiin tässä',
+);
+
+/** Faroese (føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'minieditor-specialpage-title' => 'MiniEditor Royndarsíða',
+	'minieditor-new-heading' => 'Upprætta eitt nýtt boð',
+	'minieditor-placeholder-new' => 'Skriva títt boð her',
+	'minieditor-reply' => 'Svara',
+	'minieditor-placeholder-reply' => 'Svara boðnum her',
 );
 
 /** French (français)
@@ -190,6 +204,13 @@ $messages['lb'] = array(
 	'minieditor-reply' => 'Äntwerten',
 );
 
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'minieditor-reply' => 'جؤاو ده ئن',
+);
+
 /** Macedonian (македонски)
  * @author Bjankuloski06
  */
@@ -238,6 +259,18 @@ $messages['nl'] = array(
 	'minieditor-message-edit' => 'Dit is een bestaand bericht',
 	'minieditor-reply' => 'Antwoorden',
 	'minieditor-placeholder-reply' => 'Beantwoord het bericht hier',
+);
+
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'minieditor-specialpage-title' => 'Pagina de demostracion de MiniEditor',
+	'minieditor-new-heading' => 'Crear un messatge novèl',
+	'minieditor-placeholder-new' => 'Picatz vòstre messatge aicí',
+	'minieditor-message-edit' => 'Aquò es un messatge existent',
+	'minieditor-reply' => 'Respondre',
+	'minieditor-placeholder-reply' => 'Respondètz al messatge aicí',
 );
 
 /** Polish (polski)
@@ -363,6 +396,7 @@ $messages['tzm'] = array(
 
 /** Ukrainian (українська)
  * @author Steve.rusyn
+ * @author SteveR
  * @author Ua2004
  */
 $messages['uk'] = array(
@@ -372,6 +406,18 @@ $messages['uk'] = array(
 	'minieditor-message-edit' => 'Це існуюче повідомлення',
 	'minieditor-reply' => 'Відповісти',
 	'minieditor-placeholder-reply' => 'Відповідь на повідомлення тут',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'minieditor-specialpage-title' => 'Trang thử nghiệm miniEditor',
+	'minieditor-new-heading' => 'Gửi một tin nhắn mới',
+	'minieditor-placeholder-new' => 'Nhập tin nhắn của bạn vào đây',
+	'minieditor-message-edit' => 'Đây là một bài viết sẵn có',
+	'minieditor-reply' => 'Trả lời',
+	'minieditor-placeholder-reply' => 'Trả lời tin nhắn ở đây',
 );
 
 /** Simplified Chinese (中文（简体）‎)

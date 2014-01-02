@@ -2,8 +2,14 @@
  * Handle clicks on play buttons so they play the video
  */
 
-define( 'lvs.videocontrols', [ 'wikia.videoBootstrap', 'wikia.nirvana', 'jquery', 'lvs.tracker' ], function( VideoBootstrap, nirvana, $, tracker ) {
-	"use strict";
+define( 'lvs.videocontrols', [
+		'wikia.videoBootstrap',
+		'wikia.nirvana',
+		'jquery',
+		'lvs.tracker'
+	], function( VideoBootstrap, nirvana, $, tracker ) {
+
+	'use strict';
 
 	/* @var videoInstances
 	 * Keeps track of player instances on the page.  The element containing the
@@ -37,6 +43,17 @@ define( 'lvs.videocontrols', [ 'wikia.videoBootstrap', 'wikia.nirvana', 'jquery'
 		*/
 	}
 
+	function syncVideoInteraction( title, premiumTitle ) {
+		nirvana.sendRequest({
+			controller: 'LicensedVideoSwapSpecialController',
+			method: 'playVideo',
+			data: {
+				videoTitle: title,
+				premiumTitle: premiumTitle
+			}
+		});
+	}
+
 	function init( $container ) {
 		var videoWidth = $container.find( '.grid-3' ).width();
 
@@ -50,8 +67,22 @@ define( 'lvs.videocontrols', [ 'wikia.videoBootstrap', 'wikia.nirvana', 'jquery'
 				$row = $this.closest( '.row' ),
 				$parent = $this.parent(),
 				$wrapper,
+				$newFlag,
 				trackingRank = 0,
-				trackingLabel = tracker.labels.NON_PREMIUM;
+				isPremium = 1,
+				nonPremiumTitle;
+
+			$newFlag = $row.find( '.new' );
+
+			/*
+			 * For all premium video plays that are 'new' to user, including plays from the 'more suggestions' thumbs
+			 * send a call to backend to persist and track user interaction, then hide 'New' flag
+			 */
+			if ( !$this.closest( '.non-premium' ).length && $newFlag.is( ':visible' ) ) {
+				nonPremiumTitle = $row.find( '.keep-button' ).attr( 'data-video-keep' );
+				syncVideoInteraction( nonPremiumTitle, fileTitle );
+				$newFlag.fadeOut();
+			}
 
 			$row.find( '.swap-button' ).attr( 'data-video-swap', fileTitle );
 
@@ -72,26 +103,25 @@ define( 'lvs.videocontrols', [ 'wikia.videoBootstrap', 'wikia.nirvana', 'jquery'
 
 				// For tracking purposes, figure out if premium or non-premium was clicked
 				$wrapper = $parent.closest( '.grid-3' );
-				if ( $wrapper.hasClass( 'premium' ) ) {
-					trackingLabel = tracker.labels.PREMIUM;
-				} else {
+				if ( !$wrapper.hasClass( 'premium' ) ) {
+					isPremium = 0;
 					trackingRank = 1;
 				}
 			}
 
 			tracker.track( tracker.defaults, {
 				action: tracker.actions.PLAY,
-				label: trackingLabel,
+				label: isPremium ? tracker.labels.PREMIUM : tracker.labels.NON_PREMIUM,
 				value: trackingRank
 			} );
 
 			nirvana.sendRequest({
 				controller: 'VideoHandler',
-				method: 'getEmbedCode',
+				method: (isPremium ? 'getPremiumEmbedCode' : 'getEmbedCode'),
 				data: {
 					fileTitle: fileTitle,
 					width: videoWidth,
-					autoplay: 1
+					autoplay: 1,
 				},
 				callback: function( data ) {
 					var videoInstance,
@@ -148,5 +178,5 @@ define( 'lvs.videocontrols', [ 'wikia.videoBootstrap', 'wikia.nirvana', 'jquery'
 	return {
 		init: init,
 		reset: reset
-	}
+	};
 });

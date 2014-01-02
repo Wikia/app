@@ -12,10 +12,7 @@
 
 <title><?= $pageTitle ?></title>
 
-<!-- SASS-generated CSS file -->
-<link rel="stylesheet" href="<?= AssetsManager::getInstance()->getSassCommonURL( $mainSassFile ) ?>">
-
-<!-- CSS injected by extensions -->
+<!-- CSS injected by skin and extensions -->
 <?= $cssLinks ?>
 
 <?
@@ -89,6 +86,7 @@ if(Math.random()<0.01){
 <?= $ivw ?>
 <?= $amazonDirectTargetedBuy ?>
 <?= $dynamicYield ?>
+<?= $ivw2 ?>
 <?= $body ?>
 
 <?php
@@ -99,6 +97,7 @@ if(Math.random()<0.01){
 			echo F::app()->renderView('Ad', 'Index', array('slotname' => 'INVISIBLE_2'));
 		}
 	}
+	echo F::app()->renderView('Ad', 'Index', array('slotname' => 'SEVENONEMEDIA_FLUSH'));
 ?>
 
 <? if( $jsAtBottom ): ?>

@@ -79,13 +79,14 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 			parent::getContent( $processingTimeStart );
 
 			// Prevent cache poisoning if we are serving sass from preview server
-			if ( !empty($cacheId) && getHostPrefix() == null && !$this->mForceProfile ) {
-				$expTime = 0;
-				if ( $hasErrors ) {
-					$expTime = 10; // prevent flooding servers with sass processes
-				}
-				$memc->set( $cacheId, $this->mContent, $expTime );
+			if ( !empty($cacheId) && getHostPrefix() == null && !$this->mForceProfile && !$hasErrors ) {
+				$memc->set( $cacheId, $this->mContent, 0 );
 			}
+		}
+
+		if ($hasErrors) {
+			wfProfileOut(__METHOD__);
+			throw new Exception($this->mContent);
 		}
 
 		wfProfileOut(__METHOD__);

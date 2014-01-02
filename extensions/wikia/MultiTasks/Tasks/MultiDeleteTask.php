@@ -76,6 +76,7 @@ class MultiDeleteTask extends BatchTask {
 		$lang = $data["lang"];
 		$cat = intval($data["cat"]);
 		$reason = escapeshellarg($data['reason']);
+		$suppress = ( isset( $data['suppress'] ) && $data['suppress'] === true );
 
 		$pre_wikis = array();
 		if ( !empty($wikis) ) {
@@ -93,11 +94,11 @@ class MultiDeleteTask extends BatchTask {
 				$retval = "";
 				# check dbname exists
 				$dbname = WikiFactory::getWikiByID( $city_id );
-				if ( !$dbname ) continue;			
-				
+				if ( !$dbname ) continue;
+
 				$city_url = WikiFactory::getVarValueByName( "wgServer", $city_id );
 				if ( empty($city_url) ) continue;
-				
+
 				$city_path = WikiFactory::getVarValueByName( "wgScript", $city_id );
 				# command
 				$sCommand  = "SERVER_ID={$city_id} php $IP/maintenance/wikia/deleteOn.php ";
@@ -105,6 +106,9 @@ class MultiDeleteTask extends BatchTask {
 				$sCommand .= "-t " . escapeshellarg($this->prefixedTitle) . " ";
 				if ( $reason ) {
 					$sCommand .= "-r " . $reason . " ";
+				}
+				if ( $suppress ) {
+					$sCommand .= '-s ';
 				}
 				$sCommand .= "--conf {$wgWikiaLocalSettingsPath}";
 

@@ -92,8 +92,8 @@ class WikiaView {
 	protected function buildTemplatePath( $controllerClass, $methodName, $forceRebuild = false ) {
 		wfProfileIn(__METHOD__);
 		if( ( $this->templatePath == null ) || $forceRebuild ) {
+			global $wgAutoloadClasses;
 			$app = F::app();
-			$autoloadClasses = $app->wg->AutoloadClasses;
 
 			if ( !empty( $this->response ) ) {
 				$extension = $this->response->getTemplateEngine();
@@ -109,12 +109,12 @@ class WikiaView {
 				$controllerClass = $app->getControllerClassName( $controllerBaseName );
 			}
 
-			if( empty( $autoloadClasses[$controllerClass] ) ) {
+			if( empty( $wgAutoloadClasses[$controllerClass] ) ) {
 				throw new WikiaException( "Invalid controller or service name: {$controllerClass}" );
 			}
 
 			// First we look for BaseName_MethodName
-			$dirName = dirname( $autoloadClasses[$controllerClass] );
+			$dirName = dirname( $wgAutoloadClasses[$controllerClass] );
 			$basePath = "{$dirName}/templates/{$controllerBaseName}_{$methodName}";
 			$templatePath = "{$basePath}.$extension";
 			$templateExists = file_exists( $templatePath );
@@ -216,7 +216,11 @@ class WikiaView {
 
 	protected function renderJson() {
 		if( $this->response->hasException() ) {
-			$output = array( 'exception' => array( 'message' => $this->response->getException()->getMessage(), 'code' => $this->response->getException()->getCode() ) );
+			$exception = $this->response->getException();
+			$output = array( 'exception' => array( 'message' => $exception->getMessage(), 'code' => $exception->getCode(), 'details' => '' ) );
+			if ( is_callable( [ $exception, 'getDetails' ] ) ) {
+				$output[ 'exception' ][ 'details' ] = $exception->getDetails();
+			}
 		}
 		else {
 			$output = $this->response->getData();

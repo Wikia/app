@@ -29,6 +29,8 @@ class Factory
 		$terminal = 'Base';
 		if ( $result === null || $result instanceof Solarium_Result_Select_Empty ) {
 			$terminal = 'EmptySet';
+		} else if ( $searchConfig->getQueryService() === '\\Wikia\\Search\\QueryService\\Select\\Dismax\\CombinedMedia' ) {
+			$terminal = 'CombinedMediaResultSet';
 		}
 		return (new \Wikia\Search\ProfiledClassFactory)->get( 'Wikia\\Search\\ResultSet\\' . $terminal, [ $container ] );
 	}

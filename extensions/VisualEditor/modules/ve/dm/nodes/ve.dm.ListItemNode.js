@@ -1,65 +1,44 @@
-/**
- * VisualEditor data model ListItemNode class.
+/*!
+ * VisualEditor DataModel ListItemNode class.
  *
- * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
 /**
- * DataModel node for a list item.
+ * DataModel list item node.
  *
  * @class
+ * @extends ve.dm.BranchNode
  * @constructor
- * @extends {ve.dm.BranchNode}
  * @param {ve.dm.BranchNode[]} [children] Child nodes to attach
- * @param {Object} [attributes] Reference to map of attribute key/value pairs
+ * @param {Object} [element] Reference to element in linear model
  */
-ve.dm.ListItemNode = function VeDmListItemNode( children, attributes ) {
+ve.dm.ListItemNode = function VeDmListItemNode( children, element ) {
 	// Parent constructor
-	ve.dm.BranchNode.call( this, 'listItem', children, attributes );
+	ve.dm.BranchNode.call( this, children, element );
 };
 
 /* Inheritance */
 
 ve.inheritClass( ve.dm.ListItemNode, ve.dm.BranchNode );
 
-/* Static Members */
+/* Static Properties */
 
-/**
- * Node rules.
- *
- * @see ve.dm.NodeFactory
- * @static
- * @member
- */
-ve.dm.ListItemNode.rules = {
-	'isWrapped': true,
-	'isContent': false,
-	'canContainContent': false,
-	'hasSignificantWhitespace': false,
-	'childNodeTypes': null,
-	'parentNodeTypes': ['list']
+ve.dm.ListItemNode.static.name = 'listItem';
+
+ve.dm.ListItemNode.static.parentNodeTypes = [ 'list' ];
+
+ve.dm.ListItemNode.static.matchTagNames = [ 'li' ];
+
+ve.dm.ListItemNode.static.toDataElement = function () {
+	return { 'type': 'listItem' };
 };
 
-/**
- * Node converters.
- *
- * @see {ve.dm.Converter}
- * @static
- * @member
- */
-ve.dm.ListItemNode.converters = {
-	'domElementTypes': ['li'],
-	'toDomElement': function () {
-		return document.createElement( 'li' );
-	},
-	'toDataElement': function () {
-		return {
-			'type': 'listItem'
-		};
-	}
+ve.dm.ListItemNode.static.toDomElements = function ( dataElement, doc ) {
+	return [ doc.createElement( 'li' ) ];
 };
 
 /* Registration */
 
-ve.dm.nodeFactory.register( 'listItem', ve.dm.ListItemNode );
+ve.dm.modelRegistry.register( ve.dm.ListItemNode );

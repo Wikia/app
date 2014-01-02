@@ -7,7 +7,6 @@ class GlobalHeaderController extends WikiaController {
 		global $wgCityId;
 
 		wfProfileIn(__METHOD__);
-		$this->response->addAsset('skins/oasis/js/GlobalHeader.js');
 
 		$category = WikiFactory::getCategory($wgCityId);
 

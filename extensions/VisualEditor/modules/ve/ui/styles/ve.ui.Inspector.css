@@ -1,183 +1,48 @@
-/**
- * VisualEditor user interface Inspector styles.
+/*!
+ * VisualEditor UserInterface Inspector styles.
  *
- * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
 .ve-ui-inspector {
-	font-family: sans-serif;
-	position: absolute;
-	padding: 0.75em;
-	padding-top: 2.5em;
-	min-width: 15em;
-	z-index: 3;
+	-webkit-transition: opacity 100ms;
+	-moz-transition: opacity 100ms;
+	-ms-transition: opacity 100ms;
+	-o-transition: opacity 100ms;
+	transition: opacity 100ms;
 }
 
-.ve-ui-inspector-button {
-	position: absolute;
-	top: 0.5em;
-	width: 1.5em;
-	height: 1.5em;
-	background-position: center center;
-	background-repeat: no-repeat;
-	cursor: pointer;
-	filter: alpha(opacity=8);
-	opacity: 0.8;
+.ve-ui-inspector .ve-ui-frame {
+	width: 17.25em;
+	height: 3em;
 }
 
-.ve-ui-inspector-button:hover {
-	filter: alpha(opacity=100);
-	opacity: 1;
+.ve-ui-inspector-content .ve-ui-window-head {
+	height: 2em;
+	padding: 0.5em;
 }
 
-.ve-ui-inspector-button.ve-ui-inspector-button-disabled,
-.ve-ui-inspector-button.ve-ui-inspector-button-disabled:hover {
-	filter: alpha(opacity=50);
-	opacity: 0.5;
-}
-
-.ve-ui-inspector-closeButton {
-	left: 0.5em;
-	/* @see ve.ui.Icons */
-}
-
-.ve-ui-inspector-icon {
-	position: absolute;
-	left: 2.25em;
-	top: 0.5em;
-	width: 2em;
-	height: 1.5em;
-	background-position: right center;
-	background-repeat: no-repeat;
+.ve-ui-inspector-content .ve-ui-window-icon {
+	padding-left: 0.5em;
+	margin-left: 0.25em;
 	border-left: solid 1px #eee;
-	filter: alpha(opacity=8);
-	opacity: 0.8;
 }
 
-.ve-ui-inspector-clearButton {
-	right: 0.25em;
-	/* @see ve.ui.Icons */
+.ve-ui-inspector-content .ve-ui-inspector-closeButton {
+	float: left;
 }
 
-.ve-ui-inspector form {
-	margin: 0;
+.ve-ui-inspector-content .ve-ui-inspector-removeButton {
+	float: right;
+}
+
+.ve-ui-inspector-content .ve-ui-window-body form {
+	margin: 0.25em 0 0 0;
 	padding: 0;
 	white-space: nowrap;
-	font-size: 0.8em;
 }
 
-.ve-ui-inspector form input {
-	display: inline-block;
-	width: 20em;
-	font-size: 1em;
-	font-family: sans-serif;
-	background-color: #fff;
-	border: solid 1px #cccccc;
-	padding: 0.5em;
-	-webkit-border-radius: 0.25em;
-	-moz-border-radius: 0.25em;
-	-o-border-radius: 0.25em;
-	border-radius: 0.25em;
-}
-.ve-ui-inspector form input:focus {
-	outline: none;
-}
-
-.ve-ui-inspector form input.ve-ui-linkInspector-location {
-	/* @see ve.ui.Icons */
-	background-position: 18.75em center;
-	background-repeat: no-repeat;
-	padding-right: 1.5em;
-}
-
-.ve-ui-inspector form label {
-	display: inline-block;
-	width: 6em;
-}
-
-.ve-ui-inspector-title {
-	position: absolute;
-	top: 0;
-	left: 5.125em;
-	height: 2.8em;
-	line-height: 2.8em;
-	color: #333;
-	font-size: 0.9em;
-}
-
-.ve-iframe-overlay {
-	position: absolute;
-	top: 0;
-}
-
-.ve-ui-suggest-select {
-	position: absolute;
-	background: #FFFFFF;
-	/* @embed */
-	background-image: url(images/gray.png);
-	background-position: 8em top;
-	background-repeat: repeat-y;
-	width: 20em;
-	margin-top: -1px;
-	font-size: 0.8em;
-	z-index: 101;
-	border: solid 1px #ccc;
-	-webkit-border-radius: 0 0 0.25em 0.25em;
-	-moz-border-radius: 0 0 0.25em 0.25em;
-	-o-border-radius: 0 0 0.25em 0.25em;
-	border-radius: 0 0 0.25em 0.25em;
-	-webkit-box-shadow: 0 0.15em 1em 0 rgba(0, 0, 0, 0.2);
-	-moz-box-shadow: 0 0.15em 1em 0 rgba(0, 0, 0, 0.2);
-	box-shadow: 0 0.15em 1em 0 rgba(0, 0, 0, 0.2);
-}
-
-/* @noflip */
-body.rtl .ve-ui-suggest-select {
-	background-position: 12em top;
-}
-
-.ve-ui-suggest-container {
-	margin: 0.5em 0;
-}
-
-.ve-ui-suggest-label {
-	float: left;
-	width: 6.5em;
-	padding: 0.33em 0.75em;
-	text-align: right;
-	color: #888;
-}
-
-.ve-ui-suggest-wrap {
-	float: left;
-}
-
-.ve-ui-suggest-dummy-item {
-	padding: 0.33em 0.75em;
-	width: 10.5em;
-}
-
-.ve-ui-suggest-item {
-	padding: 0.33em 0.75em;
-	width: 10.5em;
-	cursor: pointer;
-	color: #0645AD;
-}
-
-.ve-ui-suggest-item-newPage {
-	color: #BA0000;
-}
-
-.ve-ui-suggest-item-externalLink,
-.ve-ui-suggest-item-existingPage {
-	color: #0645AD;
-}
-
-.ve-ui-suggest-item.selected {
-	background-color: #b3d6f6;
-}
-
-.ve-ui-suggest-item > a {
-	text-decoration: none;
+.ve-ui-inspector-content .ve-ui-window-body .ve-ui-textInputWidget {
+	width: 100%;
 }

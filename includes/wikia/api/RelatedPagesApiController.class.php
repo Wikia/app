@@ -1,9 +1,4 @@
 <?php
-/**
- * Controller to fetch related pages for given article ids
- *
- * @author Jakub Olek <jakub.olek@wikia-inc.com>
- */
 
 class RelatedPagesApiController extends WikiaApiController {
 	const PARAMETER_ARTICLE_IDS = 'ids';

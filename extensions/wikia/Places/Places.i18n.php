@@ -32,6 +32,7 @@ $messages['en'] = array(
 );
 
 /** Message documentation (Message documentation)
+ * @author Shirayuki
  */
 $messages['qqq'] = array(
 	'places-in-category' => '$1 is a category name',
@@ -40,6 +41,14 @@ $messages['qqq'] = array(
 	'places-editor-search' => 'Label for submit button that handles a search string. {{Identical|Search}}',
 	'places-editor-title-create-new' => 'Title of places editor modal when creating a new geotag',
 	'places-editor-title-edit' => 'Title of places editor modal when editing an existing geotag',
+	'places-geolocation-modal-error-title' => '{{Identical|Error}}',
+);
+
+/** Old English (Ænglisc)
+ * @author Espreon
+ */
+$messages['ang'] = array(
+	'places-editor-search' => 'Sēcan',
 );
 
 /** Arabic (العربية)
@@ -71,11 +80,16 @@ $messages['ar'] = array(
  * @author Y-M D
  */
 $messages['br'] = array(
+	'places' => 'Lakaat war ar wiki-mañ',
+	'places-in-category' => "Lec'hioù er rummad $1",
+	'places-on-map' => '{{PLURAL:$1|$1 plas|$1 plas}} war ar gartenn-mañ', # Fuzzy
 	'places-editor-search' => 'Klask',
+	'places-editor-show-my-location' => "Ma c'has da'm lec'h",
 	'places-editor-geoposition' => "Geolec'hiadur a-vremañ :",
 	'places-geolocation-button-label' => "Ouzhpennañ ul lec'hiadur",
 	'places-geolocation-modal-add-title' => "Ouzhpennañ ul lec'hiadur",
 	'places-geolocation-modal-error-title' => 'Fazi',
+	'places-geolocation-modal-error' => "Ur fazi zo bet pa oad o klask gouzout pelec'h emaoc'h : <br />$1",
 	'places-error-no-article' => "Ret eo deoc'h diferiñ ur bajenn",
 );
 
@@ -114,7 +128,7 @@ $messages['ce'] = array(
 	'places-editor-search' => 'Лаха',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Chmee2
  */
 $messages['cs'] = array(
@@ -346,6 +360,14 @@ $messages['lb'] = array(
 	'places-error-no-article' => 'Dir musst eng Säit uginn',
 );
 
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'places-editor-search' => 'پی جوری',
+	'places-geolocation-modal-error-title' => 'خطا',
+);
+
 /** Macedonian (македонски)
  * @author Bjankuloski06
  */
@@ -528,8 +550,8 @@ $messages['pms'] = array(
  */
 $messages['ps'] = array(
 	'places-editor-search' => 'پلټل',
-	'places-geolocation-button-label' => 'ځای ورګډول',
-	'places-geolocation-modal-add-title' => 'ځای ورګډول',
+	'places-geolocation-button-label' => 'ځای ورگډول',
+	'places-geolocation-modal-add-title' => 'ځای ورگډول',
 	'places-geolocation-modal-error-title' => 'تېروتنه',
 );
 
@@ -538,6 +560,7 @@ $messages['ps'] = array(
  * @author Malafaya
  */
 $messages['pt'] = array(
+	'places-editor-search' => 'Pesquisar',
 	'places-geolocation-button-label' => 'Adicionar localização',
 	'places-geolocation-modal-add-title' => 'Adicionar localização',
 	'places-geolocation-modal-error-title' => 'Erro',
@@ -561,6 +584,10 @@ $messages['roa-tara'] = array(
 	'places' => 'Luèche sus a sta uicchi',
 	'places-in-category' => "Luèche jndr'à categorije $1",
 	'places-editor-search' => 'Cirche',
+	'places-editor-title-create-new' => "Aggiunge 'nu geotag",
+	'places-editor-title-edit' => "Cange 'nu geotag",
+	'places-geolocation-button-label' => "Aggiunge 'na località",
+	'places-geolocation-modal-add-title' => "Aggiunge 'na località",
 	'places-geolocation-modal-error-title' => 'Errore',
 );
 
@@ -674,14 +701,52 @@ $messages['tl'] = array(
 	'places-category-switch-off' => 'Paganahin ang paglalagay ng tatak na pangheograpiya',
 );
 
+/** Turkish (Türkçe)
+ * @author Incelemeelemani
+ */
+$messages['tr'] = array(
+	'places-editor-search' => 'Ara',
+	'places-editor-title-create-new' => 'Bir coğrafi etiket ekle',
+	'places-editor-title-edit' => 'Coğrafi etiketi düzenle',
+	'places-editor-show-my-location' => 'Beni konumumu bul',
+	'places-editor-geoposition' => 'Mevcut coğrafi konum:',
+	'places-geolocation-button-label' => 'Konum ekle',
+	'places-geolocation-modal-add-title' => 'Konum ekle',
+	'places-geolocation-modal-error-title' => 'Hata',
+	'places-geolocation-modal-error' => 'Konumunuz belirlenmeye çalışılırken bir hata oluştu:<br />$1',
+	'places-geolocation-modal-not-available' => 'Bu özellik şu anda yalnızca mobil sürümdü kullanılabilir. <br /><br /> Tekrar denemek ister misiniz? Bu sayfayı yalnızca mobil cihazınız ile ziyaret edin.',
+	'places-error-no-article' => 'Bir sayfa belirtmelisiniz',
+);
+
 /** Ukrainian (українська)
  * @author A1
+ * @author Andriykopanytsia
  * @author Steve.rusyn
+ * @author SteveR
  */
 $messages['uk'] = array(
 	'places' => 'Місця на цій wiki',
+	'places-desc' => 'Забезпечує <nowiki><place> і <places></nowiki> аналізує закладки для геоміток на сторінках та на [[Special:Places|карті всіх сторінок з мітками]]',
+	'places-in-category' => 'Місця в категорії $1',
+	'places-on-map' => '{{PLURAL:$1|$1 місце|$1 місця|$1 місць}} на цій карті',
+	'places-modal-go-to-special' => 'Показано {{PLURAL:$1|$1 місце|$1 місця|$1 місць}} ([[Special:Places|побачити усе]])',
+	'places-toolbar-button-tooltip' => 'Натисніть, щоб додати геомітку на цій сторінці',
+	'places-toolbar-button-address' => 'Будь ласка, вкажіть адресу для використання геоміток для цієї сторінки',
 	'places-editor-search' => 'Пошук',
+	'places-editor-title-create-new' => 'Додати геомітку',
+	'places-editor-title-edit' => 'Редагувати геомітку',
+	'places-editor-show-my-location' => "Прив'язати мене до мого розташування",
+	'places-editor-geoposition' => 'Поточне розташування:',
+	'places-geolocation-button-label' => 'Додати розташування',
+	'places-geolocation-modal-add-title' => 'Додати розташування',
 	'places-geolocation-modal-error-title' => 'Помилка',
+	'places-geolocation-modal-error' => 'Виникла помилка під час спроби визначити вашу позицію:<br />$1',
+	'places-geolocation-modal-not-available' => 'На жаль! Наразі ця функція доступна тільки на мобільних пристроях.<br /><br />Хочете спробувати? Просто зайдіть на цю сторінку за допомогою вашого мобільного пристрою.',
+	'places-error-no-article' => 'Ви повинні вказати сторінку',
+	'places-error-place-already-exists' => 'Ця сторінка вже є геоміткою',
+	'places-updated-geolocation' => 'Додати геомітку на цю сторінку',
+	'places-category-switch' => 'Вимкнути додавання геоміток',
+	'places-category-switch-off' => 'Увімкнути додавання геоміток',
 );
 
 /** Walloon (walon)

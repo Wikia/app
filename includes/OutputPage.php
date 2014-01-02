@@ -2585,8 +2585,9 @@ $templates
 	 * @param $extraQuery Array with extra query parameters to add to each request. array( param => value )
 	 * @param $loadCall boolean If true, output an (asynchronous) mw.loader.load() call rather than a <script src="..."> tag
 	 * @return string html <script> and <style> tags
+	 * // Wikia change -- made this public so we could use it to build asset purge links BAC-895
 	 */
-	protected function makeResourceLoaderLink( $modules, $only, $useESI = false, array $extraQuery = array(), $loadCall = false ) {
+	public function makeResourceLoaderLink( $modules, $only, $useESI = false, array $extraQuery = array(), $loadCall = false ) {
 		global $wgResourceLoaderUseESI;
 
 		if ( !count( $modules ) ) {
@@ -2758,11 +2759,17 @@ $templates
 	 * @return String: HTML fragment
 	 */
 	function getHeadScripts() {
-		global $wgResourceLoaderExperimentalAsyncLoading;
-
+		global $wgResourceLoaderExperimentalAsyncLoading, $wgEnableVisualEditorExt;
+		// Achtung! Achtung!
+		// This is a temporary fix for https://wikia-inc.atlassian.net/browse/VE-688 while we are working
+		// on more permanent and long term solution.
+		if ( !empty( $wgEnableVisualEditorExt ) ) {
+			$extraData = array( 've' => 1 );
+		} else {
+			$extraData = array();
+		}
 		// Startup - this will immediately load jquery and mediawiki modules
-		$scripts = $this->makeResourceLoaderLink( 'startup', ResourceLoaderModule::TYPE_SCRIPTS, true );
-
+		$scripts = $this->makeResourceLoaderLink( 'startup', ResourceLoaderModule::TYPE_SCRIPTS, true, $extraData );
 		// Load config before anything else
 		$scripts .= Html::inlineScript(
 			ResourceLoader::makeLoaderConditionalScript(

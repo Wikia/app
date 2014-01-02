@@ -1,4 +1,4 @@
-define('phalanx', ['wikia.deferred', 'wikia.nirvana'], function(deferred, nirvana) {
+define('phalanx', ['jquery', 'wikia.nirvana'], function($, nirvana) {
 	'use strict';
 
 	var TOKEN;
@@ -8,7 +8,7 @@ define('phalanx', ['wikia.deferred', 'wikia.nirvana'], function(deferred, nirvan
 	}
 
 	function validate(regexp) {
-		var dfd = new deferred();
+		var dfd = $.Deferred();
 
 		if (regexp === '') {
 			dfd.resolve(false);
@@ -37,7 +37,7 @@ define('phalanx', ['wikia.deferred', 'wikia.nirvana'], function(deferred, nirvan
 	}
 
 	function unblock(blockId) {
-		var dfd = new deferred();
+		var dfd = $.Deferred();
 
 		nirvana.postJson('PhalanxSpecial', 'unblock', {
 			blockId: blockId,

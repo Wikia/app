@@ -1,6 +1,9 @@
 <?php
 //Warning: If you break the tests contained in this file, please contact the Mobile Team. Thanks.
 
+/**
+ * Test for Class WikiaMobileSharingServiceTest
+ */
 class WikiaMobileSharingServiceTest extends WikiaBaseTest {
 
 	public function setUp() {
@@ -13,6 +16,8 @@ class WikiaMobileSharingServiceTest extends WikiaBaseTest {
 	const LANGUAGE = '|LANG|';
 
 	function testNetworks(){
+		global $wgLang;
+
 		$app = F::app();
 		$passedChecks = 0;
 		$networks = array(
@@ -23,7 +28,7 @@ class WikiaMobileSharingServiceTest extends WikiaBaseTest {
 		);
 
 		//mock Language::getCode and override wgLang
-		$origLang = $app->wg->Lang;
+		$origLang = $wgLang;
 		$lang = $this->getMock( 'Language' );
         $lang->expects( $this->any() )
              ->method( 'getCode' )
@@ -34,6 +39,9 @@ class WikiaMobileSharingServiceTest extends WikiaBaseTest {
 		//making sure the mock works as expected
 		$this->assertEquals( self::LANGUAGE, $app->wg->Lang->getCode() );
 
+		/**
+		 * @var $data SocialSharing[]
+		 */
 		$data = $app->sendRequest( 'WikiaMobileSharingService' )->getVal( 'networks' );
 
 		$this->assertTrue( is_array( $data ) );
@@ -62,9 +70,9 @@ class WikiaMobileSharingServiceTest extends WikiaBaseTest {
 		$this->assertEquals( count( $networks ), $passedChecks );
 
 		//restore for upcoming test
-		$app->wg->set( 'wgLang', $origLang );
+		$wgLang = $origLang;
 
 		//make sure wgLang is restored
-		$this->assertNotEquals( self::LANGUAGE, $app->wg->Lang->getCode() );
+		$this->assertNotEquals( $lang, $app->wg->Lang );
 	}
 }

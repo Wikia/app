@@ -26,10 +26,11 @@ var Lightbox = {
 	to: 0, // timestamp for getting wiki images
 
 	makeLightbox: function(params) {
-		// Allow other extensions to react when a Lightbox is opened.  Used in FilePage.
+		// Allow other extensions to react when a Lightbox is opened.  Used in FilePage and Touchstorm widget
 		$(window).trigger('lightboxOpened');
 
-		Lightbox.includeLatestPhotos = !$('#LatestPhotosModule .carousel-container').length; // if we don't have latest photos in the DOM, request them from back end
+		// if we don't have latest photos in the DOM, request them from back end
+		Lightbox.includeLatestPhotos = !$('#LatestPhotosModule .carousel-container').length;
 		Lightbox.openModal = params.modal;
 
 		// If file doesn't exist, show the error modal
@@ -63,7 +64,7 @@ var Lightbox = {
 		Lightbox.cacheDOM();
 
 		// Init ads in Lightbox
-		if ($('#MODAL_RECTANGLE').length && Lightbox.ads.userShowAds) {
+		if ($('#MODAL_RECTANGLE').length && window.wgShowAds) {
 			Lightbox.openModal.lightbox.addClass('show-ads');
 			window.adslots2.push(['MODAL_RECTANGLE']);
 			Lightbox.ads.adModalRectangleShown = true;
@@ -457,8 +458,6 @@ var Lightbox = {
 	ads: {
 		// is MODAL_RECTANGLE ad shown?
 		adModalRectangleShown: false,
-		// should we show ads for this user?
-		userShowAds: !window.wgUserName || window.wgUserShowAds,
 		// preload ad after this number of unique images/videos are shown
 		adMediaCountPreload: 2,
 		// show an ad after this number of unique images/videos are shown
@@ -484,7 +483,7 @@ var Lightbox = {
 		},
 		// should user see ads?
 		showAds: function() {
-			return !!(this.userShowAds
+			return !!(window.wgShowAds
 				&& (Geo.getCountryCode() === 'US' || Geo.getCountryCode() === 'GB')
 				&& $('#' + this.getSlotName()).length);
 		},
@@ -762,7 +761,13 @@ var Lightbox = {
 			});
 		}
 	},
+	carouselTypes: [
+		'relatedVideos',
+		'articleMedia',
+		'latestPhotos'
+	],
 	setUpCarousel: function() {
+
 		// cache carousel template
 		Lightbox.openModal.carouselTemplate = $('#LightboxCarouselThumbs');
 		Lightbox.openModal.carouselContainer = $('#LightboxCarouselContainer');
@@ -775,7 +780,7 @@ var Lightbox = {
 		Lightbox.current.thumbs.push({});
 
 		// Load backfill content from DOM
-		var types = ['relatedVideos', 'articleMedia', 'latestPhotos'],
+		var types = Lightbox.carouselTypes,
 			i;
 
 		for(i=0; i<types.length; i++) {
@@ -1007,7 +1012,7 @@ var Lightbox = {
 			var addresses = $(this).find('input').first().val();
 
 			// make sure user is logged in
-			if(wgUserName) {
+			if (window.wgUserName) {
 				doShareEmail(addresses);
 			} else {
 				UserLoginModal.show({
@@ -1357,6 +1362,13 @@ var Lightbox = {
 
 				carouselType = "latestPhotos";
 				trackingCarouselType = "latest-photos";
+				break;
+
+			case 'TouchStormModule':
+				clickSource = clickSource || VPS.TOUCHSTORM;
+
+				carouselType = "touchStorm";
+				trackingCarouselType = "touch-storm";
 				break;
 
 			case 'WikiaArticle':

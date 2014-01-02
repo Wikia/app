@@ -247,14 +247,10 @@ class ArticleComment {
 
 		$parser->ac_metadata = [];
 
-		// Always tidy Article Comment markup to avoid breakage of surrounding markup
-		global $wgAlwaysUseTidy;
-		$oldWgAlwaysUseTidy = $wgAlwaysUseTidy;
-		$wgAlwaysUseTidy = true;
-
 		$head = $parser->parse( $rawtext, $this->mTitle, ParserOptions::newFromContext( RequestContext::getMain() ) );
 
-		$this->mText = $head->getText();
+		$this->mText = wfFixMalformedHTML( $head->getText() );
+
 		$this->mHeadItems = $head->getHeadItems();
 
 		if( isset( $parser->ac_metadata ) ) {
@@ -264,9 +260,6 @@ class ArticleComment {
 		}
 
 		ParserPool::release( $parser );
-
-		// Restore old value of $wgAlwaysUseTidy
-		$wgAlwaysUseTidy = $oldWgAlwaysUseTidy;
 
 		return $this->mText;
 	}
@@ -733,21 +726,15 @@ class ArticleComment {
 
 		$editPage->summary = $summary;
 
+		$editPage->watchthis = $user->isWatched( $article->getTitle() );
+
 		if(!empty($metadata)) {
 			$editPage->textbox1 =  $text. Xml::element( 'ac_metadata', $metadata, ' ' );
 		}
 
 		$bot = $user->isAllowed('bot');
-			//this function calls Article::onArticleCreate which clears cache for article and it's talk page - TODO: is this comment still valid? Does it refer to the line above or to something that got deleted?
-		$retval = $editPage->internalAttemptSave( $result, $bot );
 
-		if( $retval->value == EditPage::AS_SUCCESS_UPDATE ) {
-			$commentsIndex = CommentsIndex::newFromId( $article->getID() );
-			if ( $commentsIndex instanceof CommentsIndex ) {
-				$commentsIndex->updateLastRevId( $article->getTitle()->getLatestRevID(Title::GAID_FOR_UPDATE) );
-			}
-		}
-		return $retval;
+		return $editPage->internalAttemptSave( $result, $bot );
 	}
 
 	/**
@@ -843,45 +830,14 @@ class ArticleComment {
 		 */
 
 		$article  = new Article( $commentTitle, 0 );
+
+		CommentsIndex::addCommentInfo($commentTitleText, $title, $parentId);
+
 		$retval = self::doSaveAsArticle($text, $article, $user, $metadata);
 
-		// add comment to database
 		if ( $retval->value == EditPage::AS_SUCCESS_NEW_ARTICLE ) {
-			if ( !empty($parentId) ) {
-				Wikia::log( __METHOD__, false, "ArticleComment::doPost (reply to " . $parentId . ") - saved an article " .
-					$commentTitleText . ', commentId is ' . $article->getID(), true );
-			}
-			$revId = $article->getRevIdFetched();
-			$data = array(
-				'namespace' => $title->getNamespace(),
-				'parentPageId' => $title->getArticleID(),
-				'commentId' => $article->getID(),
-				'parentCommentId' => intval($parentId),
-				'firstRevId' => $revId,
-				'lastRevId' => $revId,
-			);
-
-			$commentsIndex = new CommentsIndex( $data );
-			$commentsIndex->addToDatabase();
-			if ( !empty($parentId) ) {
-				Wikia::log( __METHOD__, false, "ArticleComment::doPost (reply to " . $parentId . ") - added comments index to DB for " .
-					$commentTitleText . ', commentId is ' . $article->getID(), true );
-			}
-
-			// set last child comment id
-			$commentsIndex->updateParentLastCommentId( $data['commentId'] );
-
-			if ( !empty($parentId) ) {
-				Wikia::log( __METHOD__, false, "ArticleComment::doPost (reply to " . $parentId . ") - updated parent for " .
-					$commentTitleText . ', commentId is ' . $article->getID(), true );
-			}
-
-			wfRunHooks( 'EditCommentsIndex', array($article->getTitle(), $commentsIndex) );
-		} else {
-			if ( !empty($parentId) ) {
-				Wikia::log( __METHOD__, false, "ArticleComment::doPost (reply to " . $parentId .
-					") - failed to save reply article with title " . $commentTitleText, true );
-			}
+			$commentsIndex = CommentsIndex::newFromId( $article->getID() );
+			wfRunHooks( 'EditCommentsIndex', [ $article->getTitle(), $commentsIndex ] );
 		}
 
 		$res = ArticleComment::doAfterPost( $retval, $article, $parentId );
@@ -911,21 +867,19 @@ class ArticleComment {
 		// Purge squid proxy URLs for ajax loaded content if we are lazy loading
 		if ( !empty( $wgArticleCommentsLoadOnDemand ) ) {
 			$urls = array();
-			$pages = $commentList->getCountPages();
 			$articleId = $title->getArticleId();
 
-			for ( $page = 1; $page <= $pages; $page++ ) {
-				$params[ 'page' ] = $page;
-				$urls[] = ArticleCommentsController::getUrl(
-					'Content',
-					array(
-						'format' => 'html',
-						'articleId' => $articleId,
-						'page' => $page,
-						'skin' => 'true'
-					)
-				);
-			}
+			// Only page 1 is cached in varnish when lazy loading is on
+			// Other pages load with action=ajax&rs=ArticleCommentsAjax&method=axGetComments
+			$urls[] = ArticleCommentsController::getUrl(
+				'Content',
+				array(
+					'format' => 'html',
+					'articleId' => $articleId,
+					'page' => 1,
+					'skin' => 'true'
+				)
+			);
 
 			$squidUpdate = new SquidUpdate( $urls );
 			$squidUpdate->doUpdate();
@@ -1457,4 +1411,52 @@ class ArticleComment {
 		$app = F::app();
 		return $app->wg->EnableMiniEditorExtForArticleComments && $app->checkSkin( 'oasis' );
 	}
+
+	/**
+	 * @desc Helper method returning true or false depending on fact if ArticleComments or Blogs are enabled
+	 *
+	 * @return bool
+	 */
+	static private function isCommentingEnabled() {
+		global $wgEnableArticleCommentsExt, $wgEnableBlogArticles;
+
+		return !empty($wgEnableArticleCommentsExt) || !empty($wgEnableBlogArticles);
+	}
+
+	/**
+	 * @desc Enables article and blog comments deletion for users who have commentdelete right but don't have delete
+	 *
+	 * @param Article $article
+	 * @param Title $title
+	 * @param User $user
+	 * @param Array $permission_errors
+	 *
+	 * @return true because it's a hook
+	 */
+	static public function onBeforeDeletePermissionErrors( &$article, &$title, &$user, &$permission_errors ) {
+		if( self::isCommentingEnabled() &&
+			$user->isAllowed( 'commentdelete' ) &&
+			ArticleComment::isTitleComment( $title )
+		) {
+			foreach( $permission_errors as $key => $errorArr ) {
+				if( self::isBadAccessError( $errorArr ) ) {
+					unset( $permission_errors[$key] );
+				}
+			}
+		}
+
+		return true;
+	}
+
+	/**
+	 * @desc Checks if $errors array have badaccess-groups or badaccess-group0 string
+	 *
+	 * @param Array $errors
+	 *
+	 * @return bool
+	 */
+	static private function isBadAccessError( $errors ) {
+		return in_array( 'badaccess-groups', $errors ) || in_array( 'badaccess-group0', $errors );
+	}
+
 }

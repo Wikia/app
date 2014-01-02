@@ -184,7 +184,7 @@
 	<div class="challenge">
 		<?= wfMsg('wikiaquiz-game-challenge') ?>
 	</div>
-	<fb:like class="fblike" href="" send="true" width="530" show_faces="true" font="" height="75" action="recommend"></fb:like>
+	<fb:like class="fblike" href="" send="true" show_faces="true" font="" height="75" action="recommend"></fb:like>
 </div>
 <script>
 	var WikiaQuizVars = <?= json_encode($quizVars) ?>, WikiaQuizEmailRequired = <?= !empty($data['requireEmail']) ? 'true' : 'false' ?>;

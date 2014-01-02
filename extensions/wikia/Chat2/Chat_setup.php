@@ -143,6 +143,17 @@ JSMessages::registerPackage('ChatBanModal', array(
 	'chat-ban-modal-button-change-ban',
 ));
 
+JSMessages::registerPackage('ChatEntryPoint', array(
+	'chat-join-the-chat',
+	'chat-start-a-chat',
+	'chat-user-menu-message-wall',
+	'chat-user-menu-talk-page',
+	'chat-user-menu-contribs',
+	'chat-live2',
+	'chat-edit-count',
+	'chat-member-since'
+));
+
 define( 'CHAT_TAG', 'chat' );
 define( 'CUC_TYPE_CHAT', 128);	// for CheckUser operation type
 

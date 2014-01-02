@@ -1,5 +1,5 @@
-<? if($user->isLoggedIn() && empty($suppressWallNotifications)): ?>
-	<ul id="WallNotifications" class="WallNotifications <?php if($prehide): ?>prehide<?php endif; ?>">
+<? if( $loggedIn && empty( $suppressWallNotifications ) ): ?>
+	<ul id="WallNotifications" class="WallNotifications <?php if( $prehide ): ?>prehide<?php endif; ?>">
 		<li>
 			<div class="bubbles">
 				<span id="bubbles_count"></span>

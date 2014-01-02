@@ -7,6 +7,7 @@
  * @author Saipetch
  */
 class WikiFeaturesSpecialController extends WikiaSpecialPageController {
+	use PreventBlockedUsersThrowsError;
 
 	public function __construct() {
 		parent::__construct('WikiFeatures', 'wikifeaturesview');
@@ -22,6 +23,8 @@ class WikiFeaturesSpecialController extends WikiaSpecialPageController {
 			$this->displayRestrictionError();
 			return false;  // skip rendering
 		}
+
+		JSMessages::enqueuePackage('WikiFeatures', JSMessages::EXTERNAL);
 
 		$this->response->addAsset('extensions/wikia/WikiFeatures/css/WikiFeatures.scss');
 		$this->response->addAsset('extensions/wikia/WikiFeatures/js/modernizr.transform.js');

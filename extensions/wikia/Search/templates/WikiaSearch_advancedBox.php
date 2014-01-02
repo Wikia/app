@@ -25,12 +25,9 @@
 		}
 		$rows = array_values( $rows );
 		$numRows = count( $rows );
-
-
-		$hidden = '<input type="hidden" name="advanced" value="'.$advanced.'" />';
 	?>
 
-	<section id="AdvancedSearch" class="AdvancedSearch<? if(!$advanced){ ?> hidden<? } ?>">
+	<section id="AdvancedSearch" class="AdvancedSearch hidden">
 		<h3><?=wfMsg('wikiasearch2-advanced-search');?></h3>
 
 		<div class="selectAll">
@@ -40,7 +37,6 @@
 		<?php for( $i = 0; $i < $numRows; $i++ ) {
 			echo $rows[$i];
 		}?>
-		<?= $hidden; ?>
 	</section>
 
 

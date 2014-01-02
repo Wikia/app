@@ -16,6 +16,7 @@ class AdminDashboardLogic {
 			'ListUsers' => true,
 			'MultipleUpload' => true,
 			'PageLayoutBuilder' => true,
+			'Promote' => true,
 			'Recentchanges' => true,
 			'RecentChanges' => true,
 			'ThemeDesigner' => true,
@@ -23,6 +24,7 @@ class AdminDashboardLogic {
 			'UserRights' => true,
 			'Userrights' => true,
 			'WikiFeatures' => true,
+			'WikiaVideoAdd' => true,
 		);
 		return !empty($generalApps[$appName]);
 	}
@@ -103,10 +105,12 @@ class AdminDashboardLogic {
 				"UserPathPrediction",
 				"UserSignup",
 				"Version",
+				"VideoPageAdmin",
 				"Videos",
 				"WDACReview",
 				"WhereIsExtension",
 				"WikiActivity",
+				"WikiaConfirmEmail",
 				"WikiaHubsV2",
 				"WikiaSearch",
 				"WikiaStyleGuide",

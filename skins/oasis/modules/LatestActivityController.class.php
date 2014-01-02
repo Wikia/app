@@ -18,7 +18,7 @@ class LatestActivityController extends WikiaController {
 		wfProfileIn(__METHOD__);
 		$maxElements = 4;
 
-		global $wgLang, $wgContentNamespaces, $wgStylePath, $wgMemc;
+		global $wgLang, $wgContentNamespaces, $wgStylePath, $wgMemc, $wgUser;
 		//$wgOut->addScript('<script src="'. $wgStylePath .'/oasis/js/LatestActivity.js"></script>');
 		$this->moduleHeader = wfMsg('oasis-activity-header');
 		
@@ -101,7 +101,10 @@ class LatestActivityController extends WikiaController {
 				$wgMemc->set($mKeyTimes, $this->changeList, 60);
 			}
 		}
-		
+
+		if ($wgUser->isAnon()) {
+			$this->response->addAsset('skins/oasis/js/LatestActivity.js');
+		}
 		// Cache the latest activity call in varnish (and browser).
 		$this->response->setCacheValidity(self::CACHE_DURATION, self::CACHE_DURATION, array(WikiaResponse::CACHE_TARGET_BROWSER, WikiaResponse::CACHE_TARGET_VARNISH));
 		

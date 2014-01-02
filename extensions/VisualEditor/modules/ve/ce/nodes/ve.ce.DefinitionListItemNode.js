@@ -1,69 +1,66 @@
-/**
- * VisualEditor content editable DefinitionListItemNode class.
+/*!
+ * VisualEditor ContentEditable DefinitionListItemNode class.
  *
- * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
 /**
- * ContentEditable node for a definition list item.
+ * ContentEditable definition list item node.
  *
  * @class
+ * @extends ve.ce.BranchNode
  * @constructor
- * @extends {ve.ce.BranchNode}
  * @param {ve.dm.DefinitionListItemNode} model Model to observe
+ * @param {Object} [config] Configuration options
  */
-ve.ce.DefinitionListItemNode = function VeCeDefinitionListItemNode( model ) {
+ve.ce.DefinitionListItemNode = function VeCeDefinitionListItemNode( model, config ) {
 	// Parent constructor
-	ve.ce.BranchNode.call(
-		this, 'definitionListItem', model, ve.ce.BranchNode.getDomWrapper( model, 'style' )
-	);
+	ve.ce.BranchNode.call( this, model, config );
 
 	// Events
-	this.model.addListenerMethod( this, 'update', 'onUpdate' );
+	this.model.connect( this, { 'update': 'onUpdate' } );
 };
 
 /* Inheritance */
 
 ve.inheritClass( ve.ce.DefinitionListItemNode, ve.ce.BranchNode );
 
-/* Static Members */
+/* Static Properties */
 
-/**
- * Node rules.
- *
- * @see ve.ce.NodeFactory
- * @static
- * @member
- */
-ve.ce.DefinitionListItemNode.rules = {
-	'canBeSplit': false
-};
-
-/**
- * Mapping of list item style values and DOM wrapper element types.
- *
- * @static
- * @member
- */
-ve.ce.DefinitionListItemNode.domWrapperElementTypes = {
-	'definition': 'dd',
-	'term': 'dt'
-};
+ve.ce.DefinitionListItemNode.static.name = 'definitionListItem';
 
 /* Methods */
 
 /**
- * Responds to model update events.
+ * Get the HTML tag name.
+ *
+ * Tag name is selected based on the model's style attribute.
+ *
+ * @returns {string} HTML tag name
+ * @throws {Error} If style is invalid
+ */
+ve.ce.DefinitionListItemNode.prototype.getTagName = function () {
+	var style = this.model.getAttribute( 'style' ),
+		types = { 'definition': 'dd', 'term': 'dt' };
+
+	if ( !( style in types ) ) {
+		throw new Error( 'Invalid style' );
+	}
+	return types[style];
+};
+
+/**
+ * Handle model update events.
  *
  * If the style changed since last update the DOM wrapper will be replaced with an appropriate one.
  *
  * @method
  */
 ve.ce.DefinitionListItemNode.prototype.onUpdate = function () {
-	this.updateDomWrapper( 'style' );
+	this.updateTagName();
 };
 
 /* Registration */
 
-ve.ce.nodeFactory.register( 'definitionListItem', ve.ce.DefinitionListItemNode );
+ve.ce.nodeFactory.register( ve.ce.DefinitionListItemNode );

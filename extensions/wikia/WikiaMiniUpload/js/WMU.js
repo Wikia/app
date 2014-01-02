@@ -53,7 +53,9 @@ var WMU_modal = null,
 	WMU_orgThumbSize = null,
 	WMU_width = null, // real width of full sized image
 	WMU_height = null,
-	WMU_widthChanges = 1,
+	WMU_exactWidth = null,    // Constrain search and upload > than this width
+	WMU_exactHeight = null,   // Constrain search and upload > than this height
+	WMU_aspectRatio = null, // Constrain searchand upload == this aspect ratio
 	WMU_refid = null,
 	WMU_wysiwygStart = 1,
 	WMU_ratio = 1,
@@ -65,8 +67,6 @@ var WMU_modal = null,
 	WMU_caption = 0,
 	WMU_link = 0,
 	WMU_box = -1,
-	WMU_width_par = null,
-	WMU_height_par = null,
 	WMU_skipDetails = false,
 	WMU_openedInEditor = true;
 
@@ -339,7 +339,7 @@ function WMU_loadMainFromView() {
 
 			WMU_indicator(1, false);
 			if($('#ImageQuery').length) {
-				$('#ImageQuery').focus();
+				$('#ImageQuery').focusNoScroll();
 			}
 			var cookieMsg = document.cookie.indexOf("wmumainmesg=");
 			if (cookieMsg > -1 && document.cookie.charAt(cookieMsg + 12) == 0) {
@@ -476,7 +476,9 @@ function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
 		if(WMU_refid != null && WMU_wysiwygStart == 2) {
 			WMU_loadDetails();
 		} else {
-			if($('#ImageQuery').length) $('#ImageQuery').focus();
+			if( $('#ImageQuery').length) {
+				$('#ImageQuery').focusNoScroll();
+			}
 		}
 		return;
 	}
@@ -521,7 +523,9 @@ function WMU_loadMain() {
 	var callback = function(html) {
 		$('#ImageUploadMain').html(html);
 		WMU_indicator(1, false);
-		if($('#ImageQuery').length) $('#ImageQuery').focus();
+		if( $('#ImageQuery').length && $('#ImageQuery').is(':visible') ) {
+			$('#ImageQuery').focusNoScroll();
+		}
 		var cookieMsg = document.cookie.indexOf("wmumainmesg=");
 		if (cookieMsg > -1 && document.cookie.charAt(cookieMsg + 12) == 0) {
 			$('#ImageUploadTextCont').hide();
@@ -534,7 +538,19 @@ function WMU_loadMain() {
 		}
 	}
 	WMU_indicator(1, true);
-	$.get(wgScriptPath + '/index.php?action=ajax&rs=WMU&method=loadMain', callback);
+
+	baseUrl = wgScriptPath + '/index.php?action=ajax&rs=WMU&method=loadMain';
+	if ( WMU_exactHeight != null ) {
+		baseUrl = baseUrl + '&exactHeight=' + WMU_exactHeight;
+	}
+	if ( WMU_exactWidth != null ) {
+		baseUrl = baseUrl + '&exactWidth=' + WMU_exactWidth;
+	}
+	if ( WMU_aspectRatio != null ) {
+		baseUrl = baseUrl + '&aspectRatio=' + WMU_aspectRatio;
+	}
+
+	$.get(baseUrl, callback);
 	WMU_curSourceId = 0;
 }
 
@@ -577,6 +593,13 @@ function WMU_recentlyUploaded(param, pagination) {
 		label: 'paginate-' + pagination
 	});
 
+	if(WMU_exactHeight) {
+		param = (param.length > 0 ? param + '&' : '') + 'exactHeight='+WMU_exactHeight;
+	}
+	if(WMU_exactWidth) {
+		param = (param.length > 0 ? param + '&' : '') + 'exactWidth='+WMU_exactWidth;
+	}
+
 	WMU_indicator(2, true);
 	$.get(wgScriptPath + '/index.php?action=ajax&rs=WMU&method=recentlyUploaded&'+param, callback);
 }
@@ -593,7 +616,9 @@ function WMU_changeSource(e) {
 			$('#WMU_results_' + WMU_curSourceId).hide();
 			$('#WMU_results_' + sourceId).show();
 
-			if($('#ImageQuery').length) $('#ImageQuery').focus();
+			if($('#ImageQuery').length) {
+				$('#ImageQuery').focusNoScroll();
+			}
 
 			WMU_track({
 				label: sourceId == 0 ? 'find-this-wiki' : 'find-flickr'
@@ -907,6 +932,16 @@ function WMU_insertImage(type) {
 	params.push('mwname='+$('#ImageUploadMWname').val());
 	params.push('tempid='+$('#ImageUploadTempid').val());
 
+	if(WMU_exactHeight) {
+		params.push('exactHeight='+WMU_exactHeight);
+	}
+	if(WMU_exactWidth) {
+		params.push('exactWidth='+WMU_exactWidth);
+	}
+	if(WMU_aspectRatio) {
+		params.push('aspectRatio='+WMU_aspectRatio);
+	}
+
 	var captionUpdateInput = $('#ImageUploadReplaceDefault');
 	if (captionUpdateInput.is(':hidden')) {
 		params.push('update_caption=' + captionUpdateInput.val());
@@ -1006,6 +1041,7 @@ function WMU_insertImage(type) {
 			case 'error':
 				o.responseText = o.responseText.replace(/<script.*script>/, "" );
 				alert(o.responseText);
+				WMU_switchScreen('Summary');
 				break;
 			case 'conflict':
 				WMU_switchScreen('Conflict');

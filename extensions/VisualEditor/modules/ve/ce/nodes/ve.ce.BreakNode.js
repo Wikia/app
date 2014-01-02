@@ -1,23 +1,24 @@
-/**
- * VisualEditor content editable BreakNode class.
+/*!
+ * VisualEditor ContentEditable BreakNode class.
  *
- * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
 /**
- * ContentEditable node for a line break.
+ * ContentEditable break node.
  *
  * @class
+ * @extends ve.ce.LeafNode
  * @constructor
- * @extends {ve.ce.LeafNode}
  * @param {ve.dm.BreakNode} model Model to observe
+ * @param {Object} [config] Configuration options
  */
-ve.ce.BreakNode = function VeCeBreakNode( model ) {
+ve.ce.BreakNode = function VeCeBreakNode( model, config ) {
 	// Parent constructor
-	ve.ce.LeafNode.call( this, 'break', model, $( '<br>' ) );
+	ve.ce.LeafNode.call( this, model, config );
 
-	// DOM Changes
+	// DOM changes
 	this.$.addClass( 've-ce-BreakNode' );
 };
 
@@ -25,19 +26,12 @@ ve.ce.BreakNode = function VeCeBreakNode( model ) {
 
 ve.inheritClass( ve.ce.BreakNode, ve.ce.LeafNode );
 
-/* Static Members */
+/* Static Properties */
 
-/**
- * Node rules.
- *
- * @see ve.ce.NodeFactory
- * @static
- * @member
- */
-ve.ce.BreakNode.rules = {
-	'canBeSplit': false
-};
+ve.ce.BreakNode.static.name = 'break';
+
+ve.ce.BreakNode.static.tagName = 'br';
 
 /* Registration */
 
-ve.ce.nodeFactory.register( 'break', ve.ce.BreakNode );
+ve.ce.nodeFactory.register( ve.ce.BreakNode );

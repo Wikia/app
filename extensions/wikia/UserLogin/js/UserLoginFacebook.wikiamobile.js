@@ -11,7 +11,6 @@ require(['track', 'wikia.querystring', 'toast', 'wikia.nirvana', 'JSMessages', '
 					//see fbconnect.js
 					window.FB.init({
 						appId : window.fbAppId,
-						oauth : true,
 						status : true, // Check login status
 						cookie : true, // Enable cookies to allow the server to access the session
 						xfbml  : window.fbUseMarkup // Whether XFBML should be automatically parsed
@@ -38,10 +37,15 @@ require(['track', 'wikia.querystring', 'toast', 'wikia.nirvana', 'JSMessages', '
 								});
 
 								var reload = new Qs(),
-									returnto = reload.getVal('returnto', (wgCanonicalSpecialPageName && (wgCanonicalSpecialPageName.match(/Userlogin|Userlogout/))) ? wgMainPageTitle : '');
+									returnto = reload.getVal('returnto',
+										(window.wgCanonicalSpecialPageName &&
+										window.wgCanonicalSpecialPageName.match(/Userlogin|Userlogout/)) ?
+											window.wgMainPageTitle :
+											''
+									);
 
 								if(returnto) {
-									reload.setPath(wgArticlePath.replace('$1', returnto));
+									reload.setPath(window.wgArticlePath.replace('$1', returnto));
 								}
 
 								reload.removeVal('returnto').removeHash('topbar').addCb().goTo();

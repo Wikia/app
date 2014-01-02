@@ -7,12 +7,26 @@ $wgShowExceptionDetails = true;
 // include chef generated variables: $wgWikiaDatacenter
 require_once('/usr/wikia/devbox/DevBoxVariables.php');
 
-$IP = '/usr/wikia/source/wiki';
-$wgWikiaLocalSettingsPath  = '/usr/wikia/docroot/wiki.factory/LocalSettings.php';
+$IP = realpath(__DIR__ . '/../../../..');
+
+if (getenv('DOCUMENT_ROOT')) {
+	$wgWikiaLocalSettingsPath = getenv('DOCUMENT_ROOT') . "/LocalSettings.php";
+} else {
+	$wgWikiaLocalSettingsPath = "/usr/wikia/docroot/wiki.factory/LocalSettings.php";
+}
+
 $wgWikiaAdminSettingsPath = dirname( $wgWikiaLocalSettingsPath ) . "/../AdminSettings.php";
 
 $wgDevelEnvironment = true;
 $wgWikicitiesReadOnly = false;
+
+if (getenv('wgDevelEnvironmentName')) {
+	$wgDevelEnvironmentName = getenv('wgDevelEnvironmentName');
+} else {
+	$host = gethostname();
+	$host = explode("-", $host);
+	$wgDevelEnvironmentName = trim($host[1]);
+}
 
 require_once("$IP/extensions/wikia/WikiFactory/Loader/WikiFactoryLoader.php");
 
@@ -76,6 +90,39 @@ switch($wgWikiaDatacenter) {
 		require_once( "$IP/extensions/wikia/Development/ExternalStoreDBFetchBlobHook.php" );
 		break;
 }
+
+// Swift storage setup
+$wgFSSwiftDC = [
+	'sjc' => [
+		'servers' => [
+			's3.dev-dfs-s1'
+		],
+		'config' => [
+			'swiftUser'    => 'development:swift',
+			'swiftKey'     => '6pS1+dRQuqtI7SSIZM2q6Dfwe6FR4O4zL12JZ5IF',
+			'swiftAuthUrl' => "http://s3.dev-dfs-s1/auth",
+			'debug'        => false,
+		]
+	],
+	'poz' => [
+		'servers' => [
+			's3.dev-dfs-p1'
+		],
+		'config' => [
+			'swiftUser'    => 'development:swift',
+			'swiftKey'     => 'yA3P1uh+gin4iX8exjnNmOLisiWOPwwyq8og40Z0',
+			'swiftAuthUrl' => "http://s3.dev-dfs-p1/auth",
+			'debug'        => false,
+		]
+	]
+];
+
+$wgFSSwiftServer = $wgFSSwiftDC[ $wgWikiaDatacenter ][ 'servers' ][ 0 ];
+$wgFSSwiftConfig = $wgFSSwiftDC[ $wgWikiaDatacenter ][ 'config' ];
+$wgEnableSwiftFileBackend = true; // enable globally on all devboxes
+
+// avatars
+$wgAvatarsUseSwiftStorage = true;
 
 $wgDevboxDefaultWikiDomain = 'www.wikia.com';
 #$wgDevboxSkipWikiFactoryVariables = true; // uncomment to skip loading of wiki-specific setup from WikiFactory
@@ -142,6 +189,25 @@ if (empty($wgRunningUnitTests)) {
 #
 require_once( dirname( $wgWikiaLocalSettingsPath ) . '/../CommonExtensions.php' );
 
+// enable globally on all devboxes (despite production being switched to NFS)
+$wgEnableSwiftFileBackend = false;
+
+$wgFileBackends['swift-backend'] = array(
+	'name'          => 'swift-backend',
+	'class'         => 'SwiftFileBackend',
+	'lockManager'   => 'nullLockManager',
+	'swiftAuthUrl'  => $wgFSSwiftConfig['swiftAuthUrl'],
+	'swiftUser'     => $wgFSSwiftConfig['swiftUser'],
+	'swiftKey'      => $wgFSSwiftConfig['swiftKey'],
+	'swiftAuthTTL'	=> 120,
+	'swiftTimeout'  => 30,
+	'cacheAuthInfo'	=> true,
+	'wikiId'        => '',
+	'isMultiMaster' => false,
+	'debug'         => false,
+	'url'           => "http://{$wgFSSwiftServer}/swift/v1",
+);
+
 $wgArticlePath = "/wiki/$1";
 
 // Just in case this has been reset somewhere else in here.
@@ -163,7 +229,15 @@ $wgRC2UDPEnabled = false;
 
 // static assets host
 $wgCdnRootUrl = "http://{$wgDevelEnvironmentName}.wikia-dev.com";
-$wgDevBoxImageServerOverride ="images.{$wgDevelEnvironmentName}.wikia-dev.com";
+
+if (!empty($wgEnableSwiftFileBackend)) {
+	$wgDevBoxImageServerOverride ="static.{$wgDevelEnvironmentName}.wikia-dev.com";
+}
+else {
+	$wgDevBoxImageServerOverride ="images.{$wgDevelEnvironmentName}.wikia-dev.com";
+}
+
+$wgWikiaVideoImageHost = false; // don't rewrite URLs for shared video thumbnails
 
 // macbre: generate proper paths for static assets on devboxes (BugId:6809)
 $wgCdnStylePath = "{$wgCdnRootUrl}/__cb{$wgStyleVersion}"; // paths for images requested from CSS/SASS
@@ -184,3 +258,4 @@ $recaptcha_private_key = '6LehHs0SAAAAABYaeCiC0ockp0NsY-H7wEiPZk7i';
 $wgConf->localVHosts = array(
 	'wikia-dev.com'
 );
+

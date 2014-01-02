@@ -49,6 +49,11 @@ If you prefer to use regular e-mail or have attachments, you can contact us at [
  * @author Shirayuki
  */
 $messages['qqq'] = array(
+	'contact' => '{{Identical|Contact Wikia}}',
+	'specialcontact-wikia' => '{{Identical|Contact Wikia}}',
+	'specialcontact-pagetitle' => '{{Identical|Contact Wikia}}',
+	'specialcontact-username' => '{{Identical|Your username}}',
+	'specialcontact-yourmail' => '{{Identical|E-mail address}}',
 	'specialcontact-problem' => '{{Identical|Subject}}',
 	'specialcontact-problemdesc' => '{{Identical|Message}}',
 );
@@ -113,19 +118,23 @@ $messages['bg'] = array(
 );
 
 /** Breton (brezhoneg)
+ * @author Fohanno
  * @author Y-M D
  */
 $messages['br'] = array(
 	'contact' => 'Mont e darempred gant Wikia',
 	'specialcontact-wikia' => 'Mont e darempred gant Wikia',
 	'specialcontact-pagetitle' => 'Mont e darempred gant Wikia',
-	'specialcontact-username' => 'Anv implijer', # Fuzzy
+	'specialcontact-username' => "Hoc'h anv implijer",
 	'specialcontact-wikiname' => 'Peseurt wiki',
 	'specialcontact-realname' => "Hoc'h anv",
 	'specialcontact-yourmail' => "Chomlec'h postel",
 	'specialcontact-problem' => 'Danvez',
 	'specialcontact-problemdesc' => 'Kemennadenn',
 	'specialcontact-mail' => 'Kas da Wikia',
+	'specialcontact-ccme' => 'Kas un eilenn eus ar gemennadenn-mañ din',
+	'specialcontact-captchainfo' => 'Ebarzhit an destenn er skeudenn, mar plij.',
+	'specialcontact-nomessage' => 'Skrivit ur gemennadenn, mar plij',
 );
 
 /** Catalan (català)
@@ -163,7 +172,14 @@ Si prefereixes l'ús regular del correu electrònic amb dades adjuntes, pots con
 	'specialcontact-submitcomplete' => 'Gràcies per contactar amb Wikia.',
 );
 
-/** Czech (česky)
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'specialcontact-problemdesc' => 'Хааман йоза',
+);
+
+/** Czech (čeština)
  * @author Chmee2
  */
 $messages['cs'] = array(
@@ -310,6 +326,7 @@ $messages['fa'] = array(
 /** Finnish (suomi)
  * @author Olli
  * @author Tofu II
+ * @author Ville96
  */
 $messages['fi'] = array(
 	'contact' => 'Ota yhteyttä Wikiaan',
@@ -320,7 +337,7 @@ $messages['fi'] = array(
 Lisätietoja ongelmien ilmoittamisesta Wikiaan löytyy [[w:project:Report_a_problem|täältä]]. Voit myös lähettää viestin [[w:Forum:Index|Wikia-yhteisön keskustelualueelle]].
 
 Jos haluat käyttää tavallista sähköpostia tai sinulla on lähetettäviä liitteitä, voit ottaa meihin yhteyttä sähköpostiosoitteella [mailto:community@wikia.com community@wikia.com].',
-	'specialcontact-username' => 'Käyttäjätunnus', # Fuzzy
+	'specialcontact-username' => 'Käyttäjätunnuksesi',
 	'specialcontact-wikiname' => 'Mikä wiki',
 	'specialcontact-realname' => 'Nimesi',
 	'specialcontact-yourmail' => 'Sähköpostiosoite',
@@ -543,6 +560,17 @@ $messages['lb'] = array(
 	'specialcontact-ccme' => 'Schéckt mir eng Kopie vun dësem Message',
 	'specialcontact-notyou' => 'Net Dir?',
 	'specialcontact-submitcomplete' => 'Merci datt dir Wikia kontaktéiert hutt.',
+);
+
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'specialcontact-wikiname' => 'کوم ویکی',
+	'specialcontact-realname' => 'نومتو',
+	'specialcontact-yourmail' => 'نشونی ايميل',
+	'specialcontact-problemdesc' => 'پيغوم',
+	'specialcontact-notyou' => 'شما نه؟',
 );
 
 /** Macedonian (македонски)
@@ -802,28 +830,28 @@ $messages['pt'] = array(
 	'specialcontact-pagetitle' => 'Contactar a Wikia',
 	'specialcontact-intro' => 'Pode contactar a [[w:project:Staff|Equipa da Wikia]] usando este formulário. Encontra uma lista dos administradores desta wiki [[Special:ListAdmins|aqui]].
 
-Para mais informações sobre como relatar problemas à Wikia visite [[w:project:Report_a_problem|esta página]], ou pode colocar um pedido de suporte no [[w:Forum:Index|Wikia Community Forums]]
+Para mais informações sobre como relatar problemas à Wikia visite [[w:project:Report_a_problem|esta página]], ou pode colocar um pedido de apoio no [[w:Forum:Index|Wikia Community Forums]]
 
-Se prefere usar o correio electrónico ou precisa de enviar ficheiros anexos, pode contactar-nos em [mailto:community@wikia.com community@wikia.com].',
+Se prefere usar o correio eletrónico ou precisa de enviar ficheiros anexos, pode contactar-nos em [mailto:community@wikia.com community@wikia.com].',
 	'specialcontact-username' => 'Nome de utilizador', # Fuzzy
 	'specialcontact-wikiname' => 'Qual é a wiki?',
 	'specialcontact-realname' => 'O seu nome',
-	'specialcontact-yourmail' => 'Correio electrónico',
+	'specialcontact-yourmail' => 'Correio eletrónico',
 	'specialcontact-problem' => 'Assunto',
 	'specialcontact-problemdesc' => 'Mensagem',
 	'specialcontact-mail' => 'Enviar à Wikia',
 	'specialcontact-filledin' => 'Esta informação foi preenchida de acordo com as preferências da sua conta',
 	'specialcontact-ccme' => 'Enviar-me uma cópia desta mensagem',
-	'specialcontact-ccdisabled' => 'Impossibilitado: Valide o seu endereço de correio electrónico para usar esta funcionalidade',
+	'specialcontact-ccdisabled' => 'Impossibilitado: Valide o seu endereço de correio eletrónico para usar esta funcionalidade',
 	'specialcontact-notyou' => 'Não é você?',
 	'specialcontact-captchainfo' => 'Introduza o texto que está na imagem, por favor.',
 	'specialcontact-captchatitle' => 'Palavra distorcida',
-	'specialcontact-formtitle' => 'Contactar a Equipa de Suporte da Wikia',
+	'specialcontact-formtitle' => 'Contactar a Equipa de Apoio da Wikia',
 	'specialcontact-nomessage' => 'Introduza uma mensagem, por favor',
 	'specialcontact-captchafail' => 'Código de confirmação incorreto ou não preenchido.',
 	'specialcontact-mailsub' => 'Correio de Contacto da Wikia',
 	'specialcontact-mailsubcc' => 'Cópia do Correio de Contacto da Wikia',
-	'specialcontact-ccheader' => 'Esta é uma cópia da mensagem que foi enviada à Equipa de Suporte da Wikia',
+	'specialcontact-ccheader' => 'Esta é uma cópia da mensagem que foi enviada à Equipa de Apoio da Wikia',
 	'specialcontact-submitcomplete' => 'Obrigado por ter contactado a Wikia.',
 );
 
@@ -884,6 +912,31 @@ $messages['roa-tara'] = array(
 	'contact' => 'Condatte Uicchia',
 	'specialcontact-wikia' => 'Condatte Uicchia',
 	'specialcontact-pagetitle' => 'Condatte Uicchia',
+	'specialcontact-intro' => "Tu puè condattà 'u [[w:project:Staff|Staffe de Uicchia]] ausanne stu module. Le amministrature de sta uicchi ponne essere acchiate [[Special:ListAdmins|aqquà]].
+
+	'Mbormaziune aggiundive sus a cumme segnalà le probbleme a Uicchi ponne essere acchiate [[w:project:Report_a_problem|aqquà]], o tu puè mannà 'nu messàgge sus a 'u [[w:Forum:Index|Forum d'a comunitate de Uicchia]] pe supporte da otre utinde.
+
+Ce tu preferisce ausà email regolare o mettere allegate, tu puè condattarne sus a [mailto:community@wikia.com community@wikia.com].",
+	'specialcontact-username' => "'U nome utende tune",
+	'specialcontact-wikiname' => 'Ce uicchi',
+	'specialcontact-realname' => "'U nome tune",
+	'specialcontact-yourmail' => 'Indirizze email',
+	'specialcontact-problem' => 'Suggette',
+	'specialcontact-problemdesc' => 'Messàgge',
+	'specialcontact-mail' => 'Manne a Uicchia',
+	'specialcontact-filledin' => "Sta 'mbormazione ha state anghiute da le preferenze d'u cunde tune",
+	'specialcontact-ccme' => "manname 'na copie de stu messàgge",
+	'specialcontact-ccdisabled' => "Disabbilitate: Pe piacere valide 'u 'ndirizze email tune pe ausà sta funzione",
+	'specialcontact-notyou' => 'No sì tu?',
+	'specialcontact-captchainfo' => "Pe piacere mitte 'u teste jndr'à l'immaggine.",
+	'specialcontact-captchatitle' => 'Parole sfocate',
+	'specialcontact-formtitle' => "Condatte 'u staff de supporte de Uicchia",
+	'specialcontact-nomessage' => "Pe piacere inghie 'u messàgge",
+	'specialcontact-captchafail' => 'Codece de conferme non corrette o mangande.',
+	'specialcontact-mailsub' => 'Mail de condatte de Uicchia',
+	'specialcontact-mailsubcc' => "Copie 'da mail de condatte a Uicchia",
+	'specialcontact-ccheader' => "Queste jè 'na copie d'u messàgge tune ca ha state mannate a 'u supporte de Uicchia",
+	'specialcontact-submitcomplete' => 'Grazie pe avè condattate Uicchia.',
 );
 
 /** Russian (русский)
@@ -1038,17 +1091,24 @@ $messages['tly'] = array(
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(
-	'specialcontact-username' => 'Кулланучы исеме', # Fuzzy
+	'specialcontact-username' => 'Сезнең кулланучы исеме',
 );
 
 /** Ukrainian (українська)
+ * @author Andriykopanytsia
  * @author Steve.rusyn
+ * @author SteveR
  * @author Ua2004
  */
 $messages['uk'] = array(
 	'contact' => "Зв'язатися з Wikia",
 	'specialcontact-wikia' => "Зв'язатися з Wikia",
 	'specialcontact-pagetitle' => "Зв'язатися з Wikia",
+	'specialcontact-intro' => "Ви можете зв'язатися з [[w:project:Staff|співроюітниками Вікії]], використовуючи цю форму. Адміністраторів цієї вікі можна знайти на [[Special:ListAdmins|цій сторінці]].
+
+Додаткову інформацію про те, як саме повідомити про проблеми на Вікії можна знайти [[w:project:Report_a_problem|тут]] або звернутися на [[w:Forum:Index|Форуми спільноти вікії]] за підтримкою інших учасників.
+
+Якщо ви віддаєте перевагу регулярному використанню електронної пошти або маєте вкладення, то можете зв'язатися з нами через [mailto:community@wikia.com community@wikia.com].",
 	'specialcontact-username' => "Ваше ім'я користувача",
 	'specialcontact-wikiname' => 'Назва вікі',
 	'specialcontact-realname' => "Ваше ім'я",

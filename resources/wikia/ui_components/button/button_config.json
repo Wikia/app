@@ -1,0 +1,20 @@
+{
+	"templateVars": {
+		"link" : {
+			"required": [ "href", "classes", "value", "title" ],
+			"optional": [ "target", "id", "data", "imageClass" ]
+		},
+		"input" : {
+			"required": [ "type", "name", "classes", "value" ],
+			"optional": [ "id", "disabled", "data" ]
+		},
+		"button" : {
+			"required": [ "type", "classes", "value" ],
+			"optional": [ "id", "disabled", "data", "imageClass" ]
+		}
+	},
+	"dependencies": {
+		"js": [],
+		"css": [ "resources/wikia/ui_components/button/css/button_default.scss" ]
+	}
+}

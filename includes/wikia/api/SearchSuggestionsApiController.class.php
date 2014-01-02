@@ -1,4 +1,5 @@
 <?php
+
 /**
 * Controller to suggest searched phrases
 *
@@ -38,7 +39,6 @@ class SearchSuggestionsApiController extends WikiaApiController {
 				foreach( $linkSuggestions as $suggestion ){
 					$searchSuggestions[]['title'] = $suggestion;
 				}
-
 				$this->response->setVal( 'items', $searchSuggestions );
 
 			} else {

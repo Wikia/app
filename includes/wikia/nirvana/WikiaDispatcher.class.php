@@ -107,7 +107,7 @@ class WikiaDispatcher {
 				}
 
 				if ( empty( $wgAutoloadClasses[$controllerClassName] ) ) {
-					throw new WikiaException( "Controller class does not exist: {$controllerClassName}" );
+					throw new ControllerNotFoundException($controllerName);
 				}
 
 				// Determine the final name for the controller and method based on any routing rules
@@ -134,7 +134,11 @@ class WikiaDispatcher {
 					// Refactor the offending class to not use executeXYZ methods or set format in request params
 					// Warning: this means you can't use the new Dispatcher routing to switch templates in modules
 					if ($format == WikiaResponse::FORMAT_HTML) {
-						$response->getView()->setTemplate( $controllerName, $method );
+						try {
+							$response->getView()->setTemplate( $controllerName, $method );
+						} catch (WikiaException $e) {
+							throw new MethodNotFoundException( "{$controllerClassName}::{$method}" );
+						}
 					}
 					$method = "execute{$method}";
 					$params = $request->getParams();  // old modules expect params in a different place
@@ -158,7 +162,7 @@ class WikiaDispatcher {
 					!method_exists( $controller, $method ) ||
 					!is_callable( array( $controller, $method ) )
 				) {
-					throw new WikiaException( "Could not dispatch {$controllerClassName}::{$method}" );
+					throw new MethodNotFoundException("{$controllerClassName}::{$method}");
 				}
 
 				// Initialize the RequestContext object if it is not already set
@@ -177,8 +181,13 @@ class WikiaDispatcher {
 				$controller->setApp( $app );
 				$controller->init();
 
-				// Actually call the controller::method!
-				$result = $controller->$method( $params );
+				if ( method_exists( $controller, 'preventUsage' ) && $controller->preventUsage( $controller->getContext()->getUser(), $method ) ) {
+					$result = false;
+				} else {
+					// Actually call the controller::method!
+					$result = $controller->$method( $params );
+				}
+
 				if($result === false) {
 				   // skip template rendering when false returned
 				   $controller->skipRendering();
@@ -204,13 +213,9 @@ class WikiaDispatcher {
 
 				} else {
 					wfProfileOut($profilename);
+					$response->setException($e);					
 					$response->setFormat( 'json' );
-
-					$response->setHeader(
-						'HTTP/1.1',
-						$e->getCode(),
-						true
-					);
+					$response->setCode($e->getCode());
 
 					$response->setVal( 'error', get_class( $e ) );
 
@@ -244,3 +249,4 @@ class WikiaDispatcher {
 		return $response;
 	}
 }
+

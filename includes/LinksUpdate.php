@@ -115,6 +115,13 @@ class LinksUpdate {
 	}
 
 	protected function doIncrementalUpdate() {
+		// Wikia change - start (BAC-597)
+		if ($this->mId === 0) {
+			Wikia::logBacktrace(__CLASS__ . '::mIdIsZero - update skipped');
+			return;
+		}
+		// Wikia change - end
+
 		wfProfileIn( __METHOD__ );
 
 		# Page links

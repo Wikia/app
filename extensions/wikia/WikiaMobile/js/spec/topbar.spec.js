@@ -7,7 +7,6 @@ describe("Topbar module", function () {
 			setHash: function(){}
 		}},
 		loader = {},
-		toc = {},
 		track = {
 			event: function(){}
 		},
@@ -21,7 +20,13 @@ describe("Topbar module", function () {
 				}
 			}
 		},
-		topbar = modules.topbar(qs, loader, toc, null, track, throbber, window);
+		jQuery = function (){
+			return {
+				on: function() {}
+			};
+		};
+
+	var topbar = modules.topbar(qs, loader, jQuery, track, throbber, window);
 
 	it('should be defined', function(){
 		expect(topbar).toBeDefined();
@@ -29,10 +34,6 @@ describe("Topbar module", function () {
 		expect(typeof topbar.openLogin).toBe('function');
 		expect(typeof topbar.openProfile).toBe('function');
 		expect(typeof topbar.openSearch).toBe('function');
-		expect(typeof topbar.closeProfile).toBe('function');
-		expect(typeof topbar.closeNav).toBe('function');
-		expect(typeof topbar.closeSearch).toBe('function');
-		expect(typeof topbar.closeDropDown).toBe('function');
+		expect(typeof topbar.close).toBe('function');
 	});
-
 });

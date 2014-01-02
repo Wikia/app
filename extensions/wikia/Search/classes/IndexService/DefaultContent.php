@@ -15,7 +15,7 @@ class DefaultContent extends AbstractService
 {
 	/**
 	 * Text from selectors in this list should be removed during HTML stripping.
-	 * @var unknown_type
+	 * @var array
 	 */
 	protected $garbageSelectors = [
 				'span.editsection',
@@ -28,19 +28,19 @@ class DefaultContent extends AbstractService
 				'script',
 				'style',
 				];
-	
+
 	/**
 	 * We remove these selectors since they are unreliable indicators of textual content
-	 * @var
+	 * @var array
 	 */
 	protected $asideSelectors = [ 'table', 'figure', 'div.noprint', 'div.quote', '.dablink' ];
-	
+
 	/**
 	 * Stores multivalued nolang_txt field as we add stuff to it.
 	 * @var array
 	 */
 	protected $nolang_txt = [];
-	
+
 	/**
 	 * Returns the fields required to make the document searchable (specifically, wid and title and body content)
 	 * @see \Wikia\Search\IndexService\AbstractService::execute()
@@ -57,14 +57,14 @@ class DefaultContent extends AbstractService
 
 		// we still assume the response is the same format as MediaWiki's
 		$response   = $service->getParseResponseFromPageId( $pageId );
-		
+
 		// ensure the response is an array, even if empty.
 		$response   = $response == false ? array() : $response;
 		$titleStr   = $service->getTitleStringFromPageId( $pageId );
-		
+
 		$this->pushNolangTxt( $titleStr )
 		     ->pushNolangTxt( preg_replace( '/([[:punct:]])/', ' $1 ', $titleStr ) );
-		
+
 		$pageFields = [
 				'wid'                        => $service->getWikiId(),
 				'pageid'                     => $pageId,
@@ -79,8 +79,8 @@ class DefaultContent extends AbstractService
 				'iscontent'                  => $service->isPageIdContent( $pageId ) ? 'true' : 'false',
 				'is_main_page'               => $service->isPageIdMainPage( $pageId ) ? 'true' : 'false',
 				];
-		return array_merge( 
-				$this->getPageContentFromParseResponse( $response ), 
+		return array_merge(
+				$this->getPageContentFromParseResponse( $response ),
 				$this->getCategoriesFromParseResponse( $response ),
 				$this->getHeadingsFromParseResponse( $response ),
 				$this->getOutboundLinks(),
@@ -88,7 +88,7 @@ class DefaultContent extends AbstractService
 				$this->getNolangTxt()
 				);
 	}
-	
+
 	/**
 	 * @return Wikia\Search\IndexService\DefaultContent
 	 */
@@ -96,12 +96,10 @@ class DefaultContent extends AbstractService
 		$this->nolang_txt = [];
 		return $this;
 	}
-	
+
 	/**
 	 * Provides an array of outbound links from the current document to other doc IDs.
 	 * Filters out self-links (e.g. Edit and the like)
-	 * @param int $wid
-	 * @param int $pageid
 	 * @return array
 	 */
 	protected function getOutboundLinks() {
@@ -120,16 +118,16 @@ class DefaultContent extends AbstractService
 		}
 		return $result;
 	}
-	
+
 	/**
 	 * Optionally sets language field for field. Old backend already does this.
 	 * @param string $field
 	 * @return string
 	 */
 	protected function field( $field ) {
-		return $this->getService()->getGlobal( 'AppStripsHtml' ) ? (new Utilities)->field( $field ) : $field; 
+		return $this->getService()->getGlobal( 'AppStripsHtml' ) ? (new Utilities)->field( $field ) : $field;
 	}
-	
+
 	/**
 	 * Wraps logic for creating the initial result array, based on which implementation we're using.
 	 * The old version strips HTML from the backend; the new version strips HTML within the IndexService.
@@ -143,7 +141,7 @@ class DefaultContent extends AbstractService
 		}
 		return [ 'html' => html_entity_decode($html, ENT_COMPAT, 'UTF-8') ];
 	}
-	
+
 	/**
 	 * Extracts categories from the MW parse response.
 	 * @param array $response
@@ -158,7 +156,7 @@ class DefaultContent extends AbstractService
 		}
 		return [ $this->field( 'categories' ) => $categories ];
 	}
-	
+
 	/**
 	 * Returns an array with section headings for the page.
 	 * @param array $response
@@ -173,17 +171,17 @@ class DefaultContent extends AbstractService
 		}
 		return [ $this->field( 'headings' ) => $headings ];
 	}
-	
+
 	/**
 	 * Add a language-agnostic field value
 	 * @param string $txt
-	 * @return DefaultContent 
+	 * @return DefaultContent
 	 */
 	protected function pushNolangTxt( $txt ) {
 		$this->nolang_txt[] = $txt;
 		return $this;
 	}
-	
+
 	/**
 	 * Returns language-agnostic multi-valued text
 	 * @return array
@@ -191,11 +189,11 @@ class DefaultContent extends AbstractService
 	protected function getNolangTxt() {
 		return [ 'nolang_txt' => $this->nolang_txt ];
 	}
-	
+
 	/**
 	 * Allows us to strip and parse HTML
 	 * By the way, if every document on the site was as big as the Jim Henson page,
-	 * then it would take under two minutes to parse them all using this function. 
+	 * then it would take under two minutes to parse them all using this function.
 	 * So this scales on the application side. I promise. I mathed it.
 	 * @param string $html
 	 * @return array
@@ -205,7 +203,7 @@ class DefaultContent extends AbstractService
 		$paragraphs = array();
 		// default value; we'll overwrite if dom can parse
 		$plaintext = preg_replace( '/\s+/', ' ', html_entity_decode( strip_tags( $html ), ENT_COMPAT, 'UTF-8' ) );
-		
+
 		$dom = new \simple_html_dom( html_entity_decode($html, ENT_COMPAT, 'UTF-8') );
 		if ( $dom->root ) {
 			if ( $this->getService()->getGlobal( 'ExtractInfoboxes' ) ) {
@@ -220,7 +218,7 @@ class DefaultContent extends AbstractService
 		$wordCount = count( $words );
 		$upTo100Words = implode( ' ', array_slice( $words, 0, min( array( $wordCount, 100 ) ) ) );
 		$this->pushNolangTxt( $upTo100Words );
-		
+
 		return  array_merge( $result,
 				[
 				'nolang_txt'           => $upTo100Words,
@@ -228,11 +226,11 @@ class DefaultContent extends AbstractService
 				$this->field( 'html' ) => $plaintext
 				]);
 	}
-	
+
 	/**
 	 * Assigns infobox-based values to result (passed by reference), when found.
 	 * @param simple_html_dom $dom
-	 * @param array $result
+	 * @return array
 	 */
 	protected function extractInfoboxes( simple_html_dom $dom ) {
 		$result = array();
@@ -259,7 +257,7 @@ class DefaultContent extends AbstractService
 		}
 		return $result;
 	}
-	
+
 	/**
 	 * Iterates through UI remnants and removes them from the dom.
 	 * Removed type hinting due to testing requirements and WikiaMockProxy
@@ -272,7 +270,7 @@ class DefaultContent extends AbstractService
 			}
 		}
 	}
-	
+
 	/**
 	 * Returns all text from tables as plaintext, and then removes them.
 	 * @param simple_html_dom $dom
@@ -284,12 +282,12 @@ class DefaultContent extends AbstractService
 			foreach( $dom->find( $aside ) as $aside ) {
 				$plaintext .= $aside->plaintext;
 				$aside->outertext = ' ';
-			} 
+			}
 		}
 		$dom->load( $dom->save() );
 		return $plaintext;
 	}
-	
+
 	/**
 	 * Returns an array of paragraph text as plaintext
 	 * @param simple_html_dom $dom
@@ -302,7 +300,7 @@ class DefaultContent extends AbstractService
 		}
 		return $paragraphs;
 	}
-	
+
 	/**
 	 * Returns HTML-free article text. Appends any tables to the bottom of the dom.
 	 * @param simple_html_dom $dom

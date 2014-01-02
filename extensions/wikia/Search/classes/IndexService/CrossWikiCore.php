@@ -17,7 +17,7 @@ class CrossWikiCore extends AbstractWikiService
 	 * Reusing the current wiki ID
 	 * @var int
 	 */
-	protected $wikId;
+	protected $wikiId;
 	
 	/**
 	 * Returns the field values for this wiki document
@@ -33,7 +33,8 @@ class CrossWikiCore extends AbstractWikiService
 				$this->getWam(),
 				$this->getCategories(),
 				$this->getVisualizationInfo(),
-				$this->getTopArticles()
+				$this->getTopArticles(),
+				$this->getLicenseInformation()
 				);
 	}
 	
@@ -165,7 +166,7 @@ class CrossWikiCore extends AbstractWikiService
 				'cat_title',
 				'cat_hidden = 0',
 				__METHOD__,
-				[ 'ORDER BY' => 'cat_pages DESC' ]
+				[ 'LIMIT' => 50, 'ORDER BY' => 'cat_pages DESC' ]
 				);
 		while ( $result = $dbr->fetchObject( $query ) ) {
 			$categories[] = str_replace( '_', ' ', $result->cat_title );
@@ -181,6 +182,27 @@ class CrossWikiCore extends AbstractWikiService
 				'top_categories_txt' => $topCategories,
 				 $topsCats => $topCategories 
 				);
+	}
+
+
+	/**
+	 * @return \LicensedWikisService
+	 */
+	protected function getLicensedWikisService(){
+
+		return  new \LicensedWikisService();
+	}
+
+	/**
+	 * Get license info this wiki
+	 * @return array
+	 */
+	protected function getLicenseInformation( ) {
+
+		$licensedWikiService = $this->getLicensedWikisService();
+		return [
+			"commercial_use_allowed_b" =>  $licensedWikiService->isCommercialUseAllowedById( $this->getWikiId() ) === true
+		];
 	}
 	
 	/**

@@ -68,6 +68,7 @@ $messages['qqq'] = array(
 	'app-tab-search' => '{{Identical|Search}}',
 	'app-tab-sotd' => 'SotD = Song of the Day',
 	'app-async-error-title' => '{{Identical|Oops}}',
+	'login-submit-button' => '{{Identical|Log in}}',
 );
 
 /** Arabic (العربية)
@@ -173,6 +174,48 @@ $messages['br'] = array(
 	'lyrics-artist-byline' => 'gant %s',
 );
 
+/** Catalan (català)
+ * @author Alvaro Vidal-Abarca
+ * @author Fitoschido
+ * @author Roxas Nobody 15
+ */
+$messages['ca'] = array(
+	'app-loading' => "S'està carregant…",
+	'app-tab-search' => 'Cerca',
+	'app-tab-about' => 'Sobre',
+	'app-tab-browse' => 'A..Z',
+	'app-tab-sotd' => 'SotD',
+	'app-async-error-title' => 'Vaja!',
+	'app-async-error-message' => 'Problema amb la connexió temporal. Si us plau provar una altra vegada més tard.',
+	'app-nonetwork-dialog-title' => 'Xarxa no disponible',
+	'app-nonetwork-dialog-message' => 'No hi ha connexió de xarxa detectada',
+	'app-nonetwork-dialog-close-button' => 'OK',
+	'search-go' => 'Vés-hi!',
+	'search-hint-text' => "per exemple, \"John Lennon: Imagini's '",
+	'search-no-match-found' => "No s'han trobat coincidències.",
+	'search-no-match-found-query' => 'Cercat:%s',
+	'search-results-title' => 'Resultats de la recerca per: %s',
+	'login-label' => 'Inici de sessió a LyricWiki',
+	'login-username-hint' => "Nom d'usuari",
+	'login-password-hint' => 'Contrasenya',
+	'login-submit-button' => 'Inici de sessió',
+	'about-heading' => 'LyricWiki',
+	'about-credits' => 'per%s',
+	'about-heading-tips' => 'Cercant...',
+	'about-tips-0' => "Començar a escriure un nom d'artista per usar l'auto-completar a mesura que escriviu.",
+	'about-tips-1' => 'Les imatges a la pantalla principal, són les primeres 9 cançons a iTunes ara mateix.',
+	'about-heading-licensing' => "Drets d'autor",
+	'about-licensing-0' => "Aquesta aplicació és 100% legal. Drets d'autor són pagats per la cançó als titulars de drets a través de Gracenote - igual que en el LyricWiki lloc web.",
+	'about-heading-feedback' => 'Comentaris',
+	'about-feedback-0' => 'Vols dir-nos alguna cosa sobre l\'aplicació? Envia\'m un correu electrònic: <span class="notranslate" traduir="no">%s</span>',
+	'about-heading-rate' => "Valorar l'app si us plau!",
+	'about-rate-0-android' => "Si t'agrada aquest app, si us plau puntua amb 5 estrelles a l'Android Market!",
+	'about-rate-0-ios' => 'Si us agrada aquesta aplicació, puntueu-la amb cinc estels a la App Store!',
+	'gracenote-takedown' => "Doh! Malauradament, no ens estan autoritzats per a mostrar la lletra completa d'aquesta cançó en el moment (això passa per menys de 1% de les nostres cançons). Si us plau provar una altra vegada la setmana que ve.",
+	'lyrics-artist-byline' => 'per%s',
+	'ringtone-matcher-by-song' => 'Enviar  %s  to de trucada per mòbil',
+);
+
 /** Chechen (нохчийн)
  * @author Умар
  */
@@ -180,7 +223,7 @@ $messages['ce'] = array(
 	'login-username-hint' => 'Декъашхочун цӀе',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Reaperman
  */
 $messages['cs'] = array(
@@ -271,11 +314,12 @@ $messages['de'] = array(
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
+ * @author Gorizon
  */
 $messages['diq'] = array(
 	'app-loading' => 'Bar beno...',
 	'app-tab-search' => 'Cı geyre',
-	'app-tab-about' => 'Heq te cı',
+	'app-tab-about' => 'Heqdé cı',
 	'app-tab-browse' => 'A ra Z',
 	'app-async-error-title' => 'Hoooop',
 	'app-nonetwork-dialog-close-button' => 'TEMAM',
@@ -285,6 +329,13 @@ $messages['diq'] = array(
 	'login-submit-button' => 'Dekewtış',
 	'about-heading' => 'LirikWiki',
 	'about-heading-tips' => 'Geyreno cı',
+);
+
+/** British English (British English)
+ * @author Shirayuki
+ */
+$messages['en-gb'] = array(
+	'gracenote-takedown' => 'Doh! Unfortunately, we are not licenced to display the full lyrics for this song at the moment (this happens for less than 1% of our songs). Please try again next week.',
 );
 
 /** Spanish (español)
@@ -317,7 +368,7 @@ $messages['es'] = array(
 	'about-tips-0' => 'Comience escribiendo el nombre de un artista para ofrecerle sugerencias.',
 	'about-tips-1' => 'Las imágenes al comienzo de la pantalla son el Top 9 de canciones en iTunes en estos momentos.',
 	'about-heading-licensing' => 'Copyrights',
-	'about-licensing-0' => 'Esta aplicación es 100% legal. A través de Gracenote se pagan las correspondientes regalías a los titulares de los derechos de las canciones - al igual que en la web de LyricWiki.',
+	'about-licensing-0' => 'Esta aplicación es 100 % legal. A través de Gracenote se pagan las correspondientes regalías a los titulares de los derechos de las canciones, al igual que en el sitio web de LyricWiki.',
 	'about-heading-feedback' => 'Sugerencias',
 	'about-feedback-0' => '¿Quieres darnos tu opinión sobre la aplicación? Envíanos un correo electrónico a: %s',
 	'about-heading-rate' => '¡Por favor, valore esta aplicación!',
@@ -330,6 +381,7 @@ $messages['es'] = array(
 
 /** Finnish (suomi)
  * @author Centerlink
+ * @author Ville96
  */
 $messages['fi'] = array(
 	'app-loading' => 'Ladataan...',
@@ -359,7 +411,7 @@ $messages['fi'] = array(
 	'about-heading-feedback' => 'Palaute',
 	'about-feedback-0' => 'Palautetta ohjelmasta? Lähetä minulle sähköpostia: %s (englanniksi)',
 	'about-heading-rate' => 'Arvioi ohjelma Marketissa!',
-	'about-rate-0-android' => 'Jos pidät tästä ohjelmasta, niin miksi et antaisi sille viittä tähteä Android Marketissa? :)', # Fuzzy
+	'about-rate-0-android' => 'Jos pidät tästä sovelluksesta, niin miksi et antaisi sille 5 tähteä Android Marketissa?',
 	'gracenote-takedown' => 'Valitettavasti emme tekijänoikeussyistä voi näyttää etsimäsi kappaleen koko sanoja. Tätä tapahtuu alle prosentille sanoituksistamme. Yritä uudelleen myöhemmin.',
 	'lyrics-artist-byline' => 'esittäjä: %s',
 	'ringtone-matcher-by-song' => 'Lähetä %s soittoäänenä puhelimeesi!',
@@ -537,6 +589,7 @@ $messages['id'] = array(
 	'about-licensing-0' => 'Aplikasi ini adalah 100% sah. Royalti dibayarkan kepada pemegang hak lagu melalui Gracenote - seperti pada situs web LyricWiki.',
 	'about-rate-0-android' => 'Jika Anda menyukai aplikasi ini, silakan menilai ini 5 bintang di Android Market!',
 	'gracenote-takedown' => 'Aduh! Sayang sekali, kami tidak diberi izin untuk menampilkan seluruh lirik untuk lagu ini pada saat ini (ini terjadi pada kurang dari 1% dari lagu-lagu kami). Mohon coba lagi minggu depan.',
+	'ringtone-matcher-by-song' => 'Kirimkan Nada Dering %s ke Ponsel Anda',
 );
 
 /** Ingush (ГӀалгӀай)
@@ -577,6 +630,13 @@ $messages['it'] = array(
 	'gracenote-takedown' => "Oops! Sfortunatamente non abbiamo la licenza per mostrare il testo completo per questa canzone al momento (questo accade circa per l'1% delle nostre canzoni). Riprova la prossima settimana.",
 	'lyrics-artist-byline' => 'by %s',
 	'ringtone-matcher-by-song' => 'Invia la suoneria di %s sul tuo cellulare',
+);
+
+/** Japanese (日本語)
+ * @author BryghtShadow
+ */
+$messages['ja'] = array(
+	'login-submit-button' => 'ログイン',
 );
 
 /** Khmer (ភាសាខ្មែរ)
@@ -625,7 +685,7 @@ $messages['km'] = array(
  */
 $messages['ko'] = array(
 	'app-loading' => '불러오는 중...',
-	'app-tab-search' => '찾기',
+	'app-tab-search' => '검색',
 	'app-tab-about' => '소개',
 	'app-tab-browse' => 'A..Z',
 	'app-tab-sotd' => '오늘의 노래',
@@ -634,10 +694,10 @@ $messages['ko'] = array(
 	'app-nonetwork-dialog-title' => '네트워크 연결이 안되어있습니다.',
 	'app-nonetwork-dialog-message' => '네트워크 연결이 감지되지 않았습니다.',
 	'app-nonetwork-dialog-close-button' => '확인',
-	'search-go' => '찾기!',
+	'search-go' => '검색!',
 	'search-hint-text' => "예 를 들면: 'John Lennon:Imagine'",
 	'search-no-match-found' => '매치가 없습니다',
-	'search-no-match-found-query' => '%s 찾음',
+	'search-no-match-found-query' => '%s에 대해 검색됨',
 	'search-results-title' => '%s 찾으신 결과',
 	'login-label' => '로그인 LyricWiki',
 	'login-username-hint' => '사용자 이름',
@@ -645,7 +705,7 @@ $messages['ko'] = array(
 	'login-submit-button' => '로그인',
 	'about-heading' => 'LyricWiki',
 	'about-credits' => '%s 으로 부터',
-	'about-heading-tips' => '찾기',
+	'about-heading-tips' => '검색하기',
 	'about-tips-0' => '예술가 이름을 타입 하기 시작 하시면 저절로 완성 될 것입니다.',
 	'about-tips-1' => '메인 화면에 있는 사진은 지금 아이튠 상위9위에 드는 노래들입니다.',
 	'about-heading-licensing' => '저작권',
@@ -681,6 +741,22 @@ $messages['lb'] = array(
 	'search-go' => 'Lass!',
 	'login-username-hint' => 'Benotzernumm',
 	'login-password-hint' => 'Passwuert',
+);
+
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'app-loading' => 'د حالت سوار كرد',
+	'app-tab-search' => 'پی جوری',
+	'app-tab-about' => 'دباره',
+	'app-tab-browse' => 'آ تا ی',
+	'app-nonetwork-dialog-close-button' => 'خوئه',
+	'search-go' => 'رؤ!',
+	'login-username-hint' => 'نوم كاروری',
+	'login-password-hint' => 'پاسورد',
+	'login-submit-button' => 'اومائن د سیستم',
+	'about-heading-tips' => 'د حالت گشتن',
 );
 
 /** Macedonian (македонски)
@@ -961,6 +1037,7 @@ $messages['ps'] = array(
 );
 
 /** Portuguese (português)
+ * @author Hamilton Abreu
  * @author Luckas
  * @author Malafaya
  * @author SandroHc
@@ -976,7 +1053,7 @@ $messages['pt'] = array(
 	'app-nonetwork-dialog-close-button' => 'OK',
 	'search-go' => 'Ir!',
 	'search-hint-text' => "p.ex. 'John Lennon:Imagine'",
-	'login-username-hint' => 'Nome de usuário',
+	'login-username-hint' => 'Nome de utilizador',
 	'login-password-hint' => 'Senha',
 	'about-heading' => 'LyricWiki',
 	'about-credits' => 'por %s',
@@ -1013,13 +1090,36 @@ $messages['roa-tara'] = array(
 	'app-tab-search' => 'Cirche',
 	'app-tab-about' => 'Sus a',
 	'app-tab-browse' => 'A..Z',
+	'app-tab-sotd' => 'SotD',
 	'app-async-error-title' => 'Ohhhhh!',
+	'app-async-error-message' => "Probbleme temboranèe cu 'a connessione. Pe piacere pruève cchiù tarde.",
+	'app-nonetwork-dialog-title' => 'Rete indisponibbile',
+	'app-nonetwork-dialog-message' => 'Nisciuna connessione de rete ha state acchiate.',
 	'app-nonetwork-dialog-close-button' => 'OK',
 	'search-go' => 'Veje!',
+	'search-hint-text' => "p.e. 'Fido Guido:Maje nisciune'",
+	'search-no-match-found' => "Non g'agghie acchiate ninde.",
+	'search-no-match-found-query' => 'Cercate: %s',
+	'search-results-title' => "Resultate d'a ricerche pe: %s",
+	'login-label' => "Trase jndr'à LyricUicchi",
 	'login-username-hint' => 'Nome utende',
 	'login-password-hint' => 'Passuord',
 	'login-submit-button' => 'Tràse',
+	'about-heading' => 'LyricUicchi',
 	'about-credits' => 'da %s',
+	'about-heading-tips' => 'Stoche a cerche',
+	'about-tips-0' => "Accuminze a scrivere 'u nome de 'n'artiste da auto combletà cumme tu scrive.",
+	'about-tips-1' => "Lefote sus 'u scherme prengepàle sò 'u Megghie 9 canzune sus a iTunes mò.",
+	'about-heading-licensing' => 'Copyright',
+	'about-licensing-0' => "St'app jè a 'u 100% legale. Le deritte onne state paiate pu titolare d'a canzone cu Gracenote - 'ndruche 'u site LyricUicchi.",
+	'about-heading-feedback' => 'Segnalazione',
+	'about-feedback-0' => "Ne vuè ccu dice quaccheccose sus a l'app? Mannane 'na mail: %s",
+	'about-heading-rate' => "Vote st'app pe piacere!",
+	'about-rate-0-android' => "Ce te piace st'app, pe piacere mitte 5 stelle sus a 'u Mercate de Android!",
+	'about-rate-0-ios' => "Ce te piace st'app, pe piacere mitte 5 stelle sus a 'u Negozie de App!",
+	'gracenote-takedown' => "Naaa! Sfortunatamende, non ge tenime 'a licenze pe fà vedè tutte le teste pe sta canzone jndr'à stu mumende (quiste succede pe mene de l'1% de le canzune nuèstre). Pe piacere pruève 'a sumane prossime.",
+	'lyrics-artist-byline' => 'da %s',
+	'ringtone-matcher-by-song' => "Manne %s suonerie sus a 'u Cellulare tune",
 );
 
 /** Russian (русский)
@@ -1113,7 +1213,7 @@ $messages['sv'] = array(
 	'login-submit-button' => 'Logga in',
 	'about-heading' => 'LyricWiki',
 	'about-credits' => 'av %s',
-	'about-heading-tips' => 'Sökningar',
+	'about-heading-tips' => 'Söker',
 	'about-tips-0' => 'Auto-complete. Börja skriva in namnet på en artist för att få det kompletterat medan du skiver.',
 	'about-tips-1' => 'Bilderna på huvudsidan är Topp 9-låtarna på iTunes just nu.',
 	'about-heading-licensing' => 'Upphovsrätt',
@@ -1203,6 +1303,7 @@ $messages['tr'] = array(
 /** Ukrainian (українська)
  * @author Base
  * @author Steve.rusyn
+ * @author SteveR
  * @author Ua2004
  */
 $messages['uk'] = array(
@@ -1242,8 +1343,49 @@ $messages['uk'] = array(
 	'ringtone-matcher-by-song' => 'Отримати рінгтон %s для вашого мобільного',
 );
 
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'app-loading' => 'Đang tải…',
+	'app-tab-search' => 'Tìm kiếm',
+	'app-tab-about' => 'Giới thiệu',
+	'app-tab-browse' => 'A..Z',
+	'app-tab-sotd' => 'SotD',
+	'app-async-error-title' => 'Rất tiếc',
+	'app-async-error-message' => 'Có vấn đề với kết nối mạng. Xin vui lòng thử lại sau.',
+	'app-nonetwork-dialog-title' => 'Mạng không sẵn dùng',
+	'app-nonetwork-dialog-message' => 'Không có kết nối mạng được phát hiện.',
+	'app-nonetwork-dialog-close-button' => 'OK',
+	'search-go' => 'Xem!',
+	'search-hint-text' => "Ví dụ: 'John Lennon:Imagine'",
+	'search-no-match-found' => 'Không tìm thấy kết quả.',
+	'search-no-match-found-query' => 'Tìm kiếm: %s',
+	'search-results-title' => 'Kết quả tìm kiếm cho: %s',
+	'login-label' => 'Đăng nhập vào LyricWiki',
+	'login-username-hint' => 'Tên người dùng',
+	'login-password-hint' => 'Mật khẩu',
+	'login-submit-button' => 'Đăng nhập',
+	'about-heading' => 'LyricWiki',
+	'about-credits' => 'bởi %s',
+	'about-heading-tips' => 'Đang tìm…',
+	'about-tips-0' => 'Bắt đầu nhập một nghệ sĩ tên đến tự động-hoàn thành khi bạn nhập.',
+	'about-tips-1' => 'Những hình ảnh trên màn hình chính là bài hát nằm ở Top 9 trên iTunes ngay bây giờ.',
+	'about-heading-licensing' => 'Bản quyền',
+	'about-licensing-0' => 'Ứng dụng này là 100% pháp lý. Bản quyền được trả tiền cho bài hát quyền  sở hữu thông qua Gracenote - giống như trên các trang web LyricWiki.',
+	'about-heading-feedback' => 'Phản hồi',
+	'about-feedback-0' => 'Bạn muốn cho chúng tôi một cái gì đó về các ứng dụng? Gửi email cho tôi:%s',
+	'about-heading-rate' => 'Xin vui lòng đánh giá ứng dụng!',
+	'about-rate-0-android' => 'Nếu bạn thích ứng dụng này, xin vui lòng đánh giá 5 sao trên Android Market!',
+	'about-rate-0-ios' => 'Nếu bạn thích ứng dụng này, xin vui lòng đánh giá 5 sao trong App Store!',
+	'gracenote-takedown' => 'Oh! Thật không may, chúng tôi không được cấp phép để hiển thị các lời bài hát đầy đủ cho bài hát này tại thời điểm này (điều này xảy ra ít hơn 1% của bài hát của chúng tôi). Hãy thử một lần nữa trong tuần tới.',
+	'lyrics-artist-byline' => 'bởi %s',
+	'ringtone-matcher-by-song' => 'Gửi %s nhạc chuông cho điện thoại của bạn',
+);
+
 /** Simplified Chinese (中文（简体）‎)
  * @author Anakmalaysia
+ * @author Liuxinyu970226
  */
 $messages['zh-hans'] = array(
 	'app-loading' => '正在载入…',
@@ -1266,6 +1408,8 @@ $messages['zh-hans'] = array(
 	'login-password-hint' => '密码',
 	'login-submit-button' => '登录',
 	'about-heading' => '歌词维基',
+	'about-credits' => '由%s',
+	'about-heading-tips' => '搜索',
 	'about-heading-licensing' => '版权',
 	'about-heading-feedback' => '反馈',
 	'about-heading-rate' => '请给此应用程序评一评！',

@@ -286,11 +286,6 @@ class LocalFile extends File {
 		if ( $row ) {
 			$this->loadFromRow( $row );
 		} else {
-			/* Wikia Change Start @author garthwebb */
-			$info = 'URI: '.(empty($_SERVER["REQUEST_URI"]) ? 'N/A' : $_SERVER["REQUEST_URI"]).
-				 ' - REF: '.(empty($_SERVER['HTTP_REFERER']) ? 'N/A' : $_SERVER['HTTP_REFERER']);
-			Wikia::Log(__METHOD__, false, "[$info] Setting fileExists to false for '".$this->getName()."'");
-			/* Wikia Change End */
 			$this->fileExists = false;
 		}
 
@@ -1008,12 +1003,6 @@ class LocalFile extends File {
 		$props['timestamp'] = wfTimestamp( TS_MW, $timestamp ); // DB -> TS_MW
 		$this->setProps( $props );
 
-		# Delete thumbnails
-		$this->purgeThumbnails();
-
-		# The file is already on its final location, remove it from the squid cache
-		SquidUpdate::purge( array( $this->getURL() ) );
-
 		# Fail now if the file isn't there
 		if ( !$this->fileExists ) {
 			wfDebug( __METHOD__ . ": File " . $this->getRel() . " went missing!\n" );
@@ -1053,6 +1042,7 @@ class LocalFile extends File {
 				# and pass an empty $oldver. Allow this bogus value so we can displace the
 				# `image` row to `oldimage`, leaving room for the new current file `image` row.
 				#throw new MWException( "Empty oi_archive_name. Database and storage out of sync?" );
+				Wikia::logBacktrace(__METHOD__ . "::oi_archive_name - [{$this->getName()}]"); // Wikia change (BAC-1068)
 			}
 			$reupload = true;
 			# Collision, this is an update of a file
@@ -1116,10 +1106,6 @@ class LocalFile extends File {
 		$wikiPage = new WikiFilePage( $descTitle );
 		$wikiPage->setFile( $this );
 
-		# start wikia code
-		wfRunHooks( 'Image::RecordUpload:article', array( &$article, $descTitle ) ) ;
-		# end wikia code
-
 		# Add the log entry
 		$log = new LogPage( 'upload' );
 		$action = $reupload ? 'overwrite' : 'upload';
@@ -1160,6 +1146,16 @@ class LocalFile extends File {
 		# which in fact doesn't really exist (bug 24978)
 		$this->saveToCache();
 
+		if ( $reupload ) {
+			# Delete old thumbnails
+			wfProfileIn( __METHOD__ . '-purge' );
+			$this->purgeThumbnails();
+			wfProfileOut( __METHOD__ . '-purge' );
+
+			# Remove the old file from the squid cache
+			SquidUpdate::purge( array( $this->getURL() ) );
+		}
+		
 		# Hooks, hooks, the magic of hooks...
 		wfRunHooks( 'FileUpload', array( $this, $reupload, $descTitle->exists() ) );
 
@@ -1248,24 +1244,40 @@ class LocalFile extends File {
 	 */
 	function move( $target ) {
 		wfDebugLog( 'imagemove', "Got request to move {$this->name} to " . $target->getText() );
+
+		// Wikia change - begin
+		// @author macbre
+		global $wgUploadMaintenance;
+		if (!empty($wgUploadMaintenance)) {
+			return Status::newFatal('filedelete-maintenance');
+		}
+		// Wikia change - end
+
 		$this->lock(); // begin
 
 		$batch = new LocalFileMoveBatch( $this, $target );
 		$batch->addCurrent();
-		$batch->addOlds();
-
+		$archiveNames = $batch->addOlds();
 		$status = $batch->execute();
+		$this->unlock(); // done
+
 		wfDebugLog( 'imagemove', "Finished moving {$this->name}" );
 
 		$this->purgeEverything();
-		$this->unlock(); // done
-
+		foreach ( $archiveNames as $archiveName ) {
+			$this->purgeOldThumbnails( $archiveName );
+		}
+		
 		if ( $status->isOk() ) {
 			// Now switch the object
 			$this->title = $target;
 			// Force regeneration of the name and hashpath
 			unset( $this->name );
 			unset( $this->hashPath );
+			// Wikia change - begin
+			// @author macbre
+			unset( $this->url );
+			// Wikia change - end
 			// Purge the new image
 			$this->purgeEverything();
 		}
@@ -1286,6 +1298,7 @@ class LocalFile extends File {
 	 * @return FileRepoStatus object.
 	 */
 	function delete( $reason, $suppress = false ) {
+		global $wgUseSquid;
 		$this->lock(); // begin
 
 		$batch = new LocalFileDeleteBatch( $this, $reason, $suppress );
@@ -1293,12 +1306,15 @@ class LocalFile extends File {
 
 		# Get old version relative paths
 		$dbw = $this->repo->getMasterDB();
-		$result = $dbw->select( 'oldimage',
+		$result = $dbw->select( 
+			'oldimage', 
 			array( 'oi_archive_name' ),
-			array( 'oi_name' => $this->getName() ) );
+			array( 'oi_name' => $this->getName() ) 
+		);
+		$archiveNames = [];
 		foreach ( $result as $row ) {
 			$batch->addOld( $row->oi_archive_name );
-			$this->purgeOldThumbnails( $row->oi_archive_name );
+			$archiveNames[] = $row->oi_archive_name;
 		}
 		$status = $batch->execute();
 
@@ -1306,10 +1322,24 @@ class LocalFile extends File {
 			// Update site_stats
 			$site_stats = $dbw->tableName( 'site_stats' );
 			$dbw->query( "UPDATE $site_stats SET ss_images=ss_images-1", __METHOD__ );
-			$this->purgeEverything();
 		}
-
 		$this->unlock(); // done
+		
+		if ( $status->ok ) {
+			$this->purgeEverything();
+			foreach ( $archiveNames as $archiveName ) {
+				$this->purgeOldThumbnails( $archiveName );
+			}
+
+			if ( $wgUseSquid ) {
+				// Purge the squid
+				$purgeUrls = array();
+				foreach ( $archiveNames as $archiveName ) {
+					$purgeUrls[] = $this->getArchiveUrl( $archiveName );
+				}
+				SquidUpdate::purge( $purgeUrls );
+			}
+		}
 
 		return $status;
 	}
@@ -1329,6 +1359,7 @@ class LocalFile extends File {
 	 * @return FileRepoStatus object.
 	 */
 	function deleteOld( $archiveName, $reason, $suppress = false ) {
+		global $wgUseSquid;
 		$this->lock(); // begin
 
 		$batch = new LocalFileDeleteBatch( $this, $reason, $suppress );
@@ -1341,6 +1372,11 @@ class LocalFile extends File {
 		if ( $status->ok ) {
 			$this->purgeDescription();
 			$this->purgeHistory();
+		}
+
+		if ( $wgUseSquid ) {
+			// Purge the squid
+			SquidUpdate::purge( array( $this->getArchiveUrl( $archiveName ) ) );
 		}
 
 		return $status;
@@ -1895,6 +1931,14 @@ class LocalFileRestoreBatch {
 				continue;
 			}
 
+			// Wikia change - begin
+			// @author macbre (BAC-526)
+			// check whether the file was deleted with "suppress" flag (and obey it)
+			if( !$this->unsuppress && ( $row->fa_deleted & Revision::DELETED_TEXT ) ) {
+				return Status::newFatal('undelete-error');
+			}
+			// Wikia change - end
+
 			$deletedRel = $this->file->repo->getDeletedHashPath( $row->fa_storage_key ) . $row->fa_storage_key;
 			$deletedUrl = $this->file->repo->getVirtualUrl() . '/deleted/' . $deletedRel;
 
@@ -2190,6 +2234,7 @@ class LocalFileMoveBatch {
 		$archiveBase = 'archive';
 		$this->olds = array();
 		$this->oldCount = 0;
+		$archiveNames = array();
 
 		$result = $this->db->select( 'oldimage',
 			array( 'oi_archive_name', 'oi_deleted' ),
@@ -2198,6 +2243,7 @@ class LocalFileMoveBatch {
 		);
 
 		foreach ( $result as $row ) {
+			$archiveNames[] = $row->oi_archive_name;
 			$oldName = $row->oi_archive_name;
 			$bits = explode( '!', $oldName, 2 );
 
@@ -2225,6 +2271,8 @@ class LocalFileMoveBatch {
 				"{$archiveBase}/{$this->newHash}{$timestamp}!{$this->newName}"
 			);
 		}
+		
+		return $archiveNames;
 	}
 
 	/**

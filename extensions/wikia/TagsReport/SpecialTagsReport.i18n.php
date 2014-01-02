@@ -23,6 +23,7 @@ $messages['en'] = array(
  * @author Siebrand
  */
 $messages['qqq'] = array(
+	'tagsreportselecttag' => '{{Identical|Select tag}}',
 	'tagsreportgo' => '{{Identical|Show}}',
 	'tagsreportmainnspace' => '{{Identical|Main}}',
 	'tagsreportgenerated' => 'Parameters:
@@ -113,6 +114,7 @@ $messages['br'] = array(
 );
 
 /** Catalan (català)
+ * @author Alvaro Vidal-Abarca
  * @author Marcmpujol
  * @author Paucabot
  */
@@ -127,6 +129,7 @@ $messages['ca'] = array(
 	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|pàgina|pàgines}})',
 	'tagsreportpagesfound' => '<strong>$1</strong> {{PLURAL:$1|pàgina trobada|pàgines trobades}}, que continguin alguna etiqueta especial (dpl, youtube, etc.)',
 	'tagsreportgenerated' => 'Generat el $1 a les $2',
+	'tagsreportpageremoved' => 'La pàgina #$1 ha estat esborrada',
 );
 
 /** Chechen (нохчийн)
@@ -136,7 +139,7 @@ $messages['ce'] = array(
 	'tagsreportnoresults' => 'ХӀума ца карийна',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -207,6 +210,7 @@ $messages['es'] = array(
 	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|página|páginas}})',
 	'tagsreportpagesfound' => '<strong>$1</strong> {{PLURAL:$1|página encontrada|páginas encontradas}}, que contengan alguna etiqueta especial (dpl, youtube, etc.)',
 	'tagsreportgenerated' => 'Generado el $1 a $2',
+	'tagsreportpageremoved' => 'La página #$1 ha sido borrada',
 );
 
 /** Finnish (suomi)
@@ -254,6 +258,7 @@ $messages['gl'] = array(
 	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|páxina|páxinas}})',
 	'tagsreportpagesfound' => '{{PLURAL:$1|Atopouse <strong>$1</strong> páxina que contén|Atopáronse <strong>$1</strong> páxinas que conteñen}} unha etiqueta especial (DPL, YouTube etc.)',
 	'tagsreportgenerated' => 'Xerado o $1 ás $2',
+	'tagsreportpageremoved' => 'A páxina nº$1 foi eliminada',
 );
 
 /** Hausa (Hausa)
@@ -342,6 +347,7 @@ $messages['it'] = array(
 );
 
 /** Japanese (日本語)
+ * @author BryghtShadow
  * @author Tommy6
  */
 $messages['ja'] = array(
@@ -352,7 +358,7 @@ $messages['ja'] = array(
 	'tagsreportnotspecify' => 'まだタグを選択していません',
 	'tagsreportnoresults' => '見つかりませんでした',
 	'tagsreportmainnspace' => '(標準)',
-	'tagsreportpages' => '<strong>$1</strong> のページ',
+	'tagsreportpages' => '(<strong>$1</strong> の{{PLURAL:$1|ページ}})',
 	'tagsreportpagesfound' => '特別なタグ（dpl・youtube など）を含むページが <strong>$1</strong> 見つかりました',
 	'tagsreportgenerated' => '$1 $2 に生成',
 );
@@ -373,6 +379,15 @@ $messages['lb'] = array(
 	'tagsreportgo' => 'Weisen',
 	'tagsreportnoresults' => 'Näischt fonnt',
 	'tagsreportpages' => '(<strong>$1</strong>  {{PLURAL:$1|Säit|Säiten}})',
+	'tagsreportpageremoved' => "D'Säit #$1 gouf ewechgeholl",
+);
+
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'tagsreportgo' => 'نشون دئن',
+	'tagsreportmainnspace' => 'اصلی',
 );
 
 /** Latgalian (latgaļu)
@@ -396,6 +411,7 @@ $messages['mk'] = array(
 	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|страница|страници}})',
 	'tagsreportpagesfound' => '{{PLURAL:$1|Пронајдена е|Пронајдени се}} <strong>$1</strong> {{PLURAL:$1|страница што содржи|страници што содржат}} специјална ознака (DPL, YouTube и тн.)',
 	'tagsreportgenerated' => 'Создадено на $1 во $2 ч.',
+	'tagsreportpageremoved' => 'Страницата бр. $1 е отстранета',
 );
 
 /** Mongolian (монгол)
@@ -403,6 +419,13 @@ $messages['mk'] = array(
  */
 $messages['mn'] = array(
 	'tagsreportgo' => 'Үзүүлэх',
+);
+
+/** Marathi (मराठी)
+ * @author V.narsikar
+ */
+$messages['mr'] = array(
+	'tagsreportpageremoved' => 'पान #$1 हे वगळल्या गेले आहे',
 );
 
 /** Malay (Bahasa Melayu)
@@ -419,6 +442,7 @@ $messages['ms'] = array(
 	'tagsreportpages' => '(<strong>$1</strong> laman)',
 	'tagsreportpagesfound' => '<strong>$1</strong> laman yang mengandungi tag khas (DPL, YouTube, dsb.) dijumpai',
 	'tagsreportgenerated' => 'Dijana pada $1, $2',
+	'tagsreportpageremoved' => 'Halaman #$1 telah dibuang',
 );
 
 /** Burmese (မြန်မာဘာသာ)
@@ -460,6 +484,7 @@ $messages['nl'] = array(
 	'tagsreportpages' => "(<strong>$1</strong> {{PLURAL:$1|pagina|pagina's}})",
 	'tagsreportpagesfound' => "Er {{PLURAL:$1|is <strong>$1</strong> pagina|zijn <strong>$1</strong> pagina's}} aangetroffen die een special label {{PLURAL:$1|bevat|bevatten}} (DPL, YouTube, enzovoort).",
 	'tagsreportgenerated' => 'Aangemaakt op $1 om $2',
+	'tagsreportpageremoved' => 'Pagina #$1 is verwijderd',
 );
 
 /** Nederlands (informeel)‎ (Nederlands (informeel)‎)
@@ -467,6 +492,23 @@ $messages['nl'] = array(
  */
 $messages['nl-informal'] = array(
 	'tagsreportnotspecify' => 'Je hebt nog geen special label geselecteerd.',
+);
+
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'tagsreport' => 'Rapòrt de balisas',
+	'tagsreporttitle' => 'Rapòrt de balisas',
+	'tagsreportselecttag' => 'Seleccionar la balisa :',
+	'tagsreportgo' => 'Afichar',
+	'tagsreportnotspecify' => 'Avètz pas seleccionat cap de balisa especiala',
+	'tagsreportnoresults' => 'Cap de resultat pas trobat',
+	'tagsreportmainnspace' => 'Principal',
+	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|pagina|paginas}})',
+	'tagsreportpagesfound' => 'Trouvé <strong>$1</strong> {{PLURAL:$1|pagina|paginas}}, que {{PLURAL:$1|conten|contenon}} una balisa especiala (dpl, youtube, ...)',
+	'tagsreportgenerated' => 'Generat lo $1 a $2',
+	'tagsreportpageremoved' => 'La pagina #$1 es estada suprimida',
 );
 
 /** Polish (polski)
@@ -484,6 +526,7 @@ $messages['pl'] = array(
 	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|strona|strony|stron}})',
 	'tagsreportpagesfound' => 'Znaleziono <strong>$1</strong> {{PLURAL:$1|stronę|strony|strony}}, gdzie znajduje się znacznik specjalny (DPL, YouTube, etc.)',
 	'tagsreportgenerated' => 'Utworzono $1 o $2',
+	'tagsreportpageremoved' => 'Strona #$1 została usunięta',
 );
 
 /** Piedmontese (Piemontèis)
@@ -527,10 +570,12 @@ $messages['pt'] = array(
 	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|página|páginas}})',
 	'tagsreportpagesfound' => '{{PLURAL:$1|Foi encontrada <strong>$1</strong> página que contém|Foram encontradas <strong>$1</strong> páginas que contêm}} um elemento especial (DPL, YouTube, etc.)',
 	'tagsreportgenerated' => 'Gerado a $1 às $2',
+	'tagsreportpageremoved' => 'A página #$1 foi removida',
 );
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
+ * @author Cainamarques
  * @author Giro720
  * @author Luckas Blade
  * @author 555
@@ -546,6 +591,7 @@ $messages['pt-br'] = array(
 	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|página|páginas}})',
 	'tagsreportpagesfound' => '{{PLURAL:$1|Foi encontrada <strong>$1</strong> página que contém|Foram encontradas <strong>$1</strong> páginas que contêm}} um elemento especial (DPL, YouTube, etc.)',
 	'tagsreportgenerated' => 'Gerado a $1 às $2',
+	'tagsreportpageremoved' => 'A página #$1 foi removida',
 );
 
 /** tarandíne (tarandíne)
@@ -562,11 +608,13 @@ $messages['roa-tara'] = array(
 	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|pàgene|pàggene}})',
 	'tagsreportpagesfound' => 'Acchiate <strong>$1</strong> {{PLURAL:$1|pàgene|pàggene}}, ca tènene tag speciale (DPL, YouTube, etc.)',
 	'tagsreportgenerated' => "Generate 'u $1 a le $2",
+	'tagsreportpageremoved' => "'A pàgene #$1 ha state luate",
 );
 
 /** Russian (русский)
  * @author DCamer
  * @author Lockal
+ * @author Okras
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
@@ -580,6 +628,7 @@ $messages['ru'] = array(
 	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|страница|страницы|страниц}})',
 	'tagsreportpagesfound' => 'Найдено <strong>$1</strong> {{PLURAL:$1|страницы|страниц}}, содержащих указанную метку (DPL, YouTube, и т. д.)',
 	'tagsreportgenerated' => 'Создана $1 в $2',
+	'tagsreportpageremoved' => 'Страница #$1 была удалена',
 );
 
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)
@@ -615,6 +664,7 @@ $messages['sv'] = array(
 	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|sida|sidor}})',
 	'tagsreportpagesfound' => 'Hittade <strong>$1</strong> {{PLURAL:$1|sida|sidor}}, som innehåller speciella taggar (DPL, YouTube, etc.)',
 	'tagsreportgenerated' => 'Skapad den $1, $2',
+	'tagsreportpageremoved' => 'Sidan #$1 har tagits bort',
 );
 
 /** Swahili (Kiswahili)
@@ -652,6 +702,7 @@ $messages['tl'] = array(
 );
 
 /** Ukrainian (українська)
+ * @author Andriykopanytsia
  * @author Prima klasy4na
  * @author Тест
  */
@@ -666,6 +717,7 @@ $messages['uk'] = array(
 	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|сторінка|сторінки|сторінок}})',
 	'tagsreportpagesfound' => 'Знайдено <strong>$1</strong> {{PLURAL:$1|сторінку|сторінки|сторінок}}, що містять спеціальні теги (DPL, youtube, і т.д.)',
 	'tagsreportgenerated' => 'Створено $1 о $2',
+	'tagsreportpageremoved' => 'Сторінка #$1 вже вилучена',
 );
 
 /** Veps (vepsän kel’)
@@ -684,12 +736,40 @@ $messages['vep'] = array(
 	'tagsreportgenerated' => 'Om sätud $1 aigal $2',
 );
 
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'tagsreport' => 'Bài báo cáo',
+	'tagsreporttitle' => 'Bài báo cáo',
+	'tagsreportselecttag' => 'Chọn từ khóa:',
+	'tagsreportgo' => 'Xem',
+	'tagsreportnotspecify' => 'Bạn đã không chọn bất kỳ thẻ đặc biệt được',
+	'tagsreportnoresults' => 'Không tìm thấy kết quả',
+	'tagsreportmainnspace' => 'Chính',
+	'tagsreportpages' => '({{PLURAL:$1|trang|trang}} <strong>$1</strong>)',
+	'tagsreportpagesfound' => 'Tìm thấy {{PLURAL:$1|trang|trang}} <strong>$1</strong>, có chứa các từ khóa đặc biệt (DPL, YouTube, vv)',
+	'tagsreportgenerated' => 'Được tạo ra trên $1 tại $2',
+	'tagsreportpageremoved' => 'Trang #$1 đã bị xóa bỏ',
+);
+
 /** Simplified Chinese (中文（简体）‎)
  * @author Hydra
+ * @author Hzy980512
+ * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
+	'tagsreport' => '标签报告',
+	'tagsreporttitle' => '标签报告',
+	'tagsreportselecttag' => '选择标签：',
 	'tagsreportgo' => '显示',
+	'tagsreportnotspecify' => '你还没选择任何特殊标签',
+	'tagsreportnoresults' => '未找到任何结果',
 	'tagsreportmainnspace' => '主要',
+	'tagsreportpages' => '(<strong>$1</strong>个页面', # Fuzzy
+	'tagsreportpagesfound' => '找到$1个含特殊标签（DPL、YouTube等）的页面。',
+	'tagsreportgenerated' => '生成于 $1 $2',
+	'tagsreportpageremoved' => '页面#$1已被移除',
 );
 
 /** Traditional Chinese (中文（繁體）‎)

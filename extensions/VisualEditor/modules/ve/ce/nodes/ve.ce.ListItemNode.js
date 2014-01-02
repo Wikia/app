@@ -1,40 +1,36 @@
-/**
- * VisualEditor content editable ListItemNode class.
+/*!
+ * VisualEditor ContentEditable ListItemNode class.
  *
- * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
 /**
- * ContentEditable node for a list item.
+ * ContentEditable list item node.
  *
  * @class
+ * @extends ve.ce.BranchNode
  * @constructor
- * @extends {ve.ce.BranchNode}
  * @param {ve.dm.ListItemNode} model Model to observe
+ * @param {Object} [config] Configuration options
  */
-ve.ce.ListItemNode = function VeCeListItemNode( model ) {
+ve.ce.ListItemNode = function VeCeListItemNode( model, config ) {
 	// Parent constructor
-	ve.ce.BranchNode.call( this, 'listItem', model, $( '<li>' ) );
+	ve.ce.BranchNode.call( this, model, config );
 };
 
 /* Inheritance */
 
 ve.inheritClass( ve.ce.ListItemNode, ve.ce.BranchNode );
 
-/* Static Members */
+/* Static Properties */
 
-/**
- * Node rules.
- *
- * @see ve.ce.NodeFactory
- * @static
- * @member
- */
-ve.ce.ListItemNode.rules = {
-	'canBeSplit': true
-};
+ve.ce.ListItemNode.static.name = 'listItem';
+
+ve.ce.ListItemNode.static.tagName = 'li';
+
+ve.ce.ListItemNode.static.canBeSplit = true;
 
 /* Registration */
 
-ve.ce.nodeFactory.register( 'listItem', ve.ce.ListItemNode );
+ve.ce.nodeFactory.register( ve.ce.ListItemNode );

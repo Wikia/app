@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * @author Inez Korczyński
  * @author Bartek Łapiński
  */
@@ -7,10 +7,14 @@
 class WikiaMiniUpload {
 	const USER_PERMISSION_ERROR = -1;
 
-	// this is the function that wraps up the WMU loaded from view, because otherwise
-	// there would be a problem loading the messages
-	// messages themselves are sent in json
-        function loadMainFromView( $error = false ) {
+	/**
+	 * This is the function that wraps up the WMU loaded from view, because otherwise
+	 * there would be a problem loading the messages.  Messages themselves are sent in json
+	 *
+	 * @param bool $error
+	 * @return string
+	 */
+	function loadMainFromView( $error = false ) {
 		global $wgFileExtensions, $wgFileBlacklist, $wgCheckFileExtensions, $wgStrictFileExtensions, $wgUser;
 		global $wgRequest;
 
@@ -35,16 +39,15 @@ class WikiaMiniUpload {
 		$script_a['check_file_extensions'] = htmlspecialchars( $wgCheckFileExtensions );
 		$script_a['strict_file_extensions'] = htmlspecialchars( $wgStrictFileExtensions );
 
-		( $wgUser->isBlocked() ) ? $script_a['user_blocked'] = true : $script_a['user_blocked'] = false;
+		$script_a['user_blocked'] = $wgUser->isBlocked();
 
 		$title = Title::newFromText($wgRequest->getVal( 'article' ), $wgRequest->getVal( 'ns' ) );
 		// if the page is protected
-		( $title->isProtected() ) ? $script_a['user_protected'] = true : $script_a['user_protected'] = false;
-
-		( $wgUser->isLoggedIn() && !$title->userCan( 'edit' ) ) ? $script_a['user_disallowed'] = true : $script_a['user_disallowed'] = false;
+		$script_a['user_protected'] = $title->isProtected();
+		$script_a['user_disallowed'] = $wgUser->isLoggedIn() && !$title->userCan( 'edit' );
 
 		// for disabled anonymous editing
-		( !$wgUser->isLoggedIn() && !$title->userCan( 'edit' ) ) ? $script_a['wmu_init_login'] = true : $script_a['wmu_init_login'] = false;
+		$script_a['wmu_init_login'] = !$wgUser->isLoggedIn() && !$title->userCan( 'edit' );
 
 		global $wgBlankImgUrl;
 		$out = '<div class="reset" id="ImageUpload">';
@@ -63,10 +66,15 @@ class WikiaMiniUpload {
 		$script_a['html'] = $out;
 
 		// jsonify
-                return json_encode( $script_a );
-        }
+		return json_encode( $script_a );
+	}
 
-	// normal, that is loaded from view, main screen
+	/**
+	 * Normal (e.g. loaded from view) main screen
+	 *
+	 * @param bool $error
+	 * @return string
+	 */
 	function loadMain( $error = false ) {
 		$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
 		$tmpl->set_vars(array(
@@ -77,14 +85,29 @@ class WikiaMiniUpload {
 		return $tmpl->render("main");
 	}
 
-	// recently uploaded images on that wiki
+	/**
+	 * Recently uploaded images on that wiki
+	 *
+	 * @return string
+	 */
 	function recentlyUploaded() {
 		global $wgRequest;
 
 		$limit = 8;
 		$offset = $wgRequest->getVal('offset');
 
-		$info = $this->getImages($limit, $offset);
+		$constrain = array();
+		$exactHeight = $wgRequest->getVal('exactHeight');
+		if ( $exactHeight ) {
+			$constrain[] = "img_height = $exactHeight";
+		}
+
+		$exactWidth = $wgRequest->getVal('exactWidth');
+		if ( $exactWidth ) {
+			$constrain[] = "img_width = $exactWidth";
+		}
+
+		$info = $this->getImages($limit, $offset, $constrain);
 
 		$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
 		$tmpl->set_vars(array('data' => $info));
@@ -98,7 +121,7 @@ class WikiaMiniUpload {
         $page = $wgRequest->getVal('page', 1);
         $sourceId = $wgRequest->getVal('sourceId');
 
-        if($sourceId == 1) {
+        if ( $sourceId == 1 ) {
 
             $flickrAPI = new phpFlickr('bac0bd138f5d0819982149f67c0ca734');
             $proxyArr = explode(':', $wgHTTPProxy);
@@ -110,7 +133,7 @@ class WikiaMiniUpload {
 
             return $tmpl->render('results_flickr');
 
-        } else if($sourceId == 0) {
+        } else if ( $sourceId == 0 ) {
 
 			if ( (int)$page == 0 ) $page = 1;
 
@@ -128,7 +151,13 @@ class WikiaMiniUpload {
 		return 'Temp_file_'. $user->getID(). '_' . time();
 	}
 
-	// store info in the db to enable the script to pick it up later during the day (via an automated cleaning routine)
+	/**
+	 * Store info in the db to enable the script to pick it up later during
+	 * the day (via an automated cleaning routine)
+	 *
+	 * @param string|$filename
+	 * @return int
+	 */
 	function tempFileStoreInfo( $filename ) {
 		global $wgExternalSharedDB, $wgCityId;
 
@@ -152,7 +181,11 @@ class WikiaMiniUpload {
 		return $dbw->insertId();
 	}
 
-	// remove the data about this file from the db, so it won't clutter it
+	/**
+	 * Remove the data about this file from the db, so it won't clutter it
+	 *
+	 * @param $id
+	 */
 	function tempFileClearInfo( $id ) {
 		global $wgExternalSharedDB;
 
@@ -167,19 +200,23 @@ class WikiaMiniUpload {
 		$dbw->commit();
 	}
 
-	// this function loads the image details page
+	/**
+	 * This function loads the image details page
+	 *
+	 * @return string
+	 */
 	function chooseImage() {
 		global $wgRequest, $wgUser;
 		$itemId = $wgRequest->getVal('itemId');
 		$sourceId = $wgRequest->getInt('sourceId');
 
-		if($sourceId == 0) {
+		if ( $sourceId == 0 ) {
 			$file = wfFindFile(Title::newFromText($itemId, 6));
 			$props = array();
 			$props['file'] = $file;
 			$props['mwname'] = $itemId;
 			$props['default_caption'] = !empty($file) ? Wikia::getProps($file->getTitle()->getArticleID(), 'default_caption') : '';
-		} else if($sourceId == 1) {
+		} else if ( $sourceId == 1 ) {
 
 			$flickrResult = $this->getFlickrPhotoInfo( $itemId );
 
@@ -202,7 +239,11 @@ class WikiaMiniUpload {
 		return $this->detailsPage($props);
 	}
 
-	// perform image check
+	/**
+	 * Perform image check
+	 *
+	 * @return array|int
+	 */
 	function checkImage() {
 		global $wgRequest, $wgUser;
 
@@ -218,12 +259,12 @@ class WikiaMiniUpload {
 
 		$ret = $upload->verifyUpload();
 
-		if(!wfRunHooks('WikiaMiniUpload:BeforeProcessing', array($mSrcName))) {
+		if ( !wfRunHooks('WikiaMiniUpload:BeforeProcessing', array($mSrcName)) ) {
 			wfDebug( "Hook 'WikiaMiniUpload:BeforeProcessing' broke processing the file." );
 			return UploadBase::VERIFICATION_ERROR;
 		}
 
-		if(is_array($ret)) {
+		if ( is_array($ret) ) {
 			return $ret['status'];
 		} else {
 			return $ret;
@@ -231,7 +272,7 @@ class WikiaMiniUpload {
 	}
 
 	function translateError ( $error ) {
-		switch( $error ) {
+		switch ( $error ) {
 			case UploadBase::SUCCESS:
 				return false;
 			case UploadBase::EMPTY_FILE:
@@ -257,7 +298,7 @@ class WikiaMiniUpload {
 		global $wgRequest, $wgUser;
 
 		$check_result = $this->checkImage() ;
-		if (UploadBase::SUCCESS == $check_result) {
+		if ( UploadBase::SUCCESS == $check_result ) {
 			$tempname = $this->tempFileName( $wgUser );
 			$file = new FakeLocalFile(Title::newFromText($tempname, 6), RepoGroup::singleton()->getLocalRepo());
 			$file->upload($wgRequest->getFileTempName('wpUploadFile'), '', '');
@@ -275,22 +316,27 @@ class WikiaMiniUpload {
 		}
 	}
 
-	// generate details page
-	function detailsPage($props) {
+	/**
+	 * Generate details page
+	 *
+	 * @param $props
+	 * @return string
+	 */
+	function detailsPage( $props ) {
 
 		$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
 
-		if (isset($props['name'])) {
+		if ( isset($props['name']) ) {
 			list( $partname, $ext ) = UploadBase::splitExtensions( $props['name'] );
 
-			if( count( $ext ) ) {
+			if ( count( $ext ) ) {
 				$finalExt = $ext[count( $ext ) - 1];
 			} else {
 				$finalExt = '';
 			}
 
 			// for more than one "extension"
-			if( count( $ext ) > 1 ) {
+			if ( count( $ext ) > 1 ) {
 				for( $i = 0; $i < count( $ext ) - 1; $i++ )
 					$partname .= '.' . $ext[$i];
 			}
@@ -300,7 +346,7 @@ class WikiaMiniUpload {
 		}
 
 		// a guard
-		if( !is_object( $props['file'] ) ) {
+		if ( !is_object( $props['file'] ) ) {
 			return $this->loadMain( $this->translateError( UploadBase::EMPTY_FILE ) );
 		}
 
@@ -308,12 +354,23 @@ class WikiaMiniUpload {
 		return $tmpl->render('details');
 	}
 
-	// this function generates the image for replacing the placeholder after adding the image
+	/**
+	 * This function generates the image for replacing the placeholder after adding the image
+	 *
+	 * @param $file
+	 * @param $name
+	 * @param $title
+	 * @param bool $thumbnail
+	 * @param int $width
+	 * @param string $layout
+	 * @param string $caption
+	 * @return mixed
+	 */
 	function generateImage( $file, $name, $title, $thumbnail = false, $width = 0, $layout = '', $caption = '' ) {
 		global $wgStylePath;
 		$page = $name;
 
-		if( $page ) {
+		if ( $page ) {
 			$query = isset($query) ? '&page=' . urlencode( $page ) : 'page=' . urlencode( $page );
 		}
 		$file = wfFindFile( $name );
@@ -321,10 +378,10 @@ class WikiaMiniUpload {
 
 		$orig = $file->getWidth( $page );
 
-		if( !$width || ( $orig < $width ) ) {
+		if ( !$width || ( $orig < $width ) ) {
 			$width = $orig;
 		}
-		if( !$layout ) {
+		if ( !$layout ) {
 			$layout = 'right';
 		}
 
@@ -364,7 +421,11 @@ class WikiaMiniUpload {
 		return str_replace("\n", ' ', $s);
 	}
 
-	// this functions handle the third step of the WMU, image insertion
+	/**
+	 * This functions handle the third step of the WMU, image insertion
+	 *
+	 * @return bool|String
+	 */
 	function insertImage() {
 		global $wgRequest, $wgUser, $wgContLang;
 		$type = $wgRequest->getVal('type');
@@ -372,19 +433,18 @@ class WikiaMiniUpload {
 		$mwname = $wgRequest->getVal('mwname');
 		$tempid = $wgRequest->getVal('tempid');
 
-		( '' != $wgRequest->getVal( 'gallery' ) ) ? $gallery = $wgRequest->getVal( 'gallery' ) : $gallery = '' ;
-		( '' != $wgRequest->getVal( 'article' ) ) ? $title_main = urldecode( $wgRequest->getVal( 'article' ) ) : $title_main = '' ;
-		( '' != $wgRequest->getCheck( 'fck' ) ) ? $fck = $wgRequest->getCheck( 'ns' ) : $fck = false ;
-		( '' != $wgRequest->getVal( 'ns' ) ) ? $ns = $wgRequest->getVal( 'ns' ) : $ns = '' ;
-		( '' != $wgRequest->getVal( 'link' ) ) ? $link = urldecode( $wgRequest->getVal( 'link' ) ) : $link = '' ;
+		$gallery = $wgRequest->getVal( 'gallery', '' );
+		$title_main = urldecode( $wgRequest->getVal( 'article', '' ) );
+		$fck = $wgRequest->getCheck( 'ns', false );
+		$ns = $wgRequest->getVal( 'ns', '' );
+		$link = urldecode( $wgRequest->getVal( 'link', '' ) );
 
 		$extraId = $wgRequest->getVal('extraId');
 		$newFile =  true;
 		$file = null;
-
-		if($name !== NULL) {
+		if ( $name !== NULL ) {
 			$name = urldecode( $name );
-			if($name == '') {
+			if ( $name == '' ) {
 				header('X-screen-type: error');
 				return WfMsg( 'wmu-warn3' );
 			} else {
@@ -392,31 +452,31 @@ class WikiaMiniUpload {
 				// did they give no extension at all when they changed the name?
 				$ext = explode( '.', $name );
 				array_shift( $ext );
-				if( count( $ext ) ) {
+				if ( count( $ext ) ) {
 					$finalExt = $ext[count( $ext ) - 1];
 				} else {
 					$finalExt = '';
 				}
 
-				if( '' == $finalExt ) {
+				if ( '' == $finalExt ) {
 					header('X-screen-type: error');
 					return wfMsg( 'wmu-filetype-missing' );
 				}
 
 				$title = Title::makeTitleSafe(NS_IMAGE, $name);
-				if(is_null($title)) {
+				if ( is_null($title) ) {
 					header('X-screen-type: error');
 					return wfMsg ( 'wmu-filetype-incorrect' );
 				}
-				if($title->exists()) {
-					if($type == 'overwrite') {
+				if ( $title->exists() ) {
+					if ( $type == 'overwrite' ) {
 						$title = Title::newFromText($name, 6);
 						// is the target protected?
 						$permErrors = $title->getUserPermissionsErrors( 'edit', $wgUser );
 						$permErrorsUpload = $title->getUserPermissionsErrors( 'upload', $wgUser );
 						$permErrorsCreate = ( $title->exists() ? array() : $title->getUserPermissionsErrors( 'create', $wgUser ) );
 
-						if( $permErrors || $permErrorsUpload || $permErrorsCreate ) {
+						if ( $permErrors || $permErrorsUpload || $permErrorsCreate ) {
 							header('X-screen-type: error');
 							return wfMsg( 'wmu-file-protected' );
 						}
@@ -424,7 +484,7 @@ class WikiaMiniUpload {
 						$file_name = new LocalFile($title, RepoGroup::singleton()->getLocalRepo());
 						$file_mwname = new FakeLocalFile(Title::newFromText($mwname, 6), RepoGroup::singleton()->getLocalRepo());
 
-						if(!empty($extraId)) {
+						if ( !empty($extraId) ) {
 							$flickrResult = $this->getFlickrPhotoInfo( $extraId );
 
 							$nsid = $flickrResult['owner']['nsid']; // e.g. 49127042@N00
@@ -440,7 +500,7 @@ class WikiaMiniUpload {
 						$file_mwname->delete('');
 						$this->tempFileClearInfo( $tempid );
 						$newFile = false;
-					} else if($type == 'existing') {
+					} else if ( $type == 'existing' ) {
 						$file = wfFindFile( Title::newFromText( $name, 6 ) );
 
 						if ( !empty( $file ) ) {
@@ -461,14 +521,14 @@ class WikiaMiniUpload {
 						// extensions check
 						list( $partname, $ext ) = UploadBase::splitExtensions( $name );
 
-						if( count( $ext ) ) {
+						if ( count( $ext ) ) {
 							$finalExt = $ext[count( $ext ) - 1];
 						} else {
 							$finalExt = '';
 						}
 
 						// for more than one "extension"
-						if( count( $ext ) > 1 ) {
+						if ( count( $ext ) > 1 ) {
 							for( $i = 0; $i < count( $ext ) - 1; $i++ )
 								$partname .= '.' . $ext[$i];
 						}
@@ -487,7 +547,7 @@ class WikiaMiniUpload {
 					$permErrorsUpload = $title->getUserPermissionsErrors( 'upload', $wgUser );
 					$permErrorsCreate = ( $title->exists() ? array() : $title->getUserPermissionsErrors( 'create', $wgUser ) );
 
-					if( $permErrors || $permErrorsUpload || $permErrorsCreate ) {
+					if ( $permErrors || $permErrorsUpload || $permErrorsCreate ) {
 						header('X-screen-type: error');
 						return wfMsg( 'wmu-file-protected' );
 					}
@@ -495,7 +555,7 @@ class WikiaMiniUpload {
 					$temp_file = new LocalFile(Title::newFromText($mwname, 6), RepoGroup::singleton()->getLocalRepo());
 					$file = new LocalFile($title, RepoGroup::singleton()->getLocalRepo());
 
-					if(!empty($extraId)) {
+					if ( !empty($extraId) ) {
 						$flickrResult = $this->getFlickrPhotoInfo( $extraId );
 
 						$nsid = $flickrResult['owner']['nsid']; // e.g. 49127042@N00
@@ -519,7 +579,7 @@ class WikiaMiniUpload {
 					$this->tempFileClearInfo( $tempid );
 				}
 
-				if( $wgUser->getOption( 'watchdefault' ) || ( $newFile && $wgUser->getOption( 'watchcreations' ) ) ) {
+				if ( $wgUser->getOption( 'watchdefault' ) || ( $newFile && $wgUser->getOption( 'watchcreations' ) ) ) {
 					$wgUser->addWatch($title);
 				}
 				$db =& wfGetDB(DB_MASTER);
@@ -533,14 +593,20 @@ class WikiaMiniUpload {
 			$file = wfFindFile( $title );
 		}
 
-		if (!is_object($file)) {
+		if ( !is_object($file) ) {
 			header('X-screen-type: error');
-			return 'File was not found!';
+			return wfMessage('wmu-file-not-found')->plain();
+		}
+
+		// Test if this violates the size requirements we've been given
+		if ( $msg = $this->invalidSize($file) ) {
+			header('X-screen-type: error');
+			return $msg;
 		}
 
 		$ns_img = $wgContLang->getFormattedNsText( NS_IMAGE );
 
-		if( ( -2 == $gallery ) && !$fck ) {
+		if ( ( -2 == $gallery ) && !$fck ) {
 			// this went in from the single placeholder...
 			$name = $title->getText();
 			$size = $wgRequest->getVal('size');
@@ -569,20 +635,20 @@ class WikiaMiniUpload {
 
 				$tag = $gallery_split[0] . ":" . $name;
 
-				if($size != 'full') {
+				if ( $size != 'full' ) {
 					$tag .= '|thumb';
 					$thumb = true;
 				}
 
-				if( isset( $width ) ) {
+				if ( isset( $width ) ) {
 					$tag .= '|'.$width;
 				}
 				$tag .= '|'.$layout;
 
-				if( $link != '' ) {
+				if ( $link != '' ) {
 					$tag .= '|link=' . $link;
 				}
-				if( $caption != '' ) {
+				if ( $caption != '' ) {
 					$tag .= '|' . $caption;
 				}
 
@@ -617,28 +683,28 @@ class WikiaMiniUpload {
 			$slider = $wgRequest->getVal('slider');
 
 			$tag = '[[' . $ns_img . ':'.$title->getDBkey();
-			if($size != 'full' && ($file->getMediaType() == 'BITMAP' || $file->getMediaType() == 'DRAWING')) {
+			if ( $size != 'full' && ($file->getMediaType() == 'BITMAP' || $file->getMediaType() == 'DRAWING') ) {
 				$tag .= '|thumb';
-				if($layout != 'right') {
+				if ( $layout != 'right' ) {
 					$tag .= '|'.$layout;
 				}
-				if($slider == 'true') {
+				if ( $slider == 'true' ) {
 					$tag .= '|'.$width;
 				}
 			}
-			if( $link != '' && $size == 'full' ) {
+			if ( $link != '' && $size == 'full' ) {
 				$tag .= '|link=' . $link;
 			}
-			if($caption != '') {
-				if($size == 'full') {
+			if ( $caption != '' ) {
+				if ( $size == 'full' ) {
 					$tag .= '|frame';
-					if($layout != 'right') {
+					if ( $layout != 'right' ) {
 						$tag .= '|'.$layout;
 					}
 				}
 				$tag .= '|'.$caption.']]';
 			} else {
-				if($size == 'full') {
+				if ( $size == 'full' ) {
 					$tag .= '|'.$layout;
 				}
 				$tag .= ']]';
@@ -646,7 +712,7 @@ class WikiaMiniUpload {
 		}
 		$message = wfMsg( 'wmu-success' );
 
-		if ($wgRequest->getVal ( 'update_caption' ) == 'on') {
+		if ( $wgRequest->getVal ( 'update_caption' ) == 'on' ) {
 			Wikia::setProps($title->getArticleID(), array('default_caption' => $caption));
 		}
 
@@ -658,6 +724,57 @@ class WikiaMiniUpload {
 						'code' => isset($embed_code) ? $embed_code : '',
 					 ));
 		return $tmpl->render('summary');
+	}
+
+	/**
+	 * Check the file object passed to make sure it passes any optional size checks passed to this
+	 * controller.  Note that this method is a negative assertion.  That is, if it fails a value will
+	 * be returned but if the size is correct, it will return FALSE (e.g., "no its not invalid")
+	 * Currently, this check uses these request parameters:
+	 *
+	 *   exactHeight   => Minimum pixel height of the image
+	 *   exactWidth    => Minimum pixel width of the image
+	 *   aspectRatio => Exact aspect ratio the image should have
+	 *
+	 * @param File|$file A file object
+	 * @return bool|String Returns an error string if there is a problem, false otherwise
+	 */
+	function invalidSize( $file ) {
+		global $wgRequest;
+		$exactHeight = $wgRequest->getVal('exactHeight');
+		$exactWidth = $wgRequest->getVal('exactWidth');
+
+		// Skip this check if we don't have any constraints
+		if (empty($exactHeight) && empty($exactWidth)) {
+			return false;
+		}
+
+		$fileHeight = $file->getHeight();
+		$fileWidth = $file->getWidth();
+
+		// Possible messages generated here:
+		//   wmu-error-exact-width
+		//   wmu-error-exact-height
+		//   wmu-error-exact-width-height
+		$msgString = 'wmu-error-exact';
+		$params = array();
+		if ( !empty($exactWidth) && ($fileWidth != $exactWidth) ) {
+			$msgString .= '-width';
+			$params[] = $exactWidth;
+			$params[] = $fileWidth;
+		}
+		if ( !empty($exactHeight) && ($fileHeight != $exactHeight) ) {
+			$msgString .= '-height';
+			$params[] = $exactHeight;
+			$params[] = $fileHeight;
+		}
+
+		// Check if the minimum sizes failed before moving on
+		if (count($params)) {
+			return wfMessage($msgString, $params)->plain();
+		}
+
+		return false;
 	}
 
 	function clean() {
@@ -679,10 +796,23 @@ class WikiaMiniUpload {
 		return $flickrResult['photo'];
 	}
 
-	function getImages ( $limit, $offset = 0 ) {
+	/**
+	 * Retrieve recently uploaded images from this wiki.  This will filter out video files
+	 * and images uploaded by bots if necessary.  Additionally, arbitrary constraints can
+	 * be passed in to filter out additional images.  These constraints can be either of:
+	 *
+	 *   $constrain[] = "img_name = 'bar'"
+	 *   $constrain['img_minor_mime'] = 'youtube'
+	 *
+	 * @param int $limit Limit the number of images to return
+	 * @param int $offset Grab images after an offset.  Used with $limit to page the results
+	 * @param array $constrain An array of constraint/value that will be used in the query
+	 * @return array An array of images
+	 */
+	function getImages( $limit, $offset = 0, $constrain = array() ) {
 
-		# Load the next set of images, eliminating images uploaded by bots as
-		# well as eliminating any video files
+		// Load the next set of images, eliminating images uploaded by bots as
+		// well as eliminating any video files
 		$dbr = wfGetDB( DB_SLAVE );
 		$image = $dbr->tableName( 'image' );
 		$sql = 'SELECT img_size, img_name, img_user, img_user_text, img_description, img_timestamp '.
@@ -697,26 +827,32 @@ class WikiaMiniUpload {
 		if ( count($botconds) ) {
 			$isbotmember = $dbr->makeList( $botconds, LIST_OR );
 
-			# LEFT join to the user_groups table on being a bot and then make sure
-			# we get null rows back (i.e. we're not a bot)
+			// LEFT join to the user_groups table on being a bot and then make sure
+			// we get null rows back (i.e. we're not a bot)
 			$ug = $dbr->tableName( 'user_groups' );
 
 			$sql .= " LEFT JOIN $ug ON img_user=ug_user AND ($isbotmember)";
 			$where[] = 'ug_group IS NULL';
 		}
 
-		# Eliminate videos from this listing
+		// Eliminate videos from this listing
 		$where[] = 'img_media_type != \'VIDEO\'';
 		$where[] = 'img_major_mime != \'video\'';
 		$where[] = 'img_media_type != \'swf\'';
 
+		// Add any additional constraints
+		if ( $constrain ) {
+			foreach ( $constrain as $cond ) {
+				$where[] = $cond;
+			}
+		}
+
 		$sql .= ' WHERE ' . $dbr->makeList( $where, LIST_AND );
 		$sql .= ' ORDER BY img_timestamp DESC ';
 		$sql .= ' LIMIT ' . ( $limit + 1 );
-		if ($offset) {
+		if ( $offset ) {
 			$sql .= " OFFSET $offset";
 		}
-
 		$res = $dbr->query( $sql, __FUNCTION__ );
 
 		$images = array();
@@ -725,7 +861,7 @@ class WikiaMiniUpload {
 		}
 		$dbr->freeResult( $res );
 
-		# Load the images into a new gallery
+		// Load the images into a new gallery
 		$gallery = new WikiaPhotoGallery();
 		$gallery->parseParams( array(
 			"rowdivider"   => true,
@@ -738,8 +874,8 @@ class WikiaMiniUpload {
 		foreach ( $images as $s ) {
 			$foundImages++;
 			if ( $foundImages > $limit ) {
-				# One extra just to test for whether to show a page link;
-				# don't actually show it.
+				// One extra just to test for whether to show a page link;
+				// don't actually show it.
 				break;
 			}
 
@@ -749,7 +885,7 @@ class WikiaMiniUpload {
 
 		$info = array("gallery" => $gallery);
 
-		# Set pagination information
+		// Set pagination information
 		if ( $offset > 0 ) {
 			$info['prev'] = $offset - $limit;
 		}

@@ -315,6 +315,12 @@ class UserProfilePageController extends WikiaController {
 			$this->profilePage = new UserProfilePage($sessionUser);
 
 			$this->setVal('body', (string)$this->sendSelfRequest('renderLightbox', array('tab' => $selectedTab, 'userId' => $userId)));
+
+			if (!empty($this->wg->AvatarsMaintenance)) {
+				$this->setVal('avatarsDisabled', true);
+				$this->setVal('avatarsDisabledMsg', wfMessage('user-identity-avatars-maintenance')->text());
+			}
+
 			//we'll implement interview section later
 			//$this->setVal( 'interviewQuestions', $this->profilePage->getInterviewQuestions( $wikiId, false, true ) );
 		}
@@ -762,7 +768,7 @@ class UserProfilePageController extends WikiaController {
 		$user = User::newFromId($userId);
 
 		$this->setVal('defaultAvatars', $this->getDefaultAvatars());
-		$this->setVal('isUploadsPossible', $this->wg->EnableUploads && $this->wg->User->isAllowed('upload') && is_writeable($this->wg->UploadDirectory));
+		$this->setVal('isUploadsPossible', $this->wg->EnableUploads && $this->wg->User->isAllowed('upload') && empty($this->wg->AvatarsMaintenance));
 
 		$this->setVal('avatarName', $user->getOption('avatar'));
 		$this->setVal('userId', $userId);
@@ -1072,13 +1078,22 @@ class UserProfilePageController extends WikiaController {
 	public function removeavatar() {
 		wfProfileIn(__METHOD__);
 		$this->setVal('status', false);
+
+		// macbre: avatars operations are disabled during maintenance
+		global $wgAvatarsMaintenance;
+		if (!empty($wgAvatarsMaintenance)) {
+			$this->setVal('error', wfMsg('user-identity-avatars-maintenance'));
+			wfProfileOut(__METHOD__);
+			return true;
+		}
+
 		if (!$this->app->wg->User->isAllowed('removeavatar')) {
 			wfProfileOut(__METHOD__);
 			return true;
 		}
 
-		if ($this->request->getVal('av_user')) {
-			$avUser = User::newFromName($this->request->getVal('av_user'));
+		if ($this->request->getVal('avUser')) {
+			$avUser = User::newFromName($this->request->getVal('avUser'));
 			if ($avUser->getID() !== 0) {
 				$avatar = Masthead::newFromUser($avUser);
 				if ($avatar->removeFile(true)) {

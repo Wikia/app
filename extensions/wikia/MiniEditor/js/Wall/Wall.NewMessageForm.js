@@ -61,7 +61,7 @@ MiniEditor.Wall.NewMessageForm = $.createClass(Wall.settings.classBindings.newMe
 	},
 
 	getMessageBody: function() {
-		return this.messageBody.data('wikiaEditor').getContent().trim();
+		return $.trim(this.messageBody.data('wikiaEditor').getContent());
 	},
 
 	// Return an empty string if we don't need to convert,
@@ -99,7 +99,7 @@ MiniEditor.Wall.NewMessageForm = $.createClass(Wall.settings.classBindings.newMe
 		var title = this.messageTitle.val();
 
 		if (title.length > 0) {
-			this.messageTitle.val(title.trim());
+			this.messageTitle.val($.trim(title));
 		}
 	}
 });

@@ -52,9 +52,9 @@
 		color: white;
 		padding-right: 40px;
 
-		-webkit-transiton: color .2s;
-		-moz-transiton: color .2s;
-		transiton: color .2s;
+		-webkit-transition: color .2s;
+		-moz-transition: color .2s;
+		transition: color .2s;
 
 		&.show {
 			color: inherit;

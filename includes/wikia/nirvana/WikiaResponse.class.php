@@ -22,6 +22,7 @@ class WikiaResponse {
 	const RESPONSE_CODE_OK = 200;
 	const RESPONSE_CODE_ERROR = 501;
 	const RESPONSE_CODE_FORBIDDEN = 403;
+	const RESPONSE_CODE_NOT_FOUND = 404;
 
 	/**
 	 * Output formats
@@ -479,32 +480,15 @@ class WikiaResponse {
 	}
 
 	/**
-	 * Add an asset to the current response
+	 * @desc Adds an asset to the current response
 	 *
-	 * @param mixed $assetName the name of a configured package or path to an asset file or an array of them
-	 * @param bool $local [OPTIONAL] whether to fetch per-wiki local URLs,
-	 * (false by default, i.e. the method returns a shared host URL's for our network);
-	 * please note that this parameter has no effect on SASS assets, those will always produce shared host URL's.
+	 * @see Wikia::addAssetsToOutput
 	 */
 	public function addAsset( $assetName, $local = false ){
-		$app = F::app();
 		wfProfileIn( __METHOD__ );
-		$type = false;
 
 		if ( $this->format == 'html' ) {
-			$sources = AssetsManager::getInstance()->getURL( $assetName, $type, $local );
-
-			foreach($sources as $src){
-				switch ( $type ) {
-					case AssetsManager::TYPE_CSS:
-					case AssetsManager::TYPE_SCSS:
-						$app->wg->Out->addStyle( $src );
-						break;
-					case AssetsManager::TYPE_JS:
-						$app->wg->Out->addScript( "<script type=\"{$app->wg->JsMimeType}\" src=\"{$src}\"></script>" );
-						break;
-				}
-			}
+			Wikia::addAssetsToOutput( $assetName, $local );
 		}
 
 		wfProfileOut( __METHOD__ );

@@ -1,7 +1,7 @@
-/**
- * VisualEditor Stand-alone initialization styles.
+/*!
+ * VisualEditor Standalone Initialization styles.
  *
- * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -9,6 +9,6 @@
 	font-size: 0.8em;
 }
 
-.ve-ui-menu {
+.ve-ui-menuWidget {
 	font-size: 0.9em;
 }

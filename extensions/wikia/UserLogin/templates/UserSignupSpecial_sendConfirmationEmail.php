@@ -14,7 +14,7 @@
 			<div class="input-group">
 				<input type="hidden" name="action" value="resendconfirmation">
 				<input type="hidden" name="username" value="<?=$username?>">
-				<input type="submit" value="<?= wfMsg('usersignup-confirm-email-resend-email') ?>" class="link">
+				<input type="submit" value="<?= wfMessage('usersignup-confirm-email-resend-email')->escaped() ?>" class="link">
 			</div>
 		</fieldset>
 	</form>
@@ -24,16 +24,15 @@
 				'WikiaStyleGuideTooltipIconController',
 				'index',
 				array(
-					'text' => wfMsg('usersignup-confirm-email-change-email-content'),
+					'text' => wfMessage('usersignup-confirm-email-change-email-content'),
 					'classes' => 'email-tooltip',
-					'tooltipIconTitle' => wfMsg('usersignup-confirm-email-tooltip'),
+					'tooltipIconTitle' => wfMessage('usersignup-confirm-email-tooltip')->escaped(),
 				)
 			);
 		?>
+		<br />
+		<a href="#" class="change-email-link"><?= wfMessage('usersignup-confirm-email-change-email')->escaped() ?></a>
 	</p>
-
-	<a href="#" class="change-email-link"><?= wfMsg('usersignup-confirm-email-change-email') ?></a>
-
 <?
 	$form = array(
 		'method' => 'post',
@@ -51,7 +50,7 @@
 			),
 			array(
 				'type' => 'text',
-				'label' => wfMsg('usersignup-confirm-email-new-email-label'),
+				'label' => wfMessage('usersignup-confirm-email-new-email-label')->escaped(),
 				'name' => 'email',
 				'isInvalid' => (!empty($errParam) && $errParam === 'email'),
 				'value' => !empty($email) ? $email : '',
@@ -60,7 +59,7 @@
 		),
 		'submits' => array(
 			array(
-				'value' => wfMsg('usersignup-confirm-email-update'),
+				'value' => wfMessage('usersignup-confirm-email-update')->escaped(),
 				'class' => 'update-button'
 			)
 		)

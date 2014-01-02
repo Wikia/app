@@ -11,15 +11,11 @@
  */
 ?>
 <section id=wkPage>
-	<?= $pageHeaderContent ;?>
+	<?= !empty( $pageHeaderContent ) ? $pageHeaderContent : ''; ?>
 	<article id=wkMainCnt>
 		<?= $bodyContent ;?>
-		<?= $navMenu ;?>
 		<footer id=wkMainCntFtr>
-			<nav id=wkRltdCnt>
-			<?= !empty( $relatedPages ) ? $relatedPages  : ''; ?>
-			<?= !empty( $categoryLinks ) ? $categoryLinks : ''; ?>
-			</nav>
+			<nav id=wkRltdCnt><?= !empty( $categoryLinks ) ? $categoryLinks : ''; ?></nav>
 			<?= !empty( $afterContentHookText ) ? $afterContentHookText : ''; ?>
 			<?= !empty( $afterBodyContent ) ? $afterBodyContent : ''; ?>
 		</footer>

@@ -95,4 +95,13 @@ class VideoTitle extends AbstractDismax
 	protected function getQueryFieldsString() {
 		return '';
 	}
+	
+	/**
+	 * We're not using this beacuse we're trying Solarium's native prepared statement stuff in this queryservice
+	 * Probably suggests we're eventually due for a refactor
+	 * @see \Wikia\Search\QueryService\Select\Dismax\AbstractDismax::getQueryClausesString()
+	 */
+	protected function getQueryClausesString() {
+		return '';
+	}
 }

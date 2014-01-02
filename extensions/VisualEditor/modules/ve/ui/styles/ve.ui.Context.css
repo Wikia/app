@@ -1,87 +1,60 @@
-/**
- * VisualEditor user interface Context styles.
+/*!
+ * VisualEditor UserInterface Context styles.
  *
- * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
-.ve-ui-context {
+.ve-ui-context,
+.ve-ui-context-inspectors,
+.ve-ui-context-menu {
 	position: absolute;
-	z-index: 2;
-	visibility: hidden;
 }
 
-.ve-ui-context-callout {
-	position: absolute;
-	/* @embed */
-	background-image: url(images/callout.svg);
-	background-repeat: no-repeat;
-	width: 15px;
-	height: 8px;
-	cursor: pointer;
-	right: -7px;
-	z-index: 4;
-}
-
-.ve-ui-context-inner {
-	margin-top: 7px;
-	position: absolute;
-	overflow: hidden;
-	border: solid 1px #ccc;
-	-webkit-border-radius: 0.25em;
-	-moz-border-radius: 0.25em;
-	-o-border-radius: 0.25em;
-	border-radius: 0.25em;
-	background-color: #fff;
-	-webkit-box-shadow: 0 0.15em 0.5em 0 rgba(0, 0, 0, 0.2);
-	-moz-box-shadow: 0 0.15em 0.5em 0 rgba(0, 0, 0, 0.2);
-	box-shadow: 0 0.15em 0.5em 0 rgba(0, 0, 0, 0.2);
-}
-
-.ve-ui-context-inspectors, .ve-ui-context-menu {
-	position: absolute;
-	z-index: 2;
-}
-
-.ve-ui-context-toolbar {
+.ve-ui-context-menu .ve-ui-toolbar-bar {
 	white-space: nowrap;
+	border: none;
+	background: none;
 }
 
-.ve-ui-context-toolbar .ve-ui-toolbarGroup {
+.ve-ui-context-menu .ve-ui-toolGroup {
+	border: none;
+	margin: 0;
+}
+
+.ve-ui-context-menu .ve-ui-buttonTool,
+.ve-ui-context-menu .ve-ui-buttonTool:hover {
 	border: none;
 }
 
-.ve-ui-context-toolbar .ve-ui-buttonTool {
-	padding: 0.25em;
-	height: 1.25em;
-	width: 1.25em;
-	margin: 0.05em;
-	border: none;
-}
-
-.ve-ui-context-toolbar .ve-ui-buttonTool:before {
-	content: " ";
-	position: absolute;
-	display: block;
-	height: 1.25em;
-	width: 1.25em;
-	background-position: center center;
-	background-repeat: no-repeat;
-	border: none;
-}
-
-.ve-ui-context-toolbar .ve-ui-buttonTool:hover {
-	border: none;
-}
-
-.ve-ui-context-toolbar .ve-ui-buttonTool:active,
-.ve-ui-context-toolbar .ve-ui-buttonTool-active {
+.ve-ui-context-menu .ve-ui-buttonTool:active,
+.ve-ui-context-menu .ve-ui-buttonTool-active {
 	background-image: none;
 }
 
-.ve-ui-context-frame-overlay {
-	position: absolute;
-	top: 0;
-	left: 0;
-	margin-top: 4px;
+.ve-ui-context-embed .ve-ui-popupWidget-callout {
+	display: none;
+}
+
+.ve-ui-context-embed .ve-ui-popupWidget-body {
+	margin-top: 0.25em;
+}
+
+/* @noflip */
+.ltr .ve-ui-context-embed .ve-ui-popupWidget-body {
+	margin-left: -0.75em;
+}
+
+/* @noflip */
+.rtl .ve-ui-context-embed .ve-ui-popupWidget-body {
+	margin-left: 0.75em;
+}
+
+.ve-ui-context-embed .ve-ui-context-menu {
+	right: 0;
+}
+
+/* HACK: Compensate for ve-ui-frame-content setting the font size to 0.8em */
+.ve-ui-frame-content .ve-ui-context {
+	font-size: 1.25em;
 }

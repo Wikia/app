@@ -50,6 +50,7 @@ class SearchApiController extends WikiaApiController {
 	 * @requestParam string $rank [OPTIONAL] The ranking to use in fetching the list of results, one of default, newest, oldest, recently-modified, stable, most-viewed, freshest, stalest
 	 * @requestParam integer $batch [OPTIONAL] The batch/page of results to fetch
 	 * @requestParam integer $limit [OPTIONAL] The number of wiki items per batch
+	 * @requestParam integer $hideNonCommercialContent [OPTIONAL] hide content licensed on cc non commercial license
 	 *
 	 * @responseParam array $items The list of results
 	 *
@@ -157,6 +158,7 @@ class SearchApiController extends WikiaApiController {
 			->setPage( $request->getVal( 'batch', 1 ) )
 			->setRank( $request->getVal( 'rank', 'default' ) )
 			->setInterWiki( true )
+			->setCommercialUse( $this->hideNonCommercialContent() )
 			->setLanguageCode( $request->getVal( 'lang' ) )
 		;
 		return $searchConfig;

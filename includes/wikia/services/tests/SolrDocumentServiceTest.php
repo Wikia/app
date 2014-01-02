@@ -2,9 +2,6 @@
 
 class SolrDocumentServiceTest extends WikiaBaseTest
 {
-	/**
-	 * @covers SolrDocumentService::getDocument
-	 */
 	public function testGetResultNoResult() {
 		$service = $this->getMock( 'SolrDocumentService', [ 'getConfig', 'getFactory', 'getDocumentId' ] );
 		$factory = $this->getMock( 'Wikia\Search\QueryService\Factory', [ 'getFromConfig' ] );
@@ -61,9 +58,6 @@ class SolrDocumentServiceTest extends WikiaBaseTest
 		);
 	}
 	
-	/**
-	 * @covers SolrDocumentService::getDocument
-	 */
 	public function testGetDocumentWithResult() {
 		$service = $this->getMock( 'SolrDocumentService', [ 'getConfig', 'getFactory', 'getDocumentId' ] );
 		$factory = $this->getMock( 'Wikia\Search\QueryService\Factory', [ 'getFromConfig' ] );
@@ -128,9 +122,6 @@ class SolrDocumentServiceTest extends WikiaBaseTest
 		);
 	}
 	
-	/**
-	 * @covers SolrDocumentService::getDocument
-	 */
 	public function testGetDocumentWithCachedResult() {
 		$service = $this->getMock( 'SolrDocumentService', [ 'getConfig', 'getFactory', 'getDocumentId' ] );
 		$config = $this->getMock( 'Wikia\Search\Config', [ 'setQuery' ] );

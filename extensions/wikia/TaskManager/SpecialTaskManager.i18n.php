@@ -23,9 +23,12 @@ $messages['en'] = array(
  * @author Siebrand
  */
 $messages['qqq'] = array(
+	'taskmanager' => '{{Identical|Display and manage background task}}',
+	'taskmanager_title' => '{{Identical|Display and manage background task}}',
 	'right-taskmanager' => '{{doc-right|taskmanager}}',
 	'right-taskmanager-action' => '{{doc-right|taskmanager-action}}',
-	'action-taskmanager' => '{{doc-action|taskmanager}}',
+	'action-taskmanager' => '{{doc-action|taskmanager}}
+{{Identical|Display and manage background task}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -84,7 +87,7 @@ $messages['ca'] = array(
 	'action-taskmanager' => 'Mostra i gestiona les tasques en segon pla',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Dontlietome7
  * @author Jezevec
  */
@@ -321,6 +324,10 @@ $messages['oc'] = array(
 	'taskmanager' => 'Afichar e gerir los prètzfaches de rèire plan',
 	'taskmanager_title' => 'Afichar e gerir los prètzfaches de rèire plan',
 	'taskmanager_tasklist' => 'Tornar a la lista dels prètzfaches',
+	'right-taskmanager' => 'Pòt afichar los prètzfaches en rèire plan',
+	'right-taskmanager-action' => 'Pòt gerir los prètzfaches en rèire plan',
+	'taskmanager-invert' => 'Inversar la seleccion',
+	'action-taskmanager' => 'afichar e gerir los prètzfaches de rèire plan',
 );
 
 /** Polish (polski)
@@ -362,6 +369,7 @@ $messages['pt'] = array(
 	'right-taskmanager' => 'Pode mostrar tarefas de segundo plano',
 	'right-taskmanager-action' => 'Pode administrar tarefas de segundo plano',
 	'taskmanager-invert' => 'Inverter seleção',
+	'action-taskmanager' => 'mostrar e gerir tarefas de segundo plano',
 );
 
 /** Brazilian Portuguese (português do Brasil)
@@ -474,11 +482,32 @@ $messages['tr'] = array(
 );
 
 /** Ukrainian (українська)
+ * @author Andriykopanytsia
  * @author Steve.rusyn
+ * @author SteveR
+ * @author Ua2004
  */
 $messages['uk'] = array(
+	'taskmanager' => 'Перегляд і керування фоновими завданнями',
+	'taskmanager_title' => 'Перегляд і керування фоновими завданнями',
 	'taskmanager_tasklist' => 'Повернутися до списку завдань',
-	'taskmanager-invert' => 'Інвертувати виділення',
+	'right-taskmanager' => 'Переглядати фонові завдання',
+	'right-taskmanager-action' => 'Керувати фоновими завданнями',
+	'taskmanager-invert' => 'Інвертувати виділене',
+	'action-taskmanager' => 'перегляд і керування фоновими завданнями',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'taskmanager' => 'Hiển thị và quản lý công việc giao diện',
+	'taskmanager_title' => 'Hiển thị và quản lý công việc giao diện',
+	'taskmanager_tasklist' => 'Trở về danh sách công việc',
+	'right-taskmanager' => 'Có thể hiển thị tác vụ nền',
+	'right-taskmanager-action' => 'Có thể quản lý tác vụ nền',
+	'taskmanager-invert' => 'Đảo ngược lựa chọn',
+	'action-taskmanager' => 'Hiển thị và quản lý công việc giao diện',
 );
 
 /** Simplified Chinese (中文（简体）‎)

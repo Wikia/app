@@ -161,7 +161,7 @@ class GameGuidesModel{
 				foreach( $titles as $title ) {
 					$contents[] = array(
 						'title' => $title->getText(),
-						'url' => $title->getLocalUrl( array( 'useskin' => 'wikiaapp' ) )
+						'url' => $title->getLocalUrl( array( 'useskin' => GameGuidesController::SKIN_NAME ) )
 					);
 				}
 
@@ -206,7 +206,7 @@ class GameGuidesModel{
 			$ret = $this->loadFromCache( $cacheKey );
 
 			if ( empty( $ret ) ) {
-				
+
 				$resultSet = $this->getResultSet( $term, $totalLimit );
 
 				$ret['textResults'] = array();
@@ -219,7 +219,7 @@ class GameGuidesModel{
 						try {
 							$textResults[] = array(
 									'textForm' => $result->getTitle(),
-									'urlForm' => $mwService->getLocalUrlForPageId( $result['pageid'], array( 'useskin' => 'wikiaapp' ) )
+									'urlForm' => $mwService->getLocalUrlForPageId( $result['pageid'], array( 'useskin' => GameGuidesController::SKIN_NAME ) )
 									);
 							$count++;
 						} catch ( Exception $e ) {} // result is probably stale/deleted
@@ -236,7 +236,7 @@ class GameGuidesModel{
 		wfProfileOut( __METHOD__ );
 		return $ret;
 	}
-	
+
 	/**
 	 * Perform a search query against NS_MAIN given a term and total limit
 	 * @param string $term

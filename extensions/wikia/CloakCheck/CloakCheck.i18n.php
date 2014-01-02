@@ -41,6 +41,13 @@ $messages['qqq'] = array(
 	'cloakcheck-form-check-self' => "An \"''IRC cloak''\" is a technical measure on an IRC network to hide the IP address of a user.",
 );
 
+/** Old English (Ænglisc)
+ * @author Espreon
+ */
+$messages['ang'] = array(
+	'cloakcheck-process-username' => 'Brūcendnama: $1',
+);
+
 /** Arabic (العربية)
  * @author Achraf94
  * @author Meno25
@@ -104,6 +111,27 @@ $messages['br'] = array(
 	'cloakcheck-process-edits-no' => "N'eus ket trawalc'h a zegasadennoù gant an implijer-mañ.",
 );
 
+/** Catalan (català)
+ * @author Marcmpujol
+ */
+$messages['ca'] = array(
+	'cloakcheck' => "Verificador d'elegibilitat de cloak d'IRC",
+	'cloakcheck-desc' => "Proporciona una interfície tot-en-un per a verificar els requisits per a una cloak d'IRC",
+	'right-cloakcheck' => "Pots comprovar la informació relacionada al cloak d'IRC d'altres usuaris",
+	'cloakcheck-form-username' => "Nom d'usuari:",
+	'cloakcheck-form-check' => "Verificar el nom d'usuari",
+	'cloakcheck-form-check-self' => "Verificar l'elegibilitat de cloak d'IRC",
+	'cloakcheck-process-empty' => "El nom d'usuari no ha d'estar buit.",
+	'cloakcheck-process-notexist' => "El nom d'usuari no existeix.",
+	'cloakcheck-process-username' => "Nom d'usuari: $1",
+	'cloakcheck-process-accountage-yes' => "El compte té l'edat suficient.",
+	'cloakcheck-process-accountage-no' => 'El compte és massa nou.',
+	'cloakcheck-process-emailconf-yes' => 'Adreça de correu electrònic confirmada.',
+	'cloakcheck-process-emailconf-no' => 'Adreça de correu electrònic no confirmada.',
+	'cloakcheck-process-edits-yes' => "L'usuari té prou edicions.",
+	'cloakcheck-process-edits-no' => "L'usuari no té prou edicions.",
+);
+
 /** Chechen (нохчийн)
  * @author Умар
  */
@@ -112,11 +140,12 @@ $messages['ce'] = array(
 	'cloakcheck-process-username' => 'Декъашхочун цӀе: $1',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Chmee2
  */
 $messages['cs'] = array(
 	'cloakcheck-form-username' => 'Uživatelské jméno:',
+	'cloakcheck-form-check' => 'Zkontrolujte uživatelské jméno',
 	'cloakcheck-process-notexist' => 'Uživatelské jméno neexistuje.',
 	'cloakcheck-process-username' => 'Uživatelské jméno:$1',
 	'cloakcheck-process-accountage-yes' => 'Účet je aktivní dostatečně dlouho.',
@@ -241,6 +270,23 @@ $messages['fi'] = array(
 	'cloakcheck-process-edits-no' => 'Käyttäjällä ei ole tarpeeksi muokkauksia.',
 );
 
+/** Faroese (føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'cloakcheck-form-username' => 'Brúkaranavn:',
+	'cloakcheck-form-check' => 'Eftirkanna brúkaranavn',
+	'cloakcheck-process-empty' => 'Brúkaranavnið má ikki vera tómt.',
+	'cloakcheck-process-notexist' => 'Brúkaranavnið er ikki til.',
+	'cloakcheck-process-username' => 'Brúkaranavn: $1',
+	'cloakcheck-process-accountage-yes' => 'Kontan er gomul nokk.',
+	'cloakcheck-process-accountage-no' => 'Kontan er ov nýggj.',
+	'cloakcheck-process-emailconf-yes' => 'T-post adressan er váttað.',
+	'cloakcheck-process-emailconf-no' => 'T-post adressan er ikki váttað.',
+	'cloakcheck-process-edits-yes' => 'Brúkarin hevur gjørt nokk av rættingum.',
+	'cloakcheck-process-edits-no' => 'Brúkarin hevur ikki gjørt nokk av rættingum.',
+);
+
 /** French (français)
  * @author Peter17
  * @author Wyz
@@ -328,15 +374,20 @@ $messages['ia'] = array(
  */
 $messages['id'] = array(
 	'cloakcheck-form-username' => 'Nama pengguna:',
+	'cloakcheck-form-check' => 'Periksa nama pengguna',
+	'cloakcheck-process-empty' => 'Nama pengguna tidak boleh kosong.',
 	'cloakcheck-process-notexist' => 'Nama pengguna tidak ada.',
 	'cloakcheck-process-edits-yes' => 'Pengguna memiliki suntingan cukup.',
+	'cloakcheck-process-edits-no' => 'Pengguna tidak memiliki cukup suntingan.',
 );
 
 /** Italian (italiano)
  * @author Lexaeus 94
  * @author Minerva Titani
+ * @author RickyB98
  */
 $messages['it'] = array(
+	'cloakcheck-desc' => 'Offre un interfaccia all-in-one per verificare i requisiti per un IRC cloak',
 	'cloakcheck-form-username' => 'Nome utente:',
 	'cloakcheck-form-check' => 'Verifica utente',
 	'cloakcheck-process-accountage-yes' => "L'account è abbastanza vecchio.",
@@ -388,11 +439,25 @@ $messages['lb'] = array(
 	'cloakcheck-form-username' => 'Benotzernumm:',
 	'cloakcheck-form-check' => 'Benotzernumm nokucken',
 	'cloakcheck-process-empty' => 'De Benotzernumm däerf net eidel sinn.',
+	'cloakcheck-process-notexist' => 'De Benotzernumm gëtt et net.',
 	'cloakcheck-process-username' => 'Benotzernumm: $1',
 	'cloakcheck-process-accountage-yes' => 'De Benotzerkont ass al genuch.',
 	'cloakcheck-process-accountage-no' => 'De Benotzerkont ass ze nei.',
 	'cloakcheck-process-edits-yes' => 'De Benotzer huet genuch Ännerungen.',
 	'cloakcheck-process-edits-no' => 'De Benotzer huet net genuch Ännerungen.',
+);
+
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'cloakcheck-form-username' => 'نوم كاروری:',
+	'cloakcheck-process-username' => 'نوم كاروری:$1',
+	'cloakcheck-process-accountage-yes' => 'حساو وه انازه کافی قدیمی نئ',
+	'cloakcheck-process-accountage-no' => 'حساو فره تازه یه',
+	'cloakcheck-process-emailconf-yes' => 'نشونی ایمیل مئکم بیه',
+	'cloakcheck-process-emailconf-no' => 'نشونی ایمیل مئکم نبیه',
+	'cloakcheck-process-edits-yes' => 'کارور ویرایشتیاش خوئن',
 );
 
 /** Lithuanian (lietuvių)
@@ -504,6 +569,13 @@ $messages['nl'] = array(
 	'cloakcheck-process-edits-no' => 'De gebruiker heeft onvoldoende bewerkingen gemaakt.',
 );
 
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'cloakcheck-form-username' => "Nom d'utilizaire :",
+);
+
 /** Polish (polski)
  * @author Sovq
  */
@@ -553,7 +625,7 @@ $messages['pms'] = array(
 $messages['ps'] = array(
 	'cloakcheck-form-username' => 'کارن-نوم:',
 	'cloakcheck-process-username' => 'کارن-نوم: $1',
-	'cloakcheck-process-accountage-no' => 'ګڼون لا تر اوسه نوی دی.',
+	'cloakcheck-process-accountage-no' => 'گڼون لا تر اوسه نوی دی.',
 );
 
 /** Portuguese (português)
@@ -572,8 +644,8 @@ $messages['pt'] = array(
 	'cloakcheck-process-username' => 'Nome de utilizador: $1',
 	'cloakcheck-process-accountage-yes' => 'A conta é suficientemente antiga.',
 	'cloakcheck-process-accountage-no' => 'A conta é demasiado recente.',
-	'cloakcheck-process-emailconf-yes' => 'O endereço de correio electrónico foi confirmado.',
-	'cloakcheck-process-emailconf-no' => 'O endereço de correio electrónico não foi confirmado.',
+	'cloakcheck-process-emailconf-yes' => 'O endereço de correio eletrónico foi confirmado.',
+	'cloakcheck-process-emailconf-no' => 'O endereço de correio eletrónico não foi confirmado.',
 	'cloakcheck-process-edits-yes' => 'O utilizador tem edições suficientes.',
 	'cloakcheck-process-edits-no' => 'O utilizador não tem edições suficientes.',
 );
@@ -680,6 +752,7 @@ $messages['sr-ec'] = array(
 /** Swedish (svenska)
  * @author Grytolle
  * @author Tobulos1
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
 	'cloakcheck' => 'Kontroll av IRC-masksbehörighet',
@@ -691,7 +764,7 @@ $messages['sv'] = array(
 	'cloakcheck-process-empty' => 'Användarnamnet får inte vara tomt.',
 	'cloakcheck-process-notexist' => 'Användarnamnet finns inte.',
 	'cloakcheck-process-username' => 'Användarnamn: $1',
-	'cloakcheck-process-accountage-yes' => 'Kontot är gammal nog.',
+	'cloakcheck-process-accountage-yes' => 'Kontot är gammalt nog.',
 	'cloakcheck-process-accountage-no' => 'Kontot är för nytt.',
 	'cloakcheck-process-emailconf-yes' => 'E-postadressen bekräftades.',
 	'cloakcheck-process-emailconf-no' => 'E-postadressen bekräftades inte.',
@@ -772,16 +845,47 @@ $messages['tt-cyrl'] = array(
 );
 
 /** Ukrainian (українська)
+ * @author Andriykopanytsia
  * @author Steve.rusyn
+ * @author SteveR
  */
 $messages['uk'] = array(
+	'cloakcheck' => 'Перевірка прав на IRC-невидимість',
+	'cloakcheck-desc' => 'Надає інтерфейс все-в-одному для перевірки вимог до IRC-невидимості',
+	'right-cloakcheck' => 'Можна перевірити дані про IRC-невидимість інших користувачів',
 	'cloakcheck-form-username' => 'Ім’я користувача:',
 	'cloakcheck-form-check' => "Перевірити ім'я користувача",
+	'cloakcheck-form-check-self' => 'Перевірити права на IRC-невидимість',
 	'cloakcheck-process-empty' => "Ім'я користувача не повинно бути порожнім.",
 	'cloakcheck-process-notexist' => 'Користувача з таким іменем не існує',
 	'cloakcheck-process-username' => "Ім'я користувача: $1",
+	'cloakcheck-process-accountage-yes' => 'Обліковий запис є досить старим.',
+	'cloakcheck-process-accountage-no' => 'Обліковий запис є занадто новим.',
 	'cloakcheck-process-emailconf-yes' => 'Адреса електронної пошти підтверджена.',
 	'cloakcheck-process-emailconf-no' => 'Адреса електронної пошти не підтверджена.',
+	'cloakcheck-process-edits-yes' => 'Користувач має достатньо редагувань.',
+	'cloakcheck-process-edits-no' => 'Користувач не має достатньо редагувань.',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'cloakcheck' => 'IRC áo choàng hội đủ điều kiện phòng',
+	'cloakcheck-desc' => 'Cung cấp một giao diện All-in-one để xác minh yêu cầu cho một áo choàng IRC',
+	'right-cloakcheck' => 'Có thể kiểm tra IRC cloak liên quan thông tin về người dùng khác',
+	'cloakcheck-form-username' => 'Tên người dùng:',
+	'cloakcheck-form-check' => 'Kiểm tra tên người dùng',
+	'cloakcheck-form-check-self' => 'Kiểm tra IRC áo choàng hội đủ điều kiện',
+	'cloakcheck-process-empty' => 'Tên người dùng không phải là sản phẩm nào.',
+	'cloakcheck-process-notexist' => 'Tên người dùng không tồn tại.',
+	'cloakcheck-process-username' => 'Tên người dùng: $1',
+	'cloakcheck-process-accountage-yes' => 'Tài khoản là đủ tuổi.',
+	'cloakcheck-process-accountage-no' => 'Tài khoản là quá mới.',
+	'cloakcheck-process-emailconf-yes' => 'E-mail địa chỉ xác nhận.',
+	'cloakcheck-process-emailconf-no' => 'Địa chỉ e-mail không được xác nhận.',
+	'cloakcheck-process-edits-yes' => 'Người dùng có đủ chỉnh sửa của bạn.',
+	'cloakcheck-process-edits-no' => 'Người dùng không có đủ chỉnh sửa của bạn.',
 );
 
 /** Simplified Chinese (中文（简体）‎)
@@ -805,4 +909,11 @@ $messages['zh-hans'] = array(
 	'cloakcheck-process-emailconf-no' => '电子邮件地址未确认。',
 	'cloakcheck-process-edits-yes' => '用户有足够的编辑。',
 	'cloakcheck-process-edits-no' => '用户编辑数不足。',
+);
+
+/** Traditional Chinese (中文（繁體）‎)
+ * @author Justincheng12345
+ */
+$messages['zh-hant'] = array(
+	'cloakcheck-process-emailconf-yes' => '電郵地址已確認。',
 );

@@ -1,9 +1,13 @@
 <?php
+
 // This is from google translate, just return early.
 if ( $_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 	header ( "HTTP/1.1 200", true, 200);
 	return;
 }
+
+// prevent $_GET['title'] from being overwritten on API calls (BAC-906)
+define('DONT_INTERPOLATE_TITLE', true);
 
 // Initialise common MW code
 require ( dirname( __FILE__ ) . '/includes/WebStart.php' );
@@ -25,6 +29,11 @@ if( function_exists( 'newrelic_name_transaction' ) ) {
 }
 
 if ( !empty( $wgEnableNirvanaAPI ) ){
+	// temporarily force ApiDocs extension regardless of config
+	require_once $IP."/extensions/wikia/ApiDocs/ApiDocs.setup.php";
+	// same for JsonFormat
+	require_once $IP."/extensions/wikia/JsonFormat/JsonFormat.setup.php";
+	
 	$app = F::app();
 
 	// Ensure that we have a title stub, otherwise parser does not work BugId: 12901

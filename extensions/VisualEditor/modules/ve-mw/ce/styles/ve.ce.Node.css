@@ -1,0 +1,70 @@
+/*!
+ * VisualEditor ContentEditable MediaWiki Node styles.
+ *
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @license The MIT License (MIT); see LICENSE.txt
+ */
+
+/* ve.ce.MWTransclusionNode */
+
+.ve-ce-mwTransclusionInlineNode {
+	display: inline-block;
+}
+
+/* HACK: Hide Ref errors in templates */
+.ve-ce-mwTransclusionNode .mw-ext-cite-error {
+	display: none;
+}
+
+/* HACK: Fake superscript style for references generated as spans in templates */
+.ve-ce-mwTransclusionNode span.reference {
+	vertical-align: super;
+	font-size: smaller;
+}
+
+/* ve.ce.MWReferenceListNode */
+
+.ve-ce-mwReferenceListNode .ve-ce-generated-wrapper {
+	display: inline-block;
+}
+
+.ve-ce-mwReferenceListNode-muted {
+	font-style: italic;
+	color: #777;
+}
+
+/* ve-ce-mwReferenceNode */
+
+.ve-ce-mwReferenceNode-missingref {
+	cursor: not-allowed;
+}
+
+/* ve.ce.MWInlineImageNode */
+
+.ve-ce-mwInlineImageNode {
+	display: inline-block;
+}
+
+/* ve.ce.MWBlockImageNode */
+
+.ve-ce-mwBlockImageNode-inner {
+	display: inline-block;
+}
+
+/* ve.ce.MWAlienExtensionNode */
+
+.ve-ce-mwAlienExtensionNode {
+	display: inline-block;
+}
+
+/* ve.ce.MWMathNode */
+
+.ve-ce-mwMathNode {
+	display: inline-block;
+}
+
+/* ve.ce.MWHieroNode */
+
+.ve-ce-mwHieroNode {
+	display: table;
+}

@@ -11,5 +11,5 @@ $specialPageAliases = array();
  * @author Jon Harald Søby
  */
 $specialPageAliases['en'] = array(
-    'UserRenameTool' => array( 'UserRenameTool', 'RenameUserTool' ),
+	'UserRenameTool' => array( 'UserRenameTool', 'RenameUserTool' ),
 );

@@ -39,4 +39,4 @@ $wgHooks['ParserFirstCallInit'][] = 'MobileContentParser::onParserFirstCallInit'
 $wgAutoloadClasses['MobileContentParser'] = "{$dir}/MobileContentParser.class.php";
 
 // allow for override in DefaultSettings
-if ( empty( $app->wg->mobileSkins ) ) $app->wg->mobileSkins = array(  'wikiphone', 'wikiaapp', 'wikiamobile' );
+if ( empty( $app->wg->mobileSkins ) ) $app->wg->mobileSkins = array( 'wikiphone', 'wikiamobile' );

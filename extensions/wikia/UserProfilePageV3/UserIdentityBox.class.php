@@ -131,6 +131,14 @@ class UserIdentityBox {
 			$data['showZeroStates'] = $this->checkIfDisplayZeroStates($data);
 		}
 
+		// Sanitize data to prevent XSS (VE-720)
+		$keysToSanitize = [ 'gender', 'location', 'occupation', 'realName', 'twitter', 'website' ];
+		foreach( $keysToSanitize as $key ) {
+			if ( !empty( $data[ $key ] ) ) {
+				$data[ $key ] = htmlspecialchars( strip_tags( $data[ $key ] ) );
+			}
+		}
+
 		wfProfileOut(__METHOD__);
 		return $data;
 	}
@@ -883,6 +891,23 @@ class UserIdentityBox {
 			return true;
 		} else {
 			return false;
+		}
+	}
+
+	/**
+	 * Blanks user profile data
+	 * @author grunny
+	 */
+	public function resetUserProfile() {
+		foreach ( $this->optionsArray as $option ) {
+			if ( $option === 'gender' || $option === 'birthday' ) {
+				$option = self::USER_PROPERTIES_PREFIX . $option;
+			}
+			$this->user->setOption( $option, null );
+
+			$this->user->saveSettings();
+			$this->app->wg->Memc->delete( $this->getMemcUserIdentityDataKey() );
+			Wikia::invalidateUser( $this->user );
 		}
 	}
 

@@ -1,40 +1,34 @@
-define('autocomplete', function(){
+define('autocomplete', ['jquery'], function($){
 	var reEscape = /(\/|\.|\*|\+|\?|\||\(|\)|\[|\]|\{|\}|\\)/g,
-		input,
-		list,
-		clear,
 		suggestions = [],
-		currentValue,
 		cachedResponse = [],
-		serviceUrl,
-		regExp,
-		t, a;
+		delay;
 
-	function getSuggestions() {
-		clearTimeout(t);
-		var curVal = currentValue,
-			cr;
+	function getSuggestions(list, serviceUrl, value) {
+		var cr;
 
-		if(curVal !== ''){
-			cr = cachedResponse[curVal];
+		clearTimeout(delay);
+
+		if(value !== ''){
+			cr = cachedResponse[value];
 
 			if (cr && cr[0].length > 0) {
 				suggestions = cr[1];
-				suggest();
+				suggest(list, value);
 			} else {
-				t = setTimeout(function(){
+				delay = setTimeout(function(){
 					$.ajax({
 						url: serviceUrl,
 						data: {
-							search: curVal
+							search: value
 						},
 						dataType: 'json'
 					}).done(
 						function(resp) {
 							if(!resp.error){
 								suggestions = resp[1];
-								cachedResponse[curVal] = resp;
-								suggest();
+								cachedResponse[value] = resp;
+								suggest(list, value);
 							}
 						}
 					);
@@ -43,92 +37,86 @@ define('autocomplete', function(){
 		}
 	}
 
-	function suggest() {
+	function suggest(list, value) {
 		var len = suggestions.length,
 			lis = '',
-			sug;
+			sug,
+			i = 0,
+			animationInterval,
+			regExp;
 
-		list.innerHTML = '';
+		list.empty();
 
 		if (len > 0) {
-			clearInterval(a);
-			regExp = new RegExp('(' + currentValue.replace(reEscape, '\\$1') + ')', 'gi');
+			clearInterval(animationInterval);
+			regExp = new RegExp('(' + value.replace(reEscape, '\\$1') + ')', 'gi');
 
-			for (var i = 0; i < len; i++) {
+			for (; i < len; i++) {
 				sug = suggestions[i];
-                li = '<li><span title="'+sug+'">' + sug.replace(regExp, '<em>$1</em>') + '<span class=copySrh>+</span></span></li>';
-				lis += li;
+				lis += '<li><span title="'+sug+'">' + sug.replace(regExp, '<em>$1</em>') + '<span class=copySrh>+</span></span></li>';
 			}
 
-			list.insertAdjacentHTML('afterbegin', lis);
-
-			var li = list.getElementsByTagName('li'),
+			var li = list.prepend(lis).find('li'),
 				cur = 0;
 
-			a = setInterval(function(){
+			animationInterval = setInterval(function(){
 				if(li[cur]){
 					li[cur++].className = 'show';
 				}else{
-					clearInterval(a);
+					clearInterval(animationInterval);
 				}
 			}, 70);
 		}
 	}
 
 	return function (options) {
-		serviceUrl = options.url;
+		var input = $(options.input),
+			list = $(options.list),
+			clear = $(options.clear),
+			serviceUrl = options.url,
+			value = input.val().trim();
 
-		if(!serviceUrl){
-			throw 'url not provided';
-		}
+		if(!serviceUrl) throw 'url not provided';
 
-		input = options.input;
-		list = options.list;
-		clear = options.clear;
+		getSuggestions(list, serviceUrl, value);
 
-		currentValue = input.value.trim();
-		getSuggestions();
+		input.on('input', function(){
+			value = input.val().trim();
 
-		input.addEventListener('input', function(){
-			currentValue = input.value.trim();
-
-			if(currentValue !== '') {
-				if(currentValue.length < 3) {
-					list.innerHTML = '';
+			if(value !== '') {
+				if(value.length < 3) {
+					list.empty();
 				} else {
-					getSuggestions();
+					getSuggestions(list, serviceUrl, value);
 				}
-				clear.className = clear.className.replace(' hide', '');
+				clear.removeClass('hide');
 			} else {
-				list.innerHTML = '';
-				clear.className = 'clsIco hide';
+				list.empty();
+				clear.addClass('hide');
 			}
 
-			input.parentElement.scrollIntoView();
+			input.parent()[0].scrollIntoView();
 		});
 
-		list.addEventListener('click', function(ev){
-			var target = ev.target,
-				title;
+		list.on('click', '.copySrh', function(event){
+			event.stopPropagation();
+				input
+					.val(value = this.parentElement.title).trigger('focus')
+					.parent()[0].scrollIntoView();
 
-			if(target.className == 'copySrh'){
-				title  = target.parentElement.title;
-				input.value = currentValue = title;
-				getSuggestions();
-				input.focus();
-				input.parentElement.scrollIntoView();
-			}else{
-				input.value = target.title || target.parentElement.title || target.children[0].title || '';
-				input.previousElementSibling.disabled = true;
-				input.parentElement.submit();
-			}
-		});
+				getSuggestions(list, serviceUrl, value);
+			})
+			.on('click', 'span[title]', function(){
+				input
+					.val(this.title || '')
+					.prev().attr('disabled', true)
+					.parent().trigger('submit');
+			});
 
-		clear && clear.addEventListener('click', function(){
-			input.value = '';
-			list.innerHTML = '';
-			clear.className = 'clsIco hide';
-			input.focus();
+		clear.on('click', function(){
+			list.empty();
+			clear.addClass('hide');
+			input.val('').trigger('focus');
 		});
 	};
 });

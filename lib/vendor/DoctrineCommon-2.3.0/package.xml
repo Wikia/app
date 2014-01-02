@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package packagerversion="1.9.2" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0
+    http://pear.php.net/dtd/tasks-1.0.xsd
+    http://pear.php.net/dtd/package-2.0
+    http://pear.php.net/dtd/package-2.0.xsd">
+ <name>DoctrineCommon</name>
+ <channel>pear.doctrine-project.org</channel>
+ <summary>Doctrine Common PHP Extensions</summary>
+ <description>The Doctrine Common package contains shared code between the other packages.</description>
+ <lead>
+  <name>Jonathan H. Wage</name>
+  <user>jwage</user>
+  <email>jonwage@gmail.com</email>
+  <active>yes</active>
+ </lead>
+ <lead>
+  <name>Guilherme Blanco</name>
+  <user>guilhermeblanco</user>
+  <email>guilhermeblanco@gmail.com</email>
+  <active>yes</active>
+ </lead>
+ <lead>
+  <name>Roman Borschel</name>
+  <user>romanb</user>
+  <email>roman@code-factory.org</email>
+  <active>yes</active>
+ </lead>
+ <lead>
+  <name>Benjamin Eberlei</name>
+  <user>beberlei</user>
+  <email>kontakt@beberlei.de</email>
+  <active>yes</active>
+ </lead>
+ <date>2012-09-20</date>
+ <time>02:10:02</time>
+ <version>
+  <release>2.3.0</release>
+  <api>2.3.0</api>
+ </version>
+ <stability>
+  <release>stable</release>
+  <api>stable</api>
+ </stability>
+ <license uri="http://www.gnu.org/licenses/lgpl.html">LGPL</license>
+ <notes>
+-
+ </notes>
+ <contents>
+  <dir baseinstalldir="/" name="/">
+   <file baseinstalldir="/" md5sum="670046c26f5b3c4754d9109a3631bfff" name="Doctrine/Common/ClassLoader.php" role="php" />
+   <file baseinstalldir="/" md5sum="1290e6082d48c6bbd450de73f6ee3d6f" name="Doctrine/Common/CommonException.php" role="php" />
+   <file baseinstalldir="/" md5sum="bb4d01aed216c94f11a0ee179afbb75e" name="Doctrine/Common/Comparable.php" role="php" />
+   <file baseinstalldir="/" md5sum="5b7dc6395cd9a9641b3c73568d0b19e7" name="Doctrine/Common/EventArgs.php" role="php" />
+   <file baseinstalldir="/" md5sum="8ab4c7e180a76f67744b77e3a506422b" name="Doctrine/Common/EventManager.php" role="php" />
+   <file baseinstalldir="/" md5sum="9845efd26033e92dce66f2a37d180bdb" name="Doctrine/Common/EventSubscriber.php" role="php" />
+   <file baseinstalldir="/" md5sum="ace163e83f69cc0fe5fde74e8f3d0433" name="Doctrine/Common/Lexer.php" role="php" />
+   <file baseinstalldir="/" md5sum="0346496ed1f29d073ce75ede4b12de94" name="Doctrine/Common/NotifyPropertyChanged.php" role="php" />
+   <file baseinstalldir="/" md5sum="abcf77ee2d10d06c506843498c72ebb9" name="Doctrine/Common/PropertyChangedListener.php" role="php" />
+   <file baseinstalldir="/" md5sum="1b97daae38fc25d29a9a997abbc708d0" name="Doctrine/Common/Version.php" role="php" />
+   <file baseinstalldir="/" md5sum="e0ad8db5b8773c8fdc1f2abb1ad5c7de" name="Doctrine/Common/Annotations/Annotation.php" role="php" />
+   <file baseinstalldir="/" md5sum="884e2a7d424436c357d359cf0bbef9fe" name="Doctrine/Common/Annotations/AnnotationException.php" role="php" />
+   <file baseinstalldir="/" md5sum="23b693115673ae4165c73ee39843e6c2" name="Doctrine/Common/Annotations/AnnotationReader.php" role="php" />
+   <file baseinstalldir="/" md5sum="f764a8dd93d69004cf546fc20ac06a9c" name="Doctrine/Common/Annotations/AnnotationRegistry.php" role="php" />
+   <file baseinstalldir="/" md5sum="f7cdcf57c9cfb6a7f014d3177b66186f" name="Doctrine/Common/Annotations/CachedReader.php" role="php" />
+   <file baseinstalldir="/" md5sum="d7904f6611e6119de893247a38564164" name="Doctrine/Common/Annotations/DocLexer.php" role="php" />
+   <file baseinstalldir="/" md5sum="d97021471a7f97d8bcaefa1f68aecd5f" name="Doctrine/Common/Annotations/DocParser.php" role="php" />
+   <file baseinstalldir="/" md5sum="35acd24d7560d807bd1bc614aa42e584" name="Doctrine/Common/Annotations/FileCacheReader.php" role="php" />
+   <file baseinstalldir="/" md5sum="540e4ae57cdd061ceaa6bdec8356084e" name="Doctrine/Common/Annotations/IndexedReader.php" role="php" />
+   <file baseinstalldir="/" md5sum="0d4c495eca1cada81518cda6d843f674" name="Doctrine/Common/Annotations/PhpParser.php" role="php" />
+   <file baseinstalldir="/" md5sum="6f8145f1dcef8bc5dfd3b2ed5ece1f96" name="Doctrine/Common/Annotations/Reader.php" role="php" />
+   <file baseinstalldir="/" md5sum="0da129111a89082ee303bbb01535ed86" name="Doctrine/Common/Annotations/SimpleAnnotationReader.php" role="php" />
+   <file baseinstalldir="/" md5sum="b79676a06408a166fef9fb9d60706c7f" name="Doctrine/Common/Annotations/TokenParser.php" role="php" />
+   <file baseinstalldir="/" md5sum="2921761bd793c75cd5736f6886034042" name="Doctrine/Common/Annotations/Annotation/Attribute.php" role="php" />
+   <file baseinstalldir="/" md5sum="0e523c927fc96fba49c0ff88f5fbd552" name="Doctrine/Common/Annotations/Annotation/Attributes.php" role="php" />
+   <file baseinstalldir="/" md5sum="0f49f50626854e89125d6c6ace6e66cb" name="Doctrine/Common/Annotations/Annotation/IgnoreAnnotation.php" role="php" />
+   <file baseinstalldir="/" md5sum="061739a3e0a2b49d16bed325deadb8a9" name="Doctrine/Common/Annotations/Annotation/Required.php" role="php" />
+   <file baseinstalldir="/" md5sum="9fdb3302439098796304708993374ae3" name="Doctrine/Common/Annotations/Annotation/Target.php" role="php" />
+   <file baseinstalldir="/" md5sum="e0bc6d39aea0831eb2fc30a3db161b1b" name="Doctrine/Common/Cache/ApcCache.php" role="php" />
+   <file baseinstalldir="/" md5sum="df87b4f865e584052037f0b8f345cd57" name="Doctrine/Common/Cache/ArrayCache.php" role="php" />
+   <file baseinstalldir="/" md5sum="1113b0421910fe61e83a2f5c7368ba69" name="Doctrine/Common/Cache/Cache.php" role="php" />
+   <file baseinstalldir="/" md5sum="ea93e1d1d7f2a3d7894988001380129d" name="Doctrine/Common/Cache/CacheProvider.php" role="php" />
+   <file baseinstalldir="/" md5sum="8de361116e2036f0fbd95f69d3e93289" name="Doctrine/Common/Cache/FileCache.php" role="php" />
+   <file baseinstalldir="/" md5sum="03cf5f2802dd8e6356a77bad5b64c696" name="Doctrine/Common/Cache/FilesystemCache.php" role="php" />
+   <file baseinstalldir="/" md5sum="3b4ec56462d921080a1184fafcd61c21" name="Doctrine/Common/Cache/MemcacheCache.php" role="php" />
+   <file baseinstalldir="/" md5sum="bf48b91f0110990823b2677b2076440a" name="Doctrine/Common/Cache/MemcachedCache.php" role="php" />
+   <file baseinstalldir="/" md5sum="f278ae7cffabd479c9d9d4b52340f9c4" name="Doctrine/Common/Cache/PhpFileCache.php" role="php" />
+   <file baseinstalldir="/" md5sum="aeeed03035d1edfe1bcfa57c1be703e1" name="Doctrine/Common/Cache/RedisCache.php" role="php" />
+   <file baseinstalldir="/" md5sum="bf6806a5b5b4a084fffc1900dc052284" name="Doctrine/Common/Cache/WinCacheCache.php" role="php" />
+   <file baseinstalldir="/" md5sum="9b82d75e32fe3f04be11bad9d96be7f2" name="Doctrine/Common/Cache/XcacheCache.php" role="php" />
+   <file baseinstalldir="/" md5sum="5c3305c4736cb537a1a89bbd964a9599" name="Doctrine/Common/Cache/ZendDataCache.php" role="php" />
+   <file baseinstalldir="/" md5sum="608c70d7fc7954a97d396ba05ba68a97" name="Doctrine/Common/Collections/ArrayCollection.php" role="php" />
+   <file baseinstalldir="/" md5sum="a24972d67bf6c6477c36e7efd8a36c50" name="Doctrine/Common/Collections/Collection.php" role="php" />
+   <file baseinstalldir="/" md5sum="94cad9aae0509982d3a86307900a0599" name="Doctrine/Common/Collections/Criteria.php" role="php" />
+   <file baseinstalldir="/" md5sum="24716f3dc1fd2d5cbfcb58aa69880bb8" name="Doctrine/Common/Collections/ExpressionBuilder.php" role="php" />
+   <file baseinstalldir="/" md5sum="4df493fc4a5953e96b5a084f900d4149" name="Doctrine/Common/Collections/Selectable.php" role="php" />
+   <file baseinstalldir="/" md5sum="21800c06af87eb5431f163bb9e5a0b8c" name="Doctrine/Common/Collections/Expr/ClosureExpressionVisitor.php" role="php" />
+   <file baseinstalldir="/" md5sum="4d35ad7c40b847390239b992a9378f03" name="Doctrine/Common/Collections/Expr/Comparison.php" role="php" />
+   <file baseinstalldir="/" md5sum="3f8801e1c42c7f6e6a19713c84aeb839" name="Doctrine/Common/Collections/Expr/CompositeExpression.php" role="php" />
+   <file baseinstalldir="/" md5sum="377420b9be484ac96b29b5ecbc82eecc" name="Doctrine/Common/Collections/Expr/Expression.php" role="php" />
+   <file baseinstalldir="/" md5sum="c455eb428d4088c3afc4480403593996" name="Doctrine/Common/Collections/Expr/ExpressionVisitor.php" role="php" />
+   <file baseinstalldir="/" md5sum="6437ae7e40b64d40c31c72da1569e47f" name="Doctrine/Common/Collections/Expr/Value.php" role="php" />
+   <file baseinstalldir="/" md5sum="90a355f458fabdf08e84af94bf523d9d" name="Doctrine/Common/Persistence/AbstractManagerRegistry.php" role="php" />
+   <file baseinstalldir="/" md5sum="4401ee131962be994ed41ad5bfc82521" name="Doctrine/Common/Persistence/ConnectionRegistry.php" role="php" />
+   <file baseinstalldir="/" md5sum="8596ec4494194870c0a8d1c8a2a6e863" name="Doctrine/Common/Persistence/ManagerRegistry.php" role="php" />
+   <file baseinstalldir="/" md5sum="9ef7d1a178878623de837e4239d06fc1" name="Doctrine/Common/Persistence/ObjectManager.php" role="php" />
+   <file baseinstalldir="/" md5sum="9c5fd116798c9a88c375276e206b5840" name="Doctrine/Common/Persistence/ObjectManagerAware.php" role="php" />
+   <file baseinstalldir="/" md5sum="efe4582eb9063ad6120d12a4643a4d43" name="Doctrine/Common/Persistence/ObjectRepository.php" role="php" />
+   <file baseinstalldir="/" md5sum="d8de34bc9a3798209cfcb74b306177e6" name="Doctrine/Common/Persistence/PersistentObject.php" role="php" />
+   <file baseinstalldir="/" md5sum="8eb8749dd9429f1f08af9fd1f0d2178a" name="Doctrine/Common/Persistence/Proxy.php" role="php" />
+   <file baseinstalldir="/" md5sum="7b862467fefe6682155164d3b66e9b7b" name="Doctrine/Common/Persistence/Event/LifecycleEventArgs.php" role="php" />
+   <file baseinstalldir="/" md5sum="c3b9ae608229ad8f8a372c15753fe6fa" name="Doctrine/Common/Persistence/Event/LoadClassMetadataEventArgs.php" role="php" />
+   <file baseinstalldir="/" md5sum="b540c1ed51a5cd574119431e015f96cf" name="Doctrine/Common/Persistence/Event/ManagerEventArgs.php" role="php" />
+   <file baseinstalldir="/" md5sum="523b75bd2bb231111505f8689c9affcb" name="Doctrine/Common/Persistence/Event/OnClearEventArgs.php" role="php" />
+   <file baseinstalldir="/" md5sum="7001fceb7375eeac89a4a44eb0cebb33" name="Doctrine/Common/Persistence/Event/PreUpdateEventArgs.php" role="php" />
+   <file baseinstalldir="/" md5sum="ef1f3ebbb21a353816ba792f7ec0f700" name="Doctrine/Common/Persistence/Mapping/AbstractClassMetadataFactory.php" role="php" />
+   <file baseinstalldir="/" md5sum="f31eb5fcba45c251de9caa3b387b3a0f" name="Doctrine/Common/Persistence/Mapping/ClassMetadata.php" role="php" />
+   <file baseinstalldir="/" md5sum="e819aeaa94da61895c54ccfe836e8287" name="Doctrine/Common/Persistence/Mapping/ClassMetadataFactory.php" role="php" />
+   <file baseinstalldir="/" md5sum="3c76a133914e33b44d7d397fcdc29cb6" name="Doctrine/Common/Persistence/Mapping/MappingException.php" role="php" />
+   <file baseinstalldir="/" md5sum="af3f59520ab4417de39f9614943cd5ce" name="Doctrine/Common/Persistence/Mapping/ReflectionService.php" role="php" />
+   <file baseinstalldir="/" md5sum="975fe267b9d3529addafe62a08fa2107" name="Doctrine/Common/Persistence/Mapping/RuntimeReflectionService.php" role="php" />
+   <file baseinstalldir="/" md5sum="48e7eb8a48ec0377291ea54eba769329" name="Doctrine/Common/Persistence/Mapping/StaticReflectionService.php" role="php" />
+   <file baseinstalldir="/" md5sum="ffcdd6b091b4cf5ad1aec0eb130b9b1e" name="Doctrine/Common/Persistence/Mapping/Driver/AnnotationDriver.php" role="php" />
+   <file baseinstalldir="/" md5sum="4262d964c9ce1278ecacd0669510dd4e" name="Doctrine/Common/Persistence/Mapping/Driver/DefaultFileLocator.php" role="php" />
+   <file baseinstalldir="/" md5sum="85c854f97848495b0e7e90304a8d5862" name="Doctrine/Common/Persistence/Mapping/Driver/FileDriver.php" role="php" />
+   <file baseinstalldir="/" md5sum="1cda9e31e2f2385e675936b6c29bbcbb" name="Doctrine/Common/Persistence/Mapping/Driver/FileLocator.php" role="php" />
+   <file baseinstalldir="/" md5sum="ec9ee53f4eb1435e96188ec7dfeef55b" name="Doctrine/Common/Persistence/Mapping/Driver/MappingDriver.php" role="php" />
+   <file baseinstalldir="/" md5sum="81e3ea227e43e45d76c6560bcb21a66d" name="Doctrine/Common/Persistence/Mapping/Driver/MappingDriverChain.php" role="php" />
+   <file baseinstalldir="/" md5sum="5fab5178078562d923fb3097d170e45e" name="Doctrine/Common/Persistence/Mapping/Driver/PHPDriver.php" role="php" />
+   <file baseinstalldir="/" md5sum="d30168096419d72ac243ab967672a1ff" name="Doctrine/Common/Persistence/Mapping/Driver/StaticPHPDriver.php" role="php" />
+   <file baseinstalldir="/" md5sum="0477cd30a13a8cbaf9f825b1d6b54369" name="Doctrine/Common/Persistence/Mapping/Driver/SymfonyFileLocator.php" role="php" />
+   <file baseinstalldir="/" md5sum="8c0f5d6fab593d89141cbd61938cfcf9" name="Doctrine/Common/Reflection/ClassFinderInterface.php" role="php" />
+   <file baseinstalldir="/" md5sum="80af543eeda7704c60f30bd7c259451a" name="Doctrine/Common/Reflection/Psr0FindFile.php" role="php" />
+   <file baseinstalldir="/" md5sum="ca83349c474bfd11d8253471a18da574" name="Doctrine/Common/Reflection/ReflectionProviderInterface.php" role="php" />
+   <file baseinstalldir="/" md5sum="44ec826decbdf864845e84e6b1aeee9a" name="Doctrine/Common/Reflection/StaticReflectionClass.php" role="php" />
+   <file baseinstalldir="/" md5sum="722ec9133383430f86184c5a1cc72012" name="Doctrine/Common/Reflection/StaticReflectionMethod.php" role="php" />
+   <file baseinstalldir="/" md5sum="9ebe06b3fee3e9a28c9929cd67b6ed21" name="Doctrine/Common/Reflection/StaticReflectionParser.php" role="php" />
+   <file baseinstalldir="/" md5sum="472a5cfd47c6a63235de4e41cf43b657" name="Doctrine/Common/Reflection/StaticReflectionProperty.php" role="php" />
+   <file baseinstalldir="/" md5sum="c662e738763db6ebdb66bb20913950c0" name="Doctrine/Common/Util/ClassUtils.php" role="php" />
+   <file baseinstalldir="/" md5sum="b50c806f08000df2babdb633cb2fa683" name="Doctrine/Common/Util/Debug.php" role="php" />
+   <file baseinstalldir="/" md5sum="cc3a82aa5c01dc78d4f20f1e5d7e9e9e" name="Doctrine/Common/Util/Inflector.php" role="php" />
+   <file baseinstalldir="/" md5sum="c781539da0fb35b5c5ad0fb72172ded6" name="LICENSE" role="data" />
+  </dir>
+ </contents>
+ <dependencies>
+  <required>
+   <php>
+    <min>5.3.0</min>
+   </php>
+   <pearinstaller>
+    <min>1.6.0</min>
+    <recommended>1.6.1</recommended>
+   </pearinstaller>
+  </required>
+ </dependencies>
+ <phprelease />
+ <changelog>
+  <release>
+   <version>
+    <release>2.3.0</release>
+    <api>2.3.0</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2012-09-20</date>
+   <license uri="http://www.gnu.org/licenses/lgpl.html">LGPL</license>
+   <notes>
+-
+   </notes>
+  </release>
+ </changelog>
+</package>

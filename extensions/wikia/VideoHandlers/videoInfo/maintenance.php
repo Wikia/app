@@ -60,7 +60,8 @@ if ( isset($options['help']) ) {
 	--dry-run			dry run
 	--quiet				show summary result only
 	--createtable		create video_info table
-	--altertablev1		alter video_info table v1
+	--altertablev1		update the video_info table to schema v1
+	--altertable		update the video_info to schema the given schema version (default VideoInfo::SCHEMA_VERSION)
 	--add				add videos
 	--remove			remove deleted videos (local)
 	--help				you are reading it right now\n\n" );
@@ -75,15 +76,25 @@ if ( wfReadOnly() ) {
 	die( "Error: In read only mode." );
 }
 
-$dryrun = ( isset($options['dry-run']) );
-$quiet = ( isset($options['quiet']) );
-$createTable = ( isset($options['createtable']) );
-$alterTableV1 = ( isset($options['altertablev1']) );
-$addVideos = ( isset($options['add']) );
-$removeVideos = ( isset($options['remove']) );
+$dryrun = isset($options['dry-run']);
+$quiet = isset($options['quiet']);
+$createTable = isset($options['createtable']);
+$alterTableV1 = isset($options['altertablev1']);
+$addVideos = isset($options['add']);
+$removeVideos = isset($options['remove']);
 
-// default setting
-if ( !$createTable && !$alterTableV1 && !$addVideos && !$removeVideos ) {
+// Set alterTable to 1 if we get the --altertablev1 option
+if ( isset($alterTableV1) ) {
+	$alterTable = 1;
+}
+
+// If we get the altertable option, see if a specific version is given.  If not use the default
+if ( isset($options['altertable']) ) {
+	$alterTable = is_numeric($options['altertable']) ? $options['altertable'] : VideoInfo::SCHEMA_VERSION;
+}
+
+// Default settings if no parameters are given
+if ( !$createTable && !$alterTable && !$addVideos && !$removeVideos ) {
 	$createTable = true;
 	$addVideos = true;
 	$removeVideos = true;
@@ -110,24 +121,44 @@ $videoList = array();
 
 $video = new VideoInfo();
 
-// create table or patch table schema
+/**
+ * Handle parameter --createtable
+ *
+ * Create the video_info table
+ */
 if ( $createTable ) {
 	if ( !$dryrun ) {
-		$video->createTableVideoInfo();
+		if ( !$video->createTableVideoInfo() ) {
+			die("Unable to create the video_info table");
+		}
 	}
-	printText("Create video_info table.\n");
+	printText("Created video_info table.\n");
+
+	// Stop here if we don't
+	if ( $dryrun ) {
+		printText("[DRY RUN] The video_info table must exist before performing any other functions, exiting ...");
+		exit(0);
+	}
 }
 
-// update schema v1
-if ( $alterTableV1 ) {
+/**
+ * Handle parameter --alterTable
+ *
+ * Update the schema to the most recent version
+ */
+if ( $alterTable ) {
 	if ( !$dryrun ) {
-		$video->alterTableVideoInfoV1();
+		$video->alterTableVideoInfo($alterTable);
 	}
-	printText("Update video_info table schema (v1).\n");
+	printText("Updated video_info table schema (v$alterTable).\n");
 }
 
-// remove deleted local videos
-if ( $removeVideos && $tableExists ) {
+/**
+ * Handle parameter --remove
+ *
+ * Remove local videos that have already been deleted
+ */
+if ( $removeVideos ) {
 	$sql = <<<SQL
 		SELECT video_title
 		FROM video_info
@@ -137,7 +168,7 @@ SQL;
 
 	$result = $db->query( $sql, __METHOD__ );
 
-	while( $row = $db->fetchObject($result) ) {
+	while ( $row = $db->fetchObject($result) ) {
 		printText( "Deleted video (local): $row->video_title" );
 		if ( !$dryrun ) {
 			$video->setVideoTitle( $row->video_title );
@@ -146,9 +177,15 @@ SQL;
 		printText( "..... DELETED.\n" );
 		$removed++;
 	}
+
+	echo "Total deleted videos removed: $removed\n";
 }
 
-// add videos
+/**
+ * Handle parameter --add
+ *
+ * Add videos to the video_info table that are already on the wiki
+ */
 if ( $addVideos ) {
 	// get embedded videos (premium)
 	$excludeList = array( 'png', 'gif', 'bmp', 'jpg', 'jpeg', 'ogg', 'ico', 'svg', 'mp3', 'wav', 'midi' );
@@ -164,7 +201,7 @@ SQL;
 
 	$result = $db->query( $sql, __METHOD__ );
 
-	while( $row = $db->fetchObject($result) ) {
+	while ( $row = $db->fetchObject($result) ) {
 		printText( "Embedded Video: " );
 		addVideo( $videoList, $row->name );
 		$total++;
@@ -178,7 +215,7 @@ SQL;
 		__METHOD__
 	);
 
-	while( $row = $db->fetchObject($result) ) {
+	while ( $row = $db->fetchObject($result) ) {
 		printText( "Local Video: " );
 		addVideo( $videoList, $row->name );
 		$total++;
@@ -194,13 +231,13 @@ SQL;
 		__METHOD__
 	);
 
-	while( $row = $db->fetchObject($result) ) {
+	while ( $row = $db->fetchObject($result) ) {
 		printText( "RelatedVideos Article: $row->page_title\n" );
 
 		$title = Title::newFromText( $row->page_title, NS_RELATED_VIDEOS );
 		$relatedVideosNSData = RelatedVideosNamespaceData::newFromTitle( $title );
 		$data = $relatedVideosNSData->getData();
-		foreach( $data['lists']['WHITELIST'] as $v ) {
+		foreach ( $data['lists']['WHITELIST'] as $v ) {
 			printText( 'NS'.NS_RELATED_VIDEOS.": " );
 
 			addVideo( $videoList, $v['title'] );
@@ -213,7 +250,7 @@ SQL;
 	printText( "MediaWiki:RelatedVideosGlobalList\n" );
 	if ( !empty($relatedVideosNSData) ) {
 		$data = $relatedVideosNSData->getData();
-		foreach( $data['lists']['WHITELIST'] as $v ) {
+		foreach ( $data['lists']['WHITELIST'] as $v ) {
 			printText( "GlobalList: " );
 
 			addVideo( $videoList, $v['title'] );
@@ -222,8 +259,4 @@ SQL;
 	}
 
 	echo "Wiki $wgCityId: TOTAL: $total, ADDED: $added, DUPLICATE: $duplicate, DUPLICATE IN DB: $dupInDb, INVALID: $invalid\n";
-}
-
-if ( $removeVideos ) {
-	echo "Total removed deleted videos: $removed\n";
 }

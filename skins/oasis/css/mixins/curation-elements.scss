@@ -1,14 +1,12 @@
 @import "../../../../skins/oasis/css/core/color";
 
 $module-background-color: #fafafa;
-$vertical-border-color: #cdcdcd;
-$horizontal-border-color: #eee;
 $chevron-color: #888;
 
 @mixin module-box {
 	background-color: $module-background-color;
-	border: 1px solid $horizontal-border-color;
-	border-top: 1px solid $vertical-border-color;
+	border: 1px solid $color-page-border-subtle;
+	border-top: 1px solid $color-page-border;
 	margin-bottom: 30px;
 	padding: 10px 0px;
 }

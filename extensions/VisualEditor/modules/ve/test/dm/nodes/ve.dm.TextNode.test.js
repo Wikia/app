@@ -1,7 +1,7 @@
-/**
- * VisualEditor data model TextNode tests.
+/*!
+ * VisualEditor DataModel TextNode tests.
  *
- * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 

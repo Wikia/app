@@ -4,12 +4,15 @@
 
     <property name="localsettings" value="/usr/wikia/docroot/wiki.factory/LocalSettings.php" />
     <property name="phpunitexcludegroups" value="deprecated,Broken" />
+    <property name="dbname" value="firefly" />
 
 	<!-- PHP Tests -->
+
+	<!-- unit tests only -->
 	<target name="php">
 		<mkdir dir="${basedir}/build/logs" />
 		<exec executable="php" dir="${basedir}" failonerror="true">
-			<env key="SERVER_ID" value="165" />
+			<env key="SERVER_DBNAME" value="${dbname}" />
 			<arg line="run-test.php
                        --log-junit ${basedir}/build/logs/phpunit.xml
                        --conf ${localsettings}
@@ -19,10 +22,11 @@
 		</exec>
 	</target>
 
+	<!-- unit, infrastructure, integration tests -->
     <target name="phpunit">
 		<mkdir dir="${basedir}/build/logs" />
         <exec executable="php" dir="${basedir}" failonerror="true">
-            <env key="SERVER_ID" value="165" />
+            <env key="SERVER_DBNAME" value="${dbname}" />
             <arg line="run-test.php
                        --log-junit ${basedir}/build/logs/phpunit.xml
                        --conf ${localsettings}
@@ -32,9 +36,10 @@
         </exec>
     </target>
 
+	<!-- used to run a single test file / extension-->
     <target name="phpunit-single">
         <exec executable="php" dir="${basedir}" failonerror="true">
-            <env key="SERVER_ID" value="165" />
+            <env key="SERVER_DBNAME" value="${dbname}" />
             <arg line="run-test.php
                        --conf ${localsettings}
                        --configuration ${basedir}/phpunit.xml
@@ -43,10 +48,11 @@
         </exec>
     </target>
 
+	<!-- code coverage report -->
 	<target name="phpunit-coverage">
 		<mkdir dir="${basedir}/build/coverage" />
 		<exec executable="php" dir="${basedir}" failonerror="true">
-			<env key="SERVER_ID" value="165" />
+			<env key="SERVER_DBNAME" value="${dbname}" />
 			<arg line="run-test.php
                        --conf ${localsettings}
                        --configuration ${basedir}/phpunit.xml
@@ -58,7 +64,7 @@
 
 	<target name="phpunit-single-coverage">
 		<exec executable="php" dir="${basedir}" failonerror="true">
-			<env key="SERVER_ID" value="165" />
+			<env key="SERVER_DBNAME" value="${dbname}" />
 			<arg line="run-test.php
                        --conf ${localsettings}
                        --configuration ${basedir}/phpunit.xml
@@ -99,7 +105,7 @@
 	<target name="codelint-php">
 		<mkdir dir="${basedir}/build" />
 		<exec executable="php" dir="${basedir}/../maintenance/wikia" failonerror="true">
-			<env key="SERVER_ID" value="165" />
+			<env key="SERVER_DBNAME" value="${dbname}" />
 			<arg line="codelint.php
 					   --conf ${localsettings}
 					   --mode=php
@@ -114,12 +120,12 @@
 	<target name="codelint-js">
 		<mkdir dir="${basedir}/build" />
 		<exec executable="php" dir="${basedir}/../maintenance/wikia" failonerror="true">
-			<env key="SERVER_ID" value="165" />
+			<env key="SERVER_DBNAME" value="${dbname}" />
 			<arg line="codelint.php
 					   --conf ${localsettings}
 					   --mode=js
 					   --dir=${basedir}/../skins/oasis,${basedir}/../skins/wikia,${basedir}/../resources,${basedir}/../extensions/wikia
-					   --blacklist=/CodeLint/examples/anticode.js,/AdEngine/ghost/,/libraries/zepto/,/libraries/yui,/CodeLint/js/,/RTE/ckeditor/_../,/jquery/jquery-,/resources/jquery,/resources/mediawiki,/Chat/js/lib/,lib/socket.io,/AdEngine/bezen/,/extensions/wikia/hacks,/extensions/wikia/SemanticBundle,qunit/qunit.js,jasmine/jasmine.js,/resources/mediawiki.language/,/tests/
+					   --blacklist=/CodeLint/examples/anticode.js,/resources/wikia/libraries/ghostwriter/,/libraries/zepto/,/libraries/yui,/CodeLint/js/,/RTE/ckeditor/_../,/jquery/jquery-,/resources/jquery,/resources/mediawiki,/Chat/js/lib/,lib/socket.io,/AdEngine/bezen/,/extensions/wikia/hacks,/extensions/wikia/SemanticBundle,qunit/qunit.js,jasmine/jasmine.js,/resources/mediawiki.language/,/tests/
 					   --format=html
 					   --output=${basedir}/build/jslint.html
 					   " />

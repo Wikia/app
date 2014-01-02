@@ -42,6 +42,7 @@ $wgAutoloadClasses[ 'VideoHandlerController' ] = $dir . '/VideoHandlerController
 $wgAutoloadClasses[ 'VideoHandlerHooks' ] = $dir . '/VideoHandlerHooks.class.php';
 $wgAutoloadClasses[ 'VideoFileUploader' ] = $dir . '/VideoFileUploader.class.php';
 $wgAutoloadClasses[ 'VideoHandlerHelper' ] = $dir . '/VideoHandlerHelper.class.php';
+$wgAutoloadClasses[ 'VideoThumbnailController' ] = $dir . '/VideoThumbnailController.class.php';
 
 // actions
 $wgAutoloadClasses[ 'WikiaRevertVideoAction'] = $dir . '/actions/WikiaRevertVideoAction.php';
@@ -102,6 +103,8 @@ $wgHooks['LinkerMakeThumbLink2FileOriginalSize'][] = 'VideoHandlerHooks::onLinke
 $wgHooks['ParserAfterStrip'][] = 'VideoHandlerHooks::convertOldInterwikiToNewInterwiki';
 $wgHooks['File::checkExtensionCompatibilityResult'][] = 'VideoHandlerHooks::checkExtensionCompatibilityResult';
 $wgHooks['FindRedirectedFile'][] = 'VideoHandlerHooks::onFindRedirectedFile';
+$wgHooks['UploadFromUrlReallyFetchFile'][] = 'VideoHandlerHooks::onUploadFromUrlReallyFetchFile';
+
 
 $wgHooks['FileUpload'][] = 'VideoInfoHooksHelper::onFileUpload';
 $wgHooks['ArticleSaveComplete'][] = 'VideoInfoHooksHelper::onArticleSaveComplete';
@@ -113,6 +116,7 @@ $wgHooks['ArticleDeleteComplete'][] = 'VideoInfoHooksHelper::onArticleDeleteComp
 $wgHooks['UndeleteComplete'][] = 'VideoInfoHooksHelper::onUndeleteComplete';
 $wgHooks['ForeignFileDeleted'][] = 'VideoInfoHooksHelper::onForeignFileDeleted';
 $wgHooks['RemovePremiumVideo'][] = 'VideoInfoHooksHelper::onRemovePremiumVideo';
+$wgHooks['WikiFilePageCheckFile'][] = 'VideoInfoHooksHelper::onCheckGhostFile';
 
 if ( !empty($wgVideoHandlersVideosMigrated) ) {
 	$wgHooks['ParserFirstCallInit'][] = 'VideoHandlerHooks::initParserHook';
@@ -121,6 +125,10 @@ if ( !empty($wgVideoHandlersVideosMigrated) ) {
 // permissions
 $wgAvailableRights[] = 'specialvideohandler';
 $wgGroupPermissions['staff']['specialvideohandler'] = true;
+
+$wgAvailableRights[] = 'uploadpremiumvideo';
+$wgGroupPermissions['*']['uploadpremiumvideo'] = false;
+$wgGroupPermissions['staff']['uploadpremiumvideo'] = true;
 
 /*
  * handlers
@@ -214,6 +222,11 @@ $wgAutoloadClasses[ 'SnappytvVideoHandler'] =  $dir . '/handlers/SnappytvVideoHa
 $wgAutoloadClasses[ 'SnappytvApiWrapper'] =  $dir . '/apiwrappers/SnappytvApiWrapper.class.php' ;
 $wgMediaHandlers['video/snappytv'] = 'SnappytvVideoHandler';
 
+$wgAutoloadClasses['UstreamVideoHandler'] =  $dir . '/handlers/UstreamVideoHandler.class.php';
+$wgAutoloadClasses['UstreamApiWrapper'] =  $dir . '/apiwrappers/UstreamApiWrapper.class.php';
+$wgMediaHandlers['video/ustream'] = 'UstreamVideoHandler';
+
+
 /**
  * Feed ingesters
  */
@@ -251,4 +264,5 @@ $wgVideoMigrationProviderMap = array(
 	28 => 'Ooyala',
 	29 => 'Iva',
 	30 => 'Snappytv',
+	31 => 'Ustream',
 );

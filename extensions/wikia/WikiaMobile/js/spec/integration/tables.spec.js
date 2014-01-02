@@ -14,12 +14,13 @@ describe("Tables module", function () {
 		},
 		{
 			Features: {},
-			iScroll: function(){},
+			IScroll: function(){},
 			addEventListener: function(){
 
 			},
 			document: document
-		}
+		},
+		jQuery
 	);
 
 	beforeEach(function(){
@@ -44,7 +45,7 @@ describe("Tables module", function () {
 	});
 
 	it('should wrap/unwrap table', function(){
-		var tab = body.querySelectorAll('table');
+		var tab = $(body).find('table');
 
 		tables.process(tab);
 
@@ -54,8 +55,8 @@ describe("Tables module", function () {
 		expect(table.parentElement.className).toBe('bigTable');
 	});
 
-	it('should add wkScroll to bitTable', function(){
-		var foundTables = body.getElementsByTagName('table');
+	it('should add wkScroll to bigTable', function(){
+		var foundTables = $(body).find('table');
 
 		tables.process(foundTables);
 
@@ -64,7 +65,7 @@ describe("Tables module", function () {
 		fireEvent('click', table.parentElement);
 
 		expect(table.parentElement.className).toMatch('active');
-		expect(table.parentElement.wkScroll).toBeTruthy();
+		expect(table.wkScroll).toBeTruthy();
 
 	});
 });

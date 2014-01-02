@@ -54,41 +54,29 @@ class WikiaViewTest extends PHPUnit_Framework_TestCase {
 	 * @dataProvider setTemplateDataProvider
 	 */
 	public function testSetTemplate( $classExists, $controllerName ) {
-		$appMock = $this->getMock( 'WikiaApp', array('ajax') ); /* @var $appMock WikiaApp */
-		$registryMock = $this->getMock( 'WikiaGlobalRegistry', array('get') );
-		$registryMock->expects( $this->any() )
-		        ->method( 'get' )
-		        ->with( $this->equalTo( 'wgAutoloadClasses' ) )
-		        ->will( $classExists ? $this->returnValue( array( $controllerName . 'Controller' => dirname( __FILE__  ) . '/_fixtures/TestController.php' ) ) : $this->returnValue( array() ) );
-		$appMock->setGlobalRegistry($registryMock);
-
-		F::setInstance( 'App', $appMock );
-
-		if( !$classExists ) {
+		if ($classExists) {
+			$this->mockAutoloadedController($controllerName);
+		} else {
 			$this->setExpectedException( 'WikiaException' );
 		}
+
 		$this->object->setTemplate( $controllerName, 'hello' );
 
 		if( $classExists ) {
 			$this->assertEquals( (dirname( __FILE__ ) . '/_fixtures/templates/' . $controllerName . '_hello.php'), $this->object->getTemplatePath() );
 		}
+		$this->unmockAutoloadedController($controllerName);
 	}
 
 	/**
 	 * @expectedException WikiaException
 	 */
 	public function testSetNonExistentTemplate() {
-		$appMock = $this->getMock( 'WikiaApp', array( 'ajax' ) ); /* @var $appMock WikiaApp */
-		$registryMock = $this->getMock( 'WikiaGlobalRegistry', array('get') );
-		$registryMock->expects( $this->any() )
-		        ->method( 'get' )
-		        ->with( $this->equalTo( 'wgAutoloadClasses' ) )
-		        ->will( $this->returnValue( array( 'TestController' => dirname( __FILE__  ) . '/_fixtures/TestController.php' ) ) );
-		$appMock->setGlobalRegistry($registryMock);
-
-		F::setInstance( 'App', $appMock );
+		$this->mockAutoloadedController('Test');
 
 		$this->object->setTemplate( 'Test', 'nonExistentMethod' );
+
+		$this->unmockAutoloadedController('Test');
 	}
 
 	/**
@@ -126,18 +114,30 @@ class WikiaViewTest extends PHPUnit_Framework_TestCase {
 		$this->object->setResponse( $response );
 
 		if ( $format == WikiaResponse::FORMAT_HTML ) {
-			$appMock = $this->getMock( 'WikiaApp', array('ajax') ); /* @var $appMock WikiaApp */
-			$registryMock = $this->getMock( 'WikiaGlobalRegistry', array('get') );
-			$registryMock->expects( $this->any() )
-				->method( 'get' )
-				->with( $this->equalTo( 'wgAutoloadClasses' ) )
-				->will( $this->returnValue( array( 'Test' . 'Controller' => dirname( __FILE__  ) . '/_fixtures/TestController.php' ) ) );
-			$appMock->setGlobalRegistry($registryMock);
+			$this->mockAutoloadedController('Test');
 
-			F::setInstance( 'App', $appMock );
 			$this->object->setTemplate( 'Test', 'formatHTML' );
 		}
 
 		$this->assertEquals( $expectedResult, $this->object->render() );
+
+		$this->unmockAutoloadedController('Test');
+	}
+
+	protected function mockAutoloadedController($controllerName) {
+		global $wgAutoloadClasses;
+		if (array_key_exists($controllerName . 'Controller', $wgAutoloadClasses)) {
+			$this->mockedAutoloadedController = $wgAutoloadClasses[$controllerName .  'Controller'];
+		}
+		$wgAutoloadClasses[$controllerName .  'Controller'] =  dirname( __FILE__  ) . '/_fixtures/' . $controllerName . 'Controller.php';
+	}
+
+	protected function unmockAutoloadedController($controllerName) {
+		global $wgAutoloadClasses;
+		if (isset($this->mockedAutoloadedController)) {
+			$wgAutoloadClasses[$controllerName. 'Controller'] = $this->mockedAutoloadedController;
+		} else {
+			unset($wgAutoloadClasses[$controllerName . 'Controller']);
+		}
 	}
 }

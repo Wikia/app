@@ -2,7 +2,7 @@ var AdLogicPageLevelParams = function (
 	log,
 	window,
 	Krux,             // optional
-	adLogicShortPage, // optional
+	adLogicPageDimensions, // optional
 	abTest            // optional
 ) {
 	'use strict';
@@ -112,8 +112,10 @@ var AdLogicPageLevelParams = function (
 				kv = kvs[i].split('=');
 				key = kv[0];
 				value = kv[1];
-				params[key] = params[key] || [];
-				params[key].push(value);
+				if (key && value) {
+					params[key] = params[key] || [];
+					params[key].push(value);
+				}
 			}
 		}
 
@@ -151,7 +153,7 @@ var AdLogicPageLevelParams = function (
 			ab: getAb()
 		};
 
-		if (adLogicShortPage && adLogicShortPage.hasPreFooters()) {
+		if (adLogicPageDimensions && adLogicPageDimensions.hasPreFooters()) {
 			params.hasp = 'yes';
 		} else {
 			params.hasp = 'no';

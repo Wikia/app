@@ -10,15 +10,23 @@ class  WikiaMobileNavigationService extends WikiaService {
 	 * @var $navModel NavigationModel
 	 */
 	private $navModel = null;
+	static $skipRendering = false;
 
 	function init(){
 		$this->navModel = new NavigationModel();
 	}
 
+	static function setSkipRendering( $value = false ){
+		self::$skipRendering = $value;
+	}
+
 	public function index() {
-		/**
-		 * @var $themeSettings ThemeSettings
-		 */
+
+		if ( self::$skipRendering ) {
+			return false;
+		}
+
+
 		$themeSettings = new ThemeSettings();
 		$settings = $themeSettings->getSettings();
 
@@ -27,12 +35,10 @@ class  WikiaMobileNavigationService extends WikiaService {
 		$this->response->setVal( 'wordmarkFont', $settings["wordmark-font"] );
 
 		if ( $settings["wordmark-type"] == "graphic" ) {
-			$this->response->setVal( 'wordmarkUrl', wfReplaceImageServer( $settings['wordmark-image-url'], SassUtil::getCacheBuster() ) );
+			$this->response->setVal( 'wordmarkUrl', $themeSettings->getWordmarkUrl() );
 		} else {
 			$this->response->setVal( 'wikiName', ( !empty( $settings['wordmark-text'] ) ) ? $settings['wordmark-text'] : $this->wg->SiteName );
 		}
-
-		//$this->response->setVal( 'searchOpen', ($this->wg->Title->getText() == SpecialPage::getTitleFor( 'Search' )->getText() ) );
 	}
 
 	public function navMenu(){

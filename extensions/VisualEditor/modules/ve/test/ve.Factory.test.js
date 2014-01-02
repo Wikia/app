@@ -1,7 +1,7 @@
-/**
+/*!
  * VisualEditor Factory tests.
  *
- * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -16,21 +16,24 @@ ve.FactoryObjectStub = function VeFactoryObjectStub( a, b, c, d ) {
 	this.d = d;
 };
 
+ve.FactoryObjectStub.static = {};
+
+ve.FactoryObjectStub.static.name = 'factory-object-stub';
+
 /* Tests */
 
-QUnit.test( 'register', 3, function ( assert ) {
+QUnit.test( 'register', 2, function ( assert ) {
 	var factory = new ve.Factory();
 	assert.throws(
 		function () {
-			factory.register( 'factory-object-stub', 'not-a-function' );
+			factory.register( 'not-a-function' );
 		},
 		Error,
 		'Throws an exception when trying to register a non-function value as a constructor'
 	);
 
-	factory.register( ['factory-object-stub-1', 'factory-object-stub-2'], ve.FactoryObjectStub );
-	assert.strictEqual( factory.lookup( 'factory-object-stub-1' ), ve.FactoryObjectStub );
-	assert.strictEqual( factory.lookup( 'factory-object-stub-2' ), ve.FactoryObjectStub );
+	factory.register( ve.FactoryObjectStub );
+	assert.strictEqual( factory.lookup( 'factory-object-stub' ), ve.FactoryObjectStub );
 } );
 
 QUnit.test( 'create', 3, function ( assert ) {
@@ -45,7 +48,7 @@ QUnit.test( 'create', 3, function ( assert ) {
 		'Throws an exception when trying to create a object of an unregistered type'
 	);
 
-	factory.register( 'factory-object-stub', ve.FactoryObjectStub );
+	factory.register( ve.FactoryObjectStub );
 
 	obj = factory.create( 'factory-object-stub', 16, 'foo', { 'baz': 'quux' }, 5 );
 
@@ -64,6 +67,6 @@ QUnit.test( 'create', 3, function ( assert ) {
 
 QUnit.test( 'lookup', 1, function ( assert ) {
 	var factory = new ve.Factory();
-	factory.register( 'factory-object-stub', ve.FactoryObjectStub );
+	factory.register( ve.FactoryObjectStub );
 	assert.strictEqual( factory.lookup( 'factory-object-stub' ), ve.FactoryObjectStub );
 } );

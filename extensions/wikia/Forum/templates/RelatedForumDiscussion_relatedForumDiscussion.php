@@ -8,13 +8,13 @@
 				</a>
 			</h4>
 			<? if($message['totalReplies'] > 0): ?>
-				<div class="forum-total-replies"><?= wfMsg('forum-related-discussion-total-replies', $message['totalReplies'] + 1) ?></div>
+				<div class="forum-total-replies"><?= wfMessage( 'forum-related-discussion-total-replies', $message['totalReplies'] + 1 )->escaped() ?></div>
 			<? endif; ?>
 			<ul class="forum-replies">
 				<? if($message['totalReplies'] < 2): ?>
 					<?= $app->renderPartial('RelatedForumDiscussion', 'message', array('reply' => $message)); ?>
 				<? endif; ?>
-			
+
 				<? foreach($message['replies'] as $reply): ?>
 					<?= $app->renderPartial('RelatedForumDiscussion', 'message', array('reply' => $reply)); ?>
 				<? endforeach; ?>

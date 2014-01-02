@@ -1,0 +1,12 @@
+{
+	"templateVars": {
+		"default": {
+			"required": ["sections"],
+			"optional": ["classes", "ids"]
+		}
+	},
+	"dependencies": {
+		"js": ["resources/wikia/ui_components/toc/js/toc.js"],
+		"css": ["resources/wikia/ui_components/toc/css/toc_default.scss"]
+	}
+}

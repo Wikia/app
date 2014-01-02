@@ -29,10 +29,10 @@ $messages['en'] = array(
 	//WAM
 	'wikiahubs-wam-header' => 'WAM Score',
 	'wikiahubs-wam-see-full-wam-ranking' => 'Read more about WAM',
-	'wikiahubs-wam-top-wikis-headline' => 'Top $1 Wikis',
+	'wikiahubs-wam-top-wikis-headline' => 'Top Wikia $1 Communities',
 	'wikiahubs-wam-rank' => 'Rank',
 	'wikiahubs-wam-score' => 'WAM Score',
-	'wikiahubs-wam-wiki-url' => "Wiki's Name",
+	'wikiahubs-wam-wiki-url' => "Name",
 	
 	// from the community
 	'wikiahubs-from-community-promoted' => 'Get Promoted',
@@ -50,15 +50,15 @@ $messages['en'] = array(
 	'wikiahubs-popular-videos' => 'Popular videos',
 
 	// social icons
-	'wikiahubs-social-twitter-link-VideoGames' => 'https://twitter.com/#!/WikiaGames',
+	'wikiahubs-social-twitter-link-VideoGames' => 'https://twitter.com/Wikia',
 	'wikiahubs-social-facebook-link-VideoGames' => 'http://www.facebook.com/Wikia',
 	'wikiahubs-social-googleplus-link-VideoGames' => 'http://gplus.to/wikia',
 
-	'wikiahubs-social-twitter-link-Entertainment' => 'https://twitter.com/#!/WikiaEnt',
+	'wikiahubs-social-twitter-link-Entertainment' => 'https://twitter.com/Wikia',
 	'wikiahubs-social-facebook-link-Entertainment' => 'http://www.facebook.com/Wikia',
 	'wikiahubs-social-googleplus-link-Entertainment' => 'http://gplus.to/wikia',
 
-	'wikiahubs-social-twitter-link-Lifestyle' => 'https://twitter.com/#!/WikiaLifestyle',
+	'wikiahubs-social-twitter-link-Lifestyle' => 'https://twitter.com/Wikia',
 	'wikiahubs-social-facebook-link-Lifestyle' => 'http://www.facebook.com/Wikia',
 	'wikiahubs-social-googleplus-link-Lifestyle' => 'http://gplus.to/wikia',
 );
@@ -79,10 +79,10 @@ $messages['de'] = array(
 	//WAM
 	'wikiahubs-wam-header' => 'WAM-Punktzahl',
 	'wikiahubs-wam-see-full-wam-ranking' => 'Mehr über WAM',
-	'wikiahubs-wam-top-wikis-headline' => 'Top $1 Wikis',
+	'wikiahubs-wam-top-wikis-headline' => 'Top in $1',
 	'wikiahubs-wam-rank' => 'Rang',
 	'wikiahubs-wam-score' => 'WAM-Punktzahl',
-	'wikiahubs-wam-wiki-url' => "Wikiname",
+	'wikiahubs-wam-wiki-url' => "Name",
 
 	// wikia hubs
 	'wikiahubs-vertical-video-games' => 'Videospiele',
@@ -135,10 +135,10 @@ $messages['fr'] = array(
 	//WAM
 	'wikiahubs-wam-header' => 'Score WAM',
 	'wikiahubs-wam-see-full-wam-ranking' => 'En lire plus sur WAM',
-	'wikiahubs-wam-top-wikis-headline' => 'Wikis - Top $1',
+	'wikiahubs-wam-top-wikis-headline' => 'Top des communautés Wikia de $1',
 	'wikiahubs-wam-rank' => 'Classement',
 	'wikiahubs-wam-score' => 'Score WAM',
-	'wikiahubs-wam-wiki-url' => "Nom du wiki",
+	'wikiahubs-wam-wiki-url' => "Nom",
 
 	// wikia hubs
 	'wikiahubs-vertical-VideoGames' => 'Jeux vidéo',
@@ -191,10 +191,10 @@ $messages['es'] = array(
 	//WAM
 	'wikiahubs-wam-header' => 'Puntuación en el WAM',
 	'wikiahubs-wam-see-full-wam-ranking' => 'Leer más acerca del WAM',
-	'wikiahubs-wam-top-wikis-headline' => 'Wikis - Top $1',
+	'wikiahubs-wam-top-wikis-headline' => 'Comunidades de Wikia - Top $1',
 	'wikiahubs-wam-rank' => 'Clasificación',
 	'wikiahubs-wam-score' => 'Puntuación en el WAM',
-	'wikiahubs-wam-wiki-url' => "Nombre del wiki",
+	'wikiahubs-wam-wiki-url' => "Nombre",
 
 	// wikia hubs
 	'wikiahubs-vertical-VideoGames' => 'Videojuegos',
@@ -226,6 +226,62 @@ $messages['es'] = array(
 	'wikiahubs-social-facebook-link-Lifestyle' => '',
 	'wikiahubs-social-googleplus-link-Lifestyle' => '',
 );
+
+$messages['pl'] = [
+	// general
+	'wikiahubs-button-cancel' => 'Anuluj',
+	'wikiahubs-search-placeholder' => 'Szukaj na Wikii',
+
+	// suggest article
+	'wikiahubs-suggest-article-header' => 'Zasugeruj artykuł',
+	'wikiahubs-suggest-article-submit-button' => 'Prześlij',
+	'wikiahubs-suggest-article-what-article' => 'Czym chcesz się podzielić? (link, maks. 255 znaków)',
+	'wikiahubs-suggest-article-reason' => 'Dlaczego ten artykuł jest dobry? (Maks. 140 znaków)',
+	'wikiahubs-suggest-article-success' => 'Dzięki za zasugerowanie artykułu, nasi edytorzy przyjrzą się zgłoszeniu. Zajrzyj wkrótce aby zobaczyć artykuł na stronie.!',
+	'wikiahubs-error-invalid-article-url-length' => 'Adres URL artykułu musi mieć co najmniej 10 znaków',
+	'wikiahubs-error-invalid-reason-length' => 'Komentarz musi mieć od 1 do 140 znaków',
+
+	// wikia hubs
+	'wikiahubs-vertical-VideoGames' => 'Gry',
+	'wikiahubs-vertical-Entertainment' => 'Rozrywka',
+	'wikiahubs-vertical-Lifestyle' => 'Lifestyle',
+
+	//WAM
+	'wikiahubs-wam-header' => 'Punktacja WAM',
+	'wikiahubs-wam-see-full-wam-ranking' => 'Dowiedz się więcej o WAM',
+	'wikiahubs-wam-top-wikis-headline' => 'Społeczności Wikii - $1',
+	'wikiahubs-wam-rank' => 'Pozycja',
+	'wikiahubs-wam-score' => 'Punktacja WAM',
+	'wikiahubs-wam-wiki-url' => 'Nazwa',
+
+	// from the community
+	'wikiahubs-from-community-promoted' => 'Wypromuj wiki',
+	'wikiahubs-from-community-caption' => 'Od [$1 $2] na [$3 $4]',
+	'wikiahubs-from-community-headline' => 'Od społeczności',
+
+	//featured video
+	'wikiahubs-sponsored-by' => 'Sponsorowany przez $1',
+
+	// 404 page
+	'wikiahubs-404-title' => 'Nie udało się odnaleźć poszukiwanej strony.',
+	'wikiahubs-404-message' => 'Nie udało się odnaleźć strony. [[$1|Kliknij tutaj]] aby wrócić do strony portalu.',
+
+	// off-shot pages
+	'wikiahubs-popular-videos' => 'Popularne filmy',
+
+	// social icons
+	'wikiahubs-social-twitter-link-VideoGames' => 'https://twitter.com/wikia_pl',
+	'wikiahubs-social-facebook-link-VideoGames' => 'https://www.facebook.com/wikiapl',
+	'wikiahubs-social-googleplus-link-VideoGames' => '',
+
+	'wikiahubs-social-twitter-link-Entertainment' => 'https://twitter.com/wikia_pl',
+	'wikiahubs-social-facebook-link-Entertainment' => 'https://www.facebook.com/wikiapl',
+	'wikiahubs-social-googleplus-link-Entertainment' => '',
+
+	'wikiahubs-social-twitter-link-Lifestyle' => 'https://twitter.com/wikia_pl',
+	'wikiahubs-social-facebook-link-Lifestyle' => 'https://www.facebook.com/wikiapl',
+	'wikiahubs-social-googleplus-link-Lifestyle' => '',
+];
 
 $messages['qqq'] = array(
 	// general

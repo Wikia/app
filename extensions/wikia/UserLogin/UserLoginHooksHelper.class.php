@@ -2,6 +2,8 @@
 
 class UserLoginHooksHelper {
 
+	const WIKIA_EMAIL_DOMAIN = "@wikia-inc.com";
+
 	// set default user options and perform other actions after account creation
 	public static function onAddNewAccount( User $user, $byEmail ) {
 		$user->setOption( 'marketingallowed', 1 );
@@ -21,30 +23,19 @@ class UserLoginHooksHelper {
 
 	// get error message when abort new account
 	public static function onAbortNewAccountErrorMessage( &$abortError, &$errParam ) {
-		if ( $abortError == wfMsg('phalanx-user-block-new-account') ) {
-			$abortError = wfMsg( 'userlogin-error-user-not-allowed' );
+		if ( $abortError == wfMessage('phalanx-user-block-new-account')->escaped() ) {
+			$abortError = wfMessage( 'userlogin-error-user-not-allowed' )->escaped();
 			$errParam = 'username';
-		} else if ( $abortError == wfMsg('userexists') ) {
-			$abortError = wfMsg( 'userlogin-error-userexists' );
+		} else if ( $abortError == wfMessage('userexists')->escaped() ) {
+			$abortError = wfMessage( 'userlogin-error-userexists' )->escaped();
 			$errParam = 'username';
-		} else if ( $abortError == wfMsg('captcha-createaccount-fail') ) {
-			$abortError = wfMsg( 'userlogin-error-captcha-createaccount-fail' );
+		} else if ( $abortError == wfMessage('captcha-createaccount-fail')->escaped() ) {
+			$abortError = wfMessage( 'userlogin-error-captcha-createaccount-fail' )->escaped();
 			$errParam = 'wpCaptchaWord';
-		} else if ( $abortError == wfMsg('phalanx-help-type-user-email') ) {
+		} else if ( $abortError == wfMessage('phalanx-help-type-user-email')->escaped() ) {
 			$errParam = 'email';
-		} else if ( $abortError == wfMsg('phalanx-email-block-new-account')) {
-			$errParam = 'email';	 
-		}
-
-		return true;
-	}
-
-	// save temp user and map temp user to user when mail password
-	public static function onMailPasswordTempUser( &$u, &$tempUser ) {
-		$tempUser = TempUser::getTempUserFromName( $u->getName() );
-		if ( $tempUser ) {
-			$tempUser->saveSettingsTempUserToUser( $u );
-			$u = $tempUser->mapTempUserToUser();
+		} else if ( $abortError == wfMessage('phalanx-email-block-new-account')->escaped()) {
+			$errParam = 'email';
 		}
 
 		return true;
@@ -109,7 +100,7 @@ class UserLoginHooksHelper {
 	// check if email is empty
 	public static function onSavePreferences( &$formData, &$error ) {
 		if ( array_key_exists( 'emailaddress', $formData ) && empty( $formData['emailaddress'] ) ) {
-			$error = wfMsg( 'usersignup-error-empty-email' );
+			$error = wfMessage( 'usersignup-error-empty-email' )->escaped();
 			return false;
 		}
 
@@ -151,4 +142,64 @@ class UserLoginHooksHelper {
 		return true;
 	}
 
+	/**
+	 * Checks if Email belongs to the wikia domain;
+	 *
+	 * @param string $sEmail Email to check
+	 * @static
+	 * @return bool
+	 */
+	public static function isWikiaEmail( $sEmail ) {
+		return substr( $sEmail, strpos( $sEmail, '@' ) ) == self::WIKIA_EMAIL_DOMAIN;
+	}
+
+	/**
+	 * Returns number of activated accounts for specific email address
+	 *
+	 * @param mixed $sEmail
+	 * @static
+	 * @return integer
+	 */
+	public static function getUsersPerEmailFromDB( $sEmail ) {
+		wfProfileIn( __METHOD__ );
+		$dbw = wfGetDB( DB_SLAVE );
+		$iCount = $dbw->selectField( 'user',
+			'count(*)',
+			array(
+				'user_email' => $sEmail,
+				'user_email_authenticated IS NOT NULL',
+		    )
+		);
+		wfProfileOut( __METHOD__ );
+		return $iCount;
+	}
+
+	/**
+	 * Keeps count of registered accounts with same email
+	 *
+	 * @param User $user
+	 * @static
+	 * @return bool
+	 */
+	public static function onConfirmEmailComplete( User $user ) {
+		global $wgAccountsPerEmail, $wgMemc;
+		$sEmail = $user->getEmail();
+		if ( isset( $wgAccountsPerEmail )
+			&& is_numeric( $wgAccountsPerEmail )
+			&& !self::isWikiaEmail( $sEmail )
+		) {
+			$key = wfSharedMemcKey( "UserLogin", "AccountsPerEmail", $sEmail );
+			$iCount = $wgMemc->get( $key );
+			if ( $iCount === false ) {
+				$iCount = self::getUsersPerEmailFromDB( $sEmail );
+				if ( $iCount > 0 ) {
+					$wgMemc->set( $key, $iCount );
+				}
+			} else {
+				$wgMemc->incr( $key );
+			}
+		}
+        return true;
+	}
 }
+

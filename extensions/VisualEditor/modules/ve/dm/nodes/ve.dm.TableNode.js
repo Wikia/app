@@ -1,65 +1,44 @@
-/**
- * VisualEditor data model TableNode class.
+/*!
+ * VisualEditor DataModel TableNode class.
  *
- * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
 /**
- * DataModel node for a table.
+ * DataModel table node.
  *
  * @class
+ * @extends ve.dm.BranchNode
  * @constructor
- * @extends {ve.dm.BranchNode}
  * @param {ve.dm.BranchNode[]} [children] Child nodes to attach
- * @param {Object} [attributes] Reference to map of attribute key/value pairs
+ * @param {Object} [element] Reference to element in linear model
  */
-ve.dm.TableNode = function VeDmTableNode( children, attributes ) {
+ve.dm.TableNode = function VeDmTableNode( children, element ) {
 	// Parent constructor
-	ve.dm.BranchNode.call( this, 'table', children, attributes );
+	ve.dm.BranchNode.call( this, children, element );
 };
 
 /* Inheritance */
 
 ve.inheritClass( ve.dm.TableNode, ve.dm.BranchNode );
 
-/* Static Members */
+/* Static Properties */
 
-/**
- * Node rules.
- *
- * @see ve.dm.NodeFactory
- * @static
- * @member
- */
-ve.dm.TableNode.rules = {
-	'isWrapped': true,
-	'isContent': false,
-	'canContainContent': false,
-	'hasSignificantWhitespace': false,
-	'childNodeTypes': ['tableSection'],
-	'parentNodeTypes': null
+ve.dm.TableNode.static.name = 'table';
+
+ve.dm.TableNode.static.childNodeTypes = [ 'tableSection' ];
+
+ve.dm.TableNode.static.matchTagNames = [ 'table' ];
+
+ve.dm.TableNode.static.toDataElement = function () {
+	return { 'type': 'table' };
 };
 
-/**
- * Node converters.
- *
- * @see {ve.dm.Converter}
- * @static
- * @member
- */
-ve.dm.TableNode.converters = {
-	'domElementTypes': ['table'],
-	'toDomElement': function () {
-		return document.createElement( 'table' );
-	},
-	'toDataElement': function () {
-		return {
-			'type': 'table'
-		};
-	}
+ve.dm.TableNode.static.toDomElements = function ( dataElement, doc ) {
+	return [ doc.createElement( 'table' ) ];
 };
 
 /* Registration */
 
-ve.dm.nodeFactory.register( 'table', ve.dm.TableNode );
+ve.dm.modelRegistry.register( ve.dm.TableNode );

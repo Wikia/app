@@ -86,7 +86,7 @@ abstract class FileOp {
 	 *     a) unexpected operation errors occurred (network partitions, disk full...)
 	 *     b) significant operation errors occured and 'force' was not set
 	 * 
-	 * @param $performOps Array List of FileOp operations
+	 * @param $performOps FileOp[] List of FileOp operations
 	 * @param $opts Array Batch operation options
 	 * @return Status 
 	 */

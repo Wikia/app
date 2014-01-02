@@ -178,11 +178,17 @@ class HAWelcomeJob extends Job {
 				 * @global Object User The state of the user viewing/using the site
 				 * @see http://www.mediawiki.org/wiki/Manual:$wgUser
 				 */
-				global $wgUser;
+				global $wgUser, $wgCityId;
+				$wiki = WikiFactory::getWikiById( $wgCityId );
+				$founderId = isset( $wiki->city_founding_user ) ? intval( $wiki->city_founding_user ) : false;
 				// Abort if the contributor is a member of a group that should not be welcomed or the default welcomer
-				if ( $wgUser->isAllowed( 'welcomeexempt' ) || $wgUser->getName() == self::DEFAULT_WELCOMER ) {
+				// Also, don't welcome founders as they are welcomed separately
+				if ( $wgUser->isAllowed( 'welcomeexempt' ) ||
+					$wgUser->getName() == self::DEFAULT_WELCOMER ||
+					$founderId === intval( $oRevision->getRawUser() )
+				) {
 					if ( !empty( $wgHAWelcomeNotices ) ) {
-						trigger_error( sprintf( '%s Done. The registered contributor is a bot, a staff member or the default welcomer.', __METHOD__ ) , E_USER_NOTICE );
+						trigger_error( sprintf( '%s Done. The registered contributor is a bot, a staff member, the wiki founder or the default welcomer.', __METHOD__ ) , E_USER_NOTICE );
 					}
 					// Restore the original error reporting level.
 					error_reporting( $iErrorReporting );
@@ -239,7 +245,9 @@ class HAWelcomeJob extends Job {
 				// The id of the user to be welcome (0 if anon).
 				'iUserId' => $oRevision->getRawUser(),
 				// The name of the user to be welcome (IP if anon).
-				'sUserName' => $oRevision->getRawUserText()
+				'sUserName' => $oRevision->getRawUserText(),
+				// The time when the job has been scheduled (as UNIX timestamp).
+				'iTimestamp' => time()
 			);
 			if ( !empty( $wgHAWelcomeNotices ) ) {
 				trigger_error( sprintf( '%s Scheduling a job.', __METHOD__ ) , E_USER_NOTICE );
@@ -276,6 +284,7 @@ class HAWelcomeJob extends Job {
 		// Convert params to object properties (easier access).
 		$this->iRecipientId = $aParams['iUserId'];
 		$this->sRecipientName = $aParams['sUserName'];
+		$this->iTimestamp = ( isset( $aParams['iTimestamp'] ) ) ? $aParams['iTimestamp'] : 0;
 		/** @global Boolean Show PHP Notices. Set via WikiFactory. */
 		global $wgHAWelcomeNotices;
 		$this->bShowNotices = !empty( $wgHAWelcomeNotices );
@@ -294,6 +303,11 @@ class HAWelcomeJob extends Job {
 	 */
 	public function run() {
 		wfProfileIn( __METHOD__ );
+		if ( 0 < $this->iTimestamp ) {
+			global $wgCityId;
+			$iSecondsToExecute = time() - $this->iTimestamp;
+			error_log( "HAWelcome-WIKIA: CityId:{$wgCityId},JobId:{$this->id},SecondsToExecute:{$iSecondsToExecute}" );
+		}
 		/** @type Interget Store the original error reporting level. */
 		$iErrorReporting = error_reporting();
 		error_reporting( E_ALL );

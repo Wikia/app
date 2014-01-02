@@ -39,6 +39,13 @@ $messages['az'] = array(
 	'imageserving-desc' => 'Vizual tələblər əsasında göstərilən səhifələrin massivindən şəkilləri seçir',
 );
 
+/** Bulgarian (български)
+ * @author Aquilax
+ */
+$messages['bg'] = array(
+	'imageserving-desc' => 'Изберете изображения от указания набор страници на база на визуалните изисквания',
+);
+
 /** Breton (brezhoneg)
  */
 $messages['br'] = array(
@@ -58,7 +65,7 @@ $messages['ca'] = array(
 	'imageserving-desc' => "Selecciona les imatges des d'un conjunt especificat de pàgines basat en les exigències visuals",
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -164,6 +171,13 @@ $messages['nl'] = array(
 	'imageserving-desc' => "Selecteert afbeeldingen uit een opgegeven verzameling pagina's gebaseerd op visuele eisen",
 );
 
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'imageserving-desc' => 'Selecciona los images dins un ensemble definit de paginas, en foncion dels besonhs visuals',
+);
+
 /** Polish (polski)
  * @author Sovq
  */
@@ -179,9 +193,10 @@ $messages['pms'] = array(
 );
 
 /** Portuguese (português)
+ * @author Josep Maria 15.
  */
 $messages['pt'] = array(
-	'imageserving-desc' => 'Escolhe imagens de um conjunto especificado de páginas com base em requisitos visuais',
+	'imageserving-desc' => 'Escolhe imagens dum conjunto especificado de páginas com base em requisitos visuais.',
 );
 
 /** Brazilian Portuguese (português do Brasil)
@@ -235,6 +250,13 @@ $messages['tt-cyrl'] = array(
  */
 $messages['uk'] = array(
 	'imageserving-desc' => 'Вибір зображень із вказаного масиву сторінок на основі візуальних вимог',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'imageserving-desc' => 'Chọn hình ảnh từ một mảng được chỉ định của trang dựa trên yêu cầu hình ảnh',
 );
 
 /** Simplified Chinese (中文（简体）‎)

@@ -24,6 +24,5 @@ $wgAutoloadClasses['WallMessage'] =  $dir . '/WallMessage.class.php';
 
 //add script in monobook
 $wgHooks['SkinAfterBottomScripts'][] = 'WallNotificationsHooksHelper::onSkinAfterBottomScripts';
-$wgHooks['MakeGlobalVariablesScript'][] = 'WallNotificationsHooksHelper::onMakeGlobalVariablesScript';
 
 $wgHooks['PersonalUrls'][] = 'WallNotificationsHooksHelper::onPersonalUrls';

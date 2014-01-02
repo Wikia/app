@@ -1,0 +1,90 @@
+/*!
+ * VisualEditor MediaWiki UserInterface Dialog styles.
+ *
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @license The MIT License (MIT); see LICENSE.txt
+ */
+
+/* ve.ui.MWTransclusionDialog */
+
+.ve-ui-mwTransclusionDialog-input {
+	width: 100%;
+}
+
+.ve-ui-mwTransclusionDialog-input textarea {
+	height: 10em;
+}
+
+.ve-ui-mwTransclusionDialog-addTemplateFieldset .ve-ui-widget {
+	display: inline-block;
+}
+
+.ve-ui-mwTransclusionDialog-addTemplateFieldset .ve-ui-buttonWidget {
+	margin-left: 0.5em;
+}
+
+.ve-ui-mwTransclusionDialog-placeholder-label {
+	font-style: italic;
+}
+
+.ve-ui-mwTransclusionDialog-addParameterFieldset .ve-ui-mwParameterSearchWidget {
+	position: relative;
+	overflow: hidden;
+	box-shadow: 0 0 0.5em rgba(0,0,0,0.2);
+	margin-bottom: 1em;
+}
+
+.ve-ui-mwTransclusionDialog-addParameterFieldset .ve-ui-searchWidget-results {
+	position: relative;
+	padding-bottom: 5em;
+}
+
+/* ve.ui.MWMetaDialog */
+
+.ve-ui-mwMetaDialog-languages-table {
+	margin: 2em 0 0 0;
+	padding: 0;
+	width: 100%;
+	border: none;
+	border-collapse: collapse;
+}
+
+.ve-ui-mwMetaDialog-languages-table th {
+	border-bottom: solid 1px #ddd;
+	text-align: left;
+}
+
+.ve-ui-mwMetaDialog-languages-table th,
+.ve-ui-mwMetaDialog-languages-table td {
+	padding: 0.75em 1em;
+	border-bottom: solid 1px white;
+}
+
+.ve-ui-mwMetaDialog-languages-table tr td:first-child {
+	width: 30%;
+}
+
+.ve-ui-mwMetaDialog-languages-table tr:nth-child(odd) td {
+	background: #F0F0F0;
+}
+
+.ve-ui-mwMetaDialog-languages-table tr:nth-child(even) td {
+	background: #F8F8F8;
+}
+
+/* ve.ui.MWBetaWelcomeDialog */
+
+.ve-ui-mwBetaWelcomeDialog-content {
+	line-height: 1.5em;
+	font-size: 1.1em;
+}
+
+/* ve.ui.MWMediaInsertDialog */
+
+.ve-ui-mwMediaInsertDialog-select {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}

@@ -1,65 +1,46 @@
-/**
- * VisualEditor data model PreformattedNode class.
+/*!
+ * VisualEditor DataModel PreformattedNode class.
  *
- * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
 /**
- * DataModel node for a preformatted.
+ * DataModel preformatted node.
  *
  * @class
+ * @extends ve.dm.BranchNode
  * @constructor
- * @extends {ve.dm.BranchNode}
  * @param {ve.dm.LeafNode[]} [children] Child nodes to attach
- * @param {Object} [attributes] Reference to map of attribute key/value pairs
+ * @param {Object} [element] Reference to element in linear model
  */
-ve.dm.PreformattedNode = function VeDmPreformattedNode( children, attributes ) {
+ve.dm.PreformattedNode = function VeDmPreformattedNode( children, element ) {
 	// Parent constructor
-	ve.dm.BranchNode.call( this, 'preformatted', children, attributes );
+	ve.dm.BranchNode.call( this, children, element );
 };
 
 /* Inheritance */
 
 ve.inheritClass( ve.dm.PreformattedNode, ve.dm.BranchNode );
 
-/* Static Members */
+/* Static Properties */
 
-/**
- * Node rules.
- *
- * @see ve.dm.NodeFactory
- * @static
- * @member
- */
-ve.dm.PreformattedNode.rules = {
-	'isWrapped': true,
-	'isContent': false,
-	'canContainContent': true,
-	'hasSignificantWhitespace': true,
-	'childNodeTypes': null,
-	'parentNodeTypes': null
+ve.dm.PreformattedNode.static.name = 'preformatted';
+
+ve.dm.PreformattedNode.static.canContainContent = true;
+
+ve.dm.PreformattedNode.static.hasSignificantWhitespace = true;
+
+ve.dm.PreformattedNode.static.matchTagNames = [ 'pre' ];
+
+ve.dm.PreformattedNode.static.toDataElement = function () {
+	return { 'type': 'preformatted' };
 };
 
-/**
- * Node converters.
- *
- * @see {ve.dm.Converter}
- * @static
- * @member
- */
-ve.dm.PreformattedNode.converters = {
-	'domElementTypes': ['pre'],
-	'toDomElement': function () {
-		return document.createElement( 'pre' );
-	},
-	'toDataElement': function () {
-		return {
-			'type': 'preformatted'
-		};
-	}
+ve.dm.PreformattedNode.static.toDomElements = function ( dataElement, doc ) {
+	return [ doc.createElement( 'pre' ) ];
 };
 
 /* Registration */
 
-ve.dm.nodeFactory.register( 'preformatted', ve.dm.PreformattedNode );
+ve.dm.modelRegistry.register( ve.dm.PreformattedNode );

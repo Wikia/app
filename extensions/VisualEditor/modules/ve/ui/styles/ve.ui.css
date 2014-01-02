@@ -1,0 +1,73 @@
+/*!
+ * VisualEditor UserInterface styles.
+ *
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @license The MIT License (MIT); see LICENSE.txt
+ */
+
+/*csslint vendor-prefix:false */
+
+/* Textures */
+
+.ve-ui-texture-pending {
+	/* @embed */
+	background-image: url(images/textures/pending.gif);
+}
+
+.ve-ui-texture-transparency {
+	/* @embed */
+	background-image: url(images/textures/transparency.png);
+}
+
+/* Animation */
+
+@-webkit-keyframes ve-ui-zoom-in {
+	from { -webkit-transform: scale(0.5); }
+	to { -webkit-transform: scale(1); }
+}
+
+@-moz-keyframes ve-ui-zoom-in {
+	from { -moz-transform: scale(0.5); }
+	to { -moz-transform: scale(1); }
+}
+
+@-o-keyframes ve-ui-zoom-in {
+	from { -o-transform: scale(0.5); }
+	to { -o-transform: scale(1); }
+}
+
+@keyframes ve-ui-zoom-in {
+	from { transform: scale(0.5); }
+	to { transform: scale(1); }
+}
+
+@-webkit-keyframes ve-ui-fade-in {
+	from { opacity: 0; }
+	to { opacity: 1; }
+}
+
+@-moz-keyframes ve-ui-fade-in {
+	from { opacity: 0; }
+	to { opacity: 1; }
+}
+
+@-o-keyframes ve-ui-fade-in {
+	from { opacity: 0; }
+	to { opacity: 1; }
+}
+
+@keyframes ve-ui-fade-in {
+	from { opacity: 0; }
+	to { opacity: 1; }
+}
+
+/* RTL Definitions */
+
+/* @noflip */
+.ve-ui-rtl {
+	direction: rtl;
+}
+/* @noflip */
+.ve-ui-ltr {
+	direction: ltr;
+}

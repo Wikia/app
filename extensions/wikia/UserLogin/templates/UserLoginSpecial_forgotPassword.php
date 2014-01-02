@@ -4,19 +4,19 @@
 		'type' => 'text',
 		'name' => 'username',
 		'isRequired' => true,
-		'label' => wfMsg('yourname'),
+		'label' => wfMessage('yourname')->escaped(),
 		'value' => ''
 	);
 
 	$forgotPasswordBtn = array(
 		'type' => 'submit',
-		'value' => wfMsg('userlogin-forgot-password-button'),
+		'value' => wfMessage('userlogin-forgot-password-button')->escaped(),
 		'class' => 'login-button big',
 	);
 
 	$backToLoginLink = array(
 		'type' => 'custom',
-		'output' => wfmsgExt('userlogin-forgot-password-go-to-login', 'parseinline'),
+		'output' => wfMessage('userlogin-forgot-password-go-to-login')->parse(),
 	);
 
 	if (isset($result) && ($result == 'error')) {

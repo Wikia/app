@@ -22,9 +22,6 @@ UserLoginAjaxForm.prototype.init = function() {
 	// get login token
 	this.retrieveLoginToken();
 
-	// set returnto url to current
-	this.inputs['returnto'].val(wgPageName);
-
 	// form submission handler
 	this.form.submit($.proxy(this.submitLogin, this));
 
