@@ -128,7 +128,7 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 			} else {
 				$formValues = $this->request->getParams();
 				$errMsg = '';
-				$requiredRows = VideoPageToolHelper::$requiredRows[$section];
+				$requiredRows = $helper->getRequiredRows( $section, $formValues );
 				$data = $program->formatFormData( $section, $requiredRows, $formValues, $errMsg );
 				if ( empty( $errMsg ) ) {
 					$status = $program->saveAssetsBySection( $section, $data );

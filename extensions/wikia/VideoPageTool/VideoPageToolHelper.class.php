@@ -18,7 +18,7 @@ class VideoPageToolHelper extends WikiaModel {
 
 	public static $requiredRows = array(
 		'featured' => 5,
-		'category' => 3,
+		'category' => [3, 5],
 		'fan'      => 4,
 	);
 
@@ -67,7 +67,7 @@ class VideoPageToolHelper extends WikiaModel {
 		);
 
 		$leftMenuItems = array();
-		foreach( $sections as $key => $value ) {
+		foreach ( $sections as $key => $value ) {
 			$query['section'] = $key;
 			$leftMenuItems[] = array(
 				'title' => $value,
@@ -183,8 +183,8 @@ class VideoPageToolHelper extends WikiaModel {
 				$data = array();
 				foreach ( array_keys( $categoryData ) as $pageId ) {
 					$title = Title::newFromID( $pageId );
-					$file = wfFindFile( $title );
-					if ( $file instanceof File  && $file->exists() && WikiaFileHelper::isFileTypeVideo( $file ) ) {
+					$file = WikiaFileHelper::getVideoFileFromTitle( $title );
+					if ( !empty( $file ) ) {
 						$thumb = $file->transform( array( 'width' => self::THUMBNAIL_CATEGORY_WIDTH, 'height' => self::THUMBNAIL_CATEGORY_HEIGHT ) );
 						$videoThumb = $thumb->toHtml();
 						$data[] = array(
@@ -274,11 +274,38 @@ class VideoPageToolHelper extends WikiaModel {
 	public function getDefaultValuesBySection( $section ) {
 		$className = VideoPageToolAsset::getClassNameFromSection( $section );
 		$values = array();
-		for( $i = 1; $i <= self::$requiredRows[$section]; $i++ ) {
+		$requiredRows = $this->getRequiredRows( $section );
+		for ( $i = 1; $i <= $requiredRows; $i++ ) {
 			$values[$i] = $className::getDefaultAssetData();
 		}
 
 		return $values;
+	}
+
+	/**
+	 * Get required rows
+	 * Note: displayTitle field is used to check for number of rows in the form
+	 * @param string $section
+	 * @param array $formValues
+	 * @return integer $requiredRows
+	 */
+	public function getRequiredRows( $section, $formValues = array() ) {
+		if ( is_array( self::$requiredRows[$section] ) ) {
+			$cnt = empty( $formValues['displayTitle'] ) ? 0 : count( $formValues['displayTitle'] );
+			$min = min( self::$requiredRows[$section] );
+			$max = max( self::$requiredRows[$section] );
+			if ( $cnt <= $min ) {
+				$requiredRows = $min;
+			} else if ( $cnt < $max ) {
+				$requiredRows = $cnt;
+			} else {
+				$requiredRows = $max;
+			}
+		} else {
+			$requiredRows = self::$requiredRows[$section];
+		}
+
+		return $requiredRows;
 	}
 
 	/**
