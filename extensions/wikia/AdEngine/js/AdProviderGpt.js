@@ -41,7 +41,11 @@ var AdProviderGpt = function (adTracker, log, window, Geo, slotTweaker, cacheSto
 		'TOP_LEADERBOARD': {'size': '728x90,1030x130,1030x65,1030x250,970x250,970x90,970x66', 'tile': 2, 'loc': 'top', 'dcopt': 'ist'},
 		'TOP_RIGHT_BOXAD': {'size': '300x250,300x600,300x1050', 'tile': 1, 'loc': 'top'},
 		'WIKIA_BAR_BOXAD_1': {'size': '320x50,320x70,320x100', 'tile': 4, 'loc': 'bottom'},
-		'GPT_FLUSH': 'flushonly'
+		'GPT_FLUSH': 'flushonly',
+
+		'MOBILE_TOP_LEADERBOARD': {size: '320x50'},
+		'MOBILE_IN_CONTENT': {size: '300x250'},
+		'MOBILE_PREFOOTER': {size: '300x250'}
 	};
 	// TODO: integrate this array to slotMap if it makes sense
 	gptConfig = { // slots to use SRA with
@@ -53,7 +57,11 @@ var AdProviderGpt = function (adTracker, log, window, Geo, slotTweaker, cacheSto
 		CORP_TOP_RIGHT_BOXAD: 'flush',
 		TOP_RIGHT_BOXAD: 'flush',
 		HOME_TOP_RIGHT_BOXAD: 'flush',
-		GPT_FLUSH: 'flushonly'
+		GPT_FLUSH: 'flushonly',
+
+		MOBILE_TOP_LEADERBOARD: 'flush',
+		MOBILE_IN_CONTENT: 'flush',
+		MOBILE_PREFOOTER: 'flush'
 	};
 
 	wikiaGpt.init(slotMap);

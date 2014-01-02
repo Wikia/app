@@ -38,31 +38,22 @@ require( ['ads', 'sloth', 'jquery', 'JSMessages', 'wikia.window', 'wikia.log'], 
 		};
 
 	log( 'Loading slot: MOBILE_TOP_LEADERBOARD', logLevel, logGroup );
-	ads.setupSlot( {
-		name: 'MOBILE_TOP_LEADERBOARD',
-		size: '320x50',
-		wrapper: topAdWrapper,
-		init: function ( found ) {
-			log( 'Slot: MOBILE_TOP_LEADERBOARD loaded, found: ' + found, logLevel, logGroup );
-			if ( !found ) {
-				topAdWrapper.className = 'hide';
-			}
-		}
-	} );
+	$(topAdWrapper).html('<div id="MOBILE_TOP_LEADERBOARD"></div>');
+	window.adslots2.push(['MOBILE_TOP_LEADERBOARD']);
 
 	if ( window.wgArticleId ) {
 		if ( showInContent ) {
 			$firstSection.before( '<div id=wkAdInContent class=ad-in-content />' );
-			lazyLoadAd( doc.getElementById( 'wkAdInContent' ), 'MOBILE_IN_CONTENT' );
+			$('#wkAdInContent').html('<div id="MOBILE_IN_CONTENT"></div>');
+			window.adslots2.push(['MOBILE_IN_CONTENT']);
 		}
 
 		if ( showBeforeFooter ) {
 			$footer.after( '<div id=wkAdBeforeFooter class=ad-in-content />' );
-			lazyLoadAd( doc.getElementById( 'wkAdBeforeFooter' ), 'MOBILE_PREFOOTER' );
+			$('#wkAdBeforeFooter').html('<div id="MOBILE_PREFOOTER"></div>');
+			window.adslots2.push(['MOBILE_PREFOOTER']);
 		}
 	}
-
-
 
 	sloth();
 } );
