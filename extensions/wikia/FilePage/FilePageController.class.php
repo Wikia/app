@@ -396,10 +396,10 @@ class FilePageController extends WikiaController {
 					FROM `globalimagelinks`
 					WHERE gil_to = $gilTo AND gil_wiki != $wiki
 					ORDER BY gil_wiki, gil_page_namespace_id
+					LIMIT 1000
 				) s
 				GROUP BY gil_wiki
 				LIMIT $limit
-
 SQL;
 			$result = $db->query( $sql, __METHOD__ );
 
