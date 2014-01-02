@@ -1,11 +1,12 @@
 /*exported SlotTracker*/
 /*global setTimeout*/
 /*jshint camelcase:false, maxparams:5*/
+/*global define*/
 
 var SlotTracker = function (log, tracker) {
 	'use strict';
 
-	var logGroup = 'SlotTracker',
+	var logGroup = 'ext.wikia.adengine.slottracker',
 		timeBuckets = [0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.5, 5.0, 8.0],
 		timeCheckpoints = [2.0, 5.0, 8.0],
 		stats = {
@@ -197,3 +198,5 @@ var SlotTracker = function (log, tracker) {
 
 	return slotTracker;
 };
+
+define('ext.wikia.adengine.slottracker', ['wikia.log', 'wikia.tracker'], SlotTracker);
