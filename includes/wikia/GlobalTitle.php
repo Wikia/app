@@ -15,7 +15,7 @@
  *
  */
 
-class GlobalTitle extends Title {
+class GlobalTitle {
 
 	/**
 	 * public, used in static constructor
@@ -26,11 +26,14 @@ class GlobalTitle extends Title {
 	public $mTextform = false;
 	public $mUrlform = false;
 	public $mArticleID = false;
+	public $mDbkeyform = '';
 
 	/**
 	 * others, private
 	 */
 	private $mServer = false;
+
+	/* @var Language */
 	private $mContLang = false;
 	private $mLang = false;
 	private $mArticlePath = false;
@@ -46,6 +49,8 @@ class GlobalTitle extends Title {
 
 	/**
 	 * static constructor, Create new Title from name of page
+	 *
+	 * @return GlobalTitle
 	 */
 	public static function newFromText( $text, $namespace, $city_id ) {
 
@@ -65,8 +70,8 @@ class GlobalTitle extends Title {
     /**
 	 * Create a new Title for the Main Page
 	 *
-	 * @param int city_id
-	 * @return Title the new object
+	 * @param int $city_id
+	 * @return GlobalTitle the new object
 	 */
 	public static function newMainPage( $city_id ) {
 		// sure hope this redirects for the most part
@@ -76,6 +81,8 @@ class GlobalTitle extends Title {
 
 	/**
 	 * static constructor, Create new Title from id of page
+	 *
+	 * @return GlobalTitle
 	 */
 	public static function newFromId( $id, $city_id, $dbname = "" ) {
 		global $wgMemc;
@@ -110,6 +117,9 @@ class GlobalTitle extends Title {
 		return $title;
 	}
 
+	/**
+	 * @return GlobalTitle
+	 */
 	public static function newFromTextCached( $text, $namespace, $city_id ) {
 		if ( !isset( self::$cachedObjects[$city_id][$namespace][$text] ) ) {
 			self::$cachedObjects[$city_id][$namespace][$text] =
@@ -150,7 +160,7 @@ class GlobalTitle extends Title {
 	/**
 	 * Get a database connection to this object database
 	 *
-	 * @param $type Master or slave constants
+	 * @param $type integer Master or slave constants
 	 * @param $groups array Query group
 	 * @return DatabaseBase
 	 */
@@ -182,6 +192,35 @@ class GlobalTitle extends Title {
 	}
 
 	/**
+	 * Prefix some arbitrary text with the namespace or interwiki prefix
+	 * of this object
+	 *
+	 * @param $name String the text
+	 * @return String the prefixed text
+	 * @private
+	 */
+	private function prefix( $name ) {
+		$p = '';
+
+		if ( 0 != $this->mNamespace ) {
+			$p .= $this->getNsText() . ':';
+		}
+		return $p . $name;
+	}
+
+	/**
+	 * Get the prefixed database key form
+	 *
+	 * @return String the prefixed title, with underscores and
+	 *  any interwiki and namespace prefixes
+	 */
+	public function getPrefixedDBkey() {
+		$s = $this->prefix( $this->mDbkeyform );
+		$s = str_replace( ' ', '_', $s );
+		return $s;
+	}
+
+	/**
 	 * Get the text form (spaces not underscores of the title with namespace
 	 * @return string
 	 * @author tor
@@ -195,6 +234,15 @@ class GlobalTitle extends Title {
 		} else {
 			return $ns . ':' . $text;
 		}
+	}
+
+	/**
+	 * Get the namespace index, i.e. one of the NS_xxxx constants.
+	 *
+	 * @return Integer: Namespace index
+	 */
+	public function getNamespace() {
+		return $this->mNamespace;
 	}
 
 	public function getCityId() {
@@ -689,10 +737,9 @@ class GlobalTitle extends Title {
 	 *
 	 * Determine wgContLang value from WikiFactory variables
 	 *
-	 * @return Lang object
+	 * @return Language
 	 */
 	private function loadContLang() {
-
 		/**
 		 * don't do this twice
 		 */
@@ -819,5 +866,42 @@ class GlobalTitle extends Title {
 			),
 			3600
 		);
+	}
+
+	/**
+	 * Get a list of URLs to purge from the Squid cache when this
+	 * page changes
+	 *
+	 * @return Array of String the URLs
+	 */
+	public function getSquidURLs() {
+		global $wgContLang;
+
+		$urls = array(
+			$this->getInternalURL(),
+			$this->getInternalURL( 'action=history' )
+		);
+
+		// purge variant urls as well
+		if ( $wgContLang->hasVariants() ) {
+			$variants = $wgContLang->getVariants();
+			foreach ( $variants as $vCode ) {
+				$urls[] = $this->getInternalURL( '', $vCode );
+			}
+		}
+
+		return $urls;
+	}
+
+	/**
+	 * Purge all applicable Squid URLs
+	 */
+	public function purgeSquid() {
+		global $wgUseSquid;
+		if ( $wgUseSquid ) {
+			$urls = $this->getSquidURLs();
+			$u = new SquidUpdate( $urls );
+			$u->doUpdate();
+		}
 	}
 }
