@@ -10,12 +10,12 @@ describe('AdConfig2', function(){
 			, logMock = function() {}
 			, windowMock = {}
 			, documentMock = {}
-			, adLogicPageDimensionsMock = {isApplicable: function() {return false;}}
+			, adDecoratorPageDimensionsMock = {isApplicable: function() {return false;}}
 			, abTestMock = {inGroup: function() {return false;}}
 			, adConfig;
 
 		adConfig = AdConfig2(
-			logMock, windowMock, documentMock, geoMock, adLogicPageDimensionsMock, abTestMock
+			logMock, windowMock, documentMock, geoMock, adDecoratorPageDimensionsMock, abTestMock
 
 			// AdProviders
 			, adProviderGptMock
@@ -38,14 +38,14 @@ describe('AdConfig2', function(){
 			, logMock = function() {}
 			, windowMock = {wgHighValueCountries: {'hi-value-country': true, 'another-hi-value-country': true}}
 			, documentMock = {}
-			, adLogicPageDimensionsMock = {isApplicable: function() {return false;}}
+			, adDecoratorPageDimensionsMock = {isApplicable: function() {return false;}}
 			, abTestMock = {inGroup: function() {return false;}}
 			, adConfig
 			, highValueSlot = 'TOP_LEADERBOARD'
 			;
 
 		adConfig = AdConfig2(
-			logMock, windowMock, documentMock, geoMock, adLogicPageDimensionsMock, abTestMock
+			logMock, windowMock, documentMock, geoMock, adDecoratorPageDimensionsMock, abTestMock
 
 			// AdProviders
 			, adProviderGptMock
@@ -70,12 +70,12 @@ describe('AdConfig2', function(){
 			, logMock = function() {}
 			, windowMock = {}
 			, documentMock = {}
-			, adLogicPageDimensionsMock = {isApplicable: function() {return false;}}
+			, adDecoratorPageDimensionsMock = {isApplicable: function() {return false;}}
 			, abTestMock = {inGroup: function() {return false;}}
 			, adConfig;
 
 		adConfig = AdConfig2(
-			logMock, windowMock, documentMock, geoMockAU, adLogicPageDimensionsMock, abTestMock
+			logMock, windowMock, documentMock, geoMockAU, adDecoratorPageDimensionsMock, abTestMock
 
 			// AdProviders
 			, adProviderGptMock
@@ -98,12 +98,12 @@ describe('AdConfig2', function(){
 			, logMock = function() {}
 			, windowMock = {}
 			, documentMock = {}
-			, adLogicPageDimensionsMock = {isApplicable: function() {return false;}}
+			, adDecoratorPageDimensionsMock = {isApplicable: function() {return false;}}
 			, abTestMock = {inGroup: function() {return false;}}
 			, adConfig;
 
 		adConfig = AdConfig2(
-			logMock, windowMock, documentMock, geoMock, adLogicPageDimensionsMock, abTestMock
+			logMock, windowMock, documentMock, geoMock, adDecoratorPageDimensionsMock, abTestMock
 
 			// AdProviders
 			, adProviderGptMock
@@ -126,12 +126,12 @@ describe('AdConfig2', function(){
 			, logMock = function() {}
 			, windowMock = {}
 			, documentMock = {}
-			, adLogicPageDimensionsMock = {isApplicable: function() {return false;}}
+			, adDecoratorPageDimensionsMock = {isApplicable: function() {return false;}}
 			, abTestMock = {inGroup: function() {return false;}}
 			, adConfig;
 
 		adConfig = AdConfig2(
-			logMock, windowMock, documentMock, geoMock, adLogicPageDimensionsMock, abTestMock
+			logMock, windowMock, documentMock, geoMock, adDecoratorPageDimensionsMock, abTestMock
 
 			// AdProviders
 			, adProviderGptMock
@@ -154,12 +154,12 @@ describe('AdConfig2', function(){
 			, logMock = function() {}
 			, windowMock = {wgContentLanguage: 'de'}
 			, documentMock = {}
-			, adLogicPageDimensionsMock = {isApplicable: function() {return false;}}
+			, adDecoratorPageDimensionsMock = {isApplicable: function() {return false;}}
 			, abTestMock = {inGroup: function() {return false;}}
 			, adConfig;
 
 		adConfig = AdConfig2(
-			logMock, windowMock, documentMock, geoMock, adLogicPageDimensionsMock, abTestMock
+			logMock, windowMock, documentMock, geoMock, adDecoratorPageDimensionsMock, abTestMock
 
 			// AdProviders
 			, adProviderGptMock
@@ -184,13 +184,13 @@ describe('AdConfig2', function(){
 			, logMock = function() {}
 			, windowMock = {wgContentLanguage: 'de'}
 			, documentMock = {}
-			, adLogicPageDimensionsMock = {isApplicable: function() {return false;}}
+			, adDecoratorPageDimensionsMock = {isApplicable: function() {return false;}}
 			, abTestMock = {inGroup: function() {return false;}}
 			, adConfig;
 
 		// First see if evolve is used for given configuration when GamePro refuses
 		adConfig = AdConfig2(
-			logMock, windowMock, documentMock, geoMock, adLogicPageDimensionsMock, abTestMock
+			logMock, windowMock, documentMock, geoMock, adDecoratorPageDimensionsMock, abTestMock
 
 			// AdProviders
 			, adProviderGptMock
@@ -202,7 +202,7 @@ describe('AdConfig2', function(){
 		expect(adConfig.getProvider(['TOP_LEADERBOARD'])).toBe(adProviderEvolveMock, 'adProviderEvolveMock TOP_LEADERBOARD');
 
 		adConfig = AdConfig2(
-			logMock, windowMock, documentMock, geoMock, adLogicPageDimensionsMock, abTestMock
+			logMock, windowMock, documentMock, geoMock, adDecoratorPageDimensionsMock, abTestMock
 
 			// AdProviders
 			, adProviderGptMock
@@ -212,64 +212,5 @@ describe('AdConfig2', function(){
 			, adProviderNullMock
 		);
 		expect(adConfig.getProvider(['TOP_LEADERBOARD'])).toBe(adProviderGameProMock, 'adProviderGameProMock TOP_LEADERBOARD');
-	});
-
-	it('getProvider calls adLogicPageDimensionsMock.isApplicable with proper slot name', function() {
-		var adProviderNullMock = {name: 'NullMock'}
-			, adProviderGameProMock = {name: 'GameProMock', canHandleSlot: function() {return true;}}
-			, adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function() {return false;}}
-			, adProviderGptMock = {name:'GptMock'}
-			, adProviderLaterMock = {name: 'LaterMock'}
-			, geoMock = {getCountryCode:function() {}}
-			, logMock = function() {}
-			, windowMock = {}
-			, documentMock = {}
-			, adLogicPageDimensionsCalledWithSlot
-			, adLogicPageDimensionsMock = {isApplicable: function(slot) {adLogicPageDimensionsCalledWithSlot = slot;}}
-			, abTestMock = {inGroup: function() {return false;}}
-			, adConfig;
-
-		adConfig = AdConfig2(
-			logMock, windowMock, documentMock, geoMock, adLogicPageDimensionsMock, abTestMock
-
-			// AdProviders
-			, adProviderGptMock
-			, adProviderEvolveMock
-			, adProviderGameProMock
-			, adProviderLaterMock
-			, adProviderNullMock
-		);
-
-		adConfig.getProvider(['foo']);
-		expect(adLogicPageDimensionsCalledWithSlot).toEqual(['foo']);
-	});
-
-	it('getProvider returns WindowSizeProviderProxy if AdLogicPageDimensions say so', function() {
-		var adProviderNullMock = {name: 'NullMock'}
-			, adProviderProxyMock = {name: 'WindowSizeProviderProxyMock'}
-			, adProviderGameProMock = {name: 'GameProMock', canHandleSlot: function() {return true;}}
-			, adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function() {return false;}}
-			, adProviderGptMock = {name:'GptMock'}
-			, adProviderLaterMock = {name: 'LaterMock'}
-			, geoMock = {getCountryCode:function() {}}
-			, logMock = function() {}
-			, windowMock = {}
-			, documentMock = {}
-			, adLogicPageDimensionsMock = {isApplicable: function() {return true;}, getProxy: function() {return adProviderProxyMock;}}
-			, abTestMock = {inGroup: function() {return false;}}
-			, adConfig;
-
-		adConfig = AdConfig2(
-			logMock, windowMock, documentMock, geoMock, adLogicPageDimensionsMock, abTestMock
-
-			// AdProviders
-			, adProviderGptMock
-			, adProviderEvolveMock
-			, adProviderGameProMock
-			, adProviderLaterMock
-			, adProviderNullMock
-		);
-
-		expect(adConfig.getProvider(['foo'])).toBe(adProviderProxyMock);
 	});
 });

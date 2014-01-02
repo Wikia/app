@@ -53,6 +53,7 @@ $config['adengine2_js'] = array(
 		'//extensions/wikia/AdEngine/js/SlotTweaker.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.js',
 		'//extensions/wikia/AdEngine/js/AdTracker.js',
+		'//extensions/wikia/AdEngine/js/SlotTracker.js',
 
 		// ad related and depending on scriptwriter (gw+ps)
 		// analytics group would be optimal but would require bumping gw+ps much higher on the page
@@ -78,6 +79,7 @@ $config['adengine2_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdLogicPageLevelParams.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageLevelParamsLegacy.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageDimensions.js',
+		'//extensions/wikia/AdEngine/js/AdDecoratorPageDimensions.js',
 		'//extensions/wikia/AdEngine/js/AdConfig2.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.run.js',
 
@@ -97,7 +99,7 @@ $config['oasis_ads_js'] = array(
 		// adengine2 low prio
 		// @requires adengine2 core already loaded
 		// @requires liftium loaded later (TODO FIXME)
-		'//extensions/wikia/AdEngine/js/AdProviderLiftium2Dom.js',
+		'//extensions/wikia/AdEngine/js/AdProviderLiftium.js',
 		'//extensions/wikia/AdEngine/js/AdProviderSevenOneMedia.js',
 		'//extensions/wikia/AdEngine/js/AdConfig2Late.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.configLateAds.js',
