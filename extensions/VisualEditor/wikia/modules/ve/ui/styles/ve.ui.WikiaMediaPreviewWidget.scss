@@ -1,3 +1,4 @@
+@import "skins/oasis/css/core/layout";
 @import "skins/oasis/css/mixins/background-opacity";
 @import "mixins/ve-icon";
 
@@ -8,17 +9,22 @@
 	position: fixed;
 	right: 0;
 	top: 0;
-	z-index: 20000000;
+	z-index: $zTop;
 
-	.ve-ui-wikiaMediaPreviewWidget-closeButton {
-		float: right;
-		margin: 10px;
-	}
-	.ve-ui-wikiaMediaPreviewWidget-title {
-		color: white;
-		font-size: 20px;
+	.ve-ui-wikiaMediaPreviewWidget-titlebar {
+		background: #000;
+		border: 1px solid #333;
+		color: #DDD;
+		font-size: 14px;
 		font-weight: normal;
-		margin: 10px;
+		padding: 9px 35px 9px 10px;
+		position: relative;
+
+		.ve-ui-wikiaMediaPreviewWidget-closeButton {
+			position: absolute;
+			right: 3px;
+			top: 3px;
+		}
 	}
 	.ve-ui-wikiaMediaPreviewWidget-image, .ve-ui-wikiaMediaPreviewWidget-videoWrapper {
 		bottom: 1em;
@@ -29,12 +35,15 @@
 		right: 0;
 		top: 1em;
 	}
+	.ve-ui-wikiaMediaPreviewWidget-image, .ve-ui-wikiaMediaPreviewWidget-videoWrapper iframe {
+		border: 2px solid #CCC;
+	}
 	.ve-ui-wikiaMediaPreviewWidget-videoWrapper {
 		// this is an approximate height.  Once we have exact heights, we can update this in the JS. (VID-885)
 		height: 500px;
 		width: 728px;
 	}
 	.ve-ui-icon-close {
-		@include ve-icon(close, ve, #000);
+		@include ve-icon( close, ve, #000 );
 	}
 }

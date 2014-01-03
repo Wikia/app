@@ -19,19 +19,20 @@ ve.ui.WikiaMediaPreviewWidget = function VeUiWikiaMediaPreviewWidget( model ) {
 		'icon': 'close'
 	} );
 
-	this.title = this.$$( '<div>' )
+	this.$titlebar = this.$$( '<div>' )
 		.text( this.model.title )
-		.addClass( 've-ui-wikiaMediaPreviewWidget-title' )
-		.prependTo( this.$ );
+		.addClass( 've-ui-wikiaMediaPreviewWidget-titlebar' );
 
 	// Events
 	this.closeButton.connect( this, { 'click': 'onCloseClick' } );
 	this.$.on( 'click', ve.bind( this.onCloseClick, this ) );
 
-	// DOM
+	// Initialization
 	this.closeButton.$
 		.addClass( 've-ui-wikiaMediaPreviewWidget-closeButton' )
-		.prependTo( this.$ );
+		.prependTo( this.$titlebar );
+
+	this.$titlebar.appendTo( this.$ );
 
 	this.$.addClass( 've-ui-wikiaMediaPreviewWidget-overlay' )
 		.hide()
