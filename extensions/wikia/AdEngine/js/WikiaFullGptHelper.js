@@ -13,7 +13,7 @@ var WikiaFullGptHelper = function (log, window, document, adLogicPageLevelParams
 		dataAttribs = {},
 		googletag;
 
-	pageLevelParams.src = 'gpt';
+	pageLevelParams.src = 'mobile';
 
 	function init(paramSlotMap) {
 		slotMap = paramSlotMap;
