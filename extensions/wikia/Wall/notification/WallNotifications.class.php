@@ -55,7 +55,7 @@ class WallNotifications {
 		$unread = array();
 
 		// walk through list of ids
-		// @$listval is unique_id field from DB
+		// $listval is unique_id field from wall_notification table in DB
 		foreach(array_reverse($list['notification']) as $listval) {
 			if(!empty($listval)) {
 				if(!$countonly) {
