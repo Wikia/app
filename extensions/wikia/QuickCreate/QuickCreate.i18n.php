@@ -363,5 +363,5 @@ $messages['vi'] = array(
  */
 $messages['zh-hans'] = array(
 	'quickcreate-desc' => '添加“创建新页面”按钮，要求匿名用户登录编辑。',
-	'quickcreate' => '提交您的菜谱',
+	'quickcreate' => '提交您的方案',
 );

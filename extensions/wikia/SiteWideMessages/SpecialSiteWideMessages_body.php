@@ -1230,14 +1230,6 @@ class SiteWideMessages extends SpecialPage {
 		// Keep a copy of these around to return if necessary
 		$unformatted = $tmpMsg;
 
-		//isset - fix for RT#48187
-		$tmpMsg = array_filter($tmpMsg, create_function('$row', 'return !isset($row["status"]) || $row["status"] == 0;'));
-		if (count($tmpMsg) && !wfReadOnly()) {
-			//purge browser cache
-			$user->invalidateCache();
-			wfDebug(basename(__FILE__) . ' || ' . __METHOD__ . " || userID=$userID, result=" . ($dbResult ? 'true':'false') . "\n");
-		}
-
 		if ($countDisplayed) {
 			//purge the cache
 			$key = 'wikia:talk_messages:' . $userID . ':' . str_replace(' ', '_', $user->getName());

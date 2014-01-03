@@ -524,13 +524,14 @@ $messages['mn'] = array(
 
 /** Malay (Bahasa Melayu)
  * @author Anakmalaysia
+ * @author SNN95
  */
 $messages['ms'] = array(
-	'wva-success' => 'Laman video $1 berjaya dibuka.', # Fuzzy
-	'wva-success-replaced' => 'Laman video $1 berjaya diganti.', # Fuzzy
+	'wva-success' => 'Laman video [[:$1]] berjaya ditambah.',
+	'wva-success-replaced' => 'Laman video [[:$1]] berjaya diganti.',
 	'wva-failure' => 'Sila nyatakan parameter yang sah.',
-	'wva-name' => 'Isikan nama:', # Fuzzy
-	'wva-url' => 'Isikan URL:', # Fuzzy
+	'wva-name' => 'Nama video:',
+	'wva-url' => 'URL video:',
 	'wva-add' => 'Tambahkan',
 	'wva-title' => 'Tambahkan video dengan segera dari URL',
 	'wva-notlogged' => 'Anda perlu log masuk atau berdaftar untuk menyisipkan video.',

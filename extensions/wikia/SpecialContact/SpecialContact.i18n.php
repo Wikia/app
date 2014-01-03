@@ -562,6 +562,17 @@ $messages['lb'] = array(
 	'specialcontact-submitcomplete' => 'Merci datt dir Wikia kontaktéiert hutt.',
 );
 
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'specialcontact-wikiname' => 'کوم ویکی',
+	'specialcontact-realname' => 'نومتو',
+	'specialcontact-yourmail' => 'نشونی ايميل',
+	'specialcontact-problemdesc' => 'پيغوم',
+	'specialcontact-notyou' => 'شما نه؟',
+);
+
 /** Macedonian (македонски)
  * @author Bjankuloski06
  */

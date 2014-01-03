@@ -204,6 +204,13 @@ $messages['lb'] = array(
 	'minieditor-reply' => 'Äntwerten',
 );
 
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'minieditor-reply' => 'جؤاو ده ئن',
+);
+
 /** Macedonian (македонски)
  * @author Bjankuloski06
  */

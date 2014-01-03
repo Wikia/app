@@ -1147,6 +1147,7 @@ Alternativament, pot fer clic " $2 " per veure la pàgina en la seva forma d\'ac
 $messages['ce'] = array(
 	'wikiaPhotoGallery-error-user-rights' => 'Декъашхочун тӀекхачаре бакъона гӀалат.',
 	'wikiaPhotoGallery-upload-findbutton' => 'Каро',
+	'wikiaPhotoGallery-upload-error-conflict-insert' => 'Чуйилла',
 	'wikiaPhotoGallery-preview-saving-title' => 'ДӀадоьду Ӏалашяр',
 	'wikiaPhotoGallery-slideshow-view-link-overlay' => 'Дехьа гӀо $1',
 );
@@ -2268,7 +2269,7 @@ $messages['gl'] = array(
 Actualice a páxina e inténteo de novo.',
 	'wikiaPhotoGallery-error-wrong-title' => 'Non hai ningún título para o identificador de artigo especificado',
 	'wikiaPhotoGallery-error-user-rights' => 'Erro de dereitos de usuario.',
-	'wikiaPhotoGallery-upload-title' => 'Atopar e subir a imaxe',
+	'wikiaPhotoGallery-upload-title' => 'Atopar e subir unha imaxe',
 	'wikiaPhotoGallery-upload-info-choose-list' => "'''OU''' escolla:",
 	'wikiaPhotoGallery-upload-info-images-label' => 'imaxes desta páxina',
 	'wikiaPhotoGallery-upload-info-upload' => "'''Ou''' sube unha imaxe desde o teu ordenador",
@@ -2405,10 +2406,10 @@ Como alternativa, pode premer en "$2" para ollar a páxina actualizada.',
 	'wikiaPhotoGallery-sliderpreview-addphoto' => 'Engadir unha foto',
 	'wikiaPhotoGallery-sliderpreview-title' => 'Construtor de presentacións de diapositivas',
 	'wikiaPhotoGallery-upload-title-slideshow' => 'Construtor de presentacións de diapositivas: Atopar e subir unha foto',
-	'wikiaPhotoGallery-upload-title-gallery' => 'Construtor de galerías: Atopar e cargar unha foto',
+	'wikiaPhotoGallery-upload-title-gallery' => 'Construtor de galerías: Atopar e subir unha foto',
 	'wikiaPhotoGallery-upload-title-slider' => 'Construtor de presentacións de diapositivas: Atopar e subir unha foto',
 	'wikiaPhotoGallery-upload-uploadtitle' => 'Cargar',
-	'wikiaPhotoGallery-upload-uploadtext' => "'''Ou''' sube unha imaxe desde o seu ordenador",
+	'wikiaPhotoGallery-upload-uploadtext' => "'''Ou''' sube unha foto desde o teu ordenador",
 	'wikiaPhotoGallery-upload-uploadbutton' => 'Subir a foto',
 	'wikiaPhotoGallery-upload-existingtext' => "'''Ou''' prema para elixir fotos de:",
 	'wikiaPhotoGallery-upload-existingtext-onarticle' => 'esta páxina',
@@ -3325,6 +3326,7 @@ $messages['ja'] = array(
 );
 
 /** Kannada (ಕನ್ನಡ)
+ * @author Dimension10
  * @author VASANTH S.N.
  */
 $messages['kn'] = array(
@@ -3332,7 +3334,8 @@ $messages['kn'] = array(
 	'wikiaPhotoGallery-error-caption' => 'ದೋಷ',
 	'wikiaPhotoGallery-upload-findtitle' => 'ಹುಡುಕು',
 	'wikiaPhotoGallery-upload-findbutton' => 'ಹುಡುಕು',
-	'wikiaPhotoGallery-upload-error-filename-incorrect' => 'ಫೈಲಿನ ಹೆಸರು "$1" ಶೀರ್ಷಿಕೆಗಳಲ್ಲಿ ನಿಷಿದ್ಧವಾಗಿರುವ ಚಿಹ್ನೆಗಳನ್ನು ಹೊಂದಿದೆ.ದಯವಿಟ್ಟು ಫೈಲಿನ ಹೆಸರನ್ನು ಬದಲಾಯಿಸಿ ಮತ್ತೆ ಅಪ್ಲೋಡ್ ಮಾಡಲು ಪ್ರಯತ್ನಿಸಿ.', # Fuzzy
+	'wikiaPhotoGallery-upload-error-filename-incorrect' => 'ಈ ಫೈಲ್ ಇನ ಹೆಸರಲ್ಲಿ ಅಕ್ರಮ ಅಕ್ಷರಗಳು ಉನ್ತು. 
+ದೈವಿಟ್ಟು ಫೈಲ್ ಇನ ಹೆಸರನ್ನ ಬದಲಾಯಿಸಿ ಪುನಃ ಪ್ರಯತ್ನ ಮಾದಿ.',
 	'wikiaPhotoGallery-preview-hover-delete' => 'ಅಳಿಸಿ',
 	'wikiaPhotoGallery-preview-position-left' => 'ಎಡ',
 	'wikiaPhotoGallery-preview-position-right' => 'ಬಲ',
@@ -4168,7 +4171,7 @@ $messages['nl'] = array(
 	'wikiaPhotoGallery-edit-summary' => 'Galerij bewerken',
 	'wikiaPhotoGallery-error-caption' => 'Fout',
 	'wikiaPhotoGallery-error-outdated' => 'Deze galerij is bewerkt terwijl u de pagina aan het bekijken was.
-Ververs de pagina en probeer het opnieuw.',
+Vernieuw de pagina en probeer het opnieuw.',
 	'wikiaPhotoGallery-error-wrong-title' => 'Er bestaat geen naam voor het opgegeven paginanummer',
 	'wikiaPhotoGallery-error-user-rights' => 'Fout in de gebruikersrechten.',
 	'wikiaPhotoGallery-upload-title' => 'Foto kiezen en uploaden',
@@ -4341,7 +4344,7 @@ Als dit bestand wordt aangeklikt, ga dan naar de opgegeven pagina.",
 $messages['nl-informal'] = array(
 	'wikiaPhotoGallery-edit-abort' => 'De wijziging die je probeerde te maken is afgebroken door een uitbreidingshook',
 	'wikiaPhotoGallery-error-outdated' => 'Deze galerij is bewerkt terwijl je de pagina aan het bekijken was.
-Ververs de pagina en probeer het opnieuw.',
+Vernieuw de pagina en probeer het opnieuw.',
 	'wikiaPhotoGallery-upload-info-upload' => 'Upload een bestand van je computer',
 	'wikiaPhotoGallery-upload-error-title' => 'Je upload is mislukt',
 	'wikiaPhotoGallery-upload-error-readonly' => 'Je kunt geen bestanden uploaden.
@@ -6259,7 +6262,7 @@ $messages['uk'] = array(
 	'wikiaPhotoGallery-sliderpreview-title' => 'Будівник повзунка',
 	'wikiaPhotoGallery-upload-title-slideshow' => 'Конструктор слайд-шоу — Пошук і завантаження фото',
 	'wikiaPhotoGallery-upload-title-gallery' => 'Конструктор галереї — Пошук і завантаження фото',
-	'wikiaPhotoGallery-upload-title-slider' => 'Будівник повзунка - пошук і завантаження фото',
+	'wikiaPhotoGallery-upload-title-slider' => 'Конструктор слайдерів — Пошук і завантаження фото',
 	'wikiaPhotoGallery-upload-uploadtitle' => 'Знайти фото',
 	'wikiaPhotoGallery-upload-uploadtext' => "Завантажте фото зі свого комп'ютера",
 	'wikiaPhotoGallery-upload-uploadbutton' => 'Завантажити фото',

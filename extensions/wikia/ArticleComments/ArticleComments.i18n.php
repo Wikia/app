@@ -140,6 +140,7 @@ $messages['af'] = array(
 	'article-comments-anonymous' => 'Anonieme gebruiker',
 	'article-comments-comments' => 'Opmerkings ($1)',
 	'article-comments-post' => 'Pos kommentaar',
+	'article-comments-cancel' => 'Kanselleer',
 	'article-comments-delete' => 'skrap',
 	'article-comments-edit' => 'wysig',
 	'article-comments-history' => 'geskiedenis',
@@ -619,6 +620,7 @@ ___________________________________________
 $messages['ce'] = array(
 	'article-comments-cancel' => 'Цаоьшу',
 	'article-comments-delete' => 'дӀаяккха',
+	'article-comments-history' => 'истори',
 );
 
 /** Sorani Kurdish (کوردی)
@@ -1823,6 +1825,71 @@ $messages['km'] = array(
 	'article-comments-next-page' => 'បន្ទាប់',
 );
 
+/** Kannada (ಕನ್ನಡ)
+ * @author Dimension10
+ */
+$messages['kn'] = array(
+	'article-comments-file-page' => "<a href='$3'>$4</a> ಅಲ್ಲಿ <a href='$1'>$2 ಇಂದ ಟಿಪ್ಪಣಿ</a>",
+	'article-blog-comments-file-page' => "<a href='$5'>$6 ಇನ </a> ಬ್ಲಾಗ್ ಅಲ್ಲಿ <a href='$3'>$4</a> ಪೋಸ್ಟ್ ಮೇಲೆ <a href='$1'>$2 ಇಂದ ಟಿಪ್ಪಣಿ</a>",
+	'article-comments-anonymous' => 'ಅನಾಮಿಕ ಸದಸ್ಯ',
+	'article-comments-comments' => 'ಟಿಪ್ಪಣಿಗಳು ($1)',
+	'article-comments-post' => 'ಟಿಪ್ಪಣಿ ಹಾಕಿ',
+	'article-comments-cancel' => 'ರದ್ದು ಮಾಡು',
+	'article-comments-delete' => 'ಅಳಿಸಿ',
+	'article-comments-edit' => 'ಸಂಪಾದಿಸಿ',
+	'article-comments-history' => 'ಇತಿಹಾಸ',
+	'article-comments-error' => 'ಟಿಪ್ಪಣಿ ಅನ್ನು ಉಳಿಸಲಿಕ್ಕೆ ಆಗಲಿಲ್ಲ',
+	'article-comments-undeleted-comment' => '$1 ಬ್ಲಾಗ್ ಪುಟ ಇಗೆ ಟಿಪ್ಪಣಿ ಇನ ಅಳಿಸುದನ್ನ ರದ್ದು ಮಾಡಿದು',
+	'article-comments-rc-comment' => 'ಪುಟಕ್ಕೆ ತಿಪನ್ನಿ (<span class="plainlinks">[$1 $2]</span>)',
+	'article-comments-rc-comments' => 'ಪುಟಕ್ಕೆ ತಿಪನ್ನಿಗಳು ([[$1]])',
+	'article-comments-fblogin' => 'ಈ ವಿಕಿಗೆ ಟಿಪ್ಪಣಿ ಹಾಕಲಿಕ್ಕೆ ದೈವಿತ್ತು <a href="$1" rel="nofollow">ಲಾಗ್ ಇನ್ ಮಾಡಿಕೊಂಡು ಫೇಸ್ಬುಕ್ ಒಟ್ಟಿಗೆ ಕನೆಕ್ಟ್ ಮಾಡಿ</a>!',
+	'article-comments-fbconnect' => 'ದೈವಿತ್ತು ಟಿಪ್ಪಣಿ ಹಾಕಲಿಕ್ಕೆ <a href="$1">ಈ ಖಾತೆ ವನ್ನು ಫೇಸ್ಬುಕ್ ಒಟ್ಟಿಗೆ ಕನೆಕ್ಟ್ ಮಾಡಿ</a>!',
+	'article-comments-rc-blog-comment' => 'ಬ್ಲಾಗ್ ಇಗೆ  ಟಿಪ್ಪಣಿ (<span class="plainlinks">[$1 $2]</span>)',
+	'article-comments-rc-blog-comments' => 'ಬ್ಲಾಗ್ ಇಗೆ  ಟಿಪ್ಪಣಿ ([[$1]])',
+	'article-comments-login' => 'ದೈವಿತ್ತು ಈ ವಿಕಿಗೆ ಟಿಪ್ಪಣಿ ಹಾಕಲಿಕ್ಕೆ <a href="$1">ಲಾಗ್ ಇನ್</a> ಮಾಡಿ.',
+	'article-comments-toc-item' => 'ಟಿಪ್ಪಣಿಗಳು',
+	'article-comments-comment-cannot-add' => 'ನಿಮಗೆ ಈ ಪುಟಕ್ಕೆ ಟಿಪ್ಪಣಿ ಹಾಕಲಿಕ್ಕೆ ಆಗುದಿಲ್ಲ.',
+	'article-comments-vote' => 'ಉಪ್ವೊಟ್',
+	'article-comments-reply' => 'ಉತ್ತರ ಕೊಡು',
+	'article-comments-show-all' => 'ಯಲ್ಲವೂ ಟಿಪ್ಪಣಿಗಳನ್ನ ತೋರಿಸು',
+	'article-comments-prev-page' => 'ಮೊದ್ದಲಿದು',
+	'article-comments-next-page' => 'ಆದಮೆಲಿದು',
+	'article-comments-page-spacer' => '&#160...&#160',
+	'article-comments-delete-reason' => 'ಅಭಿಭಾವಕ ಟಿಪ್ಪಣಿ ಅಥವಿ ಪುಟ ನಷ್ಟ ಆಗಿ ಹೋಗಿದೆ',
+	'article-comments-empty-comment' => "ಕಾಳಿ ಟಿಪ್ಪಣಿ ಹಾಕಲ್ಕ್ಕೆ ಇಲ್ಲ! <a href='$1'>ಅದರ ಬೋದ್ದಳು ಅದನ್ನ ಅಳಿಸುತೀರ?</a>",
+	'wikiamobile-article-comments-header' => 'ಟಿಪ್ಪಣಿಗಳು',
+	'wikiamobile-article-comments-more' => 'ಇನ್ನೂ ತೋರಿಸಿ',
+	'wikiamobile-article-comments-prev' => 'ಮೊದಲಿದ್ದು ತೋರಿಸಿ',
+	'wikiamobile-article-comments-none' => 'ಒಂದು ಟಿಪ್ಪಣಿ ಇಲ್ಲ',
+	'wikiamobile-article-comments-view' => 'ಉತ್ತರಗಳನ್ನ ನೋಡಿ',
+	'wikiamobile-article-comments-replies' => 'ಉತ್ತರಗಳು',
+	'wikiamobile-article-comments-post-reply' => 'ಉತ್ತರ ಕೊಡಿ!',
+	'wikiamobile-article-comments-post' => 'ಪೋಸ್ಟ್ ಮಡಿ',
+	'wikiamobile-article-comments-placeholder' => 'ಒಂದು ಟಿಪ್ಪಣಿ ಹಾಕಿ',
+	'wikiamobile-article-comments-login-post' => 'ದೈವಿತ್ತು ಟಿಪ್ಪಣಿ ಹಾಕಲಿಕ್ಕೆ ಲಾಗ್ ಇನ್ ಆಗಿ.',
+	'wikiamobile-article-comments-post-fail' => 'ಟಿಪ್ಪಣಿ ವನ್ನು ಉಳಿಸಲಿಕ್ಕೆ ಆಗಲಿಲ್ಲ. ದೈವಿತ್ತು ಸ್ವಲ್ಪ ಹೊತ್ತು ಆದಮೇಲೆ ಪ್ರಯತ್ನ ಮಾದಿ.',
+	'enotif_subject_article_comment' => ' {{SITENAME}}  ಅಲ್ಲಿ $PAGETITLE ಮೇಲೆ   $PAGEEDITOR ಟಿಪ್ಪಣಿ ಹಾಕಿದಾರೆ',
+	'enotif_body_article_comment' => 'ನಮಸ್ಕಾರ $WATCHINGUSERNAME, 
+
+{{SITENAME}} ಅಲ್ಲಿ $PAGETITLE ಮೇಲೆ ಒಂದು ಹೊಸ ಟಿಪ್ಪಣಿ ಉನ್ತು. ಈ ಲಿಂಕ್ ಅಣ್ಣ ಯಲ್ಲವೂ ಟಿಪ್ಪಣಿಗಳ್ಳನ್ನು ನೋಡಲಿಕ್ಕೆ ಉಪಯೋಗ ಮಾಡಿ: $PAGETITLE_URL#WikiaArticleComments  
+
+ವಿಕಿಯದ ಸಮಾಜ ಸಂರಕ್ಷಣ    
+______________________________________________ 
+* ಸಮಾಜ ಕೇಂದ್ರದಲ್ಲಿ ಸಹಾಯತೆ ಮತ್ತು ಸಲಹ ತೆಕ್ಕೊಳ್ಳಿ. http://community.wikia.com             
+* ನಮ್ಮಿಂದ ಕಡಿಮೆ ಪತ್ರಗಳು ಬೆಕ? ಕ್ಯಬರಹ ರದ್ದು ಮಾಡು ಅಥವಾ ನಿಮ್ಮ ಈಮೇಯ್ಲ್ ಅದ್ಯತಗಳನ್ನು ಇಲ್ಲಿ ಬದಲಾಯಿಸು : http://community.wikia.com/Special:Preferences',
+	'enotif_body_article_comment-HTML' => '<p> ನಮಸ್ಕಾರ $WATCHINGUSERNAME,
+ <br /><br /> 
+{{SITENAME}} ಅಲ್ಲಿ  $PAGETITLE ಮೇಲೆ ಒಂದು ಹೊಸ ಟಿಪ್ಪಣಿ ಉಂಟು. ಈ ಲಿಂಕ್ ಅನ್ನು ಉಪಯೋಗ ಮಡಿ: $PAGETITLE_URL#WikiaArticleComments        
+<br /><br /> 
+ - ವಿಕಿಯ ಸಮಾಜ ಸಮರ್ಥನ  
+__________________________      
+<ul>
+<li> ಸಮಾಜ ಕೇಂದ್ರದಲ್ಲಿ ಸಹಯತೆ ಮತ್ತು ಸಲಹಾ ತೆಕೊಳ್ಳಿ : <a href="http://community.wikia.com">http://community.wikia.com</a>.       <li>   
+<li>ನಮ್ಮಿಂದ ಕಡಿಮೆ ಪತ್ರಗಳು ಬೆಕ? ಕ್ಯಬರಹ ರದ್ದು ಮಾಡು ಅಥವಾ ನಿಮ್ಮ ಈಮೇಯ್ಲ್ ಅದ್ಯತಗಳನ್ನು ಇಲ್ಲಿ ಬದಲಾಯಿಸು : <a href="http://community.wikia.com/Special:Preferences">http://community.wikia.com/Special:Preferences</a></li>    
+</ul> 
+</p>',
+);
+
 /** Korean (한국어)
  * @author Cafeinlove
  * @author Hym411
@@ -2003,6 +2070,7 @@ $messages['lrc'] = array(
 	'article-comments-prev-page' => 'دما',
 	'article-comments-next-page' => 'نيا',
 	'article-comments-page-spacer' => '&#160...&#160',
+	'wikiamobile-article-comments-header' => 'نظریا',
 	'wikiamobile-article-comments-more' => 'بيشتر سواركرد كو',
 	'wikiamobile-article-comments-prev' => 'دمایی نه سوار کو',
 	'wikiamobile-article-comments-none' => 'بی نظر',
@@ -2072,12 +2140,70 @@ $messages['lus'] = array(
 
 /** Latvian (latviešu)
  * @author Papuass
+ * @author Sg ghost
  */
 $messages['lv'] = array(
+	'article-comments-file-page' => "<a href='$1'>Komentārs no $2</a> par<a href='$3'>$4</a>",
+	'article-blog-comments-file-page' => "<a href='$1'>Komentārs no $2 </a> , <a href='$3'> $4 </a> post par <a href='$5'>  $6 ir</a> blog",
+	'article-comments-anonymous' => 'Anonīms lietotājs',
+	'article-comments-comments' => 'Komentāri ( $1 )',
+	'article-comments-post' => 'Publicēt komentāru',
 	'article-comments-cancel' => 'Atcelt',
 	'article-comments-delete' => 'dzēst',
 	'article-comments-edit' => 'labot',
 	'article-comments-history' => 'vēsture',
+	'article-comments-error' => 'Komentēt nevar saglabāt',
+	'article-comments-undeleted-comment' => 'Dzēšana komentārs blogu lapā $1',
+	'article-comments-rc-comment' => 'Panta komentārs (<span class="plainlinks">[$1 $2] </span>)',
+	'article-comments-rc-comments' => 'Panta Komentāri ([[$1]])',
+	'article-comments-fblogin' => 'Lūdzu <a href="<span class=" notranslate"="" translate="no">$1" rel ="nofollow"> pieteikties un izveidot savienojumu ar Facebook</a> post komentāru par šo wiki!',
+	'article-comments-fbconnect' => 'Lūdzu <a href="<span class=" notranslate"="" translate="no">$1"> šī konta savienojumu ar Facebook</a> komentārus!',
+	'article-comments-rc-blog-comment' => 'Panta komentārs (<span class="plainlinks">[$1 $2] </span>)',
+	'article-comments-rc-blog-comments' => 'Blog komentārus ([[$1]])',
+	'article-comments-login' => 'Lūdzu <a href="$1">pieteikties</a> post komentāru par šo viki.',
+	'article-comments-toc-item' => 'Komentāri',
+	'article-comments-comment-cannot-add' => 'Nevar pievienot komentāru rakstu.',
+	'article-comments-vote' => 'Balsot līdz',
+	'article-comments-reply' => 'Atbildēt',
+	'article-comments-show-all' => 'Apskatīt visus komentārus',
+	'article-comments-prev-page' => 'Iepr',
+	'article-comments-next-page' => 'Nākamais',
+	'article-comments-page-spacer' => '&#160...&#160',
+	'article-comments-delete-reason' => 'Mātes raksts / mātes komentārs ir izdzēsts.',
+	'article-comments-empty-comment' => "Jūs nevarat ievietot tukšu komentāru. <a href='$1'>Dzēst tā vietā?</a>",
+	'wikiamobile-article-comments-header' => 'Komentāri',
+	'wikiamobile-article-comments-more' => 'Ielādēt vairāk',
+	'wikiamobile-article-comments-prev' => 'Ielādētu iepriekšēja',
+	'wikiamobile-article-comments-none' => 'Nav komentāru',
+	'wikiamobile-article-comments-view' => 'Apskatīt atbildes',
+	'wikiamobile-article-comments-replies' => 'atbildes',
+	'wikiamobile-article-comments-post-reply' => 'Publicēt atbildi',
+	'wikiamobile-article-comments-post' => 'Publicēt',
+	'wikiamobile-article-comments-placeholder' => 'Publicēt komentāru',
+	'wikiamobile-article-comments-login-post' => 'Lūdzu, piesakieties lai ievietotu komentāru.',
+	'wikiamobile-article-comments-post-fail' => 'Neizdevās saglabāt komentāru, lūdzu, mēģiniet vēlreiz vēlāk',
+	'enotif_subject_article_comment' => '$PAGEEDITOR komentēja ir "$PAGETITLE" uz {{SITENAME}}',
+	'enotif_body_article_comment' => 'Hi $WATCHINGUSERNAME,
+
+Nav jaunu komentāru pie $PAGETITLE par {{SITENAME}}. Izmantojiet šīs saites, lai redzētu visus komentāri: $PAGETITLE_URL#WikiaArticleComments
+
+- Vikija Kopienas
+
+ ______________________
+* Atrast palīdzību un konsultācijas par Kopienas Centrālās: http://community.wikia.com
+* Vēlos saņemt mazāk ziņu no mums? Jūs varat atsaukt vai mainīt savu e-pasta preferences šeit: http://community.wikia.com/Special:Preferences',
+	'enotif_body_article_comment-HTML' => '<p>Hi $WATCHINGUSERNAME,
+<br /><br />
+Nav jaunu komentāru pie $PAGETITLE par {{SITENAME}}. Izmantojiet šīs saites, lai redzētu visus komentāri: $PAGETITLE_URL#WikiaArticleComments
+<br /><br />
+- Vikija Kopienas
+<br /><br />
+ ______________________
+<ul>
+<li>Atrast palīdzību un konsultācijas par Kopienas Centrālās: <a href="http://community.wikia.com">http://community.wikia.com</a><li>
+<li>vai Vēlaties saņemt mazāk ziņu no mums? Jūs varat atsaukt vai mainīt savu e-pasta preferences šeit: <a href="http://community.wikia.com/Special:Preferences">http://community.wikia.com/Special:Preferences</a></li>
+</ul>
+</p>',
 );
 
 /** Basa Banyumasan (Basa Banyumasan)
@@ -2262,7 +2388,7 @@ $messages['ms'] = array(
 	'article-comments-delete-reason' => 'Rencana induk / ulasan induk telah dihapuskan.',
 	'article-comments-empty-comment' => "Anda tidak boleh mengirim ulasan kososng. <a href='$1'>Nak padamkan atau tak?</a>",
 	'wikiamobile-article-comments-header' => 'komen',
-	'wikiamobile-article-comments-more' => 'Muatkan lagi',
+	'wikiamobile-article-comments-more' => 'Muatkan yang selanjutnya',
 	'wikiamobile-article-comments-prev' => 'Muatkan yang sebelumnya',
 	'wikiamobile-article-comments-none' => 'Tiada komen',
 	'wikiamobile-article-comments-view' => 'Baca balasan',
@@ -3549,7 +3675,7 @@ $messages['vi'] = array(
 	'article-comments-delete-reason' => 'Bài viết gốc / bình luận gốc đã bị xóa.',
 	'article-comments-empty-comment' => "Bạn không thể đăng một bình luận rỗng. <a href='$1'>Xóa nó thay thế?</a>",
 	'wikiamobile-article-comments-header' => 'Bình luận',
-	'wikiamobile-article-comments-more' => 'Nạp thêm',
+	'wikiamobile-article-comments-more' => 'Tải thêm',
 	'wikiamobile-article-comments-prev' => 'Tải bản trước',
 	'wikiamobile-article-comments-none' => 'Không có bình luận',
 	'wikiamobile-article-comments-view' => 'Xem hồi âm',
@@ -3559,7 +3685,7 @@ $messages['vi'] = array(
 	'wikiamobile-article-comments-placeholder' => 'Viết một bình luận',
 	'wikiamobile-article-comments-login-post' => 'Vui lòng đăng nhập để viết bình luận.',
 	'wikiamobile-article-comments-post-fail' => 'Không thể lưu bình luận, xin vui lòng thử lại sau',
-	'enotif_subject_article_comment' => '$PAGEEDITOR đã bình luận trên "$PAGETITLE" trên {{SITENAME}}',
+	'enotif_subject_article_comment' => '$PAGEEDITOR đã bình luận trang "$PAGETITLE" trên {{SITENAME}}',
 	'enotif_body_article_comment' => 'Xin chào $WATCHINGUSERNAME,
 
 $PAGEEDITOR đã có một bình luận trên trang "$PAGETITLE".

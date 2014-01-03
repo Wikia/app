@@ -326,7 +326,12 @@ $messages['lb'] = array(
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
+	'main-tab-personal' => 'ویکیا مه',
 	'main-tab-search' => 'پی جوری',
+	'tab-discover-loading-message' => 'د حالت سوار كرد',
+	'tab-discover-no-network-dialog-close-button' => 'خوئه',
+	'tab-search-loading-message' => 'د حال پی  جوری',
+	'browser-loading-message' => 'د حالت سوار كرد',
 );
 
 /** Macedonian (македонски)

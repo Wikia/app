@@ -1853,17 +1853,28 @@ $messages['lb'] = array(
  */
 $messages['lrc'] = array(
 	'chat' => 'گپ زئن',
+	'chat-no-login' => 'شما سی چک چنه با وارد سیستم بویئیت',
+	'chat-no-login-text' => 'لطفا سی چک چنه وارد سیستم بویئت',
+	'chat-ban-contributions-heading' => 'جلؤگری د چک چنه',
+	'chat-ban-modal-label-expires' => 'تموم بیه آ',
+	'chat-ban-modal-label-reason' => 'دليل',
 	'chat-log-reason-undo' => 'انجوم ندی ئن',
 	'chat-ban-undolink' => 'انجوم ندی ئن',
 	'chat-ban-modal-button-ok' => 'جلۈ ای كارور بيئر',
 	'chat-ban-modal-button-cancel' => 'رد كردن',
+	'chat-ban-modal-change-ban-label' => 'آلشت بیه سی',
+	'chat-log-reason-banchange' => 'هیژ دلیلی دئه نبیه',
+	'chat-log-reason-banremove' => 'هیژ دلیلی دئه نبیه',
 	'chat-live2' => 'گپ زئن زنه!',
 	'chat-start-a-chat' => 'شرو د گپ زئن',
 	'chat-join-the-chat' => 'اومائن د گپ زئن',
+	'chat-member-since' => 'اندوم د $1',
+	'chat-great-youre-logged-in' => 'عالیه!شما اومایئت د سیستم',
 	'chat-user-menu-talk-page' => 'بلگه چك چنه',
 	'chat-user-menu-contribs' => 'هوميارا',
 	'chat-user-menu-private' => 'هوال خصوصی',
 	'chat-user-menu-kick' => 'حيرد كردن',
+	'chat-user-menu-ban' => 'جلوگری',
 	'chat-status-away' => 'دير',
 );
 
@@ -1924,6 +1935,13 @@ $messages['lt'] = array(
 	'group-chatmoderator' => 'Pokalbių moderatoriai',
 	'group-chatmoderator-member' => 'Pokalbių moderatorius',
 	'chat-browser-is-notsupported' => '	Jūsų naršyklė nepalaiko. Geriausiam patyrimui, naudokitės <a href="http://community.wikia.com/wiki/Help:Supported_browsers">naujesnę naršyklė</a>.',
+);
+
+/** Latvian (latviešu)
+ * @author Sg ghost
+ */
+$messages['lv'] = array(
+	'chat-user-menu-message-wall' => 'Lietotāja diskusija',
 );
 
 /** Macedonian (македонски)
@@ -2255,7 +2273,7 @@ $messages['nl'] = array(
 	'chat-you-were-banned' => 'U bent verbannen door $1.',
 	'chat-user-was-unbanned' => '$2 heeft de ban voor $1 beëindigd.',
 	'chat-ban-cannt-undo' => 'De verbanning is al ongedaan gemaakt',
-	'chat-user-permanently-disconnected' => 'U hebt niet langer een verbinding. Controleer uw internetverbinding en ververs de inhoud van uw webbrowser.',
+	'chat-user-permanently-disconnected' => 'U hebt niet langer een verbinding. Controleer uw internetverbinding en vernieuw de inhoud van uw webbrowser.',
 	'chat-inlinealert-a-made-b-chatmod' => '$1 heeft <strong>$2</strong> chatmoderator gemaakt.',
 	'chat-err-connected-from-another-browser' => 'U bent verbonden via een andere browser. Deze verbinding wordt nu gesloten.',
 	'chat-err-communicating-with-mediawiki' => 'Er is een fout opgetreden in de verbinding met de MediaWiki-server.',
@@ -3434,7 +3452,7 @@ $messages['zh-hans'] = array(
 	'chat-log-reason-banadd' => '在聊天室中打乱',
 	'chat-log-reason-undo' => '还原',
 	'chat-ban-undolink' => '还原',
-	'chat-ban-modal-button-ok' => '封禁该用户',
+	'chat-ban-modal-button-ok' => '禁止此用户',
 	'chat-ban-modal-button-change-ban' => '改变封禁',
 	'chat-ban-modal-button-cancel' => '取消',
 	'chat-ban-modal-change-ban-heading' => '更改此用户的聊天室禁令',

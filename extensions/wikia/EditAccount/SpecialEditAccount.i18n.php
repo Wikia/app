@@ -422,6 +422,13 @@ $messages['ca'] = array(
 	'action-editaccount' => "editar la informació d'altes usuaris",
 );
 
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'editaccount-log-entry-pass' => '$2 декъашхочун пароль хийцина',
+);
+
 /** Czech (čeština)
  * @author Chmee2
  * @author Darth Daron
@@ -442,6 +449,7 @@ $messages['cs'] = array(
 	'editaccount-label-pass' => 'Nastavit nové heslo',
 	'editaccount-label-realname' => 'Nastavit novoé skutečné jméno',
 	'editaccount-label-clearunsub' => 'Odhlášeno',
+	'editaccount-label-toggleadopt' => 'Upravit status osvojitele (pro AutomaticWikiAdopt):',
 	'editaccount-label-toggleadopt-prevent' => 'Zabránit automatickému převzetí',
 	'editaccount-label-toggleadopt-allow' => 'Povolit automatické převzetí',
 	'editaccount-label-reason' => 'Důvod:',
@@ -1273,6 +1281,26 @@ $messages['lb'] = array(
 	'action-editaccount' => 'anere Benotzer hir Informatiounen änneren',
 );
 
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'editaccount' => 'حساونه ویرایشت کو',
+	'editaccount-frame-manage' => 'حساونه ویرایشت کو',
+	'editaccount-frame-usage' => 'نسینی',
+	'editaccount-label-select' => 'یه گل حساو کاروری انتخاو بکید',
+	'editaccount-label-pass' => 'یه گل پاسورد تازه بنیت',
+	'editaccount-label-realname' => 'یه گل نوم راستکی تازه بنیت',
+	'editaccount-label-reason' => 'دليل:',
+	'editaccount-submit-pass' => 'پاسورد ذخیره کو',
+	'editaccount-submit-close' => 'حساو نه به ون',
+	'editaccount-submit-button' => 'ذخيره كردن',
+	'editaccount-status-confirmed' => 'مئکم بیه',
+	'editaccount-status-unconfirmed' => 'مئکم نبیه',
+	'editaccount-status-realuser' => 'کارور راستکی',
+	'editaccount-status-tempuser' => 'کارور موقت',
+);
+
 /** Lithuanian (lietuvių)
  * @author Eitvys200
  * @author Mantak111
@@ -1835,7 +1863,7 @@ $messages['ps'] = array(
 	'editaccount-submit-email' => 'برېښليک خوندي کول',
 	'editaccount-submit-pass' => 'پټنوم خوندي کول',
 	'editaccount-submit-realname' => 'اصلي نوم خوندي کول',
-	'editaccount-submit-close' => 'کارن حساب تړل',
+	'editaccount-submit-close' => 'گڼون تړل',
 	'editaccount-submit-button' => 'خوندي کول',
 	'editaccount-status' => 'د پيغام دريځ',
 	'editaccount-nouser' => 'د "$1" گڼون نشته!',
