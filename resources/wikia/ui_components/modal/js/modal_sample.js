@@ -30,8 +30,29 @@ require( [ 'jquery', 'wikia.ui.factory' ], function( $, uiFactory ) {
 						title: 'Small modal example.',
 						closeText: 'Close',
 						buttons: [
-							'<a href="#" id="smallModalPrimaryBtn" class="button primary" title="small modal primary button">Submit</a>',
-							'<a href="#" id="smallModalSecondaryBtn" class="button secondary" title="small modal secondary button">Cancel</a>'
+							{
+								vars: {
+									value: 'Submit',
+									classes: 'primary',
+									data: [
+										{
+											key: 'event',
+											value: 'close'
+										}
+									]
+								}
+							},
+							{
+								vars: {
+									value: 'Cancel',
+									data: [
+										{
+											key: 'event',
+											value: 'close'
+										}
+									]
+								}
+							}
 						]
 					}
 				};
@@ -50,8 +71,29 @@ require( [ 'jquery', 'wikia.ui.factory' ], function( $, uiFactory ) {
 						title: 'Medium modal example.',
 						closeText: 'Close',
 						buttons: [
-							'<a href="#" id="smallModalPrimaryBtn" class="button primary" title="small modal primary button">Submit</a>',
-							'<a href="#" id="smallModalSecondaryBtn" class="button secondary" title="small modal secondary button">Cancel</a>'
+							{
+								vars: {
+									value: 'Submit',
+									classes: 'primary',
+									data: [
+										{
+											key: 'event',
+											value: 'close'
+										}
+									]
+								}
+							},
+							{
+								vars: {
+									value: 'Cancel',
+									data: [
+										{
+											key: 'event',
+											value: 'close'
+										}
+									]
+								}
+							}
 						]
 					}
 				};
@@ -70,8 +112,29 @@ require( [ 'jquery', 'wikia.ui.factory' ], function( $, uiFactory ) {
 						title: 'Large modal example.',
 						closeText: 'Close',
 						buttons: [
-							'<a href="#" id="smallModalPrimaryBtn" class="button primary" title="small modal primary button">Submit</a>',
-							'<a href="#" id="smallModalSecondaryBtn" class="button secondary" title="small modal secondary button">Cancel</a>'
+							{
+								vars: {
+									value: 'Submit',
+									classes: 'primary',
+									data: [
+										{
+											key: 'event',
+											value: 'close'
+										}
+									]
+								}
+							},
+							{
+								vars: {
+									value: 'Cancel',
+									data: [
+										{
+											key: 'event',
+											value: 'close'
+										}
+									]
+								}
+							}
 						]
 					}
 				};
