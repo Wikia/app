@@ -67,6 +67,10 @@ RedisStorage.prototype = {
 					'wgArticlePath': extraData.wgArticlePath
 				});
 
+				// mech: sanity check, I saw that breaking sometimes, want to see the details
+				if (users && (typeof users.sort !== 'function')) {
+					logger.critical('Malformed users list for roomId ' + roomId, users);
+				}
 				// Add the room to the list of rooms on this wiki.
 				self._rpush(self.config.getKey_listOfRooms(cityId, type, users), roomId);
 				var result = {
