@@ -43,6 +43,13 @@
 		trace_l3: 13 // trace level 3
 	};
 
+	function syslog(priority, message, context) {
+		// syslogReport defined in Oasis_Index
+		if (typeof syslogReport == 'function' && priority < SYSLOG_CUTOFF) {
+			syslogReport(priority, message, context);
+		}
+	}
+
 	function logger() {
 		var console = context.console,
 			//used for undefined checks
@@ -61,18 +68,7 @@
 
 		for (p in levels) {
 			if (levels.hasOwnProperty(p)) {
-				v = levels[p];
-
-				if (v) {
-					levelsMap[v] = p;
-				}
-			}
-		}
-
-		function syslog(priority, message, context) {
-			// syslogReport defined in Oasis_Index
-			if (typeof syslogReport == 'function' && priority < SYSLOG_CUTOFF) {
-				syslogReport(priority, message, context);
+				levelsMap[levels[p]] = p;
 			}
 		}
 
@@ -120,12 +116,15 @@
 		 * @param {bool} report whether or not to log the message (to syslog)
 		 */
 		function logMessage(msg, level, group, report) {
-			level = level || 'trace';
+			if (level !== levels.emergency) {
+				level = level || 'trace';
+			}
+
 			report = report || false;
 
 			if (typeof level === 'number') {
-				if (level < 1) {
-					level = 1;
+				if (level < 0) {
+					level = 0;
 				} else if (level > levelsMap.length - 1) {
 					level = levelsMap.length - 1;
 				}
@@ -211,6 +210,7 @@
 	context.Wikia.log = logger();
 	//exposing levels to the outside world
 	context.Wikia.log.levels = levels;
+	context.Wikia.syslog = syslog;
 
 	if (context.define && context.define.amd) {
 		//AMD
