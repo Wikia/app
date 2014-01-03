@@ -82,11 +82,11 @@ exports.logLevel = (typeof arvg.loglevel != 'undefined') ? arvg.loglevel : "CRIT
 //TODO move this to other file
 /** KEY BUILDING / ACCESSING FUNCTIONS **/
 exports.getKey_listOfRooms = function( cityId, type, users ){
-	users = users || [];
-	users = users.sort();
 	if(type == "open") {
 		return "rooms_on_wiki:" + cityId;
 	} else {
+		users = users || [];
+		users = users.sort();
 		return "rooms_on_wiki:" + cityId + ':' + md5( type + users.join( ',' ) );
 	}
 }
