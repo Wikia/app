@@ -123,7 +123,7 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 		foreach ( $videos as &$video ) {
 			$video['byUserMsg'] = $specialVideos->getByUserMsg( $video['userName'], $video['userUrl'] );
 			$video['postedInMsg'] = $specialVideos->getPostedInMsg( $video['truncatedList'], $video['isTruncated'] );
-			$video['videoOverlay'] = WikiaFileHelper::videoInfoOverlay( SpecialVideosHelper::THUMBNAIL_WIDTH, $video['fileTitle'] );
+			$video['videoOverlay'] = WikiaFileHelper::videoInfoOverlay( SpecialVideosHelper::THUMBNAIL_WIDTH, $video['fileTitle'], true );
 			$video['videoPlayButton'] = WikiaFileHelper::videoPlayButtonOverlay( SpecialVideosHelper::THUMBNAIL_WIDTH, SpecialVideosHelper::THUMBNAIL_HEIGHT );
 		}
 
