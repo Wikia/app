@@ -3,6 +3,7 @@
 error_reporting(E_ALL & ~ E_STRICT);
 ini_set('display_errors', '1');
 $wgShowExceptionDetails = true;
+$wgEnableCentralizedLogging = false;
 
 // include chef generated variables: $wgWikiaDatacenter
 require_once('/usr/wikia/devbox/DevBoxVariables.php');

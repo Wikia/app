@@ -17,24 +17,30 @@
  * //e.g. http://glee.wikia.com/wiki/Rachel_Berry?log_level=info&log_group=MyLogGroup
  *
  * // The higher the log_level, the more messages will be logged.  If you want all messages,
- * // use ?log_level=10 or ?log_level=trace_l3 (they are the same)
+ * // use ?log_level=13 or ?log_level=trace_l3 (they are the same)
  *
  * @see  printMessage for a list of parameters and their description
  */
 (function (context) {
 	'use strict';
 
+	var SYSLOG_CUTOFF = 8;
+
 	var levels = {
-		user: 1,
-		feedback: 2,
-		info: 3,
-		system: 4,
-		warning: 5,
-		error: 6,
+		emergency: 0,
+		alert: 1,
+		critical: 2,
+		error: 3,
+		warning: 4,
+		notice: 5,
+		info: 6,
 		debug: 7,
-		trace: 8,
-		trace_l2: 9, // trace level 2
-		trace_l3: 10 // trace level 3
+		user: 8,
+		feedback: 9,
+		system: 10,
+		trace: 11,
+		trace_l2: 12, // trace level 2
+		trace_l3: 13 // trace level 3
 	};
 
 	function logger() {
@@ -60,6 +66,13 @@
 				if (v) {
 					levelsMap[v] = p;
 				}
+			}
+		}
+
+		function syslog(priority, message, context) {
+			// syslogReport defined in Oasis_Index
+			if (typeof syslogReport == 'function' && priority < SYSLOG_CUTOFF) {
+				syslogReport(priority, message, context);
 			}
 		}
 
@@ -104,9 +117,11 @@
 		 * @param {Mixed} msg The value to print
 		 * @param {Integer} level The log level
 		 * @param {String} group The log group
+		 * @param {bool} report whether or not to log the message (to syslog)
 		 */
-		function logMessage(msg, level, group) {
+		function logMessage(msg, level, group, report) {
 			level = level || 'trace';
+			report = report || false;
 
 			if (typeof level === 'number') {
 				if (level < 1) {
@@ -121,6 +136,10 @@
 			level = level.toLowerCase();
 			levelID = levels[level];
 			group = group || 'Unknown source';
+
+			if (report && levelID < SYSLOG_CUTOFF) {
+				syslog(levelID, msg);
+			}
 
 			if (!enabled ||
 					(msg === undef) ||
