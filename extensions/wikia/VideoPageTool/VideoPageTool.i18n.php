@@ -65,6 +65,8 @@ $messages['en'] = array(
 	// Home Page Section: Header
 	'videohomepage-header-dropdown-name' => 'Discover',
 	'videohomepage-header-search-placeholder' => 'Search for Wikia videos',
+	'videohomepage-header-browse' => 'Browse',
+
 	// Home Page Section: Partners
 	'videohomepage-partner-section-title' => 'Our Partners',
 	'videohomepage-partner-name-anyclip' => 'Anyclip',
