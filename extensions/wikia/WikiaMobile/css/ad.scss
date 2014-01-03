@@ -21,9 +21,6 @@ $slotTopHeight: 50px;
 }
 
 .ad-in-content {
-	visibility: hidden;
-
-	&.show {
 		visibility: visible;
 
 		position: relative;
@@ -36,7 +33,6 @@ $slotTopHeight: 50px;
 		width: 300px;
 
 		border-top: 1px solid $border-color;
-	}
 }
 
 #wkAdBeforeFooter.show {
