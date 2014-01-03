@@ -65,16 +65,10 @@ require( [ 'jquery', 'wikia.ui.factory' ], function( $, uiFactory ) {
 					vars: {
 						id: 'largeModalExample',
 						size: 'large',
-						content: 'This is a large modal example.',
+						content: 'This is a large modal example. <a id="largeModalAltLink" href="#">Open small modal</a>',
 						class: 'styleguide-example-large',
 						title: 'Large modal example.',
 						closeText: 'Close',
-						altLink: {
-							id: 'largeModalAltLink',
-							href: '#',
-							text: 'Open small modal',
-							title: 'Open small modal'
-						},
 						buttons: [
 							'<a href="#" id="smallModalPrimaryBtn" class="button primary" title="small modal primary button">Submit</a>',
 							'<a href="#" id="smallModalSecondaryBtn" class="button secondary" title="small modal secondary button">Cancel</a>'
