@@ -134,6 +134,7 @@ class WikiFactoryLoader {
 
 		if( !empty( $wgDevelEnvironment ) ) {
 			$this->mDebug = true;
+			$this->mAlwaysFromDB = 1;
 		}
 
 		/**
