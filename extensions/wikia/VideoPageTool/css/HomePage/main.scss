@@ -34,11 +34,16 @@
 			width: 187px;
 		}
 
+		.browse {
+			color: $color-links;
+			float: right;
+			padding-top: 1px;
+		}
+
 		.discover {
 			color: $color-links;
 			position: relative;
 			text-align: right;
-			visibility: hidden;
 
 			span {
 				display: inline-block;
@@ -61,8 +66,8 @@
 
 			form {
 				padding-top: 5px;
-				position: absolute;
-				right: 10px;
+				padding-left: 24px;
+				float: right;
 			}
 		}
 	}
@@ -87,7 +92,7 @@
 			margin-bottom: 20px;
 			padding-left: 10px;
 		}
-		
+
 		.partner-link {
 			display: block;
 			font-weight: bold;
