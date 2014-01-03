@@ -60,8 +60,17 @@ RedisStorage.prototype = {
 						extraData = {};
 					}
 				}
-				// Store the room in redis.
-				self._hmset(roomKey, {
+				var hmsetdata = {
+					'room_id': roomId,
+					'wgCityId': cityId,
+					'wgServer': extraData.wgServer,
+					'wgArticlePath': extraData.wgArticlePath
+				};
+
+				logger.critical("Calling _hmset for key " + roomKey + ' and data '+ JSON.stringify(hmsetdata));
+				self._hmset(roomKey, hmsetdata);
+
+				self.setRoomData(roomId, null, {
 					'room_id': roomId,
 					'wgCityId': cityId,
 					'wgServer': extraData.wgServer,
@@ -109,6 +118,35 @@ RedisStorage.prototype = {
 					'Error: while getting ' + key +' of room: "'+ roomId + '": %error%', 
 					errback);
 		}
+	},
+
+	/**
+	 * Set the room data
+	 * @param roomId room identifier
+	 * @param key key to set, if null then value can containg multiple entries
+	 * @param value single value if key is specified or multipl ewhen key is null
+	 */
+	setRoomData: function(roomId, key, value, callback, errback) {
+		var roomKey = this.config.getKey_room(roomId);
+		if ( key === null )  {
+			logger.critical("Wanted to call _hmset for key " + roomKey + ' and data '+ JSON.stringify(value));
+			/*
+			this._hmset(roomKey, value, callback,
+				"Warning: couldn't set hash data for room w/key '"+ roomKey + "': %error%",
+				function(errorMsg){
+					logger.warning(errorMsg);
+					errback();
+				});
+				*/
+		} else {
+			logger.critical('Want to store new host address for room ' + roomId + ': ' + key + ' - ' + value);
+			/*
+			this._hset(roomKey, key, value, callback,
+				'Error: while setting ' + key +' of room: "'+ roomId + '": %error%',
+				errback);
+			*/
+		}
+
 	},
 	
 	getRuntimeStats: function(callback, errback, both) {
