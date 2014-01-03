@@ -78,7 +78,9 @@ class StyleguideComponents {
 			[ $this, 'getAllComponentsFromDirectories' ]
 		);
 
+		$this->initComponents( $components );
 		$this->includeComponentsAssets( $components );
+
 		return $components;
 	}
 
@@ -424,6 +426,15 @@ class StyleguideComponents {
 					}
 				}
 			}
+		}
+	}
+
+	/**
+	 * @param $components
+	 */
+	private function initComponents( $components ) {
+		foreach ( $components as $component ) {
+			\Wikia\UI\Factory::getInstance()->init( $component['id'] );
 		}
 	}
 }
