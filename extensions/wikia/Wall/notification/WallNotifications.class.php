@@ -139,7 +139,7 @@ class WallNotifications {
 	 * 		)
 	 * 	)
 	 *
-	 * @param $userId
+	 * @param int $userId
 	 * @return array
 	 */
 	public function getCounts($userId) {
@@ -186,8 +186,8 @@ class WallNotifications {
 
 	/**
 	 * Returns number of unread user's notifications for wiki
-	 * @param $userId
-	 * @param $wikiId
+	 * @param int $userId
+	 * @param int $wikiId
 	 * @param bool $notifyeveryone
 	 * @return int
 	 */
@@ -889,8 +889,8 @@ class WallNotifications {
 	/**
 	 * Get notification entries from database for specific user on specific wiki
 	 * Fetches bot read and unread ones that are not hidden
-	 * @param $userId
-	 * @param $wikiId
+	 * @param int $userId
+	 * @param int $wikiId
 	 * @param bool $master
 	 * @param int $fromId
 	 * @return array
@@ -997,7 +997,7 @@ class WallNotifications {
 	 *
 	 * @author Władysław Bodzek <wladek@wikia-inc.com>
 	 *
-	 * @param $userId int User Id
+	 * @param int $userId User Id
 	 * @return User User object
 	 */
 	protected function getUser( $userId ) {
