@@ -78,6 +78,7 @@ class StyleguideComponents {
 			[ $this, 'getAllComponentsFromDirectories' ]
 		);
 
+		$this->includeComponentsAssets( $components );
 		return $components;
 	}
 
@@ -280,9 +281,7 @@ class StyleguideComponents {
 			}
 
 			if( !empty( $sampleArray[ 'assets' ] ) ) {
-				foreach( $sampleArray[ 'assets' ] as $assetUrl ) {
-					\Wikia::addAssetsToOutput( $assetUrl );
-				}
+				$sample->assets = $sampleArray[ 'assets' ];
 			}
 
 			$result[] = $sample;
@@ -409,5 +408,22 @@ class StyleguideComponents {
 	 */
 	public function getComponentsNames() {
 		return static::$componentsNames;
+	}
+
+	/**
+	 * @param $components
+	 */
+	private function includeComponentsAssets( $components ) {
+		foreach ( $components as $component ) {
+			if ( ! empty( $component['examples'] ) ) {
+				foreach ( $component['examples'] as $example ) {
+					if ( ! empty( $example->assets ) ) {
+						foreach ( $example->assets as $assetUrl ) {
+							\Wikia::addAssetsToOutput( $assetUrl );
+						}
+					}
+				}
+			}
+		}
 	}
 }
