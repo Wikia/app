@@ -67,7 +67,7 @@ class VideoPageToolHelper extends WikiaModel {
 		);
 
 		$leftMenuItems = array();
-		foreach ( $sections as $key => $value ) {
+		foreach( $sections as $key => $value ) {
 			$query['section'] = $key;
 			$leftMenuItems[] = array(
 				'title' => $value,
@@ -171,33 +171,52 @@ class VideoPageToolHelper extends WikiaModel {
 		return $video;
 	}
 
+	/**
+	 * Get Category data
+	 * @param string $categoryTitle
+	 * @return array $data
+	 */
 	public function getCategoryData( $categoryTitle ) {
 		wfProfileIn( __METHOD__ );
 
-		if ( class_exists( 'CategoryDataService' ) ) {
-			$memcKey = $this->getMemcKeyCategoryData( $categoryTitle->getText() );
-			$data = $this->wg->memc->get( $memcKey );
-			if ( !is_array( $data ) ) {
-				$categoryData = CategoryDataService::getRecentlyEdited( $categoryTitle->getDBkey(), NS_FILE );
-				$data = array();
-				foreach ( array_keys( $categoryData ) as $pageId ) {
-					$title = Title::newFromID( $pageId );
-					$file = WikiaFileHelper::getVideoFileFromTitle( $title );
-					if ( !empty( $file ) ) {
-						$thumb = $file->transform( array( 'width' => self::THUMBNAIL_CATEGORY_WIDTH, 'height' => self::THUMBNAIL_CATEGORY_HEIGHT ) );
-						$videoThumb = $thumb->toHtml();
-						$data[] = array(
-							'title' => $title->getText(),
-							'url'   => $title->getFullURL(),
-							'thumb' => $videoThumb,
-						);
-					}
-				}
+		$memcKey = $this->getMemcKeyCategoryData( $categoryTitle->getText() );
+		$data = $this->wg->memc->get( $memcKey );
+		if ( !is_array( $data ) ) {
+			$db = wfGetDB( DB_SLAVE );
+			$result = $db->select(
+				array( 'page', 'video_info', 'categorylinks' ),
+				array( 'page_id', 'page_title' ),
+				array(
+					'cl_to' => $categoryTitle->getDBkey(),
+					'page_namespace' => NS_FILE,
+				),
+				__METHOD__,
+				array(
+					'ORDER BY' => 'added_at DESC, page_title',
+					'LIMIT' => 1000,
+				),
+				array(
+					'video_info' => array( 'LEFT JOIN', 'page_title = video_title' ),
+					'categorylinks' => array( 'INNER JOIN', 'cl_from = page_id' )
+				)
+			);
 
-				$this->wg->memc->set( $memcKey, $data, self::CACHE_TTL_CATEGORY_DATA );
-			}
-		} else {
 			$data = array();
+			while ( $row = $db->fetchObject( $result ) ) {
+				$title = $row->page_title;
+				$file = WikiaFileHelper::getVideoFileFromTitle( $title );
+				if ( !empty( $file ) ) {
+					$thumb = $file->transform( array( 'width' => self::THUMBNAIL_CATEGORY_WIDTH, 'height' => self::THUMBNAIL_CATEGORY_HEIGHT ) );
+					$videoThumb = $thumb->toHtml( array( 'duration' => true ) );
+					$data[] = array(
+						'title' => $title->getText(),
+						'url'   => $title->getFullURL(),
+						'thumb' => $videoThumb,
+					);
+				}
+			}
+
+			$this->wg->memc->set( $memcKey, $data, self::CACHE_TTL_CATEGORY_DATA );
 		}
 
 		wfProfileOut( __METHOD__ );
