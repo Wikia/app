@@ -100,6 +100,7 @@ var requestMW = function(method, roomId, postdata, query, handshake, callback, e
 			 */
 			function updateMWaddress() {
 				if (redirectInfo.newServer && (server != redirectInfo.newServer)) {
+					logger.critical('Old wiki address found: ' + server + ', updating to ' + redirectInfo.newServer);
 					storage.setRoomData(roomId, 'wgServer', redirectInfo.newServer);
 				}
 			}
