@@ -142,6 +142,13 @@ $messages['ja'] = array(
 	'site-layout' => 'サイトの外装',
 );
 
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'new-look' => 'ويكيا:',
+);
+
 /** Macedonian (македонски)
  * @author Bjankuloski06
  */

@@ -5,9 +5,10 @@ describe( 'TOC', function() {
 	var getHeaders = function( html ) {
 			return html.querySelectorAll( 'h2, h3, h4, h5' );
 		},
-		createTOCSection = function( header ) {
+		createTOCSection = function( header, level ) {
 			return {
 				title: header.textContent,
+				class: 'toclevel-' + level,
 				sections: []
 			};
 		},
@@ -32,13 +33,16 @@ describe( 'TOC', function() {
 			sections: [
 				{
 					title: 'test',
+					class:  'toclevel-2',
 					sections: []
 				},
 				{
 					title: 'test',
+					class:  'toclevel-2',
 					sections: []
 				},{
 					title: 'test',
+					class:  'toclevel-2',
 					sections: []
 				}
 			]
@@ -58,15 +62,19 @@ describe( 'TOC', function() {
 			sections: [
 				{
 					title: 'test',
+					class:  'toclevel-2',
 					sections: [
 						{
 							title: 'test',
+							class:  'toclevel-3',
 							sections: [
 								{
 									title: 'test',
+									class:  'toclevel-4',
 									sections: [
 										{
 											title: 'test',
+											class:  'toclevel-5',
 											sections: []
 										}
 									]
@@ -93,32 +101,40 @@ describe( 'TOC', function() {
 			sections: [
 				{
 					title: 'test',
+					class:  'toclevel-2',
 					sections: [
 						{
 							title: 'test',
+							class:  'toclevel-3',
 							sections: []
 						},
 						{
 							title: 'test',
+							class:  'toclevel-3',
 							sections: []
 						}
 					]
 				},
 				{
 					title: 'test',
+					class:  'toclevel-2',
 					sections: [
 						{
 							title: 'test',
+							class:  'toclevel-4',
 							sections: []
 						},
 						{
 							title: 'test',
+							class:  'toclevel-3',
 							sections: [
 								{
 									title: 'test',
+									class:  'toclevel-4',
 									sections: [
 										{
 											title: 'test',
+											class:  'toclevel-5',
 											sections: []
 										}
 									]
@@ -129,6 +145,7 @@ describe( 'TOC', function() {
 				},
 				{
 					title: 'test',
+					class:  'toclevel-2',
 					sections: []
 				}
 			]
@@ -148,14 +165,17 @@ describe( 'TOC', function() {
 			sections: [
 				{
 					title: 'test',
+					class:  'toclevel-2',
 					sections: []
 				},
 				{
 					title: 'test',
+					class:  'toclevel-2',
 					sections: []
 				},
 				{
 					title: 'test',
+					class:  'toclevel-2',
 					sections: []
 				}
 			]
@@ -175,18 +195,22 @@ describe( 'TOC', function() {
 			sections: [
 				{
 					title: 'test3',
+					class:  'toclevel-3',
 					sections: [
 						{
 							title: 'test4',
+							class:  'toclevel-4',
 							sections: []
 						}
 					]
 				},
 				{
 					title: 'test2',
+					class:  'toclevel-2',
 					sections: [
 						{
 							title: 'test5',
+							class:  'toclevel-5',
 							sections: []
 						}
 					]
@@ -208,18 +232,22 @@ describe( 'TOC', function() {
 			sections: [
 				{
 					title: 'test5',
+					class:  'toclevel-5',
 					sections: []
 				},
 				{
 					title: 'test4',
+					class:  'toclevel-4',
 					sections: []
 				},
 				{
 					title: 'test3',
+					class:  'toclevel-3',
 					sections: []
 				},
 				{
 					title: 'test2',
+					class:  'toclevel-2',
 					sections: []
 				}
 			]
@@ -239,18 +267,22 @@ describe( 'TOC', function() {
 			sections: [
 				{
 					title: 'test2',
+					class:  'toclevel-2',
 					sections: [
 						{
 							title: 'test3',
+							class:  'toclevel-3',
 							sections: []
 						}
 					]
 				},
 				{
 					title: 'test2',
+					class:  'toclevel-2',
 					sections: [
 						{
 							title: 'test4',
+							class:  'toclevel-4',
 							sections: []
 						}
 					]
@@ -272,16 +304,20 @@ describe( 'TOC', function() {
 			sections: [
 				{
 					title: 'Heading 3',
+					class:  'toclevel-3',
 					sections: [
 						{
 							title: 'Heading 4',
+							class:  'toclevel-4',
 							sections: [
 								{
 									title: 'Heading 5 1',
+									class:  'toclevel-5',
 									sections: []
 								},
 								{
 									title: 'Heading 5 2',
+									class:  'toclevel-5',
 									sections: []
 								}
 							]
@@ -305,20 +341,25 @@ describe( 'TOC', function() {
 			sections: [
 				{
 					title: 'Heading 3',
+					class:  'toclevel-3',
 					sections: []
 				},
 				{
 					title: 'Heading 3',
+					class:  'toclevel-3',
 					sections: [
 						{
 							title: 'Heading 4',
+							class:  'toclevel-4',
 							sections: [
 								{
 									title: 'Heading 5 1',
+									class:  'toclevel-5',
 									sections: []
 								},
 								{
 									title: 'Heading 5 2',
+									class:  'toclevel-5',
 									sections: []
 								}
 							]

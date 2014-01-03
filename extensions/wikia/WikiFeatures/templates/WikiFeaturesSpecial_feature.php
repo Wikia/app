@@ -1,4 +1,4 @@
-<li class="feature" data-name="<?= $feature['name'] ?>">
+<li class="feature" data-name="<?= $feature['name'] ?>" data-title="<?= wfMsg('wikifeatures-feature-heading-'.$feature['name']) ?>">
 	<h3>
 		<?= wfMsg('wikifeatures-feature-heading-'.$feature['name']) ?>
 		<? if (isset($feature['active'])): ?>
@@ -18,7 +18,7 @@
 	</div>
 	<div class="details">
 		<p>
-			<?= wfMsgExt('wikifeatures-feature-description-'.$feature['name'], 'parseinline') ?>
+			<?= wfMessage('wikifeatures-feature-description-'.$feature['name'])->parse() ?>
 		</p>
 	</div>
 	<div class="actions">

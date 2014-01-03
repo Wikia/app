@@ -343,7 +343,7 @@ class WallMessage {
 		$out = (int ) $this->getArticleComment()->getMetadata('notify_everyone');
 		$ageInDays = (time() - $out)/(60*60*24);
 
-		if( $ageInDays < 30  ){
+		if( $ageInDays < WallHelper::NOTIFICATION_EXPIRE_DAYS ){
 			return true;
 		} else {
 			return false;
@@ -432,15 +432,19 @@ class WallMessage {
 	public function getWallOwner( $master = false ) {
 		$parts = explode( '/', $this->getArticleTitle( $master )->getText() );
 		$userName = $parts[0];
-		// mech: I'm not sure we have to create wall title doing db queries on both, page and comments_index tables.
-		// as the user name is the first part on comment's title. But I'm not able to go through all wall/forum
-		// usecases. I'm going to check production logs for the next 2-3 sprints and make sure the result is
-		// always correct
-		$titleText = $this->title->getText();
-		$parts = explode( '/', $titleText );
-		if ( $parts[0] != $userName ) {
-			Wikia::log( __METHOD__, false, 'WALL_PERF article title owner does not match ci username (' . $userName .
-				' vs ' . $parts[0] . ') for ' . $this->getId() . ' (title is ' . $titleText. ')', true );
+		if ( mt_rand( 1, 100 ) < 2 ) {  // doing this experiment for all requests pollutes the logs
+
+			// mech: I'm not sure we have to create wall title doing db queries on both, page and comments_index tables.
+			// as the user name is the first part on comment's title. But I'm not able to go through all wall/forum
+			// usecases. I'm going to check production logs for the next 2-3 sprints and make sure the result is
+			// always correct
+			$titleText = $this->title->getText();
+			$parts = explode( '/', $titleText );
+			if ( $parts[0] != $userName ) {
+				Wikia::log( __METHOD__, false, 'WALL_PERF article title owner does not match ci username (' . $userName .
+					' vs ' . $parts[0] . ') for ' . $this->getId() . ' (title is ' . $titleText. ')', true );
+			}
+
 		}
 
 		// mech: when the wall message is not in the db yet, the getWallTitle will return 'Empty' as is cannot find

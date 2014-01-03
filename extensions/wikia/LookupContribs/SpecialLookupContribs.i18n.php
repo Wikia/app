@@ -332,6 +332,7 @@ $messages['ce'] = array(
 	'lookupcontribswikioptions' => 'Параметраш',
 	'lookupcontribscontribslink' => 'Къинхьегаме хьажораг',
 	'lookupcontribscontribs' => 'къинхьегам',
+	'lookupcontribshist' => 'истори',
 	'lookupcontribscontent' => 'чулацам',
 	'lookupcontribsall' => 'массо',
 );
@@ -970,7 +971,11 @@ $messages['lrc'] = array(
 	'lookupcontribsselectfor' => 'انتخاب بيه سی:',
 	'lookupcontribsgo' => 'رو',
 	'lookupcontribswiki' => 'ويكی',
+	'lookupcontribswikidbname' => 'نوم دی بی',
 	'lookupcontribswikiurl' => 'يو آر ال',
+	'lookupcontribsnext' => 'نها',
+	'lookupcontribsprevious' => 'وادمايی',
+	'lookupcontribspageremoved' => 'ؤرداشته بیه:',
 	'lookupcontribscontent' => 'محتويات',
 	'lookupcontribsnormal' => 'تازه باو',
 	'lookupcontribsall' => 'همه',
@@ -1489,6 +1494,7 @@ Verifique se se enganou no nome do utilizador.</p>',
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
+ * @author Fitoschido
  * @author JM Pessanha
  * @author Luckas
  * @author Luckas Blade
@@ -1527,7 +1533,7 @@ Verifique se se enganou com o nome do utilizador.</p>',
 	'lookupcontribsdetails' => 'Ver detalhes de:',
 	'lookupcontribslastedited' => 'Última edição',
 	'lookupcontribsrecordspager' => "A mostrar os registos '''$1''' a '''$2''' de '''$3'''.",
-	'lookupcontribsnbrresult' => 'Nº do resultado:',
+	'lookupcontribsnbrresult' => 'N.º do resultado:',
 	'lookupcontribsnext' => 'seguintes',
 	'lookupcontribsprevious' => 'anteriores',
 	'lookupcontribspageremoved' => 'Removidas:',

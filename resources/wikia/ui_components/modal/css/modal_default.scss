@@ -152,12 +152,17 @@ $large-modal-margin: 50px;
 
 	.modal {
 		display: block;
+		max-height: 90%;
 		padding-bottom: $header-footer-height;
 
-		& > footer {
+		> footer {
 			bottom: 0;
 			position: absolute;
 			width: 100%;
+		}
+
+		> section {
+			box-sizing: content-box;
 		}
 
 	}

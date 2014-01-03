@@ -426,6 +426,7 @@ $messages['ca'] = array(
  * @author Умар
  */
 $messages['ce'] = array(
+	'scavengerhunt-button-enable' => 'Юкъадаладе',
 	'scavengerhunt-form-error-no-landing-title' => 'Дехар до, дӀаязъе (URL-адрес) агӀона цӀе.',
 	'scavengerhunt-label-progressBarHintLabel' => 'Координаташ хьехар',
 	'scavengerhunt-label-entry-form-username' => 'Декъашхочун цӀе',
@@ -1402,6 +1403,23 @@ $messages['lb'] = array(
 	'scavengerhunt-quit-game-button-quit' => 'Erausgoen',
 	'scavengerhunt-quit-game-button-cancel' => 'Ofbriechen',
 	'scavengerhunt-label-entry-form-username' => 'Benotzernumm',
+);
+
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'scavengerhunt-list-edit' => 'ويرايشت',
+	'scavengerhunt-label-general' => 'کلی',
+	'scavengerhunt-label-name' => 'نوم:',
+	'scavengerhunt-button-save' => 'ذخيره كردن',
+	'scavengerhunt-button-disable' => 'د كار ونن',
+	'scavengerhunt-button-enable' => 'قادر بيه',
+	'scavengerhunt-button-delete' => 'پاك كردن',
+	'scavengerhunt-entry-form-name' => 'نومتو',
+	'scavengerhunt-entry-form-email' => 'نشونی ایمیلتو:',
+	'scavengerhunt-quit-game-button-cancel' => 'رد کردن',
+	'scavengerhunt-label-clue-size' => 'انازه فونت',
 );
 
 /** Macedonian (македонски)

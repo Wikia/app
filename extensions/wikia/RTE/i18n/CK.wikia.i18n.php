@@ -691,6 +691,7 @@ $messages['ce'] = array(
 	'rte-ck-media-delete' => 'дӀаяккха',
 	'rte-ck-modeSwitch-toWysiwyg' => 'Визуальни тадар',
 	'rte-ck-templateDropDown-label' => 'Кеп',
+	'rte-ck-templateEditor-dialog-insert' => 'Чуйилла',
 	'rte-ck-templateEditor-editor-parameters' => 'Параметраш',
 	'rte-ck-templateEditor-editor-previewButton' => 'Хьалха муха ю хьажа',
 	'rte-ck-templateEditor-editor-previewTitle' => 'Хьалха муха ю хьажа',
@@ -2035,6 +2036,29 @@ $messages['lb'] = array(
 	'rte-ck-templateEditor-dialog-search' => 'No enger Schabloun sichen',
 	'rte-ck-templateEditor-editor-parameters' => 'Parameter',
 	'rte-ck-unlink' => 'Link ewechhuelen',
+);
+
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'rte-ck-hoverPreview-comment-title' => 'نظر',
+	'rte-ck-hoverPreview-delete' => 'پاك كردن',
+	'rte-ck-hoverPreview-edit' => 'ويرايشت',
+	'rte-ck-image-photo' => 'عسكيا',
+	'rte-ck-link-error-title' => 'خطا',
+	'rte-ck-link-external-linkText' => 'هوم پیوند متنی',
+	'rte-ck-link-external-url' => 'يو آر ال',
+	'rte-ck-link-internal-pageName' => 'نوم بلگه:',
+	'rte-ck-link-internal-tab' => 'هوم پیوند تویئ',
+	'rte-ck-media-delete' => 'ؤرداشتن',
+	'rte-ck-media-edit' => 'آلشت كردن',
+	'rte-ck-modeSwitch-toSource' => 'سرچشمه',
+	'rte-ck-photoGallery-gallery' => 'عسگ دونی',
+	'rte-ck-templateEditor-dialog-insert' => 'نهائن',
+	'rte-ck-templateEditor-dialog-magicWords' => 'كلميا جادويی',
+	'rte-ck-templateEditor-editor-previewButton' => 'پيش سيل',
+	'rte-ck-templateEditor-editor-previewTitle' => 'پيش سيل',
 );
 
 /** Macedonian (македонски)
@@ -3764,6 +3788,7 @@ $messages['tt-cyrl'] = array(
  * @author Andriykopanytsia
  * @author Steve.rusyn
  * @author SteveR
+ * @author Ua2004
  * @author Тест
  */
 $messages['uk'] = array(
@@ -3813,10 +3838,10 @@ $messages['uk'] = array(
 	'rte-ck-link-status-external' => 'Зовнішнє посилання',
 	'rte-ck-media-delete' => 'видалити',
 	'rte-ck-media-edit' => 'змінити',
-	'rte-ck-modeSwitch-toSource' => 'Джерело',
+	'rte-ck-modeSwitch-toSource' => 'Вихідний код',
 	'rte-ck-modeSwitch-toWysiwyg' => 'Візуальний',
-	'rte-ck-modeSwitch-toSourceTooltip' => 'Перемикання в режим Джерела',
-	'rte-ck-modeSwitch-toWysiwygTooltip' => 'Перемикання у Візуальний режим',
+	'rte-ck-modeSwitch-toSourceTooltip' => 'Режим вихідного коду',
+	'rte-ck-modeSwitch-toWysiwygTooltip' => 'Візуальний режим',
 	'rte-ck-modeSwitch-error' => 'Сталася помилка під час перемикання режимів. Будь ласка, спробуйте ще раз.',
 	'rte-ck-photoGallery-gallery' => 'Галерея',
 	'rte-ck-photoGallery-slideshow' => 'Показ слайдів',

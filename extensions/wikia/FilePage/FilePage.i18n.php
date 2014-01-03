@@ -150,6 +150,13 @@ Introdueix la descripció aquí.',
 	'file-page-more-links' => 'Veure llista completa',
 );
 
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'video-page-description-heading' => 'Цуьнах лаьцна',
+);
+
 /** Danish (dansk)
  * @author Luckas
  */
@@ -383,9 +390,28 @@ $messages['it'] = array(
 
 /** Japanese (日本語)
  * @author BryghtShadow
+ * @author Tommy6
  */
 $messages['ja'] = array(
-	'video-page-file-list-pagination' => '$2 の $1',
+	'filepage-desc' => 'MediaWiki標準のファイルページを動画に対応させる',
+	'video-page-file-list-header' => 'このウィキアでの使用状況',
+	'video-page-global-file-list-header' => '全ウィキアでの使用状況',
+	'video-page-from-provider' => '提供元: $1',
+	'video-page-expires' => '有効期限: $1',
+	'video-page-views' => '閲覧数: $1',
+	'video-page-see-more-info' => '詳細を表示',
+	'video-page-see-less-info' => '詳細を非表示',
+	'video-page-description-heading' => '解説',
+	'video-page-description-zero-state' => '解説はありません。',
+	'video-page-add-description-link-text' => '解説を追加する。',
+	'video-page-default-description-header-and-text' => '== 解説 ==
+ここに解説を入力。',
+	'video-page-file-list-pagination' => '$2 件中 $1 件目',
+	'file-page-replace-button' => '差し替え',
+	'file-page-tab-about' => '概要',
+	'file-page-tab-history' => 'ファイルの履歴',
+	'file-page-tab-metadata' => 'メタデータ',
+	'file-page-more-links' => '全て見る',
 );
 
 /** Georgian (ქართული)
@@ -415,6 +441,17 @@ Gitt d'Beschreiwung hei an.",
 	'file-page-replace-button' => 'Ersetzen',
 	'file-page-tab-about' => 'Iwwer',
 	'file-page-more-links' => 'Ganz Lëscht weisen',
+);
+
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'video-page-from-provider' => 'د $1',
+	'file-page-replace-button' => 'جاگزينشت',
+	'file-page-tab-about' => 'دباره',
+	'file-page-tab-history' => 'ويرگار فايل',
+	'file-page-tab-metadata' => 'داديا  فره گپ',
 );
 
 /** Lithuanian (lietuvių)
@@ -843,12 +880,14 @@ Nhập mô tả ở đây.',
  * @author Kuailong
  * @author Liuxinyu970226
  * @author Qiyue2001
+ * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
 	'filepage-desc' => '为了支持视频而修改标准MediaWiki文件页面',
 	'video-page-file-list-header' => '出现在这些页面上',
 	'video-page-global-file-list-header' => '出现在这些 wiki 上',
 	'video-page-from-provider' => '来自$1',
+	'video-page-expires' => '内容过期时间 $1',
 	'video-page-views' => '$1次浏览',
 	'video-page-see-more-info' => '显示更多信息',
 	'video-page-see-less-info' => '显示较少信息',

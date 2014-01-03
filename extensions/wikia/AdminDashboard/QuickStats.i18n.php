@@ -41,6 +41,16 @@ $messages['qqq'] = array(
 	'quickstats-number-shortening-billions' => 'This is a shortend number abbreviation shown in a stats table. Number larger than 1.000.000.000 are rendered using this message (as billions rounded up to the first decimal fraction). B stands for billions (1.000.000.000)',
 );
 
+/** Afrikaans (Afrikaans)
+ * @author Naudefj
+ */
+$messages['af'] = array(
+	'quickstats-header-date' => 'Datum',
+	'quickstats-header-edits' => 'Wysigings',
+	'quickstats-header-photos' => "Foto's",
+	'quickstats-totals-label' => 'Totale',
+);
+
 /** Old English (Ænglisc)
  * @author Espreon
  */
@@ -492,7 +502,7 @@ $messages['fr'] = array(
  * @author Vivaelcelta
  */
 $messages['gl'] = array(
-	'quickstats-header-label' => 'Estadísticas rápidas',
+	'quickstats-header-label' => 'Estatísticas rápidas',
 	'quickstats-header-date' => 'Data',
 	'quickstats-header-views' => 'Visitas',
 	'quickstats-header-edits' => 'Edicións',
@@ -646,6 +656,23 @@ $messages['ja'] = array(
 	'quickstats-number-shortening-billions' => '$1B',
 );
 
+/** Kannada (ಕನ್ನಡ)
+ * @author Dimension10
+ */
+$messages['kn'] = array(
+	'quickstats-header-label' => 'ತ್ವಿರಿತ ಆನ್ಕಡೆಗಳು',
+	'quickstats-header-date' => 'ದಿನಾಂಕ',
+	'quickstats-header-views' => 'ನೋಟಗಳು',
+	'quickstats-header-edits' => 'ಸಂಪಾದನೆಗಳು',
+	'quickstats-header-photos' => 'ಭಾವಚಿತ್ರಗಳು',
+	'quickstats-header-likes' => 'ಇಷ್ಟಗಳು',
+	'quickstats-totals-label' => 'ಒತ್ತುಗಳು',
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|ಇನ್ನೂ ಆನ್ಕಡೆಗಳನ್ನು ]]',
+	'quickstats-number-shortening' => '$1 ಸಾವಿರ',
+	'quickstats-number-shortening-millions' => '$1 ದಶಲಕ್ಷ',
+	'quickstats-number-shortening-billions' => '$1 ಶತಕೋಟಿ',
+);
+
 /** Korean (한국어)
  * @author Daisy2002
  * @author Excalibur777
@@ -749,9 +776,20 @@ $messages['lt'] = array(
 
 /** Latvian (latviešu)
  * @author Papuass
+ * @author Sg ghost
  */
 $messages['lv'] = array(
+	'quickstats-header-label' => 'Vienkārša Statistika',
 	'quickstats-header-date' => 'Datums',
+	'quickstats-header-views' => 'Skatīts',
+	'quickstats-header-edits' => 'Labojumi',
+	'quickstats-header-photos' => 'Fotogrāfijas',
+	'quickstats-header-likes' => 'Patīk',
+	'quickstats-totals-label' => 'Kopsummas',
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Skatīt vairāk stats]]',
+	'quickstats-number-shortening' => '$1K',
+	'quickstats-number-shortening-millions' => '$1M',
+	'quickstats-number-shortening-billions' => '$1B',
 );
 
 /** Basa Banyumasan (Basa Banyumasan)

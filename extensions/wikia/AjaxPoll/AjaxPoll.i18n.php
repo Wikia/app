@@ -466,6 +466,19 @@ $messages['ja'] = array(
 	'ajaxpoll-submitting' => '投票を送信しています。お待ちください...',
 );
 
+/** Kannada (ಕನ್ನಡ)
+ * @author Dimension10
+ */
+$messages['kn'] = array(
+	'ajaxpoll-percentVotes' => 'ಯಲ್ಲ ಮತಗಳ&nbsp;$1%',
+	'ajaxpoll-thankyou' => 'ನಿಮ್ಮ ಮತಕ್ಕೆ ಧನ್ಯವಾದ!',
+	'ajaxpoll-error' => 'ನಿಮ್ಮ ಮತವನ್ನು ಪ್ರಸಂಸಕರಣ ಮಾಡುವಾಗ ಒಂದು ತ್ರುಟಿ ಆಯಿತು. ದೈವಿತ್ತು ಸ್ವಲ್ಪ ಹೊತ್ತು ಆದ ಮೇಲೆ ಪ್ರಯತ್ನ ಮಾದಿ.',
+	'ajaxpoll-summary' => '$2 ಇಗೆ $1 ಅಕ್ಕೆ ಈ ಮತದಾನ ನಿರ್ಮಾಣ ಆಯಿತು. ಇವತ್ತಿನ ವರಗೆ  $3 ಜನರು ಮತ ಕೊತ್ತಿದರೆ.',
+	'ajaxpoll-submit' => 'ಮತ ಕೊಡಿ!',
+	'ajaxpoll-closed' => 'ಮತದಾನ ಈಗ ಮುಚ್ಚಿ ಹೊಗಿದೆ. ಪರಿಣಾಮಗಳನ್ನ ಆನಂದಿಸಿ.',
+	'ajaxpoll-submitting' => 'ದಯವಿಟ್ಟು ಪ್ರತೀಕ್ಷೆ ಮದಿ. ನಿಮ್ಮ ಮತವನ್ನು ನಾವು ಒಪ್ಪಿಸುತ ಇದ್ದೇವೆ.',
+);
+
 /** Korean (한국어)
  * @author Cafeinlove
  * @author 아라
@@ -529,9 +542,16 @@ $messages['lt'] = array(
 
 /** Latvian (latviešu)
  * @author Papuass
+ * @author Sg ghost
  */
 $messages['lv'] = array(
+	'ajaxpoll-percentVotes' => '$1% no visām balsīm',
+	'ajaxpoll-thankyou' => 'Paldies par jūsu atbalstu!',
+	'ajaxpoll-error' => 'Bija problēmas ar pārstrādes jūsu balsojumu, lūdzu mēģiniet vēlreiz.',
+	'ajaxpoll-summary' => 'Aptaujā tika izveidota $1, $2, un līdz šim $3 cilvēki, kas balsoja.',
 	'ajaxpoll-submit' => 'Balsot!',
+	'ajaxpoll-closed' => 'Aptauja ir slēgta tagad. Baudīt rezultātus.',
+	'ajaxpoll-submitting' => 'Lūdzu, uzgaidiet, iesniedzot jūsu balsojumu...',
 );
 
 /** Basa Banyumasan (Basa Banyumasan)

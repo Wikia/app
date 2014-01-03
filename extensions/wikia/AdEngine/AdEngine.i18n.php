@@ -198,6 +198,16 @@ $messages['id'] = array(
 	'adengine-exitstitial-button' => 'Lewati Iklan ini',
 );
 
+/** Kannada (ಕನ್ನಡ)
+ * @author Dimension10
+ */
+$messages['kn'] = array(
+	'adengine-exitstitial-title-template' => 'ನೀವು $1 ಬಿಡುತ ಇದ್ದೀರಿ.',
+	'adengine-exitstitial-redirecting' => 'ನಿಮ್ಮ ಬ್ರೌಸರ್ ನೀವು ಕೇಳಿದ ಪುಟಕ್ಕೆ ನಿಮ್ಮನ ಸ್ವಲ್ಪ ಹೊತ್ತಲ್ಲೇ ಕಲಿಸುತದೆ.',
+	'adengine-exitstitial-go-back' => 'ವಾಪುಸು ಹೋಗ ಬೇಕ?',
+	'adengine-exitstitial-button' => 'ಈ ಎಡನ್ನು ಜಿಗಿ ಬೇಕ?',
+);
+
 /** Korean (한국어)
  * @author 아라
  * @author 한글화담당
@@ -226,6 +236,16 @@ $messages['lrc'] = array(
 	'adengine-exitstitial-title-template' => 'شما ها رؤیت د $1...',
 	'adengine-exitstitial-go-back' => 'میهای روئی وا دما؟',
 	'adengine-exitstitial-button' => 'د ای تبلیغ زی رد با',
+);
+
+/** Latvian (latviešu)
+ * @author Sg ghost
+ */
+$messages['lv'] = array(
+	'adengine-exitstitial-title-template' => 'Jūs atstājot $1...',
+	'adengine-exitstitial-redirecting' => 'Jūsu pārlūkprogramma būs novirzīt jūs uz jūsu pieprasīto lapu pēc dažām sekundēm.',
+	'adengine-exitstitial-go-back' => 'Vēlaties doties atpakaļ?',
+	'adengine-exitstitial-button' => 'Izlaist šo reklāmu',
 );
 
 /** Basa Banyumasan (Basa Banyumasan)
