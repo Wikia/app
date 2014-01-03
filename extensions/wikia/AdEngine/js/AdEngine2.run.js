@@ -4,15 +4,16 @@
  */
 
 /*global document, window */
-/*global Geo, Wikia, Krux, AdTracker */
+/*global Geo, Wikia, Krux, AdTracker, SlotTracker */
 /*global AdConfig2, AdEngine2, DartUrl, EvolveHelper, SlotTweaker, ScriptWriter */
 /*global WikiaDartHelper, WikiaFullGptHelper */
 /*global AdProviderEvolve, AdProviderGpt, AdProviderGamePro, AdProviderLater, AdProviderNull */
-/*global AdLogicDartSubdomain, AdLogicHighValueCountry, AdLogicPageDimensions, AdLogicPageLevelParams */
+/*global AdLogicDartSubdomain, AdLogicHighValueCountry, AdDecoratorPageDimensions, AdLogicPageLevelParams */
 /*global AdLogicPageLevelParamsLegacy */
 /*global require*/
 /*jslint newcap:true */
 /*jshint camelcase:false */
+/*jshint maxlen:200*/
 
 (function (log, tracker, window, document, Geo, LazyQueue, Cookies, Cache, Krux, abTest) {
 	'use strict';
@@ -21,11 +22,13 @@
 		adConfig,
 		adEngine,
 		adTracker,
+		slotTracker,
 		adLogicDartSubdomain,
 		adLogicHighValueCountry,
 		adLogicPageLevelParams,
 		adLogicPageLevelParamsLegacy,
 		adLogicPageDimensions,
+		adDecoratorPageDimensions,
 		scriptWriter,
 		dartUrl,
 		wikiaDart,
@@ -47,8 +50,10 @@
 	// Use PostScribe for ScriptWriter implementation when SevenOne Media ads are enabled
 	window.wgUsePostScribe = window.wgUsePostScribe || window.wgAdDriverUseSevenOneMedia;
 
+	slotTracker = SlotTracker(log, tracker);
+
 	// Construct Ad Engine
-	adEngine = AdEngine2(log, LazyQueue);
+	adEngine = AdEngine2(log, LazyQueue, slotTracker);
 
 	// Construct various helpers
 	adTracker = AdTracker(log, tracker);
@@ -57,6 +62,7 @@
 	adLogicDartSubdomain = AdLogicDartSubdomain(Geo);
 	adLogicHighValueCountry = AdLogicHighValueCountry(window);
 	adLogicPageDimensions = AdLogicPageDimensions(window, document, log, slotTweaker);
+	adDecoratorPageDimensions = AdDecoratorPageDimensions(adLogicPageDimensions, log);
 	adLogicPageLevelParams = AdLogicPageLevelParams(log, window, Krux, adLogicPageDimensions, abTest);
 	adLogicPageLevelParamsLegacy = AdLogicPageLevelParamsLegacy(log, window, adLogicPageLevelParams, Krux, dartUrl);
 	scriptWriter = ScriptWriter(document, log, window);
@@ -80,15 +86,15 @@
 		window,
 		document,
 		Geo,
-		adLogicPageDimensions,
 		abTest,
+
+		adDecoratorPageDimensions,
 
 		// AdProviders:
 		adProviderGpt,
 		adProviderEvolve,
 		adProviderGamePro,
-		adProviderLater,
-		adProviderNull
+		adProviderLater
 	);
 
 	window.wgAfterContentAndJS.push(function () {
@@ -101,8 +107,15 @@
 			trackingMethod: 'ad'
 		});
 		window.adslots2 = window.adslots2 || [];
-		adEngine.run(adConfig, window.adslots2);
+		adEngine.run(adConfig, window.adslots2, 'queue.early');
 	});
+
+	window.AdEngine_getTrackerStats = function () {
+		return {
+			'old': adTracker.getStats(),
+			'new': slotTracker.getStats()
+		};
+	};
 
 	// DART API for Liftium
 	window.LiftiumDART = {
@@ -144,7 +157,7 @@
 				ga_label: 'adengine2 late',
 				trackingMethod: 'ad'
 			});
-			adEngine.run(adConfigForLateAds, queueForLateAds);
+			adEngine.run(adConfigForLateAds, queueForLateAds, 'queue.late');
 		} else {
 			log('ERROR, AdEngine_loadLateAds called before AdEngine_setLateConfig!', 1, module);
 			tracker.track({
