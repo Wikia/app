@@ -110,7 +110,7 @@ exports.getKey_userInRoom = function(userName, roomId){
 exports.getKeyPrefix_usersInRoom = function(){ return "users_in_room"; }
 exports.getKey_usersInRoom = function(roomId){ return exports.getKeyPrefix_usersInRoom() +":" + roomId; } // key for set of all usernames in the given room
 
-exports.getKeyPrefix_usersAllowedInPrivRoom = function( roomId ){ return "users_allowed_in_priv_room"; }
+exports.getKeyPrefix_usersAllowedInPrivRoom = function(){ return "users_allowed_in_priv_room"; }
 exports.getKey_usersAllowedInPrivRoom = function( roomId ){ return exports.getKeyPrefix_usersAllowedInPrivRoom() + ":" + roomId; }
 
 exports.getKey_chatEntriesInRoom = function(roomId){ return "chatentries:" + roomId; }
