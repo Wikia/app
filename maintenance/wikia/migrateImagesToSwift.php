@@ -335,7 +335,9 @@ class MigrateImagesToSwift extends Maintenance {
 
 		// lock the wiki
 		$dbw = $this->getDB( DB_MASTER, array(), $wgExternalSharedDB );
-		$dbw->replace( 'city_image_migrate', [ 'city_id' ], [ 'city_id' => $wgCityId, 'locked' => 1 ], __CLASS__ );
+		if (!$isDryRun) {
+			$dbw->replace( 'city_image_migrate', [ 'city_id' ], [ 'city_id' => $wgCityId, 'locked' => 1 ], __CLASS__ );
+		}
 
 		// block uploads via WikiFactory
 		if (!$isDryRun) {
