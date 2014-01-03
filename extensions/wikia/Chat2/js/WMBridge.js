@@ -76,7 +76,7 @@ var requestMW = function(method, roomId, postdata, query, handshake, callback, e
 			}
 
 			/**
-			 * check the response and if this is a redirect, follow it
+			 * check the response and if this is a redirect to a new server, follow it
 			 * returns true in case the method handled the redirect response
 			 */
 			function handleRedirect(response) {
@@ -95,12 +95,18 @@ var requestMW = function(method, roomId, postdata, query, handshake, callback, e
 				return false;
 			}
 
+			/**
+			 * if we were redirected to a new server, store its address in redis
+			 */
 			function updateMWaddress() {
 				if (redirectInfo.newServer && (server != redirectInfo.newServer)) {
 					storage.setRoomData(roomId, 'wgServer', redirectInfo.newServer);
 				}
 			}
 
+			/**
+			 * Make a request to MW host entrypoint
+			 */
 			function makeRequest(host) {
 				var requestUrl = 'http://' + host + '/index.php' + query + "&cb=" + Math.floor(Math.random()*99999), // varnish appears to be caching this (at least on dev boxes) when we don't want it to... so cachebust it.;
 					data;
@@ -115,7 +121,7 @@ var requestMW = function(method, roomId, postdata, query, handshake, callback, e
 						proxy: 'http://' + config.WIKIA_PROXY
 					},
 					function (error, response, body) {
-						if (handleRedirect(response)) { // 301 handling
+						if (handleRedirect(response)) { // cross-server 301 handling
 							return;
 						}
 						if(error) {
