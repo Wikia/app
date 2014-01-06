@@ -135,7 +135,7 @@ class FilePageController extends WikiaController {
 
 		$this->text = '';
 
-		if( !class_exists( 'RelatedPages' ) ) {
+		if ( !class_exists( 'RelatedPages' ) ) {
 			wfProfileOut( __METHOD__ );
 			return;
 		}
@@ -149,7 +149,7 @@ class FilePageController extends WikiaController {
 
 		# Get the title object
 		$title = Title::newFromID( $pageId );
-		if (empty($title)) {
+		if ( empty($title) ) {
 			wfProfileOut( __METHOD__ );
 			return;
 		}
@@ -445,6 +445,8 @@ SQL;
 	/**
 	 * Add more detail for local articles to the current $data by forwarding to
 	 * the ArticleSummaryController
+	 * @param array $data
+	 * @return array
 	 */
 	public function addLocalSummary ( $data ) {
 		return $this->addSummary( $data, function ( $dbName, $articleIds ) {
@@ -456,6 +458,7 @@ SQL;
 	/**
 	 * Add more detail for global articles to the current $data by making HTTP requests to the other wiki URLs
 	 * @param array $data
+	 * @return array
 	 */
 	public function addGlobalSummary( $data ) {
 		return $this->addSummary( $data, function ( $dbName, $articleIds ) {
@@ -499,6 +502,7 @@ SQL;
 	 * Get memcache key for summary of the global usage
 	 * @param string $dbName
 	 * @param integer $pageId
+	 * @return string
 	 */
 	public function getMemcKeyGlobalSummary( $dbName, $pageId ) {
 		return wfSharedMemcKey( 'filepage', 'globalusage', $dbName, $pageId );
@@ -568,5 +572,4 @@ SQL;
 
 		return $fullData;
 	}
-
 }
