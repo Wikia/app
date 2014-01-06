@@ -92,9 +92,9 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 		// get program assets
 		$assets = $program->getAssetsBySection( $section );
 		if ( empty( $assets ) ) {
-			$publishedProgram = VideoPageToolProgram::loadProgramNearestDate( $language, $date );
-			if ( !empty( $publishedProgram ) ) {
-				$assets = $publishedProgram->getAssetsBySection( $section );
+			$latestProgram = VideoPageToolProgram::loadProgramNearestDate( $language, $date );
+			if ( !empty( $latestProgram ) ) {
+				$assets = $latestProgram->getAssetsBySection( $section );
 			}
 		}
 
