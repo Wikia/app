@@ -128,7 +128,11 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 			} else {
 				$formValues = $this->request->getParams();
 				$errMsg = '';
-				$requiredRows = $helper->getRequiredRows( $section, $formValues );
+
+				// use displayTitle field to get required rows
+				$fieldValues = empty( $formValues['displayTitle'] ) ? array() : $formValues['displayTitle'];
+				$requiredRows = $helper->getRequiredRows( $section, $fieldValues );
+
 				$data = $program->formatFormData( $section, $requiredRows, $formValues, $errMsg );
 				if ( empty( $errMsg ) ) {
 					$status = $program->saveAssetsBySection( $section, $data );

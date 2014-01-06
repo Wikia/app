@@ -306,12 +306,12 @@ class VideoPageToolHelper extends WikiaModel {
 	 * Get required rows
 	 * Note: displayTitle field is used to check for number of rows in the form
 	 * @param string $section
-	 * @param array $formValues
+	 * @param array $fieldValues
 	 * @return integer $requiredRows
 	 */
-	public function getRequiredRows( $section, $formValues = array() ) {
+	public function getRequiredRows( $section, $fieldValues = array() ) {
 		if ( is_array( self::$requiredRows[$section] ) ) {
-			$cnt = empty( $formValues['displayTitle'] ) ? 0 : count( $formValues['displayTitle'] );
+			$cnt = is_array( $fieldValues ) ? count( $fieldValues ) : 0;
 			$min = min( self::$requiredRows[$section] );
 			$max = max( self::$requiredRows[$section] );
 			if ( $cnt <= $min ) {
