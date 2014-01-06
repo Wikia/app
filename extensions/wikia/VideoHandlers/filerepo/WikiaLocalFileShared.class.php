@@ -70,8 +70,6 @@ class WikiaLocalFileShared  {
 			$res = $handler->getEmbed( $this->trackingArticleId, $width, $autoplay, $isAjax, $postOnload );
 			$res['title'] = $this->oFile->getTitle()->getDBKey();
 			$res['provider'] = $this->getProviderName();
-			$res['height'] = $handler->getHeight( $width );
-			$res['width'] = $width;
 		} else {
 			$this->trackingArticleId = false;
 			$res = false;
