@@ -98,14 +98,34 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 			}
 		}
 
+		$publishDate = null;
+		if ( $program->isPublished() ) {
+			$publishDate = $program->getPublishDate();
+		} else if ( isset( $latestProgram ) && $latestProgram->isPublished() ) {
+			$publishDate = $latestProgram->getPublishDate();
+		}
+
+		$lastSavedOn = null;
+		$savedBy = null;
 		// get asset data
 		if ( empty( $assets ) ) {
 			// get default assets
 			$videos = $helper->getDefaultValuesBySection( $section );
 		} else {
+			// $assets is an associative array of assets using their display order as the key and the assets data
+			// as the value. Because of this, the first item is 1 for first in the order, rather than 0 as if it were
+			// indexed numerically.
+			$lastSavedOn = $assets[1]->getUpdatedAt();
+			$savedBy = $assets[1]->getUpdatedBy();
 			foreach( $assets as $order => $asset ) {
 				$videos[$order] = $asset->getAssetData();
+				if ( $asset->getUpdatedAt() > $lastSavedOn ) {
+					$lastSavedOn = $asset->getUpdatedAt();
+					$savedBy = $asset->getUpdatedBy();
+				}
 			}
+			// Translate user id into username
+			$savedBy = User::newFromId( $savedBy )->getName();
 		}
 
 		$result = '';
@@ -172,10 +192,12 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 		$this->moduleView = $this->app->renderView( 'VideoPageAdminSpecial', $section, array( 'videos' => $videos, 'date' => $date, 'language' => $language ) );
 		$this->publishButton = ( $program->isPublishable( array_keys( $sections ) ) ) ? '' : 'disabled';
 		$this->publishUrl = $this->wg->Title->getLocalURL( array('date' => $date, 'language' => $language) );
-		$this->publishDate = $program->getFormattedPublishDate();
 
 		$this->section = $section;
 		$this->language = $language;
+		$this->lastSavedOn = $lastSavedOn;
+		$this->savedBy = $savedBy;
+		$this->publishDate = $publishDate;
 	}
 
 	/**
@@ -488,11 +510,13 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 	 * Render header
 	 */
 
-	public function header($data) {
+	public function header() {
 		$this->language = Language::getLanguageName( $this->getVal( 'language' ) );
 		$this->section = ucfirst( $this->getVal( 'section' ) );
-		$this->publishDate = $this->getVal( 'publishDate' );
 		$this->dashboardHref = SpecialPage::getTitleFor('VideoPageAdmin')->getLocalURL();
+		$this->lastSavedOn = $this->getVal( 'lastSavedOn' );
+		$this->savedBy = $this->getVal( 'savedBy' );
+		$this->publishDate = $this->getVal( 'publishDate' );
 	}
 
 	/**
