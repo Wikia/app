@@ -203,13 +203,13 @@ class WikiaFileHelper extends Service {
 				if ( $fileMetadata ) {
 					$fileMetadata = unserialize( $fileMetadata );
 					if ( array_key_exists( 'duration', $fileMetadata ) ) {
-						$duration = self::formatDuration( $fileMetadata['duration'] );
-						$isoDuration = self::getISO8601Duration( $duration );
+						$duration = $fileMetadata['duration'];
+						$isoDuration = self::formatDurationISO8601( $duration );
 						$content .= '<meta itemprop="duration" content="'.$isoDuration.'">';
 					}
 				}
 
-				$content .= self::videoOverlayDuration( $duration );
+				$content .= self::videoOverlayDuration( self::formatDuration( $duration ) );
 				$content .= '<br />';
 
 				// video views
@@ -553,39 +553,30 @@ class WikiaFileHelper extends Service {
 	 * @return string $hms
 	 */
 	public static function formatDuration( $sec ) {
-		$hms = "";
-		$hours = intval( intval( $sec ) / 3600 );
-		if ( $hours > 0 ) {
-			$hms .= str_pad( $hours, 2, "0", STR_PAD_LEFT ). ":";
-		}
+		$sec = intval( $sec );
 
-		$minutes = intval( ( $sec / 60 ) % 60 );
-		$hms .= str_pad( $minutes, 2, "0", STR_PAD_LEFT ). ":";
-
-		$seconds = intval( $sec % 60 );
-		$hms .= str_pad( $seconds, 2, "0", STR_PAD_LEFT );
+		$format = ( $sec >= 3600 ) ? 'H:i:s' : 'i:s';
+		$hms = gmdate( $format, $sec );
 
 		return $hms;
 	}
 
 	/**
-	 * Get the duration in ISO 8601 format for meta tag
-	 * @param $hms
-	 * @return string
+	 * Format duration from second to ISO 8601 format for meta tag
+	 * @param integer $sec
+	 * @return string $result
 	 */
-	public static function getISO8601Duration( $hms ) {
-		if ( !empty( $hms ) ) {
-			$segments = explode( ':', $hms );
-			$ret = "PT";
-			if ( count( $segments ) == 3 ) {
-				$ret .= array_shift( $segments ) . 'H';
-			}
-			$ret .= array_shift( $segments ) . 'M';
-			$ret .= array_shift( $segments ) . 'S';
+	public static function formatDurationISO8601( $sec ) {
+		if ( empty( $sec ) ) {
+			$result = '';
+		} else {
+			$sec = intval( $sec );
 
-			return $ret;
+			$format = ( $sec >= 3600 ) ? '\P\TH\Hi\Ms\S' : '\P\Ti\Ms\S';
+			$result = gmdate( $format, $sec );
 		}
-		return '';
+
+		return $result;
 	}
 
 	/**

@@ -374,7 +374,8 @@ class AssetsManager {
 		// as it build our whole PHP stack and reads file from filesystem
 		// which cannot be cached by web server as the content is assumed
 		// to be dynamic
-		$url = $wgScriptPath . '/' . $filePath;
+		// BAC-696: added ltrim() - prevent double slash in the URL
+		$url = $wgScriptPath . '/' . ltrim( $filePath, '/' );
 		// TODO: remove it completely
 		//if ($minify !== null ? $minify : $this->mMinify) {
 		//	$url = $this->getAMLocalURL('one', $filePath);
