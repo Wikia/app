@@ -2024,19 +2024,19 @@ class User {
                     $dbw = wfGetDB( DB_MASTER );
             }
 			#</Wikia>
-			
+
 			$touched = $dbw->timestamp( $this->mTouched );
-			$needsPurge =  $dbw->selectField( 
-				'`user`', '1', 
-				array( 'user_id' => $this->mId, 'user_touched < ' . $dbw->addQuotes( $touched ) ), 
+			$needsPurge =  $dbw->selectField(
+				'`user`', '1',
+				array( 'user_id' => $this->mId, 'user_touched < ' . $dbw->addQuotes( $touched ) ),
 				__METHOD__ );
-			
+
 			if ( $needsPurge ) {
-				$dbw->update( '`user`', 
-					array( 'user_touched' => $touched ), array( 'user_id' => $this->mId ), 
+				$dbw->update( '`user`',
+					array( 'user_touched' => $touched ), array( 'user_id' => $this->mId ),
 					__METHOD__ );
 			}
-			
+
 			$this->clearSharedCache();
 		}
 	}
@@ -3532,7 +3532,7 @@ class User {
 		}
 
 		$priority = 0;
-		wfRunHooks( 'UserSendConfirmationMail' , array( &$this, &$args, &$priority, &$url, $token, $ip_arg ) );
+		wfRunHooks( 'UserSendConfirmationMail' , array( &$this, &$args, &$priority, &$url, $token, $ip_arg, $type ) );
 
 		/* Wikia change begin - @author: Marooned */
 		/* HTML e-mails functionality */
