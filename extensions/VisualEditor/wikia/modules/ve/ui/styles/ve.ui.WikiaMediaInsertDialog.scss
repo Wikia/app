@@ -209,6 +209,7 @@ $width-cart: 101px;
 
 	.ve-ui-wikiaMediaOptionWidget-check {
 		background-color: $color-page;
+		cursor: pointer;
 		height: 32px;
 		position: absolute;
 		right: 5px;
@@ -219,7 +220,10 @@ $width-cart: 101px;
 			@include ve-icon(checked, wikia, $color-buttons);
 			background-color: $color-buttons;
 		}
+	}
 
+	.ve-ui-mwMediaResultWidget {
+		@include cursor( 'zoom-in' );
 	}
 }
 
