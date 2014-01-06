@@ -56,8 +56,10 @@ $messages['ast'] = array(
 
 /** Azerbaijani (azərbaycanca)
  * @author Cekli829
+ * @author Mushviq Abdulla
  */
 $messages['az'] = array(
+	'ajaxpoll-thankyou' => 'Səs verdiyiniz üçün təşəkkür edirik!',
 	'ajaxpoll-submit' => 'Səs ver!',
 );
 

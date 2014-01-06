@@ -31,6 +31,16 @@ $messages['ar'] = array(
 	'adengine-exitstitial-button' => 'تخطَّ هذا الإعلان',
 );
 
+/** Azerbaijani (azərbaycanca)
+ * @author Mushviq Abdulla
+ */
+$messages['az'] = array(
+	'adengine-exitstitial-title-template' => '$1 tərk edirsən ...',
+	'adengine-exitstitial-redirecting' => 'Brauzeriniz üçün bir neçə saniyə içində istədiyiniz səhifə yönləndirmə edər.',
+	'adengine-exitstitial-go-back' => 'Geri dönmək istəyirsənmi?',
+	'adengine-exitstitial-button' => 'Reklamı ötür',
+);
+
 /** Bikol Central (Bikol Central)
  * @author Geopoet
  */
@@ -236,6 +246,15 @@ $messages['lrc'] = array(
 	'adengine-exitstitial-title-template' => 'شما ها رؤیت د $1...',
 	'adengine-exitstitial-go-back' => 'میهای روئی وا دما؟',
 	'adengine-exitstitial-button' => 'د ای تبلیغ زی رد با',
+);
+
+/** Lithuanian (lietuvių)
+ * @author Eitvys200
+ */
+$messages['lt'] = array(
+	'adengine-exitstitial-title-template' => 'Jūs paliekate $1...',
+	'adengine-exitstitial-go-back' => 'Norite grįžti atgal?',
+	'adengine-exitstitial-button' => 'Praleisti šį Skelbimą',
 );
 
 /** Latvian (latviešu)

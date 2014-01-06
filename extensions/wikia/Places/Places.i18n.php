@@ -209,6 +209,14 @@ $messages['es'] = array(
 	'places-category-switch-off' => 'Activar las geoetiquetas',
 );
 
+/** Persian (فارسی)
+ * @author Reza1615
+ */
+$messages['fa'] = array(
+	'places-editor-search' => 'جستجو',
+	'places-geolocation-modal-error-title' => 'خطا',
+);
+
 /** Finnish (suomi)
  * @author Centerlink
  * @author Nike

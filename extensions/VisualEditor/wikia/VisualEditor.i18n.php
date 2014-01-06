@@ -253,6 +253,18 @@ $messages['es'] = array(
 	'wikia-visualeditor-notification-media-permission-denied' => 'Permiso denegado',
 );
 
+/** Persian (فارسی)
+ * @author Reza1615
+ */
+$messages['fa'] = array(
+	'wikia-visualeditor-dialog-wikiamediainsert-item-title-label' => 'عنوان',
+	'wikia-visualeditor-dialog-wikiamediainsert-item-license-label' => 'اجازه‌نامه',
+	'wikia-visualeditor-dialog-wikiamediainsert-upload-button' => 'بارگذاری',
+	'wikia-visualeditor-dialog-transclusion-title' => 'الگو',
+	'wikia-visualeditor-dialogbutton-transclusion-tooltip' => 'الگو',
+	'wikia-visualeditor-notification-media-permission-denied' => 'اجازه داده نشد.',
+);
+
 /** Finnish (suomi)
  * @author Stryn
  */
@@ -376,6 +388,8 @@ $messages['lb'] = array(
 	'wikia-visualeditor-toolbar-savedialog' => 'Verëffentlechen',
 	'wikia-visualeditor-dialog-wikiasourcemode-apply-button' => 'Ännerungen uwennen',
 	'wikia-visualeditor-dialog-wikiasourcemode-help-link' => 'Help:Wikitext',
+	'wikia-visualeditor-notification-media-must-be-logged-in' => 'Dir musst ageloggt si fir Biller a Videon derbäizesetzen.',
+	'wikia-visualeditor-notification-media-query-failed' => 'Pardon, mir konnten keen ënnerstëtzt Bild oder Video op där URL fonnt.',
 	'wikia-visualeditor-notification-media-permission-denied' => 'Erlaabnes refuséiert',
 );
 
@@ -533,6 +547,9 @@ $messages['pl'] = array(
 	'wikia-visualeditor-dialog-wikiasourcemode-apply-button' => 'Zastosuj',
 	'wikia-visualeditor-dialog-wikiasourcemode-help-link' => 'Help:Wikitekst',
 	'wikia-visualeditor-dialog-wikiasourcemode-help-text' => 'Pomoc z formatowaniem',
+	'wikia-visualeditor-notification-media-must-be-logged-in' => 'Aby dodawać zdjęcia i filmy, musisz się zalogować.',
+	'wikia-visualeditor-notification-media-query-failed' => 'Niestety, nie udało się znaleźć obsługiwanego formatu zdjęć lub filmów dla tego adresu URL.',
+	'wikia-visualeditor-notification-media-permission-denied' => 'Brak dostępu',
 );
 
 /** Pashto (پښتو)

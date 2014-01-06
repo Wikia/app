@@ -213,6 +213,15 @@ $messages['es'] = array(
 	'action-stafflog' => 'ver el registro del staff centralizado',
 );
 
+/** Persian (فارسی)
+ * @author Reza1615
+ */
+$messages['fa'] = array(
+	'stafflog-filter-label' => 'پالایه',
+	'stafflog-filter-user' => 'کاربر:',
+	'stafflog-filter-type-block' => 'بلوک‌ها',
+);
+
 /** French (français)
  * @author Gomoko
  * @author Peter17

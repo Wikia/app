@@ -1131,6 +1131,7 @@ $messages['ce'] = array(
 	'awc-metrics-close-action' => 'дӀачӀагӀа',
 	'awc-metrics-close-checked' => 'ДӀачӀагӀа билгал йинарш',
 	'closed-reason' => 'Бахьан:',
+	'newwikisgraph-param-other' => 'Кхин',
 );
 
 /** Sorani Kurdish (کوردی)
@@ -1817,15 +1818,26 @@ $messages['eu'] = array(
  * @author Ebraminio
  * @author Huji
  * @author Mjbmr
+ * @author Reza1615
  * @author ZxxZxxZ
  */
 $messages['fa'] = array(
+	'wf_city_url' => 'نشانی',
+	'wf_city_id' => 'شناسه',
+	'wf_city_title' => 'عنوان',
+	'wf_city_created' => 'ایجاد شده',
 	'wf_city_founding_user' => 'بنیان‌گذار',
 	'wf_city_founding_email' => 'پست الکترونیکی بنیان‌گذار',
 	'wf_city_public' => 'وضعیت',
 	'wf_city_lang' => 'زبان',
 	'wf_cc_name' => 'رده',
+	'wikifactory-label-variables' => 'متغییرها',
+	'wikifactory-label-variables2' => 'عمومی',
 	'wikifactory-label-actions' => 'عملکردها',
+	'wikifactory-label-close' => 'بسته',
+	'wikifactory-label-tags' => 'برچسب‌ها',
+	'wikifactory-label-tags2' => 'برچسب‌ها',
+	'closewiki-nbr-wiki' => 'ویکی‌های $1',
 	'closewiki-unknown' => 'ناشناخته',
 	'wikifactory-button-saveparse' => 'تجزیه و ذخیره تغییرات',
 	'wikifactory-button-save' => 'ذخیره‌کردن تغییرات',
@@ -1836,7 +1848,15 @@ $messages['fa'] = array(
 	'awc-metrics-articles' => 'مقاله‌ها',
 	'awc-metrics-edits' => 'ویرایش‌ها',
 	'awc-metrics-db-size' => 'حجم بانک اطلاعاتی',
+	'awc-metrics-images' => 'تصویرها',
+	'awc-metrics-close' => 'بسته',
+	'awc-metrics-active' => 'فعال',
+	'awc-metrics-removed' => 'حذف شده',
 	'closed-wiki' => 'ویکی بسته شده',
+	'closed-wiki-create-wiki' => 'ایجاد ویکی جدید',
+	'closed-reason' => 'دلیل:',
+	'newwikisgraph-param-all' => 'همه',
+	'newwikisgraph-param-other' => 'دیگر',
 );
 
 /** Finnish (suomi)

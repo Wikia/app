@@ -334,6 +334,18 @@ $messages['eu'] = array(
 	'wikiapoll-error-invalid-title' => 'Galderaren testua ez da onartzen.',
 );
 
+/** Persian (فارسی)
+ * @author Reza1615
+ */
+$messages['fa'] = array(
+	'wikiapoll-thanks-for-vote' => 'سپاس!',
+	'wikiapoll-vote' => 'ثبت رای!',
+	'wikiapoll-question-mark-after' => '؟',
+	'wikiapoll-question-label' => 'پرسش',
+	'wikiapoll-cancel-label' => 'لغو',
+	'wikiamobile-wikiapoll-thanks-voting' => 'از رای دادنتان متشکریم!',
+);
+
 /** Finnish (suomi)
  * @author Tofu II
  * @author VezonThunder

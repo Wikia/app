@@ -130,6 +130,16 @@ Téntalo otra vuelta o [[Special:Contact|informa d'ello]].",
 	'comboajaxlogin-ajaxerror' => 'Wikia nun ta respondiendo. Por favor, comprueba la to conexón.',
 );
 
+/** Azerbaijani (azərbaycanca)
+ * @author Mushviq Abdulla
+ */
+$messages['az'] = array(
+	'comboajaxlogin-createlog' => 'Daxil olun ya da yeni hesab yaradın',
+	'comboajaxlogin-connectmarketing-back' => '« Geri',
+	'comboajaxlogin-connectmarketing-forward' => 'Başla »',
+	'comboajaxlogin-ajaxerror' => 'Wikia qarşılıq vermir. Lütfən şəbəkə bağlantınızı yoxlayın.',
+);
+
 /** Bashkir (башҡортса)
  * @author Ләйсән
  */
