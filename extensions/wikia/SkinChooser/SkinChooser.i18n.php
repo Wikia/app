@@ -70,6 +70,13 @@ $messages['es'] = array(
 	'site-layout' => 'Diseños del sitio',
 );
 
+/** Persian (فارسی)
+ * @author Reza1615
+ */
+$messages['fa'] = array(
+	'new-look' => 'ویکیا',
+);
+
 /** Finnish (suomi)
  * @author Crt
  * @author Nedergard
@@ -140,6 +147,13 @@ $messages['ja'] = array(
 	'skinchooser-desc' => '利用者の個人設定での外装選択を可能にします。',
 	'new-look' => 'ウィキア',
 	'site-layout' => 'サイトの外装',
+);
+
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'new-look' => 'ويكيا:',
 );
 
 /** Macedonian (македонски)

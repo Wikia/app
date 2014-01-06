@@ -632,7 +632,10 @@ Per exemple, pots:
  */
 $messages['ce'] = array(
 	'myhome-user-contributions-feed' => 'Къинхьегам',
+	'myhome-feed-newpage' => 'Керла агӀо',
 	'myhome-feed-edit' => 'нисдар',
+	'myhome-feed-delete' => 'дӀаяьккхина',
+	'myhome-hot-spots-number-of-editors' => 'нисдарш',
 );
 
 /** Czech (čeština)
@@ -2080,6 +2083,7 @@ $messages['ka'] = array(
 );
 
 /** Kannada (ಕನ್ನಡ)
+ * @author Dimension10
  * @author Nayvik
  */
 $messages['kn'] = array(
@@ -2087,6 +2091,7 @@ $messages['kn'] = array(
 	'myhome-feed-newpage' => 'ಹೊಸ ಪುಟ',
 	'myhome-feed-edit' => 'ಸಂಪಾದಿಸು',
 	'myhome-feed-talkpage' => 'ಚರ್ಚಾ ಪುಟ',
+	'myhome-feed-blogcomment' => 'ಬ್ಲಾಗ್ ಇಗೆ  ಟಿಪ್ಪಣಿ',
 	'myhome-feed-delete' => 'ಅಳಿಸಲಾಗಿದೆ',
 	'myhome-feed-categorization' => 'ವರ್ಗೀಕರಣ',
 	'myhome-hot-spots-number-of-editors' => 'ಸಂಪಾದಕರು',
@@ -2148,6 +2153,32 @@ $messages['lb'] = array(
 	'myhome-feed-new-article-comment-details' => 'Bemierkung',
 	'myhome-feed-redirect-details' => 'Viruleedung',
 	'tooltip-pt-myhome' => 'Op meng Haaptsäit goen',
+);
+
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'myhome' => 'حونه مه',
+	'prefs-myhome' => 'حونه مه',
+	'myhome-feed-newpage' => 'بلگه نو',
+	'myhome-feed-edit' => 'ويرايشت',
+	'myhome-feed-talkpage' => 'بلگه چک چنه',
+	'myhome-feed-delete' => 'پاك بیه',
+	'myhome-feed-by' => 'وا $1',
+	'myhome-feed-new-page-details' => 'بلگه نو',
+	'myhome-feed-summary-details' => 'چكسته',
+	'myhome-feed-new-blog-comment-details' => 'نظر',
+	'myhome-feed-new-article-comment-details' => 'نظر',
+	'myhome-hot-spots-number-of-editors' => 'ویرایشتگریا',
+	'tooltip-pt-myhome' => 'رو د حونه مه',
+);
+
+/** Latvian (latviešu)
+ * @author Sg ghost
+ */
+$messages['lv'] = array(
+	'wikiactivity' => 'Viki Aktivitātes',
 );
 
 /** Macedonian (македонски)
@@ -2919,6 +2950,7 @@ $messages['ps'] = array(
 
 /** Portuguese (português)
  * @author Hamilton Abreu
+ * @author Josep Maria 15.
  * @author Luckas
  * @author Malafaya
  * @author SandroHc
@@ -2983,12 +3015,12 @@ Se quer ver A Minha Casa, visite '''[[Special:Preferences|as suas Preferências]
 	'myhome-community-corner-header' => 'Mensagens Comunitárias',
 	'oasis-myhome-community-corner-edit' => 'editar mensagem &gt;',
 	'myhome-community-corner-edit' => 'editar mensagem',
-	'community-corner' => "'''Bem-vindo(a) à A Minha Casa!'''
+	'community-corner' => "'''Bem-vindo(a) à Minha Casa!'''
 
-Esta página ajuda-o a saber o que está a acontecer na wiki.
+Esta página vai ajudar-te a saber o que está a acontecer na wiki.
 
-Se é fundador ou administrador da wiki, pode alterar esta mensagem para comunicar à comunidade coisas importantes que estejam a acontecer no site.
-Pode, por exemplo:
+Se és o fundador ou um administrador da wiki, podes alterar esta mensagem para comunicar à comunidade coisas importantes que estejam a acontecer no site.
+Podes, por exemplo:
 
 * Organizar um projecto para criar uma área da wiki
 

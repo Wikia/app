@@ -177,12 +177,14 @@ $messages['de'] = array(
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
  * @author Marmase
+ * @author Mirzali
  */
 $messages['diq'] = array(
-	'partner-feed-recent-changes' => 'Vırnayışé bahdoyéni',
+	'partner-feed-recent-changes' => 'Vurnayışê peyêni',
 	'feed-title-recent-images' => 'Vurnayışê resiman',
 	'all-blog-posts' => 'kategoriy pêro',
 	'feed-title-blogcomments' => 'Vatışê - ($1)',
+	'feed-title-recentchanges' => 'Vurnayışê peyêni',
 );
 
 /** Spanish (español)
@@ -213,10 +215,15 @@ $messages['es'] = array(
 
 /** Persian (فارسی)
  * @author BlueDevil
+ * @author Reza1615
  */
 $messages['fa'] = array(
 	'partner-feed-recent-changes' => 'تغییرات اخیر',
+	'feed-title-blogposts' => 'پست‌های اخیر وبلاگ',
+	'feed-title-recent-badges' => 'نشانهای اخیر',
 	'feed-title-recent-images' => 'تصاویر اخیر',
+	'feed-title-leaderboard' => 'تابلوی رهبری دستاوردها',
+	'feed-title-recentchanges' => 'تغییرات اخیر',
 );
 
 /** Finnish (suomi)
@@ -361,6 +368,14 @@ $messages['lb'] = array(
 	'all-blog-posts' => 'all Kategorien',
 	'feed-title-blogcomments' => 'Bemierkungen iwwer $1',
 	'feed-title-recentchanges' => 'Rezent Ännerungen',
+);
+
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'feed-title-recent-images' => 'عسکیا تازه باو',
+	'feed-title-recentchanges' => 'آلشتیا تازه باو',
 );
 
 /** Macedonian (македонски)
@@ -785,6 +800,13 @@ $messages['zh-hans'] = array(
 	'partner-feed-recent-changes' => '最新更改',
 	'feed-title-blogposts' => '最新博客帖子',
 	'feed-title-recent-badges' => '最新徽章',
+	'feed-title-recent-images' => '最近的图片',
+	'feed-title-leaderboard' => '成就排行榜',
+	'feed-main-title' => 'Wikia合作伙伴订阅点',
 	'all-blog-posts' => '全部分类',
 	'blog-posts-from-listing' => '来自列表：$1',
+	'feed-title-hot-content' => '热点内容 - $1',
+	'feed-title-blogcomments' => '评论 $1',
+	'feed-title-recentchanges' => '最近更改',
+	'partner-feed-error-no-blogpost-found' => '<b>错误：</b>博客文章 $1 不存在。',
 );

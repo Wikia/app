@@ -364,6 +364,13 @@ $messages['lb'] = array(
 	'iwedit-success' => '<p>De Linkg gouf ugeluecht</p>',
 );
 
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'iwedit-update' => 'روزآمد كردن',
+);
+
 /** Latgalian (latgaļu)
  * @author Dark Eagle
  */
@@ -621,7 +628,13 @@ $messages['uk'] = array(
  * @author Baonguyen21022003
  */
 $messages['vi'] = array(
+	'interwikiedit' => 'Interwiki biên tập',
+	'iwedit-title' => 'Interwiki biên tập',
+	'iwedit-language-interwikis' => 'ngôn ngữ interwikis chỉ',
+	'iwedit-all-interwikis' => 'Tất cả interwikis',
 	'iwedit-update' => 'Cập nhật',
+	'iwedit-error' => '<p>Lỗi đã xảy ra.</p>',
+	'iwedit-success' => '<p>Tạo liên kết thành công.</p>',
 );
 
 /** Simplified Chinese (中文（简体）‎)

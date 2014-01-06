@@ -2,7 +2,7 @@
 /**
  * Integration test for file uploads and removals
  *
- * @group Broken
+ * @group Integration
  * @author macbre
  */
 class ImagesServiceUploadTest extends WikiaBaseTest {
@@ -10,7 +10,8 @@ class ImagesServiceUploadTest extends WikiaBaseTest {
 	const URL = 'http://upload.wikimedia.org/wikipedia/commons/d/d9/Eldfell%2C_Helgafell_and_the_fissure.jpg';
 	const REUPLOAD_URL = 'http://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Atlantic_Puffin.jpg/320px-Atlantic_Puffin.jpg';
 	const PREFIX = 'QAImage';
-	const FILENAME = 'Test%?ąę!-$1.jpg';
+	const FILENAME = 'Test-$1.jpg';
+	#const FILENAME = 'Test%?ąę!-$1.jpg';
 
 	private $origUser;
 	private $fileName;
@@ -32,7 +33,8 @@ class ImagesServiceUploadTest extends WikiaBaseTest {
 
 		// use Swift domain
 		global $wgDevelEnvironmentName;
-		$this->mockGlobalVariable( 'wgDevBoxImageServerOverride', "static.{$wgDevelEnvironmentName}.wikia-dev.com" );
+		// Disabling forcing the image domain due to BAC-1136
+		//$this->mockGlobalVariable( 'wgDevBoxImageServerOverride', "static.{$wgDevelEnvironmentName}.wikia-dev.com" );
 
 		// debug
 		global $wgLocalFileRepo;
@@ -131,7 +133,7 @@ class ImagesServiceUploadTest extends WikiaBaseTest {
 		$res = $this->uploadFromUrl( $file, self::URL, __CLASS__ );
 		Wikia::log( __METHOD__ , 'upload', sprintf( 'took %.4f sec', microtime( true ) - $time ) );
 
-		$this->assertTrue( $res->isOK(), 'Upload should end up successfully' );
+		$this->assertTrue( $res->isOK(), 'Upload should end up successfully - ' .json_encode($res->getErrorsArray()) );
 
 		/* @var LocalFile $file */
 		$this->assertInstanceOf( 'LocalFile', $file );
