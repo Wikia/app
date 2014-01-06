@@ -36,7 +36,7 @@ ve.ui.WikiaMediaPreviewWidget = function VeUiWikiaMediaPreviewWidget( model ) {
 
 	this.$.addClass( 've-ui-wikiaMediaPreviewWidget-overlay' )
 		.hide()
-		.appendTo( $( 'body' ) );
+		.appendTo( $( '.ve-ui-surface-overlay-global' ) );
 
 	// Init media
 	if( model.type === 'video' ) {
