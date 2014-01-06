@@ -55,13 +55,13 @@ require(['wikia.window', 'wikia.nirvana', 'track', 'wikia.cache'],
 						$wikiNavH1.addClass('animNext');
 
 						window.setTimeout(function(){
-							$wikiNavH1.text($element.text());
+							$wikiNavLink.text($element.text());
 						}, ANIMATION_TIME);
 
 					} else {
 						trackLevel(2);
 
-						$wikiNavH1.text($element.text());
+						$wikiNavLink.text($element.text());
 						lvl2Link = href;
 
 						$wkNavMenu.addClass('cur2');
@@ -79,7 +79,7 @@ require(['wikia.window', 'wikia.nirvana', 'track', 'wikia.cache'],
 					$wkNavMenu.removeClass('cur3');
 
 					window.setTimeout(function(){
-						$wikiNavH1.text($wkNavMenu.find('.lvl2.cur').prev().text());
+						$wikiNavLink.text($wkNavMenu.find('.lvl2.cur').prev().text());
 					}, ANIMATION_TIME);
 
 					window.setTimeout(function(){

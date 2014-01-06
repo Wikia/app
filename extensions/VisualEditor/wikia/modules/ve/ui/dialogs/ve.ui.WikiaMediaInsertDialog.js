@@ -205,14 +205,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.onQueryRequestVideoDone = function ( data
 		data.videoId
 	);
 	this.queryInput.setValue( '' );
-	this.addCartItem( new ve.dm.WikiaCartItem(
-		data.title,
-		data.tempUrl || data.url,
-		'video',
-		data.tempName,
-		data.provider,
-		data.videoId
-	), true );
+	this.addCartItem( model, true );
 };
 
 /**
@@ -240,7 +233,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.onSearchCheck = function ( item ) {
 	if ( cartItem ) {
 		this.cartModel.removeItems( [ cartItem.getModel() ] );
 	} else {
-		this.addCartItem( new ve.dm.WikiaCartItem( item.title, item.url, item.type ) );
+		this.addCartItem( new ve.dm.WikiaCartItem( item.title, item.url, item.type, undefined, item.provider ) );
 	}
 };
 

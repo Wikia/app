@@ -4,6 +4,7 @@
 @import "skins/oasis/css/mixins/box-sizing";
 @import "skins/oasis/css/mixins/clearfix";
 @import "skins/oasis/css/mixins/gradient";
+@import "skins/oasis/css/mixins/cursor";
 @import "mixins/ve-icon";
 
 $size-cart-item: 60px;
@@ -125,6 +126,7 @@ $width-cart: 101px;
 	}
 
 	.ve-ui-wikiaMediaPageWidget-item {
+		@include cursor( 'zoom-in' );
 		float: left;
 		text-align: center;
 		width: $width-media-item-max;
@@ -207,6 +209,7 @@ $width-cart: 101px;
 
 	.ve-ui-wikiaMediaOptionWidget-check {
 		background-color: $color-page;
+		cursor: pointer;
 		height: 32px;
 		position: absolute;
 		right: 5px;
@@ -217,7 +220,10 @@ $width-cart: 101px;
 			@include ve-icon(checked, wikia, $color-buttons);
 			background-color: $color-buttons;
 		}
+	}
 
+	.ve-ui-mwMediaResultWidget {
+		@include cursor( 'zoom-in' );
 	}
 }
 

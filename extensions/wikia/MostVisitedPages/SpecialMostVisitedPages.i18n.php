@@ -369,6 +369,14 @@ $messages['lb'] = array(
 	'mostvisitedpagesalllink' => 'Déi am dackste besichte Säite kucken',
 );
 
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'mostvisitedpagessearchtext' => 'نوم گوتار',
+	'mostvisitedpagessearchbtn' => 'پی جوری',
+);
+
 /** Macedonian (македонски)
  * @author Bjankuloski06
  */

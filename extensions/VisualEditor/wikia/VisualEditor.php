@@ -17,6 +17,7 @@ $wgAutoloadClasses['ApiPhotoAttribution'] = $dir . 'ApiPhotoAttribution.php';
 $wgAutoloadClasses['ApiAddMedia'] = $dir . 'ApiAddMedia.php';
 $wgAutoloadClasses['ApiAddMediaTemporary'] = $dir . 'ApiAddMediaTemporary.php';
 $wgAutoloadClasses['ApiAddMediaPermanent'] = $dir . 'ApiAddMediaPermanent.php';
+$wgAutoloadClasses['ApiVideoPreview'] = $dir . 'ApiVideoPreview.php';
 
 /* API Modules */
 
@@ -24,6 +25,7 @@ $wgAPIModules['apimediasearch'] = 'ApiMediaSearch';
 $wgAPIModules['apiphotoattribution'] = 'ApiPhotoAttribution';
 $wgAPIModules['addmediatemporary'] = 'ApiAddMediaTemporary';
 $wgAPIModules['addmediapermanent'] = 'ApiAddMediaPermanent';
+$wgAPIModules['videopreview'] = 'ApiVideoPreview';
 
 /* Resource Loader Modules */
 
@@ -89,6 +91,7 @@ $wgResourceModules += array(
 			've/ui/widgets/ve.ui.WikiaMediaResultsWidget.js',
 			've/ui/widgets/ve.ui.WikiaMediaQueryWidget.js',
 			've/ui/widgets/ve.ui.WikiaUploadWidget.js',
+			've/ui/widgets/ve.ui.WikiaMediaPreviewWidget.js',
 			've/ui/widgets/ve.ui.WikiaDropTargetWidget.js'
 		),
 		'messages' => array(
@@ -128,6 +131,7 @@ $wgResourceModules += array(
 			'wikia-visualeditor-notification-media-only-premium-videos-allowed',
 			'wikia-visualeditor-notification-media-query-failed',
 			'wikia-visualeditor-notification-media-permission-denied',
+			'wikia-visualeditor-notification-video-preview-not-available',
 		),
 		'dependencies' => array(
 			'ext.visualEditor.core',

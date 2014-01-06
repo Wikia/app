@@ -180,8 +180,11 @@ $messages['es'] = array(
 
 /** Persian (فارسی)
  * @author Mjbmr
+ * @author Reza1615
  */
 $messages['fa'] = array(
+	'unsubscribe' => 'لغو اشتراک',
+	'unsubscribe-confirm-legend' => 'تأیید',
 	'unsubscribe-confirm-button' => 'بله، من مطمئن هستم',
 	'unsubscribe-working-done' => 'کامل.',
 );

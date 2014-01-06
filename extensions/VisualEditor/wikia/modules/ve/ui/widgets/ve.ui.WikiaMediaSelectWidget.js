@@ -45,12 +45,10 @@ ve.ui.WikiaMediaSelectWidget.prototype.onMouseUp = function ( e ) {
 	}
 	if ( !this.disabled && e.which === 1 && this.selecting ) {
 		// What was clicked on?
-		if ( $( e.target ).hasClass( 've-ui-wikiaMediaResultWidget-check' ) ) {
+		if ( $( e.target ).hasClass( 've-ui-wikiaMediaOptionWidget-check' ) ) {
 			this.emit( 'check', this.selecting );
 		} else {
-			// TODO: When preview is ready, this should call this.selectItem.
-			//this.selectItem( this.selecting );
-			this.emit( 'check', this.selecting );
+			this.selectItem( this.selecting );
 		}
 		this.selecting = null;
 	}

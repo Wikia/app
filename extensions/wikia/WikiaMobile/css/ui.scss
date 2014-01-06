@@ -20,6 +20,8 @@ html {
 
 	font-family: 'Open Sans', sans-serif;
 
+	width: 100%;
+
 	font-size: 16px;
 	line-height: 26px;
 	font-weight: 300;
@@ -29,6 +31,8 @@ body {
 	background-color: $page-background-color;
 	color: $page-text-color;
 	margin: 0;
+
+	width: 100%;
 }
 
 // Error Box
@@ -92,6 +96,9 @@ body {
 .cld {
 	background-position: right;
 	background-origin: content-box;
+	background-repeat: no-repeat;
+	background-size: 10px;
+	background-image:  url('/extensions/wikia/WikiaMobile/images/chevron-blue-right.png'); /* base64 */
 
 	a, span {
 		padding-right: 15px;
@@ -125,12 +132,6 @@ h2[data-count] {
 .clsIco{
 	background-repeat: no-repeat;
 	background-image: url('/extensions/wikia/WikiaMobile/images/close.png'); /* base64 */
-}
-
-#wkNavLink, .cld {
-	background-repeat: no-repeat;
-	background-size: 10px;
-	background-image:  url('/extensions/wikia/WikiaMobile/images/chevron-blue-right.png'); /* base64 */
 }
 
 //chevrons
@@ -167,6 +168,11 @@ sup.reference {
 a {
 	color: $link-color;
 	text-decoration: none;
+
+	&.new {
+		color: $page-text-color;
+		pointer-events: none;
+	}
 }
 
 dd {
@@ -175,9 +181,4 @@ dd {
 
 strong, b {
 	font-weight: bold;
-}
-
-a.new {
-	color: $page-text-color;
-	pointer-events: none;
 }

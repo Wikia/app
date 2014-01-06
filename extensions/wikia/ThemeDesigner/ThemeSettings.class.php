@@ -9,6 +9,7 @@ class ThemeSettings {
 	const HistoryItemsLimit = 10;
 
 	const MIN_WIDTH_FOR_SPLIT = 1030;
+	const MIN_WIDTH_FOR_NO_SPLIT = 2000;
 
 	const WordmarkImageName = 'Wiki-wordmark.png';
 	const BackgroundImageName = 'Wiki-background';

@@ -28,6 +28,7 @@ ve.ui.WikiaMediaPageWidget = function VeUiWikiaMediaPageWidget( model, config ) 
 	this.fieldset = new ve.ui.FieldsetLayout( { '$$': this.$$ } );
 	this.image = null;
 	this.model = model;
+	this.mediaPreview = null;
 	this.removeButton = new ve.ui.ButtonWidget( {
 		'$$': this.$$,
 		'flags': ['destructive'],
@@ -61,7 +62,6 @@ ve.ui.WikiaMediaPageWidget = function VeUiWikiaMediaPageWidget( model, config ) 
 
 	// Initialization
 	this.title.$input.attr( 'maxlength', 200 );
-	this.$itemWrapper.addClass( 've-ui-wikiaMediaPageWidget-item' );
 	this.$extension
 		.addClass( 've-ui-wikiaMediaPageWidget-item-extension' )
 		.text( this.model.extension );
@@ -78,7 +78,6 @@ ve.ui.WikiaMediaPageWidget = function VeUiWikiaMediaPageWidget( model, config ) 
 
 	this.setupImage();
 	if ( this.model.type === 'video' ) {
-		// TODO: support embdedded video
 		this.setupVideoOverlay();
 	}
 };
@@ -111,6 +110,7 @@ ve.ui.WikiaMediaPageWidget.prototype.getModel = function () {
  */
 ve.ui.WikiaMediaPageWidget.prototype.onTitleKeyup = function () {
 	this.model.setTitle( this.title.$input.val() );
+	this.emit( 'title', this.model );
 };
 
 /**
@@ -134,7 +134,12 @@ ve.ui.WikiaMediaPageWidget.prototype.onImageLoad = function () {
  * @method
  */
 ve.ui.WikiaMediaPageWidget.prototype.onItemClick = function () {
-	window.alert( ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-preview-alert' ) );
+	if( !this.mediaPreview ) {
+		this.mediaPreview = new ve.ui.WikiaMediaPreviewWidget( this.model );
+		this.mediaPreview.on( 'remove', ve.bind( function() {
+			this.mediaPreview = null;
+		}, this ) );
+	}
 };
 
 /**

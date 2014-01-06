@@ -777,6 +777,24 @@ Si crees que es un error, por favor [[Special:Contact|contacta a Wikia]].<br />E
 	'right-phalanxemailblock' => 'Crear, ver y administrar bloqueos de correos',
 );
 
+/** Persian (فارسی)
+ * @author Reza1615
+ */
+$messages['fa'] = array(
+	'phalanx-type-user' => 'کاربر',
+	'phalanx-type-user-email' => 'رایانامه',
+	'phalanx-label-filter' => 'فیلتر:',
+	'phalanx-label-reason' => 'دلیل:',
+	'phalanx-label-lang' => 'زبان:',
+	'phalanx-test-submit' => 'آزمایش',
+	'phalanx-stats-table-type' => 'نوع',
+	'phalanx-stats-table-create' => 'ایجاد شده',
+	'phalanx-stats-table-expire' => 'انقضا',
+	'phalanx-stats-table-language' => 'زبان',
+	'phalanx-stats-table-text' => 'متن',
+	'phalanx-stats-table-reason' => 'دلیل',
+);
+
 /** Finnish (suomi)
  * @author Centerlink
  * @author Nedergard
@@ -1474,6 +1492,37 @@ $messages['lb'] = array(
 	'phalanx-stats-table-wiki-name' => 'Numm vun der Wiki',
 );
 
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'phalanx' => 'فالانکس',
+	'phalanx-type-summary' => 'چکسته بلگه',
+	'phalanx-type-user' => 'كارور',
+	'phalanx-type-user-email' => 'پیومک برقی',
+	'phalanx-label-filter' => 'فيلتر',
+	'phalanx-label-reason' => 'دليل:',
+	'phalanx-label-expiry' => 'تموم بين:',
+	'phalanx-label-type' => 'نوع:',
+	'phalanx-label-lang' => 'زون:',
+	'phalanx-view-type' => 'نوع قلف',
+	'phalanx-format-regex' => 'ریجکس',
+	'phalanx-format-exact' => 'گپ کردن',
+	'phalanx-link-unblock' => 'بی قطی',
+	'phalanx-link-modify' => 'آلشت كردن',
+	'phalanx-link-stats' => 'گوتن',
+	'phalanx-stats-table-type' => 'نيسنن كامپيتری',
+	'phalanx-stats-table-create' => 'راست بيه',
+	'phalanx-stats-table-expire' => 'تموم بیه آ',
+	'phalanx-stats-table-exact' => 'گپ کردن',
+	'phalanx-stats-table-regex' => 'ریجکس',
+	'phalanx-stats-table-case' => 'نمونه',
+	'phalanx-stats-table-language' => 'زون',
+	'phalanx-stats-table-text' => 'متن',
+	'phalanx-stats-table-reason' => 'دليل',
+	'phalanx-stats-table-wiki-name' => 'نوم ویکی',
+);
+
 /** Macedonian (македонски)
  * @author Bjankuloski06
  */
@@ -1849,7 +1898,7 @@ Vennligst [[Special:Contact|kontakt Wikia]] om problemet.<br />Blokkereren la i 
  * @author Siebrand
  */
 $messages['nl'] = array(
-	'phalanx-desc' => 'Phalanx  is een Geïntegreerd Spamafweersysteem',
+	'phalanx-desc' => 'Phalanx is een Geïntegreerd Spamafweersysteem',
 	'phalanx' => 'Phalanx',
 	'phalanx-title' => 'Phalanx - Geïntegreerd Spamafweersysteem',
 	'phalanx-type-content' => 'paginainhoud',

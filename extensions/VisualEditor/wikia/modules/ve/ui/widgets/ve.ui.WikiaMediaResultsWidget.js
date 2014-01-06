@@ -55,6 +55,24 @@ ve.ui.WikiaMediaResultsWidget.prototype.onResultsCheck = function ( item ) {
 };
 
 /**
+ * Handle selecting results.
+ *
+ * @method
+ * @param {ve.ui.WikiaMediaOptionWidget} item Item whose state is changing
+ */
+ve.ui.WikiaMediaResultsWidget.prototype.onResultsSelect = function ( item ) {
+	if ( item && !this.mediaPreview ) {
+ 		this.mediaPreview = new ve.ui.WikiaMediaPreviewWidget( item.model );
+		this.mediaPreview.on( 'remove', ve.bind( function() {
+			this.mediaPreview = null;
+		}, this ) );
+ 	}
+
+	//Parent
+	ve.ui.SearchWidget.prototype.onResultsSelect;
+};
+
+/**
  * Add items to the results.
  *
  * @method
@@ -105,12 +123,3 @@ ve.ui.WikiaMediaResultsWidget.prototype.onResultsScroll = function () {
  */
 ve.ui.WikiaMediaResultsWidget.prototype.onResultsHighlight =
 	ve.ui.SearchWidget.prototype.onResultsHighlight;
-
-/**
- * Handle selecting results.
- *
- * @method
- * @see {@link ve.ui.SearchWidget.prototype.onResultsSelect}
- */
-ve.ui.WikiaMediaResultsWidget.prototype.onResultsSelect =
-	ve.ui.SearchWidget.prototype.onResultsSelect;

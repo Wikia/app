@@ -36,7 +36,8 @@ $messages['qqq'] = array(
 * $1 is the number of users that have voted.',
 	'wikiapoll-question' => 'Used as a title. Parameter:
 * $1 is the poll question without a question mark.',
-	'wikiapoll-thanks-for-vote' => 'Thank you to voting user.',
+	'wikiapoll-thanks-for-vote' => 'Thank you to voting user.
+{{Identical|Thank}}',
 	'wikiapoll-vote' => 'Button text to vote in a poll.
 {{Identical|Vote}}',
 	'wikiapoll-votes' => 'Parameter:
@@ -331,6 +332,18 @@ $messages['eu'] = array(
 	'wikiapoll-publish-label' => 'Argitaratu',
 	'wikiapoll-error-duplicate' => 'Izen hori duen bozketa existitzen da.',
 	'wikiapoll-error-invalid-title' => 'Galderaren testua ez da onartzen.',
+);
+
+/** Persian (فارسی)
+ * @author Reza1615
+ */
+$messages['fa'] = array(
+	'wikiapoll-thanks-for-vote' => 'سپاس!',
+	'wikiapoll-vote' => 'ثبت رای!',
+	'wikiapoll-question-mark-after' => '؟',
+	'wikiapoll-question-label' => 'پرسش',
+	'wikiapoll-cancel-label' => 'لغو',
+	'wikiamobile-wikiapoll-thanks-voting' => 'از رای دادنتان متشکریم!',
 );
 
 /** Finnish (suomi)
