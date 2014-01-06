@@ -172,7 +172,6 @@ class VideoPageToolProgram extends WikiaModel {
 				array(
 					'language' => $language,
 					'publish_date <= '.$db->addQuotes( $date ),
-					'is_published' => 1,
 				),
 				__METHOD__,
 				array( 'ORDER BY' => 'publish_date DESC' )
