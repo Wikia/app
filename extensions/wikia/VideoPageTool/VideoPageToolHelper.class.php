@@ -18,7 +18,7 @@ class VideoPageToolHelper extends WikiaModel {
 
 	public static $requiredRows = array(
 		'featured' => 5,
-		'category' => 3,
+		'category' => [3, 5],
 		'fan'      => 4,
 	);
 
@@ -171,32 +171,52 @@ class VideoPageToolHelper extends WikiaModel {
 		return $video;
 	}
 
+	/**
+	 * Get Category data
+	 * @param string $categoryTitle
+	 * @return array $data
+	 */
 	public function getCategoryData( $categoryTitle ) {
 		wfProfileIn( __METHOD__ );
 
-		$data = array();
-		if ( class_exists( 'CategoryDataService' ) ) {
-			$memcKey = $this->getMemcKeyCategoryData( $categoryTitle->getText() );
-			$data = $this->wg->memc->get( $memcKey );
-			if ( !is_array( $data ) ) {
-				$categoryData = CategoryDataService::getRecentlyEdited( $categoryTitle->getDBkey(), NS_FILE );
-				$data = array();
-				foreach ( array_keys( $categoryData ) as $pageId ) {
-					$title = Title::newFromID( $pageId );
-					$file = wfFindFile( $title );
-					if ( $file instanceof File  && $file->exists() && WikiaFileHelper::isFileTypeVideo( $file ) ) {
-						$thumb = $file->transform( array( 'width' => self::THUMBNAIL_CATEGORY_WIDTH, 'height' => self::THUMBNAIL_CATEGORY_HEIGHT ) );
-						$videoThumb = $thumb->toHtml();
-						$data[] = array(
-							'title' => $title->getText(),
-							'url'   => $title->getFullURL(),
-							'thumb' => $videoThumb,
-						);
-					}
-				}
+		$memcKey = $this->getMemcKeyCategoryData( $categoryTitle->getText() );
+		$data = $this->wg->memc->get( $memcKey );
+		if ( !is_array( $data ) ) {
+			$db = wfGetDB( DB_SLAVE );
+			$result = $db->select(
+				array( 'page', 'video_info', 'categorylinks' ),
+				array( 'page_id', 'page_title' ),
+				array(
+					'cl_to' => $categoryTitle->getDBkey(),
+					'page_namespace' => NS_FILE,
+				),
+				__METHOD__,
+				array(
+					'ORDER BY' => 'added_at DESC, page_title',
+					'LIMIT' => 1000,
+				),
+				array(
+					'video_info' => array( 'LEFT JOIN', 'page_title = video_title' ),
+					'categorylinks' => array( 'INNER JOIN', 'cl_from = page_id' )
+				)
+			);
 
-				$this->wg->memc->set( $memcKey, $data, self::CACHE_TTL_CATEGORY_DATA );
+			$data = array();
+			while ( $row = $db->fetchObject( $result ) ) {
+				$title = $row->page_title;
+				$file = WikiaFileHelper::getVideoFileFromTitle( $title );
+				if ( !empty( $file ) ) {
+					$thumb = $file->transform( array( 'width' => self::THUMBNAIL_CATEGORY_WIDTH, 'height' => self::THUMBNAIL_CATEGORY_HEIGHT ) );
+					$videoThumb = $thumb->toHtml( array( 'duration' => true ) );
+					$data[] = array(
+						'title' => $title->getText(),
+						'url'   => $title->getFullURL(),
+						'thumb' => $videoThumb,
+					);
+				}
 			}
+
+			$this->wg->memc->set( $memcKey, $data, self::CACHE_TTL_CATEGORY_DATA );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -274,11 +294,38 @@ class VideoPageToolHelper extends WikiaModel {
 	public function getDefaultValuesBySection( $section ) {
 		$className = VideoPageToolAsset::getClassNameFromSection( $section );
 		$values = array();
-		for( $i = 1; $i <= self::$requiredRows[$section]; $i++ ) {
+		$requiredRows = $this->getRequiredRows( $section );
+		for ( $i = 1; $i <= $requiredRows; $i++ ) {
 			$values[$i] = $className::getDefaultAssetData();
 		}
 
 		return $values;
+	}
+
+	/**
+	 * Get required rows
+	 * Note: displayTitle field is used to check for number of rows in the form
+	 * @param string $section
+	 * @param array $fieldValues
+	 * @return integer $requiredRows
+	 */
+	public function getRequiredRows( $section, $fieldValues = array() ) {
+		if ( is_array( self::$requiredRows[$section] ) ) {
+			$cnt = is_array( $fieldValues ) ? count( $fieldValues ) : 0;
+			$min = min( self::$requiredRows[$section] );
+			$max = max( self::$requiredRows[$section] );
+			if ( $cnt <= $min ) {
+				$requiredRows = $min;
+			} else if ( $cnt < $max ) {
+				$requiredRows = $cnt;
+			} else {
+				$requiredRows = $max;
+			}
+		} else {
+			$requiredRows = self::$requiredRows[$section];
+		}
+
+		return $requiredRows;
 	}
 
 	/**
