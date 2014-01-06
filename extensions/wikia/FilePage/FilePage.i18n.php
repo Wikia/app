@@ -233,6 +233,15 @@ $messages['et'] = array(
 	'file-page-more-links' => 'Vaata täielikku nimekirja',
 );
 
+/** Persian (فارسی)
+ * @author Reza1615
+ */
+$messages['fa'] = array(
+	'video-page-from-provider' => 'از $1',
+	'video-page-description-heading' => 'توضیحات',
+	'file-page-tab-about' => 'درباره',
+);
+
 /** Finnish (suomi)
  * @author Nike
  * @author Ville96

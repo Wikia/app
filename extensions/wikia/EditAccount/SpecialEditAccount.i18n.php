@@ -342,7 +342,7 @@ $messages['br'] = array(
 	'editaccount-error-tempuser-email' => "Ne c'hall ket chomlec'h postel animplijerien amzeriat bezañ goullo. Ebarzhit ur chomlec'h postel, mar plij.",
 	'editaccount-log' => "Marilh ar c'hontoù implijer",
 	'editaccount-log-header' => "Rollet e vez er pajenn-mañ ar c'hemmoù graet gant staff Wikia er penndibaboù implijer.",
-	'editaccount-log-entry-email' => "en deus kemmet chmolec'h postel an implijer $2",
+	'editaccount-log-entry-email' => "en deus kemmet chomlec'h postel an implijer $2",
 	'editaccount-log-entry-pass' => 'en deus kemmet ger-tremen ar gont $2',
 	'editaccount-log-entry-realname' => 'en deus kemmet anv gwir ar gont $2',
 	'editaccount-log-entry-close' => 'en deus diweredekaet ar gont $2',
@@ -697,12 +697,16 @@ $messages['es'] = array(
 
 /** Persian (فارسی)
  * @author BlueDevil
+ * @author Reza1615
  * @author ZxxZxxZ
  */
 $messages['fa'] = array(
 	'editaccount' => 'ویرایش حساب کاربری',
+	'editaccount-frame-usage' => 'یادداشت',
 	'editaccount-label-realname' => 'تعیین نام واقعی جدید',
+	'editaccount-label-clearunsub' => 'لغو اشتراک شده',
 	'editaccount-label-reason' => 'دلیل:',
+	'editaccount-submit-pass' => 'ذخیره کلمه عبور',
 	'editaccount-submit-close' => 'بستن حساب کاربری',
 	'editaccount-submit-button' => 'ذخیره',
 );
@@ -2617,6 +2621,8 @@ $messages['zh-hans'] = array(
 	'editaccount-success-email-blank' => '成功移除帐户 $1 的电子邮件地址。',
 	'editaccount-success-pass' => '帐户 $1 的密码更改成功。',
 	'editaccount-success-realname' => '帐户 $1 的真实姓名更改成功。',
+	'editaccount-success-unsub' => '成功为账户$1移除退订位。',
+	'editaccount-success-disable' => '成功为账户$1取消禁用。',
 	'editaccount-success-close' => '成功禁用了帐户 $1 。',
 	'editaccount-error-email' => '电子邮件地址未改变。请重试或联系技术团队。',
 	'editaccount-error-pass' => '密码未改变。请重试或联系技术团队。',

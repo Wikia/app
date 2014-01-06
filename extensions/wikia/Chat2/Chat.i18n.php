@@ -961,6 +961,7 @@ Por favor, contáctalo para más información.',
 /** Persian (فارسی)
  * @author BlueDevil
  * @author Dalba
+ * @author Reza1615
  * @author جواد
  * @author پاناروما
  */

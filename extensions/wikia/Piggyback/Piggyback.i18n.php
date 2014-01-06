@@ -566,6 +566,18 @@ $messages['uk'] = array(
 	'log-description-piggyback' => 'Цей журнал містить записи входів через облікові записи piggyback.',
 );
 
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'piggyback-nosuchuser' => 'Không có người nào sử dụng tên tài khoản "$1".
+Tên người dùng là trường hợp nhạy cảm.
+Hãy kiểm tra lại hoặc bạn có thể đăng ký tài khoản này.',
+	'piggyback-wronguser' => '$1 không phải là tên người dùng của bạn',
+	'piggyback-loginprompt' => 'Vui lòng nhập lại tên người dùng và mật khẩu của bạn.',
+	'piggyback-firstlogout' => 'Xin vui lòng đăng xuất đầu tiên trở lại tài khoản của bạn.',
+);
+
 /** Simplified Chinese (中文（简体）‎)
  * @author Hydra
  * @author Hzy980512

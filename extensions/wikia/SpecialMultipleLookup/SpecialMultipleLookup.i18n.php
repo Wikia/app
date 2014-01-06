@@ -332,6 +332,17 @@ $messages['es'] = array(
 	'action-multilookup' => 'Búsqueda múltiple',
 );
 
+/** Persian (فارسی)
+ * @author Reza1615
+ */
+$messages['fa'] = array(
+	'multilookupgo' => 'برو',
+	'multilookupwiki' => 'ویکی',
+	'multilookupwikiurl' => 'نشانی اینترنتی',
+	'multilookupwikititle' => 'عنوان',
+	'multilookupwikioptions' => 'گزینه',
+);
+
 /** Finnish (suomi)
  * @author Centerlink
  * @author Crt

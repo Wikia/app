@@ -2,7 +2,7 @@
 
 // TODO: Comments!
 class WallNotificationsEveryone extends WallNotifications {
-	const queueTimeout = 30;
+
 	public function __construct() {
 		$this->app = F::app();
 		$this->cityId = $this->app->wg->CityId;
@@ -50,8 +50,8 @@ class WallNotificationsEveryone extends WallNotifications {
 		$res = $this->getDB(false)->select('wall_notification_queue',
 			array('entity_key'),
 			array(
-				'wiki_id' => $this->cityId,
-				'datediff(NOW(), event_date) < 30',
+				'wiki_id  = ' . $this->cityId,
+				'datediff(NOW(), event_date) < ' . WallHelper::NOTIFICATION_EXPIRE_DAYS,
 			),
 			__METHOD__
 		);
@@ -195,8 +195,8 @@ class WallNotificationsEveryone extends WallNotifications {
 		wfProfileIn(__METHOD__);
 
 		//TODO: performace of this queris
-		$this->getDB(true)->query('delete from wall_notification_queue where datediff(NOW(), event_date) > ' . self::queueTimeout);
-		$this->getDB(true)->query('delete from wall_notification_queue_processed where datediff(NOW(), event_date) > ' . self::queueTimeout);
+		$this->getDB(true)->query('delete from wall_notification_queue where datediff(NOW(), event_date) > ' . WallHelper::NOTIFICATION_EXPIRE_DAYS);
+		$this->getDB(true)->query('delete from wall_notification_queue_processed where datediff(NOW(), event_date) > ' . WallHelper::NOTIFICATION_EXPIRE_DAYS);
 		wfProfileOut(__METHOD__);
 	}
 }

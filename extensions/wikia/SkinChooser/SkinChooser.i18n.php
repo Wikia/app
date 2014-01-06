@@ -70,6 +70,13 @@ $messages['es'] = array(
 	'site-layout' => 'Diseños del sitio',
 );
 
+/** Persian (فارسی)
+ * @author Reza1615
+ */
+$messages['fa'] = array(
+	'new-look' => 'ویکیا',
+);
+
 /** Finnish (suomi)
  * @author Crt
  * @author Nedergard
