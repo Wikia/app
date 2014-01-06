@@ -1,13 +1,11 @@
 <header class="VideoPageToolHeader">
 	<div class="VideoPageToolTitle">
-		<h1><a href="<?= $dashboardHref ?>"><?= wfMsg( 'videopagetool-header-dashboard' ) ?></a></h1>
+		<h1><a href="<?= $dashboardHref ?>"><?= wfMessage( 'videopagetool-header-dashboard' )->text() ?></a></h1>
 		<? if ( !empty( $section ) ): ?>
 			<h2><?= $section ?></h2>
 		<? endif ?>
 
-		<? if ( !empty( $publishDate ) ): ?>
-			<p class="alternative"><?= $publishDate ?></p>
-		<? endif?>
+		<p class="alternative"><?= $wg->lang->date( time() ) ?></p>
 
 		<? if ( !empty( $language ) && !empty( $section ) ): ?>
 			<p class="alternative"><?= $language ?> / <?= $section ?></p>
@@ -15,13 +13,19 @@
 	</div>
 
 	<aside class="right">
-		<? if ( !empty( $lastEditTime ) ): ?>
-		<p><strong><?= wfMsg( 'videopagetool-header-right-last-saved' ) ?></strong> <?= $wg->lang->timeanddate( $lastEditTime, true ) ?></p>
+		<? if ( !empty( $lastSavedOn ) ): ?>
+			<p><strong><?= wfMessage( 'videopagetool-header-right-last-saved' )->text() ?></strong><?= $wg->lang->timeanddate( $lastSavedOn, true ) ?></p>
 		<? endif ?>
 
-		<? if ( !empty( $lastEditor ) ): ?>
-		<p><strong><?= wfMsg( 'videopagetool-header-right-by' ) ?></strong> <?= $lastEditor ?></p>
+		<? if ( !empty( $savedBy ) ): ?>
+			<p><strong><?= wfMessage( 'videopagetool-header-right-saved-by' )->text() ?></strong> <?= $savedBy ?></p>
 		<? endif ?>
+
+		<? if ( !empty( $publishDate ) ): ?>
+			<p><strong><?= wfMessage( 'videopagetool-header-right-publish-date' )->text() ?></strong><?= $wg->lang->date( $publishDate ) ?></p>
+		<? else: ?>
+			<p><strong><?= wfMessage( 'videopagetool-header-right-not-published' )->text() ?></strong></p>
+		<? endif?>
 	</aside>
 </header>
 <div class="VideoPageToolHeaderGradient"></div>
