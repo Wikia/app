@@ -32,6 +32,7 @@ ve.ui.Command = function VeUiCommand( name, action, method ) {
  * @returns {Mixed} Result of command execution.
  */
 ve.ui.Command.prototype.execute = function ( surface ) {
+	ve.track( 'command.execute', { action: this.action, method: this.method, name: this.name } );
 	return surface.execute.apply( surface, [ this.action, this.method ].concat( this.data ) );
 };
 

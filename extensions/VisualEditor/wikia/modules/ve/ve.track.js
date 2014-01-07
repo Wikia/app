@@ -6,22 +6,32 @@
 
 require( ['wikia.tracker'], function ( tracker ) {
 	var actions = tracker.ACTIONS,
-		// These are topics used by MediaWiki, consider them reserved. Each topic should contain
-		// any number of actions which should contain tracking parameters as they will be passed
-		// to Wikia.Tracker. If you need to define these parameters dynamically, you may use a
-		// function. Otherwise, a plain Object is fine.
+		// These are topics used by MediaWiki, consider them reserved. Each topic should be
+		// assigned to a function which will map the data associated with a topic to a format
+		// understood by Wikia.Tracker.
 		mwTopics = {
-			'Edit': {
-				'edit-link-click': {
+			'command.execute': function ( data ) {
+				return {
+					'action': actions.KEYPRESS,
+					'label': data.name
+				};
+			},
+			'Edit': function ( data ) {
+				var params = {
 					'action': actions.CLICK,
-					'category': 'article',
-					'label': 've-edit'
-				},
-				'section-edit-link-click': {
-					'action': actions.CLICK,
-					'category': 'article',
-					'label': 've-section-edit'
+					'category': 'article'
+				};
+
+				switch( data.action ) {
+					case 'edit-link-click':
+						params.label = 've-edit';
+						break;
+					case 'section-edit-link-click':
+						params.label = 've-section-edit';
+						break;
 				}
+
+				return params;
 			},
 			'performance.system.activation': function ( data ) {
 				return {
@@ -36,6 +46,18 @@ require( ['wikia.tracker'], function ( tracker ) {
 					'label': 'publish',
 					'value': data.duration
 				};
+			},
+			'tool': function ( data ) {
+				var params = {
+					'action': actions.CLICK,
+					'label': nameToLabel( data.name )
+				};
+
+				if ( data.name === 'number' || data.name === 'bullet' ) {
+					params.value = ( data.method === 'wrap' ? 1 : 0 );
+				}
+
+				return params;
 			}
 		},
 		// @see {@link nameToLabel} for more information
@@ -90,7 +112,7 @@ require( ['wikia.tracker'], function ( tracker ) {
 				}
 			}
 			// Only track things we care about
-			if ( !mwEvent || ( data.action && !( mwEvent = mwEvent[data.action] ) ) ) {
+			if ( !mwEvent ) {
 				return;
 			}
 			data = $.isFunction( mwEvent ) ? mwEvent( data, topics ) : mwEvent;

@@ -72,6 +72,7 @@ ve.ui.InspectorTool.static.isCompatibleWith = function ( model ) {
  * @method
  */
 ve.ui.InspectorTool.prototype.onSelect = function () {
+	ve.track( 'tool.inspector.select', { name: this.constructor.static.name } );
 	this.toolbar.getSurface().execute(
 		'inspector',
 		'open',

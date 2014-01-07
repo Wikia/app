@@ -50,6 +50,7 @@ ve.ui.FormatTool.prototype.onSelect = function () {
 	var format = this.constructor.static.format;
 
 	if ( this.convertible ) {
+		ve.track( 'tool.format.select', { name: this.constructor.static.name } );
 		this.toolbar.getSurface().execute( 'format', 'convert', format.type, format.attributes );
 	}
 };
