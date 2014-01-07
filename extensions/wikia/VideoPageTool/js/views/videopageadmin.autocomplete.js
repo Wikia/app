@@ -16,7 +16,7 @@
 define( 'views.videopageadmin.autocomplete', [
 		'jquery',
 		'views.videopageadmin.autocompleteitem'
-	], function( $, CategorySingleResultView ) {
+	], function( $, AutocompleteItemView ) {
 	'use strict';
 	var AutocompleteView = Backbone.View.extend({
 			initialize: function() {
@@ -124,7 +124,7 @@ define( 'views.videopageadmin.autocomplete', [
 				var that,
 						view;
 
-				if ( !this.collection.length ) return;
+				if ( !this.collection.length ) { return; }
 
 				that = this;
 
@@ -134,7 +134,7 @@ define( 'views.videopageadmin.autocomplete', [
 				this.results = [];
 
 				this.collection.each( function( model ) {
-						view = new CategorySingleResultView({
+						view = new AutocompleteItemView({
 								model: model,
 								parentView: that
 						});

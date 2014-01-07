@@ -1,6 +1,7 @@
 define( 'views.videopageadmin.categoryforms', [
 		'jquery',
 		'views.videopageadmin.autocomplete',
+		'views.videopageadmin.categorypreview',
 		'collections.videopageadmin.category',
 		'collections.videopageadmin.categorydata'
 	], function( $, AutocompleteView, CategoryCollection, CategoryDataCollection ) {
@@ -13,6 +14,10 @@ define( 'views.videopageadmin.categoryforms', [
 					this.autocomplete = new AutocompleteView({
 							el: this.el,
 							collection: this.categories
+					});
+					this.previewView = new CategoryPreviewView({
+						el: this.el,
+						collection: this.categoryData
 					});
 					_.bindAll( this, 'getPreview' );
 					console.log( this.$el );
@@ -27,11 +32,7 @@ define( 'views.videopageadmin.categoryforms', [
 						return alert( 'Please select a category before searching for results' );
 					}
 
-					this.categoryData.fetch({
-						data: {
-							categoryName: this.categories.selectedCategory
-						}
-					});
+					this.categoryData.fetch({ categoryName: this.categories.selectedCategory });
 				}
 		});
 
