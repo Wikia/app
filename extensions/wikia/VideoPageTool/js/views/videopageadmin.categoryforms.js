@@ -4,7 +4,7 @@ define( 'views.videopageadmin.categoryforms', [
 		'views.videopageadmin.categorypreview',
 		'collections.videopageadmin.category',
 		'collections.videopageadmin.categorydata'
-	], function( $, AutocompleteView, CategoryCollection, CategoryDataCollection ) {
+	], function( $, AutocompleteView, CategoryPreviewView, CategoryCollection, CategoryDataCollection ) {
 		'use strict';
 
 		var FormGroupView = Backbone.View.extend({
@@ -32,7 +32,7 @@ define( 'views.videopageadmin.categoryforms', [
 						return alert( 'Please select a category before searching for results' );
 					}
 
-					this.categoryData.fetch({ categoryName: this.categories.selectedCategory });
+					this.categoryData.setCategory( this.categories.selectedCategory );
 				}
 		});
 

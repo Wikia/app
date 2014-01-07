@@ -8,16 +8,24 @@ define( 'collections.videopageadmin.categorydata', [
 					this.controller = 'VideoPageAdminSpecial';
 					this.method = 'getCategoryData';
 					this.format = 'json';
+					this.categoryName = null;
 				},
-				fetch: function( data ) {
+				fetch: function() {
 					return Backbone.Collection.prototype.fetch.call( this, {
 						data: {
 							controller: this.controller,
 							format: this.format,
 							method: this.method,
-							categoryName: data.categoryName
+							categoryName: this.categoryName
 						}
 					});
+				},
+				setCategory: function( name, doFetch ) {
+					console.log( 'hi', typeof name );
+					if ( typeof name === 'string' ) {
+						this.categoryName = name;
+						this.fetch();
+					}
 				}
 		});
 
