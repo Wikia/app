@@ -408,7 +408,7 @@ $wgHooks['CategoryViewer::addPage'][] = 'answerAddCategoryPage';
 // Since this function returns false, it prevents the default behavior from adding this item to the "pages" section
 // of the category page.
 ////
-function answerAddCategoryPage(&$catView, &$title, &$row){
+function answerAddCategoryPage(&$catView, $humanSortkey, &$title, &$row){
 	global $wgContLang;
 
 	if (empty($catView->answers)){
