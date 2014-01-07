@@ -14,7 +14,7 @@ class VideoPageToolHelper extends WikiaModel {
 	const MAX_THUMBNAIL_WIDTH = 1024;
 	const MAX_THUMBNAIL_HEIGHT = 461;
 
-	const CACHE_TTL_CATEGORY_DATA = 86400;    // One day
+	const CACHE_TTL_CATEGORY_DATA = 300;
 
 	public static $requiredRows = array(
 		'featured' => 5,
@@ -236,8 +236,8 @@ class VideoPageToolHelper extends WikiaModel {
 	/**
 	 * Clear cache for Category Data
 	 */
-	protected function invalidateCacheCategoryData( $categoryName ) {
-		$this->wg->Memc->delete( $this->getMemcKey( $categoryName ) );
+	public function invalidateCacheCategoryData( $categoryName ) {
+		$this->wg->Memc->delete( $this->getMemcKeyCategoryData( $categoryName ) );
 	}
 
 	/**
