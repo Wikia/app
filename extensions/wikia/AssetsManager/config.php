@@ -1113,6 +1113,14 @@ $config['videohomepage_js'] = array(
 	)
 );
 
+$config['videohomepage_css'] = array(
+	'skin' => array( 'oasis' ),
+	'type' => AssetsManager::TYPE_CSS,
+	'assets' => array(
+		'//resources/wikia/libraries/jquery/owl.carousel/owl.carousel.css',
+	)
+);
+
 $config['videohomepage_scss'] = array(
 	'skin' => array( 'oasis' ),
 	'type' => AssetsManager::TYPE_SCSS,
