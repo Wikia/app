@@ -632,19 +632,19 @@ $messages['ja'] = array(
 	'wikia-home-parse-wiki-too-few-parameters' => '無効なウィキデータ - パラメータが必要',
 
 	'wikiahome-hubs-videogames-heading' => 'ゲーム',
-	'wikiahome-hubs-videogames-url' => 'http://www.ja.wikia.com/ゲーム',
+	'wikiahome-hubs-videogames-url' => 'http://ja.wikia.com/ゲーム',
 	'wikiahome-hubs-videogames-creative' => 'ウィキアではゲームカルチャーを作り上げ基盤となる場所です。楽しみにしていて！',
 	'wikiahome-hubs-videogames-more-heading' => '',
 	'wikiahome-hubs-videogames-more-list' => '',
 
 	'wikiahome-hubs-entertainment-heading' => 'エンターテイメント',
-	'wikiahome-hubs-entertainment-url' => 'http://www.ja.wikia.com/エンターテイメント',
+	'wikiahome-hubs-entertainment-url' => 'http://ja.wikia.com/エンターテイメント',
 	'wikiahome-hubs-entertainment-creative' => 'ウィキアとは詳しいコミュニティーから直にフレッシュなエンタテインメントニュースを得られる唯一の場所です。',
 	'wikiahome-hubs-entertainment-more-heading' => '',
 	'wikiahome-hubs-entertainment-more-list' => '',
 
 	'wikiahome-hubs-lifestyle-heading' => 'ライフスタイル & カルチャー',
-	'wikiahome-hubs-lifestyle-url' => 'http://www.ja.wikia.com/ライフスタイル',
+	'wikiahome-hubs-lifestyle-url' => 'http://ja.wikia.com/ライフスタイル',
 	'wikiahome-hubs-lifestyle-creative' => '熱狂的で情報を持っているコミュニティーを発見しよう。',
 	'wikiahome-hubs-lifestyle-more-heading' => '',
 	'wikiahome-hubs-lifestyle-more-list' => '',
@@ -677,7 +677,7 @@ __NOEDITSECTION__',
 *[https://twitter.com/ja_wikiaanime ツイッター]
 __NOEDITSECTION__',
 	'wikiahome-footer-community' => '===コミュニティー===
-*[http://www.ja.community.wikia.com コミュニティーセントラルl]
+*[http://ja.community.wikia.com コミュニティーセントラルl]
 *[http://ja.community.wikia.com/wiki/ヘルプ:ユーザー権限 設立者&管理者]
 *[http://ja.wikia.com/Special:Contact サポートコンタクト]$1
 *[http://www.wikia.com/Stars ウィキアスター]
