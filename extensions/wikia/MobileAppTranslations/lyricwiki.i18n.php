@@ -379,6 +379,21 @@ $messages['es'] = array(
 	'ringtone-matcher-by-song' => 'Enviar tono %s a su teléfono.',
 );
 
+/** Persian (فارسی)
+ * @author Reza1615
+ */
+$messages['fa'] = array(
+	'app-loading' => 'در حال بارگذاری...',
+	'app-tab-search' => 'جستجو',
+	'app-tab-about' => 'درباره',
+	'app-nonetwork-dialog-close-button' => 'تأیید',
+	'search-go' => 'برو!',
+	'login-username-hint' => 'نام کاربری',
+	'login-password-hint' => 'گذرواژه',
+	'login-submit-button' => 'ورود',
+	'about-heading-feedback' => 'بازخورد',
+);
+
 /** Finnish (suomi)
  * @author Centerlink
  * @author Ville96

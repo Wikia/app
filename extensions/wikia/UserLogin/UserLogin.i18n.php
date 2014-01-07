@@ -658,6 +658,19 @@ Para comprobar los acontecimientos más recientes en Wikia, visita http://comuni
 	'wikiamobile-facebook-connect-fail' => 'Lo sentimos, pero tu cuenta en Facebook no está actualmente vinculada con una cuenta Wikia.',
 );
 
+/** Persian (فارسی)
+ * @author Reza1615
+ */
+$messages['fa'] = array(
+	'userlogin-login-heading' => 'ورود به سامانه',
+	'userlogin-forgot-password' => 'گذرواژه‌تان را فراموش کردید؟',
+	'userlogin-forgot-password-button' => 'ادامه',
+	'userlogin-password-page-title' => 'تغییر گذرواژهٔ شما',
+	'userlogin-oldpassword' => 'گذرواژهٔ پیشین',
+	'userlogin-newpassword' => 'گذرواژهٔ تازه',
+	'userlogin-password-email-greeting' => 'سلام $USERNAME،',
+);
+
 /** Finnish (suomi)
  * @author Stryn
  * @author Ville96

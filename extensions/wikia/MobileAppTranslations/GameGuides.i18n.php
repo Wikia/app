@@ -262,6 +262,20 @@ $messages['es'] = array(
 	'error-json-parse' => 'Hubo un problema con los datos devueltos desde nuestros servidores, lo sentimos.\\nInténtalo de nuevo.',
 );
 
+/** Persian (فارسی)
+ * @author Reza1615
+ */
+$messages['fa'] = array(
+	'activityindicator-message' => 'در حال بارگذاری...',
+	'window-category-load-batch' => 'بیشتر',
+	'window-article-button-close' => 'بسته',
+	'window-article-button-back' => 'عقب',
+	'window-article-menu-search-label' => 'جستجو',
+	'window-article-menu-cancel-label' => 'لغو',
+	'searchview-button-back-list' => 'بازگشت به فهرست',
+	'alert-download-updated-wikis-button-ok' => 'تأیید',
+);
+
 /** Finnish (suomi)
  * @author Centerlink
  * @author Nedergard

@@ -72,6 +72,15 @@ $messages['es'] = array(
 	'wikiastyleguide-dropdown-selected-items-list' => '$1 y $2 más',
 );
 
+/** Persian (فارسی)
+ * @author Reza1615
+ */
+$messages['fa'] = array(
+	'wikiastyleguide-dropdown-all' => 'همه',
+	'wikiastyleguide-dropdown-select-all' => 'انتخاب همه',
+	'wikiastyleguide-tooltip-icon-question-mark' => '؟',
+);
+
 /** French (français)
  * @author Gomoko
  * @author Wyz

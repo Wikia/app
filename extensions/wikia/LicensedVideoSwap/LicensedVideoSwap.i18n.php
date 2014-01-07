@@ -423,6 +423,19 @@ $messages['es'] = array(
 	'lvs-new-flag' => 'Nuevo',
 );
 
+/** Persian (فارسی)
+ * @author Reza1615
+ */
+$messages['fa'] = array(
+	'lvs-history-button-text' => 'تاریخچه',
+	'lvs-button-yes' => 'بله',
+	'lvs-button-no' => 'خیر',
+	'lvs-undo-swap' => 'واگردانی',
+	'lvs-undo-keep' => 'واگردانی',
+	'lvs-posted-in-more' => 'بیشتر',
+	'lvs-new-flag' => 'جدید',
+);
+
 /** Faroese (føroyskt)
  * @author EileenSanda
  */
@@ -559,6 +572,20 @@ $messages['gl'] = array(
 	'lvs-no-monobook-support' => 'Esta páxina non é compatible co deseño Monobook. Para acceder a ela co deseño do Wikia, $1. Isto non cambiará as súas preferencias de deseño',
 	'lvs-click-here' => 'prema aquí',
 	'lvs-new-flag' => 'Novo',
+);
+
+/** Japanese (日本語)
+ * @author Tommy6
+ */
+$messages['ja'] = array(
+	'licensedvideoswap' => '許諾済み動画への差し替え',
+	'lvs-page-title' => '許諾済み動画への差し替え',
+	'lvs-history-button-text' => '履歴',
+	'lvs-match-stats-description' => '件の動画に<br />差し替え候補があります',
+	'lvs-instructions-header' => 'このページの使い方',
+	'lvs-instructions' => 'せっかくページに動画を埋め込んでも、著作権侵害により動画が削除されてしまい、利用できなくなることがあります。この問題に対する解決策としてウィキアでは、[[w:c:video|提携先から得た数多くの許諾済み動画を提供し]]、各ウィキで利用できるようにしました。このページは、このウィキアに既に埋め込まれている各動画を、同じもしくは似た内容の許諾済み動画に差し替えられないか簡単に検索するためのものです。なお、完全に同じ動画であるにもかかわらず動画サムネイルが違ってしまうことがあることに注意してください。差し替え動画を決める際には、動画自体を再生して確認することをおすすめいたします。',
+	'lvs-button-keep' => 'このまま',
+	'lvs-button-swap' => '差し替え',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -1065,6 +1092,7 @@ $messages['vi'] = array(
 	'lvs-tooltip-history' => 'Nút cấp phép trao đổi Video',
 	'lvs-history-button-text' => 'Lịch sử',
 	'lvs-page-header-back-link' => 'Quay lại cấp phép trao đổi Video',
+	'lvs-callout-title-licensed' => '100% có giấy phép',
 );
 
 /** Wu (吴语)

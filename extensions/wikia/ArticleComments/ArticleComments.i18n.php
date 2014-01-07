@@ -252,15 +252,34 @@ $messages['as'] = array(
 /** Azerbaijani (azərbaycanca)
  * @author AZISS
  * @author Cekli829
+ * @author Mushviq Abdulla
  */
 $messages['az'] = array(
+	'article-comments-file-page' => "<a href='$3'>$4</a> səhifəsində <a href='$1'>$2 tərəfindən</a> şərh edildi",
+	'article-comments-anonymous' => 'Anonim iştirakçı',
+	'article-comments-comments' => 'Şərhlər ($1)',
+	'article-comments-post' => 'Şərh göndər',
 	'article-comments-cancel' => 'İmtina',
 	'article-comments-delete' => 'sil',
 	'article-comments-edit' => 'redaktə',
 	'article-comments-history' => 'Tarix',
+	'article-comments-error' => 'Şərh qeyd edilə bilmir',
+	'article-comments-rc-comment' => 'Məqalə şərhi (<span class="plainlinks">[$1 $2]</span>)',
+	'article-comments-rc-comments' => 'Məqalə şərhləri ([[$1]])',
+	'article-comments-fbconnect' => 'Şərh etmək üçün lütfən <a href="$1">Facebook hesabı ilə hesabınızı</a> əlaqələndirin!',
+	'article-comments-rc-blog-comment' => 'Bloq şərhi (<span class="plainlinks">[$1 $2]</span>)',
+	'article-comments-rc-blog-comments' => 'Bloq şərhləri ([[$1]])',
 	'article-comments-toc-item' => 'Şərhlər',
+	'article-comments-vote' => 'Səs ver',
 	'article-comments-reply' => 'Geri göndər',
+	'article-comments-show-all' => 'Bütün şərhləri göstər',
+	'article-comments-prev-page' => 'Öncəki',
 	'article-comments-next-page' => 'Növbəti',
+	'article-comments-page-spacer' => '&#160...&#160',
+	'wikiamobile-article-comments-header' => 'Şərhlər',
+	'wikiamobile-article-comments-none' => 'Şərh yoxdur',
+	'wikiamobile-article-comments-replies' => 'cavablar',
+	'wikiamobile-article-comments-post-reply' => 'Cavab göndər',
 );
 
 /** South Azerbaijani (تورکجه)

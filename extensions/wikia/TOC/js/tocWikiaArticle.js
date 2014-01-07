@@ -1,4 +1,4 @@
-require( [ 'jquery', 'wikia.toc', 'wikia.mustache' ], function( $, toc, mustache ) {
+require( ['jquery', 'wikia.toc', 'wikia.mustache'], function( $, toc, mustache ) {
 	'use strict';
 
 	/**
@@ -25,29 +25,40 @@ require( [ 'jquery', 'wikia.toc', 'wikia.mustache' ], function( $, toc, mustache
 	}
 
 	/**
+	 * Checks and gets valid section heading
 	 *
-	 * @param {Object} header - Node element object for single article header
+	 * @param {Object} rawHeader - Node element object for single article header
 	 *
-	 * @returns {Boolean|Object} - returns false for non Wikia Article related headers
-	 *                             (example lazy loaded discussion thread)
-	 *                             or custom TOC single section object.
+	 * @returns {Object|Boolean} - returns header jQuery object or false if the header is not valid
 	 */
+	function getHeader( rawHeader ) {
+		rawHeader = $( rawHeader ).children( '.mw-headline' );
 
-	function createTOCSection( header ) {
-
-		header = $( header ).children( '.mw-headline' );
-
-		if ( header.length === 0 || header.is( ':hidden' ) ) {
+		if ( rawHeader.length === 0 || rawHeader.is( ':hidden' ) ) {
 			return false;
 		}
 
 		// clone node and remove noscript to exclude it from text
-		header = header.clone();
-		header.find( 'noscript' ).remove();
+		rawHeader = rawHeader.clone();
+		rawHeader.find( 'noscript' ).remove();
 
+		return rawHeader;
+	}
+
+	/**
+	 *
+	 * @param {Object} header - Processed element object for single article header
+	 *
+	 * @param {Integer} tocLevel - The actual level on which the element will be rendered
+	 *
+	 * @returns {Object} - returns TOC section object
+	 */
+
+	function createTOCSection( header, tocLevel ) {
 		return {
 			title: header.text(),
 			id: header.attr( 'id' ),
+			class: 'toclevel-' + tocLevel,
 			sections: []
 		};
 	}
@@ -61,23 +72,23 @@ require( [ 'jquery', 'wikia.toc', 'wikia.mustache' ], function( $, toc, mustache
 	function loadTemplate() {
 		var dfd = new $.Deferred();
 
-		require( [ 'wikia.loader', 'wikia.cache' ], function( loader, cache ) {
+		require( ['wikia.loader', 'wikia.cache'], function( loader, cache ) {
 			var template = cache.getVersioned( cacheKey );
 
 			if ( template ) {
 				dfd.resolve( template );
 			} else {
-				require( [ 'wikia.throbber' ], function( throbber ) {
+				require( ['wikia.throbber'], function( throbber ) {
 					var toc = $( '#toc' );
 
 					throbber.show( toc );
 
-					loader({
+					loader( {
 						type: loader.MULTI,
 						resources: {
 							mustache: 'extensions/wikia/TOC/templates/TOC_articleContent.mustache'
 						}
-					}).done(function ( data ) {
+					} ).done( function( data ) {
 						template = data.mustache[0];
 
 						dfd.resolve( template );
@@ -85,10 +96,10 @@ require( [ 'jquery', 'wikia.toc', 'wikia.mustache' ], function( $, toc, mustache
 						cache.setVersioned( cacheKey, template, 604800 ); //7days
 
 						throbber.remove( toc );
-					});
-				});
+					} );
+				} );
 			}
-		});
+		} );
 
 		return dfd.promise();
 	}
@@ -104,15 +115,15 @@ require( [ 'jquery', 'wikia.toc', 'wikia.mustache' ], function( $, toc, mustache
 		var $container = $target.parents( '#toc' ).children( 'ol' ),
 			$contentContainer = getContentContainer( $target ),
 			$headers = $contentContainer.find( 'h1, h2, h3, h4, h5, h6' ),
-			data = toc.getData( $headers, createTOCSection );
+			data = toc.getData( $headers, createTOCSection, getHeader );
 
 		data.wrapper = wrapper;
 
-		loadTemplate().done(function( template ) {
+		loadTemplate().done( function( template ) {
 			$container.append( mustache.render( template, data ) );
 
 			setHasTOC( $target, true );
-		});
+		} );
 	}
 
 	/**
@@ -125,7 +136,7 @@ require( [ 'jquery', 'wikia.toc', 'wikia.mustache' ], function( $, toc, mustache
 		$.cookie( 'mw_hidetoc', isHidden, {
 			expires: 30,
 			path: '/'
-		});
+		} );
 	}
 
 	/**
@@ -187,7 +198,7 @@ require( [ 'jquery', 'wikia.toc', 'wikia.mustache' ], function( $, toc, mustache
 	function hasTOC( $target ) {
 		var containerIdentifier = getContainerIdentifier( $target );
 
-		return typeof containerHasTOC[ containerIdentifier ] !== 'undefined' && containerHasTOC[ containerIdentifier ];
+		return typeof containerHasTOC[containerIdentifier] !== 'undefined' && containerHasTOC[containerIdentifier];
 	}
 
 	/**
@@ -233,7 +244,7 @@ require( [ 'jquery', 'wikia.toc', 'wikia.mustache' ], function( $, toc, mustache
 
 				showHideTOC( $target );
 			}
-		});
+		} );
 
 		// reset containerHasTOC flags for each time preview modal is opened
 		$( window ).on( 'EditPageAfterRenderPreview', function() {
@@ -241,11 +252,11 @@ require( [ 'jquery', 'wikia.toc', 'wikia.mustache' ], function( $, toc, mustache
 			if ( isNewTOC() && window.wgUserName !== null ) {
 				initTOC();
 			}
-		});
+		} );
 
 		/** Auto expand TOC in article for logged-in users with hideTOC cookie set to 'null'  */
 		if ( isNewTOC() && window.wgUserName !== null && $.cookie( 'mw_hidetoc' ) === null ) {
 			initTOC();
 		}
-	});
-});
+	} );
+} );
