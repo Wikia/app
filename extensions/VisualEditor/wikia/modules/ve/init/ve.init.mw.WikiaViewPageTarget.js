@@ -16,6 +16,8 @@
 ve.init.mw.WikiaViewPageTarget = function VeInitMwWikiaViewPageTarget() {
 	// Parent constructor
 	ve.init.mw.ViewPageTarget.call( this );
+
+	this.toolbarSaveButtonEnabled = false;
 };
 
 /* Inheritance */
@@ -50,6 +52,18 @@ ve.init.mw.WikiaViewPageTarget.static.actionsToolbarConfig = [
 	}
 ];
 
+ve.init.mw.WikiaViewPageTarget.prototype.hidePageContent = function () {
+	$( '#mw-content-text, .WikiaArticleCategories' )
+		.addClass( 've-init-mw-viewPageTarget-content' )
+		.hide();
+};
+
+ve.init.mw.WikiaViewPageTarget.prototype.mutePageContent = function () {
+	$( '#mw-content-text, .WikiaArticleCategories' )
+		.addClass( 've-init-mw-viewPageTarget-content' )
+		.fadeTo( 'fast', 0.6 );
+};
+
 ve.init.mw.WikiaViewPageTarget.prototype.onSaveDialogSave = function () {
 	ve.track( 'wikia', { 'action': ve.track.actions.CLICK, 'label': 'dialog-save-publish' } );
 	ve.init.mw.ViewPageTarget.prototype.onSaveDialogSave.call( this );
@@ -79,21 +93,19 @@ ve.init.mw.WikiaViewPageTarget.prototype.setupSkinTabs = function () {
 	// Intentionally left empty
 };
 
-ve.init.mw.WikiaViewPageTarget.prototype.mutePageContent = function () {
-	$( '#mw-content-text, .WikiaArticleCategories' )
-		.addClass( 've-init-mw-viewPageTarget-content' )
-		.fadeTo( 'fast', 0.6 );
-};
-
-ve.init.mw.WikiaViewPageTarget.prototype.hidePageContent = function () {
-	$( '#mw-content-text, .WikiaArticleCategories' )
-		.addClass( 've-init-mw-viewPageTarget-content' )
-		.hide();
-};
-
 ve.init.mw.WikiaViewPageTarget.prototype.showPageContent = function () {
 	$( '.ve-init-mw-viewPageTarget-content' )
 		.removeClass( 've-init-mw-viewPageTarget-content' )
 		.show()
 		.fadeTo( 0, 1 );
+};
+
+ve.init.mw.WikiaViewPageTarget.prototype.updateToolbarSaveButtonState = function () {
+	ve.init.mw.ViewPageTarget.prototype.updateToolbarSaveButtonState.call( this );
+	if (
+		!this.toolbarSaveButtonEnabled &&
+		( this.toolbarSaveButtonEnabled = !this.toolbarSaveButton.isDisabled() )
+	) {
+		ve.track( 'wikia', { 'action': ve.track.actions.ENABLE, 'label': 'button-publish' } );
+	}
 };
