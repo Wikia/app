@@ -92,7 +92,10 @@ module.exports = function(config) {
 			'extensions/wikia/WikiaHomePage/js/spec/WikiaHomePage.spec.js',
 
 			// Video
+			'extensions/wikia/VideoPageTool/js/lib/lodash/dist/lodash.underscore.js',
+			'extensions/wikia/VideoPageTool/js/lib/backbone/backbone.js',
 			'extensions/wikia/VideoPageTool/js/views/jquery.switcher.js',
+			'extensions/wikia/VideoPageTool/js/views/videopageadmin.autocomplete.js',
 			'extensions/wikia/VideoPageTool/js/spec/*.spec.js',
 
 			//Suggestions

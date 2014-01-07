@@ -19,7 +19,7 @@ define( 'views.videopageadmin.autocompleteitem', [
 				},
 				select: function( evt ) {
 					evt.stopPropagation();
-					this.model.collection.setCategory( this.model.get( 'name' ) );
+					this.model.collection.setCategory( this.model );
 					this.parentView.trigger( 'results:hide' );
 				},
 				render: function() {

@@ -1,16 +1,16 @@
 /**
  * @name AutocompleteView
  * @description Backbone subview/module for generic autocomplete
- * 
+ *
  * @example
  * var autocomplete = new AutocompleteView({
  *		el: '.my-el', // This el is the closest parent element containing the form and the results container
  *		collection: new CategoryCollection() // Instatiated collection is available inside the view
  * });
  *
- * @requires 
+ * @requires
  * Supplied parent element must contain a DOM structure that includes:
- * div.autocomplete, 
+ * div.autocomplete,
  * input[data-autocomplete]
  */
 define( 'views.videopageadmin.autocomplete', [
@@ -29,7 +29,7 @@ define( 'views.videopageadmin.autocomplete', [
 				_.bindAll( this, 'clearResults', 'renderResults', 'setValue' );
 
 				// hide results menu when clicked outside
-				$( 'body' ).click(function() {
+				$( 'body' ).on( 'click', function() {
 						if ( that.results && that.results.length ) {
 							that.trigger( 'results:hide' );
 						}
@@ -41,9 +41,9 @@ define( 'views.videopageadmin.autocomplete', [
 				this.collection.on( 'category:chosen', this.setValue );
 			},
 			events: {
-				'click input[data-autocomplete]': 'absorbEvent',
-				'keyup input[data-autocomplete]': 'handleKeyUp',
-				'keydown input[data-autocomplete]': 'preventKeybinds'
+				'click input[data-autocomplete]'   : 'absorbEvent',
+				'keyup input[data-autocomplete]'   : 'handleKeyUp',
+				'keydown input[data-autocomplete]' : 'preventKeybinds'
 			},
 			absorbEvent: function( evt ) {
 				// used to absorb click events on input while results menu is open
@@ -77,44 +77,33 @@ define( 'views.videopageadmin.autocomplete', [
 					// if user presses ESC, clear field
 					$tar.val( '' );
 					this.clearResults();
-				} else if ( keyCode === 50 ) {
-					//TODO: trigger collection reset by pressing '2', remove later
-					this.collection.reset([
-							{ name: 'foo' },
-							{ name: 'bar' },
-							{ name: 'baz' },
-							{ name: 'foo' },
-							{ name: 'bar' },
-							{ name: 'baz' },
-							{ name: 'foo' },
-							{ name: 'bar' }
-					]);
 				} else if ( keyCode === 13 ) {
 					// if user presses RET, select highlighted
 					this.getSelection();
 				} else if ( $val.length > 2 ) {
 					// collection fetch
-					console.log( 'Implement collection fetch' );
+					this.collection.autocomplete( $val );
+				} else if ( $val.length < 2 ) {
+					if ( this.collection.length ) {
+						this.clearResults();
+					}
 				}
 			},
 			getSelection: function() {
 				// safe early exit condition, prevents trying to get selection before first results have been set
 				if ( !this.$results ) { return false; }
 
-				var category = this.$results.find( '.selected' ).text();
-
-				if ( category.length ) {
-					this.collection.setCategory( $.trim( category ) );
-				}
+				this.$results.find( '.selected' ).click();
 
 				// trigger Search button now, or collection fetch
 			},
-			setValue: function( categoryName ) {
+			setValue: function() {
 				// setValue of input[data-autocomplete]
-				this.$input.val( categoryName );
+				this.$input.val( this.collection.selectedCategory );
 				this.clearResults();
 			},
 			clearResults: function() {
+				this.collection.reset();
 				this.results.map(function( subView ) {
 						// use Backbone's native view removal
 						return subView.remove();
@@ -130,6 +119,8 @@ define( 'views.videopageadmin.autocomplete', [
 			renderResults: function() {
 				var that,
 						view;
+
+				if ( !this.collection.length ) return;
 
 				that = this;
 
@@ -153,7 +144,9 @@ define( 'views.videopageadmin.autocomplete', [
 				var $categories,
 						$selected,
 						$newSelection,
-						idx;
+						idx,
+						pos,
+						scroll;
 
 				$categories = this.$el.find( '.autocomplete-item' );
 
@@ -171,7 +164,7 @@ define( 'views.videopageadmin.autocomplete', [
 						$newSelection = $selected.prev();
 					}
 
-				// down arrow 
+				// down arrow
 				} else if ( key === 40 ) {
 					if ( idx === -1 ) {
 						$newSelection = $categories.eq( 0 );
@@ -181,7 +174,14 @@ define( 'views.videopageadmin.autocomplete', [
 				}
 
 				if ( $newSelection ) {
+					pos = $newSelection.position();
+					scroll = this.$results.scrollTop();
 					$newSelection.addClass( 'selected' ).siblings().removeClass( 'selected' );
+					if ( pos && pos.top > this.$results.height() ) {
+						this.$results.scrollTop( $newSelection.index() * $newSelection.outerHeight() );
+					} else if ( pos && pos.top < 0 ) {
+						this.$results.scrollTop( scroll - this.$results.height() );
+					}
 				}
 			},
 	});
