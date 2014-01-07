@@ -1,8 +1,8 @@
 require( [
 		'views.videohomepage.featured',
 		'views.videohomepage.search',
-        'views.videohomepage.categories'
-], function( FeaturedVideoView, SearchView, CategoriesView ) {
+        'views.videopagetool.carousel'
+], function( FeaturedVideoView, SearchView, CarouselView ) {
 
 	'use strict';
 	// mock a global object in lieu of having one already
@@ -19,12 +19,11 @@ require( [
 
 		views.videohomepage.search = new SearchView();
 
-		views.videohomepage.categories = [];
+		views.videohomepage.categorycarousels = [];
 
 		$.each( Wikia.videoHomePage.categoryData, function( index, value ) {
-			views.videohomepage.categories.push(
-				new CategoriesView( {
-					el: '.latest-videos-wrapper',
+			views.videohomepage.categorycarousels.push(
+				new CarouselView( {
 					thumbnails: value.thumbnails,
 					displayTitle: value.displayTitle
 				} )

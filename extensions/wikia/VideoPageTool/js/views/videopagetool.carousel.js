@@ -1,23 +1,21 @@
-define( 'views.videohomepage.categories', [
+define( 'views.videopagetool.carousel', [
 	'collections.videohomepage.categorycarousel',
     'models.videohomepage.categorythumb',
     'models.videohomepage.categorycarousel',
-    'views.videopageadmin.categorythumb'
-], function( CategoryCarouselCollection, CategoryThumbModel, CategoryCarouselModel, CategoryThumbView ) {
+    'views.videopagetool.carouselthumb'
+], function( CategoryCarouselCollection, CategoryThumbModel, CategoryCarouselModel, CarouselThumbView ) {
 	'use strict';
 
-	var CategoriesView;
-
-	CategoriesView = Backbone.View.extend( {
-		//events: {},
+	var CarouselView = Backbone.View.extend( {
+		tagName: 'div',
+		className: '.carousel-wrapper',
 		initialize: function( options ) {
 			var thumbnails = [];
 
-			_.each( options.thumbnails, function( value, key, list ) {
+			_.each( options.thumbnails, function( value ) {
 				thumbnails.push( new CategoryThumbModel( value ) );
 			} );
 
-			this.thumbModels = thumbnails;
 			this.collection = new CategoryCarouselCollection( thumbnails );
 			this.model = new CategoryCarouselModel( { displayTitle: options.displayTitle } );
 
@@ -28,21 +26,19 @@ define( 'views.videohomepage.categories', [
 			var that = this,
 				view;
 
-			this.$el.append( this.template( this.model.attributes ) );
-			this.results = [];
+			this.$el.html( this.template( this.model.attributes ) );
 
 			this.collection.each( function( model ) {
-				view = new CategoryThumbView({
+				view = new CarouselThumbView({
 					model: model,
 					parentView: that
 				});
-				that.results.push( view );
-				that.$el.find( '.category-carousel' ).append( view.render().$el );
+				that.$el.append( view.$el );
 			});
 
 			return this;
 		}
 	} );
 
-	return CategoriesView;
+	return CarouselView;
 } );

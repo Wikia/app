@@ -1,11 +1,11 @@
-define( 'views.videopageadmin.categorythumb', [
+define( 'views.videopagetool.carouselthumb', [
 	'jquery'
 ], function( $ ) {
 	'use strict';
 
-	var CategoryThumbView = Backbone.View.extend( {
-		initialize: function( opts ) {
-			this.parentView = opts.parentView;
+	var CarouselThumbbView = Backbone.View.extend( {
+		initialize: function() {
+			this.render();
 		},
 		tagName: 'div',
 		className: 'carousel-item',
@@ -17,5 +17,5 @@ define( 'views.videopageadmin.categorythumb', [
 		}
 	} );
 
-	return CategoryThumbView;
+	return CarouselThumbbView;
 });
