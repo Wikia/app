@@ -1,6 +1,8 @@
 var WikiFeatures = {
 	lockedFeatures: {},
 	init: function() {
+		'use strict';
+
 		WikiFeatures.feedbackDialogPrototype = $( '.FeedbackDialog' );
 		WikiFeatures.sliders = $( '#WikiFeatures .slider' );
 		
@@ -162,7 +164,9 @@ var WikiFeatures = {
 					comment.bind('keypress keydown keyup paste cut', function() {
 						setTimeout(function() {
 							var chars = comment.val().length;
-							commentCounter.html(chars + ' / 1000');
+							commentCounter.html(chars + ' / 1000').hide(0, function() {
+								$(this).show();
+							});
 							if( chars > 1000 ) {
 								comment.addClass('invalid');
 								commentLabel.addClass('invalid');
@@ -210,6 +214,8 @@ var WikiFeatures = {
 	},
 
 	toggleFeature: function(featureName, enable) {
+		'use strict';
+
 		WikiFeatures.lockedFeatures[featureName] = true;
 		$.post(wgScriptPath + '/wikia.php', {
 			controller: 'WikiFeaturesSpecial',
@@ -229,5 +235,7 @@ var WikiFeatures = {
 };
 
 $(function() {
+	'use strict';
+
 	WikiFeatures.init();
 });
