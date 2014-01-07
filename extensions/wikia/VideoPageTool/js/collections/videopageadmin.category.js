@@ -7,8 +7,7 @@ define( 'collections.videopageadmin.category', [
 				model: CategoryModel,
 				url: '/wikia.php',
 				initialize: function() {
-					_.bindAll( this, 'setCategory' );
-					_.bindAll( this, 'autocomplete' );
+					_.bindAll( this, 'setCategory', 'autocomplete' );
 					this.controller = 'CategorySelect';
 					this.method = 'getWikiCategories';
 				},

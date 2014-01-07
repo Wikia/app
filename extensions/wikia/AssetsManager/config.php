@@ -1073,6 +1073,7 @@ $config['videopageadmin_js'] = array(
 
 		'//extensions/wikia/VideoPageTool/js/models/videopageadmin.category.js',
 		'//extensions/wikia/VideoPageTool/js/collections/videopageadmin.category.js',
+		'//extensions/wikia/VideoPageTool/js/collections/videopageadmin.categorydata.js',
 		'//extensions/wikia/VideoPageTool/js/views/videopageadmin.autocompleteitem.js',
 		'//extensions/wikia/VideoPageTool/js/views/videopageadmin.autocomplete.js',
 		'//extensions/wikia/VideoPageTool/js/views/videopageadmin.categoryforms.js',

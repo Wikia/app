@@ -24,6 +24,10 @@ define( 'views.videopageadmin.autocomplete', [
 
 				// this view requires an input with attr data-autocomplete present
 				this.$input = this.$( 'input[ data-autocomplete ]' );
+				// if the value is prepolated, set it on our collection
+				if ( this.$input.val().length ) {
+					this.collection.selectedCategory = this.$input.val();
+				}
 
 				// bind all the function contexts
 				_.bindAll( this, 'clearResults', 'renderResults', 'setValue' );
