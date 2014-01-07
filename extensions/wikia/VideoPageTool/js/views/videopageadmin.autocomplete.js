@@ -1,17 +1,16 @@
 /**
  * @name AutocompleteView
  * @description Backbone subview/module for generic autocomplete
- * 
+ * Supplied parent element must contain a DOM structure that includes:
+ * div.autocomplete,
+ * input[data-autocomplete]
+ *
  * @example
  * var autocomplete = new AutocompleteView({
  *		el: '.my-el', // This el is the closest parent element containing the form and the results container
  *		collection: new CategoryCollection() // Instatiated collection is available inside the view
  * });
  *
- * @requires 
- * Supplied parent element must contain a DOM structure that includes:
- * div.autocomplete, 
- * input[data-autocomplete]
  */
 define( 'views.videopageadmin.autocomplete', [
 		'jquery',
@@ -171,7 +170,7 @@ define( 'views.videopageadmin.autocomplete', [
 						$newSelection = $selected.prev();
 					}
 
-				// down arrow 
+				// down arrow
 				} else if ( key === 40 ) {
 					if ( idx === -1 ) {
 						$newSelection = $categories.eq( 0 );
@@ -183,7 +182,7 @@ define( 'views.videopageadmin.autocomplete', [
 				if ( $newSelection ) {
 					$newSelection.addClass( 'selected' ).siblings().removeClass( 'selected' );
 				}
-			},
+			}
 	});
 
 	return AutocompleteView;

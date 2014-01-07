@@ -4,5 +4,6 @@
 ); ?>
 
 <? if ( $haveProgram ): ?>
-	<?= $featuredContent ?>
+	<?/*= $featuredContent*/ ?>
+	<?= $categoryContent ?>
 <? endif; ?>

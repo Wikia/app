@@ -44,7 +44,7 @@ class VideoHomePageController extends WikiaController {
 		if ( $program instanceof VideoPageToolProgram && $program->exists() ) {
 			$this->haveProgram = true;
 			$this->featuredContent = $this->app->renderView( 'VideoHomePage', 'featured' );
-//			$this->categoryContent = $this->app->renderView( 'VideoHomePage', 'category' );
+			$this->categoryContent = $this->app->renderView( 'VideoHomePage', 'category' );
 //			$this->fanContent = $this->app->renderView( 'VideoHomePage', 'fan' );
 //			$this->popularContent = $this->app->renderView( 'VideoHomePage', 'popular' );
 		} else {
@@ -91,7 +91,8 @@ class VideoHomePageController extends WikiaController {
 	 */
 	public function category() {
 		$helper = new VideoPageToolHelper();
-		$this->assets = $helper->renderAssetsBySection( $this->getProgram(), self::MODULE_CATEGORY );
+		// TODO: change content back to MODULE_CATEGORY
+		$this->assets = $helper->renderAssetsBySection( $this->getProgram(), self::MODULE_FEATURED );
 	}
 
 	/**
