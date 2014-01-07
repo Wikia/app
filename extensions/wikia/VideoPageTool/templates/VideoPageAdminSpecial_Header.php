@@ -23,9 +23,13 @@
 
 		<? if ( !empty( $publishDate ) ): ?>
 			<p><strong><?= wfMessage( 'videopagetool-header-right-publish-date' )->text() ?></strong><?= $wg->lang->date( $publishDate ) ?></p>
-		<? else: ?>
+		<? elseif ( !empty( $lastSavedOn ) ): // Make sure we're on a program page ?>
 			<p><strong><?= wfMessage( 'videopagetool-header-right-not-published' )->text() ?></strong></p>
-		<? endif?>
+		<? endif ?>
+
+		<? if ( !empty( $publishedBy ) ): ?>
+			<p><strong><?= wfMessage( 'videopagetool-header-right-published-by' )->text() ?></strong><?= $publishedBy ?></p>
+		<? endif ?>
 	</aside>
 </header>
 <div class="VideoPageToolHeaderGradient"></div>

@@ -69,7 +69,8 @@ $messages['en'] = array(
 	'videopagetool-header-right-last-saved' => 'Last saved: ',
 	'videopagetool-header-right-publish-date' => 'Publish date: ',
 	'videopagetool-header-right-not-published' => 'Not published',
-	'videopagetool-header-right-saved-by' => 'by: ',
+	'videopagetool-header-right-saved-by' => 'Saved by: ',
+	'videopagetool-header-right-published-by' => 'Published by: ',
 
 	// Home Page Section: Partners
 	'videohomepage-partner-section-title' => 'Our Partners',

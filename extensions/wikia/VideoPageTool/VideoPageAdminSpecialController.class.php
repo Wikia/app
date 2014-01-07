@@ -99,10 +99,18 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 		}
 
 		$publishDate = null;
+		$publishedBy = null;
 		if ( $program->isPublished() ) {
 			$publishDate = $program->getPublishDate();
+			$publishedBy = $program->getPublishedBy();
 		} else if ( isset( $latestProgram ) && $latestProgram->isPublished() ) {
 			$publishDate = $latestProgram->getPublishDate();
+			$publishedBy = $latestProgram->getPublishedBy();
+		}
+
+		if ( $publishedBy ) {
+			// Translate user id into username
+			$publishedBy = User::newFromId( $publishedBy )->getName();
 		}
 
 		$lastSavedOn = null;
@@ -124,7 +132,6 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 					$savedBy = $asset->getUpdatedBy();
 				}
 			}
-			// Translate user id into username
 			$savedBy = User::newFromId( $savedBy )->getName();
 		}
 
@@ -198,6 +205,7 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 		$this->lastSavedOn = $lastSavedOn;
 		$this->savedBy = $savedBy;
 		$this->publishDate = $publishDate;
+		$this->publishedBy = $publishedBy;
 	}
 
 	/**
@@ -517,6 +525,7 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 		$this->lastSavedOn = $this->getVal( 'lastSavedOn' );
 		$this->savedBy = $this->getVal( 'savedBy' );
 		$this->publishDate = $this->getVal( 'publishDate' );
+		$this->publishedBy = $this->getVal( 'publishedBy' );
 	}
 
 	/**

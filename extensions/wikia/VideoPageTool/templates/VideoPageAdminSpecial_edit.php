@@ -9,7 +9,8 @@
 		'language' => $language,
 		'savedBy' => $savedBy,
 		'lastSavedOn' => $lastSavedOn,
-		'publishDate' => $publishDate
+		'publishDate' => $publishDate,
+		'publishedBy' => $publishedBy
 	)
 ) ?>
 
