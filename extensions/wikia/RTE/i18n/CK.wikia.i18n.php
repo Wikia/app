@@ -1143,15 +1143,29 @@ $messages['es'] = array(
 );
 
 /** Persian (فارسی)
+ * @author Reza1615
  */
 $messages['fa'] = array(
+	'rte-ck-bucket-insert' => 'درج',
+	'rte-ck-bucket-controls' => 'تنظیمات',
 	'rte-ck-errorPopupTitle' => 'خطا!',
+	'rte-ck-hoverPreview-comment-title' => 'نظر',
 	'rte-ck-hoverPreview-delete' => 'حذف',
 	'rte-ck-hoverPreview-edit' => 'ویرایش',
 	'rte-ck-image-add' => 'افزودن یک تصویر',
+	'rte-ck-image-photo' => 'تصویر',
 	'rte-ck-link-error-title' => 'خطا',
+	'rte-ck-link-external-url' => 'نشانی اینترنتی',
+	'rte-ck-media-delete' => 'حذف‌کردن',
+	'rte-ck-modeSwitch-toSource' => 'منبع',
+	'rte-ck-photoGallery-gallery' => 'نگارخانه',
 	'rte-ck-signature-label' => 'امضا',
 	'rte-ck-templateDropDown-label' => 'الگو',
+	'rte-ck-templateEditor-dialog-insert' => 'درج',
+	'rte-ck-templateEditor-editor-parameters' => 'پارامترها',
+	'rte-ck-templateEditor-editor-previewButton' => 'پیش‌نمایش',
+	'rte-ck-templateEditor-editor-previewTitle' => 'پیش‌نمایش',
+	'rte-ck-video-video' => 'ویدیو',
 );
 
 /** Finnish (suomi)

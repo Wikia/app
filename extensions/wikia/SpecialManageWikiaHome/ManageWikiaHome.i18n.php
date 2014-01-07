@@ -571,6 +571,29 @@ $messages['es'] = array(
 	'manage-wikia-home-collection-add-file-button' => 'Añadir una imagen',
 );
 
+/** Persian (فارسی)
+ * @author Reza1615
+ */
+$messages['fa'] = array(
+	'manage-wikia-home-change-button' => 'تغییر',
+	'manage-wikia-home-wiki-filter' => 'پالایه',
+	'manage-wikia-home-wiki-filter-reset' => 'پاک‌کردن',
+	'manage-wikia-home-wiki-list-id' => 'شناسه',
+	'manage-wikia-home-wiki-list-blocked' => 'مسدود شده',
+	'manage-wikia-home-wiki-list-collection' => 'مجموعه‌ها',
+	'manage-wikia-home-wiki-list-blocked-no' => 'خیر',
+	'manage-wikia-home-wiki-list-blocked-yes' => 'بله',
+	'manage-wikia-home-wiki-list-promoted-no' => 'خیر',
+	'manage-wikia-home-wiki-list-promoted-yes' => 'بله',
+	'manage-wikia-home-wiki-list-official-no' => 'خیر',
+	'manage-wikia-home-wiki-list-official-yes' => 'بله',
+	'manage-wikia-home-modal-button-no' => 'خیر',
+	'manage-wikia-home-modal-button-yes' => 'بله',
+	'manage-wikia-home-collections-setup-save-button' => 'ذخیره',
+	'manage-wikia-home-collections-enabled-field-label' => 'فعال',
+	'manage-wikia-home-collections-name-field-label' => 'نام مجموعه',
+);
+
 /** Faroese (føroyskt)
  * @author EileenSanda
  */

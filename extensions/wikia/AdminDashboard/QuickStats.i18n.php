@@ -97,15 +97,21 @@ $messages['as'] = array(
  * @author Andriykopanytsia
  * @author Cekli829
  * @author Melikov Memmed
+ * @author Mushviq Abdulla
  * @author Vago
  */
 $messages['az'] = array(
+	'quickstats-header-label' => 'Çevik Statistika',
 	'quickstats-header-date' => 'Tarix',
 	'quickstats-header-views' => 'Görünüş',
 	'quickstats-header-edits' => 'Redaktələr',
 	'quickstats-header-photos' => 'Şəkillər',
+	'quickstats-header-likes' => 'Bəyənmələr',
 	'quickstats-totals-label' => 'Yekunu',
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Daha çox statistikaya bax]]',
 	'quickstats-number-shortening' => '$1 тис.',
+	'quickstats-number-shortening-millions' => '$1M',
+	'quickstats-number-shortening-billions' => '$1milyard',
 );
 
 /** South Azerbaijani (تورکجه)

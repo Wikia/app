@@ -328,11 +328,11 @@ $messages['fo'] = array(
  * @author Wyz
  */
 $messages['fr'] = array(
-	'globalwatchlist-desc' => 'Envoie un sommaire hebdomadaire par courriel avec les pages suivies sur tous les wikis',
+	'globalwatchlist-desc' => 'Envoie un résumé hebdomadaire par courriel avec les pages suivies sur tous les wikis',
 	'tog-watchlistdigest' => "M'envoyer un résumé par courriel une fois par semaine",
 	'tog-watchlistdigestclear' => 'Marquer toutes les pages de mon résumé hebdomadaire comme visitées',
 	'globalwatchlist-see-more' => 'Veuillez vérifier vos listes de suivi locales pour afficher davantage de modifications',
-	'globalwatchlist-digest-email-subject' => 'Sommaire de la semaine',
+	'globalwatchlist-digest-email-subject' => 'Résumé hebdomadaire',
 	'globalwatchlist-digest-email-body' => "Bonjour $1,
 
 Ceci est une liste des pages de votre liste de suivi Wikia qui ont été modifiées depuis votre dernière visite.
@@ -340,19 +340,19 @@ Ceci est une liste des pages de votre liste de suivi Wikia qui ont été modifi�
 $2
 
 
-Ceci est une liste des pages de blogs de votre liste de suivi Wikia qui ont été modifiées ou commentées depuis votre dernière visite.
+Ceci est une liste des billets de votre liste de suivi Wikia qui ont été modifiés ou commentés depuis votre dernière visite.
 
 $3
 
-Visitez et modifiez, le cas échéant...
+Visitez et modifiez souvent...
 
 Wikia
 
-* Pour modifier vos préférences de notifications de liste de suivi, visitez : http://www.wikia.com/wiki/Special:Preferences
+* Pour modifier vos préférences de notification de liste de suivi, visitez : http://www.wikia.com/wiki/Special:Preferences
 * Pour marquer comme visitées toutes les pages de ce résumé hebdomadaire, référez-vous à l'option de l'onglet « Liste de suivi » de votre page de préférences",
 	'globalwatchlist-blog-page-title-comment' => '$1 ($2 commentaire{{PLURAL:$2||s}})',
 	'globalwatchlist-no-page-found' => 'Aucune page trouvée.',
-	'globalwatchlist-no-blog-page-found' => 'Aucune page de blog trouvée.',
+	'globalwatchlist-no-blog-page-found' => 'Aucun billet trouvé.',
 );
 
 /** Galician (galego)
