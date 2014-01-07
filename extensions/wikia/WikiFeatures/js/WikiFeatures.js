@@ -1,3 +1,5 @@
+/* global GlobalNotification, Modernizr */
+
 var WikiFeatures = {
 	lockedFeatures: {},
 	init: function() {
@@ -10,7 +12,7 @@ var WikiFeatures = {
 			$( '.representation' ).removeClass( 'promotion' );
 		}
 		
-		WikiFeatures.sliders.click( function( e ) {
+		WikiFeatures.sliders.click( function( ) {
 			var el = $( this ),
 				feature = el.closest( '.feature' ),
 				featureName = feature.data( 'name' ),
@@ -83,25 +85,29 @@ var WikiFeatures = {
 			}
 		});
 
-//		$('body' ).on('input propertychange', '#feedbackDialogModal [name=comment]', function(elem) {
-//			var $this = $(this),
-//				chars = this.value.length,
-//				elemParent = $this.closest('#feedbackDialogModal'),
-//				$counter = elemParent.find('.comment-character-count' ),
-//				$label = elemParent.find('.comment-group label' );
-//
-//			$counter.html(chars + ' / 1000');
-//
-//			if( chars > 1000 ) {
-//				$this.addClass('invalid');
-//				$label.addClass('invalid');
-//			} else {
-//				$this.removeClass('invalid');
-//				$label.removeClass('invalid');
-//			}
-//		});
+		$('body' ).on('input propertychange', '#feedbackDialogModal [name=comment]', function( ) {
+			var $this = $(this),
+				chars = this.value.length,
+				elemParent = $this.closest('#feedbackDialogModal'),
+				$counter = elemParent.find('.comment-character-count' ),
+				$label = elemParent.find('.comment-group label' );
 
-		$('#WikiFeatures .feedback').click(function(e) {
+			$counter.html(chars + ' / 1000');
+
+			// Force re-paint
+			$counter.css('display', 'none').height();
+			$counter.css('display', 'block');
+
+			if( chars > 1000 ) {
+				$this.addClass('invalid');
+				$label.addClass('invalid');
+			} else {
+				$this.removeClass('invalid');
+				$label.removeClass('invalid');
+			}
+		});
+
+		$('#WikiFeatures .feedback').click(function( e ) {
 			e.preventDefault();
 
 			var feature = $(this).closest('.feature');
@@ -154,28 +160,36 @@ var WikiFeatures = {
 					WikiFeatures.feedbackModal = feedbackModal;
 
 					var modal = feedbackModal.$element,
-						commentLabel = modal.find('.comment-group label' ),
+						//commentLabel = modal.find('.comment-group label' ),
 						comment = modal.find('textarea[name=comment]' ),
-						commentCounter = modal.find('.comment-character-count' ),
+						//commentCounter = modal.find('.comment-character-count' ),
 						submitButton = modal.find('[data-event=submit]' ),
 						statusMsg = modal.find('.status-msg'),
 						msgHandle = false;
 
-					comment.bind('keypress keydown keyup paste cut', function() {
-						setTimeout(function() {
-							var chars = comment.val().length;
-							commentCounter.html(chars + ' / 1000').hide(0, function() {
-								$(this).show();
-							});
-							if( chars > 1000 ) {
-								comment.addClass('invalid');
-								commentLabel.addClass('invalid');
-							} else {
-								comment.removeClass('invalid');
-								commentLabel.removeClass('invalid');
-							}
-						}, 50);
-					});
+//					comment.bind('keypress keydown keyup paste cut', function() {
+//						setTimeout(function() {
+//							var chars = comment.val().length,
+//								n;
+//							commentCounter.html(chars + ' / 1000');
+//
+////							n = document.createTextNode(' ');
+////							commentCounter.appendChild(n);
+////							(function(){ n.parentNode.removeChild(n); }).defer();
+//
+//							commentCounter.style.display = 'none';
+//							n = commentCounter.offsetHeight;
+//							commentCounter.style.display = 'block';
+//
+//							if( chars > 1000 ) {
+//								comment.addClass('invalid');
+//								commentLabel.addClass('invalid');
+//							} else {
+//								comment.removeClass('invalid');
+//								commentLabel.removeClass('invalid');
+//							}
+//						}, 50);
+//					});
 
 					feedbackModal.bind( 'submit', function ( event ) {
 						event.preventDefault();
@@ -217,18 +231,18 @@ var WikiFeatures = {
 		'use strict';
 
 		WikiFeatures.lockedFeatures[featureName] = true;
-		$.post(wgScriptPath + '/wikia.php', {
+		$.post(window.wgScriptPath + '/wikia.php', {
 			controller: 'WikiFeaturesSpecial',
 			method: 'toggleFeature',
 			format: 'json',
 			feature: featureName,
 			enabled: enable
 		}, function(res) {
-			if(res['result'] == 'ok') {
+			if(res.result === 'ok') {
 				WikiFeatures.lockedFeatures[featureName] = false;
 			} else {
 				// TODO: show error message
-				GlobalNotification.show(res['error'], 'error');
+				GlobalNotification.show(res.error, 'error');
 			}
 		});
 	}
