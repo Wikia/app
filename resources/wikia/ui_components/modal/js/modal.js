@@ -181,8 +181,6 @@ define( 'wikia.ui.modal', [
 
 		// clicking outside modal triggers the close action
 		this.$blackout.click( $.proxy(function( event ) {
-			event.preventDefault();
-
 			// jQuery only supports event bubbling,
 			// this is a workaround to be sure that click was done on blackout and doesn't bubble up from $element
 			// stopPropagation() on $element it not an option
