@@ -21,7 +21,6 @@ define( 'collections.videopageadmin.categorydata', [
 					});
 				},
 				setCategory: function( name, doFetch ) {
-					console.log( 'hi', typeof name );
 					if ( typeof name === 'string' ) {
 						this.categoryName = name;
 						this.fetch();
