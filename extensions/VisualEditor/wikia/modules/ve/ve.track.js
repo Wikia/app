@@ -13,7 +13,7 @@ require( ['wikia.tracker'], function ( tracker ) {
 			'command.execute': function ( data ) {
 				return {
 					'action': actions.KEYPRESS,
-					'label': data.name
+					'label': 'tool-' + nameToLabel( data.name )
 				};
 			},
 			'Edit': function ( data ) {
@@ -48,21 +48,17 @@ require( ['wikia.tracker'], function ( tracker ) {
 				};
 			},
 			'tool': function ( data ) {
-				var params = {
+				return {
 					'action': actions.CLICK,
-					'label': nameToLabel( data.name )
+					'label': 'tool-' + nameToLabel( data.name ),
+					'value': data.toolbar === 'surface' ? 1 : 0
 				};
-
-				if ( data.name === 'number' || data.name === 'bullet' ) {
-					params.value = ( data.method === 'wrap' ? 1 : 0 );
-				}
-
-				return params;
 			}
 		},
 		// @see {@link nameToLabel} for more information
 		nameToLabelMap = {
 			'meta': 'page-settings',
+			'mwSave': 'save',
 			'transclusion': 'template',
 			'wikiaMediaInsert': 'media-insert',
 			'wikiaSourceMode': 'source'
@@ -116,11 +112,12 @@ require( ['wikia.tracker'], function ( tracker ) {
 				return;
 			}
 			data = $.isFunction( mwEvent ) ? mwEvent( data, topics ) : mwEvent;
-		} else {
-			// Normalize tracking labels
-			data.label = data.label.replace( rUppercase, upperToHyphenLower );
 		}
 
+		// Normalize tracking labels
+		data.label = data.label.replace( rUppercase, upperToHyphenLower );
+
+		// Send off to Wikia.Tracker
 		tracker.track( ve.extendObject( params, data ) );
 	}
 

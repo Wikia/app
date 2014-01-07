@@ -72,7 +72,12 @@ ve.ui.DialogTool.static.isCompatibleWith = function ( model ) {
  * @method
  */
 ve.ui.DialogTool.prototype.onSelect = function () {
-	ve.track( 'tool.dialog.select', { name: this.constructor.static.name } );
+	ve.track( 'tool.dialog.select', {
+		name: this.constructor.static.name,
+		// HACK: which toolbar is this coming from?
+		// TODO: this should probably be passed into the config or something
+		toolbar: ( this.toolbar.constructor === ve.ui.Toolbar ? 'surface' : 'target' )
+	} );
 	this.toolbar.getSurface().execute(
 		'dialog',
 		'open',
