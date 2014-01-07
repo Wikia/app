@@ -79,6 +79,14 @@ ve.ui.MWNoticesPopupTool.prototype.getTitle = function () {
 	return ve.msg( this.constructor.static.titleMessage, count );
 };
 
+/**
+ * @inheritdoc
+ */
+ve.ui.MWNoticesPopupTool.prototype.onSelect = function () {
+	ve.track( 'tool.mw.noticespopup.select', { name: this.constructor.static.name } );
+	return OO.ui.PopupTool.prototype.onSelect.call( this );
+};
+
 /* Registration */
 
 ve.ui.toolFactory.register( ve.ui.MWNoticesPopupTool );
@@ -153,6 +161,16 @@ ve.ui.MWHelpPopupTool = function VeUiMWHelpPopupTool( toolGroup, config ) {
 /* Inheritance */
 
 OO.inheritClass( ve.ui.MWHelpPopupTool, OO.ui.PopupTool );
+
+/* Methods */
+
+/**
+ * @inheritdoc
+ */
+ve.ui.MWHelpPopupTool.prototype.onSelect = function () {
+	ve.track( 'tool.mw.helppopup.select', { name: this.constructor.static.name } );
+	return OO.ui.PopupTool.prototype.onSelect.call( this );
+};
 
 /* Static Properties */
 
