@@ -1,0 +1,1 @@
+define( 'templates.mustache.js', [], function() { return {"example" : '<h1>Hello {{ name }}</h1>', "done": "true"}; });
