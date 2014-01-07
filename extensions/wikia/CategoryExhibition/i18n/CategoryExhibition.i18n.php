@@ -105,6 +105,7 @@ $messages['br'] = array(
 );
 
 /** Catalan (català)
+ * @author Fitoschido
  * @author Marcmpujol
  */
 $messages['ca'] = array(
@@ -114,13 +115,13 @@ $messages['ca'] = array(
 	'category-exhibition-recentedits' => 'Editades recentement',
 	'category-exhibition-page-header' => 'Pàgines en la categoraa "$1"',
 	'category-exhibition-subcategories-header' => 'Subcategories',
-	'category-exhibition-media-header' => 'Multimèdia en la categoria "$1"',
+	'category-exhibition-media-header' => 'Multimèdia en la categoria «$1»',
 	'category-exhibition-blogs-header' => 'Entrades de bloc',
 	'category-exhibition-display-old' => 'Visualització de la llista de categories',
 	'category-exhibition-display-new' => "Visualització d'exposició de la categoria",
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -624,7 +625,7 @@ $messages['sv'] = array(
 	'category-exhibition-alphabetical' => 'Alfabetisk',
 	'category-exhibition-mostvisited' => 'Mest visade',
 	'category-exhibition-recentedits' => 'Nyligen ändrade',
-	'category-exhibition-page-header' => 'Sidor i kategori "$1"',
+	'category-exhibition-page-header' => 'Sidor i kategorin "$1"',
 	'category-exhibition-subcategories-header' => 'Underkategorier',
 	'category-exhibition-media-header' => 'Media i kategorin "$1"',
 	'category-exhibition-blogs-header' => 'Blogg-inlägg',

@@ -55,6 +55,7 @@ class WikiaHubsApiController extends WikiaApiController {
 		$moduleService = MarketingToolboxModuleService::getModuleByName($moduleName, $lang, MarketingToolboxModel::SECTION_HUBS, $verticalId);
 		
 		if( $this->isValidModuleService($moduleService) ) {
+			$moduleService->setShouldFilterCommercialData( $this->hideNonCommercialContent() );
 			$data = $moduleService->loadData($model, [
 				'lang' => $lang,
 				'vertical_id' => $verticalId,

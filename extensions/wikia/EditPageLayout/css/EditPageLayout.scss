@@ -9,10 +9,8 @@
 @import "skins/oasis/css/mixins/opacity";
 @import "skins/oasis/css/mixins/wordmark";
 @import "extensions/wikia/UserLogin/mixins/tooltip-icon";
-
 // Colors
 @import "core/colors";
-
 // Mixins
 @import "mixins/button-resize";
 @import "mixins/gradients";
@@ -20,7 +18,6 @@
 @import "mixins/splotch";
 @import "mixins/sprite-edit-page";
 @import "mixins/sprite-edit-mw-toolbar";
-
 // Core
 @import "core/buttons";
 @import "core/dimensions";
@@ -32,10 +29,8 @@
 @import "core/tabs";
 @import "core/toolbar";
 @import "core/wide";
-
 @import "skins/oasis/css/core/responsive-core";
 @import "skins/oasis/css/core/responsive-variables";
-
 
 body {
 	padding: 0;
@@ -333,6 +328,7 @@ body {
 				overflow-y: scroll;
 				min-height: 320px;
 				padding: 10px;
+				position: relative;
 				.global-notification {
 					// FB#48494 - change nav2 error styling for modal preview
 					width: auto;
@@ -426,17 +422,18 @@ body {
 }
 
 .mw-toolbar-editbutton {
-	@include sprite-edit-mw-toolbar-deep-embed(23px,23px);
+	@include sprite-edit-mw-toolbar-deep-embed(23px, 23px);
 }
 
-
-
 @if ( $responsive-layout-enabled ) {
-// START - edit page fixes
+	// START - edit page fixes
 
 	.editor .WikiaMainContent {
 		float: none;
 		width: 100%;
+		.editform {
+			z-index: 1;
+		}
 	}
 
 	.editpage-sourcewidemode.mode-source {
@@ -448,6 +445,47 @@ body {
 
 			.EditPageMainContainer {
 				margin-right: 0;
+			}
+
+			@media screen and (max-width: $width-outside) {
+				#wpSave {
+					// fix for touch devices, because in touchScreen.scss height is set to 30px !important
+					height: 21px !important;
+					margin: 0;
+					right: 20px;
+					top: 40px;
+				}
+				#wpSummaryLabel {
+					clear: none;
+				}
+				.EditPageToolbar {
+					height: 70px;
+				}
+				.EditPageRail {
+					.module_page_controls {
+						.wikia-menu-button {
+							margin: 0;
+							right: 145px;
+							top: 40px;
+						}
+						.checkboxes {
+							position: absolute;
+							right: 275px;
+							top: 37px;
+							label {
+								float: right;
+								margin: 0 0 0 10px;
+								position: static;
+							}
+						}
+						textarea {
+							float: right;
+							margin: 0 0 0 10px;
+							position: static;
+							width: 350px;
+						}
+					}
+				}
 			}
 		}
 
@@ -488,5 +526,33 @@ body {
 	.EditPageRail {
 		width: $width-rail;
 	}
+
+	// fix for wiki nav bug - DAR-2884
+	.preview .WikiaArticle {
+		overflow: inherit;
+	}
+}
 // END - edit page fixes
+
+//Mobile preview styles
+.mobile-preview {
+	border: 1px solid $color-page-border;
+	height: 480px;
+	width: 320px;
+	overflow: auto;
+	margin: 0 auto;
+
+	-webkit-overflow-scrolling: touch;
+	-webkit-transform: translate3d(0, 0, 0);
+
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+
+	iframe {
+		display: block;
+		height: 100%;
+		margin: 0 auto;
+		width: 100%;
+	}
 }

@@ -64,7 +64,7 @@ $messages['ce'] = array(
 	'quickcreate' => 'дlадахьийта хьай дарб',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Dontlietome7
  * @author Jezevec
  */
@@ -349,11 +349,19 @@ $messages['uk'] = array(
 	'quickcreate' => 'надіслати свій рецепт',
 );
 
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'quickcreate-desc' => 'Thêm một nút tạo trang mới với yêu cầu đăng nhập cho người dùng vô danh',
+	'quickcreate' => 'gửi công thức của bạn',
+);
+
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Hydra
  */
 $messages['zh-hans'] = array(
 	'quickcreate-desc' => '添加“创建新页面”按钮，要求匿名用户登录编辑。',
-	'quickcreate' => '提交您的菜谱',
+	'quickcreate' => '提交您的方案',
 );

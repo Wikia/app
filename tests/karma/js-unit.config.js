@@ -57,7 +57,10 @@ module.exports = function(config) {
 			'resources/wikia/modules/csspropshelper.js',
 			'resources/wikia/modules/spec/*.spec.js',
 
-			//Advertisment
+			//UI components
+			'resources/wikia/ui_components/**/*.js',
+
+			//Advertisement
 			'extensions/wikia/AdEngine/js/AdConfig2.js',
 			'extensions/wikia/AdEngine/js/AdConfig2Late.js',
 			'extensions/wikia/AdEngine/js/AdEngine2.js',
@@ -66,11 +69,12 @@ module.exports = function(config) {
 			'extensions/wikia/AdEngine/js/AdLogicPageLevelParams.js',
 			'extensions/wikia/AdEngine/js/AdLogicPageLevelParamsLegacy.js',
 			'extensions/wikia/AdEngine/js/AdLogicPageDimensions.js',
+			'extensions/wikia/AdEngine/js/AdDecoratorPageDimensions.js',
 			'extensions/wikia/AdEngine/js/AdProviderEvolve.js',
 			'extensions/wikia/AdEngine/js/AdProviderGamePro.js',
 			'extensions/wikia/AdEngine/js/AdProviderGpt.js',
 			'extensions/wikia/AdEngine/js/AdProviderLater.js',
-			'extensions/wikia/AdEngine/js/AdProviderLiftium2Dom.js',
+			'extensions/wikia/AdEngine/js/AdProviderLiftium.js',
 			'extensions/wikia/AdEngine/js/AdProviderNull.js',
 			'extensions/wikia/AdEngine/js/DartUrl.js',
 			'extensions/wikia/AdEngine/js/EvolveHelper.js',
@@ -87,6 +91,14 @@ module.exports = function(config) {
 			'extensions/wikia/WikiaHomePage/js/WikiaHomePage.js',
 			'extensions/wikia/WikiaHomePage/js/spec/WikiaHomePage.spec.js',
 
+			// Video
+			'extensions/wikia/VideoPageTool/js/views/jquery.switcher.js',
+			'extensions/wikia/VideoPageTool/js/spec/*.spec.js',
+
+			//Suggestions
+			'extensions/wikia/Suggestions/js/SuggestionsMatcher.js',
+			'extensions/wikia/Suggestions/js/spec/*.spec.js',
+
 			//Search
 			'extensions/wikia/Search/js/SearchAbTest.js',
 			'extensions/wikia/Search/js/SearchAbTest.*.js',
@@ -98,7 +110,11 @@ module.exports = function(config) {
 
 			// Video
 			'extensions/wikia/VideoPageTool/js/views/jquery.switcher.js',
-			'extensions/wikia/VideoPageTool/js/spec/*.spec.js'
+			'extensions/wikia/VideoPageTool/js/spec/*.spec.js',
+
+			// LyricFind PV tracking
+			'extensions/3rdparty/LyricWiki/LyricFind/js/modules/LyricFind.Tracker.js',
+			'extensions/3rdparty/LyricWiki/LyricFind/js/spec/*.spec.js'
 		]
 	});
 };

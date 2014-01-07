@@ -82,7 +82,7 @@ $messages['ca'] = array(
 	'wikiarelatedpages-heading' => 'Llegir més',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Dontlietome7
  */
 $messages['cs'] = array(

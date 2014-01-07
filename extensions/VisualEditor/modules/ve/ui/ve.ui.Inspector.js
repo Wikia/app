@@ -103,6 +103,11 @@ ve.ui.Inspector.prototype.initialize = function () {
  * @method
  */
 ve.ui.Inspector.prototype.onCloseButtonClick = function () {
+	var label = ve.track.nameToLabel( this.constructor.static.name );
+	ve.track( {
+		'action': ve.track.actions.CLICK,
+		'label': 'inspector-' + label + '-button-close'
+	} );
 	this.close( 'back' );
 };
 
@@ -112,6 +117,11 @@ ve.ui.Inspector.prototype.onCloseButtonClick = function () {
  * @method
  */
 ve.ui.Inspector.prototype.onRemoveButtonClick = function () {
+	var label = ve.track.nameToLabel( this.constructor.static.name );
+	ve.track( {
+		'action': ve.track.actions.CLICK,
+		'label': 'inspector-' + label + '-button-remove'
+	} );
 	this.close( 'remove' );
 };
 
@@ -155,5 +165,21 @@ ve.ui.Inspector.prototype.onSetup = function () {
  * @method
  */
 ve.ui.Inspector.prototype.onOpen = function () {
+	ve.track( {
+		'action': ve.track.actions.OPEN,
+		'label': 'inspector-' + ve.track.nameToLabel( this.constructor.static.name )
+	} );
 	this.initialSelection = this.surface.getModel().getSelection();
+};
+
+/**
+ * Handle inspector close events.
+ *
+ * @method
+ */
+ve.ui.Inspector.prototype.onClose = function () {
+	ve.track( {
+		'action': ve.track.actions.CLOSE,
+		'label': 'inspector-' + ve.track.nameToLabel( this.constructor.static.name )
+	} );
 };

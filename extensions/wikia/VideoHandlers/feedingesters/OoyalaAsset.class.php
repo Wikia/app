@@ -22,6 +22,7 @@ class OoyalaAsset extends WikiaModel {
 		$options = array(
 			'method' => $method,
 			'postData' => $reqBody,
+			'noProxy' => true,
 		);
 		$req = MWHttpRequest::factory( $url, $options );
 		$status = $req->execute();
@@ -103,6 +104,7 @@ class OoyalaAsset extends WikiaModel {
 		$options = array(
 			'method' => $method,
 			'postData' => $reqBody,
+			'noProxy' => true,
 		);
 
 		$req = MWHttpRequest::factory( $url, $options );
@@ -263,7 +265,7 @@ class OoyalaAsset extends WikiaModel {
 		$url = OoyalaApiWrapper::getApi( $method, $reqPath, $params );
 		//print( "Connecting to $url...\n" );
 
-		$req = MWHttpRequest::factory( $url );
+		$req = MWHttpRequest::factory( $url, array( 'noProxy' => true ) );
 		$status = $req->execute();
 		if ( $status->isGood() ) {
 			$response = json_decode( $req->getContent(), true );
@@ -336,7 +338,7 @@ class OoyalaAsset extends WikiaModel {
 		$url = OoyalaApiWrapper::getApi( $method, $reqPath );
 		//print( "Connecting to $url...\n" );
 
-		$req = MWHttpRequest::factory( $url );
+		$req = MWHttpRequest::factory( $url, array( 'noProxy' => true ) );
 		$status = $req->execute();
 		if ( $status->isGood() ) {
 			$response = json_decode( $req->getContent(), true );
@@ -441,6 +443,7 @@ class OoyalaAsset extends WikiaModel {
 		$options = array(
 			'method' => $method,
 			'postData' => $reqBody,
+			'noProxy' => true,
 		);
 
 		$req = MWHttpRequest::factory( $url, $options );

@@ -41,6 +41,7 @@ class Config
 	const RANK_NEWEST               = 'newest';
 	const RANK_OLDEST               = 'oldest';
 	const RANK_RECENTLY_MODIFIED    = 'recently-modified';
+	const RANK_NEWEST_PAGE_ID       = 'newest-pageid';
 	const RANK_STABLE               = 'stable';
 	const RANK_MOST_VIEWED          = 'most-viewed';
 	const RANK_FRESHEST             = 'freshest';
@@ -165,6 +166,7 @@ class Config
 	protected $rankOptions = [
 			self::RANK_DEFAULT           => [ 'score', Solarium_Query_Select::SORT_DESC ],
 			self::RANK_NEWEST            => [ 'created', Solarium_Query_Select::SORT_DESC ],
+			self::RANK_NEWEST_PAGE_ID    => [ 'pageid', Solarium_Query_Select::SORT_DESC ],
 			self::RANK_OLDEST            => [ 'created', Solarium_Query_Select::SORT_ASC  ],
 			self::RANK_RECENTLY_MODIFIED => [ 'touched', Solarium_Query_Select::SORT_DESC ],
 			self::RANK_STABLE            => [ 'touched', Solarium_Query_Select::SORT_ASC  ],
@@ -698,6 +700,16 @@ class Config
 	 */
 	public function setInterWiki( $apply ) {
 		return $this->setQueryService( 'Select\\Dismax\\InterWiki', $apply );
+	}
+
+
+	/**
+	 * Synonym function for backward compatbility
+	 * @param  boolean $apply
+	 * @return Wikia\Search\Config provides fluent interface
+	 */
+	public function setOnWiki( $apply ) {
+		return $this->setQueryService( 'Select\\Dismax\\OnWiki', $apply );
 	}
 
 	/**

@@ -126,7 +126,9 @@ $messages['en'] = array(
  * @author Siebrand
  */
 $messages['qqq'] = array(
+	'multiwikiedit_button' => '{{Identical|Edit}}',
 	'multiwikiedit_on' => 'Label for dropdown menu where user can select type of wikis to run script on',
+	'multiwikiedit_all_wikis' => '{{Identical|All wikis}}',
 	'multiwikiedit_success_subtitle' => '{{Identical|For $1}}',
 	'multiwikiedit_max_display_size' => 'Parameters:
 * $1 is a number of pages.',
@@ -135,6 +137,7 @@ $messages['qqq'] = array(
 	'multidelete_button' => '{{Identical|Delete}}',
 	'multidelete_select_all' => '{{Identical|Select all}}',
 	'multidelete_reason' => 'none',
+	'multidelete_all_wikis' => '{{Identical|All wikis}}',
 	'multidelete_success_subtitle' => '{{Identical|For $1}}',
 	'multidelete_split_results' => 'If number of articles to run the script on exceeds a maximum number, user receives a message informing them that the script will be split up into a number of tasks. 
 Parameters:
@@ -612,7 +615,10 @@ $messages['ca'] = array(
  * @author Умар
  */
 $messages['ce'] = array(
+	'multiwikiedit_from_form' => 'формера',
+	'multidelete' => 'АгӀонийн гулам дӀабаккхар',
 	'multidelete_title' => 'Дуккха дӀяккхар',
+	'multidelete_processing' => 'агӀонаш дӀаяхар',
 	'multiwikienterpagename' => 'ДӀаязъе агӀона цӀе:',
 );
 
@@ -622,7 +628,7 @@ $messages['ckb'] = array(
 	'multidelete_button' => 'سڕینەوە',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Darth Daron
  * @author Dontlietome7
  */
@@ -1244,13 +1250,14 @@ $messages['fr'] = array(
 
 /** Galician (galego)
  * @author Toliño
+ * @author Vivaelcelta
  */
 $messages['gl'] = array(
 	'multitasks-link-back-label' => 'aquí',
 	'multiwikiedit' => 'Editar unha manchea de páxinas',
 	'multiwikiedit_button' => 'EDITAR',
 	'multiwikiedit_confirm' => 'CONFIRMAR',
-	'multiwikiedit_help' => 'Editar unha manchea de páxinas. Pode editar as páxinas listadas nunha caixa de texto. Escolla un usuario que se mostrará nos rexistros de borrados. O ficheiro cargado deberá conter o nome da páxina e un motivo opcional separado por un carácter "|" en cada liña.',
+	'multiwikiedit_help' => 'Editar unha manchea de páxinas. Podes editar as páxinas listadas nunha caixa de texto. Escolle un usuario que se mostrará nos rexistros de borrados. O ficheiro subido deberá conter o nome da páxina e un motivo opcional separado por un carácter "|" en cada liña.',
 	'multiwikiedit_caption' => 'Lista de páxinas',
 	'multiwikiedit_title' => 'Edición en varios wikis',
 	'multiwikiedit_as' => 'Executar a escritura como',
@@ -1595,6 +1602,7 @@ $messages['it'] = array(
 );
 
 /** Japanese (日本語)
+ * @author BryghtShadow
  * @author Shirayuki
  * @author Tommy6
  */
@@ -1700,7 +1708,7 @@ $messages['ja'] = array(
 	'multiwikifinder' => '複数ウィキでのタイトルの検索',
 	'multiwikifindpagenames' => 'ページ名を検索',
 	'multiwikienterpagename' => 'ページ名を入力:',
-	'multiwikirecords' => '$1 のウィキが見つかりました', # Fuzzy
+	'multiwikirecords' => '$1 の{{PLURAL:$1|ウィキ}}が見つかりました',
 );
 
 /** Khmer (ភាសាខ្មែរ)
@@ -1858,7 +1866,10 @@ $messages['lb'] = array(
  */
 $messages['lrc'] = array(
 	'multitasks-link-back-label' => 'ايچه',
+	'multiwikiedit_button' => 'ویرایشت',
+	'multiwikiedit_confirm' => 'مئکم کردن',
 	'multiwikiedit_select_yourself' => 'شما',
+	'multidelete_success_subtitle' => 'سی $1',
 );
 
 /** Macedonian (македонски)
@@ -2670,6 +2681,7 @@ $messages['ps'] = array(
 
 /** Portuguese (português)
  * @author Hamilton Abreu
+ * @author Josep Maria 15.
  * @author Luckas
  */
 $messages['pt'] = array(
@@ -2723,7 +2735,7 @@ $messages['pt'] = array(
 	'multiwikiedit_edit_options' => 'Opções de edição',
 	'multidelete' => 'Eliminar conjunto de páginas',
 	'multidelete_button' => 'Eliminar',
-	'multidelete_help' => 'Elimine um conjunto de páginas numa tarefa de segundo plano. Pode fazê-lo só para esta wiki, para todas as wikis da base de dados partilhada, ou para um conjunto de línguas. Pode fazê-lo em seu nome, ou em nome de uma conta predefinida para scripts.',
+	'multidelete_help' => 'Elimine um conjunto de páginas numa tarefa de segundo plano. Pode fazê-lo só para esta wiki, para todas as wikis da base de dados partilhada, ou para um conjunto de línguas. Pode fazê-lo no seu nome, ou em nome de uma conta predefinida para scripts.',
 	'multidelete_caption' => 'Lista de páginas',
 	'multidelete_title' => 'Eliminação Múltipla',
 	'multidelete_both_modes' => 'Escolha uma página específica ou uma lista de páginas, por favor.',
@@ -3524,6 +3536,18 @@ $messages['uk'] = array(
 	'multiwikienterpagename' => 'Введіть назву сторінки:',
 	'multiwikirecords' => 'знайдено $1 {{PLURAL:$1|вікі}}',
 	'action-multiwikifinder' => 'шукати конкретний заголовок по всій Вікії',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'multitasks-link-back-label' => 'Ở đây',
+	'multiwikiedit' => 'Xóa một nhóm trang',
+	'multiwikiedit_button' => 'CHỈNH SỬA',
+	'multiwikiedit_confirm' => 'XÁC NHẬN',
+	'multiwikiedit_help' => 'Chỉnh sửa hàng loạt của trang. Bạn có thể chỉnh sửa các trang được liệt kê trong một hộp văn bản. Chọn một người dùng sẽ được hiển thị trong xóa Nhật ký. Đã tải lên tệp nên chứa tên trang và tùy chọn lý do tách ra bởi | nhân vật trong mỗi dòng.',
+	'multiwikiedit_caption' => 'Danh sách trang:',
 );
 
 /** Simplified Chinese (中文（简体）‎)

@@ -19,7 +19,7 @@ ve.ui.WikiaUploadWidget = function VeUiWikiaUploadWidget( config ) {
 
 	uploadButtonConfig = {
 		'$$': this.$$,
-		'label': ve.msg( 'visualeditor-wikiauploadwidget-button' ),
+		'label': ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-upload-button' ),
 		'flags': ['constructive']
 	};
 	if ( !config.hideIcon ) {
@@ -31,7 +31,7 @@ ve.ui.WikiaUploadWidget = function VeUiWikiaUploadWidget( config ) {
 		.addClass( 've-ui-icon-upload' );
 
 	this.$uploadLabel = this.$$( '<span>' )
-		.text( ve.msg( 'visualeditor-wikiauploadwidget-label' ) );
+		.text( ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-upload-label' ) );
 
 	this.uploadButton = new ve.ui.ButtonWidget( uploadButtonConfig );
 
@@ -39,7 +39,7 @@ ve.ui.WikiaUploadWidget = function VeUiWikiaUploadWidget( config ) {
 	this.$file = this.$$( '<input>' ).attr( {
 		'type': 'file',
 		'name': 'file'
-		} );
+	} );
 
 	// Events
 	this.$.on( 'click', ve.bind( this.onClick, this ) );
@@ -60,6 +60,45 @@ ve.ui.WikiaUploadWidget = function VeUiWikiaUploadWidget( config ) {
 
 ve.inheritClass( ve.ui.WikiaUploadWidget, ve.ui.Widget );
 
+/* Events */
+
+/**
+ * @event change
+ */
+
+/**
+ * @event upload
+ * @param {Object} data The API response data.
+ */
+
+/* Static methods */
+
+/**
+ * Check file for size and filetype errors
+ * @method
+ * @param {File} file File object containing properties of user uploaded file
+ * @returns {Array} Array of error strings. May return empty array
+ */
+ve.ui.WikiaUploadWidget.static.validateFile = function ( file ) {
+	var errors = [],
+		maxUploadSize = mw.config.get( 'wgMaxUploadSize' ),
+		fileExtensions = mw.config.get( 'wgFileExtensions' ),
+		filetype = fileExtensions[ ve.indexOf( file.type.substr( file.type.indexOf( '/' ) + 1 ), fileExtensions ) ];
+
+	if ( ve.isPlainObject( maxUploadSize ) ) {
+		maxUploadSize = maxUploadSize[ maxUploadSize[ filetype ] ? filetype : '*' ];
+	}
+	if ( file.size > maxUploadSize ) {
+		// Convert maxUploadSize from bytes to MB rounded to two decimals.
+		errors.push( [ 'size', Math.round( maxUploadSize / 1048576 * 100 ) / 100 ] );
+	}
+	if ( !filetype ) {
+		errors.push( [ 'filetype',  fileExtensions.join( ', ' ) ] );
+	}
+
+	return errors;
+};
+
 /* Methods */
 
 /**
@@ -75,24 +114,42 @@ ve.ui.WikiaUploadWidget.prototype.onClick = function () {
  * Handle input file change event
  *
  * @method
+ * @fires success
  */
 ve.ui.WikiaUploadWidget.prototype.onFileChange = function () {
+	var fileErrors;
+
 	if ( !this.$file[0].files[0] ) {
 		return;
 	}
-	var formData = new FormData( this.$form[0] );
-	$.ajax( {
-		'url': mw.util.wikiScript( 'api' ) + '?action=apitempupload&type=temporary&format=json',
-		'type': 'post',
-		'cache': false,
-		'contentType': false,
-		'processData': false,
-		'data': formData,
-		'success': ve.bind( this.onUploadSuccess, this ),
-		'error': ve.bind( this.onUploadError, this )
-	} );
-	this.showUploadAnimation();
+
+	fileErrors = this.constructor.static.validateFile( this.$file[0].files[0] );
+
+	if ( fileErrors.length ) {
+		mw.config.get( 'GlobalNotification' ).show(
+			// show filetype message first if multiple errors exist
+			ve.msg(
+				'wikia-visualeditor-dialog-wikiamediainsert-upload-error-' + fileErrors[ fileErrors.length - 1 ][ 0 ],
+				 fileErrors[ fileErrors.length - 1 ][ 1 ]
+			),
+			'error',
+			$( '.ve-ui-frame' ).contents().find( '.ve-ui-window-body' )
+		);
+	} else {
+		$.ajax( {
+			'url': mw.util.wikiScript( 'api' ) + '?action=addmediatemporary&format=json',
+			'type': 'post',
+			'cache': false,
+			'contentType': false,
+			'processData': false,
+			'data': new FormData( this.$form[0] ),
+			'success': ve.bind( this.onUploadSuccess, this ),
+			'error': ve.bind( this.onUploadError, this )
+		} );
+		this.showUploadAnimation();
+	}
 	this.$file.attr( 'value', '' );
+	this.emit( 'change' );
 };
 
 /**
@@ -112,7 +169,8 @@ ve.ui.WikiaUploadWidget.prototype.onUploadSuccess = function ( data ) {
 	}
 
 	// Success
-	this.emit( 'upload', data.apitempupload );
+	// TODO: this should probably fire 'success' not 'upload'
+	this.emit( 'upload', data.addmediatemporary );
 };
 
 /**
@@ -122,7 +180,7 @@ ve.ui.WikiaUploadWidget.prototype.onUploadSuccess = function ( data ) {
  */
 ve.ui.WikiaUploadWidget.prototype.onUploadError = function () {
 	this.hideUploadAnimation();
-	window.alert( ve.msg( 'visualeditor-wikiauploaderror' ) );
+	window.alert( ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-upload-error' ) );
 };
 
 

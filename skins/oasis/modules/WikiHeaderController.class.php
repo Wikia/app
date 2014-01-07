@@ -15,7 +15,7 @@ class WikiHeaderController extends WikiaController {
 
 		if ($this->wordmarkType == "graphic") {
 			wfProfileIn(__METHOD__ . 'graphicWordmarkV2');
-			$this->wordmarkUrl = wfReplaceImageServer($settings['wordmark-image-url'], SassUtil::getCacheBuster());
+			$this->wordmarkUrl = $themeSettings->getWordmarkUrl();
 			$imageTitle = Title::newFromText($themeSettings::WordmarkImageName, NS_IMAGE);
 			if ($imageTitle instanceof Title) {
 				$attributes = array();
@@ -50,7 +50,7 @@ class WikiHeaderController extends WikiaController {
 		$this->wordmarkUrl = '';
 		if ($this->wordmarkType == "graphic") {
 			wfProfileIn(__METHOD__ . 'graphicWordmark');
-			$this->wordmarkUrl = wfReplaceImageServer($settings['wordmark-image-url'], SassUtil::getCacheBuster());
+			$this->wordmarkUrl = $themeSettings->getWordmarkUrl();
 			$imageTitle = Title::newFromText($themeSettings::WordmarkImageName, NS_IMAGE);
 			if ($imageTitle instanceof Title) {
 				$attributes = array();

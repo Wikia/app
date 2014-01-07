@@ -519,7 +519,7 @@ abstract class VideoFeedIngester {
 	 * @return string
 	 */
 	protected function getUrlContent($url) {
-		return Http::get($url);
+		return Http::request( 'GET', $url, array( 'noProxy' => true ) );
 	}
 
 	/**

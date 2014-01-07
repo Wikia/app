@@ -134,7 +134,7 @@ $messages['ce'] = array(
 	'feed-title-recentchanges' => 'Керла нисдарш',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Chmee2
  */
 $messages['cs'] = array(
@@ -176,12 +176,14 @@ $messages['de'] = array(
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
+ * @author Marmase
  */
 $messages['diq'] = array(
-	'partner-feed-recent-changes' => 'Vurnayışê peyêni',
+	'partner-feed-recent-changes' => 'Vırnayışé bahdoyéni',
 	'feed-title-recent-images' => 'Vurnayışê resiman',
 	'all-blog-posts' => 'kategoriy pêro',
 	'feed-title-blogcomments' => 'Vatışê - ($1)',
+	'feed-title-recentchanges' => 'Vırnayışé bahdoyéni',
 );
 
 /** Spanish (español)
@@ -360,6 +362,14 @@ $messages['lb'] = array(
 	'all-blog-posts' => 'all Kategorien',
 	'feed-title-blogcomments' => 'Bemierkungen iwwer $1',
 	'feed-title-recentchanges' => 'Rezent Ännerungen',
+);
+
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'feed-title-recent-images' => 'عسکیا تازه باو',
+	'feed-title-recentchanges' => 'آلشتیا تازه باو',
 );
 
 /** Macedonian (македонски)
@@ -746,6 +756,32 @@ $messages['uk'] = array(
 	'partner-feed-error-no-blogpost-found' => '<b>Помилка:</b> Повідомлення в блозі  $1  не існує.',
 );
 
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'partner-feed-achievements-leaderboard' => 'Wiki bảng dẫn thành lựu',
+	'partner-feed-earned-badges' => 'Huy hiệu vừa đạt được cho một liên kết cụ thể',
+	'partner-feed-recent-blog-posts' => 'Bài viết blog gần đây liên quan đến một quảng cáo',
+	'partner-feed-latest-images' => 'Bộ sưu tập của những hình ảnh mới nhất mà đã được tải lên',
+	'partner-feed-hotcontent' => 'Trung tâm / dọc "nội dung nóng" như xếp hạng theo số biên tập viên',
+	'partner-feed-recent-blog-comments' => 'Ý kiến gần đây liên quan đến quy định bài đăng blog.',
+	'partner-feed-recent-changes' => 'Thay đổi gần đây',
+	'partnerfeed' => 'Nguồn cấp dữ liệu đối tác',
+	'error-no-article' => 'Lỗi: Không có tham số "bài viết" thông qua',
+	'feed-title-blogposts' => 'Blog đăng gần đây',
+	'feed-title-recent-badges' => 'Thay đổi phù hiệu gần đây',
+	'feed-title-recent-images' => 'Thay đổi hình ảnh gần đây',
+	'feed-title-leaderboard' => 'Bảng dẫn thành lựu',
+	'feed-main-title' => 'Wikia đối tác nguồn cấp dữ liệu',
+	'all-blog-posts' => 'Tất cả thể loại',
+	'blog-posts-from-listing' => 'từ bảng liệt kê: $1',
+	'feed-title-hot-content' => 'Nội dung nóng - $1',
+	'feed-title-blogcomments' => 'Bình luận cho $1',
+	'feed-title-recentchanges' => 'Thay đổi gần đây',
+	'partner-feed-error-no-blogpost-found' => '<b>Lỗi:</b> Bài đăng blog $1 không tồn tại.',
+);
+
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Hydra
@@ -758,6 +794,13 @@ $messages['zh-hans'] = array(
 	'partner-feed-recent-changes' => '最新更改',
 	'feed-title-blogposts' => '最新博客帖子',
 	'feed-title-recent-badges' => '最新徽章',
+	'feed-title-recent-images' => '最近的图片',
+	'feed-title-leaderboard' => '成就排行榜',
+	'feed-main-title' => 'Wikia合作伙伴订阅点',
 	'all-blog-posts' => '全部分类',
 	'blog-posts-from-listing' => '来自列表：$1',
+	'feed-title-hot-content' => '热点内容 - $1',
+	'feed-title-blogcomments' => '评论 $1',
+	'feed-title-recentchanges' => '最近更改',
+	'partner-feed-error-no-blogpost-found' => '<b>错误：</b>博客文章 $1 不存在。',
 );

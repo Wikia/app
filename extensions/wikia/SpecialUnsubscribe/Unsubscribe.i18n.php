@@ -104,7 +104,7 @@ $messages['ca'] = array(
 	'unsubscribe-working-done' => 'Complet.',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Dontlietome7
  */
 $messages['cs'] = array(

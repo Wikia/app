@@ -62,6 +62,11 @@ ve.ui.Dialog.static.name = '';
  * @method
  */
 ve.ui.Dialog.prototype.onCloseButtonClick = function () {
+	var label = ve.track.nameToLabel( this.constructor.static.name );
+	ve.track( {
+		'action': ve.track.actions.CLICK,
+		'label': 'dialog-' + label + '-button-close'
+	} );
 	this.close( 'cancel' );
 };
 
@@ -119,7 +124,15 @@ ve.ui.Dialog.prototype.onFrameDocumentKeyDown = function ( e ) {
  * @emits open
  */
 ve.ui.Dialog.prototype.open = function () {
+	var data = {
+		'action': ve.track.actions.OPEN,
+		'label': 'dialog-' + ve.track.nameToLabel( this.constructor.static.name )
+	};
 	ve.ui.Window.prototype.open.call( this );
+	if ( this.openCount ) {
+		data.value = this.openCount;
+	}
+	ve.track( data );
 	// Prevent scrolling in top-level window
 	$( window ).on( 'mousewheel', this.onWindowMouseWheelHandler );
 	$( document ).on( 'keydown', this.onDocumentKeyDownHandler );
@@ -137,6 +150,10 @@ ve.ui.Dialog.prototype.open = function () {
  */
 ve.ui.Dialog.prototype.close = function ( action ) {
 	if ( !this.closing ) {
+		ve.track( {
+			'action': ve.track.actions.CLOSE,
+			'label': 'dialog-' + ve.track.nameToLabel( this.constructor.static.name )
+		} );
 		this.$.addClass( 've-ui-dialog-closing' );
 		setTimeout( ve.bind( function () {
 			ve.ui.Window.prototype.close.call( this, action );

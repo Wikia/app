@@ -216,7 +216,11 @@ class WikiaView {
 
 	protected function renderJson() {
 		if( $this->response->hasException() ) {
-			$output = array( 'exception' => array( 'message' => $this->response->getException()->getMessage(), 'code' => $this->response->getException()->getCode() ) );
+			$exception = $this->response->getException();
+			$output = array( 'exception' => array( 'message' => $exception->getMessage(), 'code' => $exception->getCode(), 'details' => '' ) );
+			if ( is_callable( [ $exception, 'getDetails' ] ) ) {
+				$output[ 'exception' ][ 'details' ] = $exception->getDetails();
+			}
 		}
 		else {
 			$output = $this->response->getData();

@@ -47,6 +47,7 @@ class VideoInfoHelper extends WikiaModel {
 
 				$duration = 0;
 				$hdfile = 0;
+				$videoId = '';
 				if ( $fileMetadata ) {
 					$fileMetadata = unserialize( $fileMetadata );
 					if ( array_key_exists('duration', $fileMetadata) ) {
@@ -55,11 +56,15 @@ class VideoInfoHelper extends WikiaModel {
 					if ( array_key_exists('hd', $fileMetadata) ) {
 						$hdfile = ( $fileMetadata['hd'] ) ? 1 : 0;
 					}
+					if ( array_key_exists( 'videoId', $fileMetadata ) ) {
+						$videoId = $fileMetadata['videoId'];
+					}
 				}
 
 				$premium = ( $file->isLocal() ) ? 0 : 1 ;
 				$video = array(
 					'videoTitle' => $file->getName(),
+					'videoId' => $videoId,
 					'provider' => $file->minor_mime,
 					'addedAt' => $addedAt,
 					'addedBy' => $userId,
@@ -126,6 +131,33 @@ class VideoInfoHelper extends WikiaModel {
 		wfProfileOut( __METHOD__ );
 
 		return $videoList;
+	}
+
+	/**
+	 * get total views of a video from database using title
+	 * @return int $viewCount
+	 */
+	public static function getTotalViewsFromTitle( $title ) {
+		wfProfileIn( __METHOD__ );
+
+		$db = wfGetDB( DB_SLAVE );
+
+		$result = $db->select(
+			array( 'video_info' ),
+			array( 'views_total' ),
+			array( 'video_title' => $title ),
+			__METHOD__
+		);
+
+		$viewCount = 0;
+		$row = $db->fetchObject( $result );
+		if ( $row ) {
+			$viewCount = $row->views_total;
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $viewCount;
 	}
 
 	/**
@@ -231,21 +263,29 @@ class VideoInfoHelper extends WikiaModel {
 
 	/**
 	 * Fetch the list of local (e.g. non-premium) videos from this wiki
-	 *
-	 * @return array
+	 * @return array $titles
 	 */
 	public static function getLocalVideoTitles() {
-		$sql = "SELECT video_title FROM video_info WHERE premium = 0";
-		$dbh = wfGetDB(DB_SLAVE);
+		wfProfileIn( __METHOD__ );
 
-		$res = $dbh->query($sql);
+		$db = wfGetDB( DB_SLAVE );
+
+		$res = $db->select(
+			array( 'video_info' ),
+			array( 'video_title' ),
+			array( 'premium' => 0 ),
+			__METHOD__
+		);
 
 		$titles = array();
-		while ($row = $dbh->fetchObject($res)) {
+		while ( $row = $db->fetchObject( $res ) ) {
 			$titles[] = $row->video_title;
 		}
-		$dbh->freeResult($res);
+		$db->freeResult( $res );
+
+		wfProfileOut( __METHOD__ );
 
 		return $titles;
 	}
+
 }

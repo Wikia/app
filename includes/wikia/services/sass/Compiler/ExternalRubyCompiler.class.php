@@ -52,7 +52,7 @@ class ExternalRubyCompiler extends Compiler {
 
 		$sassOutput = shell_exec($cmd);
 		if ($sassOutput != '') {
-			Wikia::log(__METHOD__, false, "[SASS] error - output: " . $sassOutput. " -- Full commandline: $cmd", true /* $always */);
+			Wikia::log('sass-errors-WIKIA', false, "out: " . preg_replace('#\n\s+#', ' ', trim($sassOutput)). " / cmd: $cmd", true /* $always */);
 			if ( file_exists( $outputFile ) ) {
 				unlink($outputFile);
 			}

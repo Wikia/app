@@ -139,6 +139,7 @@ Please [[Special:Contact|contact Wikia]] about the problem.<br />The blocker als
 $messages['qqq'] = array(
 	'phalanx-type-title' => '{{Identical|Page title}}',
 	'phalanx-type-user' => '{{Identical|User}}',
+	'phalanx-type-user-email' => '{{Identical|Email}}',
 	'phalanx-add-block' => 'This message is used as a button label (like "Save", "Show preview" and "Show changes" in <code>action=edit</code>). Clicking on the button adds a new block to the Phalanx database. ([[Thread:Support/About_Wikia:Phalanx-add-block/fi/reply|documentation]] by [[User:Jack Phoenix|Jack Phoenix]])',
 	'phalanx-label-filter' => '{{Identical|Filter}}',
 	'phalanx-label-reason' => '{{Identical|Reason}}',
@@ -464,7 +465,7 @@ $messages['ce'] = array(
 	'phalanx-rule-log-details' => 'Литтар: "$1", тайп: "$2", бахьна: "$3"',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Chmee2
  */
 $messages['cs'] = array(
@@ -1473,6 +1474,37 @@ $messages['lb'] = array(
 	'phalanx-stats-table-wiki-name' => 'Numm vun der Wiki',
 );
 
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'phalanx' => 'فالانکس',
+	'phalanx-type-summary' => 'چکسته بلگه',
+	'phalanx-type-user' => 'كارور',
+	'phalanx-type-user-email' => 'پیومک برقی',
+	'phalanx-label-filter' => 'فيلتر',
+	'phalanx-label-reason' => 'دليل:',
+	'phalanx-label-expiry' => 'تموم بين:',
+	'phalanx-label-type' => 'نوع:',
+	'phalanx-label-lang' => 'زون:',
+	'phalanx-view-type' => 'نوع قلف',
+	'phalanx-format-regex' => 'ریجکس',
+	'phalanx-format-exact' => 'گپ کردن',
+	'phalanx-link-unblock' => 'بی قطی',
+	'phalanx-link-modify' => 'آلشت كردن',
+	'phalanx-link-stats' => 'گوتن',
+	'phalanx-stats-table-type' => 'نيسنن كامپيتری',
+	'phalanx-stats-table-create' => 'راست بيه',
+	'phalanx-stats-table-expire' => 'تموم بیه آ',
+	'phalanx-stats-table-exact' => 'گپ کردن',
+	'phalanx-stats-table-regex' => 'ریجکس',
+	'phalanx-stats-table-case' => 'نمونه',
+	'phalanx-stats-table-language' => 'زون',
+	'phalanx-stats-table-text' => 'متن',
+	'phalanx-stats-table-reason' => 'دليل',
+	'phalanx-stats-table-wiki-name' => 'نوم ویکی',
+);
+
 /** Macedonian (македонски)
  * @author Bjankuloski06
  */
@@ -1848,7 +1880,7 @@ Vennligst [[Special:Contact|kontakt Wikia]] om problemet.<br />Blokkereren la i 
  * @author Siebrand
  */
 $messages['nl'] = array(
-	'phalanx-desc' => 'Phalanx  is een Geïntegreerd Spamafweersysteem',
+	'phalanx-desc' => 'Phalanx is een Geïntegreerd Spamafweersysteem',
 	'phalanx' => 'Phalanx',
 	'phalanx-title' => 'Phalanx - Geïntegreerd Spamafweersysteem',
 	'phalanx-type-content' => 'paginainhoud',
@@ -2258,6 +2290,7 @@ $messages['ps'] = array(
 
 /** Portuguese (português)
  * @author Hamilton Abreu
+ * @author Josep Maria 15.
  * @author Luckas
  * @author SandroHc
  */
@@ -2323,11 +2356,11 @@ Não impede a criação dessas páginas.
 
 Nota: só funciona nas wikis de Perguntas e Respostas.',
 	'phalanx-user-block-reason-ip' => 'O seu endereço IP está impedido de editar as wikis da Wikia, devido a atividades de vandalismo ou perturbação originadas por si ou por outra pessoa que partilha o seu endereço IP atual.
-Se acredita que este bloqueio foi feito em erro [[Special:Contact|contate a Wikia]], por favor.',
+Se acredita que este bloqueio foi feito em erro [[Special:Contact|contacte a Wikia]], por favor.',
 	'phalanx-user-block-reason-exact' => 'Este utilizador ou endereço IP está impedido de editar as wikis da Wikia, devido a atividades de vandalismo ou outras formas de perturbação.
-Se acredita que este bloqueio foi feito em erro [[Special:Contact|contate a Wikia]], por favor.',
+Se acredita que este bloqueio foi feito em erro [[Special:Contact|contacte a Wikia]], por favor.',
 	'phalanx-user-block-reason-similar' => 'Este nome de utilizador está impedido de editar as wikis da Wikia, devido a atividades de vandalismo ou outras formas de perturbação exercidas por outro utilizador com um nome semelhante.
-[[Special:Contact|Contate a Wikia]] acerca deste problema, por favor.',
+[[Special:Contact|Contacte a Wikia]] acerca deste problema, por favor.',
 	'phalanx-user-block-new-account' => 'O nome de utilizador não está disponível para registo. Escolha outro, por favor.',
 	'phalanx-user-block-withreason-ip' => 'Este endereço IP está impedido de editar as wikis da Wikia, devido a atividades de vandalismo ou outra forma de perturbação conduzidas por si ou por outra pessoa que partilha o seu endereço IP atual.
 Se acredita que este bloqueio foi feito em erro, [[Special:Contact|contate a Wikia]], por favor.<br />O autor do bloqueio apresentou também este motivo adicional: $1.',
@@ -2998,6 +3031,15 @@ $messages['uk'] = array(
  */
 $messages['uz'] = array(
 	'phalanx-label-lang' => 'Til:',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'phalanx-stats-table-language' => 'Ngôn ngữ',
+	'phalanx-stats-table-text' => 'Văn bản',
+	'phalanx-stats-table-reason' => 'Lý do',
 );
 
 /** Simplified Chinese (中文（简体）‎)
