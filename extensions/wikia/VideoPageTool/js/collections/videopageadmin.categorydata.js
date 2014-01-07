@@ -12,11 +12,13 @@ define( 'collections.videopageadmin.categorydata', [
 					this.categoryName = null;
 					this.response = null;
 				},
+
+				/**
+				 * @method
+				 * @description override fetch with our decorated version,
+				 * must specify custom parse method to properly reset collection
+				 */
 				fetch: function() {
-					/*
-					 * override fetch with our decorated version,
-					 * must specify custom parse method to properly reset collection
-					 */
 					return Backbone.Collection.prototype.fetch.call( this, {
 						data: {
 							controller: this.controller,
@@ -26,11 +28,14 @@ define( 'collections.videopageadmin.categorydata', [
 						}
 					});
 				},
+
+				// custom parse to maintain collection lifecycle events
 				parse: function( resp ) {
 					// cache the response
 					this.response = resp;
 					this.reset( this.response.data );
 				},
+
 				/**
 				 * @method
 				 * @description sets the category as a property on the collection then performs fetch
