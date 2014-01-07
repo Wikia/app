@@ -93,6 +93,10 @@ a:hover .Wikia-video-play-button, .Wikia-video-play-button:hover {
 			font-weight: bold;
 		}
 	}
+	// can be removed after article cache clears on 2/6/2014
+	.info-overlay-views {
+		display: none;
+	}
 	&:hover {
 		text-decoration: none;
 		.info-overlay {
