@@ -20,6 +20,10 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	/* @var $userLoginHelper UserLoginHelper */
 	private $userLoginHelper = null;
 
+	// let's keep this fields private for security reasons
+	private $username = '';
+	private $password = '';
+
 	public function __construct() {
 		parent::__construct( 'UserLogin', '', false );
 	}
@@ -164,6 +168,11 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 			$this->wg->Out->setPageTitle( wfMessage('userlogin-forgot-password')->plain() );
 			return;
 		}
+
+		// we're sure at this point we'll need the private fields'
+		// values in the template let's pass them then
+		$this->response->setVal( 'username', $this->username );
+		$this->response->setVal( 'password', $this->password );
 
 		if ( $this->app->checkSkin( 'wikiamobile' ) ) {
 			$recoverParam = 'recover=1';
