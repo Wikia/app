@@ -672,9 +672,9 @@ __NOEDITSECTION__',
 	'wikiahome-footer-get-started-creative' => 'コミュニティーを見つけて<br />始めよう',
 	'wikiahome-footer-get-started-button' => 'http://www.wikia.com/Special:CreateNewWiki?uselang=ja', // FIXME: why is this in a message?! -- we need to pass there Wikia "button" class
 	'wikiahome-footer-follow-us' => '===フォローしてね===
-*[http://ja.community.wikia.com/wiki/カテゴリ:スタッフブログ]
-*[https://www.facebook.com/WikiaAnimeJapan フェイスブック]
-*[https://twitter.com/ja_wikiaanime ツイッター]
+*[http://ja.community.wikia.com/wiki/カテゴリ:スタッフブログ スタッフブログ]
+*[https://www.facebook.com/wikia フェイスブック]
+*[https://twitter.com/wikia ツイッター]
 __NOEDITSECTION__',
 	'wikiahome-footer-community' => '===コミュニティー===
 *[http://ja.community.wikia.com コミュニティーセントラルl]
