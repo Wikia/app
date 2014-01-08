@@ -70,7 +70,7 @@ class WikiFeaturesSpecialController extends WikiaSpecialPageController {
 		$this->features = WikiFeaturesHelper::getInstance()->getFeatureNormal();
 		$this->labsFeatures = WikiFeaturesHelper::getInstance()->getFeatureLabs();
 
-		$this->editable = ($this->wg->User->isAllowed('wikifeatures')) ? true : false ;	// only those with rights can make edits
+		$this->editable = $this->wg->User->isAllowed('wikifeatures') ? true : false ;	// only those with rights can make edits
 
 		if($this->getVal('simulateEmptyLabs', false)) {	// debug code
 			$this->labsFeatures = array();
@@ -151,11 +151,11 @@ class WikiFeaturesSpecialController extends WikiaSpecialPageController {
 		$category = $this->getVal('category');
 		$message = $this->getVal('message');
 
-		//if( !$user->isLoggedIn() ) {
+		if( !$user->isLoggedIn() ) {
 			$this->result = 'error';
 			$this->error = wfMsg('wikifeatures-error-permission');
 			return;
-		//}
+		}
 
 		// TODO: validate feature_id
 		if ( !array_key_exists($feature, WikiFeaturesHelper::$feedbackAreaIDs) ) {
