@@ -14,14 +14,14 @@
 		}
 
 		$sliders.click( function () {
-			var el = $( this ),
-				feature = el.closest( '.feature' ),
+			var $el = $( this ),
+				feature = $el.closest( '.feature' ),
 				featureName = feature.data( 'name' ),
 				isEnabled,
 				modalTitle;
 
 			if ( !lockedFeatures[ featureName ] ) {
-				isEnabled = el.hasClass( 'on' );
+				isEnabled = $el.hasClass( 'on' );
 
 				if ( isEnabled ) {
 					modalTitle = $.msg( 'wikifeatures-deactivate-heading', feature.find( 'h3' ).text().trim() );
@@ -72,7 +72,7 @@
 								deactivateModal.bind( 'confirm', function ( event ) {
 									event.preventDefault();
 									toggleFeature( featureName, false );
-									el.toggleClass( 'on' );
+									$el.toggleClass( 'on' );
 									deactivateModal.trigger( 'close' );
 								} );
 								deactivateModal.show();
@@ -81,7 +81,7 @@
 					} );
 				} else {
 					toggleFeature( featureName, true );
-					el.toggleClass( 'on' );
+					$el.toggleClass( 'on' );
 				}
 			}
 		} );
