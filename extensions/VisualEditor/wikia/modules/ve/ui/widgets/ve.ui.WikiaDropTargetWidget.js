@@ -7,7 +7,7 @@
 
 /**
  * @class
- * @extends ve.ui.Widget
+ * @extends OO.ui.Widget
  *
  * @constructor
  * @param {Object} config Configuration options
@@ -17,7 +17,7 @@
 ve.ui.WikiaDropTargetWidget = function VeUiWikiaDropTargetWidget ( config ) {
 
 	// Configuration initialization
-	ve.ui.Widget.call( this, config );
+	OO.ui.Widget.call( this, config );
 
 	// Properties
 	this.$overlay = config.surface.$globalOverlay.find( '.ve-ui-window' );
@@ -40,7 +40,7 @@ ve.ui.WikiaDropTargetWidget = function VeUiWikiaDropTargetWidget ( config ) {
 };
 
 /* Inheritance */
-ve.inheritClass( ve.ui.WikiaDropTargetWidget, ve.ui.Widget );
+OO.inheritClass( ve.ui.WikiaDropTargetWidget, OO.ui.Widget );
 
 /**
  * Handles dragenter/over & shows drop zone
