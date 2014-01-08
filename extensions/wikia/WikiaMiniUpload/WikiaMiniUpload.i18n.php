@@ -638,8 +638,11 @@ $messages['ca'] = array(
  * @author Умар
  */
 $messages['ce'] = array(
+	'wmu-upload' => 'Чуяккха',
 	'wmu-find' => 'Лаха',
+	'wmu-upload-btn' => 'Чуяккха',
 	'wmu-find-btn' => 'Каро',
+	'wmu-insert' => 'Чуйилла',
 	'wmu-insert2' => 'Файл чуйиллар',
 );
 
@@ -1133,15 +1136,27 @@ $messages['eu'] = array(
  * @author Ebraminio
  * @author Leyth
  * @author Mjbmr
+ * @author Reza1615
  */
 $messages['fa'] = array(
 	'wmu-upload' => 'بارگذاری',
+	'wmu-find' => 'یافتن',
 	'wmu-thiswiki' => 'این ویکی',
 	'wmu-flickr' => 'فلیکر',
 	'wmu-upload-btn' => 'بارگذاری',
 	'wmu-find-btn' => 'یافتن',
+	'wmu-insert' => 'درج',
+	'wmu-name' => 'نام',
+	'wmu-license' => 'اجازه‌نامه',
+	'wmu-size' => 'اندازه',
+	'wmu-width' => 'پهنا',
+	'wmu-caption' => 'عنوان',
+	'wmu-link' => 'پیوند',
+	'wmu-imagebutton' => 'افزودن تصویر',
+	'wmu-placeholder' => 'مکان نگه‏دار',
 	'wmu-gallery' => 'نگارخانه',
 	'wmu-added-from-plc' => 'افزودن پروندۀ جدید توسط مکان نگه‏دار تصویر',
+	'wmu-alignment' => 'تراز',
 );
 
 /** Finnish (suomi)
@@ -1272,7 +1287,7 @@ $messages['gl'] = array(
 	'wmu-upload-image' => 'Subir unha foto',
 	'wmu-title' => 'Subir unha foto',
 	'wmu-upload' => 'Subir',
-	'wmu-notlogged' => 'Inicia sesión ou rexístrese para subir imaxes do teu ordenador',
+	'wmu-notlogged' => 'Inicia a sesión ou rexístrate para subir imaxes do teu ordenador',
 	'wmu-find' => 'Atopar',
 	'wmu-thiswiki' => 'Este wiki',
 	'wmu-flickr' => 'Flickr',
@@ -1327,7 +1342,7 @@ $messages['gl'] = array(
 	'wmu-columns' => '$1 {{PLURAL:$1|columna|columnas}}',
 	'wmu-column' => 'Columnas',
 	'wmu-added-from-plc' => 'Ficheiro engadido a través dun marcador de posición de imaxe',
-	'wmu-uploaddisabled' => 'A subida de imaxes está desactivada neste wiki',
+	'wmu-uploaddisabled' => 'A subida de ficheiros está desactivada neste wiki',
 	'wmu-gallery-success' => 'Engadiu unha imaxe a unha nova galería. Prema a continuación para engadir máis imaxes ou para inserir a galería',
 	'wmu-gallery-btn1' => 'Engadir outra imaxe',
 	'wmu-gallery-btn2' => 'Inserir a galería no artigo',
@@ -1940,6 +1955,7 @@ $messages['mk'] = array(
 
 /** Malay (Bahasa Melayu)
  * @author Anakmalaysia
+ * @author SNN95
  */
 $messages['ms'] = array(
 	'wmu-upload-image' => 'Muat Naik Gambar',
@@ -2014,6 +2030,11 @@ $messages['ms'] = array(
 	'wmu-alignment' => 'Penjajaran',
 	'wmu-file-protected' => 'Imej ini dilindungi.',
 	'wmu-file-error' => 'Maaf, berlakunya ralat ketika proses muat naik. Sila cuba lagi.',
+	'wmu-file-not-found' => 'Fail tidak ditemui',
+	'wmu-error-exact-height' => 'Tinggi imej mestilah betul-betul $1 px (sekarang $2 px)',
+	'wmu-error-exact-width' => 'Lebar imej mestilah betul-betul $1 px (sekarang $2 px)',
+	'wmu-error-exact-width-height' => 'Lebar dan ketinggian imej mestilah betul-betul $1 x $3 px (sekarang $2 x $4 px)',
+	'wmu-error-bad-aspect-ratio' => 'Nisbah aspek tidak betul ($1 x $2 px)',
 );
 
 /** Maltese (Malti)

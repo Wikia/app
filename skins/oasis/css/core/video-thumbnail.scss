@@ -56,8 +56,41 @@
 		width: 20px;
 	}
 
+	// xsmall sizes are 54% of medium
+	// they are also positioned in the bottom/left instead of center
+	&.xsmall {
+		.play-circle{
+			// sizing
+			height: 27px;
+			width: 27px;
+
+			// positioning
+			bottom: 10px;
+			left: 34px;
+			top: auto;
+		}
+
+		.play-arrow {
+			// sizing
+			height: 16px;
+			width: 13px;
+
+			// positioning
+			bottom: 15px;
+			left: 25px;
+			top: auto;
+		}
+
+		.play-arrow:after {
+			height: 11px;
+			margin: 1px 0 0 -5.5px;
+			width: 11px;
+		}
+	}
+
+
 	// small sizes are 70% of medium
-	// they are also positioned 10px from the left and bottom instead of center
+	// they are also positioned in the bottom/left instead of center
 	&.small {
 		.play-circle{
 			// sizing
@@ -119,7 +152,7 @@
 
 		.play-arrow {
 			height: 54px;
-			margin: -20px 0 0 -7.2px;
+			margin: -20px 0 0 -7px;
 			width: 45px;
 		}
 

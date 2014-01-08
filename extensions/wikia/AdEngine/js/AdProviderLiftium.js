@@ -1,43 +1,40 @@
-/*exported AdProviderLiftium2Dom*/
+/*exported AdProviderLiftium*/
 /*jshint maxparams:false*/
 
-var AdProviderLiftium2Dom = function (log, document, slotTweaker, Liftium, scriptWriter, window) {
+var AdProviderLiftium = function (log, document, slotTweaker, Liftium, scriptWriter, window) {
 	'use strict';
 
-	var logGroup = 'AdProviderLiftium2',
+	var logGroup = 'AdProviderLiftium',
 		adNum = 200, // TODO global-ize it (move to Liftium?)!
 		slotMap,
 		canHandleSlot,
 		fillInSlot;
 
 	slotMap = {
-		'EXIT_STITIAL_BOXAD_1': {'size':'300x250'},
-		'HOME_TOP_LEADERBOARD':{'size':'728x90'},
-		'HOME_TOP_RIGHT_BOXAD':{'size':'300x250'},
-		'INCONTENT_BOXAD_1':{'size':'300x250'},
-		'INVISIBLE_1':{'size':'0x0', 'useGw': true},
-		'INVISIBLE_2':{'size':'0x0', 'useGw': true},
-		'LEFT_SKYSCRAPER_2':{'size':'160x600'},
-		'LEFT_SKYSCRAPER_3': {'size':'160x600'},
-		'TEST_TOP_RIGHT_BOXAD': {'size':'300x250'},
-		'TEST_HOME_TOP_RIGHT_BOXAD': {'size':'300x250'},
-		'TOP_BUTTON_WIDE': {'size':'292x90'},
+		'EXIT_STITIAL_BOXAD_1': {'size': '300x250'},
+		'HOME_TOP_LEADERBOARD': {'size': '728x90'},
+		'HOME_TOP_RIGHT_BOXAD': {'size': '300x250'},
+		'INCONTENT_BOXAD_1': {'size': '300x250'},
+		'INVISIBLE_1': {'size': '0x0', 'useGw': true},
+		'INVISIBLE_2': {'size': '0x0', 'useGw': true},
+		'LEFT_SKYSCRAPER_2': {'size': '160x600'},
+		'LEFT_SKYSCRAPER_3': {'size': '160x600'},
+		'TEST_TOP_RIGHT_BOXAD': {'size': '300x250'},
+		'TEST_HOME_TOP_RIGHT_BOXAD': {'size': '300x250'},
+		'TOP_BUTTON_WIDE': {'size': '292x90'},
 
 		// TOP_BUTTON after TOP_LEADERBOARD hack:
-		'TOP_BUTTON_WIDE.force':'hack',
+		'TOP_BUTTON_WIDE.force': 'hack',
 
-		'TOP_LEADERBOARD':{'size':'728x90'},
-		'TOP_RIGHT_BOXAD':{'size':'300x250'},
-		'PREFOOTER_LEFT_BOXAD':{'size':'300x250'},
-		'PREFOOTER_RIGHT_BOXAD':{'size':'300x250'},
-		'WIKIA_BAR_BOXAD_1':{'size':'300x250'}
+		'TOP_LEADERBOARD': {'size': '728x90'},
+		'TOP_RIGHT_BOXAD': {'size': '300x250'},
+		'PREFOOTER_LEFT_BOXAD': {'size': '300x250'},
+		'PREFOOTER_RIGHT_BOXAD': {'size': '300x250'},
+		'WIKIA_BAR_BOXAD_1': {'size': '300x250'}
 	};
 
-	canHandleSlot = function(slot) {
-		var slotname = slot[0];
-
-		log('canHandleSlot', 5, logGroup);
-		log(slot, 5, logGroup);
+	canHandleSlot = function (slotname) {
+		log(['canHandleSlot', slotname], 5, logGroup);
 
 		if (slotMap[slotname]) {
 			return true;
@@ -46,33 +43,30 @@ var AdProviderLiftium2Dom = function (log, document, slotTweaker, Liftium, scrip
 		return false;
 	};
 
-	// adapted for Evolve + simplified copy of AdDriverDelayedLoader.callLiftium
-	fillInSlot = function(slot) {
-		log(['fillInSlot', slot], 5, logGroup);
-		log(slot, 5, logGroup);
+	fillInSlot = function (slotname, success) {
+		log(['fillInSlot', slotname], 5, logGroup);
 
 		// TOP_BUTTON after TOP_LEADERBOARD hack:
-		if (slot[0] === 'TOP_BUTTON' || slot[0] === 'TOP_BUTTON_WIDE') {
+		if (slotname === 'TOP_BUTTON' || slotname === 'TOP_BUTTON_WIDE') {
 			log('Tried TOP_BUTTON(_WIDE). Disabled (waiting for leaderboard ads)', 2, logGroup);
 			return;
 		}
-		if (slot[0] === 'TOP_BUTTON.force' || slot[0] === 'TOP_BUTTON_WIDE.force') {
+		if (slotname === 'TOP_BUTTON.force' || slotname === 'TOP_BUTTON_WIDE.force') {
 			log('Forced TOP_BUTTON(_WIDE) call (this means leaderboard is ready and standard)', 2, logGroup);
-			slot[0] = slot[0].replace('.force', '');
+			slotname = slotname.replace('.force', '');
 		}
-		if (slot[0].indexOf('LEADERBOARD') !== -1) {
+		if (slotname.indexOf('LEADERBOARD') !== -1) {
 			log('LEADERBOARD-ish slot handled by Liftium. Running the forced TOP_BUTTON(_WIDE) now', 2, logGroup);
 
-			window.adslots2.push(['TOP_BUTTON_WIDE.force', null, 'Liftium2']);
+			window.adslots2.push(['TOP_BUTTON_WIDE.force', null, 'Liftium']);
 		}
 		// END of hack
-		if (!document.getElementById(slot[0])) {
-			log('No such element in DOM: #' + slot[0], 2, logGroup);
+		if (!document.getElementById(slotname)) {
+			log('No such element in DOM: #' + slotname, 2, logGroup);
 			return;
 		}
 
-		var slotname = slot[0],
-			slotsize = slotMap[slotname].size,
+		var slotsize = slotMap[slotname].size,
 			useGw = slotMap[slotname].useGw,
 			adDiv = document.createElement('div'),
 			adIframe = document.createElement('iframe'),
@@ -106,10 +100,13 @@ var AdProviderLiftium2Dom = function (log, document, slotTweaker, Liftium, scrip
 
 			slotTweaker.removeDefaultHeight(slotname);
 		}
+
+		// Fake success, because we don't have the success event in Liftium
+		success();
 	};
 
 	return {
-		name: 'Liftium2Dom',
+		name: 'Liftium',
 		canHandleSlot: canHandleSlot,
 		fillInSlot: fillInSlot
 	};

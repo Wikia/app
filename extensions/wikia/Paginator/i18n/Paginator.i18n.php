@@ -107,6 +107,14 @@ $messages['es'] = array(
 	'paginator-back' => 'Atrás',
 );
 
+/** Persian (فارسی)
+ * @author Reza1615
+ */
+$messages['fa'] = array(
+	'paginator-next' => 'بعدی',
+	'paginator-back' => 'عقب',
+);
+
 /** Finnish (suomi)
  * @author Centerlink
  */
@@ -175,6 +183,14 @@ $messages['ksh'] = array(
 $messages['lb'] = array(
 	'paginator-next' => 'Weider',
 	'paginator-back' => 'Zréck',
+);
+
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'paginator-next' => 'نها',
+	'paginator-back' => 'دما',
 );
 
 /** Macedonian (македонски)

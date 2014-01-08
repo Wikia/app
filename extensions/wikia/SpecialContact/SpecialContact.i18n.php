@@ -291,6 +291,7 @@ Si prefieres enviar un correo con datos adjuntos, puedes contactarnos a [mailto:
 /** Persian (فارسی)
  * @author BlueDevil
  * @author Mjbmr
+ * @author Reza1615
  */
 $messages['fa'] = array(
 	'contact' => 'تماس با ویکیا',
@@ -560,6 +561,17 @@ $messages['lb'] = array(
 	'specialcontact-ccme' => 'Schéckt mir eng Kopie vun dësem Message',
 	'specialcontact-notyou' => 'Net Dir?',
 	'specialcontact-submitcomplete' => 'Merci datt dir Wikia kontaktéiert hutt.',
+);
+
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'specialcontact-wikiname' => 'کوم ویکی',
+	'specialcontact-realname' => 'نومتو',
+	'specialcontact-yourmail' => 'نشونی ايميل',
+	'specialcontact-problemdesc' => 'پيغوم',
+	'specialcontact-notyou' => 'شما نه؟',
 );
 
 /** Macedonian (македонски)
