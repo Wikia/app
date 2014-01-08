@@ -708,6 +708,34 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 			}
 		}
 	}
+
+	/* Colorization issues (VOLDEV-36) */
+	.deleteorremove-infobox {
+		background: white;
+		border-top: 1px dashed black;
+
+		.deleteorremove-bubble {
+			background: white;
+			border: 1px solid black;
+			box-shadow: 2px 2px 4px 0 #000;
+
+			.message {
+				color: black;
+
+				.reason {
+					color: gray;
+				}
+			}
+		}
+	}
+
+	.Wall,
+	.WallPreview {
+		.quote {
+			background-color: white;
+			border: 1px solid black;
+		}
+	}
 }
 
 .WallGreeting {

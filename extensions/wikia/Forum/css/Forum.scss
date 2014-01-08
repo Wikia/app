@@ -369,3 +369,38 @@
     display: none;
   }
 }
+
+/* Monobook colorization issues (VOLDEV-36) */
+.skin-monobook {
+	.Forum {
+		.DiscussionBox {
+			.heading {
+				color: white;
+			}
+
+			.message {
+				background-color: black;
+
+				&:before {
+					border-color: black black transparent transparent;
+				}
+			}
+		}
+		
+		.ThreadList {
+			.activity {
+				li {
+					.following {
+						color: black;
+					}
+				}
+			}
+
+			.thread {
+				&:hover {
+					background-color: white;
+				}
+			}
+		}
+	}
+}
