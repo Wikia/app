@@ -13,7 +13,9 @@
 			$( '.representation' ).removeClass( 'promotion' );
 		}
 
-		$sliders.click( function () {
+		$sliders.click( function ( event ) {
+			event.preventDefault();
+			
 			var $el = $( this ),
 				feature = $el.closest( '.feature' ),
 				featureName = feature.data( 'name' ),
