@@ -151,11 +151,11 @@ class WAMApiController extends WikiaApiController {
 		$options['wikiLang'] = $this->request->getVal('wiki_lang', null);
 		$options['wikiId'] = $this->request->getInt('wiki_id', null);
 		$options['wikiWord'] = $this->request->getVal('wiki_word', null);
-		$options['excludeBlacklist'] = $this->request->getVal('exclude_blacklist', false);
+		$options['excludeBlacklist'] = $this->request->getFuzzyBool('exclude_blacklist', false);
 		$options['excludeNonCommercial'] = $this->hideNonCommercialContent();
-		$options['fetchAdmins'] = $this->request->getBool('fetch_admins', false);
+		$options['fetchAdmins'] = $this->request->getFuzzyBool('fetch_admins', false);
 		$options['avatarSize'] = $this->request->getInt('avatar_size', self::DEFAULT_AVATAR_SIZE);
-		$options['fetchWikiImages'] = $this->request->getBool('fetch_wiki_images', false);
+		$options['fetchWikiImages'] = $this->request->getFuzzyBool('fetch_wiki_images', false);
 		$options['wikiImageWidth'] = $this->request->getInt('wiki_image_width', self::DEFAULT_WIKI_IMAGE_WIDTH);
 		$options['wikiImageHeight'] = $this->request->getInt('wiki_image_height', WikiService::IMAGE_HEIGHT_KEEP_ASPECT_RATIO);
 		$options['sortColumn'] = $this->request->getVal('sort_column', 'wam_rank');
