@@ -240,6 +240,7 @@ $messages['eu'] = array(
 /** Persian (فارسی)
  * @author Ebraminio
  * @author Huji
+ * @author Reza1615
  * @author ZxxZxxZ
  */
 $messages['fa'] = array(

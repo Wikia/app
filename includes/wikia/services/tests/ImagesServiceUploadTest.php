@@ -33,7 +33,8 @@ class ImagesServiceUploadTest extends WikiaBaseTest {
 
 		// use Swift domain
 		global $wgDevelEnvironmentName;
-		$this->mockGlobalVariable( 'wgDevBoxImageServerOverride', "static.{$wgDevelEnvironmentName}.wikia-dev.com" );
+		// Disabling forcing the image domain due to BAC-1136
+		//$this->mockGlobalVariable( 'wgDevBoxImageServerOverride', "static.{$wgDevelEnvironmentName}.wikia-dev.com" );
 
 		// debug
 		global $wgLocalFileRepo;
@@ -164,7 +165,7 @@ class ImagesServiceUploadTest extends WikiaBaseTest {
 		$res = $this->uploadFromUrl( $file, self::REUPLOAD_URL, 'Reupload' );
 		Wikia::log( __METHOD__ , 'reupload', sprintf( 'took %.4f sec', microtime( true ) - $time ) );
 
-		$this->assertTrue( $res->isOK(), 'Re-upload should end up successfully' );
+		$this->assertTrue( $res->isOK(), 'Re-upload should end up successfully - ' .json_encode($res->getErrorsArray()) );
 
 		// (D) remove it...
 		$time = microtime( true );

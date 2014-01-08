@@ -18,7 +18,7 @@
 	</div>
 	<div class="details">
 		<p>
-			<?= wfMsgExt('wikifeatures-feature-description-'.$feature['name'], 'parseinline') ?>
+			<?= wfMessage('wikifeatures-feature-description-'.$feature['name'])->parse() ?>
 		</p>
 	</div>
 	<div class="actions">

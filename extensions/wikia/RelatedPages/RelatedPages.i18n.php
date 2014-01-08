@@ -115,6 +115,13 @@ $messages['es'] = array(
 	'wikiarelatedpages-heading' => 'Leer más',
 );
 
+/** Persian (فارسی)
+ * @author Reza1615
+ */
+$messages['fa'] = array(
+	'wikiarelatedpages-heading' => 'بیشتر بخوانید',
+);
+
 /** Finnish (suomi)
  * @author VezonThunder
  */
