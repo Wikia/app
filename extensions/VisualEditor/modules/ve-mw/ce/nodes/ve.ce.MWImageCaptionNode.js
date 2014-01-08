@@ -21,12 +21,12 @@ ve.ce.MWImageCaptionNode = function VeCeMWImageCaptionNode( model, config ) {
 	ve.ce.BranchNode.call( this, model, config );
 
 	// DOM changes
-	this.$.addClass( 'thumbcaption' );
+	this.$element.addClass( 'thumbcaption' );
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.ce.MWImageCaptionNode, ve.ce.BranchNode );
+OO.inheritClass( ve.ce.MWImageCaptionNode, ve.ce.BranchNode );
 
 /* Static Properties */
 
@@ -55,21 +55,21 @@ ve.ce.MWImageCaptionNode.prototype.onSplice = function () {
 	ve.ce.BranchNode.prototype.onSplice.apply( this, arguments );
 
 	if ( parentType === 'thumb' ) {
-		this.$magnify.prependTo( this.$ );
+		this.$magnify.prependTo( this.$element );
 	}
 };
 
 /** */
 ve.ce.MWImageCaptionNode.prototype.buildMagnify = function () {
-	this.$magnify = $( '<div>' )
+	this.$magnify = this.$( '<div>' )
 		.addClass( 'magnify' );
-	this.$a = $( '<a>' )
+	this.$a = this.$( '<a>' )
 		.addClass( 'internal' )
 		// It's inside a protected node, so user can't see href/title anyways.
 		//.attr( 'href', '/wiki/File:Wiki.png' )
 		//.attr( 'title', 'Enlarge' )
 		.appendTo( this.$magnify );
-	this.$img = $( '<img>' )
+	this.$img = this.$( '<img>' )
 		.attr( 'src', mw.config.get( 'wgVisualEditor' ).magnifyClipIconURL )
 		.attr( 'width', 15 )
 		.attr( 'height', 11 )

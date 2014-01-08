@@ -9,7 +9,7 @@
  * Creates an ve.ui.MWReferenceSearchWidget object.
  *
  * @class
- * @extends ve.ui.SearchWidget
+ * @extends OO.ui.SearchWidget
  *
  * @constructor
  * @param {ve.ui.Surface} [varname] [description]
@@ -22,19 +22,19 @@ ve.ui.MWReferenceSearchWidget = function VeUiMWReferenceSearchWidget( surface, c
 	}, config );
 
 	// Parent constructor
-	ve.ui.SearchWidget.call( this, config );
+	OO.ui.SearchWidget.call( this, config );
 
 	// Properties
 	this.surface = surface;
 	this.index = [];
 
 	// Initialization
-	this.$.addClass( 've-ui-mwReferenceSearchWidget' );
+	this.$element.addClass( 've-ui-mwReferenceSearchWidget' );
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.ui.MWReferenceSearchWidget, ve.ui.SearchWidget );
+OO.inheritClass( ve.ui.MWReferenceSearchWidget, OO.ui.SearchWidget );
 
 /* Events */
 
@@ -54,7 +54,7 @@ ve.inheritClass( ve.ui.MWReferenceSearchWidget, ve.ui.SearchWidget );
  */
 ve.ui.MWReferenceSearchWidget.prototype.onQueryChange = function () {
 	// Parent method
-	ve.ui.SearchWidget.prototype.onQueryChange.call( this );
+	OO.ui.SearchWidget.prototype.onQueryChange.call( this );
 
 	// Populate
 	this.addResults();
@@ -64,8 +64,8 @@ ve.ui.MWReferenceSearchWidget.prototype.onQueryChange = function () {
  * Handle select widget select events.
  *
  * @method
- * @param {ve.ui.OptionWidget} item Selected item
- * @emits select
+ * @param {OO.ui.OptionWidget} item Selected item
+ * @fires select
  */
 ve.ui.MWReferenceSearchWidget.prototype.onResultsSelect = function ( item ) {
 	var data;
@@ -115,21 +115,21 @@ ve.ui.MWReferenceSearchWidget.prototype.buildIndex = function () {
 			view = new ve.ce.InternalItemNode( internalList.getItemNode( attr.listIndex ) );
 
 			// HACK: PHP parser doesn't wrap single lines in a paragraph
-			if ( view.$.children().length === 1 && view.$.children( 'p' ).length === 1 ) {
+			if ( view.$element.children().length === 1 && view.$element.children( 'p' ).length === 1 ) {
 				// unwrap inner
-				view.$.children().replaceWith( view.$.children().contents() );
+				view.$element.children().replaceWith( view.$element.children().contents() );
 			}
 
 			citation = ( attr.refGroup.length ? attr.refGroup + ' ' : '' ) + ( j + 1 );
 			matches = attr.listKey.match( /^literal\/(.*)$/ );
 			name = matches && matches[1] || '';
 			// Make visible text, citation and reference name searchable
-			text = [ view.$.text().toLowerCase(), citation, name ].join( ' ' );
+			text = [ view.$element.text().toLowerCase(), citation, name ].join( ' ' );
 			// Make URLs searchable
-			view.$.find( 'a[href]' ).each( extractAttrs );
+			view.$element.find( 'a[href]' ).each( extractAttrs );
 
 			this.index.push( {
-				'$': view.$.clone().show(),
+				'$': view.$element.clone().show(),
 				'text': text,
 				'attributes': attr,
 				'citation': citation,
@@ -157,15 +157,15 @@ ve.ui.MWReferenceSearchWidget.prototype.addResults = function () {
 	for ( i = 0, len = this.index.length; i < len; i++ ) {
 		item = this.index[i];
 		if ( item.text.indexOf( query ) >= 0 ) {
-			$citation = $( '<div>' )
+			$citation = this.$( '<div>' )
 				.addClass( 've-ui-mwReferenceSearchWidget-citation' )
 				.text( '[' + item.citation + ']' );
-			$name = $( '<div>' )
+			$name = this.$( '<div>' )
 				.addClass( 've-ui-mwReferenceSearchWidget-name' )
 				.text( item.name );
 			items.push(
 				new ve.ui.MWReferenceResultWidget( i, {
-					'$$': this.$$, 'label': $citation.add( $name ).add( item.$ )
+					'$': this.$, 'label': $citation.add( $name ).add( item.$element )
 				} )
 			);
 		}

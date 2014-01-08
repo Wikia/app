@@ -9,17 +9,17 @@
  * Command registry.
  *
  * @class
- * @extends ve.Registry
+ * @extends OO.Registry
  * @constructor
  */
 ve.ui.CommandRegistry = function VeCommandRegistry() {
 	// Parent constructor
-	ve.Registry.call( this );
+	OO.Registry.call( this );
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.ui.CommandRegistry, ve.Registry );
+OO.inheritClass( ve.ui.CommandRegistry, OO.Registry );
 
 /* Methods */
 
@@ -27,26 +27,18 @@ ve.inheritClass( ve.ui.CommandRegistry, ve.Registry );
  * Register a constructor with the factory.
  *
  * @method
- * @param {string|string[]} name Symbolic name or list of symbolic names
- * @param {string} action Action to execute when command is triggered
- * @param {string} method Method to call on action when executing
- * @param {Mixed...} [data] Additional data to pass to the action when executing
- * @throws {Error} Action must be a string
- * @throws {Error} Method must be a string
+ * @param {ve.ui.Command} command Command object
+ * @throws {Error} If command is not an instance of ve.ui.Command
  */
-ve.ui.CommandRegistry.prototype.register = function ( name, action, method ) {
-	if ( typeof name !== 'string' && !ve.isArray( name ) ) {
-		throw new Error( 'name must be a string or array, cannot be a ' + typeof name );
+ve.ui.CommandRegistry.prototype.register = function ( command ) {
+	// Validate arguments
+	if ( !( command instanceof ve.ui.Command ) ) {
+		throw new Error(
+			'command must be an instance of ve.ui.Command, cannot be a ' + typeof command
+		);
 	}
-	if ( typeof action !== 'string' ) {
-		throw new Error( 'action must be a string, cannot be a ' + typeof action );
-	}
-	if ( typeof method !== 'string' ) {
-		throw new Error( 'method must be a string, cannot be a ' + typeof method );
-	}
-	ve.Registry.prototype.register.call(
-		this, name, { 'action': Array.prototype.slice.call( arguments, 1 ) }
-	);
+
+	OO.Registry.prototype.register.call( this, command.getName(), command );
 };
 
 /* Initialization */
@@ -54,26 +46,72 @@ ve.ui.CommandRegistry.prototype.register = function ( name, action, method ) {
 ve.ui.commandRegistry = new ve.ui.CommandRegistry();
 
 /* Registrations */
-
-ve.ui.commandRegistry.register( 'bold', 'annotation', 'toggle', 'textStyle/bold' );
-ve.ui.commandRegistry.register( 'italic', 'annotation', 'toggle', 'textStyle/italic' );
-ve.ui.commandRegistry.register( 'code', 'annotation', 'toggle', 'textStyle/code' );
-ve.ui.commandRegistry.register( 'strikethrough', 'annotation', 'toggle', 'textStyle/strike' );
-ve.ui.commandRegistry.register( 'underline', 'annotation', 'toggle', 'textStyle/underline' );
-ve.ui.commandRegistry.register( 'subscript', 'annotation', 'toggle', 'textStyle/subscript' );
-ve.ui.commandRegistry.register( 'superscript', 'annotation', 'toggle', 'textStyle/superscript' );
-ve.ui.commandRegistry.register( 'clear', 'annotation', 'clearAll' );
-ve.ui.commandRegistry.register( 'indent', 'indentation', 'increase' );
-ve.ui.commandRegistry.register( 'outdent', 'indentation', 'decrease' );
-ve.ui.commandRegistry.register( 'link', 'inspector', 'open', 'link' );
-ve.ui.commandRegistry.register( 'language', 'inspector', 'open', 'language' );
-ve.ui.commandRegistry.register( 'redo', 'history', 'redo' );
-ve.ui.commandRegistry.register( 'undo', 'history', 'undo' );
-ve.ui.commandRegistry.register( 'paragraph', 'format', 'convert', 'paragraph' );
-ve.ui.commandRegistry.register( 'heading1', 'format', 'convert', 'heading', { 'level': 1 } );
-ve.ui.commandRegistry.register( 'heading2', 'format', 'convert', 'heading', { 'level': 2 } );
-ve.ui.commandRegistry.register( 'heading3', 'format', 'convert', 'heading', { 'level': 3 } );
-ve.ui.commandRegistry.register( 'heading4', 'format', 'convert', 'heading', { 'level': 4 } );
-ve.ui.commandRegistry.register( 'heading5', 'format', 'convert', 'heading', { 'level': 5 } );
-ve.ui.commandRegistry.register( 'heading6', 'format', 'convert', 'heading', { 'level': 6 } );
-ve.ui.commandRegistry.register( 'preformatted', 'format', 'convert', 'preformatted' );
+ve.ui.commandRegistry.register(
+	new ve.ui.Command( 'undo', 'history', 'undo' )
+);
+ve.ui.commandRegistry.register(
+	new ve.ui.Command( 'redo', 'history', 'redo' )
+);
+ve.ui.commandRegistry.register(
+	new ve.ui.Command( 'bold', 'annotation', 'toggle', 'textStyle/bold' )
+);
+ve.ui.commandRegistry.register(
+	new ve.ui.Command( 'italic', 'annotation', 'toggle', 'textStyle/italic' )
+);
+ve.ui.commandRegistry.register(
+	new ve.ui.Command( 'link', 'inspector', 'open', 'link' )
+);
+ve.ui.commandRegistry.register(
+	new ve.ui.Command( 'clear', 'annotation', 'clearAll' )
+);
+ve.ui.commandRegistry.register(
+	new ve.ui.Command( 'underline', 'annotation', 'toggle', 'textStyle/underline' )
+);
+ve.ui.commandRegistry.register(
+	new ve.ui.Command( 'subscript', 'annotation', 'toggle', 'textStyle/subscript' )
+);
+ve.ui.commandRegistry.register(
+	new ve.ui.Command( 'superscript', 'annotation', 'toggle', 'textStyle/superscript' )
+);
+ve.ui.commandRegistry.register(
+	new ve.ui.Command( 'indent', 'indentation', 'increase' )
+);
+ve.ui.commandRegistry.register(
+	new ve.ui.Command( 'outdent', 'indentation', 'decrease' )
+);
+ve.ui.commandRegistry.register(
+	new ve.ui.Command( 'code', 'annotation', 'toggle', 'textStyle/code' )
+);
+ve.ui.commandRegistry.register(
+	new ve.ui.Command( 'strikethrough', 'annotation', 'toggle', 'textStyle/strike' )
+);
+ve.ui.commandRegistry.register(
+	new ve.ui.Command( 'language', 'inspector', 'open', 'language' )
+);
+ve.ui.commandRegistry.register(
+	new ve.ui.Command( 'paragraph', 'format', 'convert', 'paragraph' )
+);
+ve.ui.commandRegistry.register(
+	new ve.ui.Command( 'heading1', 'format', 'convert', 'heading', { 'level': 1 } )
+);
+ve.ui.commandRegistry.register(
+	new ve.ui.Command( 'heading2', 'format', 'convert', 'heading', { 'level': 2 } )
+);
+ve.ui.commandRegistry.register(
+	new ve.ui.Command( 'heading3', 'format', 'convert', 'heading', { 'level': 3 } )
+);
+ve.ui.commandRegistry.register(
+	new ve.ui.Command( 'heading4', 'format', 'convert', 'heading', { 'level': 4 } )
+);
+ve.ui.commandRegistry.register(
+	new ve.ui.Command( 'heading5', 'format', 'convert', 'heading', { 'level': 5 } )
+);
+ve.ui.commandRegistry.register(
+	new ve.ui.Command( 'heading6', 'format', 'convert', 'heading', { 'level': 6 } )
+);
+ve.ui.commandRegistry.register(
+	new ve.ui.Command( 'preformatted', 'format', 'convert', 'preformatted' )
+);
+ve.ui.commandRegistry.register(
+	new ve.ui.Command( 'pasteSpecial', 'content', 'pasteSpecial' )
+);

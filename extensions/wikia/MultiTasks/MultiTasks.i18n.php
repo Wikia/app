@@ -615,6 +615,7 @@ $messages['ca'] = array(
  * @author Умар
  */
 $messages['ce'] = array(
+	'multiwikiedit_from_form' => 'формера',
 	'multidelete' => 'АгӀонийн гулам дӀабаккхар',
 	'multidelete_title' => 'Дуккха дӀяккхар',
 	'multidelete_processing' => 'агӀонаш дӀаяхар',
@@ -1076,8 +1077,10 @@ $messages['es'] = array(
 );
 
 /** Persian (فارسی)
+ * @author Reza1615
  */
 $messages['fa'] = array(
+	'multiwikiedit_minoredit_caption' => 'ویرایش جزئی',
 	'multidelete_select_all' => 'انتخاب همه',
 );
 
@@ -1865,7 +1868,10 @@ $messages['lb'] = array(
  */
 $messages['lrc'] = array(
 	'multitasks-link-back-label' => 'ايچه',
+	'multiwikiedit_button' => 'ویرایشت',
+	'multiwikiedit_confirm' => 'مئکم کردن',
 	'multiwikiedit_select_yourself' => 'شما',
+	'multidelete_success_subtitle' => 'سی $1',
 );
 
 /** Macedonian (македонски)

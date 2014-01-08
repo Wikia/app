@@ -14,7 +14,7 @@ ve.ce.BranchNodeStub = function VeCeBranchNodeStub( model, $element ) {
 	ve.ce.BranchNode.call( this, model, $element );
 };
 
-ve.inheritClass( ve.ce.BranchNodeStub, ve.ce.BranchNode );
+OO.inheritClass( ve.ce.BranchNodeStub, ve.ce.BranchNode );
 
 ve.ce.BranchNodeStub.static.name = 'branch-stub';
 
@@ -56,16 +56,16 @@ QUnit.test( 'updateTagName', 4, function ( assert ) {
 	} ) );
 
 	// Add content to the node
-	node.$.text( 'hello' );
+	node.$element.text( 'hello' );
 
 	// Modify attribute
 	attributes.style = 'b';
 	node.updateTagName();
 
-	assert.equal( node.$.get( 0 ).nodeName.toLowerCase(), 'b', 'DOM element type gets converted' );
-	assert.equal( node.$.hasClass( 've-ce-branchNode' ), true, 'old classes are added to new wrapper' );
-	assert.equal( !!node.$.data( 'view' ), true, 'data added to new wrapper' );
-	assert.equal( node.$.text(), 'hello', 'contents are added to new wrapper' );
+	assert.equal( node.$element.get( 0 ).nodeName.toLowerCase(), 'b', 'DOM element type gets converted' );
+	assert.equal( node.$element.hasClass( 've-ce-branchNode' ), true, 'old classes are added to new wrapper' );
+	assert.equal( !!node.$element.data( 'view' ), true, 'data added to new wrapper' );
+	assert.equal( node.$element.text(), 'hello', 'contents are added to new wrapper' );
 } );
 
 QUnit.test( 'onSplice', 7, function ( assert ) {

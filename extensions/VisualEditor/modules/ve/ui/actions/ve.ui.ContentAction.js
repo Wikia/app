@@ -20,7 +20,7 @@ ve.ui.ContentAction = function VeUiContentAction( surface ) {
 
 /* Inheritance */
 
-ve.inheritClass( ve.ui.ContentAction, ve.ui.Action );
+OO.inheritClass( ve.ui.ContentAction, ve.ui.Action );
 
 /* Static Properties */
 
@@ -63,7 +63,7 @@ ve.ui.ContentAction.prototype.remove = function () {
  * @param {ve.Range} range Range to select
  */
 ve.ui.ContentAction.prototype.select = function ( range ) {
-	this.surface.getModel().change( null, range );
+	this.surface.getModel().setSelection( range );
 };
 
 /* Registration */

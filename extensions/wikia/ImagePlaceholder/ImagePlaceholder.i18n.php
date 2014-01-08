@@ -336,6 +336,7 @@ $messages['lb'] = array(
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
+	'imgplc-add-image' => 'اضاف کردن عسگ',
 	'imgplc-image' => 'عسگ',
 );
 

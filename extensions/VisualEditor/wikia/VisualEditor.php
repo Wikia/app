@@ -77,10 +77,10 @@ $wgResourceModules += array(
 			've/ce/ve.ce.WikiaInlineVideoNode.js',
 
 			// ui
-			've/ui/tools/buttons/ve.ui.WikiaMediaInsertButtonTool.js',
-			've/ui/tools/buttons/ve.ui.WikiaSourceModeButtonTool.js',
 			've/ui/dialogs/ve.ui.WikiaMediaInsertDialog.js',
+			've/ui/dialogs/ve.ui.WikiaReferenceDialog.js',
 			've/ui/dialogs/ve.ui.WikiaSourceModeDialog.js',
+			've/ui/tools/ve.ui.WikiaDialogTool.js',
 			've/ui/widgets/ve.ui.WikiaCartWidget.js',
 			've/ui/widgets/ve.ui.WikiaCartItemWidget.js',
 			've/ui/widgets/ve.ui.WikiaMediaPageWidget.js',
@@ -89,6 +89,7 @@ $wgResourceModules += array(
 			've/ui/widgets/ve.ui.WikiaMediaResultsWidget.js',
 			've/ui/widgets/ve.ui.WikiaMediaQueryWidget.js',
 			've/ui/widgets/ve.ui.WikiaUploadWidget.js',
+			've/ui/widgets/ve.ui.WikiaDropTargetWidget.js'
 		),
 		'messages' => array(
 			'oasis-content-picture-added-by',
@@ -106,6 +107,7 @@ $wgResourceModules += array(
 			'wikia-visualeditor-dialog-wikiamediainsert-preview-alert',
 			'wikia-visualeditor-dialog-wikiamediainsert-upload-error-size',
 			'wikia-visualeditor-dialog-wikiamediainsert-upload-error-filetype',
+			'wikia-visualeditor-dialog-drop-target-callout',
 			'wikia-visualeditor-help-label',
 			'wikia-visualeditor-help-link',
 			'wikia-visualeditor-beta-warning',

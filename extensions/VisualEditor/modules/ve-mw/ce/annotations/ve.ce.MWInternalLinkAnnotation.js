@@ -12,24 +12,21 @@
  * @extends ve.ce.LinkAnnotation
  * @constructor
  * @param {ve.dm.MWInternalLinkAnnotation} model Model to observe
+ * @param {ve.ce.ContentBranchNode} [parentNode] Node rendering this annotation
  * @param {Object} [config] Configuration options
  */
-ve.ce.MWInternalLinkAnnotation = function VeCeMWInternalLinkAnnotation( model, config ) {
-	var dmRendering;
+ve.ce.MWInternalLinkAnnotation = function VeCeMWInternalLinkAnnotation( model, parentNode, config ) {
 	// Parent constructor
-	ve.ce.LinkAnnotation.call( this, model, config );
+	ve.ce.LinkAnnotation.call( this, model, parentNode, config );
 
 	// DOM changes
-	this.$.addClass( 've-ce-mwInternalLinkAnnotation' );
-	this.$.attr( 'title', model.getAttribute( 'title' ) );
-	// Get href from DM rendering
-	dmRendering = model.getDomElements()[0];
-	this.$.attr( 'href', dmRendering.getAttribute( 'href' ) );
+	this.$element.addClass( 've-ce-mwInternalLinkAnnotation' );
+	this.$element.attr( 'title', model.getAttribute( 'title' ) );
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.ce.MWInternalLinkAnnotation, ve.ce.LinkAnnotation );
+OO.inheritClass( ve.ce.MWInternalLinkAnnotation, ve.ce.LinkAnnotation );
 
 /* Static Properties */
 

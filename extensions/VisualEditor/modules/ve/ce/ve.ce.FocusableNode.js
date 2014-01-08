@@ -16,25 +16,26 @@
  * node's DOM rendering.
  *
  * If your focusable node changes size and the highlight must be redrawn, call redrawHighlight().
- * 'resize' and 'rerender' are already bound to call this.
+ * 'resizeEnd' and 'rerender' are already bound to call this.
  *
  * @class
  * @abstract
  *
  * @constructor
- * @param {jQuery} [$focusable=this.$] Primary element user is focusing on
+ * @param {jQuery} [$focusable=this.$element] Primary element user is focusing on
  */
 ve.ce.FocusableNode = function VeCeFocusableNode( $focusable ) {
 	// Properties
 	this.focused = false;
-	this.$focusable = $focusable || this.$;
-	this.$highlights = $( [] );
+	this.$focusable = $focusable || this.$element;
+	this.$highlights = this.$( [] );
 	this.surface = null;
 
 	// Events
 	this.connect( this, {
 		'setup': 'onFocusableSetup',
-		'resize': 'onFocusableResize',
+		'resizeEnd': 'onFocusableResizeEnd',
+		'resizing': 'onFocusableResizing',
 		'rerender': 'onFocusableRerender',
 		'live': 'onFocusableLive'
 	} );
@@ -49,6 +50,12 @@ ve.ce.FocusableNode = function VeCeFocusableNode( $focusable ) {
 /**
  * @event blur
  */
+
+/* Static Methods */
+
+ve.ce.FocusableNode.static = {};
+
+ve.ce.FocusableNode.static.isFocusable = true;
 
 /* Methods */
 
@@ -90,12 +97,23 @@ ve.ce.FocusableNode.prototype.onFocusableHistory = function () {
 };
 
 /**
- * Handle resize event.
+ * Handle resize end event.
  *
  * @method
  */
-ve.ce.FocusableNode.prototype.onFocusableResize = function () {
+ve.ce.FocusableNode.prototype.onFocusableResizeEnd = function () {
 	if ( this.focused ) {
+		this.redrawHighlight();
+	}
+};
+
+/**
+ * Handle resizing event.
+ *
+ * @method
+ */
+ve.ce.FocusableNode.prototype.onFocusableResizing = function () {
+	if ( this.focused && !this.outline ) {
 		this.redrawHighlight();
 	}
 };
@@ -109,7 +127,7 @@ ve.ce.FocusableNode.prototype.onFocusableRerender = function () {
 	if ( this.focused ) {
 		this.redrawHighlight();
 		// reposition menu
-		this.surface.getSurface().getContext().show( true );
+		this.surface.getSurface().getContext().update( true, true );
 	}
 };
 
@@ -128,8 +146,8 @@ ve.ce.FocusableNode.prototype.isFocused = function () {
  *
  * @method
  * @param {boolean} value Node is focused
- * @emits focus
- * @emits blur
+ * @fires focus
+ * @fires blur
  */
 ve.ce.FocusableNode.prototype.setFocused = function ( value ) {
 	value = !!value;
@@ -154,19 +172,19 @@ ve.ce.FocusableNode.prototype.setFocused = function ( value ) {
  */
 ve.ce.FocusableNode.prototype.createHighlight = function () {
 	this.$focusable.find( '*' ).add( this.$focusable ).each(
-		ve.bind( function( i, element ) {
-			var offset, $element = $( element );
-			if ( !$element.is( ':visible' ) ) {
+		ve.bind( function( i, el ) {
+			var offset, $el = this.$( el );
+			if ( !$el.is( ':visible' ) ) {
 				return true;
 			}
-			offset = ve.Element.getRelativePosition(
-				$element, this.getRoot().getSurface().getSurface().$
+			offset = OO.ui.Element.getRelativePosition(
+				$el, this.getRoot().getSurface().getSurface().$element
 			);
 			this.$highlights = this.$highlights.add(
-				$( '<div>' )
+				this.$( '<div>' )
 					.css( {
-						height: $element.height(),
-						width: $element.width(),
+						height: $el.height(),
+						width: $el.width(),
 						top: offset.top,
 						left: offset.left
 					} )
@@ -184,7 +202,7 @@ ve.ce.FocusableNode.prototype.createHighlight = function () {
  * @method
  */
 ve.ce.FocusableNode.prototype.clearHighlight = function () {
-	this.$highlights = $( [] );
+	this.$highlights = this.$( [] );
 	this.surface.replaceHighlight( null );
 };
 

@@ -9,14 +9,14 @@
  * DataModel meta item.
  *
  * @class
- * @mixins ve.EventEmitter
+ * @mixins OO.EventEmitter
  *
  * @constructor
  * @param {ve.dm.Document} doc Document model
  */
 ve.dm.InternalList = function VeDmInternalList( doc ) {
 	// Mixin constructors
-	ve.EventEmitter.call( this );
+	OO.EventEmitter.call( this );
 
 	// Properties
 	this.document = doc;
@@ -36,7 +36,7 @@ ve.dm.InternalList = function VeDmInternalList( doc ) {
 
 /* Inheritance */
 
-ve.mixinClass( ve.dm.InternalList, ve.EventEmitter );
+OO.mixinClass( ve.dm.InternalList, OO.EventEmitter );
 
 /* Events */
 
@@ -208,16 +208,17 @@ ve.dm.InternalList.prototype.getNextUniqueNumber = function () {
  *
  * @method
  * @param {ve.dm.Converter} converter Converter object
+ * @param {HTMLDocument} doc Document to create nodes in
  * @returns {Array} Linear model data
  */
-ve.dm.InternalList.prototype.convertToData = function ( converter ) {
+ve.dm.InternalList.prototype.convertToData = function ( converter, doc ) {
 	var i, length, itemData,
 		itemHtmlQueue = this.getItemHtmlQueue(), list = [];
 
 	list.push( { 'type': 'internalList' } );
 	for ( i = 0, length = itemHtmlQueue.length; i < length; i++ ) {
 		if ( itemHtmlQueue[i] !== '' ) {
-			itemData = converter.getDataFromDomRecursion( $( '<div>' ).html( itemHtmlQueue[i] )[0] );
+			itemData = converter.getDataFromDomRecursion( $( '<div>', doc ).html( itemHtmlQueue[i] )[0] );
 			list = list.concat(
 				[{ 'type': 'internalItem' }],
 				itemData,
@@ -351,7 +352,7 @@ ve.dm.InternalList.prototype.markGroupAsChanged = function ( groupName ) {
 
 /**
  * Handle document transaction events
- * @emits update
+ * @fires update
  */
 ve.dm.InternalList.prototype.onTransact = function () {
 	var i;

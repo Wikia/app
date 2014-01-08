@@ -68,3 +68,14 @@
 .ve-ce-mwHieroNode {
 	display: table;
 }
+
+/* ve.ce.MWNumberedExternalLinkNode */
+
+.ve-ce-surface {
+    counter-reset: ve-ce-mwNumberedExternalLinkNode;
+}
+
+.ve-ce-mwNumberedExternalLinkNode a:empty:after {
+    content: "[" counter(ve-ce-mwNumberedExternalLinkNode) "]";
+    counter-increment: ve-ce-mwNumberedExternalLinkNode;
+}

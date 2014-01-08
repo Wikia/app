@@ -19,9 +19,9 @@ ve.ce.MWEntityNode = function VeCeMWEntityNode( model, config ) {
 	ve.ce.LeafNode.call( this, model, config );
 
 	// DOM changes
-	this.$.addClass( 've-ce-mwEntityNode' );
+	this.$element.addClass( 've-ce-mwEntityNode' );
 	// Need CE=false to prevent selection issues
-	this.$.prop( 'contentEditable', 'false' );
+	this.$element.prop( 'contentEditable', 'false' );
 
 	// Events
 	this.model.connect( this, { 'update': 'onUpdate' } );
@@ -32,7 +32,7 @@ ve.ce.MWEntityNode = function VeCeMWEntityNode( model, config ) {
 
 /* Inheritance */
 
-ve.inheritClass( ve.ce.MWEntityNode, ve.ce.LeafNode );
+OO.inheritClass( ve.ce.MWEntityNode, ve.ce.LeafNode );
 
 /* Static Properties */
 
@@ -48,7 +48,7 @@ ve.ce.MWEntityNode.static.name = 'mwEntity';
  * @method
  */
 ve.ce.MWEntityNode.prototype.onUpdate = function () {
-	this.$.text( this.model.getAttribute( 'character' ) );
+	this.$element.text( this.model.getAttribute( 'character' ) );
 };
 
 /* Registration */

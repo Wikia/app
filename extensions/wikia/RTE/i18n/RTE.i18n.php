@@ -837,6 +837,7 @@ $messages['zh'] = array(
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Anakmalaysia
+ * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
 	'rte-desc' => '为MediaWiki提供的CKeditor整合',
@@ -845,6 +846,7 @@ $messages['zh-hans'] = array(
 	'rte-edgecase-triplecurls' => '模板参数',
 	'rte-edgecase-nowysiwyg' => '“禁用所见即所得”命令',
 	'rte-edgecase-complex-description' => '链接描述之内的外部URL或模板',
+	'rte-edgecase-syntax' => '不允许的语法',
 	'rte-edgecase-redirect' => '重定向',
 	'rte-edgecase-unclosed-tags' => '封闭的HTML标签',
 	'enablerichtexteditor' => '在可视模式下启用编辑（除源模式之外）',

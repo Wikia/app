@@ -24,7 +24,7 @@ ve.ce.ListNode = function VeCeListNode( model, config ) {
 
 /* Inheritance */
 
-ve.inheritClass( ve.ce.ListNode, ve.ce.BranchNode );
+OO.inheritClass( ve.ce.ListNode, ve.ce.BranchNode );
 
 /* Static Properties */
 
@@ -75,7 +75,7 @@ ve.ce.ListNode.prototype.onSplice = function () {
 
 	// There's a bug in Firefox where numbered lists aren't renumbered after in/outdenting
 	// list items. Force renumbering by requesting the height, which causes a reflow
-	this.$.css( 'height' );
+	this.$element.css( 'height' );
 };
 
 /**

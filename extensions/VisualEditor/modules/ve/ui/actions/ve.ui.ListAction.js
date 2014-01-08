@@ -20,7 +20,7 @@ ve.ui.ListAction = function VeUiListAction( surface ) {
 
 /* Inheritance */
 
-ve.inheritClass( ve.ui.ListAction, ve.ui.Action );
+OO.inheritClass( ve.ui.ListAction, ve.ui.Action );
 
 /* Static Properties */
 

@@ -28,7 +28,7 @@ ve.ce.MWSyntaxHighlightNode = function VeCeMWSyntaxHighlightNode( model, config 
 	ve.ce.GeneratedContentNode.call( this );
 
 	// DOM Changes
-	this.$.addClass( 've-ce-MWSyntaxHighlightNode mwSyntaxHighlight' );
+	this.$element.addClass( 've-ce-MWSyntaxHighlightNode mwSyntaxHighlight' );
 
 	// Helpers
 	this.highlighter = null;
@@ -43,11 +43,11 @@ ve.ce.MWSyntaxHighlightNode = function VeCeMWSyntaxHighlightNode( model, config 
 
 /* Inheritance */
 
-ve.inheritClass( ve.ce.MWSyntaxHighlightNode, ve.ce.LeafNode );
+OO.inheritClass( ve.ce.MWSyntaxHighlightNode, ve.ce.LeafNode );
 
-ve.mixinClass( ve.ce.MWSyntaxHighlightNode, ve.ce.FocusableNode );
-ve.mixinClass( ve.ce.MWSyntaxHighlightNode, ve.ce.ProtectedNode );
-ve.mixinClass( ve.ce.MWSyntaxHighlightNode, ve.ce.GeneratedContentNode );
+OO.mixinClass( ve.ce.MWSyntaxHighlightNode, ve.ce.FocusableNode );
+OO.mixinClass( ve.ce.MWSyntaxHighlightNode, ve.ce.ProtectedNode );
+OO.mixinClass( ve.ce.MWSyntaxHighlightNode, ve.ce.GeneratedContentNode );
 
 /* Static Properties */
 
@@ -67,8 +67,8 @@ ve.ce.MWSyntaxHighlightNode.prototype.startGenerating = function () {
 	var lang = this.model.getAttribute( 'lang' );
 
 	// Properties
-	this.$wrapper = this.$$( '<div>' );
-	this.$code = this.$$( '<pre>' );
+	this.$wrapper = this.$( '<div>' );
+	this.$code = this.$( '<pre>' );
 
 	// Initialization
 	this.$wrapper
@@ -121,7 +121,7 @@ ve.ce.MWSyntaxHighlightNode.prototype.failGenerating = function () {
  */
 ve.ce.MWSyntaxHighlightNode.prototype.doneGenerating = function ( domElements ) {
 	var store = this.model.doc.getStore(),
-		hash = ve.getHash( this.model );
+		hash = OO.getHash( this.model );
 	store.index( domElements.toArray() , hash );
 	this.render( domElements.toArray() );
 	this.generatingPromise = null;
