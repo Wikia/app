@@ -13,7 +13,7 @@ module.exports = function( grunt ) {
 			},
 			options: {
 				// define as an AMD module
-				prefix: 'define( \'templates.mustache.js\', [], function() { \'use strict\'; return ',
+				prefix: 'define( \'templates.mustache\', [], function() { \'use strict\'; return ',
 				postfix: '; });',
 				verbose: true
 			}
