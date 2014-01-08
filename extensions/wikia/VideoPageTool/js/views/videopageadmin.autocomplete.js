@@ -6,7 +6,7 @@
  * var autocomplete = new AutocompleteView({
  *		el: '.my-el', // This el is the closest parent element containing the form and the results container
  *		collection: new CategoryCollection() // Instatiated collection is available inside the view
- * });
+ * } );
  *
  * @requires
  * Supplied parent element must contain a DOM structure that includes:
@@ -37,7 +37,7 @@ define( 'views.videopageadmin.autocomplete', [
 						if ( that.results && that.results.length ) {
 							that.trigger( 'results:hide' );
 						}
-				});
+				} );
 
 				// bind events
 				this.on( 'results:hide', this.clearResults );
@@ -111,7 +111,7 @@ define( 'views.videopageadmin.autocomplete', [
 				this.results.map(function( subView ) {
 						// use Backbone's native view removal
 						return subView.remove();
-				});
+				} );
 
 				this.results = [];
 				this.$results.html( '' ).hide();
@@ -137,10 +137,10 @@ define( 'views.videopageadmin.autocomplete', [
 						view = new AutocompleteItemView({
 								model: model,
 								parentView: that
-						});
+						} );
 						that.results.push( view );
 						that.$results.append( view.render().$el );
-				});
+				} );
 
 				return this;
 			},
@@ -188,7 +188,7 @@ define( 'views.videopageadmin.autocomplete', [
 					}
 				}
 			},
-	});
+	} );
 
 	return AutocompleteView;
-});
+} );

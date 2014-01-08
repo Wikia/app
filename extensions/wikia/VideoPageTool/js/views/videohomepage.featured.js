@@ -20,7 +20,7 @@ define( 'views.videohomepage.featured', [
 			action: Tracker.ACTIONS.CLICK,
 			category: 'video-home-page',
 			trackingMethod: 'both'
-	});
+	} );
 
 	FeaturedVideosView = Backbone.View.extend({
 			events: {
@@ -69,7 +69,7 @@ define( 'views.videohomepage.featured', [
 						if( $el.height() > $el.parent().height() ) {
 							$el.ellipses();
 						}
-				});
+				} );
 			},
 
 			queryDom: function() {
@@ -84,8 +84,8 @@ define( 'views.videohomepage.featured', [
 				_.each( this.$thumbs.find( '.video' ), function( e ) {
 						that.thumbs.push({
 								$video: $( e )
-						});
-				});
+						} );
+				} );
 
 				_.each( this.$bxSlider.children(), function( e, i ) {
 						var $elem,
@@ -98,7 +98,7 @@ define( 'views.videohomepage.featured', [
 								$videoThumb: that.thumbs[ i ].$video,
 								$image: $elem.find( '.slide-image' ),
 								idx: i
-						});
+						} );
 
 						videoKey = that.thumbs[ i ]
 												.$video.children( 'img' )
@@ -107,8 +107,8 @@ define( 'views.videohomepage.featured', [
 						that.slideModels.push( new FeaturedSlideModel({
 								videoKey: videoKey,
 								embedData: null
-						}));
-				});
+						} ));
+				} );
 			},
 
 			initSlider: function() {
@@ -122,7 +122,7 @@ define( 'views.videohomepage.featured', [
 					mode: 'fade',
 					// not using this b/c it's buggy
 					autoHover: false
-				});
+				} );
 
 			},
 			onSliderLoad: function() {
@@ -175,7 +175,7 @@ define( 'views.videohomepage.featured', [
 
 					track({
 							label: 'featured-thumbnail'
-					});
+					} );
 
 					if( this.slider.getCurrentSlide() === index ) {
 						// play the video
@@ -239,7 +239,7 @@ define( 'views.videohomepage.featured', [
 						window.GlobalNotification.show( json.error, 'error', null, 4000);
 					} else {
 						// cache embed data
-						model.set({ embedData: json });
+						model.set({ embedData: json } );
 
 						// Actually do the video embed
 						that.videoInstance = new VideoBootstrap(
@@ -253,12 +253,12 @@ define( 'views.videohomepage.featured', [
 							that.$bxSlider.redrawSlider();
 						}, 1000);
 					}
-				});
+				} );
 
 				track({
 						label: 'featured-video-plays',
 						value: this.videoPlays++
-				});
+				} );
 			},
 
 			/*
@@ -284,7 +284,7 @@ define( 'views.videohomepage.featured', [
 							width: that.getWidthForVideo( slide ),
 							autoplay: 1
 						}
-					});
+					} );
 				} else {
 					data = model.get('embedData');
 				}
@@ -325,7 +325,7 @@ define( 'views.videohomepage.featured', [
 				this.$bxSlider.find( '.slide-image' ).hide()
 					.find( '.slide-video' ).show();
 			}
-	});
+	} );
 
 	return FeaturedVideosView;
-});
+} );

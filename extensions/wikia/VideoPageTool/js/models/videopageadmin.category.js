@@ -3,7 +3,7 @@ define( 'models.videopageadmin.category', [
 		'use strict';
 
 		var CategoryModel = Backbone.Model.extend({
-		});
+		} );
 
 		return CategoryModel;
-});
+} );

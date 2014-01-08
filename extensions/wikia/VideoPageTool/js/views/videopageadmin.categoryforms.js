@@ -14,11 +14,11 @@ define( 'views.videopageadmin.categoryforms', [
 					this.autocomplete = new AutocompleteView({
 							el: this.el,
 							collection: this.categories
-					});
+					} );
 					this.previewView = new CategoryPreviewView({
 						el: this.el,
 						collection: this.categoryData
-					});
+					} );
 					_.bindAll( this, 'getPreview' );
 					console.log( this.$el );
 				},
@@ -34,7 +34,7 @@ define( 'views.videopageadmin.categoryforms', [
 
 					this.categoryData.setCategory( this.categories.selectedCategory );
 				}
-		});
+		} );
 
 		return FormGroupView;
-});
+} );

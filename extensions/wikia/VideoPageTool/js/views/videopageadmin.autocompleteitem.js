@@ -29,7 +29,7 @@ define( 'views.videopageadmin.autocompleteitem', [
 					this.$el.html( html );
 					return this;
 				}
-		});
+		} );
 
 		return CategorySingleResultView;
-});
+} );

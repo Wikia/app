@@ -5,7 +5,7 @@ define( 'models.videohomepage.slide', [], function() {
 					videoKey: String,
 					embedData: null
 				}
-		});
+		} );
 
 		return FeaturedSlideModel;
-});
+} );

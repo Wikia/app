@@ -14,7 +14,7 @@ define( 'views.videopageadmin.categorypreviewitem', [
 		render: function() {
 			return this;
 		}
-	});
+	} );
 
 	return CategoryPreviewView;
-});
+} );

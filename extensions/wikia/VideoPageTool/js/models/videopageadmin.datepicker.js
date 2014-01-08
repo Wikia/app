@@ -64,7 +64,7 @@ define('models.videopageadmin.datepicker', [], function() {
 					callback: $.proxy(function(response) {
 						$.extend(this.specialDates, response['info']);
 					}, this)
-				});
+				} );
 			}
 		},
 		setCollected: function(theYear, theMonth) {
@@ -96,4 +96,4 @@ define('models.videopageadmin.datepicker', [], function() {
 	};
 
 	return Datepicker;
-});
+} );

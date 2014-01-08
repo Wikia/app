@@ -13,7 +13,7 @@ define('views.videopageadmin.datepicker', [
 				language: params.language,
 				controller: params.controller,
 				method: params.method
-		});
+		} );
 
 		this.currDate = new Date();
 		this.init();
@@ -28,7 +28,7 @@ define('views.videopageadmin.datepicker', [
 				// when collection returns, render the calendar
 				.success(function() {
 					that.render();
-				});
+				} );
 		},
 		state: {
 			// private constants used to track state of a date entry
@@ -47,7 +47,7 @@ define('views.videopageadmin.datepicker', [
 								return this.collection.collectData(year, month);
 						}, this),
 						onSelect: $.proxy(this.onSelect, this)
-				});
+				} );
 			return this;
 		},
 		destroy: function() {
@@ -92,11 +92,11 @@ define('views.videopageadmin.datepicker', [
 				.setVal({
 						language: this.collection.language,
 						date: timestamp/1000
-				})
+				} )
 				.goTo();
 		},
 		constructor: DatepickerView
 	};
 
 	return DatepickerView;
-});
+} );

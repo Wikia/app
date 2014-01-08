@@ -16,7 +16,7 @@ define( 'collections.videopageadmin.category', [
 					this.trigger( 'category:chosen' );
 				},
 				autocomplete: function( value ) {
-					if ( this.xhr ) this.xhr.abort();
+					if ( this.xhr ) { this.xhr.abort(); }
 					this.query = value.toLowerCase();
 
 					if ( !this.raw || !this.raw.length ) {
@@ -26,7 +26,7 @@ define( 'collections.videopageadmin.category', [
 								controller: this.controller,
 								method:  this.method
 							}
-						});
+						} );
 					} else {
 						this.parse( this.raw );
 						this.reset( this.parse() );
@@ -43,16 +43,16 @@ define( 'collections.videopageadmin.category', [
 					}
 
 					_.each( resp, function( itemName ) {
-						if ( itemName.toLowerCase().indexOf( self.query ) != -1 ) {
+						if ( itemName.toLowerCase().indexOf( self.query ) !== -1 ) {
 							cache.push({
 								name: itemName
-							});
+							} );
 						}
-					});
+					} );
 
 					return cache;
 				}
-		});
+		} );
 
 		return CategoryCollection;
-});
+} );

@@ -9,10 +9,10 @@ define( 'collections.videohomepage.featuredslides', [
 					_.each( this.models, function( e ) {
 							e.set({
 									embedData: null
-							});
-					});
+							} );
+					} );
 				}
-		});
+		} );
 
 		return SlideCollection;
-});
+} );

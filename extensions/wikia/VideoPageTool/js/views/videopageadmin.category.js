@@ -10,21 +10,21 @@ define( 'views.videopageadmin.category', [
 				this.formSubViews = _.map( this.$formGroups, function( e ) {
 						return new FormGroupView({
 								el: e
-						});
-				});
+						} );
+				} );
 			},
 			events: {
 			},
-	});
+	} );
 
 	return CategoryPageView;
-});
+} );
 
 $(function () {
 		'use strict';
 		require([ 'views.videopageadmin.category' ], function( CategoryPageView ) {
 				new CategoryPageView({
 						el: '#LatestVideos'
-				});
-		});
-});
+				} );
+		} );
+} );

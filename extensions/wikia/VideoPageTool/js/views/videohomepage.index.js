@@ -14,7 +14,7 @@ require([
 						el: '#featured-video-slider',
 						$bxSlider: $( '#featured-video-bxslider' ),
 						$thumbs: $( '#featured-video-thumbs' )
-				});
+				} );
 				views.videohomepage.search = new SearchView();
-		});
-});
+		} );
+} );

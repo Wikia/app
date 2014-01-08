@@ -26,7 +26,7 @@ define( 'collections.videopageadmin.categorydata', [
 							method: this.method,
 							categoryName: this.categoryName
 						}
-					});
+					} );
 				},
 
 				// custom parse to maintain collection lifecycle events
@@ -47,7 +47,7 @@ define( 'collections.videopageadmin.categorydata', [
 						this.fetch();
 					}
 				}
-		});
+		} );
 
 		return CategoryCollection;
-});
+} );

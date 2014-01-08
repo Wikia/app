@@ -27,8 +27,8 @@ define( 'views.videopageadmin.edit', [
 					evt.preventDefault();
 					return new ThumbnailUploader({
 							el: $(this).closest('.form-box')
-					});
-			});
+					} );
+			} );
 		},
 
 		initAddVideo: function() {
@@ -91,13 +91,13 @@ define( 'views.videopageadmin.edit', [
 									window.GlobalNotification.show( json.msg, 'error' );
 								}
 							}
-						});
+						} );
 
 						// Don't move on to second VET screen.  We're done.
 						return false;
 					}
-				});
-			});
+				} );
+			} );
 		},
 
 		initSwitcher: function() {
@@ -112,7 +112,7 @@ define( 'views.videopageadmin.edit', [
 					$oCount.html( nCountVal );
 					$nCount.html( oCountVal );
 				}
-			});
+			} );
 		},
 
 		initValidator: function() {
@@ -121,7 +121,7 @@ define( 'views.videopageadmin.edit', [
 			this.validator = new Validator({
 				form: this.$form,
 				formFields: this.$formFields
-			});
+			} );
 
 			// Set max length rule for description textarea
 			this.validator.setRule( this.$formFields.filter( '.description' ), 'maxlength', 200 );
@@ -145,7 +145,7 @@ define( 'views.videopageadmin.edit', [
 							.get( 0 )
 							.scrollIntoView( true );
 					}
-			});
+			} );
 
 			// If the back end has thrown an error, run the front end validation on page load
 			if( $( '#vpt-form-error' ).length ) {
@@ -166,9 +166,9 @@ define( 'views.videopageadmin.edit', [
 						that.clearFeaturedVideoForm();
 					},
 					width: 700
-				});
+				} );
 
-			});
+			} );
 		},
 
 		/*
@@ -206,7 +206,7 @@ define( 'views.videopageadmin.edit', [
 	};
 
 	return VPTEdit;
-});
+} );
 
 require(['views.videopageadmin.edit'], function(EditView) {
 
@@ -214,5 +214,5 @@ require(['views.videopageadmin.edit'], function(EditView) {
 
 	$(function() {
 		new EditView();
-	});
-});
+	} );
+} );

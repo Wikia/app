@@ -18,10 +18,10 @@ define( 'views.videopageadmin.categorypreview', [
 		render: function() {
 			this.collection.each(function( categoryItem ) {
 				console.log( categoryItem );
-			});
+			} );
 			return this;
 		}
-	});
+	} );
 
 	return CategoryPreviewView;
-});
+} );
