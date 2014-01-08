@@ -103,7 +103,9 @@ require( ['wikia.tracker'], function ( tracker ) {
 			topics = topic.split( '.' );
 			for ( i = 0; i < topics.length; i++ ) {
 				topic = ( i === 0 ? '' : topic + '.' ) + topics[i];
-				if ( ( mwEvent = mwTopics[topic] ) ) {
+				mwEvent = mwTopics[topic];
+				if ( mwEvent ) {
+					// We have found a match; exit the loop
 					break;
 				}
 			}
