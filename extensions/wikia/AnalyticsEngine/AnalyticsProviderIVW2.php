@@ -15,10 +15,7 @@ class AnalyticsProviderIVW2 implements iAnalyticsProvider {
 			case AnalyticsEngine::EVENT_PAGEVIEW:
 				$code = $this->getTag();
 
-				return '<script type="text/javascript">
-// moved to ivw2.run.js
-//document.write("<scr" + "ipt type=\"text/javascript\" src=\"https://script.ioam.de/iam.js\"></scr" + "ipt>");
-</script>
+				return '<script type="text/javascript" src="https://script.ioam.de/iam.js"></script>
 
 <!-- SZM VERSION="2.0" -->
 <script type="text/javascript">
@@ -30,11 +27,8 @@ var iam_data = {
 "sv":"ke" // FRABO-Tag deaktiviert
 }
 
-// moved to ivw2.run.js
-//iom.c(iam_data);
+iom.c(iam_data, 2);
 </script>
-
-<div id="ivw2_placeholder" style="display:none;"></div>
 <!-- /SZM -->';
 				break;
 			default:

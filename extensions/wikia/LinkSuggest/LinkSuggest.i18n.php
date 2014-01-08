@@ -421,6 +421,15 @@ $messages['uk'] = array(
 	'tog-redirected-from' => '&ndash; перенаправлено з $1',
 );
 
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'linksuggest-desc' => 'Đề nghị liên kết đến các biên tập viên chỉnh sửa quan',
+	'tog-disablelinksuggest' => 'Không hiển thị các liên kết đề nghị trong chế độ nguồn',
+	'tog-redirected-from' => '&ndash; đổi hướng từ $1',
+);
+
 /** Simplified Chinese (中文（简体）‎)
  * @author Anakmalaysia
  * @author Dimension

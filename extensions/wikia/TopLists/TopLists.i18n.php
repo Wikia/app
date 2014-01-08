@@ -686,14 +686,19 @@ Puedes <a href="$4">cancelar</a>  tu subscripción de los cambios a la lista.',
 
 /** Persian (فارسی)
  * @author Mjbmr
+ * @author Reza1615
  */
 $messages['fa'] = array(
 	'toplists-editor-title-label' => 'نام فهرست',
+	'toplists-editor-image-browser-tooltip' => 'افزودن یک تصویر',
 	'toplists-editor-remove-item-tooltip' => 'حذف مورد',
 	'toplists-create-button' => 'ایجاد فهرست',
 	'toplists-update-button' => 'ذخیره فهرست',
 	'toplists-cancel-button' => 'لغو',
 	'toplists-image-browser-upload-btn' => 'انتخاب',
+	'toplists-list-vote-up' => 'رای موافق',
+	'toplists-createpage-dialog-label' => '۱۰ فهرست برتر',
+	'toplists-seconds' => '$1 {{PLURAL:$1|ثانیه|ثانیه}}',
 );
 
 /** Finnish (suomi)

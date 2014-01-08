@@ -823,6 +823,23 @@ $messages['es'] = array(
 	'scavengerhunt-facebook-description' => 'Texto compartido de Facebook',
 );
 
+/** Persian (فارسی)
+ * @author Reza1615
+ */
+$messages['fa'] = array(
+	'scavengerhunt-list-header-actions' => 'اقدامات',
+	'scavengerhunt-list-enabled' => 'فعال',
+	'scavengerhunt-list-disabled' => 'غیرفعال',
+	'scavengerhunt-list-edit' => 'ویرایش',
+	'scavengerhunt-label-general' => 'عمومی',
+	'scavengerhunt-label-name' => 'نام:',
+	'scavengerhunt-button-save' => 'ذخیره',
+	'scavengerhunt-button-delete' => 'حذف',
+	'scavengerhunt-quit-game-button-quit' => 'تَرک',
+	'scavengerhunt-quit-game-button-cancel' => 'لغو',
+	'scavengerhunt-label-clue-size' => 'اندازهٔ قلم',
+);
+
 /** Finnish (suomi)
  * @author Centerlink
  * @author Tofu II
@@ -1403,6 +1420,23 @@ $messages['lb'] = array(
 	'scavengerhunt-quit-game-button-quit' => 'Erausgoen',
 	'scavengerhunt-quit-game-button-cancel' => 'Ofbriechen',
 	'scavengerhunt-label-entry-form-username' => 'Benotzernumm',
+);
+
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'scavengerhunt-list-edit' => 'ويرايشت',
+	'scavengerhunt-label-general' => 'کلی',
+	'scavengerhunt-label-name' => 'نوم:',
+	'scavengerhunt-button-save' => 'ذخيره كردن',
+	'scavengerhunt-button-disable' => 'د كار ونن',
+	'scavengerhunt-button-enable' => 'قادر بيه',
+	'scavengerhunt-button-delete' => 'پاك كردن',
+	'scavengerhunt-entry-form-name' => 'نومتو',
+	'scavengerhunt-entry-form-email' => 'نشونی ایمیلتو:',
+	'scavengerhunt-quit-game-button-cancel' => 'رد کردن',
+	'scavengerhunt-label-clue-size' => 'انازه فونت',
 );
 
 /** Macedonian (македонски)
