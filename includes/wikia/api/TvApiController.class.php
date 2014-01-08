@@ -31,7 +31,7 @@ class TvApiController extends WikiaApiController {
 		}
 
 		$responseValues = $this->getExactMatch();
-		$responseValues = null;
+
 		if ( $responseValues === null ) {
 
 			$config = $this->getConfigFromRequest();
