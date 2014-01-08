@@ -14,7 +14,7 @@ class VideoPageToolHelper extends WikiaModel {
 	const MAX_THUMBNAIL_WIDTH = 1024;
 	const MAX_THUMBNAIL_HEIGHT = 461;
 
-	const CACHE_TTL_CATEGORY_DATA = 86400;    // One day
+	const CACHE_TTL_CATEGORY_DATA = 300;
 
 	public static $requiredRows = array(
 		'featured' => 5,
@@ -155,7 +155,7 @@ class VideoPageToolHelper extends WikiaModel {
 
 			$video = array(
 				'videoTitle'    => $videoTitle,
-				'videoKey'      => $title->getDBKey(),
+				'videoKey'      => $title->getDBkey(),
 				'videoThumb'    => $videoThumb,
 				'largeThumbUrl' => $largeThumbUrl,
 				'altThumbName'  => $altThumbName,
@@ -179,7 +179,7 @@ class VideoPageToolHelper extends WikiaModel {
 	public function getCategoryData( $categoryTitle ) {
 		wfProfileIn( __METHOD__ );
 
-		$memcKey = $this->getMemcKeyCategoryData( $categoryTitle->getText() );
+		$memcKey = $this->getMemcKeyCategoryData( $categoryTitle->getDBkey() );
 		$data = $this->wg->memc->get( $memcKey );
 		if ( !is_array( $data ) ) {
 			$db = wfGetDB( DB_SLAVE );
@@ -236,8 +236,8 @@ class VideoPageToolHelper extends WikiaModel {
 	/**
 	 * Clear cache for Category Data
 	 */
-	protected function invalidateCacheCategoryData( $categoryName ) {
-		$this->wg->Memc->delete( $this->getMemcKey( $categoryName ) );
+	public function invalidateCacheCategoryData( $categoryName ) {
+		$this->wg->Memc->delete( $this->getMemcKeyCategoryData( $categoryName ) );
 	}
 
 	/**
@@ -272,7 +272,7 @@ class VideoPageToolHelper extends WikiaModel {
 		$file = WikiaFileHelper::getFileFromTitle( $imageTitle );
 		if ( !empty( $file ) ) {
 			$data['imageTitle'] = $imageTitle->getText();
-			$data['imageKey'] = $imageTitle->getDBKey();
+			$data['imageKey'] = $imageTitle->getDBkey();
 
 			$thumb = $file->transform( array( 'width' => self::THUMBNAIL_WIDTH, 'height' => self::THUMBNAIL_HEIGHT ) );
 			$data['thumbUrl'] = $thumb->getUrl();
