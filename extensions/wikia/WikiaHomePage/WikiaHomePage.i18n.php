@@ -610,7 +610,7 @@ $messages['ja'] = array(
 	'wikiahome-page-header-create-wiki-button-destination' => 'http://www.wikia.com/Special:CreateWiki?uselang=ja',
 
 	'wikiahome-visualisation-remix-mixitup' => 'ミックスアップ!',
-	'wikiahome-visualisation-remix-mixituptext' => '何千ものコミュニティーに簡単にアクセスできます。リミックスしてウィキア内を探求しましょう!',
+	'wikiahome-visualisation-remix-mixituptext' => 'いくつものコミュニティーに簡単にアクセスできます。ウィキア内を探求しよう!',
 	'wikiahome-visualisation-remix-button' => 'ミックス',
 
 	'wikiahome-stats-heading' => 'コラボ中です',
@@ -622,7 +622,7 @@ $messages['ja'] = array(
 	'wikiahome-stats-edits' => '本日の変更',
 	'wikiahome-stats-communities' => 'コミュニティーの合計数',
 	'wikiahome-stats-new-communities' => '本日のコミュニティー',
-	'wikiahome-stats-totalpages' => '合計のページ数',
+	'wikiahome-stats-totalpages' => 'ページ合計数',
 
 	'wikia-home-page-preview' => 'プレビュー',
 	'wikia-home-page-visit' => '訪問',
@@ -633,31 +633,31 @@ $messages['ja'] = array(
 
 	'wikiahome-hubs-videogames-heading' => 'ゲーム',
 	'wikiahome-hubs-videogames-url' => 'http://ja.wikia.com/ゲーム',
-	'wikiahome-hubs-videogames-creative' => 'ウィキアではゲームカルチャーを作り上げ基盤となる場所です。楽しみにしていて！',
+	'wikiahome-hubs-videogames-creative' => 'ウィキアはゲームカルチャーを作り上げ基盤となる場所です。',
 	'wikiahome-hubs-videogames-more-heading' => '',
 	'wikiahome-hubs-videogames-more-list' => '',
 
 	'wikiahome-hubs-entertainment-heading' => 'エンターテイメント',
 	'wikiahome-hubs-entertainment-url' => 'http://ja.wikia.com/エンタテインメント',
-	'wikiahome-hubs-entertainment-creative' => 'ウィキアとは詳しいコミュニティーから直にフレッシュなエンタテインメントニュースを得られる唯一の場所です。',
+	'wikiahome-hubs-entertainment-creative' => 'エンターテイメントに詳しいコミュニティーから直にフレッシュな情報を得られる場所です。',
 	'wikiahome-hubs-entertainment-more-heading' => '',
 	'wikiahome-hubs-entertainment-more-list' => '',
 
 	'wikiahome-hubs-lifestyle-heading' => 'ライフスタイル & カルチャー',
 	'wikiahome-hubs-lifestyle-url' => 'http://ja.wikia.com/ライフスタイル',
-	'wikiahome-hubs-lifestyle-creative' => '熱狂的で情報を持っているコミュニティーを発見しよう。',
+	'wikiahome-hubs-lifestyle-creative' => '熱狂的で面白いコミュニティーを発見しよう。',
 	'wikiahome-hubs-lifestyle-more-heading' => '',
 	'wikiahome-hubs-lifestyle-more-list' => '',
 
 	'wikiahome-community-column1-heading' => 'コミュニティーリソース',
 	'wikiahome-community-column1-link' => 'http://ja.community.wikia.com',
-	'wikiahome-community-column1-creative' => 'ウィキアにはあなたがコミュニティーを始め成長させるための必要な情報はそろっています。ヒントやツール、そしてニュースをチェックしてみて下さい。それでも疑問がある場合は親切な人々に連絡をすることができます。',
+	'wikiahome-community-column1-creative' => 'ウィキアにはあなたがコミュニティーを始め成長させるための必要な情報はそろっています。ヒントやツール、そしてニュースをチェックしてみて下さい。それでも疑問がある場合は人々に連絡することができます。',
 	'wikiahome-community-column2-heading' => 'ウィキアの改革',
 	'wikiahome-community-column2-link' => 'http://www.wikia.com/モバイル',
 	'wikiahome-community-column2-creative' => 'ウィキアからマイウィキアとゲームガイドという公式モバイルアプリをご紹介させていただきます。各それぞれのアプリにはウィキアコミュニティーユーザーによって創られた上質で生き生きとしたコンテンツを数多く見る事が出来ます。ダウンロードは[[モバイル|こちら]]から。',
 	'wikiahome-community-column3-heading' => 'フォローしてね',
 	'wikiahome-community-social-wikia-blog' => 'ウィキアブログ',
-	'wikiahome-community-social-wikia-blog-link' => 'http://ja.community.wikia.com/wiki/Blog:カテゴリ:スタッフブログ',
+	'wikiahome-community-social-wikia-blog-link' => 'http://ja.community.wikia.com/wiki/カテゴリ:スタッフブログ',
 	'wikiahome-community-social-twitter' => 'ツイッター',
 	'wikiahome-community-social-facebook' => 'フェイスブック',
 	'wikiahome-community-social-googleplus' => 'グーグル+',
@@ -672,7 +672,7 @@ __NOEDITSECTION__',
 	'wikiahome-footer-get-started-creative' => 'コミュニティーを見つけて<br />始めよう',
 	'wikiahome-footer-get-started-button' => 'http://www.wikia.com/Special:CreateNewWiki?uselang=ja', // FIXME: why is this in a message?! -- we need to pass there Wikia "button" class
 	'wikiahome-footer-follow-us' => '===フォローしてね===
-*[http://ja.community.wikia.com/wiki/カテゴリ:スタッフブログ スタッフブログ]
+*[http://ja.community.wikia.com/wiki/カテゴリ:スタッフブログ]
 *[https://www.facebook.com/WikiaAnimeJapan フェイスブック]
 *[https://twitter.com/ja_wikiaanime ツイッター]
 __NOEDITSECTION__',
@@ -680,7 +680,7 @@ __NOEDITSECTION__',
 *[http://ja.community.wikia.com コミュニティーセントラルl]
 *[http://ja.community.wikia.com/wiki/ヘルプ:ユーザー権限 設立者&管理者]
 *[http://ja.wikia.com/Special:Contact サポートコンタクト]$1
-*[http://www.wikia.com/Stars ウィキアスター]
+*[http://www.wikia.com/Stars ウィキア スター]
 *[http://ja.community.wikia.com/wiki/ヘルプ:コンテンツ ヘルプ]
 
 __NOEDITSECTION__',
