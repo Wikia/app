@@ -20,5 +20,5 @@ module.exports = function( grunt ) {
 		}
 	} );
 
-	grunt.registerTask( 'default', [ 'mustache' ] );
+	grunt.registerTask( 'default', ['mustache'] );
 };
