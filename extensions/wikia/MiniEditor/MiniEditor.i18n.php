@@ -96,6 +96,13 @@ $messages['es'] = array(
 	'minieditor-placeholder-reply' => 'Responder al mensaje aquí',
 );
 
+/** Persian (فارسی)
+ * @author Reza1615
+ */
+$messages['fa'] = array(
+	'minieditor-reply' => 'پاسخ دادن',
+);
+
 /** Finnish (suomi)
  * @author Centerlink
  */
@@ -202,6 +209,13 @@ $messages['ku-latn'] = array(
  */
 $messages['lb'] = array(
 	'minieditor-reply' => 'Äntwerten',
+);
+
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'minieditor-reply' => 'جؤاو ده ئن',
 );
 
 /** Macedonian (македонски)

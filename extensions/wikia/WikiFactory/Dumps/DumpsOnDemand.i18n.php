@@ -158,6 +158,13 @@ $messages['ca'] = array(
 	'dump-database-last-unknown' => 'Desconegut',
 );
 
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'dump-database-full-pages' => 'Карара агӀонаш а истори а',
+);
+
 /** Czech (čeština)
  * @author Dontlietome7
  * @author Mr. Richard Bolla

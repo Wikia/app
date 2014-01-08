@@ -35,7 +35,7 @@ define( 'wikia.ui.modal', [
 				classes: [ 'normal', 'secondary' ]
 			}
 		},
-		
+
 		// reference to UI component instance
 		uiComponent;
 
@@ -73,8 +73,12 @@ define( 'wikia.ui.modal', [
 	function ieFlexboxFallback( modal ) {
 		var element = modal.$element,
 			HEADER_AND_FOOTER_HEIGHT = 90, // modal header and footer have 45px fixed height
+			SECTION_PADDING = 40, // modal section has 20px top and bottom padding
 			winHeight = $( w ).height(),
-			modalMaxHeight = ( 90 / 100 ) * winHeight - HEADER_AND_FOOTER_HEIGHT; // 90% viewport - (header + footer)
+			// IE has problem with 'max-height' together with 'border-box', so set to 'content-box' and padding need to
+			// be subtracted from 'max-height'.
+			modalMaxHeight = ( 90 / 100 ) * winHeight - HEADER_AND_FOOTER_HEIGHT - SECTION_PADDING;
+
 
 		element.children( 'section' ).css( 'maxHeight', modalMaxHeight );
 	}
@@ -84,6 +88,7 @@ define( 'wikia.ui.modal', [
 	 */
 
 	function blockPageScrolling() {
+
 		// prevent page from jumping to right if vertical scroll bar exist
 		if ( $bodyElm.height() > $win.height() ) {
 			$bodyElm.addClass( 'fake-scrollbar' );
@@ -100,7 +105,7 @@ define( 'wikia.ui.modal', [
 	 */
 
 	function unblockPageScrolling() {
-		$bodyElm.removeClass( 'with-blackout fake-scrollbar').css('top', 'auto');
+		$bodyElm.removeClass( 'with-blackout fake-scrollbar').css( 'top', 'auto' );
 		$win.scrollTop( wScrollTop );
 	}
 
@@ -166,11 +171,6 @@ define( 'wikia.ui.modal', [
 
 		/** ATTACHING EVENT HANDLERS TO MODAL */
 
-		this.$element.click(function( event ) {
-			// when click happens inside the modal, stop the propagation so it won't be handled by the blackout
-			event.stopPropagation();
-		});
-
 		// trigger custom buttons events based on button 'data-event' attribute
 		this.$element.on( 'click', 'button', $.proxy( function( event ) {
 			var modalEventName = $( event.target ).data( 'event' );
@@ -183,7 +183,13 @@ define( 'wikia.ui.modal', [
 		this.$blackout.click( $.proxy(function( event ) {
 			event.preventDefault();
 
-			if ( this.isShown() && this.isActive() ) {
+			// jQuery only supports event bubbling,
+			// this is a workaround to be sure that click was done on blackout and doesn't bubble up from $element
+			// stopPropagation() on $element it not an option
+			// because we need bubbling for other events in the $elements content
+			var blackoutWasClicked = event.target === event.delegateTarget;
+
+			if ( this.isShown() && this.isActive() && blackoutWasClicked ) {
 				this.trigger( 'close', event );
 			}
 		}, that ) );
@@ -199,8 +205,15 @@ define( 'wikia.ui.modal', [
 			'close': [
 				function() {
 					that.trigger( 'beforeClose').then( $.proxy( function() {
+						// number of active modals on page
+						var activeModalsNumb = $bodyElm.children( '.modal-blackout' ).length;
+
 						that.$blackout.remove();
-						unblockPageScrolling();
+
+						// unblock background scrolling only if this is the only if it's last active modal on page
+						if (activeModalsNumb === 1) {
+							unblockPageScrolling();
+						}
 					}, that ) );
 				}
 			]
@@ -213,20 +226,26 @@ define( 'wikia.ui.modal', [
 	 */
 	Modal.prototype.show = function() {
 
-		blockPageScrolling();
+		// block background only if not modal in scenario
+		if ( $bodyElm.hasClass( 'fake-scrollbar' ) === false ) {
+			blockPageScrolling();
+		}
 
 		this.$blackout.addClass( BLACKOUT_VISIBLE_CLASS );
 
 		// IE flex-box fallback for small and medium modals
-		if ( this.$element.hasClass( 'large' ) === false && browserDetect.isIE() ) {
+		if ( browserDetect.isIE() ) {
 
 			this.$blackout.addClass( 'IE-flex-fix' );
-			ieFlexboxFallback( this );
 
-			// update modal section max-height on window resize
-			$( w ).on( 'resize', $.proxy( function() {
+			if ( this.$element.hasClass( 'large' ) === false ) {
 				ieFlexboxFallback( this );
-			}, this ) );
+
+				// update modal section max-height on window resize
+				$( w ).on( 'resize', $.proxy( function() {
+					ieFlexboxFallback( this );
+				}, this ) );
+			}
 		}
 	};
 
@@ -327,14 +346,22 @@ define( 'wikia.ui.modal', [
 
 	/**
 	 * Sets modal's content
-	 * @param content HTML text
+	 * @param {String} content HTML text
 	 */
 	Modal.prototype.setContent = function( content ) {
 		this.$content.html( content );
 	};
 
+	/**
+	 * Sets modal's title
+	 * @param {String} title text
+	 */
+	Modal.prototype.setTitle = function( title ) {
+		this.$element.find( 'header h3' ).text( title );
+	};
+
 	/** Public API */
-	
+
 	return {
 		createComponent: createComponent
 	};

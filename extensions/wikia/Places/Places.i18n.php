@@ -209,6 +209,14 @@ $messages['es'] = array(
 	'places-category-switch-off' => 'Activar las geoetiquetas',
 );
 
+/** Persian (فارسی)
+ * @author Reza1615
+ */
+$messages['fa'] = array(
+	'places-editor-search' => 'جستجو',
+	'places-geolocation-modal-error-title' => 'خطا',
+);
+
 /** Finnish (suomi)
  * @author Centerlink
  * @author Nike
@@ -358,6 +366,14 @@ $messages['lb'] = array(
 	'places-geolocation-modal-add-title' => 'Plaz derbäisetzen',
 	'places-geolocation-modal-error-title' => 'Feeler',
 	'places-error-no-article' => 'Dir musst eng Säit uginn',
+);
+
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'places-editor-search' => 'پی جوری',
+	'places-geolocation-modal-error-title' => 'خطا',
 );
 
 /** Macedonian (македонски)

@@ -817,6 +817,7 @@ $messages['cs'] = array(
 	'swm-error-empty-group' => 'Vložte název skupiny',
 	'swm-error-invalid-time' => 'Zadán neplatný čas.',
 	'swm-lang-other' => 'všechny zbývající jazyky',
+	'action-messagetool' => 'poslat globální zprávu',
 	'swm-label-mode-users-registration' => 'Datum registrace',
 	'swm-mode-users-registration-after' => 'Po',
 	'swm-mode-users-registration-before' => 'Před',
@@ -1175,10 +1176,37 @@ $messages['eu'] = array(
 
 /** Persian (فارسی)
  * @author Ebraminio
+ * @author Reza1615
  */
 $messages['fa'] = array(
+	'swm-label-preview' => 'پیش‌نمایش',
+	'swm-label-edit' => 'ویرایش',
+	'swm-label-remove' => 'پاک‌کردن',
+	'swm-label-list' => 'فهرست',
+	'swm-label-recipient-wikis' => 'ویکی‌ها',
+	'swm-label-recipient-users' => 'کاربران',
+	'swm-label-mode-wikis-all' => 'تمام ویکی‌های',
+	'swm-label-mode-users-all' => 'تمام کاربران',
 	'swm-label-content' => 'محتوا',
+	'swm-label-comment' => 'نظر',
+	'swm-label-language' => 'زبان',
+	'swm-list-table-id' => 'شناسه',
+	'swm-list-table-sender' => 'فرستنده',
+	'swm-list-table-wiki' => 'ویکی',
+	'swm-list-table-recipient' => 'گیرنده',
+	'swm-list-table-group' => 'گروه',
 	'swm-list-table-content' => 'محتوا',
+	'swm-list-table-tools' => 'ابزارها',
+	'swm-list-table-lang' => 'زبان‌ها',
+	'swm-list-table-hub' => 'قطب',
+	'swm-yes' => 'بله',
+	'swm-no' => 'خیر',
+	'swm-mode-users-registration-after' => 'پس از',
+	'swm-mode-users-registration-before' => 'قبل از',
+	'swm-mode-users-editcount-more' => 'بیشتر',
+	'swm-mode-users-editcount-less' => 'کمتر',
+	'swm-mode-wikis-created-after' => 'پس از',
+	'swm-mode-wikis-created-before' => 'قبل از',
 );
 
 /** Finnish (suomi)
@@ -1896,6 +1924,43 @@ $messages['lb'] = array(
 	'swm-mode-users-editcount-less' => 'Manner',
 	'swm-mode-wikis-created-after' => 'Nom',
 	'swm-mode-wikis-created-before' => 'Virum',
+);
+
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'swm-label-preview' => 'پيش سيل',
+	'swm-label-edit' => 'ويرايشت',
+	'swm-label-remove' => 'ؤرداشتن',
+	'swm-label-sent' => 'كل بيه',
+	'swm-label-list' => 'نوم گه',
+	'swm-label-recipient-wikis' => 'ويكيا:',
+	'swm-label-recipient-users' => 'کاروریا',
+	'swm-label-mode-users-all' => 'همه کاروریا',
+	'swm-label-mode-users-active' => 'کاروریا کارکو',
+	'swm-label-mode-users-user-multi' => 'نوم گه کاروریا',
+	'swm-label-comment' => 'نظر',
+	'swm-label-language' => 'زون',
+	'swm-list-table-id' => 'شناسه',
+	'swm-list-table-sender' => 'فرسنه',
+	'swm-list-table-wiki' => 'ويكی',
+	'swm-list-table-group' => 'گرو',
+	'swm-list-table-removed' => 'ؤرداشته بیه:',
+	'swm-list-table-content' => 'محتويات',
+	'swm-list-table-tools' => 'اوزاريا',
+	'swm-list-table-lang' => 'زونيا',
+	'swm-yes' => 'هری',
+	'swm-no' => 'نه',
+	'swm-mode-users-registration-after' => 'نها',
+	'swm-mode-users-registration-before' => 'دما',
+	'swm-mode-users-registration-between' => 'مینجا',
+	'swm-mode-users-editcount-more' => 'بیشتر',
+	'swm-mode-users-editcount-less' => 'کمتر',
+	'swm-mode-users-editcount-between' => 'مینجا',
+	'swm-mode-wikis-created-after' => 'نها',
+	'swm-mode-wikis-created-before' => 'دما',
+	'swm-mode-wikis-created-between' => 'مینجا',
 );
 
 /** Macedonian (македонски)

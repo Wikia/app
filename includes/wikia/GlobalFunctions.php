@@ -1809,12 +1809,16 @@ function wfGetNamespaces() {
  */
 function wfFixMalformedHTML( $html ) {
 	$dom_document = new DOMDocument();
+
 	// Silence errors when loading html into DOMDocument (it complains when receiving malformed html - which is
 	// what we're using it to fix) see: http://www.php.net/manual/en/domdocument.loadhtml.php#95463
 	libxml_use_internal_errors( true );
-	$dom_document->loadHTML( $html );
-	// Strip doctype declaration, <html>, and <body> tags created by saveHTML
-	$html = preg_replace( array( '/^.*?<body>/si', '/<\/body><\/html>$/si' ), '', $dom_document->saveHTML() );
+    // Make sure loadHTML knows that text is utf-8 (it assumes  ISO-88591)
+    $dom_document->loadHTML( '<meta http-equiv="content-type" content="text/html; charset=utf-8">' . $html );
+    // Strip doctype declaration, <html>, <body> tags created by saveHTML, as well as <meta> tag added to
+    // to html above to declare the charset as UTF-8
+    $html = preg_replace( array( '/^.*?<body>/si', '/^.*?charset=utf-8">/si', 
+        '/<\/body><\/html>$/si', '/<\/head><\/html>$/si', ), '', $dom_document->saveHTML() );
 
 	return $html;
 }
