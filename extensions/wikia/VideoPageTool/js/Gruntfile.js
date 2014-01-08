@@ -1,8 +1,8 @@
 module.exports = function( grunt ) {
 	'use strict';
-	grunt.loadNpmTasks('grunt-mustache');
+	grunt.loadNpmTasks( 'grunt-mustache' );
 
-	grunt.initConfig({
+	grunt.initConfig( {
 		pkg: grunt.file.readJSON( 'package.json' ),
 
 		// Task to precompile mustache templates
@@ -18,7 +18,7 @@ module.exports = function( grunt ) {
 				verbose: true
 			}
 		}
-	});
+	} );
 
 	grunt.registerTask( 'default', [ 'mustache' ] );
 };
