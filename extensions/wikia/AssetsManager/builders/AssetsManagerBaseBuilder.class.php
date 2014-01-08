@@ -122,9 +122,15 @@ class AssetsManagerBaseBuilder {
 	}
 
 	private function minifyCSS($content) {
+		$minifyTimeStart = microtime(true);
+
 		wfProfileIn(__METHOD__);
-		$out = Minify_CSS_Compressor::process($content);
+		$out = CSSMin::minify($content);
 		wfProfileOut(__METHOD__);
+
+		\Wikia::log('sass-minify-WIKIA', false,
+			sprintf('%s: took %.2f ms', $this->mOid, ((microtime(true) - $minifyTimeStart) * 1000)), true /* $force */);
+
 		return $out;
 	}
 }
