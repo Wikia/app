@@ -5,24 +5,22 @@ define( 'wikia.toc', function() {
 	 *  Create TOC data structure
 	 *
 	 *  @param {Array} headers - array of nodes of all headers for TOC
-	 *  @param {function(object)} createSection - function that returns object for single TOC element
+	 *  @param {function(object, number)} createSection - function that returns object for single TOC element
 	 *         and takes single DOM header element as parameter. The returned object must have 'sections: []' param.
 	 *
 	 *         example: function createTOCSection(header) {
-	 *
-	 *                      header = $(header).children('.mw-headline');
-	 *
 	 *                      return {
 	 *                          title: header.text(),
 	 *                          id: header.attr('id'),
 	 *                          sections: [] // This is required !!!!!!
 	 *                      }
 	 *                  }
-	 *
+	 *  @param {function(object)} getHeader - function that returns the heading jQuery object or false if the object
+	 *			is not valid section heading
 	 *  @returns {Object} - TOC data structure of all the subsections
 	 */
 
-	function getData( headers, createSection ) {
+	function getData( headers, createSection, getHeader ) {
 		var toc = {
 				sections: []
 			}, // set base object for TOC data structure
@@ -34,15 +32,17 @@ define( 'wikia.toc', function() {
 			headerLevel,
 			i = 0,
 			obj,
-			header;
+			header,
+			$header;
 
 		for ( ; i < headersLength; i++ ) {
 			header = headers[ i ];
 			headerLevel = parseInt( header.nodeName.slice( 1 ), 10 ); // get position from header node (exp. <h2>)
-			obj = createSection( header, headerLevel ); // create section object from HTML header node
+
+			$header = getHeader( header );
 
 			// skip corrupted TOC section element
-			if ( !obj || !( obj.sections instanceof Array ) ) {
+			if ( !$header ) {
 				continue;
 			}
 
@@ -55,6 +55,8 @@ define( 'wikia.toc', function() {
 					level = hToLevel[ headerLevel ];
 				}
 			}
+
+			obj = createSection( $header, level + 1 ); // create section object from HTML header node
 
 			hToLevel[ headerLevel ] = level;
 			lastHeader = headerLevel;

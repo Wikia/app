@@ -205,12 +205,16 @@ $messages['es'] = array(
 );
 
 /** Persian (فارسی)
+ * @author Reza1615
  * @author پاناروما
  */
 $messages['fa'] = array(
 	'category-exhibition-sorttype' => 'دسته بندی بر اساس نوع',
+	'category-exhibition-alphabetical' => 'الفبایی',
 	'category-exhibition-recentedits' => 'ویرایش‌های اخیر',
 	'category-exhibition-page-header' => 'صفحه‌های موجود در این رده «$1»',
+	'category-exhibition-subcategories-header' => 'زیررده‌ها',
+	'category-exhibition-blogs-header' => 'پست‌های وبلاگ',
 );
 
 /** Finnish (suomi)

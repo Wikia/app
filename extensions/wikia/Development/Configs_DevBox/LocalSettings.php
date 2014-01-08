@@ -190,7 +190,7 @@ if (empty($wgRunningUnitTests)) {
 require_once( dirname( $wgWikiaLocalSettingsPath ) . '/../CommonExtensions.php' );
 
 // enable globally on all devboxes (despite production being switched to NFS)
-$wgEnableSwiftFileBackend = true;
+$wgEnableSwiftFileBackend = false;
 
 $wgFileBackends['swift-backend'] = array(
 	'name'          => 'swift-backend',

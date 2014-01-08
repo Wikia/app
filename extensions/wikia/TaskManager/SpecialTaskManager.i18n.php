@@ -137,6 +137,13 @@ $messages['es'] = array(
 	'action-taskmanager' => 'Muestra y administra tareas en segundo plano',
 );
 
+/** Persian (فارسی)
+ * @author Reza1615
+ */
+$messages['fa'] = array(
+	'taskmanager-invert' => 'وارونه‌کردن انتخاب',
+);
+
 /** Finnish (suomi)
  * @author Centerlink
  */

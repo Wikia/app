@@ -441,7 +441,7 @@ $messages['as'] = array(
 	'blog-refresh-label' => 'ৰিফ্ৰেচ',
 	'blog-userblog' => "$1'ৰ ব্লগ",
 	'blog-fromsitename' => ' $1ৰ পৰা',
-	'blogs-reportproblem' => 'সমস্যা জনাওঁক',
+	'blogs-reportproblem' => 'সমস্যা জনাওক',
 );
 
 /** Azerbaijani (azərbaycanca)
@@ -904,6 +904,8 @@ $messages['ca'] = array(
 $messages['ce'] = array(
 	'create-blog-preview' => 'Хьалха муха ю хьажар',
 	'create-blog-listing-preview' => 'Хьалха муха ю хьажа',
+	'blog-comment-hide' => 'къайлаяккха',
+	'blog-comment-history' => 'истори',
 	'blog-refresh-label' => 'Карлаяккха',
 );
 
@@ -1513,6 +1515,7 @@ $messages['eu'] = array(
  * @author BlueDevil
  * @author Ebraminio
  * @author Huji
+ * @author Reza1615
  * @author Taranet
  * @author پاناروما
  */
@@ -1586,6 +1589,7 @@ $messages['fa'] = array(
 	'blog-comment-edit' => 'ویرایش',
 	'blog-comment-error' => 'امکان ذخیره کردن نظر وجود ندارد',
 	'blog-comment-cannot-add' => 'اضافه کردن نظر در وبلاگ امکان‌پذیر نیست',
+	'blog-avatar-preferences-title' => 'چهره',
 	'blog-page-rate' => 'به این مقاله رأی مثبت دهید:',
 	'blog-create-post-label' => 'ایجاد پست جدید',
 	'blog-create-label' => 'ایجاد پست جدید',
@@ -3022,6 +3026,7 @@ $messages['lrc'] = array(
 	'create-blog-listing-matches-calculate' => 'حساوکردن',
 	'create-blog-listing-sortby' => 'جور كردن وا',
 	'create-blog-listing-sortby-author' => 'نيسنه',
+	'create-blog-listing-sortby-comments' => 'نظر اشمار',
 	'blog-added' => 'اضاف بیه',
 	'blog-edited' => 'ویرایشت بیه',
 	'blog-zero-comments' => 'هیش نظری تا ایسه نی!',
@@ -3067,6 +3072,7 @@ $messages['lt'] = array(
 	'create-blog-form-info' => 'Dienoraščio įrašai yra puikus būdas pasidalinti naujienomis, nuomone ir kūryba su bendruomene.',
 	'create-blog-form-post-title' => 'Dienoraščio įrašo pavadinimas',
 	'create-blog-empty-title-error' => 'Pavadinimas būtinas',
+	'create-blog-invalid-title-error' => 'Neleistinas pavadinimas',
 	'create-listing-confirm-info' => 'Nukopijuokite ir įklijuokite šį kodą:',
 	'create-blog-no-login' => 'Neprisijungęs',
 	'create-blog-login-required' => 'Jūs turite būti [{{fullurl:Special:Signup| $1 }} prisijungęs], kad sukurtumėte dienoraščių pranešimus arba sąrašus.',
@@ -3137,11 +3143,13 @@ $messages['ltg'] = array(
 
 /** Latvian (latviešu)
  * @author Papuass
+ * @author Sg ghost
  */
 $messages['lv'] = array(
 	'create-blog-categories-submit' => 'Iesniegt',
 	'create-blog-save' => 'Saglabāt lapu',
 	'blog-comments' => 'Komentāri',
+	'user-blog-url-link' => 'Lietotāja blogs:$1',
 );
 
 /** Maithili (मैथिली)
@@ -3740,7 +3748,7 @@ Gebruik een van de beschikbare parameters: <code>$2</code>.',
 	'blog-create-label' => 'Blogbericht aanmaken',
 	'blog-create-next-label' => 'Nieuw blogbericht aanmaken',
 	'blog-create-listing-label' => 'Bloglijst aanmaken',
-	'blog-refresh-label' => 'Verversen',
+	'blog-refresh-label' => 'Vernieuwen',
 	'blog-widgets-label' => 'Widget-dashboard',
 	'blog-listing-zero-other' => 'Deze gebruiker heeft nog geen blogberichten geschreven.',
 	'blog-listing-created' => 'De bloglijst is aangemaakt',

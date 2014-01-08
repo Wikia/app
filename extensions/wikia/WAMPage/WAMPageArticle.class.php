@@ -18,9 +18,6 @@ class WAMPageArticle extends Article {
 	public function view() {
 		wfProfileIn(__METHOD__);
 
-		// let MW handle basic stuff
-		parent::view();
-
 		$app = F::app();
 		$app->wg->Out->clearHTML();
 		
