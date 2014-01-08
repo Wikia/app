@@ -19,6 +19,7 @@ class ExternalRubyCompiler extends Compiler {
 	protected $sassExecutable;
 	protected $sassVariables = array();
 	protected $outputStyle = 'nested';
+	protected $useSourceMaps = false;
 
 	/**
 	 * Compile the given SASS source
@@ -36,13 +37,14 @@ class ExternalRubyCompiler extends Compiler {
 		$tempDir = str_replace('\\', '/', $tempDir);
 
 		$sassVariables = urldecode(http_build_query($this->sassVariables, '', ' '));
+		$debugMode = $this->useSourceMaps ? '--debug-in' : '';
 
 		$hasLocalFile = $source->hasPermanentFile();
 		$localFile = $source->getLocalFile();
 		$inputFile = $hasLocalFile ? $localFile : '-s';
 
 		$cmd = "{$this->sassExecutable} {$inputFile} {$outputFile} --scss -t {$this->outputStyle} "
-			. "-I {$this->rootDir} "
+			. "-I {$this->rootDir} {$debugMode} "
 			. "--cache-location {$tempDir}/sass2 -r {$this->rootDir}/extensions/wikia/SASS/wikia_sass.rb {$sassVariables}";
 		$cmd = escapeshellcmd($cmd) . " 2>&1";
 

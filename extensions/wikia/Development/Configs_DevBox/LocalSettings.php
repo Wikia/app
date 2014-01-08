@@ -142,6 +142,7 @@ $wgCheckSerialized = true;
 
 // set allinone to 1 by default (you can always overwrite this value in DevBoxSettings.php)
 $wgAllInOne = true;
+$wgEnableSASSSourceMaps = true; // @see http://bricss.net/post/33788072565/using-sass-source-maps-in-webkit-inspector
 
 // Life is easier if we have Special:WikiFactory
 $wgWikiaEnableWikiFactoryExt = true;
