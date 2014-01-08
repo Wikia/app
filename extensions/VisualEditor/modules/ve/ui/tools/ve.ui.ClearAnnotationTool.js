@@ -44,6 +44,7 @@ ve.ui.ClearAnnotationTool.static.titleMessage = 'visualeditor-clearbutton-toolti
  * @method
  */
 ve.ui.ClearAnnotationTool.prototype.onSelect = function () {
+	ve.track( 'tool.annotation.select', { name: this.constructor.static.name } );
 	this.toolbar.getSurface().execute( 'annotation', 'clearAll' );
 };
 

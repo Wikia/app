@@ -45,6 +45,7 @@ ve.ui.AnnotationTool.static.annotation = { 'name': '' };
  * @method
  */
 ve.ui.AnnotationTool.prototype.onSelect = function () {
+	ve.track( 'tool.annotation.select', { name: this.constructor.static.name } );
 	this.toolbar.getSurface().execute(
 		'annotation', 'toggle', this.constructor.static.annotation.name
 	);
