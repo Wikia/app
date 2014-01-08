@@ -116,6 +116,14 @@ class OnWiki extends AbstractDismax
 		foreach ( $this->config->getNamespaces() as $ns ) {
 			$namespaces[] = Utilities::valueForField( 'ns', $ns );
 		}
-		return implode( ' AND ', [ sprintf( '(%s)', implode( ' OR ', $namespaces ) ), Utilities::valueForField( 'wid', $this->config->getCityId() ) ] );
+
+		$minArticleQuality = $this->config->getMinArticleQuality();
+		return implode( ' AND ', [
+			sprintf( '(%s)', implode( ' OR ', $namespaces ) ),
+			Utilities::valueForField( 'wid', $this->config->getCityId() ),
+			$minArticleQuality ? Utilities::rangeIntValueField( 'wam',  $minArticleQuality ) : ''
+			]
+		);
+
 	}
 }

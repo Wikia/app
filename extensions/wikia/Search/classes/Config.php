@@ -160,6 +160,12 @@ class Config
 	protected $commercialUse;
 
 	/**
+	 * Minimum article (filter)
+	 * @var int
+	 */
+	protected  $minArticleQuality;
+
+	/**
 	 * This array allows us to associate sort arguments from the request with the appropriate sorting format
 	 * @var array
 	 */
@@ -277,6 +283,7 @@ class Config
 				];
 
 		$this->filterCodes = array_merge( $this->filterCodes, $dynamicFilterCodes );
+		$this->minArticleQuality = 0;
 
 		$this->configureByArray( $params );
 	}
@@ -410,6 +417,25 @@ class Config
 			$this->setSort( $sort[0], $sort[1] );
 		}
 		return $this;
+	}
+
+	/**
+	 * Sets minimum article quality to to filter by
+	 * @param $articleQuality
+	 */
+	public function setMinArticleQuality( $minArticleQuality )
+	{
+		$this->minArticleQuality = (int) $minArticleQuality;
+		return $this;
+	}
+
+	/**
+	 * Sets minimum article quality to to filter by
+	 * @param $articleQuality
+	 */
+	public function getMinArticleQuality( )
+	{
+		return $this->minArticleQuality;
 	}
 
 	/**
