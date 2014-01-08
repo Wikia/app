@@ -4,7 +4,6 @@
  * @param throbber.js throbber
  * @param track.js track
  */
-/* global wgTitle */
 require( ['throbber', 'track', 'wikia.nirvana', 'wikia.window'], function ( throbber, track, nirvana, window ) {
 	'use strict';
 
@@ -28,7 +27,7 @@ require( ['throbber', 'track', 'wikia.nirvana', 'wikia.window'], function ( thro
 		} );
 
 	/**
-	 * @param element DomElement
+	 * @param element jQuery object
 	 * @param event MouseEvent
 	 */
 	function onClick ( element, event ) {
@@ -56,7 +55,7 @@ require( ['throbber', 'track', 'wikia.nirvana', 'wikia.window'], function ( thro
 			format: 'html',
 			type: 'GET',
 			data: {
-				category: wgTitle,
+				category: window.wgTitle,
 				batch: batch,
 				//this is already encoded and $.ajax encode all data
 				index: decodeURIComponent( id )
@@ -64,6 +63,7 @@ require( ['throbber', 'track', 'wikia.nirvana', 'wikia.window'], function ( thro
 		} ).done(
 			function ( result ) {
 				container.remove();
+
 				prev
 					.removeClass( 'active' )
 					.toggleClass( 'visible', batch > 1 );
