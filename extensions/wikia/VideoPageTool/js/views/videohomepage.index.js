@@ -7,8 +7,9 @@ require( [
 	'use strict';
 	// mock a global object in lieu of having one already
 	var views = {
-		videohomepage: {}
-	};
+			videohomepage: {}
+		},
+		$categoriesContainer = $( '.latest-videos-wrapper' );
 
 	$( function() {
 		views.videohomepage.featured = new FeaturedVideoView( {
@@ -21,13 +22,14 @@ require( [
 
 		views.videohomepage.categorycarousels = [];
 
-		$.each( Wikia.videoHomePage.categoryData, function( index, value ) {
-			views.videohomepage.categorycarousels.push(
-				new CarouselView( {
-					thumbnails: value.thumbnails,
-					displayTitle: value.displayTitle
-				} )
-			);
+		_.each( Wikia.videoHomePage.categoryData, function( value ) {
+			var view = new CarouselView( {
+				thumbnails: value.thumbnails,
+				displayTitle: value.displayTitle
+			} );
+
+			views.videohomepage.categorycarousels.push( view );
+			$categoriesContainer.append( view.$el );
 		} );
 	} );
 } );
