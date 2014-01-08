@@ -1,6 +1,7 @@
 define( 'views.videopagetool.carouselthumb', [
-	'jquery'
-], function( $ ) {
+	'jquery',
+	'templates.mustache'
+], function( $, templates ) {
 	'use strict';
 
 	var CarouselThumbbView = Backbone.View.extend( {
@@ -9,7 +10,7 @@ define( 'views.videopagetool.carouselthumb', [
 		},
 		tagName: 'div',
 		className: 'carousel-item',
-		template: Mustache.compile( $( '#thumb-wrapper' ).html() ),
+		template: Mustache.compile( templates.carouselThumb ),
 		render: function() {
 			var html = this.template( this.model.toJSON() );
 			this.$el.html( html );

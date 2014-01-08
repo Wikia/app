@@ -1112,6 +1112,9 @@ $config['videohomepage_js'] = array(
 		'//extensions/wikia/VideoPageTool/js/lib/lodash/dist/lodash.underscore.js',
 		'//extensions/wikia/VideoPageTool/js/lib/backbone/backbone.js',
 
+		// Compile Mustache templates
+		'//extensions/wikia/VideoPageTool/js/templates.mustache.js',
+
 		'//extensions/wikia/VideoPageTool/js/models/videohomepage.slide.js',
 		'//extensions/wikia/VideoPageTool/js/models/videohomepage.categorycarousel.js',
 		'//extensions/wikia/VideoPageTool/js/models/videohomepage.categorythumb.js',

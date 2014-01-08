@@ -1,1 +1,1 @@
-define( 'templates.mustache', [], function() { 'use strict'; return {"example" : '<h1>Hello {{ name }}</h1>', "done": "true"}; });
+define( 'templates.mustache', [], function() { 'use strict'; return {"carousel" : '<h2>{{displayTitle}}</h2><div class="category-carousel"></div>',"carouselThumb" : '{{{thumb}}}<p>{{title}}</p>',"example" : '<h1>Hello {{ name }}</h1>', "done": "true"}; });

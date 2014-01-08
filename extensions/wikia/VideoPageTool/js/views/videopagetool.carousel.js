@@ -2,8 +2,15 @@ define( 'views.videopagetool.carousel', [
 	'collections.videohomepage.categorycarousel',
     'models.videohomepage.categorythumb',
     'models.videohomepage.categorycarousel',
-    'views.videopagetool.carouselthumb'
-], function( CategoryCarouselCollection, CategoryThumbModel, CategoryCarouselModel, CarouselThumbView ) {
+    'views.videopagetool.carouselthumb',
+    'templates.mustache'
+], function(
+	CategoryCarouselCollection,
+	CategoryThumbModel,
+	CategoryCarouselModel,
+	CarouselThumbView,
+	templates
+) {
 	'use strict';
 
 	var CarouselView = Backbone.View.extend( {
@@ -21,7 +28,7 @@ define( 'views.videopagetool.carousel', [
 
 			this.render();
 		},
-		template: Mustache.compile( $( '#carousel-wrapper' ).html() ),
+		template: Mustache.compile( templates.carousel ),
 		render: function() {
 			var that = this,
 				view;
