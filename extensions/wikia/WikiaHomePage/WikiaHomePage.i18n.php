@@ -638,7 +638,7 @@ $messages['ja'] = array(
 	'wikiahome-hubs-videogames-more-list' => '',
 
 	'wikiahome-hubs-entertainment-heading' => 'エンターテイメント',
-	'wikiahome-hubs-entertainment-url' => 'http://ja.wikia.com/エンターテイメント',
+	'wikiahome-hubs-entertainment-url' => 'http://ja.wikia.com/エンタテインメント',
 	'wikiahome-hubs-entertainment-creative' => 'ウィキアとは詳しいコミュニティーから直にフレッシュなエンタテインメントニュースを得られる唯一の場所です。',
 	'wikiahome-hubs-entertainment-more-heading' => '',
 	'wikiahome-hubs-entertainment-more-list' => '',
