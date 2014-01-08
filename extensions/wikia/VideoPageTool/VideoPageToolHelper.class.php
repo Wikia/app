@@ -226,6 +226,7 @@ class VideoPageToolHelper extends WikiaModel {
 
 	/**
 	 * Get memcache key for Category Data
+	 * @param $categoryName
 	 * @return string
 	 */
 	public function getMemcKeyCategoryData( $categoryName ) {
@@ -431,6 +432,7 @@ class VideoPageToolHelper extends WikiaModel {
 			$thumbOptions = array( 'noLightbox' => true );
 			$assets = $program->getAssetsBySection( $section );
 			foreach ( $assets as $asset ) {
+				/** @var VideoPageToolAsset $asset */
 				$data[] = $asset->getAssetData( $thumbOptions );
 			}
 		}

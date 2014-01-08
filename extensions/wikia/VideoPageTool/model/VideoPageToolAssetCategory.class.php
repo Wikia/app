@@ -21,6 +21,11 @@ class VideoPageToolAssetCategory extends VideoPageToolAsset {
 	 * The associative array data returned has the keys:
 	 *     categoryName => Human readable title, e.g. "Soul Bubbles Nintendo DS"
 	 *     displayTitle => Preferred title entered via Admin tool, e.g. "Soul Bubbles on Nintendo DS"
+	 *     thumbnails   => An array of video thumbnail data of the format:
+	 *          [ title => $title,
+	 *            thumb => $thumb,
+	 *            url   => $url,
+	 *          ]
 	 *     updatedBy    => Name of the user who updated this asset last
 	 *     updatedAt    => Date this asset was last updated, e.g. "17:04, September 13, 2013"
 	 */
@@ -30,9 +35,11 @@ class VideoPageToolAssetCategory extends VideoPageToolAsset {
 			return self::getDefaultAssetData();
 		}
 
+		$helper = new VideoPageToolHelper();
 		$data = array(
 			'categoryName' => $title->getText(),
 			'displayTitle' => $this->displayTitle,
+			'thumbnails'   => $helper->getCategoryData( $title ),
 		);
 
 		$assetData = array_merge( $data, parent::getAssetData() );
