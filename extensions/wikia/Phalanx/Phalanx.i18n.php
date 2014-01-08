@@ -777,6 +777,24 @@ Si crees que es un error, por favor [[Special:Contact|contacta a Wikia]].<br />E
 	'right-phalanxemailblock' => 'Crear, ver y administrar bloqueos de correos',
 );
 
+/** Persian (فارسی)
+ * @author Reza1615
+ */
+$messages['fa'] = array(
+	'phalanx-type-user' => 'کاربر',
+	'phalanx-type-user-email' => 'رایانامه',
+	'phalanx-label-filter' => 'فیلتر:',
+	'phalanx-label-reason' => 'دلیل:',
+	'phalanx-label-lang' => 'زبان:',
+	'phalanx-test-submit' => 'آزمایش',
+	'phalanx-stats-table-type' => 'نوع',
+	'phalanx-stats-table-create' => 'ایجاد شده',
+	'phalanx-stats-table-expire' => 'انقضا',
+	'phalanx-stats-table-language' => 'زبان',
+	'phalanx-stats-table-text' => 'متن',
+	'phalanx-stats-table-reason' => 'دلیل',
+);
+
 /** Finnish (suomi)
  * @author Centerlink
  * @author Nedergard

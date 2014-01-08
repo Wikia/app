@@ -8,8 +8,8 @@ class GametrailersVideoHandler extends VideoHandler {
 	protected static $autoplayParam = "autoplay";
 	protected static $autoplayValue = "true";
 
-	public function getEmbed($articleId, $width, $autoplay = false, $isAjax = false, $postOnload = false) {
-		$height = $this->getHeight($width);
+	public function getEmbed( $articleId, $width, $autoplay = false, $isAjax = false, $postOnload = false ) {
+		$height = $this->getHeight( $width );
 		$url = $this->getEmbedUrl();
 		$autoplayParam = self::$autoplayParam;
 		$autoplayValue = $autoplay ? self::$autoplayValue : 'false';
@@ -20,7 +20,11 @@ class GametrailersVideoHandler extends VideoHandler {
 <embed src="$url" $sizeString type="application/x-shockwave-flash" allowFullScreen="true" allowScriptAccess="always" base="." flashVars="$autoplayParam=$autoplayValue"></embed>
 EOT;
 
-		return array( 'html' => $html );
+		return array(
+			'html' => $html,
+			'width' => $width,
+			'height' => $height,
+		);
 	}
 
 }

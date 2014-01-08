@@ -1077,8 +1077,10 @@ $messages['es'] = array(
 );
 
 /** Persian (فارسی)
+ * @author Reza1615
  */
 $messages['fa'] = array(
+	'multiwikiedit_minoredit_caption' => 'ویرایش جزئی',
 	'multidelete_select_all' => 'انتخاب همه',
 );
 

@@ -3090,6 +3090,7 @@ Công cụ hữu ích:
  * @author Anakmalaysia
  * @author Dimension
  * @author Hydra
+ * @author Hzy980512
  * @author Liuxinyu970226
  * @author Sora
  * @author User670839245
@@ -3155,6 +3156,24 @@ Wikia团队
 
 你可以<a href="$3">点击这里取消邮件订阅</a>。',
 	'wikiadoption-mail-adoption-subject' => '#WIKINAME已被认领',
+	'wikiadoption-mail-adoption-content' => '$1，您好
+
+#WIKINAME已被代管。当Wiki的所有管理员60天或更久没有活动时，Wiki将可被代管。
+
+#WIKINAME的代管用户将拥有行政员与管理员权限。别担心，您还可以随时重新取得您在此Wiki上的管理员权限并继续做出贡献。
+
+Wikia团队
+
+您可以更改这个列表来取消订阅信息：$3',
+	'wikiadoption-mail-adoption-content-HTML' => '$1，您好<br /><br />
+
+#WIKINAME已被代管。当一个Wiki的所有管理员60天或更久没有活动时，那么它就可以被代管。<br /><br />
+
+#WIKINAME的代管用户将拥有行政员与管理员权限。别担心，您还可以随时重新取得您在此Wiki上的管理员权限并继续做出贡献。<br /><br />
+
+Wikia团队<br /><br />
+
+您可以更改这个列表来<a href="$3">取消</a>订阅信息。',
 	'tog-adoptionmails' => '当$1可以被其他用户认领时邮件通知我',
 	'wikiadoption-pref-label' => '变更首选项只会影响来自$1的邮件。',
 	'wikiadoption-welcome-header' => '恭喜！你已认领了{{SITENAME}}！',

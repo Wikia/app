@@ -489,6 +489,7 @@ $messages['br'] = array(
 /** Catalan (català)
  * @author Fitoschido
  * @author Marcmpujol
+ * @author Roxas Nobody 15
  */
 $messages['ca'] = array(
 	'createnewwiki-desc' => '[[Special:CreateNewWiki|Assistent de creació de wikis]]',
@@ -543,14 +544,15 @@ $messages['ca'] = array(
 	'cnw-welcome-instruction1' => 'Fes clic al botó de sota per començar a afegir pàgines al teu wiki.',
 	'cnw-welcome-instruction2' => "Veuràs aquest botó al llarg del teu wiki. Utilitza'l en qualsevol moment quan vulguis afegir una nova pàgina.",
 	'cnw-welcome-help' => 'Troba respostes, assessorament i més informació a <a href="http://ca.wikia.com">Comunitat Central</a>.',
-	'cnw-error-general' => 'Ui! Alguna cosa ha sortit malament al nostre sistema!  Si us plau, torna-ho a provar un altre cop o [[Special:Contact|contacta amb nosaltres]] per obtenir ajuda.', # Fuzzy
-	'cnw-error-general-heading' => 'Les nostres disculpes', # Fuzzy
+	'cnw-error-general' => 'Ui! Alguna cosa ha sortit malament al nostre sistema!  Si us plau, torna-ho a provar un altre cop o [[Special:Contact|contacta amb nosaltres]] per obtenir ajuda.',
+	'cnw-error-general-heading' => 'Les nostres disculpes',
 	'cnw-badword-header' => 'Ui!',
 	'cnw-badword-msg' => "Hola, si us plau, absten-te d'utilitzar aquestes paraules malsonants o paraules prohibides en la descripció del teu wiki: $1",
 	'cnw-error-wiki-limit-header' => 'Has assolit el límit de wikis',
 	'cnw-error-wiki-limit' => 'Hola, estàs limitat a {{PLURAL:$1|$1 creació|$1 creacions}} de wikis per dia. Espera 24 hores abans de crear un altre wiki.',
 	'cnw-error-blocked-header' => 'Compte bloquejat',
 	'cnw-error-blocked' => 'Has estat bloquejat per $1. La raó donada era: $2. (Identificador del bloqueig par a referència: $3)',
+	'cnw-error-anon-user-header' => 'Entreu',
 	'cnw-error-torblock' => 'No està permès crear wikis mitjançant la xarxa Tor.',
 	'cnw-error-bot' => "Hem detectat que pots ser un bot. Si hem comès un error, si us plau, contacta amb nosaltres i descriu que has estat falsament detectat com si fossis un bot, i t'ajudarem en la creació del teu wiki: [http://www.wikia.com/Special:Contact/general Contacta amb nosaltres]",
 	'cnw-error-bot-header' => 'Has estat detectat com a un bot',
@@ -832,13 +834,24 @@ $messages['eu'] = array(
 
 /** Persian (فارسی)
  * @author BlueDevil
+ * @author Reza1615
  */
 $messages['fa'] = array(
+	'cnw-next' => 'بعدی',
+	'cnw-back' => 'عقب',
+	'cnw-or' => 'یا',
+	'cnw-name-wiki-wiki' => 'ویکی',
 	'cnw-login' => 'ورود به سامانه',
 	'cnw-signup' => 'ایجاد حساب جدید',
 	'cnw-auth-headline' => 'ورود به سامانه',
 	'cnw-auth-headline2' => 'ثبت نام',
+	'cnw-userauth-creative' => 'ورود به سامانه',
+	'cnw-userauth-signup-button' => 'ثبت نام',
 	'cnw-desc-tip1' => 'راهنمایی',
+	'cnw-desc-select-one' => 'یکی را انتخاب کنید',
+	'cnw-desc-change-lang' => 'تغییر',
+	'cnw-desc-lang' => 'زبان',
+	'cnw-error-anon-user-header' => 'لطفا وارد شوید',
 );
 
 /** Finnish (suomi)

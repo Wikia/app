@@ -734,9 +734,12 @@ $messages['lb'] = array(
 	'categoryselect-category-remove' => 'Kategorie ewechhuelen',
 	'categoryselect-edit-summary' => 'Kategorien derbäisetzen',
 	'categoryselect-error-article-doesnt-exist' => "D'Säit [id=$1] gëtt et net.",
+	'categoryselect-error-category-name-length' => 'Déi maximal Längt fir en Numm vun enger Kategorie gouf erreecht.',
 	'categoryselect-error-db-locked' => "D'Datebank ass gespaart.",
 	'categoryselect-error-duplicate-category-name' => 'D\'Kategorie "$1" gëtt et schonn.',
+	'categoryselect-error-empty-category-name' => 'Gitt w.e.g.en Numm vun enger Kategorie un.',
 	'categoryselect-error-user-rights' => "De Benotzer huet net d'Rechter fir dës Aktioun ze maachen.",
+	'categoryselect-modal-category-name' => 'Gitt den Numm vun der Kategorie un.',
 	'categoryselect-tooltip-add' => "Dréckt 'Enter' oder 'Return' wann Dir fäerdeg sidd",
 );
 

@@ -177,13 +177,14 @@ $messages['de'] = array(
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
  * @author Marmase
+ * @author Mirzali
  */
 $messages['diq'] = array(
-	'partner-feed-recent-changes' => 'Vırnayışé bahdoyéni',
+	'partner-feed-recent-changes' => 'Vurnayışê peyêni',
 	'feed-title-recent-images' => 'Vurnayışê resiman',
 	'all-blog-posts' => 'kategoriy pêro',
 	'feed-title-blogcomments' => 'Vatışê - ($1)',
-	'feed-title-recentchanges' => 'Vırnayışé bahdoyéni',
+	'feed-title-recentchanges' => 'Vurnayışê peyêni',
 );
 
 /** Spanish (español)
@@ -214,10 +215,15 @@ $messages['es'] = array(
 
 /** Persian (فارسی)
  * @author BlueDevil
+ * @author Reza1615
  */
 $messages['fa'] = array(
 	'partner-feed-recent-changes' => 'تغییرات اخیر',
+	'feed-title-blogposts' => 'پست‌های اخیر وبلاگ',
+	'feed-title-recent-badges' => 'نشانهای اخیر',
 	'feed-title-recent-images' => 'تصاویر اخیر',
+	'feed-title-leaderboard' => 'تابلوی رهبری دستاوردها',
+	'feed-title-recentchanges' => 'تغییرات اخیر',
 );
 
 /** Finnish (suomi)

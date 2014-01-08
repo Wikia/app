@@ -8,7 +8,7 @@ class IvaVideoHandler extends VideoHandler {
 	protected static $providerHomeUrl = 'http://video.wikia.com/';
 
 	public function getEmbed( $articleId, $width, $autoplay = false, $isAjax = false, $postOnload=false ) {
-		$height = $this->getHeight($width);
+		$height = $this->getHeight( $width );
 		$autoPlayStr = $autoplay ? 'true' : 'false';
 
 		$url = $this->getEmbedUrl();
@@ -19,7 +19,11 @@ class IvaVideoHandler extends VideoHandler {
 <iframe $sizeString src='{$url}' frameborder='0' scrolling='no'></iframe>
 EOT;
 
-		return array( 'html' => $html );
+		return array(
+			'html' => $html,
+			'width' => $width,
+			'height' => $height,
+		);
 	}
 
 }
