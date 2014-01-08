@@ -4,9 +4,8 @@ define( 'views.videopageadmin.autocompleteitem', [
 	], function( $, templates ) {
 		'use strict';
 
-		var CategorySingleResultView = Backbone.View.extend({
+		var CategorySingleResultView = Backbone.View.extend( {
 				initialize: function( opts ) {
-					console.log( templates );
 					this.parentView = opts.parentView;
 				},
 				tagName: 'div',

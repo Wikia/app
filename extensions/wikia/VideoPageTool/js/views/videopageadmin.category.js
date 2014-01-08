@@ -4,11 +4,11 @@ define( 'views.videopageadmin.category', [
 	], function( $, FormGroupView ) {
 	'use strict';
 
-	var CategoryPageView = Backbone.View.extend({
+	var CategoryPageView = Backbone.View.extend( {
 			initialize: function() {
 				this.$formGroups = this.$el.find('.form-box');
 				this.formSubViews = _.map( this.$formGroups, function( e ) {
-						return new FormGroupView({
+						return new FormGroupView( {
 								el: e
 						} );
 				} );
@@ -23,7 +23,7 @@ define( 'views.videopageadmin.category', [
 $(function () {
 		'use strict';
 		require([ 'views.videopageadmin.category' ], function( CategoryPageView ) {
-				new CategoryPageView({
+				new CategoryPageView( {
 						el: '#LatestVideos'
 				} );
 		} );

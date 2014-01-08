@@ -16,13 +16,13 @@ define( 'views.videohomepage.featured', [
 	'use strict';
 	var track, FeaturedVideosView;
 
-	track = Tracker.buildTrackingFunction({
+	track = Tracker.buildTrackingFunction( {
 			action: Tracker.ACTIONS.CLICK,
 			category: 'video-home-page',
 			trackingMethod: 'both'
 	} );
 
-	FeaturedVideosView = Backbone.View.extend({
+	FeaturedVideosView = Backbone.View.extend( {
 			events: {
 				'click #featured-video-thumbs .video': 'handleThumbClick',
 				'mouseenter #featured-video-thumbs': 'clearHoverTimeout',
@@ -82,7 +82,7 @@ define( 'views.videohomepage.featured', [
 				this.slideModels = [];
 
 				_.each( this.$thumbs.find( '.video' ), function( e ) {
-						that.thumbs.push({
+						that.thumbs.push( {
 								$video: $( e )
 						} );
 				} );
@@ -92,7 +92,7 @@ define( 'views.videohomepage.featured', [
 								videoKey;
 
 						$elem = $( e );
-						that.slides.push({
+						that.slides.push( {
 								$elem: $elem,
 								$video: $elem.find( '.slide-video' ),
 								$videoThumb: that.thumbs[ i ].$video,
@@ -104,7 +104,7 @@ define( 'views.videohomepage.featured', [
 												.$video.children( 'img' )
 												.attr( 'data-video-key' );
 
-						that.slideModels.push( new FeaturedSlideModel({
+						that.slideModels.push( new FeaturedSlideModel( {
 								videoKey: videoKey,
 								embedData: null
 						} ));
@@ -112,7 +112,7 @@ define( 'views.videohomepage.featured', [
 			},
 
 			initSlider: function() {
-				this.slider = this.$bxSlider.bxSlider({
+				this.slider = this.$bxSlider.bxSlider( {
 					onSliderLoad: _.bind( this.onSliderLoad, this ),
 					onSlideAfter: _.bind( this.onSlideAfter, this ),
 					nextText: '',
@@ -173,7 +173,7 @@ define( 'views.videohomepage.featured', [
 
 					this.$thumbs.slideUp();
 
-					track({
+					track( {
 							label: 'featured-thumbnail'
 					} );
 
@@ -239,7 +239,7 @@ define( 'views.videohomepage.featured', [
 						window.GlobalNotification.show( json.error, 'error', null, 4000);
 					} else {
 						// cache embed data
-						model.set({ embedData: json } );
+						model.set( { embedData: json } );
 
 						// Actually do the video embed
 						that.videoInstance = new VideoBootstrap(
@@ -255,7 +255,7 @@ define( 'views.videohomepage.featured', [
 					}
 				} );
 
-				track({
+				track( {
 						label: 'featured-video-plays',
 						value: this.videoPlays++
 				} );
@@ -275,7 +275,7 @@ define( 'views.videohomepage.featured', [
 
 				if( model.get('embedData') === null ) {
 					// Get video embed data for this slide
-					data = Nirvana.sendRequest({
+					data = Nirvana.sendRequest( {
 						controller: 'VideoHandler',
 						method: 'getEmbedCode',
 						type: 'GET',

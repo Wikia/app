@@ -3,7 +3,7 @@ define( 'collections.videopageadmin.category', [
 	], function( CategoryModel ) {
 		'use strict';
 
-		var CategoryCollection = Backbone.Collection.extend({
+		var CategoryCollection = Backbone.Collection.extend( {
 				model: CategoryModel,
 				url: '/wikia.php',
 				initialize: function() {
@@ -11,8 +11,13 @@ define( 'collections.videopageadmin.category', [
 					this.controller = 'CategorySelect';
 					this.method = 'getWikiCategories';
 				},
-				setCategory: function( model ) {
-					this.selectedCategory = model.get( 'name' );
+				setCategory: function( data ) {
+					if ( typeof data === 'string' ) {
+						this.selectedCategory = data;
+					} else {
+						// data is a instance of model
+						this.selectedCategory = data.get( 'name' );
+					}
 					this.trigger( 'category:chosen' );
 				},
 				autocomplete: function( value ) {
@@ -20,7 +25,7 @@ define( 'collections.videopageadmin.category', [
 					this.query = value.toLowerCase();
 
 					if ( !this.raw || !this.raw.length ) {
-						this.xhr = this.fetch({
+						this.xhr = this.fetch( {
 							reset: true,
 							data: {
 								controller: this.controller,
@@ -44,7 +49,7 @@ define( 'collections.videopageadmin.category', [
 
 					_.each( resp, function( itemName ) {
 						if ( itemName.toLowerCase().indexOf( self.query ) !== -1 ) {
-							cache.push({
+							cache.push( {
 								name: itemName
 							} );
 						}

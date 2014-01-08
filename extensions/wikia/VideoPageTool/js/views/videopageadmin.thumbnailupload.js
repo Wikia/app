@@ -45,7 +45,7 @@ define( 'views.videopageadmin.thumbnailupload', [
 				that = this,
 				$videoThumb;
 
-			img = new ThumbnailModel({
+			img = new ThumbnailModel( {
 				imgTitle: data.imageTitle,
 				wikiText: data.imageWikiText
 			} );

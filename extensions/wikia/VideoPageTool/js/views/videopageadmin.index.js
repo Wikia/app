@@ -37,7 +37,7 @@ define('views.videopageadmin.index', [
 			}
 
 			// initialize new datepicker, passing through the language
-			this.datepicker = new Datepicker({
+			this.datepicker = new Datepicker( {
 				el: '#VPTDashboard .date-picker',
 				language: value,
 				controller: 'VideoPageAdminSpecial',

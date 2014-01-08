@@ -25,7 +25,7 @@ define( 'views.videopageadmin.edit', [
 		initMediaUploader: function() {
 			$( '.form-box' ).on( 'click', '.media-uploader-btn', function(evt) {
 					evt.preventDefault();
-					return new ThumbnailUploader({
+					return new ThumbnailUploader( {
 							el: $(this).closest('.form-box')
 					} );
 			} );
@@ -41,7 +41,7 @@ define( 'views.videopageadmin.edit', [
 					$descInput = $box.find( '.description' ),
 					$thumb = $box.find( '.video-thumb' );
 
-				$this.addVideoButton({
+				$this.addVideoButton( {
 					callbackAfterSelect: function( url, vet ) {
 						var $altThumbKey,
 								req;
@@ -55,7 +55,7 @@ define( 'views.videopageadmin.edit', [
 
 						req.url = url;
 
-						$.nirvana.sendRequest({
+						$.nirvana.sendRequest( {
 							controller: 'VideoPageAdminSpecial',
 							method: 'getVideoData',
 							type: 'GET',
@@ -101,7 +101,7 @@ define( 'views.videopageadmin.edit', [
 		},
 
 		initSwitcher: function() {
-			this.$form.switcher({
+			this.$form.switcher( {
 				onChange: function( $elem, $switched ) {
 					// Update the numbers beside the elements
 					var $oCount = $elem.find( '.count' ),
@@ -118,7 +118,7 @@ define( 'views.videopageadmin.edit', [
 		initValidator: function() {
 			var that = this;
 
-			this.validator = new Validator({
+			this.validator = new Validator( {
 				form: this.$form,
 				formFields: this.$formFields
 			} );
@@ -159,7 +159,7 @@ define( 'views.videopageadmin.edit', [
 			this.$form.find( '.reset' ).on( 'click', function(e) {
 				e.preventDefault();
 
-				$.confirm({
+				$.confirm( {
 					title: $.msg( 'videopagetool-confirm-clear-title' ),
 					content: $.msg( 'videopagetool-confirm-clear-message' ),
 					onOk: function() {

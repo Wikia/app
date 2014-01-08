@@ -7,20 +7,19 @@ define( 'views.videopageadmin.categoryforms', [
 	], function( $, AutocompleteView, CategoryPreviewView, CategoryCollection, CategoryDataCollection ) {
 		'use strict';
 
-		var FormGroupView = Backbone.View.extend({
+		var FormGroupView = Backbone.View.extend( {
 				initialize: function() {
 					this.categories = new CategoryCollection();
 					this.categoryData = new CategoryDataCollection();
-					this.autocomplete = new AutocompleteView({
+					this.autocomplete = new AutocompleteView( {
 							el: this.el,
 							collection: this.categories
 					} );
-					this.previewView = new CategoryPreviewView({
+					this.previewView = new CategoryPreviewView( {
 						el: this.el,
 						collection: this.categoryData
 					} );
 					_.bindAll( this, 'getPreview' );
-					console.log( this.$el );
 				},
 				events: {
 					'click .search-button': 'getPreview'

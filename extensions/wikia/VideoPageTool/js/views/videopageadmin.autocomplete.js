@@ -3,7 +3,7 @@
  * @description Backbone subview/module for generic autocomplete
  *
  * @example
- * var autocomplete = new AutocompleteView({
+ * var autocomplete = new AutocompleteView( {
  *		el: '.my-el', // This el is the closest parent element containing the form and the results container
  *		collection: new CategoryCollection() // Instatiated collection is available inside the view
  * } );
@@ -18,7 +18,7 @@ define( 'views.videopageadmin.autocomplete', [
 		'views.videopageadmin.autocompleteitem'
 	], function( $, AutocompleteItemView ) {
 	'use strict';
-	var AutocompleteView = Backbone.View.extend({
+	var AutocompleteView = Backbone.View.extend( {
 			initialize: function() {
 				var that = this;
 
@@ -47,7 +47,8 @@ define( 'views.videopageadmin.autocomplete', [
 			events: {
 				'click input[data-autocomplete]'   : 'absorbEvent',
 				'keyup input[data-autocomplete]'   : 'handleKeyUp',
-				'keydown input[data-autocomplete]' : 'preventKeybinds'
+				'keydown input[data-autocomplete]' : 'preventKeybinds',
+				'input input[data-autocomplete]'   : 'setCategory'
 			},
 			absorbEvent: function( evt ) {
 				// used to absorb click events on input while results menu is open
@@ -93,18 +94,18 @@ define( 'views.videopageadmin.autocomplete', [
 					}
 				}
 			},
+			setCategory: function() {
+				this.collection.setCategory( this.$input.val() );
+			},
 			getSelection: function() {
 				// safe early exit condition, prevents trying to get selection before first results have been set
 				if ( !this.$results ) { return false; }
 
 				this.$results.find( '.selected' ).click();
-
-				// trigger Search button now, or collection fetch
 			},
 			setValue: function() {
 				// setValue of input[data-autocomplete]
 				this.$input.val( this.collection.selectedCategory );
-				this.clearResults();
 			},
 			clearResults: function() {
 				this.collection.reset();
@@ -124,17 +125,19 @@ define( 'views.videopageadmin.autocomplete', [
 				var that,
 						view;
 
-				if ( !this.collection.length ) { return; }
-
 				that = this;
 
 				this.$results = this.$( '.autocomplete' );
-				this.$results.html( '' ).show();
-
 				this.results = [];
+				this.$results.html( '' );
+				if ( !this.collection.length ) {
+					return this.$results.hide();
+				} else {
+					this.$results.show();
+				}
 
 				this.collection.each( function( model ) {
-						view = new AutocompleteItemView({
+						view = new AutocompleteItemView( {
 								model: model,
 								parentView: that
 						} );

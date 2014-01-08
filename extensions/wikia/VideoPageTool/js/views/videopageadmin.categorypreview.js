@@ -7,7 +7,7 @@ define( 'views.videopageadmin.categorypreview', [
 		'views.videopageadmin.categorypreviewitem'
 	], function( $, CategoryPreviewItem ) {
 	'use strict';
-	var CategoryPreviewView = Backbone.View.extend({
+	var CategoryPreviewView = Backbone.View.extend( {
 		initialize: function() {
 			_.bindAll( this, 'render' );
 			console.log( this.collection );

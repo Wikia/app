@@ -9,7 +9,7 @@ define('views.videopageadmin.datepicker', [
 
 	function DatepickerView(params) {
 		this.$el = $(params.el);
-		this.collection = new DatepickerCollection({
+		this.collection = new DatepickerCollection( {
 				language: params.language,
 				controller: params.controller,
 				method: params.method
@@ -36,7 +36,7 @@ define('views.videopageadmin.datepicker', [
 			_published: 1
 		},
 		render: function() {
-			this.$el.text('').datepicker({
+			this.$el.text('').datepicker( {
 						showOtherMonths: true,
 						selectOtherMoths: true,
 						dateFormat: '@',
@@ -89,7 +89,7 @@ define('views.videopageadmin.datepicker', [
 			}
 
 			qs(loc.protocol + '//' + loc.host + pathname + 'edit')
-				.setVal({
+				.setVal( {
 						language: this.collection.language,
 						date: timestamp/1000
 				} )

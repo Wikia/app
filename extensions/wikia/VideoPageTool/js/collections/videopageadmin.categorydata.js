@@ -2,7 +2,7 @@ define( 'collections.videopageadmin.categorydata', [
 	], function() {
 		'use strict';
 
-		var CategoryCollection = Backbone.Collection.extend({
+		var CategoryCollection = Backbone.Collection.extend( {
 				url: '/wikia.php',
 				initialize: function() {
 					_.bindAll( this, 'setCategory', 'fetch' );
