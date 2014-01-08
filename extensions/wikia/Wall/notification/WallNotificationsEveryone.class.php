@@ -8,84 +8,108 @@ class WallNotificationsEveryone extends WallNotifications {
 		$this->cityId = $this->app->wg->CityId;
 	}
 
-	public function addNotificationToQueue($entity) {
-		wfProfileIn(__METHOD__);
+	/**
+	 * Adds notification to the notification queue
+	 *
+	 * @param WallNotificationEntity $entity
+	 */
+	public function addNotificationToQueue( WallNotificationEntity $entity ) {
+		wfProfileIn( __METHOD__ );
 
 		$key = $entity->id;
 		$pageId = $entity->data->title_id;
 
-		$this->getDB(true)->replace('wall_notification_queue', '', array(
-			'wiki_id' => $this->cityId,
-			'entity_key' => $key,
-			'page_id' => $pageId
-		), __METHOD__);
+		$this->getDB( true )->replace( 'wall_notification_queue', '',
+			array(
+				'wiki_id' => $this->cityId,
+				'entity_key' => $key,
+				'page_id' => $pageId
+			),
+			__METHOD__
+		);
 
 		$this->setGlobalCacheBuster();
 
+		$this->getDB( true )->commit();
+		wfProfileOut( __METHOD__ );
+	}
+
+	/**
+	 * Removes notifications for page from the notification queue and notifications list for all users and updates the
+	 * notifications cache
+	 *
+	 * @param integer $pageId Page id
+	 */
+	public function removeNotificationForPageId( $pageId ) {
+		wfProfileIn( __METHOD__ );
+
+		// remove notifications for this page for all users
+		$this->remNotificationsForUniqueID( false, $this->cityId, $pageId );
+
+		// remove notification from notification queue
+		$this->getDB(true)->delete( 'wall_notification_queue',
+			array(
+				'wiki_id' => $this->cityId,
+				'page_id' => $pageId
+			),
+			__METHOD__
+		);
+
 		$this->getDB(true)->commit();
 		wfProfileOut(__METHOD__);
 	}
 
-	public function removeNotificationFromQueue($pageId) {
-		wfProfileIn(__METHOD__);
-
-		$this->getDB(true)->delete('wall_notification_queue', array(
-			'wiki_id' => $this->cityId,
-			'page_id' => $pageId
-		), __METHOD__);
-
-		//TODO: clear old one
-
-		$this->getDB(true)->commit();
-		wfProfileOut(__METHOD__);
-	}
-
-	public function processQueue($userId) {
-		wfProfileIn(__METHOD__);
-		if ($this->getQueueProcessed($userId)) {
-			wfProfileOut(__METHOD__);
+	/**
+	 * Processes the notification queue for user
+	 *
+	 * @param integer $userId
+	 * @return bool
+	 */
+	public function processQueue( $userId ) {
+		wfProfileIn( __METHOD__ );
+		if ( $this->getQueueProcessed( $userId ) ) {
+			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
-		$res = $this->getDB(false)->select('wall_notification_queue',
-			array('entity_key'),
+		$res = $this->getDB( false )->select( 'wall_notification_queue',
+			array( 'entity_key' ),
 			array(
 				'wiki_id  = ' . $this->cityId,
 				'datediff(NOW(), event_date) < ' . WallHelper::NOTIFICATION_EXPIRE_DAYS,
 			),
 			__METHOD__
 		);
-		$entites = array();
-		if ($res) {
-			while ($val = $res->fetchRow()) {
-				$this->processEntites($userId, $val['entity_key']);
+		if ( $res ) {
+			while ( $val = $res->fetchRow() ) {
+				$this->processEntities( $userId, $val['entity_key'] );
 			}
-			$this->setQueueProcessed($userId);
+			$this->setQueueProcessed( $userId );
 		}
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 	}
 
-	public function processEntites($userId, $entityKey) {
-		wfProfileIn(__METHOD__);
+	public function processEntities( $userId, $entityKey ) {
+		wfProfileIn( __METHOD__ );
 
-		if (!$this->getEntityProcessed($userId, $entityKey)) {
-			$entityKeyArray = explode('_', $entityKey);
+		if ( !$this->getEntityProcessed( $userId, $entityKey ) ) {
+			$entityKeyArray = explode( '_', $entityKey );
 
-			$rev = Revision::newFromId($entityKeyArray[0]);
+			$rev = Revision::newFromId( $entityKeyArray[0] );
 
-			if(!empty($rev)) {
-				$notif = WallNotificationEntity::createFromRev($rev, $this->app->wg->CityId);
-				if(!empty($notif)) {
+			if ( !empty( $rev ) ) {
+				$notifications = WallNotificationEntity::createFromRev( $rev, $this->cityId );
+				if ( !empty( $notifications ) ) {
 					$wn = new WallNotifications();
-					$wn->addNotificationLinks(array($userId), $notif);
+					$wn->addNotificationLinks( array( $userId ), $notifications );
 				}
 			}
 
-			$this->setEntityProcessed($userId, $entityKey);
+			$this->setEntityProcessed( $userId, $entityKey );
 		}
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 	}
 
 	public function setGlobalCacheBuster() {
