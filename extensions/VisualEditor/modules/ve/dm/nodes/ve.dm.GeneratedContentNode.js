@@ -23,12 +23,13 @@ ve.dm.GeneratedContentNode.static = {};
 
 /**
  * Store HTML of DOM elements, hashed on data element
+ * @static
  * @param {Object} dataElement Data element
- * @param {HTMLElement[]} domElements DOM elements
+ * @param {Object|string|Array} generatedContents Generated contents
  * @param {ve.dm.IndexValueStore} store Index-value store
  * @returns {number} Index of stored data
  */
-ve.dm.GeneratedContentNode.static.storeDomElements = function ( dataElement, domElements, store ) {
-	var hash = ve.getHash( [ this.getHashObject( dataElement ), undefined ] );
-	return store.index( domElements, hash );
+ve.dm.GeneratedContentNode.static.storeGeneratedContents = function ( dataElement, generatedContents, store ) {
+	var hash = OO.getHash( [ this.getHashObject( dataElement ), undefined ] );
+	return store.index( generatedContents, hash );
 };

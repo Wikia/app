@@ -31,7 +31,7 @@ ve.dm.Model.static = {};
 /**
  * Symbolic name for this model class. Must be set to a unique string by every subclass.
  * @static
- * @property {string} [static.name=null]
+ * @property {string}
  * @inheritable
  */
 ve.dm.Model.static.name = null;
@@ -41,7 +41,7 @@ ve.dm.Model.static.name = null;
  * Empty array means none, null means any.
  * For more information about element matching, see ve.dm.ModelRegistry.
  * @static
- * @property {string[]} static.matchTagNames
+ * @property {string[]}
  * @inheritable
  */
 ve.dm.Model.static.matchTagNames = null;
@@ -51,7 +51,7 @@ ve.dm.Model.static.matchTagNames = null;
  * Empty array means none, null means any.
  * For more information about element matching, see ve.dm.ModelRegistry.
  * @static
- * @property {Array} static.matchRdfaType Array of strings or regular expressions
+ * @property {Array}
  * @inheritable
  */
 ve.dm.Model.static.matchRdfaTypes = null;
@@ -68,7 +68,7 @@ ve.dm.Model.static.matchRdfaTypes = null;
  * NOTE: This function is NOT a method, within this function "this" will not refer to an instance
  * of this class (or to anything reasonable, for that matter).
  * @static
- * @property {Function} static.matchFunction
+ * @property {Function}
  * @inheritable
  */
 ve.dm.Model.static.matchFunction = null;
@@ -168,7 +168,7 @@ ve.dm.Model.static.toDomElements = function ( /*dataElement, doc, converter*/ ) 
  * be childless.
  *
  * @static
- * @property {boolean} static.enableAboutGrouping
+ * @property {boolean}
  * @inheritable
  */
 ve.dm.Model.static.enableAboutGrouping = false;
@@ -198,7 +198,7 @@ ve.dm.Model.static.enableAboutGrouping = false;
  * do not match the blacklist will be preserved.
  *
  * @static
- * @property {boolean|string|RegExp|Array|Object} static.storeHtmlAttributes
+ * @property {boolean|string|RegExp|Array|Object}
  * @inheritable
  */
 ve.dm.Model.static.storeHtmlAttributes = true;
@@ -209,7 +209,7 @@ ve.dm.Model.static.storeHtmlAttributes = true;
  * Determine whether an attribute name matches an attribute specification.
  *
  * @param {string} attribute Attribute name
- * @param {boolean|string|RegExp|Array|Object} spec Attribute specification, see ve.dm.Model.static.storeHtmlAttributes
+ * @param {boolean|string|RegExp|Array|Object} spec Attribute specification, see #storeHtmlAttributes
  * @returns {boolean} Attribute matches spec
  */
 ve.dm.Model.matchesAttributeSpec = function ( attribute, spec ) {
@@ -308,7 +308,7 @@ ve.dm.Model.prototype.getAttribute = function ( key ) {
  * Values are by reference if array or object, similar to using the getAttribute method.
  *
  * @method
- * @param {string} prefix Only return attributes with this prefix, and remove the prefix from them
+ * @param {string} [prefix] Only return attributes with this prefix, and remove the prefix from them
  * @returns {Object} Attributes
  */
 ve.dm.Model.prototype.getAttributes = function ( prefix ) {
@@ -389,7 +389,7 @@ ve.dm.Model.prototype.getClonedElement = function () {
  * The actual logic is in a static function as this needs
  * to be accessible from ve.dm.Converter
  *
- * This is a custom hash function for ve#getHash.
+ * This is a custom hash function for oo#getHash.
  *
  * @method
  * @returns {Object} Hash object

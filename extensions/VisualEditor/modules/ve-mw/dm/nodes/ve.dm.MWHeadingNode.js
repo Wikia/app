@@ -21,7 +21,7 @@ ve.dm.MWHeadingNode = function VeDmMWHeadingNode( children, element ) {
 
 /* Inheritance */
 
-ve.inheritClass( ve.dm.MWHeadingNode, ve.dm.HeadingNode );
+OO.inheritClass( ve.dm.MWHeadingNode, ve.dm.HeadingNode );
 
 /* Static Properties */
 

@@ -411,7 +411,7 @@ QUnit.test( 'getAnnotatedRangeFromOffset', 1, function ( assert ) {
 } );
 
 QUnit.test( 'trimOuterSpaceFromRange', function ( assert ) {
-	var i, elementData,
+	var i, linearData, elementData,
 		data = [
 			// 0
 			{ 'type': 'paragraph' },
@@ -502,7 +502,8 @@ QUnit.test( 'trimOuterSpaceFromRange', function ( assert ) {
 		];
 
 	QUnit.expect( cases.length );
-	elementData = ve.dm.example.preprocessAnnotations( data );
+	linearData = ve.dm.example.preprocessAnnotations( data );
+	elementData = new ve.dm.ElementLinearData( linearData.getStore(), linearData.getData() );
 	for ( i = 0; i < cases.length; i++ ) {
 		assert.deepEqual(
 			elementData.trimOuterSpaceFromRange( cases[i].range ),

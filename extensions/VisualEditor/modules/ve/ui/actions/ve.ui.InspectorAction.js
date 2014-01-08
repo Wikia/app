@@ -20,7 +20,7 @@ ve.ui.InspectorAction = function VeUiInspectorAction( surface ) {
 
 /* Inheritance */
 
-ve.inheritClass( ve.ui.InspectorAction, ve.ui.Action );
+OO.inheritClass( ve.ui.InspectorAction, ve.ui.Action );
 
 /* Static Properties */
 
@@ -41,9 +41,10 @@ ve.ui.InspectorAction.static.methods = [ 'open' ];
  *
  * @method
  * @param {string} name Symbolic name of inspector to open
+ * @param {Object} [config] Configuration options for inspector setup
  */
-ve.ui.InspectorAction.prototype.open = function ( name ) {
-	this.surface.getContext().openInspector( name );
+ve.ui.InspectorAction.prototype.open = function ( name, config ) {
+	this.surface.getContext().getInspector( name ).open( config );
 };
 
 /* Registration */

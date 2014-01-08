@@ -1,6 +1,9 @@
-docs/**
-node_modules/**
-modules/jquery/**
-modules/jquery.uls/**
-modules/qunit/**
-modules/rangy/**
+docs
+modules/jquery
+modules/jquery.uls
+modules/jsdifflib
+modules/oojs
+modules/oojs-ui
+modules/qunit
+modules/rangy
+node_modules

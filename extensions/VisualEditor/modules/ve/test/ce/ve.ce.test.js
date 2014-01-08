@@ -95,7 +95,8 @@ QUnit.test( 'getOffsetFrom(Element|Text)Node', function ( assert ) {
 		documentModel = surface.getModel().getDocument();
 		documentView = surface.getView().getDocument();
 
-		testOffsets( documentView.documentNode.$[0], testCases[i], -1 );
+		testOffsets( documentView.documentNode.$element[0], testCases[i], -1 );
+		surface.destroy();
 	}
 } );
 
@@ -104,25 +105,25 @@ QUnit.test( 'getOffsetFrom(Element|Text)Node', function ( assert ) {
 // TODO: ve.ce.getOffsetOfSlug
 
 QUnit.test( 'isLeftOrRightArrowKey', 4, function ( assert ) {
-	assert.equal( ve.ce.isLeftOrRightArrowKey( ve.Keys.LEFT ), true, 'Left' );
-	assert.equal( ve.ce.isLeftOrRightArrowKey( ve.Keys.RIGHT ), true, 'Right' );
-	assert.equal( ve.ce.isLeftOrRightArrowKey( ve.Keys.UP ), false, 'Up' );
-	assert.equal( ve.ce.isLeftOrRightArrowKey( ve.Keys.DOWN ), false, 'Down' );
+	assert.equal( ve.ce.isLeftOrRightArrowKey( OO.ui.Keys.LEFT ), true, 'Left' );
+	assert.equal( ve.ce.isLeftOrRightArrowKey( OO.ui.Keys.RIGHT ), true, 'Right' );
+	assert.equal( ve.ce.isLeftOrRightArrowKey( OO.ui.Keys.UP ), false, 'Up' );
+	assert.equal( ve.ce.isLeftOrRightArrowKey( OO.ui.Keys.DOWN ), false, 'Down' );
 } );
 
 QUnit.test( 'isUpOrDownArrowKey', 4, function ( assert ) {
-	assert.equal( ve.ce.isUpOrDownArrowKey( ve.Keys.LEFT ), false, 'Left' );
-	assert.equal( ve.ce.isUpOrDownArrowKey( ve.Keys.RIGHT ), false, 'Right' );
-	assert.equal( ve.ce.isUpOrDownArrowKey( ve.Keys.UP ), true, 'Up' );
-	assert.equal( ve.ce.isUpOrDownArrowKey( ve.Keys.DOWN ), true, 'Down' );
+	assert.equal( ve.ce.isUpOrDownArrowKey( OO.ui.Keys.LEFT ), false, 'Left' );
+	assert.equal( ve.ce.isUpOrDownArrowKey( OO.ui.Keys.RIGHT ), false, 'Right' );
+	assert.equal( ve.ce.isUpOrDownArrowKey( OO.ui.Keys.UP ), true, 'Up' );
+	assert.equal( ve.ce.isUpOrDownArrowKey( OO.ui.Keys.DOWN ), true, 'Down' );
 } );
 
 QUnit.test( 'isArrowKey', 5, function ( assert ) {
-	assert.equal( ve.ce.isArrowKey( ve.Keys.LEFT ), true, 'Left' );
-	assert.equal( ve.ce.isArrowKey( ve.Keys.RIGHT ), true, 'Right' );
-	assert.equal( ve.ce.isArrowKey( ve.Keys.UP ), true, 'Up' );
-	assert.equal( ve.ce.isArrowKey( ve.Keys.DOWN ), true, 'Down' );
-	assert.equal( ve.ce.isArrowKey( ve.Keys.ENTER ), false, 'Enter' );
+	assert.equal( ve.ce.isArrowKey( OO.ui.Keys.LEFT ), true, 'Left' );
+	assert.equal( ve.ce.isArrowKey( OO.ui.Keys.RIGHT ), true, 'Right' );
+	assert.equal( ve.ce.isArrowKey( OO.ui.Keys.UP ), true, 'Up' );
+	assert.equal( ve.ce.isArrowKey( OO.ui.Keys.DOWN ), true, 'Down' );
+	assert.equal( ve.ce.isArrowKey( OO.ui.Keys.ENTER ), false, 'Enter' );
 } );
 
 QUnit.test( 'isShortcutKey', 3, function ( assert ) {

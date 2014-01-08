@@ -6,13 +6,64 @@
 
 require( ['wikia.tracker'], function ( tracker ) {
 	var actions = tracker.ACTIONS,
+		// These are topics used by MediaWiki, consider them reserved. Each topic should be
+		// assigned to a function which will map the data associated with a topic to a format
+		// understood by Wikia.Tracker.
+		mwTopics = {
+			'command.execute': function ( data ) {
+				return {
+					'action': actions.KEYPRESS,
+					'label': 'tool-' + nameToLabel( data.name )
+				};
+			},
+			'Edit': function ( data ) {
+				var params = {
+					'action': actions.CLICK,
+					'category': 'article'
+				};
+
+				switch( data.action ) {
+					case 'edit-link-click':
+						params.label = 've-edit';
+						break;
+					case 'section-edit-link-click':
+						params.label = 've-section-edit';
+						break;
+				}
+
+				return params;
+			},
+			'performance.system.activation': function ( data ) {
+				return {
+					'action': actions.IMPRESSION,
+					'label': 'edit-page',
+					'value': data.duration
+				};
+			},
+			'performance.user.saveComplete': function ( data ) {
+				return {
+					'action': actions.SUCCESS,
+					'label': 'publish',
+					'value': data.duration
+				};
+			},
+			'tool': function ( data ) {
+				return {
+					'action': actions.CLICK,
+					'label': 'tool-' + nameToLabel( data.name ),
+					'value': data.toolbar === 'surface' ? 1 : 0
+				};
+			}
+		},
+		// @see {@link nameToLabel} for more information
 		nameToLabelMap = {
 			'meta': 'page-settings',
+			'mwSave': 'save',
 			'transclusion': 'template',
 			'wikiaMediaInsert': 'media-insert',
 			'wikiaSourceMode': 'source'
 		},
-		rSpecialChars = /[A-Z]/g;
+		rUppercase = /[A-Z]/g;
 
 	/**
 	 * Convert symbolic names to tracking labels, falling back to the symbolic name if there is
@@ -33,53 +84,43 @@ require( ['wikia.tracker'], function ( tracker ) {
 	 * Editor tracking function.
 	 *
 	 * @method
-	 * @param {string} [name] Used by MediaWiki to distinguish tracking events.
+	 * @param {string} topic Event sub-category (like "tool", "button", etc.); this will be joined
+	 * with data.label to form the whole label for the event.
 	 * @param {Object} data The data to send to our internal tracking function.
 	 */
-	function track( name, data ) {
-		var params = {
-			category: 'editor-ve',
-			trackingMethod: 'both'
-		};
+	function track( topic, data ) {
+		var i, mwEvent, topics,
+			params = {
+				category: 'editor-ve',
+				trackingMethod: 'both'
+			};
 
-		// Handle MW tracking calls
-		if ( typeof name === 'string' ) {
-			switch( data.action ) {
-				case 'edit-link-click':
-					params.action = actions.CLICK;
-					params.category = 'article';
-					params.label = 've-edit';
+		// MW events
+		if ( topic !== 'wikia' ) {
+			// MW events are categorized in dot notation (like "performance.system.activation")
+			// This allows us to follow an entire topic ("performance") without having to track
+			// all the sub-topics separately.
+			topics = topic.split( '.' );
+			for ( i = 0; i < topics.length; i++ ) {
+				topic = ( i === 0 ? '' : topic + '.' ) + topics[i];
+				mwEvent = mwTopics[topic];
+				if ( mwEvent ) {
+					// We have found a match; exit the loop
 					break;
-				case 'page-edit-impression':
-					params.action = actions.IMPRESSION;
-					params.label = 'edit-page';
-					break;
-				case 'page-save-attempt':
-					params.action = actions.CLICK;
-					params.label = 'button-publish';
-					break;
-				case 'page-save-success':
-					params.action = actions.SUCCESS;
-					params.label = 'publish';
-					params.value = data.latency;
-					break;
-				case 'section-edit-link-click':
-					params.action = actions.CLICK;
-					params.category = 'article';
-					params.label = 've-section-edit';
-					break;
-				default:
-					// Don't track
-					return;
+				}
 			}
-		} else {
-			ve.extendObject( params, name );
-
-			// Normalize label values
-			params.label = params.label.replace( rSpecialChars, upperToHyphenLower );
+			// Only track things we care about
+			if ( !mwEvent ) {
+				return;
+			}
+			data = $.isFunction( mwEvent ) ? mwEvent( data, topics ) : mwEvent;
 		}
 
-		tracker.track( params );
+		// Normalize tracking labels
+		data.label = data.label.replace( rUppercase, upperToHyphenLower );
+
+		// Send off to Wikia.Tracker
+		tracker.track( ve.extendObject( params, data ) );
 	}
 
 	/**
@@ -96,5 +137,5 @@ require( ['wikia.tracker'], function ( tracker ) {
 	// Exports
 	ve.track.actions = actions;
 	ve.track.nameToLabel = nameToLabel;
-	ve.trackRegisterHandler( track );
+	ve.trackSubscribeAll( track );
 } );

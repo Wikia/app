@@ -21,7 +21,7 @@ ve.ce.CenterNode = function VeCeCenterNode( model, config ) {
 
 /* Inheritance */
 
-ve.inheritClass( ve.ce.CenterNode, ve.ce.BranchNode );
+OO.inheritClass( ve.ce.CenterNode, ve.ce.BranchNode );
 
 /* Static Properties */
 
