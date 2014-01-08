@@ -38,7 +38,7 @@ class GlobalFile extends WikiaObject {
 					'img_major_mime',
 					'img_minor_mime'
 				],
-				['img_name' => $this->getName()],
+				['img_name' => $this->mTitle->getDBkey()],
 				__METHOD__
 			);
 		}
@@ -122,12 +122,12 @@ class GlobalFile extends WikiaObject {
 	 * @return string
 	 */
 	private function getHashPath() {
-		$hash = md5($this->mTitle->getText());
+		$hash = md5($this->mTitle->getDBkey());
 		return "{$hash[0]}/{$hash[0]}{$hash[1]}/";
 	}
 
 	function getUrlRel() {
-		return $this->getHashPath() . rawurlencode($this->getName());
+		return $this->getHashPath() . rawurlencode($this->mTitle->getDBkey());
 	}
 
 	/**
