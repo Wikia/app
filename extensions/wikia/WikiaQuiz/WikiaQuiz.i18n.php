@@ -501,7 +501,7 @@ $messages['diq'] = array(
 	'wikiaquiz-answers-label' => 'Cıwab',
 	'wikiaquiz-answer-label' => 'Cewab',
 	'wikiaquiz-correct-label' => 'Timar bo?',
-	'wikiaquiz-cancel-label' => 'Bıterkne',
+	'wikiaquiz-cancel-label' => 'Bıtexelne',
 	'wikiaquiz-publish-label' => 'Vıla ke',
 	'wikiaquiz-game-start-button' => 'Destpêkerdışê Kayer',
 	'wikiaquiz-game-cadence-3' => 'Amade',
@@ -585,13 +585,22 @@ $messages['es'] = array(
 
 /** Persian (فارسی)
  * @author Mjbmr
+ * @author Reza1615
  */
 $messages['fa'] = array(
+	'wikiaquiz-title-label' => 'عنوان',
+	'wikiaquiz-question-label' => 'پرسش',
+	'wikiaquiz-questions-label' => 'سوال‌ها',
+	'wikiaquiz-answers-label' => 'پاسخ‌ها',
+	'wikiaquiz-answer-label' => 'پاسخ',
+	'wikiaquiz-cancel-label' => 'لغو',
 	'wikiaquiz-game-start-button' => 'شروع بازی',
 	'wikiaquiz-game-cadence-1' => 'برو!',
 	'wikiaquiz-game-question-label' => 'سؤال',
 	'wikiaquiz-game-next-button' => 'سؤال بعدی',
 	'wikiaquiz-game-finish-button' => 'پایان',
+	'wikiaquiz-game-continue-button' => 'ادامه',
+	'wikiaquiz-game-mute' => 'صامت‌سازی',
 );
 
 /** Faroese (føroyskt)

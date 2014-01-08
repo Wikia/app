@@ -213,6 +213,15 @@ $messages['es'] = array(
 	'tagsreportpageremoved' => 'La página #$1 ha sido borrada',
 );
 
+/** Persian (فارسی)
+ * @author Reza1615
+ */
+$messages['fa'] = array(
+	'tagsreportgo' => 'نمایش',
+	'tagsreportnoresults' => 'نتیجه‌ای پیدا نشد',
+	'tagsreportmainnspace' => 'اصلی',
+);
+
 /** Finnish (suomi)
  * @author Centerlink
  * @author Crt
@@ -766,7 +775,7 @@ $messages['zh-hans'] = array(
 	'tagsreportnotspecify' => '你还没选择任何特殊标签',
 	'tagsreportnoresults' => '未找到任何结果',
 	'tagsreportmainnspace' => '主要',
-	'tagsreportpages' => '(<strong>$1</strong>个页面', # Fuzzy
+	'tagsreportpages' => '（<strong>$1</strong>个页面）',
 	'tagsreportpagesfound' => '找到$1个含特殊标签（DPL、YouTube等）的页面。',
 	'tagsreportgenerated' => '生成于 $1 $2',
 	'tagsreportpageremoved' => '页面#$1已被移除',

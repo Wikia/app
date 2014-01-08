@@ -52,6 +52,7 @@ class MigrateImagesToSwift extends Maintenance {
 		$this->addOption( 'stats-only', 'Show stats (number of files and total size) and then exit' );
 		$this->addOption( 'dry-run', 'Migrate images, but don\'t disable uploads and don\'t switch wiki to Swift backend' );
 		$this->addOption( 'dc', 'Comma separated list of DCs to migrate images to (defaults to "sjc,res")' );
+		$this->addOption( 'bucket', 'Force a different bucket name than the default one (for testing only!)' );
 		$this->mDescription = 'Copies files from file system to distributed storage';
 	}
 
@@ -62,10 +63,18 @@ class MigrateImagesToSwift extends Maintenance {
 		global $wgUploadDirectory, $wgDBname, $wgCityId;
 		$this->shortBucketNameFixed = $this->fixShortBucketName();
 
+		$bucketName = $this->getOption('bucket', false);
 		$dcs = explode(',', $this->getOption('dc', 'sjc,res'));
 
 		foreach($dcs as $dc) {
-			$swiftBackend = \Wikia\SwiftStorage::newFromWiki( $wgCityId, $dc );
+			if (!is_string($bucketName)) {
+				// use bucket name taken from wiki upload path
+				$swiftBackend = \Wikia\SwiftStorage::newFromWiki( $wgCityId, $dc );
+			}
+			else {
+				// force a different bucket name via --bucket
+				$swiftBackend = \Wikia\SwiftStorage::newFromContainer( $bucketName, '/images', $dc );
+			}
 
 			$remotePath = $swiftBackend->getUrl( '' );
 			$this->output( "Migrating images on {$wgDBname} - <{$wgUploadDirectory}> -> <{$remotePath}> [dc: {$dc}]...\n" );
@@ -335,7 +344,9 @@ class MigrateImagesToSwift extends Maintenance {
 
 		// lock the wiki
 		$dbw = $this->getDB( DB_MASTER, array(), $wgExternalSharedDB );
-		$dbw->replace( 'city_image_migrate', [ 'city_id' ], [ 'city_id' => $wgCityId, 'locked' => 1 ], __CLASS__ );
+		if (!$isDryRun) {
+			$dbw->replace( 'city_image_migrate', [ 'city_id' ], [ 'city_id' => $wgCityId, 'locked' => 1 ], __CLASS__ );
+		}
 
 		// block uploads via WikiFactory
 		if (!$isDryRun) {

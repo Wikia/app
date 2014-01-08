@@ -329,6 +329,19 @@ Detalles: $2',
 	'lightbox-visit-the-wiki' => 'Visita el wiki:',
 );
 
+/** Persian (فارسی)
+ * @author Reza1615
+ */
+$messages['fa'] = array(
+	'lightbox-forum' => 'فروم',
+	'lightbox-send' => 'ارسال',
+	'lightbox-share-button-email' => 'پست الکترونیکی',
+	'lightbox-share-button-www' => 'به‌اشتراک‌گذاشتن',
+	'lightbox-share-email-page-label-address' => 'نشانی پست الکترونیکی',
+	'lightbox-share-email-ok-caption' => 'تأیید عمل',
+	'lightbox-share-email-error-caption' => 'خطا',
+);
+
 /** Finnish (suomi)
  * @author Ilkea
  * @author Nike

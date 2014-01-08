@@ -116,7 +116,7 @@ class EditPageLayoutAjax {
 	 * Parse provided wikitext to HTML using MW parser
 	 */
 	static public function preview() {
-		global $wgRequest, $wgLang;
+		global $wgRequest;
 		wfProfileIn(__METHOD__);
 
 		$skin = $wgRequest->getVal( 'skin' );
@@ -127,19 +127,15 @@ class EditPageLayoutAjax {
 			);
 		}
 
-		$res = self::resolveWikitextFromRequest('preview');
+		$res = self::resolveWikitextFromRequest( 'preview' );
 
 		// parse summary
+		// DAR-2382 -- render edit summary the same way it's rendered on Special:WikiActivity and Special:RecentChanges
+		$summary = $wgRequest->getText( 'summary' );
+		$summary = RequestContext::getMain()->getSkin()->formatComment( $summary, false );
 
-		// taken from EditPage.php
-		# Truncate for whole multibyte characters. +5 bytes for ellipsis
-		$summary = $wgLang->truncate($wgRequest->getText('summary'), 150);
-
-		# Remove extra headings from summaries and new sections.
-		$summary = preg_replace('/^\s*=+\s*(.*?)\s*=+\s*$/', '$1', $summary);
-
-		if ($summary != '') {
-			$res['summary'] = wfMsgExt('wikia-editor-preview-editSummary', array('parse'), $summary);
+		if( $summary != '' ) {
+			$res['summary'] = wfMessage( 'wikia-editor-preview-editSummary' )->rawParams( $summary )->parse();
 		}
 
 		wfProfileOut(__METHOD__);

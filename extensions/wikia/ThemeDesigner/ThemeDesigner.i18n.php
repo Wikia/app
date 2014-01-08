@@ -687,8 +687,10 @@ $messages['es'] = array(
 /** Persian (فارسی)
  * @author BlueDevil
  * @author Ebraminio
+ * @author Reza1615
  */
 $messages['fa'] = array(
+	'themedesigner-or' => 'یا',
 	'themedesigner-title' => 'طراح پوستهٔ ویکیا',
 	'themedesigner-background' => 'پیش‌زمینه',
 	'themedesigner-page' => 'صفحه',
@@ -702,16 +704,20 @@ $messages['fa'] = array(
 	'themedesigner-large' => 'بزرگ',
 	'themedesigner-tab-theme' => 'پوسته',
 	'themedesigner-tab-customize' => 'سفارشی‌کردن',
+	'themedesigner-previous-versions' => 'نگارشهای قبلی',
 	'themedesigner-button-cancel' => 'لغو',
 	'themedesigner-button-ok' => 'تأیید',
 	'themedesigner-pick-an-image' => 'انتخاب یک تصویر',
 	'themedesigner-button-upload' => 'بارگذاری',
+	'themedesigner-button-upload-wordmark' => 'بارگذاری',
 	'themedesigner-default' => 'پیش‌فرض',
 	'themedesigner-font' => 'قلم',
 	'themedesigner-size' => 'اندازه',
 	'themedesigner-button-save' => 'ذخیره',
+	'themedesigner-dont-use-a-graphic' => 'حذف‌کردن',
 	'themedesigner-history-item' => '$1 توسط $2',
 	'themedesigner-button-change-text' => 'تغییر متن',
+	'themedesigner-wodmark-preview' => 'پیش‌نمایش',
 );
 
 /** Finnish (suomi)
@@ -2275,7 +2281,8 @@ $messages['zh-hans'] = array(
 	'themedesigner-title' => 'Wikia主题设计器',
 	'themedesigner-background' => '背景',
 	'themedesigner-page' => '页面',
-	'themedesigner-color' => '颜色', # Fuzzy
+	'themedesigner-color' => '主要',
+	'themedesigner-color-middle' => '中间',
 	'themedesigner-graphic' => '图案',
 	'themedesigner-buttons' => '按钮',
 	'themedesigner-links' => '链接',

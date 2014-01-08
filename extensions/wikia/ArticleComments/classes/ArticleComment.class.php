@@ -561,11 +561,14 @@ class ArticleComment {
 	 * @returns boolean
 	 */
 	public static function canComment( Title $title = null ) {
-		global $wgTitle;
+		global $wgTitle, $wgArticleCommentsNamespaces;
 
 		$canComment = true;
 		$title = is_null( $title ) ? $wgTitle : $title;
-
+		
+		if ( !in_array( $title->getNamespace(), $wgArticleCommentsNamespaces ) ) {
+			$canComment = false;
+		}
 		if ( self::isBlog( $title ) ) {
 			$props = BlogArticle::getProps( $title->getArticleID() );
 

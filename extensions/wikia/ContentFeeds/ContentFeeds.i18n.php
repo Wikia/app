@@ -177,6 +177,14 @@ $messages['eu'] = array(
 	'contentfeeds-firstfewarticles-tag-next' => 'Hurrengoa',
 );
 
+/** Persian (فارسی)
+ * @author Reza1615
+ */
+$messages['fa'] = array(
+	'contentfeeds-firstfewarticles-tag-title' => 'عنوان',
+	'contentfeeds-firstfewarticles-tag-next' => 'بعدی',
+);
+
 /** Finnish (suomi)
  * @author Centerlink
  * @author Nedergard
