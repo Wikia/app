@@ -17,7 +17,7 @@ ve.init.mw.WikiaViewPageTarget = function VeInitMwWikiaViewPageTarget() {
 	// Parent constructor
 	ve.init.mw.ViewPageTarget.call( this );
 
-	this.toolbarSaveButtonEnabled = false;
+	this.toolbarSaveButtonEnableTracked = false;
 };
 
 /* Inheritance */
@@ -103,8 +103,8 @@ ve.init.mw.WikiaViewPageTarget.prototype.showPageContent = function () {
 ve.init.mw.WikiaViewPageTarget.prototype.updateToolbarSaveButtonState = function () {
 	ve.init.mw.ViewPageTarget.prototype.updateToolbarSaveButtonState.call( this );
 	if (
-		!this.toolbarSaveButtonEnabled &&
-		( this.toolbarSaveButtonEnabled = !this.toolbarSaveButton.isDisabled() )
+		!this.toolbarSaveButtonEnableTracked &&
+		( this.toolbarSaveButtonEnableTracked = !this.toolbarSaveButton.isDisabled() )
 	) {
 		ve.track( 'wikia', { 'action': ve.track.actions.ENABLE, 'label': 'button-publish' } );
 	}
