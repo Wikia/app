@@ -1,15 +1,17 @@
 define( 'views.videopageadmin.autocompleteitem', [
 		'jquery',
-	], function( $ ) {
+		'templates.mustache'
+	], function( $, templates ) {
 		'use strict';
 
 		var CategorySingleResultView = Backbone.View.extend({
 				initialize: function( opts ) {
+					console.log( templates );
 					this.parentView = opts.parentView;
 				},
 				tagName: 'div',
 				className: 'autocomplete-item',
-				template: Mustache.compile( $( '#autocomplete-item' ).html() ),
+				template: Mustache.compile( templates.autocompleteItem ),
 				events: {
 					'hover': 'onHover',
 					'click': 'select'
