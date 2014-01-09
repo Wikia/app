@@ -212,23 +212,52 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	public function dropdown() {
 		$query = $this->app->wg->Request->getValues();
 
-		$this->returnto = Title::newMainPage()->getPartialURL();
-		if (isset($query['title'])) {
-			if ( !AccountNavigationController::isBlacklisted( $query['title'] ) ) {
-				$this->returnto = $query['title'] ;
-			} else {
-				$this->returnto = Title::newMainPage()->getPartialURL();
-			}
-			unset($query['title']);
-			if ( isset( $query['password'] ) ) {
-				// remove the password from the params to prevent exposiong in into the URL
-				unset($query['password']);
-			}
-		} else {
-			$this->returnto = Title::newMainPage()->getPartialURL();
+		if ( isset( $query['password'] ) ) {
+			// remove the password from the params to prevent exposiong in into the URL
+			unset($query['password']);
 		}
 
-		$this->returntoquery = wfArrayToCGI( $query );
+		$this->returnto = $this->getReturnToFromQuery( $query );
+		$this->returntoquery = $this->getReturnToQueryFromQuery( $query );
+	}
+
+	private function getReturnToFromQuery( $query ) {
+		if( !is_array( $query ) ) {
+			return '';
+		}
+
+		$returnto = Title::newMainPage()->getPartialURL();
+
+		if( isset( $query['title'] ) ) {
+			if ( !AccountNavigationController::isBlacklisted( $query['title'] ) ) {
+				$returnto = $query['title'] ;
+			} else {
+				$returnto = Title::newMainPage()->getPartialURL();
+			}
+			unset($query['title']);
+		} else {
+			$returnto = Title::newMainPage()->getPartialURL();
+		}
+
+		return $returnto;
+	}
+
+	private function getReturnToQueryFromQuery( $query ) {
+		if( !is_array( $query ) ) {
+			return '';
+		}
+
+		// CONN-49 an edge-case when while being on Special:UserLogin you fail in logging-in
+		// and because of that the returntoquery gets longer and longer
+		if( !empty( $query['returntoquery'] ) ) {
+			$prevReturnToQuery = wfCgiToArray( $query['returntoquery'] );
+			$query['returntoquery'] = '';
+		} else {
+			$prevReturnToQuery = [];
+		}
+
+		$returntoquery = wfArrayToCGI( $query, $prevReturnToQuery );
+		return $returntoquery;
 	}
 
 	public function providers() {
