@@ -22,9 +22,14 @@ class WikiFeaturesSpecialController extends WikiaSpecialPageController {
 			$this->setVal('errorMessage', wfMessage('wikifeatures-error-permission')->text() );
 		}
 
+		$title = wfMessage('wikifeatures-feedback-heading')->plain();
+
+		if (strlen($featureName = $this->getVal('featureName', ''))) {
+			$title .= ' - ' . $featureName;
+		}
+
 		$templateData = [
-			'title' => wfMessage('wikifeatures-feedback-heading')->plain(),
-			'featureName' => $this->getVal('featureName', ''),
+			'featureName' => $featureName,
 			'featureImageUrl' => $this->getVal('featureImageUrl', $this->wg->BlankImgUrl),
 			'description' => wfMessage('wikifeatures-feedback-description')->text(),
 			'typeLabel' => wfMessage('wikifeatures-feedback-type-label')->plain(),
@@ -44,8 +49,9 @@ class WikiFeaturesSpecialController extends WikiaSpecialPageController {
 			->setData( $templateData )
 			->render( 'WikiFeaturesSpecial_feedback.mustache' ) );
 
-		$this->setVal( 'title', $templateData['title'] );
+		$this->setVal( 'title', $title );
 		$this->setVal( 'labelSubmit', wfMessage( 'wikifeatures-feedback-submit-button' )->plain() );
+		$this->setVal( 'labelCancel', wfMessage( 'wikifeatures-feedback-cancel-button' )->plain() );
 	}
 
 	public function index() {
@@ -127,7 +133,7 @@ class WikiFeaturesSpecialController extends WikiaSpecialPageController {
 			WikiFactory::setVarByName('wgEnableTopListsExt', $this->wg->CityId, $enabled, "WikiFeatures");
 
 		// clear cache for active wikis
-        WikiFactory::clearCache( $this->wg->CityId );
+		WikiFactory::clearCache( $this->wg->CityId );
 		$this->wg->Memc->delete(WikiFeaturesHelper::getInstance()->getMemcKeyNumActiveWikis($feature));
 
 

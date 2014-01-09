@@ -93,7 +93,8 @@
 				chars = this.value.length,
 				elemParent = $this.closest( '#feedbackDialogModal' ),
 				$counter = elemParent.find( '.comment-character-count' ),
-				$label = elemParent.find( '.comment-group label' );
+				$label = elemParent.find( '.comment-group label' ),
+				display = $counter.css( 'display' );
 
 			$counter.html( chars + ' / 1000' );
 
@@ -108,7 +109,7 @@
 			// CSS, etc.), but it's only one that works.
 
 			$counter.css( 'display', 'none' ).height(); // Force re-paint HACK
-			$counter.css( 'display', 'block' );         // Force re-paint HACK
+			$counter.css( 'display', display );         // Force re-paint HACK
 
 			if ( chars > 1000 ) {
 				$this.addClass( 'invalid' );
@@ -117,6 +118,15 @@
 				$this.removeClass( 'invalid' );
 				$label.removeClass( 'invalid' );
 			}
+		} );
+
+		// We also need to prevent repaint bug on select on feedback modal
+		$( 'body' ).on( 'change', '#feedback', function () {
+			var $select = $( this ),
+				display = $select.css( 'display' );
+
+			$select.css( 'display', 'none' ).height(); // Force re-paint HACK
+			$select.css( 'display', display );         // Force re-paint HACK
 		} );
 
 		$wikifeatures.find('.feedback' ).click( function ( e ) {
@@ -158,6 +168,17 @@
 										{
 											key: 'event',
 											value: 'submit'
+										}
+									]
+								}
+							},
+							{
+								vars: {
+									value: data.labelCancel,
+									data: [
+										{
+											key: 'event',
+											value: 'close'
 										}
 									]
 								}
