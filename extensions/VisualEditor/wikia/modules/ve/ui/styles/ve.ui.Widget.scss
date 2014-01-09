@@ -15,18 +15,17 @@
 /* Input */
 
 .oo-ui-inputWidget {
-	input, textarea {
-		background-color: $color-epl-input;
-		border-color: $color-epl-input-border;
-		box-shadow: 0 0 0 white, 0 0.1em 0.2em darken($color-epl-input-border, 3%);
+	input,
+	textarea {
+		background-color: $color-page;
+		border-color: $color-page-border;
+		box-shadow: 0 0 0 $color-ve-gradient-light, 0 0.1em 0.2em darken($color-page, 5%) inset;
 		color: $color-text;
 
 		&:focus {
-			border-color: $color-epl-input-border;
-			box-shadow: 0 0 0 white, 0 0.1em 0.2em $color-epl-input-border;
-			@if $is-dark-wiki {
-				background-color: lighten($color-epl-input, 5%);
-			}
+			background-color: $color-ve-hover;
+			border-color: $color-page-border;
+			box-shadow: 0 0 0 $color-ve-gradient-light, 0 0.1em 0.2em darken($color-page, 5%) inset;
 		}
 
 	}
@@ -45,7 +44,8 @@
 			fill: $color-text;
 		}
 
-		&.ve-ui-optionWidget-selected, &.ve-ui-optionWidget-highlighted {
+		&.ve-ui-optionWidget-selected,
+		&.ve-ui-optionWidget-highlighted {
 			background-color: darken($color-page, 10%);
 			@if $is-dark-wiki {
 				background-color: lighten($color-page, 10%);
