@@ -840,7 +840,12 @@ class ArticleComment {
 
 		if ( $retval->value == EditPage::AS_SUCCESS_NEW_ARTICLE ) {
 			$commentsIndex = CommentsIndex::newFromId( $article->getID() );
-			wfRunHooks( 'EditCommentsIndex', [ $article->getTitle(), $commentsIndex ] );
+			if ( empty( $commentsIndex ) ) {
+				Wikia::log( __METHOD__, false, "ERROR ArticleComment::doPost (reply to " . $parentId .
+					") - empty commentsIndex for " . $commentTitleText, true );
+			} else {
+				wfRunHooks( 'EditCommentsIndex', [ $article->getTitle(), $commentsIndex ] );
+			}
 		}
 
 		$res = ArticleComment::doAfterPost( $retval, $article, $parentId );
