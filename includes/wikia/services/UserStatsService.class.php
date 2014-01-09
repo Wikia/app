@@ -298,7 +298,7 @@ class UserStatsService extends WikiaModel {
 			$this->wg->Memc->set( $key, $optionsWiki, self::CACHE_TTL );
 		} else {
 			//initialize editcount skipping memcache
-			$this->getEditCountLocal( 0, true );
+			$this->getEditCountWiki( 0, true );
 		}
 
 		wfProfileOut(__METHOD__);
