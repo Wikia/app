@@ -143,6 +143,7 @@ $messages['qqq'] = array(
 	'videopagetool-header-right-publish-date' => 'This text is the date the page was published',
 	'videopagetool-header-right-not-published' => 'This text is displayed if the page has not yet been published',
 	'videopagetool-header-right-saved-by' => 'Name of last person to save this page',
+	'videopagetool-header-right-published-by' => 'Name of person to publish this page',
 
 	// Home Page Section: Partners
 	'videohomepage-partner-section-title' => 'Title for section that links to videos from our content partners',
