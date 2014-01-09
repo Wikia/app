@@ -33,7 +33,7 @@
 							var deactivateModalConfig = {
 								vars: {
 									id: 'DeactivateDialog',
-									size: 'small',
+									size: 'medium',
 									title: modalTitle,
 									content: [
 										'<p>',
