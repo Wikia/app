@@ -6,18 +6,27 @@
  * @author Jakub "Gordon" Olek
  */
 
-(function (context) {
+(function ( context ) {
 	'use strict';
 
 	var CACHE_PREFIX = 'wkch_',
 		CACHE_VALUE_PREFIX = CACHE_PREFIX + 'val_',
 		CACHE_TTL_PREFIX = CACHE_PREFIX + 'ttl_',
 		CACHE_VARY_PREFIX = CACHE_PREFIX + 'vary_',
-		storage,
 		undef;
 
-	function cache(localStorage, window) {
+	function cache ( window, localStorage ) {
 		var moduleStorage = {};
+
+		if ( !localStorage ) {
+			// Trying to access storage with cookies disabled can throw
+			// security exceptions in some browsers like Firefox (BugId:94924)
+			try {
+				localStorage = window.localStorage;
+			} catch ( e ) {
+				localStorage = {};
+			}
+		}
 
 		/**
 		 * Gets a value from the storage
@@ -28,8 +37,8 @@
 		 *
 		 * @return {Mixed} Sored value or null
 		 */
-		function uniGet(key) {
-			if (moduleStorage[key] !== undef) {
+		function uniGet ( key ) {
+			if ( moduleStorage[key] !== undef ) {
 				return moduleStorage[key];
 			}
 
@@ -44,7 +53,7 @@
 		 * @param {String} key   Storage key
 		 * @param {Mixed}  value Value to store
 		 */
-		function uniSet(key, value) {
+		function uniSet ( key, value ) {
 			moduleStorage[key] = value;
 			localStorage[key] = value;
 		}
@@ -56,7 +65,7 @@
 		 *
 		 * @param {String} key Storage key
 		 */
-		function uniDel(key) {
+		function uniDel ( key ) {
 			delete moduleStorage[key];
 			delete localStorage[key];
 		}
@@ -71,18 +80,18 @@
 		 * @param {Integer} ttl       [OPTIONAL] TTL in seconds. If falsy: live forever
 		 * @param {Date}    customNow [OPTIONAL] Custom now (date object) for computing TTL
 		 */
-		function set(key, value, ttl, customNow) {
+		function set ( key, value, ttl, customNow ) {
 			var now = customNow || new Date();
 
-			ttl = parseInt(ttl, 10);
+			ttl = parseInt( ttl, 10 );
 
-			if (ttl) {
-				uniSet(CACHE_TTL_PREFIX + key, now.getTime() + ttl * 1000);
+			if ( ttl ) {
+				uniSet( CACHE_TTL_PREFIX + key, now.getTime() + ttl * 1000 );
 			} else {
-				uniDel(CACHE_TTL_PREFIX + key);
+				uniDel( CACHE_TTL_PREFIX + key );
 			}
 
-			uniSet(CACHE_VALUE_PREFIX + key, JSON.stringify(value));
+			uniSet( CACHE_VALUE_PREFIX + key, JSON.stringify( value ) );
 		}
 
 		/**
@@ -92,10 +101,10 @@
 		 *
 		 * @param {String} key Key to delete the value at
 		 */
-		function del(key) {
-			uniDel(CACHE_TTL_PREFIX + key);
-			uniDel(CACHE_VALUE_PREFIX + key);
-			uniDel(CACHE_VARY_PREFIX + key);
+		function del ( key ) {
+			uniDel( CACHE_TTL_PREFIX + key );
+			uniDel( CACHE_VALUE_PREFIX + key );
+			uniDel( CACHE_VARY_PREFIX + key );
 		}
 
 		/**
@@ -108,19 +117,19 @@
 		 *
 		 * @return {Mixed} The value stored in the key or null
 		 */
-		function get(key, customNow) {
-			var ttl = uniGet(CACHE_TTL_PREFIX + key),
+		function get ( key, customNow ) {
+			var ttl = uniGet( CACHE_TTL_PREFIX + key ),
 				value,
 				now = customNow || new Date();
 
-			if (!ttl || ttl > now.getTime()) {
-				value = uniGet(CACHE_VALUE_PREFIX + key);
-				if (value) {
-					return JSON.parse(value);
+			if ( !ttl || ttl > now.getTime() ) {
+				value = uniGet( CACHE_VALUE_PREFIX + key );
+				if ( value ) {
+					return JSON.parse( value );
 				}
 			}
 
-			del(key);
+			del( key );
 			return null;
 		}
 
@@ -134,9 +143,9 @@
 		 * @param {Integer} ttl       [OPTIONAL] TTL in seconds.
 		 * @param {Date}    customNow [OPTIONAL] Custom now (date object) for computing TTL
 		 */
-		function setVersioned(key, value, ttl, customNow){
-			set(key, value, ttl, customNow);
-			uniSet(CACHE_VARY_PREFIX + key, window.wgStyleVersion);
+		function setVersioned ( key, value, ttl, customNow ) {
+			set( key, value, ttl, customNow );
+			uniSet( CACHE_VARY_PREFIX + key, window.wgStyleVersion );
 		}
 
 		/**
@@ -149,14 +158,14 @@
 		 *
 		 * @return {Mixed} The value stored in the key or null
 		 */
-		function getVersioned(key, customNow){
-			var vary = uniGet(CACHE_VARY_PREFIX + key);
+		function getVersioned ( key, customNow ) {
+			var vary = uniGet( CACHE_VARY_PREFIX + key );
 
-			if(!vary || vary === window.wgStyleVersion) {
-				return get(key, customNow);
+			if ( !vary || vary === window.wgStyleVersion ) {
+				return get( key, customNow );
 			}
 
-			del(key);
+			del( key );
 			return null;
 		}
 
@@ -171,22 +180,14 @@
 	}
 
 	//UMD inclusive
-	if (!context.Wikia) {
+	if ( !context.Wikia ) {
 		context.Wikia = {};
 	}
 
-	// Trying to access storage with cookies disabled can throw
-	// security exceptions in some browsers like Firefox (BugId:94924)
-	try {
-		storage = context.localStorage;
-	} catch( e ) {
-		storage = {};
-	}
-
 	//namespace
-	context.Wikia.Cache = cache(storage, context);
+	context.Wikia.Cache = cache( context );
 
-	if (context.define && context.define.amd) {
-		context.define('wikia.cache', ['wikia.localStorage', 'wikia.window'], cache);
+	if ( context.define && context.define.amd ) {
+		context.define( 'wikia.cache', [ 'wikia.window', 'wikia.localStorage' ], cache );
 	}
-}(this));
+}( this ) );
