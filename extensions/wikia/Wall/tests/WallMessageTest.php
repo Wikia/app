@@ -16,7 +16,7 @@ class WallMessageTest extends WikiaBaseTest {
 	}
 
 	/*
-	 * is article comment/title is not in database yet, we should use the article comment title's text as a fallback
+	 * if article comment/title is not in database yet, we should use the article comment title's text as a fallback
 	 * to return wall owner name
 	 */
 	public function testGetWallOwnerACFallback() {
