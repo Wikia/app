@@ -510,10 +510,11 @@ class UserStatsService extends WikiaModel {
 			array('rev_user' => $this->userId),
 			__METHOD__,
 			array(
-				'ORDER BY' => 'rev_id ASC',
+				'ORDER BY' => 'rev_timestamp ASC',
 				'LIMIT' => '1'
 			)
 		);
+
 		$firstContributionTimestamp = null;
 		if( !empty($res) ) {
 			$firstContributionTimestamp = $res->firstContributionTimestamp;
@@ -551,6 +552,7 @@ class UserStatsService extends WikiaModel {
 				'LIMIT' => '1'
 			)
 		);
+
 		$lastContributionTimestamp = null;
 		if( !empty($res) ) {
 			$lastContributionTimestamp = $res->lastContributionTimestamp;
