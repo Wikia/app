@@ -35,7 +35,7 @@ function ( sections, window, $, mustache, toc ) {
 			id: header.id,
 			name: header.textContent.trim(),
 			level: level,
-			firstLevel: level === 2,
+			firstLevel: level === 1,
 			sections: []
 		};
 	}

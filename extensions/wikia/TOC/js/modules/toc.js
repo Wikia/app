@@ -32,19 +32,18 @@ define( 'wikia.toc', function() {
 			headerLevel,
 			i = 0,
 			obj,
-			header,
-			$header;
+			header;
 
 		for ( ; i < headersLength; i++ ) {
 			header = headers[ i ];
 			headerLevel = parseInt( header.nodeName.slice( 1 ), 10 ); // get position from header node (exp. <h2>)
 
 			if ( checkHeader ) {
-				$header = checkHeader( header );
+				header = checkHeader( header );
 			}
 
 			// skip corrupted TOC section element
-			if ( !$header ) {
+			if ( !header ) {
 				continue;
 			}
 
@@ -58,7 +57,7 @@ define( 'wikia.toc', function() {
 				}
 			}
 
-			obj = createSection( $header, level + 1 ); // create section object from HTML header node
+			obj = createSection( header, level + 1 ); // create section object from HTML header node
 
 			hToLevel[ headerLevel ] = level;
 			lastHeader = headerLevel;
