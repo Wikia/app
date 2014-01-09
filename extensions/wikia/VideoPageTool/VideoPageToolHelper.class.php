@@ -214,7 +214,7 @@ class VideoPageToolHelper extends WikiaModel {
 				$file = WikiaFileHelper::getVideoFileFromTitle( $title );
 				if ( !empty( $file ) ) {
 					$thumb = $file->transform( array( 'width' => self::THUMBNAIL_CATEGORY_WIDTH, 'height' => self::THUMBNAIL_CATEGORY_HEIGHT ) );
-					$videoThumb = $thumb->toHtml( [ 'duration' => true, 'useTemplate' => true ] );
+					$videoThumb = $thumb->toHtml( ['useTemplate' => true] );
 					$data[] = array(
 						'title' => $title->getText(),
 						'url'   => $title->getFullURL(),
