@@ -30,6 +30,8 @@ $commentBg: rgb(246,246,246);
 	color: grey;
 }
 
+$move-input: -10000px;
+
 .commFrm{
 	position: relative;
     margin: 5px 0;
@@ -38,8 +40,8 @@ $commentBg: rgb(246,246,246);
 	display: box;
 
 	//Fix for Android ~4 having its own overlay on top of input
-	left: -10000px;
-	-webkit-transform: translate3d(10000px, 0, 0);
+	left: $move-input;
+	-webkit-transform: translate3d($move-input, 0, 0);
 
 	&.open{
 		height: 100px;
