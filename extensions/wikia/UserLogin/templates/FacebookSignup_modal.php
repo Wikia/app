@@ -1,5 +1,4 @@
 <div class="UserLoginFacebook">
-	<h1><?= wfMessage('usersignup-facebook-heading')->escaped() ?></h1>
 	<section class="UserLoginFacebookWrapper">
 		<section class="UserLoginFacebookLeft">
 
