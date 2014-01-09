@@ -14,7 +14,7 @@ class WallMessage {
 	/**
 	 * @var $commentsIndex CommentsIndex
 	 */
-	public $commentsIndex;
+	public $commentsIndex = false;
 	/**
 	 * @var $helper WallHelper
 	 */
@@ -199,8 +199,8 @@ class WallMessage {
 	}
 
 	public function getCommentsIndex() {
-		if(empty($this->commentsIndex)) {
-			$this->commentsIndex = CommentsIndex::newFromId( $this->getId() );
+		if( false === $this->commentsIndex ) { // false means we didn't call newFromId yet
+			$this->commentsIndex = CommentsIndex::newFromId( $this->getId() ); // note: can return null
 		}
 
 		return $this->commentsIndex;
