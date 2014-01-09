@@ -172,14 +172,21 @@ class VideoPageToolHelper extends WikiaModel {
 	}
 
 	/**
-	 * Get Category data
-	 * @param string $categoryTitle
-	 * @return array $data
+	 * Get videos tagged with the category given by parameter $categoryTitle
+	 * @param string $categoryTitle A category name, or a title object for a category
+	 * @param int $limit The maximum number of videos to return
+	 * @return array An array of video data where each array element has the structure:
+	 *   [ title => 'Video Title',
+	 *     url   => 'http://url.to.video',
+	 *     thumb => '<thumbnail_html_snippet>'
 	 */
-	public function getCategoryData( $categoryTitle ) {
+	public function getCategoryData( $categoryTitle, $limit = 100 ) {
 		wfProfileIn( __METHOD__ );
 
-		$memcKey = $this->getMemcKeyCategoryData( $categoryTitle->getDBkey() );
+		// Accept either a category object or a category name
+		$dbKey = is_object($categoryTitle) ? $categoryTitle->getDBkey() : $categoryTitle;
+
+		$memcKey = $this->getMemcKeyCategoryData( $dbKey() );
 		$data = $this->wg->memc->get( $memcKey );
 		if ( !is_array( $data ) ) {
 			$db = wfGetDB( DB_SLAVE );
@@ -187,13 +194,13 @@ class VideoPageToolHelper extends WikiaModel {
 				array( 'page', 'video_info', 'categorylinks' ),
 				array( 'page_id', 'page_title' ),
 				array(
-					'cl_to' => $categoryTitle->getDBkey(),
+					'cl_to' => $dbKey,
 					'page_namespace' => NS_FILE,
 				),
 				__METHOD__,
 				array(
 					'ORDER BY' => 'added_at DESC, page_title',
-					'LIMIT' => 1000,
+					'LIMIT' => $limit,
 				),
 				array(
 					'video_info' => array( 'LEFT JOIN', 'page_title = video_title' ),
