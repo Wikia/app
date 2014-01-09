@@ -93,9 +93,23 @@
 				chars = this.value.length,
 				elemParent = $this.closest( '#feedbackDialogModal' ),
 				$counter = elemParent.find( '.comment-character-count' ),
-				$label = elemParent.find( '.comment-group label' );
+				$label = elemParent.find( '.comment-group label' ),
+				display = $counter.css( 'display' );
 
 			$counter.html( chars + ' / 1000' );
+
+			// Force re-paint HACK
+
+			// Please do not touch those two lines - repainting is breaking in
+			// some cases (mostly on subsequent opening the modal window,
+			// but sometimes on first and sometimes it just works) - another
+			// fix is toggling this element's CSS directly IN BROWSER'S INSPECTOR.
+
+			// We've tried different hacks (javascript, adding 3D acceleration in
+			// CSS, etc.), but it's only one that works.
+
+			$counter.css( 'display', 'none' ).height(); // Force re-paint HACK
+			$counter.css( 'display', display );         // Force re-paint HACK
 
 			if ( chars > 1000 ) {
 				$this.addClass( 'invalid' );
@@ -104,6 +118,13 @@
 				$this.removeClass( 'invalid' );
 				$label.removeClass( 'invalid' );
 			}
+		} ).on( 'change', '#feedback', function () {
+			// We also need to prevent repaint bug on select on feedback modal
+			var $select = $( this ),
+				display = $select.css( 'display' );
+
+			$select.css( 'display', 'none' ).height(); // Force re-paint HACK
+			$select.css( 'display', display );         // Force re-paint HACK
 		} );
 
 		$wikifeatures.find('.feedback' ).click( function ( e ) {
