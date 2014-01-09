@@ -632,20 +632,19 @@
 		 * @dataProvider getReturnToFromQueryDataProvider
 		 */
 		public function testGetReturnToFromQuery( $query, $isTitleBlacklisted, $expected, $message ) {
-			$loginControllerMock = $this->getMock( 'UserLoginSpecialController', [ 'getMainPagePartialUrl' ] );
+			$loginControllerMock = $this->getMock( 'UserLoginSpecialController', [ 'getMainPagePartialUrl', 'isTitleBlacklisted' ] );
 			$loginControllerMock->expects( $this->any() )
 				->method( 'getMainPagePartialUrl' )
 				->will( $this->returnValue( $expected ) );
-
-			$accountNavigationControllerMock = $this->getMockClass( 'AccountNavigationController', [ 'isBlacklisted' ] );
-			$accountNavigationControllerMock::staticExpects( $this->any() )
-				->method( 'isBlacklisted' )
+			$loginControllerMock->expects( $this->any() )
+				->method( 'isTitleBlacklisted' )
 				->will( $this->returnValue( $isTitleBlacklisted ) );
 
 			$getReturnToFromQueryMethod = new ReflectionMethod( 'UserLoginSpecialController', 'getReturnToFromQuery' );
 			$getReturnToFromQueryMethod->setAccessible( true );
 
-			$this->assertEquals( $expected, $getReturnToFromQueryMethod->invoke( $loginControllerMock, [$query] ), $message );
+			$result = $getReturnToFromQueryMethod->invoke( $loginControllerMock, $query );
+			$this->assertEquals( $expected, $result, $message );
 		}
 
 		public function getReturnToFromQueryDataProvider() {
@@ -667,6 +666,66 @@
 					'isTitleBlacklisted' => true,
 					'expected' => self::MAIN_PAGE_TITLE_TXT,
 					'message' => 'Invalid (blacklisted) title in query',
+				],
+			];
+		}
+
+		/**
+		 * @param String $query
+		 * @param String $expected
+		 * @param Array $wfArrayToCGI mocked results for global function wfArrayToCGI()
+		 * @param Array $wfCgiToArrayResult mocked results for global function wfCgiToArray()
+		 * @param String $message
+		 *
+		 * @dataProvider getReturnToQueryFromQueryDataProvider
+		 */
+		public function testGetReturnToQueryFromQuery( $query, $wfArrayToCGI, $wfCgiToArrayResult, $expected, $message ) {
+			$getReturnToQueryFromQueryMethod = new ReflectionMethod( 'UserLoginSpecialController', 'getReturnToQueryFromQuery' );
+			$getReturnToQueryFromQueryMethod->setAccessible( true );
+
+			$this->mockGlobalFunction( 'wfArrayToCGI', $wfArrayToCGI );
+
+			if( !empty( $wfCgiToArrayResult ) ) {
+				$this->mockGlobalFunction( 'wfCgiToArrayResult', $wfCgiToArrayResult );
+			}
+
+			$result = $getReturnToQueryFromQueryMethod->invoke( new UserLoginSpecialController(), $query );
+			$this->assertEquals( $expected, $result, $message );
+		}
+
+		public function getReturnToQueryFromQueryDataProvider() {
+			return [
+				[
+					'$query' => [],
+					'$wfArrayToCGI' => '',
+					'$wfCgiToArrayResult' => [],
+					'$expected' => '',
+					'$message' => 'Query without any parameters',
+				],
+				[
+					'$query' => [
+						'login' => self::TEST_USERNAME,
+						'returnto' => 'Special:UserLogin',
+						'editToken' => '123456789',
+					],
+					'$wfArrayToCGI' => 'login=' . self::TEST_USERNAME . '&returnto=Special%3AUserLogin&editToken=123456789',
+					'$wfCgiToArrayResult' => [],
+					'$expected' => 'login=' . self::TEST_USERNAME . '&returnto=Special%3AUserLogin&editToken=123456789',
+					'$message' => 'Query without returntoquery parameter',
+				],
+				[
+					'$query' => [
+						'login' => self::TEST_USERNAME,
+						'returnto' => 'Special:UserLogin',
+						// notice the returnto&login in previous returntoquery were different
+						// and are supposed to be overwritten
+						'returntoquery' => 'returnto=Main_page%3Alogin=Test%3AeditToken=123456789',
+						'editToken' => '123456789',
+					],
+					'$wfArrayToCGI' => 'login=' . self::TEST_USERNAME . '&returnto=Special%3AUserLogin&editToken=123456789',
+					'$wfCgiToArrayResult' => [],
+					'$expected' => 'login=' . self::TEST_USERNAME . '&returnto=Special%3AUserLogin&editToken=123456789',
+					'$message' => 'Query with returntoquery',
 				],
 			];
 		}

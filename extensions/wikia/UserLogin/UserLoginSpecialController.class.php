@@ -233,15 +233,24 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		return Title::newMainPage()->getPartialURL();
 	}
 
+	/**
+	 * @param String $title
+	 *
+	 * @return Boolean
+	 */
+	public function isTitleBlacklisted( $title ) {
+		return AccountNavigationController::isBlacklisted( $title );
+	}
+
 	private function getReturnToFromQuery( $query ) {
 		if( !is_array( $query ) ) {
 			return '';
 		}
 
 		$returnto = $this->getMainPagePartialUrl();
-		if( isset( $query['title'] ) && !AccountNavigationController::isBlacklisted( $query['title'] ) ) {
+		if( isset( $query['title'] ) && !$this->isTitleBlacklisted( $query['title'] ) ) {
 			$returnto = $query['title'] ;
-			unset($query['title']);
+			unset( $query['title'] );
 		}
 
 		return $returnto;
@@ -253,16 +262,15 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		}
 
 		// CONN-49 an edge-case when while being on Special:UserLogin you fail in logging-in
-		// and because of that the returntoquery gets longer and longer
+		// and because of that the returntoquery gets longer and longer with each failure
 		if( !empty( $query['returntoquery'] ) ) {
 			$prevReturnToQuery = wfCgiToArray( $query['returntoquery'] );
-			$query['returntoquery'] = '';
+			$query['returntoquery'] = [];
 		} else {
 			$prevReturnToQuery = [];
 		}
 
-		$returntoquery = wfArrayToCGI( $query, $prevReturnToQuery );
-		return $returntoquery;
+		return wfArrayToCGI( $query, $prevReturnToQuery );
 	}
 
 	public function providers() {
