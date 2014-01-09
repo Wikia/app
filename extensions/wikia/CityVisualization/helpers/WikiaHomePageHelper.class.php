@@ -294,6 +294,12 @@ class WikiaHomePageHelper extends WikiaModel {
 	public function saveStatsToWF($statsValues) {
 		WikiFactory::setVarByName('wgCorpMainPageStats', Wikia::COMMUNITY_WIKI_ID, $statsValues);
 		$this->wg->Memc->delete($this->getStatsMemcacheKey());
+
+		$corpWikisLangs = array_keys((new CityVisualization())->getVisualizationWikisData());
+		$wikiaHubsHelper = new WikiaHubsServicesHelper();
+		foreach ($corpWikisLangs as $lang) {
+			$wikiaHubsHelper->purgeHomePageVarnish($lang);
+		}
 	}
 
 	/**
