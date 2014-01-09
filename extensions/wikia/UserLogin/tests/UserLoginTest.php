@@ -650,6 +650,12 @@
 		public function getReturnToFromQueryDataProvider() {
 			return [
 				[
+					'query' => '',
+					'isTitleBlacklisted' => false,
+					'expected' => '',
+					'message' => 'Query is not an array',
+				],
+				[
 					'query' => [],
 					'isTitleBlacklisted' => false,
 					'expected' => self::MAIN_PAGE_TITLE_TXT,
@@ -696,25 +702,32 @@
 		public function getReturnToQueryFromQueryDataProvider() {
 			return [
 				[
-					'$query' => [],
-					'$wfArrayToCGI' => '',
-					'$wfCgiToArrayResult' => [],
-					'$expected' => '',
-					'$message' => 'Query without any parameters',
+					'query' => '',
+					'wfArrayToCGI' => '',
+					'wfCgiToArrayResult' => [],
+					'expected' => '',
+					'message' => 'Query is not an array',
 				],
 				[
-					'$query' => [
+					'query' => [],
+					'wfArrayToCGI' => '',
+					'wfCgiToArrayResult' => [],
+					'expected' => '',
+					'message' => 'Query without any parameters',
+				],
+				[
+					'query' => [
 						'login' => self::TEST_USERNAME,
 						'returnto' => 'Special:UserLogin',
 						'editToken' => '123456789',
 					],
-					'$wfArrayToCGI' => 'login=' . self::TEST_USERNAME . '&returnto=Special%3AUserLogin&editToken=123456789',
-					'$wfCgiToArrayResult' => [],
-					'$expected' => 'login=' . self::TEST_USERNAME . '&returnto=Special%3AUserLogin&editToken=123456789',
-					'$message' => 'Query without returntoquery parameter',
+					'wfArrayToCGI' => 'login=' . self::TEST_USERNAME . '&returnto=Special%3AUserLogin&editToken=123456789',
+					'wfCgiToArrayResult' => [],
+					'expected' => 'login=' . self::TEST_USERNAME . '&returnto=Special%3AUserLogin&editToken=123456789',
+					'message' => 'Query without returntoquery parameter',
 				],
 				[
-					'$query' => [
+					'query' => [
 						'login' => self::TEST_USERNAME,
 						'returnto' => 'Special:UserLogin',
 						// notice the returnto&login in previous returntoquery were different
@@ -722,10 +735,10 @@
 						'returntoquery' => 'returnto=Main_page%3Alogin=Test%3AeditToken=123456789',
 						'editToken' => '123456789',
 					],
-					'$wfArrayToCGI' => 'login=' . self::TEST_USERNAME . '&returnto=Special%3AUserLogin&editToken=123456789',
-					'$wfCgiToArrayResult' => [],
-					'$expected' => 'login=' . self::TEST_USERNAME . '&returnto=Special%3AUserLogin&editToken=123456789',
-					'$message' => 'Query with returntoquery',
+					'wfArrayToCGI' => 'login=' . self::TEST_USERNAME . '&returnto=Special%3AUserLogin&editToken=123456789',
+					'wfCgiToArrayResult' => [],
+					'expected' => 'login=' . self::TEST_USERNAME . '&returnto=Special%3AUserLogin&editToken=123456789',
+					'message' => 'Query with returntoquery',
 				],
 			];
 		}
