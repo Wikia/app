@@ -15,8 +15,10 @@ define( 'wikia.toc', function() {
 	 *                          sections: [] // This is required !!!!!!
 	 *                      }
 	 *                  }
-	 *  @param {function(object)} checkHeader - function that returns the heading DOM Element or jQuery object or false if the object
-	 *			is not valid section heading
+	 *  @param {function(object)} checkHeader [OPTIONAL] - function that returns object that will be passed
+	 *    to createSection as a header
+	 *    or a falsy value if the object is not valid section heading
+	 *    by default raw header will be passed to createSection function
 	 *  @returns {Object} - TOC data structure of all the subsections
 	 */
 
@@ -30,11 +32,11 @@ define( 'wikia.toc', function() {
 			level = -1,
 			lastHeader = -1,
 			headerLevel,
-			i = 0,
+			i,
 			obj,
 			header;
 
-		for ( ; i < headersLength; i++ ) {
+		for ( i = 0 ; i < headersLength; i++ ) {
 			header = headers[ i ];
 			headerLevel = parseInt( header.nodeName.slice( 1 ), 10 ); // get position from header node (exp. <h2>)
 
