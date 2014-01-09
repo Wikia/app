@@ -126,16 +126,11 @@ class UserStatsService extends WikiaModel {
 		wfProfileIn( __METHOD__ );
 
 		$key = wfSharedMemcKey( 'editcount-global', $this->userId );
+		$editCount = $this->wg->Memc->get($key);
 
-		if ( !$skipCache ) {
-
-			$editCount = $this->wg->Memc->get($key);
-
-			if ( !empty( $editCount ) ) {
-				wfProfileOut( __METHOD__ );
-				return $editCount;
-			}
-
+		if ( !empty( $editCount ) && !$skipCache ) {
+			wfProfileOut( __METHOD__ );
+			return $editCount;
 		}
 
 		$dbr = wfGetDB( DB_SLAVE, $this->wg->ExternalSharedDB );
@@ -207,7 +202,7 @@ class UserStatsService extends WikiaModel {
 
 
 	/**
-	 * Load user options localized per wiki from DB
+	 * Load user options loaclized per wiki from DB
 	 * (wikia_user_properties table)
 	 * @since Nov 2013
 	 * @author Kamil Koterba
@@ -222,17 +217,13 @@ class UserStatsService extends WikiaModel {
 
 		/* Get option value from memcache */
 		$key = wfSharedMemcKey( 'optionsWiki', $wikiId, $this->userId );
+		$this->optionsAllWikis[ $wikiId ] = $this->wg->Memc->get( $key );
 
-		if ( !$skipCache ) {
-
-			$this->optionsAllWikis[ $wikiId ] = $this->wg->Memc->get( $key );
-
-			if ( !empty( $this->optionsAllWikis[ $wikiId ] ) ) {
-				wfProfileOut( __METHOD__ );
-				return $this->optionsAllWikis[ $wikiId ];
-			}
-
+		if ( !empty( $this->optionsAllWikis[ $wikiId ] ) && !$skipCache ) {
+			wfProfileOut( __METHOD__ );
+			return $this->optionsAllWikis[ $wikiId ];
 		}
+
 
 		$dbName = ( $wikiId == $this->wg->CityId ) ? false : WikiFactory::IDtoDB( $wikiId );
 
@@ -439,7 +430,7 @@ class UserStatsService extends WikiaModel {
 			$wikiId = $this->wg->CityId;
 		}
 
-		$this->loadOptionsWiki( $wikiId ); // checks if isset and loads if empty (to make sure we don't loose anything
+		$this->getOptionsWiki( $wikiId ); // checks if isset and loads if empty (to make sure we don't loose anything
 
 		$dbw = $this->getWikiDB( DB_MASTER, $dbName );
 		$dbw->replace(
