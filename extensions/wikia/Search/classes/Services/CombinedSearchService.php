@@ -163,7 +163,7 @@ class CombinedSearchService {
 
 		$select->setRows(self::MAX_TOTAL_ARTICLES);
 		$select->setQuery( $query );
-		$select->createFilterQuery( '-(articleQuality_d:[0 TO ' . ( $minArticleQuality - self::EPSILON ) . '])' ); // article quality is null or in range $minArticleQuality..100
+		$select->createFilterQuery( '-(articleQuality_i:[0 TO ' . ( $minArticleQuality - self::EPSILON ) . '])' ); // article quality is null or in range $minArticleQuality..100
 		//add filters
 		$select->createFilterQuery( 'users' )->setQuery('activeusers:[0 TO *]');
 		$select->createFilterQuery( 'pages' )->setQuery('wikipages:[500 TO *]');
