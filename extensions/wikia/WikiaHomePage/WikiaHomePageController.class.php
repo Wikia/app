@@ -470,10 +470,18 @@ class WikiaHomePageController extends WikiaController {
 	 */
 	public function renderHubSection() {
 		// biz logic here
+		$heroUrl = $this->request->getVal('herourl');
+		$heroImageUrl = $this->request->getVal('heroimageurl');
+
+		// Don't show HUB if we don't have data ~ we don't have image URL and/or HUB URL
+		if ( empty( $heroImageUrl ) || empty( $heroUrl ) ) {
+			return false;
+		}
+
 		$this->classname = $this->request->getVal('classname');
 		$this->heading = $this->request->getVal('heading');
-		$this->heroimageurl = $this->request->getVal('heroimageurl');
-		$this->herourl = $this->request->getVal('herourl');
+		$this->heroimageurl = $heroImageUrl;
+		$this->herourl = $heroUrl;
 		$this->creative = $this->request->getVal('creative');
 		$this->moreheading = $this->request->getVal('moreheading');
 		$this->morelist = $this->request->getVal('morelist');
