@@ -7,6 +7,7 @@
 		const TEST_USERNAME = 'WikiaUser';
 		const TEST_USERID = 12345;
 		const TEST_EMAIL = 'devbox+test@wikia-inc.com';
+		const MAIN_PAGE_TITLE_TXT = 'Main_Page';
 
 		protected $skinOrg = null;
 
@@ -620,6 +621,54 @@
 				// 16 success -- temp user
 
 			);
+		}
+
+		/**
+		 * @param String $query
+		 * @param Boolean $isTitleBlacklisted
+		 * @param String $expected
+		 * @param String $message message displayed during unit tests execution
+		 *
+		 * @dataProvider getReturnToFromQueryDataProvider
+		 */
+		public function testGetReturnToFromQuery( $query, $isTitleBlacklisted, $expected, $message ) {
+			$loginControllerMock = $this->getMock( 'UserLoginSpecialController', [ 'getMainPagePartialUrl' ] );
+			$loginControllerMock->expects( $this->any() )
+				->method( 'getMainPagePartialUrl' )
+				->will( $this->returnValue( $expected ) );
+
+			$accountNavigationControllerMock = $this->getMockClass( 'AccountNavigationController', [ 'isBlacklisted' ] );
+			$accountNavigationControllerMock::staticExpects( $this->any() )
+				->method( 'isBlacklisted' )
+				->will( $this->returnValue( $isTitleBlacklisted ) );
+
+			$getReturnToFromQueryMethod = new ReflectionMethod( 'UserLoginSpecialController', 'getReturnToFromQuery' );
+			$getReturnToFromQueryMethod->setAccessible( true );
+
+			$this->assertEquals( $expected, $getReturnToFromQueryMethod->invoke( $loginControllerMock, [$query] ), $message );
+		}
+
+		public function getReturnToFromQueryDataProvider() {
+			return [
+				[
+					'query' => [],
+					'isTitleBlacklisted' => false,
+					'expected' => self::MAIN_PAGE_TITLE_TXT,
+					'message' => 'No title in query',
+				],
+				[
+					'query' => [ 'title' => 'Test title' ],
+					'isTitleBlacklisted' => false,
+					'expected' => 'Test title',
+					'message' => 'Valid title in query',
+				],
+				[
+					'query' => [ 'title' => 'Blacklisted test title' ],
+					'isTitleBlacklisted' => true,
+					'expected' => self::MAIN_PAGE_TITLE_TXT,
+					'message' => 'Invalid (blacklisted) title in query',
+				],
+			];
 		}
 
 	}

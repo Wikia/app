@@ -229,22 +229,26 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		$this->returntoquery = $this->getReturnToQueryFromQuery( $query );
 	}
 
+	public function getMainPagePartialUrl() {
+		return Title::newMainPage()->getPartialURL();
+	}
+
 	private function getReturnToFromQuery( $query ) {
 		if( !is_array( $query ) ) {
 			return '';
 		}
 
-		$returnto = Title::newMainPage()->getPartialURL();
+		$returnto = $this->getMainPagePartialUrl();
 
 		if( isset( $query['title'] ) ) {
 			if ( !AccountNavigationController::isBlacklisted( $query['title'] ) ) {
 				$returnto = $query['title'] ;
 			} else {
-				$returnto = Title::newMainPage()->getPartialURL();
+				$returnto = $this->getMainPagePartialUrl();
 			}
 			unset($query['title']);
 		} else {
-			$returnto = Title::newMainPage()->getPartialURL();
+			$returnto = $this->getMainPagePartialUrl();
 		}
 
 		return $returnto;
