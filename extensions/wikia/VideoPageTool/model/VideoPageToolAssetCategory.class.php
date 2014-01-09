@@ -39,7 +39,7 @@ class VideoPageToolAssetCategory extends VideoPageToolAsset {
 		$data = array(
 			'categoryName' => $title->getText(),
 			'displayTitle' => $this->displayTitle,
-			'thumbnails'   => $helper->getCategoryData( $title ),
+			'thumbnails'   => $helper->getVideosByCategory( $title ),
 		);
 
 		$assetData = array_merge( $data, parent::getAssetData() );
