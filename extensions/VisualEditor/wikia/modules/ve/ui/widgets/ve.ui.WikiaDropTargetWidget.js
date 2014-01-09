@@ -20,23 +20,21 @@ ve.ui.WikiaDropTargetWidget = function VeUiWikiaDropTargetWidget ( config ) {
 	OO.ui.Widget.call( this, config );
 
 	// Properties
-	this.$overlay = config.surface.$globalOverlay.find( '.ve-ui-window' );
-	this.$frame = config.frame.$document;
-	this.$insertMediaDialog = this.$overlay.find( '.ve-ui-window-frame' );
+	this.$overlay = config.$overlay.find( '.oo-ui-window' );
+	this.$document = config.$document;
 	this.fadeTimeout = null;
 
 	// Events
+	this.$document.on( 'dragenter dragover', ve.bind( this.onFileDrag, this ) );
 	this.$element.on( 'dragenter dragover', ve.bind( this.onFileDrag, this ) );
 	this.$element.on( 'drop', ve.bind( this.onFileDrop, this ) );
 
-	this.$frame.on( 'dragenter dragover', ve.bind( this.onFileDrag, this ) );
-
 	// Initialization
 	this.$element
-		.removeClass( 've-ui-widget' )
+		.removeClass( 'oo-ui-widget' )
 		.html( '<div>' + ve.msg( 'wikia-visualeditor-dialog-drop-target-callout' ) + '</div>' );
 
-	this.$element.addClass( 've-ui-widget-droptarget' ).prependTo( this.$insertMediaDialog );
+	this.$element.addClass( 've-ui-widget-droptarget' );
 };
 
 /* Inheritance */
