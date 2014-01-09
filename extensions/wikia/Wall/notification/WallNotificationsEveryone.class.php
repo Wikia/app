@@ -218,12 +218,12 @@ class WallNotificationsEveryone extends WallNotifications {
 
 	/**
 	 * Get notifications that must expire
-	 * @param $expireDays number of days before notification expires
+	 * @param integer $expireDays number of days before notification expires
 	 * @return array Result contains two arrays:
 	 * 		- the first one contains notification pages grouped by user_id and wiki_id
 	 *		- the second one contains id's to all notifications
 	 */
-	public function getExpiredNotifications( $expireDays ) {
+	private function getExpiredNotifications( $expireDays ) {
 		// SELECT wn.id, wn.user_id, wn.wiki_id, wn.unique_id
 		// FROM wall_notification wn
 		// JOIN wall_notification_queue wnq ON wnq.wiki_id = wn.wiki_id AND wnq.page_id = wn.unique_id
@@ -275,61 +275,78 @@ class WallNotificationsEveryone extends WallNotifications {
 	}
 
 	/**
-	 * Remove expired notifications from database and cache
+	 * Remove expired notifications from cache
 	 *
-	 * @param $expireDays number of days before the item expires
+	 * @param array $notifications grouped list of notifications
 	 */
-	public function removeExpiredNotifications( $expireDays ) {
-		list( $notifications, $notificationToDeleteIds ) = $this->getExpiredNotifications( $expireDays );
-		if ( !empty( $notificationToDeleteIds ) ) {
-			foreach( $notifications as $userId => $wikis ) {
-				foreach ( $wikis as $wikiId => $uniqueIds ) {
-					if( $this->isCachedData( $userId, $wikiId ) ) {
-						$memCacheSync = $this->getCache( $userId, $wikiId );
-						$this->lockAndSetData( $memCacheSync,
-							function() use( $memCacheSync, $userId, $wikiId, $uniqueIds ) {
-								$data = $this->getData( $memCacheSync, $userId, $wikiId );
-								foreach ( $uniqueIds as $uniqueId ) {
-									$this->remNotificationFromData( $data, $uniqueId );
-								}
-								return $data;
-							},
-							function() use( $memCacheSync ) {
-								// Delete the cache if we were unable to update to force a rebuild
-								$memCacheSync->delete();
+	private function removeExpiredNotificationsFromCache( $notifications ) {
+		foreach( $notifications as $userId => $wikis ) {
+			foreach ( $wikis as $wikiId => $uniqueIds ) {
+				if( $this->isCachedData( $userId, $wikiId ) ) {
+					$memCacheSync = $this->getCache( $userId, $wikiId );
+					$this->lockAndSetData( $memCacheSync,
+						function() use( $memCacheSync, $userId, $wikiId, $uniqueIds ) {
+							$data = $this->getData( $memCacheSync, $userId, $wikiId );
+							foreach ( $uniqueIds as $uniqueId ) {
+								$this->remNotificationFromData( $data, $uniqueId );
 							}
-						);
-					}
+							return $data;
+						},
+						function() use( $memCacheSync ) {
+							// Delete the cache if we were unable to update to force a rebuild
+							$memCacheSync->delete();
+						}
+					);
 				}
 			}
-
-			// delete ids by chunks as they can be many
-			while ( $chunk = array_splice( $notificationToDeleteIds, 0, self::DELETE_IDS_BATCH_SIZE )) {
-				$deleteIds = '(' . implode( ',', $chunk ) . ')';
-
-				$this->getDB(true)->delete( 'wall_notification',
-					array( 'id IN '. $deleteIds ),
-					__METHOD__
-				);
-			};
-
 		}
 	}
 
-	public function clearQueue() {
+	/**
+	 * Remove expired notifications from database
+	 * @param array $notificationToDeleteIds - array containing notification ids
+	 */
+	private function deleteNotificationsFromDB( $notificationToDeleteIds ) {
+		// delete ids by chunks as they can be many
+		while ( $chunk = array_splice( $notificationToDeleteIds, 0, self::DELETE_IDS_BATCH_SIZE )) {
+			$deleteIds = '(' . implode( ',', $chunk ) . ')';
+
+			$this->getDB(true)->delete( 'wall_notification',
+				array( 'id IN '. $deleteIds ),
+				__METHOD__
+			);
+		};
+	}
+
+	/**
+	 * Clears notification queues and expired notifications
+	 *
+	 * @param bool $onlyCache - clears only users' cache
+	 */
+	public function clearQueue( $onlyCache = false ) {
 		//TODO: it causes db deadlocks - bugid 97359
 		//this should be called at most once a day in a background task
 		wfProfileIn( __METHOD__ );
 
 		// Remove expired notifications
-		$this->removeExpiredNotifications( WallHelper::NOTIFICATION_EXPIRE_DAYS );
+		list( $notificationsToDelete, $notificationToDeleteIds ) =
+			$this->getExpiredNotifications( WallHelper::NOTIFICATION_EXPIRE_DAYS );
+
+		if ( !empty( $notificationToDeleteIds ) ) {
+			$this->removeExpiredNotificationsFromCache( $notificationsToDelete );
+			if ( !$onlyCache ) {
+				$this->deleteNotificationsFromDB( $notificationToDeleteIds );
+			}
+		}
 
 		//TODO: performance of this queries
-		$db = $this->getDB( true );
-		$db->query( 'delete from wall_notification_queue where datediff(NOW(), event_date) > ' .
-			WallHelper::NOTIFICATION_EXPIRE_DAYS );
-		$db->query( 'delete from wall_notification_queue_processed where datediff(NOW(), event_date) > ' .
-			WallHelper::NOTIFICATION_EXPIRE_DAYS );
+		if ( !$onlyCache ) {
+			$db = $this->getDB( true );
+			$db->query( 'delete from wall_notification_queue where datediff(NOW(), event_date) > ' .
+				WallHelper::NOTIFICATION_EXPIRE_DAYS );
+			$db->query( 'delete from wall_notification_queue_processed where datediff(NOW(), event_date) > ' .
+				WallHelper::NOTIFICATION_EXPIRE_DAYS );
+		}
 		wfProfileOut( __METHOD__ );
 	}
 }
