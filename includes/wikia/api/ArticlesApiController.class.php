@@ -79,7 +79,7 @@ class ArticlesApiController extends WikiaApiController {
 		if ( !empty( $category )) {
 			$category = Title::makeTitleSafe( NS_CATEGORY, str_replace( ' ', '_', $category ), false, false );
 
-			if ( !is_null( $category ) && $category->exists() ) {
+			if ( !is_null( $category ) ) {
 				self::followRedirect( $category );
 
 				$ids = self::getCategoryMembers( $category->getFullText(), 5000, '', '', 'timestamp' , 'desc' );
@@ -428,7 +428,7 @@ class ArticlesApiController extends WikiaApiController {
 		if ( !empty( $category ) ) {
 			$category = Title::makeTitleSafe( NS_CATEGORY, str_replace( ' ', '_', $category ), false, false );
 
-			if ( !is_null( $category ) && $category->exists() ) {
+			if ( !is_null( $category ) ) {
 				self::followRedirect( $category );
 
 				if ( !empty( $namespaces ) ) {
@@ -831,7 +831,9 @@ class ArticlesApiController extends WikiaApiController {
 	}
 
 	static private function followRedirect( &$category ) {
-		$redirect = (new WikiPage( $category ))->getRedirectTarget();
+		if ( $category instanceof Title && $category->exists() ) {
+			$redirect = (new WikiPage( $category ))->getRedirectTarget();
+		}
 
 		if ( !empty( $redirect ) ) {
 			$category = $redirect;
