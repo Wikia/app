@@ -49,14 +49,7 @@ class UserStatsService extends WikiaModel {
 	 */
 	public function resetEditCountWiki( $wikiId = 0 ) {
 		wfProfileIn(__METHOD__);
-
-		$dbName = false;
-		if ( $wikiId != 0 ) {
-			$dbName = WikiFactory::IDtoDB( $wikiId );
-		} else {
-			$wikiId = $this->wg->CityId;
-		}
-
+		$dbName = ( $wikiId != $this->wg->CityId || empty( $wikiId ) ) ? WikiFactory::IDtoDB( $wikiId ) : false;
 		$dbr = $this->getWikiDB( DB_SLAVE, $dbName );
 		$userName = $this->getUser()->getName();
 
@@ -92,7 +85,7 @@ class UserStatsService extends WikiaModel {
 	public function getEditCountWiki( $wikiId = 0, $skipCache = false ) {
 		wfProfileIn( __METHOD__ );
 
-		$wikiId = ( $wikiId == 0 ) ? $this->wg->CityId : $wikiId ;
+		$wikiId = ( empty($wikiId) ) ? $this->wg->CityId : $wikiId ;
 
 		$editCount = $this->getOptionWiki( 'editcount', $wikiId, $skipCache );
 
@@ -122,7 +115,7 @@ class UserStatsService extends WikiaModel {
 	 *
 	 * @return Int
 	 */
-	public function getEditCountGlobal( $wikiId = 0, $skipCache = false ) {
+	public function getEditCountGlobal( $wikiId, $skipCache = false ) {
 		wfProfileIn( __METHOD__ );
 
 		$key = wfSharedMemcKey( 'editcount-global', $this->userId );
@@ -157,8 +150,9 @@ class UserStatsService extends WikiaModel {
 				__METHOD__
 			);
 
-			$dbName = ( $wikiId == 0 ) ? false : WikiFactory::IDtoDB( $wikiId );
-			$dbw = wfGetDB( DB_MASTER, array(), $dbName );
+			$wikiId = ( empty($wikiId) ) ? $this->wg->CityId : $wikiId ;
+			$dbname = ( $wikiId != $this->wg->CityId ) ? WikiFactory::IDtoDB( $wikiId ) : false;
+			$dbw = wfGetDB( DB_MASTER, array(), $dbname );
 
 			//write to wikicities (acting 'user' will redirect result to wikicites)
 			$dbw->update(
@@ -188,7 +182,7 @@ class UserStatsService extends WikiaModel {
 	 * @param bool $skipCache skip cache, reload from DB
 	 * @return array
 	 */
-	public function getOptionsWiki( $wikiId = 0, $skipCache = false ) {
+	public function getOptionsWiki( $wikiId, $skipCache = false ) {
 		wfProfileIn(__METHOD__);
 
 		if ( !empty( $this->optionsAllWikis[ $wikiId ] ) ) {
@@ -211,9 +205,9 @@ class UserStatsService extends WikiaModel {
 	 * @param bool $skipCache, skip cache, reload from DB
 	 * @return array
 	 */
-	private function loadOptionsWiki( $wikiId = 0, $skipCache = false ) {
+	private function loadOptionsWiki( $wikiId, $skipCache = false ) {
 		wfProfileIn(__METHOD__);
-		$wikiId = ( $wikiId == 0 ) ? $this->wg->CityId : $wikiId ;
+		$wikiId = ( empty($wikiId) ) ? $this->wg->CityId : $wikiId ;
 
 		/* Get option value from memcache */
 		$key = wfSharedMemcKey( 'optionsWiki', $wikiId, $this->userId );
@@ -224,8 +218,7 @@ class UserStatsService extends WikiaModel {
 			return $this->optionsAllWikis[ $wikiId ];
 		}
 
-
-		$dbName = ( $wikiId == $this->wg->CityId ) ? false : WikiFactory::IDtoDB( $wikiId );
+		$dbName = ( $wikiId != $this->wg->CityId ) ? WikiFactory::IDtoDB( $wikiId ) : false;
 
 		/* Get option value from wiki specific user properties */
 		$dbr = $this->getWikiDB( DB_SLAVE, $dbName );
@@ -394,6 +387,8 @@ class UserStatsService extends WikiaModel {
 	public function getOptionWiki( $optionName, $wikiId = 0, $skipCache = false ) {
 		wfProfileIn( __METHOD__ );
 
+		$wikiId = ( empty($wikiId) ) ? $this->wg->CityId : $wikiId ;
+
 		// Get all options for wiki
 		$optionsWiki = $this->getOptionsWiki( $wikiId, $skipCache );
 
@@ -423,12 +418,8 @@ class UserStatsService extends WikiaModel {
 
 		wfProfileIn( __METHOD__ );
 
-		$dbName = false;
-		if ( $wikiId != 0 ) {
-			$dbName = WikiFactory::IDtoDB( $wikiId );
-		} else {
-			$wikiId = $this->wg->CityId;
-		}
+		$wikiId = ( empty($wikiId) ) ? $this->wg->CityId : $wikiId ;
+		$dbName = ( $wikiId != $this->wg->CityId ) ? WikiFactory::IDtoDB( $wikiId ) : false;
 
 		$this->getOptionsWiki( $wikiId ); // checks if isset and loads if empty (to make sure we don't loose anything
 
@@ -465,7 +456,7 @@ class UserStatsService extends WikiaModel {
 
 		$firstContributionTimestamp = $this->getOptionWiki( 'firstContributionTimestamp', $wikiId );
 
-		if( empty( $firstContributionTimestamp ) ) {
+		if( $firstContributionTimestamp === null or $firstContributionTimestamp === false ) {
 			// firstContributionTimestamp has not been initialized. do so.
 			$firstContributionTimestamp = $this->initFirstContributionTimestamp( $wikiId );
 		}
@@ -483,15 +474,10 @@ class UserStatsService extends WikiaModel {
 	 * @param int $wikiId Integer Id of wiki - specifies wiki from which to get editcount, 0 for current wiki
 	 * @return String Timestamp in format YmdHis e.g. 20131107192200 or empty string
 	 */
-	private function initFirstContributionTimestamp( $wikiId = 0 ) {
+	private function initFirstContributionTimestamp( $wikiId ) {
 		wfProfileIn( __METHOD__ );
 
-		$dbName = false;
-		if ( $wikiId != 0 ) {
-			$dbName = WikiFactory::IDtoDB( $wikiId );
-		} else {
-			$wikiId = $this->wg->CityId;
-		}
+		$dbName = ( $wikiId != $this->wg->CityId || empty( $wikiId ) ) ? WikiFactory::IDtoDB( $wikiId ) : false;
 
 		$dbr = $this->getWikiDB( DB_SLAVE, $dbName );
 
@@ -528,7 +514,9 @@ class UserStatsService extends WikiaModel {
 	private function getLastContributionTimestamp( $wikiId = 0 ) {
 		wfProfileIn( __METHOD__ );
 
-		$dbName = ( $wikiId == 0 ) ? false : WikiFactory::IDtoDB( $wikiId );
+		$wikiId = ( empty($wikiId) ) ? $this->wg->CityId : $wikiId ;
+
+		$dbName = ( $wikiId != $this->wg->CityId ) ? WikiFactory::IDtoDB( $wikiId ) : false;
 
 		/* Get lastContributionTimestamp from database */
 		$dbr = $this->getWikiDB( DB_SLAVE, $dbName );
