@@ -144,6 +144,13 @@ $messages = array_merge( $messages , array(
 'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
 'addnewtalksection-link' => '新しいセクションを開始する',
 
+// hubs
+'hub-Entertainment' => 'エンターテイメント',
+'hub-Gaming' => 'ゲーム',
+'hub-Video_Games' => 'ゲーム',
+'hub-Lifestyle' => 'ライフスタイル',
+'hub-Wikia' => 'Wikia',
+
 # former shared-* messages
 'shared-Oasis-footer-wikia-links' => "*http://ja.wikia.com/ウィキアについて|<span>ウィキアについて</span>
 *http://www.wikia.com/Hiring|キャリア
