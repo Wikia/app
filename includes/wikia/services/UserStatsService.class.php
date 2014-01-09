@@ -62,11 +62,10 @@ class UserStatsService extends WikiaModel {
 	 * @since Feb 2013
 	 * @author Kamil Koterba
 	 *
-	 * @param int $wikiId Integer Id of wiki - specifies wiki from which to get editcount, 0 for current wiki
+	 * @param $dbName String Name of wiki database, false to connect current wiki
 	 * @return Int Number of edits
 	 */
-	public function resetEditCountWiki( $wikiId = 0 ) {
-		$dbName = ( $wikiId != $this->wg->CityId || empty( $wikiId ) ) ? WikiFactory::IDtoDB( $wikiId ) : false;
+	public function resetEditCountWiki( $dbName = false ) {
 		$dbr = $this->getWikiDB( DB_SLAVE, $dbName );
 		$userName = $this->getUser()->getName();
 
@@ -82,8 +81,15 @@ class UserStatsService extends WikiaModel {
 			__METHOD__
 		);
 
-		// Store editcount value
-		$this->setOptionWiki( 'editcount', $editCount, $wikiId );
+		$dbw = $this->getWikiDB( DB_MASTER, $dbName );
+		$dbw->replace(
+			'wikia_user_properties',
+			array(),
+			array( 'wup_user' => $this->userId,
+			'wup_property' => 'editcount',
+			'wup_value' => $editCount),
+			__METHOD__
+		);
 
 		return $editCount;
 	}
@@ -103,13 +109,36 @@ class UserStatsService extends WikiaModel {
 
 		$wikiId = ( empty($wikiId) ) ? $this->wg->CityId : $wikiId ;
 
-		$editCount = $this->getOptionWiki( 'editcount', $wikiId, $skipCache );
+		/* Get editcount from memcache */
+		$key = wfSharedMemcKey( 'editcount', $wikiId, $this->userId );
+		$editCount = $this->wg->Memc->get($key);
 
-		if( $editCount === null or $editCount === false ) { // editcount has not been initialized. do so.
-
-			$editCount = $this->resetEditCountWiki( $wikiId );
-
+		if ( !empty( $editCount ) && !$skipCache ) {
+			wfProfileOut( __METHOD__ );
+			return $editCount;
 		}
+
+		$dbName = ( $wikiId != $this->wg->CityId ) ? WikiFactory::IDtoDB( $wikiId ) : false;
+
+		/* Get editcount from database */
+		$dbr = $this->getWikiDB( DB_SLAVE, $dbName );
+		$field = $dbr->selectField(
+			'wikia_user_properties',
+			'wup_value',
+			array( 'wup_user' => $this->userId,
+				'wup_property' => 'editcount' ),
+			__METHOD__
+		);
+
+		if( $field === null or $field === false ) { // editcount has not been initialized. do so.
+
+			$editCount = $this->resetEditCountWiki( $dbName );
+
+		} else {
+			$editCount = $field;
+		}
+
+		$this->wg->Memc->set( $key,$editCount, 86400 );
 
 		wfProfileOut( __METHOD__ );
 		return $editCount;
@@ -387,11 +416,26 @@ class UserStatsService extends WikiaModel {
 	private function getFirstContributionTimestamp( $wikiId = 0 ) {
 		wfProfileIn( __METHOD__ );
 
-		$firstContributionTimestamp = $this->getOptionWiki( 'firstContributionTimestamp', $wikiId );
+		$wikiId = ( empty($wikiId) ) ? $this->wg->CityId : $wikiId ;
 
-		if( $firstContributionTimestamp === null or $firstContributionTimestamp === false ) {
-			// firstContributionTimestamp has not been initialized. do so.
-			$firstContributionTimestamp = $this->initFirstContributionTimestamp( $wikiId );
+		$dbName = ( $wikiId != $this->wg->CityId ) ? WikiFactory::IDtoDB( $wikiId ) : false;
+
+		/* Get firstContributionTimestamp from wiki specific user properties */
+		$dbr = $this->getWikiDB( DB_SLAVE, $dbName );
+		$field = $dbr->selectField(
+			'wikia_user_properties',
+			'wup_value',
+			array( 'wup_user' => $this->userId,
+				'wup_property' => 'firstContributionTimestamp' ),
+			__METHOD__
+		);
+
+		if( $field === null or $field === false ) { // firstContributionTimestamp has not been initialized. do so.
+
+			$firstContributionTimestamp = $this->initFirstContributionTimestamp( $dbName );
+
+		} else {
+			$firstContributionTimestamp = $field;
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -404,13 +448,11 @@ class UserStatsService extends WikiaModel {
 	 * @since Nov 2013
 	 * @author Kamil Koterba
 	 *
-	 * @param int $wikiId Integer Id of wiki - specifies wiki from which to get editcount, 0 for current wiki
+	 * @param $dbName String wiki's database name - specifies wiki from which to get timestamp
 	 * @return String Timestamp in format YmdHis e.g. 20131107192200 or empty string
 	 */
-	private function initFirstContributionTimestamp( $wikiId ) {
+	private function initFirstContributionTimestamp( $dbName ) {
 		wfProfileIn( __METHOD__ );
-
-		$dbName = ( $wikiId != $this->wg->CityId || empty( $wikiId ) ) ? WikiFactory::IDtoDB( $wikiId ) : false;
 
 		$dbr = $this->getWikiDB( DB_SLAVE, $dbName );
 
@@ -428,7 +470,16 @@ class UserStatsService extends WikiaModel {
 		$firstContributionTimestamp = null;
 		if( !empty($res) ) {
 			$firstContributionTimestamp = $res->firstContributionTimestamp;
-			$this->setOptionWiki( 'firstContributionTimestamp', $firstContributionTimestamp, $wikiId );
+
+			$dbw = $this->getWikiDB( DB_MASTER, $dbName );
+			$dbw->replace(
+				'wikia_user_properties',
+				array(),
+				array( 'wup_user' => $this->userId,
+					'wup_property' => 'firstContributionTimestamp',
+					'wup_value' => $firstContributionTimestamp),
+				__METHOD__
+			);
 		}
 
 		wfProfileOut( __METHOD__ );
