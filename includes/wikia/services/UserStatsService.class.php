@@ -506,9 +506,13 @@ class UserStatsService extends WikiaModel {
 
 		$res = $dbr->selectRow(
 			'revision',
-			array('min(rev_timestamp) AS firstContributionTimestamp'),
+			array('rev_timestamp AS firstContributionTimestamp'),
 			array('rev_user' => $this->userId),
-			__METHOD__
+			__METHOD__,
+			array(
+				'ORDER BY' => 'rev_id ASC',
+				'LIMIT' => '1'
+			)
 		);
 		$firstContributionTimestamp = null;
 		if( !empty($res) ) {
@@ -539,9 +543,13 @@ class UserStatsService extends WikiaModel {
 
 		$res = $dbr->selectRow(
 			'revision',
-			array('max(rev_timestamp) AS lastContributionTimestamp'),
+			array('rev_timestamp AS lastContributionTimestamp'),
 			array('rev_user' => $this->userId),
-			__METHOD__
+			__METHOD__,
+			array(
+				'ORDER BY' => 'rev_timestamp DESC',
+				'LIMIT' => '1'
+			)
 		);
 		$lastContributionTimestamp = null;
 		if( !empty($res) ) {
