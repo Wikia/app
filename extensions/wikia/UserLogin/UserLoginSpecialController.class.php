@@ -239,16 +239,9 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		}
 
 		$returnto = $this->getMainPagePartialUrl();
-
-		if( isset( $query['title'] ) ) {
-			if ( !AccountNavigationController::isBlacklisted( $query['title'] ) ) {
-				$returnto = $query['title'] ;
-			} else {
-				$returnto = $this->getMainPagePartialUrl();
-			}
+		if( isset( $query['title'] ) && !AccountNavigationController::isBlacklisted( $query['title'] ) ) {
+			$returnto = $query['title'] ;
 			unset($query['title']);
-		} else {
-			$returnto = $this->getMainPagePartialUrl();
 		}
 
 		return $returnto;
