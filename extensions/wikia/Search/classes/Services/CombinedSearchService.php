@@ -17,7 +17,7 @@ class CombinedSearchService {
 	const SNIPPET_LENGTH = 200;
 	const IMAGE_SIZE = 80;
 	const TOP_ARTICLES_CACHE_TIME = 604800; // 60 * 60 * 24 * 7 - one week
-	const EPSILON = 0.001;
+	const ARTICLE_QUALITY_EPSILON = 1;
 
 	/**
 	 * @var bool
@@ -163,7 +163,7 @@ class CombinedSearchService {
 
 		$select->setRows(self::MAX_TOTAL_ARTICLES);
 		$select->setQuery( $query );
-		$select->createFilterQuery( '-(articleQuality_i:[0 TO ' . ( $minArticleQuality - self::EPSILON ) . '])' ); // article quality is null or in range $minArticleQuality..100
+		$select->createFilterQuery( 'article_quality')->setQuery( '-(article_quality_i:[0 TO ' . ( $minArticleQuality - self::ARTICLE_QUALITY_EPSILON ) . '])' ); // article quality is null or in range $minArticleQuality..100
 		//add filters
 		$select->createFilterQuery( 'users' )->setQuery('activeusers:[0 TO *]');
 		$select->createFilterQuery( 'pages' )->setQuery('wikipages:[500 TO *]');
