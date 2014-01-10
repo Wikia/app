@@ -3,10 +3,10 @@
  */
 define( 'views.videopagetool.carousel', [
 	'collections.videopageadmin.categorydata',
-    'models.videohomepage.categorythumb',
-    'models.videohomepage.categorycarousel',
-    'views.videopagetool.carouselthumb',
-    'templates.mustache'
+	'models.videohomepage.categorythumb',
+	'models.videohomepage.categorycarousel',
+	'views.videopagetool.carouselthumb',
+	'templates.mustache'
 ], function(
 	CategoryDatalCollection,
 	CategoryThumbModel,
