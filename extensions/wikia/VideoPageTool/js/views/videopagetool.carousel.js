@@ -1,11 +1,14 @@
+/**
+ * View for carousel wrapper.  Data is category display title and thumbs list
+ */
 define( 'views.videopagetool.carousel', [
-	'collections.videohomepage.categorycarousel',
+	'collections.videopageadmin.categorydata',
     'models.videohomepage.categorythumb',
     'models.videohomepage.categorycarousel',
     'views.videopagetool.carouselthumb',
     'templates.mustache'
 ], function(
-	CategoryCarouselCollection,
+	CategoryDatalCollection,
 	CategoryThumbModel,
 	CategoryCarouselModel,
 	CarouselThumbView,
@@ -15,33 +18,25 @@ define( 'views.videopagetool.carousel', [
 
 	var CarouselView = Backbone.View.extend( {
 		tagName: 'div',
-		className: '.carousel-wrapper',
-		initialize: function( options ) {
-			var thumbnails = [];
-
-			_.each( options.thumbnails, function( value ) {
-				thumbnails.push( new CategoryThumbModel( value ) );
-			} );
-
-			this.collection = new CategoryCarouselCollection( thumbnails );
-			this.model = new CategoryCarouselModel( { displayTitle: options.displayTitle } );
-
+		className: 'carousel-wrapper',
+		initialize: function() {
+			this.collection = new CategoryDatalCollection( this.model.attributes.thumbnails );
 			this.render();
 		},
 		template: Mustache.compile( templates.carousel ),
 		render: function() {
-			var that = this,
-				view;
+			var $carousel;
 
-			this.$el.html( this.template( this.model.attributes ) );
+			this.$el.html( this.template( this.model.toJSON() ) );
 
-			this.collection.each( function( model ) {
-				view = new CarouselThumbView({
-					model: model,
-					parentView: that
-				});
-				that.$el.append( view.$el );
-			});
+			$carousel = this.$el.find( '.category-carousel' );
+
+			this.collection.each( function( categoryData ) {
+				var view = new CarouselThumbView({
+					model: categoryData
+				} );
+				$carousel.append( view.$el );
+			} );
 
 			return this;
 		}

@@ -1,3 +1,6 @@
+/**
+ * view for individual carousel thumbs. Data is thumbnail and video title
+ */
 define( 'views.videopagetool.carouselthumb', [
 	'jquery',
 	'templates.mustache'

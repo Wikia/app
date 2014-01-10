@@ -1,9 +1,5 @@
 <? /* @var $assets array */ ?>
 
-<br /><br />
-
-<h2><?= wfMessage( 'videohomepage-latest-videos-header' ) ?></h2>
-
 <div class="latest-videos-wrapper"></div>
 
 <script type="text/template" id="carousel-wrapper">

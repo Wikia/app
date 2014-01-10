@@ -1,8 +1,12 @@
+/**
+ * view for video home page
+ */
 require( [
 		'views.videohomepage.featured',
 		'views.videohomepage.search',
-        'views.videopagetool.carousel'
-], function( FeaturedVideoView, SearchView, CarouselView ) {
+        'views.videopagetool.carousel',
+        'collections.videopageadmin.category'
+], function( FeaturedVideoView, SearchView, CarouselView, CategoriesCollection ) {
 
 	'use strict';
 	// mock a global object in lieu of having one already
@@ -20,16 +24,20 @@ require( [
 
 		views.videohomepage.search = new SearchView();
 
+		// Catagory carousels
 		views.videohomepage.categorycarousels = [];
 
-		_.each( Wikia.videoHomePage.categoryData, function( value ) {
-			var view = new CarouselView( {
-				thumbnails: value.thumbnails,
-				displayTitle: value.displayTitle
+		this.carousels = new CategoriesCollection( Wikia.videoHomePage.categoryData );
+
+		this.carousels.each( function( carouselData ) {
+			var carouselView = new CarouselView( {
+				model: carouselData // data includes carousel title and list of thumbs
 			} );
 
-			views.videohomepage.categorycarousels.push( view );
-			$categoriesContainer.append( view.$el );
+			// cache carousel view instances
+			views.videohomepage.categorycarousels.push( carouselView );
+			// append carousel wrapper DOM to home page
+			$categoriesContainer.append( carouselView.$el );
 		} );
 	} );
 } );
