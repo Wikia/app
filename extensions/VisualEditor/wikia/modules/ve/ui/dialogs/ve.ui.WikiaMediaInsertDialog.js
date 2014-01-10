@@ -51,6 +51,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 
 	// Properties
 	this.cartModel = new ve.dm.WikiaCart();
+	this.mediaPreview = new ve.ui.WikiaMediaPreviewWidget();
 	this.cart = new ve.ui.WikiaCartWidget( this.cartModel );
 	this.insertButton = new ve.ui.ButtonWidget( {
 		'$$': this.frame.$$,
@@ -99,8 +100,10 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	this.queryInput.$input.on( 'keydown', ve.bind( this.onQueryInputKeydown, this ) );
 	this.search.connect( this, {
 		'nearingEnd': 'onSearchNearingEnd',
-		'check': 'onSearchCheck'
+		'check': 'onSearchCheck',
+		'preview': 'onMediaPreview'
 	} );
+	this.mediaPreview.on( 'close', ve.bind( this.onMediaPreview, this ) );
 	this.upload.connect( this, uploadEvents );
 	this.queryUpload.connect( this, uploadEvents );
 	this.dropTarget.on( 'drop', ve.bind( this.onFileDropped, this ) );
@@ -238,6 +241,26 @@ ve.ui.WikiaMediaInsertDialog.prototype.onSearchCheck = function ( item ) {
 };
 
 /**
+ * Handle showing or hiding the media preview
+ *
+ * @method
+ * @param {Object|null} item The item to preview or `null` if closing the preview.
+ */
+ve.ui.WikiaMediaInsertDialog.prototype.onMediaPreview = function ( item ) {
+	if ( item ) {
+ 		this.mediaPreview.open( item.model );
+	} else {
+		if ( this.mediaPreview.$image ) {
+			this.mediaPreview.$image.remove();
+		}
+		if ( this.mediaPreview.$videoWrapper ) {
+			this.mediaPreview.$videoWrapper.remove();
+		}
+		this.mediaPreview.$.hide();
+	}
+};
+
+/**
  * Handle clicking on cart items.
  *
  * @method
@@ -270,7 +293,10 @@ ve.ui.WikiaMediaInsertDialog.prototype.onCartModelAdd = function ( items ) {
 			config.$license = this.$$( this.license.html );
 		}
 		page = new ve.ui.WikiaMediaPageWidget( item, config );
-		page.connect( this, { 'remove': 'onMediaPageRemove' } );
+		page.connect( this, {
+			'remove': 'onMediaPageRemove',
+			'preview': 'onMediaPreview'
+		} );
 		this.pages.addPage( item.getId(), { '$content': page.$ } );
 	}
 
@@ -701,6 +727,21 @@ ve.ui.WikiaMediaInsertDialog.prototype.onUploadSuccess = function ( data ) {
 		), true );
 	}
 };
+
+/**
+ * Overrides parent method in order to handle escape key differently
+ *
+ * @method
+ * @param {jQuery.Event} e The jQuery event Object.
+ */
+ve.ui.WikiaMediaInsertDialog.prototype.onFrameDocumentKeyDown = function ( e ) {
+	if ( e.which === ve.Keys.ESCAPE && this.mediaPreview.$.is( ':visible' ) ) {
+		this.onMediaPreview();
+		return false;
+	}
+	ve.ui.Dialog.prototype.onFrameDocumentKeyDown.call( this, e );
+};
+
 
 /* Registration */
 

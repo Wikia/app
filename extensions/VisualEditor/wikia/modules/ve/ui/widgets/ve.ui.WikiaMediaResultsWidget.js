@@ -61,12 +61,9 @@ ve.ui.WikiaMediaResultsWidget.prototype.onResultsCheck = function ( item ) {
  * @param {ve.ui.WikiaMediaOptionWidget} item Item whose state is changing
  */
 ve.ui.WikiaMediaResultsWidget.prototype.onResultsSelect = function ( item ) {
-	if ( item && !this.mediaPreview ) {
- 		this.mediaPreview = new ve.ui.WikiaMediaPreviewWidget( item.model );
-		this.mediaPreview.on( 'remove', ve.bind( function() {
-			this.mediaPreview = null;
-		}, this ) );
- 	}
+	if ( item ) {
+		this.emit( 'preview', item );
+	}
 
 	//Parent
 	ve.ui.SearchWidget.prototype.onResultsSelect;

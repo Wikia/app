@@ -4,14 +4,15 @@
 
 /* global mw, require */
 
-ve.ui.WikiaMediaPreviewWidget = function VeUiWikiaMediaPreviewWidget( model ) {
+ve.ui.WikiaMediaPreviewWidget = function VeUiWikiaMediaPreviewWidget() {
 
 	// Parent constructor
 	ve.ui.Widget.call( this );
 
 	// Properties
-	this.model = model;
+	this.model = null;
 	this.videoInstance = null;
+	this.$videoWrapper = null;
 
 	this.closeButton = new ve.ui.IconButtonWidget( {
 		'$$': this.$$,
@@ -20,8 +21,10 @@ ve.ui.WikiaMediaPreviewWidget = function VeUiWikiaMediaPreviewWidget( model ) {
 	} );
 
 	this.$titlebar = this.$$( '<div>' )
-		.text( this.model.title )
 		.addClass( 've-ui-wikiaMediaPreviewWidget-titlebar' );
+
+	this.$title = this.$$( '<span>' )
+		.addClass( 've-ui-wikiaMediaPreviewWidget-title' );
 
 	// Events
 	this.closeButton.connect( this, { 'click': 'onCloseClick' } );
@@ -30,20 +33,14 @@ ve.ui.WikiaMediaPreviewWidget = function VeUiWikiaMediaPreviewWidget( model ) {
 	// Initialization
 	this.closeButton.$
 		.addClass( 've-ui-wikiaMediaPreviewWidget-closeButton' )
-		.prependTo( this.$titlebar );
 
-	this.$titlebar.appendTo( this.$ );
+	this.$titlebar
+		.append( this.$title, this.closeButton.$ )
+		.appendTo( this.$ );
 
 	this.$.addClass( 've-ui-wikiaMediaPreviewWidget-overlay' )
 		.hide()
 		.appendTo( $( '.ve-ui-surface-overlay-global' ) );
-
-	// Init media
-	if( model.type === 'video' ) {
-		this.handleVideo();
-	} else {
-		this.handleImage();
-	}
 };
 
 /* Inheritance */
@@ -107,13 +104,13 @@ ve.ui.WikiaMediaPreviewWidget.prototype.handleVideo = function() {
  * @param {Object} data Response data from ApiVideoPreview
  */
 ve.ui.WikiaMediaPreviewWidget.prototype.embedVideo = function( data ) {
-	var $videoWrapper = this.$$( '<div>' )
+	this.$videoWrapper = this.$$( '<div>' )
 		.addClass( 've-ui-wikiaMediaPreviewWidget-videoWrapper' )
 		.appendTo( this.$.show() );
 
 	require( ['wikia.videoBootstrap'], ve.bind( function( VideoBootstrap ) {
 		this.videoInstance = new VideoBootstrap(
-			$videoWrapper[0],
+			this.$videoWrapper[0],
 			window.JSON.parse( data.videopreview.embedCode ),
 			've-preview'
 		);
@@ -126,7 +123,7 @@ ve.ui.WikiaMediaPreviewWidget.prototype.embedVideo = function( data ) {
  * @method
  */
 ve.ui.WikiaMediaPreviewWidget.prototype.onRequestVideoDone = function( data ) {
-	if( data.videopreview ) {
+	if ( data.videopreview ) {
 		this.embedVideo( data );
 	} else {
 		this.onRequestVideoFail( data );
@@ -137,7 +134,6 @@ ve.ui.WikiaMediaPreviewWidget.prototype.onRequestVideoDone = function( data ) {
  * Handle video preview request promise.fail
  * @method
  */
-
 ve.ui.WikiaMediaPreviewWidget.prototype.onRequestVideoFail = function() {
 	mw.config.get( 'GlobalNotification' ).show(
 		ve.msg( 'wikia-visualeditor-notification-video-preview-not-available' ),
@@ -147,10 +143,27 @@ ve.ui.WikiaMediaPreviewWidget.prototype.onRequestVideoFail = function() {
 };
 
 /**
- * Remove the preview overlay DOM object and fire event for instance removal.
+ * Open a media item
  * @method
+ * @param {Object} model The media item model to open
+ */
+ve.ui.WikiaMediaPreviewWidget.prototype.open = function( model ) {
+	this.model = model;
+	this.$title.text( this.model.title );
+
+	// Init media
+	if ( model.type === 'video' ) {
+		this.handleVideo();
+	} else {
+		this.handleImage();
+	}
+};
+
+/**
+ * Close the preview
+ * @method
+ * @emits close
  */
 ve.ui.WikiaMediaPreviewWidget.prototype.onCloseClick = function() {
-	this.$.remove();
-	this.emit( 'remove' );
+	this.emit( 'close' );
 };
