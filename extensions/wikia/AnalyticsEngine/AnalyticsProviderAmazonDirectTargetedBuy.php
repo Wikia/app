@@ -5,7 +5,7 @@ class AnalyticsProviderAmazonDirectTargetedBuy implements iAnalyticsProvider {
 	private static $code = <<< SCRIPT
 		<script>
 			require(['wikia.geo'], function (geo) {
-				if (geo.getCountryCode() === 'US') {
+				if (geo.getCountryCode() in %%COUNTRIES%%) {
 					var aax_src='3006';
 					var aax_url = encodeURIComponent(document.location);
 					try { aax_url = encodeURIComponent("" + window.top.location); } catch(e) {}
@@ -22,20 +22,27 @@ SCRIPT;
 
 	public static function isEnabled() {
 		return F::app()->wg->EnableAmazonDirectTargetedBuy
+			&& F::app()->wg->AmazonDirectTargetedBuyCountries
 			&& F::app()->wg->ShowAds
-			&& AdEngine2Controller::areAdsShowableOnPage();
+			&& AdEngine2Controller::areAdsShowableOnPage()
+			&& !F::app()->wg->wgAdDriverUseSevenOneMedia;
 	}
 
 	public function getSetupHtml($params = array()) {
 		static $called = false;
 
 		$code = '';
+		$countries = [];
+
+		foreach (F::app()->wg->AmazonDirectTargetedBuyCountries as $countryCode) {
+			$countries[$countryCode] = true;
+		}
 
 		if (!$called) {
 			$called = true;
 
 			if (self::isEnabled()) {
-				$code = self::$code;
+				$code = str_replace('%%COUNTRIES%%', json_encode($countries), self::$code);
 			}
 		}
 
