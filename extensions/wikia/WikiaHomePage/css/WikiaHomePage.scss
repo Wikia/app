@@ -763,6 +763,13 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 					margin-top: 4px;
 				}
 			}
+			h2 a{
+				color: inherit;
+				
+				&:hover {
+					text-decoration: none;
+				}
+			}
 			&:first-child {
 				margin-left: 0;
 			}
