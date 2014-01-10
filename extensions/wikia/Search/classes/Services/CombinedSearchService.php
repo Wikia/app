@@ -122,7 +122,7 @@ class CombinedSearchService {
 	 * @return array
 	 */
 	protected function querySolrForArticles($query, $namespaces, $maxArticlesPerWiki, $wikiId, $wikiLang) {
-		$requestedFields = ["title", "url", "id", "score", "pageid", "lang", "wid", "articleQuality", Utilities::field('html', $wikiLang)];
+		$requestedFields = ["title", "url", "id", "score", "pageid", "lang", "wid", "article_quality_i", Utilities::field('html', $wikiLang)];
 		$searchConfig = new Config;
 		$searchConfig->setQuery($query)
 			->setLimit($maxArticlesPerWiki)
@@ -145,7 +145,7 @@ class CombinedSearchService {
 	 * @param $lang
 	 */
 	protected function queryPhraseSolrForArticles( $query, $namespaces, $lang, $hubs = null ) {
-		$requestedFields = ['title' => Utilities::field('title', $lang), "url", "id", "score", "pageid", "lang", "wid", "articleQuality", Utilities::field('html', $lang)];
+		$requestedFields = ['title' => Utilities::field('title', $lang), "url", "id", "score", "pageid", "lang", "wid", "article_quality_i", Utilities::field('html', $lang)];
 
 		$config = (new Factory())->getSolariumClientConfig();
 		$client = new \Solarium_Client($config);
@@ -348,7 +348,7 @@ class CombinedSearchService {
 		$outputModel['title'] = $articleInfo['title'];
 		$outputModel['url'] = $articleInfo['url'];
 		$outputModel['lang'] = $articleInfo['lang'];
-//		$outputModel['quality'] = $articleInfo['articleQuality'];
+		$outputModel['quality'] = isset( $articleInfo['article_quality_i'] ) ? $articleInfo['article_quality_i'] : 0;
 
 		if ( isset($articleInfo[Utilities::field('html', $articleInfo['lang'])]) ) {
 			$fullText = $articleInfo[Utilities::field('html', $articleInfo['lang'])];
@@ -402,7 +402,7 @@ class CombinedSearchService {
 	protected function getTopArticles( $wikiId, $lang ) {
 		return \WikiaDataAccess::cache( wfSharedMemcKey( "CombinedSearchService", $wikiId, $lang ), self::TOP_ARTICLES_CACHE_TIME, function() use( $wikiId, $lang ) {
 			$timer = Time::start(["CombinedSearchService", "getTopArticles"]);
-			$requestedFields = [ "title", "url", "id", "score", "pageid", "lang", "wid", "articleQuality", Utilities::field('html', $lang) ];
+			$requestedFields = [ "title", "url", "id", "score", "pageid", "lang", "wid", "article_quality_i", Utilities::field('html', $lang) ];
 			$topArticlesMap = \DataMartService::getTopArticlesByPageview(
 				$wikiId,
 				null,
