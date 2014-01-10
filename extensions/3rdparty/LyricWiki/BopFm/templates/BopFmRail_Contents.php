@@ -13,9 +13,15 @@
 			
 			$artist="Cake";$songName="Dime"; // TODO: REMOVE
 			$pageUrl = urlencode($wg->Title->getFullURL());
-		?><a id="<?= $id ?>" data-width="<?= $width ?>" data-bop-link href="http://www.bop.fm/embed/<?= $artist ?>/<?= $songName ?>/<?= $pageUrl ?>">
+		?><a id="<?= $id ?>" data-width="<?= $width ?>" data-bop-link href="http://www.bop.fm/embed/<?= $artist ?>/<?= $songName ?>">
 			<?= $artist ?> - <?= $songName ?>
-		</a>
-		<script async src="http://assets.bop.fm/embed.js"></script>
+		</a><?php
+			// NOTE: This is the correct URL for the widget and we should revert to it when we can. At the
+			// moment, there is an incompatibility between our AMD implementation and that script.
+			//$scriptUrl = "http://assets.bop.fm/embed.js";
+			
+			// Temporary fix, to allow us to use a modified version of Bop.fm's code.
+			$scriptUrl = $wg->ScriptPath."/extensions/3rdparty/LyricWiki/BopFm/js/bopfm_embed.js";
+		?><script async src="<?= $scriptUrl; ?>"></script>
 	</div>
 </section>
