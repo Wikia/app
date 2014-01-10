@@ -48,7 +48,7 @@ class WallMessage {
 
 		if( $title instanceof Title && $title->exists() ) {
 			wfProfileOut(__METHOD__);
-			return  WallMessage::newFromTitle($title);
+			return WallMessage::newFromTitle($title);
 		}
 
 		if( $master == false ) {
@@ -370,7 +370,7 @@ class WallMessage {
 		return false;
 	}
 
-    public function setNotifyEveryone( $notifyEveryone ) {
+	public function setNotifyEveryone( $notifyEveryone ) {
 		if( $this->isMain() ) {
 			if( !$this->isAllowedNotifyEveryone() ) {
 				return false;
@@ -381,8 +381,8 @@ class WallMessage {
 			if ( $notifyEveryone ) {
 				$this->getArticleComment()->setMetaData( 'notify_everyone', time() );
 				$this->doSaveMetadata( $app->wg->User,
-                    wfMessage( 'wall-message-update-highlight-summary' )->inContentLanguage()->text(),
-                    false, true );
+					wfMessage( 'wall-message-update-highlight-summary' )->inContentLanguage()->text(),
+					false, true );
 				$rev = $this->getArticleComment()->mLastRevision;
 				$entity = WallNotificationEntity::createFromRev( $rev, $this->cityId );
 				$wne->addNotificationToQueue( $entity );
@@ -391,8 +391,8 @@ class WallMessage {
 				$pageId = $this->getId();
 				$wne->removeNotificationForPageId( $pageId );
 				$this->doSaveMetadata( $app->wg->User,
-                    wfMessage( 'wall-message-update-removed-highlight-summary' )->inContentLanguage()->text(),
-                    false, true );
+					wfMessage( 'wall-message-update-removed-highlight-summary' )->inContentLanguage()->text(),
+					false, true );
 			}
 		}
 	}
@@ -1029,7 +1029,7 @@ class WallMessage {
 
 	protected function customActionNotifyRC($user, $action, $reason) {
 		$articleId = $this->getId();
-		$target =  $this->getTitle();
+		$target = $this->getTitle();
 
 		RecentChange::notifyLog(
 			wfTimestampNow(),

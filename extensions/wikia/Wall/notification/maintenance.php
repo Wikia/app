@@ -27,7 +27,7 @@ if ( wfReadOnly() ) {
 	exit( RESULT_READ_ONLY );
 }
 
-$onlyCache = isset($options['only-cache']);
+$onlyCache = isset( $options['only-cache'] );
 
 $wallNotification = new WallNotificationsEveryone();
 $wallNotification->clearQueue( $onlyCache );

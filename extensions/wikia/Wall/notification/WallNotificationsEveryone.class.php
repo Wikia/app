@@ -78,7 +78,7 @@ class WallNotificationsEveryone extends WallNotifications {
 		$res = $this->getDB( false )->select( 'wall_notification_queue',
 			array( 'entity_key' ),
 			array(
-				'wiki_id  = ' . $this->cityId,
+				'wiki_id = ' . $this->cityId,
 				'event_date > ' . $preparedDbExpireTime
 			),
 			__METHOD__

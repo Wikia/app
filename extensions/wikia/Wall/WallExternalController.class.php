@@ -469,9 +469,9 @@ class WallExternalController extends WikiaController {
 		/**
 		 * @var $mw WallMessage
 		 */
-		$mw =  WallMessage::newFromId( $msgid );
+		$mw = WallMessage::newFromId( $msgid );
 		if ($mw) {
-			if($dir == 1) {
+			if( $dir == 1 ) {
 				$mw->setNotifyEveryone( true );
 				$this->response->setVal( 'newdir', 0 );
 				$this->response->setVal( 'newmsg', wfMsg( 'wall-message-unnotifyeveryone' ) );
