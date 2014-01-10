@@ -451,14 +451,14 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 	}
 
 	/**
-	 * get category data
+	 * Get videos by category
 	 * @requestParam string categoryName
 	 * @responseParam string $result [ok/error]
 	 * @responseParam string $msg - result message
-	 * @responseParam array $data - list of videos in the category
+	 * @responseParam array $videos - list of videos in the category
 	 * @responseParam integer $total - total number of videos in the category
 	 */
-	public function getCategoryData() {
+	public function getVideosByCategory() {
 		$categoryName = $this->getVal( 'categoryName', '' );
 
 		if ( empty( $categoryName ) ) {
@@ -475,12 +475,12 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 		}
 
 		$helper = new VideoPageToolHelper();
-		$data = $helper->getCategoryData( $title );
+		$videos = $helper->getVideosByCategory( $title );
 
 		$this->result = 'ok';
 		$this->msg = '';
-		$this->data = $data;
-		$this->total = count( $data );
+		$this->videos = $videos;
+		$this->total = count( $videos );
 
 	}
 

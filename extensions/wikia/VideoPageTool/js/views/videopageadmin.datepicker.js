@@ -9,11 +9,11 @@ define('views.videopageadmin.datepicker', [
 
 	function DatepickerView(params) {
 		this.$el = $(params.el);
-		this.collection = new DatepickerCollection({
+		this.collection = new DatepickerCollection( {
 				language: params.language,
 				controller: params.controller,
 				method: params.method
-		});
+		} );
 
 		this.currDate = new Date();
 		this.init();
@@ -28,7 +28,7 @@ define('views.videopageadmin.datepicker', [
 				// when collection returns, render the calendar
 				.success(function() {
 					that.render();
-				});
+				} );
 		},
 		state: {
 			// private constants used to track state of a date entry
@@ -36,7 +36,7 @@ define('views.videopageadmin.datepicker', [
 			_published: 1
 		},
 		render: function() {
-			this.$el.text('').datepicker({
+			this.$el.text('').datepicker( {
 						showOtherMonths: true,
 						selectOtherMoths: true,
 						dateFormat: '@',
@@ -47,7 +47,7 @@ define('views.videopageadmin.datepicker', [
 								return this.collection.collectData(year, month);
 						}, this),
 						onSelect: $.proxy(this.onSelect, this)
-				});
+				} );
 			return this;
 		},
 		destroy: function() {
@@ -89,14 +89,14 @@ define('views.videopageadmin.datepicker', [
 			}
 
 			qs(loc.protocol + '//' + loc.host + pathname + 'edit')
-				.setVal({
+				.setVal( {
 						language: this.collection.language,
 						date: timestamp/1000
-				})
+				} )
 				.goTo();
 		},
 		constructor: DatepickerView
 	};
 
 	return DatepickerView;
-});
+} );
