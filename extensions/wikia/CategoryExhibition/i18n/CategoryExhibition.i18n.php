@@ -105,6 +105,7 @@ $messages['br'] = array(
 );
 
 /** Catalan (català)
+ * @author Fitoschido
  * @author Marcmpujol
  */
 $messages['ca'] = array(
@@ -114,13 +115,13 @@ $messages['ca'] = array(
 	'category-exhibition-recentedits' => 'Editades recentement',
 	'category-exhibition-page-header' => 'Pàgines en la categoraa "$1"',
 	'category-exhibition-subcategories-header' => 'Subcategories',
-	'category-exhibition-media-header' => 'Multimèdia en la categoria "$1"',
+	'category-exhibition-media-header' => 'Multimèdia en la categoria «$1»',
 	'category-exhibition-blogs-header' => 'Entrades de bloc',
 	'category-exhibition-display-old' => 'Visualització de la llista de categories',
 	'category-exhibition-display-new' => "Visualització d'exposició de la categoria",
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -204,12 +205,16 @@ $messages['es'] = array(
 );
 
 /** Persian (فارسی)
+ * @author Reza1615
  * @author پاناروما
  */
 $messages['fa'] = array(
 	'category-exhibition-sorttype' => 'دسته بندی بر اساس نوع',
+	'category-exhibition-alphabetical' => 'الفبایی',
 	'category-exhibition-recentedits' => 'ویرایش‌های اخیر',
 	'category-exhibition-page-header' => 'صفحه‌های موجود در این رده «$1»',
+	'category-exhibition-subcategories-header' => 'زیررده‌ها',
+	'category-exhibition-blogs-header' => 'پست‌های وبلاگ',
 );
 
 /** Finnish (suomi)

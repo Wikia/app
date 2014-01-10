@@ -66,7 +66,13 @@ abstract class AbstractSelect
 	 * @var string
 	 */
 	const SOLR_CORE_CROSSWIKI = 'xwiki';
-	
+
+	/**
+	 * Number of articles found to set WikiMatch
+	 * @var int
+	 */
+	const ARTICLES_NUM_WIKIMATCH = 50;
+
 	/**
 	 * Used for tracking
 	 * @var string
@@ -178,7 +184,7 @@ abstract class AbstractSelect
 	 * @param array $fields allows us to apply a mapping
 	 * @return array
 	 */
-	public function searchAsApi( $fields = null, $metadata = false ) {
+	public function searchAsApi( $fields = null, $metadata = false, $keyField = null ) {
 		$resultSet = $this->search();
 		$config = $this->getConfig();
 
@@ -191,12 +197,12 @@ abstract class AbstractSelect
 					'batches' => $total > 0 ? $numPages : 0,
 					'currentBatch' => $total > 0 ? $config->getPage() : 0,
 					'next' => $total > 0 ? min( [ $numPages * $limit, $config->getStart() + $limit ] ) : 0,
-					'items' => $resultSet->toArray( $fields )
+					'items' => $resultSet->toArray( $fields, $keyField )
 					];
 		} else if ( $fields ) {
-			$response = $resultSet->toArray( $fields );
+			$response = $resultSet->toArray( $fields, $keyField );
 		} else {
-			$response = $resultSet->toArray();
+			$response = $resultSet->toArray( null, $keyField );
 		}
 		return $response;
 	}
@@ -251,7 +257,7 @@ abstract class AbstractSelect
 	/**
 	 * Registers meta-parameters for the query
 	 * @param Solarium_Query_Select $query
-	 * @return \Wikia\Search\QueryService\Select\AbstractSelect
+	 * @return Wikia\Search\QueryService\Select\AbstractSelect
 	 */
 	protected function registerQueryParams( Solarium_Query_Select $query ) {
 		$config = $this->getConfig();
@@ -283,7 +289,7 @@ abstract class AbstractSelect
 	/**
 	 * Configures filter queries to, for instance, prevent duplicate results from PTT, or enable better caching.
 	 * @param Solarium_Query_Select $query
-	 * @return \Wikia\Search\QueryService\Select\AbstractSelect
+	 * @return Wikia\Search\QueryService\Select\AbstractSelect
 	 */
 	protected function registerFilterQueries( Solarium_Query_Select $query ) {
 		$config = $this->getConfig();
@@ -296,7 +302,7 @@ abstract class AbstractSelect
 	/**
 	 * Used to register a filter query based on settings in the config.
 	 * Children can override this method optionally.
-	 * @return \Wikia\Search\QueryService\Select\AbstractSelect
+	 * @return Wikia\Search\QueryService\Select\AbstractSelect
 	 */
 	protected function registerFilterQueryForMatch() {
 		return $this;

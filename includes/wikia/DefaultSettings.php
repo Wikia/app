@@ -64,6 +64,13 @@ require_once ( $IP."/includes/wikia/Wikia.php" );
 require_once ( $IP."/includes/wikia/WikiaMailer.php" );
 require_once ( $IP."/extensions/Math/Math.php" );
 
+/**
+ * wikia library incudes
+ */
+require_once ( $IP."/lib/wikia/fluent-sql-php/src/init.php");
+
+FluentSql\StaticSQL::setClass("\\WikiaSQL");
+
 global $wgDBname;
 if($wgDBname != 'uncyclo') {
 	include_once( "$IP/extensions/wikia/SkinChooser/SkinChooser.php" );
@@ -214,6 +221,7 @@ $wgAutoloadClasses[ 'EasyTemplate' ] = "{$IP}/includes/wikia/EasyTemplate.php";
 /**
  * Custom wikia classes
  */
+$wgAutoloadClasses[ "ArticleQualityV1Service"         ] = "$IP/includes/wikia/services/ArticleQualityV1Service.php";
 $wgAutoloadClasses[ "GlobalTitle"                     ] = "$IP/includes/wikia/GlobalTitle.php";
 $wgAutoloadClasses[ "GlobalFile"                      ] = "$IP/includes/wikia/GlobalFile.class.php";
 $wgAutoloadClasses[ "WikiFactory"                     ] = "$IP/extensions/wikia/WikiFactory/WikiFactory.php";
@@ -255,6 +263,8 @@ $wgAutoloadClasses[ 'Wikia\\Measurements\\Time'       ] = "$IP/includes/wikia/me
 $wgAutoloadClasses[ 'MemcacheMoxiCluster'             ] = "{$IP}/includes/wikia/MemcacheMoxiCluster.class.php";
 $wgAutoloadClasses[ 'MemcacheClientShadower'          ] = "{$IP}/includes/wikia/MemcacheClientShadower.class.php";
 $wgAutoloadClasses[ 'Wikia\\SwiftStorage'             ] = "$IP/includes/wikia/SwiftStorage.class.php";
+$wgAutoloadClasses[ 'WikiaSQL'                        ] = "$IP/includes/wikia/WikiaSQL.class.php";
+$wgAutoloadClasses[ 'WikiaSQLCache'                   ] = "$IP/includes/wikia/WikiaSQLCache.class.php";
 
 /**
  * Resource Loader enhancements
@@ -427,6 +437,7 @@ $wgAutoloadClasses[ "WikiaApiQueryLastEditors"      ] = "$IP/extensions/wikia/Wi
 $wgAutoloadClasses[ "WikiaApiResetPasswordTime"     ] = "$IP/extensions/wikia/WikiaApi/WikiaApiResetPasswordTime.php";
 $wgAutoloadClasses[ "ApiRunJob"                     ] = "$IP/extensions/wikia/WikiaApi/ApiRunJob.php";
 $wgAutoloadClasses[ "ApiFetchBlob"                  ] = "$IP/includes/api/wikia/ApiFetchBlob.php";
+$wgAutoloadClasses[ "ApiLicenses"                   ] = "$IP/includes/wikia/api/ApiLicenses.php";
 
 /**
  * validators
@@ -497,6 +508,7 @@ $wgAPIModules[ "ajaxlogin"         ] = "WikiaApiAjaxLogin";
 $wgAPIModules[ "awcreminder"       ] = "WikiaApiCreatorReminderEmail";
 $wgAPIModules[ "runjob"            ] = "ApiRunJob";
 $wgAPIModules[ "fetchblob"         ] = "ApiFetchBlob";
+$wgAPIModules[ "licenses"          ] = "ApiLicenses";
 $wgAPIModules[ "resetpasswordtime" ] = 'WikiaApiResetPasswordTime';
 
 $wgUseAjax                = true;
@@ -1160,8 +1172,10 @@ $wgEnableAdEngineExt = true;
 /**
  * @name $wgAdDriverUseSevenOneMedia
  * Whether to use SevenOne Media ads (true) or the other ads (false)
+ * Null means true for languages within $wgAdDriverUseSevenOneMediaInLanguages
  */
-$wgAdDriverUseSevenOneMedia = false;
+$wgAdDriverUseSevenOneMedia = null;
+$wgAdDriverUseSevenOneMediaInLanguages = ['de'];
 
 /**
  * @name $wgAdVideoTargeting
@@ -1195,3 +1209,9 @@ $wgPagesWithNoAdsForLoggedInUsersOverriden = array();
  * Default is 'corporate' (LB+MR+skin only); 'all' may be useful sometimes
  */
 $wgPagesWithNoAdsForLoggedInUsersOverriden_AD_LEVEL = null;
+
+/**
+ * @name $wgOasisResponsive
+ * Enables the Oasis responsive layout styles
+ */
+$wgOasisResponsive = null;

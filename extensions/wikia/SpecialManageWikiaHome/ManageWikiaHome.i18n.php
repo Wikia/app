@@ -393,6 +393,13 @@ $messages['ca'] = array(
 	'manage-wikia-home-collection-add-file-button' => 'Afegir una foto',
 );
 
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'manage-wikia-home-wiki-list-blocked' => 'Блоктоьхна',
+);
+
 /** German (Deutsch)
  * @author Metalhead64
  */
@@ -562,6 +569,29 @@ $messages['es'] = array(
 	'manage-wikia-home-collection-hero-image-tooltip' => 'Esta imagen debe ser $1px x $2px',
 	'manage-wikia-home-collection-sponsor-image-tooltip' => 'Esta imagen debe ser $1px × $2px',
 	'manage-wikia-home-collection-add-file-button' => 'Añadir una imagen',
+);
+
+/** Persian (فارسی)
+ * @author Reza1615
+ */
+$messages['fa'] = array(
+	'manage-wikia-home-change-button' => 'تغییر',
+	'manage-wikia-home-wiki-filter' => 'پالایه',
+	'manage-wikia-home-wiki-filter-reset' => 'پاک‌کردن',
+	'manage-wikia-home-wiki-list-id' => 'شناسه',
+	'manage-wikia-home-wiki-list-blocked' => 'مسدود شده',
+	'manage-wikia-home-wiki-list-collection' => 'مجموعه‌ها',
+	'manage-wikia-home-wiki-list-blocked-no' => 'خیر',
+	'manage-wikia-home-wiki-list-blocked-yes' => 'بله',
+	'manage-wikia-home-wiki-list-promoted-no' => 'خیر',
+	'manage-wikia-home-wiki-list-promoted-yes' => 'بله',
+	'manage-wikia-home-wiki-list-official-no' => 'خیر',
+	'manage-wikia-home-wiki-list-official-yes' => 'بله',
+	'manage-wikia-home-modal-button-no' => 'خیر',
+	'manage-wikia-home-modal-button-yes' => 'بله',
+	'manage-wikia-home-collections-setup-save-button' => 'ذخیره',
+	'manage-wikia-home-collections-enabled-field-label' => 'فعال',
+	'manage-wikia-home-collections-name-field-label' => 'نام مجموعه',
 );
 
 /** Faroese (føroyskt)
@@ -788,6 +818,9 @@ $messages['lb'] = array(
  */
 $messages['lrc'] = array(
 	'manage-wikia-home-wiki-filter' => 'فيلتر',
+	'manage-wikia-home-wiki-filter-reset' => 'پاك كردن',
+	'manage-wikia-home-wiki-list-headline' => 'نوم ویکی',
+	'manage-wikia-home-wiki-list-blocked' => 'قلف بيه',
 	'manage-wikia-home-wiki-list-blocked-no' => 'نه',
 	'manage-wikia-home-wiki-list-blocked-yes' => 'هری',
 	'manage-wikia-home-wiki-list-promoted-no' => 'نه',
@@ -1077,6 +1110,7 @@ $messages['ps'] = array(
 );
 
 /** Portuguese (português)
+ * @author Hamilton Abreu
  * @author Luckas
  */
 $messages['pt'] = array(
@@ -1092,7 +1126,7 @@ $messages['pt'] = array(
 	'manage-wikia-home-modal-button-no' => 'Não',
 	'manage-wikia-home-modal-button-yes' => 'Sim',
 	'manage-wikia-home-modal-button-okay' => 'Aceitar',
-	'manage-wikia-home-collections-setup-save-button' => 'Salvar',
+	'manage-wikia-home-collections-setup-save-button' => 'Gravar',
 	'manage-wikia-home-collections-name-field-label' => 'Nome da coleção',
 	'manage-wikia-home-collections-sponsor-url-field-label' => 'URL do patrocinador',
 );
@@ -1420,11 +1454,16 @@ $messages['vi'] = array(
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Liuxinyu970226
+ * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
 	'managewikiahome' => '管理Wikia首页',
+	'manage-wikia-home-wrong-rights' => '您可能已登出，或者您没有权限使用此特殊页面。',
 	'manage-wikia-home-wikis-in-slots-heading' => '插槽部署',
 	'manage-wikia-home-wikis-in-slots-total' => '插槽总计：$1',
+	'manage-wikia-home-wikis-in-slots-success' => '数字插槽已被更改。',
+	'manage-wikia-home-collections-invalid-action' => '此操作不存在。',
+	'manage-wikia-home-verticals-proportions' => '每纵列的wiki数量',
 	'manage-wikia-home-change-button' => '更改',
 	'manage-wikia-home-wikis-in-visualization-heading' => '已实现可视化的维基列表',
 	'manage-wikia-home-wiki-filter' => '过滤器',

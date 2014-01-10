@@ -23,6 +23,8 @@ class SpecialStyleguideController extends WikiaSpecialPageController {
 		RenderContentOnlyHelper::setRenderContentVar( true );
 		RenderContentOnlyHelper::setRenderContentLevel( RenderContentOnlyHelper::LEAVE_NAV_ONLY );
 		$this->response->addAsset( 'ui_repo_api_js' );
+		// TODO: move it probably to modal_sample.json to load additional assets on Special:Styleguide
+		$this->response->addAsset( '//resources/wikia/ui_components/modal/js/modal.sample.js' );
 		$this->response->addAsset( 'extensions/wikia/SpecialStyleguide/css/SpecialStyleguide.scss' );
 
 		$this->wg->Out->setPageTitle( wfMessage( 'styleguide-pagetitle' )->plain() );

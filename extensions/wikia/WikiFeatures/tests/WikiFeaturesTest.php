@@ -136,8 +136,8 @@
 				'normal' => array('wgEnableAchievementsExt','wgEnablePageLayoutBuilder')
 			);
 			$exp4 = array (
-				array ('name' => 'wgEnableAchievementsExt', 'enabled' => true),
-				array ('name' => 'wgEnablePageLayoutBuilder', 'enabled' => true),
+				array ('name' => 'wgEnableAchievementsExt', 'enabled' => true, 'imageExtension' => '.png' ),
+				array ('name' => 'wgEnablePageLayoutBuilder', 'enabled' => true, 'imageExtension' => '.png' ),
 			);
 			$wiki_features5 = array_merge($wiki_features3, $wiki_features4);
 
@@ -174,7 +174,7 @@
 				'labs' => array('wgEnableChat'),
 			);
 			$exp4 = array (
-				array ('name' => 'wgEnableChat', 'enabled' => true, 'new' => false, 'active' => 500),
+				array ('name' => 'wgEnableChat', 'enabled' => true, 'new' => false, 'active' => 500, 'imageExtension' => '.png' ),
 			);
 			$cache_value4 = '500';
 			$wiki_features5 = array_merge($wiki_features3, $wiki_features4);
@@ -190,7 +190,7 @@
 			$release_date13 = array('wgEnableChat' => date('Y-m-d', strtotime('+20 days')));
 
 			$exp10 = array (
-				array ('name' => 'wgEnableChat', 'enabled' => true, 'new' => true, 'active' => 500),
+				array ('name' => 'wgEnableChat', 'enabled' => true, 'new' => true, 'active' => 500, 'imageExtension' => '.png' ),
 			);
 
 			return array(

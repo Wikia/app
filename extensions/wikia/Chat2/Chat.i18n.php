@@ -161,7 +161,8 @@ $messages['qqq'] = array(
 	'chat-ban-undolink' => '{{Identical|Undo}}',
 	'chat-ban-modal-button-ok' => 'Button text to submit the form inside a modal, banning a user from chat.',
 	'chat-ban-modal-button-change-ban' => "Button text to submit the form inside a modal, changing a user's ban from chat.",
-	'chat-ban-modal-button-cancel' => 'Button text to cancel the modal that bans a user from chat.',
+	'chat-ban-modal-button-cancel' => 'Button text to cancel the modal that bans a user from chat.
+{{Identical|Cancel}}',
 	'chat-ban-modal-change-ban-heading' => "Heading text for the modal for changing or ending a user's ban.",
 	'chat-ban-modal-change-ban-label' => 'This is the form label displayed when an admin user wants to change a chat ban of another user.',
 	'chat-ban-modal-end-ban' => "Option inside a select menu.  Choose this option if you want the end a user's ban.",
@@ -631,7 +632,7 @@ $messages['ce'] = array(
 	'chat-ban-option-list' => '2 сахьат:2 hours,1 де:1 day,3 де:3 days,1 кӀиран:1 week,2 кӀиран:2 weeks,1 бутт:1 month,3 бутт:3 months,6 бутт:6 months,1 шо:1 year,цlкъа:infinite',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Chmee2
  * @author Macinosak
  * @author Mormegil
@@ -960,6 +961,7 @@ Por favor, contáctalo para más información.',
 /** Persian (فارسی)
  * @author BlueDevil
  * @author Dalba
+ * @author Reza1615
  * @author جواد
  * @author پاناروما
  */
@@ -1852,17 +1854,28 @@ $messages['lb'] = array(
  */
 $messages['lrc'] = array(
 	'chat' => 'گپ زئن',
+	'chat-no-login' => 'شما سی چک چنه با وارد سیستم بویئیت',
+	'chat-no-login-text' => 'لطفا سی چک چنه وارد سیستم بویئت',
+	'chat-ban-contributions-heading' => 'جلؤگری د چک چنه',
+	'chat-ban-modal-label-expires' => 'تموم بیه آ',
+	'chat-ban-modal-label-reason' => 'دليل',
 	'chat-log-reason-undo' => 'انجوم ندی ئن',
 	'chat-ban-undolink' => 'انجوم ندی ئن',
 	'chat-ban-modal-button-ok' => 'جلۈ ای كارور بيئر',
 	'chat-ban-modal-button-cancel' => 'رد كردن',
+	'chat-ban-modal-change-ban-label' => 'آلشت بیه سی',
+	'chat-log-reason-banchange' => 'هیژ دلیلی دئه نبیه',
+	'chat-log-reason-banremove' => 'هیژ دلیلی دئه نبیه',
 	'chat-live2' => 'گپ زئن زنه!',
 	'chat-start-a-chat' => 'شرو د گپ زئن',
 	'chat-join-the-chat' => 'اومائن د گپ زئن',
+	'chat-member-since' => 'اندوم د $1',
+	'chat-great-youre-logged-in' => 'عالیه!شما اومایئت د سیستم',
 	'chat-user-menu-talk-page' => 'بلگه چك چنه',
 	'chat-user-menu-contribs' => 'هوميارا',
 	'chat-user-menu-private' => 'هوال خصوصی',
 	'chat-user-menu-kick' => 'حيرد كردن',
+	'chat-user-menu-ban' => 'جلوگری',
 	'chat-status-away' => 'دير',
 );
 
@@ -1923,6 +1936,13 @@ $messages['lt'] = array(
 	'group-chatmoderator' => 'Pokalbių moderatoriai',
 	'group-chatmoderator-member' => 'Pokalbių moderatorius',
 	'chat-browser-is-notsupported' => '	Jūsų naršyklė nepalaiko. Geriausiam patyrimui, naudokitės <a href="http://community.wikia.com/wiki/Help:Supported_browsers">naujesnę naršyklė</a>.',
+);
+
+/** Latvian (latviešu)
+ * @author Sg ghost
+ */
+$messages['lv'] = array(
+	'chat-user-menu-message-wall' => 'Lietotāja diskusija',
 );
 
 /** Macedonian (македонски)
@@ -2254,7 +2274,7 @@ $messages['nl'] = array(
 	'chat-you-were-banned' => 'U bent verbannen door $1.',
 	'chat-user-was-unbanned' => '$2 heeft de ban voor $1 beëindigd.',
 	'chat-ban-cannt-undo' => 'De verbanning is al ongedaan gemaakt',
-	'chat-user-permanently-disconnected' => 'U hebt niet langer een verbinding. Controleer uw internetverbinding en ververs de inhoud van uw webbrowser.',
+	'chat-user-permanently-disconnected' => 'U hebt niet langer een verbinding. Controleer uw internetverbinding en vernieuw de inhoud van uw webbrowser.',
 	'chat-inlinealert-a-made-b-chatmod' => '$1 heeft <strong>$2</strong> chatmoderator gemaakt.',
 	'chat-err-connected-from-another-browser' => 'U bent verbonden via een andere browser. Deze verbinding wordt nu gesloten.',
 	'chat-err-communicating-with-mediawiki' => 'Er is een fout opgetreden in de verbinding met de MediaWiki-server.',
@@ -3160,6 +3180,23 @@ Mangyaring makipag-ugnayan sa kanila para sa mas maraming kabatiran.',
 	'chat-status-away' => 'Nasa malayo',
 );
 
+/** Turkish (Türkçe)
+ * @author Incelemeelemani
+ */
+$messages['tr'] = array(
+	'chat-start-a-chat' => 'Sohbeti Başlat',
+	'chat-join-the-chat' => 'Sohbete Katıl',
+	'chat-user-menu-message-wall' => 'Mesaj Duvarı',
+	'chat-user-menu-talk-page' => 'Tartışma Sayfası',
+	'chat-user-menu-contribs' => 'Katkılar',
+	'chat-user-menu-private' => 'Özel Mesaj',
+	'chat-user-menu-kick' => 'At',
+	'chat-user-menu-ban' => 'Yasakla',
+	'chat-user-menu-private-block' => 'Özel Mesajları Engelle',
+	'chat-user-menu-private-allow' => 'Özel Mesajlara İzin Ver',
+	'chat-user-menu-private-close' => 'Özel Odayı Kapat',
+);
+
 /** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  */
@@ -3416,7 +3453,7 @@ $messages['zh-hans'] = array(
 	'chat-log-reason-banadd' => '在聊天室中打乱',
 	'chat-log-reason-undo' => '还原',
 	'chat-ban-undolink' => '还原',
-	'chat-ban-modal-button-ok' => '封禁该用户',
+	'chat-ban-modal-button-ok' => '禁止此用户',
 	'chat-ban-modal-button-change-ban' => '改变封禁',
 	'chat-ban-modal-button-cancel' => '取消',
 	'chat-ban-modal-change-ban-heading' => '更改此用户的聊天室禁令',

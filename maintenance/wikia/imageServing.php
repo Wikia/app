@@ -41,6 +41,16 @@ class ImageServingScript extends Maintenance {
 
 		$this->output("\nImages found: " . count($images) . "\n\n");
 		$this->output(implode("\n", $images) . "\n");
+
+		// get filtered list of images
+		$im = new ImageServing( array( $title->getArticleID() ) );
+		$images = reset($im->getImages(20));
+
+		$this->output("\nImages list with filters applied:\n");
+
+		foreach($images as $image) {
+			$this->output("* {$image['name']}\n");
+		}
 	}
 }
 

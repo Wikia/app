@@ -2759,11 +2759,17 @@ $templates
 	 * @return String: HTML fragment
 	 */
 	function getHeadScripts() {
-		global $wgResourceLoaderExperimentalAsyncLoading;
-
+		global $wgResourceLoaderExperimentalAsyncLoading, $wgEnableVisualEditorExt;
+		// Achtung! Achtung!
+		// This is a temporary fix for https://wikia-inc.atlassian.net/browse/VE-688 while we are working
+		// on more permanent and long term solution.
+		if ( !empty( $wgEnableVisualEditorExt ) ) {
+			$extraData = array( 've' => 1 );
+		} else {
+			$extraData = array();
+		}
 		// Startup - this will immediately load jquery and mediawiki modules
-		$scripts = $this->makeResourceLoaderLink( 'startup', ResourceLoaderModule::TYPE_SCRIPTS, true );
-
+		$scripts = $this->makeResourceLoaderLink( 'startup', ResourceLoaderModule::TYPE_SCRIPTS, true, $extraData );
 		// Load config before anything else
 		$scripts .= Html::inlineScript(
 			ResourceLoader::makeLoaderConditionalScript(
@@ -3151,8 +3157,8 @@ $templates
 		}
 
 		if ( $wgFavicon !== false ) {
-			// Wikia change begin - @author: hyun
-			$wgFavicon = wfReplaceImageServer($wgFavicon);
+			// Wikia change begin - @author: macbre
+			wfRunHooks('OutputPageFavicon', [&$wgFavicon]);
 			// Wikia change end
 
 			$tags[] = Html::element( 'link', array( 'rel' => 'shortcut icon', 'href' => $wgFavicon ) );

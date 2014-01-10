@@ -7,6 +7,14 @@ $messages['en'] = array(
 	'paginator-back'	=> 'Back',
 );
 
+/** Message documentation (Message documentation)
+ * @author Shirayuki
+ */
+$messages['qqq'] = array(
+	'paginator-next' => '{{Identical|Next}}',
+	'paginator-back' => '{{Identical|Back}}',
+);
+
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */
@@ -62,7 +70,7 @@ $messages['ce'] = array(
 	'paginator-next' => 'Кхин дӀа',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -97,6 +105,14 @@ $messages['diq'] = array(
 $messages['es'] = array(
 	'paginator-next' => 'Siguiente',
 	'paginator-back' => 'Atrás',
+);
+
+/** Persian (فارسی)
+ * @author Reza1615
+ */
+$messages['fa'] = array(
+	'paginator-next' => 'بعدی',
+	'paginator-back' => 'عقب',
 );
 
 /** Finnish (suomi)
@@ -167,6 +183,14 @@ $messages['ksh'] = array(
 $messages['lb'] = array(
 	'paginator-next' => 'Weider',
 	'paginator-back' => 'Zréck',
+);
+
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'paginator-next' => 'نها',
+	'paginator-back' => 'دما',
 );
 
 /** Macedonian (македонски)

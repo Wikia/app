@@ -247,14 +247,10 @@ class ArticleComment {
 
 		$parser->ac_metadata = [];
 
-		// Always tidy Article Comment markup to avoid breakage of surrounding markup
-		global $wgAlwaysUseTidy;
-		$oldWgAlwaysUseTidy = $wgAlwaysUseTidy;
-		$wgAlwaysUseTidy = true;
-
 		$head = $parser->parse( $rawtext, $this->mTitle, ParserOptions::newFromContext( RequestContext::getMain() ) );
 
-		$this->mText = $head->getText();
+		$this->mText = wfFixMalformedHTML( $head->getText() );
+
 		$this->mHeadItems = $head->getHeadItems();
 
 		if( isset( $parser->ac_metadata ) ) {
@@ -264,9 +260,6 @@ class ArticleComment {
 		}
 
 		ParserPool::release( $parser );
-
-		// Restore old value of $wgAlwaysUseTidy
-		$wgAlwaysUseTidy = $oldWgAlwaysUseTidy;
 
 		return $this->mText;
 	}
@@ -568,11 +561,14 @@ class ArticleComment {
 	 * @returns boolean
 	 */
 	public static function canComment( Title $title = null ) {
-		global $wgTitle;
+		global $wgTitle, $wgArticleCommentsNamespaces;
 
 		$canComment = true;
 		$title = is_null( $title ) ? $wgTitle : $title;
-
+		
+		if ( !in_array( $title->getNamespace(), $wgArticleCommentsNamespaces ) ) {
+			$canComment = false;
+		}
 		if ( self::isBlog( $title ) ) {
 			$props = BlogArticle::getProps( $title->getArticleID() );
 

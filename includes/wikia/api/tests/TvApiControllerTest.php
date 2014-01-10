@@ -13,6 +13,130 @@ namespace Wikia\api;
 class TvApiControllerTest extends \WikiaBaseTest {
 
 	private $mockGlobalTitle;
+	private $responseValues;
+
+	/**
+	 * @var Boolean
+	 */
+	private $org_wgDevelEnvironment;
+
+	public function setUp() {
+		global $wgDevelEnvironment;
+		$this->org_wgDevelEnvironment = $wgDevelEnvironment;
+		$wgDevelEnvironment = true;
+		parent::setUp();
+	}
+
+	public function tearDown() {
+		global $wgDevelEnvironment;
+		$wgDevelEnvironment = $this->org_wgDevelEnvironment;
+		parent::tearDown();
+	}
+
+	public function testCheckArticleByQuality() {
+		$mock = $this->getMockBuilder( "\TvApiController" )
+			->disableOriginalConstructor()
+			->setMethods( [ '__construct' ] )
+			->getMock();
+
+		$mockService = $this->getMockBuilder( "\ArticleQualityV1Service" )
+			->disableOriginalConstructor()
+			->setMethods( [ '__construct', 'setArticleById', 'getArticleQuality' ] )
+			->getMock();
+
+		$mockService->expects( $this->any() )
+			->method( 'getArticleQuality' )
+			->will( $this->returnValue( 10 ) );
+
+		$refl = new \ReflectionMethod( $mock, 'checkArticleByQuality' );
+
+		$refl->setAccessible( true );
+
+		$article = [ 'articleId' => 1 ];
+		$res_article = $refl->invoke( $mock, $article, 9, $mockService );
+		$this->assertEquals( $article, $res_article );
+
+		$res_article = $refl->invoke( $mock, $article, 11, $mockService );
+		$this->assertEquals( null, $res_article );
+
+	}
+
+	public function testGetEpisodeUrlDevOrSandbox() {
+
+		$mock = $this->getMockBuilder( "\TvApiController" )
+			->disableOriginalConstructor()
+			->setMethods( ['__construct', 'getExactMatch','getResponse','setWikiVariables','getApiVersion','checkArticleByQuality'] )
+			->getMock();
+
+		$mock->expects( $this->any() )
+			->method( 'getExactMatch' )
+			->will( $this->returnValue(['url'=>'http://unittest.wikia.com/url', 'contentUrl'=>'http://unittest.wikia.com/contentUrl', 'articleId' => 8888]) );
+
+		$mock->expects( $this->any() )
+			->method( 'setWikiVariables' )
+			->will( $this->returnValue(true));
+
+		$mock->expects( $this->any() )
+			->method( 'getApiVersion' )
+			->will( $this->returnValue('test'));
+
+		$mock->expects( $this->any() )
+			->method( 'checkArticleByQuality' )
+			->will( $this->returnCallback( [ $this, 'mock_checkArticleByQuality' ] ) );
+
+		$this->getStaticMethodMock( '\WikiFactory', 'getCurrentStagingHost' )
+			->expects( $this->any() )
+			->method( 'getCurrentStagingHost' )
+			->will( $this->returnCallback( [ $this, 'mock_getCurrentStagingHost' ] ) );
+
+		$mockRequest = $this->getMockBuilder( "\WikiaRequest" )
+			->disableOriginalConstructor()
+			->setMethods( [ '__construct', 'getInt' ] )
+			->getMock();
+
+		$mockRequest->expects( $this->any() )
+			->method( 'getInt' )
+			->will( $this->returnValue( 0 ) );
+
+		$mockResponse = $this->getMockBuilder( "\WikiaResponse" )
+			->disableOriginalConstructor()
+			->setMethods( [ '__construct', 'setValues', 'setCacheValidity' ] )
+			->getMock();
+
+		$mockResponse->expects( $this->any() )
+			->method( 'setValues' )
+			->will( $this->returnCallback( [ $this, 'mock_setValues' ] ) );
+
+		$mock->expects( $this->any() )
+			->method( 'getResponse' )
+			->will( $this->returnValue($mockResponse));
+
+		$this->responseValues = null;
+		$mock->request = $mockRequest;
+		$mock->getEpisode();
+
+		$this->assertArrayHasKey('url',$this->responseValues);
+		$this->assertEquals( 'http://newhost/url',  $this->responseValues['url'] );
+
+		$this->assertArrayHasKey('contentUrl',$this->responseValues);
+		$this->assertEquals( 'http://newhost/contentUrl',  $this->responseValues['contentUrl'] );
+
+	}
+
+	public function mock_getCurrentStagingHost($arg1, $arg2)
+	{
+		return 'newhost';
+	}
+
+	public function mock_setValues($values)
+	{
+		$this->responseValues = $values;
+	}
+
+	public function mock_checkArticleByQuality($arg1, $arg2)
+	{
+		return $arg1;
+	}
 
 	public function testGetTitle() {
 
@@ -31,11 +155,11 @@ class TvApiControllerTest extends \WikiaBaseTest {
 
 		$this->setMockVariables( false, 0, 'a0', 'b0', 'c0', false );
 
-		$this->assertEquals( ['id' => 1, 'title' => 'a1', 'url' => 'b1', 'ns' => 'c1'], $refl->invoke( $mock, 'test number one' ) );
+		$this->assertEquals( ['articleId' => 1, 'title' => 'a1', 'url' => 'b1' ], $refl->invoke( $mock, 'test number one' ) );
 
-		$this->assertEquals( ['id' => 2, 'title' => 'a2', 'url' => 'b2', 'ns' => 'c2'], $refl->invoke( $mock, 'test number two' ) );
+		$this->assertEquals( ['articleId' => 2, 'title' => 'a2', 'url' => 'b2'], $refl->invoke( $mock, 'test number two' ) );
 
-		$this->assertEquals( ['id' => 30, 'title' => 'a3', 'url' => 'b3', 'ns' => 'c3'], $refl->invoke( $mock, 'test_redirect' ) );
+		$this->assertEquals( ['articleId' => 30, 'title' => 'a3', 'url' => 'b3'], $refl->invoke( $mock, 'test_redirect' ) );
 
 	}
 

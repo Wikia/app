@@ -41,6 +41,7 @@ class Config
 	const RANK_NEWEST               = 'newest';
 	const RANK_OLDEST               = 'oldest';
 	const RANK_RECENTLY_MODIFIED    = 'recently-modified';
+	const RANK_NEWEST_PAGE_ID       = 'newest-pageid';
 	const RANK_STABLE               = 'stable';
 	const RANK_MOST_VIEWED          = 'most-viewed';
 	const RANK_FRESHEST             = 'freshest';
@@ -166,12 +167,19 @@ class Config
 	protected $commercialUse;
 
 	/**
+	 * Minimum article (filter)
+	 * @var int
+	 */
+	protected  $minArticleQuality;
+
+	/**
 	 * This array allows us to associate sort arguments from the request with the appropriate sorting format
 	 * @var array
 	 */
 	protected $rankOptions = [
 			self::RANK_DEFAULT           => [ 'score', Solarium_Query_Select::SORT_DESC ],
 			self::RANK_NEWEST            => [ 'created', Solarium_Query_Select::SORT_DESC ],
+			self::RANK_NEWEST_PAGE_ID    => [ 'pageid', Solarium_Query_Select::SORT_DESC ],
 			self::RANK_OLDEST            => [ 'created', Solarium_Query_Select::SORT_ASC  ],
 			self::RANK_RECENTLY_MODIFIED => [ 'touched', Solarium_Query_Select::SORT_DESC ],
 			self::RANK_STABLE            => [ 'touched', Solarium_Query_Select::SORT_ASC  ],
@@ -282,6 +290,7 @@ class Config
 				];
 
 		$this->filterCodes = array_merge( $this->filterCodes, $dynamicFilterCodes );
+		$this->minArticleQuality = 0;
 
 		$this->configureByArray( $params );
 	}
@@ -415,6 +424,23 @@ class Config
 			$this->setSort( $sort[0], $sort[1] );
 		}
 		return $this;
+	}
+
+	/**
+	 * Sets minimum article quality to to filter by
+	 * @param $articleQuality
+	 */
+	public function setMinArticleQuality( $minArticleQuality ) {
+		$this->minArticleQuality = (int)$minArticleQuality;
+		return $this;
+	}
+
+	/**
+	 * Sets minimum article quality to to filter by
+	 * @param $articleQuality
+	 */
+	public function getMinArticleQuality() {
+		return $this->minArticleQuality;
 	}
 
 	/**
@@ -911,7 +937,6 @@ class Config
 	 */
 	public function setWikiId( $id ) {
 		$this->wikiId = $id;
-		//die("wikiid:$id");
 		return $this;
 	}
 

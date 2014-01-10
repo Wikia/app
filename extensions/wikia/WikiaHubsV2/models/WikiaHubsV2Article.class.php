@@ -21,9 +21,6 @@ class WikiaHubsV2Article extends Article {
 	public function view() {
 		wfProfileIn(__METHOD__);
 
-		// let MW handle basic stuff
-		parent::view();
-
 		$params = array();
 		if (!empty($this->verticalId)) {
 			$params['verticalid'] = $this->verticalId;

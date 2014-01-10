@@ -66,7 +66,7 @@ $messages['ca'] = array(
 	'randomwiki' => "Wiki a l'atzar",
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Mormegil
  */
 $messages['cs'] = array(
@@ -353,6 +353,14 @@ $messages['te'] = array(
 $messages['tl'] = array(
 	'randomwiki-desc' => 'Nagpapahintulot sa mga tagagamit na magalugat ang alin mang wiki',
 	'randomwiki' => 'Alinmang Wiki',
+);
+
+/** Turkish (Türkçe)
+ * @author Incelemeelemani
+ */
+$messages['tr'] = array(
+	'randomwiki-desc' => 'Kullanıcıların rastgele bir wiki keşfetmesini sağlar',
+	'randomwiki' => 'Rastgele Wiki',
 );
 
 /** Tatar (Cyrillic script) (татарча)

@@ -148,7 +148,7 @@ Wikia
 	'globalwatchlist-no-blog-page-found' => "No s'ha trobat el fitxer del registre.",
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -328,11 +328,11 @@ $messages['fo'] = array(
  * @author Wyz
  */
 $messages['fr'] = array(
-	'globalwatchlist-desc' => 'Envoie un sommaire hebdomadaire par courriel avec les pages suivies sur tous les wikis',
+	'globalwatchlist-desc' => 'Envoie un résumé hebdomadaire par courriel avec les pages suivies sur tous les wikis',
 	'tog-watchlistdigest' => "M'envoyer un résumé par courriel une fois par semaine",
 	'tog-watchlistdigestclear' => 'Marquer toutes les pages de mon résumé hebdomadaire comme visitées',
 	'globalwatchlist-see-more' => 'Veuillez vérifier vos listes de suivi locales pour afficher davantage de modifications',
-	'globalwatchlist-digest-email-subject' => 'Sommaire de la semaine',
+	'globalwatchlist-digest-email-subject' => 'Résumé hebdomadaire',
 	'globalwatchlist-digest-email-body' => "Bonjour $1,
 
 Ceci est une liste des pages de votre liste de suivi Wikia qui ont été modifiées depuis votre dernière visite.
@@ -340,19 +340,19 @@ Ceci est une liste des pages de votre liste de suivi Wikia qui ont été modifi�
 $2
 
 
-Ceci est une liste des pages de blogs de votre liste de suivi Wikia qui ont été modifiées ou commentées depuis votre dernière visite.
+Ceci est une liste des billets de votre liste de suivi Wikia qui ont été modifiés ou commentés depuis votre dernière visite.
 
 $3
 
-Visitez et modifiez, le cas échéant...
+Visitez et modifiez souvent...
 
 Wikia
 
-* Pour modifier vos préférences de notifications de liste de suivi, visitez : http://www.wikia.com/wiki/Special:Preferences
+* Pour modifier vos préférences de notification de liste de suivi, visitez : http://www.wikia.com/wiki/Special:Preferences
 * Pour marquer comme visitées toutes les pages de ce résumé hebdomadaire, référez-vous à l'option de l'onglet « Liste de suivi » de votre page de préférences",
 	'globalwatchlist-blog-page-title-comment' => '$1 ($2 commentaire{{PLURAL:$2||s}})',
 	'globalwatchlist-no-page-found' => 'Aucune page trouvée.',
-	'globalwatchlist-no-blog-page-found' => 'Aucune page de blog trouvée.',
+	'globalwatchlist-no-blog-page-found' => 'Aucun billet trouvé.',
 );
 
 /** Galician (galego)
@@ -1044,6 +1044,37 @@ Wikia
 	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|коментар|коментарі|коментарів}})',
 	'globalwatchlist-no-page-found' => 'Сторінки не знайдено.',
 	'globalwatchlist-no-blog-page-found' => 'Сторінки блогу не знайдено.',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'globalwatchlist-desc' => 'Sẽ gửi hàng tuần tiêu hóa email với các trang watchlisted trên tất cả các wiki',
+	'tog-watchlistdigest' => 'E-mail tôi một Watchlist Weekly Digest',
+	'tog-watchlistdigestclear' => 'Đánh dấu tất cả các trang từ tôi tiêu hóa Watchlist lượt truy cập',
+	'globalwatchlist-see-more' => 'Vui lòng kiểm tra của bạn watchlists địa phương cho biết thêm thay đổi',
+	'globalwatchlist-digest-email-subject' => 'Tóm tắt hàng tuần',
+	'globalwatchlist-digest-email-body' => 'Dear $1,
+
+Đây là một danh sách các trang ngày của bạn watchlist Wikia đã được chỉnh sửa kể từ khi bạn cuối truy cập chúng.
+
+$2
+
+
+Đây là một danh sách các trang blog trên của bạn watchlist Wikia đã được chỉnh sửa hoặc nhận xét kể từ khi bạn cuối truy cập chúng.
+
+$3
+
+Xin vui lòng truy cập và chỉnh sửa thường...
+
+Wikia
+
+* Để thay đổi sở thích của bạn cho các thông báo watchlist, vui lòng truy cập http://www.wikia.com/wiki/Special:Preferences.
+* Để đánh dấu tất cả các trang từ này Weekly Digest như truy cập, hãy xem các tùy chọn trong tab "Watchlist" của trang tuỳ chọn của bạn',
+	'globalwatchlist-blog-page-title-comment' => '$1($2 {{PLURAL:$2|bình luận|bình luận}})',
+	'globalwatchlist-no-page-found' => 'Trang không tìm thấy.',
+	'globalwatchlist-no-blog-page-found' => 'Không có trang blog tìm thấy.',
 );
 
 /** Simplified Chinese (中文（简体）‎)

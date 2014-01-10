@@ -104,6 +104,24 @@ class VideoFileUploader {
 		}
 		$oTitle = Title::newFromText( $titleText, NS_FILE );
 
+		// Check if the user has the proper permissions
+		// Mimicks Special:Upload's behavior
+		$user = RequestContext::getMain()->getUser();
+		$permErrors = $oTitle->getUserPermissionsErrors( 'edit', $user );
+		$permErrorsUpload = $oTitle->getUserPermissionsErrors( 'upload', $user );
+		if ( !$oTitle->exists() ) {
+			$permErrorsCreate = $oTitle->getUserPermissionsErrors( 'create', $user );
+		} else {
+			$permErrorsCreate = [];
+		}
+
+		if ( $permErrors || $permErrorsUpload || $permErrorsCreate ) {
+			$permErrors = array_merge( $permErrors, wfArrayDiff2( $permErrorsUpload, $permErrors ) );
+			$permErrors = array_merge( $permErrors, wfArrayDiff2( $permErrorsCreate, $permErrors ) );
+			wfProfileOut( __METHOD__ );
+			throw new Exception( wfMessage( array_shift( $permErrors[0] ), $permErrors[0] )->parse()  );
+		}
+	
 		if ( $oTitle->exists() ) {
 			// @TODO
 			// if video already exists make sure that we are in fact changing something
@@ -152,7 +170,7 @@ class VideoFileUploader {
 	 * @param File $file
 	 * @return FileRepoStatus
 	 */
-	public function resetThumbnail( File $file ) {
+	public function resetThumbnail( File &$file ) {
 		wfProfileIn(__METHOD__);
 
 		// Some providers will sometimes return error codes when attempting
@@ -176,20 +194,14 @@ class VideoFileUploader {
 	 *
 	 * @return UploadFromUrl
 	 */
-	protected function uploadBestThumbnail( ) {
-		wfProfileIn(__METHOD__);
+	protected function uploadBestThumbnail() {
+		wfProfileIn( __METHOD__ );
 
-		$app = F::app();
-
-		// reset proxy to blank
-		$originalProxy = $app->wg->HTTPProxy;
-		$app->wg->HTTPProxy = '';
+		// disable proxy
+		F::app()->wg->DisableProxy = true;
 
 		// Try to upload the thumbnail for this video
 		$upload = $this->uploadThumbnailFromUrl( $this->getApiWrapper()->getThumbnailUrl() );
-
-		// set proxy to original value
-		$app->wg->HTTPProxy = $originalProxy;
 
 		// If uploading the actual thumbnail fails, load a default thumbnail
 		if ( empty($upload) ) {
@@ -197,14 +209,15 @@ class VideoFileUploader {
 		}
 
 		// If we still don't have anything, give up.
-		if ( empty($upload) ) {
-			wfProfileOut(__METHOD__);
+		if ( empty( $upload ) ) {
+			wfProfileOut( __METHOD__ );
 			return null;
 		}
 
 		$this->adjustThumbnailToVideoRatio( $upload );
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
+
 		return $upload;
 	}
 

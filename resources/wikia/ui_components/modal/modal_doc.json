@@ -34,10 +34,10 @@
 					"type" : "string",
 					"description" : "styleguide-description-modal-title"
 				},
-				"closeButton": {
-					"templateVar" : "closeButton",
-					"type" : "boolean",
-					"description" : "styleguide-description-modal-close-button"
+				"closeText": {
+					"templateVar" : "closeText",
+					"type" : "string",
+					"description" : "styleguide-description-modal-close-text"
 				},
 				"altLink" : {
 					"templateVar" : "altLink",
@@ -45,19 +45,15 @@
 					"objectVar" : {
 						"id": "string",
 						"href": "string",
-						"text": "string"
+						"text": "string",
+						"title": "string"
 					},
 					"description" : "styleguide-description-modal-alt-link"
 				},
-				"secondBtn" : {
-					"templateVar" : "secondBtn",
-					"type" : "string",
-					"description" : "styleguide-description-modal-secondary-button"
-				},
-				"primaryBtn" : {
-					"templateVar" : "primaryBtn",
-					"type" : "string",
-					"description" : "styleguide-description-modal-primary-button"
+				"buttons": {
+					"templateVar": "buttons",
+					"type" : "array",
+					"description" : "styleguide-description-modal-buttons"
 				}
 			}
 		}

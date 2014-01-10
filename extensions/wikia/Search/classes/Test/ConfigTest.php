@@ -519,21 +519,25 @@ class ConfigTest extends BaseTest {
 		$config 			= new Config;
 		$searchEngineMock	= $this->getMock( 'SearchEngine', array( 'defaultNamespaces', 'searchableNamespaces', 'namespacesAsText' ), array() );
 
-		$searchEngineMock
-			->staticExpects	( $this->any() )
-			->method		( 'searchableNamespaces' )
-			->will			( $this->returnValue( array( NS_MAIN, NS_TALK, NS_CATEGORY, NS_FILE, NS_USER ) ) )
-		;
-		$searchEngineMock
-			->staticExpects	( $this->any() )
-			->method		( 'defaultNamespaces' )
-			->will			( $this->returnValue( array( NS_FILE, NS_CATEGORY ) ) )
-		;
-		$searchEngineMock
-			->staticExpects	( $this->any() )
-			->method		( 'namespacesAsText' )
-			->will			( $this->returnValue( 'Article', 'Category' ) )
-		;
+
+        $this->getStaticMethodMock('SearchEngine', 'searchableNamespaces')
+            ->expects   	( $this->any() )
+            ->method		( 'searchableNamespaces' )
+            ->will			( $this->returnValue( array( NS_MAIN, NS_TALK, NS_CATEGORY, NS_FILE, NS_USER ) ) )
+        ;
+
+        $this->getStaticMethodMock('SearchEngine', 'defaultNamespaces')
+            ->expects   	( $this->any() )
+            ->method		( 'defaultNamespaces' )
+            ->will			( $this->returnValue( array( NS_FILE, NS_CATEGORY ) ) )
+        ;
+
+        $this->getStaticMethodMock('SearchEngine', 'namespacesAsText')
+            ->expects   	( $this->any() )
+            ->method		( 'namespacesAsText' )
+            ->will			( $this->returnValue( array( 'Article', 'Category' ) ) )
+        ;
+
 
 		$this->mockClass( 'SearchEngine', $searchEngineMock );
 
@@ -1188,7 +1192,29 @@ class ConfigTest extends BaseTest {
 				$config->getStart()
 		);
 	}
-	
+
+	/**
+	 * @covers Wikia\Search\Config::setMinArticleQuality
+	 * @covers Wikia\Search\Config::getMinArticleQuality
+	 */
+	public function testGetMinArticleQuality() {
+		$val = 13; // could never be our default start
+		$config = new Config();
+		$this->assertEquals(
+			$config,
+			$config->setMinArticleQuality( $val )
+		);
+		$this->assertAttributeEquals(
+			$val,
+			'minArticleQuality',
+			$config
+		);
+		$this->assertEquals(
+			$val,
+			$config->getMinArticleQuality()
+		);
+	}
+
 	/**
 	 * @covers Wikia\Search\Config::setMinimumMatch
 	 * @covers Wikia\Search\Config::getMinimumMatch

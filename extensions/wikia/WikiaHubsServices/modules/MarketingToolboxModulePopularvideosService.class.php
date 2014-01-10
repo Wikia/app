@@ -151,4 +151,14 @@ class MarketingToolboxModulePopularvideosService extends MarketingToolboxModuleE
 
 		return $videoData;
 	}
+
+	/**
+	 * Don't return videos for commercial usages.
+	 * @param $data
+	 * @return mixed|null
+	 */
+	protected function filterCommercialData( $data ) {
+		$data['videos'] = [];
+		return $data;
+	}
 }

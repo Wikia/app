@@ -10,10 +10,12 @@ var SevenOneMediaHelper = function (adLogicPageLevelParams, scriptWriter, log, w
 		myAd,
 		initialized = false,
 		pageLevelParams = adLogicPageLevelParams.getPageLevelParams(),
+		soiKeywordsParams = ['pform', 'media', 'gnre', 'egnre', 's1'],
+
 		slotVars = {
 			'popup1': {
 				SOI_PU1: true,
-				SOI_PL: true,    // powerlayer
+				SOI_PL: false,   // powerlayer
 				SOI_PU: false,   // popunder
 				SOI_FA: false    // baseboard
 			},
@@ -53,14 +55,6 @@ var SevenOneMediaHelper = function (adLogicPageLevelParams, scriptWriter, log, w
 			ga_category: '71m',
 			ga_action: action,
 			trackingMethod: 'ad'
-		});
-
-		tracker.track({
-			eventName: 'liftium.71m',
-			ga_category: '71m',
-			ga_action: 'success', // for trackingMethod ga Wikia.Tracker requires ga_action to be one from a limited set
-			ga_label: action,
-			trackingMethod: 'ga'
 		});
 	}
 
@@ -137,16 +131,11 @@ var SevenOneMediaHelper = function (adLogicPageLevelParams, scriptWriter, log, w
 	}
 
 	function injectJavaScripts(slotname, done, error) {
-		var javaScriptsPlaceHolder = 'ad-' + slotname,
-			jsUrl = window.wgCdnRootUrl + window.wgAssetsManagerQuery.
-				replace('%1$s', 'groups').
-				replace('%2$s', 'adengine2_sevenonemedia_js').
-				replace('%3$s', '-').
-				replace('%4$d', window.wgStyleVersion);
+		var javaScriptsPlaceHolder = 'ad-' + slotname;
 
 		scriptWriter.injectScriptByUrl(
 			javaScriptsPlaceHolder,
-			jsUrl,
+			window.wgAdDriverSevenOneMediaCombinedUrl,
 			function () {
 				if (!window.SEVENONEMEDIA_CSS) {
 					error('sevenonemedia_css');
@@ -178,9 +167,69 @@ var SevenOneMediaHelper = function (adLogicPageLevelParams, scriptWriter, log, w
 		);
 	}
 
+	/**
+	 * Remove leading underscore from values.
+	 * Keep all values max 10 chars and the whole string max 113 chars.
+	 *
+	 * @param {Array} keywords
+	 * @returns {Array}
+	 */
+	function filterSoiKeywords(keywords) {
+		log(['filterSoiKeywords', keywords], 'debug', logGroup);
+
+		var i, len, val, retLen = 0, ret = [];
+
+		for (i = 0, len = keywords.length; i < len; i += 1) {
+			val = keywords[i].replace(/^_/, '').substr(0, 10);
+			if (val) {
+				retLen += val.length + 1; // include in calculations comma after each value
+				if (retLen > 113) {
+					break;
+				}
+				ret.push(val.substr(0, 10));
+			}
+		}
+
+		log(['filterSoiKeywords', keywords, ret], 'debug', logGroup);
+
+		return ret;
+	}
+
+	/**
+	 * Generate SOI_KEYWORDS
+	 *
+	 * @returns {string}
+	 */
+	function generateSoiKeywords() {
+		log('generateSoiKeywords', 'debug', logGroup);
+
+		var i, len, param, val, valIndex, valLen, keywords = [];
+
+		// Get all values for params defined in soiKeywordsParams
+		for (i = 0, len = soiKeywordsParams.length; i < len; i += 1) {
+
+			param = soiKeywordsParams[i];
+			val = pageLevelParams[param];
+
+			if (typeof val === 'string') {
+				val = [val];
+			}
+
+			if (val && val.length) {
+				for (valIndex = 0, valLen = val.length; valIndex < valLen; valIndex += 1) {
+					keywords.push(val[valIndex]);
+				}
+			}
+		}
+
+		log(['generateSoiKeywords', keywords], 'debug', logGroup);
+		return filterSoiKeywords(keywords).join(',');
+	}
+
 	function initialize(firstSlotname) {
-		var s0 = pageLevelParams.s0,
-			s1 = pageLevelParams.s1.replace('_', '');
+		var subsite = window.cscoreCat && window.cscoreCat.toLowerCase(),
+			sub2site = pageLevelParams.s1.replace('_', ''),
+			sub3site = subsite === 'lifestyle' ? window.cityShort : '';
 
 		initialized = true;
 
@@ -188,12 +237,14 @@ var SevenOneMediaHelper = function (adLogicPageLevelParams, scriptWriter, log, w
 
 		setVars({
 			SOI_SITE: 'wikia',
-			SOI_SUBSITE: s0,
-			SOI_SUB2SITE: s1,
-			SOI_SUB3SITE: '',
+			SOI_SUBSITE: subsite,
+			SOI_SUB2SITE: sub2site,
+			SOI_SUB3SITE: sub3site,
 			SOI_CONTENT: 'content',
 			SOI_WERBUNG: true
 		});
+
+		setVars({SOI_KEYWORDS: generateSoiKeywords()});
 
 		$postponedContainer = $('<div/>').attr('id', postponedContainerId).hide();
 		$('body').append($postponedContainer);

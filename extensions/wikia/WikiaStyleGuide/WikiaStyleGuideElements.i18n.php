@@ -72,6 +72,15 @@ $messages['es'] = array(
 	'wikiastyleguide-dropdown-selected-items-list' => '$1 y $2 más',
 );
 
+/** Persian (فارسی)
+ * @author Reza1615
+ */
+$messages['fa'] = array(
+	'wikiastyleguide-dropdown-all' => 'همه',
+	'wikiastyleguide-dropdown-select-all' => 'انتخاب همه',
+	'wikiastyleguide-tooltip-icon-question-mark' => '؟',
+);
+
 /** French (français)
  * @author Gomoko
  * @author Wyz
@@ -179,6 +188,15 @@ $messages['uk'] = array(
 	'wikiastyleguide-dropdown-all' => 'Усі',
 	'wikiastyleguide-dropdown-select-all' => 'Вибрати всі',
 	'wikiastyleguide-dropdown-selected-items-list' => '$1 і ще $2',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'wikiastyleguide-dropdown-all' => 'Tất cả',
+	'wikiastyleguide-dropdown-select-all' => 'Chọn tất cả',
+	'wikiastyleguide-dropdown-selected-items-list' => '$1 và $2 thêm',
 );
 
 /** Simplified Chinese (中文（简体）‎)

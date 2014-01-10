@@ -76,7 +76,11 @@ class CreateNewWikiController extends WikiaController {
 		$this->signupUrl = '';
 		if(!empty($this->wg->EnableUserLoginExt)) {
 			$signupTitle = Title::newFromText('UserSignup', NS_SPECIAL);
-			$this->signupUrl = $signupTitle->getFullURL();
+			if ( $wgRequest->getInt( 'nocaptchatest' ) ) {
+				$this->signupUrl = $signupTitle->getFullURL('nocaptchatest=1');
+			} else {
+				$this->signupUrl = $signupTitle->getFullURL();
+			}
 		}
 
 		// Make various parsed messages and status available in JS
@@ -181,6 +185,15 @@ class CreateNewWikiController extends WikiaController {
 				return;
 			}
 			*/
+
+			// check if user is logged in
+			if ( !$wgUser->isLoggedIn() ) {
+				$this->status = 'error';
+				$this->statusMsg = wfMessage( 'cnw-error-anon-user' )->parse();
+				$this->statusHeader = wfMessage( 'cnw-error-anon-user-header' )->text();
+				wfProfileOut(__METHOD__);
+				return;
+			}
 
 			// check if user is blocked
 			if ( $wgUser->isBlocked() ) {
