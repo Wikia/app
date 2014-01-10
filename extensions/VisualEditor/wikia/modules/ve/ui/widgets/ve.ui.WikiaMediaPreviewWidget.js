@@ -54,18 +54,21 @@ ve.inheritClass( ve.ui.WikiaMediaPreviewWidget, ve.ui.Widget );
  * @method
  */
 ve.ui.WikiaMediaPreviewWidget.prototype.handleImage = function() {
-	this.maxImgHeight = Math.round( $( window ).height() * 0.95 );
+	this.$.show();
+
+	this.maxImgHeight = Math.round( $( window ).height() * 0.95 ) - this.$titlebar.outerHeight();
 	this.maxImgWidth = Math.round( $( window ).width() * 0.95 );
 
 	this.$image = $( '<img>' )
 		.addClass( 've-ui-wikiaMediaPreviewWidget-image' );
 
 	require( ['wikia.thumbnailer'], ve.bind( function ( thumbnailer ) {
-		this.$image.attr( 'src', thumbnailer.getThumbURL( this.model.url, 'nocrop', this.maxImgWidth, this.maxImgHeight ) );
+		this.$image.attr( 'src', thumbnailer.getThumbURL( this.model.url, 'nocrop', this.maxImgWidth ) );
 	}, this ) );
 
-	this.$image.load( ve.bind( this.onImageLoad, this ) )
-		.appendTo( this.$.show() );
+	this.$image
+		.load( ve.bind( this.onImageLoad, this ) )
+		.appendTo( this.$ );
 };
 
 /**
@@ -78,6 +81,21 @@ ve.ui.WikiaMediaPreviewWidget.prototype.onImageLoad = function () {
 	if ( this.$image.height() > this.maxImgHeight ) {
 		this.$image.height( this.maxImgHeight );
 	}
+
+	this.verticallyAlign( this.$image );
+};
+
+ve.ui.WikiaMediaPreviewWidget.prototype.verticallyAlign = function( $element ) {
+	var availableHeight = $( window ).height() - this.$titlebar.outerHeight();
+
+	// Vertically align in available space:
+	// * Divide available space by 2 to get the middle of the available space,
+	// * Subtract half the image height to vertically center the image,
+	// * Add add the titlebar height.
+	// Show image.
+	$element
+		.css( 'top', availableHeight / 2 - $element.height() / 2 + this.$titlebar.outerHeight() )
+		.show();
 };
 
 /**
@@ -114,6 +132,9 @@ ve.ui.WikiaMediaPreviewWidget.prototype.embedVideo = function( data ) {
 			window.JSON.parse( data.videopreview.embedCode ),
 			've-preview'
 		);
+
+		this.verticallyAlign( this.$videoWrapper );
+
 	}, this ) );
 };
 
