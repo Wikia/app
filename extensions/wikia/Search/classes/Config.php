@@ -430,9 +430,8 @@ class Config
 	 * Sets minimum article quality to to filter by
 	 * @param $articleQuality
 	 */
-	public function setMinArticleQuality( $minArticleQuality )
-	{
-		$this->minArticleQuality = (int) $minArticleQuality;
+	public function setMinArticleQuality( $minArticleQuality ) {
+		$this->minArticleQuality = (int)$minArticleQuality;
 		return $this;
 	}
 
@@ -440,8 +439,7 @@ class Config
 	 * Sets minimum article quality to to filter by
 	 * @param $articleQuality
 	 */
-	public function getMinArticleQuality( )
-	{
+	public function getMinArticleQuality() {
 		return $this->minArticleQuality;
 	}
 

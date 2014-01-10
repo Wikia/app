@@ -112,18 +112,23 @@ class OnWiki extends AbstractDismax
 	 */
 	protected function getFilterQueryString()
 	{
+
 		$namespaces = [];
 		foreach ( $this->config->getNamespaces() as $ns ) {
 			$namespaces[] = Utilities::valueForField( 'ns', $ns );
 		}
 
 		$minArticleQuality = $this->config->getMinArticleQuality();
-		return implode( ' AND ', [
+		$filters = [
 			sprintf( '(%s)', implode( ' OR ', $namespaces ) ),
 			Utilities::valueForField( 'wid', $this->config->getCityId() ),
-			$minArticleQuality ? Utilities::rangeIntValueField( 'wam',  $minArticleQuality ) : ''
-			]
-		);
+		];
+
+		if ( $minArticleQuality ) {
+			$filters[ ] = Utilities::rangeIntValueField( 'articleQuality_i', $minArticleQuality );
+		}
+
+		return implode( ' AND ', $filters );
 
 	}
 }

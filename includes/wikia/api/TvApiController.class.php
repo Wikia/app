@@ -31,12 +31,12 @@ class TvApiController extends WikiaApiController {
 		}
 
 		$responseValues = $this->getExactMatch();
-		$responseValues = null;
-		if ( $responseValues === null ) {
+		$responseValues = $this->checkArticleByQuality( $responseValues,
+			$this->request->getInt( static::PARAM_ARTICLE_QUALITY ) );
 
+		if ( $responseValues === null ) {
 			$config = $this->getConfigFromRequest();
 			$responseValues = $this->getResponseFromConfig( $config );
-
 		}
 
 		if ( empty($responseValues) ) {
@@ -73,6 +73,25 @@ class TvApiController extends WikiaApiController {
 	 */
 	protected function replaceHost( $details ) {
 		return $details[ 1 ] . WikiFactory::getCurrentStagingHost( $details[ 4 ], $details[ 3 ] );
+	}
+
+	protected function checkArticleByQuality( $article, $minArticleQuality, $articleQualityService = null ) {
+
+		if ( !$minArticleQuality || $article === null ) {
+			return;
+		}
+
+		//Only for unit tests
+		if ( $articleQualityService === null ) {
+			$articleQualityService = new ArticleQualityV1Service();
+		}
+		$articleQualityService->setArticleById( $article[ 'articleId' ] );
+		if ( $articleQualityService->getArticleQuality() < $minArticleQuality ) {
+			$article = null;
+		}
+
+		return $article;
+
 	}
 
 	protected function getExactMatch() {
