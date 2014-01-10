@@ -342,10 +342,11 @@ class WallNotificationsEveryone extends WallNotifications {
 		//TODO: performance of this queries
 		if ( !$onlyCache ) {
 			$db = $this->getDB( true );
-			$db->query( 'delete from wall_notification_queue where datediff(NOW(), event_date) > ' .
+			$db->query( 'DELETE FROM wall_notification_queue WHERE datediff(NOW(), event_date) > ' .
 				WallHelper::NOTIFICATION_EXPIRE_DAYS );
-			$db->query( 'delete from wall_notification_queue_processed where datediff(NOW(), event_date) > ' .
+			$db->query( 'DELETE FROM wall_notification_queue_processed WHERE datediff(NOW(), event_date) > ' .
 				WallHelper::NOTIFICATION_EXPIRE_DAYS );
+			$db->commit();
 		}
 		wfProfileOut( __METHOD__ );
 	}
