@@ -75,9 +75,6 @@ $messages['en'] = array(
 	'videohomepage-partner-name-ooyala' => 'Ooyala',
 	'videohomepage-partner-name-realgravity' => 'Real Gravity',
 	'videohomepage-partner-name-screenplay' => 'Screenplay',
-
-	// Home Page Section: Latest Videos
-	'videohomepage-latest-videos-header' => 'Latest Videos',
 );
 
 $messages['qqq'] = array(
