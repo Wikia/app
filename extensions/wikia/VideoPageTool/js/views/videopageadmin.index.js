@@ -18,7 +18,7 @@ define('views.videopageadmin.index', [
 			var that = this;
 			this.$regionSelect.on('change', function(evt) {
 				return that.renderDatepicker.call(that, evt);
-			});
+			} );
 		},
 		renderDatepicker: function(evt) {
 			var value = evt ? evt.target.value : this.defaultLanguage;
@@ -37,17 +37,17 @@ define('views.videopageadmin.index', [
 			}
 
 			// initialize new datepicker, passing through the language
-			this.datepicker = new Datepicker({
+			this.datepicker = new Datepicker( {
 				el: '#VPTDashboard .date-picker',
 				language: value,
 				controller: 'VideoPageAdminSpecial',
 				method: 'getCalendarInfo'
-			});
+			} );
 		}
 	};
 
 	return VPTIndex;
-});
+} );
 
 require(['views.videopageadmin.index'], function(IndexView) {
 
@@ -55,5 +55,5 @@ require(['views.videopageadmin.index'], function(IndexView) {
 
 	$(function() {
 		new IndexView();
-	});
-});
+	} );
+} );

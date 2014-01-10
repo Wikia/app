@@ -1,14 +1,6 @@
 <form id="LatestVideos" class="WikiaForm vpt-form latest-video-form" method="post">
-
-<script type="text/template" id="autocomplete-item">
-	<strong>{{ name }}</strong>
-</script>
-
 	<? for( $x = 1; $x <= count($categories); $x++ ): ?>
-
-		<?
-			$category = $categories[ $x ];
-		?>
+		<? $category = $categories[ $x ]; ?>
 
 		<div class="form-box latest-video with-nav">
 			<div class="autocomplete">

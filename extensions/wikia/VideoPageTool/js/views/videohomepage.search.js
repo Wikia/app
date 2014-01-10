@@ -7,11 +7,11 @@ define( 'views.videohomepage.search', [
 		function SearchView() {
 			this.$el = $( '#WikiaSearch' );
 
-			this.track = Tracker.buildTrackingFunction({
+			this.track = Tracker.buildTrackingFunction( {
 				action: Tracker.ACTIONS.CLICK,
 				category: 'video-home-page',
 				trackingMethod: 'both'
-			});
+			} );
 
 			this.init();
 		}
@@ -19,9 +19,9 @@ define( 'views.videohomepage.search', [
 		SearchView.prototype.init = function() {
 			var that = this;
 			this.$el.on( 'click', function() {
-					that.track({ label: 'search-box' });
-			});
+					that.track( { label: 'search-box' } );
+			} );
 		};
 
 		return SearchView;
-});
+} );
