@@ -983,7 +983,7 @@ class BlogTemplateClass {
 	}
 
 	private static function __parse( $aInput, $aParams, &$parser, $returnPlainData = false ) {
-		global $wgLang, $wgUser, $wgCityId, $wgParser, $wgTitle;
+		global $wgLang, $wgUser, $wgCityId, $wgParser, $wgTitle, $wgOut;
 		global $wgExtensionsPath, $wgStylePath, $wgRequest;
 
 		wfProfileIn( __METHOD__ );
@@ -1230,6 +1230,8 @@ class BlogTemplateClass {
 						}
 					} else {
 						if( !empty( self::$oTitle ) && self::$oTitle->getNamespace() == NS_BLOG_ARTICLE) {
+							//bugId: PLA-844
+							$wgOut->setRobotPolicy( 'noindex,nofollow' );
 							$result = wfMsgExt('blog-empty-user-blog', array('parse'));
 						}
 						else {
