@@ -39,6 +39,7 @@ class VideoHomePageController extends WikiaController {
 		OasisController::addBodyClass( 'WikiaVideo' );
 		$this->response->addAsset( 'videohomepage_js' );
 		$this->response->addAsset( 'videohomepage_scss' );
+		$this->response->addAsset( 'videohomepage_css' );
 
 		$program = $this->getProgram();
 		if ( $program instanceof VideoPageToolProgram && $program->exists() ) {
