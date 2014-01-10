@@ -946,97 +946,95 @@ Text should be placed on this page if you wish to explain usage, style and polic
 'unsubscribe-email' => 'If you no longer want to receive email from Wikia you can unsubscribe here: $1',
 
 # former shared-* messages
-'shared-Globalnavigation' => "*homepage:Video_Games|Video Games|video-games-vertical-color
+'shared-Globalnavigation' => "*w:c:www:Entertainment|Entertainment
 
-**#|What's Hot
-***http://shadowofmordor.wikia.com/wiki/Shadow_of_Mordor_Wikia|Shadow of Mordor
-***homepage:Video_Games/Xbox_and_PS4_Launch_Portal|Launch Portal
-***homepage:Video_Games/The_Stockpile|The Stockpile
-***w:c:video:Video_Wiki|Latest Videos
-***homepage:Video_Games|More...
+**w:c:www:TV|What's on TV
+***w:c:bones:Bones_Wiki|Bones
+***w:c:americanidol:American_Idol_Wiki|American Idol
+***w:c:ncis:NCIS_Database|NCIS
+***w:c:beinghuman:Being_Human_Wiki|Being Human
+***w:c:www:TV|More...
 
-**#|PS4 Games
-***http://killzone.wikia.com/wiki/Killzone:_Shadow_Fall|Killzone: Shadowfall
-***http://knack.wikia.com/wiki/Main_Page|Knack
-***http://warframe.wikia.com/wiki/WARFRAME_Wiki|Warframe
-***http://infamous.wikia.com/wiki/InFamous:_Second_Son|Infamous: Second Son
-***homepage:Video_Games|More...
+**w:c:www:Movie|Movies
+***w:c:greenhornet:Green_Hornet_Wiki|The Green Hornet
+***w:c:truegrit:True_Grit_Wiki|True Grit
+***w:c:narnia:The_Chronicles_of_Narnia_Wiki|Narnia
+***w:c:smurfs:Smurfs_Wiki|The Smurfs Movie
+***w:c:www:Movie|More...
 
-**#|Xbox One Games
-***http://forzamotorsport.wikia.com/wiki/Forza_Motorsport_5|Forza 5
-***http://killerinstinct.wikia.com/wiki/Killer_Instinct_(Xbox_One)|Killer Instinct
-***http://rysesonofrome.wikia.com/wiki/Ryse:_Son_of_Rome_Wiki|Ryse: Son of Rome
-***http://deadrising.wikia.com/wiki/Dead_Rising_3|Dead Rising 3
-***homepage:Video_Games|More...
+**w:c:www:Anime|Anime
+***w:c:dragonball:Main_Page|Dragon Ball Wiki
+***w:c:bleach:Main_Page|Bleach Wiki
+***w:c:naruto:Narutopedia|Narutopedia
+***w:c:winx:Winx_Club_Wiki|Winx Club Wiki
+***w:c:www:Anime|More...
 
-**#|Free to Play
-***w:c:warframe|Warframe
-***w:c:leagueoflegends|League of Legends
-***w:c:clashofclans|Clash of Clans
-***w:c:puzzle-dragons-global|Puzzle & Dragons
-***homepage:Video_Games|More...
+**w:c:entertainment:Wikia_Entertainment|Staff Picks
+***w:c:thehungergames:The_Hunger_Games_Wiki|The Hunger Games
+***w:c:millenniumtrilogy:Millenium_Trilogy_Wiki|Millennium Trilogy
+***w:c:gossipgirl:Gossip_Girl_Wiki|Gossip Girl
+***w:c:Entertainment:Entertainment_Giveaways|Giveaways!
+***w:c:www:Entertainment:Wikia_Entertainment|More...
 
-*homepage:Entertainment|Entertainment|entertainment-vertical-color
+*w:c:www:Video_Games|Video Games
 
-**#|What's Hot
-***http://dragons.wikia.com/wiki/User_blog:Mhadick/Wikia%27s_Epic_Dragon_Battle|Dragon Battle
-***http://entertainment.wikia.com/wiki/User_blog:Gcheung28/Holiday_Know_Days:_Community_Choice_Awards|Community Choice Awards
-***http://shadowofmordor.wikia.com/wiki/Shadow_of_Mordor_Wikia|Shadow of Mordor
-***w:c:video:Video_Wiki|New Videos
-***w:c:entertainment:Wikia_Entertainment|More...
+**w:c:www:Xbox_360_Games|Xbox 360 Games
+***w:c:bulletstorm:Bulletstorm_Wiki|Bulletstorm
+***w:c:deadspace:Main_Page|Dead Space 2
+***w:c:dragonage:Dragon_Age_Wiki|Dragon Age 2
+***w:c:callofduty:Call_of_Duty_Wiki|CoD: Black Ops
+***w:c:www:Xbox_360_Games|More...
 
-**#|Movies
-***w:c:lotr:The_Hobbit:_The_Desolation_of_Smaug|The Hobbit 2
-***w:c:disney:Frozen|Frozen
-***w:c:thehungergames:The_Hunger_Games:_Catching_Fire|Catching Fire
-***w:c:marvel:Thor:_The_Dark_World|Thor: The Dark World
-***homepage:Entertainment|More...
+**w:c:www:PS3_Games|PS3 Games
+***w:c:fallout:Fallout_Wiki|Fallout: New Vegas
+***w:c:killzone:Main_Page|Killzone 3
+***w:c:masseffect:Mass_Effect_Wiki|Mass Effect 3
+***w:c:assassinscreed:Assassin's_Creed_Wiki|AC: Brotherhood
+***w:c:www:PS3_Games|More...
 
-**#|TV
-***w:c:tardis|Doctor Who
-***w:c:shield|Agents of SHIELD
-***w:c:americanhorrorstory|American Horror Story
-***w:c:vampirediaries|The Vampire Diaries
-***homepage:Entertainment|More...
+**w:c:www:PC_Games|PC Games
+***w:c:diablo:Diablo_Wiki|Diablo 3
+***w:c:swtor:Star_Wars:_The_Old_Republic_Wiki|SW: The Old Republic
+***w:c:runescape:RuneScape_Wiki|RuneScape
+***w:c:wowwiki:Portal:Main|WoW: Cataclysm
+***w:c:www:PC_Games|More...
 
-**#|Music
-***w:c:lyrics|Song Lyrics
-***w:c:music:Music_Wiki/|Music Wikia
-***w:c:ladygaga:Gagapedia|Lady Gaga
-***w:c:britneyspears:Britney_Spears_Wiki|Britney Spears
-***homepage:Entertainment|More...
+**w:c:www:Wii_games|Wii Games
+***w:c:zelda:Zeldapedia|Zelda: Skyward Sword
+***w:c:donkeykong:Donkey_Kong_Country_Returns|DK Country Returns
+***w:c:sonic:Sonic_Colors|Sonic Colors
+***w:c:kirby:Kirby_Wiki|Kirby's Epic Yarn
+***w:c:www:Wii_games|More...
 
-*homepage:Lifestyle|Lifestyle|lifestyle-vertical-color
+*w:c:www:Lifestyle|Lifestyle
 
-**#|What's Hot
-***w:c:bookclub:Portal:Book_Club|Wikia Book Club
-***w:c:recipes:Portal:Closet_Confidential|Closet Confidential
-***w:c:recipes:Portal:Food_Fiction|Food Fiction
-***w:User_blog:TranStanley/Introducing_My_Wikia_for_iPad|My Wikia for iPad
-***w:c:weddings:Category:Wedding_Themes|Movie Wedding Themes
-***homepage:Lifestyle|More...
-
-**#|Fashion and Beauty
-***w:c:fashion:Fashion_Wiki|Fashion
-***w:c:haircolor:Haircolor_Wiki|Haircolor
-***w:c:makeup:Makeup_Wiki|Makeup
-***w:c:nails:Nails_Wiki|Nails
-***homepage:Lifestyle|More...
-
-**#|Food
+**w:c:www:Recipes|Food & Drink
 ***w:c:healthyrecipes:Healthy_Recipes_Wiki|Healthy Recipes
-***w:c:glutenfreerecipes:Gluten_Free_Recipes_Wiki|Gluten Free Recipes
 ***w:c:japaneserecipes:Japanese_Recipes_Wiki|Japanese Recipes
-***w:c:desserts:Dessert_Wiki|Dessert Recipes
-***homepage:Lifestyle|More...
-
-**#|Drink
-***w:c:cocktails:Cocktails_Wiki|Cocktails
-***w:c:beer:Beer_Wiki|Beer
-***w:c:tea:WikiTea|Tea
+***w:c:glutenfreerecipes:Gluten_Free_Recipes_Wiki|Gluten Free Recipes
 ***w:c:coffee:Main_Page|Coffee
-***homepage:Lifestyle|More...
-",
+***w:c:www:Recipes|More...
+
+**w:c:www:Lifestyle|DIY
+***w:c:howto:How_To|How-To
+***w:c:toastmasters:Toastmasters_Wiki|Toastmasters
+***w:c:vintagepatterns:Main_Page|Vintage Patterns
+***w:c:chdk:CHDK|Canon Hacking
+***w:c:www:Lifestyle|More...
+
+**w:c:Travel:Wikia_Travel|Travel
+***w:c:lasvegas:Main_Page|Las Vegas
+***w:c:reststops:Main_Page|Rest Stops
+***w:c:romanchurches:Main_Page|Roman Churches
+***w:c:ukhousing.wikia.com:Main_Page|UK Housing
+***w:c:www:Lifestyle|More...
+
+**w:c:www:Lifestyle|Featured
+***w:c:emoticon:Emoticon_wiki|Emoticon
+***w:c:familypedia:Family_History_and_Genealogy_Wiki|Genealogy
+***w:c:logos:Logopedia|Logos
+***w:c:icehockey:The_Face_Off|Ice Hockey
+***w:c:www:Lifestyle|More...",
 'shared-Oasis-footer-wikia-links' => "*http://www.wikia.com/About_Us|<span>About Us</span>
 *http://www.wikia.com/Hiring|Careers
 *http://www.wikia.com/Advertising|Advertise
