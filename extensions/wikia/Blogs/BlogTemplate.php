@@ -1182,6 +1182,7 @@ class BlogTemplateClass {
 				wfProfileOut( __METHOD__ );
 				return $res;
 			}else{
+				$parser->mOutput->setProperty("blogPostCount", self::getResultsCount());
 				if ( self::$aOptions['type'] == 'count' ) {
 					/* get results count */
 					$result = self::getResultsCount();
@@ -1230,8 +1231,6 @@ class BlogTemplateClass {
 						}
 					} else {
 						if( !empty( self::$oTitle ) && self::$oTitle->getNamespace() == NS_BLOG_ARTICLE) {
-							//bugId: PLA-844
-							$wgOut->setRobotPolicy( 'noindex,nofollow' );
 							$result = wfMsgExt('blog-empty-user-blog', array('parse'));
 						}
 						else {

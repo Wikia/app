@@ -89,11 +89,19 @@ class BlogArticle extends Article {
 		$purge   = $wgRequest->getVal( "action" ) == 'purge';
 		$page    = $wgRequest->getVal( "page", 0 );
 		$offset  = $page * $this->mCount;
+		$localMemcacheBuster   = 1;
+		$blogPostCount = null;
 
 		$wgOut->setSyndicated( true );
 
 		if( !$purge ) {
-			$listing  = $wgMemc->get( wfMemcKey( "blog", "listing", $userMem, $page ) );
+			$cachedValue  = $wgMemc->get( wfMemcKey( "blog", "listing", $userMem, $page, $localMemcacheBuster ) );
+			if ( $cachedValue ) {
+				$listing = $cachedValue['listing'];
+				if ( isset($cachedValue['blogPostCount']) ) {
+					$blogPostCount = $cachedValue['blogPostCount'];
+				}
+			}
 		}
 
 		if( !$listing ) {
@@ -109,9 +117,13 @@ class BlogArticle extends Article {
 				</bloglist>";
 			$parserOutput = $wgParser->parse($text, $this->mTitle,  new ParserOptions());
 			$listing = $parserOutput->getText();
-			$wgMemc->set( wfMemcKey( "blog", "listing", $userMem, $page ), $listing, 3600 );
+			$blogPostCount = $parserOutput->getProperty("blogPostCount");
+			$wgMemc->set( wfMemcKey( "blog", "listing", $userMem, $page, $localMemcacheBuster ), [ 'listing'=> $listing, 'blogPostCount' => $blogPostCount ], 3600 );
 		}
-
+		if ( isset($blogPostCount) && $blogPostCount == 0 ) {
+			// bugid: PLA-844
+			$wgOut->setRobotPolicy( "noindex,nofollow" );
+		}
 		$wgOut->addHTML( $listing );
 	}
 
