@@ -92,8 +92,7 @@ class VideoHomePageController extends WikiaController {
 	 */
 	public function category() {
 		$helper = new VideoPageToolHelper();
-		// TODO: change content back to MODULE_CATEGORY
-		$this->assets = $helper->renderAssetsBySection( $this->getProgram(), self::MODULE_FEATURED );
+		$this->assets = $helper->renderAssetsBySection( $this->getProgram(), self::MODULE_CATEGORY );
 	}
 
 	/**
