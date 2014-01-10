@@ -396,6 +396,16 @@ use Swagger\Annotations as SWG;
  * 					dataType="int",
  * 					defaultValue="6",
  * 					@SWG\AllowableValues(valueType="RANGE",min="0", max="15")
+ * 				),
+ * 				@SWG\Parameter(
+ * 					name="minArticleQuality",
+ * 					description="Minimal value of article quality",
+ * 					paramType="query",
+ * 					required="false",
+ * 					allowMultiple="false",
+ * 					dataType="int",
+ * 					defaultValue="10",
+ * 					@SWG\AllowableValues(valueType="RANGE",min="0", max="99")
  * 				)
  * 			)
  * 		)
