@@ -83,13 +83,14 @@ var UserLoginFacebook = {
 				loginCallback();
 			} else {
 				require( ['wikia.querystring'], function( Qs ) {
-					var wgCanonicalSpecialPageName = wgCanonicalSpecialPageName,
+					var w = window,
+						wgCanonicalSpecialPageName = w.wgCanonicalSpecialPageName,
 						qString = new Qs(),
 						returnTo = ( wgCanonicalSpecialPageName &&
-							( wgCanonicalSpecialPageName.match( /Userlogin|Userlogout/ ) ) ) ? wgMainPageTitle : null;
+							( wgCanonicalSpecialPageName.match( /Userlogin|Userlogout/ ) ) ) ? w.wgMainPageTitle : null;
 
 					if( returnTo ) {
-						qString.setPath( wgArticlePath.replace( '$1', returnTo ) );
+						qString.setPath( w.wgArticlePath.replace( '$1', returnTo ) );
 					}
 					qString.addCb().goTo();
 				} );
@@ -97,7 +98,7 @@ var UserLoginFacebook = {
 		} else {
 			require( ['wikia.ui.factory'], function( uiFactory ) {
 				$.when(
-					uiFactory.init( 'modal'),
+					uiFactory.init( 'modal' ),
 					$.getResources(
 						[$.getSassCommonURL( 'extensions/wikia/UserLogin/css/UserLoginFacebook.scss' )]
 					)
