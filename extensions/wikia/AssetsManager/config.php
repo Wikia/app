@@ -1109,6 +1109,7 @@ $config['videohomepage_js'] = array(
 	'skin' => array( 'oasis' ),
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
+		// jQuery plugins
 		'//resources/wikia/libraries/jquery/bxslider/jquery.bxslider.js',
 		'//resources/wikia/libraries/jquery/owl.carousel/owl.carousel.js',
 		'//resources/wikia/libraries/jquery/ellipses.js',
@@ -1117,20 +1118,27 @@ $config['videohomepage_js'] = array(
 		'//extensions/wikia/VideoPageTool/js/lib/lodash/dist/lodash.underscore.js',
 		'//extensions/wikia/VideoPageTool/js/lib/backbone/backbone.js',
 
-		// Compile Mustache templates
+		// Compiled Mustache templates
 		'//extensions/wikia/VideoPageTool/js/templates.mustache.js',
 
+		// Featured video slider
 		'//extensions/wikia/VideoPageTool/js/models/videohomepage.slide.js',
+		'//extensions/wikia/VideoPageTool/js/collections/videohomepage.featuredslides.js',
+		'//extensions/wikia/VideoPageTool/js/views/videohomepage.featured.js',
+
+		// Latest videos / category carousels
 		'//extensions/wikia/VideoPageTool/js/models/videohomepage.categorycarousel.js',
 		'//extensions/wikia/VideoPageTool/js/models/videohomepage.categorythumb.js',
-		'//extensions/wikia/VideoPageTool/js/collections/videohomepage.featuredslides.js',
 		'//extensions/wikia/VideoPageTool/js/collections/videopageadmin.category.js',
 		'//extensions/wikia/VideoPageTool/js/collections/videopageadmin.categorydata.js',
+		'//extensions/wikia/VideoPageTool/js/views/videohomepage.carousels.js',
 		'//extensions/wikia/VideoPageTool/js/views/videopagetool.carouselthumb.js',
 		'//extensions/wikia/VideoPageTool/js/views/videopagetool.carousel.js',
-		'//extensions/wikia/VideoPageTool/js/views/videohomepage.carousels.js',
-		'//extensions/wikia/VideoPageTool/js/views/videohomepage.featured.js',
+
+		// Search box
 		'//extensions/wikia/VideoPageTool/js/views/videohomepage.search.js',
+
+		// "Router" for views
 		'//extensions/wikia/VideoPageTool/js/views/videohomepage.index.js',
 	)
 );
