@@ -831,15 +831,15 @@ class ArticlesApiController extends WikiaApiController {
 	}
 
 	static private function followRedirect( $category ) {
-		$redirect = false;
 
 		if ( $category instanceof Title && $category->exists() ) {
 			$redirect = (new WikiPage( $category ))->getRedirectTarget();
+
+			if ( !empty( $redirect ) ) {
+				return $redirect;
+			}
 		}
 
-		if ( !empty( $redirect ) ) {
-			$category = $redirect;
-		}
 		return $category;
 	}
 
