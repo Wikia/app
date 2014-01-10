@@ -187,6 +187,10 @@ class ArticleQualityV1Service extends Service {
 		$quality += 10 * sqrt( min( $inputs[ 'sections' ], 6 ) );
 		$quality += $inputs[ 'images' ] ? 10 * sqrt( min( $inputs[ 'images' ], 10 ) ) : -40;
 
+		if ( $quality < 0 ) {
+			$quality = 0;
+		}
+
 		return $quality;
 	}
 
