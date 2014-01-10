@@ -3,6 +3,8 @@
  * Class definition for SearchApiController
  */
 use Wikia\Search\Config, Wikia\Search\QueryService\Factory, Wikia\Search\QueryService\DependencyContainer;
+use Wikia\Search\Services\CombinedSearchService;
+
 /**
  * Controller to execute searches in the content of a wiki.
  * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
@@ -12,8 +14,9 @@ use Wikia\Search\Config, Wikia\Search\QueryService\Factory, Wikia\Search\QuerySe
 class SearchApiController extends WikiaApiController {
 	const ITEMS_PER_BATCH = 25;
 	const CROSS_WIKI_LIMIT = 25;
-
 	const PARAMETER_NAMESPACES = 'namespaces';
+
+	protected $allowedHubs = [ 'Gaming' => true, 'Entertainment' => true, 'Lifestyle' => true ];
 
 	/**
 	 * Fetches results for the submitted query
@@ -76,6 +79,33 @@ class SearchApiController extends WikiaApiController {
 		}
 
 		$this->response->setVal( 'items', $items );
+	}
+
+	public function getCombined() {
+		if ( !$this->request->getVal( 'query' ) ) {
+			throw new MissingParameterApiException( 'query' );
+		}
+		if ( $this->request->getVal( 'lang' ) ) {
+			throw new InvalidParameterApiException( 'lang' );
+		}
+		$minArticleQuality = $this->request->getInt("minArticleQuality", 10);
+		$hubs = $this->request->getArray( 'hubs' );
+		foreach ( $hubs as $hub ) {
+			if ( !isset( $this->allowedHubs[ $hub ] ) ) {
+				$hub = htmlentities( $hub, ENT_QUOTES );
+				throw new InvalidParameterApiException( 'hubs (' . $hub . ')' );
+			}
+		}
+
+		$query = $this->request->getVal( 'query' );
+		$langs = $this->request->getArray( 'langs', ['en'] );
+		$namespaces = $this->request->getArray( 'namespaces', [ NS_MAIN ] );
+		$limit = $this->request->getVal( 'limit', null );
+
+		$searchService = new CombinedSearchService();
+		$response = $searchService->search($query, $langs, $namespaces, $hubs, $limit, $minArticleQuality);
+
+		$this->getResponse()->setData($response);
 	}
 
 	/**
@@ -164,3 +194,4 @@ class SearchApiController extends WikiaApiController {
 		return $searchConfig;
 	}
 }
+
