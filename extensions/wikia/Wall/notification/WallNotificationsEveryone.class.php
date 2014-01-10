@@ -74,11 +74,12 @@ class WallNotificationsEveryone extends WallNotifications {
 			return true;
 		}
 
+		$preparedDbExpireTime = $this->getDbExpireDate();
 		$res = $this->getDB( false )->select( 'wall_notification_queue',
 			array( 'entity_key' ),
 			array(
 				'wiki_id  = ' . $this->cityId,
-				'datediff(NOW(), event_date) < ' . WallHelper::NOTIFICATION_EXPIRE_DAYS,
+				'event_date > ' . $preparedDbExpireTime
 			),
 			__METHOD__
 		);
@@ -218,16 +219,16 @@ class WallNotificationsEveryone extends WallNotifications {
 
 	/**
 	 * Get notifications that must expire
-	 * @param integer $expireDays number of days before notification expires
+	 * @param string $preparedDbExpireTime quoted string date after which the notifications expire
 	 * @return array Result contains two arrays:
 	 * 		- the first one contains notification pages grouped by user_id and wiki_id
 	 *		- the second one contains id's to all notifications
 	 */
-	private function getExpiredNotifications( $expireDays ) {
+	private function getExpiredNotifications( $preparedDbExpireTime ) {
 		// SELECT wn.id, wn.user_id, wn.wiki_id, wn.unique_id
 		// FROM wall_notification wn
 		// JOIN wall_notification_queue wnq ON wnq.wiki_id = wn.wiki_id AND wnq.page_id = wn.unique_id
-		// WHERE datediff(NOW(), event_date) > 7
+		// WHERE event_date < '20140113121200';
 		$db = $this->getDB(true);
 		$res = $db->select(
 			array(
@@ -241,7 +242,7 @@ class WallNotificationsEveryone extends WallNotifications {
 				'wn.unique_id'
 			),
 			array(
-				'datediff(NOW(), event_date) > ' . $expireDays
+				'event_date < ' . $preparedDbExpireTime
 			),
 			__METHOD__,
 			array(),
@@ -319,6 +320,17 @@ class WallNotificationsEveryone extends WallNotifications {
 	}
 
 	/**
+	 * Return the db quoted notifications expiration date
+	 * @return string
+	 */
+	private function getDbExpireDate() {
+		$db = $this->getDB( true );
+		return $db->addQuotes(
+			$db->timestamp( strtotime( -WallHelper::NOTIFICATION_EXPIRE_DAYS .' days' ) )
+		);
+	}
+
+	/**
 	 * Clears notification queues and expired notifications
 	 *
 	 * @param bool $onlyCache - clears only users' cache
@@ -328,9 +340,11 @@ class WallNotificationsEveryone extends WallNotifications {
 		//this should be called at most once a day in a background task
 		wfProfileIn( __METHOD__ );
 
+		$preparedDbExpireTime = $this->getDbExpireDate();
+
 		// Remove expired notifications
 		list( $notificationsToDelete, $notificationToDeleteIds ) =
-			$this->getExpiredNotifications( WallHelper::NOTIFICATION_EXPIRE_DAYS );
+			$this->getExpiredNotifications( $preparedDbExpireTime );
 
 		if ( !empty( $notificationToDeleteIds ) ) {
 			$this->removeExpiredNotificationsFromCache( $notificationsToDelete );
@@ -342,10 +356,8 @@ class WallNotificationsEveryone extends WallNotifications {
 		//TODO: performance of this queries
 		if ( !$onlyCache ) {
 			$db = $this->getDB( true );
-			$db->query( 'DELETE FROM wall_notification_queue WHERE datediff(NOW(), event_date) > ' .
-				WallHelper::NOTIFICATION_EXPIRE_DAYS );
-			$db->query( 'DELETE FROM wall_notification_queue_processed WHERE datediff(NOW(), event_date) > ' .
-				WallHelper::NOTIFICATION_EXPIRE_DAYS );
+			$db->query( 'DELETE FROM wall_notification_queue WHERE event_date < ' . $preparedDbExpireTime );
+			$db->query( 'DELETE FROM wall_notification_queue_processed WHERE event_date < ' . $preparedDbExpireTime );
 			$db->commit();
 		}
 		wfProfileOut( __METHOD__ );
