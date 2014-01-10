@@ -152,6 +152,7 @@ $messages['ca'] = array(
  * @author Умар
  */
 $messages['ce'] = array(
+	'window-category-load-batch' => 'Кхин',
 	'window-article-button-close' => 'ДӀачӀагӀа',
 );
 
@@ -259,6 +260,20 @@ $messages['es'] = array(
 	'error-no-connection' => 'Conexión a Intenet no disponible.\\nInténtalo de nuevo.',
 	'error-server' => 'Nuestros servidores respondieron con un error, lo sentimos.\\nInténtalo de nuevo.',
 	'error-json-parse' => 'Hubo un problema con los datos devueltos desde nuestros servidores, lo sentimos.\\nInténtalo de nuevo.',
+);
+
+/** Persian (فارسی)
+ * @author Reza1615
+ */
+$messages['fa'] = array(
+	'activityindicator-message' => 'در حال بارگذاری...',
+	'window-category-load-batch' => 'بیشتر',
+	'window-article-button-close' => 'بسته',
+	'window-article-button-back' => 'عقب',
+	'window-article-menu-search-label' => 'جستجو',
+	'window-article-menu-cancel-label' => 'لغو',
+	'searchview-button-back-list' => 'بازگشت به فهرست',
+	'alert-download-updated-wikis-button-ok' => 'تأیید',
 );
 
 /** Finnish (suomi)
@@ -872,6 +887,31 @@ $messages['uk'] = array(
 	'error-no-connection' => 'Немає підключення до Інтернету.\\пбудь ласка спробуйте ще раз.',
 	'error-server' => 'Наші сервери відповіли: помилка, вибачте. \\nСпробуйте ще раз.',
 	'error-json-parse' => 'Виникла проблема з даними, які повертаються з наших серверів, вибачте. \\nБудь ласка, спробуйте ще раз.',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'activityindicator-message' => 'Đang tải…',
+	'window-wikis-title' => 'Wikia Game Guides',
+	'window-wikis-wikilist-search-hint' => 'Tìm kiếm Top Game của chúng tôi...',
+	'window-category-load-batch' => 'Nhiều hơn',
+	'window-article-button-close' => 'Đóng',
+	'window-article-button-back' => 'Quay lại',
+	'window-article-menu-search-label' => 'Tìm kiếm',
+	'window-article-menu-dashboard-label' => 'Nội dung hướng dẫn',
+	'window-article-menu-cancel-label' => 'Hủy bỏ',
+	'searchview-no-results' => 'Không có kết quả cho "%s"',
+	'searchview-button-back-list' => 'Quay lại danh sách',
+	'searchview-button-back-article' => 'Quay lại bài viết',
+	'searchbar-hint' => 'Tìm %s...',
+	'alert-download-updated-wikis-message' => 'Danh sách các hướng dẫn có sẵn sẽ được cập nhật.',
+	'alert-download-updated-wikis-button-ok' => 'Ok',
+	'error-update-required' => 'Một bản cập nhật cho ứng dụng này có sẵn và yêu cầu.',
+	'error-no-connection' => 'Không có kết nối internet.\\nPlease thử lại.',
+	'error-server' => 'Các máy chủ của chúng tôi đang trả lời bị lỗi, xin lỗi. \\ NHãy thử lại.',
+	'error-json-parse' => 'Có một vấn đề với dữ liệu trả về từ các máy chủ của chúng tôi, xin lỗi.\\nHãy thử lại.',
 );
 
 /** Simplified Chinese (中文（简体）‎)

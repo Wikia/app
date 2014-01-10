@@ -1472,18 +1472,18 @@ $messages['pt'] = array(
 ''Esta é a tua página de utilizador. Por favor, edita esta página para contar mais sobre ti para a comunidade!''
 
 == As minhas contribuições ==
-* [[:Special:Contributions/$1|Contribuições deste utilizador]]
+* [[Special:Contributions/$1|Contribuições deste utilizador]]
 
 == As minhas páginas preferidas ==
 * Adiciona links para as tuas páginas favoritas deste wiki!
 * Página preferida #2
-* Página preferida #3", # Fuzzy
+* Página preferida #3",
 	'welcome-message-user' => 'Olá, bem-vindo(a) à {{SITENAME}}! Obrigado pela tua edição na página [[:$1]].
 
 Por favor, deixa uma mensagem na [[$2|minha página de discussão]] se eu posso-te ajudar nalguma coisa! $3',
 	'welcome-message-anon' => "Olá, bem-vindo(a) à {{SITENAME}}! Muito obrigado pela tua edição em [[:$1]]. 
 
-Porque não '''[[:Special:Userlogin|crias uma conta e te identificas]]'''? Desta forma será muito máis fácil saber as páginas que tu editaste e o trabalho será atribuido a ti na wiki, alem do mais será de grande ajuda na hora de comunicar-te com o resto da comunidade.
+Porque não '''[[Especial:Entrar|crias uma conta e te identificas]]'''? Desta forma será muito mais fácil saber as páginas que tu editaste e o teu trabalho será atribuido a ti na wiki, além do mais será de grande ajuda na hora de comunicar-te com o resto da comunidade.
 
 Por favor, se tiveres alguma dúvida, sente-te a vontade para deixar uma mensagem na [[$2|minha pagina de discussão]] para ver se eu posso-te ajudar com alguma coisa. $3", # Fuzzy
 	'welcome-message-log' => 'boas-vindas a novo colaborador',
@@ -2035,6 +2035,7 @@ Xin vui lòng để lại tin nhắn cho tôi nếu bạn cần sự trợ giúp
  * @author Dimension
  * @author Hydra
  * @author Liuxinyu970226
+ * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
 	'welcome-user-page' => "==关于我==
@@ -2064,4 +2065,5 @@ $messages['zh-hans'] = array(
 	'welcome-message-wall-user' => '嗨，欢迎来到{{SITENAME}}！ 感谢您协助编辑[[:$1]]页。
 
 如果我能帮忙做些什么，请给我留言！',
+	'welcome-description' => '在用户初次贡献后发一条欢迎消息给他们',
 );

@@ -107,6 +107,14 @@ $messages['es'] = array(
 	'paginator-back' => 'Atrás',
 );
 
+/** Persian (فارسی)
+ * @author Reza1615
+ */
+$messages['fa'] = array(
+	'paginator-next' => 'بعدی',
+	'paginator-back' => 'عقب',
+);
+
 /** Finnish (suomi)
  * @author Centerlink
  */

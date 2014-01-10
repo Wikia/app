@@ -73,18 +73,14 @@ define( 'wikia.ui.modal', [
 	function ieFlexboxFallback( modal ) {
 		var element = modal.$element,
 			HEADER_AND_FOOTER_HEIGHT = 90, // modal header and footer have 45px fixed height
+			SECTION_PADDING = 40, // modal section has 20px top and bottom padding
 			winHeight = $( w ).height(),
-			// Using scrollHeight instead of $.height() because in IE10 $.height() returns only the visible height of
-			// the element after onresize is fired but we need the full height of the element.
-			elementHeight = modal.$content[0].scrollHeight,
-			modalMaxHeight = ( 90 / 100 ) * winHeight - HEADER_AND_FOOTER_HEIGHT; // 90% viewport - (header + footer)
+			// IE has problem with 'max-height' together with 'border-box', so set to 'content-box' and padding need to
+			// be subtracted from 'max-height'.
+			modalMaxHeight = ( 90 / 100 ) * winHeight - HEADER_AND_FOOTER_HEIGHT - SECTION_PADDING;
 
-		// DAR-3169 - max-height doesn't always work on IE9/10 so we're using height
-		modalMaxHeight = ( modalMaxHeight >= elementHeight ) ?
-			'auto' :
-			modalMaxHeight;
 
-		element.children( 'section' ).css( 'height', modalMaxHeight );
+		element.children( 'section' ).css( 'maxHeight', modalMaxHeight );
 	}
 
 	/**
@@ -175,11 +171,6 @@ define( 'wikia.ui.modal', [
 
 		/** ATTACHING EVENT HANDLERS TO MODAL */
 
-		this.$element.click(function( event ) {
-			// when click happens inside the modal, stop the propagation so it won't be handled by the blackout
-			event.stopPropagation();
-		});
-
 		// trigger custom buttons events based on button 'data-event' attribute
 		this.$element.on( 'click', 'button', $.proxy( function( event ) {
 			var modalEventName = $( event.target ).data( 'event' );
@@ -190,9 +181,13 @@ define( 'wikia.ui.modal', [
 
 		// clicking outside modal triggers the close action
 		this.$blackout.click( $.proxy(function( event ) {
-			event.preventDefault();
+			// jQuery only supports event bubbling,
+			// this is a workaround to be sure that click was done on blackout and doesn't bubble up from $element
+			// stopPropagation() on $element it not an option
+			// because we need bubbling for other events in the $elements content
+			var blackoutWasClicked = event.target === event.delegateTarget;
 
-			if ( this.isShown() && this.isActive() ) {
+			if ( this.isShown() && this.isActive() && blackoutWasClicked ) {
 				this.trigger( 'close', event );
 			}
 		}, that ) );

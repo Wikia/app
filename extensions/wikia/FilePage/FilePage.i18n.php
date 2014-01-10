@@ -150,6 +150,13 @@ Introdueix la descripció aquí.',
 	'file-page-more-links' => 'Veure llista completa',
 );
 
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'video-page-description-heading' => 'Цуьнах лаьцна',
+);
+
 /** Danish (dansk)
  * @author Luckas
  */
@@ -224,6 +231,15 @@ $messages['et'] = array(
 	'video-page-global-file-list-header' => 'Esineb selles vikis',
 	'video-page-description-heading' => 'Kirjeldus',
 	'file-page-more-links' => 'Vaata täielikku nimekirja',
+);
+
+/** Persian (فارسی)
+ * @author Reza1615
+ */
+$messages['fa'] = array(
+	'video-page-from-provider' => 'از $1',
+	'video-page-description-heading' => 'توضیحات',
+	'file-page-tab-about' => 'درباره',
 );
 
 /** Finnish (suomi)

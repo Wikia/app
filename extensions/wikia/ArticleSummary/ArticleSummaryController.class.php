@@ -2,13 +2,48 @@
 
 class ArticleSummaryController extends WikiaController {
 
+	public function blurb() {
+		wfProfileIn( __METHOD__ );
 
-	public function blurb () {
+		$idStr = $this->request->getVal( 'ids' );
+		$ids = explode( ',', $idStr );
 
-		$method = $this->request->getVal('method');
-		$idStr = $this->request->getVal('ids');
-		$ids = explode(',', $idStr);
+		$summary = array();
 
-		$this->summary = ArticleSummary::blurb($ids);
+		# Iterate through each title per wiki ID
+		foreach ( $ids as $id ) {
+			$title = Title::newFromID( $id );
+			if ( empty( $title ) ) {
+				$summary[$this->wg->CityId]['error'][] = "Unable to find title for ID $id";
+				break;
+			}
+
+			$service = new ArticleService( $id );
+			$snippet = $service->getTextSnippet();
+
+			$imageServing = new ImageServing( array( $id ), 200, array( 'w' => 2, 'h' => 1 ) );
+			$images = $imageServing->getImages( 1 ); // get just one image per article
+
+			$imageURL = '';
+			if ( isset( $images[$id] ) ) {
+				$imageURL = $images[$id][0]['url'];
+			}
+
+			$summary[$id] = array(
+				'wiki'       => $this->wg->Sitename,
+				'wikiUrl'    => $this->wg->Server,
+				'titleDBkey' => $title->getPrefixedDBkey(),
+				'titleText'  => $title->getFullText(),
+				'articleId'  => $title->getArticleID(),
+				'imageUrl'   => $imageURL,
+				'url'        => $title->getFullURL(),
+				'snippet'    => $snippet,
+			);
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		$this->summary = $summary;
 	}
+
 }

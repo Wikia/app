@@ -30,6 +30,7 @@ $wgHooks['ArticleDeleteComplete']    [] = "Wikia::onArticleDeleteComplete";
 $wgHooks['ContributionsToolLinks']   [] = 'Wikia::onContributionsToolLinks';
 $wgHooks['AjaxAddScript']            [] = 'Wikia::onAjaxAddScript';
 $wgHooks['TitleGetSquidURLs']        [] = 'Wikia::onTitleGetSquidURLs';
+$wgHooks['OutputPageFavicon']        [] = 'Wikia::onOutputPageFavicon';
 
 # changes in recentchanges (MultiLookup)
 $wgHooks['RecentChange_save']        [] = "Wikia::recentChangesSave";
@@ -2139,6 +2140,27 @@ class Wikia {
 			$backend = FileBackendGroup::singleton()->get( 'swift-backend' );
 			$fname = 'mwstore://' . $backend->getName() . "/$wgFSSwiftContainer/images/timeline/$hash";
 		}
+
+		return true;
+	}
+
+	/**
+	 * Rewrties favicon URL to point to CDN domain with a proper cache buster
+	 *
+	 * Uses ThemeDesigner's "revision" ID instead of wgStyleVersion
+	 * to properly update the favicon after the upload
+	 *
+	 * @param $favicon string favicon URL to modify
+	 * @return bool true
+	 *
+	 * @authro hyun
+	 * @authro macbre
+	 *
+	 * @see BAC-1131
+	 */
+	static function onOutputPageFavicon(&$favicon) {
+		$cb = SassUtil::getCacheBuster();
+		$favicon = wfReplaceImageServer($favicon, $cb);
 
 		return true;
 	}

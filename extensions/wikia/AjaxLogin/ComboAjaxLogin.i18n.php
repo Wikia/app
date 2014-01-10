@@ -50,6 +50,14 @@ Parameters:
 * $1 - is the specific reason given for the read-only mode',
 );
 
+/** Afrikaans (Afrikaans)
+ * @author Naudefj
+ */
+$messages['af'] = array(
+	'comboajaxlogin-connectmarketing-back' => '« Terug',
+	'comboajaxlogin-connectmarketing-forward' => 'Begin »',
+);
+
 /** Arabic (العربية)
  * @author Achraf94
  * @author Alexknight12
@@ -120,6 +128,16 @@ Téntalo otra vuelta o [[Special:Contact|informa d'ello]].",
 <br />
 (Si yá tienes una cuenta, pues <a href="#">entrar</a> de mou normal, pero nun podrás editar.)</p>',
 	'comboajaxlogin-ajaxerror' => 'Wikia nun ta respondiendo. Por favor, comprueba la to conexón.',
+);
+
+/** Azerbaijani (azərbaycanca)
+ * @author Mushviq Abdulla
+ */
+$messages['az'] = array(
+	'comboajaxlogin-createlog' => 'Daxil olun ya da yeni hesab yaradın',
+	'comboajaxlogin-connectmarketing-back' => '« Geri',
+	'comboajaxlogin-connectmarketing-forward' => 'Başla »',
+	'comboajaxlogin-ajaxerror' => 'Wikia qarşılıq vermir. Lütfən şəbəkə bağlantınızı yoxlayın.',
 );
 
 /** Bashkir (башҡортса)
@@ -965,6 +983,40 @@ $messages['lt'] = array(
 	'comboajaxlogin-connectmarketing-back' => '« Atgal',
 	'comboajaxlogin-connectmarketing-forward' => 'Pradėti »',
 	'comboajaxlogin-ajaxerror' => 'Wikia neatsako. Prašome patikrinti savo tinklo jungtį.',
+);
+
+/** Latvian (latviešu)
+ * @author Edgars2007
+ * @author Sg ghost
+ */
+$messages['lv'] = array(
+	'comboajaxlogin-desc' => 'Dynamic kastīte, kas ļauj lietotājiem, lai pieteiktos, atgādinātu paroli un reģistrēt lietotājus',
+	'comboajaxlogin-createlog' => 'Pieteikties vai izveidot kontu',
+	'comboajaxlogin-actionmsg' => 'Lai veiktu šo darbību, jums vispirms ir nepieciešams, lai pieteiktos vai izveidot kontu',
+	'comboajaxlogin-actionmsg-protected' => 'Lai veiktu šo darbību, jums vispirms ir nepieciešams, lai pieteiktos vai izveidot kontu.',
+	'comboajaxlogin-connectmarketing' => '<h1>Pievienot savu kontu</h1>
+<ul>
+<li>Saglabāt savu pašreizējo lietotājvārdu, vēsturi, rediģē... nekas izmaiņām, izņemot kā pieteikšanās</li>
+<li>Savu darbību par Wikia dalīties ar draugiem Facebook</li>
+<li>Pilnīgu kontroli pār to, kas ir publicēts</li>
+</ul>',
+	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>Japiesakās, izmantojot Facebook savienot</h1>',
+	'comboajaxlogin-connectmarketing-oasis' => '<h1>Pieslēgties Facebook kontā Wikia</h1>
+<ul>
+<li>Saglabāt savu pašreizējo lietotājvārdu, vēsturi, rediģē... nekas izmaiņām, izņemot kā pieteikšanās</li>
+<li>Savu darbību par Wikia dalīties ar draugiem Facebook, ar pilnīgu kontroli pār to, kas ir publicēts</li>
+</ul>',
+	'comboajaxlogin-connectmarketing-back' => '« Atpakaļ',
+	'comboajaxlogin-connectmarketing-forward' => 'Sāktu »',
+	'comboajaxlogin-connectdirections' => 'Iekļūt Wikia lietotājvārdu un paroli šeit, mēs brīnumainā veidā savienot savu Wikia un Facebook kontu fonā.
+N!Kad tas ir paveikts, var pieteikties bez problēmām, izmantojot jebkuru Facebook Connect pogas.',
+	'comboajaxlogin-post-not-understood' => 'Tur bija kļūda, kā šī forma tika veidota.
+Lūdzu mēģiniet vēlreiz vai [[Special:Contact|report this]].',
+	'comboajaxlogin-readonlytext' => '<h2>Piedodiet!</h2>
+<p>Jūs nevar izveidot kontu šajā brīdī, mēs drīz atšaksim darboties. Lūk kas notiek:<br /><em><span class="notranslate" tulkot="nav">$1</span></em></p>
+<p>Lūdzu, apmeklējiet <a href="http://twitter.com/wikia">Twitter</a> vai <a href="http://facebook.com/wikia">Facebook</a>, lai uzzinātu vairāk.<br />
+(Ja jums jau ir konts, jūs varat <a href="#">pieteikties</a> kā parasti, bet jūs nevarēsiet rediģēt.)</p>',
+	'comboajaxlogin-ajaxerror' => 'Wikia nereaģē. Lūdzu, pārbaudiet savu tīkla savienojumu.',
 );
 
 /** Basa Banyumasan (Basa Banyumasan)

@@ -632,7 +632,10 @@ Per exemple, pots:
  */
 $messages['ce'] = array(
 	'myhome-user-contributions-feed' => 'Къинхьегам',
+	'myhome-feed-newpage' => 'Керла агӀо',
 	'myhome-feed-edit' => 'нисдар',
+	'myhome-feed-delete' => 'дӀаяьккхина',
+	'myhome-hot-spots-number-of-editors' => 'нисдарш',
 );
 
 /** Czech (čeština)
@@ -2169,6 +2172,13 @@ $messages['lrc'] = array(
 	'myhome-feed-new-article-comment-details' => 'نظر',
 	'myhome-hot-spots-number-of-editors' => 'ویرایشتگریا',
 	'tooltip-pt-myhome' => 'رو د حونه مه',
+);
+
+/** Latvian (latviešu)
+ * @author Sg ghost
+ */
+$messages['lv'] = array(
+	'wikiactivity' => 'Viki Aktivitātes',
 );
 
 /** Macedonian (македонски)

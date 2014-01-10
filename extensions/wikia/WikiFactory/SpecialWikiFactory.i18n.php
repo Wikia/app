@@ -1126,10 +1126,12 @@ $messages['ce'] = array(
 	'awc-metrics-two-months' => 'кхоьллина < 2 бутт хьалха',
 	'awc-metrics-three-months' => 'кхоьллина < 3 бутт хьалха',
 	'awc-metrics-half-year' => 'кхоьллина < 6 бутт хьалха',
+	'awc-metrics-edits' => 'Нисдарш',
 	'awc-metrics-close' => 'ДӀачӀагӀа',
 	'awc-metrics-close-action' => 'дӀачӀагӀа',
 	'awc-metrics-close-checked' => 'ДӀачӀагӀа билгал йинарш',
 	'closed-reason' => 'Бахьан:',
+	'newwikisgraph-param-other' => 'Кхин',
 );
 
 /** Sorani Kurdish (کوردی)
@@ -1816,15 +1818,26 @@ $messages['eu'] = array(
  * @author Ebraminio
  * @author Huji
  * @author Mjbmr
+ * @author Reza1615
  * @author ZxxZxxZ
  */
 $messages['fa'] = array(
+	'wf_city_url' => 'نشانی',
+	'wf_city_id' => 'شناسه',
+	'wf_city_title' => 'عنوان',
+	'wf_city_created' => 'ایجاد شده',
 	'wf_city_founding_user' => 'بنیان‌گذار',
 	'wf_city_founding_email' => 'پست الکترونیکی بنیان‌گذار',
 	'wf_city_public' => 'وضعیت',
 	'wf_city_lang' => 'زبان',
 	'wf_cc_name' => 'رده',
+	'wikifactory-label-variables' => 'متغییرها',
+	'wikifactory-label-variables2' => 'عمومی',
 	'wikifactory-label-actions' => 'عملکردها',
+	'wikifactory-label-close' => 'بسته',
+	'wikifactory-label-tags' => 'برچسب‌ها',
+	'wikifactory-label-tags2' => 'برچسب‌ها',
+	'closewiki-nbr-wiki' => 'ویکی‌های $1',
 	'closewiki-unknown' => 'ناشناخته',
 	'wikifactory-button-saveparse' => 'تجزیه و ذخیره تغییرات',
 	'wikifactory-button-save' => 'ذخیره‌کردن تغییرات',
@@ -1835,7 +1848,15 @@ $messages['fa'] = array(
 	'awc-metrics-articles' => 'مقاله‌ها',
 	'awc-metrics-edits' => 'ویرایش‌ها',
 	'awc-metrics-db-size' => 'حجم بانک اطلاعاتی',
+	'awc-metrics-images' => 'تصویرها',
+	'awc-metrics-close' => 'بسته',
+	'awc-metrics-active' => 'فعال',
+	'awc-metrics-removed' => 'حذف شده',
 	'closed-wiki' => 'ویکی بسته شده',
+	'closed-wiki-create-wiki' => 'ایجاد ویکی جدید',
+	'closed-reason' => 'دلیل:',
+	'newwikisgraph-param-all' => 'همه',
+	'newwikisgraph-param-other' => 'دیگر',
 );
 
 /** Finnish (suomi)
@@ -5424,8 +5445,18 @@ $messages['zh-hans'] = array(
 	'closewiki-message' => '域名 $1',
 	'closewiki-nbr-wiki' => '$1 维基',
 	'closewiki-dump-url' => '数据库转储：$1',
+	'closewiki-unknown' => '未知',
+	'closewiki-return' => '返回$1',
+	'wikifactory-button-saveparse' => '解析并保存更改',
+	'wikifactory-button-save' => '保存更改',
+	'awc-metrics-wikis' => '显示Wiki',
+	'awc-metrics-select' => '显示Wiki：',
+	'awc-metrics-by-language' => '按语言：',
+	'awc-metrics-category' => '和分类：',
 	'awc-metrics-all' => '所有维基',
 	'awc-metrics-all-languages' => '所有语言',
+	'awc-metrics-search' => '搜索选项：',
+	'awc-metrics-nbr-result' => '结果：',
 	'awc-metrics-images' => '图像',
 	'awc-metrics-close' => '关闭',
 	'awc-metrics-close-action' => '关闭',

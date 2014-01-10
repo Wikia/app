@@ -1147,6 +1147,7 @@ Alternativament, pot fer clic " $2 " per veure la pàgina en la seva forma d\'ac
 $messages['ce'] = array(
 	'wikiaPhotoGallery-error-user-rights' => 'Декъашхочун тӀекхачаре бакъона гӀалат.',
 	'wikiaPhotoGallery-upload-findbutton' => 'Каро',
+	'wikiaPhotoGallery-upload-error-conflict-insert' => 'Чуйилла',
 	'wikiaPhotoGallery-preview-saving-title' => 'ДӀадоьду Ӏалашяр',
 	'wikiaPhotoGallery-slideshow-view-link-overlay' => 'Дехьа гӀо $1',
 );
@@ -1887,11 +1888,30 @@ Describe esta imagen.",
 
 /** Persian (فارسی)
  * @author Mjbmr
+ * @author Reza1615
  */
 $messages['fa'] = array(
 	'wikiaPhotoGallery-back' => 'بازگشت',
 	'wikiaPhotoGallery-finish' => 'پایان',
 	'wikiaPhotoGallery-lightbox-caption' => 'توسط $1',
+	'wikiaPhotoGallery-error-caption' => 'خطا',
+	'wikiaPhotoGallery-upload-findtitle' => 'یافتن',
+	'wikiaPhotoGallery-upload-findbutton' => 'یافتن',
+	'wikiaPhotoGallery-upload-error-conflict-insert' => 'درج',
+	'wikiaPhotoGallery-upload-select-images' => 'انتخاب',
+	'wikiaPhotoGallery-photooptions-done' => 'انجام شد',
+	'wikiaPhotoGallery-preview-hover-delete' => 'حذف',
+	'wikiaPhotoGallery-preview-spacing-small' => 'کوچک',
+	'wikiaPhotoGallery-preview-spacing-medium' => 'متوسط',
+	'wikiaPhotoGallery-preview-spacing-large' => 'بزرگ',
+	'wikiaPhotoGallery-preview-captionsize-small' => 'کوچک',
+	'wikiaPhotoGallery-preview-captionsize-medium' => 'متوسط',
+	'wikiaPhotoGallery-preview-captionsize-large' => 'بزرگ',
+	'wikiaPhotoGallery-preview-bordersize-none' => 'هیچ',
+	'wikiaPhotoGallery-preview-bordersize-small' => 'کوچک',
+	'wikiaPhotoGallery-preview-bordersize-medium' => 'متوسط',
+	'wikiaPhotoGallery-preview-bordersize-large' => 'بزرگ',
+	'wikiaPhotoGallery-upload-selectbutton' => 'انتخاب',
 );
 
 /** Finnish (suomi)

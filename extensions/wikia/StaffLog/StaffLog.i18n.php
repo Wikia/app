@@ -213,6 +213,15 @@ $messages['es'] = array(
 	'action-stafflog' => 'ver el registro del staff centralizado',
 );
 
+/** Persian (فارسی)
+ * @author Reza1615
+ */
+$messages['fa'] = array(
+	'stafflog-filter-label' => 'پالایه',
+	'stafflog-filter-user' => 'کاربر:',
+	'stafflog-filter-type-block' => 'بلوک‌ها',
+);
+
 /** French (français)
  * @author Gomoko
  * @author Peter17
@@ -684,10 +693,13 @@ $messages['vi'] = array(
  */
 $messages['zh-hans'] = array(
 	'stafflog-blockmsg' => '$1 $2 试图封禁在维基系统 $4 上面的员工用户 $3，理由为 $5',
+	'right-stafflog' => '可以查看stafflog',
+	'stafflog-wiki-status-change' => '$1 更改 $2 的状态到 $3。理由：$4',
 	'stafflog-filter-label' => '过滤器',
 	'stafflog-filter-user' => '用户：',
 	'stafflog-filter-type' => '类型：',
 	'stafflog-filter-apply' => '应用过滤器',
 	'stafflog-filter-type-renameuser' => '重命名用户',
 	'stafflog-filter-type-wikifactory' => 'Wiki状态',
+	'action-stafflog' => '查看集中式的员工日志',
 );

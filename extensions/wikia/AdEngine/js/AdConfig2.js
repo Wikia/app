@@ -1,18 +1,19 @@
+/*exported AdConfig2*/
 var AdConfig2 = function (
 	// regular dependencies
 	log,
 	window,
 	document,
 	Geo,
-	adLogicPageDimensions,
 	abTest,
+
+	adDecoratorPageDimensions,
 
 	// adProviders
 	adProviderGpt,
 	adProviderEvolve,
 	adProviderGamePro,
-	adProviderLater,
-	adProviderNull
+	adProviderLater
 ) {
 	'use strict';
 
@@ -21,7 +22,8 @@ var AdConfig2 = function (
 		country = Geo.getCountryCode(),
 		defaultHighValueSlots,
 		highValueSlots,
-		useSevenOneMedia = window.wgAdDriverUseSevenOneMedia;
+		useSevenOneMedia = window.wgAdDriverUseSevenOneMedia,
+		decorators = [adDecoratorPageDimensions];
 
 	defaultHighValueSlots = {
 		'CORP_TOP_LEADERBOARD': true,
@@ -49,7 +51,7 @@ var AdConfig2 = function (
 
 	highValueSlots = defaultHighValueSlots;
 
-	function getBackEndProvider(slot) {
+	function getProvider(slot) {
 		var slotname = slot[0];
 
 		log('getProvider', 5, logGroup);
@@ -68,15 +70,12 @@ var AdConfig2 = function (
 		if (slot[2] === 'AdDriver') {
 			return adProviderGpt;
 		}
-		if (slot[2] === 'Liftium2') {
-			return adProviderLater;
-		}
-		if (slot[2] === 'Liftium2Dom') {
+		if (slot[2] === 'Liftium') {
 			return adProviderLater;
 		}
 
 		// Prevent passing WIKIA_BAR_BOXAD_1 to Later queue if useSevenOneMedia
-		if (slotname === 'WIKIA_BAR_BOXAD_1' && adProviderGpt.canHandleSlot(slot)) {
+		if (slotname === 'WIKIA_BAR_BOXAD_1' && adProviderGpt.canHandleSlot(slotname)) {
 			return adProviderGpt;
 		}
 
@@ -89,7 +88,7 @@ var AdConfig2 = function (
 		if (highValueSlots[slotname]) {
 			// First ask GamePro (german lang wiki)
 			if (cityLang === 'de') {
-				if (adProviderGamePro.canHandleSlot(slot)) {
+				if (adProviderGamePro.canHandleSlot(slotname)) {
 					return adProviderGamePro;
 				}
 			}
@@ -97,36 +96,21 @@ var AdConfig2 = function (
 
 		// Next Evolve (AU, CA, and NZ traffic)
 		if (country === 'AU' || country === 'CA' || country === 'NZ') {
-			if (adProviderEvolve.canHandleSlot(slot)) {
+			if (adProviderEvolve.canHandleSlot(slotname)) {
 				return adProviderEvolve;
 			}
 		}
 
 		// Non-high-value slots goes to ad provider Later, so GamePro can grab them later
-		if (highValueSlots[slotname] && adProviderGpt.canHandleSlot(slot)) {
+		if (highValueSlots[slotname] && adProviderGpt.canHandleSlot(slotname)) {
 			return adProviderGpt;
 		}
 
 		return adProviderLater;
 	}
 
-	function getProvider(slot) {
-		var provider = getBackEndProvider(slot);
-
-		// No page length checking logic for Null provider
-		if (provider === adProviderNull) {
-			return provider;
-		}
-
-		// Check if we should apply page length checking for that slot
-		if (provider !== adProviderNull && adLogicPageDimensions.isApplicable(slot)) {
-			return adLogicPageDimensions.getProxy(provider);
-		}
-
-		return provider;
-	}
-
 	return {
+		getDecorators: function () {return decorators;},
 		getProvider: getProvider
 	};
 };

@@ -311,19 +311,15 @@ define( 'wikia.preview', [
 		if ( typeof summary !== 'undefined' ) {
 			var $editPagePreviewEditSummary = $( '<div>', {id: 'EditPagePreviewEditSummary'} ),
 				$articlePreview = contentNode.closest( '.ArticlePreview' ),
-				articleHeight = $articlePreview.height(),
-				minArticleHeight = 200,
-				editSummaryHeight,
-				newArticleHeight;
+				articlePreviewWidth = $articlePreview.width(),
+				$modalToolbar = $( '.modalToolbar' ),
+				modalToolbarWidth = $modalToolbar.outerWidth( true );
 
-			$editPagePreviewEditSummary.width( width ).appendTo( $articlePreview.parent() ).html( summary );
+			$editPagePreviewEditSummary
+				.width( articlePreviewWidth - modalToolbarWidth )
+				.html( summary );
 
-			editSummaryHeight = $editPagePreviewEditSummary.height();
-			newArticleHeight = articleHeight - editSummaryHeight;
-
-			if ( newArticleHeight > minArticleHeight ) {
-				$articlePreview.height( newArticleHeight );
-			}
+			$modalToolbar.before( $editPagePreviewEditSummary );
 		}
 	}
 
@@ -378,7 +374,7 @@ define( 'wikia.preview', [
 		}
 
 		// Force browser to redraw/repaint
-		// http://stackoverflow.com/questions/3485365/how-can-i-force-webkit-to-redraw-repaint-to-propagate-style-changes
+		// http://stackoverflow.com/q/3485365/how-can-i-force-webkit-to-redraw-repaint-to-propagate-style-changes
 		$article.hide();
 		$article.height();
 		$article.show();

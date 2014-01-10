@@ -332,6 +332,7 @@ $messages['ce'] = array(
 	'lookupcontribswikioptions' => 'Параметраш',
 	'lookupcontribscontribslink' => 'Къинхьегаме хьажораг',
 	'lookupcontribscontribs' => 'къинхьегам',
+	'lookupcontribshist' => 'истори',
 	'lookupcontribscontent' => 'чулацам',
 	'lookupcontribsall' => 'массо',
 );
@@ -564,8 +565,16 @@ $messages['eu'] = array(
 /** Persian (فارسی)
  * @author BlueDevil
  * @author Ebraminio
+ * @author Reza1615
  */
 $messages['fa'] = array(
+	'lookupcontribsgo' => 'برو',
+	'lookupcontribswiki' => 'ویکی',
+	'lookupcontribswikiurl' => 'نشانی اینترنتی',
+	'lookupcontribswikititle' => 'عنوان',
+	'lookupcontribswikioptions' => 'گزینه',
+	'lookupcontribshist' => 'تاریخچه',
+	'lookupcontribsdiff' => 'تفاوت',
 	'lookupcontribscontent' => 'محتوا',
 	'lookupcontribsnormal' => 'اخیر',
 	'lookupcontribsall' => 'همه',

@@ -961,6 +961,7 @@ Por favor, contáctalo para más información.',
 /** Persian (فارسی)
  * @author BlueDevil
  * @author Dalba
+ * @author Reza1615
  * @author جواد
  * @author پاناروما
  */
@@ -1935,6 +1936,13 @@ $messages['lt'] = array(
 	'group-chatmoderator' => 'Pokalbių moderatoriai',
 	'group-chatmoderator-member' => 'Pokalbių moderatorius',
 	'chat-browser-is-notsupported' => '	Jūsų naršyklė nepalaiko. Geriausiam patyrimui, naudokitės <a href="http://community.wikia.com/wiki/Help:Supported_browsers">naujesnę naršyklė</a>.',
+);
+
+/** Latvian (latviešu)
+ * @author Sg ghost
+ */
+$messages['lv'] = array(
+	'chat-user-menu-message-wall' => 'Lietotāja diskusija',
 );
 
 /** Macedonian (македонски)

@@ -291,6 +291,7 @@ Si prefieres enviar un correo con datos adjuntos, puedes contactarnos a [mailto:
 /** Persian (فارسی)
  * @author BlueDevil
  * @author Mjbmr
+ * @author Reza1615
  */
 $messages['fa'] = array(
 	'contact' => 'تماس با ویکیا',

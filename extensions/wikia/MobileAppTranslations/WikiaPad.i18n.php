@@ -178,6 +178,17 @@ $messages['es'] = array(
 	'browser-loading-message' => 'Cargando...',
 );
 
+/** Persian (فارسی)
+ * @author Reza1615
+ */
+$messages['fa'] = array(
+	'main-tab-search' => 'جستجو',
+	'main-tab-offline' => 'برون‌خط',
+	'tab-discover-loading-message' => 'در حال بارگذاری...',
+	'tab-discover-no-network-dialog-close-button' => 'تأیید',
+	'browser-loading-message' => 'در حال بارگذاری...',
+);
+
 /** Finnish (suomi)
  * @author Centerlink
  * @author Nedergard
