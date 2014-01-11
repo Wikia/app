@@ -2582,7 +2582,6 @@ class DPLMain {
             return $output;
         }
 
-        $sk =& $wgUser->getSkin();
         // generate title for Special:Contributions (used if adduser=true)
         $sSpecContribs = '[[:Special:Contributions|Contributions]]';
 
@@ -2661,13 +2660,13 @@ class DPLMain {
             //chop off title if "too long"
 			if( isset($iTitleMaxLen) && (strlen($sTitleText) > $iTitleMaxLen) )  $sTitleText = substr($sTitleText, 0, $iTitleMaxLen) . '...';
             if ($bShowCurID && isset($row->page_id)) {
-				//$articleLink = '<html>'.$sk->makeKnownLinkObj($title, htmlspecialchars($sTitleText),'curid='.$row->page_id).'</html>';
+				//$articleLink = '<html>'.Linker::makeKnownLinkObj($title, htmlspecialchars($sTitleText),'curid='.$row->page_id).'</html>';
 				$articleLink = '[{{fullurl:'.$title->getText().'|curid='.$row->page_id.'}} '.htmlspecialchars($sTitleText).']';
             } else if (!$bEscapeLinks || ($pageNamespace!=14 && $pageNamespace!=6) ) {
                 // links to categories or images need an additional ":"
                 $articleLink = '[['.$title->getPrefixedText().'|'.$wgContLang->convert( $sTitleText ).']]';
 			} else {
-				// $articleLink = '<html>'.$sk->makeKnownLinkObj($title, htmlspecialchars($sTitleText)).'</html>';
+				// $articleLink = '<html>'.Linker::makeKnownLinkObj($title, htmlspecialchars($sTitleText)).'</html>';
 				$articleLink = '[{{fullurl:'.$title->getText().'}} '.htmlspecialchars($sTitleText).']';
             }
 
