@@ -89,7 +89,10 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 
 		$program = VideoPageToolProgram::newProgram( $language, $date );
 
-		// get program assets
+		// get program assets. VPT needs a program object for each request. It first checks if one already exists for
+		// that language and date. If one doesn't, it creates a new one. It then uses that program to pull the
+		// associated assets. If it's a new program, it won't have any assets yet created. To help the user, we
+		// grab the assets from the the last saved program and use those as the default assets for this new program.
 		$assets = $program->getAssetsBySection( $section );
 		if ( empty( $assets ) ) {
 			$latestProgram = VideoPageToolProgram::loadProgramNearestDate( $language, $date );
@@ -113,18 +116,15 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 			$publishedBy = User::newFromId( $publishedBy )->getName();
 		}
 
-		$lastSavedOn = null;
+		$lastSavedOn = 0;
 		$savedBy = null;
 		// get asset data
 		if ( empty( $assets ) ) {
 			// get default assets
 			$videos = $helper->getDefaultValuesBySection( $section );
 		} else {
-			// $assets is an associative array of assets using their display order as the key and the assets data
-			// as the value. Because of this, the first item is 1 for first in the order, rather than 0 as if it were
-			// indexed numerically.
-			$lastSavedOn = $assets[1]->getUpdatedAt();
-			$savedBy = $assets[1]->getUpdatedBy();
+			// Saved on and saved by data are saved on a per asset basis, therefore it's necessary to loop through each
+			// asset to make sure we're using the latest saved information.
 			foreach( $assets as $order => $asset ) {
 				$videos[$order] = $asset->getAssetData();
 				if ( $asset->getUpdatedAt() > $lastSavedOn ) {
