@@ -378,6 +378,7 @@ $messages['ca'] = array(
 $messages['ce'] = array(
 	'toplists-editor-related-article-placeholder' => 'ДӀаязъе йолуш йолу агӀона цӀе',
 	'toplists-update-button' => 'МогӀам Ӏалашбар',
+	'toplists-days' => '$1 {{PLURAL:$1|де}}',
 );
 
 /** Czech (čeština)
