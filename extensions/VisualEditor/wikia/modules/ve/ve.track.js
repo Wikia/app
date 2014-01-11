@@ -2,7 +2,7 @@
  * VisualEditor tracking for Wikia
  */
 
-/* global require */
+/* global mw, require */
 
 require( ['wikia.tracker'], function ( tracker ) {
 	var actions = tracker.ACTIONS,
@@ -132,6 +132,17 @@ require( ['wikia.tracker'], function ( tracker ) {
 	 */
 	function upperToHyphenLower( match ) {
 		return '-' + match.toLowerCase();
+	}
+
+	// Track time to init when accessing directly from the URI via ?veaction=edit
+	if ( mw.libs.ve.activateOnPageLoad ) {
+		mw.hook( 've.activationComplete' ).add( function () {
+			ve.track( 'wikia' , {
+				'action': actions.IMPRESSION,
+				'label': 'edit-page-on-load',
+				'value': ve.now() - wgNow.getTime()
+			} );
+		} );
 	}
 
 	// Exports
