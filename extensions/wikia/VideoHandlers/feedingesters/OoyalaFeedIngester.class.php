@@ -55,19 +55,11 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 			$url = $this->initFeedUrl( $apiParams, $nextPage );
 			print( "Connecting to $url...\n" );
 
-			$req = MWHttpRequest::factory( $url, array( 'noProxy' => true ) );
-			$status = $req->execute();
-			if ( $status->isGood() ) {
-				$response = $req->getContent();
-			} else {
-				print( "ERROR: problem downloading content (".$status->getMessage().").\n" );
+			$response = OoyalaAsset::getApiContent( $url );
+			if ( $response === false ) {
 				wfProfileOut( __METHOD__ );
-
 				return 0;
 			}
-
-			// parse response
-			$response = json_decode( $response, true );
 
 			$videos = empty( $response['items'] ) ? array() : $response['items'] ;
 			$nextPage = empty( $response['next_page'] ) ? '' : $response['next_page'] ;

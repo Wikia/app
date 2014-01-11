@@ -7,39 +7,6 @@
 */
 
 /**
- * Constructs a URL to get assets from Ooyala API
- * @param integer $apiPageSize
- * @param integer $nextPage
- * @param string $extra
- * @return string $url
- */
-function getApiAssets( $apiPageSize, $nextPage, $extra ) {
-	$cond = array(
-		"status = 'live'",
-	);
-
-	if ( !empty( $extra ) ) {
-		$cond[] = $extra;
-	}
-
-	$params = array(
-		'limit' => $apiPageSize,
-		'where' => implode( ' AND ', $cond ),
-	);
-
-	if ( !empty($nextPage) ) {
-		$parsed = explode( "?", $nextPage );
-		parse_str( array_pop($parsed), $params );
-	}
-
-	$method = 'GET';
-	$reqPath = '/v2/assets';
-	$url = OoyalaApiWrapper::getApi( $method, $reqPath, $params );
-
-	return $url;
-}
-
-/**
  * Send request to Ooyala to update metadata
  * @param string $videoId
  * @param array $metadata
@@ -231,27 +198,21 @@ if ( !empty( $ageRequired ) ) {
 
 do {
 	// connect to provider API
-	$url = getApiAssets( $apiPageSize, $nextPage, $extra );
+	$url = OoyalaAsset::getApiUrlAssets( $apiPageSize, $nextPage, $extra );
 	echo "\nConnecting to $url...\n" ;
 
-	$req = MWHttpRequest::factory( $url );
-	$status = $req->execute();
-	if ( $status->isGood() ) {
-		$response = $req->getContent();
-	} else {
-		die ( "ERROR: problem downloading content (".$status->getMessage().").\n" );
+	$response = OoyalaAsset::getApiContent( $url );
+	if ( $response === false ) {
+		exit();
 	}
 
-	// parse response
-	$response = json_decode( $response, true );
-
-	$videos = empty($response['items']) ? array() : $response['items'] ;
-	$nextPage = empty($response['next_page']) ? '' : $response['next_page'] ;
+	$videos = empty( $response['items'] ) ? array() : $response['items'] ;
+	$nextPage = empty( $response['next_page'] ) ? '' : $response['next_page'] ;
 
 	$total += count( $videos );
 
 	$cnt = 0;
-	foreach( $videos as $video ) {
+	foreach ( $videos as $video ) {
 		$cnt++;
 		$title = trim( $video['name'] );
 		echo "[Page $page: $cnt of $total] Video: $title ({$video['embed_code']})\n";
@@ -274,6 +235,6 @@ do {
 	}
 
 	$page++;
-} while( !empty( $nextPage ) );
+} while ( !empty( $nextPage ) );
 
 echo "\nTotal videos: ".$total.", Success: ".( $total - $failed - $skipped ).", Failed: $failed, Skipped: $skipped\n\n";

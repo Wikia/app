@@ -3,7 +3,66 @@
 class OoyalaAsset extends WikiaModel {
 
 	/**
-	 * add remote asset
+	 * Constructs a URL to get assets from Ooyala API
+	 * @param integer $apiPageSize
+	 * @param string $nextPage
+	 * @param string $extra
+	 * @return string $url
+	 */
+	public static function getApiUrlAssets( $apiPageSize, $nextPage = '', $extra = '' ) {
+		wfProfileIn( __METHOD__ );
+
+		$cond = array(
+			"status = 'live'",
+		);
+
+		if ( !empty( $extra ) ) {
+			$cond[] = $extra;
+		}
+
+		$params = array(
+			'limit' => $apiPageSize,
+			'where' => implode( ' AND ', $cond ),
+		);
+
+		if ( !empty( $nextPage ) ) {
+			$parsed = explode( "?", $nextPage );
+			parse_str( array_pop($parsed), $params );
+		}
+
+		$method = 'GET';
+		$reqPath = '/v2/assets';
+		$url = OoyalaApiWrapper::getApi( $method, $reqPath, $params );
+
+		wfProfileOut( __METHOD__ );
+
+		return $url;
+	}
+
+	/**
+	 * Get API content
+	 * @param string $url
+	 * @return array|false $result
+	 */
+	public static function getApiContent( $url ) {
+		wfProfileIn( __METHOD__ );
+
+		$req = MWHttpRequest::factory( $url, array( 'noProxy' => true ) );
+		$status = $req->execute();
+		if ( $status->isGood() ) {
+			$result = json_decode( $req->getContent(), true );
+		} else {
+			$result = false;
+			print( "ERROR: problem downloading content (".$status->getMessage().").\n" );
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $result;
+	}
+
+	/**
+	 * Add remote asset
 	 * @param array $data
 	 * @return boolean $resp
 	 */
@@ -59,7 +118,7 @@ class OoyalaAsset extends WikiaModel {
 	}
 
 	/**
-	 * generate remote asset params
+	 * Generate remote asset params
 	 * @param array $data
 	 * @return array $params
 	 */
@@ -79,7 +138,7 @@ class OoyalaAsset extends WikiaModel {
 	}
 
 	/**
-	 * add metadata
+	 * Add metadata
 	 * @param string $videoId
 	 * @param array $metadata
 	 * @return boolean $resp
@@ -128,7 +187,7 @@ class OoyalaAsset extends WikiaModel {
 	}
 
 	/**
-	 * generate asset metadata
+	 * Generate asset metadata
 	 * @param array $data
 	 * @return array $metadata
 	 */
@@ -213,7 +272,7 @@ class OoyalaAsset extends WikiaModel {
 	}
 
 	/**
-	 * check if video title exists
+	 * Check if video title exists
 	 * @param string $name
 	 * @param string $source
 	 * @param string $assetType [remote_asset]
@@ -230,7 +289,7 @@ class OoyalaAsset extends WikiaModel {
 	}
 
 	/**
-	 * check if video id exists (match sourceid in metadata)
+	 * Check if video id exists (match sourceid in metadata)
 	 * @param string $sourceId
 	 * @param string $source
 	 * @param string $assetType [remote_asset]
@@ -247,7 +306,7 @@ class OoyalaAsset extends WikiaModel {
 	}
 
 	/**
-	 * check if video exists
+	 * Check if video exists
 	 * @param array $cond
 	 * @return boolean
 	 */
@@ -281,7 +340,7 @@ class OoyalaAsset extends WikiaModel {
 	}
 
 	/**
-	 * set thumbnail url
+	 * Set thumbnail url
 	 * @param string $videoId
 	 * @param array $assetData
 	 * @return boolean $resp
@@ -306,7 +365,7 @@ class OoyalaAsset extends WikiaModel {
 	}
 
 	/**
-	 * set primary thumbnail
+	 * Set primary thumbnail
 	 * @param string $videoId
 	 * @return boolean $resp
 	 */
@@ -325,7 +384,7 @@ class OoyalaAsset extends WikiaModel {
 	}
 
 	/**
-	 * get player info
+	 * Get player info
 	 * @param string $videoId
 	 * @return array|false $response
 	 */
@@ -353,7 +412,7 @@ class OoyalaAsset extends WikiaModel {
 	}
 
 	/**
-	 * set player
+	 * Set player
 	 * @param string $videoId
 	 * @param string $playerId (new player id)
 	 * @return boolean $resp
@@ -373,7 +432,7 @@ class OoyalaAsset extends WikiaModel {
 	}
 
 	/**
-	 * set age gate player
+	 * Set age gate player
 	 * @param string $videoId
 	 * @param array $data
 	 * @return boolean $resp
@@ -392,7 +451,7 @@ class OoyalaAsset extends WikiaModel {
 	}
 
 	/**
-	 * set label
+	 * Set label
 	 * @param string $videoId
 	 * @param array $data
 	 * @return boolean $resp
@@ -426,7 +485,7 @@ class OoyalaAsset extends WikiaModel {
 	}
 
 	/**
-	 * send request
+	 * Send request
 	 * @param string $method
 	 * @param string $reqPath
 	 * @param array $params
