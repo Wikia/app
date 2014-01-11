@@ -6,19 +6,14 @@ class OoyalaAsset extends WikiaModel {
 	 * Constructs a URL to get assets from Ooyala API
 	 * @param integer $apiPageSize
 	 * @param string $nextPage
-	 * @param string $extra
+	 * @param array $cond - conditions for query
 	 * @return string $url
 	 */
-	public static function getApiUrlAssets( $apiPageSize, $nextPage = '', $extra = '' ) {
+	public static function getApiUrlAssets( $apiPageSize = 100, $nextPage = '', $cond = array() ) {
 		wfProfileIn( __METHOD__ );
 
-		$cond = array(
-			"status = 'live'",
-		);
-
-		if ( !empty( $extra ) ) {
-			$cond[] = $extra;
-		}
+		// only live video
+		$cond[] = "status = 'live'";
 
 		$params = array(
 			'limit' => $apiPageSize,
@@ -27,7 +22,7 @@ class OoyalaAsset extends WikiaModel {
 
 		if ( !empty( $nextPage ) ) {
 			$parsed = explode( "?", $nextPage );
-			parse_str( array_pop($parsed), $params );
+			parse_str( array_pop( $parsed ), $params );
 		}
 
 		$method = 'GET';

@@ -42,17 +42,9 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 		$articlesCreated = 0;
 		$nextPage = '';
 
-		// ingest only live video
-		$cond = array_merge( array( "status = 'live'" ), $params['cond'] );
-
-		$apiParams = array(
-			'limit' => self::API_PAGE_SIZE,
-			'where' => implode( ' AND ', $cond ),
-		);
-
 		do {
 			// connect to provider API
-			$url = $this->initFeedUrl( $apiParams, $nextPage );
+			$url = OoyalaAsset::getApiUrlAssets( self::API_PAGE_SIZE, $nextPage, $params['cond'] );
 			print( "Connecting to $url...\n" );
 
 			$response = OoyalaAsset::getApiContent( $url );

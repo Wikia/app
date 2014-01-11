@@ -166,7 +166,7 @@ if ( isset( $options['help'] ) ) {
 	--age                          set age_required value in metadata
 	--player                       set player id
 	--remove                       remove field from custom metadata (only if the field is empty)
-	--extra                        extra conditions to get video assets from ooyala
+	--extra                        extra conditions to get video assets from ooyala (use ' AND ' to separate each condition)
 	--dry-run                      dry run
 	--help                         you are reading it right now\n\n" );
 }
@@ -174,7 +174,7 @@ if ( isset( $options['help'] ) ) {
 $dryRun = isset( $options['dry-run'] );
 $ageRequired = isset( $options['age'] ) ? $options['age'] : 0;
 $playerId = isset( $options['player'] ) ? $options['player'] : '';
-$extra = isset( $options['extra'] ) ? $options['extra'] : '';
+$extra = isset( $options['extra'] ) ? explode( ' AND ', $options['extra'] ) : array();
 $remove = isset( $options['remove'] ) ? $options['remove'] : '';
 
 if ( !is_numeric( $ageRequired ) ) {
@@ -190,10 +190,7 @@ $skipped = 0;
 
 // set condition to get age gated videos
 if ( !empty( $ageRequired ) ) {
-	if ( !empty( $extra ) ) {
-		$extra .= ' AND ';
-	}
-	$extra .= "labels INCLUDES 'Age gated'";
+	$extra[] = "labels INCLUDES 'Age gated'";
 }
 
 do {
