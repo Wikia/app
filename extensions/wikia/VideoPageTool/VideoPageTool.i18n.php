@@ -66,11 +66,11 @@ $messages['en'] = array(
 	'videohomepage-header-dropdown-name' => 'Discover',
 	'videohomepage-header-search-placeholder' => 'Search for Wikia videos',
 	'videohomepage-header-browse' => 'Browse',
-	'videopagetool-header-right-last-saved' => 'Last saved: ',
-	'videopagetool-header-right-publish-date' => 'Publish date: ',
+	'videopagetool-header-right-last-saved' => 'Last saved: $1',
+	'videopagetool-header-right-publish-date' => 'Publish date: $1',
 	'videopagetool-header-right-not-published' => 'Not published',
-	'videopagetool-header-right-saved-by' => 'Saved by: ',
-	'videopagetool-header-right-published-by' => 'Published by: ',
+	'videopagetool-header-right-saved-by' => 'Saved by: $1',
+	'videopagetool-header-right-published-by' => 'Published by: $1',
 
 	// Home Page Section: Partners
 	'videohomepage-partner-section-title' => 'Our Partners',
