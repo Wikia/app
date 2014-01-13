@@ -151,9 +151,13 @@ $messages['fa'] = array(
 );
 
 /** Finnish (suomi)
+ * @author Elseweyr
  * @author Silvonen
  */
 $messages['fi'] = array(
+	'adengine-exitstitial-title-template' => 'Olet jättämässä sivua $1...',
+	'adengine-exitstitial-redirecting' => 'Sinut ohjataan pyytämäsi sivulle hetken kuluttua.',
+	'adengine-exitstitial-go-back' => 'Haluatko palata takaisin?',
 	'adengine-exitstitial-button' => 'Ohita tämä mainos',
 );
 
