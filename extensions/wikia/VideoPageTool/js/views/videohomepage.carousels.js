@@ -12,7 +12,6 @@ define( 'views.videohomepage.carousels', [
 		initialize: function() {
 			// data from collection is assigned on page load in the category template
 			this.collection = new CategoriesCollection( Wikia.videoHomePage.categoryData );
-			this.carouselViews = [];
 			this.render();
 		},
 		render: function() {
@@ -25,9 +24,6 @@ define( 'views.videohomepage.carousels', [
 
 				// append carousel wrapper DOM to home page
 				that.$el.append( carouselView.$el );
-
-				// cache carousel view instances
-				that.carouselViews.push( carouselView );
 			} );
 
 			return this;
