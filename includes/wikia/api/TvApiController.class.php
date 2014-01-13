@@ -4,6 +4,8 @@ class TvApiController extends WikiaApiController {
 
 	//const PARAMETER_NAMESPACES = 'namespaces';
 	const LIMIT_SETTING = 1;
+	const WIKI_LIMIT = 5;
+	const HUB_SETTING = 'Entertainment';
 	const RANK_SETTING = 'default';
 	const LANG_SETTING = 'en';
 	const NAMESPACE_SETTING = 0;
@@ -14,14 +16,10 @@ class TvApiController extends WikiaApiController {
 	const RESPONSE_CACHE_VALIDITY = 86400; /* 24h */
 	const PARAM_ARTICLE_QUALITY = 'minArticleQuality';
 	/**
-	 * @var wikiId
+	 * @var Array wikis
 	 */
-	private $wikiId;
-
-	/**
-	 * @var url for wikiId
-	 */
-	private $url;
+	private $wikis = [];
+	private $qualityService;
 
 	public function getEpisode() {
 		global $wgStagingEnvironment, $wgDevelEnvironment;
@@ -30,13 +28,20 @@ class TvApiController extends WikiaApiController {
 			throw new NotFoundApiException();
 		}
 
-		$responseValues = $this->getExactMatch();
-		$responseValues = $this->checkArticleByQuality( $responseValues,
-			$this->request->getInt( static::PARAM_ARTICLE_QUALITY ) );
+		$minQuality = 0;
 
-		if ( $responseValues === null ) {
-			$config = $this->getConfigFromRequest();
-			$responseValues = $this->getResponseFromConfig( $config );
+		foreach( $this->wikis as $wiki ) {
+			$responseValues = null;
+			$wikiId = $wiki['id'];
+			$url = $wiki['url'];
+			$responseValues = $this->getExactMatch( $wiki['id'] );
+			if ( $responseValues === null ) {
+				$config = $this->getConfigFromRequest( $wiki['id'] );
+				$responseValues = $this->getResponseFromConfig( $config, $wiki['id'] );
+			}
+			if ( $responseValues !== null && $responseValues['quality'] >= $minQuality ) {
+				break;
+			}
 		}
 
 		if ( empty($responseValues) ) {
@@ -44,14 +49,14 @@ class TvApiController extends WikiaApiController {
 		}
 
 		if ( empty( $responseValues[ 'contentUrl' ] ) ) { //only for unit test
-			$responseValues[ 'contentUrl' ] = $this->url . self::API_URL . $responseValues[ 'articleId' ];
+			$responseValues[ 'contentUrl' ] = $url . self::API_URL . $responseValues[ 'articleId' ];
 		}
 		if ( $wgStagingEnvironment || $wgDevelEnvironment ) {
 			$responseValues[ 'contentUrl' ] = preg_replace_callback( self::WIKIA_URL_REGEXP, array( $this, 'replaceHost' ), $responseValues[ "contentUrl" ] );
 			$responseValues[ 'url' ] = preg_replace_callback( self::WIKIA_URL_REGEXP, array( $this, 'replaceHost' ), $responseValues[ "url" ] );
 		}
 
-		$responseValues = array_merge( [ 'wikiId' => (int) $this->wikiId ], $responseValues );
+		$responseValues = array_merge( [ 'wikiId' => (int) $wikiId ], $responseValues );
 
 		$response = $this->getResponse();
 		$response->setValues( $responseValues );
@@ -107,42 +112,43 @@ class TvApiController extends WikiaApiController {
 			}
 		}
 		else{
-			throw new NotFoundApiException();
+			$article = null;
 		}
 
 		return $article;
-
 	}
 
-	protected function getExactMatch() {
+	protected function getExactMatch( $wikiId ) {
 		$query = $this->request->getVal( 'episodeName', null );
 		if ( $query !== null ) {
-			return $this->getTitle( $query );
+			return $this->getTitle( $query, $wikiId );
 		}
 		return null;
 	}
 
-	protected function createTitle($text)
+	protected function createTitle($text, $wikiId)
 	{
-		return GlobalTitle::newFromText( $text, NS_MAIN, $this->wikiId );
+		return GlobalTitle::newFromText( $text, NS_MAIN, $wikiId );
 	}
 
-	protected function getTitle( $text ) {
+	protected function getTitle( $text, $wikiId ) {
 		//try exact phrase
 		$underscoredText = str_replace( ' ', '_', $text );
-		$title = $this->createTitle( $underscoredText );
+		$title = $this->createTitle( $underscoredText, $wikiId );
 		if( !$title->exists() ) {
 			$serializedText = str_replace( ' ', '_', ucwords( strtolower( $text ) ) );
-			$title =  $this->createTitle( $serializedText );
+			$title =  $this->createTitle( $serializedText, $wikiId );
 		}
 		if ( $title->isRedirect() ) {
 			$title = $title->getRedirectTarget();
 		}
 		if($title->exists()) {
+			//checkarticlebyquality
 			return [
 				'articleId' => (int) $title->getArticleID(),
 				'title' => $title->getText(),
-				'url' => $title->getFullURL()
+				'url' => $title->getFullURL(),
+				'quality' => 0//quality...
 			];
 		}
 		return null;
@@ -151,16 +157,16 @@ class TvApiController extends WikiaApiController {
 	protected function setWikiVariables(){
 		$config = $this->getConfigCrossWiki();
 		$resultSet = (new Factory)->getFromConfig( $config )->search();
+		$found = false;
 
 		foreach( $resultSet->getResults() as $result ) {
 			if ( $result['id'] && $result['url'] && $result['score'] > static::MINIMAL_WIKIA_SCORE ) {
-				$this->wikiId = $result['id'];
-				$this->url = $result['url'];
-				return true;
+				$this->wikis[] = [ 'id' => $result['id'], 'url' => $result['url'] ];
+				$found = true;
 			}
 		}
 
-		return false;
+		return $found;
 	}
 
 	protected function getConfigCrossWiki() {
@@ -171,12 +177,12 @@ class TvApiController extends WikiaApiController {
 			throw new InvalidParameterApiException( 'seriesName' );
 		}
 		$searchConfig->setQuery( $query )
-			->setLimit( static::LIMIT_SETTING )
-			->setRank( 'default' )
+			->setLimit( static::WIKI_LIMIT )
+			->setRank( static::RANK_SETTING )
 			->setInterWiki( true )
 			->setCommercialUse( $this->hideNonCommercialContent() )
 			->setLanguageCode( $request->getVal( 'lang', static::LANG_SETTING ) )
-			->setHub( 'Entertainment' )
+			->setHub( static::HUB_SETTING )
 		;
 		return $searchConfig;
 	}
@@ -185,7 +191,7 @@ class TvApiController extends WikiaApiController {
 	 * Inspects request and sets config accordingly.
 	 * @return Wikia\Search\Config
 	 */
-	protected function getConfigFromRequest() {
+	protected function getConfigFromRequest( $wikiId ) {
 		$request = $this->getRequest();
 		$searchConfig = new Wikia\Search\Config;
 
@@ -194,7 +200,7 @@ class TvApiController extends WikiaApiController {
 			->setPage( static::LIMIT_SETTING )
 			->setLanguageCode(  $request->getVal( 'lang', static::LANG_SETTING ) )
 			->setRank( static::RANK_SETTING )
-			->setWikiId($this->wikiId)
+			->setWikiId( $wikiId )
 			->setMinArticleQuality( $request->getInt(static::PARAM_ARTICLE_QUALITY) )
 			->setVideoSearch( false )
 			->setOnWiki(true)
@@ -229,12 +235,15 @@ class TvApiController extends WikiaApiController {
 
 
 
-	protected function getResponseFromConfig( Wikia\Search\Config $searchConfig ) {
+	protected function getResponseFromConfig( Wikia\Search\Config $searchConfig, $wikiId ) {
 		if (! $searchConfig->getQuery()->hasTerms() ) {
 			throw new InvalidParameterApiException( 'episodeName' );
 		}
 
-		$responseValues = (new Factory)->getFromConfig( $searchConfig )->searchAsApi( [ 'pageid' => 'articleId', 'title', 'url', 'score' ], true );
+		$responseValues = (new Factory)->getFromConfig( $searchConfig )->searchAsApi(
+			[ 'pageid' => 'articleId', 'title', 'url', 'score', 'article_quality_i' => 'quality' ],
+			true
+		);
 
 		//post processing
 		if ( !empty( $responseValues[ 'items' ] ) ) {
@@ -249,7 +258,7 @@ class TvApiController extends WikiaApiController {
 			if ( $subpage !== false ) {
 				//we found subpage, return only the main page then
 				$main = substr( $responseValues['title'], 0, $subpage );
-				$result = $this->getTitle( $main );
+				$result = $this->getTitle( $main, $wikiId );
 				if ( $result !== null ) {
 					return $result;
 				}
