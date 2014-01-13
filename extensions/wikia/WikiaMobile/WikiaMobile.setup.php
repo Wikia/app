@@ -202,6 +202,7 @@ if ( empty( $wgWikiaMobileSupportedVideos ) ) {
 		'youtube',
 		'dailymotion',
 		'vimeo',
-		'bliptv'
+		'bliptv',
+		'uStream'
 	];
 }

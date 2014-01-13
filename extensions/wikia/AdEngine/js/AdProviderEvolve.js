@@ -9,7 +9,7 @@ var AdProviderEvolve = function (adLogicPageLevelParamsLegacy, scriptWriter, adT
 	var slotMap,
 		logGroup = 'AdProviderEvolve',
 		ord = Math.round(Math.random() * 23456787654),
-		slotForSkin = 'INVISIBLE_1',
+		slotForSkin = 'INVISIBLE_SKIN',
 		hoppedSlots = {},
 		hopTo = 'Liftium',
 		iface,
