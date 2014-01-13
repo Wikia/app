@@ -19,6 +19,7 @@ class TvApiController extends WikiaApiController {
 	 * @var Array wikis
 	 */
 	private $wikis = [];
+	private $qualityService;
 
 	public function getEpisode() {
 		global $wgStagingEnvironment, $wgDevelEnvironment;
