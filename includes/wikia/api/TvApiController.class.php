@@ -23,7 +23,6 @@ class TvApiController extends WikiaApiController {
 
 	public function getEpisode() {
 		global $wgStagingEnvironment, $wgDevelEnvironment;
-		die();
 		if ( !$this->setWikiVariables() ) {
 			throw new NotFoundApiException();
 		}
