@@ -7,7 +7,7 @@ define( 'views.videopagetool.carouselthumb', [
 ], function( $, templates ) {
 	'use strict';
 
-	var CarouselThumbbView = Backbone.View.extend( {
+	var CarouselThumbView = Backbone.View.extend( {
 		initialize: function() {
 			this.render();
 		},
@@ -21,5 +21,5 @@ define( 'views.videopagetool.carouselthumb', [
 		}
 	} );
 
-	return CarouselThumbbView;
+	return CarouselThumbView;
 });
