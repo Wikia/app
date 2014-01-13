@@ -245,6 +245,7 @@ $messages['de'] = array(
 
 /** Zazaki (Zazaki)
  * @author Marmase
+ * @author Mirzali
  */
 $messages['diq'] = array(
 	'prefs-personal' => 'Şınasiya me',
@@ -261,15 +262,15 @@ $messages['diq'] = array(
 	'prefs-emailv2' => 'E-posta',
 	'prefs-email-advanced-v2' => 'Tercihê raverberdey',
 	'preferences-v2-redirect-wiki-activity' => 'Wiki aktivite',
-	'preferences-v2-redirect-main-page' => 'Pera Seri',
-	'preferences-v2-redirect-recent-changes' => 'Vırnayışé bahdoyéni',
+	'preferences-v2-redirect-main-page' => 'Pela Seri',
+	'preferences-v2-redirect-recent-changes' => 'Vurnayışê peyêni',
 	'prefs-monobookv2' => 'MonoBook',
 	'tog-showAdsv2' => 'Reklami:',
 	'prefs-addressv2' => 'Adres:',
 	'preferences-v2-watchdefault' => 'Timar ke',
 	'preferences-v2-watchmoves' => 'Ber',
 	'preferences-v2-watchdeletion' => 'Besterne',
-	'preferences-v2-watchcreations' => 'İycad ke',
+	'preferences-v2-watchcreations' => 'Vıraze',
 	'preferences-v2-showads-enable' => 'Reklama hemın bıvin',
 	'preferences-v2-showads-disable' => 'Reklama hemın mevin',
 	'preferences-v2-my-email-address' => 'E-posta adresiya mı:',
@@ -334,6 +335,20 @@ $messages['es'] = array(
 	'tog-editsectiononrightclick-v2' => 'Editar las secciones haciendo clic derecho en los títulos',
 	'tog-editondblclick-v2' => 'Editar las páginas con doble clic',
 	'tog-hidefollowedpages-v2' => 'Ocultar mi lista de páginas seguidas para los demás',
+);
+
+/** Persian (فارسی)
+ * @author Reza1615
+ */
+$messages['fa'] = array(
+	'prefs-emailv2' => 'پست الکترونیکی',
+	'preferences-v2-redirect-wiki-activity' => 'فعالیت‌های ویکی',
+	'preferences-v2-redirect-recent-changes' => 'تغییرات اخیر',
+	'prefs-addressv2' => 'نشانی',
+	'preferences-v2-watchdefault' => 'ویرایش',
+	'preferences-v2-watchmoves' => 'انتقال',
+	'preferences-v2-watchdeletion' => 'حذف',
+	'preferences-v2-watchcreations' => 'ایجاد',
 );
 
 /** Finnish (suomi)

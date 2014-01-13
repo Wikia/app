@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 class UserLoginHooksHelper {
 
@@ -55,13 +55,15 @@ class UserLoginHooksHelper {
 	}
 
 	// set parameters for User::sendConfirmationEmail()
-	public static function onUserSendConfirmationMail( &$user, &$args, &$priority, &$url, $token, $ip_arg ) {
-		$priority = 1;  // confirmation emails are higher than default priority of 0
-		$url = $user->wikiaConfirmationTokenUrl( $token );
-		if ( !$ip_arg ) {
-			$args[1] = $url;
-		} else {
-			$args[2] = $url;
+	public static function onUserSendConfirmationMail( &$user, &$args, &$priority, &$url, $token, $ip_arg, $type ) {
+		if ( $type !== 'reactivateaccount' ) {
+			$priority = 1;  // confirmation emails are higher than default priority of 0
+			$url = $user->wikiaConfirmationTokenUrl( $token );
+			if ( !$ip_arg ) {
+				$args[1] = $url;
+			} else {
+				$args[2] = $url;
+			}
 		}
 
 		return true;

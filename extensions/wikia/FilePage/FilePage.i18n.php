@@ -233,13 +233,24 @@ $messages['et'] = array(
 	'file-page-more-links' => 'Vaata täielikku nimekirja',
 );
 
+/** Persian (فارسی)
+ * @author Reza1615
+ */
+$messages['fa'] = array(
+	'video-page-from-provider' => 'از $1',
+	'video-page-description-heading' => 'توضیحات',
+	'file-page-tab-about' => 'درباره',
+);
+
 /** Finnish (suomi)
+ * @author Elseweyr
  * @author Nike
  * @author Ville96
  */
 $messages['fi'] = array(
 	'video-page-file-list-header' => 'Esiintyy näillä sivuilla',
 	'video-page-global-file-list-header' => 'Esiintyy näissä wikeissä',
+	'video-page-views' => '$1 {{PLURAL:$1|Katselukerta|Katselukertaa}}',
 	'video-page-see-more-info' => 'Näytä lisätiedot',
 	'video-page-see-less-info' => 'Näytä vähemmän tietoa',
 	'video-page-description-heading' => 'Kuvaus',
@@ -803,28 +814,29 @@ Açıklamasını buraya girin.',
 
 /** Ukrainian (українська)
  * @author Andriykopanytsia
+ * @author Ua2004
  * @author Ата
  */
 $messages['uk'] = array(
 	'filepage-desc' => 'Модифікація стандартної MediaWiki-сторінки файлу для підтримки відео',
-	'video-page-file-list-header' => "З'являється на цих сторінках",
-	'video-page-global-file-list-header' => "З'являється на цих вікі",
+	'video-page-file-list-header' => 'Використовується на наступних сторінках:',
+	'video-page-global-file-list-header' => 'Використовується на наступних вікі:',
 	'video-page-from-provider' => 'З $1',
-	'video-page-expires' => 'Вміст закінчується на $1',
+	'video-page-expires' => 'Вміст придатний до $1',
 	'video-page-views' => '$1 {{PLURAL:$1|перегляд|перегляди|переглядів}}',
 	'video-page-see-more-info' => 'Показати додаткову інформацію',
 	'video-page-see-less-info' => 'Показати менше інформації',
 	'video-page-description-heading' => 'Опис',
 	'video-page-description-zero-state' => 'Ще немає опису.',
-	'video-page-add-description-link-text' => 'Додати опис',
-	'video-page-default-description-header-and-text' => '= = Опис = =
-Введіть опис тут.',
+	'video-page-add-description-link-text' => 'Додати опис.',
+	'video-page-default-description-header-and-text' => '==Опис==
+Введіть тут опис файлу.',
 	'video-page-file-list-pagination' => '$1 з $2',
 	'file-page-replace-button' => 'Замінити',
 	'file-page-tab-about' => 'Про файл',
 	'file-page-tab-history' => 'Історія файлу',
 	'file-page-tab-metadata' => 'Метадані',
-	'file-page-more-links' => 'Див. повний список',
+	'file-page-more-links' => 'Повний список',
 );
 
 /** Urdu (اردو)

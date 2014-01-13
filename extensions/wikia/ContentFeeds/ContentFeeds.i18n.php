@@ -177,11 +177,21 @@ $messages['eu'] = array(
 	'contentfeeds-firstfewarticles-tag-next' => 'Hurrengoa',
 );
 
+/** Persian (فارسی)
+ * @author Reza1615
+ */
+$messages['fa'] = array(
+	'contentfeeds-firstfewarticles-tag-title' => 'عنوان',
+	'contentfeeds-firstfewarticles-tag-next' => 'بعدی',
+);
+
 /** Finnish (suomi)
  * @author Centerlink
+ * @author Elseweyr
  * @author Nedergard
  */
 $messages['fi'] = array(
+	'contentfeeds-newimages-rss-desc' => 'Syöte sivulta $1',
 	'contentfeeds-firstfewarticles-tag-header' => 'Luo ensimmäiset sivusi!',
 	'contentfeeds-firstfewarticles-tag-title' => 'Otsikko',
 	'contentfeeds-firstfewarticles-tag-next' => 'Seuraava',

@@ -79,10 +79,13 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 		$newWikisAmount = $this->request->getVal('new-wikis-amount', $this->helper->getNumberOfNewWikiSlots($this->visualizationLang));
 
 		$this->form = new CollectionsForm();
+		$this->statsForm = new StatsForm();
 		$collectionsModel = $this->getWikiaCollectionsModel();
 		$this->collectionsList = $collectionsModel->getList($this->visualizationLang);
 		$collectionValues = $this->prepareCollectionToShow($this->collectionsList);
 		$wikisPerCollection = $this->getWikisPerCollection($this->collectionsList);
+
+		$statsValues = $this->helper->getStatsFromWF();
 
 		if( $this->request->wasPosted() ) {
 			if ( $this->request->getVal('wikis-in-slots',false) ) {
@@ -120,10 +123,22 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 				} else {
 					$this->errorMsg = wfMessage('manage-wikia-home-collections-failure')->text();
 				}
+			} elseif ( $this->request->getVal('stats',false) ) {
+				$statsValues = $this->request->getParams();
+				$statsValues = $this->statsForm->filterData($statsValues);
+				$isValid = $this->statsForm->validate($statsValues);
+
+				if ($isValid) {
+					$this->helper->saveStatsToWF($statsValues);
+					$this->infoMsg = wfMessage('manage-wikia-home-stats-success')->text();
+				} else {
+					$this->errorMsg = wfMessage('manage-wikia-home-stats-failure')->text();
+				}
 			}
 		}
 
 		$this->form->setFieldsValues($collectionValues);
+		$this->statsForm->setFieldsValues($statsValues);
 		$this->verticals = $this->getWikiVerticals();
 
 		$this->setVal('videoGamesAmount', $videoGamesAmount);

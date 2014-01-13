@@ -2325,7 +2325,7 @@ $messages['diq'] = array(
 	'wall-button-to-cancel-preview' => 'Bıvurne',
 	'wall-button-to-submit-comment' => 'Nusne',
 	'wall-button-to-submit-reply' => 'Cewab bıde',
-	'wall-button-cancel-changes' => 'Bıterkne',
+	'wall-button-cancel-changes' => 'Bıtexelne',
 	'wall-button-done-source' => 'Qeyd kerd',
 	'wall-message-edit' => 'Bıvurne',
 	'wall-message-more' => 'Dehana vêşi',
@@ -2765,9 +2765,42 @@ $messages['eu'] = array(
 );
 
 /** Persian (فارسی)
+ * @author Reza1615
  * @author ZxxZxxZ
  */
 $messages['fa'] = array(
+	'wall-message-wall' => 'دیوار پیام',
+	'wall-message-unfollow' => 'دنبال نکردن',
+	'wall-message-undoremove' => 'واگردانی',
+	'wall-toolbar-history' => 'تاریخچه',
+	'wall-message-remove' => 'پاک‌کردن',
+	'wall-thread-deleted' => 'حذف شده',
+	'wall-thread-closed' => 'بسته‌شده',
+	'wall-placeholder-reply' => 'ارسال پاسخ',
+	'wall-button-to-preview-comment' => 'پیش‌نمایش',
+	'wall-button-to-cancel-preview' => 'ویرایش',
+	'wall-button-to-submit-comment' => 'پست',
+	'wall-button-to-submit-reply' => 'پاسخ دادن',
+	'wall-button-save-changes' => 'ذخیره‌کردن تغییرات',
+	'wall-button-cancel-changes' => 'لغو',
+	'wall-button-done-source' => 'انجام شد',
+	'wall-message-edit' => 'ویرایش',
+	'wall-message-more' => 'بیشتر',
+	'wall-message-delete' => 'حذف',
+	'wall-action-all-confirm-cancel' => 'لغو',
+	'wall-delete-error-title' => 'خطا',
+	'wall-action-remove-confirm-ok' => 'پاک‌کردن',
+	'wall-action-close-confirm-ok' => 'بسته',
+	'wall-action-admin-confirm-ok' => 'حذف',
+	'wall-notifications' => 'اطلاعیه‌ها',
+	'wall-notifications-markasread-all-wikis' => 'تمام ویکی‌های',
+	'wall-notifications-markasread-this-wiki' => 'این ویکی',
+	'wall-sorting-most-active' => 'فعال ترین',
+	'wall-sorting-archived' => 'بایگانی‌شده',
+	'wall-recentchanges-namespace-selector-message-wall' => 'دیوار پیام',
+	'wall-history' => 'تاریخچه',
+	'wall-history-sorting-newest-first' => 'جدیدترین ابتدا بیاید',
+	'wall-history-summary-label' => 'خلاصه',
 	'wall-topic-edit-save' => 'ذخیره',
 	'wall-topic-edit-cancel' => 'لغو',
 );

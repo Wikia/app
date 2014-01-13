@@ -165,7 +165,7 @@ class ImagesServiceUploadTest extends WikiaBaseTest {
 		$res = $this->uploadFromUrl( $file, self::REUPLOAD_URL, 'Reupload' );
 		Wikia::log( __METHOD__ , 'reupload', sprintf( 'took %.4f sec', microtime( true ) - $time ) );
 
-		$this->assertTrue( $res->isOK(), 'Re-upload should end up successfully' );
+		$this->assertTrue( $res->isOK(), 'Re-upload should end up successfully - ' .json_encode($res->getErrorsArray()) );
 
 		// (D) remove it...
 		$time = microtime( true );
