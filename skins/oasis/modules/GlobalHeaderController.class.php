@@ -31,8 +31,6 @@ class GlobalHeaderController extends WikiaController {
 
 		$this->menuNodes = $menuNodes;
 
-		var_dump($this->menuNodes);die;
-
 		wfProfileOut(__METHOD__);
 	}
 
