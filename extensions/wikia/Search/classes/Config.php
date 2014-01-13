@@ -80,6 +80,12 @@ class Config
 	protected $wikiId = 0;
 
 	/**
+	 * Id of page to search for
+	 * @var int
+	 */
+	protected $pageId = 0;
+
+	/**
 	 * Result offset for our query
 	 * @var int
 	 */
@@ -163,7 +169,7 @@ class Config
 	 * Minimum article (filter)
 	 * @var int
 	 */
-	protected  $minArticleQuality;
+	protected  $minArticleQuality = 0;
 
 	/**
 	 * This array allows us to associate sort arguments from the request with the appropriate sorting format
@@ -283,8 +289,6 @@ class Config
 				];
 
 		$this->filterCodes = array_merge( $this->filterCodes, $dynamicFilterCodes );
-		$this->minArticleQuality = 0;
-
 		$this->configureByArray( $params );
 	}
 
@@ -921,6 +925,26 @@ class Config
 	 */
 	public function getCityId() {
 		return $this->getWikiId();
+	}
+
+	/**
+	 * Sets pageId to search for
+	 * @param $pageId
+	 * @return $this
+	 */
+	public function setPageId($pageId)
+	{
+		$this->pageId =(int) $pageId;
+		return $this;
+	}
+
+	/**
+	 * Get currently set pageId
+	 * @return int
+	 */
+	public function getPageId()
+	{
+		return $this->pageId;
 	}
 
 	/**

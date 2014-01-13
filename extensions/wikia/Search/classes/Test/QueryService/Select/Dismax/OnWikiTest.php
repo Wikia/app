@@ -334,7 +334,7 @@ class OnWikiTest extends Wikia\Search\Test\BaseTest {
 	 * @covers Wikia\Search\QueryService\Select\Dismax\OnWiki::getQueryClausesString
 	 */
 	public function testGetQueryClausesString() {
-		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getCityId', 'getNamespaces' ) );
+		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getCityId', 'getNamespaces', 'getPageId' ) );
 		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $mockConfig ) );
 		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\Dismax\OnWiki' )
 		                   ->setConstructorArgs( array( $dc ) )
@@ -347,6 +347,11 @@ class OnWikiTest extends Wikia\Search\Test\BaseTest {
 		    ->will   ( $this->returnValue( 123 ) )
 		;
 		$mockConfig
+			->expects( $this->once() )
+			->method ( 'getPageId' )
+			->will   ( $this->returnValue( 88 ) )
+		;
+		$mockConfig
 		    ->expects( $this->once() )
 		    ->method ( 'getNamespaces' )
 		    ->will   ( $this->returnValue( array( 0, 14 ) ) )
@@ -354,7 +359,7 @@ class OnWikiTest extends Wikia\Search\Test\BaseTest {
 		$method = new ReflectionMethod( 'Wikia\Search\QueryService\Select\Dismax\OnWiki', 'getQueryClausesString' );
 		$method->setAccessible( true );
 		$this->assertEquals(
-				'((wid:123) AND ((ns:0) OR (ns:14)))',
+				'((wid:123) AND (pageid:88) AND ((ns:0) OR (ns:14)))',
 				$method->invoke( $mockSelect )
 		);
 	}

@@ -33,31 +33,47 @@ class TvApiControllerTest extends \WikiaBaseTest {
 		parent::tearDown();
 	}
 
-	public function testCheckArticleByQuality() {
+	public function testCheckArticleByQualityFound() {
 		$mock = $this->getMockBuilder( "\TvApiController" )
 			->disableOriginalConstructor()
-			->setMethods( [ '__construct' ] )
+			->setMethods( [ '__construct', 'getQualityFromSolr' ] )
 			->getMock();
 
-		$mockService = $this->getMockBuilder( "\ArticleQualityV1Service" )
-			->disableOriginalConstructor()
-			->setMethods( [ '__construct', 'setArticleById', 'getArticleQuality' ] )
-			->getMock();
-
-		$mockService->expects( $this->any() )
-			->method( 'getArticleQuality' )
-			->will( $this->returnValue( 10 ) );
+		$mock->expects( $this->any() )
+			->method( 'getQualityFromSolr' )
+			->will( $this->returnValue( [ [ 'articleQuality_i' => 10 ] ] ) );
 
 		$refl = new \ReflectionMethod( $mock, 'checkArticleByQuality' );
 
 		$refl->setAccessible( true );
 
 		$article = [ 'articleId' => 1 ];
-		$res_article = $refl->invoke( $mock, $article, 9, $mockService );
+		$res_article = $refl->invoke( $mock, $article, 9 );
 		$this->assertEquals( $article, $res_article );
 
-		$res_article = $refl->invoke( $mock, $article, 11, $mockService );
+		$res_article = $refl->invoke( $mock, $article, 11 );
 		$this->assertEquals( null, $res_article );
+	}
+
+	/**
+	 * @expectedException NotFoundApiException
+	 */
+	public function testCheckArticleByQualityException() {
+		$mock = $this->getMockBuilder( "\TvApiController" )
+			->disableOriginalConstructor()
+			->setMethods( [ '__construct', 'getQualityFromSolr' ] )
+			->getMock();
+
+		$mock->expects( $this->any() )
+			->method( 'getQualityFromSolr' )
+			->will( $this->returnValue( null ) );
+
+		$refl = new \ReflectionMethod( $mock, 'checkArticleByQuality' );
+
+		$refl->setAccessible( true );
+
+		$article = [ 'articleId' => 1 ];
+		$refl->invoke( $mock, $article, 9);
 
 	}
 

@@ -98,6 +98,10 @@ class OnWiki extends AbstractDismax
 	 */
 	protected function getQueryClausesString() {
 		$queryClauses = array( Utilities::valueForField( 'wid', $this->config->getCityId() ) );
+		$pageId = $this->config->getPageId();
+		if ( $pageId ) {
+			$queryClauses[ ] = Utilities::valueForField( 'pageid', $pageId );
+		}
 		$nsQuery = '';
 		foreach ( $this->config->getNamespaces() as $namespace ) {
 			$nsQuery .= ( !empty( $nsQuery ) ? ' OR ' : '' ) . Utilities::valueForField( 'ns', $namespace );

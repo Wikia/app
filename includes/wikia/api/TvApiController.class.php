@@ -75,19 +75,39 @@ class TvApiController extends WikiaApiController {
 		return $details[ 1 ] . WikiFactory::getCurrentStagingHost( $details[ 4 ], $details[ 3 ] );
 	}
 
-	protected function checkArticleByQuality( $article, $minArticleQuality, $articleQualityService = null ) {
+	/**
+	 * Query Solr for articleQuality
+	 * @param $articleId
+	 * @return array
+	 */
+	protected function getQualityFromSolr( $articleId ) {
+		$config = $this->getConfigById( $articleId );
+		return ( new Factory )->getFromConfig( $config )->searchAsApi( [ 'articleQuality_i' ], true );
+	}
+
+	/**
+	 * Checks articleId for minimum Quality
+	 * @param $article
+	 * @param $minArticleQuality
+	 * @return null|$article
+	 * @throws NotFoundApiException
+	 */
+	protected function checkArticleByQuality( $article, $minArticleQuality) {
 
 		if ( !$minArticleQuality || $article === null ) {
 			return;
 		}
 
-		//Only for unit tests
-		if ( $articleQualityService === null ) {
-			$articleQualityService = new ArticleQualityV1Service();
+		$responseValues = $this->getQualityFromSolr($article[ 'articleId' ]);
+
+		if(! empty($responseValues) && isset($responseValues[0]['articleQuality_i']))
+		{
+			if ( $responseValues[0]['articleQuality_i'] < $minArticleQuality ) {
+				$article = null;
+			}
 		}
-		$articleQualityService->setArticleById( $article[ 'articleId' ] );
-		if ( $articleQualityService->getArticleQuality() < $minArticleQuality ) {
-			$article = null;
+		else{
+			throw new NotFoundApiException();
 		}
 
 		return $article;
@@ -183,6 +203,31 @@ class TvApiController extends WikiaApiController {
 
 		return $searchConfig;
 	}
+
+	/**
+	 * Inspects request and sets config accordingly.
+	 * @return Wikia\Search\Config
+	 */
+	protected function getConfigById($articleId) {
+		$request = $this->getRequest();
+		$searchConfig = new Wikia\Search\Config;
+
+		$searchConfig->setQuery('*')
+			->setLimit( 1 )
+			->setPage( 1 )
+			->setWikiId($this->wikiId)
+			->setVideoSearch( false )
+			->setOnWiki(true)
+			->setPageId((int)$articleId)
+			->setNamespaces( [static::NAMESPACE_SETTING] );
+
+		;
+
+		return $searchConfig;
+	}
+
+
+
 
 	protected function getResponseFromConfig( Wikia\Search\Config $searchConfig ) {
 		if (! $searchConfig->getQuery()->hasTerms() ) {

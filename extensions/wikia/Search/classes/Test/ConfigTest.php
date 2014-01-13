@@ -1215,6 +1215,29 @@ class ConfigTest extends BaseTest {
 		);
 	}
 
+
+	/**
+	 * @covers Wikia\Search\Config::setPageId
+	 * @covers Wikia\Search\Config::getPageId
+	 */
+	public function testSetPageId() {
+		$val = 13; // could never be our default start
+		$config = new Config();
+		$this->assertEquals(
+			$config,
+			$config->setPageId( $val )
+		);
+		$this->assertAttributeEquals(
+			$val,
+			'pageId',
+			$config
+		);
+		$this->assertEquals(
+			$val,
+			$config->getPageId()
+		);
+	}
+
 	/**
 	 * @covers Wikia\Search\Config::setMinimumMatch
 	 * @covers Wikia\Search\Config::getMinimumMatch
