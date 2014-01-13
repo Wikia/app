@@ -8,6 +8,18 @@ $messages = array(
 	'editcount_submit' => 'Submit',
 	'editcount_total' => 'Total',
 	'editcount_allwikis' => 'All wikis',
+	'editcount_refresh_time' => 'Results in $1 column are cached. Next time data will be refreshed after $2',
+	),
+
+// Documentation
+	'qqq' => array(
+	'editcount' => 'Edit count',
+	'editcount_username' => 'Label of form field to pass username',
+	'editcount_submit' => 'Form submit button name',
+	'editcount_total' => 'Label of row containing aggregated editcount values ',
+	'editcount_allwikis' => 'Label of column containing summary editcount of all wikis',
+	'editcount_refresh_time' => 'Message saying when cached data will be refreshed (actually when cache expires)
+		| $1 referred column name | $2 date and time when cache expires',
 	),
 
 /* Arabic (Meno25) */
@@ -118,6 +130,16 @@ $messages = array(
 	'editcount_username' => 'Stranòm:',
 	'editcount_submit' => 'Manda',
 	'editcount_total' => 'Total',
+	),
+
+// Polish (Kamil Koterba)
+	'pl' => array(
+		'editcount' => 'Licznik edycji',
+		'editcount_username' => 'Użytkownik:',
+		'editcount_submit' => 'Wyślij',
+		'editcount_total' => 'Suma',
+		'editcount_allwikis' => 'Wszystkie wiki',
+		'editcount_refresh_time' => 'Wniki w kolumnie $1 są zapisane w pamięci podręcznej. Następnym razem dane zostaną odświeżone po $2'
 	),
 
 // Portuguese (Lugusto)

@@ -3,6 +3,9 @@ if (!defined('MEDIAWIKI')) die();
 
 class Editcount extends SpecialPage {
 	const ONE_QUERY = 1;
+	const CACHE_TIME = 86400; // 24h
+	var $refreshTimestamps;
+
 	/**
 	 * Constructor
 	 */
@@ -67,7 +70,7 @@ class Editcount extends SpecialPage {
 				$totalAll = $this->getTotal( $nscountAll = $this->editsByNsAll( $uid ) );
 			}
 			$html = new EditcountHTML;
-			$html->outputHTML( $username, $uid, @$nscount, @$total, @$nscountAll, @$totalAll );
+			$html->outputHTML( $username, $uid, @$nscount, @$total, @$nscountAll, @$totalAll, $this->refreshTimestamps );
 		}
 	}
 
@@ -115,64 +118,85 @@ class Editcount extends SpecialPage {
 	 * @return array
 	 */
 	function editsByNs( $uid ) {
-		$nscount = array();
+		global $wgMemc;
+		$key = wfMemcKey( 'namespaceCount', $uid );
+		$keyTimestamp = wfMemcKey( 'namespaceCountTimestamp', $uid );
+		$nscount = $wgMemc->get($key);
+		$this->refreshTimestamps['currentWikia'] = $wgMemc->get($keyTimestamp);
 
-		if (self::ONE_QUERY == 1) {
-			$dbr =& wfGetDB( DB_SLAVE );
-			$res = $dbr->select(
-				array( 'revision', 'page' ),
-				array( 'page_namespace', 'COUNT(*) as count' ),
-				array(
-					'rev_user' => $uid,
-					'rev_page = page_id'
-				),
-				__METHOD__,
-				array( 'GROUP BY' => 'page_namespace' )
-			);
+		if ( empty($nscount) ) {
+			$nscount = array();
 
-			while( $row = $dbr->fetchObject( $res ) ) {
-				$nscount[$row->page_namespace] = $row->count;
-			}
-		} else {
-			$nspaces = $this->editsByNsAll($uid);
-			if (!empty($nspaces)) {
-				foreach ($nspaces as $ns => $count) {
-					if ($count > 0) {
-						$nscount[$ns] = $this->editsInNs($uid, $ns);
+			if (self::ONE_QUERY == 1) {
+				$dbr =& wfGetDB( DB_SLAVE );
+				$res = $dbr->select(
+					array( 'revision', 'page' ),
+					array( 'page_namespace', 'COUNT(*) as count' ),
+					array(
+						'rev_user' => $uid,
+						'rev_page = page_id'
+					),
+					__METHOD__,
+					array( 'GROUP BY' => 'page_namespace' )
+				);
+
+				while( $row = $dbr->fetchObject( $res ) ) {
+					$nscount[$row->page_namespace] = $row->count;
+				}
+			} else {
+				$nspaces = $this->editsByNsAll($uid);
+				if (!empty($nspaces)) {
+					foreach ($nspaces as $ns => $count) {
+						if ($count > 0) {
+							$nscount[$ns] = $this->editsInNs($uid, $ns);
+						}
 					}
 				}
 			}
+
+			$wgMemc->set( $key, $nscount, self::CACHE_TIME );
+			$this->refreshTimestamps['currentWikia'] = time()+self::CACHE_TIME;
+			$wgMemc->set( $keyTimestamp, $this->refreshTimestamps['currentWikia'], self::CACHE_TIME );
 		}
 
 		return $nscount;
 	}
 
 	function editsByNsAll( $uid ) {
-		global $wgStatsDB, $wgStatsDBEnabled;
-		$nscount = array();
+		global $wgStatsDB, $wgStatsDBEnabled, $wgMemc;
 
-		if ( !empty( $wgStatsDBEnabled ) ) {
-			$dbs = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
-			$res = $dbs->select(
-				array( 'events' ),
-				array( 'page_ns as namespace', 'count(page_ns) as count' ),
-				array(
-					'user_id' => $uid,
-					' ( event_type = 1 ) or ( event_type = 2 ) '
-				),
-				__METHOD__,
-				array (
-					'GROUP BY' => 'page_ns',
-					'ORDER BY' => 'null'
-				)
-			);
+		$key = wfSharedMemcKey( 'namespaceCountAllWikis', $uid );
+		$keyTimestamp = wfMemcKey( 'namespaceCountTimestamp', $uid );
+		$nscount = $wgMemc->get($key);
+		$this->refreshTimestamps['allWikias'] = $wgMemc->get($keyTimestamp);
 
-			while( $row = $dbs->fetchObject( $res ) ) {
-				$nscount[$row->namespace] = $row->count;
+		if ( empty($nscount) ) {
+			$nscount = array();
+			if ( !empty( $wgStatsDBEnabled ) ) {
+				$dbs = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
+				$res = $dbs->select(
+					array( 'events' ),
+					array( 'page_ns as namespace', 'count(page_ns) as count' ),
+					array(
+						'user_id' => $uid,
+						' ( event_type = 1 ) or ( event_type = 2 ) '
+					),
+					__METHOD__,
+					array (
+						'GROUP BY' => 'page_ns',
+						'ORDER BY' => 'null'
+					)
+				);
+
+				while( $row = $dbs->fetchObject( $res ) ) {
+					$nscount[$row->namespace] = $row->count;
+				}
+				$dbs->freeResult( $res );
 			}
-			$dbs->freeResult( $res );
+			$wgMemc->set( $key, $nscount, self::CACHE_TIME );
+			$this->refreshTimestamps['allWikias'] = time()+self::CACHE_TIME;
+			$wgMemc->set( $keyTimestamp, $this->refreshTimestamps['allWikias'], self::CACHE_TIME );
 		}
-
 		return $nscount;
 	}
 
@@ -184,19 +208,26 @@ class Editcount extends SpecialPage {
 	 * @return string
 	 */
 	function editsInNs( $uid, $ns ) {
-		$nscount = array();
+		global $wgMemc;
+		$key = wfMemcKey( 'namespaceCount', $uid, $ns );
+		$nscount = $wgMemc->get( $key );
 
-		$dbr =& wfGetDB( DB_SLAVE );
-		$res = $dbr->selectField(
-			array( 'revision', 'page' ),
-			array( 'COUNT(*) as count' ),
-			array(
-				'page_namespace' => $ns,
-				'rev_user' => $uid,
-				'rev_page = page_id'
-			),
-			__METHOD__
-		);
+		if ( empty($nscount) ) {
+			$nscount = array();
+
+			$dbr =& wfGetDB( DB_SLAVE );
+			$res = $dbr->selectField(
+				array( 'revision', 'page' ),
+				array( 'COUNT(*) as count' ),
+				array(
+					'page_namespace' => $ns,
+					'rev_user' => $uid,
+					'rev_page = page_id'
+				),
+				__METHOD__
+			);
+			$wgMemc->set( $key, $nscount, self::CACHE_TIME );
+		}
 
 		return $res;
 	}
@@ -226,8 +257,8 @@ class EditcountHTML extends Editcount {
 	 * @param array  $nscount
 	 * @param int    $total
 	 */
-	function outputHTML( $username, $uid, $nscount, $total, $nscountall, $totalall ) {
-		global $wgTitle, $wgOut, $wgLang;
+	function outputHTML( $username, $uid, $nscount, $total, $nscountall, $totalall, $refreshTimestamps ) {
+		global $wgOut;
 		wfProfileIn( __METHOD__ );
 
 		/* current wiki */
@@ -243,8 +274,8 @@ class EditcountHTML extends Editcount {
 		$title = SpecialPage::getTitleFor( $name ); // get link WITHOUT subpage
 		$action = $title->getLocalUrl();
 
-		$user = wfMsgHtml( 'editcount_username' );
-		$submit = wfMsgHtml( 'editcount_submit' );
+		$user = wfMessage( 'editcount_username' )->escaped();
+		$submit = wfMessage( 'editcount_submit' )->escaped();
 
 		$editcounttable = ($username != null && $uid != 0) ? $this->makeTable() : "";
 
@@ -257,6 +288,9 @@ class EditcountHTML extends Editcount {
 			"editcounttable" 	=> $editcounttable
 		));
 		$wgOut->addHTML( $oTmpl->render("main-form") );
+
+		$this->addRefreshTimestampsToOut( $refreshTimestamps );
+
 		wfProfileOut( __METHOD__ );
 	}
 
@@ -269,7 +303,7 @@ class EditcountHTML extends Editcount {
 		global $wgLang, $wgCityId, $wgDBname;
         wfProfileIn( __METHOD__ );
 
-		$total = wfMsgHtml( 'editcount_total' );
+		$total = wfMessage( 'editcount_total' )->escaped();
 		$wikiName = $wgDBname;
 		/* current wiki */
 		$ftotal = $wgLang->formatNum( $this->total );
@@ -296,4 +330,33 @@ class EditcountHTML extends Editcount {
         wfProfileOut( __METHOD__ );
         return $res;
 	}
+
+	/**
+	 * Adds to output information for user when cached data will be refreshed next time
+	 *
+	 * @param $refreshTimestamps Array of timestamps in format YmdHis e.g. 20131107192200
+	 *
+	 * @access private
+	 */
+	function addRefreshTimestampsToOut( $refreshTimestamps ) {
+		wfProfileIn( __METHOD__ );
+		global $wgOut, $wgLang, $wgDBname;
+
+		// Current wikia column (using db name as column name)
+		if( isset( $refreshTimestamps['currentWikia'] ) ) {
+			$currentWikiaMsg = $wgDBname;
+			$nextRefCurrW = $wgLang->timeanddate( $refreshTimestamps['currentWikia'] ,true, true );
+			$wgOut->addElement( 'p', '', wfMessage( 'editcount_refresh_time' )->rawParams( $currentWikiaMsg, $nextRefCurrW )->escaped() );
+		}
+
+		// all wikias (summary column)
+		if( isset( $refreshTimestamps[ 'allWikias' ] ) ) {
+			$allWikiasMsg = wfMessage( 'editcount_allwikis' )->escaped();
+			$nextRefAllW = $wgLang->timeanddate( $refreshTimestamps[ 'allWikias' ] ,true, true );
+			$wgOut->addElement( 'p', '', wfMessage( 'editcount_refresh_time' )->rawParams( $allWikiasMsg, $nextRefAllW )->escaped() );
+		}
+
+		wfProfileOut( __METHOD__ );
+	}
+
 }
