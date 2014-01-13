@@ -1,7 +1,7 @@
 $(function () {
 	'use strict';
 
-	var GLOBAL_NAV_SAMPLING_RATIO = 100, // integer (0-100): 0 - no tracking, 100 - track everything */
+	var GLOBAL_NAV_SAMPLING_RATIO = 10, // integer (0-100): 0 - no tracking, 100 - track everything */
 		track = Wikia.Tracker.buildTrackingFunction({
 			category: 'global-navigation',
 			trackingMethod: 'ga'
@@ -67,12 +67,7 @@ $(function () {
 		return GLOBAL_NAV_SAMPLING_RATIO >= Math.floor((Math.random() * 100 + 1));
 	}
 
-	function isTrackedGroup() {
-		var group = window.Wikia.AbTest ? Wikia.AbTest.getGroup( 'DAR_GLOBALNAVIGATIONFIXED' ) : undefined ;
-		return group !== undefined;
-	}
-
-	if (isTrackedGroup() && isSampledPV()) {
+	if (isSampledPV()) {
 		Wikia.log( 'Global nav tracking enabled', 'info', 'GlobalNav' );
 		$('#WikiaHeader').on('click', clickTrackingHandler);
 		$('#WikiaHeader').on('hovermenu-shown', hoverMenuTrackingHandler);

@@ -7,6 +7,7 @@ class GlobalHeaderController extends WikiaController {
 		global $wgCityId;
 
 		wfProfileIn(__METHOD__);
+		$this->response->addAsset('skins/oasis/js/GlobalHeader.js');
 
 		$category = WikiFactory::getCategory($wgCityId);
 
@@ -29,6 +30,8 @@ class GlobalHeaderController extends WikiaController {
 		wfRunHooks('AfterGlobalHeader', array(&$menuNodes, $category, $messageName));
 
 		$this->menuNodes = $menuNodes;
+
+		var_dump($this->menuNodes);die;
 
 		wfProfileOut(__METHOD__);
 	}
