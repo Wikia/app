@@ -325,7 +325,7 @@ class WikiaMobileHooks {
 					wfProfileOut( __METHOD__ );
 					return true;
 				}
-			} else if ( $ns == NS_HELP ) {
+			} else if ( $ns == NS_HELP && $title->isKnown() ) {
 				wfProfileOut( __METHOD__ );
 				return true;
 			}
