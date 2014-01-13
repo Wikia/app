@@ -248,7 +248,7 @@ class Config
 
 	/**
 	 * If an error occurred during search, we store it here.
-	 * @var Exception
+	 * @var \Exception
 	 */
 	protected $error;
 
@@ -432,7 +432,8 @@ class Config
 
 	/**
 	 * Sets minimum article quality to to filter by
-	 * @param $articleQuality
+	 * @param int $minArticleQuality
+	 * @return $this
 	 */
 	public function setMinArticleQuality( $minArticleQuality ) {
 		$this->minArticleQuality = (int)$minArticleQuality;
@@ -441,7 +442,7 @@ class Config
 
 	/**
 	 * Sets minimum article quality to to filter by
-	 * @param $articleQuality
+	 * @returns int
 	 */
 	public function getMinArticleQuality() {
 		return $this->minArticleQuality;
@@ -659,7 +660,7 @@ class Config
 
 	/**
 	 * We set any exceptions called during Wikia\Search\QueryService\Select\AbstractSelect::search here
-	 * @param Exception $error
+	 * @param \Exception $error
 	 * @return \Wikia\Search\Config
 	 */
 	public function setError( \Exception $error ) {
@@ -669,7 +670,7 @@ class Config
 
 	/**
 	 * Returns the currently stored error.
-	 * @return null|Exception
+	 * @return null|\Exception
 	 */
 	public function getError() {
 		return $this->error;
@@ -759,7 +760,7 @@ class Config
 	/**
 	 * Synonym function for backward compatbility
 	 * @param  boolean $apply
-	 * @return Wikia\Search\Config provides fluent interface
+	 * @return \Wikia\Search\Config provides fluent interface
 	 */
 	public function setOnWiki( $apply ) {
 		return $this->setQueryService( 'Select\\Dismax\\OnWiki', $apply );
@@ -983,7 +984,7 @@ class Config
 
 	/**
 	 * Sets the page, which is a shortcut for offset/limit handling
-	 * @param int value
+	 * @param int $value
 	 * @return \Wikia\Search\Config
 	 */
 	public function setPage( $value ) {
@@ -1002,7 +1003,7 @@ class Config
 	/**
 	 * Sets the result set
 	 * @param \Wikia\Search\ResultSet\AbstractResultSet $results
-	 * @return \Wikia\Search|Config
+	 * @return \Wikia\Search\Config
 	 */
 	public function setResults( \Wikia\Search\ResultSet\AbstractResultSet $results ) {
 		$this->results = $results;
