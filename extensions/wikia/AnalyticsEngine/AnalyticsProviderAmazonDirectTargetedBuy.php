@@ -6,14 +6,18 @@ class AnalyticsProviderAmazonDirectTargetedBuy implements iAnalyticsProvider {
 		<script>
 			require(['wikia.geo'], function (geo) {
 				if (geo.getCountryCode() in %%COUNTRIES%%) {
-					var aax_src='3006';
-					var aax_url = encodeURIComponent(document.location);
+					var aax_src='3006',
+						aax_url = encodeURIComponent(document.location),
+						host = (geo.getCountryCode() === 'US') ? 'aax-us-east' : 'aax',
+						s = document.createElement('script'),
+						insertLoc = document.getElementsByTagName('script')[0];
+
 					try { aax_url = encodeURIComponent("" + window.top.location); } catch(e) {}
-					var s = document.createElement('script');
+
 					s.type = 'text/javascript';
 					s.async = true;
-					s.src = '//aax-us-east.amazon-adsystem.com/e/dtb/bid?src=' + aax_src + '&u=' + aax_url + "&cb=" + Math.round(Math.random()*10000000);
-					var insertLoc = document.getElementsByTagName('script')[0];
+					s.src = '//' + host + '.amazon-adsystem.com/e/dtb/bid?src=' + aax_src + '&u=' + aax_url + "&cb=" + Math.round(Math.random()*10000000);
+
 					insertLoc.parentNode.insertBefore(s, insertLoc);
 				}
 			});
