@@ -348,7 +348,7 @@ class CombinedSearchService {
 		$outputModel['title'] = $articleInfo['title'];
 		$outputModel['url'] = $articleInfo['url'];
 		$outputModel['lang'] = $articleInfo['lang'];
-		$outputModel['quality'] = isset( $articleInfo['article_quality_i'] ) ? $articleInfo['article_quality_i'] : 0;
+		$outputModel['quality'] = isset( $articleInfo['article_quality_i'] ) ? $articleInfo['article_quality_i'] : null;
 
 		if ( isset($articleInfo[Utilities::field('html', $articleInfo['lang'])]) ) {
 			$fullText = $articleInfo[Utilities::field('html', $articleInfo['lang'])];
