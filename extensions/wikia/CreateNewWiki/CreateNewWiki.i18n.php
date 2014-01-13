@@ -855,6 +855,7 @@ $messages['fa'] = array(
 );
 
 /** Finnish (suomi)
+ * @author Elseweyr
  * @author Ilkea
  * @author Lukkipoika
  * @author Nike
@@ -903,6 +904,7 @@ $messages['fi'] = array(
 	'cnw-desc-choose' => 'Valitse kategoria',
 	'cnw-desc-select-one' => 'Valitse yksi',
 	'cnw-desc-all-ages' => 'Kaikenikäisille',
+	'cnw-desc-tip-all-ages' => 'Käsitteleekö tämä wiki aihetta, jota kiinnostaa lapsia? Noudattaaksemme Yhdysvaltojen lakia pidämme seurantaa wikeistä, joiden aiheet viehättävät 12-vuotiaita tai nuorempia lapsia.',
 	'cnw-desc-default-lang' => 'Wikisi kieli tulee olemaan $1',
 	'cnw-desc-change-lang' => 'vaihda',
 	'cnw-desc-lang' => 'Kieli',
@@ -914,14 +916,16 @@ $messages['fi'] = array(
 	'cnw-welcome-instruction1' => 'Klikkaa painiketta alta aloittaaksesi sivujen lisäämisen wikiisi.',
 	'cnw-welcome-instruction2' => 'Näet tämän painikkeen joka puolella wikissäsi, käytä sitä kun haluat lisätä uuden sivun.',
 	'cnw-welcome-help' => 'Löydä vastauksia, neuvoa, ja muuta <a href="http://community.wikia.com">Community Central:sta</a>',
-	'cnw-error-general' => 'Oho, jokin meni pieleen meidän puolellamme!  Ole hyvä ja yritä uudelleen tai <a href="/Special:Contact">ota yhteyttä</a> saadaksesi apua.', # Fuzzy
-	'cnw-error-general-heading' => 'Pahoittelumme', # Fuzzy
+	'cnw-error-general' => 'Oho, jokin meni pieleen meidän puolellamme! Ole hyvä ja yritä uudelleen tai [[Special:Contact|ota meihin yhteyttä]] saadaksesi apua.',
+	'cnw-error-general-heading' => 'Pahoittelumme',
 	'cnw-badword-header' => 'Hei siellä',
 	'cnw-badword-msg' => 'Hei, vältä käyttämästä näitä rumia sanoja tai kiellettyjä sanoja Wikisi kuvauksesta: $1',
 	'cnw-error-wiki-limit-header' => 'Wikien enimmäis määrä saavutettu',
 	'cnw-error-wiki-limit' => 'Hei, olet rajoitettu luomaan {{PLURAL:$1|$1 wikin|$1 wikiä}} päivässä. Odota 24 tuntia ennen wikin luontia.',
 	'cnw-error-blocked-header' => 'Käyttäjätunnus estetty',
 	'cnw-error-blocked' => '$1 esti sinut. Syy oli: $2. (Eston ID valitusta varten: $3)',
+	'cnw-error-anon-user-header' => 'Ole hyvä ja kirjaudu sisään',
+	'cnw-error-anon-user' => 'Anonyymi käyttäjä ei voi luoda wikiä. [[Special:UserLogin|Kirjaudu sisään]] ja yritä uudelleen.',
 	'cnw-error-torblock' => 'Wikin luonti Tor-verkkoa käyttäen ei ole sallittu.',
 	'cnw-error-bot' => 'Havaitsimme että voit olla botti. Jos olemme tehneet virheen, ota yhteyttä kertoen että sinut on virheellisesti havaittu botiksi, ja me avustamme wikisi luonnissa: [http://www.wikia.com/Special:Contact/general Ota yhteyttä]',
 	'cnw-error-bot-header' => 'Sinut on havaittu botiksi',
@@ -3176,6 +3180,7 @@ $messages['zh'] = array(
  * @author Liuxinyu970226
  * @author Sam Wang
  * @author TianyinLee
+ * @author User670839245
  * @author Yfdyh000
  * @author 乌拉跨氪
  */
@@ -3241,6 +3246,7 @@ $messages['zh-hans'] = array(
 	'cnw-error-blocked-header' => '帐户被封禁',
 	'cnw-error-blocked' => '您已被$1封禁。原因是：$2。（参考封禁ID：$3）',
 	'cnw-error-anon-user-header' => '请登录',
+	'cnw-error-anon-user' => '匿名用户不能创建维基。请先[[Special:UserLogin|登陆]]，然后再试。',
 	'cnw-error-torblock' => '不能使用Tor网络创建Wiki。',
 	'cnw-error-bot' => '我们发现您可能是一个及其软件。如果这是个错误，请联系并告诉我们您被误认为是一个机器人，然后让我们协助您创建Wiki：[http://www.wikia.com/Special:Contact/general 联系我们]',
 	'cnw-error-bot-header' => '您已被识别为机器人',

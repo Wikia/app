@@ -136,6 +136,15 @@ $messages['oc'] = array(
 	'wikiastyleguide-dropdown-selected-items-list' => '$1 e $2 que demòran',
 );
 
+/** Ossetic (Ирон)
+ * @author Amikeco
+ */
+$messages['os'] = array(
+	'wikiastyleguide-dropdown-all' => 'Æппæт',
+	'wikiastyleguide-dropdown-select-all' => 'Равзарын иууылдæр',
+	'wikiastyleguide-dropdown-selected-items-list' => '$1 æмæ та $2 ма',
+);
+
 /** Polish (polski)
  * @author Sovq
  */
