@@ -79,8 +79,8 @@ class CombinedSearchServiceTest extends BaseTest {
 
 	public function testSearchForArticles() {
 		$combinedSearchServiceMock = $this->getMock('Wikia\Search\Services\CombinedSearchService', ['queryPhraseSolrForArticles', 'getImage']);
-		$foundResultsMock1 = [ [ 'lang' => 'pl', 'title' => 'a', 'url' => 'b', 'id' => '123_14', 'score' => 3, 'pageid' => 14, 'wid' => 123, 'html_pl' => 'lorem ipsum pl' ] ];
-		$foundResultsMock2 = [ [ 'lang' => 'en', 'title' => 'w', 'url' => 'x', 'id' => '124_15', 'score' => 3, 'pageid' => 15, 'wid' => 124, 'html_en' => 'lorem ipsum en' ] ];
+		$foundResultsMock1 = [ [ 'lang' => 'pl', 'title' => 'a', 'url' => 'b', 'id' => '123_14', 'score' => 3, 'pageid' => 14, 'wid' => 123, 'html_pl' => 'lorem ipsum pl', 'quality' => 0 ] ];
+		$foundResultsMock2 = [ [ 'lang' => 'en', 'title' => 'w', 'url' => 'x', 'id' => '124_15', 'score' => 3, 'pageid' => 15, 'wid' => 124, 'html_en' => 'lorem ipsum en', 'quality' => 0 ] ];
 
 		$combinedSearchServiceMock->expects( $this->at(0) )
 			->method ( 'queryPhraseSolrForArticles' )
@@ -112,14 +112,16 @@ class CombinedSearchServiceTest extends BaseTest {
 				'title' => 'a',
 				'url' => 'b',
 				'lang' => 'pl',
-				'snippet' => 'lorem ipsum pl' ],
+				'snippet' => 'lorem ipsum pl',
+				'quality' => 0],
 			[
 				'wikiId' => 124,
 				'articleId' => 15,
 				'title' => 'w',
 				'url' => 'x',
 				'lang' => 'en',
-				'snippet' => 'lorem ipsum en' ] ],
+				'snippet' => 'lorem ipsum en',
+				'quality' => 0]],
 			$response );
 	}
 
