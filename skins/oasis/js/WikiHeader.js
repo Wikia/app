@@ -50,6 +50,12 @@ var WikiHeader = {
 					return false;
 				}
 			});
+			$( '#wpSummary' ).bind( 'keypress', function ( ev ) {
+				if ( ev.keyCode === 13 /* enter */ && !WikiHeader.editformSubmitAllowed ) {
+					// prevent tracking
+					ev.stopImmediatePropagation();
+				}
+			} );
 		}
 
 		//Accessibility Events
