@@ -325,6 +325,9 @@ class WikiaMobileHooks {
 					wfProfileOut( __METHOD__ );
 					return true;
 				}
+			} else if ( $ns == NS_HELP ) {
+				wfProfileOut( __METHOD__ );
+				return true;
 			}
 
 			self::$displayErrorPage = true;
