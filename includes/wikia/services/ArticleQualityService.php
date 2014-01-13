@@ -9,6 +9,11 @@ class ArticleQualityService extends Service {
 	const CACHE_BUSTER = '0';
 
 	/**
+	 * @var WikiaApp
+	 */
+	protected $app;
+
+	/**
 	 * @var int
 	 */
 	protected $articleId;
@@ -119,6 +124,10 @@ class ArticleQualityService extends Service {
 		99 => 322.646075843896,
 	];
 
+	public function __construct() {
+		$this->app = F::app();
+	}
+
 	/**
 	 * Sets articleId
 	 * @param $articleId
@@ -132,14 +141,14 @@ class ArticleQualityService extends Service {
 	 * @return int|null
 	 */
 	public function getArticleQuality() {
-		global $wgMemc;
+
 		$cacheKey = wfMemcKey(
 			__CLASS__,
 			self::CACHE_BUSTER,
 			$this->articleId
 		);
 
-		$percentile = $wgMemc->get( $cacheKey );
+		$percentile = $this->app->wg->Memc->get( $cacheKey );
 
 		if ( $percentile === false ) {
 			$title = Title::newFromID( $this->articleId );
@@ -169,7 +178,7 @@ class ArticleQualityService extends Service {
 			$quality = $this->computeFormula( $inputs );
 			$percentile = $this->searchPercentile( $quality );
 
-			$wgMemc->set( $cacheKey, $percentile, self::MEMC_CACHE_TIME );
+			$this->app->wg->Memc->set( $cacheKey, $percentile, self::MEMC_CACHE_TIME );
 		}
 		return $percentile;
 	}
