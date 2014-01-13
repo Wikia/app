@@ -1,3 +1,4 @@
+/*jshint camelcase:false*/
 var AdLogicPageLevelParams = function (
 	log,
 	window,
@@ -112,8 +113,10 @@ var AdLogicPageLevelParams = function (
 				kv = kvs[i].split('=');
 				key = kv[0];
 				value = kv[1];
-				params[key] = params[key] || [];
-				params[key].push(value);
+				if (key && value) {
+					params[key] = params[key] || [];
+					params[key].push(value);
+				}
 			}
 		}
 

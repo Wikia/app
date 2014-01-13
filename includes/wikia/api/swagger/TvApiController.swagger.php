@@ -22,13 +22,19 @@ use Swagger\Annotations as SWG;
  * 		name="url",
  * 		type="string",
  * 		required="true",
- * 		description="The relative URL of the Article"
+ * 		description="The relative URL of the article"
  * 	)
  * 	@SWG\Property(
- * 		name="pageid",
+ * 		name="wikiId",
  * 		type="int",
  * 		required="true",
- * 		description="An internal identification number for Article"
+ * 		description="An internal identification number for wiki"
+ * 	)
+ * 		@SWG\Property(
+ * 		name="articleId",
+ * 		type="int",
+ * 		required="true",
+ * 		description="An internal identification number for article"
  * 	)
  * 	@SWG\Property(
  * 		name="contentUrl",

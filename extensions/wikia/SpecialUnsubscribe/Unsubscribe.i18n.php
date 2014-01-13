@@ -104,7 +104,7 @@ $messages['ca'] = array(
 	'unsubscribe-working-done' => 'Complet.',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -180,8 +180,11 @@ $messages['es'] = array(
 
 /** Persian (فارسی)
  * @author Mjbmr
+ * @author Reza1615
  */
 $messages['fa'] = array(
+	'unsubscribe' => 'لغو اشتراک',
+	'unsubscribe-confirm-legend' => 'تأیید',
 	'unsubscribe-confirm-button' => 'بله، من مطمئن هستم',
 	'unsubscribe-working-done' => 'کامل.',
 );

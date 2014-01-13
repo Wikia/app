@@ -38,6 +38,8 @@ class CreateWikiTest extends WikiaBaseTest {
 	 * @group Infrastructure
 	 */
 	public function testWikiCreation() {
+		$this->markTestSkipped( 'Test failed on QA machine while it works on a devbox; DB issue Connection Team will look at it while working on CONN-44' );
+
 		global $wgCityId, $wgWikiaLocalSettingsPath, $wgMaxShellMemory, $wgMaxShellTime;
 
 		$wgMaxShellMemory = 0;

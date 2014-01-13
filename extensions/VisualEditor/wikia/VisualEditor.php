@@ -9,18 +9,24 @@ $wgExtensionCredits['other'][] = array(
 
 $dir = dirname( __FILE__ ) . '/';
 
-// Register files
+/* Classes */
+
 $wgAutoloadClasses['VisualEditorWikiaHooks'] = $dir . 'VisualEditor.hooks.php';
-$wgAutoloadClasses['ApiTempUpload'] = $dir . 'ApiTempUpload.php';
 $wgAutoloadClasses['ApiMediaSearch'] = $dir . 'ApiMediaSearch.php';
 $wgAutoloadClasses['ApiPhotoAttribution'] = $dir . 'ApiPhotoAttribution.php';
+$wgAutoloadClasses['ApiAddMedia'] = $dir . 'ApiAddMedia.php';
+$wgAutoloadClasses['ApiAddMediaTemporary'] = $dir . 'ApiAddMediaTemporary.php';
+$wgAutoloadClasses['ApiAddMediaPermanent'] = $dir . 'ApiAddMediaPermanent.php';
 
-// Register API modules
-$wgAPIModules['apitempupload'] = 'ApiTempUpload';
+/* API Modules */
+
 $wgAPIModules['apimediasearch'] = 'ApiMediaSearch';
 $wgAPIModules['apiphotoattribution'] = 'ApiPhotoAttribution';
+$wgAPIModules['addmediatemporary'] = 'ApiAddMediaTemporary';
+$wgAPIModules['addmediapermanent'] = 'ApiAddMediaPermanent';
 
-// Register resource modules
+/* Resource Loader Modules */
+
 $wgVisualEditorWikiaResourceTemplate = array(
 	'localBasePath' => $dir . 'modules',
 	'remoteExtPath' => 'VisualEditor/wikia/modules',
@@ -90,11 +96,16 @@ $wgResourceModules += array(
 			'wikia-visualeditor-preference-enable',
 			'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip',
 			'wikia-visualeditor-dialog-wikiamediainsert-insert-button',
+			'wikia-visualeditor-dialog-wikiamediainsert-item-license-label',
+			'wikia-visualeditor-dialog-wikiamediainsert-item-title-label',
+			'wikia-visualeditor-dialog-wikiamediainsert-item-remove-button',
 			'wikia-visualeditor-dialog-wikiamediainsert-upload-label',
 			'wikia-visualeditor-dialog-wikiamediainsert-upload-button',
 			'wikia-visualeditor-dialog-wikiamediainsert-upload-error',
 			'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder',
 			'wikia-visualeditor-dialog-wikiamediainsert-preview-alert',
+			'wikia-visualeditor-dialog-wikiamediainsert-upload-error-size',
+			'wikia-visualeditor-dialog-wikiamediainsert-upload-error-filetype',
 			'wikia-visualeditor-help-label',
 			'wikia-visualeditor-help-link',
 			'wikia-visualeditor-beta-warning',
@@ -111,6 +122,10 @@ $wgResourceModules += array(
 			'wikia-visualeditor-dialog-wikiasourcemode-apply-button',
 			'wikia-visualeditor-dialog-wikiasourcemode-help-link',
 			'wikia-visualeditor-dialog-wikiasourcemode-help-text',
+			'wikia-visualeditor-notification-media-must-be-logged-in',
+			'wikia-visualeditor-notification-media-only-premium-videos-allowed',
+			'wikia-visualeditor-notification-media-query-failed',
+			'wikia-visualeditor-notification-media-permission-denied',
 		),
 		'dependencies' => array(
 			'ext.visualEditor.core',
@@ -127,5 +142,6 @@ $wgExtensionMessagesFiles['VisualEditorWikia'] = $dir . 'VisualEditor.i18n.php';
 
 /* Hooks */
 
-$wgHooks['ResourceLoaderTestModules'][] = 'VisualEditorWikiaHooks::onResourceLoaderTestModules';
 $wgHooks['GetPreferences'][] = 'VisualEditorWikiaHooks::onGetPreferences';
+$wgHooks['ResourceLoaderTestModules'][] = 'VisualEditorWikiaHooks::onResourceLoaderTestModules';
+$wgHooks['MakeGlobalVariablesScript'][] = 'VisualEditorWikiaHooks::onMakeGlobalVariablesScript';

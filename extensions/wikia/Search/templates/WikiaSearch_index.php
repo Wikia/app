@@ -90,7 +90,7 @@
 					<? if ( !$hasArticleMatch && $isMonobook ): ?>
 						<?=wfMsgExt('searchmenu-new', array('parse'), $query);?>
 					<? endif; ?>
-					<p><i><?=wfMsg('wikiasearch2-noresults')?></i></p>
+					<p class="no-result"><i><?=wfMsg('wikiasearch2-noresults')?></i></p>
 				<?php endif; ?>
 			<?php else: // add border in center column for blank search page BugId: 48489 ?>
 				<p>&nbsp;</p>	

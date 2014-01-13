@@ -139,7 +139,8 @@ function wfCreatePageOnGetPreferences( $user, &$preferences ) {
 }
 
 function wfCreatePageAjaxGetDialog() {
-	global $wgWikiaCreatePageUseFormatOnly, $wgUser,  $wgCreatePageOptions, $wgExtensionsPath, $wgScript, $wgEnableVideoToolExt;
+	global $wgWikiaCreatePageUseFormatOnly, $wgUser,  $wgCreatePageOptions, $wgExtensionsPath, $wgScript,
+	$wgEnableVideoToolExt, $wgEnableVisualEditorExt;
 
 	$template = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 	$options = array();
@@ -195,7 +196,7 @@ function wfCreatePageAjaxGetDialog() {
 	}
 
 	$template->set_vars( array(
-			'useFormatOnly' => !empty( $wgWikiaCreatePageUseFormatOnly ) ? true : false,
+			'useFormatOnly' => !empty( $wgWikiaCreatePageUseFormatOnly ) || !empty( $wgEnableVisualEditorExt ),
 			'options' => $options,
 			'type' => $listtype
 		)
@@ -205,6 +206,7 @@ function wfCreatePageAjaxGetDialog() {
 	$body['width'] = $wgCreatePageDialogWidth;
 	$body['defaultOption'] = $defaultLayout;
 	$body['title'] = wfMsg( 'createpage-dialog-title' );
+	$body['addPageLabel'] = wfMsg( 'button-createpage' );
 
 	$response = new AjaxResponse( json_encode( $body ) );
 	$response->setCacheDuration( 0 ); // no caching

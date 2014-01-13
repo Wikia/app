@@ -1,6 +1,7 @@
-/*global require*/
+/* exported AdProviderSevenOneMedia */
+/* jshint maxparams:false */
 
-var AdProviderSevenOneMedia = function (log, window, tracker, $, sevenOneMedia) {
+var AdProviderSevenOneMedia = function (log, window, adTracker, $, sevenOneMedia) {
 	'use strict';
 
 	var logGroup = 'AdProviderSevenOneMedia',
@@ -8,32 +9,24 @@ var AdProviderSevenOneMedia = function (log, window, tracker, $, sevenOneMedia) 
 			TOP_RIGHT_BOXAD: 'rectangle1',
 			HOME_TOP_RIGHT_BOXAD: 'rectangle1',
 
-//			PREFOOTER_LEFT_BOXAD: 'promo1',
+			PREFOOTER_LEFT_BOXAD: 'promo1',
 
 			TOP_LEADERBOARD: 'topAds',
 			HOME_TOP_LEADERBOARD: 'topAds',
 			HUB_TOP_LEADERBOARD: 'topAds',
 
 			SEVENONEMEDIA_FLUSH: 'trackEnd'
-		},
-		trackedSize = {
-			rectangle1: '300x250',
-			promo1: '300x250',
-			topAds: '728x90',
-			trackEnd: '1x1'
 		};
 
-	function canHandleSlot(slot) {
-		log(['canHandleSlot', slot], 'debug', logGroup);
-
-		var slotname = slot[0];
+	function canHandleSlot(slotname) {
+		log(['canHandleSlot', slotname], 'debug', logGroup);
 
 		if (slotMap[slotname]) {
-			log(['canHandleSlot', slot, true], 'debug', logGroup);
+			log(['canHandleSlot', slotname, true], 'debug', logGroup);
 			return true;
 		}
 
-		log(['canHandleSlot', slot, false], 'debug', logGroup);
+		log(['canHandleSlot', slotname, false], 'debug', logGroup);
 		return false;
 	}
 
@@ -68,64 +61,29 @@ var AdProviderSevenOneMedia = function (log, window, tracker, $, sevenOneMedia) 
 		}
 	}
 
-	// TODO: ADEN-492 don't duplicate it everywhere, ok?
-	function formatTrackTime(t, max) {
-		if (isNaN(t)) {
-			log('Error, time tracked is NaN: ' + t, 'debug', logGroup);
-			return "NaN";
-		}
+	function fillInSlot(slotname, pSuccess) {
+		log(['fillInSlot', slotname], 'info', logGroup);
 
-		if (t < 0) {
-			log('Error, time tracked is a negative number: ' + t, 'debug', logGroup);
-			return "negative";
-		}
-
-		t /= 1000;
-		if (t > max) {
-			return "more_than_" + max;
-		}
-
-		return t.toFixed(1);
-	}
-
-	function fillInSlot(slot) {
-		log(['fillInSlot', slot], 'info', logGroup);
-
-		var slotname = slot[0],
-			slotDeName = slotMap[slotname],
-			slotsize = slotDeName && trackedSize[slotDeName],
+		var slotDeName = slotMap[slotname],
 			$slot,
-			hopTimer = new Date().getTime();
+			slotTracker = adTracker.trackSlot('sevenonemedia', slotname);
 
 		function clearDefaultHeight() {
 			$('#' + slotname).removeClass('default-height');
 		}
 
-		function trackSuccess() {
-			var hopTime = new Date().getTime() - hopTimer;
-			log('slotTimer2 end for ' + slotname + ' after ' + hopTime + ' ms (success)', 'debug', logGroup);
-			tracker.track({
-				eventName: 'liftium.hop2',
-				ga_category: 'success2/sevenonemedia',
-				ga_action: 'slot ' + slotname,
-				ga_label: formatTrackTime(hopTime, 5),
-				trackingMethod: 'ad'
-			});
+		function success() {
+			slotTracker.success();
+			pSuccess();
 		}
 
-		tracker.track({
-			eventName: 'liftium.slot2',
-			ga_category: 'slot2/' + slotsize,
-			ga_action: slotname,
-			ga_label: 'sevenonemedia',
-			trackingMethod: 'ad'
-		});
+		slotTracker.init();
 
 		if (slotDeName === 'topAds') {
 			makeTopAds();
 			sevenOneMedia.pushAd('popup1');
 			sevenOneMedia.pushAd('fullbanner2', {afterFinish: handleTopButton});
-			sevenOneMedia.pushAd('skyscraper1', {afterFinish: trackSuccess});
+			sevenOneMedia.pushAd('skyscraper1', {afterFinish: success});
 			sevenOneMedia.flushAds();
 		}
 
@@ -133,7 +91,7 @@ var AdProviderSevenOneMedia = function (log, window, tracker, $, sevenOneMedia) 
 			$slot = $('<div class="ad-wrapper" style="display: none"></div>');
 			$slot.attr('id', 'ad-' + slotDeName);
 			$('#' + slotname).append($slot);
-			sevenOneMedia.pushAd(slotDeName, {beforeFinish: clearDefaultHeight, afterFinish: trackSuccess});
+			sevenOneMedia.pushAd(slotDeName, {beforeFinish: clearDefaultHeight, afterFinish: success});
 			sevenOneMedia.flushAds();
 		}
 

@@ -10,7 +10,8 @@ class TvApiController extends WikiaApiController {
 	const API_URL = 'api/v1/Articles/AsSimpleJson?id=';
 	const MINIMAL_WIKIA_SCORE = 0.5;
 	const MINIMAL_ARTICLE_SCORE = 1.7;
-
+	const WIKIA_URL_REGEXP = '~^(http(s?)://)(([^\.]+)\.wikia\.com)~';
+	const RESPONSE_CACHE_VALIDITY = 86400; /* 24h */
 	/**
 	 * @var wikiId
 	 */
@@ -22,6 +23,7 @@ class TvApiController extends WikiaApiController {
 	private $url;
 
 	public function getEpisode() {
+		global $wgStagingEnvironment, $wgDevelEnvironment;
 
 		if ( !$this->setWikiVariables() ) {
 			throw new NotFoundApiException();
@@ -37,20 +39,36 @@ class TvApiController extends WikiaApiController {
 			throw new NotFoundApiException();
 		}
 
-		$responseValues[ 'contentUrl' ] = $this->url . self::API_URL . $responseValues[ 'articleId' ];
+		if ( empty( $responseValues[ 'contentUrl' ] ) ) { //only for unit test
+			$responseValues[ 'contentUrl' ] = $this->url . self::API_URL . $responseValues[ 'articleId' ];
+		}
+		if ( $wgStagingEnvironment || $wgDevelEnvironment ) {
+			$responseValues[ 'contentUrl' ] = preg_replace_callback( self::WIKIA_URL_REGEXP, array( $this, 'replaceHost' ), $responseValues[ "contentUrl" ] );
+			$responseValues[ 'url' ] = preg_replace_callback( self::WIKIA_URL_REGEXP, array( $this, 'replaceHost' ), $responseValues[ "url" ] );
+		}
+
 		$responseValues = array_merge( [ 'wikiId' => (int) $this->wikiId ], $responseValues );
 
 		$response = $this->getResponse();
 		$response->setValues( $responseValues );
 
 		$response->setCacheValidity(
-			86400 /* 24h */,
-			86400 /* 24h */,
+			self::RESPONSE_CACHE_VALIDITY /* 24h */,
+			self::RESPONSE_CACHE_VALIDITY /* 24h */,
 			array(
 				WikiaResponse::CACHE_TARGET_BROWSER,
 				WikiaResponse::CACHE_TARGET_VARNISH
 			)
 		);
+	}
+
+	/**
+	 * Callback function for preg_replace
+	 * @param $details
+	 * @return string
+	 */
+	protected function replaceHost( $details ) {
+		return $details[ 1 ] . WikiFactory::getCurrentStagingHost( $details[ 4 ], $details[ 3 ] );
 	}
 
 	protected function getExactMatch() {
@@ -60,7 +78,6 @@ class TvApiController extends WikiaApiController {
 		}
 		return null;
 	}
-
 
 	protected function createTitle($text)
 	{
@@ -87,7 +104,6 @@ class TvApiController extends WikiaApiController {
 		}
 		return null;
 	}
-
 
 	protected function setWikiVariables(){
 		$config = $this->getConfigCrossWiki();
@@ -147,7 +163,7 @@ class TvApiController extends WikiaApiController {
 		if (! $searchConfig->getQuery()->hasTerms() ) {
 			throw new InvalidParameterApiException( 'episodeName' );
 		}
-		//Standard Wikia API response with pagination values
+
 		$responseValues = (new Factory)->getFromConfig( $searchConfig )->searchAsApi( [ 'pageid' => 'articleId', 'title', 'url', 'score' ], true );
 		//post processing
 		if ( !empty( $responseValues[ 'items' ] ) ) {

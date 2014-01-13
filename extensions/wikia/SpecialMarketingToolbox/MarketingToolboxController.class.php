@@ -75,6 +75,10 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 	 * Here curator can select language, section, vertical and date
 	 */
 	public function dashboardAction() {
+		if (!$this->checkAccess()) {
+			return false;
+		}
+
 		$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/css/MarketingToolbox_Dashboard.scss');
 		$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/js/MarketingToolbox.js');
 		$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/js/DatepickerModel.js');
@@ -109,6 +113,10 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 	 * Main action for editing hub modules
 	 */
 	public function editHubAction() {
+		if (!$this->checkAccess()) {
+			return false;
+		}
+
 		$this->retriveDataFromUrl();
 
 		$this->wg->Out->addJsConfigVars([
@@ -187,6 +195,10 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 	}
 
 	public function publishHub() {
+		if (!$this->checkAccess()) {
+			return false;
+		}
+
 		if ($this->request->wasPosted()) {
 			$this->retriveDataFromUrl();
 
@@ -360,8 +372,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 	 * @desc Used by WMU to get the image url
 	 */
 	public function getImageDetails() {
-		if (!$this->wg->User->isLoggedIn() || !$this->wg->User->isAllowed('marketingtoolbox')) {
-			$this->specialPage->displayRestrictionError();
+		if (!$this->checkAccess()) {
 			return false;
 		}
 
@@ -380,6 +391,10 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 	}
 
 	public function getVideoDetails() {
+		if (!$this->checkAccess()) {
+			return false;
+		}
+
 		$url = $this->getVal('url');
 
 		$response = $this->sendRequest('VideosController', 'addVideo', array( 'url' => $url ) );

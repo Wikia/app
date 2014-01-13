@@ -137,6 +137,13 @@ $messages['af'] = array(
 	'editaccount-nouser' => 'Die gebruiker "$1" bestaan nie.',
 );
 
+/** Old English (Ænglisc)
+ * @author Espreon
+ */
+$messages['ang'] = array(
+	'editaccount-submit-button' => 'Hordian',
+);
+
 /** Arabic (العربية)
  * @author Achraf94
  * @author Claw eg
@@ -176,6 +183,8 @@ $messages['ar'] = array(
 	'editaccount-success-pass' => 'تم تغيير كلمة مرور الحساب $1 بنجاح.',
 	'editaccount-success-realname' => 'تم تغيير الإسم  الحقيقي الخاص بالحساب $1 بنجاح.',
 	'editaccount-success-unsub' => 'ألغي بنجاح الاشتراك قليلاً للحساب $1.',
+	'editaccount-success-disable' => 'ألغي بنجاح الاشتراك قليلاً للحساب $1.',
+	'editaccount-success-toggleadopt' => 'تم تثبيت حالة اعتماد أهلية بنجاح لحساب $1.',
 	'editaccount-success-close' => 'تم تعطيل الحساب $1 بنجاح.',
 	'editaccount-error-email' => 'لم يتم تغيير البريد الإلكتروني. حاول مرة أخرى أو اتصل "بالفريق التقني".',
 	'editaccount-error-pass' => 'لم يتم تغيير كلمة المرور. حاول مرة أخرى أو اتصل "بالفريق التقني".',
@@ -193,6 +202,8 @@ $messages['ar'] = array(
 	'editaccount-status-unconfirmed' => 'لم يتم التأكيد',
 	'editaccount-status-realuser' => 'المستخدم الحقيقي',
 	'editaccount-status-tempuser' => 'المستخدم المؤقت',
+	'editaccount-error-tempuser-email' => 'المستخدمون المؤقتون لا يمكن أن يكون لديهم حقل عنوان البريد الإلكتروني فارغاً، الرجاء إدخال عنوان بريد إلكتروني.',
+	'editaccount-email-change-requested' => 'طلب المستخدم بتغيير البريد الإلكتروني عبر التفضيلات إلى $1 . لتأكيد تغيير عنوان البريد الإلكتروني المطلوب للمستخدم، أدخل عنوان البريد الإلكتروني المطلوب في الحقل أدناه وانقر "حفظ وتأكيد".',
 	'editaccount-log' => 'سجل حسابات المستخدم',
 	'editaccount-log-header' => 'هذه الصفحة تسرد التغييرات التي تم إجراؤها على معلومات المستخدم من قبل موظفي ويكيا.',
 	'editaccount-log-entry-email' => 'قام بتغيير  بريد المستخدم $2 الإلكتروني',
@@ -256,6 +267,7 @@ $messages['bg'] = array(
 	'editaccount-submit-pass' => 'Съхраняване на паролата',
 	'editaccount-submit-button' => 'Съхраняване',
 	'editaccount-invalid-email' => '"$1" не е валиден адрес за електронна поща!',
+	'editaccount-status-tempuser' => 'Временен потребител',
 	'right-editaccount' => 'Редактиране на настройките на други потребители',
 );
 
@@ -330,7 +342,7 @@ $messages['br'] = array(
 	'editaccount-error-tempuser-email' => "Ne c'hall ket chomlec'h postel animplijerien amzeriat bezañ goullo. Ebarzhit ur chomlec'h postel, mar plij.",
 	'editaccount-log' => "Marilh ar c'hontoù implijer",
 	'editaccount-log-header' => "Rollet e vez er pajenn-mañ ar c'hemmoù graet gant staff Wikia er penndibaboù implijer.",
-	'editaccount-log-entry-email' => "en deus kemmet chmolec'h postel an implijer $2",
+	'editaccount-log-entry-email' => "en deus kemmet chomlec'h postel an implijer $2",
 	'editaccount-log-entry-pass' => 'en deus kemmet ger-tremen ar gont $2',
 	'editaccount-log-entry-realname' => 'en deus kemmet anv gwir ar gont $2',
 	'editaccount-log-entry-close' => 'en deus diweredekaet ar gont $2',
@@ -410,7 +422,14 @@ $messages['ca'] = array(
 	'action-editaccount' => "editar la informació d'altes usuaris",
 );
 
-/** Czech (česky)
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'editaccount-log-entry-pass' => '$2 декъашхочун пароль хийцина',
+);
+
+/** Czech (čeština)
  * @author Chmee2
  * @author Darth Daron
  * @author Dontlietome7
@@ -430,6 +449,7 @@ $messages['cs'] = array(
 	'editaccount-label-pass' => 'Nastavit nové heslo',
 	'editaccount-label-realname' => 'Nastavit novoé skutečné jméno',
 	'editaccount-label-clearunsub' => 'Odhlášeno',
+	'editaccount-label-toggleadopt' => 'Upravit status osvojitele (pro AutomaticWikiAdopt):',
 	'editaccount-label-toggleadopt-prevent' => 'Zabránit automatickému převzetí',
 	'editaccount-label-toggleadopt-allow' => 'Povolit automatické převzetí',
 	'editaccount-label-reason' => 'Důvod:',
@@ -677,12 +697,16 @@ $messages['es'] = array(
 
 /** Persian (فارسی)
  * @author BlueDevil
+ * @author Reza1615
  * @author ZxxZxxZ
  */
 $messages['fa'] = array(
 	'editaccount' => 'ویرایش حساب کاربری',
+	'editaccount-frame-usage' => 'یادداشت',
 	'editaccount-label-realname' => 'تعیین نام واقعی جدید',
+	'editaccount-label-clearunsub' => 'لغو اشتراک شده',
 	'editaccount-label-reason' => 'دلیل:',
+	'editaccount-submit-pass' => 'ذخیره کلمه عبور',
 	'editaccount-submit-close' => 'بستن حساب کاربری',
 	'editaccount-submit-button' => 'ذخیره',
 );
@@ -690,6 +714,7 @@ $messages['fa'] = array(
 /** Finnish (suomi)
  * @author Centerlink
  * @author Crt
+ * @author Elseweyr
  * @author Jack Phoenix <jack@countervandalism.net>
  * @author Nedergard
  * @author Nike
@@ -710,6 +735,9 @@ $messages['fi'] = array(
 	'editaccount-label-pass' => 'Aseta uusi salasana',
 	'editaccount-label-realname' => 'Aseta uusi oikea nimi',
 	'editaccount-label-clearunsub' => 'Tilaus lopetettu',
+	'editaccount-label-toggleadopt' => 'Muokkaa adoptoijatilaa (AutomaticWikiAdoptia varten):',
+	'editaccount-label-toggleadopt-prevent' => 'Estä automaattinen adoptointi',
+	'editaccount-label-toggleadopt-allow' => 'Salli automaattinen adoptointi',
 	'editaccount-label-reason' => 'Syy',
 	'editaccount-submit-email' => 'Tallenna sähköpostiosoite',
 	'editaccount-submit-pass' => 'Tallenna salasana',
@@ -724,6 +752,7 @@ $messages['fi'] = array(
 	'editaccount-success-email-blank' => 'Tunnuksen $1 sähköpostiosoitteen poistaminen onnistui.',
 	'editaccount-success-pass' => 'Tunnuksen $1 salasana vaihdettiin onnistuneesti.',
 	'editaccount-success-realname' => 'Tilin $1 oikea nimi vaihdettiin onnistuneesti.',
+	'editaccount-success-toggleadopt' => 'Käyttäjän $1 adoptointikelpoisuustila vaihdettiin onnistuneesti',
 	'editaccount-success-close' => 'Tunnus $1 poistettiin käytöstä onnistuneesti.',
 	'editaccount-error-email' => 'Sähköpostiosoitetta ei vaihdettu. Yritä uudelleen tai ota yhteyttä tekniseen tiimiin.',
 	'editaccount-error-pass' => 'Salasanaa ei vaihdettu. Yritä uudelleen tai ota yhteyttä tekniseen tiimiin.',
@@ -731,12 +760,18 @@ $messages['fi'] = array(
 	'editaccount-error-close' => 'Tunnusta suljettaessa tapahtui virhe. Yritä uudelleen tai ota yhteyttä tekniseen tiimiin.',
 	'editaccount-invalid-email' => '"$1" ei ole kelvollinen sähköpostiosoite!',
 	'editaccount-nouser' => 'Tunnusta nimeltä "$1" ei ole olemassa!',
+	'editaccount-not-loaded' => 'Virhe: Käyttäjän tietojen lataaminen epäonnistui, ole hyvä ja kokeile sivun uudelleenlataamista.',
+	'editaccount-remove-avatar-fail' => 'Ongelma avatarin automaattisessa poistossa.',
+	'editaccount-requested' => 'Huomautus: Käyttäjä on pyytänyt tilin sulkemista',
+	'editaccount-not-requested' => 'VAROITUS: Käyttäjä ei ole pyytänyt tilin sulkemista',
 	'editaccount-labal-account-status' => 'Tilin tila',
 	'editaccount-labal-email-status' => 'Sähköpostin tila',
 	'editaccount-status-confirmed' => 'Vahvistettu',
 	'editaccount-status-unconfirmed' => 'Vahvistamaton',
 	'editaccount-status-realuser' => 'Todellinen käyttäjä',
 	'editaccount-status-tempuser' => 'Tilapäinen käyttäjä',
+	'editaccount-error-tempuser-email' => 'Väliaikaisilla käyttäjillä ei voi olla tyhjää sähköpostiosoitekenttää. Ole hyvä ja syötä sähköpostiosoite.',
+	'editaccount-email-change-requested' => 'Käyttäjä pyysi Asetuksien kautta sähköpostiosoitteensa muuttamista osoitteeksi $1. Vahvistaaksesi käyttäjän pyytämä sähköpostiosoitteen muutos, syötä pyydetty sähköpostiosoite allaolevaan kenttään ja klikkaa "Tallenna ja vahvista."',
 	'editaccount-log' => 'Käyttäjätunnusloki',
 	'editaccount-log-header' => 'Tämä sivu listaa Wikian henkilökunnan käyttäjäkohtaisiin asetuksiin tekemät muutokset.',
 	'editaccount-log-entry-email' => 'muutti käyttäjän $2 sähköpostiosoitetta',
@@ -1166,6 +1201,16 @@ $messages['it'] = array(
 	'action-editaccount' => 'modificare le informazioni di altri utenti',
 );
 
+/** Japanese (日本語)
+ * @author BryghtShadow
+ */
+$messages['ja'] = array(
+	'editaccount-label-reason' => '理由:',
+	'editaccount-submit-button' => '保存',
+	'editaccount-invalid-email' => "''$1'' は有効なメールアドレスではありません。",
+	'editaccount-labal-account-status' => 'アカウントの状態',
+);
+
 /** Khmer (ភាសាខ្មែរ)
  * @author គីមស៊្រុន
  */
@@ -1248,6 +1293,27 @@ $messages['lb'] = array(
 	'editaccount-log-entry-realname' => 'huet de richtegen Numm vum Benotzer $2 geännert',
 	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">Dëse Benotzerkont gouf global desaktivéiert.</div>',
 	'right-editaccount' => 'Aner Benotzerastellungen änneren',
+	'action-editaccount' => 'anere Benotzer hir Informatiounen änneren',
+);
+
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'editaccount' => 'حساونه ویرایشت کو',
+	'editaccount-frame-manage' => 'حساونه ویرایشت کو',
+	'editaccount-frame-usage' => 'نسینی',
+	'editaccount-label-select' => 'یه گل حساو کاروری انتخاو بکید',
+	'editaccount-label-pass' => 'یه گل پاسورد تازه بنیت',
+	'editaccount-label-realname' => 'یه گل نوم راستکی تازه بنیت',
+	'editaccount-label-reason' => 'دليل:',
+	'editaccount-submit-pass' => 'پاسورد ذخیره کو',
+	'editaccount-submit-close' => 'حساو نه به ون',
+	'editaccount-submit-button' => 'ذخيره كردن',
+	'editaccount-status-confirmed' => 'مئکم بیه',
+	'editaccount-status-unconfirmed' => 'مئکم نبیه',
+	'editaccount-status-realuser' => 'کارور راستکی',
+	'editaccount-status-tempuser' => 'کارور موقت',
 );
 
 /** Lithuanian (lietuvių)
@@ -1812,7 +1878,7 @@ $messages['ps'] = array(
 	'editaccount-submit-email' => 'برېښليک خوندي کول',
 	'editaccount-submit-pass' => 'پټنوم خوندي کول',
 	'editaccount-submit-realname' => 'اصلي نوم خوندي کول',
-	'editaccount-submit-close' => 'کارن حساب تړل',
+	'editaccount-submit-close' => 'گڼون تړل',
 	'editaccount-submit-button' => 'خوندي کول',
 	'editaccount-status' => 'د پيغام دريځ',
 	'editaccount-nouser' => 'د "$1" گڼون نشته!',
@@ -2367,11 +2433,12 @@ $messages['tl'] = array(
 );
 
 /** Turkish (Türkçe)
+ * @author Incelemeelemani
  * @author Suelnur
  */
 $messages['tr'] = array(
 	'editaccount-submit-close' => 'Hesabı kapat',
-	'edit-account-closed-flag' => '<div style="border: 1px solid black; padding: 1em">Bu hesap devre dışı bırakıldı.</div>', # Fuzzy
+	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">Bu hesap Wikia tarafından küresel olarak devre dışı bırakıldı.</div>',
 );
 
 /** Tatar (Cyrillic script) (татарча)
@@ -2510,6 +2577,8 @@ $messages['vi'] = array(
 	'editaccount-status-unconfirmed' => 'Chưa được xác nhận',
 	'editaccount-status-realuser' => 'Người sử dụng thực tế',
 	'editaccount-status-tempuser' => 'Người sử dụng tạm thời',
+	'editaccount-error-tempuser-email' => 'Người sử dụng tạm thời không thể có email trống trường địa chỉ, xin vui lòng nhập một địa chỉ email.',
+	'editaccount-email-change-requested' => 'Yêu cầu người dùng thay đổi email thông qua các tùy chọn để  $1 . Để xác nhận thay đổi địa chỉ thư điện tử được yêu cầu cho người dùng, nhập địa chỉ email yêu cầu vào trường dưới đây và nhấp vào "Lưu và xác nhận."',
 	'editaccount-log' => 'Nhật trình Tài khoản người dùng',
 	'editaccount-log-header' => 'Trang này liệt kê những thay đổi thông tin người dùng được thực hiện bởi Nhân viên Wikia',
 	'editaccount-log-entry-email' => 'thư điện tử đã thay đổi cho người dùng $2',
@@ -2518,6 +2587,7 @@ $messages['vi'] = array(
 	'editaccount-log-entry-close' => 'vô hiệu hóa tài khoản $2',
 	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">Tài khoản này đã bị vô hiệu hoá trên toàn cầu bởi Wikia.</div>',
 	'right-editaccount' => 'Sửa đổi thông tin người dùng khác',
+	'action-editaccount' => 'chỉnh sửa thông tin của người dùng khác',
 );
 
 /** Simplified Chinese (中文（简体）‎)
@@ -2526,6 +2596,7 @@ $messages['vi'] = array(
  * @author Hydra
  * @author Hzy980512
  * @author Liuxinyu970226
+ * @author User670839245
  * @author Yfdyh000
  * @author 乌拉跨氪
  */
@@ -2562,6 +2633,9 @@ $messages['zh-hans'] = array(
 	'editaccount-success-email-blank' => '成功移除帐户 $1 的电子邮件地址。',
 	'editaccount-success-pass' => '帐户 $1 的密码更改成功。',
 	'editaccount-success-realname' => '帐户 $1 的真实姓名更改成功。',
+	'editaccount-success-unsub' => '成功为账户$1移除退订位。',
+	'editaccount-success-disable' => '成功为账户$1取消禁用。',
+	'editaccount-success-toggleadopt' => '账户 $1 的认领能力状态已被成功更改。',
 	'editaccount-success-close' => '成功禁用了帐户 $1 。',
 	'editaccount-error-email' => '电子邮件地址未改变。请重试或联系技术团队。',
 	'editaccount-error-pass' => '密码未改变。请重试或联系技术团队。',
@@ -2580,6 +2654,7 @@ $messages['zh-hans'] = array(
 	'editaccount-status-realuser' => '活跃用户',
 	'editaccount-status-tempuser' => '临时用户',
 	'editaccount-error-tempuser-email' => '临时用户不能有空白的电子邮件地址字段，请输入一个电子邮件地址。',
+	'editaccount-email-change-requested' => '用户在用户设置里请求了将电子邮件更改为$1。为确认该用户的电子邮件更改请求，请您在下面输入请求的电子邮件地址，并点击“保存并确认”。',
 	'editaccount-log' => '用户帐户日志',
 	'editaccount-log-header' => '本页列出了由Wikia工作人员对用户信息所做出的更改。',
 	'editaccount-log-entry-email' => '用户$2电子邮箱地址已变更',

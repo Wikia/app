@@ -144,7 +144,10 @@ class SwiftStorage {
 		$status = $req->execute();
 
 		if (!$status->isOK()) {
-			self::log(__METHOD__, 'can\'t set ACL');
+			self::log(
+				__METHOD__,
+				sprintf('can\'t set ACL [<%s> returned HTTP %d - %s] %s', $url, $req->getStatus(), json_encode($status->getErrorsArray()), json_encode($req->getResponseHeaders()))
+			);
 		}
 
 		return $container;
@@ -176,7 +179,7 @@ class SwiftStorage {
 		$remotePath = $this->getRemotePath( $remoteFile );
 		$file = ( is_resource( $localFile ) ) ? get_resource_type( $localFile ) : $localFile; 
 		
-		wfDebug( __METHOD__ . ": {$file} -> {$remotePath}\n" );
+		wfDebug( __METHOD__ . ": {$file} -> {$remotePath} [{$this->swiftServer}]\n" );
 
 		$time = microtime( true );
 
@@ -222,7 +225,7 @@ class SwiftStorage {
 		}
 
 		$time = round( ( microtime( true ) - $time ) * 1000 );
-		wfDebug( __METHOD__ . ": {$localFile} uploaded in {$time} ms\n" );
+		wfDebug( __METHOD__ . ": {$localFile} uploaded in {$time} ms [{$this->swiftServer}]\n" );
 
 		return $res;
 	}
@@ -257,7 +260,6 @@ class SwiftStorage {
 	 * @return String $content
 	 */
 	public function read( $remoteFile ) {
-		$content = '';
 		try {
 			$remoteFile = $this->getRemotePath( $remoteFile );
 			$object = $this->container->get_object( $remoteFile );
@@ -315,4 +317,13 @@ class SwiftStorage {
 	public static function log($method, $msg) {
 		\Wikia::log(self::LOG_GROUP . '-WIKIA', false, $method . ': ' . $msg, true /* $force */);
 	}
+
+	/**
+	 * Return Swift server 
+	 * 
+	 * @param - no params
+	 */
+	public function getSwiftServer() {
+		return $this->swiftServer;
+	} 
 }

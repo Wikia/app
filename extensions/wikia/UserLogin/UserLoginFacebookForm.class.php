@@ -28,6 +28,10 @@ class UserLoginFacebookForm extends UserLoginForm {
 
 		// add an email to the request and pass it to the underlying class
 		$request->setVal('email', $resp->getVal('email', false));
+		// put the username and password field in the expected place for validation MAIN-1283
+		$request->setVal('userloginext01', $request->getVal('username'));
+		$request->setVal('userloginext02', $request->getVal('password'));
+
 		if ( $request->getVal( 'type', '' ) == '' ) {
 			$request->setVal( 'type', 'signup' );
 		}
@@ -40,7 +44,7 @@ class UserLoginFacebookForm extends UserLoginForm {
 		global $wgCaptchaTriggers;
 
 		$oldValue = $wgCaptchaTriggers;
-		
+
 		$wgCaptchaTriggers['createaccount'] = false;
 
 		$ret = $this->addNewAccountInternal();

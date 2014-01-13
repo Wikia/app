@@ -1,6 +1,7 @@
-// TODO: move Wikia.Tracker outside
+/* exported AdProviderGpt */
+/* jshint maxparams: false, maxlen: 150 */
 
-var AdProviderGpt = function (tracker, log, window, Geo, slotTweaker, cacheStorage, adLogicHighValueCountry, wikiaGpt) {
+var AdProviderGpt = function (adTracker, log, window, Geo, slotTweaker, cacheStorage, adLogicHighValueCountry, wikiaGpt) {
 	'use strict';
 
 	var logGroup = 'AdProviderGpt',
@@ -22,7 +23,7 @@ var AdProviderGpt = function (tracker, log, window, Geo, slotTweaker, cacheStora
 	slotMap = {
 		'CORP_TOP_LEADERBOARD': {'size': '728x90,1030x130,1030x65,1030x250,970x250,970x90,970x66', 'tile': 2, 'loc': 'top', 'dcopt': 'ist'},
 		'CORP_TOP_RIGHT_BOXAD': {'size': '300x250,300x600,300x1050', 'tile': 1, 'loc': 'top'},
-		'EXIT_STITIAL_BOXAD_1': {'size': '300x250,600x400,800x450,550x480', 'tile': 2, 'loc': "exit"},
+		'EXIT_STITIAL_BOXAD_1': {'size': '300x250,600x400,800x450,550x480', 'tile': 2, 'loc': 'exit'},
 		'HOME_TOP_LEADERBOARD': {'size': '728x90,1030x130,1030x65,1030x250,970x250,970x90,970x66', 'tile': 2, 'loc': 'top', 'dcopt': 'ist'},
 		'HOME_TOP_RIGHT_BOXAD': {'size': '300x250,300x600,300x1050', 'tile': 1, 'loc': 'top'},
 		'HUB_TOP_LEADERBOARD':  {'size': '728x90,1030x130,1030x65,1030x250,970x250,970x90,970x66', 'tile': 2, 'loc': 'top', 'dcopt': 'ist'},
@@ -59,27 +60,8 @@ var AdProviderGpt = function (tracker, log, window, Geo, slotTweaker, cacheStora
 
 	// Private methods
 
-	function formatTrackTime(t, max) {
-		if (isNaN(t)) {
-			log('Error, time tracked is NaN: ' + t, 7, logGroup);
-			return "NaN";
-		}
-
-		if (t < 0) {
-			log('Error, time tracked is a negative number: ' + t, 7, logGroup);
-			return "negative";
-		}
-
-		t /= 1000;
-		if (t > max) {
-			return "more_than_" + max;
-		}
-
-		return t.toFixed(1);
-	}
-
 	function incrementItemInStorage(storageKey) {
-		log('incrementItemInStorage ' + storageKey, 5, logGroup);
+		log('incrementItemInStorage ' + storageKey, 'debug', logGroup);
 
 		var numCallForSlot = cacheStorage.get(storageKey, now) || 0;
 
@@ -89,74 +71,104 @@ var AdProviderGpt = function (tracker, log, window, Geo, slotTweaker, cacheStora
 		return numCallForSlot;
 	}
 
-	function canHandleSlot(slotinfo) {
-		log(['canHandleSlot', slotinfo], 5, logGroup);
-
-		return !!slotMap[slotinfo[0]];
+	function getStorageKey(param, slotname) {
+		return 'dart_' + param + '_' + slotname;
 	}
 
-	// Public methods
-
 	/**
-	 * Flush GPT ads (if not flushed already).
+	 * Flush GPT ads
 	 *
 	 * This function will cause all ads pushed to GPT to be fetched and rendered.
-	 * All other ads will go through the legacy DART API.
+	 * All other ads will auto-flush because the gptFlush variable is set to true.
 	 */
 	function flushGpt() {
-		log('flushGpt', 5, logGroup);
+		log('flushGpt', 'debug', logGroup);
 
 		gptFlushed = true;
 		wikiaGpt.flushAds();
 	}
 
-	function fillInSlot(slot) {
-		log(['fillInSlot', slot], 5, logGroup);
+	/**
+	 * Given we're considering calling DART (right country, right slot), should we?
+	 *
+	 * @param slotname
+	 * @returns {boolean}
+	 */
+	function shouldCallDart(slotname) {
+		log(['shouldCallDart', slotname], 'debug', logGroup);
 
-		if (gptConfig[slot[0]] === 'flushonly') {
+		var noAdLastTime = cacheStorage.get(getStorageKey('noad', slotname), now) || false,
+			numCallForSlot = cacheStorage.get(getStorageKey('calls', slotname), now) || 0;
+
+		// Show INVISIBLE_SKIN when leaderboard was to be shown
+		if (slotname === 'INVISIBLE_SKIN') {
+			if (!leaderboardCalled) {
+				return true;
+			}
+		}
+
+		// Always have an ad for MODAL_INTERSTITIAL
+		if (slotname.match(/^MODAL_INTERSTITIAL/)) {
+			return true;
+		}
+
+		// Check if there was ad last time
+		// If not, check if desired number of DART calls were made
+		if (noAdLastTime && numCallForSlot >= maxCallsToDART) {
+			log('There was no ad for this slot last time and reached max number of calls to DART', 'debug', logGroup);
+			log({slot: slotname, numCalls: numCallForSlot, maxCalls: maxCallsToDART, geo: country}, 'debug', logGroup);
+			return false;
+		}
+
+		if (slotname.search('LEADERBOARD') > -1) {
+			leaderboardCalled = true;
+		}
+		return true;
+	}
+
+	// Public methods
+
+	function canHandleSlot(slotname) {
+		log(['canHandleSlot', slotname], 'debug', logGroup);
+
+		if (!isHighValueCountry || !slotMap[slotname]) {
+			return false;
+		}
+
+		if (gptConfig[slotname] === 'flushonly') {
+			return true;
+		}
+
+		var canHandle = shouldCallDart(slotname);
+
+		if (!canHandle && gptConfig[slotname] === 'flush') {
 			flushGpt();
+		}
+
+		return canHandle;
+	}
+
+	function fillInSlot(slotname, success, hop) {
+		log(['fillInSlot', slotname], 'debug', logGroup);
+
+		var noAdStorageKey = getStorageKey('noad', slotname),
+			numCallForSlotStorageKey = getStorageKey('calls', slotname),
+			slotTracker = adTracker.trackSlot('addriver2', slotname);
+
+		if (gptConfig[slotname] === 'flushonly') {
+			flushGpt();
+			success();
 			return;
 		}
 
-		var slotname = slot[0],
-			slotsize = slotMap[slotname].size,
+		slotTracker.init();
 
-			noAdStorageKey = 'dart_noad_' + slotname,
-			numCallForSlotStorageKey = 'dart_calls_' + slotname,
+		incrementItemInStorage(numCallForSlotStorageKey);
+		cacheStorage.del(noAdStorageKey);
 
-			noAdLastTime = cacheStorage.get(noAdStorageKey, now) || false,
-			numCallForSlot = cacheStorage.get(numCallForSlotStorageKey, now) || 0,
-			dontCallDart = false,
-
-			hopTimer,
-			hopTime,
-
-			// Do this when DART hops or doesn't handle
-			error = function () {
-				log(slotname + ' was not filled by DART', 2, logGroup);
-				cacheStorage.set(noAdStorageKey, true, forgetAdsShownAfterTime, now);
-
-				// don't track hop if not high value country
-				// don't track hop if dart was not called but rather skipped
-				if (isHighValueCountry && !dontCallDart) {
-					// Track hop time
-					hopTime = new Date().getTime() - hopTimer;
-					log('slotTimer2 end for ' + slotname + ' after ' + hopTime + ' ms (hop)', 7, logGroup);
-					tracker.track({
-						eventName: 'liftium.hop2',
-						ga_category: 'hop2/addriver2',
-						ga_action: 'slot ' + slotname,
-						ga_label: formatTrackTime(hopTime, 5),
-						trackingMethod: 'ad'
-					});
-				}
-
-				slot[2] = 'Liftium2';
-				window.adslots2.push(slot);
-			},
-
-			// Do this when filling slot by DART
-			success = function () {
+		wikiaGpt.pushAd(
+			slotname,
+			function () { // Success
 				slotTweaker.removeDefaultHeight(slotname);
 				slotTweaker.removeTopButtonIfNeeded(slotname);
 				slotTweaker.adjustLeaderboardSize(slotname);
@@ -164,69 +176,22 @@ var AdProviderGpt = function (tracker, log, window, Geo, slotTweaker, cacheStora
 				// experimental hack: track LB success time
 				if (slotname.search('LEADERBOARD') > -1) {
 					// Track hop time
-					hopTime = new Date().getTime() - hopTimer;
-					log('slotTimer2 end for ' + slotname + ' after ' + hopTime + ' ms (success)', 7, logGroup);
-					tracker.track({
-						eventName: 'liftium.hop2',
-						ga_category: 'success2/addriver2',
-						ga_action: 'slot ' + slotname,
-						ga_label: formatTrackTime(hopTime, 5),
-						trackingMethod: 'ad'
-					});
+					slotTracker.success();
 				}
-			};
 
-		if (!isHighValueCountry) {
-			error();
-			return;
-		}
+				success();
+			},
+			function () { // Hop
+				log(slotname + ' was not filled by DART', 'info', logGroup);
+				cacheStorage.set(noAdStorageKey, true, forgetAdsShownAfterTime, now);
 
-		// Show INVISIBLE_SKIN when leaderboard was shown
-		if (slotname === 'INVISIBLE_SKIN') {
-			if (!leaderboardCalled) {
-				dontCallDart = true;
+				// Track hop time
+				slotTracker.hop();
+
+				// hop to Liftium
+				hop({method: 'hop'}, 'Liftium');
 			}
-		} else if (!slotname.match(/^MODAL_INTERSTITIAL/)) {
-			// Always have an ad for MODAL_INTERSTITIAL
-			// Otherwise check if there was ad last time
-			// If not, check if desired number of DART calls were made
-			if (noAdLastTime && numCallForSlot >= maxCallsToDART) {
-				log('There was no ad for this slot last time and reached max number of calls to DART', 5, logGroup);
-				log({slot: slotname, numCalls: numCallForSlot, maxCalls: maxCallsToDART, geo: country}, 6, logGroup);
-
-				dontCallDart = true;
-			}
-		}
-
-		if (dontCallDart) {
-			if (gptConfig[slotname] === 'flush') {
-				flushGpt();
-			}
-			error();
-			return;
-		}
-
-		if (slotname.search('LEADERBOARD') > -1) {
-			leaderboardCalled = true;
-		}
-
-		hopTimer = new Date().getTime();
-		log('hopTimer start for ' + slotname, 7, logGroup);
-
-		incrementItemInStorage(numCallForSlotStorageKey);
-		cacheStorage.del(noAdStorageKey);
-
-		tracker.track({
-			eventName: 'liftium.slot2',
-			ga_category: 'slot2/' + slotsize.split(',')[0],
-			ga_action: slotname,
-			ga_label: 'addriver2',
-			trackingMethod: 'ad'
-		});
-
-		log('Use the new GPT library for ' + slotname, 5, logGroup);
-
-		wikiaGpt.pushAd(slotname, success, error);
+		);
 
 		if (gptConfig[slotname] === 'flush' || gptFlushed) {
 			flushGpt();

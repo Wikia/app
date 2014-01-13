@@ -134,6 +134,33 @@ class VideoInfoHelper extends WikiaModel {
 	}
 
 	/**
+	 * get total views of a video from database using title
+	 * @return int $viewCount
+	 */
+	public static function getTotalViewsFromTitle( $title ) {
+		wfProfileIn( __METHOD__ );
+
+		$db = wfGetDB( DB_SLAVE );
+
+		$result = $db->select(
+			array( 'video_info' ),
+			array( 'views_total' ),
+			array( 'video_title' => $title ),
+			__METHOD__
+		);
+
+		$viewCount = 0;
+		$row = $db->fetchObject( $result );
+		if ( $row ) {
+			$viewCount = $row->views_total;
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $viewCount;
+	}
+
+	/**
 	 * check if video is removed
 	 * @param Title|string $title
 	 * @return boolean
@@ -236,21 +263,29 @@ class VideoInfoHelper extends WikiaModel {
 
 	/**
 	 * Fetch the list of local (e.g. non-premium) videos from this wiki
-	 *
-	 * @return array
+	 * @return array $titles
 	 */
 	public static function getLocalVideoTitles() {
-		$sql = "SELECT video_title FROM video_info WHERE premium = 0";
-		$dbh = wfGetDB(DB_SLAVE);
+		wfProfileIn( __METHOD__ );
 
-		$res = $dbh->query($sql);
+		$db = wfGetDB( DB_SLAVE );
+
+		$res = $db->select(
+			array( 'video_info' ),
+			array( 'video_title' ),
+			array( 'premium' => 0 ),
+			__METHOD__
+		);
 
 		$titles = array();
-		while ($row = $dbh->fetchObject($res)) {
+		while ( $row = $db->fetchObject( $res ) ) {
 			$titles[] = $row->video_title;
 		}
-		$dbh->freeResult($res);
+		$db->freeResult( $res );
+
+		wfProfileOut( __METHOD__ );
 
 		return $titles;
 	}
+
 }

@@ -14,11 +14,13 @@ class Hooks {
 	/* @String repoName - repo name */
 	static private $repoName = 'local';
 
-	/*
+	/**
 	 * init config for FSFileBackend class
+	 *
+	 * @return \FSFileBackend
 	 */
 	static private function initLocalFS( ) {
-		global $wgUploadDirectory, $wgUploadDirectoryNFS, $wgDeletedDirectory;
+		global $wgUploadDirectory, $wgUploadDirectoryNFS;
 		
 		$repoName = self::$repoName;
 		$directory = ( !empty( $wgUploadDirectoryNFS ) ) ? $wgUploadDirectoryNFS : $wgUploadDirectory;
@@ -52,7 +54,7 @@ class Hooks {
 	}
 	
 	/* save image into local repo */
-	public static function doStoreInternal( $params, $status ) {
+	public static function doStoreInternal( $params, \Status $status ) {
 		global $wgEnableSwithSyncToLocalFS, $wgDevelEnvironment;
 		
 		wfProfileIn( __METHOD__ );
@@ -65,6 +67,13 @@ class Hooks {
 				
 				# ... and set correct destination path
 				$params['dst'] = str_replace( "swift-backend", sprintf("%s-backend", self::$repoName), $params['dst'] );
+
+				# don't sync dynamically generated timeline files (BAC-1081)
+				if (strpos($params['dst'], '/local-public/timeline/') !== false) {
+					wfDebug(__METHOD__ . ": syncing {$params['dst']} to NFS skipped!\n");
+					wfProfileOut( __METHOD__ );
+					return true;
+				}
 			
 				# init FSFileBackend object
 				$fsBackend = self::initLocalFS();
@@ -95,7 +104,7 @@ class Hooks {
 		return true;
 	}
 	
-	public static function doCopyInternal( $params, $status ) {
+	public static function doCopyInternal( $params, \Status $status ) {
 		global $wgEnableSwithSyncToLocalFS, $wgDevelEnvironment;
 		
 		wfProfileIn( __METHOD__ );
@@ -148,7 +157,7 @@ class Hooks {
 		return true;
 	}
 	
-	public static function doDeleteInternal( $params, $status ) {
+	public static function doDeleteInternal( $params, \Status $status ) {
 		global $wgEnableSwithSyncToLocalFS, $wgDevelEnvironment;
 		
 		wfProfileIn( __METHOD__ );

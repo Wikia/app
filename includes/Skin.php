@@ -57,6 +57,9 @@ abstract class Skin extends ContextSource {
 			}
 			$skinDir->close();
 			$skinsInitialised = true;
+
+			ksort($wgValidSkinNames); // Wikia change - BAC-1154
+
 			wfProfileOut( __METHOD__ . '-init' );
 		}
 		return $wgValidSkinNames;

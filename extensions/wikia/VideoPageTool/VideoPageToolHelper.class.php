@@ -118,7 +118,6 @@ class VideoPageToolHelper extends WikiaModel {
 			}
 
 			// get thumbnail
-			// TODO: we no longer need the thumbnail html, only the url
 			$thumb = $file->transform( array( 'width' => self::THUMBNAIL_WIDTH, 'height' => self::THUMBNAIL_HEIGHT ) );
 			$videoThumb = $thumb->toHtml( $thumbOptions );
 			$thumbUrl = $thumb->getUrl();

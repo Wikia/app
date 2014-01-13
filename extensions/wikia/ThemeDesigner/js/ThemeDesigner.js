@@ -1,3 +1,5 @@
+(function( window ) {
+'use strict';
 var ThemeDesigner = {
 	slideByDefaultWidth: 760,
 	slideByItems: 5,
@@ -6,12 +8,10 @@ var ThemeDesigner = {
 	basePageOpacity: 70,
 	maxPageOpacity: 100,
 	minSliderValue: 0,
-	splitOption: null,
+	splitOption: true,
 	$slider: null,
 
 	init: function() {
-		'use strict';
-
 		var that = this;
 		// theme settings
 		this.settings = window.themeSettings;
@@ -32,7 +32,9 @@ var ThemeDesigner = {
 		// min width for dynamic is equal to our breakpoint
 		// TODO: When refactoring ThemeDesigner into AMD module, use wikia.fluidlayout.getBreakpointContent
 		this.minWidthForDynamicBackground = 1030;
-		this.minWidthNotSplitBackground = 2100;
+		// TODO: when using wikia.fluidlayout for minWidthForDynamicBackground, we need to add following variable to
+		// wikia.fluidlayout and reference it here too.
+		this.minWidthNotSplitBackground = 2000;
 
 		this.backgroundType = 0;
 
@@ -74,16 +76,16 @@ var ThemeDesigner = {
 	},
 
 	standarizeSettingValues: function() {
-		'use strict';
-
 		ThemeDesigner.settings['background-dynamic'] = ThemeDesigner.settings['background-dynamic'].toString();
 		ThemeDesigner.settings['background-fixed'] = ThemeDesigner.settings['background-fixed'].toString();
 		ThemeDesigner.settings['background-tiled'] = ThemeDesigner.settings['background-tiled'].toString();
+
+		if ( ThemeDesigner.settings['background-image'] === false ) {
+			ThemeDesigner.settings['background-image'] = '';
+		}
 	},
 
 	initTooltips: function() {
-		'use strict';
-
 		var tooltipTimeout = 0;
 
 		function setTooltipTimeout(elem) {
@@ -112,8 +114,6 @@ var ThemeDesigner = {
 	},
 
 	themeTabInit: function() {
-		'use strict';
-
 		var slideBy = ThemeDesigner.slideByDefaultWidth,
 			slideMax = -Math.floor($('#ThemeTab').find('.slider').find('ul').find('li').length /
 				ThemeDesigner.slideByItems) * ThemeDesigner.slideByDefaultWidth;
@@ -176,8 +176,6 @@ var ThemeDesigner = {
 	},
 
 	customizeTabInit: function() {
-		'use strict';
-
 		$('#CustomizeTab').find('li').find('img[id*="color"]').click(function(event) {
 			ThemeDesigner.showPicker(event, 'color');
 		});
@@ -214,6 +212,8 @@ var ThemeDesigner = {
 				ThemeDesigner.settings['background-image-width'],
 				ThemeDesigner.settings['background-dynamic'] === 'true'
 			);
+
+			ThemeDesigner.setSplitOption();
 		}
 
 		// submit handler for uploading custom background image
@@ -233,8 +233,6 @@ var ThemeDesigner = {
 	},
 
 	wordmarkTabInit: function() {
-		'use strict';
-
 		// handle font family and font size menu change
 		$('#wordmark-font').change(function() {
 			ThemeDesigner.set('wordmark-font', $(this).val());
@@ -293,8 +291,6 @@ var ThemeDesigner = {
 	},
 
 	wordmarkShield: function() {
-		'use strict';
-
 		var shield = $('#wordmark-shield'),
 			parent;
 
@@ -313,8 +309,6 @@ var ThemeDesigner = {
 	},
 
 	toolBarInit: function() {
-		'use strict';
-
 		$('#Toolbar .history')
 			.click(function() {
 				$(this).find('ul').show();
@@ -326,8 +320,6 @@ var ThemeDesigner = {
 	},
 
 	showPicker: function(event, type) {
-		'use strict';
-
 		$().log('running showPicker');
 		ThemeDesigner.hidePicker();
 		event.stopPropagation();
@@ -452,8 +444,6 @@ var ThemeDesigner = {
 	},
 
 	hidePicker: function() {
-		'use strict';
-
 		$('body').unbind('.picker');
 		$('#ColorNameForm').unbind();
 		this.themeDesignerPicker
@@ -465,8 +455,6 @@ var ThemeDesigner = {
 	},
 
 	checkBgIsDynamic: function(width, value) {
-		'use strict';
-
 		var noSplitOption = $('#CustomizeTab').find('.not-split-option');
 
 		// TODO: Remove IF statement after fluid layout global release
@@ -474,23 +462,23 @@ var ThemeDesigner = {
 			if ( width < ThemeDesigner.minWidthForDynamicBackground ) {
 				noSplitOption.css('display', 'none');
 				ThemeDesigner.backgroundType = 1;
+				ThemeDesigner.splitOption = false;
 				ThemeDesigner.changeDynamicBg(false);
 			} else if ( width < ThemeDesigner.minWidthNotSplitBackground ) {
 				noSplitOption.css('display', 'none');
 				ThemeDesigner.backgroundType = 2;
+				ThemeDesigner.splitOption = true;
 				ThemeDesigner.checkTiledBg(value);
-				ThemeDesigner.splitOption = value;
 			} else {
 				noSplitOption.css('display', 'inline');
 				ThemeDesigner.backgroundType = 3;
 				ThemeDesigner.checkTiledBg(value);
+				ThemeDesigner.splitOption = value;
 			}
 		}
 	},
 
 	checkTiledBg: function(value) {
-		'use strict';
-
 		if (ThemeDesigner.backgroundType > 1) {
 			if ($('#tile-background').attr('checked') ) {
 				ThemeDesigner.changeDynamicBg(false);
@@ -503,8 +491,6 @@ var ThemeDesigner = {
 	},
 
 	changeDynamicBg: function(value) {
-		'use strict';
-
 		var val = !!value,
 			el = $('#not-split-background');
 
@@ -514,9 +500,15 @@ var ThemeDesigner = {
 		}
 	},
 
-	loadImage: function(src) {
-		'use strict';
+	setSplitOption: function() {
+		if (ThemeDesigner.backgroundType === 1) {
+			ThemeDesigner.splitOption = false;
+		} else if (ThemeDesigner.backgroundType === 3) {
+			ThemeDesigner.splitOption = ThemeDesigner.settings['background-dynamic'] === 'true';
+		}
+	},
 
+	loadImage: function(src) {
 		var img = new Image();
 
 		img.onload = function() {
@@ -531,8 +523,6 @@ var ThemeDesigner = {
 	},
 
 	checkBgImageIsSet: function() {
-		'use strict';
-
 		if (ThemeDesigner.settings['background-image'] === '') {
 			ThemeDesigner.set('background-image-width', 0);
 			ThemeDesigner.set('background-image-height', 0);
@@ -543,8 +533,6 @@ var ThemeDesigner = {
 	},
 
 	middleColorSelect: function(enable) {
-		'use strict';
-
 		if (enable) {
 			$('#CustomizeTab').find('.wrap-middle-color').css({opacity: 1});
 			$('#CustomizeTab').find('.middle-color-mask').hide();
@@ -558,8 +546,6 @@ var ThemeDesigner = {
 	 * @author: Inez Korczynski
 	 */
 	set: function(setting, newValue) {
-		'use strict';
-
 		$().log('Setting: "' + setting + '" to: "' + newValue + '"');
 
 		ThemeDesigner.settings[setting] = newValue;
@@ -624,8 +610,6 @@ var ThemeDesigner = {
 	 */
 	wordmarkUploadCallback : {
 		onComplete: function(response) {
-			'use strict';
-
 			var resp = JSON.parse(response);
 
 			if(resp.errors && resp.errors.length > 0) {
@@ -647,8 +631,6 @@ var ThemeDesigner = {
 	 * @author: Inez Korczynski
 	 */
 	wordmarkUpload: function() {
-		'use strict';
-
 		return $('#WordMarkUploadFile').val() !== '';
 
 	},
@@ -658,8 +640,6 @@ var ThemeDesigner = {
 	 */
 	faviconUploadCallback : {
 		onComplete: function(response) {
-			'use strict';
-
 			var resp = JSON.parse(response);
 
 			if(resp.errors && resp.errors.length > 0) {
@@ -674,8 +654,7 @@ var ThemeDesigner = {
 	},
 
 	faviconUpload: function() {
-		'use strict';
-		// do validation
+			// do validation
 	},
 
 	/**
@@ -685,8 +664,6 @@ var ThemeDesigner = {
 	 */
 	backgroundImageUploadCallback : {
 		onComplete: function(response) {
-			'use strict';
-
 			var resp = JSON.parse(response);
 			$().log(resp);
 			if(resp.errors && resp.errors.length > 0) {
@@ -718,16 +695,12 @@ var ThemeDesigner = {
 	 * @author: Inez Korczynski
 	 */
 	backgroundImageUpload: function() {
-		'use strict';
-
 		return $('#BackgroundImageForm').find('input[type="file"]').val() !== '';
 
 	},
 
 
 	revertToPreviousTheme: function(event) {
-		'use strict';
-
 		event.preventDefault();
 		event.stopPropagation();
 		ThemeDesigner.settings = ThemeDesigner.history[$(this).index()].settings;
@@ -738,23 +711,17 @@ var ThemeDesigner = {
 	},
 
 	cancelClick: function(event) {
-		'use strict';
-
 		event.preventDefault();
 		document.location = window.returnTo;
 	},
 
 	saveClick: function(event) {
-		'use strict';
-
 		event.preventDefault();
 		$(event.target).attr('disabled', true);
 		ThemeDesigner.save();
 	},
 
 	save: function() {
-		'use strict';
-
 		$().log(ThemeDesigner.settings, 'ThemeDesigner');
 
 		// send current settings to backend
@@ -778,8 +745,6 @@ var ThemeDesigner = {
 	},
 
 	navigationClick: function(event) {
-		'use strict';
-
 		event.preventDefault();
 
 		var clickedLink = $(this),
@@ -797,8 +762,6 @@ var ThemeDesigner = {
 	},
 
 	resizeIframe: function() {
-		'use strict';
-
 		this.previewFrame.css('height', $(window).height() - $('#Designer').height());
 	},
 
@@ -807,8 +770,6 @@ var ThemeDesigner = {
 	themes: false,
 
 	applySettings: function(reloadCSS, updateSkinPreview) {
-		'use strict';
-
 		$().log('applySettings');
 
 		var file, theme, settingsToLoad, wordmark;
@@ -921,8 +882,6 @@ var ThemeDesigner = {
 	 * Purges the page from which user has triggered Theme Designer
 	 */
 	purgeReturnToPage: function(callback) {
-		'use strict';
-
 		if (!window.returnTo) {
 			return;
 		}
@@ -944,8 +903,6 @@ var ThemeDesigner = {
 	 * Copied here from WikiaPhotoGallery.js
 	 */
 	rgb2hex: function(rgb) {
-		'use strict';
-
 		function hex(x) {
 			return ('0' + parseInt(x, 10).toString(16)).slice(-2);
 		}
@@ -961,8 +918,6 @@ var ThemeDesigner = {
 	},
 
 	initSwatches: function() {
-		'use strict';
-
 		this.swatches = {};
 
 		// init color-body swatches
@@ -1021,7 +976,7 @@ var ThemeDesigner = {
 		this.swatches['color-body-middle'] = this.swatches['color-body'];
 
 		// initialize color-button swatches
-		this.swatches['color-button'] = [
+		this.swatches['color-buttons'] = [
 			'fec356',
 			'6699ff',
 			'6c93b1',
@@ -1107,8 +1062,6 @@ var ThemeDesigner = {
 	 * @desc Sets ThemeDesigner page-opacity option to ThemeDesigner.maxPageOpacity and jQuery UI slider value to 0
 	 */
 	resetPageOpacity: function() {
-		'use strict';
-
 		var value = ThemeDesigner.maxPageOpacity;
 		ThemeDesigner.set( 'page-opacity', value );
 
@@ -1119,9 +1072,10 @@ var ThemeDesigner = {
 	}
 
 };
+	window.ThemeDesigner = ThemeDesigner;
+})( window );
 
 $(function() {
 	'use strict';
-
-	ThemeDesigner.init();
+	window.ThemeDesigner.init();
 });
