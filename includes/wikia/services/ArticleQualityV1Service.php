@@ -187,10 +187,6 @@ class ArticleQualityV1Service extends Service {
 		$quality += 10 * sqrt( min( $inputs[ 'sections' ], 6 ) );
 		$quality += $inputs[ 'images' ] ? 10 * sqrt( min( $inputs[ 'images' ], 10 ) ) : -40;
 
-		if ( $quality < 0 ) {
-			$quality = 0;
-		}
-
 		return $quality;
 	}
 
@@ -215,11 +211,11 @@ class ArticleQualityV1Service extends Service {
 	 */
 	protected function searchPercentile( $value ) {
 		$max = count( $this->percentiles ) - 1;
-		$min = 0;
+		$firstElement = $min = 0;
 
 		while ( 1 ) {
 			if ( $max < $min ) {
-				return null;
+				return $this->percentiles[ $firstElement ];
 			}
 
 			//calculate middle point
