@@ -823,6 +823,23 @@ $messages['es'] = array(
 	'scavengerhunt-facebook-description' => 'Texto compartido de Facebook',
 );
 
+/** Persian (فارسی)
+ * @author Reza1615
+ */
+$messages['fa'] = array(
+	'scavengerhunt-list-header-actions' => 'اقدامات',
+	'scavengerhunt-list-enabled' => 'فعال',
+	'scavengerhunt-list-disabled' => 'غیرفعال',
+	'scavengerhunt-list-edit' => 'ویرایش',
+	'scavengerhunt-label-general' => 'عمومی',
+	'scavengerhunt-label-name' => 'نام:',
+	'scavengerhunt-button-save' => 'ذخیره',
+	'scavengerhunt-button-delete' => 'حذف',
+	'scavengerhunt-quit-game-button-quit' => 'تَرک',
+	'scavengerhunt-quit-game-button-cancel' => 'لغو',
+	'scavengerhunt-label-clue-size' => 'اندازهٔ قلم',
+);
+
 /** Finnish (suomi)
  * @author Centerlink
  * @author Tofu II

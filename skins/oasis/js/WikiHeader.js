@@ -3,6 +3,7 @@ var WikiHeader = {
 	isDisplayed: false,
 	activeL1: null,
 	isTouchScreen: $().isTouchscreen(),
+	editformSubmitAllowed: false,
 
 	settings: {
 		mouseoverDelay: this.isTouchScreen ? 0 : 200,
@@ -41,8 +42,20 @@ var WikiHeader = {
 			},this));
 
 		// BugID: 64318 - hiding publish button on nav edit
-		if ( (window.wgIsWikiNavMessage) && (wgAction == "edit") ) {
-			$('#wpSave').hide();
+		if ( (window.wgIsWikiNavMessage) && (window.wgAction === "edit") ) {
+			$( '#wpSave' ).hide();
+			$( '#editform' ).submit( function( ev ) {
+				if ( !WikiHeader.editformSubmitAllowed ) {
+					ev.stopImmediatePropagation();
+					return false;
+				}
+			});
+			$( '#wpSummary' ).bind( 'keypress', function ( ev ) {
+				if ( ev.keyCode === 13 /* enter */ && !WikiHeader.editformSubmitAllowed ) {
+					// prevent tracking
+					ev.stopImmediatePropagation();
+				}
+			} );
 		}
 
 		//Accessibility Events
@@ -366,6 +379,8 @@ jQuery(function($) {
 							+ '</div>';
 
 					$('.modalContent .ArticlePreview').prepend(notifications);
+				} else {
+					WikiHeader.editformSubmitAllowed = true;
 				}
 				previewNode.find('nav > ul a').click(function() {
 					if ($(this).attr('href') == '#') {
@@ -378,6 +393,11 @@ jQuery(function($) {
 				});
 
 			});
+		});
+
+		// disable submit on editform when preview is closed
+		$(window).bind('EditPagePreviewClosed', function() {
+			WikiHeader.editformSubmitAllowed = false;
 		});
 
 		// modify size of preview modal

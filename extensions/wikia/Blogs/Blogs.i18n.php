@@ -441,7 +441,7 @@ $messages['as'] = array(
 	'blog-refresh-label' => 'ৰিফ্ৰেচ',
 	'blog-userblog' => "$1'ৰ ব্লগ",
 	'blog-fromsitename' => ' $1ৰ পৰা',
-	'blogs-reportproblem' => 'সমস্যা জনাওঁক',
+	'blogs-reportproblem' => 'সমস্যা জনাওক',
 );
 
 /** Azerbaijani (azərbaycanca)
@@ -902,8 +902,10 @@ $messages['ca'] = array(
  * @author Умар
  */
 $messages['ce'] = array(
+	'create-blog-save' => 'Ӏалашйе агӀо',
 	'create-blog-preview' => 'Хьалха муха ю хьажар',
 	'create-blog-listing-preview' => 'Хьалха муха ю хьажа',
+	'blog-comment-hide' => 'къайлаяккха',
 	'blog-comment-history' => 'истори',
 	'blog-refresh-label' => 'Карлаяккха',
 );
@@ -1514,6 +1516,7 @@ $messages['eu'] = array(
  * @author BlueDevil
  * @author Ebraminio
  * @author Huji
+ * @author Reza1615
  * @author Taranet
  * @author پاناروما
  */
@@ -1587,6 +1590,7 @@ $messages['fa'] = array(
 	'blog-comment-edit' => 'ویرایش',
 	'blog-comment-error' => 'امکان ذخیره کردن نظر وجود ندارد',
 	'blog-comment-cannot-add' => 'اضافه کردن نظر در وبلاگ امکان‌پذیر نیست',
+	'blog-avatar-preferences-title' => 'چهره',
 	'blog-page-rate' => 'به این مقاله رأی مثبت دهید:',
 	'blog-create-post-label' => 'ایجاد پست جدید',
 	'blog-create-label' => 'ایجاد پست جدید',
@@ -1614,6 +1618,7 @@ $messages['fa'] = array(
 /** Finnish (suomi)
  * @author Centerlink
  * @author Crt
+ * @author Elseweyr
  * @author Ilkea
  * @author Lukkipoika
  * @author Nedergard
@@ -1621,28 +1626,29 @@ $messages['fa'] = array(
  * @author Ville96
  */
 $messages['fi'] = array(
+	'blog-file-page' => "Artikkeli <a href='$1'>$2</a> käyttäjän <a href='$3'>$4</a> blogilla",
 	'createblogpage' => 'Luo blogi',
-	'createbloglistingpage' => 'Luo blogilista',
+	'createbloglistingpage' => 'Luo blogilistaus',
 	'create-blog-spam' => 'Vaikuttaa roskalta',
-	'create-blog-cant-edit' => 'Muokkausta ei suoritetuttu',
+	'create-blog-cant-edit' => 'Muokkausta ei voitu suorittaa',
 	'create-blog-post-category' => 'Blogiartikkelit',
-	'create-blog-post-category-body' => 'Tämä on automaattisesti tehty lista blogiartikkeleista',
-	'create-blog-post-category-log' => 'Tehty luokaksi blogiartikkeleille',
+	'create-blog-post-category-body' => 'Tämä on automaattisesti tehty lista blogiartikkeleita',
+	'create-blog-post-category-log' => 'Luotiin luokka blogiartikkeleita varten',
 	'create-blog-post-recent-listing' => 'Tuoreimmat artikkelit',
 	'create-blog-post-recent-listing-title' => 'Tuoreimmat artikkelit',
-	'create-blog-post-recent-listing-log' => 'Luotu artikkeli viimeisimmistä blogi-lähetyksistä',
+	'create-blog-post-recent-listing-log' => 'Luotiin artikkeli viimeisimmillä blogiartikkeleilla',
 	'create-blog-post-title' => 'Luo uusi blogiartikkeli',
 	'create-blog-post-title-edit' => 'Muokkaa blogikirjoitusta',
 	'create-blog-form-title' => 'Mikä on blogiartikkeli?',
-	'create-blog-form-post-text' => 'Blogiteksti',
-	'create-blog-form-info' => 'Blogiartikkelit ovat hyvä tapa jakaa uutisia, mielipiteitä ja muita luovia töitä yhteisölle.',
+	'create-blog-form-post-text' => 'Blogin teksti',
+	'create-blog-form-info' => 'Blogiartikkelit ovat loistava tapa jakaa uutisia, mielipiteitä ja muita luovia töitä yhteisön kanssa.',
 	'create-blog-form-post-title' => 'Blogiartikkelin otsikko',
 	'create-blog-empty-title-error' => 'Otsikko vaaditaan',
-	'create-blog-empty-post-error' => 'Blogiartikkeli on viallinen',
-	'create-blog-empty-article-log' => 'Artikkeli on tehty blogiartikkeleille',
+	'create-blog-empty-post-error' => 'Blogiartikkelin runko on tyhjä',
+	'create-blog-empty-article-log' => 'Luotiin blogien listausartikkeli',
 	'create-blog-invalid-title-error' => 'Virheellinen otsikko',
 	'create-listing-confirm-info' => 'Kopioi ja liitä seuraava koodi:',
-	'create-blog-no-login' => 'Et ole kirjautunut sisään.',
+	'create-blog-no-login' => 'Et ole kirjautunut sisään',
 	'create-blog-login-required' => 'Sinun täytyy <span class="plainlinks">[{{fullurl:Special:Signup|$1}} kirjautua sisän]</span> kirjoittaaksesi blogiartikkeleita tai listataksesi niitä.',
 	'create-blog-categories-title' => 'Lisää tämä blogiartikkeli seuraaviin luokkiin (napsauta valitaksesi)',
 	'create-blog-categories-textinput' => 'Lisää uusi luokka',
@@ -1650,17 +1656,17 @@ $messages['fi'] = array(
 	'create-blog-save' => 'Tallenna sivu',
 	'create-blog-preview' => 'Esikatsele',
 	'create-blog-updated' => 'Blogiartikkeli pävitetty tai lisätty.',
-	'create-blog-permission-denied' => 'Virhe tallentaessa blogisivua: Oikeus peruttu',
-	'create-blog-article-already-exists' => 'Blogiartikkelin nimi on varattu.Ole hyvä ja vaihda nimi',
-	'create-blog-listing-title' => 'Luo uusi blogilista',
-	'create-blog-listing-form-title' => 'Mikä on blogilista?',
-	'create-blog-listing-form-info' => 'Blogilistoja käytetään listaamaan eri kirjoittajien artikkeleita samalle sivulle.
-Luo blogilistalle sivuja luokkiin, kuten "Barack Obama", "Fanifiktiot" tai voit jopa yhdistää useita luokkia.',
-	'create-blog-listing-page-title' => 'Blogilistan otsikko',
+	'create-blog-permission-denied' => 'Virhe blogisivua tallennettaessa: Ei oikeutta',
+	'create-blog-article-already-exists' => 'Blogiartikkelin nimi on jo olemassa. Ole hyvä ja valitse toinen nimi',
+	'create-blog-listing-title' => 'Luo uusi blogien listaussivu',
+	'create-blog-listing-form-title' => 'Mikä on blogien listaussivu?',
+	'create-blog-listing-form-info' => 'Blogilistauksia käytetään listaamaan eri kirjoittajien artikkeleita samalle sivulle.
+Luo blogilistauksia luokkien mukaan, kuten "Barack Obama" tai "Fanifiktiot". Voit myös yhdistää useita luokkia.',
+	'create-blog-listing-page-title' => 'Blogilistaussivun otsikko',
 	'create-blog-listing-preview' => 'Esikatsele',
-	'create-blog-listing-authors' => 'Hae tämän kirjoittajan blogiartikkelit (pilkuilla eroteltuina)',
+	'create-blog-listing-authors' => 'Hae näiden kirjoittajien blogiartikkelit (pilkuilla eroteltuna)',
 	'create-blog-listing-blog-post-categories-title' => 'Hae blogiartikkelit näistä luokista',
-	'create-blog-listing-page-categories-title' => 'Lisää tämä blogi listalle näihin luokkiin',
+	'create-blog-listing-page-categories-title' => 'Lisää tämä blogilistaussivu näihin luokkiin',
 	'create-blog-listing-matches' => 'Täsmää',
 	'create-blog-listing-matches-calculate' => 'Laske',
 	'create-blog-listing-matches-recalculate' => 'Laske uudelleen',
@@ -1671,7 +1677,7 @@ Luo blogilistalle sivuja luokkiin, kuten "Barack Obama", "Fanifiktiot" tai voit 
 	'create-blog-listing-sortby-comments' => 'Kommenttien lukumäärä',
 	'create-blog-listing-output-as-box' => 'Luo koodi kopioitavaksi ja liitettäväksi',
 	'create-blog-listing-output-as-page' => 'Luo uusi lista',
-	'create-blog-listing-tag-format-not-recognized-on-page' => 'Avainsanaa ei tunnisteta blogilistalla',
+	'create-blog-listing-tag-format-not-recognized-on-page' => 'Blogilistaustagia ei tunnistettu sivulla',
 	'blog-header' => 'Blogiartikkelit, jotka ovat luokassa"$1"',
 	'blog-subheader' => 'Seuraavat $1 blogiartikkelit ovat tässä luokassa.',
 	'blog-subheader-all' => 'Seuraavat $1 ovat tässä luokassa, poissa $2 koko tuloksista.',
@@ -1684,13 +1690,13 @@ Luo blogilistalle sivuja luokkiin, kuten "Barack Obama", "Fanifiktiot" tai voit 
 	'blog-newerposts' => 'Uudemmat artikkelit',
 	'blog-nbrcomments' => '{{PLURAL:$1|Yksi kommentti|$1 kommenttia}}',
 	'blog-nopostfound' => 'Artikkeleita ei löytynyt.',
-	'blog-writeone' => 'Kirjoita yksi!',
-	'blog-empty-user-blog' => 'Tämä käyttäjä ei ole kirjoittanut yhtäään blogiartikkelia!',
+	'blog-writeone' => 'Kirjoita blogi!',
+	'blog-empty-user-blog' => 'Tämä käyttäjä ei ole kirjoittanut yhtään blogiartikkelia!',
 	'blog-added' => 'lisätty',
 	'blog-edited' => 'muokattu',
 	'blog-page' => 'Blogi',
 	'blog-zero-comments' => 'Ei kommentteja vielä!',
-	'blog-comment-post' => 'Lähetä kommentti',
+	'blog-comment-post' => 'Kommentoi',
 	'blog-comments' => 'Kommentit',
 	'blog-rc-comments' => 'Blogin kommentit',
 	'blog-comments-new' => 'Blogin uudet kommentit',
@@ -1707,7 +1713,7 @@ Luo blogilistalle sivuja luokkiin, kuten "Barack Obama", "Fanifiktiot" tai voit 
 	'blog-comment-unhide' => 'näytä',
 	'blog-comment-history' => 'historiasta',
 	'blog-comment-edit' => 'muokkaa',
-	'blog-comment-error' => 'Kommenttia ei tallennettu',
+	'blog-comment-error' => 'Kommenttia ei voitu tallentaa',
 	'blog-comment-cannot-add' => 'Et voi lähettää kommentteja tähän blogiin.',
 	'blug-cut-sign' => '…',
 	'blog-avatar-preferences-title' => 'Avatar',
@@ -1715,27 +1721,27 @@ Luo blogilistalle sivuja luokkiin, kuten "Barack Obama", "Fanifiktiot" tai voit 
 	'blog-create-post-label' => 'Luo blogiartikkeli',
 	'blog-create-label' => 'Luo blogiartikkeli',
 	'blog-create-next-label' => 'Luo uusi blogiartikkeli',
-	'blog-create-listing-label' => 'Luo blogilista',
+	'blog-create-listing-label' => 'Luo blogilistaus',
 	'blog-refresh-label' => 'Päivitä',
 	'blog-widgets-label' => 'Widgetin hallinta',
 	'blog-listing-zero-other' => 'Tämä käyttäjä ei ole vielä kirjoittanut yhtään blogimerkintää!',
 	'blog-listing-created' => 'Blogi-luettelointisivu luotu',
 	'blog-userblog' => 'Käyttäjän $1 blogi',
-	'blog-fromsitename' => 'Tuotu $1',
+	'blog-fromsitename' => 'Tuotu sivulta $1',
 	'blogs-reportproblem' => 'Ilmoita ongelmasta',
 	'blogs-comment-hidden' => 'Kommentti piilotettu.',
-	'right-blog-comments-toggle' => 'Kytkeä blogikirjoitusten kommentteja päälle/pois',
-	'right-blog-comments-delete' => 'Poistaa kommentteja blogiartikkeleista',
-	'right-blog-articles-edit' => 'Muokata blogiartikkeleita',
-	'right-blog-articles-move' => 'Siirtää blogiartikkeleita',
-	'blogs-recent-url-text' => 'Uusimmat blogimerkinnät',
-	'blog-desc' => 'Blogi-artikkelit',
-	'blog-movepage-badtitle' => 'Virheellinen blogi-postitusotsikko',
+	'right-blog-comments-toggle' => 'Kytke blogikirjoitusten kommentointi päälle/pois päältä',
+	'right-blog-comments-delete' => 'Poista kommentteja blogiartikkeleista',
+	'right-blog-articles-edit' => 'Muokkaa blogiartikkeleita',
+	'right-blog-articles-move' => 'Siirrä blogiartikkeleita',
+	'blogs-recent-url-text' => 'Tuoreimmat blogiartikkelit',
+	'blog-desc' => 'Blogiartikkelit',
+	'blog-movepage-badtitle' => 'Virheellinen blogiartikkelin otsikko',
 	'blog-comment-sending' => 'Lähetetään...',
 	'blog-by' => '$1, kirjoittanut $2',
 	'blogs-searchprofile' => 'Blogit',
 	'blogs-searchprofile-tooltip' => 'Hae blogi-artikkeleista ja blogi-listauksista',
-	'user-blog-url-link' => 'Käyttäjän blogi: $1',
+	'user-blog-url-link' => 'Käyttäjän blogi:$1',
 );
 
 /** Faroese (føroyskt)
@@ -2902,6 +2908,7 @@ $messages['kn'] = array(
  * @author Cwt96
  * @author Daisy2002
  * @author Hym411
+ * @author Leehoy
  * @author 아라
  * @author 한글화담당
  */
@@ -2909,26 +2916,66 @@ $messages['ko'] = array(
 	'createblogpage' => '블로그 만들기',
 	'createbloglistingpage' => '블로그 목록 만들기',
 	'create-blog-spam' => '스팸으로 보입니다',
+	'create-blog-cant-edit' => '수정할 수 없습니다.',
 	'create-blog-post-category' => '블로그 게시물',
+	'create-blog-post-category-body' => '자동으로 생성된 블로그 글 목록',
 	'create-blog-post-recent-listing' => '최근 게시물',
 	'create-blog-post-recent-listing-title' => '최근 게시물',
+	'create-blog-post-title' => '새로운 게시물 작성',
 	'create-blog-post-title-edit' => '블로그 게시물 편집',
 	'create-blog-form-title' => '블로그 게시물이 무엇입니까?',
 	'create-blog-form-post-title' => '블로그 게시물 제목',
+	'create-blog-invalid-title-error' => '잘못된 제목',
+	'create-listing-confirm-info' => '다음 코드를 복사하여 붙여넣으세요:',
+	'create-blog-no-login' => '로그인 하지 않음',
+	'create-blog-categories-textinput' => '새로운 분류 추가',
+	'create-blog-categories-submit' => '제출',
 	'create-blog-save' => '문서 저장',
 	'create-blog-preview' => '미리 보기',
+	'create-blog-updated' => '블로그 게시글 작성 혹은 수정.',
+	'create-blog-permission-denied' => '블로그 페이지를 저장하는 동안 오류가 발생하였습니다:권한 거부',
+	'create-blog-article-already-exists' => '같은 이름의 블로그 게시물이 존재합니다, 이름을 바꾸어주세요',
+	'create-blog-listing-form-title' => '블로그 목록 페이지는 무엇입니까?',
+	'create-blog-listing-preview' => '미리보기',
+	'create-blog-listing-matches' => '일치하는 항목',
 	'create-blog-listing-matches-calculate' => '계산',
 	'create-blog-listing-matches-recalculate' => '재계산',
+	'create-blog-listing-sortby' => '정렬',
+	'create-blog-listing-sortby-date' => '최신의',
+	'create-blog-listing-sortby-author' => '작성자',
+	'create-blog-listing-sortby-comments' => '댓글 개수',
+	'create-blog-listing-output-as-box' => '복사와 붙여넣기를 위한 코드 생성',
+	'blog-header' => '"$1" 분류의 게시글',
 	'blog-defaulttitle' => '블로그',
+	'blog-olderposts' => '오래된 게시글',
+	'blog-newerposts' => '새로운 게시글',
+	'blog-nopostfound' => '게시글이 없습니다',
+	'blog-writeone' => '새 게시물 작성!',
 	'blog-added' => '추가됨',
 	'blog-edited' => '편집됨',
 	'blog-page' => '블로그',
+	'blog-zero-comments' => '댓글이 없습니다!',
 	'blog-comment-post' => '덧글 남기기',
 	'blog-comments' => '덧글',
 	'blog-rc-comments' => '블로그 덧글',
+	'blog-comments-new' => '블로그에 새 댓글이 있습니다',
+	'blog-comments-save' => '블로그에 댓글 저장',
+	'blog-voting-label' => '투표',
+	'blog-comments-dsc' => '최근항목순',
+	'blog-comments-asc' => '오래된항목순',
+	'blog-comments-anonymous' => '익명의 사용자',
+	'blog-comment-delete' => '삭제',
+	'blog-comment-hide' => '숨기기',
+	'blog-comment-unhide' => '숨기기 취소',
+	'blog-comment-edit' => '편집',
+	'blog-comment-error' => '댓글을 저장할 수 없습니다',
+	'blog-comment-cannot-add' => '블로그에 댓글을 남길 수 없습니다.',
 	'blog-avatar-preferences-title' => '아바타',
 	'blog-refresh-label' => '새로 고침',
+	'blog-userblog' => '$1의 블로그',
 	'blogs-reportproblem' => '문제 보고',
+	'blogs-comment-hidden' => '숨겨진 댓글',
+	'blog-comment-sending' => '전송 중..',
 );
 
 /** Colognian (Ripoarisch)
@@ -3069,6 +3116,7 @@ $messages['lt'] = array(
 	'create-blog-form-info' => 'Dienoraščio įrašai yra puikus būdas pasidalinti naujienomis, nuomone ir kūryba su bendruomene.',
 	'create-blog-form-post-title' => 'Dienoraščio įrašo pavadinimas',
 	'create-blog-empty-title-error' => 'Pavadinimas būtinas',
+	'create-blog-invalid-title-error' => 'Neleistinas pavadinimas',
 	'create-listing-confirm-info' => 'Nukopijuokite ir įklijuokite šį kodą:',
 	'create-blog-no-login' => 'Neprisijungęs',
 	'create-blog-login-required' => 'Jūs turite būti [{{fullurl:Special:Signup| $1 }} prisijungęs], kad sukurtumėte dienoraščių pranešimus arba sąrašus.',

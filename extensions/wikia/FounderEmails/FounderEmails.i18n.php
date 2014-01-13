@@ -1127,6 +1127,13 @@ Sempre pots fer-li un cop d'ull a la Wiki Activitat per a tots els canvis existe
 	'founderemails-pref-complete-digest-v2' => '... un resum diari de les incorporacions, edicions i visites està preparat',
 );
 
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'founderemails-email-0-day-addpages-button' => 'ТӀетоха агӀо',
+);
+
 /** Czech (čeština)
  * @author Chmee2
  */
@@ -2102,12 +2109,27 @@ Siempre puedes echarle un vistazo a la Wiki Actividad para ver todos los cambios
 
 /** Persian (فارسی)
  * @author BlueDevil
+ * @author Reza1615
  */
 $messages['fa'] = array(
 	'founderemails-email-user-registered-greeting' => 'سلام $USERNAME،',
 	'founderemails-email-user-registered-signature' => 'تیم ویکیا',
 	'founderemails-email-0-days-passed-subject' => 'به ویکیا خوش آمدید!',
+	'founderemails-email-first-edit-greeting' => 'سلام $USERNAME،',
+	'founderemails-email-first-edit-signature' => 'تیم ویکیا',
+	'founderemails-email-general-edit-greeting' => 'سلام $USERNAME،',
+	'founderemails-email-general-edit-signature' => 'تیم ویکیا',
+	'founderemails-email-anon-edit-greeting' => 'سلام $USERNAME،',
+	'founderemails-email-anon-edit-signature' => 'تیم ویکیا',
+	'founderemails-email-lot-happening-greeting' => 'سلام $USERNAME،',
+	'founderemails-email-lot-happening-signature' => 'تیم ویکیا',
+	'founderemails-email-0-day-addpages-button' => 'افزودن یک صفحه',
+	'founderemails-email-0-day-addphotos-button' => 'اضافه‌کردن یک تصویر',
+	'founderemails-email-0-day-customizetheme-button' => 'سفارشی‌کردن',
+	'founderemails-email-views-digest-greeting' => 'سلام $USERNAME،',
 	'founderemails-email-views-digest-signature' => 'تیم ویکیا',
+	'founderemails-email-complete-digest-greeting' => 'سلام $USERNAME،',
+	'founderemails-email-complete-digest-signature' => 'تیم ویکیا',
 );
 
 /** Finnish (suomi)
@@ -8752,6 +8774,7 @@ Wikia团队',
 	'founderemails-email-10-day-share-heading' => '妈妈一定和你说过“独乐乐不如众乐乐”的道理吧？',
 	'founderemails-email-10-day-email-heading' => '利用电子邮件的力量。',
 	'founderemails-email-10-day-join-heading' => '链接同类网站。',
+	'founderemails-email-views-digest-subject' => '$WIKINAME的今日观点',
 	'founderemails-email-views-digest-body' => '本日$WIKINAME的访问量是$1{{PLURAL:$1|人|人}}.
 
 继续丰富、宣传你的维基来鼓励更多人阅读、编辑和传播吧。

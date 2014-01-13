@@ -3157,8 +3157,8 @@ $templates
 		}
 
 		if ( $wgFavicon !== false ) {
-			// Wikia change begin - @author: hyun
-			$wgFavicon = wfReplaceImageServer($wgFavicon);
+			// Wikia change begin - @author: macbre
+			wfRunHooks('OutputPageFavicon', [&$wgFavicon]);
 			// Wikia change end
 
 			$tags[] = Html::element( 'link', array( 'rel' => 'shortcut icon', 'href' => $wgFavicon ) );

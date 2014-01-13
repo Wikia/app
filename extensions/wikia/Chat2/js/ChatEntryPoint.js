@@ -169,7 +169,9 @@ var ChatEntryPoint = {
 	},
 
 	onSuccessfulLogin: function(json) {
-		UserLoginModal.dialog.startThrobbing();
+		/* Quick hack, we shouldn't access UserLoginModal.$modal here. Maybe modal can provide new event launched
+		   between onSuccess and onClose and we can hook into it. */
+		UserLoginModal.$modal.$element.startThrobbing();
 		$.nirvana.sendRequest({
 			controller: 'ChatRail',
 			method: 'AnonLoginSuccess',
@@ -180,8 +182,8 @@ var ChatEntryPoint = {
 	},
 
 	onJoinChatFormLoaded: function( html ) {
-		UserLoginModal.dialog.stopThrobbing();
-		UserLoginModal.dialog.closeModal();
+		UserLoginModal.$modal.$element.stopThrobbing();
+		UserLoginModal.$modal.trigger('close');
 
 		require( [ 'wikia.ui.factory' ], function( uiFactory ) {
 			uiFactory.init( 'modal' ).then( function( uiModal ) {
