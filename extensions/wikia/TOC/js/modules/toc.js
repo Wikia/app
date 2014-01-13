@@ -15,12 +15,14 @@ define( 'wikia.toc', function() {
 	 *                          sections: [] // This is required !!!!!!
 	 *                      }
 	 *                  }
-	 *  @param {function(object)} getHeader - function that returns the heading jQuery object or false if the object
-	 *			is not valid section heading
+	 *  @param {function(object)} checkHeader [OPTIONAL] - function that returns object that will be passed
+	 *    to createSection as a header
+	 *    or a falsy value if the object is not valid section heading
+	 *    by default raw header will be passed to createSection function
 	 *  @returns {Object} - TOC data structure of all the subsections
 	 */
 
-	function getData( headers, createSection, getHeader ) {
+	function getData( headers, createSection, checkHeader ) {
 		var toc = {
 				sections: []
 			}, // set base object for TOC data structure
@@ -30,19 +32,20 @@ define( 'wikia.toc', function() {
 			level = -1,
 			lastHeader = -1,
 			headerLevel,
-			i = 0,
+			i,
 			obj,
-			header,
-			$header;
+			header;
 
-		for ( ; i < headersLength; i++ ) {
+		for ( i = 0 ; i < headersLength; i++ ) {
 			header = headers[ i ];
 			headerLevel = parseInt( header.nodeName.slice( 1 ), 10 ); // get position from header node (exp. <h2>)
 
-			$header = getHeader( header );
+			if ( checkHeader ) {
+				header = checkHeader( header );
+			}
 
 			// skip corrupted TOC section element
-			if ( !$header ) {
+			if ( !header ) {
 				continue;
 			}
 
@@ -56,7 +59,7 @@ define( 'wikia.toc', function() {
 				}
 			}
 
-			obj = createSection( $header, level + 1 ); // create section object from HTML header node
+			obj = createSection( header, level + 1 ); // create section object from HTML header node
 
 			hToLevel[ headerLevel ] = level;
 			lastHeader = headerLevel;

@@ -1127,6 +1127,13 @@ Sempre pots fer-li un cop d'ull a la Wiki Activitat per a tots els canvis existe
 	'founderemails-pref-complete-digest-v2' => '... un resum diari de les incorporacions, edicions i visites està preparat',
 );
 
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'founderemails-email-0-day-addpages-button' => 'ТӀетоха агӀо',
+);
+
 /** Czech (čeština)
  * @author Chmee2
  */

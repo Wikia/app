@@ -297,13 +297,14 @@ $messages['fa'] = array(
 
 /** Finnish (suomi)
  * @author Crt
+ * @author Elseweyr
  * @author Ilkea
  */
 $messages['fi'] = array(
 	'ajaxpoll-percentVotes' => '$1%&nbsp;kaikista äänistä',
-	'ajaxpoll-thankyou' => 'Kiitos vastauksestasi!',
-	'ajaxpoll-error' => 'Ongelma käsitellessä vastaustasi. Yritä uudelleen.',
-	'ajaxpoll-summary' => 'Äänestys luotiin $1 kello $2, ja tähän mennessä siihen on vastannut $3 henkilöä.',
+	'ajaxpoll-thankyou' => 'Kiitos äänestäsi!',
+	'ajaxpoll-error' => 'Ääntäsi käsiteltäessä esiintyi ongelma. Yritä uudelleen.',
+	'ajaxpoll-summary' => 'Äänestys luotiin $2 kello $1, ja tähän mennessä siihen on vastannut $3 henkilöä.',
 	'ajaxpoll-submit' => 'Äänestä!',
 	'ajaxpoll-closed' => 'Äänestys on nyt sulkeutunut. Nauti tuloksista.',
 	'ajaxpoll-submitting' => 'Odota, vastaustasi lähetetään...',

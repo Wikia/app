@@ -82,7 +82,9 @@ $messages['qqq'] = array(
 {{Identical|History}}',
 	'lvs-page-header-back-link' => 'Text for link that brings users back to the Licensed Video Swap page from the history page',
 	'lvs-callout-header' => 'This is some header text that encourages the user to replace unlicensed videos with videos licensed for use on Wikia.  This section is temporary and will go away after a certain number of views. There\'s an optional "<br />" tag between the two sentences for purposes of making the header look nicer.',
-	'lvs-match-stats-description' => 'Description for numerical counter that shows how many total matched videos are available.',
+	'lvs-match-stats-description' => 'Description for numerical counter that shows how many total matched videos are available.
+
+Preceded by total number of videos.',
 	'lvs-callout-title-licensed' => 'Title for lvs callout header section.',
 	'lvs-callout-reason-licensed' => 'This is a bullet point that appears below lvs-callout-header. It explains that Wikia videos are licensed for use on Wikia. This section is temporary and will go away after a certain number of views.',
 	'lvs-callout-title-quality' => 'Title for lvs callout header section.',
@@ -90,8 +92,13 @@ $messages['qqq'] = array(
 	'lvs-callout-title-collaborative' => 'Title for lvs callout header section.',
 	'lvs-callout-reason-collaborative' => 'This is a bullet point that appears below lvs-callout-header.  This section is temporary and will go away after a certain number of views.',
 	'lvs-callout-reason-more' => 'This is a bullet point that appears below lvs-callout-header. This starts as "mid-sentence" because this is the last bullet point in the section and is a continuation of the previous ones in this set, saying basically "...and more". Due to design constraints this needs to be a separate message. This section is temporary and will go away after a certain number of views.',
-	'lvs-instructions-header' => 'This is the title of the section on how to use this page.',
-	'lvs-instructions' => 'This is the text at the top of the Licensed Video Swap special page that explains to the user what this page is all about. The idea is that users can exchange unlicensed videos for videos licensed for use on Wikia.',
+	'lvs-instructions-header' => 'This is the title of the section on how to use this page.
+
+Followed by:
+* {{msg-wikia|Lvs-instructions}}.',
+	'lvs-instructions' => 'This is the text at the top of the Licensed Video Swap special page that explains to the user what this page is all about. The idea is that users can exchange unlicensed videos for videos licensed for use on Wikia.
+
+Preceded by the heading {{msg-wikia|Lvs-instructions-header}}.',
 	'lvs-button-keep' => 'This is the text that appears on a button that, when clicked, will keep the non-licensed video as opposed to swapping it out for a licensed video.',
 	'lvs-button-swap' => 'This is the text that appears on a button that, when clicked, will swap out a non-licensed video for a licensed video suggested from the wikia video library.',
 	'lvs-button-yes' => 'Yes (user agrees to keep seeing suggestions for video matches for that video).
