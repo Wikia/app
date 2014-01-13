@@ -1,6 +1,6 @@
 <?php
 
-class ArticleQualityV1Service extends Service {
+class ArticleQualityService extends Service {
 
 	const SQL_CACHE_TIME = 86399; // 12h
 
