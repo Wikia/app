@@ -76,7 +76,7 @@ function getAssetById( $videoId ) {
 	$url = OoyalaApiWrapper::getApi( $method, $reqPath, $params );
 	print( "Connecting to $url...\n" );
 
-	$req = MWHttpRequest::factory( $url );
+	$req = MWHttpRequest::factory( $url, array( 'noProxy' => true ) );
 	$status = $req->execute();
 	if ( $status->isGood() ) {
 		$result = json_decode( $req->getContent(), true );

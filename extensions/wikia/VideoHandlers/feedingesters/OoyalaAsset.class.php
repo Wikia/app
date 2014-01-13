@@ -57,6 +57,88 @@ class OoyalaAsset extends WikiaModel {
 	}
 
 	/**
+	 * Get asset by id
+	 * @param string $videoId
+	 * @return array|false $result
+	 */
+	public function getAssetById( $videoId ) {
+		wfProfileIn( __METHOD__ );
+
+		$method = 'GET';
+		$reqPath = '/v2/assets/'.$videoId;
+		$params = array();
+
+		$url = OoyalaApiWrapper::getApi( $method, $reqPath, $params );
+		print( "Connecting to $url...\n" );
+
+		$result = self::getApiContent( $url );
+
+		wfProfileOut( __METHOD__ );
+
+		return $result;
+	}
+
+	/**
+	 * Get labels for all providers
+	 * @return array|false $providers
+	 */
+	public function getApiLabelsProviders() {
+		wfProfileIn( __METHOD__ );
+
+		$method = 'GET';
+		$reqPath = '/v2/labels/';
+
+		$url = OoyalaApiWrapper::getApi( $method, $reqPath );
+
+		$result = self::getApiContent( $url );
+		if ( $result == false ) {
+			wfProfileOut( __METHOD__ );
+			return $result;
+		}
+
+		$labels = empty( $result['items'] ) ? array() : $result['items'];
+
+		$providers = array();
+		foreach ( $labels as $label ) {
+			if ( !empty( $label['full_name'] ) && preg_match( '/\/Providers\/([\w\s]+)/', $label['full_name'] ) ) {
+				$providers[$label['id']] = $label['name'];
+			}
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $providers;
+	}
+
+	/**
+	 * Get label id
+	 * @param string $labelName - name of the label
+	 * @return string|false $labelId
+	 */
+	public function getLabelId( $labelName ) {
+		wfProfileIn( __METHOD__ );
+
+		$labelId = false;
+
+		$labels = $this->getApiLabelsProviders();
+		if ( $labels == false ) {
+			wfProfileOut( __METHOD__ );
+			return $labelId;
+		}
+
+		foreach ( $labels as $id => $name ) {
+			if ( strtolower( $name ) == strtolower( $labelName ) ) {
+				$labelId = $id;
+				break;
+			}
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $labelId;
+	}
+
+	/**
 	 * Add remote asset
 	 * @param array $data
 	 * @return boolean $resp
