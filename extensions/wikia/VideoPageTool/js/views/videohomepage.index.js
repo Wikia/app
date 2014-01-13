@@ -24,7 +24,7 @@ require( [
 		} );
 
 		views.videohomepage.categories = new CarouselsView( {
-			el: '#latest-videos-wrapper'
+			el: '.latest-videos-wrapper'
 		} );
 	}
 
