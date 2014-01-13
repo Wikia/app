@@ -33,7 +33,7 @@ class TvApiControllerTest extends \WikiaBaseTest {
 		parent::tearDown();
 	}
 
-	public function testCheckArticleByQualityFound() {
+	public function testGetArticleQuality() {
 		$mock = $this->getMockBuilder( "\TvApiController" )
 			->disableOriginalConstructor()
 			->setMethods( [ '__construct', 'getQualityFromSolr' ] )
@@ -47,18 +47,10 @@ class TvApiControllerTest extends \WikiaBaseTest {
 
 		$refl->setAccessible( true );
 
-		$article = [ 'articleId' => 1 ];
-		$res_article = $refl->invoke( $mock, $article, 9 );
-		$this->assertEquals( $article, $res_article );
-
-		$res_article = $refl->invoke( $mock, $article, 11 );
-		$this->assertEquals( null, $res_article );
+		$this->assertEquals( 10, $refl->invoke( $mock, 88 ) );
 	}
 
-	/**
-	 * @expectedException NotFoundApiException
-	 */
-	public function testCheckArticleByQualityException() {
+	public function testGetArticleQualityNotFound() {
 		$mock = $this->getMockBuilder( "\TvApiController" )
 			->disableOriginalConstructor()
 			->setMethods( [ '__construct', 'getQualityFromSolr' ] )
@@ -72,8 +64,7 @@ class TvApiControllerTest extends \WikiaBaseTest {
 
 		$refl->setAccessible( true );
 
-		$article = [ 'articleId' => 1 ];
-		$refl->invoke( $mock, $article, 9);
+		$this->assertEquals( null, $refl->invoke( $mock, 88 ) );
 
 	}
 
@@ -81,7 +72,7 @@ class TvApiControllerTest extends \WikiaBaseTest {
 
 		$mock = $this->getMockBuilder( "\TvApiController" )
 			->disableOriginalConstructor()
-			->setMethods( ['__construct', 'getExactMatch','getResponse','setWikiVariables','getApiVersion','checkArticleByQuality'] )
+			->setMethods( ['__construct', 'getExactMatch','getResponse','setWikiVariables','getApiVersion','checkArticleByQuality','getConfigFromRequest','getResponseFromConfig'] )
 			->getMock();
 
 		$mock->expects( $this->any() )
@@ -129,6 +120,7 @@ class TvApiControllerTest extends \WikiaBaseTest {
 
 		$this->responseValues = null;
 		$mock->request = $mockRequest;
+		$mock->wikis = [[1]];
 		$mock->getEpisode();
 
 		$this->assertArrayHasKey('url',$this->responseValues);
@@ -171,11 +163,11 @@ class TvApiControllerTest extends \WikiaBaseTest {
 
 		$this->setMockVariables( false, 0, 'a0', 'b0', 'c0', false );
 
-		$this->assertEquals( ['articleId' => 1, 'title' => 'a1', 'url' => 'b1' ], $refl->invoke( $mock, 'test number one' ) );
+		$this->assertEquals( ['articleId' => 1, 'title' => 'a1', 'url' => 'b1' ], $refl->invoke( $mock, 'test number one', 1 ) );
 
-		$this->assertEquals( ['articleId' => 2, 'title' => 'a2', 'url' => 'b2'], $refl->invoke( $mock, 'test number two' ) );
+		$this->assertEquals( ['articleId' => 2, 'title' => 'a2', 'url' => 'b2'], $refl->invoke( $mock, 'test number two', 1) );
 
-		$this->assertEquals( ['articleId' => 30, 'title' => 'a3', 'url' => 'b3'], $refl->invoke( $mock, 'test_redirect' ) );
+		$this->assertEquals( ['articleId' => 30, 'title' => 'a3', 'url' => 'b3'], $refl->invoke( $mock, 'test_redirect', 1 ) );
 
 	}
 
