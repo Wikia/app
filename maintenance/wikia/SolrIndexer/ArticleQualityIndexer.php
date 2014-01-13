@@ -5,7 +5,6 @@ require_once( dirname( __FILE__ ) . '/../../Maintenance.php' );
 class ArticleQualityIndexer extends Maintenance {
 
 	const ARRAY_SIZE = 100;
-	const SOLR_URL = 'http://search-s11:8983/solr/update';
 
 	private $wikiId;
 	private $client;
@@ -90,7 +89,7 @@ class ArticleQualityIndexer extends Maintenance {
 
 	protected function getCurlConnection() {
 		if ( !isset( $this->curlClient ) ) {
-			$this->curlClient = curl_init( self::SOLR_URL );
+			$this->curlClient = curl_init( $this->getMasterSolrUrl() );
 			curl_setopt( $this->curlClient, CURLOPT_HTTPHEADER, [ 'Content-type:application/json' ] );
 		}
 		return $this->curlClient;
@@ -109,6 +108,15 @@ class ArticleQualityIndexer extends Maintenance {
 			$this->client = new Solarium_Client( $this->CONFIG );
 		}
 		return $this->client;
+	}
+
+	protected function getMasterSolrUrl() {
+		global $wgSolrMaster;
+		if ( isset( $wgSolrMaster ) ) {
+			$url = 'http://' . $wgSolrMaster . ':8983/solr/update';
+			return $url;
+		}
+		die(1);
 	}
 }
 
