@@ -8,7 +8,7 @@ define( 'views.videopagetool.carousel', [
 	'views.videopagetool.carouselthumb',
 	'templates.mustache'
 ], function(
-	CategoryDatalCollection,
+	CategoryDataCollection,
 	CategoryThumbModel,
 	CategoryCarouselModel,
 	CarouselThumbView,
@@ -20,7 +20,7 @@ define( 'views.videopagetool.carousel', [
 		tagName: 'div',
 		className: 'carousel-wrapper',
 		initialize: function() {
-			this.collection = new CategoryDatalCollection( this.model.attributes.thumbnails );
+			this.collection = new CategoryDataCollection( this.model.attributes.thumbnails );
 			this.render();
 		},
 		template: Mustache.compile( templates.carousel ),
