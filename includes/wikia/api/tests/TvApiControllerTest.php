@@ -41,9 +41,9 @@ class TvApiControllerTest extends \WikiaBaseTest {
 
 		$mock->expects( $this->any() )
 			->method( 'getQualityFromSolr' )
-			->will( $this->returnValue( [ [ 'articleQuality_i' => 10 ] ] ) );
+			->will( $this->returnValue( [ [ 'quality' => 10 ] ] ) );
 
-		$refl = new \ReflectionMethod( $mock, 'checkArticleByQuality' );
+		$refl = new \ReflectionMethod( $mock, 'getArticleQuality' );
 
 		$refl->setAccessible( true );
 
@@ -60,7 +60,7 @@ class TvApiControllerTest extends \WikiaBaseTest {
 			->method( 'getQualityFromSolr' )
 			->will( $this->returnValue( null ) );
 
-		$refl = new \ReflectionMethod( $mock, 'checkArticleByQuality' );
+		$refl = new \ReflectionMethod( $mock, 'getArticleQuality' );
 
 		$refl->setAccessible( true );
 
@@ -148,14 +148,18 @@ class TvApiControllerTest extends \WikiaBaseTest {
 
 	public function testGetTitle() {
 
-		$mock = $this->getMockBuilder( "\TvApiController" )
+		$mock = $this->getMockBuilder( '\TvApiController' )
 			->disableOriginalConstructor()
-			->setMethods( ['__construct', 'createTitle'] )
+			->setMethods( ['__construct', 'createTitle', 'getArticleQuality'] )
 			->getMock();
 
 		$mock->expects( $this->any() )
 			->method( 'createTitle' )
 			->will( $this->returnCallback( [$this, 'mock_createTitle'] ) );
+
+		$mock->expects( $this->any() )
+			->method( 'getArticleQuality' )
+			->will( $this->returnValue( 13 ) );
 
 		$refl = new \ReflectionMethod($mock, 'getTitle');
 
@@ -163,11 +167,9 @@ class TvApiControllerTest extends \WikiaBaseTest {
 
 		$this->setMockVariables( false, 0, 'a0', 'b0', 'c0', false );
 
-		$this->assertEquals( ['articleId' => 1, 'title' => 'a1', 'url' => 'b1' ], $refl->invoke( $mock, 'test number one', 1 ) );
-
-		$this->assertEquals( ['articleId' => 2, 'title' => 'a2', 'url' => 'b2'], $refl->invoke( $mock, 'test number two', 1) );
-
-		$this->assertEquals( ['articleId' => 30, 'title' => 'a3', 'url' => 'b3'], $refl->invoke( $mock, 'test_redirect', 1 ) );
+		$this->assertEquals( ['articleId' => 1, 'title' => 'a1', 'url' => 'b1', 'quality' => 13 ], $refl->invoke( $mock, 'test number one', 1 ) );
+		$this->assertEquals( ['articleId' => 2, 'title' => 'a2', 'url' => 'b2', 'quality' => 13 ], $refl->invoke( $mock, 'test number two', 1) );
+		$this->assertEquals( ['articleId' => 30, 'title' => 'a3', 'url' => 'b3', 'quality' => 13 ], $refl->invoke( $mock, 'test_redirect', 1 ) );
 
 	}
 
@@ -208,7 +210,6 @@ class TvApiControllerTest extends \WikiaBaseTest {
 				->will( $this->returnValue( true ) );
 
 			$id = $id * 10;
-
 		}
 
 		$this->mockGlobalTitle->expects( $this->any() )
