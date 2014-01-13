@@ -24,21 +24,39 @@ define( 'views.videopagetool.carousel', [
 			this.render();
 		},
 		template: Mustache.compile( templates.carousel ),
+		events: {
+			'click .control[data-direction="left"]': 'slideLeft',
+			'click .control[data-direction="right"]': 'slideRight',
+		},
 		render: function() {
-			var $carousel;
+			var self = this;
 
 			this.$el.html( this.template( this.model.toJSON() ) );
-
-			$carousel = this.$el.find( '.category-carousel' );
+			this.$carousel = this.$el.find( '.category-carousel' );
 
 			this.collection.each( function( categoryData ) {
 				var view = new CarouselThumbView({
 					model: categoryData
 				} );
-				$carousel.append( view.$el );
+				self.$carousel.append( view.$el );
 			} );
 
+			this.$carousel.owlCarousel();
+			this.visibleItems = this.$carousel.data( 'owlCarousel' ).visibleItems;
+
 			return this;
+		},
+		slideRight: function() {
+			var i;
+			for ( i = 0; i < this.visibleItems.length; i++ ) {
+				this.$carousel.trigger( 'owl.next' );
+			}
+		},
+		slideLeft: function() {
+			var i;
+			for ( i = 0; i < this.visibleItems.length; i++ ) {
+				this.$carousel.trigger( 'owl.prev' );
+			}
 		}
 	} );
 
