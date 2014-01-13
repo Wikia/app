@@ -3,7 +3,7 @@
  * Collection data is an array with all the carousel data.
  */
 define( 'views.videohomepage.carousels', [
-	'collections.videopageadmin.category',
+	'collections.videopageadmin.categorydata',
 	'views.videopagetool.carousel'
 ], function( CategoriesCollection, CarouselView ) {
 	'use strict';
@@ -12,6 +12,7 @@ define( 'views.videohomepage.carousels', [
 		initialize: function() {
 			// data from collection is assigned on page load in the category template
 			this.collection = new CategoriesCollection( Wikia.videoHomePage.categoryData );
+			console.log( this );
 			this.render();
 		},
 		render: function() {
