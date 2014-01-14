@@ -74,7 +74,7 @@ $modal-background: #3D3D3D;
 	position: fixed;
 	top: 0;
 	left: 0;
-	z-index: 20;
+	z-index: $video-overlay-z-index;
 
 	background-color: rgba(0,0,0,.8);
 	@include transition(top .2s ease);
@@ -106,7 +106,7 @@ $modal-background: #3D3D3D;
 	color: white;
 	line-height: 20px;
 	font-weight: 100;
-	z-index: 21;
+	z-index: $video-overlay-z-index + 1;
 	@include transition(bottom .3s ease-in);
 	display: none;
 
