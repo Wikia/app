@@ -35,20 +35,20 @@ define( 'views.videopagetool.carousel', [
 			this.$carousel = this.$el.find( '.category-carousel' );
 
 			this.collection.each( function( categoryData ) {
-				var view = new CarouselThumbView({
+				var view = new CarouselThumbView( {
 					model: categoryData
 				} );
 				self.$carousel.append( view.$el );
 			} );
 
-			this.$carousel.owlCarousel({
+			this.$carousel.owlCarousel( {
 				scrollPerPage: true,
 				pagination: true,
 				paginationSpeed: 500,
 				lazyLoad: true,
 				navigation: true,
 				rewindNav: false
-			});
+			} );
 
 			return this;
 		},
