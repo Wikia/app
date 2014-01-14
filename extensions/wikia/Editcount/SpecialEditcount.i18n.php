@@ -8,6 +8,8 @@ $messages = array(
 	'editcount_submit' => 'Submit',
 	'editcount_total' => 'Total',
 	'editcount_allwikis' => 'All wikis',
+	'editcount_archived_revisions' => 'Archived revisions',
+	'editcount_no_data' => 'No data',
 	'editcount_refresh_time' => 'Results in <em>$1</em> column are cached. Next time data will be refreshed after $2',
 	),
 
@@ -18,6 +20,8 @@ $messages = array(
 	'editcount_submit' => 'Form submit button name',
 	'editcount_total' => 'Label of row containing aggregated editcount values ',
 	'editcount_allwikis' => 'Label of column containing summary editcount of all wikis',
+	'editcount_archived_revisions' => 'Label of number of archived (deleted) revisions',
+	'editcount_no_data' => "Message saying we don't have data to display/count number of revisions",
 	'editcount_refresh_time' => 'Message saying when cached data will be refreshed (actually when cache expires)
 		| $1 referred column name | $2 date and time when cache expires',
 	),
@@ -139,6 +143,8 @@ $messages = array(
 		'editcount_submit' => 'Wyślij',
 		'editcount_total' => 'Suma',
 		'editcount_allwikis' => 'Wszystkie wiki',
+		'editcount_archived_revisions' => 'Usunięte edycje',
+		'editcount_no_data' => 'Brak danych',
 		'editcount_refresh_time' => 'Wyniki w kolumnie <em>$1</em> są zapisane w pamięci podręcznej. Następnym razem dane zostaną odświeżone po $2'
 	),
 

@@ -66,11 +66,14 @@ class Editcount extends SpecialPage {
 			if ($uid != 0) {
 				/* show results for current wiki */
 				$total = $this->getTotal( $nscount = $this->editsByNs( $uid ) );
+				/* show archived revisions count for current wiki */
+				$arcount = $this->editsArchived( $uid );
+				$total += $arcount;// Let archived revisions have their share in percentage
 				/* show results for all wikis */
 				$totalAll = $this->getTotal( $nscountAll = $this->editsByNsAll( $uid ) );
 			}
 			$html = new EditcountHTML;
-			$html->outputHTML( $username, $uid, @$nscount, @$total, @$nscountAll, @$totalAll, $this->refreshTimestamps );
+			$html->outputHTML( $username, $uid, @$nscount, @$arcount, @$total, @$nscountAll, @$totalAll, $this->refreshTimestamps );
 		}
 	}
 
@@ -160,6 +163,35 @@ class Editcount extends SpecialPage {
 		}
 
 		return $nscount;
+	}
+
+	/**
+	 * Count the number of archived edits (revisions) of a user
+	 *
+	 * @param int $uid The user ID to check
+	 * @return int
+	 */
+	function editsArchived( $uid ) {
+		global $wgMemc;
+		$key = wfMemcKey( 'archivedCount', $uid );
+		$arcount = $wgMemc->get($key);
+
+		if ( empty($arcount) ) {
+			$userName = User::newFromId( $uid )->getName();
+			$dbr =& wfGetDB( DB_SLAVE );
+			$arcount = $dbr->selectField(
+				array( 'archive' ),
+				array( 'COUNT(*) as count' ),
+				array(
+					'ar_user_text' => $userName
+				),
+				__METHOD__
+			);
+
+			$wgMemc->set( $key, $arcount, self::CACHE_TIME );
+		}
+
+		return $arcount;
 	}
 
 	function editsByNsAll( $uid ) {
@@ -253,17 +285,23 @@ class EditcountHTML extends Editcount {
 	 * Output the HTML form on Special:Editcount
 	 *
 	 * @param string $username
-	 * @param int    $uid
-	 * @param array  $nscount
-	 * @param int    $total
+	 * @param int $uid 	User ID
+	 * @param array $nscount	Array of namespaces codes and editcounts per namespace for current wiki
+	 * 			e.g. array ( '0'=> 5 ) 5 edits in main namespace (0)
+	 * @param int $arcount Sum of archived revisions on wiki
+	 * @param int $wikitotal	Sum of all edits in all namespaces plus archived revisions for current wiki
+	 * @param array $nscountall	Array of namespaces codes and editcounts per namespace for all wikis
+	 * @param int $totalall	Sum of edits on all wikis
+	 * @param array $refreshTimestamps
 	 */
-	function outputHTML( $username, $uid, $nscount, $total, $nscountall, $totalall, $refreshTimestamps ) {
+	function outputHTML( $username, $uid, $nscount, $arcount, $wikitotal, $nscountall, $totalall, $refreshTimestamps ) {
 		global $wgOut;
 		wfProfileIn( __METHOD__ );
 
 		/* current wiki */
 		$this->nscount = $nscount;
-		$this->total = $total;
+		$this->wikitotal = $wikitotal;
+		$this->arcount = $arcount;
 		/* all wikis */
 		$this->nscountall = $nscountall;
 		$this->totalall = $totalall;
@@ -300,14 +338,14 @@ class EditcountHTML extends Editcount {
 	 * @access private
 	 */
 	function makeTable() {
-		global $wgLang, $wgCityId, $wgDBname;
+		global $wgLang, $wgCityId, $wgSitename;
         wfProfileIn( __METHOD__ );
 
 		$total = wfMessage( 'editcount_total' )->escaped();
-		$wikiName = $wgDBname;
+		$wikiName = $wgSitename;
 		/* current wiki */
-		$ftotal = $wgLang->formatNum( $this->total );
-		$percent = ($this->total > 0) ? wfPercent( $this->total / $this->total * 100 , 2 ) : wfPercent( 0 ); // @bug 4400
+		$ftotal = $wgLang->formatNum( $this->wikitotal );
+		$percent = ($this->wikitotal > 0) ? wfPercent( $this->wikitotal / $this->wikitotal * 100 , 2 ) : wfPercent( 0 ); // @bug 4400
 		/* all wikis */
 		$ftotalall = $wgLang->formatNum( $this->totalall );
 		$percentall = ($this->totalall > 0) ? wfPercent( $this->totalall / $this->totalall * 100 , 2 ) : wfPercent( 0 );
@@ -321,9 +359,10 @@ class EditcountHTML extends Editcount {
             "percentall"	=> $percentall,
             "wikiName"		=> $wikiName,
             "nscount"		=> $this->nscount,
-            "nstotal"		=> $this->total,
+            "wikitotal"		=> $this->wikitotal,
             "nscountall"	=> $this->nscountall,
             "nstotalall"	=> $this->totalall,
+			"arcount"		=> $this->arcount,
             "wgLang"		=> $wgLang,
         ));
         $res = $oTmpl->render("table");
