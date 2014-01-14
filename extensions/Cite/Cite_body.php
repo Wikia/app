@@ -156,14 +156,12 @@ class Cite {
 	 * @return string
 	 */
 	function ref( $str, $argv, $parser ) {
-
 		if ( $this->mInCite ) {
 			return htmlspecialchars( "<ref>$str</ref>" );
 		} else {
 			$this->mCallCnt++;
 			$this->mInCite = true;
 			$ret = $this->guardedRef( $str, $argv, $parser );
-
 			$this->mInCite = false;
 			return $ret;
 		}
@@ -286,6 +284,7 @@ class Cite {
 			# fers to an existing one.  If it refers to a nonexistent ref,
 			# we'll figure that out later.  Likewise it's definitely valid
 			# if there's any content, regardless of key.
+
 			return $this->stack( $str, $key, $group, $follow, $argv );
 		}
 
