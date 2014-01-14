@@ -68,13 +68,13 @@ class CombinedSearchService {
 		$result = [];
 		$limit = ( $limit !== null ) ? $limit : self::MAX_TOTAL_ARTICLES;
 		if ( !empty( $wikias ) ) {
-			$timer->stop();
 			$result[ 'wikias' ] = $wikias;
 		} else {
 			$result[ 'wikias' ] = [];
 		}
 		$articles = $this->phraseSearchForArticles($query, $namespaces, $langs, $hubs, $minArticleQuality);
 		$result['articles'] = array_slice( $articles, 0, $limit );
+		$timer->stop();
 		return $result;
 	}
 
@@ -123,7 +123,7 @@ class CombinedSearchService {
 	 * @return array
 	 */
 	protected function querySolrForArticles($query, $namespaces, $maxArticlesPerWiki, $wikiId, $wikiLang) {
-		$requestedFields = ["title", "url", "id", "score", "pageid", "lang", "wid", Utilities::field('html', $wikiLang)];
+		$requestedFields = ["title", "url", "id", "score", "pageid", "lang", "wid", "article_quality_i", Utilities::field('html', $wikiLang)];
 		$searchConfig = new Config;
 		$searchConfig->setQuery($query)
 			->setLimit($maxArticlesPerWiki)
@@ -149,7 +149,7 @@ class CombinedSearchService {
 	 * @return array
 	 */
 	protected function queryPhraseSolrForArticles( $query, $namespaces, $lang, $hubs = null, $minArticleQuality = 10 ) {
-		$requestedFields = ['title' => Utilities::field('title', $lang), "url", "id", "score", "pageid", "lang", "wid", Utilities::field('html', $lang)];
+		$requestedFields = ['title' => Utilities::field('title', $lang), "url", "id", "score", "pageid", "lang", "wid", "article_quality_i", Utilities::field('html', $lang)];
 
 		$config = (new Factory())->getSolariumClientConfig();
 		$client = new \Solarium_Client($config);
@@ -291,6 +291,7 @@ class CombinedSearchService {
 	}
 
 	public function phraseSearchForWikias($query, $langs, $hubs) {
+		$timer = Time::start([__CLASS__, __METHOD__]);
 		$wikias = [];
 		foreach ($langs as $lang) {
 			$crossWikiResults = $this->queryPhraseForWikias($query, $hubs, $lang);
@@ -301,6 +302,7 @@ class CombinedSearchService {
 				break;
 			}
 		}
+		$timer->stop();
 		return $wikias;
 	}
 
@@ -351,6 +353,7 @@ class CombinedSearchService {
 		$outputModel['title'] = $articleInfo['title'];
 		$outputModel['url'] = $articleInfo['url'];
 		$outputModel['lang'] = $articleInfo['lang'];
+		$outputModel['quality'] = isset( $articleInfo['article_quality_i'] ) ? $articleInfo['article_quality_i'] : null;
 
 		if ( isset($articleInfo[Utilities::field('html', $articleInfo['lang'])]) ) {
 			$fullText = $articleInfo[Utilities::field('html', $articleInfo['lang'])];
@@ -404,7 +407,7 @@ class CombinedSearchService {
 	protected function getTopArticles( $wikiId, $lang ) {
 		return \WikiaDataAccess::cache( wfSharedMemcKey( "CombinedSearchService", $wikiId, $lang ), self::TOP_ARTICLES_CACHE_TIME, function() use( $wikiId, $lang ) {
 			$timer = Time::start(["CombinedSearchService", "getTopArticles"]);
-			$requestedFields = [ "title", "url", "id", "score", "pageid", "lang", "wid", Utilities::field('html', $lang) ];
+			$requestedFields = [ "title", "url", "id", "score", "pageid", "lang", "wid", "article_quality_i", Utilities::field('html', $lang) ];
 			$topArticlesMap = \DataMartService::getTopArticlesByPageview(
 				$wikiId,
 				null,
