@@ -1,8 +1,6 @@
 <? /* @var $assets array */ ?>
 
-<div class="latest-videos-wrapper">
-<h2>Latest Videos</h2>
-</div>
+<div class="latest-videos-wrapper"></div>
 
 <script type="text/javascript">
 

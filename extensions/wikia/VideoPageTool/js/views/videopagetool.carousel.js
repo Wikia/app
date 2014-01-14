@@ -45,7 +45,9 @@ define( 'views.videopagetool.carousel', [
 				scrollPerPage: true,
 				pagination: true,
 				paginationSpeed: 500,
-				lazyLoad: true
+				lazyLoad: true,
+				navigation: true,
+				rewindNav: false
 			});
 
 			return this;

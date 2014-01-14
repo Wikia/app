@@ -22,10 +22,6 @@ $play-button-overlay-fade-duration: 400ms;
 }
 
 
-.WikiaPage {
-	border: 0;
-}
-
 // Allow takeover of left/right margins on this page.  There's no UGC content so it should be fine.
 .WikiaArticle {
 	overflow: visible;
@@ -34,8 +30,10 @@ $play-button-overlay-fade-duration: 400ms;
 .featured-video {
 	@include clearfix;
 	background: black;
-	margin: 0 -10px;
+	margin: 0 0 40px 0;
+	max-height: 750px;
 	width: auto;
+
 	.featured-video-slider{
 		position: relative;
 		ul {
