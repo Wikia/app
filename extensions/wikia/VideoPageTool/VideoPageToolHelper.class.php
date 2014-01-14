@@ -8,8 +8,8 @@ class VideoPageToolHelper extends WikiaModel {
 	const THUMBNAIL_WIDTH = 180;
 	const THUMBNAIL_HEIGHT = 100;
 
-	const THUMBNAIL_CATEGORY_WIDTH = 160;
-	const THUMBNAIL_CATEGORY_HEIGHT = 92;
+	const THUMBNAIL_CATEGORY_WIDTH = 263;
+	const THUMBNAIL_CATEGORY_HEIGHT = 148;
 
 	const MAX_THUMBNAIL_WIDTH = 1024;
 	const MAX_THUMBNAIL_HEIGHT = 461;
@@ -124,6 +124,9 @@ class VideoPageToolHelper extends WikiaModel {
 
 			// get thumbnail
 			$thumb = $file->transform( array( 'width' => self::THUMBNAIL_WIDTH, 'height' => self::THUMBNAIL_HEIGHT ) );
+			$thumbOptions = array(
+				'hidePlayButton' => false
+			);
 			$videoThumb = $thumb->toHtml( $thumbOptions );
 			$thumbUrl = $thumb->getUrl();
 
@@ -214,7 +217,7 @@ class VideoPageToolHelper extends WikiaModel {
 				$file = WikiaFileHelper::getVideoFileFromTitle( $title );
 				if ( !empty( $file ) ) {
 					$thumb = $file->transform( array( 'width' => self::THUMBNAIL_CATEGORY_WIDTH, 'height' => self::THUMBNAIL_CATEGORY_HEIGHT ) );
-					$videoThumb = $thumb->toHtml( ['useTemplate' => true] );
+					$videoThumb = $thumb->toHtml( [ 'useTemplate' => true ] );
 					$videos[] = array(
 						'title' => $title->getText(),
 						'url'   => $title->getFullURL(),

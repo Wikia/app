@@ -18,7 +18,7 @@ define( 'views.videopagetool.carousel', [
 
 	var CarouselView = Backbone.View.extend( {
 		tagName: 'div',
-		className: 'carousel-wrapper',
+		className: 'carousel',
 		initialize: function() {
 			this.collection = new CategoryDataCollection( this.model.attributes.thumbnails );
 			this.render();
@@ -41,22 +41,20 @@ define( 'views.videopagetool.carousel', [
 				self.$carousel.append( view.$el );
 			} );
 
-			this.$carousel.owlCarousel();
-			this.visibleItems = this.$carousel.data( 'owlCarousel' ).visibleItems;
+			this.$carousel.owlCarousel({
+				scrollPerPage: true,
+				pagination: true,
+				paginationSpeed: 500,
+				lazyLoad: true
+			});
 
 			return this;
 		},
 		slideRight: function() {
-			var i;
-			for ( i = 0; i < this.visibleItems.length; i++ ) {
-				this.$carousel.trigger( 'owl.next' );
-			}
+			this.$carousel.trigger( 'owl.next' );
 		},
 		slideLeft: function() {
-			var i;
-			for ( i = 0; i < this.visibleItems.length; i++ ) {
-				this.$carousel.trigger( 'owl.prev' );
-			}
+			this.$carousel.trigger( 'owl.prev' );
 		}
 	} );
 

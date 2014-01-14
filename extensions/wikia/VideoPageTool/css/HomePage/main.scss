@@ -9,7 +9,12 @@
  * https://wikia-inc.atlassian.net/browse/VID-829
  */
 
+.WikiaArticleCategories {
+	display: none;
+}
+
 .WikiaVideo {
+	padding-bottom: 20px;
 	.wv-sprite {
 		@include sprite-VideoPageTool-base();
 	}
@@ -37,7 +42,7 @@
 		.browse {
 			color: $color-links;
 			float: right;
-			padding-top: 1px;
+			padding-top: 9px;
 		}
 
 		.discover {
@@ -135,6 +140,80 @@
 		.ico-screenplay {
 			@include sprite-VideoPageTool('ico_screenplay');
 			width: 35px;
+		}
+	}
+}
+
+$pagination-color: #bbbdc0;
+
+.latest-videos-wrapper {
+	padding-top: 20px;
+
+	h2 {
+		color: $pagination-color;
+		font-size: 26px;
+		font-weight: 100;
+		line-height: 50px;
+		margin-bottom: 20px;
+		text-transform: uppercase;
+	}
+}
+.carousel {
+	border-bottom: 1px solid $pagination-color;
+	margin-bottom: 40px;
+	padding-bottom: 20px;
+
+	.owl-pagination {
+		@include clearfix;
+		display: inline-block;
+		position: absolute;
+		right: .8em;
+		top: -30px;
+
+		.owl-page {
+			background: $pagination-color;
+			border-radius: 1.3em;
+			display: block;
+			float: left;
+			height: .6em;
+			margin-left: 8px;
+			width: .6em;
+
+			&.active {
+				background: darken( $pagination-color, 40% );
+			}
+		}
+	}
+
+	.category-carousel {
+		margin-top: 16px;
+	}
+
+	.carousel-title {
+		font-size: 17px;
+		font-weight: bold;
+		margin-top: 36px;
+	}
+
+	.carousel-item {
+		margin: 0 10px;
+
+		.wikia-video-thumbnail {
+			margin-bottom: 16px;
+		}
+
+		img {
+			width: 100%;
+			height: auto;
+		}
+
+		a {
+			color: $color-text;
+		}
+
+		&:hover a {
+			color: $color-links;
+			text-decoration: none;
 		}
 	}
 }
