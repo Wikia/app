@@ -27,8 +27,9 @@ class VideoPageToolHooks {
 	}
 
 	/**
+	 * Hook: Clear cache (videos by category) when the category page is purged
 	 * @param WikiPage $page
-	 * @return bool
+	 * @return true
 	 */
 	public static function onArticlePurge( WikiPage &$page ) {
 		wfProfileIn( __METHOD__ );
@@ -40,6 +41,48 @@ class VideoPageToolHooks {
 		}
 
 		wfProfileOut( __METHOD__ );
+
+		return true;
+	}
+
+	/**
+	 * Hook: Clear cache (videos by category) when adding new category on file page
+	 * @param Title $title
+	 * @param array $categories
+	 * @return true
+	 */
+	public static function onCategorySelectSave( $title, $categories ) {
+		if ( $title instanceof Title && is_array( $categories ) && $title->getNamespace() == NS_FILE ) {
+			$helper = new VideoPageToolHelper();
+			foreach ( $categories as $category ) {
+				if ( !empty( $category['namespace'] ) && $category['namespace'] == F::app()->wg->ContLang->getFormattedNsText( NS_CATEGORY ) ) {
+					$categoryTitle = Title::newFromText( $category['name'], NS_CATEGORY );
+					if ( !empty( $categoryTitle ) ) {
+						$helper->invalidateCacheVideosByCategory( $categoryTitle->getDBkey() );
+					}
+				}
+			}
+		}
+
+		return true;
+	}
+
+	/**
+	 * Hook: Clear cache (videos by category) when video ingestion is completed
+	 * @param Title $title
+	 * @param array $categories
+	 * @return true
+	 */
+	public static function onVideoIngestionComplete( $title, $categories ) {
+		if ( $title instanceof Title && is_array( $categories ) ) {
+			$helper = new VideoPageToolHelper();
+			foreach ( $categories as $category ) {
+				$categoryTitle = Title::newFromText( $category, NS_CATEGORY );
+				if ( !empty( $categoryTitle ) ) {
+					$helper->invalidateCacheVideosByCategory( $categoryTitle->getDBkey() );
+				}
+			}
+		}
 
 		return true;
 	}

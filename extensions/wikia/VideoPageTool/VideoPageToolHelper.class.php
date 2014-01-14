@@ -14,7 +14,7 @@ class VideoPageToolHelper extends WikiaModel {
 	const MAX_THUMBNAIL_WIDTH = 1024;
 	const MAX_THUMBNAIL_HEIGHT = 461;
 
-	const CACHE_TTL_CATEGORY_DATA = 300;
+	const CACHE_TTL_CATEGORY_DATA = 3600;
 
 	public static $requiredRows = array(
 		'featured' => 5,
