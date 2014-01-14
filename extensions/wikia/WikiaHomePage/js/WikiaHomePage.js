@@ -640,13 +640,6 @@ var WikiaRemixInstance = new WikiaHomePageRemix();
 $(function () {
 	WikiaRemixInstance.init();
 	WikiPreviewInterstitial.init();
-
-	$( '.wikiahomepage-footer' ).on('click', '.wikia-menu-button.secondary li', function ( event ) {
-		if (event.target === this) {
-			event.stopPropagation();
-			$( this ).children( 'a' ).get( 0 ).click();
-		}
-	} );
 });
 
 $(window).load(function() {
@@ -654,3 +647,16 @@ $(window).load(function() {
 		$('#' + WikiaRemixInstance.SPONSOR_HERO_IMG_CONTAINER_ID).fadeOut(WikiaRemixInstance.SPONSOR_HERO_IMG_FADE_OUT_TIME);
 	}, WikiaRemixInstance.SPONSOR_HERO_IMG_TIMEOUT);
 });
+
+
+// Support clicking on whole button, not only the flag
+$( function() {
+	$( '.wikiahomepage-footer' ).on( 'click', '.wikia-menu-button.secondary li', function ( event ) {
+		// check if our target is really the event's target we would like to invoke - in order to avoid incidental
+		// calling of event handler from child elements
+		if ( event.target === this ) {
+			event.stopPropagation();
+			$( this ).children( 'a' ).get( 0 ).click();
+		}
+	} );
+} );
