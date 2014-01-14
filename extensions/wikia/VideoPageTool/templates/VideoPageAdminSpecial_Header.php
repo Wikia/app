@@ -14,21 +14,21 @@
 
 	<aside class="right">
 		<? if ( !empty( $lastSavedOn ) ): ?>
-			<p><?= wfMessage( 'videopagetool-header-right-last-saved', $wg->lang->timeanddate( $lastSavedOn, true ) )->parse() ?></p>
+			<p><?= wfMessage( 'videopagetool-header-last-saved', $wg->lang->timeanddate( $lastSavedOn, true ) )->parse() ?></p>
 		<? endif ?>
 
 		<? if ( !empty( $savedBy ) ): ?>
-			<p><?= wfMessage( 'videopagetool-header-right-saved-by', $savedBy )->parse() ?></p>
+			<p><?= wfMessage( 'videopagetool-header-saved-by', $savedBy )->parse() ?></p>
 		<? endif ?>
 
 		<? if ( !empty( $publishDate ) ): ?>
-			<p><?= wfMessage( 'videopagetool-header-right-publish-date', $wg->lang->date( $publishDate ) )->parse() ?></p>
+			<p><?= wfMessage( 'videopagetool-header-publish-date', $wg->lang->date( $publishDate ) )->parse() ?></p>
 		<? elseif ( !empty( $lastSavedOn ) ): // Make sure we're on a program page ?>
-			<p><?= wfMessage( 'videopagetool-header-right-not-published' )->parse() ?></p>
+			<p><?= wfMessage( 'videopagetool-header-not-published' )->parse() ?></p>
 		<? endif ?>
 
 		<? if ( !empty( $publishedBy ) ): ?>
-			<p><?= wfMessage( 'videopagetool-header-right-published-by', $publishedBy )->parse() ?></p>
+			<p><?= wfMessage( 'videopagetool-header-published-by', $publishedBy )->parse() ?></p>
 		<? endif ?>
 	</aside>
 </header>
