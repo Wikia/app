@@ -16,6 +16,7 @@ class VideoPageToolAssetCategory extends VideoPageToolAsset {
 
 	/**
 	 * Get asset data (used in template)
+	 * @param array $thumbOptions
 	 * @return array
 	 *
 	 * The associative array data returned has the keys:
@@ -29,7 +30,7 @@ class VideoPageToolAssetCategory extends VideoPageToolAsset {
 	 *     updatedBy    => Name of the user who updated this asset last
 	 *     updatedAt    => Date this asset was last updated, e.g. "17:04, September 13, 2013"
 	 */
-	public function getAssetData() {
+	public function getAssetData( $thumbOptions = array() ) {
 		$title = Title::newFromText( $this->categoryName, NS_CATEGORY );
 		if ( empty( $title ) ) {
 			return self::getDefaultAssetData();
@@ -39,10 +40,10 @@ class VideoPageToolAssetCategory extends VideoPageToolAsset {
 		$data = array(
 			'categoryName' => $title->getText(),
 			'displayTitle' => $this->displayTitle,
-			'thumbnails'   => $helper->getVideosByCategory( $title ),
+			'thumbnails'   => $helper->getVideosByCategory( $title, null, $thumbOptions ),
 		);
 
-		$assetData = array_merge( $data, parent::getAssetData() );
+		$assetData = array_merge( $data, parent::getAssetData( $thumbOptions ) );
 
 		return $assetData;
 	}

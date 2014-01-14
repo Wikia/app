@@ -39,6 +39,7 @@ class VideoHomePageController extends WikiaController {
 		OasisController::addBodyClass( 'WikiaVideo' );
 		$this->response->addAsset( 'videohomepage_js' );
 		$this->response->addAsset( 'videohomepage_scss' );
+		$this->response->addAsset( 'videohomepage_css' );
 
 		$program = $this->getProgram();
 		if ( $program instanceof VideoPageToolProgram && $program->exists() ) {
@@ -90,8 +91,9 @@ class VideoHomePageController extends WikiaController {
 	 * @responseParam array $assets
 	 */
 	public function category() {
+		$thumbOptions = [ 'hidePlayButton' => true ];
 		$helper = new VideoPageToolHelper();
-		$this->assets = $helper->renderAssetsBySection( $this->getProgram(), self::MODULE_CATEGORY );
+		$this->assets = $helper->renderAssetsBySection( $this->getProgram(), self::MODULE_CATEGORY, $thumbOptions );
 	}
 
 	/**

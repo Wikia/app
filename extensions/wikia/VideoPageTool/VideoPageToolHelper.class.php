@@ -8,8 +8,8 @@ class VideoPageToolHelper extends WikiaModel {
 	const THUMBNAIL_WIDTH = 180;
 	const THUMBNAIL_HEIGHT = 100;
 
-	const THUMBNAIL_CATEGORY_WIDTH = 160;
-	const THUMBNAIL_CATEGORY_HEIGHT = 92;
+	const THUMBNAIL_CATEGORY_WIDTH = 263;
+	const THUMBNAIL_CATEGORY_HEIGHT = 148;
 
 	const MAX_THUMBNAIL_WIDTH = 1024;
 	const MAX_THUMBNAIL_HEIGHT = 461;
@@ -124,6 +124,9 @@ class VideoPageToolHelper extends WikiaModel {
 
 			// get thumbnail
 			$thumb = $file->transform( array( 'width' => self::THUMBNAIL_WIDTH, 'height' => self::THUMBNAIL_HEIGHT ) );
+			$thumbOptions = array(
+				'hidePlayButton' => false
+			);
 			$videoThumb = $thumb->toHtml( $thumbOptions );
 			$thumbUrl = $thumb->getUrl();
 
@@ -175,12 +178,13 @@ class VideoPageToolHelper extends WikiaModel {
 	 * Get videos tagged with the category given by parameter $categoryTitle
 	 * @param string $categoryTitle A category name, or a title object for a category
 	 * @param int $limit The maximum number of videos to return
+	 * @param array $thumbOptions
 	 * @return array $videos An array of video data where each array element has the structure:
 	 *   [ title => 'Video Title',
 	 *     url   => 'http://url.to.video',
 	 *     thumb => '<thumbnail_html_snippet>'
 	 */
-	public function getVideosByCategory( $categoryTitle, $limit = 100 ) {
+	public function getVideosByCategory( $categoryTitle, $limit = 100, $thumbOptions = array() ) {
 		wfProfileIn( __METHOD__ );
 
 		// Accept either a category object or a category name
@@ -208,13 +212,15 @@ class VideoPageToolHelper extends WikiaModel {
 				)
 			);
 
+			$thumbOptions['useTemplate'] = true;
+
 			$videos = array();
 			while ( $row = $db->fetchObject( $result ) ) {
 				$title = $row->page_title;
 				$file = WikiaFileHelper::getVideoFileFromTitle( $title );
 				if ( !empty( $file ) ) {
 					$thumb = $file->transform( array( 'width' => self::THUMBNAIL_CATEGORY_WIDTH, 'height' => self::THUMBNAIL_CATEGORY_HEIGHT ) );
-					$videoThumb = $thumb->toHtml( ['useTemplate' => true] );
+					$videoThumb = $thumb->toHtml( $thumbOptions );
 					$videos[] = array(
 						'title' => $title->getText(),
 						'url'   => $title->getFullURL(),
@@ -431,12 +437,13 @@ class VideoPageToolHelper extends WikiaModel {
 	 * Render assets by section (used in VideoHomePageController)
 	 * @param VideoPageToolProgram $program
 	 * @param string $section [featured/category/fan]
+	 * @param array $thumbOptions
 	 * @return type
 	 */
-	public function renderAssetsBySection( $program, $section ) {
+	public function renderAssetsBySection( $program, $section, $thumbOptions = array() ) {
 		$data = array();
 		if ( $program instanceof VideoPageToolProgram ) {
-			$thumbOptions = array( 'noLightbox' => true );
+			$thumbOptions['noLightbox'] = true;
 			$assets = $program->getAssetsBySection( $section );
 			foreach ( $assets as $asset ) {
 				/** @var VideoPageToolAsset $asset */
