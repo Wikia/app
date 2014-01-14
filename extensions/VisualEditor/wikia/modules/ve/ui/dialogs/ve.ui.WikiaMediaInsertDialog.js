@@ -39,6 +39,7 @@ ve.ui.WikiaMediaInsertDialog.static.pages = [ 'main', 'search' ];
  *
  * @method
  * @param {string} html The HTML to format
+ * @returns {jQuery}
  */
 ve.ui.WikiaMediaInsertDialog.static.formatPolicy = function ( html ) {
 	 return $( '<div>' )
@@ -379,6 +380,9 @@ ve.ui.WikiaMediaInsertDialog.prototype.setup = function () {
 	// Parent method
 	ve.ui.MWDialog.prototype.setup.call( this );
 	this.pages.setPage( 'main' );
+
+	// If the policy height (which has a max-height property set) is the same as the first child of the policy
+	// then there is no more of the policy to show and the read more link can be hidden.
 	if ( this.$policy.height() === this.$policy.children().first().height() ) {
 		this.$policyReadMore.hide();
 	}
