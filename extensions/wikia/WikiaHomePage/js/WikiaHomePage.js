@@ -641,11 +641,11 @@ $(function () {
 	WikiaRemixInstance.init();
 	WikiPreviewInterstitial.init();
 
-	$('body' ).on('click', '.wikiahomepage-footer .wikia-menu-button.secondary li', function( event ) {
+	$( 'body' ).on( 'click', '.wikiahomepage-footer .wikia-menu-button.secondary li', function ( event ) {
 		event.stopPropagation();
 
-		$(this).children('a' ).first().click();
-	})
+		$( this ).children( 'a' ).first().click();
+	} );
 });
 
 $(window).load(function() {
