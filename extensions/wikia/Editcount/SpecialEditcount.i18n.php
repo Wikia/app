@@ -10,7 +10,7 @@ $messages = array(
 	'editcount_allwikis' => 'All wikis',
 	'editcount_archived_revisions' => 'Archived revisions',
 	'editcount_no_data' => 'No data',
-	'editcount_refresh_time' => 'Results in <em>$1</em> column are cached. Next time data will be refreshed after $2',
+	'editcount_refresh_time' => "Results in ''$1'' column are cached. Next time data will be refreshed after $2",
 	),
 
 // Documentation
@@ -145,7 +145,7 @@ $messages = array(
 		'editcount_allwikis' => 'Wszystkie wiki',
 		'editcount_archived_revisions' => 'Usunięte edycje',
 		'editcount_no_data' => 'Brak danych',
-		'editcount_refresh_time' => 'Wyniki w kolumnie <em>$1</em> są zapisane w pamięci podręcznej. Następnym razem dane zostaną odświeżone po $2'
+		'editcount_refresh_time' => "Wyniki w kolumnie ''$1''z są zapisane w pamięci podręcznej. Następnym razem dane zostaną odświeżone po $2"
 	),
 
 // Portuguese (Lugusto)

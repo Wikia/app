@@ -18,10 +18,10 @@ class Editcount extends SpecialPage {
 	 * main()
 	 */
 	function execute( $par = null ) {
-		global $wgVersion, $wgRequest, $wgOut, $wgContLang, $wgSpecialEditCountExludedUsernames;
+		global $wgVersion, $wgRequest, $wgContLang, $wgSpecialEditCountExludedUsernames;
 
 		if ( version_compare( $wgVersion, '1.5beta4', '<' ) ) {
-			$wgOut->versionRequired( '1.5beta4' );
+			$this->getOutput()->versionRequired( '1.5beta4' );
 			return;
 		}
 
@@ -44,12 +44,15 @@ class Editcount extends SpecialPage {
 			$uid = User::idFromName( $username );
 		}
 
+		/* take archived revisions count for current wiki into consideration */
+		$arcount = $this->editsArchived( $uid );
+
 		if ( $this->including() ) {
 			if ( !isset($namespace) ) {
 				if ($uid != 0) {
 					// ADi: can't do that, we need count per wiki
 					// $out = $wgContLang->formatNum( User::edits( $uid ) );
-					$out = $wgContLang->formatNum( $this->getTotal( $this->editsByNs( $uid ) ) );
+					$out = $wgContLang->formatNum( $this->getTotal( $this->editsByNs( $uid ) ) + $arcount );
 				} else {
 					$out = "";
 				}
@@ -60,14 +63,13 @@ class Editcount extends SpecialPage {
 					$out = "";
 				}
 			}
-			$wgOut->addHTML( $out );
+			$this->getOutput()->addHTML( $out );
 		} else {
 			$nscount = $nscountAll = array();
+			$total = $totalAll = 0;
 			if ($uid != 0) {
 				/* show results for current wiki */
 				$total = $this->getTotal( $nscount = $this->editsByNs( $uid ) );
-				/* show archived revisions count for current wiki */
-				$arcount = $this->editsArchived( $uid );
 				$total += $arcount;// Let archived revisions have their share in percentage
 				/* show results for all wikis */
 				$totalAll = $this->getTotal( $nscountAll = $this->editsByNsAll( $uid ) );
@@ -79,8 +81,6 @@ class Editcount extends SpecialPage {
 
 	/**
 	 * Parse the username and namespace parts of the input and return them
-	 *
-	 * @access private
 	 *
 	 * @param string $par
 	 * @return array
@@ -100,8 +100,6 @@ class Editcount extends SpecialPage {
 
 	/**
 	 * Compute and return the total edits in all namespaces
-	 *
-	 * @access private
 	 *
 	 * @param array $nscount An associative array
 	 * @return int
@@ -268,14 +266,12 @@ class Editcount extends SpecialPage {
 
 class EditcountHTML extends Editcount {
 	/**
-	 * @access private
 	 * @var array
 	 */
 	var $nscount;
 	var $nscountall;
 
 	/**
-	 * @access private
 	 * @var int
 	 */
 	var $total;
@@ -295,7 +291,6 @@ class EditcountHTML extends Editcount {
 	 * @param array $refreshTimestamps
 	 */
 	function outputHTML( $username, $uid, $nscount, $arcount, $wikitotal, $nscountall, $totalall, $refreshTimestamps ) {
-		global $wgOut;
 		wfProfileIn( __METHOD__ );
 
 		/* current wiki */
@@ -325,7 +320,7 @@ class EditcountHTML extends Editcount {
 			"username"			=> $username,
 			"editcounttable" 	=> $editcounttable
 		));
-		$wgOut->addHTML( $oTmpl->render("main-form") );
+		$this->getOutput()->addHTML( $oTmpl->render("main-form") );
 
 		$this->addRefreshTimestampsToOut( $refreshTimestamps );
 
@@ -335,19 +330,18 @@ class EditcountHTML extends Editcount {
 	/**
 	 * Make the editcount-by-namespaces HTML table
 	 *
-	 * @access private
 	 */
 	function makeTable() {
-		global $wgLang, $wgCityId, $wgSitename;
+		global $wgCityId, $wgSitename;
         wfProfileIn( __METHOD__ );
 
 		$total = wfMessage( 'editcount_total' )->escaped();
 		$wikiName = $wgSitename;
 		/* current wiki */
-		$ftotal = $wgLang->formatNum( $this->wikitotal );
+		$ftotal = $this->getLanguage()->formatNum( $this->wikitotal );
 		$percent = ($this->wikitotal > 0) ? wfPercent( $this->wikitotal / $this->wikitotal * 100 , 2 ) : wfPercent( 0 ); // @bug 4400
 		/* all wikis */
-		$ftotalall = $wgLang->formatNum( $this->totalall );
+		$ftotalall = $this->getLanguage()->formatNum( $this->totalall );
 		$percentall = ($this->totalall > 0) ? wfPercent( $this->totalall / $this->totalall * 100 , 2 ) : wfPercent( 0 );
 
         $oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
@@ -362,8 +356,8 @@ class EditcountHTML extends Editcount {
             "wikitotal"		=> $this->wikitotal,
             "nscountall"	=> $this->nscountall,
             "nstotalall"	=> $this->totalall,
-			"arcount"		=> $this->arcount,
-            "wgLang"		=> $wgLang,
+            "arcount"		=> $this->arcount,
+            "wgLang"		=> $this->getLanguage(),
         ));
         $res = $oTmpl->render("table");
         wfProfileOut( __METHOD__ );
@@ -375,24 +369,23 @@ class EditcountHTML extends Editcount {
 	 *
 	 * @param $refreshTimestamps Array of timestamps in format YmdHis e.g. 20131107192200
 	 *
-	 * @access private
 	 */
 	function addRefreshTimestampsToOut( $refreshTimestamps ) {
 		wfProfileIn( __METHOD__ );
-		global $wgOut, $wgLang, $wgDBname;
+		global $wgSitename;
 
 		// Current wikia column (using db name as column name)
 		if( isset( $refreshTimestamps['currentWikia'] ) ) {
-			$currentWikiaMsg = $wgDBname;
-			$nextRefCurrW = $wgLang->timeanddate( $refreshTimestamps['currentWikia'] ,true, true );
-			$wgOut->addHTML( '<p>' . wfMessage( 'editcount_refresh_time' )->params( $currentWikiaMsg, $nextRefCurrW )->text() . '</p>' );
+			$currentWikiaMsg = $wgSitename;
+			$nextRefCurrW = $this->getLanguage()->timeanddate( $refreshTimestamps['currentWikia'] ,true, true );
+			$this->getOutput()->addWikiMsg( 'editcount_refresh_time', $currentWikiaMsg, $nextRefCurrW );
 		}
 
 		// all wikias (summary column)
 		if( isset( $refreshTimestamps[ 'allWikias' ] ) ) {
 			$allWikiasMsg = wfMessage( 'editcount_allwikis' )->escaped();
-			$nextRefAllW = $wgLang->timeanddate( $refreshTimestamps[ 'allWikias' ] ,true, true );
-			$wgOut->addHTML( '<p>' . wfMessage( 'editcount_refresh_time' )->params( $allWikiasMsg, $nextRefAllW )->text() . '</p>' );
+			$nextRefAllW = $this->getLanguage()->timeanddate( $refreshTimestamps[ 'allWikias' ] ,true, true );
+			$this->getOutput()->addWikiMsg( 'editcount_refresh_time', $allWikiasMsg, $nextRefAllW );
 		}
 
 		wfProfileOut( __METHOD__ );
