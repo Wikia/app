@@ -47,8 +47,6 @@ function wikia_fbconnect_considerProfilePic( &$specialConnect ){
 			$picUrl = FBConnectProfilePic::getImgUrlById( $fb_id, FB_PIC_BIG );
 
 			if( $picUrl != '' ) {
-				$tmpFile = '';
-
 				$app = F::app();
 
 				// UPPv3 has been enabled in 2012 sitewide
@@ -57,7 +55,7 @@ function wikia_fbconnect_considerProfilePic( &$specialConnect ){
 
 				$data = new stdClass();
 				$data->source = 'facebook';
-				$data->file = $tmpFile;
+				$data->file = $picUrl;
 
 				$userProfilePageV3->saveUsersAvatar( $wgUser->getId(), $data );
 			}
