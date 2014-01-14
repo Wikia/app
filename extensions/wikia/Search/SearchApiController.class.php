@@ -16,7 +16,6 @@ class SearchApiController extends WikiaApiController {
 	const CROSS_WIKI_LIMIT = 25;
 	const PARAMETER_NAMESPACES = 'namespaces';
 	const MIN_ARTICLE_QUALITY_PARAM_NAME = 'minArticleQuality';
-	const MIN_ARTICLE_QUALITY_DEFAULT_VALUE = 10;
 
 	protected $allowedHubs = [ 'Gaming' => true, 'Entertainment' => true, 'Lifestyle' => true ];
 
@@ -106,7 +105,10 @@ class SearchApiController extends WikiaApiController {
 		if ( $this->request->getVal( 'lang' ) ) {
 			throw new InvalidParameterApiException( 'lang' );
 		}
-		$minArticleQuality = $this->request->getInt( self::MIN_ARTICLE_QUALITY_PARAM_NAME, self::MIN_ARTICLE_QUALITY_DEFAULT_VALUE );
+		$minArticleQuality = null;
+		if ( $this->request->getVal(self::MIN_ARTICLE_QUALITY_PARAM_NAME) != null ) {
+			$minArticleQuality = $this->request->getInt( self::MIN_ARTICLE_QUALITY_PARAM_NAME );
+		}
 		$hubs = $this->request->getArray( 'hubs' );
 		foreach ( $hubs as $hub ) {
 			if ( !isset( $this->allowedHubs[ $hub ] ) ) {
