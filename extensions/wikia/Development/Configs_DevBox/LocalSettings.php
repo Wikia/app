@@ -222,7 +222,7 @@ $wgDefaultExternalStore = array( "DB://dev-archive");
 $wgEnableOpenXSPC = true;
 
 //rebulild message cache when ?rebuildmessages is appended to url
-$wgLocalisationCacheConf[ "manualRecache" ] = !array_key_exists( 'rebuildmessages', $_GET );
+$wgLocalisationCacheConf[ "manualRecache" ] = false  && !array_key_exists( 'rebuildmessages', $_GET );
 
 // disable irc feed
 $wgRC2UDPEnabled = false;
