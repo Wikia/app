@@ -33,7 +33,7 @@ define( 'views.videohomepage.featured', [
 				'mouseleave.autohover #featured-video-bxslider': 'bxSliderStartAuto',
 
 				'mouseenter .bx-pager .bx-pager-item': 'showThumbs',
-				'mouseleave .bx-pager .bx-pager-item': 'setHoverTimeout',
+				'mouseleave .bx-pager .bx-pager-item': 'setHoverTimeout'
 			},
 
 			initialize: function( opts ) {

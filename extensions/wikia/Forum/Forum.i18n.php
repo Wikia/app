@@ -1035,17 +1035,57 @@ ___________________________________________ <br />
 );
 
 /** Persian (فارسی)
+ * @author Ebraminio
  * @author Reza1615
  */
 $messages['fa'] = array(
 	'forum-forum-title' => 'فروم',
 	'forum-specialpage-heading' => 'فروم',
 	'forum-specialpage-policies-edit' => 'ویرایش',
-	'forum-board-thread-follow' => 'دنبال کردن',
+	'forum-board-thread-follow' => 'دنبال‌کردن',
 	'forum-board-thread-following' => 'دنبال‌کردن',
 	'forum-thread-reply-placeholder' => 'ارسال پاسخ',
 	'forum-thread-reply-post' => 'پاسخ دادن',
 	'forum-discussion-post' => 'پست',
+);
+
+/** Finnish (suomi)
+ * @author Elseweyr
+ */
+$messages['fi'] = array(
+	'forum-forum-title' => 'Foorumi',
+	'forum-active-threads' => '$1 {{PLURAL:$1|aktiivinen keskustelu|aktiivista keskustelua}}',
+	'forum-active-threads-on-topic' => "$1 {{PLURAL:$1|aktiivinen keskustelu|aktiivista keskustelua}} aiheesta '''[[$2]]'''",
+	'forum-header-total-threads' => '<em>$1</em><span>{{PLURAL:$1|keskustelu<br />tässä Foorumissa|keskustelua<br />tässä Foorumissa}}</span>',
+	'forum-header-active-threads' => '<em>$1</em><span>{{PLURAL:$1|aktiivinen<br />keskustelu|aktiivista<br />keskustelua}}</span>',
+	'forum-specialpage-heading' => 'Foorumi',
+	'forum-specialpage-board-threads' => '$1 {{PLURAL:$1|keskustelu|keskustelua}}',
+	'forum-specialpage-board-posts' => '$1 {{PLURAL:$1|viesti|viestiä}}',
+	'forum-specialpage-board-lastpostby' => 'Viimeisimmän viestin kirjoitti',
+	'forum-specialpage-policies-edit' => 'Muokkaa',
+	'forum-specialpage-policies' => 'Foorumin säännöt / UKK',
+	'forum-board-title' => '$1 -keskustelupalsta',
+	'forum-board-topic-title' => 'Keskusteluja aiheesta $1',
+	'forum-board-topics' => 'Aiheet',
+	'forum-board-thread-follow' => 'Seuraa',
+	'forum-board-thread-following' => 'Seurattu',
+	'forum-board-thread-kudos' => '$1 kehua',
+	'forum-board-thread-replies' => '$1 {{PLURAL:$1|viesti|viestiä}}',
+	'forum-board-new-message-heading' => 'Aloita keskustelu',
+	'forum-no-board-selection-error' => '← Valitse keskustelupalsta',
+	'forum-thread-reply-placeholder' => 'Lähetä vastaus',
+	'forum-thread-reply-post' => 'Vastaa',
+	'forum-thread-deleted-return-to' => 'Palaa $1 -keskustelupalstalle',
+	'forum-sorting-option-newest-replies' => 'Viimeisimmät vastaukset',
+	'forum-sorting-option-popular-threads' => 'Suosituimmat',
+	'forum-sorting-option-most-replies' => 'Viimeisen 7 päivän aktiivisimmat',
+	'forum-sorting-option-newest-threads' => 'Uusimmat keskustelut',
+	'forum-sorting-option-oldest-threads' => 'Vanhimmat keskustelut',
+	'forum-discussion-post' => 'Luo keskustelu',
+	'forum-discussion-highlight' => 'Korosta tämä keskustelu',
+	'forum-discussion-placeholder-title' => 'Mistä haluat puhua?',
+	'forum-discussion-placeholder-message' => 'Kirjoita uusi viesti $1 -keskustelupalstalle',
+	'forum-discussion-placeholder-message-short' => 'Lähetä uusi viesti',
 );
 
 /** French (français)
@@ -2604,7 +2644,7 @@ ___________________________________________<br />
  tuỳ chọn email của bạn ở đây: http://community.wikia.com/Special:Preferences',
 	'forum-wiki-activity-msg' => 'trên $1',
 	'forum-wiki-activity-msg-name' => 'Board $1',
-	'forum-activity-module-heading' => 'Diễn đàn hoạt động',
+	'forum-activity-module-heading' => 'Hoạt động gần đây trên diễn đàn',
 	'forum-related-module-heading' => 'Chủ đề liên quan',
 	'forum-activity-module-posted' => '$1 gửi một trả lời cách đây $2',
 	'forum-activity-module-started' => '$1 bắt đầu một cuộc thảo luận cách đây $2',
@@ -2639,7 +2679,7 @@ ___________________________________________<br />
 	'forum-admin-merge-board-warning' => 'Các chủ đề trên Board này sẽ được sáp nhập vào một Board hiện tại.',
 	'forum-admin-merge-board-destination' => 'Chọn một Board để nhập đến:',
 	'forum-admin-delete-and-merge-button-label' => 'Xóa và hợp nhất',
-	'forum-admin-link-label' => 'Ban quản lý Board',
+	'forum-admin-link-label' => 'Quản lý Board',
 	'forum-autoboard-title-1' => 'Thảo luận chung',
 	'forum-autoboard-body-1' => 'Board này là dành cho cuộc hội thoại chung về wiki.',
 	'forum-autoboard-title-2' => 'Tin tức và thông báo',
@@ -2898,12 +2938,15 @@ ___________________________________________<br />
  * @author Dimension
  * @author Hzy980512
  * @author Liuxinyu970226
+ * @author User670839245
  * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
 	'forum-forum-title' => '论坛',
 	'forum-active-threads' => '$1{{PLURAL:$1|条活跃讨论|条活跃讨论}}',
 	'forum-active-threads-on-topic' => "$1{{PLURAL:$1|条活跃讨论|条活跃讨论}}有关：'''[[$2]]'''",
+	'forum-header-total-threads' => '<em>$1</em><span>在此论坛上<br />条帖子</span>',
+	'forum-header-active-threads' => '<em>$1</em><span>条活跃的<br />讨论</span>',
 	'forum-specialpage-heading' => '论坛',
 	'forum-specialpage-board-lastpostby' => '最后发帖者',
 	'forum-specialpage-policies-edit' => '编辑',

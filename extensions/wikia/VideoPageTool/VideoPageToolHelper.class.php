@@ -8,13 +8,13 @@ class VideoPageToolHelper extends WikiaModel {
 	const THUMBNAIL_WIDTH = 180;
 	const THUMBNAIL_HEIGHT = 100;
 
-	const THUMBNAIL_CATEGORY_WIDTH = 160;
-	const THUMBNAIL_CATEGORY_HEIGHT = 92;
+	const THUMBNAIL_CATEGORY_WIDTH = 263;
+	const THUMBNAIL_CATEGORY_HEIGHT = 148;
 
 	const MAX_THUMBNAIL_WIDTH = 1024;
 	const MAX_THUMBNAIL_HEIGHT = 461;
 
-	const CACHE_TTL_CATEGORY_DATA = 300;
+	const CACHE_TTL_CATEGORY_DATA = 3600;
 
 	public static $requiredRows = array(
 		'featured' => 5,
@@ -124,6 +124,9 @@ class VideoPageToolHelper extends WikiaModel {
 
 			// get thumbnail
 			$thumb = $file->transform( array( 'width' => self::THUMBNAIL_WIDTH, 'height' => self::THUMBNAIL_HEIGHT ) );
+			$thumbOptions = array(
+				'hidePlayButton' => false
+			);
 			$videoThumb = $thumb->toHtml( $thumbOptions );
 			$thumbUrl = $thumb->getUrl();
 
@@ -172,28 +175,36 @@ class VideoPageToolHelper extends WikiaModel {
 	}
 
 	/**
-	 * Get Category data
-	 * @param string $categoryTitle
-	 * @return array $data
+	 * Get videos tagged with the category given by parameter $categoryTitle
+	 * @param string $categoryTitle A category name, or a title object for a category
+	 * @param int $limit The maximum number of videos to return
+	 * @param array $thumbOptions
+	 * @return array $videos An array of video data where each array element has the structure:
+	 *   [ title => 'Video Title',
+	 *     url   => 'http://url.to.video',
+	 *     thumb => '<thumbnail_html_snippet>'
 	 */
-	public function getCategoryData( $categoryTitle ) {
+	public function getVideosByCategory( $categoryTitle, $limit = 100, $thumbOptions = array() ) {
 		wfProfileIn( __METHOD__ );
 
-		$memcKey = $this->getMemcKeyCategoryData( $categoryTitle->getDBkey() );
-		$data = $this->wg->memc->get( $memcKey );
-		if ( !is_array( $data ) ) {
+		// Accept either a category object or a category name
+		$dbKey = is_object( $categoryTitle ) ? $categoryTitle->getDBkey() : $categoryTitle;
+
+		$memcKey = $this->getMemcKeyVideosByCategory( $dbKey );
+		$videos = $this->wg->memc->get( $memcKey );
+		if ( !is_array( $videos ) ) {
 			$db = wfGetDB( DB_SLAVE );
 			$result = $db->select(
 				array( 'page', 'video_info', 'categorylinks' ),
 				array( 'page_id', 'page_title' ),
 				array(
-					'cl_to' => $categoryTitle->getDBkey(),
+					'cl_to' => $dbKey,
 					'page_namespace' => NS_FILE,
 				),
 				__METHOD__,
 				array(
 					'ORDER BY' => 'added_at DESC, page_title',
-					'LIMIT' => 1000,
+					'LIMIT' => $limit,
 				),
 				array(
 					'video_info' => array( 'LEFT JOIN', 'page_title = video_title' ),
@@ -201,14 +212,16 @@ class VideoPageToolHelper extends WikiaModel {
 				)
 			);
 
-			$data = array();
+			$thumbOptions['useTemplate'] = true;
+
+			$videos = array();
 			while ( $row = $db->fetchObject( $result ) ) {
 				$title = $row->page_title;
 				$file = WikiaFileHelper::getVideoFileFromTitle( $title );
 				if ( !empty( $file ) ) {
 					$thumb = $file->transform( array( 'width' => self::THUMBNAIL_CATEGORY_WIDTH, 'height' => self::THUMBNAIL_CATEGORY_HEIGHT ) );
-					$videoThumb = $thumb->toHtml( array( 'duration' => true ) );
-					$data[] = array(
+					$videoThumb = $thumb->toHtml( $thumbOptions );
+					$videos[] = array(
 						'title' => $title->getText(),
 						'url'   => $title->getFullURL(),
 						'thumb' => $videoThumb,
@@ -216,28 +229,29 @@ class VideoPageToolHelper extends WikiaModel {
 				}
 			}
 
-			$this->wg->memc->set( $memcKey, $data, self::CACHE_TTL_CATEGORY_DATA );
+			$this->wg->memc->set( $memcKey, $videos, self::CACHE_TTL_CATEGORY_DATA );
 		}
 
 		wfProfileOut( __METHOD__ );
 
-		return $data;
+		return $videos;
 	}
 
 	/**
-	 * Get memcache key for Category Data
+	 * Get memcache key for videos by category
+	 * @param $categoryName
 	 * @return string
 	 */
-	public function getMemcKeyCategoryData( $categoryName ) {
+	public function getMemcKeyVideosByCategory( $categoryName ) {
 		$categoryName = md5( $categoryName );
-		return wfMemcKey( 'videopagetool', 'categorydata', $categoryName );
+		return wfMemcKey( 'videopagetool', 'videosbycategory', $categoryName );
 	}
 
 	/**
-	 * Clear cache for Category Data
+	 * Clear cache for videos by category
 	 */
-	public function invalidateCacheCategoryData( $categoryName ) {
-		$this->wg->Memc->delete( $this->getMemcKeyCategoryData( $categoryName ) );
+	public function invalidateCacheVideosByCategory( $categoryName ) {
+		$this->wg->Memc->delete( $this->getMemcKeyVideosByCategory( $categoryName ) );
 	}
 
 	/**
@@ -423,14 +437,16 @@ class VideoPageToolHelper extends WikiaModel {
 	 * Render assets by section (used in VideoHomePageController)
 	 * @param VideoPageToolProgram $program
 	 * @param string $section [featured/category/fan]
+	 * @param array $thumbOptions
 	 * @return type
 	 */
-	public function renderAssetsBySection( $program, $section ) {
+	public function renderAssetsBySection( $program, $section, $thumbOptions = array() ) {
 		$data = array();
 		if ( $program instanceof VideoPageToolProgram ) {
-			$thumbOptions = array( 'noLightbox' => true );
+			$thumbOptions['noLightbox'] = true;
 			$assets = $program->getAssetsBySection( $section );
 			foreach ( $assets as $asset ) {
+				/** @var VideoPageToolAsset $asset */
 				$data[] = $asset->getAssetData( $thumbOptions );
 			}
 		}

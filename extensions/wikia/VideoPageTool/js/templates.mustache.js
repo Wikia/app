@@ -1,1 +1,1 @@
-define( 'templates.mustache', [], function() { 'use strict'; return {"autocompleteItem" : '<strong>{{ name }}</strong>',"example" : '<h1>Hello {{ name }}</h1>', "done": "true"}; });
+define( 'templates.mustache', [], function() { 'use strict'; return {"autocompleteItem" : '<strong>{{ name }}</strong>',"carousel" : '<span class="carousel-title">{{displayTitle}}</span><div class="category-carousel"></div>',"carouselThumb" : '{{{thumb}}}<div><a href="{{url}}">{{title}}</a></div>',"example" : '<h1>Hello {{ name }}</h1>', "done": "true"}; });

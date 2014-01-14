@@ -187,9 +187,11 @@ $messages['fa'] = array(
 
 /** Finnish (suomi)
  * @author Centerlink
+ * @author Elseweyr
  * @author Nedergard
  */
 $messages['fi'] = array(
+	'contentfeeds-newimages-rss-desc' => 'Syöte sivulta $1',
 	'contentfeeds-firstfewarticles-tag-header' => 'Luo ensimmäiset sivusi!',
 	'contentfeeds-firstfewarticles-tag-title' => 'Otsikko',
 	'contentfeeds-firstfewarticles-tag-next' => 'Seuraava',

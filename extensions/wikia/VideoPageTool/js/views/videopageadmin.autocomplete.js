@@ -8,7 +8,6 @@
  *		collection: new CategoryCollection() // Instatiated collection is available inside the view
  * } );
  *
- * @requires
  * Supplied parent element must contain a DOM structure that includes:
  * div.autocomplete,
  * input[data-autocomplete]
@@ -190,8 +189,7 @@ define( 'views.videopageadmin.autocomplete', [
 						this.$results.scrollTop( scroll - this.$results.height() );
 					}
 				}
-			},
+			}
 	} );
-
 	return AutocompleteView;
 } );

@@ -1,7 +1,8 @@
-@import "skins/oasis/css/mixins/box-sizing-border-box";
-@import "skins/oasis/css/mixins/clearfix";
-@import "skins/oasis/css/mixins/opacity";
-@import "skins/oasis/css/mixins/transition";
+@import 'skins/oasis/css/core/color';
+@import 'skins/oasis/css/mixins/box-sizing-border-box';
+@import 'skins/oasis/css/mixins/clearfix';
+@import 'skins/oasis/css/mixins/opacity';
+@import 'skins/oasis/css/mixins/transition';
 @import '../mixins/_sprite-VideoPageTool.scss';
 
 
@@ -22,10 +23,6 @@ $play-button-overlay-fade-duration: 400ms;
 }
 
 
-.WikiaPage {
-	border: 0;
-}
-
 // Allow takeover of left/right margins on this page.  There's no UGC content so it should be fine.
 .WikiaArticle {
 	overflow: visible;
@@ -34,8 +31,10 @@ $play-button-overlay-fade-duration: 400ms;
 .featured-video {
 	@include clearfix;
 	background: black;
-	margin: 0 -10px;
+	margin: 0 0 40px 0;
+	max-height: 780px;
 	width: auto;
+
 	.featured-video-slider{
 		position: relative;
 		ul {
@@ -71,7 +70,7 @@ $play-button-overlay-fade-duration: 400ms;
 					&:after {
 						@include opacity(10);
 						background: black;
-						content: "";
+						content: '';
 						display: block;
 						height: 100%;
 						left: 0;
@@ -116,9 +115,15 @@ $play-button-overlay-fade-duration: 400ms;
 				// extend the element to the bottom of the video thumbnails so cursor stays hovered
 				padding-top: 15px;
 				a {
+					background: $color-page-border;
 					width: 8px;
 					height: 8px;
 					margin: 0 5px 0 4px;
+				}
+
+				a.active {
+					background: darken( $color-page-border, 40% );
+
 				}
 			}
 		}
@@ -169,7 +174,7 @@ $play-button-overlay-fade-duration: 400ms;
 					&:after {
 						@include opacity( 80 );
 						background: black;
-						content: "";
+						content: '';
 						display: block;
 						height: 100%;
 						left: 0;
