@@ -22,7 +22,7 @@ class VideoHomePageArticle extends Article {
 
 		$out = $this->getContext()->getOutput();
 
-		$html = F::app()->sendRequest('VideoHomePageController', 'index');
+		$html = F::app()->renderView( 'VideoHomePageController', 'index' );
 		$out->clearHTML();
 
 		$html .= F::app()->renderView( 'VideoHomePage', 'partners' );

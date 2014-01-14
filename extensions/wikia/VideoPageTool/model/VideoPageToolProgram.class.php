@@ -394,7 +394,7 @@ class VideoPageToolProgram extends WikiaModel {
 	/**
 	 * Clear all program caches
 	 */
-	protected function invalidateCache() {
+	public function invalidateCache() {
 		$this->invalidateCacheCompletedSections();
 		$this->invalidateCachePrograms( $this->language );
 		$this->invalidateNearestDate( $this->language );
@@ -450,7 +450,7 @@ class VideoPageToolProgram extends WikiaModel {
 
 		$memKey = self::getMemcKeyPrograms( $language, $startDate );
 		$programs = $app->wg->Memc->get( $memKey );
-		if ( empty( $programs )) {
+		if ( empty( $programs ) ) {
 			$db = wfGetDB( DB_SLAVE );
 
 			$result = $db->select(
