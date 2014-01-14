@@ -98,6 +98,10 @@ class OnWiki extends AbstractDismax
 	 */
 	protected function getQueryClausesString() {
 		$queryClauses = array( Utilities::valueForField( 'wid', $this->config->getCityId() ) );
+		$pageId = $this->config->getPageId();
+		if ( $pageId ) {
+			$queryClauses[ ] = Utilities::valueForField( 'pageid', $pageId );
+		}
 		$nsQuery = '';
 		foreach ( $this->config->getNamespaces() as $namespace ) {
 			$nsQuery .= ( !empty( $nsQuery ) ? ' OR ' : '' ) . Utilities::valueForField( 'ns', $namespace );
@@ -112,10 +116,23 @@ class OnWiki extends AbstractDismax
 	 */
 	protected function getFilterQueryString()
 	{
+
 		$namespaces = [];
 		foreach ( $this->config->getNamespaces() as $ns ) {
 			$namespaces[] = Utilities::valueForField( 'ns', $ns );
 		}
-		return implode( ' AND ', [ sprintf( '(%s)', implode( ' OR ', $namespaces ) ), Utilities::valueForField( 'wid', $this->config->getCityId() ) ] );
+
+		$minArticleQuality = $this->config->getMinArticleQuality();
+		$filters = [
+			sprintf( '(%s)', implode( ' OR ', $namespaces ) ),
+			Utilities::valueForField( 'wid', $this->config->getCityId() ),
+		];
+
+		if ( $minArticleQuality ) {
+			$filters[ ] = Utilities::rangeIntValueField( 'articleQuality_i', $minArticleQuality );
+		}
+
+		return implode( ' AND ', $filters );
+
 	}
 }

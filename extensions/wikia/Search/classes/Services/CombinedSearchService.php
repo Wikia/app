@@ -17,6 +17,7 @@ class CombinedSearchService {
 	const SNIPPET_LENGTH = 200;
 	const IMAGE_SIZE = 80;
 	const TOP_ARTICLES_CACHE_TIME = 604800; // 60 * 60 * 24 * 7 - one week
+	const ARTICLE_QUALITY_EPSILON = 1;
 
 	/**
 	 * @var bool
@@ -60,7 +61,7 @@ class CombinedSearchService {
 		return $this->hideNonCommercialContent;
 	}
 
-	public function search($query, $langs, $namespaces, $hubs, $limit = null) {
+	public function search($query, $langs, $namespaces, $hubs, $limit = null, $minArticleQuality = 10) {
 		$timer = Time::start([__CLASS__, __METHOD__]);
 		$wikias = $this->phraseSearchForWikias($query, $langs, $hubs);
 
@@ -72,7 +73,7 @@ class CombinedSearchService {
 		} else {
 			$result[ 'wikias' ] = [];
 		}
-		$articles = $this->phraseSearchForArticles($query, $namespaces, $langs, $hubs);
+		$articles = $this->phraseSearchForArticles($query, $namespaces, $langs, $hubs, $minArticleQuality);
 		$result['articles'] = array_slice( $articles, 0, $limit );
 		return $result;
 	}
@@ -97,11 +98,11 @@ class CombinedSearchService {
 		return $articles;
 	}
 
-	public function phraseSearchForArticles($query, $namespaces, $langs, $hubs = null) {
+	public function phraseSearchForArticles($query, $namespaces, $langs, $hubs = null, $minArticleQuality = 10) {
 		$timer = Time::start([__CLASS__, __METHOD__]);
 		$articles = [];
 		foreach( $langs as $lang ) {
-			$currentResults = $this->queryPhraseSolrForArticles($query, $namespaces, $lang, $hubs);
+			$currentResults = $this->queryPhraseSolrForArticles($query, $namespaces, $lang, $hubs, $minArticleQuality);
 			foreach ($currentResults as $article) {
 				$articles[] = $this->processArticle($article);
 			}
@@ -143,8 +144,11 @@ class CombinedSearchService {
 	 * @param $query
 	 * @param $namespaces
 	 * @param $lang
+	 * @param null|string[] $hubs
+	 * @param int $minArticleQuality
+	 * @return array
 	 */
-	protected function queryPhraseSolrForArticles( $query, $namespaces, $lang, $hubs = null ) {
+	protected function queryPhraseSolrForArticles( $query, $namespaces, $lang, $hubs = null, $minArticleQuality = 10 ) {
 		$requestedFields = ['title' => Utilities::field('title', $lang), "url", "id", "score", "pageid", "lang", "wid", Utilities::field('html', $lang)];
 
 		$config = (new Factory())->getSolariumClientConfig();
@@ -159,6 +163,7 @@ class CombinedSearchService {
 
 		$select->setRows(self::MAX_TOTAL_ARTICLES);
 		$select->setQuery( $query );
+		$select->createFilterQuery( 'article_quality')->setQuery( '-(article_quality_i:[0 TO ' . ( $minArticleQuality - self::ARTICLE_QUALITY_EPSILON ) . '])' ); // article quality is null or in range $minArticleQuality..100
 		//add filters
 		$select->createFilterQuery( 'users' )->setQuery('activeusers:[0 TO *]');
 		$select->createFilterQuery( 'pages' )->setQuery('wikipages:[500 TO *]');

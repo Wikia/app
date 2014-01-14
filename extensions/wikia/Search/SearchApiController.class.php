@@ -15,6 +15,8 @@ class SearchApiController extends WikiaApiController {
 	const ITEMS_PER_BATCH = 25;
 	const CROSS_WIKI_LIMIT = 25;
 	const PARAMETER_NAMESPACES = 'namespaces';
+	const MIN_ARTICLE_QUALITY_PARAM_NAME = 'minArticleQuality';
+	const MIN_ARTICLE_QUALITY_DEFAULT_VALUE = 10;
 
 	protected $allowedHubs = [ 'Gaming' => true, 'Entertainment' => true, 'Lifestyle' => true ];
 
@@ -81,13 +83,30 @@ class SearchApiController extends WikiaApiController {
 		$this->response->setVal( 'items', $items );
 	}
 
+	/**
+	 * Fetches results for combined search for submitted query
+	 *
+	 * @requestParam string $query The query to use for the search
+	 * @requestParam string[] $langs [OPTIONAL] list of characters
+	 * @requestParam string[] $hubs [OPTIONAL] list of hubs to filter by
+	 * @requestParam string[] $namespaces [OPTIONAL] list of namespaces to filter by
+	 * @requestParam string[] $hubs [OPTIONAL] list of hubs to filter by
+	 * @requestParam integer $limit [OPTIONAL] The number of items
+	 *
+	 * @responseParam array $result contains list of wikias results and articles results.
+	 *
+	 * @example &query=kermit
+	 * @example &query=kermit&langs=en&limit=2
+	 */
 	public function getCombined() {
 		if ( !$this->request->getVal( 'query' ) ) {
 			throw new MissingParameterApiException( 'query' );
 		}
+		// use langs not lang
 		if ( $this->request->getVal( 'lang' ) ) {
 			throw new InvalidParameterApiException( 'lang' );
 		}
+		$minArticleQuality = $this->request->getInt( self::MIN_ARTICLE_QUALITY_PARAM_NAME, self::MIN_ARTICLE_QUALITY_DEFAULT_VALUE );
 		$hubs = $this->request->getArray( 'hubs' );
 		foreach ( $hubs as $hub ) {
 			if ( !isset( $this->allowedHubs[ $hub ] ) ) {
@@ -102,7 +121,7 @@ class SearchApiController extends WikiaApiController {
 		$limit = $this->request->getVal( 'limit', null );
 
 		$searchService = new CombinedSearchService();
-		$response = $searchService->search($query, $langs, $namespaces, $hubs, $limit);
+		$response = $searchService->search($query, $langs, $namespaces, $hubs, $limit, $minArticleQuality);
 
 		$this->getResponse()->setData($response);
 	}

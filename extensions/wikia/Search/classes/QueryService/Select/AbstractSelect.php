@@ -150,6 +150,7 @@ abstract class AbstractSelect
 				'categories',
 				'hub',
 				'lang',
+				'article_quality_i'
 			];
 	
 	/**
@@ -257,7 +258,7 @@ abstract class AbstractSelect
 	/**
 	 * Registers meta-parameters for the query
 	 * @param Solarium_Query_Select $query
-	 * @return \Wikia\Search\QueryService\Select\AbstractSelect
+	 * @return Wikia\Search\QueryService\Select\AbstractSelect
 	 */
 	protected function registerQueryParams( Solarium_Query_Select $query ) {
 		$config = $this->getConfig();
@@ -289,7 +290,7 @@ abstract class AbstractSelect
 	/**
 	 * Configures filter queries to, for instance, prevent duplicate results from PTT, or enable better caching.
 	 * @param Solarium_Query_Select $query
-	 * @return \Wikia\Search\QueryService\Select\AbstractSelect
+	 * @return Wikia\Search\QueryService\Select\AbstractSelect
 	 */
 	protected function registerFilterQueries( Solarium_Query_Select $query ) {
 		$config = $this->getConfig();
@@ -302,7 +303,7 @@ abstract class AbstractSelect
 	/**
 	 * Used to register a filter query based on settings in the config.
 	 * Children can override this method optionally.
-	 * @return \Wikia\Search\QueryService\Select\AbstractSelect
+	 * @return Wikia\Search\QueryService\Select\AbstractSelect
 	 */
 	protected function registerFilterQueryForMatch() {
 		return $this;

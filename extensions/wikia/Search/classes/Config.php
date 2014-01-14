@@ -80,6 +80,12 @@ class Config
 	protected $wikiId = 0;
 
 	/**
+	 * Id of page to search for
+	 * @var int
+	 */
+	protected $pageId = 0;
+
+	/**
 	 * Result offset for our query
 	 * @var int
 	 */
@@ -167,6 +173,12 @@ class Config
 	protected $commercialUse;
 
 	/**
+	 * Minimum article (filter)
+	 * @var int
+	 */
+	protected  $minArticleQuality = 0;
+
+	/**
 	 * This array allows us to associate sort arguments from the request with the appropriate sorting format
 	 * @var array
 	 */
@@ -236,7 +248,7 @@ class Config
 
 	/**
 	 * If an error occurred during search, we store it here.
-	 * @var Exception
+	 * @var \Exception
 	 */
 	protected $error;
 
@@ -284,7 +296,6 @@ class Config
 				];
 
 		$this->filterCodes = array_merge( $this->filterCodes, $dynamicFilterCodes );
-
 		$this->configureByArray( $params );
 	}
 
@@ -417,6 +428,24 @@ class Config
 			$this->setSort( $sort[0], $sort[1] );
 		}
 		return $this;
+	}
+
+	/**
+	 * Sets minimum article quality to to filter by
+	 * @param int $minArticleQuality
+	 * @return $this
+	 */
+	public function setMinArticleQuality( $minArticleQuality ) {
+		$this->minArticleQuality = (int)$minArticleQuality;
+		return $this;
+	}
+
+	/**
+	 * Sets minimum article quality to to filter by
+	 * @returns int
+	 */
+	public function getMinArticleQuality() {
+		return $this->minArticleQuality;
 	}
 
 	/**
@@ -631,7 +660,7 @@ class Config
 
 	/**
 	 * We set any exceptions called during Wikia\Search\QueryService\Select\AbstractSelect::search here
-	 * @param Exception $error
+	 * @param \Exception $error
 	 * @return \Wikia\Search\Config
 	 */
 	public function setError( \Exception $error ) {
@@ -641,7 +670,7 @@ class Config
 
 	/**
 	 * Returns the currently stored error.
-	 * @return null|Exception
+	 * @return null|\Exception
 	 */
 	public function getError() {
 		return $this->error;
@@ -731,7 +760,7 @@ class Config
 	/**
 	 * Synonym function for backward compatbility
 	 * @param  boolean $apply
-	 * @return Wikia\Search\Config provides fluent interface
+	 * @return \Wikia\Search\Config provides fluent interface
 	 */
 	public function setOnWiki( $apply ) {
 		return $this->setQueryService( 'Select\\Dismax\\OnWiki', $apply );
@@ -925,6 +954,26 @@ class Config
 	}
 
 	/**
+	 * Sets pageId to search for
+	 * @param $pageId
+	 * @return $this
+	 */
+	public function setPageId($pageId)
+	{
+		$this->pageId =(int) $pageId;
+		return $this;
+	}
+
+	/**
+	 * Get currently set pageId
+	 * @return int
+	 */
+	public function getPageId()
+	{
+		return $this->pageId;
+	}
+
+	/**
 	 * Backwards compatibility
 	 * @param  int $value
 	 * @return \Wikia\Search\Config
@@ -935,7 +984,7 @@ class Config
 
 	/**
 	 * Sets the page, which is a shortcut for offset/limit handling
-	 * @param int value
+	 * @param int $value
 	 * @return \Wikia\Search\Config
 	 */
 	public function setPage( $value ) {
@@ -954,7 +1003,7 @@ class Config
 	/**
 	 * Sets the result set
 	 * @param \Wikia\Search\ResultSet\AbstractResultSet $results
-	 * @return \Wikia\Search|Config
+	 * @return \Wikia\Search\Config
 	 */
 	public function setResults( \Wikia\Search\ResultSet\AbstractResultSet $results ) {
 		$this->results = $results;
