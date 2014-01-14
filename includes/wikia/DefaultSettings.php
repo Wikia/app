@@ -17,12 +17,7 @@ if( !defined( 'MEDIAWIKI' ) ) {
 	die( 1 );
 }
 
-/**
- * Use revision number
- */
-include "$IP/includes/wikia/wgCacheBuster.php";
-$wgStyleVersion = $wgMergeStyleVersionJS = $wgMergeStyleVersionCSS = $wgCacheBuster;
-
+$wgStyleVersion = "66666";
 /**
  * @name wgAkamaiGlobalVersion
  *
