@@ -7,13 +7,8 @@ $(function () {
 	};
 
 	ManageWikiaHome.prototype = {
-		MIN_CHARS_TO_START_FILTERING: 3,
-		isListChangingDelayed: false,
-		isBlocked: false,
-		locked: false,
 		visualizationLang: 'en',
 		flags: {},
-		modalInfo: { content: '' },
 		wikisPerCollection: [],
 		SLOTS_IN_TOTAL: 0,
 		uiModal: undefined,
@@ -55,6 +50,7 @@ $(function () {
 				.removeAttr('selected');
 		},
 		isWikiBlocked: function (wikiId) {
+			$('body').startThrobbing();
 			return $.nirvana.sendRequest({
 				controller: 'ManageWikiaHome',
 				method: 'isWikiBlocked',
@@ -62,6 +58,9 @@ $(function () {
 				data: {
 					lang: this.visualizationLang,
 					wikiId: wikiId
+				},
+				callback: function() {
+					$('body').stopThrobbing();
 				}
 			});
 		},
