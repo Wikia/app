@@ -26,18 +26,20 @@ function wikia_fbconnect_init(){
  * function will check to see if the user has a Wikia Avatar and if they don't, it will attempt to
  * use this Facebook-connected user's profile picture as their Wikia Avatar.
  *
- * FIXME: Is there a way to make this fail gracefully if we ever un-include the Masthead extension?
+ * This function is depended on Masthead and UserProfilePageController classes
  */
 function wikia_fbconnect_considerProfilePic( &$specialConnect ){
-	wfProfileIn(__METHOD__);
+	wfProfileIn( __METHOD__ );
 	global $wgUser;
 
 	// We need the facebook id to have any chance of getting a profile pic.
-	$fb_ids = FBConnectDB::getFacebookIDs($wgUser);
+	$fb_ids = FBConnectDB::getFacebookIDs( $wgUser );
+
 	if( count( $fb_ids ) > 0 ) {
 		$fb_id = array_shift( $fb_ids );
 
-		// If the useralready has a masthead avatar, don't overwrite it, this function shouldn't alter anything in that case.
+		// If the user already has a masthead avatar, don't overwrite it,
+		// this function shouldn't alter anything in that case.
 		$masthead = Masthead::newFromUser( $wgUser );
 
 		if( !$masthead->hasAvatar() ) {
@@ -46,15 +48,17 @@ function wikia_fbconnect_considerProfilePic( &$specialConnect ){
 
 			if( $picUrl != '' ) {
 				$tmpFile = '';
-				$sUrl = $masthead->uploadByUrlToTempFile( $picUrl, $tmpFile );
 
 				$app = F::app();
 
 				// UPPv3 has been enabled in 2012 sitewide
 				// https://github.com/Wikia/config/blob/dev/CommonExtensions.php#L1714
 				$userProfilePageV3 = new UserProfilePageController( $app );
+
+				$data = new stdClass();
 				$data->source = 'facebook';
 				$data->file = $tmpFile;
+
 				$userProfilePageV3->saveUsersAvatar($wgUser->getId(), $data);
 			}
 		}
