@@ -86,7 +86,16 @@ $messages['en'] = array(
 
 	'manage-wikia-home-collection-hero-image-tooltip' => 'This image should be $1px × $2px',
 	'manage-wikia-home-collection-sponsor-image-tooltip' => 'This image should be $1px × $2px',
-	'manage-wikia-home-collection-add-file-button' => 'Add a photo'
+	'manage-wikia-home-collection-add-file-button' => 'Add a photo',
+
+	'manage-wikia-home-stats-header' => 'Corporate main page stats',
+	'manage-wikia-home-stats-text' => 'Those stats are displayed on all corporate sites without separation per language.',
+	'manage-wikia-home-stats-visitors-label' => 'Monthly visitors',
+	'manage-wikia-home-stats-mobile-percentage-label' => '% Mobile Visitors',
+	'manage-wikia-home-stats-edits-default-label' => 'Changes today fallback',
+	'manage-wikia-home-stats-total-pages-label' => 'Total Pages fallback',
+	'manage-wikia-home-stats-success' => 'Stats updated successfully!',
+	'manage-wikia-home-stats-failure' => 'Data wasn\'t saved. Please correct errors in form and try again. '
 );
 
 /** Message documentation (Message documentation)
@@ -204,6 +213,14 @@ Parameters:
 * $2 - its height',
 	'manage-wikia-home-collection-add-file-button' => 'A label on buttons which open the image uploader.
 {{Identical|Add photo}}',
+	'manage-wikia-home-stats-header' => 'Header for corporate main page stats management section',
+	'manage-wikia-home-stats-text' => 'Message which informs user that stats in this section works globally without separation per language.',
+	'manage-wikia-home-stats-visitors-label' => "Label for 'Monthly visitors' form field.",
+	'manage-wikia-home-stats-mobile-percentage-label' => "Label for '% Mobile Visitors' form field.",
+	'manage-wikia-home-stats-edits-default-label' => "Label for 'Changes today' form field which is fallback on main page used when something wrong happen in the code.",
+	'manage-wikia-home-stats-total-pages-label' => "Label for 'Total Pages' form field which is fallback on main page used when something wrong happen in the code.",
+	'manage-wikia-home-stats-success' => 'Message after successful save.',
+	'manage-wikia-home-stats-failure' => "Message which informs user that there data weren't saved because of errors in the form.",
 );
 
 /** Arabic (العربية)

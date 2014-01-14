@@ -213,11 +213,11 @@ var WikiaFullGptHelper = function (log, window, document, adLogicPageLevelParams
 			doneCallbacks[slotnameGpt] = function () {
 				var status, height;
 
-				// TODO: unify forced status and height based status?
-				if (window.adDriver2ForcedStatus && window.adDriver2ForcedStatus[slotname]) {
-					status = window.adDriver2ForcedStatus[slotname];
-					log(['doneCallback', slotname, 'forced status', status], 4, logGroup);
-					if (status === 'success' && typeof success === 'function') {
+				status = window.adDriver2ForcedStatus && window.adDriver2ForcedStatus[slotname];
+
+				if (status === 'success') {
+					log(['doneCallback', slotname, 'running success callback (forced status)'], 4, logGroup);
+					if (typeof success === 'function') {
 						success();
 					}
 				} else {

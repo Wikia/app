@@ -53,6 +53,18 @@ $wgExtensionCredits['specialpage'][] = array(
 
 $wgSpecialPages['DevBoxPanel'] = 'DevBoxPanel';
 
+if (getenv('wgDevelEnvironmentName')) {
+        $wgDevelEnvironmentName = getenv('wgDevelEnvironmentName');
+} else {
+        $host = gethostname();
+        $host = explode("-", $host);
+        $wgDevelEnvironmentName = trim($host[1]);
+}
+
+// Asset manaager and ajax requests come in "too early" for the rest of config
+// So we need a fallback global domain.  This is kind of a hack, fixme.
+$wgDevboxDefaultWikiDomain = 'www.wikia.com';
+
 class DevBoxPanel extends SpecialPage {
 	public function __construct(){
 		// macbre: don't run code below when running in command line mode (memcache starts to act strange) - NOTE: This macbre code was in a different spot... this may be fixed implicitly now.

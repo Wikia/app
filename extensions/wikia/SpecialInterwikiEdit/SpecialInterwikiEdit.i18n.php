@@ -351,6 +351,13 @@ $messages['kn'] = array(
 	'iwedit-all-interwikis' => 'ಎಲ್ಲಾ ಇಂಟರ್ವಿಕಿಗಳು',
 );
 
+/** Karachay-Balkar (къарачай-малкъар)
+ * @author Iltever
+ */
+$messages['krc'] = array(
+	'iwedit-update' => 'Джангырт',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */

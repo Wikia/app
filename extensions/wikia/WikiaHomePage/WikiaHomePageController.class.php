@@ -51,8 +51,6 @@ class WikiaHomePageController extends WikiaController {
 	//failsafe
 	const FAILSAFE_ARTICLE_TITLE = 'Failsafe';
 
-	const HOMEPAGE_MEMC_KEY_VER = '1.04';
-
 	/**
 	 * @var WikiaHomePageHelper
 	 */
@@ -73,6 +71,7 @@ class WikiaHomePageController extends WikiaController {
 		$this->helper = new WikiaHomePageHelper();
 		$this->wg->Out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/WikiaHomePage/css/WikiaHomePage.scss'));
 	}
+
 
 	public function index() {
 		//cache response on varnish for 1h to enable rolling of stats
@@ -145,25 +144,10 @@ class WikiaHomePageController extends WikiaController {
 	public function getStats() {
 		wfProfileIn(__METHOD__);
 
-		$memKey = wfSharedMemcKey('wikiahomepage', 'stats', $this->wg->contLang->getCode(), self::HOMEPAGE_MEMC_KEY_VER);
+		$memKey = $this->helper->getStatsMemcacheKey();
 		$stats = $this->wg->Memc->get($memKey);
 		if (empty($stats)) {
-			$stats['visitors'] = $this->helper->getStatsFromArticle('StatsVisitors');
-			$stats['mobilePercentage'] = $this->helper->getStatsFromArticle('MobilePercentage') / 100.0;
-
-			$stats['edits'] = $this->helper->getEdits();
-			if (empty($stats['edits'])) {
-				$stats['editsDefault'] = $this->helper->getStatsFromArticle('StatsEdits');
-			}
-
-			$stats['communities'] = $this->helper->getTotalCommunities();
-
-			$defaultTotalPages = $this->helper->getStatsFromArticle('StatsTotalPages');
-			$totalPages = intval(Wikia::get_content_pages());
-			$stats['totalPages'] = ($totalPages > $defaultTotalPages) ? $totalPages : $defaultTotalPages;
-
-			$stats['newCommunities'] = $this->helper->getLastDaysNewCommunities();
-
+			$stats = $this->helper->getStatsIncludingFallbacks();
 			$this->wg->Memc->set($memKey, $stats, 60 * 60 * 1);
 		}
 
@@ -486,10 +470,18 @@ class WikiaHomePageController extends WikiaController {
 	 */
 	public function renderHubSection() {
 		// biz logic here
+		$heroUrl = $this->request->getVal('herourl');
+		$heroImageUrl = $this->request->getVal('heroimageurl');
+
+		// Don't show HUB if we don't have data ~ we don't have image URL and/or HUB URL
+		if ( empty( $heroImageUrl ) || empty( $heroUrl ) ) {
+			return false;
+		}
+
 		$this->classname = $this->request->getVal('classname');
 		$this->heading = $this->request->getVal('heading');
-		$this->heroimageurl = $this->request->getVal('heroimageurl');
-		$this->herourl = $this->request->getVal('herourl');
+		$this->heroimageurl = $heroImageUrl;
+		$this->herourl = $heroUrl;
 		$this->creative = $this->request->getVal('creative');
 		$this->moreheading = $this->request->getVal('moreheading');
 		$this->morelist = $this->request->getVal('morelist');
