@@ -240,23 +240,26 @@ function SharedHelpHook(&$out, &$text) {
 				$idx2 = strpos($tmp, 'end');
 				$key = trim(substr($tmp, $idx1+4, $idx2-$idx1));
 				$sharedArticle = array('cachekey' => $key, 'timestamp' => wfTimestamp());
-				$wgMemc->set($sharedArticleKey, $sharedArticle);
-				wfDebug("SharedHelp: using parser cache {$sharedArticle['cachekey']}\n");
+				$wgMemc->set( $sharedArticleKey, $sharedArticle );
+				wfDebug( "SharedHelp: using parser cache {$sharedArticle['cachekey']}\n" );
 			}
 			curl_close( $c );
 		}
 
 		if ( empty( $content ) ) {
-			wfProfileOut(__METHOD__);
+			//if on mobile, show 404 instead of empty page
+			if( F::app()->checkskin( 'wikiamobile' ) ){
+				WikiaMobileErrorService::setDisplayErrorPage( true );
+			}
+			wfProfileOut( __METHOD__ );
 			return true;
 		} else {
 			// So we don't return 404s for local requests to these pages as they have content (BugID: 44611)
 			$out->setStatusCode( 200 );
-			WikiaMobileHooks::resetDisplayErrorPage();
 		}
 
 		//process article if not redirected before
-		if (empty($wasRedirected)) {
+		if ( empty( $wasRedirected ) ) {
 			# get rid of editsection links
 			$content = preg_replace("|<span class=\"editsection( .*)?\"><a href=\".*?\" title=\".*?\">.*?<\/a><\/span>|", "", $content);
 			$content = strtr($content,

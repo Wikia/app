@@ -7,6 +7,22 @@
 	 */
 class WikiaMobileErrorService extends WikiaService {
 	/**
+	 * @var bool
+	 */
+	static private $displayErrorPage;
+	/**
+	 * @param bool
+	 */
+	static function setDisplayErrorPage( $value = false ){
+		self::$displayErrorPage = $value;
+	}
+	/**
+	 * @return bool
+	 */
+	static function getDisplayErrorPage(){
+		return self::$displayErrorPage;
+	}
+	/**
 	 * Page Not Found
 	 *
 	 * Get 20 most recent edited page
