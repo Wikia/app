@@ -59,11 +59,11 @@ function wikia_fbconnect_considerProfilePic( &$specialConnect ){
 				$data->source = 'facebook';
 				$data->file = $tmpFile;
 
-				$userProfilePageV3->saveUsersAvatar($wgUser->getId(), $data);
+				$userProfilePageV3->saveUsersAvatar( $wgUser->getId(), $data );
 			}
 		}
 	}
 
-	wfProfileOut(__METHOD__);
+	wfProfileOut( __METHOD__ );
 	return true;
 } // end wikia_fbconnect_considerProfilePic()
