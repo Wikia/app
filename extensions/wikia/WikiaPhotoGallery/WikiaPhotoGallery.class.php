@@ -1958,7 +1958,7 @@ class WikiaPhotoGallery extends ImageGallery {
 			if( !empty( $item ) ) {
 				$media[] = array(
 					'title' => $val[0],
-					'caption' => html_entity_decode( $val[3] ),
+					'caption' => $val[3],
 					'link' => $val[2]
 				);
 			}

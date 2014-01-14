@@ -117,6 +117,7 @@ function(
 		//loop that gets all media from a page
 		while ( element = elements[i++] ) {
 			params = element.getAttribute('data-params') || false;
+
 			data = JSON.parse( params );
 
 			if ( data && data instanceof Array ) {
