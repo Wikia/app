@@ -94,17 +94,25 @@ var SlotTracker = function (log, tracker) {
 		if (interesting) {
 			stats.interestingEvents += 1;
 
-			log(['Pushing to GA', gaCategory, gaAction, gaLabel, gaValue], 'info', logGroup);
+			if (window.wgAdDriverUseNewTracking) {
+				log(['Pushing to GA', gaCategory, gaAction, gaLabel, gaValue], 'info', logGroup);
 
-			tracker.track({
-				ga_category: gaCategory,
-				ga_action: gaAction,
-				ga_label: gaLabel,
-				ga_value: gaValue,
-				trackingMethod: 'ad'
-			});
+				tracker.track({
+					ga_category: gaCategory,
+					ga_action: gaAction,
+					ga_label: gaLabel,
+					ga_value: gaValue,
+					trackingMethod: 'ad'
+				});
+			} else {
+				log(['Not pushing to GA (wgAdDriverUseNewTracking is false)',
+					gaCategory, gaAction, gaLabel, gaValue], 'debug', logGroup
+				);
+			}
 		} else {
-			log(['Not pushing to GA', gaCategory, gaAction, gaLabel, gaValue], 'debug', logGroup);
+			log(['Not pushing to GA (not interesting)',
+				gaCategory, gaAction, gaLabel, gaValue], 'debug', logGroup
+			);
 		}
 	}
 
