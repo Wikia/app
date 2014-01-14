@@ -27,7 +27,11 @@ class TvApiController extends WikiaApiController {
 			throw new NotFoundApiException();
 		}
 
-		$minQuality = $this->request->getInt(self::PARAM_ARTICLE_QUALITY);
+		$minQuality = $this->request->getVal( self::PARAM_ARTICLE_QUALITY );
+		if ( $minQuality !== null ) {
+			$minQuality = (int)$minQuality;
+		}
+
 
 		foreach( $this->wikis as $wiki ) {
 			$responseValues = null;
@@ -38,8 +42,12 @@ class TvApiController extends WikiaApiController {
 				$config = $this->getConfigFromRequest( $wiki['id'] );
 				$responseValues = $this->getResponseFromConfig( $config, $wiki['id'] );
 			}
-			if ( $responseValues !== null && $responseValues['quality'] >= $minQuality ) {
-				break;
+
+			if ( $responseValues !== null ) {
+				if ( ( $minQuality == null ) ||
+					 ( $responseValues[ 'quality' ] !== null && $responseValues[ 'quality' ] >= $minQuality ) ) {
+					break;
+				}
 			}
 		}
 
