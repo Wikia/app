@@ -124,9 +124,6 @@ class VideoPageToolHelper extends WikiaModel {
 
 			// get thumbnail
 			$thumb = $file->transform( array( 'width' => self::THUMBNAIL_WIDTH, 'height' => self::THUMBNAIL_HEIGHT ) );
-			$thumbOptions = array(
-				'hidePlayButton' => false
-			);
 			$videoThumb = $thumb->toHtml( $thumbOptions );
 			$thumbUrl = $thumb->getUrl();
 
@@ -437,13 +434,12 @@ class VideoPageToolHelper extends WikiaModel {
 	 * Render assets by section (used in VideoHomePageController)
 	 * @param VideoPageToolProgram $program
 	 * @param string $section [featured/category/fan]
-	 * @param array $thumbOptions
+	 * @param array $thumbOptions An optional array of thumbnail options to override the defaults for the given asset.
 	 * @return type
 	 */
 	public function renderAssetsBySection( $program, $section, $thumbOptions = array() ) {
 		$data = array();
 		if ( $program instanceof VideoPageToolProgram ) {
-			$thumbOptions['noLightbox'] = true;
 			$assets = $program->getAssetsBySection( $section );
 			foreach ( $assets as $asset ) {
 				/** @var VideoPageToolAsset $asset */

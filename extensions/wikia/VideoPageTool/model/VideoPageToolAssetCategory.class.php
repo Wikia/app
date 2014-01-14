@@ -7,6 +7,7 @@ class VideoPageToolAssetCategory extends VideoPageToolAsset {
 
 	protected $categoryName;
 	protected $displayTitle;
+	protected $defaultThumbOptions = [ 'hidePlayButton' => true ];
 
 	// required data field -- array( FormFieldName => varName )
 	protected static $dataFields = array(
@@ -35,6 +36,9 @@ class VideoPageToolAssetCategory extends VideoPageToolAsset {
 		if ( empty( $title ) ) {
 			return self::getDefaultAssetData();
 		}
+
+		// Allow defaults to be overridden by options passed into us
+		$thumbOptions = array_merge( $this->defaultThumbOptions, $thumbOptions );
 
 		$helper = new VideoPageToolHelper();
 		$data = array(
