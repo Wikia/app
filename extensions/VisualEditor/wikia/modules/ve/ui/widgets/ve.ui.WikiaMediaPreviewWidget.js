@@ -7,45 +7,45 @@
 ve.ui.WikiaMediaPreviewWidget = function VeUiWikiaMediaPreviewWidget() {
 
 	// Parent constructor
-	ve.ui.Widget.call( this );
+	OO.ui.Widget.call( this );
 
 	// Properties
 	this.model = null;
 	this.videoInstance = null;
 	this.$videoWrapper = null;
 
-	this.closeButton = new ve.ui.IconButtonWidget( {
-		'$$': this.$$,
+	this.closeButton = new OO.ui.IconButtonWidget( {
+		'$': this.$,
 		'title': ve.msg( 'visualeditor-dialog-action-close' ),
 		'icon': 'close'
 	} );
 
-	this.$titlebar = this.$$( '<div>' )
+	this.$titlebar = this.$( '<div>' )
 		.addClass( 've-ui-wikiaMediaPreviewWidget-titlebar' );
 
-	this.$title = this.$$( '<span>' )
+	this.$title = this.$( '<span>' )
 		.addClass( 've-ui-wikiaMediaPreviewWidget-title' );
 
 	// Events
 	this.closeButton.connect( this, { 'click': 'onCloseClick' } );
-	this.$.on( 'click', ve.bind( this.onCloseClick, this ) );
+	this.$element.on( 'click', ve.bind( this.onCloseClick, this ) );
 
 	// Initialization
-	this.closeButton.$
+	this.closeButton.$element
 		.addClass( 've-ui-wikiaMediaPreviewWidget-closeButton' )
 
 	this.$titlebar
-		.append( this.$title, this.closeButton.$ )
-		.appendTo( this.$ );
+		.append( this.$title, this.closeButton.$element )
+		.appendTo( this.$element );
 
-	this.$.addClass( 've-ui-wikiaMediaPreviewWidget-overlay' )
+	this.$element.addClass( 've-ui-wikiaMediaPreviewWidget-overlay' )
 		.hide()
 		.appendTo( $( '.ve-ui-surface-overlay-global' ) );
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.ui.WikiaMediaPreviewWidget, ve.ui.Widget );
+OO.inheritClass( ve.ui.WikiaMediaPreviewWidget, OO.ui.Widget );
 
 /* Methods */
 
@@ -54,7 +54,7 @@ ve.inheritClass( ve.ui.WikiaMediaPreviewWidget, ve.ui.Widget );
  * @method
  */
 ve.ui.WikiaMediaPreviewWidget.prototype.handleImage = function() {
-	this.$.show();
+	this.$element.show();
 
 	this.maxImgHeight = Math.round( $( window ).height() * 0.95 ) - this.$titlebar.outerHeight();
 	this.maxImgWidth = Math.round( $( window ).width() * 0.95 );
@@ -68,7 +68,7 @@ ve.ui.WikiaMediaPreviewWidget.prototype.handleImage = function() {
 
 	this.$image
 		.load( ve.bind( this.onImageLoad, this ) )
-		.appendTo( this.$ );
+		.appendTo( this.$element );
 };
 
 /**
@@ -122,9 +122,9 @@ ve.ui.WikiaMediaPreviewWidget.prototype.handleVideo = function() {
  * @param {Object} data Response data from ApiVideoPreview
  */
 ve.ui.WikiaMediaPreviewWidget.prototype.embedVideo = function( data ) {
-	this.$videoWrapper = this.$$( '<div>' )
+	this.$videoWrapper = this.$( '<div>' )
 		.addClass( 've-ui-wikiaMediaPreviewWidget-videoWrapper' )
-		.appendTo( this.$.show() );
+		.appendTo( this.$element.show() );
 
 	require( ['wikia.videoBootstrap'], ve.bind( function( VideoBootstrap ) {
 		this.videoInstance = new VideoBootstrap(

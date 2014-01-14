@@ -97,12 +97,15 @@ class WikiaRequest {
 	 * Fetch a boolean value from the input or return $default if not set.
 	 * Guaranteed to return true or false, with normal PHP semantics for
 	 * boolean interpretation of strings.
+	 * String "false" will be interpreted as false.
 	 * @param $name string
 	 * @param $default bool
 	 * @return bool
 	 */
 	public function getBool( $name, $default = false ) {
-		return $this->getVal( $name, $default ) ? true : false;
+		$value = $this->getVal( $name, $default );
+		if (is_string($value) && strcasecmp($value, "false") == 0) return false;
+		return $value ? true : false;
 	}
 
 	/**

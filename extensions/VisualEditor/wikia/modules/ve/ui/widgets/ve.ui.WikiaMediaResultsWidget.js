@@ -4,7 +4,7 @@
 
 /**
  * @class
- * @extends ve.ui.Widget
+ * @extends OO.ui.Widget
  *
  * @constructor
  * @param {Object} [config] Configuration options
@@ -12,10 +12,10 @@
  */
 ve.ui.WikiaMediaResultsWidget = function VeUiWikiaMediaResultsWidget( config ) {
 	// Parent constructor
-	ve.ui.Widget.call( this, config );
+	OO.ui.Widget.call( this, config );
 
 	// Properties
-	this.results = new ve.ui.WikiaMediaSelectWidget( { '$$': this.$$ } );
+	this.results = new ve.ui.WikiaMediaSelectWidget( { '$': this.$ } );
 	this.size = config.size || 160;
 
 	// Events
@@ -24,17 +24,17 @@ ve.ui.WikiaMediaResultsWidget = function VeUiWikiaMediaResultsWidget( config ) {
 		'select': 'onResultsSelect',
 		'check': 'onResultsCheck'
 	} );
-	this.$.on( 'scroll', ve.bind( this.onResultsScroll, this ) );
+	this.$element.on( 'scroll', ve.bind( this.onResultsScroll, this ) );
 
 	// Initialization
-	this.$
+	this.$element
 		.addClass( 've-ui-wikiaMediaResultsWidget' )
-		.append( this.results.$ );
+		.append( this.results.$element );
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.ui.WikiaMediaResultsWidget, ve.ui.Widget );
+OO.inheritClass( ve.ui.WikiaMediaResultsWidget, OO.ui.Widget );
 
 /* Events */
 
@@ -64,9 +64,6 @@ ve.ui.WikiaMediaResultsWidget.prototype.onResultsSelect = function ( item ) {
 	if ( item ) {
 		this.emit( 'preview', item );
 	}
-
-	//Parent
-	ve.ui.SearchWidget.prototype.onResultsSelect;
 };
 
 /**
@@ -81,7 +78,7 @@ ve.ui.WikiaMediaResultsWidget.prototype.addItems = function ( items ) {
 
 	for ( i = 0; i < items.length; i++ ) {
 		results.push(
-			new ve.ui.WikiaMediaOptionWidget( items[i], { '$$': this.$$, 'size': this.size } )
+			new ve.ui.WikiaMediaOptionWidget( items[i], { '$': this.$, 'size': this.size } )
 		);
 	}
 
@@ -92,7 +89,7 @@ ve.ui.WikiaMediaResultsWidget.prototype.addItems = function ( items ) {
  * Get the results.
  *
  * @method
- * @returns {ve.ui.SelectWidget} The results widget.
+ * @returns {OO.ui.SelectWidget} The results widget.
  */
 ve.ui.WikiaMediaResultsWidget.prototype.getResults = function () {
 	return this.results;
@@ -105,8 +102,8 @@ ve.ui.WikiaMediaResultsWidget.prototype.getResults = function () {
  * @fires nearingEnd
  */
 ve.ui.WikiaMediaResultsWidget.prototype.onResultsScroll = function () {
-	var position = this.$.scrollTop() + this.$.outerHeight(),
-		threshold = this.results.$.outerHeight() - this.size;
+	var position = this.$element.scrollTop() + this.$element.outerHeight(),
+		threshold = this.results.$element.outerHeight() - this.size;
 	if ( position > threshold ) {
 		this.emit( 'nearingEnd' );
 	}
@@ -116,7 +113,7 @@ ve.ui.WikiaMediaResultsWidget.prototype.onResultsScroll = function () {
  * Handle highlighting results.
  *
  * @method
- * @see {@link ve.ui.SearchWidget.prototype.onResultsHighlight}
+ * @see {@link OO.ui.SearchWidget.prototype.onResultsHighlight}
  */
 ve.ui.WikiaMediaResultsWidget.prototype.onResultsHighlight =
-	ve.ui.SearchWidget.prototype.onResultsHighlight;
+	OO.ui.SearchWidget.prototype.onResultsHighlight;

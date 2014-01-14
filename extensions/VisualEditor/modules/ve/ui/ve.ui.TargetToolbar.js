@@ -9,7 +9,7 @@
  * UserInterface target toolbar.
  *
  * @class
- * @extends ve.ui.SurfaceToolbar
+ * @extends ve.ui.Toolbar
  *
  * @constructor
  * @param {ve.init.Target} target Target to control
@@ -18,7 +18,7 @@
  */
 ve.ui.TargetToolbar = function VeUiTargetToolbar( target, surface, options ) {
 	// Parent constructor
-	ve.ui.SurfaceToolbar.call( this, surface, options );
+	ve.ui.Toolbar.call( this, surface, options );
 
 	// Properties
 	this.target = target;
@@ -26,7 +26,7 @@ ve.ui.TargetToolbar = function VeUiTargetToolbar( target, surface, options ) {
 
 /* Inheritance */
 
-ve.inheritClass( ve.ui.TargetToolbar, ve.ui.SurfaceToolbar );
+OO.inheritClass( ve.ui.TargetToolbar, ve.ui.Toolbar );
 
 /* Methods */
 

@@ -175,6 +175,7 @@ $messages['de'] = array(
 
 /** Zazaki (Zazaki)
  * @author Marmase
+ * @author Mirzali
  */
 $messages['diq'] = array(
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Medya dek',
@@ -190,8 +191,8 @@ $messages['diq'] = array(
 	'wikia-visualeditor-savedialog-label-save' => 'Bıhesırne',
 	'wikia-visualeditor-savedialog-label-restore' => 'Verêna perer',
 	'wikia-visualeditor-toolbar-savedialog' => 'Bıhesırne',
-	'wikia-visualeditor-dialogbutton-wikiasourcemode-tooltip' => 'Vırazoğa Çımi',
-	'wikia-visualeditor-dialog-wikiasourcemode-title' => 'Vırazoğa Çımi',
+	'wikia-visualeditor-dialogbutton-wikiasourcemode-tooltip' => 'Vıraştoğê Çımey',
+	'wikia-visualeditor-dialog-wikiasourcemode-title' => 'Vıraştoğê Çımey',
 	'wikia-visualeditor-dialog-wikiasourcemode-help-link' => 'Help:Wikitext',
 	'wikia-visualeditor-dialog-wikiasourcemode-help-text' => 'Format kerdış desteg',
 );
@@ -274,6 +275,9 @@ $messages['fi'] = array(
 	'wikia-visualeditor-preference-enable' => 'Ota käyttöön Visuaalinen muokkain',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Lisää media',
 	'wikia-visualeditor-dialog-wikiamediainsert-insert-button' => 'Lisää media',
+	'wikia-visualeditor-dialog-wikiamediainsert-item-title-label' => 'Otsikko',
+	'wikia-visualeditor-dialog-wikiamediainsert-item-license-label' => 'Lisenssi',
+	'wikia-visualeditor-dialog-wikiamediainsert-item-remove-button' => 'Poista tämä kohde',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-label' => 'Lisää uusia kuvia tähän wikiaan',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-button' => 'Tallenna',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error' => 'Virhe tallennettaessa tiedostoa',
@@ -461,6 +465,20 @@ $messages['ms'] = array(
 	'wikia-visualeditor-notification-media-permission-denied' => 'Kebenaran ditolak',
 );
 
+/** Norwegian Bokmål (norsk bokmål)
+ * @author Danmichaelo
+ */
+$messages['nb'] = array(
+	'wikia-visualeditor-preference-enable' => 'Skru på VisualEditor (beta)',
+	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Legg til media',
+	'wikia-visualeditor-dialog-wikiamediainsert-insert-button' => 'Legg til media',
+	'wikia-visualeditor-dialog-wikiamediainsert-item-title-label' => 'Tittel',
+	'wikia-visualeditor-dialog-wikiamediainsert-item-license-label' => 'Lisens',
+	'wikia-visualeditor-dialog-wikiamediainsert-item-remove-button' => 'Fjern dette elementet',
+	'wikia-visualeditor-dialog-wikiamediainsert-upload-label' => 'Legg til bilder på denne wikiaen',
+	'wikia-visualeditor-dialog-wikiamediainsert-upload-button' => 'Last opp',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -550,6 +568,7 @@ $messages['pl'] = array(
 	'wikia-visualeditor-dialog-wikiasourcemode-help-link' => 'Help:Wikitekst',
 	'wikia-visualeditor-dialog-wikiasourcemode-help-text' => 'Pomoc z formatowaniem',
 	'wikia-visualeditor-notification-media-must-be-logged-in' => 'Aby dodawać zdjęcia i filmy, musisz się zalogować.',
+	'wikia-visualeditor-notification-media-only-premium-videos-allowed' => 'Ta wiki pozwala dodawać tylko licencjonowane treści z <a href="http://video.wikia.com" target="_blank">biblioteki filmów Wikia</a>. Przejdź do <a href="http://video.wikia.com" target="_blank">video.wikia.com</a>, aby wyszukać film.',
 	'wikia-visualeditor-notification-media-query-failed' => 'Niestety, nie udało się znaleźć obsługiwanego formatu zdjęć lub filmów dla tego adresu URL.',
 	'wikia-visualeditor-notification-media-permission-denied' => 'Brak dostępu',
 );

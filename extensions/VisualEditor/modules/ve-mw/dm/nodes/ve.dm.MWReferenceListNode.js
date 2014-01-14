@@ -21,7 +21,7 @@ ve.dm.MWReferenceListNode = function VeDmMWReferenceListNode( length, element ) 
 
 /* Inheritance */
 
-ve.inheritClass( ve.dm.MWReferenceListNode, ve.dm.BranchNode );
+OO.inheritClass( ve.dm.MWReferenceListNode, ve.dm.BranchNode );
 
 /* Static members */
 
@@ -53,7 +53,7 @@ ve.dm.MWReferenceListNode.static.toDataElement = function ( domElements, convert
 		}
 	};
 	if ( mwData.body && mwData.body.html ) {
-		$contents = $( '<div>' ).append( mwData.body.html );
+		$contents = $( '<div>', domElements[0].ownerDocument ).append( mwData.body.html );
 		contentsData = converter.getDataFromDomRecursionClean( $contents[0] );
 		return [ referenceListData ].
 			concat( contentsData ).

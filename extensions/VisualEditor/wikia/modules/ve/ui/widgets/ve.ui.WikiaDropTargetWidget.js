@@ -7,7 +7,7 @@
 
 /**
  * @class
- * @extends ve.ui.Widget
+ * @extends OO.ui.Widget
  *
  * @constructor
  * @param {Object} config Configuration options
@@ -17,30 +17,28 @@
 ve.ui.WikiaDropTargetWidget = function VeUiWikiaDropTargetWidget ( config ) {
 
 	// Configuration initialization
-	ve.ui.Widget.call( this, config );
+	OO.ui.Widget.call( this, config );
 
 	// Properties
-	this.$overlay = config.surface.$globalOverlay.find( '.ve-ui-window' );
-	this.$frame = config.frame.$document;
-	this.$insertMediaDialog = this.$overlay.find( '.ve-ui-window-frame' );
+	this.$overlay = config.$overlay.find( '.oo-ui-window' );
+	this.$document = config.$document;
 	this.fadeTimeout = null;
 
 	// Events
-	this.$.on( 'dragenter dragover', ve.bind( this.onFileDrag, this ) );
-	this.$.on( 'drop', ve.bind( this.onFileDrop, this ) );
-
-	this.$frame.on( 'dragenter dragover', ve.bind( this.onFileDrag, this ) );
+	this.$document.on( 'dragenter dragover', ve.bind( this.onFileDrag, this ) );
+	this.$element.on( 'dragenter dragover', ve.bind( this.onFileDrag, this ) );
+	this.$element.on( 'drop', ve.bind( this.onFileDrop, this ) );
 
 	// Initialization
-	this.$
-		.removeClass( 've-ui-widget' )
+	this.$element
+		.removeClass( 'oo-ui-widget' )
 		.html( '<div>' + ve.msg( 'wikia-visualeditor-dialog-drop-target-callout' ) + '</div>' );
 
-	this.$.addClass( 've-ui-widget-droptarget' ).prependTo( this.$insertMediaDialog );
+	this.$element.addClass( 've-ui-widget-droptarget' );
 };
 
 /* Inheritance */
-ve.inheritClass( ve.ui.WikiaDropTargetWidget, ve.ui.Widget );
+OO.inheritClass( ve.ui.WikiaDropTargetWidget, OO.ui.Widget );
 
 /**
  * Handles dragenter/over & shows drop zone
@@ -52,10 +50,10 @@ ve.ui.WikiaDropTargetWidget.prototype.onFileDrag = function( e ) {
 	if ( this.fadeTimeout ) {
 		clearTimeout( this.fadeTimeout );
 	}
-	if ( this.$.is( ':visible' ) ) {
+	if ( this.$element.is( ':visible' ) ) {
 		return;
 	}
-	this.$.fadeIn();
+	this.$element.fadeIn();
 };
 
 /* Event Handlers */
@@ -66,11 +64,11 @@ ve.ui.WikiaDropTargetWidget.prototype.onFileDrag = function( e ) {
  */
 ve.ui.WikiaDropTargetWidget.prototype.onFileDragEnd = function( e ) {
 	e.preventDefault();
-	if ( !this.$.is( ':visible' ) ) {
+	if ( !this.$element.is( ':visible' ) ) {
 		return;
 	}
 	this.fadeTimeout = setTimeout( ve.bind( function() {
-		this.$.fadeOut();
+		this.$element.fadeOut();
 	}, this ), 200 );
 };
 
@@ -86,7 +84,7 @@ ve.ui.WikiaDropTargetWidget.prototype.onFileDrop = function( event ) {
 	event.preventDefault();
 
 	// fade out the drop zone
-	this.$.fadeOut();
+	this.$element.fadeOut();
 
 	// trigger file drop
 	this.emit( 'drop', files[0] );

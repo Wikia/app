@@ -13,15 +13,22 @@
  * idiom, except that they are guaranteed to execute before any subsequent
  * on-event listener. Therefore, events are executed in the 'right order'.
  *
- * This matters when many events are added to the event queue in one go.
+ * This matters when many events are added to the task queue in one go.
  * For instance, browsers often queue 'keydown' and 'keypress' in immediate
  * sequence, so a setTimeout(f, 0) defined in the keydown listener will run
  * *after* the keypress listener (i.e. in the 'wrong' order). EventSequencer
  * ensures that this does not happen.
  *
- * All listeners receive the jQuery event as an argument. If an on-event
+ * All these listeners receive the jQuery event as an argument. If an on-event
  * listener needs to pass information to a corresponding after-event listener,
  * it can do so by adding properties into the jQuery event itself.
+ *
+ * There are also 'onLoop' and 'afterLoop' listeners, which only fire once per
+ * Javascript event loop iteration, respectively before and after all the
+ * other listeners fire.
+ *
+ * For further event loop / task queue information, see:
+ * http://www.whatwg.org/specs/web-apps/current-work/multipage/webappapis.html#event-loops
  *
  * @class ve.EventSequencer
  */
@@ -66,21 +73,52 @@ ve.EventSequencer = function VeEventSequencer( eventNames ) {
 	this.pendingCalls = [];
 
 	/**
-	 * @property {Object.<string,Function>}
+	 * @property {Object.<string,Function[]>}
 	 */
 	this.onListenersForEvent = {};
 
 	/**
-	 * @property {Object.<string,Function>}
+	 * @property {Object.<string,Function[]>}
 	 */
 	this.afterListenersForEvent = {};
+
+	/**
+	 * @property {Object.<string,Function[]>}
+	 */
+	this.afterOneListenersForEvent = {};
 
 	for ( i = 0, len = eventNames.length; i < len; i++ ) {
 		eventName = eventNames[i];
 		this.onListenersForEvent[eventName] = [];
 		this.afterListenersForEvent[eventName] = [];
+		this.afterOneListenersForEvent[eventName] = [];
 		this.eventHandlers[eventName] = makeEventHandler( eventName );
 	}
+
+	/**
+	 * @property {Function[]}
+	 */
+	this.onLoopListeners = [];
+
+	/**
+	 * @property {Function[]}
+	 */
+	this.afterLoopListeners = [];
+
+	/**
+	 * @property {Function[]}
+	 */
+	this.afterLoopOneListeners = [];
+
+	/**
+	 * @property {boolean}
+	 */
+	this.doneOnLoop = false;
+
+	/**
+	 * @property {number}
+	 */
+	this.afterLoopTimeoutId = null;
 };
 
 /**
@@ -110,6 +148,15 @@ ve.EventSequencer.prototype.detach = function () {
 
 
 /**
+ * Add listeners to be fired at the start of the Javascript event loop iteration
+ * @method
+ * @param {Function[]} listeners Listeners that take no arguments
+ */
+ve.EventSequencer.prototype.onLoop = function ( listeners ) {
+	this.onLoopListeners.push.apply( this.onLoopListeners, listeners );
+};
+
+/**
  * Add listeners to be fired just before the browser native action
  * @method
  * @param {Object.<string,Function>} listeners Function for each event
@@ -120,7 +167,6 @@ ve.EventSequencer.prototype.on = function ( listeners ) {
 		this.onListenersForEvent[eventName].push( listeners[eventName] );
 	}
 };
-
 
 /**
  * Add listeners to be fired as soon as possible after the native action
@@ -135,6 +181,36 @@ ve.EventSequencer.prototype.after = function ( listeners ) {
 };
 
 /**
+ * Add listeners to be fired once, as soon as possible after the native action
+ * @method
+ * @param {Object.<string,Function[]>} listeners Function for each event
+ */
+ve.EventSequencer.prototype.afterOne = function ( listeners ) {
+	var eventName;
+	for ( eventName in listeners ) {
+		this.afterOneListenersForEvent[eventName].push( listeners[eventName] );
+	}
+};
+
+/**
+ * Add listeners to be fired at the end of the Javascript event loop iteration
+ * @method
+ * @param {Function[]} listeners Listeners that take no arguments
+ */
+ve.EventSequencer.prototype.afterLoop = function ( listeners ) {
+	Array.prototype.push.apply( this.afterLoopListeners, listeners );
+};
+
+/**
+ * Add listeners to be fired once, at the end of the Javascript event loop iteration
+ * @method
+ * @param {Function[]} listeners Listeners that take no arguments
+ */
+ve.EventSequencer.prototype.afterLoopOne = function ( listeners ) {
+	Array.prototype.push.apply( this.afterLoopOneListeners, listeners );
+};
+
+/**
  * Generic listener method which does the sequencing
  * @private
  * @method
@@ -142,38 +218,127 @@ ve.EventSequencer.prototype.after = function ( listeners ) {
  * @param {jQuery.Event} ev The browser event
  */
 ve.EventSequencer.prototype.onEvent = function ( eventName, ev ) {
-	var i, len, onListener, afterListener, pendingCall;
+	var i, len, onListener, onListeners, pendingCall, me, id;
 	this.runPendingCalls();
+	if ( !this.doneOnLoop ) {
+		this.doneOnLoop = true;
+		this.doOnLoop();
+	}
+
+	onListeners = this.onListenersForEvent[ eventName ] || [];
+
 	// Length cache 'len' is required, as an onListener could add another onListener
-	for ( i = 0, len = this.onListenersForEvent[eventName].length; i < len; i++ ) {
-		onListener = this.onListenersForEvent[eventName][i];
+	for ( i = 0, len = onListeners.length; i < len; i++ ) {
+		onListener = onListeners[i];
 		onListener( ev );
 	}
-	// Length cache 'len' for style only
-	for ( i = 0, len = this.afterListenersForEvent[eventName].length; i < len; i++ ) {
-		afterListener = this.afterListenersForEvent[eventName][i];
-
+	// Queue a call to afterEvent only if there are some
+	// afterListeners/afterOneListeners/afterLoopListeners
+	if ( ( this.afterListenersForEvent[eventName] || [] ).length > 0 ||
+		( this.afterOneListenersForEvent[eventName] || [] ).length > 0 ||
+		this.afterLoopListeners.length > 0 ) {
 		// Create a cancellable pending call
 		// - Create the pendingCall object first
 		// - then create the setTimeout invocation to modify pendingCall.id
 		// - then set pendingCall.id to the setTimeout id, so the call can cancel itself
-		// Must wrap everything in a function call, to create the required closure.
-		pendingCall = { 'func': afterListener, 'id': null, 'ev': ev, 'eventName': eventName };
-		/*jshint loopfunc:true */
-		( function ( pendingCall, ev ) {
-			var id = setTimeout( function () {
-				if ( pendingCall.id === null ) {
-					// clearTimeout seems not always to work immediately
-					return;
-				}
-				pendingCall.id = null;
-				pendingCall.func( ev );
-			} );
-			pendingCall.id = id;
-		} )( pendingCall, ev );
-		/*jshint loopfunc:false */
+		pendingCall = { 'id': null, 'ev': ev, 'eventName': eventName };
+		me = this;
+		id = setTimeout( function () {
+			if ( pendingCall.id === null ) {
+				// clearTimeout seems not always to work immediately
+				return;
+			}
+			me.resetAfterLoopTimeout();
+			pendingCall.id = null;
+			me.afterEvent( eventName, ev );
+		} );
+		pendingCall.id = id;
 		this.pendingCalls.push( pendingCall );
 	}
+};
+
+/**
+ * Generic after listener method which gets queued
+ * @private
+ * @method
+ * @param {string} eventName Javascript name of the event, e.g. 'keydown'
+ * @param {jQuery.Event} ev The browser event
+ */
+ve.EventSequencer.prototype.afterEvent = function ( eventName, ev ) {
+	var i, len, afterListeners, afterOneListeners;
+
+	// Snapshot the listener lists, and blank *OneListener list.
+	// This ensures reasonable behaviour if a function called adds another listener.
+	afterListeners = ( this.afterListenersForEvent[eventName] || [] ).slice();
+	afterOneListeners = ( this.afterOneListenersForEvent[eventName] || [] ).slice();
+	( this.afterOneListenersForEvent[eventName] || [] ).length = 0;
+
+	for ( i = 0, len = afterListeners.length; i < len; i++ ) {
+		afterListeners[i]( ev );
+	}
+
+	for ( i = 0, len = afterOneListeners.length; i < len; i++ ) {
+		afterOneListeners[i]( ev );
+	}
+};
+
+/**
+ * Call each onLoopListener once
+ * @private
+ * @method
+ */
+ve.EventSequencer.prototype.doOnLoop = function () {
+	var i, len;
+	// Length cache 'len' is required, as the functions called may add another listener
+	for ( i = 0, len = this.onLoopListeners.length; i < len; i++ ) {
+		this.onLoopListeners[i]();
+	}
+};
+
+/**
+ * Call each afterLoopListener once, unless the setTimeout is already cancelled
+ * @private
+ * @method
+ * @param {number} myTimeoutId The calling setTimeout id
+ */
+ve.EventSequencer.prototype.doAfterLoop = function ( myTimeoutId ) {
+	var i, len, afterLoopListeners, afterLoopOneListeners;
+
+	if ( this.afterLoopTimeoutId !== myTimeoutId ) {
+		// cancelled; do nothing
+		return;
+	}
+	this.afterLoopTimeoutId = null;
+
+	// Snapshot the listener lists, and blank *OneListener list.
+	// This ensures reasonable behaviour if a function called adds another listener.
+	afterLoopListeners = this.afterLoopListeners.slice();
+	afterLoopOneListeners = this.afterLoopOneListeners.slice();
+	this.afterLoopOneListeners.length = 0;
+
+	for ( i = 0, len = this.afterLoopListeners.length; i < len; i++ ) {
+		this.afterLoopListeners[i]();
+	}
+
+	for ( i = 0, len = this.afterLoopOneListeners.length; i < len; i++ ) {
+		this.afterLoopOneListeners[i]();
+	}
+};
+
+/**
+ * Push any pending doAfterLoop to end of task queue (cancel, then re-set)
+ * @private
+ * @method
+ */
+ve.EventSequencer.prototype.resetAfterLoopTimeout = function () {
+	var timeoutId, me = this;
+	if ( this.afterLoopTimeoutId !== null ) {
+		clearTimeout( this.afterLoopTimeoutId );
+	}
+	timeoutId = setTimeout( function () {
+		me.doAfterLoop( timeoutId );
+	} );
+	this.afterLoopTimeoutId = timeoutId;
 };
 
 /**
@@ -196,7 +361,7 @@ ve.EventSequencer.prototype.runPendingCalls = function () {
 		pendingCall.id = null;
 		// Force to run now. It's important that we set id to null before running,
 		// so that there's no chance a recursive call will call the listener again.
-		pendingCall.func( pendingCall.ev );
+		this.afterEvent( pendingCall.eventName, pendingCall.ev );
 	}
 	// This is safe because we only ever appended to the list, so it's definitely exhausted
 	// now.

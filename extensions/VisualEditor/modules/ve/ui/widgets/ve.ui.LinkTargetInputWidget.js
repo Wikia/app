@@ -9,30 +9,32 @@
  * Creates an ve.ui.LinkTargetInputWidget object.
  *
  * @class
- * @extends ve.ui.TextInputWidget
+ * @extends OO.ui.TextInputWidget
  *
  * @constructor
  * @param {Object} [config] Configuration options
  */
 ve.ui.LinkTargetInputWidget = function VeUiLinkTargetInputWidget( config ) {
 	// Parent constructor
-	ve.ui.TextInputWidget.call( this, config );
+	OO.ui.TextInputWidget.call( this, config );
 
 	// Properties
 	this.annotation = null;
 
 	// Initialization
-	this.$.addClass( 've-ui-linkTargetInputWidget' );
+	this.$element.addClass( 've-ui-linkTargetInputWidget' );
 
 	// Default RTL/LTR check
+	// Has to use global $() instead of this.$() because only the main document's <body> has
+	// the 'rtl' class; inspectors and dialogs have oo-ui-rtl instead.
 	if ( $( 'body' ).hasClass( 'rtl' ) ) {
-		this.$input.addClass( 've-ui-rtl' );
+		this.$input.addClass( 'oo-ui-rtl' );
 	}
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.ui.LinkTargetInputWidget, ve.ui.TextInputWidget );
+OO.inheritClass( ve.ui.LinkTargetInputWidget, OO.ui.TextInputWidget );
 
 /* Methods */
 
@@ -49,6 +51,8 @@ ve.ui.LinkTargetInputWidget.prototype.onEdit = function () {
 		// Allow the stack to clear so the value will be updated
 		setTimeout( ve.bind( function () {
 			// RTL/LTR check
+			// Has to use global $() instead of this.$() because only the main document's <body> has
+			// the 'rtl' class; inspectors and dialogs have oo-ui-rtl instead.
 			if ( $( 'body' ).hasClass( 'rtl' ) ) {
 				var isExt = ve.init.platform.getExternalLinkUrlProtocolsRegExp()
 					.test( this.$input.val() );
@@ -83,7 +87,7 @@ ve.ui.LinkTargetInputWidget.prototype.setValue = function ( value ) {
 	}
 
 	// Parent method
-	ve.ui.TextInputWidget.prototype.setValue.call( this, value );
+	OO.ui.TextInputWidget.prototype.setValue.call( this, value );
 };
 
 /**
@@ -99,7 +103,7 @@ ve.ui.LinkTargetInputWidget.prototype.setAnnotation = function ( annotation ) {
 	this.annotation = annotation;
 
 	// Parent method
-	ve.ui.TextInputWidget.prototype.setValue.call(
+	OO.ui.TextInputWidget.prototype.setValue.call(
 		this,
 		this.getTargetFromAnnotation( annotation )
 	);

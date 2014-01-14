@@ -401,13 +401,14 @@ $messages['eu'] = array(
 );
 
 /** Persian (فارسی)
+ * @author Ebraminio
  * @author ZxxZxxZ
  * @author جواد
  */
 $messages['fa'] = array(
 	'categoryselect-button-add' => 'افزودن رده',
 	'categoryselect-button-cancel' => 'لغو',
-	'categoryselect-button-save' => 'ذخیره کردن',
+	'categoryselect-button-save' => 'ذخیره‌کردن',
 	'categoryselect-category-edit' => 'ویرایش رده',
 	'categoryselect-edit-summary' => 'افزودن رده',
 	'categoryselect-tooltip-add' => 'پس از اتمام دکمه اینتر را فشار دهید', # Fuzzy
@@ -1349,6 +1350,7 @@ $messages['zh'] = array(
  * @author Dimension
  * @author Hydra
  * @author Hzy980512
+ * @author User670839245
  * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
@@ -1368,6 +1370,7 @@ $messages['zh-hans'] = array(
 	'categoryselect-error-empty-category-name' => '请输入分类名称。',
 	'categoryselect-error-user-rights' => '用户没有进行此操作的权限。',
 	'categoryselect-modal-category-name' => '提供类别的名称：',
+	'categoryselect-modal-category-sortkey' => '您亦可在此名字下在“$1”分类页面上按字母排列。',
 	'categoryselect-tooltip-add' => '完成后按Enter或Return键。',
 	'tog-disablecategoryselect' => '禁用分类模块（仅适用于如果编辑在可视模式下已被禁用）',
 	'tog-disablecategoryselect-v2' => '禁用分类模块（仅适用于如果可视模式已被禁用）',

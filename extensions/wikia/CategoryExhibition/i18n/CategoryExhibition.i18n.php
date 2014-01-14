@@ -370,6 +370,16 @@ $messages['kn'] = array(
 	'category-exhibition-subcategories-header' => 'ಉಪವರ್ಗಗಳು',
 );
 
+/** Korean (한국어)
+ * @author Leehoy
+ */
+$messages['ko'] = array(
+	'category-exhibition-sorttype' => '정렬 기준:',
+	'category-exhibition-alphabetical' => '알파벳순',
+	'category-exhibition-recentedits' => '최근 수정',
+	'category-exhibition-subcategories-header' => '하위 분류',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  */
 $messages['lb'] = array(

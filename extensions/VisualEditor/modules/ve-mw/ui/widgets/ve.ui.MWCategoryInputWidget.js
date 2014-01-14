@@ -11,8 +11,8 @@
  * Creates an ve.ui.MWCategoryInputWidget object.
  *
  * @class
- * @extends ve.ui.TextInputWidget
- * @mixins ve.ui.LookupInputWidget
+ * @extends OO.ui.TextInputWidget
+ * @mixins OO.ui.LookupInputWidget
  *
  * @constructor
  * @param {ve.ui.MWCategoryWidget} categoryWidget
@@ -25,10 +25,10 @@ ve.ui.MWCategoryInputWidget = function VeUiMWCategoryInputWidget( categoryWidget
 	}, config );
 
 	// Parent constructor
-	ve.ui.TextInputWidget.call( this, config );
+	OO.ui.TextInputWidget.call( this, config );
 
 	// Mixin constructors
-	ve.ui.LookupInputWidget.call( this, this, config );
+	OO.ui.LookupInputWidget.call( this, this, config );
 
 	// Properties
 	this.categoryWidget = categoryWidget;
@@ -36,15 +36,15 @@ ve.ui.MWCategoryInputWidget = function VeUiMWCategoryInputWidget( categoryWidget
 	this.categoryPrefix = mw.config.get( 'wgFormattedNamespaces' )['14'] + ':';
 
 	// Initialization
-	this.$.addClass( 've-ui-mwCategoryInputWidget' );
-	this.lookupMenu.$.addClass( 've-ui-mwCategoryInputWidget-menu' );
+	this.$element.addClass( 've-ui-mwCategoryInputWidget' );
+	this.lookupMenu.$element.addClass( 've-ui-mwCategoryInputWidget-menu' );
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.ui.MWCategoryInputWidget, ve.ui.TextInputWidget );
+OO.inheritClass( ve.ui.MWCategoryInputWidget, OO.ui.TextInputWidget );
 
-ve.mixinClass( ve.ui.MWCategoryInputWidget, ve.ui.LookupInputWidget );
+OO.mixinClass( ve.ui.MWCategoryInputWidget, OO.ui.LookupInputWidget );
 
 /* Methods */
 
@@ -77,10 +77,10 @@ ve.ui.MWCategoryInputWidget.prototype.getLookupCacheItemFromData = function ( da
 	var i, len, title, result = [];
 	if ( ve.isArray( data ) && data.length ) {
 		for ( i = 0, len = data[1].length; i < len; i++ ) {
-			try {
-				title = new mw.Title( data[1][i] );
+			title = mw.Title.newFromText( data[1][i] );
+			if ( title ) {
 				result.push( title.getMainText() );
-			} catch ( e ) { }
+			}
 			// If the received title isn't valid, just ignore it
 		}
 	}
@@ -91,7 +91,7 @@ ve.ui.MWCategoryInputWidget.prototype.getLookupCacheItemFromData = function ( da
  * Get list of menu items from a server response.
  *
  * @param {Object} data Query result
- * @returns {ve.ui.MenuItemWidget[]} Menu items
+ * @returns {OO.ui.MenuItemWidget[]} Menu items
  */
 ve.ui.MWCategoryInputWidget.prototype.getLookupMenuItemsFromData = function ( data ) {
 	var i, len, item,
@@ -100,7 +100,7 @@ ve.ui.MWCategoryInputWidget.prototype.getLookupMenuItemsFromData = function ( da
 		existingCategoryItems = [],
 		matchingCategoryItems = [],
 		items = [],
-		menu$$ = this.lookupMenu.$$,
+		menu$ = this.lookupMenu.$,
 		category = this.getCategoryItemFromValue( this.value ),
 		existingCategories = this.categoryWidget.getCategories(),
 		matchingCategories = data || [];
@@ -136,30 +136,30 @@ ve.ui.MWCategoryInputWidget.prototype.getLookupMenuItemsFromData = function ( da
 
 	// Add sections for non-empty groups
 	if ( newCategoryItems.length ) {
-		items.push( new ve.ui.MenuSectionItemWidget(
-			'newCategory', { '$$': menu$$, 'label': ve.msg( 'visualeditor-dialog-meta-categories-input-newcategorylabel' ) }
+		items.push( new OO.ui.MenuSectionItemWidget(
+			'newCategory', { '$': menu$, 'label': ve.msg( 'visualeditor-dialog-meta-categories-input-newcategorylabel' ) }
 		) );
 		for ( i = 0, len = newCategoryItems.length; i < len; i++ ) {
 			item = newCategoryItems[i];
-			items.push( new ve.ui.MenuItemWidget( item, { '$$': menu$$, 'label': item } ) );
+			items.push( new OO.ui.MenuItemWidget( item, { '$': menu$, 'label': item } ) );
 		}
 	}
 	if ( existingCategoryItems.length ) {
-		items.push( new ve.ui.MenuSectionItemWidget(
-			'inArticle', { '$$': menu$$, 'label': ve.msg( 'visualeditor-dialog-meta-categories-input-movecategorylabel' ) }
+		items.push( new OO.ui.MenuSectionItemWidget(
+			'inArticle', { '$': menu$, 'label': ve.msg( 'visualeditor-dialog-meta-categories-input-movecategorylabel' ) }
 		) );
 		for ( i = 0, len = existingCategoryItems.length; i < len; i++ ) {
 			item = existingCategoryItems[i];
-			items.push( new ve.ui.MenuItemWidget( item, { '$$': menu$$, 'label': item } ) );
+			items.push( new OO.ui.MenuItemWidget( item, { '$': menu$, 'label': item } ) );
 		}
 	}
 	if ( matchingCategoryItems.length ) {
-		items.push( new ve.ui.MenuSectionItemWidget(
-			'matchingCategories', { '$$': menu$$, 'label': ve.msg( 'visualeditor-dialog-meta-categories-input-matchingcategorieslabel' ) }
+		items.push( new OO.ui.MenuSectionItemWidget(
+			'matchingCategories', { '$': menu$, 'label': ve.msg( 'visualeditor-dialog-meta-categories-input-matchingcategorieslabel' ) }
 		) );
 		for ( i = 0, len = matchingCategoryItems.length; i < len; i++ ) {
 			item = matchingCategoryItems[i];
-			items.push( new ve.ui.MenuItemWidget( item, { '$$': menu$$, 'label': item } ) );
+			items.push( new OO.ui.MenuItemWidget( item, { '$': menu$, 'label': item } ) );
 		}
 	}
 
@@ -177,18 +177,22 @@ ve.ui.MWCategoryInputWidget.prototype.getCategoryItemFromValue = function ( valu
 	var title;
 
 	// Normalize
-	try {
-		title = new mw.Title( this.categoryPrefix + value );
+	title = mw.Title.newFromText( this.categoryPrefix + value );
+	if ( title ) {
 		return {
 			'name': title.getPrefixedText(),
 			'value': title.getMainText(),
 			'metaItem': {}
 		};
-	} catch ( e ) { }
+	}
 
 	if ( this.forceCapitalization ) {
 		value = value.substr( 0, 1 ).toUpperCase() + value.substr( 1 );
 	}
 
-	return { 'name': this.categoryPrefix + value, 'value': value, 'metaItem': {} };
+	return {
+		'name': this.categoryPrefix + value,
+		'value': value,
+		'metaItem': {}
+	};
 };
