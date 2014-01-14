@@ -38,9 +38,9 @@ ve.ui.WikiaMediaPreviewWidget = function VeUiWikiaMediaPreviewWidget() {
 		.append( this.$title, this.closeButton.$element )
 		.appendTo( this.$element );
 
-	this.$element.addClass( 've-ui-wikiaMediaPreviewWidget-overlay' )
-		.hide()
-		.appendTo( $( '.ve-ui-surface-overlay-global' ) );
+	this.$element
+		.addClass( 've-ui-wikiaMediaPreviewWidget-overlay' )
+		.hide();
 };
 
 /* Inheritance */
