@@ -222,16 +222,18 @@ class ArticleQualityService extends Service {
 
 		while ( 1 ) {
 			if ( $max < $min ) {
-				return $this->percentiles[ $firstElement ];
+				return $firstElement;
 			}
 
 			//calculate middle point
 			$diff = $max - $min;
 			$add = 0;
-			//if diff is odd, increment it to make it even
+			//check if diff is odd, increment it to make it even
+			//this is quicker than e.q modulo
 			if ( ( $diff & 1 ) == 1 ) {
 				$add = 1;
 			}
+			// Quicker than normal division, prevents from non-integer results
 			$diff = $add + $min + ( $diff >> 1 );
 
 			if ( $value >= $this->percentiles[ $diff ] ) {
