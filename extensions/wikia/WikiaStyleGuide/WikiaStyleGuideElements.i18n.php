@@ -72,6 +72,15 @@ $messages['es'] = array(
 	'wikiastyleguide-dropdown-selected-items-list' => '$1 y $2 más',
 );
 
+/** Persian (فارسی)
+ * @author Reza1615
+ */
+$messages['fa'] = array(
+	'wikiastyleguide-dropdown-all' => 'همه',
+	'wikiastyleguide-dropdown-select-all' => 'انتخاب همه',
+	'wikiastyleguide-tooltip-icon-question-mark' => '؟',
+);
+
 /** French (français)
  * @author Gomoko
  * @author Wyz
@@ -125,6 +134,15 @@ $messages['oc'] = array(
 	'wikiastyleguide-dropdown-all' => 'Totes',
 	'wikiastyleguide-dropdown-select-all' => 'Seleccionar tot',
 	'wikiastyleguide-dropdown-selected-items-list' => '$1 e $2 que demòran',
+);
+
+/** Ossetic (Ирон)
+ * @author Amikeco
+ */
+$messages['os'] = array(
+	'wikiastyleguide-dropdown-all' => 'Æппæт',
+	'wikiastyleguide-dropdown-select-all' => 'Равзарын иууылдæр',
+	'wikiastyleguide-dropdown-selected-items-list' => '$1 æмæ та $2 ма',
 );
 
 /** Polish (polski)

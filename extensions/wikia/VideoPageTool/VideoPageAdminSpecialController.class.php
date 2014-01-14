@@ -155,7 +155,11 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 			} else {
 				$formValues = $this->request->getParams();
 				$errMsg = '';
-				$requiredRows = VideoPageToolHelper::$requiredRows[$section];
+
+				// use displayTitle field to get required rows
+				$fieldValues = empty( $formValues['displayTitle'] ) ? array() : $formValues['displayTitle'];
+				$requiredRows = $helper->getRequiredRows( $section, $fieldValues );
+
 				$data = $program->formatFormData( $section, $requiredRows, $formValues, $errMsg );
 				if ( empty( $errMsg ) ) {
 					$status = $program->saveAssetsBySection( $section, $data );
@@ -477,13 +481,14 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 	}
 
 	/**
-	 * get category data
+	 * Get videos by category
 	 * @requestParam string categoryName
 	 * @responseParam string $result [ok/error]
 	 * @responseParam string $msg - result message
-	 * @responseParam array $data
+	 * @responseParam array $videos - list of videos in the category
+	 * @responseParam integer $total - total number of videos in the category
 	 */
-	public function getCategoryData() {
+	public function getVideosByCategory() {
 		$categoryName = $this->getVal( 'categoryName', '' );
 
 		if ( empty( $categoryName ) ) {
@@ -500,17 +505,12 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 		}
 
 		$helper = new VideoPageToolHelper();
-		$data = $helper->getCategoryData( $title );
+		$videos = $helper->getVideosByCategory( $title );
 
-		if ( empty( $data ) ) {
-			$this->result = 'error';
-			$this->msg = wfMessage( 'videopagetool-unknown-category' )->plain();
-			$this->data = $data;
-		} else {
-			$this->result = 'ok';
-			$this->msg = '';
-			$this->data = $data;
-		}
+		$this->result = 'ok';
+		$this->msg = '';
+		$this->videos = $videos;
+		$this->total = count( $videos );
 
 	}
 

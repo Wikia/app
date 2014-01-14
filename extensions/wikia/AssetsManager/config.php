@@ -55,10 +55,6 @@ $config['adengine2_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdTracker.js',
 		'//extensions/wikia/AdEngine/js/SlotTracker.js',
 
-		// ad related and depending on scriptwriter (gw+ps)
-		// analytics group would be optimal but would require bumping gw+ps much higher on the page
-		'//extensions/wikia/AnalyticsEngine/js/ivw2.run.js',
-
 		// high prio
 		'//extensions/wikia/AdEngine/js/OoyalaTracking.js',
 		'//extensions/wikia/AdEngine/js/DartUrl.js',
@@ -1062,6 +1058,9 @@ $config['videopageadmin_js'] = array(
 		'//extensions/wikia/WikiaMiniUpload/js/WMU.js',
 		// TODO: probably move this jQuery plugin to /resources at some point
 		'//extensions/wikia/VideoPageTool/js/views/jquery.switcher.js',
+		
+		// Compiled Mustache templates
+		'//extensions/wikia/VideoPageTool/js/templates.mustache.js',
 
 		'//extensions/wikia/VideoPageTool/js/models/videopageadmin.datepicker.js',
 		'//extensions/wikia/VideoPageTool/js/models/videopageadmin.thumbnail.js',
@@ -1071,10 +1070,12 @@ $config['videopageadmin_js'] = array(
 		'//extensions/wikia/VideoPageTool/js/views/videopageadmin.thumbnailupload.js',
 		'//extensions/wikia/VideoPageTool/js/views/videopageadmin.edit.js',
 
-		'//extensions/wikia/VideoPageTool/js/models/videopageadmin.category.js',
 		'//extensions/wikia/VideoPageTool/js/collections/videopageadmin.category.js',
+		'//extensions/wikia/VideoPageTool/js/collections/videopageadmin.categorydata.js',
 		'//extensions/wikia/VideoPageTool/js/views/videopageadmin.autocompleteitem.js',
 		'//extensions/wikia/VideoPageTool/js/views/videopageadmin.autocomplete.js',
+		'//extensions/wikia/VideoPageTool/js/views/videopageadmin.categorypreviewitem.js',
+		'//extensions/wikia/VideoPageTool/js/views/videopageadmin.categorypreview.js',
 		'//extensions/wikia/VideoPageTool/js/views/videopageadmin.categoryforms.js',
 		'//extensions/wikia/VideoPageTool/js/views/videopageadmin.category.js',
 	)

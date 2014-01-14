@@ -52,7 +52,7 @@
 							$this.hide().prev().hide().before( '...' );
 						}
 					}
-				});
+				} );
 			}
 		};
 
@@ -60,7 +60,7 @@
 			return this.each(function() {
 				var $this = $( this );
 				$this.data( 'ellipses', new Ellipses( $this ));
-			});
+			} );
 		};
 	};
 
@@ -69,4 +69,4 @@
 	} else {
 		factory( exports.jQuery );
 	}
-})( this );
+} )( this );

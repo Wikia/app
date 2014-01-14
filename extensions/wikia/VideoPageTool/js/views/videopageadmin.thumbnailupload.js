@@ -45,10 +45,10 @@ define( 'views.videopageadmin.thumbnailupload', [
 				that = this,
 				$videoThumb;
 
-			img = new ThumbnailModel({
+			img = new ThumbnailModel( {
 				imgTitle: data.imageTitle,
 				wikiText: data.imageWikiText
-			});
+			} );
 
 			$videoThumb = this.$el.find('.video-thumb');
 
@@ -75,8 +75,8 @@ define( 'views.videopageadmin.thumbnailupload', [
 				that.$el.find( '.alt-thumb' ).val( response.data.imageKey );
 				that.$el.find( '.alt-thumb-name' ).text( response.data.imageTitle );
 
-			});
+			} );
 		}
 	};
 	return ThumbnailUploader;
-});
+} );

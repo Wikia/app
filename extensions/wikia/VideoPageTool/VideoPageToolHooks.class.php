@@ -36,7 +36,7 @@ class VideoPageToolHooks {
 		$title = $page->getTitle();
 		if ( $title->getNamespace() == NS_CATEGORY ) {
 			$helper = new VideoPageToolHelper();
-			$helper->invalidateCacheCategoryData( $title->getText() );
+			$helper->invalidateCacheVideosByCategory( $title->getDBkey() );
 		}
 
 		wfProfileOut( __METHOD__ );

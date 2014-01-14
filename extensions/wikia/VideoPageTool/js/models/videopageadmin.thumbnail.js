@@ -17,9 +17,9 @@ define( 'models.videopageadmin.thumbnail', [
 				data: {
 					imageTitle: that.imgTitle
 				}
-			});
+			} );
 		}
 	};
 
 	return ThumbnailModel;
-});
+} );

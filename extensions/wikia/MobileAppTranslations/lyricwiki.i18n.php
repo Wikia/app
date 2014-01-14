@@ -315,11 +315,12 @@ $messages['de'] = array(
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
  * @author Gorizon
+ * @author Mirzali
  */
 $messages['diq'] = array(
 	'app-loading' => 'Bar beno...',
 	'app-tab-search' => 'Cı geyre',
-	'app-tab-about' => 'Heqdé cı',
+	'app-tab-about' => 'Heqa cı de',
 	'app-tab-browse' => 'A ra Z',
 	'app-async-error-title' => 'Hoooop',
 	'app-nonetwork-dialog-close-button' => 'TEMAM',
@@ -377,6 +378,21 @@ $messages['es'] = array(
 	'gracenote-takedown' => '¡Qué mala suerte! En este momento no tenemos permiso para mostrar la letra completa de esta canción (esto sucede en menos del 1% de nuestras canciones). Por favor, inténtelo de nuevo la próxima semana.',
 	'lyrics-artist-byline' => 'por %s',
 	'ringtone-matcher-by-song' => 'Enviar tono %s a su teléfono.',
+);
+
+/** Persian (فارسی)
+ * @author Reza1615
+ */
+$messages['fa'] = array(
+	'app-loading' => 'در حال بارگذاری...',
+	'app-tab-search' => 'جستجو',
+	'app-tab-about' => 'درباره',
+	'app-nonetwork-dialog-close-button' => 'تأیید',
+	'search-go' => 'برو!',
+	'login-username-hint' => 'نام کاربری',
+	'login-password-hint' => 'گذرواژه',
+	'login-submit-button' => 'ورود',
+	'about-heading-feedback' => 'بازخورد',
 );
 
 /** Finnish (suomi)

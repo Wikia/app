@@ -44,7 +44,7 @@ class VideoHomePageController extends WikiaController {
 		if ( $program instanceof VideoPageToolProgram && $program->exists() ) {
 			$this->haveProgram = true;
 			$this->featuredContent = $this->app->renderView( 'VideoHomePage', 'featured' );
-//			$this->categoryContent = $this->app->renderView( 'VideoHomePage', 'category' );
+			$this->categoryContent = $this->app->renderView( 'VideoHomePage', 'category' );
 //			$this->fanContent = $this->app->renderView( 'VideoHomePage', 'fan' );
 //			$this->popularContent = $this->app->renderView( 'VideoHomePage', 'popular' );
 		} else {

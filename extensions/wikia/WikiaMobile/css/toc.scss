@@ -165,7 +165,7 @@ $level0-border-left-width: 5px;
 	}
 }
 
-.level2 {
+.level1 {
 	border-top: 1px solid $dark-border;
 
 	> li {
@@ -183,7 +183,7 @@ $level0-border-left-width: 5px;
 	}
 }
 
-.level3 {
+.level2 {
 	border-top: 1px solid #F0F0F0;
 
 	> li {
@@ -203,7 +203,7 @@ $level0-border-left-width: 5px;
 	}
 }
 
-.level2 {
+.level1 {
 	display:none;
 
 	.open & {
@@ -219,7 +219,7 @@ $level0-border-left-width: 5px;
 	}
 }
 
-.level2, .level3 {
+.level1, .level2 {
 
 	li {
 		border-top: 1px solid #F0F0F0;
