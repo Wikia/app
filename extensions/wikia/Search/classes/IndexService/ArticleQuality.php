@@ -18,14 +18,14 @@ class ArticleQuality extends AbstractService
 	public function execute() {
 		$result = array();
 
-		$aqService = new \ArticleQualityV1Service();
+		$aqService = new \ArticleQualityService();
 		$pageId = $this->currentPageId;
 		if ( $pageId === null ) {
 			throw new \WikiaException( 'A pageId-dependent indexer service was executed without a page ID queued' );
 		}
 
 		$aqService->setArticleById( $pageId );
-		$result[ 'article_quality' ] = $aqService->getArticleQuality();
+		$result[ 'article_quality_i' ] = $aqService->getArticleQuality();
 
 		return $result;
 	}

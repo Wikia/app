@@ -155,17 +155,14 @@ class CombinedSearchService {
 		$client = new \Solarium_Client($config);
 
 		$phrase = $this->sanitizeQuery( $query );
-		$query = $this->prepareQuery( $phrase, $namespaces, $lang, $hubs );
+		$query = $this->prepareQuery( $phrase, $namespaces, $lang, $hubs, $minArticleQuality );
 
 		$select = $client->createSelect();
 		$dismax = $select->getDisMax();
 		$dismax->setQueryParser('edismax');
-
 		$select->setRows(self::MAX_TOTAL_ARTICLES);
 		$select->setQuery( $query );
-		if ( $minArticleQuality != null ) {
-			$select->createFilterQuery( 'article_quality')->setQuery( 'article_quality_i:[' . $minArticleQuality . ' TO *]' );
-		}
+
 		//add filters
 		$select->createFilterQuery( 'users' )->setQuery('activeusers:[0 TO *]');
 		$select->createFilterQuery( 'pages' )->setQuery('wikipages:[500 TO *]');
@@ -242,7 +239,7 @@ class CombinedSearchService {
 		return $result;
 	}
 
-	protected function prepareQuery( $query, $namespaces, $lang, $hubs = null ) {
+	protected function prepareQuery( $query, $namespaces, $lang, $hubs = null, $minArticleQuality = null ) {
 		$nsArr = [];
 		$hubQuery = '';
 		if( !empty( $hubs ) ) {
@@ -257,6 +254,9 @@ class CombinedSearchService {
 		}
 		$query = '+(' . $hubQuery . '(' . implode(' OR ', $nsArr ) . ') AND (lang:' . $lang .
 			')) AND +((title_en:"'.$query.'") OR (redirect_titles_mv_en:"'.$query.'")) AND +(nolang_txt:"'.$query.'")';
+		if ( $minArticleQuality != null ) {
+			$query .= ' AND +(article_quality_i:[' . $minArticleQuality . ' TO *])';
+		}
 		return $query;
 	}
 
