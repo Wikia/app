@@ -28,7 +28,7 @@ class BopFmRailController extends WikiaController {
 			// Set variables to pass to the rail module.
 			$title = $wgTitle->getText();
 			$colonIndex = strpos($title, ":"); // this doesn't work for artists with colons in their name (eg: Sixx:A.M.).
-			if($colonIndex !== false){
+			if($colonIndex === false){
 				// no colon... we must be on an artist page.
 				$artist = $title;
 				$songName = "";
