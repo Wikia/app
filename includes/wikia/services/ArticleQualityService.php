@@ -149,7 +149,7 @@ class ArticleQualityService extends Service {
 		);
 
 		$percentile = $this->app->wg->Memc->get( $cacheKey );
-
+		$percentile = false;
 		if ( $percentile === false ) {
 			$title = Title::newFromID( $this->articleId );
 			if ( $title === null ) {
@@ -205,12 +205,7 @@ class ArticleQualityService extends Service {
 	 * @return int
 	 */
 	protected function getCharsCountFromHTML( $text ) {
-		libxml_use_internal_errors( true );
-		$doc = new DOMDocument();
-		$doc->loadHTML( $text );
-		libxml_use_internal_errors( false );
-		return strlen( $doc->textContent );
-
+		return strlen( strip_tags( $text ) );
 	}
 
 	/**
@@ -219,8 +214,11 @@ class ArticleQualityService extends Service {
 	 * @return int|null
 	 */
 	protected function searchPercentile( $value ) {
-		$max = count( $this->percentiles ) - 1;
-		$firstElement = $min = 0;
+		reset( $this->percentiles );
+		$firstElement = key( $this->percentiles );
+		$min = $firstElement;
+		end( $this->percentiles );
+		$max = key( $this->percentiles );
 
 		while ( 1 ) {
 			if ( $max < $min ) {
