@@ -112,6 +112,12 @@ use Swagger\Annotations as SWG;
  * 		type="string",
  * 		description="The URL of the image"
  *  )
+ * 	@SWG\Property(
+ * 		name="quality",
+ * 		type="int",
+ * 		required="true",
+ * 		description="Quality score of the article, ranges from 0 (low quality) to 99 (high quality)"
+ * 	)
  *
  *
  * @SWG\Model( id="CrossWikiSearchResult" )
@@ -197,7 +203,6 @@ use Swagger\Annotations as SWG;
  * 		items="$ref:CombinedSearchArticlesResultSet",
  * 		description="The list of top articles on the Wikia site"
  *  )
- *
  *
  * @SWG\Api(
  * 	path="/api/v1/Search/List",
@@ -336,7 +341,6 @@ use Swagger\Annotations as SWG;
  * 		)
  * 	)
  * )
- *
  *
  *  @SWG\Api(
  * 	path="/api/v1/Search/Combined",

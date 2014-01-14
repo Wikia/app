@@ -42,6 +42,12 @@ use Swagger\Annotations as SWG;
  * 		required="true",
  * 		description="The URL of plain content of the article"
  * 	)
+ * 	@SWG\Property(
+ * 		name="quality",
+ * 		type="int",
+ * 		required="true",
+ * 		description="Quality score of the article, ranges from 0 (low quality) to 99 (high quality)"
+ * 	)
  *
  * @SWG\Api(
  * 	path="/api/v1/Tv/Episode",
@@ -74,7 +80,17 @@ use Swagger\Annotations as SWG;
  *					allowMultiple="false",
  *					dataType="string",
  *					defaultValue=""
- *				)
+ *				),
+ * 				@SWG\Parameter(
+ * 					name="minArticleQuality",
+ * 					description="Minimal value of article quality",
+ * 					paramType="query",
+ * 					required="false",
+ * 					allowMultiple="false",
+ * 					dataType="int",
+ * 					defaultValue="10",
+ * 					@SWG\AllowableValues(valueType="RANGE",min="0", max="99")
+ * 				)
  *			)
  *		)
  * 	)
