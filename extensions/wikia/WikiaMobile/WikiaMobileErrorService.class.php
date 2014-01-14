@@ -7,21 +7,10 @@
 	 */
 class WikiaMobileErrorService extends WikiaService {
 	/**
+	 * Used by WikiaMobileHooks and SharedHelp
 	 * @var bool
 	 */
-	static private $displayErrorPage;
-	/**
-	 * @param bool
-	 */
-	static function setDisplayErrorPage( $value = false ){
-		self::$displayErrorPage = $value;
-	}
-	/**
-	 * @return bool
-	 */
-	static function getDisplayErrorPage(){
-		return self::$displayErrorPage;
-	}
+	static public $displayErrorPage;
 	/**
 	 * Page Not Found
 	 *
