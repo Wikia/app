@@ -44,6 +44,7 @@ ve.ui.IndentationTool.static.method = '';
  * @method
  */
 ve.ui.IndentationTool.prototype.onSelect = function () {
+	ve.track( 'tool.indentation.select', { name: this.constructor.static.name } );
 	this.toolbar.getSurface().execute( 'indentation', this.constructor.static.method );
 };
 

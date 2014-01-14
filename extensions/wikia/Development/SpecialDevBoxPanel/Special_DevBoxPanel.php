@@ -53,6 +53,18 @@ $wgExtensionCredits['specialpage'][] = array(
 
 $wgSpecialPages['DevBoxPanel'] = 'DevBoxPanel';
 
+if (getenv('wgDevelEnvironmentName')) {
+        $wgDevelEnvironmentName = getenv('wgDevelEnvironmentName');
+} else {
+        $host = gethostname();
+        $host = explode("-", $host);
+        $wgDevelEnvironmentName = trim($host[1]);
+}
+
+// Asset manaager and ajax requests come in "too early" for the rest of config
+// So we need a fallback global domain.  This is kind of a hack, fixme.
+$wgDevboxDefaultWikiDomain = 'www.wikia.com';
+
 class DevBoxPanel extends SpecialPage {
 	public function __construct(){
 		// macbre: don't run code below when running in command line mode (memcache starts to act strange) - NOTE: This macbre code was in a different spot... this may be fixed implicitly now.
@@ -246,16 +258,6 @@ function wfDevBoxLogExceptions( $errorText ) {
 }
 
 /**
- * @return array Parts of host. used to set $wgDevelEnvironmentName;
- */
-function getHostParts() {
-	if (!isset($_SERVER['HTTP_HOST'])) return null;
-	if (count (explode(".", $_SERVER['HTTP_HOST'])) == 3) return null;
-	$aHostParts = explode(".", str_replace('.wikia-dev.com', '', $_SERVER['HTTP_HOST']));
-	return $aHostParts;
-}
-
-/**
  * @return String full domain of wiki which this dev-box should behave as.
  *
  * Hostname scheme: override.developer.wikia-dev.com
@@ -264,22 +266,18 @@ function getHostParts() {
  */
 function getForcedWikiValue(){
 	global $wgDevelEnvironmentName;
-	$aHostParts = getHostParts();
 
-	if(!empty($hostParts)) {
-		$wgDevelEnvironmentName = array_pop($hostParts);
-	} else {
-		$host = exec('hostname'); //TODO: replce it by gethostname php >= 5.3.0
-		$host = explode("-", $host);
-		$wgDevelEnvironmentName = trim($host[1]);
+	if (!isset($_SERVER['HTTP_HOST'])) {
+		return '';
 	}
 
-	if(empty($aHostParts)) {
-		return "";
+	if (count(explode(".", $_SERVER['HTTP_HOST'])) == 3) {
+		return 'wikia.com';
 	}
-	array_pop($aHostParts);  // remove developer name
-	$override = implode(".", $aHostParts);
-	return "$override.wikia.com";
+
+	$site = str_replace('.' . $wgDevelEnvironmentName . '.wikia-dev.com', '', $_SERVER['HTTP_HOST']);
+
+	return "$site.wikia.com";
 } // end getForcedWikiValue()
 
 

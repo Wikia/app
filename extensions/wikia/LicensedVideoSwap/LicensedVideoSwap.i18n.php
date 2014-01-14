@@ -82,7 +82,9 @@ $messages['qqq'] = array(
 {{Identical|History}}',
 	'lvs-page-header-back-link' => 'Text for link that brings users back to the Licensed Video Swap page from the history page',
 	'lvs-callout-header' => 'This is some header text that encourages the user to replace unlicensed videos with videos licensed for use on Wikia.  This section is temporary and will go away after a certain number of views. There\'s an optional "<br />" tag between the two sentences for purposes of making the header look nicer.',
-	'lvs-match-stats-description' => 'Description for numerical counter that shows how many total matched videos are available.',
+	'lvs-match-stats-description' => 'Description for numerical counter that shows how many total matched videos are available.
+
+Preceded by total number of videos.',
 	'lvs-callout-title-licensed' => 'Title for lvs callout header section.',
 	'lvs-callout-reason-licensed' => 'This is a bullet point that appears below lvs-callout-header. It explains that Wikia videos are licensed for use on Wikia. This section is temporary and will go away after a certain number of views.',
 	'lvs-callout-title-quality' => 'Title for lvs callout header section.',
@@ -90,8 +92,13 @@ $messages['qqq'] = array(
 	'lvs-callout-title-collaborative' => 'Title for lvs callout header section.',
 	'lvs-callout-reason-collaborative' => 'This is a bullet point that appears below lvs-callout-header.  This section is temporary and will go away after a certain number of views.',
 	'lvs-callout-reason-more' => 'This is a bullet point that appears below lvs-callout-header. This starts as "mid-sentence" because this is the last bullet point in the section and is a continuation of the previous ones in this set, saying basically "...and more". Due to design constraints this needs to be a separate message. This section is temporary and will go away after a certain number of views.',
-	'lvs-instructions-header' => 'This is the title of the section on how to use this page.',
-	'lvs-instructions' => 'This is the text at the top of the Licensed Video Swap special page that explains to the user what this page is all about. The idea is that users can exchange unlicensed videos for videos licensed for use on Wikia.',
+	'lvs-instructions-header' => 'This is the title of the section on how to use this page.
+
+Followed by:
+* {{msg-wikia|Lvs-instructions}}.',
+	'lvs-instructions' => 'This is the text at the top of the Licensed Video Swap special page that explains to the user what this page is all about. The idea is that users can exchange unlicensed videos for videos licensed for use on Wikia.
+
+Preceded by the heading {{msg-wikia|Lvs-instructions-header}}.',
 	'lvs-button-keep' => 'This is the text that appears on a button that, when clicked, will keep the non-licensed video as opposed to swapping it out for a licensed video.',
 	'lvs-button-swap' => 'This is the text that appears on a button that, when clicked, will swap out a non-licensed video for a licensed video suggested from the wikia video library.',
 	'lvs-button-yes' => 'Yes (user agrees to keep seeing suggestions for video matches for that video).
@@ -267,6 +274,13 @@ $messages['ca'] = array(
 	'lvs-click-here' => 'feu clic aquí',
 );
 
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'lvs-history-button-text' => 'Истори',
+);
+
 /** German (Deutsch)
  * @author Metalhead64
  */
@@ -416,6 +430,19 @@ $messages['es'] = array(
 	'lvs-new-flag' => 'Nuevo',
 );
 
+/** Persian (فارسی)
+ * @author Reza1615
+ */
+$messages['fa'] = array(
+	'lvs-history-button-text' => 'تاریخچه',
+	'lvs-button-yes' => 'بله',
+	'lvs-button-no' => 'خیر',
+	'lvs-undo-swap' => 'واگردانی',
+	'lvs-undo-keep' => 'واگردانی',
+	'lvs-posted-in-more' => 'بیشتر',
+	'lvs-new-flag' => 'جدید',
+);
+
 /** Faroese (føroyskt)
  * @author EileenSanda
  */
@@ -554,6 +581,20 @@ $messages['gl'] = array(
 	'lvs-new-flag' => 'Novo',
 );
 
+/** Japanese (日本語)
+ * @author Tommy6
+ */
+$messages['ja'] = array(
+	'licensedvideoswap' => '許諾済み動画への差し替え',
+	'lvs-page-title' => '許諾済み動画への差し替え',
+	'lvs-history-button-text' => '履歴',
+	'lvs-match-stats-description' => '件の動画に<br />差し替え候補があります',
+	'lvs-instructions-header' => 'このページの使い方',
+	'lvs-instructions' => 'せっかくページに動画を埋め込んでも、著作権侵害により動画が削除されてしまい、利用できなくなることがあります。この問題に対する解決策としてウィキアでは、[[w:c:video|提携先から得た数多くの許諾済み動画を提供し]]、各ウィキで利用できるようにしました。このページは、このウィキアに既に埋め込まれている各動画を、同じもしくは似た内容の許諾済み動画に差し替えられないか簡単に検索するためのものです。なお、完全に同じ動画であるにもかかわらず動画サムネイルが違ってしまうことがあることに注意してください。差し替え動画を決める際には、動画自体を再生して確認することをおすすめいたします。',
+	'lvs-button-keep' => 'このまま',
+	'lvs-button-swap' => '差し替え',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
@@ -588,9 +629,15 @@ $messages['lb'] = array(
  */
 $messages['lrc'] = array(
 	'lvs-history-button-text' => 'ويرگار',
+	'lvs-button-keep' => 'واداشتن',
+	'lvs-button-yes' => 'هری',
+	'lvs-button-no' => 'نه',
+	'lvs-more-suggestions' => 'پیشنادیا هنی',
 	'lvs-undo-swap' => 'انجوم ندی ئن',
 	'lvs-undo-keep' => 'انجوم ندی ئن',
 	'lvs-posted-in-more' => 'بيشتر',
+	'lvs-click-here' => 'ایچه بپورنیت',
+	'lvs-new-flag' => 'تازه',
 );
 
 /** Malayalam (മലയാളം)
@@ -602,6 +649,7 @@ $messages['ml'] = array(
 
 /** Malay (Bahasa Melayu)
  * @author Anakmalaysia
+ * @author SNN95
  */
 $messages['ms'] = array(
 	'licensedvideoswap' => 'Pertukaran Video Berlesen',
@@ -612,6 +660,7 @@ $messages['ms'] = array(
 	'lvs-history-button-text' => 'Sejarah',
 	'lvs-page-header-back-link' => 'Kembali ke Pertukaran Video Berlesen',
 	'lvs-callout-header' => 'Kami telah menemui padanan untuk video-video pada wiki anda di Wikia Video.<br />Adalah baik untuk menggantikan video anda dengan video dari Wikia Video kerana:',
+	'lvs-match-stats-description' => 'Video<br />bersama Padanan',
 	'lvs-callout-title-licensed' => '100% Berlesen',
 	'lvs-callout-reason-licensed' => 'Wikia Videos dilesenkan untuk komuniti-komuniti kami untuk digunakan di wiki-wiki anda',
 	'lvs-callout-title-quality' => 'Mutu Tinggi',
@@ -623,6 +672,8 @@ $messages['ms'] = array(
 	'lvs-instructions' => "Kebanyakan video yang terletak pada wiki anda akan hilang akibat dipadamkan atau ditanggalkan kerana menyalahi hak cipta. Oleh itu, Wikia telah melesenkan [[w:c:video|beribu-ribu video]] untuk digunakan pada wiki anda dari rakan-rakan kongsi kandungan. Halaman Istimewa ini adalah cara yang mudah untuk anda melihat sama ada terdapatnya video berlesen yang sepadan dengan video-video berhak cipta di wiki anda. Sila ambil perhatian bahawa selalunya video yang tepat-tepat sama menunjukkan lakaran kenit (''thumbnail'') yang berlainan, jadi adalah paling baik untuk meneliti video itu sebelum membuat pilihan. Selamat menukar!",
 	'lvs-button-keep' => 'Simpan',
 	'lvs-button-swap' => 'Tukar',
+	'lvs-button-yes' => 'Ya',
+	'lvs-button-no' => 'Tidak',
 	'lvs-more-suggestions' => 'cadangan lain',
 	'lvs-best-match-label' => 'Padanan Berlesen Terbaik dari Wikia Video',
 	'lvs-undo-swap' => 'Buat asal',
@@ -631,12 +682,15 @@ $messages['ms'] = array(
 	'lvs-keep-video-success' => 'Anda telah memilih untuk mengekalkan video semasa anda. Video itu akan digugurkan dari senarai ini. $1',
 	'lvs-restore-video-success' => 'Anda telah memulihkan video berkenaan pada senarai ini.',
 	'lvs-error-permission' => 'Anda tidak boleh menukarkan video ini.',
+	'lvs-error-permission-access' => 'Anda tidak boleh mengakses laman ini.',
 	'lvs-error-invalid-page-status' => 'Anda tidak boleh memulihkan video ini.',
+	'lvs-error-already-swapped' => 'Perisian video ini telah telah telah ditukar.',
+	'lvs-error-already-kept-forever' => 'Video ini telah disimpan.',
 	'lvs-posted-in-label' => 'Video semasa yang terpapar pada',
 	'lvs-posted-in-label-none' => 'Video semasa tidak terpapar pada sebarang rencana',
 	'lvs-posted-in-more' => 'selanjutnya',
 	'lvs-confirm-keep-title' => 'Simpan Video',
-	'lvs-confirm-keep-message' => 'Anda telah memilih untuk tidak menggantikan video semasa anda dengan Wikia Video yang berlesen. Adakah anda ingin teruskan?', # Fuzzy
+	'lvs-confirm-keep-message' => 'Anda telah memilih untuk tidak menggantikan video semasa anda dengan <a href="http://video.wikia.com/" target="_blank">Wikia Video</a> yang berlesen. Adakah anda ingin teruskan?',
 	'lvs-confirm-undo-swap-title' => 'Sahkan Pengunduran',
 	'lvs-confirm-undo-swap-message' => 'Adakah anda benar-benar mahu memulihkan video asal?',
 	'lvs-confirm-undo-keep-title' => 'Sahkan Pengunduran',
@@ -652,6 +706,7 @@ $messages['ms'] = array(
 	'lvs-history-instructions' => 'Untuk melihat sejarah untuk semua pertukaran dan pengunduran, sila layari $1.',
 	'lvs-no-monobook-support' => 'Halaman ini tidak disokong di Monobook. Untuk mengaksesnya di dalam susun atur Wikia, $1. Ini tidak akan mengubah tetapan susun atur anda.',
 	'lvs-click-here' => 'klik di sini',
+	'lvs-new-flag' => 'Baru',
 );
 
 /** Nepali (नेपाली)
@@ -1044,6 +1099,7 @@ $messages['vi'] = array(
 	'lvs-tooltip-history' => 'Nút cấp phép trao đổi Video',
 	'lvs-history-button-text' => 'Lịch sử',
 	'lvs-page-header-back-link' => 'Quay lại cấp phép trao đổi Video',
+	'lvs-callout-title-licensed' => '100% có giấy phép',
 );
 
 /** Wu (吴语)

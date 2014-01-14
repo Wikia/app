@@ -45,6 +45,7 @@ ve.ui.ListTool.static.style = '';
  * @method
  */
 ve.ui.ListTool.prototype.onSelect = function () {
+	ve.track( 'tool.list.select', { method: this.method, name: this.constructor.static.name } );
 	if ( this.method === 'wrap' ) {
 		this.toolbar.surface.execute( 'list', 'wrap', this.constructor.static.style );
 	} else if ( this.method === 'unwrap' ) {

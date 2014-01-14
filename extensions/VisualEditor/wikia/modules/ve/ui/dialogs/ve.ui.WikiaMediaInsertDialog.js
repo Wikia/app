@@ -73,6 +73,11 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	// Properties
 	this.cartModel = new ve.dm.WikiaCart();
 	this.cart = new ve.ui.WikiaCartWidget( this.cartModel );
+	this.dropTarget = new ve.ui.WikiaDropTargetWidget( {
+		'$': this.$,
+		'$document': this.frame.$document,
+		'$overlay': this.surface.$globalOverlay
+	} );
 	this.insertButton = new OO.ui.PushButtonWidget( {
 		'$': this.$,
 		'label': ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-insert-button' ),
@@ -132,6 +137,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	this.upload.connect( this, uploadEvents );
 	this.queryUpload.connect( this, uploadEvents );
 	this.$policyReadMoreLink.on( 'click', ve.bind( this.onReadMoreLinkClick, this ) );
+	this.dropTarget.on( 'drop', ve.bind( this.onFileDropped, this ) );
 
 	// Initialization
 	this.$mainPage.append( this.upload.$element, this.$policy, this.$policyReadMore );
@@ -149,6 +155,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	this.$body.append( this.$content, this.$cart );
 	this.frame.$content.addClass( 've-ui-wikiaMediaInsertDialog' );
 	this.$foot.append( this.insertButton.$element );
+	this.$frame.prepend( this.dropTarget.$element );
 };
 
 
@@ -163,6 +170,17 @@ ve.ui.WikiaMediaInsertDialog.prototype.onReadMoreLinkClick = function ( e ) {
 	this.$policyReadMore.hide();
 	this.$policy.animate( { 'max-height': this.$policy.children().first().height() } );
 };
+
+/**
+ * Handle drag & drop file uploaded
+ *
+ * @method
+ * @param {Object} file instance of file
+ */
+ve.ui.WikiaMediaInsertDialog.prototype.onFileDropped = function ( file ) {
+	this.upload.$file.trigger( 'change', file );
+};
+
 
 /**
  * Handle query input changes.
@@ -364,6 +382,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.setup = function () {
 	if ( this.$policy.height() === this.$policy.children().first().height() ) {
 		this.$policyReadMore.hide();
 	}
+	this.dropTarget.setup();
 };
 
 /**
@@ -392,6 +411,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.teardown = function ( action ) {
 	}
 	this.cartModel.clearItems();
 	this.queryInput.setValue( '' );
+	this.dropTarget.teardown();
 
 	// Parent method
 	ve.ui.MWDialog.prototype.teardown.call( this, action );

@@ -17,14 +17,26 @@ class AnalyticsProviderIVWTest extends WikiaBaseTest {
 	 *
 	 */
 	private function getAnalyticsProviderIVWTag($url) {
-		$page = Http::get($url, 'default', array('noProxy' => true));
-		if (preg_match('/<img src="([^">]+)" [^>]+ alt="szmtag"/', $page, $m)) {
-			$path = parse_url($m[1], PHP_URL_PATH);
-			$arr = explode('/', $path);
-			return array_pop($arr);
-		} else {
-			$this->fail('Cannot find the analytics image on page ' . $url);
+		$req = MWHttpRequest::factory( $url, ['noProxy' => true ] );
+		$req->execute();
+
+		$page = $req->getContent();
+
+		$dom = new DOMDocument('1.0', 'utf-8');
+		//suppress warnings for not well-formed html
+		$loaded = @$dom->loadHTML( $page );
+		if ( $loaded ) {
+			$dom_path = new DOMXPath( $dom );
+			$nodes = $dom_path->query("//img[@alt='szmtag']");
+			if ( $nodes->length > 0 ) {
+				//get src attribute value from first node only as we expect only one item with that alt tag
+				$src = $nodes->item(0)->attributes->getNamedItem('src')->nodeValue;
+				$path = parse_url($src, PHP_URL_PATH);
+				$arr = explode('/', $path);
+				return array_pop($arr);
+			}
 		}
+		$this->fail('Cannot find the analytics image on page ' . $url);
 	}
 
 	/**

@@ -59,6 +59,7 @@ ve.ui.HistoryTool.static.check = '';
  * @method
  */
 ve.ui.HistoryTool.prototype.onSelect = function () {
+	ve.track( 'tool.history.select', { name: this.constructor.static.name } );
 	this.toolbar.getSurface().execute( 'history', this.constructor.static.method );
 	this.setActive( false );
 };

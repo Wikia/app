@@ -9,7 +9,7 @@ var AdProviderSevenOneMedia = function (log, window, adTracker, $, sevenOneMedia
 			TOP_RIGHT_BOXAD: 'rectangle1',
 			HOME_TOP_RIGHT_BOXAD: 'rectangle1',
 
-//			PREFOOTER_LEFT_BOXAD: 'promo1',
+			PREFOOTER_LEFT_BOXAD: 'promo1',
 
 			TOP_LEADERBOARD: 'topAds',
 			HOME_TOP_LEADERBOARD: 'topAds',
@@ -18,17 +18,15 @@ var AdProviderSevenOneMedia = function (log, window, adTracker, $, sevenOneMedia
 			SEVENONEMEDIA_FLUSH: 'trackEnd'
 		};
 
-	function canHandleSlot(slot) {
-		log(['canHandleSlot', slot], 'debug', logGroup);
-
-		var slotname = slot[0];
+	function canHandleSlot(slotname) {
+		log(['canHandleSlot', slotname], 'debug', logGroup);
 
 		if (slotMap[slotname]) {
-			log(['canHandleSlot', slot, true], 'debug', logGroup);
+			log(['canHandleSlot', slotname, true], 'debug', logGroup);
 			return true;
 		}
 
-		log(['canHandleSlot', slot, false], 'debug', logGroup);
+		log(['canHandleSlot', slotname, false], 'debug', logGroup);
 		return false;
 	}
 
@@ -63,16 +61,20 @@ var AdProviderSevenOneMedia = function (log, window, adTracker, $, sevenOneMedia
 		}
 	}
 
-	function fillInSlot(slot) {
-		log(['fillInSlot', slot], 'info', logGroup);
+	function fillInSlot(slotname, pSuccess) {
+		log(['fillInSlot', slotname], 'info', logGroup);
 
-		var slotname = slot[0],
-			slotDeName = slotMap[slotname],
+		var slotDeName = slotMap[slotname],
 			$slot,
 			slotTracker = adTracker.trackSlot('sevenonemedia', slotname);
 
 		function clearDefaultHeight() {
 			$('#' + slotname).removeClass('default-height');
+		}
+
+		function success() {
+			slotTracker.success();
+			pSuccess();
 		}
 
 		slotTracker.init();
@@ -81,7 +83,7 @@ var AdProviderSevenOneMedia = function (log, window, adTracker, $, sevenOneMedia
 			makeTopAds();
 			sevenOneMedia.pushAd('popup1');
 			sevenOneMedia.pushAd('fullbanner2', {afterFinish: handleTopButton});
-			sevenOneMedia.pushAd('skyscraper1', {afterFinish: slotTracker.success});
+			sevenOneMedia.pushAd('skyscraper1', {afterFinish: success});
 			sevenOneMedia.flushAds();
 		}
 
@@ -89,7 +91,7 @@ var AdProviderSevenOneMedia = function (log, window, adTracker, $, sevenOneMedia
 			$slot = $('<div class="ad-wrapper" style="display: none"></div>');
 			$slot.attr('id', 'ad-' + slotDeName);
 			$('#' + slotname).append($slot);
-			sevenOneMedia.pushAd(slotDeName, {beforeFinish: clearDefaultHeight, afterFinish: slotTracker.success});
+			sevenOneMedia.pushAd(slotDeName, {beforeFinish: clearDefaultHeight, afterFinish: success});
 			sevenOneMedia.flushAds();
 		}
 

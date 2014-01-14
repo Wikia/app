@@ -89,6 +89,7 @@ $wgResourceModules += array(
 			've/ui/widgets/ve.ui.WikiaMediaResultsWidget.js',
 			've/ui/widgets/ve.ui.WikiaMediaQueryWidget.js',
 			've/ui/widgets/ve.ui.WikiaUploadWidget.js',
+			've/ui/widgets/ve.ui.WikiaDropTargetWidget.js'
 		),
 		'messages' => array(
 			'oasis-content-picture-added-by',
@@ -108,6 +109,7 @@ $wgResourceModules += array(
 			'wikia-visualeditor-dialog-wikiamediainsert-upload-error-filetype',
 			'wikia-visualeditor-dialog-wikiamediainsert-policy-message',
 			'wikia-visualeditor-dialog-wikiamediainsert-read-more',
+			'wikia-visualeditor-dialog-drop-target-callout',
 			'wikia-visualeditor-help-label',
 			'wikia-visualeditor-help-link',
 			'wikia-visualeditor-beta-warning',

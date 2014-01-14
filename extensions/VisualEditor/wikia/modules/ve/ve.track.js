@@ -6,27 +6,59 @@
 
 require( ['wikia.tracker'], function ( tracker ) {
 	var actions = tracker.ACTIONS,
-		// These are topics used by MediaWiki, consider them reserved. Each topic should contain
-		// any number of actions which should contain tracking parameters as they will be passed
-		// to Wikia.Tracker. If you need to define these parameters dynamically, you may use a
-		// function. Otherwise, a plain Object is fine.
+		// These are topics used by MediaWiki, consider them reserved. Each topic should be
+		// assigned to a function which will map the data associated with a topic to a format
+		// understood by Wikia.Tracker.
 		mwTopics = {
-			'Edit': {
-				'edit-link-click': {
+			'command.execute': function ( data ) {
+				return {
+					'action': actions.KEYPRESS,
+					'label': 'tool-' + nameToLabel( data.name )
+				};
+			},
+			'Edit': function ( data ) {
+				var params = {
 					'action': actions.CLICK,
-					'category': 'article',
-					'label': 've-edit'
-				},
-				'section-edit-link-click': {
-					'action': actions.CLICK,
-					'category': 'article',
-					'label': 've-section-edit'
+					'category': 'article'
+				};
+
+				switch( data.action ) {
+					case 'edit-link-click':
+						params.label = 've-edit';
+						break;
+					case 'section-edit-link-click':
+						params.label = 've-section-edit';
+						break;
 				}
+
+				return params;
+			},
+			'performance.system.activation': function ( data ) {
+				return {
+					'action': actions.IMPRESSION,
+					'label': 'edit-page',
+					'value': data.duration
+				};
+			},
+			'performance.user.saveComplete': function ( data ) {
+				return {
+					'action': actions.SUCCESS,
+					'label': 'publish',
+					'value': data.duration
+				};
+			},
+			'tool': function ( data ) {
+				return {
+					'action': actions.CLICK,
+					'label': 'tool-' + nameToLabel( data.name ),
+					'value': data.toolbar === 'surface' ? 1 : 0
+				};
 			}
 		},
 		// @see {@link nameToLabel} for more information
 		nameToLabelMap = {
 			'meta': 'page-settings',
+			'mwSave': 'save',
 			'transclusion': 'template',
 			'wikiaMediaInsert': 'media-insert',
 			'wikiaSourceMode': 'source'
@@ -57,7 +89,7 @@ require( ['wikia.tracker'], function ( tracker ) {
 	 * @param {Object} data The data to send to our internal tracking function.
 	 */
 	function track( topic, data ) {
-		var mwEvent,
+		var i, mwEvent, topics,
 			params = {
 				category: 'editor-ve',
 				trackingMethod: 'both'
@@ -65,17 +97,29 @@ require( ['wikia.tracker'], function ( tracker ) {
 
 		// MW events
 		if ( topic !== 'wikia' ) {
-			mwEvent = mwTopics[topic];
+			// MW events are categorized in dot notation (like "performance.system.activation")
+			// This allows us to follow an entire topic ("performance") without having to track
+			// all the sub-topics separately.
+			topics = topic.split( '.' );
+			for ( i = 0; i < topics.length; i++ ) {
+				topic = ( i === 0 ? '' : topic + '.' ) + topics[i];
+				mwEvent = mwTopics[topic];
+				if ( mwEvent ) {
+					// We have found a match; exit the loop
+					break;
+				}
+			}
 			// Only track things we care about
-			if ( !mwEvent || !( mwEvent = mwEvent[data.action] ) ) {
+			if ( !mwEvent ) {
 				return;
 			}
-			data = $.isFunction( mwEvent ) ? mwEvent( data ) : mwEvent;
-		} else {
-			// Normalize tracking labels
-			data.label = data.label.replace( rUppercase, upperToHyphenLower );
+			data = $.isFunction( mwEvent ) ? mwEvent( data, topics ) : mwEvent;
 		}
 
+		// Normalize tracking labels
+		data.label = data.label.replace( rUppercase, upperToHyphenLower );
+
+		// Send off to Wikia.Tracker
 		tracker.track( ve.extendObject( params, data ) );
 	}
 

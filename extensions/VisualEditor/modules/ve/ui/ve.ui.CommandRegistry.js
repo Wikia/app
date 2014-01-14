@@ -27,11 +27,10 @@ OO.inheritClass( ve.ui.CommandRegistry, OO.Registry );
  * Register a constructor with the factory.
  *
  * @method
- * @param {string|string[]} name Symbolic name or list of symbolic names
  * @param {ve.ui.Command} command Command object
  * @throws {Error} If command is not an instance of ve.ui.Command
  */
-ve.ui.CommandRegistry.prototype.register = function ( name, command ) {
+ve.ui.CommandRegistry.prototype.register = function ( command ) {
 	// Validate arguments
 	if ( !( command instanceof ve.ui.Command ) ) {
 		throw new Error(
@@ -39,7 +38,7 @@ ve.ui.CommandRegistry.prototype.register = function ( name, command ) {
 		);
 	}
 
-	OO.Registry.prototype.register.call( this, name, command );
+	OO.Registry.prototype.register.call( this, command.getName(), command );
 };
 
 /* Initialization */
@@ -47,70 +46,72 @@ ve.ui.CommandRegistry.prototype.register = function ( name, command ) {
 ve.ui.commandRegistry = new ve.ui.CommandRegistry();
 
 /* Registrations */
-
 ve.ui.commandRegistry.register(
-	'bold', new ve.ui.Command( 'annotation', 'toggle', 'textStyle/bold' )
+	new ve.ui.Command( 'undo', 'history', 'undo' )
 );
 ve.ui.commandRegistry.register(
-	'italic', new ve.ui.Command( 'annotation', 'toggle', 'textStyle/italic' )
+	new ve.ui.Command( 'redo', 'history', 'redo' )
 );
 ve.ui.commandRegistry.register(
-	'code', new ve.ui.Command( 'annotation', 'toggle', 'textStyle/code' )
+	new ve.ui.Command( 'bold', 'annotation', 'toggle', 'textStyle/bold' )
 );
 ve.ui.commandRegistry.register(
-	'strikethrough', new ve.ui.Command( 'annotation', 'toggle', 'textStyle/strike' )
+	new ve.ui.Command( 'italic', 'annotation', 'toggle', 'textStyle/italic' )
 );
 ve.ui.commandRegistry.register(
-	'underline', new ve.ui.Command( 'annotation', 'toggle', 'textStyle/underline' )
+	new ve.ui.Command( 'link', 'inspector', 'open', 'link' )
 );
 ve.ui.commandRegistry.register(
-	'subscript', new ve.ui.Command( 'annotation', 'toggle', 'textStyle/subscript' )
+	new ve.ui.Command( 'clear', 'annotation', 'clearAll' )
 );
 ve.ui.commandRegistry.register(
-	'superscript', new ve.ui.Command( 'annotation', 'toggle', 'textStyle/superscript' )
+	new ve.ui.Command( 'underline', 'annotation', 'toggle', 'textStyle/underline' )
 );
 ve.ui.commandRegistry.register(
-	'clear', new ve.ui.Command( 'annotation', 'clearAll' )
+	new ve.ui.Command( 'subscript', 'annotation', 'toggle', 'textStyle/subscript' )
 );
 ve.ui.commandRegistry.register(
-	'indent', new ve.ui.Command( 'indentation', 'increase' )
+	new ve.ui.Command( 'superscript', 'annotation', 'toggle', 'textStyle/superscript' )
 );
 ve.ui.commandRegistry.register(
-	'outdent', new ve.ui.Command( 'indentation', 'decrease' )
+	new ve.ui.Command( 'indent', 'indentation', 'increase' )
 );
 ve.ui.commandRegistry.register(
-	'link', new ve.ui.Command( 'inspector', 'open', 'link' )
+	new ve.ui.Command( 'outdent', 'indentation', 'decrease' )
 );
 ve.ui.commandRegistry.register(
-	'language', new ve.ui.Command( 'inspector', 'open', 'language' )
+	new ve.ui.Command( 'code', 'annotation', 'toggle', 'textStyle/code' )
 );
 ve.ui.commandRegistry.register(
-	'redo', new ve.ui.Command( 'history', 'redo' )
+	new ve.ui.Command( 'strikethrough', 'annotation', 'toggle', 'textStyle/strike' )
 );
 ve.ui.commandRegistry.register(
-	'undo', new ve.ui.Command( 'history', 'undo' )
+	new ve.ui.Command( 'language', 'inspector', 'open', 'language' )
 );
 ve.ui.commandRegistry.register(
-	'paragraph', new ve.ui.Command( 'format', 'convert', 'paragraph' )
+	new ve.ui.Command( 'paragraph', 'format', 'convert', 'paragraph' )
 );
 ve.ui.commandRegistry.register(
-	'heading1', new ve.ui.Command( 'format', 'convert', 'heading', { 'level': 1 } )
+	new ve.ui.Command( 'heading1', 'format', 'convert', 'heading', { 'level': 1 } )
 );
 ve.ui.commandRegistry.register(
-	'heading2', new ve.ui.Command( 'format', 'convert', 'heading', { 'level': 2 } )
+	new ve.ui.Command( 'heading2', 'format', 'convert', 'heading', { 'level': 2 } )
 );
 ve.ui.commandRegistry.register(
-	'heading3', new ve.ui.Command( 'format', 'convert', 'heading', { 'level': 3 } )
+	new ve.ui.Command( 'heading3', 'format', 'convert', 'heading', { 'level': 3 } )
 );
 ve.ui.commandRegistry.register(
-	'heading4', new ve.ui.Command( 'format', 'convert', 'heading', { 'level': 4 } )
+	new ve.ui.Command( 'heading4', 'format', 'convert', 'heading', { 'level': 4 } )
 );
 ve.ui.commandRegistry.register(
-	'heading5', new ve.ui.Command( 'format', 'convert', 'heading', { 'level': 5 } )
+	new ve.ui.Command( 'heading5', 'format', 'convert', 'heading', { 'level': 5 } )
 );
 ve.ui.commandRegistry.register(
-	'heading6', new ve.ui.Command( 'format', 'convert', 'heading', { 'level': 6 } )
+	new ve.ui.Command( 'heading6', 'format', 'convert', 'heading', { 'level': 6 } )
 );
 ve.ui.commandRegistry.register(
-	'preformatted', new ve.ui.Command( 'format', 'convert', 'preformatted' )
+	new ve.ui.Command( 'preformatted', 'format', 'convert', 'preformatted' )
+);
+ve.ui.commandRegistry.register(
+	new ve.ui.Command( 'pasteSpecial', 'content', 'pasteSpecial' )
 );

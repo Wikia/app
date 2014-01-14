@@ -1,7 +1,9 @@
+/*jshint camelcase:false*/
+/*exported AdLogicPageDimensions*/
 var AdLogicPageDimensions = function (window, document, log, slotTweaker) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adengine.logic.shortpage',
+	var logGroup = 'ext.wikia.adengine.logic.pagedimensions',
 		initCalled = false,
 		wrappedAds = {},
 
@@ -96,7 +98,7 @@ var AdLogicPageDimensions = function (window, document, log, slotTweaker) {
 				log(['Loading ad in slot ' + ad.slotname, ad], 'info', logGroup);
 
 				slotTweaker.show(ad.slotname, true);
-				ad.provider.fillInSlot(ad.slotinfo);
+				ad.loadCallback();
 				ad.state = 'shown';
 
 			} else if (ad.state === 'hidden') {
@@ -125,17 +127,19 @@ var AdLogicPageDimensions = function (window, document, log, slotTweaker) {
 	 * Add an ad to the wrappedAds
 	 *
 	 * @param slotname
-	 * @param slotinfo -- the info you pass to fillInSlot
-	 * @param provider -- the original provider for the slot
+	 * @param loadCallback -- the function to call when an ad shows up the first time
 	 */
-	function add(slotname, slotinfo, provider) {
-		log(['add', slotname, slotinfo, provider], 'debug', logGroup);
+	function add(slotname, loadCallback) {
+		log(['add', slotname, loadCallback], 'debug', logGroup);
+
+		if (!initCalled) {
+			init();
+		}
 
 		wrappedAds[slotname] = {
 			slotname: slotname,
 			state: 'none',
-			slotinfo: slotinfo,
-			provider: provider
+			loadCallback: loadCallback
 		};
 
 		refresh(wrappedAds[slotname]);
@@ -190,69 +194,32 @@ var AdLogicPageDimensions = function (window, document, log, slotTweaker) {
 	}
 
 	/**
-	 * Check if window size logic is applicable to the given slot
-	 *
-	 * @param slotinfo
-	 * @return {boolean}
-	 */
-	function isApplicable(slotinfo) {
-		log(['isApplicable', slotinfo], 'debug', logGroup);
-
-		var slotname = slotinfo[0];
-		return !!(slotsOnlyOnLongPages[slotname] || slotsToHideOnMediaQuery[slotname]);
-	}
-
-	/**
 	 * Check if page should have prefooters (note it can change later)
 	 *
 	 * @returns {boolean}
 	 */
 	function hasPreFooters() {
 		log('hasPreFooters', 'debug', logGroup);
-		return pageHeight < preFootersThreshold;
+		pageHeight = document.documentElement.scrollHeight;
+		log(['hasPreFooters', {pageHeight: pageHeight, preFootersThreshold: preFootersThreshold}], 'debug', logGroup);
+		return pageHeight > preFootersThreshold;
 	}
 
 	/**
-	 * Get proxy for given provider delaying fillInSlot to the time screen dimensions criteria
-	 * are met. It'll hide and reshow the slots when screen dimensions change in case it affects
-	 * their desired presence
+	 * Check if window size logic is applicable to the given slot
 	 *
-	 * @param provider
-	 * @returns {{name: string, wrappedProvider: *, canHandleSlot: Function, fillInSlot: Function}}
+	 * @param slotname
+	 * @return {boolean}
 	 */
-	function getProxy(provider) {
-		log(['getProxy', provider], 'debug', logGroup);
+	function isApplicable(slotname) {
+		log(['isApplicable', slotname], 'debug', logGroup);
 
-		function canHandleSlot(slotinfo) {
-			log(['canHandleSlot', slotinfo, provider], 'debug', logGroup);
-			return provider.canHandleSlot(slotinfo);
-		}
-
-		function fillInSlot(slotinfo) {
-			log(['fillInSlot', slotinfo, provider], 'debug', logGroup);
-
-			var slotname = slotinfo[0];
-			add(slotname, slotinfo, provider);
-		}
-
-		// Init once
-		if (!initCalled) {
-			initCalled = true;
-			init();
-		}
-
-		// Return the provider interface
-		return {
-			name: 'WindowSizeProviderProxy',
-			wrappedProvider: provider,
-			canHandleSlot: canHandleSlot,
-			fillInSlot: fillInSlot
-		};
+		return !!(slotsOnlyOnLongPages[slotname] || slotsToHideOnMediaQuery[slotname]);
 	}
 
 	return {
 		isApplicable: isApplicable,
-		hasPreFooters: hasPreFooters,
-		getProxy: getProxy
+		addSlot: add,
+		hasPreFooters: hasPreFooters
 	};
 };
