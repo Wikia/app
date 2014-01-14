@@ -149,7 +149,7 @@ class ArticleQualityService extends Service {
 		);
 
 		$percentile = $this->app->wg->Memc->get( $cacheKey );
-		$percentile = false;
+
 		if ( $percentile === false ) {
 			$title = Title::newFromID( $this->articleId );
 			if ( $title === null ) {
