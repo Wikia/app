@@ -102,6 +102,7 @@ class WikiaMobileMediaService extends WikiaService {
 					if ( !empty( $item['caption'] ) ) {
 						$capt = $parser->internalParse( $item['caption'] );
 						$parser->replaceLinkHolders( $capt );
+						$capt = $parser->killMarkers( $capt );
 
 						$info['capt'] = htmlspecialchars( $capt );
 					}
@@ -151,7 +152,6 @@ class WikiaMobileMediaService extends WikiaService {
 					[],
 					wfMessage( 'wikiamobile-media-group-footer', count( $params ) )->inContentLanguage()->plain()
 				);
-
 			}
 		}
 
