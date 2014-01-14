@@ -1,6 +1,6 @@
 @import 'skins/oasis/css/core/color';
-@import "skins/oasis/css/mixins/clearfix";
-@import "skins/oasis/css/mixins/transform";
+@import 'skins/oasis/css/mixins/clearfix';
+@import 'skins/oasis/css/mixins/transform';
 @import './../mixins/_sprite-VideoPageTool.scss';
 
 $color-page-border: #bbbdc0;
@@ -115,7 +115,7 @@ $color-page-border: #bbbdc0;
 		}
 
 		// Icon classes for partner sprites
-		[class^="ico-"] {
+		[class^='ico-'] {
 			@extend .wv-sprite;
 			display: inline-block;
 			height: 40px;
