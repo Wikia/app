@@ -97,7 +97,6 @@ class TvApiController extends WikiaApiController {
 	 * @return null|int
 	 */
 	protected function getArticleQuality( $wikiId, $articleId ) {
-
 		$responseValues = $this->getQualityFromSolr( $wikiId, $articleId );
 		if ( !empty( $responseValues ) && isset( $responseValues[ 0 ][ 'quality' ] ) ) {
 			return $responseValues[ 0 ][ 'quality' ];
