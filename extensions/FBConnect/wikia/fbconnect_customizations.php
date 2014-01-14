@@ -37,27 +37,25 @@ function wikia_fbconnect_considerProfilePic( &$specialConnect ){
 	if( count( $fb_ids ) > 0 ) {
 		$fb_id = array_shift( $fb_ids );
 
-		if ( class_exists( 'Masthead' ) ) {
-			// If the useralready has a masthead avatar, don't overwrite it, this function shouldn't alter anything in that case.
-			$masthead = Masthead::newFromUser( $wgUser );
+		// If the useralready has a masthead avatar, don't overwrite it, this function shouldn't alter anything in that case.
+		$masthead = Masthead::newFromUser( $wgUser );
 
-			if( !$masthead->hasAvatar() ) {
-				// Attempt to store the facebook profile pic as the Wikia avatar.
-				$picUrl = FBConnectProfilePic::getImgUrlById( $fb_id, FB_PIC_BIG );
+		if( !$masthead->hasAvatar() ) {
+			// Attempt to store the facebook profile pic as the Wikia avatar.
+			$picUrl = FBConnectProfilePic::getImgUrlById( $fb_id, FB_PIC_BIG );
 
-				if( $picUrl != '' ) {
-					$tmpFile = '';
-					$sUrl = $masthead->uploadByUrlToTempFile( $picUrl, $tmpFile );
+			if( $picUrl != '' ) {
+				$tmpFile = '';
+				$sUrl = $masthead->uploadByUrlToTempFile( $picUrl, $tmpFile );
 
-					$app = F::app();
+				$app = F::app();
 
-					// UPPv3 has been enabled in 2012 sitewide
-					// https://github.com/Wikia/config/blob/dev/CommonExtensions.php#L1714
-					$userProfilePageV3 = new UserProfilePageController( $app );
-					$data->source = 'facebook';
-					$data->file = $tmpFile;
-					$userProfilePageV3->saveUsersAvatar($wgUser->getId(), $data);
-				}
+				// UPPv3 has been enabled in 2012 sitewide
+				// https://github.com/Wikia/config/blob/dev/CommonExtensions.php#L1714
+				$userProfilePageV3 = new UserProfilePageController( $app );
+				$data->source = 'facebook';
+				$data->file = $tmpFile;
+				$userProfilePageV3->saveUsersAvatar($wgUser->getId(), $data);
 			}
 		}
 	}
