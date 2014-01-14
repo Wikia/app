@@ -252,6 +252,7 @@ function SharedHelpHook(&$out, &$text) {
 		} else {
 			// So we don't return 404s for local requests to these pages as they have content (BugID: 44611)
 			$out->setStatusCode( 200 );
+			WikiaMobileHooks::resetDisplayErrorPage();
 		}
 
 		//process article if not redirected before

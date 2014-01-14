@@ -15,6 +15,10 @@ class WikiaMobileHooks {
 	 */
 	static private $displayErrorPage = false;
 
+	static public function resetDisplayErrorPage(){
+		$displayErrorPage = false;
+	}
+
 	/**
 	 * @param $parser Parser
 	 * @param $text String
