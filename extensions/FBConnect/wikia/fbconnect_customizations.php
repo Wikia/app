@@ -34,47 +34,29 @@ function wikia_fbconnect_considerProfilePic( &$specialConnect ){
 
 	// We need the facebook id to have any chance of getting a profile pic.
 	$fb_ids = FBConnectDB::getFacebookIDs($wgUser);
-	if(count($fb_ids) > 0){
-		$fb_id = array_shift($fb_ids);
-		if ( class_exists( 'Masthead' ) ){
+	if( count( $fb_ids ) > 0 ) {
+		$fb_id = array_shift( $fb_ids );
+
+		if ( class_exists( 'Masthead' ) ) {
 			// If the useralready has a masthead avatar, don't overwrite it, this function shouldn't alter anything in that case.
-			$masthead = Masthead::newFromUser($wgUser);
+			$masthead = Masthead::newFromUser( $wgUser );
+
 			if( !$masthead->hasAvatar() ) {
-				global $wgEnableUserProfilePagesV3;
+				// Attempt to store the facebook profile pic as the Wikia avatar.
+				$picUrl = FBConnectProfilePic::getImgUrlById( $fb_id, FB_PIC_BIG );
 
-				if( !empty($wgEnableUserProfilePagesV3) ) {
-				//bugId:10580
-					// Attempt to store the facebook profile pic as the Wikia avatar.
-					$picUrl = FBConnectProfilePic::getImgUrlById($fb_id, FB_PIC_BIG);
-				} else {
-					// Attempt to store the facebook profile pic as the Wikia avatar.
-					$picUrl = FBConnectProfilePic::getImgUrlById($fb_id, FB_PIC_SQUARE);
-				}
+				if( $picUrl != '' ) {
+					$tmpFile = '';
+					$sUrl = $masthead->uploadByUrlToTempFile( $picUrl, $tmpFile );
 
-				if( $picUrl != "" ) {
-					if( !empty($wgEnableUserProfilePagesV3) ) {
-					//bugId:10580
-						$tmpFile = '';
-						$sUrl = $masthead->uploadByUrlToTempFile($picUrl, $tmpFile);
+					$app = F::app();
 
-						$app = F::app();
-						$userProfilePageV3 = new UserProfilePageController($app);
-						$data->source = 'facebook';
-						$data->file = $tmpFile;
-						$userProfilePageV3->saveUsersAvatar($wgUser->getId(), $data);
-					} else {
-						$errorNo = $masthead->uploadByUrl($picUrl);
-
-						// Apply this as the user's new avatar if the image-pull went okay.
-						if($errorNo == UPLOAD_ERR_OK){
-							$sUrl = $masthead->getLocalPath();
-							if ( !empty($sUrl) ) {
-								/* set user option */
-								$wgUser->setOption( AVATAR_USER_OPTION_NAME, $sUrl );
-								$wgUser->saveSettings();
-							}
-						}
-					}
+					// UPPv3 has been enabled in 2012 sitewide
+					// https://github.com/Wikia/config/blob/dev/CommonExtensions.php#L1714
+					$userProfilePageV3 = new UserProfilePageController( $app );
+					$data->source = 'facebook';
+					$data->file = $tmpFile;
+					$userProfilePageV3->saveUsersAvatar($wgUser->getId(), $data);
 				}
 			}
 		}
