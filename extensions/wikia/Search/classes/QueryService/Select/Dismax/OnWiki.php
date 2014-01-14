@@ -129,7 +129,7 @@ class OnWiki extends AbstractDismax
 		];
 
 		if ( $minArticleQuality ) {
-			$filters[ ] = Utilities::rangeIntValueField( 'articleQuality_i', $minArticleQuality );
+			$filters[ ] = Utilities::rangeIntValueField( 'article_quality_i', $minArticleQuality );
 		}
 
 		return implode( ' AND ', $filters );
