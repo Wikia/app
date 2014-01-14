@@ -61,7 +61,7 @@ class CombinedSearchService {
 		return $this->hideNonCommercialContent;
 	}
 
-	public function search($query, $langs, $namespaces, $hubs, $limit = null, $minArticleQuality = 10) {
+	public function search($query, $langs, $namespaces, $hubs, $limit = null, $minArticleQuality = null) {
 		$timer = Time::start([__CLASS__, __METHOD__]);
 		$wikias = $this->phraseSearchForWikias($query, $langs, $hubs);
 
@@ -98,7 +98,7 @@ class CombinedSearchService {
 		return $articles;
 	}
 
-	public function phraseSearchForArticles($query, $namespaces, $langs, $hubs = null, $minArticleQuality = 10) {
+	public function phraseSearchForArticles($query, $namespaces, $langs, $hubs = null, $minArticleQuality = null) {
 		$timer = Time::start([__CLASS__, __METHOD__]);
 		$articles = [];
 		foreach( $langs as $lang ) {
@@ -148,7 +148,7 @@ class CombinedSearchService {
 	 * @param int $minArticleQuality
 	 * @return array
 	 */
-	protected function queryPhraseSolrForArticles( $query, $namespaces, $lang, $hubs = null, $minArticleQuality = 10 ) {
+	protected function queryPhraseSolrForArticles( $query, $namespaces, $lang, $hubs = null, $minArticleQuality = null ) {
 		$requestedFields = ['title' => Utilities::field('title', $lang), "url", "id", "score", "pageid", "lang", "wid", "article_quality_i", Utilities::field('html', $lang)];
 
 		$config = (new Factory())->getSolariumClientConfig();
@@ -163,7 +163,9 @@ class CombinedSearchService {
 
 		$select->setRows(self::MAX_TOTAL_ARTICLES);
 		$select->setQuery( $query );
-		$select->createFilterQuery( 'article_quality')->setQuery( '-(article_quality_i:[0 TO ' . ( $minArticleQuality - self::ARTICLE_QUALITY_EPSILON ) . '])' ); // article quality is null or in range $minArticleQuality..100
+		if ( $minArticleQuality != null ) {
+			$select->createFilterQuery( 'article_quality')->setQuery( 'article_quality_i:[' . $minArticleQuality . ' TO *]' );
+		}
 		//add filters
 		$select->createFilterQuery( 'users' )->setQuery('activeusers:[0 TO *]');
 		$select->createFilterQuery( 'pages' )->setQuery('wikipages:[500 TO *]');
