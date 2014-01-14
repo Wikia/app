@@ -15,7 +15,7 @@ var SevenOneMediaHelper = function (adLogicPageLevelParams, scriptWriter, log, w
 		slotVars = {
 			'popup1': {
 				SOI_PU1: true,
-				SOI_PL: true,    // powerlayer
+				SOI_PL: false,   // powerlayer
 				SOI_PU: false,   // popunder
 				SOI_FA: false    // baseboard
 			},

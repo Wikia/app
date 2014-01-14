@@ -25,32 +25,40 @@ require( ['jquery', 'wikia.toc', 'wikia.mustache'], function( $, toc, mustache )
 	}
 
 	/**
+	 * Checks and gets valid section heading
 	 *
-	 * @param {Object} header - Node element object for single article header
-	 * @param {String} level - String with an integer which is later being concatenated with 'toclevel-' string and
-	 *                         passed as a class of a list item; the number is taken from <h1>, <h2>, <h3>... tags
+	 * @param {Object} rawHeader - Node element object for single article header
 	 *
-	 * @returns {Boolean|Object} - returns false for non Wikia Article related headers
-	 *                             (example lazy loaded discussion thread)
-	 *                             or custom TOC single section object.
+	 * @returns {Object|Boolean} - returns header jQuery object or false if the header is not valid
 	 */
+	function getHeader( rawHeader ) {
+		rawHeader = $( rawHeader ).children( '.mw-headline' );
 
-	function createTOCSection( header, level ) {
-
-		header = $( header ).children( '.mw-headline' );
-
-		if ( header.length === 0 || header.is( ':hidden' ) ) {
+		if ( rawHeader.length === 0 || rawHeader.is( ':hidden' ) ) {
 			return false;
 		}
 
 		// clone node and remove noscript to exclude it from text
-		header = header.clone();
-		header.find( 'noscript' ).remove();
+		rawHeader = rawHeader.clone();
+		rawHeader.find( 'noscript' ).remove();
 
+		return rawHeader;
+	}
+
+	/**
+	 *
+	 * @param {Object} header - Processed element object for single article header
+	 *
+	 * @param {Integer} tocLevel - The actual level on which the element will be rendered
+	 *
+	 * @returns {Object} - returns TOC section object
+	 */
+
+	function createTOCSection( header, tocLevel ) {
 		return {
 			title: header.text(),
 			id: header.attr( 'id' ),
-			class: 'toclevel-' + level,
+			class: 'toclevel-' + tocLevel,
 			sections: []
 		};
 	}
@@ -107,7 +115,7 @@ require( ['jquery', 'wikia.toc', 'wikia.mustache'], function( $, toc, mustache )
 		var $container = $target.parents( '#toc' ).children( 'ol' ),
 			$contentContainer = getContentContainer( $target ),
 			$headers = $contentContainer.find( 'h1, h2, h3, h4, h5, h6' ),
-			data = toc.getData( $headers, createTOCSection );
+			data = toc.getData( $headers, createTOCSection, getHeader );
 
 		data.wrapper = wrapper;
 

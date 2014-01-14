@@ -267,25 +267,6 @@ class CreateWiki {
 		}
 
 		/**
-		 * copy default logo & favicon
-		 */
-		$uploader = User::newFromName( 'CreateWiki script' );
-
-		$res = ImagesService::uploadImageFromUrl( self::CREATEWIKI_LOGO, (object) ['name' => 'Wiki.png'], $uploader );
-		if ( $res['status'] === true ) {
-			wfDebugLog( "createwiki", __METHOD__ . ": Default logo has been uploaded\n", true );
-		} else {
-			wfDebugLog( "createwiki", __METHOD__ . ": Default logo has not been uploaded - " . print_r($res['errors'], true) . "\n", true );
-		}
-
-		$res = ImagesService::uploadImageFromUrl( self::CREATEWIKI_ICON, (object) ['name' => 'Favicon.ico'], $uploader );
-		if (  $res['status'] == true  ) {
-			wfDebugLog( "createwiki", __METHOD__ . ": Default favicon has been uploaded\n", true );
-		} else {
-			wfDebugLog( "createwiki", __METHOD__ . ": Default favicon has not been uploaded - " . print_r($res['errors'], true) . "\n", true );
-		}
-
-		/**
 		 * wikifactory variables
 		 */
 		wfDebugLog( "createwiki", __METHOD__ . ": Populating city_variables\n", true );
@@ -324,11 +305,29 @@ class CreateWiki {
 			wfDebugLog( "createwiki", __METHOD__ . ": Create user sysop/bureaucrat for user: {$this->mNewWiki->founderId} failed \n", true );
 		}
 
-
 		/**
 		 * init site_stats table (add empty row)
 		 */
 		$this->mNewWiki->dbw->insert( "site_stats", array( "ss_row_id" => "1"), __METHOD__ );
+
+		/**
+		 * copy default logo & favicon
+		 */
+		$uploader = User::newFromName( 'CreateWiki script' );
+
+		$res = ImagesService::uploadImageFromUrl( self::CREATEWIKI_LOGO, (object) ['name' => 'Wiki.png'], $uploader );
+		if ( $res['status'] === true ) {
+			wfDebugLog( "createwiki", __METHOD__ . ": Default logo has been uploaded\n", true );
+		} else {
+			wfDebugLog( "createwiki", __METHOD__ . ": Default logo has not been uploaded - " . print_r($res['errors'], true) . "\n", true );
+		}
+
+		$res = ImagesService::uploadImageFromUrl( self::CREATEWIKI_ICON, (object) ['name' => 'Favicon.ico'], $uploader );
+		if (  $res['status'] == true  ) {
+			wfDebugLog( "createwiki", __METHOD__ . ": Default favicon has been uploaded\n", true );
+		} else {
+			wfDebugLog( "createwiki", __METHOD__ . ": Default favicon has not been uploaded - " . print_r($res['errors'], true) . "\n", true );
+		}
 
 		/**
 		 * add local job
@@ -419,21 +418,7 @@ class CreateWiki {
 		$tags->addTagsByName( $this->mNewWiki->hub );
 
 		/**
-		 * move main page
-		 */
-		$cmd = sprintf(
-			"SERVER_ID=%d %s %s/maintenance/wikia/moveMain.php -t '%s' --conf %s",
-			$this->mNewWiki->city_id,
-			$this->mPHPbin,
-			$this->mIP,
-			$this->mNewWiki->sitename,
-			$wgWikiaLocalSettingsPath
-		);
-		wfShellExec( $cmd );
-		wfDebugLog( "createwiki", __METHOD__ . ": Main page moved \n", true );
-
-		/**
-		 * show congratulation message
+		 * move main page -> this code exists in CreateWikiLocalJob - so it is not needed anymore
 		 */
 
 		/**
