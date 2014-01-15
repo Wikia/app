@@ -12,6 +12,7 @@ class TvApiController extends WikiaApiController {
 	const MINIMAL_ARTICLE_SCORE = 1.7;
 	const WIKIA_URL_REGEXP = '~^(http(s?)://)(([^\.]+)\.wikia\.com)~';
 	const RESPONSE_CACHE_VALIDITY = 86400; /* 24h */
+	const PARAM_ARTICLE_QUALITY = 'minArticleQuality';
 	/**
 	 * @var wikiId
 	 */
@@ -30,6 +31,9 @@ class TvApiController extends WikiaApiController {
 		}
 
 		$responseValues = $this->getExactMatch();
+		$responseValues = $this->checkArticleByQuality( $responseValues,
+			$this->request->getInt( static::PARAM_ARTICLE_QUALITY ) );
+
 		if ( $responseValues === null ) {
 			$config = $this->getConfigFromRequest();
 			$responseValues = $this->getResponseFromConfig( $config );
@@ -69,6 +73,25 @@ class TvApiController extends WikiaApiController {
 	 */
 	protected function replaceHost( $details ) {
 		return $details[ 1 ] . WikiFactory::getCurrentStagingHost( $details[ 4 ], $details[ 3 ] );
+	}
+
+	protected function checkArticleByQuality( $article, $minArticleQuality, $articleQualityService = null ) {
+
+		if ( !$minArticleQuality || $article === null ) {
+			return;
+		}
+
+		//Only for unit tests
+		if ( $articleQualityService === null ) {
+			$articleQualityService = new ArticleQualityV1Service();
+		}
+		$articleQualityService->setArticleById( $article[ 'articleId' ] );
+		if ( $articleQualityService->getArticleQuality() < $minArticleQuality ) {
+			$article = null;
+		}
+
+		return $article;
+
 	}
 
 	protected function getExactMatch() {
@@ -145,12 +168,14 @@ class TvApiController extends WikiaApiController {
 	protected function getConfigFromRequest() {
 		$request = $this->getRequest();
 		$searchConfig = new Wikia\Search\Config;
+
 		$searchConfig->setQuery( $request->getVal( 'episodeName', null ) )
 			->setLimit( static::LIMIT_SETTING )
 			->setPage( static::LIMIT_SETTING )
-			->setLanguageCode( static::LANG_SETTING )
+			->setLanguageCode(  $request->getVal( 'lang', static::LANG_SETTING ) )
 			->setRank( static::RANK_SETTING )
 			->setWikiId($this->wikiId)
+			->setMinArticleQuality( $request->getInt(static::PARAM_ARTICLE_QUALITY) )
 			->setVideoSearch( false )
 			->setOnWiki(true)
 			->setNamespaces( [static::NAMESPACE_SETTING] );
@@ -165,6 +190,7 @@ class TvApiController extends WikiaApiController {
 		}
 
 		$responseValues = (new Factory)->getFromConfig( $searchConfig )->searchAsApi( [ 'pageid' => 'articleId', 'title', 'url', 'score' ], true );
+
 		//post processing
 		if ( !empty( $responseValues[ 'items' ] ) ) {
 			$responseValues = $responseValues[ 'items' ][ 0 ];
