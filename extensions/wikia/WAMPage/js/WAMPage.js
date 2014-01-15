@@ -42,14 +42,14 @@ WAMPage.prototype = {
 			mw.loader.use(['jquery.ui.datepicker'])
 		).done(
 			$.proxy(function(getResourcesData) {
-				var minDate = new Date(window.wamFilterMinMaxDates['min_date'] * 1000 ),
-					maxDate = new Date(window.wamFilterMinMaxDates['max_date'] * 1000 ),
+				var minDate = new Date( window.wamFilterMinMaxDates['min_date'] * 1000 ),
+					maxDate = new Date( window.wamFilterMinMaxDates['max_date'] * 1000 ),
 					timezoneOffset = (new Date()).getTimezoneOffset();
 
-				minDate.setMinutes(minDate.getMinutes() + timezoneOffset);
-				maxDate.setMinutes(maxDate.getMinutes() + timezoneOffset);
+				minDate.setMinutes( minDate.getMinutes() + timezoneOffset );
+				maxDate.setMinutes( maxDate.getMinutes() + timezoneOffset );
 
-				$('#WamFilterHumanDate').datepicker({
+				$( '#WamFilterHumanDate' ).datepicker( {
 					showOtherMonths: true,
 					selectOtherMonths: true,
 					minDate: minDate,
@@ -58,18 +58,18 @@ WAMPage.prototype = {
 					altFormat: '@',
 					dateFormat: (typeof window.wamFilterDateFormat !== 'undefined' && window.wamFilterDateFormat) ?
 						window.wamFilterDateFormat : undefined,
-					onSelect: $.proxy(function() {
-						var $date = $('#WamFilterDate');
-						$date.val(($date.val() / 1000) - timezoneOffset * 60);
+					onSelect: $.proxy( function () {
+						var $date = $( '#WamFilterDate' );
+						$date.val( ($date.val() / 1000) - timezoneOffset * 60 );
 
-						if( $(this).closest('#WamFilterDate') ) {
-							WAMPage.trackClick('WamPage', Wikia.Tracker.ACTIONS.CLICK, 'wam-search-filter-change',
-								null, {lang: wgContentLanguage, filter: 'date'});
+						if ( $( this ).closest( '#WamFilterDate' ) ) {
+							WAMPage.trackClick( 'WamPage', Wikia.Tracker.ACTIONS.CLICK, 'wam-search-filter-change',
+								null, {lang: wgContentLanguage, filter: 'date'} );
 						}
-						WAMPage.filterWamIndex($date);
-					}, this)
-				});
-			}, this)
+						WAMPage.filterWamIndex( $date );
+					}, this )
+				} );
+			}, this )
 		);
 	},
 
