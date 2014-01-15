@@ -11,11 +11,6 @@ class WikiaMobileHooks {
 	 */
 	static private $mediaNsString = null;
 	/**
-	 * @var bool
-	 */
-	static private $displayErrorPage = false;
-
-	/**
 	 * @param $parser Parser
 	 * @param $text String
 	 * @param $strip_state
@@ -325,9 +320,12 @@ class WikiaMobileHooks {
 					wfProfileOut( __METHOD__ );
 					return true;
 				}
+			} else if ( $ns == NS_HELP ) {
+				wfProfileOut( __METHOD__ );
+				return true;
 			}
 
-			self::$displayErrorPage = true;
+			WikiaMobileErrorService::$displayErrorPage = true;
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -345,9 +343,8 @@ class WikiaMobileHooks {
 		wfProfileIn( __METHOD__ );
 		$app = F::app();
 
-		if( $app->checkSkin( 'wikiamobile', $skin ) && self::$displayErrorPage ) {
+		if( $app->checkSkin( 'wikiamobile', $skin ) && WikiaMobileErrorService::$displayErrorPage == true ) {
 			$out->clearHTML();
-
 			$out->addHTML( $app->renderView( 'WikiaMobileErrorService', 'pageNotFound', array( 'out' => &$out) ) );
 
 			wfProfileOut( __METHOD__ );
