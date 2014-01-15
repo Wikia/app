@@ -362,6 +362,8 @@ class ArticleComment {
 			$replyButton = '';
 
 			//this is for blogs we want to know if commenting on it is enabled
+			// we cannot check it using $title->getBaseText, as this returns main namespace title
+			// the subjectpage for $parts title is something like 'User blog comment:SomeUser/BlogTitle' which is fine
 			$commentingAllowed = ArticleComment::canComment( Title::newFromText( $parts['title'] )->getSubjectPage() );
 
 			if ( ( count( $parts['partsStripped'] ) == 1 ) && $commentingAllowed && !ArticleCommentInit::isFbConnectionNeeded() ) {
