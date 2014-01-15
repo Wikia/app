@@ -1962,8 +1962,6 @@ class WikiaPhotoGallery extends ImageGallery {
 					'link' => $val[2]
 				);
 			}
-
-
 		}
 
 		if ( !empty( $media ) ) {
