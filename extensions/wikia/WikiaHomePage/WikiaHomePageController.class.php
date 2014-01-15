@@ -51,6 +51,8 @@ class WikiaHomePageController extends WikiaController {
 	//failsafe
 	const FAILSAFE_ARTICLE_TITLE = 'Failsafe';
 
+	const DEFAULT_CONTENT_LANG = 'en';
+
 	/**
 	 * @var WikiaHomePageHelper
 	 */
@@ -83,7 +85,8 @@ class WikiaHomePageController extends WikiaController {
 		$response = $this->app->sendRequest('WikiaHomePageController', 'getHubImages');
 		$this->hubImages = $response->getVal('hubImages', '');
 
-		$this->lang = $this->wg->contLang->getCode();
+		$this->setCorporateContentLang($this->wg->Lang->getCode());
+
 		JSMessages::enqueuePackage('WikiaHomePage', JSMessages::EXTERNAL);
 
 		$batches = $this->getList();
@@ -657,5 +660,20 @@ class WikiaHomePageController extends WikiaController {
 		}
 
 		return $this->visualization;
+	}
+
+	/**
+	 * Sets language variable to get proper sprite image.
+	 * If corporate page exists for passed language code this code is set
+	 * otherwise default language is set.
+	 *
+	 * @param string $lang User language code
+	 */
+	private function setCorporateContentLang($lang) {
+		$corpLangsList = $this->getVisualization()->getVisualizationWikisData();
+		if ( !array_key_exists($lang, $corpLangsList) ) {
+			$lang = self::DEFAULT_CONTENT_LANG;
+		}
+		$this->lang = $lang;
 	}
 }
