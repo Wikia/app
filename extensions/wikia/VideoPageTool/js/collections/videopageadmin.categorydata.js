@@ -7,7 +7,7 @@ define( 'collections.videopageadmin.categorydata', [
 		initialize: function() {
 			_.bindAll( this, 'setCategory', 'fetch' );
 			this.controller = 'VideoPageAdminSpecial';
-			this.method = 'getCategoryData';
+			this.method = 'getVideosByCategory';
 			this.format = 'json';
 			this.categoryName = null;
 			this.response = null;
@@ -33,7 +33,7 @@ define( 'collections.videopageadmin.categorydata', [
 		parse: function( resp ) {
 			// cache the response
 			this.response = resp;
-			this.reset( this.response.data );
+			this.reset( this.response.videos );
 		},
 
 		/**

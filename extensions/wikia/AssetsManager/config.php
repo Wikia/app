@@ -1051,6 +1051,7 @@ $config['videopageadmin_js'] = array(
 		'//extensions/wikia/VideoPageTool/js/lib/backbone/backbone.js',
 
 		// Library Dependencies
+		'//resources/wikia/libraries/jquery/owl.carousel/owl.carousel.js',
 		'//resources/jquery.ui/jquery.ui.core.js',
 		'//resources/jquery.ui/jquery.ui.datepicker.js',
 		'//resources/jquery/jquery.validate.js',
@@ -1072,10 +1073,12 @@ $config['videopageadmin_js'] = array(
 
 		'//extensions/wikia/VideoPageTool/js/collections/videopageadmin.category.js',
 		'//extensions/wikia/VideoPageTool/js/collections/videopageadmin.categorydata.js',
+
+		'//extensions/wikia/VideoPageTool/js/views/videopagetool.owlcarousel.js',
+		'//extensions/wikia/VideoPageTool/js/views/videopagetool.carouselthumb.js',
+		'//extensions/wikia/VideoPageTool/js/views/videopageadmin.carousel.js',
 		'//extensions/wikia/VideoPageTool/js/views/videopageadmin.autocompleteitem.js',
 		'//extensions/wikia/VideoPageTool/js/views/videopageadmin.autocomplete.js',
-		'//extensions/wikia/VideoPageTool/js/views/videopageadmin.categorypreviewitem.js',
-		'//extensions/wikia/VideoPageTool/js/views/videopageadmin.categorypreview.js',
 		'//extensions/wikia/VideoPageTool/js/views/videopageadmin.categoryforms.js',
 		'//extensions/wikia/VideoPageTool/js/views/videopageadmin.category.js',
 	)
@@ -1085,7 +1088,8 @@ $config['videopageadmin_css'] = array(
 	'skin' => array( 'oasis' ),
 	'type' => AssetsManager::TYPE_CSS,
 	'assets' => array(
-		'//resources/jquery.ui/themes/default/jquery.ui.datepicker.css'
+		'//resources/jquery.ui/themes/default/jquery.ui.datepicker.css',
+		'//resources/wikia/libraries/jquery/owl.carousel/owl.carousel.css',
 	)
 );
 
@@ -1097,6 +1101,7 @@ $config['videopageadmin_scss'] = array(
 		'//extensions/wikia/WikiaMiniUpload/css/WMU.scss',
 		'//extensions/wikia/VideoPageTool/css/Admin/VideoPageTool.scss',
 		'//extensions/wikia/VideoPageTool/css/Admin/VideoPageTool_Header.scss',
+		'//extensions/wikia/VideoPageTool/css/carousel.scss',
 	)
 );
 
@@ -1159,6 +1164,7 @@ $config['videohomepage_scss'] = array(
 		'//resources/wikia/libraries/jquery/bxslider/jquery.bxslider.scss',
 		// VideoHomePage
 		'//extensions/wikia/VideoPageTool/css/HomePage/main.scss',
+		'//extensions/wikia/VideoPageTool/css/carousel.scss',
 		'//extensions/wikia/VideoPageTool/css/HomePage/featured.scss',
 	)
 );

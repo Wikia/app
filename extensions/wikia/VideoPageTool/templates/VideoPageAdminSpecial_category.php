@@ -38,6 +38,8 @@
 				<img class="chevron chevron-down" src="<?= $wg->BlankImgUrl ?>">
 			</button>
 		</div>
+		<div class="carousel">
+		</div>
 		<a class="preview" href="#"><span></span><?= wfMessage( 'videopagetool-category-preview' )->plain() ?><span></span></a>
 
 	<? endfor; ?>

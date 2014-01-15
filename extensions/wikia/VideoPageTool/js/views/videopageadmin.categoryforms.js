@@ -1,9 +1,9 @@
 define( 'views.videopageadmin.categoryforms', [
 		'jquery',
 		'views.videopageadmin.autocomplete',
-		'views.videopageadmin.categorypreview',
+		'views.videopageadmin.carousel',
 		'collections.videopageadmin.categorydata'
-	], function( $, AutocompleteView, CategoryPreviewView, CategoryDataCollection ) {
+	], function( $, AutocompleteView, AdminCarouselView, CategoryDataCollection ) {
 		'use strict';
 
 		var FormGroupView = Backbone.View.extend( {
@@ -14,23 +14,26 @@ define( 'views.videopageadmin.categoryforms', [
 							el: this.el,
 							collection: this.categories
 					} );
-					this.previewView = new CategoryPreviewView( {
-						el: this.el,
+					this.previewView = new AdminCarouselView( {
+						el: this.$el.next( '.carousel' ),
 						collection: this.categoryData
 					} );
 					_.bindAll( this, 'getPreview' );
+
+					if ( this.categories.selectedCategory ) {
+						this.getPreview();
+					}
 				},
 				events: {
 					'click .search-button': 'getPreview'
 				},
-				getPreview: function( evt ) {
-					evt.preventDefault();
-
+				getPreview: function() {
 					if ( !this.categories.selectedCategory ) {
 						return window.alert( 'Please select a category before searching for results' );
 					}
 
 					this.categoryData.setCategory( this.categories.selectedCategory );
+					return false;
 				}
 		} );
 
