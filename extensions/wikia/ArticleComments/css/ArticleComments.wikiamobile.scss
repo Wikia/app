@@ -39,10 +39,6 @@ $move-input: -10000px;
 	display: -moz-box;
 	display: box;
 
-	//Fix for Android ~4 having its own overlay on top of input
-	left: $move-input;
-	-webkit-transform: translate3d($move-input, 0, 0);
-
 	&.open{
 		height: 100px;
 	}
@@ -58,6 +54,8 @@ $move-input: -10000px;
 		padding: 9px;
 		border-radius: 0;
 		-webkit-appearance: none;
+		//Fix for Android ~4 having its own overlay on top of input
+		-webkit-user-modify: read-write-plaintext-only;
 
 		margin: 0;
 
