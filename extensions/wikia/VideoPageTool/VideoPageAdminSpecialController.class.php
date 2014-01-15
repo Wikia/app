@@ -103,8 +103,11 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 			// get default assets
 			$videos = $helper->getDefaultValuesBySection( $section );
 		} else {
+			// Override defaults so we always show a lightbox in the admin pages
+			$thumbOptions = [ 'noLightbox' => false ];
 			foreach( $assets as $order => $asset ) {
-				$videos[$order] = $asset->getAssetData();
+				/** @var VideoPageToolAsset $asset */
+				$videos[$order] = $asset->getAssetData( $thumbOptions );
 			}
 		}
 
@@ -399,8 +402,10 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 
 		$url = urldecode( $url );
 		if ( preg_match( '/.+\/wiki\/File:(.+)$/i', $url, $matches ) ) {
+			// Override defaults so we always show a lightbox in the admin pages
+			$thumbOptions = [ 'noLightbox' => false ];
 			$helper = new VideoPageToolHelper();
-			$video = $helper->getVideoData( $matches[1], $altThumbTitle );
+			$video = $helper->getVideoData( $matches[1], $altThumbTitle, null, null, $thumbOptions );
 		}
 
 		if ( empty( $video ) ) {
