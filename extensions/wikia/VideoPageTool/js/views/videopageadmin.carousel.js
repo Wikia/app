@@ -31,7 +31,15 @@ define( 'views.videopageadmin.carousel', [
 			'click .owl-buttons div': 'onPageChange'
 		},
 		render: function() {
-			var self = this;
+			var self;
+
+			if ( !this.collection.length ) {
+				this.$el.html( '' );
+				return false;
+			}
+
+			self = this;
+
 			this.pageCount = Math.ceil( this.collection.response.total / 3 );
 			this.$el.html( this.template( {
 				pages: this.pageCount,
@@ -52,6 +60,7 @@ define( 'views.videopageadmin.carousel', [
 				navigation: true,
 				pagination: false
 			} );
+			this.$el.slideDown( 100 );
 
 			return this;
 		},
