@@ -61,6 +61,7 @@ class WAMPageController extends WikiaController
 		$this->selectedVerticalId = $this->getVal('verticalId', null);
 		$this->selectedLangCode = $this->getVal('langCode', null);
 		$this->selectedDate = $this->getVal('date', null);
+		$this->selectedHumanReadableDate = $this->getVal('humanreadabledate', null);
 
 		$this->selectedVerticalId = ($this->selectedVerticalId !== '') ? $this->selectedVerticalId : null;
 		$this->selectedLangCode = ($this->selectedLangCode !== '') ? $this->selectedLangCode : null;
@@ -85,7 +86,7 @@ class WAMPageController extends WikiaController
 			]
 		);
 		if (!empty($this->selectedDate)) {
-			$timestamp = $this->getTimestampFromLocalDate($this->selectedDate);
+			$timestamp = $this->selectedDate;
 
 			if (!empty($filterMinMaxDates['min_date'])) {
 				$dateValidator = new WikiaValidatorCompare(['expression' => WikiaValidatorCompare::GREATER_THAN_EQUAL]);
@@ -118,10 +119,8 @@ class WAMPageController extends WikiaController
 
 	protected function getIndexParams($forPaginator = false) {
 		if( $forPaginator ) {
-			$date = isset($this->selectedDate) ? $this->selectedDate : null;
 			$page = '%s';
 		} else {
-			$date = isset($this->selectedDate) ? strtotime($this->selectedDate) : null;
 			$page = $this->page;
 		}
 
@@ -129,7 +128,7 @@ class WAMPageController extends WikiaController
 			'searchPhrase' => $this->searchPhrase,
 			'verticalId' => $this->selectedVerticalId,
 			'langCode' => $this->selectedLangCode,
-			'date' => $date,
+			'date' => isset($this->selectedDate) ? $this->selectedDate : null,
 			'page' => $page,
 		];
 

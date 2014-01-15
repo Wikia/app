@@ -47,23 +47,28 @@ WAMPage.prototype = {
 				var maxDate = new Date(window.wamFilterMinMaxDates['max_date'] * 1000);
 				maxDate.setMinutes(maxDate.getMinutes() + maxDate.getTimezoneOffset());
 
-				$('#WamFilterDate').datepicker({
+				$('#WamFilterHumanDate').datepicker({
 					showOtherMonths: true,
 					selectOtherMonths: true,
 					minDate: minDate,
 					maxDate: maxDate,
+					altField: '#WamFilterDate',
+					altFormat: '@',
 					dateFormat: (typeof window.wamFilterDateFormat !== 'undefined' && window.wamFilterDateFormat)
 						? window.wamFilterDateFormat
 						: undefined,
 					onSelect: $.proxy(function() {
+						var $date = $('#WamFilterDate');
+						$date.val($date.val() / 1000);
+
 						if( $(this).closest('#WamFilterDate') ) {
-							WAMPage.trackClick('WamPage', Wikia.Tracker.ACTIONS.CLICK, 'wam-search-filter-change', null, {lang: wgContentLanguage, filter: 'date'});
+							WAMPage.trackClick('WamPage', Wikia.Tracker.ACTIONS.CLICK, 'wam-search-filter-change',
+								null, {lang: wgContentLanguage, filter: 'date'});
 						}
-						WAMPage.filterWamIndex($('#WamFilterDate'));
+						WAMPage.filterWamIndex($date);
 					}, this)
 				})
-			}
-			, this)
+			}, this)
 		);
 	},
 
