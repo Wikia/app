@@ -40,6 +40,7 @@ ve.ui.WikiaSourceModeDialog.prototype.initialize = function () {
 
 	// Properties
 	this.openCount = 0;
+	this.timings = {};
 	this.sourceModeTextarea = new OO.ui.TextInputWidget({
 		'$': this.$,
 		'multiline': true
@@ -75,6 +76,7 @@ ve.ui.WikiaSourceModeDialog.prototype.setup = function () {
 	var doc = this.surface.getModel().getDocument();
 
 	this.openCount++;
+	this.timings.serializeStart = ve.now();
 
 	// Parent method
 	ve.ui.MWDialog.prototype.setup.call( this );
@@ -94,6 +96,12 @@ ve.ui.WikiaSourceModeDialog.prototype.onSerialize = function ( wikitext ) {
 	this.sourceModeTextarea.setValue( wikitext );
 	this.sourceModeTextarea.$input.focus();
 	this.$frame.stopThrobbing();
+
+	ve.track( 'wikia', {
+		'action': ve.track.actions.SUCCESS,
+		'label': 'dialog-source-serialize',
+		'value': ve.now() - this.timings.serializeStart
+	} );
 };
 
 /**
@@ -101,6 +109,7 @@ ve.ui.WikiaSourceModeDialog.prototype.onSerialize = function ( wikitext ) {
  */
 ve.ui.WikiaSourceModeDialog.prototype.onApply = function () {
 	ve.track( 'wikia', { 'action': ve.track.actions.CLICK, 'label': 'dialog-source-button-save' } );
+	this.timings.parseStart = ve.now();
 	this.$frame.startThrobbing();
 	this.parse();
 };
@@ -148,8 +157,6 @@ ve.ui.WikiaSourceModeDialog.prototype.onParseSuccess = function( response ) {
 		return this.onParseError.call( this );
 	}
 
-	ve.track( 'wikia', { 'action': ve.track.actions.SUCCESS, 'label': 'dialog-source-parse-success' } );
-
 	// TODO: Close is called in this way in order to be synchronous (compare with OO.ui.Dialog.close)
 	// otherwise it was causing problems with stealing the focus from newly created surface.
 	OO.ui.Window.prototype.close.call( this );
@@ -180,6 +187,12 @@ ve.ui.WikiaSourceModeDialog.prototype.onParseSuccess = function( response ) {
 		this.attachToolbarButtons();
 		this.$document[0].focus();
 		this.activating = false;
+
+		ve.track( 'wikia', {
+			'action': ve.track.actions.SUCCESS,
+			'label': 'dialog-source-parse',
+			'value': ve.now() - this.timings.parseStart
+		} );
 	}, target ), false );
 };
 
@@ -187,7 +200,11 @@ ve.ui.WikiaSourceModeDialog.prototype.onParseSuccess = function( response ) {
  * @method
  */
 ve.ui.WikiaSourceModeDialog.prototype.onParseError = function ( ) {
-	ve.track( 'wikia', { 'action': ve.track.actions.ERROR, 'label': 'dialog-source-parse-error' } );
+	ve.track( 'wikia', {
+		'action': ve.track.actions.ERROR,
+		'label': 'dialog-source-parse',
+		'value': ve.now() - this.timings.parseStart
+	} );
 	// TODO: error handling?
 };
 
