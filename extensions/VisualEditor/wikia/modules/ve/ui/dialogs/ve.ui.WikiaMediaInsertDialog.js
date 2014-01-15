@@ -185,7 +185,15 @@ ve.ui.WikiaMediaInsertDialog.prototype.onQueryRequestSearchDone = function ( ite
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onQueryRequestVideoDone = function ( data ) {
 	this.queryInput.setValue( '' );
-	this.addCartItem( model, true );
+	//this.addCartItem( model, true );
+	this.addCartItem( new ve.dm.WikiaCartItem(
+ 		data.title,
+ 		data.tempUrl || data.url,
+ 		'video',
+ 		data.tempName,
+ 		data.provider,
+ 		data.videoId
+ 	), true );
 };
 
 /**
