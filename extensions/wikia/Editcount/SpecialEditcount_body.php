@@ -20,11 +20,6 @@ class Editcount extends SpecialPage {
 	function execute( $par = null ) {
 		global $wgVersion, $wgRequest, $wgContLang, $wgSpecialEditCountExludedUsernames;
 
-		if ( version_compare( $wgVersion, '1.5beta4', '<' ) ) {
-			$this->getOutput()->versionRequired( '1.5beta4' );
-			return;
-		}
-
 		$target = isset( $par ) ? $par : $wgRequest->getText( 'username' );
 
 		if (isset($par) && ($par == "User")) {
@@ -75,7 +70,7 @@ class Editcount extends SpecialPage {
 				$totalAll = $this->getTotal( $nscountAll = $this->editsByNsAll( $uid ) );
 			}
 			$html = new EditcountHTML;
-			$html->outputHTML( $username, $uid, @$nscount, @$arcount, @$total, @$nscountAll, @$totalAll, $this->refreshTimestamps );
+			$html->outputHTML( $username, $uid, $nscount, $arcount, $total, $nscountAll, $totalAll, $this->refreshTimestamps );
 		}
 	}
 
