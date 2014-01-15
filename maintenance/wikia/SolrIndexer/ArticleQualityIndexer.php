@@ -82,7 +82,7 @@ class ArticleQualityIndexer extends Maintenance {
 	 */
 	protected function getArticleService() {
 		if ( !isset( $this->service ) ) {
-			$this->service = new ArticleQualityV1Service();
+			$this->service = new ArticleQualityService();
 		}
 		return $this->service;
 	}
