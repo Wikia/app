@@ -25,12 +25,14 @@ class VideoPageToolProgram extends WikiaModel {
 	protected $language = 'en';
 	protected $publishDate;
 	protected $isPublished = 0;
+	protected $publishedBy;
 
 	protected static $fields = array(
 		'program_id'   => 'programId',
 		'language'     => 'language',
 		'publish_date' => 'publishDate',
 		'is_published' => 'isPublished',
+		'published_by' => 'publishedBy',
 	);
 
 	/**
@@ -55,6 +57,14 @@ class VideoPageToolProgram extends WikiaModel {
 	 */
 	public function getPublishDate() {
 		return $this->publishDate;
+	}
+
+	/**
+	 * Get published by
+	 * @return integer [userId]
+	 */
+	public function getPublishedBy() {
+		return $this->publishedBy;
 	}
 
 	/**
@@ -103,6 +113,14 @@ class VideoPageToolProgram extends WikiaModel {
 	 */
 	protected function setPublishDate( $value ) {
 		$this->publishDate = $value;
+	}
+
+	/**
+	 * Set published by
+	 * @param integer $value [userId]
+	 */
+	protected function setPublishedBy( $value ) {
+		$this->publishedBy = $value;
 	}
 
 	/**
@@ -172,7 +190,6 @@ class VideoPageToolProgram extends WikiaModel {
 				array(
 					'language' => $language,
 					'publish_date <= '.$db->addQuotes( $date ),
-					'is_published' => 1,
 				),
 				__METHOD__,
 				array( 'ORDER BY' => 'publish_date DESC' )
@@ -356,7 +373,8 @@ class VideoPageToolProgram extends WikiaModel {
 
 		$db->update(
 			'vpt_program',
-			array( 'is_published' => $this->isPublished ),
+			array( 'is_published' => $this->isPublished,
+				   'published_by' => $this->publishedBy ),
 			array(
 				'language' => $this->language,
 				'publish_date' => $db->timestamp( $this->publishDate ),
@@ -407,6 +425,7 @@ class VideoPageToolProgram extends WikiaModel {
 	 */
 	public function publishProgram() {
 		$this->setIsPublished( true );
+		$this->setPublishedBy( $this->wg->User->getId() );
 
 		$db = wfGetDB( DB_MASTER );
 		$status = $this->updateToDatabase();
