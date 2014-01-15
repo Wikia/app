@@ -2388,6 +2388,11 @@ $messages['ja'] = array(
      $2
 お楽しみください。
 - Wikia チーム',
+
+	'oasis-corporatefooter-hub-Entertainment-link' => 'http://ja.wikia.com/エンタテインメント',
+	'oasis-corporatefooter-hub-Gaming-link' => 'http://ja.wikia.com/ゲーム',
+	'oasis-corporatefooter-hub-Lifestyle-link' => 'http://ja.wikia.com/ライフスタイル',
+
 );
 
 /** Korean (한국어) */

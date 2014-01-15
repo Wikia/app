@@ -785,9 +785,12 @@ Seràs notificat per correu electrònic quan s'hagi completat.",
 $messages['ce'] = array(
 	'renameuser' => 'Декъашхочун цӀе хийца',
 	'userrenametool-submit' => 'Кхочушдé',
+	'userrenametool-info-wiki-finished' => '$1 цӀе хийцина $2 → $3 (→ $4).
+Бахьна: "$5".',
 	'userrenametool-page-exists' => 'Агӏо $1 йолуш ю цундела и ша юху дӏаязъян йиш яц.',
 	'userrenametool-logpagetext' => 'ХӀокху тептар чохь гойту дӀабазбелла декъашхойн цӀераш хийцар.',
-	'userrenametool-move-log' => 'Автоматически декъашхочун цӀе хийцина дела «[[User:$1|$1]]» оцу «[[User:$2|$2]]»',
+	'userrenametool-logentry' => 'цӀе хийцина $1 → «$2»',
+	'userrenametool-move-log' => 'Автоматически декъашхочун цӀе хийцина дела «[[User:$1|$1]]» → «[[User:$2|$2]]»',
 	'right-renameuser' => 'Декъашхойн цӀе хийцар',
 	'action-renameuser' => 'декъашхойн цӀераш хийцар',
 );
