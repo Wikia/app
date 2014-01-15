@@ -118,9 +118,10 @@ class ImagesServiceUploadTest extends WikiaBaseTest {
 		file_put_contents( $tmpFile, $res );
 		$this->assertTrue( is_readable( $tmpFile ), 'Temp file for HTTP upload should be created and readable' );
 
+		Wikia::log(__METHOD__, false, sprintf('uploading %s (%.2f kB) as %s', $tmpFile, filesize($tmpFile) / 1024, $file->getName()), true);
 		$res = $file->upload( $tmpFile, $comment, '' );
 
-		unlink( $tmpFile );
+		#unlink( $tmpFile );
 		return $res;
 	}
 
