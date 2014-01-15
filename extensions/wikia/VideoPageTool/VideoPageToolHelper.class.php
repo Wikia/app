@@ -175,21 +175,18 @@ class VideoPageToolHelper extends WikiaModel {
 	}
 
 	/**
-	 * Get videos tagged with the category given by parameter $categoryTitle
-	 * @param string $categoryTitle A category name, or a title object for a category
-	 * @param int $limit The maximum number of videos to return
+	 * Get videos tagged with the category given by parameter $categoryTitle (limit = 100)
+	 * @param Title $categoryTitle
 	 * @param array $thumbOptions
 	 * @return array $videos An array of video data where each array element has the structure:
 	 *   [ title => 'Video Title',
 	 *     url   => 'http://url.to.video',
 	 *     thumb => '<thumbnail_html_snippet>'
 	 */
-	public function getVideosByCategory( $categoryTitle, $limit = 100, $thumbOptions = array() ) {
+	public function getVideosByCategory( $categoryTitle, $thumbOptions = array() ) {
 		wfProfileIn( __METHOD__ );
 
-		// Accept either a category object or a category name
-		$dbKey = is_object( $categoryTitle ) ? $categoryTitle->getDBkey() : $categoryTitle;
-
+		$dbKey = $categoryTitle->getDBkey();
 		$memcKey = $this->getMemcKeyVideosByCategory( $dbKey );
 		$videos = $this->wg->memc->get( $memcKey );
 		if ( !is_array( $videos ) ) {
@@ -204,7 +201,7 @@ class VideoPageToolHelper extends WikiaModel {
 				__METHOD__,
 				array(
 					'ORDER BY' => 'added_at DESC, page_title',
-					'LIMIT' => $limit,
+					'LIMIT' => 100,
 				),
 				array(
 					'video_info' => array( 'LEFT JOIN', 'page_title = video_title' ),
