@@ -45,9 +45,12 @@ class TvApiController extends WikiaApiController {
 
 			if ( $responseValues !== null ) {
 				if ( ( $minQuality == null ) ||
-					 ( $responseValues[ 'quality' ] !== null && $responseValues[ 'quality' ] >= $minQuality ) ) {
+					( $responseValues[ 'quality' ] !== null && $responseValues[ 'quality' ] >= $minQuality )
+				) {
 					break;
 				}
+
+				$responseValues = null;
 			}
 		}
 
