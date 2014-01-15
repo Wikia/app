@@ -32,7 +32,7 @@ ve.ui.WikiaMediaPreviewWidget = function VeUiWikiaMediaPreviewWidget() {
 
 	// Initialization
 	this.closeButton.$element
-		.addClass( 've-ui-wikiaMediaPreviewWidget-closeButton' )
+		.addClass( 've-ui-wikiaMediaPreviewWidget-closeButton' );
 
 	this.$titlebar
 		.append( this.$title, this.closeButton.$element )
