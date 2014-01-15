@@ -14,13 +14,29 @@ define( 'views.videopageadmin.carousel', [
 
 	var AdminCarouselView = OwlCarouselView.extend( {
 		initialize: function() {
-			_.bindAll( this, 'render' );
+			_.bindAll( this,
+				'render',
+				'onReset'
+			);
 			this.collection.on( 'reset', this.render );
+			this.currentPage = 1;
+
+			// bind events outside the scope of this view
+			this.$el
+				.closest( '.vpt-form' )
+				.on( 'form:reset', this.onReset );
 		},
 		template: Mustache.compile( templates.adminCarousel ),
+		events: {
+			'click .owl-buttons div': 'onPageChange'
+		},
 		render: function() {
 			var self = this;
-			this.$el.html( this.template() );
+			this.pageCount = Math.ceil( this.collection.response.total / 3 );
+			this.$el.html( this.template( {
+				pages: this.pageCount,
+				total: this.collection.response.total
+			} ) );
 			this.$carousel = this.$el.find( '.category-carousel' );
 
 			this.collection.each( function( categoryData ) {
@@ -33,10 +49,25 @@ define( 'views.videopageadmin.carousel', [
 			this.renderCarousel( {
 				items: 3,
 				lazyLoad: false,
-				navigation: false,
+				navigation: true,
 				pagination: false
 			} );
+
 			return this;
+		},
+		onReset: function() {
+			this.$el.slideUp( 200 );
+			this.collection.reset();
+		},
+		onPageChange: function( evt ) {
+			var $el = $( evt.target );
+
+			if ( $el.hasClass( 'owl-next' ) && this.currentPage < this.pageCount ) {
+				this.currentPage++;
+			} else {
+				this.currentPage--;
+			}
+			this.$( '.results-page-current' ).text( this.currentPage );
 		}
 	} );
 	return AdminCarouselView;

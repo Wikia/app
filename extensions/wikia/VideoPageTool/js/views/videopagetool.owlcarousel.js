@@ -26,6 +26,9 @@ define( 'views.videopagetool.owlcarousel', [
 		},
 		slideLeft: function() {
 			this.$carousel.trigger( 'owl.prev' );
+		},
+		getCarouselInstance: function() {
+			return this.$carousel.data( 'owlCarousel' );
 		}
 	});
 	return OwlCarouselView;

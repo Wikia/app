@@ -67,7 +67,7 @@ define( 'views.videopageadmin.edit', [
 									var video = json.video;
 									$thumb.html();
 
-									// update input value and remove any error messages that might be there.
+									// update input value and remove any error messages self might be there.
 									$videoKeyInput
 										.val( video.videoKey )
 										.removeClass( 'error' )
@@ -116,7 +116,7 @@ define( 'views.videopageadmin.edit', [
 		},
 
 		initValidator: function() {
-			var that = this;
+			var self = this;
 
 			this.validator = new Validator( {
 				form: this.$form,
@@ -135,7 +135,7 @@ define( 'views.videopageadmin.edit', [
 							$firstError;
 
 					// check for errors
-					success = that.validator.onSubmit();
+					success = self.validator.onSubmit();
 
 					// jump back up to form box if errors are present
 					if ( !success ) {
@@ -154,7 +154,7 @@ define( 'views.videopageadmin.edit', [
 		},
 
 		initReset: function() {
-			var that = this;
+			var self = this;
 
 			this.$form.find( '.reset' ).on( 'click', function(e) {
 				e.preventDefault();
@@ -163,7 +163,8 @@ define( 'views.videopageadmin.edit', [
 					title: $.msg( 'videopagetool-confirm-clear-title' ),
 					content: $.msg( 'videopagetool-confirm-clear-message' ),
 					onOk: function() {
-						that.clearFeaturedVideoForm();
+						self.$form.trigger( 'form:reset' );
+						self.clearFeaturedVideoForm();
 					},
 					width: 700
 				} );
@@ -174,7 +175,7 @@ define( 'views.videopageadmin.edit', [
 		/*
 		 * This reset is very specific to this form since it covers reverting titles and thumbnails
 		 * @TODO: we may want to just create a default empty version of the form and hide it if it's not needed.
-		 * That way we could just replace all the HTML to its default state without worrying about clearing every form
+		 * self way we could just replace all the HTML to its default state without worrying about clearing every form
 		 * field.
 		 */
 		clearFeaturedVideoForm: function() {
