@@ -662,6 +662,13 @@ class WikiaHomePageController extends WikiaController {
 		return $this->visualization;
 	}
 
+	/**
+	 * Sets language variable to get proper sprite image.
+	 * If corporate page exists for passed language code this code is set
+	 * otherwise default language is set.
+	 *
+	 * @param string $lang User language code
+	 */
 	private function setCorporateContentLang($lang) {
 		$corpLangsList = $this->getVisualization()->getVisualizationWikisData();
 		if ( !array_key_exists($lang, $corpLangsList) ) {
