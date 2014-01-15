@@ -18,12 +18,6 @@ if( !defined( 'MEDIAWIKI' ) ) {
 }
 
 /**
- * Use revision number
- */
-include "$IP/includes/wikia/wgCacheBuster.php";
-$wgStyleVersion = $wgMergeStyleVersionJS = $wgMergeStyleVersionCSS = $wgCacheBuster;
-
-/**
  * @name wgAkamaiGlobalVersion
  *
  * this variable is used for purging all images on akamai. increasing this value
