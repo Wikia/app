@@ -18,7 +18,7 @@ class Editcount extends SpecialPage {
 	 * main()
 	 */
 	function execute( $par = null ) {
-		global $wgVersion, $wgRequest, $wgContLang, $wgSpecialEditCountExludedUsernames;
+		global $wgRequest, $wgContLang, $wgSpecialEditCountExludedUsernames;
 
 		$target = isset( $par ) ? $par : $wgRequest->getText( 'username' );
 
