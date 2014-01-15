@@ -315,16 +315,16 @@ class VideoPageToolProgram extends WikiaModel {
 	 */
 	protected function loadFromCache( $cache ) {
 		foreach ( static::$fields as $varName ) {
-            // This is a quick check to make sure $published_by (which is a
-            // new column added to the vpt_program table) is in the cache.
-            // This helps the transition as the cache is filled with new
-            // data which will from here on out include this field.
-            // This should be removed a few days following the release on 1/22/14.
-            if ( array_key_exists( $varName, $cache ) ) {
-			    $this->$varName = $cache[$varName];
-            } else {
-			    $this->$varName = null;
-            }
+			// This is a quick check to make sure $published_by (which is a
+			// new column added to the vpt_program table) is in the cache.
+			// This helps the transition as the cache is filled with new
+			// data which will from here on out include this field.
+			// This should be removed a few days following the release on 1/22/14.
+			if ( array_key_exists( $varName, $cache ) ) {
+				$this->$varName = $cache[$varName];
+			} else {
+				$this->$varName = null;
+			}
 		}
 	}
 
