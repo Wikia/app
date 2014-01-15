@@ -102,7 +102,6 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 		'check': 'onSearchCheck',
 		'preview': 'onMediaPreview'
 	} );
-	this.mediaPreview.on( 'close', ve.bind( this.onMediaPreview, this ) );
 	this.upload.connect( this, uploadEvents );
 	this.queryUpload.connect( this, uploadEvents );
 	this.dropTarget.on( 'drop', ve.bind( this.onFileDropped, this ) );
@@ -235,13 +234,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.onMediaPreview = function ( item ) {
 	if ( item ) {
 		this.mediaPreview.open( item.model );
 	} else {
-		if ( this.mediaPreview.$image ) {
-			this.mediaPreview.$image.remove();
-		}
-		if ( this.mediaPreview.$videoWrapper ) {
-			this.mediaPreview.$videoWrapper.remove();
-		}
-		this.mediaPreview.$element.hide();
+		this.mediaPreview.close();
 	}
 };
 

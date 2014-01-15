@@ -27,8 +27,8 @@ ve.ui.WikiaMediaPreviewWidget = function VeUiWikiaMediaPreviewWidget() {
 		.addClass( 've-ui-wikiaMediaPreviewWidget-title' );
 
 	// Events
-	this.closeButton.connect( this, { 'click': 'onCloseClick' } );
-	this.$element.on( 'click', ve.bind( this.onCloseClick, this ) );
+	this.closeButton.connect( this, { 'click': 'close' } );
+	this.$element.on( 'click', ve.bind( this.close, this ) );
 
 	// Initialization
 	this.closeButton.$element
@@ -183,8 +183,15 @@ ve.ui.WikiaMediaPreviewWidget.prototype.open = function( model ) {
 /**
  * Close the preview
  * @method
- * @emits close
  */
-ve.ui.WikiaMediaPreviewWidget.prototype.onCloseClick = function() {
-	this.emit( 'close' );
+ve.ui.WikiaMediaPreviewWidget.prototype.close = function() {
+	if ( this.$image ) {
+		this.$image.remove();
+		this.$image = null;
+	} else if ( this.$videoWrapper ) {
+		this.$videoWrapper.remove();
+		this.$videoWrapper = null;
+	}
+
+	this.$element.hide();
 };
