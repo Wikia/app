@@ -119,6 +119,7 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 		$lastSavedOn = 0;
 		$savedBy = null;
 		// get asset data
+		$videos = array();
 		if ( empty( $assets ) ) {
 			// get default assets
 			$videos = $helper->getDefaultValuesBySection( $section );
@@ -486,7 +487,6 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 	 * @responseParam string $result [ok/error]
 	 * @responseParam string $msg - result message
 	 * @responseParam array $videos - list of videos in the category
-	 * @responseParam integer $total - total number of videos in the category
 	 */
 	public function getVideosByCategory() {
 		$categoryName = $this->getVal( 'categoryName', '' );
@@ -510,7 +510,6 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 		$this->result = 'ok';
 		$this->msg = '';
 		$this->videos = $videos;
-		$this->total = count( $videos );
 
 	}
 
