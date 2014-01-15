@@ -73,6 +73,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	this.queryUpload = this.query.getUpload();
 	this.search = new ve.ui.WikiaMediaResultsWidget( { '$': this.$ } );
 	this.results = this.search.getResults();
+	this.timings = {};
 	this.upload = new ve.ui.WikiaUploadWidget( { '$': this.$, 'hideIcon': true } );
 
 	this.$cart = this.$( '<div>' );
@@ -403,6 +404,8 @@ ve.ui.WikiaMediaInsertDialog.prototype.convertTemporaryToPermanent = function ( 
 ve.ui.WikiaMediaInsertDialog.prototype.insertMedia = function ( cartItems ) {
 	var i, promises = [];
 
+	this.timings.insertStart = ve.now();
+
 	// TODO: consider encapsulating this so it doesn't get created on every function call
 	function temporaryToPermanentCallback( cartItem, name ) {
 		cartItem.temporaryFileName = null;
@@ -559,6 +562,12 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMediaCallback = function (
 	}
 
 	this.surface.getModel().getFragment().collapseRangeToEnd().insertContent( linmod );
+
+	ve.track( 'wikia', {
+		'action': ve.track.actions.SUCCESS,
+		'label': 'dialog-media-insert',
+		'value': ve.now() - this.timings.insertStart
+	} );
 };
 
 /**
