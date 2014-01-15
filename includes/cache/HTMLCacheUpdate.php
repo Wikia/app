@@ -61,8 +61,10 @@ class HTMLCacheUpdate implements DeferrableUpdate {
 
 		// Wikia change - begin
 		// @author macbre - BAC-1183
-		Wikia::log('purge-requests-WIKIA', false,
-			sprintf('an edit of "%s" triggered %d purge requests', $this->mTitle->getPrefixedText(), $numRows), true);
+		if ($numRows > 0) {
+			Wikia::log('purge-requests-WIKIA', false,
+				sprintf('an edit of "%s" triggered %d purge requests', $this->mTitle->getPrefixedText(), $numRows), true);
+		}
 		// Wikia change - end
 
 		if ( $numRows > $this->mRowsPerJob * 2 ) {
