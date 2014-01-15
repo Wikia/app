@@ -12,7 +12,7 @@ figure{
 	line-height: 0;
 	position: relative;
 
-	a {
+	> a {
 		display: inline-block;
 		//This will make link as big as images inside and not bigger so we can safly assume that clicks happen only on img tag
 		overflow: hidden;

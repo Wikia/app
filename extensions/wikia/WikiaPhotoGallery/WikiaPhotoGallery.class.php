@@ -1446,6 +1446,10 @@ class WikiaPhotoGallery extends ImageGallery {
 
 					$imageParams = array( 'full' => $imageUrl );
 
+					if ( $this->mParser ) {
+						$this->mParser->replaceLinkHolders( $text );
+					}
+
 					$data['mediaInfo'] = array(
 						'attributes' => $imageAttribs,
 						'parameters' => $imageParams,
