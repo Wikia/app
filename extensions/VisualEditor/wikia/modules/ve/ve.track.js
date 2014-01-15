@@ -140,7 +140,7 @@ require( ['wikia.tracker'], function ( tracker ) {
 			ve.track( 'wikia' , {
 				'action': actions.IMPRESSION,
 				'label': 'edit-page-on-load',
-				'value': ve.now() - wgNow.getTime()
+				'value': ve.now() - window.wgNow.getTime()
 			} );
 		} );
 	}
