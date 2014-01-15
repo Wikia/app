@@ -55,6 +55,11 @@ $messages['en'] = array(
 	'videohomepage-header-dropdown-name' => 'Discover',
 	'videohomepage-header-search-placeholder' => 'Search for Wikia videos',
 	'videohomepage-header-browse' => 'Browse',
+	'videopagetool-header-last-saved' => "'''Last saved:''' $1",
+	'videopagetool-header-publish-date' => "'''Publish date:''' $1",
+	'videopagetool-header-not-published' => "'''Not published'''",
+	'videopagetool-header-saved-by' => "'''Saved by:''' $1",
+	'videopagetool-header-published-by' => "'''Published by:''' $1",
 
 	// Home Page Section: Partners
 	'videohomepage-partner-section-title' => 'Our Partners',
@@ -112,6 +117,12 @@ $messages['qqq'] = array(
 	// Home Page Section: Header
 	'videohomepage-header-dropdown-name' => 'Name of the dropdown that allows users to explore Wikia Video\'s sections',
 	'videohomepage-header-search-placeholder' => 'Placeholder text for Wikia Video search box',
+	'videopagetool-header-last-saved' => 'This text is the date and time the page was last saved',
+	'videopagetool-header-publish-date' => 'This text is the date the page was published',
+	'videopagetool-header-not-published' => 'This text is displayed if the page has not yet been published',
+	'videopagetool-header-saved-by' => 'Name of last person to save this page',
+	'videopagetool-header-published-by' => 'Name of person to publish this page',
+
 	// Home Page Section: Partners
 	'videohomepage-partner-section-title' => 'Title for section that links to videos from our content partners',
 	'videohomepage-partner-name-anyclip' => 'This text is the name of a partner: anyclip',
