@@ -327,7 +327,7 @@ class WikiaMobileHooks {
 				}
 			}
 
-			self::$displayErrorPage = true;
+			WikiaMobileErrorService::$displayErrorPage = true;
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -345,7 +345,7 @@ class WikiaMobileHooks {
 		wfProfileIn( __METHOD__ );
 		$app = F::app();
 
-		if( $app->checkSkin( 'wikiamobile', $skin ) && self::$displayErrorPage ) {
+		if( $app->checkSkin( 'wikiamobile', $skin ) && WikiaMobileErrorService::$displayErrorPage == true ) {
 			$out->clearHTML();
 
 			$out->addHTML( $app->renderView( 'WikiaMobileErrorService', 'pageNotFound', array( 'out' => &$out) ) );
