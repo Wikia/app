@@ -362,7 +362,7 @@ class ArticleComment {
 			$replyButton = '';
 
 			//this is for blogs we want to know if commenting on it is enabled
-			$commentingAllowed = ArticleComment::canComment( Title::newFromText( $title->getBaseText() ) );
+			$commentingAllowed = ArticleComment::canComment( Title::newFromText( $parts['title'] )->getSubjectPage() );
 
 			if ( ( count( $parts['partsStripped'] ) == 1 ) && $commentingAllowed && !ArticleCommentInit::isFbConnectionNeeded() ) {
 				$replyButton = '<button type="button" class="article-comm-reply wikia-button secondary actionButton">' . wfMsg('article-comments-reply') . '</button>';
@@ -565,7 +565,7 @@ class ArticleComment {
 
 		$canComment = true;
 		$title = is_null( $title ) ? $wgTitle : $title;
-		
+
 		if ( !in_array( $title->getNamespace(), $wgArticleCommentsNamespaces ) ) {
 			$canComment = false;
 		}
