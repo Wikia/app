@@ -17,7 +17,6 @@ if( !defined( 'MEDIAWIKI' ) ) {
 	die( 1 );
 }
 
-$wgStyleVersion = "66666";
 /**
  * @name wgAkamaiGlobalVersion
  *
@@ -1169,6 +1168,15 @@ $wgEnableAdEngineExt = true;
  */
 $wgAdDriverUseSevenOneMedia = null;
 $wgAdDriverUseSevenOneMediaInLanguages = ['de'];
+
+/**
+ * @name $wgAdDriverUseNewTracking
+ * Whether to use the new ad tracking code.
+ * If true: the new tracking code (SlotTracker.js) will be used on half of
+ * the traffic and the old one (AdTracker.js) on the other half.
+ * If false: only the old ad tracking code (AdTracker.js) will be used.
+ */
+$wgAdDriverUseNewTracking = false;
 
 /**
  * @name $wgAdVideoTargeting
