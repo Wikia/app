@@ -17,7 +17,6 @@ if( !defined( 'MEDIAWIKI' ) ) {
 	die( 1 );
 }
 
-$wgStyleVersion = "66666";
 /**
  * @name wgAkamaiGlobalVersion
  *
