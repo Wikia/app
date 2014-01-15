@@ -7,6 +7,10 @@
 		'publishDate' => $publishDate,
 		'section' => $section,
 		'language' => $language,
+		'savedBy' => $savedBy,
+		'lastSavedOn' => $lastSavedOn,
+		'publishDate' => $publishDate,
+		'publishedBy' => $publishedBy
 	)
 ) ?>
 

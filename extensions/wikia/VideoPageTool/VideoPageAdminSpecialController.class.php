@@ -89,15 +89,35 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 
 		$program = VideoPageToolProgram::newProgram( $language, $date );
 
-		// get program assets
+		// get program assets. VPT needs a program object for each request. It first checks if one already exists for
+		// that language and date. If one doesn't, it creates a new one. It then uses that program to pull the
+		// associated assets. If it's a new program, it won't have any assets yet created. To help the user, we
+		// grab the assets from the the last saved program and use those as the default assets for this new program.
 		$assets = $program->getAssetsBySection( $section );
 		if ( empty( $assets ) ) {
-			$publishedProgram = VideoPageToolProgram::loadProgramNearestDate( $language, $date );
-			if ( !empty( $publishedProgram ) ) {
-				$assets = $publishedProgram->getAssetsBySection( $section );
+			$latestProgram = VideoPageToolProgram::loadProgramNearestDate( $language, $date );
+			if ( !empty( $latestProgram ) ) {
+				$assets = $latestProgram->getAssetsBySection( $section );
 			}
 		}
 
+		$publishDate = null;
+		$publishedBy = null;
+		if ( $program->isPublished() ) {
+			$publishDate = $program->getPublishDate();
+			$publishedBy = $program->getPublishedBy();
+		} else if ( isset( $latestProgram ) && $latestProgram->isPublished() ) {
+			$publishDate = $latestProgram->getPublishDate();
+			$publishedBy = $latestProgram->getPublishedBy();
+		}
+
+		if ( $publishedBy ) {
+			// Translate user id into username
+			$publishedBy = User::newFromId( $publishedBy )->getName();
+		}
+
+		$lastSavedOn = 0;
+		$savedBy = null;
 		// get asset data
 		if ( empty( $assets ) ) {
 			// get default assets
@@ -105,10 +125,18 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 		} else {
 			// Override defaults so we always show a lightbox in the admin pages
 			$thumbOptions = [ 'noLightbox' => false ];
-			foreach( $assets as $order => $asset ) {
+
+			// Saved on and saved by data are saved on a per asset basis, therefore it's necessary to loop through each
+			// asset to make sure we're using the latest saved information.
+			foreach ( $assets as $order => $asset ) {
 				/** @var VideoPageToolAsset $asset */
 				$videos[$order] = $asset->getAssetData( $thumbOptions );
+				if ( $asset->getUpdatedAt() > $lastSavedOn ) {
+					$lastSavedOn = $asset->getUpdatedAt();
+					$savedBy = $asset->getUpdatedBy();
+				}
 			}
+			$savedBy = User::newFromId( $savedBy )->getName();
 		}
 
 		$result = '';
@@ -179,10 +207,13 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 		$this->moduleView = $this->app->renderView( 'VideoPageAdminSpecial', $section, array( 'videos' => $videos, 'date' => $date, 'language' => $language ) );
 		$this->publishButton = ( $program->isPublishable( array_keys( $sections ) ) ) ? '' : 'disabled';
 		$this->publishUrl = $this->wg->Title->getLocalURL( array('date' => $date, 'language' => $language) );
-		$this->publishDate = $program->getFormattedPublishDate();
 
 		$this->section = $section;
 		$this->language = $language;
+		$this->lastSavedOn = $lastSavedOn;
+		$this->savedBy = $savedBy;
+		$this->publishDate = $publishDate;
+		$this->publishedBy = $publishedBy;
 	}
 
 	/**
@@ -493,11 +524,14 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 	 * Render header
 	 */
 
-	public function header($data) {
+	public function header() {
 		$this->language = Language::getLanguageName( $this->getVal( 'language' ) );
 		$this->section = ucfirst( $this->getVal( 'section' ) );
-		$this->publishDate = $this->getVal( 'publishDate' );
 		$this->dashboardHref = SpecialPage::getTitleFor('VideoPageAdmin')->getLocalURL();
+		$this->lastSavedOn = $this->getVal( 'lastSavedOn' );
+		$this->savedBy = $this->getVal( 'savedBy' );
+		$this->publishDate = $this->getVal( 'publishDate' );
+		$this->publishedBy = $this->getVal( 'publishedBy' );
 	}
 
 	/**
