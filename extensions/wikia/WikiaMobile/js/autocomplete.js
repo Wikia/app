@@ -1,4 +1,6 @@
 define('autocomplete', ['jquery'], function($){
+	'use strict';
+
 	var reEscape = /(\/|\.|\*|\+|\?|\||\(|\)|\[|\]|\{|\}|\\)/g,
 		suggestions = [],
 		cachedResponse = [],
@@ -73,10 +75,15 @@ define('autocomplete', ['jquery'], function($){
 		var input = $(options.input),
 			list = $(options.list),
 			clear = $(options.clear),
+			//On A2.3 setting class on clear icon have no effect on first use after open
+			//to trigger repaint we need to set the class on its parent
+			clearParent = clear.parent(),
 			serviceUrl = options.url,
 			value = input.val().trim();
 
 		if(!serviceUrl) throw 'url not provided';
+
+		clearParent.visible = false;
 
 		getSuggestions(list, serviceUrl, value);
 
@@ -89,10 +96,16 @@ define('autocomplete', ['jquery'], function($){
 				} else {
 					getSuggestions(list, serviceUrl, value);
 				}
-				clear.removeClass('hide');
+
+				if ( !clearParent.visible ) {
+					clearParent.removeClass('hide-clear').visible = true;
+				}
 			} else {
 				list.empty();
-				clear.addClass('hide');
+
+				if ( clearParent.visible ) {
+					clearParent.addClass('hide-clear').visible = false;
+				}
 			}
 
 			input.parent()[0].scrollIntoView();
@@ -100,23 +113,25 @@ define('autocomplete', ['jquery'], function($){
 
 		list.on('click', '.copySrh', function(event){
 			event.stopPropagation();
-				input
-					.val(value = this.parentElement.title).trigger('focus')
-					.parent()[0].scrollIntoView();
+			input
+				.val(value = this.parentElement.title).trigger('focus')
+				.parent()[0].scrollIntoView();
 
-				getSuggestions(list, serviceUrl, value);
-			})
-			.on('click', 'span[title]', function(){
-				input
-					.val(this.title || '')
-					.prev().attr('disabled', true)
-					.parent().trigger('submit');
-			});
+			getSuggestions(list, serviceUrl, value);
+		})
+		.on('click', 'span[title]', function(){
+			input
+				.val(this.title || '')
+				.prev().attr('disabled', true)
+				.parent().trigger('submit');
+		});
 
-		clear.on('click', function(){
+		clear.on('touchend', function(){
 			list.empty();
-			clear.addClass('hide');
-			input.val('').trigger('focus');
+			clearParent.addClass('hide-clear').visible = false;
+			input.val('');
+		} ).on('click', function(){
+			input.trigger('focus');
 		});
 	};
 });
