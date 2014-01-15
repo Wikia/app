@@ -40,7 +40,10 @@ class Editcount extends SpecialPage {
 		}
 
 		/* take archived revisions count for current wiki into consideration */
-		$arcount = $this->editsArchived( $uid );
+		$arcount = 0;
+		if ($uid != 0) {
+			$arcount = $this->editsArchived( $uid );
+		}
 
 		if ( $this->including() ) {
 			if ( !isset($namespace) ) {
