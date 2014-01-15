@@ -1,10 +1,10 @@
 /*
-	$Revision: 1.5 $Date: 2013/10/07 15:43:21 $
+	$Revision: 1.7 $Date: 2014/01/31 14:06:31 $
 	SevenOne Media Ad Integration for de.wikia.com
 */
 
 window.myAd = {
-	revision: '$Revision: 1.5 $Date: 2013/10/07 15:43:21 $',
+	revision: '$Revision: 1.7 $Date: 2014/01/31 14:06:31 $',
 	soi_site_script:  'wikia.js',
 
 	container_prefix: 'ad-',
@@ -24,6 +24,7 @@ window.myAd = {
 					src = '/globalV6.js';
 					break;
 				case 'site':
+					this.excludeAds();
 					if (this.soi_site_script) src = '/Sites/' + this.soi_site_script;
 					break;
 			}
@@ -32,6 +33,31 @@ window.myAd = {
 
 			this.loaded[which] = true;
 			document.write('<script src="' + server + src + '" type="text/javascript"><\/script>');
+		},
+	getClientWidth: function() {
+			return window.innerWidth // includes scrollbar - identical with media query condition
+				|| (document.documentElement ?
+					  document.documentElement.clientWidth // html element
+					: document.body ?
+						  document.body.clientWidth || document.body.offsetWidth // body
+						: 0); // not available
+		},
+	getContentWidth: function() {
+			var ads_outer = document.getElementById('ads-outer');
+			return ads_outer ? ads_outer.offsetWidth : 0;
+		},
+	excludeAds: function() {
+			try {
+				// high default in case of non-retrievable widths
+				var content_width = this.getContentWidth() || 10000;
+				var client_width  = this.getClientWidth() || 10000;
+				if (client_width < 1300) window.SOI_SB = 0;
+				if (client_width < 1200) window.SOI_SC1 = window.SOI_WP = window.SOI_FP = 0;
+				if (client_width < 1170) window.SOI_SC1 = window.SOI_SB = window.SOI_WP = 0; // (1170 - 960) / 2 - 5 = 100px visibible width
+				if (content_width < 800) window.SOI_PU = window.SOI_PL = window.SOI_FA
+					= window.SOI_BB = window.SOI_PD = window.SOI_HP = 0;
+			}
+			catch(e) {}
 		},
 	insertAd: function(ad_id) {
 			if (!window.SOI_WERBUNG) return;
@@ -191,6 +217,7 @@ window.myAd = {
 						case 'fullbanner2':
 							retval = SoiAd.isPowerbanner(ad_id) || SoiAd.isPushdown(ad_id)|| SoiAd.isBillboard(ad_id)
 								|| SoiAd.isWallpaper(ad_id) || SoiAd.isFireplace(ad_id);
+							if (!retval && this.getClientWidth() < 1020) retval = true;
 							break;
 						case 'rectangle1':
 							retval = SoiAd.isHalfpage(ad_id);
