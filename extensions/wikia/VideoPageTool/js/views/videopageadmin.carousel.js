@@ -66,6 +66,7 @@ define( 'views.videopageadmin.carousel', [
 		},
 		onReset: function() {
 			this.$el.slideUp( 200 );
+			this.collection.selectedCategory = '';
 			this.collection.reset();
 		},
 		onPageChange: function( evt ) {

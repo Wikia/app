@@ -19,7 +19,11 @@ define( 'views.videopageadmin.categoryforms', [
 						el: this.$el.next( '.carousel' ),
 						collection: this.categoryData
 					} );
-					_.bindAll( this, 'getPreview', 'togglePreview' );
+					_.bindAll( this,
+						'getPreview',
+						'togglePreview',
+						'onCategoryDataReset'
+					);
 
 					if ( this.categories.selectedCategory ) {
 						this.getPreview();
@@ -36,6 +40,8 @@ define( 'views.videopageadmin.categoryforms', [
 						self.togglePreview();
 						return false;
 					} );
+
+					this.categoryData.on( 'reset', this.onCategoryDataReset );
 				},
 				events: {
 					'click .search-button': 'getPreview'
@@ -47,6 +53,12 @@ define( 'views.videopageadmin.categoryforms', [
 
 					this.categoryData.setCategory( this.categories.selectedCategory );
 					return false;
+				},
+				onCategoryDataReset: function() {
+					// Reset selected category to nothing on collection wipes
+					if ( !this.categoryData.length ) {
+						this.categories.selectedCategory = null;
+					}
 				},
 				togglePreview: function() {
 					this.previewView.$el.slideToggle( 200 );
