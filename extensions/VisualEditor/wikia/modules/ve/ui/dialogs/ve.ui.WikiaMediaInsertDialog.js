@@ -723,7 +723,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.onUploadSuccess = function ( data ) {
  * @param {jQuery.Event} e The jQuery event Object.
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onFrameDocumentKeyDown = function ( e ) {
-	if ( e.which === OO.ui.Keys.ESCAPE && this.mediaPreview.$.is( ':visible' ) ) {
+	if ( e.which === OO.ui.Keys.ESCAPE && this.mediaPreview.$element.is( ':visible' ) ) {
 		this.onMediaPreview();
 		return false;
 	}
