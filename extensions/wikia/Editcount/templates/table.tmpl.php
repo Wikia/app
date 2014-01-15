@@ -34,7 +34,7 @@
 	<td class="ecrowright"><?=$fpercentall?></td>
 </tr>
 <?	} ?>
-<?php
+<?php if ( $arcount > 0 ) {
 	/* current wiki total number of archived revisions */
 	$farcount = $wgLang->formatNum( $arcount );
 	$percent = ($arcount > 0 && $wikitotal > 0) ? wfPercent( $arcount / $wikitotal * 100 ) : wfPercent(0);
@@ -48,5 +48,8 @@
 	<td class="ecrowright"><?=wfMessage('editcount_no_data')->escaped()?></td>
 	<td class="ecrowright">-</td>
 </tr>
+<?php
+}
+?>
 </table>
 <!-- e:<?= __FILE__ ?> -->
