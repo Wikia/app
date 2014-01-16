@@ -307,6 +307,8 @@ class UserIdentityBox {
 					$data->$option = str_replace('*', '&asterix;', $data->$option);
 					$data->$option = $this->app->wg->Parser->parse($data->$option, $this->user->getUserPage(), new ParserOptions($this->user))->getText();
 					$data->$option = str_replace('&amp;asterix;', '*', $data->$option);
+                    // Encoding problems in user masthead (CONN-131)
+					$data->$option = str_replace('&#160;', ' ', $data->$option);
 					$data->$option = trim(strip_tags($data->$option));
 
 					//phalanx filtering; bugId:10233
