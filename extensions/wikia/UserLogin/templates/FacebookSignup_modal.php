@@ -24,7 +24,7 @@
 				'method' => 'index',
 				'params' => array(
 					'text' => wfMessage('email')->escaped(),
-					'tooltipIconTitle' => wfMessage('usersignup-facebook-email-tooltip')->escaped(),
+					'tooltipIconTitle' => wfMessage('usersignup-facebook-email-tooltip')->plain(),
 				),
 			),
 			array(
