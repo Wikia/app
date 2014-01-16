@@ -59,8 +59,8 @@ WAMPage.prototype = {
 						window.wamFilterDateFormat : undefined,
 					onSelect: $.proxy( function () {
 						var $date = $( '#WamFilterDate' ),
-							timestamp = $date.val(),
-							currentTimezoneOffset = (new Date( timestamp )).getTimezoneOffset()
+							timestamp = parseInt( $date.val(), 10 ),
+							currentTimezoneOffset = (new Date( timestamp )).getTimezoneOffset();
 						$date.val( (timestamp / 1000) - currentTimezoneOffset * 60 );
 						WAMPage.trackClick( 'WamPage', Wikia.Tracker.ACTIONS.CLICK, 'wam-search-filter-change',
 							null, {lang: wgContentLanguage, filter: 'date'} );
