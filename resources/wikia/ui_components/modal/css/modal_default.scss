@@ -216,6 +216,12 @@ body.background-dynamic {
 		&.fake-scrollbar {
 			overflow-y: scroll;
 		}
+
+		// TODO: temporary solution - hack to fix tooltips position on modals
+		// TODO: Bootstrap tooltip.js need to be updated and then it's possible to set tooltip container
+		.tooltip {
+			position: fixed;
+		}
 	}
 }
 
