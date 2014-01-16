@@ -1,5 +1,5 @@
 $(window).on('load', function(){
-	require( ['ads', 'sloth', 'jquery', 'JSMessages', 'wikia.window', 'wikia.log'], function ( ads, sloth, $, msg, window, log ) {
+	require( ['jquery', 'JSMessages', 'wikia.window', 'wikia.log'], function ( $, msg, window, log ) {
 		'use strict';
 
 		var MIN_ZEROTH_SECTION_LENGTH = 700,

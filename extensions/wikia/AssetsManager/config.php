@@ -51,10 +51,18 @@ $config['adengine_mobile_js'] = array(
 		// deps:
 		'//resources/wikia/modules/cookies.js',
 		'//resources/wikia/modules/document.js',
-		'//resources/wikia/modules/geo.js',
-		'//resources/wikia/modules/lazyqueue.js',
 		'//resources/wikia/modules/log.js',
 		'//resources/wikia/modules/window.js',
+	)
+);
+
+$config['adengine_mobile_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	//'skin' => 'wikiamobile',
+	'assets' => array(
+		//deps
+		'//resources/wikia/modules/lazyqueue.js',
+		'//resources/wikia/modules/geo.js',
 		// AdEngine:
 		'//extensions/wikia/AdEngine/js/AdConfigMobile.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.js',
@@ -73,43 +81,8 @@ $config['adengine_mobile_js'] = array(
 $config['adengine2_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
+		'#group_adengine_modules_js',
 		'#group_adengine_mobile_js',
-/*
-		// core
-		'//resources/wikia/modules/scriptwriter.js',
-		'//extensions/wikia/AdEngine/js/Krux.js',
-		'//extensions/wikia/AdEngine/js/SlotTweaker.js',
-		'//extensions/wikia/AdEngine/js/AdEngine2.js',
-		'//extensions/wikia/AdEngine/js/AdTracker.js',
-		'//extensions/wikia/AdEngine/js/SlotTracker.js',
-
-		// high prio
-		'//extensions/wikia/AdEngine/js/OoyalaTracking.js',
-		'//extensions/wikia/AdEngine/js/DartUrl.js',
-		'//extensions/wikia/AdEngine/js/WikiaDartHelper.js',
-		'//extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
-		'//extensions/wikia/AdEngine/js/WikiaFullGptHelper.js',
-		'//extensions/wikia/AdEngine/js/SevenOneMediaHelper.js',
-		'//extensions/wikia/AdEngine/js/EvolveHelper.js',
-		'//extensions/wikia/AdEngine/js/AdProviderEvolve.js',
-		'//extensions/wikia/AdEngine/js/AdProviderGamePro.js',
-		'//extensions/wikia/AdEngine/js/AdProviderSevenOneMedia.js',
-		'//extensions/wikia/AdEngine/js/AdProviderGpt.js',
-		'//extensions/wikia/AdEngine/js/AdProviderLater.js',
-		'//extensions/wikia/AdEngine/js/AdProviderNull.js',
-		'//extensions/wikia/AdEngine/js/AdTemplateSkin.js',
-		'//extensions/wikia/AdEngine/js/AdLogicDartSubdomain.js',
-		'//extensions/wikia/AdEngine/js/AdLogicHighValueCountry.js',
-		'//extensions/wikia/AdEngine/js/AdLogicPageLevelParams.js',
-		'//extensions/wikia/AdEngine/js/AdLogicPageLevelParamsLegacy.js',
-		'//extensions/wikia/AdEngine/js/AdLogicPageDimensions.js',
-		'//extensions/wikia/AdEngine/js/AdDecoratorPageDimensions.js',
-		'//extensions/wikia/AdEngine/js/AdConfig2.js',
-		'//extensions/wikia/AdEngine/js/AdEngine2.run.js',
-
-		// low prio
-		// not here! @see adengine2 low prio section someplace else
-*/
 	),
 );
 
@@ -638,22 +611,10 @@ $config['wikiamobile_js_ads'] = array(
 	'skin' => 'wikiamobile',
 	'assets' => array(
 		//libraries
-		//I wan't to minimize how much data we have to transfer
-		//We currently don't have JS minimizer so I used minified version of it
-		'//resources/wikia/libraries/postscribe/postscribe.min.js',
-		'//resources/wikia/modules/scriptwriter.js',
-
-		//advertisement "core"
-		'//extensions/wikia/AdEngine/js/AdLogicPageLevelParams.js',
-		'//extensions/wikia/AdEngine/js/DartUrl.js',
-		'//extensions/wikia/AdEngine/js/WikiaDartMobileHelper.js',
-		'//extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
 
 		'#group_adengine_mobile_js',
 
 		//modules
-		'//resources/wikia/modules/geo.js',
-		'//extensions/wikia/WikiaMobile/js/ads.js',
 		'//extensions/wikia/WikiaMobile/js/ad_slots.js',
 	)
 );
