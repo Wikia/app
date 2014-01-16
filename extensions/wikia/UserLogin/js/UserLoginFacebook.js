@@ -8,8 +8,9 @@ var UserLoginFacebook = {
 		PAGE: 2,
 		MODAL: 3
 	},
+	actions: {},
 	track: false,
-	tracker: window.Wikia.Tracker,
+
 
 
 	log: function( msg ) {
@@ -21,11 +22,16 @@ var UserLoginFacebook = {
 	init: function( origin ) {
 		'use strict';
 
+		var self = this;
+
 		if( !this.initialized ) {
-			this.track = this.tracker.buildTrackingFunction( {
-				category: 'login',
-				label: 'facebook',
-				value: origin || 0
+			require( ['wikia.tracker'], function( tracker ) {
+				self.actions = tracker.ACTIONS
+				self.track = tracker.buildTrackingFunction( {
+					category: 'user-sign-up',
+					value: origin || 0,
+					trackingMethod: 'both'
+				} );
 			} );
 
 			this.initialized = true;
@@ -80,7 +86,8 @@ var UserLoginFacebook = {
 
 				default:
 					this.track( {
-						action: this.tracker.ACTIONS.ERROR
+						action: this.actions.ERROR,
+						label: 'facebook-login'
 					} );
 					break;
 			}
@@ -98,7 +105,8 @@ var UserLoginFacebook = {
 			// logged in using FB account, reload the page or callback
 
 			this.track( {
-				action: this.tracker.ACTIONS.SUCCESS
+				action: this.tracker.ACTIONS.SUCCESS,
+				label: 'facebook-login'
 			} );
 
 			if ( loginCallback && typeof loginCallback === 'function' ) {
@@ -162,7 +170,8 @@ var UserLoginFacebook = {
 						// Track Facebook Connect Modal Close
 						facebookSignupModal.bind( 'beforeClose', function () {
 							self.track( {
-								action: self.tracker.ACTIONS.CLOSE
+								action: self.tracker.ACTIONS.CLOSE,
+								label: 'facebook-login-modal'
 							} );
 						} );
 
