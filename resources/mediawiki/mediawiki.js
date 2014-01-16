@@ -243,7 +243,14 @@ var mw = ( function ( $, undefined ) {
 		 * Dummy function which in debug mode can be replaced with a function that
 		 * emulates console.log in console-less environments.
 		 */
-		log: function() { },
+		log: ( function () {
+                        var log = function () {};
+                        log.warn = function () {};
+                        log.deprecate = function ( obj, key, val ) {
+                                obj[key] = val;
+                        };
+                        return log;
+                }() ),
 	
 		/**
 		 * @var constructor Make the Map constructor publicly available.
