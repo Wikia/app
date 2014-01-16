@@ -43,4 +43,8 @@
 	.oo-ui-icon-close {
 		@include ve-icon( close, oo, #000 );
 	}
+
+	.wikiaThrobber {
+		background-color: transparent;
+	}
 }

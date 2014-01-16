@@ -54,13 +54,14 @@ OO.inheritClass( ve.ui.WikiaMediaPreviewWidget, OO.ui.Widget );
  * @method
  */
 ve.ui.WikiaMediaPreviewWidget.prototype.handleImage = function() {
-	this.$element.show();
+	this.$element.startThrobbing();
 
 	this.maxImgHeight = Math.round( $( window ).height() * 0.95 ) - this.$titlebar.outerHeight();
 	this.maxImgWidth = Math.round( $( window ).width() * 0.95 );
 
 	this.$image = $( '<img>' )
-		.addClass( 've-ui-wikiaMediaPreviewWidget-image' );
+		.addClass( 've-ui-wikiaMediaPreviewWidget-image' )
+		.hide();
 
 	require( ['wikia.thumbnailer'], ve.bind( function ( thumbnailer ) {
 		this.$image.attr( 'src', thumbnailer.getThumbURL( this.model.url, 'nocrop', this.maxImgWidth ) );
@@ -96,6 +97,8 @@ ve.ui.WikiaMediaPreviewWidget.prototype.verticallyAlign = function( $element ) {
 	$element
 		.css( 'top', availableHeight / 2 - $element.height() / 2 + this.$titlebar.outerHeight() )
 		.show();
+
+	this.$element.stopThrobbing();
 };
 
 /**
@@ -103,6 +106,8 @@ ve.ui.WikiaMediaPreviewWidget.prototype.verticallyAlign = function( $element ) {
  * @method
  */
 ve.ui.WikiaMediaPreviewWidget.prototype.handleVideo = function() {
+	this.$element.startThrobbing();
+
 	$.ajax( {
 		'url': mw.util.wikiScript( 'api' ),
 		'data': {
@@ -171,6 +176,7 @@ ve.ui.WikiaMediaPreviewWidget.prototype.onRequestVideoFail = function() {
 ve.ui.WikiaMediaPreviewWidget.prototype.open = function( model ) {
 	this.model = model;
 	this.$title.text( this.model.title );
+	this.$element.show();
 
 	// Init media
 	if ( model.type === 'video' ) {
