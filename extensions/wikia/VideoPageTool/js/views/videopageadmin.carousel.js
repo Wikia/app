@@ -35,7 +35,7 @@ define( 'views.videopageadmin.carousel', [
 
 			if ( !this.collection.length ) {
 				this.$el.html( '' );
-				return false;
+				return this;
 			}
 
 			self = this;
