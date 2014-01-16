@@ -46,10 +46,10 @@
 			}
 		}
 
-		if( mode === 'create' ) {
+		if ( mode === 'create' ) {
 			callback = function( embedData ) {
 				var wikitag = $( '#VideoEmbedTag' ).val();
-				if( !triggeredFromRTE ) {
+				if ( !triggeredFromRTE ) {
 					window.WikiaEditor.getInstance().getEditbox().focus();
 					// VID-1177 IE11 execution order was inserting tags before switching focus
 					setTimeout( function() {
@@ -65,13 +65,13 @@
 				}
 
 			};
-		} else if( mode === 'edit' ) {
+		} else if ( mode === 'edit' ) {
 			callback = function ( embedData ) {
 				if ( element != 'undefined' ) {
 					var wikitext = '';
 
 					// Handle video placeholders in the editor [[File:Placeholder|video]]
-					if( element.hasClass( 'media-placeholder' ) ) {
+					if ( element.hasClass( 'media-placeholder' ) ) {
 						wikitext = embedData.wikitext;
 						RTE.mediaEditor.update( element, wikitext, embedData );
 					} else {
