@@ -123,10 +123,14 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 			// get default assets
 			$videos = $helper->getDefaultValuesBySection( $section );
 		} else {
+			// Override defaults so we always show a lightbox in the admin pages
+			$thumbOptions = [ 'noLightbox' => false ];
+
 			// Saved on and saved by data are saved on a per asset basis, therefore it's necessary to loop through each
 			// asset to make sure we're using the latest saved information.
-			foreach( $assets as $order => $asset ) {
-				$videos[$order] = $asset->getAssetData();
+			foreach ( $assets as $order => $asset ) {
+				/** @var VideoPageToolAsset $asset */
+				$videos[$order] = $asset->getAssetData( $thumbOptions );
 				if ( $asset->getUpdatedAt() > $lastSavedOn ) {
 					$lastSavedOn = $asset->getUpdatedAt();
 					$savedBy = $asset->getUpdatedBy();
@@ -429,8 +433,10 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 
 		$url = urldecode( $url );
 		if ( preg_match( '/.+\/wiki\/File:(.+)$/i', $url, $matches ) ) {
+			// Override defaults so we always show a lightbox in the admin pages
+			$thumbOptions = [ 'noLightbox' => false ];
 			$helper = new VideoPageToolHelper();
-			$video = $helper->getVideoData( $matches[1], $altThumbTitle );
+			$video = $helper->getVideoData( $matches[1], $altThumbTitle, null, null, $thumbOptions );
 		}
 
 		if ( empty( $video ) ) {

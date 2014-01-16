@@ -91,9 +91,8 @@ class VideoHomePageController extends WikiaController {
 	 * @responseParam array $assets
 	 */
 	public function category() {
-		$thumbOptions = [ 'hidePlayButton' => true ];
 		$helper = new VideoPageToolHelper();
-		$this->assets = $helper->renderAssetsBySection( $this->getProgram(), self::MODULE_CATEGORY, $thumbOptions );
+		$this->assets = $helper->renderAssetsBySection( $this->getProgram(), self::MODULE_CATEGORY );
 	}
 
 	/**
