@@ -42,14 +42,11 @@ WAMPage.prototype = {
 			mw.loader.use(['jquery.ui.datepicker'])
 		).done(
 			$.proxy(function(getResourcesData) {
-				var minDate = new Date( window.wamFilterMinMaxDates['min_date'] * 1000 ),
-					minDateTimezoneOffset = minDate.getTimezoneOffset(),
-					maxDate = new Date( window.wamFilterMinMaxDates['max_date'] * 1000 ),
-					maxDateTimezoneOffset = minDate.getTimezoneOffset(),
-					currentTimezoneOffset = (new Date()).getTimezoneOffset();
+				var minDate = new Date( window.wamFilterMinMaxDates.min_date * 1000 ),
+					maxDate = new Date( window.wamFilterMinMaxDates.max_date * 1000 );
 
-				minDate.setMinutes( minDate.getMinutes() + minDateTimezoneOffset );
-				maxDate.setMinutes( maxDate.getMinutes() + maxDateTimezoneOffset );
+				minDate.setMinutes( minDate.getMinutes() + minDate.getTimezoneOffset() );
+				maxDate.setMinutes( maxDate.getMinutes() + maxDate.getTimezoneOffset() );
 
 				$( '#WamFilterHumanDate' ).datepicker( {
 					showOtherMonths: true,
@@ -61,13 +58,12 @@ WAMPage.prototype = {
 					dateFormat: (typeof window.wamFilterDateFormat !== 'undefined' && window.wamFilterDateFormat) ?
 						window.wamFilterDateFormat : undefined,
 					onSelect: $.proxy( function () {
-						var $date = $( '#WamFilterDate' );
-						$date.val( ($date.val() / 1000) - currentTimezoneOffset * 60 );
-
-						if ( $( this ).closest( '#WamFilterDate' ) ) {
-							WAMPage.trackClick( 'WamPage', Wikia.Tracker.ACTIONS.CLICK, 'wam-search-filter-change',
-								null, {lang: wgContentLanguage, filter: 'date'} );
-						}
+						var $date = $( '#WamFilterDate' ),
+							timestamp = $date.val(),
+							currentTimezoneOffset = (new Date( timestamp )).getTimezoneOffset()
+						$date.val( (timestamp / 1000) - currentTimezoneOffset * 60 );
+						WAMPage.trackClick( 'WamPage', Wikia.Tracker.ACTIONS.CLICK, 'wam-search-filter-change',
+							null, {lang: wgContentLanguage, filter: 'date'} );
 						WAMPage.filterWamIndex( $date );
 					}, this )
 				} );
