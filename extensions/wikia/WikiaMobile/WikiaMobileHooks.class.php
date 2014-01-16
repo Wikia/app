@@ -10,10 +10,6 @@ class WikiaMobileHooks {
 	 * @var null
 	 */
 	static private $mediaNsString = null;
-	/**
-	 * @var bool
-	 */
-	static private $displayErrorPage = false;
 
 	/**
 	 * @param $parser Parser
