@@ -23,10 +23,10 @@ define( 'views.videopageadmin.edit', [
 		},
 
 		initMediaUploader: function() {
-			$( '.form-box' ).on( 'click', '.media-uploader-btn', function(evt) {
+			$( '.form-box' ).on( 'click', '.media-uploader-btn', function( evt ) {
 					evt.preventDefault();
 					return new ThumbnailUploader( {
-							el: $(this).closest('.form-box')
+							el: $( this ).closest('.form-box')
 					} );
 			} );
 		},
@@ -101,18 +101,23 @@ define( 'views.videopageadmin.edit', [
 		},
 
 		initSwitcher: function() {
-			this.$form.switcher( {
-				onChange: function( $elem, $switched ) {
-					// Update the numbers beside the elements
-					var $oCount = $elem.find( '.count' ),
-						oCountVal = $oCount.html(),
-						$nCount = $switched.find( '.count' ),
-						nCountVal = $nCount.html();
+			var opts = {};
 
-					$oCount.html( nCountVal );
-					$nCount.html( oCountVal );
-				}
-			} );
+			if ( $( '.form-wrapper' ).length ) {
+				opts.boxes = '.form-wrapper';
+			}
+
+			opts.onChange = function( $elem, $switched ) {
+				// Update the numbers beside the elements
+				var $oCount = $elem.find( '.count' ),
+					oCountVal = $oCount.html(),
+					$nCount = $switched.find( '.count' ),
+					nCountVal = $nCount.html();
+
+				$oCount.html( nCountVal );
+				$nCount.html( oCountVal );
+			};
+			this.$form.switcher( opts );
 		},
 
 		initValidator: function() {
@@ -156,7 +161,7 @@ define( 'views.videopageadmin.edit', [
 		initReset: function() {
 			var self = this;
 
-			this.$form.find( '.reset' ).on( 'click', function(e) {
+			this.$form.find( '.reset' ).on( 'click', function( e ) {
 				e.preventDefault();
 
 				$.confirm( {
@@ -209,11 +214,11 @@ define( 'views.videopageadmin.edit', [
 	return VPTEdit;
 } );
 
-require(['views.videopageadmin.edit'], function(EditView) {
+require( ['views.videopageadmin.edit'], function( EditView ) {
 
 	'use strict';
 
-	$(function() {
+	$( function() {
 		new EditView();
 	} );
 } );

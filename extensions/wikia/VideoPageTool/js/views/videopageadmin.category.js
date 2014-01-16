@@ -8,7 +8,7 @@ define( 'views.videopageadmin.category', [
 	var CategoryPageView = Backbone.View.extend( {
 			initialize: function() {
 				this.categories = new CategoryCollection();
-				this.$formGroups = this.$el.find( '.form-box' );
+				this.$formGroups = this.$el.find( '.form-wrapper' );
 
 				_.bindAll( this, 'render' );
 				this.categories.on( 'reset', this.render );

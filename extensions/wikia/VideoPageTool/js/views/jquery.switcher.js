@@ -26,7 +26,7 @@
 		};
 
 		this.$elem = $element;
-		this.options = $.extend(defaults, options);
+		this.options = $.extend( defaults, options );
 		this.init();
 	};
 
@@ -43,31 +43,41 @@
 
 		},
 		bindEvents: function() {
-			var that = this;
+			var self = this;
 
-			this.upArrows.on( 'click', this.handleUpClick );
-			this.downArrows.on( 'click', this.handleDownClick );
+			this.upArrows.on( 'click', $.proxy( this.handleUpClick, this ) );
+			this.downArrows.on( 'click', $.proxy( this.handleDownClick, this ) );
 
 			this.$elem.on( 'switched.switcher', function( e, data ) {
-				that.updateDisabled();
+				self.updateDisabled();
 				// Call extension's onChange callback
-				that.options.onChange && that.options.onChange( data.box, data.elem );
+				if ( self.options.onChange ) {
+					self.options.onChange( data.box, data.elem );
+				}
 			});
 		},
 		handleUpClick: function( e ) {
+			var $box,
+					$prev;
+
 			e.preventDefault();
 
-			var $box = $( this ).parent(),
-				$prev = $box.prev();
+			$box = $( e.target ).closest( this.options.boxes );
+			$prev = $box.prev();
+
 			$box.insertBefore( $prev );
 
 			$box.parent().trigger( 'switched.switcher', { box: $box, elem: $prev } );
 		},
 		handleDownClick: function( e ) {
+			var $box,
+					$next;
+
 			e.preventDefault();
 
-			var $box = $( this ).parent(),
-				$next = $box.next();
+			$box = $( e.target ).closest( this.options.boxes ),
+			$next = $box.next();
+
 			$box.insertAfter( $next );
 
 			$box.parent().trigger( 'switched.switcher', { box: $box, elem: $next } );
@@ -92,7 +102,7 @@
 	$.fn.switcher = function( options ) {
 		return this.each( function() {
 			var $this = $( this );
-			$this.data('switcher', new Switcher( $this, options ))
+			$this.data('switcher', new Switcher( $this, options ));
 		});
 	};
 

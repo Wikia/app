@@ -16,7 +16,7 @@ define( 'views.videopageadmin.categoryforms', [
 							collection: this.categories
 					} );
 					this.previewView = new AdminCarouselView( {
-						el: this.$el.next( '.carousel' ),
+						el: this.$el.find( '.carousel' ),
 						collection: this.categoryData
 					} );
 					_.bindAll( this,
@@ -29,22 +29,11 @@ define( 'views.videopageadmin.categoryforms', [
 						this.getPreview();
 					}
 
-					/**
-					 * TODO: fix the dom structure so you can use a scoped selector in
-					 * the events hash as opposed to selecting OUTSIDE of the scope of this.
-					 * .preview and .carousel should not be siblings to .form-box orrrrrr
-					 * they should all be wrapped by a higher level element and that should
-					 * be the parent of this view.
-					 */
-					this.$el.nextAll( '.preview' ).eq( 0 ).click( function() {
-						self.togglePreview();
-						return false;
-					} );
-
 					this.categoryData.on( 'reset', this.onCategoryDataReset );
 				},
 				events: {
-					'click .search-button': 'getPreview'
+					'click .search-button': 'getPreview',
+					'click .preview': 'togglePreview'
 				},
 				getPreview: function() {
 					if ( !this.categories.selectedCategory ) {
