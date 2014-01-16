@@ -356,7 +356,7 @@ class ArticleComment {
 
 			$isStaff = (int)in_array('staff', $this->mUser->getEffectiveGroups() );
 
-			$parts = self::explode($title);
+			$parts = self::explode( $title->getDBkey() );
 
 			$buttons = array();
 			$replyButton = '';
@@ -364,7 +364,8 @@ class ArticleComment {
 			//this is for blogs we want to know if commenting on it is enabled
 			// we cannot check it using $title->getBaseText, as this returns main namespace title
 			// the subjectpage for $parts title is something like 'User blog comment:SomeUser/BlogTitle' which is fine
-			$commentingAllowed = ArticleComment::canComment( Title::newFromText( $parts['title'] )->getSubjectPage() );
+			$articleTitle = Title::makeTitle( MWNamespace::getSubject( $this->mNamespace ), $parts['title'] );
+			$commentingAllowed = ArticleComment::canComment( $articleTitle );
 
 			if ( ( count( $parts['partsStripped'] ) == 1 ) && $commentingAllowed && !ArticleCommentInit::isFbConnectionNeeded() ) {
 				$replyButton = '<button type="button" class="article-comm-reply wikia-button secondary actionButton">' . wfMsg('article-comments-reply') . '</button>';
