@@ -10,7 +10,7 @@ class VideoPageToolAssetCategory extends VideoPageToolAsset {
 
 	// required data field -- array( FormFieldName => varName )
 	protected static $dataFields = array(
-		'categoryName'  => 'categoryName',
+		'categoryName' => 'categoryName',
 		'displayTitle' => 'displayTitle',
 	);
 
@@ -60,6 +60,24 @@ class VideoPageToolAssetCategory extends VideoPageToolAsset {
 		$defaultData = array_merge( $data, parent::getDefaultAssetData() );
 
 		return $defaultData;
+	}
+
+	/**
+	 * Format form data
+	 * @param integer $requiredRows
+	 * @param array $formValues
+	 * @param string $errMsg
+	 * @return array $data
+	 */
+	public static function formatFormData( $requiredRows, $formValues, &$errMsg ) {
+		// set displayTitle = categoryName if displayTitle is empty
+		foreach ( $formValues['displayTitle'] as $key => &$value ) {
+			if ( empty( $value ) ) {
+				$value = $formValues['categoryName'][$key];
+			}
+		}
+
+		return parent::formatFormData( $requiredRows, $formValues, $errMsg );
 	}
 
 }

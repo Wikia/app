@@ -383,7 +383,7 @@ class VideoPageToolHelper extends WikiaModel {
 	 * @param string $errMsg
 	 * @return bool
 	 */
-	public function validateDescriptiion( $description, &$errMsg ) {
+	public function validateDescription( $description, &$errMsg ) {
 		if ( strlen( $description ) > 200 ) {
 			$errMsg = wfMessage( 'videopagetool-error-invalid-description' )->plain();
 			return false;
