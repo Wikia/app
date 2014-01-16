@@ -1150,6 +1150,12 @@ $wgWikiaHubsFileRepoDirectory = '/images/c/corp/images';
 $wgEnableAmazonDirectTargetedBuy = true;
 
 /**
+ * @name $wgAmazonDirectTargetedBuyCountries
+ * Enables AmazonDirectTargetedBuy integration in theese countries (given AmazonDirectTargetedBuy is also true)
+ */
+$wgAmazonDirectTargetedBuyCountries = ['US'];
+
+/**
  * @name $wgEnableJavaScriptErrorLogging
  * Enables JavaScript error logging mechanism
  */

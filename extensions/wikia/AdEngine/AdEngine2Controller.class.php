@@ -334,9 +334,9 @@ class AdEngine2Controller extends WikiaController {
 
 		// AdDriver
 		$vars['wgAdDriverCookieLifetime'] = $wgAdDriverCookieLifetime;
-		$highValueCountries = WikiFactory::getVarValueByName('wgHighValueCountries', 177);	// community central
+		$highValueCountries = $wgHighValueCountries;
 		if (empty($highValueCountries)) {
-			$highValueCountries = $wgHighValueCountries;
+			$highValueCountries = WikiFactory::getVarValueByName('wgHighValueCountries', Wikia::COMMUNITY_WIKI_ID);
 		}
 		$vars['wgHighValueCountries'] = $highValueCountries;
 
