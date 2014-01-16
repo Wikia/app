@@ -134,51 +134,6 @@ class WAMPageController extends WikiaController
 		return $indexParams;
 	}
 
-	/**
-	 * Convert date local language into timestamp (workaround for not existing locales)
-	 *
-	 * @param $localDate
-	 * @return int
-	 */
-	protected function getTimestampFromLocalDate($localDate) {
-		$engMonthNames = array_map(
-			'mb_strtolower',
-			Language::factory(self::DEFAULT_LANG_CODE)->getMonthNamesArray()
-		);
-
-		$localMonthNames = array_map(
-			'mb_strtolower',
-			$this->wg->Lang->getMonthNamesArray()
-		);
-
-		$monthMap = array_combine($localMonthNames, $engMonthNames);
-		// remove first element because it's always empty
-		array_shift($monthMap);
-
-		// get month short version
-		$engShortMonthNames = array_map(
-			'mb_strtolower',
-			Language::factory(self::DEFAULT_LANG_CODE)->getMonthAbbreviationsArray()
-		);
-
-		$localShortMonthNames = array_map(
-			'mb_strtolower',
-			$this->wg->Lang->getMonthAbbreviationsArray()
-		);
-
-		$shortMonthMap = array_combine($localShortMonthNames, $engShortMonthNames);
-		// remove first element because it's always empty
-		array_shift($shortMonthMap);
-
-		$monthMap += $shortMonthMap;
-
-		$engDate = strtr(mb_strtolower($localDate), $monthMap);
-
-		$timestamp = strtotime($engDate);
-
-		return $timestamp;
-	}
-
 	protected function getUrlWithAllParams() {
 		$url = '#';
 		$title = $this->wg->Title;
