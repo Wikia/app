@@ -3,6 +3,14 @@ var UserLoginFacebook = {
 	form: false,
 	callbacks: {},
 	initialized: false,
+	origins: {
+		DROPDOWN: 1,
+		PAGE: 2,
+		MODAL: 3
+	},
+	track: false,
+	tracker: window.Wikia.Tracker,
+
 
 	log: function( msg ) {
 		'use strict';
@@ -10,10 +18,16 @@ var UserLoginFacebook = {
 		$().log( msg, 'UserLoginFacebook' );
 	},
 
-	init: function() {
+	init: function( origin ) {
 		'use strict';
 
 		if( !this.initialized ) {
+			this.track = this.tracker.buildTrackingFunction( {
+				category: 'login',
+				label: 'facebook',
+				value: origin || 0
+			} );
+
 			this.initialized = true;
 			this.loginSetup();
 			this.setupTooltips();
@@ -64,7 +78,10 @@ var UserLoginFacebook = {
 					);
 					break;
 
-				case 'unknown':
+				default:
+					this.track( {
+						action: this.tracker.ACTIONS.ERROR
+					} );
 					break;
 			}
 		}
@@ -79,6 +96,11 @@ var UserLoginFacebook = {
 
 		if ( resp.loggedIn ) {
 			// logged in using FB account, reload the page or callback
+
+			this.track( {
+				action: this.tracker.ACTIONS.SUCCESS
+			} );
+
 			if ( loginCallback && typeof loginCallback === 'function' ) {
 				loginCallback();
 			} else {
@@ -133,7 +155,18 @@ var UserLoginFacebook = {
 
 						self.modal = facebookSignupModal; // set reference to modal object
 
-							self.form = new UserLoginFacebookForm( $modal, {
+						self.track( {
+							action: self.tracker.ACTIONS.CONFIRM
+						} );
+
+						// Track Facebook Connect Modal Close
+						facebookSignupModal.bind( 'beforeClose', function () {
+							self.track( {
+								action: self.tracker.ACTIONS.CLOSE
+							} );
+						} );
+
+						self.form = new UserLoginFacebookForm( $modal, {
 							ajaxLogin: true,
 							callback: function( res ) {
 								var location = res.location;
