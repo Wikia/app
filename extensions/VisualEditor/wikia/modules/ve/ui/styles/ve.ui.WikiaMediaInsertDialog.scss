@@ -223,14 +223,13 @@ $width-cart: 101px;
 				background-color: $color-buttons;
 			}
 		}
+		.oo-ui-labeledElement-label {
+			display: none;
+		}
 	}
 
 	.ve-ui-mwMediaResultWidget {
 		@include cursor( 'zoom-in' );
-
-		.oo-ui-labeledElement-label {
-			display: none;
-		}
 	}
 }
 
