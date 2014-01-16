@@ -8,7 +8,7 @@
 /*global AdConfig2, AdEngine2, DartUrl, EvolveHelper, SlotTweaker, ScriptWriter */
 /*global WikiaDartHelper, WikiaFullGptHelper */
 /*global AdProviderEvolve, AdProviderGpt, AdProviderGamePro, AdProviderLater, AdProviderNull */
-/*global AdLogicDartSubdomain, AdLogicHighValueCountry, AdDecoratorPageDimensions, AdLogicPageLevelParams */
+/*global AdLogicDartSubdomain, AdLogicHighValueCountry, AdDecoratorPageDimensions, AdLogicPageLevelParams, adSlots */
 /*global AdLogicPageLevelParamsLegacy */
 /*global require*/
 /*jslint newcap:true */
@@ -77,7 +77,7 @@
 	evolveHelper = EvolveHelper(log, window);
 
 	// Construct Ad Providers
-	adProviderGpt = AdProviderGpt(adTracker, log, window, Geo, slotTweaker, Cache, adLogicHighValueCountry, wikiaFullGpt);
+	adProviderGpt = AdProviderGpt(adTracker, log, window, Geo, slotTweaker, Cache, adLogicHighValueCountry, wikiaFullGpt, adSlots);
 	adProviderEvolve = AdProviderEvolve(adLogicPageLevelParamsLegacy, scriptWriter, adTracker, log, window, document, Krux, evolveHelper, slotTweaker);
 	adProviderGamePro = AdProviderGamePro(adLogicPageLevelParamsLegacy, scriptWriter, adTracker, log, window, slotTweaker);
 	adProviderNull = AdProviderNull(log, slotTweaker);

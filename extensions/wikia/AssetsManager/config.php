@@ -44,7 +44,7 @@ $config['liftium_ads_js'] = array(
 	),
 );
 
-$config['adengine_mobile_js'] = array(
+$config['adengine_modules_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	//'skin' => 'wikiamobile',
 	'assets' => array(
@@ -56,7 +56,7 @@ $config['adengine_mobile_js'] = array(
 	)
 );
 
-$config['adengine_mobile_js'] = array(
+$config['adengine_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	//'skin' => 'wikiamobile',
 	'assets' => array(
@@ -82,7 +82,8 @@ $config['adengine2_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'#group_adengine_modules_js',
-		'#group_adengine_mobile_js',
+		'//extensions/wikia/AdEngine/js/AdSlots.desktop.js',
+		'#group_adengine_js',
 	),
 );
 
@@ -611,8 +612,8 @@ $config['wikiamobile_js_ads'] = array(
 	'skin' => 'wikiamobile',
 	'assets' => array(
 		//libraries
-
-		'#group_adengine_mobile_js',
+		'//extensions/wikia/AdEngine/js/AdSlots.mobile.js',
+		'#group_adengine_js',
 
 		//modules
 		'//extensions/wikia/WikiaMobile/js/ad_slots.js',

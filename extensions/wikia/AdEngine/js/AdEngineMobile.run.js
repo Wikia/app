@@ -24,7 +24,7 @@ require(
 				set: function () {},
 				del: function () {}
 			},
-			adProviderGpt = AdProviderGpt(adTracker, log, window, geo, slotTweaker, cache, adLogicHighValueCountry, wikiaFullGpt),
+			adProviderGpt = AdProviderGpt(adTracker, log, window, geo, slotTweaker, cache, adLogicHighValueCountry, wikiaFullGpt, adSlots),
 			adProviderNull = AdProviderNull(log, slotTweaker),
 			adConfigMobile = AdConfigMobile(
 				// AdProviders:
