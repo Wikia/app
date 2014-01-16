@@ -100,7 +100,6 @@ class ServiceTest extends WikiaBaseTest {
 	 * @group UsingDB
 	 */
 	function testUserStatsService() {
-		global $wgArticle;
 		$user = User::newFromName('QATestsBot');
 
 		$service = new UserStatsService($user->getId());
@@ -111,16 +110,6 @@ class ServiceTest extends WikiaBaseTest {
 		$this->assertInternalType('string', $stats['date']);
 
 		// edits increase - perform fake edit
-		$edits = $stats['edits'];
-
-		$flags = $status = false;
-		UserStatsService::onArticleSaveComplete($wgArticle, $user, false, false, false, false, false, $flags, false, $status, false);
-
-		$stats = $service->getStats();
-
-		$this->assertEquals($edits+1, $stats['edits']);
-
-		// edits increase ("manual")
 		$edits = $stats['edits'];
 
 		$service->increaseEditsCount();

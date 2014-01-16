@@ -362,7 +362,9 @@ class ArticleComment {
 			$replyButton = '';
 
 			//this is for blogs we want to know if commenting on it is enabled
-			$commentingAllowed = ArticleComment::canComment( Title::newFromText( $title->getBaseText() ) );
+			// we cannot check it using $title->getBaseText, as this returns main namespace title
+			// the subjectpage for $parts title is something like 'User blog comment:SomeUser/BlogTitle' which is fine
+			$commentingAllowed = ArticleComment::canComment( Title::newFromText( $parts['title'] )->getSubjectPage() );
 
 			if ( ( count( $parts['partsStripped'] ) == 1 ) && $commentingAllowed && !ArticleCommentInit::isFbConnectionNeeded() ) {
 				$replyButton = '<button type="button" class="article-comm-reply wikia-button secondary actionButton">' . wfMsg('article-comments-reply') . '</button>';
@@ -561,11 +563,14 @@ class ArticleComment {
 	 * @returns boolean
 	 */
 	public static function canComment( Title $title = null ) {
-		global $wgTitle;
+		global $wgTitle, $wgArticleCommentsNamespaces;
 
 		$canComment = true;
 		$title = is_null( $title ) ? $wgTitle : $title;
 
+		if ( !in_array( $title->getNamespace(), $wgArticleCommentsNamespaces ) ) {
+			$canComment = false;
+		}
 		if ( self::isBlog( $title ) ) {
 			$props = BlogArticle::getProps( $title->getArticleID() );
 

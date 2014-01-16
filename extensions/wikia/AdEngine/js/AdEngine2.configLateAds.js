@@ -6,7 +6,7 @@
  */
 
 /*global DartUrl, ScriptWriter, AdLogicPageLevelParams, AdLogicPageLevelParamsLegacy, SlotTweaker, AdTracker*/
-/*global AdProviderNull, AdProviderLiftium2Dom, AdProviderGamePro, AdProviderSevenOneMedia, SevenOneMediaHelper*/
+/*global AdProviderNull, AdProviderLiftium, AdProviderGamePro, AdProviderSevenOneMedia, SevenOneMediaHelper*/
 /*global AdConfig2Late, Wikia, window, document, Geo, Krux, jQuery*/
 /*jslint newcap:true*/
 /*jshint maxparams:false, camelcase:false, maxlen: 150*/
@@ -23,7 +23,7 @@
 		slotTweaker,
 		fakeLiftium = {},
 		adProviderGamePro,
-		adProviderLiftium2Dom,
+		adProviderLiftium,
 		adProviderNull,
 		adProviderSevenOneMedia,
 		sevenOneMediaHelper;
@@ -33,7 +33,7 @@
 		return window.Liftium.callInjectedIframeAd(sizeOrSlot, iframeElement, placement);
 	};
 
-	adTracker = AdTracker(log, tracker);
+	adTracker = AdTracker(log, tracker, window);
 	dartUrl = DartUrl();
 	scriptWriter = ScriptWriter(document, log, window);
 	adLogicPageLevelParams = AdLogicPageLevelParams(log, window, Krux); // omitted a few optional deps
@@ -46,13 +46,13 @@
 	sevenOneMediaHelper = SevenOneMediaHelper(adLogicPageLevelParams, scriptWriter, log, window, $, tracker);
 	adProviderSevenOneMedia = AdProviderSevenOneMedia(log, window, adTracker, $, sevenOneMediaHelper);
 	adProviderGamePro = AdProviderGamePro(adLogicPageLevelParamsLegacy, scriptWriter, adTracker, log, window, slotTweaker);
-	adProviderLiftium2Dom = AdProviderLiftium2Dom(log, document, slotTweaker, fakeLiftium, scriptWriter, window);
+	adProviderLiftium = AdProviderLiftium(log, document, slotTweaker, fakeLiftium, scriptWriter, window);
 
 	adConfig = AdConfig2Late(
 		log,
 		window,
 		adProviderGamePro,
-		adProviderLiftium2Dom,
+		adProviderLiftium,
 		adProviderNull,
 		adProviderSevenOneMedia
 	);

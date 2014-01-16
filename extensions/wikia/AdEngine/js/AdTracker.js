@@ -7,31 +7,35 @@ var AdTracker = function (log, tracker) {
 	var logGroup = 'AdTracker',
 		maxTrackedTime = 5,
 		trackedSize = {
-			CORP_TOP_LEADERBOARD: '728x90',
-			CORP_TOP_RIGHT_BOXAD: '300x250',
-			EXIT_STITIAL_BOXAD_1: '300x250',
-			HOME_TOP_LEADERBOARD: '728x90',
-			HOME_TOP_RIGHT_BOXAD: '300x250',
-			HUB_TOP_LEADERBOARD:  '728x90',
-			INCONTENT_BOXAD_1:    '300x250',
-			INVISIBLE_1:          '0x0',
-			INVISIBLE_2:          '0x0',
-			INVISIBLE_SKIN:       '1x1',
-			LEFT_SKYSCRAPER_2:    '160x600',
-			LEFT_SKYSCRAPER_3:    '160x600',
-			MODAL_INTERSTITIAL:   '300x250',
-			MODAL_INTERSTITIAL_1: '300x250',
-			MODAL_INTERSTITIAL_2: '300x250',
-			MODAL_INTERSTITIAL_3: '300x250',
-			MODAL_INTERSTITIAL_4: '300x250',
-			MODAL_RECTANGLE:      '300x100',
-			PREFOOTER_LEFT_BOXAD: '300x250',
-			PREFOOTER_RIGHT_BOXAD:'300x250',
-			SEVENONEMEDIA_FLUSH:  '0x0',
-			TOP_BUTTON_WIDE:      '292x90',
-			TOP_LEADERBOARD:      '728x90',
-			TOP_RIGHT_BOXAD:      '300x250',
-			WIKIA_BAR_BOXAD_1:    '320x50'
+			CORP_TOP_LEADERBOARD:  '728x90',
+			CORP_TOP_RIGHT_BOXAD:  '300x250',
+			EXIT_STITIAL_BOXAD_1:  '300x250',
+			HOME_TOP_LEADERBOARD:  '728x90',
+			HOME_TOP_RIGHT_BOXAD:  '300x250',
+			HUB_TOP_LEADERBOARD:   '728x90',
+			INCONTENT_BOXAD_1:     '300x250',
+			INVISIBLE_1:           '0x0',
+			INVISIBLE_2:           '0x0',
+			INVISIBLE_SKIN:        '1x1',
+			LEFT_SKYSCRAPER_2:     '160x600',
+			LEFT_SKYSCRAPER_3:     '160x600',
+			MODAL_INTERSTITIAL:    '300x250',
+			MODAL_INTERSTITIAL_1:  '300x250',
+			MODAL_INTERSTITIAL_2:  '300x250',
+			MODAL_INTERSTITIAL_3:  '300x250',
+			MODAL_INTERSTITIAL_4:  '300x250',
+			MODAL_RECTANGLE:       '300x100',
+			PREFOOTER_LEFT_BOXAD:  '300x250',
+			PREFOOTER_RIGHT_BOXAD: '300x250',
+			SEVENONEMEDIA_FLUSH:   '0x0',
+			TOP_BUTTON_WIDE:       '292x90',
+			TOP_LEADERBOARD:       '728x90',
+			TOP_RIGHT_BOXAD:       '300x250',
+			WIKIA_BAR_BOXAD_1:     '320x50'
+		},
+		stats = {
+			allEvents: 0,
+			interestingEvents: 0
 		};
 
 	function formatTrackTime(t) {
@@ -65,31 +69,59 @@ var AdTracker = function (log, tracker) {
 	function trackInit(provider, slotname, slotsize) {
 		log(['trackInit', slotname, slotsize], 'debug', logGroup);
 
-		tracker.track({
-			eventName: 'liftium.slot3',
-			ga_category: 'slot3/' + slotsize.split(',')[0],
-			ga_action: slotname,
-			ga_label: provider,
-			trackingMethod: 'ad'
-		});
+		log([
+			'event: ' + 'register',
+			'provider: ' + provider,
+			'slotname: ' + slotname,
+			'value: 0'
+		], 'debug', logGroup);
+
+		if (!window.wgAdDriverUseNewTracking) {
+			tracker.track({
+				eventName: 'liftium.slot3',
+				ga_category: 'slot3/' + slotsize.split(',')[0],
+				ga_action: slotname,
+				ga_label: provider,
+				trackingMethod: 'ad'
+			});
+		}
+
+		stats.allEvents += 1;
+		stats.interestingEvents += 1;
 	}
 
 	function trackEnd(provider, category, slotname, hopTime, reason) {
-		log(['trackEnd', category, slotname, hopTime], 'debug', logGroup);
-
-		var labelPrefix = '';
+		var timeBucket = formatTrackTime(hopTime),
+			labelPrefix = '',
+			toLog = [
+				'event: ' + category,
+				'provider: ' + provider,
+				'slotname: ' + slotname,
+				'timeBucket: ' + timeBucket,
+				'extraParams: ', {}
+			];
 
 		if (reason) {
 			labelPrefix = reason + '/';
+			toLog.reason = reason;
 		}
 
-		tracker.track({
-			eventName: 'liftium.hop3',
-			ga_category: category + '3/' + provider,
-			ga_action: 'slot ' + slotname,
-			ga_label: labelPrefix + formatTrackTime(hopTime),
-			trackingMethod: 'ad'
-		});
+		toLog.push('value: 0');
+		toLog.push('[NOT TRACKED hopTime: ' + (hopTime / 1000) + ']');
+		log(toLog, 'debug', logGroup);
+
+		if (!window.wgAdDriverUseNewTracking) {
+			tracker.track({
+				eventName: 'liftium.hop3',
+				ga_category: category + '3/' + provider,
+				ga_action: 'slot ' + slotname,
+				ga_label: labelPrefix + formatTrackTime(hopTime),
+				trackingMethod: 'ad'
+			});
+		}
+
+		stats.allEvents += 1;
+		stats.interestingEvents += 1;
 	}
 
 	function trackSlot(provider, slotname) {
@@ -119,7 +151,12 @@ var AdTracker = function (log, tracker) {
 		};
 	}
 
+	function getStats() {
+		return stats;
+	}
+
 	return {
-		trackSlot: trackSlot
+		trackSlot: trackSlot,
+		getStats: getStats
 	};
 };

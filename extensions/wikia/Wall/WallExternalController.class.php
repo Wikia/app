@@ -489,7 +489,9 @@ class WallExternalController extends WikiaController {
 		$helper = new WallHelper();
 
 		$msgid = $this->request->getVal('msgid');
-		$newtitle = trim($this->request->getVal('newtitle'));
+
+		// XSS vulnerable (MAIN-1412)
+		$newtitle = strip_tags( trim($this->request->getVal('newtitle')) );
 
 		$newbody = $this->getConvertedContent($this->request->getVal('newbody'));
 

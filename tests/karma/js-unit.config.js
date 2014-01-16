@@ -60,7 +60,7 @@ module.exports = function(config) {
 			//UI components
 			'resources/wikia/ui_components/**/*.js',
 
-			//Advertisment
+			//Advertisement
 			'extensions/wikia/AdEngine/js/AdConfig2.js',
 			'extensions/wikia/AdEngine/js/AdConfig2Late.js',
 			'extensions/wikia/AdEngine/js/AdEngine2.js',
@@ -69,11 +69,12 @@ module.exports = function(config) {
 			'extensions/wikia/AdEngine/js/AdLogicPageLevelParams.js',
 			'extensions/wikia/AdEngine/js/AdLogicPageLevelParamsLegacy.js',
 			'extensions/wikia/AdEngine/js/AdLogicPageDimensions.js',
+			'extensions/wikia/AdEngine/js/AdDecoratorPageDimensions.js',
 			'extensions/wikia/AdEngine/js/AdProviderEvolve.js',
 			'extensions/wikia/AdEngine/js/AdProviderGamePro.js',
 			'extensions/wikia/AdEngine/js/AdProviderGpt.js',
 			'extensions/wikia/AdEngine/js/AdProviderLater.js',
-			'extensions/wikia/AdEngine/js/AdProviderLiftium2Dom.js',
+			'extensions/wikia/AdEngine/js/AdProviderLiftium.js',
 			'extensions/wikia/AdEngine/js/AdProviderNull.js',
 			'extensions/wikia/AdEngine/js/DartUrl.js',
 			'extensions/wikia/AdEngine/js/EvolveHelper.js',
@@ -93,10 +94,6 @@ module.exports = function(config) {
 			// Video
 			'extensions/wikia/VideoPageTool/js/views/jquery.switcher.js',
 			'extensions/wikia/VideoPageTool/js/spec/*.spec.js',
-
-			//Suggestions
-			'extensions/wikia/Suggestions/js/SuggestionsMatcher.js',
-			'extensions/wikia/Suggestions/js/spec/*.spec.js',
 
 			//Search
 			'extensions/wikia/Search/js/SearchAbTest.js',

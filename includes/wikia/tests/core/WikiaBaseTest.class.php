@@ -202,6 +202,7 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
+	 * @throws Exception
 	 * @return WikiaMockProxy
 	 */
 	private function getMockProxy() {
@@ -258,12 +259,9 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Create mocked object of a given class with list of methods and values they return provided
-	 *
-	 * @param string $className name of the class to be mocked
-	 * @param array $methods list of methods and values they should return
-	 * @param string $staticConstructor name of the "static" class constructor (e.g. Title::newFromText) that will return mocked object
-	 * @return PHPUnit_Framework_MockObject_MockObject mocked object
+	 * @param $className
+	 * @param array $methods
+	 * @return PHPUnit_Framework_MockObject_MockObject
 	 */
 	protected function getMockWithMethods($className, Array $methods = array()) {
 		$mock = $this->getMock($className, array_keys($methods));
@@ -277,6 +275,14 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 		return $mock;
 	}
 
+	/**
+	 * Create mocked object of a given class with list of methods and values they return provided
+	 *
+	 * @param string $className name of the class to be mocked
+	 * @param array $methods list of methods and values they should return
+	 * @param string $staticConstructor name of the "static" class constructor (e.g. Title::newFromText) that will return mocked object
+	 * @return PHPUnit_Framework_MockObject_MockObject mocked object
+	 */
 	protected function mockClassWithMethods($className, Array $methods = array(), $staticConstructor = '') {
 		$mock = $this->getMockWithMethods($className,$methods);
 
@@ -326,6 +332,7 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	 * @param $returnValue mixed
 	 * @param $callsNum int
 	 * @param $inputParams array
+	 * @throws Exception
 	 */
 	protected function mockGlobalFunction( $functionName, $returnValue, $callsNum = null, $inputParams = null ) {
 		// sanity check to prevent deprecated way of using this function
@@ -354,8 +361,9 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	/**
 	 * Mock given message
 	 *
-	 * @param $messageName string
+	 * @param $messageKey
 	 * @param $messageContent string
+	 * @return PHPUnit_Framework_MockObject_MockObject
 	 */
 	protected function mockMessage($messageKey, $messageContent) {
 		$mock = $this->getMessageMock( $messageKey );

@@ -315,11 +315,12 @@ $messages['de'] = array(
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
  * @author Gorizon
+ * @author Mirzali
  */
 $messages['diq'] = array(
 	'app-loading' => 'Bar beno...',
 	'app-tab-search' => 'Cı geyre',
-	'app-tab-about' => 'Heqdé cı',
+	'app-tab-about' => 'Heqa cı de',
 	'app-tab-browse' => 'A ra Z',
 	'app-async-error-title' => 'Hoooop',
 	'app-nonetwork-dialog-close-button' => 'TEMAM',
@@ -368,7 +369,7 @@ $messages['es'] = array(
 	'about-tips-0' => 'Comience escribiendo el nombre de un artista para ofrecerle sugerencias.',
 	'about-tips-1' => 'Las imágenes al comienzo de la pantalla son el Top 9 de canciones en iTunes en estos momentos.',
 	'about-heading-licensing' => 'Copyrights',
-	'about-licensing-0' => 'Esta aplicación es 100% legal. A través de Gracenote se pagan las correspondientes regalías a los titulares de los derechos de las canciones - al igual que en la web de LyricWiki.',
+	'about-licensing-0' => 'Esta aplicación es 100 % legal. A través de Gracenote se pagan las correspondientes regalías a los titulares de los derechos de las canciones, al igual que en el sitio web de LyricWiki.',
 	'about-heading-feedback' => 'Sugerencias',
 	'about-feedback-0' => '¿Quieres darnos tu opinión sobre la aplicación? Envíanos un correo electrónico a: %s',
 	'about-heading-rate' => '¡Por favor, valore esta aplicación!',
@@ -377,6 +378,21 @@ $messages['es'] = array(
 	'gracenote-takedown' => '¡Qué mala suerte! En este momento no tenemos permiso para mostrar la letra completa de esta canción (esto sucede en menos del 1% de nuestras canciones). Por favor, inténtelo de nuevo la próxima semana.',
 	'lyrics-artist-byline' => 'por %s',
 	'ringtone-matcher-by-song' => 'Enviar tono %s a su teléfono.',
+);
+
+/** Persian (فارسی)
+ * @author Reza1615
+ */
+$messages['fa'] = array(
+	'app-loading' => 'در حال بارگذاری...',
+	'app-tab-search' => 'جستجو',
+	'app-tab-about' => 'درباره',
+	'app-nonetwork-dialog-close-button' => 'تأیید',
+	'search-go' => 'برو!',
+	'login-username-hint' => 'نام کاربری',
+	'login-password-hint' => 'گذرواژه',
+	'login-submit-button' => 'ورود',
+	'about-heading-feedback' => 'بازخورد',
 );
 
 /** Finnish (suomi)
@@ -741,6 +757,22 @@ $messages['lb'] = array(
 	'search-go' => 'Lass!',
 	'login-username-hint' => 'Benotzernumm',
 	'login-password-hint' => 'Passwuert',
+);
+
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'app-loading' => 'د حالت سوار كرد',
+	'app-tab-search' => 'پی جوری',
+	'app-tab-about' => 'دباره',
+	'app-tab-browse' => 'آ تا ی',
+	'app-nonetwork-dialog-close-button' => 'خوئه',
+	'search-go' => 'رؤ!',
+	'login-username-hint' => 'نوم كاروری',
+	'login-password-hint' => 'پاسورد',
+	'login-submit-button' => 'اومائن د سیستم',
+	'about-heading-tips' => 'د حالت گشتن',
 );
 
 /** Macedonian (македонски)
@@ -1331,9 +1363,34 @@ $messages['uk'] = array(
  * @author Baonguyen21022003
  */
 $messages['vi'] = array(
+	'app-loading' => 'Đang tải…',
+	'app-tab-search' => 'Tìm kiếm',
+	'app-tab-about' => 'Giới thiệu',
+	'app-tab-browse' => 'A..Z',
+	'app-tab-sotd' => 'SotD',
+	'app-async-error-title' => 'Rất tiếc',
+	'app-async-error-message' => 'Có vấn đề với kết nối mạng. Xin vui lòng thử lại sau.',
+	'app-nonetwork-dialog-title' => 'Mạng không sẵn dùng',
+	'app-nonetwork-dialog-message' => 'Không có kết nối mạng được phát hiện.',
+	'app-nonetwork-dialog-close-button' => 'OK',
+	'search-go' => 'Xem!',
+	'search-hint-text' => "Ví dụ: 'John Lennon:Imagine'",
+	'search-no-match-found' => 'Không tìm thấy kết quả.',
+	'search-no-match-found-query' => 'Tìm kiếm: %s',
+	'search-results-title' => 'Kết quả tìm kiếm cho: %s',
+	'login-label' => 'Đăng nhập vào LyricWiki',
 	'login-username-hint' => 'Tên người dùng',
 	'login-password-hint' => 'Mật khẩu',
 	'login-submit-button' => 'Đăng nhập',
+	'about-heading' => 'LyricWiki',
+	'about-credits' => 'bởi %s',
+	'about-heading-tips' => 'Đang tìm…',
+	'about-tips-0' => 'Bắt đầu nhập một nghệ sĩ tên đến tự động-hoàn thành khi bạn nhập.',
+	'about-tips-1' => 'Những hình ảnh trên màn hình chính là bài hát nằm ở Top 9 trên iTunes ngay bây giờ.',
+	'about-heading-licensing' => 'Bản quyền',
+	'about-licensing-0' => 'Ứng dụng này là 100% pháp lý. Bản quyền được trả tiền cho bài hát quyền  sở hữu thông qua Gracenote - giống như trên các trang web LyricWiki.',
+	'about-heading-feedback' => 'Phản hồi',
+	'about-feedback-0' => 'Bạn muốn cho chúng tôi một cái gì đó về các ứng dụng? Gửi email cho tôi:%s',
 	'about-heading-rate' => 'Xin vui lòng đánh giá ứng dụng!',
 	'about-rate-0-android' => 'Nếu bạn thích ứng dụng này, xin vui lòng đánh giá 5 sao trên Android Market!',
 	'about-rate-0-ios' => 'Nếu bạn thích ứng dụng này, xin vui lòng đánh giá 5 sao trong App Store!',

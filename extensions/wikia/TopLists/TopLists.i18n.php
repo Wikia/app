@@ -378,6 +378,7 @@ $messages['ca'] = array(
 $messages['ce'] = array(
 	'toplists-editor-related-article-placeholder' => 'ДӀаязъе йолуш йолу агӀона цӀе',
 	'toplists-update-button' => 'МогӀам Ӏалашбар',
+	'toplists-days' => '$1 {{PLURAL:$1|де}}',
 );
 
 /** Czech (čeština)
@@ -686,14 +687,19 @@ Puedes <a href="$4">cancelar</a>  tu subscripción de los cambios a la lista.',
 
 /** Persian (فارسی)
  * @author Mjbmr
+ * @author Reza1615
  */
 $messages['fa'] = array(
 	'toplists-editor-title-label' => 'نام فهرست',
+	'toplists-editor-image-browser-tooltip' => 'افزودن یک تصویر',
 	'toplists-editor-remove-item-tooltip' => 'حذف مورد',
 	'toplists-create-button' => 'ایجاد فهرست',
 	'toplists-update-button' => 'ذخیره فهرست',
 	'toplists-cancel-button' => 'لغو',
 	'toplists-image-browser-upload-btn' => 'انتخاب',
+	'toplists-list-vote-up' => 'رای موافق',
+	'toplists-createpage-dialog-label' => '۱۰ فهرست برتر',
+	'toplists-seconds' => '$1 {{PLURAL:$1|ثانیه|ثانیه}}',
 );
 
 /** Finnish (suomi)
@@ -930,7 +936,7 @@ $messages['gl'] = array(
 	'toplits-image-browser-clear-picture' => 'Borrar a imaxe',
 	'toplits-image-browser-selected-picture' => 'Selección actual: $1',
 	'toplists-image-browser-upload-btn' => 'Elixir',
-	'toplists-image-browser-upload-label' => 'Subir a súa',
+	'toplists-image-browser-upload-label' => 'Subir a túa',
 	'toplists-list-creation-summary' => 'Creando unha lista, $1',
 	'toplists-list-update-summary' => 'Actualizando unha lista, $1',
 	'toplists-item-creation-summary' => 'Creando un elemento da lista',

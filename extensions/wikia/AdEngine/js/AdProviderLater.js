@@ -1,12 +1,15 @@
-var AdProviderLater = function(log, queueForLateAds) {
+/*exported AdProviderLater*/
+/*global setTimeout*/
+var AdProviderLater = function (log, queueForLateAds) {
 	'use strict';
 
-	var fillInSlot = function(slot) {
-		log('fillInSlot', 5, 'AdProviderLater');
-		log(slot, 5, 'AdProviderLater');
-
-		queueForLateAds.push(slot);
-	};
+	function fillInSlot(slotname, success) {
+		log(['fillInSlot', slotname, success], 5, 'AdProviderLater');
+		setTimeout(function () {
+			queueForLateAds.push([slotname]);
+		}, 0);
+		success();
+	}
 
 	return {
 		name: 'Later',

@@ -2,7 +2,7 @@
 	<div id="errorBox">
 		<div id="wpError"></div>
 	</div>
-	
+
 	<ul class="tabs">
 		<?
 		foreach ($tabs as $tab) {
@@ -13,7 +13,7 @@
 				</li>
 		<? } ?>
 	</ul>
-	
+
 	<ul class="tab-content">
 		<li class="avatar">
 			<form id="usersAvatar" class="WikiaForm" name="usersAvatar" method="post" enctype="multipart/form-data"
@@ -38,7 +38,7 @@
 							<?= $fbAvatarConnectButton; ?>
 						</div>
 					<? endif; ?>
-					
+
 					<? if( !empty($defaultAvatars) ): ?>
 						<div class ="input-group">
 							<label><?= wfMsg('user-identity-box-avatar-choose-avatar'); ?></label>
@@ -53,16 +53,16 @@
 
 			</form>
 		</li>
-		
+
 		<li class="about">
 			<form id="userData" class="WikiaForm" name="userData">
 				<div class="input-group">
 					<label for="name" ><?= wfMsg('user-identity-box-about-name'); ?></label>
-					<input type="text" name="name" value="<?= strip_tags($user['realName']); ?>" maxlength="<?= $charLimits['name']; ?>" />
+					<input type="text" name="name" value="<?= $user['realName']; ?>" maxlength="<?= $charLimits['name']; ?>" />
 				</div>
 				<div class="input-group">
 					<label for="location"><?= wfMsg('user-identity-box-about-location'); ?></label>
-					<input type="text" name="location" value="<?= strip_tags($user['location']); ?>" maxlength="<?= $charLimits['location']; ?>" />
+					<input type="text" name="location" value="<?= $user['location']; ?>" maxlength="<?= $charLimits['location']; ?>" />
 				</div>
 				<div class="input-group">
 					<label for="month"><?= wfMsg('user-identity-box-about-birthday'); ?></label>
@@ -83,17 +83,17 @@
 							for($i = 1; $i <= $days; $i++) {
 								echo Xml::option( $i, $i, $selectedDay === $i );
 							}
-						} 
+						}
 						?>
 					</select>
 				</div>
 				<div class="input-group">
 					<label for="occupation"><?= wfMsg('user-identity-box-about-occupation'); ?></label>
-					<input type="text" name="occupation" value="<?= strip_tags($user['occupation']); ?>" maxlength="<?= $charLimits['occupation']; ?>" />
+					<input type="text" name="occupation" value="<?= $user['occupation']; ?>" maxlength="<?= $charLimits['occupation']; ?>" />
 				</div>
 				<div class="input-group">
 					<label for="gender"><?= wfMsg('user-identity-box-about-gender'); ?></label>
-					<input type="text" name="gender" value="<?= strip_tags($user['gender']); ?>" maxlength="<?= $charLimits['gender']; ?>" />
+					<input type="text" name="gender" value="<?= $user['gender']; ?>" maxlength="<?= $charLimits['gender']; ?>" />
 				</div>
 				<? if( $isUserPageOwner ): ?>
 					<div class="input-group" id="facebookConnect"  <? if( !empty($user['fbPage']) ): ?>style="display: none;"<? endif; ?> >
@@ -109,12 +109,12 @@
 				<? endif; ?>
 				<div class="input-group">
 					<label for="website"><?= wfMsg('user-identity-box-about-website'); ?></label>
-					<input type="text" name="website" value="<?= strip_tags($user['website']); ?>">
+					<input type="text" name="website" value="<?= $user['website']; ?>">
 				</div>
 				<div class="input-group">
 					<label for="twitter"><?= wfMsg('user-identity-box-about-tweet'); ?></label>
 					<span class="tweet-at">@</span>
-					<input type="text" name="twitter" value="<?= strip_tags($user['twitter']); ?>">
+					<input type="text" name="twitter" value="<?= $user['twitter']; ?>">
 				</div>
 				<div class="input-group">
 					<label><?= wfMsg('user-identity-box-about-fav-wikis'); ?></label>
