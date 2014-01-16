@@ -54,7 +54,7 @@
 				if ( self.options.onChange ) {
 					self.options.onChange( data.box, data.elem );
 				}
-			});
+			} );
 		},
 		handleUpClick: function( e ) {
 			var $box,
@@ -86,8 +86,8 @@
 		updateDisabled: function() {
 			this.setBoxes();
 
-			this.upArrows.attr('disabled', false);
-			this.downArrows.attr('disabled', false);
+			this.upArrows.attr( 'disabled', false );
+			this.downArrows.attr( 'disabled', false );
 
 			this.$boxes.eq( 0 ).find( this.options.up ).attr( 'disabled', true );
 			this.$boxes.eq( this.count - 1 ).find( this.options.down ).attr( 'disabled', true );
@@ -102,8 +102,8 @@
 	$.fn.switcher = function( options ) {
 		return this.each( function() {
 			var $this = $( this );
-			$this.data('switcher', new Switcher( $this, options ));
-		});
+			$this.data( 'switcher', new Switcher( $this, options ) );
+		} );
 	};
 
-})( jQuery );
+} )( jQuery );
