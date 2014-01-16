@@ -56,6 +56,8 @@ ve.init.mw.WikiaViewPageTarget.prototype.hidePageContent = function () {
 	$( '#mw-content-text, .WikiaArticleCategories' )
 		.addClass( 've-init-mw-viewPageTarget-content' )
 		.hide();
+
+	$( 'body' ).addClass( 've' );
 };
 
 ve.init.mw.WikiaViewPageTarget.prototype.mutePageContent = function () {
@@ -98,6 +100,7 @@ ve.init.mw.WikiaViewPageTarget.prototype.showPageContent = function () {
 		.removeClass( 've-init-mw-viewPageTarget-content' )
 		.show()
 		.fadeTo( 0, 1 );
+	$( 'body' ).removeClass( 've' );
 };
 
 ve.init.mw.WikiaViewPageTarget.prototype.updateToolbarSaveButtonState = function () {
