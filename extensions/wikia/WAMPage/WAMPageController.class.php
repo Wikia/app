@@ -61,7 +61,6 @@ class WAMPageController extends WikiaController
 		$this->selectedVerticalId = $this->getVal('verticalId', null);
 		$this->selectedLangCode = $this->getVal('langCode', null);
 		$this->selectedDate = $this->getVal('date', null);
-		$this->selectedHumanReadableDate = $this->getVal('humanreadabledate', null);
 
 		$this->selectedVerticalId = ($this->selectedVerticalId !== '') ? $this->selectedVerticalId : null;
 		$this->selectedLangCode = ($this->selectedLangCode !== '') ? $this->selectedLangCode : null;
