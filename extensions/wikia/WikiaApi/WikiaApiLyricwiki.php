@@ -57,7 +57,7 @@ class WikiaApiLyricwiki extends ApiBase {
 
 		extract( $this->extractRequestParams() );
 
-		// Detect the API even if func is not defined (since that wasn't a documented requirement).  - SWC (note: did I actually mean "even if action=lyrics isn't defined"?)
+		// Detect the API function even if func is not defined (since that wasn't a documented requirement).  - SWC
 		$func = (($func == "")?"getSong":$func);
 
 		// Phase 'title' out (deprecated).  this is not the same as the soap.  I was coding too fast whilst in an IRC discussion and someone said artist/title just for the sake of argument and I didn't check against the SOAP :[ *embarassing*
