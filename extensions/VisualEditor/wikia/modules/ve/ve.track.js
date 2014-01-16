@@ -10,6 +10,20 @@ require( ['wikia.tracker'], function ( tracker ) {
 		// assigned to a function which will map the data associated with a topic to a format
 		// understood by Wikia.Tracker.
 		mwTopics = {
+			'behavior.lastTransactionTillSaveDialogOpen': function ( data ) {
+				return {
+					'action': actions.OPEN,
+					'label': 'dialog-save',
+					'value': data.duration
+				};
+			},
+			'behavior.saveDialogClose': function ( data ) {
+				return {
+					'action': actions.CLOSE,
+					'label': 'dialog-save',
+					'value': data.duration
+				};
+			},
 			'command.execute': function ( data ) {
 				return {
 					'action': actions.KEYPRESS,
@@ -40,10 +54,35 @@ require( ['wikia.tracker'], function ( tracker ) {
 					'value': data.duration
 				};
 			},
+			'performance.user.reviewComplete': function ( data ) {
+				return {
+					'action': actions.SUCCESS,
+					'label': 'dialog-save-review-changes',
+					'value': data.duration
+				};
+			},
+			'performance.user.reviewError': function ( data ) {
+				return {
+					'action': actions.ERROR,
+					'label': 'dialog-save-review-changes',
+					'value': data.duration
+				};
+			},
 			'performance.user.saveComplete': function ( data ) {
 				return {
 					'action': actions.SUCCESS,
 					'label': 'publish',
+					'value': data.duration
+				};
+			},
+			'performance.user.saveError': function ( data, topics ) {
+				if ( !data.type ) {
+					data.type = topics[ topics.length - 1 ];
+				}
+				return {
+					'action': actions.ERROR,
+					'label': 'publish-' + data.type,
+					'retries': data.retries,
 					'value': data.duration
 				};
 			},
@@ -63,6 +102,14 @@ require( ['wikia.tracker'], function ( tracker ) {
 			'wikiaMediaInsert': 'media-insert',
 			'wikiaSourceMode': 'source'
 		},
+		// A lot of the events sent in the 'wikia' topic are tracked generically (for example,
+		// all dialog 'open' and 'close' events). Sometimes this isn't desired because we want
+		// to track them manually and provide custom data. Adding those events to this array
+		// will allow this. Events should be listed alphabetically in the format: "label/action"
+		wikiaTopicBlacklist = [
+			'dialog-save/close',
+			'dialog-save/open'
+		],
 		rUppercase = /[A-Z]/g;
 
 	/**
@@ -118,6 +165,14 @@ require( ['wikia.tracker'], function ( tracker ) {
 
 		// Normalize tracking labels
 		data.label = data.label.replace( rUppercase, upperToHyphenLower );
+
+		// Don't track blacklisted Wikia tracking calls.
+		if (
+			topic === 'wikia' &&
+			$.inArray( [ data.label, data.action ].join( '/' ), wikiaTopicBlacklist ) > -1
+		) {
+			return;
+		}
 
 		// Send off to Wikia.Tracker
 		tracker.track( ve.extendObject( params, data ) );
