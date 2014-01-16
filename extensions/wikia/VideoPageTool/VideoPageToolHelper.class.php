@@ -393,18 +393,18 @@ class VideoPageToolHelper extends WikiaModel {
 	}
 
 	/**
-	 * Validate category
+	 * Validate category (called from validateFormField())
 	 * @param string $categoryName
 	 * @param string $errMsg
 	 * @return boolean
 	 */
 	public function validateCategoryName( $categoryName, &$errMsg ) {
 		$title = Title::newFromText( $categoryName, NS_CATEGORY );
-		if ( $title instanceof Title ) {
+		if ( $title instanceof Title && count( $this->getVideosByCategory( $title ) ) > 0 ) {
 			return true;
 		}
 
-		$errMsg = wfMessage( 'videopagetool-unknown-category' )->plain();
+		$errMsg = wfMessage( 'videopagetool-error-empty-category' )->plain();
 
 		return false;
 	}

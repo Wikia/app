@@ -500,7 +500,7 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 		$title = Title::newFromText( $categoryName, NS_CATEGORY );
 		if ( empty( $title ) ) {
 			$this->result = 'error';
-			$this->msg = wfMessage( 'videopagetool-unknown-category' )->plain();
+			$this->msg = wfMessage( 'videopagetool-error-unknown-category' )->plain();
 			return;
 		}
 
