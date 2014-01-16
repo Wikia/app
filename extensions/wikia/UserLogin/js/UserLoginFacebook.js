@@ -168,6 +168,13 @@ var UserLoginFacebook = {
 								$.proxy( signupAjaxForm.validateInput, signupAjaxForm ) );
 
 						facebookSignupModal.show();
+
+						// TODO: temporary fix - force repaint
+						// find a way to fix forms on modal rendering issues on chrome
+						// o wait till chrome fixes its rendering bug -
+						// when changing position relative to fixed on <body>
+						$modal.hide().height();
+						$modal.show();
 					} );
 				} );
 			} );
