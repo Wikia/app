@@ -50,13 +50,16 @@
 	// Use PostScribe for ScriptWriter implementation when SevenOne Media ads are enabled
 	window.wgUsePostScribe = window.wgUsePostScribe || window.wgAdDriverUseSevenOneMedia;
 
+	// Enable the new tracking for half of the pages if wgAdDriverUseNewTracking is true
+	window.wgAdDriverUseNewTracking = window.wgAdDriverUseNewTracking && (Math.random() < 0.5);
+
 	slotTracker = SlotTracker(log, tracker);
 
 	// Construct Ad Engine
 	adEngine = AdEngine2(log, LazyQueue, slotTracker);
 
 	// Construct various helpers
-	adTracker = AdTracker(log, tracker);
+	adTracker = AdTracker(log, tracker, window);
 	slotTweaker = SlotTweaker(log, document, window);
 	dartUrl = DartUrl();
 	adLogicDartSubdomain = AdLogicDartSubdomain(Geo);
