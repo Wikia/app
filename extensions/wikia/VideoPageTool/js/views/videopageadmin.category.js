@@ -28,9 +28,9 @@ define( 'views.videopageadmin.category', [
 	return CategoryPageView;
 } );
 
-$(function () {
+$( function () {
 		'use strict';
-		require([ 'views.videopageadmin.category' ], function( CategoryPageView ) {
+		require( [ 'views.videopageadmin.category' ], function( CategoryPageView ) {
 				new CategoryPageView( {
 						el: '#LatestVideos'
 				} );

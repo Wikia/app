@@ -26,7 +26,7 @@ define( 'views.videopageadmin.edit', [
 			$( '.form-box' ).on( 'click', '.media-uploader-btn', function( evt ) {
 					evt.preventDefault();
 					return new ThumbnailUploader( {
-							el: $( this ).closest('.form-box')
+							el: $( this ).closest( '.form-box' )
 					} );
 			} );
 		},
@@ -46,7 +46,7 @@ define( 'views.videopageadmin.edit', [
 						var $altThumbKey,
 								req;
 
-						$altThumbKey = $box.find('.alt-thumb').val();
+						$altThumbKey = $box.find( '.alt-thumb' ).val();
 						req = {};
 
 						if ( $altThumbKey.length ) {
@@ -67,7 +67,7 @@ define( 'views.videopageadmin.edit', [
 									var video = json.video;
 									$thumb.html();
 
-									// update input value and remove any error messages self might be there.
+									// update input value and remove any error messages that might be there.
 									$videoKeyInput
 										.val( video.videoKey )
 										.removeClass( 'error' )
@@ -180,7 +180,7 @@ define( 'views.videopageadmin.edit', [
 		/*
 		 * This reset is very specific to this form since it covers reverting titles and thumbnails
 		 * @TODO: we may want to just create a default empty version of the form and hide it if it's not needed.
-		 * self way we could just replace all the HTML to its default state without worrying about clearing every form
+		 * that way we could just replace all the HTML to its default state without worrying about clearing every form
 		 * field.
 		 */
 		clearFeaturedVideoForm: function() {
@@ -203,7 +203,7 @@ define( 'views.videopageadmin.edit', [
 
 			// reset custom thumb name
 			this.$form.find( '.alt-thumb-name' )
-				.text( $.msg('videopagetool-image-title-default-text') )
+				.text( $.msg( 'videopagetool-image-title-default-text' ) )
 				.addClass( 'alternative' );
 
 			// Also clear all error messages for better UX

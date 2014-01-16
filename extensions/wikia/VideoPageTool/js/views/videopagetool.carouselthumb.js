@@ -22,4 +22,4 @@ define( 'views.videopagetool.carouselthumb', [
 	} );
 
 	return CarouselThumbView;
-});
+} );

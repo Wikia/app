@@ -1,7 +1,7 @@
 define( 'views.videopagetool.owlcarousel', [
 ], function() {
 	'use strict';
-	var OwlCarouselView = Backbone.View.extend({
+	var OwlCarouselView = Backbone.View.extend( {
 		tagName: 'div',
 		className: 'carousel',
 		$carousel: null,
@@ -30,6 +30,6 @@ define( 'views.videopagetool.owlcarousel', [
 		getCarouselInstance: function() {
 			return this.$carousel.data( 'owlCarousel' );
 		}
-	});
+	} );
 	return OwlCarouselView;
-});
+} );
