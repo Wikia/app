@@ -202,6 +202,10 @@ class ForumExternalController extends WallExternalController {
 		$this->errorfield = '';
 		$this->errormsg = '';
 
+		// Trim spaces (CONN-167)
+		$boardTitle = trim( $boardTitle );
+		$boardDescription = trim( $boardDescription );
+
 		// Reject illegal characters.
 		$rxTc = Title::getTitleInvalidRegex();
 		if ( preg_match( $rxTc, $boardTitle ) ) {
