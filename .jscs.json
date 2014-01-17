@@ -1,8 +1,10 @@
 {
 	"requireCurlyBraces": ["if", "else", "for", "while", "do"],
 	"requireSpaceAfterKeywords": ["if", "else", "for", "while", "do", "switch", "return"],
+	"disallowSpaceAfterKeywords": ["function"],
+	"requireParenthesesAroundIIFE": true,
 	"requireSpacesInFunctionExpression": {
-		"beforeOpeningCurlyBrace": true
+		"beforeOpeningCurlyBrace": false
 	},
 	"requireMultipleVarDecl": true,
 	"requireSpacesInsideObjectBrackets": "all",
