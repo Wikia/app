@@ -139,8 +139,8 @@ class ThemeSettings {
 			// Do not save wordmark if its empty.
 			unset( $settings[ 'wordmark-text' ] );
 		} else {
-			if ( mb_strlen( $settings[ 'wordmark-text' ] ) > 100 ) {
-				$settings[ 'wordmark-text' ] = mb_substr( $settings[ 'wordmark-text' ], 0, 100 );
+			if ( mb_strlen( $settings[ 'wordmark-text' ] ) > 50 ) {
+				$settings[ 'wordmark-text' ] = mb_substr( $settings[ 'wordmark-text' ], 0, 50 );
 			}
 		}
 

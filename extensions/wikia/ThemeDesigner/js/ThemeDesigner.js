@@ -247,8 +247,8 @@ var ThemeDesigner = {
 			var value = $('#wordmark-edit').find('input[type="text"]').val().trim();
 			if (value.length > 0) {
 
-				if ( value.length > 100 ) {
-					value = value.substr( 0, 100 );
+				if ( value.length > 50 ) {
+					value = value.substr( 0, 50 );
 				}
 
 				ThemeDesigner.set('wordmark-text', value);
