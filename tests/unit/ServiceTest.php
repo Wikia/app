@@ -85,6 +85,11 @@ class ServiceTest extends WikiaBaseTest {
 	}
 
 	function testUserStatsService() {
+		// make sure we don't use memcache during the call
+		$wgMemcMock = $this->getMock( 'stdclass', ['get', 'set'] );
+		$wgMemcMock->expects( $this->any() )->method( 'get' )->will( $this->returnValue( null ) );
+		$this->mockGlobalVariable('wgMemc', $wgMemcMock);
+
 		$user = User::newFromName('QATestsBot');
 
 		$service = new UserStatsService($user->getId());
