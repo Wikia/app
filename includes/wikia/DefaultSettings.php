@@ -18,12 +18,6 @@ if( !defined( 'MEDIAWIKI' ) ) {
 }
 
 /**
- * Use revision number
- */
-include "$IP/includes/wikia/wgCacheBuster.php";
-$wgStyleVersion = $wgMergeStyleVersionJS = $wgMergeStyleVersionCSS = $wgCacheBuster;
-
-/**
  * @name wgAkamaiGlobalVersion
  *
  * this variable is used for purging all images on akamai. increasing this value
@@ -1156,6 +1150,12 @@ $wgWikiaHubsFileRepoDirectory = '/images/c/corp/images';
 $wgEnableAmazonDirectTargetedBuy = true;
 
 /**
+ * @name $wgAmazonDirectTargetedBuyCountries
+ * Enables AmazonDirectTargetedBuy integration in theese countries (given AmazonDirectTargetedBuy is also true)
+ */
+$wgAmazonDirectTargetedBuyCountries = ['US'];
+
+/**
  * @name $wgEnableJavaScriptErrorLogging
  * Enables JavaScript error logging mechanism
  */
@@ -1174,6 +1174,15 @@ $wgEnableAdEngineExt = true;
  */
 $wgAdDriverUseSevenOneMedia = null;
 $wgAdDriverUseSevenOneMediaInLanguages = ['de'];
+
+/**
+ * @name $wgAdDriverUseNewTracking
+ * Whether to use the new ad tracking code.
+ * If true: the new tracking code (SlotTracker.js) will be used on half of
+ * the traffic and the old one (AdTracker.js) on the other half.
+ * If false: only the old ad tracking code (AdTracker.js) will be used.
+ */
+$wgAdDriverUseNewTracking = false;
 
 /**
  * @name $wgAdVideoTargeting
