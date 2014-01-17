@@ -67,7 +67,10 @@ class CategoriesService extends Service {
 					'page_namespace' => NS_CATEGORY,
 					'pp_propname' => 'hiddencat'
 				),
-				__METHOD__
+				__METHOD__,
+				[
+					'LIMIT' => 666
+				]
 			);
 
 			$this->mHiddenCats = array();
