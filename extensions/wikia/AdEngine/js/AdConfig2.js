@@ -10,11 +10,11 @@ var AdConfig2 = function (
 	adDecoratorPageDimensions,
 
 	// adProviders
-	adProviderNull,
 	adProviderGpt,
 	adProviderEvolve,
 	adProviderGamePro,
-	adProviderLater
+	adProviderLater,
+	adProviderNull
 ) {
 	'use strict';
 

@@ -97,11 +97,11 @@
 		adDecoratorPageDimensions,
 
 		// AdProviders:
-		adProviderNull,
 		adProviderGpt,
 		adProviderEvolve,
 		adProviderGamePro,
-		adProviderLater
+		adProviderLater,
+		adProviderNull
 	);
 
 	window.wgAfterContentAndJS.push(function () {
