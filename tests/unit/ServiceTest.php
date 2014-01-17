@@ -90,9 +90,9 @@ class ServiceTest extends WikiaBaseTest {
 		$service = new UserStatsService($user->getId());
 		$stats = $service->getStats();
 
-		$this->assertInternalType('int', $stats['edits']);
-		$this->assertInternalType('int', $stats['likes']);
-		$this->assertInternalType('string', $stats['date']);
+		$this->assertInternalType('int', $stats['edits'], 'Checking if edits number is an integer');
+		$this->assertInternalType('int', $stats['likes'], 'Checking if likes number is an integer');
+		$this->assertInternalType('string', $stats['date'], 'Checking if date is a string');
 
 		// edits increase - perform fake edit
 		$edits = $stats['edits'];
@@ -100,7 +100,7 @@ class ServiceTest extends WikiaBaseTest {
 		$service->increaseEditsCount();
 
 		$stats = $service->getStats();
-		$this->assertEquals($edits+1, $stats['edits']);
+		$this->assertEquals($edits+1, $stats['edits'], 'Checking if UserStatsService::increaseEditsCount works correctly');
 	}
 
 	function testCategoriesService() {
