@@ -58,6 +58,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 		}
 
 		$this->setVal('slotsInTotal', WikiaHomePageHelper::SLOTS_IN_TOTAL);
+		$this->infoMsg = FlashMessages::get();
 
 		//wikis with visualization selectbox
 		$visualizationLang = $this->wg->request->getVal(self::WHST_VISUALIZATION_LANG_VAR_NAME, $this->wg->contLang->getCode());
@@ -116,10 +117,8 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 					$collectionSavedValues = $this->prepareCollectionForSave($collectionValues);
 					$collectionsModel->saveAll($this->visualizationLang, $collectionSavedValues);
 
-					$this->collectionsList = $collectionsModel->getList($this->visualizationLang);
-					$wikisPerCollection = $this->getWikisPerCollection($this->collectionsList, true);
-					
-					$this->infoMsg = wfMessage('manage-wikia-home-collections-success')->text();
+					FlashMessages::put(wfMessage('manage-wikia-home-collections-success')->text());
+					$this->response->redirect($_SERVER['REQUEST_URI']);
 				} else {
 					$this->errorMsg = wfMessage('manage-wikia-home-collections-failure')->text();
 				}
@@ -130,7 +129,8 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 
 				if ($isValid) {
 					$this->helper->saveStatsToWF($statsValues);
-					$this->infoMsg = wfMessage('manage-wikia-home-stats-success')->text();
+					FlashMessages::put(wfMessage('manage-wikia-home-stats-success')->text());
+					$this->response->redirect($_SERVER['REQUEST_URI']);
 				} else {
 					$this->errorMsg = wfMessage('manage-wikia-home-stats-failure')->text();
 				}
