@@ -5,6 +5,7 @@ var SlotTweaker = function(log, document, window) {
 		, addDefaultHeight, removeClass, removeDefaultHeight, hide, show, removeTopButtonIfNeeded
 		, defaultHeightClass = 'default-height'
 		, rclass = /[\t\r\n]/g
+		, isMedrec
 		, isLeaderboard, isStandardLeaderboardSize, adjustLeaderboardSize
 		, standardLeaderboardSizeClass = 'standard-leaderboard'
 	;
@@ -26,6 +27,10 @@ var SlotTweaker = function(log, document, window) {
 			removeClass(slot, defaultHeightClass);
 		}
 	};
+
+	isMedrec = function (slotname) {
+		return slotname.search(/TOP_RIGHT_BOXAD/);
+	}
 
 	isLeaderboard = function (slotname) {
 		return slotname.indexOf('LEADERBOARD') !== -1;
@@ -94,6 +99,12 @@ var SlotTweaker = function(log, document, window) {
 				slot.className += ' hidden';
 			} else {
 				slot.style.display = 'none';
+			}
+		}
+
+		if (isMedrec) {
+			if (window.document.getElementsByClassName('SelfServeUrl').length > 0) {
+				window.document.getElementsByClassName('SelfServeUrl')[0].style.display = 'none';
 			}
 		}
 	};
