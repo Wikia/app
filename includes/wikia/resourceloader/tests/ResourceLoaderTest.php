@@ -34,8 +34,8 @@ class ResourceLoaderTest extends WikiaBaseTest {
 	 * @param $timestamp int timestamp in URL
 	 * @param $ttl int expected caching period
 	 */
-	public function testResourceLoaderModifyMaxAge($timestamp, $ttl) {
-		global $wgHooks, $wgStyleVersion;
+	public function testResourceLoaderModifyMaxAge($version, $ttl) {
+		global $wgHooks;
 
 		$resourceLoader = new ResourceLoader();
 		$resourceLoader->register('WikiaTestModule', array(
@@ -44,7 +44,7 @@ class ResourceLoaderTest extends WikiaBaseTest {
 
 		$request = new WebRequest();
 		$request->setVal('modules', 'WikiaTestModule');
-		$request->setVal('version', $wgStyleVersion . '-' . wfTimestamp(TS_ISO_8601_BASIC, $timestamp));
+		$request->setVal('version', join('-', $version));
 
 		// set up hooks
 		$wgHooks['ResourceLoaderCacheControlHeaders'][] = 'ResourceLoaderTest::onResourceLoaderCacheControlHeaders';
@@ -59,19 +59,15 @@ class ResourceLoaderTest extends WikiaBaseTest {
 	}
 
 	public function resourceLoaderModifyMaxAgeDataProvider() {
-		global $wgResourceLoaderMaxage;
+		global $wgResourceLoaderMaxage, $wgStyleVersion;
 
 		return array(
 			array(
-				'timestamp' => TestResourceLoaderModule::TIMESTAMP - 1,
+				'version' => [$wgStyleVersion, TestResourceLoaderModule::TIMESTAMP],
 				'ttl' => $wgResourceLoaderMaxage['versioned']['client']
 			),
 			array(
-				'timestamp' => TestResourceLoaderModule::TIMESTAMP,
-				'ttl' => $wgResourceLoaderMaxage['versioned']['client']
-			),
-			array(
-				'timestamp' => TestResourceLoaderModule::TIMESTAMP + 1,
+				'version' => [TestResourceLoaderModule::TIMESTAMP],
 				'ttl' => $wgResourceLoaderMaxage['unversioned']['client']
 			)
 		);
