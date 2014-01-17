@@ -71,7 +71,11 @@ class NavigationModel extends WikiaModel {
 	 * @param int $cityId city ID (false - default to current wiki)
 	 * @return string memcache key
 	 */
-	private function getMemcKey( $messageName, $cityId = false ) {
+	private function getMemcKey( $messageName, $cityId = false, $langCode = '' ) {
+		if (empty($langCode)) {
+			$langCode = $this->wg->Lang->getCode();
+		}
+
 		if ( $this->useSharedMemcKey ) {
 			$wikiId = substr( wfSharedMemcKey(), 0, -1 );
 
@@ -86,12 +90,12 @@ class NavigationModel extends WikiaModel {
 
 		$messageName = str_replace(' ', '_', $messageName);
 
-		return implode( ':', array( __CLASS__, $wikiId, $this->wg->Lang->getCode(), $messageName, self::version ) );
+		return implode( ':', array( __CLASS__, $wikiId, $langCode, $messageName, self::version ) );
 	}
 
-	public function clearMemc( $key = self::WIKIA_GLOBAL_VARIABLE, $city_id = false ){
+	public function clearMemc( $key = self::WIKIA_GLOBAL_VARIABLE, $city_id = false, $langCode = '' ){
 		$this->wg->Memc->delete(
-			$this->getMemcKey( $key, $city_id )
+			$this->getMemcKey( $key, $city_id, $langCode )
 		);
 	}
 
@@ -172,7 +176,6 @@ class NavigationModel extends WikiaModel {
 	 * @return array parsed menu wikitext
 	 */
 	public function parse( $type, $source, Array $maxChildrenAtLevel = array(), $duration = 3600, $forContent = false, $filterInactiveSpecialPages = false ) {
-		global $wgLang;
 		wfProfileIn( __METHOD__ . ":$type");
 
 		$this->forContent = $forContent;
@@ -190,16 +193,11 @@ class NavigationModel extends WikiaModel {
 					break;
 
 				case self::TYPE_VARIABLE:
-					// try to use "local" value
-					$text = $this->app->getGlobal( $source );
-
-					if ( empty($text) ) {
-						$text = WikiFactory::getVarValueByName( $source, self::COMMUNITY_WIKI_ID );
-					}
+					$text = $this->getNavigationFromWF($source);
 
 					if ( !is_string($text) && is_array($text) ) {
 						// fallback to WikiFactory value from community (city id 177)
-						$text = $this->getNavigationFromArray($text, $wgLang->getCode());
+						$text = $this->getNavigationFromArray($text, $this->wg->Lang->getCode());
 					} else {
 						$text = '';
 					}
@@ -221,6 +219,23 @@ class NavigationModel extends WikiaModel {
 	}
 
 	/**
+	 * Gets navigations as an array or string from wiki factory variable
+	 *
+	 * @param $source name of variable
+	 * @return mixed|null
+	 */
+	private function getNavigationFromWF($source) {
+		// try to use "local" value
+		$text = $this->app->getGlobal( $source );
+
+		if ( empty($text) ) {
+			$text = WikiFactory::getVarValueByName( $source, self::COMMUNITY_WIKI_ID );
+		}
+
+		return $text;
+	}
+
+	/**
 	 * Gets navigation menu in selected language
 	 *
 	 * @param array $nav array with menu nodes in different languages
@@ -238,6 +253,24 @@ class NavigationModel extends WikiaModel {
 			}
 		}
 		return $text;
+	}
+
+	/**
+	 * Gets language codes for existing navigation menus
+	 *
+	 * @param $source name of variable
+	 * @return array language codes
+	 */
+	public function getNavigationLanguageCodes($source) {
+		$langCodes = array();
+
+		$menus = $this->getNavigationFromWF($source);
+		if (is_array($menus)) {
+			$langCodes = array_keys($menus);
+		}
+
+		return $langCodes;
+
 	}
 
 	public function parseText($text, Array $maxChildrenAtLevel = array(), $forContent = false, $filterInactiveSpecialPages = false) {
