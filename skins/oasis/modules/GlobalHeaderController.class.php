@@ -11,7 +11,7 @@ class GlobalHeaderController extends WikiaController {
 
 		$category = WikiFactory::getCategory($wgCityId);
 
-		$messageName = 'shared-Globalnavigation';
+		$messageName = 'wgSharedGlobalnavigation';
 		if ($category) {
 			$messageNameWithCategory = $messageName . '-' . $category->cat_id;
 			if (!wfEmptyMsg($messageNameWithCategory, wfMsg($messageNameWithCategory))) {
@@ -21,7 +21,7 @@ class GlobalHeaderController extends WikiaController {
 
 		$navigation = new NavigationModel(true /* useSharedMemcKey */);
 		$menuNodes = $navigation->parse(
-			NavigationModel::TYPE_MESSAGE,
+			NavigationModel::TYPE_VARIABLE,
 			$messageName,
 			array(3, 4, 5),
 			1800 /* 3 hours */
