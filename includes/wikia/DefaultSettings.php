@@ -1222,3 +1222,6 @@ $wgPagesWithNoAdsForLoggedInUsersOverriden_AD_LEVEL = null;
  * Enables the Oasis responsive layout styles
  */
 $wgOasisResponsive = null;
+
+/** @var $wgEnableCentralizedLogging bool whether or not logging to syslog is enabled */
+$wgEnableCentralizedLogging = true;
