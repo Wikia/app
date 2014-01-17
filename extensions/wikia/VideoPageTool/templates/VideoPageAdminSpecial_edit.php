@@ -10,7 +10,8 @@
 		'savedBy' => $savedBy,
 		'lastSavedOn' => $lastSavedOn,
 		'publishDate' => $publishDate,
-		'publishedBy' => $publishedBy
+		'publishedBy' => $publishedBy,
+		'programDate' => $programDate
 	)
 ) ?>
 
