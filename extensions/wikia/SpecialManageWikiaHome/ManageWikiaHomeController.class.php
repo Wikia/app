@@ -58,7 +58,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 		}
 
 		$this->setVal('slotsInTotal', WikiaHomePageHelper::SLOTS_IN_TOTAL);
-		$this->infoMsg = FlashMessages::get();
+		$this->infoMsg = FlashMessages::pop();
 
 		//wikis with visualization selectbox
 		$visualizationLang = $this->wg->request->getVal(self::WHST_VISUALIZATION_LANG_VAR_NAME, $this->wg->contLang->getCode());

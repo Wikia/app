@@ -124,7 +124,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 
 		$this->checkDate($this->date);
 
-		$this->flashMessage = FlashMessages::get();
+		$this->flashMessage = FlashMessages::pop();
 
 		$modulesData = $this->toolboxModel->getModulesData(
 			$this->langCode,
