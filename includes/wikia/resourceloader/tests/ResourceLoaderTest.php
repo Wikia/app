@@ -18,6 +18,8 @@ class ResourceLoaderTest extends WikiaBaseTest {
 		global $wgHooks;
 		$this->oldWgHooks = $wgHooks;
 
+		$this->mockGlobalVariable('wgCacheEpoch',TestResourceLoaderModule::TIMESTAMP - 1000);
+
 		parent::setUp();
 	}
 
@@ -61,13 +63,25 @@ class ResourceLoaderTest extends WikiaBaseTest {
 	public function resourceLoaderModifyMaxAgeDataProvider() {
 		global $wgResourceLoaderMaxage, $wgStyleVersion;
 
+		$pastTimestamp = wfTimestamp( TS_ISO_8601_BASIC, TestResourceLoaderModule::TIMESTAMP - 1 );
+		$currTimestamp = wfTimestamp( TS_ISO_8601_BASIC, TestResourceLoaderModule::TIMESTAMP );
+		$futureTimestamp = wfTimestamp( TS_ISO_8601_BASIC, TestResourceLoaderModule::TIMESTAMP + 1 );
+
 		return array(
-			array(
-				'version' => [$wgStyleVersion, TestResourceLoaderModule::TIMESTAMP],
+			'timestamp - 1' => array(
+				'version' => [$wgStyleVersion, $pastTimestamp],
 				'ttl' => $wgResourceLoaderMaxage['versioned']['client']
 			),
-			array(
-				'version' => [TestResourceLoaderModule::TIMESTAMP],
+			'timestamp' => array(
+				'version' => [$wgStyleVersion, $currTimestamp],
+				'ttl' => $wgResourceLoaderMaxage['versioned']['client']
+			),
+			'timestamp + 1' => array(
+				'version' => [$wgStyleVersion, $futureTimestamp],
+				'ttl' => $wgResourceLoaderMaxage['unversioned']['client']
+			),
+			'no style version' => array(
+				'version' => [$currTimestamp],
 				'ttl' => $wgResourceLoaderMaxage['unversioned']['client']
 			)
 		);
