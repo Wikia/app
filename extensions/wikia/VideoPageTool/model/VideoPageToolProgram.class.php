@@ -184,13 +184,23 @@ class VideoPageToolProgram extends WikiaModel {
 		if ( empty($nearestDate) ) {
 			$db = wfGetDB( DB_SLAVE );
 
+			$sql_conditions = array(
+				'language' => $language,
+				'publish_date <= '.$db->addQuotes( $date ),
+			);
+
+			// If there's a timestamp, the request is coming from the VPT
+			// admin and we want to get the nearest published or non-published
+			// program. If there is no timestamp, it's coming from the Video
+			// Home Page and we only want the nearest published program.
+			if ( !$timestamp ) {
+				$sql_conditions["is_published"] = 1;
+			}
+
 			$row = $db->selectRow(
 				array( 'vpt_program' ),
 				array( 'unix_timestamp(publish_date) as publish_date' ),
-				array(
-					'language' => $language,
-					'publish_date <= '.$db->addQuotes( $date ),
-				),
+				$sql_conditions,
 				__METHOD__,
 				array( 'ORDER BY' => 'publish_date DESC' )
 			);
