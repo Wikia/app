@@ -2,13 +2,13 @@
  * VisualEditor ContentEditable Wikia example data sets.
  */
 
-/* global mw: false */
+/* global require,mw: false */
 
 /**
  * @namespace
  * @ignore
  */
-ve.ce.wikiaExample = ( function ( utils ) {
+ve.ce.wikiaExample = ( function () {
 	var media = {};
 
 	/* Data */
@@ -358,4 +358,4 @@ ve.ce.wikiaExample = ( function ( utils ) {
 
 	// Exports
 	return { 'media': media };
-}( ve.wikiaTest.utils ) );
+}() );
