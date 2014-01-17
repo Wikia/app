@@ -1,4 +1,4 @@
-window.adSlots = {
+var adSlots = {
 	// TODO: tile is not used
 	// GPT: only loc, pos and size keys are used
 	map: {

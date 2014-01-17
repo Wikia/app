@@ -44,7 +44,7 @@ $config['liftium_ads_js'] = array(
 	),
 );
 
-$config['adengine_modules_js'] = array(
+$config['adengine_oasis_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	//'skin' => 'wikiamobile',
 	'assets' => array(
@@ -64,7 +64,6 @@ $config['adengine_js'] = array(
 		'//resources/wikia/modules/lazyqueue.js',
 		'//resources/wikia/modules/geo.js',
 		// AdEngine:
-		'//extensions/wikia/AdEngine/js/AdConfigMobile.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageLevelParams.js',
 		'//extensions/wikia/AdEngine/js/AdProviderGpt.js',
@@ -73,18 +72,35 @@ $config['adengine_js'] = array(
 		'//extensions/wikia/AdEngine/js/SlotTracker.js',
 		'//extensions/wikia/AdEngine/js/SlotTweaker.js',
 		'//extensions/wikia/AdEngine/js/WikiaFullGptHelper.js',
-		// run:
-		'//extensions/wikia/AdEngine/js/AdEngineMobile.run.js',
 	)
 );
 
 $config['adengine2_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
-		'#group_adengine_modules_js',
+		'#group_adengine_oasis_js',
 		'//extensions/wikia/AdEngine/js/AdSlots.desktop.js',
 		'#group_adengine_js',
+		// run:
+		'//extensions/wikia/AdEngine/js/AdEngine2.run.js',
 	),
+);
+
+$config['wikiamobile_js_ads'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => 'wikiamobile',
+	'assets' => array(
+		// libraries
+		'//extensions/wikia/AdEngine/js/AdSlots.mobile.js',
+		'//extensions/wikia/AdEngine/js/AdConfigMobile.js',
+		'#group_adengine_js',
+
+		// run:
+		'//extensions/wikia/AdEngine/js/AdEngineMobile.run.js',
+
+		// initialize
+		'//extensions/wikia/WikiaMobile/js/ad_slots.js',
+	)
 );
 
 $config['oasis_ads_js'] = array(
@@ -604,19 +620,6 @@ $config['wikiamobile_tables_js'] = array(
 	'skin' => 'wikiamobile',
 	'assets' => array(
 		'//extensions/wikia/WikiaMobile/js/tables.js'
-	)
-);
-
-$config['wikiamobile_js_ads'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => 'wikiamobile',
-	'assets' => array(
-		//libraries
-		'//extensions/wikia/AdEngine/js/AdSlots.mobile.js',
-		'#group_adengine_js',
-
-		//modules
-		'//extensions/wikia/WikiaMobile/js/ad_slots.js',
 	)
 );
 

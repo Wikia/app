@@ -11,12 +11,14 @@ var AdProviderGpt = function (adTracker, log, window, Geo, slotTweaker, cacheSto
 		maxCallsToDART,
 		isHighValueCountry,
 		leaderboardCalled = false, // save if leaderboard was called, so we know whether to call INVISIBLE slot as well
-		gptFlushed = false;
+		gptFlushed = false,
+		slotMap = adSlots.map,
+		gptConfig = adSlots.gptConfig;
 
 	maxCallsToDART = adLogicHighValueCountry.getMaxCallsToDART(country);
 	isHighValueCountry = adLogicHighValueCountry.isHighValueCountry(country);
 
-	wikiaGpt.init(adSlots.map);
+	wikiaGpt.init(slotMap);
 
 	// Private methods
 
@@ -95,13 +97,13 @@ var AdProviderGpt = function (adTracker, log, window, Geo, slotTweaker, cacheSto
 			return false;
 		}
 
-		if (adSlots.gptConfig[slotname] === 'flushonly') {
+		if (gptConfig[slotname] === 'flushonly') {
 			return true;
 		}
 
 		var canHandle = shouldCallDart(slotname);
 
-		if (!canHandle && adSlots.gptConfig[slotname] === 'flush') {
+		if (!canHandle && gptConfig[slotname] === 'flush') {
 			flushGpt();
 		}
 
@@ -115,7 +117,7 @@ var AdProviderGpt = function (adTracker, log, window, Geo, slotTweaker, cacheSto
 			numCallForSlotStorageKey = getStorageKey('calls', slotname),
 			slotTracker = adTracker.trackSlot('addriver2', slotname);
 
-		if (adSlots.gptConfig[slotname] === 'flushonly') {
+		if (gptConfig[slotname] === 'flushonly') {
 			flushGpt();
 			success();
 			return;
@@ -153,7 +155,7 @@ var AdProviderGpt = function (adTracker, log, window, Geo, slotTweaker, cacheSto
 			}
 		);
 
-		if (adSlots.gptConfig[slotname] === 'flush' || gptFlushed) {
+		if (gptConfig[slotname] === 'flush' || gptFlushed) {
 			flushGpt();
 		}
 	}

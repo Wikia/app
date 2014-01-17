@@ -7,9 +7,10 @@ require(
 	[
 		'wikia.adlogicpageparams', 'ext.wikia.adengine.adtracker', 'wikia.document',
 		'wikia.geo', 'wikia.lazyqueue', 'wikia.log', 'ext.wikia.adengine.slottracker',
-		'ext.wikia.adengine.slottweaker', 'wikia.window'
+		'ext.wikia.adengine.slottweaker', 'wikia.window',
+		'wikia.adslots'
 	],
-	function (adLogicPageLevelParams, adTracker, document, geo, lazyQueue, log, slotTracker, slotTweaker, window) {
+	function (adLogicPageLevelParams, adTracker, document, geo, lazyQueue, log, slotTracker, slotTweaker, window, adSlots) {
 		'use strict';
 
 		var logGroup = 'AdEngineMobile',
