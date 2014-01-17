@@ -10,6 +10,7 @@ var AdConfig2 = function (
 	adDecoratorPageDimensions,
 
 	// adProviders
+	adProviderNull,
 	adProviderGpt,
 	adProviderEvolve,
 	adProviderGamePro,
@@ -56,6 +57,12 @@ var AdConfig2 = function (
 
 		log('getProvider', 5, logGroup);
 		log(slot, 5, logGroup);
+
+
+		// If wgShowAds set to false hide slots
+		if (!window.wgShowAds) {
+			return adProviderNull;
+		}
 
 		// Force providers:
 		if (slot[2] === 'GamePro') {

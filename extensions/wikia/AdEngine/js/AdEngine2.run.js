@@ -44,6 +44,9 @@
 		queueForLateAds,
 		adConfigForLateAds;
 
+	// Don't show ads when Sony requests the page
+	window.wgShowAds = window.wgShowAds && !window.navigator.userAgent.match(/sony_tvs/);
+
 	// Don't have SevenOne Media ads on IE8 (or below)
 	window.wgAdDriverUseSevenOneMedia = window.wgAdDriverUseSevenOneMedia && abTest.inGroup('SEVENONEMEDIA_ADS', 'ENABLED');
 
@@ -94,6 +97,7 @@
 		adDecoratorPageDimensions,
 
 		// AdProviders:
+		adProviderNull,
 		adProviderGpt,
 		adProviderEvolve,
 		adProviderGamePro,
