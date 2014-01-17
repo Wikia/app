@@ -137,6 +137,12 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 					$savedBy = $asset->getUpdatedBy();
 				}
 			}
+
+			// add default values if the number of assets is less than number of rows that needed to be shown
+			for ( $i = count( $videos ) + 1; $i <= $helper->getRequiredRowsMax( $section ); $i++ ) {
+				$videos[$i] = array_pop( $helper->getDefaultValuesBySection( $section, 1 ) );
+			}
+
 			$savedBy = User::newFromId( $savedBy )->getName();
 		}
 
@@ -162,8 +168,7 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 				$errMsg = '';
 
 				// use displayTitle field to get required rows
-				$fieldValues = empty( $formValues['displayTitle'] ) ? array() : $formValues['displayTitle'];
-				$requiredRows = $helper->getRequiredRows( $section, $fieldValues );
+				$requiredRows = $helper->getRequiredRows( $section, $formValues );
 
 				$data = $program->formatFormData( $section, $requiredRows, $formValues, $errMsg );
 				if ( empty( $errMsg ) ) {

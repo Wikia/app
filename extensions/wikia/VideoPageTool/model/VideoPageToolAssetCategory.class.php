@@ -7,6 +7,7 @@ class VideoPageToolAssetCategory extends VideoPageToolAsset {
 
 	protected $categoryName;
 	protected $displayTitle;
+
 	protected $defaultThumbOptions = [ 'hidePlayButton' => true ];
 
 	// required data field -- array( FormFieldName => varName )
@@ -79,6 +80,27 @@ class VideoPageToolAssetCategory extends VideoPageToolAsset {
 			if ( empty( $value ) ) {
 				$value = $formValues['categoryName'][$key];
 			}
+		}
+
+		// remove row if categoryName is empty
+		$resetRows = false;
+		$rows = count( $formValues['categoryName'] );
+		$helper = new VideoPageToolHelper();
+		for ( $i = $rows - 1; $i >= $helper->getRequiredRowsMin( 'category' ); $i-- ) {
+			if ( !empty( $formValues['categoryName'][$i] ) ) {
+				break;
+			}
+
+			foreach ( STATIC::$dataFields as $formFieldName => $varName ) {
+				unset( $formValues[$formFieldName][$i] );
+			}
+
+			$resetRows = true;
+		}
+
+		// update required rows
+		if ( $resetRows ) {
+			$requiredRows = $helper->getRequiredRows( 'category', $formValues );
 		}
 
 		return parent::formatFormData( $requiredRows, $formValues, $errMsg );
