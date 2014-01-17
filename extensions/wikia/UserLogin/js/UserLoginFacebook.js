@@ -90,7 +90,6 @@ var UserLoginFacebook = {
 						action: this.actions.ERROR,
 						label: 'facebook-login'
 					} );
-					break;
 			}
 		}
 	},
@@ -170,7 +169,7 @@ var UserLoginFacebook = {
 							// Track FB Connect Modal Close
 							self.track( {
 								action: self.actions.CLOSE,
-								label: 'user-sign-up'
+								label: 'facebook-login-modal'
 							} );
 						} );
 
@@ -180,7 +179,7 @@ var UserLoginFacebook = {
 								// Track FB Connect Sign Up
 								self.track( {
 									action: self.actions.SUBMIT,
-									label: 'user-sign-up'
+									label: 'facebook-login-modal'
 								} );
 								var location = res.location;
 
@@ -216,7 +215,7 @@ var UserLoginFacebook = {
 						// Track FB Connect Modal Open
 						self.track( {
 							action: self.actions.OPEN,
-							label: 'user-sign-up'
+							label: 'facebook-login-modal'
 						} );
 						facebookSignupModal.show();
 
