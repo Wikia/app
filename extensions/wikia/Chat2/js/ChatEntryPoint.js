@@ -162,7 +162,7 @@ var ChatEntryPoint = {
 			window.open(linkToSpecialChat, 'wikiachat', window.wgWikiaChatWindowFeatures);
 		} else {
 			UserLoginModal.show({
-				callback: $.proxy(ChatEntryPoint.onSuccessfulLogin, ChatEntryPoint)
+				callback: ChatEntryPoint.onSuccessfulLogin
 			});
 		}
 	},
