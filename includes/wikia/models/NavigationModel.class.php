@@ -29,6 +29,8 @@ class NavigationModel extends WikiaModel {
 
 	const COMMUNITY_WIKI_ID = 177;
 
+	const DEFAULT_GLOBALNAV_LANG = 'en';
+
 	// magic word used to force given menu item to not be turned into a link (BugId:15189)
 	const NOLINK = '__NOLINK__';
 	const ALLOWABLE_TAGS = '';
@@ -170,6 +172,7 @@ class NavigationModel extends WikiaModel {
 	 * @return array parsed menu wikitext
 	 */
 	public function parse( $type, $source, Array $maxChildrenAtLevel = array(), $duration = 3600, $forContent = false, $filterInactiveSpecialPages = false ) {
+		global $wgLang;
 		wfProfileIn( __METHOD__ . ":$type");
 
 		$this->forContent = $forContent;
@@ -190,10 +193,17 @@ class NavigationModel extends WikiaModel {
 					// try to use "local" value
 					$text = $this->app->getGlobal( $source );
 
-					// fallback to WikiFactory value from community (city id 177)
-					if ( !is_string( $text ) ) {
+					if ( empty($text) ) {
 						$text = WikiFactory::getVarValueByName( $source, self::COMMUNITY_WIKI_ID );
 					}
+
+					if ( !is_string($text) && is_array($text) ) {
+						// fallback to WikiFactory value from community (city id 177)
+						$text = $this->getNavigationFromArray($text, $wgLang->getCode());
+					} else {
+						$text = '';
+					}
+
 					break;
 				default:
 					$text = '';
@@ -208,6 +218,26 @@ class NavigationModel extends WikiaModel {
 
 		wfProfileOut( __METHOD__ . ":$type");
 		return $nodes;
+	}
+
+	/**
+	 * Gets navigation menu in selected language
+	 *
+	 * @param array $nav array with menu nodes in different languages
+	 * @param string $lang menu language
+	 * @return string wikitext with menu links
+	 */
+	private function getNavigationFromArray($nav, $lang) {
+		$text = '';
+		if ( array_key_exists($lang, $nav) ) {
+			$text = $nav[$lang];
+		} else {
+			$lang = self::DEFAULT_GLOBALNAV_LANG;
+			if (array_key_exists($lang, $nav)) {
+				$text = $nav[$lang];
+			}
+		}
+		return $text;
 	}
 
 	public function parseText($text, Array $maxChildrenAtLevel = array(), $forContent = false, $filterInactiveSpecialPages = false) {
