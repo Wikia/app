@@ -12,8 +12,7 @@ var AdProviderGpt = function (adTracker, log, window, Geo, slotTweaker, cacheSto
 		isHighValueCountry,
 		leaderboardCalled = false, // save if leaderboard was called, so we know whether to call INVISIBLE slot as well
 		gptFlushed = false,
-		slotMap = adSlots.map,
-		gptConfig = adSlots.gptConfig;
+		slotMap = adSlots.map;
 
 	maxCallsToDART = adLogicHighValueCountry.getMaxCallsToDART(country);
 	isHighValueCountry = adLogicHighValueCountry.isHighValueCountry(country);
@@ -97,13 +96,13 @@ var AdProviderGpt = function (adTracker, log, window, Geo, slotTweaker, cacheSto
 			return false;
 		}
 
-		if (gptConfig[slotname] === 'flushonly') {
+		if (slotMap[slotname].gpt === 'flushonly') {
 			return true;
 		}
 
 		var canHandle = shouldCallDart(slotname);
 
-		if (!canHandle && gptConfig[slotname] === 'flush') {
+		if (!canHandle && slotMap[slotname].gpt === 'flush') {
 			flushGpt();
 		}
 
@@ -117,7 +116,7 @@ var AdProviderGpt = function (adTracker, log, window, Geo, slotTweaker, cacheSto
 			numCallForSlotStorageKey = getStorageKey('calls', slotname),
 			slotTracker = adTracker.trackSlot('addriver2', slotname);
 
-		if (gptConfig[slotname] === 'flushonly') {
+		if (slotMap[slotname].gpt === 'flushonly') {
 			flushGpt();
 			success();
 			return;
@@ -155,7 +154,7 @@ var AdProviderGpt = function (adTracker, log, window, Geo, slotTweaker, cacheSto
 			}
 		);
 
-		if (gptConfig[slotname] === 'flush' || gptFlushed) {
+		if (slotMap[slotname].gpt === 'flush' || gptFlushed) {
 			flushGpt();
 		}
 	}
