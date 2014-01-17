@@ -26,7 +26,7 @@ var UserLoginFacebook = {
 
 		if( !this.initialized ) {
 			require( ['wikia.tracker'], function( tracker ) {
-				self.actions = tracker.ACTIONS
+				self.actions = tracker.ACTIONS;
 				self.track = tracker.buildTrackingFunction( {
 					category: 'user-sign-up',
 					value: origin || 0,
@@ -62,7 +62,7 @@ var UserLoginFacebook = {
 				ev.preventDefault();
 
 				// @see http://developers.facebook.com/docs/reference/javascript/FB.login/
-				FB.login( $.proxy( self.loginCallback, self ), {
+				window.FB.login( $.proxy( self.loginCallback, self ), {
 					scope:'publish_stream,email'
 				} );
 		} );
@@ -85,6 +85,7 @@ var UserLoginFacebook = {
 					break;
 
 				default:
+					// Track FB Connect Error
 					this.track( {
 						action: this.actions.ERROR,
 						label: 'facebook-login'
@@ -104,8 +105,9 @@ var UserLoginFacebook = {
 		if ( resp.loggedIn ) {
 			// logged in using FB account, reload the page or callback
 
+			// Track FB Connect Login
 			this.track( {
-				action: this.tracker.ACTIONS.SUCCESS,
+				action: this.actions.SUCCESS,
 				label: 'facebook-login'
 			} );
 
@@ -163,21 +165,23 @@ var UserLoginFacebook = {
 
 						self.modal = facebookSignupModal; // set reference to modal object
 
-						self.track( {
-							action: self.tracker.ACTIONS.CONFIRM
-						} );
-
 						// Track Facebook Connect Modal Close
 						facebookSignupModal.bind( 'beforeClose', function () {
+							// Track FB Connect Modal Close
 							self.track( {
-								action: self.tracker.ACTIONS.CLOSE,
-								label: 'facebook-login-modal'
+								action: self.actions.CLOSE,
+								label: 'user-sign-up'
 							} );
 						} );
 
 						self.form = new UserLoginFacebookForm( $modal, {
 							ajaxLogin: true,
 							callback: function( res ) {
+								// Track FB Connect Sign Up
+								self.track( {
+									action: self.actions.SUBMIT,
+									label: 'user-sign-up'
+								} );
 								var location = res.location;
 
 								// redirect to the user page
@@ -209,6 +213,11 @@ var UserLoginFacebook = {
 							.on ( 'blur', 'input[name=username], input[name=password]',
 								$.proxy( signupAjaxForm.validateInput, signupAjaxForm ) );
 
+						// Track FB Connect Modal Open
+						self.track( {
+							action: self.actions.OPEN,
+							label: 'user-sign-up'
+						} );
 						facebookSignupModal.show();
 
 						// TODO: temporary fix - force repaint
