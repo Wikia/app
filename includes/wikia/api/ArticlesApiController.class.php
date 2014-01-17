@@ -744,7 +744,8 @@ class ArticlesApiController extends WikiaApiController {
 				$data = [ 'thumbnail' => null, 'original_dimensions' => null ];
 				if ( isset( $images[ $id ] ) ) {
 					$data['thumbnail'] = $images[$id][0]['url'];
-					$data['original_dimensions'] = $images[$id][0]['original_dimensions'];
+					$data['original_dimensions'] = isset( $images[$id][0]['original_dimensions'] ) ?
+						$images[$id][0]['original_dimensions'] : null;
 				}
 				$result[ $id ] = $data;
 			}
