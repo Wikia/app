@@ -3,8 +3,8 @@
 class WikiaValidatorNumeric extends WikiaValidator {
 	
 	protected function config( array $options = array() ) {
-		$this->setOption('min', 0);
-		$this->setOption('max', 32767);			
+		$this->setOption('min', null);
+		$this->setOption('max', null);
 	}
 	
 	protected function configMsgs( array $msgs = array() ) {
@@ -20,16 +20,15 @@ class WikiaValidatorNumeric extends WikiaValidator {
 			return false;
 		}
 		
-		if($value < $this->getOption('min')) {
+		if($this->getOption('min') !== null && $value < $this->getOption('min')) {
 			$this->createError( 'too_small' );
 			return false;
 		}
 		
-		if($value > $this->getOption('max')) {
+		if($this->getOption('max') !== null && $value > $this->getOption('max')) {
 			$this->createError( 'too_big' );
 			return false;
 		}
 		return true;
 	}
 }
-

@@ -310,6 +310,13 @@ hauries de visitar això:
 	'wikiasmartbanner-view' => 'mostra',
 );
 
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'wikiamobile-hide-section' => 'къайлаяккха',
+);
+
 /** Czech (čeština)
  * @author Michaelbrabec
  */
@@ -500,6 +507,7 @@ $1',
 
 /** Persian (فارسی)
  * @author Mjbmr
+ * @author Reza1615
  */
 $messages['fa'] = array(
 	'wikiamobile-search' => 'جستجو',
@@ -507,6 +515,17 @@ $messages['fa'] = array(
 	'wikiamobile-search-wikia' => 'ویکیا',
 	'wikiamobile-login' => 'ورود',
 	'wikiamobile-password' => 'رمز عبور',
+	'wikiamobile-login-submit' => 'ورود',
+	'wikiamobile-article-categories' => 'رده‌ها',
+	'wikiamobile-feedback' => 'بازخورد',
+	'wikiamobile-back' => 'عقب',
+	'wikiamobile-hide-section' => 'نهفتن',
+	'wikiamobile-profile' => 'نمایه',
+	'wikiamobile-last-edited-by' => 'توسط $1',
+	'wikiamobile-anonymous-edited-by' => 'ناشناس',
+	'wikiamobile-category-items-more' => 'ادامه مطلب',
+	'wikiamobile-category-items-prev' => 'بارگیری قبلی',
+	'wikiamobile-categories-expand' => 'نمایش همه',
 );
 
 /** Finnish (suomi)
@@ -615,7 +634,7 @@ $1',
 	'wikiamobile-video-views-counter' => '$1 {{PLURAL:$1|vue|vues}}',
 	'wikiamobile-video-not-friendly-header' => 'Crac !',
 	'wikiamobile-video-not-friendly' => 'Désolé, cette vidéo n’est pas disponible sur mobile.',
-	'wikiamobile-toc-header' => 'table des matières',
+	'wikiamobile-toc-header' => 'sommaire',
 	'wikiamobile-ad-label' => 'publicité',
 	'wikiamobile-image-not-loaded' => 'L’image n’est pas disponible',
 	'wikiamobile-shared-file-not-available' => 'Oups, cet élément n’est plus disponible ; mais vu que vous êtes ici, explorez le wiki !',

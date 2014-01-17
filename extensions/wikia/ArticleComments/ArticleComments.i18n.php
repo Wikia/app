@@ -252,15 +252,34 @@ $messages['as'] = array(
 /** Azerbaijani (azərbaycanca)
  * @author AZISS
  * @author Cekli829
+ * @author Mushviq Abdulla
  */
 $messages['az'] = array(
+	'article-comments-file-page' => "<a href='$3'>$4</a> səhifəsində <a href='$1'>$2 tərəfindən</a> şərh edildi",
+	'article-comments-anonymous' => 'Anonim iştirakçı',
+	'article-comments-comments' => 'Şərhlər ($1)',
+	'article-comments-post' => 'Şərh göndər',
 	'article-comments-cancel' => 'İmtina',
 	'article-comments-delete' => 'sil',
 	'article-comments-edit' => 'redaktə',
 	'article-comments-history' => 'Tarix',
+	'article-comments-error' => 'Şərh qeyd edilə bilmir',
+	'article-comments-rc-comment' => 'Məqalə şərhi (<span class="plainlinks">[$1 $2]</span>)',
+	'article-comments-rc-comments' => 'Məqalə şərhləri ([[$1]])',
+	'article-comments-fbconnect' => 'Şərh etmək üçün lütfən <a href="$1">Facebook hesabı ilə hesabınızı</a> əlaqələndirin!',
+	'article-comments-rc-blog-comment' => 'Bloq şərhi (<span class="plainlinks">[$1 $2]</span>)',
+	'article-comments-rc-blog-comments' => 'Bloq şərhləri ([[$1]])',
 	'article-comments-toc-item' => 'Şərhlər',
+	'article-comments-vote' => 'Səs ver',
 	'article-comments-reply' => 'Geri göndər',
+	'article-comments-show-all' => 'Bütün şərhləri göstər',
+	'article-comments-prev-page' => 'Öncəki',
 	'article-comments-next-page' => 'Növbəti',
+	'article-comments-page-spacer' => '&#160...&#160',
+	'wikiamobile-article-comments-header' => 'Şərhlər',
+	'wikiamobile-article-comments-none' => 'Şərh yoxdur',
+	'wikiamobile-article-comments-replies' => 'cavablar',
+	'wikiamobile-article-comments-post-reply' => 'Cavab göndər',
 );
 
 /** South Azerbaijani (تورکجه)
@@ -901,7 +920,7 @@ $messages['diq'] = array(
 	'article-comments-next-page' => 'Bahdoyên',
 	'article-comments-page-spacer' => '&#160...&#160',
 	'wikiamobile-article-comments-header' => 'vatışê',
-	'wikiamobile-article-comments-more' => 'Zewbi buwane',
+	'wikiamobile-article-comments-more' => 'Zêde bar ke',
 	'wikiamobile-article-comments-prev' => 'Bahdoyêni buwane',
 	'wikiamobile-article-comments-none' => 'Vatış çıno',
 	'wikiamobile-article-comments-view' => 'Cewabi bıvin',
@@ -1172,6 +1191,7 @@ $messages['fa'] = array(
 
 /** Finnish (suomi)
  * @author Centerlink
+ * @author Elseweyr
  * @author Ilkea
  * @author Lukkipoika
  * @author Nike
@@ -1179,67 +1199,70 @@ $messages['fa'] = array(
  * @author Tofu II
  */
 $messages['fi'] = array(
+	'article-comments-file-page' => "<a href='$1'>Kommentti käyttäjältä $2</a> sivulla <a href='$3'>$4</a>",
+	'article-blog-comments-file-page' => "<a href='$1'>Käyttäjän $2 kommentti</a> käyttäjän <a href='$5'>$6</a> blogimerkinnästä <a href='$3'>$4</a>.",
 	'article-comments-anonymous' => 'Anonyymi käyttäjä',
 	'article-comments-comments' => 'Kommentit ($1)',
 	'article-comments-post' => 'Lähetä kommentti',
 	'article-comments-cancel' => 'Peruuta',
 	'article-comments-delete' => 'poista',
 	'article-comments-edit' => 'muokkaa',
-	'article-comments-history' => 'historiasta',
+	'article-comments-history' => 'historia',
 	'article-comments-error' => 'Kommenttia ei voitu tallentaa',
 	'article-comments-undeleted-comment' => 'Kommenttia ei poistettu blogisivulta $1',
 	'article-comments-rc-comment' => 'Artikkelin kommentti (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-comments' => 'Artikkelin kommentit ([[$1]])',
-	'article-comments-fblogin' => 'Voisitko <a href="$1" rel="nofollow">kirjautua sisään ja yhdistää Facebookiin</a> kommentoidaksesi tätä wikiä!',
-	'article-comments-fbconnect' => 'Voisitko <a href="$1">yhdistää tämän käyttäjätilin Facebookiin</a> kommentoidaksesi!',
+	'article-comments-fblogin' => 'Ole hyvä ja <a href="$1" rel="nofollow">kirjaudu sisään yhdistyäksesi Facebookiin</a> ja kommentoidaksesi tässä wikissä!',
+	'article-comments-fbconnect' => 'Ole hyvä ja <a href="$1">yhdistä tämä käyttäjätili Facebookiin</a> kommentoidaksesi!',
 	'article-comments-rc-blog-comment' => 'Blogin kommentti (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-blog-comments' => 'Blogin kommentit ([[$1]])',
-	'article-comments-login' => '<a href="$1">Kirjaudu sisään</a> kommetoidaksesi',
+	'article-comments-login' => '<a href="$1">Kirjaudu sisään</a> kommetoidaksesi tässä wikissä.',
 	'article-comments-toc-item' => 'Kommentit',
 	'article-comments-comment-cannot-add' => 'Et voi lisätä kommenttia tähän artikkeliin.',
-	'article-comments-vote' => 'Äänestä',
-	'article-comments-reply' => 'Vastaus',
+	'article-comments-vote' => 'Äänestä ylös',
+	'article-comments-reply' => 'Vastaa',
 	'article-comments-show-all' => 'Näytä kaikki kommentit',
 	'article-comments-prev-page' => 'Edell.',
 	'article-comments-next-page' => 'Seuraava',
 	'article-comments-page-spacer' => '&#160...&#160',
 	'article-comments-delete-reason' => 'Ylemmän tason artikkeli/kommentti on poistettu.',
-	'article-comments-empty-comment' => "Et voi lähettää tyhjää kommenttia. <a href='$1'>Poistaisitko kommentin sen sijaan?</a>",
-	'wikiamobile-article-comments-header' => 'kommenttia',
+	'article-comments-empty-comment' => "Et voi lähettää tyhjää kommenttia. <a href='$1'>Haluatko sen sijaan poistaa sen?</a>",
+	'wikiamobile-article-comments-header' => 'Kommentit',
 	'wikiamobile-article-comments-more' => 'Lataa lisää',
 	'wikiamobile-article-comments-prev' => 'Lataa edelliset',
 	'wikiamobile-article-comments-none' => 'Ei kommentteja',
-	'wikiamobile-article-comments-view' => 'Näytä kommentit',
-	'wikiamobile-article-comments-replies' => 'Vastaukset',
+	'wikiamobile-article-comments-view' => 'Näytä vastaukset',
+	'wikiamobile-article-comments-replies' => 'vastaukset',
 	'wikiamobile-article-comments-post-reply' => 'Lähetä vastaus',
 	'wikiamobile-article-comments-post' => 'Lähetä',
 	'wikiamobile-article-comments-placeholder' => 'Lähetä kommentti',
 	'wikiamobile-article-comments-login-post' => 'Kirjaudu sisään kommentoidaksesi.',
-	'enotif_subject_article_comment' => '$PAGEEDITOR on kommentoinut: "$PAGETITLE" {{SITENAME}}ssä.',
-	'enotif_body_article_comment' => 'Hyvä $WATCHINGUSERNAME,
+	'wikiamobile-article-comments-post-fail' => 'Kommenttia ei voitu tallentaa, yritä myöhemmin uudelleen',
+	'enotif_subject_article_comment' => '$PAGEEDITOR on kommentoinut artikkelia "$PAGETITLE" {{SITENAME}}ssä.',
+	'enotif_body_article_comment' => 'Hei $WATCHINGUSERNAME,
 
-$PAGEEDITOR teki kommentin sivulle "$PAGETITLE".
+{{SITENAME}}n sivulla $PAGETITLE on uusi kommentti. Nähdäksesi kaikki kommentit, seuraa linkkiä:
+$PAGETITLE_URL#WikiaArticleComments
 
-Nähdäksesi kommentin paina:
-$PAGETILE_URL
+- Wikia Community Support
 
-Vieraile ja muokkaa usein...
+___________________________________________
+* Apua ja neuvoja löydät Community Centralilta: http://community.wikia.com
+* Haluatko vähemmän sähköpostia meiltä? Voit muuttaa asetuksiasi täällä:
+http://community.wikia.com/wiki/Toiminnot:Asetukset',
+	'enotif_body_article_comment-HTML' => '<p>Hei $WATCHINGUSERNAME,
+<br /><br />
+{{SITENAME}}n sivulla $PAGETITLE on uusi kommentti. Seuraa tätä linkkiä nähdäksesi kaikki kommentit: 
+$PAGETITLE_URL#WikiaArticleComments
+<br /><br />
 
-Wikia', # Fuzzy
-	'enotif_body_article_comment-HTML' => '<p>Arvoisa $WATCHINGUSERNAME,
-<br /><br />
-$PAGEEDITOR teki kommentin sivulle "$PAGETITLE".
-<br /><br />
-Seuraa tätä linkkiä nähdäksesi kommenttisäikeen: <a href="$PAGETITLE_URL">$PAGETITLE</a>
-<br /><br />
-Vieraile ja muokkaa usein...
-<br /><br />
-Wikia
-<br /><hr />
+- Wikia Community Support
+___________________________________________
 <ul>
-<li>Haluatko valita, että mitkä sähköpostiviestit sinä vastaanotat? <a href="{{fullurl:Special:Preferences}}">Päivitä asetuksiasi<a>.</li>
+<li>Löydä apua ja neuvoja Yhteisöwikiltä: <a href="http://yhteiso.wikia.com">http://yhteiso.wikia.com</a><li>
+<li>Haluatko saada meiltä vähemmän viestejä? Voit muuttaa sähköpostiasetuksesi täällä: <a href="http://community.wikia.com/Special:Preferences">http://community.wikia.com/Special:Preferences</a></li>
 </ul>
-</p>', # Fuzzy
+</p>',
 );
 
 /** Faroese (føroyskt)
@@ -1893,6 +1916,7 @@ __________________________
 /** Korean (한국어)
  * @author Cafeinlove
  * @author Hym411
+ * @author Leehoy
  * @author 아라
  * @author 한글화담당
  */
@@ -1907,6 +1931,8 @@ $messages['ko'] = array(
 	'article-comments-error' => '덧글을 저장할 수 없습니다',
 	'article-comments-rc-comment' => '문서 덧글 (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-comments' => '문서 덧글 ([[$1]])',
+	'article-comments-fblogin' => '이 위키에 댓글을 남기기 위해서 <a href="$1" rel="nofollow">페이스북에 로그인</a>하세요',
+	'article-comments-fbconnect' => '댓글을 남기기 위해서 <a href="$1">페이스북과 계정을 연걸</a>하세요!',
 	'article-comments-rc-blog-comments' => '블로그 덧글 ([[$1]])',
 	'article-comments-toc-item' => '덧글',
 	'article-comments-comment-cannot-add' => '문서에 덧글을 추가할 수 없습니다.',
@@ -1916,6 +1942,9 @@ $messages['ko'] = array(
 	'article-comments-prev-page' => '이전',
 	'article-comments-next-page' => '다음',
 	'article-comments-page-spacer' => '&#160...&#160',
+	'article-comments-delete-reason' => '상위 글/ 상위 댓글이 삭제됨',
+	'article-comments-empty-comment' => "빈 댓글을 쓸 수 없습니다. <a href='$1'>삭제 하시겠습니까?</a>",
+	'wikiamobile-article-comments-header' => '댓글',
 	'wikiamobile-article-comments-more' => '더 불러오기',
 	'wikiamobile-article-comments-prev' => '이전 불러오기',
 	'wikiamobile-article-comments-none' => '덧글 없음',
@@ -3720,8 +3749,8 @@ Wikia
  * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
-	'article-comments-file-page' => "<a href='$1'>评论来自 $2</a> 于 <a href='$3'>$4</a>",
-	'article-blog-comments-file-page' => "在<a href='$5'>$6</a>的博客上的<a href='$3'>$4</a>文章有<a href='$1'>来至$2的评论</a>。",
+	'article-comments-file-page' => "<a href='$1'>评论由 $2</a> 于 <a href='$3'>$4</a> 发表",
+	'article-blog-comments-file-page' => "在<a href='$5'>$6</a>的博客上的文章<a href='$3'>$4</a>有<a href='$1'>来至$2的评论</a>。",
 	'article-comments-anonymous' => '匿名用户',
 	'article-comments-comments' => '评论（$1）',
 	'article-comments-post' => '发表评论',
@@ -3729,17 +3758,17 @@ $messages['zh-hans'] = array(
 	'article-comments-delete' => '删除',
 	'article-comments-edit' => '编辑',
 	'article-comments-history' => '历史',
-	'article-comments-error' => '无法保存注释',
+	'article-comments-error' => '无法保存评论',
 	'article-comments-undeleted-comment' => '博客页$1被撤消删除的评论',
 	'article-comments-rc-comment' => '条目评论(<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-comments' => '文章评论([[$1]])',
 	'article-comments-fblogin' => '请<a href="$1" rel="nofollow">登陆并连接到Facebook</a>以在本维基上发表评论！',
-	'article-comments-fbconnect' => '请<a href="$1">将该账户联结到Facebook</a>进行评论！',
+	'article-comments-fbconnect' => '请<a href="$1">将该账户连接到Facebook</a>以进行评论！',
 	'article-comments-rc-blog-comment' => '博客评论(<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-blog-comments' => '博客评论([[$1]])',
 	'article-comments-login' => '请<a href="$1">登陆</a>以在本维基上发表评论。',
 	'article-comments-toc-item' => '评论',
-	'article-comments-comment-cannot-add' => '不能将注释添加到文章中。',
+	'article-comments-comment-cannot-add' => '不能将评论添加到文章中。',
 	'article-comments-vote' => '投票',
 	'article-comments-reply' => '答复',
 	'article-comments-show-all' => '显示所有注释',

@@ -14,7 +14,7 @@ class WallMessage {
 	/**
 	 * @var $commentsIndex CommentsIndex
 	 */
-	public $commentsIndex;
+	public $commentsIndex = false;
 	/**
 	 * @var $helper WallHelper
 	 */
@@ -199,8 +199,8 @@ class WallMessage {
 	}
 
 	public function getCommentsIndex() {
-		if(empty($this->commentsIndex)) {
-			$this->commentsIndex = CommentsIndex::newFromId( $this->getId() );
+		if( false === $this->commentsIndex ) { // false means we didn't call newFromId yet
+			$this->commentsIndex = CommentsIndex::newFromId( $this->getId() ); // note: can return null
 		}
 
 		return $this->commentsIndex;
@@ -432,14 +432,14 @@ class WallMessage {
 	public function getWallOwner( $master = false ) {
 		$parts = explode( '/', $this->getArticleTitle( $master )->getText() );
 		$userName = $parts[0];
+		$titleText = $this->title->getText();
+		$parts = explode( '/', $titleText );
 		if ( mt_rand( 1, 100 ) < 2 ) {  // doing this experiment for all requests pollutes the logs
 
 			// mech: I'm not sure we have to create wall title doing db queries on both, page and comments_index tables.
 			// as the user name is the first part on comment's title. But I'm not able to go through all wall/forum
 			// usecases. I'm going to check production logs for the next 2-3 sprints and make sure the result is
 			// always correct
-			$titleText = $this->title->getText();
-			$parts = explode( '/', $titleText );
 			if ( $parts[0] != $userName ) {
 				Wikia::log( __METHOD__, false, 'WALL_PERF article title owner does not match ci username (' . $userName .
 					' vs ' . $parts[0] . ') for ' . $this->getId() . ' (title is ' . $titleText. ')', true );

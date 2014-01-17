@@ -13,7 +13,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 
 	/* @const SIGNUP_REDIRECT_OPTION_NAME Name of user option containing redirect path to return to after email confirmation */
 	const SIGNUP_REDIRECT_OPTION_NAME = 'SignupRedirect';
-	
+
 	/* @const SIGNED_UP_ON_WIKI_OPTION_NAME Name of user option containing id of wiki where user signed up */
 	const SIGNED_UP_ON_WIKI_OPTION_NAME = 'SignedUpOnWiki';
 
@@ -145,11 +145,15 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 				if ( $this->result == 'ok' ) {
 					// redirect page
 					$this->userLoginHelper->doRedirect();
-				} else if ( $this->result == 'unconfirm' ) {
+				} elseif ( $this->result == 'unconfirm' ) {
 					$response = $this->app->sendRequest('UserLoginSpecial', 'getUnconfirmedUserRedirectUrl', array('username' => $this->username, 'uselang' => $code));
 					$redirectUrl = $response->getVal('redirectUrl');
 					$this->wg->out->redirect( $redirectUrl );
-				} else if ( $this->result == 'resetpass') {
+				} elseif ( $this->result === 'closurerequested' ) {
+					$response = $this->app->sendRequest( 'UserLoginSpecial', 'getCloseAccountRedirectUrl' );
+					$redirectUrl = $response->getVal( 'redirectUrl' );
+					$this->wg->Out->redirect( $redirectUrl );
+				} elseif ( $this->result == 'resetpass') {
 					$this->editToken = $this->wg->User->getEditToken();
 					$this->subheading = wfMessage('resetpass_announce')->escaped();
 					$this->wg->Out->setPageTitle( wfMessage('userlogin-password-page-title')->plain() );
@@ -193,6 +197,10 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 			'uselang' => $this->getVal('uselang'),
 		);
 		$this->redirectUrl = $title->getFullUrl( $params );
+	}
+
+	public function getCloseAccountRedirectUrl() {
+		$this->redirectUrl = SpecialPage::getTitleFor( 'CloseMyAccount', 'reactivate' )->getFullUrl();
 	}
 
 	/**
@@ -311,6 +319,14 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 					$this->result = 'unconfirm';
 					$this->msg = wfMessage( 'usersignup-confirmation-email-sent', $this->wg->User->getEmail() )->parse();
 				} else {
+					$result = '';
+					$resultMsg = '';
+					if ( !wfRunHooks( 'WikiaUserLoginSuccess', array( $this->wg->User, &$result, &$resultMsg ) ) ) {
+						$this->result = $result;
+						$this->msg = $resultMsg;
+						break;
+					}
+
 					//Login succesful
 					$injected_html = '';
 					wfRunHooks('UserLoginComplete', array(&$this->wg->User, &$injected_html));

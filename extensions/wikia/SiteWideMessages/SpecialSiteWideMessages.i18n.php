@@ -1176,10 +1176,37 @@ $messages['eu'] = array(
 
 /** Persian (فارسی)
  * @author Ebraminio
+ * @author Reza1615
  */
 $messages['fa'] = array(
+	'swm-label-preview' => 'پیش‌نمایش',
+	'swm-label-edit' => 'ویرایش',
+	'swm-label-remove' => 'پاک‌کردن',
+	'swm-label-list' => 'فهرست',
+	'swm-label-recipient-wikis' => 'ویکی‌ها',
+	'swm-label-recipient-users' => 'کاربران',
+	'swm-label-mode-wikis-all' => 'تمام ویکی‌های',
+	'swm-label-mode-users-all' => 'تمام کاربران',
 	'swm-label-content' => 'محتوا',
+	'swm-label-comment' => 'نظر',
+	'swm-label-language' => 'زبان',
+	'swm-list-table-id' => 'شناسه',
+	'swm-list-table-sender' => 'فرستنده',
+	'swm-list-table-wiki' => 'ویکی',
+	'swm-list-table-recipient' => 'گیرنده',
+	'swm-list-table-group' => 'گروه',
 	'swm-list-table-content' => 'محتوا',
+	'swm-list-table-tools' => 'ابزارها',
+	'swm-list-table-lang' => 'زبان‌ها',
+	'swm-list-table-hub' => 'قطب',
+	'swm-yes' => 'بله',
+	'swm-no' => 'خیر',
+	'swm-mode-users-registration-after' => 'پس از',
+	'swm-mode-users-registration-before' => 'قبل از',
+	'swm-mode-users-editcount-more' => 'بیشتر',
+	'swm-mode-users-editcount-less' => 'کمتر',
+	'swm-mode-wikis-created-after' => 'پس از',
+	'swm-mode-wikis-created-before' => 'قبل از',
 );
 
 /** Finnish (suomi)

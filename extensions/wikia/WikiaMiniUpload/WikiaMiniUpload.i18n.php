@@ -1136,15 +1136,27 @@ $messages['eu'] = array(
  * @author Ebraminio
  * @author Leyth
  * @author Mjbmr
+ * @author Reza1615
  */
 $messages['fa'] = array(
 	'wmu-upload' => 'بارگذاری',
+	'wmu-find' => 'یافتن',
 	'wmu-thiswiki' => 'این ویکی',
 	'wmu-flickr' => 'فلیکر',
 	'wmu-upload-btn' => 'بارگذاری',
 	'wmu-find-btn' => 'یافتن',
+	'wmu-insert' => 'درج',
+	'wmu-name' => 'نام',
+	'wmu-license' => 'اجازه‌نامه',
+	'wmu-size' => 'اندازه',
+	'wmu-width' => 'پهنا',
+	'wmu-caption' => 'عنوان',
+	'wmu-link' => 'پیوند',
+	'wmu-imagebutton' => 'افزودن تصویر',
+	'wmu-placeholder' => 'مکان نگه‏دار',
 	'wmu-gallery' => 'نگارخانه',
 	'wmu-added-from-plc' => 'افزودن پروندۀ جدید توسط مکان نگه‏دار تصویر',
+	'wmu-alignment' => 'تراز',
 );
 
 /** Finnish (suomi)

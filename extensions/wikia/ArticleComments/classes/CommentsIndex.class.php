@@ -326,6 +326,10 @@ class CommentsIndex extends WikiaModel {
 
 		wfProfileIn( __METHOD__ );
 
+		if ( !$commentId ) {
+			wfProfileOut( __METHOD__ );
+			return null;
+		}
 		$sqlWhere = array( 'comment_id' => $commentId );
 		if ( !empty($parentPageId) ) {
 			$sqlWhere['parent_page_id'] = $parentPageId;
