@@ -43,6 +43,8 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	private static $slowTests = [];
 	private static $fastTests = [];
 
+	private static $testTimerResolution = null;
+
 	const SLOW_TEST_THRESHOLD = 0.002; // ms
 
 	/**
@@ -53,9 +55,16 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 		$testClass = get_called_class();
 		echo "\nRunning '{$testClass}'...";
 
+		global $wgMarkTestSpeed;
+		$wgMarkTestSpeed = false;
+
+		global $wgOutputTestSpeedMessages;
+		$wgOutputTestSpeedMessages = true;
+
 		self::$slowTests = [];
 		self::$fastTests = [];
 		self::$testRunTime = microtime(true);
+		self::$testTimerResolution = strlen(substr(strrchr(self::SLOW_TEST_THRESHOLD, "."), 1)) + 3;
 	}
 
 	/**
@@ -64,6 +73,16 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	public static function tearDownAfterClass() {
 		$time = round( (microtime(true) - self::$testRunTime) * 1000, 2 );
 		echo "done in {$time} ms";
+
+		if (!empty(self::$slowTests)) {
+			echo "\nslowTests\n";
+			echo implode(array_keys(self::$slowTests), ', ');
+		}
+
+		if (!empty(self::$fastTests)) {
+			echo "\nfastTests\n";
+			echo implode(array_keys(self::$fastTests), ', ');
+		}
 	}
 
 	protected function setUp() {
@@ -95,7 +114,7 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 		$this->mockProxy = null;
 		$this->endTime = microtime(true);
 
-		$this->testRunTime = $this->endTime - $this->startTime;
+		$this->testRunTime = round( $this->endTime - $this->startTime, self::$testTimerResolution);
 		$this->processTestRunTime();
 	}
 
@@ -106,12 +125,12 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 
 		if($this->testRunTime > self::SLOW_TEST_THRESHOLD) {
 			if(!empty($wgOutputTestSpeedMessages)) {
-				echo "\n" . $this->testRunTime . ' ms' . " - SLOW TEST: " . $this->getName() . "\n";
+				echo "\n" . $this->testRunTime . 'ms - SLOW: ' . $this->getName() . "\n";
 			}
 			$this->processSlowTest( $annotations );
 		} else {
 			if(!empty($wgOutputTestSpeedMessages)) {
-				echo "\n" . $this->testRunTime . ' ms' . " - GOOD TEST: " . $this->getName() .  "\n";
+				echo "\n" . $this->testRunTime . 'ms - FAST: ' . $this->getName() .  "\n";
 			}
 			$this->processFastTest( $annotations );
 		}
@@ -164,7 +183,7 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 			$updatedTestCode = str_replace($docComment, $newDocComment, $testCode);
 		}
 
-		file_put_contents($filePath, $updatedTestCode);
+		//file_put_contents($filePath, $updatedTestCode);
 		unset($classReflector);
 		unset($methodReflector);
 	}
