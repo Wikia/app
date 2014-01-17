@@ -246,6 +246,11 @@ var ThemeDesigner = {
 			event.preventDefault();
 			var value = $('#wordmark-edit').find('input[type="text"]').val().trim();
 			if (value.length > 0) {
+
+				if ( value.length > 100 ) {
+					value = value.substr( 0, 100 );
+				}
+
 				ThemeDesigner.set('wordmark-text', value);
 			} else {
 				$.getMessages('ThemeDesigner', function() {
