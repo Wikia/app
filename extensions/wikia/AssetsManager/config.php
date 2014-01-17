@@ -171,6 +171,7 @@ $config['oasis_blocking'] = array(
 		'//resources/wikia/modules/lazyqueue.js',
 	)
 );
+
 $config['abtesting'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis', 'wikiamobile' ],
@@ -178,6 +179,13 @@ $config['abtesting'] = array(
 		'//extensions/wikia/AbTesting/js/AbTest.js',
 	)
 );
+$config['optimizely'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/Optimizely/js/OptimizelyLoader.js',
+	)
+);
+
 
 /** jQuery **/
 $config['jquery'] = array(
