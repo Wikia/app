@@ -31,4 +31,4 @@ define( 'views.videohomepage.carousels', [
 	} );
 
 	return CarouselsView;
-});
+} );

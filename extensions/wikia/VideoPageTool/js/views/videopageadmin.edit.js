@@ -23,10 +23,10 @@ define( 'views.videopageadmin.edit', [
 		},
 
 		initMediaUploader: function() {
-			$( '.form-box' ).on( 'click', '.media-uploader-btn', function(evt) {
+			$( '.form-box' ).on( 'click', '.media-uploader-btn', function( evt ) {
 					evt.preventDefault();
 					return new ThumbnailUploader( {
-							el: $(this).closest('.form-box')
+							el: $( this ).closest( '.form-box' )
 					} );
 			} );
 		},
@@ -46,7 +46,7 @@ define( 'views.videopageadmin.edit', [
 						var $altThumbKey,
 								req;
 
-						$altThumbKey = $box.find('.alt-thumb').val();
+						$altThumbKey = $box.find( '.alt-thumb' ).val();
 						req = {};
 
 						if ( $altThumbKey.length ) {
@@ -101,22 +101,27 @@ define( 'views.videopageadmin.edit', [
 		},
 
 		initSwitcher: function() {
-			this.$form.switcher( {
-				onChange: function( $elem, $switched ) {
-					// Update the numbers beside the elements
-					var $oCount = $elem.find( '.count' ),
-						oCountVal = $oCount.html(),
-						$nCount = $switched.find( '.count' ),
-						nCountVal = $nCount.html();
+			var opts = {};
 
-					$oCount.html( nCountVal );
-					$nCount.html( oCountVal );
-				}
-			} );
+			if ( $( '.form-wrapper' ).length ) {
+				opts.boxes = '.form-wrapper';
+			}
+
+			opts.onChange = function( $elem, $switched ) {
+				// Update the numbers beside the elements
+				var $oCount = $elem.find( '.count' ),
+					oCountVal = $oCount.html(),
+					$nCount = $switched.find( '.count' ),
+					nCountVal = $nCount.html();
+
+				$oCount.html( nCountVal );
+				$nCount.html( oCountVal );
+			};
+			this.$form.switcher( opts );
 		},
 
 		initValidator: function() {
-			var that = this;
+			var self = this;
 
 			this.validator = new Validator( {
 				form: this.$form,
@@ -135,7 +140,7 @@ define( 'views.videopageadmin.edit', [
 							$firstError;
 
 					// check for errors
-					success = that.validator.onSubmit();
+					success = self.validator.onSubmit();
 
 					// jump back up to form box if errors are present
 					if ( !success ) {
@@ -154,16 +159,17 @@ define( 'views.videopageadmin.edit', [
 		},
 
 		initReset: function() {
-			var that = this;
+			var self = this;
 
-			this.$form.find( '.reset' ).on( 'click', function(e) {
+			this.$form.find( '.reset' ).on( 'click', function( e ) {
 				e.preventDefault();
 
 				$.confirm( {
 					title: $.msg( 'videopagetool-confirm-clear-title' ),
 					content: $.msg( 'videopagetool-confirm-clear-message' ),
 					onOk: function() {
-						that.clearFeaturedVideoForm();
+						self.$form.trigger( 'form:reset' );
+						self.clearFeaturedVideoForm();
 					},
 					width: 700
 				} );
@@ -174,7 +180,7 @@ define( 'views.videopageadmin.edit', [
 		/*
 		 * This reset is very specific to this form since it covers reverting titles and thumbnails
 		 * @TODO: we may want to just create a default empty version of the form and hide it if it's not needed.
-		 * That way we could just replace all the HTML to its default state without worrying about clearing every form
+		 * that way we could just replace all the HTML to its default state without worrying about clearing every form
 		 * field.
 		 */
 		clearFeaturedVideoForm: function() {
@@ -197,7 +203,7 @@ define( 'views.videopageadmin.edit', [
 
 			// reset custom thumb name
 			this.$form.find( '.alt-thumb-name' )
-				.text( $.msg('videopagetool-image-title-default-text') )
+				.text( $.msg( 'videopagetool-image-title-default-text' ) )
 				.addClass( 'alternative' );
 
 			// Also clear all error messages for better UX
@@ -208,11 +214,11 @@ define( 'views.videopageadmin.edit', [
 	return VPTEdit;
 } );
 
-require(['views.videopageadmin.edit'], function(EditView) {
+require( ['views.videopageadmin.edit'], function( EditView ) {
 
 	'use strict';
 
-	$(function() {
+	$( function() {
 		new EditView();
 	} );
 } );

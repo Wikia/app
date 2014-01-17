@@ -7,4 +7,4 @@ define( 'models.videohomepage.categorycarousel', [], function() {
 	} );
 
 	return CategoryCarouselModel;
-});
+} );

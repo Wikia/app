@@ -50,18 +50,18 @@ define( 'views.videopageadmin.thumbnailupload', [
 				wikiText: data.imageWikiText
 			} );
 
-			$videoThumb = this.$el.find('.video-thumb');
+			$videoThumb = this.$el.find( '.video-thumb' );
 
-			img.create().done(function( response ) {
+			img.create().done( function( response ) {
 
 				// Swap out the small thumbnail
-				if ( $videoThumb.find('img').length ) {
+				if ( $videoThumb.find( 'img' ).length ) {
 					that.$el
 						.find( '.Wikia-video-thumb' )
 						.attr( 'src', response.data.thumbUrl );
 
 				} else {
-					$videoThumb.html( $('<img>' )
+					$videoThumb.html( $( '<img>' )
 						.addClass( 'Wikia-video-thumb' )
 						.attr( 'src', response.data.thumbUrl ) );
 				}
