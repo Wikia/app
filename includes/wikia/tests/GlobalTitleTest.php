@@ -23,12 +23,17 @@ class GlobalTitleTest extends PHPUnit_Framework_TestCase {
 
 	function testNewFromText1() {
 		$title = GlobalTitle::newFromText( "Test", NS_MAIN, 177 );
+
+		$this->assertFalse( $title instanceof Title );
+		$this->assertTrue( $title instanceof GlobalTitle );
+
 		$this->assertTrue( $title->getNamespace() === NS_MAIN );
 		$this->assertTrue( $title->getNsText() === "" ) ;
 		$this->assertTrue( $title->getText() === "Test" );
 
 		$title = GlobalTitle::newFromText( "Test_Ze_Spacjami", NS_MAIN, 177 );
-		$this->assertTrue( $title->getText() === "Test Ze Spacjami", "Underscores, spaces expected" );
+		$this->assertEquals( "Test Ze Spacjami", $title->getText(), "Underscores, spaces expected" );
+		$this->assertEquals( "Test_Ze_Spacjami", $title->getPrefixedDBkey() );
 	}
 
 	function testNewFromText2() {
@@ -36,9 +41,12 @@ class GlobalTitleTest extends PHPUnit_Framework_TestCase {
 		$this->assertTrue( $title->getNamespace() === NS_TALK );
 		$this->assertTrue( $title->getNsText() === "Talk" );
 		$this->assertTrue( $title->getText() === "Test" );
+		$this->assertEquals( "Talk:Test", $title->getPrefixedDBkey() );
+		$this->assertEquals( "Talk:Test", $title->getPrefixedText() );
 
 		$title = GlobalTitle::newFromText( "Test_Ze_Spacjami", NS_TALK, 177 );
-		$this->assertTrue( $title->getText() === "Test Ze Spacjami", "Underscores, spaces expected" );
+		$this->assertEquals( "Test Ze Spacjami", $title->getText(), "Underscores, spaces expected" );
+		$this->assertEquals( "Talk:Test Ze Spacjami", $title->getPrefixedText() );
 	}
 	
 	function testUrlsMainNS() {
@@ -70,5 +78,13 @@ class GlobalTitleTest extends PHPUnit_Framework_TestCase {
 		$title = GlobalTitle::newFromText( "Strona główna", false, 1686 ); # pl.wikia.com
 		$url = "http://spolecznosc.wikia.com/wiki/Strona_g%C5%82%C3%B3wna?diff=0&oldid=500";
 		$this->assertTrue( $title->getFullURL( wfArrayToCGI(array( "diff" => 0, "oldid" => 500 ) ) ) === $url, "NOT MATCH" );
+	}
+
+	function testSquidURLs() {
+		$title = GlobalTitle::newFromText( "Test", NS_MAIN, 177 );
+		$squidURLs = $title->getSquidURLs();
+
+		$this->assertContains('http://community.wikia.com/wiki/Test', $squidURLs);
+		$this->assertContains('http://community.wikia.com/wiki/Test?action=history', $squidURLs);
 	}
 };

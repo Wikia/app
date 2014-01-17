@@ -22,8 +22,6 @@ $rows = $dbr->query( "SELECT * FROM video_interwiki" );
 
 while( $file = $dbr->fetchObject( $rows ) ) {
 	$title = GlobalTitle::newFromId( $file->article_id, $file->city_id );
-	if ( $title )
+	if ( $title instanceof GlobalTitle )
 		echo $title->getFullURL() . "\n";
 }
-
-?>

@@ -83,7 +83,7 @@ class WikiaHubsServicesHelper
 	 * @param $mainPageName
 	 * @param $wikiId
 	 *
-	 * @return GlobalTitle|null|Title
+	 * @return GlobalTitle|null
 	 */
 	protected static function getGlobalTitleFromText($mainPageName, $wikiId) {
 		return GlobalTitle::newFromText($mainPageName, NS_MAIN, $wikiId);

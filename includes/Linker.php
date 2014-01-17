@@ -169,7 +169,7 @@ class Linker {
 		$target, $html = null, $customAttribs = array(), $query = array(), $options = array()
 	) {
 		wfProfileIn( __METHOD__ );
-		if ( !$target instanceof Title ) {
+		if ( !$target instanceof Title && !$target instanceof GlobalTitle ) {
 			wfProfileOut( __METHOD__ );
 			return "<!-- ERROR -->$html";
 		}

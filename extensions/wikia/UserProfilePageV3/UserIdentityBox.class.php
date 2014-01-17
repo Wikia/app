@@ -566,7 +566,7 @@ class UserIdentityBox {
 				$wikiName = WikiFactory::getVarValueByName('wgSitename', $wikiId);
 				$wikiTitle = GlobalTitle::newFromText($this->user->getName(), NS_USER_TALK, $wikiId);
 
-				if ($wikiTitle) {
+				if ($wikiTitle instanceof GlobalTitle) {
 					$wikiUrl = $wikiTitle->getFullUrl();
 					$wikis[$wikiId] = array('id' => $wikiId, 'wikiName' => $wikiName, 'wikiUrl' => $wikiUrl, 'edits' => $editCount);
 				}
@@ -650,7 +650,7 @@ class UserIdentityBox {
 		$wikiName = WikiFactory::getVarValueByName('wgSitename', $wikiId);
 		$wikiTitle = GlobalTitle::newFromText($this->user->getName(), NS_USER_TALK, $wikiId);
 
-		if ($wikiTitle instanceof Title) {
+		if ($wikiTitle instanceof GlobalTitle) {
 			$wikiUrl = $wikiTitle->getFullUrl();
 
 			/** @var $userStatsService UserStatsService */
@@ -743,7 +743,7 @@ class UserIdentityBox {
 				$wikiName = WikiFactory::getVarValueByName('wgSitename', $wikiId);
 				$wikiTitle = GlobalTitle::newFromText($this->user->getName(), NS_USER_TALK, $wikiId);
 
-				if ($wikiTitle) {
+				if ($wikiTitle instanceof GlobalTitle) {
 					$wikiUrl = $wikiTitle->getFullUrl();
 					$wikis[$wikiId] = array('id' => $wikiId, 'wikiName' => $wikiName, 'wikiUrl' => $wikiUrl, 'edits' => $editCount);
 				} else {
