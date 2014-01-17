@@ -3,11 +3,9 @@
 <div class="latest-videos-wrapper"></div>
 
 <script type="text/javascript">
-
-	var Wikia = Wikia || {};
-	Wikia.videoHomePage = Wikia.videoHomePage || {};
+	Wikia.modules = Wikia.modules || {};
+	Wikia.modules.videoHomePage = Wikia.modules.videoHomePage || {};
 
 	// set data for Backbone collection
-	Wikia.videoHomePage.categoryData = <?= json_encode( $assets ) ?>;
-
+	Wikia.modules.videoHomePage.categoryData = <?= json_encode( $assets ) ?>;
 </script>

@@ -1,4 +1,4 @@
-define( 'views.videohomepage.search', [
+define( 'videohomepage.views.search', [
 		'jquery',
 		'wikia.tracker'
 	], function( $, Tracker ) {

@@ -1,7 +1,7 @@
-define( 'views.videopageadmin.edit', [
+define( 'videopageadmin.views.edit', [
 	'jquery',
-	'models.videopageadmin.validator',
-	'views.videopageadmin.thumbnailupload'
+	'videopageadmin.models.validator',
+	'videopageadmin.views.thumbnailupload'
 ], function( $, Validator, ThumbnailUploader ) {
 
 	'use strict';
@@ -214,7 +214,7 @@ define( 'views.videopageadmin.edit', [
 	return VPTEdit;
 } );
 
-require( ['views.videopageadmin.edit'], function( EditView ) {
+require( ['videopageadmin.views.edit'], function( EditView ) {
 
 	'use strict';
 

@@ -1,4 +1,4 @@
-define( 'views.videopageadmin.autocompleteitem', [
+define( 'videopageadmin.views.autocompleteitem', [
 		'jquery',
 		'templates.mustache'
 	], function( $, templates ) {

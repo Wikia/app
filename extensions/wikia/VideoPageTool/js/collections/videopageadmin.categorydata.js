@@ -1,4 +1,4 @@
-define( 'collections.videopageadmin.categorydata', [
+define( 'videopageadmin.collections.categorydata', [
 ], function() {
 	'use strict';
 

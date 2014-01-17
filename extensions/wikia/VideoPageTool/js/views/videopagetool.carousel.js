@@ -2,9 +2,9 @@
  * View for carousel wrapper.  Data is category display title and thumbs list
  */
 define( 'views.videopagetool.carousel', [
-	'collections.videopageadmin.categorydata',
-	'models.videohomepage.categorythumb',
-	'models.videohomepage.categorycarousel',
+	'videopageadmin.collections.categorydata',
+	'videohomepage.models.categorythumb',
+	'videohomepage.models.categorycarousel',
 	'views.videopagetool.carouselthumb',
 	'templates.mustache'
 ], function(

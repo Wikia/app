@@ -1,4 +1,4 @@
-define( 'models.videohomepage.categorythumb', [], function() {
+define( 'videohomepage.models.categorythumb', [], function() {
 	'use strict';
 	var CategoryThumbModel = Backbone.Model.extend( {
 		defaults: {

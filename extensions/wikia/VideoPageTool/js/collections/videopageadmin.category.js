@@ -5,7 +5,7 @@
  *							Calls CategorySelect::getWikiCategories which returns ALL the categories
  * @requires { CategoryModel }
  */
-define( 'collections.videopageadmin.category', [], function() {
+define( 'videopageadmin.collections.category', [], function() {
 	'use strict';
 
 	var CategoryCollection = Backbone.Collection.extend( {

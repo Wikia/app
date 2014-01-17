@@ -1,8 +1,8 @@
 /*global WMU_skipDetails, WMU_show, WMU_openedInEditor */
-define( 'views.videopageadmin.thumbnailupload', [
+define( 'videopageadmin.views.thumbnailupload', [
 		'jquery',
 		'wikia.window',
-		'models.videopageadmin.thumbnail',
+		'videopageadmin.models.thumbnail',
 		'wikia.aim'
 	], function( $, window, ThumbnailModel ) {
 	'use strict';

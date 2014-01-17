@@ -2,8 +2,8 @@
  * View for list of carousels on the video homage page.
  * Collection data is an array with all the carousel data.
  */
-define( 'views.videohomepage.carousels', [
-	'collections.videopageadmin.categorydata',
+define( 'videohomepage.views.carousels', [
+	'videopageadmin.collections.categorydata',
 	'views.videopagetool.carousel'
 ], function( CategoriesCollection, CarouselView ) {
 	'use strict';
@@ -11,7 +11,7 @@ define( 'views.videohomepage.carousels', [
 	var CarouselsView = Backbone.View.extend( {
 		initialize: function() {
 			// data from collection is assigned on page load in the category template
-			this.collection = new CategoriesCollection( Wikia.videoHomePage.categoryData );
+			this.collection = new CategoriesCollection( Wikia.modules.videoHomePage.categoryData );
 			this.render();
 		},
 		render: function() {

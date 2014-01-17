@@ -2,8 +2,8 @@
  * @description Generalized view for jQuery.ui Datepicker, based/refactored from SpecialMarketingToolbox implementation
  * @dependencies Model datepicker
  */
-define( 'views.videopageadmin.datepicker', [
-		'models.videopageadmin.datepicker'
+define( 'videopageadmin.views.datepicker', [
+		'videopageadmin.models.datepicker'
 ], function( DatepickerCollection ) {
 	'use strict';
 
