@@ -162,7 +162,7 @@ ve.wikiaTest = ( function () {
 			nodeView.setFocused( false );
 
 			assert.equalDomStructure(
-				nodeView.$,
+				nodeView.$element,
 				getHtml( current ),
 				'Built with attributes: ' + utils.getObjectDescription( current )
 			);
@@ -219,7 +219,7 @@ ve.wikiaTest = ( function () {
 		nodeView.setFocused( false );
 
 		assert.equalDomStructure(
-			nodeView.$,
+			nodeView.$element,
 			getHtml( previous ),
 			'Starting with attributes: ' + utils.getObjectDescription( previous )
 		);
@@ -238,7 +238,7 @@ ve.wikiaTest = ( function () {
 			);
 
 			assert.equalDomStructure(
-				nodeView.$,
+				nodeView.$element,
 				getHtml( merged ),
 				'Attributes changed: ' + utils.getObjectDescription( diff )
 			);
