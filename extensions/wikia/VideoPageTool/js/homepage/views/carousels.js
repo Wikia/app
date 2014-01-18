@@ -4,7 +4,7 @@
  */
 define( 'videohomepage.views.carousels', [
 	'videopageadmin.collections.categorydata',
-	'views.videopagetool.carousel'
+	'shared.views.carousel'
 ], function( CategoriesCollection, CarouselView ) {
 	'use strict';
 

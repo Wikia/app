@@ -1,4 +1,4 @@
-define( 'views.videopagetool.owlcarousel', [
+define( 'shared.views.owlcarousel', [
 ], function() {
 	'use strict';
 	var OwlCarouselView = Backbone.View.extend( {
