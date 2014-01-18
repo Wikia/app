@@ -26,11 +26,11 @@ class YoutubeVideoHandler extends VideoHandler {
 
 		return array(
 			'html' => "<div id='youtubeVideoPlayer' {$sizeString}></div>",
+			'width' => $width,
+			'height' => $height,
 			'init' => 'wikia.videohandler.youtube',
 			'jsParams' => array(
-				'width' => $width,
-				'height' => $height,
-				'videoId'=> $this->videoId,
+				'videoId' => $this->videoId,
 				'playerVars' => $playerVars,
 			),
 			'scripts' => array(

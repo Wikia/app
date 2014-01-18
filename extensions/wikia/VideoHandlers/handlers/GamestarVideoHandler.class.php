@@ -27,7 +27,11 @@ class GamestarVideoHandler extends VideoHandler {
 </object>
 EOT;
 
-		return array( 'html' => $html );
+		return array(
+			'html' => $html,
+			'width' => $width,
+			'height' => $height,
+		);
 	}
 
 }

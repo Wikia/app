@@ -52,8 +52,9 @@
 				<option value="<?=$verticalId?>"<? if ($selectedVerticalId == $verticalId): ?>selected="selected"<? endif ?>><?=$verticalName?></option>
 				<? endforeach ?>
 			</select>
+			<input type="hidden" name="date" id="WamFilterDate" value="<?=$selectedDate?>"/>
 			<label for="WamFilterDate"><?= wfMessage('wam-index-filter-date-label')->text() ?></label>
-			<input type="text" name="date" id="WamFilterDate" value="<?=$selectedDate?>" placeholder="<?= $wg->Lang->date(time()); ?>"/>
+			<input type="text" id="WamFilterHumanDate" value="<?= $wg->Lang->date($selectedDate); ?>" placeholder="<?= $wg->Lang->date(time()); ?>"/>
 			<label for="langCode"><?= wfMessage('wam-index-filter-lang-label')->text() ?></label>
 			<select name="langCode" id="langCode">
 				<option value=""><?= wfMessage('wam-index-filter-language-default')->text() ?></option>

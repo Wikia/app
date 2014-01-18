@@ -41,7 +41,6 @@
 		}
 	}
 
-
 	// xsmall sizes are 54% of medium
 	// they are also positioned in the bottom/left instead of center
 	&.xsmall {
@@ -130,7 +129,7 @@
 	}
 
 	.duration {
-		@include opacity(80);
+		@include opacity(70);
 		border-radius: 1px 0 0 0;
 		bottom: 0;
 		color: white;
