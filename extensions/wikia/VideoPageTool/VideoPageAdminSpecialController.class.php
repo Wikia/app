@@ -138,11 +138,6 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 				}
 			}
 
-			// add default values if the number of assets is less than number of rows that needed to be shown
-			for ( $i = count( $videos ) + 1; $i <= $helper->getRequiredRowsMax( $section ); $i++ ) {
-				$videos[$i] = array_pop( $helper->getDefaultValuesBySection( $section, 1 ) );
-			}
-
 			$savedBy = User::newFromId( $savedBy )->getName();
 		}
 
@@ -171,6 +166,10 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 				$requiredRows = $helper->getRequiredRows( $section, $formValues );
 
 				$data = $program->formatFormData( $section, $requiredRows, $formValues, $errMsg );
+				for ( $i = count( $data ) + 1; $i <= count( $assets ); $i++ ) {
+					$data[$i] = [];
+				}
+
 				if ( empty( $errMsg ) ) {
 					$status = $program->saveAssetsBySection( $section, $data );
 					if ( $status->isGood() ) {
@@ -185,7 +184,8 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 					// update original asset data
 					foreach ( $data as $order => $row ) {
 						foreach ( $row as $name => $value ) {
-							if ( array_key_exists( $name, $videos[$order] ) && $videos[$order][$name] != $value ) {
+							if ( empty( $videos[$order][$name] )
+								|| ( array_key_exists( $name, $videos[$order] ) && $videos[$order][$name] != $value ) ) {
 								$videos[$order][$name] = $value;
 							}
 
@@ -204,6 +204,11 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 		} else if ( !empty( $success ) ) {
 			$result = 'ok';
 			$msg = wfMessage( 'videopagetool-success-save' )->plain();
+		}
+
+		// add default values if the number of assets is less than number of rows that needed to be shown
+		for ( $i = count( $videos ) + 1; $i <= $helper->getRequiredRowsMax( $section ); $i++ ) {
+			$videos[$i] = array_pop( $helper->getDefaultValuesBySection( $section, 1 ) );
 		}
 
 		$this->result = $result;

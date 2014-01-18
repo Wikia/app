@@ -356,6 +356,63 @@ class VideoPageToolAsset extends WikiaModel {
 	}
 
 	/**
+	 * Remove asset from the database
+	 * @return Status
+	 */
+	protected function removeFromDatabase() {
+		wfProfileIn( __METHOD__ );
+
+		if ( wfReadOnly() ) {
+			wfProfileOut( __METHOD__ );
+			return Status::newFatal( wfMessage( 'videos-error-readonly' )->plain() );
+		}
+
+		$db = wfGetDB( DB_MASTER );
+
+		$db->delete(
+			'vpt_asset',
+			array(
+				'program_id' => $this->programId,
+				'section' => $this->section,
+				'`order`' => $this->order,
+			),
+			__METHOD__
+		);
+
+		$affected = $db->affectedRows();
+
+		wfProfileOut( __METHOD__ );
+
+		return Status::newGood( $affected );
+	}
+
+	/**
+	 * Remove asset
+	 * @return type
+	 */
+	public function remove() {
+		wfProfileIn( __METHOD__ );
+
+		if ( empty( $this->programId ) || empty( $this->section ) || empty( $this->order ) ) {
+			wfProfileOut( __METHOD__ );
+			return Status::newFatal( wfMessage( 'videopagetool-error-missing-parameter' )->plain() );
+		}
+
+		if ( $this->exists() ) {
+			$status = $this->removeFromDatabase();
+		}
+
+		if ( $status->isGood() ) {
+			$this->invalidateCache();
+			$this->invalidateCacheAssetsBySection( $this->programId, $this->section );
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $status;
+	}
+
+	/**
 	 * Save asset
 	 * @return Status
 	 */
