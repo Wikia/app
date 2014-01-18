@@ -175,9 +175,7 @@ ve.ce.wikiaExample = ( function () {
 			typeOf = rdfaType;
 
 		if ( attributes.type !== 'none' ) {
-			require( ['wikia.stringhelper'], function ( stringUtils ) {
-				typeOf = typeOf + '/' + stringUtils.ucFirst( attributes.type );
-			} );
+			typeOf = typeOf + '/' + utils.ucFirst( attributes.type );
 		}
 
 		$mock.attr( 'typeof', typeOf );

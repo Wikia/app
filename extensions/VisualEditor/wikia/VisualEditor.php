@@ -132,8 +132,7 @@ $wgResourceModules += array(
 			'wikia-visualeditor-notification-media-permission-denied',
 		),
 		'dependencies' => array(
-			'ext.visualEditor.core',
-			'wikia.stringhelper',
+			'ext.visualEditor.core'
 		)
 	),
 );
