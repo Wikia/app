@@ -5,7 +5,7 @@
 			<h2><?= $section ?></h2>
 		<? endif ?>
 
-		<p class="alternative"><?= $wg->lang->date( time() ) ?></p>
+		<p class="alternative"><?= $programDate ?></p>
 
 		<? if ( !empty( $language ) && !empty( $section ) ): ?>
 			<p class="alternative"><?= $language ?> / <?= $section ?></p>

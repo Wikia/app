@@ -108,7 +108,7 @@ define( 'views.videopageadmin.autocomplete', [
 			},
 			clearResults: function() {
 				this.collection.reset();
-				this.results.map(function( subView ) {
+				this.results.map( function( subView ) {
 						// use Backbone's native view removal
 						return subView.remove();
 				} );
@@ -160,7 +160,7 @@ define( 'views.videopageadmin.autocomplete', [
 
 				$selected = $categories.closest( '.selected' );
 
-				idx = _.indexOf( $categories, $selected.get(0) );
+				idx = _.indexOf( $categories, $selected.get( 0 ) );
 
 				// up arrow
 				if ( key === 38 ) {

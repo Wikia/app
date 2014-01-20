@@ -17,7 +17,6 @@ if( !defined( 'MEDIAWIKI' ) ) {
 	die( 1 );
 }
 
-$wgStyleVersion = "66666";
 /**
  * @name wgAkamaiGlobalVersion
  *
@@ -1151,6 +1150,12 @@ $wgWikiaHubsFileRepoDirectory = '/images/c/corp/images';
 $wgEnableAmazonDirectTargetedBuy = true;
 
 /**
+ * @name $wgAmazonDirectTargetedBuyCountries
+ * Enables AmazonDirectTargetedBuy integration in theese countries (given AmazonDirectTargetedBuy is also true)
+ */
+$wgAmazonDirectTargetedBuyCountries = ['US'];
+
+/**
  * @name $wgEnableJavaScriptErrorLogging
  * Enables JavaScript error logging mechanism
  */
@@ -1169,6 +1174,15 @@ $wgEnableAdEngineExt = true;
  */
 $wgAdDriverUseSevenOneMedia = null;
 $wgAdDriverUseSevenOneMediaInLanguages = ['de'];
+
+/**
+ * @name $wgAdDriverUseNewTracking
+ * Whether to use the new ad tracking code.
+ * If true: the new tracking code (SlotTracker.js) will be used on half of
+ * the traffic and the old one (AdTracker.js) on the other half.
+ * If false: only the old ad tracking code (AdTracker.js) will be used.
+ */
+$wgAdDriverUseNewTracking = false;
 
 /**
  * @name $wgAdVideoTargeting
@@ -1208,3 +1222,6 @@ $wgPagesWithNoAdsForLoggedInUsersOverriden_AD_LEVEL = null;
  * Enables the Oasis responsive layout styles
  */
 $wgOasisResponsive = null;
+
+/** @var $wgEnableCentralizedLogging bool whether or not logging to syslog is enabled */
+$wgEnableCentralizedLogging = true;

@@ -170,6 +170,7 @@ $config['oasis_blocking'] = array(
 		'//resources/wikia/modules/lazyqueue.js',
 	)
 );
+
 $config['abtesting'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis', 'wikiamobile' ],
@@ -177,6 +178,13 @@ $config['abtesting'] = array(
 		'//extensions/wikia/AbTesting/js/AbTest.js',
 	)
 );
+$config['optimizely'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/Optimizely/js/OptimizelyLoader.js',
+	)
+);
+
 
 /** jQuery **/
 $config['jquery'] = array(
@@ -222,9 +230,6 @@ $config['oasis_jquery'] = array(
 		'//extensions/wikia/Search/js/SearchAbTest.DomUpdater.js',
 		'//extensions/wikia/Search/js/SearchAbTest.Context.js',
 		'//extensions/wikia/Search/js/SearchAbTest.js',
-
-		// Fixed global nav ABTesting
-		'//skins/oasis/js/GlobalHeader.js',
 	)
 );
 
@@ -868,7 +873,7 @@ $config['chat_js2'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'#group_oasis_jquery',
-		'#group_ui_repo_api_js',
+		'#group_oasis_shared_core_js',
 
 		// shared libraries
 		'//extensions/wikia/AssetsManager/js/AssetsManager.js',
@@ -887,7 +892,6 @@ $config['chat_js2'] = array(
 		'//extensions/wikia/Chat2/js/models/models.js',
 		'//extensions/wikia/Chat2/js/controllers/controllers.js',
 		'//extensions/wikia/Chat2/js/views/views.js',
-		'//resources/wikia/modules/browserDetect.js',
 		'//extensions/wikia/Chat2/js/views/ChatBanModal.js',
 	)
 );
@@ -1051,6 +1055,7 @@ $config['videopageadmin_js'] = array(
 		'//extensions/wikia/VideoPageTool/js/lib/backbone/backbone.js',
 
 		// Library Dependencies
+		'//resources/wikia/libraries/jquery/owl.carousel/owl.carousel.js',
 		'//resources/jquery.ui/jquery.ui.core.js',
 		'//resources/jquery.ui/jquery.ui.datepicker.js',
 		'//resources/jquery/jquery.validate.js',
@@ -1072,10 +1077,12 @@ $config['videopageadmin_js'] = array(
 
 		'//extensions/wikia/VideoPageTool/js/collections/videopageadmin.category.js',
 		'//extensions/wikia/VideoPageTool/js/collections/videopageadmin.categorydata.js',
+
+		'//extensions/wikia/VideoPageTool/js/views/videopagetool.owlcarousel.js',
+		'//extensions/wikia/VideoPageTool/js/views/videopagetool.carouselthumb.js',
+		'//extensions/wikia/VideoPageTool/js/views/videopageadmin.carousel.js',
 		'//extensions/wikia/VideoPageTool/js/views/videopageadmin.autocompleteitem.js',
 		'//extensions/wikia/VideoPageTool/js/views/videopageadmin.autocomplete.js',
-		'//extensions/wikia/VideoPageTool/js/views/videopageadmin.categorypreviewitem.js',
-		'//extensions/wikia/VideoPageTool/js/views/videopageadmin.categorypreview.js',
 		'//extensions/wikia/VideoPageTool/js/views/videopageadmin.categoryforms.js',
 		'//extensions/wikia/VideoPageTool/js/views/videopageadmin.category.js',
 	)
@@ -1085,7 +1092,8 @@ $config['videopageadmin_css'] = array(
 	'skin' => array( 'oasis' ),
 	'type' => AssetsManager::TYPE_CSS,
 	'assets' => array(
-		'//resources/jquery.ui/themes/default/jquery.ui.datepicker.css'
+		'//resources/jquery.ui/themes/default/jquery.ui.datepicker.css',
+		'//resources/wikia/libraries/jquery/owl.carousel/owl.carousel.css',
 	)
 );
 
@@ -1097,6 +1105,7 @@ $config['videopageadmin_scss'] = array(
 		'//extensions/wikia/WikiaMiniUpload/css/WMU.scss',
 		'//extensions/wikia/VideoPageTool/css/Admin/VideoPageTool.scss',
 		'//extensions/wikia/VideoPageTool/css/Admin/VideoPageTool_Header.scss',
+		'//extensions/wikia/VideoPageTool/css/carousel.scss',
 	)
 );
 
@@ -1159,6 +1168,7 @@ $config['videohomepage_scss'] = array(
 		'//resources/wikia/libraries/jquery/bxslider/jquery.bxslider.scss',
 		// VideoHomePage
 		'//extensions/wikia/VideoPageTool/css/HomePage/main.scss',
+		'//extensions/wikia/VideoPageTool/css/carousel.scss',
 		'//extensions/wikia/VideoPageTool/css/HomePage/featured.scss',
 	)
 );
@@ -1368,9 +1378,9 @@ $config['analytics_gas_js'] = array(
 $config['wiki_map_js'] = array(
     'type' => AssetsManager::TYPE_JS,
     'assets' => array(
-        '//extensions/wikia/WikiMap/js/d3.v2.js',
-        '//extensions/wikia/WikiMap/js/jquery.xcolor.js',
-        '//extensions/wikia/WikiMap/js/wikiMapIndexContent.js'
+        '//extensions/wikia/hacks/WikiMap/js/d3.v2.js',
+        '//extensions/wikia/hacks/WikiMap/js/jquery.xcolor.js',
+        '//extensions/wikia/hacks/WikiMap/js/WikiMapIndexContent.js'
     )
 );
 

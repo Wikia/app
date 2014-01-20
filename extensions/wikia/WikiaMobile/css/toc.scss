@@ -5,11 +5,6 @@ $toc-background: #F8F8F8;
 $handle-size: 48px;
 $dark-border: #D8D8D8;
 
-//TODO: Remove after 2 weeks :)
-#toc.toc {
-	display: none;
-}
-
 //Some simple fixed for RTL languages
 .cont-dir-rtl {
 	.side-menu-capable {
@@ -32,6 +27,7 @@ $dark-border: #D8D8D8;
 	bottom:0;
 	width: 260px;
 	background: $toc-background;
+	z-index: $video-overlay-z-index; //For overlaying Ooyala Videos
 
 	counter-reset: level1, level2, level3;
 
@@ -44,7 +40,7 @@ $dark-border: #D8D8D8;
 		-moz-transform: translate(0);
 		transform: translate(0);
 
-		z-index: 11;
+		z-index: $video-overlay-z-index + 2; //For overlaying Curtain
 	}
 
 	header {

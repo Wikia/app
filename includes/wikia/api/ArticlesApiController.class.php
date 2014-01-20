@@ -603,6 +603,7 @@ class ArticlesApiController extends WikiaApiController {
 		$articles = is_array( $articleIds ) ? $articleIds : [ $articleIds ];
 		$ids = [];
 		$collection = [];
+		$titles = [];
 		foreach ( $articles as $i ) {
 			//data is cached on a per-article basis
 			//to avoid one article requiring purging
@@ -660,7 +661,7 @@ class ArticlesApiController extends WikiaApiController {
 					$collection[$id]['comments'] = ( class_exists( 'ArticleCommentList' ) ) ? ArticleCommentList::newFromTitle( $t )->getCountAllNested() : false;
 					//add file data
 					$collection[$id] = array_merge( $collection[ $id ], $fileData );
-
+					$articles[] = $id;
 					$this->wg->Memc->set( self::getCacheKey( $id, self::DETAILS_CACHE_ID ), $collection[$id], 86400 );
 				}
 
@@ -743,7 +744,8 @@ class ArticlesApiController extends WikiaApiController {
 				$data = [ 'thumbnail' => null, 'original_dimensions' => null ];
 				if ( isset( $images[ $id ] ) ) {
 					$data['thumbnail'] = $images[$id][0]['url'];
-					$data['original_dimensions'] = $images[$id][0]['original_dimensions'];
+					$data['original_dimensions'] = isset( $images[$id][0]['original_dimensions'] ) ?
+						$images[$id][0]['original_dimensions'] : null;
 				}
 				$result[ $id ] = $data;
 			}
