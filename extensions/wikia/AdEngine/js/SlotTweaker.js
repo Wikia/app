@@ -29,8 +29,17 @@ var SlotTweaker = function(log, document, window) {
 	};
 
 	isMedrec = function (slotname) {
-		return slotname.search(/TOP_RIGHT_BOXAD/);
-	}
+		return slotname.match(/TOP_RIGHT_BOXAD/);
+	};
+
+	hideSelfServeUrl = function (slotname) {
+		var selfServeUrl = document.getElementsByClassName('SelfServeUrl');
+		if (isMedrec(slotname)) {
+			if (selfServeUrl.length > 0) {
+				selfServeUrl[0].className += ' hidden';
+			}
+		}
+	};
 
 	isLeaderboard = function (slotname) {
 		return slotname.indexOf('LEADERBOARD') !== -1;
@@ -103,15 +112,6 @@ var SlotTweaker = function(log, document, window) {
 		}
 	};
 
-	hideSelfServeUrl = function(slotname) {
-		var selfServeUrl = document.getElementsByClassName('SelfServeUrl');
-		if (isMedrec(slotname)) {
-			if (selfServeUrl.length > 0) {
-				selfServeUrl[0].style.display = 'none';
-			}
-		}
-	};
-
 	show = function(slotname, usingClass) {
 		log('hide ' + slotname + (usingClass ? ' using class hidden' : ' using display: none'), 6, logGroup);
 
@@ -131,8 +131,8 @@ var SlotTweaker = function(log, document, window) {
 		removeDefaultHeight: removeDefaultHeight,
 		removeTopButtonIfNeeded: removeTopButtonIfNeeded,
 		adjustLeaderboardSize: adjustLeaderboardSize,
-		hideSelfServeUrl: hideSelfServeUrl,
 		hide: hide,
+		hideSelfServeUrl : hideSelfServeUrl,
 		show: show
 	};
 };
