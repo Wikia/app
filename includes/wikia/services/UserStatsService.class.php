@@ -93,17 +93,15 @@ class UserStatsService extends WikiaModel {
 		wfProfileIn( __METHOD__ );
 
 		$wikiId = ( $wikiId == 0 ) ? $this->wg->CityId : $wikiId ;
-
 		$editCount = $this->getOptionWiki( 'editcount', $wikiId, $skipCache );
 
-		if( $editCount === null or $editCount === false ) { // editcount has not been initialized. do so.
-
+		if( $editCount === null or $editCount === false ) {
+		// editcount has not been initialized. do so.
 			$editCount = $this->resetEditCountWiki( $wikiId );
-
 		}
 
 		wfProfileOut( __METHOD__ );
-		return $editCount;
+		return (int) $editCount;
 	}
 
 

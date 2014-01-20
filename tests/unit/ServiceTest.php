@@ -85,14 +85,19 @@ class ServiceTest extends WikiaBaseTest {
 	}
 
 	function testUserStatsService() {
+		// make sure we don't use memcache during the call
+		$wgMemcMock = $this->getMock( 'stdclass', ['get', 'set'] );
+		$wgMemcMock->expects( $this->any() )->method( 'get' )->will( $this->returnValue( null ) );
+		$this->mockGlobalVariable('wgMemc', $wgMemcMock);
+
 		$user = User::newFromName('QATestsBot');
 
 		$service = new UserStatsService($user->getId());
 		$stats = $service->getStats();
 
-		$this->assertInternalType('int', $stats['edits']);
-		$this->assertInternalType('int', $stats['likes']);
-		$this->assertInternalType('string', $stats['date']);
+		$this->assertInternalType('int', $stats['edits'], 'Checking if edits number is an integer');
+		$this->assertInternalType('int', $stats['likes'], 'Checking if likes number is an integer');
+		$this->assertInternalType('string', $stats['date'], 'Checking if date is a string');
 
 		// edits increase - perform fake edit
 		$edits = $stats['edits'];
@@ -100,7 +105,7 @@ class ServiceTest extends WikiaBaseTest {
 		$service->increaseEditsCount();
 
 		$stats = $service->getStats();
-		$this->assertEquals($edits+1, $stats['edits']);
+		$this->assertEquals($edits+1, $stats['edits'], 'Checking if UserStatsService::increaseEditsCount works correctly');
 	}
 
 	function testCategoriesService() {
