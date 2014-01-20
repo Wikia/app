@@ -26,18 +26,21 @@ require( ['jquery', 'JSMessages', 'wikia.window', 'wikia.log'], function ( $, ms
 	log( 'Loading slot: ' + mobileTopLeaderBoard, logLevel, logGroup );
 	window.adslots2.push([mobileTopLeaderBoard]);
 
-	if ( window.wgArticleId ) {
-		if ( showInContent ) {
-			log( 'Loading slot: ' + mobileInContent, logLevel, logGroup );
-			$firstSection.before( createSlot( mobileInContent ) );
-			window.adslots2.push([mobileInContent]);
-		}
+	if ( window.wgArticleId && (showInContent || showPreFooter) ) {
+		//this can wait to on load as is under the fold
+		$(window).on('load', function(){
+			if ( showInContent ) {
+				log( 'Loading slot: ' + mobileInContent, logLevel, logGroup );
+				$firstSection.before( createSlot( mobileInContent ) );
+				window.adslots2.push([mobileInContent]);
+			}
 
-		if ( showPreFooter ) {
-			log( 'Loading slot: ' + mobilePreFooter, logLevel, logGroup );
-			$footer.after( createSlot( mobilePreFooter ) );
-			window.adslots2.push([mobilePreFooter]);
-		}
+			if ( showPreFooter ) {
+				log( 'Loading slot: ' + mobilePreFooter, logLevel, logGroup );
+				$footer.after( createSlot( mobilePreFooter ) );
+				window.adslots2.push([mobilePreFooter]);
+			}
+		});
 	}
 
 //		$footer.before( createSlot( 'GPT_FLUSH', true ) );

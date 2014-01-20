@@ -48,7 +48,6 @@ class WikiaMobileService extends WikiaService {
 			if ( $mobileAdService->shouldShowAds() ) {
 				$topLeaderBoardAd = $this->app->renderView( 'WikiaMobileAdService', 'topLeaderBoard' );
 				$this->globalVariables['wgShowAds'] = true;
-				$this->globalVariables['wgUsePostScribe'] = true; /** @see ADEN-666 */
 			}
 		}
 
