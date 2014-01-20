@@ -70,6 +70,7 @@ HoverMenu.prototype.mouseover = function(event) {
 			method: 'menuItemsAll',
 			format: 'jsonp',
 			data: {
+				hash: $nav.data('hash'),
 				indexes: indexes,
 				uselang: window.wgUserLanguage,
 				cb: window.wgStyleVersion

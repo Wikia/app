@@ -43,7 +43,8 @@ class GlobalHeaderController extends WikiaController {
 		if (!empty($this->wg->LangToCentralMap[$userLang])) {
 			$centralUrl = $this->wg->LangToCentralMap[$userLang];
 		}
-		$createWikiUrl = GlobalTitle::newFromText('CreateNewWiki', NS_SPECIAL, 80433)->getFullURL();
+		$createWikiUrl = GlobalTitle::newFromText('CreateNewWiki', NS_SPECIAL, Wikia::MAIN_CORPORATE_WIKI_ID)
+			->getFullURL();
 		if ($userLang != 'en') {
 			$createWikiUrl .= '?uselang=' . $userLang;
 		}
