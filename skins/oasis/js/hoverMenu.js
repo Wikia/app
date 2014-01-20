@@ -72,7 +72,7 @@ HoverMenu.prototype.mouseover = function(event) {
 			data: {
 				indexes: indexes,
 				uselang: window.wgUserLanguage,
-				cb: window.wgStyleVersion,
+				cb: window.wgStyleVersion
 			},
 			scriptPath: window.location.protocol + '//' + $('.start-a-wiki a' ).get(0).hostname,
 			callback: $.proxy(function(items) {
