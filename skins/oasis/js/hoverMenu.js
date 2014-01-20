@@ -58,6 +58,7 @@ HoverMenu.prototype.mouseover = function(event) {
 	if (this.selector == '#GlobalNavigation' && !globalNavigationMenusCached) {
 		var $nav = $(this.selector),
 			$navItems = $nav.children('li'),
+			uselang = Wikia.Querystring().getVal('uselang', ''),
 			indexes = $navItems.map(function() {
 				return $(this).data('index');
 			}).get();
@@ -71,7 +72,8 @@ HoverMenu.prototype.mouseover = function(event) {
 			type: 'GET',
 			data: {
 				hash: $nav.data('hash'),
-				indexes: indexes
+				indexes: indexes,
+				uselang: uselang
 			},
 			callback: $.proxy(function(items) {
 				$.each(items, function(index, html) {
