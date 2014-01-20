@@ -43,7 +43,7 @@ class WikiaMobileService extends WikiaService {
 		$mobileAdService = new WikiaMobileAdService();
 
 		if ( $mobileAdService->shouldLoadAssets() ) {
-			$this->jsBodyPackages[] = 'wikiamobile_js_ads';
+			$this->jsBodyPackages[] = 'wikiamobile_ads_js';
 
 			if ( $mobileAdService->shouldShowAds() ) {
 				$topLeaderBoardAd = $this->app->renderView( 'WikiaMobileAdService', 'topLeaderBoard' );
