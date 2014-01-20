@@ -1,4 +1,4 @@
-<section class="WikiaHomePage WikiaGrid wikiahomepage-contentlang-<?= $lang ?>">
+<section class="WikiaHomePage WikiaGrid">
 	<header class="wikiahomepage-header">
 		<div class="wikiahompage-heading-group">
 			<h1><?= WfMessage('wikiahome-page-header-heading')->text(); ?></h1>
