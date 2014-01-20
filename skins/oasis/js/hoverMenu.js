@@ -67,12 +67,13 @@ HoverMenu.prototype.mouseover = function(event) {
 		$.nirvana.sendRequest({
 			controller: 'GlobalHeaderController',
 			method: 'menuItemsAll',
-			format: 'json',
-			type: 'GET',
+			format: 'jsonp',
 			data: {
-				hash: $nav.data('hash'),
-				indexes: indexes
+				uselang: window.wgUserLanguage,
+				indexes: indexes,
+				cb: window.wgStyleVersion
 			},
+			scriptPath: window.location.protocol + '//' + $('.start-a-wiki a' ).get(0).hostname,
 			callback: $.proxy(function(items) {
 				$.each(items, function(index, html) {
 					$navItems.filter(function() {

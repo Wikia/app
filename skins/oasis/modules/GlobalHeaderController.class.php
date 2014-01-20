@@ -43,8 +43,7 @@ class GlobalHeaderController extends WikiaController {
 		if (!empty($this->wg->LangToCentralMap[$userLang])) {
 			$centralUrl = $this->wg->LangToCentralMap[$userLang];
 		}
-
-		$createWikiUrl = 'http://www.wikia.com/Special:CreateNewWiki';
+		$createWikiUrl = GlobalTitle::newFromText('CreateNewWiki', NS_SPECIAL, 80433)->getFullURL();
 		if ($userLang != 'en') {
 			$createWikiUrl .= '?uselang=' . $userLang;
 		}
@@ -70,7 +69,7 @@ class GlobalHeaderController extends WikiaController {
 	}
 
 	public function menuItemsAll() {
-		$this->response->setFormat('json');
+		$this->response->setFormat(WikiaResponse::FORMAT_JSONP);
 
 		$indexes = $this->request->getVal('indexes', array());
 
