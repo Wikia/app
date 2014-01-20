@@ -56,32 +56,38 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 		echo "\nRunning '{$testClass}'...";
 
 		global $wgMarkTestSpeed;
-		$wgMarkTestSpeed = false;
+		$wgMarkTestSpeed = true;
 
 		global $wgOutputTestSpeedMessages;
 		$wgOutputTestSpeedMessages = true;
 
 		self::$slowTests = [];
 		self::$fastTests = [];
-		self::$testRunTime = microtime(true);
-		self::$testTimerResolution = strlen(substr(strrchr(self::SLOW_TEST_THRESHOLD, "."), 1)) + 3;
+		self::$testRunTime = microtime( true );
+		self::$testTimerResolution = strlen( substr( strrchr( self::SLOW_TEST_THRESHOLD, "." ), 1 ) ) + 3;
 	}
 
 	/**
 	 * Print out time it took to run all tests from current test class
 	 */
 	public static function tearDownAfterClass() {
-		$time = round( (microtime(true) - self::$testRunTime) * 1000, 2 );
+		$time = round( ( microtime( true ) - self::$testRunTime ) * 1000, 2 );
 		echo "done in {$time} ms";
 
 		if (!empty(self::$slowTests)) {
+			echo "\n---------------------------------------------\n";
 			echo "\nslowTests\n";
-			echo implode(array_keys(self::$slowTests), ', ');
+			var_dump(self::$slowTests);
+			//foreach (self::$slowTests as $k => $v) echo "\t$k\n";
+			echo "\n---------------------------------------------\n";
 		}
 
 		if (!empty(self::$fastTests)) {
+			echo "\n---------------------------------------------\n";
 			echo "\nfastTests\n";
-			echo implode(array_keys(self::$fastTests), ', ');
+			var_dump(self::$fastTests);
+			//foreach (self::$fastTests as $k => $v) echo "\t$k\n";
+			echo "\n---------------------------------------------\n";
 		}
 	}
 
@@ -112,9 +118,8 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 		}
 		$this->mockProxy->disable();
 		$this->mockProxy = null;
-		$this->endTime = microtime(true);
 
-		$this->testRunTime = round( $this->endTime - $this->startTime, self::$testTimerResolution);
+		$this->testRunTime = round( microtime(true) - $this->startTime, self::$testTimerResolution);
 		$this->processTestRunTime();
 	}
 
@@ -122,6 +127,9 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 		global $wgOutputTestSpeedMessages;
 
 		$annotations = $this->getAnnotations();
+
+		$fastTests = [];
+		$slowTests = [];
 
 		if($this->testRunTime > self::SLOW_TEST_THRESHOLD) {
 			if(!empty($wgOutputTestSpeedMessages)) {
@@ -155,16 +163,20 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 			echo "\nAdding slow annotation to " . $className . '::' . $methodName;
 		}
 
+		unset($classReflector);
+		unset($methodReflector);
+
 		$slowGroupAnnotation = '@group Slow';
 		$slowTimeAnnotation = '@slowExecutionTime ' . $this->testRunTime . ' ms';
 
-		$testCode = file_get_contents($filePath);
+		//$testCode = file_get_contents($filePath);
 
 		if(!$docComment) {
 			$functionStartRegex = '/(.*\s+function\s+' . $methodName . '\s*\()/';
 			$newDocComment = $this->getNewDocblockForSlowTest( $slowGroupAnnotation, $slowTimeAnnotation );
 
-			$updatedTestCode = preg_replace( $functionStartRegex, $newDocComment . "\\1", $testCode );
+			//$updatedTestCode = preg_replace( $functionStartRegex, $newDocComment . "\\1", $testCode );
+			return [$filePath, 'preg_replace', $functionStartRegex, $newDocComment];
 		} else {
 			$newDocComment = $docComment;
 
@@ -180,12 +192,11 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 				$newDocComment = preg_replace($regexSlowGroup, $slowGroupAnnotation, $newDocComment);
 			}
 
-			$updatedTestCode = str_replace($docComment, $newDocComment, $testCode);
+			//$updatedTestCode = str_replace($docComment, $newDocComment, $testCode);
+			return [$filePath, 'str_replace', $docComment, $newDocComment];
 		}
 
 		//file_put_contents($filePath, $updatedTestCode);
-		unset($classReflector);
-		unset($methodReflector);
 	}
 
 	protected function removeSlowTestAnnotation() {
@@ -206,17 +217,18 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 			echo "\nRemoving slow annotation to " . get_class($this) . '::' . $this->getName();
 		}
 
-		$testCode = file_get_contents($filePath);
+		unset($classReflector);
+		unset($methodReflector);
+
 		if($docComment) {
 			$newDocComment = preg_replace($regexSlowExecTime, '', $docComment);
 			$newDocComment = preg_replace($regexSlowGroup, '', $newDocComment);
-			$updatedTestCode = str_replace($docComment, $newDocComment, $testCode);
+			//$updatedTestCode = str_replace($docComment, $newDocComment, $testCode);
+
+			return [$filePath, 'str_replace', $docComment, $newDocComment];
+		} else {
+			return [null];
 		}
-
-		file_put_contents($filePath, $updatedTestCode);
-
-		unset($classReflector);
-		unset($methodReflector);
 
 	}
 
@@ -578,7 +590,9 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	protected function processSlowTest( $annotations ) {
 		global $wgMarkTestSpeed;
 
-		if ( !isset( self::$slowTests[$this->getName( false )] ) ) {
+		$testCaseName = $this->getName( false );
+
+		if ( !isset( self::$slowTests[ $testCaseName ] ) ) {
 			$annotatedAsSlow = false;
 			if ( !empty( $annotations['method'] ) && !empty( $annotations['method']['group'] ) ) {
 				if ( in_array( 'Slow', $annotations['method']['group'] ) ) {
@@ -586,9 +600,8 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 				}
 			}
 			if ( !$annotatedAsSlow && !empty($wgMarkTestSpeed)) {
-				$this->addSlowTestAnnotation();
+				self::$slowTests[ $testCaseName ] = $this->addSlowTestAnnotation();
 			}
-			self::$slowTests[$this->getName( false )] = true;
 		}
 	}
 
@@ -598,7 +611,9 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	protected function processFastTest( $annotations ) {
 		global $wgMarkTestSpeed;
 
-		if ( !isset( self::$fastTests[$this->getName( false )] ) ) {
+		$testCaseName = $this->getName( false );
+
+		if ( !isset( self::$fastTests[ $testCaseName ] ) ) {
 			$annotatedAsSlow = false;
 			if ( !empty( $annotations['method'] ) && !empty( $annotations['method']['group'] ) ) {
 				if ( in_array( 'Slow', $annotations['method']['group'] ) ) {
@@ -606,9 +621,8 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 				}
 			}
 			if ( $annotatedAsSlow && !empty($wgMarkTestSpeed) ) {
-				$this->removeSlowTestAnnotation();
+				self::$fastTests[ $testCaseName ] = $this->removeSlowTestAnnotation();
 			}
-			self::$fastTests[$this->getName( false )] = true;
 		}
 	}
 
