@@ -2,13 +2,13 @@
  * VisualEditor ContentEditable Wikia example data sets.
  */
 
-/* global require,mw: false */
+/* global mw: false */
 
 /**
  * @namespace
  * @ignore
  */
-ve.ce.wikiaExample = ( function () {
+ve.ce.wikiaExample = ( function ( utils ) {
 	var media = {};
 
 	/* Data */
@@ -237,7 +237,7 @@ ve.ce.wikiaExample = ( function () {
 		}
 
 		$mock
-			.addClass( 've-ce-branchNode ve-ce-protectedNode' )
+			.addClass( 've-ce-branchNode ve-ce-generatedContentNode ve-ce-protectedNode' )
 			.attr( 'contenteditable', false )
 			.append( media.html.shield );
 
@@ -356,4 +356,4 @@ ve.ce.wikiaExample = ( function () {
 
 	// Exports
 	return { 'media': media };
-}() );
+}( ve.wikiaTest.utils ) );
