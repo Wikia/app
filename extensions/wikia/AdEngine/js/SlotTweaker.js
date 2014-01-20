@@ -16,6 +16,7 @@ var SlotTweaker = function (log, document, window) {
 		element.className = newClasses;
 	}
 
+	// TODO: called always with usingClass=true
 	function hide(slotname, usingClass) {
 		log('hide ' + slotname + (usingClass ? ' using class hidden' : ' using display: none'), 6, logGroup);
 

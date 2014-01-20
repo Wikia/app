@@ -22,18 +22,11 @@ define(
 		function fillInSlot(slotname, success, hop) {
 			log(['fillInSlot', slotname], 'debug', logGroup);
 
-			wikiaGpt.pushAd(
-				slotname,
-				function () {
-					// Success
-					slotTweaker.removeDefaultHeight(slotname);
-					success();
-				},
-				function () {
-					// Hop
-					hop({method: 'hop'}, 'Null');
-				}
-			);
+			function hopToNull() {
+				hop({method: 'hop'}, 'Null');
+			}
+
+			wikiaGpt.pushAd(slotname, success, hopToNull);
 			wikiaGpt.flushAds();
 		}
 

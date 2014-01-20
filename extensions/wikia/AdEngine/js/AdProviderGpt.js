@@ -1,7 +1,7 @@
 /* exported AdProviderGpt */
 /* jshint maxparams: false, maxlen: 150 */
 
-var AdProviderGpt = function (adTracker, log, window, Geo, slotTweaker, cacheStorage, adLogicHighValueCountry, wikiaGpt, adSlots) {
+var AdProviderGpt = function (adTracker, log, window, Geo, slotTweaker, cacheStorage, adLogicHighValueCountry, wikiaGpt) {
 	'use strict';
 
 	var logGroup = 'AdProviderGpt',
@@ -59,6 +59,19 @@ var AdProviderGpt = function (adTracker, log, window, Geo, slotTweaker, cacheSto
 	}
 
 	/**
+	 * Flush GPT ads
+	 *
+	 * This function will cause all ads pushed to GPT to be fetched and rendered.
+	 * All other ads will auto-flush because the gptFlush variable is set to true.
+	 */
+	function flushGpt() {
+		log('flushGpt', 'debug', logGroup);
+
+		gptFlushed = true;
+		wikiaGpt.flushAds();
+	}
+
+	/**
 	 * Given we're considering calling DART (right country, right slot), should we?
 	 *
 	 * @param slotname
@@ -94,19 +107,6 @@ var AdProviderGpt = function (adTracker, log, window, Geo, slotTweaker, cacheSto
 			leaderboardCalled = true;
 		}
 		return true;
-	}
-
-	/**
-	 * Flush GPT ads
-	 *
-	 * This function will cause all ads pushed to GPT to be fetched and rendered.
-	 * All other ads will auto-flush because the gptFlush variable is set to true.
-	 */
-	function flushGpt() {
-		log('flushGpt', 'debug', logGroup);
-
-		gptFlushed = true;
-		wikiaGpt.flushAds();
 	}
 
 	// Public methods

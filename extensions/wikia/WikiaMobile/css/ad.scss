@@ -2,7 +2,6 @@
 
 //variables
 $slotWidth: 300px; //in content width
-$slotWidthMax: 320px; //top leaderboard width
 $slotTopHeight: 50px;
 
 #MOBILE_TOP_LEADERBOARD {
@@ -29,10 +28,6 @@ $slotTopHeight: 50px;
 	padding: 15px 0;
 
 	border-top: 1px solid $border-color;
-
-	&.default-height {
-		height: 0;
-	}
 
 	&.hidden {
 		display: none;
