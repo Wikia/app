@@ -630,7 +630,6 @@ $config['wikiamobile_ads_gpt_js'] = array(
 	'skin' => 'wikiamobile',
 	'assets' => array(
 		// Modules
-		'//resources/wikia/modules/geo.js',
 		'//resources/wikia/modules/lazyqueue.js',
 
 		// Advertisement libs
@@ -648,7 +647,6 @@ $config['wikiamobile_ads_gpt_js'] = array(
 
 		// Run!
 		'//extensions/wikia/WikiaMobile/js/ad_slots2.js',
-		'//extensions/wikia/AdEngine/js/AdEngineMobile.run.js',
 	)
 );
 
