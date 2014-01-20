@@ -405,12 +405,16 @@ class Wikia {
 	 *
 	 */
 	static public function log( $method, $sub = false, $message = '', $always = false, $timestamp = false ) {
-	  global $wgDevelEnvironment, $wgErrorLog, $wgDBname, $wgCityId, $wgCommandLineMode, $wgCommandLineSilentMode;
+	  global $wgDevelEnvironment, $wgErrorLog, $wgDBname, $wgCityId, $wgCommandLineMode, $wgCommandLineSilentMode, $wgEnableCentralizedLogging;
 
 		$method = $sub ? $method . "-" . $sub : $method;
 		if( $wgDevelEnvironment || $wgErrorLog || $always ) {
-			// Currently this goes to syslog1's /var/log/httpd-info.log
-			error_log( $method . ":{$wgDBname}/{$wgCityId}:" . $message );
+			if (!$wgDevelEnvironment && $wgEnableCentralizedLogging) {
+				$method = preg_match('/-WIKIA$/', $method) ? str_replace('-WIKIA', '', $method) : $method;
+				\Wikia\Logger\WikiaLogger::instance()->debug($message, ['method' => $method]);
+			} else {
+				error_log( $method . ":{$wgDBname}/{$wgCityId}:" . $message );
+			}
 		}
 		/**
 		 * commandline = echo

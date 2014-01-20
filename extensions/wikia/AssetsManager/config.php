@@ -170,6 +170,7 @@ $config['oasis_blocking'] = array(
 		'//resources/wikia/modules/lazyqueue.js',
 	)
 );
+
 $config['abtesting'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis', 'wikiamobile' ],
@@ -177,6 +178,13 @@ $config['abtesting'] = array(
 		'//extensions/wikia/AbTesting/js/AbTest.js',
 	)
 );
+$config['optimizely'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/Optimizely/js/OptimizelyLoader.js',
+	)
+);
+
 
 /** jQuery **/
 $config['jquery'] = array(
@@ -1370,9 +1378,9 @@ $config['analytics_gas_js'] = array(
 $config['wiki_map_js'] = array(
     'type' => AssetsManager::TYPE_JS,
     'assets' => array(
-        '//extensions/wikia/WikiMap/js/d3.v2.js',
-        '//extensions/wikia/WikiMap/js/jquery.xcolor.js',
-        '//extensions/wikia/WikiMap/js/wikiMapIndexContent.js'
+        '//extensions/wikia/hacks/WikiMap/js/d3.v2.js',
+        '//extensions/wikia/hacks/WikiMap/js/jquery.xcolor.js',
+        '//extensions/wikia/hacks/WikiMap/js/WikiMapIndexContent.js'
     )
 );
 
