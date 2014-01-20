@@ -23,6 +23,8 @@ require( ['jquery', 'JSMessages', 'wikia.window', 'wikia.log'], function ( $, ms
 				'</label></div></div>';
 		};
 
+	window.adslots2 = window.adslots2 || [];
+
 	log( 'Loading slot: ' + mobileTopLeaderBoard, logLevel, logGroup );
 	window.adslots2.push([mobileTopLeaderBoard]);
 

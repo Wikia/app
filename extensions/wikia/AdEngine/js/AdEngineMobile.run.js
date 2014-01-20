@@ -5,27 +5,17 @@
 
 require(
 	[
-		'wikia.adlogicpageparams', 'ext.wikia.adengine.adtracker', 'wikia.document',
-		'wikia.geo', 'wikia.lazyqueue', 'wikia.log', 'ext.wikia.adengine.slottracker',
-		'ext.wikia.adengine.slottweaker', 'wikia.window',
-		'wikia.adslots'
+		'wikia.adlogicpageparams', 'wikia.document',
+		'wikia.lazyqueue', 'wikia.log', 'ext.wikia.adengine.slottracker',
+		'ext.wikia.adengine.slottweaker', 'wikia.window'
 	],
-	function (adLogicPageLevelParams, adTracker, document, geo, lazyQueue, log, slotTracker, slotTweaker, window, adSlots) {
+	function (adLogicPageLevelParams, document, lazyQueue, log, slotTracker, slotTweaker, window) {
 		'use strict';
 
 		var logGroup = 'AdEngineMobile',
 			adEngine = AdEngine2(log, lazyQueue, slotTracker),
 			wikiaFullGpt = WikiaFullGptHelper(log, window, document, adLogicPageLevelParams),
-			adLogicHighValueCountry = { // nice hack
-				getMaxCallsToDART: function () { return 1e16; },
-				isHighValueCountry: function () { return true; }
-			},
-			cache = {
-				get: function () {},
-				set: function () {},
-				del: function () {}
-			},
-			adProviderGpt = AdProviderGpt(adTracker, log, window, geo, slotTweaker, cache, adLogicHighValueCountry, wikiaFullGpt, adSlots),
+			adProviderGpt = AdProviderGptMobile(log, window, slotTweaker, wikiaFullGpt),
 			adProviderNull = AdProviderNull(log, slotTweaker),
 			adConfigMobile = AdConfigMobile(
 				// AdProviders:
