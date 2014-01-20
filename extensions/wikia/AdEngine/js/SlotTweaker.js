@@ -5,7 +5,7 @@ var SlotTweaker = function(log, document, window) {
 		, addDefaultHeight, removeClass, removeDefaultHeight, hide, show, removeTopButtonIfNeeded
 		, defaultHeightClass = 'default-height'
 		, rclass = /[\t\r\n]/g
-		, isMedrec
+		, isMedrec, hideSelfServeUrl
 		, isLeaderboard, isStandardLeaderboardSize, adjustLeaderboardSize
 		, standardLeaderboardSizeClass = 'standard-leaderboard'
 	;
@@ -101,10 +101,13 @@ var SlotTweaker = function(log, document, window) {
 				slot.style.display = 'none';
 			}
 		}
+	};
 
-		if (isMedrec) {
-			if (window.document.getElementsByClassName('SelfServeUrl').length > 0) {
-				window.document.getElementsByClassName('SelfServeUrl')[0].style.display = 'none';
+	hideSelfServeUrl = function(slotname) {
+		var selfServeUrl = document.getElementsByClassName('SelfServeUrl');
+		if (isMedrec(slotname)) {
+			if (selfServeUrl.length > 0) {
+				selfServeUrl[0].style.display = 'none';
 			}
 		}
 	};
@@ -128,6 +131,7 @@ var SlotTweaker = function(log, document, window) {
 		removeDefaultHeight: removeDefaultHeight,
 		removeTopButtonIfNeeded: removeTopButtonIfNeeded,
 		adjustLeaderboardSize: adjustLeaderboardSize,
+		hideSelfServeUrl: hideSelfServeUrl,
 		hide: hide,
 		show: show
 	};
