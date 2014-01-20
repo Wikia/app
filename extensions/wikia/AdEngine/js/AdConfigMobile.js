@@ -5,10 +5,13 @@ var AdConfigMobile = function (
 	'use strict';
 
 	function getProvider(slot) {
-		if (slot[2] === 'Liftium') {
+		if (slot[2] === 'Null') {
 			return adProviderNull;
 		}
-		return adProviderGpt;
+		if (adProviderGpt.canHandleSlot(slot[0])) {
+			return adProviderGpt;
+		}
+		return adProviderNull;
 	}
 
 	return {

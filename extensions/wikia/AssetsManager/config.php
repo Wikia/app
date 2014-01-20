@@ -46,7 +46,6 @@ $config['liftium_ads_js'] = array(
 
 $config['adengine_oasis_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
-	//'skin' => 'wikiamobile',
 	'assets' => array(
 		// deps:
 		'//resources/wikia/modules/cookies.js',
@@ -79,7 +78,6 @@ $config['adengine2_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'#group_adengine_oasis_js',
-		'//extensions/wikia/AdEngine/js/AdSlots.desktop.js',
 		'#group_adengine_js',
 		// run:
 		'//extensions/wikia/AdEngine/js/AdEngine2.run.js',
@@ -91,7 +89,6 @@ $config['wikiamobile_js_ads'] = array(
 	'skin' => 'wikiamobile',
 	'assets' => array(
 		// libraries
-		'//extensions/wikia/AdEngine/js/AdSlots.mobile.js',
 		'//extensions/wikia/AdEngine/js/AdConfigMobile.js',
 		'#group_adengine_js',
 
@@ -107,7 +104,6 @@ $config['oasis_ads_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		// ads
-/*
 		'//extensions/wikia/AdEngine/AdMeldAPIClient.js',
 		'//extensions/wikia/AdEngine/AdProviderOpenX.js',
 		'//extensions/wikia/AdEngine/LazyLoadAds.js',
@@ -119,7 +115,6 @@ $config['oasis_ads_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdProviderSevenOneMedia.js',
 		'//extensions/wikia/AdEngine/js/AdConfig2Late.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.configLateAds.js',
-*/
 
 		'#group_liftium_ads_js',
 

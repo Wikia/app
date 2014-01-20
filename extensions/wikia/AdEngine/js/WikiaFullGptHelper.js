@@ -13,10 +13,9 @@ var WikiaFullGptHelper = function (log, window, document, adLogicPageLevelParams
 		dataAttribs = {},
 		googletag;
 
-	pageLevelParams.src = 'mobile';
-
-	function init(paramSlotMap) {
+	function init(paramSlotMap, src) {
 		slotMap = paramSlotMap;
+		pageLevelParams.src = src;
 	}
 
 	function triggerDone(slotnameGpt) {
