@@ -1,4 +1,4 @@
-define( 'models.videopageadmin.thumbnail', [
+define( 'videopageadmin.models.thumbnail', [
 		'jquery'
 ], function( $ ) {
 	'use strict';

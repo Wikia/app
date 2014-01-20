@@ -1,6 +1,6 @@
 /* global _ */
 /* global Backbone */
-define( 'views.videohomepage.featured', [
+define( 'videohomepage.views.featured', [
 		// lib deps
 		'jquery',
 		// wikia core deps
@@ -8,8 +8,8 @@ define( 'views.videohomepage.featured', [
 		'wikia.videoBootstrap',
 		'wikia.tracker',
 		// module specific deps
-		'models.videohomepage.slide',
-		'collections.videohomepage.featuredslides',
+		'videohomepage.models.slide',
+		'videohomepage.collections.featuredslides',
 		'jquery.ellipses'
 ], function( $, Nirvana, VideoBootstrap, Tracker, FeaturedSlideModel, FeaturedSlidesCollection ) {
 

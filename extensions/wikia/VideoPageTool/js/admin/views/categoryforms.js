@@ -1,8 +1,8 @@
-define( 'views.videopageadmin.categoryforms', [
+define( 'videopageadmin.views.categoryforms', [
 		'jquery',
-		'views.videopageadmin.autocomplete',
-		'views.videopageadmin.carousel',
-		'collections.videopageadmin.categorydata'
+		'videopageadmin.views.autocomplete',
+		'videopageadmin.views.carousel',
+		'videopageadmin.collections.categorydata'
 	], function( $, AutocompleteView, AdminCarouselView, CategoryDataCollection ) {
 		'use strict';
 

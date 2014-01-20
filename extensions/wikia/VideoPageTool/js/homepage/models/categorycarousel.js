@@ -1,4 +1,4 @@
-define( 'models.videohomepage.categorycarousel', [], function() {
+define( 'videohomepage.models.categorycarousel', [], function() {
 	'use strict';
 	var CategoryCarouselModel = Backbone.Model.extend( {
 		defaults: {

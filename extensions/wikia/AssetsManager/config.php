@@ -1062,29 +1062,29 @@ $config['videopageadmin_js'] = array(
 		'//resources/wikia/modules/aim.js',
 		'//extensions/wikia/WikiaMiniUpload/js/WMU.js',
 		// TODO: probably move this jQuery plugin to /resources at some point
-		'//extensions/wikia/VideoPageTool/js/views/jquery.switcher.js',
+		'//extensions/wikia/VideoPageTool/js/shared/views/switcher.js',
 
 		// Compiled Mustache templates
 		'//extensions/wikia/VideoPageTool/js/templates.mustache.js',
 
-		'//extensions/wikia/VideoPageTool/js/models/videopageadmin.datepicker.js',
-		'//extensions/wikia/VideoPageTool/js/models/videopageadmin.thumbnail.js',
-		'//extensions/wikia/VideoPageTool/js/models/videopageadmin.validator.js',
-		'//extensions/wikia/VideoPageTool/js/views/videopageadmin.datepicker.js',
-		'//extensions/wikia/VideoPageTool/js/views/videopageadmin.index.js',
-		'//extensions/wikia/VideoPageTool/js/views/videopageadmin.thumbnailupload.js',
-		'//extensions/wikia/VideoPageTool/js/views/videopageadmin.edit.js',
+		'//extensions/wikia/VideoPageTool/js/admin/models/datepicker.js',
+		'//extensions/wikia/VideoPageTool/js/admin/models/thumbnail.js',
+		'//extensions/wikia/VideoPageTool/js/admin/models/validator.js',
+		'//extensions/wikia/VideoPageTool/js/admin/views/datepicker.js',
+		'//extensions/wikia/VideoPageTool/js/admin/views/index.js',
+		'//extensions/wikia/VideoPageTool/js/admin/views/thumbnailupload.js',
+		'//extensions/wikia/VideoPageTool/js/admin/views/edit.js',
 
-		'//extensions/wikia/VideoPageTool/js/collections/videopageadmin.category.js',
-		'//extensions/wikia/VideoPageTool/js/collections/videopageadmin.categorydata.js',
+		'//extensions/wikia/VideoPageTool/js/admin/collections/category.js',
+		'//extensions/wikia/VideoPageTool/js/admin/collections/categorydata.js',
 
-		'//extensions/wikia/VideoPageTool/js/views/videopagetool.owlcarousel.js',
-		'//extensions/wikia/VideoPageTool/js/views/videopagetool.carouselthumb.js',
-		'//extensions/wikia/VideoPageTool/js/views/videopageadmin.carousel.js',
-		'//extensions/wikia/VideoPageTool/js/views/videopageadmin.autocompleteitem.js',
-		'//extensions/wikia/VideoPageTool/js/views/videopageadmin.autocomplete.js',
-		'//extensions/wikia/VideoPageTool/js/views/videopageadmin.categoryforms.js',
-		'//extensions/wikia/VideoPageTool/js/views/videopageadmin.category.js',
+		'//extensions/wikia/VideoPageTool/js/shared/views/owlcarousel.js',
+		'//extensions/wikia/VideoPageTool/js/shared/views/carouselthumb.js',
+		'//extensions/wikia/VideoPageTool/js/admin/views/carousel.js',
+		'//extensions/wikia/VideoPageTool/js/admin/views/autocompleteitem.js',
+		'//extensions/wikia/VideoPageTool/js/admin/views/autocomplete.js',
+		'//extensions/wikia/VideoPageTool/js/admin/views/categoryforms.js',
+		'//extensions/wikia/VideoPageTool/js/admin/views/category.js',
 	)
 );
 
@@ -1121,7 +1121,7 @@ $config['videohomepage_js'] = array(
 		// jQuery plugins
 		'//resources/wikia/libraries/jquery/bxslider/jquery.bxslider.js',
 		'//resources/wikia/libraries/jquery/owl.carousel/owl.carousel.js',
-		'//resources/wikia/libraries/jquery/ellipses.js',
+		'//extensions/wikia/VideoPageTool/js/shared/views/ellipses.js',
 
 		// Lodash is an underscore.js rewrite and a prereq for Backbone
 		'//extensions/wikia/VideoPageTool/js/lib/lodash/dist/lodash.underscore.js',
@@ -1131,24 +1131,24 @@ $config['videohomepage_js'] = array(
 		'//extensions/wikia/VideoPageTool/js/templates.mustache.js',
 
 		// Featured video slider
-		'//extensions/wikia/VideoPageTool/js/models/videohomepage.slide.js',
-		'//extensions/wikia/VideoPageTool/js/collections/videohomepage.featuredslides.js',
-		'//extensions/wikia/VideoPageTool/js/views/videohomepage.featured.js',
+		'//extensions/wikia/VideoPageTool/js/homepage/models/slide.js',
+		'//extensions/wikia/VideoPageTool/js/homepage/collections/featuredslides.js',
+		'//extensions/wikia/VideoPageTool/js/homepage/views/featured.js',
 
 		// Latest videos / category carousels
-		'//extensions/wikia/VideoPageTool/js/models/videohomepage.categorycarousel.js',
-		'//extensions/wikia/VideoPageTool/js/models/videohomepage.categorythumb.js',
-		'//extensions/wikia/VideoPageTool/js/collections/videopageadmin.category.js',
-		'//extensions/wikia/VideoPageTool/js/collections/videopageadmin.categorydata.js',
-		'//extensions/wikia/VideoPageTool/js/views/videohomepage.carousels.js',
-		'//extensions/wikia/VideoPageTool/js/views/videopagetool.carouselthumb.js',
-		'//extensions/wikia/VideoPageTool/js/views/videopagetool.carousel.js',
+		'//extensions/wikia/VideoPageTool/js/homepage/models/categorycarousel.js',
+		'//extensions/wikia/VideoPageTool/js/homepage/models/categorythumb.js',
+		'//extensions/wikia/VideoPageTool/js/admin/collections/category.js',
+		'//extensions/wikia/VideoPageTool/js/admin/collections/categorydata.js',
+		'//extensions/wikia/VideoPageTool/js/homepage/views/carousels.js',
+		'//extensions/wikia/VideoPageTool/js/shared/views/carouselthumb.js',
+		'//extensions/wikia/VideoPageTool/js/shared/views/carousel.js',
 
 		// Search box
-		'//extensions/wikia/VideoPageTool/js/views/videohomepage.search.js',
+		'//extensions/wikia/VideoPageTool/js/homepage/views/search.js',
 
 		// "Router" for views
-		'//extensions/wikia/VideoPageTool/js/views/videohomepage.index.js',
+		'//extensions/wikia/VideoPageTool/js/homepage/views/index.js',
 	)
 );
 

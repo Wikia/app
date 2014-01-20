@@ -1,7 +1,7 @@
-define( 'views.videopageadmin.category', [
+define( 'videopageadmin.views.category', [
 		'jquery',
-		'collections.videopageadmin.category',
-		'views.videopageadmin.categoryforms'
+		'videopageadmin.collections.category',
+		'videopageadmin.views.categoryforms'
 	], function( $, CategoryCollection, FormGroupView ) {
 	'use strict';
 
@@ -30,7 +30,7 @@ define( 'views.videopageadmin.category', [
 
 $( function () {
 		'use strict';
-		require( [ 'views.videopageadmin.category' ], function( CategoryPageView ) {
+		require( [ 'videopageadmin.views.category' ], function( CategoryPageView ) {
 				new CategoryPageView( {
 						el: '#LatestVideos'
 				} );

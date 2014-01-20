@@ -1,5 +1,5 @@
-define( 'collections.videohomepage.featuredslides', [
-		'models.videohomepage.slide'
+define( 'videohomepage.collections.featuredslides', [
+		'videohomepage.models.slide'
 	], function( SlideModel ) {
 		'use strict';
 

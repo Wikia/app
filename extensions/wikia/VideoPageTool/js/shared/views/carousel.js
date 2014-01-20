@@ -1,11 +1,11 @@
 /**
  * View for carousel wrapper.  Data is category display title and thumbs list
  */
-define( 'views.videopagetool.carousel', [
-	'collections.videopageadmin.categorydata',
-	'models.videohomepage.categorythumb',
-	'models.videohomepage.categorycarousel',
-	'views.videopagetool.carouselthumb',
+define( 'shared.views.carousel', [
+	'videopageadmin.collections.categorydata',
+	'videohomepage.models.categorythumb',
+	'videohomepage.models.categorycarousel',
+	'shared.views.carouselthumb',
 	'templates.mustache'
 ], function(
 	CategoryDataCollection,

@@ -1,9 +1,9 @@
 /**
  * View for carousel wrapper.  Data is category display title and thumbs list
  */
-define( 'views.videopageadmin.carousel', [
-	'views.videopagetool.owlcarousel',
-	'views.videopagetool.carouselthumb',
+define( 'videopageadmin.views.carousel', [
+	'shared.views.owlcarousel',
+	'shared.views.carouselthumb',
 	'templates.mustache'
 ], function(
 	OwlCarouselView,

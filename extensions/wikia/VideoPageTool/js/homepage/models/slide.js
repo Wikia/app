@@ -1,4 +1,4 @@
-define( 'models.videohomepage.slide', [], function() {
+define( 'videohomepage.models.slide', [], function() {
 		'use strict';
 		var FeaturedSlideModel = Backbone.Model.extend( {
 				defaults: {

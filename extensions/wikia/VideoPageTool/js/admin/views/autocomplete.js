@@ -12,9 +12,9 @@
  * div.autocomplete,
  * input[data-autocomplete]
  */
-define( 'views.videopageadmin.autocomplete', [
+define( 'videopageadmin.views.autocomplete', [
 		'jquery',
-		'views.videopageadmin.autocompleteitem'
+		'videopageadmin.views.autocompleteitem'
 	], function( $, AutocompleteItemView ) {
 	'use strict';
 	var AutocompleteView = Backbone.View.extend( {
