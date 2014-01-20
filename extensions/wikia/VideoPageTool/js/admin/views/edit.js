@@ -213,12 +213,3 @@ define( 'videopageadmin.views.edit', [
 
 	return VPTEdit;
 } );
-
-require( ['videopageadmin.views.edit'], function( EditView ) {
-
-	'use strict';
-
-	$( function() {
-		new EditView();
-	} );
-} );
