@@ -134,7 +134,7 @@ define( 'autocomplete', ['jquery'], function ( $ ) {
 			clearParent.addClass( 'hide-clear' ).visible = false;
 			input.val( '' );
 		} ).on( 'click', function () {
-				input.trigger( 'focus' );
-			} );
+			input.trigger( 'focus' );
+		} );
 	};
 } );
