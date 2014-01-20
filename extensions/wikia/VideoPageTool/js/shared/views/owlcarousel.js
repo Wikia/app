@@ -7,7 +7,7 @@ define( 'shared.views.owlcarousel', [
 		$carousel: null,
 		events: {
 			'click .control[data-direction="left"]': 'slideLeft',
-			'click .control[data-direction="right"]': 'slideRight',
+			'click .control[data-direction="right"]': 'slideRight'
 		},
 		renderCarousel: function( config ) {
 			var params = _.extend( {
