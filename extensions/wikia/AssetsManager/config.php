@@ -170,6 +170,7 @@ $config['oasis_blocking'] = array(
 		'//resources/wikia/modules/lazyqueue.js',
 	)
 );
+
 $config['abtesting'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis', 'wikiamobile' ],
@@ -177,6 +178,13 @@ $config['abtesting'] = array(
 		'//extensions/wikia/AbTesting/js/AbTest.js',
 	)
 );
+$config['optimizely'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/Optimizely/js/OptimizelyLoader.js',
+	)
+);
+
 
 /** jQuery **/
 $config['jquery'] = array(
@@ -222,9 +230,6 @@ $config['oasis_jquery'] = array(
 		'//extensions/wikia/Search/js/SearchAbTest.DomUpdater.js',
 		'//extensions/wikia/Search/js/SearchAbTest.Context.js',
 		'//extensions/wikia/Search/js/SearchAbTest.js',
-
-		// Fixed global nav ABTesting
-		'//skins/oasis/js/GlobalHeader.js',
 	)
 );
 
@@ -868,7 +873,7 @@ $config['chat_js2'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'#group_oasis_jquery',
-		'#group_ui_repo_api_js',
+		'#group_oasis_shared_core_js',
 
 		// shared libraries
 		'//extensions/wikia/AssetsManager/js/AssetsManager.js',
@@ -887,7 +892,6 @@ $config['chat_js2'] = array(
 		'//extensions/wikia/Chat2/js/models/models.js',
 		'//extensions/wikia/Chat2/js/controllers/controllers.js',
 		'//extensions/wikia/Chat2/js/views/views.js',
-		'//resources/wikia/modules/browserDetect.js',
 		'//extensions/wikia/Chat2/js/views/ChatBanModal.js',
 	)
 );
@@ -1325,9 +1329,9 @@ $config['analytics_gas_js'] = array(
 $config['wiki_map_js'] = array(
     'type' => AssetsManager::TYPE_JS,
     'assets' => array(
-        '//extensions/wikia/WikiMap/js/d3.v2.js',
-        '//extensions/wikia/WikiMap/js/jquery.xcolor.js',
-        '//extensions/wikia/WikiMap/js/wikiMapIndexContent.js'
+        '//extensions/wikia/hacks/WikiMap/js/d3.v2.js',
+        '//extensions/wikia/hacks/WikiMap/js/jquery.xcolor.js',
+        '//extensions/wikia/hacks/WikiMap/js/WikiMapIndexContent.js'
     )
 );
 

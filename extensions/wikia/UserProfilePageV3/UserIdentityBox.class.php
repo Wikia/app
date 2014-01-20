@@ -304,10 +304,7 @@ class UserIdentityBox {
 		if (is_object($data)) {
 			foreach ($this->optionsArray as $option) {
 				if (isset($data->$option)) {
-					$data->$option = str_replace('*', '&asterix;', $data->$option);
-					$data->$option = $this->app->wg->Parser->parse($data->$option, $this->user->getUserPage(), new ParserOptions($this->user))->getText();
-					$data->$option = str_replace('&amp;asterix;', '*', $data->$option);
-					$data->$option = trim(strip_tags($data->$option));
+					$data->$option = $this->doParserFilter($data->$option);
 
 					//phalanx filtering; bugId:10233
 					if ($option !== 'name') {
@@ -382,6 +379,25 @@ class UserIdentityBox {
 
 		wfProfileOut(__METHOD__);
 		return false;
+	}
+
+	/**
+	 * @brief Converts wikitext string to HTML
+	 *
+	 * @param string $text the text to be parsed
+	 *
+	 * @return string Parsed HTML string
+	 */
+	public function doParserFilter( $text )
+	{
+		$text = str_replace( '*', '&asterix;', $text );
+		$text = $this->app->wg->Parser->parse( $text, $this->user->getUserPage(), new ParserOptions( $this->user ) )->getText();
+		$text = str_replace( '&amp;asterix;', '*', $text );
+		// Encoding problems in user masthead (CONN-131)
+		$text = str_replace( '&#160;', ' ', $text );
+		$text = trim( strip_tags( $text ) );
+
+		return $text;
 	}
 
 	/**

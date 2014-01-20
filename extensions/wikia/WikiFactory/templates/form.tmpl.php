@@ -95,6 +95,10 @@ border: none;
 .wf-variable-form .success {color: darkgreen; font-weight: bold; }
 .wf-variable-form textarea { width: 90%; height: 8em; }
 .wf-variable-form input.input-string { width: 90%; }
+.wf-variable-form label { display: block; padding-top: 1em; }
+.wf-variable-form-inline-group { width: 45%; }
+.wf-variable-form-left { float: left; }
+.wf-variable-form-right { float: right; }
 
 .prompt {
 	color: #fe0000;
