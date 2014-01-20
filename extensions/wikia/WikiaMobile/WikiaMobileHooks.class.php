@@ -321,7 +321,8 @@ class WikiaMobileHooks {
 					wfProfileOut( __METHOD__ );
 					return true;
 				}
-			} else if ( $ns == NS_HELP ) {
+			//Do not show error on non-blank help pages (including shared help)
+			} else if ( $ns == NS_HELP && ( $title->isKnown() || SharedHelpArticleExists( $title ) ) ) {
 				wfProfileOut( __METHOD__ );
 				return true;
 			}

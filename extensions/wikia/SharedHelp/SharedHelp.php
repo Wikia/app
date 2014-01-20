@@ -247,10 +247,6 @@ function SharedHelpHook(&$out, &$text) {
 		}
 
 		if ( empty( $content ) ) {
-			//if on mobile, show 404 instead of empty page
-			if( F::app()->checkskin( 'wikiamobile' ) ){
-				WikiaMobileErrorService::$displayErrorPage = true;
-			}
 			wfProfileOut(__METHOD__);
 			return true;
 		} else {

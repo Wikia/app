@@ -10,7 +10,7 @@ class WikiaMobileErrorService extends WikiaService {
 	 * Used by WikiaMobileHooks and SharedHelp
 	 * @var bool
 	 */
-	static public $displayErrorPage;
+	static public $displayErrorPage = false;
 	/**
 	 * Page Not Found
 	 *
