@@ -95,7 +95,7 @@ class BlogArticle extends Article {
 
 		if( !$purge ) {
 			$cachedValue  = $this->blogListingMemcacheKey( $userMem, $page );
-			if ( $cachedValue ) {
+			if ( $cachedValue && isset( $cachedValue['listing'] ) ) {
 				$listing = $cachedValue['listing'];
 				if ( isset($cachedValue['blogPostCount']) ) {
 					$blogPostCount = $cachedValue['blogPostCount'];
