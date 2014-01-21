@@ -41,7 +41,6 @@ define( 'shared.views.carousel', [
 				self.$carousel.append( view.$el );
 			} );
 
-
 			this.$carousel.owlCarousel( {
 				scrollPerPage: true,
 				pagination: true,
