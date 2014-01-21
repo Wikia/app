@@ -18,8 +18,6 @@ class EditPageLayoutTest extends WikiaBaseTest {
 	}
 
 	/**
-@group Slow
-@slowExecutionTime 0.0091519355773926 ms
 	 * @group UsingDB
 	 */
 	public function testMainPageEdit() {
@@ -111,8 +109,6 @@ class EditPageLayoutTest extends WikiaBaseTest {
 	}
 
 	/**
-@group Slow
-@slowExecutionTime 0.0091519355773926 ms
 	 * @group UsingDB
 	 */
 	public function testPreloadText() {

@@ -10,8 +10,6 @@ use Wikia\Search\Hooks;
 class HooksTest extends BaseTest {
 	
 	/**
-@group Slow
-@slowExecutionTime 0.082754135131836 ms
 	 * @covers Wikia\Search\Hooks
 	 */
 	public function testOnWikiaMobileAssetsPackages() {
@@ -66,8 +64,6 @@ class HooksTest extends BaseTest {
 	}
 	
 	/**
-@group Slow
-@slowExecutionTime 0.091402053833008 ms
 	 * @covers Wikia\Search\Hooks::onArticleDeleteComplete
 	 */
 	public function testOnArticleDeleteComplete() {
@@ -92,8 +88,6 @@ class HooksTest extends BaseTest {
 	}
 	
 	/**
-@group Slow
-@slowExecutionTime 0.072642087936401 ms
 	 * @covers Wikia\Search\Hooks::onArticleSaveComplete
 	 */
 	public function testOnArticleSaveComplete() {
@@ -137,8 +131,6 @@ class HooksTest extends BaseTest {
 	}
 	
 	/**
-@group Slow
-@slowExecutionTime 0.060944080352783 ms
 	 * @covers Wikia\Search\Hooks::onArticleUndelete
 	 */
 	public function testOnArticleUndelete() {
@@ -168,8 +160,6 @@ class HooksTest extends BaseTest {
 	}
 	
 	/**
-@group Slow
-@slowExecutionTime 0.060994148254395 ms
 	 * @covers Wikia\Search\Hooks::onWikiFactoryPublicStatusChange
 	 */
 	public function testOnWikiFactoryPublicStatusChange() {
@@ -199,8 +189,6 @@ class HooksTest extends BaseTest {
 	}
 	
 	/**
-@group Slow
-@slowExecutionTime 0.059478998184204 ms
 	 * @covers Wikia\Search\Hooks::onGetPreferences
 	 */
 	public function testonGetPreferences() {
@@ -224,8 +212,6 @@ class HooksTest extends BaseTest {
 	}
 	
 	/**
-@group Slow
-@slowExecutionTime 0.074724912643433 ms
 	 * @covers Wikia\Search\Hooks::onLinkEnd
 	 * @covers Wikia\Search\Hooks::popLinks
 	 */

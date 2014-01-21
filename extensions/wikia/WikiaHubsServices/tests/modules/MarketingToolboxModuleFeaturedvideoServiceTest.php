@@ -11,8 +11,6 @@ class MarketingToolboxModuleFeaturedvideoServiceTest extends WikiaBaseTest {
 	}
 
 	/**
-@group Slow
-@slowExecutionTime 0.0055592060089111 ms
 	 * @dataProvider getStructuredDataDataProvider
 	 */
 	public function testGetStructuredData($inputData, $expectedData, $mockedVideoData) {

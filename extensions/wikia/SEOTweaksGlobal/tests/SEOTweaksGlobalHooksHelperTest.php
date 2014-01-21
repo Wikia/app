@@ -155,8 +155,6 @@ class SEOTweaksGlobalHooksHelperTest extends WikiaBaseTest {
 		$this->assertEquals(array('foo'=>'bar'), $meta);
 	}
 	/**
-@group Slow
-@slowExecutionTime 0.055020093917847 ms
 	 * As tests above cover all the generation cases, we right now use the cached value to check the
 	 * behaviour in remaining scenarios
 	 * @dataProvider getCacheDataProvider

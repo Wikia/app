@@ -80,8 +80,6 @@ class MarketingToolboxModuleFromthecommunityServiceTest extends WikiaBaseTest {
 	}
 
 	/**
-@group Slow
-@slowExecutionTime 0.0042750835418701 ms
 	 * @dataProvider getStructuredDataDataProvider
 	 */
 	public function testGetStructuredData($inputData, $expectedData) {

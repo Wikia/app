@@ -78,8 +78,6 @@
 		}
 
 		/**
-@group Slow
-@slowExecutionTime 0.0056171417236328 ms
 		 * @dataProvider toggleFeatureDataProvider
 		 */
 		public function testToggleFeature($is_allow, $feature, $enabled, $exp_result, $exp_error) {

@@ -57,8 +57,6 @@
 		}
 
 		/**
-@group Slow
-@slowExecutionTime 0.71286797523499 ms
 		 * @dataProvider signupDataProvider
 		 */
 		public function testSignup( $requestParams, $mockUserParams, $mockUserLoginFormParams, $expResult, $expMsg, $expErrParam ) {
@@ -326,8 +324,6 @@
 		}
 
 		/**
-@group Slow
-@slowExecutionTime 0.58809614181519 ms
 		 * @dataProvider changeUnconfirmedUserEmailDataProvider
 		 */
 		public function testChangeUnconfirmedUserEmail( $params, $mockUserParams, $mockSessionParams, $mockCacheParams, $expResult, $expMsg, $expErrParam ) {
@@ -498,8 +494,6 @@
 		}
 
 		/**
-@group Slow
-@slowExecutionTime 0.66614198684692 ms
 		 * @dataProvider sendConfirmationEmailDataProvider
 		 */
 		public function testSendConfirmationEmail( $mockWebRequestParams, $params, $mockEmailAuth, $mockUserParams, $mockSessionParams, $mockCacheParams, $mockMessagesMap, $mockMsgExt, $expResult, $expMsg, $expMsgEmail, $expErrParam, $expHeading, $expSubheading ) {

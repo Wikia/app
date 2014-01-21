@@ -10,8 +10,6 @@ use Wikia\Search\Test\BaseTest;
 class SearchApiControllerTest extends BaseTest
 {
 	/**
-@group Slow
-@slowExecutionTime 0.064336061477661 ms
 	 * @covers SearchApiController::getList
 	 */
 	public function testGetListWithTerms() {
@@ -39,8 +37,6 @@ class SearchApiControllerTest extends BaseTest
 	}
 	
 	/**
-@group Slow
-@slowExecutionTime 0.07322096824646 ms
 	 * @covers SearchApiController::getConfigFromRequest
 	 */
 	public function testGetConfigFromRequest() {
@@ -144,8 +140,6 @@ class SearchApiControllerTest extends BaseTest
 	}
 	
 	/**
-@group Slow
-@slowExecutionTime 0.064065933227539 ms
 	 * @covers SearchApiController::validateNamespacesForConfig
 	 */
 	public function testValidateNamespacesForConfigNoNamespaces() {
@@ -188,8 +182,6 @@ class SearchApiControllerTest extends BaseTest
 	}
 	
 	/**
-@group Slow
-@slowExecutionTime 0.064065933227539 ms
 	 * @covers SearchApiController::validateNamespacesForConfig
 	 */
 	public function testValidateNamespacesForConfigWithNamespaces() {
@@ -233,8 +225,6 @@ class SearchApiControllerTest extends BaseTest
 	}
 	
 	/**
-@group Slow
-@slowExecutionTime 0.064065933227539 ms
 	 * @covers SearchApiController::validateNamespacesForConfig
 	 */
 	public function testValidateNamespacesForConfigBadNamespaces() {
@@ -277,8 +267,6 @@ class SearchApiControllerTest extends BaseTest
 	}
 	
 	/**
-@group Slow
-@slowExecutionTime 0.063141107559204 ms
 	 * @covers SearchApiController::setResponseFromConfig
 	 */
 	public function testSetResponseFromConfigNoTerms() {
@@ -318,8 +306,6 @@ class SearchApiControllerTest extends BaseTest
 	}
 	
 	/**
-@group Slow
-@slowExecutionTime 0.063141107559204 ms
 	 * @covers SearchApiController::setResponseFromConfig
 	 */
 	public function testSetResponseFromConfigWithTerms() {

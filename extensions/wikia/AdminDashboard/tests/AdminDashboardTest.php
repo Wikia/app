@@ -56,8 +56,6 @@
 		}
 
 		/**
-@group Slow
-@slowExecutionTime 0.03082013130188 ms
 		 * @dataProvider getStatsDataProvider
 		 */
 		public function testGetStats($cache_value, $expected_daily, $expected_total, $fetch_obj=null) {

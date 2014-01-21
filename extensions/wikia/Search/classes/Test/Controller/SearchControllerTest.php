@@ -21,8 +21,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 	}
 
 	/**
-@group Slow
-@slowExecutionTime 0.09761905670166 ms
 	 * @covers WikiaSearchController::index
 	 */
 	public function testIndex() {
@@ -173,8 +171,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 	}
 
 	/**
-@group Slow
-@slowExecutionTime 0.12783098220825 ms
 	 * @covers WikiaSearchController::handleArticleMatchTracking
 	 */
 	public function testArticleMatchTrackingWithMatch() {
@@ -274,8 +270,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 	}
 
 	/**
-@group Slow
-@slowExecutionTime 0.12783098220825 ms
 	 * @covers WikiaSearchController::handleArticleMatchTracking
 	 */
 	public function testArticleMatchTrackingWithoutMatch() {
@@ -337,8 +331,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 	}
 
 	/**
-@group Slow
-@slowExecutionTime 0.12783098220825 ms
 	 * @covers WikiaSearchController::handleArticleMatchTracking
 	 */
 	public function testHandleArticleMatchTrackingWithoutGoSearch() {
@@ -430,8 +422,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 
 	
 	/**
-@group Slow
-@slowExecutionTime 0.062512874603271 ms
 	 * @covers WikiaSearchController::pagination
 	 */
 	public function testPaginationWithoutConfig() {
@@ -471,8 +461,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 	}
 
 	/**
-@group Slow
-@slowExecutionTime 0.062512874603271 ms
 	 * @covers WikiaSearchController::pagination
 	 */
 	public function testPaginationMalformedConfig() {
@@ -513,8 +501,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 
 
 	/**
-@group Slow
-@slowExecutionTime 0.062512874603271 ms
 	 * @covers WikiaSearchController::pagination
 	 */
 	public function testPaginationWithConfigNoResults1() {
@@ -548,8 +534,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
-@group Slow
-@slowExecutionTime 0.062512874603271 ms
 	 * @covers WikiaSearchController::pagination
 	 */
 	public function testPaginationWithConfigNoResults2() {
@@ -583,8 +567,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 	}
 
 	/**
-@group Slow
-@slowExecutionTime 0.062512874603271 ms
 	 * @covers WikiaSearchController::pagination
 	 */
 	public function testPaginationWithConfig() {
@@ -735,8 +717,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 	}
 
 	/**
-@group Slow
-@slowExecutionTime 0.059134006500244 ms
 	 * @covers WikiaSearchController::tabs
 	 */
 	public function testTabsWithoutConfig() {
@@ -763,8 +743,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 	}
 
 	/**
-@group Slow
-@slowExecutionTime 0.059134006500244 ms
 	 * @covers WikiaSearchController::tabs
 	 */
 	public function testTabsWithBadConfig() {
@@ -791,8 +769,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 	}
 
 	/**
-@group Slow
-@slowExecutionTime 0.059134006500244 ms
 	 * @covers WikiaSearchController::tabs
 	 */
 	public function testTabs() {
@@ -934,8 +910,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 	}
 
 	/**
-@group Slow
-@slowExecutionTime 0.059134006500244 ms
 	 * @covers WikiaSearchController::tabs
 	 */
 	public function testTabsVideoWithNoFilter() {
@@ -1081,8 +1055,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 	}
 
 	/**
-@group Slow
-@slowExecutionTime 0.057582139968872 ms
 	 * @covers WikiaSearchController::advancedBox
 	 */
 	public function testAdvancedBoxWithoutConfig() {
@@ -1111,8 +1083,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 	}
 
 	/**
-@group Slow
-@slowExecutionTime 0.057582139968872 ms
 	 * @covers WikiaSearchController::advancedBox
 	 */
 	public function testAdvancedBoxWithBadConfig() {
@@ -1141,8 +1111,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 	}
 
 	/**
-@group Slow
-@slowExecutionTime 0.057582139968872 ms
 	 * @covers WikiaSearchController::advancedBox
 	 */
 	public function testAdvancedBox() {
@@ -1189,8 +1157,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 	}
 
 	/**
-@group Slow
-@slowExecutionTime 0.063305139541626 ms
 	 * @covers WikiaSearchController::isCorporateWiki
 	 */
 	public function testIsCorporateWiki() {
@@ -1317,8 +1283,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 	}*/
 
 	/**
-@group Slow
-@slowExecutionTime 0.058579921722412 ms
 	 * @covers WikiaSearchController::setNamespacesFromRequest
 	 */
 	public function testSetNamespacesFromRequestHasNamespaces() {
@@ -1364,8 +1328,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 	}
 
 	/**
-@group Slow
-@slowExecutionTime 0.058579921722412 ms
 	 * @covers WikiaSearchController::setNamespacesFromRequest
 	 */
 	public function testSetNamespacesFromRequestAllNamespaces() {
@@ -1412,8 +1374,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 	}
 
 	/**
-@group Slow
-@slowExecutionTime 0.058579921722412 ms
 	 * @covers WikiaSearchController::setNamespacesFromRequest
 	 */
 	public function testSetNamespacesFromRequestDefaultNamespaces() {
@@ -1465,8 +1425,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 	}
 
 	/**
-@group Slow
-@slowExecutionTime 0.066542148590088 ms
 	 * @covers WikiaSearchController::videoSearch
 	 */
 	public function testVideoSearch() {
@@ -1570,8 +1528,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
-@group Slow
-@slowExecutionTime 0.064772129058838 ms
 	 * @covers WikiaSearchController::searchVideosByTitle
 	 */
 	public function testSearchVideosByTitle() {
@@ -1665,8 +1621,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 	}
 
 	/**
-@group Slow
-@slowExecutionTime 0.063482999801636 ms
 	 * @covers WikiaSearchController::getPages
 	 */
 	public function testGetPages() {
@@ -1724,8 +1678,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 	}
 
 	/**
-@group Slow
-@slowExecutionTime 0.11256814002991 ms
 	 * @covers WikiaSearchController::advancedTabLink
 	 */
 	public function testAdvancedTabLink() {
@@ -1819,8 +1771,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
-@group Slow
-@slowExecutionTime 0.057858943939209 ms
 	 * @covers WikiaSearchController::getSearchConfigFromRequest
 	 * @todo update
 	 */
@@ -2031,8 +1981,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
-@group Slow
-@slowExecutionTime 0.057632923126221 ms
 	 * @covers WikiaSearchController::getSearchConfigFromRequest
 	 * @todo fix
 	 */
@@ -2261,8 +2209,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 	
 	
 	/**
-@group Slow
-@slowExecutionTime 0.092725038528442 ms
 	 * @covers WikiaSearchController::setPageTitle
 	 */
 	public function testSetPageTitle()
@@ -2395,8 +2341,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
-@group Slow
-@slowExecutionTime 0.064550876617432 ms
 	 * @covers WikiaSearchController::setResponseValuesFromConfig
 	 */
 	public function testSetResponseValuesFromConfigAsJson()
@@ -2464,8 +2408,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
-@group Slow
-@slowExecutionTime 0.064550876617432 ms
 	 * @covers WikiaSearchController::setResponseValuesFromConfig
 	 */
 	public function testSetResponseValuesFromConfigDefault()
@@ -2772,8 +2714,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 	}
 
 	/**
-@group Slow
-@slowExecutionTime 0.05842399597168 ms
 	 * @covers WikiaSearchController::processArticleItem
 	 * @dataProvider articleItemProvider
 	 */

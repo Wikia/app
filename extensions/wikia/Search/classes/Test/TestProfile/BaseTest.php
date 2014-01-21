@@ -7,8 +7,6 @@ use Wikia\Search\Test, ReflectionProperty;
 class BaseTest extends Test\BaseTest
 {
 	/**
-@group Slow
-@slowExecutionTime 0.086757898330688 ms
 	 * @covers Wikia\Search\TestProfile\Base::getQueryFieldsToBoosts
 	 */
 	public function testGetQueryFieldsToBoosts() {

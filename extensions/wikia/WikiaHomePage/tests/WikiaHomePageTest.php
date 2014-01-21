@@ -105,8 +105,6 @@ class WikiaHomePageTest extends WikiaBaseTest {
 	}
 
 	/**
-@group Slow
-@slowExecutionTime 0.051239013671875 ms
 	 * @dataProvider getHubV2ImagesDataProvider
 	 */
 	public function testGetHubV2Images($mockedImageUrl, $expHubImages) {
@@ -309,8 +307,6 @@ TXT;
 	}
 
 	/**
-@group Slow
-@slowExecutionTime 0.043102979660034 ms
 	 * @dataProvider getWikiAdminAvatarsDataProvider
 	 */
 	public function testGetWikiAdminAvatars($mockWikiId, $mockWikiServiceParam, $mockUserStatsServiceParam, $mockUserParam, $expAdminAvatars) {
@@ -484,8 +480,6 @@ TXT;
 	}
 
 	/**
-@group Slow
-@slowExecutionTime 0.046041011810303 ms
 	 * @dataProvider getWikiTopEditorAvatarsDataProvider
 	 */
 	public function testGetWikiTopEditorAvatars($mockWikiId, $mockWikiServiceParam, $mockUserParam, $mockAvatarServiceParam, $expTopEditorAvatars) {
@@ -605,8 +599,6 @@ TXT;
 	}
 
 	/**
-@group Slow
-@slowExecutionTime 0.045831203460693 ms
 	 * @dataProvider getProcessedWikisImgSizesDataProvider
 	 */
 	public function testGetProcessedWikisImgSizes($slotName, $width, $height) {

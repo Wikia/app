@@ -11,8 +11,6 @@ use ReflectionProperty, ReflectionMethod;
 class IndexerTest extends BaseTest
 {
 	/**
-@group Slow
-@slowExecutionTime 0.064698934555054 ms
 	 * @covers Wikia\Search\Indexer::getPages
 	 */
 	public function testGetPages() {
@@ -43,8 +41,6 @@ class IndexerTest extends BaseTest
 	}
 	
 	/**
-@group Slow
-@slowExecutionTime 0.067184925079346 ms
 	 * @covers Wikia\Search\Indexer::getPage
 	 */
 	public function testGetPage() {
@@ -95,8 +91,6 @@ class IndexerTest extends BaseTest
 	}
 	
 	/**
-@group Slow
-@slowExecutionTime 0.065011024475098 ms
 	 * @covers Wikia\Search\Indexer::getIndexService
 	 */
 	public function testGetIndexService() {
@@ -119,8 +113,6 @@ class IndexerTest extends BaseTest
 	}
 	
 	/**
-@group Slow
-@slowExecutionTime 0.065571069717407 ms
 	 * @covers Wikia\Search\Indexer::getSolrDocument
 	 */
 	public function testGetSolrDocument() {
@@ -154,8 +146,6 @@ class IndexerTest extends BaseTest
 	}
 	
 	/**
-@group Slow
-@slowExecutionTime 0.064877986907959 ms
 	 * @covers Wikia\Search\Indexer::reindexBatch
 	 */
 	public function testReindexBatch() {
@@ -179,8 +169,6 @@ class IndexerTest extends BaseTest
 	}
 	
 	/**
-@group Slow
-@slowExecutionTime 0.070295810699463 ms
 	 * @covers Wikia\Search\Indexer::updateDocuments
 	 */
 	public function testUpdateDocuments() {
@@ -246,8 +234,6 @@ class IndexerTest extends BaseTest
 	}
 	
 	/**
-@group Slow
-@slowExecutionTime 0.073707818984985 ms
 	 * @covers Wikia\Search\Indexer::reindexWiki
 	 */
 	public function testReindexWiki() {
@@ -316,8 +302,6 @@ class IndexerTest extends BaseTest
 	}
 	
 	/**
-@group Slow
-@slowExecutionTime 0.069576978683472 ms
 	 * @covers Wikia\Search\Indexer::deleteWikiDocs
 	 */
 	public function testDeleteWikiDocs() {
@@ -387,8 +371,6 @@ class IndexerTest extends BaseTest
 	}
 	
 	/**
-@group Slow
-@slowExecutionTime 0.068135023117065 ms
 	 * @covers Wikia\Search\Indexer::deleteManyWikiDocs
 	 */
 	public function testDeleteManyWikiDocs() {
@@ -458,8 +440,6 @@ class IndexerTest extends BaseTest
 	}
 	
 	/**
-@group Slow
-@slowExecutionTime 0.067481994628906 ms
 	 * @covers Wikia\Search\Indexer::deleteBatch
 	 */
 	public function testDeleteBatch() {
@@ -528,8 +508,6 @@ class IndexerTest extends BaseTest
 	}
 	
 	/**
-@group Slow
-@slowExecutionTime 0.064579963684082 ms
 	 * @covers Wikia\Search\Indexer::reindexPage
 	 */
 	public function testReindexPage() {
@@ -553,8 +531,6 @@ class IndexerTest extends BaseTest
 	}
 	
 	/**
-@group Slow
-@slowExecutionTime 0.064694166183472 ms
 	 * @covers Wikia\Search\Indexer::deleteArticle
 	 */
 	public function testDeleteArticle() {
@@ -581,8 +557,6 @@ class IndexerTest extends BaseTest
 	}
 	
 	/**
-@group Slow
-@slowExecutionTime 0.065211057662964 ms
 	 * @covers Wikia\Search\Indexer::getClient
 	 */
 	public function testGetClient() {
@@ -622,8 +596,6 @@ class IndexerTest extends BaseTest
 	}
 	
 	/**
-@group Slow
-@slowExecutionTime 0.062698841094971 ms
 	 * @covers Wikia\Search\Indexer::getLogger
 	 */
 	public function testGetLogger() {
@@ -646,8 +618,6 @@ class IndexerTest extends BaseTest
 	}
 	
 	/**
-@group Slow
-@slowExecutionTime 0.062500953674316 ms
 	 * @covers Wikia\Search\Indexer::getMwService
 	 */
 	public function testGetMwService() {

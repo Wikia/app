@@ -11,8 +11,6 @@ class MarketingToolboxModuleWikiasPicksServiceTest extends WikiaBaseTest
 	}
 
 	/**
-@group Slow
-@slowExecutionTime 0.0022499561309814 ms
 	 * @dataProvider getStructuredDataProvider
 	 */
 	public function testGetStructuredData($data, $expectedData) {

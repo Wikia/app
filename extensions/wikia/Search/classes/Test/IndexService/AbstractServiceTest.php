@@ -17,8 +17,6 @@ class AbstractServiceTest extends BaseTest
 	}
 	
 	/**
-@group Slow
-@slowExecutionTime 0.060383081436157 ms
 	 * @covers \Wikia\Search\IndexService\AbstractService::__construct
 	 */
 	public function testConstruct() {
@@ -35,8 +33,6 @@ class AbstractServiceTest extends BaseTest
 	}
 	
 	/**
-@group Slow
-@slowExecutionTime 0.059211015701294 ms
 	 * @covers \Wikia\Search\IndexService\AbstractService::setPageId
 	 */
 	public function testSetPageId() {
@@ -54,8 +50,6 @@ class AbstractServiceTest extends BaseTest
 	}
 	
     /**
-@group Slow
-@slowExecutionTime 0.059317827224731 ms
 	 * @covers \Wikia\Search\IndexService\AbstractService::setPageIds
 	 */
 	public function testSetPageIds() {
@@ -73,8 +67,6 @@ class AbstractServiceTest extends BaseTest
 	}
 	
 	/**
-@group Slow
-@slowExecutionTime 0.059608936309814 ms
 	 * @covers \Wikia\Search\IndexService\AbstractService::getCurrentDocumentId
 	 */
 	public function testGetCurrentDocumentId() {
@@ -88,8 +80,6 @@ class AbstractServiceTest extends BaseTest
 	}
 	
 	/**
-@group Slow
-@slowExecutionTime 0.060324907302856 ms
 	 * @covers \Wikia\Search\IndexService\AbstractService::getJsonDocumentFromResponse
 	 */
 	public function testGetJsonDocumentFromResponse() {
@@ -104,8 +94,6 @@ class AbstractServiceTest extends BaseTest
 	}
 	
 	/**
-@group Slow
-@slowExecutionTime 0.063952922821045 ms
 	 * @covers \Wikia\Search\IndexService\AbstractService::getResponseForPageIds
 	 */
 	public function testGetResponseForPageIdsSuccess() {
@@ -157,8 +145,6 @@ class AbstractServiceTest extends BaseTest
 	}
 	
 	/**
-@group Slow
-@slowExecutionTime 0.063952922821045 ms
 	 * @covers \Wikia\Search\IndexService\AbstractService::getResponseForPageIds
 	 */
 	public function testGetResponseForPageIdsSkipRepeats() {
@@ -207,8 +193,6 @@ class AbstractServiceTest extends BaseTest
 	}
 
     /**
-@group Slow
-@slowExecutionTime 0.063952922821045 ms
 	 * @covers \Wikia\Search\IndexService\AbstractService::getResponseForPageIds
 	 */
 	public function testGetResponseForPageIdsError() {
@@ -251,8 +235,6 @@ class AbstractServiceTest extends BaseTest
 	}
 	
 	/**
-@group Slow
-@slowExecutionTime 0.063952922821045 ms
 	 * @covers \Wikia\Search\IndexService\AbstractService::getResponseForPageIds
 	 */
 	public function testGetResponseForPageIdsNotExists() {
@@ -292,8 +274,6 @@ class AbstractServiceTest extends BaseTest
 	}
 	
 	/**
-@group Slow
-@slowExecutionTime 0.059535026550293 ms
 	 * @covers Wikia\Search\IndexService\AbstractService::getService
 	 */
 	public function testGetService() {
@@ -320,8 +300,6 @@ class AbstractServiceTest extends BaseTest
 	}
 	
 	/**
-@group Slow
-@slowExecutionTime 0.062819957733154 ms
 	 * @covers Wikia\Search\IndexService\AbstractService::getResponse
 	 */
 	public function testGetResponseWorks() {
@@ -348,8 +326,6 @@ class AbstractServiceTest extends BaseTest
 	}
 	
 	/**
-@group Slow
-@slowExecutionTime 0.062819957733154 ms
 	 * @covers Wikia\Search\IndexService\AbstractService::getResponse
 	 */
 	public function testGetResponseBreaks() {

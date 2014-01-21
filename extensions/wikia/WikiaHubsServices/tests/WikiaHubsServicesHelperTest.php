@@ -11,8 +11,6 @@ class WikiaHubsServicesHelperTest extends WikiaBaseTest {
 	}
 
 	/**
-@group Slow
-@slowExecutionTime 0.00528883934021 ms
 	 * @dataProvider purgeHomePageVarnishDataProvider
 	 */
 	public function testPurgeHomePageVarnish($lang, $wikiId, $mainPageName) {
@@ -61,8 +59,6 @@ class WikiaHubsServicesHelperTest extends WikiaBaseTest {
 	}
 
 	/**
-@group Slow
-@slowExecutionTime 0.0038678646087646 ms
 	 * @dataProvider purgeHubVarnish
 	 */
 	public function testPurgeHubVarnish($lang, $wikiId, $verticalId, $hubName) {

@@ -4,8 +4,6 @@ class SharingToolbarControllerTest extends WikiaBaseTest
 {
 
 	/**
-@group Slow
-@slowExecutionTime 0.0021431446075439 ms
 	 * @dataProvider shareButtonDataProvider
 	 */
 	public function testShareButton($namespace, $required, array $globalVariables, $enableSharingToolbar, $returnValue)

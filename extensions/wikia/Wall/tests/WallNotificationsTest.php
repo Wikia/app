@@ -302,8 +302,6 @@ class WallNotificationsTest extends WikiaBaseTest {
 		return $tests;
 	}
 	/**
-@group Slow
-@slowExecutionTime 0.0021841526031494 ms
 	 * @dataProvider someDataProvider
 	 */
 	public function testAddNotificationToData($userId, $wikiId, $uniqueId, $entityKey, $authorId, $isReply, $read, $dataS, $dataF) {

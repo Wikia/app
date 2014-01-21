@@ -11,8 +11,6 @@ use Wikia\Search\Utilities as Utils;
 class UtilitiesTest extends BaseTest
 {
 	/**
-@group Slow
-@slowExecutionTime 0.081192970275879 ms
 	 * @covers Wikia\Search\Utilities::valueForField
 	 */
 	public function testValueForField() {
@@ -23,8 +21,6 @@ class UtilitiesTest extends BaseTest
 	}
 	
 	/**
-@group Slow
-@slowExecutionTime 0.081272125244141 ms
 	 * @covers Wikia\Search\Utilities::field
 	 */
 	public function testField() {

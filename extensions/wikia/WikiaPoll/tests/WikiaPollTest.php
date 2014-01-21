@@ -179,10 +179,6 @@ class WikiaPollTest extends WikiaBaseTest {
 		$result = $poll->hasVoted();
 		$this->assertInternalType("array", $result, "HasVoted result is array");
 		$this->assertEquals(true, $result['hasVoted'], "HasVoted result is true");
-/**
- * @group Slow
- * @slowExecutionTime 0.11272001266479 ms
- */
 	}
 
 	function testDuplicateCreate() {

@@ -3,8 +3,6 @@
 class UIFactoryApiControllerTest extends WikiaBaseTest {
 
 	/**
-@group Slow
-@slowExecutionTime 0.0020542144775391 ms
 	 * @expectedException MissingParameterApiException
 	 */
 	public function testMissingParameter() {

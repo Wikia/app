@@ -70,8 +70,6 @@ class FounderProgressBarTest extends WikiaBaseTest {
 		}
 
 		/**
-@group Slow
-@slowExecutionTime 0.044852018356323 ms
 		 * @dataProvider taskCompleteDataProvider
 		 */
 		
@@ -105,8 +103,6 @@ class FounderProgressBarTest extends WikiaBaseTest {
 		}
 
 		/**
-@group Slow
-@slowExecutionTime 0.039615869522095 ms
 		 * @dataProvider longTaskListDataProvider
 		 */
 		public function testLongTaskList($fetch_obj, $exp_list, $exp_data) {
@@ -352,8 +348,6 @@ class FounderProgressBarTest extends WikiaBaseTest {
 		}
 		
 		/**
-@group Slow
-@slowExecutionTime 0.0027639865875244 ms
 		 * @dataProvider doTaskDataProvider
 		 */
 		public function testDoTask($case) {
@@ -490,8 +484,6 @@ class FounderProgressBarTest extends WikiaBaseTest {
 		}
 		
 		/**
-@group Slow
-@slowExecutionTime 0.0050308704376221 ms
 		 * @dataProvider skipTaskDataProvider
 		 */
 		public function testskipTask($task_id, $task_skipped, $result, $extra_task) {

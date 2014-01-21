@@ -83,8 +83,6 @@ class FactoryTest extends WikiaBaseTest {
 	}
 
 	/**
-@group Slow
-@slowExecutionTime 0.0048439502716064 ms
 	 * @dataProvider testAddAssetDataProvider
 	 */
 	public function testAddAsset($asset, $type) {

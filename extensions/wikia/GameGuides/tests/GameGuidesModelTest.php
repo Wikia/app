@@ -10,8 +10,6 @@ class GameGuidesModelTest extends WikiaBaseTest
 	}
 
 	/**
-@group Slow
-@slowExecutionTime 0.012891054153442 ms
 	 * @covers GameGuidesModel::getResultSet
 	 */
 	public function testGetResultSet()

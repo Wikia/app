@@ -13,10 +13,6 @@ class WikiaMobileSharingServiceTest extends WikiaBaseTest {
 
 	const MESSAGE = '|MESSAGE|';
 	const URL = '|URL|';
-/**
- * @group Slow
- * @slowExecutionTime 0.061309099197388 ms
- */
 	const LANGUAGE = '|LANG|';
 
 	function testNetworks(){

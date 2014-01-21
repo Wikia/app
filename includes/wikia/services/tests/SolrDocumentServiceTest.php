@@ -178,8 +178,6 @@ class SolrDocumentServiceTest extends WikiaBaseTest
 	}
 	
 	/**
-@group Slow
-@slowExecutionTime 0.0020949840545654 ms
 	 * @covers SolrDocumentService::setWikiId
 	 * @covers SolrDocumentService::getWikiId
 	 */
@@ -215,8 +213,6 @@ class SolrDocumentServiceTest extends WikiaBaseTest
 	}
 	
 	/**
-@group Slow
-@slowExecutionTime 0.0025930404663086 ms
 	 * @covers SolrDocumentService::getDocumentId
 	 */
 	public function testGetDocumentIdMain() {
@@ -245,8 +241,6 @@ class SolrDocumentServiceTest extends WikiaBaseTest
 	}
 	
 	/**
-@group Slow
-@slowExecutionTime 0.0025930404663086 ms
 	 * @covers SolrDocumentService::getDocumentId
 	 */
 	public function testGetDocumentIdXwiki() {
@@ -274,8 +268,6 @@ class SolrDocumentServiceTest extends WikiaBaseTest
 	}
 	
 	/**
-@group Slow
-@slowExecutionTime 0.0036499500274658 ms
 	 * @covers SolrDocumentService::getConfig
 	 */
 	public function testGetConfigCrossWiki() {
@@ -307,8 +299,6 @@ class SolrDocumentServiceTest extends WikiaBaseTest
 	}
 	
 	/**
-@group Slow
-@slowExecutionTime 0.0036499500274658 ms
 	 * @covers SolrDocumentService::getConfig
 	 */
 	public function testGetConfigMain() {

@@ -33,8 +33,6 @@
 		}
 
 		/**
-@group Slow
-@slowExecutionTime 0.40564489364624 ms
 		 * @dataProvider loginDataProvider
 		 */
 		public function testLogin( $requestParams, $mockLoginFormParams, $mockUserParams, $mockHelperParams, $expResult, $expMsg, $expErrParam='' ) {
@@ -276,8 +274,6 @@
 		}
 
 		/**
-@group Slow
-@slowExecutionTime 0.44850206375122 ms
 		 * @dataProvider mailPasswordDataProvider
 		 */
 		public function testMailPassword( $requestParams, $mockWgUserParams, $mockAuthParams, $mockUserParams, $mockLoginFormParams, $expResult, $expMsg, $expErrParam='' ) {
@@ -410,8 +406,6 @@
 		}
 
 		/**
-@group Slow
-@slowExecutionTime 0.50066995620728 ms
 		 * @dataProvider changePasswordDataProvider
 		 */
 		public function testChangePassword($params, $mockWebRequestParams, $mockWgUserParams, $mockAuthParams, $mockUserParams, $mockHelperParams, $expResult, $expMsg) {

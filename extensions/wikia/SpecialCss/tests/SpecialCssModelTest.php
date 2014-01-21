@@ -19,8 +19,6 @@ class SpecialCssModelTest extends WikiaBaseTest {
 	}
 
 	/**
-@group Slow
-@slowExecutionTime 0.0037829875946045 ms
 	 * @dataProvider testGetSpecialCssDataProvider
 	 */
 	public function testGetSpecialCssUrl($fullUrl, $expected, $params) {

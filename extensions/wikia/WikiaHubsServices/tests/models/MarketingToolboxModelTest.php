@@ -377,8 +377,6 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 	}
 
 	/**
-@group Slow
-@slowExecutionTime 0.049154043197632 ms
 	 * Test saving module when there is no data
 	 */
 	public function testSaveModuleInsert() {
@@ -435,8 +433,6 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 	}
 
 	/**
-@group Slow
-@slowExecutionTime 0.048794984817505 ms
 	 * Test saving module when there is data already saved
 	 */
 	public function testSaveModuleUpdate() {
@@ -707,8 +703,6 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 	}
 
 	/**
-@group Slow
-@slowExecutionTime 0.04659104347229 ms
 	 * @dataProvider getDataModulesSavedDataProvider
 	 */
 	public function testCheckModulesSaved($savedModules, $expectedVal) {
