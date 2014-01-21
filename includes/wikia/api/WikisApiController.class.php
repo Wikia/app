@@ -323,46 +323,28 @@ class WikisApiController extends WikiaApiController {
 
 	protected function getImageData( $wikiInfo, $width = null, $height = null ) {
 		$imageName = $wikiInfo[ 'image' ];
-		$img = wfFindFile( $imageName );
-
 		$crop = ( $width != null || $height != null );
 		$width = ( $width !== null ) ? $width : static::DEFAULT_WIDTH;
 		$height = ( $height !== null ) ? $height : static::DEFAULT_HEIGHT;
 		$imgUrl = '';
 		$imgWidth = null;
 		$imgHeight = null;
+
+		$img = wfFindFile( $imageName );
 		if ( $img instanceof WikiaLocalFile ) {
 			//found on en-corporate wiki
 			if ( $crop ) {
 				//get original image if no cropping
 				$imageServing = new ImageServing( null, $width, $height );
 				$imgUrl = $imageServing->getUrl( $img, $width, $height );
-			}
-			else {
+			} else {
 				$imgUrl = $img->getFullUrl();
 				$imgWidth = $img->getWidth();
 				$imgHeight = $img->getHeight();
 			}
+		} else {
 
-		}
-		else {
-			$wcmodel = new WikiaCorporateModel();
-			//try to find image on lang specific corporate wiki
-			$f = null;
-			$noCorporate = false;
-			try {
-				$corporateWId = $wcmodel->getCorporateWikiIdByLang( $wikiInfo[ 'lang' ] );
-				$f = GlobalFile::newFromText( $imageName, $corporateWId );
-			}catch ( Exception $e ) {
-				$noCorporate = true;
-			}
-
-			if ( $noCorporate ) {
-				//if image wasn't found, try to find it on wiki itself
-				$imageName = UploadVisualizationImageFromFile::VISUALIZATION_MAIN_IMAGE_NAME;
-				$f = GlobalFile::newFromText( $imageName, $wikiInfo[ 'id' ] );
-			}
-
+			$f = $this->findGlobalFileImage( $imageName, $wikiInfo[ 'lang' ], $wikiInfo[ 'id' ] );
 			if ( $f && $f->exists() ) {
 				$imgWidth = $f->getWidth();
 				$imgHeight = $f->getHeight();
@@ -377,14 +359,10 @@ class WikisApiController extends WikiaApiController {
 						$height
 					);
 					$imgUrl = $response[ 'src' ];
-
-				}
-				else {
+				} else {
 					$imgUrl = $f->getUrl();
-
 				}
 			}
-
 		}
 
 		if ( $imgUrl ) {
@@ -395,10 +373,29 @@ class WikisApiController extends WikiaApiController {
 					'height' => $imgHeight
 				]
 			];
+		} else {
+			return [ 'image' => '' ];
 		}
-		else {
-			return [ ];
+	}
+
+	protected function findGlobalFileImage( $imageName, $lang, $wikiId ) {
+		$wcmodel = new WikiaCorporateModel();
+		//try to find image on lang specific corporate wiki
+		$f = null;
+		$noCorporate = false;
+		try {
+			$corporateWId = $wcmodel->getCorporateWikiIdByLang( $lang );
+			$f = GlobalFile::newFromText( $imageName, $corporateWId );
+		} catch ( Exception $e ) {
+			$noCorporate = true;
 		}
+
+		if ( $noCorporate ) {
+			//if image wasn't found, try to find it on wiki itself
+			$imageName = UploadVisualizationImageFromFile::VISUALIZATION_MAIN_IMAGE_NAME;
+			$f = GlobalFile::newFromText( $imageName, $wikiId );
+		}
+		return $f;
 	}
 
 	protected function getWikiWordmarkImage( $id ) {
