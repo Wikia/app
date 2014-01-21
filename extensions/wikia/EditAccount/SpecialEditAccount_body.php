@@ -37,7 +37,7 @@ class EditAccount extends SpecialPage {
 	 * @param $par Mixed: parameter passed to the page or null
 	 */
 	public function execute( $par ) {
-		global $wgOut, $wgUser, $wgRequest, $wgEnableUserLoginExt, $wgExternalAuthType, $wgTitle;
+		global $wgOut, $wgUser, $wgRequest, $wgParser, $wgEnableUserLoginExt, $wgExternalAuthType, $wgTitle;
 
 		// Set page title and other stuff
 		$this->setHeaders();
@@ -191,6 +191,24 @@ class EditAccount extends SpecialPage {
 
 			// emailStatus is the status of the email in the "Set new email address" field
 			$emailStatus = ( $this->mUser->isEmailConfirmed() ) ? wfMsg('editaccount-status-confirmed') : wfMsg('editaccount-status-unconfirmed') ;
+
+			$blockMessage = '';
+
+			if ( $this->mUser->getOption( 'disabled' ) ) {
+
+				$blockedBy = '';
+				$blockedFor = $this->mUser->blockedFor();
+
+				if ( $this->mUser->blockedBy() ) {
+					$blockedBy = User::newFromId( $this->mUser->blockedBy() );
+				}
+
+				$blockMessage = ( $blockedBy ? '[[' . $blockedBy->getUserPage()->getFullText() . ']]:' : '' ) . $blockedFor;
+				$oParserOut = $wgParser->parse( $blockMessage, $wgTitle, $wgOut->parserOptions() );
+				$blockMessage = $oParserOut->getText();
+
+			}
+
 			$oTmpl->set_Vars( array(
 					'userEmail' => $this->mUser->getEmail(),
 					'userRealName' => $this->mUser->getRealName(),
@@ -198,6 +216,7 @@ class EditAccount extends SpecialPage {
 					'userReg' => date( 'r', strtotime( $this->mUser->getRegistration() ) ),
 					'isUnsub' => $this->mUser->getOption('unsubscribed'),
 					'isDisabled' => $this->mUser->getOption('disabled'),
+					'blockMessage' => $blockMessage,
 					'isAdopter' => $this->mUser->getOption('AllowAdoption', 1 ),
 					'userStatus' => $userStatus,
 					'emailStatus' => $emailStatus,

@@ -69,6 +69,8 @@
 		<input type="hidden" name="wpUserName" value="<?php echo $user_hsc ?>" />
 	</form>
 <?php if( $isDisabled ) { ?>
+<div><?php echo $blockMessage ?></div>
+
 <?= wfMsg('edit-account-closed-flag'); ?>
 	<form method="post" action="">
 		<input type="submit" value="<?php echo wfMsg('editaccount-submit-cleardisable') ?>" <?= $disabled; ?> />

@@ -282,6 +282,21 @@ EOT
 		} else {
 			$wgOut->addWikiText( '*' . wfMessage('lookupuser-table-cannot-be-displayed')->text() );
 		}
+
+		if ( $user->getOption( 'disabled' ) ) {
+
+			$blockedBy = '';
+			$blockedFor = $user->blockedFor();
+
+			if ( $user->blockedBy() ) {
+				$blockedBy = User::newFromId( $user->blockedBy() );
+			}
+
+			$blockMessage = '*' . ( $blockedBy ? '[[' . $blockedBy->getUserPage()->getFullText() . ']]:' : '' ) . $blockedFor;
+
+			$wgOut->addWikiText( $blockMessage );
+
+		}
 		//End: Small Stuff Week
 
 		$wgOut->addWikiText( '*' . wfMessage( 'lookupuser-useroptions' )->text() . '<br />' . $optionsString );
