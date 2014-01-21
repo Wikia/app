@@ -40,8 +40,7 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 
 	private static $testRunTime = 0;
 
-	private static $slowTests = [];
-	private static $fastTests = [];
+	private static $testsAnnotations = [];
 
 	private static $testTimerResolution = null;
 
@@ -59,12 +58,11 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 		$wgMarkTestSpeed = true;
 
 		global $wgOutputTestSpeedMessages;
-		$wgOutputTestSpeedMessages = true;
+		$wgOutputTestSpeedMessages = false;
 
-		self::$slowTests = [];
-		self::$fastTests = [];
+		self::$testsAnnotations = [];
 		self::$testRunTime = microtime( true );
-		self::$testTimerResolution = strlen( substr( strrchr( self::SLOW_TEST_THRESHOLD, "." ), 1 ) ) + 3;
+		self::$testTimerResolution = strlen( substr( strrchr( self::SLOW_TEST_THRESHOLD, "." ), 1 ) ) + 2;
 	}
 
 	/**
@@ -74,20 +72,15 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 		$time = round( ( microtime( true ) - self::$testRunTime ) * 1000, 2 );
 		echo "done in {$time} ms";
 
-		if (!empty(self::$slowTests)) {
-			echo "\n---------------------------------------------\n";
-			echo "\nslowTests\n";
-			var_dump(self::$slowTests);
-			//foreach (self::$slowTests as $k => $v) echo "\t$k\n";
-			echo "\n---------------------------------------------\n";
-		}
+		if (!empty(self::$testsAnnotations)) {
+			foreach (self::$testsAnnotations as $key => $arr) {
+				if ( !is_array( $arr ) ) continue;
 
-		if (!empty(self::$fastTests)) {
-			echo "\n---------------------------------------------\n";
-			echo "\nfastTests\n";
-			var_dump(self::$fastTests);
-			//foreach (self::$fastTests as $k => $v) echo "\t$k\n";
-			echo "\n---------------------------------------------\n";
+				list($fileName, $funcName, $paramFrom, $paramTo) = $arr;
+				$source = file_get_contents($fileName);
+				$source = call_user_func($funcName, $paramFrom, $paramTo, $source);
+				file_put_contents($fileName, $source);
+			}
 		}
 	}
 
@@ -128,9 +121,6 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 
 		$annotations = $this->getAnnotations();
 
-		$fastTests = [];
-		$slowTests = [];
-
 		if($this->testRunTime > self::SLOW_TEST_THRESHOLD) {
 			if(!empty($wgOutputTestSpeedMessages)) {
 				echo "\n" . $this->testRunTime . 'ms - SLOW: ' . $this->getName() . "\n";
@@ -169,25 +159,23 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 		$slowGroupAnnotation = '@group Slow';
 		$slowTimeAnnotation = '@slowExecutionTime ' . $this->testRunTime . ' ms';
 
-		//$testCode = file_get_contents($filePath);
-
 		if(!$docComment) {
 			$functionStartRegex = '/(.*\s+function\s+' . $methodName . '\s*\()/';
 			$newDocComment = $this->getNewDocblockForSlowTest( $slowGroupAnnotation, $slowTimeAnnotation );
 
 			//$updatedTestCode = preg_replace( $functionStartRegex, $newDocComment . "\\1", $testCode );
-			return [$filePath, 'preg_replace', $functionStartRegex, $newDocComment];
+			return [$filePath, 'preg_replace', $functionStartRegex, $newDocComment . "\\1"];
 		} else {
 			$newDocComment = $docComment;
 
 			if(!preg_match($regexSlowExecTime, $docComment)) {
-				$newDocComment = preg_replace($regexDocBlockStart,  "/**\n" . $slowTimeAnnotation . "\n", $newDocComment );
+				$newDocComment = preg_replace($regexDocBlockStart,  "/**\n * " . $slowTimeAnnotation . "\n", $newDocComment );
 			} else {
 				$newDocComment = preg_replace($regexSlowExecTime, $slowGroupAnnotation, $newDocComment);
 			}
 
 			if(!preg_match($regexSlowGroup, $docComment)) {
-				$newDocComment = preg_replace($regexDocBlockStart,  "/**\n" . $slowGroupAnnotation . "\n", $newDocComment );
+				$newDocComment = preg_replace($regexDocBlockStart,  "/**\n * " . $slowGroupAnnotation . "\n", $newDocComment );
 			} else {
 				$newDocComment = preg_replace($regexSlowGroup, $slowGroupAnnotation, $newDocComment);
 			}
@@ -195,8 +183,6 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 			//$updatedTestCode = str_replace($docComment, $newDocComment, $testCode);
 			return [$filePath, 'str_replace', $docComment, $newDocComment];
 		}
-
-		//file_put_contents($filePath, $updatedTestCode);
 	}
 
 	protected function removeSlowTestAnnotation() {
@@ -227,7 +213,7 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 
 			return [$filePath, 'str_replace', $docComment, $newDocComment];
 		} else {
-			return [null];
+			return null;
 		}
 
 	}
@@ -592,7 +578,7 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 
 		$testCaseName = $this->getName( false );
 
-		if ( !isset( self::$slowTests[ $testCaseName ] ) ) {
+		if ( !isset( self::$testsAnnotations[ $testCaseName ] ) ) {
 			$annotatedAsSlow = false;
 			if ( !empty( $annotations['method'] ) && !empty( $annotations['method']['group'] ) ) {
 				if ( in_array( 'Slow', $annotations['method']['group'] ) ) {
@@ -600,7 +586,7 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 				}
 			}
 			if ( !$annotatedAsSlow && !empty($wgMarkTestSpeed)) {
-				self::$slowTests[ $testCaseName ] = $this->addSlowTestAnnotation();
+				self::$testsAnnotations[ $testCaseName ] = $this->addSlowTestAnnotation();
 			}
 		}
 	}
@@ -613,7 +599,7 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 
 		$testCaseName = $this->getName( false );
 
-		if ( !isset( self::$fastTests[ $testCaseName ] ) ) {
+		if ( !isset( self::$testsAnnotations[ $testCaseName ] ) ) {
 			$annotatedAsSlow = false;
 			if ( !empty( $annotations['method'] ) && !empty( $annotations['method']['group'] ) ) {
 				if ( in_array( 'Slow', $annotations['method']['group'] ) ) {
@@ -621,7 +607,7 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 				}
 			}
 			if ( $annotatedAsSlow && !empty($wgMarkTestSpeed) ) {
-				self::$fastTests[ $testCaseName ] = $this->removeSlowTestAnnotation();
+				self::$testsAnnotations[ $testCaseName ] = $this->removeSlowTestAnnotation();
 			}
 		}
 	}
