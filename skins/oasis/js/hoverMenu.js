@@ -69,6 +69,7 @@ HoverMenu.prototype.mouseover = function(event) {
 			controller: 'GlobalHeaderController',
 			method: 'menuItemsAll',
 			format: 'jsonp',
+			jsonpCallback: 'Globalheader',
 			data: {
 				hash: $nav.data('hash'),
 				indexes: indexes,

@@ -1,9 +1,8 @@
 <?php
 
 class GlobalHeaderController extends WikiaController {
+	const MESSAGE_NAME = 'wgSharedGlobalnavigation';
 	private $menuNodes;
-
-	private static $createNewWikiUrl;
 
 	public function init() {
 		global $wgCityId;
@@ -13,7 +12,7 @@ class GlobalHeaderController extends WikiaController {
 
 		$category = WikiFactory::getCategory($wgCityId);
 
-		$messageName = 'wgSharedGlobalnavigation';
+		$messageName = self::MESSAGE_NAME;
 		if ($category) {
 			$messageNameWithCategory = $messageName . '-' . $category->cat_id;
 			if (!wfEmptyMsg($messageNameWithCategory, wfMsg($messageNameWithCategory))) {
@@ -44,7 +43,7 @@ class GlobalHeaderController extends WikiaController {
 		if (!empty($this->wg->LangToCentralMap[$userLang])) {
 			$centralUrl = $this->wg->LangToCentralMap[$userLang];
 		}
-		$createWikiUrl = self::getCreateNewWikiUrl();
+		$createWikiUrl = NavigationModel::getCreateNewWikiUrl();
 		if ($userLang != 'en') {
 			$createWikiUrl .= '?uselang=' . $userLang;
 		}
@@ -98,20 +97,9 @@ class GlobalHeaderController extends WikiaController {
 	}
 
 	public static function onMakeGlobalVariablesScript(Array &$vars) {
-		$parseCorporateUrl = parse_url(self::getCreateNewWikiUrl());
+		$parseCorporateUrl = parse_url(NavigationModel::getCreateNewWikiUrl());
 		$vars['wgCorporateUrl'] = $parseCorporateUrl['scheme'] . '://' . $parseCorporateUrl['host'];
 
 		return true;
-	}
-
-	private static function getCreateNewWikiUrl() {
-		if ( empty( self::$createNewWikiUrl ) ) {
-			self::$createNewWikiUrl = GlobalTitle::newFromText(
-				'CreateNewWiki',
-				NS_SPECIAL,
-				Wikia::MAIN_CORPORATE_WIKI_ID
-			)->getFullURL();
-		}
-		return self::$createNewWikiUrl;
 	}
 }

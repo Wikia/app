@@ -228,12 +228,9 @@ Class WikiFactoryChangedHooks {
 	 * Clear memcache after global navigation edit
 	 */
 	static public function GlobalNavigationChange($cv_name, $wiki_id, $value) {
-		if ($cv_name == 'wgSharedGlobalnavigation') {
-			$model = new NavigationModel( true );
-			$langCodes = $model->getNavigationLanguageCodes($cv_name);
-			foreach ($langCodes as $langCode) {
-				$model->clearMemc($cv_name, false, $langCode);
-			}
+		if ($cv_name == GlobalHeaderController::MESSAGE_NAME) {
+			$model = new NavigationModel(true);
+			$model->purgeCache(GlobalHeaderController::MESSAGE_NAME);
 		}
 		return true;
 	}

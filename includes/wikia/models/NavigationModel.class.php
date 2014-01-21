@@ -56,6 +56,8 @@ class NavigationModel extends WikiaModel {
 	// list of errors encountered when parsing the wikitext
 	private $errors = array();
 
+	private static $createNewWikiUrl;
+
 	public function __construct( $useSharedMemcKey = false ) {
 		parent::__construct();
 
@@ -97,6 +99,38 @@ class NavigationModel extends WikiaModel {
 		$this->wg->Memc->delete(
 			$this->getMemcKey( $key, $city_id, $langCode )
 		);
+	}
+
+	private function getNavigationUrl($lang) {
+		return http_build_url(
+			self::getCreateNewWikiUrl(),
+			[
+				'path' => 'wikia.php',
+				'query' => http_build_query([
+					'controller' => 'GlobalHeader',
+					'method' => 'menuItemsAll',
+					'format' => WikiaResponse::FORMAT_JSONP,
+					'callback' => 'Globalheader',
+					'cb' => $this->wg->CacheBuster,
+					// TODO hash
+					// TODO indexes
+					'uselang' => $lang
+		])
+			]
+		);
+	}
+
+	public function purgeCache($messageName) {
+		$langs = array_keys(wfGetFixedLanguageNames());
+
+		$urlsToPurge = [];
+		foreach ($langs as $lang) {
+			$this->clearMemc($messageName, false, $lang);
+			$urlsToPurge[] = $this->getNavigationUrl($lang);
+		}
+
+		$u = new SquidUpdate( $urlsToPurge );
+		$u->doUpdate();
 	}
 
 	private function setShouldTranslateContent($shouldTranslateContent) {
@@ -639,5 +673,16 @@ class NavigationModel extends WikiaModel {
 		}
 
 		return isset( $this->biggestCategories[$index-1] ) ? $this->biggestCategories[$index-1] : null;
+	}
+
+	public static function getCreateNewWikiUrl() {
+		if ( empty( self::$createNewWikiUrl ) ) {
+			self::$createNewWikiUrl = GlobalTitle::newFromText(
+				'CreateNewWiki',
+				NS_SPECIAL,
+				Wikia::MAIN_CORPORATE_WIKI_ID
+			)->getFullURL();
+		}
+		return self::$createNewWikiUrl;
 	}
 }
