@@ -10,11 +10,11 @@ class IgnVideoHandler extends VideoHandler {
 	protected static $autoplayParam = "qs_autoplay";
 	protected static $autoplayValue = "true";
 
-	public function getEmbed($articleId, $width, $autoplay=false, $isAjax=false, $postOnload=false) {
-		return $this->getEmbedNative($width, $autoplay);
+	public function getEmbed( $articleId, $width, $autoplay = false, $isAjax = false, $postOnload = false ) {
+		return $this->getEmbedNative( $width, $autoplay );
 	}
 
-	private function getEmbedNative($width, $autoplay=false) {
+	private function getEmbedNative( $width, $autoplay = false ) {
 		$height =  $this->getHeight( $width );
 		$autoplay = $autoplay ? '&' . self::$autoplayParam . '=' . self::$autoplayValue : '';
 		$url = self::$providerPlayerUrl.'?url='.$this->getEmbedUrl().$autoplay;
@@ -24,7 +24,11 @@ class IgnVideoHandler extends VideoHandler {
 <iframe src="{$url}" $sizeString scrolling="no" frameborder="0" allowfullscreen></iframe>
 EOT;
 
-		return array( 'html' => $html );
+		return array(
+			'html' => $html,
+			'width' => $width,
+			'height' => $height,
+		);
 	}
 
 	public function getEmbedUrl() {

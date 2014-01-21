@@ -18,7 +18,17 @@ class WikiService extends WikiaModel {
 	static $botGroups = array('bot', 'bot-global');
 	static $excludedWikiaUsers = array(
 		22439, //Wikia
-		1458396, //Abuse filter
+		/* Abuse filter users start */
+		519362,
+		3245469,
+		5309332,
+		4067247,
+		4865761,
+		4119511,
+		1458396,
+		15510531,
+		24039613
+		/* Abuse filter users start */
 	);
 
 	protected $cityVisualizationObject = null;

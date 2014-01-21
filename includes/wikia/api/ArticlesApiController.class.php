@@ -79,8 +79,8 @@ class ArticlesApiController extends WikiaApiController {
 		if ( !empty( $category )) {
 			$category = Title::makeTitleSafe( NS_CATEGORY, str_replace( ' ', '_', $category ), false, false );
 
-			if ( !is_null( $category ) && $category->exists() ) {
-				self::followRedirect( $category );
+			if ( !is_null( $category ) ) {
+				$category = self::followRedirect( $category );
 
 				$ids = self::getCategoryMembers( $category->getFullText(), 5000, '', '', 'timestamp' , 'desc' );
 
@@ -428,8 +428,8 @@ class ArticlesApiController extends WikiaApiController {
 		if ( !empty( $category ) ) {
 			$category = Title::makeTitleSafe( NS_CATEGORY, str_replace( ' ', '_', $category ), false, false );
 
-			if ( !is_null( $category ) && $category->exists() ) {
-				self::followRedirect( $category );
+			if ( !is_null( $category ) ) {
+				$category = self::followRedirect( $category );
 
 				if ( !empty( $namespaces ) ) {
 					foreach ( $namespaces as &$n ) {
@@ -603,6 +603,7 @@ class ArticlesApiController extends WikiaApiController {
 		$articles = is_array( $articleIds ) ? $articleIds : [ $articleIds ];
 		$ids = [];
 		$collection = [];
+		$titles = [];
 		foreach ( $articles as $i ) {
 			//data is cached on a per-article basis
 			//to avoid one article requiring purging
@@ -660,7 +661,7 @@ class ArticlesApiController extends WikiaApiController {
 					$collection[$id]['comments'] = ( class_exists( 'ArticleCommentList' ) ) ? ArticleCommentList::newFromTitle( $t )->getCountAllNested() : false;
 					//add file data
 					$collection[$id] = array_merge( $collection[ $id ], $fileData );
-
+					$articles[] = $id;
 					$this->wg->Memc->set( self::getCacheKey( $id, self::DETAILS_CACHE_ID ), $collection[$id], 86400 );
 				}
 
@@ -743,7 +744,8 @@ class ArticlesApiController extends WikiaApiController {
 				$data = [ 'thumbnail' => null, 'original_dimensions' => null ];
 				if ( isset( $images[ $id ] ) ) {
 					$data['thumbnail'] = $images[$id][0]['url'];
-					$data['original_dimensions'] = $images[$id][0]['original_dimensions'];
+					$data['original_dimensions'] = isset( $images[$id][0]['original_dimensions'] ) ?
+						$images[$id][0]['original_dimensions'] : null;
 				}
 				$result[ $id ] = $data;
 			}
@@ -830,12 +832,17 @@ class ArticlesApiController extends WikiaApiController {
 		);
 	}
 
-	static private function followRedirect( &$category ) {
-		$redirect = (new WikiPage( $category ))->getRedirectTarget();
+	static private function followRedirect( $category ) {
 
-		if ( !empty( $redirect ) ) {
-			$category = $redirect;
+		if ( $category instanceof Title && $category->exists() ) {
+			$redirect = (new WikiPage( $category ))->getRedirectTarget();
+
+			if ( !empty( $redirect ) ) {
+				return $redirect;
+			}
 		}
+
+		return $category;
 	}
 
 	/**

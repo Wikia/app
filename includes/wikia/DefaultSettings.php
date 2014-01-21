@@ -18,12 +18,6 @@ if( !defined( 'MEDIAWIKI' ) ) {
 }
 
 /**
- * Use revision number
- */
-include "$IP/includes/wikia/wgCacheBuster.php";
-$wgStyleVersion = $wgMergeStyleVersionJS = $wgMergeStyleVersionCSS = $wgCacheBuster;
-
-/**
  * @name wgAkamaiGlobalVersion
  *
  * this variable is used for purging all images on akamai. increasing this value
@@ -132,6 +126,8 @@ $wgAutoloadClasses['MethodNotFoundException'] = "{$IP}/includes/wikia/nirvana/Wi
 $wgAutoloadClasses['AssetsManager'] = $IP . '/extensions/wikia/AssetsManager/AssetsManager.class.php';
 $wgAutoloadClasses['AssetsConfig'] = $IP . '/extensions/wikia/AssetsManager/AssetsConfig.class.php';
 
+$wgAutoloadClasses['FlashMessages'] = "{$IP}/includes/wikia/FlashMessages.class.php";
+
 /**
  * Wikia API
  * (based on Nirvana)
@@ -227,7 +223,6 @@ $wgAutoloadClasses[ "WikiFactory"                     ] = "$IP/extensions/wikia/
 $wgAutoloadClasses[ "WikiFactoryHub"                  ] = "$IP/extensions/wikia/WikiFactory/Hubs/WikiFactoryHub.php";
 $wgAutoloadClasses[ 'SimplePie'                       ] = "$IP/lib/vendor/SimplePie/simplepie.inc";
 $wgAutoloadClasses[ 'MustachePHP'                     ] = "$IP/lib/vendor/mustache.php/Mustache.php";
-$wgAutoloadClasses[ 'Minify_CSS_Compressor'           ] = "$IP/lib/vendor/Minify_CSS_Compressor.php";
 $wgAutoloadClasses[ 'GMetricClient'                   ] = "$IP/lib/vendor/GMetricClient.class.php";
 $wgAutoloadClasses[ 'FakeLocalFile'                   ] = "$IP/includes/wikia/FakeLocalFile.class.php";
 $wgAutoloadClasses[ 'WikiaUploadStash'                ] = "$IP/includes/wikia/upload/WikiaUploadStash.class.php";
@@ -315,6 +310,7 @@ $wgAutoloadClasses['RenderContentOnlyHelper'] = $IP . '/includes/wikia/RenderCon
 $wgAutoloadClasses['SolrDocumentService'] = $IP . '/includes/wikia/services/SolrDocumentService.class.php';
 $wgAutoloadClasses['FormBuilderService']  =  $IP.'/includes/wikia/services/FormBuilderService.class.php';
 $wgAutoloadClasses['LicensedWikisService']  =  $IP.'/includes/wikia/services/LicensedWikisService.class.php';
+$wgAutoloadClasses['ArticleQualityService'] = $IP.'/includes/wikia/services/ArticleQualityService.php';
 
 // data models
 $wgAutoloadClasses['WikisModel'] = "{$IP}/includes/wikia/models/WikisModel.class.php";
@@ -1157,6 +1153,12 @@ $wgWikiaHubsFileRepoDirectory = '/images/c/corp/images';
 $wgEnableAmazonDirectTargetedBuy = true;
 
 /**
+ * @name $wgAmazonDirectTargetedBuyCountries
+ * Enables AmazonDirectTargetedBuy integration in theese countries (given AmazonDirectTargetedBuy is also true)
+ */
+$wgAmazonDirectTargetedBuyCountries = ['US'];
+
+/**
  * @name $wgEnableJavaScriptErrorLogging
  * Enables JavaScript error logging mechanism
  */
@@ -1175,6 +1177,15 @@ $wgEnableAdEngineExt = true;
  */
 $wgAdDriverUseSevenOneMedia = null;
 $wgAdDriverUseSevenOneMediaInLanguages = ['de'];
+
+/**
+ * @name $wgAdDriverUseNewTracking
+ * Whether to use the new ad tracking code.
+ * If true: the new tracking code (SlotTracker.js) will be used on half of
+ * the traffic and the old one (AdTracker.js) on the other half.
+ * If false: only the old ad tracking code (AdTracker.js) will be used.
+ */
+$wgAdDriverUseNewTracking = false;
 
 /**
  * @name $wgAdVideoTargeting
@@ -1214,3 +1225,6 @@ $wgPagesWithNoAdsForLoggedInUsersOverriden_AD_LEVEL = null;
  * Enables the Oasis responsive layout styles
  */
 $wgOasisResponsive = null;
+
+/** @var $wgEnableCentralizedLogging bool whether or not logging to syslog is enabled */
+$wgEnableCentralizedLogging = true;

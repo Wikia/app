@@ -315,11 +315,12 @@ $messages['de'] = array(
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
  * @author Gorizon
+ * @author Mirzali
  */
 $messages['diq'] = array(
 	'app-loading' => 'Bar beno...',
 	'app-tab-search' => 'Cı geyre',
-	'app-tab-about' => 'Heqdé cı',
+	'app-tab-about' => 'Heqa cı de',
 	'app-tab-browse' => 'A ra Z',
 	'app-async-error-title' => 'Hoooop',
 	'app-nonetwork-dialog-close-button' => 'TEMAM',
