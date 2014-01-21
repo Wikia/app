@@ -379,22 +379,19 @@ class WikisApiController extends WikiaApiController {
 	}
 
 	protected function findGlobalFileImage( $imageName, $lang, $wikiId ) {
-		$wcmodel = new WikiaCorporateModel();
 		//try to find image on lang specific corporate wiki
 		$f = null;
-		$noCorporate = false;
-		try {
-			$corporateWId = $wcmodel->getCorporateWikiIdByLang( $lang );
-			$f = GlobalFile::newFromText( $imageName, $corporateWId );
-		} catch ( Exception $e ) {
-			$noCorporate = true;
-		}
+		$visualizationModel = new CityVisualization();
+		$cityList = $visualizationModel->getVisualizationWikisData();
 
-		if ( $noCorporate ) {
+		if ( isset( $cityList[ $lang ] ) ) {
+			$f = GlobalFile::newFromText( $imageName, $cityList[ $lang ] );
+		} else {
 			//if image wasn't found, try to find it on wiki itself
 			$imageName = UploadVisualizationImageFromFile::VISUALIZATION_MAIN_IMAGE_NAME;
 			$f = GlobalFile::newFromText( $imageName, $wikiId );
 		}
+
 		return $f;
 	}
 
