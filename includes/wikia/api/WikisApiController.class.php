@@ -194,6 +194,7 @@ class WikisApiController extends WikiaApiController {
 				WikiaResponse::CACHE_TARGET_VARNISH
 			)
 		);
+		//die();
 		wfProfileOut( __METHOD__ );
 	}
 
@@ -343,7 +344,8 @@ class WikisApiController extends WikiaApiController {
 				$imgHeight = $img->getHeight();
 			}
 		} else {
-
+			var_dump($imageName);//die();
+			ini_set('html_errors',0);
 			$f = $this->findGlobalFileImage( $imageName, $wikiInfo[ 'lang' ], $wikiInfo[ 'id' ] );
 			if ( $f && $f->exists() ) {
 				$imgWidth = $f->getWidth();
@@ -385,7 +387,7 @@ class WikisApiController extends WikiaApiController {
 		$cityList = $visualizationModel->getVisualizationWikisData();
 
 		if ( isset( $cityList[ $lang ] ) ) {
-			$f = GlobalFile::newFromText( $imageName, $cityList[ $lang ] );
+			$f = GlobalFile::newFromText( $imageName, $cityList[ $lang ][ 'wikiId' ] );
 		} else {
 			//if image wasn't found, try to find it on wiki itself
 			$imageName = UploadVisualizationImageFromFile::VISUALIZATION_MAIN_IMAGE_NAME;
