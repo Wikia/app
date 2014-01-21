@@ -166,6 +166,9 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 				$requiredRows = $helper->getRequiredRows( $section, $formValues );
 
 				$data = $program->formatFormData( $section, $requiredRows, $formValues, $errMsg );
+
+				// Add blank records so $data is the same length as $assets.
+				// This ensures the old assets are removed from DB if they were removed from the input form
 				for ( $i = count( $data ) + 1; $i <= count( $assets ); $i++ ) {
 					$data[$i] = [];
 				}
@@ -184,10 +187,7 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 					// update original asset data
 					foreach ( $data as $order => $row ) {
 						foreach ( $row as $name => $value ) {
-							if ( empty( $videos[$order][$name] )
-								|| ( array_key_exists( $name, $videos[$order] ) && $videos[$order][$name] != $value ) ) {
-								$videos[$order][$name] = $value;
-							}
+							$videos[$order][$name] = $value;
 
 							// replace alternative thumbnail
 							if ( $name == 'altThumbTitle' && array_key_exists( 'altThumbKey', $videos[$order] )
@@ -207,8 +207,9 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 		}
 
 		// add default values if the number of assets is less than number of rows that needed to be shown
+		$defaultValues = array_pop( $helper->getDefaultValuesBySection( $section, 1 ) );
 		for ( $i = count( $videos ) + 1; $i <= $helper->getRequiredRowsMax( $section ); $i++ ) {
-			$videos[$i] = array_pop( $helper->getDefaultValuesBySection( $section, 1 ) );
+			$videos[$i] = $defaultValues;
 		}
 
 		$this->result = $result;

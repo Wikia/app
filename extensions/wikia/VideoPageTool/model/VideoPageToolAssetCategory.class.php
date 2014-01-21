@@ -76,13 +76,13 @@ class VideoPageToolAssetCategory extends VideoPageToolAsset {
 	 */
 	public static function formatFormData( $requiredRows, $formValues, &$errMsg ) {
 		// set displayTitle = categoryName if displayTitle is empty
-		foreach ( $formValues['displayTitle'] as $key => &$value ) {
+		foreach ( $formValues['displayTitle'] as $order => &$value ) {
 			if ( empty( $value ) ) {
-				$value = $formValues['categoryName'][$key];
+				$value = $formValues['categoryName'][$order];
 			}
 		}
 
-		// remove row if categoryName is empty
+		// Remove rows where categoryName is empty
 		$resetRows = false;
 		$rows = count( $formValues['categoryName'] );
 		$helper = new VideoPageToolHelper();
