@@ -16,7 +16,7 @@ define( 'videopageadmin.models.validator', [ 'jquery' ], function( $ ) {
 
 	Validator.prototype = {
 		init: function() {
-			this.validator = this.$form.validate({debug:true});
+			this.validator = this.$form.validate();
 			this.$form.on( 'submit', $.proxy( this.onSubmit, this ) );
 
 			// If the back end has thrown an error, run the front end validation on page load

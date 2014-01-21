@@ -1076,7 +1076,6 @@ $config['videopageadmin_js'] = array(
 		'//extensions/wikia/VideoPageTool/js/admin/views/editbase.js',
 		'//extensions/wikia/VideoPageTool/js/admin/views/featured.js',
 		'//extensions/wikia/VideoPageTool/js/admin/collections/category.js',
-
 		'//extensions/wikia/VideoPageTool/js/admin/collections/categorydata.js',
 
 		'//extensions/wikia/VideoPageTool/js/shared/views/owlcarousel.js',

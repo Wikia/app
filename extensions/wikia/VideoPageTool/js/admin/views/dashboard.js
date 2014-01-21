@@ -1,13 +1,13 @@
-define('videopageadmin.views.index', [
+define('videopageadmin.views.dashboard', [
 	'videopageadmin.views.datepicker'
 ], function(Datepicker) {
 	'use strict';
 
-	function VPTIndex() {
+	function VPTDashboard() {
 		this.init();
 	}
 
-	VPTIndex.prototype = {
+	VPTDashboard.prototype = {
 		init: function() {
 			this.$regionSelect = $('#VideoPageToolRegionSelect');
 			this.defaultLanguage = this.$regionSelect.data('defaultLanguage');
@@ -46,14 +46,14 @@ define('videopageadmin.views.index', [
 		}
 	};
 
-	return VPTIndex;
+	return VPTDashboard;
 } );
 
-require(['videopageadmin.views.index'], function(IndexView) {
+require(['videopageadmin.views.dashboard'], function(DashboardView) {
 
 	'use strict';
 
 	$(function() {
-		new IndexView();
+		new DashboardView();
 	} );
 } );
