@@ -1,4 +1,4 @@
-define( 'models.videopageadmin.thumbnail', [
+define( 'videopageadmin.models.thumbnail', [
 		'jquery'
 ], function( $ ) {
 	'use strict';
@@ -11,15 +11,15 @@ define( 'models.videopageadmin.thumbnail', [
 		create: function() {
 			var that = this;
 
-			return $.nirvana.sendRequest({
+			return $.nirvana.sendRequest( {
 				controller: 'VideoPageAdminSpecial',
 				method: 'getImageData',
 				data: {
 					imageTitle: that.imgTitle
 				}
-			});
+			} );
 		}
 	};
 
 	return ThumbnailModel;
-});
+} );

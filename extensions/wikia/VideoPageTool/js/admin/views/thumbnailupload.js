@@ -1,8 +1,8 @@
 /*global WMU_skipDetails, WMU_show, WMU_openedInEditor */
-define( 'views.videopageadmin.thumbnailupload', [
+define( 'videopageadmin.views.thumbnailupload', [
 		'jquery',
 		'wikia.window',
-		'models.videopageadmin.thumbnail',
+		'videopageadmin.models.thumbnail',
 		'wikia.aim'
 	], function( $, window, ThumbnailModel ) {
 	'use strict';
@@ -45,23 +45,23 @@ define( 'views.videopageadmin.thumbnailupload', [
 				that = this,
 				$videoThumb;
 
-			img = new ThumbnailModel({
+			img = new ThumbnailModel( {
 				imgTitle: data.imageTitle,
 				wikiText: data.imageWikiText
-			});
+			} );
 
-			$videoThumb = this.$el.find('.video-thumb');
+			$videoThumb = this.$el.find( '.video-thumb' );
 
-			img.create().done(function( response ) {
+			img.create().done( function( response ) {
 
 				// Swap out the small thumbnail
-				if ( $videoThumb.find('img').length ) {
+				if ( $videoThumb.find( 'img' ).length ) {
 					that.$el
 						.find( '.Wikia-video-thumb' )
 						.attr( 'src', response.data.thumbUrl );
 
 				} else {
-					$videoThumb.html( $('<img>' )
+					$videoThumb.html( $( '<img>' )
 						.addClass( 'Wikia-video-thumb' )
 						.attr( 'src', response.data.thumbUrl ) );
 				}
@@ -75,8 +75,8 @@ define( 'views.videopageadmin.thumbnailupload', [
 				that.$el.find( '.alt-thumb' ).val( response.data.imageKey );
 				that.$el.find( '.alt-thumb-name' ).text( response.data.imageTitle );
 
-			});
+			} );
 		}
 	};
 	return ThumbnailUploader;
-});
+} );

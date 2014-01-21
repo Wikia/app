@@ -2,18 +2,18 @@
  * @description Generalized view for jQuery.ui Datepicker, based/refactored from SpecialMarketingToolbox implementation
  * @dependencies Model datepicker
  */
-define('views.videopageadmin.datepicker', [
-		'models.videopageadmin.datepicker'
-], function(DatepickerCollection) {
+define( 'videopageadmin.views.datepicker', [
+		'videopageadmin.models.datepicker'
+], function( DatepickerCollection ) {
 	'use strict';
 
-	function DatepickerView(params) {
-		this.$el = $(params.el);
-		this.collection = new DatepickerCollection({
+	function DatepickerView( params ) {
+		this.$el = $( params.el );
+		this.collection = new DatepickerCollection( {
 				language: params.language,
 				controller: params.controller,
 				method: params.method
-		});
+		} );
 
 		this.currDate = new Date();
 		this.init();
@@ -26,9 +26,9 @@ define('views.videopageadmin.datepicker', [
 			this.collection
 				.collectData( this.currDate.getFullYear(), this.currDate.getMonth() + 1 )
 				// when collection returns, render the calendar
-				.success(function() {
+				.success( function() {
 					that.render();
-				});
+				} );
 		},
 		state: {
 			// private constants used to track state of a date entry
@@ -36,67 +36,67 @@ define('views.videopageadmin.datepicker', [
 			_published: 1
 		},
 		render: function() {
-			this.$el.text('').datepicker({
+			this.$el.text( '' ).datepicker( {
 						showOtherMonths: true,
 						selectOtherMoths: true,
 						dateFormat: '@',
 						nextText: '',
 						prevText: '',
-						beforeShowDay: $.proxy(this.beforeShowDay, this),
-						onChangeMonthYear: $.proxy(function(year, month) {
-								return this.collection.collectData(year, month);
-						}, this),
-						onSelect: $.proxy(this.onSelect, this)
-				});
+						beforeShowDay: $.proxy( this.beforeShowDay, this ),
+						onChangeMonthYear: $.proxy( function( year, month ) {
+								return this.collection.collectData( year, month );
+						}, this ),
+						onSelect: $.proxy( this.onSelect, this )
+				} );
 			return this;
 		},
 		destroy: function() {
-			this.$el.datepicker('destroy');
+			this.$el.datepicker( 'destroy' );
 			delete this.collection;
 		},
-		beforeShowDay: function(date) {
+		beforeShowDay: function( date ) {
 			var tdClassName,
 					dayStatus;
 
 			tdClassName = '';
-			dayStatus = this.collection.getStatus(date);
+			dayStatus = this.collection.getStatus( date );
 
-			if (dayStatus !== undefined) {
+			if ( dayStatus !== undefined ) {
 				// response sends back a string, parse it to int
-				dayStatus = parseInt(dayStatus, 10);
-				if (dayStatus === this.state._notPublished ) {
+				dayStatus = parseInt( dayStatus, 10 );
+				if ( dayStatus === this.state._notPublished ) {
 					tdClassName = 'in-prog';
-				} else if (dayStatus === this.state._published ) {
+				} else if ( dayStatus === this.state._published ) {
 					tdClassName = 'published';
 				}
 			}
 
 			return [true, tdClassName ];
 		},
-		onChangeMonthYear: function(year, month) {
-			return this.collection.collectData(year, month);
+		onChangeMonthYear: function( year, month ) {
+			return this.collection.collectData( year, month );
 		},
-		onSelect: function(timestamp) {
+		onSelect: function( timestamp ) {
 			var qs = window.Wikia.Querystring,
 					loc = window.location,
 					pathname;
 
 
-			if (loc.pathname.charAt( loc.pathname.length - 1 ) !== '/') {
+			if ( loc.pathname.charAt( loc.pathname.length - 1 ) !== '/' ) {
 				pathname = loc.pathname + '/';
 			} else {
 				pathname = loc.pathname;
 			}
 
-			qs(loc.protocol + '//' + loc.host + pathname + 'edit')
-				.setVal({
+			qs( loc.protocol + '//' + loc.host + pathname + 'edit' )
+				.setVal( {
 						language: this.collection.language,
 						date: timestamp/1000
-				})
+				} )
 				.goTo();
 		},
 		constructor: DatepickerView
 	};
 
 	return DatepickerView;
-});
+} );

@@ -1,5 +1,5 @@
-define( 'collections.videohomepage.featuredslides', [
-		'models.videohomepage.slide'
+define( 'videohomepage.collections.featuredslides', [
+		'videohomepage.models.slide'
 	], function( SlideModel ) {
 		'use strict';
 
@@ -9,10 +9,10 @@ define( 'collections.videohomepage.featuredslides', [
 					_.each( this.models, function( e ) {
 							e.set({
 									embedData: null
-							});
-					});
+							} );
+					} );
 				}
-		});
+		} );
 
 		return SlideCollection;
-});
+} );
