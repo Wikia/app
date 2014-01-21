@@ -599,10 +599,7 @@ return array(
 	),
 	'mediawiki.Title' => array(
 		'scripts' => 'resources/mediawiki/mediawiki.Title.js',
-		'dependencies' => array(
-			'jquery.byteLength',
-			'mediawiki.util',
-		),
+		'dependencies' => 'mediawiki.util',
 	),
 	'mediawiki.Uri' => array(
 		'scripts' => 'resources/mediawiki/mediawiki.Uri.js',
