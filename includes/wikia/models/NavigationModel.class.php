@@ -105,14 +105,13 @@ class NavigationModel extends WikiaModel {
 		return http_build_url(
 			self::getCreateNewWikiUrl(),
 			[
-				'path' => 'wikia.php',
+				'path' => '/wikia.php',
 				'query' => http_build_query([
 					'controller' => 'GlobalHeader',
 					'method' => 'menuItemsAll',
 					'format' => WikiaResponse::FORMAT_JSONP,
 					'callback' => 'Globalheader',
 					'cb' => $this->wg->CacheBuster,
-					// TODO hash
 					'uselang' => $lang
 		])
 			]

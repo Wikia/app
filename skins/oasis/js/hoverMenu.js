@@ -71,7 +71,6 @@ HoverMenu.prototype.mouseover = function(event) {
 			format: 'jsonp',
 			jsonpCallback: 'Globalheader',
 			data: {
-				hash: $nav.data('hash'),
 				uselang: window.wgUserLanguage,
 				cb: window.wgStyleVersion
 			},
