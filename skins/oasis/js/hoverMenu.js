@@ -32,12 +32,12 @@ var HoverMenu = function(selector) {
 
 	//Accessibility
 	//Show when any inner anchors are in focus
-	$('> li', this.menu).on('focus', '> a', $.proxy(function(event) {
+	this.menu.on('focus', '> li > a', $.proxy(function(event) {
 		this.hideNav();
 		this.showNav($(event.currentTarget).closest('li'));
 	}, this));
 
-	$('.subnav',this.menu).on('focus', 'a', $.proxy(function(event) {
+	this.menu.on('focus', '.subnav a', $.proxy(function(event) {
 		this.hideNav();
 		this.showNav($(event.currentTarget).closest('.subnav').closest('li'));
 	}, this));
