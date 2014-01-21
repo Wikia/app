@@ -41,13 +41,19 @@ define( 'shared.views.carousel', [
 				self.$carousel.append( view.$el );
 			} );
 
+
 			this.$carousel.owlCarousel( {
 				scrollPerPage: true,
 				pagination: true,
 				paginationSpeed: 500,
 				lazyLoad: true,
 				navigation: true,
-				rewindNav: false
+				rewindNav: false,
+				afterUpdate: function() {
+					self.$carousel.find( '.title' ).ellipses({
+						wordsHidden: 2
+					});
+				}
 			} );
 
 			return this;
