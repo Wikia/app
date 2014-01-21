@@ -310,6 +310,7 @@ $wgAutoloadClasses['RenderContentOnlyHelper'] = $IP . '/includes/wikia/RenderCon
 $wgAutoloadClasses['SolrDocumentService'] = $IP . '/includes/wikia/services/SolrDocumentService.class.php';
 $wgAutoloadClasses['FormBuilderService']  =  $IP.'/includes/wikia/services/FormBuilderService.class.php';
 $wgAutoloadClasses['LicensedWikisService']  =  $IP.'/includes/wikia/services/LicensedWikisService.class.php';
+$wgAutoloadClasses['ArticleQualityService'] = $IP.'/includes/wikia/services/ArticleQualityService.php';
 
 // data models
 $wgAutoloadClasses['WikisModel'] = "{$IP}/includes/wikia/models/WikisModel.class.php";
