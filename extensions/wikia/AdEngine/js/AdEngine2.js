@@ -1,4 +1,5 @@
 /*exported AdEngine2*/
+/*global define*/
 var AdEngine2 = function (log, LazyQueue, slotTracker) {
 	'use strict';
 

@@ -84,7 +84,7 @@ var SlotTracker = function (log, tracker) {
 			gaLabel,
 			gaValue;
 
-		extraParams['pos'] = data.slotname;
+		extraParams.pos = data.slotname;
 
 		gaCategory = ['ad', eventName, data.provider, slotType].join('/');
 		gaAction = buildExtraParamsString(extraParams);

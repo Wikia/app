@@ -1,4 +1,5 @@
-/*global setTimeout*/
+/*global setTimeout, define*/
+/*jshint maxlen:150, camelcase:false, maxdepth:5*/
 var WikiaFullGptHelper = function (log, window, document, adLogicPageLevelParams) {
 	'use strict';
 

@@ -1,4 +1,5 @@
 /*exported AdProviderNull*/
+/*global define*/
 var AdProviderNull = function (log, slotTweaker) {
 	'use strict';
 
