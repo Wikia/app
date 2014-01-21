@@ -75,7 +75,7 @@ HoverMenu.prototype.mouseover = function(event) {
 				uselang: window.wgUserLanguage,
 				cb: window.wgStyleVersion
 			},
-			scriptPath: window.location.protocol + '//' + $('.start-a-wiki a' ).get(0).hostname,
+			scriptPath: window.wgCorporateUrl,
 			callback: $.proxy(function(items) {
 				$.each(items, function(index, html) {
 					$navItems.filter(function() {
