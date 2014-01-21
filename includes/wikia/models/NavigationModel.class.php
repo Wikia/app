@@ -196,7 +196,6 @@ class NavigationModel extends WikiaModel {
 					$text = $this->getNavigationFromWF($source);
 
 					if ( !is_string($text) && is_array($text) ) {
-						// fallback to WikiFactory value from community (city id 177)
 						$text = $this->getNavigationFromArray($text, $this->wg->Lang->getCode());
 					} else {
 						$text = '';
