@@ -126,6 +126,8 @@ $wgAutoloadClasses['MethodNotFoundException'] = "{$IP}/includes/wikia/nirvana/Wi
 $wgAutoloadClasses['AssetsManager'] = $IP . '/extensions/wikia/AssetsManager/AssetsManager.class.php';
 $wgAutoloadClasses['AssetsConfig'] = $IP . '/extensions/wikia/AssetsManager/AssetsConfig.class.php';
 
+$wgAutoloadClasses['FlashMessages'] = "{$IP}/includes/wikia/FlashMessages.class.php";
+
 /**
  * Wikia API
  * (based on Nirvana)
