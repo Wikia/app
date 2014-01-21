@@ -113,7 +113,6 @@ class NavigationModel extends WikiaModel {
 					'callback' => 'Globalheader',
 					'cb' => $this->wg->CacheBuster,
 					// TODO hash
-					// TODO indexes
 					'uselang' => $lang
 		])
 			]

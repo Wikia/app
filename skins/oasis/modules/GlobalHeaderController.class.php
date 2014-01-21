@@ -71,7 +71,7 @@ class GlobalHeaderController extends WikiaController {
 	public function menuItemsAll() {
 		$this->response->setFormat(WikiaResponse::FORMAT_JSONP);
 
-		$indexes = $this->request->getVal('indexes', array());
+		$indexes = $this->menuNodes[0]['children'];
 
 		$menuItems = array();
 		foreach($indexes as $index) {
