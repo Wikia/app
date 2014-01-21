@@ -1021,7 +1021,7 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 }
 
 @each $lang in en de es fr pl ja {
-	.wikiahomepage-contentlang-#{$lang} {
+	body.wikia-contentlang-#{$lang} {
 		.wikiahomepage-community-social-wikia-blog,
 		.wikiahomepage-community-social-twitter,
 		.wikiahomepage-community-social-facebook,
