@@ -312,8 +312,7 @@ class OoyalaAsset extends WikiaModel {
 		if ( !empty( $data['keywords'] ) ) {
 			$metadata['keywords'] = $data['keywords'];
 		}
-		// ageRequired can be 0
-		if ( isset( $data['ageRequired'] ) ) {
+		if ( !empty( $data['ageRequired'] ) ) {
 			$metadata['age_required'] = $data['ageRequired'];
 		}
 		if ( !empty( $data['targetCountry'] ) ) {
