@@ -39,7 +39,6 @@ define( 'videopageadmin.views.editbase', [], function() {
 						.val( '' );
 
 					this.$el.trigger( 'form:reset' );
-					// this.clearFeaturedVideoForm(); // TODO: move this to only featured video
 				}, this ),
 				width: 700
 			} );

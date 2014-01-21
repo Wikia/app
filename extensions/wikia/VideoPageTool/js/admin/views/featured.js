@@ -8,7 +8,7 @@ define( 'videopageadmin.views.featured', [
 	var FeaturedVideo = EditBaseView.extend( {
 		initialize: function() {
 			EditBaseView.prototype.initialize.call( this, arguments );
-			this.$formFields = this.$el.find( '.description, .display-title, .video-key, .alt-thumb' );
+			this.$fieldsToValidate = this.$el.find( '.description, .display-title, .video-key, .alt-thumb' );
 
 			_.bindAll( this, 'initAddVideo', 'initValidator', 'clearForm' );
 
@@ -23,25 +23,30 @@ define( 'videopageadmin.views.featured', [
 			return _.extend( {}, EditBaseView.prototype.events, {
 				'click .media-uploader-btn': 'addImage',
 				'submit': 'validate'
-			});
+			} );
 		},
 		initValidator: function() {
 			this.validator = new Validator( {
 				form: this.$el,
-				formFields: this.$formFields
+				fields: this.$fieldsToValidate
 			} );
 
-			// Set max length rule for description textarea
-			this.validator.setRule( this.$formFields.filter( '.description' ), 'maxlength', 200 );
-			this.validator.setRule( this.$formFields.filter( '.alt-thumb' ), 'missingImage' );
-
-			this.$formFields.each( this.validator.addRules );
-
-			// If the back end has thrown an error, run the front end validation on page load
-			if( $( '#vpt-form-error' ).length ) {
-				this.validator.formIsValid();
-			}
-
+			this.$fieldsToValidate.each( function() {
+				$( this ).rules( 'add', {
+					required: true,
+					messages: {
+						required: function( len, elem ) {
+							var msg;
+							if ( $( elem ).hasClass( 'alt-thumb' ) ) {
+								msg = $.msg( 'videopagetool-formerror-altthumb' );
+							} else {
+								msg = $.msg( 'htmlform-required' );
+							}
+							return msg;
+						}
+					}
+				} );
+			} );
 		},
 		validate: function( e ) {
 			e.preventDefault();

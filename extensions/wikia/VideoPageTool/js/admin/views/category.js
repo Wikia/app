@@ -11,7 +11,7 @@ define( 'videopageadmin.views.category', [
 		initialize: function() {
 			EditBaseView.prototype.initialize.call( this, arguments );
 			this.categories = new CategoryCollection();
-			this.$formFields = this.$el.find( '.category-name' );
+			this.$fieldsToValidate = this.$el.find( '.category-name' );
 			this.$formGroups = this.$el.find( '.form-wrapper' );
 
 			_.bindAll( this, 'render', 'initValidator' );
@@ -29,16 +29,27 @@ define( 'videopageadmin.views.category', [
 			return this;
 		},
 		initValidator: function() {
+			var self = this;
+
 			this.validator = new Validator( {
 				form: this.$el,
-				formFields: this.$formFields
+				fields: this.$fieldsToValidate
 			} );
 
-			// If the back end has thrown an error, run the front end validation on page load
-			if( $( '#vpt-form-error' ).length ) {
-				this.validator.formIsValid();
-			}
-
+			this.$fieldsToValidate.rules( 'add', {
+				required: function() {
+					var count = 0;
+					self.$fieldsToValidate.each( function() {
+						if ( $( this ).val() ) {
+							count ++;
+						}
+					} );
+					return count < 3;
+				},
+				messages: {
+					required: "at least three categories must be chosen"
+				}
+			} );
 		}
 	} );
 
