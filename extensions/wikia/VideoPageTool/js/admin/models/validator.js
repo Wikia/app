@@ -28,12 +28,22 @@ define( 'videopageadmin.models.validator', [ 'jquery' ], function( $ ) {
 		/*
 		 * call submit on the DOM element to prevent retriggering the jQuery event
 		 */
-		onSubmit: function() {
+		onSubmit: function( e ) {
+			e.preventDefault();
+			var $firstError;
+
 			// only execute if method exists in context
 			if ( this.formIsValid && this.formIsValid() ) {
 				this.$form[0].submit();
 				return true;
 			}
+
+			// jump back up to form box if errors are present
+			$firstError = $( '.error' ).eq( 0 );
+			$firstError
+				.closest( '.form-box' )
+			.get( 0 )
+				.scrollIntoView( true );
 
 			return false;
 		},

@@ -14,7 +14,8 @@ require( [
 			view = new CategoryView( {
 				el: '#LatestVideos'
 			} );
-		} else if ( section === 'featured' ) {
+		} else {
+			// default is featured video form
 			view = new FeaturedView( {
 				el: '.vpt-form'
 			} );

@@ -2,9 +2,8 @@ define( 'videopageadmin.views.category', [
 		'jquery',
 		'videopageadmin.collections.category',
 		'videopageadmin.views.categoryforms',
-		'videopageadmin.views.editbase',
-		'videopageadmin.models.validator'
-	], function( $, CategoryCollection, FormGroupView, EditBaseView, Validator ) {
+		'videopageadmin.views.editbase'
+	], function( $, CategoryCollection, FormGroupView, EditBaseView ) {
 	'use strict';
 
 	var CategoryPageView = EditBaseView.extend( {
@@ -31,23 +30,22 @@ define( 'videopageadmin.views.category', [
 		initValidator: function() {
 			var self = this;
 
-			this.validator = new Validator( {
-				form: this.$el,
-				fields: this.$fieldsToValidate
-			} );
+			EditBaseView.prototype.initValidator.call( this, arguments );
 
 			this.$fieldsToValidate.rules( 'add', {
-				required: function() {
-					var count = 0;
-					self.$fieldsToValidate.each( function() {
-						if ( $( this ).val() ) {
-							count ++;
-						}
-					} );
-					return count < 3;
+				required: {
+					depends: function() {
+						var count = 0;
+						self.$fieldsToValidate.each( function() {
+							if ( $( this ).val() ) {
+								count ++;
+							}
+						} );
+						return count < 3;
+					}
 				},
 				messages: {
-					required: "at least three categories must be chosen"
+					required: $.msg( 'videopagetool-formerror-category-name' )
 				}
 			} );
 		}

@@ -1,4 +1,3 @@
-/*global WMU_skipDetails, WMU_show, WMU_openedInEditor */
 define( 'videopageadmin.views.thumbnailupload', [
 		'jquery',
 		'wikia.window',
@@ -27,6 +26,7 @@ define( 'videopageadmin.views.thumbnailupload', [
 			this.$window.on( 'WMU_addFromSpecialPage', $.proxy( this.onUserUpload, this ) );
 		},
 		showUploader: function() {
+			/* jshint ignore:start */
 			// bypass page layout details screen
 			// @deprecated WMU global namespace pollution
 			window.WMU_exactHeight = 461;
@@ -35,6 +35,7 @@ define( 'videopageadmin.views.thumbnailupload', [
 			window.WMU_skipDetails = true;
 			window.WMU_show();
 			window.WMU_openedInEditor = false;
+			/* jshint ignore:end */
 		},
 		onUserUpload: function( evt, data ) {
 			evt.preventDefault();
@@ -72,7 +73,11 @@ define( 'videopageadmin.views.thumbnailupload', [
 					.attr( 'href', response.data.largeThumbUrl )
 					.fadeIn( 200 );
 
-				that.$el.find( '.alt-thumb' ).val( response.data.imageKey );
+				that.$el.find( '.alt-thumb' )
+					.val( response.data.imageKey )
+					.removeClass( 'error' )
+				.next( '.error' )
+					.remove();
 				that.$el.find( '.alt-thumb-name' ).text( response.data.imageTitle );
 
 			} );

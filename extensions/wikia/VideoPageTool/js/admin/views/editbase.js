@@ -1,4 +1,6 @@
-define( 'videopageadmin.views.editbase', [], function() {
+define( 'videopageadmin.views.editbase', [
+	'videopageadmin.models.validator'
+], function( Validator ) {
 	'use strict';
 
 	var EditBase = Backbone.View.extend( {
@@ -7,6 +9,12 @@ define( 'videopageadmin.views.editbase', [], function() {
 		},
 		events: {
 			'click .reset': 'reset'
+		},
+		initValidator: function() {
+			this.validator = new Validator( {
+				form: this.$el,
+				fields: this.$fieldsToValidate
+			} );
 		},
 		switcher: function() {
 			var opts = {};

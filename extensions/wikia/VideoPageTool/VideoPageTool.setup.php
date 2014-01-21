@@ -56,5 +56,6 @@ JSMessages::registerPackage('VideoPageTool', array(
 	'videopagetool-description-maxlength-error',
 	'videopagetool-video-title-default-text',
 	'videopagetool-image-title-default-text',
-	'videopagetool-formerror-altthumb'
+	'videopagetool-formerror-altthumb',
+	'videopagetool-formerror-category-name',
 ));

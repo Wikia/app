@@ -1,8 +1,7 @@
 define( 'videopageadmin.views.featured', [
 	'videopageadmin.views.editbase',
-	'videopageadmin.views.thumbnailupload',
-	'videopageadmin.models.validator'
-], function( EditBaseView, ThumbnailUploader, Validator ) {
+	'videopageadmin.views.thumbnailupload'
+], function( EditBaseView, ThumbnailUploader ) {
 	'use strict';
 
 	var FeaturedVideo = EditBaseView.extend( {
@@ -14,23 +13,15 @@ define( 'videopageadmin.views.featured', [
 
 			this.initAddVideo();
 			this.initValidator();
-
-			// TODO: check if this is the right way to bind this event
-			this.$el.on( 'form:reset', this.clearForm );
-
 		},
 		events: function() {
 			return _.extend( {}, EditBaseView.prototype.events, {
 				'click .media-uploader-btn': 'addImage',
-				'submit': 'validate'
+				'form:reset': 'clearForm'
 			} );
 		},
 		initValidator: function() {
-			this.validator = new Validator( {
-				form: this.$el,
-				fields: this.$fieldsToValidate
-			} );
-
+			EditBaseView.prototype.initValidator.call( this, arguments );
 			this.$fieldsToValidate.each( function() {
 				$( this ).rules( 'add', {
 					required: true,
@@ -48,23 +39,10 @@ define( 'videopageadmin.views.featured', [
 				} );
 			} );
 		},
-		validate: function( e ) {
-			e.preventDefault();
-			var success,
-				$firstError;
-
-			// check for errors
-			success = this.validator.onSubmit();
-
-			// jump back up to form box if errors are present
-			if ( !success ) {
-				$firstError = $( '.error' ).eq( 0 );
-				$firstError
-					.closest( '.form-box' )
-					.get( 0 )
-					.scrollIntoView( true );
-			}
-		},
+		/**
+		 * Apply $.fn.addVideoButton to each add video button on the form
+		 * @todo: use Backbone for data updating instead of nirvana
+		 */
 		initAddVideo: function() {
 			this.$el.find( '.add-video-button' ).each( function() {
 				var $this = $( this ),
