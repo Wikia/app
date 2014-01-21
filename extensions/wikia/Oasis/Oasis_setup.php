@@ -65,6 +65,7 @@ function wfOasisSetup() {
 	$wgHooks['ArticleSaveComplete'][] = 'ArticleService::onArticleSaveComplete';
 	$wgHooks['SkinCopyrightFooter'][] = 'CorporateFooterController::onSkinCopyrightFooter';
 	$wgHooks['MakeGlobalVariablesScript'][] = 'OasisController::onMakeGlobalVariablesScript';
+	$wgHooks['MakeGlobalVariablesScript'][] = 'GlobalHeaderController::onMakeGlobalVariablesScript';
 
 	// support "noexternals" URL param
 	global $wgNoExternals, $wgRequest;
