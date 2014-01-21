@@ -474,7 +474,7 @@ class VideoPageToolAsset extends WikiaModel {
 
 	/**
 	 * Unserialize and set to data
-	 * @param type $serializedData
+	 * @param string $serializedData
 	 */
 	protected function setSerializedData( $serializedData ) {
 		$data = json_decode( $serializedData, true );
