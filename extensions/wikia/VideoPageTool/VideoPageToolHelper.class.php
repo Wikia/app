@@ -29,9 +29,9 @@ class VideoPageToolHelper extends WikiaModel {
 	 */
 	public function getSections() {
 		$sections = array(
-			'featured' => wfMessage( 'videopagetool-section-featured' )->plain(),
-			'category' => wfMessage( 'videopagetool-section-category' )->plain(),
-//			'fan' => wfMessage( 'videopagetool-section-fan' )->plain(),
+			VideoPageToolAssetFeatured::SECTION => wfMessage( 'videopagetool-section-featured' )->plain(),
+			VideoPageToolAssetCategory::SECTION => wfMessage( 'videopagetool-section-category' )->plain(),
+//			VideoPageToolAssetFan::SECTION => wfMessage( 'videopagetool-section-fan' )->plain(),
 		);
 
 		return $sections;

@@ -353,13 +353,10 @@ class VideoPageToolProgram extends WikiaModel {
 
 		$db = wfGetDB( DB_MASTER );
 
-		$programId = $db->nextSequenceValue( 'video_vpt_program_seq' );
-
 		$db->insert(
 			'vpt_program',
 			array(
-				'program_id' => $programId,
-				'language' => $this->language,
+				'language'     => $this->language,
 				'publish_date' => $db->timestamp( $this->publishDate ),
 				'is_published' => $this->isPublished,
 			),
@@ -448,7 +445,7 @@ class VideoPageToolProgram extends WikiaModel {
 		$this->setPublishedBy( $this->wg->User->getId() );
 
 		$db = wfGetDB( DB_MASTER );
-		$status = $this->updateToDatabase();
+		$status = $this->save();
 		$db->commit();
 
 		if ( $status->isGood() && $status->value > 0 ) {
@@ -466,7 +463,7 @@ class VideoPageToolProgram extends WikiaModel {
 		$this->setIsPublished( false );
 
 		$db = wfGetDB( DB_MASTER );
-		$status = $this->updateToDatabase();
+		$status = $this->save();
 		$db->commit();
 
 		if ( $status->isGood() && $status->value > 0 ) {
@@ -554,13 +551,24 @@ class VideoPageToolProgram extends WikiaModel {
 	}
 
 	/**
+	 * Get all assets associated with this program
+	 * @return array
+	 */
+	public function getAssets() {
+		$assets = [];
+		if ( $this->exists() ) {
+			$assets = VideoPageToolAsset::getAssets( $this->programId );
+		}
+		return $assets;
+	}
+
+	/**
 	 * Save assets by section
 	 * @param string $section
 	 * @param array $assets
-	 * @param boolean $setPublish
 	 * @return Status
 	 */
-	public function saveAssetsBySection( $section, $assets, $setPublish = false ) {
+	public function saveAssetsBySection( $section, $assets ) {
 		wfProfileIn( __METHOD__ );
 
 		if ( empty( $this->language ) || empty( $this->publishDate ) ) {
@@ -575,11 +583,7 @@ class VideoPageToolProgram extends WikiaModel {
 		$status = Status::newGood();
 
 		// save program
-		if ( !$this->exists() ) {
-			$status = $this->addToDatabase();
-		} else if ( $setPublish ) {
-			$status = $this->updateToDatabase();
-		}
+		$this->save();
 
 		if ( !$status->isGood() ) {
 			$db->rollback();
@@ -594,7 +598,7 @@ class VideoPageToolProgram extends WikiaModel {
 		foreach ( $assets as $order => $asset ) {
 			$assetObj = VideoPageToolAsset::newAsset( $this->programId, $section, $order );
 			if ( empty( $asset ) ) {
-				$status = $assetObj->remove();
+				$status = $assetObj->delete();
 			} else {
 				$assetObj->setData( $asset );
 				$assetObj->setUpdatedAt( $time );
@@ -706,4 +710,47 @@ class VideoPageToolProgram extends WikiaModel {
 		$this->wg->Memc->delete( $this->getMemcKeyCompletedSections() );
 	}
 
+	public function save() {
+		wfProfileIn( __METHOD__ );
+
+		// save program
+		if ( $this->exists() ) {
+			$status = $this->updateToDatabase();
+		} else {
+			$status = $this->addToDatabase();
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $status;
+	}
+
+	/**
+	 * Removes the current program from the database
+	 * @param boolean $cascade Whether or not to cascade this delete to also delete dependent assets
+	 */
+	public function delete( $cascade = false ) {
+		wfProfileIn( __METHOD__ );
+
+		if ( $this->exists() ) {
+			// Delete all dependent assets if we get the $cascade option
+			if ( $cascade ) {
+				$assets = $this->getAssets();
+				foreach ( $assets as $asset ) {
+					/** @var VideoPageToolAsset $asset */
+					$asset->delete();
+				}
+			}
+
+			$dbw = wfGetDB(DB_MASTER);
+
+			(new WikiaSQL())
+				->DELETE('vpt_program')
+				->WHERE('program_id')->EQUAL_TO($this->programId)
+				->run($dbw);
+
+			$this->invalidateCache();
+		}
+
+		wfProfileOut( __METHOD__ );
+	}
 }

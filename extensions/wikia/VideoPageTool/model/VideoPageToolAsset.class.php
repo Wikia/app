@@ -98,7 +98,7 @@ class VideoPageToolAsset extends WikiaModel {
 
 	/**
 	 * Set asset id
-	 * @param type $value
+	 * @param integer $value
 	 */
 	protected function setAssetId( $value ) {
 		$this->assetId = $value;
@@ -177,13 +177,13 @@ class VideoPageToolAsset extends WikiaModel {
 	public static function newAsset( $programId, $section, $order ) {
 		wfProfileIn( __METHOD__ );
 
-		$className = self::getClassNameFromSection( $section );
-		$asset = new $className( $programId, $section, $order );
-
 		if ( empty( $programId ) || empty( $section ) || empty( $order ) ) {
 			wfProfileOut( __METHOD__ );
 			return null;
 		}
+
+		$className = self::getClassNameFromSection( $section );
+		$asset = new $className( $programId, $section, $order );
 
 		$asset->setProgramId( $programId );
 		$asset->setSection( $section );
@@ -322,8 +322,6 @@ class VideoPageToolAsset extends WikiaModel {
 
 		$db = wfGetDB( DB_MASTER );
 
-		$assetId = $db->nextSequenceValue( 'video_vpt_asset_seq' );
-
 		if ( empty( $this->updatedAt ) ) {
 			$this->updatedAt = $db->timestamp();
 		}
@@ -333,13 +331,12 @@ class VideoPageToolAsset extends WikiaModel {
 		$db->insert(
 			'vpt_asset',
 			array(
-				'asset_id' => $assetId,
 				'program_id' => $this->programId,
 				'section' => $this->section,
 				'`order`' => $this->order,
 				'data' => $data,
 				'updated_by' => $this->updatedBy,
-				'updated_at' => $db->timestamp( $this->udpatedAt ),
+				'updated_at' => $db->timestamp( $this->updatedAt ),
 			),
 			__METHOD__,
 			'IGNORE'
@@ -387,10 +384,10 @@ class VideoPageToolAsset extends WikiaModel {
 	}
 
 	/**
-	 * Remove asset
-	 * @return type
+	 * Delete asset from database and caches
+	 * @return Status
 	 */
-	public function remove() {
+	public function delete() {
 		wfProfileIn( __METHOD__ );
 
 		if ( empty( $this->programId ) || empty( $this->section ) || empty( $this->order ) ) {
@@ -404,6 +401,7 @@ class VideoPageToolAsset extends WikiaModel {
 
 		if ( $status->isGood() ) {
 			$this->invalidateCache();
+//			$this->invalidateCacheAssets( $this->programId );
 			$this->invalidateCacheAssetsBySection( $this->programId, $this->section );
 		}
 
@@ -452,6 +450,7 @@ class VideoPageToolAsset extends WikiaModel {
 
 		if ( $status->isGood() ) {
 			$this->invalidateCache();
+//			$this->invalidateCacheAssets( $this->programId );
 			$this->invalidateCacheAssetsBySection( $this->programId, $this->section );
 		}
 
@@ -580,6 +579,54 @@ class VideoPageToolAsset extends WikiaModel {
 	 */
 	protected function invalidateCacheAssetsBySection( $programId, $section ) {
 		$this->wg->Memc->delete( self::getMemcKeyAssetsBySection( $programId, $section ) );
+	}
+
+	/**
+	 * Get all assets associated with particular program ID.
+	 *
+	 * NOTE: Currently this is only used to cleanup assets when deleting a VideoPageToolProgram and so is
+	 * not cached.  If this is ever used for regular lookups it should be cached.
+	 *
+	 * @param integer $programId Return all assets belonging to this program ID
+	 * @return array
+	 */
+	public static function getAssets( $programId ) {
+		wfProfileIn( __METHOD__ );
+
+		$db = wfGetDB( DB_SLAVE );
+
+		$assets = (new WikiaSQL()) // ->cache( 60*60, self::getMemcKeyAssets( $programId ) )
+			->SELECT('*')
+				->FIELD('unix_timestamp(updated_at)')->AS_('updated_at')
+			->FROM('vpt_asset')
+			->WHERE('program_id')->EQUAL_TO($programId)
+			->runLoop( $db, function( &$assets,$row ) {
+					$assets[] = self::newFromRow( $row );
+			});
+
+		wfProfileOut( __METHOD__ );
+
+		return $assets;
+	}
+
+	/**
+	 * Get memcache key for all assets
+	 * @param integer $programId
+	 * @return string
+	 */
+	protected static function getMemcKeyAssets( $programId ) {
+		return wfMemcKey( 'videopagetool', 'assets', $programId );
+	}
+
+	/**
+	 * Clear cache for all assets of a program.
+	 *
+	 * Currently this cache is not being used (see NOTE in the getAssets() method
+	 *
+	 * @param integer $programId
+	 */
+	protected function invalidateCacheAssets( $programId ) {
+		$this->wg->Memc->delete( self::getMemcKeyAssets( $programId ) );
 	}
 
 	/**

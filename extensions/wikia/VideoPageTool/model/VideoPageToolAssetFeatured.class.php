@@ -5,6 +5,8 @@
  */
 class VideoPageToolAssetFeatured extends VideoPageToolAsset {
 
+	const SECTION = 'featured';
+
 	protected $title;
 	protected $displayTitle;
 	protected $description;
