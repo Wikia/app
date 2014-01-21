@@ -1,0 +1,38 @@
+define( 'videopageadmin.views.category', [
+		'jquery',
+		'videopageadmin.collections.category',
+		'videopageadmin.views.categoryforms'
+	], function( $, CategoryCollection, FormGroupView ) {
+	'use strict';
+
+	var CategoryPageView = Backbone.View.extend( {
+			initialize: function() {
+				this.categories = new CategoryCollection();
+				this.$formGroups = this.$el.find( '.form-wrapper' );
+
+				_.bindAll( this, 'render' );
+				this.categories.on( 'reset', this.render );
+			},
+			render: function() {
+				var self = this;
+				this.formSubViews = _.map( this.$formGroups, function( e ) {
+						return new FormGroupView( {
+								el: e,
+								categories: new CategoryCollection( self.categories.toJSON() )
+						} );
+				} );
+				return this;
+			}
+	} );
+
+	return CategoryPageView;
+} );
+
+$( function () {
+		'use strict';
+		require( [ 'videopageadmin.views.category' ], function( CategoryPageView ) {
+				new CategoryPageView( {
+						el: '#LatestVideos'
+				} );
+		} );
+} );

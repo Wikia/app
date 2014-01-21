@@ -4,7 +4,7 @@
  * @see http://jqueryvalidation.org/
  */
 
-define( 'models.videopageadmin.validator', [ 'jquery' ], function( $ ) {
+define( 'videopageadmin.models.validator', [ 'jquery' ], function( $ ) {
 
 	'use strict';
 
@@ -65,7 +65,7 @@ define( 'models.videopageadmin.validator', [ 'jquery' ], function( $ ) {
 					}
 				},
 				onkeyup: false
-			});
+			} );
 		},
 
 		/*
@@ -76,7 +76,7 @@ define( 'models.videopageadmin.validator', [ 'jquery' ], function( $ ) {
 			if ( this.formIsValid && this.formIsValid() ) {
 				this.$form[0].submit();
 				return true;
-			} 
+			}
 
 			return false;
 		},
@@ -93,7 +93,7 @@ define( 'models.videopageadmin.validator', [ 'jquery' ], function( $ ) {
 				if ( !( that.validator.element( $( this ) ) ) ) {
 					isValid = false;
 				}
-			});
+			} );
 
 			return isValid;
 		},
@@ -107,4 +107,4 @@ define( 'models.videopageadmin.validator', [ 'jquery' ], function( $ ) {
 	};
 
 	return Validator;
-});
+} );

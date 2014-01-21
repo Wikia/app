@@ -1,4 +1,4 @@
-(function( exports ) {
+( function( exports ) {
 	'use strict';
 	var factory = function( $ ) {
 		function Ellipses( $el ) {
@@ -52,15 +52,15 @@
 							$this.hide().prev().hide().before( '...' );
 						}
 					}
-				});
+				} );
 			}
 		};
 
 		$.fn.ellipses = function() {
-			return this.each(function() {
+			return this.each( function() {
 				var $this = $( this );
-				$this.data( 'ellipses', new Ellipses( $this ));
-			});
+				$this.data( 'ellipses', new Ellipses( $this ) );
+			} );
 		};
 	};
 
@@ -69,4 +69,4 @@
 	} else {
 		factory( exports.jQuery );
 	}
-})( this );
+} )( this );

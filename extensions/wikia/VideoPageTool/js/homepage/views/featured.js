@@ -1,6 +1,6 @@
 /* global _ */
 /* global Backbone */
-define( 'views.videohomepage.featured', [
+define( 'videohomepage.views.featured', [
 		// lib deps
 		'jquery',
 		// wikia core deps
@@ -8,21 +8,21 @@ define( 'views.videohomepage.featured', [
 		'wikia.videoBootstrap',
 		'wikia.tracker',
 		// module specific deps
-		'models.videohomepage.slide',
-		'collections.videohomepage.featuredslides',
+		'videohomepage.models.slide',
+		'videohomepage.collections.featuredslides',
 		'jquery.ellipses'
 ], function( $, Nirvana, VideoBootstrap, Tracker, FeaturedSlideModel, FeaturedSlidesCollection ) {
 
 	'use strict';
 	var track, FeaturedVideosView;
 
-	track = Tracker.buildTrackingFunction({
+	track = Tracker.buildTrackingFunction( {
 			action: Tracker.ACTIONS.CLICK,
 			category: 'video-home-page',
 			trackingMethod: 'both'
-	});
+	} );
 
-	FeaturedVideosView = Backbone.View.extend({
+	FeaturedVideosView = Backbone.View.extend( {
 			events: {
 				'click #featured-video-thumbs .video': 'handleThumbClick',
 				'mouseenter #featured-video-thumbs': 'clearHoverTimeout',
@@ -33,7 +33,7 @@ define( 'views.videohomepage.featured', [
 				'mouseleave.autohover #featured-video-bxslider': 'bxSliderStartAuto',
 
 				'mouseenter .bx-pager .bx-pager-item': 'showThumbs',
-				'mouseleave .bx-pager .bx-pager-item': 'setHoverTimeout',
+				'mouseleave .bx-pager .bx-pager-item': 'setHoverTimeout'
 			},
 
 			initialize: function( opts ) {
@@ -69,7 +69,7 @@ define( 'views.videohomepage.featured', [
 						if( $el.height() > $el.parent().height() ) {
 							$el.ellipses();
 						}
-				});
+				} );
 			},
 
 			queryDom: function() {
@@ -82,37 +82,37 @@ define( 'views.videohomepage.featured', [
 				this.slideModels = [];
 
 				_.each( this.$thumbs.find( '.video' ), function( e ) {
-						that.thumbs.push({
+						that.thumbs.push( {
 								$video: $( e )
-						});
-				});
+						} );
+				} );
 
 				_.each( this.$bxSlider.children(), function( e, i ) {
 						var $elem,
 								videoKey;
 
 						$elem = $( e );
-						that.slides.push({
+						that.slides.push( {
 								$elem: $elem,
 								$video: $elem.find( '.slide-video' ),
 								$videoThumb: that.thumbs[ i ].$video,
 								$image: $elem.find( '.slide-image' ),
 								idx: i
-						});
+						} );
 
 						videoKey = that.thumbs[ i ]
 												.$video.children( 'img' )
 												.attr( 'data-video-key' );
 
-						that.slideModels.push( new FeaturedSlideModel({
+						that.slideModels.push( new FeaturedSlideModel( {
 								videoKey: videoKey,
 								embedData: null
-						}));
-				});
+						} ));
+				} );
 			},
 
 			initSlider: function() {
-				this.slider = this.$bxSlider.bxSlider({
+				this.slider = this.$bxSlider.bxSlider( {
 					onSliderLoad: _.bind( this.onSliderLoad, this ),
 					onSlideAfter: _.bind( this.onSlideAfter, this ),
 					nextText: '',
@@ -122,7 +122,7 @@ define( 'views.videohomepage.featured', [
 					mode: 'fade',
 					// not using this b/c it's buggy
 					autoHover: false
-				});
+				} );
 
 			},
 			onSliderLoad: function() {
@@ -173,9 +173,9 @@ define( 'views.videohomepage.featured', [
 
 					this.$thumbs.slideUp();
 
-					track({
+					track( {
 							label: 'featured-thumbnail'
-					});
+					} );
 
 					if( this.slider.getCurrentSlide() === index ) {
 						// play the video
@@ -239,7 +239,7 @@ define( 'views.videohomepage.featured', [
 						window.GlobalNotification.show( json.error, 'error', null, 4000);
 					} else {
 						// cache embed data
-						model.set({ embedData: json });
+						model.set( { embedData: json } );
 
 						// Actually do the video embed
 						that.videoInstance = new VideoBootstrap(
@@ -253,12 +253,12 @@ define( 'views.videohomepage.featured', [
 							that.$bxSlider.redrawSlider();
 						}, 1000);
 					}
-				});
+				} );
 
-				track({
+				track( {
 						label: 'featured-video-plays',
 						value: this.videoPlays++
-				});
+				} );
 			},
 
 			/*
@@ -275,7 +275,7 @@ define( 'views.videohomepage.featured', [
 
 				if( model.get('embedData') === null ) {
 					// Get video embed data for this slide
-					data = Nirvana.sendRequest({
+					data = Nirvana.sendRequest( {
 						controller: 'VideoHandler',
 						method: 'getEmbedCode',
 						type: 'GET',
@@ -284,7 +284,7 @@ define( 'views.videohomepage.featured', [
 							width: that.getWidthForVideo( slide ),
 							autoplay: 1
 						}
-					});
+					} );
 				} else {
 					data = model.get('embedData');
 				}
@@ -325,7 +325,7 @@ define( 'views.videohomepage.featured', [
 				this.$bxSlider.find( '.slide-image' ).hide()
 					.find( '.slide-video' ).show();
 			}
-	});
+	} );
 
 	return FeaturedVideosView;
-});
+} );
