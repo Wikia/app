@@ -863,7 +863,7 @@ class SQL {
 		return $result === false ? $defaultReturn : $result;
 	}
 
-	public function run($db, callable $callback, $cacheKey=null, $defaultReturn=[]) {
+	public function run($db, callable $callback=null, $cacheKey=null, $defaultReturn=[]) {
 		return $this->runLoop($db, $callback, $cacheKey, $defaultReturn, false);
 	}
 
@@ -1364,6 +1364,10 @@ class SQL {
 
 		$sql = $this->injectParams($db, $breakDown);
 		$result = $db->query($sql);
+
+		if ($callback == null) {
+			return $result;
+		}
 
 		if ($autoIterate) {
 			$data = $this->autoIterate($result, $callback);
