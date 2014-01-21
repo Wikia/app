@@ -592,18 +592,25 @@ class VideoPageToolProgram extends WikiaModel {
 		$assetList = array();
 		foreach ( $assets as $order => $asset ) {
 			$assetObj = VideoPageToolAsset::newAsset( $this->programId, $section, $order );
-			$assetObj->setData( $asset );
-			$assetObj->setUpdatedAt( $time );
-			$assetObj->setUpdatedBy( $userId );
+			if ( empty( $asset ) ) {
+				$status = $assetObj->remove();
+			} else {
+				$assetObj->setData( $asset );
+				$assetObj->setUpdatedAt( $time );
+				$assetObj->setUpdatedBy( $userId );
 
-			$status = $assetObj->save();
+				$status = $assetObj->save();
+			}
+
 			if ( !$status->isGood() ) {
 				$db->rollback();
 				wfProfileOut( __METHOD__ );
 				return $status;
 			}
 
-			$assetList[$order] = $assetObj;
+			if ( !empty( $asset ) ) {
+				$assetList[$order] = $assetObj;
+			}
 		}
 
 		$db->commit();

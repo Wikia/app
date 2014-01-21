@@ -9,6 +9,7 @@ class VideoPageToolAssetFeatured extends VideoPageToolAsset {
 	protected $displayTitle;
 	protected $description;
 	protected $altThumbTitle;
+
 	protected $defaultThumbOptions = [ 'noLightbox' => true ];
 
 	// required data field -- array( FormFieldName => varName )
