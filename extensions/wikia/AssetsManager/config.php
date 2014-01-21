@@ -1071,11 +1071,12 @@ $config['videopageadmin_js'] = array(
 		'//extensions/wikia/VideoPageTool/js/admin/models/thumbnail.js',
 		'//extensions/wikia/VideoPageTool/js/admin/models/validator.js',
 		'//extensions/wikia/VideoPageTool/js/admin/views/datepicker.js',
-		'//extensions/wikia/VideoPageTool/js/admin/views/index.js',
+		'//extensions/wikia/VideoPageTool/js/admin/views/dashboard.js',
 		'//extensions/wikia/VideoPageTool/js/admin/views/thumbnailupload.js',
-		'//extensions/wikia/VideoPageTool/js/admin/views/edit.js',
-
+		'//extensions/wikia/VideoPageTool/js/admin/views/editbase.js',
+		'//extensions/wikia/VideoPageTool/js/admin/views/featured.js',
 		'//extensions/wikia/VideoPageTool/js/admin/collections/category.js',
+
 		'//extensions/wikia/VideoPageTool/js/admin/collections/categorydata.js',
 
 		'//extensions/wikia/VideoPageTool/js/shared/views/owlcarousel.js',
@@ -1085,6 +1086,7 @@ $config['videopageadmin_js'] = array(
 		'//extensions/wikia/VideoPageTool/js/admin/views/autocomplete.js',
 		'//extensions/wikia/VideoPageTool/js/admin/views/categoryforms.js',
 		'//extensions/wikia/VideoPageTool/js/admin/views/category.js',
+		'//extensions/wikia/VideoPageTool/js/admin/views/index.js',
 	)
 );
 

@@ -1,3 +1,4 @@
+// TODO: Remove this file
 define( 'videopageadmin.views.edit', [
 	'jquery',
 	'videopageadmin.models.validator',
@@ -29,95 +30,6 @@ define( 'videopageadmin.views.edit', [
 							el: $( this ).closest( '.form-box' )
 					} );
 			} );
-		},
-
-		initAddVideo: function() {
-			this.$form.find( '.add-video-button' ).each( function() {
-				var $this = $( this ),
-					$box = $this.closest( '.form-box' ),
-					$videoKeyInput = $this.siblings( '.video-key' ),
-					$videoTitle = $this.siblings( '.video-title' ),
-					$displayTitleInput = $box.find( '.display-title' ),
-					$descInput = $box.find( '.description' ),
-					$thumb = $box.find( '.video-thumb' );
-
-				$this.addVideoButton( {
-					callbackAfterSelect: function( url, vet ) {
-						var $altThumbKey,
-								req;
-
-						$altThumbKey = $box.find( '.alt-thumb' ).val();
-						req = {};
-
-						if ( $altThumbKey.length ) {
-							req.altThumbKey = $altThumbKey;
-						}
-
-						req.url = url;
-
-						$.nirvana.sendRequest( {
-							controller: 'VideoPageAdminSpecial',
-							method: 'getVideoData',
-							type: 'GET',
-							format: 'json',
-							data: req,
-							callback: function( json ) {
-								if( json.result === 'ok' ) {
-
-									var video = json.video;
-									$thumb.html();
-
-									// update input value and remove any error messages that might be there.
-									$videoKeyInput
-										.val( video.videoKey )
-										.removeClass( 'error' )
-										.next( '.error' )
-										.remove();
-									$videoTitle
-										.removeClass( 'alternative' )
-										.text( video.videoTitle );
-									$displayTitleInput
-										.val( video.displayTitle )
-										.trigger( 'keyup' ); // for validation
-									$descInput.val( video.description )
-										.trigger( 'keyup' ); // for validation
-
-									// Update thumbnail html
-									$thumb.html( video.videoThumb );
-
-									// close VET modal
-									vet.close();
-								} else {
-									window.GlobalNotification.show( json.msg, 'error' );
-								}
-							}
-						} );
-
-						// Don't move on to second VET screen.  We're done.
-						return false;
-					}
-				} );
-			} );
-		},
-
-		initSwitcher: function() {
-			var opts = {};
-
-			if ( $( '.form-wrapper' ).length ) {
-				opts.boxes = '.form-wrapper';
-			}
-
-			opts.onChange = function( $elem, $switched ) {
-				// Update the numbers beside the elements
-				var $oCount = $elem.find( '.count' ),
-					oCountVal = $oCount.html(),
-					$nCount = $switched.find( '.count' ),
-					nCountVal = $nCount.html();
-
-				$oCount.html( nCountVal );
-				$nCount.html( oCountVal );
-			};
-			this.$form.switcher( opts );
 		},
 
 		initValidator: function() {
