@@ -7,44 +7,6 @@
 */
 
 /**
- * Send request to Ooyala to update metadata
- * @param string $videoId
- * @param array $metadata
- * @return boolean $resp
- */
-function updateMetadata( $videoId, $metadata ) {
-	$method = 'PATCH';
-	$reqPath = '/v2/assets/'.$videoId.'/metadata';
-
-	$reqBody = json_encode( $metadata );
-
-	$url = OoyalaApiWrapper::getApi( $method, $reqPath, array(), $reqBody );
-	echo "\tRequest to update metadata: $url\n";
-
-	$options = array(
-		'method' => $method,
-		'postData' => $reqBody,
-	);
-
-	$req = MWHttpRequest::factory( $url, $options );
-	$status = $req->execute();
-	if ( $status->isGood() ) {
-		$meta = json_decode( $req->getContent(), true );
-		$resp = true;
-
-		echo "\tUpdated Metadata for $videoId: \n";
-		foreach( explode( "\n", var_export( $meta, TRUE ) ) as $line ) {
-			echo "\t\t:: $line\n";
-		}
-	} else {
-		$resp = false;
-		echo "\tERROR: problem adding metadata (".$status->getMessage().").\n";
-	}
-
-	return $resp;
-}
-
-/**
  * remove field from Custom Metadata if the field is empty
  * @global integer $skipped
  * @global integer $failed
@@ -71,7 +33,7 @@ function removeCustomMetadata( $video, $title, $removedField ) {
 	}
 
 	if ( !$dryRun ) {
-		$resp = updateMetadata( $video['embed_code'], $metadata );
+		$resp = OoyalaAsset::updateMetadata( $video['embed_code'], $metadata );
 		if ( !$resp ) {
 			$failed++;
 		}
@@ -108,7 +70,7 @@ function addAgeRequired( $video, $title, $ageRequired ) {
 	}
 
 	if ( !$dryRun ) {
-		$resp = updateMetadata( $video['embed_code'], $metadata );
+		$resp = OoyalaAsset::updateMetadata( $video['embed_code'], $metadata );
 		if ( !$resp ) {
 			$failed++;
 		}
@@ -227,7 +189,7 @@ do {
 		}
 
 		if ( !empty( $remove ) ) {
-			 removeCustomMetadata( $video, $title, $remove );
+			removeCustomMetadata( $video, $title, $remove );
 		}
 	}
 

@@ -250,7 +250,7 @@ class OoyalaAsset extends WikiaModel {
 			$resp = true;
 
 			print( "Ooyala: Updated Metadata for $videoId: \n" );
-			foreach( explode( "\n", var_export( $meta, TRUE ) ) as $line ) {
+			foreach( explode( "\n", var_export( $meta, true ) ) as $line ) {
 				print ":: $line\n";
 			}
 		} else {
@@ -259,6 +259,45 @@ class OoyalaAsset extends WikiaModel {
 		}
 
 		wfProfileOut( __METHOD__ );
+
+		return $resp;
+	}
+
+	/**
+	 * Send request to Ooyala to update metadata
+	 * @param string $videoId
+	 * @param array $metadata
+	 * @return boolean $resp
+	 */
+	public static function updateMetadata( $videoId, $metadata ) {
+		$method = 'PATCH';
+		$reqPath = '/v2/assets/'.$videoId.'/metadata';
+
+		$reqBody = json_encode( $metadata );
+
+		$url = OoyalaApiWrapper::getApi( $method, $reqPath, array(), $reqBody );
+		echo "\tRequest to update metadata: $url\n";
+
+		$options = array(
+			'method' => $method,
+			'postData' => $reqBody,
+			'noProxy' => true,
+		);
+
+		$req = MWHttpRequest::factory( $url, $options );
+		$status = $req->execute();
+		if ( $status->isGood() ) {
+			$meta = json_decode( $req->getContent(), true );
+			$resp = true;
+
+			echo "\tUpdated Metadata for $videoId: \n";
+			foreach( explode( "\n", var_export( $meta, true ) ) as $line ) {
+				echo "\t\t:: $line\n";
+			}
+		} else {
+			$resp = false;
+			echo "\tERROR: problem updating metadata (".$status->getMessage().").\n";
+		}
 
 		return $resp;
 	}
@@ -590,7 +629,7 @@ class OoyalaAsset extends WikiaModel {
 			// for debugging
 			//$resp = json_decode( $req->getContent(), true );
 			//if ( !empty( $resp ) ) {
-			//	foreach( explode( "\n", var_export( $resp, TRUE ) ) as $line ) {
+			//	foreach( explode( "\n", var_export( $resp, true ) ) as $line ) {
 			//		print ":: $line\n";
 			//	}
 			//}
