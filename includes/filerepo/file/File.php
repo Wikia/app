@@ -1213,6 +1213,7 @@ abstract class File {
 	function getThumbUrl( $suffix = false ) {
 		$this->assertRepoDefined();
 		$path = $this->repo->getZoneUrl( 'thumb' ) . '/' . $this->getUrlRel();
+		$path  = wfReplaceImageServer( $path, $this->getTimestamp() ); // Wikia change (BAC-1206)
 		if ( $suffix !== false ) {
 			$path .= '/' . rawurlencode( $suffix );
 		}
