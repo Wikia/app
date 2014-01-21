@@ -50,9 +50,9 @@ define( 'shared.views.carousel', [
 				navigation: true,
 				rewindNav: false,
 				afterUpdate: function() {
-					self.$carousel.find( '.title' ).ellipses({
+					self.$carousel.find( '.title' ).ellipses( {
 						wordsHidden: 2
-					});
+					} );
 				}
 			} );
 
