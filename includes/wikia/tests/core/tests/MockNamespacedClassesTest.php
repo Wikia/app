@@ -5,8 +5,6 @@ namespace {
 	class MockNamespacedClassesTest extends WikiaBaseTest {
 
 /**
- * @group Slow
- * @slowExecutionTime 0.0026111602783203 ms
  */
 		public function testConstructorMocks() {
 			$fakeObject = new stdClass;
@@ -28,8 +26,6 @@ namespace {
 		}
 
 /**
- * @group Slow
- * @slowExecutionTime 0.041651964187622 ms
  */
 		public function testStaticMethodMocks() {
 			$fakeObject = new stdClass;
@@ -52,8 +48,6 @@ namespace {
 		}
 
 /**
- * @group Slow
- * @slowExecutionTime 0.040904998779297 ms
  */
 		public function testRegularMethodMocks() {
 			$fakeObject = new stdClass;
@@ -77,8 +71,6 @@ namespace {
 		}
 
 /**
- * @group Slow
- * @slowExecutionTime 0.042875051498413 ms
  */
 		public function testCallingFromOtherNamespace() {
 			$expValue = 2;
@@ -98,8 +90,6 @@ namespace {
 		}
 
 /**
- * @group Slow
- * @slowExecutionTime 0.048278093338013 ms
  */
 		public function testCallingFromOtherNamespaceWithAlias() {
 			$expValue = 2;

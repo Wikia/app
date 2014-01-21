@@ -62,8 +62,6 @@
 		}
 
 /**
- * @group Slow
- * @slowExecutionTime 0.43625497817993 ms
  */
 		public function testWikiaMobileLoginTemplate() {
 			$mobileSkin = Skin::newFromKey( 'wikiamobile' );
@@ -84,8 +82,6 @@
 		}
 
 /**
- * @group Slow
- * @slowExecutionTime 0.47720789909363 ms
  */
 		public function testWikiaMobileChangePasswordTemplate(){
 			$mobileSkin = Skin::newFromKey( 'wikiamobile' );

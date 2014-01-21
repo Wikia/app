@@ -7,8 +7,6 @@ class WikiaQuizModuleTest extends WikiaBaseTest {
 	}
 	
 /**
- * @group Slow
- * @slowExecutionTime 0.0034418106079102 ms
  */
 	public function testExecuteGetQuizElement() {
 		$wgRequest = $this->getMock('WebRequest', array('getVal'), array(), '', false);

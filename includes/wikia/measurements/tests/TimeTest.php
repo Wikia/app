@@ -5,8 +5,6 @@ namespace Wikia\Measurements;
 class TimeTest extends \WikiaBaseTest {
 
 /**
- * @group Slow
- * @slowExecutionTime 0.0029489994049072 ms
  */
 	public function testStop() {
 		$driver = $this->buildMock();

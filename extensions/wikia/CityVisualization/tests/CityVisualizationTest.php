@@ -17,8 +17,6 @@ class CityVisualizationTest extends WikiaBaseTest {
 	}
 
 	/**
-@group Slow
-@slowExecutionTime 0.13196206092834 ms
 	 * @dataProvider generateBatchedDataProvider
 	 */
 	public function testGenerateBatches($slots, $promotedWikiCount) {

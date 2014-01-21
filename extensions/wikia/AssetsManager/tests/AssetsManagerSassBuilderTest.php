@@ -15,8 +15,6 @@ class AssetsManagerSassBuilderTest extends WikiaBaseTest {
 	}
 
 /**
- * @group Slow
- * @slowExecutionTime 0.8822181224823 ms
  */
 	public function testSassBuilder() {
 		// disable memcache layer in this test

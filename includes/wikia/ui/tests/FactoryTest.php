@@ -132,8 +132,6 @@ class FactoryTest extends WikiaBaseTest {
 	}
 
 /**
- * @group Slow
- * @slowExecutionTime 0.0066041946411133 ms
  */
 	public function testInitForOneComponent() {
 		$UIComponentMock = $this->getMock('Wikia\UI\Component', [ 'setTemplateVarsConfig', 'addAsset', 'setComponentDependencies' ]);
@@ -164,8 +162,6 @@ class FactoryTest extends WikiaBaseTest {
 	}
 
 /**
- * @group Slow
- * @slowExecutionTime 0.0055310726165771 ms
  */
 	public function testLoadComponentTemplateContent() {
 		$path = '/tmp/sample/path/component';
@@ -189,8 +185,6 @@ class FactoryTest extends WikiaBaseTest {
 	}
 
 /**
- * @group Slow
- * @slowExecutionTime 0.0046360492706299 ms
  */
 	public function testGetComponentAssetsUrls() {
 		$componentMock = $this->getMock( 'Wikia\UI\Component', [ 'getAssets' ] );
@@ -216,8 +210,6 @@ class FactoryTest extends WikiaBaseTest {
 	}
 
 /**
- * @group Slow
- * @slowExecutionTime 0.0032608509063721 ms
  */
 	public function testLoadSingleDependency() {
 		$c1ComponentMock = $this->getMock( 'Wikia\UI\Component', [ 'getComponentDependencies' ] );
@@ -241,8 +233,6 @@ class FactoryTest extends WikiaBaseTest {
 	}
 
 /**
- * @group Slow
- * @slowExecutionTime 0.0036189556121826 ms
  */
 	public function testLoadDependencyJustOnce() {
 		$c1ComponentMock = $this->getMock( 'Wikia\UI\Component', [ 'getComponentDependencies' ] );
@@ -275,8 +265,6 @@ class FactoryTest extends WikiaBaseTest {
 	}
 
 /**
- * @group Slow
- * @slowExecutionTime 0.0036180019378662 ms
  */
 	public function testCircularDependencies() {
 		$c1ComponentMock = $this->getMock( 'Wikia\UI\Component', [ 'getComponentDependencies' ] );

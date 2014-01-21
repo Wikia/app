@@ -108,8 +108,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 	}
 
 /**
- * @group Slow
- * @slowExecutionTime 0.071619987487793 ms
  */
 	public function testHandleArticleMatchTrackingPage2() {
 		$mockController = $this->searchController->setMethods( null )->getMock();
@@ -129,8 +127,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 	}
 
 /**
- * @group Slow
- * @slowExecutionTime 0.062842130661011 ms
  */
 	public function testHandleLayoutAbTest() {
 		$mockController = $this->searchController->setMethods( array( 'templateExists', 'setVal' ) )->getMock();

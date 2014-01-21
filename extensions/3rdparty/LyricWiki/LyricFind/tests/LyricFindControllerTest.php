@@ -13,8 +13,6 @@ class LyricFindControllerTest extends WikiaBaseTest {
 	}
 
 	/**
-@group Slow
-@slowExecutionTime 0.0029809474945068 ms
 	 * @dataProvider trackDataProvider
 	 * @param $amgId
 	 * @param $trackResult

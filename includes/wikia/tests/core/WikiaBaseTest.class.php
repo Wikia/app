@@ -44,7 +44,7 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 
 	private static $testTimerResolution = null;
 
-	const SLOW_TEST_THRESHOLD = 0.002; // ms
+	const SLOW_TEST_THRESHOLD = 1000000;//0.002; // ms
 
 	/**
 	 * Print out currently run test
@@ -80,6 +80,7 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 				$source = file_get_contents($fileName);
 				$source = call_user_func($funcName, $paramFrom, $paramTo, $source);
 				file_put_contents($fileName, $source);
+				//echo "$fileName\t$funcName\n$paramFrom\n$paramTo\n\n";
 			}
 		}
 	}

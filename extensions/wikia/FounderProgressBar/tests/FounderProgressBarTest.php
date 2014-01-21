@@ -91,8 +91,6 @@ class FounderProgressBarTest extends WikiaBaseTest {
 		}
 		
 /**
- * @group Slow
- * @slowExecutionTime 0.0053060054779053 ms
  */
 		public function testShortTaskList() {
 			$response = $this->app->sendRequest('FounderProgressBar', 'getShortTaskList');

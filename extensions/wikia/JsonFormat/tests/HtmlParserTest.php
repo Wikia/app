@@ -17,8 +17,6 @@ class HtmlParserTest extends WikiaBaseTest {
 	}
 
 /**
- * @group Slow
- * @slowExecutionTime 0.006378173828125 ms
  */
 	public function testParseSimple() {
 		$htmlParser = new HtmlParser();
@@ -53,8 +51,6 @@ class HtmlParserTest extends WikiaBaseTest {
 	}
 
 /**
- * @group Slow
- * @slowExecutionTime 0.016942977905273 ms
  */
 	public function testSectionsSameLevel() {
 		$htmlParser = new HtmlParser();

@@ -19,8 +19,6 @@ class UserServiceTest extends WikiaBaseTest {
 	}
 
 /**
- * @group Slow
- * @slowExecutionTime 0.0073959827423096 ms
  */
 	public function testCache() {
 		$user = $this->getTestUser();

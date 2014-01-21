@@ -205,8 +205,6 @@ class SelectTest extends BaseTest
 	}
 	
 /**
- * @group Slow
- * @slowExecutionTime 0.076008081436157 ms
  */
 	public function testGetSolrQueryWithWordLimit() {
 		$query = <<<YEEZY

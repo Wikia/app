@@ -17,8 +17,6 @@ class GlobalWatchlistBotTest extends WikiaBaseTest {
   	return $userMock;
 	}
 /**
- * @group Slow
- * @slowExecutionTime 0.0077219009399414 ms
  */
 	public function testBlogsSection() {
 		$bot = new GlobalWatchlistBot(true, array(), array());

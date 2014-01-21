@@ -172,8 +172,6 @@ class WikiaHomePageTest extends WikiaBaseTest {
 	}
 
 /**
- * @group Slow
- * @slowExecutionTime 0.043869018554688 ms
  */
 	public function testGetList() {
 		$this->markTestSkipped('This test needs to be rewritten to serve its purpose');

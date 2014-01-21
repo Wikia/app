@@ -7,8 +7,6 @@ class WikiaPollTest extends WikiaBaseTest {
 	}
 
 /**
- * @group Slow
- * @slowExecutionTime 0.16554999351501 ms
  */
 	public function testWikiaPollAjaxCreate() {
 		$poll = new WikiaPollAjax;
@@ -53,8 +51,6 @@ class WikiaPollTest extends WikiaBaseTest {
 	}
 
 /**
- * @group Slow
- * @slowExecutionTime 0.17814683914185 ms
  */
 	public function testWikiaPollAjaxGet() {
 
@@ -89,8 +85,6 @@ class WikiaPollTest extends WikiaBaseTest {
 	}
 
 /**
- * @group Slow
- * @slowExecutionTime 0.12109208106995 ms
  */
 	public function testWikiaPollAjaxUpdate() {
 		// Third part of test is to update the poll we've got and see if that works too
@@ -135,8 +129,6 @@ class WikiaPollTest extends WikiaBaseTest {
 	}
 
 /**
- * @group Slow
- * @slowExecutionTime 0.13253998756409 ms
  */
 	public function testWikiaPollAjaxVote() {
 		// Fourth part of test is to register a vote for an item

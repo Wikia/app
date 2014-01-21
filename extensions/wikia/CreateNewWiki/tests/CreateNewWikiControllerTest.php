@@ -89,8 +89,6 @@ class CreateNewWikiControllerTest extends WikiaBaseTest {
 	}
 
 /**
- * @group Slow
- * @slowExecutionTime 0.032166004180908 ms
  */
 	public function testCheckWikiNameSuccess() {
 

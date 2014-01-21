@@ -12,8 +12,6 @@ class HelloWorldTest extends WikiaBaseTest {
 	}
 
 /**
- * @group Slow
- * @slowExecutionTime 0.04605507850647 ms
  */
 	public function testGettingWikiData() {
 

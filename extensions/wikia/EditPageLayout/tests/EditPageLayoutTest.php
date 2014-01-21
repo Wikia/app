@@ -50,8 +50,6 @@ class EditPageLayoutTest extends WikiaBaseTest {
 	}
 
 /**
- * @group Slow
- * @slowExecutionTime 0.0023579597473145 ms
  */
 	public function testAddingFields() {
 		$title = Title::newFromText('Foo');
@@ -137,8 +135,6 @@ class EditPageLayoutTest extends WikiaBaseTest {
 	}
 
 /**
- * @group Slow
- * @slowExecutionTime 0.0022342205047607 ms
  */
 	public function testEditNotices() {
 		$title = Title::newFromText('NewArticle');

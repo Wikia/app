@@ -31,8 +31,6 @@ class CategoryHelperTest extends WikiaBaseTest {
 	}
 
 /**
- * @group Slow
- * @slowExecutionTime 0.0027468204498291 ms
  */
 	public function testGetCategoryNames() {
 		$actual = CategoryHelper::getCategoryNames( self::$data );

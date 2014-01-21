@@ -7,8 +7,6 @@ class LicensedWikisServiceTest extends WikiaBaseTest {
 	}
 
 /**
- * @group Slow
- * @slowExecutionTime 0.0021920204162598 ms
  */
 	public function testIsCommercialUseAllowedById() {
 
