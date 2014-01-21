@@ -344,8 +344,6 @@ class WikisApiController extends WikiaApiController {
 				$imgHeight = $img->getHeight();
 			}
 		} else {
-			var_dump($imageName);//die();
-			ini_set('html_errors',0);
 			$f = $this->findGlobalFileImage( $imageName, $wikiInfo[ 'lang' ], $wikiInfo[ 'id' ] );
 			if ( $f && $f->exists() ) {
 				$imgWidth = $f->getWidth();
