@@ -176,7 +176,6 @@ class RelatedVideosController extends WikiaController {
 					'constHeight' => RelatedVideosService::$height,
 					'usePreloading' => true,
 					'disableRDF' => true,
-					'useTemplate' => true,
 				)
 			);
 
