@@ -5,10 +5,8 @@
 			<? $index = 0; ?>
 			<? foreach ( $assets as $videoData ): ?>
 				<li>
-					<div class="slide-image" data-index="<?= $index ?>">
-						<div class="Wikia-video-play-button">
-							<img class="sprite large play" src="<?= $wg->BlankImgUrl ?>">
-						</div>
+					<div class="slide-image video wikia-video-thumbnail xlarge" data-index="<?= $index ?>">
+						<span class="play-circle"></span>
 						<img src="<?= $videoData['largeThumbUrl'] ?>">
 						<div class="caption small-4 columns">
 							<span class="title"><?= $videoData['displayTitle'] ?></span>
