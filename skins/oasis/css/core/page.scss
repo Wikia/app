@@ -93,18 +93,6 @@
 }
 /* end temp transistion code */
 
-.WikiaPage .WikiaMainContentContainer .sharedHelp {
-  padding: 10px;
-  margin: 5px;
-  background: $color-page;
-  border: 1px solid $color-page-border;
-  @if lightness($color-page) < 50 {
-    background: $color-module-background;
-    border: 1px solid $color-page-border;
-  }
-
-}
-
 .WikiaRail {
 	float: right;
 	padding: 0 $width-gutter;

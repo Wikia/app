@@ -111,7 +111,7 @@ class SharedHttp {
  * @return bool
  */
 function SharedHelpHook(&$out, &$text) {
-	global $wgTitle, $wgMemc, $wgSharedDB, $wgCityId, $wgHelpWikiId, $wgContLang, $wgLanguageCode, $wgArticlePath;
+	global $wgTitle, $wgOut, $wgMemc, $wgSharedDB, $wgCityId, $wgHelpWikiId, $wgContLang, $wgLanguageCode, $wgArticlePath;
 
 	/* Insurance that hook will be called only once #BugId:  */
 	static $wasCalled = false;
@@ -322,6 +322,7 @@ function SharedHelpHook(&$out, &$text) {
 			$helpSitename = WikiFactory::getVarValueByName( 'wgSitename', $wgHelpWikiId );
 
 			// "this text is stored..."
+			$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/SharedHelp/css/shared-help.scss' ));
 			$info = '<div class="sharedHelpInfo plainlinks" style="text-align: right; font-size: smaller;padding: 5px">' . wfMsgExt('shared_help_info', 'parseinline', $sharedServer . $sharedArticlePathClean . $articleLink, $helpSitename ) . '</div>';
 
 			if(strpos($text, '"noarticletext"') > 0) {
