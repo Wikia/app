@@ -133,7 +133,7 @@ class VideoPageToolAsset extends WikiaModel {
 	 * @param array $value
 	 */
 	public function setData( $value ) {
-		foreach ( STATIC::$dataFields as $field ) {
+		foreach ( static::$dataFields as $field ) {
 			if ( property_exists( $this, $field ) && array_key_exists( $field, $value ) ) {
 				$this->$field = $value[$field];
 			}
@@ -168,11 +168,33 @@ class VideoPageToolAsset extends WikiaModel {
 	}
 
 	/**
+	 * Get the mapping between the display form names and the properties of this asset
+	 */
+	public static function getPropMap() {
+		return array_merge( self::$fields, self::$dataFields );
+	}
+
+	/**
+	 * Get the property name for the given form field name
+	 * @param string $formName
+	 * @return string|null
+	 */
+	public static function getPropName( $formName ) {
+		if ( array_key_exists( $formName, self::$fields ) ) {
+			return self::$fields[ $formName ];
+		}
+		if ( array_key_exists( $formName, self::$dataFields )) {
+			return self::$dataFields[ $formName ];
+		}
+		return null;
+	}
+
+	/**
 	 * Get asset object from program id, section and order
 	 * @param integer $programId
 	 * @param string $section
 	 * @param integer $order
-	 * @return Object|null $asset
+	 * @return VideoPageToolAsset|null $asset
 	 */
 	public static function newAsset( $programId, $section, $order ) {
 		wfProfileIn( __METHOD__ );
@@ -183,6 +205,8 @@ class VideoPageToolAsset extends WikiaModel {
 		}
 
 		$className = self::getClassNameFromSection( $section );
+
+		/** @var VideoPageToolAsset $asset */
 		$asset = new $className( $programId, $section, $order );
 
 		$asset->setProgramId( $programId );
@@ -208,10 +232,12 @@ class VideoPageToolAsset extends WikiaModel {
 	/**
 	 * Get asset object from a row from table
 	 * @param array $row
-	 * @return object $asset
+	 * @return VideoPageToolAsset $asset
 	 */
 	public static function newFromRow( $row ) {
 		$className = self::getClassNameFromSection( $row->section );
+
+		/** @var VideoPageToolAsset $asset */
 		$asset = new $className();
 		$asset->loadFromRow( $row );
 
@@ -266,6 +292,10 @@ class VideoPageToolAsset extends WikiaModel {
 	 */
 	protected function loadFromCache( $cache ) {
 		foreach ( static::$fields as $varName ) {
+			$this->$varName = $cache[$varName];
+		}
+
+		foreach ( static::$dataFields as $varName ) {
 			$this->$varName = $cache[$varName];
 		}
 	}
@@ -385,19 +415,17 @@ class VideoPageToolAsset extends WikiaModel {
 
 	/**
 	 * Delete asset from database and caches
-	 * @return Status
+	 * @return Status|null
 	 */
 	public function delete() {
 		wfProfileIn( __METHOD__ );
 
-		if ( empty( $this->programId ) || empty( $this->section ) || empty( $this->order ) ) {
+		if ( !$this->exists() ) {
 			wfProfileOut( __METHOD__ );
-			return Status::newFatal( wfMessage( 'videopagetool-error-missing-parameter' )->plain() );
+			return null;
 		}
 
-		if ( $this->exists() ) {
-			$status = $this->removeFromDatabase();
-		}
+		$status = $this->removeFromDatabase();
 
 		if ( $status->isGood() ) {
 			$this->invalidateCache();
@@ -494,6 +522,10 @@ class VideoPageToolAsset extends WikiaModel {
 	 */
 	public function saveToCache() {
 		foreach ( self::$fields as $varName ) {
+			$cache[$varName] = $this->$varName;
+		}
+
+		foreach ( static::$dataFields as $varName ) {
 			$cache[$varName] = $this->$varName;
 		}
 
@@ -664,7 +696,7 @@ class VideoPageToolAsset extends WikiaModel {
 	public static function formatFormData( $requiredRows, $formValues, &$errMsg ) {
 		$data = array();
 		for ( $i = 0; $i < $requiredRows; $i++ ) {
-			foreach ( STATIC::$dataFields as $formFieldName => $varName ) {
+			foreach ( static::$dataFields as $formFieldName => $varName ) {
 				// validate form
 				$helper = new VideoPageToolHelper();
 				$helper->validateFormField( $formFieldName, $formValues[$formFieldName][$i], $errMsg );
