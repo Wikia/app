@@ -1050,11 +1050,9 @@ $config['videopageadmin_dashboard_js'] = [
 	'skin' => ['oasis'],
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
-		// Lodash is an underscore.js rewrite and a prereq for Backbone
+		// Library Dependencies
 		'//extensions/wikia/VideoPageTool/js/lib/lodash/dist/lodash.underscore.js',
 		'//extensions/wikia/VideoPageTool/js/lib/backbone/backbone.js',
-
-		// Library Dependencies
 		'//resources/jquery.ui/jquery.ui.datepicker.js',
 
 		'//extensions/wikia/VideoPageTool/js/admin/models/datepicker.js',
