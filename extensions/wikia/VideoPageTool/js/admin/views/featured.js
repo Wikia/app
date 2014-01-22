@@ -26,8 +26,8 @@ define( 'videopageadmin.views.featured', [
 		},
 		initValidator: function() {
 			EditBaseView.prototype.initValidator.call( this, arguments );
-			this.$fieldsToValidate.each( function() {
-				$( this ).rules( 'add', {
+			_.each( this.$fieldsToValidate, function( elem ) {
+				$( elem ).rules( 'add', {
 					required: true,
 					messages: {
 						required: function( len, elem ) {
@@ -48,11 +48,11 @@ define( 'videopageadmin.views.featured', [
 		 * @todo: use Backbone for data updating instead of nirvana
 		 */
 		initAddVideo: function() {
-			this.$el.find( '.add-video-button' ).each( function() {
-				var $this = $( this ),
-					$box = $this.closest( '.form-box' ),
-					$videoKeyInput = $this.siblings( '.video-key' ),
-					$videoTitle = $this.siblings( '.video-title' ),
+			_.each( this.$el.find( '.add-video-button' ), function( elem ) {
+				var $elem = $( elem ),
+					$box = $elem.closest( '.form-box' ),
+					$videoKeyInput = $elem.siblings( '.video-key' ),
+					$videoTitle = $elem.siblings( '.video-title' ),
 					$displayTitleInput = $box.find( '.display-title' ),
 					$descInput = $box.find( '.description' ),
 					$thumb = $box.find( '.video-thumb' ),
@@ -113,7 +113,7 @@ define( 'videopageadmin.views.featured', [
 					return false;
 				};
 
-				$this.addVideoButton( {
+				$elem.addVideoButton( {
 					callbackAfterSelect: callbackAfterSelect
 				} );
 			} );

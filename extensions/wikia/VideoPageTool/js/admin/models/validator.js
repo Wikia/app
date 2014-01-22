@@ -56,8 +56,8 @@ define( 'videopageadmin.models.validator', [ 'jquery' ], function( $ ) {
 			var self = this,
 				isValid = true;
 
-			this.$fields.each( function() {
-				if ( !( self.validator.element( $( this ) ) ) ) {
+			_.each( this.$fields, function( elem ) {
+				if ( !( self.validator.element( $( elem ) ) ) ) {
 					isValid = false;
 				}
 			} );

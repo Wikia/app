@@ -41,8 +41,8 @@ define( 'videopageadmin.views.category', [
 				required: {
 					depends: function() {
 						var count = 0;
-						self.$fieldsToValidate.each( function() {
-							if ( $( this ).val() ) {
+						_.each( self.$fieldsToValidate, function( elem ) {
+							if ( $( elem ).val() ) {
 								count ++;
 							}
 						} );
