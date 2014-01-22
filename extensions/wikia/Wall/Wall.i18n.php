@@ -239,7 +239,7 @@ The original post and your summary will still appear in the wiki's history.",
 	'wall-history-username-short' => '<a href="$2">$1</a>',
 
 	'wall-history-title' => 'wall history',
-	'wall-history-who-involved-wall-title' => "Who's involved ?",
+	'wall-history-who-involved-wall-title' => "Who's involved?",
 	'wall-history-who-involved-thread-title' => "Who's involved in this thread?",
 	'wall-history-thread-created' => '$1 created by $2',
 	'wall-history-thread-removed' => '$1 removed by $2',

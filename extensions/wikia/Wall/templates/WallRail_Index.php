@@ -24,7 +24,9 @@
 						<li><a href="<?= $userInvolved['usertalk']; ?>"> <?= wfMsg('talkpage'); ?></a></li>
 					<? endif; ?>
 					<li><a href="<?= $userInvolved['usercontribs']; ?>"> <?= wfMsg('wall-history-rail-contribs'); ?></a></li>
-					<li><a href="<?= $userInvolved['userblock']; ?>"> <?= wfMsg('wall-history-rail-block'); ?></a></li>
+					<? if( $app->wg->User->isAllowed( 'block' ) ): ?>
+						<li><a href="<?= $userInvolved['userblock']; ?>"> <?= wfMsg('wall-history-rail-block'); ?></a></li>
+					<? endif; ?>
 				</ul>
 			</li>
 		<?php endforeach; ?>
