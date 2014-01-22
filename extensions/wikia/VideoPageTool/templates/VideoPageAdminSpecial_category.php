@@ -1,4 +1,5 @@
 <form id="LatestVideos" class="WikiaForm vpt-form latest-video-form" method="post">
+	<p class="alternative"><?= wfMessage( 'videopagetool-category-instructions' )->escaped() ?></p>
 	<? for( $x = 1; $x <= count($categories); $x++ ): ?>
 		<? $category = $categories[ $x ]; ?>
 

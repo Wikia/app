@@ -1043,10 +1043,24 @@ $config['VET_js'] = array(
 /**
  * @name VideoPageTool
  * @description Assets for the VideoPageTool, same styles as SpecialMarketingToolbox
- * @TODO: decide if we want to split the js/css into two different packages for index and edit pages
+ * The JS is split into two different packages for the dashboard and edit pages
  */
 
-$config['videopageadmin_js'] = array(
+$config['videopageadmin_dashboard_js'] = [
+	'skin' => ['oasis'],
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		// Library Dependencies
+		'//extensions/wikia/VideoPageTool/js/lib/lodash/dist/lodash.underscore.js',
+		'//extensions/wikia/VideoPageTool/js/lib/backbone/backbone.js',
+		'//resources/jquery.ui/jquery.ui.datepicker.js',
+
+		'//extensions/wikia/VideoPageTool/js/admin/models/datepicker.js',
+		'//extensions/wikia/VideoPageTool/js/admin/views/datepicker.js',
+		'//extensions/wikia/VideoPageTool/js/admin/views/dashboard.js',
+	]
+];
+$config['videopageadmin_edit_js'] = array(
 	'skin' => array( 'oasis' ),
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
@@ -1057,7 +1071,6 @@ $config['videopageadmin_js'] = array(
 		// Library Dependencies
 		'//resources/wikia/libraries/jquery/owl.carousel/owl.carousel.js',
 		'//resources/jquery.ui/jquery.ui.core.js',
-		'//resources/jquery.ui/jquery.ui.datepicker.js',
 		'//resources/jquery/jquery.validate.js',
 		'//resources/wikia/modules/aim.js',
 		'//extensions/wikia/WikiaMiniUpload/js/WMU.js',
@@ -1067,14 +1080,11 @@ $config['videopageadmin_js'] = array(
 		// Compiled Mustache templates
 		'//extensions/wikia/VideoPageTool/js/templates.mustache.js',
 
-		'//extensions/wikia/VideoPageTool/js/admin/models/datepicker.js',
 		'//extensions/wikia/VideoPageTool/js/admin/models/thumbnail.js',
 		'//extensions/wikia/VideoPageTool/js/admin/models/validator.js',
-		'//extensions/wikia/VideoPageTool/js/admin/views/datepicker.js',
-		'//extensions/wikia/VideoPageTool/js/admin/views/index.js',
 		'//extensions/wikia/VideoPageTool/js/admin/views/thumbnailupload.js',
-		'//extensions/wikia/VideoPageTool/js/admin/views/edit.js',
-
+		'//extensions/wikia/VideoPageTool/js/admin/views/editbase.js',
+		'//extensions/wikia/VideoPageTool/js/admin/views/featured.js',
 		'//extensions/wikia/VideoPageTool/js/admin/collections/category.js',
 		'//extensions/wikia/VideoPageTool/js/admin/collections/categorydata.js',
 
@@ -1085,6 +1095,7 @@ $config['videopageadmin_js'] = array(
 		'//extensions/wikia/VideoPageTool/js/admin/views/autocomplete.js',
 		'//extensions/wikia/VideoPageTool/js/admin/views/categoryforms.js',
 		'//extensions/wikia/VideoPageTool/js/admin/views/category.js',
+		'//extensions/wikia/VideoPageTool/js/admin/views/index.js',
 	)
 );
 

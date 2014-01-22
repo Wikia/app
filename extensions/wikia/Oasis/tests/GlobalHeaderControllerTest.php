@@ -40,7 +40,7 @@ class GlobalHeaderControllerTest extends WikiaBaseTest
 		$mockResponse
 			->expects	( $this->at( 1 ) )
 			->method	( 'setVal' )
-			->with		( 'createWikiUrl', 'http://www.wikia.com/Special:CreateNewWiki' )
+			->with		( 'createWikiUrl', $this->stringContains('Special:CreateNewWiki') )
 		;
 		$mockResponse
 			->expects	( $this->at( 2 ) )
@@ -133,7 +133,7 @@ class GlobalHeaderControllerTest extends WikiaBaseTest
 		$mockResponse
 			->expects	( $this->at( 1 ) )
 			->method	( 'setVal' )
-			->with		( 'createWikiUrl', 'http://www.wikia.com/Special:CreateNewWiki?uselang=fr' )
+			->with		( 'createWikiUrl', $this->stringContains('Special:CreateNewWiki?uselang=fr') )
 		;
 		$mockResponse
 			->expects	( $this->at( 2 ) )
@@ -221,7 +221,7 @@ class GlobalHeaderControllerTest extends WikiaBaseTest
 		$mockResponse
 			->expects	( $this->at( 1 ) )
 			->method	( 'setVal' )
-			->with		( 'createWikiUrl', 'http://www.wikia.com/Special:CreateNewWiki' )
+			->with		( 'createWikiUrl', $this->stringContains('Special:CreateNewWiki') )
 		;
 		$mockResponse
 			->expects	( $this->at( 2 ) )

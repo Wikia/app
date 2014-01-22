@@ -29,6 +29,8 @@ class NavigationModel extends WikiaModel {
 
 	const COMMUNITY_WIKI_ID = 177;
 
+	const DEFAULT_GLOBALNAV_LANG = 'en';
+
 	// magic word used to force given menu item to not be turned into a link (BugId:15189)
 	const NOLINK = '__NOLINK__';
 	const ALLOWABLE_TAGS = '';
@@ -54,6 +56,8 @@ class NavigationModel extends WikiaModel {
 	// list of errors encountered when parsing the wikitext
 	private $errors = array();
 
+	private static $createNewWikiUrl;
+
 	public function __construct( $useSharedMemcKey = false ) {
 		parent::__construct();
 
@@ -69,7 +73,11 @@ class NavigationModel extends WikiaModel {
 	 * @param int $cityId city ID (false - default to current wiki)
 	 * @return string memcache key
 	 */
-	private function getMemcKey( $messageName, $cityId = false ) {
+	private function getMemcKey( $messageName, $cityId = false, $langCode = '' ) {
+		if (empty($langCode)) {
+			$langCode = $this->wg->Lang->getCode();
+		}
+
 		if ( $this->useSharedMemcKey ) {
 			$wikiId = substr( wfSharedMemcKey(), 0, -1 );
 
@@ -84,13 +92,43 @@ class NavigationModel extends WikiaModel {
 
 		$messageName = str_replace(' ', '_', $messageName);
 
-		return implode( ':', array( __CLASS__, $wikiId, $this->wg->Lang->getCode(), $messageName, self::version ) );
+		return implode( ':', array( __CLASS__, $wikiId, $langCode, $messageName, self::version ) );
 	}
 
-	public function clearMemc( $key = self::WIKIA_GLOBAL_VARIABLE, $city_id = false ){
+	public function clearMemc( $key = self::WIKIA_GLOBAL_VARIABLE, $city_id = false, $langCode = '' ){
 		$this->wg->Memc->delete(
-			$this->getMemcKey( $key, $city_id )
+			$this->getMemcKey( $key, $city_id, $langCode )
 		);
+	}
+
+	private function getNavigationUrl($lang) {
+		return http_build_url(
+			self::getCreateNewWikiUrl(),
+			[
+				'path' => '/wikia.php',
+				'query' => http_build_query([
+					'controller' => 'GlobalHeader',
+					'method' => 'menuItemsAll',
+					'format' => WikiaResponse::FORMAT_JSONP,
+					'callback' => 'Globalheader',
+					'cb' => $this->wg->CacheBuster,
+					'uselang' => $lang
+		])
+			]
+		);
+	}
+
+	public function purgeCache($messageName) {
+		$langs = array_keys(wfGetFixedLanguageNames());
+
+		$urlsToPurge = [];
+		foreach ($langs as $lang) {
+			$this->clearMemc($messageName, false, $lang);
+			$urlsToPurge[] = $this->getNavigationUrl($lang);
+		}
+
+		$u = new SquidUpdate( $urlsToPurge );
+		$u->doUpdate();
 	}
 
 	private function setShouldTranslateContent($shouldTranslateContent) {
@@ -187,13 +225,14 @@ class NavigationModel extends WikiaModel {
 					break;
 
 				case self::TYPE_VARIABLE:
-					// try to use "local" value
-					$text = $this->app->getGlobal( $source );
+					$text = $this->getNavigationFromWF($source);
 
-					// fallback to WikiFactory value from community (city id 177)
-					if ( !is_string( $text ) ) {
-						$text = WikiFactory::getVarValueByName( $source, self::COMMUNITY_WIKI_ID );
+					if ( !is_string($text) && is_array($text) ) {
+						$text = $this->getNavigationFromArray($text, $this->wg->Lang->getCode());
+					} else {
+						$text = '';
 					}
+
 					break;
 				default:
 					$text = '';
@@ -208,6 +247,61 @@ class NavigationModel extends WikiaModel {
 
 		wfProfileOut( __METHOD__ . ":$type");
 		return $nodes;
+	}
+
+	/**
+	 * Gets navigations as an array or string from wiki factory variable
+	 *
+	 * @param $source name of variable
+	 * @return mixed|null
+	 */
+	private function getNavigationFromWF($source) {
+		// try to use "local" value
+		$text = $this->app->getGlobal( $source );
+
+		if ( empty($text) ) {
+			$text = WikiFactory::getVarValueByName( $source, self::COMMUNITY_WIKI_ID );
+		}
+
+		return $text;
+	}
+
+	/**
+	 * Gets navigation menu in selected language
+	 *
+	 * @param array $nav array with menu nodes in different languages
+	 * @param string $lang menu language
+	 * @return string wikitext with menu links
+	 */
+	private function getNavigationFromArray($nav, $lang) {
+		$text = '';
+		if ( array_key_exists($lang, $nav) ) {
+			$text = $nav[$lang];
+		} else {
+			$lang = self::DEFAULT_GLOBALNAV_LANG;
+			if (array_key_exists($lang, $nav)) {
+				$text = $nav[$lang];
+			}
+		}
+		return $text;
+	}
+
+	/**
+	 * Gets language codes for existing navigation menus
+	 *
+	 * @param $source name of variable
+	 * @return array language codes
+	 */
+	public function getNavigationLanguageCodes($source) {
+		$langCodes = array();
+
+		$menus = $this->getNavigationFromWF($source);
+		if (is_array($menus)) {
+			$langCodes = array_keys($menus);
+		}
+
+		return $langCodes;
+
 	}
 
 	public function parseText($text, Array $maxChildrenAtLevel = array(), $forContent = false, $filterInactiveSpecialPages = false) {
@@ -576,5 +670,16 @@ class NavigationModel extends WikiaModel {
 		}
 
 		return isset( $this->biggestCategories[$index-1] ) ? $this->biggestCategories[$index-1] : null;
+	}
+
+	public static function getCreateNewWikiUrl() {
+		if ( empty( self::$createNewWikiUrl ) ) {
+			self::$createNewWikiUrl = GlobalTitle::newFromText(
+				'CreateNewWiki',
+				NS_SPECIAL,
+				Wikia::MAIN_CORPORATE_WIKI_ID
+			)->getFullURL();
+		}
+		return self::$createNewWikiUrl;
 	}
 }
