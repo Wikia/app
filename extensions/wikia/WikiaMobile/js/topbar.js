@@ -86,20 +86,7 @@ function (
 		searchInput.value = '';
 		searchSug.innerHTML = '';
 
-		/*
-		 This is needed for iOS 4.x
-		 It knows what to do with input element with autofocus attribute
-		 but totaly forgets about the rest
-		 so I need to cause repaint of the navbar
-
-		 comment this out and load a page on iOS 4.x for a reference
-		 */
-		navBar.style.width = 'auto';
-		setTimeout( function () {
-			navBar.style.width = '100%';
-			searchInput.focus();
-		}, 50 );
-
+		searchInput.focus();
 	}
 
 	if (searchForm) {
