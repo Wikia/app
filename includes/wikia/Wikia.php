@@ -1600,10 +1600,12 @@ class Wikia {
 		   wikia logo should be stored under File:Wiki.png on current wikia. If wfFindFile doesn't find it
 		   on current wikia it tires to fallback to starter.wikia.com where the default one is stored
 		*/
-		$logoPage = Title::newFromText( 'Wiki.png', NS_FILE );
-		$logoFile = wfFindFile( $logoPage );
-		if( $logoFile ) {
-			$tpl->set( 'logopath', $logoFile->getUrl() );
+		if ( !self::isOasis() ) {
+			$logoPage = Title::newFromText( 'Wiki.png', NS_FILE );
+			$logoFile = wfFindFile( $logoPage );
+			if( $logoFile ) {
+				$tpl->set( 'logopath', $logoFile->getUrl() );
+			}
 		}
 
 		wfProfileOut(__METHOD__);
