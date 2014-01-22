@@ -1,4 +1,5 @@
 (function(window, $) {
+'use strict';
 
 var HoverMenu = function(selector) {
 
@@ -25,23 +26,25 @@ var HoverMenu = function(selector) {
 	}
 
 	//Events
-	this.menu.children("li").hover($.proxy(this.mouseover, this), $.proxy(this.mouseout, this));
+	this.menu
+		.on('mouseenter', '> li', $.proxy(this.mouseover, this))
+		.on('mouseleave', '> li', $.proxy(this.mouseout, this));
 
 	//Accessibility
 	//Show when any inner anchors are in focus
-	this.menu.children("li").children("a").focus($.proxy(function(event) {
+	this.menu.on('focus', '> li > a', $.proxy(function(event) {
 		this.hideNav();
-		this.showNav($(event.currentTarget).closest("li"));
+		this.showNav($(event.currentTarget).closest('li'));
 	}, this));
 
-	this.menu.find(".subnav a").focus($.proxy(function(event) {
+	this.menu.on('focus', '.subnav a', $.proxy(function(event) {
 		this.hideNav();
-		this.showNav($(event.currentTarget).closest(".subnav").closest("li"));
+		this.showNav($(event.currentTarget).closest('.subnav').closest('li'));
 	}, this));
 
 	//Hide when focus out of first and last anchor
-	this.menu.children("li").first().children("a").focusout($.proxy(this.hideNav, this));
-	this.menu.find(".subnav>li:last-child li:last-child a").focusout($.proxy(this.hideNav, this));
+	this.menu.children('li').first().children('a').focusout($.proxy(this.hideNav, this));
+	this.menu.find('.subnav>li:last-child li:last-child a').focusout($.proxy(this.hideNav, this));
 };
 
 var globalNavigationMenusCached = false;
@@ -49,13 +52,13 @@ HoverMenu.prototype.mouseover = function(event) {
 	this.event = event;
 
 	//Hide all subnavs except for this one
-	this.menu.children("li").children("ul").not($(event.currentTarget).find("ul")).removeClass("show");
+	this.menu.children('li').children('ul').not($(event.currentTarget).find('ul')).removeClass('show');
 
 	//Cancel mouseoutTimer
 	clearTimeout(this.mouseoutTimer);
 
 	// Lazy load content for Global Navigation (BugId:36973)
-	if (this.selector == '#GlobalNavigation' && !globalNavigationMenusCached) {
+	if (this.selector === '#GlobalNavigation' && !globalNavigationMenusCached) {
 		var $nav = $(this.selector),
 			$navItems = $nav.children('li'),
 			indexes = $navItems.map(function() {
@@ -67,12 +70,13 @@ HoverMenu.prototype.mouseover = function(event) {
 		$.nirvana.sendRequest({
 			controller: 'GlobalHeaderController',
 			method: 'menuItemsAll',
-			format: 'json',
-			type: 'GET',
+			format: 'jsonp',
+			jsonpCallback: 'Globalheader',
 			data: {
-				hash: $nav.data('hash'),
-				indexes: indexes
+				uselang: window.wgUserLanguage,
+				cb: window.wgStyleVersion
 			},
+			scriptPath: window.wgCorporateUrl,
 			callback: $.proxy(function(items) {
 				$.each(items, function(index, html) {
 					$navItems.filter(function() {
@@ -81,7 +85,7 @@ HoverMenu.prototype.mouseover = function(event) {
 				});
 
 				// Make sure we haven't left yet (BugId:43496).
-				if (this.event.type == 'mouseover') {
+				if (this.event.type === 'mouseover') {
 					this.handleShowNav(event);
 				}
 			}, this)
@@ -96,7 +100,7 @@ HoverMenu.prototype.mouseover = function(event) {
 HoverMenu.prototype.handleShowNav = function(event) {
 
 	// Mouse is not coming from within the nav.
-	if ($(event.relatedTarget).closest(this.selector).length == 0) {
+	if ($(event.relatedTarget).closest(this.selector).length === 0) {
 
 		//Delay before showing subnav.
 		var currentTarget = event.currentTarget;
@@ -131,7 +135,7 @@ HoverMenu.prototype.mouseout = function(event) {
 	this.event = event;
 
 	//Mouse has exited the nav.
-	if ($(event.relatedTarget).closest(this.selector).length == 0) {
+	if ($(event.relatedTarget).closest(this.selector).length === 0) {
 
 		//Stop mouseoverTimer
 		clearTimeout(this.mouseoverTimer);
@@ -151,20 +155,19 @@ HoverMenu.prototype.mouseout = function(event) {
 };
 
 HoverMenu.prototype.showNav = function(parent) {
-	var event,
-	nav = $(parent).children('ul');
+	var nav = $(parent).children('ul');
 	window.HoverMenuGlobal.hideAll();
 	this.mouseoverTimerRunning = false;
 
 	if (nav.exists()) {
-		nav.addClass("show");
+		nav.addClass('show');
 		nav.trigger('hovermenu-shown');
 
 		// spotlights displaying
-		if (this.selector == '#GlobalNavigation') {
+		if (this.selector === '#GlobalNavigation') {
 			var i = $(parent).index() + 1,
-				funcSuffix = "_SPOTLIGHT_GLOBALNAV_" + i,
-				func = window[ "fillIframe" + funcSuffix ] || window[ "fillElem" + funcSuffix ];
+				funcSuffix = '_SPOTLIGHT_GLOBALNAV_' + i,
+				func = window[ 'fillIframe' + funcSuffix ] || window[ 'fillElem' + funcSuffix ];
 
 			if ( func ) {
 				func();
@@ -175,9 +178,8 @@ HoverMenu.prototype.showNav = function(parent) {
 };
 
 HoverMenu.prototype.hideNav = function() {
-	var event,
-		nav = this.menu.find(".subnav");
-	nav.removeClass("show");
+	var nav = this.menu.find('.subnav');
+	nav.removeClass('show');
 
 	if (nav.exists()) {
 		nav.trigger('hovermenu-hidden');
@@ -200,13 +202,13 @@ var HoverMenuGlobal = {
 
 $(function() {
 	//Create instances of HoverMenu
-	HoverMenuGlobal.menus.push(new HoverMenu("#GlobalNavigation"));
-	HoverMenuGlobal.menus.push(new HoverMenu("#AccountNavigation"));
-	HoverMenuGlobal.menus.push(new HoverMenu("#WallNotifications"));
+	HoverMenuGlobal.menus.push(new HoverMenu('#GlobalNavigation'));
+	HoverMenuGlobal.menus.push(new HoverMenu('#AccountNavigation'));
+	HoverMenuGlobal.menus.push(new HoverMenu('#WallNotifications'));
 	//Accessbility
-	$("div.skiplinkcontainer a").focus(function(evt) {
-		$("body").data("accessible", "true");
-		$("#GlobalNavigation .subnav, #WikiHeader .subnav").show();
+	$('div.skiplinkcontainer a').focus(function() {
+		$('body').data('accessible', 'true');
+		$('#GlobalNavigation .subnav, #WikiHeader .subnav').show();
 	});
 });
 

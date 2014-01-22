@@ -175,7 +175,7 @@ class RelatedVideosController extends WikiaController {
 					// This attirbute is deprecated with the new toHtml function.  Remove when refactoring
 					'constHeight' => RelatedVideosService::$height,
 					'usePreloading' => true,
-					'disableRDF' => true
+					'disableRDF' => true,
 				)
 			);
 
