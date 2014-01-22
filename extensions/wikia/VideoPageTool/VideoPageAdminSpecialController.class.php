@@ -26,9 +26,6 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 	 * @responseParam string language - current language
 	 */
 	public function index() {
-		$this->response->addAsset('videopageadmin_js');
-		$this->response->addAsset('videopageadmin_scss');
-		$this->response->addAsset('videopageadmin_css');
 		if ( !$this->getUser()->isAllowed( 'videopagetool' ) ) {
 			$this->displayRestrictionError();
 			return false;
@@ -43,12 +40,17 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 
 		$language = $this->getVal( 'language', VideoPageToolHelper::DEFAULT_LANGUAGE );
 
+		$this->response->addAsset( 'videopageadmin_scss' );
+		$this->response->addAsset( 'videopageadmin_css' );
+
 		$subpage = $this->getSubpage();
 		if ( !empty( $subpage ) ) {
+			$this->response->addAsset( 'videopageadmin_edit_js' );
 			$this->forward( __CLASS__, $subpage );
 			return true;
 		}
 
+		$this->response->addAsset( 'videopageadmin_dashboard_js' );
 		$helper = new VideoPageToolHelper();
 		$this->languages = $helper->getLanguages();
 		$this->language = $language;

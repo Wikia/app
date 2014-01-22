@@ -58,9 +58,11 @@ $messages['en'] = array(
 	'videopagetool-category-name-placeholder' => 'Type in words to bring in videos',
 	'videopagetool-category-display-title-placeholder' => 'Category title',
 	'videopagetool-category-preview' => 'Preview',
+	'videopagetool-category-instructions' => 'Note: A minimum of three modules must be programmed in order to save or publish this page.',
 
 	'videopagetool-hint-required-dimensions' => 'Image dimensions must be 1024 x 461',
 	'videopagetool-formerror-altthumb' => 'Please add an image',
+	'videopagetool-formerror-category-name' => 'At least 3 categories must be chosen',
 	'videopagetool-date-header' => 'Editing for date: $1',
 
 	// Home Page Section: Header
