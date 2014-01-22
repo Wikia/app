@@ -91,12 +91,31 @@ module.exports = function(config) {
 			'extensions/wikia/WikiaHomePage/js/WikiaHomePage.js',
 			'extensions/wikia/WikiaHomePage/js/spec/WikiaHomePage.spec.js',
 
-			// Video
+			/**
+			 * Extension: VideoPageTool
+			 * @description This extension is actually split up into a 'homepage' & an 'admin' component and is
+			 * built using Backbone. Therefore, these unit tests are to be organized in a mirrored structure.
+			 */
+
+			/*
+			 * Common VideoPageTool Deps
+			 */
 			'extensions/wikia/VideoPageTool/js/lib/lodash/dist/lodash.underscore.js',
 			'extensions/wikia/VideoPageTool/js/lib/backbone/backbone.js',
 			'extensions/wikia/VideoPageTool/js/shared/views/switcher.js',
+
+			/*
+			 * VideoPageTool: Admin Module
+			 */
+			'extensions/wikia/VideoPageTool/js/admin/collections/category.js',
 			'extensions/wikia/VideoPageTool/js/admin/views/autocomplete.js',
+
+			/*
+			 * VideoPageTool: Source the tests
+			 */
 			'extensions/wikia/VideoPageTool/js/spec/*.spec.js',
+			'extensions/wikia/VideoPageTool/js/spec/**/*.spec.js',
+			'extensions/wikia/VideoPageTool/js/spec/**/**/*.spec.js',
 
 			//Search
 			'extensions/wikia/Search/js/SearchAbTest.js',

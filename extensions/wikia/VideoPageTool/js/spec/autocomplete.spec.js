@@ -1,5 +1,5 @@
-/*global describe, it, expect, beforeEach, modules */
-describe( 'VideoPageTool: Admin AutocompleteView (Backbone):', function() {
+/*global describe, it, expect, afterEach, beforeEach, modules */
+describe( 'VideoPageTool: Admin AutocompleteView ( Backbone ):', function() {
 	'use strict';
 	var AutocompleteView,
 			instance;
@@ -10,18 +10,18 @@ describe( 'VideoPageTool: Admin AutocompleteView (Backbone):', function() {
 		return collection;
 	}
 
-	beforeEach(function() {
+	beforeEach( function() {
 		$( 'body' ).append( '<div id="autocompleteTest"><input data-autocomplete type="text" value="" /></div>' );
 		AutocompleteView = modules[ 'videopageadmin.views.autocomplete' ]( jQuery );
-		instance = new AutocompleteView({
+		instance = new AutocompleteView( {
 			collection: createMockCollection(),
 			el: $( '#autocompleteTest' )
 		} );
 	} );
 
-	afterEach(function() {
+	afterEach( function() {
 		$( '#autocompleteTest' ).remove();
-	});
+	} );
 
 	it( 'should export a constructor', function() {
 		expect( typeof AutocompleteView ).toBe( 'function' );
@@ -31,7 +31,7 @@ describe( 'VideoPageTool: Admin AutocompleteView (Backbone):', function() {
 		expect( typeof instance ).toBe( 'object' );
 	} );
 
-	it( 'should be an extension of a Backbone class', function() {
-		expect( instance.constructor.toString() ).toBe( 'function () { return parent.apply(this, arguments); }' );
+	it( 'should extend Backbone.View', function() {
+		expect( instance instanceof Backbone.View ).toBe( true );
 	} );
 } );
