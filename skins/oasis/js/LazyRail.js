@@ -1,5 +1,36 @@
 $( function () {
 	'use strict';
+	function getParamsFromUrl() {
+		var params = {},
+		getParams = '',
+		tmpQuery = [],
+		i = 0,
+		tmp = [],
+		paramsToPreserve = [ 'noexternals', 'noads', 'uselang', 'mcache', 'rebuildemssages' ];
+
+		getParams = window.location.search.substr( 1 );
+
+		if (getParams) {
+			tmpQuery = getParams.split( '&' );
+			i = tmpQuery.length;
+
+			getParams = {};
+			while ( i-- ) {
+				if ( tmpQuery[ i ] ) {
+					tmp = tmpQuery[ i ].split( '=' );
+					getParams[ tmp[ 0 ] ] = decodeURIComponent( tmp[ 1 ] ) || '';
+				}
+			}
+
+			for ( tmp in getParams ) {
+				if ( getParams.hasOwnProperty( tmp ) && paramsToPreserve.indexOf( tmp ) !== false ) {
+					params[ tmp ] = getParams[ tmp ];
+				}
+			}
+		}
+		return params;
+	}
+
 	var rail = $( '#WikiaRail' ),
 		LAZY_LOADING_SAMPLING_RATIO = 10, // integer (0-100): 0 - no tracking, 100 - track everything */
 		params = {},
@@ -16,6 +47,8 @@ $( function () {
 		if ( typeof wgSassLoadedScss !== 'undefined' ) {
 			params.excludeScss = window.wgSassLoadedScss;
 		}
+
+		$.extend(params, getParamsFromUrl());
 
 		$.nirvana.sendRequest( {
 			controller: 'RailController',
