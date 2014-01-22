@@ -1,3 +1,6 @@
+/**
+ * This is the base view class for all edit forms in the VPT admin
+ */
 define( 'videopageadmin.views.editbase', [
 	'videopageadmin.models.validator'
 ], function( Validator ) {

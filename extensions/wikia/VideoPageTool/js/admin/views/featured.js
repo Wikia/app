@@ -1,3 +1,7 @@
+/**
+ * View file for the featured video form
+ * @extends 'videopageadmin.views.editbase'
+ */
 define( 'videopageadmin.views.featured', [
 	'videopageadmin.views.editbase',
 	'videopageadmin.views.thumbnailupload'

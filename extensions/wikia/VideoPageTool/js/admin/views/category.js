@@ -1,3 +1,8 @@
+/**
+ * View file for the category (aka latest videos) form
+ * @extends 'videopageadmin.views.editbase'
+ */
+
 define( 'videopageadmin.views.category', [
 		'jquery',
 		'videopageadmin.collections.category',
