@@ -18,7 +18,7 @@ $( function () {
 			while ( i-- ) {
 				if ( tmpQuery[ i ] ) {
 					splitParam = tmpQuery[ i ].split( '=' );
-					if (paramsToPreserve.indexOf( splitParam[ 0 ] ) !== false) {
+					if (paramsToPreserve.indexOf( splitParam[ 0 ] ) !== -1) {
 						params[ splitParam[ 0 ] ] = decodeURIComponent( splitParam[ 1 ] ) || '';
 					}
 				}
