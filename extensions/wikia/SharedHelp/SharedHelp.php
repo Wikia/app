@@ -349,6 +349,10 @@ function SharedHelpEditPageHook(&$editpage) {
 		return true;
 	}
 
+	if ( !SharedHelpArticleExists($wgTitle) ) {
+		return true;
+	}
+
 	$helpSitename = WikiFactory::getVarValueByName( 'wgSitename', $wgHelpWikiId );
 
 	$msg = '<div style="border: solid 1px; padding: 10px; margin: 5px" class="sharedHelpEditInfo">'.wfMsgExt('shared_help_edit_info', 'parseinline', $wgTitle->getDBkey(), $helpSitename).'</div>';
