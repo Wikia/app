@@ -77,7 +77,6 @@ function mapMetadata( $ingester, $data ) {
 			$keywords[] = $data['series'];
 		}
 
-
 		if ( !empty( $keywords ) && count( $keywords ) < 5 ) {
 			$data['name'] = implode( ', ', $keywords );
 			$keywords = array();
@@ -86,29 +85,16 @@ function mapMetadata( $ingester, $data ) {
 
 	// get keywords
 	if ( !empty( $data['tags'] ) ) {
-		if ( !empty( $keywords ) ) {
-			$tags = array_map( 'trim', explode( ',', $data['tags'] ) );
-			$keywords = array_merge( $keywords, $tags );
-		} else {
-			$data['keywords'] = preg_replace( '/,([^\s])/', ', $1', $data['tags'] );
-		}
+		$tags = array_map( 'trim', explode( ',', $data['tags'] ) );
+		$keywords = array_merge( $keywords, $tags );
 		$data['tags'] = null;
 	}
 
 	if ( !empty( $keywords ) ) {
 		$keywords = $ingester->getUniqueArray( $keywords );
-		foreach ( $keywords as $keyword ) {
-			foreach ( $categories as $category ) {
-				if ( strcasecmp( $keyword, $category ) == 0 ) {
-					array_pop( $keywords );
-					if ( !in_array( $category, $pageCategories ) ) {
-						$pageCategories[] = $category;
-					}
-					break;
-				}
-			}
-		}
 		$data['keywords'] = implode( ', ', $keywords );
+	} else {
+		$data['keywords'] = null;
 	}
 
 	// get page categories
@@ -153,7 +139,7 @@ function mapMetadata( $ingester, $data ) {
 
 	// get language
 	if ( !empty( $data['lang'] ) && !empty( $languageNames ) && array_key_exists( $data['lang'], $languageNames ) ) {
-		$data['lang'] = $languageNames[$data['language']];
+		$data['lang'] = $languageNames[$data['lang']];
 	}
 
 	// get subtitle
@@ -162,20 +148,8 @@ function mapMetadata( $ingester, $data ) {
 	}
 
 	// get country code
-	if ( !empty( $data['targetCountry'] ) && !empty( $countryNames ) && array_key_exists( $data['targetCountry'], $countryNames ) ) {
-		$data['targetCountry'] = $countryNames[$data['targetCountry']];
-	}
-
-	// add page categories to metadata for IVA only
-	if ( !empty( $iva ) ) {
-		$data['pagecategories'] = empty( $data['pagecategories'] ) ? '' : $data['pagecategories'];
-		if ( empty( $data['pagecategories'] ) ) {
-			$metadata['pagecategories'] = '';
-		} else {
-			$categories = array_map( 'trim', explode( ',', $data['pagecategories'] ) );
-			$categories = $ingester->generateCategories( $metadata, $categories );
-			$metadata['pagecategories'] = implode( ', ', $categories );
-		}
+	if ( !empty( $data['targetcountry'] ) && !empty( $countryNames ) && array_key_exists( $data['targetcountry'], $countryNames ) ) {
+		$data['targetcountry'] = $countryNames[$data['targetcountry']];
 	}
 
 	return $data;
@@ -184,23 +158,22 @@ function mapMetadata( $ingester, $data ) {
 /**
  * Mapping additional metadata for IVA
  * @param VideoFeedIngester $ingester
- * @param array $data
  * @param array $metadata
  */
-function mapMetadataIva( $ingester, $data, &$metadata ) {
+function mapMetadataIva( $ingester, &$metadata ) {
 	// get category and type
-	$metadata['category'] = $ingester->getCategory( $metadata['category'] );
-	if ( !empty( $data['category'] ) ) {
-		$metadata['type'] = $ingester->getStdType( $data['category'] );
+	if ( !empty( $metadata['category'] ) ) {
+		$metadata['type'] = $ingester->getStdType( $metadata['category'] );
 	}
+	$metadata['category'] = $ingester->getCategory( $metadata['category'] );
 
-	// add page categories to metadata
-	$metadata['pagecategories'] = empty( $data['pagecategories'] ) ? '' : $data['pagecategories'];
-	if ( empty( $data['pagecategories'] ) ) {
+	if ( empty( $metadata['pagecategories'] ) ) {
 		$metadata['pagecategories'] = '';
 	} else {
-		$categories = array_map( 'trim', explode( ',', $data['pagecategories'] ) );
-		$categories = $ingester->generateCategories( $metadata, $categories );
+		$data = $metadata;
+		$data['language'] = $data['lang'];
+		$categories = array_map( 'trim', explode( ',', $metadata['pagecategories'] ) );
+		$categories = $ingester->generateCategories( $data, $categories );
 		$metadata['pagecategories'] = implode( ', ', $categories );
 	}
 }
@@ -283,6 +256,7 @@ $categories = array(
 	'ubisoft', 'WBIE', 'Comics', 'Comic-Con', 'Food', 'Walkthroughs', 'Walkthrough', 'Remake', 'Expert Showcase', 'Wikia Productions',
 	'Adventure', 'Pixar',
 	'Disney', 'RPG', 'Namco Bandai', 'Cartoon', 'Wikia Fan Media', 'Action', 'Multiplayer', 'Online', 'Marvel', 'Walt Disney', 'Shooter',
+	'Horror', 'Drama',
 );
 
 $nextPage = '';
@@ -313,9 +287,11 @@ do {
 		$msg = "[Page $page: $cnt of $total] Video: $title ({$video['embed_code']})";
 		echo "\n$msg";
 
-		// backup data to csv file
-		if ( !empty( $backupFile ) ) {
-			backupFile( $backupFile, $msg, $video );
+		// skip if 'name' field exists
+		if ( empty( $video['metadata'] ) ) {
+			echo " ... SKIPPED (Empty metadata).\n";
+			$skipped++;
+			continue;
 		}
 
 		// skip if 'name' field exists
@@ -325,6 +301,11 @@ do {
 			continue;
 		}
 
+		// backup data to csv file
+		if ( !empty( $backupFile ) ) {
+			backupFile( $backupFile, $msg, $video );
+		}
+
 		// get provider
 		$label = OoyalaApiWrapper::getProviderName( $video['labels'] );
 		$label = empty( $label ) ? "No provider name" : OoyalaApiWrapper::formatProviderName( $label );
@@ -332,7 +313,7 @@ do {
 
 		$newMeta = mapMetadata( $ingester, $video['metadata'] );
 		if ( !empty( $iva ) ) {
-			mapMetadataIva( $ingester, $video['metadata'], $newMeta );
+			mapMetadataIva( $ingester, $newMeta );
 		}
 
 		if ( !array_key_exists( 'name', $newMeta ) ) {
