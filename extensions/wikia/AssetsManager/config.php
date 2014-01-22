@@ -1043,7 +1043,7 @@ $config['VET_js'] = array(
 /**
  * @name VideoPageTool
  * @description Assets for the VideoPageTool, same styles as SpecialMarketingToolbox
- * @TODO: decide if we want to split the js/css into two different packages for index and edit pages
+ * The JS is split into two different packages for the dashboard and edit pages
  */
 
 $config['videopageadmin_dashboard_js'] = [
