@@ -46,8 +46,6 @@ class WikiaValidatorDependentTest extends WikiaBaseTest {
 	}
 
 /**
- * @group Slow
- * @slowExecutionTime 0.00271 ms
  */
 	public function testIsValid() {
 		$wikiaValidatorStringStub = $this->getMock('WikiaValidatorString');

@@ -34,8 +34,6 @@ class TvApiControllerTest extends \WikiaBaseTest {
 	}
 
 /**
- * @group Slow
- * @slowExecutionTime 0.03306 ms
  */
 	public function testGetEpisodeUrlDevOrSandbox() {
 
@@ -97,8 +95,6 @@ class TvApiControllerTest extends \WikiaBaseTest {
 	}
 
 /**
- * @group Slow
- * @slowExecutionTime 0.03306 ms
  */
 	public function testGetTitle() {
 

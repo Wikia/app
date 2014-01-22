@@ -24,8 +24,6 @@ class GlobalFileTest extends WikiaBaseTest {
 	}
 
 	/**
- * @group Slow
- * @slowExecutionTime 0.04497 ms
 	 * @dataProvider newFromTextProvider
 	 */
 	public function testNewFromText($row, $cityId, $path, $exists, $width, $height, $crop, $mime, $url) {

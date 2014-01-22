@@ -19,8 +19,6 @@ class UIFactoryApiControllerTest extends WikiaBaseTest {
 	}
 
 /**
- * @group Slow
- * @slowExecutionTime 0.03715 ms
  */
 	public function testFactoryInit() {
 		$componentNames = [ 'button', 'modal' ];

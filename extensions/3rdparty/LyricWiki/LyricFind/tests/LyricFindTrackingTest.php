@@ -13,8 +13,6 @@ class LyricFindTrackingTest extends WikiaBaseTest {
 	}
 
 	/**
- * @group Slow
- * @slowExecutionTime 0.00256 ms
 	 * @dataProvider pageIsTrackableProvider
 	 * @param $ns int namespace
 	 * @param $action string action=... value

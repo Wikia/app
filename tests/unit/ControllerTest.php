@@ -11,8 +11,6 @@ class ControllerTest extends WikiaBaseTest {
 
 		parent::setUp();
 /**
- * @group Slow
- * @slowExecutionTime 0.00512 ms
  */
 	}
 
@@ -46,8 +44,6 @@ class ControllerTest extends WikiaBaseTest {
 	}
 
 	/**
- * @group Slow
- * @slowExecutionTime 0.01569 ms
 	 * @group UsingDB
 	 */
 	function testWikiaLink() {

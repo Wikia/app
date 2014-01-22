@@ -18,8 +18,6 @@ class HubRssServiceTest extends WikiaBaseTest {
 	}
 
 	/**
- * @group Slow
- * @slowExecutionTime 0.00445 ms
 	 * @covers  HubRssFeedService::dataToXml
 	 */
 	public function testDataToXml() {

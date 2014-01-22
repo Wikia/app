@@ -10,8 +10,6 @@ class ServiceTest extends WikiaBaseTest {
 	}
 
 	/**
- * @group Slow
- * @slowExecutionTime 0.02214 ms
 	 * @group UsingDB
 	 */
 	function testAvatarService() {
@@ -35,8 +33,6 @@ class ServiceTest extends WikiaBaseTest {
 	}
 
 	/**
- * @group Slow
- * @slowExecutionTime 0.02214 ms
 	 * @group UsingDB
 	 */
 	function testPageStatsService() {
@@ -95,8 +91,6 @@ class ServiceTest extends WikiaBaseTest {
 	}
 
 	/**
- * @group Slow
- * @slowExecutionTime 0.02214 ms
 	 * @group UsingDB
 	 */
 	function testUserStatsService() {

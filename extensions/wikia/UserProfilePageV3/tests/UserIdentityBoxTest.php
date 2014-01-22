@@ -9,8 +9,6 @@ class UserIdentityBoxTest extends WikiaBaseTest {
 	}
 
 	/**
- * @group Slow
- * @slowExecutionTime 0.00212 ms
 	 * @dataProvider checkIfDisplayZeroStatesDataProvider
 	 *
 	 * @author Andrzej 'nAndy' Łukaszewski

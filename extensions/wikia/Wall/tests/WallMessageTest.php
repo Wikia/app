@@ -6,8 +6,6 @@ class WallMessageTest extends WikiaBaseTest {
 	 * title takes precedence over the ac itself
 	 */
 /**
- * @group Slow
- * @slowExecutionTime 0.00297 ms
  */
 	public function testGetWallUsesWallMainTitle() {
 		$acTitle = Title::newFromText( 'ArticleCommentTitle/@comment/xxx' );

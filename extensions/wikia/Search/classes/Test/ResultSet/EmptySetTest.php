@@ -10,8 +10,6 @@ use Wikia, ReflectionProperty, ReflectionMethod;
 class WikiaSearchResultSetEmptySetTest extends Wikia\Search\Test\BaseTest {
 	
 	/**
- * @group Slow
- * @slowExecutionTime 0.10649 ms
 	 * @covers Wikia\Search\ResultSet\EmptySet::configure
 	 */
 	public function testConfigure() {
@@ -38,8 +36,6 @@ class WikiaSearchResultSetEmptySetTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
- * @group Slow
- * @slowExecutionTime 0.10847 ms
 	 * @covers Wikia\Search\ResultSet\EmptySet::getResultsStart
 	 */
 	public function testGetResultsStart() {
@@ -55,8 +51,6 @@ class WikiaSearchResultSetEmptySetTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
- * @group Slow
- * @slowExecutionTime 0.10702 ms
 	 * @covers Wikia\Search\ResultSet\EmptySet::getQueryTime
 	 */
 	public function testGetQueryTime() {

@@ -12,8 +12,6 @@ class CreateNewWikiControllerTest extends WikiaBaseTest {
 	}
 
 	/**
- * @group Slow
- * @slowExecutionTime 0.06795 ms
 	 * @group hyun
 	 * @dataProvider getCreateWikiDataProvider
 	 */
@@ -89,8 +87,6 @@ class CreateNewWikiControllerTest extends WikiaBaseTest {
 	}
 
 /**
- * @group Slow
- * @slowExecutionTime 0.03403 ms
  */
 	public function testCheckWikiNameSuccess() {
 

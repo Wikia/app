@@ -3,8 +3,6 @@
 class InfoboxesServiceTest extends WikiaBaseTest
 {
 	/**
- * @group Slow
- * @slowExecutionTime 0.00425 ms
 	 * @covers InfoboxesService::getForPageIds
 	 */
 	public function testGetForPageIds() {
@@ -70,8 +68,6 @@ class InfoboxesServiceTest extends WikiaBaseTest
 	}
 	
 	/**
- * @group Slow
- * @slowExecutionTime 0.00309 ms
 	 * @covers InfoboxesService::getIdQueries
 	 */
 	public function testGetIdQueries() {
@@ -105,8 +101,6 @@ class InfoboxesServiceTest extends WikiaBaseTest
 	}
 	
 	/**
- * @group Slow
- * @slowExecutionTime 0.00392 ms
 	 * @covers InfoboxesService::getMappedIds
 	 */
 	public function testGetMappedIds() {
@@ -159,8 +153,6 @@ class InfoboxesServiceTest extends WikiaBaseTest
 	}
 	
 	/**
- * @group Slow
- * @slowExecutionTime 0.0021 ms
 	 * @covers InfoboxesService::getItemsFromSearchResponse
 	 */
 	public function testGetItemsFromSearchResponse() {
@@ -190,8 +182,6 @@ class InfoboxesServiceTest extends WikiaBaseTest
 	}
 	
 	/**
- * @group Slow
- * @slowExecutionTime 0.01004 ms
 	 * @covers InfoboxesService::getSearchResponse
 	 */
 	public function testGetSearchResponse() {

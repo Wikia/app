@@ -14,8 +14,6 @@ class ResultTest extends BaseTest {
 	);
 
 	/**
- * @group Slow
- * @slowExecutionTime 0.10619 ms
 	 * @covers Wikia\Search\Result::getCityId
 	 * @covers Wikia\Search\Result::__construct
 	 */
@@ -36,8 +34,6 @@ class ResultTest extends BaseTest {
 	}
 
 	/**
- * @group Slow
- * @slowExecutionTime 0.10777 ms
 	 * @covers Wikia\Search\Result::getText
 	 * @covers Wikia\Search\Result::setText
 	 */
@@ -69,8 +65,6 @@ class ResultTest extends BaseTest {
 	}
 	
 	/**
- * @group Slow
- * @slowExecutionTime 0.10604 ms
 	 * @covers Wikia\Search\Result::getText
 	 */
 	public function testGetTextWithWordLimit() {
@@ -88,8 +82,6 @@ class ResultTest extends BaseTest {
 	}
 
 	/**
- * @group Slow
- * @slowExecutionTime 0.10674 ms
 	 * @covers Wikia\Search\Result::getEscapedUrl
 	 */
 	public function testGetEscapedUrl() {
@@ -107,8 +99,6 @@ class ResultTest extends BaseTest {
 	}
 
 	/**
- * @group Slow
- * @slowExecutionTime 0.10698 ms
 	 * @covers Wikia\Search\Result::getTitle
 	 * @covers Wikia\Search\Result::setTitle
 	 */
@@ -180,8 +170,6 @@ class ResultTest extends BaseTest {
 	}
 
 	/**
- * @group Slow
- * @slowExecutionTime 0.10531 ms
 	 * @covers Wikia\Search\Result::getUrl
 	 * @covers Wikia\Search\Result::setUrl
 	 * @covers Wikia\Search\Result::getTextUrl
@@ -214,8 +202,6 @@ class ResultTest extends BaseTest {
 		);
 	}
 	/**
- * @group Slow
- * @slowExecutionTime 0.10488 ms
 	 * @covers Wikia\Search\Result::getHub
 	 */ 
 	
@@ -229,8 +215,6 @@ class ResultTest extends BaseTest {
 	}
 
 	/**
- * @group Slow
- * @slowExecutionTime 0.10524 ms
 	 * @covers Wikia\Search\Result::setVar
 	 * @covers Wikia\Search\Result::getVar
 	 * @covers Wikia\Search\Result::getVars
@@ -271,8 +255,6 @@ class ResultTest extends BaseTest {
 	}
 
 	/**
- * @group Slow
- * @slowExecutionTime 0.10667 ms
 	 * @covers Wikia\Search\Result::fixSnippeting
 	 */
 	public function testFixSnippeting() {
@@ -357,8 +339,6 @@ class ResultTest extends BaseTest {
 	}
 
 	/**
- * @group Slow
- * @slowExecutionTime 0.10614 ms
 	 * @covers Wikia\Search\Result::toArray
 	 */
 	public function testToArray() {
@@ -381,8 +361,6 @@ class ResultTest extends BaseTest {
 	}
 
 	/**
- * @group Slow
- * @slowExecutionTime 0.10661 ms
 	 * @covers Wikia\Search\Result::replaceUnusualEscapes
 	 * @covers Wikia\Search\Result::replaceUnusualEscapesCallback
 	 */
@@ -400,8 +378,6 @@ class ResultTest extends BaseTest {
 	}
 
 	/**
- * @group Slow
- * @slowExecutionTime 0.10913 ms
 	 * @covers Wikia\Search\Result::getVideoViews
 	 */
 	public function testGetVideoViews() {
@@ -431,8 +407,6 @@ class ResultTest extends BaseTest {
 	}
 	
 	/**
- * @group Slow
- * @slowExecutionTime 0.10913 ms
 	 * @covers Wikia\Search\Result::getVideoViews
 	 */
 	public function testGetVideoViewsException() {
@@ -465,8 +439,6 @@ class ResultTest extends BaseTest {
 	}
 	
 	/**
- * @group Slow
- * @slowExecutionTime 0.10673 ms
 	 * @covers Wikia\Search\Result::offsetGet
 	 */
 	public function testOffsetGetTitle() {
@@ -487,8 +459,6 @@ class ResultTest extends BaseTest {
 	}
 	
 	/**
- * @group Slow
- * @slowExecutionTime 0.10673 ms
 	 * @covers Wikia\Search\Result::offsetGet
 	 */
 	public function testOffsetGetText() {
@@ -509,8 +479,6 @@ class ResultTest extends BaseTest {
 	}
 	
 	/**
- * @group Slow
- * @slowExecutionTime 0.10673 ms
 	 * @covers Wikia\Search\Result::offsetGet
 	 */
 	public function testoffsetGetVideoViews() {
@@ -527,8 +495,6 @@ class ResultTest extends BaseTest {
 	}
 	
 	/**
- * @group Slow
- * @slowExecutionTime 0.10673 ms
 	 * @covers Wikia\Search\Result::offsetGet
 	 */
 	public function testOffsetGetDefaultLanguageField() {
@@ -544,8 +510,6 @@ class ResultTest extends BaseTest {
 	}
 	
 	/**
- * @group Slow
- * @slowExecutionTime 0.10673 ms
 	 * @covers Wikia\Search\Result::offsetGet
 	 */
 	public function testOffsetGetDynamicNonLanguageField() {

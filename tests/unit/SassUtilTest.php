@@ -3,8 +3,6 @@
 class SassUtilTest extends WikiaBaseTest {
 
 	/**
- * @group Slow
- * @slowExecutionTime 0.00247 ms
 	 * @group UsingDB
 	 */
 	function testSassUtil() {

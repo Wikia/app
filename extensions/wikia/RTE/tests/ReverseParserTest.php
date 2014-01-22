@@ -10,8 +10,6 @@ class ReverseParserTest extends WikiaBaseTest {
 
 		$this->reverseParser = new RTEReverseParser();
 /**
- * @group Slow
- * @slowExecutionTime 0.00377 ms
  */
 	}
 

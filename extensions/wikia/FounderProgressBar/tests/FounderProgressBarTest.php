@@ -70,8 +70,6 @@ class FounderProgressBarTest extends WikiaBaseTest {
 		}
 
 		/**
- * @group Slow
- * @slowExecutionTime 0.00989 ms
 		 * @dataProvider taskCompleteDataProvider
 		 */
 		
@@ -91,8 +89,6 @@ class FounderProgressBarTest extends WikiaBaseTest {
 		}
 		
 /**
- * @group Slow
- * @slowExecutionTime 0.00335 ms
  */
 		public function testShortTaskList() {
 			$response = $this->app->sendRequest('FounderProgressBar', 'getShortTaskList');
@@ -107,8 +103,6 @@ class FounderProgressBarTest extends WikiaBaseTest {
 		}
 
 		/**
- * @group Slow
- * @slowExecutionTime 0.02092 ms
 		 * @dataProvider longTaskListDataProvider
 		 */
 		public function testLongTaskList($fetch_obj, $exp_list, $exp_data) {
@@ -354,8 +348,6 @@ class FounderProgressBarTest extends WikiaBaseTest {
 		}
 		
 		/**
- * @group Slow
- * @slowExecutionTime 0.00292 ms
 		 * @dataProvider doTaskDataProvider
 		 */
 		public function testDoTask($case) {
@@ -492,8 +484,6 @@ class FounderProgressBarTest extends WikiaBaseTest {
 		}
 		
 		/**
- * @group Slow
- * @slowExecutionTime 0.0052 ms
 		 * @dataProvider skipTaskDataProvider
 		 */
 		public function testskipTask($task_id, $task_skipped, $result, $extra_task) {

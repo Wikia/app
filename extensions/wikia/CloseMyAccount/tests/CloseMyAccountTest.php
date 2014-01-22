@@ -11,8 +11,6 @@ class CloseMyAccountTest extends WikiaBaseTest {
 	}
 
 	/**
- * @group Slow
- * @slowExecutionTime 0.00223 ms
 	 * @dataProvider getDaysUntilClosureProvider
 	 */
 	public function testGetDaysUntilClosure( $expected, $getOptionValue ) {

@@ -8,8 +8,6 @@ class ExternalStoreDBFetchBlobHookTest extends WikiaBaseTest {
 	}
 
 /**
- * @group Slow
- * @slowExecutionTime 1.77425 ms
  */
 	public function testApiCall() {
 		$result = false;

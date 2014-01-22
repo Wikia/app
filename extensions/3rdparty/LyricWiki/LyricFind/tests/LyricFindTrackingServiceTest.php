@@ -18,8 +18,6 @@ class LyricFindTrackingServiceTest extends WikiaBaseTest {
 	}
 
 	/**
- * @group Slow
- * @slowExecutionTime 0.05623 ms
 	 * @dataProvider formatTrackIdProvider
 	 * @param $amgId
 	 * @param $gracenoteId
@@ -87,8 +85,6 @@ class LyricFindTrackingServiceTest extends WikiaBaseTest {
 	}
 
 	/**
- * @group Slow
- * @slowExecutionTime 0.11621 ms
 	 * @dataProvider trackResponseCodeProvider
 	 * @param $amgId
 	 * @param $trackId

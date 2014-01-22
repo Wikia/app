@@ -10,8 +10,6 @@ use Wikia\Search\Field, Wikia\Search\Test\BaseTest, \ReflectionProperty, \Reflec
 class WikiaSearchFieldTest extends BaseTest {
 
 	/**
- * @group Slow
- * @slowExecutionTime 0.08263 ms
 	 * @covers Wikia\Search\Field\Field::__construct
 	 */
 	public function test__construct() {
@@ -32,8 +30,6 @@ class WikiaSearchFieldTest extends BaseTest {
 	}
 	
 	/**
- * @group Slow
- * @slowExecutionTime 0.08268 ms
 	 * @covers Wikia\Search\Field\Field::__toString()
 	 */
 	public function test__toString() {
@@ -55,8 +51,6 @@ class WikiaSearchFieldTest extends BaseTest {
 	}
 	
 	/**
- * @group Slow
- * @slowExecutionTime 0.0845 ms
 	 * @covers Wikia\Search\Field\FieldExpression::getFieldValueString
 	 * @covers Wikia\Search\Field\FieldExpression::__toString()
 	 */
@@ -88,8 +82,6 @@ class WikiaSearchFieldTest extends BaseTest {
 	}
 	
 	/**
- * @group Slow
- * @slowExecutionTime 0.0822 ms
 	 * @covers Wikia\Search\Field\FieldExpression::getFieldValueString
 	 * @covers Wikia\Search\Field\FieldExpression::getNegationString
 	 * @covers Wikia\Search\Field\FieldExpression::setNegate
@@ -112,8 +104,6 @@ class WikiaSearchFieldTest extends BaseTest {
 	
 	
 	/**
- * @group Slow
- * @slowExecutionTime 0.08217 ms
 	 * @covers Wikia\Search\Field\FieldExpression::getFieldValueString
 	 * @covers Wikia\Search\Field\FieldExpression::getBoostString
 	 * @covers Wikia\Search\Field\FieldExpression::setBoost
@@ -135,8 +125,6 @@ class WikiaSearchFieldTest extends BaseTest {
 	}
 	
 	/**
- * @group Slow
- * @slowExecutionTime 0.08224 ms
 	 * @covers Wikia\Search\Field\FieldExpression::getFieldValueString
 	 * @covers Wikia\Search\Field\FieldExpression::setValueQuote
 	 */

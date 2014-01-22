@@ -10,8 +10,6 @@ use Wikia, ReflectionMethod, ReflectionProperty;
 class InterWikiTest extends Wikia\Search\Test\BaseTest {
 	
 	/**
- * @group Slow
- * @slowExecutionTime 0.11225 ms
 	 * @covers Wikia\Search\QueryService\Select\Dismax\InterWiki::extractMatch
 	 */
 	public function testExtractMatch() {
@@ -38,8 +36,6 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
- * @group Slow
- * @slowExecutionTime 0.12671 ms
 	 * @covers Wikia\Search\QueryService\Select\Dismax\InterWiki::registerNonDismaxComponents
 	 */
 	public function testRegisterNonDismaxComponents() {
@@ -68,8 +64,6 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 	
 	
 	/**
- * @group Slow
- * @slowExecutionTime 0.11108 ms
 	 * @covers Wikia\Search\QueryService\Select\Dismax\InterWiki::registerFilterQueryForMatch
 	 */
 	public function testRegisterFilterQueryForMatch() {
@@ -118,8 +112,6 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
- * @group Slow
- * @slowExecutionTime 0.11279 ms
 	 * @covers Wikia\Search\QueryService\Select\Dismax\InterWiki::prepareRequest
 	 */
 	public function testPrepareRequest() {
@@ -166,8 +158,6 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
- * @group Slow
- * @slowExecutionTime 0.11337 ms
 	 * @covers Wikia\Search\QueryService\Select\Dismax\InterWiki::getFilterQueryString
 	 */
 	public function testGetFilterQueryString() {
@@ -202,8 +192,6 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
- * @group Slow
- * @slowExecutionTime 0.10798 ms
 	 * @covers Wikia\Search\QueryService\Select\Dismax\InterWiki::getQueryClausesString
 	 */
 	public function testGetQueryClausesString() {

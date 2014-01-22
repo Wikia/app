@@ -1,7 +1,5 @@
 <?php
 /**
- * @group Slow
- * @slowExecutionTime 0.01231 ms
  */
 class NavigationModelTest extends WikiaBaseTest {
 	function testParseLines() {
@@ -121,8 +119,6 @@ class NavigationModelTest extends WikiaBaseTest {
 			);
 		}
 /**
- * @group Slow
- * @slowExecutionTime 0.02742 ms
  */
 	}
 
@@ -159,8 +155,6 @@ class NavigationModelTest extends WikiaBaseTest {
 			1
 		));
 /**
- * @group Slow
- * @slowExecutionTime 0.00752 ms
  */
 	}
 
@@ -266,8 +260,6 @@ class NavigationModelTest extends WikiaBaseTest {
 			);
 		}
 /**
- * @group Slow
- * @slowExecutionTime 0.02177 ms
  */
 	}
 
@@ -331,8 +323,6 @@ class NavigationModelTest extends WikiaBaseTest {
 	}
 
 	/**
- * @group Slow
- * @slowExecutionTime 0.0132 ms
 	 * @group UsingDB
 	 */
 	function testParseErrors() {

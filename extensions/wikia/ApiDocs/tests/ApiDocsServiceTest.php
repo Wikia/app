@@ -12,8 +12,6 @@ class ApiDocsServiceTest extends \WikiaBaseTest {
 	}
 
 /**
- * @group Slow
- * @slowExecutionTime 0.00995 ms
  */
 	public function testGetDocList() {
 		$swaggerMock = $this->getMockBuilder( '\Swagger\Swagger' )

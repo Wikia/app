@@ -3,8 +3,6 @@
 class VideoEmbedToolSearchServiceTest extends WikiaBaseTest {
 	
 	/**
- * @group Slow
- * @slowExecutionTime 0.01088 ms
 	 * @covers VideoEmbedToolSearchService::getSuggestionsForArticleId
 	 */
 	public function testGetSuggestionsForArticleId() {
@@ -106,8 +104,6 @@ class VideoEmbedToolSearchServiceTest extends WikiaBaseTest {
 	}
 	
 	/**
- * @group Slow
- * @slowExecutionTime 0.00729 ms
 	 * @covers VideoEmbedToolSearchService::videoSearch
 	 */
 	public function testVideoSearch() {
@@ -193,8 +189,6 @@ class VideoEmbedToolSearchServiceTest extends WikiaBaseTest {
 	}
 	
 	/**
- * @group Slow
- * @slowExecutionTime 0.00469 ms
 	 * @covers VideoEmbedToolSearchService::setSuggestionQueryByArticleId
 	 */
 	public function testSetSuggestionQueryByArticleIdWorks() {
@@ -240,8 +234,6 @@ class VideoEmbedToolSearchServiceTest extends WikiaBaseTest {
 	}
 	
 	/**
- * @group Slow
- * @slowExecutionTime 0.00469 ms
 	 * @covers VideoEmbedToolSearchService::setSuggestionQueryByArticleId
 	 */
 	public function testSetSuggestionQueryByArticleIdBreaks() {
@@ -310,8 +302,6 @@ class VideoEmbedToolSearchServiceTest extends WikiaBaseTest {
 	}
 	
 	/**
- * @group Slow
- * @slowExecutionTime 0.0075 ms
 	 * @covers VideoEmbedToolSearchService::getConfig
 	 */
 	public function testGetConfigPremium() {

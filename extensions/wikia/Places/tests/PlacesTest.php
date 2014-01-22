@@ -27,8 +27,6 @@ class PlacesTest extends WikiaBaseTest {
 	}
 
 	/**
- * @group Slow
- * @slowExecutionTime 0.00228 ms
 	 * @group UsingDB
 	 */
 	function testPlaceModelNewFromAttributes() {
@@ -47,8 +45,6 @@ class PlacesTest extends WikiaBaseTest {
 	}
 
 	/**
- * @group Slow
- * @slowExecutionTime 0.00228 ms
 	 * @group UsingDB
 	 */
 	function testPlaceFromAttributes() {
@@ -61,8 +57,6 @@ class PlacesTest extends WikiaBaseTest {
 	}
 
 	/**
- * @group Slow
- * @slowExecutionTime 0.00228 ms
 	 * @group UsingDB
 	 */
 	function testPlaceFromModel() {
@@ -75,8 +69,6 @@ class PlacesTest extends WikiaBaseTest {
 	}
 
 	/**
- * @group Slow
- * @slowExecutionTime 0.00228 ms
 	 * @group UsingDB
 	 */
 	function testRenderMarkers() {
@@ -89,8 +81,6 @@ class PlacesTest extends WikiaBaseTest {
 	}
 
 	/**
- * @group Slow
- * @slowExecutionTime 0.00228 ms
 	 * @group UsingDB
 	 */
 	function testGetPlaceWikiTextFromModel() {

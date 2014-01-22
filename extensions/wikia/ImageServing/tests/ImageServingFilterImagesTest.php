@@ -40,8 +40,6 @@ class ImageServingFilterImagesTest extends WikiaBaseTest {
 	}
 
 	/**
- * @group Slow
- * @slowExecutionTime 0.00213 ms
 	 * @dataProvider filterImagesByMimeTypeDataProvider
 	 */
 	public function testFilterImagesByMimeType($mime, $shouldBeFilteredOut = false) {

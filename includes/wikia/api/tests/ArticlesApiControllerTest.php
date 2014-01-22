@@ -7,8 +7,6 @@
 class ArticlesApiControllerTest extends \WikiaBaseTest {
 
 	/**
- * @group Slow
- * @slowExecutionTime 0.00542 ms
 	 * @covers ArticlesApiController::getArticlesThumbnails
 	 * @dataProvider imagesDataProvider
 	 */

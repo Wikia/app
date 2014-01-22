@@ -8,8 +8,6 @@ use Wikia\Search\Query\Select as Query, Wikia\Search\MediaWikiService, Wikia\Sea
 class SelectTest extends BaseTest
 {
 	/**
- * @group Slow
- * @slowExecutionTime 0.10508 ms
 	 * @covers Wikia\Search\Query\Select::__construct
 	 */
 	public function testConstruct()
@@ -23,8 +21,6 @@ class SelectTest extends BaseTest
 	}
 	
 	/**
- * @group Slow
- * @slowExecutionTime 0.10171 ms
 	 * @covers Wikia\Search\Query\Select::getSanitizedQuery
 	 */
 	public function testGetSanitizedQuery()
@@ -56,8 +52,6 @@ class SelectTest extends BaseTest
 	}
 	
 	/**
- * @group Slow
- * @slowExecutionTime 0.09664 ms
 	 * @covers Wikia\Search\Query\Select::getQueryForHtml
 	 */
 	public function testGetQueryForHtml() {
@@ -74,8 +68,6 @@ class SelectTest extends BaseTest
 	}
 	
 	/**
- * @group Slow
- * @slowExecutionTime 0.09615 ms
 	 * @covers Wikia\Search\Query\Select::hasTerms
 	 */
 	public function testHasTerms() {
@@ -99,8 +91,6 @@ class SelectTest extends BaseTest
 	}
 	
 	/**
- * @group Slow
- * @slowExecutionTime 0.09583 ms
 	 * @covers Wikia\Search\Query\Select::getService
 	 */
 	public function testGetService() {
@@ -119,8 +109,6 @@ class SelectTest extends BaseTest
 	}
 	
 	/**
- * @group Slow
- * @slowExecutionTime 0.09836 ms
 	 * @covers Wikia\Search\Query\Select::initializeNamespaceData
 	 * @covers Wikia\Search\Query\Select::getNamespacePrefix
 	 * @covers Wikia\Search\Query\Select::getNamespaceId
@@ -145,8 +133,6 @@ class SelectTest extends BaseTest
 	}
 	
 	/**
- * @group Slow
- * @slowExecutionTime 0.10406 ms
 	 * @covers Wikia\Search\Query\Select::getNamespacePrefix
 	 */
 	public function testGetNamespacePrefix() {
@@ -182,8 +168,6 @@ class SelectTest extends BaseTest
 	}
 	
 	/**
- * @group Slow
- * @slowExecutionTime 0.1008 ms
 	 * @covers Wikia\Search\Query\Select::getSolrQuery
 	 */
 	public function testGetSolrQuery() {
@@ -205,8 +189,6 @@ class SelectTest extends BaseTest
 	}
 	
 /**
- * @group Slow
- * @slowExecutionTime 0.09587 ms
  */
 	public function testGetSolrQueryWithWordLimit() {
 		$query = <<<YEEZY

@@ -14,8 +14,6 @@ class SEOTweaksGlobalHooksHelperTest extends WikiaBaseTest {
 	 * Test if the thumbnail gets generated for article
 	 */
 /**
- * @group Slow
- * @slowExecutionTime 0.16844 ms
  */
 	public function testArticleImageGeneration() {
 		$memkey = 'sght_memkey';
@@ -73,8 +71,6 @@ class SEOTweaksGlobalHooksHelperTest extends WikiaBaseTest {
 	 * Test if the thumbnail gets generated for article from file namespace
 	 */
 /**
- * @group Slow
- * @slowExecutionTime 0.16844 ms
  */
 	public function testFileImageGeneration() {
 		$memkey = 'sght_memkey2';
@@ -126,8 +122,6 @@ class SEOTweaksGlobalHooksHelperTest extends WikiaBaseTest {
 	 * Test if we don't try to generate thumbnail for user pages (bugid 98881)
 	 */
 /**
- * @group Slow
- * @slowExecutionTime 0.16844 ms
  */
 	public function testUserNS() {
 		$mock_cache = $this->getMock('stdClass', array('get', 'set'));
@@ -161,8 +155,6 @@ class SEOTweaksGlobalHooksHelperTest extends WikiaBaseTest {
 		$this->assertEquals(array('foo'=>'bar'), $meta);
 	}
 	/**
- * @group Slow
- * @slowExecutionTime 0.07584 ms
 	 * As tests above cover all the generation cases, we right now use the cached value to check the
 	 * behaviour in remaining scenarios
 	 * @dataProvider getCacheDataProvider
