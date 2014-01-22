@@ -5,7 +5,7 @@ $( function () {
 		getParams = '',
 		tmpQuery = [],
 		i = 0,
-		tmp = [],
+		splitParam = [],
 		paramsToPreserve = [ 'noexternals', 'noads', 'uselang', 'mcache', 'rebuildemssages' ];
 
 		getParams = window.location.search.substr( 1 );
@@ -17,14 +17,14 @@ $( function () {
 			getParams = {};
 			while ( i-- ) {
 				if ( tmpQuery[ i ] ) {
-					tmp = tmpQuery[ i ].split( '=' );
-					getParams[ tmp[ 0 ] ] = decodeURIComponent( tmp[ 1 ] ) || '';
+					splitParam = tmpQuery[ i ].split( '=' );
+					getParams[ splitParam[ 0 ] ] = decodeURIComponent( splitParam[ 1 ] ) || '';
 				}
 			}
 
-			for ( tmp in getParams ) {
-				if ( getParams.hasOwnProperty( tmp ) && paramsToPreserve.indexOf( tmp ) !== false ) {
-					params[ tmp ] = getParams[ tmp ];
+			for ( splitParam in getParams ) {
+				if ( getParams.hasOwnProperty( splitParam ) && paramsToPreserve.indexOf( splitParam ) !== false ) {
+					params[ splitParam ] = getParams[ splitParam ];
 				}
 			}
 		}
