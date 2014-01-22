@@ -10,6 +10,8 @@ class WAMServiceTest extends WikiaBaseTest {
 	}
 
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.00363 ms
 	 * @dataProvider getWamIndexConditionsDataProvider
 	 */
 	public function testGetWamIndexConditions ($options, $expConds, $blackList = '') {

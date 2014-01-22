@@ -10,6 +10,10 @@ class ControllerTest extends WikiaBaseTest {
 		$wgAutoloadClasses['OasisTemplate'] = $IP . '/skins/Oasis.php';
 
 		parent::setUp();
+/**
+ * @group Slow
+ * @slowExecutionTime 0.00512 ms
+ */
 	}
 
 	function testDispatchingToController() {
@@ -42,6 +46,8 @@ class ControllerTest extends WikiaBaseTest {
 	}
 
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.01569 ms
 	 * @group UsingDB
 	 */
 	function testWikiaLink() {

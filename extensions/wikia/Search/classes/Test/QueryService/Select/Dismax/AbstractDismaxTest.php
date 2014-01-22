@@ -12,6 +12,8 @@ class AbstractDismaxTest extends BaseTest
 {
 
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.10459 ms
 	 * @covers Wikia\Search\QueryService\Select\Dismax\AbstractDismax::getQuery
 	 */
 	public function testGetQuery() {
@@ -51,6 +53,8 @@ class AbstractDismaxTest extends BaseTest
 	}
 	
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.10459 ms
 	 * @covers Wikia\Search\QueryService\Select\Dismax\AbstractDismax::getQuery
 	 */
 	public function testGetQueryMultipleQueryClauses() {
@@ -90,6 +94,8 @@ class AbstractDismaxTest extends BaseTest
 	}
 	
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.10631 ms
 	 * @covers Wikia\Search\QueryService\Select\Dismax\AbstractDismax::getQueryFieldsString
 	 */
 	public function testGetQueryFieldsString() {
@@ -118,6 +124,8 @@ class AbstractDismaxTest extends BaseTest
 	}
 	
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.10661 ms
 	 * @covers Wikia\Search\QueryService\Select\Dismax\AbstractDismax::registerComponents
 	 */
 	public function testRegisterComponents() {
@@ -149,6 +157,8 @@ class AbstractDismaxTest extends BaseTest
 	}
 	
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.12218 ms
 	 * @covers Wikia\Search\QueryService\Select\Dismax\AbstractDismax::registerDismax
 	 */
 	public function testRegisterDismax() {
@@ -270,6 +280,8 @@ class AbstractDismaxTest extends BaseTest
 	}
 	
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.10123 ms
 	 * @covers Wikia\Search\QueryService\Select\Dismax\AbstractDismax::registerNonDismaxComponents
 	 */
 	public function testRegisterNonDismaxComponents() {
@@ -289,6 +301,8 @@ class AbstractDismaxTest extends BaseTest
 	}
 	
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.10182 ms
 	 * @covers Wikia\Search\QueryService\Select\Dismax\AbstractDismax::getBoostQueryString
 	 */
 	public function testGetBoostQueryString() {

@@ -10,6 +10,8 @@ use Wikia, ReflectionProperty, ReflectionMethod, ArrayIterator;
 class AbstractResultSetTest extends Wikia\Search\Test\BaseTest {
 	
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.10349 ms
 	 * @covers Wikia\Search\ResultSet\AbstractResultSet::__construct
 	 */
 	public function testConstruct() {
@@ -23,6 +25,8 @@ class AbstractResultSetTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.10191 ms
 	 * @covers Wikia\Search\ResultSet\AbstractResultSet::getResultsFound
 	 */
 	public function testGetResultsFound() {
@@ -40,6 +44,8 @@ class AbstractResultSetTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.10143 ms
 	 * @covers Wikia\Search\ResultSet\AbstractResultSet::hasResults
 	 */
 	public function testHasResults() {
@@ -59,6 +65,8 @@ class AbstractResultSetTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.10343 ms
 	 * @covers Wikia\Search\ResultSet\AbstractResultSet::getResultsNum
 	 */
 	public function testGetResultsNum() {
@@ -76,6 +84,8 @@ class AbstractResultSetTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.10344 ms
 	 * @covers Wikia\Search\ResultSet\AbstractResultSet::setHeader
 	 */
 	public function testSetHeader() {
@@ -96,6 +106,8 @@ class AbstractResultSetTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.10434 ms
 	 * @covers Wikia\Search\ResultSet\AbstractResultSet::addHeaders
 	 */
 	public function testAddHeaders() {
@@ -121,6 +133,8 @@ class AbstractResultSetTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.10337 ms
 	 * @covers Wikia\Search\ResultSet\AbstractResultSet::getHeader
 	 */
 	public function testGetHeader() {
@@ -146,6 +160,8 @@ class AbstractResultSetTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.10182 ms
 	 * @covers Wikia\Search\ResultSet\AbstractResultSet::getResults
 	 */
 	public function testGetResults() {
@@ -169,6 +185,8 @@ class AbstractResultSetTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.10425 ms
 	 * @covers Wikia\Search\ResultSet\AbstractResultSet::getQuery
 	 */
 	public function testGetQuery() {
@@ -199,6 +217,8 @@ class AbstractResultSetTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.1069 ms
 	 * @covers Wikia\Search\ResultSet\AbstractResultSet::toArray
 	 */
 	public function testToArray() {
@@ -228,6 +248,8 @@ class AbstractResultSetTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.10365 ms
 	 * @covers Wikia\Search\ResultSet\AbstractResultSet::getIterable
 	 */
 	public function testGetIterable() {
@@ -249,6 +271,8 @@ class AbstractResultSetTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.11773 ms
 	 * @covers Wikia\Search\Traits\AttributeIterableTrait::offsetExists
 	 * @covers Wikia\Search\Traits\AttributeIterableTrait::offsetGet
 	 * @covers Wikia\Search\Traits\AttributeIterableTrait::offsetSet

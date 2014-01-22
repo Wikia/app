@@ -9,6 +9,8 @@ class MarketingToolboxModulePopularvideosServiceTest extends WikiaBaseTest
 	}
 
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.00551 ms
 	 * @dataProvider getDataStructureDataProvider
 	 */
 	public function testGetDataStructureDataProvider($inputData, $videoData, $thumbSize, $expectedData) {

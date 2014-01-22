@@ -50,6 +50,8 @@ class AvatarServiceTest extends WikiaBaseTest {
 	}
 
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.00275 ms
 	 * @dataProvider getAvatarUrlDataProvider
 	 */
 	public function testGetAvatarUrl($url, $userName, $userId, $avatarSize) {

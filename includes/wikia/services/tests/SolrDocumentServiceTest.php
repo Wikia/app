@@ -3,6 +3,8 @@
 class SolrDocumentServiceTest extends WikiaBaseTest
 {
 /**
+ * @group Slow
+ * @slowExecutionTime 0.00818 ms
  */
 	public function testGetResultNoResult() {
 		$service = $this->getMock( 'SolrDocumentService', [ 'getConfig', 'getFactory', 'getDocumentId' ] );
@@ -61,6 +63,8 @@ class SolrDocumentServiceTest extends WikiaBaseTest
 	}
 	
 /**
+ * @group Slow
+ * @slowExecutionTime 0.00818 ms
  */
 	public function testGetDocumentWithResult() {
 		$service = $this->getMock( 'SolrDocumentService', [ 'getConfig', 'getFactory', 'getDocumentId' ] );
@@ -213,6 +217,8 @@ class SolrDocumentServiceTest extends WikiaBaseTest
 	}
 	
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.00238 ms
 	 * @covers SolrDocumentService::getDocumentId
 	 */
 	public function testGetDocumentIdMain() {
@@ -241,6 +247,8 @@ class SolrDocumentServiceTest extends WikiaBaseTest
 	}
 	
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.00238 ms
 	 * @covers SolrDocumentService::getDocumentId
 	 */
 	public function testGetDocumentIdXwiki() {
@@ -268,6 +276,8 @@ class SolrDocumentServiceTest extends WikiaBaseTest
 	}
 	
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.00362 ms
 	 * @covers SolrDocumentService::getConfig
 	 */
 	public function testGetConfigCrossWiki() {
@@ -299,6 +309,8 @@ class SolrDocumentServiceTest extends WikiaBaseTest
 	}
 	
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.00362 ms
 	 * @covers SolrDocumentService::getConfig
 	 */
 	public function testGetConfigMain() {

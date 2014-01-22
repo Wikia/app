@@ -78,6 +78,8 @@
 		}
 
 		/**
+ * @group Slow
+ * @slowExecutionTime 0.01272 ms
 		 * @dataProvider toggleFeatureDataProvider
 		 */
 		public function testToggleFeature($is_allow, $feature, $enabled, $exp_result, $exp_error) {
@@ -152,6 +154,8 @@
 		}
 
 		/**
+ * @group Slow
+ * @slowExecutionTime 0.0021 ms
 		 * @dataProvider getFeatureLabsDataProvider
 		 */
 		public function testGetFeatureLabs($wg_wiki_features, $exp_result, $cache_value=null, $release_date=array()) {

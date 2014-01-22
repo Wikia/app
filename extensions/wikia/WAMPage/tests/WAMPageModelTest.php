@@ -27,6 +27,8 @@ class WAMPageModelTest extends WikiaBaseTest {
 	}
 
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.00548 ms
 	 * @dataProvider getTabsProvider
 	 * @param $configData
 	 * @param $expectedTabs
@@ -127,6 +129,8 @@ class WAMPageModelTest extends WikiaBaseTest {
 	}
 
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.0061 ms
 	 * @dataProvider getWAMSubpageUrlProvider
 	 * 
 	 * @param Array $mockedTitleData
@@ -243,6 +247,8 @@ class WAMPageModelTest extends WikiaBaseTest {
 	}
 
 	 /**
+ * @group Slow
+ * @slowExecutionTime 0.00235 ms
 	  * @dataProvider calculateFilterIndexProvider
 	  */
 	public function testCalculateFilterIndex( $wamWikis, $params, $expected ) {

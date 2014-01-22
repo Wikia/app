@@ -17,6 +17,8 @@ class WallNotificationsTest extends WikiaBaseTest {
 	}
 
 /**
+ * @group Slow
+ * @slowExecutionTime 0.00836 ms
  */
 	public function testNotifyEveryoneForMainThread() {
 		$wn = $this->getMock('WallNotifications', array('sendEmails','addNotificationLinks'));
@@ -45,6 +47,8 @@ class WallNotificationsTest extends WikiaBaseTest {
 
 
 /**
+ * @group Slow
+ * @slowExecutionTime 0.00836 ms
  */
 	public function testNotifyEveryoneForReply() {
 		$wn = $this->getMock('WallNotifications', array('sendEmails','addNotificationLinks','getWatchlist'));
@@ -302,6 +306,8 @@ class WallNotificationsTest extends WikiaBaseTest {
 		return $tests;
 	}
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.00333 ms
 	 * @dataProvider someDataProvider
 	 */
 	public function testAddNotificationToData($userId, $wikiId, $uniqueId, $entityKey, $authorId, $isReply, $read, $dataS, $dataF) {

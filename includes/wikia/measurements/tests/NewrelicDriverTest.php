@@ -13,6 +13,8 @@ class NewrelicDriverTest extends \WikiaBaseTest {
 	}
 
 /**
+ * @group Slow
+ * @slowExecutionTime 0.01464 ms
  */
 	public function testMeasureTime() {
 		$this->getGlobalFunctionMock("newrelic_custom_metric")

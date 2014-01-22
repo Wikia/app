@@ -6,6 +6,8 @@ class AutomaticWikiAdoptionGatherDataTest extends WikiaBaseTest {
 	private $dataMapper;
 
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.00593 ms
 	 * Script can do 3 actions, this tests all three
 	 * @dataProvider maintenanceScriptDataProvider
 	 */

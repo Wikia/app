@@ -29,6 +29,8 @@ class ResourceLoaderTest extends WikiaBaseTest {
 	}
 
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.01404 ms
 	 * @dataProvider resourceLoaderModifyMaxAgeDataProvider
 	 *
 	 * @param $timestamp int timestamp in URL

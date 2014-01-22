@@ -12,6 +12,8 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 	}
 
 /**
+ * @group Slow
+ * @slowExecutionTime 0.05776 ms
  */
 	public function testGetModuleName() {
 		$mockMsg = $this->getGlobalFunctionMock( 'wfMsg' );
@@ -51,6 +53,8 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 	}
 
 /**
+ * @group Slow
+ * @slowExecutionTime 0.05776 ms
  */
 	public function testGetAvailableSections() {
 		$mockMsg = $this->getGlobalFunctionMock( 'wfMsg' );
@@ -68,6 +72,8 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 	}
 
 /**
+ * @group Slow
+ * @slowExecutionTime 0.05776 ms
  */
 	public function testGetSectionName() {
 		$mockMsg = $this->getGlobalFunctionMock( 'wfMsg' );
@@ -95,6 +101,8 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 	}
 
 /**
+ * @group Slow
+ * @slowExecutionTime 0.05776 ms
  */
 	public function testGetModuleUrl() {
 		$params = array(
@@ -136,6 +144,8 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 	}
 
 /**
+ * @group Slow
+ * @slowExecutionTime 0.05776 ms
  */
 	public function testGetModulesDataFromDefault() {
 		$params = array(
@@ -218,6 +228,8 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 	}
 
 /**
+ * @group Slow
+ * @slowExecutionTime 0.05776 ms
  */
 	public function testGetModulesDataWithoutDefaults() {
 		$params = array(
@@ -377,6 +389,8 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 	}
 
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.06034 ms
 	 * Test saving module when there is no data
 	 */
 	public function testSaveModuleInsert() {
@@ -433,6 +447,8 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 	}
 
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.06115 ms
 	 * Test saving module when there is data already saved
 	 */
 	public function testSaveModuleUpdate() {
@@ -527,6 +543,8 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 	}
 
 /**
+ * @group Slow
+ * @slowExecutionTime 0.05776 ms
  */
 	public function testGetDataPublished() {
 		$model = new MarketingToolboxModel();
@@ -570,6 +588,8 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 	}
 
 /**
+ * @group Slow
+ * @slowExecutionTime 0.05776 ms
  */
 	public function testGetCalendarDataNotPublished() {
 		$model = new MarketingToolboxModel();
@@ -613,6 +633,8 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 	}
 
 /**
+ * @group Slow
+ * @slowExecutionTime 0.05776 ms
  */
 	public function testGetCalendarDataEmptyData() {
 
@@ -640,6 +662,8 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 	}
 
 /**
+ * @group Slow
+ * @slowExecutionTime 0.05776 ms
  */
 	public function testGetCalendarDataComplex() {
 		$model = new MarketingToolboxModel();
@@ -703,6 +727,8 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 	}
 
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.05785 ms
 	 * @dataProvider getDataModulesSavedDataProvider
 	 */
 	public function testCheckModulesSaved($savedModules, $expectedVal) {

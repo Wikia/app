@@ -10,6 +10,8 @@ class JsonSimplifierTest extends WikiaBaseTest {
 
 
 /**
+ * @group Slow
+ * @slowExecutionTime 0.01662 ms
  */
 	public function testProcessList() {
 

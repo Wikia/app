@@ -7,6 +7,8 @@ class WikiaPollTest extends WikiaBaseTest {
 	}
 
 /**
+ * @group Slow
+ * @slowExecutionTime 0.19072 ms
  */
 	public function testWikiaPollAjaxCreate() {
 		$poll = new WikiaPollAjax;
@@ -51,6 +53,8 @@ class WikiaPollTest extends WikiaBaseTest {
 	}
 
 /**
+ * @group Slow
+ * @slowExecutionTime 0.19072 ms
  */
 	public function testWikiaPollAjaxGet() {
 
@@ -85,6 +89,8 @@ class WikiaPollTest extends WikiaBaseTest {
 	}
 
 /**
+ * @group Slow
+ * @slowExecutionTime 0.19072 ms
  */
 	public function testWikiaPollAjaxUpdate() {
 		// Third part of test is to update the poll we've got and see if that works too
@@ -129,6 +135,8 @@ class WikiaPollTest extends WikiaBaseTest {
 	}
 
 /**
+ * @group Slow
+ * @slowExecutionTime 0.19072 ms
  */
 	public function testWikiaPollAjaxVote() {
 		// Fourth part of test is to register a vote for an item
@@ -179,6 +187,10 @@ class WikiaPollTest extends WikiaBaseTest {
 		$result = $poll->hasVoted();
 		$this->assertInternalType("array", $result, "HasVoted result is array");
 		$this->assertEquals(true, $result['hasVoted'], "HasVoted result is true");
+/**
+ * @group Slow
+ * @slowExecutionTime 0.12387 ms
+ */
 	}
 
 	function testDuplicateCreate() {

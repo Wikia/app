@@ -13,6 +13,8 @@ class CachingApiDocsServiceTest extends \WikiaBaseTest {
 	}
 
 /**
+ * @group Slow
+ * @slowExecutionTime 0.06163 ms
  */
 	public function testGetDocListCacheHit() {
 		$cacheBuster = 132;
@@ -37,6 +39,8 @@ class CachingApiDocsServiceTest extends \WikiaBaseTest {
 
 
 /**
+ * @group Slow
+ * @slowExecutionTime 0.06163 ms
  */
 	public function testGetDocListCacheMiss() {
 		$cacheBuster = 132;
@@ -65,6 +69,8 @@ class CachingApiDocsServiceTest extends \WikiaBaseTest {
 	}
 
 /**
+ * @group Slow
+ * @slowExecutionTime 0.06163 ms
  */
 	public function testGetDocCacheHit() {
 		$cacheBuster = 132;
@@ -89,6 +95,8 @@ class CachingApiDocsServiceTest extends \WikiaBaseTest {
 
 
 /**
+ * @group Slow
+ * @slowExecutionTime 0.06163 ms
  */
 	public function testGetDocCacheMiss() {
 		$cacheBuster = 132;

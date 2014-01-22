@@ -40,12 +40,6 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 
 	private static $testRunTime = 0;
 
-	private static $testsAnnotations = [];
-
-	private static $testTimerResolution = null;
-
-	const SLOW_TEST_THRESHOLD = 1000000;//0.002; // ms
-
 	/**
 	 * Print out currently run test
 	 */
@@ -60,9 +54,9 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 		global $wgOutputTestSpeedMessages;
 		$wgOutputTestSpeedMessages = false;
 
-		self::$testsAnnotations = [];
 		self::$testRunTime = microtime( true );
-		self::$testTimerResolution = strlen( substr( strrchr( self::SLOW_TEST_THRESHOLD, "." ), 1 ) ) + 2;
+
+		WikiaTestSpeedAnnotator::initialize();
 	}
 
 	/**
@@ -72,17 +66,18 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 		$time = round( ( microtime( true ) - self::$testRunTime ) * 1000, 2 );
 		echo "done in {$time} ms";
 
-		if (!empty(self::$testsAnnotations)) {
-			foreach (self::$testsAnnotations as $key => $arr) {
-				if ( !is_array( $arr ) ) continue;
-
-				list($fileName, $funcName, $paramFrom, $paramTo) = $arr;
-				$source = file_get_contents($fileName);
-				$source = call_user_func($funcName, $paramFrom, $paramTo, $source);
-				file_put_contents($fileName, $source);
-				//echo "$fileName\t$funcName\n$paramFrom\n$paramTo\n\n";
-			}
-		}
+		WikiaTestSpeedAnnotator::execute();
+//		if (!empty(self::$testsAnnotations)) {
+//			foreach (self::$testsAnnotations as $key => $arr) {
+//				if ( !is_array( $arr ) ) continue;
+//
+//				list($fileName, $funcName, $paramFrom, $paramTo) = $arr;
+//				$source = file_get_contents($fileName);
+//				$source = call_user_func($funcName, $paramFrom, $paramTo, $source);
+//				file_put_contents($fileName, $source);
+//				//echo "$fileName\t$funcName\n$paramFrom\n$paramTo\n\n";
+//			}
+//		}
 	}
 
 	protected function setUp() {
@@ -113,111 +108,80 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 		$this->mockProxy->disable();
 		$this->mockProxy = null;
 
-		$this->testRunTime = round( microtime(true) - $this->startTime, self::$testTimerResolution);
-		$this->processTestRunTime();
+		WikiaTestSpeedAnnotator::add(get_class($this), $this->getName(false), microtime(true) - $this->startTime,
+			$this->getAnnotations());
+
+		//$this->processTestRunTime();
 	}
 
-	protected function processTestRunTime() {
-		global $wgOutputTestSpeedMessages;
-
-		$annotations = $this->getAnnotations();
-
-		if($this->testRunTime > self::SLOW_TEST_THRESHOLD) {
-			if(!empty($wgOutputTestSpeedMessages)) {
-				echo "\n" . $this->testRunTime . 'ms - SLOW: ' . $this->getName() . "\n";
-			}
-			$this->processSlowTest( $annotations );
-		} else {
-			if(!empty($wgOutputTestSpeedMessages)) {
-				echo "\n" . $this->testRunTime . 'ms - FAST: ' . $this->getName() .  "\n";
-			}
-			$this->processFastTest( $annotations );
-		}
-	}
-
-	protected function addSlowTestAnnotation() {
-		global $wgOutputTestSpeedMessages;
-
-		$className = get_class($this);
-		$methodName = $this->getName(false);
-		$regexSlowGroup = '/@group\s+Slow\s*/';
-		$regexSlowExecTime = '/@slowExecutionTime\s+([0-9\.]+\s*(ms?))/';
-		$regexDocBlockStart = '/\/\*\*\s*\n/';
-
-		$classReflector = new ReflectionClass($className);
-		$methodReflector  = new ReflectionMethod($className, $methodName);
-		$docComment = $methodReflector->getDocComment();
-
-		$filePath = $classReflector->getFileName();
-
-		if(!empty($wgOutputTestSpeedMessages)) {
-			echo "\nAdding slow annotation to " . $className . '::' . $methodName;
-		}
-
-		unset($classReflector);
-		unset($methodReflector);
-
-		$slowGroupAnnotation = '@group Slow';
-		$slowTimeAnnotation = '@slowExecutionTime ' . $this->testRunTime . ' ms';
-
-		if(!$docComment) {
-			$functionStartRegex = '/(.*\s+function\s+' . $methodName . '\s*\()/';
-			$newDocComment = $this->getNewDocblockForSlowTest( $slowGroupAnnotation, $slowTimeAnnotation );
-
-			//$updatedTestCode = preg_replace( $functionStartRegex, $newDocComment . "\\1", $testCode );
-			return [$filePath, 'preg_replace', $functionStartRegex, $newDocComment . "\\1"];
-		} else {
-			$newDocComment = $docComment;
-
-			if(!preg_match($regexSlowExecTime, $docComment)) {
-				$newDocComment = preg_replace($regexDocBlockStart,  "/**\n * " . $slowTimeAnnotation . "\n", $newDocComment );
-			} else {
-				$newDocComment = preg_replace($regexSlowExecTime, $slowGroupAnnotation, $newDocComment);
-			}
-
-			if(!preg_match($regexSlowGroup, $docComment)) {
-				$newDocComment = preg_replace($regexDocBlockStart,  "/**\n * " . $slowGroupAnnotation . "\n", $newDocComment );
-			} else {
-				$newDocComment = preg_replace($regexSlowGroup, $slowGroupAnnotation, $newDocComment);
-			}
-
-			//$updatedTestCode = str_replace($docComment, $newDocComment, $testCode);
-			return [$filePath, 'str_replace', $docComment, $newDocComment];
-		}
-	}
-
-	protected function removeSlowTestAnnotation() {
-		global $wgOutputTestSpeedMessages;
-
-		$className = get_class($this);
-		$methodName = $this->getName(false);
-		$regexSlowGroup = '/^\s*\*\s*@group\s+Slow\s*\n/m';
-		$regexSlowExecTime = '/^\s*\*\s*@slowExecutionTime\s+([0-9\.]+\s*(ms?)\s*\n)/m';
-
-		$classReflector = new ReflectionClass($className);
-		$methodReflector  = new ReflectionMethod($className, $methodName);
-		$docComment = $methodReflector->getDocComment();
-
-		$filePath = $classReflector->getFileName();
-
-		if(!empty($wgOutputTestSpeedMessages)) {
-			echo "\nRemoving slow annotation to " . get_class($this) . '::' . $this->getName();
-		}
-
-		unset($classReflector);
-		unset($methodReflector);
-
-		if($docComment) {
-			$newDocComment = preg_replace($regexSlowExecTime, '', $docComment);
-			$newDocComment = preg_replace($regexSlowGroup, '', $newDocComment);
-			//$updatedTestCode = str_replace($docComment, $newDocComment, $testCode);
-
-			return [$filePath, 'str_replace', $docComment, $newDocComment];
-		} else {
-			return null;
-		}
-
-	}
+//	protected function processTestRunTime() {
+//		global $wgOutputTestSpeedMessages;
+//
+//		$annotations = $this->getAnnotations();
+//
+//		if($this->testRunTime > self::SLOW_TEST_THRESHOLD) {
+//			if(!empty($wgOutputTestSpeedMessages)) {
+//				echo "\n" . $this->testRunTime . 'ms - SLOW: ' . $this->getName() . "\n";
+//			}
+//			$this->processSlowTest( $annotations );
+//		} else {
+//			if(!empty($wgOutputTestSpeedMessages)) {
+//				echo "\n" . $this->testRunTime . 'ms - FAST: ' . $this->getName() .  "\n";
+//			}
+//			$this->processFastTest( $annotations );
+//		}
+//	}
+//
+//	protected function addSlowTestAnnotation() {
+//		global $wgOutputTestSpeedMessages;
+//
+//		$className = get_class($this);
+//		$methodName = $this->getName(false);
+//		$regexSlowGroup = '/@group\s+Slow\s*/';
+//		$regexSlowExecTime = '/@slowExecutionTime\s+([0-9\.]+\s*(ms?))/';
+//		$regexDocBlockStart = '/\/\*\*\s*\n/';
+//
+//		$classReflector = new ReflectionClass($className);
+//		$methodReflector  = new ReflectionMethod($className, $methodName);
+//		$docComment = $methodReflector->getDocComment();
+//
+//		$filePath = $classReflector->getFileName();
+//
+//		if(!empty($wgOutputTestSpeedMessages)) {
+//			echo "\nAdding slow annotation to " . $className . '::' . $methodName;
+//		}
+//
+//		unset($classReflector);
+//		unset($methodReflector);
+//
+//		$slowGroupAnnotation = '@group Slow';
+//		$slowTimeAnnotation = '@slowExecutionTime ' . $this->testRunTime . ' ms';
+//
+//		if(!$docComment) {
+//			$functionStartRegex = '/(.*\s+function\s+' . $methodName . '\s*\()/';
+//			$newDocComment = $this->getNewDocblockForSlowTest( $slowGroupAnnotation, $slowTimeAnnotation );
+//
+//			//$updatedTestCode = preg_replace( $functionStartRegex, $newDocComment . "\\1", $testCode );
+//			return [$filePath, 'preg_replace', $functionStartRegex, $newDocComment . "\\1"];
+//		} else {
+//			$newDocComment = $docComment;
+//
+//			if(!preg_match($regexSlowExecTime, $docComment)) {
+//				$newDocComment = preg_replace($regexDocBlockStart,  "/**\n * " . $slowTimeAnnotation . "\n", $newDocComment );
+//			} else {
+//				$newDocComment = preg_replace($regexSlowExecTime, $slowGroupAnnotation, $newDocComment);
+//			}
+//
+//			if(!preg_match($regexSlowGroup, $docComment)) {
+//				$newDocComment = preg_replace($regexDocBlockStart,  "/**\n * " . $slowGroupAnnotation . "\n", $newDocComment );
+//			} else {
+//				$newDocComment = preg_replace($regexSlowGroup, $slowGroupAnnotation, $newDocComment);
+//			}
+//
+//			//$updatedTestCode = str_replace($docComment, $newDocComment, $testCode);
+//			return [$filePath, 'str_replace', $docComment, $newDocComment];
+//		}
+//	}
 
 	/**
 	 * @throws Exception
@@ -569,61 +533,6 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	public static function markTestIncomplete($message = '') {
 		Wikia::log(__METHOD__, '', $message);
 		parent::markTestIncomplete($message);
-	}
-
-	/**
-	 * @param $annotations
-	 */
-	protected function processSlowTest( $annotations ) {
-		global $wgMarkTestSpeed;
-
-		$testCaseName = $this->getName( false );
-
-		if ( !isset( self::$testsAnnotations[ $testCaseName ] ) ) {
-			$annotatedAsSlow = false;
-			if ( !empty( $annotations['method'] ) && !empty( $annotations['method']['group'] ) ) {
-				if ( in_array( 'Slow', $annotations['method']['group'] ) ) {
-					$annotatedAsSlow = true;
-				}
-			}
-			if ( !$annotatedAsSlow && !empty($wgMarkTestSpeed)) {
-				self::$testsAnnotations[ $testCaseName ] = $this->addSlowTestAnnotation();
-			}
-		}
-	}
-
-	/**
-	 * @param $annotations
-	 */
-	protected function processFastTest( $annotations ) {
-		global $wgMarkTestSpeed;
-
-		$testCaseName = $this->getName( false );
-
-		if ( !isset( self::$testsAnnotations[ $testCaseName ] ) ) {
-			$annotatedAsSlow = false;
-			if ( !empty( $annotations['method'] ) && !empty( $annotations['method']['group'] ) ) {
-				if ( in_array( 'Slow', $annotations['method']['group'] ) ) {
-					$annotatedAsSlow = true;
-				}
-			}
-			if ( $annotatedAsSlow && !empty($wgMarkTestSpeed) ) {
-				self::$testsAnnotations[ $testCaseName ] = $this->removeSlowTestAnnotation();
-			}
-		}
-	}
-
-	/**
-	 * @param $slowGroupAnnotation
-	 * @param $slowTimeAnnotation
-	 */
-	protected function getNewDocblockForSlowTest( $slowGroupAnnotation, $slowTimeAnnotation ) {
-		$newDocComment = "/**" . "\n";
-		$newDocComment .= " * " . $slowGroupAnnotation . "\n";
-		$newDocComment .= " * " . $slowTimeAnnotation . "\n";
-		$newDocComment .= " */" . "\n";
-
-		return $newDocComment;
 	}
 
 	private function parseGlobalFunctionName( $functionName ) {

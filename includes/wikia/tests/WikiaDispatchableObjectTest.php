@@ -40,6 +40,8 @@ class WikiaDispatchableObjectTest extends WikiaBaseTest {
 	}
 
 /**
+ * @group Slow
+ * @slowExecutionTime 0.00632 ms
  */
 	public function testPurgeUrl() {
 		$className = get_class( $this->dispatchableMock );

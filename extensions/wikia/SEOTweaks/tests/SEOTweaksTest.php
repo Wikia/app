@@ -11,6 +11,8 @@ class SEOTweaksTest extends WikiaBaseTest
 	}
 	
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.00227 ms
 	 * @covers SEOTweaksHooksHelper::onBeforePageDisplay
 	 */
 	public function testOnBeforePageDisplayWithoutGoogleVals() {
@@ -46,6 +48,8 @@ class SEOTweaksTest extends WikiaBaseTest
 	}
 	
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.00227 ms
 	 * @covers SEOTweaksHooksHelper::onBeforePageDisplay
 	 */
 	public function testOnBeforePageDisplayWithGoogleVals() {
@@ -81,6 +85,8 @@ class SEOTweaksTest extends WikiaBaseTest
 	}
 	
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.01238 ms
 	 * @covers SEOTweaksHooksHelper::onAfterInitialize
 	 */
 	public function testOnAfterInitializeValid() {
@@ -127,6 +133,8 @@ class SEOTweaksTest extends WikiaBaseTest
 	}
 	
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.01238 ms
 	 * @covers SEOTweaksHooksHelper::onAfterInitialize
 	 */
 	public function testOnAfterInitializeNotValid() {
@@ -176,6 +184,8 @@ class SEOTweaksTest extends WikiaBaseTest
 	}
 	
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.00945 ms
 	 * @covers SEOTweaksHooksHelper::onImagePageAfterImageLinks
 	 */
 	public function testOnImagePageAfterImageLinksEmpties() {
@@ -246,6 +256,8 @@ class SEOTweaksTest extends WikiaBaseTest
 	}
 	
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.00945 ms
 	 * @covers SEOTweaksHooksHelper::onImagePageAfterImageLinks
 	 */
 	public function testOnImagePageAfterImageLinksImage() {
@@ -333,6 +345,8 @@ class SEOTweaksTest extends WikiaBaseTest
 	}
 	
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.00945 ms
 	 * @covers SEOTweaksHooksHelper::onImagePageAfterImageLinks
 	 */
 	public function testOnImagePageAfterImageLinksVideo() {
@@ -410,6 +424,8 @@ class SEOTweaksTest extends WikiaBaseTest
 	}
 	
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.02336 ms
 	 * If the file already has alt text, do nothing
 	 * @covers SEOTweaksHooksHelper::onBeforeParserMakeImageLinkObjOptions
 	 */
@@ -456,6 +472,8 @@ class SEOTweaksTest extends WikiaBaseTest
 	}
 	
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.02336 ms
 	 * If the file already has alt text, do nothing
 	 * @covers SEOTweaksHooksHelper::onBeforeParserMakeImageLinkObjOptions
 	 */
@@ -500,6 +518,8 @@ class SEOTweaksTest extends WikiaBaseTest
 	}
 	
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.00273 ms
 	 * @covers SEOTweaksHooksHelper::onArticleViewHeader
 	 */
 	public function testOnArticleViewHeaderTitleExists()
@@ -555,6 +575,8 @@ class SEOTweaksTest extends WikiaBaseTest
 	}
 	
     /**
+ * @group Slow
+ * @slowExecutionTime 0.00273 ms
 	 * @covers SEOTweaksHooksHelper::onArticleViewHeader
 	 */
 	public function testOnArticleViewHeaderTitleExistsNonShareReferrer()
@@ -610,6 +632,8 @@ class SEOTweaksTest extends WikiaBaseTest
 	}
 	
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.00273 ms
 	 * @covers SEOTweaksHooksHelper::onArticleViewHeader
 	 */
     public function testOnArticleViewHeaderTitleNotExistsNoResults()
@@ -706,6 +730,8 @@ class SEOTweaksTest extends WikiaBaseTest
 	}
 	
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.00273 ms
 	 * @covers SEOTweaksHooksHelper::onArticleViewHeader
 	 */
     public function testOnArticleViewHeaderTitleNotExistsWithResults()

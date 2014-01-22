@@ -17,6 +17,8 @@ class AbstractWikiServiceTest extends BaseTest
 	}
 	
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.08558 ms
 	 * @covers \Wikia\Search\IndexService\AbstractWikiService::getStubbedWikiResponse
 	 */
 	public function testGetStubbedWikiResponseHatesPageIds() {
@@ -34,6 +36,8 @@ class AbstractWikiServiceTest extends BaseTest
 	}
 	
     /**
+ * @group Slow
+ * @slowExecutionTime 0.08558 ms
 	 * @covers \Wikia\Search\IndexService\AbstractWikiService::getStubbedWikiResponse
 	 */
 	public function testGetStubbedWikiResponseSuccess() {
@@ -61,6 +65,8 @@ class AbstractWikiServiceTest extends BaseTest
 	}
 	
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.08567 ms
 	 * @covers \Wikia\Search\IndexService\AbstractWikiService::getCurrentDocumentId
 	 */
 	public function testGetCurrentDocumentId() {

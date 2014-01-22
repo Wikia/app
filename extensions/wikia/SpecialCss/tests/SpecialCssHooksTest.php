@@ -9,6 +9,8 @@ class SpecialCssHooksTest extends WikiaBaseTest {
 	}
 
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.00337 ms
 	 * @dataProvider testShouldRedirectDataProvider
 	 */
 	public function testShouldRedirect( $isExtensionEnabled, $isWikiaCssTitle, $isSkinRight, $isUserAllowed, $isRedirectExpected, $assertionMessage ) {
@@ -86,6 +88,10 @@ class SpecialCssHooksTest extends WikiaBaseTest {
 		];
 	}
 
+/**
+ * @group Slow
+ * @slowExecutionTime 0.0023 ms
+ */
 	public function testRemoveNamespace() {
 		$removeNamespaceMethod = new ReflectionMethod('SpecialCssHooks', 'removeNamespace');
 		$removeNamespaceMethod->setAccessible(true);

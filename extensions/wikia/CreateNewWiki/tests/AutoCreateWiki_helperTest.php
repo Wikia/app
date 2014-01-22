@@ -16,6 +16,8 @@ class AutoCreateWikiTest extends WikiaBaseTest {
 	}
 
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.00475 ms
 	 * @dataProvider getDomainCheckData
 	 */
 	public function testCheckDomainIsCorrect($domainName, $lang, $isCorrect, $expectedErrorKey) {
@@ -75,6 +77,10 @@ class AutoCreateWikiTest extends WikiaBaseTest {
 			array('def', 'pl', false, 'autocreatewiki-violate-policy'),
 			array('zzz', 'en', false, 'autocreatewiki-violate-policy'),
 		);
+/**
+ * @group Slow
+ * @slowExecutionTime 0.03264 ms
+ */
 	}
 
 	function testCheckDomainIsCorrectBadWords() {
@@ -100,6 +106,10 @@ class AutoCreateWikiTest extends WikiaBaseTest {
 		$result = $autoCreateWikiMock::checkDomainIsCorrect('woohooo', 'pl');
 
 		$this->assertEquals('mocked-string', $result);
+/**
+ * @group Slow
+ * @slowExecutionTime 0.03363 ms
+ */
 	}
 
 	function testCheckDomainIsCorrectDomainExists() {

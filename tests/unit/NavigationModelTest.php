@@ -1,4 +1,8 @@
 <?php
+/**
+ * @group Slow
+ * @slowExecutionTime 0.01231 ms
+ */
 class NavigationModelTest extends WikiaBaseTest {
 	function testParseLines() {
 		$model = new NavigationModel();
@@ -116,6 +120,10 @@ class NavigationModelTest extends WikiaBaseTest {
 				$model->parseLines($case['param1'], $case['param2'])
 			);
 		}
+/**
+ * @group Slow
+ * @slowExecutionTime 0.02742 ms
+ */
 	}
 
 	function testParseMessage() {
@@ -150,6 +158,10 @@ class NavigationModelTest extends WikiaBaseTest {
 			array(),
 			1
 		));
+/**
+ * @group Slow
+ * @slowExecutionTime 0.00752 ms
+ */
 	}
 
 	function testParseOneLine() {
@@ -253,6 +265,10 @@ class NavigationModelTest extends WikiaBaseTest {
 				$model->parseOneLine($case['line'])
 			);
 		}
+/**
+ * @group Slow
+ * @slowExecutionTime 0.02177 ms
+ */
 	}
 
 	function testParseOneLineWithoutTranslation() {
@@ -315,6 +331,8 @@ class NavigationModelTest extends WikiaBaseTest {
 	}
 
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.0132 ms
 	 * @group UsingDB
 	 */
 	function testParseErrors() {

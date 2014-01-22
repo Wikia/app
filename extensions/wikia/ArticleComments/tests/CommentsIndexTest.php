@@ -28,6 +28,8 @@ class CommentsIndexTest extends WikiaBaseTest {
 	 * Make sure the cache is not used when the CommentsIndex objects are just fetched from the database.
 	 */
 /**
+ * @group Slow
+ * @slowExecutionTime 0.00805 ms
  */
 	public function testCommentsIndexCacheNotUsedForDB() {
 
@@ -48,6 +50,8 @@ class CommentsIndexTest extends WikiaBaseTest {
 	 * make sure it's not fetched from the database
 	 */
 /**
+ * @group Slow
+ * @slowExecutionTime 0.00805 ms
  */
 	public function testCommentsIndexCacheIsUsedForNewObjects() {
 

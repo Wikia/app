@@ -42,6 +42,8 @@ class BaseTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.10658 ms
 	 * @covers Wikia\Search\ResultSet\Base::configure
 	 */
 	public function testConfigure() {
@@ -83,6 +85,8 @@ class BaseTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.10412 ms
 	 * @covers Wikia\Search\ResultSet\Base::setResults
 	 */
 	public function testSetResults() {
@@ -104,6 +108,8 @@ class BaseTest extends Wikia\Search\Test\BaseTest {
 		);
 	}
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.13081 ms
 	 * @covers \Wikia\Search\ResultSet\Base::addResult
 	 */
 	public function testAddResult() {
@@ -251,6 +257,8 @@ class BaseTest extends Wikia\Search\Test\BaseTest {
 
 	
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.10555 ms
 	 * @covers \Wikia\Search\ResultSet\Base::getResultsStart
 	 */
 	public function testGetResultsStart() {
@@ -269,6 +277,8 @@ class BaseTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.10459 ms
 	 * @covers \Wikia\Search\ResultSet\Base::getQueryTime
 	 */
 	public function testGetQueryTime() {
@@ -287,6 +297,8 @@ class BaseTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.1052 ms
 	 * @covers Wikia\Search\ResultSet\Base::HandleMatchPrepends
 	 */
 	public function testHandleMatchPrependsStartNotZero() {
@@ -318,6 +330,8 @@ class BaseTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.1052 ms
 	 * @covers Wikia\Search\ResultSet\Base::HandleMatchPrepends
 	 */
 	public function testHandleMatchPrependsOnWiki() {
@@ -350,6 +364,8 @@ class BaseTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.1052 ms
 	 * @covers Wikia\Search\ResultSet\Base::HandleMatchPrepends
 	 */
 	public function testHandleMatchPrependsInterWiki() {
@@ -382,6 +398,8 @@ class BaseTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.10581 ms
 	 * @covers Wikia\Search\ResultSet\Base::prependWikiMatchIfExists
 	 */
 	public function testPrependWikiMatchNoMatch() {
@@ -408,6 +426,8 @@ class BaseTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.10581 ms
 	 * @covers Wikia\Search\ResultSet\Base::prependWikiMatchIfExists
 	 */
 	public function testPrependWikiMatchWithMatch() {
@@ -439,6 +459,8 @@ class BaseTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.10806 ms
 	 * @covers Wikia\Search\ResultSet\Base::prependArticleMatchIfExists
 	 */
 	public function testPrependArticleMatchNoMatch() {
@@ -465,6 +487,8 @@ class BaseTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.10806 ms
 	 * @covers Wikia\Search\ResultSet\Base::prependArticleMatchIfExists
 	 */
 	public function testPrependArticleMatchWithMatch() {
@@ -497,6 +521,8 @@ class BaseTest extends Wikia\Search\Test\BaseTest {
 	
 	
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.10717 ms
 	 * @covers \Wikia\Search\ResultSet\Base::isOnlyArticleMatchFound
 	 */
 	public function testIsOnlyArticleMatchFoundWrongResultNum() {
@@ -515,6 +541,8 @@ class BaseTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.1083 ms
 	 * @covers Wikia\Search\ResultSet\Base::addMatchResult
 	 */
 	public function testAddMatchResultNoResult() {
@@ -552,6 +580,8 @@ class BaseTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.1083 ms
 	 * @covers Wikia\Search\ResultSet\Base::addMatchResult
 	 */
 	public function testAddMatchResultWithResult() {
@@ -591,6 +621,8 @@ class BaseTest extends Wikia\Search\Test\BaseTest {
 	
 	
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.10717 ms
 	 * @covers \Wikia\Search\ResultSet\Base::isOnlyArticleMatchFound
 	 */
 	public function testIsOnlyArticleMatchFoundNotArticleMatch() {
@@ -625,6 +657,8 @@ class BaseTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.10717 ms
 	 * @covers \Wikia\Search\ResultSet\Base::isOnlyArticleMatchFound
 	 */
 	public function testIsOnlyArticleMatchFoundCorrect() {

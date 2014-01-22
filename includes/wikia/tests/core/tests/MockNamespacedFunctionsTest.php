@@ -5,6 +5,8 @@ namespace {
 	class MockNamespacedFunctionsTest extends WikiaBaseTest {
 
 /**
+ * @group Slow
+ * @slowExecutionTime 0.05734 ms
  */
 		public function testFunctionNameSpec() {
 			$expValue = 2;
@@ -24,6 +26,8 @@ namespace {
 		}
 
 /**
+ * @group Slow
+ * @slowExecutionTime 0.05734 ms
  */
 		public function testNamespacedFunctionsMocks() {
 			$expValue = 2;

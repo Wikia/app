@@ -10,6 +10,8 @@ use Wikia\Search\Test\BaseTest, ReflectionProperty, ReflectionMethod, Wikia\Sear
 class MatchTest extends BaseTest {
 
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.09084 ms
 	 * @covers Wikia\Search\Match\AbstractMatch::__construct
 	 * @covers Wikia\Search\Match\AbstractMatch::getId
 	 */
@@ -36,6 +38,8 @@ class MatchTest extends BaseTest {
 	}
 	
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.09008 ms
 	 * @covers Wikia\Search\Match\AbstractMatch::getResult
 	 */
 	public function testAbstractGetResult() {
@@ -59,6 +63,8 @@ class MatchTest extends BaseTest {
 	}
 	
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.09222 ms
 	 * @covers Wikia\Search\Match\Article::hasRedirect
 	 */
 	public function testArticleMatchHasRedirect() {
@@ -93,6 +99,8 @@ class MatchTest extends BaseTest {
 	}
 	
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.10959 ms
 	 * @covers Wikia\Search\Match\Article::createResult
 	 */
 	public function testCreateResultArticle() {
@@ -224,6 +232,8 @@ class MatchTest extends BaseTest {
 	}
 	
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.09399 ms
 	 * @covers Wikia\Search\Match\Wiki::createResult
 	 */
 	public function testWikiMatchCreateResult() {

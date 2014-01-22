@@ -3,6 +3,8 @@
 class MimeMagicLiteTest extends WikiaBaseTest {
 
 	/**
+ * @group Slow
+ * @slowExecutionTime 0.0038 ms
 	 * Make sure the mime types returned by MimeMagicLite are the same as those by MimeMagic
 	 *
 	 * @param string $typeName
