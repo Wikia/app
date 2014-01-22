@@ -51,7 +51,6 @@
 						$tar.hide();
 					} else {
 						if ( spanTop !== currSpanTop ) {
-
 							// we're at a new line, increment lineCount
 							lineCount += 1;
 							// update span top with the new y coordinate
@@ -64,14 +63,13 @@
 							// reached
 							$tar
 								.hide()
-								.prevUntil( ':nth-child( ' + ( i - self.settings.wordsHidden )  + ' )' )
+							.prevUntil( ':nth-child( ' + ( i - self.settings.wordsHidden )  + ' )' )
 								.hide()
-								.eq( 0 )
+							.eq( 0 )
 								.before( '<span class="ellipses">...</span>' );
 
 							// if the last span before the ... is a -, trim it
 							self.trimDashes();
-							break;
 						}
 					}
 				}
