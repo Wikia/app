@@ -1046,7 +1046,23 @@ $config['VET_js'] = array(
  * @TODO: decide if we want to split the js/css into two different packages for index and edit pages
  */
 
-$config['videopageadmin_js'] = array(
+$config['videopageadmin_dashboard_js'] = [
+	'skin' => ['oasis'],
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		// Lodash is an underscore.js rewrite and a prereq for Backbone
+		'//extensions/wikia/VideoPageTool/js/lib/lodash/dist/lodash.underscore.js',
+		'//extensions/wikia/VideoPageTool/js/lib/backbone/backbone.js',
+
+		// Library Dependencies
+		'//resources/jquery.ui/jquery.ui.datepicker.js',
+
+		'//extensions/wikia/VideoPageTool/js/admin/models/datepicker.js',
+		'//extensions/wikia/VideoPageTool/js/admin/views/datepicker.js',
+		'//extensions/wikia/VideoPageTool/js/admin/views/dashboard.js',
+	]
+];
+$config['videopageadmin_edit_js'] = array(
 	'skin' => array( 'oasis' ),
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
@@ -1057,7 +1073,6 @@ $config['videopageadmin_js'] = array(
 		// Library Dependencies
 		'//resources/wikia/libraries/jquery/owl.carousel/owl.carousel.js',
 		'//resources/jquery.ui/jquery.ui.core.js',
-		'//resources/jquery.ui/jquery.ui.datepicker.js',
 		'//resources/jquery/jquery.validate.js',
 		'//resources/wikia/modules/aim.js',
 		'//extensions/wikia/WikiaMiniUpload/js/WMU.js',
@@ -1067,11 +1082,8 @@ $config['videopageadmin_js'] = array(
 		// Compiled Mustache templates
 		'//extensions/wikia/VideoPageTool/js/templates.mustache.js',
 
-		'//extensions/wikia/VideoPageTool/js/admin/models/datepicker.js',
 		'//extensions/wikia/VideoPageTool/js/admin/models/thumbnail.js',
 		'//extensions/wikia/VideoPageTool/js/admin/models/validator.js',
-		'//extensions/wikia/VideoPageTool/js/admin/views/datepicker.js',
-		'//extensions/wikia/VideoPageTool/js/admin/views/dashboard.js',
 		'//extensions/wikia/VideoPageTool/js/admin/views/thumbnailupload.js',
 		'//extensions/wikia/VideoPageTool/js/admin/views/editbase.js',
 		'//extensions/wikia/VideoPageTool/js/admin/views/featured.js',
