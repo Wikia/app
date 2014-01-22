@@ -37,7 +37,7 @@ class EditAccount extends SpecialPage {
 	 * @param $par Mixed: parameter passed to the page or null
 	 */
 	public function execute( $par ) {
-		global $wgOut, $wgUser, $wgRequest, $wgParser, $wgEnableUserLoginExt, $wgExternalAuthType, $wgTitle;
+		global $wgOut, $wgUser, $wgRequest, $wgEnableUserLoginExt, $wgExternalAuthType, $wgTitle;
 
 		// Set page title and other stuff
 		$this->setHeaders();
