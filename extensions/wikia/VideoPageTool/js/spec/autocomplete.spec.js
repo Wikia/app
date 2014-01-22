@@ -1,5 +1,5 @@
 /*global describe, it, expect, beforeEach, modules */
-describe( 'VideoPageAdmin AutocompleteView (Backbone):', function() {
+describe( 'VideoPageTool: Admin AutocompleteView (Backbone):', function() {
 	'use strict';
 	var AutocompleteView,
 			instance;
@@ -11,11 +11,17 @@ describe( 'VideoPageAdmin AutocompleteView (Backbone):', function() {
 	}
 
 	beforeEach(function() {
-		AutocompleteView = modules[ 'views.videopageadmin.autocomplete' ]( jQuery );
+		$( 'body' ).append( '<div id="autocompleteTest"><input data-autocomplete type="text" value="" /></div>' );
+		AutocompleteView = modules[ 'videopageadmin.views.autocomplete' ]( jQuery );
 		instance = new AutocompleteView({
-			collection: createMockCollection()
+			collection: createMockCollection(),
+			el: $( '#autocompleteTest' )
 		} );
 	} );
+
+	afterEach(function() {
+		$( '#autocompleteTest' ).remove();
+	});
 
 	it( 'should export a constructor', function() {
 		expect( typeof AutocompleteView ).toBe( 'function' );

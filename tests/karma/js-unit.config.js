@@ -94,8 +94,8 @@ module.exports = function(config) {
 			// Video
 			'extensions/wikia/VideoPageTool/js/lib/lodash/dist/lodash.underscore.js',
 			'extensions/wikia/VideoPageTool/js/lib/backbone/backbone.js',
-			'extensions/wikia/VideoPageTool/js/views/jquery.switcher.js',
-			'extensions/wikia/VideoPageTool/js/views/videopageadmin.autocomplete.js',
+			'extensions/wikia/VideoPageTool/js/shared/views/switcher.js',
+			'extensions/wikia/VideoPageTool/js/admin/views/autocomplete.js',
 			'extensions/wikia/VideoPageTool/js/spec/*.spec.js',
 
 			//Search
