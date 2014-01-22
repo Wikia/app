@@ -7,11 +7,12 @@ class VideoPageToolAssetCategory extends VideoPageToolAsset {
 
 	protected $categoryName;
 	protected $displayTitle;
+
 	protected $defaultThumbOptions = [ 'hidePlayButton' => true ];
 
 	// required data field -- array( FormFieldName => varName )
 	protected static $dataFields = array(
-		'categoryName'  => 'categoryName',
+		'categoryName' => 'categoryName',
 		'displayTitle' => 'displayTitle',
 	);
 
@@ -44,7 +45,7 @@ class VideoPageToolAssetCategory extends VideoPageToolAsset {
 		$data = array(
 			'categoryName' => $title->getText(),
 			'displayTitle' => $this->displayTitle,
-			'thumbnails'   => $helper->getVideosByCategory( $title, null, $thumbOptions ),
+			'thumbnails'   => $helper->getVideosByCategory( $title, $thumbOptions ),
 		);
 
 		$assetData = array_merge( $data, parent::getAssetData( $thumbOptions ) );
@@ -64,6 +65,45 @@ class VideoPageToolAssetCategory extends VideoPageToolAsset {
 		$defaultData = array_merge( $data, parent::getDefaultAssetData() );
 
 		return $defaultData;
+	}
+
+	/**
+	 * Format form data
+	 * @param integer $requiredRows
+	 * @param array $formValues
+	 * @param string $errMsg
+	 * @return array $data
+	 */
+	public static function formatFormData( $requiredRows, $formValues, &$errMsg ) {
+		// set displayTitle = categoryName if displayTitle is empty
+		foreach ( $formValues['displayTitle'] as $order => &$value ) {
+			if ( empty( $value ) ) {
+				$value = $formValues['categoryName'][$order];
+			}
+		}
+
+		// Remove rows where categoryName is empty
+		$resetRows = false;
+		$rows = count( $formValues['categoryName'] );
+		$helper = new VideoPageToolHelper();
+		for ( $i = $rows - 1; $i >= $helper->getRequiredRowsMin( 'category' ); $i-- ) {
+			if ( !empty( $formValues['categoryName'][$i] ) ) {
+				break;
+			}
+
+			foreach ( STATIC::$dataFields as $formFieldName => $varName ) {
+				unset( $formValues[$formFieldName][$i] );
+			}
+
+			$resetRows = true;
+		}
+
+		// update required rows
+		if ( $resetRows ) {
+			$requiredRows = $helper->getRequiredRows( 'category', $formValues );
+		}
+
+		return parent::formatFormData( $requiredRows, $formValues, $errMsg );
 	}
 
 }

@@ -16,10 +16,11 @@ class VideoPageToolHelper extends WikiaModel {
 
 	const CACHE_TTL_CATEGORY_DATA = 3600;
 
+	// minimum and maximum rows
 	public static $requiredRows = array(
-		'featured' => 5,
+		'featured' => [5],
 		'category' => [3, 5],
-		'fan'      => 4,
+		'fan'      => [4],
 	);
 
 	/**
@@ -172,21 +173,18 @@ class VideoPageToolHelper extends WikiaModel {
 	}
 
 	/**
-	 * Get videos tagged with the category given by parameter $categoryTitle
-	 * @param string $categoryTitle A category name, or a title object for a category
-	 * @param int $limit The maximum number of videos to return
+	 * Get videos tagged with the category given by parameter $categoryTitle (limit = 100)
+	 * @param Title $categoryTitle
 	 * @param array $thumbOptions
 	 * @return array $videos An array of video data where each array element has the structure:
 	 *   [ title => 'Video Title',
 	 *     url   => 'http://url.to.video',
 	 *     thumb => '<thumbnail_html_snippet>'
 	 */
-	public function getVideosByCategory( $categoryTitle, $limit = 100, $thumbOptions = array() ) {
+	public function getVideosByCategory( $categoryTitle, $thumbOptions = array() ) {
 		wfProfileIn( __METHOD__ );
 
-		// Accept either a category object or a category name
-		$dbKey = is_object( $categoryTitle ) ? $categoryTitle->getDBkey() : $categoryTitle;
-
+		$dbKey = $categoryTitle->getDBkey();
 		$memcKey = $this->getMemcKeyVideosByCategory( $dbKey );
 		$videos = $this->wg->memc->get( $memcKey );
 		if ( !is_array( $videos ) ) {
@@ -201,7 +199,7 @@ class VideoPageToolHelper extends WikiaModel {
 				__METHOD__,
 				array(
 					'ORDER BY' => 'added_at DESC, page_title',
-					'LIMIT' => $limit,
+					'LIMIT' => 100,
 				),
 				array(
 					'video_info' => array( 'LEFT JOIN', 'page_title = video_title' ),
@@ -299,13 +297,17 @@ class VideoPageToolHelper extends WikiaModel {
 
 	/**
 	 * Get default values by section
-	 * @param string $section
+	 * @param string $section [featured/category/fan]
+	 * @param integer $requiredRows
 	 * @return array $values
 	 */
-	public function getDefaultValuesBySection( $section ) {
+	public function getDefaultValuesBySection( $section, $requiredRows = 0 ) {
 		$className = VideoPageToolAsset::getClassNameFromSection( $section );
 		$values = array();
-		$requiredRows = $this->getRequiredRows( $section );
+		if ( empty( $requiredRows ) ) {
+			$requiredRows = $this->getRequiredRowsMax( $section );
+		}
+
 		for ( $i = 1; $i <= $requiredRows; $i++ ) {
 			$values[$i] = $className::getDefaultAssetData();
 		}
@@ -316,27 +318,41 @@ class VideoPageToolHelper extends WikiaModel {
 	/**
 	 * Get required rows
 	 * Note: displayTitle field is used to check for number of rows in the form
-	 * @param string $section
-	 * @param array $fieldValues
+	 * @param string $section [featured/category/fan]
+	 * @param array $formValues
 	 * @return integer $requiredRows
 	 */
-	public function getRequiredRows( $section, $fieldValues = array() ) {
-		if ( is_array( self::$requiredRows[$section] ) ) {
-			$cnt = is_array( $fieldValues ) ? count( $fieldValues ) : 0;
-			$min = min( self::$requiredRows[$section] );
-			$max = max( self::$requiredRows[$section] );
-			if ( $cnt <= $min ) {
-				$requiredRows = $min;
-			} else if ( $cnt < $max ) {
-				$requiredRows = $cnt;
-			} else {
-				$requiredRows = $max;
-			}
+	public function getRequiredRows( $section, $formValues ) {
+		$cnt = empty( $formValues['displayTitle']  ) ? 0 : count( $formValues['displayTitle'] );
+		$min = $this->getRequiredRowsMin( $section );
+		$max = $this->getRequiredRowsMax( $section );
+		if ( $cnt <= $min ) {
+			$requiredRows = $min;
+		} else if ( $cnt < $max ) {
+			$requiredRows = $cnt;
 		} else {
-			$requiredRows = self::$requiredRows[$section];
+			$requiredRows = $max;
 		}
 
 		return $requiredRows;
+	}
+
+	/**
+	 * Get minimum required rows
+	 * @param string $section [featured/category/fan]
+	 * @return integer
+	 */
+	public function getRequiredRowsMin( $section ) {
+		return min( self::$requiredRows[$section] );
+	}
+
+	/**
+	 * Get maximum required rows
+	 * @param string $section [featured/category/fan]
+	 * @return integer
+	 */
+	public function getRequiredRowsMax( $section ) {
+		return max( self::$requiredRows[$section] );
 	}
 
 	/**
@@ -383,7 +399,7 @@ class VideoPageToolHelper extends WikiaModel {
 	 * @param string $errMsg
 	 * @return bool
 	 */
-	public function validateDescriptiion( $description, &$errMsg ) {
+	public function validateDescription( $description, &$errMsg ) {
 		if ( strlen( $description ) > 200 ) {
 			$errMsg = wfMessage( 'videopagetool-error-invalid-description' )->plain();
 			return false;
@@ -393,18 +409,18 @@ class VideoPageToolHelper extends WikiaModel {
 	}
 
 	/**
-	 * Validate category
+	 * Validate category (called from validateFormField())
 	 * @param string $categoryName
 	 * @param string $errMsg
 	 * @return boolean
 	 */
 	public function validateCategoryName( $categoryName, &$errMsg ) {
 		$title = Title::newFromText( $categoryName, NS_CATEGORY );
-		if ( $title instanceof Title ) {
+		if ( $title instanceof Title && count( $this->getVideosByCategory( $title ) ) > 0 ) {
 			return true;
 		}
 
-		$errMsg = wfMessage( 'videopagetool-unknown-category' )->plain();
+		$errMsg = wfMessage( 'videopagetool-error-empty-category' )->plain();
 
 		return false;
 	}
