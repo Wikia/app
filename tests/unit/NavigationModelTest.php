@@ -121,15 +121,16 @@ class NavigationModelTest extends WikiaBaseTest {
 	function testParseMessage() {
 		$messageName = 'test'.rand();
 
-		$this->getGlobalFunctionMock( 'wfMsg' )
-			->expects( $this->exactly( 2 ) )
-			->method( 'wfMsg' )
+		$model = $this->getMockBuilder('NavigationModel')
+			->setMethods(array('getMessageContent'))
+			->getMock();
+
+		$model->expects($this->once())
+			->method('getMessageContent')
 			->will( $this->returnValue( '*whatever' ) );
 
-		$model = new NavigationModel();
-
 		$nodes = array(
-			array(
+			array( 
 				'children' => array(1)
 			),
 			array (
