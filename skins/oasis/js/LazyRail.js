@@ -18,13 +18,9 @@ $( function () {
 			while ( i-- ) {
 				if ( tmpQuery[ i ] ) {
 					splitParam = tmpQuery[ i ].split( '=' );
-					getParams[ splitParam[ 0 ] ] = decodeURIComponent( splitParam[ 1 ] ) || '';
-				}
-			}
-
-			for ( splitParam in getParams ) {
-				if ( getParams.hasOwnProperty( splitParam ) && paramsToPreserve.indexOf( splitParam ) !== false ) {
-					params[ splitParam ] = getParams[ splitParam ];
+					if (paramsToPreserve.indexOf( splitParam[ 0 ] ) !== false) {
+						params[ splitParam[ 0 ] ] = decodeURIComponent( splitParam[ 1 ] ) || '';
+					}
 				}
 			}
 		}
