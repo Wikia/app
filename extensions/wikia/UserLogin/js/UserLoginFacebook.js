@@ -3,6 +3,15 @@ var UserLoginFacebook = {
 	form: false,
 	callbacks: {},
 	initialized: false,
+	origins: {
+		DROPDOWN: 1,
+		PAGE: 2,
+		MODAL: 3
+	},
+	actions: {},
+	track: false,
+
+
 
 	log: function( msg ) {
 		'use strict';
@@ -10,10 +19,21 @@ var UserLoginFacebook = {
 		$().log( msg, 'UserLoginFacebook' );
 	},
 
-	init: function() {
+	init: function( origin ) {
 		'use strict';
 
+		var self = this;
+
 		if( !this.initialized ) {
+			require( ['wikia.tracker'], function( tracker ) {
+				self.actions = tracker.ACTIONS;
+				self.track = tracker.buildTrackingFunction( {
+					category: 'user-sign-up',
+					value: origin || 0,
+					trackingMethod: 'both'
+				} );
+			} );
+
 			this.initialized = true;
 			this.loginSetup();
 			this.setupTooltips();
@@ -42,7 +62,7 @@ var UserLoginFacebook = {
 				ev.preventDefault();
 
 				// @see http://developers.facebook.com/docs/reference/javascript/FB.login/
-				FB.login( $.proxy( self.loginCallback, self ), {
+				window.FB.login( $.proxy( self.loginCallback, self ), {
 					scope:'publish_stream,email'
 				} );
 		} );
@@ -64,8 +84,12 @@ var UserLoginFacebook = {
 					);
 					break;
 
-				case 'unknown':
-					break;
+				default:
+					// Track FB Connect Error
+					this.track( {
+						action: this.actions.ERROR,
+						label: 'facebook-login'
+					} );
 			}
 		}
 	},
@@ -79,6 +103,13 @@ var UserLoginFacebook = {
 
 		if ( resp.loggedIn ) {
 			// logged in using FB account, reload the page or callback
+
+			// Track FB Connect Login
+			this.track( {
+				action: this.actions.SUCCESS,
+				label: 'facebook-login'
+			} );
+
 			if ( loginCallback && typeof loginCallback === 'function' ) {
 				loginCallback();
 			} else {
@@ -133,9 +164,23 @@ var UserLoginFacebook = {
 
 						self.modal = facebookSignupModal; // set reference to modal object
 
+						// Track Facebook Connect Modal Close
+						facebookSignupModal.bind( 'beforeClose', function () {
+							// Track FB Connect Modal Close
+							self.track( {
+								action: self.actions.CLOSE,
+								label: 'facebook-login-modal'
+							} );
+						} );
+
 						self.form = new UserLoginFacebookForm( $modal, {
 							ajaxLogin: true,
 							callback: function( res ) {
+								// Track FB Connect Sign Up
+								self.track( {
+									action: self.actions.SUBMIT,
+									label: 'facebook-login-modal'
+								} );
 								var location = res.location;
 
 								// redirect to the user page
@@ -180,6 +225,11 @@ var UserLoginFacebook = {
 								} );
 							} );
 
+						// Track FB Connect Modal Open
+						self.track( {
+							action: self.actions.OPEN,
+							label: 'facebook-login-modal'
+						} );
 						facebookSignupModal.show();
 
 						// TODO: temporary fix - force repaint
