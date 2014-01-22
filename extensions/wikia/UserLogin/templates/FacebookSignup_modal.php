@@ -9,13 +9,13 @@
 				'type' => 'text',
 				'name' => 'username',
 				'isRequired' => true,
-				'label' => wfMessage('yourname')->plain(),
+				'label' => wfMessage('yourname')->escaped(),
 			),
 			array(
 				'type' => 'password',
 				'name' => 'password',
 				'isRequired' => true,
-				'label' => wfMessage('yourpassword')->plain(),
+				'label' => wfMessage('yourpassword')->escaped(),
 			),
 			array(
 				'type' => 'nirvana',
@@ -23,7 +23,7 @@
 				'controller' => 'WikiaStyleGuideTooltipIconController',
 				'method' => 'index',
 				'params' => array(
-					'text' => wfMessage('email')->plain(),
+					'text' => wfMessage('email')->escaped(),
 					'tooltipIconTitle' => wfMessage('usersignup-facebook-email-tooltip')->plain(),
 				),
 			),
@@ -41,7 +41,7 @@
 				'controller' => 'UserSignupSpecial',
 				'view' => 'submit',
 				'class' => 'submit-pane error modal-pane',
-				'params' => array('createAccountButtonLabel' => wfMessage('createaccount')->plain())
+				'params' => array('createAccountButtonLabel' => wfMessage('createaccount')->escaped())
 			),
 		),
 		'method' => 'post',
@@ -52,16 +52,16 @@
 		</section>
 
 		<section class="UserLoginFacebookRight">
-			<h1><?= wfMessage('usersignup-facebook-have-an-account-heading')->plain() ?></h1>
-			<p><?= wfMessage('usersignup-facebook-have-an-account')->plain() ?></p>
-			<a class="wikia-button" href="<?= htmlspecialchars($specialUserLoginUrl) ?>"><?= wfMessage('login')->plain() ?></a>
+			<h1><?= wfMessage('usersignup-facebook-have-an-account-heading')->escaped() ?></h1>
+			<p><?= wfMessage('usersignup-facebook-have-an-account')->escaped() ?></p>
+			<a class="wikia-button" href="<?= htmlspecialchars($specialUserLoginUrl) ?>"><?= wfMessage('login')->escaped() ?></a>
 		</section>
 	</section>
 
 	<a href="#" class="FacebookSignupConfigHeader">
 		<img src="<?= $wg->BlankImgUrl ?>" class="chevron">
-		<span class="hide"><?= wfMessage('userlogin-facebook-hide-preferences')->plain() ?></span>
-		<span class="show"><?= wfMessage('userlogin-facebook-show-preferences')->plain() ?></span>
+		<span class="hide"><?= wfMessage('userlogin-facebook-hide-preferences')->escaped() ?></span>
+		<span class="show"><?= wfMessage('userlogin-facebook-show-preferences')->escaped() ?></span>
 	</a>
 
 <?php
@@ -82,7 +82,7 @@
 		$newOptions[] = $optionElement;
 	}
 	$formFb = array(
-		'legend' => wfMessage('fbconnect-prefs-post')->plain(),
+		'legend' => wfMessage('fbconnect-prefs-post')->escaped(),
 		'class' => 'FacebookSignupConfig',
 		'inputs' => $newOptions,
 		'method' => 'post',

@@ -209,8 +209,21 @@ var UserLoginFacebook = {
 								event.preventDefault();
 								$( this ).toggleClass( 'on' ).next( 'form' ).toggle();
 							} )
-							.on ( 'blur', 'input[name=username], input[name=password]',
-								$.proxy( signupAjaxForm.validateInput, signupAjaxForm ) );
+							.on( 'blur', 'input[name=username], input[name=password]',
+								$.proxy( signupAjaxForm.validateInput, signupAjaxForm )
+							)
+							.on( 'click', '.submit-pane .extiw', function( event ) {
+								require( ['wikia.tracker'], function( tracker ) {
+									tracker.track( {
+										action: tracker.ACTIONS.CLICK_LINK_TEXT,
+										browserEvent: event,
+										category: 'user-sign-up',
+										href: $( event.target ).attr( 'href' ),
+										label: 'wikia-terms-of-use',
+										trackingMethod: 'both'
+									} );
+								} );
+							} );
 
 						// Track FB Connect Modal Open
 						self.track( {
