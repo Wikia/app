@@ -7,7 +7,7 @@ class WikiaTestSpeedAnnotator {
 	private static $methods = [ ];
 	private static $timerResolution = null;
 
-	const REGEX_SLOW_GROUP = '/^\s*\*\s*@group\s+Slow\s*\n/m';
+	const REGEX_SLOW_GROUP     = '/^\s*\*\s*@group\s+Slow\s*\n/m';
 	const REGEX_SLOW_EXEC_TIME = '/^\s*\*\s*@slowExecutionTime\s+([0-9\.]+\s*(ms?)\s*\n)/m';
 
 	public static function initialize() {
@@ -21,15 +21,15 @@ class WikiaTestSpeedAnnotator {
 			// normalize time
 			$executionTime = round( $executionTime, self::$timerResolution );
 
-			$classReflector  = new ReflectionClass($className);
-			$methodReflector = new ReflectionMethod($className, $methodName);
+			$classReflector  = new ReflectionClass( $className );
+			$methodReflector = new ReflectionMethod( $className, $methodName );
 
-			$lineNumber = $methodReflector->getStartLine();
-			$docComment = $methodReflector->getDocComment();
-			$filePath = $classReflector->getFileName();
+			$lineNumber          = $methodReflector->getStartLine();
+			$docComment          = $methodReflector->getDocComment();
+			$filePath            = $classReflector->getFileName();
 			$alreadyMarkedAsSlow = self::isMarkedAsSlow( $annotations );
 
-			self::$methods[$methodName] = [$filePath, $lineNumber, $docComment, $alreadyMarkedAsSlow, $executionTime];
+			self::$methods[$methodName] = [ $filePath, $lineNumber, $docComment, $alreadyMarkedAsSlow, $executionTime ];
 		}
 	}
 
@@ -38,50 +38,35 @@ class WikiaTestSpeedAnnotator {
 			return;
 		}
 
-		$affectedFiles = [];
+		$affectedFiles = [ ];
 
 		self::sortMethods();
 
-		foreach (self::$methods as $methodName => $array) {
-			list($filePath, $lineNumber, $docComment, $alreadyMarkedAsSlow, $executionTime) = $array;
+		foreach ( self::$methods as $methodName => $array ) {
+			list( $filePath, $lineNumber, $docComment, $alreadyMarkedAsSlow, $executionTime ) = $array;
 
-			if (($isSlow = ($executionTime > self::SLOW_TEST_THRESHOLD)) xor $alreadyMarkedAsSlow) {
-				if ($isSlow) {
-					self::addSlowAnnotation($filePath, $methodName, $docComment, $executionTime);
+			if ( ( $isSlow = ( $executionTime > self::SLOW_TEST_THRESHOLD ) ) xor $alreadyMarkedAsSlow ) {
+				if ( $isSlow ) {
+					self::addSlowAnnotation( $filePath, $methodName, $docComment, $executionTime );
 				} else {
-					self::removeSlowAnnotation($filePath, $methodName, $docComment);
+					self::removeSlowAnnotation( $filePath, $methodName, $docComment );
 				}
 			}
 		}
 
-		// check if is slow
-			// check if it's already slow
-				// do nothing
-			// else
-				// add slow group and time
-					// check if it has any docblock
-						// add annotation to docblock
-					// else
-						// add new docblock with annotation
-		// else
-			// check if it's already slow
-				// remove slow annotation
-			// else
-				// do nothing
-
 		// cleanup docblocks from all affected files
-		foreach ($affectedFiles as $filePath ) {
+		foreach ( $affectedFiles as $filePath ) {
 			self::cleanupEmptyDocComments( $filePath );
 		}
 	}
 
 	private static function isDocCommentEmpty( $docComment ) {
-		return 0 !== preg_match('/^\s*\/\*\*[\s|\*]*\//', $docComment);
+		return 0 !== preg_match( '/^\s*\/\*\*[\s|\*]*\//', $docComment );
 	}
 
 	private static function cleanupEmptyDocComments( $filePath ) {
 		$fileContents = file_get_contents( $filePath );
-		$fileContents = preg_replace('/^\s*\/\*\*[\s|\*]*\//', '', $fileContents);
+		$fileContents = preg_replace( '/^\s*\/\*\*[\s|\*]*\//', '', $fileContents );
 		file_put_contents( $filePath, $fileContents );
 	}
 
@@ -91,43 +76,42 @@ class WikiaTestSpeedAnnotator {
 	}
 
 	private static function isMarkedAsSlow( $annotations ) {
-		return  !empty( $annotations['method'] ) && !empty( $annotations['method']['group'] )
-			&& in_array( 'Slow', $annotations['method']['group'] );
+		return !empty( $annotations['method'] ) && !empty( $annotations['method']['group'] )
+		&& in_array( 'Slow', $annotations['method']['group'] );
 	}
 
 	private static function sortMethods() {
-		uasort( self::$methods, function($a, $b) {
-			return $a[0] == $b[0]  ? (($a[1] > $b[1]) ? -1 : 1) : strcasecmp($a[0], $b[0]);
+		uasort( self::$methods, function ( $a, $b ) {
+			return $a[0] == $b[0] ? ( ( $a[1] > $b[1] ) ? -1 : 1 ) : strcasecmp( $a[0], $b[0] );
 		} );
 	}
 
 	private static function removeSlowAnnotationFromDocComment( $docComment ) {
+		$docComment = preg_replace( self::REGEX_SLOW_EXEC_TIME, '', $docComment );
+		$docComment = preg_replace( self::REGEX_SLOW_GROUP, '', $docComment );
 
-		$newDocComment = preg_replace(self::REGEX_SLOW_EXEC_TIME, '', $docComment);
-		$newDocComment = preg_replace(self::REGEX_SLOW_GROUP, '', $newDocComment);
-
-		return $newDocComment;
+		return $docComment;
 	}
 
-	private static function removeSlowAnnotation($filePath, $methodName, $docComment) {
+	private static function removeSlowAnnotation( $filePath, $methodName, $docComment ) {
 		$newDocComment = self::removeSlowAnnotationFromDocComment( $docComment );
 
 		$fileContents = file_get_contents( $filePath );
-		$fileContents = str_replace($docComment, $newDocComment, $fileContents);
+		$fileContents = str_replace( $docComment, $newDocComment, $fileContents );
 		file_put_contents( $filePath, $fileContents );
 	}
 
-	private static function addSlowAnnotation($filePath, $methodName, $docComment, $executionTime) {
-		$newDocComment = $docComment ? self::createDocComment( $executionTime )
+	private static function addSlowAnnotation( $filePath, $methodName, $docComment, $executionTime ) {
+		$newDocComment = empty( $docComment ) ? self::createDocComment( $executionTime )
 			: self::updateDocComment( $docComment, $executionTime );
 
-		$functionStartRegex = '/(\/[^\/]*\/)?(\s*+function\s+' . $methodName . '\s*\()/';
+		$functionStartRegex = '/\s*(\/[^\/]*\/)?(' . "\n" . '\s*.*function\s+' . $methodName . '\s*\()/';
 
 		$fileContents = file_get_contents( $filePath );
 
-		/// replace old doccomment and method declaration with new doccomment and method declaration
+		// replace old doccomment and method declaration with new doccomment and method declaration
 
-		$fileContents = str_replace($functionStartRegex, $newDocComment."\\2", $fileContents);
+		$fileContents = preg_replace( $functionStartRegex, "\n\n" . $newDocComment . "\\2", $fileContents );
 
 		file_put_contents( $filePath, $fileContents );
 	}
@@ -140,10 +124,10 @@ class WikiaTestSpeedAnnotator {
 		$docComment = self::removeSlowAnnotationFromDocComment( $docComment );
 
 		$slowGroupAnnotation = '@group Slow';
-		$slowTimeAnnotation = '@slowExecutionTime ' . $executionTime . ' ms';
+		$slowTimeAnnotation  = '@slowExecutionTime ' . $executionTime . ' ms';
 
-		$docComment = preg_replace('/**',  "/**\n * " . $slowTimeAnnotation, $docComment );
-		$docComment = preg_replace('/**',  "/**\n * " . $slowGroupAnnotation, $docComment );
+		$docComment = str_replace( '/**', "/**\n * " . $slowTimeAnnotation, $docComment );
+		$docComment = str_replace( '/**', "/**\n * " . $slowGroupAnnotation, $docComment );
 
 		return $docComment;
 	}
