@@ -221,18 +221,11 @@ class NavigationModel extends WikiaModel {
 			// get wikitext from given source
 			switch( $type ) {
 				case self::TYPE_MESSAGE:
-					$text = $this->forContent ? wfMsgForContent( $source ) : wfMsg( $source );
+					$text = $this->getMessageContent( $source );
 					break;
 
 				case self::TYPE_VARIABLE:
-					$text = $this->getNavigationFromWF($source);
-
-					if ( !is_string($text) && is_array($text) ) {
-						$text = $this->getNavigationFromArray($text, $this->wg->Lang->getCode());
-					} else {
-						$text = '';
-					}
-
+					$text = $this->getVariableContent( $source );
 					break;
 				default:
 					$text = '';
@@ -670,6 +663,30 @@ class NavigationModel extends WikiaModel {
 		}
 
 		return isset( $this->biggestCategories[$index-1] ) ? $this->biggestCategories[$index-1] : null;
+	}
+
+	/**
+	 * @param $source
+	 * @return String
+	 */
+	protected function getMessageContent( $source ) {
+		$text = $this->forContent ? wfMsgForContent( $source ) : wfMsg( $source );
+		return $text;
+	}
+
+	/**
+	 * @param $source
+	 * @return mixed|null
+	 */
+	protected function getVariableContent( $source ) {
+		$text = $this->getNavigationFromWF($source);
+
+		if ( !is_string($text) && is_array($text) ) {
+			$text = $this->getNavigationFromArray($text, $this->wg->Lang->getCode());
+		} else {
+			$text = '';
+		}
+		return $text;
 	}
 
 	public static function getCreateNewWikiUrl() {
