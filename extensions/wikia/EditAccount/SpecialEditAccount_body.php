@@ -474,7 +474,7 @@ class EditAccount extends SpecialPage {
 			$context = RequestContext::getMain();
 		}
 
-		$key = wfSharedMemcKey(
+		$key = wfMemcKey(
 			'Special:EditAccount',
 			'LogEntry',
 			$user->getId(),
