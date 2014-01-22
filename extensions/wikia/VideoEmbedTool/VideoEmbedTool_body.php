@@ -249,7 +249,7 @@ class VideoEmbedTool {
 			}
 		}
 
-		$description = urldecode( $wgRequest->getVal('description') );
+		$description = trim( urldecode( $wgRequest->getVal( 'description' ) ) );
 
 		// Set the video descriptions
 		$vHelper = new VideoHandlerHelper();
