@@ -2,26 +2,16 @@ $( function () {
 	'use strict';
 	function getParamsFromUrl() {
 		var params = {},
-		getParams = '',
-		tmpQuery = [],
+		paramVal,
+		qs = Wikia.Querystring(),
 		i = 0,
-		splitParam = [],
-		paramsToPreserve = [ 'noexternals', 'noads', 'uselang', 'mcache', 'rebuildemssages' ];
+		paramsToPreserve = [ 'noexternals', 'noads', 'uselang', 'mcache', 'rebuildmessages' ],
+		paramsToPreserveLength = paramsToPreserve.length;
 
-		getParams = window.location.search.substr( 1 );
-
-		if (getParams) {
-			tmpQuery = getParams.split( '&' );
-			i = tmpQuery.length;
-
-			getParams = {};
-			while ( i-- ) {
-				if ( tmpQuery[ i ] ) {
-					splitParam = tmpQuery[ i ].split( '=' );
-					if (paramsToPreserve.indexOf( splitParam[ 0 ] ) !== -1) {
-						params[ splitParam[ 0 ] ] = decodeURIComponent( splitParam[ 1 ] ) || '';
-					}
-				}
+		for ( i = 0; i < paramsToPreserveLength; i++ ) {
+			paramVal = qs.getVal( paramsToPreserve[ i ] );
+			if ( paramVal !== undefined ) {
+				params[ paramsToPreserve[ i ] ] = paramVal;
 			}
 		}
 		return params;
