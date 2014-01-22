@@ -194,18 +194,10 @@ class EditAccount extends SpecialPage {
 
 			$blockMessage = '';
 
+			// Get last log message if disabled
 			if ( $this->mUser->getOption( 'disabled' ) ) {
 
-				$blockedBy = '';
-				$blockedFor = $this->mUser->blockedFor();
-
-				if ( $this->mUser->blockedBy() ) {
-					$blockedBy = User::newFromId( $this->mUser->blockedBy() );
-				}
-
-				$blockMessage = ( $blockedBy ? '[[' . $blockedBy->getUserPage()->getFullText() . ']]:' : '' ) . $blockedFor;
-				$oParserOut = $wgParser->parse( $blockMessage, $wgTitle, $wgOut->parserOptions() );
-				$blockMessage = $oParserOut->getText();
+				$blockMessage = self::getLastUserLogEntry( $this->mUser );
 
 			}
 
@@ -464,5 +456,68 @@ class EditAccount extends SpecialPage {
 		// This suffix shouldn't reduce the entropy of the intentionally scrambled password.
 		$REQUIRED_CHARS = "A1a";
 		return (wfGenerateToken() . $REQUIRED_CHARS);
+	}
+
+	/**
+	 *  Returns last log entry for blocked user
+	 *
+	 * @param User $user User we are looking for
+	 * @return string Last log message for user
+	 */
+	public static function getLastUserLogEntry( User $user )
+	{
+		global $wgOut, $wgMemc;
+
+		if ( $wgOut instanceof OutputPage ) {
+			$context = $wgOut->getContext();
+		} else {
+			$context = RequestContext::getMain();
+		}
+
+		$key = wfSharedMemcKey(
+			'Special:EditAccount',
+			'LogEntry',
+			$user->getId(),
+			$context->getLanguage()->getCode(),
+			'v1'
+		);
+
+
+		if (!$user->getOption('disabled')) {
+			$wgMemc->delete($key);
+			return '';
+		}
+
+		$log_param = mysql_real_escape_string( $user->getUserPage()->getFullText() );
+
+		$blockMessage = WikiaDataAccess::cache(
+			$key,
+			3600, // one hour
+			function () use ( $log_param, $context ) {
+
+				$dbr =& wfGetDB( DB_SLAVE );
+
+				$query = "SELECT log_id,log_type,log_action,log_timestamp,log_user,log_user_text,log_namespace,log_title,log_comment,log_params,log_deleted,ts_tags
+							FROM logging FORCE INDEX (type_time)
+							LEFT JOIN tag_summary ON ((ts_log_id=log_id))
+							WHERE (log_type != 'StaffLog') AND log_type = 'editaccnt' AND log_params = '{$log_param}'
+							ORDER BY log_timestamp DESC LIMIT 1";
+
+				$logEntryResult = $dbr->query(
+					$query,
+					__METHOD__
+				);
+
+				$LogList = new LogEventsList( $context->getSkin(), $context->getOutput(), 0 );
+
+				foreach ( $logEntryResult as $row ) {
+					return $LogList->logLine( $row );
+				}
+
+				return '';
+			}
+		);
+
+		return $blockMessage;
 	}
 }

@@ -283,18 +283,12 @@ EOT
 			$wgOut->addWikiText( '*' . wfMessage('lookupuser-table-cannot-be-displayed')->text() );
 		}
 
+		// Get last log message if disabled
 		if ( $user->getOption( 'disabled' ) ) {
 
-			$blockedBy = '';
-			$blockedFor = $user->blockedFor();
+			$blockMessage = EditAccount::getLastUserLogEntry( $user );
 
-			if ( $user->blockedBy() ) {
-				$blockedBy = User::newFromId( $user->blockedBy() );
-			}
-
-			$blockMessage = '*' . ( $blockedBy ? '[[' . $blockedBy->getUserPage()->getFullText() . ']]:' : '' ) . $blockedFor;
-
-			$wgOut->addWikiText( $blockMessage );
+			$wgOut->addHTML( '<ul>' . $blockMessage . '</ul>' );
 
 		}
 		//End: Small Stuff Week
