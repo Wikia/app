@@ -17,8 +17,6 @@ class WikiaDispatcherTest extends WikiaBaseTest {
 		parent::setUp();
 	}
 
-/**
- */
 	public function testDispatchUnknownOrEmptyController() {
 		$app = $this->getMock( 'WikiaApp', array( 'runFunction' ) );
 		$app->expects( $this->any() )
@@ -62,8 +60,6 @@ class WikiaDispatcherTest extends WikiaBaseTest {
 		$this->assertEquals("hello", $response->getVal('wasCalled'));
 	}
 
-/**
- */
 	public function testRouting() {
 		$response = $this->object->dispatch( F::app(), new WikiaRequest( array( 'controller' => 'Test', 'method' => 'index' ) ) );
 

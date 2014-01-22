@@ -23,8 +23,6 @@ class ShareButtonsTest extends WikiaBaseTest {
 		);
 	}
 	
-/**
- */
 	public function testFactoryWithTitle() {
 		$mockTitle = $this->getMockBuilder( 'Title' )
 		                  ->disableOriginalConstructor()

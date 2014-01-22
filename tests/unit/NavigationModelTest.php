@@ -1,6 +1,4 @@
 <?php
-/**
- */
 class NavigationModelTest extends WikiaBaseTest {
 	function testParseLines() {
 		$model = new NavigationModel();
@@ -118,8 +116,6 @@ class NavigationModelTest extends WikiaBaseTest {
 				$model->parseLines($case['param1'], $case['param2'])
 			);
 		}
-/**
- */
 	}
 
 	function testParseMessage() {
@@ -154,8 +150,6 @@ class NavigationModelTest extends WikiaBaseTest {
 			array(),
 			1
 		));
-/**
- */
 	}
 
 	function testParseOneLine() {
@@ -259,8 +253,6 @@ class NavigationModelTest extends WikiaBaseTest {
 				$model->parseOneLine($case['line'])
 			);
 		}
-/**
- */
 	}
 
 	function testParseOneLineWithoutTranslation() {

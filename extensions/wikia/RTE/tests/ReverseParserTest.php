@@ -9,8 +9,6 @@ class ReverseParserTest extends WikiaBaseTest {
 		parent::setUp();
 
 		$this->reverseParser = new RTEReverseParser();
-/**
- */
 	}
 
 	function testHeading2() {

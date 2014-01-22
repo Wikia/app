@@ -12,8 +12,6 @@ class ImageReviewTest extends WikiaBaseTest {
 		parent::setUp();
 	}
 
-/**
- */
 	public function testImageReviewSpecialControllerIndexCorrect() {
 		$this->setStubsForImageReviewSpecialControllerTests(false);
 
@@ -24,8 +22,6 @@ class ImageReviewTest extends WikiaBaseTest {
 		$this->assertEquals($this->fakeCorrectImages, $imagesList);
 	}
 
-/**
- */
 	public function testImageReviewSpecialControllerIndexError() {
 		$this->setStubsForImageReviewSpecialControllerTests(true);
 

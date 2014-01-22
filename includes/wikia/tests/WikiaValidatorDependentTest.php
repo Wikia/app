@@ -45,8 +45,6 @@ class WikiaValidatorDependentTest extends WikiaBaseTest {
 		);
 	}
 
-/**
- */
 	public function testIsValid() {
 		$wikiaValidatorStringStub = $this->getMock('WikiaValidatorString');
 		$wikiaValidatorStringStub->expects($this->any())->method('isValid')->will($this->returnValue(true));

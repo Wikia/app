@@ -11,8 +11,6 @@ class HelloWorldTest extends WikiaBaseTest {
 		parent::setUp();
 	}
 
-/**
- */
 	public function testGettingWikiData() {
 
 		$testRow = new stdClass();

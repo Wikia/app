@@ -59,8 +59,6 @@
 			$this->assertEquals( $expErrParam, $responseData, 'errParam' );
 		}
 
-/**
- */
 		public function testWikiaMobileLoginTemplate() {
 			$mobileSkin = Skin::newFromKey( 'wikiamobile' );
 			$this->setUpMockObject( 'User', array( 'getSkin' => $mobileSkin ), true, 'wgUser' );
@@ -79,8 +77,6 @@
 			$this->tearDownMobileSkin();
 		}
 
-/**
- */
 		public function testWikiaMobileChangePasswordTemplate(){
 			$mobileSkin = Skin::newFromKey( 'wikiamobile' );
 			$this->setUpMockObject( 'User', array( 'getSkin' => $mobileSkin ), true, 'wgUser' );

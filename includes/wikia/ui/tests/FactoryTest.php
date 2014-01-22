@@ -129,8 +129,6 @@ class FactoryTest extends WikiaBaseTest {
 		];
 	}
 
-/**
- */
 	public function testInitForOneComponent() {
 		$UIComponentMock = $this->getMock('Wikia\UI\Component', [ 'setTemplateVarsConfig', 'addAsset', 'setComponentDependencies' ]);
 		$UIComponentMock->expects( $this->once() )->method( 'setTemplateVarsConfig' );
@@ -159,8 +157,6 @@ class FactoryTest extends WikiaBaseTest {
 		$this->assertEquals( [ 'js' => [], 'css' => [] ], $component->getAssets());
 	}
 
-/**
- */
 	public function testLoadComponentTemplateContent() {
 		$path = '/tmp/sample/path/component';
 
@@ -182,8 +178,6 @@ class FactoryTest extends WikiaBaseTest {
 		$UIFactoryMock->loadComponentTemplateContent( $componentMock, 'subtype' );
 	}
 
-/**
- */
 	public function testGetComponentAssetsUrls() {
 		$componentMock = $this->getMock( 'Wikia\UI\Component', [ 'getAssets' ] );
 		$componentMock->expects( $this->once() )->method( 'getAssets' )->will( $this->returnValue(
@@ -207,8 +201,6 @@ class FactoryTest extends WikiaBaseTest {
         $this->assertEquals( [ 'js' => [ 'url1', 'url2' ], 'css' => [ 'url3', 'url4' ] ], $UIFactoryMock->getComponentAssetsUrls( $componentMock ) );
 	}
 
-/**
- */
 	public function testLoadSingleDependency() {
 		$c1ComponentMock = $this->getMock( 'Wikia\UI\Component', [ 'getComponentDependencies' ] );
 		$c1ComponentMock->expects( $this->any() )->method( 'getComponentDependencies' )->will( $this->returnValue( [ 'c2' ] ) );
@@ -230,8 +222,6 @@ class FactoryTest extends WikiaBaseTest {
 		$this->assertEquals( [ 'c2' => $c2ComponentMock ], $dep );
 	}
 
-/**
- */
 	public function testLoadDependencyJustOnce() {
 		$c1ComponentMock = $this->getMock( 'Wikia\UI\Component', [ 'getComponentDependencies' ] );
 		$c1ComponentMock->expects( $this->any() )->method( 'getComponentDependencies' )->will( $this->returnValue( [ 'c4' ] ) );
@@ -262,8 +252,6 @@ class FactoryTest extends WikiaBaseTest {
 
 	}
 
-/**
- */
 	public function testCircularDependencies() {
 		$c1ComponentMock = $this->getMock( 'Wikia\UI\Component', [ 'getComponentDependencies' ] );
 		$c1ComponentMock->expects( $this->any() )->method( 'getComponentDependencies' )->will( $this->returnValue( [ 'c2' ] ) );

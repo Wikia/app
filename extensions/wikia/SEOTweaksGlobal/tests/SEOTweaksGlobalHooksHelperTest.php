@@ -10,11 +10,9 @@ class SEOTweaksGlobalHooksHelperTest extends WikiaBaseTest {
 		parent::setUp();
 	}
 
-	/*
+	/**
 	 * Test if the thumbnail gets generated for article
 	 */
-/**
- */
 	public function testArticleImageGeneration() {
 		$memkey = 'sght_memkey';
 		$thumbUrl = 'http://www.wikia.com/wiki/fake.jpg';
@@ -67,11 +65,9 @@ class SEOTweaksGlobalHooksHelperTest extends WikiaBaseTest {
 		$this->assertEquals(array('foo'=>'bar', 'og:image' => $thumbUrl), $meta);
 	}
 
-	/*
+	/**
 	 * Test if the thumbnail gets generated for article from file namespace
 	 */
-/**
- */
 	public function testFileImageGeneration() {
 		$memkey = 'sght_memkey2';
 		$thumbUrl = 'http://www.wikia.com/wiki/fake2.jpg';
@@ -118,11 +114,9 @@ class SEOTweaksGlobalHooksHelperTest extends WikiaBaseTest {
 		$this->assertEquals(array('foo'=>'bar', 'og:image' => $thumbUrl), $meta);
 	}
 
-	/*
+	/**
 	 * Test if we don't try to generate thumbnail for user pages (bugid 98881)
 	 */
-/**
- */
 	public function testUserNS() {
 		$mock_cache = $this->getMock('stdClass', array('get', 'set'));
 		$mock_cache->expects($this->never())

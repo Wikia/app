@@ -13,8 +13,6 @@ class WikiaMobileSharingServiceTest extends WikiaBaseTest {
 
 	const MESSAGE = '|MESSAGE|';
 	const URL = '|URL|';
-/**
- */
 	const LANGUAGE = '|LANG|';
 
 	function testNetworks(){

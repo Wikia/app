@@ -30,8 +30,6 @@ class CategoryHelperTest extends WikiaBaseTest {
 		$this->assertEquals( $expectedWikiText, trim( $wikiText ) );
 	}
 
-/**
- */
 	public function testGetCategoryNames() {
 		$actual = CategoryHelper::getCategoryNames( self::$data );
 		$expected = [ 'Test category', '2nd test category' ];

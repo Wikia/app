@@ -2,8 +2,6 @@
 
 class SolrDocumentServiceTest extends WikiaBaseTest
 {
-/**
- */
 	public function testGetResultNoResult() {
 		$service = $this->getMock( 'SolrDocumentService', [ 'getConfig', 'getFactory', 'getDocumentId' ] );
 		$factory = $this->getMock( 'Wikia\Search\QueryService\Factory', [ 'getFromConfig' ] );
@@ -60,8 +58,6 @@ class SolrDocumentServiceTest extends WikiaBaseTest
 		);
 	}
 	
-/**
- */
 	public function testGetDocumentWithResult() {
 		$service = $this->getMock( 'SolrDocumentService', [ 'getConfig', 'getFactory', 'getDocumentId' ] );
 		$factory = $this->getMock( 'Wikia\Search\QueryService\Factory', [ 'getFromConfig' ] );

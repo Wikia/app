@@ -1,8 +1,6 @@
 <?php
 
 class WikiaHomePageHelperTest extends WikiaBaseTest {
-/**
- */
 	public function testPreparePromotedBatchesForVisualization() {
 		$WHPHelper = $this->getMock('WikiaHomePageHelper', ['getImageUrl']);
 		$WHPHelper
@@ -42,8 +40,6 @@ class WikiaHomePageHelperTest extends WikiaBaseTest {
 
 	}
 
-/**
- */
 	public function testPrepareBatchesForVisualization() {
 		$WHPHelper = $this->getMock('WikiaHomePageHelper', ['getImageUrl']);
 		$WHPHelper
@@ -75,8 +71,6 @@ class WikiaHomePageHelperTest extends WikiaBaseTest {
 
 	}
 
-/**
- */
 	public function testPrepareOnePromotedBatchesForVisualization() {
 		$WHPHelper = $this->getMock('WikiaHomePageHelper', ['getImageUrl']);
 		$WHPHelper

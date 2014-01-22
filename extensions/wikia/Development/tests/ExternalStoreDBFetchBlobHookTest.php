@@ -7,8 +7,6 @@ class ExternalStoreDBFetchBlobHookTest extends WikiaBaseTest {
 		parent::setUp();
 	}
 
-/**
- */
 	public function testApiCall() {
 		$result = false;
 

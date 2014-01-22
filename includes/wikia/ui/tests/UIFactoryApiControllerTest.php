@@ -18,8 +18,6 @@ class UIFactoryApiControllerTest extends WikiaBaseTest {
 
 	}
 
-/**
- */
 	public function testFactoryInit() {
 		$componentNames = [ 'button', 'modal' ];
 		$factoryMock = $this->getMock( 'Wikia\UI\Factory', [ 'init', '__wakeup' ], [], '', false );

@@ -6,8 +6,6 @@ class WikiaQuizModuleTest extends WikiaBaseTest {
 		$this->setupFile = dirname(__FILE__) . '/../WikiaQuiz_setup.php';
 	}
 	
-/**
- */
 	public function testExecuteGetQuizElement() {
 		$wgRequest = $this->getMock('WebRequest', array('getVal'), array(), '', false);
 		$wgRequest->expects($this->any())

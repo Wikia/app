@@ -11,8 +11,6 @@ class ApiDocsServiceTest extends \WikiaBaseTest {
 		parent::setUp();
 	}
 
-/**
- */
 	public function testGetDocList() {
 		$swaggerMock = $this->getMockBuilder( '\Swagger\Swagger' )
 			->disableOriginalConstructor()->getMock();

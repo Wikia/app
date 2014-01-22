@@ -16,8 +16,6 @@ class HtmlParserTest extends WikiaBaseTest {
 		parent::setUp();
 	}
 
-/**
- */
 	public function testParseSimple() {
 		$htmlParser = new HtmlParser();
 		$node = $htmlParser->parse("<div><a>link</div>");
@@ -50,8 +48,6 @@ class HtmlParserTest extends WikiaBaseTest {
 		$this->assertEquals( 'Section1', $node->getChildren()[1]->getTitle() );
 	}
 
-/**
- */
 	public function testSectionsSameLevel() {
 		$htmlParser = new HtmlParser();
 		$node = $htmlParser->parse('

@@ -5,8 +5,6 @@ class WallMessageTest extends WikiaBaseTest {
 	 * Forum main board title can have a slightly different name that the ac title itself, the article comment parent
 	 * title takes precedence over the ac itself
 	 */
-/**
- */
 	public function testGetWallUsesWallMainTitle() {
 		$acTitle = Title::newFromText( 'ArticleCommentTitle/@comment/xxx' );
 		$wallTitle = Title::newFromText( 'MessageWallTitle' );  // this takes precedence

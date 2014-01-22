@@ -105,8 +105,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		$mockController->index();
 	}
 
-/**
- */
 	public function testHandleArticleMatchTrackingPage2() {
 		$mockController = $this->searchController->setMethods( null )->getMock();
 		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getPage' ) );
@@ -124,8 +122,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		
 	}
 
-/**
- */
 	public function testHandleLayoutAbTest() {
 		$mockController = $this->searchController->setMethods( array( 'templateExists', 'setVal' ) )->getMock();
 

@@ -188,8 +188,6 @@ class SelectTest extends BaseTest
 		);
 	}
 	
-/**
- */
 	public function testGetSolrQueryWithWordLimit() {
 		$query = <<<YEEZY
 Uh:my mind move like a Tron bike

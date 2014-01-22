@@ -86,8 +86,6 @@ class CreateNewWikiControllerTest extends WikiaBaseTest {
 		];
 	}
 
-/**
- */
 	public function testCheckWikiNameSuccess() {
 
 		$wikiName = 'muppet';

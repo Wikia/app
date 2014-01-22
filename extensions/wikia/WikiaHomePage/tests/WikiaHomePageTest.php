@@ -169,8 +169,6 @@ class WikiaHomePageTest extends WikiaBaseTest {
 		);
 	}
 
-/**
- */
 	public function testGetList() {
 		$this->markTestSkipped('This test needs to be rewritten to serve its purpose');
 		$this->setUpMock();

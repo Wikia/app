@@ -86,8 +86,6 @@ class SpecialCssHooksTest extends WikiaBaseTest {
 		];
 	}
 
-/**
- */
 	public function testRemoveNamespace() {
 		$removeNamespaceMethod = new ReflectionMethod('SpecialCssHooks', 'removeNamespace');
 		$removeNamespaceMethod->setAccessible(true);

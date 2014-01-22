@@ -75,8 +75,6 @@ class AutoCreateWikiTest extends WikiaBaseTest {
 			array('def', 'pl', false, 'autocreatewiki-violate-policy'),
 			array('zzz', 'en', false, 'autocreatewiki-violate-policy'),
 		);
-/**
- */
 	}
 
 	function testCheckDomainIsCorrectBadWords() {
@@ -102,8 +100,6 @@ class AutoCreateWikiTest extends WikiaBaseTest {
 		$result = $autoCreateWikiMock::checkDomainIsCorrect('woohooo', 'pl');
 
 		$this->assertEquals('mocked-string', $result);
-/**
- */
 	}
 
 	function testCheckDomainIsCorrectDomainExists() {

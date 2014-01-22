@@ -27,8 +27,6 @@ class CommentsIndexTest extends WikiaBaseTest {
 	/*
 	 * Make sure the cache is not used when the CommentsIndex objects are just fetched from the database.
 	 */
-/**
- */
 	public function testCommentsIndexCacheNotUsedForDB() {
 
 		$rowMock = $this->getFakeCommentsIndexRow(1);
@@ -47,8 +45,6 @@ class CommentsIndexTest extends WikiaBaseTest {
 	 * during the request. So here we simulate inserting the CommentsIndex to the table and then ask for that id and
 	 * make sure it's not fetched from the database
 	 */
-/**
- */
 	public function testCommentsIndexCacheIsUsedForNewObjects() {
 
 		$rowMock = $this->getFakeCommentsIndexRow(2);

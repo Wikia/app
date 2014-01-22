@@ -33,8 +33,6 @@ class TvApiControllerTest extends \WikiaBaseTest {
 		parent::tearDown();
 	}
 
-/**
- */
 	public function testGetEpisodeUrlDevOrSandbox() {
 
 		$mock = $this->getMockBuilder( "\TvApiController" )
@@ -94,8 +92,6 @@ class TvApiControllerTest extends \WikiaBaseTest {
 		$this->responseValues = $values;
 	}
 
-/**
- */
 	public function testGetTitle() {
 
 		$mock = $this->getMockBuilder( "\TvApiController" )

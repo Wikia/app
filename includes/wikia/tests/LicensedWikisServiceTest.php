@@ -6,8 +6,6 @@ class LicensedWikisServiceTest extends WikiaBaseTest {
 		parent::setUp();
 	}
 
-/**
- */
 	public function testIsCommercialUseAllowedById() {
 
 		$licensedWikisService = $this->getMock('LicensedWikisService', ['getCommercialUseNotAllowedWikis']);

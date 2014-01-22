@@ -18,8 +18,6 @@ class UserServiceTest extends WikiaBaseTest {
 
 	}
 
-/**
- */
 	public function testCache() {
 		$user = $this->getTestUser();
 

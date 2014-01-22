@@ -11,8 +11,6 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 		parent::setUp();
 	}
 
-/**
- */
 	public function testGetModuleName() {
 		$mockMsg = $this->getGlobalFunctionMock( 'wfMsg' );
 
@@ -50,8 +48,6 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 		}
 	}
 
-/**
- */
 	public function testGetAvailableSections() {
 		$mockMsg = $this->getGlobalFunctionMock( 'wfMsg' );
 
@@ -67,8 +63,6 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 		$this->assertEquals('test name for hubs section', $sections[MarketingToolboxModel::SECTION_HUBS]);
 	}
 
-/**
- */
 	public function testGetSectionName() {
 		$mockMsg = $this->getGlobalFunctionMock( 'wfMsg' );
 
@@ -94,8 +88,6 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 		$this->assertArrayHasKey(WikiFactoryHub::CATEGORY_ID_LIFESTYLE, $verticals);
 	}
 
-/**
- */
 	public function testGetModuleUrl() {
 		$params = array(
 			'moduleId' => MarketingToolboxModuleSliderService::MODULE_ID,
@@ -135,8 +127,6 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 		$this->assertEquals('test returned url', $url);
 	}
 
-/**
- */
 	public function testGetModulesDataFromDefault() {
 		$params = array(
 			'langCode' => 'pl',
@@ -217,8 +207,6 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 		}
 	}
 
-/**
- */
 	public function testGetModulesDataWithoutDefaults() {
 		$params = array(
 			'langCode' => 'pl',
@@ -526,8 +514,6 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 		);
 	}
 
-/**
- */
 	public function testGetDataPublished() {
 		$model = new MarketingToolboxModel();
 
@@ -569,8 +555,6 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 		$this->assertEquals($statuses['PUBLISHED'], $data['2012-12-25']);
 	}
 
-/**
- */
 	public function testGetCalendarDataNotPublished() {
 		$model = new MarketingToolboxModel();
 
@@ -612,8 +596,6 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 		$this->assertEquals($statuses['NOT_PUBLISHED'], $data['2012-12-25']);
 	}
 
-/**
- */
 	public function testGetCalendarDataEmptyData() {
 
 		$dbMock = $this->getMock('DatabaseMysql', array('makeList', 'select', 'fetchRow'));
@@ -639,8 +621,6 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 		$this->assertEmpty($data);
 	}
 
-/**
- */
 	public function testGetCalendarDataComplex() {
 		$model = new MarketingToolboxModel();
 

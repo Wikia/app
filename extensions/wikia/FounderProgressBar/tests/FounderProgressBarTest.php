@@ -88,8 +88,6 @@ class FounderProgressBarTest extends WikiaBaseTest {
 				);
 		}
 		
-/**
- */
 		public function testShortTaskList() {
 			$response = $this->app->sendRequest('FounderProgressBar', 'getShortTaskList');
 			

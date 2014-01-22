@@ -4,8 +4,6 @@ namespace {
 
 	class MockNamespacedClassesTest extends WikiaBaseTest {
 
-/**
- */
 		public function testConstructorMocks() {
 			$fakeObject = new stdClass;
 
@@ -25,8 +23,6 @@ namespace {
 			$this->assertSame($fakeObject,new \WikiaConstructorClassTest\WikiaMockTest(),'class from other namespace (with \\ at the beginning)');
 		}
 
-/**
- */
 		public function testStaticMethodMocks() {
 			$fakeObject = new stdClass;
 
@@ -47,8 +43,6 @@ namespace {
 
 		}
 
-/**
- */
 		public function testRegularMethodMocks() {
 			$fakeObject = new stdClass;
 
@@ -70,8 +64,6 @@ namespace {
 
 		}
 
-/**
- */
 		public function testCallingFromOtherNamespace() {
 			$expValue = 2;
 
@@ -89,8 +81,6 @@ namespace {
 			$this->assertEquals($expValue,\WikiaClassTest3\callRegular(),'call static method from another namespace using alias');
 		}
 
-/**
- */
 		public function testCallingFromOtherNamespaceWithAlias() {
 			$expValue = 2;
 

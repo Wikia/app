@@ -4,8 +4,6 @@ namespace Wikia\Measurements;
 
 class TimeTest extends \WikiaBaseTest {
 
-/**
- */
 	public function testStop() {
 		$driver = $this->buildMock();
 		$driver->expects( $this->once() )

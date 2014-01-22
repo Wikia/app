@@ -12,8 +12,6 @@ class CachingApiDocsServiceTest extends \WikiaBaseTest {
 		parent::setUp();
 	}
 
-/**
- */
 	public function testGetDocListCacheHit() {
 		$cacheBuster = 132;
 		$this->getGlobalFunctionMock("wfMemcKey")
@@ -36,8 +34,6 @@ class CachingApiDocsServiceTest extends \WikiaBaseTest {
 	}
 
 
-/**
- */
 	public function testGetDocListCacheMiss() {
 		$cacheBuster = 132;
 		$cacheKey = "fooKey";
@@ -64,8 +60,6 @@ class CachingApiDocsServiceTest extends \WikiaBaseTest {
 		$this->assertEquals( [ 'foo' ], $result );
 	}
 
-/**
- */
 	public function testGetDocCacheHit() {
 		$cacheBuster = 132;
 		$this->getGlobalFunctionMock("wfMemcKey")
@@ -88,8 +82,6 @@ class CachingApiDocsServiceTest extends \WikiaBaseTest {
 	}
 
 
-/**
- */
 	public function testGetDocCacheMiss() {
 		$cacheBuster = 132;
 		$cacheKey = "fooKey";

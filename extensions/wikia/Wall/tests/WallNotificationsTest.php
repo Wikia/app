@@ -16,8 +16,6 @@ class WallNotificationsTest extends WikiaBaseTest {
 		parent::setUp();
 	}
 
-/**
- */
 	public function testNotifyEveryoneForMainThread() {
 		$wn = $this->getMock('WallNotifications', array('sendEmails','addNotificationLinks'));
 
@@ -44,8 +42,6 @@ class WallNotificationsTest extends WikiaBaseTest {
 	}
 
 
-/**
- */
 	public function testNotifyEveryoneForReply() {
 		$wn = $this->getMock('WallNotifications', array('sendEmails','addNotificationLinks','getWatchlist'));
 

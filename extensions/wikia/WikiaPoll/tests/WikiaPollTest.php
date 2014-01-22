@@ -6,8 +6,6 @@ class WikiaPollTest extends WikiaBaseTest {
 		parent::setUp();
 	}
 
-/**
- */
 	public function testWikiaPollAjaxCreate() {
 		$poll = new WikiaPollAjax;
 
@@ -50,8 +48,6 @@ class WikiaPollTest extends WikiaBaseTest {
 		$this->assertContains("Question text is invalid", $result["error"], 'Create Poll with null title failed to return the expected error string');
 	}
 
-/**
- */
 	public function testWikiaPollAjaxGet() {
 
 		// Second part of test is to see if we can "get" the same poll we created
@@ -84,8 +80,6 @@ class WikiaPollTest extends WikiaBaseTest {
 		$this->assertEquals(true, $result["exists"], "Get a poll that exists");
 	}
 
-/**
- */
 	public function testWikiaPollAjaxUpdate() {
 		// Third part of test is to update the poll we've got and see if that works too
 
@@ -128,8 +122,6 @@ class WikiaPollTest extends WikiaBaseTest {
 		$this->assertEquals(true, $result["success"], "Update result is success");
 	}
 
-/**
- */
 	public function testWikiaPollAjaxVote() {
 		// Fourth part of test is to register a vote for an item
 
@@ -179,8 +171,6 @@ class WikiaPollTest extends WikiaBaseTest {
 		$result = $poll->hasVoted();
 		$this->assertInternalType("array", $result, "HasVoted result is array");
 		$this->assertEquals(true, $result['hasVoted'], "HasVoted result is true");
-/**
- */
 	}
 
 	function testDuplicateCreate() {

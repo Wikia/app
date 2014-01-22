@@ -47,8 +47,6 @@ class EditPageLayoutTest extends WikiaBaseTest {
 		$this->assertEquals($title, $editPage->getEditedTitle());
 	}
 
-/**
- */
 	public function testAddingFields() {
 		$title = Title::newFromText('Foo');
 		$editPage = $this->editPageFactory($title);
@@ -130,8 +128,6 @@ class EditPageLayoutTest extends WikiaBaseTest {
 		$wgTitle = $tempTitle;
 	}
 
-/**
- */
 	public function testEditNotices() {
 		$title = Title::newFromText('NewArticle');
 		$editPage = $this->editPageFactory($title);
