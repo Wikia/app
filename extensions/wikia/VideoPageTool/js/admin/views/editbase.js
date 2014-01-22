@@ -49,6 +49,9 @@ define( 'videopageadmin.views.editbase', [
 					this.$el.find( 'input:text, input:hidden, textarea' )
 						.val( '' );
 
+					// Also clear all error messages for better UX
+					this.validator.clearErrors();
+
 					this.$el.trigger( 'form:reset' );
 				}, this ),
 				width: 700
