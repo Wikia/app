@@ -178,6 +178,81 @@ function mapMetadataIva( $ingester, &$metadata ) {
 	}
 }
 
+/**
+ * Compare new metadata with the one from file
+ * @param array $video
+ * @param string $msg
+ * @param array $newMeta
+ * @return boolean
+ */
+function compareMetadataFile( $video, $msg, $newMeta ) {
+		// find duplicate videos from wiki
+		$duplicates = WikiaFileHelper::getDuplicateVideos( 'ooyala', $video['embed_code'], 2 );
+		if ( empty( $duplicates ) ) {
+			echo "\n\tNOTE: $msg ... File not found in DB\n";
+			return false;
+		} else if ( count( $duplicates ) > 1 ) {
+			$dupes = array();
+			foreach ( $duplicates as $dup ) {
+				$dupes[] = $dup['video_title'];
+			}
+			echo "\n\tNOTE: $msg ... (Found ".count( $duplicates )." duplicates: ".implode( ',', $dupes ).")\n";
+			return false;
+		}
+
+		// get file object
+		$title = $duplicates[0]['video_title'];
+		$file = WikiaFileHelper::getVideoFileFromTitle( $title );
+		if ( empty( $file ) ) {
+			echo "\n\tNOTE: $msg ... File not found\n";
+			return false;
+		}
+
+		$fileMeta = unserialize( $file->getMetadata() );
+		foreach ( $fileMeta as $key => $value ) {
+			if ( $key == 'ageRequired' ) {
+				$fileMeta['age_required'] = $fileMeta['ageRequired'];
+				unset( $fileMeta['ageRequired'] );
+			} else if ( $key == 'language' ) {
+				$fileMeta['lang'] = $fileMeta['language'];
+				unset( $fileMeta['language'] );
+			} else if ( $key == 'published' ) {
+				$fileMeta['published'] = date( 'Y-m-d', $fileMeta['published'] );
+			} else {
+				$keyLc = strtolower( $key );
+				if ( $key != $keyLc ) {
+					$fileMeta[$keyLc] = $fileMeta[$key];
+					unset( $fileMeta[$key] );
+				}
+			}
+		}
+
+		echo "\n\tCompare to File:\n";
+		compareMetadata( $fileMeta, $newMeta );
+
+		return true;
+}
+
+/**
+ * Compare metadata
+ * @param array $oldMeta
+ * @param array $newMeta
+ */
+function compareMetadata( $oldMeta, $newMeta ) {
+	$fields = array_unique( array_merge( array_keys( $newMeta ), array_keys( $oldMeta ) ) );
+	foreach ( $fields as $field ) {
+		if ( ( !isset( $newMeta[$field] ) || is_null( $newMeta[$field] ) ) && isset( $oldMeta[$field] ) ) {
+			echo "\t\t[DELETED] $field: ".$oldMeta[$field]."\n";
+		} else if ( isset( $newMeta[$field] ) && !isset( $oldMeta[$field] ) ) {
+			echo "\t\t[NEW] $field: $newMeta[$field]\n";
+		} else if ( strcasecmp( $oldMeta[$field], $newMeta[$field] ) == 0 ) {
+			echo "\t\t$field: $newMeta[$field]\n";
+		} else {
+			echo "\t\t[UPDATED]$field: $newMeta[$field] (Old value: ".$oldMeta[$field].")\n";
+		}
+	}
+}
+
 
 // ----------------------------- Main ------------------------------------
 
@@ -186,12 +261,13 @@ ini_set( "include_path", dirname( __FILE__ )."/../../" );
 require_once( "commandLine.inc" );
 
 if ( isset( $options['help'] ) ) {
-	die( "Usage: php mapVideoMetadataOoyalaBacklot.php [--help] [--dry-run] [--backup=path/filename] [--name=abc] [--limit=10]
+	die( "Usage: php mapVideoMetadataOoyala.php [--help] [--dry-run] [--backup=path/filename] [--name=abc] [--limit=10] [--compare]
 	--dry-run       dry run
 	--name          specific video title only (optional)
 	--iva           iva provider only
 	--limit         mapping limit
 	--backup        backup all videos data to file
+	--compare       compare new metadata with the one from file
 	--help          you are reading it right now\n\n" );
 }
 
@@ -204,6 +280,7 @@ $videoTitle = isset( $options['name'] ) ? $options['name'] : '';
 $iva = isset( $options['iva'] );
 $backupFile = isset( $options['backup'] ) ? $options['backup'] : '';
 $limit = isset( $options['limit'] ) ? $options['limit'] : 0;
+$compareWithFile = isset( $options['compare'] );
 
 $apiPageSize = 100;
 if ( !empty( $limit ) && $limit < $apiPageSize ) {
@@ -283,8 +360,8 @@ do {
 	$cnt = 0;
 	foreach ( $videos as $video ) {
 		$cnt++;
-		$title = trim( $video['name'] );
-		$msg = "[Page $page: $cnt of $total] Video: $title ({$video['embed_code']})";
+		$videoTitle = trim( $video['name'] );
+		$msg = "[Page $page: $cnt of $total] Video: $videoTitle ({$video['embed_code']})";
 		echo "\n$msg";
 
 		// skip if 'name' field exists
@@ -321,24 +398,17 @@ do {
 		}
 
 		echo " ... DONE \n\tNEW Metadata:\n";
-		$fields = array_unique( array_merge( array_keys( $newMeta ), array_keys( $video['metadata'] ) ) );
-		foreach ( $fields as $field ) {
-			if ( ( !isset( $newMeta[$field] ) || is_null( $newMeta[$field] ) ) && isset( $video['metadata'][$field] ) ) {
-				echo "\t\t[DELETED] $field: ".$video['metadata'][$field]."\n";
-			} else if ( isset( $newMeta[$field] ) && !isset( $video['metadata'][$field] ) ) {
-				echo "\t\t[NEW] $field: $newMeta[$field]\n";
-			} else if ( strcasecmp( $video['metadata'][$field], $newMeta[$field] ) == 0 ) {
-				echo "\t\t$field: $newMeta[$field]\n";
-			} else {
-				echo "\t\t[UPDATED]$field: $newMeta[$field] (Old value: ".$video['metadata'][$field].")\n";
-			}
-		}
+		compareMetadata( $video['metadata'], $newMeta );
 
 		if ( !$dryRun ) {
 			$resp = OoyalaAsset::updateMetadata( $video['embed_code'], $newMeta );
 			if ( !$resp ) {
 				$failed++;
 			}
+		}
+
+		if ( $compareWithFile ) {
+			compareMetadataFile( $video, $msg, $newMeta );
 		}
 	}
 
