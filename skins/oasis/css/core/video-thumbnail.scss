@@ -32,6 +32,7 @@
 		&:after {
 			background-image: url(/skins/oasis/images/sprite.png); /* $wgCdnStylePath */
 			background-position: -1237px 0px;
+			background-repeat: no-repeat;
 			content: "";
 			display: block;
 			height: 22px;
@@ -52,8 +53,8 @@
 			top: auto;
 
 			&:after {
-				background-position: -1244px -25px;
-				height: 13px;
+				background-position: -1244px -26px;
+				height: 15px;
 				width: 9px;
 			}
 		}
@@ -70,8 +71,8 @@
 			left: 34px;
 			top: auto;
 			&:after {
-				background-position: -1210px -79px;
-				height: 17px;
+				background-position: -1210px -81px;
+				height: 15px;
 				width: 12px;
 			}
 		}
@@ -130,6 +131,7 @@
 
 	.duration {
 		@include opacity(70);
+		background: black;
 		border-radius: 1px 0 0 0;
 		bottom: 0;
 		color: white;
