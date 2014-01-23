@@ -236,9 +236,20 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 		return $recentEditsCount;
 	}
 
+	/**
+	 * @param RecentChange|null $oRecentChange we allow it to be null because of compatibility with FounderEmailsEvent::register()
+	 *
+	 * @return bool
+	 *
+	 * @throws Exception
+	 */
 	public static function register( $oRecentChange = null ) {
 		global $wgUser, $wgCityId;
 		wfProfileIn( __METHOD__ );
+
+		if( is_null( $oRecentChange ) ) {
+			throw new \Exception( 'Invalid $oRecentChange value.' );
+		}
 
 		if ( FounderEmails::getInstance()->getLastEventType() == 'register' ) {
 			// special case: creating userpage after user registration, ignore event
