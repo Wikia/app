@@ -619,10 +619,10 @@ class GlobalWatchlistBot {
 				$aWikiBlogs[$iWikiId][] = $oResultRow;
 				$this->makeBlogsList( $aWikiDigest, $iWikiId, $oResultRow );
 			} else {
-				$oGlobalTitle = GlobalTitle::newFromText( $oResultRow->gwa_title, $oResultRow->gwa_namespace, $iWikiId );
+				$oGlobalTitle = GlobalTitle::newFromTextAndCityId( $oResultRow->gwa_title, $oResultRow->gwa_namespace, $iWikiId );
 				if ( $oGlobalTitle->exists() ) {
 					$aWikiDigest[ 'pages' ][] = array(
-						'title' => GlobalTitle::newFromText( $oResultRow->gwa_title, $oResultRow->gwa_namespace, $iWikiId ),
+						'title' => GlobalTitle::newFromTextAndCityId( $oResultRow->gwa_title, $oResultRow->gwa_namespace, $iWikiId ),
 						'revisionId' => $oResultRow->gwa_rev_id
 					);
 				} else {
@@ -698,7 +698,7 @@ class GlobalWatchlistBot {
 					);
 					$aWikiDigest[ 'blogs' ][ $blogTitle ] = array (
 						'comments' => intval( $oRow->cnt ),
-						'blogpage' => GlobalTitle::newFromText( $blogTitle, NS_BLOG_ARTICLE, $iWikiId ),
+						'blogpage' => GlobalTitle::newFromTextAndCityId( $blogTitle, NS_BLOG_ARTICLE, $iWikiId ),
 						'own_comments' => 0
 					);
 					

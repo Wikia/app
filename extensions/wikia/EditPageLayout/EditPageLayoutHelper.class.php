@@ -115,7 +115,7 @@ class EditPageLayoutHelper {
 		$this->addJsVariableRef('wgEditPageSection', $this->editPage->section);
 
 		// data for license module (BugId:6967)
-		$titleLicensing = GlobalTitle::newFromText( 'Community_Central:Licensing', null, 177 );
+		$titleLicensing = GlobalTitle::newFromTextAndCityId( 'Community_Central:Licensing', null, 177 );
 		$this->addJsVariable('wgEditPageLicensingUrl', $titleLicensing->getFullUrl());
 		$this->addJsVariable('wgRightsText', $this->app->wg->RightsText);
 

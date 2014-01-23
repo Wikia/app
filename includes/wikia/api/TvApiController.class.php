@@ -81,7 +81,7 @@ class TvApiController extends WikiaApiController {
 
 	protected function createTitle($text)
 	{
-		return GlobalTitle::newFromText( $text, NS_MAIN, $this->wikiId );
+		return GlobalTitle::newFromTextAndCityId( $text, NS_MAIN, $this->wikiId );
 	}
 
 	protected function getTitle( $text ) {

@@ -161,7 +161,7 @@ class PromoteImageReviewTask extends BatchTask {
 		$retval = "";
 
 		$dbname = WikiFactory::IDtoDB($sourceWikiId);
-		$imageTitle = GlobalTitle::newFromId($imageId, $sourceWikiId);
+		$imageTitle = GlobalTitle::newFromIdAndCityId($imageId, $sourceWikiId);
 
 		$sourceImageUrl = null;
 		if($imageTitle instanceof GlobalTitle) {

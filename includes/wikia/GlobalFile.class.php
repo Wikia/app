@@ -51,7 +51,7 @@ class GlobalFile extends WikiaObject {
 	 * @param int $wikiId city ID
 	 */
 	static public function newFromText($title, $wikiId) {
-		$title = GlobalTitle::newFromText($title, NS_FILE, $wikiId);
+		$title = GlobalTitle::newFromTextAndCityId($title, NS_FILE, $wikiId);
 		return new self($title);
 	}
 

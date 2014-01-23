@@ -1005,7 +1005,7 @@ class MediaWikiService
 					'amlang'      => $this->getGlobalForWiki( 'wgLanguageCode', $wikiId )
 					) 
 			);
-		$title = \GlobalTitle::newFromText( $response['query']['allmessages'][0]['*'], NS_MAIN, $wikiId );
+		$title = \GlobalTitle::newFromTextAndCityId( $response['query']['allmessages'][0]['*'], NS_MAIN, $wikiId );
 		if ( $title->isRedirect() ) {
 			$title = $title->getRedirectTarget();
 		}

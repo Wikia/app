@@ -86,7 +86,7 @@ foreach ( $aAllFiles as $key => $fileRow ) {
 
 			while( $file = $dbw->fetchObject( $rows ) ) {
 				$articleId = $file->il_from;
-				$oTitle = GlobalTitle::newFromId($articleId, $fileRow->wiki_id); //::newFromId( $articleId );
+				$oTitle = GlobalTitle::newFromIdAndCityId($articleId, $fileRow->wiki_id);
 
 				echo "* " . $oTitle->getFullURL() . " [contains File:{$fileRow->img_name} ] \n";
 			}

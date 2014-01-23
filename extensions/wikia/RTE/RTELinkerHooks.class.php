@@ -107,9 +107,11 @@ class RTELinkerHooks extends Linker {
 	/**
 	 * Returns placeholder for broken image link
 	 *
-	 * This one is called directly by RTEParser::makeImage()
+	 * This one is called directly by RTEParser::makeImage() and it's different than Linker::makeBrokenImageLinkObj()
+	 * because it has one more parameter and if we leave here RTELinkerHooks::makeBrokenImageLinkObj() overwritten with
+	 * this one additional parameter it will cause PHP Strict warning
 	 */
-	public static function makeBrokenImageLinkObj(Title $title, $html = '', $query = '', $trail = '', $prefix = '', $time = false, $wikitextIdx = null) {
+	public static function makeBrokenImageLinkObject(Title $title, $html = '', $query = '', $trail = '', $prefix = '', $time = false, $wikitextIdx = null) {
 		wfProfileIn(__METHOD__);
 
 		// try to resolve internal links in broken image caption (RT #90616)

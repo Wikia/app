@@ -32,7 +32,7 @@ class FounderEmailsCompleteDigestEvent extends FounderEmailsEvent {
 		foreach ($cityList as $cityID) {
 			$user_ids = $wikiService->getWikiAdminIds( $cityID );
 			$foundingWiki = WikiFactory::getWikiById( $cityID );
-			$page_url = GlobalTitle::newFromText( 'WikiActivity', NS_SPECIAL, $cityID )->getFullUrl();
+			$page_url = GlobalTitle::newFromTextAndCityId( 'WikiActivity', NS_SPECIAL, $cityID )->getFullUrl();
 
 			$emailParams = array(
 				'$WIKINAME' => $foundingWiki->city_title,

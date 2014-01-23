@@ -21,7 +21,7 @@ $dbr = wfGetDB( DB_SLAVE, array(), $wgExternalDatawareDB );
 $rows = $dbr->query( "SELECT * FROM video_interwiki" );
 
 while( $file = $dbr->fetchObject( $rows ) ) {
-	$title = GlobalTitle::newFromId( $file->article_id, $file->city_id );
+	$title = GlobalTitle::newFromIdAndCityId( $file->article_id, $file->city_id );
 	if ( $title )
 		echo $title->getFullURL() . "\n";
 }

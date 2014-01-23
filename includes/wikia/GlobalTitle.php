@@ -46,8 +46,14 @@ class GlobalTitle extends Title {
 
 	/**
 	 * static constructor, Create new Title from name of page
+	 *
+	 * @param String $text Title of an article
+	 * @param Integer $namespace
+	 * @param Integer $city_id id of a wiki on which the article is written
+	 *
+	 * @return GlobalTitle
 	 */
-	public static function newFromText( $text, $namespace, $city_id ) {
+	public static function newFromTextAndCityId( $text, $namespace = NS_MAIN, $city_id ) {
 
 		$filteredText = Sanitizer::decodeCharReferences( $text );
 		$title = new GlobalTitle();
@@ -68,7 +74,7 @@ class GlobalTitle extends Title {
 	 * @param int city_id
 	 * @return Title the new object
 	 */
-	public static function newMainPage( $city_id ) {
+	public static function newMainPageByCityId( $city_id ) {
 		// sure hope this redirects for the most part
 		$title = self::newFromText( 'Main Page', NS_MAIN, $city_id );
 		return $title;
@@ -77,7 +83,7 @@ class GlobalTitle extends Title {
 	/**
 	 * static constructor, Create new Title from id of page
 	 */
-	public static function newFromId( $id, $city_id, $dbname = "" ) {
+	public static function newFromIdAndCityId( $id, $city_id, $dbname = "" ) {
 		global $wgMemc;
 		$title = null;
 
@@ -98,7 +104,7 @@ class GlobalTitle extends Title {
 		}
 
 		if ( isset( $res['title'] ) && isset($res['namespace']) ) {
-			$title = GlobalTitle::newFromText( $res['title'], $res['namespace'], $city_id );
+			$title = GlobalTitle::newFromTextAndCityId( $res['title'], $res['namespace'], $city_id );
 		} else {
 			$title = NULL;
 		}
@@ -113,7 +119,7 @@ class GlobalTitle extends Title {
 	public static function newFromTextCached( $text, $namespace, $city_id ) {
 		if ( !isset( self::$cachedObjects[$city_id][$namespace][$text] ) ) {
 			self::$cachedObjects[$city_id][$namespace][$text] =
-				GlobalTitle::newFromText( $text, $namespace, $city_id );
+				GlobalTitle::newFromTextAndCityId( $text, $namespace, $city_id );
 		}
 		return self::$cachedObjects[$city_id][$namespace][$text];
 	}
@@ -436,7 +442,7 @@ class GlobalTitle extends Title {
 				);
 
 				if ( $row ) {
-					$this->mRedirectTarget = GlobalTitle::newFromText($row->rd_title,$row->rd_namespace,$this->mCityId);
+					$this->mRedirectTarget = GlobalTitle::newFromTextAndCityId($row->rd_title,$row->rd_namespace,$this->mCityId);
 				}
 			}
 		}

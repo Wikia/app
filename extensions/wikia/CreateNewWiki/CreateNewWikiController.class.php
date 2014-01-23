@@ -238,7 +238,7 @@ class CreateNewWikiController extends WikiaController {
 				$this->status = 'ok';
 				$this->siteName = $createWiki->getWikiInfo('sitename');
 				$this->cityId = $cityId;
-				$finishCreateTitle = GlobalTitle::newFromText("FinishCreate", NS_SPECIAL, $cityId);
+				$finishCreateTitle = GlobalTitle::newFromTextAndCityId("FinishCreate", NS_SPECIAL, $cityId);
 				$this->finishCreateUrl = empty($wgDevelDomains) ? $finishCreateTitle->getFullURL() : str_replace('.wikia.com', '.'.$wgDevelDomains[0], $finishCreateTitle->getFullURL());
 			}
 		}

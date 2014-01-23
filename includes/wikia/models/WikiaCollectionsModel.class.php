@@ -26,7 +26,7 @@ class WikiaCollectionsModel extends WikiaModel {
 		foreach($this->getList($langCode) as $collection) {
 			$this->wg->Memc->delete($visualization->getCollectionCacheKey($collection['id']));
 
-			$title = GlobalTitle::newMainPage($corporateModel->getCorporateWikiIdByLang($langCode));
+			$title = GlobalTitle::newMainPageByCityId($corporateModel->getCorporateWikiIdByLang($langCode));
 			$title->purgeSquid();
 			Wikia::log(__METHOD__, '', 'Purged memcached for collection #' . $collection['id']);
 		}

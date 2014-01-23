@@ -562,7 +562,7 @@ class WikiaHomePageController extends WikiaController {
 
 		$wordmarkUrl = '';
 		try {
-			$title = GlobalTitle::newFromText('Wiki-wordmark.png', NS_FILE, $wikiId);
+			$title = GlobalTitle::newFromTextAndCityId('Wiki-wordmark.png', NS_FILE, $wikiId);
 			if ( $title !== null ) {
 				$file = new GlobalFile($title);
 				if ( $file !== null ) {

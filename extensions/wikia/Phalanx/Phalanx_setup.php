@@ -128,7 +128,7 @@ function efLoadPhalanxLink( $id, $nt, &$links ) {
 	global $wgUser;
 	if( $wgUser->isAllowed( 'phalanx' ) ) {
 		$links[] = RequestContext::getMain()->getSkin()->makeKnownLinkObj(
-			GlobalTitle::newFromText('Phalanx', NS_SPECIAL, 177),
+			GlobalTitle::newFromTextAndCityId('Phalanx', NS_SPECIAL, 177),
 			'PhalanxBlock',
 			wfArrayToCGI( array('type'=>'8', 'target'=>$nt->getText(), 'wpPhalanxCheckBlocker'=>$nt->getText() ) )
 		);

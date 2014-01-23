@@ -94,7 +94,7 @@ function axWFactoryGetVariable() {
 			else {
 				if (preg_match("/^MediaWiki:.*$/", $name, $matches2)) {
 					$r_pages[] = array(
-									"url" => GlobalTitle::newFromText( $name, 0, $city_id )->getFullURL()
+									"url" => GlobalTitle::newFromTextAndCityId( $name, 0, $city_id )->getFullURL()
 									);
 				}
 			}

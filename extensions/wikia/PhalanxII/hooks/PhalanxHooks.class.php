@@ -21,7 +21,7 @@ class PhalanxHooks extends WikiaObject {
 
 		if ( $user->isAllowed( 'phalanx' ) ) {
 			$links[] = Linker::makeKnownLinkObj(
-				GlobalTitle::newFromText( 'Phalanx', NS_SPECIAL, WikiFactory::COMMUNITY_CENTRAL ),
+				GlobalTitle::newFromTextAndCityId( 'Phalanx', NS_SPECIAL, WikiFactory::COMMUNITY_CENTRAL ),
 				'PhalanxBlock',
 				wfArrayToCGI(
 					[

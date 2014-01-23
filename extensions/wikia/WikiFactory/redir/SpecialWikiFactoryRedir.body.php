@@ -17,7 +17,7 @@ class WikiFactoryRedirPage extends UnlistedSpecialPage {
 		global $wgDBname;
 		// $wgOut->addHtml( 'The dbname of this wiki is ['. $wgDBname ."]<br/>\n" );
 
-		$WF = GlobalTitle::newFromText('WikiFactory/db:'. $wgDBname, NS_SPECIAL, 177);
+		$WF = GlobalTitle::newFromTextAndCityId('WikiFactory/db:'. $wgDBname, NS_SPECIAL, 177);
 		$url = $WF->getFullURL();
 
 		$wgOut->redirect( $url );

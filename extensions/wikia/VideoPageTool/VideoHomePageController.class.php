@@ -67,7 +67,7 @@ class VideoHomePageController extends WikiaController {
 		$partners[ 'realgravity' ] = array( 'label' => 'RealGravity' );
 
 		foreach( $partners as &$partner ) {
-			$partner['url'] = GlobalTitle::newFromText( $partner['label'], NS_CATEGORY, VideoHandlerHooks::VIDEO_WIKI )->getFullUrl();
+			$partner['url'] = GlobalTitle::newFromTextAndCityId( $partner['label'], NS_CATEGORY, VideoHandlerHooks::VIDEO_WIKI )->getFullUrl();
 		}
 
 		// sort by keys, views need to be alphabetized

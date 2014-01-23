@@ -48,7 +48,7 @@ class CoppaImageReviewHelper extends WikiaModel {
 			$isThumb = true;
 			if ( empty( $img['src'] ) ) {
 				// If we don't have a thumb by this point, we still need to display something, fall back to placeholder
-				$globalTitle = GlobalTitle::newFromId( $row->page_id, $row->wiki_id );
+				$globalTitle = GlobalTitle::newFromIdAndCityId( $row->page_id, $row->wiki_id );
 				if ( is_object( $globalTitle ) ) {
 					$img['page'] = $globalTitle->getFullUrl();
 					// @TODO this should be taken from the code instead of being hardcoded

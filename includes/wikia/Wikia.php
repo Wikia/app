@@ -1018,7 +1018,7 @@ class Wikia {
 		$cityId = ( $wgCityId == 1927 ) ? $wgCityId : 177;
 		$name = $to->name;
 
-		$oTitle = GlobalTitle::newFromText('Unsubscribe', NS_SPECIAL, $cityId);
+		$oTitle = GlobalTitle::newFromTextAndCityId('Unsubscribe', NS_SPECIAL, $cityId);
 		if ( !is_object( $oTitle ) ) {
 			return true;
 		}
@@ -1928,7 +1928,7 @@ class Wikia {
 		global $wgUser, $wgCityId;
 		if ( $wgCityId !== '177' && $id !== 0 && $wgUser->isAllowed( 'lookupuser' ) ) {
 			$links[] = Linker::linkKnown(
-				GlobalTitle::newFromText( 'LookupUser', NS_SPECIAL, 177 ),
+				GlobalTitle::newFromTextAndCityId( 'LookupUser', NS_SPECIAL, 177 ),
 				wfMsgHtml( 'lookupuser' ),
 				array(),
 				array( 'target' => $title->getText() )

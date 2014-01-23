@@ -236,8 +236,8 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 		return $recentEditsCount;
 	}
 
-	public static function register( $oRecentChange ) {
-		global $wgUser, $wgCityId;
+	public static function register( $oRecentChange = null ) {
+		global $wgUser;
 		wfProfileIn( __METHOD__ );
 
 		if ( FounderEmails::getInstance()->getLastEventType() == 'register' ) {

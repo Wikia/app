@@ -102,7 +102,7 @@ class WikiaApiQueryLastEditors extends ApiQueryBase {
 			# page
 			$url = "";
 			if ( $row->event_type == 1 || $row->event_type == 2 ) { // edit or create
-				$oGTitle = GlobalTitle::newFromId( $row->page_id, $row->wiki_id );
+				$oGTitle = GlobalTitle::newFromIdAndCityId( $row->page_id, $row->wiki_id );
 				if ( is_object( $oGTitle ) ) {
 					$url = $oGTitle->getFullURL();
 				}

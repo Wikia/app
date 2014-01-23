@@ -20,12 +20,12 @@ function wfSigSetup(&$parser) {
 }
 
 function wfMakeStaffSignature( $contents, $attributes, $parser ) {
-	$title = GlobalTitle::newFromText('Staff', 4 /*project*/, 177);
+	$title = GlobalTitle::newFromTextAndCityId('Staff', 4 /*project*/, 177);
 	return wfMakeSignatureCommon( $title->getFullURL(), "This user is a member of Wikia Staff" );
 }
 
 function wfMakeHelperSignature( $contents, $attributes, $parser ) {
-	$title = GlobalTitle::newFromText('Helper_Group', 12 /*help*/, 177);
+	$title = GlobalTitle::newFromTextAndCityId('Helper_Group', 12 /*help*/, 177);
 	return wfMakeSignatureCommon( $title->getFullURL(), "This user is a Wikia Helper" );
 }
 

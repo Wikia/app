@@ -156,8 +156,8 @@ class WikiFactoryReporter extends SpecialPage
 		else
 		{
 			#we're away from home, so make sure the links link back right
-			$WF_title  = GlobalTitle::newFromText('WikiFactory',      NS_SPECIAL, 177);
-			$wie_title = GlobalTitle::newFromText('WhereIsExtension', NS_SPECIAL, 177);
+			$WF_title  = GlobalTitle::newFromTextAndCityId('WikiFactory',      NS_SPECIAL, 177);
+			$wie_title = GlobalTitle::newFromTextAndCityId('WhereIsExtension', NS_SPECIAL, 177);
 		}
 
 		$wie_query = array(

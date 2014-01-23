@@ -51,7 +51,7 @@ function efCreateSearchForm() {
 	global $wgHelpWikiId;
 
 	if ( !empty( $wgHelpWikiId ) ) {
-		$helpSearchUrl = GlobalTitle::newFromText( 'Search', NS_SPECIAL, $wgHelpWikiId )->getFullURL();
+		$helpSearchUrl = GlobalTitle::newFromTextAndCityId( 'Search', NS_SPECIAL, $wgHelpWikiId )->getFullURL();
 	} else {
 		$helpSearchUrl = SpecialPage::getTitleFor( 'Search' )->getLocalURL();
 	}

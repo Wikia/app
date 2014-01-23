@@ -554,7 +554,7 @@ class WikiaHomePageHelper extends WikiaModel {
 	}
 
 	protected function getNewFilesUrl($wikiId) {
-		$globalNewFilesTitle = GlobalTitle::newFromText('NewFiles', NS_SPECIAL, $wikiId);
+		$globalNewFilesTitle = GlobalTitle::newFromTextAndCityId('NewFiles', NS_SPECIAL, $wikiId);
 		if ($globalNewFilesTitle instanceof Title) {
 			$newFilesUrl = $globalNewFilesTitle->getFullURL();
 			return $newFilesUrl;

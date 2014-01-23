@@ -396,7 +396,7 @@ class WikisApiController extends WikiaApiController {
 	}
 
 	protected function getWikiWordmarkImage( $id ) {
-		$title = GlobalTitle::newFromText( static::WORDMARK, NS_FILE, $id );
+		$title = GlobalTitle::newFromTextAndCityId( static::WORDMARK, NS_FILE, $id );
 		if ( $title !== null ) {
 			$file = new GlobalFile( $title );
 			if ( $file !== null && $file->exists() ) {

@@ -2639,7 +2639,7 @@ class MediaWikiServiceTest extends BaseTest
 		    ->will   ( $this->returnValue( $title ) )
 		;
 		$this->mockClass( 'ApiService', $apiservice );
-		$this->mockClass( 'GlobalTitle', $title, 'newFromText' );
+		$this->mockClass( 'GlobalTitle', $title, 'newFromTextAndCityId' );
 		$reflGet = new ReflectionMethod( 'Wikia\Search\MediaWikiService', 'getMainPageTitleForWikiId' );
 		$reflGet->setAccessible( true );
 		$result = $reflGet->invoke( $service, 123 );

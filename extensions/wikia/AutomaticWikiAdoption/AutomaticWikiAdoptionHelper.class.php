@@ -173,9 +173,9 @@ class AutomaticWikiAdoptionHelper {
 					// get email params
 					$magicwords = array('#WIKINAME' => $wiki_name);
 					$admin_name = $admin->getName();
-					$globalTitleUserRights = GlobalTitle::newFromText('UserRights', -1, $wikiId);
+					$globalTitleUserRights = GlobalTitle::newFromTextAndCityId('UserRights', -1, $wikiId);
 					$specialUserRightsUrl = $globalTitleUserRights->getFullURL();
-					$globalTitlePreferences = GlobalTitle::newFromText('Preferences', -1, $wikiId);
+					$globalTitlePreferences = GlobalTitle::newFromTextAndCityId('Preferences', -1, $wikiId);
 					$specialPreferencesUrl = $globalTitlePreferences->getFullURL();
 
 					//sent e-mail

@@ -911,7 +911,7 @@ class Linker {
 	 * @param $time Boolean: a file of a certain timestamp was requested
 	 * @return String
 	 */
-	public static function makeBrokenImageLinkObj( $title, $label = '', $query = '', $unused1 = '', $unused2 = '', $time = false ) {
+	public static function makeBrokenImageLinkObj( Title $title, $label = '', $query = '', $unused1 = '', $unused2 = '', $time = false ) {
 		global $wgEnableUploads, $wgUploadMissingFileUrl, $wgUploadNavigationUrl;
 		if ( ! $title instanceof Title ) {
 			return "<!-- ERROR -->" . htmlspecialchars( $label );
