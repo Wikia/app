@@ -98,7 +98,7 @@ class WikiFactory {
 	/**
 	 * list of valid database clusters used for creating wikis
 	 */
-	static public $clusters = array( "c1", "c2", "c3", "c4" );
+	static public $clusters = array( "c1", "c2", "c3", "c4", "c5", "c6" );
 
 	static public $levels = array(
 		1 => "read only",
