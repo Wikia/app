@@ -95,11 +95,24 @@ class GlobalTitle extends Title {
 	}
 
 	/**
-	 * static constructor, Create new Title from id of page
+	 * @desc static constructor, Create new Title from id of page
+	 *
+	 * @param Integer $id
+	 * @param Integer $city_id
+	 * @param String $dbname
+	 * 
+	 * @throws Exception
+	 *
+	 * @returns GlobalTitle|null
 	 */
 	public static function newFromId( $id, $city_id = 0, $dbname = "" ) {
 		global $wgMemc;
 		$title = null;
+
+		if( $city_id <= 0 ) {
+		// we allow to pass 0 in the method definition because of Strict Compatibility with Title::newFromText()
+			throw new \Exception( 'Invalid $city_id.' );
+		}
 
 		$memkey = sprintf( "GlobalTitle:%d:%d", $id, $city_id );
 		$res = $wgMemc->get( $memkey );
