@@ -71,11 +71,6 @@ class WikiaTestSpeedAnnotator {
 		file_put_contents( $filePath, $fileContents );
 	}
 
-	private static function setTimerResolution() {
-
-		self::$timerResolution = strlen( substr( strrchr( self::SLOW_TEST_THRESHOLD, "." ), 1 ) ) + 2;
-	}
-
 	private static function isMarkedAsSlow( $annotations ) {
 		return !empty( $annotations['method'] ) && !empty( $annotations['method']['group'] )
 		&& in_array( 'Slow', $annotations['method']['group'] );
