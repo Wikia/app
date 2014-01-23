@@ -107,7 +107,11 @@ module.exports = function(config) {
 			/*
 			 * VideoPageTool: Admin Module
 			 */
+
+			// Collections
 			'extensions/wikia/VideoPageTool/js/admin/collections/category.js',
+			'extensions/wikia/VideoPageTool/js/admin/collections/categorydata.js',
+			// Views
 			'extensions/wikia/VideoPageTool/js/admin/views/autocomplete.js',
 
 			/*
