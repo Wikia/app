@@ -10,8 +10,8 @@ class WikiaTestSpeedAnnotator {
 	const REGEX_SLOW_GROUP = '/^\s*\*\s*@group\s+Slow\s*\n/m';
 	const REGEX_SLOW_EXEC_TIME = '/^\s*\*\s*@slowExecutionTime\s+([0-9\.]+\s*(ms?)\s*\n)/m';
 	const REGEX_EMPTY_DOCCOMMENT = '/^\s*\/\*\*[\s|\*]*\//';
-	const REGEX_METHOD_START = '/(\s*/\*(.*?)\*/)?(%s\s*.*function\s+%s\s*\()/sm';
-	const REGEX_DOCCOMMENT_FOR_METHOD = '/^(\s*).*function\s+%s\s*\(/m';
+	const REGEX_DOCCOMMENT_WITH_METHOD = '/(\s*/\*(.*?)\*/)?(%s\s*.*function\s+%s\s*\()/sm';
+	const REGEX_INDENTATION_FOR_METHOD = '/^(\s*).*function\s+%s\s*\(/m';
 
 	public static function initialize() {
 		self::setTimerResolution();
@@ -124,10 +124,10 @@ class WikiaTestSpeedAnnotator {
 
 	private static function replaceDocCommentForMethod($sourceCode, $methodName, $newDocComment) {
 
-		$methodStartRegex = sprintf(self::REGEX_METHOD_START, PHP_EOL, $methodName);
+		$docCommentWithMethodRegex = sprintf(self::REGEX_DOCCOMMENT_WITH_METHOD, PHP_EOL, $methodName);
 
-		// replace old DocComments and method declaration with new DocComments and method declaration
-		return preg_replace( $methodStartRegex, PHP_EOL . PHP_EOL . $newDocComment . '\2', $sourceCode );
+		// replace old DocComment and method declaration with new DocComment and method declaration
+		return preg_replace( $docCommentWithMethodRegex, PHP_EOL . PHP_EOL . $newDocComment . '\2', $sourceCode );
 	}
 
 	private static function createDocComment( $indentation, $executionTime ) {
@@ -150,7 +150,7 @@ class WikiaTestSpeedAnnotator {
 	private static function getIndentation($sourceCode, $methodName) {
 		$matches = null;
 
-		$methodWithDocCommentRegex = sprintf( self::REGEX_DOCCOMMENT_FOR_METHOD, $methodName );
+		$methodWithDocCommentRegex = sprintf( self::REGEX_INDENTATION_FOR_METHOD, $methodName );
 
 		if (preg_match_all($methodWithDocCommentRegex, $sourceCode, $matches) > 0) {
 			return $matches[0][1];
