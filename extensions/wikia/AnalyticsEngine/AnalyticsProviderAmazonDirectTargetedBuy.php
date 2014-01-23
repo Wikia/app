@@ -34,7 +34,7 @@ SCRIPT;
 	}
 
 	public function getSetupHtml($params = array()) {
-		global $wgAmazonDirectTargetedBuyCountries;
+		global $wgAmazonDirectTargetedBuyCountries, $wgAmazonDirectTargetedBuyCountriesDefault;
 
 		static $called = false;
 		$code = '';
@@ -42,13 +42,17 @@ SCRIPT;
 		if (!$called && self::isEnabled()) {
 			$called = true;
 			$countriesJS = [];
-			$amazonCountries = $wgAmazonDirectTargetedBuyCountries;
 
-			if (!$amazonCountries) {
+			$amazonCountries = $wgAmazonDirectTargetedBuyCountries;
+			if (empty($amazonCountries)) {
 				// If the variable is not set for given wiki, use the value from the community wiki
 				$amazonCountries = WikiFactory::getVarValueByName(
 					'wgAmazonDirectTargetedBuyCountries', Wikia::COMMUNITY_WIKI_ID
 				);
+			}
+			if (empty($amazonCountries)) {
+				// If the variable is set nor for given wiki neither for community, use the default value
+				$amazonCountries = $wgAmazonDirectTargetedBuyCountriesDefault;
 			}
 
 			if (is_array($amazonCountries)) {
