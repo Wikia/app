@@ -7,8 +7,11 @@ class WikiaTestSpeedAnnotator {
 	private static $methods = [ ];
 	private static $timerResolution = null;
 
-	const REGEX_SLOW_GROUP     = '/^\s*\*\s*@group\s+Slow\s*\n/m';
+	const REGEX_SLOW_GROUP = '/^\s*\*\s*@group\s+Slow\s*\n/m';
 	const REGEX_SLOW_EXEC_TIME = '/^\s*\*\s*@slowExecutionTime\s+([0-9\.]+\s*(ms?)\s*\n)/m';
+	const REGEX_EMPTY_DOCCOMMENT = '/^\s*\/\*\*[\s|\*]*\//';
+	const REGEX_DOCCOMMENT_WITH_METHOD = '/(\s*/\*(.*?)\*/)?(%s\s*.*function\s+%s\s*\()/sm';
+	const REGEX_INDENTATION_FOR_METHOD = '/^(\s*).*function\s+%s\s*\(/m';
 
 	public static function initialize() {
 		self::setTimerResolution();
@@ -65,7 +68,7 @@ class WikiaTestSpeedAnnotator {
 
 	private static function cleanupEmptyDocComments( $filePath ) {
 		$fileContents = file_get_contents( $filePath );
-		$fileContents = preg_replace( '/^\s*\/\*\*[\s|\*]*\//', '', $fileContents );
+		$fileContents = preg_replace( self::REGEX_EMPTY_DOCCOMMENT, '', $fileContents );
 		file_put_contents( $filePath, $fileContents );
 	}
 
@@ -79,6 +82,9 @@ class WikiaTestSpeedAnnotator {
 		&& in_array( 'Slow', $annotations['method']['group'] );
 	}
 
+	/**
+	 * Order self::$methods values by filePath DESC and then by lineNumber DESC
+	 */
 	private static function sortMethods() {
 		uasort( self::$methods, function ( $a, $b ) {
 			return $a['filePath'] == $b['filePath'] ? ( ( $a['lineNumber'] > $b['lineNumber'] ) ? -1 : 1 )
@@ -117,38 +123,36 @@ class WikiaTestSpeedAnnotator {
 	}
 
 	private static function replaceDocCommentForMethod($sourceCode, $methodName, $newDocComment) {
-		$functionStartRegex = '/(\s*/\*(.*?)\*/)?(' . "\n" . '\s*.*function\s+' . $methodName . '\s*\()/sm';
 
-		// replace old DocComments and method declaration with new DocComments and method declaration
-		return preg_replace( $functionStartRegex, "\n\n" . $newDocComment . "\\2", $sourceCode );
+		$docCommentWithMethodRegex = sprintf(self::REGEX_DOCCOMMENT_WITH_METHOD, PHP_EOL, $methodName);
+
+		// replace old DocComment and method declaration with new DocComment and method declaration
+		return preg_replace( $docCommentWithMethodRegex, PHP_EOL . PHP_EOL . $newDocComment . '\2', $sourceCode );
 	}
 
 	private static function createDocComment( $indentation, $executionTime ) {
-		$docComment = [
-			"/**\n",
-			" * @group Slow\n",
-			" * @slowExecutionTime " . $executionTime . " ms\n */\n"
-		];
+		return self::createDocCommentAnnotation( $indentation, $executionTime ) . $indentation . ' */'.PHP_EOL;
+	}
 
-		return $indentation . implode( $indentation, $docComment );
+	private static function createDocCommentAnnotation( $indentation, $executionTime ) {
+		return $indentation . '/**'.PHP_EOL
+				 . $indentation . ' * @group Slow'.PHP_EOL
+				 . $indentation . ' * @slowExecutionTime ' . $executionTime . ' ms'.PHP_EOL;
 	}
 
 	private static function updateDocComment( $indentation, $docComment, $executionTime ) {
 		$docComment = self::removeSlowAnnotationFromDocComment( $docComment );
+		$docCommentAnnotation = self::createDocCommentAnnotation( $indentation, $executionTime );
 
-		$slowGroupAnnotation = '@group Slow';
-		$slowTimeAnnotation  = '@slowExecutionTime ' . $executionTime . ' ms';
-
-		$docComment = str_replace( '/**', "/**\n" . $indentation . " * " . $slowTimeAnnotation, $docComment );
-		$docComment = str_replace( '/**', "/**\n" . $indentation . " * " . $slowGroupAnnotation, $docComment );
-
-		return $docComment;
+		return str_replace( '/**', $docCommentAnnotation, $docComment );
 	}
 
 	private static function getIndentation($sourceCode, $methodName) {
 		$matches = null;
 
-		if (preg_match_all('/^(\s*).*function ' . $methodName . '\(/m', $sourceCode, $matches) > 0) {
+		$methodWithDocCommentRegex = sprintf( self::REGEX_INDENTATION_FOR_METHOD, $methodName );
+
+		if (preg_match_all($methodWithDocCommentRegex, $sourceCode, $matches) > 0) {
 			return $matches[0][1];
 		} else {
 			return '';
