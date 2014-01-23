@@ -1,4 +1,4 @@
-/*global describe, it, expect, beforeEach, modules */
+/*global describe, it, expect, beforeEach, modules, spyOn */
 describe( 'VideoPageTool: Admin Category Collection ( Backbone ):', function() {
 	'use strict';
 	var CategoryCollection,
@@ -6,6 +6,8 @@ describe( 'VideoPageTool: Admin Category Collection ( Backbone ):', function() {
 
 	beforeEach( function() {
 		CategoryCollection = modules[ 'videopageadmin.collections.category' ]();
+		// suppresses xhr
+		spyOn( CategoryCollection.prototype, 'fetch' );
 		instance = new CategoryCollection();
 	} );
 
