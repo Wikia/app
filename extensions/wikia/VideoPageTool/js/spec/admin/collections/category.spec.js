@@ -68,18 +68,19 @@ describe( 'VideoPageTool: Admin Category Collection ( Backbone ):', function() {
 	} );
 
 	it( 'autocomplete() should only accept strings', function() {
+		var error = new TypeError( 'value must be a String' );
 		expect( function() {
 			instance.autocomplete( 0 );
-		} ).toThrow( new TypeError( 'value must be a String' ) );
+		} ).toThrow( error );
 		expect( function() {
 			instance.autocomplete( undefined );
-		} ).toThrow( new TypeError( 'value must be a String' ) );
+		} ).toThrow( error );
 		expect( function() {
 			instance.autocomplete( null );
-		} ).toThrow( new TypeError( 'value must be a String' ) );
+		} ).toThrow( error );
 		expect( function() {
 			instance.autocomplete( {} );
-		} ).toThrow( new TypeError( 'value must be a String' ) );
+		} ).toThrow( error );
 	} );
 
 	it( 'parse() should store the raw response', function() {

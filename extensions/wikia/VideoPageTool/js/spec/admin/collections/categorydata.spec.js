@@ -63,17 +63,18 @@ describe( 'VideoPageTool: Admin CategoryData Collection ( Backbone ):', function
 	} );
 
 	it( 'setCategory() to throw TypeError on non-String arguments', function() {
+		var error = new TypeError( 'name is not a String' );
 		expect( function() {
 			instance.setCategory( 0 );
-		} ).toThrow( new TypeError( 'name is not a String' ) );
+		} ).toThrow( error );
 		expect( function() {
 			instance.setCategory( NaN );
-		} ).toThrow( new TypeError( 'name is not a String' ) );
+		} ).toThrow( error );
 		expect( function() {
 			instance.setCategory( undefined );
-		} ).toThrow( new TypeError( 'name is not a String' ) );
+		} ).toThrow( error );
 		expect( function() {
 			instance.setCategory( {} );
-		} ).toThrow( new TypeError( 'name is not a String' ) );
+		} ).toThrow( error );
 	} );
 } );
