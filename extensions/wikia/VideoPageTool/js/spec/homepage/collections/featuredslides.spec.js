@@ -13,10 +13,10 @@ describe( 'VideoPageAdmin FeaturedSlidesCollection ( Backbone ):', function() {
 		expect( typeof FeaturedSlidesCollection ).toBe( 'function' );
 	} );
 
-	it( 'should construct be newable', function() {
+	it( 'should be instantiated into an object', function() {
 		expect( typeof instance ).toBe( 'object' );
 	} );
-  
+
 	it( 'should be an instance of Backbone.Collection', function() {
 		expect( instance instanceof Backbone.Collection ).toBe( true );
 	} );
