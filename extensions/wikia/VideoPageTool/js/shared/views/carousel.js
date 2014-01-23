@@ -54,8 +54,9 @@ define( 'shared.views.carousel', [
 					} );
 				},
 				beforeUpdate: function() {
-					if ( self.$( '.ellipses' ).length ) {
-						self.$( '.ellipses' ).remove();
+					var $ellipses = self.$( '.ellipses' );
+					if ( $ellipses.length ) {
+						$ellipses.remove();
 					}
 				}
 			} );

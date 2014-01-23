@@ -63,7 +63,9 @@ define( 'videohomepage.views.featured', [
 
 			render: function() {
 				var $ellipses = this.$( '.ellipses' );
-				if ( $ellipses.length ) { $ellipses.remove(); }
+				if ( $ellipses.length ) {
+					$ellipses.remove();
+				}
 				this.$thumbs.find( '.title' ).ellipses( { maxLines: 2 } );
 			},
 
