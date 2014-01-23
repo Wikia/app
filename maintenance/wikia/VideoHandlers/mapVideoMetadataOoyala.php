@@ -22,6 +22,26 @@ function backupFile( $filename, $msg, $video ) {
 }
 
 /**
+ * Get std name
+ * @param string $name
+ * @return string $stdName
+ */
+function getStdName( $name ) {
+	switch ( strtolower( $name ) ) {
+		case 'gaming':
+			$stdName = 'Games';
+			break;
+		case 'foreign':
+			$stdName = 'International';
+			break;
+		default:
+			$stdName = $name;
+	}
+
+	return $stdName;
+}
+
+/**
  * Map metadata
  * @global array $languageNames
  * @global array $countryNames
@@ -50,6 +70,8 @@ function mapMetadata( $ingester, $data ) {
 			if ( empty( $keyword ) || strtolower( $keyword ) == 'the' ) {
 				continue;
 			}
+
+			$keyword = getStdName( $keyword );
 
 			$keywords[] = $keyword;
 
@@ -85,7 +107,10 @@ function mapMetadata( $ingester, $data ) {
 
 	// get keywords
 	if ( !empty( $data['tags'] ) ) {
-		$tags = array_map( 'trim', explode( ',', $data['tags'] ) );
+		$tags = array();
+		foreach ( explode( ',', $data['tags'] ) as $tag ) {
+			$tags[] = getStdName( trim( $tag ) );
+		}
 		$keywords = array_merge( $keywords, $tags );
 		$data['tags'] = null;
 	}
@@ -152,30 +177,23 @@ function mapMetadata( $ingester, $data ) {
 		$data['targetcountry'] = $countryNames[$data['targetcountry']];
 	}
 
-	return $data;
-}
-
-/**
- * Mapping additional metadata for IVA
- * @param VideoFeedIngester $ingester
- * @param array $metadata
- */
-function mapMetadataIva( $ingester, &$metadata ) {
 	// get category and type
-	if ( !empty( $metadata['category'] ) ) {
-		$metadata['type'] = $ingester->getStdType( $metadata['category'] );
+	$data['category'] = $ingester->getCategory( $data['category'] );
+	if ( !empty( $data['category'] ) && empty( $data['type']) ) {
+		$data['type'] = $ingester->getStdType( $data['category'] );
 	}
-	$metadata['category'] = $ingester->getCategory( $metadata['category'] );
 
-	if ( empty( $metadata['pagecategories'] ) ) {
-		$metadata['pagecategories'] = '';
+	if ( empty( $data['pagecategories'] ) ) {
+		$data['pagecategories'] = '';
 	} else {
-		$data = $metadata;
-		$data['language'] = $data['lang'];
-		$categories = array_map( 'trim', explode( ',', $metadata['pagecategories'] ) );
-		$categories = $ingester->generateCategories( $data, $categories );
-		$metadata['pagecategories'] = implode( ', ', $categories );
+		$meta = $data;
+		$meta['language'] = $meta['lang'];
+		$pageCat = array_map( 'trim', explode( ',', $data['pagecategories'] ) );
+		$pageCat = $ingester->generateCategories( $meta, $pageCat );
+		$data['pagecategories'] = implode( ', ', $pageCat );
 	}
+
+	return $data;
 }
 
 /**
@@ -209,19 +227,19 @@ function compareMetadataFile( $video, $msg, $newMeta ) {
 		}
 
 		$fileMeta = unserialize( $file->getMetadata() );
-		foreach ( $fileMeta as $key => $value ) {
+		foreach ( $fileMeta as $key => &$value ) {
 			if ( $key == 'ageRequired' ) {
-				$fileMeta['age_required'] = $fileMeta['ageRequired'];
+				$fileMeta['age_required'] = $value;
 				unset( $fileMeta['ageRequired'] );
 			} else if ( $key == 'language' ) {
-				$fileMeta['lang'] = $fileMeta['language'];
+				$fileMeta['lang'] = $value;
 				unset( $fileMeta['language'] );
 			} else if ( $key == 'published' ) {
-				$fileMeta['published'] = date( 'Y-m-d', $fileMeta['published'] );
+				$value = date( 'Y-m-d', $value );
 			} else {
 				$keyLc = strtolower( $key );
 				if ( $key != $keyLc ) {
-					$fileMeta[$keyLc] = $fileMeta[$key];
+					$fileMeta[$keyLc] = $value;
 					unset( $fileMeta[$key] );
 				}
 			}
@@ -389,9 +407,6 @@ do {
 		echo " ($label)";
 
 		$newMeta = mapMetadata( $ingester, $video['metadata'] );
-		if ( !empty( $iva ) ) {
-			mapMetadataIva( $ingester, $newMeta );
-		}
 
 		if ( !array_key_exists( 'name', $newMeta ) ) {
 			$newMeta['name'] = '';
