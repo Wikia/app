@@ -1149,11 +1149,14 @@ $config['videohomepage_js'] = array(
 		// Latest videos / category carousels
 		'//extensions/wikia/VideoPageTool/js/homepage/models/categorycarousel.js',
 		'//extensions/wikia/VideoPageTool/js/homepage/models/categorythumb.js',
+
 		'//extensions/wikia/VideoPageTool/js/admin/collections/category.js',
 		'//extensions/wikia/VideoPageTool/js/admin/collections/categorydata.js',
-		'//extensions/wikia/VideoPageTool/js/homepage/views/carousels.js',
+
 		'//extensions/wikia/VideoPageTool/js/shared/views/carouselthumb.js',
-		'//extensions/wikia/VideoPageTool/js/shared/views/carousel.js',
+		'//extensions/wikia/VideoPageTool/js/shared/views/owlcarousel.js',
+		'//extensions/wikia/VideoPageTool/js/homepage/views/carousel.js',
+		'//extensions/wikia/VideoPageTool/js/homepage/views/carousels.js',
 
 		// Search box
 		'//extensions/wikia/VideoPageTool/js/homepage/views/search.js',
