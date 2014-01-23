@@ -44,7 +44,6 @@
 		#bodyContent {
 			overflow: hidden;
 			visibility: hidden;
-			width: 0;
 		}
 	}
 
@@ -52,12 +51,12 @@
 	.WikiaRail {
 		overflow: hidden;
 		visibility: hidden;
-		width: 0;
 	}
 
 	.ContentWarning {
-		display: block;
-	}
+        display: block;
+        position: fixed;
+    }
 
 	.adm-dash-search,
 	.WikiaWideTablesWrapper {
