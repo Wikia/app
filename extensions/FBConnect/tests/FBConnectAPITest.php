@@ -31,7 +31,6 @@ class FBConnectApiTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * @dataProvider isConfigSetupDataProvider
-	 * @group Broken
 	 */
 	public function testIsConfigSetup($expected, $fbAppId, $fbAppSecret){
 		$this->fbAppId = $fbAppId;

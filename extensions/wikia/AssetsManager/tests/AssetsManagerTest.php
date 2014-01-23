@@ -85,7 +85,6 @@ class AssetsManagerTest extends WikiaBaseTest {
 	}
 
 	public function duplicateAssetsDataProvider() {
-		return;
 		$dataSets = array();
 
 		$config = new AssetsConfig();
