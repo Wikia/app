@@ -116,6 +116,39 @@ function setPlayerId( $video, $title, $playerId ) {
 	return;
 }
 
+/**
+ * Update Metadata
+ * @global integer $skipped
+ * @global integer $failed
+ * @global boolean $dryRun
+ * @param array $video
+ * @param string $title
+ * @param string $metaKey
+ * @param string $metaFromValue
+ * @param string $metaToValue
+ */
+function changeMetadata( $video, $title, $metaKey, $metaFromValue, $metaToValue ) {
+	global $skipped, $failed, $dryRun;
+
+	$metadata = $video['metadata'];
+	if ( isset( $metadata[$metaKey] ) && strtolower( $metadata[$metaKey] ) == $metaFromValue ) {
+		$metadata[$metaKey] = $metaToValue;
+	} else {
+		echo "\tSKIP: $title - value not equal to $metaFromValue ($metaKey: {$metadata[$metaKey]}).\n";
+		$skipped++;
+		return;
+	}
+
+	if ( !$dryRun ) {
+		$resp = OoyalaAsset::updateMetadata( $video['embed_code'], $metadata );
+		if ( !$resp ) {
+			$failed++;
+		}
+	}
+
+	return;
+}
+
 // ----------------------------- Main ------------------------------------
 
 ini_set( "include_path", dirname( __FILE__ )."/../../" );
@@ -124,13 +157,17 @@ ini_set( 'display_errors', 1 );
 require_once( "commandLine.inc" );
 
 if ( isset( $options['help'] ) ) {
-	die( "Usage: php maintenance.php [--help] [--age=123] [--dry-run] [--player=xyz] [extra=abc] [--remove=age_required]
-	--age                          set age_required value in metadata
-	--player                       set player id
-	--remove                       remove field from custom metadata (only if the field is empty)
-	--extra                        extra conditions to get video assets from ooyala (use ' AND ' to separate each condition)
-	--dry-run                      dry run
-	--help                         you are reading it right now\n\n" );
+	die( "Usage: php maintenance.php [--help] [--age=123] [--dry-run] [--player=xyz] [extra=abc] [--remove=age_required] [--update=metakey] [--from=abc] [to=def]
+	--age              set age_required value in metadata
+	--player           set player id
+	--remove           remove field from custom metadata (only if the field is empty)
+	--extra            extra conditions to get video assets from ooyala (use ' AND ' to separate each condition)
+	--change           update metadata (will required --from and --to options)
+	--from             metadata value that will be updated from (required for --update option)
+	--to               metadata value that will be updated to (required for --update option)
+	--limit            limit
+	--dry-run          dry run
+	--help             you are reading it right now\n\n" );
 }
 
 $dryRun = isset( $options['dry-run'] );
@@ -138,12 +175,24 @@ $ageRequired = isset( $options['age'] ) ? $options['age'] : 0;
 $playerId = isset( $options['player'] ) ? $options['player'] : '';
 $extra = isset( $options['extra'] ) ? explode( ' AND ', $options['extra'] ) : array();
 $remove = isset( $options['remove'] ) ? $options['remove'] : '';
+$update = isset( $options['update'] ) ? $options['update'] : '';
+$from = empty( $options['from'] ) ? '' : $options['from'];
+$to = empty( $options['to'] ) ? '' : $options['to'];
+$limit = empty( $options['limit'] ) ? '' : $options['limit'];
 
 if ( !is_numeric( $ageRequired ) ) {
 	die( "Invalid age.\n" );
 }
 
+if ( !empty( $update ) && ( empty( $from ) || empty( $to ) ) ) {
+	die( "--from and --to options are required.\n" );
+}
+
 $apiPageSize = 100;
+if ( !empty( $limit ) && $limit < $apiPageSize ) {
+	$apiPageSize = $limit;
+}
+
 $nextPage = '';
 $page = 1;
 $total = 0;
@@ -153,6 +202,10 @@ $skipped = 0;
 // set condition to get age gated videos
 if ( !empty( $ageRequired ) ) {
 	$extra[] = "labels INCLUDES 'Age gated'";
+}
+
+if ( !empty( $update ) ) {
+	$extra[] = "metadata.$update = '$from'";
 }
 
 do {
@@ -191,9 +244,13 @@ do {
 		if ( !empty( $remove ) ) {
 			removeCustomMetadata( $video, $title, $remove );
 		}
+
+		if ( !empty( $update ) ) {
+			changeMetadata( $video, $title, $update, $from, $to );
+		}
 	}
 
 	$page++;
-} while ( !empty( $nextPage ) );
+} while ( !empty( $nextPage ) && $total < $limit );
 
 echo "\nTotal videos: ".$total.", Success: ".( $total - $failed - $skipped ).", Failed: $failed, Skipped: $skipped\n\n";
