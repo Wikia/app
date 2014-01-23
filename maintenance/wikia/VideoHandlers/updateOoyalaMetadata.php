@@ -154,6 +154,12 @@ function changeMetadata( $video, $title, $metaKey, $metaFromValue, $metaToValue 
 
 	if ( $changed ) {
 		$metadata[$metaKey] = implode( ', ', $metaValues );
+		/* for debuging
+		echo "\n\tNEW Metadata (".$video['embed_code']."):\n";
+		compareMetadata( $video['metadata'], $metadata );
+		echo "\n";
+		*/
+
 		if ( !$dryRun ) {
 			$resp = OoyalaAsset::updateMetadata( $video['embed_code'], $metadata );
 			if ( !$resp ) {
@@ -161,11 +167,31 @@ function changeMetadata( $video, $title, $metaKey, $metaFromValue, $metaToValue 
 			}
 		}
 	} else {
-		echo "\tSKIP: $title - value not equal to $metaFromValue ($metaKey: {".$metadata[$metaKey]."}).\n";
+		echo "\tSKIP: $title - value not equal to '$metaFromValue' ($metaKey: ".$metadata[$metaKey].").\n";
 		$skipped++;
 	}
 
 	return;
+}
+
+/**
+ * Compare metadata
+ * @param array $oldMeta
+ * @param array $newMeta
+ */
+function compareMetadata( $oldMeta, $newMeta ) {
+	$fields = array_unique( array_merge( array_keys( $newMeta ), array_keys( $oldMeta ) ) );
+	foreach ( $fields as $field ) {
+		if ( ( !isset( $newMeta[$field] ) || is_null( $newMeta[$field] ) ) && isset( $oldMeta[$field] ) ) {
+			echo "\t\t[DELETED] $field: ".$oldMeta[$field]."\n";
+		} else if ( isset( $newMeta[$field] ) && !isset( $oldMeta[$field] ) ) {
+			echo "\t\t[NEW] $field: $newMeta[$field]\n";
+		} else if ( strcasecmp( $oldMeta[$field], $newMeta[$field] ) == 0 ) {
+			echo "\t\t$field: $newMeta[$field]\n";
+		} else {
+			echo "\t\t[UPDATED]$field: $newMeta[$field] (Old value: ".$oldMeta[$field].")\n";
+		}
+	}
 }
 
 // ----------------------------- Main ------------------------------------
@@ -196,8 +222,8 @@ $playerId = isset( $options['player'] ) ? $options['player'] : '';
 $extra = isset( $options['extra'] ) ? explode( ' AND ', $options['extra'] ) : array();
 $remove = isset( $options['remove'] ) ? $options['remove'] : '';
 $update = isset( $options['update'] ) ? $options['update'] : '';
-$from = empty( $options['from'] ) ? '' : $options['from'];
-$to = empty( $options['to'] ) ? '' : $options['to'];
+$from = isset( $options['from'] ) ? $options['from'] : '';
+$to = isset( $options['to'] ) ? $options['to'] : '';
 $limit = empty( $options['limit'] ) ? '' : $options['limit'];
 $isList = isset( $options['list'] );
 
@@ -205,7 +231,7 @@ if ( !is_numeric( $ageRequired ) ) {
 	die( "Invalid age.\n" );
 }
 
-if ( !empty( $update ) && ( empty( $from ) || empty( $to ) ) ) {
+if ( !empty( $update ) && ( !isset( $options['from'] ) || !isset( $options['to'] ) ) ) {
 	die( "--from and --to options are required.\n" );
 }
 
