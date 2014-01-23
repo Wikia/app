@@ -27,6 +27,7 @@ function backupFile( $filename, $msg, $video ) {
  * @return string $stdName
  */
 function getStdName( $name ) {
+	$name = trim( $name );
 	switch ( strtolower( $name ) ) {
 		case 'gaming':
 			$stdName = 'Games';
@@ -66,12 +67,10 @@ function mapMetadata( $ingester, $data ) {
 	$keywords = array();
 	if ( empty( $data['name'] ) && !empty( $data['keywords'] ) ) {
 		foreach ( explode( ',' , $data['keywords'] ) as $keyword ) {
-			$keyword = trim( $keyword );
+			$keyword = getStdName( $keyword );
 			if ( empty( $keyword ) || strtolower( $keyword ) == 'the' ) {
 				continue;
 			}
-
-			$keyword = getStdName( $keyword );
 
 			$keywords[] = $keyword;
 
@@ -109,7 +108,7 @@ function mapMetadata( $ingester, $data ) {
 	if ( !empty( $data['tags'] ) ) {
 		$tags = array();
 		foreach ( explode( ',', $data['tags'] ) as $tag ) {
-			$tags[] = getStdName( trim( $tag ) );
+			$tags[] = getStdName( $tag );
 		}
 		$keywords = array_merge( $keywords, $tags );
 		$data['tags'] = null;

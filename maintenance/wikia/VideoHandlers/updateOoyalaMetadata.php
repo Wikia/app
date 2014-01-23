@@ -121,6 +121,7 @@ function setPlayerId( $video, $title, $playerId ) {
  * @global integer $skipped
  * @global integer $failed
  * @global boolean $dryRun
+ * @global boolean $isList
  * @param array $video
  * @param string $title
  * @param string $metaKey
@@ -128,22 +129,40 @@ function setPlayerId( $video, $title, $playerId ) {
  * @param string $metaToValue
  */
 function changeMetadata( $video, $title, $metaKey, $metaFromValue, $metaToValue ) {
-	global $skipped, $failed, $dryRun;
+	global $skipped, $failed, $dryRun, $isList;
 
 	$metadata = $video['metadata'];
-	if ( isset( $metadata[$metaKey] ) && strtolower( $metadata[$metaKey] ) == $metaFromValue ) {
-		$metadata[$metaKey] = $metaToValue;
-	} else {
-		echo "\tSKIP: $title - value not equal to $metaFromValue ($metaKey: {$metadata[$metaKey]}).\n";
+	if ( !isset( $metadata[$metaKey] ) ) {
+		echo "\tSKIP: $title - metadata key ($metaKey) not found.\n";
 		$skipped++;
 		return;
 	}
 
-	if ( !$dryRun ) {
-		$resp = OoyalaAsset::updateMetadata( $video['embed_code'], $metadata );
-		if ( !$resp ) {
-			$failed++;
+	if ( $isList ) {
+		$metaValues = array_map( 'trim', explode( ',', $metadata[$metaKey] ) );
+	} else {
+		$metaValues = array( $metadata[$metaKey] );
+	}
+
+	$changed = false;
+	foreach ( $metaValues as &$value ) {
+		if ( strtolower( $value ) == $metaFromValue ) {
+			$changed = true;
+			$value = $metaToValue;
 		}
+	}
+
+	if ( $changed ) {
+		$metadata[$metaKey] = implode( ', ', $metaValues );
+		if ( !$dryRun ) {
+			$resp = OoyalaAsset::updateMetadata( $video['embed_code'], $metadata );
+			if ( !$resp ) {
+				$failed++;
+			}
+		}
+	} else {
+		echo "\tSKIP: $title - value not equal to $metaFromValue ($metaKey: {".$metadata[$metaKey]."}).\n";
+		$skipped++;
 	}
 
 	return;
@@ -165,6 +184,7 @@ if ( isset( $options['help'] ) ) {
 	--change           update metadata (will required --from and --to options)
 	--from             metadata value that will be updated from (required for --update option)
 	--to               metadata value that will be updated to (required for --update option)
+	--list             set if the metadata value is a list (used with --change option)
 	--limit            limit
 	--dry-run          dry run
 	--help             you are reading it right now\n\n" );
@@ -179,6 +199,7 @@ $update = isset( $options['update'] ) ? $options['update'] : '';
 $from = empty( $options['from'] ) ? '' : $options['from'];
 $to = empty( $options['to'] ) ? '' : $options['to'];
 $limit = empty( $options['limit'] ) ? '' : $options['limit'];
+$isList = isset( $options['list'] );
 
 if ( !is_numeric( $ageRequired ) ) {
 	die( "Invalid age.\n" );
