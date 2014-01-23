@@ -44,22 +44,23 @@ describe( 'VideoPageTool: Admin Category Collection ( Backbone ):', function() {
 	} );
 
 	it( 'should\'t allow setting of selectedCategory with anything that isn\'t a string or Backbone.Model', function() {
+		var error = new TypeError( 'data is not an instance of Backbone.Model' );
 		// passing in a Number
 		expect( function() {
 			instance.setCategory( 0 );
-		} ).toThrow( new TypeError( 'data is not an instance of Backbone.Model' ) );
+		} ).toThrow( error );
 		// passing in undefined
 		expect( function() {
 			instance.setCategory( undefined );
-		} ).toThrow( new TypeError( 'data is not an instance of Backbone.Model' ) );
+		} ).toThrow( error );
 		// passing in null
 		expect( function() {
 			instance.setCategory( null );
-		} ).toThrow( new TypeError( 'data is not an instance of Backbone.Model' ) );
+		} ).toThrow( error );
 		// passing in an {}
 		expect( function() {
 			instance.setCategory( {} );
-		} ).toThrow( new TypeError( 'data is not an instance of Backbone.Model' ) );
+		} ).toThrow( error );
 	} );
 
 	it( 'autocomplete() should lowercase user search queries', function() {
