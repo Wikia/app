@@ -9,10 +9,10 @@
  * @ignore
  */
 ve.ce.wikiaExample = ( function ( utils ) {
-	var fakeHref = 'Foo',
-		fakeHrefUrl = ve.resolveUrl( fakeHref, document ),
-		fakeImage = 'Bar',
-		fakeImageUrl = ve.resolveUrl( fakeImage, document ),
+	var fakeLinkUrl = 'Foo',
+		fakeLinkUrlResolved = ve.resolveUrl( fakeLinkUrl, document ),
+		fakeImageUrl = 'Bar',
+		fakeImageUrlResolved = ve.resolveUrl( fakeImageUrl, document ),
 		media = {};
 
 	/* Data */
@@ -58,9 +58,9 @@ ve.ce.wikiaExample = ( function ( utils ) {
 	media.data.testCases = {
 		'block': {
 			'mw:Image': {
-				'align': [ 'center', 'default', 'left', 'none', 'right' ],
+				'align': [ 'center'/*, *'default', 'left', 'none', 'right'*/ ],
 				'height': [ media.data.defaultHeight, 1 ],
-				'type': [ 'frame', 'frameless', 'none', 'thumb' ],
+				'type': [ 'frame'/*, 'frameless', 'none', 'thumb'*/ ],
 				'width': [ media.data.defaultWidth, 2 ]
 			}
 		},
@@ -96,12 +96,12 @@ ve.ce.wikiaExample = ( function ( utils ) {
 			'</figcaption>',
 		'frame':
 			'<figure class="thumb thumbinner" style="">' +
-				'<a class="image" href="' + fakeHrefUrl + '"><img src="' + fakeImageUrl + '"></a>' +
+				'<a class="image" href="' + fakeLinkUrlResolved + '"><img src="' + fakeImageUrlResolved + '"></a>' +
 				'<a class="internal sprite details magnify ve-no-shield"></a>' +
 			'</figure>',
 		'frameless':
 			'<div class="" style="">' +
-				'<a class="image" href="' + fakeHrefUrl + '"><img src="' + fakeImageUrl + '"></a>' +
+				'<a class="image" href="' + fakeLinkUrlResolved + '"><img src="' + fakeImageUrlResolved + '"></a>' +
 			'</div>'
 	};
 
@@ -111,7 +111,7 @@ ve.ce.wikiaExample = ( function ( utils ) {
 	media.html.inline = {
 		'frameless':
 			'<a class="image ve-ce-mwInlineImageNode ve-ce-leafNode ve-ce-generatedContentNode ve-ce-protectedNode" contenteditable="false">' +
-				'<img src="' + fakeImageUrl + '" width="" height="">' +
+				'<img src="' + fakeImageUrlResolved + '" width="" height="">' +
 				media.html.shield +
 			'</a>'
 	};
@@ -131,12 +131,12 @@ ve.ce.wikiaExample = ( function ( utils ) {
 	media.htmlDom = {
 		'block':
 			'<figure data-mw=\'{"attribution":{"username":"Foo","avatar":"Foo.png"}}\'>' +
-				'<a href="' + fakeHref + '"><img src="' + fakeImage + '" resource="FooBar"></a>' +
+				'<a href="' + fakeLinkUrl + '"><img src="' + fakeImageUrl + '" resource="FooBar"></a>' +
 				'<figcaption>abc</figcaption>' +
 			'</figure>',
 		'inline':
 			'<span data-mw=\'{"attribution":{"username":"Foo","avatar":"Foo.png"}}\'>' +
-				'<a href="' + fakeHref + '"><img src="' + fakeImage + '" resource="FooBar"></a>' +
+				'<a href="' + fakeLinkUrl + '"><img src="' + fakeImageUrl + '" resource="FooBar"></a>' +
 			'</span>'
 	};
 
@@ -195,7 +195,7 @@ ve.ce.wikiaExample = ( function ( utils ) {
 			$mock.addClass( media.data.cssClasses.htmlDomAlign[ attributes.align ] );
 		}
 
-		$mock.find( 'img[src="' + fakeImage + '"]' ).attr( {
+		$mock.find( 'img[src="' + fakeImageUrl + '"]' ).attr( {
 			height: attributes.height,
 			width: attributes.width
 		} );
@@ -245,7 +245,7 @@ ve.ce.wikiaExample = ( function ( utils ) {
 			.attr( 'contenteditable', false )
 			.append( media.html.shield );
 
-		$mock.find( 'img[src="' + fakeImageUrl + '"]' ).attr( {
+		$mock.find( 'img[src="' + fakeImageUrlResolved + '"]' ).attr( {
 			height: attributes.height,
 			width: width
 		} );
@@ -292,7 +292,7 @@ ve.ce.wikiaExample = ( function ( utils ) {
 	media.inline.getHtml = function ( attributes ) {
 		var $mock = $( media.html.inline[ attributes.type ] );
 
-		$mock.find( 'img[src="' + fakeImageUrl + '"]' ).attr( {
+		$mock.find( 'img[src="' + fakeImageUrlResolved + '"]' ).attr( {
 			height: attributes.height,
 			width: attributes.width
 		} );
@@ -326,7 +326,7 @@ ve.ce.wikiaExample = ( function ( utils ) {
 	 */
 	media.video.getHtml = function ( attributes, html ) {
 		var $mock = $( html ),
-			$mockImage = $mock.find( 'img[src="' + fakeImageUrl + '"]' ),
+			$mockImage = $mock.find( 'img[src="' + fakeImageUrlResolved + '"]' ),
 			$playButton = $( media.html.video.playButton ),
 			$playButtonImage = $playButton.find( 'img' ),
 			size,
