@@ -2,7 +2,7 @@
 <ul class="related-topics">
 <?php foreach ($relatedTopics as $val): ?>
 	<li class="related-topic" data-topic="<?= $val->getText() ?>">
-		<a href="<?php echo WallHelper::getTopicPageURL($val); ?>">
+		<a class="wikia-button" href="<?php echo WallHelper::getTopicPageURL($val); ?>">
 			<?= $val->getText() ?>
 		</a>
 	</li>
@@ -10,14 +10,14 @@
 	<script id="RelatedTopicTemplate" type="text/template">
 		{{#topics}}
 			<li class="related-topic" data-topic="{{topic}}">
-				<a href="{{url}}">
+				<a class="wikia-button" href="{{url}}">
 					{{topic}}
 				</a>
 			</li>
 		{{/topics}}
 	</script>
 	<li class="edit-topic">
-		<a href="#" class="edit-topic-link">
+		<a href="#" class="edit-topic-link wikia-button">
 			<img src="<?= $wg->BlankImgUrl ?>" class="sprite edit-pencil">
 			<?= wfMsg('wall-topic-edit') ?>
 		</a>
