@@ -33,7 +33,7 @@ define( 'videopageadmin.collections.categorydata', [
 		parse: function( resp ) {
 			// cache the response
 			this.response = resp;
-			this.reset( this.response.thumbnails );
+			this.reset( this.response.videos || this.response.thumbnails );
 		},
 
 		/**
