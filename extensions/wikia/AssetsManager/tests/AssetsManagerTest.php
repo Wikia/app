@@ -41,7 +41,7 @@ class AssetsManagerTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @dataProvider testGetSassFilePathProvider
+	 * @dataProvider getSassFilePathProvider
 	 * @group UsingDB
 	 */
 	public function testGetSassFilePath($url, $expected) {
@@ -160,9 +160,9 @@ class AssetsManagerTest extends WikiaBaseTest {
 		];
 	}
 
-	public function testGetSassFilePathProvider() {
+	public function getSassFilePathProvider() {
 		return [
-/*			[AssetsManager::getInstance()->getSassCommonURL(self::SASS_FILE), self::SASS_FILE],*/
+			[AssetsManager::getInstance()->getSassCommonURL(self::SASS_FILE), self::SASS_FILE],
 			[self::SASS_FILE, self::SASS_FILE],
 			['http://google.com'.self::SASS_FILE, 'http://google.com'.self::SASS_FILE],
 		];
