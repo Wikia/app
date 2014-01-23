@@ -67,7 +67,7 @@ class GlobalTitle extends Title {
 	 * @param int city_id
 	 * @return Title the new object
 	 */
-	public static function newMainPage( $city_id ) {
+	public static function newMainPage( $city_id = null ) {
 		// sure hope this redirects for the most part
 		$title = self::newFromText( 'Main Page', NS_MAIN, $city_id );
 		return $title;
