@@ -21,12 +21,12 @@ class WikiaTestSpeedAnnotator {
 			// normalize time
 			$executionTime = round( $executionTime, self::$timerResolution );
 
-			$classReflector  = new ReflectionClass( $className );
+			$classReflector = new ReflectionClass( $className );
 			$methodReflector = new ReflectionMethod( $className, $methodName );
 
-			$lineNumber          = $methodReflector->getStartLine();
-			$docComment          = $methodReflector->getDocComment();
-			$filePath            = $classReflector->getFileName();
+			$lineNumber = $methodReflector->getStartLine();
+			$docComment = $methodReflector->getDocComment();
+			$filePath = $classReflector->getFileName();
 			$alreadyMarkedAsSlow = self::isMarkedAsSlow( $annotations );
 
 			self::$methods[$methodName] = [ 'filePath' => $filePath, 'lineNumber' => $lineNumber, 'docComment' => $docComment,
@@ -97,7 +97,7 @@ class WikiaTestSpeedAnnotator {
 		$newDocComment = self::removeSlowAnnotationFromDocComment( $docComment );
 
 		$fileContents = file_get_contents( $filePath );
-		
+
 		$fileContents = self::replaceDocCommentForMethod($fileContents, $methodName, $newDocComment);
 
 		file_put_contents( $filePath, $fileContents );
@@ -106,10 +106,10 @@ class WikiaTestSpeedAnnotator {
 	private static function addSlowAnnotation( $filePath, $methodName, $docComment, $executionTime ) {
 		$fileContents = file_get_contents( $filePath );
 
-		$whitespaces = self::getWhitespaces($fileContents, $methodName);
+		$indentation = self::getIndentation($fileContents, $methodName);
 
-		$newDocComment = empty( $docComment ) ? self::createDocComment( $whitespaces, $executionTime )
-			: self::updateDocComment( $whitespaces, $docComment, $executionTime );
+		$newDocComment = empty( $docComment ) ? self::createDocComment( $indentation, $executionTime )
+			: self::updateDocComment( $indentation, $docComment, $executionTime );
 
 		$fileContents = self::replaceDocCommentForMethod($fileContents, $methodName, $newDocComment);
 
@@ -123,29 +123,29 @@ class WikiaTestSpeedAnnotator {
 		return preg_replace( $functionStartRegex, "\n\n" . $newDocComment . "\\2", $sourceCode );
 	}
 
-	private static function createDocComment( $whitespaces, $executionTime ) {
+	private static function createDocComment( $indentation, $executionTime ) {
 		$docComment = [
 			"/**\n",
 			" * @group Slow\n",
 			" * @slowExecutionTime " . $executionTime . " ms\n */\n"
 		];
 
-		return $whitespaces . implode( $whitespaces, $docComment );
+		return $indentation . implode( $indentation, $docComment );
 	}
 
-	private static function updateDocComment( $whitespaces, $docComment, $executionTime ) {
+	private static function updateDocComment( $indentation, $docComment, $executionTime ) {
 		$docComment = self::removeSlowAnnotationFromDocComment( $docComment );
 
 		$slowGroupAnnotation = '@group Slow';
 		$slowTimeAnnotation  = '@slowExecutionTime ' . $executionTime . ' ms';
 
-		$docComment = str_replace( '/**', "/**\n" . $whitespaces . " * " . $slowTimeAnnotation, $docComment );
-		$docComment = str_replace( '/**', "/**\n" . $whitespaces . " * " . $slowGroupAnnotation, $docComment );
+		$docComment = str_replace( '/**', "/**\n" . $indentation . " * " . $slowTimeAnnotation, $docComment );
+		$docComment = str_replace( '/**', "/**\n" . $indentation . " * " . $slowGroupAnnotation, $docComment );
 
 		return $docComment;
 	}
 
-	private static function getWhitespaces($sourceCode, $methodName) {
+	private static function getIndentation($sourceCode, $methodName) {
 		$matches = null;
 
 		if (preg_match_all('/^(\s*).*function ' . $methodName . '\(/m', $sourceCode, $matches) > 0) {
