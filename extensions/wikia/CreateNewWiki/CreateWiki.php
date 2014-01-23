@@ -45,7 +45,7 @@ class CreateWiki {
 	const DEFAULT_STAFF        = "Angela";
 	const DEFAULT_USER         = 'Default';
 	const DEFAULT_DOMAIN       = "wikia.com";
-	const ACTIVE_CLUSTER       = "c5";
+	const ACTIVE_CLUSTER       = "c6";
 	const DEFAULT_SLOT         = "slot1";
 	const DEFAULT_NAME         = "Wiki";
 	const DEFAULT_WIKI_TYPE    = "";
