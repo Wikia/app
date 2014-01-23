@@ -9,7 +9,11 @@
  * @ignore
  */
 ve.ce.wikiaExample = ( function ( utils ) {
-	var media = {};
+	var fakeHref = 'Foo',
+		fakeHrefUrl = ve.resolveUrl( fakeHref, document ),
+		fakeImage = 'Bar',
+		fakeImageUrl = ve.resolveUrl( fakeImage, document ),
+		media = {};
 
 	/* Data */
 
@@ -92,12 +96,12 @@ ve.ce.wikiaExample = ( function ( utils ) {
 			'</figcaption>',
 		'frame':
 			'<figure class="thumb thumbinner" style="">' +
-				'<a class="image" href="Foo"><img src="Bar"></a>' +
+				'<a class="image" href="' + fakeHrefUrl + '"><img src="' + fakeImageUrl + '"></a>' +
 				'<a class="internal sprite details magnify ve-no-shield"></a>' +
 			'</figure>',
 		'frameless':
 			'<div class="" style="">' +
-				'<a class="image" href="Foo"><img src="Bar"></a>' +
+				'<a class="image" href="' + fakeHrefUrl + '"><img src="' + fakeImageUrl + '"></a>' +
 			'</div>'
 	};
 
@@ -106,8 +110,8 @@ ve.ce.wikiaExample = ( function ( utils ) {
 
 	media.html.inline = {
 		'frameless':
-			'<a class="image ve-ce-mwInlineImageNode ve-ce-leafNode ve-ce-protectedNode" contenteditable="false">' +
-				'<img src="Bar" width="" height="">' +
+			'<a class="image ve-ce-mwInlineImageNode ve-ce-leafNode ve-ce-generatedContentNode ve-ce-protectedNode" contenteditable="false">' +
+				'<img src="' + fakeImageUrl + '" width="" height="">' +
 				media.html.shield +
 			'</a>'
 	};
@@ -127,12 +131,12 @@ ve.ce.wikiaExample = ( function ( utils ) {
 	media.htmlDom = {
 		'block':
 			'<figure data-mw=\'{"attribution":{"username":"Foo","avatar":"Foo.png"}}\'>' +
-				'<a href="Foo"><img src="Bar" resource="FooBar"></a>' +
+				'<a href="' + fakeHref + '"><img src="' + fakeImage + '" resource="FooBar"></a>' +
 				'<figcaption>abc</figcaption>' +
 			'</figure>',
 		'inline':
 			'<span data-mw=\'{"attribution":{"username":"Foo","avatar":"Foo.png"}}\'>' +
-				'<a href="Foo"><img src="Bar" resource="FooBar"></a>' +
+				'<a href="' + fakeHref + '"><img src="' + fakeImage + '" resource="FooBar"></a>' +
 			'</span>'
 	};
 
@@ -191,7 +195,7 @@ ve.ce.wikiaExample = ( function ( utils ) {
 			$mock.addClass( media.data.cssClasses.htmlDomAlign[ attributes.align ] );
 		}
 
-		$mock.find( 'img[src="Bar"]' ).attr( {
+		$mock.find( 'img[src="' + fakeImage + '"]' ).attr( {
 			height: attributes.height,
 			width: attributes.width
 		} );
@@ -241,7 +245,7 @@ ve.ce.wikiaExample = ( function ( utils ) {
 			.attr( 'contenteditable', false )
 			.append( media.html.shield );
 
-		$mock.find( 'img[src="Bar"]' ).attr( {
+		$mock.find( 'img[src="' + fakeImageUrl + '"]' ).attr( {
 			height: attributes.height,
 			width: width
 		} );
@@ -288,7 +292,7 @@ ve.ce.wikiaExample = ( function ( utils ) {
 	media.inline.getHtml = function ( attributes ) {
 		var $mock = $( media.html.inline[ attributes.type ] );
 
-		$mock.find( 'img[src="Bar"]' ).attr( {
+		$mock.find( 'img[src="' + fakeImageUrl + '"]' ).attr( {
 			height: attributes.height,
 			width: attributes.width
 		} );
@@ -322,7 +326,7 @@ ve.ce.wikiaExample = ( function ( utils ) {
 	 */
 	media.video.getHtml = function ( attributes, html ) {
 		var $mock = $( html ),
-			$mockImage = $mock.find( 'img[src="Bar"]' ),
+			$mockImage = $mock.find( 'img[src="' + fakeImageUrl + '"]' ),
 			$playButton = $( media.html.video.playButton ),
 			$playButtonImage = $playButton.find( 'img' ),
 			size,
