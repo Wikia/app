@@ -1,8 +1,10 @@
 <?php
 
 class WikiaTestSpeedAnnotator {
-
 	const SLOW_TEST_THRESHOLD = 0.002; // 0.002s = 2ms
+
+	// resolution is equal to number of significant characters of SLOW_TEST_THRESHOLD plus two.
+	const TEST_EXECUTION_TIME_RESOLUTION = 5;
 
 	private static $methods = [ ];
 	private static $timerResolution = null;
@@ -14,15 +16,13 @@ class WikiaTestSpeedAnnotator {
 	const REGEX_INDENTATION_FOR_METHOD = '/^(\s*).*function\s+%s\s*\(/m';
 
 	public static function initialize() {
-		self::setTimerResolution();
-
 		self::$methods = [ ];
 	}
 
 	public static function add( $className, $methodName, $executionTime, $annotations ) {
 		if ( empty( self::$methods[$methodName] ) ) {
 			// normalize time
-			$executionTime = round( $executionTime, self::$timerResolution );
+			$executionTime = round( $executionTime, self::TEST_EXECUTION_TIME_RESOLUTION );
 
 			$classReflector = new ReflectionClass( $className );
 			$methodReflector = new ReflectionMethod( $className, $methodName );
@@ -44,11 +44,10 @@ class WikiaTestSpeedAnnotator {
 
 		$affectedFiles = [ ];
 
-		self::sortMethods();
-
 		foreach ( self::$methods as $methodName => $array ) {
 			if ( ( $isSlow = ( $array['executionTime'] > self::SLOW_TEST_THRESHOLD ) ) xor $array['alreadyMarkedAsSlow'] ) {
 				$affectedFiles[] = $array['filePath'];
+
 				if ( $isSlow ) {
 					self::addSlowAnnotation( $array['filePath'], $array['methodName'], $array['docComment'],
 						$array['executionTime'] );
@@ -63,7 +62,7 @@ class WikiaTestSpeedAnnotator {
 			self::cleanupEmptyDocComments( $filePath );
 		}
 
-		self::$methods = [];
+		self::initialize();
 	}
 
 	private static function cleanupEmptyDocComments( $filePath ) {
@@ -72,24 +71,9 @@ class WikiaTestSpeedAnnotator {
 		file_put_contents( $filePath, $fileContents );
 	}
 
-	private static function setTimerResolution() {
-		// resolution is equal to number of significant characters plus two.
-		self::$timerResolution = strlen( substr( strrchr( self::SLOW_TEST_THRESHOLD, "." ), 1 ) ) + 2;
-	}
-
 	private static function isMarkedAsSlow( $annotations ) {
 		return !empty( $annotations['method'] ) && !empty( $annotations['method']['group'] )
 		&& in_array( 'Slow', $annotations['method']['group'] );
-	}
-
-	/**
-	 * Order self::$methods values by filePath DESC and then by lineNumber DESC
-	 */
-	private static function sortMethods() {
-		uasort( self::$methods, function ( $a, $b ) {
-			return $a['filePath'] == $b['filePath'] ? ( ( $a['lineNumber'] > $b['lineNumber'] ) ? -1 : 1 )
-				: strcasecmp( $a['filePath'], $b['filePath'] );
-		} );
 	}
 
 	private static function removeSlowAnnotationFromDocComment( $docComment ) {
