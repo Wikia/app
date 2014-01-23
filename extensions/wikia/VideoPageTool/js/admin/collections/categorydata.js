@@ -33,7 +33,7 @@ define( 'videopageadmin.collections.categorydata', [
 		parse: function( resp ) {
 			// cache the response
 			this.response = resp;
-			this.reset( this.response.videos );
+			this.reset( this.response.videos || this.response.thumbnails );
 		},
 
 		/**
@@ -45,6 +45,8 @@ define( 'videopageadmin.collections.categorydata', [
 			if ( typeof name === 'string' ) {
 				this.categoryName = name;
 				this.fetch();
+			} else {
+				throw new TypeError( 'name is not a String' );
 			}
 		}
 	} );

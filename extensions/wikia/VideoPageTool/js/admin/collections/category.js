@@ -1,6 +1,6 @@
 /**
  * CategoryCollection
- * @constructor 
+ * @constructor
  * @description Collection representing all the categories present on executing wikia
  *							Calls CategorySelect::getWikiCategories which returns ALL the categories
  * @requires { CategoryModel }
@@ -39,6 +39,9 @@ define( 'videopageadmin.collections.category', [], function() {
 			if ( typeof data === 'string' ) {
 				this.selectedCategory = data;
 			} else {
+				if ( !( data instanceof Backbone.Model ) ) {
+					throw new TypeError( 'data is not an instance of Backbone.Model' );
+				}
 				// data is a instance of model
 				this.selectedCategory = data.get( 'name' );
 			}
@@ -56,6 +59,9 @@ define( 'videopageadmin.collections.category', [], function() {
 		 * @param { string } value - String to filter collection against
 		 */
 		autocomplete: function( value ) {
+			if ( typeof value !== 'string' ) {
+				throw new TypeError( 'value must be a String' );
+			}
 			this.query = value.toLowerCase();
 			this.parse( this.raw );
 			this.reset( this.parse() );
