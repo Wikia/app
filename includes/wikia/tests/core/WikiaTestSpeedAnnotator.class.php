@@ -2,7 +2,7 @@
 
 class WikiaTestSpeedAnnotator {
 
-	const SLOW_TEST_THRESHOLD = 0.002; // ms
+	const SLOW_TEST_THRESHOLD = 0.002; // 0.002s = 2ms
 
 	private static $methods = [ ];
 	private static $timerResolution = null;
@@ -49,19 +49,15 @@ class WikiaTestSpeedAnnotator {
 				if ( $isSlow ) {
 					self::addSlowAnnotation( $filePath, $methodName, $docComment, $executionTime );
 				} else {
-					self::removeSlowAnnotation( $filePath, $methodName, $docComment );
+					self::removeSlowAnnotation( $filePath, $docComment );
 				}
 			}
 		}
 
-		// cleanup docblocks from all affected files
+		// cleanup DocComments from all affected files
 		foreach ( $affectedFiles as $filePath ) {
 			self::cleanupEmptyDocComments( $filePath );
 		}
-	}
-
-	private static function isDocCommentEmpty( $docComment ) {
-		return 0 !== preg_match( '/^\s*\/\*\*[\s|\*]*\//', $docComment );
 	}
 
 	private static function cleanupEmptyDocComments( $filePath ) {
@@ -93,7 +89,7 @@ class WikiaTestSpeedAnnotator {
 		return $docComment;
 	}
 
-	private static function removeSlowAnnotation( $filePath, $methodName, $docComment ) {
+	private static function removeSlowAnnotation( $filePath, $docComment ) {
 		$newDocComment = self::removeSlowAnnotationFromDocComment( $docComment );
 
 		$fileContents = file_get_contents( $filePath );
@@ -109,8 +105,7 @@ class WikiaTestSpeedAnnotator {
 
 		$fileContents = file_get_contents( $filePath );
 
-		// replace old doccomment and method declaration with new doccomment and method declaration
-
+		// replace old DocComments and method declaration with new DocComments and method declaration
 		$fileContents = preg_replace( $functionStartRegex, "\n\n" . $newDocComment . "\\2", $fileContents );
 
 		file_put_contents( $filePath, $fileContents );
