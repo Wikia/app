@@ -1,33 +1,29 @@
 /**
  * View for carousel wrapper.  Data is category display title and thumbs list
  */
-define( 'shared.views.carousel', [
+define( 'videohomepage.views.carousel', [
 	'videopageadmin.collections.categorydata',
 	'videohomepage.models.categorythumb',
 	'videohomepage.models.categorycarousel',
 	'shared.views.carouselthumb',
+	'shared.views.owlcarousel',
 	'templates.mustache'
 ], function(
 	CategoryDataCollection,
 	CategoryThumbModel,
 	CategoryCarouselModel,
 	CarouselThumbView,
+	OwlCarouselBase,
 	templates
 ) {
 	'use strict';
 
-	var CarouselView = Backbone.View.extend( {
-		tagName: 'div',
-		className: 'carousel',
+	var CarouselView = OwlCarouselBase.extend( {
 		initialize: function() {
 			this.collection = new CategoryDataCollection( this.model.attributes.thumbnails );
 			this.render();
 		},
 		template: Mustache.compile( templates.carousel ),
-		events: {
-			'click .control[data-direction="left"]': 'slideLeft',
-			'click .control[data-direction="right"]': 'slideRight',
-		},
 		render: function() {
 			var self = this;
 
@@ -41,7 +37,7 @@ define( 'shared.views.carousel', [
 				self.$carousel.append( view.$el );
 			} );
 
-			this.$carousel.owlCarousel( {
+			this.renderCarousel( {
 				scrollPerPage: true,
 				pagination: true,
 				paginationSpeed: 500,
@@ -51,12 +47,6 @@ define( 'shared.views.carousel', [
 			} );
 
 			return this;
-		},
-		slideRight: function() {
-			this.$carousel.trigger( 'owl.next' );
-		},
-		slideLeft: function() {
-			this.$carousel.trigger( 'owl.prev' );
 		}
 	} );
 

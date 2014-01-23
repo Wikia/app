@@ -1155,8 +1155,8 @@ $config['videohomepage_js'] = array(
 
 		'//extensions/wikia/VideoPageTool/js/shared/views/carouselthumb.js',
 		'//extensions/wikia/VideoPageTool/js/shared/views/owlcarousel.js',
-		'//extensions/wikia/VideoPageTool/js/homepage/views/carousel.js',
 		'//extensions/wikia/VideoPageTool/js/homepage/views/carousels.js',
+		'//extensions/wikia/VideoPageTool/js/homepage/views/carousel.js',
 
 		// Search box
 		'//extensions/wikia/VideoPageTool/js/homepage/views/search.js',
