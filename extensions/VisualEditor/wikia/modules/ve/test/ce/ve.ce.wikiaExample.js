@@ -58,9 +58,9 @@ ve.ce.wikiaExample = ( function ( utils ) {
 	media.data.testCases = {
 		'block': {
 			'mw:Image': {
-				'align': [ 'center'/*, *'default', 'left', 'none', 'right'*/ ],
+				'align': [ 'center', 'default', 'left', 'none', 'right' ],
 				'height': [ media.data.defaultHeight, 1 ],
-				'type': [ 'frame'/*, 'frameless', 'none', 'thumb'*/ ],
+				'type': [ 'frame', 'frameless', 'none', 'thumb' ],
 				'width': [ media.data.defaultWidth, 2 ]
 			}
 		},
