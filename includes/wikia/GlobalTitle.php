@@ -45,9 +45,22 @@ class GlobalTitle extends Title {
 	static protected $cachedObjects = array();
 
 	/**
-	 * static constructor, Create new Title from name of page
+	 * @desc Static constructor, Create new Title from name of page
+	 *
+	 * @param String $text
+	 * @param Integer $namespace (default NS_MAIN)
+	 * @param Integer|null $city_id a wiki id; we allow null because of compatibility with Title::newFromText()
+	 *
+	 * @throws Exception when $city_id parameter is null
+	 *
+	 * @return GlobalTitle
 	 */
 	public static function newFromText( $text, $namespace = NS_MAIN, $city_id = null ) {
+		if( $city_id <= 0 ) {
+		// we allow to pass null in the method definition because of Strict Compatibility with Title::newFromText()
+			throw new \Exception( 'Invalid $city_id.' );
+		}
+
 		$filteredText = Sanitizer::decodeCharReferences( $text );
 		$title = new GlobalTitle();
 
@@ -61,13 +74,21 @@ class GlobalTitle extends Title {
 		return $title;
 	}
 	
-    /**
-	 * Create a new Title for the Main Page
+	/**
+	 * @desc Create a new Title for the Main Page
 	 *
-	 * @param int city_id
-	 * @return Title the new object
+	 * @param Integer city_id a wiki id; we allow null because of compatibility with Title::newFromText()
+	 *
+	 * @throws Exception when $city_id parameter is null
+	 *
+	 * @return GlobalTitle
 	 */
 	public static function newMainPage( $city_id = null ) {
+		if( $city_id <= 0 ) {
+		// we allow to pass null in the method definition because of Strict Compatibility with Title::newFromText()
+			throw new \Exception( 'Invalid $city_id.' );
+		}
+
 		// sure hope this redirects for the most part
 		$title = self::newFromText( 'Main Page', NS_MAIN, $city_id );
 		return $title;
