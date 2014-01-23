@@ -3,15 +3,11 @@
  */
 define( 'videohomepage.views.carousel', [
 	'videopageadmin.collections.categorydata',
-	'videohomepage.models.categorythumb',
-	'videohomepage.models.categorycarousel',
 	'shared.views.carouselthumb',
 	'shared.views.owlcarousel',
 	'templates.mustache'
 ], function(
 	CategoryDataCollection,
-	CategoryThumbModel,
-	CategoryCarouselModel,
 	CarouselThumbView,
 	OwlCarouselBase,
 	templates
@@ -20,7 +16,14 @@ define( 'videohomepage.views.carousel', [
 
 	var CarouselView = OwlCarouselBase.extend( {
 		initialize: function() {
-			this.collection = new CategoryDataCollection( this.model.attributes.thumbnails );
+			this.collection = new CategoryDataCollection( this.model.get( 'thumbnails' ).slice( 0, 24 ) );
+			if ( this.collection.length ) {
+				this.collection.add( {
+					count: 8238,
+					link: '<a href="#">See more videos</a>',
+					type: 'redirect'
+				} );
+			}
 			this.render();
 		},
 		template: Mustache.compile( templates.carousel ),
@@ -43,10 +46,19 @@ define( 'videohomepage.views.carousel', [
 				paginationSpeed: 500,
 				lazyLoad: true,
 				navigation: true,
-				rewindNav: false
+				rewindNav: false,
+				afterUpdate: function() {
+					self.resizeLastSlide();
+				}
 			} );
 
 			return this;
+		},
+		resizeLastSlide: function() {
+			var height,
+					$lastSlide;
+
+			height = this.$el.find( '.owl-item:first-child img' ).height();
 		}
 	} );
 

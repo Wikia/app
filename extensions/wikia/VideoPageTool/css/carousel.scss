@@ -91,5 +91,9 @@
 			color: $color-links;
 			text-decoration: none;
 		}
+
+	}
+	.owl-item:last-child {
+		border: 1px solid $color-page-border;
 	}
 }
