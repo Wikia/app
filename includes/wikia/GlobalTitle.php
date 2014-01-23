@@ -56,7 +56,7 @@ class GlobalTitle extends Title {
 	 * @return GlobalTitle
 	 */
 	public static function newFromText( $text, $namespace = NS_MAIN, $city_id = null ) {
-		if( $city_id <= 0 ) {
+		if( $city_id === null ) {
 		// we allow to pass null in the method definition because of Strict Compatibility with Title::newFromText()
 			throw new \Exception( 'Invalid $city_id.' );
 		}
@@ -84,7 +84,7 @@ class GlobalTitle extends Title {
 	 * @return GlobalTitle
 	 */
 	public static function newMainPage( $city_id = null ) {
-		if( $city_id <= 0 ) {
+		if( $city_id === null ) {
 		// we allow to pass null in the method definition because of Strict Compatibility with Title::newFromText()
 			throw new \Exception( 'Invalid $city_id.' );
 		}
@@ -105,11 +105,11 @@ class GlobalTitle extends Title {
 	 *
 	 * @returns GlobalTitle|null
 	 */
-	public static function newFromId( $id, $city_id = 0, $dbname = "" ) {
+	public static function newFromId( $id, $city_id = null, $dbname = "" ) {
 		global $wgMemc;
 		$title = null;
 
-		if( $city_id <= 0 ) {
+		if( $city_id === null ) {
 		// we allow to pass 0 in the method definition because of Strict Compatibility with Title::newFromText()
 			throw new \Exception( 'Invalid $city_id.' );
 		}
