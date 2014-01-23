@@ -983,7 +983,7 @@ class BlogTemplateClass {
 	}
 
 	private static function __parse( $aInput, $aParams, &$parser, $returnPlainData = false ) {
-		global $wgLang, $wgUser, $wgCityId, $wgParser, $wgTitle, $wgOut;
+		global $wgLang, $wgUser, $wgCityId, $wgParser, $wgTitle;
 		global $wgExtensionsPath, $wgStylePath, $wgRequest;
 
 		wfProfileIn( __METHOD__ );

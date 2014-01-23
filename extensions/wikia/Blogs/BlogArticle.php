@@ -94,7 +94,9 @@ class BlogArticle extends Article {
 		$wgOut->setSyndicated( true );
 
 		if( !$purge ) {
-			$cachedValue  = $this->blogListingMemcacheKey( $userMem, $page );
+			$cachedValueKey  = $this->blogListingMemcacheKey( $userMem, $page );
+			$cachedValue = $wgMemc->get( $cachedValueKey );
+
 			if ( $cachedValue && isset( $cachedValue['listing'] ) ) {
 				$listing = $cachedValue['listing'];
 				if ( isset($cachedValue['blogPostCount']) ) {
