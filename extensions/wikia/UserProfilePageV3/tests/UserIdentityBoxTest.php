@@ -9,6 +9,17 @@ class UserIdentityBoxTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @dataProvider doParserFilterDataProvider
+	 *
+	 * @author Sergey Naumov
+	 */
+	public function testDoParserFilter($text, $expectedResult) {
+		$userIdentityBox = new UserIdentityBox(F::app(), new User, self::TOP_WIKI_LIMIT);
+
+		$this->assertEquals($expectedResult, $userIdentityBox->doParserFilter($text));
+	}
+
+	/**
 	 * @dataProvider checkIfDisplayZeroStatesDataProvider
 	 *
 	 * @author Andrzej 'nAndy' Łukaszewski
@@ -109,6 +120,36 @@ class UserIdentityBoxTest extends WikiaBaseTest {
 					'arrayElementWeDontCareAbout' => 'thisShouldBeIgnored'
 				),
 				true
+			)
+		);
+	}
+
+	/**
+	 * @brief data provider for UserIdentityBoxTest::testDoParserFilter()
+	 *
+	 * @author Sergey Naumov
+	 */
+	public function doParserFilterDataProvider() {
+		return array(
+			array(
+                'string',
+				'string'
+			),
+			array(
+                ' :D',
+				':D'
+			),
+			array(
+                '*** :D ***',
+				'*** :D ***'
+			),
+			array(
+                'http://domain.com/%20',
+				'http://domain.com/%20'
+			),
+			array(
+                '[http://www.example.com link title]',
+				'link title'
 			)
 		);
 	}

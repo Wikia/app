@@ -127,6 +127,8 @@ $wgAutoloadClasses['MethodNotFoundException'] = "{$IP}/includes/wikia/nirvana/Wi
 $wgAutoloadClasses['AssetsManager'] = $IP . '/extensions/wikia/AssetsManager/AssetsManager.class.php';
 $wgAutoloadClasses['AssetsConfig'] = $IP . '/extensions/wikia/AssetsManager/AssetsConfig.class.php';
 
+$wgAutoloadClasses['FlashMessages'] = "{$IP}/includes/wikia/FlashMessages.class.php";
+
 /**
  * Wikia API
  * (based on Nirvana)
@@ -309,6 +311,7 @@ $wgAutoloadClasses['RenderContentOnlyHelper'] = $IP . '/includes/wikia/RenderCon
 $wgAutoloadClasses['SolrDocumentService'] = $IP . '/includes/wikia/services/SolrDocumentService.class.php';
 $wgAutoloadClasses['FormBuilderService']  =  $IP.'/includes/wikia/services/FormBuilderService.class.php';
 $wgAutoloadClasses['LicensedWikisService']  =  $IP.'/includes/wikia/services/LicensedWikisService.class.php';
+$wgAutoloadClasses['ArticleQualityService'] = $IP.'/includes/wikia/services/ArticleQualityService.php';
 
 // data models
 $wgAutoloadClasses['WikisModel'] = "{$IP}/includes/wikia/models/WikisModel.class.php";
@@ -1223,3 +1226,6 @@ $wgPagesWithNoAdsForLoggedInUsersOverriden_AD_LEVEL = null;
  * Enables the Oasis responsive layout styles
  */
 $wgOasisResponsive = null;
+
+/** @var $wgEnableCentralizedLogging bool whether or not logging to syslog is enabled */
+$wgEnableCentralizedLogging = true;

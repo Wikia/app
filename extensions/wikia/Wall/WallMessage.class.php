@@ -14,7 +14,7 @@ class WallMessage {
 	/**
 	 * @var $commentsIndex CommentsIndex
 	 */
-	public $commentsIndex;
+	public $commentsIndex = false;
 	/**
 	 * @var $helper WallHelper
 	 */
@@ -48,7 +48,7 @@ class WallMessage {
 
 		if( $title instanceof Title && $title->exists() ) {
 			wfProfileOut(__METHOD__);
-			return  WallMessage::newFromTitle($title);
+			return WallMessage::newFromTitle($title);
 		}
 
 		if( $master == false ) {
@@ -199,8 +199,8 @@ class WallMessage {
 	}
 
 	public function getCommentsIndex() {
-		if(empty($this->commentsIndex)) {
-			$this->commentsIndex = CommentsIndex::newFromId( $this->getId() );
+		if( false === $this->commentsIndex ) { // false means we didn't call newFromId yet
+			$this->commentsIndex = CommentsIndex::newFromId( $this->getId() ); // note: can return null
 		}
 
 		return $this->commentsIndex;
@@ -369,25 +369,30 @@ class WallMessage {
 		}
 		return false;
 	}
-	public function setNotifyeveryone($notifyeveryone, $save = false ) {
-		if($this->isMain()) {
-			if(!$this->isAllowedNotifyEveryone()) {
+
+	public function setNotifyEveryone( $notifyEveryone ) {
+		if( $this->isMain() ) {
+			if( !$this->isAllowedNotifyEveryone() ) {
 				return false;
 			}
 			$app = F::App();
 			$wne = new WallNotificationsEveryone();
-			$this->load(true);
-			if($notifyeveryone) {
-				$this->getArticleComment()->setMetaData('notify_everyone', time());
-				$this->doSaveMetadata( $app->wg->User, wfMsgForContent( 'wall-message-update-highlight-summary' ), false, true );
+			$this->load( true );
+			if ( $notifyEveryone ) {
+				$this->getArticleComment()->setMetaData( 'notify_everyone', time() );
+				$this->doSaveMetadata( $app->wg->User,
+					wfMessage( 'wall-message-update-highlight-summary' )->inContentLanguage()->text(),
+					false, true );
 				$rev = $this->getArticleComment()->mLastRevision;
-				$notif = WallNotificationEntity::createFromRev($rev, $this->cityId);
-				$wne->addNotificationToQueue($notif);
+				$entity = WallNotificationEntity::createFromRev( $rev, $this->cityId );
+				$wne->addNotificationToQueue( $entity );
 			} else {
-				$this->getArticleComment()->removeMetadata('notify_everyone');
+				$this->getArticleComment()->removeMetadata( 'notify_everyone' );
 				$pageId = $this->getId();
-				$wne->removeNotificationFromQueue($pageId);
-				$this->doSaveMetadata( $app->wg->User, wfMsgForContent( 'wall-message-update-removed-highlight-summary' ), false, true );
+				$wne->removeNotificationForPageId( $pageId );
+				$this->doSaveMetadata( $app->wg->User,
+					wfMessage( 'wall-message-update-removed-highlight-summary' )->inContentLanguage()->text(),
+					false, true );
 			}
 		}
 	}
@@ -1024,7 +1029,7 @@ class WallMessage {
 
 	protected function customActionNotifyRC($user, $action, $reason) {
 		$articleId = $this->getId();
-		$target =  $this->getTitle();
+		$target = $this->getTitle();
 
 		RecentChange::notifyLog(
 			wfTimestampNow(),

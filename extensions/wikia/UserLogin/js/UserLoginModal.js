@@ -29,7 +29,7 @@ var UserLoginModal = {
 					that.uiFactory = uiFactory;
 					that.packagesData = packagesData;
 
-					window.UserLoginFacebook && window.UserLoginFacebook.init();
+					window.UserLoginFacebook && window.UserLoginFacebook.init( window.UserLoginFacebook.origins.MODAL );
 
 					that.buildModal( options );
 				} );

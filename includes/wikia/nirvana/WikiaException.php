@@ -57,6 +57,7 @@ class WikiaException extends WikiaBaseException {
 
 		if (!$wgRunningUnitTests && $wgNoDBUnits) {
 			// log more details (macbre)
+		Wikia::log( 'exceptions-WIKIA', get_class($this), $message, true );
 			Wikia::logBacktrace( __METHOD__ );
 		}
 	}
