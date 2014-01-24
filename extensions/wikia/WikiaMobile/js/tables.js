@@ -84,6 +84,10 @@ define( 'tables', ['events', 'track', 'wikia.window', 'jquery'], function ( ev, 
 							scrollX: true
 						} );
 
+						table.wkScroll.on( 'scrollEnd', function (){
+							track.event( 'tables', track.SWIPE );
+						} );
+
 						this.className += ' active';
 					}
 				} );
