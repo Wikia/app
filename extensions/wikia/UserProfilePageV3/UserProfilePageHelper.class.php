@@ -162,7 +162,7 @@ class UserProfilePageHelper {
 		return is_array( $hiddenWikis ) ? $hiddenWikis : array();
 	}
 
-	private static function saveHiddenWikisDB( $hiddenWikis ) {
+	public static function saveHiddenWikisDB( $hiddenWikis ) {
 		self::getDb( true )->replace(
 			'global_registry',
 			array( 'item_id', 'item_type' ),
