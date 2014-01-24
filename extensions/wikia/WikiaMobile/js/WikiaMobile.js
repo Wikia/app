@@ -55,4 +55,10 @@ require( ['wikia.querystring', require.optional( 'wikia.cookies' ), 'track', 'wi
 				href: this.href
 			}, event );
 		} );
+
+		$( '.userpage-link' ).on( 'click', function ( event ) {
+			track.event( 'byline', track.CLICK, {
+				href: this.href
+			}, event );
+		} );
 	} );
