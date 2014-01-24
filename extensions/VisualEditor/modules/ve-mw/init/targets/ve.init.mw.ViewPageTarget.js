@@ -287,6 +287,7 @@ ve.init.mw.ViewPageTarget.prototype.deactivate = function ( override ) {
 ve.init.mw.ViewPageTarget.prototype.onLoad = function ( doc ) {
 	if ( this.activating ) {
 		ve.track( 'Edit', { action: 'page-edit-impression' } );
+		EditorSurvey.set( 've-fail' );
 		this.edited = false;
 		this.doc = doc;
 		this.setUpSurface( doc, ve.bind( function() {
@@ -355,6 +356,8 @@ ve.init.mw.ViewPageTarget.prototype.onTokenError = function ( response, status )
  * @param {number} [newid] New revision id, undefined if unchanged
  */
 ve.init.mw.ViewPageTarget.prototype.onSave = function ( html, newid ) {
+	EditorSurvey.set( 've-success' );
+	EditorSurvey.init();
 	ve.track( 'Edit', {
 		action: 'page-save-success',
 		latency: this.saveStart ? ve.now() - this.saveStart : 0
@@ -735,6 +738,7 @@ ve.init.mw.ViewPageTarget.prototype.onToolbarSaveButtonClick = function () {
  */
 ve.init.mw.ViewPageTarget.prototype.onToolbarCancelButtonClick = function () {
 	ve.track( { 'action': ve.track.actions.CLICK, 'label': 'button-cancel' } );
+	EditorSurvey.init();
 	this.deactivate();
 };
 
