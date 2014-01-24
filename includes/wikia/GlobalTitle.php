@@ -77,7 +77,7 @@ class GlobalTitle extends Title {
 	/**
 	 * @desc Create a new Title for the Main Page
 	 *
-	 * @param Integer city_id a wiki id; we allow null because of compatibility with Title::newMainPage()
+	 * @param Integer $city_id a wiki id; we allow null because of compatibility with Title::newMainPage()
 	 *
 	 * @throws Exception when $city_id parameter is null
 	 *
