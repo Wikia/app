@@ -12,12 +12,13 @@ define ('AVATAR_MAX_SIZE', 512000 );
 define ('AVATAR_UPLOAD_FIELD', 'wkUserAvatar');
 
 /**
- * model
+ * models
  */
 $wgAutoloadClasses['UserProfilePage'] =  $dir . '/UserProfilePage.class.php';
 $wgAutoloadClasses['UserIdentityBox'] =  $dir . '/UserIdentityBox.class.php';
 $wgAutoloadClasses['UserProfilePageRailHelper'] =  $dir . '/UserProfilePageRailHelper.class.php';
 $wgAutoloadClasses['ImageOperationsHelper'] =  $dir . '/ImageOperationsHelper.class.php';
+$wgAutoloadClasses['FavoriteWikisModel'] =  $dir . '/models/FavoriteWikisModel.class.php';
 
 $wgAutoloadClasses['UserProfilePageHelper'] =  $dir . '/UserProfilePageHelper.class.php';
 

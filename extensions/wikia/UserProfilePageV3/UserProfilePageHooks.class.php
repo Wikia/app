@@ -30,7 +30,7 @@ class UserProfilePageHooks {
 			$wikiId = intval($wgCityId);
 
 			if ($user instanceof User && $wikiId > 0) {
-				$userIdentityBox = new UserIdentityBox(F::app(), $user, UserProfilePageController::MAX_TOP_WIKIS);
+				$userIdentityBox = new UserIdentityBox( $user );
 				$userIdentityBox->addTopWiki($wikiId);
 			}
 		}
@@ -152,7 +152,7 @@ class UserProfilePageHooks {
 		if ($title instanceof Title && in_array($title->getNamespace(), $UPPNamespaces)) {
 			$user = UserProfilePageHelper::getUserFromTitle($title);
 			if ( $user instanceof User && $user->getId() > 0) {
-				$userIdentityBox = new UserIdentityBox( F::app(), $user, UserProfilePageController::MAX_TOP_WIKIS );
+				$userIdentityBox = new UserIdentityBox( $user );
 				$userData = $userIdentityBox->getFullData();
 				if ( is_array( $userData ) && array_key_exists( 'showZeroStates', $userData ) ) {
 					if ( !$userData['showZeroStates'] ) {

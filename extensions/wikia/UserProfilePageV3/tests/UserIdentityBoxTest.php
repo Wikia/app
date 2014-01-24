@@ -14,7 +14,7 @@ class UserIdentityBoxTest extends WikiaBaseTest {
 	 * @author Sergey Naumov
 	 */
 	public function testDoParserFilter($text, $expectedResult) {
-		$userIdentityBox = new UserIdentityBox(F::app(), new User, self::TOP_WIKI_LIMIT);
+		$userIdentityBox = new UserIdentityBox( new User );
 
 		$this->assertEquals($expectedResult, $userIdentityBox->doParserFilter($text));
 	}
@@ -25,7 +25,7 @@ class UserIdentityBoxTest extends WikiaBaseTest {
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	public function testCheckIfDisplayZeroStates($data, $expectedResult) {
-		$userIdentityBox = new UserIdentityBox(F::app(), $this->getMock('User'), self::TOP_WIKI_LIMIT);
+		$userIdentityBox = new UserIdentityBox( $this->getMock('User') );
 
 		$this->assertEquals($expectedResult, $userIdentityBox->checkIfDisplayZeroStates($data));
 	}
