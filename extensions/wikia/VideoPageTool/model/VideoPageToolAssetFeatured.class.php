@@ -14,7 +14,6 @@ class VideoPageToolAssetFeatured extends VideoPageToolAsset {
 		'noLightbox' => true,
 		'useTemplate' => true,
 		'hidePlayButton' => true,
-		'width' => 300,
 	];
 
 	// required data field -- array( FormFieldName => varName )
