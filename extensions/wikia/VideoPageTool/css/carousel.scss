@@ -93,7 +93,17 @@
 		}
 
 	}
-	.owl-item:last-child {
+	.owl-item:last-child .category-slide {
 		border: 1px solid $color-page-border;
+		box-sizing: border-box;
+		font-size: 14px;
+		line-height: 18px;
+		padding-left: 1.5em;
+
+		p {
+			font-size: 24px;
+			font-weight: bold;
+			margin-top: 1em;
+		}
 	}
 }

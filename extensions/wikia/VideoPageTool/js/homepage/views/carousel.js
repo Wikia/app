@@ -54,11 +54,23 @@ define( 'videohomepage.views.carousel', [
 
 			return this;
 		},
+		/**
+		 * @description Method to handle repositioning & resizing of elements based on fluid repaints
+		 */
 		resizeLastSlide: function() {
 			var height,
-					$lastSlide;
+					$buttons;
 
-			height = this.$el.find( '.owl-item:first-child img' ).height();
+			$buttons = this.$( '.owl-buttons div' );
+			height = this.$( '.owl-item:first-child img' ).height();
+
+			// set the last slides height (since it doesn't come with an image)
+			this.$( '.category-slide' ).height( height );
+
+			// position slider arrows in correct position
+			$buttons.css({
+				top: ( height / 2 ) - ( $buttons.eq(0).height() / 2 )
+			});
 		}
 	} );
 
