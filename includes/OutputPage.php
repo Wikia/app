@@ -2025,6 +2025,8 @@ class OutputPage extends ContextSource {
 			wfProfileOut( 'Output-skin' );
 		}
 
+		wfRunHooks( 'BeforeSendCacheControl', array( &$this ) ); // Wikia change
+
 		$this->sendCacheControl();
 		ob_end_flush();
 		wfProfileOut( __METHOD__ );
