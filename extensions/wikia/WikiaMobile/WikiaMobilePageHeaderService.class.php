@@ -84,7 +84,7 @@ class  WikiaMobilePageHeaderService extends WikiaService {
 					$userName = wfMessage( 'wikiamobile-anonymous-edited-by' )->text();
 				} else {
 					//Wrap username in a link to user page
-					$userName = "<a href='{$user->getUserPage()->getLocalUrl()}'>{$userName}</a>";
+					$userName = "<a class=userpage-link href='{$user->getUserPage()->getLocalUrl()}'>{$userName}</a>";
 				}
 
 				$this->response->setVal(
