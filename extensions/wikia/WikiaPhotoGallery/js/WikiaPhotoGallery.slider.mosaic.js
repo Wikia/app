@@ -8,7 +8,7 @@ var WikiaMosaicSliderMasterControl = {
 			WikiaMosaicSliderMasterControl.sliders.push(new WikiaMosaicSlider(sliders[i]));
 		}
 
-		sliders.click(WikiaMosaicSliderMasterControl.clickTrackingHandler);
+		sliders.first().click(WikiaMosaicSliderMasterControl.clickTrackingHandler);
 	},
 	trackClick: function(category, action, label, value, params, event) {
 		Wikia.Tracker.track({
@@ -36,6 +36,7 @@ var WikiaMosaicSliderMasterControl = {
 			var url = node.closest('a').attr('href');
 			WikiaMosaicSliderMasterControl.trackClick('MosaicSlider', Wikia.Tracker.ACTIONS.CLICK_LINK_IMAGE, 'thumbnail', imageIndex, {href:url, button: mouseButton}, e);
 		}
+
 		$().log('tracking took ' + (new Date() - startTime) + ' ms');
 	}
 };
