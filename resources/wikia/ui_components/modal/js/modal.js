@@ -16,9 +16,11 @@ define( 'wikia.ui.modal', [
 		INACTIVE_CLASS = 'inactive',
 
 		// vars required for disable scroll behind modal
-		$bodyElm = $( 'body' ),
+		$wrapper = $('.WikiaSiteWrapper'),
 		$win = $( w ),
 		wScrollTop,
+
+		$body = $('body'),
 
 		// default modal rendering params
 		modalDefaults = {
@@ -90,14 +92,14 @@ define( 'wikia.ui.modal', [
 	function blockPageScrolling() {
 
 		// prevent page from jumping to right if vertical scroll bar exist
-		if ( $bodyElm.height() > $win.height() ) {
-			$bodyElm.addClass( 'fake-scrollbar' );
+		if ( $wrapper.height() > $win.height() ) {
+			$wrapper.addClass( 'fake-scrollbar' );
 		}
 
 		// set current page vertical position
 		wScrollTop = $win.scrollTop();
 
-		$bodyElm.addClass( 'with-blackout' ).css( 'top', -wScrollTop );
+		$wrapper.addClass( 'with-blackout' ).css( 'top', -wScrollTop );
 	}
 
 	/**
@@ -105,7 +107,7 @@ define( 'wikia.ui.modal', [
 	 */
 
 	function unblockPageScrolling() {
-		$bodyElm.removeClass( 'with-blackout fake-scrollbar').css( 'top', 'auto' );
+		$wrapper.removeClass( 'with-blackout fake-scrollbar').css( 'top', 'auto' );
 		$win.scrollTop( wScrollTop );
 	}
 
@@ -161,7 +163,7 @@ define( 'wikia.ui.modal', [
 		params = $.extend( true, {}, modalDefaults, params );
 
 		// render modal markup and append to DOM
-		$( 'body' ).append( uiComponent.render( params ) );
+		$body.append( uiComponent.render( params ) );
 
 		// cache jQuery selectors for different parts of modal
 		this.$element = $( jQuerySelector );
@@ -204,7 +206,7 @@ define( 'wikia.ui.modal', [
 				function() {
 					that.trigger( 'beforeClose').then( $.proxy( function() {
 						// number of active modals on page
-						var activeModalsNumb = $bodyElm.children( '.modal-blackout' ).length;
+						var activeModalsNumb = $body.children( '.modal-blackout' ).length;
 
 						that.$blackout.remove();
 
@@ -225,7 +227,7 @@ define( 'wikia.ui.modal', [
 	Modal.prototype.show = function() {
 
 		// block background only if not modal in scenario
-		if ( $bodyElm.hasClass( 'fake-scrollbar' ) === false ) {
+		if ( $wrapper.hasClass( 'fake-scrollbar' ) === false ) {
 			blockPageScrolling();
 		}
 
