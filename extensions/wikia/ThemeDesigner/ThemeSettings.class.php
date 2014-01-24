@@ -132,6 +132,18 @@ class ThemeSettings {
 		global $wgCityId, $wgUser;
 		$cityId = empty($cityId) ? $wgCityId : $cityId;
 
+		// Verify wordmark length ( CONN-116 )
+		$settings[ 'wordmark-text' ] = trim( $settings[ 'wordmark-text' ] );
+
+		if ( empty( $settings[ 'wordmark-text' ] ) ) {
+			// Do not save wordmark if its empty.
+			unset( $settings[ 'wordmark-text' ] );
+		} else {
+			if ( mb_strlen( $settings[ 'wordmark-text' ] ) > 50 ) {
+				$settings[ 'wordmark-text' ] = mb_substr( $settings[ 'wordmark-text' ], 0, 50 );
+			}
+		}
+
 		if(isset($settings['favicon-image-name']) && strpos($settings['favicon-image-name'], 'Temp_file_') === 0) {
 			$temp_file = new LocalFile(Title::newFromText($settings['favicon-image-name'], 6), RepoGroup::singleton()->getLocalRepo());
 			$file = new LocalFile(Title::newFromText(self::FaviconImageName, 6), RepoGroup::singleton()->getLocalRepo());
