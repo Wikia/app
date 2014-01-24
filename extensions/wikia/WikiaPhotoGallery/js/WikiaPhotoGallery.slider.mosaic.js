@@ -8,7 +8,7 @@ var WikiaMosaicSliderMasterControl = {
 			WikiaMosaicSliderMasterControl.sliders.push(new WikiaMosaicSlider(sliders[i]));
 		}
 
-		sliders.first().click(WikiaMosaicSliderMasterControl.clickTrackingHandler);
+		sliders.click(WikiaMosaicSliderMasterControl.clickTrackingHandler);
 	},
 	trackClick: function(category, action, label, value, params, event) {
 		Wikia.Tracker.track({
