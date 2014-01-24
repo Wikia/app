@@ -170,7 +170,9 @@
 				action: Wikia.Tracker.ACTIONS.SUBMIT,
 				label: 'publish'
 			});
-			EditorSurvey.set( 'ck-success' );
+			if ( EditorSurvey ) {
+				EditorSurvey.set( 'ck-success' );
+			}
 
 			// prevent submitting immediately so we can track this event
 			event.preventDefault();

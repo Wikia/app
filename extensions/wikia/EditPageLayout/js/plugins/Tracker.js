@@ -32,7 +32,9 @@
 					action: Wikia.Tracker.ACTIONS.VIEW,
 					label: 'edit-page'
 				});
-				EditorSurvey.set( 'ck-fail' );
+				if ( EditorSurvey ) {
+					EditorSurvey.set( 'ck-fail' );
+				}
 			}
 
 			// Add the tracking functions to the editor object for easy reference elsewhere
