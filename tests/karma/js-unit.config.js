@@ -115,6 +115,11 @@ module.exports = function(config) {
 			'extensions/wikia/VideoPageTool/js/admin/views/autocomplete.js',
 
 			/*
+			 * VideoPageTool: Homepage Module
+			 */
+			'extensions/wikia/VideoPageTool/js/homepage/collections/featuredslides.js',
+
+			/*
 			 * VideoPageTool: Source the tests
 			 */
 			'extensions/wikia/VideoPageTool/js/spec/*.spec.js',

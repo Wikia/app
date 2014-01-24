@@ -8,10 +8,9 @@ define( 'videohomepage.views.featured', [
 		'wikia.videoBootstrap',
 		'wikia.tracker',
 		// module specific deps
-		'videohomepage.models.slide',
 		'videohomepage.collections.featuredslides',
 		'jquery.ellipses'
-], function( $, Nirvana, VideoBootstrap, Tracker, FeaturedSlideModel, FeaturedSlidesCollection ) {
+], function( $, Nirvana, VideoBootstrap, Tracker, FeaturedSlidesCollection ) {
 
 	'use strict';
 	var track, FeaturedVideosView;
@@ -98,10 +97,10 @@ define( 'videohomepage.views.featured', [
 												.$video.children( 'img' )
 												.attr( 'data-video-key' );
 
-						that.slideModels.push( new FeaturedSlideModel( {
+						that.slideModels.push( {
 								videoKey: videoKey,
 								embedData: null
-						} ) );
+						} );
 				} );
 			},
 
