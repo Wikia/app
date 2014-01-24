@@ -114,13 +114,14 @@ class UserProfilePageHelper {
 	private static function rebuildData( $memCSync, $city_id, $is_hidden ) {
 		$changed = false;
 		$hiddenWikis = $memCSync->get();
-
 		if ( empty( $hiddenWikis ) && !is_array( $hiddenWikis ) ) {
 			$hiddenWikis = self::getHiddenWikisFromDB();
 		}
-		if ( $is_hidden && !in_array( $city_id, $hiddenWikis ) ) {
-			$hiddenWikis[] = $city_id;
-			$changed = true;
+		if ( $is_hidden ) {
+			if ( !in_array( $city_id, $hiddenWikis ) ) {
+				$hiddenWikis[] = $city_id;
+				$changed = true;
+			}
 		} else {
 			if ( ( $index = array_search($city_id, $hiddenWikis ) ) !== false ) {
 				unset( $hiddenWikis[$index] );
@@ -148,7 +149,6 @@ class UserProfilePageHelper {
 	}
 
 	private static function getHiddenWikisFromDB() {
-var_dump('DB HIT');
 		$value = self::getDb( false )->selectField(
 			'global_registry',
 			'item_value',

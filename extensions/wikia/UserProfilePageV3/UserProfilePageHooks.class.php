@@ -198,7 +198,7 @@ class UserProfilePageHooks {
 	 */
 	static public function onWikiFactoryVariableRemoved( $cv_name , $city_id ) {
 		if ( $cv_name === 'wgGroupPermissionsLocal' ) {
-			UserProfilePageHelper::updateHiddenWikis( (int)$city_id, true );
+			UserProfilePageHelper::updateHiddenWikis( (int)$city_id, false );
 		}
 		return true;
 	}

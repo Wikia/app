@@ -786,8 +786,9 @@ class WikiFactory {
 	static public function removeVarById( $variable_id, $wiki, $reason=null ) {
 		$bStatus = false;
 		wfProfileIn( __METHOD__ );
-		$dbw = self::db( DB_MASTER );
 
+		$variable = self::getVarById( $variable_id, $wiki );
+		$dbw = self::db( DB_MASTER );
 		$dbw->begin();
 		try {
 			if ( isset($variable_id) && isset($wiki) ) {
@@ -804,6 +805,8 @@ class WikiFactory {
 				$dbw->commit();
 				$bStatus = true;
 				self::clearCache( $wiki );
+
+				wfRunHooks( 'WikiFactoryVariableRemoved', array( $variable->cv_name , $wiki ) );
 			}
 		}
 		catch ( DBQueryError $e ) {
