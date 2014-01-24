@@ -164,4 +164,31 @@ class UserProfilePageHooks {
 		return true;
 	}
 
+
+	/**
+	 * @brief Hook on WikiFactory change and update wikis's visibility if the wgGroupPermissionsLocal is changed
+	 *
+	 * @author Evgeniy (aquilax)
+	 */
+	static public function onWikiFactoryChanged( $cv_name , $city_id, $value ) {
+		if ( $cv_name === 'wgGroupPermissionsLocal' ) {
+			$is_hidden = false;
+			$permissions =  WikiFactory::getVarValueByName( 'wgGroupPermissionsLocal', $city_id );
+			if ( !empty( $value ) ) {
+				$permissions = WikiFactoryLoader::parsePermissionsSettings( $value );
+			}
+			if (
+				isset( $permissions['*'] ) &&
+				is_array( $permissions['*'] ) &&
+				isset( $permissions['*']['read'] ) &&
+				$permissions['*']['read'] === false
+			) {
+				$is_hidden = true;
+			}
+			UserProfilePageHelper::updateHiddenWikis( (int)$city_id, $is_hidden );
+		}
+		return true;
+	}
+
+
 }
