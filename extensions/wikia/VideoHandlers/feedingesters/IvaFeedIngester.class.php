@@ -825,7 +825,7 @@ class IvaFeedIngester extends VideoFeedIngester {
 	 * @return array $data
 	 */
 	protected function generateRemoteAssetData( $name, $data, $generateUrl = true ) {
-		$data['name'] = $name;
+		$data['assetTitle'] = $name;
 		$data['duration'] = $data['duration'] * 1000;
 		$data['published'] = empty( $data['published'] ) ? '' : strftime( '%Y-%m-%d', $data['published'] );
 

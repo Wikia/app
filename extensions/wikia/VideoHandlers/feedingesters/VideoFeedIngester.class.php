@@ -242,7 +242,6 @@ abstract class VideoFeedIngester {
 		// create category names to add to the new file page
 		$categories = $this->generateCategories( $data, $addlCategories );
 
-
 		// create remote asset (ooyala)
 		if ( $remoteAsset ) {
 			$metadata['pageCategories'] = implode( ', ', $categories );
@@ -355,7 +354,7 @@ abstract class VideoFeedIngester {
 
 		// check if video title exists
 		$ooyalaAsset = new OoyalaAsset();
-		$isExist = $ooyalaAsset->isTitleExist( $assetData['name'], $assetData['provider'] );
+		$isExist = $ooyalaAsset->isTitleExist( $assetData['assetTitle'], $assetData['provider'] );
 		if ( $isExist ) {
 			print( "Skip (Uploading Asset): $name ($assetData[provider]): video already exists in remote assets.\n" );
 			wfProfileOut( __METHOD__ );
@@ -443,7 +442,7 @@ abstract class VideoFeedIngester {
 	 * @return array $data
 	 */
 	protected function generateRemoteAssetData( $name, $data ) {
-		$data['name'] = $name;
+		$data['assetTitle'] = $name;
 
 		return $data;
 	}

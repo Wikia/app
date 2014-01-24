@@ -237,7 +237,7 @@ class OoyalaAsset extends WikiaModel {
 	 */
 	protected function generateRemoteAssetParams( $data ) {
 		$params = array(
-			'name' => $data['name'],
+			'name' => $data['assetTitle'],
 			'asset_type' => 'remote_asset',
 			'description' => $data['description'],
 			'duration' => $data['duration'],
