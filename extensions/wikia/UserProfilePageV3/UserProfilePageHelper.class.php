@@ -144,10 +144,11 @@ class UserProfilePageHelper {
 
 	private static function getDb( $master = FALSE ) {
 		global $wgExternalDatawareDB;
-		return wfGetDB( $master ? DB_MASTER:DB_SLAVE, array(), $wgExternalDatawareDB );
+		return wfGetDB( $master ? DB_MASTER : DB_SLAVE, array(), $wgExternalDatawareDB );
 	}
 
 	private static function getHiddenWikisFromDB() {
+var_dump('DB HIT');
 		$value = self::getDb( false )->selectField(
 			'global_registry',
 			'item_value',
@@ -158,7 +159,7 @@ class UserProfilePageHelper {
 			__METHOD__
 		);
 		$hiddenWikis = unserialize( $value );
-		return is_array($hiddenWikis) ? $hiddenWikis : array();
+		return is_array( $hiddenWikis ) ? $hiddenWikis : array();
 	}
 
 	private static function saveHiddenWikisDB( $hiddenWikis ) {
@@ -175,19 +176,24 @@ class UserProfilePageHelper {
 	}
 
 	public static function getHiddenWikiIds() {
+		wfProfileIn(__METHOD__);
 		$memCSync = self::getCache();
 
 		$list = $memCSync->get();
-		if( empty( $list ) && !is_array( $list ) ) {
+
+		if ( empty( $list ) && !is_array( $list ) ) {
 			self::lockAndSetData( $memCSync,
-				function () use ( $memCSync ) {
-					return self::getHiddenWikisFromDB();
+				function () use ( $memCSync, &$list ) {
+					$list = self::getHiddenWikisFromDB();
+					return $list;
 				},
 				function () {
 					return array();
 				}
 			);
 		}
+		wfProfileOut(__METHOD__);
+		return $list;
 	}
 
 	public static function updateHiddenWikis( $city_id, $is_hidden ) {
@@ -197,7 +203,10 @@ class UserProfilePageHelper {
 			function() use ( $memCSync, $city_id, $is_hidden ) {
 				return self::rebuildData( $memCSync, $city_id, $is_hidden );
 			},
-			function() {}
+			function() use ( $memCSync) {
+				// Delete the cache if we were unable to update to force a rebuild
+				$memCSync->delete();
+			}
 		);
 		wfProfileOut(__METHOD__);
 	}
