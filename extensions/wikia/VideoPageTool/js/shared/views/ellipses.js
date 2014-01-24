@@ -68,12 +68,14 @@
 							.eq( 0 )
 								.before( '<span class="ellipses">...</span>' );
 
-							// if the last span before the ... is a -, trim it
 							self.trimDashes();
 						}
 					}
 				}
 			},
+			/**
+			 * @description if the last span before the ... is a -, trim it
+			 */
 			trimDashes: function() {
 				var $ellipses,
 						$prev;
