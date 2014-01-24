@@ -49,6 +49,12 @@ define( 'videohomepage.views.carousel', [
 				rewindNav: false,
 				afterUpdate: function() {
 					self.resizeLastSlide();
+					self.$carousel.find( '.title' ).ellipses( {
+						wordsHidden: 2
+					} );
+				},
+				beforeUpdate: function() {
+					self.$( '.ellipses' ).remove();
 				}
 			} );
 

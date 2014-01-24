@@ -1142,7 +1142,6 @@ $config['videohomepage_js'] = array(
 		'//extensions/wikia/VideoPageTool/js/templates.mustache.js',
 
 		// Featured video slider
-		'//extensions/wikia/VideoPageTool/js/homepage/models/slide.js',
 		'//extensions/wikia/VideoPageTool/js/homepage/collections/featuredslides.js',
 		'//extensions/wikia/VideoPageTool/js/homepage/views/featured.js',
 

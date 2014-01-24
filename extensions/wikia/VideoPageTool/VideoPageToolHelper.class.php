@@ -199,7 +199,7 @@ class VideoPageToolHelper extends WikiaModel {
 				__METHOD__,
 				array(
 					'ORDER BY' => 'added_at DESC, page_title',
-					'LIMIT' => 100,
+					'LIMIT' => 20,
 				),
 				array(
 					'video_info' => array( 'LEFT JOIN', 'page_title = video_title' ),
