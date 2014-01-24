@@ -13,6 +13,8 @@ class VideoPageToolAssetFeatured extends VideoPageToolAsset {
 	protected $defaultThumbOptions = [
 		'noLightbox' => true,
 		'useTemplate' => true,
+		'hidePlayButton' => true,
+		'width' => 300,
 	];
 
 	// required data field -- array( FormFieldName => varName )

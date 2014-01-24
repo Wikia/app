@@ -5,8 +5,8 @@ class VideoPageToolHelper extends WikiaModel {
 	const DEFAULT_LANGUAGE = 'en';
 	const DEFAULT_SECTION = 'featured';
 
-	const THUMBNAIL_WIDTH = 180;
-	const THUMBNAIL_HEIGHT = 100;
+	const THUMBNAIL_WIDTH = 291;
+	const THUMBNAIL_HEIGHT = 131;
 
 	const THUMBNAIL_CATEGORY_WIDTH = 263;
 	const THUMBNAIL_CATEGORY_HEIGHT = 148;

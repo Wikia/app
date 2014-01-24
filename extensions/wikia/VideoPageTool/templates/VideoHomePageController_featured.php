@@ -23,10 +23,7 @@
 			<ul class="thumbs-inner small-block-grid-5">
 				<? foreach ( $assets as $videoData ): ?>
 					<li>
-						<a class="video wikia-video-thumbnail small hide-play">
-							<span class="play-circle"></span>
-							<img data-video-key="<?= htmlspecialchars( $videoData['videoKey'] ) ?>" src="<?= $videoData['thumbUrl'] ?>">
-						</a>
+						<?= $videoData['videoThumb'] ?>
 						<div class="title"><p><?= $videoData['displayTitle'] ?></p></div>
 					</li>
 				<? endforeach; ?>
