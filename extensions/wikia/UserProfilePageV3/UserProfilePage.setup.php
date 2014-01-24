@@ -49,6 +49,7 @@ $wgHooks['SkinSubPageSubtitleAfterTitle'][] = 'UserProfilePageHooks::onSkinSubPa
 $wgHooks['ArticleSaveComplete'][] = 'UserProfilePageHooks::onArticleSaveComplete';
 $wgHooks['WikiaMobileAssetsPackages'][] = 'UserProfilePageHooks::onWikiaMobileAssetsPackages';
 $wgHooks['WikiFactoryChanged'][] = 'UserProfilePageHooks::onWikiFactoryChanged';
+$wgHooks['WikiFactoryVariableRemoved'][] = 'UserProfilePageHooks::onWikiFactoryVariableRemoved';
 
 $wgHooks['GetRailModuleList'][] = 'UserProfilePageRailHelper::onGetRailModuleList';
 

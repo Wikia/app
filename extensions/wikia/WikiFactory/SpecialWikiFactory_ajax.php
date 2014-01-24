@@ -709,12 +709,18 @@ function axWFactoryRemoveVariable( ) {
 			$return = Wikia::errormsg( "Variable not removed because of problems with database. Try again." );
 		} else {
 			$return = Wikia::successmsg( " Value of variable was removed ");
+			$variable = WikiFactory::getVarById( $cv_id, $city_id );
+			$variable_name = is_object($variable) ? $variable->cv_name : false;
+			wfRunHooks( 'WikiFactoryVariableRemoved', array( $variable_name , $city_id ) );
+
 			if ( !empty( $tag_name ) ) {
 				// apply changes to all wikis with given tag
 				$tagsQuery = new WikiFactoryTagsQuery( $tag_name );
 				foreach ( $tagsQuery->doQuery() as $tagged_wiki_id ) {
 					if ( WikiFactory::removeVarByID( $cv_id, $tagged_wiki_id ) ) {
 						$tag_wiki_count++;
+
+						wfRunHooks( 'WikiFactoryVariableRemoved', array( $variable_name , $tagged_wiki_id ) );
 					}
 				}
 				$return .= Wikia::successmsg(" ({$tag_wiki_count} wikis affected)");
