@@ -11,6 +11,8 @@ if (is_array($excludeGroups)) {
 	}
 }
 
+$wgAnnotateTestSpeed = (getenv('ANNOTATE_TEST_SPEED') === '1');
+
 require_once dirname(__FILE__) . '/bootstrap.php';
 
 require_once 'PHP/CodeCoverage/Filter.php';
