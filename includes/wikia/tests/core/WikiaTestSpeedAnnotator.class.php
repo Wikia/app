@@ -12,7 +12,7 @@ class WikiaTestSpeedAnnotator {
 	const REGEX_SLOW_GROUP = '/^\s*\*\s*@group\s+Slow\s*\n/m';
 	const REGEX_SLOW_EXEC_TIME = '/^\s*\*\s*@slowExecutionTime\s+([0-9\.]+\s*(ms?)\s*\n)/m';
 	const REGEX_EMPTY_DOCCOMMENT = '/^\s*\/\*\*[\s|\*]*\//';
-	const REGEX_DOCCOMMENT_WITH_METHOD = '/(\s*\/\*(.*?)\*\/)?(%s\s*.*function\s+%s\s*\()/sm';
+	const REGEX_DOCCOMMENT_WITH_METHOD = '/(\s*\/\*(.*?)\*\/)?(%s[\sa-zA-Z]*function\s+%s\s*\()/sm';
 	const REGEX_INDENTATION_FOR_METHOD = '/^([ \t]*).*function\s+%s\s*\(/m';
 
 	public static function initialize() {
@@ -88,7 +88,7 @@ class WikiaTestSpeedAnnotator {
 
 		$fileContents = file_get_contents( $filePath );
 
-		$fileContents = self::replaceDocCommentForMethod($fileContents, $methodName, $newDocComment);
+		$fileContents = self::replaceDocCommentForMethod($fileContents, $methodName, $docComment, $newDocComment);
 
 		file_put_contents( $filePath, $fileContents );
 	}
@@ -98,30 +98,51 @@ class WikiaTestSpeedAnnotator {
 
 		$indentation = self::getIndentation($fileContents, $methodName);
 
-		$newDocComment = empty( $docComment ) ? self::createDocComment( $indentation, $executionTime )
-			: self::updateDocComment( $indentation, $docComment, $executionTime );
+		if ( empty( $docComment ) ) {
+			$newDocComment =  self::createDocComment( $indentation, $executionTime );
+			$fileContents = self::addDocCommentToMethod($fileContents, $methodName, $newDocComment);
+		} else {
+			$newDocComment = self::updateDocComment( $indentation, $docComment, $executionTime );
+			$fileContents = self::replaceDocCommentForMethod($fileContents, $methodName, $newDocComment);
+		}
 
-		$fileContents = self::replaceDocCommentForMethod($fileContents, $methodName, $newDocComment);
 
 		file_put_contents( $filePath, $fileContents );
 	}
 
 	private static function replaceDocCommentForMethod($sourceCode, $methodName, $newDocComment) {
 
-		$docCommentWithMethodRegex = sprintf(self::REGEX_DOCCOMMENT_WITH_METHOD, PHP_EOL, $methodName);
+		$methodDeclaration = strpos($sourceCode, 'function ' . $methodName);
+		$codeTillMethodDeclaration = substr($sourceCode, 0, $methodDeclaration);
 
-		// replace old DocComment and method declaration with new DocComment and method declaration
-		return preg_replace( $docCommentWithMethodRegex, PHP_EOL . PHP_EOL . $newDocComment . '\3', $sourceCode );
+		$docCommentEnd = strrpos($codeTillMethodDeclaration, '*/');
+		$codeTillDocCommentEnd = substr($codeTillMethodDeclaration, 0, $docCommentEnd);
+		$codeTillDocCommentStart = substr($codeTillDocCommentEnd, 0, strrpos($codeTillDocCommentEnd, '/**'));
+		$codeFromDocCommentEnd = substr($sourceCode, $docCommentEnd + 2);
+
+		return $codeTillDocCommentStart . $newDocComment . $codeFromDocCommentEnd;
+	}
+
+	private static function addDocCommentToMethod($sourceCode, $methodName, $newDocComment) {
+
+		$methodDeclaration = strpos($sourceCode, 'function ' . $methodName);
+		$codeTillMethodDeclaration = substr($sourceCode, 0, $methodDeclaration);
+
+		$docPosition = strrpos($codeTillMethodDeclaration, "\n");
+		$codeTillDocCommentStart = substr($codeTillMethodDeclaration, 0, $docPosition + 1);
+		$codeFromDocCommentEnd = substr($sourceCode, $docPosition + 1);
+
+		return $codeTillDocCommentStart . $newDocComment . $codeFromDocCommentEnd;
 	}
 
 	private static function createDocComment( $indentation, $executionTime ) {
-		return self::createDocCommentAnnotation( $indentation, $executionTime ) . $indentation . ' */'.PHP_EOL;
+		return $indentation . self::createDocCommentAnnotation( $indentation, $executionTime ) . PHP_EOL . $indentation . ' */' . PHP_EOL;
 	}
 
 	private static function createDocCommentAnnotation( $indentation, $executionTime ) {
-		return $indentation . '/**'.PHP_EOL
-				 . $indentation . ' * @group Slow'.PHP_EOL
-				 . $indentation . ' * @slowExecutionTime ' . $executionTime . ' ms'.PHP_EOL;
+		return '/**' . PHP_EOL
+			. $indentation . ' * @group Slow' . PHP_EOL
+			. $indentation . ' * @slowExecutionTime ' . $executionTime . ' ms';
 	}
 
 	private static function updateDocComment( $indentation, $docComment, $executionTime ) {
