@@ -16,11 +16,11 @@ define( 'wikia.ui.modal', [
 		INACTIVE_CLASS = 'inactive',
 
 		// vars required for disable scroll behind modal
-		$wrapper = $('.WikiaSiteWrapper'),
+		$wrapper = $( '.WikiaSiteWrapper' ),
 		$win = $( w ),
 		wScrollTop,
 
-		$body = $('body'),
+		$body = $( 'body' ),
 
 		// default modal rendering params
 		modalDefaults = {
