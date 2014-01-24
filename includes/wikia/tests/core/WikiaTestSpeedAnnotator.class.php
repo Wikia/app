@@ -12,7 +12,6 @@ class WikiaTestSpeedAnnotator {
 	const REGEX_SLOW_GROUP = '/^\s*\*\s*@group\s+Slow\s*\n/m';
 	const REGEX_SLOW_EXEC_TIME = '/^\s*\*\s*@slowExecutionTime\s+([0-9\.]+\s*(ms?)\s*\n)/m';
 	const REGEX_EMPTY_DOCCOMMENT = '/^\s*\/\*\*[\s|\*]*\//';
-	const REGEX_DOCCOMMENT_WITH_METHOD = '/(\s*\/\*(.*?)\*\/)?(%s[\sa-zA-Z]*function\s+%s\s*\()/sm';
 	const REGEX_INDENTATION_FOR_METHOD = '/^([ \t]*).*function\s+%s\s*\(/m';
 
 	public static function initialize() {
