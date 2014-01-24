@@ -2,8 +2,29 @@ var EditorSurvey = {
 
 	$survey: null,
 	$wrapper: null,
+	veLoaded: false,
 
 	init: function() {
+		mw.hook( 've.activationComplete' ).add( function() {
+			EditorSurvey.set( 've-fail' );
+			EditorSurvey.veLoaded = true;
+		} );
+		mw.hook( 'postEdit' ).add( function() {
+			// Only act on this hook if VE was first loaded
+			if ( EditorSurvey.veLoaded ) {
+				EditorSurvey.set( 've-success' );
+			}
+		} );
+		mw.hook( 've.deactivationComplete' ).add( function() {
+			EditorSurvey.veLoaded = false;
+			// Delayed because VE core code fires deactivation before postEdit. Also, it feels nicer.
+			setTimeout( EditorSurvey.getSurvey, 1000 );
+		} );
+
+		EditorSurvey.getSurvey();
+	},
+
+	getSurvey: function() {
 		var contentType, json;
 		if ( $.cookie( 'editorsurvey' ) && $.cookie( 'editorsurvey' ) !== 'seen' ) {
 			$.nirvana.sendRequest( {
