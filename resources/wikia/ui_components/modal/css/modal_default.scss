@@ -215,12 +215,5 @@ $large-modal-margin: 50px;
 		&.fake-scrollbar {
 			overflow-y: scroll;
 		}
-
-		// Fix for CONN-171 - Scrolling background on IE 11
-		// TODO: Remove this if/when the dynamic background is fixed
-		&.skin-oasis::after,
-		&.skin-oasis::before {
-			height: 100%;
-		}
 	}
 }
