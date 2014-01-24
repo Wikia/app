@@ -4,6 +4,7 @@ var EditorSurvey = {
 	$wrapper: null,
 
 	init: function() {
+		var contentType, json;
 		if ( $.cookie( 'editorsurvey' ) && $.cookie( 'editorsurvey' ) !== 'seen' ) {
 			$.nirvana.sendRequest( {
 				format: 'html',
@@ -11,8 +12,8 @@ var EditorSurvey = {
 				method: 'index',
 				data: { 'type': $.cookies.get( 'editorsurvey' ) },
 				callback: function( response, status, xhr ) {
-					var ct = xhr.getResponseHeader( 'content-type' ) || '';
-					if ( ct.indexOf( 'html' ) > -1 ) {
+					contentType = xhr.getResponseHeader( 'content-type' ) || '';
+					if ( contentType.indexOf( 'html' ) > -1 ) {
 						// Modal
 						$( response ).makeModal( { 'escapeToClose': false } );
 						// Cache
@@ -20,15 +21,15 @@ var EditorSurvey = {
 						EditorSurvey.$wrapper = EditorSurvey.$survey.closest( '.modalWrapper' );
 						// Buttons
 						EditorSurvey.$survey.find( '.secondary, .primary' ).on( 'click', function() {
-							EditorSurvey.seen();
+							EditorSurvey.set( 'seen' );
 							EditorSurvey.closeModal();
 						} );
 						// Close button
 						EditorSurvey.$wrapper.find( '.close' ).on( 'click', EditorSurvey.seen );
 						// Blackout overlay
 						EditorSurvey.$wrapper.next( '.blackout' ).on( 'click', EditorSurvey.seen );
-					} else if ( ct.indexOf( 'json' ) > -1 ) {
-						var json = JSON.parse( response );
+					} else if ( contentType.indexOf( 'json' ) > -1 ) {
+						json = JSON.parse( response );
 						if ( json.wam ) {
 							EditorSurvey.clear();
 						}
@@ -36,11 +37,6 @@ var EditorSurvey = {
 				}
 			} );
 		}
-	},
-
-	seen: function() {
-		// Expire in 10 years
-		$.cookie( 'editorsurvey', 'seen', { 'expires': 3650, 'domain': wgCookieDomain } );
 	},
 
 	closeModal: function() {
@@ -52,8 +48,10 @@ var EditorSurvey = {
 	},
 
 	set: function( value ) {
-		var date = new Date();
-		if ( !$.cookie( 'editorsurvey' ) || $.cookie( 'editorsurvey' ) !== 'seen' ) {
+		if ( value === 'seen' ) {
+			// Expire in 10 years
+			$.cookie( 'editorsurvey', 'seen', { 'expires': 3650, 'domain': wgCookieDomain } );
+		} else if ( !$.cookie( 'editorsurvey' ) || $.cookie( 'editorsurvey' ) !== 'seen' ) {
 			// Expire in 2 days
 			$.cookie( 'editorsurvey', value, { 'expires': 2, 'domain': wgCookieDomain } );
 		}
