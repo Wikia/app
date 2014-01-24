@@ -1252,3 +1252,9 @@ $wgOasisResponsive = null;
 
 /** @var $wgEnableCentralizedLogging bool whether or not logging to syslog is enabled */
 $wgEnableCentralizedLogging = true;
+
+/**
+ * @name $wgDisableReportTime
+ * Turns off <!-- Served by ... in ... ms --> HTML comment
+ */
+$wgDisableReportTime = true;
