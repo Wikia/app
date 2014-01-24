@@ -56,6 +56,9 @@ $wgHooks['LocalFilePurgeCacheUrls']     [] = 'Wikia::onLocalFilePurge';
 $wgHooks['LocalFilePurgeThumbnailsUrls'][] = 'Wikia::onLocalFilePurge';
 $wgHooks['LocalFileExecuteUrls']        [] = 'Wikia::onLocalFilePurge';
 
+# send ETag response header - BAC-1227
+$wgHooks['ParserCacheGetETag']       [] = 'Wikia::onParserCacheGetETag';
+
 /**
  * This class have only static methods so they can be used anywhere
  *
@@ -2216,6 +2219,22 @@ class Wikia {
 				sprintf( 'an upload of "File:%s" triggered %d purge requests', $file->getName(), count( $urls ) ), true );
 		}
 
+		return true;
+	}
+
+	/**
+	 * Send ETag header with article's last modidication timestamp and cache buster
+	 *
+	 * See BAC-1227 for details
+	 *
+	 * @param WikiPage $article
+	 * @param ParserOptions $popts
+	 * @param $eTag
+	 * @author macbre
+	 */
+	static function onParserCacheGetETag(Article $article, ParserOptions $popts, &$eTag) {
+		global $wgStyleVersion;
+		$eTag = sprintf( '%s-%s', $article->getTouched(), $wgStyleVersion );
 		return true;
 	}
 }
