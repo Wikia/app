@@ -57,18 +57,12 @@ define( 'videohomepage.views.featured', [
 				this.timeout = 0;
 				this.initSlider();
 
-				$( window ).on( 'resize', _.bind(this.collection.resetEmbedData, this.collection) );
-				this.render();
+				$( window ).on( 'resize', _.bind( this.collection.resetEmbedData, this.collection ) );
 			},
 
 			render: function() {
-				var $titles = this.$thumbs.find( '.title' ).find( 'p' );
-				_.each( $titles, function( e ) {
-						var $el = $( e );
-						if( $el.height() > $el.parent().height() ) {
-							$el.ellipses();
-						}
-				} );
+				this.$( '.ellipses' ).remove();
+				this.$thumbs.find( '.title' ).ellipses( { maxLines: 2 } );
 			},
 
 			queryDom: function() {
@@ -122,7 +116,6 @@ define( 'videohomepage.views.featured', [
 					// not using this b/c it's buggy
 					autoHover: false
 				} );
-
 			},
 			onSliderLoad: function() {
 				// Show the slider now that it's done loading
@@ -154,6 +147,7 @@ define( 'videohomepage.views.featured', [
 			showThumbs: function() {
 				this.clearHoverTimeout();
 				this.$thumbs.slideDown();
+				this.render();
 			},
 
 			handleThumbClick: function( e ) {
@@ -235,7 +229,7 @@ define( 'videohomepage.views.featured', [
 
 				$.when( data ).done( function( json ) {
 					if( json.error ) {
-						window.GlobalNotification.show( json.error, 'error', null, 4000);
+						window.GlobalNotification.show( json.error, 'error', null, 4000 );
 					} else {
 						// cache embed data
 						model.set( { embedData: json } );
@@ -248,9 +242,9 @@ define( 'videohomepage.views.featured', [
 						);
 
 						// Wait till video has loaded and update the slider viewport height.
-						setTimeout(function() {
+						setTimeout( function() {
 							that.$bxSlider.redrawSlider();
-						}, 1000);
+						}, 1000 );
 					}
 				} );
 
@@ -272,7 +266,7 @@ define( 'videohomepage.views.featured', [
 
 				model = this.collection.at( slide.idx );
 
-				if( model.get('embedData') === null ) {
+				if( model.get( 'embedData' ) === null ) {
 					// Get video embed data for this slide
 					data = Nirvana.sendRequest( {
 						controller: 'VideoHandler',
@@ -285,7 +279,7 @@ define( 'videohomepage.views.featured', [
 						}
 					} );
 				} else {
-					data = model.get('embedData');
+					data = model.get( 'embedData' );
 				}
 
 				// return a promise or a plain object

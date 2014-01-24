@@ -26,7 +26,7 @@ define( 'shared.views.carousel', [
 		template: Mustache.compile( templates.carousel ),
 		events: {
 			'click .control[data-direction="left"]': 'slideLeft',
-			'click .control[data-direction="right"]': 'slideRight',
+			'click .control[data-direction="right"]': 'slideRight'
 		},
 		render: function() {
 			var self = this;
@@ -47,7 +47,15 @@ define( 'shared.views.carousel', [
 				paginationSpeed: 500,
 				lazyLoad: true,
 				navigation: true,
-				rewindNav: false
+				rewindNav: false,
+				afterUpdate: function() {
+					self.$carousel.find( '.title' ).ellipses( {
+						wordsHidden: 2
+					} );
+				},
+				beforeUpdate: function() {
+					self.$( '.ellipses' ).remove();
+				}
 			} );
 
 			return this;
