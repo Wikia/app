@@ -48,10 +48,18 @@
 	}
 
 	.WikiaMainContent,
-	.WikiaRail {
+	.WikiaRail,
+    .WikiaFooter {
 		overflow: hidden;
 		visibility: hidden;
 	}
+
+    .WikiaRail {
+      .wikia-ad {
+        display:none;
+      }
+    }
+
 
 	.ContentWarning {
         display: block;
