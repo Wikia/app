@@ -48,6 +48,9 @@ $wgHooks['UserLoadFromDatabase']     [] = "Wikia::onUserLoadFromDatabase";
 $wgHooks['AfterSetupLocalFileRepo']  [] = "Wikia::onAfterSetupLocalFileRepo";
 $wgHooks['BeforeRenderTimeline']     [] = "Wikia::onBeforeRenderTimeline";
 
+# send ETag response header - BAC-1227
+$wgHooks['ParserCacheGetETag']       [] = 'Wikia::onParserCacheGetETag';
+
 /**
  * This class have only static methods so they can be used anywhere
  *
@@ -2166,6 +2169,22 @@ class Wikia {
 		$cb = SassUtil::getCacheBuster();
 		$favicon = wfReplaceImageServer($favicon, $cb);
 
+		return true;
+	}
+
+	/**
+	 * Send ETag header with article's last modidication timestamp and cache buster
+	 *
+	 * See BAC-1227 for details
+	 *
+	 * @param WikiPage $article
+	 * @param ParserOptions $popts
+	 * @param $eTag
+	 * @author macbre
+	 */
+	static function onParserCacheGetETag(Article $article, ParserOptions $popts, &$eTag) {
+		global $wgStyleVersion;
+		$eTag = sprintf( '%s-%s', $article->getTouched(), $wgStyleVersion );
 		return true;
 	}
 }
