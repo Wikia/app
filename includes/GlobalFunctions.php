@@ -1692,7 +1692,6 @@ function wfReportTime() {
 	if ( !empty( $wgDisableReportTime ) ) {
 		return '';
 	}
-
 	// Wikia change - end
 
 	$elapsed = microtime( true ) - $wgRequestTime;
