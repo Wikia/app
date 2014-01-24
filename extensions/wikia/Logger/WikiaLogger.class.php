@@ -44,6 +44,10 @@ class WikiaLogger {
 	}
 
 	public function onError($code, $message, $file, $line, $context) {
+		if (!($code & error_reporting())) {
+			return true;
+		}
+
 		$exit = false;
 
 		switch ($code) {
