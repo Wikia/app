@@ -64,6 +64,7 @@ $messages['ang'] = array(
 
 /** Arabic (العربية)
  * @author Achraf94
+ * @author Claw eg
  */
 $messages['ar'] = array(
 	'stafflog-desc' => 'تسجيل مركزي للموظفين',
@@ -81,6 +82,7 @@ $messages['ar'] = array(
 	'stafflog-filter-type-piggyback' => 'استعارة حساب',
 	'stafflog-filter-type-renameuser' => 'إعادة تسمية المستخدم',
 	'stafflog-filter-type-wikifactory' => 'حالة الويكي',
+	'action-stafflog' => 'رؤية سجل العاملين المركزي',
 );
 
 /** Breton (brezhoneg)

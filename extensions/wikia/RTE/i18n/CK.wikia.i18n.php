@@ -1967,13 +1967,14 @@ $messages['kn'] = array(
 
 /** Korean (한국어)
  * @author Infinity
+ * @author Priviet
  * @author 아라
  */
 $messages['ko'] = array(
 	'rte-ck-link-external-tab' => '바깥 링크',
 	'rte-ck-link-title' => '링크 만들거나 편집하기',
 	'rte-ck-link-label-target' => '대상 문서 또는 URL',
-	'rte-ck-link-label-display' => '문서에 보여지는 글',
+	'rte-ck-link-label-display' => '문서에 보이는 글',
 	'rte-ck-link-label-internal' => '위키 문서로 링크',
 	'rte-ck-link-label-external' => '바깥 링크',
 	'rte-ck-link-status-checking' => '상태 확인 중',
@@ -2161,7 +2162,7 @@ $messages['mk'] = array(
 	'rte-ck-templateEditor-dialog-mostFrequentlyUsed' => 'Најкористени',
 	'rte-ck-templateEditor-dialog-search' => 'Пребарајте шаблон',
 	'rte-ck-templateEditor-editor-chooseAnotherTpl' => 'Одберете друг шаблон',
-	'rte-ck-templateEditor-editor-intro' => 'Сменете ги вредностите лево и кликнете за преглед. Кога сте готови со уредување, кликнете на „ОК“.',
+	'rte-ck-templateEditor-editor-intro' => 'Сменете ги вредностите лево и стиснете за преглед. Кога сте готови со уредување, стиснете на „ОК“.',
 	'rte-ck-templateEditor-editor-parameters' => 'Параметри',
 	'rte-ck-templateEditor-editor-previewButton' => 'Преглед',
 	'rte-ck-templateEditor-editor-previewTitle' => 'Преглед',

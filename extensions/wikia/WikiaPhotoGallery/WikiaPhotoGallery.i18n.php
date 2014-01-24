@@ -3727,8 +3727,8 @@ $messages['mk'] = array(
 	'wikiaPhotoGallery-preview-captions-right' => 'Десно',
 	'wikiaPhotoGallery-conflict-title' => 'Се случи судир во уредувањата',
 	'wikiaPhotoGallery-conflict-help' => 'Го наведуваме викитекстот што се создаде со вашето уредување.
-Можете да го ископирате овој текст, да кликнете на „$1“ и да го залепите на правилното место за да си ги повратите промените.
-Или пак можете да кликнете на „$2“ за да ја видите страницата во изменетиот облик.',
+Можете да го ископирате овој текст, да стиснете на „$1“ и да го залепите на правилното место за да си ги повратите промените.
+Или пак можете да стиснете на „$2“ за да ја видите страницата во изменетиот облик.',
 	'wikiaPhotoGallery-conflict-edit' => 'Посети режим на уредување',
 	'wikiaPhotoGallery-conflict-view' => 'Преглед на тековната страница',
 	'wikiaPhotoGallery-preview-delete-title' => 'Да ја отстранам сликава?',
@@ -3780,7 +3780,7 @@ $messages['mk'] = array(
 	'wikiaPhotoGallery-upload-uploadtitle' => 'Подигни',
 	'wikiaPhotoGallery-upload-uploadtext' => "'''Или''' подигнете слика од вашиот сметач",
 	'wikiaPhotoGallery-upload-uploadbutton' => 'Подигни слика',
-	'wikiaPhotoGallery-upload-existingtext' => "'''Или''' кликнете за да одберете слики од:",
+	'wikiaPhotoGallery-upload-existingtext' => "'''Или''' стиснете за да одберете слики од:",
 	'wikiaPhotoGallery-upload-existingtext-onarticle' => 'оваа страница',
 	'wikiaPhotoGallery-upload-existingtext-recentupload' => 'најскоро подигнати',
 	'wikiaPhotoGallery-upload-selectbutton' => 'Одбери',
@@ -3790,7 +3790,7 @@ $messages['mk'] = array(
 	'wikiaPhotoGallery-photooptions-captionsub' => "'''Незадолжително.'''
 Опишете ја сликава.",
 	'wikiaPhotoGallery-photooptions-linktitle' => 'Поврзи страница',
-	'wikiaPhotoGallery-photooptions-linksub' => "'''Незадолжително.''' Кога ќе се кликне на сликава, оди на ова страница.",
+	'wikiaPhotoGallery-photooptions-linksub' => "'''Незадолжително.''' Кога ќе се стисне на сликава, оди на ова страница.",
 	'wikiaPhotoGallery-photooptions-linktext' => 'Текст за приказ во врската',
 	'wikiaPhotoGallery-photooptions-linkurl' => 'Врска до (тука ископирајте назив или URL).',
 	'wikiaPhotoGallery-photooptions-description' => 'Податоци за сликата.',

@@ -1107,6 +1107,7 @@ $messages['mr'] = array(
 
 /** Malay (Bahasa Melayu)
  * @author Anakmalaysia
+ * @author SNN95
  */
 $messages['ms'] = array(
 	'comboajaxlogin-desc' => 'Petak dinamik yang membolehkan pengguna log masuk, ingatkan kata laluan dan daftarkan pengguna',
@@ -1125,8 +1126,8 @@ $messages['ms'] = array(
 <li>Simpan nama pengguna semasa, sejarah, suntingan anda dsb... tiada apa yang berubah selain cara anda log masuk</li>
 <li>Kongsikan kegiatan anda di Wikia dengan rakan-rakan anda Facebook, dengan mengawal sepenuhnya apa yang diterbitkan</li>
 </ul>',
-	'comboajaxlogin-connectmarketing-back' => '&laquo; Kembali',
-	'comboajaxlogin-connectmarketing-forward' => 'Mulakan &raquo;',
+	'comboajaxlogin-connectmarketing-back' => '« Kembali',
+	'comboajaxlogin-connectmarketing-forward' => 'Mulakan »',
 	'comboajaxlogin-connectdirections' => 'Taipkan nama pengguna dan kata laluan Wikia anda di sini – kami akan menyambungkan akaun-akaun Wikia dan Facebook secara automatik.
 
 Selepas siap, anda boleh log masuk dengan mudah dengan menekan mana-mana butang Facebook Connect.',
