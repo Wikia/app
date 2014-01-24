@@ -39,12 +39,13 @@ require(['wikia.window', 'wikia.nirvana', 'track', 'wikia.cache'],
 				var $this = $(this),
 					$element = $this.children().first(),
 					hasChildren = $this.hasClass('cld'),
-					href = $element.attr('href');
+					href = $element.attr('href'),
+					$ul;
 
 				event.stopPropagation();
 
 				if(hasChildren) {
-					$this.find('ul').first().addClass('cur');
+					$ul = $this.find('ul').first().addClass('cur');
 
 					handleHeaderLink(href);
 
@@ -55,6 +56,7 @@ require(['wikia.window', 'wikia.nirvana', 'track', 'wikia.cache'],
 						$wikiNavH1.addClass('animNext');
 
 						window.setTimeout(function(){
+							$ul.addClass('anim-done');
 							$wikiNavLink.text($element.text());
 						}, ANIMATION_TIME);
 
@@ -66,6 +68,10 @@ require(['wikia.window', 'wikia.nirvana', 'track', 'wikia.cache'],
 
 						$wkNavMenu.addClass('cur2');
 						$wikiNavH1.removeClass().addClass('anim');
+
+						window.setTimeout(function(){
+							$ul.addClass('anim-done');
+						}, ANIMATION_TIME);
 					}
 				}
 			}).on('click', '#wkNavBack', function(){
@@ -83,7 +89,7 @@ require(['wikia.window', 'wikia.nirvana', 'track', 'wikia.cache'],
 					}, ANIMATION_TIME);
 
 					window.setTimeout(function(){
-						$wkNavMenu.find('.lvl3.cur').removeClass('cur');
+						$wkNavMenu.find('.lvl3.cur').removeClass('cur anim-done');
 						$wikiNavH1.removeClass();
 					}, ANIMATION_TIME * 2);
 				} else {
@@ -93,7 +99,7 @@ require(['wikia.window', 'wikia.nirvana', 'track', 'wikia.cache'],
 					$wikiNavH1.removeClass().addClass('animBack');
 
 					window.setTimeout(function(){
-						$wkNavMenu.find('.lvl2.cur').removeClass('cur');
+						$wkNavMenu.find('.lvl2.cur').removeClass('cur anim-done');
 					}, ANIMATION_TIME * 2);
 				}
 			});
