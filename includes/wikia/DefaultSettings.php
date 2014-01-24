@@ -1155,13 +1155,16 @@ $wgEnableAmazonDirectTargetedBuy = true;
 /**
  * @name $wgAmazonDirectTargetedBuyCountriesDefault
  * The default value for $wgAmazonDirectTargetedBuyCountriesDefault
+ * Main steering var, change this one.
  * Value set for community central overrides this. Value for particular wiki overrides the community
+ * US + EU (UK is GB...)
  */
-$wgAmazonDirectTargetedBuyCountriesDefault = ['US'];
+$wgAmazonDirectTargetedBuyCountriesDefault = ['US', 'AT', 'BE', 'DK', 'FI', 'FR', 'DE', 'IE', 'IT', 'LU', 'NL', 'NO', 'PL', 'PT', 'ES', 'SE', 'CH', 'GB'];
 
 /**
  * @name $wgAmazonDirectTargetedBuyCountries
  * Enables AmazonDirectTargetedBuy integration in theese countries (given AmazonDirectTargetedBuy is also true)
+ * "Utility" var, don't change it here.
  */
 $wgAmazonDirectTargetedBuyCountries = null;
 
