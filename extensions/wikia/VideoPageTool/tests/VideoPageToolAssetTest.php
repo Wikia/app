@@ -27,7 +27,7 @@ class VideoPageToolAssetTest extends WikiaBaseTest {
 		}
 
 		if ( empty($this->program) ) {
-			throw new Exception("Failed to load program with lang=$langauge and date=$date");
+			throw new Exception("Failed to load program with lang=$language and date=$date");
 		}
 
 		// Save this program to get a program ID
@@ -67,11 +67,11 @@ class VideoPageToolAssetTest extends WikiaBaseTest {
 		$section = $type::SECTION;
 
 		// Check creation
-		$asset = VideoPageToolAsset::newAsset($this->programID, $section, $order );
+		$asset = VideoPageToolAsset::newAsset( $this->programID, $section, $order );
 
 		$this->assertInstanceOf( $type, $asset, "Failed to create new $type object" );
 
-		$asset->setData($data);
+		$asset->setData( $data );
 
 		$status = $asset->save();
 
@@ -80,7 +80,7 @@ class VideoPageToolAssetTest extends WikiaBaseTest {
 		$this->assertGreaterThan( 0, $asset->getAssetId(), 'Asset ID is not greater than zero');
 
 		// Check loading from cache
-		$memcLoadedAsset = VideoPageToolAsset::newAsset($this->programID, $section, $order );
+		$memcLoadedAsset = VideoPageToolAsset::newAsset( $this->programID, $section, $order );
 		$this->assertEquals( $asset->getAssetId(), $memcLoadedAsset->getAssetId(), "Not able to load saved asset" );
 
 		// Check getters
@@ -110,13 +110,13 @@ class VideoPageToolAssetTest extends WikiaBaseTest {
 
 		// Check loading when cache is empty
 		$this->disableMemcached();
-		$dbLoadedAsset = VideoPageToolAsset::newAsset($this->programID, $section, $order );
+		$dbLoadedAsset = VideoPageToolAsset::newAsset( $this->programID, $section, $order );
 		$this->assertEquals( $asset->getAssetId(), $dbLoadedAsset->getAssetId(), "Not able to load saved asset" );
 
 		// Check getters
 		$this->assertEquals( $this->programID, $dbLoadedAsset->getProgramId(), 'Got wrong program ID' );
 		$this->assertEquals( $section, $dbLoadedAsset->getSection(), 'Got wrong section name' );
-		$this->assertEquals( $order, $dbLoadedAsset->getOrder(), 'Got wrong order number');
+		$this->assertEquals( $order, $dbLoadedAsset->getOrder(), 'Got wrong order number' );
 
 		// Check for default data
 		$defaultAssetData = $dbLoadedAsset->getDefaultAssetData();
@@ -140,7 +140,7 @@ class VideoPageToolAssetTest extends WikiaBaseTest {
 		$status = $asset->delete();
 		$this->assertTrue( $status->isGood(), 'Failed to delete new $type object' );
 
-		$deletedAsset = VideoPageToolAsset::newAsset($this->programID, $section, $order );
+		$deletedAsset = VideoPageToolAsset::newAsset( $this->programID, $section, $order );
 		$this->assertNull( $deletedAsset->getAssetId(), 'Unsuccessful delete' );
 	}
 

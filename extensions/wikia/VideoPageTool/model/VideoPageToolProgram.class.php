@@ -743,10 +743,10 @@ class VideoPageToolProgram extends WikiaModel {
 
 			$dbw = wfGetDB(DB_MASTER);
 
-			(new WikiaSQL())
-				->DELETE('vpt_program')
-				->WHERE('program_id')->EQUAL_TO($this->programId)
-				->run($dbw);
+			( new WikiaSQL() )
+				->DELETE( 'vpt_program' )
+				->WHERE( 'program_id' )->EQUAL_TO( $this->programId )
+				->run( $dbw );
 
 			$this->invalidateCache();
 		}
