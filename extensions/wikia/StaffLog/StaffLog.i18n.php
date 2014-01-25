@@ -64,6 +64,7 @@ $messages['ang'] = array(
 
 /** Arabic (العربية)
  * @author Achraf94
+ * @author Claw eg
  */
 $messages['ar'] = array(
 	'stafflog-desc' => 'تسجيل مركزي للموظفين',
@@ -81,6 +82,7 @@ $messages['ar'] = array(
 	'stafflog-filter-type-piggyback' => 'استعارة حساب',
 	'stafflog-filter-type-renameuser' => 'إعادة تسمية المستخدم',
 	'stafflog-filter-type-wikifactory' => 'حالة الويكي',
+	'action-stafflog' => 'رؤية سجل العاملين المركزي',
 );
 
 /** Breton (brezhoneg)
@@ -127,7 +129,7 @@ $messages['ca'] = array(
 	'action-stafflog' => "mostra l'historial centralitzat",
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Chmee2
  * @author Dontlietome7
  */
@@ -211,6 +213,15 @@ $messages['es'] = array(
 	'stafflog-filter-type-renameuser' => 'Cambiar nombre de usuario',
 	'stafflog-filter-type-wikifactory' => 'Estado del wiki',
 	'action-stafflog' => 'ver el registro del staff centralizado',
+);
+
+/** Persian (فارسی)
+ * @author Reza1615
+ */
+$messages['fa'] = array(
+	'stafflog-filter-label' => 'پالایه',
+	'stafflog-filter-user' => 'کاربر:',
+	'stafflog-filter-type-block' => 'بلوک‌ها',
 );
 
 /** French (français)
@@ -315,6 +326,17 @@ $messages['id'] = array(
 $messages['lb'] = array(
 	'stafflog-desc' => 'Zentraliséiert Logge vun de Staff-Mataarbechter',
 	'stafflog-blockmsg' => '$1 $2 huet versicht de Staff-Mataarbechter $3 op der Wiki $4 ze spären: Grond: $5',
+);
+
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'stafflog-filter-label' => 'فيلتر',
+	'stafflog-filter-user' => 'كارور',
+	'stafflog-filter-type' => 'نوع:',
+	'stafflog-filter-apply' => 'وه كار بردن فيلتر',
+	'stafflog-filter-type-block' => 'بخشیا',
 );
 
 /** Macedonian (македонски)
@@ -673,10 +695,13 @@ $messages['vi'] = array(
  */
 $messages['zh-hans'] = array(
 	'stafflog-blockmsg' => '$1 $2 试图封禁在维基系统 $4 上面的员工用户 $3，理由为 $5',
+	'right-stafflog' => '可以查看stafflog',
+	'stafflog-wiki-status-change' => '$1 更改 $2 的状态到 $3。理由：$4',
 	'stafflog-filter-label' => '过滤器',
 	'stafflog-filter-user' => '用户：',
 	'stafflog-filter-type' => '类型：',
 	'stafflog-filter-apply' => '应用过滤器',
 	'stafflog-filter-type-renameuser' => '重命名用户',
 	'stafflog-filter-type-wikifactory' => 'Wiki状态',
+	'action-stafflog' => '查看集中式的员工日志',
 );

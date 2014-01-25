@@ -49,6 +49,7 @@ $messages['qqq'] = array(
 * $1 is a link to the suggested image.',
 	'lightbox-share-button-email' => '{{Identical|Email}}',
 	'lightbox-share-button-www' => '{{Identical|Share}}',
+	'lightbox-share-email-page-label-address' => '{{Identical|E-mail address}}',
 	'lightbox-share-email-error-caption' => '{{Identical|Error}}',
 	'lightbox-share-email-error-content' => 'Parameters:
 * $1 is the number of sent e-mails
@@ -173,7 +174,14 @@ Detalls: $2",
 	'lightbox-visit-the-wiki' => 'Visita el wiki:',
 );
 
-/** Czech (česky)
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'lightbox-share-button-embed' => 'Чуйилла',
+);
+
+/** Czech (čeština)
  * @author Chmee2
  * @author Darth Daron
  */
@@ -319,6 +327,19 @@ Detalles: $2',
 	'lightbox-share-email-error-login' => 'Para enviar correos electrónicos debes iniciar sesión.',
 	'lightbox-share-email-error-noaddress' => 'No has especificado ninguna dirección.',
 	'lightbox-visit-the-wiki' => 'Visita el wiki:',
+);
+
+/** Persian (فارسی)
+ * @author Reza1615
+ */
+$messages['fa'] = array(
+	'lightbox-forum' => 'فروم',
+	'lightbox-send' => 'ارسال',
+	'lightbox-share-button-email' => 'پست الکترونیکی',
+	'lightbox-share-button-www' => 'به‌اشتراک‌گذاشتن',
+	'lightbox-share-email-page-label-address' => 'نشانی پست الکترونیکی',
+	'lightbox-share-email-ok-caption' => 'تأیید عمل',
+	'lightbox-share-email-error-caption' => 'خطا',
 );
 
 /** Finnish (suomi)
@@ -574,11 +595,11 @@ $1
 	'lightbox-share-email-page-label' => '友達にメールでこのページを送信',
 	'lightbox-share-email-page-label-address' => 'メールアドレス',
 	'lightbox-share-email-ok-caption' => '確認',
-	'lightbox-share-email-ok-content' => 'メールを送信しました。', # Fuzzy
+	'lightbox-share-email-ok-content' => '{{PLURAL:$1|メール}}を送信しました。',
 	'lightbox-share-email-error-caption' => 'エラー',
-	'lightbox-share-email-error-content' => 'メールの送信でエラーが発生しました。
+	'lightbox-share-email-error-content' => '{{PLURAL:$1メール}}の送信でエラーが発生しました。
 
-詳細: $2', # Fuzzy
+詳細: $2',
 	'lightbox-share-email-error-login' => 'メールを送信するにはログインする必要があります',
 	'lightbox-share-email-error-noaddress' => 'メールアドレスが指定されていません',
 	'lightbox-visit-the-wiki' => 'ウィキに移動:',
@@ -609,9 +630,13 @@ $messages['lb'] = array(
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
+	'lightbox-standard-link' => 'هوم پیوند استاندارد',
 	'lightbox-send' => 'كل كردن',
 	'lightbox-share-button-email' => 'ايميل',
+	'lightbox-share-button-www' => 'بهر کردن',
 	'lightbox-share-button-embed' => 'مئن رئته',
+	'lightbox-share-email-page-label-address' => 'نشونی ايميل',
+	'lightbox-share-email-ok-caption' => 'مئکم کردن',
 	'lightbox-share-email-error-caption' => 'خطا',
 );
 
@@ -1051,9 +1076,17 @@ Mga detalye: $2',
 );
 
 /** Turkish (Türkçe)
+ * @author Incelemeelemani
  * @author Suelnur
  */
 $messages['tr'] = array(
+	'lightbox-forum' => 'Forum',
+	'lightbox-standard-link' => 'Standart bağlantı',
+	'lightbox-blog-link' => 'Blog bağlantı',
+	'lightbox-send' => 'Gönder',
+	'lightbox-share-button-email' => 'E-posta',
+	'lightbox-share-button-www' => 'Paylaş',
+	'lightbox-share-email-page-label-address' => 'E-posta adresi',
 	'lightbox-share-email-error-caption' => 'Hata',
 );
 

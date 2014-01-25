@@ -98,7 +98,7 @@ $messages['ce'] = array(
 	'spellchecker-info-spellcheck-languages' => 'Мотт',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Darth Daron
  */
 $messages['cs'] = array(
@@ -164,6 +164,14 @@ $messages['es'] = array(
 	'spellchecker-info-spellcheck-submit' => 'Revisar la ortografía',
 	'spellchecker-info-spellcheck-is-correct' => 'La palabra "$1" está escrita correctamente',
 	'spellchecker-info-spellcheck-suggestions' => 'Sugerencias de ortografía para "$1": $2',
+);
+
+/** Persian (فارسی)
+ * @author Reza1615
+ */
+$messages['fa'] = array(
+	'spellchecker-info-provider' => 'مهیا کننده',
+	'spellchecker-info-spellcheck-languages' => 'زبان',
 );
 
 /** Finnish (suomi)
@@ -643,5 +651,6 @@ $messages['zh-hans'] = array(
 	'spellchecker-info-spellcheck-text' => '文本已检查',
 	'spellchecker-info-spellcheck-languages' => '语言',
 	'spellchecker-info-spellcheck-submit' => '拼写检查',
+	'spellchecker-info-spellcheck-is-correct' => '单词“$1”拼写正确',
 	'spellchecker-info-spellcheck-suggestions' => '对"$1"的拼写建议：$2',
 );

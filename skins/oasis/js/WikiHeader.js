@@ -3,6 +3,7 @@ var WikiHeader = {
 	isDisplayed: false,
 	activeL1: null,
 	isTouchScreen: $().isTouchscreen(),
+	editformSubmitAllowed: false,
 
 	settings: {
 		mouseoverDelay: this.isTouchScreen ? 0 : 200,
@@ -41,8 +42,20 @@ var WikiHeader = {
 			},this));
 
 		// BugID: 64318 - hiding publish button on nav edit
-		if ( (window.wgIsWikiNavMessage) && (wgAction == "edit") ) {
-			$('#wpSave').hide();
+		if ( (window.wgIsWikiNavMessage) && (window.wgAction === "edit") ) {
+			$( '#wpSave' ).hide();
+			$( '#editform' ).submit( function( ev ) {
+				if ( !WikiHeader.editformSubmitAllowed ) {
+					ev.stopImmediatePropagation();
+					return false;
+				}
+			});
+			$( '#wpSummary' ).bind( 'keypress', function ( ev ) {
+				if ( ev.keyCode === 13 /* enter */ && !WikiHeader.editformSubmitAllowed ) {
+					// prevent tracking
+					ev.stopImmediatePropagation();
+				}
+			} );
 		}
 
 		//Accessibility Events
@@ -333,60 +346,63 @@ jQuery(function($) {
 	if (window.wgIsWikiNavMessage) {
 		// preload messages
 		$.getMessages('Oasis-navigation-v2').done(function() {
-			$('#EditPageRail .module_page_controls .module_content').append(
-				'<div class="preview-validator-desc">' + $.msg('oasis-navigation-v2-validation-caption') + '</div>'
-			);
+			// setup menu in preview mode
+			$(window).bind('EditPageAfterRenderPreview', function(ev, previewNode) {
+				// don't style wiki nav like article content
+				previewNode.removeClass('WikiaArticle');
+				WikiHeader.init(true);
+				var firstMenuValid = WikiHeader.firstMenuValidator(),
+					secondMenuValid = WikiHeader.secondMenuValidator(),
+					menuParseError = !!previewNode.find('nav > ul').attr('data-parse-errors'),
+					errorMessages = [];
+
+				if (menuParseError) {
+					errorMessages.push($.msg('oasis-navigation-v2-magic-word-validation'));
+				}
+
+				if (!firstMenuValid && !secondMenuValid) {
+					errorMessages.push($.msg('oasis-navigation-v2-level12-validation'));
+				}
+				else if (!firstMenuValid) {
+					errorMessages.push($.msg('oasis-navigation-v2-level1-validation'));
+				}
+				else if (!secondMenuValid) {
+					errorMessages.push($.msg('oasis-navigation-v2-level2-validation'));
+				}
+
+				if (errorMessages.length > 0) {
+					$('#publish').remove();
+					// TODO: use mustache and promise pattern along with .getMessages
+					var notifications =
+						'<div class="global-notification error">'
+							+ '<div class="msg">' + errorMessages.join("</br>") + '</div>'
+							+ '</div>';
+
+					$('.modalContent .ArticlePreview').prepend(notifications);
+				} else {
+					WikiHeader.editformSubmitAllowed = true;
+				}
+				previewNode.find('nav > ul a').click(function() {
+					if ($(this).attr('href') == '#') {
+						return false;
+					}
+				});
+
+				previewNode.find('.msg > a').click(function() {
+					window.location = this.href;
+				});
+
+			});
+		});
+
+		// disable submit on editform when preview is closed
+		$(window).bind('EditPagePreviewClosed', function() {
+			WikiHeader.editformSubmitAllowed = false;
 		});
 
 		// modify size of preview modal
 		$(window).bind('EditPageRenderPreview', function(ev, options) {
-            options.width = ($('#WikiaPage').width() - 271) /* menu width */ + 32 /* padding */;
-		});
-
-		// setup menu in preview mode
-		$(window).bind('EditPageAfterRenderPreview', function(ev, previewNode) {
-			// don't style wiki nav like article content
-			previewNode.removeClass('WikiaArticle');
-			WikiHeader.init(true);
-			var firstMenuValid = WikiHeader.firstMenuValidator(),
-				secondMenuValid = WikiHeader.secondMenuValidator(),
-				menuParseError = !!previewNode.find('nav > ul').attr('data-parse-errors'),
-				errorMessages = [];
-
-			if (menuParseError) {
-				errorMessages.push($.msg('oasis-navigation-v2-magic-word-validation'));
-			}
-
-			if (!firstMenuValid && !secondMenuValid) {
-				errorMessages.push($.msg('oasis-navigation-v2-level12-validation'));
-			}
-			else if (!firstMenuValid) {
-				errorMessages.push($.msg('oasis-navigation-v2-level1-validation'));
-			}
-			else if (!secondMenuValid) {
-				errorMessages.push($.msg('oasis-navigation-v2-level2-validation'));
-			}
-
-			if (errorMessages.length > 0) {
-				$('#publish').remove();
-				// TODO: use mustache and promise pattern along with .getMessages
-                var notifications =
-                    '<div class="global-notification error">'
-                    + '<div class="msg">' + errorMessages.join("</br>") + '</div>'
-                    + '</div>';
-
-                $('.modalContent .ArticlePreview').prepend(notifications);
-			}
-			previewNode.find('nav > ul a').click(function() {
-				if ($(this).attr('href') == '#') {
-					return false;
-				}
-			});
-
-            previewNode.find('.msg > a').click(function() {
-                window.location = this.href;
-            });
-
+			options.width = ($('#WikiaPage').width() - 271) /* menu width */ + 32 /* padding */;
 		});
 
 		$('#wpPreview').parent().removeClass('secondary');

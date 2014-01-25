@@ -401,13 +401,14 @@ $messages['eu'] = array(
 );
 
 /** Persian (فارسی)
+ * @author Ebraminio
  * @author ZxxZxxZ
  * @author جواد
  */
 $messages['fa'] = array(
 	'categoryselect-button-add' => 'افزودن رده',
 	'categoryselect-button-cancel' => 'لغو',
-	'categoryselect-button-save' => 'ذخیره کردن',
+	'categoryselect-button-save' => 'ذخیره‌کردن',
 	'categoryselect-category-edit' => 'ویرایش رده',
 	'categoryselect-edit-summary' => 'افزودن رده',
 	'categoryselect-tooltip-add' => 'پس از اتمام دکمه اینتر را فشار دهید', # Fuzzy
@@ -663,13 +664,15 @@ $messages['ja'] = array(
 	'categoryselect-category-remove' => 'カテゴリを除去',
 	'categoryselect-edit-summary' => 'カテゴリを追加',
 	'categoryselect-error-article-doesnt-exist' => '記事 [id=$1] は存在しません。',
+	'categoryselect-error-category-name-length' => 'カテゴリ名の最大文字数に到達しました。',
 	'categoryselect-error-db-locked' => 'データベースがロックされています。',
-	'categoryselect-error-edit-abort' => '拡張機能のフックによって、修正が中断されました', # Fuzzy
-	'categoryselect-error-empty-category-name' => 'カテゴリ名を入力（"|"より前の部分）', # Fuzzy
-	'categoryselect-error-user-rights' => '利用者権限のエラーです。', # Fuzzy
-	'categoryselect-modal-category-name' => 'カテゴリ名を入力', # Fuzzy
-	'categoryselect-modal-category-sortkey' => '"$1"カテゴリで記事のソートに使用する名前を入力', # Fuzzy
-	'categoryselect-tooltip-add' => 'エンターキーを押すと終了', # Fuzzy
+	'categoryselect-error-duplicate-category-name' => '「$1」というカテゴリは既に追加されています。',
+	'categoryselect-error-edit-abort' => '拡張機能のフックによって修正が中断されました',
+	'categoryselect-error-empty-category-name' => 'カテゴリ名を入力してください。',
+	'categoryselect-error-user-rights' => 'この操作を実行する権限がありません。',
+	'categoryselect-modal-category-name' => 'カテゴリ名を入力:',
+	'categoryselect-modal-category-sortkey' => '必要であれば、「$1」のカテゴリページでページを一覧表示する際の表示順を調整するための名前を指定できます:',
+	'categoryselect-tooltip-add' => 'エンターキーもしくはリターンキーを押すと終了。',
 	'tog-disablecategoryselect' => 'カテゴリタグ付け機能を無効にする（ビジュアルモードでの編集を無効にしている場合にのみ適用）',
 	'tog-disablecategoryselect-v2' => 'カテゴリモジュールを無効にする（ビジュアルモードでの編集を無効にしている場合にのみ適用）',
 );
@@ -734,9 +737,12 @@ $messages['lb'] = array(
 	'categoryselect-category-remove' => 'Kategorie ewechhuelen',
 	'categoryselect-edit-summary' => 'Kategorien derbäisetzen',
 	'categoryselect-error-article-doesnt-exist' => "D'Säit [id=$1] gëtt et net.",
+	'categoryselect-error-category-name-length' => 'Déi maximal Längt fir en Numm vun enger Kategorie gouf erreecht.',
 	'categoryselect-error-db-locked' => "D'Datebank ass gespaart.",
 	'categoryselect-error-duplicate-category-name' => 'D\'Kategorie "$1" gëtt et schonn.',
+	'categoryselect-error-empty-category-name' => 'Gitt w.e.g.en Numm vun enger Kategorie un.',
 	'categoryselect-error-user-rights' => "De Benotzer huet net d'Rechter fir dës Aktioun ze maachen.",
+	'categoryselect-modal-category-name' => 'Gitt den Numm vun der Kategorie un.',
 	'categoryselect-tooltip-add' => "Dréckt 'Enter' oder 'Return' wann Dir fäerdeg sidd",
 );
 
@@ -744,8 +750,16 @@ $messages['lb'] = array(
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
+	'categoryselect-button-add' => 'یه گل دسه اضاف کو',
 	'categoryselect-button-cancel' => 'رد كردن',
 	'categoryselect-button-save' => 'ذخيره كردن',
+	'categoryselect-category-add' => 'یه گل دسه اضاف کو....',
+	'categoryselect-category-edit' => 'ویرایشت دسه',
+	'categoryselect-category-remove' => 'دسه نه جاوه جا کو',
+	'categoryselect-edit-summary' => 'اضاف بیئن دسه یا',
+	'categoryselect-error-article-doesnt-exist' => 'بلگه [id=$1] نیئش.',
+	'categoryselect-error-db-locked' => 'جاگه دونسمنيا بسه بيه',
+	'categoryselect-error-duplicate-category-name' => 'دسه "$1" ایسه هئیش.',
 );
 
 /** Lithuanian (lietuvių)
@@ -1338,6 +1352,7 @@ $messages['zh'] = array(
  * @author Dimension
  * @author Hydra
  * @author Hzy980512
+ * @author User670839245
  * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
@@ -1357,6 +1372,7 @@ $messages['zh-hans'] = array(
 	'categoryselect-error-empty-category-name' => '请输入分类名称。',
 	'categoryselect-error-user-rights' => '用户没有进行此操作的权限。',
 	'categoryselect-modal-category-name' => '提供类别的名称：',
+	'categoryselect-modal-category-sortkey' => '您亦可在此名字下在“$1”分类页面上按字母排列。',
 	'categoryselect-tooltip-add' => '完成后按Enter或Return键。',
 	'tog-disablecategoryselect' => '禁用分类模块（仅适用于如果编辑在可视模式下已被禁用）',
 	'tog-disablecategoryselect-v2' => '禁用分类模块（仅适用于如果可视模式已被禁用）',

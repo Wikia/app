@@ -20,7 +20,9 @@
 				var fixed = $window.scrollTop() >= this.$button.offset().top - this.buttonHeight;
 				this.$toolbar.toggleClass( 'fixed', fixed );
 			},
-			onEmailClick: function ( ) {
+			onEmailClick: function ( event ) {
+				event.preventDefault();
+
 				var node = $( this ),
 					shareEmailLabel = node.attr( 'data-lightboxShareEmailLabel' ),
 					sendLabel = node.attr( 'data-lightboxSend' ),
@@ -107,7 +109,7 @@
 									format: 'json',
 									data: {
 										pageName: window.wgPageName,
-										addresses: $( '#shareEmailModal #lightbox-share-email-text' ).val(),
+										addresses: $( '#lightbox-share-email-text' ).val(),
 										messageId: 1
 									},
 									callback: function ( data ) {
@@ -135,7 +137,7 @@
 
 										// close email modal when share is successful (BugId:16061)
 										if ( result.success ) {
-											$( '#ShareEmailModal' ).trigger( 'close' );
+											shareEmailModal.trigger( 'close' );
 
 											window.UserLogin.refreshIfAfterForceLogin();
 										}

@@ -23,6 +23,24 @@ function ( sections, window, $, mustache, toc ) {
 	}
 
 	/**
+	 * @desc Creates object representing a section
+	 *
+	 * @param {Object} header - Processed element object for single article header
+	 * @param {Integer} level - The actual level on which the element will be rendered
+	 *
+	 * @returns {Object} - returns TOC section object
+	 */
+	function createSection( header, level ) {
+		return {
+			id: header.id,
+			name: header.textContent.trim(),
+			level: level,
+			firstLevel: level === 1,
+			sections: []
+		};
+	}
+
+	/**
 	 * @desc Renders toc for a given page
 	 * @returns HTML String
 	 */
@@ -36,15 +54,7 @@ function ( sections, window, $, mustache, toc ) {
 			wrap = '<div id="tocWrapper"><div id="scroller">{{> ol}}</div></div>',
 			tocData = toc.getData(
 				sections.list,
-				function ( header, level ) {
-					return {
-						id: header.id,
-						name: header.textContent.trim(),
-						level: level,
-						firstLevel: level === 2,
-						sections: []
-					};
-				}
+				createSection
 			);
 
 		if ( tocData.sections.length ) {
@@ -136,11 +146,15 @@ function ( sections, window, $, mustache, toc ) {
 
 			$anchors = $ol.find( 'li > a' );
 
-			tocScroll = new window.IScroll('#tocWrapper', {
-				click: true,
-				scrollY: true,
-				scrollX: false
-			});
+			var wrapper = document.getElementById( 'tocWrapper' );
+
+			if ( wrapper ) {
+				tocScroll = new window.IScroll( wrapper, {
+					click: true,
+					scrollY: true,
+					scrollX: false
+				});
+			}
 
 			inited = true;
 		}

@@ -14,7 +14,7 @@ class WallMessage {
 	/**
 	 * @var $commentsIndex CommentsIndex
 	 */
-	public $commentsIndex;
+	public $commentsIndex = false;
 	/**
 	 * @var $helper WallHelper
 	 */
@@ -48,7 +48,7 @@ class WallMessage {
 
 		if( $title instanceof Title && $title->exists() ) {
 			wfProfileOut(__METHOD__);
-			return  WallMessage::newFromTitle($title);
+			return WallMessage::newFromTitle($title);
 		}
 
 		if( $master == false ) {
@@ -199,8 +199,8 @@ class WallMessage {
 	}
 
 	public function getCommentsIndex() {
-		if(empty($this->commentsIndex)) {
-			$this->commentsIndex = CommentsIndex::newFromId( $this->getId() );
+		if( false === $this->commentsIndex ) { // false means we didn't call newFromId yet
+			$this->commentsIndex = CommentsIndex::newFromId( $this->getId() ); // note: can return null
 		}
 
 		return $this->commentsIndex;
@@ -225,7 +225,7 @@ class WallMessage {
 
 	public function addNewReply($body, $user) {
 		wfProfileIn( __METHOD__ );
-		$out = self::buildNewMessageAndPost($body, $this->getWallTitle(), $user, '', $this );
+		$out = self::buildNewMessageAndPost($body, $this->getArticleTitle(), $user, '', $this );
 		wfProfileOut( __METHOD__ );
 		return $out;
 	}
@@ -343,7 +343,7 @@ class WallMessage {
 		$out = (int ) $this->getArticleComment()->getMetadata('notify_everyone');
 		$ageInDays = (time() - $out)/(60*60*24);
 
-		if( $ageInDays < 30  ){
+		if( $ageInDays < WallHelper::NOTIFICATION_EXPIRE_DAYS ){
 			return true;
 		} else {
 			return false;
@@ -369,25 +369,30 @@ class WallMessage {
 		}
 		return false;
 	}
-	public function setNotifyeveryone($notifyeveryone, $save = false ) {
-		if($this->isMain()) {
-			if(!$this->isAllowedNotifyEveryone()) {
+
+	public function setNotifyEveryone( $notifyEveryone ) {
+		if( $this->isMain() ) {
+			if( !$this->isAllowedNotifyEveryone() ) {
 				return false;
 			}
 			$app = F::App();
 			$wne = new WallNotificationsEveryone();
-			$this->load(true);
-			if($notifyeveryone) {
-				$this->getArticleComment()->setMetaData('notify_everyone', time());
-				$this->doSaveMetadata( $app->wg->User, wfMsgForContent( 'wall-message-update-highlight-summary' ), false, true );
+			$this->load( true );
+			if ( $notifyEveryone ) {
+				$this->getArticleComment()->setMetaData( 'notify_everyone', time() );
+				$this->doSaveMetadata( $app->wg->User,
+					wfMessage( 'wall-message-update-highlight-summary' )->inContentLanguage()->text(),
+					false, true );
 				$rev = $this->getArticleComment()->mLastRevision;
-				$notif = WallNotificationEntity::createFromRev($rev, $this->cityId);
-				$wne->addNotificationToQueue($notif);
+				$entity = WallNotificationEntity::createFromRev( $rev, $this->cityId );
+				$wne->addNotificationToQueue( $entity );
 			} else {
-				$this->getArticleComment()->removeMetadata('notify_everyone');
+				$this->getArticleComment()->removeMetadata( 'notify_everyone' );
 				$pageId = $this->getId();
-				$wne->removeNotificationFromQueue($pageId);
-				$this->doSaveMetadata( $app->wg->User, wfMsgForContent( 'wall-message-update-removed-highlight-summary' ), false, true );
+				$wne->removeNotificationForPageId( $pageId );
+				$this->doSaveMetadata( $app->wg->User,
+					wfMessage( 'wall-message-update-removed-highlight-summary' )->inContentLanguage()->text(),
+					false, true );
 			}
 		}
 	}
@@ -416,9 +421,11 @@ class WallMessage {
 		return true;
 	}
 
-
-	public function getWallOwnerName() {
-		$title = $this->getWallTitle();
+	/**
+	 * This method is used by on Wall and Forum messages to get the name of the main page (wall owner or forum board)
+	 */
+	public function getMainPageText() {
+		$title = $this->getArticleTitle();
 		$parts = explode( '/', $title->getText() );
 		$wallOwnerName = $parts[0];
 
@@ -428,17 +435,28 @@ class WallMessage {
 	}
 
 	public function getWallOwner( $master = false ) {
-		$parts = explode( '/', $this->getWallTitle( $master )->getText() );
+		$parts = explode( '/', $this->getArticleTitle( $master )->getText() );
 		$userName = $parts[0];
-		// mech: I'm not sure we have to create wall title doing db queries on both, page and comments_index tables.
-		// as the user name is the first part on comment's title. But I'm not able to go through all wall/forum
-		// usecases. I'm going to check production logs for the next 2-3 sprints and make sure the result is
-		// always correct
 		$titleText = $this->title->getText();
 		$parts = explode( '/', $titleText );
-		if ( $parts[0] != $userName ) {
-			Wikia::log( __METHOD__, false, 'WALL_PERF article title owner does not match ci username (' . $userName .
-				' vs ' . $parts[0] . ') for ' . $this->getId() . ' (title is ' . $titleText. ')', true );
+		if ( mt_rand( 1, 100 ) < 2 ) {  // doing this experiment for all requests pollutes the logs
+
+			// mech: I'm not sure we have to create wall title doing db queries on both, page and comments_index tables.
+			// as the user name is the first part on comment's title. But I'm not able to go through all wall/forum
+			// usecases. I'm going to check production logs for the next 2-3 sprints and make sure the result is
+			// always correct
+			if ( $parts[0] != $userName ) {
+				Wikia::log( __METHOD__, false, 'WALL_PERF article title owner does not match ci username (' . $userName .
+					' vs ' . $parts[0] . ') for ' . $this->getId() . ' (title is ' . $titleText. ')', true );
+			}
+
+		}
+
+		// mech: when the wall message is not in the db yet, the getWallTitle will return 'Empty' as is cannot find
+		// the row in comments_index. After I'll make sure that call to getWallTitle is not needed, the check below
+		// can be safely removed
+		if ( $userName == 'Empty' && !empty( $parts[0] ) ) {
+			$userName = $parts[0];
 		}
 
 		$wall_owner = User::newFromName( $userName, false );
@@ -450,13 +468,7 @@ class WallMessage {
 	}
 
 	public function getWallPageUrl() {
-		return $this->getWallTitle()->getFullUrl();
-	}
-
-
-	//TODO: remove get wall title
-	public function getWallTitle( $master = false ){
-		return $this->getArticleTitle( $master );
+		return $this->getArticleTitle()->getFullUrl();
 	}
 
 	public function getArticleTitle( $master = false ){
@@ -497,7 +509,7 @@ class WallMessage {
 	 * @return Wall
 	 */
 	public function getWall() {
-		$wall = Wall::newFromTitle( $this->getWallTitle() );
+		$wall = Wall::newFromTitle( $this->getArticleTitle() );
 		return $wall;
 	}
 
@@ -635,13 +647,21 @@ class WallMessage {
 		return false;
 	}
 
+	/**
+	 * Checks if the user passed as an argument is the owner of the Wall containing current WallMessage
+	 *
+	 * @param User $user instance of the user class
+	 * @return bool true when the user is the owner
+	 */
 	public function isWallOwner(User $user) {
 		$wallUser = $this->getWallOwner();
 		if(empty($wallUser)) {
 			return false;
 		}
 
-		return $wallUser->getId() == $user->getId();
+		// we're using names instead of ids, as ids for anonymous users are equal 0. This will cause bugs
+		// while verifying anonymous wall owners
+		return $wallUser->getName() == $user->getName();
 	}
 
 	public function load($master = false) {
@@ -828,7 +848,7 @@ class WallMessage {
 	}
 
 	public function isWallWatched(User $user) {
-		return $user->isWatched( $this->getWallTitle() );
+		return $user->isWatched( $this->getArticleTitle() );
 	}
 
 	public function isWatched(User $user) {
@@ -1009,7 +1029,7 @@ class WallMessage {
 
 	protected function customActionNotifyRC($user, $action, $reason) {
 		$articleId = $this->getId();
-		$target =  $this->getTitle();
+		$target = $this->getTitle();
 
 		RecentChange::notifyLog(
 			wfTimestampNow(),

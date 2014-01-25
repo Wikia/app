@@ -185,13 +185,20 @@ class WikiaFileHelper extends Service {
 	 * get html for video info overlay
 	 * @param integer $width
 	 * @param Title|string $title
+	 * @param Boolean $showViews
 	 * @return string
 	 */
-	public static function videoInfoOverlay( $width, $title = null ) {
+	public static function videoInfoOverlay( $width, $title = null, $showViews = false ) {
 		$html = '';
 		if ( $width > 230 && !empty( $title ) ) {
 			$file = self::getFileFromTitle( $title );
 			if ( !empty( $file ) ) {
+				// info
+				$attribs = [
+					"class" => "info-overlay",
+					"style" => "width: {$width}px;"
+				];
+
 				// video title
 				$contentWidth = $width - 60;
 				$videoTitle = $title->getText();
@@ -203,26 +210,23 @@ class WikiaFileHelper extends Service {
 				if ( $fileMetadata ) {
 					$fileMetadata = unserialize( $fileMetadata );
 					if ( array_key_exists( 'duration', $fileMetadata ) ) {
-						$duration = self::formatDuration( $fileMetadata['duration'] );
-						$isoDuration = self::getISO8601Duration( $duration );
+						$duration = $fileMetadata['duration'];
+						$isoDuration = self::formatDurationISO8601( $duration );
 						$content .= '<meta itemprop="duration" content="'.$isoDuration.'">';
 					}
 				}
 
-				$content .= self::videoOverlayDuration( $duration );
+				$content .= self::videoOverlayDuration( self::formatDuration( $duration ) );
 				$content .= '<br />';
 
 				// video views
 				$videoTitle = $title->getDBKey();
-				$views = MediaQueryService::getTotalVideoViewsByTitle( $videoTitle );
-				$content .= self::videoOverlayViews( $views );
-				$content .= '<meta itemprop="interactionCount" content="UserPlays:'.$views.'" />';
-
-				// info
-				$attribs = array(
-					"class" => "info-overlay",
-					"style" => "width: {$width}px;"
-				);
+				if( $showViews ) {
+					$views = MediaQueryService::getTotalVideoViewsByTitle( $videoTitle );
+					$content .= self::videoOverlayViews( $views );
+					$attribs['class'] .= " info-overlay-with-views";
+					$content .= '<meta itemprop="interactionCount" content="UserPlays:'.$views.'" />';
+				}
 
 				$html = Xml::tags( 'span', $attribs, $content );
 			}
@@ -553,39 +557,30 @@ class WikiaFileHelper extends Service {
 	 * @return string $hms
 	 */
 	public static function formatDuration( $sec ) {
-		$hms = "";
-		$hours = intval( intval( $sec ) / 3600 );
-		if ( $hours > 0 ) {
-			$hms .= str_pad( $hours, 2, "0", STR_PAD_LEFT ). ":";
-		}
+		$sec = intval( $sec );
 
-		$minutes = intval( ( $sec / 60 ) % 60 );
-		$hms .= str_pad( $minutes, 2, "0", STR_PAD_LEFT ). ":";
-
-		$seconds = intval( $sec % 60 );
-		$hms .= str_pad( $seconds, 2, "0", STR_PAD_LEFT );
+		$format = ( $sec >= 3600 ) ? 'H:i:s' : 'i:s';
+		$hms = gmdate( $format, $sec );
 
 		return $hms;
 	}
 
 	/**
-	 * Get the duration in ISO 8601 format for meta tag
-	 * @param $hms
-	 * @return string
+	 * Format duration from second to ISO 8601 format for meta tag
+	 * @param integer $sec
+	 * @return string $result
 	 */
-	public static function getISO8601Duration( $hms ) {
-		if ( !empty( $hms ) ) {
-			$segments = explode( ':', $hms );
-			$ret = "PT";
-			if ( count( $segments ) == 3 ) {
-				$ret .= array_shift( $segments ) . 'H';
-			}
-			$ret .= array_shift( $segments ) . 'M';
-			$ret .= array_shift( $segments ) . 'S';
+	public static function formatDurationISO8601( $sec ) {
+		if ( empty( $sec ) ) {
+			$result = '';
+		} else {
+			$sec = intval( $sec );
 
-			return $ret;
+			$format = ( $sec >= 3600 ) ? '\P\TH\Hi\Ms\S' : '\P\Ti\Ms\S';
+			$result = gmdate( $format, $sec );
 		}
-		return '';
+
+		return $result;
 	}
 
 	/**

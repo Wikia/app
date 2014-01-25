@@ -337,9 +337,11 @@ class WikiaApp {
 	 * @return WikiaDispatcher
 	 */
 	public function getDispatcher() {
+		wfProfileIn(__METHOD__);
 		if( $this->dispatcher == null ) {
 			$this->dispatcher = (new WikiaDispatcher);
 		}
+		wfProfileOut(__METHOD__);
 		return $this->dispatcher;
 	}
 
@@ -579,6 +581,7 @@ class WikiaApp {
 	 * @return WikiaResponse a response object with the data produced by the method call
 	 */
 	public function sendRequest( $controllerName = null, $methodName = null, $params = array(), $internal = true ) {
+		wfProfileIn(__METHOD__);
 
 		if ( !empty( $controllerName ) ) {
 			$params['controller'] = $controllerName;
@@ -596,7 +599,9 @@ class WikiaApp {
 
 		$request->setInternal( $internal );
 
-		return $this->getDispatcher()->dispatch( $this, $request );
+		$out = $this->getDispatcher()->dispatch( $this, $request );
+		wfProfileOut(__METHOD__);
+		return $out;
 	}
 
 	/**
@@ -654,7 +659,10 @@ class WikiaApp {
 	 */
 
 	public function renderView( $controllerName, $method, Array $params = null ) {
-		return $this->sendRequest( $controllerName, $method, $params, true )->toString();
+		wfProfileIn(__METHOD__);
+		$out = $this->sendRequest( $controllerName, $method, $params, true )->toString();
+		wfProfileOut(__METHOD__);
+		return $out;
 	}
 
 	/**

@@ -90,8 +90,10 @@ $messages['bar'] = array(
 /** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
  * @author EugeneZelenko
  * @author Jim-by
+ * @author Red Winged Duck
  */
 $messages['be-tarask'] = array(
+	'interwikiedit' => 'Рэдактар інтэрвікі',
 	'iwedit-title' => 'Рэдактар інтэрвікі',
 	'iwedit-language-interwikis' => 'толькі моўныя інтэрвікі',
 	'iwedit-all-interwikis' => 'усе інтэрвікі',
@@ -147,7 +149,7 @@ $messages['ce'] = array(
 	'iwedit-success' => '<p>Хьажораг кхиамца кхоьллина.</p>',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Dontlietome7
  * @author Utar
  */
@@ -351,6 +353,13 @@ $messages['kn'] = array(
 	'iwedit-all-interwikis' => 'ಎಲ್ಲಾ ಇಂಟರ್ವಿಕಿಗಳು',
 );
 
+/** Karachay-Balkar (къарачай-малкъар)
+ * @author Iltever
+ */
+$messages['krc'] = array(
+	'iwedit-update' => 'Джангырт',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
@@ -362,6 +371,13 @@ $messages['lb'] = array(
 	'iwedit-update' => 'Aktualiséieren',
 	'iwedit-error' => '<p>Et ass e Feeler geschitt.</p>',
 	'iwedit-success' => '<p>De Linkg gouf ugeluecht</p>',
+);
+
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'iwedit-update' => 'روزآمد كردن',
 );
 
 /** Latgalian (latgaļu)
@@ -621,7 +637,13 @@ $messages['uk'] = array(
  * @author Baonguyen21022003
  */
 $messages['vi'] = array(
+	'interwikiedit' => 'Interwiki biên tập',
+	'iwedit-title' => 'Interwiki biên tập',
+	'iwedit-language-interwikis' => 'ngôn ngữ interwikis chỉ',
+	'iwedit-all-interwikis' => 'Tất cả interwikis',
 	'iwedit-update' => 'Cập nhật',
+	'iwedit-error' => '<p>Lỗi đã xảy ra.</p>',
+	'iwedit-success' => '<p>Tạo liên kết thành công.</p>',
 );
 
 /** Simplified Chinese (中文（简体）‎)

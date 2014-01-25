@@ -23,6 +23,8 @@ class ControllerTest extends WikiaBaseTest {
 	}
 
 	function testRenderView() {
+		$this->markTestSkipped('Refactor this unit test');
+
 		$result = F::app()->renderView('UnitTest', 'Index');
 		$this->assertEquals('Foo', $result);
 

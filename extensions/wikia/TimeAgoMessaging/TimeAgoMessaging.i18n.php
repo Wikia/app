@@ -125,7 +125,7 @@ $messages['ce'] = array(
 	'timeago-month-from-now' => '$1 {{PLURAL:$1|бутт}} хьалха',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Darth Daron
  * @author Dontlietome7
  * @author Mormegil
@@ -626,6 +626,13 @@ $messages['tl'] = array(
 	'timeago-minute-from-now' => '{{PLURAL:$1|isang minuto|$1 mga minuto}} magmula ngayon',
 	'timeago-month-from-now' => '{{PLURAL:$1|isang buwan|$1 mga buwan}} magmula ngayon',
 	'timeago-second-from-now' => 'isang minuto magmula ngayon',
+);
+
+/** Tatar (Cyrillic script) (татарча)
+ * @author Ilnur efende
+ */
+$messages['tt-cyrl'] = array(
+	'timeago-minute' => '{{PLURAL:$1|$1 минут|$1 минут|$1 минут}} элек', # Fuzzy
 );
 
 /** Ukrainian (українська)

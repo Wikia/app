@@ -27,13 +27,17 @@ define( 'wikia.preview', [
 	var $article,
 		$previewTypeDropdown = $(), // in case preview loaded quicker than switchPreview
 		previewTemplate, // current design of preview has this margins to emulate page margins
-		// TODO: when we will redesign preview to meet darwin design directions - this should be done differently and refactored
-		articleMargin = fluidlayout.getWidthPadding() + fluidlayout.getArticleBorderWidth(), // values for min and max are Darwin minimum and maximum supported article width.
+		// TODO: when we will redesign preview to meet darwin design directions -
+		// TODO: this should be done differently and refactored
+		// values for min and max are Darwin minimum and maximum supported article width.
+		articleMargin = fluidlayout.getWidthPadding() + fluidlayout.getArticleBorderWidth(),
 		rightRailWidth = fluidlayout.getRightRailWidth(),
 		isRailDropped = false,
 		isWidePage = false,
 		articleWrapperWidth, // width of article wrapper needed as reference for preview scaling
-		FIT_SMALL_SCREEN = 80, // pixels to be removed from modal width to fit modal on small screens, won't be needed when new modals will be introduced
+		// pixels to be removed from modal width to fit modal on small screens,
+		// won't be needed when new modals will be introduced
+		FIT_SMALL_SCREEN = 80,
 		previewTypes, //List of available preview options
 		currentTypeName, //Currently used preview type
 		editPageOptions, //options passed from EditPageLayout
@@ -80,7 +84,9 @@ define( 'wikia.preview', [
 	 * @param {object} data - data that comes from preview api
 	 */
 	function handleMobilePreview ( data ) {
-		var iframe = $article.html( '<div class="mobile-preview"><iframe  width="320" height="480"></iframe></div>' ).find( 'iframe' )[ 0 ],
+		var iframe = $article.html(
+				'<div class="mobile-preview"><iframe  width="320" height="480"></iframe></div>'
+			).find( 'iframe' )[ 0 ],
 			doc = iframe.document;
 
 		if ( iframe.contentDocument ) {
@@ -104,7 +110,9 @@ define( 'wikia.preview', [
 
 	/**
 	 * @desc Function that loads preview
-	 * @param {string} type - What type of preview to load currently - empty -> Desktop preview, mobile -> Mobile preview
+	 * @param {string} type - What type of preview to load currently
+	 *                          empty -> Desktop preview,
+	 *                          mobile -> Mobile preview
 	 * @param {boolean} opening - whether this is first load and all values should be calculated
 	 */
 	function loadPreview ( type, opening ) {
@@ -221,7 +229,8 @@ define( 'wikia.preview', [
 	 * Display a dialog with article preview. Options passed in the object are:
 	 *  - 'width' - dialog width in pixels
 	 *  - 'isRailDropped' - flag set to true for window size 1023 and below when responsive layout is enabled
-	 *  - 'scrollbarWidth' - width of the scrollbar (need do be subtracted from article wrapper width as reference for scaling)
+	 *  - 'scrollbarWidth' - width of the scrollbar
+	 *                      (need do be subtracted from article wrapper width as reference for scaling)
 	 *  - 'onPublishButton' - callback function launched when user presses the 'Publish' button on the dialog
 	 *  - 'getPreviewContent' - callback function called when the dialog tries to fetch the current article content from
 	 *    the editor. this function takes a callback as a parameter and is supposed to call it with two parameters. the
@@ -243,6 +252,7 @@ define( 'wikia.preview', [
 					message: msg( 'back' ),
 					handler: function () {
 						$( '#EditPageDialog' ).closeModal();
+						$( window ).trigger( 'EditPagePreviewClosed' );
 					}
 				},
 				{
@@ -288,7 +298,7 @@ define( 'wikia.preview', [
 					handlePreviewDropdown( previewTemplate );
 				}
 			}
-		} );
+		});
 	}
 
 	/**
@@ -302,19 +312,15 @@ define( 'wikia.preview', [
 		if ( typeof summary !== 'undefined' ) {
 			var $editPagePreviewEditSummary = $( '<div>', {id: 'EditPagePreviewEditSummary'} ),
 				$articlePreview = contentNode.closest( '.ArticlePreview' ),
-				articleHeight = $articlePreview.height(),
-				minArticleHeight = 200,
-				editSummaryHeight,
-				newArticleHeight;
+				articlePreviewWidth = $articlePreview.width(),
+				$modalToolbar = $( '.modalToolbar' ),
+				modalToolbarWidth = $modalToolbar.outerWidth( true );
 
-			$editPagePreviewEditSummary.width( width ).appendTo( $articlePreview.parent() ).html( summary );
+			$editPagePreviewEditSummary
+				.width( articlePreviewWidth - modalToolbarWidth )
+				.html( summary );
 
-			editSummaryHeight = $editPagePreviewEditSummary.height();
-			newArticleHeight = articleHeight - editSummaryHeight;
-
-			if ( newArticleHeight > minArticleHeight ) {
-				$articlePreview.height( newArticleHeight );
-			}
+			$modalToolbar.before( $editPagePreviewEditSummary );
 		}
 	}
 
@@ -368,7 +374,8 @@ define( 'wikia.preview', [
 			$article.css( cssTransform, '' );
 		}
 
-		// Force browser to redraw/repaint - http://stackoverflow.com/questions/3485365/how-can-i-force-webkit-to-redraw-repaint-to-propagate-style-changes
+		// Force browser to redraw/repaint
+		// http://stackoverflow.com/q/3485365/how-can-i-force-webkit-to-redraw-repaint-to-propagate-style-changes
 		$article.hide();
 		$article.height();
 		$article.show();
@@ -402,7 +409,8 @@ define( 'wikia.preview', [
 	/**
 	 * Returns previewTypes object which depends on the type of previewing page
 	 *
-	 * @param {boolean} isWidePage - type of previewing article page is it mainpage/a page without right rail or not (DAR-2366)
+	 * @param {boolean} isWidePage - type of previewing article page
+	 *                               is it mainpage / a page without right rail or not (DAR-2366)
 	 */
 
 	function getPreviewTypes ( isWidePage ) {

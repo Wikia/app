@@ -95,11 +95,6 @@ class WikiFactory {
 		"hash"
 	);
 
-	/**
-	 * list of valid database clusters used for creating wikis
-	 */
-	static public $clusters = array( "c1", "c2", "c3", "c4" );
-
 	static public $levels = array(
 		1 => "read only",
 		2 => "editable by staff",
@@ -567,10 +562,24 @@ class WikiFactory {
 			# if reason was passed non-null, prepare a string for sprintf, else a zero-len string
 			$reason_extra = !empty($reason) ? " (reason: ". (string)$reason .")" : '';
 
-			if( isset( $variable->cv_value ) ) {
+
+			$needPreformat = in_array( $variable->cv_variable_type, array( 'struct', 'array', 'hash', 'text' ) );
+
+
+			if ( isset( $variable->cv_value ) ) {
+
+				if ( !$needPreformat ) {
+					$message = "Variable <strong>%s</strong> changed value from <strong>%s</strong> to <strong>%s</strong>%s";
+				} else {
+					$message = '<div>Variable <strong>%s</strong> changed value </div>' .
+						'<div class="v1"><strong>Old value:</strong><pre>%s</pre></div> ' .
+						'<div class="v2"><strong>New value:</strong><pre>%s</pre></div>' .
+						'<div class="clear">%s</div></div>';
+				}
+
 				self::log(
 					self::LOG_VARIABLE,
-					sprintf("Variable %s changed value from %s to %s%s",
+					sprintf($message,
 						$variable->cv_name,
 						var_export( unserialize( $variable->cv_value ), true ),
 						var_export( $value, true ),
@@ -581,9 +590,16 @@ class WikiFactory {
 				);
 			}
 			else {
+
+				if ( !$needPreformat ) {
+					$message = 'Variable <strong>%s</strong> set value: <strong>%s</strong> %s';
+				} else {
+					$message = 'Variable <strong>%s</strong> set value: <pre>%s</pre> %s';
+				}
+
 				self::log(
 					self::LOG_VARIABLE,
-					sprintf("Variable %s set value: %s%s",
+					sprintf($message,
 						$variable->cv_name,
 						var_export( $value, true ),
 						$reason_extra
@@ -2945,20 +2961,6 @@ class WikiFactory {
 
 		wfProfileOut( __METHOD__ );
 		return $clusters;
-	}
-
-	/**
-	 * isValidCluster -- check if name is valid cluster (c1, c2, c3, ... )
-	 *
-	 * @author Krzysztof Krzyżaniak (eloy) <eloy@wikia-inc.com>
-	 * @access public
-	 * @static
-	 *
-	 * @param string $cluster cluster name
-	 * @return bool
-	 */
-	static public function isValidCluster( $cluster ) {
-		return in_array( $cluster, self::$clusters );
 	}
 
 	/**

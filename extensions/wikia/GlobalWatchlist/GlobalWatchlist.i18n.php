@@ -148,7 +148,7 @@ Wikia
 	'globalwatchlist-no-blog-page-found' => "No s'ha trobat el fitxer del registre.",
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -328,11 +328,11 @@ $messages['fo'] = array(
  * @author Wyz
  */
 $messages['fr'] = array(
-	'globalwatchlist-desc' => 'Envoie un sommaire hebdomadaire par courriel avec les pages suivies sur tous les wikis',
+	'globalwatchlist-desc' => 'Envoie un résumé hebdomadaire par courriel avec les pages suivies sur tous les wikis',
 	'tog-watchlistdigest' => "M'envoyer un résumé par courriel une fois par semaine",
 	'tog-watchlistdigestclear' => 'Marquer toutes les pages de mon résumé hebdomadaire comme visitées',
 	'globalwatchlist-see-more' => 'Veuillez vérifier vos listes de suivi locales pour afficher davantage de modifications',
-	'globalwatchlist-digest-email-subject' => 'Sommaire de la semaine',
+	'globalwatchlist-digest-email-subject' => 'Résumé hebdomadaire',
 	'globalwatchlist-digest-email-body' => "Bonjour $1,
 
 Ceci est une liste des pages de votre liste de suivi Wikia qui ont été modifiées depuis votre dernière visite.
@@ -340,19 +340,19 @@ Ceci est une liste des pages de votre liste de suivi Wikia qui ont été modifi�
 $2
 
 
-Ceci est une liste des pages de blogs de votre liste de suivi Wikia qui ont été modifiées ou commentées depuis votre dernière visite.
+Ceci est une liste des billets de votre liste de suivi Wikia qui ont été modifiés ou commentés depuis votre dernière visite.
 
 $3
 
-Visitez et modifiez, le cas échéant...
+Visitez et modifiez souvent...
 
 Wikia
 
-* Pour modifier vos préférences de notifications de liste de suivi, visitez : http://www.wikia.com/wiki/Special:Preferences
+* Pour modifier vos préférences de notification de liste de suivi, visitez : http://www.wikia.com/wiki/Special:Preferences
 * Pour marquer comme visitées toutes les pages de ce résumé hebdomadaire, référez-vous à l'option de l'onglet « Liste de suivi » de votre page de préférences",
 	'globalwatchlist-blog-page-title-comment' => '$1 ($2 commentaire{{PLURAL:$2||s}})',
 	'globalwatchlist-no-page-found' => 'Aucune page trouvée.',
-	'globalwatchlist-no-blog-page-found' => 'Aucune page de blog trouvée.',
+	'globalwatchlist-no-blog-page-found' => 'Aucun billet trouvé.',
 );
 
 /** Galician (galego)
@@ -1022,28 +1022,28 @@ $messages['uk'] = array(
 	'globalwatchlist-desc' => 'Надсилає на електронну пошту щотижневий дайджест списків спостереження з усіх вікі.',
 	'tog-watchlistdigest' => 'Надсилати мені щотижневий дайджест списку спостереження',
 	'tog-watchlistdigestclear' => 'Позначити усі сторінки з тижневого дайджесту списку спостереження як відвідані',
-	'globalwatchlist-see-more' => 'Для додаткових змін перевірте, будь ласка, Ваші місцеві списки спостереження',
+	'globalwatchlist-see-more' => 'Більше новин можна знайти у ваших локальних списках спостереження на кожній вікі',
 	'globalwatchlist-digest-email-subject' => 'Щотижневий дайджест',
-	'globalwatchlist-digest-email-body' => 'Шановний(-а) $1!
+	'globalwatchlist-digest-email-body' => 'Привіт, $1!
 
-Ось список сторінок з вашого списку спостереження Wikia, які було змінено з моменту Вашого останнього візиту.
+Ось список сторінок із вашого списку спостереження Wikia, які було змінено з моменту вашого останнього візиту.
 
 $2
 
 
-Ось список сторінок блоґу з вашого списку спостереження Wikia, які було змінено чи прокоментовано з моменту Вашого останнього візиту.
+Ось список сторінок блоґу з вашого списку спостереження Wikia, які було змінено чи прокоментовано з моменту вашого останнього візиту.
 
 $3
 
-Відвідайте ці сторінки, якщо бажаєте...
+Відвідайте ці сторінки, якщо бажаєте.
 
 Wikia
 
 * Щоб вимкнути сповіщення про сторінки зі списку спостереження, перейдіть сюди: http://www.wikia.com/wiki/Special:Preferences
-* Щоб позначити усі сторінки з цього листа прочитаними, зайдіть на вкладку "Список спостереження" на сторінці ваших налаштувань',
+* Щоб позначити усі сторінки з цього листа прочитаними, зайдіть на вкладку "<a href="http://www.wikia.com/wiki/Special:Preferences#mw-prefsection-emailv2">Електронна пошта</a>" на сторінці ваших налаштувань',
 	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|коментар|коментарі|коментарів}})',
-	'globalwatchlist-no-page-found' => 'Сторінки не знайдено.',
-	'globalwatchlist-no-blog-page-found' => 'Сторінки блогу не знайдено.',
+	'globalwatchlist-no-page-found' => 'Змінених сторінок немає.',
+	'globalwatchlist-no-blog-page-found' => 'Змінених сторінок блоґів немає.',
 );
 
 /** Vietnamese (Tiếng Việt)

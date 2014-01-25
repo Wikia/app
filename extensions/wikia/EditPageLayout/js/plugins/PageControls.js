@@ -150,11 +150,12 @@
 		},
 
 		// handle "Show changes" button
-		onDiff: function ( ev ) {
-			this.renderChanges({});
+		onDiff: function ( event ) {
+			event.preventDefault();
+			// move the focus to the selected items to prevent iPad from showing the VK and resizing the viewport
+			$( event.target ).focus();
+			this.renderChanges();
 			this.editor.track( 'diff' );
-
-			ev.preventDefault();
 		},
 
 		// handle "Save" button
@@ -471,30 +472,56 @@
 		},
 
 		// render "show diff" modal
-		renderChanges: function ( extraData ) {
+		renderChanges: function () {
 			var self = this;
-			require( ['wikia.preview'], function ( preview ) {
-				preview.renderDialog( $.msg( 'editpagelayout-pageControls-changes' ), {}, function ( contentNode ) {
-					self.getContent( function ( content ) {
-						extraData.content = extraData.content || content;
-						extraData.section = parseInt( $.getUrlVar( 'section' ) || 0 );
-
-						if ( self.categories.length ) {
-							extraData.categories = self.categories.val();
+			require( [ 'wikia.ui.factory' ], function( uiFactory ){
+				uiFactory.init( [ 'modal' ] ).then(function( uiModal ) {
+					var previewModalConfig = {
+						vars: {
+							id: 'EditPageDialog',
+							title: $.msg( 'editpagelayout-pageControls-changes' ),
+							content: '<div class="ArticlePreview modalContent"><div class="ArticlePreviewInner">' +
+								'</div></div>',
+							size: 'large'
 						}
+					};
+					uiModal.createComponent( previewModalConfig, function( previewModal ) {
+						previewModal.deactivate();
 
-						$.when( // get wikitext diff
-							self.ajax( 'diff', extraData ), // load CSS for diff
-							mw.loader.use( 'mediawiki.action.history.diff' )
-						).done( function ( ajaxData ) {
-							var data = ajaxData[0],
-								html = '<h1 class="pagetitle">' + window.wgEditedTitle + '</h1>' + data.html;
+						previewModal.$content.bind( 'click', function( event ) {
+							var target = $( event.target );
+							target.closest( 'a' ).not( '[href^="#"]' ).attr( 'target', '_blank' );
+						});
 
-							contentNode.html( html );
-						} );
-					} );
-				} );
-			} );
+						self.getContent(function( content ) {
+							var section = $.getUrlVar( 'section' ) || 0,
+								extraData = {
+									content: content,
+									section: parseInt( section, 10 )
+								};
+
+							if ( self.categories.length ) {
+								extraData.categories = self.categories.val();
+							}
+
+							$.when(
+								// get wikitext diff
+								self.ajax( 'diff' , extraData ),
+
+								// load CSS for diff
+								mw.loader.use( 'mediawiki.action.history.diff' )
+							).done(function( ajaxData ) {
+								var data = ajaxData[ 0 ],
+									html = '<h1 class="pagetitle">' + window.wgEditedTitle + '</h1>' + data.html;
+								previewModal.$content.find( '.ArticlePreview .ArticlePreviewInner' ).html( html );
+								previewModal.activate();
+							});
+						});
+
+						previewModal.show();
+					});
+				});
+			});
 		},
 
 		getSummary: function () {

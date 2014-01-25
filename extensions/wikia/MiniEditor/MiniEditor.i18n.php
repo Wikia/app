@@ -60,7 +60,7 @@ $messages['ca'] = array(
 	'minieditor-placeholder-reply' => 'Respondre al missatge aquí',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Jezevec
  */
 $messages['cs'] = array(
@@ -94,6 +94,13 @@ $messages['es'] = array(
 	'minieditor-message-edit' => 'Este es un mensaje existente',
 	'minieditor-reply' => 'Responder',
 	'minieditor-placeholder-reply' => 'Responder al mensaje aquí',
+);
+
+/** Persian (فارسی)
+ * @author Reza1615
+ */
+$messages['fa'] = array(
+	'minieditor-reply' => 'پاسخ دادن',
 );
 
 /** Finnish (suomi)
@@ -202,6 +209,13 @@ $messages['ku-latn'] = array(
  */
 $messages['lb'] = array(
 	'minieditor-reply' => 'Äntwerten',
+);
+
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'minieditor-reply' => 'جؤاو ده ئن',
 );
 
 /** Macedonian (македонски)

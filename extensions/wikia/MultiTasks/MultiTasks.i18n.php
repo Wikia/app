@@ -128,6 +128,7 @@ $messages['en'] = array(
 $messages['qqq'] = array(
 	'multiwikiedit_button' => '{{Identical|Edit}}',
 	'multiwikiedit_on' => 'Label for dropdown menu where user can select type of wikis to run script on',
+	'multiwikiedit_all_wikis' => '{{Identical|All wikis}}',
 	'multiwikiedit_success_subtitle' => '{{Identical|For $1}}',
 	'multiwikiedit_max_display_size' => 'Parameters:
 * $1 is a number of pages.',
@@ -136,6 +137,7 @@ $messages['qqq'] = array(
 	'multidelete_button' => '{{Identical|Delete}}',
 	'multidelete_select_all' => '{{Identical|Select all}}',
 	'multidelete_reason' => 'none',
+	'multidelete_all_wikis' => '{{Identical|All wikis}}',
 	'multidelete_success_subtitle' => '{{Identical|For $1}}',
 	'multidelete_split_results' => 'If number of articles to run the script on exceeds a maximum number, user receives a message informing them that the script will be split up into a number of tasks. 
 Parameters:
@@ -227,6 +229,8 @@ $messages['af'] = array(
 
 /** Arabic (العربية)
  * @author Achraf94
+ * @author Alzahrani
+ * @author Claw eg
  * @author ترجمان05
  */
 $messages['ar'] = array(
@@ -234,6 +238,7 @@ $messages['ar'] = array(
 	'multiwikiedit' => 'تعديل عملية حذف متتالية للصفحات',
 	'multiwikiedit_button' => 'تحرير',
 	'multiwikiedit_confirm' => 'تأكيد',
+	'multiwikiedit_help' => 'تحرير مجموعة من الصفحات. يمنك تعديل صفحات مسرودة في صندوق نصي. اختر مستخدمًا سيظهر في سجلات الحذف. الملف المرفوع يجب أن يحتوي على اسم الصفحة وسبب اختياري مفصولين بواسطة حرف | في كل سطر.',
 	'multiwikiedit_caption' => 'قائمة الصفحات',
 	'multiwikiedit_title' => 'تحرير متعدد الويكي',
 	'multiwikiedit_as' => 'تشغيل السكريبت حسب',
@@ -269,6 +274,9 @@ $messages['ar'] = array(
 	'multiwikiedit_file_missing' => 'غير قادر على قراءة الملف المعطى',
 	'multiwikiedit_select_script' => 'تعديل سكريب الصفحة',
 	'multiwikiedit_select_yourself' => 'أنت',
+	'multiwikiedit_no_page' => 'رجاء حدد على الأقل صفحة واحدة للتعديل أو اختر ملفًا يحتوي على قائمة الصفحات.',
+	'multiwikiedit_split_results' => "قائمة مقالاتك كان كبيرًا جدًا لدرجة أنه لا يمكن القيام به في مهمة واحدة. تم تقسيمها بدلاً من ذلك إلى '''{{PLURAL:$1|مهمة|2=مهمتين|$1 مهام|$1 مهمة}}'''، بحجم أقصى لكل '''{{PLURAL:$2|مقالة|2=مقالتين|$2 مقالات|$2 مقالة}}'''.",
+	'multiwikiedit_max_display_size' => "الحذف المتعدد به حد أقصى لعدد المقالات في طور التأكيد. تمت تغطية سؤالك في {{PLURAL:$1|'''مقالة واحدة'''|2='''مقالتين'''|'''$1''' مقالات|'''$1''' مقال}}. اختر مقالاتك واحفظ المهمة. بعدئذٍ، حاول تفعيله مجددًا للإمساك بجميع المقالات المتبقية.",
 	'multiwikiedit_add_text' => 'حدد نص المقالة أولا',
 	'multiwikiedit_supply_wikis' => 'يرجى تقديم قائمة الويكيات المختارة',
 	'multiwikiedit_tasks_list' => 'قائمة المهام التي يجب إنجازها',
@@ -277,26 +285,38 @@ $messages['ar'] = array(
 	'action-multiwikiedit' => 'تعديل مجموعة صفحات',
 	'multidelete' => 'حذف مجموعة صفحات',
 	'multidelete_button' => 'حذف',
+	'multidelete_help' => 'حذف مجموعة صفحات عن طريق مهمة خلفية. يمكنك القيام بذلك لهذه الويكي أو جميع الويكي من قاعدة بيانات مشتركة أو الويكي المحددة أو اللغات المحددة. يمكنك اختيار الحذف أو عن طريق حساب نصي معد مسبقًا.',
 	'multidelete_caption' => 'قائمة الصفحات',
 	'multidelete_title' => 'حذف متعدد',
+	'multidelete_both_modes' => 'من فضلك اختر إما صفحة واحدة أو قائمة معطاة من الصفحات.',
 	'multidelete_or' => '<b>أو</b>',
 	'multidelete_error_empty_selection' => 'يرجى تقديم قائمة الويكيات المختارة',
 	'multidelete_error_empty_pages' => 'من فضلك اختر إما صفحة واحدة أو قائمة معطاة من الصفحات.',
+	'multidelete_error_multi_page' => 'عنوان واحد فقط مسموح للحذف المتعدد مرة واحدة.',
+	'multidelete_info_empty_list' => 'لم يتم العثور على العناوين المقدمة أو أي ويكيات محددة.',
+	'multidelete_task_added' => 'مهمة حذف متعدد #$1 قد أضيفت.',
+	'multidelete_task_error' => 'حدث خطأ في إضافة مهمة الحذف المتعدد.',
+	'multidelete_task_none_selected' => 'لم تحدد أي مقالات. فلم تضاف المهمة.',
 	'multidelete_select_all' => 'اختر الكل',
 	'multidelete_page' => 'الصفحات للحذف',
 	'multidelete_reason' => 'سبب الحذف',
 	'multidelete_list_caption' => 'في قائمة ويكي محددة',
+	'multidelete_choose_articles' => 'اختر أي مقالات موجودة ينبغي حذفها',
 	'multidelete_processing' => 'حذف الصفحات',
 	'multidelete_this_wiki' => 'هذا الويكي',
 	'multidelete_inbox_caption' => 'أو مفصولة بفواصل',
 	'multidelete_all_wikis' => 'كل الويكيات',
 	'multidelete_selected_wikis' => 'الويكيات المختارة',
 	'multidelete_success_subtitle' => 'من أجل $1',
+	'multidelete_link_back' => 'يمكنك العودة إلى نموذج الحذف المتعدد $1.',
 	'multidelete_omitting_nonexistant' => 'إزالة صفحة غير موجودة $1.',
 	'multidelete_omitting_invalid' => 'إزالة صفحة غير صالحة $1.',
 	'multidelete_file_bad_format' => 'الملف ينبغي أن يكون في شكل نص',
 	'multidelete_file_missing' => 'غير قادر على قراءة الملف المعطى',
 	'multidelete_select_script' => 'حساب السكريبت المعين',
+	'multidelete_no_page' => 'رجاء حدد على الأقل صفحة واحدة للحذف أو اختر ملفًا يحتوي على قائمة الصفحات.',
+	'multidelete_split_results' => "قائمة مقالاتك كان كبيرًا جدًا لدرجة أنه لا يمكن القيام به في مهمة واحدة. تم تقسيمها بدلاً من ذلك إلى '''{{PLURAL:$1|مهمة|2=مهمتين|$1 مهام|$1 مهمة}}'''، بحجم أقصى لكل '''{{PLURAL:$2|مقالة|2=مقالتين|$2 مقالات|$2 مقالة}}'''.",
+	'multidelete_max_display_size' => "الحذف المتعدد به حد أقصى لعدد المقالات في طور التأكيد. تمت تغطية سؤالك في {{PLURAL:$1|'''مقالة واحدة'''|2='''مقالتين'''|'''$1''' مقالات|'''$1''' مقال}}. اختر مقالاتك واحفظ المهمة. بعدئذٍ، حاول تفعيله مجددًا للإمساك بجميع المقالات المتبقية.",
 	'multidelete_brazilian_portuguese_wikis' => 'جميع الويكيات البرتغالية البرازيلية',
 	'multidelete_hebrew_wikis' => 'جميع الويكيات العبرية',
 	'multidelete_chinese_wikis' => 'جميع الويكيات الصينية',
@@ -613,6 +633,7 @@ $messages['ca'] = array(
  * @author Умар
  */
 $messages['ce'] = array(
+	'multiwikiedit_from_form' => 'формера',
 	'multidelete' => 'АгӀонийн гулам дӀабаккхар',
 	'multidelete_title' => 'Дуккха дӀяккхар',
 	'multidelete_processing' => 'агӀонаш дӀаяхар',
@@ -625,7 +646,7 @@ $messages['ckb'] = array(
 	'multidelete_button' => 'سڕینەوە',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Darth Daron
  * @author Dontlietome7
  */
@@ -1074,8 +1095,10 @@ $messages['es'] = array(
 );
 
 /** Persian (فارسی)
+ * @author Reza1615
  */
 $messages['fa'] = array(
+	'multiwikiedit_minoredit_caption' => 'ویرایش جزئی',
 	'multidelete_select_all' => 'انتخاب همه',
 );
 
@@ -1254,7 +1277,7 @@ $messages['gl'] = array(
 	'multiwikiedit' => 'Editar unha manchea de páxinas',
 	'multiwikiedit_button' => 'EDITAR',
 	'multiwikiedit_confirm' => 'CONFIRMAR',
-	'multiwikiedit_help' => 'Editar unha manchea de páxinas. Pode editar as páxinas listadas nunha caixa de texto. Escolle un usuario que se mostrará nos rexistros de borrados. O ficheiro subido deberá conter o nome da páxina e un motivo opcional separado por un carácter "|" en cada liña.',
+	'multiwikiedit_help' => 'Editar unha manchea de páxinas. Podes editar as páxinas listadas nunha caixa de texto. Escolle un usuario que se mostrará nos rexistros de borrados. O ficheiro subido deberá conter o nome da páxina e un motivo opcional separado por un carácter "|" en cada liña.',
 	'multiwikiedit_caption' => 'Lista de páxinas',
 	'multiwikiedit_title' => 'Edición en varios wikis',
 	'multiwikiedit_as' => 'Executar a escritura como',
@@ -1863,7 +1886,10 @@ $messages['lb'] = array(
  */
 $messages['lrc'] = array(
 	'multitasks-link-back-label' => 'ايچه',
+	'multiwikiedit_button' => 'ویرایشت',
+	'multiwikiedit_confirm' => 'مئکم کردن',
 	'multiwikiedit_select_yourself' => 'شما',
+	'multidelete_success_subtitle' => 'سی $1',
 );
 
 /** Macedonian (македонски)

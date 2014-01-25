@@ -31,6 +31,8 @@ define( 'wikia.videoBootstrap', [
 		this.clickSource = clickSource;
 		this.title = json.title;
 		this.provider = json.provider;
+		this.width = json.width;
+		this.height = json.height;
 
 		// Insert html if it hasn't been inserted already
 		function insertHtml() {

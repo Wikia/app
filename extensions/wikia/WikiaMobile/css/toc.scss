@@ -5,28 +5,31 @@ $toc-background: #F8F8F8;
 $handle-size: 48px;
 $dark-border: #D8D8D8;
 
-//TODO: Remove after 2 weeks :)
-#toc.toc {
-	display: none;
+//Some simple fixed for RTL languages
+.cont-dir-rtl {
+	.side-menu-capable {
+		direction: ltr; //JanusCSS will change it to rtl
+
+		-webkit-transform: translate(100%);
+		-moz-transform: translate(100%);
+		transform: translate(100%);
+	}
+
+	#wkTOCHandle {
+		border-radius: 3px 3px 0 0;
+	}
 }
 
-#wkTOC {
+.side-menu {
 	position: fixed;
 	left: -260px;
 	top: 0;
 	bottom:0;
 	width: 260px;
 	background: $toc-background;
+	z-index: $video-overlay-z-index; //For overlaying Ooyala Videos
 
 	counter-reset: level1, level2, level3;
-
-	&.side-menu-capable {
-		left: 0;
-
-		-webkit-transform: translate(-100%);
-		-moz-transform: translate(-100%);
-		transform: translate(-100%);
-	}
 
 	&.active {
 		-webkit-transition: -webkit-transform .1s ease-out;
@@ -37,7 +40,7 @@ $dark-border: #D8D8D8;
 		-moz-transform: translate(0);
 		transform: translate(0);
 
-		z-index: 11;
+		z-index: $video-overlay-z-index + 2; //For overlaying Curtain
 	}
 
 	header {
@@ -50,6 +53,14 @@ $dark-border: #D8D8D8;
 		font-weight: 600;
 		z-index: 1;
 	}
+}
+
+.side-menu-capable {
+	left: 0;
+
+	-webkit-transform: translate(-100%);
+	-moz-transform: translate(-100%);
+	transform: translate(-100%);
 }
 
 #wkTOCHandle {
@@ -150,7 +161,7 @@ $level0-border-left-width: 5px;
 	}
 }
 
-.level2 {
+.level1 {
 	border-top: 1px solid $dark-border;
 
 	> li {
@@ -168,7 +179,7 @@ $level0-border-left-width: 5px;
 	}
 }
 
-.level3 {
+.level2 {
 	border-top: 1px solid #F0F0F0;
 
 	> li {
@@ -188,7 +199,7 @@ $level0-border-left-width: 5px;
 	}
 }
 
-.level2 {
+.level1 {
 	display:none;
 
 	.open & {
@@ -204,7 +215,7 @@ $level0-border-left-width: 5px;
 	}
 }
 
-.level2, .level3 {
+.level1, .level2 {
 
 	li {
 		border-top: 1px solid #F0F0F0;

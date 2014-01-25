@@ -501,22 +501,13 @@ class MediaQueryService extends WikiaService {
 		$memKeyBucket = substr( $hashTitle, 0, 2 );
 		$memKeyBase = self::getMemKeyTotalVideoViews();
 		$videoList = $app->wg->Memc->get( $memKeyBase.'-'.$memKeyBucket );
-		if ( !is_array($videoList) ) {
-			$videoListTotal = VideoInfoHelper::getTotalViewsFromDB();
-			foreach ( $videoListTotal as $memKeyBucket => $list ) {
-				$app->wg->Memc->set( $memKeyBase.'-'.$memKeyBucket, $list, 60*60*2 );
-			}
-
-			// cache empty list into the bucket so that we don't need to do query again when video has 0 views.
-			if ( empty($videoListTotal[$memKeyBucket]) ) {
-				$videoList = array();
-				$app->wg->Memc->set( $memKeyBase.'-'.$memKeyBucket, $videoList, 60*60*2 );
-			} else {
-				$videoList = $videoListTotal[$memKeyBucket];
-			}
+		if ( !is_array($videoList) || !isset($videoList[$hashTitle]) ) {
+			$viewCount =  VideoInfoHelper::getTotalViewsFromTitle( $title );
+			$videoList[$hashTitle] = $viewCount;
+			$app->wg->Memc->set( $memKeyBase.'-'.$memKeyBucket, $videoList, 60*60*2 );
 		}
 
-		$videoViews = isset($videoList[$hashTitle]) ? $videoList[$hashTitle] : 0;
+		$videoViews = $videoList[$hashTitle];
 
 		wfProfileOut( __METHOD__ );
 

@@ -48,6 +48,7 @@ $messages['af'] = array(
 
 /** Arabic (العربية)
  * @author Achraf94
+ * @author Claw eg
  */
 $messages['ar'] = array(
 	'tagsreport' => 'تقرير العلامات',
@@ -60,6 +61,7 @@ $messages['ar'] = array(
 	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|صفحة|صفحات}})',
 	'tagsreportpagesfound' => 'تم العثور على (<strong>$1</strong> {{PLURAL:$1|صفحة|صفحات}}) تحتوي على العلامة الخاصة (دي بي إل، يوتيوب، إلخ.)',
 	'tagsreportgenerated' => 'تم توليدها في  $1 على الساعة  $2',
+	'tagsreportpageremoved' => 'الصفحة #$1 قد أزيلت',
 );
 
 /** Azerbaijani (azərbaycanca)
@@ -111,6 +113,7 @@ $messages['br'] = array(
 	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|pajenn|pajennoù}})',
 	'tagsreportpagesfound' => 'Kavet <strong>$1</strong> pajennoù, zo enno ur valizenn arbennik (dpl, youtube, ...)', # Fuzzy
 	'tagsreportgenerated' => "Krouet d'an $1 da $2",
+	'tagsreportpageremoved' => 'Lamet eo bet ar bajenn #$1',
 );
 
 /** Catalan (català)
@@ -139,7 +142,7 @@ $messages['ce'] = array(
 	'tagsreportnoresults' => 'ХӀума ца карийна',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -211,6 +214,15 @@ $messages['es'] = array(
 	'tagsreportpagesfound' => '<strong>$1</strong> {{PLURAL:$1|página encontrada|páginas encontradas}}, que contengan alguna etiqueta especial (dpl, youtube, etc.)',
 	'tagsreportgenerated' => 'Generado el $1 a $2',
 	'tagsreportpageremoved' => 'La página #$1 ha sido borrada',
+);
+
+/** Persian (فارسی)
+ * @author Reza1615
+ */
+$messages['fa'] = array(
+	'tagsreportgo' => 'نمایش',
+	'tagsreportnoresults' => 'نتیجه‌ای پیدا نشد',
+	'tagsreportmainnspace' => 'اصلی',
 );
 
 /** Finnish (suomi)
@@ -380,6 +392,14 @@ $messages['lb'] = array(
 	'tagsreportnoresults' => 'Näischt fonnt',
 	'tagsreportpages' => '(<strong>$1</strong>  {{PLURAL:$1|Säit|Säiten}})',
 	'tagsreportpageremoved' => "D'Säit #$1 gouf ewechgeholl",
+);
+
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'tagsreportgo' => 'نشون دئن',
+	'tagsreportmainnspace' => 'اصلی',
 );
 
 /** Latgalian (latgaļu)
@@ -748,11 +768,19 @@ $messages['vi'] = array(
 /** Simplified Chinese (中文（简体）‎)
  * @author Hydra
  * @author Hzy980512
+ * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
+	'tagsreport' => '标签报告',
+	'tagsreporttitle' => '标签报告',
+	'tagsreportselecttag' => '选择标签：',
 	'tagsreportgo' => '显示',
+	'tagsreportnotspecify' => '你还没选择任何特殊标签',
+	'tagsreportnoresults' => '未找到任何结果',
 	'tagsreportmainnspace' => '主要',
+	'tagsreportpages' => '（<strong>$1</strong>个页面）',
 	'tagsreportpagesfound' => '找到$1个含特殊标签（DPL、YouTube等）的页面。',
+	'tagsreportgenerated' => '生成于 $1 $2',
 	'tagsreportpageremoved' => '页面#$1已被移除',
 );
 

@@ -134,6 +134,7 @@ $messages['qqq'] = array(
 	'action-toplists-create-edit-list' => '{{doc-action|toplists-create-edit}}',
 	'toplists-editor-remove-item-tooltip' => '{{Identical|Remove item}}',
 	'toplists-create-button' => '{{Identical|Create list}}',
+	'toplists-cancel-button' => '{{Identical|Cancel}}',
 	'toplits-image-browser-selected-picture' => '$1 is the title of the image page.',
 	'toplists-image-browser-upload-btn' => '{{Identical|Choose}}',
 	'toplists-list-vote-up' => 'Keep this as short as possible. Everything exceeding allowed lenght will be cutted out!',
@@ -145,6 +146,7 @@ $messages['qqq'] = array(
 
 /** Arabic (العربية)
  * @author Achraf94
+ * @author Claw eg
  * @author Imksa
  * @author Meno25
  * @author OsamaK
@@ -189,6 +191,8 @@ $messages['ar'] = array(
 	'toplists-update-button' => 'احفظ القائمة',
 	'toplists-cancel-button' => 'إلغاء',
 	'toplists-items-removed' => 'تمت إزالة {{PLURAL:$1|عنصر واحد|$1 عناصر}}',
+	'toplists-items-created' => 'أنشئت $1 {{PLURAL:$1|عنصر واحد|2=عنصران|عناصر|$1 عنصر}}',
+	'toplists-items-updated' => 'تحديث $1 {{PLURAL:$1|عنصر واحد|2=عنصرين|عناصر|$1 عنصر}}',
 	'toplists-items-nochange' => 'لا يوجد تغيير في العناصر',
 	'toplits-image-browser-no-picture-selected' => 'ليست هناك صورة مختارة',
 	'toplits-image-browser-clear-picture' => 'صورة واضحة',
@@ -222,6 +226,11 @@ $3
 -ويكيا
 
 يمكنك  <a href="$4">إلغاء الإشتراك</a> من خلال التغييرات  للقائمة.',
+	'toplists-seconds' => '{{PLURAL:$1|ثانية واحدة|2=ثانيتان|$1 ثوان|$1 ثانية}}',
+	'toplists-minutes' => '{{PLURAL:$1|دقيقة واحدة|دقيقتان|$1 دقائق|$1 دقيقة}}',
+	'toplists-hours' => '({{PLURAL:$1||ساعة واحدة|ساعتان|$1 ساعات|$1 ساعة}})',
+	'toplists-days' => '{{PLURAL:$1||يوم واحد|يومان|$1 أيام|$1 يومًا|$1 يوم}}',
+	'toplists-weeks' => '{{PLURAL:$1||أسبوع واحد|أسبوعان|$1 أسابيع|$1 أسبوعًا|$1 أسبوع}}',
 	'toplists-msg-fb-OnRateArticle-short' => 'صوت على قائمة أفضل 10 في $WIKINAME!',
 	'toplists-create-heading' => '<em>خاصية جديدة!</em> إنشاء قائمة أفضل عشرة خاصة بك',
 	'toplists-create-button-msg' => 'إنشاء قائمة',
@@ -377,9 +386,10 @@ $messages['ca'] = array(
 $messages['ce'] = array(
 	'toplists-editor-related-article-placeholder' => 'ДӀаязъе йолуш йолу агӀона цӀе',
 	'toplists-update-button' => 'МогӀам Ӏалашбар',
+	'toplists-days' => '$1 {{PLURAL:$1|де}}',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Chmee2
  * @author Darth Daron
  */
@@ -685,14 +695,19 @@ Puedes <a href="$4">cancelar</a>  tu subscripción de los cambios a la lista.',
 
 /** Persian (فارسی)
  * @author Mjbmr
+ * @author Reza1615
  */
 $messages['fa'] = array(
 	'toplists-editor-title-label' => 'نام فهرست',
+	'toplists-editor-image-browser-tooltip' => 'افزودن یک تصویر',
 	'toplists-editor-remove-item-tooltip' => 'حذف مورد',
 	'toplists-create-button' => 'ایجاد فهرست',
 	'toplists-update-button' => 'ذخیره فهرست',
 	'toplists-cancel-button' => 'لغو',
 	'toplists-image-browser-upload-btn' => 'انتخاب',
+	'toplists-list-vote-up' => 'رای موافق',
+	'toplists-createpage-dialog-label' => '۱۰ فهرست برتر',
+	'toplists-seconds' => '$1 {{PLURAL:$1|ثانیه|ثانیه}}',
 );
 
 /** Finnish (suomi)
@@ -929,7 +944,7 @@ $messages['gl'] = array(
 	'toplits-image-browser-clear-picture' => 'Borrar a imaxe',
 	'toplits-image-browser-selected-picture' => 'Selección actual: $1',
 	'toplists-image-browser-upload-btn' => 'Elixir',
-	'toplists-image-browser-upload-label' => 'Subir a súa',
+	'toplists-image-browser-upload-label' => 'Subir a túa',
 	'toplists-list-creation-summary' => 'Creando unha lista, $1',
 	'toplists-list-update-summary' => 'Actualizando unha lista, $1',
 	'toplists-item-creation-summary' => 'Creando un elemento da lista',

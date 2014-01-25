@@ -65,20 +65,16 @@ class ApiMediaSearch extends ApiBase {
 	}
 
 	protected function getType( $title ) {
-		$fileTitle = Title::newFromText( $title, NS_FILE );
-		$image = wfFindFile( $fileTitle );
-
+		$image = wfFindFile( $title );
 		$mediaTypes = [
 			'BITMAP' => 'photo',
 			'VIDEO' => 'video'
 		];
-
 		return $mediaTypes[ $image->getMediaType() ];
 	}
 
 	protected function getUrl( $title ) {
-		$fileTitle = Title::newFromText( $title, NS_FILE );
-		$image = wfFindFile( $fileTitle );
+		$image = wfFindFile( $title );
 		return $image->getFullUrl();
 	}
 
@@ -143,10 +139,11 @@ class ApiMediaSearch extends ApiBase {
 		$items = [];
 
 		foreach( $raw['items'] as $rawItem ) {
+			$title = Title::newFromText( $rawItem['title'], NS_FILE );
 			$item = [
-				'title' => $rawItem['title'],
-				'type' => $this->getType( $rawItem['title'] ),
-				'url' => $this->getUrl( $rawItem['title'] )
+				'title' => $title->getText(),
+				'type' => $this->getType( $title ),
+				'url' => $this->getUrl( $title )
 			];
 			array_push( $items, $item );
 		}

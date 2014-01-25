@@ -31,6 +31,16 @@ $messages['ar'] = array(
 	'adengine-exitstitial-button' => 'تخطَّ هذا الإعلان',
 );
 
+/** Azerbaijani (azərbaycanca)
+ * @author Mushviq Abdulla
+ */
+$messages['az'] = array(
+	'adengine-exitstitial-title-template' => '$1 tərk edirsən ...',
+	'adengine-exitstitial-redirecting' => 'Brauzeriniz üçün bir neçə saniyə içində istədiyiniz səhifə yönləndirmə edər.',
+	'adengine-exitstitial-go-back' => 'Geri dönmək istəyirsənmi?',
+	'adengine-exitstitial-button' => 'Reklamı ötür',
+);
+
 /** Bikol Central (Bikol Central)
  * @author Geopoet
  */
@@ -141,9 +151,13 @@ $messages['fa'] = array(
 );
 
 /** Finnish (suomi)
+ * @author Elseweyr
  * @author Silvonen
  */
 $messages['fi'] = array(
+	'adengine-exitstitial-title-template' => 'Olet jättämässä sivua $1...',
+	'adengine-exitstitial-redirecting' => 'Sinut ohjataan pyytämäsi sivulle hetken kuluttua.',
+	'adengine-exitstitial-go-back' => 'Haluatko palata takaisin?',
 	'adengine-exitstitial-button' => 'Ohita tämä mainos',
 );
 
@@ -179,6 +193,14 @@ $messages['gl'] = array(
 	'adengine-exitstitial-button' => 'Saltar este anuncio',
 );
 
+/** Hakka (客家語/Hak-kâ-ngî)
+ * @author EagerLin
+ */
+$messages['hak'] = array(
+	'adengine-exitstitial-go-back' => '想要豆轉去麼?',
+	'adengine-exitstitial-button' => '跳過廣告',
+);
+
 /** Hungarian (magyar)
  * @author Liteon
  */
@@ -196,6 +218,16 @@ $messages['id'] = array(
 	'adengine-exitstitial-redirecting' => 'Peramban Anda akan mengarahkan Anda ke halaman yang Anda minta dalam beberapa detik.',
 	'adengine-exitstitial-go-back' => 'Ingin kembali?',
 	'adengine-exitstitial-button' => 'Lewati Iklan ini',
+);
+
+/** Kannada (ಕನ್ನಡ)
+ * @author Dimension10
+ */
+$messages['kn'] = array(
+	'adengine-exitstitial-title-template' => 'ನೀವು $1 ಬಿಡುತ ಇದ್ದೀರಿ.',
+	'adengine-exitstitial-redirecting' => 'ನಿಮ್ಮ ಬ್ರೌಸರ್ ನೀವು ಕೇಳಿದ ಪುಟಕ್ಕೆ ನಿಮ್ಮನ ಸ್ವಲ್ಪ ಹೊತ್ತಲ್ಲೇ ಕಲಿಸುತದೆ.',
+	'adengine-exitstitial-go-back' => 'ವಾಪುಸು ಹೋಗ ಬೇಕ?',
+	'adengine-exitstitial-button' => 'ಈ ಎಡನ್ನು ಜಿಗಿ ಬೇಕ?',
 );
 
 /** Korean (한국어)
@@ -226,6 +258,25 @@ $messages['lrc'] = array(
 	'adengine-exitstitial-title-template' => 'شما ها رؤیت د $1...',
 	'adengine-exitstitial-go-back' => 'میهای روئی وا دما؟',
 	'adengine-exitstitial-button' => 'د ای تبلیغ زی رد با',
+);
+
+/** Lithuanian (lietuvių)
+ * @author Eitvys200
+ */
+$messages['lt'] = array(
+	'adengine-exitstitial-title-template' => 'Jūs paliekate $1...',
+	'adengine-exitstitial-go-back' => 'Norite grįžti atgal?',
+	'adengine-exitstitial-button' => 'Praleisti šį Skelbimą',
+);
+
+/** Latvian (latviešu)
+ * @author Sg ghost
+ */
+$messages['lv'] = array(
+	'adengine-exitstitial-title-template' => 'Jūs atstājot $1...',
+	'adengine-exitstitial-redirecting' => 'Jūsu pārlūkprogramma būs novirzīt jūs uz jūsu pieprasīto lapu pēc dažām sekundēm.',
+	'adengine-exitstitial-go-back' => 'Vēlaties doties atpakaļ?',
+	'adengine-exitstitial-button' => 'Izlaist šo reklāmu',
 );
 
 /** Basa Banyumasan (Basa Banyumasan)
@@ -386,6 +437,16 @@ $messages['ru'] = array(
 	'adengine-exitstitial-button' => 'Пропустить это объявление',
 );
 
+/** Slovenian (slovenščina)
+ * @author Mitja i
+ */
+$messages['sl'] = array(
+	'adengine-exitstitial-title-template' => 'Zapuščate  $1 ...',
+	'adengine-exitstitial-redirecting' => 'Kmalu boste preusmerjeni na zahtevano stran.',
+	'adengine-exitstitial-go-back' => 'Želite nazaj?',
+	'adengine-exitstitial-button' => 'Preskočite ta oglas',
+);
+
 /** Swedish (svenska)
  * @author Tobulos1
  */
@@ -446,10 +507,11 @@ $messages['zh'] = array(
 /** Simplified Chinese (中文（简体）‎)
  * @author Byfserag
  * @author Liuxinyu970226
+ * @author 御坂美琴
  */
 $messages['zh-hans'] = array(
 	'adengine-exitstitial-title-template' => '您将要离开$1......',
 	'adengine-exitstitial-redirecting' => '您的浏览器将在几秒钟后重定向至您请求的页面。',
-	'adengine-exitstitial-go-back' => '想要回去吗？',
+	'adengine-exitstitial-go-back' => '想要返回吗？',
 	'adengine-exitstitial-button' => '跳过这个广告',
 );

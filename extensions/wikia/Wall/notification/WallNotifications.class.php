@@ -12,6 +12,11 @@
  */
 
 class WallNotifications {
+	/**
+	 * @var WikiaApp
+	 */
+	protected $app;
+
 	private $cachedUsers = array();
 
 	private $removedEntities;
@@ -54,6 +59,8 @@ class WallNotifications {
 		$read = array();
 		$unread = array();
 
+		// walk through list of ids
+		// $listval is unique_id field from wall_notification table in DB
 		foreach(array_reverse($list['notification']) as $listval) {
 			if(!empty($listval)) {
 				if(!$countonly) {
@@ -118,6 +125,28 @@ class WallNotifications {
 		return $out;
 	}
 
+	/**
+	 * Returns array with wikis' ids and number of unread notifications on that wiki
+	 *
+	 * example return
+	 * 	$output = array(
+	 * 		array(
+	 * 			'id' => 831,
+	 * 			'wgServer' => "http://muppet.wikia.com",
+	 * 			'sitename' => "Muppet Wiki",
+	 * 			'unread' => 5
+	 * 		),
+	 * 		array (
+	 * 			'id' => 5915,
+	 * 			'wgServer' => "http://poznan.wikia.com",
+	 * 			'sitename' => "Poznańska Wiki",
+	 * 			'unread' => 1
+	 * 		)
+	 * 	)
+	 *
+	 * @param int $userId
+	 * @return array
+	 */
 	public function getCounts($userId) {
 		wfProfileIn(__METHOD__);
 		$wikiList = $this->getWikiList($userId);
@@ -160,6 +189,13 @@ class WallNotifications {
 		return 1;
 	}
 
+	/**
+	 * Returns number of unread user's notifications for wiki
+	 * @param int $userId
+	 * @param int $wikiId
+	 * @param bool $notifyeveryone
+	 * @return int
+	 */
 	private function getCount($userId, $wikiId, $notifyeveryone = false) {
 		// fixme
 		// should not to do the whole work of WikiNotifications
@@ -693,7 +729,8 @@ class WallNotifications {
 
 	protected function addNotificationToData(&$data, $userId, $wikiId, $uniqueId, $entityKey, $authorId, $isReply, $read = false, $notifyeveryone) {
 		$data['notification'][] = $uniqueId;
-		$addedAtTmp = end( $data['notification'] );
+		// $addedAt remember key of added value
+		end( $data['notification'] );
 		$addedAt = key( $data['notification'] );
 		reset( $data['notification'] );
 
@@ -854,21 +891,46 @@ class WallNotifications {
 		return $data;
 	}
 
+	/**
+	 * Get notification entries from database for specific user on specific wiki
+	 * Fetches bot read and unread ones that are not hidden
+	 * @param int $userId
+	 * @param int $wikiId
+	 * @param bool $master
+	 * @param int $fromId
+	 * @return array
+	 */
 	protected function getBackupData($userId, $wikiId, $master = false, $fromId = 0) {
 		$uniqueIds = array();
 		// select distinct Unique_id from wall_notification where user_id = 1 and wiki_id = 1 order by id
+		// unique_id field contains page id (like page_id in page table)
+		// for many notifications we want to make sure we 50 notifications from different pages hance distinct
 		$db = $this->getDB(true);
-		$res = $db->select('wall_notification',
-			array('distinct unique_id'),
+		$res = $db->select(
+			array ( 'wn1' => 'wall_notification','wn2' => 'wall_notification' ),
+			array ( 'wn1.unique_id' ),
 			array(
-				'user_id' => $userId,
-				'wiki_id' => $wikiId,
-				'is_hidden' => 0
+				'wn1.user_id' => $userId,
+				'wn1.wiki_id' => $wikiId,
+				'wn1.is_hidden' => 0,
+				'wn2.id' => null
 			),
 			__METHOD__,
 			array(
-				"ORDER BY" => "id desc" ,
-				"LIMIT" => 50
+				'LIMIT' => '50',
+				'ORDER BY' => 'wn1.id DESC'
+			),
+			array(
+				'wn2' => array (
+					'LEFT JOIN',
+					array (
+						'wn1.user_id = wn2.user_id',
+						'wn1.wiki_id = wn2.wiki_id',
+						'wn1.is_hidden = wn2.is_hidden',
+						'wn1.unique_id = wn2.unique_id',
+						'wn2.id < wn1.id'
+					)
+				),
 			)
 		);
 
@@ -878,6 +940,7 @@ class WallNotifications {
 
 		$out = array();
 		if(!empty($uniqueIds)) {
+			// fetch notification entries for pre fetched unique ids
 			$res = $db->select('wall_notification',
 				array('id', 'is_read', 'is_reply', 'unique_id', 'entity_key', 'author_id', 'notifyeveryone'),
 				//array('id', 'unique_id', 'entity_key', 'author_id'),
@@ -939,7 +1002,7 @@ class WallNotifications {
 	 *
 	 * @author Władysław Bodzek <wladek@wikia-inc.com>
 	 *
-	 * @param $userId int User Id
+	 * @param int $userId User Id
 	 * @return User User object
 	 */
 	protected function getUser( $userId ) {

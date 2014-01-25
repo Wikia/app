@@ -1,16 +1,18 @@
 <?php
 
 class GlobalHeaderController extends WikiaController {
+	const MESSAGE_NAME = 'wgSharedGlobalnavigation';
 	private $menuNodes;
 
 	public function init() {
 		global $wgCityId;
 
 		wfProfileIn(__METHOD__);
+		$this->response->addAsset('skins/oasis/js/GlobalHeader.js');
 
 		$category = WikiFactory::getCategory($wgCityId);
 
-		$messageName = 'shared-Globalnavigation';
+		$messageName = self::MESSAGE_NAME;
 		if ($category) {
 			$messageNameWithCategory = $messageName . '-' . $category->cat_id;
 			if (!wfEmptyMsg($messageNameWithCategory, wfMsg($messageNameWithCategory))) {
@@ -20,7 +22,7 @@ class GlobalHeaderController extends WikiaController {
 
 		$navigation = new NavigationModel(true /* useSharedMemcKey */);
 		$menuNodes = $navigation->parse(
-			NavigationModel::TYPE_MESSAGE,
+			NavigationModel::TYPE_VARIABLE,
 			$messageName,
 			array(3, 4, 5),
 			1800 /* 3 hours */
@@ -34,7 +36,6 @@ class GlobalHeaderController extends WikiaController {
 	}
 
 	public function index() {
-
 		$userLang = $this->wg->Lang->getCode();
 
 		// Link to Wikia home page
@@ -42,8 +43,7 @@ class GlobalHeaderController extends WikiaController {
 		if (!empty($this->wg->LangToCentralMap[$userLang])) {
 			$centralUrl = $this->wg->LangToCentralMap[$userLang];
 		}
-
-		$createWikiUrl = 'http://www.wikia.com/Special:CreateNewWiki';
+		$createWikiUrl = NavigationModel::getCreateNewWikiUrl();
 		if ($userLang != 'en') {
 			$createWikiUrl .= '?uselang=' . $userLang;
 		}
@@ -69,9 +69,9 @@ class GlobalHeaderController extends WikiaController {
 	}
 
 	public function menuItemsAll() {
-		$this->response->setFormat('json');
+		$this->response->setFormat(WikiaResponse::FORMAT_JSONP);
 
-		$indexes = $this->request->getVal('indexes', array());
+		$indexes = $this->menuNodes[0]['children'];
 
 		$menuItems = array();
 		foreach($indexes as $index) {
@@ -81,7 +81,7 @@ class GlobalHeaderController extends WikiaController {
 		$this->response->setData($menuItems);
 
 		// Cache for 1 day
-		$this->response->setCacheValidity(86400, 86400, array(
+		$this->response->setCacheValidity(3600, 3600, array(
 			WikiaResponse::CACHE_TARGET_BROWSER,
 			WikiaResponse::CACHE_TARGET_VARNISH
 		));
@@ -94,5 +94,12 @@ class GlobalHeaderController extends WikiaController {
 			$result = false;
 		}
 		return $result;
+	}
+
+	public static function onMakeGlobalVariablesScript(Array &$vars) {
+		$parseCorporateUrl = parse_url(NavigationModel::getCreateNewWikiUrl());
+		$vars['wgCorporateUrl'] = $parseCorporateUrl['scheme'] . '://' . $parseCorporateUrl['host'];
+
+		return true;
 	}
 }

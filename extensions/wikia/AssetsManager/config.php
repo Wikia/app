@@ -11,6 +11,7 @@ $config['oasis_shared_core_js'] = array(
 		'//resources/wikia/libraries/mustache/mustache.js',
 		'//resources/wikia/modules/browserDetect.js',
 		'//resources/mediawiki/mediawiki.Uri.js',
+		'#group_ui_repo_api_js',
 	),
 );
 
@@ -52,10 +53,7 @@ $config['adengine2_js'] = array(
 		'//extensions/wikia/AdEngine/js/SlotTweaker.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.js',
 		'//extensions/wikia/AdEngine/js/AdTracker.js',
-
-		// ad related and depending on scriptwriter (gw+ps)
-		// analytics group would be optimal but would require bumping gw+ps much higher on the page
-		'//extensions/wikia/AnalyticsEngine/js/ivw2.run.js',
+		'//extensions/wikia/AdEngine/js/SlotTracker.js',
 
 		// high prio
 		'//extensions/wikia/AdEngine/js/OoyalaTracking.js',
@@ -77,6 +75,7 @@ $config['adengine2_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdLogicPageLevelParams.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageLevelParamsLegacy.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageDimensions.js',
+		'//extensions/wikia/AdEngine/js/AdDecoratorPageDimensions.js',
 		'//extensions/wikia/AdEngine/js/AdConfig2.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.run.js',
 
@@ -96,7 +95,7 @@ $config['oasis_ads_js'] = array(
 		// adengine2 low prio
 		// @requires adengine2 core already loaded
 		// @requires liftium loaded later (TODO FIXME)
-		'//extensions/wikia/AdEngine/js/AdProviderLiftium2Dom.js',
+		'//extensions/wikia/AdEngine/js/AdProviderLiftium.js',
 		'//extensions/wikia/AdEngine/js/AdProviderSevenOneMedia.js',
 		'//extensions/wikia/AdEngine/js/AdConfig2Late.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.configLateAds.js',
@@ -110,7 +109,6 @@ $config['oasis_ads_js'] = array(
 $config['oasis_noads_extensions_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
-		'//extensions/wikia/VideoHandlers/js/VideoHandlers.js',
 		'//extensions/wikia/CreatePage/js/CreatePage.js',
 		'//extensions/wikia/VideoHandlers/js/VideoBootstrap.js',
 		'//extensions/wikia/Lightbox/js/LightboxLoader.js',
@@ -172,6 +170,7 @@ $config['oasis_blocking'] = array(
 		'//resources/wikia/modules/lazyqueue.js',
 	)
 );
+
 $config['abtesting'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis', 'wikiamobile' ],
@@ -179,6 +178,13 @@ $config['abtesting'] = array(
 		'//extensions/wikia/AbTesting/js/AbTest.js',
 	)
 );
+$config['optimizely'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/Optimizely/js/OptimizelyLoader.js',
+	)
+);
+
 
 /** jQuery **/
 $config['jquery'] = array(
@@ -224,9 +230,6 @@ $config['oasis_jquery'] = array(
 		'//extensions/wikia/Search/js/SearchAbTest.DomUpdater.js',
 		'//extensions/wikia/Search/js/SearchAbTest.Context.js',
 		'//extensions/wikia/Search/js/SearchAbTest.js',
-
-		// Fixed global nav ABTesting
-		'//skins/oasis/js/GlobalHeader.js',
 	)
 );
 
@@ -299,7 +302,6 @@ $config['oasis_nojquery_shared_js'] = array(
 		'//skins/oasis/js/CorporateFooter.js',
 		'//skins/oasis/js/buttons.js',
 		'//skins/oasis/js/WikiHeader.js',
-		'//skins/oasis/js/Interlang.js',
 		'//skins/oasis/js/WikiaNotifications.js',
 		'//skins/oasis/js/FirefoxFindFix.js',
 		'//skins/oasis/js/isTouchScreen.js',
@@ -683,7 +685,7 @@ $config['special_contact_wikiamobile_js'] = array(
 $config['monobook_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
-		'#group_oasis_wikia_js',
+		'#group_oasis_shared_core_js',
 		'#group_oasis_jquery',
 		'#group_articlecomments_js',
 
@@ -870,7 +872,7 @@ $config['chat_js2'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'#group_oasis_jquery',
-		'#group_ui_repo_api_js',
+		'#group_oasis_shared_core_js',
 
 		// shared libraries
 		'//extensions/wikia/AssetsManager/js/AssetsManager.js',
@@ -889,7 +891,6 @@ $config['chat_js2'] = array(
 		'//extensions/wikia/Chat2/js/models/models.js',
 		'//extensions/wikia/Chat2/js/controllers/controllers.js',
 		'//extensions/wikia/Chat2/js/views/views.js',
-		'//resources/wikia/modules/browserDetect.js',
 		'//extensions/wikia/Chat2/js/views/ChatBanModal.js',
 	)
 );
@@ -1327,9 +1328,9 @@ $config['analytics_gas_js'] = array(
 $config['wiki_map_js'] = array(
     'type' => AssetsManager::TYPE_JS,
     'assets' => array(
-        '//extensions/wikia/WikiMap/js/d3.v2.js',
-        '//extensions/wikia/WikiMap/js/jquery.xcolor.js',
-        '//extensions/wikia/WikiMap/js/wikiMapIndexContent.js'
+        '//extensions/wikia/hacks/WikiMap/js/d3.v2.js',
+        '//extensions/wikia/hacks/WikiMap/js/jquery.xcolor.js',
+        '//extensions/wikia/hacks/WikiMap/js/WikiMapIndexContent.js'
     )
 );
 
@@ -1494,7 +1495,6 @@ $config['ui_repo_api_js'] = array(
 	'assets' => array(
 		'//resources/wikia/modules/nirvana.js',
 		'//resources/wikia/modules/uifactory.js',
-		'//resources/wikia/libraries/mustache/mustache.js',
 		'//resources/wikia/modules/uicomponent.js',
 	)
 );

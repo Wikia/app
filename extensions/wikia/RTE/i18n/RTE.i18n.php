@@ -158,7 +158,7 @@ $messages['ce'] = array(
 	'prefs-rte' => 'Визуальни йозан тадар (RTE)',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Darth Daron
  */
 $messages['cs'] = array(
@@ -221,11 +221,12 @@ $messages['de-formal'] = array(
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
+ * @author Mirzali
  */
 $messages['diq'] = array(
 	'rte-edgecase-comment' => 'Vatışdiq HTML',
 	'rte-edgecase-triplecurls' => 'parametrey şablonan',
-	'rte-edgecase-redirect' => 'hetenayış',
+	'rte-edgecase-redirect' => 'serçarnayış',
 	'prefs-rte' => 'Editorê metnê Zengini',
 );
 
@@ -411,7 +412,7 @@ $messages['ja'] = array(
  * @author Purodha
  */
 $messages['ksh'] = array(
-	'rte-edgecase-redirect' => 'en Ömleidung',
+	'rte-edgecase-redirect' => 'en Ömleidong',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -766,6 +767,7 @@ $messages['tl'] = array(
 
 /** Turkish (Türkçe)
  * @author Emperyan
+ * @author Incelemeelemani
  * @author Mert.subay
  */
 $messages['tr'] = array(
@@ -783,7 +785,7 @@ $messages['tr'] = array(
 	'rte-edgecase-redirect' => 'yönlendirme',
 	'rte-edgecase-templateintable' => 'şablon tanımlı tablo',
 	'rte-edgecase-unclosed-tags' => 'Kapatılmış HTML etiketi',
-	'enablerichtexteditor' => 'Zengin Metin Düzenleyicisi etkinleştir', # Fuzzy
+	'enablerichtexteditor' => '(Kaynak moduna ek olarak) Görsel modda düzenlemeyi etkinleştir',
 	'rte-enablerichtexteditormessage' => 'Zengin Metin Düzenleyicisi etkin!',
 	'rte-first-run-notice' => 'Düzenleyicide birkaç geliştirme yaptık.Daha fazlasını öğrenmek için, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news read the announcement].',
 );
@@ -814,6 +816,14 @@ $messages['uk'] = array(
 	'prefs-rte' => 'Візуальний текстовий редактор (RTE)',
 );
 
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'rte-edgecase-info-title' => 'Chế độ nguồn yêu cầu',
+	'rte-edgecase-info' => 'Chỉnh sửa nội dung bằng chế độ trực quan đã bị vô hiệu hóa do trang chứa nhiều mã phức tạp.',
+);
+
 /** Chinese (中文)
  */
 $messages['zh'] = array(
@@ -828,6 +838,7 @@ $messages['zh'] = array(
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Anakmalaysia
+ * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
 	'rte-desc' => '为MediaWiki提供的CKeditor整合',
@@ -836,6 +847,7 @@ $messages['zh-hans'] = array(
 	'rte-edgecase-triplecurls' => '模板参数',
 	'rte-edgecase-nowysiwyg' => '“禁用所见即所得”命令',
 	'rte-edgecase-complex-description' => '链接描述之内的外部URL或模板',
+	'rte-edgecase-syntax' => '不允许的语法',
 	'rte-edgecase-redirect' => '重定向',
 	'rte-edgecase-unclosed-tags' => '封闭的HTML标签',
 	'enablerichtexteditor' => '在可视模式下启用编辑（除源模式之外）',
