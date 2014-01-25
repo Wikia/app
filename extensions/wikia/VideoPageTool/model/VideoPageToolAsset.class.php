@@ -628,11 +628,11 @@ class VideoPageToolAsset extends WikiaModel {
 		$db = wfGetDB( DB_SLAVE );
 
 		$assets = (new WikiaSQL()) // ->cache( 60*60, self::getMemcKeyAssets( $programId ) )
-			->SELECT('*')
-				->FIELD('unix_timestamp(updated_at)')->AS_('updated_at')
-			->FROM('vpt_asset')
-			->WHERE('program_id')->EQUAL_TO($programId)
-			->runLoop( $db, function( &$assets,$row ) {
+			->SELECT( '*' )
+				->FIELD( 'unix_timestamp(updated_at)' )->AS_( 'updated_at' )
+			->FROM( 'vpt_asset' )
+			->WHERE( 'program_id' )->EQUAL_TO( $programId )
+			->runLoop( $db, function( &$assets, $row ) {
 					$assets[] = self::newFromRow( $row );
 			});
 
