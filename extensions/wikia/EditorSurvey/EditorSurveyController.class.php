@@ -1,37 +1,40 @@
 <?php
 
 class EditorSurveyController extends WikiaController {
+	public static $surveyIds = [
+		'ck-fail' => '1Mne6ZGeRVNAmmtVsPsOZL5SqGD093CxABXhaz8tVHRo',
+		'ck-success' => '12HQsoPoB-bXq5UMUsHxkdWIG0aLA3JAHxxcgqpZrM3M',
+		've-fail' => '1Dp_aW0B7-j7lE39qEpQxRwKH2QPOUAL4iW0wZH2Bq4E',
+		've-success' => '17PSLHGQopOrEYCNAm_v2ZqA90HCcMXDHmPJrZHh7IVI'
+	];
+
 	public function index() {
 		global $wgCityId;
-		$type = $this->request->getVal('type');
+
+		$response = [ 'html' => '' ];
+		$type = $this->request->getVal( 'type' );
+		$bodyMsgKey = 'editorsurvey-' . ( endsWith( $type, 'success' ) ? 'success' : 'fail' );
+		$surveyUrl = 'https://docs.google.com/forms/d/' . static::$surveyIds[$type] . '/viewform';
 
 		// WAM check
-		$wamData = $this->app->sendRequest('WAMApiController', 'getWAMIndex', ['wiki_id' => $wgCityId])->getData();
+		$wamData = $this->app->sendRequest( 'WAMApiController', 'getWAMIndex', [
+			'wiki_id' => $wgCityId
+		])->getData();
+
 		if ( count( $wamData['wam_index'] ) ) {
-			$rank = $wamData['wam_index'][$wgCityId]['wam_rank'];
-
-			if ( $rank <= 100 ) {
-				$this->response->setFormat( 'json' );
-				$this->response->setVal( 'wam', true );
-				return true;
-			}
+			$response['wam_rank'] = $wamData['wam_index'][$wgCityId]['wam_rank'];
 		}
 
-		// Template vars
-		$this->heading = wfMsg('editorsurvey-heading');
-		if ( $type == 've-success' ) {
-			$this->body = wfMsg('editorsurvey-success');
-			$this->surveyUrl = 'https://docs.google.com/forms/d/17PSLHGQopOrEYCNAm_v2ZqA90HCcMXDHmPJrZHh7IVI/viewform';
-		} else if ( $type == 've-fail' ) {
-			$this->body = wfMsg('editorsurvey-fail');
-			$this->surveyUrl = 'https://docs.google.com/forms/d/1Dp_aW0B7-j7lE39qEpQxRwKH2QPOUAL4iW0wZH2Bq4E/viewform';
-		} else if ( $type == 'ck-success' ) {
-			$this->body = wfMsg('editorsurvey-success');
-			$this->surveyUrl = 'https://docs.google.com/forms/d/12HQsoPoB-bXq5UMUsHxkdWIG0aLA3JAHxxcgqpZrM3M/viewform';
-		} else if ( $type == 'ck-fail' ) {
-			$this->body = wfMsg('editorsurvey-fail');
-			$this->surveyUrl = 'https://docs.google.com/forms/d/1Mne6ZGeRVNAmmtVsPsOZL5SqGD093CxABXhaz8tVHRo/viewform';
+		if ( !isset( $response['wam_rank'] ) || $response['wam_rank'] > 100 ) {
+			$response['html'] = $this->app->renderPartial( 'EditorSurveyController', 'modal', [
+				'body' => wfMsg( $bodyMsgKey ),
+				'heading' => wfMsg( 'editorsurvey-heading' ),
+				'surveyUrl' => $surveyUrl
+			]);
 		}
+
+		$this->response->setData( $response );
+		$this->response->setFormat( 'json' );
 	}
 };
 
