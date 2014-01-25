@@ -46,9 +46,9 @@ var EditorSurvey = {
 							EditorSurvey.closeModal();
 						} );
 						// Close button
-						EditorSurvey.$wrapper.find( '.close' ).on( 'click', EditorSurvey.seen );
+						EditorSurvey.$wrapper.find( '.close' ).on( 'click', EditorSurvey.set( 'seen' ) );
 						// Blackout overlay
-						EditorSurvey.$wrapper.next( '.blackout' ).on( 'click', EditorSurvey.seen );
+						EditorSurvey.$wrapper.next( '.blackout' ).on( 'click', EditorSurvey.set( 'seen' ) );
 					} else if ( contentType.indexOf( 'json' ) > -1 ) {
 						json = JSON.parse( response );
 						if ( json.wam ) {
