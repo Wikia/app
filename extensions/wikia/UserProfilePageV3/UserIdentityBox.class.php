@@ -42,9 +42,10 @@ class UserIdentityBox {
 	 * @param User $user core user object
 	 */
 	public function __construct( User $user ) {
-		$this->app = F::app();
+		global $wgTitle;
+
 		$this->user = $user;
-		$this->title = $this->app->wg->Title;
+		$this->title = $wgTitle;
 		$this->favWikisModel = new FavoriteWikisModel( $this->user );
 
 		if ( is_null( $this->title ) ) {
@@ -74,6 +75,7 @@ class UserIdentityBox {
 
 	protected function getUserData($dataType) {
 		wfProfileIn(__METHOD__);
+		global $wgCityId, $wgLang;
 
 		$userName = $this->user->getName();
 		$userId = $this->user->getId();
@@ -87,7 +89,7 @@ class UserIdentityBox {
 
 			$this->getUserTags( $data );
 		} else {
-			$wikiId = $this->app->wg->CityId;
+			$wikiId = $wgCityId;
 
 			if (empty($this->userStats)) {
 				/** @var $userStatsService UserStatsService */
@@ -110,7 +112,7 @@ class UserIdentityBox {
 
 			$data = $this->getInternationalizedRegistrationDate($wikiId, $data);
 			if(!empty($data['edits'])) {
-				$data['edits'] = $this->app->wg->Lang->formatNum($data['edits']);
+				$data['edits'] = $wgLang->formatNum($data['edits']);
 			}
 
 			//other data operations
@@ -152,9 +154,11 @@ class UserIdentityBox {
 	}
 
 	protected function internationalizeRegistrationDate($data) {
+		global $wgLang;
 		wfProfileIn(__METHOD__);
+
 		if (!empty($data['registration'])) {
-			$data['registration'] = $this->app->wg->Lang->date($data['registration']);
+			$data['registration'] = $wgLang->date($data['registration']);
 		}
 		wfProfileOut(__METHOD__);
 		return $data;
@@ -201,7 +205,9 @@ class UserIdentityBox {
 	 * @return array $data modified object
 	 */
 	private function getDefaultData($data) {
-		$memcData = $this->app->wg->Memc->get($this->getMemcUserIdentityDataKey());
+		global $wgMemc;
+
+		$memcData = $wgMemc->get($this->getMemcUserIdentityDataKey());
 
 		if (empty($memcData)) {
 			foreach (array('location', 'occupation', 'gender', 'birthday', 'website', 'twitter', 'fbPage', 'hideEditsWikis') as $key) {
@@ -276,6 +282,7 @@ class UserIdentityBox {
 	 * @return boolean
 	 */
 	public function saveUserData($data) {
+		global $wgCityId;
 		wfProfileIn(__METHOD__);
 
 		$changed = false;
@@ -336,12 +343,11 @@ class UserIdentityBox {
 			}
 		}
 
-		$wikiId = $this->app->wg->CityId;
-		if (!$this->hasUserEditedMastheadBefore($wikiId)) {
-			$this->user->setOption(self::USER_EDITED_MASTHEAD_PROPERTY . $wikiId, true);
-			$this->user->setOption(self::USER_FIRST_MASTHEAD_EDIT_DATE_PROPERTY . $wikiId, date('YmdHis'));
+		if( !$this->hasUserEditedMastheadBefore($wgCityId) ) {
+			$this->user->setOption(self::USER_EDITED_MASTHEAD_PROPERTY . $wgCityId, true);
+			$this->user->setOption(self::USER_FIRST_MASTHEAD_EDIT_DATE_PROPERTY . $wgCityId, date('YmdHis'));
 
-			$this->addTopWiki($wikiId);
+			$this->addTopWiki($wgCityId);
 			$changed = true;
 		}
 
@@ -366,10 +372,11 @@ class UserIdentityBox {
 	 *
 	 * @return string Parsed HTML string
 	 */
-	public function doParserFilter( $text )
-	{
+	public function doParserFilter( $text ) {
+		global $wgParser;
+
 		$text = str_replace( '*', '&asterix;', $text );
-		$text = $this->app->wg->Parser->parse( $text, $this->user->getUserPage(), new ParserOptions( $this->user ) )->getText();
+		$text = $wgParser->parse( $text, $this->user->getUserPage(), new ParserOptions( $this->user ) )->getText();
 		$text = str_replace( '&amp;asterix;', '*', $text );
 		// Encoding problems in user masthead (CONN-131)
 		$text = str_replace( '&#160;', ' ', $text );
@@ -405,6 +412,8 @@ class UserIdentityBox {
 	 * @return array
 	 */
 	private function saveMemcUserIdentityData($data) {
+		global $wgMemc;
+
 		foreach (array('location', 'occupation', 'gender', 'birthday', 'website', 'twitter', 'fbPage', 'realName', 'topWikis', 'hideEditsWikis') as $property) {
 			if (is_object($data) && isset($data->$property)) {
 				$memcData[$property] = $data->$property;
@@ -446,7 +455,7 @@ class UserIdentityBox {
 			}
 		}
 
-		$this->app->wg->Memc->set($this->getMemcUserIdentityDataKey(), $memcData);
+		$wgMemc->set($this->getMemcUserIdentityDataKey(), $memcData);
 
 		return $memcData;
 	}
@@ -459,7 +468,9 @@ class UserIdentityBox {
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	private function getDb($type = DB_SLAVE) {
-		return wfGetDB($type, array(), $this->app->wg->SharedDB);
+		global $wgSharedDB;
+
+		return wfGetDB( $type, array(), $wgSharedDB );
 	}
 
 	/**
@@ -471,14 +482,15 @@ class UserIdentityBox {
 	 * @author tor
 	 */
 	protected function getUserTags(&$data) {
+		global $wgEnableTwoTagsInMasthead;
 		wfProfileIn(__METHOD__);
 
-		if( !empty($this->app->wg->EnableTwoTagsInMasthead) ) {
+		if( !empty( $wgEnableTwoTagsInMasthead ) ) {
 			/** @var $strategy UserTwoTagsStrategy */
-			$strategy = new UserTwoTagsStrategy($this->user);
+			$strategy = new UserTwoTagsStrategy( $this->user );
 		} else {
 			/** @var $strategy UserOneTagStrategy */
-			$strategy = new UserOneTagStrategy($this->user);
+			$strategy = new UserOneTagStrategy( $this->user );
 		}
 		$tags = $strategy->getUserTags();
 
@@ -518,6 +530,8 @@ class UserIdentityBox {
 	 * @return bool
 	 */
 	public function shouldDisplayFullMasthead() {
+		global $wgCityId;
+
 		$userId = $this->user->getId();
 		if (empty($this->userStats)) {
 			/** @var $userStatsService UserStatsService */
@@ -528,9 +542,8 @@ class UserIdentityBox {
 		$iEdits = $this->userStats['edits'];
 		$iEdits = is_null($iEdits) ? 0 : intval($iEdits);
 
-		$wikiId = $this->app->wg->CityId;
 		$hasUserEverEditedMastheadBefore = $this->hasUserEverEditedMasthead();
-		$hasUserEditedMastheadBeforeOnThisWiki = $this->hasUserEditedMastheadBefore($wikiId);
+		$hasUserEditedMastheadBeforeOnThisWiki = $this->hasUserEditedMastheadBefore( $wgCityId );
 
 		if ($hasUserEditedMastheadBeforeOnThisWiki || ($iEdits > 0 && $hasUserEverEditedMastheadBefore)) {
 			return true;
@@ -544,6 +557,8 @@ class UserIdentityBox {
 	 * @author grunny
 	 */
 	public function resetUserProfile() {
+		global $wgMemc;
+
 		foreach ( $this->optionsArray as $option ) {
 			if ( $option === 'gender' || $option === 'birthday' ) {
 				$option = self::USER_PROPERTIES_PREFIX . $option;
@@ -551,7 +566,7 @@ class UserIdentityBox {
 			$this->user->setOption( $option, null );
 
 			$this->user->saveSettings();
-			$this->app->wg->Memc->delete( $this->getMemcUserIdentityDataKey() );
+			$wgMemc->delete( $this->getMemcUserIdentityDataKey() );
 			Wikia::invalidateUser( $this->user );
 		}
 	}
@@ -583,10 +598,12 @@ class UserIdentityBox {
 	 * @return boolean
 	 */
 	public function hideWiki( $wikiId ) {
+		global $wgMemc;
+
 		$result = $this->favWikisModel->hideWiki( $wikiId );
 
 		if( $result ) {
-			$memcData = $this->app->wg->Memc->get( $this->getMemcUserIdentityDataKey() );
+			$memcData = $wgMemc->get( $this->getMemcUserIdentityDataKey() );
 			$memcData['topWikis'] = empty( $memcData['topWikis'] ) ? [] : $memcData['topWikis'];
 			$this->saveMemcUserIdentityData( $memcData );
 		}
