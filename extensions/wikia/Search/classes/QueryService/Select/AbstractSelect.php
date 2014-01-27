@@ -281,7 +281,7 @@ abstract class AbstractSelect
 	protected function getRequestedFields() {
 		$fields = [];
 		foreach ( array_merge( $this->requestedFields, $this->getConfig()->getRequestedFields() ) as $field ) {
-			$fields[] = Utilities::field( $field );
+			$fields[] = Utilities::field( $field, $this->config->getLanguageCode() );
 		}
 		return $fields;
 	}
