@@ -280,8 +280,10 @@ abstract class AbstractSelect
 	 */
 	protected function getRequestedFields() {
 		$fields = [];
-		foreach ( array_merge( $this->requestedFields, $this->getConfig()->getRequestedFields() ) as $field ) {
-			$fields[] = Utilities::field( $field, $this->getConfig->getLanguageCode() );
+		$config = $this->getConfig();
+		$language = $config->getLanguageCode();
+		foreach ( array_merge( $this->requestedFields, $config->getRequestedFields() ) as $field ) {
+			$fields[] = Utilities::field( $field, $language );
 		}
 		return $fields;
 	}
