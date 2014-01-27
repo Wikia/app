@@ -19,7 +19,7 @@ describe("Tables module", function () {
 			IScroll: function(){
 				return {
 					on: function(){}
-				}
+				};
 			},
 			addEventListener: function(){
 
