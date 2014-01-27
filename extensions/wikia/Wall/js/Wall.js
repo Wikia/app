@@ -272,7 +272,8 @@ var Wall = $.createClass(Object, {
 	vote: function(e) {
 		e.preventDefault();
 		if(!window.wgUserName) {
-			UserLoginModal.show({
+			UserLoginModal.show( {
+				origin: 'wall-and-forum',
 				callback: this.proxy(function() {
 					this.voteBase(e, function(target, data, dir){
 								window.location.reload();
@@ -684,7 +685,8 @@ var Wall = $.createClass(Object, {
 		e.preventDefault();
 		var rootMessageId = $(e.target).closest('.message').data('id');
 		if(window.wgDisableAnonymousEditing  && !window.wgUserName) {
-			UserLoginModal.show({
+			UserLoginModal.show( {
+				origin: 'wall-and-forum',
 				callback: this.proxy(function() {
 					this.editTopics(rootMessageId);
 				})
