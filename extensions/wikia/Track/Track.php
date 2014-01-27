@@ -14,7 +14,7 @@ class Track {
 	const BASE_URL = 'http://a.wikia-beacon.com/__track';
 
 	public static function getURL ($type=null, $name=null, $param=null, $for_html=true) {
-		global $wgCityId, $wgContLanguageCode, $wgDBname, $wgDBcluster, $wgUser, $wgArticle, $wgTitle, $wgAdServerTest;
+		global $wgStyleVersion, $wgCityId, $wgContLanguageCode, $wgDBname, $wgDBcluster, $wgUser, $wgArticle, $wgTitle, $wgAdServerTest;
 
 		$sep = $for_html ? '&amp;' : '&';
 		$ip = F::app()->wg->Request->getIP();
@@ -23,6 +23,7 @@ class Track {
 			($type ? "/$type" : '').
 			($name ? "/$name" : '').
 			'?'.
+			'cb='.$wgStyleVersion.$sep.
 			'c='.$wgCityId.$sep.
 			'lc='.$wgContLanguageCode.$sep.
 			'lid='.WikiFactory::LangCodeToId($wgContLanguageCode).$sep.
@@ -71,7 +72,7 @@ class Track {
 	var utma = RegExp("__utma=([0-9\.]+)").exec(document.cookie);
 	var utmb = RegExp("__utmb=([0-9\.]+)").exec(document.cookie);
 
-	var trackUrl = "$url" + ((typeof document.referrer != "undefined") ? "&amp;r=" + escape(document.referrer) : "") + "&amp;cb=" + (new Date).valueOf() + (window.beacon_id ? "&amp;beacon=" + window.beacon_id : "") + (utma && utma[1] ? "&amp;utma=" + utma[1] : "") + (utmb && utmb[1] ? "&amp;utmb=" + utmb[1] : "");
+	var trackUrl = "$url" + ((typeof document.referrer != "undefined") ? "&amp;r=" + escape(document.referrer) : "") + "&amp;rand=" + (new Date).valueOf() + (window.beacon_id ? "&amp;beacon=" + window.beacon_id : "") + (utma && utma[1] ? "&amp;utma=" + utma[1] : "") + (utmb && utmb[1] ? "&amp;utmb=" + utmb[1] : "");
 	document.write('<'+'script type="text/javascript" src="' + trackUrl + '"><'+'/script>');
 })();
 </script>
