@@ -26,8 +26,7 @@ class VideosModuleController extends WikiaController {
 			$categoryTitle = Title::newFromText( $categoryName, NS_CATEGORY );
 			$categoryVideos = $helper->getVideosByCategory( $categoryTitle, $numVideosNeeded );
 			if ( $categoryVideos ) {
-				shuffle( $categoryVideos );
-				$this->videos[] = $categoryVideos;
+				$this->videos = array_merge( $this->videos, $categoryVideos );
 			}
 		}
 
