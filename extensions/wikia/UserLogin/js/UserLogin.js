@@ -41,8 +41,7 @@ var UserLogin = {
 					origin: 'editor'
 				} );
 				return true;
-			}
-			else if ( showComboAjaxForPlaceHolder( '', false, '', false, true ) ) {
+			} else if ( showComboAjaxForPlaceHolder( '', false, '', false, true ) ) {
 				return true;
 			}
 		}

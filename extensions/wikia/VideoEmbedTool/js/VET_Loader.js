@@ -43,7 +43,7 @@
 			return;
 		} else if (wgUserName == null) {
 			UserLoginModal.show( {
-					origin: 'vet',
+				origin: 'vet',
 				callback: function() {
 					UserLogin.forceLoggedIn = true;
 					window.VET_loader.load(options);

@@ -1009,7 +1009,7 @@ var Lightbox = {
 
 		shareEmailForm.submit(function(e) {
 			e.preventDefault();
-			var addresses = $(this).find('input').first().val(),
+			var addresses = $( this ).find( 'input' ).first().val(),
 				UserLoginModal = window.UserLoginModal;
 
 			// make sure user is logged in

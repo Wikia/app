@@ -116,7 +116,7 @@ var UserLoginModal = {
 					options.modalInitCallback();
 				}
 
-				if (options.origin ) {
+				if ( options.origin ) {
 					origin = options.origin;
 				}
 
@@ -133,17 +133,17 @@ var UserLoginModal = {
 					} );
 				} ).on( 'click', '.keep-logged-in label', function() {
 					that.track( {
-						ction: clickAction,
+						action: clickAction,
 						label: 'keep-me-logged-in'
 					} );
 				} ).on( 'click', '.get-account a', function() {
 					that.track( {
-						ction: clickAction,
+						action: clickAction,
 						label: 'sign-up-from-' + origin
 					} );
 				} ).on( 'click', '.sso-login-facebook', function() {
 					that.track( {
-						ction: clickAction,
+						action: clickAction,
 						label: 'facebook-connect'
 					} );
 				} );
