@@ -105,13 +105,12 @@ class WikiaTestSpeedAnnotator {
 			$fileContents = self::replaceDocCommentForMethod($fileContents, $methodName, $newDocComment);
 		}
 
-
 		file_put_contents( $filePath, $fileContents );
 	}
 
 	private static function replaceDocCommentForMethod($sourceCode, $methodName, $newDocComment) {
 
-		$methodDeclaration = strpos($sourceCode, 'function ' . $methodName);
+		$methodDeclaration = self::regexpos($sourceCode, '/function\s+'.$methodName.'\s*\(/');
 		$codeTillMethodDeclaration = substr($sourceCode, 0, $methodDeclaration);
 
 		$docCommentEnd = strrpos($codeTillMethodDeclaration, '*/');
@@ -124,7 +123,7 @@ class WikiaTestSpeedAnnotator {
 
 	private static function addDocCommentToMethod($sourceCode, $methodName, $newDocComment) {
 
-		$methodDeclaration = strpos($sourceCode, 'function ' . $methodName);
+		$methodDeclaration = self::regexpos($sourceCode, '/function\s+'.$methodName.'\s*\(/');
 		$codeTillMethodDeclaration = substr($sourceCode, 0, $methodDeclaration);
 
 		$docPosition = strrpos($codeTillMethodDeclaration, "\n");
@@ -161,5 +160,11 @@ class WikiaTestSpeedAnnotator {
 		} else {
 			return '';
 		}
+	}
+
+	private static function regexpos($content, $regex) { 
+		$matches = [];
+
+		return preg_match($regex, $content, $matches, PREG_OFFSET_CAPTURE) ? $matches[0][1] : false;
 	}
 }
