@@ -6,8 +6,7 @@ namespace Wikia\Search\IndexService;
  * @package Search
  * @subpackage IndexService
  */
-class ArticleType extends AbstractService
-{
+class ArticleType extends AbstractService {
 	/**
 	 * Returns article type filed
 	 * @see \Wikia\Search\IndexService\AbstractService::execute()
@@ -17,13 +16,12 @@ class ArticleType extends AbstractService
 	public function execute() {
 		$articleTypeService = new \ArticleTypeService();
 
-		$wikiId = (int) $this->getService()->getWikiId();
-		$pageId = (int) $this->currentPageId;
-		if ( $pageId === null ) {
+		if ( $this->currentPageId === null ) {
 			throw new \WikiaException( 'A pageId-dependent indexer service was executed without a page ID queued' );
 		}
+		$wikiId = (int) $this->getService()->getWikiId();
+		$pageId = (int) $this->currentPageId;
 
 		return [ "article_type_s" => $articleTypeService->getArticleType( $wikiId, $pageId ) ];
 	}
-
 }
