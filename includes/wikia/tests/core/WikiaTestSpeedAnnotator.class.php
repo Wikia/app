@@ -1,7 +1,7 @@
 <?php
 
 class WikiaTestSpeedAnnotator {
-	const SLOW_TEST_THRESHOLD = 0.002; // 0.002s = 2ms
+	const SLOW_TEST_THRESHOLD = 0.01; // 0.01s = 10ms
 
 	// resolution is equal to number of significant characters of SLOW_TEST_THRESHOLD plus two.
 	const TEST_EXECUTION_TIME_RESOLUTION = 5;

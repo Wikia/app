@@ -69,6 +69,8 @@ class PlacesTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.01362 ms
 	 * @group UsingDB
 	 */
 	function testRenderMarkers() {
