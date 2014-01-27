@@ -27,7 +27,7 @@ abstract class AbstractDismax extends AbstractSelect
 		$queryFieldsString = '';
 		foreach ( $this->getConfig()->getQueryFieldsToBoosts()  as $field => $boost ) {
 			$queryFieldsString .= sprintf( '%s^%s ', Utilities::field( $field,
-											$this->config->getLanguageCode() ), $boost );
+											$this->getConfig->getLanguageCode() ), $boost );
 		}
 		return trim( $queryFieldsString );
 	}
