@@ -28,6 +28,8 @@
 			this.positionNav();
 
 			//Events
+
+			// Menu Main nodes
 			this.nav
 				// hover main menu nodes
 				.on('mouseenter', '.nav-item', $.proxy(this.mouseoverL1, this))
@@ -37,7 +39,10 @@
 				// focus main menu links
 				.on('focus', '.nav-item > a', $.proxy(function(event){
 					this.showSubNavL2($(event.target).parent('li'));
-				},this))
+				},this));
+
+			// Items in menu second level
+			this.nav
 				// hover second level menu items
 				.on('mouseenter', '.subnav-2-item', $.proxy(this.mouseoverL2,this))
 				.on('mouseleave', '.subnav-2-item', $.proxy(this.mouseoutL2,this))
@@ -47,12 +52,14 @@
 				.on('focus', '.subnav-2-item > a', $.proxy(function(event){
 					this.hideNavL3();
 					this.showSubNavL3($(event.target).parent('li'));
-				},this))
-				//Accessibility Events
-				//Show when any inner anchors are in focus
-				// IE9 focus handling fix - see BugId:5914.
-				// Assume keyboard-based navigation (IE9 focus handling fix).
-				// Switch to browser's default onfocus behaviour when mouse-based navigation is detected  (IE9 focus handling fix).
+				},this));
+
+			//Accessibility Events
+			//Show when any inner anchors are in focus
+			// IE9 focus handling fix - see BugId:5914.
+			// Assume keyboard-based navigation (IE9 focus handling fix).
+			// Switch to browser's default onfocus behaviour when mouse-based navigation is detected  (IE9 focus handling fix).
+			this.nav
 				.on('mousedown', '.subnav-3 a', function() {suppressOnFocus = true;})
 				// Switch back to keyboard-based navigation mode  (IE9 focus handling fix).
 				.on('mouseup', '.subnav-3 a', function() {suppressOnFocus = false;})
