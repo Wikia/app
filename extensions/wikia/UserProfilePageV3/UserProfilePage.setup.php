@@ -31,13 +31,18 @@ $wgAutoloadClasses['Masthead'] =  $dir . '/Masthead.class.php';
 /**
  * helper classes (strategies)
  */
-$wgAutoloadClasses['UserTagsStrategyBase'] =  $dir . '/strategies/UserTagsStrategyBase.class.php';
-$wgAutoloadClasses['UserOneTagStrategy'] =  $dir . '/strategies/UserOneTagStrategy.class.php';
-$wgAutoloadClasses['UserTwoTagsStrategy'] =  $dir . '/strategies/UserTwoTagsStrategy.class.php';
+$wgAutoloadClasses['UserTagsStrategyBase'] = $dir . '/strategies/UserTagsStrategyBase.class.php';
+$wgAutoloadClasses['UserOneTagStrategy'] = $dir . '/strategies/UserOneTagStrategy.class.php';
+$wgAutoloadClasses['UserTwoTagsStrategy'] = $dir . '/strategies/UserTwoTagsStrategy.class.php';
 
 /**
- * special pages
+ * helpers
  */
+$wgAutoloadClasses['UserWikisFilter'] = $dir . '/filters/UserWikisFilter.class.php';
+$wgAutoloadClasses['HiddenWikisFilter'] = $dir . '/filters/HiddenWikisFilter.class.php';
+$wgAutoloadClasses['UserWikisFilterDecorator'] = $dir . '/filters/UserWikisFilterDecorator.class.php';
+$wgAutoloadClasses['UserWikisFilterUniqueDecorator'] = $dir . '/filters/UserWikisFilterUniqueDecorator.class.php';
+$wgAutoloadClasses['UserWikisFilterPrivateDecorator'] = $dir . '/filters/UserWikisFilterPrivateDecorator.class.php';
 
 /**
  * hooks

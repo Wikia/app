@@ -563,17 +563,7 @@ class UserIdentityBox {
 	 * @return array
 	 */
 	public function getTopWikis( $refreshHidden = false ) {
-		$topWikis = $this->favWikisModel->getTopWikis( $refreshHidden );
-		$hiddenWikis = UserProfilePageHelper::getHiddenWikiIds();
-		$wikis = [];
-
-		foreach( $topWikis as $wiki ) {
-			if( isset( $wiki['id'] ) && !in_array( $wiki['id'], $hiddenWikis ) ) {
-				$wikis[] = $wiki;
-			}
-		}
-
-		return $wikis;
+		return $this->favWikisModel->getTopWikis( $refreshHidden );
 	}
 
 	/**

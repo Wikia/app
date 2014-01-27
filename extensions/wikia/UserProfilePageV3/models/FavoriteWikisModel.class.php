@@ -88,7 +88,7 @@ class FavoriteWikisModel extends WikiaModel {
 	}
 
 	/**
-	 * @brief Gets top wikis filters them and returns
+	 * @brief Gets top wikis filters them, sorts and returns
 	 *
 	 * @param Boolean $refreshHidden
 	 *
@@ -102,14 +102,12 @@ class FavoriteWikisModel extends WikiaModel {
 		}
 
 		$wikis = array_merge( $this->getTopWikisFromDb(), $this->getEditsWikis() );
-
-		$ids = array();
-		foreach( $wikis as $key => $wiki ) {
-			if( $this->isTopWikiHidden( $wiki['id'] ) || in_array( (int) $wiki['id'], $ids ) ) {
-				unset( $wikis[$key] );
-			}
-			$ids[] = (int) $wiki['id'];
-		}
+		$filter = new UserWikisFilterPrivateDecorator(
+			new UserWikisFilterUniqueDecorator(
+				new HiddenWikisFilter( $wikis, $this->getHiddenTopWikis() )
+			)
+		);
+		$wikis = $filter->getFiltered();
 
 		wfProfileOut( __METHOD__ );
 		return $this->sortTopWikis( $wikis );
