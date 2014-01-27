@@ -692,7 +692,9 @@ class ArticlesApiController extends WikiaApiController {
 			}
 
 			$details['abstract'] = $snippet;
-			$details = array_merge( $details, $thumbnails[ $id ] );
+			if ( isset( $thumbnails[ $id ] ) ) {
+				$details = array_merge( $details, $thumbnails[ $id ] );
+			}
 		}
 
 		$thumbnails = null;
