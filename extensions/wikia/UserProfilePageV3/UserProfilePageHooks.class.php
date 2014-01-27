@@ -6,9 +6,11 @@ class UserProfilePageHooks {
 	 *
 	 * @author Tomek Odrobny
 	 *
-	 * @param $title Title
+	 * @param Title $title
+	 * @param String $ptext
+	 *
+	 * @return Boolean
 	 */
-
 	static public function onSkinSubPageSubtitleAfterTitle($title, &$ptext) {
 		if (!empty($title) && $title->getNamespace() == NS_USER) {
 			$ptext = $title->getText();
@@ -16,8 +18,6 @@ class UserProfilePageHooks {
 
 		return true;
 	}
-
-
 
 	/**
 	 * @brief adds wiki id to cache and fav wikis instantly
@@ -37,7 +37,15 @@ class UserProfilePageHooks {
 		return true;
 	}
 
-	//WikiaMobile hook to add assets so they are minified and concatenated
+	/**
+	 * @brief WikiaMobile hook to add assets so they are minified and concatenated
+	 *
+	 * @param Array $jsStaticPackages
+	 * @param Array $jsExtensionPackages
+	 * @param Array $scssPackages
+	 *
+	 * @return Boolean
+	 */
 	static public function onWikiaMobileAssetsPackages( &$jsStaticPackages, &$jsExtensionPackages, &$scssPackages){
 		$wg = F::app()->wg;
 		if ( $wg->Title->getNamespace() === NS_USER ) {
@@ -52,12 +60,15 @@ class UserProfilePageHooks {
 	static public function onSkinTemplateOutputPageBeforeExec( $skin, $template ) {
 		return self::addToUserProfile($skin, $template);
 	}
-	/**
-	 *
-	 * Monobook fallback for UUP
-	 *
-	 */
 
+	/**
+	 * @brief Monobook fallback for UUP
+	 *
+	 * @param Skin $skin
+	 * @param Object $tpl
+	 *
+	 * @return Boolean
+	 */
 	static function addToUserProfile(&$skin, &$tpl) {
 		wfProfileIn(__METHOD__);
 
@@ -142,7 +153,9 @@ class UserProfilePageHooks {
 	 * Don't send 404 status for user pages with filled in masthead (bugid:44602)
 	 * @brief hook handler
 	 *
-	 * @param $article Article
+	 * @param Article $article
+	 *
+	 * @return Boolean
 	 */
 	static public function onBeforeDisplayNoArticleText($article) {
 		global $UPPNamespaces;
@@ -167,6 +180,12 @@ class UserProfilePageHooks {
 
 	/**
 	 * @brief Hook on WikiFactory change and update wikis's visibility if the wgGroupPermissionsLocal is changed
+	 *
+	 * @param String $cv_name
+	 * @param Integer $city_id
+	 * @param String $value
+	 *
+	 * @return Boolean
 	 *
 	 * @author Evgeniy (aquilax)
 	 */
@@ -194,6 +213,11 @@ class UserProfilePageHooks {
 	/**
 	 * @brief Hook on WikiFactory value remove and update wikis's visibility if the wgGroupPermissionsLocal is removed
 	 *
+	 * @param String $cv_name
+	 * @param Integer $city_id
+	 *
+	 * @return Boolean
+	 *
 	 * @author Evgeniy (aquilax)
 	 */
 	static public function onWikiFactoryVariableRemoved( $cv_name , $city_id ) {
@@ -202,4 +226,5 @@ class UserProfilePageHooks {
 		}
 		return true;
 	}
+
 }
