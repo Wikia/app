@@ -1595,19 +1595,6 @@ class Wikia {
 		$tpl->set( 'thisurl', $title->getPrefixedURL() );
 		$tpl->set( 'thisquery', $skinTemplate->thisquery );
 
-		/* Replace Wikia logo path
-		   This functionality is for finding proper path of Wiki.png instead of const one from wgLogo
-		   wikia logo should be stored under File:Wiki.png on current wikia. If wfFindFile doesn't find it
-		   on current wikia it tires to fallback to starter.wikia.com where the default one is stored
-		*/
-		if ( !self::isOasis() ) {
-			$logoPage = Title::newFromText( 'Wiki.png', NS_FILE );
-			$logoFile = wfFindFile( $logoPage );
-			if( $logoFile ) {
-				$tpl->set( 'logopath', $logoFile->getUrl() );
-			}
-		}
-
 		wfProfileOut(__METHOD__);
 		return true;
 	}
