@@ -7,6 +7,7 @@ class VideosModuleHelper {
 	const THUMBNAIL_CATEGORY_WIDTH = 263;
 	const THUMBNAIL_CATEGORY_HEIGHT = 148;
 	const CACHE_TTL_CATEGORY_DATA = 3600;
+	const VIDEO_WIKI_DB = 'video151';
 
 	/*
 	 *   Example of use:
@@ -50,9 +51,10 @@ class VideosModuleHelper {
 		wfProfileIn( __METHOD__ );
 
 		$dbKey = $categoryTitle->getDBkey();
-		$db = wfGetDB( DB_SLAVE );
+		// pass an empty array here to access the third default argument so we can
+		// change the wiki to connect to.
+		$db = wfGetDB( DB_SLAVE, array(), self::VIDEO_WIKI_DB );
 
-		// Why does this have to be treated as an expression?
 		$videos = ( new WikiaSQL() )
 			->SELECT( 'page_id, page_title' )
 			->FROM( 'page' )

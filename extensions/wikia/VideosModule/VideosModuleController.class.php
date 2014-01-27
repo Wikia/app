@@ -31,8 +31,6 @@ class VideosModuleController extends WikiaController {
 			}
 		}
 
-		$this->hello_world = "Hello world!";
-
 		wfProfileOut( __METHOD__ );
 	}
 }
