@@ -15,6 +15,7 @@ var WikiHeader = {
 	},
 
 	init: function(isValidator) {
+		var suppressOnFocus = false;
 		//Variables
 		this.nav = $('#WikiHeader > nav');
 		this.navLI = this.nav.find('.nav-item');
@@ -24,22 +25,44 @@ var WikiHeader = {
 
 		this.positionNav();
 
-		this.navLI.hover($.proxy(this.mouseoverL1,this), $.proxy(this.mouseoutL1,this));
-		this.subnav2LI.hover($.proxy(this.mouseoverL2,this), $.proxy(this.mouseoutL2,this));
-
 		//Events
-		this.navLI
-			.click($.proxy(this.mouseclickL1,this))
-			.children('a').focus($.proxy(function(event){
+		this.nav
+			// hover main menu nodes
+			.on('mouseenter', '.nav-item', $.proxy(this.mouseoverL1, this))
+			.on('mouseleave', '.nav-item', $.proxy(this.mouseoutL1,this))
+			// click main menu nodes
+			.on('click', '.nav-item', $.proxy(this.mouseclickL1,this))
+			// focus main menu links
+			.on('focus', '.nav-item > a', $.proxy(function(event){
 				this.showSubNavL2($(event.target).parent('li'));
-			},this));
-
-		this.subnav2LI
-			.click($.proxy(this.mouseclickL2,this))
-			.children('a').focus($.proxy(function(event){
+			},this))
+			// hover second level menu items
+			.on('mouseenter', '.subnav-2-item', $.proxy(this.mouseoverL2,this))
+			.on('mouseleave', '.subnav-2-item', $.proxy(this.mouseoutL2,this))
+			// click second level menu items
+			.on('click', '.subnav-2-item', $.proxy(this.mouseclickL2,this))
+			// focus second level menu links
+			.on('focus', '.subnav-2-item > a', $.proxy(function(event){
 				this.hideNavL3();
 				this.showSubNavL3($(event.target).parent('li'));
-			},this));
+			},this))
+			//Accessibility Events
+			//Show when any inner anchors are in focus
+			// IE9 focus handling fix - see BugId:5914.
+			// Assume keyboard-based navigation (IE9 focus handling fix).
+			// Switch to browser's default onfocus behaviour when mouse-based navigation is detected  (IE9 focus handling fix).
+			.on('mousedown', '.subnav-3 a', function() {suppressOnFocus = true;})
+			// Switch back to keyboard-based navigation mode  (IE9 focus handling fix).
+			.on('mouseup', '.subnav-3 a', function() {suppressOnFocus = false;})
+			// The onfocus behaviour intended only for keyboard-based navigation (IE9 focus handling fix).
+			.on('focus', '.subnav-3 a', $.proxy(function(event) {
+				if ( !suppressOnFocus ) {
+					this.hideNavL3();
+					this.showSubNavL3($(event.currentTarget).closest('.subnav').parent('li'));
+				}
+			}, this))
+			//Hide when focus out of last anchor
+			.on('focusout', '.subnav-3:last-child > li:last-child a', $.proxy(this.hideNavL3, this));
 
 		// BugID: 64318 - hiding publish button on nav edit
 		if ( (window.wgIsWikiNavMessage) && (window.wgAction === "edit") ) {
@@ -57,29 +80,6 @@ var WikiHeader = {
 				}
 			} );
 		}
-
-		//Accessibility Events
-		//Show when any inner anchors are in focus
-
-		// IE9 focus handling fix - see BugId:5914.
-		// Assume keyboard-based navigation (IE9 focus handling fix).
-		var suppressOnFocus = false;
-
-		this.subnav3.find('a')
-			// Switch to browser's default onfocus behaviour when mouse-based navigation is detected  (IE9 focus handling fix).
-			.bind('mousedown', function() {suppressOnFocus = true;})
-			// Switch back to keyboard-based navigation mode  (IE9 focus handling fix).
-			.bind('mouseup', function() {suppressOnFocus = false;})
-			// The onfocus behaviour intended only for keyboard-based navigation (IE9 focus handling fix).
-			.focus($.proxy(function(event) {
-				if ( !suppressOnFocus ) {
-					this.hideNavL3();
-					this.showSubNavL3($(event.currentTarget).closest('.subnav').parent('li'));
-				}
-			}, this));
-		//Hide when focus out of first and last anchor
-		this.subnav3.find('li:first-child a').focusout(this.hideNavL3);
-		this.subnav3.last().find('li:last-child a').focusout(this.hideNavL3);
 
 		//Mouse out of browser
 		$(document).mouseout($.proxy(function(e){
@@ -250,7 +250,6 @@ var WikiHeader = {
 	},
 
 	showSubNavL3: function(parent) {
-
 		var subnav = $(parent).children('ul');
 
 		if (subnav.exists()) {
