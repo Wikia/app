@@ -122,7 +122,7 @@ var UserLoginModal = {
 
 				that.track( {
 					action: that.trackerActions.OPEN,
-					label: origin
+					label: 'from-' + origin
 				} );
 
 				// Click tracking
