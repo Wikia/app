@@ -92,6 +92,7 @@
 	};
 
 	init = {
+		activateOnPageLoad: uri.query.veaction === 'edit',
 
 		support: support,
 
@@ -285,7 +286,7 @@
 	if ( thisPageIsAvailable ) {
 		$( function () {
 			if ( isViewPage ) {
-				if ( uri.query.veaction === 'edit' ) {
+				if ( init.activateOnPageLoad ) {
 					getTarget().done( function ( target ) {
 						target.activate();
 					} );
