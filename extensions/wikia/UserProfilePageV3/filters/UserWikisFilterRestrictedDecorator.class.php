@@ -1,11 +1,11 @@
 <?php
-class UserWikisFilterPrivateDecorator extends UserWikisFilterDecorator {
+class UserWikisFilterRestrictedDecorator extends UserWikisFilterDecorator {
 	private $privateWikis;
 	private $filter;
 
 	public function __construct( UserWikisFilter $filter ) {
 		$this->filter = $filter;
-		$this->privateWikis = UserProfilePageHelper::getHiddenWikiIds();
+		$this->privateWikis = UserProfilePageHelper::getRestrictedWikisIds();
 	}
 
 	public function getFiltered() {

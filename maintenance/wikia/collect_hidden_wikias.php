@@ -41,7 +41,7 @@ class CollectHiddenWikias {
 			}
 			$i++;
 		}
-		UserProfilePageHelper::saveHiddenWikisDB( $hiddenWikis );
+		UserProfilePageHelper::saveRestrictedWikisDB( $hiddenWikis );
 	}
 }
 CollectHiddenWikias::collect();

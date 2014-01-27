@@ -102,7 +102,8 @@ class FavoriteWikisModel extends WikiaModel {
 		}
 
 		$wikis = array_merge( $this->getTopWikisFromDb(), $this->getEditsWikis() );
-		$filter = new UserWikisFilterPrivateDecorator(
+
+		$filter = new UserWikisFilterRestrictedDecorator(
 			new UserWikisFilterUniqueDecorator(
 				new HiddenWikisFilter( $wikis, $this->getHiddenTopWikis() )
 			)

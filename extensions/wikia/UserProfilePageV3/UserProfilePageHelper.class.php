@@ -11,7 +11,9 @@ class UserProfilePageHelper {
 	 * @desc getUserFromTitle() is sometimes called in hooks therefore I added returnUser flag and when
 	 * it is set to true getUserFromTitle() will assign $this->user variable with a user object
 	 *
-	 * @return User
+	 * @param null|String|Title $title
+	 *
+	 * @return User|null
 	 *
 	 * @author ADi
 	 * @author nAndy
@@ -79,7 +81,6 @@ class UserProfilePageHelper {
 		return $user;
 	}
 
-
 	public static function lockAndSetData( $memCSync, $getDataCallback, $lockFailCallback ) {
 		// Try to update the data $count times before giving up
 		$count = 5;
@@ -115,7 +116,7 @@ class UserProfilePageHelper {
 		$changed = false;
 		$hiddenWikis = $memCSync->get();
 		if ( empty( $hiddenWikis ) && !is_array( $hiddenWikis ) ) {
-			$hiddenWikis = self::getHiddenWikisFromDB();
+			$hiddenWikis = self::getRestrictedWikisFromDB();
 		}
 		if ( $is_hidden ) {
 			if ( !in_array( $city_id, $hiddenWikis ) ) {
@@ -129,18 +130,18 @@ class UserProfilePageHelper {
 			}
 		}
 		if ( $changed ) {
-			self::saveHiddenWikisDB( $hiddenWikis );
+			self::saveRestrictedWikisDB( $hiddenWikis );
 		}
 		return $hiddenWikis;
 	}
 
-	private static function getHiddenWikiKey() {
+	private static function getRestrictedWikisKey() {
 		return  wfSharedMemcKey( __CLASS__, __METHOD__);
 	}
 
 	private static function getCache() {
 		global $wgMemc;
-		return new MemcacheSync( $wgMemc, self::getHiddenWikiKey() );
+		return new MemcacheSync( $wgMemc, self::getRestrictedWikisKey() );
 	}
 
 	private static function getDb( $master = FALSE ) {
@@ -148,7 +149,7 @@ class UserProfilePageHelper {
 		return wfGetDB( $master ? DB_MASTER : DB_SLAVE, array(), $wgExternalDatawareDB );
 	}
 
-	private static function getHiddenWikisFromDB() {
+	private static function getRestrictedWikisFromDB() {
 		$value = self::getDb( false )->selectField(
 			'global_registry',
 			'item_value',
@@ -162,7 +163,7 @@ class UserProfilePageHelper {
 		return is_array( $hiddenWikis ) ? $hiddenWikis : array();
 	}
 
-	public static function saveHiddenWikisDB( $hiddenWikis ) {
+	public static function saveRestrictedWikisDB( $hiddenWikis ) {
 		self::getDb( true )->replace(
 			'global_registry',
 			array( 'item_id', 'item_type' ),
@@ -175,7 +176,7 @@ class UserProfilePageHelper {
 		);
 	}
 
-	public static function getHiddenWikiIds() {
+	public static function getRestrictedWikisIds() {
 		wfProfileIn(__METHOD__);
 		$memCSync = self::getCache();
 
@@ -184,7 +185,7 @@ class UserProfilePageHelper {
 		if ( empty( $list ) && !is_array( $list ) ) {
 			self::lockAndSetData( $memCSync,
 				function () use ( $memCSync, &$list ) {
-					$list = self::getHiddenWikisFromDB();
+					$list = self::getRestrictedWikisFromDB();
 					return $list;
 				},
 				function () {
