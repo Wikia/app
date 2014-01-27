@@ -333,7 +333,7 @@ class RelatedPages {
 
 		$results = WikiaDataAccess::cacheWithLock(
 			( empty( $this->memcKeyPrefix ) ) ? wfMemcKey( __METHOD__) : wfMemcKey( $this->memcKeyPrefix, __METHOD__), 
-			$this->categoryRankCacheTTL * 1,
+			$this->categoryRankCacheTTL * 3600,
 			function () use ( $wgContentNamespaces ) {
 				$db = wfGetDB(DB_SLAVE);
 				$sql = ( new WikiaSQL() )
@@ -351,18 +351,12 @@ class RelatedPages {
 					$sql->JOIN('page')->ON("page_id = cl_from AND $join_cond");
 				}
 
-				$results = $sql->runLoop($db, function(&$results, $row) {
-					if ( !isset( $results['rank'] ) ) {
-						$results['rank'] = 1;
-					}
-					$results[$row->cl_to] = $results['rank'];
-					$results['rank']++;
+				$rank = 1;
+				$results = $sql->runLoop($db, function(&$results, $row) use ( &$rank ) {
+					$results[$row->cl_to] = $rank;
+					$rank++;
 				});
 				
-				if ( isset( $results['rank'] ) ) {
-					unset( $results['rank'] );
-				}
-
 				return $results;
 			}
 		);
