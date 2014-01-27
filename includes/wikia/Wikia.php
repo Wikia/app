@@ -48,6 +48,12 @@ $wgHooks['UserLoadFromDatabase']     [] = "Wikia::onUserLoadFromDatabase";
 $wgHooks['AfterSetupLocalFileRepo']  [] = "Wikia::onAfterSetupLocalFileRepo";
 $wgHooks['BeforeRenderTimeline']     [] = "Wikia::onBeforeRenderTimeline";
 
+# send ETag response header - BAC-1227
+$wgHooks['ParserCacheGetETag']       [] = 'Wikia::onParserCacheGetETag';
+
+# Add X-Served-By and X-Backend-Response-Time response headers - BAC-550
+$wgHooks['BeforeSendCacheControl']   [] = 'Wikia::onBeforeSendCacheControl';
+
 /**
  * This class have only static methods so they can be used anywhere
  *
@@ -2165,6 +2171,44 @@ class Wikia {
 	static function onOutputPageFavicon(&$favicon) {
 		$cb = SassUtil::getCacheBuster();
 		$favicon = wfReplaceImageServer($favicon, $cb);
+
+		return true;
+	}
+
+	/**
+	 * Send ETag header with article's last modidication timestamp and cache buster
+	 *
+	 * See BAC-1227 for details
+	 *
+	 * @param WikiPage $article
+	 * @param ParserOptions $popts
+	 * @param $eTag
+	 * @author macbre
+	 */
+	static function onParserCacheGetETag(Article $article, ParserOptions $popts, &$eTag) {
+		global $wgStyleVersion;
+		$eTag = sprintf( '%s-%s', $article->getTouched(), $wgStyleVersion );
+		return true;
+	}
+
+	/**
+	 * Add X-Served-By and X-Backend-Response-Time response headers
+	 *
+	 * See BAC-550 for details
+	 *
+	 * @param OutputPage $out
+	 * @param Skin $sk
+	 * @return bool
+	 * @author macbre
+	 */
+	static function onBeforeSendCacheControl(OutputPage $out) {
+		global $wgRequestTime;
+
+		$response = $out->getRequest()->response();
+		$elapsed = microtime( true ) - $wgRequestTime;
+
+		$response->header( sprintf( 'X-Served-By:%s', wfHostname() ) );
+		$response->header( sprintf( 'X-Backend-Response-Time:%01.3f', $elapsed ) );
 
 		return true;
 	}
