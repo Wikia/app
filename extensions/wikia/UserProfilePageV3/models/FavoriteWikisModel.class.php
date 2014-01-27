@@ -19,6 +19,9 @@ class FavoriteWikisModel extends WikiaModel {
 	 */
 	const PAGE_WIKIA_PROPS_PROPNAME = 10;
 
+	/**
+	 * @param User $user
+	 */
 	public function __construct( User $user ) {
 		$this->app = F::app();
 		$this->user = $user;
@@ -27,7 +30,7 @@ class FavoriteWikisModel extends WikiaModel {
 	/**
 	 * @brief Gets top wikis from DB for devboxes from method UserIdentityBox::getTestData()
 	 *
-	 * @param Integer $limit how many wikis data should be returned?
+	 * @param Integer|null $limit
 	 *
 	 * @return array
 	 */
@@ -230,7 +233,7 @@ class FavoriteWikisModel extends WikiaModel {
 	}
 
 	/**
-	 * @brief Gets test data for devboxes
+	 * @param Integer $limit
 	 *
 	 * @return array
 	 */
@@ -313,6 +316,9 @@ class FavoriteWikisModel extends WikiaModel {
 
 	/**
 	 * @brief auxiliary method for getting hidden pages/wikis from db
+	 *
+	 * @param DatabaseBase $dbHandler
+	 *
 	 * @author ADi
 	 * @return array
 	 */
