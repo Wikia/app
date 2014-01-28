@@ -17,8 +17,15 @@ var SpecialVideos = {
 	initDropdown: function() {
 		$('.WikiaDropdown').wikiaDropdown({
 			onChange: function(e, $target) {
-				var sort = $target.data( 'sort' );
-				( new Wikia.Querystring() ).setVal( 'sort', sort ).goTo();
+				var sort = $target.data( 'sort' ),
+					category = $target.data( 'category' ),
+					qs = new Wikia.Querystring();
+
+				qs.setVal( 'sort', sort );
+				if( category ) {
+					qs.setVal( 'category', category );
+				}
+				qs.goTo();
 			}
 		});
 	},
