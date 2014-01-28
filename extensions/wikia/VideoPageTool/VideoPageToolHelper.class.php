@@ -173,6 +173,7 @@ class VideoPageToolHelper extends WikiaModel {
 	}
 
 	/**
+	 * Get a count of the videos in the given category
 	 * @param Title $categoryTitle
 	 * @return int
 	 */
@@ -180,7 +181,7 @@ class VideoPageToolHelper extends WikiaModel {
 		wfProfileIn( __METHOD__ );
 
 		$categoryKey = $categoryTitle->getDBkey();
-		$memcKey = $this->getMemcKeyVideosByCategory( $categoryKey );
+		$memcKey = $this->getMemcKeyCountVideosByCategory( $categoryKey );
 		$db = wfGetDB( DB_SLAVE );
 
 		$count = (new WikiaSQL())->cache( self::CACHE_TTL_CATEGORY_DATA, $memcKey )
@@ -263,13 +264,23 @@ class VideoPageToolHelper extends WikiaModel {
 	}
 
 	/**
+ * Get memcache key for videos by category
+ * @param $categoryName
+ * @return string
+ */
+	public function getMemcKeyVideosByCategory( $categoryName ) {
+		$categoryName = md5( $categoryName );
+		return wfMemcKey( 'videopagetool', 'videosbycategory', $categoryName );
+	}
+
+	/**
 	 * Get memcache key for videos by category
 	 * @param $categoryName
 	 * @return string
 	 */
-	public function getMemcKeyVideosByCategory( $categoryName ) {
+	public function getMemcKeyCountVideosByCategory( $categoryName ) {
 		$categoryName = md5( $categoryName );
-		return wfMemcKey( 'videopagetool', 'videosbycategory', $categoryName );
+		return wfMemcKey( 'videopagetool', 'count-videos-by-category', $categoryName );
 	}
 
 	/**
@@ -277,6 +288,7 @@ class VideoPageToolHelper extends WikiaModel {
 	 */
 	public function invalidateCacheVideosByCategory( $categoryName ) {
 		$this->wg->Memc->delete( $this->getMemcKeyVideosByCategory( $categoryName ) );
+		$this->wg->Memc->delete( $this->getMemcKeyCountVideosByCategory( $categoryName ) );
 	}
 
 	/**
