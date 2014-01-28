@@ -135,7 +135,7 @@ class VideoPageToolProgram extends WikiaModel {
 	 * Given a language, finds the program object nearest (or equal to) to the date (default = today's date)
 	 * @param string $lang
 	 * @param string $date [timestamp]
-	 * @return object|null $program
+	 * @return VideoPageToolProgram|null $program
 	 */
 	public static function loadProgramNearestDate( $lang, $date = '' ) {
 		wfProfileIn( __METHOD__ );
@@ -243,7 +243,7 @@ class VideoPageToolProgram extends WikiaModel {
 	 * Get program object from language and publish date
 	 * @param string $language
 	 * @param integer $publishDate
-	 * @return object $program
+	 * @return VideoPageToolProgram
 	 */
 	public static function newProgram( $language, $publishDate ) {
 		wfProfileIn( __METHOD__ );
@@ -272,7 +272,7 @@ class VideoPageToolProgram extends WikiaModel {
  	/**
 	 * Get program object from a row from table
 	 * @param array $row
-	 * @return array $program
+	 * @return VideoPageToolProgram
 	 */
 	public static function newFromRow( $row ) {
 		$program = new self();
@@ -282,6 +282,7 @@ class VideoPageToolProgram extends WikiaModel {
 
 	/**
 	 * Load data from database
+	 * @return boolean
 	 */
 	protected function loadFromDatabase() {
 		wfProfileIn( __METHOD__ );
@@ -431,7 +432,7 @@ class VideoPageToolProgram extends WikiaModel {
 	/**
 	 * Clear all program caches
 	 */
-	protected function invalidateCache() {
+	public function invalidateCache() {
 		$this->invalidateCacheCompletedSections();
 		$this->invalidateCachePrograms( $this->language );
 		$this->invalidateNearestDate( $this->language );
@@ -440,7 +441,7 @@ class VideoPageToolProgram extends WikiaModel {
 
 	/**
 	 * Publish program
-	 * @return Status $status
+	 * @return Status
 	 */
 	public function publishProgram() {
 		$this->setIsPublished( true );
@@ -459,7 +460,7 @@ class VideoPageToolProgram extends WikiaModel {
 
 	/**
 	 * Unpublish program
-	 * @return Status $status
+	 * @return Status
 	 */
 	public function unpublishProgram() {
 		$this->setIsPublished( false );
@@ -479,7 +480,7 @@ class VideoPageToolProgram extends WikiaModel {
 	 * Get the list of programs for the month starting at $startDate
 	 * @param string $language
 	 * @param string $startDate [yyyy-mm-dd]
-	 * @return array $programs [array( date => status ); date = yyyy-mm-dd; status = 0 (not published)/ 1 (published)]
+	 * @return array [array( date => status ); date = yyyy-mm-dd; status = 0 (not published)/ 1 (published)]
 	 */
 	public static function getProgramsForMonth( $language, $startDate ) {
 		wfProfileIn( __METHOD__ );
@@ -488,7 +489,7 @@ class VideoPageToolProgram extends WikiaModel {
 
 		$memKey = self::getMemcKeyPrograms( $language, $startDate );
 		$programs = $app->wg->Memc->get( $memKey );
-		if ( empty( $programs )) {
+		if ( empty( $programs ) ) {
 			$db = wfGetDB( DB_SLAVE );
 
 			$result = $db->select(
@@ -529,7 +530,7 @@ class VideoPageToolProgram extends WikiaModel {
 	/**
 	 * Clear cache for programs
 	 * @param string $language
-	 * @param string $startDate [yyyy-mm-dd]
+	 * @param string [yyyy-mm-dd]
 	 */
 	protected function invalidateCachePrograms( $language, $startDate = '' ) {
 		if ( empty( $startDate ) ) {
@@ -542,7 +543,7 @@ class VideoPageToolProgram extends WikiaModel {
 	/**
 	 * Get assets by section
 	 * @param string $section
-	 * @return array $assets
+	 * @return array
 	 */
 	public function getAssetsBySection( $section ) {
 		$assets = array();
@@ -592,18 +593,25 @@ class VideoPageToolProgram extends WikiaModel {
 		$assetList = array();
 		foreach ( $assets as $order => $asset ) {
 			$assetObj = VideoPageToolAsset::newAsset( $this->programId, $section, $order );
-			$assetObj->setData( $asset );
-			$assetObj->setUpdatedAt( $time );
-			$assetObj->setUpdatedBy( $userId );
+			if ( empty( $asset ) ) {
+				$status = $assetObj->remove();
+			} else {
+				$assetObj->setData( $asset );
+				$assetObj->setUpdatedAt( $time );
+				$assetObj->setUpdatedBy( $userId );
 
-			$status = $assetObj->save();
+				$status = $assetObj->save();
+			}
+
 			if ( !$status->isGood() ) {
 				$db->rollback();
 				wfProfileOut( __METHOD__ );
 				return $status;
 			}
 
-			$assetList[$order] = $assetObj;
+			if ( !empty( $asset ) ) {
+				$assetList[$order] = $assetObj;
+			}
 		}
 
 		$db->commit();
@@ -627,7 +635,7 @@ class VideoPageToolProgram extends WikiaModel {
 	 * @param integer $requiredRows
 	 * @param array $formValues
 	 * @param string $errMsg
-	 * @return array $data
+	 * @return array
 	 */
 	public function formatFormData( $section, $requiredRows, $formValues, &$errMsg ) {
 		$className = VideoPageToolAsset::getClassNameFromSection( $section );
@@ -649,7 +657,7 @@ class VideoPageToolProgram extends WikiaModel {
 	/**
 	 * Get list of completed sections
 	 * @param array $sections - required sections
-	 * @return array $list - completed sections
+	 * @return array - completed sections
 	 */
 	public function getCompletedSections( $sections ) {
 		wfProfileIn( __METHOD__ );
@@ -660,15 +668,14 @@ class VideoPageToolProgram extends WikiaModel {
 			$db = wfGetDB( DB_SLAVE );
 
 			$result = $db->select(
-				array( 'vpt_program', 'vpt_asset' ),
+				array( 'vpt_asset' ),
 				array( 'distinct section' ),
 				array(
-					'vpt_program.program_id' => $this->programId,
+					'vpt_asset.program_id' => $this->programId,
 					'vpt_asset.section' => $sections,
 				),
 				__METHOD__,
-				array( 'ORDER BY' => 'section' ),
-				array( 'vpt_asset' => array( 'JOIN', 'vpt_asset.program_id = vpt_program.program_id' ) )
+				array( 'ORDER BY' => 'section' )
 			);
 
 			$list = array();

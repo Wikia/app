@@ -32,9 +32,10 @@ class SpecialVideosHelper extends WikiaModel {
 	 * @param string $sort [recent/popular/trend]
 	 * @param integer $page
 	 * @param array $providers
+	 * @param string $category
 	 * @return array $videos
 	 */
-	public function getVideos( $sort, $page, $providers = array() ) {
+	public function getVideos( $sort, $page, $providers = array(), $category = '' ) {
 		wfProfileIn( __METHOD__ );
 
 		if ( $sort == 'premium' ) {
@@ -45,7 +46,7 @@ class SpecialVideosHelper extends WikiaModel {
 		}
 
 		$mediaService = new MediaQueryService();
-		$videoList = $mediaService->getVideoList( $sort, $filter, self::VIDEOS_PER_PAGE, $page, $providers );
+		$videoList = $mediaService->getVideoList( $sort, $filter, self::VIDEOS_PER_PAGE, $page, $providers, $category );
 
 		$videos = array();
 		$helper = new VideoHandlerHelper();

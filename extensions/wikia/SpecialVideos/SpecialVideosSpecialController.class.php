@@ -65,6 +65,7 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 		// Sorting/filtering dropdown values
 		$sort = $this->request->getVal( 'sort', 'trend' );
 		$page = $this->request->getVal( 'page', 1 );
+		$category = $this->request->getVal( 'category' );
 
 		// Add GlobalNotification message after adding a new video. We can abstract this later if we want to add more types of messages
 		$msg = $this->request->getVal( 'msg', '');
@@ -89,7 +90,7 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 		$providers = $providers ? explode(',', $providers) : null;
 
 		$specialVideos = new SpecialVideosHelper();
-		$videos = $specialVideos->getVideos( $sort, $page, $providers );
+		$videos = $specialVideos->getVideos( $sort, $page, $providers, $category );
 
 		$mediaService = new MediaQueryService();
 		if ( $sort == 'premium' ) {

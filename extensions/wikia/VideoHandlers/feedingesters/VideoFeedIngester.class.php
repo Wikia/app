@@ -306,6 +306,7 @@ abstract class VideoFeedIngester {
 				$fullUrl = WikiFactory::getLocalEnvURL($uploadedTitle->getFullURL());
 				print "Ingested {$uploadedTitle->getText()} from partner clip id $id. {$fullUrl}\n\n";
 				wfWaitForSlaves(self::THROTTLE_INTERVAL);
+				wfRunHooks( 'VideoIngestionComplete', array( $uploadedTitle, $categories ) );
 				wfProfileOut( __METHOD__ );
 				return 1;
 			}
