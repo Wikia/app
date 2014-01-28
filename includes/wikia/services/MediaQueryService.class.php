@@ -406,7 +406,9 @@ class MediaQueryService extends WikiaService {
 		});
 
 		wfProfileOut( __METHOD__ );
-		return $videoList;
+
+		// Make sure we're returning an array
+		return empty( $videoList ) ? [] : $videoList;
 	}
 
 	/**
