@@ -239,12 +239,13 @@
 	a.external, a[href^="gopher://"] {
 		&:after {
 			background-image: url(/skins/oasis/images/sprite.png);	/* $wgCdnStylePath */
-			background-position: top right;
+			background-position: -1198px 0;
 			background-repeat: no-repeat;
 			content: "";
 			display: inline-block;
 			height: 16px;
-			padding: 0px 3px 0 0;
+			margin-left: 3px;
+			padding: 0;
 			vertical-align: text-top;
 			width: 10px;
 		}
