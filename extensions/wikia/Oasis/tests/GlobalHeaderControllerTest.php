@@ -189,6 +189,7 @@ class GlobalHeaderControllerTest extends WikiaBaseTest
 	}
 	
 	/**
+	 * @group UsingDB
 	 * @covers GlobalHeaderController::index
 	 */
 	public function testIndexAlternateLink() {

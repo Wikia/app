@@ -50,6 +50,7 @@ class AvatarServiceTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @group UsingDB
 	 * @dataProvider getAvatarUrlDataProvider
 	 */
 	public function testGetAvatarUrl($url, $userName, $userId, $avatarSize) {

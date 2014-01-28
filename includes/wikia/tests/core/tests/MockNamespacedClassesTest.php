@@ -4,6 +4,9 @@ namespace {
 
 	class MockNamespacedClassesTest extends WikiaBaseTest {
 
+		/**
+		 * @group UsingDB
+		 */
 		public function testConstructorMocks() {
 			$fakeObject = new stdClass;
 

@@ -59,6 +59,7 @@ class JsonFormatTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @group UsingDB
 	 * @dataProvider ContentProvider
 	 */
 	public function testContentMatching( $wikiText, $expectedContent ) {
@@ -70,6 +71,7 @@ class JsonFormatTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @group UsingDB
 	 * @dataProvider ContentProvider
 	 */
 	public function testContentMatchingWithLazyLoad( $wikiText, $expectedContent ) {
