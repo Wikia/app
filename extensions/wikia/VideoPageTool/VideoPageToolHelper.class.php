@@ -200,8 +200,8 @@ class VideoPageToolHelper extends WikiaModel {
 
 			->SELECT('page_id')->FIELD('page_title')
 			->FROM( 'page' )
-				->LEFT_JOIN( 'video_info' )->ON( 'page_title = video_title' )
-				->JOIN( 'categorylinks' )->ON( 'cl_from = page_id' )
+				->LEFT_JOIN( 'video_info' )->ON( 'page_title', 'video_title' )
+				->JOIN( 'categorylinks' )->ON( 'cl_from', 'page_id' )
 			->WHERE( 'cl_to' )->EQUAL_TO( $dbKey )
 			->AND_( 'page_namespace' )->EQUAL_TO( NS_FILE )
 			->ORDER_BY( 'added_at ')->DESC()
@@ -216,20 +216,22 @@ class VideoPageToolHelper extends WikiaModel {
 				$file = WikiaFileHelper::getVideoFileFromTitle( $title );
 
 				if ( !empty( $file ) ) {
-					$thumb = $file->transform( array( 'width'  => self::THUMBNAIL_CATEGORY_WIDTH,
-													  'height' => self::THUMBNAIL_CATEGORY_HEIGHT ) );
+					$thumb = $file->transform( [
+						'width'  => self::THUMBNAIL_CATEGORY_WIDTH,
+						'height' => self::THUMBNAIL_CATEGORY_HEIGHT
+					] );
 					$videoThumb = $thumb->toHtml( $thumbOptions );
-					$videos[] = array(
+					$videos[] = [
 						'title' => $title->getText(),
 						'url'   => $title->getFullURL(),
 						'thumb' => $videoThumb,
-					);
+					];
 				}
 			});
 
 		wfProfileOut( __METHOD__ );
 
-		return $videos;
+		return empty($videos) ? [] : $videos;
 	}
 
 	/**
