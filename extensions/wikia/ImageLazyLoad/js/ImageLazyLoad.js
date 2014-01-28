@@ -13,11 +13,13 @@ $(function() {
 
 		init: function() {
 			var self = this,
-				throttled;
+				throttled,
+				proxy = $.proxy(self.checkAndLoad, self);
 			self.createCache();
 			self.checkAndLoad();
-			throttled = $.throttle( 250, $.proxy( self.checkAndLoad, self ) );
+			throttled = $.throttle( 250, proxy );
 			$( window ).on( 'scroll', throttled );
+			$(document).on('tablesorter_sortComplete', proxy);
 		},
 
 		createCache: function() {
