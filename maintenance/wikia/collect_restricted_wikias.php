@@ -3,9 +3,9 @@
 ini_set( "include_path", dirname(__FILE__)."/../" );
 require_once( 'commandLine.inc' );
 
-class CollectHiddenWikias {
+class CollectRestrictedWikias {
 
-	private static function isHiddenWiki( $value ) {
+	private static function isRestrictedWiki( $value ) {
 		$permissions = WikiFactoryLoader::parsePermissionsSettings( $value );
 		if (
 			isset( $permissions['*'] ) &&
@@ -30,18 +30,18 @@ class CollectHiddenWikias {
 
 		$res = $dbr->query( $sql, __FUNCTION__ );
 		$count = $dbr->numRows ( $res );
-		$hiddenWikis = array();
+		$restrictedWikis = array();
 		$i = 0;
 		while ( $row = $dbr->fetchRow( $res ) ) {
-			if ( self::isHiddenWiki( $row['cv_value'] ) ) {
-				$hiddenWikis[] = (int)$row['cv_city_id'];
+			if ( self::isRestrictedWiki( $row['cv_value'] ) ) {
+				$restrictedWikis[] = (int)$row['cv_city_id'];
 			}
 			if ($i % 1000 == 0) {
 				echo $i.'/'.$count.PHP_EOL;
 			}
 			$i++;
 		}
-		UserProfilePageHelper::saveRestrictedWikisDB( $hiddenWikis );
+		UserProfilePageHelper::saveRestrictedWikisDB( $restrictedWikis );
 	}
 }
-CollectHiddenWikias::collect();
+CollectRestrictedWikias::collect();
