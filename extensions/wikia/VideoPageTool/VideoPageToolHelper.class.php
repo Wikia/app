@@ -173,6 +173,36 @@ class VideoPageToolHelper extends WikiaModel {
 	}
 
 	/**
+	 * @param Title $categoryTitle
+	 * @return int
+	 */
+	public function countVideosByCategory( Title $categoryTitle ) {
+		wfProfileIn( __METHOD__ );
+
+		$categoryKey = $categoryTitle->getDBkey();
+		$memcKey = $this->getMemcKeyVideosByCategory( $categoryKey );
+		$db = wfGetDB( DB_SLAVE );
+
+		$count = (new WikiaSQL())->cache( self::CACHE_TTL_CATEGORY_DATA, $memcKey )
+			->SELECT( 'count(*)' )->AS_( 'count' )
+			->FROM( 'page' )
+				->LEFT_JOIN( 'video_info' )->ON( 'page_title', 'video_title' )
+				->JOIN( 'categorylinks' )->ON( 'cl_from', 'page_id' )
+			->WHERE( 'cl_to' )->EQUAL_TO( $categoryKey )
+			->AND_( 'page_namespace' )->EQUAL_TO( NS_FILE )
+			->run( $db, function( $result ) {
+				/** @var ResultWrapper $result */
+				$row = $result->fetchObject();
+				$count = empty($row) ? 0 : $row->count;
+				return $count;
+			});
+
+		wfProfileOut( __METHOD__ );
+
+		return $count;
+	}
+
+	/**
 	 * Get videos tagged with the category given by parameter $categoryTitle (limit = 100)
 	 * @param Title $categoryTitle
 	 * @param array $thumbOptions
@@ -181,7 +211,7 @@ class VideoPageToolHelper extends WikiaModel {
 	 *     url   => 'http://url.to.video',
 	 *     thumb => '<thumbnail_html_snippet>'
 	 */
-	public function getVideosByCategory( $categoryTitle, $thumbOptions = array() ) {
+	public function getVideosByCategory( Title $categoryTitle, $thumbOptions = array() ) {
 		wfProfileIn( __METHOD__ );
 
 		$dbKey = $categoryTitle->getDBkey();
