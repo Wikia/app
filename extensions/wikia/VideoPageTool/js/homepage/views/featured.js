@@ -36,6 +36,8 @@ define( 'videohomepage.views.featured', [
 			},
 
 			initialize: function( opts ) {
+				_.bindAll( this, 'reloadVideo' );
+
 				this.$bxSlider = opts.$bxSlider;
 				this.$thumbs = opts.$thumbs;
 
@@ -57,7 +59,8 @@ define( 'videohomepage.views.featured', [
 				this.timeout = 0;
 				this.initSlider();
 
-				$( window ).on( 'resize', _.bind( this.collection.resetEmbedData, this.collection ) );
+				$( window ).on( 'resize', _.bind( this.collection.resetEmbedData, this.collection ) )
+					.on( 'lightboxOpened', this.reloadVideo );
 			},
 
 			render: function() {
@@ -253,6 +256,12 @@ define( 'videohomepage.views.featured', [
 						value: this.videoPlays++
 				} );
 			},
+
+		reloadVideo: function() {
+			if( this.videoInstance ) {
+				this.videoInstance.reload();
+			}
+		},
 
 			/*
 			 * @desc Get video data if we don't have it already or if the window
