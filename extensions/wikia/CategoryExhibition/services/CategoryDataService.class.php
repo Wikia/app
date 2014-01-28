@@ -29,6 +29,7 @@ class CategoryDataService extends Service {
 
 		$result = self::tableFromResult( $res );
 
+		wfProfileOut( __METHOD__ );
 		return $result;
 	}
 
@@ -76,7 +77,6 @@ class CategoryDataService extends Service {
 		});
 
 		wfProfileOut( __METHOD__ );
-
 		return $count;
 	}
 
@@ -119,9 +119,11 @@ class CategoryDataService extends Service {
 	 */
 	public static function getMostVisited( $sCategoryDBKey, $mNamespace = null, $limit = false, $negative = false ) {
 		global $wgCityId, $wgStatsDBEnabled;
+		wfProfileIn( __METHOD__ );
 
 		if ( empty( $wgStatsDBEnabled ) ) {
 			Wikia::log(__METHOD__, ' Stats DB is disabled');
+			wfProfileOut( __METHOD__ );
 			return array();
 		}
 
@@ -175,6 +177,8 @@ class CategoryDataService extends Service {
 						$aResult[ $key ] = array( 'page_id' => $key );
 						if ( !empty( $limit ) && $aResultCount >= $limit ) {
 							self::logProcessingTime($time);
+
+							wfProfileOut( __METHOD__ );
 							return $aResult;
 						}
 					}
@@ -191,10 +195,12 @@ class CategoryDataService extends Service {
 				return $ret;
 			} else {
 				Wikia::log(__METHOD__, 'No data at all. Quitting.');
+				wfProfileOut( __METHOD__ );
 				return array();
 			}
 		} else {
 			Wikia::log(__METHOD__, ' No articles in category found - quitting');
+			wfProfileOut( __METHOD__ );
 			return array();
 		}
 	}
