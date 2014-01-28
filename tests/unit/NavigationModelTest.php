@@ -175,6 +175,9 @@ class NavigationModelTest extends WikiaBaseTest {
 		));
 	}
 
+	/**
+	 * @group UsingDB
+	 */
 	function testParseOneLine() {
 		$model = new NavigationModel();
 
@@ -310,6 +313,9 @@ class NavigationModelTest extends WikiaBaseTest {
 
 	}
 
+	/**
+	 * @group UsingDB
+	 */
 	function testParseText() {
 		$model = new NavigationModel();
 
