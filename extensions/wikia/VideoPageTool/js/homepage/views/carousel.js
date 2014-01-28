@@ -20,7 +20,8 @@ define( 'videohomepage.views.carousel', [
 			if ( this.collection.length ) {
 				this.collection.add( {
 					count: 8238,
-					link: '<a href="#">See more videos</a>',
+					label: 'See more blah',
+					link: '/wiki/Special:Something',
 					type: 'redirect'
 				} );
 			}
