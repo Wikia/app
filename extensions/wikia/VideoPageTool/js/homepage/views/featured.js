@@ -133,7 +133,7 @@ define( 'videohomepage.views.featured', [
 		},
 
 		onSlideAfter: function( $slide, oldIndex, newIndex ) {
-			if( this.isVideoSlider ) {
+			if ( this.isVideoSlider ) {
 				this.playVideo( this.slides[ newIndex ] );
 			}
 		},
@@ -164,7 +164,7 @@ define( 'videohomepage.views.featured', [
 			$thumb =  $( e.target );
 			index = $thumb.closest( 'li' ).index();
 
-			if( !$thumb.hasClass( 'playing' ) ) {
+			if ( !$thumb.hasClass( 'playing' ) ) {
 				if ( !this.isVideoSlider ) {
 					this.switchToVideoSlider();
 				}
@@ -175,7 +175,7 @@ define( 'videohomepage.views.featured', [
 						label: 'featured-thumbnail'
 				} );
 
-				if( this.slider.getCurrentSlide() === index ) {
+				if ( this.slider.getCurrentSlide() === index ) {
 					// play the video
 					this.playVideo( this.slides[ index ] );
 
@@ -225,7 +225,7 @@ define( 'videohomepage.views.featured', [
 				model = this.collection.at( slide.idx );
 
 			// Stop the video that's playing
-			if( this.videoInstance ) {
+			if ( this.videoInstance ) {
 				this.videoInstance.destroy();
 			}
 
@@ -233,7 +233,7 @@ define( 'videohomepage.views.featured', [
 			slide.$videoThumb.addClass( 'playing' );
 
 			$.when( data ).done( function( json ) {
-				if( json.error ) {
+				if ( json.error ) {
 					window.GlobalNotification.show( json.error, 'error', null, 4000 );
 				} else {
 					// cache embed data
@@ -260,7 +260,7 @@ define( 'videohomepage.views.featured', [
 		},
 
 		reloadVideo: function() {
-			if( this.videoInstance ) {
+			if ( this.videoInstance ) {
 				this.videoInstance.reload();
 			}
 		},
@@ -277,7 +277,7 @@ define( 'videohomepage.views.featured', [
 
 			model = this.collection.at( slide.idx );
 
-			if( model.get( 'embedData' ) === null ) {
+			if ( model.get( 'embedData' ) === null ) {
 				// Get video embed data for this slide
 				data = Nirvana.sendRequest( {
 					controller: 'VideoHandler',
