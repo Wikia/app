@@ -1141,6 +1141,7 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 	}
 
 	/**
+	 * @group UsingDB
 	 * @covers WikiaSearchController::advancedBox
 	 */
 	public function testAdvancedBox() {
