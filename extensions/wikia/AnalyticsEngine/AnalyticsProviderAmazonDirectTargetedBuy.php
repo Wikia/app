@@ -34,9 +34,7 @@ SCRIPT;
 
 
 	public function getSetupHtml($params = array()) {
-		global
-			$wgAmazonDirectTargetedBuyCountries,
-			$wgAmazonDirectTargetedBuyCountriesDefault;
+		global $wgAmazonDirectTargetedBuyCountries, $wgAmazonDirectTargetedBuyCountriesDefault;
 
 		static $called = false;
 		$code = '';
