@@ -21,7 +21,6 @@ class UserIdentityBox {
 	const USER_GENDER_CHAR_LIMIT = 200;
 
 	private $user = null;
-	private $app = null;
 	private $title = null;
 	private $favWikisModel = null;
 
@@ -46,7 +45,7 @@ class UserIdentityBox {
 
 		$this->user = $user;
 		$this->title = $wgTitle;
-		$this->favWikisModel = new FavoriteWikisModel( $this->user );
+		$this->favWikisModel = $this->getFavoriteWikisModel();
 
 		if ( is_null( $this->title ) ) {
 			$this->title = $this->user->getUserPage();
@@ -578,7 +577,7 @@ class UserIdentityBox {
 	 * @return array
 	 */
 	public function getTopWikis( $refreshHidden = false ) {
-		return $this->favWikisModel->getTopWikis( $refreshHidden );
+		return $this->getFavoriteWikisModel()->getTopWikis( $refreshHidden );
 	}
 
 	/**
@@ -587,7 +586,7 @@ class UserIdentityBox {
 	 * @param $wikiId
 	 */
 	public function addTopWiki( $wikiId ) {
-		$this->favWikisModel->addTopWiki( $wikiId );
+		$this->getFavoriteWikisModel()->addTopWiki( $wikiId );
 	}
 
 	/**
@@ -600,7 +599,7 @@ class UserIdentityBox {
 	public function hideWiki( $wikiId ) {
 		global $wgMemc;
 
-		$result = $this->favWikisModel->hideWiki( $wikiId );
+		$result = $this->getFavoriteWikisModel()->hideWiki( $wikiId );
 
 		if( $result ) {
 			$memcData = $wgMemc->get( $this->getMemcUserIdentityDataKey() );
@@ -609,6 +608,14 @@ class UserIdentityBox {
 		}
 
 		return $result;
+	}
+
+	public function getFavoriteWikisModel() {
+		if( is_null( $this->favWikisModel ) ) {
+			$this->favWikisModel = new FavoriteWikisModel( $this->user );
+		}
+
+		return $this->favWikisModel;
 	}
 
 }

@@ -132,26 +132,53 @@ class UserIdentityBoxTest extends WikiaBaseTest {
 	public function doParserFilterDataProvider() {
 		return array(
 			array(
-                'string',
+				'string',
 				'string'
 			),
 			array(
-                ' :D',
+				' :D',
 				':D'
 			),
 			array(
-                '*** :D ***',
+				'*** :D ***',
 				'*** :D ***'
 			),
 			array(
-                'http://domain.com/%20',
+				'http://domain.com/%20',
 				'http://domain.com/%20'
 			),
 			array(
-                '[http://www.example.com link title]',
+				'[http://www.example.com link title]',
 				'link title'
 			)
 		);
+	}
+
+	/**
+	 * @desc Tests if UserIdentityBox::getTopWikis delegates pulling wikis to FavoriteWikisModel
+	 */
+	public function testGetTopWikis() {
+		$userMock = $this->getMock( 'User' );
+
+		$favoriteWikisModelMock = $this->getMock(
+			'FavoriteWikisModel',
+			[ 'getTopWikis' ],
+			[ $userMock ]
+		);
+
+		$userIdentityBoxMock = $this->getMock(
+			'UserIdentityBox',
+			[ 'getFavoriteWikisModel' ],
+			[ $userMock ],
+			'',
+			false
+		);
+		$userIdentityBoxMock->expects( $this->once() )
+			->method( 'getFavoriteWikisModel' )
+			->will( $this->returnValue( $favoriteWikisModelMock ) );
+
+		/** @var UserIdentityBox $userIdentityBoxMock */
+		$userIdentityBoxMock->getTopWikis();
 	}
 
 }
