@@ -39,6 +39,14 @@ function wfAntiSpamInputInit () {
 	$wgHooks['RequestWiki::showRequestForm:presubmit'][] = 'wfAntiSpamInputBoxInclusion' ;
 	$wgHooks['RequestWiki::processErrors'][] = 'wfAntiSpamInputCheck' ;
 
+	#Special:SignUp
+	$wgHooks['UserCreateForm'][] = 'wfAntiSpamInputBoxInclusion' ;
+	$wgHooks['AddNewAccount'][] = 'wfAntiSpamInputCheck' ;
+
+	#Special:Login
+	$wgHooks['UserLoginForm'][] = 'wfAntiSpamInputBoxInclusion' ;
+	$wgHooks['UserLoginComplete'][] = 'wfAntiSpamInputCheck' ;
+
 	# Special:CreatePage
 	$wgHooks['CreatePageMultiEditor::GenerateForm:presubmit'][] = 'wfAntiSpamInputBoxInclusion' ;
 	# wfAntiSpamInputCheck for CreatePage is handled by EditPage::attemptSave hook above
