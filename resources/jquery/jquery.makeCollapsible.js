@@ -81,7 +81,7 @@
 							if ( $( this ).children( 'td' ).length ) {
 								return;
 							}
-							
+
 							$containers.splice( i, 1 );
 						} );
 					}					
