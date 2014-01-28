@@ -72,7 +72,7 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 				$clipData['published'] = empty( $video['metadata']['published'] ) ? '' : strtotime( $video['metadata']['published'] );
 				$clipData['name'] = empty( $video['metadata']['name'] ) ? '' : $video['metadata']['name'];
 				$clipData['type'] = empty( $video['metadata']['type'] ) ? '' : $video['metadata']['type'];
-				$clipData['category'] = empty( $video['metadata']['category'] ) ? '' : $video['metadata']['category'];
+				$clipData['category'] = empty( $video['metadata']['category'] ) ? '' : $this->getCategory( $video['metadata']['category'] );
 				$clipData['keywords'] = empty( $video['metadata']['keywords'] ) ? '' : $video['metadata']['keywords'];
 				$clipData['description'] = trim( $video['description'] );
 
@@ -157,11 +157,12 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 		wfProfileIn( __METHOD__ );
 
 		if ( !empty( $data['name'] ) ) {
-			$categories += array_map( 'trim', explode( ',', $data['name'] ) );
+			$categories = array_merge( $categories, array_map( 'trim', explode( ',', $data['name'] ) ) );
 		}
 
 		if ( !empty( $data['pageCategories'] ) ) {
-			$categories += array_map( 'trim', explode( ',', $data['pageCategories'] ) );
+			$stdCateogories = array_map( array( $this ,'getStdPageCategory' ), explode( ',', $data['pageCategories'] ) );
+			$categories = array_merge( $categories, $stdCateogories );
 		}
 
 		// remove 'the' category
@@ -173,6 +174,8 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 		if ( !empty( $data['categoryName'] ) ) {
 			$categories[] = $data['categoryName'];
 		}
+
+		$categories = array_merge( $categories, $this->getAdditionalPageCategories( $categories ) );
 
 		$categories[] = 'Ooyala';
 
