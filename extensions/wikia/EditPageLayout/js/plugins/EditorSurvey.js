@@ -6,13 +6,13 @@
 
 		init: function() {
 			if ( EditorSurvey ) {
-				EditorSurvey.unload( true, 'ck-fail' );
+				EditorSurvey.bindUnload( 'ck-fail' );
 				this.editor.on('state', this.proxy(this.stateChanged));
 			}
 		},
 		stateChanged: function( editor, state ) {
 			if ( state == editor.states.SAVING ) {
-				EditorSurvey.unload( false );
+				EditorSurvey.unbindUnload();
 				EditorSurvey.set( 'ck-success' );
 			}
 		}

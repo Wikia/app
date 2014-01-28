@@ -2,10 +2,10 @@
 	var EditorSurvey = {
 		init: function() {
 			mw.hook( 've.activationComplete' ).add( function() {
-				EditorSurvey.unload( true, 've-fail' );
+				EditorSurvey.bindUnload( 've-fail' );
 			} );
 			mw.hook( 'postEdit' ).add( function() {
-				EditorSurvey.unload( false );
+				EditorSurvey.unbindUnload();
 				EditorSurvey.set( 've-success' );
 			} );
 			mw.hook( 've.deactivationComplete' ).add( function() {
@@ -21,14 +21,14 @@
 			EditorSurvey.getSurvey();
 		},
 
-		unload: function( enable, value ) {
-			if ( enable ) {
-				$( window ).on( 'beforeunload.EditorSurvey', function() {
-					EditorSurvey.set( value );
-				} );
-			} else {
-				$( window ).off( 'beforeunload.EditorSurvey' );
-			}
+		bindUnload: function( value ) {
+			$( window ).on( 'beforeunload.EditorSurvey', function() {
+				EditorSurvey.set( value );
+			} );
+		},
+
+		unbindUnload: function() {
+			$( window ).off( 'beforeunload.EditorSurvey' );
 		},
 
 		getSurvey: function() {
@@ -44,7 +44,7 @@
 						var $modal;
 
 						// Disable setting the fail cookie when the window is unloaded
-						EditorSurvey.unload( false );
+						EditorSurvey.unbindUnload();
 
 						// Don't display for wikis with WAM scores of 100 or lower
 						if ( response.wam_rank <= 100 ) {
@@ -73,7 +73,6 @@
 		},
 
 		set: function( value ) {
-			console.log( 'EditorSurvey setting: ', value );
 			var options = { 'domain': wgCookieDomain };
 
 			// Only set value if modal hasn't been seen.
