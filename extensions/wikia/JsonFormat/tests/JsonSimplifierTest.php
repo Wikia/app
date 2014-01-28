@@ -9,6 +9,10 @@ class JsonSimplifierTest extends WikiaBaseTest {
 	}
 
 
+	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.01676 ms
+	 */
 	public function testProcessList() {
 
 		$mockSimplifier = $this->getMockBuilder( '\Wikia\JsonFormat\JsonFormatSimplifier' )

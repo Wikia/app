@@ -105,6 +105,8 @@ class WikiaHomePageTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.0574 ms
 	 * @dataProvider getHubV2ImagesDataProvider
 	 */
 	public function testGetHubV2Images($mockedImageUrl, $expHubImages) {
@@ -169,6 +171,10 @@ class WikiaHomePageTest extends WikiaBaseTest {
 		);
 	}
 
+	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.053 ms
+	 */
 	public function testGetList() {
 		$this->markTestSkipped('This test needs to be rewritten to serve its purpose');
 		$this->setUpMock();
@@ -305,6 +311,8 @@ TXT;
 	}
 
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.05325 ms
 	 * @dataProvider getWikiAdminAvatarsDataProvider
 	 */
 	public function testGetWikiAdminAvatars($mockWikiId, $mockWikiServiceParam, $mockUserStatsServiceParam, $mockUserParam, $expAdminAvatars) {
@@ -478,6 +486,8 @@ TXT;
 	}
 
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.05289 ms
 	 * @dataProvider getWikiTopEditorAvatarsDataProvider
 	 */
 	public function testGetWikiTopEditorAvatars($mockWikiId, $mockWikiServiceParam, $mockUserParam, $mockAvatarServiceParam, $expTopEditorAvatars) {
@@ -597,6 +607,8 @@ TXT;
 	}
 
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.05252 ms
 	 * @dataProvider getProcessedWikisImgSizesDataProvider
 	 */
 	public function testGetProcessedWikisImgSizes($slotName, $width, $height) {

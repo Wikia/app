@@ -111,6 +111,8 @@ class PhalanxModelTest extends WikiaBaseTest {
 	/* PhalanxContentModel class */
 	/* match_question_title method */
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.04619 ms
 	 * @dataProvider phalanxTitleDataProvider
 	 */
 	public function testPhalanxContentModelQuestionTitle( $title, $block, $language, $result ) {
@@ -126,6 +128,8 @@ class PhalanxModelTest extends WikiaBaseTest {
 	/* PhalanxContentModel class */
 	/* match_summary method */
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.04572 ms
 	 * @dataProvider phalanxContentModelDataProvider
 	 */
 	public function testPhalanxContentModelSummary( $title, $text, $summary, $block_text, $block_summary, $result_text, $result_summary ) {
@@ -141,6 +145,8 @@ class PhalanxModelTest extends WikiaBaseTest {
 	/* PhalanxContentModel class */
 	/* match_content method */
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.04324 ms
 	 * @dataProvider phalanxContentModelDataProvider
 	 */
 	public function testPhalanxContentModelContent( $title, $text, $summary, $block_text, $block_summary, $result_text, $result_summary ) {
@@ -156,6 +162,8 @@ class PhalanxModelTest extends WikiaBaseTest {
 	/* PhalanxContentModel class */
 	/* match_title method */
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.04322 ms
 	 * @dataProvider phalanxTitleDataProvider
 	 */
 	public function testPhalanxContentModelTitle( $title, $block, $language, $result ) {

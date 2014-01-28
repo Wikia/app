@@ -58,6 +58,10 @@ class SolrDocumentServiceTest extends WikiaBaseTest
 		);
 	}
 	
+	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.01169 ms
+	 */
 	public function testGetDocumentWithResult() {
 		$service = $this->getMock( 'SolrDocumentService', [ 'getConfig', 'getFactory', 'getDocumentId' ] );
 		$factory = $this->getMock( 'Wikia\Search\QueryService\Factory', [ 'getFromConfig' ] );

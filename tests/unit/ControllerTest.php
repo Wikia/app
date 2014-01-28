@@ -44,6 +44,8 @@ class ControllerTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.02133 ms
 	 * @group UsingDB
 	 */
 	function testWikiaLink() {

@@ -25,6 +25,8 @@ class IndexServicesTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.0832 ms
 	 * @covers Wikia\Search\IndexService\BacklinkCount::execute
 	 */
 	public function testBacklinkCountExecute() {
@@ -51,6 +53,8 @@ class IndexServicesTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08319 ms
 	 * @covers Wikia\Search\IndexService\Metadata::execute
 	 */
 	public function testMetadataExecuteInternal() {
@@ -72,6 +76,8 @@ class IndexServicesTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08172 ms
 	 * @covers Wikia\Search\IndexService\Metadata::execute
 	 */
 	public function testMetadataExecuteInternalNoPageId() {
@@ -98,6 +104,8 @@ class IndexServicesTest extends BaseTest
 	}
 	
 	/**
+	  * @group Slow
+	  * @slowExecutionTime 0.08487 ms
 	 * @covers Wikia\Search\IndexService\Metadata::execute
 	 */
 	 public function testMetadataExecuteInternalSuccess() {
@@ -134,6 +142,8 @@ class IndexServicesTest extends BaseTest
 		);
 	}
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08515 ms
 	 * @covers \Wikia\Search\IndexService\Redirects::execute
 	 */
 	public function testRedirectsService() {
@@ -163,6 +173,8 @@ class IndexServicesTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08454 ms
 	 * @covers Wikia\Search\IndexService\VideoViews::execute
 	 */
 	public function testVideoViewsService() {
@@ -204,6 +216,8 @@ class IndexServicesTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08742 ms
 	 * @covers Wikia\Search\IndexService\WikiPromoData::execute
 	 */
 	public function testWikiPromoData() {
@@ -249,6 +263,8 @@ class IndexServicesTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08654 ms
 	 * @covers Wikia\Search\IndexService\WikiStats::execute
 	 */
 	public function testWikiStatsExecute() {

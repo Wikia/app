@@ -18,6 +18,8 @@ class EditPageLayoutTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.01107 ms
 	 * @group UsingDB
 	 */
 	public function testMainPageEdit() {
@@ -35,6 +37,9 @@ class EditPageLayoutTest extends WikiaBaseTest {
 		$this->assertEquals($formAction, $editPage->getFormAction());
 	}
 
+	/**
+	 * @group UsingDB
+	 */
 	public function testCustomFormHandler() {
 		$title = Title::newFromText('Foo');
 		$editPage = $this->editPageFactory($title);
@@ -47,6 +52,9 @@ class EditPageLayoutTest extends WikiaBaseTest {
 		$this->assertEquals($title, $editPage->getEditedTitle());
 	}
 
+	/**
+	 * @group UsingDB
+	 */
 	public function testAddingFields() {
 		$title = Title::newFromText('Foo');
 		$editPage = $this->editPageFactory($title);
@@ -107,6 +115,8 @@ class EditPageLayoutTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.07107 ms
 	 * @group UsingDB
 	 */
 	public function testPreloadText() {
@@ -128,6 +138,9 @@ class EditPageLayoutTest extends WikiaBaseTest {
 		$wgTitle = $tempTitle;
 	}
 
+	/**
+	 * @group UsingDB
+	 */
 	public function testEditNotices() {
 		$title = Title::newFromText('NewArticle');
 		$editPage = $this->editPageFactory($title);
