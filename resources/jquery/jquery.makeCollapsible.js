@@ -72,6 +72,20 @@
 				// Slide doesn't work with tables, but fade does as of jQuery 1.1.3
 				// http://stackoverflow.com/questions/467336#920480
 				if ( options.instantHide ) {
+					// begin wikia change - @author Cqm
+					// VOLDEV-32
+					if ( $collapsible.hasClass( 'sortable' ) && !$collapsible.hasClass( 'jquery-sortable' ) ) {
+						$containers.each( function ( i ) {
+							// check for rows made up of just TH tags
+							// @source jquery.tablesorter module
+							if ( $( this ).children( 'td' ).length ) {
+								return;
+							}
+							
+							$containers.splice( i, 1 );
+						} );
+					}					
+					// end wikia change
 					$containers.hide();
 					hookCallback();
 				} else {
