@@ -8,12 +8,12 @@ class UserWikisFilterRestrictedDecorator extends UserWikisFilterDecorator {
 
 	public function getFiltered() {
 		$filtered = $this->filter->getFiltered();
-		$privateWikis = $this->getRestrictedWikis();
+		$restrictedWikis = $this->getRestrictedWikis();
 
 		foreach( $filtered as $key => $wikiData ) {
 			$wikiId = (int) $wikiData['id'];
 
-			if( in_array( $wikiId, $privateWikis ) ) {
+			if( in_array( $wikiId, $restrictedWikis ) ) {
 				unset( $filtered[$key] );
 			}
 		}
