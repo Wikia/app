@@ -165,6 +165,8 @@ class UserIdentityBoxTest extends WikiaBaseTest {
 			[ 'getTopWikis' ],
 			[ $userMock ]
 		);
+		$favoriteWikisModelMock->expects( $this->once() )
+			->method( 'getTopWikis' );
 
 		$userIdentityBoxMock = $this->getMock(
 			'UserIdentityBox',
