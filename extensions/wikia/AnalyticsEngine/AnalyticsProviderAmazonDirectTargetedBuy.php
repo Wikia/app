@@ -32,7 +32,6 @@ SCRIPT;
 			&& !$wgAdDriverUseSevenOneMedia;
 	}
 
-
 	public function getSetupHtml($params = array()) {
 		global $wgAmazonDirectTargetedBuyCountries, $wgAmazonDirectTargetedBuyCountriesDefault;
 
