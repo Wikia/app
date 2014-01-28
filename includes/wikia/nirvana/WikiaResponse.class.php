@@ -275,43 +275,38 @@ class WikiaResponse {
 	}
 
 	/**
-	 * Sets correct cache headers for the browser, Varnish or both
+	 * Sets correct cache headers for the client, Varnish or both
 	 *
-	 * @param integer $expiryTime validity for the Expires header in seconds
-	 * @param integer $maxAge validity for the Cache-Control max-age header in seconds
-	 * @param array $targets an array with the targets to be affected by the headers, one (or a combination) of
-	 * WikiaResponse::CACHE_TARGET_BROWSER and WikiaResponse::CACHE_TARGET_VARNISH
+	 * Cache-Control header will be set
+	 *
+	 * @param integer $varnishTTL expiry time for Varnish (and the client of $browserTTL is not provided)
+	 * @param integer $browserTTL expiry time for the client
 	 */
-	public function setCacheValidity( $expiryTime = null, $maxAge = null, Array $targets = array() ){
+	public function setCacheValidity( $varnishTTL, $browserTTL = false ){
 		$this->isCaching = true;
-		$targetBrowser = ( in_array( self::CACHE_TARGET_BROWSER, $targets ) );
-		$targetVarnish = ( in_array( self::CACHE_TARGET_VARNISH, $targets ) );
 
-		if ( !is_null( $expiryTime ) ){
-			$expiryTime = (int) $expiryTime;
-
-			if ( $targetBrowser ) {
-				//X-Pass are sent to the browser
-				$this->setHeader( 'X-Pass-Expires', gmdate( 'D, d M Y H:i:s', time() + $expiryTime ) . ' GMT', true );
-			}
-
-			if ( $targetVarnish) {
-				$this->setHeader( 'Expires', gmdate( 'D, d M Y H:i:s', time() + $expiryTime ) . ' GMT', true);
-			}
+		// default to the TTL for Varnish
+		if ($browserTTL === false) {
+			$browserTTL = $varnishTTL;
 		}
 
-		if( !is_null( $maxAge ) ) {
-			$maxAge = (int) $maxAge;
-			$cacheControl = ( $maxAge > 0 ) ? "public, max-age={$maxAge}" : 'no-cache, no-store, max-age=0, must-revalidate';
-
-			if ( $targetBrowser ) {
-				$this->setHeader( 'X-Pass-Cache-Control', $cacheControl, true );
-			}
-
-			if ( $targetVarnish) {
-				$this->setHeader( 'Cache-Control', $cacheControl, true );
-			}
+		if ($browserTTL > 0) {
+			$browserCacheControl = sprintf('public, max-age=%d', $browserTTL);
 		}
+		else {
+			// disable client cache
+			$browserCacheControl = 'max-age=0, must-revalidate, no-cache';
+		}
+
+		if ($varnishTTL > 0) {
+			$varnishCacheControl = sprintf('s-max-age=%d', $varnishTTL);
+		}
+		else {
+			// disable Varnish cache
+			$varnishCacheControl = 'private, s-maxage=0, no-store';
+		}
+
+		$this->setHeader('Cache-Control', sprintf('%s, %s', $browserCacheControl, $varnishCacheControl));
 	}
 
 	/**
