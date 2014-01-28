@@ -69,7 +69,7 @@ define( 'videohomepage.views.featured', [
 		},
 
 		queryDom: function() {
-			var that = this;
+			var self = this;
 
 			// arrays containing cached DOM lookups
 			this.slides = [];
@@ -78,7 +78,7 @@ define( 'videohomepage.views.featured', [
 			this.slideModels = [];
 
 			_.each( this.$thumbs.find( '.video' ), function( e ) {
-					that.thumbs.push( {
+					self.thumbs.push( {
 							$video: $( e )
 					} );
 			} );
@@ -88,19 +88,19 @@ define( 'videohomepage.views.featured', [
 							videoKey;
 
 					$elem = $( e );
-					that.slides.push( {
+					self.slides.push( {
 							$elem: $elem,
 							$video: $elem.find( '.slide-video' ),
-							$videoThumb: that.thumbs[ i ].$video,
+							$videoThumb: self.thumbs[ i ].$video,
 							$image: $elem.find( '.slide-image' ),
 							idx: i
 					} );
 
-					videoKey = that.thumbs[ i ]
+					videoKey = self.thumbs[ i ]
 											.$video.children( 'img' )
 											.attr( 'data-video-key' );
 
-					that.slideModels.push( {
+					self.slideModels.push( {
 							videoKey: videoKey,
 							embedData: null
 					} );
@@ -139,9 +139,9 @@ define( 'videohomepage.views.featured', [
 		},
 
 		setHoverTimeout: function() {
-			var that = this;
+			var self = this;
 			this.timeout = setTimeout( function() {
-					that.$thumbs.slideUp();
+					self.$thumbs.slideUp();
 			}, 300 );
 		},
 
@@ -220,7 +220,7 @@ define( 'videohomepage.views.featured', [
 		 * just let the slider switch to the next image.
 		 */
 		playVideo: function( slide ) {
-			var that = this,
+			var self = this,
 				data = this.getEmbedCode( slide ),
 				model = this.collection.at( slide.idx );
 
@@ -240,7 +240,7 @@ define( 'videohomepage.views.featured', [
 					model.set( { embedData: json } );
 
 					// Actually do the video embed
-					that.videoInstance = new VideoBootstrap(
+					self.videoInstance = new VideoBootstrap(
 						slide.$video[ 0 ],
 						model.get( 'embedData' ).embedCode,
 						'videoHomePage'
@@ -248,7 +248,7 @@ define( 'videohomepage.views.featured', [
 
 					// Wait till video has loaded and update the slider viewport height.
 					setTimeout( function() {
-						that.$bxSlider.redrawSlider();
+						self.$bxSlider.redrawSlider();
 					}, 1000 );
 				}
 			} );
@@ -271,7 +271,7 @@ define( 'videohomepage.views.featured', [
 		 * code at a different size.
 		 */
 		getEmbedCode: function( slide ) {
-			var that = this,
+			var self = this,
 				data,
 				model;
 
@@ -285,7 +285,7 @@ define( 'videohomepage.views.featured', [
 					type: 'GET',
 					data: {
 						fileTitle: model.get( 'videoKey' ),
-						width: that.getWidthForVideo( slide ),
+						width: self.getWidthForVideo( slide ),
 						autoplay: 1
 					}
 				} );
