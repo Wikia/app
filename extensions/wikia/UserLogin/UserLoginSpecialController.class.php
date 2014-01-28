@@ -385,7 +385,9 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 					LoginForm::clearLoginToken();
 					UserLoginHelper::clearNotConfirmedUserSession();
 					$this->userLoginHelper->clearPasswordThrottle( $loginForm->mUsername );
-					$this->username = $loginForm->mUsername;
+					// we're sure at this point we'll need the private field'
+					// value in the template let's pass them then
+					$this->response->setVal( 'username', $loginForm->mUsername );
 					$this->result = 'ok';
 				}
 				break;
