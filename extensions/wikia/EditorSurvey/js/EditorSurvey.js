@@ -1,18 +1,34 @@
-( function( $ ) {
+( function( window, $ ) {
 	var EditorSurvey = {
 		init: function() {
 			mw.hook( 've.activationComplete' ).add( function() {
-				EditorSurvey.set( 've-fail' );
+				EditorSurvey.unload( true, 've-fail' );
 			} );
 			mw.hook( 'postEdit' ).add( function() {
+				EditorSurvey.unload( false );
 				EditorSurvey.set( 've-success' );
 			} );
 			mw.hook( 've.deactivationComplete' ).add( function() {
 				// Delayed because VE core code fires deactivation before postEdit. Also, it feels nicer.
-				setTimeout( EditorSurvey.getSurvey, 1000 );
+				setTimeout( function() {
+					EditorSurvey.getSurvey();
+				}, 1000 );
+			} );
+			mw.hook( 've.cancelButton' ).add( function() {
+				EditorSurvey.set( 've-fail' );
 			} );
 
 			EditorSurvey.getSurvey();
+		},
+
+		unload: function( enable, value ) {
+			if ( enable ) {
+				$( window ).on( 'beforeunload.EditorSurvey', function() {
+					EditorSurvey.set( value );
+				} );
+			} else {
+				$( window ).off( 'beforeunload.EditorSurvey' );
+			}
 		},
 
 		getSurvey: function() {
@@ -26,6 +42,9 @@
 					data: { 'type': val },
 					callback: function( response ) {
 						var $modal;
+
+						// Disable setting the fail cookie when the window is unloaded
+						EditorSurvey.unload( false );
 
 						// Don't display for wikis with WAM scores of 100 or lower
 						if ( response.wam_rank <= 100 ) {
@@ -54,6 +73,7 @@
 		},
 
 		set: function( value ) {
+			console.log( 'EditorSurvey setting: ', value );
 			var options = { 'domain': wgCookieDomain };
 
 			// Only set value if modal hasn't been seen.
@@ -72,4 +92,8 @@
 	};
 
 	$( EditorSurvey.init );
-})( jQuery );
+
+	// Exports
+	window.EditorSurvey = EditorSurvey;
+
+})( window, jQuery );
