@@ -277,7 +277,7 @@ class VideoPageToolAsset extends WikiaModel {
 
 	/**
 	 * Load data from a row from the table
-	 * @param array $row
+	 * @param ResultWrapper $row
 	 */
 	protected function loadFromRow( $row ) {
 		foreach ( static::$fields as $fieldName => $varName ) {
@@ -316,20 +316,13 @@ class VideoPageToolAsset extends WikiaModel {
 
 		$data = $this->serializeData();
 
-		$db->update(
-			'vpt_asset',
-			array(
-				'data' => $data,
-				'updated_by' => $this->updatedBy,
-				'updated_at' => $db->timestamp( $this->updatedAt ),
-			),
-			array(
-				'program_id' => $this->programId,
-				'section' => $this->section,
-				'`order`' => $this->order,
-			),
-			__METHOD__
-		);
+		(new WikiaSQL())
+			->UPDATE( 'vpt_asset' )
+				->SET( 'data', $data )
+				->SET( 'updated_by', $this->updatedBy )
+				->SET( 'updated_at',  $db->timestamp( $this->updatedAt ) )
+			->WHERE( 'asset_id' )->EQUAL_TO( $this->assetId )
+			->run( $db );
 
 		$affected = $db->affectedRows();
 
@@ -358,19 +351,15 @@ class VideoPageToolAsset extends WikiaModel {
 
 		$data = $this->serializeData();
 
-		$db->insert(
-			'vpt_asset',
-			array(
-				'program_id' => $this->programId,
-				'section' => $this->section,
-				'`order`' => $this->order,
-				'data' => $data,
-				'updated_by' => $this->updatedBy,
-				'updated_at' => $db->timestamp( $this->updatedAt ),
-			),
-			__METHOD__,
-			'IGNORE'
-		);
+		( new WikiaSQL() )
+			->INSERT( 'vpt_asset' )
+				->SET( 'program_id', $this->programId )
+				->SET( 'section', $this->section )
+				->SET( '`order`', $this->order )
+				->SET( 'data', $data )
+				->SET( 'updated_by', $this->updatedBy )
+				->SET( 'updated_at', $db->timestamp( $this->updatedAt ) )
+			->run( $db );
 
 		$affected = $db->affectedRows();
 		if ( $affected > 0 ) {
@@ -396,15 +385,10 @@ class VideoPageToolAsset extends WikiaModel {
 
 		$db = wfGetDB( DB_MASTER );
 
-		$db->delete(
-			'vpt_asset',
-			array(
-				'program_id' => $this->programId,
-				'section' => $this->section,
-				'`order`' => $this->order,
-			),
-			__METHOD__
-		);
+		(new WikiaSQL())
+			->DELETE( 'vpt_asset' )
+			->WHERE( 'asset_id' )->EQUAL_TO( $this->assetId )
+			->run( $db );
 
 		$affected = $db->affectedRows();
 
@@ -493,7 +477,7 @@ class VideoPageToolAsset extends WikiaModel {
 	 */
 	protected function serializeData() {
 		$data = array();
-		foreach ( STATIC::$dataFields as $field ) {
+		foreach ( static::$dataFields as $field ) {
 			$data[$field] = $this->$field;
 		}
 
@@ -521,6 +505,8 @@ class VideoPageToolAsset extends WikiaModel {
 	 * Save to cache
 	 */
 	public function saveToCache() {
+		$cache = [];
+
 		foreach ( self::$fields as $varName ) {
 			$cache[$varName] = $this->$varName;
 		}
@@ -627,7 +613,7 @@ class VideoPageToolAsset extends WikiaModel {
 
 		$db = wfGetDB( DB_SLAVE );
 
-		$assets = (new WikiaSQL()) // ->cache( 60*60, self::getMemcKeyAssets( $programId ) )
+		$assets = (new WikiaSQL())
 			->SELECT( '*' )
 				->FIELD( 'unix_timestamp(updated_at)' )->AS_( 'updated_at' )
 			->FROM( 'vpt_asset' )

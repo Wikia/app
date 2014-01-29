@@ -5,6 +5,8 @@
  *
  * These tests expect to be run against a wiki that has the Video Page Tool extension enabled and, with that,
  * the appropriate DB tables.
+ *
+ * @group Integration
  */
 class VideoPageToolAssetTest extends WikiaBaseTest {
 
@@ -14,6 +16,11 @@ class VideoPageToolAssetTest extends WikiaBaseTest {
 	protected $origMemc;
 
 	public function setUp() {
+		global $wgCityId;
+		file_put_contents('/tmp/debug.out', "CITYID: ".$wgCityId."\n", FILE_APPEND);
+
+		$this->mockGlobalVariable( 'wgUser', User::newFromName( 'Garthwebb' ) );
+
 		$language = 'en';
 		$date = 158486400; // This is Jan 9th, 1975 a date suitably far in the past but doing well for its age thank you very much
 
@@ -31,7 +38,10 @@ class VideoPageToolAssetTest extends WikiaBaseTest {
 		}
 
 		// Save this program to get a program ID
-		$this->program->save();
+		$status = $this->program->save();
+		if ( !$status->isGood() ) {
+			throw new Exception("Failed to save program with lang=$language and date=$date");
+		}
 
 		$this->programID = $this->program->getProgramId();
 	}
@@ -66,6 +76,10 @@ class VideoPageToolAssetTest extends WikiaBaseTest {
 	public function testCRUDAsset( $type, $order, $data ) {
 		$section = $type::SECTION;
 
+		/**
+		 * Create and save the object
+		 */
+
 		// Check creation
 		$asset = VideoPageToolAsset::newAsset( $this->programID, $section, $order );
 
@@ -73,13 +87,24 @@ class VideoPageToolAssetTest extends WikiaBaseTest {
 
 		$asset->setData( $data );
 
+		global $wgUser;
+		$asset->setUpdatedBy( $wgUser->getId() );
+
 		$status = $asset->save();
 
 		$this->assertTrue( $status->isGood(), 'Failed to save new $type object' );
 		$this->assertInternalType( 'integer', $asset->getAssetId(), 'Result of getAssetId is not an integer' );
 		$this->assertGreaterThan( 0, $asset->getAssetId(), 'Asset ID is not greater than zero');
 
-		// Check loading from cache
+		// Make sure we can get the program
+		$program = $asset->getProgram();
+
+		$this->assertTrue( $program instanceof VideoPageToolProgram, 'Did not get a program object back from getProgram' );
+
+		/**
+		 * Check loading the object from cache
+		 */
+
 		$memcLoadedAsset = VideoPageToolAsset::newAsset( $this->programID, $section, $order );
 		$this->assertEquals( $asset->getAssetId(), $memcLoadedAsset->getAssetId(), "Not able to load saved asset" );
 
@@ -108,7 +133,11 @@ class VideoPageToolAssetTest extends WikiaBaseTest {
 		// Let slave catch up
 		sleep(1);
 
-		// Check loading when cache is empty
+		/**
+		 * Check loading the object from database
+		 */
+
+		// Make sure memcache doesn't fulfill our request
 		$this->disableMemcached();
 		$dbLoadedAsset = VideoPageToolAsset::newAsset( $this->programID, $section, $order );
 		$this->assertEquals( $asset->getAssetId(), $dbLoadedAsset->getAssetId(), "Not able to load saved asset" );

@@ -271,12 +271,36 @@ class VideoPageToolProgram extends WikiaModel {
 
  	/**
 	 * Get program object from a row from table
-	 * @param array $row
+	 * @param ResultWrapper $row
 	 * @return VideoPageToolProgram
 	 */
 	public static function newFromRow( $row ) {
 		$program = new self();
 		$program->loadFromRow( $row );
+		return $program;
+	}
+
+	public static function newFromId( $id ) {
+		wfProfileIn( __METHOD__ );
+		$program  = new self();
+
+		$db = wfGetDB( DB_SLAVE );
+
+		$row = ( new WikiaSQL() )
+			->SELECT( '*' )
+				->FIELD( 'unix_timestamp(publish_date)' )->AS_( 'publish_date' )
+			->FROM( 'vpt_program' )
+			->WHERE( 'program_id' )->EQUAL_TO( $id )
+			->run( $db, function( $result ) {
+				/** @var ResultWrapper $result */
+				return $result->fetchObject();
+			});
+
+		if ( $row ) {
+			$program->loadFromRow( $row );
+		}
+
+		wfProfileOut( __METHOD__ );
 		return $program;
 	}
 
@@ -289,15 +313,16 @@ class VideoPageToolProgram extends WikiaModel {
 
 		$db = wfGetDB( DB_SLAVE );
 
-		$row = $db->selectRow(
-			array( 'vpt_program' ),
-			array( '*, unix_timestamp(publish_date) as publish_date' ),
-			array(
-				'language' => $this->language,
-				'publish_date' => date( 'Y-m-d', $this->publishDate ),
-			),
-			__METHOD__
-		);
+		$row = ( new WikiaSQL() )
+			->SELECT( '*' )
+				->FIELD( 'unix_timestamp(publish_date)' )->AS_( 'publish_date' )
+			->FROM( 'vpt_program' )
+			->WHERE( 'language' )->EQUAL_TO( $this->language )
+			->AND_( 'publish_date' )->EQUAL_TO( date( 'Y-m-d', $this->publishDate ) )
+			->run( $db, function( $result ) {
+				/** @var ResultWrapper $result */
+				return $result->fetchObject();
+			});
 
 		if ( $row ) {
 			$this->loadFromRow( $row );
@@ -312,7 +337,7 @@ class VideoPageToolProgram extends WikiaModel {
 
 	/**
 	 * Load data from a row from the table
-	 * @param array $row
+	 * @param ResultWrapper $row
 	 */
 	protected function loadFromRow( $row ) {
 		foreach ( static::$fields as $fieldName => $varName ) {
@@ -357,7 +382,7 @@ class VideoPageToolProgram extends WikiaModel {
 			'vpt_program',
 			array(
 				'language'     => $this->language,
-				'publish_date' => $db->timestamp( $this->publishDate ),
+				'publish_date' => date( 'Y-m-d', $this->publishDate ),
 				'is_published' => $this->isPublished,
 			),
 			__METHOD__,
@@ -367,6 +392,9 @@ class VideoPageToolProgram extends WikiaModel {
 		$affected = $db->affectedRows();
 		if ( $affected > 0 ) {
 			$this->setProgramId( $db->insertId() );
+		} else {
+			// If this already exists in the DB, load the row so we have the program ID
+			$this->loadFromDatabase();
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -388,16 +416,12 @@ class VideoPageToolProgram extends WikiaModel {
 
 		$db = wfGetDB( DB_MASTER );
 
-		$db->update(
-			'vpt_program',
-			array( 'is_published' => $this->isPublished,
-				   'published_by' => $this->publishedBy ),
-			array(
-				'language' => $this->language,
-				'publish_date' => $db->timestamp( $this->publishDate ),
-			),
-			__METHOD__
-		);
+		( new WikiaSQL() )
+			->UPDATE( 'vpt_program' )
+				->SET( 'is_published', $this->isPublished )
+				->SET( 'published_by', $this->publishedBy )
+			->WHERE( 'program_id' )->EQUAL_TO( $this->programId )
+			->run( $db );
 
 		$affected = $db->affectedRows();
 
@@ -625,6 +649,7 @@ class VideoPageToolProgram extends WikiaModel {
 		$this->saveToCache();
 
 		foreach ( $assetList as $assetObj ) {
+			/** @var VideoPageToolAsset $assetObj */
 			$assetObj->saveToCache();
 		}
 
@@ -720,6 +745,7 @@ class VideoPageToolProgram extends WikiaModel {
 			$status = $this->addToDatabase();
 		}
 
+		
 		wfProfileOut( __METHOD__ );
 		return $status;
 	}
@@ -741,16 +767,19 @@ class VideoPageToolProgram extends WikiaModel {
 				}
 			}
 
-			$dbw = wfGetDB(DB_MASTER);
-
-			( new WikiaSQL() )
-				->DELETE( 'vpt_program' )
-				->WHERE( 'program_id' )->EQUAL_TO( $this->programId )
-				->run( $dbw );
-
+			$this->deleteFromDatabase();
 			$this->invalidateCache();
 		}
 
 		wfProfileOut( __METHOD__ );
+	}
+
+	protected function deleteFromDatabase() {
+		$dbw = wfGetDB(DB_MASTER);
+
+		( new WikiaSQL() )
+			->DELETE( 'vpt_program' )
+			->WHERE( 'program_id' )->EQUAL_TO( $this->programId )
+			->run( $dbw );
 	}
 }
