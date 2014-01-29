@@ -594,6 +594,10 @@ class WikiaFileHelper extends Service {
 
 	/**
 	 * Get file from title (Please be careful when using $force)
+	 *
+	 * Note: this method turns a string $title into an object, affecting the calling code version
+	 * of this variable
+	 *
 	 * @param Title|string $title
 	 * @param bool $force
 	 * @return File|null $file
@@ -620,6 +624,10 @@ class WikiaFileHelper extends Service {
 
 	/**
 	 * Get video file from title (Please be careful when using $force)
+	 *
+	 * Note: this method calls getFileFromTitle which converts a string $title into a Title object.  This
+	 * conversion is propagated up to the calling code.
+	 *
 	 * @param Title|string $title
 	 * @param bool $force
 	 * @return File|null $file
