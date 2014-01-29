@@ -18,19 +18,20 @@ $slotTopHeight: 50px;
 }
 
 .ad-in-content {
+	visibility: hidden;
+
 	position: relative;
 	margin: 0 auto;
+
 	//compensate for wkPage margin
 	left: -3.125%;
 
-	width: $slotWidth;
+	&.show {
+		visibility: visible;
 
-	padding: 15px 0;
+		padding: 15px 0;
 
-	border-top: 1px solid $border-color;
-
-	&.hidden {
-		display: none;
+		border-top: 1px solid $border-color;
 	}
 }
 
