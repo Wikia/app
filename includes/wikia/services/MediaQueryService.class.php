@@ -352,7 +352,7 @@ class MediaQueryService extends WikiaService {
 		// Determine the sort column
 		if ( $sort == 'popular' ) {
 			$sortCol = 'views_total';
-		} else if ( $sort == 'trend' ) {
+		} elseif ( $sort == 'trend' ) {
 			$sortCol = 'views_7day';
 		} else {
 			$sortCol = 'added_at';

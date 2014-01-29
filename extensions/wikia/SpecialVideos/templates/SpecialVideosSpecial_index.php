@@ -12,8 +12,10 @@
 			<ul class="dropdown-list">
 				<? foreach($sortingOptions as $sortBy => $option): ?>
 					<? if($sortMsg != $option): ?>
+
+						<? list($sortType, $category) = explode( ':', $sortBy ) ?>
 						<li class="dropdown-item">
-							<label data-sort="<?= $sortBy ?>" data-category="<? /*some php var for category param here*/ ?>"><?= $option ?></label>
+							<label data-sort="<?= $sortType ?>" data-category="<?= $category ?>"><?= $option ?></label>
 						</li>
 					<? endif; ?>
 				<? endforeach; ?>

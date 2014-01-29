@@ -128,11 +128,14 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 			$video['videoPlayButton'] = WikiaFileHelper::videoPlayButtonOverlay( SpecialVideosHelper::THUMBNAIL_WIDTH, SpecialVideosHelper::THUMBNAIL_HEIGHT );
 		}
 
+		// The new trending in <category> options have a slightly different key format
+		$sortKey = $sort.( empty($category) ? '' : ":$category" );
+
 		$this->thumbHeight = SpecialVideosHelper::THUMBNAIL_HEIGHT;
 		$this->thumbWidth = SpecialVideosHelper::THUMBNAIL_WIDTH;
 		$this->addVideo = $addVideo;
 		$this->pagination = $pagination;
-		$this->sortMsg = $sortingOptions[$sort]; // selected sorting option to display in drop down
+		$this->sortMsg = $sortingOptions[$sortKey]; // selected sorting option to display in drop down
 		$this->sortingOptions = $sortingOptions; // populate the drop down
 		$this->videos = $videos;
 
