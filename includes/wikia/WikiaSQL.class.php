@@ -19,7 +19,7 @@ class WikiaSQL extends FluentSql\SQL {
 	 * @param $cacheEmpty
 	 * @return WikiaSQL
 	 */
-	public function cacheGlobal($ttl, $cacheKey=null, $cacheEmpty=null) {
+	public function cacheGlobal($ttl, $cacheKey=null, $cacheEmpty=false) {
 		$this->useSharedMemKey = true;
 		return $this->cache($ttl, $cacheKey, $cacheEmpty);
 	}
