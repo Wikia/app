@@ -1,92 +1,107 @@
 <?php
 
-class VideosModuleHelper {
+class VideosModuleHelper extends WikiaModel {
 
 	const SEARCH_START = 0;
 	const SEARCH_LIMIT = 20;
-	const THUMBNAIL_CATEGORY_WIDTH = 263;
-	const THUMBNAIL_CATEGORY_HEIGHT = 148;
-	const CACHE_TTL_CATEGORY_DATA = 3600;
-	const VIDEO_WIKI_DB = 'video151';
+	const THUMBNAIL_WIDTH = 500;
+	const THUMBNAIL_HEIGHT = 309;
+	// We don't care where else this video has been posted, we just want to display it
+	const POSTED_IN_ARTICLES = 0;
+	const VIDEO_LIMIT = 25;
+	const GET_THUMB = true;
 
-	/*
-	 *   Example of use:
-	 *   http://harrypotter.jacek.wikia-dev.com/wikia.php?controller=VideoEmbedTool&method=getSuggestedVideos&svStart=0&svSize=5&articleId=15&format=json
-	 *   svStart     - offset
-	 *   svSize      - limit
-	 *   videoWidth  - thumbnail width
-	 *   videoHeight - thumbnail height
-	 *   articleId 	 - the suggestions should be related to this article
+	/**
+	 * Use the VideoEmbedToolSearchService to find premium videos related to the current article.
+	 * @param $articleId - ID of the article being viewed.
+	 * @return array - Premium videos related to article.
 	 */
-	public function getSuggestedVideos( $articleId ) {
+	public function getArticleRelatedVideos( $articleId ) {
 
 		wfProfileIn( __METHOD__ );
 
 		$service = new VideoEmbedToolSearchService();
 		$service->setStart( self::SEARCH_START )->setLimit( self::SEARCH_LIMIT );
+		$service->setHeight( self::THUMBNAIL_HEIGHT );
+		$service->setWidth( self::THUMBNAIL_WIDTH );
 		$response = $service->getSuggestionsForArticleId( $articleId );
+
 		$videos = array(
 			'items' => $response['items'],
 			'returnedVideoCount' => count( $response['items'] )
 		);
 
-		return $videos;
-
 		wfProfileOut( __METHOD__ );
+
+		return $videos;
 
 	}
 
 	/**
-	 * Get videos tagged with the category given by parameter $categoryTitle (limit = 100)
-	 * @param Title $categoryTitle
-	 * @param int $numVideos
-	 * @param array $thumbOptions
-	 * @return array An array of video data where each array element has the structure:
-	 *   [ title => 'Video Title',
-	 *     url   => 'http://url.to.video',
-	 *     thumb => '<thumbnail_html_snippet>'
+	 * Use WikiaSearchController to find premium videos related to the local wiki.
+	 * @return array - Premium videos related to the local wiki.
 	 */
-	public function getVideosByCategory( $categoryTitle, $numVideosNeeded, $thumbOptions = array() ) {
+	public function getWikiRelatedVideos() {
 
-		wfProfileIn( __METHOD__ );
+		wfProfileIn(__METHOD__);
 
-		$dbKey = $categoryTitle->getDBkey();
-		// pass an empty array here to access the third default argument so we can
-		// change the wiki to connect to.
-		$db = wfGetDB( DB_SLAVE, array(), self::VIDEO_WIKI_DB );
+		// Strip Wiki off the end of the wiki name if it exists
+		$wikiTitle = preg_replace('/ Wiki$/', '', $this->wg->Sitename);
 
-		$videos = ( new WikiaSQL() )
-			->SELECT( 'page_id, page_title' )
-			->FROM( 'page' )
-			->LEFT_JOIN( 'video_info' )
-			->ON( 'page_title', 'video_title' )
-			->INNER_JOIN( 'categorylinks' )
-			->ON( 'cl_from', 'page_id' )
-			->WHERE( 'cl_to' )->EQUAL_TO( $dbKey )
-			->AND_( 'page_namespace' )->EQUAL_TO( NS_FILE )
-			->ORDER_BY( ['views_7day', 'page_title'] )
-			->LIMIT( $numVideosNeeded )
-			->cache( self::CACHE_TTL_CATEGORY_DATA )
-			->run( $db, function ( $result ) use ( $thumbOptions ) {
-				$videos = array();
-				while ( $row = $result->fetchObject( $result ) ) {
-					$title = $row->page_title;
-					$file = WikiaFileHelper::getVideoFileFromTitle( $title );
-					if ( !empty( $file ) ) {
-						$thumb = $file->transform( array( 'width' => self::THUMBNAIL_CATEGORY_WIDTH, 'height' => self::THUMBNAIL_CATEGORY_HEIGHT ) );
-						$videoThumb = $thumb->toHtml( $thumbOptions );
-						$videos[] = array(
-							'title' => $title->getText(),
-							'url'   => $title->getFullURL(),
-							'thumb' => $videoThumb,
-						);
-					}
-				}
-				return $videos;
-			});
+		$params = array( 'title' => $wikiTitle );
+		$videoResults = $this->app->sendRequest( 'WikiaSearchController', 'searchVideosByTitle', $params )->getData();
 
-		wfProfileOut( __METHOD__ );
+		$helper = new VideoHandlerHelper();
+		foreach ( $videoResults as $video ) {
+			$videoTitle = preg_replace( '/.+File:/', '', $video['title'] );
+			$videoDetail = $helper->getVideoDetailFromWiki( $this->wg->WikiaVideoRepoDBName,
+					$videoTitle,
+					self::THUMBNAIL_WIDTH,
+					self::THUMBNAIL_HEIGHT,
+					self::POSTED_IN_ARTICLES,
+					self::GET_THUMB );
+			// normalize json so the key for the url for the video is identical to the key
+			// used in getArticleRelatedVideos
+			$videoDetail['url'] = $videoDetail['fileUrl'];
+			unset($videoDetail['fileUrl']);
+			$videos[] = $videoDetail;
+		}
+
+		wfProfileOut(__METHOD__);
 
 		return $videos;
 	}
+
+	/**
+	 * Get videos to populated the Videos Module. First try and get premium videos
+	 * related to the article page. If that's not enough add premium videos related
+	 * to the local wiki. Finally, if still more or needed, get trending premium
+	 * videos related to the vertical of the wiki.
+	 * @var int $articleId - ID of the article being viewed.
+	 * @return array - The list of videos.
+	 */
+	public function getVideos( $articleId ) {
+
+		wfProfileIn(__METHOD__);
+
+		$articleRelatedVideos = $this->getArticleRelatedVideos( $articleId );
+		$articleRelatedVideosCount = $articleRelatedVideos['returnedVideoCount'];
+		$videos = $articleRelatedVideos['items'];
+
+		// Add videos from getWikiRelatedVideos if we didn't hit our video count
+		// limit
+		if ( $articleRelatedVideosCount < self::VIDEO_LIMIT ) {
+			$wikiRelatedVideos = $this->getWikiRelatedVideos();
+			array_splice( $wikiRelatedVideos, self::VIDEO_LIMIT - $articleRelatedVideosCount );
+			// We want these to always be shown in a random order to the user
+			shuffle( $wikiRelatedVideos );
+			$videos = array_merge( $videos,  $wikiRelatedVideos );
+		}
+
+		wfProfileOut(__METHOD__);
+
+		return $videos;
+	}
+
+	//public function getVerticleRelatedVideos (  )
 }
