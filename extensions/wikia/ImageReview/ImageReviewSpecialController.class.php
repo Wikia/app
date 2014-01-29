@@ -53,7 +53,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 			$this->forward( get_class( $this ), 'csvStats' );
 		}
 
-		$this->response->setCacheValidity(0, 0, array(WikiaResponse::CACHE_TARGET_BROWSER, WikiaResponse::CACHE_TARGET_VARNISH));
+		$this->response->setCacheValidity(WikiaResponse::CACHE_DISABLED);
 		$this->response->sendHeaders();
 
 		$this->response->addAsset('extensions/wikia/ImageReview/js/jquery.onImagesLoad.js');

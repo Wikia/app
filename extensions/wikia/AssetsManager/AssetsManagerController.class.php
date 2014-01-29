@@ -46,8 +46,6 @@ class AssetsManagerController extends WikiaController {
 		$messages = $this->request->getVal( 'messages', null );
 		$mustache = $this->request->getVal( 'mustache', null );
 		$ttl = $this->request->getInt( 'ttl', 0 );
-		$varnishTTL = $this->request->getInt( 'varnishTTL', $ttl );
-		$browserTTL = $this->request->getInt( 'browserTTL', $ttl );
 
 		// handle templates via sendRequest
 		if ( !is_null( $templates ) ) {
@@ -148,12 +146,8 @@ class AssetsManagerController extends WikiaController {
 		}
 
 		// handle cache time
-		if ( $varnishTTL > 0 ) {
-			$this->response->setCacheValidity( $varnishTTL, $varnishTTL, array( WikiaResponse::CACHE_TARGET_VARNISH ) );
-		}
-
-		if ( $browserTTL > 0 ) {
-			$this->response->setCacheValidity( $browserTTL, $browserTTL, array( WikiaResponse::CACHE_TARGET_BROWSER ) );
+		if ( $ttl > 0 ) {
+			$this->response->setCacheValidity( $ttl );
 		}
 
 		$this->response->setFormat( 'json' );

@@ -77,7 +77,7 @@ class WikiaHomePageController extends WikiaController {
 
 	public function index() {
 		//cache response on varnish for 1h to enable rolling of stats
-		$this->response->setCacheValidity(3600, 3600, array(WikiaResponse::CACHE_TARGET_BROWSER, WikiaResponse::CACHE_TARGET_VARNISH));
+		$this->response->setCacheValidity(3600);
 
 		$this->response->addAsset('wikiahomepage_scss');
 		$this->response->addAsset('wikiahomepage_js');

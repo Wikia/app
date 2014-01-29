@@ -43,8 +43,7 @@ class WikiaResponse {
 	/**
 	 * Cache targets
 	 */
-	const CACHE_TARGET_BROWSER = 0;
-	const CACHE_TARGET_VARNISH = 1;
+	const CACHE_DISABLED = 0;
 
 	/**
 	 * View object
@@ -278,6 +277,8 @@ class WikiaResponse {
 	 * Sets correct cache headers for the client, Varnish or both
 	 *
 	 * Cache-Control header will be set
+	 *
+	 * @see http://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html
 	 *
 	 * @param integer $varnishTTL expiry time for Varnish (and for the client if $browserTTL is not provided)
 	 * @param integer $browserTTL expiry time for the client
