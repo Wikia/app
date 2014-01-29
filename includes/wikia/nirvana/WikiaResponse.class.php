@@ -276,38 +276,27 @@ class WikiaResponse {
 	/**
 	 * Sets correct cache headers for the client, Varnish or both
 	 *
-	 * Cache-Control header will be set
+	 * Cache-Control / X-Pass-Cache-Control headers will be set
 	 *
 	 * @see http://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html
 	 *
 	 * @param integer $varnishTTL expiry time for Varnish (and for the client if $browserTTL is not provided)
 	 * @param integer $browserTTL expiry time for the client
 	 */
-	public function setCacheValidity( $varnishTTL, $browserTTL = false ){
+	public function setCacheValidity( $varnishTTL, $browserTTL = false ) {
 		$this->isCaching = true;
+
+		$this->setHeader('Cache-Control', sprintf('s-maxage=%d', $varnishTTL));
 
 		// default to the TTL for Varnish
 		if ($browserTTL === false) {
 			$browserTTL = $varnishTTL;
 		}
 
+		// cache on client sioe
 		if ($browserTTL > 0) {
-			$browserCacheControl = sprintf('public, max-age=%d', $browserTTL);
+			$this->setHeader('X-Pass-Cache-Control', sprintf('public, max-age=%d', $browserTTL));
 		}
-		else {
-			// disable client cache
-			$browserCacheControl = 'max-age=0, must-revalidate, no-cache';
-		}
-
-		if ($varnishTTL > 0) {
-			$varnishCacheControl = sprintf('s-maxage=%d', $varnishTTL);
-		}
-		else {
-			// disable Varnish cache
-			$varnishCacheControl = 'private, s-maxage=0, no-store';
-		}
-
-		$this->setHeader('Cache-Control', sprintf('%s, %s', $browserCacheControl, $varnishCacheControl));
 	}
 
 	/**
