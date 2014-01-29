@@ -200,7 +200,7 @@ class VideoPageToolHelper extends WikiaModel {
 
 			->SELECT('page_id')->FIELD('page_title')
 			->FROM( 'page' )
-				->LEFT_JOIN( 'video_info' )->ON( 'page_title', 'video_title' )
+				->JOIN( 'video_info' )->ON( 'page_title', 'video_title' )
 				->JOIN( 'categorylinks' )->ON( 'cl_from', 'page_id' )
 			->WHERE( 'cl_to' )->EQUAL_TO( $dbKey )
 			->AND_( 'page_namespace' )->EQUAL_TO( NS_FILE )
