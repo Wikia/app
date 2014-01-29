@@ -161,8 +161,8 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 		}
 
 		if ( !empty( $data['pageCategories'] ) ) {
-			$stdCateogories = array_map( array( $this ,'getStdPageCategory' ), explode( ',', $data['pageCategories'] ) );
-			$categories = array_merge( $categories, $stdCateogories );
+			$stdCategories = array_map( array( $this ,'getStdPageCategory' ), explode( ',', $data['pageCategories'] ) );
+			$categories = array_merge( $categories, $stdCategories );
 		}
 
 		// remove 'the' category

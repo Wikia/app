@@ -178,7 +178,8 @@ class AnyclipFeedIngester extends VideoFeedIngester {
 
 		if ( !empty( $data['name'] ) ) {
 			$categories[] = $data['name'];
-			if ( ( $addition = $this->getAdditionalPageCateogory( $data['name'] ) ) != '' ) {
+			$addition = $this->getAdditionalPageCategory( $data['name'] );
+			if ( !empty( $addition ) ) {
 				$categories[] = $addition;
 			}
 		}

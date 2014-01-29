@@ -1011,7 +1011,7 @@ abstract class VideoFeedIngester {
 	 * @param string $category
 	 * @return string $addition
 	 */
-	public function getAdditionalPageCateogory( $category ) {
+	public function getAdditionalPageCategory( $category ) {
 		switch ( strtolower( $category ) ) {
 			case 'movies':
 			case 'tv':
@@ -1041,7 +1041,8 @@ abstract class VideoFeedIngester {
 	public function getAdditionalPageCategories( $categories ) {
 		$pageCategories = array();
 		foreach ( $categories as $category ) {
-			if ( ( $addition = $this->getAdditionalPageCateogory( $category ) ) != '' ) {
+			$addition = $this->getAdditionalPageCategory( $category );
+			if ( !empty( $addition ) ) {
 				$pageCategories[] = $addition;
 			}
 		}
