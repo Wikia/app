@@ -70,7 +70,6 @@ define( 'videohomepage.views.carousel', [
 
 			$buttons = this.$( '.owl-buttons div' );
 			height = this.$( '.owl-item' ).eq( 0 ).find( 'img' ).height();
-			console.log( height );
 
 			// set the last slides height ( since it doesn't come with an image )
 			this.$( '.category-slide' ).height( height ).show();
