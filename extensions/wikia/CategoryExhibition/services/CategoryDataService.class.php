@@ -78,13 +78,13 @@ class CategoryDataService extends Service {
 		// Run the query we've built
 		$count = $query->run( $db, function( ResultWrapper $result ) {
 			$row = $result->fetchObject();
-			return $row->count;
+			return empty( $row ) ? 0 : $row->count;
 		});
 
 		wfProfileOut( __METHOD__ );
 
 		// Make sure we default to zero
-		return $count ? $count : 0;
+		return $count;
 	}
 
 	/**
