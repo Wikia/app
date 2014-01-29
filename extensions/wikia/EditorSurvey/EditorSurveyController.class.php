@@ -29,6 +29,8 @@ class EditorSurveyController extends WikiaController {
 			$response['html'] = $this->app->renderPartial( 'EditorSurveyController', 'modal', [
 				'body' => wfMsg( $bodyMsgKey ),
 				'heading' => wfMsg( 'editorsurvey-heading' ),
+				'cancelButton' => wfMsg( 'editorsurvey-cancelButton' ),
+				'takeSurveyButton' => wfMsg( 'editorsurvey-takeSurveyButton' ),
 				'surveyUrl' => $surveyUrl
 			]);
 		}
