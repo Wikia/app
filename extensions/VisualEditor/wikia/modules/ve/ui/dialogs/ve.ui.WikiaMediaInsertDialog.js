@@ -33,6 +33,28 @@ ve.ui.WikiaMediaInsertDialog.static.icon = 'media';
 
 ve.ui.WikiaMediaInsertDialog.static.pages = [ 'main', 'search' ];
 
+/**
+ * Properly format the media policy message
+ * Strip all HTML tags except for anchors. Make anchors open in a new window.
+ *
+ * @method
+ * @param {string} html The HTML to format
+ * @returns {jQuery}
+ */
+ve.ui.WikiaMediaInsertDialog.static.formatPolicy = function ( html ) {
+	 return $( '<div>' )
+		.html( html )
+		.find( '*' )
+			.each( function() {
+				if ( this.tagName.toLowerCase() === 'a' ) {
+					$( this ).attr( 'target', '_blank' );
+				} else {
+					$( this ).contents().unwrap();
+				}
+			} )
+			.end();
+};
+
 /* Methods */
 
 /**
@@ -74,11 +96,25 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	this.queryUpload = this.query.getUpload();
 	this.search = new ve.ui.WikiaMediaResultsWidget( { '$': this.$ } );
 	this.results = this.search.getResults();
+	this.timings = {};
 	this.upload = new ve.ui.WikiaUploadWidget( { '$': this.$, 'hideIcon': true } );
 
 	this.$cart = this.$( '<div>' );
 	this.$content = this.$( '<div>' );
 	this.$mainPage = this.$( '<div>' );
+	this.$policy = this.$( '<div>' )
+		.addClass('ve-ui-wikiaMediaInsertDialog-policy')
+		.html(
+			this.constructor.static.formatPolicy(
+				ve.init.platform.getParsedMessage( 'wikia-visualeditor-dialog-wikiamediainsert-policy-message' )
+			)
+		);
+	this.$policyReadMore = this.$( '<div>' )
+		.addClass( 've-ui-wikiaMediaInsertDialog-readMore' );
+	this.$policyReadMoreLink = this.$( '<a>' )
+		.html( ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-read-more' ) );
+	this.$policyReadMore.append( this.$policyReadMoreLink );
+
 
 	// Events
 	this.cartModel.connect( this, {
@@ -104,10 +140,12 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	} );
 	this.upload.connect( this, uploadEvents );
 	this.queryUpload.connect( this, uploadEvents );
+	this.$policyReadMoreLink.on( 'click', ve.bind( this.onReadMoreLinkClick, this ) );
 	this.dropTarget.on( 'drop', ve.bind( this.onFileDropped, this ) );
 
 	// Initialization
-	this.upload.$element.appendTo( this.$mainPage );
+	this.$mainPage.append( this.upload.$element, this.$policy, this.$policyReadMore );
+
 	this.pages.addPage( 'main', { '$content': this.$mainPage } );
 	this.pages.addPage( 'search', { '$content': this.search.$element } );
 
@@ -123,6 +161,19 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	this.$foot.append( this.insertButton.$element );
 	this.$frame.prepend( this.dropTarget.$element );
 	this.surface.$globalOverlay.append( this.mediaPreview.$element );
+};
+
+
+/**
+ * Handle clicking the media policy read more link.
+ *
+ * @method
+ * @param {jQuery} e The jQuery event
+ */
+ve.ui.WikiaMediaInsertDialog.prototype.onReadMoreLinkClick = function ( e ) {
+	e.preventDefault();
+	this.$policyReadMore.hide();
+	this.$policy.animate( { 'max-height': this.$policy.children().first().height() } );
 };
 
 /**
@@ -350,7 +401,13 @@ ve.ui.WikiaMediaInsertDialog.prototype.onMediaPageRemove = function ( item ) {
 ve.ui.WikiaMediaInsertDialog.prototype.setup = function () {
 	// Parent method
 	ve.ui.MWDialog.prototype.setup.call( this );
-	this.setPage( 'main' );
+	this.pages.setPage( 'main' );
+
+	// If the policy height (which has a max-height property set) is the same as the first child of the policy
+	// then there is no more of the policy to show and the read more link can be hidden.
+	if ( this.$policy.height() === this.$policy.children().first().height() ) {
+		this.$policyReadMore.hide();
+	}
 	this.dropTarget.setup();
 };
 
@@ -423,6 +480,8 @@ ve.ui.WikiaMediaInsertDialog.prototype.convertTemporaryToPermanent = function ( 
  */
 ve.ui.WikiaMediaInsertDialog.prototype.insertMedia = function ( cartItems ) {
 	var i, promises = [];
+
+	this.timings.insertStart = ve.now();
 
 	// TODO: consider encapsulating this so it doesn't get created on every function call
 	function temporaryToPermanentCallback( cartItem, name ) {
@@ -580,6 +639,12 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMediaCallback = function (
 	}
 
 	this.surface.getModel().getFragment().collapseRangeToEnd().insertContent( linmod );
+
+	ve.track( 'wikia', {
+		'action': ve.track.actions.SUCCESS,
+		'label': 'dialog-media-insert',
+		'value': ve.now() - this.timings.insertStart
+	} );
 };
 
 /**

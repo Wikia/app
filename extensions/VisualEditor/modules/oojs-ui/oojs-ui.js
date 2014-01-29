@@ -676,7 +676,8 @@ OO.ui.Frame.prototype.transplantStyles = function () {
 		try {
 			rules = sheet.cssRules;
 		} catch ( e ) { }
-		if ( sheet.ownerNode.nodeName.toLowerCase() === 'link' && rules ) {
+		// Disabled with `false` for Wikia
+		if ( false && sheet.ownerNode.nodeName.toLowerCase() === 'link' && rules ) {
 			// This is a <link> tag pointing to a same-origin style sheet. Rebuild it as a
 			// <style> tag. This needs to be in a try-catch because it sometimes fails in Firefox.
 			try {
