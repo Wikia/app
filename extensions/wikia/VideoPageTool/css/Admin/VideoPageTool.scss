@@ -171,9 +171,11 @@ $label-padding: 10px 10px 10px 0px;
 			width: 179px;
 		}
 		.video-thumb {
-			background: $color-page-border-subtle;
-			height: 100px;
 			position: relative;
+
+			img {
+				width: 100%;
+			}
 		}
 		.button-group {
 			label.error {
