@@ -191,7 +191,7 @@ class UserProfilePageHooks {
 	 */
 	static public function onWikiFactoryChanged( $cv_name , $city_id, $value ) {
 		if ( $cv_name === 'wgGroupPermissionsLocal' ) {
-			$is_hidden = false;
+			$is_restricted = false;
 			$permissions =  WikiFactory::getVarValueByName( 'wgGroupPermissionsLocal', $city_id );
 			if ( !empty( $value ) ) {
 				$permissions = WikiFactoryLoader::parsePermissionsSettings( $value );
@@ -202,9 +202,9 @@ class UserProfilePageHooks {
 				isset( $permissions['*']['read'] ) &&
 				$permissions['*']['read'] === false
 			) {
-				$is_hidden = true;
+				$is_restricted = true;
 			}
-			UserProfilePageHelper::updateHiddenWikis( (int)$city_id, $is_hidden );
+			UserProfilePageHelper::updateRestrictedWikis( (int)$city_id, $is_restricted );
 		}
 		return true;
 	}
@@ -222,7 +222,7 @@ class UserProfilePageHooks {
 	 */
 	static public function onWikiFactoryVariableRemoved( $cv_name , $city_id ) {
 		if ( $cv_name === 'wgGroupPermissionsLocal' ) {
-			UserProfilePageHelper::updateHiddenWikis( (int)$city_id, false );
+			UserProfilePageHelper::updateRestrictedWikis( (int)$city_id, false );
 		}
 		return true;
 	}

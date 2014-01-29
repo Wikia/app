@@ -2,8 +2,8 @@
 
 class UserProfilePageHelper {
 
-	const GLOBAL_HIDDEN_WIKIS_ID = 0;
-	const GLOBAL_HIDDEN_WIKIS_TYPE = 1;
+	const GLOBAL_RESTRICTED_WIKIS_ID = 0;
+	const GLOBAL_RESTRICTED_WIKIS_TYPE = 1;
 
 	/**
 	 * @brief Get user object from given title
@@ -81,58 +81,27 @@ class UserProfilePageHelper {
 		return $user;
 	}
 
-	public static function lockAndSetData( $memCSync, $getDataCallback, $lockFailCallback ) {
-		// Try to update the data $count times before giving up
-		$count = 5;
-		while ( $count-- ) {
-			if( $memCSync->lock() ) {
-				$data = $getDataCallback();
-				$success = false;
-				// Make sure we have data
-				if ( isset( $data ) ) {
-					// See if we can set it successfully
-					if ( $memCSync->set( $data ) ) {
-						$success = true;
-					}
-				} else {
-					// If there's no data don't bother doing anything
-					$success = true;
-				}
-				$memCSync->unlock();
-				if ( $success ) {
-					break;
-				}
-			} else {
-				usleep( rand( 1, $count * 1000 ) );
-			}
-		}
-		// If count is -1 it means we left the above loop failing to update
-		if ( $count == -1 ) {
-			$lockFailCallback();
-		}
-	}
-
-	private static function rebuildData( $memCSync, $city_id, $is_hidden ) {
+	private static function rebuildData( $memCSync, $city_id, $is_restricted ) {
 		$changed = false;
-		$hiddenWikis = $memCSync->get();
-		if ( empty( $hiddenWikis ) && !is_array( $hiddenWikis ) ) {
-			$hiddenWikis = self::getRestrictedWikisFromDB();
+		$restrictedWikis = $memCSync->get();
+		if ( empty( $restrictedWikis ) && !is_array( $restrictedWikis ) ) {
+			$restrictedWikis = self::getRestrictedWikisFromDB();
 		}
-		if ( $is_hidden ) {
-			if ( !in_array( $city_id, $hiddenWikis ) ) {
-				$hiddenWikis[] = $city_id;
+		if ( $is_restricted ) {
+			if ( !in_array( $city_id, $restrictedWikis ) ) {
+				$restrictedWikis[] = $city_id;
 				$changed = true;
 			}
 		} else {
-			if ( ( $index = array_search($city_id, $hiddenWikis ) ) !== false ) {
-				unset( $hiddenWikis[$index] );
+			if ( ( $index = array_search($city_id, $restrictedWikis ) ) !== false ) {
+				unset( $restrictedWikis[$index] );
 				$changed = true;
 			}
 		}
 		if ( $changed ) {
-			self::saveRestrictedWikisDB( $hiddenWikis );
+			self::saveRestrictedWikisDB( $restrictedWikis );
 		}
-		return $hiddenWikis;
+		return $restrictedWikis;
 	}
 
 	private static function getRestrictedWikisKey() {
@@ -154,23 +123,23 @@ class UserProfilePageHelper {
 			'global_registry',
 			'item_value',
 			array(
-				'item_id' => self::GLOBAL_HIDDEN_WIKIS_ID,
-				'item_type' => self::GLOBAL_HIDDEN_WIKIS_TYPE,
+				'item_id' => self::GLOBAL_RESTRICTED_WIKIS_ID,
+				'item_type' => self::GLOBAL_RESTRICTED_WIKIS_TYPE,
 			),
 			__METHOD__
 		);
-		$hiddenWikis = unserialize( $value );
-		return is_array( $hiddenWikis ) ? $hiddenWikis : array();
+		$restrictedWikis = unserialize( $value );
+		return is_array( $restrictedWikis ) ? $restrictedWikis : array();
 	}
 
-	public static function saveRestrictedWikisDB( $hiddenWikis ) {
+	public static function saveRestrictedWikisDB( $restrictedWikis ) {
 		self::getDb( true )->replace(
 			'global_registry',
 			array( 'item_id', 'item_type' ),
 			array(
-				'item_id' => self::GLOBAL_HIDDEN_WIKIS_ID,
-				'item_type' => self::GLOBAL_HIDDEN_WIKIS_TYPE,
-				'item_value' => serialize( $hiddenWikis )
+				'item_id' => self::GLOBAL_RESTRICTED_WIKIS_ID,
+				'item_type' => self::GLOBAL_RESTRICTED_WIKIS_TYPE,
+				'item_value' => serialize( $restrictedWikis )
 			),
 			__METHOD__
 		);
@@ -183,7 +152,7 @@ class UserProfilePageHelper {
 		$list = $memCSync->get();
 
 		if ( empty( $list ) && !is_array( $list ) ) {
-			self::lockAndSetData( $memCSync,
+			$memCSync->lockAndSetData(
 				function () use ( $memCSync, &$list ) {
 					$list = self::getRestrictedWikisFromDB();
 					return $list;
@@ -197,12 +166,12 @@ class UserProfilePageHelper {
 		return $list;
 	}
 
-	public static function updateHiddenWikis( $city_id, $is_hidden ) {
+	public static function updateRestrictedWikis( $city_id, $is_restricted ) {
 		wfProfileIn(__METHOD__);
 		$memCSync = self::getCache();
-		self::lockAndSetData( $memCSync,
-			function() use ( $memCSync, $city_id, $is_hidden ) {
-				return self::rebuildData( $memCSync, $city_id, $is_hidden );
+		$memCSync->lockAndSetData(
+			function() use ( $memCSync, $city_id, $is_restricted ) {
+				return self::rebuildData( $memCSync, $city_id, $is_restricted );
 			},
 			function() use ( $memCSync) {
 				// Delete the cache if we were unable to update to force a rebuild
