@@ -250,12 +250,14 @@ class VideoHandlerController extends WikiaController {
 		$thumbWidth = $this->getVal( 'thumbWidth', '250' );
 		$thumbHeight = $this->getVal( 'thumbHeight', '250' );
 		$articleLimit = $this->getVal( 'articleLimit', '10' );
+		$getThumb = $this->getVal( 'getThumb' );
 
 		$helper = new VideoHandlerHelper();
 		$videoDetail = $helper->getVideoDetail( array('title' => $fileTitle),
 												$thumbWidth,
 												$thumbHeight,
-												$articleLimit
+												$articleLimit,
+												$getThumb
 		);
 		$this->detail = $videoDetail;
 	}
