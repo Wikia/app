@@ -39,7 +39,7 @@ class IvaFeedIngester extends VideoFeedIngester {
 		'Glee' => array( 'Glee' ),
 		'My Little Pony' => array( 'My Little Pony' ),
 		'Vampire Diaries' => array( 'Vampire Diaries' ),
-		'Game of Thrones' => array( 'Game of Thrones', 785881, 722311 ),
+		'Game of Thrones' => array( 785881, 722311 ),
 		'Doctor Who' => array( 'Doctor Who' ),
 		'Gundam' => array( 'Gundam' ),
 		'Degrassi' => array( 'Degrassi' ),
@@ -824,26 +824,29 @@ class IvaFeedIngester extends VideoFeedIngester {
 	 * Massage some video metadata and generate URLs to this video's assets
 	 * @param string $name
 	 * @param array $data
+	 * @param boolean $generateUrl
 	 * @return array $data
 	 */
-	protected function generateRemoteAssetData( $name, $data ) {
-		$data['name'] = $name;
+	protected function generateRemoteAssetData( $name, $data, $generateUrl = true ) {
+		$data['assetTitle'] = $name;
 		$data['duration'] = $data['duration'] * 1000;
 		$data['published'] = empty( $data['published'] ) ? '' : strftime( '%Y-%m-%d', $data['published'] );
 
-		$url = str_replace( '$1', F::app()->wg->IvaApiConfig['AppId'], static::$ASSET_URL );
-		$url = str_replace( '$2', $data['videoId'], $url );
+		if ( $generateUrl ) {
+			$url = str_replace( '$1', F::app()->wg->IvaApiConfig['AppId'], static::$ASSET_URL );
+			$url = str_replace( '$2', $data['videoId'], $url );
 
-		$expired = 1609372800; // 2020-12-31
-		$url = str_replace( '$3', $expired, $url );
+			$expired = 1609372800; // 2020-12-31
+			$url = str_replace( '$3', $expired, $url );
 
-		$hash = $this->generateHash( $url );
-		$url .= '&h='.$hash;
+			$hash = $this->generateHash( $url );
+			$url .= '&h='.$hash;
 
-		$data['url'] = array(
-			'flash' => $url,
-			'iphone' => $url,
-		);
+			$data['url'] = array(
+				'flash' => $url,
+				'iphone' => $url,
+			);
+		}
 
 		return $data;
 	}

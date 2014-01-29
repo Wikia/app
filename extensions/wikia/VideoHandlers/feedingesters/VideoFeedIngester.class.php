@@ -198,11 +198,13 @@ abstract class VideoFeedIngester {
 		// check if the video id exists in Ooyala.
 		if ( $remoteAsset ) {
 			$ooyalaAsset = new OoyalaAsset();
-			$isExist = $ooyalaAsset->isSourceIdExist( $id, $provider );
-			if ( $isExist ) {
-				print "Not uploading [$name (Id: $id)] - video already exists in remote assets.\n";
-				wfProfileOut( __METHOD__ );
-				return 0;
+			$dupAssets = $ooyalaAsset->getAssetsBySourceId( $id, $provider );
+			if ( !empty( $dupAssets ) ) {
+				if ( $this->reupload === false ) {
+					print "Not uploading [$name (Id: $id)] - video already exists in remote assets.\n";
+					wfProfileOut( __METHOD__ );
+					return 0;
+				}
 			}
 		}
 
@@ -243,7 +245,18 @@ abstract class VideoFeedIngester {
 		// create remote asset (ooyala)
 		if ( $remoteAsset ) {
 			$metadata['pageCategories'] = implode( ', ', $categories );
-			$result = $this->createRemoteAsset( $id, $name, $metadata, $debug );
+			if ( !empty( $dupAssets ) ) {
+				if ( !empty( $dupAssets[0]['metadata']['sourceid'] ) && $dupAssets[0]['metadata']['sourceid'] == $id ) {
+					$result = $this->updateRemoteAsset( $id, $name, $metadata, $debug, $dupAssets[0] );
+				} else {
+					echo "Skipping {$metadata['name']} - {$metadata['description']}. SouceId not match (Id: $id).\n";
+					wfProfileOut( __METHOD__ );
+					return 0;
+				}
+			} else {
+				$result = $this->createRemoteAsset( $id, $name, $metadata, $debug );
+			}
+
 			wfProfileOut( __METHOD__ );
 			return $result;
 		}
@@ -341,7 +354,7 @@ abstract class VideoFeedIngester {
 
 		// check if video title exists
 		$ooyalaAsset = new OoyalaAsset();
-		$isExist = $ooyalaAsset->isTitleExist( $assetData['name'], $assetData['provider'] );
+		$isExist = $ooyalaAsset->isTitleExist( $assetData['assetTitle'], $assetData['provider'] );
 		if ( $isExist ) {
 			print( "Skip (Uploading Asset): $name ($assetData[provider]): video already exists in remote assets.\n" );
 			wfProfileOut( __METHOD__ );
@@ -369,13 +382,67 @@ abstract class VideoFeedIngester {
 	}
 
 	/**
+	 * Update remote asset (metadata only)
+	 * @param string $id
+	 * @param string $name
+	 * @param array $metadata
+	 * @param boolean $debug
+	 * @param array $dupAsset
+	 * @return integer
+	 */
+	protected function updateRemoteAsset( $id, $name, $metadata, $debug, $dupAsset ) {
+		wfProfileIn( __METHOD__ );
+
+		if ( empty( $dupAsset['embed_code'] ) ) {
+			echo "Error when updating remote asset data: empty asset embed code.\n";
+			wfProfileOut( __METHOD__ );
+			return 0;
+		}
+
+		$assetData = $this->generateRemoteAssetData( $dupAsset['name'], $metadata, false );
+
+		$ooyalaAsset = new OoyalaAsset();
+		$assetMeta = $ooyalaAsset->getAssetMetadata( $assetData );
+
+		// set reupload
+		$assetMeta['reupload'] = 1;
+
+		// remove unwanted data
+		$emptyMetaKeys = array_diff( array_keys( $dupAsset['metadata'] ), array_keys( $assetMeta ) );
+		foreach ( $emptyMetaKeys as $key ) {
+			$assetMeta[$key] = null;
+		}
+
+		if ( $debug ) {
+			print "Ready to update remote asset\n";
+			print "id:          $id\n";
+			print "name:        $name\n";
+			print "embed code:  $dupAsset[embed_code]\n";
+			print "asset name:  $dupAsset[name]\n";
+			print "metadata:\n";
+			foreach ( explode("\n", var_export( $assetMeta, TRUE ) ) as $line ) {
+				print ":: $line\n";
+			}
+		} else {
+			$result = $ooyalaAsset->updateMetadata( $dupAsset['embed_code'], $assetMeta );
+			if ( !$result ) {
+				wfProfileOut( __METHOD__ );
+				return 0;
+			}
+		}
+
+		wfProfileOut( __METHOD__ );
+		return 1;
+	}
+
+	/**
 	 * Generate remote asset data
 	 * @param string $name
 	 * @param array $data
 	 * @return array $data
 	 */
 	protected function generateRemoteAssetData( $name, $data ) {
-		$data['name'] = $name;
+		$data['assetTitle'] = $name;
 
 		return $data;
 	}
@@ -994,6 +1061,7 @@ abstract class VideoFeedIngester {
 			case 'trailer':
 				$category = 'Trailers';
 				break;
+			case 'game':
 			case 'gaming':
 				$category = 'Games';
 				break;

@@ -79,6 +79,42 @@ class OoyalaAsset extends WikiaModel {
 	}
 
 	/**
+	 * Get assets by sourceid in metadata (max = 10)
+	 * @param string $sourceId
+	 * @param string $source
+	 * @param string $assetType [remote_asset]
+	 * @return array $assets
+	 */
+	public function getAssetsBySourceId( $sourceId, $source, $assetType = 'remote_asset' ) {
+		wfProfileIn( __METHOD__ );
+
+		$cond = array(
+			"asset_type='$assetType'",
+			"metadata.sourceid='$sourceId'",
+			//"metadata.source='$source'",
+		);
+
+		$params = array(
+			'limit' => 10,
+			'where' => implode( ' AND ', $cond ),
+		);
+
+		$method = 'GET';
+		$reqPath = '/v2/assets';
+
+		$url = OoyalaApiWrapper::getApi( $method, $reqPath, $params );
+		print( "Connecting to $url...\n" );
+
+		$response = self::getApiContent( $url );
+
+		$assets = empty( $response['items'] ) ? array() : $response['items'];
+
+		wfProfileOut( __METHOD__ );
+
+		return $assets;
+	}
+
+	/**
 	 * Get labels for all providers
 	 * @return array|false $providers
 	 */
@@ -201,7 +237,7 @@ class OoyalaAsset extends WikiaModel {
 	 */
 	protected function generateRemoteAssetParams( $data ) {
 		$params = array(
-			'name' => $data['name'],
+			'name' => $data['assetTitle'],
 			'asset_type' => 'remote_asset',
 			'description' => $data['description'],
 			'duration' => $data['duration'],
@@ -227,10 +263,6 @@ class OoyalaAsset extends WikiaModel {
 		$reqPath = '/v2/assets/'.$videoId.'/metadata';
 
 		$assetData = $this->getAssetMetadata( $metadata );
-
-		// source and sourceid are required. They are used for tracking the video.
-		$assetData['source'] = $metadata['provider'];
-		$assetData['sourceid'] = $metadata['videoId'];
 
 		$reqBody = json_encode( $assetData );
 
@@ -307,7 +339,7 @@ class OoyalaAsset extends WikiaModel {
 	 * @param array $data
 	 * @return array $metadata
 	 */
-	protected function getAssetMetadata( $data ) {
+	public function getAssetMetadata( $data ) {
 		$metadata = array();
 
 		if ( !empty( $data['category'] ) ) {
@@ -383,6 +415,10 @@ class OoyalaAsset extends WikiaModel {
 		// filter empty value
 		$this->filterEmptyValue( $metadata );
 
+		// source and sourceid are required. They are used for tracking the video.
+		$metadata['source'] = $data['provider'];
+		$metadata['sourceid'] = $data['videoId'];
+
 		return $metadata;
 	}
 
@@ -410,10 +446,10 @@ class OoyalaAsset extends WikiaModel {
 	 * @param string $assetType [remote_asset]
 	 * @return boolean
 	 */
-	public function isSourceIdExist( $videoId, $source, $assetType = 'remote_asset' ) {
+	public function isSourceIdExist( $sourceId, $source, $assetType = 'remote_asset' ) {
 		$cond = array(
 			"asset_type='$assetType'",
-			"metadata.sourceid='$videoId'",
+			"metadata.sourceid='$sourceId'",
 			//"metadata.source='$source'",
 		);
 
