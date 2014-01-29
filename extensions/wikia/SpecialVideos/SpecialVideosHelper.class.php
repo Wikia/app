@@ -24,7 +24,7 @@ class SpecialVideosHelper extends WikiaModel {
 			$options['premium'] = wfMessage( 'specialvideos-sort-featured' )->text();
 		}
 
-		if ( 1|| $this->wg->UseVideoVerticalFilters ) {
+		if ( $this->wg->UseVideoVerticalFilters ) {
 			$options['trend:Games'] = wfMessage( 'specialvideos-filter-games' )->text();
 			$options['trend:Lifestyle'] = wfMessage( 'specialvideos-filter-lifestyle' )->text();
 			$options['trend:Entertainment'] = wfMessage( 'specialvideos-filter-entertainment' )->text();
