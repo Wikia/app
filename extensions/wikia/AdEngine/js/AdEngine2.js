@@ -32,7 +32,9 @@ var AdEngine2 = function (log, LazyQueue, slotTracker) {
 
 			function success(extra) {
 				log(['success', slotname, extra], 'debug', logGroup);
-				aSlotTracker.track('success');
+				aSlotTracker.track('success')
+
+				slot[1] && slot[1](hop)
 			}
 
 			function hop(extra, hopTo) {

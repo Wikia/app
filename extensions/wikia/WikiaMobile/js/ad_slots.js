@@ -47,13 +47,13 @@ require( ['ads', 'jquery', 'JSMessages', 'wikia.window', 'wikia.log'], function 
 
 	if ( window.wgArticleId ) {
 		if ( showInContent ) {
-			$firstSection.before( '<div id=wkAdInContent class=ad-in-content />' );
-			loadAd( doc.getElementById( 'wkAdInContent' ), 'MOBILE_IN_CONTENT' );
+			$firstSection.before( '<div id=MOBILE_IN_CONTENT class=ad-in-content />' );
+			loadAd( doc.getElementById( 'MOBILE_IN_CONTENT' ), 'MOBILE_IN_CONTENT' );
 		}
 
 		if ( showBeforeFooter ) {
-			$footer.after( '<div id=wkAdBeforeFooter class=ad-in-content />' );
-			loadAd( doc.getElementById( 'wkAdBeforeFooter' ), 'MOBILE_PREFOOTER' );
+			$footer.after( '<div id=MOBILE_PREFOOTER class=ad-in-content />' );
+			loadAd( doc.getElementById( 'MOBILE_PREFOOTER' ), 'MOBILE_PREFOOTER' );
 		}
 	}
 } );
