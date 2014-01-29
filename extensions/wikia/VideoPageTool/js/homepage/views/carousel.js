@@ -49,10 +49,10 @@ define( 'videohomepage.views.carousel', [
 				navigation: true,
 				rewindNav: false,
 				afterUpdate: function() {
-					self.resizeLastSlide();
 					self.$carousel.find( '.title' ).ellipses( {
 						wordsHidden: 2
 					} );
+					self.resizeLastSlide();
 				},
 				beforeUpdate: function() {
 					self.$( '.ellipses' ).remove();
@@ -69,10 +69,11 @@ define( 'videohomepage.views.carousel', [
 					$buttons;
 
 			$buttons = this.$( '.owl-buttons div' );
-			height = this.$( '.owl-item:first-child img' ).height();
+			height = this.$( '.owl-item' ).eq( 0 ).find( 'img' ).height();
+			console.log( height );
 
 			// set the last slides height (since it doesn't come with an image)
-			this.$( '.category-slide' ).height( height );
+			this.$( '.category-slide' ).height( height ).show();
 
 			// position slider arrows in correct position
 			$buttons.css({
