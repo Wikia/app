@@ -23,10 +23,6 @@ class AssetsManagerController extends WikiaController {
 	 * @requestParam string scripts - comma-separated list of AssetsManager groups
 	 * @requestParam string messages - comma-separated list of JSMessages packages
 	 * @requestParam integer ttl - cache period for varnish and browser (in seconds),
-	 * no caching will be used if not specified or 0, this value is overridden by varnishTTL
-	 * and browserTTL respectively for the Varnish part and the Browser part
-	 * @requestParam integer varnishTTL - cache period for varnish (in seconds)
-	 * @requestParam integer browserTTL - cache period for varnish (in seconds)
 	 *
 	 * @responseParam array templates - rendered templates (either HTML or JSON encoded string)
 	 * @responseParam array styles - minified styles
