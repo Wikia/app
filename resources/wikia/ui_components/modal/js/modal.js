@@ -12,6 +12,8 @@ define( 'wikia.ui.modal', [
 	// constants for modal component
 	var BLACKOUT_ID = 'blackout',
 		BLACKOUT_VISIBLE_CLASS = 'visible',
+		BODY_WITH_BLACKOUT_CLASS = 'with-blackout',
+		FAKE_SCROLLBAR_CLASS = 'fake-scrollbar',
 		CLOSE_CLASS = 'close',
 		INACTIVE_CLASS = 'inactive',
 
@@ -93,13 +95,14 @@ define( 'wikia.ui.modal', [
 
 		// prevent page from jumping to right if vertical scroll bar exist
 		if ( $wrapper.height() > $win.height() ) {
-			$wrapper.addClass( 'fake-scrollbar' );
+			$wrapper.addClass( FAKE_SCROLLBAR_CLASS );
 		}
 
 		// set current page vertical position
 		wScrollTop = $win.scrollTop();
 
-		$wrapper.addClass( 'with-blackout' ).css( 'top', -wScrollTop );
+		$body.addClass( BODY_WITH_BLACKOUT_CLASS );
+		$wrapper.css( 'top', -wScrollTop );
 	}
 
 	/**
@@ -107,7 +110,8 @@ define( 'wikia.ui.modal', [
 	 */
 
 	function unblockPageScrolling() {
-		$wrapper.removeClass( 'with-blackout fake-scrollbar').css( 'top', 'auto' );
+		$body.removeClass( BODY_WITH_BLACKOUT_CLASS );
+		$wrapper.removeClass( FAKE_SCROLLBAR_CLASS ).css( 'top', 'auto' );
 		$win.scrollTop( wScrollTop );
 	}
 
@@ -227,7 +231,7 @@ define( 'wikia.ui.modal', [
 	Modal.prototype.show = function() {
 
 		// block background only if not modal in scenario
-		if ( $wrapper.hasClass( 'fake-scrollbar' ) === false ) {
+		if ( $wrapper.hasClass( FAKE_SCROLLBAR_CLASS ) === false ) {
 			blockPageScrolling();
 		}
 
