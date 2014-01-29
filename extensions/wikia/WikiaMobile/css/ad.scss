@@ -25,11 +25,13 @@ $slotTopHeight: 50px;
 
 	//compensate for wkPage margin
 	left: -3.125%;
+	min-width: $slotWidth;
 
 	&.show {
 		visibility: visible;
 
 		padding: 15px 0;
+		text-align: center;
 
 		border-top: 1px solid $border-color;
 	}

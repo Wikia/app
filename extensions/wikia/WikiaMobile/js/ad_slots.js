@@ -45,15 +45,18 @@ require( ['ads', 'jquery', 'JSMessages', 'wikia.window', 'wikia.log'], function 
 		}
 	} );
 
-	if ( window.wgArticleId ) {
-		if ( showInContent ) {
-			$firstSection.before( '<div id=MOBILE_IN_CONTENT class=ad-in-content />' );
-			loadAd( doc.getElementById( 'MOBILE_IN_CONTENT' ), 'MOBILE_IN_CONTENT' );
-		}
+	if ( window.wgArticleId && (showInContent || showPreFooter ) ) {
+		//this can wait to on load as is under the fold
+		$( window ).on( 'load', function () {
+			if ( showInContent ) {
+				$firstSection.before( '<div id=MOBILE_IN_CONTENT class=ad-in-content />' );
+				loadAd( doc.getElementById( 'MOBILE_IN_CONTENT' ), 'MOBILE_IN_CONTENT' );
+			}
 
-		if ( showBeforeFooter ) {
-			$footer.after( '<div id=MOBILE_PREFOOTER class=ad-in-content />' );
-			loadAd( doc.getElementById( 'MOBILE_PREFOOTER' ), 'MOBILE_PREFOOTER' );
-		}
+			if ( showBeforeFooter ) {
+				$footer.after( '<div id=MOBILE_PREFOOTER class=ad-in-content />' );
+				loadAd( doc.getElementById( 'MOBILE_PREFOOTER' ), 'MOBILE_PREFOOTER' );
+			}
+		} );
 	}
 } );

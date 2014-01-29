@@ -47,8 +47,7 @@ require(
 		log( 'Loading slot: ' + mobileTopLeaderBoard, logLevel, logGroup );
 		adSlots.push( [mobileTopLeaderBoard, isAdVisible( mobileTopLeaderBoard )] );
 
-		if ( window.wgArticleId && (showInContent || showPreFooter
-			) ) {
+		if ( window.wgArticleId && (showInContent || showPreFooter ) ) {
 			//this can wait to on load as is under the fold
 			$( window ).on( 'load', function () {
 				if ( showInContent ) {
