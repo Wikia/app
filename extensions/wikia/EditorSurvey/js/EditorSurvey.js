@@ -1,4 +1,8 @@
 ( function( window, $ ) {
+	if ( !window.wgEditorSurveyEnabled ) {
+		return;
+	}
+
 	var EditorSurvey = {
 		init: function() {
 			mw.hook( 've.activationComplete' ).add( function() {
