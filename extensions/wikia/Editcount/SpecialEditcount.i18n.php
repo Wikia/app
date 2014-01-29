@@ -145,7 +145,7 @@ $messages = array(
 		'editcount_allwikis' => 'Wszystkie wiki',
 		'editcount_archived_revisions' => 'Usunięte edycje',
 		'editcount_no_data' => 'Brak danych',
-		'editcount_refresh_time' => "Wyniki w kolumnie ''$1''z są zapisane w pamięci podręcznej. Następnym razem dane zostaną odświeżone po $2"
+		'editcount_refresh_time' => "Wyniki w kolumnie ''$1'' są zapisane w pamięci podręcznej. Następnym razem dane zostaną odświeżone po $2"
 	),
 
 // Portuguese (Lugusto)

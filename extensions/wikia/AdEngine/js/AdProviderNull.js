@@ -11,6 +11,7 @@ var AdProviderNull = function (log, slotTweaker) {
 	function fillInSlot(slotname, success) {
 		log(['fillInSlot', slotname], 5, logGroup);
 		slotTweaker.hide(slotname);
+		slotTweaker.hideSelfServeUrl(slotname);
 		success();
 	}
 

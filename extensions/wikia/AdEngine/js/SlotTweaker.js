@@ -5,6 +5,7 @@ var SlotTweaker = function(log, document, window) {
 		, addDefaultHeight, removeClass, removeDefaultHeight, hide, show, removeTopButtonIfNeeded
 		, defaultHeightClass = 'default-height'
 		, rclass = /[\t\r\n]/g
+		, isMedrec, hideSelfServeUrl
 		, isLeaderboard, isStandardLeaderboardSize, adjustLeaderboardSize
 		, standardLeaderboardSizeClass = 'standard-leaderboard'
 	;
@@ -24,6 +25,19 @@ var SlotTweaker = function(log, document, window) {
 
 		if (slot) {
 			removeClass(slot, defaultHeightClass);
+		}
+	};
+
+	isMedrec = function (slotname) {
+		return slotname.match(/TOP_RIGHT_BOXAD/);
+	};
+
+	hideSelfServeUrl = function (slotname) {
+		var selfServeUrl = document.getElementsByClassName('SelfServeUrl');
+		if (isMedrec(slotname)) {
+			if (selfServeUrl.length > 0) {
+				selfServeUrl[0].className += ' hidden';
+			}
 		}
 	};
 
@@ -118,6 +132,7 @@ var SlotTweaker = function(log, document, window) {
 		removeTopButtonIfNeeded: removeTopButtonIfNeeded,
 		adjustLeaderboardSize: adjustLeaderboardSize,
 		hide: hide,
+		hideSelfServeUrl : hideSelfServeUrl,
 		show: show
 	};
 };
