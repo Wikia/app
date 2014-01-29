@@ -339,10 +339,10 @@ class VideoEmbedToolSearchService
 	public function getRank() {
 		return $this->rank;
 	}
-	
+
 	/**
 	 * Allows us to set wiki ID based on search type
-	 * @param string $searchType
+	 * @param string $type
 	 * @return VideoEmbedToolSearchService provides fluent interface
 	 */
 	public function setSearchType( $type ) {

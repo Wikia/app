@@ -20,6 +20,10 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	/* @var $userLoginHelper UserLoginHelper */
 	private $userLoginHelper = null;
 
+	// let's keep this fields private for security reasons
+	private $username = '';
+	private $password = '';
+
 	public function __construct() {
 		parent::__construct( 'UserLogin', '', false );
 	}
@@ -169,6 +173,11 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 			return;
 		}
 
+		// we're sure at this point we'll need the private fields'
+		// values in the template let's pass them then
+		$this->response->setVal( 'username', $this->username );
+		$this->response->setVal( 'password', $this->password );
+
 		if ( $this->app->checkSkin( 'wikiamobile' ) ) {
 			$recoverParam = 'recover=1';
 			$recover = ( $this->wg->request->getInt( 'recover' ) === 1 );
@@ -211,23 +220,57 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	public function dropdown() {
 		$query = $this->app->wg->Request->getValues();
 
-		$this->returnto = Title::newMainPage()->getPartialURL();
-		if (isset($query['title'])) {
-			if ( !AccountNavigationController::isBlacklisted( $query['title'] ) ) {
-				$this->returnto = $query['title'] ;
-			} else {
-				$this->returnto = Title::newMainPage()->getPartialURL();
-			}
-			unset($query['title']);
-			if ( isset( $query['password'] ) ) {
-				// remove the password from the params to prevent exposiong in into the URL
-				unset($query['password']);
-			}
-		} else {
-			$this->returnto = Title::newMainPage()->getPartialURL();
+		if ( isset( $query['password'] ) ) {
+			// remove the password from the params to prevent exposiong in into the URL
+			unset($query['password']);
 		}
 
-		$this->returntoquery = wfArrayToCGI( $query );
+		$this->returnto = $this->getReturnToFromQuery( $query );
+		$this->returntoquery = $this->getReturnToQueryFromQuery( $query );
+	}
+
+	public function getMainPagePartialUrl() {
+		return Title::newMainPage()->getPartialURL();
+	}
+
+	/**
+	 * @param String $title
+	 *
+	 * @return Boolean
+	 */
+	public function isTitleBlacklisted( $title ) {
+		return AccountNavigationController::isBlacklisted( $title );
+	}
+
+	private function getReturnToFromQuery( $query ) {
+		if( !is_array( $query ) ) {
+			return '';
+		}
+
+		$returnto = $this->getMainPagePartialUrl();
+		if( isset( $query['title'] ) && !$this->isTitleBlacklisted( $query['title'] ) ) {
+			$returnto = $query['title'] ;
+			unset( $query['title'] );
+		}
+
+		return $returnto;
+	}
+
+	private function getReturnToQueryFromQuery( $query ) {
+		if( !is_array( $query ) ) {
+			return '';
+		}
+
+		// CONN-49 an edge-case when while being on Special:UserLogin you fail in logging-in
+		// and because of that the returntoquery gets longer and longer with each failure
+		if( !empty( $query['returntoquery'] ) ) {
+			$prevReturnToQuery = wfCgiToArray( $query['returntoquery'] );
+			$query['returntoquery'] = [];
+		} else {
+			$prevReturnToQuery = [];
+		}
+
+		return wfArrayToCGI( $query, $prevReturnToQuery );
 	}
 
 	public function providers() {
@@ -342,7 +385,9 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 					LoginForm::clearLoginToken();
 					UserLoginHelper::clearNotConfirmedUserSession();
 					$this->userLoginHelper->clearPasswordThrottle( $loginForm->mUsername );
-					$this->username = $loginForm->mUsername;
+					// we're sure at this point we'll need the private field'
+					// value in the template let's pass them then
+					$this->response->setVal( 'username', $loginForm->mUsername );
 					$this->result = 'ok';
 				}
 				break;

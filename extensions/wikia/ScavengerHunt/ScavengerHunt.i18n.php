@@ -228,6 +228,7 @@ $messages['ang'] = array(
 
 /** Arabic (العربية)
  * @author Achraf94
+ * @author Claw eg
  * @author Meno25
  * @author OsamaK
  */
@@ -282,6 +283,10 @@ $messages['ar'] = array(
 	'scavengerhunt-button-add-section' => 'إضافة خطوة أخرى في الصيد',
 	'scavengerhunt-button-remove-section' => 'إزالة هذه الخطوة',
 	'scavengerhunt-form-error' => 'الرجاء تصحيح الأخطاء التالية:',
+	'scavengerhunt-form-error-no-landing-title' => 'الرجاء إدخال اسم الصفحة المقصودة (URL صالح).',
+	'scavengerhunt-form-error-invalid-title' => 'لم يتم العثور على عنوان الصفحة التالي: "$1".',
+	'scavengerhunt-form-error-landing-button-text' => 'الرجاء إدخال نص زر الصفحة المقصودة.',
+	'scavengerhunt-form-error-landing-button-position' => 'الرجاء أدخل موضع زر الصفحة المقصودة.',
 	'scavengerhunt-form-error-no-sprite-image' => 'يرجى إعطاء المسار الكامل لملف الصورة',
 	'scavengerhunt-entry-form-name' => 'اسمك:',
 	'scavengerhunt-entry-form-email' => 'عنوان بريدك الإلكتروني:',
@@ -359,6 +364,7 @@ $messages['br'] = array(
 	'scavengerhunt-button-enable' => 'Gweredekaat',
 	'scavengerhunt-button-delete' => 'Dilemel',
 	'scavengerhunt-button-export' => 'Ezporzhiañ da CVS',
+	'scavengerhunt-button-remove-section' => 'Lemel ar prantad-mañ',
 	'scavengerhunt-form-error' => 'Reizhit ar fazioù-mañ, mar plij :',
 	'scavengerhunt-form-error-article-hidden-image' => "Ebarzhit an holl chomlec'hioù evit ar skeudennoù kuzhet, mar plij.",
 	'scavengerhunt-form-error-invalid-url' => 'Pourchasit un URL gwiriek, mar plij.',
@@ -378,6 +384,7 @@ $messages['br'] = array(
 	'scavengerhunt-label-clue-font' => 'Kinkladurioù ar font',
 	'scavengerhunt-label-article-congrats' => "Kemennadenn gourc'hemennoù",
 	'scavengerhunt-label-facebook' => 'Rannañ Facebook',
+	'scavengerhunt-editor-tip-starting-clue-button-target' => "Setu amañ chomlec'h ar bajenn gant an elfenn gentañ.",
 	'scavengerhunt-editor-tip-clue-color' => "Ret eo al livioù bezañ skrivet gant niveroù c'hwezekredel evel #F00.",
 	'scavengerhunt-editor-tip-facebook-description' => 'Testenn a vo diskwelet er gemennadenn rannañ',
 );

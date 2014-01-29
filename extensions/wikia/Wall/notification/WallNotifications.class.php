@@ -12,6 +12,11 @@
  */
 
 class WallNotifications {
+	/**
+	 * @var WikiaApp
+	 */
+	protected $app;
+
 	private $cachedUsers = array();
 
 	private $removedEntities;

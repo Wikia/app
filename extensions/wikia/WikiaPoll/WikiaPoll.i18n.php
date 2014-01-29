@@ -486,9 +486,14 @@ $messages['it'] = array(
 
 /** Japanese (日本語)
  * @author BryghtShadow
+ * @author Tommy6
  */
 $messages['ja'] = array(
 	'wikiapoll-votes' => '{{PLURAL:$1|$1 票}}',
+	'wikiamobile-wikiapoll-open-poll' => '投票にご協力ください',
+	'wikiamobile-wikiapoll-thanks-voting' => 'ご投票ありがとうございます!',
+	'wikiamobile-wikiapoll-poll' => '投票',
+	'wikiamobile-wikiapoll-user-voted' => '「$1」に投票しました',
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)

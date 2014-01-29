@@ -389,11 +389,8 @@ function(
 					cap = cap();
 				} else {
 					//if caption is not a string and img.caption is set to true grab it from DOM
-					figCap = currentMedia.element.parentElement.parentElement.getElementsByClassName( 'thumbcaption' )[0];
-
-					cap = figCap ? figCap.innerHTML : '';
 					//and then cache it in media object
-					currentMedia.caption = cap;
+					currentMedia.caption = cap = $( currentMedia.element ).parents( 'figure' ).find( '.thumbcaption' ).text();
 				}
 			} else {
 				cap = '';

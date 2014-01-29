@@ -1154,6 +1154,20 @@ $messages['si'] = array(
 	'quickstats-number-shortening' => '$1K',
 );
 
+/** Slovenian (slovenščina)
+ * @author Mitja i
+ */
+$messages['sl'] = array(
+	'quickstats-header-label' => 'Hitre statistike',
+	'quickstats-header-date' => 'Datum',
+	'quickstats-header-views' => 'Ogledi',
+	'quickstats-header-edits' => 'Urejanja',
+	'quickstats-header-photos' => 'Fotografije',
+	'quickstats-header-likes' => 'Všečki',
+	'quickstats-totals-label' => 'Skupaj',
+	'quickstats-see-more-stats-link' => '[[Special: WikiStats|Glej več statistik]]', # Fuzzy
+);
+
 /** Somali (Soomaaliga)
  * @author Abshirdheere
  */

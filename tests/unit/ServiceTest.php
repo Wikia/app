@@ -85,6 +85,8 @@ class ServiceTest extends WikiaBaseTest {
 	}
 
 	function testUserStatsService() {
+		$this->markTestSkipped('This is not a unit test');
+
 		$user = User::newFromName('QATestsBot');
 
 		$service = new UserStatsService($user->getId());

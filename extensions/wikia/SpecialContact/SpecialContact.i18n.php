@@ -135,6 +135,8 @@ $messages['br'] = array(
 	'specialcontact-ccme' => 'Kas un eilenn eus ar gemennadenn-mañ din',
 	'specialcontact-captchainfo' => 'Ebarzhit an destenn er skeudenn, mar plij.',
 	'specialcontact-nomessage' => 'Skrivit ur gemennadenn, mar plij',
+	'specialcontact-ccheader' => 'Setu amañ un eiladenn eus ar gemennadenn a zo bet kaset da Skoazell Wikia',
+	'specialcontact-submitcomplete' => "Trugarez deoc'h evit mont e darempred gant Wikia.",
 );
 
 /** Catalan (català)

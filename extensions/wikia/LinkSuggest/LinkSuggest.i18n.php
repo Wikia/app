@@ -417,7 +417,7 @@ $messages['tt-cyrl'] = array(
  */
 $messages['uk'] = array(
 	'linksuggest-desc' => 'Пропонує редакторам посилання в режимі редагування',
-	'tog-disablelinksuggest' => 'Не показувати пропозицій посилань у режимі Вихідного коду',
+	'tog-disablelinksuggest' => 'Не показувати підказки з посиланнями у режимі вихідного коду',
 	'tog-redirected-from' => '&ndash; перенаправлено з $1',
 );
 

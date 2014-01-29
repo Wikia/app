@@ -35,9 +35,9 @@ echo
 echo "dbname: $dbname"
 echo "cluster: $cluster"
 echo
-echo "About to issue php $script -d $dbname -c $cluster"
+echo "About to issue php $script -d $dbname -c $cluster -p $WIKIA_PROD_DATACENTER"
 echo
 echo -n "Hit enter to continue, Ctrl-C to cancel"
 read
 
-php $script -d "$dbname" -c "$cluster"
+php $script -d "$dbname" -c "$cluster" -p "$WIKIA_PROD_DATACENTER"

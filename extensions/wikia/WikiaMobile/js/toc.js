@@ -1,7 +1,7 @@
 /* globals Features:true */
 //init toc
-require( [ 'sections', 'wikia.window', 'jquery', 'wikia.mustache', 'wikia.toc' ],
-function ( sections, window, $, mustache, toc ) {
+require( [ 'sections', 'wikia.window', 'jquery', 'wikia.mustache', 'wikia.toc', 'track' ],
+function ( sections, window, $, mustache, toc, track ) {
 	'use strict';
 
 	//private
@@ -123,7 +123,7 @@ function ( sections, window, $, mustache, toc ) {
 	function init () {
 		if ( !inited ) {
 			$toc.on( 'click', 'header', function () {
-				onClose();
+				onClose( 'header' );
 				window.scrollTo( 0, 0 );
 			} )
 			.on( 'click', 'li', function ( event ) {
@@ -134,7 +134,7 @@ function ( sections, window, $, mustache, toc ) {
 				event.preventDefault();
 
 				if ( !toggleLi( $li ) ) {
-					onClose();
+					onClose( 'element' );
 				}
 
 				sections.scrollTo( $a.attr( 'href' ) );
@@ -165,32 +165,46 @@ function ( sections, window, $, mustache, toc ) {
 	 */
 	function onTap (){
 		inPageToc.scrollIntoView();
+
+		track.event( 'newtoc', track.CLICK, {
+			label: 'scroll'
+		} );
 	}
 
 	/**
 	 * @desc Fires on opening of a Side menu toc
 	 */
 	function onOpen () {
+		$toc.addClass( active );
 		$document.on( 'section:changed', onSectionChange );
 
 		init();
 
 		onSectionChange( null, sections.current()[0], true );
 		$.event.trigger( 'curtain:show' );
+
+		track.event( 'newtoc', track.CLICK, {
+			label: 'open'
+		} );
 	}
 
 	/**
 	 * @desc Fires on closing of a Side menu toc
 	 */
-	function onClose () {
-		$document.off( 'section:changed', onSectionChange );
+	function onClose( event ) {
+		if ( $toc.hasClass( active ) ) {
+			$toc.removeClass( active );
+			$document.off( 'section:changed', onSectionChange );
+
+			track.event( 'newtoc', track.CLICK, {
+				label: (typeof event === 'string' ? event : 'close')
+			} );
+		}
+
 		$.event.trigger( 'curtain:hide' );
 	}
 
-	$document.on( 'curtain:hidden', function () {
-		$toc.removeClass( active );
-		onClose();
-	} );
+	$document.on( 'curtain:hidden', onClose );
 
 	if ( !sideMenuCapable ) {
 		tocTemplate = renderToc();
@@ -211,10 +225,10 @@ function ( sections, window, $, mustache, toc ) {
 		event.stopPropagation();
 
 		if ( sideMenuCapable ) {
-			if ( $toc.toggleClass( active ).hasClass( active ) ) {
-				onOpen();
-			} else {
+			if ( $toc.hasClass( active ) ) {
 				onClose();
+			} else {
+				onOpen();
 			}
 		} else {
 			onTap();

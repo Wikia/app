@@ -194,6 +194,7 @@ class WikisApiController extends WikiaApiController {
 				WikiaResponse::CACHE_TARGET_VARNISH
 			)
 		);
+		//die();
 		wfProfileOut( __METHOD__ );
 	}
 
@@ -305,14 +306,12 @@ class WikisApiController extends WikiaApiController {
 			return [];
 		}
 		//post process thumbnails
-		if ( isset( $wikiInfo[ 'image' ] ) ) {
-			$wikiInfo = array_merge(
-				$wikiInfo,
-				$this->getImageData( $wikiInfo[ 'image' ], $width, $height )
-			);
-		} else {
-			$wikiInfo[ 'image' ] = '';
-		}
+
+		$wikiInfo = array_merge(
+			$wikiInfo,
+			$this->getImageData( $wikiInfo, $width, $height )
+		);
+
 		//set snippet
 		if ( isset( $wikiInfo[ 'desc' ] ) ) {
 			$length = ( $snippet !== null ) ? $snippet : static::DEFAULT_SNIPPET_LENGTH;
@@ -323,27 +322,77 @@ class WikisApiController extends WikiaApiController {
 		return $wikiInfo;
 	}
 
-	protected function getImageData( $imageName, $width = null, $height = null  ) {
+	protected function getImageData( $wikiInfo, $width = null, $height = null ) {
+		$imageName = $wikiInfo[ 'image' ];
+		$crop = ( $width != null || $height != null );
+		$width = ( $width !== null ) ? $width : static::DEFAULT_WIDTH;
+		$height = ( $height !== null ) ? $height : static::DEFAULT_HEIGHT;
+		$imgUrl = '';
+		$imgWidth = null;
+		$imgHeight = null;
+
 		$img = wfFindFile( $imageName );
 		if ( $img instanceof WikiaLocalFile ) {
-			if ( $width == null && $height == null ) {
+			//found on en-corporate wiki
+			if ( $crop ) {
 				//get original image if no cropping
-				$imgUrl = $img->getFullUrl();
-			} else {
-				$width = ( $width !== null ) ? $width : static::DEFAULT_WIDTH;
-				$height = ( $height !== null ) ? $height : static::DEFAULT_HEIGHT;
 				$imageServing = new ImageServing( null, $width, $height );
 				$imgUrl = $imageServing->getUrl( $img, $width, $height );
+			} else {
+				$imgUrl = $img->getFullUrl();
+				$imgWidth = $img->getWidth();
+				$imgHeight = $img->getHeight();
 			}
+		} else {
+			$f = $this->findGlobalFileImage( $imageName, $wikiInfo[ 'lang' ], $wikiInfo[ 'id' ] );
+			if ( $f && $f->exists() ) {
+				$imgWidth = $f->getWidth();
+				$imgHeight = $f->getHeight();
+				if ( $crop ) {
+					$globalTitle = $f->getTitle();
+
+					$imageService = new ImagesService();
+					$response = $imageService->getImageSrc(
+						$globalTitle->getCityId(),
+						$globalTitle->getArticleID(),
+						$width,
+						$height
+					);
+					$imgUrl = $response[ 'src' ];
+				} else {
+					$imgUrl = $f->getUrl();
+				}
+			}
+		}
+
+		if ( $imgUrl ) {
 			return [
 				'image' => $imgUrl,
 				'original_dimensions' => [
-					'width' => $img->getWidth(),
-					'height' => $img->getHeight()
+					'width' => $imgWidth,
+					'height' => $imgHeight
 				]
 			];
+		} else {
+			return [ 'image' => '' ];
 		}
-		return [];
+	}
+
+	protected function findGlobalFileImage( $imageName, $lang, $wikiId ) {
+		//try to find image on lang specific corporate wiki
+		$f = null;
+		$visualizationModel = new CityVisualization();
+		$cityList = $visualizationModel->getVisualizationWikisData();
+
+		if ( isset( $cityList[ $lang ] ) ) {
+			$f = GlobalFile::newFromText( $imageName, $cityList[ $lang ][ 'wikiId' ] );
+		} else {
+			//if image wasn't found, try to find it on wiki itself
+			$imageName = UploadVisualizationImageFromFile::VISUALIZATION_MAIN_IMAGE_NAME;
+			$f = GlobalFile::newFromText( $imageName, $wikiId );
+		}
+
+		return $f;
 	}
 
 	protected function getWikiWordmarkImage( $id ) {
@@ -406,6 +455,7 @@ class WikisApiController extends WikiaApiController {
 			],
 			'topUsers' => array_keys( $topUsers ),
 			'headline' => isset( $modelData[ $id ] ) ? $modelData[ $id ][ 'headline' ] : '',
+		    'lang' => isset( $modelData[ $id ] ) ? $modelData[ $id ][ 'lang' ] : '',
 			'flags' => $flags,
 			'desc' => isset( $modelData[ $id ] ) ? $modelData[ $id ][ 'desc' ] : '',
 			'image' => isset( $modelData[ $id ] ) ? $modelData[ $id ][ 'image' ] : '',
