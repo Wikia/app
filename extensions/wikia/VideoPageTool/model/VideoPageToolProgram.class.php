@@ -186,7 +186,7 @@ class VideoPageToolProgram extends WikiaModel {
 
 			$sql_conditions = array(
 				'language' => $language,
-				'publish_date <= '.$db->addQuotes( $date ),
+				'publish_date < '.$db->addQuotes( $date ),
 			);
 
 			// If there's a timestamp, the request is coming from the VPT
