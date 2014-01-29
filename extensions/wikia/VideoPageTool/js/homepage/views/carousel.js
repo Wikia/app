@@ -44,13 +44,14 @@ define( 'videohomepage.views.carousel', [
 			this.renderCarousel( {
 				scrollPerPage: true,
 				pagination: true,
-				paginationSpeed: 500,
+				paginationSpeed: 800,
+				slideSpeed: 800,
 				lazyLoad: true,
 				navigation: true,
 				rewindNav: false,
 				afterUpdate: function() {
 					self.resizeLastSlide();
-					self.$carousel.find( '.title' ).ellipses( {
+					self.$carousel.find( '.title a' ).ellipses( {
 						wordsHidden: 2
 					} );
 				},
