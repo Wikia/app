@@ -22,8 +22,9 @@ class WikisApiController extends WikiaApiController {
 	const DEFAULT_WIDTH = 250;
 	const DEFAULT_HEIGHT = null;
 	const DEFAULT_SNIPPET_LENGTH = null;
-	const CACHE_VERSION = 2;
+	const CACHE_VERSION = 3;
 	const WORDMARK = 'Wiki-wordmark.png';
+	const MAX_WIKIS = 250;
 	private static $flagsBlacklist = array( 'blocked', 'promoted' );
 
 	private $keys;
@@ -59,6 +60,7 @@ class WikisApiController extends WikiaApiController {
 		}
 
 		$results = $this->getWikiService()->getTop( $langs, $hub );
+		$results = $this->filterNonCommercial( $results );
 		$batches = wfPaginateArray( $results, $limit, $batch );
 
 		if ( $expand ) {
@@ -120,6 +122,7 @@ class WikisApiController extends WikiaApiController {
 		}
 
 		$results = $this->getWikiService()->getByString( $keyword, $langs, $hub, $includeDomain );
+		$results = $this->filterNonCommercial( $results );
 
 		if( is_array( $results ) ) {
 			$batches = wfPaginateArray( $results, $limit, $batch );
@@ -254,6 +257,23 @@ class WikisApiController extends WikiaApiController {
 
 		$this->response->setVal( 'items', $items );
 		wfProfileOut( __METHOD__ );
+	}
+
+	protected function getNonCommercialWikis() {
+		$licensed = new LicensedWikisService();
+		$licensedIds = array_keys( $licensed->getCommercialUseNotAllowedWikis() );
+		return $licensedIds;
+	}
+
+	protected function filterNonCommercial( $wikis ) {
+		$result =[];
+		$blackList = $this->getNonCommercialWikis();
+		foreach( $wikis as $wiki ) {
+			if ( !in_array( $wiki['id'], $blackList ) ) {
+				$result[] = $wiki;
+			}
+		}
+		return array_slice($result, 0, self::MAX_WIKIS);
 	}
 
 	protected function expandBatches( $batches ) {
