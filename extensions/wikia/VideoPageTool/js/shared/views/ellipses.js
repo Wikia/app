@@ -11,6 +11,7 @@
 
 		Ellipses.prototype = {
 			settings: {
+				marginLeft: -3,
 				maxLines: 2,
 				// words hidden on last visible line
 				wordsHidden: 1
@@ -66,21 +67,29 @@
 							.prevUntil( ':nth-child( ' + ( i - self.settings.wordsHidden )  + ' )' )
 								.hide()
 							.eq( 0 )
-								.before( '<span class="ellipses">...</span>' );
+								.before( '<span class="ellipses" style="">...</span>' );
 
-							self.trimDashes();
+							self.trim();
 						}
 					}
 				}
 			},
 			/**
-			 * @description if the last span before the ... is a -, trim it
+			 * @description method that aims to achieve balance between clean ellipses implementation
+			 * and performance. Uses CSS to position ellipses appropriate to hide last whitespace and also trims
+			 * dashes.
 			 */
-			trimDashes: function() {
+			trim: function() {
 				var $ellipses,
 						$prev;
+
 				$ellipses = this.$el.find( '.ellipses' );
 				$prev = $ellipses.prev( 'span' );
+
+				$ellipses.css({
+					marginLeft: this.settings.marginLeft
+				});
+
 				if ( $prev.text() === '-' ) {
 					$prev.hide();
 				}
