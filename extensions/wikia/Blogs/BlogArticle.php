@@ -442,6 +442,15 @@ class BlogArticle extends Article {
 				$catView->blogs = array();
 			}
 
+			if ( F::app()->checkSkin( 'wikiamobile' ) ) {
+				$catView->blogs[] = [
+					'name' => $title->getText(),
+					'url' => $title->getLocalUrl(),
+				];
+
+				return false;
+			}
+
 			/**
 			 * initialize CategoryView->blogs_start_char array
 			 */
