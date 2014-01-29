@@ -6,7 +6,7 @@ define( 'shared.views.carousel', [
 	'videohomepage.models.categorythumb',
 	'videohomepage.models.categorycarousel',
 	'shared.views.carouselthumb',
-	'templates.mustache'
+	'videopagetool.templates.mustache'
 ], function(
 	CategoryDataCollection,
 	CategoryThumbModel,

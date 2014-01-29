@@ -3,7 +3,7 @@
  */
 define( 'shared.views.carouselthumb', [
 	'jquery',
-	'templates.mustache'
+	'videopagetool.templates.mustache'
 ], function( $, templates ) {
 	'use strict';
 
