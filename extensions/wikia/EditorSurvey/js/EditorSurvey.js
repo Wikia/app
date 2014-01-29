@@ -6,11 +6,10 @@
 	var EditorSurvey = {
 		init: function() {
 			mw.hook( 've.activationComplete' ).add( function() {
-				EditorSurvey.bindUnload( 've-fail' );
+				EditorSurvey.bindUnload();
 			} );
 			mw.hook( 'postEdit' ).add( function() {
-				EditorSurvey.unbindUnload();
-				EditorSurvey.set( 've-success' );
+				EditorSurvey.handleSuccess();
 			} );
 			mw.hook( 've.deactivationComplete' ).add( function() {
 				// Delayed because VE core code fires deactivation before postEdit. Also, it feels nicer.
@@ -19,20 +18,39 @@
 				}, 1000 );
 			} );
 			mw.hook( 've.cancelButton' ).add( function() {
-				EditorSurvey.set( 've-fail' );
+				EditorSurvey.handleFailure();
 			} );
 
 			EditorSurvey.getSurvey();
 		},
 
-		bindUnload: function( value ) {
+		getEditorAbbreviation: function() {
+			var abbreviation;
+			if ( window.WikiaEditor ) {
+				abbreviation = 'ck';
+			} else if ( window.ve ) {
+				abbreviation = 've';
+			}
+			return abbreviation;
+		}
+
+		bindUnload: function() {
 			$( window ).on( 'beforeunload.EditorSurvey', function() {
-				EditorSurvey.set( value );
+				EditorSurvey.handleFailure();
 			} );
 		},
 
 		unbindUnload: function() {
 			$( window ).off( 'beforeunload.EditorSurvey' );
+		},
+
+		handleSuccess: function() {
+			EditorSurvey.unbindUnload();
+			EditorSurvey.set( EditorSurvey.getEditorAbbreviation() + '-success' );
+		},
+
+		handleFailure: function() {
+			EditorSurvey.set( EditorSurvey.getEditorAbbreviation() + '-fail' );
 		},
 
 		getSurvey: function() {
