@@ -62,18 +62,14 @@
 				}
 			}
 
-			var ajaxParams = {
+			return $.ajax({
 				url: url + '/wikia.php?' + $.param(getUrl), /* JSlint ignore */
 				dataType: format,
 				type: type,
 				data: sortedDict,
 				success: callback,
 				error: onErrorCallback
-			};
-			if (attr.jsonpCallback) {
-				ajaxParams.jsonpCallback = attr.jsonpCallback;
-			}
-			return $.ajax(ajaxParams);
+			});
 		}
 
 		return {
