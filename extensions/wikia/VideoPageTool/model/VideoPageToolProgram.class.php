@@ -174,11 +174,15 @@ class VideoPageToolProgram extends WikiaModel {
 			// If there was a specific timestamp given, look it up directly, don't cache it
 			$date = date( 'Y-m-d', $timestamp );
 			$nearestDate = '';
+			// For the edit page (time stamp given), we want to look for nearest date
+			// not including today.
+			$publishDateOperator = '<';
 		} else {
 			// If no timestamp was given, assume today and use a cache
 			$date = date( 'Y-m-d', time() );
 			$nearestKey = self::getMemcKeyNearestDate( $language );
 			$nearestDate = $app->wg->Memc->get( $nearestKey );
+			$publishDateOperator = '<=';
 		}
 
 		if ( empty($nearestDate) ) {
@@ -186,7 +190,7 @@ class VideoPageToolProgram extends WikiaModel {
 
 			$sql_conditions = array(
 				'language' => $language,
-				'publish_date < '.$db->addQuotes( $date ),
+				"publish_date $publishDateOperator ".$db->addQuotes( $date ),
 			);
 
 			// If there's a timestamp, the request is coming from the VPT
