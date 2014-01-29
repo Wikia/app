@@ -7,24 +7,25 @@ $pagination-color-normal: #e0dfdf;
 $pagination-color-active: #a7a9ab;
 
 .carousel-wrapper {
-	margin: 0 20px;
-	padding-bottom: 3em;
+	margin: 0 25px;
+	padding-bottom: 3.8em;
 
 	.owl-pagination {
 		@include clearfix;
 		display: inline-block;
 		position: absolute;
 		right: .8em;
-		top: -30px;
+		top: -24px;
 
 		.owl-page {
+			$dot-size: .5em;
 			background: $pagination-color-normal;
 			border-radius: 1.3em;
 			display: block;
 			float: left;
-			height: .6em;
+			height: $dot-size;
 			margin-left: 7px;
-			width: .6em;
+			width: $dot-size;
 
 			&.active {
 				background: $pagination-color-active;
@@ -45,6 +46,8 @@ $pagination-color-active: #a7a9ab;
 			top: 30%;
 			margin-top: -11px;
 			right: -$shift-width;
+			z-index: 600;
+
 
 			&:first-child {
 				@include transform-scale( -1 );
@@ -66,6 +69,24 @@ $pagination-color-active: #a7a9ab;
 
 	.category-carousel {
 		margin-top: 11px;
+
+		&:before, &:after {
+			content: '';
+			background: #FFF;
+			height: 100%;
+			position: absolute;
+			display: block;
+			top: 0;
+			width: 10px;
+			z-index: 500;
+		}
+		&:before {
+			left: 0px;
+		}
+
+		&:after {
+			right: 0px;
+		}
 	}
 
 	.carousel-title {
@@ -102,7 +123,7 @@ $pagination-color-active: #a7a9ab;
 		border: 1px solid $color-page-border;
 		box-sizing: border-box;
 		font-size: 14px;
-		line-height: 18px;
+		line-height: 12px;
 		padding-left: 1.5em;
 
 		p {
