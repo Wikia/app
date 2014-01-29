@@ -51,7 +51,7 @@ $messages['en'] = array(
 	'videopagetool-success-save' => 'Your changes have been saved',
 	'videopagetool-success-publish' => 'Your changes have been published',
 	'videopagetool-hint-description-maxlength' => '$1 characters max',
-	'videopagetool-see-more-label' => 'See more',
+	'videopagetool-see-more-label' => 'See more videos',
 
 	// Latest Video (category) form
 	'videopagetool-category-label-name' => 'Category',
