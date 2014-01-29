@@ -92,11 +92,40 @@ function findFounders( $timestamp ) {
 	}
 }
 
+function findInvalidFounders( $founders ) {
+	$db = wfGetDB( DB_SLAVE, [], 'wikicities' );
+	$table = 'user';
+	$fields = [ 'user_id' ];
+	$where = [ 'user_id in ' . $db->buildConcat( $founders ) ];
+	// $invalidFounders are users who founded a wiki but are not in wikicities.user table
+	$invalidFounders = [];
+	$recentUsers = [];
+	$recentFoundersNo = count( $founders );
+
+	try {
+		$resultWrapper = $db->select( $table, $fields, $where, __METHOD__ );
+		while( $row = $resultWrapper->fetchObject() ) {
+			$recentUsers[] = $row->user_id;
+		}
+		$recentUsersNo = count( $recentUsers );
+
+		if( $recentFoundersNo > $recentUsersNo ) {
+			$invalidFounders = array_diff( $founders, $recentUsers );
+		}
+
+		return $invalidFounders;
+	} catch( DBQueryError $e ) {
+		echo "Database error: " . $e->getMessage() . "\n";
+		echo "SQL statement was: " . $e->getSQL() . "\n\n";
+		return false;
+	}
+}
+
 /**
  * @brief Displays help content
  */
 function help() {
-	echo "This script checks if a founder of a wiki is present in `wikicities.user` table.\n";
+	echo "This script checks if a founder of a wiki is present in `wikicities.user` table.\nIf he's not present in the table then he's marked as 'invalid founder'.";
 	echo "Available options: \n";
 	echo "\thelp or ? -- displays this text\n";
 	echo "\ttimestamp -- (optional) starting point\n\n";
@@ -106,17 +135,28 @@ function help() {
 
 if( shouldDisplayHelp( $argv, $options ) ) {
 	help();
-	exit(CNW_MAINTENANCE_SUCCESS);
+	exit( CNW_MAINTENANCE_SUCCESS );
 } else {
 	$timestamp = getTimestamp( $options );
 	$founders = findFounders( $timestamp );
 
 	if( $founders === false ) {
-		exit(CNW_MAINTENANCE_DB_ERROR);
+		exit( CNW_MAINTENANCE_DB_ERROR );
 	} else if( empty( $founders ) ) {
 		echo "No recent founders found.\n\n";
-		exit(CNW_MAINTENANCE_SUCCESS);
+		exit( CNW_MAINTENANCE_SUCCESS );
 	} else {
 		echo 'Founders found: ' . rtrim( implode( ', ', $founders ), ', ' ) . "\n";
+		$invalidFounders = findInvalidFounders( $founders );
+
+		if( $invalidFounders === false ) {
+			exit( CNW_MAINTENANCE_DB_ERROR );
+		} else if( empty( $invalidFounders ) ) {
+			echo "No invalid founders found.\n\n";
+			exit( CNW_MAINTENANCE_SUCCESS );
+		} else {
+			echo 'Invalid founders found: ' . rtrim( implode( ', ', $founders ), ', ' ) . "\n";
+			exit( CNW_MAINTENANCE_SUCCESS );
+		}
 	}
 }
