@@ -19,9 +19,9 @@ define( 'videohomepage.views.carousel', [
 			this.collection = new CategoryDataCollection( this.model.get( 'thumbnails' ).slice( 0, 24 ) );
 			if ( this.collection.length ) {
 				this.collection.add( {
-					count: 8238,
-					label: 'See more blah',
-					link: '/wiki/Special:Something',
+					count: this.model.get( 'total' ),
+					label: this.model.get( 'seeMoreLabel' ),
+					url: this.model.get( 'url' ),
 					type: 'redirect'
 				} );
 			}

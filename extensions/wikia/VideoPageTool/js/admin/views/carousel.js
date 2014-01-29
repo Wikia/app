@@ -43,7 +43,7 @@ define( 'videopageadmin.views.carousel', [
 			this.pageCount = Math.ceil( this.collection.length / 3 );
 			this.$el.html( this.template( {
 				pages: this.pageCount,
-				total: this.collection.length
+				total: this.collection.response.total
 			} ) );
 			this.$carousel = this.$el.find( '.category-carousel' );
 
