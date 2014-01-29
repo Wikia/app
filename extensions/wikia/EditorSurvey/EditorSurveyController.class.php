@@ -12,9 +12,6 @@ class EditorSurveyController extends WikiaController {
 		global $wgCityId;
 
 		$response = [ 'html' => '' ];
-		$type = $this->request->getVal( 'type' );
-		$bodyMsgKey = 'editorsurvey-' . ( endsWith( $type, 'success' ) ? 'success' : 'fail' );
-		$surveyUrl = 'https://docs.google.com/forms/d/' . static::$surveyIds[$type] . '/viewform';
 
 		// WAM check
 		$wamData = $this->app->sendRequest( 'WAMApiController', 'getWAMIndex', [
@@ -26,6 +23,9 @@ class EditorSurveyController extends WikiaController {
 		}
 
 		if ( !isset( $response['wam_rank'] ) || $response['wam_rank'] > 100 ) {
+			$type = $this->request->getVal( 'type' );
+			$bodyMsgKey = 'editorsurvey-' . ( endsWith( $type, 'success' ) ? 'success' : 'fail' );
+			$surveyUrl = 'https://docs.google.com/forms/d/' . static::$surveyIds[$type] . '/viewform';
 			$response['html'] = $this->app->renderPartial( 'EditorSurveyController', 'modal', [
 				'body' => wfMsg( $bodyMsgKey ),
 				'heading' => wfMsg( 'editorsurvey-heading' ),
