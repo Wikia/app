@@ -21,7 +21,11 @@
 				<? foreach ( $sortingOptions as $sortBy => $option ): ?>
 					<? if ( $sortMsg != $option ): ?>
 
-						<? list( $sortType, $category ) = explode( ':', $sortBy ) ?>
+						<?
+							$parts = explode( ':', $sortBy );
+							$sortType = empty( $parts[0] ) ? '' : $parts[0];
+							$category = empty( $parts[1] ) ? '' : $parts[1];
+						?>
 						<li class="dropdown-item">
 							<label data-sort="<?= $sortType ?>" data-category="<?= $category ?>"><?= $option ?></label>
 						</li>
