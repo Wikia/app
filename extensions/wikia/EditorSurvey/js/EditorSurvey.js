@@ -44,13 +44,21 @@
 			$( window ).off( 'beforeunload.EditorSurvey' );
 		},
 
+		surveyHasBeenSeen: function() {
+			return $.cookie( 'editorsurvey' ) === 'seen' ? true : false;
+		},
+
 		handleSuccess: function() {
 			EditorSurvey.unbindUnload();
-			EditorSurvey.set( EditorSurvey.getEditorAbbreviation() + '-success' );
+			if ( EditorSurvey.surveyHasBeenSeen() ) {
+				EditorSurvey.setCookie( EditorSurvey.getEditorAbbreviation() + '-success' );
+			}
 		},
 
 		handleFailure: function() {
-			EditorSurvey.set( EditorSurvey.getEditorAbbreviation() + '-fail' );
+			if ( EditorSurvey.surveyHasBeenSeen() ) {
+				EditorSurvey.setCookie( EditorSurvey.getEditorAbbreviation() + '-fail' );
+			}
 		},
 
 		getSurvey: function() {
@@ -73,7 +81,7 @@
 							// Since 've-fail' was set on editor activation, we need to clear
 							// the cookie for these users so they don't immediately get a modal
 							// when they go to another wiki with a higher WAM score.
-							EditorSurvey.set( null );
+							EditorSurvey.setCookie( null );
 							return;
 						}
 
@@ -81,7 +89,7 @@
 						$modal = $( response.html ).makeModal( {
 							'escapeToClose': false,
 							'onAfterClose': function() {
-								EditorSurvey.set( 'seen' );
+								EditorSurvey.setCookie( 'seen' );
 							}
 						} );
 
@@ -94,13 +102,8 @@
 			}
 		},
 
-		set: function( value ) {
+		setCookie: function( value ) {
 			var options = { 'domain': wgCookieDomain };
-
-			// Only set value if modal hasn't been seen.
-			if ( $.cookie( 'editorsurvey' ) === 'seen' ) {
-				return;
-			}
 
 			// If setting a value, set the expire time based on whether or not the user
 			// has seen the survey modal (10 years if they have, 2 days otherwise).
