@@ -994,6 +994,9 @@ abstract class VideoFeedIngester {
 			case 'trailer':
 				$category = 'Trailers';
 				break;
+			case 'gaming':
+				$category = 'Games';
+				break;
 			case 'none':
 				$category = '';
 				break;
@@ -1001,6 +1004,50 @@ abstract class VideoFeedIngester {
 		}
 
 		return $category;
+	}
+
+	/**
+	 * Get additional page category
+	 * @param string $category
+	 * @return string $addition
+	 */
+	public function getAdditionalPageCategory( $category ) {
+		switch ( strtolower( $category ) ) {
+			case 'movies':
+			case 'tv':
+			case 'movie trailers':
+				$addition = 'Entertainment';
+				break;
+			case 'travel':
+			case 'beauty':
+			case 'fashion':
+			case 'food':
+			case 'food & drink':
+			case 'crafts':
+			case 'howto':
+				$addition = 'Lifestyle';
+				break;
+			default: $addition = '';
+		}
+
+		return $addition;
+	}
+
+	/**
+	 * Get list of additional page category
+	 * @param array $categories
+	 * @return array $pageCategories
+	 */
+	public function getAdditionalPageCategories( $categories ) {
+		$pageCategories = array();
+		foreach ( $categories as $category ) {
+			$addition = $this->getAdditionalPageCategory( $category );
+			if ( !empty( $addition ) ) {
+				$pageCategories[] = $addition;
+			}
+		}
+
+		return $pageCategories;
 	}
 
 	/**
@@ -1049,7 +1096,7 @@ abstract class VideoFeedIngester {
 	public function getUniqueArray( $arr ) {
 		$lower = array_map( 'strtolower', $arr );
 		$unique = array_intersect_key( $arr, array_unique( $lower ) );
-		return $unique;
+		return array_filter( $unique );
 	}
 
 }
