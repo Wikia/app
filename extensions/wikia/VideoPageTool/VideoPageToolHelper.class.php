@@ -185,9 +185,9 @@ class VideoPageToolHelper extends WikiaModel {
 		$db = wfGetDB( DB_SLAVE );
 
 		$count = (new WikiaSQL())->cache( self::CACHE_TTL_CATEGORY_DATA, $memcKey )
-			->SELECT( 'count(*)' )->AS_( 'count' )
+			->SELECT( 'count(distinct video_title)' )->AS_( 'count' )
 			->FROM( 'page' )
-				->LEFT_JOIN( 'video_info' )->ON( 'page_title', 'video_title' )
+				->JOIN( 'video_info' )->ON( 'page_title', 'video_title' )
 				->JOIN( 'categorylinks' )->ON( 'cl_from', 'page_id' )
 			->WHERE( 'cl_to' )->EQUAL_TO( $categoryKey )
 			->AND_( 'page_namespace' )->EQUAL_TO( NS_FILE )
