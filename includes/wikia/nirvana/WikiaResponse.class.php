@@ -279,7 +279,7 @@ class WikiaResponse {
 	 *
 	 * Cache-Control header will be set
 	 *
-	 * @param integer $varnishTTL expiry time for Varnish (and the client of $browserTTL is not provided)
+	 * @param integer $varnishTTL expiry time for Varnish (and for the client if $browserTTL is not provided)
 	 * @param integer $browserTTL expiry time for the client
 	 */
 	public function setCacheValidity( $varnishTTL, $browserTTL = false ){
