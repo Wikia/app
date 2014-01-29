@@ -299,7 +299,7 @@ class WikiaResponse {
 		}
 
 		if ($varnishTTL > 0) {
-			$varnishCacheControl = sprintf('s-max-age=%d', $varnishTTL);
+			$varnishCacheControl = sprintf('s-maxage=%d', $varnishTTL);
 		}
 		else {
 			// disable Varnish cache
