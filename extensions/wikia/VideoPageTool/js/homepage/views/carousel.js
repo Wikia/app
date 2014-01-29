@@ -72,13 +72,14 @@ define( 'videohomepage.views.carousel', [
 			$buttons = this.$( '.owl-buttons div' );
 			height = this.$( '.owl-item:first-child img' ).height();
 
-			// set the last slides height (since it doesn't come with an image)
+			// set the last slides height ( since it doesn't come with an image )
 			this.$( '.category-slide' ).height( height );
 
 			// position slider arrows in correct position
-			$buttons.css({
-				top: ( height / 2 ) - ( $buttons.eq(0).height() / 2 )
-			});
+			$buttons.css( {
+				top: ( height / 2 ),
+				marginTop: -Math.round( $buttons.eq( 0 ).height() / 2 )
+			} );
 		}
 	} );
 
