@@ -177,7 +177,7 @@ class VideoPageToolHelper extends WikiaModel {
 	 * @param Title $categoryTitle
 	 * @return int
 	 */
-	public function countVideosByCategory( Title $categoryTitle ) {
+	public function getVideosByCategoryCount( Title $categoryTitle ) {
 		wfProfileIn( __METHOD__ );
 
 		$categoryKey = $categoryTitle->getDBkey();

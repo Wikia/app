@@ -528,8 +528,8 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 
 		$this->result = 'ok';
 		$this->msg = '';
-		$this->videos = $helper->getVideosByCategory( $title );
-		$this->total = $helper->countVideosByCategory( $title );
+		$this->thumbnails = $helper->getVideosByCategory( $title );
+		$this->total = $helper->getVideosByCategoryCount( $title );
 		$this->url = $title->escapeLocalURL();
 		$this->seeMoreLabel = wfMessage( 'videopagetool-see-more-label' )->plain();
 	}

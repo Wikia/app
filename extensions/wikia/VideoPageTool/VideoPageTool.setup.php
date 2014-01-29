@@ -29,9 +29,6 @@ $wgAutoloadClasses['VideoHomePageController'] =  $dir . 'VideoHomePageController
 $wgAutoloadClasses['VideoHomePageArticle']    =  $dir . 'model/VideoHomePageArticle.class.php';
 $wgAutoloadClasses['VideoHomePagePage']       =  $dir . 'model/VideoHomePagePage.class.php';
 
-// Dependent classes
-$wgAutoloadClasses[ 'CategoryDataService' ] = $dir . '../CategoryExhibition/services/CategoryDataService.class.php';
-
 // i18n mapping
 $wgExtensionMessagesFiles['VideoPageTool'] = $dir.'VideoPageTool.i18n.php';
 

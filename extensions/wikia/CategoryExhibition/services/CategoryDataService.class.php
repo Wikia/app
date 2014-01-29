@@ -7,7 +7,7 @@ class CategoryDataService extends Service {
 
 	/**
 	 * @param string $sCategoryDBKey
-	 * @param int $mNamespace
+	 * @param string $mNamespace
 	 * @param bool $negative
 	 * @return array
 	 */
@@ -37,7 +37,7 @@ class CategoryDataService extends Service {
 	 * Return the number of articles that are in a particular category.
 	 *
 	 * @param string $sCategoryDBKey The DB key for the category
-	 * @param int $mNamespace A namespace to filter on.  If not given, a count of articles in
+	 * @param string $mNamespace A namespace to filter on.  If not given, a count of articles in
 	 *                        any namespace is returned
 	 * @param bool $negative If $mNamespace is provided, this determines if this function returns
 	 *                       a count of all articles with this category (false) or a count
@@ -58,16 +58,21 @@ class CategoryDataService extends Service {
 		$query = (new WikiaSQL())->cache( 5 )
 			->SELECT( 'count(distinct page_title)' )->AS_( 'count' )
 			->FROM( 'page' )
-				->LEFT_JOIN( 'revision' )->ON( 'rev_page = page_id' )
-				->JOIN( 'categorylinks' )->ON( 'cl_from = page_id' )
+				->LEFT_JOIN( 'revision' )->ON( 'rev_page', 'page_id' )
+				->JOIN( 'categorylinks' )->ON( 'cl_from', 'page_id' )
 			->WHERE( 'cl_to' )->EQUAL_TO( $sCategoryDBKey );
+
+		// If we have a namespace, convert it to an array
+		if ( $mNamespace && !is_array($mNamespace) ) {
+			$mNamespace = explode(',', $mNamespace);
+		}
 
 		// Decide whether we include or exclude the namespace passed to us.  If its null
 		// don't include the namespace in the query at all
 		if ( $mNamespace && $negative === true ) {
-			$query->AND_( 'page_namespace' )->NOT_EQUAL_TO( $mNamespace );
+			$query->AND_( 'page_namespace' )->NOT_IN( $mNamespace );
 		} else if ( $mNamespace && $negative === false ) {
-			$query->AND_( 'page_namespace' )->EQUAL_TO( $mNamespace );
+			$query->AND_( 'page_namespace' )->IN( $mNamespace );
 		}
 
 		// Run the query we've built
@@ -84,7 +89,7 @@ class CategoryDataService extends Service {
 	 * Return a list of articles in a particular category, ordered by their last edit date
 	 *
 	 * @param string $sCategoryDBKey
-	 * @param int $mNamespace
+	 * @param string $mNamespace
 	 * @param bool $negative
 	 * @return array
 	 */
@@ -192,6 +197,7 @@ class CategoryDataService extends Service {
 					$ret = array_slice($ret, 0, $limit, true);
 				}
 
+				wfProfileOut( __METHOD__ );
 				return $ret;
 			} else {
 				Wikia::log(__METHOD__, 'No data at all. Quitting.');
