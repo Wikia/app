@@ -20,7 +20,6 @@
 			<ul class="dropdown-list">
 				<? foreach ( $sortingOptions as $sortBy => $option ): ?>
 					<? if ( $sortMsg != $option ): ?>
-
 						<?
 							$parts = explode( ':', $sortBy );
 							$sortType = empty( $parts[0] ) ? '' : $parts[0];
