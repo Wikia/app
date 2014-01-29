@@ -46,6 +46,9 @@ class VideoPageToolAssetCategory extends VideoPageToolAsset {
 			'categoryName' => $title->getText(),
 			'displayTitle' => $this->displayTitle,
 			'thumbnails'   => $helper->getVideosByCategory( $title, $thumbOptions ),
+			'total'        => $helper->getVideosByCategoryCount( $title ),
+			'url'          => $title->escapeLocalURL(),
+			'seeMoreLabel' => wfMessage( 'videopagetool-see-more-label' )->plain(),
 		);
 
 		$assetData = array_merge( $data, parent::getAssetData( $thumbOptions ) );

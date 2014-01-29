@@ -1,33 +1,33 @@
 /**
  * View for carousel wrapper.  Data is category display title and thumbs list
  */
-define( 'shared.views.carousel', [
+define( 'videohomepage.views.carousel', [
 	'videopageadmin.collections.categorydata',
-	'videohomepage.models.categorythumb',
-	'videohomepage.models.categorycarousel',
 	'shared.views.carouselthumb',
+	'shared.views.owlcarousel',
 	'templates.mustache'
 ], function(
 	CategoryDataCollection,
-	CategoryThumbModel,
-	CategoryCarouselModel,
 	CarouselThumbView,
+	OwlCarouselBase,
 	templates
 ) {
 	'use strict';
 
-	var CarouselView = Backbone.View.extend( {
-		tagName: 'div',
-		className: 'carousel-wrapper',
+	var CarouselView = OwlCarouselBase.extend( {
 		initialize: function() {
-			this.collection = new CategoryDataCollection( this.model.attributes.thumbnails );
+			this.collection = new CategoryDataCollection( this.model.get( 'thumbnails' ).slice( 0, 24 ) );
+			if ( this.collection.length ) {
+				this.collection.add( {
+					count: this.model.get( 'total' ),
+					label: this.model.get( 'seeMoreLabel' ),
+					url: this.model.get( 'url' ),
+					type: 'redirect'
+				} );
+			}
 			this.render();
 		},
 		template: Mustache.compile( templates.carousel ),
-		events: {
-			'click .control[data-direction="left"]': 'slideLeft',
-			'click .control[data-direction="right"]': 'slideRight'
-		},
 		render: function() {
 			var self = this;
 
@@ -41,7 +41,7 @@ define( 'shared.views.carousel', [
 				self.$carousel.append( view.$el );
 			} );
 
-			this.$carousel.owlCarousel( {
+			this.renderCarousel( {
 				scrollPerPage: true,
 				pagination: true,
 				paginationSpeed: 500,
@@ -49,6 +49,7 @@ define( 'shared.views.carousel', [
 				navigation: true,
 				rewindNav: false,
 				afterUpdate: function() {
+					self.resizeLastSlide();
 					self.$carousel.find( '.title' ).ellipses( {
 						wordsHidden: 2
 					} );
@@ -60,11 +61,23 @@ define( 'shared.views.carousel', [
 
 			return this;
 		},
-		slideRight: function() {
-			this.$carousel.trigger( 'owl.next' );
-		},
-		slideLeft: function() {
-			this.$carousel.trigger( 'owl.prev' );
+		/**
+		 * @description Method to handle repositioning & resizing of elements based on fluid repaints
+		 */
+		resizeLastSlide: function() {
+			var height,
+					$buttons;
+
+			$buttons = this.$( '.owl-buttons div' );
+			height = this.$( '.owl-item:first-child img' ).height();
+
+			// set the last slides height (since it doesn't come with an image)
+			this.$( '.category-slide' ).height( height );
+
+			// position slider arrows in correct position
+			$buttons.css({
+				top: ( height / 2 ) - ( $buttons.eq(0).height() / 2 )
+			});
 		}
 	} );
 
