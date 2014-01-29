@@ -63,13 +63,13 @@
 
 		getSurvey: function() {
 			var contentType, json,
-				val = $.cookie( 'editorsurvey' );
-			if ( val && val !== 'seen' ) {
+				cookieValue = $.cookie( 'editorsurvey' );
+			if ( cookieValue && cookieValue !== 'seen' ) {
 				$.nirvana.sendRequest( {
 					format: 'json',
 					controller: 'EditorSurvey',
 					method: 'index',
-					data: { 'type': val },
+					data: { 'type': cookieValue },
 					callback: function( response ) {
 						var $modal;
 
