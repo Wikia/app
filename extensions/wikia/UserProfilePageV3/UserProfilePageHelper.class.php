@@ -4,6 +4,7 @@ class UserProfilePageHelper {
 
 	const GLOBAL_RESTRICTED_WIKIS_ID = 0;
 	const GLOBAL_RESTRICTED_WIKIS_TYPE = 1;
+	const GLOBAL_RESTRICTED_WIKIS_CACHE_TIME = 0;
 
 	/**
 	 * @brief Get user object from given title
@@ -81,44 +82,33 @@ class UserProfilePageHelper {
 		return $user;
 	}
 
-	private static function rebuildData( $memCSync, $city_id, $is_restricted ) {
-		$changed = false;
-		$restrictedWikis = $memCSync->get();
-		if ( empty( $restrictedWikis ) && !is_array( $restrictedWikis ) ) {
-			$restrictedWikis = self::getRestrictedWikisFromDB();
-		}
-		if ( $is_restricted ) {
-			if ( !in_array( $city_id, $restrictedWikis ) ) {
-				$restrictedWikis[] = $city_id;
-				$changed = true;
-			}
-		} else {
-			if ( ( $index = array_search($city_id, $restrictedWikis ) ) !== false ) {
-				unset( $restrictedWikis[$index] );
-				$changed = true;
-			}
-		}
-		if ( $changed ) {
-			self::saveRestrictedWikisDB( $restrictedWikis );
-		}
-		return $restrictedWikis;
-	}
-
+	/**
+	 * Generate Restricted Wikis Memcache key
+	 *
+	 * @return string
+	 */
 	private static function getRestrictedWikisKey() {
 		return  wfSharedMemcKey( __CLASS__, __METHOD__);
 	}
 
-	private static function getCache() {
-		global $wgMemc;
-		return new MemcacheSync( $wgMemc, self::getRestrictedWikisKey() );
-	}
-
+	/**
+	 * Get database handler to Dataware
+	 *
+	 * @param bool $master - Master or slave DB
+	 * @return DatabaseBase|TotallyFakeDatabase - Database hadler
+	 */
 	private static function getDb( $master = FALSE ) {
 		global $wgExternalDatawareDB;
 		return wfGetDB( $master ? DB_MASTER : DB_SLAVE, array(), $wgExternalDatawareDB );
 	}
 
+	/**
+	 * Load restricted wiki ids from DB
+	 *
+	 * @return array - Array with restricted wiki ids
+	 */
 	private static function getRestrictedWikisFromDB() {
+		wfProfileIn(__METHOD__);
 		$value = self::getDb( false )->selectField(
 			'global_registry',
 			'item_value',
@@ -129,9 +119,14 @@ class UserProfilePageHelper {
 			__METHOD__
 		);
 		$restrictedWikis = unserialize( $value );
+		wfProfileOut(__METHOD__);
 		return is_array( $restrictedWikis ) ? $restrictedWikis : array();
 	}
 
+	/**
+	 * Save restricted wiki ids to DB
+	 * @param $restrictedWikis array - array with restricted wiki ids
+	 */
 	public static function saveRestrictedWikisDB( $restrictedWikis ) {
 		self::getDb( true )->replace(
 			'global_registry',
@@ -145,40 +140,43 @@ class UserProfilePageHelper {
 		);
 	}
 
+	/**
+	 * Get restricted wiki ids
+	 *
+	 * @return array Array with restricted wiki ids
+	 */
 	public static function getRestrictedWikisIds() {
-		wfProfileIn(__METHOD__);
-		$memCSync = self::getCache();
-
-		$list = $memCSync->get();
-
-		if ( empty( $list ) && !is_array( $list ) ) {
-			$memCSync->lockAndSetData(
-				function () use ( $memCSync, &$list ) {
-					$list = self::getRestrictedWikisFromDB();
-					return $list;
-				},
-				function () {
-					return array();
-				}
-			);
-		}
-		wfProfileOut(__METHOD__);
-		return $list;
-	}
-
-	public static function updateRestrictedWikis( $city_id, $is_restricted ) {
-		wfProfileIn(__METHOD__);
-		$memCSync = self::getCache();
-		$memCSync->lockAndSetData(
-			function() use ( $memCSync, $city_id, $is_restricted ) {
-				return self::rebuildData( $memCSync, $city_id, $is_restricted );
-			},
-			function() use ( $memCSync) {
-				// Delete the cache if we were unable to update to force a rebuild
-				$memCSync->delete();
+		return WikiaDataAccess::cache( self::getRestrictedWikisKey(), self::GLOBAL_RESTRICTED_WIKIS_CACHE_TIME,
+			function () {
+				return self::getRestrictedWikisFromDB();
 			}
 		);
-		wfProfileOut(__METHOD__);
+	}
+
+	/**
+	 * Update Restricted wiki list if necessary
+	 *
+	 * @param $city_id integer Wiki id in wikicities
+	 * @param $is_restricted bool True if wiki is restricted
+	 */
+	public static function updateRestrictedWikis( $city_id, $is_restricted ) {
+		$changed = false;
+		$restrictedWikis = self::getRestrictedWikisIds();
+		if ( $is_restricted ) {
+			if ( !in_array( $city_id, $restrictedWikis ) ) {
+				$restrictedWikis[] = $city_id;
+				$changed = true;
+			}
+		} else {
+			if ( ( $index = array_search($city_id, $restrictedWikis ) ) !== false ) {
+				unset( $restrictedWikis[$index] );
+				$changed = true;
+			}
+		}
+		if ( $changed ) {
+			self::saveRestrictedWikisDB( $restrictedWikis );
+			WikiaDataAccess::cachePurge( self::getRestrictedWikisKey() );
+		}
 	}
 
 }
