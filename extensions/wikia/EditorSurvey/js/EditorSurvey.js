@@ -62,8 +62,7 @@
 		},
 
 		getSurvey: function() {
-			var contentType, json,
-				cookieValue = $.cookie( 'editorsurvey' );
+			var cookieValue = $.cookie( 'editorsurvey' );
 			if ( cookieValue && cookieValue !== 'seen' ) {
 				$.nirvana.sendRequest( {
 					format: 'json',
