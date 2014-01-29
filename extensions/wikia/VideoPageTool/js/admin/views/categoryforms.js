@@ -16,7 +16,7 @@ define( 'videopageadmin.views.categoryforms', [
 							collection: this.categories
 					} );
 					this.previewView = new AdminCarouselView( {
-						el: this.$el.find( '.carousel' ),
+						el: this.$el.find( '.carousel-wrapper' ),
 						collection: this.categoryData
 					} );
 					_.bindAll( this,

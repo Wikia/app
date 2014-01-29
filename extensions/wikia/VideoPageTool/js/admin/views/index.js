@@ -1,59 +1,30 @@
-define('videopageadmin.views.index', [
-	'videopageadmin.views.datepicker'
-], function(Datepicker) {
+/**
+ * @description This is a replacement 'router' or 'controller' file used to instantiate Backbone views.
+ * Since we aren't using Backbone's router ATM due to time limitations and this just being an exploratory
+ * exercise, we'll just inspect window.location to decide which modules to instantiate.
+ * Note that the default section is featured videos.
+ */
+require( [
+	'wikia.querystring',
+	'videopageadmin.views.featured',
+	'videopageadmin.views.category'
+], function( QueryString, FeaturedView, CategoryView ) {
 	'use strict';
 
-	function VPTIndex() {
-		this.init();
-	}
+	var qs = new QueryString(),
+		section = qs.getVal( 'section' ),
+		view;
 
-	VPTIndex.prototype = {
-		init: function() {
-			this.$regionSelect = $('#VideoPageToolRegionSelect');
-			this.defaultLanguage = this.$regionSelect.data('defaultLanguage');
-			this.bindEvents();
-			this.renderDatepicker();
-		},
-		bindEvents: function() {
-			var that = this;
-			this.$regionSelect.on('change', function(evt) {
-				return that.renderDatepicker.call(that, evt);
+	$( function() {
+		if ( section === 'category' ) {
+			view = new CategoryView( {
+				el: '#LatestVideos'
 			} );
-		},
-		renderDatepicker: function(evt) {
-			var value = evt ? evt.target.value : this.defaultLanguage;
-
-			// don't render if placeholder is chosen (for first time)
-			if (value === 'placeholder') {
-				return false;
-			}
-
-			// disable placeholder from being selected after a region has been selected
-			this.$regionSelect.find('option[value=\'placeholder\']').attr('disabled', true);
-
-			// delete stale datepickers
-			if (this.datepicker) {
-				this.datepicker.destroy();
-			}
-
-			// initialize new datepicker, passing through the language
-			this.datepicker = new Datepicker( {
-				el: '#VPTDashboard .date-picker',
-				language: value,
-				controller: 'VideoPageAdminSpecial',
-				method: 'getCalendarInfo'
+		} else {
+			// default is featured video form
+			view = new FeaturedView( {
+				el: '.vpt-form'
 			} );
 		}
-	};
-
-	return VPTIndex;
-} );
-
-require(['videopageadmin.views.index'], function(IndexView) {
-
-	'use strict';
-
-	$(function() {
-		new IndexView();
 	} );
 } );

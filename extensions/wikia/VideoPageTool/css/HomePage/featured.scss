@@ -145,10 +145,9 @@ $play-button-overlay-fade-duration: 400ms;
 				.title {
 					@include opacity( 70 );
 					color: #FFF;
-					fond-size: 14px;
+					font-size: 14px;
 					line-height: 1.5em;
 					max-height: 3em;
-					overflow: hidden;
 					text-align: left;
 					p {
 						margin: 0;
@@ -193,6 +192,9 @@ $play-button-overlay-fade-duration: 400ms;
 					height: auto;
 				}
 
+			}
+			.duration {
+				display: none;
 			}
 		}
 	}

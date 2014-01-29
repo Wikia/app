@@ -1,4 +1,5 @@
 <form id="LatestVideos" class="WikiaForm vpt-form latest-video-form" method="post">
+	<p class="alternative"><?= wfMessage( 'videopagetool-category-instructions' )->escaped() ?></p>
 	<? for( $x = 1; $x <= count($categories); $x++ ): ?>
 		<? $category = $categories[ $x ]; ?>
 
@@ -39,7 +40,7 @@
 					<img class="chevron chevron-down" src="<?= $wg->BlankImgUrl ?>">
 				</button>
 			</div>
-			<div class="carousel">
+			<div class="carousel-wrapper">
 			</div>
 			<a class="preview" href="#"><span></span><?= wfMessage( 'videopagetool-category-preview' )->plain() ?><span></span></a>
 		</div>

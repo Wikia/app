@@ -51,6 +51,7 @@ $messages['en'] = array(
 	'videopagetool-success-save' => 'Your changes have been saved',
 	'videopagetool-success-publish' => 'Your changes have been published',
 	'videopagetool-hint-description-maxlength' => '$1 characters max',
+	'videopagetool-see-more-label' => 'See more',
 
 	// Latest Video (category) form
 	'videopagetool-category-label-name' => 'Category',
@@ -58,9 +59,11 @@ $messages['en'] = array(
 	'videopagetool-category-name-placeholder' => 'Type in words to bring in videos',
 	'videopagetool-category-display-title-placeholder' => 'Category title',
 	'videopagetool-category-preview' => 'Preview',
+	'videopagetool-category-instructions' => 'Note: A minimum of three modules must be programmed in order to save or publish this page.',
 
 	'videopagetool-hint-required-dimensions' => 'Image dimensions must be 1024 x 461',
 	'videopagetool-formerror-altthumb' => 'Please add an image',
+	'videopagetool-formerror-category-name' => 'At least 3 categories must be chosen',
 	'videopagetool-date-header' => 'Editing for date: $1',
 
 	// Home Page Section: Header
@@ -125,6 +128,7 @@ $messages['qqq'] = array(
 	'videopagetool-tooltip-in-progress' => 'In Progress',
 	'videopagetool-header-dashboard' => 'Title for dashboard page',
 	'videopagetool-success-save' => 'This text appears if your changes have been saved successfully',
+	'videopagetool-see-more-label' => 'Link text to a page of all videos in the category being displayed',
 
 	// Latest Video (category) form
 	'videopagetool-category-label-name' => 'label for the form input to enter a category',

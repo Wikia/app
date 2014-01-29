@@ -139,6 +139,15 @@ $label-padding: 10px 10px 10px 0px;
 		padding: 10px 0;
 	}
 
+	// validation
+	label.error {
+		clear: both;
+		float: right;
+		font-size: 13px;
+		margin: 0;
+		width: 70%;
+	}
+
 	// Featured video form styles
 	.featured-video {
 		.media-btn {
@@ -165,14 +174,6 @@ $label-padding: 10px 10px 10px 0px;
 			background: $color-page-border-subtle;
 			height: 100px;
 			position: relative;
-		}
-		// validation
-		label.error {
-			clear: both;
-			float: right;
-			font-size: 13px;
-			margin: 0;
-			width: 70%;
 		}
 		.button-group {
 			label.error {
