@@ -44,7 +44,7 @@ class CategoryDataService extends Service {
 	 *                       of all articles without this category (true).  Default is false.
 	 * @return int The number of articles with this category
 	 */
-	public static function getArticleCount( $sCategoryDBKey, $mNamespace = null, $negative = false ) {
+	public static function getArticleCount( $sCategoryDBKey, $mNamespace = '', $negative = false ) {
 		wfProfileIn( __METHOD__ );
 
 		if ( strlen($sCategoryDBKey) == 0 ) {
@@ -82,7 +82,9 @@ class CategoryDataService extends Service {
 		});
 
 		wfProfileOut( __METHOD__ );
-		return $count;
+
+		// Make sure we default to zero
+		return $count ? $count : 0;
 	}
 
 	/**

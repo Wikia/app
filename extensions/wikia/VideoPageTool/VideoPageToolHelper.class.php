@@ -274,7 +274,7 @@ class VideoPageToolHelper extends WikiaModel {
 	}
 
 	/**
-	 * Get memcache key for videos by category
+	 * Get memcache key for count of videos by category
 	 * @param $categoryName
 	 * @return string
 	 */
