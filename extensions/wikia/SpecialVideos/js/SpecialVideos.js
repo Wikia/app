@@ -22,8 +22,10 @@ var SpecialVideos = {
 					qs = new Wikia.Querystring();
 
 				qs.setVal( 'sort', sort );
-				if( category ) {
+				if ( category ) {
 					qs.setVal( 'category', category );
+				} else {
+					qs.removeVal( 'category' );
 				}
 				qs.goTo();
 			}
