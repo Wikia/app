@@ -3,7 +3,7 @@ define( 'shared.views.owlcarousel', [
 	'use strict';
 	var OwlCarouselView = Backbone.View.extend( {
 		tagName: 'div',
-		className: 'carousel',
+		className: 'carousel-wrapper',
 		$carousel: null,
 		events: {
 			'click .control[data-direction="left"]': 'slideLeft',

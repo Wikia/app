@@ -5,11 +5,11 @@ class VideoPageToolHelper extends WikiaModel {
 	const DEFAULT_LANGUAGE = 'en';
 	const DEFAULT_SECTION = 'featured';
 
-	const THUMBNAIL_WIDTH = 180;
-	const THUMBNAIL_HEIGHT = 100;
+	const THUMBNAIL_WIDTH = 291;
+	const THUMBNAIL_HEIGHT = 131;
 
-	const THUMBNAIL_CATEGORY_WIDTH = 263;
-	const THUMBNAIL_CATEGORY_HEIGHT = 148;
+	const THUMBNAIL_CATEGORY_WIDTH = 297;
+	const THUMBNAIL_CATEGORY_HEIGHT = 157;
 
 	const MAX_THUMBNAIL_WIDTH = 1024;
 	const MAX_THUMBNAIL_HEIGHT = 461;
@@ -173,6 +173,37 @@ class VideoPageToolHelper extends WikiaModel {
 	}
 
 	/**
+	 * Get a count of the videos in the given category
+	 * @param Title $categoryTitle
+	 * @return int
+	 */
+	public function getVideosByCategoryCount( Title $categoryTitle ) {
+		wfProfileIn( __METHOD__ );
+
+		$categoryKey = $categoryTitle->getDBkey();
+		$memcKey = $this->getMemcKeyCountVideosByCategory( $categoryKey );
+		$db = wfGetDB( DB_SLAVE );
+
+		$count = (new WikiaSQL())->cache( self::CACHE_TTL_CATEGORY_DATA, $memcKey )
+			->SELECT( 'count(*)' )->AS_( 'count' )
+			->FROM( 'page' )
+				->LEFT_JOIN( 'video_info' )->ON( 'page_title', 'video_title' )
+				->JOIN( 'categorylinks' )->ON( 'cl_from', 'page_id' )
+			->WHERE( 'cl_to' )->EQUAL_TO( $categoryKey )
+			->AND_( 'page_namespace' )->EQUAL_TO( NS_FILE )
+			->run( $db, function( $result ) {
+				/** @var ResultWrapper $result */
+				$row = $result->fetchObject();
+				$count = empty($row) ? 0 : $row->count;
+				return $count;
+			});
+
+		wfProfileOut( __METHOD__ );
+
+		return $count;
+	}
+
+	/**
 	 * Get videos tagged with the category given by parameter $categoryTitle (limit = 100)
 	 * @param Title $categoryTitle
 	 * @param array $thumbOptions
@@ -181,7 +212,7 @@ class VideoPageToolHelper extends WikiaModel {
 	 *     url   => 'http://url.to.video',
 	 *     thumb => '<thumbnail_html_snippet>'
 	 */
-	public function getVideosByCategory( $categoryTitle, $thumbOptions = array() ) {
+	public function getVideosByCategory( Title $categoryTitle, $thumbOptions = array() ) {
 		wfProfileIn( __METHOD__ );
 
 		$dbKey = $categoryTitle->getDBkey();
@@ -233,13 +264,23 @@ class VideoPageToolHelper extends WikiaModel {
 	}
 
 	/**
-	 * Get memcache key for videos by category
-	 * @param $categoryName
-	 * @return string
-	 */
+ * Get memcache key for videos by category
+ * @param $categoryName
+ * @return string
+ */
 	public function getMemcKeyVideosByCategory( $categoryName ) {
 		$categoryName = md5( $categoryName );
 		return wfMemcKey( 'videopagetool', 'videosbycategory', $categoryName );
+	}
+
+	/**
+	 * Get memcache key for count of videos by category
+	 * @param $categoryName
+	 * @return string
+	 */
+	public function getMemcKeyCountVideosByCategory( $categoryName ) {
+		$categoryName = md5( $categoryName );
+		return wfMemcKey( 'videopagetool', 'count-videos-by-category', $categoryName );
 	}
 
 	/**
@@ -247,6 +288,7 @@ class VideoPageToolHelper extends WikiaModel {
 	 */
 	public function invalidateCacheVideosByCategory( $categoryName ) {
 		$this->wg->Memc->delete( $this->getMemcKeyVideosByCategory( $categoryName ) );
+		$this->wg->Memc->delete( $this->getMemcKeyCountVideosByCategory( $categoryName ) );
 	}
 
 	/**

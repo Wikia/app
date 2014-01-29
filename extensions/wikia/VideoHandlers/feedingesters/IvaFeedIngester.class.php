@@ -795,10 +795,11 @@ class IvaFeedIngester extends VideoFeedIngester {
 	public function generateCategories( $data, $categories ) {
 		wfProfileIn( __METHOD__ );
 
-		$categories[] = 'IVA';
 		$categories[] = $data['name'];
 		$categories[] = $data['series'];
 		$categories[] = $data['category'];
+
+		$categories = array_merge( $categories, $this->getAdditionalPageCategories( $categories ) );
 
 		// add language
 		if ( !empty( $data['language'] ) && strtolower( $data['language'] ) != 'english' ) {
@@ -811,6 +812,8 @@ class IvaFeedIngester extends VideoFeedIngester {
 			$categories[] = 'International';
 			$categories[] = $data['subtitle'];
 		}
+
+		$categories[] = 'IVA';
 
 		wfProfileOut( __METHOD__ );
 

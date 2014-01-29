@@ -18,7 +18,7 @@ define( 'shared.views.carousel', [
 
 	var CarouselView = Backbone.View.extend( {
 		tagName: 'div',
-		className: 'carousel',
+		className: 'carousel-wrapper',
 		initialize: function() {
 			this.collection = new CategoryDataCollection( this.model.attributes.thumbnails );
 			this.render();
