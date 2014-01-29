@@ -1182,7 +1182,7 @@ class BlogTemplateClass {
 				wfProfileOut( __METHOD__ );
 				return $res;
 			}else{
-				if ( $parser->mOutput instanceof PaserOutput ) {
+				if ( !empty($parser->mOutput) && $parser->mOutput instanceof PaserOutput ) {
 					$parser->mOutput->setProperty("blogPostCount", self::getResultsCount());
 				}
 				if ( self::$aOptions['type'] == 'count' ) {
