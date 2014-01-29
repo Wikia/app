@@ -72,13 +72,13 @@ define( 'videohomepage.views.carousel', [
 			height = this.$( '.owl-item' ).eq( 0 ).find( 'img' ).height();
 			console.log( height );
 
-			// set the last slides height (since it doesn't come with an image)
+			// set the last slides height ( since it doesn't come with an image )
 			this.$( '.category-slide' ).height( height ).show();
 
 			// position slider arrows in correct position
-			$buttons.css({
-				top: ( height / 2 ) - ( $buttons.eq(0).height() / 2 )
-			});
+			$buttons.css( {
+				top: ( height / 2 ) - ( $buttons.eq( 0 ).height() / 2 )
+			} );
 		}
 	} );
 
