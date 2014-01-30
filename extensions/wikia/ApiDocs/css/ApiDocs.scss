@@ -4,7 +4,6 @@
 @import "skins/oasis/css/core/sprite";
 @import "skins/oasis/css/core/GlobalHeader";
 
-
 //colors variables
 $main-bgcolor: #ffffff;
 $blue-c1: #0a5fa3;
@@ -12,6 +11,7 @@ $lightGray-c2: #f9f9f9;
 $midGray-c3: #e6e6e6;
 $gray-c4: #676767;
 $darkGray-c5: #333333;
+$footer-size: 60px;
 
 @mixin boxHeader {
 	color: $blue-c1;
@@ -108,6 +108,15 @@ h1 {
 	width: 960px;
 }
 
+
+html {
+	height:100%;
+}
+
+body {
+	min-height: 100%;
+	position: relative;
+}
 
 @import "ApiDocsBox";
 @import "ApiDocsEndpoint";

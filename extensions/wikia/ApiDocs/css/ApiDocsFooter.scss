@@ -1,5 +1,14 @@
-footer {
+// Staticly positioned element so that laout will leave place for actual footer which has position absolute.
+.footer-spacer {
+	height: $footer-size;
+}
+
+footer.subnav {
+	bottom: 0;
+	line-height: $footer-size;
+	margin-bottom: 0;
+	position: absolute;
 	text-align: center;
+	width: 100%;
 	vertical-align: middle;
-	line-height: 60px; 	
 }
