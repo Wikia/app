@@ -88,8 +88,7 @@ class VideosModuleHelper extends WikiaModel {
 		$articleRelatedVideosCount = $articleRelatedVideos['returnedVideoCount'];
 		$videos = $articleRelatedVideos['items'];
 
-		// Add videos from getWikiRelatedVideos if we didn't hit our video count
-		// limit
+		// Add videos from getWikiRelatedVideos if we didn't hit our video count limit
 		if ( $articleRelatedVideosCount < self::VIDEO_LIMIT ) {
 			$wikiRelatedVideos = $this->getWikiRelatedVideos();
 			array_splice( $wikiRelatedVideos, self::VIDEO_LIMIT - $articleRelatedVideosCount );
@@ -103,5 +102,4 @@ class VideosModuleHelper extends WikiaModel {
 		return $videos;
 	}
 
-	//public function getVerticleRelatedVideos (  )
 }

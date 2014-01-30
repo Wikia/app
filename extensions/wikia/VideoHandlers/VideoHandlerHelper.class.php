@@ -228,9 +228,10 @@ class VideoHandlerHelper extends WikiaModel {
 	 * @param integer $thumbWidth
 	 * @param integer $thumbHeight
 	 * @param integer $postedInArticles
+	 * @param bool $getThumb
 	 * @return array $videoDetail
 	 */
-	public function getVideoDetail( $videoInfo, $thumbWidth, $thumbHeight, $postedInArticles, $getThumb ) {
+	public function getVideoDetail( $videoInfo, $thumbWidth, $thumbHeight, $postedInArticles, $getThumb = false ) {
 		wfProfileIn( __METHOD__ );
 
 		$videoDetail = array();
@@ -296,6 +297,7 @@ class VideoHandlerHelper extends WikiaModel {
 	 * @param $thumbWidth - The width of the thumbnail to return
 	 * @param $thumbHeight - The height of the thumbnail to return
 	 * @param $postedInArticles - Cap on number of "posted in" article details to return
+	 * @param $getThumb - Whether to return a fully formed html thumbnail of the video or not
 	 * @return null|array - As associative array of video information
 	 */
 	public function getVideoDetailFromWiki( $dbName, $title, $thumbWidth, $thumbHeight, $postedInArticles, $getThumb = false ) {
