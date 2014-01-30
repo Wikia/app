@@ -378,11 +378,11 @@ class VideoHandlerHelper extends WikiaModel {
 
 	/**
 	 * Reset the video thumbnail to its original image as defined by the video provider
-	 *
 	 * @param File $file The video file to reset
+	 * @param string|null $thumbnailUrl
 	 * @return FileRepoStatus The status of the publish operation
 	 */
-	public function resetVideoThumb( File $file ) {
+	public function resetVideoThumb( File $file, $thumbnailUrl = null ) {
 		$mime = $file->getMimeType();
 		list(, $provider) = explode('/', $mime);
 		$videoId = $file->getVideoId();
@@ -392,7 +392,11 @@ class VideoHandlerHelper extends WikiaModel {
 		$oUploader->setProvider( $provider );
 		$oUploader->setVideoId( $videoId );
 		$oUploader->setTargetTitle( $title->getDBkey() );
-		$result = $oUploader->resetThumbnail( $file );
+		if ( empty( $thumbnailUrl ) ) {
+			$thumbnailUrl = $oUploader->getApiWrapper()->getThumbnailUrl();
+		}
+
+		$result = $oUploader->resetThumbnail( $file, $thumbnailUrl );
 
 		if ( $result->isGood() ) {
 			// update data and clear cache
