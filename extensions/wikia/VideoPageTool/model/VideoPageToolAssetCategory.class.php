@@ -4,6 +4,7 @@
  * VideoPageToolAssetCategory Class
  */
 class VideoPageToolAssetCategory extends VideoPageToolAsset {
+	const SECTION = 'category';
 
 	protected $categoryName;
 	protected $displayTitle;
