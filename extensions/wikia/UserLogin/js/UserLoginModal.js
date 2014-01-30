@@ -146,6 +146,11 @@ var UserLoginModal = {
 						action: clickAction,
 						label: 'facebook-connect'
 					} );
+				}).on( 'click', 'input.login-button', function(event) {
+					that.track( {
+						action: clickAction,
+						label: 'login-from-'  + origin
+					} );
 				} );
 			} );
 		} );
