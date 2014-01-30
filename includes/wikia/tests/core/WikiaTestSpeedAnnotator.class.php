@@ -7,7 +7,6 @@ class WikiaTestSpeedAnnotator {
 	const TEST_EXECUTION_TIME_RESOLUTION = 5;
 
 	private static $methods = [ ];
-	private static $timerResolution = null;
 
 	const REGEX_SLOW_GROUP = '/^\s*\*\s*@group\s+Slow\s*\n/m';
 	const REGEX_SLOW_EXEC_TIME = '/^\s*\*\s*@slowExecutionTime\s+([0-9\.]+\s*(ms?)\s*\n)/m';
