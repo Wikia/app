@@ -1,8 +1,7 @@
 /* exported AdProviderGpt */
 /* jshint maxparams: false, maxlen: 150 */
 
-var AdProviderGpt;
-AdProviderGpt = function ( adTracker, log, window, Geo, slotTweaker, cacheStorage, adLogicHighValueCountry, wikiaGpt ) {
+var AdProviderGpt = function (adTracker, log, window, Geo, slotTweaker, cacheStorage, adLogicHighValueCountry, wikiaGpt) {
 	'use strict';
 
 	var logGroup = 'AdProviderGpt',
@@ -16,8 +15,8 @@ AdProviderGpt = function ( adTracker, log, window, Geo, slotTweaker, cacheStorag
 		gptConfig,
 		gptFlushed = false;
 
-	maxCallsToDART = adLogicHighValueCountry.getMaxCallsToDART( country );
-	isHighValueCountry = adLogicHighValueCountry.isHighValueCountry( country );
+	maxCallsToDART = adLogicHighValueCountry.getMaxCallsToDART(country);
+	isHighValueCountry = adLogicHighValueCountry.isHighValueCountry(country);
 
 	// TODO: tile is not used, keys without apostrophes
 	// GPT: only loc, pos and size keys are used
@@ -27,11 +26,11 @@ AdProviderGpt = function ( adTracker, log, window, Geo, slotTweaker, cacheStorag
 		'EXIT_STITIAL_BOXAD_1': {'size': '300x250,600x400,800x450,550x480', 'tile': 2, 'loc': 'exit'},
 		'HOME_TOP_LEADERBOARD': {'size': '728x90,1030x130,1030x65,1030x250,970x250,970x90,970x66', 'tile': 2, 'loc': 'top', 'dcopt': 'ist'},
 		'HOME_TOP_RIGHT_BOXAD': {'size': '300x250,300x600,300x1050', 'tile': 1, 'loc': 'top'},
-		'HUB_TOP_LEADERBOARD': {'size': '728x90,1030x130,1030x65,1030x250,970x250,970x90,970x66', 'tile': 2, 'loc': 'top', 'dcopt': 'ist'},
+		'HUB_TOP_LEADERBOARD':  {'size': '728x90,1030x130,1030x65,1030x250,970x250,970x90,970x66', 'tile': 2, 'loc': 'top', 'dcopt': 'ist'},
 		'INVISIBLE_SKIN': {'size': '1x1', 'loc': 'top', 'gptOnly': true},
 		'LEFT_SKYSCRAPER_2': {'size': '160x600', 'tile': 3, 'loc': 'middle'},
 		'LEFT_SKYSCRAPER_3': {'size': '160x600', 'tile': 6, 'loc': 'footer'},
-		'MODAL_INTERSTITIAL': {'size': '300x250,600x400,800x450,550x480', 'tile': 2, 'loc': 'modal'},
+		'MODAL_INTERSTITIAL':   {'size': '300x250,600x400,800x450,550x480', 'tile': 2, 'loc': 'modal'},
 		'MODAL_INTERSTITIAL_1': {'size': '300x250,600x400,800x450,550x480', 'tile': 2, 'loc': 'modal'},
 		'MODAL_INTERSTITIAL_2': {'size': '300x250,600x400,800x450,550x480', 'tile': 2, 'loc': 'modal'},
 		'MODAL_INTERSTITIAL_3': {'size': '300x250,600x400,800x450,550x480', 'tile': 2, 'loc': 'modal'},
@@ -57,22 +56,22 @@ AdProviderGpt = function ( adTracker, log, window, Geo, slotTweaker, cacheStorag
 		GPT_FLUSH: 'flushonly'
 	};
 
-	wikiaGpt.init( slotMap );
+	wikiaGpt.init(slotMap);
 
 	// Private methods
 
-	function incrementItemInStorage( storageKey ) {
-		log( 'incrementItemInStorage ' + storageKey, 'debug', logGroup );
+	function incrementItemInStorage(storageKey) {
+		log('incrementItemInStorage ' + storageKey, 'debug', logGroup);
 
-		var numCallForSlot = cacheStorage.get( storageKey, now ) || 0;
+		var numCallForSlot = cacheStorage.get(storageKey, now) || 0;
 
 		numCallForSlot += 1;
-		cacheStorage.set( storageKey, numCallForSlot, forgetAdsShownAfterTime, now );
+		cacheStorage.set(storageKey, numCallForSlot, forgetAdsShownAfterTime, now);
 
 		return numCallForSlot;
 	}
 
-	function getStorageKey( param, slotname ) {
+	function getStorageKey(param, slotname) {
 		return 'dart_' + param + '_' + slotname;
 	}
 
@@ -83,7 +82,7 @@ AdProviderGpt = function ( adTracker, log, window, Geo, slotTweaker, cacheStorag
 	 * All other ads will auto-flush because the gptFlush variable is set to true.
 	 */
 	function flushGpt() {
-		log( 'flushGpt', 'debug', logGroup );
+		log('flushGpt', 'debug', logGroup);
 
 		gptFlushed = true;
 		wikiaGpt.flushAds();
@@ -95,33 +94,33 @@ AdProviderGpt = function ( adTracker, log, window, Geo, slotTweaker, cacheStorag
 	 * @param slotname
 	 * @returns {boolean}
 	 */
-	function shouldCallDart( slotname ) {
-		log( ['shouldCallDart', slotname], 'debug', logGroup );
+	function shouldCallDart(slotname) {
+		log(['shouldCallDart', slotname], 'debug', logGroup);
 
-		var noAdLastTime = cacheStorage.get( getStorageKey( 'noad', slotname ), now ) || false,
-			numCallForSlot = cacheStorage.get( getStorageKey( 'calls', slotname ), now ) || 0;
+		var noAdLastTime = cacheStorage.get(getStorageKey('noad', slotname), now) || false,
+			numCallForSlot = cacheStorage.get(getStorageKey('calls', slotname), now) || 0;
 
 		// Show INVISIBLE_SKIN when leaderboard was to be shown
-		if ( slotname === 'INVISIBLE_SKIN' ) {
-			if ( leaderboardCalled ) {
+		if (slotname === 'INVISIBLE_SKIN') {
+			if (leaderboardCalled) {
 				return true;
 			}
 		}
 
 		// Always have an ad for MODAL_INTERSTITIAL
-		if ( slotname.match( /^MODAL_INTERSTITIAL/ ) ) {
+		if (slotname.match(/^MODAL_INTERSTITIAL/)) {
 			return true;
 		}
 
 		// Check if there was ad last time
 		// If not, check if desired number of DART calls were made
-		if ( noAdLastTime && numCallForSlot >= maxCallsToDART ) {
-			log( 'There was no ad for this slot last time and reached max number of calls to DART', 'debug', logGroup );
-			log( {slot: slotname, numCalls: numCallForSlot, maxCalls: maxCallsToDART, geo: country}, 'debug', logGroup );
+		if (noAdLastTime && numCallForSlot >= maxCallsToDART) {
+			log('There was no ad for this slot last time and reached max number of calls to DART', 'debug', logGroup);
+			log({slot: slotname, numCalls: numCallForSlot, maxCalls: maxCallsToDART, geo: country}, 'debug', logGroup);
 			return false;
 		}
 
-		if ( slotname.search( 'LEADERBOARD' ) > -1 ) {
+		if (slotname.search('LEADERBOARD') > -1) {
 			leaderboardCalled = true;
 		}
 		return true;
@@ -151,38 +150,38 @@ AdProviderGpt = function ( adTracker, log, window, Geo, slotTweaker, cacheStorag
 		return true;
 	}
 
-	function canHandleSlot( slotname ) {
-		log( ['canHandleSlot', slotname], 'debug', logGroup );
+	function canHandleSlot(slotname) {
+		log(['canHandleSlot', slotname], 'debug', logGroup);
 
 		if ( isAmznOnPage( slotname, slotMap[slotname] ) ) {
 			return true;
 		}
 
-		if ( !isHighValueCountry || !slotMap[slotname] ) {
+		if (!isHighValueCountry || !slotMap[slotname]) {
 			return false;
 		}
 
-		if ( gptConfig[slotname] === 'flushonly' ) {
+		if (gptConfig[slotname] === 'flushonly') {
 			return true;
 		}
 
-		var canHandle = shouldCallDart( slotname );
+		var canHandle = shouldCallDart(slotname);
 
-		if ( !canHandle && gptConfig[slotname] === 'flush' ) {
+		if (!canHandle && gptConfig[slotname] === 'flush') {
 			flushGpt();
 		}
 
 		return canHandle;
 	}
 
-	function fillInSlot( slotname, success, hop ) {
-		log( ['fillInSlot', slotname], 'debug', logGroup );
+	function fillInSlot(slotname, success, hop) {
+		log(['fillInSlot', slotname], 'debug', logGroup);
 
-		var noAdStorageKey = getStorageKey( 'noad', slotname ),
-			numCallForSlotStorageKey = getStorageKey( 'calls', slotname ),
-			slotTracker = adTracker.trackSlot( 'addriver2', slotname );
+		var noAdStorageKey = getStorageKey('noad', slotname),
+			numCallForSlotStorageKey = getStorageKey('calls', slotname),
+			slotTracker = adTracker.trackSlot('addriver2', slotname);
 
-		if ( gptConfig[slotname] === 'flushonly' ) {
+		if (gptConfig[slotname] === 'flushonly') {
 			flushGpt();
 			success();
 			return;
@@ -190,18 +189,18 @@ AdProviderGpt = function ( adTracker, log, window, Geo, slotTweaker, cacheStorag
 
 		slotTracker.init();
 
-		incrementItemInStorage( numCallForSlotStorageKey );
-		cacheStorage.del( noAdStorageKey );
+		incrementItemInStorage(numCallForSlotStorageKey);
+		cacheStorage.del(noAdStorageKey);
 
 		wikiaGpt.pushAd(
 			slotname,
 			function () { // Success
-				slotTweaker.removeDefaultHeight( slotname );
-				slotTweaker.removeTopButtonIfNeeded( slotname );
-				slotTweaker.adjustLeaderboardSize( slotname );
+				slotTweaker.removeDefaultHeight(slotname);
+				slotTweaker.removeTopButtonIfNeeded(slotname);
+				slotTweaker.adjustLeaderboardSize(slotname);
 
 				// experimental hack: track LB success time
-				if ( slotname.search( 'LEADERBOARD' ) > -1 ) {
+				if (slotname.search('LEADERBOARD') > -1) {
 					// Track hop time
 					slotTracker.success();
 				}
@@ -209,18 +208,18 @@ AdProviderGpt = function ( adTracker, log, window, Geo, slotTweaker, cacheStorag
 				success();
 			},
 			function () { // Hop
-				log( slotname + ' was not filled by DART', 'info', logGroup );
-				cacheStorage.set( noAdStorageKey, true, forgetAdsShownAfterTime, now );
+				log(slotname + ' was not filled by DART', 'info', logGroup);
+				cacheStorage.set(noAdStorageKey, true, forgetAdsShownAfterTime, now);
 
 				// Track hop time
 				slotTracker.hop();
 
 				// hop to Liftium
-				hop( {method: 'hop'}, 'Liftium' );
+				hop({method: 'hop'}, 'Liftium');
 			}
 		);
 
-		if ( gptConfig[slotname] === 'flush' || gptFlushed ) {
+		if (gptConfig[slotname] === 'flush' || gptFlushed) {
 			flushGpt();
 		}
 	}
