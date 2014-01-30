@@ -71,35 +71,4 @@ class VideosModuleHelper extends WikiaModel {
 
 		return $videos;
 	}
-
-	/**
-	 * Get videos to populated the Videos Module. First try and get premium videos
-	 * related to the article page. If that's not enough add premium videos related
-	 * to the local wiki. Finally, if still more or needed, get trending premium
-	 * videos related to the vertical of the wiki.
-	 * @var int $articleId - ID of the article being viewed.
-	 * @return array - The list of videos.
-	 */
-	public function getVideos( $articleId ) {
-
-		wfProfileIn(__METHOD__);
-
-		$articleRelatedVideos = $this->getArticleRelatedVideos( $articleId );
-		$articleRelatedVideosCount = $articleRelatedVideos['returnedVideoCount'];
-		$videos = $articleRelatedVideos['items'];
-
-		// Add videos from getWikiRelatedVideos if we didn't hit our video count limit
-		if ( $articleRelatedVideosCount < self::VIDEO_LIMIT ) {
-			$wikiRelatedVideos = $this->getWikiRelatedVideos();
-			array_splice( $wikiRelatedVideos, self::VIDEO_LIMIT - $articleRelatedVideosCount );
-			// We want these to always be shown in a random order to the user
-			shuffle( $wikiRelatedVideos );
-			$videos = array_merge( $videos,  $wikiRelatedVideos );
-		}
-
-		wfProfileOut(__METHOD__);
-
-		return $videos;
-	}
-
 }
