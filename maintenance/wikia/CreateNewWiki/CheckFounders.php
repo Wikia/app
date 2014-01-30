@@ -175,7 +175,7 @@ if( shouldDisplayHelp( $argv, $options ) ) {
 		echo "No recent founders found." . PHP_EOL . PHP_EOL;
 		exit( CNW_MAINTENANCE_SUCCESS );
 	} else {
-		echo 'Founders found: ' . rtrim( implode( ', ', $founders ), ', ' ) . PHP_EOL;
+		echo 'Founders found: ' . implode( ', ', $founders ) . PHP_EOL;
 		$invalidFounders = findInvalidFounders( $founders );
 
 		if( $invalidFounders === false ) {
@@ -185,7 +185,7 @@ if( shouldDisplayHelp( $argv, $options ) ) {
 			exit( CNW_MAINTENANCE_SUCCESS );
 		} else {
 		// once "invalid founder" is found display the message and add it to our logs with MOLI: label
-			$msg = 'Invalid founders found: ' . rtrim( implode( ', ', $invalidFounders ), ', ' );
+			$msg = 'Invalid founders found: ' . implode( ', ', $invalidFounders );
 			echo $msg . PHP_EOL . PHP_EOL;
 			Wikia::log( __METHOD__, false, CNW_MAINTENANCE_LOG_LABEL . $msg );
 			exit( CNW_MAINTENANCE_SUCCESS );
