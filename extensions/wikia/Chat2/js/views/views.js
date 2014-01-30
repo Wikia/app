@@ -3,6 +3,76 @@
 //Views
 //
 
+var ChatUserOptions = {
+	init: function () {
+		'use strict';
+
+		this._state = localStorage['chat.options'] && localStorage['chat.options'][0] === '{' &&
+			JSON.parse( localStorage['chat.options'] ) || { sound: true };
+
+		var self = this;
+		$.nirvana.sendRequest( {
+			controller: 'ChatController',
+			method: 'getUserSound',
+			'type': 'GET',
+			'format': 'json',
+			'callback': function( response ) {
+				if( response.sound !== '' ) {
+					var soundFile =  window.wgExtensionsPath + '/wikia/Chat2/sounds/' + response.sound;
+					self._state.soundFile = soundFile;
+					console.log( self._state );
+					$('#chat-sound-message').attr( 'src', soundFile );
+				}
+			}
+		} );
+	},
+
+	toggleBool: function ( key ) {
+		return this.set( key, !this.get( key ) );
+	},
+
+	get: function ( key ) {
+		'use strict';
+
+		if ( this._state === undefined ) this.init();
+
+		return this._state[key];
+	},
+
+	set: function ( key, newState ) {
+		'use strict';
+
+		this._state[key] = newState;
+
+		localStorage['chat.options'] = JSON.stringify( this._state );
+
+		return newState;
+	},
+
+	stylizeOptionsSoundButton: function () {
+		'use strict';
+
+		if ( !!this.get( 'sound' ) ) {
+			$( '#button-sound' ).addClass( 'enabled' ).removeClass( 'disabled' ).text( $.msg('chat-option-sound-on') );
+		} else {
+			$( '#button-sound' ).addClass( 'disabled' ).removeClass( 'enabled' ).text( $.msg('chat-option-sound-off') );
+		}
+	},
+
+	getSoundOption: function () {
+		'use strict';
+
+		return !!this.get( 'sound' );
+	},
+
+	toggleSoundOption: function () {
+		'use strict';
+
+		this.toggleBool( 'sound' );
+		this.stylizeOptionsSoundButton();
+	}
+};
+
 var ChatView = Backbone.View.extend({
 	tagName: 'li',
 	template: _.template( $('#message-template').html() ),
@@ -378,13 +448,21 @@ var NodeChatDiscussion = Backbone.View.extend({
 		if (chat.attributes.name == wgUserName) this.forceScroll = true;
 
 		// Add message to chat
-		var view = new ChatView({model: chat});
+		var view = new ChatView({model: chat}),
+			$el = $(view.el);
+
 		this.chatUL.append(view.render().el);
 
+		// play sound on normal messages (not you and not inline)
 		// Scroll chat to bottom
+
+		if (ChatUserOptions.getSoundOption() && $('#chat-sound-message').attr('src' ).length && !$el.hasClass('you') && !$el.hasClass('inline-alert')) {
+			document.getElementById('chat-sound-message').play();
+		}
 		if (this.forceScroll) {
 			this.scrollToBottom();
 		}
+
 	},
 
 	removeChat: function(chat) {
@@ -418,6 +496,7 @@ var NodeChatDiscussion = Backbone.View.extend({
 var NodeChatUsers = Backbone.View.extend({
 	actionTemplate: _.template( $('#user-action-template').html() ),
 	actionTemplateNoUrl: _.template( $('#user-action-template-no-url').html() ),
+
 	initialize: function(options) {
 		this.model.users.bind('add', $.proxy(this.addUser,this));
 		this.model.users.bind('remove', $.proxy(this.removeUser, this));
@@ -443,6 +522,17 @@ var NodeChatUsers = Backbone.View.extend({
 			event.preventDefault();
 			window.mainRoom.showRoom('main');
 		});
+
+		if ( $( '#chat-sound-message' ).attr( 'src' ).length ) {
+			ChatUserOptions.stylizeOptionsSoundButton();
+			$( '#button-sound' ).on( 'click', function ( e ) {
+				e.preventDefault();
+
+				ChatUserOptions.toggleSoundOption();
+			} );
+		} else {
+			$( '#button-sound' ).text( $.msg('chat-option-sound-disabled') );
+		}
 
 		// Hide/show main chat user list
 		$('#Rail .chevron').click(function() {

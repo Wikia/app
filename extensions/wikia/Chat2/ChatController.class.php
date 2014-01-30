@@ -118,4 +118,11 @@ class ChatController extends WikiaController {
 
 		return true;
 	}
+
+	public function getUserSound() {
+		global $wgUser;
+
+		$this->sound = $wgUser->getOption( ChatPreferenesHooks::CHAT_INCOMING_MESSAGE_SOUND_KEY, '' );
+	}
+
 }

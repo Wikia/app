@@ -337,6 +337,7 @@ a {
 		line-height: 30px;
 		padding: 3px 0 3px 13px;
 		text-overflow: ellipsis;
+		cursor: pointer;
 		.chevron {
 			border-width: 5px;
 			border-color: black transparent transparent;
@@ -361,13 +362,56 @@ a {
 			vertical-align: middle;
 		}
 	}
-	.private {
+	.private,
+	.options-header {
 		@include linear-gradient($color-rail-headline-bottom, top, $color-rail-headline-top, 0, $color-rail-headline-bottom, 100%);
 		border-top: 1px solid $color-rail-headline-border;
 		border-bottom: 1px solid $color-rail-headline-border;
 		font-size: 11px;
 		padding: 3px 2px 2px;
-		display:none;
+	}
+	.private {
+		display: none;
+	}
+	.options-box {
+		div {
+			margin: 5px 0;
+
+			&#button-sound {
+				padding-left: 20px;
+
+				&:after {
+					background-color: transparent;
+					background-image: url('/extensions/wikia/Chat2/images/speaker.png'); /* wgCdnStylePath */
+					background-repeat: no-repeat;
+					background-position-x: 0;
+					@if $is-dark-wiki {
+						background-position-x: -16px;
+					} @else {
+						background-position-x: 0;
+					}
+					width: 16px;
+					height: 16px;
+
+					content: '';
+					position: absolute;
+					left: 2px;
+				}
+
+				&.enabled,
+				&.disabled {
+					cursor: pointer;
+				}
+
+				&.enabled:after {
+					background-position-x: -16px;
+				}
+
+				&.disabled:after {
+					background-position-x: -32px;
+				}
+			}
+		}
 	}
 	.selected {
 		@include box-shadow(0, 0, 7px, darken($color-menu-highlight, 50%), true);
