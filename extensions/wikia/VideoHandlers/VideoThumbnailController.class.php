@@ -21,7 +21,8 @@ class VideoThumbnailController extends WikiaController {
 	 *		valign - valign for image
 	 *		imgExtraStyle - extra style for image
 	 *		disableRDF - disable RDF metadata
-	 *		responsive
+	 *		fluid - image will take the width of it's container
+	 *		forceSize - 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge'
 	 * @responseParam string width
 	 * @responseParam string height
 	 * @responseParam string linkHref
@@ -174,25 +175,24 @@ class VideoThumbnailController extends WikiaController {
 			}
 		}
 
-		// check responsive
-		if ( empty( $options[ 'responsive' ] ) ) {
-			$width = $width.'px';
-			$height = $height.'px';
+		// check fluid
+		if ( empty( $options[ 'fluid' ] ) ) {
+			$this->imgWidth = $width;
+			$this->imgHeight = $height;
 		} else {
-			$width = 0;
-			$height = 0;
-			$linkClasses[] = 'responsive';
+			$linkClasses[] = 'fluid';
 		}
-
-		// set width and height
-		$this->width = $width;
-		$this->height = $height;
 
 		// set link attributes
 		$this->linkHref = $linkHref;
 		$this->linkClasses = array_unique( $linkClasses );
 		$this->linkAttrs = $this->getAttribs( $linkAttribs );
-		$this->size = $this->getThumbnailSize( $width );
+
+		if ( gettype( $options['forceSize'] ) == "string" ) {
+			$this->size = $options['forceSize'];
+		} else {
+			$this->size = $this->getThumbnailSize( $width );
+		}
 
 		// set image attributes
 		$this->imgSrc = $imgSrc;

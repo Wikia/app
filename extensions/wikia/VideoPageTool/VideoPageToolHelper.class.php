@@ -226,6 +226,8 @@ class VideoPageToolHelper extends WikiaModel {
 		$db = wfGetDB( DB_SLAVE );
 
 		$thumbOptions['useTemplate'] = true;
+		$thumbOptions['fluid'] = true;
+		$thumbOptions['forceSize'] = 'small';
 
 		$videos = (new WikiaSQL())->cache( self::CACHE_TTL_CATEGORY_DATA, $memcKey )
 

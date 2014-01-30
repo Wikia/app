@@ -664,6 +664,7 @@ class Linker {
 			 * Wikia change start
 			 * @author Federico
 			 */
+			$params['useTemplate'] = true;
 			$origHTML = $s = $thumb->toHtml( $params );
 			/**
 			 * Wikia change end
@@ -868,6 +869,7 @@ class Linker {
 			 * Wikia change start
 			 * @author Federico
 			 */
+			$params['useTemplate'] = true;
 			$origHTML = $thumb->toHtml( $params );
 			$s .= $origHTML;
 			/**

@@ -8,8 +8,11 @@
 
 .wikia-video-thumbnail {
 	display: inline-block;
-	width: 100%;
 	position: relative;
+
+	&.fluid > img {
+		width: 100%;
+	}
 
 	// Background circle
 	.play-circle {
