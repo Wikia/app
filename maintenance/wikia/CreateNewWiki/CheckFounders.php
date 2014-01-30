@@ -149,15 +149,15 @@ if( shouldDisplayHelp( $argv, $options ) ) {
 	help();
 	exit( CNW_MAINTENANCE_SUCCESS );
 } else {
-	global $wgReadOnly, $wgSharedDB;
+	global $wgReadOnly, $wgExternalSharedDB;
 
 	if( !empty( $wgReadOnly ) ) {
-		echo "Database is in read-only mode at this moment";
+		echo "Database is in read-only mode at this moment. Try again later.\n\n";
 		exit( CNW_MAINTENANCE_READ_ONLY );
 	}
 
 	if( empty( $wgExternalSharedDB ) ) {
-		echo "Could not find shared DB";
+		echo "Could not find shared DB.\n\n";
 		exit( CNW_MAINTENANCE_NO_SHAREDDB_ERR );
 	}
 
@@ -179,6 +179,7 @@ if( shouldDisplayHelp( $argv, $options ) ) {
 			echo "No invalid founders found.\n\n";
 			exit( CNW_MAINTENANCE_SUCCESS );
 		} else {
+		// once "invalid founder" is found display the message and add it to our logs with MOLI: label
 			$msg = 'Invalid founders found: ' . rtrim( implode( ', ', $invalidFounders ), ', ' );
 			echo $msg . "\n\n";
 			Wikia::log( __METHOD__, false, 'MOLI: ' . $msg );
