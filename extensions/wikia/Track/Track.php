@@ -13,7 +13,7 @@ $wgHooks['WikiaSkinTopScripts'][] = 'Track::onWikiaSkinTopScripts';
 class Track {
 	const BASE_URL = 'http://a.wikia-beacon.com/__track';
 
-	public static function getURL ($type=null, $name=null, $param=null, $for_html=true) {
+	private static function getURL ($type=null, $name=null, $param=null, $for_html=true) {
 		global $wgStyleVersion, $wgCityId, $wgContLanguageCode, $wgDBname, $wgDBcluster, $wgUser, $wgArticle, $wgTitle, $wgAdServerTest;
 
 		$sep = $for_html ? '&amp;' : '&';
@@ -47,7 +47,7 @@ class Track {
 		return $url;
 	}
 
-	public static function getViewJS ($param=null) {
+	private static function getViewJS ($param=null) {
 		global $wgDevelEnvironment, $wgJsMimeType;
 
 		// Fake beacon and varnishTime values for development environment
@@ -105,8 +105,7 @@ SCRIPT1;
 	public static function addGlobalVars(Array &$vars) {
 		global $wgUser;
 
-		// TODO: consider using $wgUser->isLoggedIn() instead
-		if ($wgUser->getId() && $wgUser->getId() > 0) {
+		if ($wgUser->isLoggedIn()) {
 			$vars['wgTrackID'] = $wgUser->getId();
 		}
 		return true;
