@@ -12,22 +12,24 @@ class SpotlightsController extends WikiaController {
 	 */
 	public function getSpotlights() {
 		$spotlights = [];
+		$request = $this->wg->request;
 
-		$cityId 	= $this->wg->request->getInt('cityId', 0);
-		$vertical 	= $this->wg->request->getVal('vertical', '');
-		$type		= $this->wg->request->getVal('type', self::TYPE_TIPSY);
+		$cityId 	= $request->getInt( 'cityId', 0 );
+		$vertical 	= $request->getVal( 'vertical', '' );
 
-		if ($cityId && !empty($vertical)) {
+		if ( $cityId && !empty( $vertical ) ) {
+			$type = $request->getVal( 'type', self::TYPE_TIPSY );
+
 			$spotlights = WikiaDataAccess::cache(
-				$this->getMemcKey($type, $vertical, $cityId),
+				$this->getMemcKey( $type, $vertical, $cityId ),
 				86400 /* 24 hours */,
-				function() use($type, $vertical, $cityId) {
+				function() use( $type, $vertical, $cityId ) {
 					$spotlights = [];
 					$spotlightsModel = new SpotlightsModel();
 
-					switch($type) {
-						case self::TYPE_OPENX: $spotlights = $spotlightsModel->getOpenXSpotlights($vertical); break;
-						case self::TYPE_TIPSY: $spotlights = $spotlightsModel->getTipsySpotlights($cityId); break;
+					switch( $type ) {
+						case self::TYPE_OPENX: $spotlights = $spotlightsModel->getOpenXSpotlights( $vertical ); break;
+						case self::TYPE_TIPSY: $spotlights = $spotlightsModel->getTipsySpotlights( $cityId ); break;
 					}
 
 					return $spotlights;
@@ -35,10 +37,10 @@ class SpotlightsController extends WikiaController {
 			);
 		}
 
-		$this->setVal('spotlights', json_encode($spotlights));
+		$this->setVal( 'spotlights', json_encode( $spotlights ) );
 	}
 
-	private function getMemcKey($type, $vertical, $cityId) {
+	private function getMemcKey( $type, $vertical, $cityId ) {
 		return wfSharedMemcKey(
 			'spotlights',
 			$type,

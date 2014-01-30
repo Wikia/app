@@ -3,6 +3,7 @@
 class SpotlightsModel extends WikiaModel {
 	const IMG_WIDTH = 255;
 	const IMG_HEIGHT = 123;
+	const WIKI_VISUALIZATION_IMG = 'Wikia-Visualization-Main.png';
 
 	/**
 	 * Gets set of wikis from given vertical and community wikis
@@ -10,12 +11,12 @@ class SpotlightsModel extends WikiaModel {
 	 * @param string $vertical Vertical name
 	 * @return array
 	 */
-	public function getOpenXSpotlights($vertical) {
+	public function getOpenXSpotlights( $vertical ) {
 		$spotlights = [];
 		$verticalsData = $this->getOpenXVerticalData();
 
-		if ( isset($verticalsData[$vertical]) ) {
-			$spotlights = array_merge($verticalsData[$vertical], $this->getOpenXCommunityData());
+		if ( isset( $verticalsData[ $vertical ] ) ) {
+			$spotlights = array_merge( $verticalsData[ $vertical ], $this->getOpenXCommunityData() );
 		}
 
 		return $spotlights;
@@ -27,14 +28,14 @@ class SpotlightsModel extends WikiaModel {
 	 * @param int $cityId Wiki ID
 	 * @return array
 	 */
-	public function getTipsySpotlights($cityId) {
+	public function getTipsySpotlights( $cityId ) {
 		$spotlights = [];
 		$tipsy = $this->getTipsyData();
 
-		if ( isset($tipsy[$cityId]) ) {
-			$spotlights = $tipsy[$cityId];
-			foreach ($spotlights as &$spotlight) {
-				$spotlight['image'] = $this->getSpotlightImage($spotlight['url']);
+		if ( isset( $tipsy[ $cityId ] ) ) {
+			$spotlights = $tipsy[ $cityId ];
+			foreach ( $spotlights as &$spotlight ) {
+				$spotlight[ 'image' ] = $this->getSpotlightImage( $spotlight[ 'url' ] );
 			}
 		}
 
@@ -47,14 +48,14 @@ class SpotlightsModel extends WikiaModel {
 	 * @param $url Wiki url
 	 * @return null|string
 	 */
-	private function getSpotlightImage($url) {
+	private function getSpotlightImage( $url ) {
 		$imageUrl = null;
-		$cityId = WikiFactory::UrlToID($url);
-		$title = GlobalTitle::newFromText('Wikia-Visualization-Main.png', NS_FILE, $cityId);
+		$cityId = WikiFactory::UrlToID( $url );
+		$title = GlobalTitle::newFromText( self::WIKI_VISUALIZATION_IMG, NS_FILE, $cityId );
 		if ( $title !== null ) {
-			$file = new GlobalFile($title);
+			$file = new GlobalFile( $title );
 			if ( $file !== null ) {
-				$imageUrl = $file->getCrop(self::IMG_WIDTH, self::IMG_HEIGHT);
+				$imageUrl = $file->getCrop( self::IMG_WIDTH, self::IMG_HEIGHT );
 			}
 		}
 		return $imageUrl;
@@ -311,4 +312,4 @@ class SpotlightsModel extends WikiaModel {
 			],
 		];
 	}
-} 
+}
