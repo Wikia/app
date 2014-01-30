@@ -30,23 +30,6 @@ require( ['wikia.tracker'], function ( tracker ) {
 					'label': 'tool-' + nameToLabel( data.name )
 				};
 			},
-			'Edit': function ( data ) {
-				var params = {
-					'action': actions.CLICK,
-					'category': 'article'
-				};
-
-				switch( data.action ) {
-					case 'edit-link-click':
-						params.label = 've-edit';
-						break;
-					case 'section-edit-link-click':
-						params.label = 've-section-edit';
-						break;
-				}
-
-				return params;
-			},
 			'performance.system.activation': function ( data ) {
 				return {
 					'action': actions.IMPRESSION,
