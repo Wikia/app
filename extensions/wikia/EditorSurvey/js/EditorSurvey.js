@@ -32,7 +32,7 @@
 				abbreviation = 've';
 			}
 			return abbreviation;
-		}
+		},
 
 		bindUnload: function() {
 			$( window ).on( 'beforeunload.EditorSurvey', function() {
