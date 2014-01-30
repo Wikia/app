@@ -194,7 +194,7 @@ require( ['wikia.tracker'], function ( tracker ) {
 		mw.hook( 've.activationComplete' ).add( function () {
 			ve.track( 'wikia' , {
 				'action': actions.IMPRESSION,
-				'label': 'edit-page-ready-on-load',
+				'label': 'edit-page-ready-from-page-load',
 				'value': Math.round( ve.now() - window.wgNow )
 			} );
 		} );
