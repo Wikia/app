@@ -753,7 +753,7 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.10668 ms
-	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::getFilterQueryString
+	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::prepareResponse
 	 */
 	public function testPrepareResponse() {
 		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'setResults', 'setResultsFound', 'getPage', 'getQuery' ) );

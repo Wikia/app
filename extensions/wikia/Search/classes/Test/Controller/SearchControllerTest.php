@@ -587,6 +587,8 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 	}
 
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.18153 ms
 	 * @covers WikiaSearchController::pagination
 	 */
 	public function testPaginationWithConfig() {
@@ -793,6 +795,8 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 	}
 
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.11167 ms
 	 * @covers WikiaSearchController::tabs
 	 */
 	public function testTabs() {
@@ -1141,6 +1145,8 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 	}
 
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08988 ms
 	 * @group UsingDB
 	 * @covers WikiaSearchController::advancedBox
 	 */

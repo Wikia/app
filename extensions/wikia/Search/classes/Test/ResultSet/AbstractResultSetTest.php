@@ -27,7 +27,7 @@ class AbstractResultSetTest extends Wikia\Search\Test\BaseTest {
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.09517 ms
-	 * @covers Wikia\Search\ResultSet\AbstractResultSet::getResults
+	 * @covers Wikia\Search\ResultSet\AbstractResultSet::getResultsFound
 	 */
 	public function testGetResultsFound() {
 		$resultSet = $this->getMockBuilder( '\Wikia\Search\ResultSet\AbstractResultSet' )

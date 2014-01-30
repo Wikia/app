@@ -1792,7 +1792,7 @@ class ConfigTest extends BaseTest {
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.07596 ms
-	 * @covers Wikia\Search\Config::getQueryFields
+	 * @covers Wikia\Search\Config::getQueryFieldsToBoosts
 	 */
 	public function testGetQueryFieldsToBoosts() {
 		$testProfile = $this->getMock( 'Wikia\\Search\\TestProfile\\Base', [ 'getQueryFieldsToBoosts' ] );
@@ -1834,7 +1834,6 @@ class ConfigTest extends BaseTest {
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.0751 ms
-	 * @covers Wikia\Search\Config::setResults
 	 * @covers Wikia\Search\Config::getResults
 	 */
 	public function testSetGetResults() {

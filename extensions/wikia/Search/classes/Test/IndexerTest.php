@@ -13,7 +13,7 @@ class IndexerTest extends BaseTest
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.08802 ms
-	 * @covers Wikia\Search\Indexer::getPage
+	 * @covers Wikia\Search\Indexer::getPages
 	 */
 	public function testGetPages() {
 		$indexer = $this->getMockBuilder( 'Wikia\Search\Indexer' )
