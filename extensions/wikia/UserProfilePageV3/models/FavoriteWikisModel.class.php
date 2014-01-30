@@ -366,7 +366,7 @@ class FavoriteWikisModel extends WikiaModel {
 		$dbHandler->replace(
 			'page_wikia_props',
 			null,
-			array('page_id' => $this->user->getId(), 'propname' => 10, 'props' => serialize($data)),
+			array('page_id' => $this->user->getId(), 'propname' => self::PAGE_WIKIA_PROPS_PROPNAME, 'props' => serialize($data)),
 			__METHOD__
 		);
 		$dbHandler->commit();
