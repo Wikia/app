@@ -206,7 +206,7 @@ class DefaultContent extends AbstractService
 		$result = array();
 		$paragraphs = array();
 		
-		$html = str_replace("&lt;", "", $html); // workaround for bug in html_entity_decode that truncates the text
+		$html = str_replace(["&lt;", "&gt;"], "", $html); // workaround for bug in html_entity_decode that truncates the text
 
 		$dom = new \simple_html_dom( html_entity_decode($html, ENT_COMPAT, 'UTF-8') );
 		if ( $dom->root ) {

@@ -303,6 +303,7 @@ class DefaultContentTest extends BaseTest
 		
 		$this->assertEquals($expected, $prep->invoke($service, "<p>tam foo bar</p>"));
 		$this->assertEquals($expected, $prep->invoke($service, "&lt;tam foo bar"));
+		$this->assertEquals($expected, $prep->invoke($service, "&gt;tam foo bar"));
 	}
 	
 	/**
