@@ -106,7 +106,6 @@ $pagination-color-active: #a7a9ab;
 
 		img {
 			width: 100%;
-			height: auto;
 		}
 
 		a {
@@ -122,6 +121,7 @@ $pagination-color-active: #a7a9ab;
 	.owl-item:last-child .category-slide {
 		border: 1px solid $color-page-border;
 		box-sizing: border-box;
+		display: none;
 		font-size: 14px;
 		line-height: 12px;
 		padding-left: 1.5em;

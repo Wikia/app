@@ -54,6 +54,7 @@ define( 'videohomepage.views.carousel', [
 					self.$carousel.find( '.title a' ).ellipses( {
 						wordsHidden: 2
 					} );
+					self.resizeLastSlide();
 				},
 				beforeUpdate: function() {
 					self.$( '.ellipses' ).remove();
@@ -70,7 +71,7 @@ define( 'videohomepage.views.carousel', [
 					$buttons;
 
 			$buttons = this.$( '.owl-buttons div' );
-			height = this.$( '.owl-item:first-child img' ).height();
+			height = this.$( '.owl-item' ).eq( 0 ).find( 'img' ).height();
 
 			// set the last slides height ( since it doesn't come with an image )
 			this.$( '.category-slide' ).height( height );
