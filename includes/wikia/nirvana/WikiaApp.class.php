@@ -582,20 +582,17 @@ class WikiaApp {
 	 */
 	public function sendRequest( $controllerName = null, $methodName = null, $params = array(), $internal = true ) {
 		wfProfileIn(__METHOD__);
-		$values = array();
 
 		if ( !empty( $controllerName ) ) {
-			$values['controller'] = $controllerName;
+			$params['controller'] = $controllerName;
 		}
 
 		if ( !empty( $methodName ) ) {
-			$values['method'] = $methodName;
+			$params['method'] = $methodName;
 		}
 
-		$params = array_merge( (array) $params, $values );
-
 		if ( empty( $methodName ) || empty( $controllerName ) ) {
-			$params = array_merge( $params, $_POST, $_GET );
+			$params = array_merge( (array) $params, $_POST, $_GET );
 		}
 
 		$request = new WikiaRequest($params);
