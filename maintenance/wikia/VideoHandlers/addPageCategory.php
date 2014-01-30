@@ -61,12 +61,12 @@ if ( isset($options['help']) ) {
 		Limit results to one or more specific categories separated by commas
 
 	--limit NUM
-		Limit number of videos returned (ordered by video title)
+		[REQUIRED] Limit number of videos returned (ordered by video title)
 
 	* Actions
 	
 	--add CATEGORY_NAME[;CATEGORY_NAME;...]
-		Add the given category (separated by semicolons)
+		Add the given category or categories (separated by semicolons)
 
 	--addPageCategories
 		Add page category using the categories found in the pageCategories metadata field.  Any video that does
@@ -177,10 +177,7 @@ if ( $replace ) {
 }
 
 if ( $matchCategories ) {
-	$values = [];
-	foreach ( $matchCategories as $cat ) {
-		$values[] = $db->addQuotes( $cat );
-	}
+	$values = array_map( [ $db, 'addQuotes' ], $matchCategories );
 	$sqlWhere[] = "EXISTS (
 		SELECT 1
 		FROM page JOIN categorylinks ON page_id = cl_from
