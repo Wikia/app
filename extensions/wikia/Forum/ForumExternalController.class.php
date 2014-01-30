@@ -203,8 +203,16 @@ class ForumExternalController extends WallExternalController {
 		$this->errormsg = '';
 
 		// Trim spaces (CONN-167)
-		$boardTitle = trim( $boardTitle );
-		$boardDescription = trim( $boardDescription );
+		$unicodeTrimRegex = array(
+			'/\s+/u',                                // spaces and tabs
+			'/^[\pZ|\pC]+([\PZ|\PC]*)[\pZ|\pC]+$/u', // unicode trim
+			'/([\pZ|\pC])[\pZ|\pC]+/u',              // unicode spaces
+		);
+
+		$unicode_replacement = array( ' ', '$1', ' ' );
+
+		$boardTitle = trim( preg_replace( $unicodeTrimRegex, $unicode_replacement, $boardTitle ) );
+		$boardDescription = trim( preg_replace( $unicodeTrimRegex, $unicode_replacement, $boardDescription ) );
 
 		// Reject illegal characters.
 		$rxTc = Title::getTitleInvalidRegex();
@@ -214,14 +222,14 @@ class ForumExternalController extends WallExternalController {
 			return false;
 		}
 
-		$titleLength = strlen( $boardTitle );
+		$titleLength = mb_strlen( $boardTitle );
 		if ( $titleLength > 40 || $titleLength < 4 ) {
 			$this->errorfield = 'boardTitle';
 			$this->errormsg = wfMessage( 'forum-board-title-validation-length' )->escaped();
 			return false;
 		}
 
-		$descriptionLength = strlen( $boardDescription );
+		$descriptionLength = mb_strlen( $boardDescription );
 
 		if ( $descriptionLength > 255 || $descriptionLength < 4 ) {
 			$this->errorfield = 'boardDescription';
