@@ -210,22 +210,41 @@ class OoyalaAsset extends WikiaModel {
 			// add metadata for the asset
 			$resp = $this->addMetadata( $asset['embed_code'], $data );
 			if ( $resp ) {
-				// set thumbnail
-				$resp = $this->setThumbnailUrl( $asset['embed_code'], $data );
-				if ( $resp ) {
-					// set primary thumbnail
-					$resp = $this->setPrimaryThumbnail( $asset['embed_code'] );
-					if ( $resp ) {
-						// set labels
-						$resp = $this->setLabels( $asset['embed_code'], $data );
+				if ( empty( $data['thumbnail'] ) ) {
+					print( "NOTE: No thumbnail for $asset[name] ($asset[embed_code]).\n" );
+				} else {
+					// set thumbnail
+					$resp = $this->setThumbnail( $asset['embed_code'], $data );
+					if ( !$resp ) {
+						print( "Error: Cannot setting thumbnail for $asset[name] ($asset[embed_code]).\n" );
 					}
 				}
+
+				// always set labels
+				$resp = $this->setLabels( $asset['embed_code'], $data );
 			}
 		} else {
 			print( "ERROR: problem posting remote asset (".$status->getMessage().").\n" );
 		}
 
 		wfProfileOut( __METHOD__ );
+
+		return $resp;
+	}
+
+	/**
+	 * Set thumbnail
+	 * @param string $videoId
+	 * @param array $data
+	 * @return boolean
+	 */
+	public function setThumbnail( $videoId, $data ) {
+		// set thumbnail
+		$resp = $this->setThumbnailUrl( $videoId, $data );
+		if ( $resp ) {
+			// set primary thumbnail
+			$resp = $this->setPrimaryThumbnail( $videoId );
+		}
 
 		return $resp;
 	}
@@ -410,6 +429,10 @@ class OoyalaAsset extends WikiaModel {
 		}
 		if ( !empty( $data['pageCategories'] ) ) {
 			$metadata['pagecategories'] = $data['pageCategories'];
+		}
+		// set blank thumbnail
+		if ( empty( $data['thumbnail'] ) ) {
+			$metadata['thumbnail'] = 1;
 		}
 
 		// filter empty value
