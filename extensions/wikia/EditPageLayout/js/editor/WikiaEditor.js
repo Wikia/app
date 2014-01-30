@@ -264,6 +264,11 @@
 
 				GlobalTriggers.fire('WikiaEditorReady', this);
 				$().log('Editor is ready!', 'WikiaEditor');
+				WE.track( {
+					action: Wikia.Tracker.ACTIONS.impression,
+					label: 'edit-page',
+					value: (new Date() - window.wgNow) / 1000
+				} );
 			}
 		},
 
