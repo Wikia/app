@@ -5,6 +5,10 @@ class FavoriteWikisModel extends WikiaModel {
 	 */
 	private $user;
 
+	/**
+	 * @desc Maximum number of wikis returned at once
+	 * @var Integer
+	 */
 	const MAX_FAV_WIKIS = 4;
 	const CACHE_VERSION = '1.00';
 
