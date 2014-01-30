@@ -57,8 +57,8 @@ if ( isset($options['help']) ) {
 	--provider PROVIDER_NAME
 		Limit results based on provider name
 
-	--category CATEGORY_NAME[,CATEGORY_NAME,...]
-		Limit results to one or more specific categories separated by commas
+	--category CATEGORY_NAME[;CATEGORY_NAME;...]
+		Limit results to one or more specific categories separated by semicolons
 
 	--limit NUM
 		[REQUIRED] Limit number of videos returned (ordered by video title)
@@ -108,7 +108,7 @@ if ( !is_numeric( $limit ) ) {
 }
 
 // category
-$matchCategories = isset( $options['category'] ) ? explode(',', $options['category']) : [];
+$matchCategories = isset( $options['category'] ) ? explode(';', $options['category']) : [];
 
 // page name
 $name = isset( $options['name'] ) ? $options['name'] : '';
