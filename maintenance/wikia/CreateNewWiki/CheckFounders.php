@@ -89,8 +89,8 @@ function findFounders( $timestamp ) {
 
 		return $founders;
 	} catch( DBQueryError $e ) {
-		echo "Database error: " . $e->getMessage() . "\n";
-		echo "SQL statement was: " . $e->getSQL() . "\n\n";
+		echo "Database error: " . $e->getMessage() . PHP_EOL;
+		echo "SQL statement was: " . $e->getSQL() . PHP_EOL . PHP_EOL;
 		return false;
 	}
 }
@@ -127,8 +127,8 @@ function findInvalidFounders( $founders ) {
 
 		return $invalidFounders;
 	} catch( DBQueryError $e ) {
-		echo "Database error: " . $e->getMessage() . "\n";
-		echo "SQL statement was: " . $e->getSQL() . "\n\n";
+		echo "Database error: " . $e->getMessage() . PHP_EOL;
+		echo "SQL statement was: " . $e->getSQL()  . PHP_EOL . PHP_EOL;
 		return false;
 	}
 }
@@ -137,10 +137,12 @@ function findInvalidFounders( $founders ) {
  * @brief Displays help content
  */
 function help() {
-	echo "This script checks if a founder of a wiki is present in `wikicities.user` table.\nIf he's not present in the table then he's marked as 'invalid founder'.";
-	echo "Available options: \n";
-	echo "\thelp or ? -- displays this text\n";
-	echo "\ttimestamp -- (optional) the end date in 'between' condition while selecting recent founders; default: time() result\n\n";
+	echo "This script checks if a founder of a wiki is present in `wikicities.user` table." . PHP_EOL;
+	echo "If he's not present in the table then he's marked as 'invalid founder'." . PHP_EOL;
+	echo "Available options:" . PHP_EOL;
+	echo "\thelp or ? -- displays this text" . PHP_EOL;
+	echo "\ttimestamp -- (optional) the end date in 'between' condition while selecting recent founders;"
+		 . " default: time() result" . PHP_EOL . PHP_EOL;
 }
 
 /** APPLICATION **/
@@ -152,12 +154,12 @@ if( shouldDisplayHelp( $argv, $options ) ) {
 	global $wgReadOnly, $wgExternalSharedDB;
 
 	if( !empty( $wgReadOnly ) ) {
-		echo "Database is in read-only mode at this moment. Try again later.\n\n";
+		echo "Database is in read-only mode at this moment. Try again later." . PHP_EOL . PHP_EOL;
 		exit( CNW_MAINTENANCE_READ_ONLY );
 	}
 
 	if( empty( $wgExternalSharedDB ) ) {
-		echo "Could not find shared DB.\n\n";
+		echo "Could not find shared DB." . PHP_EOL . PHP_EOL;
 		exit( CNW_MAINTENANCE_NO_SHAREDDB_ERR );
 	}
 
@@ -167,21 +169,21 @@ if( shouldDisplayHelp( $argv, $options ) ) {
 	if( $founders === false ) {
 		exit( CNW_MAINTENANCE_DB_ERROR );
 	} else if( empty( $founders ) ) {
-		echo "No recent founders found.\n\n";
+		echo "No recent founders found." . PHP_EOL . PHP_EOL;
 		exit( CNW_MAINTENANCE_SUCCESS );
 	} else {
-		echo 'Founders found: ' . rtrim( implode( ', ', $founders ), ', ' ) . "\n";
+		echo 'Founders found: ' . rtrim( implode( ', ', $founders ), ', ' ) . PHP_EOL;
 		$invalidFounders = findInvalidFounders( $founders );
 
 		if( $invalidFounders === false ) {
 			exit( CNW_MAINTENANCE_DB_ERROR );
 		} else if( empty( $invalidFounders ) ) {
-			echo "No invalid founders found.\n\n";
+			echo "No invalid founders found." . PHP_EOL . PHP_EOL;
 			exit( CNW_MAINTENANCE_SUCCESS );
 		} else {
 		// once "invalid founder" is found display the message and add it to our logs with MOLI: label
 			$msg = 'Invalid founders found: ' . rtrim( implode( ', ', $invalidFounders ), ', ' );
-			echo $msg . "\n\n";
+			echo $msg . PHP_EOL . PHP_EOL;
 			Wikia::log( __METHOD__, false, 'MOLI: ' . $msg );
 			exit( CNW_MAINTENANCE_SUCCESS );
 		}
