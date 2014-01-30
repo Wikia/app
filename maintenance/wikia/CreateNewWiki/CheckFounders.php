@@ -179,7 +179,9 @@ if( shouldDisplayHelp( $argv, $options ) ) {
 			echo "No invalid founders found.\n\n";
 			exit( CNW_MAINTENANCE_SUCCESS );
 		} else {
-			echo 'Invalid founders found: ' . rtrim( implode( ', ', $founders ), ', ' ) . "\n";
+			$msg = 'Invalid founders found: ' . rtrim( implode( ', ', $invalidFounders ), ', ' );
+			echo $msg . "\n\n";
+			Wikia::log( __METHOD__, false, 'MOLI: ' . $msg );
 			exit( CNW_MAINTENANCE_SUCCESS );
 		}
 	}
