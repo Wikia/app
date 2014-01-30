@@ -131,7 +131,7 @@ var UserLoginModal = {
 						action: clickAction,
 						label: 'forgot-password'
 					} );
-				} ).on( 'click', '.keep-logged-in label', function() {
+				} ).on( 'click', 'input.keep-logged-in', function() {
 					that.track( {
 						action: clickAction,
 						label: 'keep-me-logged-in'
