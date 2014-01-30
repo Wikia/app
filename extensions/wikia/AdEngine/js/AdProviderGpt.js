@@ -126,8 +126,6 @@ var AdProviderGpt = function (adTracker, log, window, Geo, slotTweaker, cacheSto
 		return true;
 	}
 
-	// Public methods
-
 	function isAmznOnPage( slotname, slot ) {
 		log( ['isAmznOnPage', slotname], 'debug', logGroup );
 
@@ -147,7 +145,7 @@ var AdProviderGpt = function (adTracker, log, window, Geo, slotTweaker, cacheSto
 
 		}
 
-		return true;
+		return false;
 	}
 
 	function canHandleSlot(slotname) {
