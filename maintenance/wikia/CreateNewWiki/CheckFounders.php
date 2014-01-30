@@ -9,6 +9,9 @@ define( 'CNW_MAINTENANCE_DB_ERROR', 1 );
 define( 'CNW_MAINTENANCE_READ_ONLY', 2 );
 define( 'CNW_MAINTENANCE_NO_SHAREDDB_ERR', 3 );
 
+/** OTHER CONSTANTS **/
+define( 'CNW_MAINTENANCE_LOG_LABEL', 'MOLI: ' );
+
 /** FUNCTIONS' DEFINITIONS **/
 
 /**
@@ -184,7 +187,7 @@ if( shouldDisplayHelp( $argv, $options ) ) {
 		// once "invalid founder" is found display the message and add it to our logs with MOLI: label
 			$msg = 'Invalid founders found: ' . rtrim( implode( ', ', $invalidFounders ), ', ' );
 			echo $msg . PHP_EOL . PHP_EOL;
-			Wikia::log( __METHOD__, false, 'MOLI: ' . $msg );
+			Wikia::log( __METHOD__, false, CNW_MAINTENANCE_LOG_LABEL . $msg );
 			exit( CNW_MAINTENANCE_SUCCESS );
 		}
 	}
