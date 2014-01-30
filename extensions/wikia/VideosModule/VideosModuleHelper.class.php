@@ -8,7 +8,7 @@ class VideosModuleHelper extends WikiaModel {
 	const THUMBNAIL_HEIGHT = 309;
 	// We don't care where else this video has been posted, we just want to display it
 	const POSTED_IN_ARTICLES = 0;
-	const VIDEO_LIMIT = 25;
+	const VIDEO_LIMIT = 20;
 	const GET_THUMB = true;
 
 	/**
