@@ -178,7 +178,7 @@ require( ['throbber', 'toast', 'modal', 'track', 'JSMessages', 'lazyload', 'jque
 					}
 				).fail(
 					onFail
-				).then( function () {
+				).always( function () {
 					submit.disabled = false;
 					throbber.hide( form );
 				} );
