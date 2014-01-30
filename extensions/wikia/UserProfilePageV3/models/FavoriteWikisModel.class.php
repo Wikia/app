@@ -382,12 +382,7 @@ class FavoriteWikisModel extends WikiaModel {
 	 * @return boolean
 	 */
 	private function isTopWikiHidden( $wikiId ) {
-		wfProfileIn(__METHOD__);
-
-		$out = (in_array($wikiId, $this->getHiddenTopWikis()) ? true : false);
-
-		wfProfileOut(__METHOD__);
-		return $out;
+		return in_array( $wikiId, $this->getHiddenTopWikis() );
 	}
 
 	/**
