@@ -192,7 +192,6 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		$name = "ImageReviewStats-$startYear-$startMonth-$startDay-to-$endYear-$endMonth-$endDay";
 
 		header("Pragma: public");
-		header("Expires: 0");
 		header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
 		header('Content-Type: text/force-download');
 
