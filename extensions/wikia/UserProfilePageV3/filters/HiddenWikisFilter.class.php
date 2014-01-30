@@ -1,4 +1,9 @@
 <?php
+/**
+ * Class HiddenWikisFilter
+ *
+ * @desc Manages wikis array/collection and returns filtered version
+ */
 class HiddenWikisFilter extends UserWikisFilter {
 	private $wikis = [];
 	private $hiddenWikis = [];
