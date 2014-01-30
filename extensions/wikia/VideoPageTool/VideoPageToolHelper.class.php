@@ -76,7 +76,6 @@ class VideoPageToolHelper extends WikiaModel {
 		foreach( $sections as $key => $value ) {
 			$query['section'] = $key;
 			$leftMenuItems[] = array(
-				'title' => $value,
 				'anchor' => $value,
 				'href' => $this->wg->title->getLocalURL( $query ),
 				'selected' => ($selected == $key),
@@ -226,6 +225,8 @@ class VideoPageToolHelper extends WikiaModel {
 		$db = wfGetDB( DB_SLAVE );
 
 		$thumbOptions['useTemplate'] = true;
+		$thumbOptions['fluid'] = true;
+		$thumbOptions['forceSize'] = 'small';
 
 		$videos = (new WikiaSQL())->cache( self::CACHE_TTL_CATEGORY_DATA, $memcKey )
 

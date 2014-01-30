@@ -15,6 +15,7 @@ class VideoPageToolAssetFeatured extends VideoPageToolAsset {
 	protected $defaultThumbOptions = [
 		'noLightbox' => true,
 		'useTemplate' => true,
+		'fluid' => true,
 		'hidePlayButton' => true,
 	];
 
