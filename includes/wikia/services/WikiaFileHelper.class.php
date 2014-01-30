@@ -498,7 +498,6 @@ class WikiaFileHelper extends Service {
 			$htmlParams = array(
 				'custom-title-link' => $oTitle,
 				'duration' => true,
-				'useTemplate' => true,
 				'linkAttribs' => array( 'class' => 'video-thumbnail' )
 			);
 			if ( $force16x9Ratio ) {
