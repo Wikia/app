@@ -188,7 +188,7 @@ class VideoThumbnailController extends WikiaController {
 		$this->linkClasses = array_unique( $linkClasses );
 		$this->linkAttrs = $this->getAttribs( $linkAttribs );
 
-		if ( gettype( $options['forceSize'] ) == "string" ) {
+		if ( !empty( $options['forceSize'] ) ) {
 			$this->size = $options['forceSize'];
 		} else {
 			$this->size = $this->getThumbnailSize( $width );
