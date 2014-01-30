@@ -804,155 +804,126 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 		$reflspell->setAccessible( true );
 		$reflspell->invoke( $mockSelect, $mockResult ); // weirdness
 	}
-	
-	/**
-	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::getFilterQueryString
-	 * @todo move to correct query service
-//	public function testGetFilterQueryString() {
-//		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getCityId', 'getNamespaces' ) );
-//		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $mockConfig ) );
-//		$mockSelect = $this->getMockBuilder( '\Wikia\Search\QueryService\Select\AbstractSelect' )
-//		                   ->setConstructorArgs( array( $dc ) )
-//		                   ->setMethods( array( null ) )
-//		                   ->getMockForAbstractClass();
-//		$mockConfig
-//		    ->expects( $this->once() )
-//		    ->method ( 'getCityId' )
-//		    ->will   ( $this->returnValue( 123 ) )
-//		;
-//		$mockConfig
-//		    ->expects( $this->once() )
-//		    ->method ( 'getNamespaces' )
-//		    ->will   ( $this->returnValue( [ 0, 14 ] ) )
-//		;
-//		$reflspell = new ReflectionMethod( 'Wikia\Search\QueryService\Select\AbstractSelect', 'getFilterQueryString' );
-//		$reflspell->setAccessible( true );
-//		$this->assertEquals(
-//				'((ns:0) OR (ns:14)) AND (wid:123)',
-//				$reflspell->invoke( $mockSelect )
-//		);
-//	}
-	*/
-	
+
 	/**
 	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::registerDismax
 	 * @todo move ot correct query service
-//	public function testRegisterDismax() {
-//		$mockQuery = $this->getMockBuilder( 'Solarium_Query_Select' )
-//		                  ->disableOriginalConstructor()
-//		                  ->setMethods( array( 'getDismax' ) )
-//		                  ->getMock();
-//
-//		$dismaxMethods = array(
-//				'setQueryFields', 'setQueryParser', 'setPhraseFields', 'setBoostFunctions',
-//				'setBoostQuery', 'setMinimumMatch', 'setPhraseSlop', 'setTie'
-//				);
-//		$mockDismax = $this->getMockBuilder( 'Solarium_Query_Select_Component_DisMax' )
-//		                   ->disableOriginalConstructor()
-//		                   ->setMethods( $dismaxMethods )
-//		                   ->getMock();
-//		$mockService = $this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
-//		                      ->disableOriginalConstructor()
-//		                      ->setMethods( array( 'isOnDbCluster' ) )
-//		                      ->getMock();
-//
-//		$mockConfig = $this->getMockBuilder( 'Wikia\Search\Config' )
-//		                   ->setMethods( array( 'getMinimumMatch', 'getSkipBoostFunctions', 'getQuery' ) )
-//		                   ->getMock();
-//
-//		$deps = array( 'config' => $mockConfig, 'service' => $mockService  );
-//		$dc = new Wikia\Search\QueryService\DependencyContainer( $deps );
-//		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\AbstractSelect' )
-//		                   ->setConstructorArgs( array( $dc ) )
-//		                   ->setMethods( array( 'getQueryFieldsString', 'getBoostQueryString' ) )
-//		                   ->getMockForAbstractClass();
-//
-//		$mockSelect
-//		    ->expects( $this->once() )
-//		    ->method ( 'getQueryFieldsString' )
-//		    ->will   ( $this->returnValue( 'bar' ) )
-//		;
-//		$mockQuery
-//		    ->expects( $this->once() )
-//		    ->method ( 'getDismax' )
-//		    ->will   ( $this->returnValue( $mockDismax ) )
-//		;
-//		$mockDismax
-//		    ->expects( $this->once() )
-//		    ->method ( 'setQueryFields' )
-//		    ->with   ( 'bar' )
-//		    ->will   ( $this->returnValue( $mockDismax ) )
-//	    ;
-//		$mockDismax
-//		    ->expects( $this->once() )
-//		    ->method ( 'setQueryParser' )
-//		    ->with   ( 'edismax' )
-//		    ->will   ( $this->returnValue( $mockDismax ) )
-//		;
-//		$mockService
-//		    ->expects( $this->once() )
-//		    ->method ( 'isOnDbCluster' )
-//		    ->will   ( $this->returnValue( true  ) )
-//		;
-//		$mockDismax
-//		    ->expects( $this->once() )
-//		    ->method ( 'setPhraseFields' )
-//		    ->with   ( 'bar' )
-//		    ->will   ( $this->returnValue( $mockDismax ) )
-//		;
-//		$mockSelect
-//		    ->expects( $this->once() )
-//		    ->method ( 'getBoostQueryString' )
-//		    ->will   ( $this->returnValue( 'bq' ) )
-//		;
-//		$mockDismax
-//		    ->expects( $this->once() )
-//		    ->method ( 'setBoostQuery' )
-//		    ->with   ( 'bq' )
-//		    ->will   ( $this->returnValue( $mockDismax ) )
-//		;
-//		$mockConfig
-//		    ->expects( $this->once() )
-//		    ->method ( 'getMinimumMatch' )
-//		    ->will   ( $this->returnValue( '80%' ) )
-//		;
-//		$mockDismax
-//		    ->expects( $this->once() )
-//		    ->method ( 'setMinimumMatch' )
-//		    ->with   ( '80%' )
-//		    ->will   ( $this->returnValue( $mockDismax ) )
-//		;
-//		$mockDismax
-//		    ->expects( $this->once() )
-//		    ->method ( 'setPhraseSlop' )
-//		    ->with   ( 3 )
-//		    ->will   ( $this->returnValue( $mockDismax ) )
-//		;
-//		$mockDismax
-//		    ->expects( $this->once() )
-//		    ->method ( 'setTie' )
-//		    ->with   ( 0.01 )
-//		    ->will   ( $this->returnValue( $mockDismax ) )
-//		;
-//		$mockConfig
-//		    ->expects( $this->once() )
-//		    ->method ( 'getSkipBoostFunctions' )
-//		    ->will   ( $this->returnValue( false ) )
-//		;
-//		$bfsRefl = new ReflectionProperty( 'Wikia\Search\QueryService\Select\AbstractSelect', 'boostFunctions' );
-//		$bfsRefl->setAccessible( true );
-//		$bfsRefl->setValue( $mockSelect, array( 'foo', 'bar' ) );
-//		$mockDismax
-//		    ->expects( $this->once() )
-//		    ->method ( 'setBoostFunctions' )
-//		    ->with   ( 'foo bar' )
-//		;
-//		$funcRefl = new ReflectionMethod( 'Wikia\Search\QueryService\Select\AbstractSelect', 'registerDismax' );
-//		$funcRefl->setAccessible( true );
-//		$this->assertEquals(
-//				$mockSelect,
-//				$funcRefl->invoke( $mockSelect, $mockQuery )
-//		);
+	public function testRegisterDismax() {
+		$mockQuery = $this->getMockBuilder( 'Solarium_Query_Select' )
+		                  ->disableOriginalConstructor()
+		                  ->setMethods( array( 'getDismax' ) )
+		                  ->getMock();
+
+		$dismaxMethods = array(
+				'setQueryFields', 'setQueryParser', 'setPhraseFields', 'setBoostFunctions',
+				'setBoostQuery', 'setMinimumMatch', 'setPhraseSlop', 'setTie'
+				);
+		$mockDismax = $this->getMockBuilder( 'Solarium_Query_Select_Component_DisMax' )
+		                   ->disableOriginalConstructor()
+		                   ->setMethods( $dismaxMethods )
+		                   ->getMock();
+		$mockService = $this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
+		                      ->disableOriginalConstructor()
+		                      ->setMethods( array( 'isOnDbCluster' ) )
+		                      ->getMock();
+
+		$mockConfig = $this->getMockBuilder( 'Wikia\Search\Config' )
+		                   ->setMethods( array( 'getMinimumMatch', 'getSkipBoostFunctions', 'getQuery' ) )
+		                   ->getMock();
+
+		$deps = array( 'config' => $mockConfig, 'service' => $mockService  );
+		$dc = new Wikia\Search\QueryService\DependencyContainer( $deps );
+		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\AbstractSelect' )
+		                   ->setConstructorArgs( array( $dc ) )
+		                   ->setMethods( array( 'getQueryFieldsString', 'getBoostQueryString' ) )
+		                   ->getMockForAbstractClass();
+
+		$mockSelect
+		    ->expects( $this->once() )
+		    ->method ( 'getQueryFieldsString' )
+		    ->will   ( $this->returnValue( 'bar' ) )
+		;
+		$mockQuery
+		    ->expects( $this->once() )
+		    ->method ( 'getDismax' )
+		    ->will   ( $this->returnValue( $mockDismax ) )
+		;
+		$mockDismax
+		    ->expects( $this->once() )
+		    ->method ( 'setQueryFields' )
+		    ->with   ( 'bar' )
+		    ->will   ( $this->returnValue( $mockDismax ) )
+	    ;
+		$mockDismax
+		    ->expects( $this->once() )
+		    ->method ( 'setQueryParser' )
+		    ->with   ( 'edismax' )
+		    ->will   ( $this->returnValue( $mockDismax ) )
+		;
+		$mockService
+		    ->expects( $this->once() )
+		    ->method ( 'isOnDbCluster' )
+		    ->will   ( $this->returnValue( true  ) )
+		;
+		$mockDismax
+		    ->expects( $this->once() )
+		    ->method ( 'setPhraseFields' )
+		    ->with   ( 'bar' )
+		    ->will   ( $this->returnValue( $mockDismax ) )
+		;
+		$mockSelect
+		    ->expects( $this->once() )
+		    ->method ( 'getBoostQueryString' )
+		    ->will   ( $this->returnValue( 'bq' ) )
+		;
+		$mockDismax
+		    ->expects( $this->once() )
+		    ->method ( 'setBoostQuery' )
+		    ->with   ( 'bq' )
+		    ->will   ( $this->returnValue( $mockDismax ) )
+		;
+		$mockConfig
+		    ->expects( $this->once() )
+		    ->method ( 'getMinimumMatch' )
+		    ->will   ( $this->returnValue( '80%' ) )
+		;
+		$mockDismax
+		    ->expects( $this->once() )
+		    ->method ( 'setMinimumMatch' )
+		    ->with   ( '80%' )
+		    ->will   ( $this->returnValue( $mockDismax ) )
+		;
+		$mockDismax
+		    ->expects( $this->once() )
+		    ->method ( 'setPhraseSlop' )
+		    ->with   ( 3 )
+		    ->will   ( $this->returnValue( $mockDismax ) )
+		;
+		$mockDismax
+		    ->expects( $this->once() )
+		    ->method ( 'setTie' )
+		    ->with   ( 0.01 )
+		    ->will   ( $this->returnValue( $mockDismax ) )
+		;
+		$mockConfig
+		    ->expects( $this->once() )
+		    ->method ( 'getSkipBoostFunctions' )
+		    ->will   ( $this->returnValue( false ) )
+		;
+		$bfsRefl = new ReflectionProperty( 'Wikia\Search\QueryService\Select\AbstractSelect', 'boostFunctions' );
+		$bfsRefl->setAccessible( true );
+		$bfsRefl->setValue( $mockSelect, array( 'foo', 'bar' ) );
+		$mockDismax
+		    ->expects( $this->once() )
+		    ->method ( 'setBoostFunctions' )
+		    ->with   ( 'foo bar' )
+		;
+		$funcRefl = new ReflectionMethod( 'Wikia\Search\QueryService\Select\AbstractSelect', 'registerDismax' );
+		$funcRefl->setAccessible( true );
+		$this->assertEquals(
+				$mockSelect,
+				$funcRefl->invoke( $mockSelect, $mockQuery )
+		);
 	}*/
 	
 	/**
@@ -1419,6 +1390,35 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 				$fqs->invoke( $mockService )
 		);
 	}
+
+	/**
+	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::getFilterQueryString
+	 * @todo move to correct query service
+	public function testGetFilterQueryString() {
+		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getCityId', 'getNamespaces' ) );
+		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $mockConfig ) );
+		$mockSelect = $this->getMockBuilder( '\Wikia\Search\QueryService\Select\AbstractSelect' )
+			->setConstructorArgs( array( $dc ) )
+			->setMethods( array( null ) )
+			->getMockForAbstractClass();
+		$mockConfig
+			->expects( $this->once() )
+			->method ( 'getCityId' )
+			->will   ( $this->returnValue( 123 ) )
+			;
+		$mockConfig
+			->expects( $this->once() )
+			->method ( 'getNamespaces' )
+			->will   ( $this->returnValue( [ 0, 14 ] ) )
+			;
+		$reflspell = new ReflectionMethod( 'Wikia\Search\QueryService\Select\AbstractSelect', 'getFilterQueryString' );
+		$reflspell->setAccessible( true );
+		$this->assertEquals(
+			'((ns:0) OR (ns:14)) AND (wid:123)',
+			$reflspell->invoke( $mockSelect )
+		);
+	}
+	 */
 	
 	/**
 	 * @group Slow
