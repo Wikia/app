@@ -27,7 +27,6 @@ class FavoriteWikisModel extends WikiaModel {
 	 * @param User $user
 	 */
 	public function __construct( User $user ) {
-		$this->app = F::app();
 		$this->user = $user;
 	}
 
@@ -39,16 +38,17 @@ class FavoriteWikisModel extends WikiaModel {
 	 * @return array
 	 */
 	private function getTopWikisFromDb( $limit = null ) {
+		global $wgCityId, $wgDevelEnvironment, $wgStatsDB;
 		wfProfileIn(__METHOD__);
 
 		if (is_null($limit)) {
 			$limit = self::MAX_FAV_WIKIS;
 		}
 
-		if ( empty($this->app->wg->CityId) ) {
+		if ( empty( $wgCityId ) ) {
 			// staff/internal does not have stats db
 			$wikis = array();
-		} else if ($this->app->wg->DevelEnvironment) {
+		} else if ( $wgDevelEnvironment ) {
 			//devboxes uses the same database as production
 			//to avoid strange behavior we set test data on devboxes
 			$wikis = $this->getTestData($limit);
@@ -61,7 +61,7 @@ class FavoriteWikisModel extends WikiaModel {
 				$where[] = 'wiki_id NOT IN (' . join(',', $hiddenTopWikis) . ')';
 			}
 
-			$dbs = wfGetDB(DB_SLAVE, array(), $this->app->wg->StatsDB);
+			$dbs = wfGetDB( DB_SLAVE, array(), $wgStatsDB );
 			$res = $dbs->select(
 				array('specials.events_local_users'),
 				array('wiki_id', 'edits'),
@@ -159,6 +159,7 @@ class FavoriteWikisModel extends WikiaModel {
 	 * @return void
 	 */
 	public function addTopWiki( $wikiId ) {
+		global $wgUser;
 		wfProfileIn(__METHOD__);
 
 		$wikiName = WikiFactory::getVarValueByName('wgSitename', $wikiId);
@@ -168,7 +169,7 @@ class FavoriteWikisModel extends WikiaModel {
 			$wikiUrl = $wikiTitle->getFullUrl();
 
 			/** @var $userStatsService UserStatsService */
-			$userStatsService = new UserStatsService($this->app->wg->User->getId());
+			$userStatsService = new UserStatsService( $wgUser->getId() );
 			$userStats = $userStatsService->getStats();
 
 			//adding new wiki to topWikis in cache
@@ -180,10 +181,11 @@ class FavoriteWikisModel extends WikiaModel {
 	}
 
 	private function storeEditsWikis($wikiId, $wiki) {
+		global $wgMemc;
 		wfProfileIn(__METHOD__);
 
 		//getting array of masthead edits wikis
-		$mastheadEditsWikis = $this->app->wg->Memc->get($this->getMemcMastheadEditsWikisKey(), array());
+		$mastheadEditsWikis = $wgMemc->get( $this->getMemcMastheadEditsWikisKey(), [] );
 		if (!is_array($mastheadEditsWikis)) {
 			$mastheadEditsWikis = array();
 		}
@@ -197,16 +199,17 @@ class FavoriteWikisModel extends WikiaModel {
 			}
 		}
 
-		$this->app->wg->Memc->set($this->getMemcMastheadEditsWikisKey(), $mastheadEditsWikis);
+		$wgMemc->set( $this->getMemcMastheadEditsWikisKey(), $mastheadEditsWikis );
 
 		wfProfileOut(__METHOD__);
 		return $mastheadEditsWikis;
 	}
 
 	private function getEditsWikis() {
+		global $wgMemc;
 		wfProfileIn( __METHOD__ );
 
-		$mastheadEditsWikis = $this->app->wg->Memc->get( $this->getMemcMastheadEditsWikisKey(), null );
+		$mastheadEditsWikis = $wgMemc->get( $this->getMemcMastheadEditsWikisKey(), null );
 		$mastheadEditsWikis = is_array( $mastheadEditsWikis ) ? $mastheadEditsWikis : [];
 
 		wfProfileOut( __METHOD__ );
@@ -226,11 +229,12 @@ class FavoriteWikisModel extends WikiaModel {
 	 * @brief Clears hidden wikis: the field of this class, DB and memcached data
 	 */
 	private function clearHiddenTopWikis() {
+		global $wgExternalSharedDB, $wgMemc;
 		wfProfileIn(__METHOD__);
 
 		$hiddenWikis = array();
-		$this->updateHiddenInDb(wfGetDB(DB_MASTER, array(), $this->app->wg->ExternalSharedDB), $hiddenWikis);
-		$this->app->wg->Memc->set($this->getMemcHiddenWikisId(), $hiddenWikis);
+		$this->updateHiddenInDb( wfGetDB( DB_MASTER, [], $wgExternalSharedDB ), $hiddenWikis );
+		$wgMemc->set($this->getMemcHiddenWikisId(), $hiddenWikis);
 
 		wfProfileOut(__METHOD__);
 	}
@@ -241,6 +245,7 @@ class FavoriteWikisModel extends WikiaModel {
 	 * @return array
 	 */
 	private function getTestData($limit) {
+		global $wgCityId;
 		wfProfileIn(__METHOD__);
 
 		$wikis = [
@@ -254,7 +259,7 @@ class FavoriteWikisModel extends WikiaModel {
 		]; //test data
 
 		foreach ($wikis as $wikiId => $editCount) {
-			if (!$this->isTopWikiHidden($wikiId) && ($wikiId != $this->app->wg->CityId)) {
+			if ( !$this->isTopWikiHidden( $wikiId ) && ( $wikiId != $wgCityId ) ) {
 				$wikiName = WikiFactory::getVarValueByName('wgSitename', $wikiId);
 				$wikiTitle = GlobalTitle::newFromText($this->user->getName(), NS_USER_TALK, $wikiId);
 
@@ -281,14 +286,15 @@ class FavoriteWikisModel extends WikiaModel {
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	private function getHiddenTopWikis() {
+		global $wgMemc, $wgExternalSharedDB;
 		wfProfileIn(__METHOD__);
 
-		$hiddenWikis = $this->app->wg->Memc->get( $this->getMemcHiddenWikisId() );
+		$hiddenWikis = $wgMemc->get( $this->getMemcHiddenWikisId() );
 
-		if ( empty($hiddenWikis) && !is_array($hiddenWikis) ) {
-			$dbs = wfGetDB(DB_SLAVE, array(), $this->app->wg->ExternalSharedDB);
-			$hiddenWikis = $this->getHiddenFromDb($dbs);
-			$this->app->wg->Memc->set($this->getMemcHiddenWikisId(), $hiddenWikis);
+		if ( empty( $hiddenWikis ) && !is_array( $hiddenWikis ) ) {
+			$dbs = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
+			$hiddenWikis = $this->getHiddenFromDb( $dbs );
+			$wgMemc->set( $this->getMemcHiddenWikisId(), $hiddenWikis );
 		}
 
 		wfProfileOut(__METHOD__);
@@ -304,13 +310,14 @@ class FavoriteWikisModel extends WikiaModel {
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	public function hideWiki( $wikiId ) {
+		global $wgExternalSharedDB, $wgMemc;
 		wfProfileIn( __METHOD__ );
 
 		if( !$this->isTopWikiHidden( $wikiId ) ) {
 			$hiddenWikis = $this->getHiddenTopWikis();
 			$hiddenWikis[] = $wikiId;
-			$this->updateHiddenInDb( wfGetDB(DB_MASTER, [], $this->app->wg->ExternalSharedDB ), $hiddenWikis );
-			$this->app->wg->Memc->set( $this->getMemcHiddenWikisId(), $hiddenWikis );
+			$this->updateHiddenInDb( wfGetDB( DB_MASTER, [], $wgExternalSharedDB ), $hiddenWikis );
+			$wgMemc->set( $this->getMemcHiddenWikisId(), $hiddenWikis );
 		}
 
 		wfProfileOut( __METHOD__ );
