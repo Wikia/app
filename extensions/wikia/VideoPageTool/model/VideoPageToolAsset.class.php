@@ -231,7 +231,7 @@ class VideoPageToolAsset extends WikiaModel {
 
 	/**
 	 * Get asset object from a row from table
-	 * @param array $row
+	 * @param ResultWrapper $row
 	 * @return VideoPageToolAsset $asset
 	 */
 	public static function newFromRow( $row ) {
@@ -399,23 +399,23 @@ class VideoPageToolAsset extends WikiaModel {
 
 	/**
 	 * Delete asset from database and caches
-	 * @return Status|null
+	 * @return Status
 	 */
 	public function delete() {
 		wfProfileIn( __METHOD__ );
 
+		// Remove this from cache
+		$this->invalidateCache();
+
 		if ( !$this->exists() ) {
+			$status = Status::newGood();
+			$status->warning( "Tried to delete asset that does not exist" );
+
 			wfProfileOut( __METHOD__ );
-			return null;
+			return $status;
 		}
 
 		$status = $this->removeFromDatabase();
-
-		if ( $status->isGood() ) {
-			$this->invalidateCache();
-//			$this->invalidateCacheAssets( $this->programId );
-			$this->invalidateCacheAssetsBySection( $this->programId, $this->section );
-		}
 
 		wfProfileOut( __METHOD__ );
 
@@ -462,8 +462,6 @@ class VideoPageToolAsset extends WikiaModel {
 
 		if ( $status->isGood() ) {
 			$this->invalidateCache();
-//			$this->invalidateCacheAssets( $this->programId );
-			$this->invalidateCacheAssetsBySection( $this->programId, $this->section );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -522,7 +520,11 @@ class VideoPageToolAsset extends WikiaModel {
 	 * Clear cache
 	 */
 	protected function invalidateCache() {
+		wfProfileIn( __METHOD__ );
 		$this->wg->Memc->delete( $this->getMemcKey() );
+//		$this->invalidateCacheAssets( $this->programId );
+		$this->invalidateCacheAssetsBySection( $this->programId, $this->section );
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**
