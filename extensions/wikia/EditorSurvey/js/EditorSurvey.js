@@ -50,13 +50,13 @@
 
 		handleSuccess: function() {
 			EditorSurvey.unbindUnload();
-			if ( EditorSurvey.surveyHasBeenSeen() ) {
+			if ( !EditorSurvey.surveyHasBeenSeen() ) {
 				EditorSurvey.setCookie( EditorSurvey.getEditorAbbreviation() + '-success' );
 			}
 		},
 
 		handleFailure: function() {
-			if ( EditorSurvey.surveyHasBeenSeen() ) {
+			if ( !EditorSurvey.surveyHasBeenSeen() ) {
 				EditorSurvey.setCookie( EditorSurvey.getEditorAbbreviation() + '-fail' );
 			}
 		},
