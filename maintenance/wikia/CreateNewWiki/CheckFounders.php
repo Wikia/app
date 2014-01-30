@@ -149,46 +149,45 @@ function help() {
 }
 
 /** APPLICATION **/
+global $wgReadOnly, $wgExternalSharedDB;
 
 if( shouldDisplayHelp( $argv, $options ) ) {
 	help();
 	exit( CNW_MAINTENANCE_SUCCESS );
+}
+
+if( !empty( $wgReadOnly ) ) {
+	echo "Database is in read-only mode at this moment. Try again later." . PHP_EOL . PHP_EOL;
+	exit( CNW_MAINTENANCE_READ_ONLY );
+}
+
+if( empty( $wgExternalSharedDB ) ) {
+	echo "Could not find shared DB." . PHP_EOL . PHP_EOL;
+	exit( CNW_MAINTENANCE_NO_SHAREDDB_ERR );
+}
+
+$timestamp = getTimestamp( $options );
+$founders = findFounders( $timestamp );
+
+if( $founders === false ) {
+	exit( CNW_MAINTENANCE_DB_ERROR );
+} else if( empty( $founders ) ) {
+	echo "No recent founders found." . PHP_EOL . PHP_EOL;
+	exit( CNW_MAINTENANCE_SUCCESS );
 } else {
-	global $wgReadOnly, $wgExternalSharedDB;
+	echo 'Founders found: ' . implode( ', ', $founders ) . PHP_EOL;
+	$invalidFounders = findInvalidFounders( $founders );
 
-	if( !empty( $wgReadOnly ) ) {
-		echo "Database is in read-only mode at this moment. Try again later." . PHP_EOL . PHP_EOL;
-		exit( CNW_MAINTENANCE_READ_ONLY );
-	}
-
-	if( empty( $wgExternalSharedDB ) ) {
-		echo "Could not find shared DB." . PHP_EOL . PHP_EOL;
-		exit( CNW_MAINTENANCE_NO_SHAREDDB_ERR );
-	}
-
-	$timestamp = getTimestamp( $options );
-	$founders = findFounders( $timestamp );
-
-	if( $founders === false ) {
+	if( $invalidFounders === false ) {
 		exit( CNW_MAINTENANCE_DB_ERROR );
-	} else if( empty( $founders ) ) {
-		echo "No recent founders found." . PHP_EOL . PHP_EOL;
+	} else if( empty( $invalidFounders ) ) {
+		echo "No invalid founders found." . PHP_EOL . PHP_EOL;
 		exit( CNW_MAINTENANCE_SUCCESS );
 	} else {
-		echo 'Founders found: ' . implode( ', ', $founders ) . PHP_EOL;
-		$invalidFounders = findInvalidFounders( $founders );
-
-		if( $invalidFounders === false ) {
-			exit( CNW_MAINTENANCE_DB_ERROR );
-		} else if( empty( $invalidFounders ) ) {
-			echo "No invalid founders found." . PHP_EOL . PHP_EOL;
-			exit( CNW_MAINTENANCE_SUCCESS );
-		} else {
-		// once "invalid founder" is found display the message and add it to our logs with MOLI: label
-			$msg = 'Invalid founders found: ' . implode( ', ', $invalidFounders );
-			echo $msg . PHP_EOL . PHP_EOL;
-			Wikia::log( __METHOD__, false, CNW_MAINTENANCE_LOG_LABEL . $msg );
-			exit( CNW_MAINTENANCE_SUCCESS );
-		}
+	// once "invalid founder" is found display the message and add it to our logs with MOLI: label
+		$msg = 'Invalid founders found: ' . implode( ', ', $invalidFounders );
+		echo $msg . PHP_EOL . PHP_EOL;
+		Wikia::log( __METHOD__, false, CNW_MAINTENANCE_LOG_LABEL . $msg );
+		exit( CNW_MAINTENANCE_SUCCESS );
 	}
 }
