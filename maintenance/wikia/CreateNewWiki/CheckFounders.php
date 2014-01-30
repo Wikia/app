@@ -6,6 +6,8 @@ require_once( $cmdLineScript );
 /** EXIT STATUSES **/
 define( 'CNW_MAINTENANCE_SUCCESS', 0 );
 define( 'CNW_MAINTENANCE_DB_ERROR', 1 );
+define( 'CNW_MAINTENANCE_READ_ONLY', 2 );
+define( 'CNW_MAINTENANCE_NO_SHAREDDB_ERR', 3 );
 
 /** FUNCTIONS' DEFINITIONS **/
 
@@ -70,9 +72,10 @@ function getDates( $timestamp ) {
  * @return array|bool
  */
 function findFounders( $timestamp ) {
-	list( $startDate, $endDate ) = getDates( $timestamp );
+	global $wgExternalSharedDB;
 
-	$db = wfGetDB( DB_SLAVE, [], 'wikicities' );
+	list( $startDate, $endDate ) = getDates( $timestamp );
+	$db = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
 	$table = 'city_list';
 	$fields = [ 'city_founding_user' ];
 	$where = [ 'city_founding_user > 0', "city_created between '$startDate' and '$endDate'" ];
@@ -92,11 +95,20 @@ function findFounders( $timestamp ) {
 	}
 }
 
+/**
+ * @brief Checks if recent founders are present in wikicities.user table if now there are returned as "invalid founders"
+ *
+ * @param Array $founders list of ids of recent founders from wikicities.city_list table
+ *
+ * @return array|bool
+ */
 function findInvalidFounders( $founders ) {
-	$db = wfGetDB( DB_SLAVE, [], 'wikicities' );
-	$table = 'user';
+	global $wgExternalSharedDB;
+
+	$db = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
+	$table = '`user`';
 	$fields = [ 'user_id' ];
-	$where = [ 'user_id in ' . $db->buildConcat( $founders ) ];
+	$where = [ 'user_id in (' . $db->makeList( $founders ) . ')' ];
 	// $invalidFounders are users who founded a wiki but are not in wikicities.user table
 	$invalidFounders = [];
 	$recentUsers = [];
@@ -128,7 +140,7 @@ function help() {
 	echo "This script checks if a founder of a wiki is present in `wikicities.user` table.\nIf he's not present in the table then he's marked as 'invalid founder'.";
 	echo "Available options: \n";
 	echo "\thelp or ? -- displays this text\n";
-	echo "\ttimestamp -- (optional) starting point\n\n";
+	echo "\ttimestamp -- (optional) the end date in 'between' condition while selecting recent founders; default: time() result\n\n";
 }
 
 /** APPLICATION **/
@@ -137,6 +149,18 @@ if( shouldDisplayHelp( $argv, $options ) ) {
 	help();
 	exit( CNW_MAINTENANCE_SUCCESS );
 } else {
+	global $wgReadOnly, $wgSharedDB;
+
+	if( !empty( $wgReadOnly ) ) {
+		echo "Database is in read-only mode at this moment";
+		exit( CNW_MAINTENANCE_READ_ONLY );
+	}
+
+	if( empty( $wgExternalSharedDB ) ) {
+		echo "Could not find shared DB";
+		exit( CNW_MAINTENANCE_NO_SHAREDDB_ERR );
+	}
+
 	$timestamp = getTimestamp( $options );
 	$founders = findFounders( $timestamp );
 
