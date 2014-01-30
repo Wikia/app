@@ -3,33 +3,38 @@
 @import 'skins/oasis/css/mixins/transform';
 @import './mixins/_sprite-VideoPageTool.scss';
 
+$pagination-color-normal: #e0dfdf;
+$pagination-color-active: #a7a9ab;
+
 .carousel-wrapper {
-	margin: 0 40px;
-	padding-bottom: 1em;
+	margin: 0 25px;
+	padding-bottom: 3.8em;
 
 	.owl-pagination {
 		@include clearfix;
 		display: inline-block;
 		position: absolute;
 		right: .8em;
-		top: -30px;
+		top: -24px;
 
 		.owl-page {
-			background: $color-page-border;
+			$dot-size: .5em;
+			background: $pagination-color-normal;
 			border-radius: 1.3em;
 			display: block;
 			float: left;
-			height: .6em;
-			margin-left: 8px;
-			width: .6em;
+			height: $dot-size;
+			margin-left: 7px;
+			width: $dot-size;
 
 			&.active {
-				background: darken( $color-page-border, 40% );
+				background: $pagination-color-active;
 			}
 		}
 	}
 
 	.owl-buttons {
+		$shift-width: 15px;
 		> div {
 			@include sprite-VideoPageTool-base();
 			@include sprite-VideoPageTool( 'carousel_arrow_dark' );
@@ -40,11 +45,13 @@
 			position: absolute;
 			top: 30%;
 			margin-top: -11px;
-			right: -20px;
+			right: -$shift-width;
+			z-index: 600;
+
 
 			&:first-child {
 				@include transform-scale( -1 );
-				left: -20px;
+				left: -$shift-width;
 			}
 
 			&:hover {
@@ -61,11 +68,29 @@
 	}
 
 	.category-carousel {
-		margin-top: 16px;
+		margin-top: 11px;
+
+		&:before, &:after {
+			content: '';
+			background: #FFF;
+			height: 100%;
+			position: absolute;
+			display: block;
+			top: 0;
+			width: 10px;
+			z-index: 500;
+		}
+		&:before {
+			left: 0px;
+		}
+
+		&:after {
+			right: 0px;
+		}
 	}
 
 	.carousel-title {
-		font-size: 17px;
+		font-size: 21px;
 		font-weight: bold;
 		margin-top: 36px;
 		margin-left: 10px;
@@ -73,9 +98,10 @@
 
 	.carousel-item {
 		margin: 0 10px;
+		font-size: 16px;
 
 		.wikia-video-thumbnail {
-			margin-bottom: 16px;
+			margin-bottom: 11px;
 		}
 
 		img {
@@ -90,6 +116,20 @@
 		&:hover a {
 			color: $color-links;
 			text-decoration: none;
+		}
+
+	}
+	.owl-item:last-child .category-slide {
+		border: 1px solid $color-page-border;
+		box-sizing: border-box;
+		font-size: 14px;
+		line-height: 12px;
+		padding-left: 1.5em;
+
+		p {
+			font-size: 24px;
+			font-weight: bold;
+			margin-top: 1em;
 		}
 	}
 }
