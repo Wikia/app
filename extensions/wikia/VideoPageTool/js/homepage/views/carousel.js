@@ -44,12 +44,14 @@ define( 'videohomepage.views.carousel', [
 			this.renderCarousel( {
 				scrollPerPage: true,
 				pagination: true,
-				paginationSpeed: 500,
+				paginationSpeed: 800,
+				slideSpeed: 800,
 				lazyLoad: true,
 				navigation: true,
 				rewindNav: false,
 				afterUpdate: function() {
-					self.$carousel.find( '.title' ).ellipses( {
+					self.resizeLastSlide();
+					self.$carousel.find( '.title a' ).ellipses( {
 						wordsHidden: 2
 					} );
 					self.resizeLastSlide();
@@ -72,11 +74,12 @@ define( 'videohomepage.views.carousel', [
 			height = this.$( '.owl-item' ).eq( 0 ).find( 'img' ).height();
 
 			// set the last slides height ( since it doesn't come with an image )
-			this.$( '.category-slide' ).height( height ).show();
+			this.$( '.category-slide' ).height( height );
 
 			// position slider arrows in correct position
 			$buttons.css( {
-				top: ( height / 2 ) - ( $buttons.eq( 0 ).height() / 2 )
+				top: ( height / 2 ),
+				marginTop: -Math.round( $buttons.eq( 0 ).height() / 2 )
 			} );
 		}
 	} );

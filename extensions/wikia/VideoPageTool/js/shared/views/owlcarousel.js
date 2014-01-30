@@ -11,9 +11,11 @@ define( 'shared.views.owlcarousel', [
 		},
 		renderCarousel: function( config ) {
 			var params = _.extend( {
+				items: 5,
+				itemsDesktop: [ 1599, 4 ],
 				scrollPerPage: true,
 				pagination: true,
-				paginationSpeed: 500,
+				paginationSpeed: 1000,
 				lazyLoad: true,
 				navigation: true,
 				rewindNav: false
