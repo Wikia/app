@@ -214,7 +214,7 @@
 			);
 		}
 
-		/*
+		/**
 		 * //fb#21148
 		 * //These tests doesn't have too much sense IMHO.
 		 * //They're checking static fields of class which is being tested
