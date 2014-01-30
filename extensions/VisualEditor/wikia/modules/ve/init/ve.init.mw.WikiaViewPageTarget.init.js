@@ -30,6 +30,7 @@
 	function getTarget() {
 		var loadTargetDeferred;
 		if ( !getTargetDeferred ) {
+			// Can't use ve.track here, it's not available yet.
 			Wikia.Tracker.track( {
 				'action': Wikia.Tracker.ACTIONS.IMPRESSION,
 				'category': 'editor-ve',
