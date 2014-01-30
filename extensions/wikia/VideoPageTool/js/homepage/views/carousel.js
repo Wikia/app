@@ -49,8 +49,7 @@ define( 'videohomepage.views.carousel', [
 				lazyLoad: true,
 				navigation: true,
 				rewindNav: false,
-				afterUpdate: function() {
-					self.resizeLastSlide();
+				afterMove: function() {
 					self.$carousel.find( '.title a' ).ellipses( {
 						wordsHidden: 2
 					} );
@@ -74,7 +73,7 @@ define( 'videohomepage.views.carousel', [
 			height = this.$( '.owl-item' ).eq( 0 ).find( 'img' ).height();
 
 			// set the last slides height ( since it doesn't come with an image )
-			this.$( '.category-slide' ).height( height );
+			this.$( '.category-slide' ).height( height ).show();
 
 			// position slider arrows in correct position
 			$buttons.css( {
