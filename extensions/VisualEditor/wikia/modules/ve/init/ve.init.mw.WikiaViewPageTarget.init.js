@@ -30,6 +30,12 @@
 	function getTarget() {
 		var loadTargetDeferred;
 		if ( !getTargetDeferred ) {
+			Wikia.Tracker.track( {
+				'action': Wikia.Tracker.ACTIONS.IMPRESSION,
+				'category': 'editor-ve',
+				'label': 'edit-page',
+				'trackingMethod': 'both'
+			} );
 			getTargetDeferred = $.Deferred();
 			loadTargetDeferred = $.Deferred()
 				.done( function () {
@@ -163,8 +169,9 @@
 
 			e.preventDefault();
 
+			ve.track( 'Edit', { action: 'edit-link-click' } );
+
 			getTarget().done( function ( target ) {
-				ve.track( 'Edit', { action: 'edit-link-click' } );
 				target.activate();
 			} );
 		},
@@ -176,8 +183,9 @@
 
 			e.preventDefault();
 
+			ve.track( 'Edit', { action: 'section-edit-link-click' } );
+
 			getTarget().done( function ( target ) {
-				ve.track( 'Edit', { action: 'section-edit-link-click' } );
 				target.saveEditSection( $( e.target ).closest( 'h1, h2, h3, h4, h5, h6' ).get( 0 ) );
 				target.activate();
 			} );

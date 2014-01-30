@@ -50,7 +50,7 @@ require( ['wikia.tracker'], function ( tracker ) {
 			'performance.system.activation': function ( data ) {
 				return {
 					'action': actions.IMPRESSION,
-					'label': 'edit-page',
+					'label': 'edit-page-ready',
 					'value': data.duration
 				};
 			},
