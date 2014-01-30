@@ -169,7 +169,8 @@ if ( $addPageCategories ) {
 if ( $replace ) {
 	$sqlWhere[] = "EXISTS (
 		SELECT 1
-		FROM page LEFT JOIN categorylinks ON page_id = cl_from
+		FROM page
+			LEFT JOIN categorylinks ON page_id = cl_from
 		WHERE cl_to = ".$db->addQuotes( $old )."
 		  AND page_namespace = ".NS_FILE."
 		  AND page_title = img_name
@@ -180,7 +181,8 @@ if ( $matchCategories ) {
 	$values = array_map( [ $db, 'addQuotes' ], $matchCategories );
 	$sqlWhere[] = "EXISTS (
 		SELECT 1
-		FROM page JOIN categorylinks ON page_id = cl_from
+		FROM page
+			JOIN categorylinks ON page_id = cl_from
 		WHERE cl_to IN (".implode(',', $values).")
 		  AND page_namespace = ".NS_FILE."
 		  AND page_title = img_name
