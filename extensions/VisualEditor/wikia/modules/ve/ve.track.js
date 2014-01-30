@@ -51,7 +51,7 @@ require( ['wikia.tracker'], function ( tracker ) {
 				return {
 					'action': actions.IMPRESSION,
 					'label': 'edit-page-ready',
-					'value': data.duration
+					'value': Math.round( data.duration )
 				};
 			},
 			'performance.user.reviewComplete': function ( data ) {
@@ -194,8 +194,8 @@ require( ['wikia.tracker'], function ( tracker ) {
 		mw.hook( 've.activationComplete' ).add( function () {
 			ve.track( 'wikia' , {
 				'action': actions.IMPRESSION,
-				'label': 'edit-page-on-load',
-				'value': ve.now() - window.wgNow.getTime()
+				'label': 'edit-page-ready-on-load',
+				'value': Math.round( ve.now() - window.wgNow )
 			} );
 		} );
 	}
