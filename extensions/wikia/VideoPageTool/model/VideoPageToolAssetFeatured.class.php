@@ -17,7 +17,7 @@ class VideoPageToolAssetFeatured extends VideoPageToolAsset {
 		'useTemplate' => true,
 		'fluid' => true,
 		'hidePlayButton' => true,
-		'imgClass' => 'Wikia-video-thumb'
+		'imgClass' => 'vpt-featured-thumbnail'
 	];
 
 	// required data field -- array( FormFieldName => varName )
