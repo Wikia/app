@@ -325,7 +325,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.onCartModelAdd = function ( items ) {
 		item = items[i];
 		config = { '$': this.$ };
 		if ( item.isTemporary() ) {
-			config.editable = true
+			config.editable = true;
 			config.$license = this.$( this.license.html );
 		}
 		page = new ve.ui.WikiaMediaPageWidget( item, config );
