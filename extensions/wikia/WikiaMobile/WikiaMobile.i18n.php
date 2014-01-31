@@ -59,7 +59,7 @@ you should definitely check this out:
 	'wikiamobile-video-not-friendly' => 'Sorry, this video isn\'t available on mobile.',
 
 	//toc
-	'wikiamobile-toc-header' => 'table of contents',
+	'wikiamobile-toc-header' => 'Table of Contents',
 
 	//ad
 	'wikiamobile-ad-label' => 'advertisement',
