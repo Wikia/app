@@ -328,45 +328,38 @@ class RelatedPages {
 	 * @return array
 	 */
 	protected function getCategoryRank() {
-		global $wgMemc;
+		global $wgContentNamespaces;
 		wfProfileIn( __METHOD__ );
 
-		if ( empty( $this->memcKeyPrefix ) ){
-			$cacheKey = wfMemcKey( __METHOD__);
-		} else {
-			$cacheKey = wfMemcKey( $this->memcKeyPrefix, __METHOD__);
-		}
-		$cache = $wgMemc->get( $cacheKey );
-		if( is_array($cache) ) {
-			wfProfileOut( __METHOD__ );
-			return $cache;
-		}
+		$results = WikiaDataAccess::cacheWithLock(
+			( empty( $this->memcKeyPrefix ) ) ? wfMemcKey( __METHOD__) : wfMemcKey( $this->memcKeyPrefix, __METHOD__), 
+			$this->categoryRankCacheTTL * 3600,
+			function () use ( $wgContentNamespaces ) {
+				$db = wfGetDB(DB_SLAVE);
+				$sql = ( new WikiaSQL() )
+					->SELECT( "COUNT(cl_to)" )->AS_("count")->FIELD('cl_to')
+					->FROM( 'categorylinks' )
+					->GROUP_BY( 'cl_to' )
+					->HAVING( 'count > 1' )
+					->ORDER_BY( ['count', 'desc'] );
 
-		$dbr = wfGetDB( DB_SLAVE );
-		$tables = array( "categorylinks" );
-		$joinSql = $this->getPageJoinSql( $dbr, $tables );
+				if( count($wgContentNamespaces) > 0 ) {
+					$join_cond = ( count($wgContentNamespaces) == 1)
+								? "page_namespace = " . intval(reset($wgContentNamespaces))
+								: "page_namespace in ( " . $db->makeList( $wgContentNamespaces ) . " )";
+					
+					$sql->JOIN('page')->ON("page_id = cl_from AND $join_cond");
+				}
 
-		$res = $dbr->select(
-			$tables,
-			array( "cl_to", "COUNT(cl_to) AS count" ),
-			array(),
-			__METHOD__,
-			array(
-				"GROUP BY" => "cl_to",
-				"HAVING" => "count > 1",
-				"ORDER BY" => "count DESC"
-			),
-			$joinSql
+				$rank = 1;
+				$results = $sql->runLoop($db, function(&$results, $row) use ( &$rank ) {
+					$results[$row->cl_to] = $rank;
+					$rank++;
+				});
+				
+				return $results;
+			}
 		);
-		$results = array();
-
-		$rank = 1;
-		while($row = $dbr->fetchObject($res)) {
-			$results[$row->cl_to] = $rank;
-			$rank++;
-		}
-
-		$wgMemc->set( $cacheKey, $results, ( $this->categoryRankCacheTTL * 3600 ) );
 
 		wfProfileOut( __METHOD__ );
 		return $results;

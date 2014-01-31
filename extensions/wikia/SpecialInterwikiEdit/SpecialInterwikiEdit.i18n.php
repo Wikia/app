@@ -90,8 +90,10 @@ $messages['bar'] = array(
 /** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
  * @author EugeneZelenko
  * @author Jim-by
+ * @author Red Winged Duck
  */
 $messages['be-tarask'] = array(
+	'interwikiedit' => 'Рэдактар інтэрвікі',
 	'iwedit-title' => 'Рэдактар інтэрвікі',
 	'iwedit-language-interwikis' => 'толькі моўныя інтэрвікі',
 	'iwedit-all-interwikis' => 'усе інтэрвікі',

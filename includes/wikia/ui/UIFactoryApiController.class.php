@@ -92,14 +92,7 @@ class UIFactoryApiController extends \WikiaApiController {
 		$this->setVal( 'dependencies', $result );
 
 		// set response caching
-		$this->response->setCacheValidity(
-			self::CLIENT_CACHE_VALIDITY,
-			self::CLIENT_CACHE_VALIDITY,
-			array(
-				\WikiaResponse::CACHE_TARGET_BROWSER,
-				\WikiaResponse::CACHE_TARGET_VARNISH
-			)
-		);
+		$this->response->setCacheValidity(self::CLIENT_CACHE_VALIDITY);
 
 		wfProfileOut( __METHOD__ );
 	}

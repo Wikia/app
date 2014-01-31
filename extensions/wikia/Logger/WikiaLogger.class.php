@@ -44,6 +44,10 @@ class WikiaLogger {
 	}
 
 	public function onError($code, $message, $file, $line, $context) {
+		if (!($code & error_reporting())) {
+			return true;
+		}
+
 		$exit = false;
 
 		switch ($code) {
@@ -66,9 +70,12 @@ class WikiaLogger {
 				$priorityString = 'Fatal Error';
 				break;
 			case E_STRICT:
-				$method = 'info';
-				$priorityString = 'Strict Standards';
-				break;
+			case E_PARSE:
+			case E_COMPILE_ERROR:
+			case E_COMPILE_WARNING:
+			case E_DEPRECATED:
+				// compile-time errors don't call autoload callbacks, so let the standard php error log handle them - BAC-1225
+				return false;
 			default:
 				return false;
 		}

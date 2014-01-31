@@ -273,13 +273,14 @@ $messages['an'] = array(
 /** Arabic (العربية)
  * @author Achraf94
  * @author Alexknight12
+ * @author Claw eg
  * @author DRIHEM
  * @author Imksa
  * @author Meno25
  * @author OsamaK
  */
 $messages['ar'] = array(
-	'blog-file-page' => "المشاركة <a href='$1'>$2</a> المعلقة على مدونة <a href='$3'>$4's</a>",
+	'blog-file-page' => "مشاركة <a href='$1'>$2</a> على مدونة <a href='$3'>$4</a>",
 	'createblogpage' => 'إنشاء مدونة',
 	'createbloglistingpage' => 'إنشاء قائمة مدونات',
 	'create-blog-spam' => 'يبدو أن ما أدخلته غير مرغوب فيه',
@@ -2909,6 +2910,7 @@ $messages['kn'] = array(
  * @author Daisy2002
  * @author Hym411
  * @author Leehoy
+ * @author Priviet
  * @author 아라
  * @author 한글화담당
  */
@@ -2961,8 +2963,8 @@ $messages['ko'] = array(
 	'blog-comments-new' => '블로그에 새 댓글이 있습니다',
 	'blog-comments-save' => '블로그에 댓글 저장',
 	'blog-voting-label' => '투표',
-	'blog-comments-dsc' => '최근항목순',
-	'blog-comments-asc' => '오래된항목순',
+	'blog-comments-dsc' => '최근 항목순',
+	'blog-comments-asc' => '오래된 항목순',
 	'blog-comments-anonymous' => '익명의 사용자',
 	'blog-comment-delete' => '삭제',
 	'blog-comment-hide' => '숨기기',
@@ -3271,7 +3273,7 @@ $messages['mk'] = array(
 	'create-listing-confirm-info' => 'Ископирајте и залепете го следниов код:',
 	'create-blog-no-login' => 'Не сте најавени',
 	'create-blog-login-required' => 'Мора да сте [{{fullurl:Special:Signup|$1}} најавени] за да можете да создавате блог-записи или пописи.',
-	'create-blog-categories-title' => 'Додај го овој блог-запис во следниве категории (кликнете за да одберете)',
+	'create-blog-categories-title' => 'Додај го овој блог-запис во следниве категории (стиснете за да одберете)',
 	'create-blog-categories-textinput' => 'Додај нова категорија',
 	'create-blog-categories-submit' => 'Поднеси',
 	'create-blog-save' => 'Зачувај',

@@ -114,19 +114,20 @@ if (!$wg->DevelEnvironment):?>
 <?= $amazonDirectTargetedBuy ?>
 <?= $dynamicYield ?>
 <?= $ivw2 ?>
-<?= $body ?>
+<div class="WikiaSiteWrapper">
+	<?= $body ?>
 
-<?php
-	echo F::app()->renderView('Ad', 'Index', array('slotname' => 'GPT_FLUSH'));
-	if (empty($wg->SuppressAds)) {
-		echo F::app()->renderView('Ad', 'Index', array('slotname' => 'INVISIBLE_1'));
-		if (!$wg->EnableWikiaHomePageExt) {
-			echo F::app()->renderView('Ad', 'Index', array('slotname' => 'INVISIBLE_2'));
+	<?php
+		echo F::app()->renderView('Ad', 'Index', array('slotname' => 'GPT_FLUSH'));
+		if (empty($wg->SuppressAds)) {
+			echo F::app()->renderView('Ad', 'Index', array('slotname' => 'INVISIBLE_1'));
+			if (!$wg->EnableWikiaHomePageExt) {
+				echo F::app()->renderView('Ad', 'Index', array('slotname' => 'INVISIBLE_2'));
+			}
 		}
-	}
-	echo F::app()->renderView('Ad', 'Index', array('slotname' => 'SEVENONEMEDIA_FLUSH'));
-?>
-
+		echo F::app()->renderView('Ad', 'Index', array('slotname' => 'SEVENONEMEDIA_FLUSH'));
+	?>
+</div>
 <? if( $jsAtBottom ): ?>
 	<!--[if lt IE 8]>
 		<script src="<?= $wg->ResourceBasePath ?>/resources/wikia/libraries/json2/json2.js"></script>

@@ -15,20 +15,13 @@ class WikiaSQL extends FluentSql\SQL {
 
 	/**
 	 * @param $ttl
+	 * @param $cacheKey
+	 * @param $cacheEmpty
 	 * @return WikiaSQL
 	 */
-	public function cacheGlobal($ttl) {
-		return $this->cache($ttl, true);
-	}
-
-	/**
-	 * @param int $ttl
-	 * @param bool $sharedKey
-	 * @return WikiaSQL
-	 */
-	public function cache($ttl, $sharedKey=false) {
-		$this->useSharedMemKey = $sharedKey;
-		return parent::cache($ttl);
+	public function cacheGlobal($ttl, $cacheKey=null, $cacheEmpty=false) {
+		$this->useSharedMemKey = true;
+		return $this->cache($ttl, $cacheKey, $cacheEmpty);
 	}
 
 	protected function getCacheKey(sql\Breakdown $breakDown) {

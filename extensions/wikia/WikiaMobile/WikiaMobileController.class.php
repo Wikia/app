@@ -32,14 +32,7 @@ class WikiaMobileController extends WikiaController{
 		$wgLang = !empty( $lang ) ? Language::factory( $lang ) : $this->wg->Lang;
 
 		//Cache on Varnish for 15 minutes
-		$this->response->setCacheValidity(
-			900,
-			900,
-			[
-				WikiaResponse::CACHE_TARGET_BROWSER,
-				WikiaResponse::CACHE_TARGET_VARNISH
-			]
-		);
+		$this->response->setCacheValidity(900);
 
 		$this->forward( 'WikiaMobileNavigationService', 'navMenu' );
 	}

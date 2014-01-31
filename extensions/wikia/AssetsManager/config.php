@@ -302,7 +302,6 @@ $config['oasis_nojquery_shared_js'] = array(
 		'//skins/oasis/js/CorporateFooter.js',
 		'//skins/oasis/js/buttons.js',
 		'//skins/oasis/js/WikiHeader.js',
-		'//skins/oasis/js/Interlang.js',
 		'//skins/oasis/js/WikiaNotifications.js',
 		'//skins/oasis/js/FirefoxFindFix.js',
 		'//skins/oasis/js/isTouchScreen.js',
@@ -1631,23 +1630,5 @@ $config['api_docs_scss'] = array(
 	'type' => AssetsManager::TYPE_SCSS,
 	'assets' => array(
 		'//extensions/wikia/ApiDocs/css/ApiDocs.scss',
-	)
-);
-
-$config['suggestions_js'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		'//extensions/wikia/Suggestions/js/SuggestionsMatcher.js',
-		'//extensions/wikia/Suggestions/js/SuggestionsClient.js',
-		'//extensions/wikia/Suggestions/js/SuggestionsViewModel.js',
-		'//extensions/wikia/Suggestions/js/SuggestionsView.js',
-		'//extensions/wikia/Suggestions/js/Suggestions.js',
-	)
-);
-
-$config['suggestions_scss'] = array(
-	'type' => AssetsManager::TYPE_SCSS,
-	'assets' => array(
-		'//extensions/wikia/Suggestions/css/Suggestions.scss',
 	)
 );

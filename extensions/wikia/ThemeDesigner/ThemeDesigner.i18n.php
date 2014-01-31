@@ -162,16 +162,20 @@ $messages['af'] = array(
 
 /** Arabic (العربية)
  * @author Achraf94
+ * @author Claw eg
  * @author Meno25
  * @author OsamaK
  */
 $messages['ar'] = array(
+	'action-themedesigner' => 'دخول مصمم الويكي',
 	'themedesigner-or' => 'أو',
 	'themedesigner-desc' => 'يسمح للإداريين بالقيام بتصميم مظهر للويكي',
 	'themedesigner-title' => 'مصمم مظاهر ويكيا',
 	'themedesigner-background' => 'الخلفية',
 	'themedesigner-page' => 'الصفحة',
-	'themedesigner-color' => 'لون', # Fuzzy
+	'themedesigner-color' => 'رئيسي',
+	'themedesigner-color-middle' => 'أوسط',
+	'themedesigner-rules-color-middle' => 'لون مختلف لمنتصف الصفحة',
 	'themedesigner-graphic' => 'رسم',
 	'themedesigner-buttons' => 'أزرار',
 	'themedesigner-links' => 'وصلات',
@@ -183,6 +187,8 @@ $messages['ar'] = array(
 	'themedesigner-large' => 'كبير',
 	'themedesigner-tile-background' => 'فسيفساء',
 	'themedesigner-fix-background' => 'ثابتة',
+	'themedesigner-not-split-background' => 'بلا تقسيم',
+	'themedesigner-rules-not-split-background' => 'إن كان رسم خلفيتك أعرض من $1 بكسل فلديك الخيار "لعدم" تقسيم صورة.',
 	'themedesigner-transparency' => 'الشفافية',
 	'themedesigner-tab-theme' => 'المظهر',
 	'themedesigner-tab-customize' => 'تخصيص المظهر',
@@ -219,6 +225,9 @@ $messages['ar'] = array(
 	'themedesigner-manual-upload-error' => 'استخدم "مصمم المظهر" لتحميل شعار للويكي أو خلفية',
 	'themedesigner-favicon-heading' => 'أيقونة',
 	'themedesigner-wodmark-preview' => 'عرض مسبق',
+	'themedesigner-wordmark-preview-error' => 'عفوا! لا يمكن أن يكون اسم الويكي فارغا،
+رجاء أدخل اسم ويكي حتى يتم الحفظ.',
+	'themedesigner-upload-disabled' => 'عذرا، فقد قمنا بتعطيل الرفع مؤقتا. تحقق بعد فترة لإجراء التغييرات',
 );
 
 /** Azerbaijani (azərbaycanca)
@@ -289,7 +298,8 @@ $messages['br'] = array(
 	'themedesigner-title' => 'Empenter tresoù Wikia',
 	'themedesigner-background' => 'Drekleur',
 	'themedesigner-page' => 'Pajenn',
-	'themedesigner-color' => 'liv', # Fuzzy
+	'themedesigner-color' => 'pennañ',
+	'themedesigner-color-middle' => 'kreiz',
 	'themedesigner-graphic' => 'grafik',
 	'themedesigner-buttons' => 'boutonoù',
 	'themedesigner-links' => 'liammoù',
@@ -324,9 +334,11 @@ $messages['br'] = array(
 	'themedesigner-button-save' => 'Enrollañ',
 	'themedesigner-upload-a-graphic' => 'enporzhiañ ur grafik',
 	'themedesigner-rules-wordmark' => 'betek 250x65 piksel (restroù .png hepken)', # Fuzzy
-	'themedesigner-dont-use-a-graphic' => 'Non pas implijout a grafik', # Fuzzy
+	'themedesigner-dont-use-a-graphic' => 'lemel',
 	'themedesigner-history-item' => '$1 dre $2',
 	'themedesigner-button-change-text' => 'Kemmañ an destenn',
+	'themedesigner-size-error' => 'Direizh eo ment ar restr',
+	'themedesigner-type-error' => 'Seurt restr direizh',
 	'themedesigner-wodmark-preview' => 'Rakwelet',
 );
 
@@ -602,7 +614,6 @@ $messages['diq'] = array(
  * @author Shirayuki
  */
 $messages['en-gb'] = array(
-	'themedesigner-color' => 'colour', # Fuzzy
 	'themedesigner-rules-color-middle' => 'Different colour for middle of the page',
 	'themedesigner-tab-customize' => 'Customise',
 	'themedesigner-pick-a-color' => 'Pick a colour',
@@ -1237,12 +1248,15 @@ $2',
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
+	'action-themedesigner' => 'пристап на Уредник на изглед',
 	'themedesigner-or' => 'или',
 	'themedesigner-desc' => 'Им овозможува на вики-администраторите ликовно да го уредат изгледот на викито',
 	'themedesigner-title' => 'Ликовен уредник на Викија',
 	'themedesigner-background' => 'Позадина',
 	'themedesigner-page' => 'Страница',
-	'themedesigner-color' => 'боја', # Fuzzy
+	'themedesigner-color' => 'главна',
+	'themedesigner-color-middle' => 'средна',
+	'themedesigner-rules-color-middle' => 'Различна боја за средината на страницата',
 	'themedesigner-graphic' => 'графика',
 	'themedesigner-buttons' => 'копчиња',
 	'themedesigner-links' => 'врски',
@@ -1254,6 +1268,7 @@ $messages['mk'] = array(
 	'themedesigner-large' => 'Голем',
 	'themedesigner-tile-background' => 'поле',
 	'themedesigner-fix-background' => 'поправи',
+	'themedesigner-not-split-background' => 'не двој',
 	'themedesigner-transparency' => 'проѕирност',
 	'themedesigner-tab-theme' => 'Изглед',
 	'themedesigner-tab-customize' => 'Прилагоди',
@@ -1488,6 +1503,7 @@ $messages['nl'] = array(
 	'themedesigner-tile-background' => 'tegel',
 	'themedesigner-fix-background' => 'gefixeerd',
 	'themedesigner-not-split-background' => 'niet splitsen',
+	'themedesigner-rules-not-split-background' => "Als uw achtergrondafbeelding breder is dan $1px heeft u de optie om de afbeelding ''niet'' te laten splitsen.",
 	'themedesigner-transparency' => 'transparantie',
 	'themedesigner-tab-theme' => 'Vormgeving',
 	'themedesigner-tab-customize' => 'Aanpassen',
@@ -1831,7 +1847,8 @@ $messages['ro'] = array(
 $messages['roa-tara'] = array(
 	'themedesigner-or' => 'o',
 	'themedesigner-page' => 'Pàgene',
-	'themedesigner-color' => 'culore', # Fuzzy
+	'themedesigner-color' => 'prengepàle',
+	'themedesigner-color-middle' => 'mmienze',
 	'themedesigner-graphic' => 'grafiche',
 	'themedesigner-buttons' => 'buttune',
 	'themedesigner-links' => 'collegaminde',
@@ -1842,6 +1859,12 @@ $messages['roa-tara'] = array(
 	'themedesigner-fix-background' => 'corregge',
 	'themedesigner-tab-theme' => 'Teme',
 	'themedesigner-tab-customize' => 'Personalizze',
+	'themedesigner-button-ok' => 'Ok',
+	'themedesigner-pick-an-image' => "Pigghie 'n'immaggine",
+	'themedesigner-dont-use-a-background' => "No scè ausanne 'nu sfonde",
+	'themedesigner-upload-your-own' => "Careche 'u tune",
+	'themedesigner-button-upload' => 'Careche',
+	'themedesigner-button-upload-wordmark' => 'Careche',
 	'themedesigner-button-save' => 'Reggìstre',
 );
 
