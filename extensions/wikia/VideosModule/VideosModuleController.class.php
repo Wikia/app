@@ -4,7 +4,7 @@ class VideosModuleController extends WikiaController {
 
 	/**
 	 * VideosModule
-	 * Returns videos to populated the Videos Module. First try and get premium videos
+	 * Returns videos to populate the Videos Module. First try and get premium videos
 	 * related to the article page. If that's not enough add premium videos related
 	 * to the local wiki. Finally, if still more or needed, get trending premium
 	 * videos related to the vertical of the wiki.

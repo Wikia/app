@@ -43,7 +43,7 @@ class VideosModuleHelper extends WikiaModel {
 	 */
 	public function getWikiRelatedVideos() {
 
-		wfProfileIn(__METHOD__);
+		wfProfileIn( __METHOD__ );
 
 		// Strip Wiki off the end of the wiki name if it exists
 		$wikiTitle = preg_replace('/ Wiki$/', '', $this->wg->Sitename);
@@ -52,6 +52,7 @@ class VideosModuleHelper extends WikiaModel {
 		$videoResults = $this->app->sendRequest( 'WikiaSearchController', 'searchVideosByTitle', $params )->getData();
 
 		$helper = new VideoHandlerHelper();
+		$videos = array();
 		foreach ( $videoResults as $video ) {
 			$videoTitle = preg_replace( '/.+File:/', '', $video['title'] );
 			$videoDetail = $helper->getVideoDetailFromWiki( $this->wg->WikiaVideoRepoDBName,
@@ -67,7 +68,7 @@ class VideosModuleHelper extends WikiaModel {
 			$videos[] = $videoDetail;
 		}
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 
 		return $videos;
 	}
