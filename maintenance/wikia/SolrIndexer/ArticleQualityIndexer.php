@@ -84,6 +84,10 @@ class ArticleQualityIndexer extends Maintenance {
 		foreach( $ids as $key => $id ) {
 			$start = microtime( true );
 			$res = $this->getArticleQuality( $id );
+			if ( isset( $res->exception ) ) {
+				//if exception returned check production url
+				$res = $this->getArticleQuality( $id, true );
+			}
 			echo '[' . $this->wikiId . ']' . $batch . " out of " . $total . " current: " . $key . " " . ( microtime( true ) - $start );
 			if ( isset( $res->contents[0]->article_quality_i ) || isset( $res->contents[0]->delete ) ) {
 				$result[] = $res->contents[0];
@@ -93,8 +97,8 @@ class ArticleQualityIndexer extends Maintenance {
 		return $result;
 	}
 
-	protected function getArticleQuality( $id ) {
-		$url = $this->getIP() . '/wikia.php?controller=WikiaSearchIndexer&method=get&service=ArticleQuality&ids=' . $id;
+	protected function getArticleQuality( $id, $prod = false ) {
+		$url = $this->getIP( $prod ) . '/wikia.php?controller=WikiaSearchIndexer&method=get&service=ArticleQuality&ids=' . $id;
               echo $this->domain . " :" . $url." ";
 		$ch = curl_init( $url );
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -108,8 +112,8 @@ class ArticleQualityIndexer extends Maintenance {
 		return json_decode( $res );
 	}
 
-	protected function getIP() {
-		return $this->ips[rand(0,count($this->ips)-1)];
+	protected function getIP( $prod ) {
+		return $prod ? $this->domain : $this->ips[rand(0,count($this->ips)-1)];
 	}
 
 	protected function setInSolr( $data ) {
