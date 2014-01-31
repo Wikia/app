@@ -18,10 +18,6 @@ function ( sections, window, $, mustache, toc, track ) {
 		inPageToc,
 		tocTemplate;
 
-	if ( sideMenuCapable ) {
-		$toc.addClass( 'side-menu-capable' );
-	}
-
 	/**
 	 * @desc Creates object representing a section
 	 *
