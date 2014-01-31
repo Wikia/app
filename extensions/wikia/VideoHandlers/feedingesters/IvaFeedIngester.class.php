@@ -605,7 +605,7 @@ class IvaFeedIngester extends VideoFeedIngester {
 						continue;
 					}
 
-					$clipData['thumbnail'] = $videoAsset['VideoAssetScreenCapture']['URL'];
+					$clipData['thumbnail'] = empty( $videoAsset['VideoAssetScreenCapture']['URL'] ) ? '' : $videoAsset['VideoAssetScreenCapture']['URL'];
 					$clipData['duration'] = $videoAsset['StreamLengthinseconds'];
 
 					$clipData['published'] = '';
