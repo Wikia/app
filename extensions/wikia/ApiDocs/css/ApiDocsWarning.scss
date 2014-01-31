@@ -1,0 +1,40 @@
+.api-warning {
+	border: 1px solid;
+	border-color: $gray-c4;
+	margin: 30px auto 50px auto;
+	width: 800px;
+
+	h2 {
+		font-size: 24px;
+		font-weight: bold;
+	}
+
+	header {
+		background-color: $lightGray-c2;
+		border-bottom: 1px solid;
+		line-height: 45px;
+		padding: 0 20px;
+	}
+
+	.more {
+		float: right;
+		font-size: 16px;
+	}
+
+	section {
+		padding: 20px 20px;
+	}
+
+	aside.icons {
+		float: right;
+		width: 300px;
+		hieght: 50px;
+	}
+}
+
+.api-warning-lightbox-background {
+	background-color: argb(85,255,255,255);
+	height: 100%;
+	position: fixed;
+	width:100%;
+}

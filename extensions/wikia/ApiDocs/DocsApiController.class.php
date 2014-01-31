@@ -28,14 +28,21 @@ class DocsApiController extends WikiaController {
 		$css = [ AssetsManager::getInstance()->getSassCommonURL( '//extensions/wikia/ApiDocs/css/ApiDocs.scss', false, ['color-header' => '#004c7f']) ];
 		$this->setVal( 'css', $css );
 
+		$js = AssetsManager::getInstance()->getURL( 'api_docs_js', $type, false );
+		$this->setVal( 'js', $js );
+
 		$licensedService = new LicensedWikisService();
 		if ($licensedService->isCommercialUseAllowedForThisWiki()) {
-			$js = AssetsManager::getInstance()->getURL( 'api_docs_js', $type, false );
-			$this->setVal( 'js', $js );
+			$licenseMessage = $this->app->renderView("ApiDocsController", "licenseMessage", []);
+			$this->getResponse()->setVal("licenseMessage", $licenseMessage);
 		} else {
-			$this->getResponse()->getView()->setTemplate('ApiDocsController', 'disabled');			
+			$licenseWarning = $this->app->renderView("ApiDocsController", "licenseWarning", []);
+			$this->getResponse()->setVal("licenseWarning", $licenseWarning);
 		}
 	}
+
+	public function licenseMessage() { $this->response->setTemplateEngine( self::TEMPLATE_ENGINE ); }
+	public function licenseWarning() { $this->response->setTemplateEngine( self::TEMPLATE_ENGINE ); }
 
 	/**
 	 *
