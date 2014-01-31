@@ -243,6 +243,7 @@ class VideoHandlerController extends WikiaController {
 	 * @requestParam int|thumbWidth - The width of the video thumbnail to return
 	 * @requestParam int|thumbHeight - The height of the video thumbnail to return
 	 * @requestParam int|articleLimit - The number of "posted in" article detail records to return
+	 * @requestParam bool|getThumb - Whether to return a fully formed html thumbnail of the video or not
 	 * @responseParam array|detail - The video details
 	 */
 	public function getVideoDetail() {
@@ -250,12 +251,14 @@ class VideoHandlerController extends WikiaController {
 		$thumbWidth = $this->getVal( 'thumbWidth', '250' );
 		$thumbHeight = $this->getVal( 'thumbHeight', '250' );
 		$articleLimit = $this->getVal( 'articleLimit', '10' );
+		$getThumb = $this->getVal( 'getThumb', false );
 
 		$helper = new VideoHandlerHelper();
 		$videoDetail = $helper->getVideoDetail( array('title' => $fileTitle),
 												$thumbWidth,
 												$thumbHeight,
-												$articleLimit
+												$articleLimit,
+												$getThumb
 		);
 		$this->detail = $videoDetail;
 	}
