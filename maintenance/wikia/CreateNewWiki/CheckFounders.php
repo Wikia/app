@@ -49,23 +49,6 @@ function getTimestamp( $options ) {
 }
 
 /**
- * @briefs Basing on the passed timestamp it returns an array with two dates used later in SQL condition
- *
- * @desc The timestamp is being changed to data in Y-m-d H:i:s format.
- *       It's an "end date" and by using strtotime() function we calculate
- *       the "start date" by deducting "1 day" from the "end date".
- *
- * @param String $timestamp
- * @return array
- */
-function getDates( $timestamp ) {
-	$dateFormat = 'Y-m-d H:i:s';
-	$startDate = date( $dateFormat, strtotime( '-1 day', $timestamp ) );
-	$endDate = date( $dateFormat, $timestamp );
-	return [ $startDate, $endDate ];
-}
-
-/**
  * @brief Selects recent founders from DB
  *
  * @desc Returns false in case of DB error or array with found founders ids
@@ -77,8 +60,9 @@ function getDates( $timestamp ) {
 function findFounders( $timestamp ) {
 	global $wgExternalSharedDB;
 
-	list( $startDate, $endDate ) = getDates( $timestamp );
 	$db = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
+	$startDate = $db->timestamp( strtotime( '-1 day', $timestamp ) );
+	$endDate = $db->timestamp( $timestamp );
 	$table = 'city_list';
 	$fields = [ 'city_founding_user' ];
 	$where = [ 'city_founding_user > 0', "city_created between '$startDate' and '$endDate'" ];
