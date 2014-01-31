@@ -206,11 +206,9 @@ class ForumExternalController extends WallExternalController {
 		$boardTitle = WikiaSanitizer::unicodeTrim( WikiaSanitizer::removeDoubleSpaces( $boardTitle ) );
 		$boardDescription = WikiaSanitizer::unicodeTrim( $boardDescription );
 
-		$boardTitle = preg_replace('/\W/gu', '', $boardTitle);
-
 		// Reject illegal characters.
 		$rxTc = Title::getTitleInvalidRegex();
-		if ( preg_match( $rxTc, $boardTitle ) ) {
+		if ( preg_match( $rxTc, $boardTitle ) || Title::newFromText($boardTitle) === null ) {
 			$this->errorfield = 'boardTitle';
 			$this->errormsg = wfMessage( 'forum-board-title-validation-invalid' )->escaped();
 			return false;
