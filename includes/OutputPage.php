@@ -660,7 +660,7 @@ class OutputPage extends ContextSource {
 			// disable the support for If-Modified-Since when ETag is enabled
 			unset($_SERVER['HTTP_IF_MODIFIED_SINCE']);
 		}
-		// Wikia change - begin
+		// Wikia change - end
 
 		$timestamp = wfTimestamp( TS_MW, $timestamp );
 		$modifiedTimes = array(
