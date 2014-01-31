@@ -5,21 +5,7 @@ $toc-background: #F8F8F8;
 $handle-size: 44px;
 $dark-border: #D8D8D8;
 
-//Some simple fixed for RTL languages
-.cont-dir-rtl {
-	.side-menu-capable {
-		direction: ltr; //JanusCSS will change it to rtl
-
-		-webkit-transform: translate(100%);
-		-moz-transform: translate(100%);
-		transform: translate(100%);
-	}
-
-	#wkTOCHandle {
-		border-radius: 3px 3px 0 0;
-	}
-}
-
+/* @noflip */
 .side-menu {
 	position: fixed;
 	right: 0;
@@ -61,6 +47,7 @@ $dark-border: #D8D8D8;
 	}
 }
 
+/* @noflip */
 #wkTOCHandle {
 	position: absolute;
 	left: -$handle-size;
