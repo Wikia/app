@@ -578,11 +578,11 @@ use Swagger\Annotations as SWG;
  * 
  * @SWG\Api(
  * 	path="/api/v1/Articles/List",
- * 	description="Get the most viewed articles for the current wiki",
+ * 	description="Get articles list in alphabetical order",
  * 	@SWG\Operations(
  * 		@SWG\Operation(
  * 			httpMethod="GET",
- * 			summary="Get the most viewed articles for the current wiki ",
+ * 			summary="Get articles list in alphabetical order",
  * 			nickname="getList",
  * 			responseClass="UnexpandedListArticleResultSet",
  * 			@SWG\ErrorResponses(
@@ -632,11 +632,11 @@ use Swagger\Annotations as SWG;
  * )
  * @SWG\Api(
  * 	path="/api/v1/Articles/List?expand=1",
- * 	description="Get a list of pages on the current wiki",
+ * 	description="Get articles list in alphabetical order (expanded results)",
  * 	@SWG\Operations(
  * 		@SWG\Operation(
  * 			httpMethod="GET",
- * 			summary="Get a list of pages on the current wiki",
+ * 			summary="Get articles list in alphabetical order (expanded results)",
  * 			nickname="getList",
  * 			responseClass="ExpandedListArticleResultSet",
  * 			@SWG\ErrorResponses(

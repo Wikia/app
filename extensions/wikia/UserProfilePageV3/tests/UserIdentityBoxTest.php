@@ -14,7 +14,7 @@ class UserIdentityBoxTest extends WikiaBaseTest {
 	 * @author Sergey Naumov
 	 */
 	public function testDoParserFilter($text, $expectedResult) {
-		$userIdentityBox = new UserIdentityBox(F::app(), new User, self::TOP_WIKI_LIMIT);
+		$userIdentityBox = new UserIdentityBox( new User );
 
 		$this->assertEquals($expectedResult, $userIdentityBox->doParserFilter($text));
 	}
@@ -25,7 +25,7 @@ class UserIdentityBoxTest extends WikiaBaseTest {
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	public function testCheckIfDisplayZeroStates($data, $expectedResult) {
-		$userIdentityBox = new UserIdentityBox(F::app(), $this->getMock('User'), self::TOP_WIKI_LIMIT);
+		$userIdentityBox = new UserIdentityBox( $this->getMock('User') );
 
 		$this->assertEquals($expectedResult, $userIdentityBox->checkIfDisplayZeroStates($data));
 	}
@@ -132,26 +132,55 @@ class UserIdentityBoxTest extends WikiaBaseTest {
 	public function doParserFilterDataProvider() {
 		return array(
 			array(
-                'string',
+				'string',
 				'string'
 			),
 			array(
-                ' :D',
+				' :D',
 				':D'
 			),
 			array(
-                '*** :D ***',
+				'*** :D ***',
 				'*** :D ***'
 			),
 			array(
-                'http://domain.com/%20',
+				'http://domain.com/%20',
 				'http://domain.com/%20'
 			),
 			array(
-                '[http://www.example.com link title]',
+				'[http://www.example.com link title]',
 				'link title'
 			)
 		);
+	}
+
+	/**
+	 * @desc Tests if UserIdentityBox::getTopWikis delegates pulling wikis to FavoriteWikisModel
+	 */
+	public function testGetTopWikis() {
+		$userMock = $this->getMock( 'User' );
+
+		$favoriteWikisModelMock = $this->getMock(
+			'FavoriteWikisModel',
+			[ 'getTopWikis' ],
+			[ $userMock ]
+		);
+		$favoriteWikisModelMock->expects( $this->once() )
+			->method( 'getTopWikis' );
+
+		$userIdentityBoxMock = $this->getMock(
+			'UserIdentityBox',
+			[ 'getFavoriteWikisModel' ],
+			[ $userMock ],
+			'',
+			false
+		);
+		$userIdentityBoxMock->expects( $this->once() )
+			->method( 'getFavoriteWikisModel' )
+			->will( $this->returnValue( $favoriteWikisModelMock ) );
+
+		/** @var UserIdentityBox $userIdentityBoxMock */
+		$userIdentityBoxMock->getTopWikis();
 	}
 
 }

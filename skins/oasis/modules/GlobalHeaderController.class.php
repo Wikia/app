@@ -1,7 +1,6 @@
 <?php
 
 class GlobalHeaderController extends WikiaController {
-	const MESSAGE_NAME = 'wgSharedGlobalnavigation';
 	private $menuNodes;
 
 	public function init() {
@@ -12,7 +11,7 @@ class GlobalHeaderController extends WikiaController {
 
 		$category = WikiFactory::getCategory($wgCityId);
 
-		$messageName = self::MESSAGE_NAME;
+		$messageName = 'shared-Globalnavigation';
 		if ($category) {
 			$messageNameWithCategory = $messageName . '-' . $category->cat_id;
 			if (!wfEmptyMsg($messageNameWithCategory, wfMsg($messageNameWithCategory))) {
@@ -22,7 +21,7 @@ class GlobalHeaderController extends WikiaController {
 
 		$navigation = new NavigationModel(true /* useSharedMemcKey */);
 		$menuNodes = $navigation->parse(
-			NavigationModel::TYPE_VARIABLE,
+			NavigationModel::TYPE_MESSAGE,
 			$messageName,
 			array(3, 4, 5),
 			1800 /* 3 hours */
@@ -36,6 +35,7 @@ class GlobalHeaderController extends WikiaController {
 	}
 
 	public function index() {
+
 		$userLang = $this->wg->Lang->getCode();
 
 		// Link to Wikia home page
@@ -43,7 +43,8 @@ class GlobalHeaderController extends WikiaController {
 		if (!empty($this->wg->LangToCentralMap[$userLang])) {
 			$centralUrl = $this->wg->LangToCentralMap[$userLang];
 		}
-		$createWikiUrl = NavigationModel::getCreateNewWikiUrl();
+
+		$createWikiUrl = 'http://www.wikia.com/Special:CreateNewWiki';
 		if ($userLang != 'en') {
 			$createWikiUrl .= '?uselang=' . $userLang;
 		}
@@ -69,9 +70,9 @@ class GlobalHeaderController extends WikiaController {
 	}
 
 	public function menuItemsAll() {
-		$this->response->setFormat(WikiaResponse::FORMAT_JSONP);
+		$this->response->setFormat('json');
 
-		$indexes = $this->menuNodes[0]['children'];
+		$indexes = $this->request->getVal('indexes', array());
 
 		$menuItems = array();
 		foreach($indexes as $index) {
@@ -81,10 +82,7 @@ class GlobalHeaderController extends WikiaController {
 		$this->response->setData($menuItems);
 
 		// Cache for 1 day
-		$this->response->setCacheValidity(3600, 3600, array(
-			WikiaResponse::CACHE_TARGET_BROWSER,
-			WikiaResponse::CACHE_TARGET_VARNISH
-		));
+		$this->response->setCacheValidity(86400);
 	}
 
 	protected function isGameStarLogoEnabled() {
@@ -94,12 +92,5 @@ class GlobalHeaderController extends WikiaController {
 			$result = false;
 		}
 		return $result;
-	}
-
-	public static function onMakeGlobalVariablesScript(Array &$vars) {
-		$parseCorporateUrl = parse_url(NavigationModel::getCreateNewWikiUrl());
-		$vars['wgCorporateUrl'] = $parseCorporateUrl['scheme'] . '://' . $parseCorporateUrl['host'];
-
-		return true;
 	}
 }

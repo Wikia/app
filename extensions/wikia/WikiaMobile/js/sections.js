@@ -12,7 +12,7 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 		sections = $( 'h2[id],h3[id],h4[id]', d.getElementById( 'wkPage' ) ).toArray(),
 		l = sections.length,
 		lastSection,
-		escapeRegExp = /[()\.]/g,
+		escapeRegExp = /[()\.\+]/g,
 		offset = 5;
 
 	/**
@@ -21,7 +21,7 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 	 * @returns {undefined|true} - status code if scroll actually happened
 	 */
 	function scrollTo ( header ) {
-		//() and . have to be escaped before passed to querySelector
+		//() . and + have to be escaped before passed to querySelector
 		var h = document.querySelector( header.replace( escapeRegExp, '\\$&' ) ),
 			ret;
 
