@@ -67,3 +67,4 @@ ve.init.mw.WikiaViewPageTarget.prototype.onToolbarCancelButtonClick = function (
 	mw.hook( 've.cancelButton' ).fire();
 	ve.init.mw.ViewPageTarget.prototype.onToolbarCancelButtonClick.call( this );
 };
+

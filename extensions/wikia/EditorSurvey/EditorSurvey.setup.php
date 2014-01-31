@@ -12,3 +12,4 @@ $wgExtensionMessagesFiles['EditorSurvey'] = $dir . 'EditorSurvey.i18n.php';
 
 // hooks
 $wgHooks['MakeGlobalVariablesScript'][] = 'EditorSurveyHooksHelper::onMakeGlobalVariablesScript';
+

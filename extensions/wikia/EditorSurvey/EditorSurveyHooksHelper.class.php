@@ -14,3 +14,4 @@ class EditorSurveyHooksHelper {
 		return true;
 	}
 }
+
