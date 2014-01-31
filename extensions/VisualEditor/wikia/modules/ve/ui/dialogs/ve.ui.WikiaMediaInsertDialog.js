@@ -222,6 +222,11 @@ ve.ui.WikiaMediaInsertDialog.prototype.onQueryInputKeydown =
  * @param {Object} items An object containing items to add to the search results
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onQueryRequestSearchDone = function ( items ) {
+	items.forEach( function( item ) {
+		if ( item.type === 'video' ) {
+			item.provider = 'wikia';
+		}
+	} );
 	this.search.addItems( items );
 	this.results.setChecked( this.cartModel.getItems(), true );
 	this.pages.setPage( 'search' );
@@ -271,7 +276,11 @@ ve.ui.WikiaMediaInsertDialog.prototype.onSearchCheck = function ( item ) {
 	if ( cartItem ) {
 		this.cartModel.removeItems( [ cartItem.getModel() ] );
 	} else {
-		this.addCartItem( new ve.dm.WikiaCartItem( item.title, item.url, item.type, undefined, item.provider ) );
+		if ( item.type === 'video' ) {
+			this.addCartItem( new ve.dm.WikiaCartItem( item.title, item.url, item.type, undefined, 'wikia' ) );
+		} else {
+			this.addCartItem( new ve.dm.WikiaCartItem( item.title, item.url, item.type ) );			
+		}
 	}
 };
 
@@ -282,10 +291,11 @@ ve.ui.WikiaMediaInsertDialog.prototype.onSearchCheck = function ( item ) {
  * @param {Object|null} item The item to preview or `null` if closing the preview.
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onMediaPreview = function ( item ) {
-	if ( item ) {
-		this.mediaPreview.open( item.model );
+	var model = item.getModel();
+	if ( model.type === 'photo' ) {
+		this.mediaPreview.openForImage( model.title, model.url );
 	} else {
-		this.mediaPreview.close();
+		this.mediaPreview.openForVideo( model.title, model.provider, model.videoId );
 	}
 };
 
@@ -309,16 +319,13 @@ ve.ui.WikiaMediaInsertDialog.prototype.onCartSelect = function ( item ) {
  * @param {ve.dm.WikiaCartItem[]} items Cart models
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onCartModelAdd = function ( items ) {
-	var config, i, isTemporary, item, page;
+	var config, i, item, page;
 
 	for ( i = 0; i < items.length; i++ ) {
 		item = items[i];
-		isTemporary = item.isTemporary();
-		config = {
-			'$': this.$,
-			'editable': ( isTemporary && item.provider !== 'wikia' )
-		};
-		if ( isTemporary ) {
+		config = { '$': this.$ };
+		if ( item.isTemporary() ) {
+			config.editable = true
 			config.$license = this.$( this.license.html );
 		}
 		page = new ve.ui.WikiaMediaPageWidget( item, config );
@@ -781,9 +788,9 @@ ve.ui.WikiaMediaInsertDialog.prototype.onUploadSuccess = function ( data ) {
  * @param {jQuery.Event} e The jQuery event Object.
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onFrameDocumentKeyDown = function ( e ) {
-	if ( e.which === OO.ui.Keys.ESCAPE && this.mediaPreview.$element.is( ':visible' ) ) {
-		this.onMediaPreview();
-		return false;
+	if ( e.which === OO.ui.Keys.ESCAPE && this.mediaPreview.isOpen() ) {
+		this.mediaPreview.close();
+		return false; // stop propagation
 	}
 	ve.ui.Dialog.prototype.onFrameDocumentKeyDown.call( this, e );
 };

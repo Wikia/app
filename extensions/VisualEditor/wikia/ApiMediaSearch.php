@@ -140,15 +140,11 @@ class ApiMediaSearch extends ApiBase {
 
 		foreach( $raw['items'] as $rawItem ) {
 			$title = Title::newFromText( $rawItem['title'], NS_FILE );
-			$type = $this->getType( $title );
 			$item = [
 				'title' => $title->getText(),
-				'type' => $type,
+				'type' => $this->getType( $title ),
 				'url' => $this->getUrl( $title )
 			];
-			if( $type === 'video' ) {
-				$item['provider'] = 'wikia';
-			}
 			array_push( $items, $item );
 		}
 
