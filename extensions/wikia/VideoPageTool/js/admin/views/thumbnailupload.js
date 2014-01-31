@@ -58,12 +58,12 @@ define( 'videopageadmin.views.thumbnailupload', [
 				// Swap out the small thumbnail
 				if ( $videoThumb.find( 'img' ).length ) {
 					that.$el
-						.find( '.Wikia-video-thumb' )
+						.find( '.vpt-featured-thumbnail' )
 						.attr( 'src', response.data.thumbUrl );
 
 				} else {
 					$videoThumb.html( $( '<img>' )
-						.addClass( 'Wikia-video-thumb' )
+						.addClass( 'vpt-featured-thumbnail' )
 						.attr( 'src', response.data.thumbUrl ) );
 				}
 
