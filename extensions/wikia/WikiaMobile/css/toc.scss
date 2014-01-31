@@ -2,7 +2,7 @@
 
 $line-height: 40px;
 $toc-background: #F8F8F8;
-$handle-size: 48px;
+$handle-size: 44px;
 $dark-border: #D8D8D8;
 
 //Some simple fixed for RTL languages
@@ -22,7 +22,7 @@ $dark-border: #D8D8D8;
 
 .side-menu {
 	position: fixed;
-	left: -260px;
+	right: 0;
 	top: 0;
 	bottom:0;
 	width: 260px;
@@ -31,13 +31,19 @@ $dark-border: #D8D8D8;
 
 	counter-reset: level1, level2, level3;
 
-	&.active {
-		-webkit-transition: -webkit-transform .1s ease-out;
-		-moz-transition: -moz-transform .1s ease-out;
-		transition: transform .1s ease-out;
+	-webkit-transition: -webkit-transform .1s ease-out;
+	-moz-transition: -moz-transform .1s ease-out;
+	transition: transform .1s ease-out;
 
+	-webkit-transform: translate(100%);
+	-moz-transform: translate(100%);
+	-ms-transform: translate(100%);
+	transform: translate(100%);
+
+	&.active {
 		-webkit-transform: translate(0);
 		-moz-transform: translate(0);
+		-ms-transform: translate(0);
 		transform: translate(0);
 
 		z-index: $video-overlay-z-index + 2; //For overlaying Curtain
@@ -55,27 +61,14 @@ $dark-border: #D8D8D8;
 	}
 }
 
-.side-menu-capable {
-	left: 0;
-
-	-webkit-transform: translate(-100%);
-	-moz-transform: translate(-100%);
-	transform: translate(-100%);
-}
-
 #wkTOCHandle {
 	position: absolute;
-	right: -$handle-size;
-	bottom: 25px;
+	left: -$handle-size;
+	bottom: 48px;
 	width: $handle-size;
 	height: $handle-size;
 
-	background-color: rgb(0, 77, 141);
-	background-size: 55%;
-	background-repeat: no-repeat;
-	background-position: center;
-	background-image: url(/extensions/wikia/WikiaMobile/images/toc-icon.png); /* base64 */
-	border-radius: 0 3px 3px 0;
+	border-radius: 3px 0 0 3px;
 }
 
 .toc-list {
