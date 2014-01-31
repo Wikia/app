@@ -14,14 +14,14 @@ require( ['wikia.tracker'], function ( tracker ) {
 				return {
 					'action': actions.OPEN,
 					'label': 'dialog-save',
-					'value': data.duration
+					'value': normalizeDuration( data.duration )
 				};
 			},
 			'behavior.saveDialogClose': function ( data ) {
 				return {
 					'action': actions.CLOSE,
 					'label': 'dialog-save',
-					'value': data.duration
+					'value': normalizeDuration( data.duration )
 				};
 			},
 			'command.execute': function ( data ) {
@@ -34,28 +34,28 @@ require( ['wikia.tracker'], function ( tracker ) {
 				return {
 					'action': actions.IMPRESSION,
 					'label': 'edit-page-ready',
-					'value': Math.round( data.duration )
+					'value': normalizeDuration( data.duration )
 				};
 			},
 			'performance.user.reviewComplete': function ( data ) {
 				return {
 					'action': actions.SUCCESS,
 					'label': 'dialog-save-review-changes',
-					'value': data.duration
+					'value': normalizeDuration( data.duration )
 				};
 			},
 			'performance.user.reviewError': function ( data ) {
 				return {
 					'action': actions.ERROR,
 					'label': 'dialog-save-review-changes',
-					'value': data.duration
+					'value': normalizeDuration( data.duration )
 				};
 			},
 			'performance.user.saveComplete': function ( data ) {
 				return {
 					'action': actions.SUCCESS,
 					'label': 'publish',
-					'value': data.duration
+					'value': normalizeDuration( data.duration )
 				};
 			},
 			'performance.user.saveError': function ( data, topics ) {
@@ -66,7 +66,7 @@ require( ['wikia.tracker'], function ( tracker ) {
 					'action': actions.ERROR,
 					'label': 'publish-' + data.type,
 					'retries': data.retries,
-					'value': data.duration
+					'value': normalizeDuration( data.duration )
 				};
 			},
 			'tool': function ( data ) {
@@ -108,6 +108,17 @@ require( ['wikia.tracker'], function ( tracker ) {
 	 */
 	function nameToLabel( name ) {
 		return nameToLabelMap[name] || name;
+	}
+
+	/**
+	 * Normalize time durations.
+	 *
+	 * @method
+	 * @param {number} duration Time in milliseconds
+	 * @returns {number} Normalized time in milliseconds
+	 */
+	function normalizeDuration( duration ) {
+		return Math.round( duration );
 	}
 
 	/**
@@ -186,5 +197,6 @@ require( ['wikia.tracker'], function ( tracker ) {
 	// Exports
 	ve.track.actions = actions;
 	ve.track.nameToLabel = nameToLabel;
+	ve.track.normalizeDuration = normalizeDuration;
 	ve.trackSubscribeAll( track );
 } );
