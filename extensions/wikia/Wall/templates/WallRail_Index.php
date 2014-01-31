@@ -23,7 +23,7 @@
 					<? else: ?>
 						<li><a href="<?= $userInvolved['usertalk']; ?>"> <?= wfMessage( 'talkpage' )->escaped(); ?></a></li>
 					<? endif; ?>
-					<li><a href="<?= $userInvolved['usercontribs']; ?>"> <?= wfMessage( 'wall-history-rail-contribs' )->escaped; ?></a></li>
+					<li><a href="<?= $userInvolved['usercontribs']; ?>"> <?= wfMessage( 'wall-history-rail-contribs' )->escaped(); ?></a></li>
 					<? if( $app->wg->User->isAllowed( 'block' ) ): ?>
 						<li><a href="<?= $userInvolved['userblock']; ?>"> <?= wfMessage( 'wall-history-rail-block' )->escaped(); ?></a></li>
 					<? endif; ?>
