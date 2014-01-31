@@ -137,6 +137,8 @@ $config['oasis_noads_extensions_js'] = array(
 		// Related Forum Discussion is on all article pages
 		'//extensions/wikia/Forum/js/RelatedForumDiscussion.js',
 		'//extensions/wikia/VideoEmbedTool/js/VET_Loader.js',
+		// Survey for first time editors
+		'//extensions/wikia/EditorSurvey/js/EditorSurvey.js',
 	)
 );
 
