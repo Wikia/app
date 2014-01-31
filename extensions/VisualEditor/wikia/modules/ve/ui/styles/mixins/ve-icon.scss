@@ -5,9 +5,9 @@ $basePath: "/extensions/VisualEditor";
 /*
  * $name - name of the icon (bold, media, etc)
  * $vendor - who is providing the icon? (ve, mw, wikia)
+ * $baseColor - the color that the icon sits on
  */
 @mixin ve-icon($name, $vendor, $baseColor: $color-page) {
-	$base: "";
 	$vendorPath: "";
 	$white: "";
 
