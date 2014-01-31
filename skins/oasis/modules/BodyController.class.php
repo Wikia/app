@@ -83,6 +83,16 @@ class BodyController extends WikiaController {
 	}
 
 	/**
+	 * Decide on which pages the LIMITED responsive / liquid layout should be turned on.
+	 * @return Boolean
+	 */
+	public static function isLimitedResponsiveLayoutEnabled() {
+		global $wgOasisResponsive, $wgOasisResponsiveLimited;
+
+		return !empty( $wgOasisResponsive ) && !empty( $wgOasisResponsiveLimited );
+	}
+
+	/**
 	 * Decide whether to show user pages header on current page
 	 */
 	public static function showUserPagesHeader() {

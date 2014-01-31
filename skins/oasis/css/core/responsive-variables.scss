@@ -11,6 +11,11 @@ $width-outside-max: 1600px;
 $width-outside-max-half: $width-outside-max / 2;
 $width-padding: $width-gutter / 2;
 
+// Limited fluid
+@if (get_command_line_param("limitFluid") == 1) {
+	$width-outside-max: 1030px;
+}
+
 // Breakpoints
 $breakpoint-content: $width-outside;
 $breakpoint-fluid: $width-outside + $width-adskins;
