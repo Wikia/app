@@ -1258,3 +1258,9 @@ $wgEnableCentralizedLogging = true;
  * Turns off <!-- Served by ... in ... ms --> HTML comment
  */
 $wgDisableReportTime = true;
+
+/**
+ * @name $wgInvalidateCacheOnLocalSettingsChange
+ * Setting this to true will invalidate all cached pages whenever LocalSettings.php is changed.
+ */
+$wgInvalidateCacheOnLocalSettingsChange = false;
