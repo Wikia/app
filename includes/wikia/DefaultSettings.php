@@ -1195,7 +1195,7 @@ $wgAdDriverUseSevenOneMediaInLanguages = ['de'];
  * the traffic and the old one (AdTracker.js) on the other half.
  * If false: only the old ad tracking code (AdTracker.js) will be used.
  */
-$wgAdDriverUseNewTracking = false;
+$wgAdDriverUseNewTracking = true;
 
 /**
  * @name $wgHighValueCountriesDefault
