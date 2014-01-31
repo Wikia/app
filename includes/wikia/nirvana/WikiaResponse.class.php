@@ -74,6 +74,7 @@ class WikiaResponse {
 	/**
 	 * constructor
 	 * @param string $format
+	 * @param WikiaRequest $request
 	 */
 	public function __construct( $format, $request = null ) {
 		$this->setFormat( $format );
@@ -93,7 +94,7 @@ class WikiaResponse {
 	 * set exception
 	 * @param Exception $exception
 	 */
-	public function setException(Exception $exception) {
+	public function setException( Exception $exception ) {
 		$this->exception = $exception;
 	}
 
@@ -262,7 +263,7 @@ class WikiaResponse {
 	}
 
 	public function setHeader( $name, $value, $replace = true ) {
-		if( $replace ) {
+		if ( $replace ) {
 			$this->removeHeader( $name );
 		}
 
@@ -310,8 +311,8 @@ class WikiaResponse {
 	public function getHeader( $name ) {
 		$result = array();
 
-		foreach( $this->headers as $key => $header ) {
-			if( $header['name'] == $name ) {
+		foreach ( $this->headers as $key => $header ) {
+			if ( $header['name'] == $name ) {
 				$result[] = $header;
 			}
 		}
@@ -320,8 +321,8 @@ class WikiaResponse {
 	}
 
 	public function removeHeader( $name ) {
-		foreach( $this->headers as $key => $header ) {
-			if( $header['name'] == $name ) {
+		foreach ( $this->headers as $key => $header ) {
+			if ( $header['name'] == $name ) {
 				unset( $this->headers[ $key ] );
 			}
 		}
@@ -352,7 +353,7 @@ class WikiaResponse {
 	 */
 
 	public function &getVal( $key, $default = null ) {
-		if( isset( $this->data[$key] ) ) {
+		if ( isset( $this->data[$key] ) ) {
 			return $this->data[$key];
 		}
 		return $default;
@@ -386,14 +387,14 @@ class WikiaResponse {
 	}
 
 	public function toString() {
-		if( $this->body === null ) {
+		if ( $this->body === null ) {
 			$this->body = $this->view->render();
 		}
 		return $this->body;
 	}
 
-	public function setTemplateEngine($engine) {
-		if(in_array( $engine, array(self::TEMPLATE_ENGINE_PHP, self::TEMPLATE_ENGINE_MUSTACHE))) {
+	public function setTemplateEngine( $engine ) {
+		if ( in_array( $engine, array(self::TEMPLATE_ENGINE_PHP, self::TEMPLATE_ENGINE_MUSTACHE)) ) {
 			$this->templateEngine = $engine;
 		}
 	}
@@ -403,13 +404,13 @@ class WikiaResponse {
 	}
 
 	public function sendHeaders() {
-		if( ( $this->getFormat() == WikiaResponse::FORMAT_JSON ) && $this->hasException() ) {
+		if ( ( $this->getFormat() == WikiaResponse::FORMAT_JSON ) && $this->hasException() ) {
 			// set error header for JSON response (as requested for mobile apps)
 			$this->setHeader( self::ERROR_HEADER_NAME, $this->getException()->getMessage() );
 		}
 
-		if( !$this->hasContentType() ) {
-			if( ( $this->getFormat() == WikiaResponse::FORMAT_JSON ) ) {
+		if ( !$this->hasContentType() ) {
+			if ( ( $this->getFormat() == WikiaResponse::FORMAT_JSON ) ) {
 				$this->setContentType( 'application/json; charset=utf-8' );
 			} else if ( $this->getFormat() == WikiaResponse::FORMAT_JSONP ) {
 				$this->setContentType( 'text/javascript; charset=utf-8' );
@@ -427,13 +428,14 @@ class WikiaResponse {
 
 			//standard HTTP response codes get automatically described by PHP and those descriptions shouldn't be overridden, ever
 			//use a custom error code if you need a custom code description
-			if( !$this->isStandardHTTPCode( $this->code ) ) {
+			if ( !$this->isStandardHTTPCode( $this->code ) ) {
 				if ( $this->hasException() ) {
 					$msg = ' ' . $this->getException()->getMessage();
 				}
 
-				if(empty($msg))
+				if ( empty($msg) ) {
 					$msg = ' Unknown';
+				}
 			}
 
 			$this->sendHeader( "HTTP/1.1 {$this->code}{$msg}", false );
@@ -449,7 +451,7 @@ class WikiaResponse {
 	 *
 	 * @param string $url the URL to redirect to
 	 */
-	public function redirect( $url ){
+	public function redirect( $url ) {
 		$this->sendHeader( "Location: " . $url, true );
 	}
 
@@ -457,9 +459,10 @@ class WikiaResponse {
 	 * @brief Add js var to script tag on top of the page
 	 * THIS MUST BE CALLED BEFORE SKIN RENDERING
 	 *
-	 * @param string $name, mix $val
+	 * @param string $name
+	 * @param mixed $val
 	 */
-	public function setJsVar($name, $val) {
+	public function setJsVar( $name, $val ) {
 		//FIXME: is this global request context always valid? What about special pages?
 		RequestContext::getMain()->getOutput()->addJsConfigVars($name, $val);
 	}
@@ -469,7 +472,7 @@ class WikiaResponse {
 	 *
 	 * @see Wikia::addAssetsToOutput
 	 */
-	public function addAsset( $assetName, $local = false ){
+	public function addAsset( $assetName, $local = false ) {
 		wfProfileIn( __METHOD__ );
 
 		if ( $this->format == 'html' ) {
@@ -499,7 +502,7 @@ class WikiaResponse {
 		$app->wg->Out->addModuleMessages($modules);
 	}
 
-	private function isStandardHTTPCode($code){
+	private function isStandardHTTPCode( $code ) {
 		return in_array( $code, array(
 			100, 101,
 			200, 201, 202, 203, 204, 205, 206,
@@ -518,7 +521,7 @@ class WikiaResponse {
 	public function __toString() {
 		try {
 			return $this->toString();
-		} catch( Exception $e ) {
+		} catch ( Exception $e ) {
 			// php doesn't allow exceptions to be thrown inside __toString() so we need an extra try/catch block here
 			$app = F::app();
 			$this->setException( $e );
