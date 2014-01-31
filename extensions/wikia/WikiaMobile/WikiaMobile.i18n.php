@@ -40,6 +40,7 @@ $messages['en'] = array(
 	'wikiamobile-category-items-prev' => 'Load previous',
 	'wikiamobile-categories-expand' => 'Show All',
 	'wikiamobile-categories-collapse' => 'Hide All',
+	'wikiamobile-categories-blogs' => 'Blog posts',
 
 	//sharing
 	'wikiamobile-sharing-media-image' => 'Picture',
