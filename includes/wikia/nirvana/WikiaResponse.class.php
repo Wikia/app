@@ -282,7 +282,7 @@ class WikiaResponse {
 	 * @see http://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html
 	 *
 	 * @param integer $varnishTTL expiry time for Varnish (and for the client if $browserTTL is not provided)
-	 * @param integer $browserTTL expiry time for the client
+	 * @param bool|int $browserTTL expiry time for the client
 	 */
 	public function setCacheValidity( $varnishTTL, $browserTTL = false ) {
 		$this->isCaching = true;
@@ -294,7 +294,7 @@ class WikiaResponse {
 			$browserTTL = $varnishTTL;
 		}
 
-		// cache on client sioe
+		// cache on client side
 		if ($browserTTL > 0) {
 			$this->setHeader('X-Pass-Cache-Control', sprintf('public, max-age=%d', $browserTTL));
 		}
