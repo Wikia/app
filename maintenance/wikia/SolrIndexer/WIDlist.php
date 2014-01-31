@@ -42,8 +42,8 @@ class WIDlist extends Maintenance {
 		$select->createFilterQuery( 'dis' )->setQuery('-(title_en:disambiguation)');
 		$select->createFilterQuery( 'answer_host' )->setQuery('-(host:*answers.wikia.com)');
 		$select->createFilterQuery( 'answer' )->setQuery('-(hub:Wikianswers)');
-		//speedydeletion: 547090, scratchpad: 95, lyrics:43339,
-		$select->createFilterQuery( 'banned' )->setQuery('-(wid:547090) AND -(wid:95) AND -(wid:43339)');
+		//speedydeletion: 547090, scratchpad: 95, lyrics:43339, colors:32379
+		$select->createFilterQuery( 'banned' )->setQuery('-(wid:547090) AND -(wid:95) AND -(wid:43339) AND -(wid:32379)');
 
 		$select->addParam( 'group', 'true' );
 		$select->addParam( 'group.field', 'wid' );

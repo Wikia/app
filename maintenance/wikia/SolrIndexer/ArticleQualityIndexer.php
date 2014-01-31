@@ -85,7 +85,7 @@ class ArticleQualityIndexer extends Maintenance {
 			$start = microtime( true );
 			$res = $this->getArticleQuality( $id );
 			echo '[' . $this->wikiId . ']' . $batch . " out of " . $total . " current: " . $key . " " . ( microtime( true ) - $start );
-			if ( isset( $res->contents[0]->article_quality_i ) ) {
+			if ( isset( $res->contents[0]->article_quality_i ) || isset( $res->contents[0]->delete ) ) {
 				$result[] = $res->contents[0];
 			}
 			echo "\n";
@@ -124,7 +124,7 @@ class ArticleQualityIndexer extends Maintenance {
 		$client = $this->getSolrConnection();
 		$select = $client->createSelect();
 		$select->setFields( [ 'pageid' ] );
-		$select->setQuery( '+(wid:'.$this->wikiId.') AND +(ns:0) AND -(article_quality_i:[0 TO *])' );
+		$select->setQuery( '+(wid:'.$this->wikiId.') AND +(ns:0) AND -(article_quality_i:[0 TO *]) AND +(words:[10 TO *])' );
 
 		$select->setRows( 1000000 );
 
