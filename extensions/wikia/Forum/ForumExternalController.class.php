@@ -203,16 +203,10 @@ class ForumExternalController extends WallExternalController {
 		$this->errormsg = '';
 
 		// Trim spaces (CONN-167)
-		$unicodeTrimRegex = array(
-			'/\s+/u',                                // spaces and tabs
-			'/^[\pZ|\pC]+([\PZ|\PC]*)[\pZ|\pC]+$/u', // unicode trim
-			'/([\pZ|\pC])[\pZ|\pC]+/u',              // unicode spaces
-		);
+		$boardTitle = WikiaSanitizer::unicodeTrim( WikiaSanitizer::removeDoubleSpaces( $boardTitle ) );
+		$boardDescription = WikiaSanitizer::unicodeTrim( $boardDescription );
 
-		$unicode_replacement = array( ' ', '$1', ' ' );
-
-		$boardTitle = trim( preg_replace( $unicodeTrimRegex, $unicode_replacement, $boardTitle ) );
-		$boardDescription = trim( preg_replace( $unicodeTrimRegex, $unicode_replacement, $boardDescription ) );
+		$boardTitle = preg_replace('/\W/gu', '', $boardTitle);
 
 		// Reject illegal characters.
 		$rxTc = Title::getTitleInvalidRegex();
