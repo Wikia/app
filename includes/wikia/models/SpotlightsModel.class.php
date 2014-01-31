@@ -51,11 +51,20 @@ class SpotlightsModel extends WikiaModel {
 	private function getSpotlightImage( $url ) {
 		$imageUrl = null;
 		$cityId = WikiFactory::UrlToID( $url );
+		$helper = new WikiaHomePageHelper();
 		$title = GlobalTitle::newFromText( self::WIKI_VISUALIZATION_IMG, NS_FILE, $cityId );
 		if ( $title !== null ) {
 			$file = new GlobalFile( $title );
 			if ( $file !== null ) {
-				$imageUrl = $file->getCrop( self::IMG_WIDTH, self::IMG_HEIGHT );
+				$originalWidth = $file->getWidth();
+				$originalHeight = $file->getHeight();
+				$imageServing = $helper->getImageServingForResize(
+					self::IMG_WIDTH,
+					self::IMG_HEIGHT,
+					$originalWidth,
+					$originalHeight
+				);
+				$imageUrl = $imageServing->getUrl( $file, $originalWidth, $originalHeight );
 			}
 		}
 		return $imageUrl;
@@ -72,150 +81,181 @@ class SpotlightsModel extends WikiaModel {
 			1706 => [
 				0 => [
 					'url' => 'http://fallout.wikia.com/',
-					'image' => ''
+					'image' => '',
+					'text' => 'Fallout Wiki',
 				],
 				1 => [
 					'url' => 'http://leagueoflegends.wikia.com/',
-					'image' => ''
+					'image' => '',
+					'text' => 'League of Legends Wiki',
 				],
 				2 => [
 					'url' => 'http://gta.wikia.com/',
-					'image' => ''
+					'image' => '',
+					'text' => 'GTA Wiki',
 				]
 			],
 			// RuneScape
 			304 => [
 				0 => [
 					'url' => 'http://2007.runescape.wikia.com/',
-					'image' => ''
+					'image' => '',
+					'text' => '"2007scape Wiki',
 				],
 				1 => [
 					'url' => 'http://leagueoflegends.wikia.com/',
-					'image' => ''
+					'image' => '',
+					'text' => 'League of Legends Wiki',
 				],
 				2 => [
 					'url' => 'http://elderscrolls.wikia.com/',
-					'image' => ''
+					'image' => '',
+					'text' => 'Elder Scrolls Wiki',
 				]
 			],
 			// League of Legends
 			14764 => [
 				0 => [
 					'url' => 'http://elderscrolls.wikia.com/',
-					'image' => ''
+					'image' => '',
+					'text' => 'Elder Scrolls Wiki',
+
 				],
 				1 => [
 					'url' => 'http://finalfantasy.wikia.com/',
-					'image' => ''
+					'image' => '',
+					'text' => 'Final Fantasy Wiki',
 				],
 				2 => [
 					'url' => 'http://runescape.wikia.com/',
-					'image' => ''
+					'image' => '',
+					'text' => 'Runescape Wiki'
 				]
 			],
 			// Warframe
 			544934 => [
 				0 => [
 					'url' => 'http://leagueoflegends.wikia.com/',
-					'image' => ''
+					'image' => '',
+					'text' => 'League of Legends Wiki',
 				],
 				1 => [
 					'url' => 'http://elderscrolls.wikia.com/',
-					'image' => ''
+					'image' => '',
+					'text' => 'Elder Scrolls Wiki',
 				],
 				2 => [
 					'url' => 'http://dont-starve-game.wikia.com/',
-					'image' => ''
+					'image' => '',
+					'text' => 'Dont\' Starve Wiki',
 				]
 			],
 			// Fallout
 			3035 => [
 				0 => [
 					'url' => 'http://elderscrolls.wikia.com/',
-					'image' => ''
+					'image' => '',
+					'text' => 'Elder Scrolls Wiki',
 				],
 				1 => [
 					'url' => 'http://gta.wikia.com/',
-					'image' => ''
+					'image' => '',
+					'text' => 'GTA Wiki',
 				],
 				2 => [
 					'url' => 'http://leagueoflegends.wikia.com/',
-					'image' => ''
+					'image' => '',
+					'text' => 'League of Legends Wiki',
 				]
 			],
 			// Disney
 			374 => [
 				0 => [
 					'url' => 'http://pixar.wikia.com/',
-					'image' => ''
+					'image' => '',
+					'text' => 'Pixar Wiki',
 				],
 				1 => [
 					'url' => 'http://villains.wikia.com/',
-					'image' => ''
+					'image' => '',
+					'text' => 'Villains Wiki',
 				],
 				2 => [
 					'url' => 'http://harrypotter.wikia.com/',
-					'image' => ''
+					'image' => '',
+					'text' => 'Harry Potter Wiki',
 				]
 			],
 			// Yu-Gi-Oh!
 			410 => [
 				0 => [
 					'url' => 'http://cardfight.wikia.com/',
-					'image' => ''
+					'image' => '',
+					'text' => 'Cardfight Wiki',
 				],
 				1 => [
 					'url' => 'http://naruto.wikia.com/',
-					'image' => ''
+					'image' => '',
+					'text' => 'Naruto Wiki',
 				],
 				2 => [
 					'url' => 'http://onepiece.wikia.com/',
-					'image' => ''
+					'image' => '',
+					'text' => 'One Piece Wiki',
 				]
 			],
 			// Cardfight
 			185111 => [
 				0 => [
 					'url' => 'http://yugioh.wikia.com/',
-					'image' => ''
+					'image' => '',
+					'text' => 'Yu-Gi-Oh Wiki',
 				],
 				1 => [
 					'url' => 'http://buddyfight.wikia.com/',
-					'image' => ''
+					'image' => '',
+					'text' => 'Buddy Fight Wiki',
 				],
 				2 => [
 					'url' => 'http://naruto.wikia.com/',
-					'image' => ''
+					'image' => '',
+					'text' => 'Naruto Wiki',
 				]
 			],
 			// Lyrics
 			43339 => [
 				0 => [
 					'url' => 'http://disney.wikia.com/',
-					'image' => ''
+					'image' => '',
+					'text' => 'Disney Wiki',
 				],
 				1 => [
 					'url' => 'http://starwars.wikia.com/',
-					'image' => ''
+					'image' => '',
+					'text' => 'Star Wars Wiki',
 				],
 				2 => [
 					'url' => 'http://harrypotter.wikia.com/',
-					'image' => ''
+					'image' => '',
+					'text' => 'Harry Potter Wiki',
 				]
 			],
 			// Arrested Development
 			2514 => [
 				0 => [
 					'url' => 'http://starwars.wikia.com/',
-					'image' => ''
+					'image' => '',
+					'text' => 'Star Wars Wiki',
 				],
 				1 => [
 					'url' => 'http://harrypotter.wikia.com/',
-					'image' => ''
+					'image' => '',
+					'text' => 'Harry Potter Wiki',
 				],
 				2 => [
 					'url' => 'http://gameofthrones.wikia.com',
-					'image' => ''
+					'image' => '',
+					'text' => 'Game of Thrones Wiki',
 				]
 			],
 		];

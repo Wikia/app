@@ -1,5 +1,5 @@
 <?php
-class SpotlightsController extends WikiaController {
+class SpotlightsABTestController extends WikiaController {
 	const TYPE_TIPSY = 1;
 	const TYPE_OPENX = 2;
 	const MEMCACHE_VER = '1.0';
