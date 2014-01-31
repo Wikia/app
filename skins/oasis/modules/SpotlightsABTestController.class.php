@@ -1,32 +1,44 @@
 <?php
 class SpotlightsABTestController extends WikiaController {
-	const TYPE_TIPSY = 1;
-	const TYPE_OPENX = 2;
+	const TYPE_TIPSY_MOCK = 1;
+	const TYPE_OPENX_MOCK = 2;
 	const MEMCACHE_VER = '1.0';
 
 	/**
 	 * JSON response with recommended wikis
 	 */
 	public function getSpotlights() {
-		$spotlights = [];
+		$spotlights = [
+			'status' => 0,
+			'data' => []
+		];
 		$request = $this->wg->request;
 
 		$cityId 	= $request->getInt( 'cityId', 0 );
 		$vertical 	= $request->getVal( 'vertical', '' );
 
 		if ( $cityId && !empty( $vertical ) ) {
-			$type = $request->getVal( 'type', self::TYPE_TIPSY );
+			$type = $request->getVal( 'type', self::TYPE_TIPSY_MOCK );
 
 			$spotlights = WikiaDataAccess::cache(
 				$this->getMemcKey( $type, $vertical, $cityId ),
 				86400 /* 24 hours */,
 				function() use( $type, $vertical, $cityId ) {
-					$spotlights = [];
+					$spotlights = [
+						'status' => 0,
+						'data' => []
+					];
 					$spotlightsModel = new SpotlightsModel();
 
 					switch( $type ) {
-						case self::TYPE_OPENX: $spotlights = $spotlightsModel->getOpenXSpotlights( $vertical ); break;
-						case self::TYPE_TIPSY: $spotlights = $spotlightsModel->getTipsySpotlights( $cityId ); break;
+						case self::TYPE_OPENX_MOCK:
+							$spotlights['data'] = $spotlightsModel->getOpenXSpotlights( $vertical );
+							$spotlights['status'] = 1;
+							break;
+						case self::TYPE_TIPSY_MOCK:
+							$spotlights['data'] = $spotlightsModel->getTipsySpotlights( $cityId );
+							$spotlights['status'] = 1;
+							break;
 					}
 
 					return $spotlights;
