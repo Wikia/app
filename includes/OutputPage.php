@@ -694,6 +694,18 @@ class OutputPage extends ContextSource {
 		# Not modified
 		# Give a 304 response code and disable body output
 		wfDebug( __METHOD__ . ": NOT MODIFIED, $info\n", false );
+		$this->setCacheOK();
+		return true;
+	}
+
+	/**
+	 * Sets the response of this request to 304 not modified
+	 * Adds required headers and disables body output
+	 *
+	 * @author macbre / BAC-1521
+	 * @see https://gerrit.wikimedia.org/r/#/c/60440/7/includes/OutputPage.php
+	 */
+	private function setCacheOK() {
 		ini_set( 'zlib.output_compression', 0 );
 		$this->getRequest()->response()->header( "HTTP/1.1 304 Not Modified" );
 		$this->sendCacheControl();
