@@ -454,7 +454,8 @@ var RelatedVideos = {
 					}
 				}, false, message );
 			} else {
-				UserLoginModal.show({
+				UserLoginModal.show( {
+					origin: 'related-videos',
 					callback: function() {
 						$( window ).scrollTop( element.offset().top + 100 );
 						alreadyLoggedIn = true;
