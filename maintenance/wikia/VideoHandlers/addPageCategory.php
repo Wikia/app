@@ -95,6 +95,10 @@ if ( empty($wgCityId) ) {
 
 $dryRun = isset( $options['dry-run'] );
 
+if ( $dryRun ) {
+	echo "== DRY RUN MODE ==\n";
+}
+
 // Constrain on provider if given
 $provider = isset( $options['provider'] ) ? $options['provider'] : '';
 
