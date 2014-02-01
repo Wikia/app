@@ -95,19 +95,16 @@ if ( empty($wgCityId) ) {
 
 $dryRun = isset( $options['dry-run'] );
 
-// provider
+// Constrain on provider if given
 $provider = isset( $options['provider'] ) ? $options['provider'] : '';
-if ( empty( $provider ) ) {
-	die( "Error: Invalid provider.\n" );
-}
 
-// limit
-$limit = isset( $options['limit'] ) ? $options['limit'] : 0;
+// Add a limit.  If no limit is passed, give a reasonable max
+$limit = isset( $options['limit'] ) ? $options['limit'] : 1000;
 if ( !is_numeric( $limit ) ) {
 	die( "Error: Invalid limit.\n" );
 }
 
-// category
+// See if we need to constrain on specific categories
 $matchCategories = isset( $options['category'] ) ? explode(';', $options['category']) : [];
 
 // page name
@@ -156,11 +153,12 @@ $botUser = User::newFromName( 'WikiaBot' );
 
 $db = wfGetDB( DB_SLAVE );
 
-$sqlWhere = array(
-	'img_media_type' => 'VIDEO',
-	'img_minor_mime' => $provider,
+$sqlWhere = ['img_media_type' => 'VIDEO'];
 
-);
+// Add provider if it was given
+if ( $provider ) {
+	$sqlWhere['img_minor_mime'] = $provider;
+}
 
 if ( $addPageCategories ) {
 	$sqlWhere[] = "img_metadata like '%\"pageCategories%\"'";
