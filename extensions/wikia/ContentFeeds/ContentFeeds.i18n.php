@@ -55,6 +55,7 @@ $messages['ar'] = array(
  * @author Cekli829
  */
 $messages['az'] = array(
+	'contentfeeds-firstfewarticles-tag-title' => 'Başlıq',
 	'contentfeeds-firstfewarticles-tag-next' => 'Növbəti',
 );
 

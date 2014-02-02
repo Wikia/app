@@ -1159,10 +1159,24 @@ ___________________________________________<br />
 );
 
 /** Azerbaijani (azərbaycanca)
+ * @author Cekli829
  * @author Erdemaslancan
  */
 $messages['az'] = array(
+	'wall-message-remove' => 'Çıxar',
+	'wall-button-to-cancel-preview' => 'Redaktə',
+	'wall-message-delete' => 'Sil',
+	'wall-delete-error-title' => 'Xəta',
+	'wall-action-admin-confirm-ok' => 'Sil',
+	'wall-action-restore-confirm-ok' => 'Bərpa et',
+	'wall-action-rev-confirm-ok' => 'Bəli, sil',
+	'wall-notifications-markasread-all-wikis' => 'Bütün vikilər',
+	'wall-notifications-markasread-this-wiki' => 'Bu viki',
 	'wall-recentchanges-summary' => '($1)',
+	'wall-history' => 'Tarix',
+	'wall-history-action-view' => 'görünüş',
+	'mail-notification-html-greeting' => 'Salam $1,',
+	'wall-topic-edit-save' => 'Saxla',
 );
 
 /** South Azerbaijani (تورکجه)
