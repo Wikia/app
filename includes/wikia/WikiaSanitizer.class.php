@@ -19,14 +19,4 @@ class WikiaSanitizer {
 		return trim( preg_replace( '/^[\pZ\pC]+|[\pZ\pC]+$/u', '', $string ) );
 	}
 
-	/**
-	 * Removes double spaces in strings, also takes care of Unicode encoded separators
-	 *
-	 * @param $string  String to be parsed
-	 * @url http://www.php.net/manual/en/regexp.reference.unicode.php
-	 * @return string|null
-	 */
-	public static function removeDoubleSpaces( $string ) {
-		return preg_replace( array( '/[\pZ|\pC]+/u', '/\s+/' ), ' ', $string );
-	}
-} 
+}

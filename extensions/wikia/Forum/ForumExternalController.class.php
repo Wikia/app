@@ -67,7 +67,6 @@ class ForumExternalController extends WallExternalController {
 		}
 
 		$newTitle = Title::newFromText( $boardTitle, NS_WIKIA_FORUM_BOARD );
-
 		if ( $newTitle->exists() ) {
 			$this->status = 'error';
 			$this->errormsg = wfMessage( 'forum-board-title-validation-exists' )->escaped();
@@ -75,11 +74,16 @@ class ForumExternalController extends WallExternalController {
 		}
 
 		$forum = new Forum();
-		$forum->createBoard( $boardTitle, $boardDescription );
+		$creation = $forum->createBoard( $boardTitle, $boardDescription );
 
-		$this->status = 'ok';
-		$this->errorfield = '';
-		$this->errormsg = '';
+		if ( false === $creation ) {
+			$this->status = 'error';
+			$this->errormsg = wfMessage( 'forum-board-title-validation-invalid' )->escaped();
+		} else {
+			$this->status = 'ok';
+			$this->errorfield = '';
+			$this->errormsg = '';
+		}
 	}
 
 	/**
@@ -203,19 +207,19 @@ class ForumExternalController extends WallExternalController {
 		$this->errormsg = '';
 
 		// Trim spaces (CONN-167)
-		$boardTitle = WikiaSanitizer::unicodeTrim( WikiaSanitizer::removeDoubleSpaces( $boardTitle ) );
+		$boardTitle = WikiaSanitizer::unicodeTrim( $boardTitle );
 		$boardDescription = WikiaSanitizer::unicodeTrim( $boardDescription );
 
 		// Reject illegal characters.
 		$rxTc = Title::getTitleInvalidRegex();
-		if ( preg_match( $rxTc, $boardTitle ) || Title::newFromText($boardTitle) === null ) {
+		if ( preg_match( $rxTc, $boardTitle ) || is_null( Title::newFromText( $boardTitle ) ) ) {
 			$this->errorfield = 'boardTitle';
 			$this->errormsg = wfMessage( 'forum-board-title-validation-invalid' )->escaped();
 			return false;
 		}
 
 		$titleLength = mb_strlen( $boardTitle );
-		if ( $titleLength > 40 || $titleLength < 4 ) {
+		if ( $titleLength > Forum::BOARD_TITLE_MAX || $titleLength < Forum::BOARD_TITLE_MIN ) {
 			$this->errorfield = 'boardTitle';
 			$this->errormsg = wfMessage( 'forum-board-title-validation-length' )->escaped();
 			return false;
@@ -223,7 +227,7 @@ class ForumExternalController extends WallExternalController {
 
 		$descriptionLength = mb_strlen( $boardDescription );
 
-		if ( $descriptionLength > 255 || $descriptionLength < 4 ) {
+		if ( $descriptionLength > Forum::BOARD_DESC_MAX || $descriptionLength < Forum::BOARD_DESC_MIN ) {
 			$this->errorfield = 'boardDescription';
 			$this->errormsg = wfMessage( 'forum-board-description-validation-length' )->escaped();
 			return false;
