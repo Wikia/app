@@ -137,6 +137,7 @@
 			group = group || 'Unknown source';
 
 			if (report && levelID < SYSLOG_CUTOFF) {
+				console.log("LOGGING TO SYSLOG:", msg);
 				syslog(levelID, msg);
 			}
 
