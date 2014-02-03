@@ -5,7 +5,7 @@
 	WE.plugins.editorsurvey = $.createClass(WE.plugin,{
 
 		init: function() {
-			if ( EditorSurvey ) {
+			if ( window.EditorSurvey ) {
 				EditorSurvey.bindUnload();
 				this.editor.on('state', this.proxy(this.stateChanged));
 			}
