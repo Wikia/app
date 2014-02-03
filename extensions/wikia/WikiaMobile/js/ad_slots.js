@@ -45,7 +45,7 @@ require( ['ads', 'jquery', 'JSMessages', 'wikia.window', 'wikia.log'], function 
 		}
 	} );
 
-	if ( window.wgArticleId && (showInContent || showPreFooter ) ) {
+	if ( window.wgArticleId && (showInContent || showBeforeFooter ) ) {
 		//this can wait to on load as is under the fold
 		$( window ).on( 'load', function () {
 			if ( showInContent ) {
