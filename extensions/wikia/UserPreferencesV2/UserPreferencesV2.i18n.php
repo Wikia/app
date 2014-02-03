@@ -151,7 +151,7 @@ $messages['ar'] = array(
 	'preferences-v2-oldsig' => 'التوقيع الحالي:',
 	'preferences-v2-nickname' => 'توقيع مخصص:',
 	'preferences-v2-fancysig' => 'أود استخدام نص ويكي في توقيعي<br />[[{{MediaWiki:preferences-v2-fancysig-help-page-name}}|ما هو التوقيع؟]]',
-	'preferences-v2-fancysig-help-page-name' => 'مساعدة:توقيع', # Fuzzy
+	'preferences-v2-fancysig-help-page-name' => 'مساعدة:Signature', # Fuzzy
 	'prefs-appearance' => 'المظهر',
 	'preferences-v2-date' => 'صيغة التاريخ:',
 	'preferences-v2-time' => 'المنطقة الزمنية:',
@@ -194,6 +194,21 @@ $messages['ar'] = array(
 	'tog-editsectiononrightclick-v2' => 'تفعيل تعديل الأقسام بالنقر باليمين على عناوين الأقسام',
 	'tog-editondblclick-v2' => 'تحرير الصفحات بالنقر المزدوج',
 	'tog-hidefollowedpages-v2' => 'أخف قائمة الصفحات التي أتابعها عن الجميع',
+);
+
+/** Azerbaijani (azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'preferences-v2-username' => 'Mənim istifadəçi adım:',
+	'preferences-v2-usergroups' => 'Mənim istifadəçi qruplarım:',
+	'preferences-v2-gender' => 'Mənim cinsim:',
+	'preferences-v2-password' => 'Mənim parolum:',
+	'preferences-v2-date' => 'Tarix formatı:',
+	'preferences-v2-time' => 'Vaxt zonası:',
+	'prefs-emailv2' => 'E-poçt',
+	'preferences-v2-watchdeletion' => 'Sil',
+	'preferences-v2-watchcreations' => 'Yarat',
 );
 
 /** Bulgarian (български)
@@ -336,7 +351,7 @@ $messages['diq'] = array(
 	'tog-showAdsv2' => 'Reklami:',
 	'prefs-addressv2' => 'Adres:',
 	'preferences-v2-watchdefault' => 'Timar ke',
-	'preferences-v2-watchmoves' => 'Ber',
+	'preferences-v2-watchmoves' => 'Bere',
 	'preferences-v2-watchdeletion' => 'Besterne',
 	'preferences-v2-watchcreations' => 'Vıraze',
 	'preferences-v2-showads-enable' => 'Reklama hemın bıvin',

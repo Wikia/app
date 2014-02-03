@@ -261,6 +261,7 @@ $messages['ar'] = array(
  */
 $messages['az'] = array(
 	'phalanx-type-user' => 'istifadəçi',
+	'phalanx-type-user-email' => 'e-poçt',
 	'phalanx-label-reason' => 'Səbəb:',
 	'phalanx-label-type' => 'Tipi:',
 	'phalanx-label-lang' => 'Dil:',

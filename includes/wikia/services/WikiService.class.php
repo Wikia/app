@@ -537,19 +537,21 @@ class WikiService extends WikiaModel {
 				//this respects WF's data abstraction layer
 				//also: WF data is heavily cached
 				$name = WikiFactory::getVarValueByName( 'wgSitename', $wikiId );
-				$hubName = ( !empty( $hub ) ) ? $hub : $this->getVerticalByWikiId( $wikiId );
-				$langCode = WikiFactory::getVarValueByName( 'wgLanguageCode', $wikiId );
-				$topic = WikiFactory::getVarValueByName( 'wgWikiTopics', $wikiId );
-				$domain = $this->getDomainByWikiId( $wikiId );
+				if ( !empty( $name ) ) {
+					$hubName = ( !empty( $hub ) ) ? $hub : $this->getVerticalByWikiId( $wikiId );
+					$langCode = WikiFactory::getVarValueByName( 'wgLanguageCode', $wikiId );
+					$topic = WikiFactory::getVarValueByName( 'wgWikiTopics', $wikiId );
+					$domain = $this->getDomainByWikiId( $wikiId );
 
-				$results[] = array(
-					'id' => $wikiId,
-					'name' => ( !empty( $name ) ) ? $name : null,
-					'hub' => $hubName,
-					'language' => ( !empty( $langCode ) ) ? $langCode : null,
-					'topic' => ( !empty( $topic ) ) ? $topic : null,
-					'domain' => $domain
-				);
+					$results[ ] = array(
+						'id' => $wikiId,
+						'name' => $name,
+						'hub' => $hubName,
+						'language' => ( !empty( $langCode ) ) ? $langCode : null,
+						'topic' => ( !empty( $topic ) ) ? $topic : null,
+						'domain' => $domain
+					);
+				}
 			}
 
 			$this->wg->Memc->set( $cacheKey, $results, 86400 /* 24h */ );

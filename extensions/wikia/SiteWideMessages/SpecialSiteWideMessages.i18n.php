@@ -441,6 +441,7 @@ $messages['az'] = array(
 	'swm-button-save' => '[ Yaddaşa ver ]',
 	'swm-button-new' => '[ Yeni ]',
 	'swm-list-no-messages' => 'Mesaj yoxdur.',
+	'swm-list-table-id' => 'ID',
 	'swm-list-table-wiki' => 'Viki',
 	'swm-list-table-group' => 'Qrup',
 	'swm-list-table-removed' => 'Çıxarılıb',
@@ -448,6 +449,14 @@ $messages['az'] = array(
 	'swm-list-table-lang' => 'Dillər',
 	'swm-yes' => 'Bəli',
 	'swm-no' => 'Xeyr',
+	'swm-mode-users-registration-after' => 'Sonra',
+	'swm-mode-users-registration-before' => 'Əvvəl',
+	'swm-mode-users-registration-between' => 'Arasında',
+	'swm-mode-users-editcount-more' => 'Daha',
+	'swm-mode-users-editcount-between' => 'Arasında',
+	'swm-mode-wikis-created-after' => 'Sonra',
+	'swm-mode-wikis-created-before' => 'Əvvəl',
+	'swm-mode-wikis-created-between' => 'Arasında',
 );
 
 /** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)

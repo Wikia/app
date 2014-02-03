@@ -476,6 +476,16 @@ ___________________________________________
 	'usersignup-facebook-problem' => 'هناك مشكلة في الاتصال مع فيسبوك. الرجاء المحاولة مرة أخرى لاحقاً.',
 );
 
+/** Azerbaijani (azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'usersignup-welcome-email-greeting' => 'Salam $USERNAME',
+	'usersignup-marketing-global-heading' => 'Yarat',
+	'usersignup-account-creation-email-greeting' => 'Salam,',
+	'usersignup-confirmation-reminder-email-greeting' => 'Salam $USERNAME',
+);
+
 /** South Azerbaijani (تورکجه)
  * @author Arjanizary
  */

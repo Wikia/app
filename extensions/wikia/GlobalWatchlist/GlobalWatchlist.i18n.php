@@ -148,6 +148,13 @@ Wikia
 	'globalwatchlist-no-blog-page-found' => "No s'ha trobat el fitxer del registre.",
 );
 
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'tog-watchlistdigestclear' => 'Билгал йе еша сана сан тергаме могӀам чура агӀонаш',
+);
+
 /** Czech (čeština)
  * @author Dontlietome7
  */
