@@ -29,4 +29,3 @@ $wgExtensionMessagesFiles['Randomrootpage'] = $dir . 'Randomrootpage.i18n.php';
 $wgExtensionMessagesFiles['RandomrootpageAlias'] = $dir . 'Randomrootpage.i18n.alias.php';
 
 $wgAutoloadClasses['SpecialRandomrootpage'] = $dir . 'Randomrootpage_body.php';
-
