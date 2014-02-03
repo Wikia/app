@@ -29,12 +29,14 @@ $wgAutoloadClasses['VideosModuleController'] =  $dir . '/VideosModuleController.
  * hooks
  */
 $wgAutoloadClasses['VideosModuleHooks'] =  $dir . '/VideosModuleHooks.class.php';
+$wgHooks['OutputPageBeforeHTML'][] = 'VideosModuleHooks::onOutputPageBeforeHTML';
 
 if ( $wgVideosModuleOnRail ) {
 	$wgHooks['GetRailModuleList'][] = 'VideosModuleHooks::onGetRailModuleList';
 } else {
-	array_splice( $wgHooks['OutputPageBeforeHTML'], 0, 0, 'VideosModuleHooks::onOutputPageBeforeHTML' );
+	//array_splice( $wgHooks['OutputPageBeforeHTML'], 0, 0, 'VideosModuleHooks::onOutputPageBeforeHTML' );
 }
+
 
 /**
  * messages

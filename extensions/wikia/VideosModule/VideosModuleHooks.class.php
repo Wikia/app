@@ -15,4 +15,17 @@ class VideosModuleHooks {
 
 		return true;
 	}
+
+	static public function onOutputPageBeforeHTML( OutputPage $out, &$text ) {
+
+		$scripts = AssetsManager::getInstance()->getURL( 'videos_module_js' );
+
+		foreach( $scripts as $script ){
+			F::app()->wg->Out->addScript( "<script src='{$script}'></script>" );
+		}
+
+		return true;
+
+	}
+
 }
