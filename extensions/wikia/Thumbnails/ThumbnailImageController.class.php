@@ -3,7 +3,7 @@
 /**
  * Class ImageThumbnailController
  */
-class ImageThumbnailController extends WikiaController {
+class ThumbnailImageController extends WikiaController {
 	/**
 	 * @todo Create image version of video thumbnail controller
 	 */

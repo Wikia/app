@@ -1,6 +1,6 @@
 <?php
 
-class VideoThumbnailController extends WikiaController {
+class ThumbnailVideoController extends WikiaController {
 
 	/**
 	 * Thumbnail Template
