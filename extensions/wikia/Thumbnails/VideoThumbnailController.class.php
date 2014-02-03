@@ -63,6 +63,8 @@ class VideoThumbnailController extends WikiaController {
 
 		// use mustache for template
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
+		$this->response->getView()->setTemplatePath( dirname(__FILE__) . '/templates/videoThumbnail.mustache' );
+
 
 		// default value
 		$linkAttribs = [];
