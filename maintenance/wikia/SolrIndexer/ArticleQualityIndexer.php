@@ -10,6 +10,7 @@ class ArticleQualityIndexer extends Maintenance {
 	private $domain;
 	private $client;
 	private $curlClient;
+	private $solrDomain;
 	private $CONFIG = [
 		'adapter' => 'Solarium_Client_Adapter_Curl',
 		'adapteroptions' => [
@@ -67,6 +68,7 @@ class ArticleQualityIndexer extends Maintenance {
 		}
 
 		$ids = $this->getIds();
+		$this->domain = ( isset( $this->solrDomain ) ) ? $this->solrDomain : $this->domain ;
 		$batches = array_chunk( $ids, self::ARRAY_SIZE );
 		$b = count( $batches );
 		foreach( $batches as $key => $batch ) {
@@ -84,12 +86,12 @@ class ArticleQualityIndexer extends Maintenance {
 		foreach( $ids as $key => $id ) {
 			$start = microtime( true );
 			$res = $this->getArticleQuality( $id );
-			if ( isset( $res->exception ) ) {
+			if ( isset( $res->exception ) || empty( $res ) ) {
 				//if exception returned check production url
 				$res = $this->getArticleQuality( $id, true );
 			}
 			echo '[' . $this->wikiId . ']' . $batch . " out of " . $total . " current: " . $key . " " . ( microtime( true ) - $start );
-			if ( isset( $res->contents[0]->article_quality_i ) || isset( $res->contents[0]->delete ) ) {
+			if ( isset( $res->contents[0]->article_quality_i ) ) {
 				$result[] = $res->contents[0];
 			}
 			echo "\n";
@@ -127,7 +129,7 @@ class ArticleQualityIndexer extends Maintenance {
 		//get ids from solr index
 		$client = $this->getSolrConnection();
 		$select = $client->createSelect();
-		$select->setFields( [ 'pageid' ] );
+		$select->setFields( [ 'pageid', 'host' ] );
 		$select->setQuery( '+(wid:'.$this->wikiId.') AND +(ns:0) AND -(article_quality_i:[0 TO *]) AND +(words:[10 TO *])' );
 
 		$select->setRows( 1000000 );
@@ -136,6 +138,9 @@ class ArticleQualityIndexer extends Maintenance {
 		$docs = $result->getDocuments();
 		foreach( $docs as $doc ) {
 			$ids[] = $doc->pageid;
+			if ( !isset( $this->solrDomain ) ) {
+				$this->solrDomain = $doc->host;
+			}
 		}
 		return $ids;
 	}
