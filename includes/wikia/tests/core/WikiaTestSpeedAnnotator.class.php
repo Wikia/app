@@ -14,7 +14,7 @@ class WikiaTestSpeedAnnotator {
 	const REGEX_INDENTATION_FOR_METHOD = '/^([ \t]*).*function\s+%s\s*\(/m';
 
 	public static function initialize() {
-		self::$methods = [ ];
+		self::$methods = [];
 	}
 
 	public static function add( $className, $methodName, $executionTime, $annotations ) {
@@ -40,7 +40,7 @@ class WikiaTestSpeedAnnotator {
 			return;
 		}
 
-		$affectedFiles = [ ];
+		$affectedFiles = [];
 
 		foreach ( self::$methods as $methodName => $array ) {
 			if ( ( $isSlow = ( $array['executionTime'] > self::SLOW_TEST_THRESHOLD ) ) xor $array['alreadyMarkedAsSlow'] ) {
@@ -86,7 +86,7 @@ class WikiaTestSpeedAnnotator {
 
 		$fileContents = file_get_contents( $filePath );
 
-		$fileContents = self::replaceDocCommentForMethod($fileContents, $methodName, $docComment, $newDocComment);
+		$fileContents = self::replaceDocCommentForMethod($fileContents, $methodName, $newDocComment);
 
 		file_put_contents( $filePath, $fileContents );
 	}
