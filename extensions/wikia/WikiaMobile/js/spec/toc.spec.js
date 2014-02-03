@@ -104,40 +104,46 @@ describe( "toc module", function () {
 
 	it( 'should mark current active section', function(){
 		var tocHandle = window.document.getElementById( 'wkTOCHandle' ),
-			$toc = $( window.document.getElementById( 'wkTOC' ) );
+			$toc = $( window.document.getElementById( 'wkTOC' ) ),
+			$current;
 
 		$( tocHandle ).trigger( 'click' );
 
-		expect( $toc.find('.current' ).length ).toEqual( 0 );
+		$current = $toc.find('.current' );
+		expect( $current.length ).toEqual( 0 );
 
 		$( window.document ).trigger( 'section:changed', {
 			id: 'Biography'
 		} );
 
-		expect( $toc.find('.current' ).length ).toEqual( 1 );
-		expect( $toc.find('.current' ).eq( 0 ).html()  ).toContain( 'Biography' );
+		$current = $toc.find('.current' );
+		expect( $current.length ).toEqual( 1 );
+		expect( $current.eq( 0 ).html()  ).toContain( 'Biography' );
 
 		$( window.document ).trigger( 'section:changed', {
 			id: 'Season_One'
 		} );
 
-		expect( $toc.find('.current' ).length ).toEqual( 2 );
-		expect( $toc.find('.current' ).eq( 0 ).html()  ).toContain( 'Biography' );
-		expect( $toc.find('.current' ).eq( 1 ).html()  ).toEqual( 'Season One' );
+		$current = $toc.find('.current' );
+		expect( $current.length ).toEqual( 2 );
+		expect( $current.eq( 0 ).html()  ).toContain( 'Biography' );
+		expect( $current.eq( 1 ).html()  ).toEqual( 'Season One' );
 
 		$( window.document ).trigger( 'section:changed', {
 			id: 'Pilot'
 		} );
 
-		expect( $toc.find('.current' ).length ).toEqual( 2 );
-		expect( $toc.find('.current' ).eq( 0 ).html()  ).toContain( 'Biography' );
-		expect( $toc.find('.current' ).eq( 1 ).html()  ).toEqual( 'Pilot' );
+		$current = $toc.find('.current' );
+		expect( $current.length ).toEqual( 2 );
+		expect( $current.eq( 0 ).html()  ).toContain( 'Biography' );
+		expect( $current.eq( 1 ).html()  ).toEqual( 'Pilot' );
 
 		$( window.document ).trigger( 'section:changed', {
 			id: 'Biography'
 		} );
 
-		expect( $toc.find('.current' ).length ).toEqual( 1 );
-		expect( $toc.find('.current' ).eq( 0 ).html()  ).toContain( 'Biography' );
+		$current = $toc.find('.current' );
+		expect( $current.length ).toEqual( 1 );
+		expect( $current.eq( 0 ).html()  ).toContain( 'Biography' );
 	} );
 } );
