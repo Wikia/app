@@ -239,7 +239,7 @@ The original post and your summary will still appear in the wiki's history.",
 	'wall-history-username-short' => '<a href="$2">$1</a>',
 
 	'wall-history-title' => 'wall history',
-	'wall-history-who-involved-wall-title' => "Who's involved ?",
+	'wall-history-who-involved-wall-title' => "Who's involved?",
 	'wall-history-who-involved-thread-title' => "Who's involved in this thread?",
 	'wall-history-thread-created' => '$1 created by $2',
 	'wall-history-thread-removed' => '$1 removed by $2',
@@ -1159,10 +1159,24 @@ ___________________________________________<br />
 );
 
 /** Azerbaijani (azərbaycanca)
+ * @author Cekli829
  * @author Erdemaslancan
  */
 $messages['az'] = array(
+	'wall-message-remove' => 'Çıxar',
+	'wall-button-to-cancel-preview' => 'Redaktə',
+	'wall-message-delete' => 'Sil',
+	'wall-delete-error-title' => 'Xəta',
+	'wall-action-admin-confirm-ok' => 'Sil',
+	'wall-action-restore-confirm-ok' => 'Bərpa et',
+	'wall-action-rev-confirm-ok' => 'Bəli, sil',
+	'wall-notifications-markasread-all-wikis' => 'Bütün vikilər',
+	'wall-notifications-markasread-this-wiki' => 'Bu viki',
 	'wall-recentchanges-summary' => '($1)',
+	'wall-history' => 'Tarix',
+	'wall-history-action-view' => 'görünüş',
+	'mail-notification-html-greeting' => 'Salam $1,',
+	'wall-topic-edit-save' => 'Saxla',
 );
 
 /** South Azerbaijani (تورکجه)

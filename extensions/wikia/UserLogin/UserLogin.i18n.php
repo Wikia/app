@@ -190,6 +190,14 @@ $messages['qqq'] = array(
 	'wikiamobile-facebook-connect-fail' => "Shown when a user tries to log in via FBConnect but there's no matching account in our DB, please keep the message as short as possible as the space at disposal is really limited",
 );
 
+/** Aragonese (aragonés)
+ * @author Willtron
+ */
+$messages['an'] = array(
+	'userlogin-get-account' => 'No tiene garra cuenta? <a href="$1" tabindex="$2">Rechistra-te</a>',
+	'userlogin-retypenew' => 'Torne a escribir a nueva clau',
+);
+
 /** Arabic (العربية)
  * @author Achraf94
  * @author Claw eg
@@ -236,11 +244,11 @@ $messages['ar'] = array(
 	'userlogin-retypenew' => 'أعد كتابة كلمة المرور الجديدة',
 	'userlogin-password-email-subject' => 'طلب كلمة مرور منسية',
 	'userlogin-password-email-greeting' => 'مرحباً $USERNAME,',
-	'userlogin-password-email-content' => 'الرجاء استخدام كلمة المرور المؤقتة هذه لتسجيل الدخول إلى ويكيا: "$NEWPASSWORD"
-<br><br>
-إن لم تطلب كلمة مرور جديدة، فلا تقلق! حسابك آمن ومأمون. يمكنك تجاهل هذه الرسالة ومتابعة تسجيل دخولك إلى ويكيا باستخدام كلمة المرور القديمة.
-<br><br>
-أسئلة أو مخاوف؟ لا تتردد في <a href="http://community.wikia.com/wiki/Special:Contact/account-issue">الاتصال بنا</a>.', # Fuzzy
+	'userlogin-password-email-content' => 'الرجاء استخدام كلمة السر المؤقتة هذه لتسجيل الدخول إلى ويكيا: "$NEWPASSWORD"
+<br /><br />
+إن لم تطلب كلمة سر جديدة، فلا تقلق! حسابك آمن ومأمون. يمكنك تجاهل هذه الرسالة ومتابعة تسجيل دخولك إلى ويكيا باستخدام كلمة السر القديمة.
+<br /><br />
+أسئلة أو مخاوف؟ لا تتردد في <a href="http://community.wikia.com/wiki/Special:Contact/account-issue">الاتصال بنا</a>.',
 	'userlogin-password-email-signature' => 'دعم مجتمع ويكيا',
 	'userlogin-password-email-body' => 'مرحبًا $2،
 
@@ -270,6 +278,7 @@ ___________________________________________
 );
 
 /** Azerbaijani (azərbaycanca)
+ * @author Cekli829
  * @author Khan27
  */
 $messages['az'] = array(
@@ -287,6 +296,7 @@ $messages['az'] = array(
 	'userlogin-retypenew' => 'Yeni şifrəni təkrar yazın',
 	'userlogin-password-email-subject' => 'Şifrəni unutmaq sorğusu',
 	'userlogin-password-email-greeting' => 'Salam $USERNAME,',
+	'userlogin-provider-or' => 'Və ya',
 	'userlogin-provider-tooltip-facebook' => 'Facebook ilə daxil ol butonuna basın',
 	'userlogin-provider-tooltip-facebook-signup' => 'Facebook ilə qeyd ol butonuna bas',
 	'wikiamobile-sendpassword-label' => 'Yeni şifrəni göndər',

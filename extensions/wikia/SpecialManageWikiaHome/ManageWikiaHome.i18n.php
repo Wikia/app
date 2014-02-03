@@ -306,6 +306,24 @@ $messages['ar'] = array(
 	'manage-wikia-home-stats-failure' => 'لم يتم حفظ البيانات. من فضلك قم بتصحيح الأخطاء في النموذج وحاول مجددا.',
 );
 
+/** Azerbaijani (azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'manage-wikia-home-wiki-list-blocked-no' => 'Xeyr',
+	'manage-wikia-home-wiki-list-blocked-yes' => 'Bəli',
+	'manage-wikia-home-wiki-list-promoted-no' => 'Xeyr',
+	'manage-wikia-home-wiki-list-promoted-yes' => 'Bəli',
+	'manage-wikia-home-wiki-list-official-no' => 'Xeyr',
+	'manage-wikia-home-wiki-list-official-yes' => 'Bəli',
+	'manage-wikia-home-wiki-list-all-collections' => 'Bütün kolleksiyalar',
+	'manage-wikia-home-modal-button-no' => 'Xeyr',
+	'manage-wikia-home-modal-button-yes' => 'Bəli',
+	'manage-wikia-home-collections-setup-save-button' => 'Saxla',
+	'manage-wikia-home-collections-enabled-field-label' => 'Qoşulub',
+	'manage-wikia-home-collections-name-field-label' => 'Kolleksiya adı',
+);
+
 /** Bulgarian (български)
  * @author DCLXVI
  */
@@ -861,6 +879,14 @@ $messages['gl'] = array(
 	'manage-wikia-home-collection-hero-image-tooltip' => 'A imaxe debería ser $1px × $2px',
 	'manage-wikia-home-collection-sponsor-image-tooltip' => 'A imaxe debería ser $1px × $2px',
 	'manage-wikia-home-collection-add-file-button' => 'Engadir unha foto',
+	'manage-wikia-home-stats-header' => 'Estatísticas da páxina principal corporativa',
+	'manage-wikia-home-stats-text' => 'Esas estatísticas móstranse en todos os sitios corporativos sen separación por lingua.',
+	'manage-wikia-home-stats-visitors-label' => 'Visitantes mensuais',
+	'manage-wikia-home-stats-mobile-percentage-label' => '% de visitantes desde dispositivos móbiles',
+	'manage-wikia-home-stats-edits-default-label' => 'Modo de emerxencia dos cambios de hoxe',
+	'manage-wikia-home-stats-total-pages-label' => 'Modo de emerxencia do total de páxinas',
+	'manage-wikia-home-stats-success' => 'As estatísticas actualizáronse correctamente!',
+	'manage-wikia-home-stats-failure' => 'Non se gardaron os datos. Corrixa os erros do formulario e inténteo de novo.',
 );
 
 /** Indonesian (Bahasa Indonesia)
