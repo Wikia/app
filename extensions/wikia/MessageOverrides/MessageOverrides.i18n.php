@@ -5051,8 +5051,6 @@ Bitte ignoriere diese E-Mail, falls du sie nicht selbst angefordert hast. Das al
 	'philcalendar-20120223' => '*  vafsfafad|asdf
 **  DESCRIPTION: sadfadsfsafds
 **  SYSTEMS: ps3',
-	'photopop-game-loading' => 'Lade…',
-	'photopop-game-progress' => 'Bilder',
 	'plb-create-already-exists-error' => 'Ein Layout mit diesem Titel existiert bereits. Versuche es mit einem anderen Titel.',
 	'plb-create-button-draft-title' => 'Layout als Entwurf speichern',
 	'plb-create-button-draft' => 'Layout als Entwurf speichern',
@@ -17818,7 +17816,6 @@ __NOEDITSECTION__',
 	'wikiahome-footer-everywhere' => '===Wikia en tous lieux===
 *[http://www.wikia.com/Mobile Wikia mobile]
 *[http://www.wikia.com/Mobile/GameGuides App. jeux vidéo]
-*[http://www.wikia.com/Mobile/PhotoPop App. divertissement]
 *[http://api.wikia.com/wiki/Wikia_API_Wiki API]
 __NOEDITSECTION__',
 	'wikiahome-footer-wikiainc' => '===Wikia, Inc.===
@@ -21130,7 +21127,6 @@ __NOEDITSECTION__',
 	'wikiahome-footer-everywhere' => '===Wikia ovunque===
 *[http://www.wikia.com/Mobile Wikia Mobile]
 *[http://www.wikia.com/Mobile/GameGuides Video Game Apps]
-*[http://www.wikia.com/Mobile/PhotoPop Entertainment Apps]
 *[http://api.wikia.com/wiki/Wikia_API_Wiki API]
 __NOEDITSECTION__',
 	'wikiahome-footer-follow-us' => '===Seguici===
@@ -25309,7 +25305,6 @@ ___________________________________________
 	'wikiahome-footer-everywhere' => '=== 어디서나 위키아 ===
 *[http://www.wikia.com/Mobile 위키아 모바일 (영어)]
 *[http://www.wikia.com/Mobile/GameGuides 비디오 게임 앱 (영어)]
-*[http://www.wikia.com/Mobile/PhotoPop 엔터테인먼트 앱 (영어)]
 *[http://api.wikia.com/wiki/Wikia_API_Wiki API (영어)]',
 	'wikiahome-footer-follow-us' => '=== 소식 구독하기 ===
 *[http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog 위키아 블로그 (영어)]
@@ -30527,7 +30522,6 @@ __NOEDITSECTION__',
 	'wikiahome-footer-everywhere' => '===Викия повсюда===
 *[http://www.wikia.com/Mobile Мобильная Викия]
 *[http://www.wikia.com/Mobile/GameGuides Приложение для видеоигр]
-*[http://www.wikia.com/Mobile/PhotoPop Приложение для кино и сериалов]
 *[http://api.wikia.com/wiki/Wikia_API_Wiki API]
 __NOEDITSECTION__',
 	'wikiahome-footer-follow-us' => '===Следите за нами===
@@ -37294,7 +37288,6 @@ __NOEDITSECTION__',
 	'wikiahome-footer-everywhere' => '===其他===
 *[http://www.wikia.com/Mobile 维基移动]
 *[http://www.wikia.com/Mobile/GameGuides 维基游戏指南]
-*[http://www.wikia.com/Mobile/PhotoPop 维基娱乐汇]
 *[http://api.wikia.com/wiki/Wikia_API_Wiki API]
 __NOEDITSECTION__',
 	'wikiahome-footer-follow-us' => '===关注我们===

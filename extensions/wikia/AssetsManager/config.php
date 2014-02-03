@@ -924,25 +924,6 @@ $config['theme_designer_js'] = array(
 	)
 );
 
-/** PhotoPop **/
-$config['photopop'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		'//resources/wikia/modules/cookies.js',
-		'//resources/wikia/modules/querystring.js',
-		'//resources/wikia/modules/log.js',
-		'//resources/wikia/libraries/mustache/mustache.js',
-		'//resources/wikia/libraries/my.class/my.class.js',
-		'//extensions/wikia/PhotoPop/shared/lib/store.js',
-		'//extensions/wikia/PhotoPop/shared/lib/observable.js',
-		'//extensions/wikia/PhotoPop/shared/lib/reqwest.js',
-		'//extensions/wikia/PhotoPop/shared/lib/classlist.js',
-		'//extensions/wikia/PhotoPop/shared/lib/wikia.js',
-		'//extensions/wikia/PhotoPop/shared/lib/require.js',
-		'#group_tracker_js',
-	)
-);
-
 /** MessageWall **/
 $config['wall_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
