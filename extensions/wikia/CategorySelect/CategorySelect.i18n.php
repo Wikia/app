@@ -138,8 +138,13 @@ $messages['as'] = array(
  * @author Cekli829
  */
 $messages['az'] = array(
+	'categoryselect-button-add' => 'Kateqoriya əlavə et',
 	'categoryselect-button-cancel' => 'Ləğv et',
 	'categoryselect-button-save' => 'Qeyd et',
+	'categoryselect-category-add' => 'Əlavə kateqoriya...',
+	'categoryselect-category-edit' => 'Kateqoriyanı redaktə et',
+	'categoryselect-category-remove' => 'Kateqoriyanı sil',
+	'categoryselect-edit-summary' => 'Gizli kateqoriyalar',
 );
 
 /** Bavarian (Boarisch)
@@ -334,7 +339,7 @@ $messages['de-formal'] = array(
  */
 $messages['diq'] = array(
 	'categoryselect-button-cancel' => 'Bıtexelne',
-	'categoryselect-button-save' => 'Star ke',
+	'categoryselect-button-save' => 'Qeyd ke',
 );
 
 /** Greek (Ελληνικά)

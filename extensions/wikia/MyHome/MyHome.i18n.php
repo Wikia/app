@@ -305,6 +305,7 @@ $messages['az'] = array(
 	'myhome-feed-new-blog-comment-details' => 'Şərh',
 	'myhome-feed-new-article-comment-details' => 'Şərh',
 	'myhome-feed-redirect-details' => 'İstiqamətləndirmə',
+	'myhome-hot-spots-number-of-editors' => 'redaktorlar',
 	'myhome-namespace-blog' => 'Bloq',
 );
 
@@ -750,11 +751,12 @@ $messages['cy'] = array(
  * @author Kjell
  * @author LWChris
  * @author Metalhead64
+ * @author PtM
  * @author The Evil IP address
  * @author Umherirrender
  */
 $messages['de'] = array(
-	'myhome-desc' => 'Eine private Homepage für angemeldete Benutzer',
+	'myhome-desc' => 'Eine wikiaspezifische Übersichtsseite auf Aktivitäten (Edits, Blogposts, Comments, Forumposts) im Wiki.',
 	'myhome' => 'Startseite',
 	'wikiactivity' => 'Wiki-Aktivität',
 	'myhome-activity-more' => 'mehr kürzliche Änderungen',

@@ -80,13 +80,23 @@ function (
 		reset( true );
 		//show search
 		navBar.className = 'srhOpn';
-		searchForm.scrollIntoView();
 
 		//reset search
 		searchInput.value = '';
 		searchSug.innerHTML = '';
 
 		searchInput.focus();
+
+		/*
+		 Hiding topbar while searchForm open -> first line for Android,
+		 Second line for iOS to wait for the browser to show keyboard (first
+		 version will not work for iOS browsers as they will move the topbar back
+		 to the viewport
+		 */
+		searchForm.scrollIntoView();
+		setTimeout( function(){
+			searchForm.scrollIntoView();
+		}, 0 );
 	}
 
 	if (searchForm) {

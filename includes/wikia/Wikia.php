@@ -74,7 +74,6 @@ class Wikia {
 	const VARNISH_STAGING_VERIFY = 'verify';
 	const REQUIRED_CHARS = '0123456789abcdefG';
 	const COMMUNITY_WIKI_ID = 177;
-	const MAIN_CORPORATE_WIKI_ID = 80433;
 
 	private static $vars = array();
 	private static $cachedLinker;
@@ -2259,6 +2258,9 @@ class Wikia {
 
 		$response->header( sprintf( 'X-Served-By:%s', wfHostname() ) );
 		$response->header( sprintf( 'X-Backend-Response-Time:%01.3f', $elapsed ) );
+
+		$response->header( 'X-Cache: ORIGIN' );
+		$response->header( 'X-Cache-Hits: ORIGIN' );
 
 		return true;
 	}

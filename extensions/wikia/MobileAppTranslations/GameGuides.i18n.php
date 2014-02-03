@@ -48,6 +48,7 @@ $messages['en'] = array(
 );
 
 /** Message documentation (Message documentation)
+ * @author Liuxinyu970226
  * @author Shirayuki
  */
 $messages['qqq'] = array(
@@ -57,6 +58,7 @@ $messages['qqq'] = array(
 	'window-article-button-back' => '{{Identical|Back}}',
 	'window-article-menu-search-label' => '{{Identical|Search}}',
 	'window-article-menu-cancel-label' => '{{Identical|Cancel}}',
+	'error-no-connection' => 'Please do not translate "\\n"',
 );
 
 /** Arabic (العربية)
@@ -88,6 +90,8 @@ $messages['ar'] = array(
  * @author Cekli829
  */
 $messages['az'] = array(
+	'activityindicator-message' => 'Yüklənir…',
+	'window-category-load-batch' => 'Daha',
 	'window-article-button-close' => 'Bağlı',
 	'window-article-button-back' => 'Əvvəlki',
 	'window-article-menu-search-label' => 'Axtar',
@@ -917,6 +921,7 @@ $messages['vi'] = array(
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Hydra
+ * @author Liuxinyu970226
  * @author Reasno
  * @author Sam Wang
  */
@@ -934,7 +939,9 @@ $messages['zh-hans'] = array(
 	'searchview-button-back-list' => '返回到列表',
 	'searchview-button-back-article' => '返回条目',
 	'searchbar-hint' => '搜索 %s ⋯',
+	'alert-download-updated-wikis-message' => '此有效指引列表将被更新。',
 	'alert-download-updated-wikis-button-ok' => '确认',
+	'error-update-required' => '对此app的更新现已提供并且需要。',
 );
 
 /** Traditional Chinese (中文（繁體）‎)

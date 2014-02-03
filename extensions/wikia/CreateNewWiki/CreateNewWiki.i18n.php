@@ -195,6 +195,14 @@ $messages['af'] = array(
 	'cnw-badword-header' => 'Pas op!',
 );
 
+/** Aragonese (aragonés)
+ * @author Willtron
+ */
+$messages['an'] = array(
+	'cnw-call-to-signup' => 'Rechistra-te aquí',
+	'cnw-userauth-marketing-heading' => 'No tiene garra cuenta?',
+);
+
 /** Arabic (العربية)
  * @author Achraf94
  * @author Claw eg
@@ -338,6 +346,7 @@ $messages['avk'] = array(
 $messages['az'] = array(
 	'cnw-next' => 'Növbəti',
 	'cnw-back' => 'Əvvəlki',
+	'cnw-or' => 'və ya',
 	'cnw-name-wiki-wiki' => 'Viki',
 	'cnw-login' => 'Daxil ol',
 	'cnw-auth-headline' => 'Daxil ol',
@@ -3286,7 +3295,7 @@ $messages['zh-hant'] = array(
 	'cnw-userauth-headline' => '擁有帳戶嗎？',
 	'cnw-userauth-creative' => '登入',
 	'cnw-userauth-marketing-heading' => '沒有帳戶嗎？',
-	'cnw-userauth-marketing-body' => '您需要帳戶才能在wikia創建wiki。只需要一分鐘即可 註冊!', # Fuzzy
+	'cnw-userauth-marketing-body' => '您需要帳戶才能在wikia創建wiki。只需要一分鐘即可註冊!',
 	'cnw-userauth-signup-button' => '註冊',
 	'cnw-desc-headline' => '你的wiki是關於什麼？',
 	'cnw-desc-creative' => '描述您的主題',
@@ -3298,6 +3307,8 @@ $messages['zh-hant'] = array(
 	'cnw-desc-tip3-creative' => '讓人們知道他們可以編輯和增加頁面來幫助你的wiki 增長',
 	'cnw-desc-choose' => '選擇一個分類',
 	'cnw-desc-select-one' => '請選擇一項',
+	'cnw-desc-all-ages' => '所有年齡',
+	'cnw-desc-tip-all-ages' => '這個Wiki有關於孩子們感興趣的話題嗎？为了遵守美國法律，我們持續追縱直接與12歲及以下兒童相關主題的wiki。',
 	'cnw-desc-default-lang' => '你的 wiki 將使用$1',
 	'cnw-desc-change-lang' => '變更',
 	'cnw-desc-lang' => '語言',
@@ -3309,13 +3320,17 @@ $messages['zh-hant'] = array(
 	'cnw-welcome-instruction1' => '按一下下面的按鈕以開始將頁面添加到你的 wiki。',
 	'cnw-welcome-instruction2' => '你會在你的 wiki 各頁面看到此按鈕，任何時候可使用它來新加頁面。',
 	'cnw-welcome-help' => '要找尋解答、建議以及其他，可到 <a href="http://community.wikia.com">社群中心</a>.',
-	'cnw-error-general' => '創建你的 wiki 時發生錯誤，請稍後再試。', # Fuzzy
+	'cnw-error-general' => '哎呀，我們這邊出了一些問題 ！請重試，或 [[Special： Contact|聯絡我們]]以得到幫助。', # Fuzzy
 	'cnw-error-general-heading' => '抱歉',
+	'cnw-badword-header' => '哇',
 	'cnw-badword-msg' => '嗨，請不要使用這些不好的、被禁止的字詞在您的 Wiki 描述：$1',
 	'cnw-error-wiki-limit-header' => '到達 Wiki 限制',
 	'cnw-error-wiki-limit' => '您好，您受限於每天的 {{PLURAL:$1|$1 wiki creation|$1 wiki創建}} 數量。 請等待24小時之後再創建另一個wiki。.',
 	'cnw-error-blocked-header' => '帳戶被封禁',
 	'cnw-error-blocked' => '您的帳戶被 $1封禁。 封禁原因是 $2. (被封禁ID: $3)',
+	'cnw-error-anon-user-header' => '請登錄',
+	'cnw-error-anon-user' => '匿名用戶不能創建維基。請先[[Special:UserLogin|登入]]，然後再試。',
 	'cnw-error-torblock' => '不允許通過 Tor 網路創建 wiki 。',
+	'cnw-error-bot' => '我們檢測到您可能是個機器人。如果我們弄錯了，請聯繫我們描述你被錯誤地檢測為機器人，我們將協助您創建您的 wiki: [HTTP://www.wikia.com/Special:Contact/聯繫我們]',
 	'cnw-error-bot-header' => '你已被檢測到是機器人',
 );

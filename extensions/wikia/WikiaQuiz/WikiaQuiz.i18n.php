@@ -202,6 +202,7 @@ $messages['az'] = array(
 	'wikiaquiz-cancel-label' => 'İmtina',
 	'wikiaquiz-publish-label' => 'Naşir',
 	'wikiaquiz-game-finish-button' => 'Son',
+	'wikiaquiz-game-email-placeholder' => 'yourname@youremail.com',
 );
 
 /** Bulgarian (български)
