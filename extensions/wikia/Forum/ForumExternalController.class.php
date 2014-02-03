@@ -218,16 +218,14 @@ class ForumExternalController extends WallExternalController {
 			return false;
 		}
 
-		$titleLength = mb_strlen( $boardTitle );
-		if ( $titleLength > Forum::BOARD_TITLE_MAX || $titleLength < Forum::BOARD_TITLE_MIN ) {
+		$forum = new Forum();
+		if ( $forum->validateLength( $boardTitle, 'title' ) !== Forum::LEN_OK ) {
 			$this->errorfield = 'boardTitle';
 			$this->errormsg = wfMessage( 'forum-board-title-validation-length' )->escaped();
 			return false;
 		}
 
-		$descriptionLength = mb_strlen( $boardDescription );
-
-		if ( $descriptionLength > Forum::BOARD_DESC_MAX || $descriptionLength < Forum::BOARD_DESC_MIN ) {
+		if ( $forum->validateLength( $boardDescription, 'desc' ) !== Forum::LEN_OK ) {
 			$this->errorfield = 'boardDescription';
 			$this->errormsg = wfMessage( 'forum-board-description-validation-length' )->escaped();
 			return false;
