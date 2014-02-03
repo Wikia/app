@@ -12,6 +12,12 @@ class Forum extends Walls {
 	//controlling from outside if use can edit/create/delete board page
 	static $allowToEditBoard = false;
 
+	const BOARD_TITLE_MIN = 4;
+	const BOARD_TITLE_MAX = 40;
+
+	const BOARD_DESC_MIN = 4;
+	const BOARD_DESC_MAX = 255;
+
 
 	public function getBoardList($db = DB_SLAVE) {
 		$boardTitles = $this->getListTitles( $db, NS_WIKIA_FORUM_BOARD );
@@ -200,19 +206,11 @@ class Forum extends Walls {
 	 */
 
 	public function createBoard( $titletext, $body, $bot = false ) {
-		wfProfileIn( __METHOD__ );
-
-		$this->createOrEditBoard( null, $titletext, $body, $bot );
-
-		wfProfileOut( __METHOD__ );
+		return $this->createOrEditBoard( null, $titletext, $body, $bot );
 	}
 
 	public function editBoard( $id, $titletext, $body, $bot = false ) {
-		wfProfileIn( __METHOD__ );
-
-		$this->createOrEditBoard( $id, $titletext, $body, $bot );
-
-		wfProfileOut( __METHOD__ );
+		return $this->createOrEditBoard( $id, $titletext, $body, $bot );
 	}
 
 	/**
@@ -225,12 +223,18 @@ class Forum extends Walls {
 			$id = $board->getId();
 		}
 
-		if ( strlen( $titletext ) < 4 || strlen( $body ) < 4 ) {
+		if (
+			mb_strlen( $titletext ) < self::BOARD_TITLE_MIN ||
+			mb_strlen( $body ) < self::BOARD_DESC_MIN
+		) {
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
-		if ( strlen( $body ) > 255 || strlen( $titletext ) > 40 ) {
+		if (
+			mb_strlen( $body ) > self::BOARD_DESC_MAX ||
+			mb_strlen( $titletext ) > self::BOARD_TITLE_MAX
+		) {
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
@@ -265,6 +269,7 @@ class Forum extends Walls {
 		Forum::$allowToEditBoard = false;
 
 		wfProfileOut( __METHOD__ );
+		return $retval;
 	}
 
 	/**
