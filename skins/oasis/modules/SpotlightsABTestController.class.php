@@ -33,6 +33,8 @@ class SpotlightsABTestController extends WikiaController {
 					switch( $type ) {
 						case self::TYPE_OPENX_MOCK:
 							$spotlights['data'] = $spotlightsModel->getOpenXSpotlights( $vertical );
+							$spotlights['communityData'] = $spotlightsModel->getOpenXCommunityData();
+
 							$spotlights['status'] = 1;
 							break;
 						case self::TYPE_TIPSY_MOCK:
