@@ -1953,7 +1953,7 @@ class WikiaPhotoGallery extends ImageGallery {
 	 * Renders a gallery/slideshow as a media group in the WikiaMobile skin
 	 */
 	private function renderWikiaMobileMediaGroup() {
-		$media = array();
+		$media = [];
 		$result = '';
 
 		foreach( $this->mFiles as $val ) {
@@ -1969,15 +1969,14 @@ class WikiaPhotoGallery extends ImageGallery {
 		}
 
 		if ( !empty( $media ) ) {
-			$result = F::app()->sendRequest(
+			$result = F::app()->renderView(
 				'WikiaMobileMediaService',
 				'renderMediaGroup',
 				[
 					'items' => $media,
 					'parser' => $this->mParser
-				],
-				true
-			)->toString();
+				]
+			);
 		}
 
 		return $result;

@@ -525,12 +525,13 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 		}
 
 		$helper = new VideoPageToolHelper();
-		$videos = $helper->getVideosByCategory( $title );
 
 		$this->result = 'ok';
 		$this->msg = '';
-		$this->videos = $videos;
-
+		$this->thumbnails = $helper->getVideosByCategory( $title );
+		$this->total = $helper->getVideosByCategoryCount( $title );
+		$this->url = $title->escapeLocalURL();
+		$this->seeMoreLabel = wfMessage( 'videopagetool-see-more-label' )->plain();
 	}
 
 	/*

@@ -302,7 +302,6 @@ $config['oasis_nojquery_shared_js'] = array(
 		'//skins/oasis/js/CorporateFooter.js',
 		'//skins/oasis/js/buttons.js',
 		'//skins/oasis/js/WikiHeader.js',
-		'//skins/oasis/js/Interlang.js',
 		'//skins/oasis/js/WikiaNotifications.js',
 		'//skins/oasis/js/FirefoxFindFix.js',
 		'//skins/oasis/js/isTouchScreen.js',
@@ -1148,11 +1147,14 @@ $config['videohomepage_js'] = array(
 		// Latest videos / category carousels
 		'//extensions/wikia/VideoPageTool/js/homepage/models/categorycarousel.js',
 		'//extensions/wikia/VideoPageTool/js/homepage/models/categorythumb.js',
+
 		'//extensions/wikia/VideoPageTool/js/admin/collections/category.js',
 		'//extensions/wikia/VideoPageTool/js/admin/collections/categorydata.js',
-		'//extensions/wikia/VideoPageTool/js/homepage/views/carousels.js',
+
 		'//extensions/wikia/VideoPageTool/js/shared/views/carouselthumb.js',
-		'//extensions/wikia/VideoPageTool/js/shared/views/carousel.js',
+		'//extensions/wikia/VideoPageTool/js/shared/views/owlcarousel.js',
+		'//extensions/wikia/VideoPageTool/js/homepage/views/carousels.js',
+		'//extensions/wikia/VideoPageTool/js/homepage/views/carousel.js',
 
 		// Search box
 		'//extensions/wikia/VideoPageTool/js/homepage/views/search.js',
@@ -1628,23 +1630,5 @@ $config['api_docs_scss'] = array(
 	'type' => AssetsManager::TYPE_SCSS,
 	'assets' => array(
 		'//extensions/wikia/ApiDocs/css/ApiDocs.scss',
-	)
-);
-
-$config['suggestions_js'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		'//extensions/wikia/Suggestions/js/SuggestionsMatcher.js',
-		'//extensions/wikia/Suggestions/js/SuggestionsClient.js',
-		'//extensions/wikia/Suggestions/js/SuggestionsViewModel.js',
-		'//extensions/wikia/Suggestions/js/SuggestionsView.js',
-		'//extensions/wikia/Suggestions/js/Suggestions.js',
-	)
-);
-
-$config['suggestions_scss'] = array(
-	'type' => AssetsManager::TYPE_SCSS,
-	'assets' => array(
-		'//extensions/wikia/Suggestions/css/Suggestions.scss',
 	)
 );

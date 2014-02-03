@@ -43,8 +43,7 @@ class WikiaResponse {
 	/**
 	 * Cache targets
 	 */
-	const CACHE_TARGET_BROWSER = 0;
-	const CACHE_TARGET_VARNISH = 1;
+	const CACHE_DISABLED = 0;
 
 	/**
 	 * View object
@@ -276,42 +275,28 @@ class WikiaResponse {
 	}
 
 	/**
-	 * Sets correct cache headers for the browser, Varnish or both
+	 * Sets correct cache headers for the client, Varnish or both
 	 *
-	 * @param integer $expiryTime validity for the Expires header in seconds
-	 * @param integer $maxAge validity for the Cache-Control max-age header in seconds
-	 * @param array $targets an array with the targets to be affected by the headers, one (or a combination) of
-	 * WikiaResponse::CACHE_TARGET_BROWSER and WikiaResponse::CACHE_TARGET_VARNISH
+	 * Cache-Control / X-Pass-Cache-Control headers will be set
+	 *
+	 * @see http://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html
+	 *
+	 * @param integer $varnishTTL expiry time for Varnish (and for the client if $browserTTL is not provided)
+	 * @param bool|int $browserTTL expiry time for the client
 	 */
-	public function setCacheValidity( $expiryTime = null, $maxAge = null, Array $targets = array() ) {
+	public function setCacheValidity( $varnishTTL, $browserTTL = false ) {
 		$this->isCaching = true;
-		$targetBrowser = ( in_array( self::CACHE_TARGET_BROWSER, $targets ) );
-		$targetVarnish = ( in_array( self::CACHE_TARGET_VARNISH, $targets ) );
 
-		if ( !is_null( $expiryTime ) ) {
-			$expiryTime = (int) $expiryTime;
+		$this->setHeader('Cache-Control', sprintf('s-maxage=%d', $varnishTTL));
 
-			if ( $targetBrowser ) {
-				//X-Pass are sent to the browser
-				$this->setHeader( 'X-Pass-Expires', gmdate( 'D, d M Y H:i:s', time() + $expiryTime ) . ' GMT', true );
-			}
-
-			if ( $targetVarnish ) {
-				$this->setHeader( 'Expires', gmdate( 'D, d M Y H:i:s', time() + $expiryTime ) . ' GMT', true);
-			}
+		// default to the TTL for Varnish
+		if ($browserTTL === false) {
+			$browserTTL = $varnishTTL;
 		}
 
-		if ( !is_null( $maxAge ) ) {
-			$maxAge = (int) $maxAge;
-			$cacheControl = ( $maxAge > 0 ) ? "public, max-age={$maxAge}" : 'no-cache, no-store, max-age=0, must-revalidate';
-
-			if ( $targetBrowser ) {
-				$this->setHeader( 'X-Pass-Cache-Control', $cacheControl, true );
-			}
-
-			if ( $targetVarnish ) {
-				$this->setHeader( 'Cache-Control', $cacheControl, true );
-			}
+		// cache on client side
+		if ($browserTTL > 0) {
+			$this->setHeader('X-Pass-Cache-Control', sprintf('public, max-age=%d', $browserTTL));
 		}
 	}
 

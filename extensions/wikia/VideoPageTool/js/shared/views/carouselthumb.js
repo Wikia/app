@@ -9,11 +9,15 @@ define( 'shared.views.carouselthumb', [
 
 	var CarouselThumbView = Backbone.View.extend( {
 		initialize: function() {
+			if ( this.model.get( 'type' ) === 'redirect' ) {
+				this.template = Mustache.compile( templates.carouselLastThumb );
+			} else {
+				this.template = Mustache.compile( templates.carouselThumb );
+			}
 			this.render();
 		},
 		tagName: 'div',
 		className: 'carousel-item',
-		template: Mustache.compile( templates.carouselThumb ),
 		render: function() {
 			var html = this.template( this.model.toJSON() );
 			this.$el.html( html );

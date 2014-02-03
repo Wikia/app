@@ -99,6 +99,7 @@ $messages['qqq'] = array(
 	'editaccount-label-toggleadopt-allow' => 'Label for option to allow user to automatically adopting a wiki.',
 	'editaccount-label-reason' => 'Label for reason field.
 {{Identical|Reason}}',
+	'editaccount-submit-pass' => '{{Identical|Save password}}',
 	'editaccount-submit-button' => 'Text of the submission button.
 {{Identical|Save}}',
 	'editaccount-success-disable' => 'Parameters:

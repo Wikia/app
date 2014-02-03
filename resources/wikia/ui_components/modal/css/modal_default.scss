@@ -207,27 +207,23 @@ $large-modal-margin: 50px;
 }
 
 // styles required to disable scrolling behind modal
-body,
-body.background-dynamic {
-	&.with-blackout {
-		position: fixed;
-		width: 100%;
+body.with-blackout {
 
-		&.fake-scrollbar {
-			overflow-y: scroll;
-		}
+	&.background-dynamic {
+		position: static;
 
-		// TODO: temporary solution - hack to fix tooltips position on modals
-		// TODO: Bootstrap tooltip.js need to be updated and then it's possible to set tooltip container
-		.tooltip {
-			position: fixed;
-		}
-
-		// Fix for CONN-171 - Scrolling background on IE 11
-		// TODO: Remove this if/when the dynamic background is fixed
-		&.skin-oasis::after,
-		&.skin-oasis::before {
+		&:after,
+		&:before {
 			height: 100%;
 		}
+	}
+
+	.WikiaSiteWrapper {
+		position: fixed;
+		width: 100%;
+	}
+
+	.fake-scrollbar {
+		overflow-y: scroll;
 	}
 }

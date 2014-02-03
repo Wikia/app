@@ -40,7 +40,7 @@ define( 'videopageadmin.views.carousel', [
 
 			self = this;
 
-			this.pageCount = Math.ceil( this.collection.response.total / 3 );
+			this.pageCount = Math.ceil( this.collection.length / 3 );
 			this.$el.html( this.template( {
 				pages: this.pageCount,
 				total: this.collection.response.total

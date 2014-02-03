@@ -5,6 +5,8 @@
  */
 class VideoPageToolAssetFeatured extends VideoPageToolAsset {
 
+	const SECTION = 'featured';
+
 	protected $title;
 	protected $displayTitle;
 	protected $description;
@@ -13,7 +15,9 @@ class VideoPageToolAssetFeatured extends VideoPageToolAsset {
 	protected $defaultThumbOptions = [
 		'noLightbox' => true,
 		'useTemplate' => true,
+		'fluid' => true,
 		'hidePlayButton' => true,
+		'imgClass' => 'vpt-featured-thumbnail'
 	];
 
 	// required data field -- array( FormFieldName => varName )

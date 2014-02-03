@@ -160,13 +160,7 @@ class GameGuidesController extends WikiaController {
 		if( isset( $period ) && isset( $factor ) ) {
 			$cacheValidityTime = $factor * $period;
 
-			$this->response->setCacheValidity(
-				$cacheValidityTime,
-				$cacheValidityTime,
-				[
-					WikiaResponse::CACHE_TARGET_VARNISH
-				]
-			);
+			$this->response->setCacheValidity($cacheValidityTime);
 		}
 	}
 

@@ -79,6 +79,42 @@ class OoyalaAsset extends WikiaModel {
 	}
 
 	/**
+	 * Get assets by sourceid in metadata (max = 10)
+	 * @param string $sourceId
+	 * @param string $source
+	 * @param string $assetType [remote_asset]
+	 * @return array $assets
+	 */
+	public function getAssetsBySourceId( $sourceId, $source, $assetType = 'remote_asset' ) {
+		wfProfileIn( __METHOD__ );
+
+		$cond = array(
+			"asset_type='$assetType'",
+			"metadata.sourceid='$sourceId'",
+			//"metadata.source='$source'",
+		);
+
+		$params = array(
+			'limit' => 10,
+			'where' => implode( ' AND ', $cond ),
+		);
+
+		$method = 'GET';
+		$reqPath = '/v2/assets';
+
+		$url = OoyalaApiWrapper::getApi( $method, $reqPath, $params );
+		print( "Connecting to $url...\n" );
+
+		$response = self::getApiContent( $url );
+
+		$assets = empty( $response['items'] ) ? array() : $response['items'];
+
+		wfProfileOut( __METHOD__ );
+
+		return $assets;
+	}
+
+	/**
 	 * Get labels for all providers
 	 * @return array|false $providers
 	 */
@@ -174,16 +210,18 @@ class OoyalaAsset extends WikiaModel {
 			// add metadata for the asset
 			$resp = $this->addMetadata( $asset['embed_code'], $data );
 			if ( $resp ) {
-				// set thumbnail
-				$resp = $this->setThumbnailUrl( $asset['embed_code'], $data );
-				if ( $resp ) {
-					// set primary thumbnail
-					$resp = $this->setPrimaryThumbnail( $asset['embed_code'] );
-					if ( $resp ) {
-						// set labels
-						$resp = $this->setLabels( $asset['embed_code'], $data );
+				if ( empty( $data['thumbnail'] ) ) {
+					print( "NOTE: No thumbnail for $asset[name] ($asset[embed_code]).\n" );
+				} else {
+					// set thumbnail
+					$resp = $this->setThumbnail( $asset['embed_code'], $data );
+					if ( !$resp ) {
+						print( "Error: Cannot setting thumbnail for $asset[name] ($asset[embed_code]).\n" );
 					}
 				}
+
+				// always set labels
+				$resp = $this->setLabels( $asset['embed_code'], $data );
 			}
 		} else {
 			print( "ERROR: problem posting remote asset (".$status->getMessage().").\n" );
@@ -195,13 +233,30 @@ class OoyalaAsset extends WikiaModel {
 	}
 
 	/**
+	 * Set thumbnail
+	 * @param string $videoId
+	 * @param array $data
+	 * @return boolean
+	 */
+	public function setThumbnail( $videoId, $data ) {
+		// set thumbnail
+		$resp = $this->setThumbnailUrl( $videoId, $data );
+		if ( $resp ) {
+			// set primary thumbnail
+			$resp = $this->setPrimaryThumbnail( $videoId );
+		}
+
+		return $resp;
+	}
+
+	/**
 	 * Generate remote asset params
 	 * @param array $data
 	 * @return array $params
 	 */
 	protected function generateRemoteAssetParams( $data ) {
 		$params = array(
-			'name' => $data['name'],
+			'name' => $data['assetTitle'],
 			'asset_type' => 'remote_asset',
 			'description' => $data['description'],
 			'duration' => $data['duration'],
@@ -227,10 +282,6 @@ class OoyalaAsset extends WikiaModel {
 		$reqPath = '/v2/assets/'.$videoId.'/metadata';
 
 		$assetData = $this->getAssetMetadata( $metadata );
-
-		// source and sourceid are required. They are used for tracking the video.
-		$assetData['source'] = $metadata['provider'];
-		$assetData['sourceid'] = $metadata['videoId'];
 
 		$reqBody = json_encode( $assetData );
 
@@ -307,7 +358,7 @@ class OoyalaAsset extends WikiaModel {
 	 * @param array $data
 	 * @return array $metadata
 	 */
-	protected function getAssetMetadata( $data ) {
+	public function getAssetMetadata( $data ) {
 		$metadata = array();
 
 		if ( !empty( $data['category'] ) ) {
@@ -379,9 +430,17 @@ class OoyalaAsset extends WikiaModel {
 		if ( !empty( $data['pageCategories'] ) ) {
 			$metadata['pagecategories'] = $data['pageCategories'];
 		}
+		// set blank thumbnail
+		if ( empty( $data['thumbnail'] ) ) {
+			$metadata['thumbnail'] = 1;
+		}
 
 		// filter empty value
 		$this->filterEmptyValue( $metadata );
+
+		// source and sourceid are required. They are used for tracking the video.
+		$metadata['source'] = $data['provider'];
+		$metadata['sourceid'] = $data['videoId'];
 
 		return $metadata;
 	}
@@ -410,10 +469,10 @@ class OoyalaAsset extends WikiaModel {
 	 * @param string $assetType [remote_asset]
 	 * @return boolean
 	 */
-	public function isSourceIdExist( $videoId, $source, $assetType = 'remote_asset' ) {
+	public function isSourceIdExist( $sourceId, $source, $assetType = 'remote_asset' ) {
 		$cond = array(
 			"asset_type='$assetType'",
-			"metadata.sourceid='$videoId'",
+			"metadata.sourceid='$sourceId'",
 			//"metadata.source='$source'",
 		);
 

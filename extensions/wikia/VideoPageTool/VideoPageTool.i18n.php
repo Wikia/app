@@ -51,6 +51,7 @@ $messages['en'] = array(
 	'videopagetool-success-save' => 'Your changes have been saved',
 	'videopagetool-success-publish' => 'Your changes have been published',
 	'videopagetool-hint-description-maxlength' => '$1 characters max',
+	'videopagetool-see-more-label' => 'See more videos',
 
 	// Latest Video (category) form
 	'videopagetool-category-label-name' => 'Category',
@@ -127,6 +128,7 @@ $messages['qqq'] = array(
 	'videopagetool-tooltip-in-progress' => 'In Progress',
 	'videopagetool-header-dashboard' => 'Title for dashboard page',
 	'videopagetool-success-save' => 'This text appears if your changes have been saved successfully',
+	'videopagetool-see-more-label' => 'Link text to a page of all videos in the category being displayed',
 
 	// Latest Video (category) form
 	'videopagetool-category-label-name' => 'label for the form input to enter a category',

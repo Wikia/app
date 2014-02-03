@@ -68,14 +68,7 @@ class WikisApiController extends WikiaApiController {
 		foreach ( $batches as $name => $value ) {
 			$this->response->setVal( $name, $value );
 		}
-		$this->response->setCacheValidity(
-			static::CACHE_1_WEEK,
-			static::CACHE_1_WEEK,
-			array(
-				WikiaResponse::CACHE_TARGET_BROWSER,
-				WikiaResponse::CACHE_TARGET_VARNISH
-			)
-		);
+		$this->response->setCacheValidity(static::CACHE_1_WEEK);
 	}
 
 	/**
@@ -138,14 +131,7 @@ class WikisApiController extends WikiaApiController {
 		//store only for 24h to allow new wikis
 		//to appear in a reasonable amount of time in the search
 		//results
-		$this->response->setCacheValidity(
-			static::CACHE_1_DAY,
-			static::CACHE_1_DAY,
-			array(
-				WikiaResponse::CACHE_TARGET_BROWSER,
-				WikiaResponse::CACHE_TARGET_VARNISH
-			)
-		);
+		$this->response->setCacheValidity(static::CACHE_1_DAY);
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -186,15 +172,7 @@ class WikisApiController extends WikiaApiController {
 		$this->response->setVal( 'items', $items );
 
 		//set varnish caching
-		$this->response->setCacheValidity(
-			static::CACHE_1_DAY,
-			static::CACHE_1_DAY,
-			array(
-				WikiaResponse::CACHE_TARGET_BROWSER,
-				WikiaResponse::CACHE_TARGET_VARNISH
-			)
-		);
-		//die();
+		$this->response->setCacheValidity(static::CACHE_1_DAY);
 		wfProfileOut( __METHOD__ );
 	}
 

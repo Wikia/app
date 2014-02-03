@@ -1153,10 +1153,20 @@ $wgWikiaHubsFileRepoDirectory = '/images/c/corp/images';
 $wgEnableAmazonDirectTargetedBuy = true;
 
 /**
+ * @name $wgAmazonDirectTargetedBuyCountriesDefault
+ * The default value for $wgAmazonDirectTargetedBuyCountriesDefault
+ * Main steering var, change this one.
+ * Value set for community central overrides this. Value for particular wiki overrides the community
+ * US + EU (UK is GB...)
+ */
+$wgAmazonDirectTargetedBuyCountriesDefault = ['US', 'AT', 'BE', 'DK', 'FI', 'FR', 'DE', 'IE', 'IT', 'LU', 'NL', 'NO', 'PL', 'PT', 'ES', 'SE', 'CH', 'GB'];
+
+/**
  * @name $wgAmazonDirectTargetedBuyCountries
  * Enables AmazonDirectTargetedBuy integration in theese countries (given AmazonDirectTargetedBuy is also true)
+ * "Utility" var, don't change it here.
  */
-$wgAmazonDirectTargetedBuyCountries = ['US'];
+$wgAmazonDirectTargetedBuyCountries = null;
 
 /**
  * @name $wgEnableJavaScriptErrorLogging
@@ -1186,6 +1196,20 @@ $wgAdDriverUseSevenOneMediaInLanguages = ['de'];
  * If false: only the old ad tracking code (AdTracker.js) will be used.
  */
 $wgAdDriverUseNewTracking = false;
+
+/**
+ * @name $wgHighValueCountriesDefault
+ * Default list of countries defined as high-value for revenue purposes
+ * $wgHighValueCountries overrides this
+ */
+$wgHighValueCountriesDefault = array('CA'=>3, 'DE'=>3, 'DK'=>3, 'ES'=>3, 'FI'=>3, 'FR'=>3, 'GB'=>3, 'IT'=>3, 'NL'=>3, 'NO'=>3, 'SE'=>3, 'UK'=>3, 'US'=>3);
+
+/**
+ * @name $wgHighValueCountries
+ * List of countries defined as high-value for revenue purposes
+ * Value set in WikiFactory for Community acts as global value. Can be overridden per wiki.
+ */
+$wgHighValueCountries = null;
 
 /**
  * @name $wgAdVideoTargeting
@@ -1228,3 +1252,9 @@ $wgOasisResponsive = null;
 
 /** @var $wgEnableCentralizedLogging bool whether or not logging to syslog is enabled */
 $wgEnableCentralizedLogging = true;
+
+/**
+ * @name $wgDisableReportTime
+ * Turns off <!-- Served by ... in ... ms --> HTML comment
+ */
+$wgDisableReportTime = true;

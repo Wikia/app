@@ -1038,14 +1038,16 @@ $messages['ja'] = array(
 	'founderprogressbar-list-label' => '{{SITENAME}} のタスク',
 	'founderprogressbar-list-task-label' => 'タスク',
 	'founderprogressbar-list-skipped-task-label' => 'スキップしたタスク',
+	'founderprogressbar-list-bonus-task-desc' => 'ボーナスタスクをアンロックするにはタスクリストのタスクをすべて完了してください',
 	'founderprogressbar-task-call-to-action' => '課題に移動',
 	'founderprogressbar-page-add10-label' => '記事数を$1件にする',
 	'founderprogressbar-page-add10-description' => '新しいウィキがよいスタートを切れるようにするのに最も効果的な方法は、そのウィキが扱おうとしている話題に関するページを作成していくことです。1つもしくは2つ以上の段落があり、他のページへのリンクがあるページが、良いページと言えるでしょう。',
-	'founderprogressbar-themedesigner-visit-label' => '自分のテーマをカスタマイズ',
+	'founderprogressbar-themedesigner-visit-label' => 'ウィキのテーマをカスタマイズ',
 	'founderprogressbar-page-add20-label' => '記事数を$1件にする',
-	'founderprogressbar-category-edit-label' => 'カテゴリ ページを編集',
+	'founderprogressbar-category-edit-label' => 'カテゴリページを編集',
 	'founderprogressbar-gallery-add-label' => '写真ギャラリーを追加',
 	'founderprogressbar-video-add-label' => '動画を追加',
+	'founderprogressbar-bonus-photo-add10-description' => 'さらに画像を追加し、ウィキをより魅力的なものにしましょう。画像を10件追加すると、ボーナスタスクのクレジットを1つ獲得できます。',
 );
 
 /** Luxembourgish (Lëtzebuergesch)

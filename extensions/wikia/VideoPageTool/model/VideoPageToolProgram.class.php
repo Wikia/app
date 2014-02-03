@@ -174,11 +174,15 @@ class VideoPageToolProgram extends WikiaModel {
 			// If there was a specific timestamp given, look it up directly, don't cache it
 			$date = date( 'Y-m-d', $timestamp );
 			$nearestDate = '';
+			// For the edit page (time stamp given), we want to look for nearest date
+			// not including today.
+			$publishDateOperator = '<';
 		} else {
 			// If no timestamp was given, assume today and use a cache
 			$date = date( 'Y-m-d', time() );
 			$nearestKey = self::getMemcKeyNearestDate( $language );
 			$nearestDate = $app->wg->Memc->get( $nearestKey );
+			$publishDateOperator = '<=';
 		}
 
 		if ( empty($nearestDate) ) {
@@ -186,7 +190,7 @@ class VideoPageToolProgram extends WikiaModel {
 
 			$sql_conditions = array(
 				'language' => $language,
-				'publish_date <= '.$db->addQuotes( $date ),
+				"publish_date $publishDateOperator ".$db->addQuotes( $date ),
 			);
 
 			// If there's a timestamp, the request is coming from the VPT
@@ -271,12 +275,36 @@ class VideoPageToolProgram extends WikiaModel {
 
  	/**
 	 * Get program object from a row from table
-	 * @param array $row
+	 * @param ResultWrapper $row
 	 * @return VideoPageToolProgram
 	 */
 	public static function newFromRow( $row ) {
 		$program = new self();
 		$program->loadFromRow( $row );
+		return $program;
+	}
+
+	public static function newFromId( $id ) {
+		wfProfileIn( __METHOD__ );
+		$program  = new self();
+
+		$db = wfGetDB( DB_SLAVE );
+
+		$row = ( new WikiaSQL() )
+			->SELECT( '*' )
+				->FIELD( 'unix_timestamp(publish_date)' )->AS_( 'publish_date' )
+			->FROM( 'vpt_program' )
+			->WHERE( 'program_id' )->EQUAL_TO( $id )
+			->run( $db, function( $result ) {
+				/** @var ResultWrapper $result */
+				return $result->fetchObject();
+			});
+
+		if ( $row ) {
+			$program->loadFromRow( $row );
+		}
+
+		wfProfileOut( __METHOD__ );
 		return $program;
 	}
 
@@ -289,15 +317,16 @@ class VideoPageToolProgram extends WikiaModel {
 
 		$db = wfGetDB( DB_SLAVE );
 
-		$row = $db->selectRow(
-			array( 'vpt_program' ),
-			array( '*, unix_timestamp(publish_date) as publish_date' ),
-			array(
-				'language' => $this->language,
-				'publish_date' => date( 'Y-m-d', $this->publishDate ),
-			),
-			__METHOD__
-		);
+		$row = ( new WikiaSQL() )
+			->SELECT( '*' )
+				->FIELD( 'unix_timestamp(publish_date)' )->AS_( 'publish_date' )
+			->FROM( 'vpt_program' )
+			->WHERE( 'language' )->EQUAL_TO( $this->language )
+			->AND_( 'publish_date' )->EQUAL_TO( date( 'Y-m-d', $this->publishDate ) )
+			->run( $db, function( $result ) {
+				/** @var ResultWrapper $result */
+				return $result->fetchObject();
+			});
 
 		if ( $row ) {
 			$this->loadFromRow( $row );
@@ -312,7 +341,7 @@ class VideoPageToolProgram extends WikiaModel {
 
 	/**
 	 * Load data from a row from the table
-	 * @param array $row
+	 * @param ResultWrapper $row
 	 */
 	protected function loadFromRow( $row ) {
 		foreach ( static::$fields as $fieldName => $varName ) {
@@ -353,14 +382,11 @@ class VideoPageToolProgram extends WikiaModel {
 
 		$db = wfGetDB( DB_MASTER );
 
-		$programId = $db->nextSequenceValue( 'video_vpt_program_seq' );
-
 		$db->insert(
 			'vpt_program',
 			array(
-				'program_id' => $programId,
-				'language' => $this->language,
-				'publish_date' => $db->timestamp( $this->publishDate ),
+				'language'     => $this->language,
+				'publish_date' => date( 'Y-m-d', $this->publishDate ),
 				'is_published' => $this->isPublished,
 			),
 			__METHOD__,
@@ -370,6 +396,9 @@ class VideoPageToolProgram extends WikiaModel {
 		$affected = $db->affectedRows();
 		if ( $affected > 0 ) {
 			$this->setProgramId( $db->insertId() );
+		} else {
+			// If this already exists in the DB, load the row so we have the program ID
+			$this->loadFromDatabase();
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -391,16 +420,12 @@ class VideoPageToolProgram extends WikiaModel {
 
 		$db = wfGetDB( DB_MASTER );
 
-		$db->update(
-			'vpt_program',
-			array( 'is_published' => $this->isPublished,
-				   'published_by' => $this->publishedBy ),
-			array(
-				'language' => $this->language,
-				'publish_date' => $db->timestamp( $this->publishDate ),
-			),
-			__METHOD__
-		);
+		( new WikiaSQL() )
+			->UPDATE( 'vpt_program' )
+				->SET( 'is_published', $this->isPublished )
+				->SET( 'published_by', $this->publishedBy )
+			->WHERE( 'program_id' )->EQUAL_TO( $this->programId )
+			->run( $db );
 
 		$affected = $db->affectedRows();
 
@@ -448,7 +473,7 @@ class VideoPageToolProgram extends WikiaModel {
 		$this->setPublishedBy( $this->wg->User->getId() );
 
 		$db = wfGetDB( DB_MASTER );
-		$status = $this->updateToDatabase();
+		$status = $this->save();
 		$db->commit();
 
 		if ( $status->isGood() && $status->value > 0 ) {
@@ -466,7 +491,7 @@ class VideoPageToolProgram extends WikiaModel {
 		$this->setIsPublished( false );
 
 		$db = wfGetDB( DB_MASTER );
-		$status = $this->updateToDatabase();
+		$status = $this->save();
 		$db->commit();
 
 		if ( $status->isGood() && $status->value > 0 ) {
@@ -554,13 +579,24 @@ class VideoPageToolProgram extends WikiaModel {
 	}
 
 	/**
+	 * Get all assets associated with this program
+	 * @return array
+	 */
+	public function getAssets() {
+		$assets = [];
+		if ( $this->exists() ) {
+			$assets = VideoPageToolAsset::getAssets( $this->programId );
+		}
+		return $assets;
+	}
+
+	/**
 	 * Save assets by section
 	 * @param string $section
 	 * @param array $assets
-	 * @param boolean $setPublish
 	 * @return Status
 	 */
-	public function saveAssetsBySection( $section, $assets, $setPublish = false ) {
+	public function saveAssetsBySection( $section, $assets ) {
 		wfProfileIn( __METHOD__ );
 
 		if ( empty( $this->language ) || empty( $this->publishDate ) ) {
@@ -575,11 +611,7 @@ class VideoPageToolProgram extends WikiaModel {
 		$status = Status::newGood();
 
 		// save program
-		if ( !$this->exists() ) {
-			$status = $this->addToDatabase();
-		} else if ( $setPublish ) {
-			$status = $this->updateToDatabase();
-		}
+		$this->save();
 
 		if ( !$status->isGood() ) {
 			$db->rollback();
@@ -594,7 +626,7 @@ class VideoPageToolProgram extends WikiaModel {
 		foreach ( $assets as $order => $asset ) {
 			$assetObj = VideoPageToolAsset::newAsset( $this->programId, $section, $order );
 			if ( empty( $asset ) ) {
-				$status = $assetObj->remove();
+				$status = $assetObj->delete();
 			} else {
 				$assetObj->setData( $asset );
 				$assetObj->setUpdatedAt( $time );
@@ -621,6 +653,7 @@ class VideoPageToolProgram extends WikiaModel {
 		$this->saveToCache();
 
 		foreach ( $assetList as $assetObj ) {
+			/** @var VideoPageToolAsset $assetObj */
 			$assetObj->saveToCache();
 		}
 
@@ -706,4 +739,51 @@ class VideoPageToolProgram extends WikiaModel {
 		$this->wg->Memc->delete( $this->getMemcKeyCompletedSections() );
 	}
 
+	public function save() {
+		wfProfileIn( __METHOD__ );
+
+		// save program
+		if ( $this->exists() ) {
+			$status = $this->updateToDatabase();
+		} else {
+			$status = $this->addToDatabase();
+		}
+
+		
+		wfProfileOut( __METHOD__ );
+		return $status;
+	}
+
+	/**
+	 * Removes the current program from the database
+	 * @param boolean $cascade Whether or not to cascade this delete to also delete dependent assets
+	 */
+	public function delete( $cascade = false ) {
+		wfProfileIn( __METHOD__ );
+
+		if ( $this->exists() ) {
+			// Delete all dependent assets if we get the $cascade option
+			if ( $cascade ) {
+				$assets = $this->getAssets();
+				foreach ( $assets as $asset ) {
+					/** @var VideoPageToolAsset $asset */
+					$asset->delete();
+				}
+			}
+
+			$this->deleteFromDatabase();
+			$this->invalidateCache();
+		}
+
+		wfProfileOut( __METHOD__ );
+	}
+
+	protected function deleteFromDatabase() {
+		$dbw = wfGetDB(DB_MASTER);
+
+		( new WikiaSQL() )
+			->DELETE( 'vpt_program' )
+			->WHERE( 'program_id' )->EQUAL_TO( $this->programId )
+			->run( $dbw );
+	}
 }

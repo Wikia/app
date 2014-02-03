@@ -87,7 +87,7 @@ class VideoFileUploader {
 		// Some providers will sometimes return error codes when attempting
 		// to fetch a thumbnnail
 		try {
-			$upload = $this->uploadBestThumbnail();
+			$upload = $this->uploadBestThumbnail( $this->getApiWrapper()->getThumbnailUrl() );
 		} catch ( Exception $e ) {
 			Wikia::Log(__METHOD__, false, $e->getMessage());
 
@@ -167,17 +167,17 @@ class VideoFileUploader {
 
 	/**
 	 * Reset the thumbnail for this video to its original from the provider
-	 *
 	 * @param File $file
+	 * @param string $thumbnailUrl
 	 * @return FileRepoStatus
 	 */
-	public function resetThumbnail( File &$file ) {
+	public function resetThumbnail( File &$file, $thumbnailUrl ) {
 		wfProfileIn(__METHOD__);
 
 		// Some providers will sometimes return error codes when attempting
 		// to fetch a thumbnail
 		try {
-			$upload = $this->uploadBestThumbnail();
+			$upload = $this->uploadBestThumbnail( $thumbnailUrl );
 		} catch ( Exception $e ) {
 			return Status::newFatal($e->getMessage());
 		}
@@ -192,17 +192,16 @@ class VideoFileUploader {
 	/**
 	 * Try to upload the best thumbnail for this file, starting with the one the provider
 	 * gives and falling back to the default thumb
-	 *
+	 * @param string $thumbnailUrl
 	 * @return UploadFromUrl
 	 */
-	protected function uploadBestThumbnail() {
+	protected function uploadBestThumbnail( $thumbnailUrl ) {
 		wfProfileIn( __METHOD__ );
 
 		// disable proxy
 		F::app()->wg->DisableProxy = true;
-
 		// Try to upload the thumbnail for this video
-		$upload = $this->uploadThumbnailFromUrl( $this->getApiWrapper()->getThumbnailUrl() );
+		$upload = $this->uploadThumbnailFromUrl( $thumbnailUrl );
 
 		// If uploading the actual thumbnail fails, load a default thumbnail
 		if ( empty($upload) ) {
@@ -288,7 +287,7 @@ class VideoFileUploader {
 
 	}
 
-	protected function getApiWrapper( ) {
+	public function getApiWrapper( ) {
 		wfProfileIn( __METHOD__ );
 		if ( !empty( $this->oApiWrapper ) ) {
 			wfProfileOut( __METHOD__ );
