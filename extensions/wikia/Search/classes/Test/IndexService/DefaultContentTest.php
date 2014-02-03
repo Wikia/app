@@ -276,6 +276,35 @@ class DefaultContentTest extends BaseTest
 				$get->invoke( $service, $response )
 		);
 	}
+
+	public function test_PLA_580() {
+		// tests for PLA-580: It's possible to break our indexer by putting special characters in article.
+		$service = $this->getMock( 'Wikia\Search\IndexService\DefaultContent', array( 'getService', 'prepValuesFromHtml' ) );
+		$mwService = $this->getMock( 'Wikia\Search\MediaWikiService', array( 'getGlobal' ) );
+		$service
+		    ->expects( $this->any() )
+		    ->method ( 'getService' )
+		    ->will   ( $this->returnValue( $mwService ) )
+		;
+		$mwService
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'getGlobal' )
+		    ->will   ( $this->returnValue( false ) )
+		;
+		
+		$prep = new ReflectionMethod( 'Wikia\Search\IndexService\DefaultContent', 'prepValuesFromHtml' );
+		$prep->setAccessible( true );
+
+		$expected = [ 
+			'nolang_txt' => "tam foo bar",
+			'words' => 3,
+			'html' => "tam foo bar"
+    ];
+		
+		$this->assertEquals($expected, $prep->invoke($service, "<p>tam foo bar</p>"));
+		$this->assertEquals($expected, $prep->invoke($service, "&lt;tam foo bar"));
+		$this->assertEquals($expected, $prep->invoke($service, "&gt;tam foo bar"));
+	}
 	
 	/**
 	 * @covers Wikia\Search\IndexService\DefaultContent::getOutboundLinks
@@ -409,7 +438,7 @@ ENDIT;
 		
 		$result = $prep->invoke( $service, $html );
 		$this->assertEquals(
-				preg_replace( '/\s+/', ' ', $html ) . ' ',
+				preg_replace( '/\s+/', ' ', $html ),
 				$result['html_en']
 		);
 		$this->assertGreaterThanOrEqual(

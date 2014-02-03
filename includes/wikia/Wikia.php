@@ -2259,6 +2259,9 @@ class Wikia {
 		$response->header( sprintf( 'X-Served-By:%s', wfHostname() ) );
 		$response->header( sprintf( 'X-Backend-Response-Time:%01.3f', $elapsed ) );
 
+		$response->header( 'X-Cache: ORIGIN' );
+		$response->header( 'X-Cache-Hits: ORIGIN' );
+
 		return true;
 	}
 }

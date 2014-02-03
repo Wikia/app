@@ -110,7 +110,7 @@ $messages['ar'] = array(
 	'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' => 'ابحث عن أي شيء، أو أدخل عنوان URL',
 	'wikia-visualeditor-dialog-wikiamediainsert-preview-alert' => 'المعاينة قريبًا!',
 	'wikia-visualeditor-help-label' => 'مشكلات معروفة',
-	'wikia-visualeditor-help-link' => 'مساعدة:المحرر المرئي', # Fuzzy
+	'wikia-visualeditor-help-link' => 'Help:VisualEditor',
 	'wikia-visualeditor-beta-warning' => 'هذا هو تكامل محرر ويكيا المرئي التجريبي. توجد بعد الحواف الخشنة، ولكننا نأمل أن تعجبك!',
 	'wikia-visualeditor-wikitext-warning' => 'أنت تستخدم المحرر المرئي التجريبي - نص ويكي لا يعمل هنا. اختر "وضع المصدر" من قائمة "المزيد" لاستخدام نص ويكي.',
 	'wikia-visualeditor-aliennode-tooltip' => 'عذرًا، هذا العنصر يمكن تحريره فقط في المحرر التقليدي حاليًا.',
@@ -122,12 +122,20 @@ $messages['ar'] = array(
 	'wikia-visualeditor-dialogbutton-wikiasourcemode-tooltip' => 'محرر المصدر',
 	'wikia-visualeditor-dialog-wikiasourcemode-title' => 'محرر المصدر',
 	'wikia-visualeditor-dialog-wikiasourcemode-apply-button' => 'طبق التعديلات',
-	'wikia-visualeditor-dialog-wikiasourcemode-help-link' => 'مساعدة:نص ويكي', # Fuzzy
+	'wikia-visualeditor-dialog-wikiasourcemode-help-link' => 'Help:Wikitext',
 	'wikia-visualeditor-dialog-wikiasourcemode-help-text' => 'مساعدة بالتنسيق',
 	'wikia-visualeditor-notification-media-must-be-logged-in' => 'يجب أن تسجل دخولك لإضافة الصور وملفات الفيديو.',
 	'wikia-visualeditor-notification-media-only-premium-videos-allowed' => 'هذه الويكي تسمح فقط بمحتوى مرخص من <a href="http://video.wikia.com" target="_blank">مكتبة مقاطع ويكيا المصورة</a> للإضاف. رجاءً اتجه إلى <a href="http://video.wikia.com" target="_blank">video.wikia.com</a> للبحث عن مقاطع مصورة.',
 	'wikia-visualeditor-notification-media-query-failed' => 'عذرًا، لم نتمكن من إيجاد صورة مدعومة أو فيديو مدعوم في عنوان URL ذاك.',
 	'wikia-visualeditor-notification-media-permission-denied' => 'الإذن مرفوض.',
+);
+
+/** Azerbaijani (azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'wikia-visualeditor-dialog-transclusion-title' => 'Şablon',
+	'wikia-visualeditor-dialogbutton-transclusion-tooltip' => 'Şablon',
 );
 
 /** Breton (brezhoneg)
@@ -384,6 +392,7 @@ $messages['fr'] = array(
 );
 
 /** Galician (galego)
+ * @author Elisardojm
  * @author Toliño
  * @author Vivaelcelta
  */
@@ -396,11 +405,15 @@ $messages['gl'] = array(
 	'wikia-visualeditor-dialog-wikiamediainsert-item-remove-button' => 'Eliminar este elemento',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-label' => 'Engadir novas imaxes a esta comunidade',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-button' => 'Subir',
+	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-size' => 'Vaites! Esa imaxe é grande de máis. $1MB é o máximo que podemos aceptar, capitán!',
+	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-filetype' => 'Vaites! Só admitimos $1',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error' => 'Erro ao subir o ficheiro',
 	'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' => 'Busca algo ou escribe un enderezo URL',
 	'wikia-visualeditor-dialog-wikiamediainsert-preview-alert' => 'Axiña estará dispoñible a vista previa!',
 	'wikia-visualeditor-help-label' => 'Problemas coñecidos',
 	'wikia-visualeditor-help-link' => 'Help:Editor visual',
+	'wikia-visualeditor-beta-warning' => 'Esta é a integración en fase beta do editor visual. Quedan algunhas cousas por pulir, pero esperamos que lle guste!',
+	'wikia-visualeditor-wikitext-warning' => 'Está usando o editor visual en fase beta; o código wiki non funciona aquí. Seleccione o "Modo fonte" no menú "Máis" para usalo.',
 	'wikia-visualeditor-aliennode-tooltip' => 'Sentímolo, polo de agora este elemento só se pode editar no editor clásico.',
 	'wikia-visualeditor-dialog-transclusion-title' => 'Modelo',
 	'wikia-visualeditor-dialogbutton-transclusion-tooltip' => 'Modelo',
@@ -411,6 +424,11 @@ $messages['gl'] = array(
 	'wikia-visualeditor-dialog-wikiasourcemode-title' => 'Editor de código fonte',
 	'wikia-visualeditor-dialog-wikiasourcemode-apply-button' => 'Aplicar os cambios',
 	'wikia-visualeditor-dialog-wikiasourcemode-help-link' => 'Help:Texto wiki',
+	'wikia-visualeditor-dialog-wikiasourcemode-help-text' => 'Axuda co formato',
+	'wikia-visualeditor-notification-media-must-be-logged-in' => 'Debe acceder ao sistema para engadir imaxes e vídeos.',
+	'wikia-visualeditor-notification-media-only-premium-videos-allowed' => 'Este wiki só permite a adición de contidos con licenza da <a href="http://video.wikia.com" target="_blank">biblioteca de vídeos do Wikia</a>. Vaia a <a href="http://video.wikia.com" target="_blank">video.wikia.com</a> para atopar vídeos.',
+	'wikia-visualeditor-notification-media-query-failed' => 'Sentímolo, non atopamos unha imaxe ou vídeo admitido nese enderezo URL.',
+	'wikia-visualeditor-notification-media-permission-denied' => 'Permisos rexeitados',
 );
 
 /** Armenian (Հայերեն)

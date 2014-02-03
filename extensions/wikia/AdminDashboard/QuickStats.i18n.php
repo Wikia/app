@@ -415,7 +415,7 @@ $messages['es'] = array(
 	'quickstats-header-likes' => 'Me gusta',
 	'quickstats-totals-label' => 'Total',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Ver más estadísticas]]',
-	'quickstats-number-shortening' => '$1m',
+	'quickstats-number-shortening' => '$1K',
 	'quickstats-number-shortening-millions' => '$1M',
 	'quickstats-number-shortening-billions' => '$1B',
 );
@@ -1155,6 +1155,7 @@ $messages['si'] = array(
 );
 
 /** Slovenian (slovenščina)
+ * @author Dbc334
  * @author Mitja i
  */
 $messages['sl'] = array(
@@ -1165,7 +1166,10 @@ $messages['sl'] = array(
 	'quickstats-header-photos' => 'Fotografije',
 	'quickstats-header-likes' => 'Všečki',
 	'quickstats-totals-label' => 'Skupaj',
-	'quickstats-see-more-stats-link' => '[[Special: WikiStats|Glej več statistik]]', # Fuzzy
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Oglejte si več statistik]]',
+	'quickstats-number-shortening' => '$1 tis.',
+	'quickstats-number-shortening-millions' => '$1 mio.',
+	'quickstats-number-shortening-billions' => '$1 mia.',
 );
 
 /** Somali (Soomaaliga)
@@ -1189,16 +1193,18 @@ $messages['so'] = array(
  * @author Rancher
  */
 $messages['sr-ec'] = array(
-	'quickstats-header-label' => 'Статистике накратко',
+	'quickstats-header-label' => 'Статистика укратко',
 	'quickstats-header-date' => 'Датум',
 	'quickstats-header-views' => 'Прегледи',
 	'quickstats-header-edits' => 'Измене',
-	'quickstats-header-photos' => 'Слике',
+	'quickstats-header-photos' => 'Фотографије',
 	'quickstats-header-likes' => 'Свиђања',
 	'quickstats-date-format' => 'd M',
 	'quickstats-totals-label' => 'Укупно',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Више статистика]]',
-	'quickstats-number-shortening' => '$1 K',
+	'quickstats-number-shortening' => '$1 хиљ.',
+	'quickstats-number-shortening-millions' => '$1 мил.',
+	'quickstats-number-shortening-billions' => '$1 млрд.',
 );
 
 /** Swedish (svenska)
@@ -1433,6 +1439,8 @@ $messages['zh-hant'] = array(
 	'quickstats-totals-label' => '總計',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|查看更多統計]]',
 	'quickstats-number-shortening' => '$1K',
+	'quickstats-number-shortening-millions' => '一百萬', # Fuzzy
+	'quickstats-number-shortening-billions' => '10億', # Fuzzy
 );
 
 /** Chinese (Hong Kong) (中文（香港）‎)

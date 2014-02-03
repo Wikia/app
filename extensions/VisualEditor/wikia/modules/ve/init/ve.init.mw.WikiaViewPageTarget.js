@@ -62,3 +62,9 @@ ve.init.mw.WikiaViewPageTarget.prototype.showPageContent = function () {
 		.show()
 		.fadeTo( 0, 1 );
 };
+
+ve.init.mw.WikiaViewPageTarget.prototype.onToolbarCancelButtonClick = function () {
+	mw.hook( 've.cancelButton' ).fire();
+	ve.init.mw.ViewPageTarget.prototype.onToolbarCancelButtonClick.call( this );
+};
+

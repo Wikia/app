@@ -38,6 +38,14 @@ $messages['ar'] = array(
 	'wikiastyleguide-dropdown-selected-items-list' => '$1 و $2 إضافي',
 );
 
+/** Azerbaijani (azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'wikiastyleguide-dropdown-all' => 'Bütün',
+	'wikiastyleguide-dropdown-select-all' => 'Hamısını seç',
+);
+
 /** Bengali (বাংলা)
  * @author Aftab1995
  */

@@ -447,6 +447,16 @@ $messages['sl'] = array(
 	'adengine-exitstitial-button' => 'Preskočite ta oglas',
 );
 
+/** Serbian (Cyrillic script) (српски (ћирилица)‎)
+ * @author Rancher
+ */
+$messages['sr-ec'] = array(
+	'adengine-exitstitial-title-template' => 'Напуштате $1…',
+	'adengine-exitstitial-redirecting' => 'Прегледач ће вас за који секунд одвести на тражену страницу.',
+	'adengine-exitstitial-go-back' => 'Желите да се вратите назад?',
+	'adengine-exitstitial-button' => 'Прескочи оглас',
+);
+
 /** Swedish (svenska)
  * @author Tobulos1
  */

@@ -41,13 +41,14 @@ $messages['af'] = array(
 /** Arabic (العربية)
  * @author Achraf94
  * @author Aiman titi
+ * @author Claw eg
  */
 $messages['ar'] = array(
-	'wva-success' => 'صفحة الفيديو [[:$1]] تم إضافتها بنجاح', # Fuzzy
-	'wva-success-replaced' => 'صفحة الفيديو [[:$1]] تم تعويضها بنجاح', # Fuzzy
+	'wva-success' => 'أضيفت صفحة الفيديو [[:$1]] بنجاح',
+	'wva-success-replaced' => 'تم استبدال صفحة الفيديو [[:$1]] بنجاح',
 	'wva-failure' => 'يرجى تزويد المعلومات الصحيحة',
-	'wva-name' => 'أدخل الإسم:', # Fuzzy
-	'wva-url' => 'أدخل العنوان الإلكتروني للفيديو (URL):', # Fuzzy
+	'wva-name' => 'اسم الفيديو:',
+	'wva-url' => 'عنوان URL الفيديو:',
 	'wva-add' => 'أضف',
 	'wva-title' => 'إضافة فيديو بسرعة من العنوان (URL)',
 	'wva-notlogged' => 'يجب أن تكون مسجلا إذا أردت إضافة فيديو',
@@ -60,6 +61,7 @@ $messages['ar'] = array(
  * @author Cekli829
  */
 $messages['az'] = array(
+	'wva-name' => 'Video adı:',
 	'wva-add' => 'Əlavə et',
 );
 
@@ -69,8 +71,8 @@ $messages['az'] = array(
  * @author Red Winged Duck
  */
 $messages['be-tarask'] = array(
-	'wva-success' => 'Старонка відэа $1 пасьпяхова дададзеная.', # Fuzzy
-	'wva-success-replaced' => 'Старонка відэа $1 пасьпяхова замененая.', # Fuzzy
+	'wva-success' => 'Старонка відэа [[:$1]] пасьпяхова дададзеная.',
+	'wva-success-replaced' => 'Старонка відэа [[:$1]] пасьпяхова замененая.',
 	'wva-failure' => 'Калі ласка, падайце слушныя парамэтры.',
 	'wva-name' => 'Назва відэа:',
 	'wva-url' => 'URL-адрас відэа:',

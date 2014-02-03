@@ -193,7 +193,9 @@ $messages['it'] = array(
  * @author Tommy6
  */
 $messages['ja'] = array(
+	'linksuggest-desc' => '編集画面で編集者に対しリンクの提案を行う',
 	'tog-disablelinksuggest' => 'ソースモードでの編集時のリンク補完を使わない',
+	'tog-redirected-from' => '&ndash; $1からのリダイレクト',
 );
 
 /** Khmer (ភាសាខ្មែរ)

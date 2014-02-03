@@ -188,6 +188,7 @@ $messages['az'] = array(
 	'lookupcontribswikititle' => 'Başlıq',
 	'lookupcontribsnext' => 'növbəti',
 	'lookupcontribsfinal' => 'son',
+	'lookupcontribsall' => 'bütün',
 );
 
 /** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)

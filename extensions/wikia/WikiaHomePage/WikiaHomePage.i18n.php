@@ -102,7 +102,6 @@ __NOEDITSECTION__',
 	'wikiahome-footer-everywhere' => '===Wikia Everywhere===
 *[http://www.wikia.com/Mobile Wikia Mobile]
 *[http://www.wikia.com/Mobile/GameGuides Video Game Apps]
-*[http://www.wikia.com/Mobile/PhotoPop Entertainment Apps]
 *[http://api.wikia.com/wiki/Wikia_API_Wiki API]
 __NOEDITSECTION__',
 	'wikiahome-footer-partner' => "===Partner===
@@ -342,7 +341,6 @@ __NOEDITSECTION__',
 	'wikiahome-footer-everywhere' => '===Wikia para todos===
 *[http://es.wikia.com/Móviles Wikia Móviles]
 *[http://es.wikia.com/Móviles/GameGuide Ap. Videojuegos]
-*[http://es.wikia.com/Móbiles/PhotoPop Ap. Entretenimiento]
 *[http://api.wikia.com/wiki/Wikia_API_Wiki API]
 __NOEDITSECTION__',
 	'wikiahome-footer-partner' => "===Publicidad===
@@ -450,7 +448,6 @@ __NOEDITSECTION__',
 	'wikiahome-footer-everywhere' => '===Wikia en tous lieux===
 *[http://www.wikia.com/Mobile Wikia Mobile]
 *[http://www.wikia.com/Mobile/GameGuides Video Game Apps]
-*[http://www.wikia.com/Mobile/PhotoPop Entertainment Apps]
 *[http://api.wikia.com/wiki/Wikia_API_Wiki API]
 __NOEDITSECTION__',
 	'wikiahome-footer-partner' => "===Partenaire===
@@ -571,7 +568,6 @@ __NOEDITSECTION__',
 	'wikiahome-footer-everywhere' => '===Wikia wszędzie===
 *[http://www.wikia.com/Mobile Wikia Mobilna]
 *[http://pl.wikia.com/Aplikacje_mobilne/GameGuides Video Game Apps]
-*[http://www.wikia.com/Mobile/PhotoPop Entertainment Apps]
 *[http://api.wikia.com/wiki/Wikia_API_Wiki API]
 __NOEDITSECTION__',
 	'wikiahome-footer-partner' => "===Współpraca===
@@ -687,7 +683,6 @@ __NOEDITSECTION__',
 	'wikiahome-footer-everywhere' => '===どこでもウィキア===
 *[http://www.wikia.com/Mobile ウィキアモバイル]
 *[http://www.wikia.com/Mobile/GameGuides ゲームアプリ]
-*[http://www.wikia.com/Mobile/PhotoPop エンターテイメントアプリ]
 *[http://api.wikia.com/wiki/Wikia_API_Wiki API]
 __NOEDITSECTION__',
 	'wikiahome-footer-partner' => "===パートナー===

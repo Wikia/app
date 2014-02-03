@@ -223,6 +223,15 @@ $messages['ast'] = array(
 	'lvs-button-no' => 'Non',
 );
 
+/** Azerbaijani (azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'lvs-history-button-text' => 'Tarix',
+	'lvs-button-yes' => 'Bəli',
+	'lvs-button-no' => 'Xeyr',
+);
+
 /** Bulgarian (български)
  * @author DCLXVI
  */
