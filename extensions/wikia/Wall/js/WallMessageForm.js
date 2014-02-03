@@ -82,13 +82,17 @@
 		},
 
 		loginBeforeSubmit: function( action ) {
+
+			var UserLoginModal = window.UserLoginModal;
+
 			if( window.wgDisableAnonymousEditing  && !window.wgUserName ) {
-				UserLoginModal.show({
-					callback: this.proxy(function() {
+				UserLoginModal.show( {
+					origin: 'wall-and-forum',
+					callback: this.proxy( function() {
 						action( false );
 						return true;
-					})
-				});
+					} )
+				} );
 			} else {
 				action( true );
 				return true;

@@ -137,6 +137,8 @@ $config['oasis_noads_extensions_js'] = array(
 		// Related Forum Discussion is on all article pages
 		'//extensions/wikia/Forum/js/RelatedForumDiscussion.js',
 		'//extensions/wikia/VideoEmbedTool/js/VET_Loader.js',
+		// Survey for first time editors
+		'//extensions/wikia/EditorSurvey/js/EditorSurvey.js',
 	)
 );
 
@@ -919,25 +921,6 @@ $config['theme_designer_js'] = array(
 		'//resources/wikia/libraries/bootstrap/popover.js',
 		'//extensions/wikia/JSMessages/js/JSMessages.js',
 		'//extensions/wikia/ThemeDesigner/js/ThemeDesigner.js'
-	)
-);
-
-/** PhotoPop **/
-$config['photopop'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		'//resources/wikia/modules/cookies.js',
-		'//resources/wikia/modules/querystring.js',
-		'//resources/wikia/modules/log.js',
-		'//resources/wikia/libraries/mustache/mustache.js',
-		'//resources/wikia/libraries/my.class/my.class.js',
-		'//extensions/wikia/PhotoPop/shared/lib/store.js',
-		'//extensions/wikia/PhotoPop/shared/lib/observable.js',
-		'//extensions/wikia/PhotoPop/shared/lib/reqwest.js',
-		'//extensions/wikia/PhotoPop/shared/lib/classlist.js',
-		'//extensions/wikia/PhotoPop/shared/lib/wikia.js',
-		'//extensions/wikia/PhotoPop/shared/lib/require.js',
-		'#group_tracker_js',
 	)
 );
 

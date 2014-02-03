@@ -72,6 +72,13 @@ $messages['ar'] = array(
 	'dump-database-last-unknown' => 'غير معروف',
 );
 
+/** Azerbaijani (azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'dump-database-last-unknown' => 'Naməlum',
+);
+
 /** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
  * @author EugeneZelenko
  * @author Jim-by

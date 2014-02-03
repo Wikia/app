@@ -61,6 +61,7 @@ $messages['ar'] = array(
  * @author Cekli829
  */
 $messages['az'] = array(
+	'main-tab-search' => 'Axtar',
 	'tab-discover-loading-message' => 'Yüklənir…',
 	'tab-discover-no-network-dialog-close-button' => 'OK',
 	'tab-search-loading-message' => 'Axtarılır...',

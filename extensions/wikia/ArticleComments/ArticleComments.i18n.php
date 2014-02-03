@@ -99,7 +99,8 @@ Parameters:
 	'article-comments-anonymous' => 'Anonymous users are logged out / un-authenticated users.
 {{Identical|Anonymous user}}',
 	'article-comments-comments' => '{{Identical|Comment}}',
-	'article-comments-post' => 'This is the text of a submit button to post a new article comment.',
+	'article-comments-post' => 'This is the text of a submit button to post a new article comment.
+{{Identical|Post comment}}',
 	'article-comments-cancel' => 'Cancel/stop editing an article comment.
 {{Identical|Cancel}}',
 	'article-comments-delete' => 'Click this button to delete the comment. It will take you to a page where you can confirm the deletion.
@@ -124,7 +125,8 @@ Parameters:
 	'wikiamobile-article-comments-post-reply' => 'Label on a button to post a reply to comment',
 	'wikiamobile-article-comments-post' => 'Label on a button to post a comment.
 {{Identical|Post}}',
-	'wikiamobile-article-comments-placeholder' => 'This is an input placeholder displayed when no text is in given input',
+	'wikiamobile-article-comments-placeholder' => 'This is an input placeholder displayed when no text is in given input.
+{{Identical|Post comment}}',
 	'wikiamobile-article-comments-login-post' => 'Message shown to a user if he tries to post a comment on a wiki where login is obligatory to edit.
 This is shown in small pop up message in red.',
 	'wikiamobile-article-comments-post-fail' => 'Message shown to a user when saving his comment failed.
@@ -160,6 +162,7 @@ $messages['ang'] = array(
 
 /** Arabic (العربية)
  * @author Achraf94
+ * @author Claw eg
  * @author DRIHEM
  * @author Meno25
  * @author OsamaK
@@ -201,10 +204,10 @@ $messages['ar'] = array(
 	'wikiamobile-article-comments-view' => 'عرض الردود',
 	'wikiamobile-article-comments-replies' => 'الردود',
 	'wikiamobile-article-comments-post-reply' => 'نشر الرد',
-	'wikiamobile-article-comments-post' => 'عرض',
+	'wikiamobile-article-comments-post' => 'إرسال',
 	'wikiamobile-article-comments-placeholder' => 'أرسل تعليقا',
 	'wikiamobile-article-comments-login-post' => 'الرجاء تسجيل الدخول لإضافة تعليق.',
-	'wikiamobile-article-comments-post-fail' => 'فشل في حفظ التعليق, الرجاء المحاولة مرة أخرى لاحقاً',
+	'wikiamobile-article-comments-post-fail' => 'فشل في حفظ التعليق، الرجاء المحاولة مرة أخرى لاحقاً',
 	'enotif_subject_article_comment' => '$PAGEEDITOR قام بالتعليق على "$PAGETITLE" على {{SITENAME}}',
 	'enotif_body_article_comment' => 'مرحبا $WATCHINGUSERNAME،
 
@@ -3479,6 +3482,7 @@ $messages['tly'] = array(
  * @author 82-145
  * @author Gizemb
  * @author Incelemeelemani
+ * @author Trncmvsr
  */
 $messages['tr'] = array(
 	'article-comments-file-page' => "<a href='$3'>$4</a> sayfasında <a href='$1'>$2 tarafından</a> yorum yapıldı",
@@ -3508,9 +3512,15 @@ $messages['tr'] = array(
 	'article-comments-next-page' => 'Sonraki',
 	'article-comments-page-spacer' => '&#160...&#160',
 	'article-comments-delete-reason' => 'Ana makale / ana yorum silinmiş.',
+	'wikiamobile-article-comments-header' => 'Yorumlar',
+	'wikiamobile-article-comments-more' => 'Daha fazla yükle',
+	'wikiamobile-article-comments-prev' => 'Öncekileri yükle',
 	'wikiamobile-article-comments-none' => 'Yorum yok',
+	'wikiamobile-article-comments-view' => 'Yanıtları görüntüle',
 	'wikiamobile-article-comments-replies' => 'cevaplar',
 	'wikiamobile-article-comments-post-reply' => 'Cevap gönder',
+	'wikiamobile-article-comments-post' => 'Yazı',
+	'wikiamobile-article-comments-placeholder' => 'Yorum gönder',
 	'wikiamobile-article-comments-login-post' => 'Yorum yazmak için lütfen giriş yapınız.',
 	'wikiamobile-article-comments-post-fail' => 'Yorum kaydetme başarısız oldu, lütfen daha sonra yeniden deneyin',
 );
@@ -3820,6 +3830,8 @@ ___________________________________________
  * @author Ffaarr
  */
 $messages['zh-hant'] = array(
+	'article-comments-file-page' => "<a href='$1'>評論由 $2</a> 於 <a href='$3'>$4</a> 發表",
+	'article-blog-comments-file-page' => "在<a href='$5'>$6</a>的部落格上的文章<a href='$3'>$4</a>有<a href='$1'>來自$2的評論</a>。",
 	'article-comments-anonymous' => '匿名用戶',
 	'article-comments-comments' => '評論 ( $1 )',
 	'article-comments-post' => '發表評論',
@@ -3834,7 +3846,7 @@ $messages['zh-hant'] = array(
 	'article-comments-fblogin' => '請 <a href="$1" rel="nofollow">登入並連接Facebook</a> 來在這個wiki發表評論',
 	'article-comments-fbconnect' => '請 <a href="$1">把這個帳號與Facebook連結</a> 來評論',
 	'article-comments-rc-blog-comment' => '部落格評論 (<span class="plainlinks">[$1 $2]</span>)',
-	'article-comments-rc-blog-comments' => '部落格評論 （[[ $1 ]])', # Fuzzy
+	'article-comments-rc-blog-comments' => '部落格評論([[$1]])',
 	'article-comments-login' => '請 <a href="$1">登入</a> 以在此wiki上張貼評論。',
 	'article-comments-toc-item' => '評論',
 	'article-comments-comment-cannot-add' => '您不能在這篇文章中增加評論。',
@@ -3844,6 +3856,7 @@ $messages['zh-hant'] = array(
 	'article-comments-prev-page' => '前一筆',
 	'article-comments-next-page' => '下一頁',
 	'article-comments-page-spacer' => '&#160...&#160',
+	'article-comments-delete-reason' => '原條目/原評論已被删除。',
 	'article-comments-empty-comment' => "你不能發佈空的評論。<a href='$1'>要刪除它嗎？</a>",
 	'wikiamobile-article-comments-header' => '評論',
 	'wikiamobile-article-comments-more' => '載入更多',
@@ -3857,6 +3870,31 @@ $messages['zh-hant'] = array(
 	'wikiamobile-article-comments-login-post' => '請登錄後發表評論。',
 	'wikiamobile-article-comments-post-fail' => '評論儲存失敗，請稍後再試',
 	'enotif_subject_article_comment' => '$PAGEEDITOR 在 {{SITENAME}}的文章 "$PAGETITLE"中發表評論',
+	'enotif_body_article_comment' => 'Hi~,$WATCHINGUSERNAME，
+
+{{SITENAME}}上的$PAGETITLE有了新評論哦。
+點此連結查看評論：$PAGETITLE_URL#WikiaArticleComments
+
+Wikia社區支援
+
+___________________________________________
+* 在社區中心尋找幫助和建議: http://community.wikia.com
+* 覺得訊息太多？您可以在這裡退訂或變更電子信箱設定：http://community.wikia.com/Special:Preferences',
+	'enotif_body_article_comment-HTML' => '<p>Hi，$WATCHINGUSERNAME,
+<br /><br />
+{{SITENAME}}上的$PAGETITLE有評論哦。點擊下面的連結查看全部評論：
+<br /><br />
+依如下連結接查看評論：<a href="$PAGETITLE_URL">$PAGETITLE</a>$PAGETITLE_URL#WikiaArticleComments
+<br /><br />
+- Wikia社區支援
+<br /><br />
+
+___________________________________________
+<ul>
+<li>在社區中心群求幫助或建議：<a href="http://community.wikia.com">http://community.wikia.com</a><li>
+<li>管理您收到的郵件，退訂或改變郵件設置請點擊： <a href="http://community.wikia.com/Special:Preferences">http://community.wikia.com/Special:Preferences</a></li>
+</ul>
+</p>',
 );
 
 /** Chinese (Hong Kong) (中文（香港）‎)

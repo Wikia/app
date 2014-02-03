@@ -85,6 +85,15 @@ $messages['ar'] = array(
 	'action-stafflog' => 'رؤية سجل العاملين المركزي',
 );
 
+/** Azerbaijani (azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'stafflog-filter-label' => 'Süzgəc',
+	'stafflog-filter-user' => 'İstifadəçi:',
+	'stafflog-filter-type' => 'Tipi:',
+);
+
 /** Breton (brezhoneg)
  * @author Y-M D
  */

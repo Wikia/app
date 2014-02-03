@@ -155,15 +155,6 @@ class AssetsManagerController extends WikiaController {
 	}
 
 	/**
-	 * Purges Varnish and Memcached data mapping to the specified set of paramenters
-	 *
-	 * @param array $options @see getMultiTypePackage
-	 */
-	public function purgeMultiTypePackageCache( Array $options ) {
-		SquidUpdate::purge( array ( AssetsManager::getInstance()->getMultiTypePackageURL( $options ) ) );
-	}
-
-	/**
 	 * Returns instance of AssetsManager builder handling given type of assets
 	 *
 	 * @param string $type assets type ('one', 'group', 'groups', 'sass')
