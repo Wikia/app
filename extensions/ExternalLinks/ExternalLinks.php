@@ -8,6 +8,13 @@ $wgExtensionCredits['specialpage'][] = array(
 	'url' => 'http://www.mediawiki.org/wiki/Extension:ExternalLinks',
 	'descriptionmsg' => 'el-desc',
 );
+
+/**
+ * Extension settings
+ */
+$wgELuserRight = 'rollback'; // default: edit
+$wgELvalidationMode = 'cURL'; // default: none (disabled)
+
 $wgExtensionMessagesFiles['EL'] =  dirname(__FILE__) . '/ExternalLinks.i18n.php';
 
 $rtgIP = dirname( __FILE__ ) . '/';
