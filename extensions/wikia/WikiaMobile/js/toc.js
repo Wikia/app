@@ -9,7 +9,7 @@ function ( sections, window, $, mustache, toc, track ) {
 		active = 'active',
 		$document = $( window.document ),
 		$anchors,
-		sideMenuCapable = ( Features.positionfixed && Features.overflow ),
+		sideMenuCapable = ( window.Features.positionfixed && window.Features.overflow ),
 		$ol,
 		inited,
 		$toc = $( '#wkTOC' ),
@@ -206,7 +206,7 @@ function ( sections, window, $, mustache, toc, track ) {
 		tocTemplate = renderToc();
 
 		if ( tocTemplate ) {
-			$ol = $document.find('#mw-content-text')
+			$ol = $document.find( '#mw-content-text' )
 				.append(
 					'<div class="in-page-toc"><h2>' + $toc.find( 'header' ).text() + '</h2>' + tocTemplate + '</div>'
 				).find('.level');
