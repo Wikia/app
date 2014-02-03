@@ -30,6 +30,7 @@ class VideosModuleController extends WikiaController {
 		$articleRelatedVideos = $helper->getArticleRelatedVideos( $articleId );
 		$articleRelatedVideosCount = $articleRelatedVideos['returnedVideoCount'];
 		$videos = $articleRelatedVideos['items'];
+		$this->response->addAsset( 'videos_module_js' );
 
 		// Add videos from getWikiRelatedVideos if we didn't hit our video count limit
 		if ( $articleRelatedVideosCount < $helper::VIDEO_LIMIT ) {

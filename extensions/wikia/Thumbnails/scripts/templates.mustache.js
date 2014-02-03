@@ -1,0 +1,5 @@
+define( 'thumbnails.templates.mustache', [], function() { 'use strict'; return {
+    "titleThumbnail" : '<div class="title-thumbnail">{{{thumb}}}<div class="title" title="{{title}}"><a href="{{url}}">{{title}}</a></div></div>',
+    "videoThumbnail" : '<ahref="{{ linkHref }}"class="video wikia-video-thumbnail {{ size }} {{# linkClasses }}{{ . }} {{/ linkClasses }}"{{# linkAttrs }}{{ . }} {{/ linkAttrs }}><span class="play-circle"></span><imgsrc="{{ imgSrc }}"{{# imgClass }}class="{{ imgClass }}"{{/ imgClass }}data-video-key="{{ videoKey }}"data-video-name="{{ videoName }}"{{# imgWidth }} width="{{ imgWidth }}" {{/ imgWidth}}{{# imgHeight }} height="{{ imgHeight }}" {{/ imgHeight}}{{# imgAttrs }}{{ . }} {{/ imgAttrs }}><span class="duration" {{# durationAttrs }}{{ . }} {{/ durationAttrs }}>{{ duration }}</span>{{# metaAttrs }}<meta itemprop="{{itemprop}}" content="{{content}}">{{/ metaAttrs }}</a>',
+    "done": "true"
+  }; });
