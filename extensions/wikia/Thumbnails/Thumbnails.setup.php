@@ -8,8 +8,7 @@ $wgExtensionCredits['videohandlers'][] = [
 		"Kenneth Kouot <kenneth at wikia-inc.com>",
 		"James Sutterfield <james at wikia-inc.com>",
 	],
-	'url' => 'http://video.wikia.com',
-	'descriptionmsg' => 'wikia-thumbnails-desc',
+	'descriptionmsg' => 'thumbnails-extension-description',
 ];
 
 $dir = dirname( __FILE__ );
