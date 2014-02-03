@@ -1,6 +1,6 @@
 <?
 $wgExtensionCredits['videohandlers'][] = [
-	'name' => 'VideoHandlers',
+	'name' => 'Thumbnails',
 	'author' => [
 		"Liz Lee <liz at wikia-inc.com>",
 		"Saipetch Kongkatong <saipetch at wikia-inc.com>",
