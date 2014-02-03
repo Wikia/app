@@ -14,10 +14,9 @@ class WikiaSanitizer {
 	 * @return string
 	 * @url http://www.php.net/manual/en/regexp.reference.unicode.php
 	 */
-	public static function unicodeTrim($string) {
+	public static function unicodeTrim( $string ) {
 		// Trim spaces (CONN-167)
-		return trim( preg_replace( '/^[\pZ|\pC]*([\PZ|\PC]*)[\pZ|\pC]*$/u', '$1', $string ));
-
+		return trim( preg_replace( '/^[\pZ\pC]+|[\pZ\pC]+$/u', '', $string ) );
 	}
 
 	/**
@@ -28,8 +27,6 @@ class WikiaSanitizer {
 	 * @return string|null
 	 */
 	public static function removeDoubleSpaces( $string ) {
-
-		return preg_replace( array('/[\pZ|\pC]+/u', '/\s+/'), ' ', $string );
-
+		return preg_replace( array( '/[\pZ|\pC]+/u', '/\s+/' ), ' ', $string );
 	}
 } 
