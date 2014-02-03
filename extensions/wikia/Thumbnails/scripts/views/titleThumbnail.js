@@ -1,5 +1,5 @@
 define( 'thumbnails.titlethumbnail', [
-	'thumbnails.templates',
+	'thumbnails.templates.mustache',
     'wikia.mustache'
 ], function( templates, Mustache ) {
 	'use strict';

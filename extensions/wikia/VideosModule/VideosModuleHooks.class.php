@@ -21,7 +21,7 @@ class VideosModuleHooks {
 		$scripts = AssetsManager::getInstance()->getURL( 'videos_module_js' );
 
 		foreach( $scripts as $script ){
-			F::app()->wg->Out->addScript( "<script src='{$script}'></script>" );
+			$out->addScript( "<script src='{$script}'></script>" );
 		}
 
 		return true;

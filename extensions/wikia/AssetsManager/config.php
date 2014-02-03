@@ -1620,6 +1620,7 @@ $config['videos_module_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => ['oasis'],
 	'assets' => [
+		'//extensions/wikia/Thumbnails/scripts/templates.mustache.js',
 		'//extensions/wikia/Thumbnails/scripts/views/titleThumbnail.js',
 		'//extensions/wikia/VideosModule/scripts/views/bottomModule.js',
 	]

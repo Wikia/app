@@ -1,4 +1,3 @@
-alert('loaded');
 require( ['sloth', 'thumbnails.titlethumbnail', 'wikia.nirvana'], function( sloth, TitleThumbnailView, nirvana ) {
 	'use strict';
 
@@ -18,7 +17,6 @@ require( ['sloth', 'thumbnails.titlethumbnail', 'wikia.nirvana'], function( slot
 			} );
 		},
 		render: function() {
-			alert( 'render' );
 		},
 		getData: function () {
 			if ( this.data !== null ) {
