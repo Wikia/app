@@ -124,7 +124,7 @@ class ThumbnailVideo extends ThumbnailImage {
 
 		// Migrate to new system which uses a template instead of this toHtml method
 		if( !empty( $options[ 'useTemplate' ] ) ) {
-			$html = $app->renderView( 'VideoThumbnailController', 'thumbnail',  [
+			$html = $app->renderView( 'ThumbnailVideoController', 'thumbnail',  [
 				'file' => $this->file,
 				'url' => $this->url,
 				'width' => $this->width,

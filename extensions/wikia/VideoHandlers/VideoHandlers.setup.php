@@ -37,12 +37,10 @@ $wgWikiaVideosFoundInTemplates = 0;
 $dir = dirname( __FILE__ );
 
 // Main classes
-$wgAutoloadClasses[ 'ThumbnailVideo' ] = $dir . '/ThumbnailVideo.class.php';
 $wgAutoloadClasses[ 'VideoHandlerController' ] = $dir . '/VideoHandlerController.class.php';
 $wgAutoloadClasses[ 'VideoHandlerHooks' ] = $dir . '/VideoHandlerHooks.class.php';
 $wgAutoloadClasses[ 'VideoFileUploader' ] = $dir . '/VideoFileUploader.class.php';
 $wgAutoloadClasses[ 'VideoHandlerHelper' ] = $dir . '/VideoHandlerHelper.class.php';
-$wgAutoloadClasses[ 'VideoThumbnailController' ] = $dir . '/VideoThumbnailController.class.php';
 
 // actions
 $wgAutoloadClasses[ 'WikiaRevertVideoAction'] = $dir . '/actions/WikiaRevertVideoAction.php';
