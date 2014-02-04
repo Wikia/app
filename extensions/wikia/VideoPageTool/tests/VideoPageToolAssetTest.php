@@ -20,6 +20,10 @@ class VideoPageToolAssetTest extends WikiaBaseTest {
 		$this->setupFile = dirname(__FILE__) . '/../VideoPageTool.setup.php';
 		parent::setUp();
 
+		/*
+		 * That's pretty bad, as we will return master db connection for all wfGetDB calls, even those for slave and
+		 * dataware. But as for now mockGlobalFunction does not support PHPUnit's callbacks and returnValueArray
+		 */
 		$slaveDb = wfGetDB( DB_MASTER, [], 'video151' );
 		$this->mockGlobalFunction('wfGetDB', $slaveDb);
 
