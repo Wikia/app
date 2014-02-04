@@ -6,12 +6,11 @@ define( 'thumbnails.titlethumbnail', [
 
 	function TitleView( model ) {
 		this.model = model;
-		this.template = Mustache.compile( templates.titleThumbnail );
 	}
 
 	TitleView.prototype = {
 		render: function() {
-			return Mustache.render( this.template, this.model );
+			return Mustache.render( templates.titleThumbnail, this.model );
 		},
 		constructor: TitleView
 	};

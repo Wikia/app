@@ -9,9 +9,9 @@ require( [
 
 	function VideoModule( options ) {
 		this.el = options.el;
+		this.$el = $( options.el );
 		this.data = null;
-		this.aritcleId = window.wgArticleId;
-		this.template = Mustache.compile( templates.bottomModule );
+		this.articleId = window.wgArticleId;
 
 		if ( !this.articleId ) {
 			return;
@@ -29,23 +29,36 @@ require( [
 			} );
 		},
 		render: function() {
-			$.when( this.getData )
-				.done( $.proxy( function() {
+			$.when( this.getData() )
+				.done( $.proxy( this.renderWidthData, this ) );
+		},
+		renderWidthData: function() {
+			var i, out,
+				videos = this.data.videos,
+				len = videos.length,
+				thumbHtml = '';
 
-				}, this ) );
+			for ( i = 0; i < len; i++ ) {
+				thumbHtml += new TitleThumbnailView( videos[i] ).render();
+			}
 
+			// TODO: hard coded title
+			out = Mustache.render( templates.bottomModule, { title: 'Must Watch Videos', thumbnails: thumbHtml } );
+			this.$el.append( out );
 		},
 		getData: function () {
+			var self = this;
 			if ( this.data !== null ) {
 				return this.data;
 			} else {
 				return nirvana.getJson(
 					'VideosModuleController',
 					'index',
-					{
-						articleId: this.articleId
-					}
-				);
+					{ articleId: this.articleId }
+				)
+					.done( function( data ) {
+						self.data = data;
+					} );
 			}
 		}
 	};

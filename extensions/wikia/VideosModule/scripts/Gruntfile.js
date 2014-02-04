@@ -8,12 +8,12 @@ module.exports = function( grunt ) {
 		// Task to precompile mustache templates
 		mustache: {
 			files: {
-				src: '../templates/*.mustache',
+				src: '../templates/mustache/*.mustache',
 				dest: 'templates.mustache.js'
 			},
 			options: {
 				// define as an AMD module
-				prefix: 'define( \'videomodule.templates.mustache\', [], function() { \'use strict\'; return ',
+				prefix: 'define( \'videosmodule.templates.mustache\', [], function() { \'use strict\'; return ',
 				postfix: '; });',
 				verbose: true
 			}
