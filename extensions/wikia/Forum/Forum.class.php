@@ -12,6 +12,18 @@ class Forum extends Walls {
 	//controlling from outside if use can edit/create/delete board page
 	static $allowToEditBoard = false;
 
+	/**
+	 * @desc Min and max lengths of fields
+	 * @var array
+	 */
+	private $fieldsLengths = [
+		'title' => [ 'min' => 4, 'max' => 40 ],
+		'desc' => [ 'min' => 4, 'max' => 255 ],
+	];
+
+	const LEN_OK = 0;
+	const LEN_TOO_BIG_ERR = -1;
+	const LEN_TOO_SMALL_ERR = -2;
 
 	public function getBoardList($db = DB_SLAVE) {
 		$boardTitles = $this->getListTitles( $db, NS_WIKIA_FORUM_BOARD );
@@ -200,19 +212,11 @@ class Forum extends Walls {
 	 */
 
 	public function createBoard( $titletext, $body, $bot = false ) {
-		wfProfileIn( __METHOD__ );
-
-		$this->createOrEditBoard( null, $titletext, $body, $bot );
-
-		wfProfileOut( __METHOD__ );
+		return $this->createOrEditBoard( null, $titletext, $body, $bot );
 	}
 
 	public function editBoard( $id, $titletext, $body, $bot = false ) {
-		wfProfileIn( __METHOD__ );
-
-		$this->createOrEditBoard( $id, $titletext, $body, $bot );
-
-		wfProfileOut( __METHOD__ );
+		return $this->createOrEditBoard( $id, $titletext, $body, $bot );
 	}
 
 	/**
@@ -225,12 +229,10 @@ class Forum extends Walls {
 			$id = $board->getId();
 		}
 
-		if ( strlen( $titletext ) < 4 || strlen( $body ) < 4 ) {
-			wfProfileOut( __METHOD__ );
-			return false;
-		}
-
-		if ( strlen( $body ) > 255 || strlen( $titletext ) > 40 ) {
+		if (
+			self::LEN_OK !== $this->validateLength( $titletext, 'title' ) ||
+			self::LEN_OK !== $this->validateLength( $body, 'desc' )
+		) {
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
@@ -265,6 +267,43 @@ class Forum extends Walls {
 		Forum::$allowToEditBoard = false;
 
 		wfProfileOut( __METHOD__ );
+		return $retval;
+	}
+
+	/**
+	 * @desc Returns length limit of a field; if not set in Forum::$fieldsLengths returns 0
+	 *
+	 * @param String $type one of: 'min' or 'max'
+	 * @param String $field fields defined in Forum::$fieldsLengths
+	 *
+	 * @return int
+	 */
+	public function getLengthLimits( $type, $field ) {
+		return ( isset( $this->fieldsLengths[$field] ) && isset( $this->fieldsLengths[$field][$type] ) ) ?
+			(int) $this->fieldsLengths[$field][$type] :
+			0;
+	}
+
+	/**
+	 * @desc Returns Forum::LEN_OK, Forum::LEN_TOO_SMALL_ERR or Forum::LEN_TOO_BIG_ERR depends if the length is valid
+	 *
+	 * @param String $input data to be validated
+	 * @param String $field field with defined length's limits in Forum::$fieldsLengths array
+	 *
+	 * @return string
+	 */
+	public function validateLength( $input, $field ) {
+		$min = $this->getLengthLimits( 'min', $field );
+		$max = $this->getLengthLimits( 'max', $field );
+		$out = self::LEN_OK;
+
+		if( mb_strlen( $input ) < $min ) {
+			$out = self::LEN_TOO_SMALL_ERR;
+		} else if( mb_strlen( $input ) > $max ) {
+			$out = self::LEN_TOO_BIG_ERR;
+		}
+
+		return $out;
 	}
 
 	/**
