@@ -14,15 +14,14 @@ $wgDBdevboxUser = 'devbox';
 $wgDBdevboxPass = 'devbox';
 
 $USAGE =
-	"Usage:\tphp getDatabase.php [[-h [hostname] | [-f [dbname] | -d [dbname] ]| -i [filename] | [ -l [config] ]  | -?]\n" .
+	"Usage:\tphp getDatabase.php [[-h [hostname] | [-f [hostname] | -i [filename] | [ -p [env] ]  | -?]\n" .
 	"\toptions:\n" .
 	"\t\t--help      show this message\n" .
-	"\t\t-h          Fetch and import to dev db by hostname\n" .
+	"\t\t-h          Fetch and import to dev db by hostname (short name or fully qualified name ok)\n" .
 	"\t\t-f          Fetch a new database file from s3\n" .
 	"\t\t-i          Import a downloaded file to dev db\n" .
 	"\t\t-p          Which dev database to use for target: sjc or poz (optional, defaults to WIKIA_PROD_DATACENTER) \n".
-	"\n" .
-	"Or use " . __DIR__ . "/getDatabase.sh host\n";
+	"\n";
 
 $opts = getopt ("h:i:f:p:?::");
 if( empty( $opts ) ) die( $USAGE );
@@ -52,7 +51,13 @@ $filedir = $opts['h'] ? sys_get_temp_dir() . '/' : "";
 
 // Step 1) Hit production to get the dbname and cluster
 if ( array_key_exists('h', $opts) || array_key_exists ('f', $opts) ) {
-	$url="http://$hostname.wikia.com/wiki/Special:Version";
+	if (stripos($hostname, "wikia.com") > 0) {
+		// use full hostname given by user
+		$url="http://$hostname/wiki/Special:Version";
+	} else {
+		// assume short name
+		$url="http://$hostname.wikia.com/wiki/Special:Version";
+	}
 	print_r("Getting $url\n");
 	$page = file_get_contents($url);
 	if ($page) {
