@@ -65,7 +65,7 @@ function findInvalidFounders( $interval ) {
 		'u.user_id IS NULL',
 		"l.city_created > DATE( NOW() - INTERVAL $interval day )"
 	];
-	$options = [ 'distinct' => true ];
+	$options = [ 'DISTINCT' ];
 	$invalidFounders = [];
 
 	try {
