@@ -26,6 +26,7 @@ class VideoPageToolProgram extends WikiaModel {
 	protected $publishDate;
 	protected $isPublished = 0;
 	protected $publishedBy;
+	protected $dbw = null;
 
 	protected static $fields = array(
 		'program_id'   => 'programId',
@@ -380,7 +381,7 @@ class VideoPageToolProgram extends WikiaModel {
 			return Status::newFatal( wfMessage( 'videos-error-readonly' )->plain() );
 		}
 
-		$db = wfGetDB( DB_MASTER );
+		$db = $this->getMasterDB();
 
 		$db->insert(
 			'vpt_program',
@@ -418,7 +419,7 @@ class VideoPageToolProgram extends WikiaModel {
 			return Status::newFatal( wfMessage( 'videos-error-readonly' )->plain() );
 		}
 
-		$db = wfGetDB( DB_MASTER );
+		$db = $this->getMasterDB();
 
 		( new WikiaSQL() )
 			->UPDATE( 'vpt_program' )
@@ -472,7 +473,7 @@ class VideoPageToolProgram extends WikiaModel {
 		$this->setIsPublished( true );
 		$this->setPublishedBy( $this->wg->User->getId() );
 
-		$db = wfGetDB( DB_MASTER );
+		$db = $this->getMasterDB();
 		$status = $this->save();
 		$db->commit();
 
@@ -490,7 +491,7 @@ class VideoPageToolProgram extends WikiaModel {
 	public function unpublishProgram() {
 		$this->setIsPublished( false );
 
-		$db = wfGetDB( DB_MASTER );
+		$db = $this->getMasterDB();
 		$status = $this->save();
 		$db->commit();
 
@@ -604,7 +605,7 @@ class VideoPageToolProgram extends WikiaModel {
 			return Status::newFatal( wfMessage( 'videopagetool-error-missing-parameter' )->plain() );
 		}
 
-		$db = wfGetDB( DB_MASTER );
+		$db = $this->getMasterDB();
 
 		$db->begin();
 
@@ -758,7 +759,7 @@ class VideoPageToolProgram extends WikiaModel {
 	 * Removes the current program from the database
 	 * @param boolean $cascade Whether or not to cascade this delete to also delete dependent assets
 	 */
-	public function delete( $cascade = false, $dbw = null ) {
+	public function delete( $cascade = false ) {
 		wfProfileIn( __METHOD__ );
 
 		if ( $this->exists() ) {
@@ -771,21 +772,26 @@ class VideoPageToolProgram extends WikiaModel {
 				}
 			}
 
-			$this->deleteFromDatabase( $dbw );
+			$this->deleteFromDatabase();
 			$this->invalidateCache();
 		}
 
 		wfProfileOut( __METHOD__ );
 	}
 
-	protected function deleteFromDatabase( $dbw = null ) {
-		if ( !$dbw ) {
-			$dbw = wfGetDB(DB_MASTER);
+
+	protected function getMasterDB() {
+		if ( empty( $this->dbw ) ) {
+			$this->dbw = wfGetDB( DB_MASTER );
 		}
+		return $this->dbw;
+	}
+
+	protected function deleteFromDatabase() {
 
 		( new WikiaSQL() )
 			->DELETE( 'vpt_program' )
 			->WHERE( 'program_id' )->EQUAL_TO( $this->programId )
-			->run( $dbw );
+			->run( $this->getMasterDB() );
 	}
 }
