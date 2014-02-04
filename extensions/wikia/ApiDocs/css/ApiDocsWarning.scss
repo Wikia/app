@@ -24,23 +24,25 @@
 	}
 
 	section {
-		min-height: 46px;
-		padding: 20px 20px;
+		min-height: 36px;
+		line-height: 18px;
+		padding: 25px 20px;
+		width: 540px;
 	}
 
 	aside.icons {
 		float: right;
-		padding: 16px 10px;
+		padding: 17px 10px;
 
 		.icon {
 			display: none;
 			margin: 0 3px;
 		}
 
-		&.by > .icon.cc-by,
-		&.nd > .icon.cc-nd,
-		&.sa > .icon.cc-sa,
-		&.nc > .icon.cc-nc {
+		&.by > a > .icon.cc-by,
+		&.nd > a > .icon.cc-nd,
+		&.sa > a > .icon.cc-sa,
+		&.nc > a > .icon.cc-nc {
 			display: inline-block;
 		}
 	}
