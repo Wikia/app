@@ -51,6 +51,14 @@ if (!function_exists('extAddSpecialPage')) {
 extAddSpecialPage(dirname(__FILE__) . '/SpecialSiteWideMessages_body.php', 'SiteWideMessages', 'SiteWideMessages');
 $wgSpecialPageGroups['SiteWideMessages'] = 'wikia';
 
+$wgAutoloadClasses['SiteWideMessagesController'] =  __DIR__ . '/SiteWideMessagesController.class.php';
+
+$wgResourceModules['ext.siteWideMessages.anon'] = array(
+	'localBasePath' => __DIR__ . '/js',
+	'remoteExtPath' => 'wikia/SiteWideMessages/js',
+	'scripts' => 'SiteWideMessages.anon.js',
+);
+
 /**
  * Initialize hooks
  *
@@ -135,11 +143,13 @@ function SiteWideMessagesAddNotifications(&$skim, &$tpl) {
 
 	if ( F::app()->checkSkin( 'oasis' ) ) {
 		// Add site wide notifications that haven't been dismissed
-		if ( $wgUser->isLoggedIn() ) {
-			$msgs = SiteWideMessages::getAllUserMessages( $wgUser, false, false );
-		} else {
-			$msgs = SiteWideMessages::getAllAnonMessages( $wgUser, false, false );
+		if ( !$wgUser->isLoggedIn() ) {
+			$wgOut->addModuleScripts( 'ext.siteWideMessages.anon' );
+			wfProfileOut( __METHOD__ );
+			return true;
 		}
+
+		$msgs = SiteWideMessages::getAllUserMessages( $wgUser, false, false );
 
 		if ( !empty( $msgs ) ) {
 			wfProfileIn( __METHOD__ . '::parse' );

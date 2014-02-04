@@ -110,14 +110,7 @@ class WikiaMobileCategoryService extends WikiaService {
 
 				if ( !empty( $data['items'] ) ) {
 					//cache response for 3 hours in varnish and browser
-					$this->response->setCacheValidity(
-						WikiaMobileCategoryService::CACHE_TIME,
-						WikiaMobileCategoryService::CACHE_TIME,
-						[
-							WikiaResponse::CACHE_TARGET_BROWSER,
-							WikiaResponse::CACHE_TARGET_VARNISH
-						]
-					);
+					$this->response->setCacheValidity(WikiaMobileCategoryService::CACHE_TIME);
 					$this->response->setVal( 'itemsBatch', $data['items'] );
 				} else {
 					$err = "No Data for given index or batch";

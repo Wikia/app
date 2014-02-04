@@ -49,23 +49,23 @@ class AnalyticsProviderIVW2Test extends WikiaBaseTest {
 			array('http://de.wikia.com/Mobil/LyricWiki', 'RC_WIKIA_MOBIL'),
 			array('http://de.wikia.com/Mobil/GameGuides', 'RC_WIKIA_MOBIL'),
 
-//			array('http://de.community.wikia.com/wiki/Admin-Bereich:Hauptseite', 'RC_WIKIA_COMMUNITY'),
-//			array('http://de.community.wikia.com/wiki/Community_Deutschland', 'RC_WIKIA_COMMUNITY'),
-//			array('http://de.community.wikia.com/wiki/Blog%3AWikia_Deutschland_News', 'RC_WIKIA_COMMUNITY'),
+			array('http://de.community.wikia.com/wiki/Admin-Bereich:Hauptseite', 'RC_WIKIA_COMMUNITY'),
+			array('http://de.community.wikia.com/wiki/Community_Deutschland', 'RC_WIKIA_COMMUNITY'),
+			array('http://de.community.wikia.com/wiki/Blog%3AWikia_Deutschland_News', 'RC_WIKIA_COMMUNITY'),
 
 			array('http://de.wikia.com/Spezial:Suche?search=elder&fulltext=Search', 'RC_WIKIA_SEARCH'),
 
-//			array('http://de.elderscrolls.wikia.com/wiki/Elder_Scrolls_Wiki', 'RC_WIKIA_UGCGAMES'),
-//			array('http://de.swtor.wikia.com/wiki/Star_Wars_-_The_Old_Republic_Wiki', 'RC_WIKIA_UGCGAMES'),
+			array('http://de.elderscrolls.wikia.com/wiki/Elder_Scrolls_Wiki', 'RC_WIKIA_UGCGAMES'),
+			array('http://de.swtor.wikia.com/wiki/Star_Wars_-_The_Old_Republic_Wiki', 'RC_WIKIA_UGCGAMES'),
 
-//			array('http://de.community.wikia.com/wiki/Forum:%C3%9Cbersicht', 'RC_WIKIA_PIN'),
+			array('http://de.community.wikia.com/wiki/Forum:%C3%9Cbersicht', 'RC_WIKIA_PIN'),
 
-//			array('http://shaun.wikia.com/wiki/Shaun', 'RC_WIKIA_UGCENT'),
-//			array('http://de.marvel-filme.wikia.com/wiki/Marvel-Filme', 'RC_WIKIA_UGCENT'),
+			array('http://shaun.wikia.com/wiki/Shaun', 'RC_WIKIA_UGCENT'),
+			array('http://de.marvel-filme.wikia.com/wiki/Marvel-Filme', 'RC_WIKIA_UGCENT'),
 
-//			array('http://de.gta.wikia.com/wiki/Hauptseite', 'RC_WIKIA_UGCGAMES'),
-//			array('http://de.green.wikia.com/wiki/Hauptseite', 'RC_WIKIA_UGCLIFESTYLE'),
-//			array('http://de.naruto.wikia.com/wiki/Narutopedia', 'RC_WIKIA_UGCANIME'),
+			array('http://de.gta.wikia.com/wiki/Hauptseite', 'RC_WIKIA_UGCGAMES'),
+			array('http://de.green.wikia.com/wiki/Hauptseite', 'RC_WIKIA_UGCLIFESTYLE'),
+			array('http://de.naruto.wikia.com/wiki/Narutopedia', 'RC_WIKIA_UGCANIME'),
 
 			array('http://de.wikia.com/Entertainment/Anime', 'RC_WIKIA_START'),
 		);

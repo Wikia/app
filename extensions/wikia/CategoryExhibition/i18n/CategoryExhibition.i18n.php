@@ -56,6 +56,13 @@ $messages['ar'] = array(
 	'category-exhibition-display-new' => 'عرض معرض التصنيف',
 );
 
+/** Azerbaijani (azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'category-exhibition-subcategories-header' => 'Alt kateqoriyalar',
+);
+
 /** Bikol Central (Bikol Central)
  * @author Geopoet
  */

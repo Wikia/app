@@ -170,6 +170,7 @@ Parameters:
 	'blog-added' => 'This is the possible value of $CHANGEDORCREATED in {{msg-mw|enotif_subject}} and {{msg-mw|enotif_body|notext=1}}.',
 	'blog-edited' => 'This is a possible value of $CHANGEDORCREATED in {{msg-mw|enotif_subject}} and {{msg-mw|enotif_body|notext=1}}.',
 	'blog-page' => '{{Identical|Blog}}',
+	'blog-comment-post' => '{{Identical|Post comment}}',
 	'blog-comments' => '{{Identical|Comment}}',
 	'blog-rc-comments' => '{{Identical|Blog comment}}',
 	'blog-comments-label' => 'This is a checkbox label. If checked by the blog author, users will be able to leave comments on the blog.',
@@ -273,19 +274,20 @@ $messages['an'] = array(
 /** Arabic (العربية)
  * @author Achraf94
  * @author Alexknight12
+ * @author Claw eg
  * @author DRIHEM
  * @author Imksa
  * @author Meno25
  * @author OsamaK
  */
 $messages['ar'] = array(
-	'blog-file-page' => "المشاركة <a href='$1'>$2</a> المعلقة على مدونة <a href='$3'>$4's</a>",
+	'blog-file-page' => "مشاركة <a href='$1'>$2</a> على مدونة <a href='$3'>$4</a>",
 	'createblogpage' => 'إنشاء مدونة',
 	'createbloglistingpage' => 'إنشاء قائمة مدونات',
 	'create-blog-spam' => 'يبدو أن ما أدخلته غير مرغوب فيه',
 	'create-blog-cant-edit' => 'لا يمكن إجراء تعديل',
 	'create-blog-post-category' => 'المشاركات في المدونة',
-	'create-blog-post-category-body' => 'هذه قائمة مدونات منشئة أوتوماتيتكيا',
+	'create-blog-post-category-body' => 'هذه قائمة مشاركات مدونات منشئة تلقائيًا',
 	'create-blog-post-category-log' => 'أنشأ مقالا تصنيفيا لمشاركات المدونة',
 	'create-blog-post-recent-listing' => 'المشاركات الأخيرة',
 	'create-blog-post-recent-listing-title' => 'المشاركات الأخيرة',
@@ -300,11 +302,11 @@ $messages['ar'] = array(
 	'create-blog-empty-post-error' => 'نص المدونة فارغ',
 	'create-blog-empty-article-log' => 'أنشأ مقالة فيها قائمة المدونات',
 	'create-blog-invalid-title-error' => 'عنوان غير صحيح',
-	'create-listing-confirm-info' => 'إنسخ و لصق الكود التالي:',
+	'create-listing-confirm-info' => 'قم بنسخ ولصق الكود التالي:',
 	'create-blog-no-login' => 'غير مسجل الدخول',
 	'create-blog-login-required' => 'يجب أن تكون [{{fullurl:Special:Signup|$1}} مسجلا] لكي تنشأ قوائم أو مشاركات في المدونة.',
 	'create-blog-categories-title' => 'أضف هذه المعلقة من المدونة إلى إحدى التصانيف التاليى (انقر لكي تختار)',
-	'create-blog-categories-textinput' => 'إضافة تصنيف جديد',
+	'create-blog-categories-textinput' => 'أضف تصنيفًا جديدًا',
 	'create-blog-categories-submit' => 'إرسال',
 	'create-blog-save' => 'احفظ الصفحة',
 	'create-blog-preview' => 'أظهر معاينة',
@@ -320,19 +322,19 @@ $messages['ar'] = array(
 	'create-blog-listing-authors' => 'الحصول على معلقات المدونة لهؤلاء المستخدمين (بين كل اسم مستخدم ضع فاصل)',
 	'create-blog-listing-blog-post-categories-title' => 'استعمال معلقات المدونة من هذه التصانيف',
 	'create-blog-listing-page-categories-title' => 'أضف صفحة قائمة المدونة هذه إلى التصانيف التالية',
-	'create-blog-listing-matches' => 'الترابط',
+	'create-blog-listing-matches' => 'نتائج مطابقة',
 	'create-blog-listing-matches-calculate' => 'حساب',
 	'create-blog-listing-matches-recalculate' => 'إعادة حساب',
-	'create-blog-listing-matches-info' => 'ربط {{PLURAL:$1|معلقة|معلقات}} المدونة الموجودة',
+	'create-blog-listing-matches-info' => 'تم إيجاد {{PLURAL:$1|مشاركة|مشاركات}} مدونة مطابقة',
 	'create-blog-listing-sortby' => 'الترتيب حسب',
 	'create-blog-listing-sortby-date' => 'الأحدث',
 	'create-blog-listing-sortby-author' => 'المؤلف',
 	'create-blog-listing-sortby-comments' => 'عدد التعليقات',
-	'create-blog-listing-output-as-box' => 'ينشئ رمزا للنسخ و اللصق',
+	'create-blog-listing-output-as-box' => 'إنشاء رمز النسخ واللصق',
 	'create-blog-listing-output-as-page' => 'إنشاء صفحة القائمة كصفحة جديدة',
 	'create-blog-listing-tag-format-not-recognized-on-page' => 'علامة قائمة المدونة لم يتم التعرف إليها في الصفحة',
 	'blog-header' => 'مقالات المدونة في التصنيف "$1"',
-	'blog-subheader' => '{{PLURAL:$1|هناك معلقة واحدة|هناك $1 معلقات }} في هذا التصنيف.',
+	'blog-subheader' => '{{PLURAL:$1|هناك مشاركة واحدة|هناك $1 مشاركات}} في هذا التصنيف.',
 	'blog-subheader-all' => '{{PLURAL:$1|هناك مقالة مدونة واحدة في هذا التصنيف|هناك $1 مقالات مدونة في هذا التصنيف, من $2 واحدة ككل.}}',
 	'blog-invalidparam' => "تم تجاهل تطبيق غير معروف '$1'. يرجى استخدام أحد التطبيقات المتوفرة: <code>$2</code>.",
 	'blog-emptyparam' => 'اسم التطبيق لا يمكن أن يكون فارغا',
@@ -365,28 +367,28 @@ $messages['ar'] = array(
 	'blog-comment-hide' => 'أخف',
 	'blog-comment-unhide' => 'أظهر',
 	'blog-comment-history' => 'تاريخ',
-	'blog-comment-edit' => 'تعديل',
+	'blog-comment-edit' => 'عدل',
 	'blog-comment-error' => 'تعذّر حفظ التعليق',
 	'blog-comment-cannot-add' => 'لا يمكنك التعليق على المدونة.',
 	'blog-avatar-preferences-title' => 'الصورة الرمزية',
 	'blog-page-rate' => 'صنف هذه المقالة:',
-	'blog-create-post-label' => 'أنشأ معلقة في المدونة',
-	'blog-create-label' => 'أنشأ مقالة مدونة',
+	'blog-create-post-label' => 'أنشئ مشاركة مدونة',
+	'blog-create-label' => 'أنشئ مقالة مدونة',
 	'blog-create-next-label' => 'إنشاء مقالة مدونة جديدة',
-	'blog-create-listing-label' => 'أنشاء قائمة مدونة',
+	'blog-create-listing-label' => 'أنشئ قائمة مدونة',
 	'blog-refresh-label' => 'تحديث',
 	'blog-widgets-label' => 'لوحة القيادة',
-	'blog-listing-zero-other' => 'هذا المستخدم لم يكتب أي معلقة في المدونة حتى الآن!',
-	'blog-listing-created' => 'أنشأت صفحة قائمة المدونة',
+	'blog-listing-zero-other' => 'هذا المستخدم لم يكتب أي مشاركات مدونة حتى الآن!',
+	'blog-listing-created' => 'تم إنشاء صفحة قائمة المدونة',
 	'blog-userblog' => 'مدونة $1',
 	'blog-fromsitename' => 'من $1',
-	'blogs-reportproblem' => 'تقرير مشكلة',
+	'blogs-reportproblem' => 'أبلغ عن مشكلة',
 	'blogs-comment-hidden' => 'تعليق مخفي',
 	'right-blog-comments-toggle' => 'تشغيل التعليقات على مقالة المدونة',
 	'right-blog-comments-delete' => 'حذف التعليقات على مقالة المدونة',
 	'right-blog-articles-edit' => 'عدل مقالة المدونة',
 	'right-blog-articles-move' => 'انقل مقالة المدونة',
-	'blogs-recent-url-text' => 'أحدث معلقات المدونة',
+	'blogs-recent-url-text' => 'أحدث مشاركات المدونة',
 	'blog-desc' => 'مقالات المدونة',
 	'blog-movepage-badtitle' => 'عنوان مدونة غير صالح',
 	'blog-comment-sending' => 'جاري الإرسال...',
@@ -457,8 +459,10 @@ $messages['az'] = array(
 	'blog-comment-delete' => 'sil',
 	'blog-comment-history' => 'tarix',
 	'blog-comment-edit' => 'redaktə',
+	'blog-desc' => 'Bloq məqalələri',
 	'blog-comment-sending' => 'Göndərilir...',
 	'blog-by' => '$1 tərəfindən $2',
+	'blogs-searchprofile' => 'Bloqlar',
 );
 
 /** Bikol Central (Bikol Central)
@@ -2909,6 +2913,7 @@ $messages['kn'] = array(
  * @author Daisy2002
  * @author Hym411
  * @author Leehoy
+ * @author Priviet
  * @author 아라
  * @author 한글화담당
  */
@@ -2961,8 +2966,8 @@ $messages['ko'] = array(
 	'blog-comments-new' => '블로그에 새 댓글이 있습니다',
 	'blog-comments-save' => '블로그에 댓글 저장',
 	'blog-voting-label' => '투표',
-	'blog-comments-dsc' => '최근항목순',
-	'blog-comments-asc' => '오래된항목순',
+	'blog-comments-dsc' => '최근 항목순',
+	'blog-comments-asc' => '오래된 항목순',
 	'blog-comments-anonymous' => '익명의 사용자',
 	'blog-comment-delete' => '삭제',
 	'blog-comment-hide' => '숨기기',
@@ -3271,7 +3276,7 @@ $messages['mk'] = array(
 	'create-listing-confirm-info' => 'Ископирајте и залепете го следниов код:',
 	'create-blog-no-login' => 'Не сте најавени',
 	'create-blog-login-required' => 'Мора да сте [{{fullurl:Special:Signup|$1}} најавени] за да можете да создавате блог-записи или пописи.',
-	'create-blog-categories-title' => 'Додај го овој блог-запис во следниве категории (кликнете за да одберете)',
+	'create-blog-categories-title' => 'Додај го овој блог-запис во следниве категории (стиснете за да одберете)',
 	'create-blog-categories-textinput' => 'Додај нова категорија',
 	'create-blog-categories-submit' => 'Поднеси',
 	'create-blog-save' => 'Зачувај',
@@ -5764,6 +5769,8 @@ $messages['zh-hant'] = array(
 	'create-blog-no-login' => '未登入',
 	'create-blog-login-required' => '您必須 [{{fullurl:Special:Signup|$1}} 登入]才能部落格文章或列表。',
 	'create-blog-categories-title' => '這篇文章添加到這些分類 （按一下可選擇）',
+	'create-blog-save' => '儲存頁面',
+	'create-blog-preview' => '顯示預覽',
 	'create-blog-listing-sortby-date' => '最新',
 	'create-blog-listing-sortby-author' => '作者',
 	'create-blog-listing-sortby-comments' => '評論數',

@@ -22,7 +22,11 @@ class FiveminVideoHandler extends VideoHandler {
 <embed src='{$url}' type='application/x-shockwave-flash' $sizeString allowfullscreen='true' allowScriptAccess='always'></embed>
 EOT;
 
-		return array( 'html' => $html );
+		return array(
+			'html' => $html,
+			'width' => $width,
+			'height' => $height,
+		);
 	}
 
 }

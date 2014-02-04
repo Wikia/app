@@ -77,15 +77,13 @@ class WikiaHomePageController extends WikiaController {
 
 	public function index() {
 		//cache response on varnish for 1h to enable rolling of stats
-		$this->response->setCacheValidity(3600, 3600, array(WikiaResponse::CACHE_TARGET_BROWSER, WikiaResponse::CACHE_TARGET_VARNISH));
+		$this->response->setCacheValidity(3600);
 
 		$this->response->addAsset('wikiahomepage_scss');
 		$this->response->addAsset('wikiahomepage_js');
 
 		$response = $this->app->sendRequest('WikiaHomePageController', 'getHubImages');
 		$this->hubImages = $response->getVal('hubImages', '');
-
-		$this->setCorporateContentLang($this->wg->Lang->getCode());
 
 		JSMessages::enqueuePackage('WikiaHomePage', JSMessages::EXTERNAL);
 
@@ -95,6 +93,8 @@ class WikiaHomePageController extends WikiaController {
 			'wgWikiaBatchesStatus' => $batches['status'],
 			'wgInitialWikiBatchesForVisualization' => $batches['batches']
 		]);
+
+		$this->lang = self::getContentLang();
 
 		OasisController::addBodyClass('WikiaHome');
 	}
@@ -662,18 +662,29 @@ class WikiaHomePageController extends WikiaController {
 		return $this->visualization;
 	}
 
+	public static function onBeforePageDisplay( OutputPage &$out, &$skin ) {
+
+		OasisController::addBodyClass( 'wikia-contentlang-' . self::getContentLang() );
+
+		return true;
+	}
+
 	/**
-	 * Sets language variable to get proper sprite image.
-	 * If corporate page exists for passed language code this code is set
-	 * otherwise default language is set.
+	 * Gets language variable to get proper sprite image.
+	 * If corporate page exists for passed language code this code is returned
+	 * otherwise default language is returned.
 	 *
-	 * @param string $lang User language code
+	 *
+	 * @returns string User language code
 	 */
-	private function setCorporateContentLang($lang) {
-		$corpLangsList = $this->getVisualization()->getVisualizationWikisData();
+	private static function getContentLang() {
+		global $wgLang;
+		$lang = $wgLang->getCode();
+
+		$corpLangsList = ( new CityVisualization() )->getVisualizationWikisData();
 		if ( !array_key_exists($lang, $corpLangsList) ) {
 			$lang = self::DEFAULT_CONTENT_LANG;
 		}
-		$this->lang = $lang;
+		return $lang;
 	}
 }
