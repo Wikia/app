@@ -1,9 +1,21 @@
-require( ['sloth', 'thumbnails.titlethumbnail', 'wikia.nirvana'], function( sloth, TitleThumbnailView, nirvana ) {
+require( [
+	'sloth',
+	'thumbnails.titlethumbnail',
+	'wikia.nirvana',
+	'wikia.mustache',
+    'videosmodule.templates.mustache'
+], function( sloth, TitleThumbnailView, nirvana, Mustache, templates ) {
 	'use strict';
 
 	function VideoModule( options ) {
 		this.el = options.el;
 		this.data = null;
+		this.aritcleId = window.wgArticleId;
+		this.template = Mustache.compile( templates.bottomModule );
+
+		if ( !this.articleId ) {
+			return;
+		}
 		this.init();
 	}
 
@@ -13,10 +25,15 @@ require( ['sloth', 'thumbnails.titlethumbnail', 'wikia.nirvana'], function( slot
 			sloth( {
 				on: this.el,
 				threshold: 200,
-				callback: this.render
+				callback: $.proxy( this.render, this )
 			} );
 		},
 		render: function() {
+			$.when( this.getData )
+				.done( $.proxy( function() {
+
+				}, this ) );
+
 		},
 		getData: function () {
 			if ( this.data !== null ) {
@@ -24,9 +41,11 @@ require( ['sloth', 'thumbnails.titlethumbnail', 'wikia.nirvana'], function( slot
 			} else {
 				return nirvana.getJson(
 					'VideosModuleController',
-					'executeIndex'
+					'index',
+					{
+						articleId: this.articleId
+					}
 				);
-
 			}
 		}
 	};
