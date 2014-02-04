@@ -68,7 +68,7 @@ class WikiaApiLyricwiki extends ApiBase {
 		$albumYear = getVal($_GET, 'albumYear');
 
 		// force cache these calls in varnish for an hour
-		header("Cache-Control: max-age=3600, s-maxage=3600, public");
+		header("Cache-Control: max-age=86400, s-maxage=86400, public");
 
 		// Special case (suggested by CantoPod) to return all of an artist's songs when no song is specified.
 		// Similarly, if the title passed in is an album, automatically detect that type of page and use the appropriate parser.
