@@ -34,31 +34,12 @@
 @import 'throbber';
 @import "form";
 @import "curtain";
+@import "page_header";
 @import '../../RelatedPages/css/RelatedPages.wikiamobile';
 
 //mixins
 @import "mixins/transition.scss";
 @import "mixins/box-shadow.scss";
-
-#wkMainCntHdr {
-	margin-bottom: 25px;
-	position: relative;
-
-	h1{
-		margin: 0 0 15px 0;
-
-		line-height: 2.2rem;
-		font-size: 2rem;
-		font-weight: 400;
-	}
-
-	div {
-		color: #AAA;
-
-		font-size: .9rem;
-		line-height: 1.2rem;
-	}
-}
 
 #wkPage {
 	//I want page to be at least 405px long to be able to show share and search suggestions
@@ -158,15 +139,4 @@ blockquote, .quote {
 
 .editsection {
 	display: none;
-}
-
-.comment-counter{
-	display: block;
-
-	margin-top: 15px;
-	padding-left: 20px;
-
-	background-image: url( '/extensions/wikia/WikiaMobile/images/commentIconSmall.png' );
-	background-repeat: no-repeat;
-	background-position-y: center;
 }
