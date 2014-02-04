@@ -16,8 +16,16 @@ class VideoPageToolAssetTest extends WikiaBaseTest {
 	protected $origMemc;
 
 	public function setUp() {
-		global $wgCityId;
-		file_put_contents('/tmp/debug.out', "CITYID: ".$wgCityId."\n", FILE_APPEND);
+
+		$this->setupFile = dirname(__FILE__) . '/../VideoPageTool.setup.php';
+		parent::setUp();
+
+		/*
+		 * That's pretty bad, as we will return master db connection for all wfGetDB calls, even those for slave and
+		 * dataware. But as for now mockGlobalFunction does not support PHPUnit's callbacks and returnValueArray
+		 */
+		$slaveDb = wfGetDB( DB_MASTER, [], 'video151' );
+		$this->mockGlobalFunction('wfGetDB', $slaveDb);
 
 		$this->mockGlobalVariable( 'wgUser', User::newFromName( 'Garthwebb' ) );
 
@@ -193,6 +201,9 @@ class VideoPageToolAssetTest extends WikiaBaseTest {
 	}
 
 	public function tearDown() {
-		$this->program->delete();
+		if ( !empty($this->program) ) {
+			$this->program->delete();
+		}
+		parent::tearDown();
 	}
 }
