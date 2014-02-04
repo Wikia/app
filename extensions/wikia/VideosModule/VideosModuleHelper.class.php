@@ -72,4 +72,47 @@ class VideosModuleHelper extends WikiaModel {
 
 		return $videos;
 	}
+
+	/**
+	 * Get videos by category from the wiki
+	 * @param integer $limit
+	 * @return array $videos
+	 */
+	public function getVerticalVideos( $limit ) {
+		wfProfileIn( __METHOD__ );
+
+		$params = [
+			'controller' => 'VideoHandler',
+			'method'     => 'getVideoList',
+			'limit'      => $limit,
+			'category'   => $this->getWikiVertical(),
+		];
+
+		$response = ApiService::foreignCall( $this->wg->WikiaVideoRepoDBName, $params, ApiService::WIKIA );
+		$videos = empty( $response['videos'] ) ? array() : $response['videos'];
+
+		wfProfileOut( __METHOD__ );
+
+		return $videos;
+	}
+
+	/**
+	 * Get wiki vertical
+	 * @return string $name - wiki vertical
+	 */
+	public function getWikiVertical() {
+		wfProfileIn( __METHOD__ );
+
+		$categoryId = WikiFactoryHub::getCategoryId( $this->wg->CityId );
+		$verticalId = HubService::getCanonicalCategoryId( $categoryId );
+
+		// get category name
+		$category = WikiFactoryHub::getInstance()->getCategory( $verticalId );
+		$name = empty( $category['name'] ) ? '' : $category['name'];
+
+		wfProfileOut( __METHOD__ );
+
+		return $name;
+	}
+
 }

@@ -223,6 +223,8 @@ class VideoHandlerController extends WikiaController {
 	 * @responseParam boolean $fileExists
 	 */
 	public function fileExists() {
+		wfProfileIn( __METHOD__ );
+
 		$fileExists = false;
 
 		$fileTitle = $this->getVal( 'fileTitle', '' );
@@ -235,6 +237,8 @@ class VideoHandlerController extends WikiaController {
 		}
 
 		$this->fileExists = $fileExists;
+
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**
@@ -247,6 +251,8 @@ class VideoHandlerController extends WikiaController {
 	 * @responseParam array detail - The video details
 	 */
 	public function getVideoDetail() {
+		wfProfileIn( __METHOD__ );
+
 		$fileTitle = $this->getVal( 'fileTitle', '' );
 		$thumbWidth = $this->getVal( 'thumbWidth', '250' );
 		$thumbHeight = $this->getVal( 'thumbHeight', '250' );
@@ -261,5 +267,37 @@ class VideoHandlerController extends WikiaController {
 												$getThumb
 		);
 		$this->detail = $videoDetail;
+
+		wfProfileOut( __METHOD__ );
 	}
+
+	/**
+	 * Get list of videos
+	 * @requestParam string sort [recent/popular/trend]
+	 * @requestParam integer limit
+	 * @requestParam integer page
+	 * @requestParam array providers - Only videos hosted by these providers will be returned. Default: all providers.
+	 * @requestParam string category - Category name. Only videos tagged with this category will be returned. Default: any categories.
+	 * @responseParam array $videos
+	 *   [array('title'=>value, 'provider'=>value, 'addedAt'=>value,'addedBy'=>value, 'duration'=>value, 'viewsTotal'=>value)]
+	 */
+	public function getVideoList() {
+		wfProfileIn( __METHOD__ );
+
+		$sort = $this->getVal( 'sort', 'recent' );
+		$limit = $this->getVal( 'limit', 1 );
+		$page = $this->getVal( 'page', 1 );
+		$providers = $this->getVal( 'providers', array() );
+		$category = $this->getVal( 'category', '' );
+
+		$filter = 'all';
+
+		$mediaService = new MediaQueryService();
+		$videoList = $mediaService->getVideoList( $sort, $filter, $limit, $page, $providers, $category );
+
+		$this->videos = $videoList;
+
+		wfProfileOut( __METHOD__ );
+	}
+
 }
