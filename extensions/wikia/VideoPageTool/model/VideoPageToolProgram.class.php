@@ -779,7 +779,11 @@ class VideoPageToolProgram extends WikiaModel {
 		wfProfileOut( __METHOD__ );
 	}
 
-
+	/**
+	 * A simple wrapper around wfGetDB that caches the connection to local master db. Needed mostly for the ease of
+	 * unit testing mocking (as the delete method is called outside the test, in tearDown method)
+	 * @return master database connection
+	 */
 	protected function getMasterDB() {
 		if ( empty( $this->dbw ) ) {
 			$this->dbw = wfGetDB( DB_MASTER );
