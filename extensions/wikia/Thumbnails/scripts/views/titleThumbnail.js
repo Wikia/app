@@ -1,4 +1,4 @@
-define( 'thumbnails.titlethumbnail', [
+define( 'thumbnails.views.titlethumbnail', [
 	'thumbnails.templates.mustache',
     'wikia.mustache'
 ], function( templates, Mustache ) {
@@ -8,11 +8,10 @@ define( 'thumbnails.titlethumbnail', [
 		this.model = model;
 	}
 
-	TitleView.prototype = {
-		render: function() {
-			return Mustache.render( templates.titleThumbnail, this.model );
-		},
-		constructor: TitleView
+	TitleView.prototype.render = function() {
+		this.el = Mustache.render( templates.titleThumbnail, this.model );
+		this.$el = $( this.el );
+		return this;
 	};
 
 	return TitleView;

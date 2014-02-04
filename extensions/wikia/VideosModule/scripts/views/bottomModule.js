@@ -1,70 +1,54 @@
-require( [
+define( 'videosmodule.views.bottommodule', [
 	'sloth',
-	'thumbnails.titlethumbnail',
-	'wikia.nirvana',
+	'thumbnails.views.titlethumbnail',
 	'wikia.mustache',
     'videosmodule.templates.mustache'
-], function( sloth, TitleThumbnailView, nirvana, Mustache, templates ) {
+], function( sloth, TitleThumbnailView, Mustache, templates ) {
 	'use strict';
 
 	function VideoModule( options ) {
 		this.el = options.el;
 		this.$el = $( options.el );
-		this.data = null;
+		this.model = options.model;
 		this.articleId = window.wgArticleId;
 
-		if ( !this.articleId ) {
-			return;
+		// Make sure we're on an article page
+		if ( this.articleId ) {
+			this.init();
 		}
-		this.init();
 	}
 
-	VideoModule.prototype = {
-		init: function() {
-			this.getData();
-			sloth( {
-				on: this.el,
-				threshold: 200,
-				callback: $.proxy( this.render, this )
-			} );
-		},
-		render: function() {
-			$.when( this.getData() )
-				.done( $.proxy( this.renderWidthData, this ) );
-		},
-		renderWidthData: function() {
-			var i, out,
-				videos = this.data.videos,
-				len = videos.length,
-				thumbHtml = '';
-
-			for ( i = 0; i < len; i++ ) {
-				thumbHtml += new TitleThumbnailView( videos[i] ).render();
-			}
-
-			// TODO: hard coded title
-			out = Mustache.render( templates.bottomModule, { title: 'Must Watch Videos', thumbnails: thumbHtml } );
-			this.$el.append( out );
-		},
-		getData: function () {
-			var self = this;
-			if ( this.data !== null ) {
-				return this.data;
-			} else {
-				return nirvana.getJson(
-					'VideosModuleController',
-					'index',
-					{ articleId: this.articleId }
-				)
-					.done( function( data ) {
-						self.data = data;
-					} );
-			}
-		}
+	VideoModule.prototype.init = function() {
+		this.model.fetch();
+		// Sloth is a lazy loading service that waits till an element is visisble to load more content
+		sloth( {
+			on: this.el,
+			threshold: 200,
+			callback: $.proxy( this.render, this )
+		} );
 	};
 
-	$( function() {
-		var module = new VideoModule( { el: document.getElementById( 'WikiaArticleFooter' ) } );
-	} );
+	VideoModule.prototype.render = function() {
+		$.when( this.model.fetch() )
+			.done( $.proxy( this.renderWidthData, this ) );
+	};
+
+	VideoModule.prototype.renderWidthData = function() {
+		console.log( this.model );
+		var i, out,
+			videos = this.model.data.videos,
+			len = videos.length,
+			thumbHtml = '';
+
+		for ( i = 0; i < len; i++ ) {
+			thumbHtml += new TitleThumbnailView( videos[i] ).render().el;
+		}
+
+		// TODO: hard coded title
+		out = Mustache.render( templates.bottomModule, { title: 'Must Watch Videos', thumbnails: thumbHtml } );
+		this.$el.append( out );
+	};
+
+	return VideoModule;
 
 } );
