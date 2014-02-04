@@ -1,0 +1,32 @@
+$apiDocs-icon-size: 30px;
+$apiDocs-large-icon-size: 50px;
+
+.icon {
+	background-size: $apiDocs-icon-size $apiDocs-icon-size;
+	display: inline-block;
+	height: $apiDocs-icon-size;
+	width: $apiDocs-icon-size;
+
+	&.large {
+		background-size: $apiDocs-large-icon-size $apiDocs-large-icon-size;
+		display: inline-block;
+		height: $apiDocs-large-icon-size;
+		width: $apiDocs-large-icon-size;
+	}
+
+	&.cc-by {
+		background-image: url("/extensions/wikia/ApiDocs/files/license/cc-by.png");
+	}
+
+	&.cc-nc {
+		background-image: url("/extensions/wikia/ApiDocs/files/license/cc-nc.png");
+	}
+
+	&.cc-nd {
+		background-image: url("/extensions/wikia/ApiDocs/files/license/cc-nd.png");
+	}
+
+	&.cc-sa {
+		background-image: url("/extensions/wikia/ApiDocs/files/license/cc-sa.png");
+	}
+}

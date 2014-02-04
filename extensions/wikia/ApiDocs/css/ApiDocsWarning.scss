@@ -12,7 +12,7 @@
 	}
 
 	header {
-		background-color: $lightGray-c2;
+		background-color: $midGray-c3;
 		border-bottom: 1px solid;
 		line-height: 45px;
 		padding: 0 20px;
@@ -24,13 +24,25 @@
 	}
 
 	section {
+		min-height: 46px;
 		padding: 20px 20px;
 	}
 
 	aside.icons {
 		float: right;
-		width: 300px;
-		hieght: 50px;
+		padding: 16px 10px;
+
+		.icon {
+			display: none;
+			margin: 0 3px;
+		}
+
+		&.by > .icon.cc-by,
+		&.nd > .icon.cc-nd,
+		&.sa > .icon.cc-sa,
+		&.nc > .icon.cc-nc {
+			display: inline-block;
+		}
 	}
 }
 

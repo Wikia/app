@@ -11,7 +11,6 @@ $lightGray-c2: #f9f9f9;
 $midGray-c3: #e6e6e6;
 $gray-c4: #676767;
 $darkGray-c5: #333333;
-$footer-size: 60px;
 
 @mixin boxHeader {
 	color: $blue-c1;
@@ -121,7 +120,8 @@ body {
 @import "ApiDocsBox";
 @import "ApiDocsWarning";
 @import "ApiDocsEndpoint";
-@import "ApiDocsHeader";
+@import "ApiDocsMessage";
+@import "ApiDocsIcons";
 @import "ApiDocsParameter";
 @import "ApiDocsResponseClass";
 @import "ApiDocsResponseType";
@@ -129,5 +129,4 @@ body {
 @import "ApiDocsTry";
 @import "ApiDocsHighlight";
 @import "ApiDocsButtons";
-@import "ApiDocsFooter";
 

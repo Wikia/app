@@ -41,8 +41,19 @@ class DocsApiController extends WikiaController {
 		}
 	}
 
-	public function licenseMessage() { $this->response->setTemplateEngine( self::TEMPLATE_ENGINE ); }
-	public function licenseWarning() { $this->response->setTemplateEngine( self::TEMPLATE_ENGINE ); }
+	public function licenseMessage() {
+		$this->response->setTemplateEngine( self::TEMPLATE_ENGINE );
+	}
+
+	public function licenseWarning() {
+		$this->response->setTemplateEngine( self::TEMPLATE_ENGINE );
+		$this->response->setVal( 'licenseClasses', $this->getLicenseClassString() );
+		$this->response->setVal( 'licenseName', $this->app->wg->RightsText );
+	}
+
+	public function getLicenseClassString() {
+		return strtolower( implode( " ", $this->app->wg->RightsIcons ) );
+	}
 
 	/**
 	 *
