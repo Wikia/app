@@ -15,9 +15,21 @@ class VideoPageToolAssetTest extends WikiaBaseTest {
 	protected $programID;
 	protected $origMemc;
 
+	protected $dbMocked = false;
+	protected $dbConn = null;
+
 	public function setUp() {
-		global $wgCityId;
-		file_put_contents('/tmp/debug.out', "CITYID: ".$wgCityId."\n", FILE_APPEND);
+
+		$this->setupFile = dirname(__FILE__) . '/../VideoPageTool.setup.php';
+		parent::setUp();
+
+		if (!$this->dbMocked) {
+			$slaveDb = wfGetDB( DB_MASTER, [], 'video151' );
+			$this->dbConn = $slaveDb;
+
+			$this->mockGlobalFunction('wfGetDB', $slaveDb);
+			$this->dbMocked = true;
+		}
 
 		$this->mockGlobalVariable( 'wgUser', User::newFromName( 'Garthwebb' ) );
 
@@ -193,6 +205,9 @@ class VideoPageToolAssetTest extends WikiaBaseTest {
 	}
 
 	public function tearDown() {
-		$this->program->delete();
+		if ( !empty($this->program) ) {
+			$this->program->delete( false, $this->dbConn );
+		}
+		parent::tearDown();
 	}
 }

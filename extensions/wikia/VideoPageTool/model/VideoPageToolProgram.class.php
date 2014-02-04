@@ -758,7 +758,7 @@ class VideoPageToolProgram extends WikiaModel {
 	 * Removes the current program from the database
 	 * @param boolean $cascade Whether or not to cascade this delete to also delete dependent assets
 	 */
-	public function delete( $cascade = false ) {
+	public function delete( $cascade = false, $dbw = null ) {
 		wfProfileIn( __METHOD__ );
 
 		if ( $this->exists() ) {
@@ -771,15 +771,17 @@ class VideoPageToolProgram extends WikiaModel {
 				}
 			}
 
-			$this->deleteFromDatabase();
+			$this->deleteFromDatabase( $dbw );
 			$this->invalidateCache();
 		}
 
 		wfProfileOut( __METHOD__ );
 	}
 
-	protected function deleteFromDatabase() {
-		$dbw = wfGetDB(DB_MASTER);
+	protected function deleteFromDatabase( $dbw = null ) {
+		if ( !$dbw ) {
+			$dbw = wfGetDB(DB_MASTER);
+		}
 
 		( new WikiaSQL() )
 			->DELETE( 'vpt_program' )
