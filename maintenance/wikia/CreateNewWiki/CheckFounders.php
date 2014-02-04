@@ -10,6 +10,7 @@ define( 'CNW_MAINTENANCE_READ_ONLY', 2 );
 define( 'CNW_MAINTENANCE_NO_SHAREDDB_ERR', 3 );
 
 /** OTHER CONSTANTS **/
+define( 'CNW_MAINTENANCE_DATE_FORMAT', 'Ymd' );
 define( 'CNW_MAINTENANCE_MAX_DAYS_BACK', 365 );
 define( 'CNW_MAINTENANCE_LOG_LABEL', 'MOLI: ' );
 
@@ -34,6 +35,13 @@ function shouldDisplayHelp( $argv, $options ) {
 	}
 
 	return $out;
+}
+
+function getCreationDate( $interval ) {
+	$date = date( CNW_MAINTENANCE_DATE_FORMAT, strtotime( '-' . $interval . ' day' ) );
+	$date .= '000000';
+
+	return $date;
 }
 
 /**
@@ -63,11 +71,11 @@ function findInvalidFounders( $interval ) {
 		'l.city_founding_user <> 0',
 		'l.city_founding_user IS NOT NULL',
 		'u.user_id IS NULL',
-		"l.city_created > DATE( NOW() - INTERVAL $interval day )"
+		'l.city_created > \'' . getCreationDate( $interval ) . '\''
 	];
 	$options = [ 'DISTINCT' ];
 	$invalidFounders = [];
-
+	
 	try {
 		$resultWrapper = $db->select( $table, $fields, $where, __METHOD__, $options, $joins );
 		while( $row = $resultWrapper->fetchObject() ) {
