@@ -62,7 +62,8 @@ class  WikiaMobilePageHeaderService extends WikiaService {
 
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 
-		$out = $this->wg->Out;
+		$wg = $this->wg;
+		$out = $wg->Out;
 		$titleText = $out->getPageTitle();
 		$title = $out->getTitle();
 		$namespace = ($title instanceof Title) ? $title->getNamespace() : -1;
@@ -104,16 +105,16 @@ class  WikiaMobilePageHeaderService extends WikiaService {
 			}
 		}
 
-        //if(true){
-            $commentList = ArticleCommentList::newFromTitle( $title );
-            $numberOfComments = F::app()->wg->Lang->formatNum( $commentList->getCountAllNested() );
-            $this->response->setVal(
-                'commentCounter',
-                wfMessage( 'wikiamobile-comments' )
-                    ->params( $numberOfComments )
-                    ->text()
+		if( $wg->EnableArticleCommentsExt ){
+			$commentList = ArticleCommentList::newFromTitle( $title );
+			$numberOfComments = $wg->Lang->formatNum( $commentList->getCountAllNested() );
+			$this->response->setVal(
+				'commentCounter',
+				wfMessage( 'wikiamobile-comments' )
+					->params( $numberOfComments )
+					->text()
             );
-        //}
+		}
 
 		$this->response->setVal( 'editLink', $this->getTitleEditUrl() );
 
