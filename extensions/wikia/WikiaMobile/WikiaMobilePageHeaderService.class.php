@@ -79,6 +79,8 @@ class  WikiaMobilePageHeaderService extends WikiaService {
 
 				$userName = $user->getName();
 
+                $numberOfComments = 30;
+
 				if ( User::isIP( $userName ) ) {
 					//For anonymous users don't display IP
 					$userName = wfMessage( 'wikiamobile-anonymous-edited-by' )->text();
@@ -100,6 +102,13 @@ class  WikiaMobilePageHeaderService extends WikiaService {
 						->params( $userName )
 						->text()
 				);
+
+                $this->response->setVal(
+                    'commentsCounter',
+                    wfMessage( 'wikiamobile-comments' )
+                        ->params( $numberOfComments )
+                        ->text()
+                );
 			}
 		}
 
