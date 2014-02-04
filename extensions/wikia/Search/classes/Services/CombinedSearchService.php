@@ -230,7 +230,7 @@ class CombinedSearchService {
 			foreach( $requestedFields as $key => $field ) {
 				$keyValue = !is_numeric( $key ) ? $key : $field;
 				$value = $doc->{$field};
-				if ( !empty( $value ) ) {
+				if ( isset( $value ) ) {
 					$item[ $keyValue ] = $value;
 				}
 			}
