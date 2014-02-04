@@ -79,8 +79,6 @@ class  WikiaMobilePageHeaderService extends WikiaService {
 
 				$userName = $user->getName();
 
-                $numberOfComments = 30;
-
 				if ( User::isIP( $userName ) ) {
 					//For anonymous users don't display IP
 					$userName = wfMessage( 'wikiamobile-anonymous-edited-by' )->text();
@@ -103,14 +101,19 @@ class  WikiaMobilePageHeaderService extends WikiaService {
 						->text()
 				);
 
-                $this->response->setVal(
-                    'commentsCounter',
-                    wfMessage( 'wikiamobile-comments' )
-                        ->params( $numberOfComments )
-                        ->text()
-                );
 			}
 		}
+
+        //if(true){
+            $commentList = ArticleCommentList::newFromTitle( $title );
+            $numberOfComments = F::app()->wg->Lang->formatNum( $commentList->getCountAllNested() );
+            $this->response->setVal(
+                'commentCounter',
+                wfMessage( 'wikiamobile-comments' )
+                    ->params( $numberOfComments )
+                    ->text()
+            );
+        //}
 
 		$this->response->setVal( 'editLink', $this->getTitleEditUrl() );
 
