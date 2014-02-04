@@ -15,7 +15,6 @@ class VideoPageToolAssetTest extends WikiaBaseTest {
 	protected $programID;
 	protected $origMemc;
 
-	protected $dbMocked = false;
 	protected $dbConn = null;
 
 	public function setUp() {
@@ -23,13 +22,9 @@ class VideoPageToolAssetTest extends WikiaBaseTest {
 		$this->setupFile = dirname(__FILE__) . '/../VideoPageTool.setup.php';
 		parent::setUp();
 
-		if (!$this->dbMocked) {
-			$slaveDb = wfGetDB( DB_MASTER, [], 'video151' );
-			$this->dbConn = $slaveDb;
-
-			$this->mockGlobalFunction('wfGetDB', $slaveDb);
-			$this->dbMocked = true;
-		}
+		$slaveDb = wfGetDB( DB_MASTER, [], 'video151' );
+		$this->dbConn = $slaveDb;
+		$this->mockGlobalFunction('wfGetDB', $slaveDb);
 
 		$this->mockGlobalVariable( 'wgUser', User::newFromName( 'Garthwebb' ) );
 
