@@ -16,8 +16,9 @@ define( 'videohomepage.views.carousel', [
 
 	var CarouselView = OwlCarouselBase.extend( {
 		initialize: function() {
+			var total = parseInt( this.model.get( 'total' ), 10 );
 			this.collection = new CategoryDataCollection( this.model.get( 'thumbnails' ).slice( 0, 24 ) );
-			if ( this.collection.length ) {
+			if ( total > 24 ) {
 				this.collection.add( {
 					count: this.model.get( 'total' ),
 					label: this.model.get( 'seeMoreLabel' ),
