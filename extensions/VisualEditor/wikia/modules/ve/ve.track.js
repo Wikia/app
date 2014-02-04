@@ -47,6 +47,12 @@ require( ['wikia.tracker'], function ( tracker ) {
 
 				return params;
 			},
+			'error.createdocumentfromhtml': function ( data ) {
+				return {
+					'action': actions.ERROR,
+					'label': 'createdocumentfromhtml-' + data.message
+				};
+			},
 			'performance.system.activation': function ( data ) {
 				return {
 					'action': actions.IMPRESSION,

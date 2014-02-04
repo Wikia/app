@@ -6,7 +6,7 @@
  */
 
 ( function () {
-	var ve, hasOwn;
+	var ve, hasOwn, rSpecialChars, rWhiteSpace;
 
 	/**
 	 * Namespace for all VisualEditor classes, static methods and static properties.
@@ -21,6 +21,11 @@
 	/* Utility Functions */
 
 	hasOwn = Object.prototype.hasOwnProperty;
+
+	/* Static Properties */
+
+	rSpecialChars = /[^\w\d\s]/g;
+	rWhiteSpace = /\s/g;
 
 	/* Static Methods */
 
@@ -722,13 +727,28 @@
 		// object...), so we're detecting that and using the innerHTML hack described above.
 
 		// Create an invisible iframe
-		var newDocument, $iframe = $( '<iframe frameborder="0" width="0" height="0" />'),
+		var newDocument, newWindow,
+			$iframe = $( '<iframe frameborder="0" width="0" height="0" />'),
 			iframe = $iframe.get( 0 );
 		// Attach it to the document. We have to do this to get a new document out of it
 		document.documentElement.appendChild( iframe );
-		// Write the HTML to it
-		newDocument = ( iframe.contentWindow && iframe.contentWindow.document ) || iframe.contentDocument;
+		newWindow = ( iframe.contentWindow || iframe.contentDocument.defaultView );
+		newDocument = newWindow.document;
 		newDocument.open();
+		// Handle JavaScript errors inside the iframe. Note that the placement of this function
+		// here is intentional, it MUST be defined after the call to .open()!
+		newWindow.onerror = function( message ) {
+			ve.track( 'error.createdocumentfromhtml', {
+				message: message
+					.toLowerCase()
+					.replace( rSpecialChars, '' )
+					.replace( rWhiteSpace, '-' )
+			} );
+
+			// Suppress in-browser errors
+			return true;
+		};
+		// Write the HTML to it
 		newDocument.write( html ); // Party like it's 1995!
 		newDocument.close();
 		// Detach the iframe
