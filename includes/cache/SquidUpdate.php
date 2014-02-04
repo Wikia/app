@@ -240,7 +240,7 @@ class SquidUpdate {
 	 * @static
 	 */
 	static function ScribePurge( $urlArr ) {
-		global $wgEnableScribeReport;
+		global $wgEnableScribeReport, $wgCityId;
 		wfProfileIn( __METHOD__ );
 		$key = 'varnish_purges';
 
@@ -264,6 +264,12 @@ class SquidUpdate {
 					)
 				);
 				WScribeClient::singleton($key)->send($data);
+
+				// log purges using SFlow (BAC-1258)
+				Wikia\SFlow::operation('varnish.purge', [
+					'city' => $wgCityId,
+					'url' => $url
+				]);
 			}
 		}
 		catch( TException $e ) {
