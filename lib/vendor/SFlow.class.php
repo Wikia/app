@@ -68,7 +68,7 @@ class SFlow {
 			$payload = json_encode($data);
 			wfDebug( sprintf( "%s: sending '%s'\n", __METHOD__ , $payload ) );
 
-			fwrite($sock, json_encode($data));
+			fwrite($sock, $payload);
 			fclose($sock);
 		} catch(\Exception $e) {
 			\Wikia::log(__METHOD__, 'send', $e->getMessage(), true);
