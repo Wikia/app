@@ -10,6 +10,7 @@ define( 'CNW_MAINTENANCE_READ_ONLY', 2 );
 define( 'CNW_MAINTENANCE_NO_SHAREDDB_ERR', 3 );
 
 /** OTHER CONSTANTS **/
+define( 'CNW_MAINTENANCE_MAX_DAYS_BACK', 365 );
 define( 'CNW_MAINTENANCE_LOG_LABEL', 'MOLI: ' );
 
 /** FUNCTIONS' DEFINITIONS **/
@@ -36,86 +37,47 @@ function shouldDisplayHelp( $argv, $options ) {
 }
 
 /**
- * @brief Gets timestamp from passed options or returns result of time() function
- *
- * @param Array $options
- * @return int
- */
-function getTimestamp( $options ) {
-	$timestamp = isset( $options['timestamp'] ) ? $options['timestamp'] : time();
-	// edge case when somebody run the script with "--timestamp 1391005260" instead of "--timestamp=1391005260"
-	$timestamp = $timestamp > 1 ? $timestamp : time();
-	return (int) $timestamp;
-}
-
-/**
  * @brief Selects recent founders from DB
  *
  * @desc Returns false in case of DB error or array with found founders ids
  *
- * @param Integer $timestamp based on this timestamp the where condition is created
+ * @param Integer $interval number of days we should go back; default: 1; max: 365;
  *
  * @return array|bool
  */
-function findFounders( $timestamp ) {
+function findInvalidFounders( $interval ) {
 	global $wgExternalSharedDB;
 
-	$db = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
-	$startDate = $db->timestamp( strtotime( '-1 day', $timestamp ) );
-	$endDate = $db->timestamp( $timestamp );
-	$table = 'city_list';
-	$fields = [ 'city_founding_user' ];
-	$where = [ 'city_founding_user > 0', "city_created between '$startDate' and '$endDate'" ];
-	$founders = [];
-
-	try {
-		$resultWrapper = $db->select( $table, $fields, $where, __METHOD__ );
-		while( $row = $resultWrapper->fetchObject() ) {
-			$founders[] = $row->city_founding_user;
-		}
-
-		return $founders;
-	} catch( DBQueryError $e ) {
-		echo "Database error: " . $e->getMessage() . PHP_EOL;
-		echo "SQL statement was: " . $e->getSQL() . PHP_EOL . PHP_EOL;
-		return false;
-	}
-}
-
-/**
- * @brief Checks if recent founders are present in wikicities.user table if now there are returned as "invalid founders"
- *
- * @param Array $founders list of ids of recent founders from wikicities.city_list table
- *
- * @return array|bool
- */
-function findInvalidFounders( $founders ) {
-	global $wgExternalSharedDB;
+	$interval = intval( $interval );
+	$interval = ( $interval <= 0 || $interval > CNW_MAINTENANCE_MAX_DAYS_BACK ) ? 1 : $interval;
 
 	$db = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
-	$table = '`user`';
-	$fields = [ 'user_id' ];
-	$where = [ 'user_id in (' . $db->makeList( $founders ) . ')' ];
-	// $invalidFounders are users who founded a wiki but are not in wikicities.user table
+
+	$table = [ 'l' => 'city_list', 'u' => '`user`' ];
+	$fields = [ 'l.city_founding_user' ];
+	$joins = [ 'u' => [
+		'LEFT JOIN',
+		'l.city_founding_user = u.user_id'
+	] ];
+	$where = [
+		'l.city_founding_user <> 0',
+		'l.city_founding_user IS NOT NULL',
+		'u.user_id IS NULL',
+		"l.city_created > DATE( NOW() - INTERVAL $interval day )"
+	];
+	$options = [ 'distinct' => true ];
 	$invalidFounders = [];
-	$recentUsers = [];
-	$recentFoundersNo = count( $founders );
 
 	try {
-		$resultWrapper = $db->select( $table, $fields, $where, __METHOD__ );
+		$resultWrapper = $db->select( $table, $fields, $where, __METHOD__, $options, $joins );
 		while( $row = $resultWrapper->fetchObject() ) {
-			$recentUsers[] = $row->user_id;
-		}
-		$recentUsersNo = count( $recentUsers );
-
-		if( $recentFoundersNo > $recentUsersNo ) {
-			$invalidFounders = array_diff( $founders, $recentUsers );
+			$invalidFounders[] = $row->city_founding_user;
 		}
 
 		return $invalidFounders;
 	} catch( DBQueryError $e ) {
 		echo "Database error: " . $e->getMessage() . PHP_EOL;
-		echo "SQL statement was: " . $e->getSQL()  . PHP_EOL . PHP_EOL;
+		echo "SQL statement was: " . $e->getSQL() . PHP_EOL . PHP_EOL;
 		return false;
 	}
 }
@@ -128,8 +90,7 @@ function help() {
 	echo "If he's not present in the table then he's marked as 'invalid founder'." . PHP_EOL;
 	echo "Available options:" . PHP_EOL;
 	echo "\thelp or ? -- displays this text" . PHP_EOL;
-	echo "\ttimestamp -- (optional) the end date in 'between' condition while selecting recent founders;"
-		 . " default: time() result" . PHP_EOL . PHP_EOL;
+	echo "\tinterval -- (optional) how many days back we should check; default: 1 day; max: 365;" . PHP_EOL . PHP_EOL;
 }
 
 /** APPLICATION **/
@@ -150,28 +111,18 @@ if( empty( $wgExternalSharedDB ) ) {
 	exit( CNW_MAINTENANCE_NO_SHAREDDB_ERR );
 }
 
-$timestamp = getTimestamp( $options );
-$founders = findFounders( $timestamp );
+$interval = ( isset( $options['interval'] ) ? $options['interval'] : false );
+$invalidFounders = findInvalidFounders( $interval );
 
-if( $founders === false ) {
+if( $invalidFounders === false ) {
 	exit( CNW_MAINTENANCE_DB_ERROR );
-} else if( empty( $founders ) ) {
-	echo "No recent founders found." . PHP_EOL . PHP_EOL;
+} else if( empty( $invalidFounders ) ) {
+	echo "No invalid founders found." . PHP_EOL . PHP_EOL;
 	exit( CNW_MAINTENANCE_SUCCESS );
 } else {
-	echo 'Founders found: ' . implode( ', ', $founders ) . PHP_EOL;
-	$invalidFounders = findInvalidFounders( $founders );
-
-	if( $invalidFounders === false ) {
-		exit( CNW_MAINTENANCE_DB_ERROR );
-	} else if( empty( $invalidFounders ) ) {
-		echo "No invalid founders found." . PHP_EOL . PHP_EOL;
-		exit( CNW_MAINTENANCE_SUCCESS );
-	} else {
 	// once "invalid founder" is found display the message and add it to our logs with MOLI: label
-		$msg = 'Invalid founders found: ' . implode( ', ', $invalidFounders );
-		echo $msg . PHP_EOL . PHP_EOL;
-		Wikia::log( __METHOD__, false, CNW_MAINTENANCE_LOG_LABEL . $msg );
-		exit( CNW_MAINTENANCE_SUCCESS );
-	}
+	$msg = 'Invalid founders found: ' . implode( ', ', $invalidFounders );
+	echo $msg . PHP_EOL . PHP_EOL;
+	Wikia::log( __METHOD__, false, CNW_MAINTENANCE_LOG_LABEL . $msg );
+	exit( CNW_MAINTENANCE_SUCCESS );
 }
