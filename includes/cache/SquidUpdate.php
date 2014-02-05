@@ -268,7 +268,8 @@ class SquidUpdate {
 				// log purges using SFlow (BAC-1258)
 				Wikia\SFlow::operation('varnish.purge', [
 					'city' => $wgCityId,
-					'url' => $url
+					'url' => $url,
+					'method' => self::getPurgeCaller()
 				]);
 			}
 		}
@@ -277,6 +278,29 @@ class SquidUpdate {
 		}
 
 		wfProfileOut( __METHOD__ );
+	}
+
+	/**
+	 * Return the name of the method (outside of internal code) that triggered purge request
+	 *
+	 * @return bool|string method name
+	 */
+	private static function getPurgeCaller() {
+		// analyze the backtrace to log the source of purge requests
+		$backtrace = wfDebugBacktrace();
+		$method = '';
+
+		while($entry = array_shift($backtrace)) {
+			// ignore "internal" classes
+			if (empty($entry['class']) || in_array($entry['class'], [__CLASS__, 'WikiPage', 'Article', 'Title'])) {
+				continue;
+			}
+
+			$method = $entry['class'] . ':' . $entry['function'];
+			break;
+		}
+
+		return $method;
 	}
 
 	/**
