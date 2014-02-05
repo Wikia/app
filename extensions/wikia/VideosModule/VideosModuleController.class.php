@@ -20,17 +20,17 @@ class VideosModuleController extends WikiaController {
 		$articleId = $this->request->getVal( 'articleId', 0 );
 		$showVerticalOnly = $this->request->getVal( 'verticalonly', 0 );
 
-		if ( !$articleId ) {
-			$this->result = 'error';
-			$this->msg = wfMessage( 'videosmodule-error-no-articleId' )->plain();
-			wfProfileOut(__METHOD__);
-			return;
-		}
-
 		$videos = [];
 		$helper = new VideosModuleHelper();
 
 		if ( empty( $showVerticalOnly ) ) {
+			if ( empty( $articleId ) ) {
+				$this->result = 'error';
+				$this->msg = wfMessage( 'videosmodule-error-no-articleId' )->plain();
+				wfProfileOut( __METHOD__ );
+				return;
+			}
+
 			// get article related videos
 			$videos = $helper->getArticleRelatedVideos( $articleId );
 
