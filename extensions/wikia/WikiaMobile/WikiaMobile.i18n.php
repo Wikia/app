@@ -25,7 +25,6 @@ $messages['en'] = array(
 	'wikiamobile-last-edited-on' => 'Last edited on $1',
 	'wikiamobile-last-edited-by' => 'by $1',
 	'wikiamobile-anonymous-edited-by' => 'Anonymous',
-    'wikiamobile-comments' => '$1 {{PLURAL:$1|Comment|Comments}}',
 
 	//footer
 	'wikiamobile-footer-link-lifestyle' => '[[w:c:www:Lifestyle|Lifestyle]]',
