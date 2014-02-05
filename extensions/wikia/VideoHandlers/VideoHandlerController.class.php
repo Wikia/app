@@ -260,11 +260,12 @@ class VideoHandlerController extends WikiaController {
 		$getThumb = $this->getVal( 'getThumb', false );
 
 		$helper = new VideoHandlerHelper();
-		$videoDetail = $helper->getVideoDetail( array('title' => $fileTitle),
-												$thumbWidth,
-												$thumbHeight,
-												$articleLimit,
-												$getThumb
+		$videoDetail = $helper->getVideoDetail(
+			[ 'title' => $fileTitle ],
+			$thumbWidth,
+			$thumbHeight,
+			$articleLimit,
+			$getThumb
 		);
 		$this->detail = $videoDetail;
 
@@ -291,6 +292,9 @@ class VideoHandlerController extends WikiaController {
 		$category = $this->getVal( 'category', '' );
 
 		$filter = 'all';
+		if ( is_string( $providers ) ) {
+			$providers = [ $providers ];
+		}
 
 		$mediaService = new MediaQueryService();
 		$videoList = $mediaService->getVideoList( $sort, $filter, $limit, $page, $providers, $category );
