@@ -20,7 +20,16 @@ class VideoPageToolAssetTest extends WikiaBaseTest {
 		$this->setupFile = dirname(__FILE__) . '/../VideoPageTool.setup.php';
 		parent::setUp();
 
-		$this->mockGlobalVariable( 'wgUser', User::newFromName( 'Garthwebb' ) );
+		$mock_user = $this->getMock( 'User', [ 'getId', 'getName' ]);
+		$mock_user->expects( $this->any() )
+			->method( 'getId' )
+			->will( $this->returnValue( 123 ) );
+
+		$mock_user->expects( $this->any() )
+			->method( 'getName' )
+			->will( $this->returnValue( 'Garthwebb' ) );
+
+		$this->mockGlobalVariable('wgUser', $mock_user);
 
 		/*
 		 * That's pretty bad, as we will return master db connection for all wfGetDB calls, even those for slave and
