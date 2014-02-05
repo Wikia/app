@@ -2273,6 +2273,7 @@ $messages['ne'] = array(
 
 /** Dutch (Nederlands)
  * @author AvatarTeam
+ * @author Flightmare
  * @author SPQRobin
  * @author Siebrand
  * @author Tjcool007
@@ -2341,7 +2342,7 @@ Neem contact op met deze gebruiker voor meer informatie.',
 	'chat-user-menu-contribs' => 'Bijdragen',
 	'chat-user-menu-private' => 'Privébericht',
 	'chat-user-menu-give-chat-mod' => 'Status van chatmoderator weergeven',
-	'chat-user-menu-kick' => 'Verbannen',
+	'chat-user-menu-kick' => 'Kick',
 	'chat-user-menu-ban' => 'Verbannen',
 	'chat-user-menu-private-block' => 'Privéberichten blokkeren',
 	'chat-user-menu-private-allow' => 'Privéberichten toestaan',
@@ -2609,7 +2610,7 @@ $messages['ps'] = array(
 	'chat-log-reason-banremove' => 'هېڅ سبب نه دی ورکړ شوی',
 	'chat-live2' => 'ژوندی! بانډار',
 	'chat-start-a-chat' => 'بانډار پيلول',
-	'chat-join-the-chat' => 'بانډار کې ورګډېدل',
+	'chat-join-the-chat' => 'بانډار کې ورگډ شئ',
 	'chat-edit-count' => '{{PLURAL:$1|$1 سمون|$1 سمونونه}}',
 	'chat-member-since' => 'له $1 راهيسې غړی دی',
 	'chat-user-menu-message-wall' => 'پيغام دېوال',

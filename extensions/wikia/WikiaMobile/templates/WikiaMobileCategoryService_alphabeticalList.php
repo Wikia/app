@@ -20,7 +20,7 @@
 	$urlSafeIndex = urlencode( $index );
 	$id = 'catAlpha' . $urlSafeIndex;
 	?>
-	<h2 id="<?= $id ;?>" data-count="<?= $wg->ContLang->formatNum( $itemsBatch['total'] ) ;?>"><?= strtoupper( $index ) ;?></h2>
+	<h2 id="<?= $id ;?>" data-count="<?= $wg->ContLang->formatNum( $itemsBatch['total'] ) ;?>"><?= $index; ?></h2>
 	<section class=artSec id="<?= $urlSafeIndex; ?>" data-batches=<?= $itemsBatch['batches'] ;?>>
 		<a class="pagLess<?= ( $currentBatch > 1 ? ' visible' : '' ) ;?>" data-batch="<?=$prevBatch?>" href="?page=<?=$prevBatch;?>&index=<?=$urlSafeIndex;?>#<?=$id;?>"><?= wfMessage( 'wikiamobile-category-items-prev' )->text() ;?></a>
 		<?= $app->getView( 'WikiaMobileCategoryService', 'getBatch', array( 'itemsBatch' => $itemsBatch['items'] ) ) ;?>

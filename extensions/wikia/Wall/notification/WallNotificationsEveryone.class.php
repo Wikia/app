@@ -285,7 +285,7 @@ class WallNotificationsEveryone extends WallNotifications {
 			foreach ( $wikis as $wikiId => $uniqueIds ) {
 				if( $this->isCachedData( $userId, $wikiId ) ) {
 					$memCacheSync = $this->getCache( $userId, $wikiId );
-					$this->lockAndSetData( $memCacheSync,
+					$memCacheSync->lockAndSetData(
 						function() use( $memCacheSync, $userId, $wikiId, $uniqueIds ) {
 							$data = $this->getData( $memCacheSync, $userId, $wikiId );
 							foreach ( $uniqueIds as $uniqueId ) {

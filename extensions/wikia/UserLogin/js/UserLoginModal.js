@@ -10,6 +10,14 @@ var UserLoginModal = {
 
 		var that = this;
 
+		require( ['wikia.tracker'], function( tracker ) {
+			that.trackerActions = tracker.ACTIONS;
+			that.track = tracker.buildTrackingFunction( {
+				category: 'force-login-modal',
+				trackingMethod: 'both'
+			} );
+		} );
+
 		$.when(
 				Wikia.getMultiTypePackage( {
 					templates: [
@@ -29,7 +37,7 @@ var UserLoginModal = {
 					that.uiFactory = uiFactory;
 					that.packagesData = packagesData;
 
-					window.UserLoginFacebook && window.UserLoginFacebook.init();
+					window.UserLoginFacebook && window.UserLoginFacebook.init( window.UserLoginFacebook.origins.MODAL );
 
 					that.buildModal( options );
 				} );
@@ -39,7 +47,9 @@ var UserLoginModal = {
 	buildModal: function(options) {
 		'use strict';
 
-		var that = this;
+		var that = this,
+			origin = '',
+			clickAction = this.trackerActions.CLICK;
 
 		this.uiFactory.init( 'modal' ).then( function ( uiModal ) {
 			var modalConfig = {
@@ -56,7 +66,9 @@ var UserLoginModal = {
 			uiModal.createComponent( modalConfig, function ( loginModal ) {
 				UserLoginModal.$modal = loginModal;
 
-				UserLoginModal.loginAjaxForm = new window.UserLoginAjaxForm( loginModal.$element, {
+				var $loginModal = loginModal.$element;
+
+				UserLoginModal.loginAjaxForm = new window.UserLoginAjaxForm( $loginModal, {
 					ajaxLogin: true,
 					callback: function ( res ) {
 						window.wgUserName = res.username;
@@ -84,8 +96,8 @@ var UserLoginModal = {
 							callback: function ( html ) {
 								var content = $( '<div style="display:none" />' ).append( html ),
 									heading = content.find( 'h1' ),
-									modal = UserLoginModal.$modal,
-									contentBlock = modal.$element.find( '.UserLoginModal' );
+									modal = loginModal,
+									contentBlock = $loginModal.find( '.UserLoginModal' );
 
 								modal.setTitle( heading.text() );
 								heading.remove();
@@ -103,6 +115,43 @@ var UserLoginModal = {
 				if ( options.modalInitCallback && typeof options.modalInitCallback === 'function' ) {
 					options.modalInitCallback();
 				}
+
+				if ( options.origin ) {
+					origin = options.origin;
+				}
+
+				that.track( {
+					action: that.trackerActions.OPEN,
+					label: 'from-' + origin
+				} );
+
+				// Click tracking
+				$loginModal.on( 'click', '.forgot-password', function() {
+					that.track( {
+						action: clickAction,
+						label: 'forgot-password'
+					} );
+				} ).on( 'click', 'input.keep-logged-in', function() {
+					that.track( {
+						action: clickAction,
+						label: 'keep-me-logged-in'
+					} );
+				} ).on( 'click', '.get-account a', function() {
+					that.track( {
+						action: clickAction,
+						label: 'sign-up-from-' + origin
+					} );
+				} ).on( 'click', '.sso-login-facebook', function() {
+					that.track( {
+						action: clickAction,
+						label: 'facebook-connect'
+					} );
+				}).on( 'click', 'input.login-button', function(event) {
+					that.track( {
+						action: clickAction,
+						label: 'login-from-'  + origin
+					} );
+				} );
 			} );
 		} );
 	},

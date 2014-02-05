@@ -1,14 +1,14 @@
-@import "../../../../skins/oasis/css/core/color";
+@import "skins/oasis/css/core/color";
 
 @mixin submitpane {
 	margin-top: 30px;
-	width: 318px;
-	input[type=submit] {
-		width: 318px;
-	}
+
 	p {
 		color: $color-alternate-text;
 		line-height: 18px;
 		margin: 0 0 15px 0;
+	}
+	input[type=submit] {
+		width: 100%;
 	}
 }

@@ -31,7 +31,8 @@
 					showEmailModal = function () {
 						SharingToolbar.showEmailModal( shareEmailLabel, sendLabel, shareEmailLabelAddress,
 							cancelLabel );
-					};
+					},
+					UserLoginModal = window.UserLoginModal;
 
 				if ( window.wgUserName === null ) {
 					if ( window.wgComboAjaxLogin ) {
@@ -45,7 +46,8 @@
 							};
 						}, false, true );
 					} else {
-						window.UserLoginModal.show( {
+						UserLoginModal.show( {
+							origin: 'sharing-toolbar',
 							callback: function () {
 								window.UserLogin.forceLoggedIn = true;
 								showEmailModal();
@@ -109,7 +111,7 @@
 									format: 'json',
 									data: {
 										pageName: window.wgPageName,
-										addresses: $( '#shareEmailModal #lightbox-share-email-text' ).val(),
+										addresses: $( '#lightbox-share-email-text' ).val(),
 										messageId: 1
 									},
 									callback: function ( data ) {
@@ -137,7 +139,7 @@
 
 										// close email modal when share is successful (BugId:16061)
 										if ( result.success ) {
-											$( '#ShareEmailModal' ).trigger( 'close' );
+											shareEmailModal.trigger( 'close' );
 
 											window.UserLogin.refreshIfAfterForceLogin();
 										}

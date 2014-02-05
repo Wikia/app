@@ -157,21 +157,22 @@ var ChatEntryPoint = {
 		});
 	},
 
-	onClickChatButton: function(linkToSpecialChat) {
-		if (window.wgUserName) {
-			window.open(linkToSpecialChat, 'wikiachat', window.wgWikiaChatWindowFeatures);
+	onClickChatButton: function( linkToSpecialChat ) {
+		'use strict';
+
+		var UserLoginModal = window.UserLoginModal;
+
+		if ( window.wgUserName ) {
+			window.open( linkToSpecialChat, 'wikiachat', window.wgWikiaChatWindowFeatures );
 		} else {
-			UserLoginModal.show({
-				persistModal: true,
+			UserLoginModal.show( {
+				origin: 'chat',
 				callback: ChatEntryPoint.onSuccessfulLogin
-			});
+			} );
 		}
 	},
 
 	onSuccessfulLogin: function(json) {
-		/* Quick hack, we shouldn't access UserLoginModal.$modal here. Maybe modal can provide new event launched
-		   between onSuccess and onClose and we can hook into it. */
-		UserLoginModal.$modal.$element.startThrobbing();
 		$.nirvana.sendRequest({
 			controller: 'ChatRail',
 			method: 'AnonLoginSuccess',
@@ -182,8 +183,6 @@ var ChatEntryPoint = {
 	},
 
 	onJoinChatFormLoaded: function( html ) {
-		UserLoginModal.$modal.$element.stopThrobbing();
-		UserLoginModal.$modal.trigger('close');
 
 		require( [ 'wikia.ui.factory' ], function( uiFactory ) {
 			uiFactory.init( 'modal' ).then( function( uiModal ) {

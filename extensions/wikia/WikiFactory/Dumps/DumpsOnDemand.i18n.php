@@ -53,6 +53,7 @@ Wikia maak outomaties rugsteunkopieë van alle wiki's.",
 /** Arabic (العربية)
  * @author Achraf94
  * @author Alexknight12
+ * @author Claw eg
  * @author DRIHEM
  */
 $messages['ar'] = array(
@@ -68,11 +69,20 @@ $messages['ar'] = array(
 	'dump-database-request-already-submitted' => 'تم طلب المقلب مؤخرا (منذ 7 أيام على الأقل)',
 	'dump-database-request-requested' => 'طلب بعث قاعدة البيانات',
 	'dump-database-info-more' => 'الرجاء <a href="http://community.wikia.com/wiki/Help:Database_download">قراءة هذا</a> لمزيد من المعلومات',
+	'dump-database-last-unknown' => 'غير معروف',
+);
+
+/** Azerbaijani (azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'dump-database-last-unknown' => 'Naməlum',
 );
 
 /** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
  * @author EugeneZelenko
  * @author Jim-by
+ * @author Red Winged Duck
  */
 $messages['be-tarask'] = array(
 	'dump-database' => 'Копіі базы зьвестак',
@@ -87,6 +97,7 @@ $messages['be-tarask'] = array(
 	'dump-database-request-already-submitted' => 'Копія была запытаная нядаўна (меней 7 дзён таму)',
 	'dump-database-request-requested' => 'Запыт копіі базы зьвестак дасланы',
 	'dump-database-info-more' => 'Калі ласка, глядзіце дадатковую інфармацыю <a href="http://community.wikia.com/wiki/Help:Database_download">тут</a>',
+	'dump-database-last-unknown' => 'Невядома',
 );
 
 /** Bulgarian (български)

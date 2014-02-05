@@ -102,7 +102,7 @@ var SlotTracker = function (log, tracker) {
 					ga_category: gaCategory,
 					ga_action: gaAction,
 					ga_label: gaLabel,
-					ga_value: gaValue,
+					ga_value: Math.round(gaValue),
 					trackingMethod: 'ad'
 				});
 			} else {
@@ -155,7 +155,7 @@ var SlotTracker = function (log, tracker) {
 						slotname: slotname,
 						state: eventsTracked.join(',')
 					},
-					lastEventTime
+					lastEventTime * 1000
 				);
 			}, timeCheckPoint * 1000);
 		}
@@ -175,7 +175,7 @@ var SlotTracker = function (log, tracker) {
 					timeBucket: timeBucket,
 					extraParams: extraParams
 				},
-				timeElapsed
+				timeElapsed * 1000
 			);
 		}
 

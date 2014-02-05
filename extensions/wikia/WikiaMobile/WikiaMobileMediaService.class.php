@@ -103,7 +103,10 @@ class WikiaMobileMediaService extends WikiaService {
 						$capt = $parser->internalParse( $item['caption'] );
 						$parser->replaceLinkHolders( $capt );
 
-						$info['capt'] = $capt;
+						//Kill all markers from gallery caption as if at this time they are not converted to HTML
+						//We want have chance to Json encode it and this might really brake gallery HTML
+						//https://wikia-inc.atlassian.net/browse/MOB-346
+						$info['capt'] = $parser->killMarkers( $capt );
 					}
 
 					$params[] = $info;

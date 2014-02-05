@@ -228,9 +228,10 @@ class VideoHandlerHelper extends WikiaModel {
 	 * @param integer $thumbWidth
 	 * @param integer $thumbHeight
 	 * @param integer $postedInArticles
+	 * @param bool $getThumb
 	 * @return array $videoDetail
 	 */
-	public function getVideoDetail( $videoInfo, $thumbWidth, $thumbHeight, $postedInArticles ) {
+	public function getVideoDetail( $videoInfo, $thumbWidth, $thumbHeight, $postedInArticles, $getThumb = false ) {
 		wfProfileIn( __METHOD__ );
 
 		$videoDetail = array();
@@ -249,6 +250,11 @@ class VideoHandlerHelper extends WikiaModel {
 			} else {
 				$userName = '';
 				$userUrl = '';
+			}
+
+			$thumbNail = '';
+			if ( $getThumb ) {
+				$thumbNail = $thumb->toHtml( [ 'useTemplate' => true ] );
 			}
 
 			// get article list
@@ -272,6 +278,7 @@ class VideoHandlerHelper extends WikiaModel {
 				'viewsTotal' => empty($videoInfo['viewsTotal']) ? 0 : $videoInfo['viewsTotal'],
 				'provider' => $file->getProviderName(),
 				'embedUrl' => $file->getHandler()->getEmbedUrl(),
+				'thumbnail' => $thumbNail
 			);
 		} else {
 			Wikia::Log(__METHOD__, false, "No file found for '".$videoInfo['title']."'");
@@ -290,15 +297,17 @@ class VideoHandlerHelper extends WikiaModel {
 	 * @param $thumbWidth - The width of the thumbnail to return
 	 * @param $thumbHeight - The height of the thumbnail to return
 	 * @param $postedInArticles - Cap on number of "posted in" article details to return
+	 * @param $getThumb - Whether to return a fully formed html thumbnail of the video or not
 	 * @return null|array - As associative array of video information
 	 */
-	public function getVideoDetailFromWiki( $dbName, $title, $thumbWidth, $thumbHeight, $postedInArticles ) {
+	public function getVideoDetailFromWiki( $dbName, $title, $thumbWidth, $thumbHeight, $postedInArticles, $getThumb = false ) {
 		$params = array('controller'   => 'VideoHandler',
 						'method'       => 'getVideoDetail',
 						'fileTitle'    => $title,
 						'thumbWidth'   => $thumbWidth,
 						'thumbHeight'  => $thumbHeight,
 						'articleLimit' => $postedInArticles,
+						'getThumb'     => $getThumb
 		);
 
 		$response = ApiService::foreignCall( $dbName, $params, ApiService::WIKIA );
@@ -378,11 +387,11 @@ class VideoHandlerHelper extends WikiaModel {
 
 	/**
 	 * Reset the video thumbnail to its original image as defined by the video provider
-	 *
 	 * @param File $file The video file to reset
+	 * @param string|null $thumbnailUrl
 	 * @return FileRepoStatus The status of the publish operation
 	 */
-	public function resetVideoThumb( File $file ) {
+	public function resetVideoThumb( File $file, $thumbnailUrl = null ) {
 		$mime = $file->getMimeType();
 		list(, $provider) = explode('/', $mime);
 		$videoId = $file->getVideoId();
@@ -392,7 +401,11 @@ class VideoHandlerHelper extends WikiaModel {
 		$oUploader->setProvider( $provider );
 		$oUploader->setVideoId( $videoId );
 		$oUploader->setTargetTitle( $title->getDBkey() );
-		$result = $oUploader->resetThumbnail( $file );
+		if ( empty( $thumbnailUrl ) ) {
+			$thumbnailUrl = $oUploader->getApiWrapper()->getThumbnailUrl();
+		}
+
+		$result = $oUploader->resetThumbnail( $file, $thumbnailUrl );
 
 		if ( $result->isGood() ) {
 			// update data and clear cache

@@ -305,6 +305,7 @@ $messages['az'] = array(
 	'myhome-feed-new-blog-comment-details' => 'Şərh',
 	'myhome-feed-new-article-comment-details' => 'Şərh',
 	'myhome-feed-redirect-details' => 'İstiqamətləndirmə',
+	'myhome-hot-spots-number-of-editors' => 'redaktorlar',
 	'myhome-namespace-blog' => 'Bloq',
 );
 
@@ -750,11 +751,12 @@ $messages['cy'] = array(
  * @author Kjell
  * @author LWChris
  * @author Metalhead64
+ * @author PtM
  * @author The Evil IP address
  * @author Umherirrender
  */
 $messages['de'] = array(
-	'myhome-desc' => 'Eine private Homepage für angemeldete Benutzer',
+	'myhome-desc' => 'Eine wikiaspezifische Übersichtsseite auf Aktivitäten (Edits, Blogposts, Comments, Forumposts) im Wiki.',
 	'myhome' => 'Startseite',
 	'wikiactivity' => 'Wiki-Aktivität',
 	'myhome-activity-more' => 'mehr kürzliche Änderungen',
@@ -2001,6 +2003,7 @@ $messages['ja'] = array(
 	'myhome-hot-spots-feed' => 'ホットスポット',
 	'myhome-hot-spots-feed-empty' => "このウィキはあなたの参加者を待っています。'''[[Special:CreatePage|編集に参加]]'''してみませんか？",
 	'myhome-hot-spots-newest' => 'このウィキの新しいページ',
+	'tog-userlandingpage' => '初期ページ:',
 	'prefs-myhome' => 'ウィキアクティビティ',
 	'myhome-feed-newpage' => '新しいページ',
 	'myhome-feed-edit' => '編集',
@@ -2190,13 +2193,13 @@ $messages['mk'] = array(
 	'wikiactivity' => 'Активности на викито',
 	'myhome-activity-more' => 'понови активности',
 	'myhome-activity-feed' => 'Канал со најнови активности',
-	'myhome-activity-feed-empty' => "Ова вики чека на вашето учество. Кликнете на '''[[Special:CreatePage|Нова страница]]''' за да почнете да пишувате!",
+	'myhome-activity-feed-empty' => "Ова вики чека на вашето учество. Стиснете на '''[[Special:CreatePage|Нова страница]]''' за да почнете да пишувате!",
 	'myhome-watchlist-feed' => 'Набљудувања',
 	'myhome-watchlist-feed-empty' => 'Можете да додавате страници во списокот на набљудувања со притискање на врската „{{int:watch}}“ во лентата на врвот од страницата. 
 Со списокот можете да ги следите најновите промени во страниците за кои сте заинтересирани.',
 	'myhome-user-contributions-feed' => 'Придонеси',
 	'myhome-hot-spots-feed' => 'Најактивни места',
-	'myhome-hot-spots-feed-empty' => "Ова вики чека на вашето учество. Кликнете на '''[[Special:CreatePage|Нова страница]]''' за да почнете да пишувате!",
+	'myhome-hot-spots-feed-empty' => "Ова вики чека на вашето учество. Стиснете на '''[[Special:CreatePage|Нова страница]]''' за да почнете да пишувате!",
 	'myhome-hot-spots-newest' => 'Нови страници на викито',
 	'tog-userlandingpage' => 'Целна страница:',
 	'prefs-myhome' => 'Моја домашна',
@@ -2231,7 +2234,7 @@ $messages['mk'] = array(
 	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|Додадена фотографија|Додадени фотографии}}',
 	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|Додадена видеоснимка|Додадени видеоснимки}}',
 	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Додадена категорија|Додадени категории}}',
-	'myhome-user-contributions-empty' => 'Можете да се приклучите на ова вики со тоа што ќе кликнете на „{{int:editthispage}}“ не било која статија, и ќе го додадете она од коешто имате познавања. 
+	'myhome-user-contributions-empty' => 'Можете да се приклучите на ова вики со тоа што ќе стиснете на „{{int:editthispage}}“ не било која статија, и ќе го додадете она од коешто имате познавања. 
 Секој може да прави измени, да додава информации и да поправа грешки. 
 Викито го гради заедницата, и штом еднаш ќе го стиснете копчето за уредување, веќе станувате дел од таа заедница. Испробајте!',
 	'myhome-hot-spots-number-of-editors' => 'уредници',

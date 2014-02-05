@@ -95,11 +95,6 @@ class WikiFactory {
 		"hash"
 	);
 
-	/**
-	 * list of valid database clusters used for creating wikis
-	 */
-	static public $clusters = array( "c1", "c2", "c3", "c4" );
-
 	static public $levels = array(
 		1 => "read only",
 		2 => "editable by staff",
@@ -791,8 +786,9 @@ class WikiFactory {
 	static public function removeVarById( $variable_id, $wiki, $reason=null ) {
 		$bStatus = false;
 		wfProfileIn( __METHOD__ );
-		$dbw = self::db( DB_MASTER );
 
+		$variable = self::getVarById( $variable_id, $wiki );
+		$dbw = self::db( DB_MASTER );
 		$dbw->begin();
 		try {
 			if ( isset($variable_id) && isset($wiki) ) {
@@ -809,6 +805,8 @@ class WikiFactory {
 				$dbw->commit();
 				$bStatus = true;
 				self::clearCache( $wiki );
+
+				wfRunHooks( 'WikiFactoryVariableRemoved', array( $variable->cv_name , $wiki ) );
 			}
 		}
 		catch ( DBQueryError $e ) {
@@ -2966,20 +2964,6 @@ class WikiFactory {
 
 		wfProfileOut( __METHOD__ );
 		return $clusters;
-	}
-
-	/**
-	 * isValidCluster -- check if name is valid cluster (c1, c2, c3, ... )
-	 *
-	 * @author Krzysztof Krzyżaniak (eloy) <eloy@wikia-inc.com>
-	 * @access public
-	 * @static
-	 *
-	 * @param string $cluster cluster name
-	 * @return bool
-	 */
-	static public function isValidCluster( $cluster ) {
-		return in_array( $cluster, self::$clusters );
 	}
 
 	/**

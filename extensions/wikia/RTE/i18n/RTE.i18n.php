@@ -67,6 +67,13 @@ $messages['ar'] = array(
 	'prefs-rte' => 'محرر النص المتطور',
 );
 
+/** Azerbaijani (azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'rte-edgecase-redirect' => 'yönləndirmə',
+);
+
 /** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
  * @author EugeneZelenko
  * @author Jim-by
