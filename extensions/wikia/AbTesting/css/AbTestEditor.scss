@@ -8,8 +8,8 @@ $abTesting-color-hover: mix($color-page, $color-text, 80);
 $abTesting-color-text-warning: #c27500;
 
 .running {
-	font-weight: bold;
 	color: green;
+	font-weight: bold;
 }
 .not-running {
 	color: red;

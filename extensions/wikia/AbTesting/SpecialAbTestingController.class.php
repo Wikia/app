@@ -13,8 +13,10 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 
 	public function calcGeneralInformation(&$experiment) {
 		$gaSlots  = [ ];
+		// we need timestamp in UTC, regardless of current timezone (ie. devboxes)
 		$now      = strtotime( gmdate( "M d Y H:i:s", time() ) );
 		$timezone = date_default_timezone_get();
+		date_default_timezone_set('UTC');
 
 		$experiment[ 'is_running' ] = false;
 
@@ -23,7 +25,7 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 			$endTime   = strtotime( $version[ 'end_time' ] );
 			if ( $startTime <= $now && $endTime >= $now ) {
 				$experiment[ 'versions' ][ $id ][ 'is_running' ] = true;
-				$experiment[ 'is_running' ]                  = $experiment[ 'is_running' ] || true;
+				$experiment[ 'is_running' ]  = $experiment[ 'is_running' ] || true;
 				if ( strlen( $version[ 'ga_slot' ] ) ) {
 					$gaSlots[] = $version[ 'ga_slot'];
 				}
