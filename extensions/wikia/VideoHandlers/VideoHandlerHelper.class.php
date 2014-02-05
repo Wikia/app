@@ -17,13 +17,13 @@ class VideoHandlerHelper extends WikiaModel {
 	public function addCategoryVideos( $title, $user, $flags = EDIT_NEW ) {
 		wfProfileIn( __METHOD__ );
 
-		if ( is_string($title) ) {
+		if ( is_string( $title ) ) {
 			$title = Title::newFromText( $title, NS_FILE );
 		}
 
 		$status = false;
 		if ( $title instanceof Title && !$title->exists() ) {
-			if ( !is_object($user) ) {
+			if ( !is_object( $user ) ) {
 				$user = User::newFromId( $user );
 			}
 
@@ -47,6 +47,8 @@ class VideoHandlerHelper extends WikiaModel {
 	 * @return string $text
 	 */
 	public function getVideoDescription( $file, $fillFromMeta = true ) {
+		wfProfileIn( __METHOD__ );
+
 		// Get the file page for this file
 		$page = WikiPage::factory( $file->getTitle() );
 
@@ -58,9 +60,11 @@ class VideoHandlerHelper extends WikiaModel {
 
 		// If we have an empty string or a bunch of whitespace, and we're asked to do so,
 		// use the default description from the file metadata
-		if ( $fillFromMeta && (trim($text) == '') ) {
+		if ( $fillFromMeta && ( trim( $text ) == '' ) ) {
 			$text = $file->getMetaDescription();
 		}
+
+		wfProfileOut( __METHOD__ );
 
 		return $text;
 	}
@@ -72,6 +76,8 @@ class VideoHandlerHelper extends WikiaModel {
 	 * @return bool - Returns true if successful, false otherwise
 	 */
 	public function addDefaultVideoDescription( $file ) {
+		wfProfileIn( __METHOD__ );
+
 		$title = $file->getTitle();
 
 		// Get the file page for this file
@@ -85,10 +91,12 @@ class VideoHandlerHelper extends WikiaModel {
 
 		// If there is no description, pull the description from metadata,
 		// otherwise do nothing
-		if ( trim($text) == '' ) {
+		if ( trim( $text ) == '' ) {
 			$text = $file->getMetaDescription();
+			wfProfileOut( __METHOD__ );
 			return $this->setVideoDescription( $title, $text );
 		} else {
+			wfProfileOut( __METHOD__ );
 			return true;
 		}
 	}
@@ -101,6 +109,8 @@ class VideoHandlerHelper extends WikiaModel {
 	 * @return bool Returns true if successful, false otherwise
 	 */
 	public function setVideoDescription( $title, $description ) {
+		wfProfileIn( __METHOD__ );
+
 		// Get the file page for this file
 		$page = WikiPage::factory( $title );
 
@@ -109,14 +119,13 @@ class VideoHandlerHelper extends WikiaModel {
 		// Insert description header
 		$text = $this->replaceDescriptionSection( $text, $description );
 
-		$summary = wfMessage('videohandler-log-add-description')->inContentLanguage()->plain();
+		$summary = wfMessage( 'videohandler-log-add-description' )->inContentLanguage()->plain();
 		$status = $page->doEdit( $text, $summary );
+		$result = ( $status->isOK() ) ? true : false;
 
-		if ( $status->isOK() ) {
-			return true;
-		} else {
-			return false;
-		}
+		wfProfileOut( __METHOD__ );
+
+		return $result;
 	}
 
 	/**
@@ -126,6 +135,8 @@ class VideoHandlerHelper extends WikiaModel {
 	 * @return string $newContent
 	 */
 	public function stripDescriptionHeader( $content ) {
+		wfProfileIn( __METHOD__ );
+
 		$headerText = wfMessage( 'videohandler-description' );
 
 		// Grab everything after the description header
@@ -136,6 +147,8 @@ class VideoHandlerHelper extends WikiaModel {
 			// Get rid of any H2 headings after the description
 			$newContent = preg_replace('/^==[^=]+==.*/sm', '', $matches[1]);
 		}
+
+		wfProfileOut( __METHOD__ );
 
 		return $newContent;
 	}
@@ -148,6 +161,8 @@ class VideoHandlerHelper extends WikiaModel {
 	 * @return String - The updated file page content
 	 */
 	public function replaceDescriptionSection( $content, $descText = '' ) {
+		wfProfileIn( __METHOD__ );
+
 		$headerText = wfMessage( 'videohandler-description' );
 
 		// Don't include the description section if there's no description text
@@ -189,6 +204,8 @@ class VideoHandlerHelper extends WikiaModel {
 			// If there wasn't a description section, add one
 			$content = $descSection."\n".$content;
 		}
+
+		wfProfileOut( __METHOD__ );
 
 		return $content;
 	}
@@ -281,7 +298,7 @@ class VideoHandlerHelper extends WikiaModel {
 				'thumbnail' => $thumbNail
 			);
 		} else {
-			Wikia::Log(__METHOD__, false, "No file found for '".$videoInfo['title']."'");
+			Wikia::Log( __METHOD__, false, "No file found for '".$videoInfo['title']."'" );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -301,21 +318,24 @@ class VideoHandlerHelper extends WikiaModel {
 	 * @return null|array - As associative array of video information
 	 */
 	public function getVideoDetailFromWiki( $dbName, $title, $thumbWidth, $thumbHeight, $postedInArticles, $getThumb = false ) {
-		$params = array('controller'   => 'VideoHandler',
-						'method'       => 'getVideoDetail',
-						'fileTitle'    => $title,
-						'thumbWidth'   => $thumbWidth,
-						'thumbHeight'  => $thumbHeight,
-						'articleLimit' => $postedInArticles,
-						'getThumb'     => $getThumb
-		);
+		wfProfileIn( __METHOD__ );
+
+		$params = [
+			'controller'   => 'VideoHandler',
+			'method'       => 'getVideoDetail',
+			'fileTitle'    => $title,
+			'thumbWidth'   => $thumbWidth,
+			'thumbHeight'  => $thumbHeight,
+			'articleLimit' => $postedInArticles,
+			'getThumb'     => $getThumb
+		];
 
 		$response = ApiService::foreignCall( $dbName, $params, ApiService::WIKIA );
-		if ( !empty($response['detail']) ) {
-			return $response['detail'];
-		} else {
-			return null;
-		}
+		$videoDetail = empty( $response['detail'] ) ? null : $response['detail'];
+
+		wfProfileOut( __METHOD__ );
+
+		return $videoDetail;
 	}
 
 	/**
