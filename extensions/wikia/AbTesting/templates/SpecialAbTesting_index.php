@@ -1,3 +1,8 @@
+<? if ( strlen( $gaSlots ) ): ?>
+<div>
+	<?= wfMessage('abtesting-currently-used-ga-slots', $gaSlots)->plain(); ?>
+</div>
+<? endif ?>
 <table class="WikiaTable AbTestEditor" id="AbTestEditor">
 	<thead>
 		<tr>

@@ -11,6 +11,32 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 		parent::__construct('AbTesting', 'abtestpanel', false);
 	}
 
+	public function calcGeneralInformation(&$experiment) {
+		$gaSlots  = [ ];
+		$now      = strtotime( gmdate( "M d Y H:i:s", time() ) );
+		$timezone = date_default_timezone_get();
+
+		$experiment[ 'is_running' ] = false;
+
+		foreach ( $experiment[ 'versions' ] as $id => $version ) {
+			$startTime = strtotime( $version[ 'start_time' ] );
+			$endTime   = strtotime( $version[ 'end_time' ] );
+			if ( $startTime <= $now && $endTime >= $now ) {
+				$experiment[ 'versions' ][ $id ][ 'is_running' ] = true;
+				$experiment[ 'is_running' ]                  = $experiment[ 'is_running' ] || true;
+				if ( strlen( $version[ 'ga_slot' ] ) ) {
+					$gaSlots[] = $version[ 'ga_slot'];
+				}
+			} else {
+				$experiment[ 'versions' ][ $id ][ 'is_running' ] = false;
+			}
+		}
+
+		date_default_timezone_set( $timezone );
+
+		return array_unique( $gaSlots );
+	}
+
 	public function index() {
 		if ( !$this->wg->User->isAllowed( 'abtestpanel' ) ) {
 			$this->skipRendering();
@@ -23,10 +49,20 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 
 		$this->setHeaders();
 		$experiments = $abData->getAll();
+		$gaSlots = [];
+
 		foreach ($experiments as &$exp) {
 			$this->addActions($exp);
+			$expGaSlots = $this->calcGeneralInformation($exp);
+			if ( count($expGaSlots) ) {
+				$gaSlots = array_merge( $gaSlots, $expGaSlots );
+			}
 		}
+
+		sort( $gaSlots );
+
 		$this->setVal( 'experiments', $experiments );
+		$this->setVal( 'gaSlots', implode( ', ', $gaSlots ) );
 
 		$actions = array();
 		$actions[] = array(

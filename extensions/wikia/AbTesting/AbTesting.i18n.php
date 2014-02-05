@@ -10,6 +10,7 @@ $messages = array();
 $messages['en'] = array(
 	'abtesting' => 'A/B Testing',
 	'abtesting-desc' => 'The A/B Testing extension is used by Wikia to test what effects different features or settings have on actual users.',
+	'abtesting-currently-used-ga-slots' => 'List of currently used GA slots: $1',
 
 	'abtesting-heading-id' => 'ID',
 	'abtesting-heading-name' => 'Name',
@@ -52,6 +53,7 @@ $messages['en'] = array(
 $messages['qqq'] = array(
 	'abtesting' => 'Page title',
 	'abtesting-desc' => 'Description of the A/B Testing extension',
+	'abtesting-currently-used-ga-slots' => 'Label for currently used GA slots',
 
 	'abtesting-heading-id' => 'Label for the ID field',
 	'abtesting-heading-name' => 'Label for the Name field',
