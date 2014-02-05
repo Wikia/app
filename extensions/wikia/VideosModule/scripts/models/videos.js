@@ -11,7 +11,7 @@ define( 'videosmodule.models.videos', [
 
 	VideosData.prototype.fetch = function() {
 		var ret,
-			self = this;
+				self = this;
 
 		if ( this.data !== null ) {
 			ret = this.data;
