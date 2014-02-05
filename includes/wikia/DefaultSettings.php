@@ -224,7 +224,6 @@ $wgAutoloadClasses[ "WikiFactoryHub"                  ] = "$IP/extensions/wikia/
 $wgAutoloadClasses[ 'SimplePie'                       ] = "$IP/lib/vendor/SimplePie/simplepie.inc";
 $wgAutoloadClasses[ 'MustachePHP'                     ] = "$IP/lib/vendor/mustache.php/Mustache.php";
 $wgAutoloadClasses[ 'GMetricClient'                   ] = "$IP/lib/vendor/GMetricClient.class.php";
-$wgAutoloadClasses[ 'Wikia\\SFlow'                    ] = "$IP/lib/vendor/SFlow.class.php";
 $wgAutoloadClasses[ 'FakeLocalFile'                   ] = "$IP/includes/wikia/FakeLocalFile.class.php";
 $wgAutoloadClasses[ 'WikiaUploadStash'                ] = "$IP/includes/wikia/upload/WikiaUploadStash.class.php";
 $wgAutoloadClasses[ 'WikiaUploadStashFile'            ] = "$IP/includes/wikia/upload/WikiaUploadStashFile.class.php";
@@ -1267,3 +1266,12 @@ $wgDisableReportTime = true;
  * Setting this to true will invalidate all cached pages whenever LocalSettings.php is changed.
  */
 $wgInvalidateCacheOnLocalSettingsChange = false;
+
+/**
+ * SFlow client and config
+ */
+$wgSFlowHost = 'localhost';
+$wgSFlowPort = 36343;
+$wgSFlowSampling = 1;
+
+$wgAutoloadClasses[ 'Wikia\\SFlow'] = "$IP/lib/vendor/SFlow.class.php";

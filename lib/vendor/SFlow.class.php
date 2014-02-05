@@ -9,8 +9,6 @@ namespace Wikia;
 
 class SFlow {
 
-	const HOST = 'localhost';
-	const PORT = 36343;
 	const APPLICATION = 'mw';
 
 	/**
@@ -34,9 +32,13 @@ class SFlow {
 	 * @param int $req_bytes
 	 * @param int $resp_bytes
 	 * @param int $uS
-	 * @param int $sampling_rate
 	 */
-	private static function app_operation($app_name, $op_name, $attributes="", $status=0, $status_descr="", $req_bytes=0, $resp_bytes=0, $uS=0, $sampling_rate=1) {
+	private static function app_operation($app_name, $op_name, $attributes="", $status=0, $status_descr="", $req_bytes=0, $resp_bytes=0, $uS=0) {
+		global $wgSFlowHost, $wgSFlowPort, $wgSFlowSampling;
+
+		// sampling handling
+		$sampling_rate = $wgSFlowSampling;
+
 		if($sampling_rate > 1) {
 			if(mt_rand(1,$sampling_rate) != 1) {
 				return;
@@ -46,8 +48,10 @@ class SFlow {
 		wfProfileIn(__METHOD__);
 
 		try {
-			$sock = fsockopen("udp://" . self::HOST, self::PORT, $errno, $errstr);
-			if(! $sock) { return; }
+			$sock = fsockopen("udp://" . $wgSFlowHost, $wgSFlowPort, $errno, $errstr);
+			if( !$sock ) {
+				return;
+			}
 
 			$data = [
 				"flow_sample" => [
