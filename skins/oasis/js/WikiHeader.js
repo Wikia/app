@@ -1,15 +1,17 @@
 (function(window, $) {
 	'use strict';
-	var WikiHeader = {
+
+	var isTouchScreen = $().isTouchscreen(),
+		WikiHeader = {
 		lastSubnavClicked: -1,
 		isDisplayed: false,
 		activeL1: null,
-		isTouchScreen: $().isTouchscreen(),
+
 		editformSubmitAllowed: false,
 
 		settings: {
-			mouseoverDelay: this.isTouchScreen ? 0 : 200,
-			mouseoutDelay: this.isTouchScreen ? 0 : 350
+			mouseoverDelay: isTouchScreen ? 0 : 200,
+			mouseoutDelay: isTouchScreen ? 0 : 350
 		},
 
 		log: function(msg) {
