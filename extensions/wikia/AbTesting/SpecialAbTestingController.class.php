@@ -13,10 +13,10 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 
 	public function calcGeneralInformation(&$experiment) {
 		$gaSlots  = [ ];
-		// we need timestamp in UTC, regardless of current timezone (ie. devboxes)
-		$now      = strtotime( gmdate( "M d Y H:i:s", time() ) );
+		// we need timestamp and strtotime in UTC, regardless of current timezone (ie. devboxes)
 		$timezone = date_default_timezone_get();
 		date_default_timezone_set('UTC');
+		$now = time();
 
 		$experiment[ 'is_running' ] = false;
 
