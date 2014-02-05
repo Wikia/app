@@ -255,12 +255,14 @@ class SquidUpdate {
 					throw new MWException( 'Bad purge URL' );
 				}
 				$url = SquidUpdate::expand( $url );
+				$method = self::getPurgeCaller();
 
 				wfDebug( "Purging URL $url via Scribe\n" );
 				$data = json_encode(
 					array(
 						'url' => $url,
 						'time' => time(),
+						'method' => $method,
 					)
 				);
 				WScribeClient::singleton($key)->send($data);
@@ -269,7 +271,7 @@ class SquidUpdate {
 				Wikia\SFlow::operation('varnish.purge', [
 					'city' => $wgCityId,
 					'url' => $url,
-					'method' => self::getPurgeCaller()
+					'method' => $method,
 				]);
 			}
 		}
