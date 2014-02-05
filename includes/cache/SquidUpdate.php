@@ -257,7 +257,7 @@ class SquidUpdate {
 				$url = SquidUpdate::expand( $url );
 				$method = self::getPurgeCaller();
 
-				wfDebug( "Purging URL $url via Scribe\n" );
+				wfDebug( "Purging URL $url from $method via Scribe\n" );
 				$data = json_encode(
 					array(
 						'url' => $url,
