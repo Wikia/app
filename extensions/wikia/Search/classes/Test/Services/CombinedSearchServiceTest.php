@@ -137,17 +137,17 @@ class CombinedSearchServiceTest extends BaseTest {
 			->with   ( "foobar", ['FOO'], 'en' )
 			->will   ( $this->returnValue($foundResultsMockEN) );
 
-		$combinedSearchServiceMock->expects( $this->at(1) )
+		$combinedSearchServiceMock->expects( $this->never() )
 			->method ( 'getTopArticles' )
 			->withAnyParameters()
 			->will   ( $this->returnValue(['fake1']) );
 
-		$combinedSearchServiceMock->expects( $this->at(2) )
+		$combinedSearchServiceMock->expects( $this->at(1) )
 			->method ( 'queryPhraseForWikias' )
 			->with   ( "foobar", ['FOO'], 'pl' )
 			->will   ( $this->returnValue($foundResultsMockPL) );
 
-		$combinedSearchServiceMock->expects( $this->at(3) )
+		$combinedSearchServiceMock->expects( $this->never() )
 			->method ( 'getTopArticles' )
 			->withAnyParameters()
 			->will   ( $this->returnValue(['fake2']) );
@@ -172,7 +172,7 @@ class CombinedSearchServiceTest extends BaseTest {
 					'lang' => 'en',
 					'snippet' => 'lorem ipsum en',
 					'wordmark' => 'fake wordmarkUrl',
-					'topArticles' => [ 'fake1' ] ],
+				],
 				[
 					'wikiId' => 125,
 					'name' => 'a',
@@ -180,7 +180,7 @@ class CombinedSearchServiceTest extends BaseTest {
 					'lang' => 'pl',
 					'snippet' => 'lorem ipsum pl',
 					'wordmark' => 'fake wordmarkUrl',
-					'topArticles' => [ 'fake2'] ] ],
-			$response );
+				]
+			], $response );
 	}
 }

@@ -298,7 +298,8 @@ class CombinedSearchService {
 		foreach ($langs as $lang) {
 			$crossWikiResults = $this->queryPhraseForWikias($query, $hubs, $lang);
 			foreach ($crossWikiResults as $wikiSearchResult) {
-				$wikias[] = $this->processWiki($wikiSearchResult, true);
+				//PLA-1116: set to false
+				$wikias[] = $this->processWiki($wikiSearchResult, false);
 			}
 			if (sizeof($wikias) >= self::CROSS_WIKI_RESULTS) {
 				break;

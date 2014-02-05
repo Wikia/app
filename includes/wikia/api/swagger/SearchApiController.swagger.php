@@ -196,13 +196,6 @@ use Swagger\Annotations as SWG;
  * 		type="string",
  * 		description="URL for Wikia site logo"
  *  )
- * 	@SWG\Property(
- * 		name="topArticles",
- * 		required="true",
- * 		type="Array",
- * 		items="$ref:CombinedSearchArticlesResultSet",
- * 		description="The list of top articles on the Wikia site"
- *  )
  *
  * @SWG\Api(
  * 	path="/api/v1/Search/List",
