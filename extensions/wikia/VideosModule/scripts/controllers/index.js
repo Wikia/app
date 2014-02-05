@@ -6,7 +6,6 @@ require( [
 	'videosmodule.models.videos'
 ], function( BottomModule, VideoData ) {
 	'use strict';
-	console.log( VideoData );
 	var view,
 		rail = false,
 		bottom = true,

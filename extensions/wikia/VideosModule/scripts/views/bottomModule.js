@@ -30,10 +30,10 @@ define( 'videosmodule.views.bottommodule', [
 
 	VideoModule.prototype.render = function() {
 		$.when( this.model.fetch() )
-			.done( $.proxy( this.renderWidthData, this ) );
+			.done( $.proxy( this.renderWithData, this ) );
 	};
 
-	VideoModule.prototype.renderWidthData = function() {
+	VideoModule.prototype.renderWithData = function() {
 		var i, out,
 			videos = this.model.data.videos,
 			len = videos.length,
