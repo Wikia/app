@@ -140,35 +140,36 @@ var AdProviderGpt = function (adTracker, log, window, Geo, slotTweaker, cacheSto
 	function canHandleSlot(slotname) {
 		log(['canHandleSlot', slotname], 'debug', logGroup);
 
-		var canHandle;
+		var canHandle = false;
 
 		// Show INVISIBLE_SKIN when leaderboard was to be shown
 		if (slotname === 'INVISIBLE_SKIN') {
 			if (leaderboardCalled) {
-				return true;
+				canHandle = true;
 			}
 		}
 
-		if (isAmznOnPage(slotname, slotMap[slotname])) {
+		if (!isHighValueCountry || !slotMap[slotname]) {
+			canHandle = false;
+		}
+
+		if (gptConfig[slotname] === 'flushonly') {
 			canHandle = true;
-		} else {
-			if (!isHighValueCountry || !slotMap[slotname]) {
-				return false;
-			}
+		}
 
-			if (gptConfig[slotname] === 'flushonly') {
-				return true;
-			}
+		canHandle = shouldCallDart(slotname);
 
-			canHandle = shouldCallDart(slotname);
-
-			if (!canHandle && gptConfig[slotname] === 'flush') {
-				flushGpt();
-			}
+		if (!canHandle && gptConfig[slotname] === 'flush') {
+			flushGpt();
 		}
 
 		if (canHandle && slotname.search('LEADERBOARD') > -1) {
 			leaderboardCalled = true;
+		}
+
+		if (!canHandle && isAmznOnPage(slotname, slotMap[slotname])) {
+			canHandle = true;
+//			flushGpt();
 		}
 
 		return canHandle;
