@@ -10,6 +10,7 @@ var AdLogicPageLevelParams = function (
 
 	var logGroup = 'AdLogicPageLevelParams',
 		hostname = window.location.hostname.toString(),
+		allowedLanguages = { en: true },
 		maxNumberOfCategories = 3,
 		maxNumberOfKruxSegments = 27; // keep the DART URL part for Krux segments below 500 chars
 
@@ -50,21 +51,10 @@ var AdLogicPageLevelParams = function (
 	}
 
 	function getCategories() {
-		if (window.wgCategories instanceof Array && window.wgCategories.length > 0) {
-			var categories = [];
 
-			for (var i = 0; i < window.wgCategories.length; i++) {
-				// Look for at least one latin character in category
-				if (/[A-Za-z\d]/.test(window.wgCategories[i])) {
-					categories[categories.length] = window.wgCategories[i];
-
-					if (categories.length === maxNumberOfCategories) {
-						break;
-					}
-				}
-			}
-
-			if (categories.length) {
+		if (window.wgContentLanguage && (window.wgContentLanguage in allowedLanguages)) {
+			if (window.wgCategories instanceof Array && window.wgCategories.length > 0) {
+				var categories = window.wgCategories.slice(0, maxNumberOfCategories);
 				return categories.join('|').toLowerCase().replace(/ /g, '_').split('|');
 			}
 		}
