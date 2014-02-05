@@ -46,6 +46,7 @@ class DocsApiController extends WikiaController {
 	public function licenseMessage() {
 		$this->response->setTemplateEngine( self::TEMPLATE_ENGINE );
 		$this->response->setVal( 'licenseUrl', $this->licenseUrl() );
+		$this->response->setVal( 'licenses', $this->getLicenseIconUrls() );
 	}
 
 	public function licenseWarning() {
@@ -53,15 +54,22 @@ class DocsApiController extends WikiaController {
 		$this->response->setVal( 'licenseClasses', $this->getLicenseClassString() );
 		$this->response->setVal( 'licenseName', $this->app->wg->RightsText );
 		$this->response->setVal( 'licenseUrl', $this->licenseUrl() );
+		$this->response->setVal( 'licenses', $this->getLicenseIconUrls() );
 	}
 
-	public function licenseUrl() {
+	protected function licenseUrl() {
 		return empty($this->app->wg->RightsUrl) ? self::DEFAULT_LICENSE_VALUE : $this->app->wg->RightsUrl;
 	}
 
-	public function getLicenseClassString() {
+	protected function getLicenseClassString() {
 		return strtolower( implode( " ", $this->app->wg->RightsIcons ) );
 	}
+	
+	protected function getLicenseIconUrls() {
+		return [
+			'cc-by' => AssetsManager::getInstance()->getURL('files/license/cc-by.svg')
+		];
+	} 
 
 	/**
 	 *

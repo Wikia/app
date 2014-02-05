@@ -23,6 +23,7 @@ $message-aside-padding-left: 20px;
 		width: $message-bar-width - $message-aside-width - $message-aside-padding-left - 10px;
 
 		.icons {
+			display: block;
 			float: right;
 			padding-left: 40px;
 		}

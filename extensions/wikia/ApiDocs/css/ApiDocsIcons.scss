@@ -15,18 +15,48 @@ $apiDocs-large-icon-size: 50px;
 	}
 
 	&.cc-by {
-		background-image: url("/extensions/wikia/ApiDocs/files/license/cc-by.png");
+		background-image: url("/extensions/wikia/ApiDocs/files/license/cc-by.png"); /* base64 */
 	}
 
 	&.cc-nc {
-		background-image: url("/extensions/wikia/ApiDocs/files/license/cc-nc.png");
+		background-image: url("/extensions/wikia/ApiDocs/files/license/cc-nc.png"); /* base64 */
 	}
 
 	&.cc-nd {
-		background-image: url("/extensions/wikia/ApiDocs/files/license/cc-nd.png");
+		background-image: url("/extensions/wikia/ApiDocs/files/license/cc-nd.png"); /* base64 */
 	}
 
 	&.cc-sa {
-		background-image: url("/extensions/wikia/ApiDocs/files/license/cc-sa.png");
+		background-image: url("/extensions/wikia/ApiDocs/files/license/cc-sa.png"); /* base64 */
+	}
+
+	&.gfdl {
+		background-image: url("/extensions/wikia/ApiDocs/files/license/gfdl.png"); /* base64 */
+	}
+
+	&:hover path {
+		fill: black;
+	}
+}
+
+a:hover .icon {
+	&.cc-by {
+		background-image: url("/extensions/wikia/ApiDocs/files/license/cc-by-dark.png"); /* base64 */
+	}
+
+	&.cc-nc {
+		background-image: url("/extensions/wikia/ApiDocs/files/license/cc-nc-dark.png"); /* base64 */
+	}
+
+	&.cc-nd {
+		background-image: url("/extensions/wikia/ApiDocs/files/license/cc-nd-dark.png"); /* base64 */
+	}
+
+	&.cc-sa {
+		background-image: url("/extensions/wikia/ApiDocs/files/license/cc-sa-dark.png"); /* base64 */
+	}
+
+	&.gfdl {
+		background-image: url("/extensions/wikia/ApiDocs/files/license/gfdl-dark.png"); /* base64 */
 	}
 }
