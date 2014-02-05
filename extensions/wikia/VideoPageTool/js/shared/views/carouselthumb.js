@@ -18,7 +18,7 @@ define( 'shared.views.carouselthumb', [
 			this.render();
 		},
 		tagName: 'div',
-		className: 'carousel-item',
+		className: 'carousel-item title-thumbnail',
 		render: function() {
 			var html = this.template( this.model.toJSON() );
 			this.$el.html( html );
