@@ -87,4 +87,24 @@ class VideoPageToolHooks {
 		return true;
 	}
 
+	/**
+	 * Hook: Clear cache (videos by category) when video is deleted. We don't need
+	 * any of the parameters OnFileDeleteComplete passes in by default, instead we
+	 * find the latest program, and clear the cache for the category names defined
+	 * in the category assets for that program.
+	 * @return true
+	 */
+	public static function onFileDeleteComplete( &$file, $oldimage, $article, $user, $reason ) {
+		$controller = new VideoHomePageController();
+		$program = $controller->getProgram();
+		$assets = $program->getAssetsBySection( VideoHomePageController::MODULE_CATEGORY );
+		$helper = new VideoPageToolHelper();
+		foreach ( $assets as $asset ) {
+			$title = Title::newFromText( $asset->getCategoryName(), NS_CATEGORY );
+			$helper->invalidateCacheVideosByCategory( $title->getDBkey() );
+		}
+
+		return true;
+	}
+
 }
