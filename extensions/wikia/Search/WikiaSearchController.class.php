@@ -233,6 +233,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	public function searchVideosByTitle() {
 		$searchConfig = new Wikia\Search\Config;
 		$title = $this->getVal( 'title' );
+		$limit = $this->getVal( 'limit' );
 		$mm = $this->getVal( 'mm', '80%' );
 		if ( empty( $title ) ) {
 			throw new Exception( "Please include a value for 'title'." );
@@ -241,6 +242,10 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		    ->setVideoTitleSearch( true )
 		    ->setQuery( $title )
 		    ->setMinimumMatch( $mm );
+		if ( !empty( $limit ) ) {
+			$searchConfig->setLimit( $limit );
+		}
+
 		$queryService = $this->queryServiceFactory->getFromConfig( $searchConfig );
 		if ( ( $minDuration = $this->getVal( 'minseconds' ) ) && ( $maxDuration = $this->getVal( 'maxseconds' ) ) ) {
 			$queryService->setMinDuration( $minDuration)->setMaxDuration( $maxDuration );
@@ -265,16 +270,16 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$response->setFormat( 'json' );
 		$response->setData( $entityResponse );
 	}
-	
+
 	/**
-	 * JSON service that supports the access of video (and optionally photo) content from both 
+	 * JSON service that supports the access of video (and optionally photo) content from both
 	 * the current and premium video wiki.
-	 * 
+	 *
 	 *  Request params:
 	 *  -- q (required) the query
 	 *  -- videoOnly (optional) whether to only include videos (false by default)
 	 *  -- next (optional) pagination value
-	 *  
+	 *
 	 */
 	public function combinedMediaSearch() {
 		$request = $this->getRequest();
@@ -289,7 +294,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		       ->setCombinedMediaSearchIsVideoOnly( $videoOnly )
 		       ->setLimit( 4 )
 		       ->setStart( $this->getVal( 'next', 0 ) );
-		
+
 		$results = $this->queryServiceFactory->getFromConfig( $config )->searchAsApi( [ 'url', 'id', 'pageid', 'wid', 'title' ], true );
 		$dimensions = [ 'width' => 120, 'height' => 90 ];
 		$service = new \Wikia\Search\MediaWikiService();
@@ -762,4 +767,4 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 	}
 }
- 
+
