@@ -5,9 +5,7 @@
 @import 'skins/oasis/css/mixins/transition';
 @import '../mixins/_sprite-VideoPageTool.scss';
 
-
 $play-button-overlay-fade-duration: 400ms;
-
 
 // show/hide play buttons and arrows on hover of ancestor elements
 @mixin transition-show-hide( $selector ) {
@@ -21,7 +19,6 @@ $play-button-overlay-fade-duration: 400ms;
 		visibility: visible;
 	}
 }
-
 
 // Allow takeover of left/right margins on this page.  There's no UGC content so it should be fine.
 .WikiaArticle {
