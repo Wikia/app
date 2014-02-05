@@ -34,14 +34,13 @@ define( 'videosmodule.views.bottommodule', [
 	};
 
 	VideoModule.prototype.renderWidthData = function() {
-		console.log( this.model );
 		var i, out,
 			videos = this.model.data.videos,
 			len = videos.length,
 			thumbHtml = '';
 
 		for ( i = 0; i < len; i++ ) {
-			thumbHtml += new TitleThumbnailView( videos[i] ).render().el;
+			thumbHtml += new TitleThumbnailView( videos[i], { el: 'li' } ).render().el.outerHTML;
 		}
 
 		// TODO: hard coded title
