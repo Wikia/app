@@ -106,14 +106,13 @@ class  WikiaMobilePageHeaderService extends WikiaService {
 		}
 
 		if( $wg->EnableArticleCommentsExt ){
-			$commentList = ArticleCommentList::newFromTitle( $title );
-			$numberOfComments = $wg->Lang->formatNum( $commentList->getCountAllNested() );
+			$numberOfComments = ArticleCommentList::newFromTitle( $title )->getCountAllNested();
 			$this->response->setVal(
 				'commentCounter',
-				wfMessage( 'wikiamobile-comments' )
+				wfMessage( 'wikiamobile-article-comments-counter' )
 					->params( $numberOfComments )
 					->text()
-            );
+			);
 		}
 
 		$this->response->setVal( 'editLink', $this->getTitleEditUrl() );
