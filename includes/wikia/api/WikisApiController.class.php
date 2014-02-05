@@ -22,8 +22,9 @@ class WikisApiController extends WikiaApiController {
 	const DEFAULT_WIDTH = 250;
 	const DEFAULT_HEIGHT = null;
 	const DEFAULT_SNIPPET_LENGTH = null;
-	const CACHE_VERSION = 2;
+	const CACHE_VERSION = 3;
 	const WORDMARK = 'Wiki-wordmark.png';
+	const MAX_WIKIS = 250;
 	private static $flagsBlacklist = array( 'blocked', 'promoted' );
 
 	private $keys;
@@ -59,6 +60,7 @@ class WikisApiController extends WikiaApiController {
 		}
 
 		$results = $this->getWikiService()->getTop( $langs, $hub );
+		$results = $this->filterNonCommercial( $results );
 		$batches = wfPaginateArray( $results, $limit, $batch );
 
 		if ( $expand ) {
@@ -68,14 +70,7 @@ class WikisApiController extends WikiaApiController {
 		foreach ( $batches as $name => $value ) {
 			$this->response->setVal( $name, $value );
 		}
-		$this->response->setCacheValidity(
-			static::CACHE_1_WEEK,
-			static::CACHE_1_WEEK,
-			array(
-				WikiaResponse::CACHE_TARGET_BROWSER,
-				WikiaResponse::CACHE_TARGET_VARNISH
-			)
-		);
+		$this->response->setCacheValidity(static::CACHE_1_WEEK);
 	}
 
 	/**
@@ -120,6 +115,7 @@ class WikisApiController extends WikiaApiController {
 		}
 
 		$results = $this->getWikiService()->getByString( $keyword, $langs, $hub, $includeDomain );
+		$results = $this->filterNonCommercial( $results );
 
 		if( is_array( $results ) ) {
 			$batches = wfPaginateArray( $results, $limit, $batch );
@@ -138,14 +134,7 @@ class WikisApiController extends WikiaApiController {
 		//store only for 24h to allow new wikis
 		//to appear in a reasonable amount of time in the search
 		//results
-		$this->response->setCacheValidity(
-			static::CACHE_1_DAY,
-			static::CACHE_1_DAY,
-			array(
-				WikiaResponse::CACHE_TARGET_BROWSER,
-				WikiaResponse::CACHE_TARGET_VARNISH
-			)
-		);
+		$this->response->setCacheValidity(static::CACHE_1_DAY);
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -186,15 +175,7 @@ class WikisApiController extends WikiaApiController {
 		$this->response->setVal( 'items', $items );
 
 		//set varnish caching
-		$this->response->setCacheValidity(
-			static::CACHE_1_DAY,
-			static::CACHE_1_DAY,
-			array(
-				WikiaResponse::CACHE_TARGET_BROWSER,
-				WikiaResponse::CACHE_TARGET_VARNISH
-			)
-		);
-		//die();
+		$this->response->setCacheValidity(static::CACHE_1_DAY);
 		wfProfileOut( __METHOD__ );
 	}
 
@@ -254,6 +235,22 @@ class WikisApiController extends WikiaApiController {
 
 		$this->response->setVal( 'items', $items );
 		wfProfileOut( __METHOD__ );
+	}
+
+	protected function getNonCommercialWikis() {
+		$licensed = new LicensedWikisService();
+		return $licensed->getCommercialUseNotAllowedWikis();
+	}
+
+	protected function filterNonCommercial( $wikis ) {
+		$result =[];
+		$blackList = $this->getNonCommercialWikis();
+		foreach( $wikis as $wiki ) {
+			if ( !isset( $blackList[ $wiki['id'] ] ) ) {
+				$result[] = $wiki;
+			}
+		}
+		return array_slice($result, 0, self::MAX_WIKIS);
 	}
 
 	protected function expandBatches( $batches ) {

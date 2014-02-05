@@ -1618,13 +1618,18 @@ class Wikia {
 	 */
 	static public function onAfterInitialize($title, $article, $output, $user, WebRequest $request, $wiki) {
 		// allinone
-		global $wgResourceLoaderDebug, $wgAllInOne;
+		global $wgResourceLoaderDebug, $wgAllInOne, $wgUseSiteJs, $wgUseSiteCss, $wgAllowUserJs, $wgAllowUserCss;
 
 		$wgAllInOne = $request->getBool('allinone', $wgAllInOne) !== false;
 		if ($wgAllInOne === false) {
 			$wgResourceLoaderDebug = true;
 			wfDebug("Wikia: using resource loader debug mode\n");
 		}
+
+		$wgUseSiteJs = $request->getBool( 'usesitejs', $wgUseSiteJs ) !== false;
+		$wgUseSiteCss = $request->getBool( 'usesitecss', $wgUseSiteCss ) !== false;
+		$wgAllowUserJs = $request->getBool( 'allowuserjs', $wgAllowUserJs ) !== false;
+		$wgAllowUserCss = $request->getBool( 'allowusercss', $wgAllowUserCss ) !== false;
 
 		return true;
 	}
@@ -2258,6 +2263,9 @@ class Wikia {
 
 		$response->header( sprintf( 'X-Served-By:%s', wfHostname() ) );
 		$response->header( sprintf( 'X-Backend-Response-Time:%01.3f', $elapsed ) );
+
+		$response->header( 'X-Cache: ORIGIN' );
+		$response->header( 'X-Cache-Hits: ORIGIN' );
 
 		return true;
 	}

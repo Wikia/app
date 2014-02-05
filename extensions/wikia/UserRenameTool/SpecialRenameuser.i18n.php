@@ -342,6 +342,7 @@ $messages['ast'] = array(
  * @author Cekli829
  */
 $messages['az'] = array(
+	'userrenametool-warnings' => 'Xəbərdarlıqlar:',
 	'userrenametool-confirm-yes' => 'Bəli',
 	'userrenametool-confirm-no' => 'Xeyr',
 );

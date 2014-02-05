@@ -273,7 +273,7 @@ class ThemeSettings {
 		global $wgUploadPath;
 
 		$wordmarkUrl = $this->getSettings()['wordmark-image-url'];
-		$wordmarkPath = reset(explode('/images/', $wordmarkUrl));
+		$wordmarkPath = explode('/images/', $wordmarkUrl)[0];
 
 		if (!empty($wordmarkPath)) {
 			$wordmarkUrl = str_replace(
@@ -306,7 +306,7 @@ class ThemeSettings {
 			return $backgroundUrl;
 		}
 
-		$backgroundPath = reset(explode('/images/', $backgroundUrl));
+		$backgroundPath = explode('/images/', $backgroundUrl)[0];
 
 		if (!empty($wordmarkPath)) {
 			$backgroundUrl = str_replace(

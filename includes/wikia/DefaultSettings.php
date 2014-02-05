@@ -259,6 +259,7 @@ $wgAutoloadClasses[ 'MemcacheClientShadower'          ] = "{$IP}/includes/wikia/
 $wgAutoloadClasses[ 'Wikia\\SwiftStorage'             ] = "$IP/includes/wikia/SwiftStorage.class.php";
 $wgAutoloadClasses[ 'WikiaSQL'                        ] = "$IP/includes/wikia/WikiaSQL.class.php";
 $wgAutoloadClasses[ 'WikiaSQLCache'                   ] = "$IP/includes/wikia/WikiaSQLCache.class.php";
+$wgAutoloadClasses[ 'WikiaSanitizer'                  ] = $IP . '/includes/wikia/WikiaSanitizer.class.php';
 
 /**
  * Resource Loader enhancements
@@ -317,6 +318,7 @@ $wgAutoloadClasses['WikisModel'] = "{$IP}/includes/wikia/models/WikisModel.class
 $wgAutoloadClasses['NavigationModel'] = "{$IP}/includes/wikia/models/NavigationModel.class.php";
 $wgAutoloadClasses['WikiaCollectionsModel'] = "{$IP}/includes/wikia/models/WikiaCollectionsModel.class.php";
 $wgAutoloadClasses['WikiaCorporateModel'] = "{$IP}/includes/wikia/models/WikiaCorporateModel.class.php";
+$wgAutoloadClasses['SpotlightsModel'] = "{$IP}/includes/wikia/models/SpotlightsModel.class.php";
 
 // modules
 $wgAutoloadClasses['OasisController'] = $IP.'/skins/oasis/modules/OasisController.class.php';
@@ -341,6 +343,7 @@ $wgAutoloadClasses['FollowedPagesController'] = $IP.'/skins/oasis/modules/Follow
 $wgAutoloadClasses['MyToolsController'] = $IP.'/skins/oasis/modules/MyToolsController.class.php';
 $wgAutoloadClasses['UserPagesHeaderController'] = $IP.'/skins/oasis/modules/UserPagesHeaderController.class.php';
 $wgAutoloadClasses['SpotlightsController'] = $IP.'/skins/oasis/modules/SpotlightsController.class.php';
+$wgAutoloadClasses['SpotlightsABTestController'] = $IP.'/skins/oasis/modules/SpotlightsABTestController.class.php';
 $wgAutoloadClasses['MenuButtonController'] = $IP.'/skins/oasis/modules/MenuButtonController.class.php';
 $wgAutoloadClasses['CommentsLikesController'] = $IP.'/skins/oasis/modules/CommentsLikesController.class.php';
 $wgAutoloadClasses['BlogListingController'] = $IP.'/skins/oasis/modules/BlogListingController.class.php';
@@ -1195,7 +1198,7 @@ $wgAdDriverUseSevenOneMediaInLanguages = ['de'];
  * the traffic and the old one (AdTracker.js) on the other half.
  * If false: only the old ad tracking code (AdTracker.js) will be used.
  */
-$wgAdDriverUseNewTracking = false;
+$wgAdDriverUseNewTracking = true;
 
 /**
  * @name $wgHighValueCountriesDefault
@@ -1258,3 +1261,18 @@ $wgEnableCentralizedLogging = true;
  * Turns off <!-- Served by ... in ... ms --> HTML comment
  */
 $wgDisableReportTime = true;
+
+/**
+ * @name $wgInvalidateCacheOnLocalSettingsChange
+ * Setting this to true will invalidate all cached pages whenever LocalSettings.php is changed.
+ */
+$wgInvalidateCacheOnLocalSettingsChange = false;
+
+/**
+ * SFlow client and config
+ */
+$wgSFlowHost = 'localhost';
+$wgSFlowPort = 36343;
+$wgSFlowSampling = 1;
+
+$wgAutoloadClasses[ 'Wikia\\SFlow'] = "$IP/lib/vendor/SFlow.class.php";

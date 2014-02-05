@@ -31,7 +31,8 @@
 					showEmailModal = function () {
 						SharingToolbar.showEmailModal( shareEmailLabel, sendLabel, shareEmailLabelAddress,
 							cancelLabel );
-					};
+					},
+					UserLoginModal = window.UserLoginModal;
 
 				if ( window.wgUserName === null ) {
 					if ( window.wgComboAjaxLogin ) {
@@ -45,7 +46,8 @@
 							};
 						}, false, true );
 					} else {
-						window.UserLoginModal.show( {
+						UserLoginModal.show( {
+							origin: 'sharing-toolbar',
 							callback: function () {
 								window.UserLogin.forceLoggedIn = true;
 								showEmailModal();
