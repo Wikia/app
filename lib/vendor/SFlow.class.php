@@ -17,8 +17,8 @@ class SFlow {
 	 * @param string $op_name operation name
 	 * @param array $data optional params to be sent
 	 */
-	public static function operation($op_name, Array $data = array()) {
-		self::app_operation(self::APPLICATION, $op_name, wfArrayToCGI($data));
+	public static function operation( $op_name, Array $data = array() ) {
+		self::app_operation( self::APPLICATION, $op_name, wfArrayToCGI( $data ) );
 	}
 
 	/**
@@ -33,23 +33,23 @@ class SFlow {
 	 * @param int $resp_bytes
 	 * @param int $uS
 	 */
-	private static function app_operation($app_name, $op_name, $attributes="", $status=0, $status_descr="", $req_bytes=0, $resp_bytes=0, $uS=0) {
+	private static function app_operation( $app_name, $op_name, $attributes = "", $status = 0, $status_descr = "", $req_bytes = 0, $resp_bytes = 0, $uS = 0 ) {
 		global $wgSFlowHost, $wgSFlowPort, $wgSFlowSampling;
 
 		// sampling handling
 		$sampling_rate = $wgSFlowSampling;
 
-		if($sampling_rate > 1) {
-			if(mt_rand(1,$sampling_rate) != 1) {
+		if ( $sampling_rate > 1 ) {
+			if ( mt_rand( 1, $sampling_rate ) != 1 ) {
 				return;
 			}
 		}
 
-		wfProfileIn(__METHOD__);
+		wfProfileIn( __METHOD__ );
 
 		try {
-			$sock = fsockopen("udp://" . $wgSFlowHost, $wgSFlowPort, $errno, $errstr);
-			if( !$sock ) {
+			$sock = fsockopen( "udp://" . $wgSFlowHost, $wgSFlowPort, $errno, $errstr );
+			if ( !$sock ) {
 				return;
 			}
 
@@ -69,16 +69,16 @@ class SFlow {
 				]
 			];
 
-			$payload = json_encode($data);
+			$payload = json_encode( $data );
 			wfDebug( sprintf( "%s: sending '%s'\n", __METHOD__ , $payload ) );
 
-			fwrite($sock, $payload);
-			fclose($sock);
-		} catch(\Exception $e) {
-			\Wikia::log(__METHOD__, 'send', $e->getMessage(), true);
-			\Wikia::logBacktrace(__METHOD__);
+			fwrite( $sock, $payload );
+			fclose( $sock );
+		} catch ( \Exception $e ) {
+			\Wikia::log( __METHOD__, 'send', $e->getMessage(), true );
+			\Wikia::logBacktrace( __METHOD__ );
 		}
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 	}
 }
