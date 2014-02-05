@@ -159,17 +159,12 @@ var AdProviderGpt = function (adTracker, log, window, Geo, slotTweaker, cacheSto
 
 		canHandle = shouldCallDart(slotname);
 
-		if (!canHandle && gptConfig[slotname] === 'flush') {
-			flushGpt();
-		}
-
 		if (canHandle && slotname.search('LEADERBOARD') > -1) {
 			leaderboardCalled = true;
 		}
 
 		if (!canHandle && isAmznOnPage(slotname, slotMap[slotname])) {
 			canHandle = true;
-//			flushGpt();
 		}
 
 		return canHandle;
