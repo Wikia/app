@@ -1267,3 +1267,12 @@ $wgDisableReportTime = true;
  * Setting this to true will invalidate all cached pages whenever LocalSettings.php is changed.
  */
 $wgInvalidateCacheOnLocalSettingsChange = false;
+
+/**
+ * SFlow client and config
+ */
+$wgSFlowHost = 'localhost';
+$wgSFlowPort = 36343;
+$wgSFlowSampling = 1;
+
+$wgAutoloadClasses[ 'Wikia\\SFlow'] = "$IP/lib/vendor/SFlow.class.php";
