@@ -3,10 +3,10 @@
  */
 require( [
 	'videosmodule.views.bottommodule',
-    'videosmodule.models.videos'
+	'videosmodule.models.videos'
 ], function( BottomModule, VideoData ) {
 	'use strict';
-console.log( VideoData );
+	console.log( VideoData );
 	var view,
 		rail = false,
 		bottom = true,
@@ -17,7 +17,9 @@ console.log( VideoData );
 		$( function() {
 			view = new BottomModule( {
 				el: document.getElementById( 'WikiaArticleFooter' ),
-				model: new VideoData( { verticalOnly: verticalOnly  } )
+				model: new VideoData( {
+					verticalOnly: verticalOnly
+				} )
 			} );
 		} );
 	} else if ( rail ) {
