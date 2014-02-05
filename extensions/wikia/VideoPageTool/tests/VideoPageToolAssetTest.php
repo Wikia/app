@@ -31,6 +31,8 @@ class VideoPageToolAssetTest extends WikiaBaseTest {
 
 		$this->mockGlobalVariable('wgUser', $mock_user);
 
+		$this->mockStaticMethod( 'User', 'newFromId', $mock_user );
+
 		/*
 		 * That's pretty bad, as we will return master db connection for all wfGetDB calls, even those for slave and
 		 * dataware. But as for now mockGlobalFunction does not support PHPUnit's callbacks and returnValueArray
