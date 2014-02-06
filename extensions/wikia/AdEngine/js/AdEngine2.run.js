@@ -6,7 +6,7 @@
 /*global document, window */
 /*global Geo, Wikia, Krux, AdTracker, SlotTracker */
 /*global AdConfig2, AdEngine2, DartUrl, EvolveHelper, SlotTweaker, ScriptWriter */
-/*global WikiaDartHelper, WikiaFullGptHelper */
+/*global WikiaDartHelper, WikiaFullGptHelper, AdLogicPageDimensions */
 /*global AdProviderEvolve, AdProviderGpt, AdProviderLater, AdProviderNull */
 /*global AdLogicDartSubdomain, AdLogicHighValueCountry, AdDecoratorPageDimensions, AdLogicPageLevelParams */
 /*global AdLogicPageLevelParamsLegacy, AdSlotMapConfig */
@@ -173,6 +173,9 @@
 		}
 	};
 
+	if (window.wgEnableRHonDesktop) {
+		window.wgAfterContentAndJS.push(window.AdEngine_loadLateAds);
+	}
 	// Load Krux asynchronously later
 	// If you call AdEngine_loadKruxLater(Krux) at the end of the HTML Krux
 	// or on DOM ready, it will be loaded after most (if not all) of the ads
