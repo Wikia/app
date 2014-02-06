@@ -1172,6 +1172,22 @@ $wgAmazonDirectTargetedBuyCountriesDefault = ['US', 'AT', 'BE', 'DK', 'FI', 'FR'
 $wgAmazonDirectTargetedBuyCountries = null;
 
 /**
+ * @name $wgAdPageLevelCategoryLangsDefault
+ * The default value for $wgAdPageLevelCategoryLangs
+ * $wgAdPageLevelCategoryLangs overrides this
+ * Value set for community central overrides this. Value for particular wiki overrides the community
+ * US + EU (UK is GB...)
+ */
+$wgAdPageLevelCategoryLangsDefault = [ 'en' => true ];
+
+/**
+ * @name $wgAdPageLevelCategoriesLangs
+ * Enables DART category page param for these content languages
+ * "Utility" var, don't change it here.
+ */
+$wgAdPageLevelCategoryLangs = null;
+
+/**
  * @name $wgEnableJavaScriptErrorLogging
  * Enables JavaScript error logging mechanism
  */
