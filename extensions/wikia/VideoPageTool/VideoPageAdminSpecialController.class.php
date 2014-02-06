@@ -448,8 +448,9 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 
 		$url = urldecode( $url );
 		if ( preg_match( '/.+\/wiki\/File:(.+)$/i', $url, $matches ) ) {
-			// Override defaults so we always show a lightbox in the admin pages
-			$thumbOptions = [ 'noLightbox' => false ];
+			// Use the default thumb options from Featured Assets since that's the only type of
+			// asset this controller returns.
+			$thumbOptions = VideoPageToolAssetFeatured::$defaultThumbOptions;
 			$helper = new VideoPageToolHelper();
 			$video = $helper->getVideoData( $matches[1], $altThumbTitle, null, null, $thumbOptions );
 		}
