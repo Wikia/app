@@ -313,7 +313,7 @@ class AdEngine2Controller extends WikiaController {
 			   $wgEnableAdMeldAPIClient, $wgEnableAdMeldAPIClientPixels,
 			   $wgLoadAdDriverOnLiftiumInit, $wgOutboundScreenRedirectDelay,
 			   $wgEnableOutboundScreenExt, $wgAdDriverUseSevenOneMedia, $wgAdDriverUseNewTracking,
-			   $wgOut;
+		       $wgEnableRHonDesktop, $wgOut;
 
 		$wgNoExternals = $wgRequest->getBool('noexternals', $wgNoExternals);
 
@@ -379,6 +379,10 @@ class AdEngine2Controller extends WikiaController {
 		}
 		if (!empty($wgEnableOutboundScreenExt)) {
 			$vars['wgEnableOutboundScreenExt'] = $wgEnableOutboundScreenExt;
+		}
+
+		if (!empty($wgEnableRHonDesktop)) {
+			$vars['wgEnableRHonDesktop'] = $wgEnableRHonDesktop;
 		}
 
 		wfProfileOut(__METHOD__);

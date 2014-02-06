@@ -1179,6 +1179,12 @@ $wgAmazonDirectTargetedBuyCountries = null;
 $wgEnableJavaScriptErrorLogging = false;
 
 /**
+ * @name $wgEnableRHonDesktop
+ * Enables RH- hack on Desktop
+ */
+$wgEnableRHonDesktop = false;
+
+/**
  * @name $wgEnableAdEngineExt
  * Enables ad engine
  */
