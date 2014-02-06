@@ -121,6 +121,14 @@ a {
 	color: $blue-c1;
 }
 
+a:hover,
+a:active {
+	text-decoration: underline;
+}
+a:visited {
+	color: #462f91;
+ }
+
 @import "ApiDocsBox";
 @import "ApiDocsWarning";
 @import "ApiDocsEndpoint";
