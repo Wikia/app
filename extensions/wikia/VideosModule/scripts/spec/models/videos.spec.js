@@ -1,4 +1,3 @@
-/* global describe, it, expect, beforeEach, modules, spyOn */
 describe( 'VideosModule -- sData Data: ', function() {
 	'use strict';
 	var VideosData,
