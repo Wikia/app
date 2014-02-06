@@ -400,8 +400,9 @@ class BlogArticle extends Article {
 
 	/**
 	 * Hook
+	 * @param CategoryViewer 
 	 */
-	static public function addCategoryPage( &$catView, $sortkey, &$title, &$row ) {
+	static public function addCategoryPage( &$catView, &$title, &$row, $sortkey ) {
 		global $wgContLang;
 
 		if( in_array( $row->page_namespace, array( NS_BLOG_ARTICLE, NS_BLOG_LISTING ) ) ) {

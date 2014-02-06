@@ -408,7 +408,7 @@ $wgHooks['CategoryViewer::addPage'][] = 'answerAddCategoryPage';
 // Since this function returns false, it prevents the default behavior from adding this item to the "pages" section
 // of the category page.
 ////
-function answerAddCategoryPage(&$catView, $humanSortkey, &$title, &$row){
+function answerAddCategoryPage( &$catView, &$title, &$row, $humanSortkey ) {
 	global $wgContLang;
 
 	if (empty($catView->answers)){
@@ -613,7 +613,7 @@ class CategoryWithAds extends CategoryViewer{
 			} elseif( $this->showGallery && $title->getNamespace() == NS_FILE ) {
 				$this->addImage( $title, $x->cl_sortkey, $x->page_len, $x->page_is_redirect );
 			} else {
-				if( wfRunHooks( "CategoryViewer::addPage", array( &$this, $x->cl_sortkey, &$title, &$x ) ) ) {
+				if( wfRunHooks( "CategoryViewer::addPage", array( &$this, &$title, &$x, $x->cl_sortkey ) ) ) {
 					$this->addPage( $title, $x->cl_sortkey, $x->page_len, $x->page_is_redirect );
 				}
 			}
