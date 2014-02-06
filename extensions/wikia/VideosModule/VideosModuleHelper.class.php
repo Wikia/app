@@ -54,7 +54,7 @@ class VideosModuleHelper extends WikiaModel {
 
 		$params = [
 			'title' => $wikiTitle,
-			'limit' => $this->getVideoLimit()
+			'limit' => $this->getVideoLimit( $videos )
 		];
 		$videoResults = $this->app->sendRequest( 'WikiaSearchController', 'searchVideosByTitle', $params )->getData();
 
@@ -85,7 +85,7 @@ class VideosModuleHelper extends WikiaModel {
 		$params = [
 			'controller' => 'VideoHandler',
 			'method'     => 'getVideoList',
-			'limit'      => $this->getVideoLimit(),
+			'limit'      => $this->getVideoLimit( $videos ),
 			'category'   => $this->getWikiVertical(),
 		];
 
