@@ -32,8 +32,8 @@ define( 'videopageadmin.collections.category', [], function() {
 		/**
 		 * @method
 		 * @description Sets category and triggers event for views to respond to
-		 * @param { Backbone.Model | string } data - Instance of Backbone.Model with name
-		 *																		property or a string containing name
+		 * @param {Backbone.Model|string} data Instance of Backbone.Model with name
+		 * property or a string containing name
 		 */
 		setCategory: function( data ) {
 			if ( typeof data === 'string' ) {
@@ -56,7 +56,7 @@ define( 'videopageadmin.collections.category', [], function() {
 		 * @method
 		 * @description Routine to bypass fetch and use parse to filter through cached results
 		 *							then reset the collection
-		 * @param { string } value - String to filter collection against
+		 * @param {string} value - String to filter collection against
 		 */
 		autocomplete: function( value ) {
 			if ( typeof value !== 'string' ) {
@@ -72,8 +72,8 @@ define( 'videopageadmin.collections.category', [], function() {
 		 * @description Override default passthrough parse to use cache if collection is already populated.
 		 *							Also filters results based on user query.
 		 *							Uses cached response if available.
-		 * @param { object } [ resp ] - Response payload
-		 * @returns { object } models - Filtered models to reset collection with
+		 * @param {object} resp - Response payload
+		 * @returns {object} Filtered models to reset collection with
 		 */
 		parse: function( resp ) {
 			var models = [],
