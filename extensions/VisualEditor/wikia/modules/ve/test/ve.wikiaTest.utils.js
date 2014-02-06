@@ -249,6 +249,8 @@ ve.wikiaTest = ( function () {
 				)
 			);
 
+			nodeView.$element.removeClass( 've-ce-generatedContentNode-generating' );
+
 			assert.equalDomStructure(
 				nodeView.$element,
 				getHtml( merged ),
