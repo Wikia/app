@@ -313,7 +313,7 @@ class AdEngine2Controller extends WikiaController {
 			   $wgEnableAdMeldAPIClient, $wgEnableAdMeldAPIClientPixels,
 			   $wgLoadAdDriverOnLiftiumInit, $wgOutboundScreenRedirectDelay,
 			   $wgEnableOutboundScreenExt, $wgAdDriverUseSevenOneMedia, $wgAdDriverUseNewTracking,
-		       $wgAdPageLevelCategoryLangs, $wgAdPageLevelCategoryLangsDefault,
+			   $wgAdPageLevelCategoryLangs, $wgAdPageLevelCategoryLangsDefault,
 			   $wgOut;
 
 		$wgNoExternals = $wgRequest->getBool('noexternals', $wgNoExternals);

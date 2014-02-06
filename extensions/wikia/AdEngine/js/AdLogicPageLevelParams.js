@@ -10,7 +10,6 @@ var AdLogicPageLevelParams = function (
 
 	var logGroup = 'AdLogicPageLevelParams',
 		hostname = window.location.hostname.toString(),
-		allowedLanguages = { en: true },
 		maxNumberOfCategories = 3,
 		maxNumberOfKruxSegments = 27; // keep the DART URL part for Krux segments below 500 chars
 
