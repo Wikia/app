@@ -21,6 +21,8 @@ class MigrateImagesToSwiftBulk2 extends Maintenance {
 
 	const FILES_PER_SEC = 10;
 	const KB_PER_SEC = 800;
+	const THREADS_MAX = 400;
+	const THREADS_DEFAULT = 100;
 
 	const SWIFT_BUCKET_NAME_MIN_LENGTH = 3;
 
@@ -49,7 +51,7 @@ class MigrateImagesToSwiftBulk2 extends Maintenance {
 	private $pathPrefix = null;
 	private $useDiff = false;
 	private $useLocalFiles = false;
-	private $threads = 10;
+	private $threads = self::THREADS_DEFAULT;
 	private $hammer = null;
 
 	private $debug = false;
@@ -68,7 +70,7 @@ class MigrateImagesToSwiftBulk2 extends Maintenance {
 		$this->addOption( 'bucket', 'Force a different bucket name than the default one (for testing only!)' );
 		$this->addOption( 'debug', 'Show a lot of debugging stuff.' );
 		$this->addOption( 'diff', 'Use incremental strategy while uploading files.' );
-		$this->addOption( 'threads', 'Total number of threads (gets split across DCs) (default: 10, max. 400).' );
+		$this->addOption( 'threads', 'Total number of threads (gets split across DCs) (default: '.self::THREADS_DEFAULT.', max. '.self::THREADS_MAX.').' );
 		$this->addOption( 'local', 'Read files from local file system (uses: /raid/images/by_id/).' );
 		$this->addOption( 'wait', 'Add en extra 180 seconds sleep after disabling uploads.' );
 		$this->addOption( 'hammer', 'Hammer a single host.' );
@@ -149,6 +151,14 @@ class MigrateImagesToSwiftBulk2 extends Maintenance {
 
 		self::log( __CLASS__, "short bucket name fix applied - '{$bucketName}', <{$wgUploadPath}>, <{$wgUploadDirectory}>, NFS: <{$wgUploadDirectoryNFS}>" , self::LOG_MIGRATION_PROGRESS );
 		return true;
+	}
+
+	protected function rewriteLocalPath( $path ) {
+		if ( $this->useLocalFiles ) {
+			$path = preg_replace("#^/images/by_id/#",self::LOCAL_PATH,$path);
+			$path = preg_replace("#^/images/#",self::LOCAL_PATH,$path);
+		}
+		return $path;
 	}
 
 	/**
@@ -243,10 +253,7 @@ class MigrateImagesToSwiftBulk2 extends Maintenance {
 			$metadata['Sha1Base36'] = $row['hash'];
 		}
 
-		$src = $uploadDir . '/' . $path;
-		if ( $this->useLocalFiles ) {
-			$src = preg_replace("#^/images/#",self::LOCAL_PATH,$src);
-		}
+		$src = $this->rewriteLocalPath( $uploadDir . '/' . $path );
 
 		$this->allFiles[] = array(
 			'src' => $src,
@@ -296,15 +303,13 @@ class MigrateImagesToSwiftBulk2 extends Maintenance {
 		$this->useDiff = $this->getOption('diff',false);
 		$this->useLocalFiles = $this->getOption('local',false);
 
-		$this->threads = intval($this->getOption('threads',10));
-		$this->threads = min(400,max(1,$this->threads));
+		$this->threads = intval($this->getOption('threads',self::THREADS_DEFAULT));
+		$this->threads = min(self::THREADS_MAX,max(1,$this->threads));
 
 		$this->hammer = $this->getOption('hammer',null);
 
 		$uploadDir = !empty($wgUploadDirectoryNFS) ? $wgUploadDirectoryNFS : $wgUploadDirectory;
-		if ( $this->useLocalFiles ) {
-			$uploadDir = preg_replace("#^/images/#",self::LOCAL_PATH,$uploadDir);
-		}
+		$uploadDir = $this->rewriteLocalPath($uploadDir);
 		if ( !is_dir($uploadDir) ) {
 			$this->fatal(__CLASS__,"Could not read the source directory: {$uploadDir}",self::LOG_MIGRATION_ERRORS);
 		}
@@ -557,6 +562,8 @@ class MigrateImagesToSwiftBulk2 extends Maintenance {
 		$migration->setThreads(400);
 		$migration->setLogger($logger);
 		$migration->run();
+
+		$logger->log(1,"Finished migration.");
 
 	}
 
