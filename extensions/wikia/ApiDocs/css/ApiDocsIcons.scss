@@ -6,6 +6,7 @@ $apiDocs-large-icon-size: 50px;
 	display: inline-block;
 	height: $apiDocs-icon-size;
 	width: $apiDocs-icon-size;
+	margin: 0 2px;
 
 	&.large {
 		background-size: $apiDocs-large-icon-size $apiDocs-large-icon-size;
