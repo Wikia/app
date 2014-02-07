@@ -258,6 +258,7 @@ class SquidUpdate {
 				$method = self::getPurgeCaller();
 
 				wfDebug( "Purging URL $url from $method via Scribe\n" );
+				wfDebug( "Purging backtrace: " . wfGetAllCallers( false ) . "\n" );
 				$data = json_encode(
 					array(
 						'url' => $url,
