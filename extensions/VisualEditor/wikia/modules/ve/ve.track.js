@@ -111,7 +111,8 @@ require( ['wikia.tracker'], function ( tracker ) {
 	}
 
 	/**
-	 * Normalize time durations.
+	 * Normalize time durations, for example rounding up or down or limiting
+	 * the number of decimal spaces to keep.
 	 *
 	 * @method
 	 * @param {number} duration Time in milliseconds
@@ -189,7 +190,7 @@ require( ['wikia.tracker'], function ( tracker ) {
 			ve.track( 'wikia' , {
 				'action': actions.IMPRESSION,
 				'label': 'edit-page-ready-from-page-load',
-				'value': Math.round( ve.now() - window.wgNow )
+				'value': normalizeDuration( ve.now() - window.wgNow )
 			} );
 		} );
 	}
