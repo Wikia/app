@@ -555,9 +555,11 @@ class MigrateImagesToSwiftBulk2 extends Maintenance {
 //		$files[2]['src'] = $files[1]['src'];
 
 		if ( $this->useDiff ) {
-			$migration = new \Wikia\Swift\Wiki\DiffMigration($targets,$files,$logger);
+			$migration = new \Wikia\Swift\Wiki\DiffMigration($targets,$files);
+			$remoteFilter = new \Wikia\Swift\Wiki\WikiFilesFilter($this->pathPrefix);
+			$migration->setRemoteFilter($remoteFilter);
 		} else {
-			$migration = new \Wikia\Swift\Wiki\SimpleMigration($targets,$files,$logger);
+			$migration = new \Wikia\Swift\Wiki\SimpleMigration($targets,$files);
 		}
 		$migration->setThreads(400);
 		$migration->setLogger($logger);

@@ -111,9 +111,13 @@ class SimpleMigration extends Migration {
 }
 
 class DiffMigration extends Migration {
+	protected $remoteFilter;
+	public function setRemoteFilter( $remoteFilter ) {
+		$this->remoteFilter = $remoteFilter;
+	}
 
 	protected function getOperationsFor( Target $target ) {
-		$builder = new DiffOperationListBuilder($target,$this->operations);
+		$builder = new DiffOperationListBuilder($target,$this->operations,$this->remoteFilter);
 		$builder->copyLogger($this);
 		return $builder->build();
 	}
@@ -122,9 +126,13 @@ class DiffMigration extends Migration {
 class DiffOperationListBuilder {
 	use LoggerFeature;
 
-	public function __construct( Target $target, $operations ) {
+	/** @var WikiFilesFilter $filter */
+	protected $remoteFilter;
+
+	public function __construct( Target $target, $operations, $remoteFilter ) {
 		$this->target = $target;
 		$this->operations = $operations;
+		$this->remoteFilter = $remoteFilter;
 	}
 
 	protected function getLoggerPrefix() { return $this->target->getCluster()->getName(); }
@@ -146,6 +154,10 @@ class DiffOperationListBuilder {
 		$container = $target->getContainer();
 		$bucket = new Bucket($cluster,$container);
 		$existing = $bucket->getItems();
+		if ( $this->remoteFilter ) {
+			$this->remoteFilter->copyLogger($this);
+			$existing = $this->remoteFilter->filter($existing);
+		}
 
 		$this->log(3,sprintf("Found %d files in ceph",count($existing)));
 //		var_dump(array_keys($requests),array_keys($existing));
@@ -186,4 +198,32 @@ class DiffOperationListBuilder {
 		return $requests;
 	}
 
+}
+
+class WikiFilesFilter {
+	use LoggerFeature;
+
+	protected $prefix;
+	protected $regex;
+
+	public function __construct( $prefix ) {
+		$this->prefix = ltrim($prefix,'/');
+		$prefixRegex = preg_quote($this->prefix);
+		$this->regex = "#^$prefixRegex/([0-9a-fA-F]/[0-9a-fA-F]{2}/|archive/[0-9a-fA-F]/[0-9a-fA-F]{2}/|deleted/([0-9a-zA-Z]/){3})#";
+	}
+
+	protected function getLoggerPrefix() { return 'files-filter'; }
+
+	public function filter( $files ) {
+		$this->log(3,sprintf("Got %d files to process...",count($files)));
+		/** @var Remote $remote */
+		foreach ($files as $k => $remote) {
+			$path = $remote->getRemotePath();
+			if ( !preg_match($this->regex,$path) ) {
+				unset($files[$k]);
+			}
+		}
+		$this->log(3,sprintf("Returning %d files that matched the wiki files regex...",count($files)));
+		return $files;
+	}
 }
