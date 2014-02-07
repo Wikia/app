@@ -202,7 +202,14 @@ class WallHistoryController extends WallController {
 				$history[$key]['msgurl'] = $messagePageUrl;
 				
 				$msgUser = $wm->getUser();
-				$history[$key]['msguserurl'] = Title::newFromText( $msgUser->getName(), NS_USER_WALL )->getFullUrl();
+
+				// VOLDEV-39: Wall history message edit links should not link to walls when disabled
+				if ( $this->wg->EnableWallExt ) {
+					$history[$key]['msguserurl'] = Title::newFromText( $msgUser->getName(), NS_USER_WALL )->getFullUrl();
+				} else {
+					$history[$key]['msguserurl'] = Title::newFromText( $msgUser->getName(), NS_USER_TALK )->getFullUrl();
+				}
+
 				$history[$key]['msgusername'] = $msgUser->getName();
 			
 				
