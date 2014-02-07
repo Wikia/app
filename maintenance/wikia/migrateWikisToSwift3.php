@@ -28,7 +28,7 @@ class MigrateWikisToSwift3 extends Maintenance {
 	const THREADS_DEFAULT = 40;
 
 	const SCRIPT_PATH = '/var/log/migration_queue';
-	const CMD = '/bin/bash -c "SERVER_ID=%d php migrateImagesToSwift_bulk.php %s --conf %s" >> %s 2>&1';
+	const CMD = '/bin/bash -c "SERVER_ID=%d php -ddisplay_errors=1 migrateImagesToSwift_bulk.php %s --conf %s" >> %s 2>&1';
 	
 	private $disabled_wikis = [ 717284, 298117 ];
 	private $db;
