@@ -21,7 +21,12 @@
 ( function () {
 	var conf, tabMessages, uri, pageExists, viewUri, veEditUri, isViewPage,
 		init, support, getTargetDeferred, userPrefEnabled, $edit, thisPageIsAvailable,
-		plugins = [];
+		plugins = [],
+		// Used by tracking calls that go out before ve.track is available.
+		trackerConfig = {
+			'category': 'editor-ve',
+			'trackingMethod': 'both'
+		};
 
 	/**
 	 * Use deferreds to avoid loading and instantiating Target multiple times.
@@ -30,6 +35,10 @@
 	function getTarget() {
 		var loadTargetDeferred;
 		if ( !getTargetDeferred ) {
+			Wikia.Tracker.track( trackerConfig, {
+				'action': Wikia.Tracker.ACTIONS.IMPRESSION,
+				'label': 'edit-page'
+			} );
 			getTargetDeferred = $.Deferred();
 			loadTargetDeferred = $.Deferred()
 				.done( function () {
@@ -163,8 +172,13 @@
 
 			e.preventDefault();
 
+			Wikia.Tracker.track( trackerConfig, {
+				'action': Wikia.Tracker.ACTIONS.CLICK,
+				'category': 'article',
+				'label': 've-edit'
+			} );
+
 			getTarget().done( function ( target ) {
-				ve.track( 'Edit', { action: 'edit-link-click' } );
 				target.activate();
 			} );
 		},
@@ -176,8 +190,13 @@
 
 			e.preventDefault();
 
+			Wikia.Tracker.track( trackerConfig, {
+				'action': Wikia.Tracker.ACTIONS.CLICK,
+				'category': 'article',
+				'label': 've-section-edit'
+			} );
+
 			getTarget().done( function ( target ) {
-				ve.track( 'Edit', { action: 'section-edit-link-click' } );
 				target.saveEditSection( $( e.target ).closest( 'h1, h2, h3, h4, h5, h6' ).get( 0 ) );
 				target.activate();
 			} );
