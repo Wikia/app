@@ -45,9 +45,7 @@ ve.init.mw.WikiaViewPageTarget.prototype.setupSkinTabs = function () {
 };
 
 ve.init.mw.WikiaViewPageTarget.prototype.mutePageContent = function () {
-	/*$( '#mw-content-text, .WikiaArticleCategories' )
-		.addClass( 've-init-mw-viewPageTarget-content' )
-		.fadeTo( 'fast', 0.6 );*/
+	// Intentionally left empty
 };
 
 ve.init.mw.WikiaViewPageTarget.prototype.hidePageContent = function () {
