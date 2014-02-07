@@ -297,6 +297,23 @@ class AdEngine2Controller extends WikiaController {
 	 */
 
 	/**
+	 * Handle URL parameters and set proper global variables early enough :)
+	 *
+	 * - Detect debug mode for assets (allinone=0) - sets $wgAllInOne and $wgResourceLoaderDebug
+	 *
+	 * @author macbre
+	 */
+	static public function onAfterInitialize($title, $article, $output, $user, WebRequest $request, $wiki) {
+
+		global $wgEnableRHonDesktop;
+
+		$wgEnableRHonDesktop = $request->getBool( 'noremnant', $wgEnableRHonDesktop );
+
+		return true;
+	}
+
+
+	/**
 	 * Register global JS variables bottom (migrated from wfAdEngineSetupJSVars)
 	 *
 	 * @param array $vars
