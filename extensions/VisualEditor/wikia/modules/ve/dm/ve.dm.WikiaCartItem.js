@@ -42,7 +42,7 @@ ve.dm.WikiaCartItem = function VeDmWikiaCartItem(
  * @returns {boolean} True if the item is temporary, false otherwise.
  */
 ve.dm.WikiaCartItem.prototype.isTemporary = function () {
-	return !!this.temporaryFileName || this.provider === 'wikia';
+	return !!this.temporaryFileName;
 };
 
 /**

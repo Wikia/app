@@ -8,7 +8,7 @@ require( ['wikia.tracker'], function ( tracker ) {
 	var actions = tracker.ACTIONS,
 		// These are topics used by MediaWiki, consider them reserved. Each topic should be
 		// assigned to a function which will map the data associated with a topic to a format
-		// understood by Wikia.Tracker.
+		// understood by Wikia.Tracker. Keep them alphabetized.
 		mwTopics = {
 			'behavior.lastTransactionTillSaveDialogOpen': function ( data ) {
 				return {
@@ -28,6 +28,12 @@ require( ['wikia.tracker'], function ( tracker ) {
 				return {
 					'action': actions.KEYPRESS,
 					'label': 'tool-' + nameToLabel( data.name )
+				};
+			},
+			'error.createdocumentfromhtml': function ( data ) {
+				return {
+					'action': actions.ERROR,
+					'label': 'createdocumentfromhtml-' + data.message
 				};
 			},
 			'performance.system.activation': function ( data ) {

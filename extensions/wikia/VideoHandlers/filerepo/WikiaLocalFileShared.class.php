@@ -52,7 +52,7 @@ class WikiaLocalFileShared  {
 	 * @param string $width Desired width of video player
 	 * @param bool $autoplay Whether the video should play on page load
 	 * @param bool $isAjax Whether the curent request is part of an ajax call
-	 * @param bool $postOnload
+	 * @param bool $postOnload Whether player is loaded after page onload event (used for JWPlayer)
 	 * @return bool|string
 	 */
 	public function getEmbedCode( $width, $autoplay = false, $isAjax = false, $postOnload = false ) {

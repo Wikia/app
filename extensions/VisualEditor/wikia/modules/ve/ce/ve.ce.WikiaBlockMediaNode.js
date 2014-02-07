@@ -224,19 +224,19 @@ ve.ce.WikiaBlockMediaNode.prototype.rebuild = function () {
 	// Magnifying glass icon
 	if ( type !== 'frameless' && type !== 'none' ) {
 		$thumb.append( this.createMagnify() );
-	}
 
-	// Caption
-	if ( this.model.children.length === 1 ) {
-		captionModel = this.model.children[ 0 ];
-		captionView = ve.ce.nodeFactory.create( captionModel.getType(), captionModel );
-		captionModel.connect( this, { 'update': 'onModelUpdate' } );
-		this.children.push( captionView );
-		captionView.attach( this );
-		captionView.$element.appendTo( $thumb );
+		// Caption
+		if ( this.model.children.length === 1 ) {
+			captionModel = this.model.children[ 0 ];
+			captionView = ve.ce.nodeFactory.create( captionModel.getType(), captionModel );
+			captionModel.connect( this, { 'update': 'onModelUpdate' } );
+			this.children.push( captionView );
+			captionView.attach( this );
+			captionView.$element.appendTo( $thumb );
 
-		if ( this.live !== captionView.isLive() ) {
-			captionView.setLive( this.live );
+			if ( this.live !== captionView.isLive() ) {
+				captionView.setLive( this.live );
+			}
 		}
 	}
 
