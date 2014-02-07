@@ -6,12 +6,12 @@
 @import "skins/oasis/css/mixins/flexbox";
 @import "skins/oasis/css/mixins/transition";
 
-.ve-loading-indicator {
+.ve-indicator {
 	@include align-items( center );
 	@include blackout();
 	@include flexbox();
 	@include justify-content( center );
-	@include transition-shorthand( display 0.2s ease-in-out );
+	opacity: 0;
 
 	.content {
 		@include box-shadow( 1px, 2px, 5px, rgba(0, 0, 0, .7) );

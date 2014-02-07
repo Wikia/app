@@ -23,31 +23,34 @@
 		init, support, getTargetDeferred, userPrefEnabled, $edit, thisPageIsAvailable,
 		plugins = [];
 
-	function loadingIndicator() {
+	function indicator( type, hook ) {
 		var timer,
-			$indicator = $( '<div>' ).addClass( 've-loading-indicator visible' ),
+			$indicator = $( '<div>' ).addClass( 've-indicator visible' ),
 			$content = $( '<div>' ).addClass( 'content' ),
-			$throbber = $( '<div>' ).addClass( 'loading' ),
+			$icon = $( '<div>' ).addClass( type ),
 			$message = $( '<p>' )
 				.addClass( 'message' )
-				.text( mw.message( 'wikia-visualeditor-loading' ).plain() );
+				.text( mw.message( 'wikia-visualeditor-' + type ).plain() );
 
 		$content
-			.append( $throbber )
+			.append( $icon )
 			.append( $message );
 
 		$indicator
 			.append( $content )
-			.appendTo( $( 'body' ) );
+			.appendTo( $( 'body' ) )
+			.animate( { 'opacity': 1 }, 400 );
 
 		// Display the message if loading is taking awhile
 		timer = setTimeout( function () {
 			$message.slideDown( 400 );
 		}, 3000 );
 
-		mw.hook( 've.activationComplete' ).add( function () {
+		// Cleanup indicators when hook is fired
+		mw.hook( hook ).add( function cleanup() {
 			clearTimeout( timer );
-			$indicator.fadeOut( 200, function() {
+			$indicator.animate( { 'opacity': 0 }, 400, function () {
+				mw.hook( hook ).remove( cleanup );
 				$indicator.remove();
 			} );
 		} );
@@ -60,7 +63,7 @@
 	function getTarget() {
 		var loadTargetDeferred;
 
-		loadingIndicator();
+		indicator( 'loading', 've.activationComplete' );
 
 		if ( !getTargetDeferred ) {
 			getTargetDeferred = $.Deferred();
