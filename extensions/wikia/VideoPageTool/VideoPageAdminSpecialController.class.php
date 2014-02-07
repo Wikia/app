@@ -420,14 +420,14 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 	}
 
 	/**
-	 * Get video data
+	 * Get video data for a featured video
 	 * @requestParam string url
 	 * @requestParam string altThumbKey
 	 * @responseParam string result [ok/error]
 	 * @responseParam string msg - result message
 	 * @responseParam array video
 	 */
-	public function getVideoData() {
+	public function getFeaturedVideoData() {
 		$errMsg = '';
 		if ( !$this->validateUser( $errMsg ) ) {
 			$this->result = 'error';
