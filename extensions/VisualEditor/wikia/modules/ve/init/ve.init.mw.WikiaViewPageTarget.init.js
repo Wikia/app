@@ -59,11 +59,12 @@
 	 */
 	function getTarget() {
 		var loadTargetDeferred;
+
+		loadingIndicator();
+
 		if ( !getTargetDeferred ) {
 			getTargetDeferred = $.Deferred();
 			loadTargetDeferred = $.Deferred();
-
-			loadingIndicator();
 
 			$.when(
 				loadTargetDeferred,
