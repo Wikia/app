@@ -8,7 +8,7 @@ class VideosModuleController extends WikiaController {
 	 * related to the article page. If that's not enough add premium videos related
 	 * to the local wiki. Finally, if still more or needed, get trending premium
 	 * videos related to the vertical of the wiki.
-	 * @requestParam integer articleId
+	 * @requestParam integer articleId (this is required if verticalonly is 0)
 	 * @requestParam integer verticalonly [0/1] - show vertical videos only
 	 * @responseParam string $result [ok/error]
 	 * @responseParam string $msg - result message

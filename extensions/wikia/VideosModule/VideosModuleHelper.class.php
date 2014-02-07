@@ -91,6 +91,9 @@ class VideosModuleHelper extends WikiaModel {
 
 		$response = ApiService::foreignCall( $this->wg->WikiaVideoRepoDBName, $params, ApiService::WIKIA );
 		if ( !empty( $response['videos'] ) ) {
+
+			shuffle( $response['videos'] );
+
 			foreach ( $response['videos'] as $video ) {
 				if ( count( $videos ) >= self::VIDEO_LIMIT ) {
 					break;
@@ -144,7 +147,12 @@ class VideosModuleHelper extends WikiaModel {
 				);
 
 				if ( !empty( $videoDetail ) ) {
-					$videoList[$hash] = $videoDetail;
+					$videoList[$hash] = [
+						'title'     => $videoDetail['title'],
+						'fileTitle' => $videoDetail['fileTitle'],
+						'fileUrl'   => $videoDetail['fileUrl'],
+						'thumbnail' => $videoDetail['thumbnail'],
+					];
 				}
 			}
 		}

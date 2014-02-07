@@ -259,14 +259,15 @@ class VideoHandlerHelper extends WikiaModel {
 			// get thumbnail
 			$thumb = $file->transform( array( 'width' => $thumbWidth, 'height' => $thumbHeight ) );
 			$thumbUrl = $thumb->getUrl();
+
 			// get user
-			if ( !empty($videoInfo['addedBy']) ) {
+			if ( empty($videoInfo['addedBy']) ) {
+				$userName = '';
+				$userUrl = '';
+			} else {
 				$user = User::newFromId( $videoInfo['addedBy'] );
 				$userName = ( User::isIP($user->getName()) ) ? wfMessage( 'oasis-anon-user' )->text() : $user->getName();
 				$userUrl = $user->getUserPage()->getFullURL();
-			} else {
-				$userName = '';
-				$userUrl = '';
 			}
 
 			$thumbNail = '';
@@ -275,9 +276,14 @@ class VideoHandlerHelper extends WikiaModel {
 			}
 
 			// get article list
-			$mediaQuery = new ArticlesUsingMediaQuery( $title );
-			$articleList = $mediaQuery->getArticleList();
-			list( $truncatedList, $isTruncated ) = WikiaFileHelper::truncateArticleList( $articleList, $postedInArticles );
+			if ( empty( $postedInArticles ) ) {
+				$isTruncated = 0;
+				$truncatedList = array();
+			} else {
+				$mediaQuery = new ArticlesUsingMediaQuery( $title );
+				$articleList = $mediaQuery->getArticleList();
+				list( $truncatedList, $isTruncated ) = WikiaFileHelper::truncateArticleList( $articleList, $postedInArticles );
+			}
 
 			// video details
 			$videoDetail = array(
@@ -309,12 +315,12 @@ class VideoHandlerHelper extends WikiaModel {
 	/**
 	 * Same as 'VideoHandlerHelper::getVideoDetail' but retrieves information from an external wiki
 	 * Typically used to get premium video info from video.wikia.com when on another wiki.
-	 * @param $dbName - The DB name of the wiki that should be used to find video details
-	 * @param $title - The title of the video to get details for
-	 * @param $thumbWidth - The width of the thumbnail to return
-	 * @param $thumbHeight - The height of the thumbnail to return
-	 * @param $postedInArticles - Cap on number of "posted in" article details to return
-	 * @param $getThumb - Whether to return a fully formed html thumbnail of the video or not
+	 * @param string $dbName - The DB name of the wiki that should be used to find video details
+	 * @param string $title - The title of the video to get details for
+	 * @param integer $thumbWidth - The width of the thumbnail to return
+	 * @param integer $thumbHeight - The height of the thumbnail to return
+	 * @param integer $postedInArticles - Cap on number of "posted in" article details to return
+	 * @param boolean $getThumb - Whether to return a fully formed html thumbnail of the video or not
 	 * @return null|array - As associative array of video information
 	 */
 	public function getVideoDetailFromWiki( $dbName, $title, $thumbWidth, $thumbHeight, $postedInArticles, $getThumb = false ) {
