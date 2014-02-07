@@ -1,9 +1,7 @@
 <div id="blackout_{{id}}" class="modal-blackout">
     <div id="{{id}}" class="modal {{size}} {{#classes}}{{.}} {{/classes}}" {{#data}}data-{{key}}="{{value}}"{{/data}}>
         <header>
-            {{#closeButton}}
-                <a href="#" class="close">{{closeText}}</a>
-            {{/closeButton}}
+            <a href="#" class="close" title="{{closeText}}">{{closeText}}</a>
             <h3>{{title}}</h3>
         </header>
         <section>
@@ -11,11 +9,12 @@
         </section>
         <footer>
             {{#altLink}}
-                <a id="{{altLink.id}}" href="{{altLink.href}}">{{altLink.text}}</a>
+                <a id="{{altLink.id}}" href="{{altLink.href}}" title="{{altLink.title}}">{{altLink.text}}</a>
             {{/altLink}}
             <div class="buttons">
-                {{{primaryBtn}}}
-                {{{secondBtn}}}
+	            {{#buttons}}
+		            {{{.}}}
+	            {{/buttons}}
             </div>
         </footer>
     </div>

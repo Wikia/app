@@ -1,7 +1,10 @@
 describe('AdLogicPageDimensions', function(){
-	function adShown(slotName, pageLength, responsiveLayout, matchingMediaQuery) {
-		var slot = [slotName],
-			matchingMediaQueryDict = {},
+	function adShown(slotName, pageLength, responsiveLayout, matchingMediaQuery, railExists) {
+
+		if (typeof railExists === 'undefined') {
+			railExists = true;
+		}
+		var matchingMediaQueryDict = {},
 			i,
 			len,
 			windowMock = {
@@ -14,11 +17,12 @@ describe('AdLogicPageDimensions', function(){
 				}
 			},
 			logMock = function() {},
-			documentMock = {documentElement: {scrollHeight: pageLength, scrollWidth: 1280}},
+			documentMock = {documentElement: {scrollHeight: pageLength, scrollWidth: 1280}, getElementById: function() { return railExists ? {} : null; }},
 			slotTweakerMock = {hide: function() {}, show: function() {}},
-			adLogicPageDimensions = AdLogicPageDimensions(windowMock, documentMock, logMock, slotTweakerMock),
+			abTestMock = {getGroup: function () {}},
+			adLogicPageDimensions = AdLogicPageDimensions(windowMock, documentMock, logMock, slotTweakerMock, abTestMock),
 			fillInSlotCalled = false,
-			providerMock = {fillInSlot: function() { fillInSlotCalled = true; }};
+			fillInSlotMock = function () { fillInSlotCalled = true; };
 
 		if (matchingMediaQuery) {
 			for (i = 0, len = matchingMediaQuery.length; i < len; i += 1) {
@@ -26,12 +30,12 @@ describe('AdLogicPageDimensions', function(){
 			}
 		}
 
-		if (!adLogicPageDimensions.isApplicable(slot)) {
+		if (!adLogicPageDimensions.isApplicable(slotName)) {
 			// The proxy would not be used, so ad would be always shown
 			return true;
 		}
 
-		adLogicPageDimensions.getProxy(providerMock).fillInSlot(slot);
+		adLogicPageDimensions.addSlot(slotName, fillInSlotMock);
 
 		if (fillInSlotCalled) {
 			// The ad would be shown
@@ -65,6 +69,7 @@ describe('AdLogicPageDimensions', function(){
 		expect(adShown('foo', 5000)).toBeTruthy('height=5000 slot=foo -> ADS');
 		expect(adShown('LEFT_SKYSCRAPER_2', 5000)).toBeTruthy('height=5000 slot=LEFT_SKYSCRAPER_2 -> ADS');
 		expect(adShown('LEFT_SKYSCRAPER_3', 5000)).toBeTruthy('height=5000 slot=LEFT_SKYSCRAPER_3 -> ADS');
+		expect(adShown('LEFT_SKYSCRAPER_3', 5000, undefined, undefined, false)).toBeFalsy('height=5000 slot=LEFT_SKYSCRAPER_3 -> ADS noRail');
 		expect(adShown('PREFOOTER_LEFT_BOXAD', 5000)).toBeTruthy('height=5000 slot=PREFOOTER_LEFT_BOXAD -> ADS');
 		expect(adShown('PREFOOTER_RIGHT_BOXAD', 5000)).toBeTruthy('height=5000 slot=PREFOOTER_RIGHT_BOXAD -> ADS');
 	});
@@ -86,6 +91,7 @@ describe('AdLogicPageDimensions', function(){
 		expect(adShown('foo', 5000, true, width2000)).toBeTruthy('height=5000 slot=foo -> ADS');
 		expect(adShown('LEFT_SKYSCRAPER_2', 5000, true, width2000)).toBeTruthy('height=5000 slot=LEFT_SKYSCRAPER_2 -> ADS');
 		expect(adShown('LEFT_SKYSCRAPER_3', 5000, true, width2000)).toBeTruthy('height=5000 slot=LEFT_SKYSCRAPER_3 -> ADS');
+		expect(adShown('LEFT_SKYSCRAPER_3', 5000, true, width2000, false)).toBeFalsy('height=5000 slot=LEFT_SKYSCRAPER_3 -> ADS noRail');
 		expect(adShown('PREFOOTER_LEFT_BOXAD', 5000, true, width2000)).toBeTruthy('height=5000 slot=PREFOOTER_LEFT_BOXAD -> ADS');
 		expect(adShown('PREFOOTER_RIGHT_BOXAD', 5000, true, width2000)).toBeTruthy('height=5000 slot=PREFOOTER_RIGHT_BOXAD -> ADS');
 	});
@@ -99,6 +105,7 @@ describe('AdLogicPageDimensions', function(){
 		expect(adShown('HOME_TOP_RIGHT_BOXAD', 5000, true, width2000)).toBeTruthy('width=2000 slot=HOME_TOP_RIGHT_BOXAD -> ADS');
 		expect(adShown('LEFT_SKYSCRAPER_2', 5000, true, width2000)).toBeTruthy('width=2000 slot=LEFT_SKYSCRAPER_2 -> ADS');
 		expect(adShown('LEFT_SKYSCRAPER_3', 5000, true, width2000)).toBeTruthy('width=2000 slot=LEFT_SKYSCRAPER_3 -> ADS');
+		expect(adShown('LEFT_SKYSCRAPER_3', 5000, true, width2000, false)).toBeFalsy('width=2000 slot=LEFT_SKYSCRAPER_3 -> ADS noRail');
 		expect(adShown('INCONTENT_BOXAD_1', 5000, true, width2000)).toBeTruthy('width=2000 slot=INCONTENT_BOXAD_1 -> ADS');
 
 		expect(adShown('foo', 5000, true, width1024)).toBeTruthy('width=1024 slot=foo -> ADS');
@@ -108,6 +115,7 @@ describe('AdLogicPageDimensions', function(){
 		expect(adShown('HOME_TOP_RIGHT_BOXAD', 5000, true, width1024)).toBeTruthy('width=1024 slot=HOME_TOP_RIGHT_BOXAD -> ADS');
 		expect(adShown('LEFT_SKYSCRAPER_2', 5000, true, width1024)).toBeTruthy('width=1024 slot=LEFT_SKYSCRAPER_2 -> ADS');
 		expect(adShown('LEFT_SKYSCRAPER_3', 5000, true, width1024)).toBeTruthy('width=1024 slot=LEFT_SKYSCRAPER_3 -> ADS');
+		expect(adShown('LEFT_SKYSCRAPER_3', 5000, true, width1024, false)).toBeFalsy('width=1024 slot=LEFT_SKYSCRAPER_3 -> ADS noRail');
 		expect(adShown('INCONTENT_BOXAD_1', 5000, true, width1024)).toBeTruthy('width=1024 slot=INCONTENT_BOXAD_1 -> ADS');
 
 		expect(adShown('foo', 5000, true, width800)).toBeTruthy('width=800 slot=foo -> ADS');
@@ -121,7 +129,7 @@ describe('AdLogicPageDimensions', function(){
 	});
 
 	it('updates the logic when resize event is fired', function() {
-		var slot = ['LEFT_SKYSCRAPER_3'],
+		var slotName = 'LEFT_SKYSCRAPER_3',
 			resizeListener = function () {},
 			isNarrow,
 			windowMock = {
@@ -138,15 +146,16 @@ describe('AdLogicPageDimensions', function(){
 				}
 			},
 			logMock = function() {},
-			documentMock = {documentElement: {scrollWidth: 1280}},
+			documentMock = {documentElement: {scrollWidth: 1280}, getElementById: function() { return {}; }},
 			adShown,
 			adLoadCounter = 0,
 			slotTweakerMock = {hide: function () {adShown = false;}, show: function () {adShown = true;}},
-			adLogicPageDimensions = AdLogicPageDimensions(windowMock, documentMock, logMock, slotTweakerMock),
-			providerMock = {fillInSlot: function () { adLoadCounter += 1; }};
+			abTestMock = {getGroup: function () {}},
+			adLogicPageDimensions = AdLogicPageDimensions(windowMock, documentMock, logMock, slotTweakerMock, abTestMock),
+			fillInSlotMock = function () { adLoadCounter += 1; };
 
 		documentMock.documentElement.scrollHeight = 1000;
-		adLogicPageDimensions.getProxy(providerMock).fillInSlot(slot);
+		adLogicPageDimensions.addSlot(slotName, fillInSlotMock);
 
 		// Page is short and wide
 		documentMock.documentElement.scrollHeight = 1000;
@@ -197,4 +206,3 @@ describe('AdLogicPageDimensions', function(){
 		expect(adShown).toBeFalsy('7) Ad is hidden');
 	});
 });
-

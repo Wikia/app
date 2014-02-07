@@ -33,6 +33,7 @@ $wgSpecialPages[ 'GameGuidesContent' ] =  'GameGuidesSpecialContentController';
 
 $wgGroupPermissions['*']['gameguidescontent'] = false;
 $wgGroupPermissions['staff']['gameguidescontent'] = true;
+$wgGroupPermissions['helper']['gameguidescontent'] = true;
 
 if ( $wgGameGuidesContentForAdmins ) {
 	$wgGroupPermissions['sysop']['gameguidescontent'] = true;

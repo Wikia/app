@@ -79,7 +79,7 @@ class SpecialConnect extends SpecialPage {
 	 * Performs any necessary execution and outputs the resulting Special page.
 	 */
 	function execute( $par ) {
-		global $wgUser, $wgRequest;
+		global $wgUser, $wgRequest, $wgOut;
 
 		if ( $wgRequest->getVal("action", "") == "disconnect_reclamation" ) {
 			self::disconnectReclamationAction();
@@ -155,10 +155,16 @@ class SpecialConnect extends SpecialPage {
 			}
 		}
 
+		JSMessages::enqueuePackage('FBConnect', JSMessages::INLINE);
+
 		switch ( $par ) {
 		case 'ChooseName':
 			$choice = $wgRequest->getText('wpNameChoice');
+			if ( empty( $this->mEmail ) ) {
+				$this->mEmail = $wgRequest->getText( 'wpEmail' );
+			}
 			if ($wgRequest->getCheck('wpCancel')) {
+				$fb->logout();
 				$this->sendError('fbconnect-cancel', 'fbconnect-canceltext');
 			}
 			else switch ($choice) {
@@ -841,9 +847,10 @@ class SpecialConnect extends SpecialPage {
 		$wgOut->addWikiMsg( $messagekey );
 		// TODO: Format the html a little nicer
 		$wgOut->addHTML('
-		<form action="' . $this->getTitle('ChooseName')->getLocalUrl() . '" method="POST">
+		<form id="chooseNameForm" action="' . $this->getTitle('ChooseName')->getLocalUrl() . '" method="POST">
 			<fieldset id="mw-fbconnect-choosename">
 				<legend>' . wfMsg('fbconnect-chooselegend') . '</legend>
+				<input type="hidden" name="wpEmail" value="' . FBConnectUser::getOptionFromInfo( 'email', $userinfo ) . '">
 				<table>');
 		// Let them attach to an existing user if $fbConnectOnly allows it
 		if (!$fbConnectOnly) {
@@ -904,7 +911,7 @@ class SpecialConnect extends SpecialPage {
 			'<input name="wpName2" size="16" value="" id="wpName2"/></td></tr>' .
 			// Finish with two options, "Log in" or "Cancel"
 			'<tr><td></td><td class="mw-submit"><input type="submit" value="Log in" name="wpOK"/>' .
-			'<input type="submit" value="Cancel" name="wpCancel"/></td></tr></table></fieldset></form>'
+			'<input id="wpCancel" type="submit" value="Cancel" name="wpCancel"/></td></tr></table></fieldset></form>'
 		);
 	}
 

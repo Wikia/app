@@ -10,10 +10,6 @@ class WikiaMobileHooks {
 	 * @var null
 	 */
 	static private $mediaNsString = null;
-	/**
-	 * @var bool
-	 */
-	static private $displayErrorPage = false;
 
 	/**
 	 * @param $parser Parser
@@ -174,12 +170,37 @@ class WikiaMobileHooks {
 			//remove bold, italics, underline and anchor tags from section headings (also optimizes output size)
 			$text = preg_replace( '/<\/?(b|u|i|a|em|strong){1}(\s+[^>]*)*>/im', '', $text );
 
-			//$link contains the section edit link, add it to the next line to put it back
-			//ATM editing is not allowed in WikiaMobile
-			$ret = "<h{$level} id=\"{$anchor}\" {$attribs}{$text}</h{$level}>";
+            if ( F::app()->wg->User->isAnon() ) {
+				$link = '';
+			}
+
+			$ret = "<h{$level} id='{$anchor}' {$attribs}{$text}{$link}</h{$level}>";
 		}
 
 		wfProfileOut( __METHOD__ );
+		return true;
+	}
+
+	/**
+	 * @param $skin Skin
+	 * @param $title Title
+	 * @param $section Integer
+	 * @param $tooltip
+	 * @param $result
+	 * @param bool $lang
+	 */
+	public static function onDoEditSectionLink( $skin, $nt, $section, $tooltip, &$result, $lang ) {
+		if ( F::app()->checkSkin( 'wikiamobile', $skin ) ) {
+			$link = F::app()->wg->Title->getLocalURL( [
+				'section' => $section,
+				'action' => 'edit'
+			] );
+
+			$result = "<a href='$link' class='editsection'></a>";
+
+			return false;
+		}
+
 		return true;
 	}
 
@@ -233,7 +254,7 @@ class WikiaMobileHooks {
 			}
 
 			//set proper titles for a page
-			$out->setPageTitle( $text . ' <span id=catTtl>' . wfMessage( 'wikiamobile-categories-tagline' )->inContentLanguage()->plain() . '</span>');
+			$out->setPageTitle( $text );
 			$out->setHTMLTitle( $text );
 
 			//render lists: exhibition and alphabetical
@@ -300,9 +321,14 @@ class WikiaMobileHooks {
 					wfProfileOut( __METHOD__ );
 					return true;
 				}
+			//Do not show error on non-blank help pages (including shared help)
+			} else if ( $ns == NS_HELP && ( $title->isKnown() ||
+					is_callable('SharedHelpArticleExists') && SharedHelpArticleExists( $title ) ) ) {
+				wfProfileOut( __METHOD__ );
+				return true;
 			}
 
-			self::$displayErrorPage = true;
+			WikiaMobileErrorService::$displayErrorPage = true;
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -320,7 +346,7 @@ class WikiaMobileHooks {
 		wfProfileIn( __METHOD__ );
 		$app = F::app();
 
-		if( $app->checkSkin( 'wikiamobile', $skin ) && self::$displayErrorPage ) {
+		if( $app->checkSkin( 'wikiamobile', $skin ) && WikiaMobileErrorService::$displayErrorPage == true ) {
 			$out->clearHTML();
 
 			$out->addHTML( $app->renderView( 'WikiaMobileErrorService', 'pageNotFound', array( 'out' => &$out) ) );

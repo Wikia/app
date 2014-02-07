@@ -89,11 +89,20 @@ class BlogArticle extends Article {
 		$purge   = $wgRequest->getVal( "action" ) == 'purge';
 		$page    = $wgRequest->getVal( "page", 0 );
 		$offset  = $page * $this->mCount;
+		$blogPostCount = null;
 
 		$wgOut->setSyndicated( true );
 
 		if( !$purge ) {
-			$listing  = $wgMemc->get( wfMemcKey( "blog", "listing", $userMem, $page ) );
+			$cachedValueKey  = $this->blogListingMemcacheKey( $userMem, $page );
+			$cachedValue = $wgMemc->get( $cachedValueKey );
+
+			if ( $cachedValue && isset( $cachedValue['listing'] ) ) {
+				$listing = $cachedValue['listing'];
+				if ( isset($cachedValue['blogPostCount']) ) {
+					$blogPostCount = $cachedValue['blogPostCount'];
+				}
+			}
 		}
 
 		if( !$listing ) {
@@ -109,9 +118,13 @@ class BlogArticle extends Article {
 				</bloglist>";
 			$parserOutput = $wgParser->parse($text, $this->mTitle,  new ParserOptions());
 			$listing = $parserOutput->getText();
-			$wgMemc->set( wfMemcKey( "blog", "listing", $userMem, $page ), $listing, 3600 );
+			$blogPostCount = $parserOutput->getProperty("blogPostCount");
+			$wgMemc->set( $this->blogListingMemcacheKey( $userMem, $page ), [ 'listing'=> $listing, 'blogPostCount' => $blogPostCount ], 3600 );
 		}
-
+		if ( isset($blogPostCount) && $blogPostCount == 0 ) {
+			// bugid: PLA-844
+			$wgOut->setRobotPolicy( "noindex,nofollow" );
+		}
 		$wgOut->addHTML( $listing );
 	}
 
@@ -130,13 +143,22 @@ class BlogArticle extends Article {
 
 		$user = $this->mTitle->getPrefixedDBkey();
 		foreach( range(0, 5) as $page ) {
-			$wgMemc->delete( wfMemcKey( "blog", "listing", $user, $page ) );
+			$wgMemc->delete($this->blogListingMemcacheKey($user, $page));
 		}
 		$this->doPurge();
 
 		$title = Title::newFromText( 'Category:BlogListingPage' );
 		$title->touchLinks();
 
+	}
+
+	/**
+	 * @param $user - user dbkKey
+	 * @param $page - page no
+	 * @return String - memcache key
+	 */
+	private function blogListingMemcacheKey($user, $page) {
+		return wfMemcKey("blog", "listing", "v2", $user, $page);
 	}
 
 	/**
@@ -411,6 +433,15 @@ class BlogArticle extends Article {
 			 */
 			if( !isset( $catView->blogs ) ) {
 				$catView->blogs = array();
+			}
+
+			if ( F::app()->checkSkin( 'wikiamobile' ) ) {
+				$catView->blogs[] = [
+					'name' => $title->getText(),
+					'url' => $title->getLocalUrl(),
+				];
+
+				return false;
 			}
 
 			/**

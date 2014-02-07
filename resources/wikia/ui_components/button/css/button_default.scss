@@ -1,4 +1,5 @@
 @import "skins/oasis/css/core/color";
+@import "skins/oasis/css/core/sprite";
 @import "skins/oasis/css/mixins/border-radius";
 @import "skins/oasis/css/mixins/box-shadow";
 @import "skins/oasis/css/mixins/gradient";
@@ -68,7 +69,7 @@ button {
 	}
 	&.big {
 		font-size: 18px;
-		line-height: 40px;
+		line-height: 23px;
 		height: 40px;
 	}
 }

@@ -3,10 +3,10 @@
 // Simple Article/Page class with properties used in the DPL
 class DPLArticle {
 	var $mTitle = ''; 		// title
-	var $mNamespace = - 1;	// namespace (number)
+	var $mNamespace = -1;	// namespace (number)
 	var $mID = 0;			// page_id
 	var $mSelTitle = '';    // selected title of initial page
-	var $mSelNamespace = - 1;// selected namespace (number) of initial page
+	var $mSelNamespace = -1;// selected namespace (number) of initial page
 	var $mImageSelTitle = ''; // selected title of image
 	var $mLink = ''; 		// html link to page
 	var $mExternalLink = '';// external link on the page
@@ -22,11 +22,11 @@ class DPLArticle {
 	var $mUserLink = ''; 	// link to editor (first/last, depending on user's request) 's page or contributions if not registered
 	var $mUser = ''; 		// name of editor (first/last, depending on user's request) or contributions if not registered
 	var $mComment = ''; 	// revision comment / edit summary
-	var $mContribution = ''; // number of bytes changed
-	var $mContrib = '';      // short string indicating the size of a contribution
-	var $mContributor = '';  // user who made the changes
-
-	function __construct( $title, $namespace ) {
+	var $mContribution= ''; // number of bytes changed
+	var $mContrib= '';      // short string indicating the size of a contribution
+	var $mContributor= '';  // user who made the changes
+	
+	function __construct($title, $namespace) {
 		$this->mTitle     = $title;
 		$this->mNamespace = $namespace;
 	}

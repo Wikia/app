@@ -55,6 +55,7 @@ $messages['ar'] = array(
  * @author Cekli829
  */
 $messages['az'] = array(
+	'contentfeeds-firstfewarticles-tag-title' => 'Başlıq',
 	'contentfeeds-firstfewarticles-tag-next' => 'Növbəti',
 );
 
@@ -106,7 +107,7 @@ $messages['ce'] = array(
 	'contentfeeds-firstfewarticles-tag-next' => 'Кхин дӀа',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -177,11 +178,21 @@ $messages['eu'] = array(
 	'contentfeeds-firstfewarticles-tag-next' => 'Hurrengoa',
 );
 
+/** Persian (فارسی)
+ * @author Reza1615
+ */
+$messages['fa'] = array(
+	'contentfeeds-firstfewarticles-tag-title' => 'عنوان',
+	'contentfeeds-firstfewarticles-tag-next' => 'بعدی',
+);
+
 /** Finnish (suomi)
  * @author Centerlink
+ * @author Elseweyr
  * @author Nedergard
  */
 $messages['fi'] = array(
+	'contentfeeds-newimages-rss-desc' => 'Syöte sivulta $1',
 	'contentfeeds-firstfewarticles-tag-header' => 'Luo ensimmäiset sivusi!',
 	'contentfeeds-firstfewarticles-tag-title' => 'Otsikko',
 	'contentfeeds-firstfewarticles-tag-next' => 'Seuraava',
@@ -314,6 +325,14 @@ $messages['lb'] = array(
 	'contentfeeds-firstfewarticles-tag-title' => 'Titel',
 	'contentfeeds-firstfewarticles-tag-next' => 'Weider',
 	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Feeler: De Säitentitel ass obligatoresch',
+);
+
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'contentfeeds-newimages-rss-desc' => 'غذا دئن سی $1',
+	'contentfeeds-firstfewarticles-tag-next' => 'نها',
 );
 
 /** Lithuanian (lietuvių)

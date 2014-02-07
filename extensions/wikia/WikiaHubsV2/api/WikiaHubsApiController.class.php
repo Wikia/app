@@ -55,6 +55,7 @@ class WikiaHubsApiController extends WikiaApiController {
 		$moduleService = MarketingToolboxModuleService::getModuleByName($moduleName, $lang, MarketingToolboxModel::SECTION_HUBS, $verticalId);
 		
 		if( $this->isValidModuleService($moduleService) ) {
+			$moduleService->setShouldFilterCommercialData( $this->hideNonCommercialContent() );
 			$data = $moduleService->loadData($model, [
 				'lang' => $lang,
 				'vertical_id' => $verticalId,
@@ -65,14 +66,7 @@ class WikiaHubsApiController extends WikiaApiController {
 			throw new BadRequestApiException();
 		}
 		
-		$this->response->setCacheValidity(
-			self::CLIENT_CACHE_VALIDITY,
-			self::CLIENT_CACHE_VALIDITY,
-			array(
-				WikiaResponse::CACHE_TARGET_BROWSER,
-				WikiaResponse::CACHE_TARGET_VARNISH
-			)
-		);
+		$this->response->setCacheValidity(self::CLIENT_CACHE_VALIDITY);
 		
 		wfProfileOut( __METHOD__ );
 	}
