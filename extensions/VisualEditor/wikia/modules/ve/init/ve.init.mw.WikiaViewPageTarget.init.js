@@ -46,7 +46,7 @@
 			$message.slideDown( 400 );
 		}, 3000 );
 
-		// Cleanup indicators when hook is fired
+		// Cleanup indicator when hook is fired
 		mw.hook( hook ).add( function cleanup() {
 			clearTimeout( timer );
 			$indicator.animate( { 'opacity': 0 }, 400, function () {
