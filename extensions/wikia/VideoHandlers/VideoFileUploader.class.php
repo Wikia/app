@@ -131,7 +131,7 @@ class VideoFileUploader {
 			$content = $article->getContent();
 			$newcontent = $this->getDescription();
 			if ( $content != $newcontent ) {
-				$article->doEdit( $newcontent, 'update' );
+				$article->doEdit( $newcontent, wfMessage( 'videos-update-edit-summary' )->inContentLanguage()->text() );
 			}
 		}
 
