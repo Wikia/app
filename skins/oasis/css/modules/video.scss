@@ -8,6 +8,37 @@
 .videos-module {
 	margin-bottom: 30px;
 
+  &.rows-2 {
+    /**
+     * We will have max 2 rows of thumbnails, which at the largest breakpoint, is a max of 8 thumbs.
+     * To handle this for responsive, we will always render a maximum of 8 thumbs, but only show
+     * 6 or 8 based on the current breakpoint context.
+     */
+    @media #{$small} {
+      li:nth-child(n+7) {
+        display: none;
+      }
+    }
+    @media #{$x-large} {
+      li:nth-child(n+7) {
+        display: block;
+      }
+    }
+  }
+
+  &.rows-1 {
+    @media #{$small} {
+      li:nth-child(n+4) {
+        display: none;
+      }
+    }
+    @media #{$x-large} {
+      li:nth-child(n+4) {
+        display: block;
+      }
+    }
+  }
+
 	h2 {
 		border-bottom: solid 1px $color-headline-border;
 		font-size: 18px;
@@ -37,4 +68,6 @@
 		line-height: 18px;
 		padding-top: 11px;
 	}
+
 }
+
