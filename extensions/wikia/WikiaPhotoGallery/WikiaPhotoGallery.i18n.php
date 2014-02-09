@@ -6131,6 +6131,7 @@ $messages['tr'] = array(
  * @author Steve.rusyn
  * @author SteveR
  * @author Ua2004
+ * @author Ата
  * @author Тест
  */
 $messages['uk'] = array(
@@ -6233,7 +6234,7 @@ $messages['uk'] = array(
 	'wikiaPhotoGallery-preview-captions' => 'Підписи',
 	'wikiaPhotoGallery-preview-captions-left' => 'Зліва',
 	'wikiaPhotoGallery-preview-captions-center' => 'По центру',
-	'wikiaPhotoGallery-preview-captions-right' => 'Зправа',
+	'wikiaPhotoGallery-preview-captions-right' => 'Справа',
 	'wikiaPhotoGallery-conflict-title' => 'Виник конфлікт редагування',
 	'wikiaPhotoGallery-conflict-help' => 'Ми покажемо ниже вікітекст, створений вашим редагуванням.
 Для відновлення ваших змін ви можете скопіювати цей текст, натиснувши „$1“ та вставити його у потрібному місці.

@@ -177,6 +177,7 @@ $messages['af'] = array(
 );
 
 /** Arabic (العربية)
+ * @author Achraf94
  * @author Claw eg
  * @author Kuwaity26
  */
@@ -208,6 +209,7 @@ $messages['ar'] = array(
 	'wikiamobile-category-items-prev' => 'تحميل السابق',
 	'wikiamobile-categories-expand' => 'أظهر الكل',
 	'wikiamobile-categories-collapse' => 'أخفِ الكل',
+	'wikiamobile-categories-blogs' => 'المشاركات في المدونة',
 	'wikiamobile-sharing-media-image' => 'صورة',
 	'wikiamobile-sharing-page-text' => '$1 - $2',
 	'wikiamobile-sharing-modal-text' => '$1 على $2 - $3',
@@ -511,6 +513,7 @@ $messages['es'] = array(
 	'wikiamobile-category-items-prev' => 'Cargar el anterior',
 	'wikiamobile-categories-expand' => 'Mostrar todo',
 	'wikiamobile-categories-collapse' => 'Ocultar todo',
+	'wikiamobile-categories-blogs' => 'Entradas de blog',
 	'wikiamobile-sharing-media-image' => 'Imagen',
 	'wikiamobile-sharing-page-text' => '$1 - $2',
 	'wikiamobile-sharing-modal-text' => '$1 en $2 - $3',
@@ -652,6 +655,7 @@ $messages['fr'] = array(
 	'wikiamobile-category-items-prev' => 'Lire le précédent',
 	'wikiamobile-categories-expand' => 'Afficher tout',
 	'wikiamobile-categories-collapse' => 'Masquer tout',
+	'wikiamobile-categories-blogs' => 'Billets de blog',
 	'wikiamobile-sharing-media-image' => 'Image',
 	'wikiamobile-sharing-page-text' => '$1 - $2',
 	'wikiamobile-sharing-modal-text' => '$1 sur $2 - $3',
@@ -708,6 +712,7 @@ $messages['gl'] = array(
 	'wikiamobile-category-items-prev' => 'Cargar os anteriores',
 	'wikiamobile-categories-expand' => 'Mostrar todos',
 	'wikiamobile-categories-collapse' => 'Agochar todos',
+	'wikiamobile-categories-blogs' => 'Entradas de blogue',
 	'wikiamobile-sharing-media-image' => 'Imaxe',
 	'wikiamobile-sharing-page-text' => '$1 - $2',
 	'wikiamobile-sharing-modal-text' => '$1 en $2 - $3',
@@ -1051,6 +1056,7 @@ $messages['ms'] = array(
 	'wikiamobile-category-items-prev' => 'Muatkan yang sebelumnya',
 	'wikiamobile-categories-expand' => 'Paparkan Semua',
 	'wikiamobile-categories-collapse' => 'Sorokkan Semua',
+	'wikiamobile-categories-blogs' => 'Kiriman blog',
 	'wikiamobile-sharing-media-image' => 'Gambar',
 	'wikiamobile-sharing-page-text' => '$1 - $2',
 	'wikiamobile-sharing-modal-text' => '$1 tentang $2 - $3',
@@ -1386,6 +1392,7 @@ $messages['ru'] = array(
 	'wikiamobile-category-items-prev' => 'Загрузить предыдущие',
 	'wikiamobile-categories-expand' => 'Показать всё',
 	'wikiamobile-categories-collapse' => 'Скрыть всё',
+	'wikiamobile-categories-blogs' => 'Записи в блоге',
 	'wikiamobile-sharing-media-image' => 'Картинка',
 	'wikiamobile-sharing-page-text' => '$1 - $2',
 	'wikiamobile-sharing-modal-text' => '$1 на $2 - $3',
@@ -1484,6 +1491,7 @@ $messages['sv'] = array(
 	'wikiamobile-category-items-prev' => 'Läs in föregående',
 	'wikiamobile-categories-expand' => 'Visa alla',
 	'wikiamobile-categories-collapse' => 'Dölj alla',
+	'wikiamobile-categories-blogs' => 'Blogginlägg',
 	'wikiamobile-sharing-media-image' => 'Bild',
 	'wikiamobile-sharing-page-text' => '$1 - $2',
 	'wikiamobile-sharing-modal-text' => '$1 på $2 - $3',
@@ -1644,6 +1652,7 @@ $messages['uk'] = array(
 	'wikiamobile-category-items-prev' => 'Завантажити попередні',
 	'wikiamobile-categories-expand' => 'Показати усі',
 	'wikiamobile-categories-collapse' => 'Приховати всі',
+	'wikiamobile-categories-blogs' => 'Записи у блозі',
 	'wikiamobile-sharing-media-image' => 'Зображення',
 	'wikiamobile-sharing-page-text' => '$1 - $2',
 	'wikiamobile-sharing-modal-text' => '$1 у $2 - $3',

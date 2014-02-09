@@ -2314,6 +2314,13 @@ Siempre puedes echarle un vistazo a la Wiki Actividad para ver todos los cambios
 	'founderemails-pref-complete-digest-v2' => '...un resumen diario de las incorporaciones, ediciones y visitas está preparado',
 );
 
+/** Basque (euskara)
+ * @author Subi
+ */
+$messages['eu'] = array(
+	'founderemails-email-0-days-passed-subject' => 'Ongi etorri Wikiara!',
+);
+
 /** Persian (فارسی)
  * @author BlueDevil
  * @author Reza1615
@@ -8232,6 +8239,19 @@ Palagi kang makakapunta sa gawain ng wiki upang makita ang lahat ng nakakapukaw 
 	'founderemails-pref-edits-v2' => '...namamatnugot ang isang tao',
 	'founderemails-pref-views-digest-v2' => '...nakahanda na ang isang pang-araw-araw na buod ng kabuuang mga pagtanaw',
 	'founderemails-pref-complete-digest-v2' => '...nakahanda na ang isang Pang-araw-araw na Buod ng mga pagsali, mga pamamatnugot, at mga pagtanaw',
+);
+
+/** Turkish (Türkçe)
+ * @author Incelemeelemani
+ */
+$messages['tr'] = array(
+	'founderemails-email-lot-happening-signature' => 'Wikia Takımı',
+	'founderemails-email-lot-happening-button' => 'Etkinlikleri Gör',
+	'founderemails-email-0-day-addpages-heading' => 'Sayfaları ekle.',
+	'founderemails-email-0-day-addpages-button' => 'Bir Sayfa Ekle',
+	'founderemails-email-0-day-addphotos-heading' => 'Fotoğraf ekle',
+	'founderemails-email-0-day-addphotos-button' => 'Bir Fotoğraf Ekle',
+	'founderemails-email-0-day-customizetheme-heading' => 'Temanızı özelleştirin.',
 );
 
 /** Tatar (Cyrillic script) (татарча)

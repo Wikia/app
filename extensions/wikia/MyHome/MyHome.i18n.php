@@ -1192,6 +1192,13 @@ Näiteks:
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|üks sõnum|$1 sõnumit}}',
 );
 
+/** Basque (euskara)
+ * @author Subi
+ */
+$messages['eu'] = array(
+	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|mezu bat|$1 mezu}}',
+);
+
 /** Persian (فارسی)
  * @author BlueDevil
  * @author Ebraminio
@@ -3630,11 +3637,20 @@ $messages['tly'] = array(
  * @author Joseph
  */
 $messages['tr'] = array(
+	'myhome-desc' => 'Kayıtlı kullanıcılar için özel ana sayfa',
 	'myhome' => 'Evim',
+	'wikiactivity' => 'Wiki Etkinliği',
 	'myhome-activity-more' => 'daha fazla son etkinliği gör',
 	'myhome-activity-feed' => 'Etkinlik beslemesi',
+	'myhome-activity-feed-empty' => "Bu wiki sizinde burada yer almanızı bekliyor.
+Yazmaya başlamak için '''[[Special:CreatePage|Yeni sayfa]]''' yazısına tıklayın!",
 	'myhome-watchlist-feed' => 'İzleme listesi',
+	'myhome-watchlist-feed-empty' => 'Takip etmek istediğiniz sayfaları, sayfanın üzerinde bulunan "{{int:watch}}" bağlantısına tıklayarak ekleyebilirsiniz.
+Takip etmek için izleme listenizi kullanabilir veya son sayfa değişikliklerine bakabilirsiniz.',
 	'myhome-user-contributions-feed' => 'Katkılar',
+	'myhome-hot-spots-feed' => 'Sıcak Noktalar',
+	'myhome-hot-spots-feed-empty' => "Bu wiki sizinde burada yer almanızı bekliyor.
+Yazmaya başlamak için '''[[Special:CreatePage|Yeni sayfa]]''' yazısına tıklayın!",
 	'myhome-hot-spots-newest' => "Wiki'deki yeni sayfalar",
 	'tog-userlandingpage' => 'Açılış sayfam:',
 	'prefs-myhome' => 'Evim',
@@ -3646,6 +3662,7 @@ $messages['tr'] = array(
 	'myhome-feed-delete' => 'silindi',
 	'myhome-feed-image' => 'resim eklendi',
 	'myhome-feed-video' => 'video eklendi',
+	'myhome-feed-categorization' => 'kategorizasyon',
 	'myhome-feed-created-by' => '$1 tarafından oluşturuldu',
 	'myhome-feed-added-by' => '$1 tarafından eklendi',
 	'myhome-feed-edited-by' => '$1 tarafından değiştirildi',
@@ -3654,11 +3671,12 @@ $messages['tr'] = array(
 	'myhome-feed-deleted-by' => '$1 tarafından silindi',
 	'myhome-feed-moved-by' => '$1 tarafından taşındı',
 	'myhome-feed-article-comment-created-by' => '$1 kullanıcısından yeni yorum',
-	'myhome-feed-article-comment-edited-by' => '$1 kullanıcısının yorumunu değiştirdi',
+	'myhome-feed-article-comment-edited-by' => '$1 kullanıcısı yorumunu değiştirdi',
 	'myhome-feed-by' => '$1 tarafından',
+	'myhome-feed-diff-alt' => 'bu sayfadaki değişiklikleri gösterir',
 	'myhome-feed-new-page-details' => 'Yeni sayfa',
 	'myhome-feed-summary-details' => 'Özet',
-	'myhome-feed-section-edit-details' => 'Bölümü değiştirdi',
+	'myhome-feed-section-edit-details' => 'Düzenlenmiş bölüm',
 	'myhome-feed-new-blog-post-details' => 'Yeni günlük',
 	'myhome-feed-new-blog-comment-details' => 'Yorum',
 	'myhome-feed-new-article-comment-details' => 'Yorum',
@@ -3667,14 +3685,39 @@ $messages['tr'] = array(
 	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|Eklenen resim|Eklenen resimler}}',
 	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|Eklenen video|Eklenen videolar}}',
 	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Eklenen kategori|Eklenen kategoriler}}',
+	'myhome-user-contributions-empty' => 'Herhangi bir sayfanın üzerindeki "{{int:editthispage}}" tıklayarak, bu wikiyi değiştirebilirsiniz.
+Herkesin değişiklik yaparak eklediği bilgilerdeki hataları düzeltebilirsiniz.
+Wiki topluluğu tarafından üretilen ve adı düzenle olan butonu bir defa tıkladığınızda, sizde artık bu topluluğun bir parçası olacaksınız.
+Bunu bir deneyin!',
 	'myhome-hot-spots-number-of-editors' => 'editörler',
+	'myhome-log-in' => "<center>Eğer giriş yaparsanız Evim kullanılabilir.<br /><br /><big>'''[{{fullurl:Special:Signup|$1}} Lütfen bu sayfayı görmek için giriş yapın!]'''</big></center>",
+	'myhome-switch-to-monaco' => "WikiActivity özelliği yalnızca Wikia teması kullandığınızda aktif olur.
+Eğer Evim sayfasını görmek isterseniz, lütfen '''[[Special:Preferences|Tercihlerinizden]]''' temanızı değiştirin.",
 	'myhome-namespace-blog' => 'Günlük',
 	'myhome-community-corner-header' => 'Topluluk Mesajları',
-	'myhome-community-corner-edit' => 'iletiyi değiştir',
+	'oasis-myhome-community-corner-edit' => 'düzenleme mesajı &gt;',
+	'myhome-community-corner-edit' => 'düzenleme mesajı',
+	'community-corner' => "'''Evime Hoş Geldiniz!'''
+
+Bu sayfa güncel olarak wikide ne olduğunu görerek güncel kalmanıza yardımcı olur.
+
+Eğer bu wikinin kurucusu ve yöneticisi iseniz, site hakkında önemli şeyler ile ilgili toplulukla konuşmak için bu mesajı değiştirebilirsiniz, örnekleri ise şunlar olabilir :
+
+* Wikide projenizi organize etmek için kullanabileceğini bir alan
+
+* Herkesin görmesi gereken bazı yeni sayfaları göstermek
+
+* Kullanıcıların sitede tartışmalar yapabileceği bir alan
+
+* Wiki katılımcılarının temposunu yükseltmek için eklenecek özel bir şey
+
+* Ya da bazı cesaret kelimeleri bulunabilir!",
 	'myhome-hot-spots-definition' => 'Son {{PLURAL:$1|gün|$1 gün}} içinde en çok düzenlenen sayfalar.',
 	'myhome-default-view-checkbox' => '$1 sayfasını varsayılan görünümüm yap',
 	'myhome-default-view-success' => 'Tamam, bu artık sizin varsayılanınız',
 	'tooltip-pt-myhome' => 'Evime git',
+	'activityfeed' => 'Etkinlik akışı',
+	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|bir mesajınız|$1 mesajlarınız}}',
 );
 
 /** Tatar (Cyrillic script) (татарча)
