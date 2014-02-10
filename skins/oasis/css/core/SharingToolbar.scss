@@ -28,7 +28,7 @@ $toolbar-placing-breakpoint: 1185px;
 	}
 	&.hidden {
 		left: 0px;
-		visibility: hidden;
+		display: none;
 	}
 	&.loading {
 		background: $share-background-color url(/skins/common/images/ajax.gif) no-repeat 50% 50%; /* $wgCdnStylePath */
