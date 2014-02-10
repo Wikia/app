@@ -64,7 +64,7 @@ define( 'videosmodule.views.bottommodule', [
 		if ( groupParams.position === 1 ) {
 			this.$el.append( out );
 		} else {
-			$( out ).insertBefore( this.$el.find( '.RelatedPagesModule' ) );
+			this.$el.prepend( out );
 		}
 		this.$el.find( '.videos-module' ).addClass( groupParams.rows > 1 ? 'rows-2' : 'rows-1' );
 	};

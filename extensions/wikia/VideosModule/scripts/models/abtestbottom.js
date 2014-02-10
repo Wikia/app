@@ -8,7 +8,7 @@ define( 'videosmodule.models.abtestbottom', [
 	function ABTestBottom() {
 		var testParams = window.Wikia.AbTest;
 		testParams.getGroup = function() {
-			return 'GROUP_E';
+			return 'GROUP_C';
 		};
 		this.testGroup = testParams ? testParams.getGroup( 'VIDEOS_MODULE_BOTTOM' ) : null;
 	}
