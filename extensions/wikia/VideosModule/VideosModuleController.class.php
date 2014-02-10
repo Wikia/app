@@ -8,8 +8,8 @@ class VideosModuleController extends WikiaController {
 	 * related to the article page. If that's not enough add premium videos related
 	 * to the local wiki. Finally, if still more or needed, get trending premium
 	 * videos related to the vertical of the wiki.
-	 * @requestParam integer articleId (this is required if verticalonly is 0)
-	 * @requestParam integer verticalonly [0/1] - show vertical videos only
+	 * @requestParam integer articleId (required if verticalonly is false)
+	 * @requestParam string verticalonly [true/false] - show vertical videos only
 	 * @responseParam string $result [ok/error]
 	 * @responseParam string $msg - result message
 	 * @responseParam array $videos - list of videos
@@ -18,12 +18,12 @@ class VideosModuleController extends WikiaController {
 		wfProfileIn( __METHOD__ );
 
 		$articleId = $this->request->getVal( 'articleId', 0 );
-		$showVerticalOnly = $this->request->getVal( 'verticalonly', 0 );
+		$showVerticalOnly = ( $this->request->getVal( 'verticalonly' ) == 'true' );
 
 		$videos = [];
 		$helper = new VideosModuleHelper();
 
-		if ( empty( $showVerticalOnly ) ) {
+		if ( !$showVerticalOnly ) {
 			if ( empty( $articleId ) ) {
 				$this->result = 'error';
 				$this->msg = wfMessage( 'videosmodule-error-no-articleId' )->plain();
@@ -36,14 +36,13 @@ class VideosModuleController extends WikiaController {
 
 			// Add videos from getWikiRelatedVideos if we didn't hit our video count limit
 			if ( count( $videos ) < VideosModuleHelper::VIDEO_LIMIT ) {
-				$videos = $helper->getWikiRelatedVideos( $videos );
+				$videos = array_merge( $videos, $helper->getWikiRelatedVideos() );
 			}
-
 		}
 
+		// get vertical videos
 		if ( count( $videos ) < VideosModuleHelper::VIDEO_LIMIT ) {
-			// get vertical videos
-			$videos = $helper->getVerticalVideos( $videos );
+			$videos = array_merge( $videos, $helper->getVerticalVideos() );
 		}
 
 		$this->result = "ok";

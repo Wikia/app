@@ -243,7 +243,7 @@ class VideoHandlerController extends WikiaController {
 
 	/**
 	 * Exposes the VideoHandlerHelper::getVideoDetail method from this controller
-	 * @requestParam string fileTitle - The title of the file to get details for
+	 * @requestParam array fileTitle - The title of the file to get details for
 	 * @requestParam int thumbWidth - The width of the video thumbnail to return
 	 * @requestParam int thumbHeight - The height of the video thumbnail to return
 	 * @requestParam int articleLimit - The number of "posted in" article detail records to return
@@ -253,21 +253,37 @@ class VideoHandlerController extends WikiaController {
 	public function getVideoDetail() {
 		wfProfileIn( __METHOD__ );
 
-		$fileTitle = $this->getVal( 'fileTitle', '' );
+		$fileTitle = $this->getVal( 'fileTitle', array() );
 		$thumbWidth = $this->getVal( 'thumbWidth', '250' );
 		$thumbHeight = $this->getVal( 'thumbHeight', '250' );
 		$articleLimit = $this->getVal( 'articleLimit', '10' );
 		$getThumb = $this->getVal( 'getThumb', false );
 
+		if ( is_string( $fileTitle ) ) {
+			$singleFile = true;
+			$fileTitles = [ $fileTitle ];
+		} else {
+			$singleFile = false;
+			$fileTitles = $fileTitle;
+		}
+
+		$videos = [];
 		$helper = new VideoHandlerHelper();
-		$videoDetail = $helper->getVideoDetail(
-			[ 'title' => $fileTitle ],
-			$thumbWidth,
-			$thumbHeight,
-			$articleLimit,
-			$getThumb
-		);
-		$this->detail = $videoDetail;
+		foreach ( $fileTitles as $fileTitle ) {
+			$detail = $helper->getVideoDetail(
+				[ 'title' => $fileTitle ],
+				$thumbWidth,
+				$thumbHeight,
+				$articleLimit,
+				$getThumb
+			);
+
+			if ( !empty( $detail ) ) {
+				$videos[] = $detail;
+			}
+		}
+
+		$this->detail = ( !empty( $videos ) && $singleFile ) ? array_pop( $videos ) : $videos;
 
 		wfProfileOut( __METHOD__ );
 	}
