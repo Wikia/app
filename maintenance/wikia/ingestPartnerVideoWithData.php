@@ -161,16 +161,14 @@ function loadUser( $userName ) {
 
 function loadProviders ( $provider ) {
 
-	// If no provider was specified, assume all active providers
-	if ( empty($provider) ) {
+	if ( empty( $provider ) ) {
+		// If no provider was specified, assume all active providers
 		$providersVideoFeed = VideoFeedIngester::activeProviders();
-	}
-	// If a provider was specified, check it against the list of legal providers
-	elseif (array_search($provider, VideoFeedIngester::allProviders()) !== false) {
+	} elseif ( array_search( $provider, VideoFeedIngester::allProviders() ) !== false ) {
+		// If a provider was specified, check it against the list of legal providers
 		$providersVideoFeed = array( $provider );
-	}
-	// If a provider was given but was not found, die.
-	else {
+	} else {
+		// If a provider was given but was not found, die.
 		die("unknown provider $provider. aborting.\n");
 	}
 
