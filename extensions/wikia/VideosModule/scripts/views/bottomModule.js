@@ -8,9 +8,9 @@ define( 'videosmodule.views.bottommodule', [
 
 	// AB Test Code
 	var testParams,
-			testGroup,
-			groups,
-			groupParams;
+		testGroup,
+		groups,
+		groupParams;
 
 	testParams = window.Wikia.AbTest;
 	testParams.getGroup = function() {
