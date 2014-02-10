@@ -37,6 +37,7 @@ $messages['en'] = array(
 	'wikia-visualeditor-notification-media-only-premium-videos-allowed' => 'This wiki only allows licensed content from <a href="http://video.wikia.com" target="_blank">Wikia Video Library</a> to be added. Please go to <a href="http://video.wikia.com" target="_blank">video.wikia.com</a> to search for videos.',
 	'wikia-visualeditor-notification-media-query-failed' => 'Sorry, we couldn\'t find a supported image or video at that URL.',
 	'wikia-visualeditor-notification-media-permission-denied' => 'Permission denied',
+	'wikia-visualeditor-loading' => 'Loading the VisualEditor...',
 );
 
 /** Message documentation (Message documentation)
@@ -90,6 +91,7 @@ $messages['qqq'] = array(
 	'wikia-visualeditor-notification-media-query-failed' => 'This is a generic error message when something about adding an image or video fails.',
 	'wikia-visualeditor-notification-media-permission-denied' => 'Error message displayed when user is not allowed to add an image or video.
 {{Identical|Permission denied}}',
+	'wikia-visualeditor-loading' => 'The message displayed next to the loading indicator while the editor is loading.',
 );
 
 /** Arabic (العربية)
