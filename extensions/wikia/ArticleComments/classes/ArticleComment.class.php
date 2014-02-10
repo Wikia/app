@@ -908,19 +908,6 @@ class ArticleComment {
 			}
 		}
 
-		/*
-		// TODO: use this when surrogate key purging works correctly
-		$parentTitle = Title::newFromText( $commentTitle->getBaseText() );
-
-		if ($parentTitle) {
-			if ( empty( $wgArticleCommentsLoadOnDemand ) ) {
-				// need to invalidate parsed article if it includes comments in the body
-				$parentTitle->invalidateCache();
-			}
-			SquidUpdate::VarnishPurgeKey( self::getSurrogateKey( $parentTitle->getArticleID() ) );
-		}
-		*/
-
 		wfProfileOut( __METHOD__ );
 	}
 
