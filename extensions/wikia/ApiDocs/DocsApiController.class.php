@@ -6,6 +6,7 @@ use Wikia\ApiDocs\Services\IApiDocsService;
 class DocsApiController extends WikiaController {
 	const TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 	const DEFAULT_LICENSE_VALUE = "http://creativecommons.org/licenses/by-sa/3.0/";
+	const LICENSE_ICONS_URL = 'files/license/cc-by.svg';
 
 	/**
 	 * @var IApiDocsService
@@ -67,7 +68,7 @@ class DocsApiController extends WikiaController {
 	
 	protected function getLicenseIconUrls() {
 		return [
-			'cc-by' => AssetsManager::getInstance()->getURL('files/license/cc-by.svg')
+			'cc-by' => AssetsManager::getInstance()->getURL( self::LICENSE_ICONS_URL )
 		];
 	} 
 
