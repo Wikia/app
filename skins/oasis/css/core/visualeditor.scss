@@ -4,7 +4,6 @@
 @import "skins/oasis/css/mixins/blackout";
 @import "skins/oasis/css/mixins/box-sizing";
 @import "skins/oasis/css/mixins/flexbox";
-@import "skins/oasis/css/mixins/transition";
 
 .ve-indicator {
 	@include align-items( center );
