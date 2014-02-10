@@ -2,80 +2,17 @@ define( 'videosmodule.views.bottommodule', [
 	'sloth',
 	'thumbnails.views.titlethumbnail',
 	'wikia.mustache',
-	'videosmodule.templates.mustache'
-], function( sloth, TitleThumbnailView, Mustache, templates ) {
+	'videosmodule.templates.mustache',
+	'videosmodule.models.abtestbottom'
+], function( sloth, TitleThumbnailView, Mustache, templates, abTest ) {
 	'use strict';
 
-	// AB Test Code
-	var testParams,
-		testGroup,
-		groups,
+	// Keep AB test variables private
+	var testCase,
 		groupParams;
 
-	testParams = window.Wikia.AbTest;
-	testParams.getGroup = function() {
-		return 'GROUP_E';
-	};
-	testGroup = testParams ? testParams.getGroup( 'VIDEOS_MODULE_BOTTOM' ) : null;
-
-	/*
-	 * AB Test Info:
-	 * Position 1: Below Read More
-	 * Position 2: Above Read More
-	 */
-
-	groups = {
-		// Article, Above Read More, 2 Rows
-		'GROUP_A': {
-			verticalOnly: false,
-			position: 2,
-			rows: 2
-		},
-		// Vertical, Above Read More, 2 Rows
-		'GROUP_B': {
-			verticalOnly: true,
-			position: 2,
-			rows: 2
-		},
-		// Article, Below Read More, 2 Rows
-		'GROUP_C': {
-			verticalOnly: false,
-			position: 1,
-			rows: 2
-		},
-		// Article, Above Read More, 2 Rows
-		'GROUP_D': {
-			verticalOnly: false,
-			position: 2,
-			rows: 2
-		},
-		// Article, Above Read More, 1 Row
-		'GROUP_E': {
-			verticalOnly: false,
-			position: 2,
-			rows: 1
-		},
-		// Article, Above Read More, 1 Row
-		'GROUP_F': {
-			verticalOnly: true,
-			position: 2,
-			rows: 1
-		},
-		// Article, Below Read More, 1 Row
-		'GROUP_G': {
-			verticalOnly: false,
-			position: 1,
-			rows: 1
-		},
-		// Article, Above Read More, 1 Row
-		'GROUP_H': {
-			verticalOnly: false,
-			position: 2,
-			rows: 1
-		},
-	};
-
-	groupParams = groups[ testGroup || 'GROUP_G' ];
+	testCase = abTest();
+	groupParams = testCase.getGroupParams();
 
 	function VideoModule( options ) {
 		this.el = options.el;
@@ -105,7 +42,7 @@ define( 'videosmodule.views.bottommodule', [
 
 	VideoModule.prototype.render = function() {
 		$.when( this.model.fetch() )
-		.done( $.proxy( this.renderWithData, this ) );
+			.done( $.proxy( this.renderWithData, this ) );
 	};
 
 	VideoModule.prototype.renderWithData = function() {
@@ -132,5 +69,4 @@ define( 'videosmodule.views.bottommodule', [
 	};
 
 	return VideoModule;
-
 } );
