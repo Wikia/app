@@ -1,6 +1,17 @@
+/*jshint camelcase:false, maxdepth:6*/
 /*global setTimeout*/
 var WikiaFullGptHelper = function (log, window, document, adLogicPageLevelParams, adSlotMapConfig) {
 	'use strict';
+
+	if ( WikiaFullGptHelper.prototype._singletonInstance ) {
+		return WikiaFullGptHelper.prototype._singletonInstance;
+	}
+
+	if (!(this instanceof WikiaFullGptHelper)){
+		return new WikiaFullGptHelper(log, window, document, adLogicPageLevelParams);
+	}
+
+	WikiaFullGptHelper.prototype._singletonInstance = this;
 
 	var logGroup = 'WikiaFullGptHelper',
 		gptLoaded = false,
@@ -270,8 +281,6 @@ var WikiaFullGptHelper = function (log, window, document, adLogicPageLevelParams
 		});
 	}
 
-	return {
-		pushAd: pushAd,
-		flushAds: flushAds
-	};
+	this.pushAd = pushAd;
+	this.flushAds = flushAds;
 };
