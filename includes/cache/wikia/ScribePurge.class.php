@@ -12,44 +12,82 @@ use Wikia\SFlow;
 
 class ScribePurge {
 
+	const SCRIBE_KEY = 'varnish_purges';
+
+	private static $urls = [];
+	private static $urlsCount = 0;
+
 	/**
 	 * Add array of URLs to the purger queue
 	 *
 	 * @param Array $urlArr list of URLs to purge
-	 * @throws MWException
 	 */
 	static function purge( $urlArr ) {
-		global $wgEnableScribeReport, $wgCityId;
+		global $wgEnableScribeReport;
 		wfProfileIn( __METHOD__ );
-		$key = 'varnish_purges';
 
 		if ( empty( $wgEnableScribeReport ) ) {
 			wfProfileOut( __METHOD__ );
 			return;
 		}
 
-		try {
-			foreach ( $urlArr as $url ) {
-				if ( !is_string( $url ) ) {
-					throw new WikiaException( 'Bad purge URL' );
-				}
-				$url = SquidUpdate::expand( $url );
-				$method = self::getPurgeCaller();
+		foreach ( $urlArr as $url ) {
+			if ( !is_string( $url ) ) {
+				throw new WikiaException( 'Bad purge URL' );
+			}
+			$url = SquidUpdate::expand( $url );
+			$method = self::getPurgeCaller();
 
-				wfDebug( "Purging URL $url from $method via Scribe\n" );
-				wfDebug( "Purging backtrace: " . wfGetAllCallers( false ) . "\n" );
-				$data = json_encode( [
-					'url' => $url,
-					'time' => time(),
-					'method' => $method,
-				] );
-				WScribeClient::singleton( $key )->send( $data );
+			wfDebug( "Purging URL $url from $method via Scribe\n" );
+			wfDebug( "Purging backtrace: " . wfGetAllCallers( false ) . "\n" );
+
+			// add to the queue, will be sent by onRestInPeace method
+			self::$urls[ $url ] = [
+				'url' => $url,
+				'time' => time(),
+				'method' => $method,
+			];
+			self::$urlsCount++;
+		}
+
+		wfProfileOut( __METHOD__ );
+	}
+
+	/**
+	 * This method is called via hook at the end or request handling
+	 *
+	 * Make the list of unique URLs and send them to Fastly via Scribe queue
+	 *
+	 * @authot macbre
+	 *
+	 * @param MediaWiki $mw MW instance
+	 * @return bool true - it's a hook
+	 * @throws WikiaException
+	 */
+	static function onRestInPeace(MediaWiki $mw) {
+		global $wgCityId;
+
+		// don't process an empty queue
+		if ( empty(self::$urls) ) {
+			return true;
+		}
+
+		wfProfileIn(__METHOD__);
+		$scribe = WScribeClient::singleton( self::SCRIBE_KEY );
+
+		try {
+			wfDebug( sprintf("%s: sending %d unique URLs to the purger (%d items were queued in total)\n", __METHOD__, count(self::$urls), self::$urlsCount) );
+
+			foreach ( self::$urls as $url => $data ) {
+				wfDebug( sprintf("%s: %s\n", __METHOD__, $url ) );
+
+				$scribe->send( json_encode($data) );
 
 				// log purges using SFlow (BAC-1258)
 				SFlow::operation( 'varnish.purge', [
 					'city' => $wgCityId,
-					'url' => $url,
-					'method' => $method,
+					'url' => $data['url'],
+					'method' => $data['method'],
 				] );
 			}
 		}
@@ -57,7 +95,8 @@ class ScribePurge {
 			Wikia::log( __METHOD__, 'scribeClient exception', $e->getMessage() );
 		}
 
-		wfProfileOut( __METHOD__ );
+		wfProfileOut(__METHOD__);
+		return true;
 	}
 
 	/**
