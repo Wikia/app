@@ -10,7 +10,6 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 
 	var d = window.document,
 		sections = getHeaders(),
-		l = sections.length,
 		lastSection,
 		escapeRegExp = /[()\.\+]/g,
 		offset = 5;
@@ -20,6 +19,7 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 	 * @return Array
 	 */
 	function getHeaders(){
+		//querySelectorAll returns NodeList but this one is not live
 		return Array.prototype.slice.apply( d.querySelectorAll( 'h2[id],h3[id],h4[id]' ) )
 	}
 
@@ -47,7 +47,8 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 	 */
 	function current () {
 		var top = window.scrollY,
-			i = 0;
+			i = 0,
+			l = sections.length;
 
 		for ( ; i < l; i++ ) {
 			if ( sections[i].offsetTop - offset > top ) {
@@ -88,9 +89,7 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 	return {
 		list: function(){
 			//make sure we're grabbing the latest version
-			sections = getHeaders();
-
-			return sections;
+			return sections = getHeaders();
 		},
 		scrollTo: scrollTo,
 		current: current
