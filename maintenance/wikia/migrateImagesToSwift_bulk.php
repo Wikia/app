@@ -6,6 +6,7 @@
  * @see http://www.mediawiki.org/wiki/Manual:Image_administration#Data_storage
  *
  * @author Macbre
+ * @author wladek
  * @ingroup Maintenance
  */
 
@@ -32,12 +33,17 @@ class MigrateImagesToSwiftBulk2 extends Maintenance {
 
 	const LOCAL_PATH = '/raid/images/by_id/';
 
+	const MD5_CACHE_DIRECTORY = '/raid/migration/md5';
+
 	// connections to Swift backends images will be migrated to
 	/* @var \Wikia\SwiftStorage[] $swiftBackends */
 	private $swiftBackends;
 	private $timePerDC = [];
 
 	private $shortBucketNameFixed = false;
+
+	/** @var \Wikia\Swift\File\Md5Cache $md5Cache */
+	private $md5Cache;
 
 	// stats
 	private $imagesCnt = 0;
@@ -82,6 +88,9 @@ class MigrateImagesToSwiftBulk2 extends Maintenance {
 	 */
 	private function init() {
 		global $wgUploadDirectory, $wgDBname, $wgCityId;
+
+		$this->setupMd5Cache();
+
 		$this->shortBucketNameFixed = $this->fixShortBucketName();
 
 		$bucketName = $this->getOption('bucket', false);
@@ -135,7 +144,7 @@ class MigrateImagesToSwiftBulk2 extends Maintenance {
 
 		// bucket name is fine, leave now
 		if (strlen($bucketName) >= self::SWIFT_BUCKET_NAME_MIN_LENGTH) {
-			if (!$this->hasOption('force')) return false;
+			return false;
 		}
 
 		// keep the old path
@@ -151,6 +160,14 @@ class MigrateImagesToSwiftBulk2 extends Maintenance {
 
 		self::log( __CLASS__, "short bucket name fix applied - '{$bucketName}', <{$wgUploadPath}>, <{$wgUploadDirectory}>, NFS: <{$wgUploadDirectoryNFS}>" , self::LOG_MIGRATION_PROGRESS );
 		return true;
+	}
+
+	protected function setupMd5Cache() {
+		global $wgDBname;
+		$md5Cache = \Wikia\Swift\File\Md5Cache::getInstance();
+		$md5CacheFile = sprintf("%s/%s/%s/%s.md5list",self::MD5_CACHE_DIRECTORY,substr($wgDBname,0,1),substr($wgDBname,0,2),$wgDBname);
+		$md5Cache->setCacheFile($md5CacheFile);
+		$this->md5Cache = $md5Cache;
 	}
 
 	protected function rewriteLocalPath( $path ) {
@@ -521,12 +538,10 @@ class MigrateImagesToSwiftBulk2 extends Maintenance {
 	}
 
 	protected function processQueue() {
-		global $wgFSSwiftDC, $wgDBname;
-
-//		var_dump($this->allFiles);
-//		return;
+		global $wgFSSwiftDC;
 
 		$logger = $this->logger;
+		$logger->log(2,sprintf("Found %d entries in md5 cache",$this->md5Cache->getCachedCount()));
 
 		$targets = array();
 		foreach($this->swiftBackends as $dc => $swift) {
@@ -552,7 +567,6 @@ class MigrateImagesToSwiftBulk2 extends Maintenance {
 		}
 
 		$files = $this->allFiles;
-//		$files[2]['src'] = $files[1]['src'];
 
 		if ( $this->useDiff ) {
 			$migration = new \Wikia\Swift\Wiki\DiffMigration($targets,$files);

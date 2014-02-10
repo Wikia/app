@@ -11,6 +11,7 @@ foreach (array(
 	'Wiki',
 	'Status',
 	'Process',
+	'File',
 		 ) as $baseName ) {
 	require_once __DIR__ . "/{$baseName}.php";
 }

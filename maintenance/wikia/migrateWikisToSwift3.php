@@ -6,6 +6,7 @@
  * @see http://www.mediawiki.org/wiki/Manual:Image_administration#Data_storage
  *
  * @author Moli
+ * @author wladek
  * @ingroup Maintenance
  */
 
@@ -102,7 +103,7 @@ class MigrateWikisToSwift3 extends Maintenance {
 			array( 'city_list', 'city_variables' ),
 			array( 'city_id', 'city_dbname' ),
 			array(
-				'cv_value is null or cv_value != "b:1;"', // wgEnableSwiftBackend == true
+				'cv_value is null or cv_value != "b:1;"', // not "wgEnableSwiftBackend == true"
 			),
 			__CLASS__,
 			array_merge(array(

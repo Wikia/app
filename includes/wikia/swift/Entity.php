@@ -2,6 +2,8 @@
 
 namespace Wikia\Swift\Entity;
 
+use Wikia\Swift\File\Md5Cache;
+
 class Local {
 	protected $localPath;
 	protected $metadata;
@@ -39,7 +41,9 @@ class Local {
 		if ( $this->size === null ) { $this->size = filesize($this->localPath); }
 	}
 	public function loadMd5() {
-		if ( $this->md5 === null ) { $this->md5 = md5_file($this->localPath); }
+		if ( $this->md5 === null ) {
+			$this->md5 = Md5Cache::getInstance()->get($this->localPath);
+		}
 	}
 }
 
