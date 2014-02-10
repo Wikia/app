@@ -9,7 +9,8 @@ define( 'videosmodule.models.videos', [
 		this.articleId = window.wgArticleId || null;
 	};
 
-	VideosData.prototype.fetch = function() {
+	// TODO: accept verticalOnly arg for AB test
+	VideosData.prototype.fetch = function( verticalOnly ) {
 		var ret,
 			self = this;
 
@@ -18,7 +19,8 @@ define( 'videosmodule.models.videos', [
 		} else {
 			ret = nirvana.getJson( 'VideosModuleController', 'index', {
 				articleId: this.articleId,
-				verticalOnly: this.verticalOnly
+				// TODO: check for argument for AB testing purposes, not needed in final
+				verticalOnly: verticalOnly ? verticalOnly : this.verticalOnly
 			} ).done( function( data ) {
 				self.data = data;
 			} );

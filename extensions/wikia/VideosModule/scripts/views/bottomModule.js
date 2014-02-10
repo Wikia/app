@@ -2,9 +2,17 @@ define( 'videosmodule.views.bottommodule', [
 	'sloth',
 	'thumbnails.views.titlethumbnail',
 	'wikia.mustache',
-    'videosmodule.templates.mustache'
-], function( sloth, TitleThumbnailView, Mustache, templates ) {
+	'videosmodule.templates.mustache',
+	'videosmodule.models.abtestbottom'
+], function( sloth, TitleThumbnailView, Mustache, templates, abTest ) {
 	'use strict';
+
+	// Keep AB test variables private
+	var testCase,
+		groupParams;
+
+	testCase = abTest();
+	groupParams = testCase.getGroupParams();
 
 	function VideoModule( options ) {
 		this.el = options.el;
@@ -19,7 +27,11 @@ define( 'videosmodule.views.bottommodule', [
 	}
 
 	VideoModule.prototype.init = function() {
-		this.model.fetch();
+		if ( !groupParams ) {
+			// Add tracking for GROUP_I, Control Group
+			return false;
+		}
+		this.model.fetch( groupParams.verticalOnly );
 		// Sloth is a lazy loading service that waits till an element is visisble to load more content
 		sloth( {
 			on: this.el,
@@ -34,10 +46,14 @@ define( 'videosmodule.views.bottommodule', [
 	};
 
 	VideoModule.prototype.renderWithData = function() {
-		var i, out,
+		var i,
+			out,
 			videos = this.model.data.videos,
 			len = videos.length,
 			thumbHtml = '';
+
+		// AB test set rows shown
+		videos = videos.slice( 0, groupParams.rows > 1 ? 8 : 4 );
 
 		for ( i = 0; i < len; i++ ) {
 			thumbHtml += new TitleThumbnailView( videos[i], { el: 'li' } ).render().el.outerHTML;
@@ -45,9 +61,13 @@ define( 'videosmodule.views.bottommodule', [
 
 		// TODO: hard coded title
 		out = Mustache.render( templates.bottomModule, { title: 'Must Watch Videos', thumbnails: thumbHtml } );
-		this.$el.append( out );
+		if ( groupParams.position === 1 ) {
+			this.$el.append( out );
+		} else {
+			this.$el.prepend( out );
+		}
+		this.$el.find( '.videos-module' ).addClass( groupParams.rows > 1 ? 'rows-2' : 'rows-1' );
 	};
 
 	return VideoModule;
-
 } );
