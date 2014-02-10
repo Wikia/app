@@ -23,7 +23,7 @@ class ScribePurge {
 		wfProfileIn( __METHOD__ );
 		$key = 'varnish_purges';
 
-		if ( empty($wgEnableScribeReport) ) {
+		if ( empty( $wgEnableScribeReport ) ) {
 			wfProfileOut( __METHOD__ );
 			return;
 		}
@@ -38,22 +38,22 @@ class ScribePurge {
 
 				wfDebug( "Purging URL $url from $method via Scribe\n" );
 				wfDebug( "Purging backtrace: " . wfGetAllCallers( false ) . "\n" );
-				$data = json_encode([
+				$data = json_encode( [
 					'url' => $url,
 					'time' => time(),
 					'method' => $method,
-				]);
-				WScribeClient::singleton($key)->send($data);
+				] );
+				WScribeClient::singleton( $key )->send( $data );
 
 				// log purges using SFlow (BAC-1258)
-				SFlow::operation('varnish.purge', [
+				SFlow::operation( 'varnish.purge', [
 					'city' => $wgCityId,
 					'url' => $url,
 					'method' => $method,
-				]);
+				] );
 			}
 		}
-		catch( TException $e ) {
+		catch ( TException $e ) {
 			Wikia::log( __METHOD__, 'scribeClient exception', $e->getMessage() );
 		}
 
@@ -70,9 +70,9 @@ class ScribePurge {
 		$backtrace = wfDebugBacktrace();
 		$method = '';
 
-		while($entry = array_shift($backtrace)) {
+		while ( $entry = array_shift( $backtrace ) ) {
 			// ignore "internal" classes
-			if (empty($entry['class']) || in_array($entry['class'], [__CLASS__, 'SquidUpdate', 'WikiPage', 'Article', 'Title'])) {
+			if ( empty( $entry['class'] ) || in_array( $entry['class'], [__CLASS__, 'SquidUpdate', 'WikiPage', 'Article', 'Title'] ) ) {
 				continue;
 			}
 
