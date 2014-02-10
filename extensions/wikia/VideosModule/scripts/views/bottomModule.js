@@ -46,10 +46,11 @@ define( 'videosmodule.views.bottommodule', [
 	};
 
 	VideoModule.prototype.renderWithData = function() {
-		var i, out,
-				videos = this.model.data.videos,
-				len = videos.length,
-				thumbHtml = '';
+		var i,
+			out,
+			videos = this.model.data.videos,
+			len = videos.length,
+			thumbHtml = '';
 
 		// AB test set rows shown
 		videos = videos.slice( 0, groupParams.rows > 1 ? 8 : 4 );
