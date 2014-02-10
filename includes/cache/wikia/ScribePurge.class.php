@@ -21,6 +21,7 @@ class ScribePurge {
 	 * Add array of URLs to the purger queue
 	 *
 	 * @param Array $urlArr list of URLs to purge
+	 * @throws WikiaException
 	 */
 	static function purge( $urlArr ) {
 		global $wgEnableScribeReport;
@@ -62,7 +63,6 @@ class ScribePurge {
 	 *
 	 * @param MediaWiki $mw MW instance
 	 * @return bool true - it's a hook
-	 * @throws WikiaException
 	 */
 	static function onRestInPeace( MediaWiki $mw ) {
 		global $wgCityId;
