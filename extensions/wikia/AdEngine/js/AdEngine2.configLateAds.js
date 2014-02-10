@@ -21,6 +21,7 @@
 		dartUrl,
 		adTracker,
 		slotTweaker,
+		wikiaFullGpt,
 		fakeLiftium = {},
 		adProviderGamePro,
 		adProviderLiftium,
@@ -39,6 +40,7 @@
 	adLogicPageLevelParams = AdLogicPageLevelParams(log, window, Krux); // omitted a few optional deps
 	adLogicPageLevelParamsLegacy = AdLogicPageLevelParamsLegacy(log, window, adLogicPageLevelParams, Krux, dartUrl);
 	slotTweaker = SlotTweaker(log, document, window);
+	wikiaFullGpt = WikiaFullGptHelper(log, window, document, adLogicPageLevelParams);
 
 	// TODO: ad provider error
 	adProviderNull = AdProviderNull(log, slotTweaker);
@@ -48,7 +50,7 @@
 	adProviderGamePro = AdProviderGamePro(adLogicPageLevelParamsLegacy, scriptWriter, adTracker, log, window, slotTweaker);
 
 	if (window.wgEnableRHonDesktop) {
-		adProviderLiftium = AdProviderRemnantDart(log, slotTweaker);
+		adProviderLiftium = AdProviderRemnantDart(adTracker, log, slotTweaker, wikiaFullGpt);
 	} else {
 		adProviderLiftium = AdProviderLiftium(log, document, slotTweaker, fakeLiftium, scriptWriter, window);
 	}
