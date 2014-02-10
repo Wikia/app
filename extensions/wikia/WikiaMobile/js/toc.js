@@ -1,6 +1,6 @@
 /* globals Features:true */
 //init toc
-require( [ 'sections', 'wikia.window', 'jquery', 'wikia.mustache', 'wikia.toc', 'track', 'relatedPages' ],
+require( [ 'sections', 'wikia.window', 'jquery', 'wikia.mustache', 'wikia.toc', 'track', require.optional( 'relatedPages' ) ],
 function ( sections, window, $, mustache, toc, track, relatedPages ) {
 	'use strict';
 

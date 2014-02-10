@@ -1,4 +1,4 @@
-define( 'relatedPages', [ 'sloth', 'wikia.window', 'jquery' ], function ( sloth, w, $ ) {
+require( [ 'sloth', 'wikia.window', 'jquery' ], function ( sloth, w, $ ) {
 	'use strict';
 
 	var $placeholder,
@@ -130,30 +130,31 @@ define( 'relatedPages', [ 'sloth', 'wikia.window', 'jquery' ], function ( sloth,
 		return dfd.promise();
 	}
 
-	return {
-		init: function(){
-			if ( shouldLoad ) {
-				sloth( {
-					on: $placeholder,
-					threshold: 200,
-					callback: load
-				} );
-			}
-		},
-		load: function () {
-			var dfd = $.Deferred();
-
-			if ( shouldLoad ) {
-				sloth( {
-					off: $placeholder
-				} );
-
-				load().done( dfd.resolve );
-			} else {
-				dfd.reject();
-			}
-
-			return dfd.promise();
-		}
+	if ( shouldLoad ) {
+		sloth( {
+			on: $placeholder,
+			threshold: 200,
+			callback: load
+		} );
 	}
+
+	define( 'relatedPages', function(){
+		return {
+			load: function () {
+				var dfd = $.Deferred();
+
+				if ( shouldLoad ) {
+					sloth( {
+						off: $placeholder
+					} );
+
+					load().done( dfd.resolve );
+				} else {
+					dfd.reject();
+				}
+
+				return dfd.promise();
+			}
+		};
+	});
 } );
