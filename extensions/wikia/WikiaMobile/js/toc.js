@@ -50,7 +50,7 @@ function ( sections, window, $, mustache, toc, track ) {
 				'{{#sections.length}}{{> ol}}{{/sections.length}}</li>{{/.}}',
 			wrap = '<div id="tocWrapper"><div id="scroller">{{> ol}}</div></div>',
 			tocData = toc.getData(
-				sections.list,
+				sections.list(),
 				createSection
 			);
 
