@@ -215,6 +215,10 @@
 		}
 
 		/**
+		 * check release date for all Labs Features
+		 *
+		 * @group Broken
+		 *
 		 * fb#21148
 		 * These tests doesn't have too much sense IMHO.
 		 * They're checking static fields of class which is being tested
@@ -222,8 +226,6 @@
 		 * and on devboxes. Any other idea what else except removing
 		 * these tests we can do? @author nAndy
 		 */
-		/*
-		// check release date for all Labs Features
 		public function testLabsFeaturesReleaseDate() {
 			global $wgWikiFeatures;
 
@@ -233,10 +235,19 @@
 			sort($response);
 			$this->assertEquals($exp_result, $response);
 		}
-		*/
 
-		/*
-		// check feedback id for all Labs Features
+		/**
+		 * check feedback id for all Labs Features
+		 *
+		 * @group Broken
+		 *
+		 * fb#21148
+		 * These tests doesn't have too much sense IMHO.
+		 * They're checking static fields of class which is being tested
+		 * with our configuration which is different on production
+		 * and on devboxes. Any other idea what else except removing
+		 * these tests we can do? @author nAndy
+		 */
 		public function testLabsFeaturesFeedbackId() {
 			global $wgWikiFeatures;
 
@@ -248,5 +259,4 @@
 				$this->assertEquals($exp_result, $response);
 			}
 		}
-		*/
 	}
