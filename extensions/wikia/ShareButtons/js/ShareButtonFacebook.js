@@ -1,4 +1,5 @@
 (function( window, $) {
+'use strict';
 
 var Wikia = window.Wikia || {},
 	ShareButtons = Wikia.ShareButtons;
