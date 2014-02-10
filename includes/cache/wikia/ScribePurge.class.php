@@ -64,24 +64,24 @@ class ScribePurge {
 	 * @return bool true - it's a hook
 	 * @throws WikiaException
 	 */
-	static function onRestInPeace(MediaWiki $mw) {
+	static function onRestInPeace( MediaWiki $mw ) {
 		global $wgCityId;
 
 		// don't process an empty queue
-		if ( empty(self::$urls) ) {
+		if ( empty( self::$urls ) ) {
 			return true;
 		}
 
-		wfProfileIn(__METHOD__);
+		wfProfileIn( __METHOD__ );
 		$scribe = WScribeClient::singleton( self::SCRIBE_KEY );
 
 		try {
-			wfDebug( sprintf("%s: sending %d unique URLs to the purger (%d items were queued in total)\n", __METHOD__, count(self::$urls), self::$urlsCount) );
+			wfDebug( sprintf( "%s: sending %d unique URLs to the purger (%d items were queued in total)\n", __METHOD__, count( self::$urls ), self::$urlsCount ) );
 
 			foreach ( self::$urls as $url => $data ) {
-				wfDebug( sprintf("%s: %s\n", __METHOD__, $url ) );
+				wfDebug( sprintf( "%s: %s\n", __METHOD__, $url ) );
 
-				$scribe->send( json_encode($data) );
+				$scribe->send( json_encode( $data ) );
 
 				// log purges using SFlow (BAC-1258)
 				SFlow::operation( 'varnish.purge', [
@@ -95,7 +95,7 @@ class ScribePurge {
 			Wikia::log( __METHOD__, 'scribeClient exception', $e->getMessage() );
 		}
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
