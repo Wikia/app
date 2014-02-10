@@ -43,7 +43,10 @@ define( 'videosmodule.views.bottommodule', [
 			thumbHtml += new TitleThumbnailView( videos[i], { el: 'li' } ).render().el.outerHTML;
 		}
 
-		out = Mustache.render( templates.bottomModule, { title: $.msg( 'videosmodule-title-must-watch' ), thumbnails: thumbHtml } );
+		out = Mustache.render( templates.bottomModule, {
+			title: $.msg( 'videosmodule-title-must-watch' ),
+			thumbnails: thumbHtml
+		} );
 		this.$el.append( out );
 	};
 
