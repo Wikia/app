@@ -259,6 +259,9 @@ $wgAutoloadClasses[ 'MemcacheClientShadower'          ] = "{$IP}/includes/wikia/
 $wgAutoloadClasses[ 'Wikia\\SwiftStorage'             ] = "$IP/includes/wikia/SwiftStorage.class.php";
 $wgAutoloadClasses[ 'WikiaSQL'                        ] = "$IP/includes/wikia/WikiaSQL.class.php";
 $wgAutoloadClasses[ 'WikiaSQLCache'                   ] = "$IP/includes/wikia/WikiaSQLCache.class.php";
+$wgAutoloadClasses[ 'WikiaSanitizer'                  ] = "$IP/includes/wikia/WikiaSanitizer.class.php";
+$wgAutoloadClasses[ 'ScribePurge'                     ] = "$IP/includes/cache/wikia/ScribePurge.class.php";
+$wgHooks          [ 'RestInPeace'                     ][] = 'ScribePurge::onRestInPeace';
 
 /**
  * Resource Loader enhancements
@@ -311,6 +314,7 @@ $wgAutoloadClasses['SolrDocumentService'] = $IP . '/includes/wikia/services/Solr
 $wgAutoloadClasses['FormBuilderService']  =  $IP.'/includes/wikia/services/FormBuilderService.class.php';
 $wgAutoloadClasses['LicensedWikisService']  =  $IP.'/includes/wikia/services/LicensedWikisService.class.php';
 $wgAutoloadClasses['ArticleQualityService'] = $IP.'/includes/wikia/services/ArticleQualityService.php';
+$wgAutoloadClasses['ArticleTypeService'] = $IP.'/includes/wikia/services/ArticleTypeService.class.php';
 
 // data models
 $wgAutoloadClasses['WikisModel'] = "{$IP}/includes/wikia/models/WikisModel.class.php";
@@ -1172,6 +1176,22 @@ $wgAmazonDirectTargetedBuyCountriesDefault = ['US', 'AT', 'BE', 'DK', 'FI', 'FR'
 $wgAmazonDirectTargetedBuyCountries = null;
 
 /**
+ * @name $wgAdPageLevelCategoryLangsDefault
+ * The default value for $wgAdPageLevelCategoryLangs
+ * $wgAdPageLevelCategoryLangs overrides this
+ * Value set for community central overrides this. Value for particular wiki overrides the community
+ * US + EU (UK is GB...)
+ */
+$wgAdPageLevelCategoryLangsDefault = [ 'en' => true ];
+
+/**
+ * @name $wgAdPageLevelCategoriesLangs
+ * Enables DART category page param for these content languages
+ * "Utility" var, don't change it here.
+ */
+$wgAdPageLevelCategoryLangs = null;
+
+/**
  * @name $wgEnableJavaScriptErrorLogging
  * Enables JavaScript error logging mechanism
  */
@@ -1267,3 +1287,12 @@ $wgDisableReportTime = true;
  * Setting this to true will invalidate all cached pages whenever LocalSettings.php is changed.
  */
 $wgInvalidateCacheOnLocalSettingsChange = false;
+
+/**
+ * SFlow client and config
+ */
+$wgSFlowHost = 'localhost';
+$wgSFlowPort = 36343;
+$wgSFlowSampling = 1;
+
+$wgAutoloadClasses[ 'Wikia\\SFlow'] = "$IP/lib/vendor/SFlow.class.php";

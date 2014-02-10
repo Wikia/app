@@ -353,6 +353,34 @@ $messages['fi'] = array(
 	'wikia-visualeditor-dialog-wikiasourcemode-help-link' => 'Help:Wikitext',
 );
 
+/** Faroese (føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'wikia-visualeditor-preference-enable' => 'Ger VisualEditor virknan í beta',
+	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Legg ein miðil afturat',
+	'wikia-visualeditor-dialog-wikiamediainsert-insert-button' => 'Legg afturat miðil',
+	'wikia-visualeditor-dialog-wikiamediainsert-item-title-label' => 'Heiti',
+	'wikia-visualeditor-dialog-wikiamediainsert-item-license-label' => 'Lisensur',
+	'wikia-visualeditor-dialog-wikiamediainsert-item-remove-button' => 'Tak henda lutin burtur',
+	'wikia-visualeditor-dialog-wikiamediainsert-upload-label' => 'Legg afturat nýggjar myndir til hesa wikiuna',
+	'wikia-visualeditor-dialog-wikiamediainsert-upload-button' => 'Legg út',
+	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-size' => 'Ups! Handa myndin er ov stór.  $1MB er alt ið vit kunnu klára!',
+	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-filetype' => 'Ups! Vit stuðla bara $1',
+	'wikia-visualeditor-dialog-wikiamediainsert-upload-error' => 'Tað hendi ein feilur, meðan tú legði fílu út',
+	'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' => 'Leita eftir onkrum, ella set inn ein URL (internetadressu)',
+	'wikia-visualeditor-dialog-wikiamediainsert-preview-alert' => 'Forskoðan kemur skjótt!',
+	'wikia-visualeditor-help-label' => 'Kendir trupulleikar',
+	'wikia-visualeditor-help-link' => 'Help:VisualEditor',
+	'wikia-visualeditor-dialog-transclusion-title' => 'Fyrimynd',
+	'wikia-visualeditor-dialogbutton-transclusion-tooltip' => 'Fyrimynd',
+	'wikia-visualeditor-savedialog-label-save' => 'Útgev',
+	'wikia-visualeditor-savedialog-label-restore' => 'Endurstovna síðu',
+	'wikia-visualeditor-toolbar-savedialog' => 'Útgev',
+	'wikia-visualeditor-dialog-wikiasourcemode-apply-button' => 'Goym broytingar',
+	'wikia-visualeditor-dialog-wikiasourcemode-help-link' => 'Help:Wikitext',
+);
+
 /** French (français)
  * @author Gomoko
  */
@@ -702,6 +730,31 @@ $messages['pt'] = array(
 	'wikia-visualeditor-dialog-wikiamediainsert-item-remove-button' => 'Remover este item',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-label' => 'Adicionar novas imagens a esta wikia',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-button' => 'Carregar',
+);
+
+/** Romanian (română)
+ * @author Minisarm
+ */
+$messages['ro'] = array(
+	'wikia-visualeditor-dialog-wikiamediainsert-item-title-label' => 'Titlu',
+	'wikia-visualeditor-dialog-wikiamediainsert-item-license-label' => 'Licență',
+	'wikia-visualeditor-dialog-wikiamediainsert-item-remove-button' => 'Elimină acest element',
+	'wikia-visualeditor-dialog-wikiamediainsert-upload-button' => 'Încarcă',
+	'wikia-visualeditor-dialog-wikiamediainsert-upload-error' => 'Eroare la încărcarea fișierului',
+	'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' => 'Căutați ceva sau introduceți o adresă URL',
+	'wikia-visualeditor-dialog-wikiamediainsert-preview-alert' => 'Previzualizare în curând!',
+	'wikia-visualeditor-help-label' => 'Probleme cunoscute',
+	'wikia-visualeditor-dialog-transclusion-title' => 'Format',
+	'wikia-visualeditor-dialogbutton-transclusion-tooltip' => 'Format',
+	'wikia-visualeditor-savedialog-label-save' => 'Publică',
+	'wikia-visualeditor-savedialog-label-restore' => 'Restaurează pagina',
+	'wikia-visualeditor-toolbar-savedialog' => 'Publică',
+	'wikia-visualeditor-dialogbutton-wikiasourcemode-tooltip' => 'Editor de cod sursă',
+	'wikia-visualeditor-dialog-wikiasourcemode-title' => 'Editor de cod sursă',
+	'wikia-visualeditor-dialog-wikiasourcemode-apply-button' => 'Aplică modificările',
+	'wikia-visualeditor-dialog-wikiasourcemode-help-text' => 'Ajutor pentru formatare',
+	'wikia-visualeditor-notification-media-must-be-logged-in' => 'Trebuie să fiți autentificat pentru a adăuga imagini şi clipuri video.',
+	'wikia-visualeditor-notification-media-permission-denied' => 'Permisiune refuzată',
 );
 
 /** tarandíne (tarandíne)

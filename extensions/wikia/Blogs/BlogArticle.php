@@ -326,14 +326,6 @@ class BlogArticle extends Article {
 		$rescnt = count( $catView->blogs );
 		$countmsg = self::getCountMessage( $catView, $rescnt, $dbcnt, 'article' );
 
-		// order blog entries alphabetically
-		ksort($catView->blogs);
-
-		$catView->blogs_start_char = array();
-		foreach($catView->blogs as $key => $entry) {
-			$catView->blogs_start_char[] = $wgContLang->convert( $wgContLang->firstChar($key) );
-		}
-
 		if( $rescnt > 0 ) {
 			$r = "<div id=\"mw-pages\">\n";
 			$r .= '<h2>' . wfMsg( "blog-header", $ti ) . "</h2>\n";
@@ -430,8 +422,9 @@ class BlogArticle extends Article {
 
 	/**
 	 * Hook
+	 * @param CategoryViewer 
 	 */
-	static public function addCategoryPage( &$catView, &$title, &$row ) {
+	static public function addCategoryPage( &$catView, &$title, &$row, $sortkey ) {
 		global $wgContLang;
 
 		if( in_array( $row->page_namespace, array( NS_BLOG_ARTICLE, NS_BLOG_LISTING ) ) ) {
@@ -464,12 +457,13 @@ class BlogArticle extends Article {
 			$userName = $title->getBaseText();
 			$link = $catView->getSkin()->link($title, $userName." - ".$text);
 
-			// blogs entries will be sorted using this key
-			$index = $wgContLang->uc("{$userName}-{$text}");
-
-			$catView->blogs[$index] = $row->page_is_redirect
+			$catView->blogs[] = $row->page_is_redirect
 				? '<span class="redirect-in-category">' . $link . '</span>'
 				: $link;
+
+			// The blog entries should be sorted on the category page
+			// just like other pages
+			$catView->blogs_start_char[] = $catView->collation->getFirstLetter( $sortkey );
 
 			/**
 			 * when we return false it won't be displayed as normal category but

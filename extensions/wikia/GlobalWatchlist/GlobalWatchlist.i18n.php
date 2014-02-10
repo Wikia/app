@@ -1021,6 +1021,16 @@ Wikia
 	'globalwatchlist-no-blog-page-found' => 'Walang natagpuang pahina ng blog.',
 );
 
+/** Turkish (Türkçe)
+ * @author Incelemeelemani
+ */
+$messages['tr'] = array(
+	'globalwatchlist-desc' => 'Tüm wikilerdeki izleme listenizdeki sayfaları haftalık özet e-posta olarak gönderir',
+	'tog-watchlistdigest' => 'Bana Haftalık İzleme Özetini e-posta gönder',
+	'globalwatchlist-no-page-found' => 'Sayfa bulunamadı.',
+	'globalwatchlist-no-blog-page-found' => 'Blog sayfası bulunamadı.',
+);
+
 /** Ukrainian (українська)
  * @author Ua2004
  * @author Ата

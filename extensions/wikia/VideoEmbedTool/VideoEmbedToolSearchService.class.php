@@ -41,7 +41,12 @@ class VideoEmbedToolSearchService
 	 * @var string
 	 */
 	protected $suggestionQuery;
-	
+
+	/**
+	 * @var string $title
+	 */
+	protected $title;
+
 	/**
 	 * Whether to do preprocessing on title, and then character limit if so
 	 * @var int
@@ -103,11 +108,9 @@ class VideoEmbedToolSearchService
 	 * @param int $articleId
 	 * @return array
 	 */
-	public function getSuggestionsForArticleId( $articleId )
-	{
+	public function getSuggestionsForArticleId( $articleId ) {
 		$this->setSuggestionQueryByArticleId( $articleId );
 		$query = $this->getSuggestionQuery();
-		$service = $this->getMwService();
 		$expectedFields = $this->getExpectedFields();
 		$config = $this->getConfig()->setWikiId( Wikia\Search\QueryService\Select\Dismax\Video::VIDEO_WIKI_ID )
 		                            ->setQuery( $query )
@@ -183,7 +186,7 @@ class VideoEmbedToolSearchService
 						true
 				);
 				$trimTitle = $this->getTrimTitle();
-				if (! empty( $trimTitle ) ) {
+				if ( ! empty( $trimTitle ) ) {
 					$singleVideoData['title'] = mb_substr( $singleVideoData['title'], 0, $trimTitle );
 				}
 				$singleVideoData['pos'] = $pos++;
@@ -236,14 +239,14 @@ class VideoEmbedToolSearchService
 	}
 	
 	/**
-	 * @return the $height
+	 * @return int Height of video
 	 */
 	public function getHeight() {
 		return $this->height;
 	}
 
 	/**
-	 * @return the $width
+	 * @return int Width of video
 	 */
 	public function getWidth() {
 		return $this->width;
@@ -264,14 +267,14 @@ class VideoEmbedToolSearchService
 	}
 
 	/**
-	 * @return the $title
+	 * @return string Title of video
 	 */
 	public function getTitle() {
 		return $this->title;
 	}
 
 	/**
-	 * @return the $trimTitle
+	 * @return string Trimmed Title
 	 */
 	public function getTrimTitle() {
 		return $this->trimTitle;

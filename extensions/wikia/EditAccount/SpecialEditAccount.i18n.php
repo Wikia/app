@@ -1355,7 +1355,7 @@ $messages['mk'] = array(
 	'editaccount-title' => 'Специјални:УредиСметка',
 	'editaccount-frame-manage' => 'Уреди сметка',
 	'editaccount-frame-usage' => 'Напомена',
-	'editaccount-usage' => 'Корисничките податоци се кешираат посебно за секое вики. Кога ќе смените лозинка или е-пошта, кешот ќе се поднови само за ова вики. Упатете го корисникот кон ова вики да се најави со новосоздадена лозинка, за да избегне проблеми со кеширање.',
+	'editaccount-usage' => 'Корисничките податоци се меѓускладираат посебно за секое вики. Кога ќе смените лозинка или е-пошта, меѓускладот ќе се поднови само за ова вики. Упатете го корисникот кон ова вики да се најави со новосоздадена лозинка, за да избегне проблеми со меѓускладирање.',
 	'editaccount-label-select' => 'Одберете корисничка сметка',
 	'editaccount-submit-account' => 'Раководење со сметка',
 	'editaccount-frame-account' => 'Уредување на корисничка сметка: $1',
@@ -2269,7 +2269,7 @@ $messages['sv'] = array(
 	'editaccount-label-toggleadopt-prevent' => 'Förhindra automatisk adoptering',
 	'editaccount-label-toggleadopt-allow' => 'Tillåt automatisk adoption',
 	'editaccount-label-reason' => 'Anledning:',
-	'editaccount-submit-email' => 'Spara e-postadress',
+	'editaccount-submit-email' => 'Spara och bekräfta e-postadress',
 	'editaccount-submit-pass' => 'Spara lösenord',
 	'editaccount-submit-realname' => 'Spara riktigt namn',
 	'editaccount-submit-clearunsub' => 'Rensa avprenumerering',
@@ -2438,7 +2438,11 @@ $messages['tl'] = array(
  * @author Suelnur
  */
 $messages['tr'] = array(
+	'editaccount-frame-usage' => 'Not',
+	'editaccount-label-reason' => 'Gerekçe:',
+	'editaccount-submit-pass' => 'Parolayı kaydet',
 	'editaccount-submit-close' => 'Hesabı kapat',
+	'editaccount-submit-button' => 'Kaydet',
 	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">Bu hesap Wikia tarafından küresel olarak devre dışı bırakıldı.</div>',
 );
 

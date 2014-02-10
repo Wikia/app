@@ -380,6 +380,17 @@ $messages['es'] = array(
 	'ringtone-matcher-by-song' => 'Enviar tono %s a su teléfono.',
 );
 
+/** Basque (euskara)
+ * @author Subi
+ */
+$messages['eu'] = array(
+	'app-loading' => 'Kargatzen...',
+	'app-nonetwork-dialog-close-button' => 'Ados',
+	'search-hint-text' => "adib. 'John Lennon:Imagine'",
+	'login-username-hint' => 'Erabiltzaile izena',
+	'login-password-hint' => 'Pasahitza',
+);
+
 /** Persian (فارسی)
  * @author Reza1615
  */
@@ -1308,11 +1319,29 @@ $messages['tly'] = array(
 );
 
 /** Turkish (Türkçe)
+ * @author Incelemeelemani
  * @author Suelnur
  */
 $messages['tr'] = array(
+	'app-loading' => 'Yükleniyor...',
+	'app-tab-search' => 'Arama',
+	'app-tab-about' => 'Hakkında',
+	'app-tab-browse' => 'A..Z',
+	'app-tab-sotd' => 'SotD',
+	'app-async-error-title' => 'Oops',
+	'app-async-error-message' => 'Geçici bağlantı sorunu. Lütfen daha sonra yeniden deneyin.',
+	'app-nonetwork-dialog-title' => 'Ağ kullanılamıyor',
+	'app-nonetwork-dialog-close-button' => 'TAMAM',
+	'search-go' => 'Git!',
+	'search-hint-text' => "örn. 'John Lennon:Hayal'",
+	'search-no-match-found' => 'Eşleşme bulunamadı.',
+	'search-no-match-found-query' => 'Aranan: %s',
+	'search-results-title' => 'Arama sonuçları: %s',
+	'login-label' => 'LyricWiki girişi',
 	'login-username-hint' => 'Kullanıcı adı',
 	'login-password-hint' => 'Parola',
+	'about-heading' => 'LyricWiki',
+	'about-heading-tips' => 'Aranıyor',
 	'about-heading-licensing' => 'Telif hakları',
 );
 

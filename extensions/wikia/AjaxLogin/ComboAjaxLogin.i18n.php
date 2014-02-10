@@ -213,8 +213,11 @@ $messages['bho'] = array(
 
 /** Bengali (বাংলা)
  * @author Aftab1995
+ * @author Tauhid16
  */
 $messages['bn'] = array(
+	'comboajaxlogin-createlog' => 'প্রবেশ করুন অথবা নতুন অ্যকাউন্ট তৈরি করুন',
+	'comboajaxlogin-actionmsg' => 'এই কাজটি সফল করার জন্য আপনাকে প্রথমে প্রবেশ করতে হবে অথবা নতুন অ্যাকাউন্ট তৈরি করতে হবে।',
 	'comboajaxlogin-connectmarketing-back' => '« পিছনে',
 	'comboajaxlogin-connectmarketing-forward' => 'শুরু করুন »',
 );
