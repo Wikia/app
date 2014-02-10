@@ -3,6 +3,16 @@
 var WikiaFullGptHelper = function (log, window, document, adLogicPageLevelParams, adSlotMapConfig) {
 	'use strict';
 
+	if ( WikiaFullGptHelper.prototype.singletonInstance ) {
+		return WikiaFullGptHelper.prototype.singletonInstance;
+	}
+
+	if (!(this instanceof WikiaFullGptHelper)){
+		return new WikiaFullGptHelper(log, window, document, adLogicPageLevelParams);
+	}
+
+	WikiaFullGptHelper.prototype.singletonInstance = this;
+
 	var logGroup = 'WikiaFullGptHelper',
 		gptLoaded = false,
 		pageLevelParams = adLogicPageLevelParams.getPageLevelParams(),
@@ -132,57 +142,57 @@ var WikiaFullGptHelper = function (log, window, document, adLogicPageLevelParams
 					}
 				}
 
-				for ( slotMapSrc in providerSlotMap ) {
-					if ( !providerSlotMap.hasOwnProperty( slotMapSrc ) ) {
-						continue;
-					}
+				for (slotMapSrc in providerSlotMap) {
+					if (providerSlotMap.hasOwnProperty(slotMapSrc)) {
 
-					slotMap = providerSlotMap[slotMapSrc];
+						slotMap = providerSlotMap[slotMapSrc];
 
-					// Define all possible slots
-					for (slotname in slotMap) {
-						if (slotMap.hasOwnProperty(slotname) && slotMap[slotname].size) {
-							log(['loadGpt', 'defining slot', slotname], 9, logGroup);
+						// Define all possible slots
+						for (slotname in slotMap) {
+							if (slotMap.hasOwnProperty(slotname) && slotMap[slotname].size) {
+								log(['loadGpt', 'defining slot', slotname], 9, logGroup);
 
-							slotnameGpt = slotname + '_' + slotMapSrc;
-							slotItem = slotMap[slotname];
-							sizes = convertSizesToGpt(slotItem.size);
+								slotnameGpt = slotname + '_' + slotMapSrc;
+								slotItem = slotMap[slotname];
+								sizes = convertSizesToGpt(slotItem.size);
 
-							slotPath = path + '/' + slotname + '_' + slotMapSrc;
+								slotPath = path + '/' + slotname + '_' + slotMapSrc;
 
-							log(['googletag.defineSlot', slotPath, sizes, slotnameGpt], 9, logGroup);
-							slot = googletag.defineSlot(slotPath, sizes, slotnameGpt);
-							slot.addService(googletag.pubads());
+								log(['googletag.defineSlot', slotPath, sizes, slotnameGpt], 9, logGroup);
+								slot = googletag.defineSlot(slotPath, sizes, slotnameGpt);
+								slot.addService(googletag.pubads());
 
-							// Per-slot targeting keys
-							slotParams = {
-								pos: slotname,
-								loc: slotItem.loc,
-								src: slotMapSrc
-							};
-							for (name in slotParams) {
-								if (slotParams.hasOwnProperty(name)) {
-									value = slotParams[name];
-									if (value) {
-										log(['slot.setTargeting', name, value], 9, logGroup);
-										slot.setTargeting(name, value);
+								// Per-slot targeting keys
+								slotParams = {
+									pos: slotname,
+									loc: slotItem.loc,
+									src: slotMapSrc
+								};
+								for (name in slotParams) {
+									if (slotParams.hasOwnProperty(name)) {
+										value = slotParams[name];
+										if (value) {
+											log(['slot.setTargeting', name, value], 9, logGroup);
+											slot.setTargeting(name, value);
+										}
 									}
 								}
+
+								gptSlots[slotnameGpt] = slot;
+
+								dataAttribs[slotnameGpt] = {
+									'data-gpt-page-params': JSON.stringify(pageLevelParams),
+									'data-gpt-slot-params': JSON.stringify(slotParams),
+									'data-gpt-slot-sizes': JSON.stringify(sizes)
+								};
+
+								log(['loadGpt', 'defined slot', slotname, slot], 9, logGroup);
+
 							}
-
-							gptSlots[slotnameGpt] = slot;
-
-							dataAttribs[slotnameGpt] = {
-								'data-gpt-page-params': JSON.stringify(pageLevelParams),
-								'data-gpt-slot-params': JSON.stringify(slotParams),
-								'data-gpt-slot-sizes': JSON.stringify(sizes)
-							};
-
-							log(['loadGpt', 'defined slot', slotname, slot], 9, logGroup);
-
 						}
 					}
 				}
+
 				log(['loadGpt', 'all slots defined'], 9, logGroup);
 
 				// Enable services
@@ -271,10 +281,8 @@ var WikiaFullGptHelper = function (log, window, document, adLogicPageLevelParams
 		});
 	}
 
-	return {
-		pushAd: pushAd,
-		flushAds: flushAds
-	};
+	this.pushAd = pushAd;
+	this.flushAds = flushAds;
 };
 
 define('ext.wikia.adengine.gpthelper', ['wikia.log', 'wikia.window', 'wikia.document', 'wikia.adlogicpageparams'], WikiaFullGptHelper);
