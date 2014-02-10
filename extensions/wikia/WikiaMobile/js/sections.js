@@ -9,11 +9,19 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 	'use strict';
 
 	var d = window.document,
-		sections = $( 'h2[id],h3[id],h4[id]', d.getElementById( 'wkPage' ) ).toArray(),
+		sections = getHeaders(),
 		l = sections.length,
 		lastSection,
 		escapeRegExp = /[()\.\+]/g,
 		offset = 5;
+
+	/**
+	 * @desc grab all headers on the page
+	 * @return Array
+	 */
+	function getHeaders(){
+		return Array.prototype.slice.apply( d.querySelectorAll( 'h2[id],h3[id],h4[id]' ) )
+	}
 
 	/**
 	 * @desc Function that lets you scroll viewport to a given section
@@ -78,7 +86,12 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 	window.addEventListener( 'scroll', onScroll );
 
 	return {
-		list: sections,
+		list: function(){
+			//make sure we're grabbing the latest version
+			sections = getHeaders();
+
+			return sections;
+		},
 		scrollTo: scrollTo,
 		current: current
 	};
