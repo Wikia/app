@@ -21,6 +21,13 @@ $messages['qqq'] = array(
 	'cacheepoch-wf-reason' => 'Log message for administrators only. Do not change "Special:CacheEpoch"',
 );
 
+/** Arabic (العربية)
+ * @author Claw eg
+ */
+$messages['ar'] = array(
+	'cacheepoch-submit' => 'حدث القيمة',
+);
+
 /** Breton (brezhoneg)
  * @author Y-M D
  */

@@ -15,16 +15,17 @@ $wgExtensionCredits['specialpage'][] = array(
 	'path'           => __FILE__,
 	'name'           => 'Random root page',
 	'version'        => '1.1',
-	'author'         => 'Hojjat (aka Huji)',
+	'author'         => array( 'Hojjat (aka Huji)', 'Sam Reed' ),
 	'url'            => 'https://www.mediawiki.org/wiki/Extension:Randomrootpage',
 	'descriptionmsg' => 'randomrootpage-desc',
 );
 
 $wgSpecialPages['Randomrootpage'] = 'SpecialRandomrootpage';
-$wgSpecialPageGroups['Randomrootpage'] = 'pages';
+$wgSpecialPageGroups['Randomrootpage'] = 'redirects';
 
 $dir = dirname(__FILE__) . '/';
-$wgExtensionMessagesFiles['Randomrootpage'] = $dir . 'Randomrootpage.i18n.php';
-$wgAutoloadClasses['SpecialRandomrootpage'] = $dir . 'Randomrootpage_body.php';
 
-$wgSpecialPageGroups['Randomrootpage'] = 'redirects';
+$wgExtensionMessagesFiles['Randomrootpage'] = $dir . 'Randomrootpage.i18n.php';
+$wgExtensionMessagesFiles['RandomrootpageAlias'] = $dir . 'Randomrootpage.i18n.alias.php';
+
+$wgAutoloadClasses['SpecialRandomrootpage'] = $dir . 'Randomrootpage_body.php';
