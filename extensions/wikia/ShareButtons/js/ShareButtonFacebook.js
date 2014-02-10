@@ -8,19 +8,14 @@ if ( ShareButtons ) {
 		dependencies: [ $.loadFacebookAPI ],
 		callback: function() {
 			var dfd = new $.Deferred();
-			console.log('callback');
 
-			FB.XFBML.parse( $( '.fb-like' ).parent( '.shareButton' ).get( 0 ) );
-			FB.Event.subscribe( 'xfbml.render', function() {
-				console.log('FB loaded');
-				dfd.resolve();
-			} );
-			FB.Event.subscribe( 'edge.create', function() {
+			window.FB.Event.subscribe( 'xfbml.render', dfd.resolve );
+			window.FB.Event.subscribe( 'edge.create', function() {
 				ShareButtons.track({
 					label: 'facebook'
 				});
 			});
-
+			window.FB.XFBML.parse( $( '.fb-like' ).parent( '.shareButton' ).get( 0 ) );
 			return dfd.promise();
 		}
 	});

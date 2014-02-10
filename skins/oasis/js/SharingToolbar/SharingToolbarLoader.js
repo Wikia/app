@@ -48,13 +48,10 @@ jQuery(function( $ ) {
 					// Display the toolbar when the share buttons are done processing
 					Wikia.ShareButtons.process().done(function() {
 						Wikia.SharingToolbar.toggleToolbar( event );
-					})
-					.fail(function() {
-						alert('$.get failed!');
 					});
 				}
 			);
-		})
+		});
 
 	}
 

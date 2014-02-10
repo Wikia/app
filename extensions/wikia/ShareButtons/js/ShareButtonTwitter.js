@@ -11,16 +11,12 @@ if ( ShareButtons ) {
 
 			// Resolve when contents have finished loading
 			var button = $( '.twitter-share-button' );
-			button.load( function() {
-				console.log('Twitter 1 loaded');
-				dfd.resolve();
-			} );
+			button.load( dfd.resolve );
 
 			twttr.ready(function(twttr) {
 				if (button.not('iframe').exists()) {
 					// init share button one more time if Twitter api library was already loaded
 					twttr.widgets.load(button.parent().get(0));
-					console.log('Twitter 2 loaded');
 					dfd.resolve();
 				}
 				twttr.events.bind('click', function(event) {
