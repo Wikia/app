@@ -15,7 +15,7 @@ class VideosModuleHelper extends WikiaModel {
 	/**
 	 * Use the VideoEmbedToolSearchService to find premium videos related to the current article.
 	 * @param integer $articleId - ID of the article being viewed.
-	 * @return array $relatedVideos - Premium videos related to article.
+	 * @return array $videos - Premium videos related to article.
 	 */
 	public function getArticleRelatedVideos( $articleId ) {
 		wfProfileIn( __METHOD__ );
@@ -32,17 +32,15 @@ class VideosModuleHelper extends WikiaModel {
 			}
 		}
 
-		$relatedVideos = $this->getVideosDetail( $videos );
-
 		wfProfileOut( __METHOD__ );
 
-		return $relatedVideos;
+		return $videos;
 
 	}
 
 	/**
 	 * Use WikiaSearchController to find premium videos related to the local wiki.
-	 * @return array $relatedVideos - Premium videos related to the local wiki.
+	 * @return array $videos - Premium videos related to the local wiki.
 	 */
 	public function getWikiRelatedVideos() {
 		wfProfileIn( __METHOD__ );
@@ -52,7 +50,7 @@ class VideosModuleHelper extends WikiaModel {
 
 		$params = [
 			'title' => $wikiTitle,
-			'limit' => $this->getVideoLimit()
+			'limit' => $this->getVideoLimit(),
 		];
 		$videoResults = $this->app->sendRequest( 'WikiaSearchController', 'searchVideosByTitle', $params )->getData();
 
@@ -66,16 +64,14 @@ class VideosModuleHelper extends WikiaModel {
 
 		shuffle( $videos );
 
-		$relatedVideos = $this->getVideosDetail( $videos );
-
 		wfProfileOut( __METHOD__ );
 
-		return $relatedVideos;
+		return $videos;
 	}
 
 	/**
 	 * Get videos by category from the wiki
-	 * @return array $verticalVideos
+	 * @return array $videos - list of vertical videos (premium videos)
 	 */
 	public function getVerticalVideos() {
 		wfProfileIn( __METHOD__ );
@@ -100,11 +96,9 @@ class VideosModuleHelper extends WikiaModel {
 
 		shuffle( $videos );
 
-		$verticalVideos = $this->getVideosDetail( $videos );
-
 		wfProfileOut( __METHOD__ );
 
-		return $verticalVideos;
+		return $videos;
 	}
 
 	/**
