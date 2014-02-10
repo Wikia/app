@@ -107,6 +107,14 @@ $messages['es'] = array(
 	'paginator-back' => 'Atrás',
 );
 
+/** Basque (euskara)
+ * @author Subi
+ */
+$messages['eu'] = array(
+	'paginator-next' => 'Hurrengoa',
+	'paginator-back' => 'Atzera',
+);
+
 /** Persian (فارسی)
  * @author Reza1615
  */

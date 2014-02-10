@@ -168,6 +168,20 @@ if ( $addPageCategories ) {
 	$sqlWhere[] = "img_metadata like '%\"pageCategories%\"'";
 }
 
+// If we are adding a category don't bother selecting any pages that
+// already have this category.
+if ( $addCategories ) {
+	$values = array_map( [ $db, 'addQuotes' ], $addCategories );
+	$sqlWhere[] = "NOT EXISTS (
+		SELECT 1
+		FROM page
+			LEFT JOIN categorylinks ON page_id = cl_from
+		WHERE cl_to IN (".implode( ',', $values ).")
+		  AND page_namespace = ".NS_FILE."
+		  AND page_title = img_name
+	)";
+}
+
 if ( $replace ) {
 	$sqlWhere[] = "EXISTS (
 		SELECT 1

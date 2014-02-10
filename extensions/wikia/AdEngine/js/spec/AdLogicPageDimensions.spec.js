@@ -1,5 +1,9 @@
 describe('AdLogicPageDimensions', function(){
-	function adShown(slotName, pageLength, responsiveLayout, matchingMediaQuery) {
+	function adShown(slotName, pageLength, responsiveLayout, matchingMediaQuery, railExists) {
+
+		if (typeof railExists === 'undefined') {
+			railExists = true;
+		}
 		var matchingMediaQueryDict = {},
 			i,
 			len,
@@ -13,7 +17,7 @@ describe('AdLogicPageDimensions', function(){
 				}
 			},
 			logMock = function() {},
-			documentMock = {documentElement: {scrollHeight: pageLength, scrollWidth: 1280}},
+			documentMock = {documentElement: {scrollHeight: pageLength, scrollWidth: 1280}, getElementById: function() { return railExists ? {} : null; }},
 			slotTweakerMock = {hide: function() {}, show: function() {}},
 			abTestMock = {getGroup: function () {}},
 			adLogicPageDimensions = AdLogicPageDimensions(windowMock, documentMock, logMock, slotTweakerMock, abTestMock),
@@ -65,6 +69,7 @@ describe('AdLogicPageDimensions', function(){
 		expect(adShown('foo', 5000)).toBeTruthy('height=5000 slot=foo -> ADS');
 		expect(adShown('LEFT_SKYSCRAPER_2', 5000)).toBeTruthy('height=5000 slot=LEFT_SKYSCRAPER_2 -> ADS');
 		expect(adShown('LEFT_SKYSCRAPER_3', 5000)).toBeTruthy('height=5000 slot=LEFT_SKYSCRAPER_3 -> ADS');
+		expect(adShown('LEFT_SKYSCRAPER_3', 5000, undefined, undefined, false)).toBeFalsy('height=5000 slot=LEFT_SKYSCRAPER_3 -> ADS noRail');
 		expect(adShown('PREFOOTER_LEFT_BOXAD', 5000)).toBeTruthy('height=5000 slot=PREFOOTER_LEFT_BOXAD -> ADS');
 		expect(adShown('PREFOOTER_RIGHT_BOXAD', 5000)).toBeTruthy('height=5000 slot=PREFOOTER_RIGHT_BOXAD -> ADS');
 	});
@@ -86,6 +91,7 @@ describe('AdLogicPageDimensions', function(){
 		expect(adShown('foo', 5000, true, width2000)).toBeTruthy('height=5000 slot=foo -> ADS');
 		expect(adShown('LEFT_SKYSCRAPER_2', 5000, true, width2000)).toBeTruthy('height=5000 slot=LEFT_SKYSCRAPER_2 -> ADS');
 		expect(adShown('LEFT_SKYSCRAPER_3', 5000, true, width2000)).toBeTruthy('height=5000 slot=LEFT_SKYSCRAPER_3 -> ADS');
+		expect(adShown('LEFT_SKYSCRAPER_3', 5000, true, width2000, false)).toBeFalsy('height=5000 slot=LEFT_SKYSCRAPER_3 -> ADS noRail');
 		expect(adShown('PREFOOTER_LEFT_BOXAD', 5000, true, width2000)).toBeTruthy('height=5000 slot=PREFOOTER_LEFT_BOXAD -> ADS');
 		expect(adShown('PREFOOTER_RIGHT_BOXAD', 5000, true, width2000)).toBeTruthy('height=5000 slot=PREFOOTER_RIGHT_BOXAD -> ADS');
 	});
@@ -99,6 +105,7 @@ describe('AdLogicPageDimensions', function(){
 		expect(adShown('HOME_TOP_RIGHT_BOXAD', 5000, true, width2000)).toBeTruthy('width=2000 slot=HOME_TOP_RIGHT_BOXAD -> ADS');
 		expect(adShown('LEFT_SKYSCRAPER_2', 5000, true, width2000)).toBeTruthy('width=2000 slot=LEFT_SKYSCRAPER_2 -> ADS');
 		expect(adShown('LEFT_SKYSCRAPER_3', 5000, true, width2000)).toBeTruthy('width=2000 slot=LEFT_SKYSCRAPER_3 -> ADS');
+		expect(adShown('LEFT_SKYSCRAPER_3', 5000, true, width2000, false)).toBeFalsy('width=2000 slot=LEFT_SKYSCRAPER_3 -> ADS noRail');
 		expect(adShown('INCONTENT_BOXAD_1', 5000, true, width2000)).toBeTruthy('width=2000 slot=INCONTENT_BOXAD_1 -> ADS');
 
 		expect(adShown('foo', 5000, true, width1024)).toBeTruthy('width=1024 slot=foo -> ADS');
@@ -108,6 +115,7 @@ describe('AdLogicPageDimensions', function(){
 		expect(adShown('HOME_TOP_RIGHT_BOXAD', 5000, true, width1024)).toBeTruthy('width=1024 slot=HOME_TOP_RIGHT_BOXAD -> ADS');
 		expect(adShown('LEFT_SKYSCRAPER_2', 5000, true, width1024)).toBeTruthy('width=1024 slot=LEFT_SKYSCRAPER_2 -> ADS');
 		expect(adShown('LEFT_SKYSCRAPER_3', 5000, true, width1024)).toBeTruthy('width=1024 slot=LEFT_SKYSCRAPER_3 -> ADS');
+		expect(adShown('LEFT_SKYSCRAPER_3', 5000, true, width1024, false)).toBeFalsy('width=1024 slot=LEFT_SKYSCRAPER_3 -> ADS noRail');
 		expect(adShown('INCONTENT_BOXAD_1', 5000, true, width1024)).toBeTruthy('width=1024 slot=INCONTENT_BOXAD_1 -> ADS');
 
 		expect(adShown('foo', 5000, true, width800)).toBeTruthy('width=800 slot=foo -> ADS');
@@ -138,7 +146,7 @@ describe('AdLogicPageDimensions', function(){
 				}
 			},
 			logMock = function() {},
-			documentMock = {documentElement: {scrollWidth: 1280}},
+			documentMock = {documentElement: {scrollWidth: 1280}, getElementById: function() { return {}; }},
 			adShown,
 			adLoadCounter = 0,
 			slotTweakerMock = {hide: function () {adShown = false;}, show: function () {adShown = true;}},

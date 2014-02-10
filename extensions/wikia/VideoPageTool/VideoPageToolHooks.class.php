@@ -87,4 +87,32 @@ class VideoPageToolHooks {
 		return true;
 	}
 
+	/**
+	 * Hook: Clear cache (videos by category) when video is deleted. We only need
+	 * to check if the file is a local video, we don't need the rest of the parameters
+	 * OnFileDeleteComplete passes in by default. Instead, after verifying the file is
+	 * a local video we find the latest program and clear the cache for the category
+	 * names defined in the category assets for that program.
+	 * @param LocalFile $file
+	 * @param $oldimage
+	 * @param $article
+	 * @param User $user
+	 * @param $reason
+	 * @return true
+	 */
+	public static function onFileDeleteComplete( &$file, $oldimage, $article, $user, $reason ) {
+		if ( WikiaFileHelper::isFileTypeVideo( $file ) && $file->isLocal() ) {
+			$controller = new VideoHomePageController();
+			$program = $controller->getProgram();
+			$assets = $program->getAssetsBySection( VideoHomePageController::MODULE_CATEGORY );
+			$helper = new VideoPageToolHelper();
+			foreach ( $assets as $asset ) {
+				$title = Title::newFromText( $asset->getCategoryName(), NS_CATEGORY );
+				$helper->invalidateCacheVideosByCategory( $title->getDBkey() );
+			}
+		}
+
+		return true;
+	}
+
 }

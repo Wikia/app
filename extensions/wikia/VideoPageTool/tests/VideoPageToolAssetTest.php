@@ -16,10 +16,29 @@ class VideoPageToolAssetTest extends WikiaBaseTest {
 	protected $origMemc;
 
 	public function setUp() {
-		global $wgCityId;
-		file_put_contents('/tmp/debug.out', "CITYID: ".$wgCityId."\n", FILE_APPEND);
 
-		$this->mockGlobalVariable( 'wgUser', User::newFromName( 'Garthwebb' ) );
+		$this->setupFile = dirname(__FILE__) . '/../VideoPageTool.setup.php';
+		parent::setUp();
+
+		$mock_user = $this->getMock( 'User', [ 'getId', 'getName' ]);
+		$mock_user->expects( $this->any() )
+			->method( 'getId' )
+			->will( $this->returnValue( 123 ) );
+
+		$mock_user->expects( $this->any() )
+			->method( 'getName' )
+			->will( $this->returnValue( 'Garthwebb' ) );
+
+		$this->mockGlobalVariable('wgUser', $mock_user);
+
+		$this->mockStaticMethod( 'User', 'newFromId', $mock_user );
+
+		/*
+		 * That's pretty bad, as we will return master db connection for all wfGetDB calls, even those for slave and
+		 * dataware. But as for now mockGlobalFunction does not support PHPUnit's callbacks and returnValueArray
+		 */
+		$slaveDb = wfGetDB( DB_MASTER, [], 'video151' );
+		$this->mockGlobalFunction('wfGetDB', $slaveDb);
 
 		$language = 'en';
 		$date = 158486400; // This is Jan 9th, 1975 a date suitably far in the past but doing well for its age thank you very much
@@ -193,6 +212,9 @@ class VideoPageToolAssetTest extends WikiaBaseTest {
 	}
 
 	public function tearDown() {
-		$this->program->delete();
+		if ( !empty($this->program) ) {
+			$this->program->delete();
+		}
+		parent::tearDown();
 	}
 }

@@ -1173,6 +1173,7 @@ $messages['es'] = array(
 
 /** Basque (euskara)
  * @author An13sa
+ * @author Subi
  */
 $messages['eu'] = array(
 	'swm-label-language' => 'Hizkuntza',
@@ -1181,6 +1182,7 @@ $messages['eu'] = array(
 	'swm-button-save' => '[ Gorde ]',
 	'swm-list-table-wiki' => 'Wiki',
 	'swm-list-table-tools' => 'Tresnak',
+	'swm-list-table-lang' => 'Hizkuntzak',
 	'swm-yes' => 'Bai',
 	'swm-no' => 'Ez',
 );
