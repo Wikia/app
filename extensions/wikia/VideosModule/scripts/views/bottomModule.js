@@ -1,6 +1,6 @@
 define( 'videosmodule.views.bottommodule', [
 	'sloth',
-	'thumbnails.views.titlethumbnail',
+	'videosmodule.views.titlethumbnail',
 	'wikia.mustache',
 	'videosmodule.templates.mustache',
 	'videosmodule.models.abtestbottom'
@@ -47,27 +47,28 @@ define( 'videosmodule.views.bottommodule', [
 
 	VideoModule.prototype.renderWithData = function() {
 		var i,
-			out,
+			$out,
 			videos = this.model.data.videos,
 			len = videos.length,
-			thumbHtml = '';
+			thumbHtml = [];
 
 		// AB test set rows shown
 		videos = videos.slice( 0, groupParams.rows > 1 ? 8 : 4 );
 
 		for ( i = 0; i < len; i++ ) {
-			thumbHtml += new TitleThumbnailView( videos[i], { el: 'li' } ).render().el.outerHTML;
+			thumbHtml.push( new TitleThumbnailView( videos[i], { el: 'li' } ).render().$el );
 		}
 
-		out = Mustache.render( templates.bottomModule, {
-			title: $.msg( 'videosmodule-title-default' ),
-			thumbnails: thumbHtml
-		} );
+		$out = $( Mustache.render( templates.bottomModule, {
+			title: $.msg( 'videosmodule-title-default' )
+		} ) );
+
+		$out.find( '.thumbnails' ).append( thumbHtml );
 
 		if ( groupParams.position === 1 ) {
-			this.$el.append( out );
+			this.$el.append( $out );
 		} else {
-			this.$el.prepend( out );
+			this.$el.prepend( $out );
 		}
 		this.$el.find( '.videos-module' ).addClass( groupParams.rows > 1 ? 'rows-2' : 'rows-1' );
 	};

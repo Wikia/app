@@ -1628,7 +1628,8 @@ $config['videos_module_js'] = [
 		'//extensions/wikia/VideosModule/scripts/templates.mustache.js',
 		'//extensions/wikia/VideosModule/scripts/models/abtestbottom.js',
 		'//extensions/wikia/VideosModule/scripts/models/videos.js',
-		'//extensions/wikia/VideosModule/scripts/views/bottommodule.js',
+		'//extensions/wikia/VideosModule/scripts/views/titleThumbnail.js',
+		'//extensions/wikia/VideosModule/scripts/views/bottomModule.js',
 		'//extensions/wikia/VideosModule/scripts/controllers/index.js',
 	]
 ];
