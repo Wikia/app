@@ -29,6 +29,7 @@ $wgAutoloadClasses['VideosModuleController'] =  $dir . '/VideosModuleController.
  * hooks
  */
 $wgAutoloadClasses['VideosModuleHooks'] =  $dir . '/VideosModuleHooks.class.php';
+$wgHooks['OutputPageBeforeHTML'][] = 'VideosModuleHooks::onOutputPageBeforeHTML';
 
 //if ( $wgVideosModuleOnRail ) {
 	$wgHooks['GetRailModuleList'][] = 'VideosModuleHooks::onGetRailModuleList';
@@ -37,7 +38,13 @@ $wgAutoloadClasses['VideosModuleHooks'] =  $dir . '/VideosModuleHooks.class.php'
 //	array_splice( $wgHooks['OutputPageBeforeHTML'], 0, 0, 'VideosModuleHooks::onOutputPageBeforeHTML' );
 //}
 
+
 /**
  * messages
  */
 $wgExtensionMessagesFiles['VideosModule'] = $dir . '/VideosModule.i18n.php';
+
+// register messages package for JS
+JSMessages::registerPackage('VideosModule', array(
+	'videosmodule-title-default',
+));

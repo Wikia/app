@@ -507,7 +507,10 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 	 * @requestParam string categoryName
 	 * @responseParam string $result [ok/error]
 	 * @responseParam string $msg - result message
-	 * @responseParam array $videos - list of videos in the category
+	 * @responseParam array thumbnails - the list of videos in the category
+	 * @responseParam integer total - the number of videos in the category
+	 * @responseParam string url - the url of the category page
+	 * @responseParam string seeMoreLabel
 	 */
 	public function getVideosByCategory() {
 		$categoryName = $this->getVal( 'categoryName', '' );

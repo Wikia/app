@@ -1,6 +1,6 @@
 define( 'videopageadmin.views.autocompleteitem', [
 		'jquery',
-		'templates.mustache'
+		'videopagetool.templates.mustache'
 	], function( $, templates ) {
 		'use strict';
 

@@ -13,7 +13,7 @@ module.exports = function( grunt ) {
 			},
 			options: {
 				// define as an AMD module
-				prefix: 'define( \'videopagetool.templates.mustache\', [], function() { \'use strict\'; return ',
+				prefix: 'define( \'videosmodule.templates.mustache\', [], function() { \'use strict\'; return ',
 				postfix: '; });',
 				verbose: true
 			}
