@@ -7,9 +7,6 @@ define( 'videosmodule.models.abtestbottom', [
 	// Singleton to protect integrity of test cases
 	function ABTestBottom() {
 		var testParams = window.Wikia.AbTest;
-		testParams.getGroup = function() {
-			return 'GROUP_C';
-		};
 		this.testGroup = testParams ? testParams.getGroup( 'VIDEOS_MODULE_BOTTOM' ) : null;
 	}
 
