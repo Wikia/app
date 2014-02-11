@@ -44,6 +44,7 @@ if ( !$maintClass || !class_exists( $maintClass ) ) {
 }
 
 // Get an object to start us off
+/** @var Maintenance $maintenance */
 $maintenance = new $maintClass();
 
 // Basic sanity checks and such
@@ -113,3 +114,4 @@ try {
 	exit( 1 );
 }
 
+wfRunHooks( 'RestInPeace' ); // Wikia change - @author macbre
