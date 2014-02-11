@@ -488,7 +488,7 @@ class MediaWiki {
 	 * Ends this task peacefully
 	 */
 	public function restInPeace() {
-		wfRunHooks( 'RestInPeace', [ $this ] ); // Wikia change - @author macbre
+		wfRunHooks( 'RestInPeace' ); // Wikia change - @author macbre
 
 		MessageCache::logMessages();
 		wfLogProfilingData();

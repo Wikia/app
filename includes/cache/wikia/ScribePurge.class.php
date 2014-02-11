@@ -55,16 +55,15 @@ class ScribePurge {
 	}
 
 	/**
-	 * This method is called via hook at the end or request handling
+	 * This method is called via hook at the end of the request handling
 	 *
 	 * Make the list of unique URLs and send them to Fastly via Scribe queue
 	 *
-	 * @authot macbre
+	 * @author macbre
 	 *
-	 * @param MediaWiki $mw MW instance
 	 * @return bool true - it's a hook
 	 */
-	static function onRestInPeace( MediaWiki $mw ) {
+	static function onRestInPeace() {
 		global $wgCityId;
 
 		// don't process an empty queue

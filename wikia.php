@@ -63,6 +63,8 @@ if ( !empty( $wgEnableNirvanaAPI ) ){
 
 	wfLogProfilingData();
 
+	wfRunHooks( 'RestInPeace' );
+
 } else {
 	header( "HTTP/1.1 503 Service Unavailable", true, 503 );
 }
