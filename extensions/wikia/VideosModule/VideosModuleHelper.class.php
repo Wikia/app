@@ -26,6 +26,10 @@ class VideosModuleHelper extends WikiaModel {
 
 		$videos = [];
 		foreach ( $response['items'] as $video ) {
+			if ( count( $this->existingVideos ) >= self::VIDEO_LIMIT ) {
+				break;
+			}
+
 			$title = Title::newFromText( $video['title'], NS_FILE );
 			if ( $title instanceof Title && $this->isValidVideo( $title->getDBkey() ) ) {
 				$videos[] = $title->getDBkey();
@@ -56,6 +60,10 @@ class VideosModuleHelper extends WikiaModel {
 
 		$videos = [];
 		foreach ( $videoResults as $video ) {
+			if ( count( $this->existingVideos ) >= self::VIDEO_LIMIT ) {
+				break;
+			}
+
 			$videoTitle = preg_replace( '/.+\/File:/', '', urldecode( $video['url'] ) );
 			if ( $this->isValidVideo( $videoTitle ) ) {
 				$videos[] = $videoTitle;
@@ -88,6 +96,10 @@ class VideosModuleHelper extends WikiaModel {
 		$response = ApiService::foreignCall( $this->wg->WikiaVideoRepoDBName, $params, ApiService::WIKIA );
 		if ( !empty( $response['videos'] ) ) {
 			foreach ( $response['videos'] as $video ) {
+				if ( count( $this->existingVideos ) >= self::VIDEO_LIMIT ) {
+					break;
+				}
+
 				if ( $this->isValidVideo( $video['title'] ) ) {
 					$videos[] = $video['title'];
 				}
@@ -131,7 +143,7 @@ class VideosModuleHelper extends WikiaModel {
 		$videoList = [];
 		if ( !empty( $videos ) ) {
 			$helper = new VideoHandlerHelper();
-			$detail = $helper->getVideoDetailFromWiki(
+			$videosDetail = $helper->getVideoDetailFromWiki(
 				$this->wg->WikiaVideoRepoDBName,
 				$videos,
 				self::THUMBNAIL_WIDTH,
@@ -140,7 +152,6 @@ class VideosModuleHelper extends WikiaModel {
 				self::GET_THUMB
 			);
 
-			$videosDetail = array_slice( $detail, 0, self::VIDEO_LIMIT );
 			foreach( $videosDetail as $video ) {
 				$videoList[] = [
 					'title'     => $video['title'],
