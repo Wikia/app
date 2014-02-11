@@ -566,11 +566,15 @@ function albumResult($artist, $album, $year){
 				 * unfortunately we can't repackage the app ATM,
 				 * this is hacky but we need to get that reporting now.
 				 *
+				 * We need to be able to supress this for v2 while both apps
+				 * are in development. For LYR-87 we'll add the 'nocomscore' param.
+				 *
 				 * @TODO remove when we'll get to v2 of the app
-				 * @author Jakub Olek
+				 * @author Jakub Olek, Sean Colombo
 				 */
 				$fullApiAuth = $wgRequest->getVal('fullApiAuth');
-				if( !empty( $fullApiAuth ) ) {
+				$noComscore = $wgRequest->getVal('nocomscore');
+				if( (!empty( $fullApiAuth )) && empty($noComscore) ) {
 					$result['lyrics'] .= self::COMSCORE_TAG_PLACEHOLDER;
 				}
 
