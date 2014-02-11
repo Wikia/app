@@ -18,7 +18,7 @@ $dir = dirname( __FILE__ );
 /**
  * classes
  */
-$wgAutoloadClasses[ 'VideosModuleHelper'] =  $dir. '/VideosModuleHelper.class.php' ;
+$wgAutoloadClasses[ 'VideosModule'] =  $dir. '/VideosModule.class.php' ;
 
 /**
  * controllers

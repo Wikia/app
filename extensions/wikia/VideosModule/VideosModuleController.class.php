@@ -21,7 +21,7 @@ class VideosModuleController extends WikiaController {
 		$showVerticalOnly = ( $this->request->getVal( 'verticalonly' ) == 'true' );
 
 		$videos = [];
-		$helper = new VideosModuleHelper();
+		$module = new VideosModule();
 
 		if ( !$showVerticalOnly ) {
 			if ( empty( $articleId ) ) {
@@ -32,22 +32,22 @@ class VideosModuleController extends WikiaController {
 			}
 
 			// get article related videos
-			$videos = $helper->getArticleRelatedVideos( $articleId );
+			$videos = $module->getArticleRelatedVideos( $articleId );
 
 			// Add videos from getWikiRelatedVideos if we didn't hit our video count limit
-			if ( count( $videos ) < VideosModuleHelper::VIDEO_LIMIT ) {
-				$videos = array_merge( $videos, $helper->getWikiRelatedVideos() );
+			if ( count( $videos ) < VideosModule::VIDEO_LIMIT ) {
+				$videos = array_merge( $videos, $module->getWikiRelatedVideos() );
 			}
 		}
 
 		// get vertical videos
-		if ( count( $videos ) < VideosModuleHelper::VIDEO_LIMIT ) {
-			$videos = array_merge( $videos, $helper->getVerticalVideos() );
+		if ( count( $videos ) < VideosModule::VIDEO_LIMIT ) {
+			$videos = array_merge( $videos, $module->getVerticalVideos() );
 		}
 
 		$this->result = "ok";
 		$this->msg = '';
-		$this->videos = $helper->getVideosDetail( $videos );
+		$this->videos = $module->getVideosDetail( $videos );
 
 		wfProfileOut( __METHOD__ );
 	}

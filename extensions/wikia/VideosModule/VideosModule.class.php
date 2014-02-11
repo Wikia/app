@@ -1,6 +1,6 @@
 <?php
 
-class VideosModuleHelper extends WikiaModel {
+class VideosModule extends WikiaModel {
 
 	const THUMBNAIL_WIDTH = 500;
 	const THUMBNAIL_HEIGHT = 309;

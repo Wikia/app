@@ -121,7 +121,7 @@ class VideoHandlerHelper extends WikiaModel {
 
 		$summary = wfMessage( 'videohandler-log-add-description' )->inContentLanguage()->plain();
 		$status = $page->doEdit( $text, $summary );
-		$result = ( $status->isOK() ) ? true : false;
+		$result = $status->isOK();
 
 		wfProfileOut( __METHOD__ );
 
