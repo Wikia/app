@@ -85,19 +85,16 @@ class SpotlightsModel extends WikiaModel {
 					'url' => 'http://fallout.wikia.com/',
 					'image' => '',
 					'text' => 'Fallout Wiki',
-					'subtitle' => ''
 				],
 				1 => [
 					'url' => 'http://leagueoflegends.wikia.com/',
 					'image' => '',
 					'text' => 'League of Legends Wiki',
-					'subtitle' => ''
 				],
 				2 => [
 					'url' => 'http://gta.wikia.com/',
 					'image' => '',
 					'text' => 'GTA Wiki',
-					'subtitle' => ''
 				]
 			],
 			// RuneScape
@@ -106,19 +103,16 @@ class SpotlightsModel extends WikiaModel {
 					'url' => 'http://2007.runescape.wikia.com/',
 					'image' => '',
 					'text' => '"2007scape Wiki',
-					'subtitle' => ''
 				],
 				1 => [
 					'url' => 'http://leagueoflegends.wikia.com/',
 					'image' => '',
 					'text' => 'League of Legends Wiki',
-					'subtitle' => ''
 				],
 				2 => [
 					'url' => 'http://elderscrolls.wikia.com/',
 					'image' => '',
 					'text' => 'Elder Scrolls Wiki',
-					'subtitle' => ''
 				]
 			],
 			// League of Legends
@@ -127,20 +121,17 @@ class SpotlightsModel extends WikiaModel {
 					'url' => 'http://elderscrolls.wikia.com/',
 					'image' => '',
 					'text' => 'Elder Scrolls Wiki',
-					'subtitle' => ''
 
 				],
 				1 => [
 					'url' => 'http://finalfantasy.wikia.com/',
 					'image' => '',
 					'text' => 'Final Fantasy Wiki',
-					'subtitle' => ''
 				],
 				2 => [
 					'url' => 'http://runescape.wikia.com/',
 					'image' => '',
 					'text' => 'Runescape Wiki',
-					'subtitle' => ''
 				]
 			],
 			// Warframe
@@ -149,19 +140,16 @@ class SpotlightsModel extends WikiaModel {
 					'url' => 'http://leagueoflegends.wikia.com/',
 					'image' => '',
 					'text' => 'League of Legends Wiki',
-					'subtitle' => ''
 				],
 				1 => [
 					'url' => 'http://elderscrolls.wikia.com/',
 					'image' => '',
 					'text' => 'Elder Scrolls Wiki',
-					'subtitle' => ''
 				],
 				2 => [
 					'url' => 'http://dont-starve-game.wikia.com/',
 					'image' => '',
 					'text' => 'Dont\' Starve Wiki',
-					'subtitle' => ''
 				]
 			],
 			// Fallout
@@ -170,19 +158,16 @@ class SpotlightsModel extends WikiaModel {
 					'url' => 'http://elderscrolls.wikia.com/',
 					'image' => '',
 					'text' => 'Elder Scrolls Wiki',
-					'subtitle' => ''
 				],
 				1 => [
 					'url' => 'http://gta.wikia.com/',
 					'image' => '',
 					'text' => 'GTA Wiki',
-					'subtitle' => ''
 				],
 				2 => [
 					'url' => 'http://leagueoflegends.wikia.com/',
 					'image' => '',
 					'text' => 'League of Legends Wiki',
-					'subtitle' => ''
 				]
 			],
 			// Disney
@@ -191,7 +176,6 @@ class SpotlightsModel extends WikiaModel {
 					'url' => 'http://pixar.wikia.com/',
 					'image' => '',
 					'text' => 'Pixar Wiki',
-					'subtitle' => ''
 				],
 				1 => [
 					'url' => 'http://villains.wikia.com/',
@@ -202,7 +186,6 @@ class SpotlightsModel extends WikiaModel {
 					'url' => 'http://harrypotter.wikia.com/',
 					'image' => '',
 					'text' => 'Harry Potter Wiki',
-					'subtitle' => ''
 				]
 			],
 			// Yu-Gi-Oh!
@@ -211,19 +194,16 @@ class SpotlightsModel extends WikiaModel {
 					'url' => 'http://cardfight.wikia.com/',
 					'image' => '',
 					'text' => 'Cardfight Wiki',
-					'subtitle' => ''
 				],
 				1 => [
 					'url' => 'http://naruto.wikia.com/',
 					'image' => '',
 					'text' => 'Naruto Wiki',
-					'subtitle' => ''
 				],
 				2 => [
 					'url' => 'http://onepiece.wikia.com/',
 					'image' => '',
 					'text' => 'One Piece Wiki',
-					'subtitle' => ''
 				]
 			],
 			// Cardfight
@@ -232,19 +212,16 @@ class SpotlightsModel extends WikiaModel {
 					'url' => 'http://yugioh.wikia.com/',
 					'image' => '',
 					'text' => 'Yu-Gi-Oh Wiki',
-					'subtitle' => ''
 				],
 				1 => [
 					'url' => 'http://buddyfight.wikia.com/',
 					'image' => '',
 					'text' => 'Buddy Fight Wiki',
-					'subtitle' => ''
 				],
 				2 => [
 					'url' => 'http://naruto.wikia.com/',
 					'image' => '',
 					'text' => 'Naruto Wiki',
-					'subtitle' => ''
 				]
 			],
 			// Lyrics
@@ -253,19 +230,16 @@ class SpotlightsModel extends WikiaModel {
 					'url' => 'http://disney.wikia.com/',
 					'image' => '',
 					'text' => 'Disney Wiki',
-					'subtitle' => ''
 				],
 				1 => [
 					'url' => 'http://starwars.wikia.com/',
 					'image' => '',
 					'text' => 'Star Wars Wiki',
-					'subtitle' => ''
 				],
 				2 => [
 					'url' => 'http://harrypotter.wikia.com/',
 					'image' => '',
 					'text' => 'Harry Potter Wiki',
-					'subtitle' => ''
 				]
 			],
 			// Arrested Development
@@ -274,19 +248,16 @@ class SpotlightsModel extends WikiaModel {
 					'url' => 'http://starwars.wikia.com/',
 					'image' => '',
 					'text' => 'Star Wars Wiki',
-					'subtitle' => ''
 				],
 				1 => [
 					'url' => 'http://harrypotter.wikia.com/',
 					'image' => '',
 					'text' => 'Harry Potter Wiki',
-					'subtitle' => ''
 				],
 				2 => [
 					'url' => 'http://gameofthrones.wikia.com',
 					'image' => '',
 					'text' => 'Game of Thrones Wiki',
-					'subtitle' => ''
 				]
 			],
 			// MediaWiki 119
