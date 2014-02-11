@@ -15,6 +15,8 @@ define( 'videosmodule.views.bottommodule', [
 	groupParams = testCase.getGroupParams();
 
 	function VideoModule( options ) {
+		// Note that this.el refers to the DOM element that the videos module should be inserted before or after,
+		// not the wrapper for the videos module. We can update this after the A/B testing is over.  
 		this.el = options.el;
 		this.$el = $( options.el );
 		this.model = options.model;
