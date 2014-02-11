@@ -28,12 +28,12 @@ ve.ce.WikiaMediaCaptionNode = function VeCeWikiaMediaCaptionNode( model, config 
 	ve.ce.BranchNode.call( this, model, config );
 
 	// DOM changes
-	this.$.addClass( 'thumbcaption' );
+	this.$element.addClass( 'thumbcaption' );
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.ce.WikiaMediaCaptionNode, ve.ce.BranchNode );
+OO.inheritClass( ve.ce.WikiaMediaCaptionNode, ve.ce.BranchNode );
 
 /* Static Properties */
 
@@ -54,10 +54,10 @@ ve.ce.WikiaMediaCaptionNode.prototype.createAttribution = function () {
 		attribution = this.model.parent.getAttribute( 'attribution' ),
 		href = new mw.Title( attribution.username, 2 ).getUrl();
 
-	$attribution = this.$$( '<div>' )
+	$attribution = this.$( '<div>' )
 		.addClass( 'picture-attribution' );
 
-	$image = this.$$( '<img>' )
+	$image = this.$( '<img>' )
 		.addClass( 'avatar' )
 		.attr( {
 			alt: attribution.username,
@@ -66,7 +66,7 @@ ve.ce.WikiaMediaCaptionNode.prototype.createAttribution = function () {
 			width: 16
 		} );
 
-	$link = this.$$( '<a>' )
+	$link = this.$( '<a>' )
 		.attr( 'href', href )
 		.text( attribution.username );
 
@@ -98,7 +98,7 @@ ve.ce.WikiaMediaCaptionNode.prototype.onSplice = function () {
 		parentModel.getAttribute( 'attribution' ) !== undefined &&
 		parentModel.getAttribute( 'width' ) >= this.minWidth
 	) {
-		this.$attribution.appendTo( this.$ );
+		this.$attribution.appendTo( this.$element );
 	}
 };
 

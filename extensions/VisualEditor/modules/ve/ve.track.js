@@ -18,31 +18,50 @@
 	 * generic interface for routing these events to an analytics framework.
 	 *
 	 * @member ve
-	 * @param {string} name Event name
-	 * @param {Mixed...} [data] Data to log
+	 * @param {string} topic Event name
+	 * @param {Object} [data] Additional data describing the event, encoded as an object
 	 */
-	ve.track = function () {
-		queue.push( { context: { timeStamp: ve.now() }, args: arguments } );
+	ve.track = function ( topic, data ) {
+		queue.push( { topic: topic, timeStamp: ve.now(), data: data } );
 		callbacks.fire( queue );
 	};
 
 	/**
-	 * Register a handler for analytic events.
+	 * Register a handler for subset of analytic events, specified by topic
 	 *
 	 * Handlers will be called once for each tracked event, including any events that fired before the
 	 * handler was registered; 'this' is set to a plain object with a 'timeStamp' property indicating
-	 * the exact time at which the event fired.
+	 * the exact time at which the event fired, a string 'topic' property naming the event, and a
+	 * 'data' property which is an object of event-specific data. The event topic and event data are
+	 * also passed to the callback as the first and second arguments, respectively.
+	 *
+	 * @member ve
+	 * @param {string} topic Handle events whose name starts with this string prefix
+	 * @param {Function} callback Handler to call for each matching tracked event
+	 */
+	ve.trackSubscribe = function ( topic, callback ) {
+		var seen = 0;
+
+		callbacks.add( function ( queue ) {
+			var event;
+			for ( ; seen < queue.length; seen++ ) {
+				event = queue[ seen ];
+				if ( event.topic.indexOf( topic ) === 0 ) {
+					callback.call( event, event.topic, event.data );
+				}
+			}
+		} );
+	};
+
+	/**
+	 * Register a handler for all analytic events
+	 *
+	 * Like ve#trackSubscribe, but binds the callback to all events, regardless of topic.
 	 *
 	 * @member ve
 	 * @param {Function} callback
 	 */
-	ve.trackRegisterHandler = function ( callback ) {
-		var invocation, seen = 0;
-		callbacks.add( function ( queue ) {
-			for ( ; seen < queue.length; seen++ ) {
-				invocation = queue[ seen ];
-				callback.apply( invocation.context, invocation.args );
-			}
-		} );
+	ve.trackSubscribeAll = function ( callback ) {
+		ve.trackSubscribe( '', callback );
 	};
 }() );

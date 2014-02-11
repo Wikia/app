@@ -12,17 +12,17 @@
  * @extends ve.ui.MWExtensionInspector
  *
  * @constructor
- * @param {ve.ui.Surface} surface
+ * @param {ve.ui.WindowSet} windowSet Window set this inspector is part of
  * @param {Object} [config] Configuration options
  */
-ve.ui.MWHieroInspector = function VeUiMWHieroInspector( surface, config ) {
+ve.ui.MWHieroInspector = function VeUiMWHieroInspector( windowSet, config ) {
 	// Parent constructor
-	ve.ui.MWExtensionInspector.call( this, surface, config );
+	ve.ui.MWExtensionInspector.call( this, windowSet, config );
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.ui.MWHieroInspector, ve.ui.MWExtensionInspector );
+OO.inheritClass( ve.ui.MWHieroInspector, ve.ui.MWExtensionInspector );
 
 /* Static properties */
 
@@ -43,7 +43,16 @@ ve.ui.MWHieroInspector.prototype.initialize = function () {
 	// Parent method
 	ve.ui.MWExtensionInspector.prototype.initialize.call( this );
 
-	this.input.$.addClass( 've-ui-mwHieroInspector-input' );
+	this.input.$element.addClass( 've-ui-mwHieroInspector-input' );
+};
+
+ve.ui.MWHieroInspector.prototype.onOpen = function () {
+	// Parent method
+	ve.ui.MWExtensionInspector.prototype.onOpen.call( this );
+
+	// Override directionality settings, inspector's input
+	// should always be LTR:
+	this.input.setRTL( false );
 };
 
 /* Registration */

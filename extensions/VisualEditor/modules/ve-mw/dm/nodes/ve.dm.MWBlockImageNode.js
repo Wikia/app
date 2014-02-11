@@ -10,17 +10,27 @@
  *
  * @class
  * @extends ve.dm.BranchNode
+ * @mixins ve.dm.MWImageNode
  * @constructor
  * @param {number} [length] Length of content data in document
  * @param {Object} [element] Reference to element in linear model
  */
 ve.dm.MWBlockImageNode = function VeDmMWBlockImageNode( length, element ) {
+	// Parent constructor
 	ve.dm.BranchNode.call( this, 0, element );
+
+	// Mixin constructors
+	ve.dm.MWImageNode.call( this );
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.dm.MWBlockImageNode, ve.dm.BranchNode );
+OO.inheritClass( ve.dm.MWBlockImageNode, ve.dm.BranchNode );
+
+// Need to mixin base class as well
+OO.mixinClass( ve.dm.MWBlockImageNode, ve.dm.GeneratedContentNode );
+
+OO.mixinClass( ve.dm.MWBlockImageNode, ve.dm.MWImageNode );
 
 /* Static Properties */
 
@@ -52,7 +62,8 @@ ve.dm.MWBlockImageNode.static.getMatchRdfaTypes = function () {
 };
 
 ve.dm.MWBlockImageNode.static.toDataElement = function ( domElements, converter ) {
-	var $figure = $( domElements[0] ),
+	var dataElement,
+		$figure = $( domElements[0] ),
 		// images with link='' have a span wrapper instead
 		$imgWrapper = $figure.children( 'a, span' ).eq( 0 ),
 		$img = $imgWrapper.children( 'img' ).eq( 0 ),
@@ -64,11 +75,14 @@ ve.dm.MWBlockImageNode.static.toDataElement = function ( domElements, converter 
 			type: this.rdfaToType[typeofAttr],
 			href: $imgWrapper.attr( 'href' ) || '',
 			src: $img.attr( 'src' ),
-			width: $img.attr( 'width' ),
-			height: $img.attr( 'height' ),
 			resource: $img.attr( 'resource' ),
 			originalClasses: classes
-		};
+		},
+		width = $img.attr( 'width' ),
+		height = $img.attr( 'height' );
+
+	attributes.width = width !== undefined && width !== '' ? Number( width ) : null;
+	attributes.height = height !== undefined && height !== '' ? Number( height ) : null;
 
 	// Extract individual classes
 	classes = typeof classes === 'string' ? classes.trim().split( /\s+/ ) : [];
@@ -97,17 +111,21 @@ ve.dm.MWBlockImageNode.static.toDataElement = function ( domElements, converter 
 	}
 
 	// Store unrecognized classes so we can restore them on the way out
-	attributes.unrecognizedClasses = ve.simpleArrayDifference( classes, recognizedClasses );
+	attributes.unrecognizedClasses = OO.simpleArrayDifference( classes, recognizedClasses );
+
+	dataElement = { 'type': this.name, 'attributes': attributes };
+
+	this.storeGeneratedContents( dataElement, dataElement.attributes.src, converter.getStore() );
 
 	if ( $caption.length === 0 ) {
 		return [
-			{ 'type': this.name, 'attributes': attributes },
+			dataElement,
 			{ 'type': this.captionNodeType },
 			{ 'type': '/' + this.captionNodeType },
 			{ 'type': '/' + this.name }
 		];
 	} else {
-		return [ { 'type': this.name, 'attributes': attributes } ].
+		return [ dataElement ].
 			concat( converter.getDataFromDomRecursionClean( $caption[0], { 'type': this.captionNodeType } ) ).
 			concat( [ { 'type': '/' + this.name } ] );
 	}
@@ -160,7 +178,7 @@ ve.dm.MWBlockImageNode.static.toDomElements = function ( data, doc, converter ) 
 	}
 
 	if ( dataElement.attributes.unrecognizedClasses ) {
-		classes = ve.simpleArrayUnion( classes, dataElement.attributes.unrecognizedClasses );
+		classes = OO.simpleArrayUnion( classes, dataElement.attributes.unrecognizedClasses );
 	}
 
 	if (

@@ -20,7 +20,7 @@ ve.dm.MWCategoryMetaItem = function VeDmMWCategoryMetaItem( element ) {
 
 /* Inheritance */
 
-ve.inheritClass( ve.dm.MWCategoryMetaItem, ve.dm.MetaItem );
+OO.inheritClass( ve.dm.MWCategoryMetaItem, ve.dm.MetaItem );
 
 /* Static Properties */
 

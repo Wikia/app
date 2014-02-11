@@ -13,6 +13,8 @@
  * @mixins ve.dm.GeneratedContentNode
  *
  * @constructor
+ * @param {number} [length] Length of content data (ignored, forced to 0)
+ * @param {Object} [element] Reference to element in linear model
  */
 ve.dm.MWExtensionNode = function VeDmMWExtensionNode( length, element ) {
 	// Parent constructor
@@ -24,9 +26,9 @@ ve.dm.MWExtensionNode = function VeDmMWExtensionNode( length, element ) {
 
 /* Inheritance */
 
-ve.inheritClass( ve.dm.MWExtensionNode, ve.dm.LeafNode );
+OO.inheritClass( ve.dm.MWExtensionNode, ve.dm.LeafNode );
 
-ve.mixinClass( ve.dm.MWExtensionNode, ve.dm.GeneratedContentNode );
+OO.mixinClass( ve.dm.MWExtensionNode, ve.dm.GeneratedContentNode );
 
 /* Static members */
 
@@ -41,7 +43,7 @@ ve.dm.MWExtensionNode.static.tagName = null;
 /**
  * Name of the extension and the parser tag name.
  * @static
- * @property {string} static.extensionName
+ * @property {string}
  * @inheritable
  */
 ve.dm.MWExtensionNode.static.extensionName = null;
@@ -64,7 +66,7 @@ ve.dm.MWExtensionNode.static.toDataElement = function ( domElements, converter )
 		}
 	};
 
-	index = this.storeDomElements( dataElement, domElements, converter.getStore() );
+	index = this.storeGeneratedContents( dataElement, domElements, converter.getStore() );
 	dataElement.attributes.originalIndex = index;
 
 	return dataElement;
@@ -72,7 +74,7 @@ ve.dm.MWExtensionNode.static.toDataElement = function ( domElements, converter )
 
 ve.dm.MWExtensionNode.static.toDomElements = function ( dataElement, doc, converter ) {
 	var el,
-		index = converter.getStore().indexOfHash( ve.getHash( this.getHashObject( dataElement ) ) ),
+		index = converter.getStore().indexOfHash( OO.getHash( this.getHashObject( dataElement ) ) ),
 		originalMw = dataElement.attributes.originalMw;
 
 	// If the transclusion is unchanged just send back the

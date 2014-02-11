@@ -96,7 +96,7 @@
 	// For special pages, no information about page existence is exposed to
 	// mw.config, so we assume it exists TODO: fix this in core.
 	pageExists = !!mw.config.get( 'wgArticleId' ) || mw.config.get( 'wgNamespaceNumber' ) < 0;
-	viewUri = new mw.Uri( mw.util.wikiGetlink( mw.config.get( 'wgRelevantPageName' ) ) );
+	viewUri = new mw.Uri( mw.util.getUrl( mw.config.get( 'wgRelevantPageName' ) ) );
 	veEditUri = viewUri.clone().extend( { 'veaction': 'edit' } );
 	isViewPage = (
 		mw.config.get( 'wgIsArticle' ) &&
@@ -126,25 +126,11 @@
 	};
 
 	init = {
+		activateOnPageLoad: uri.query.veaction === 'edit',
 
 		support: support,
 
-		blacklist: {
-			// IE <= 8 has various incompatibilities in layout and feature support
-			// IE9 and IE10 generally work but fail in ajax handling when making POST
-			// requests to the VisualEditor/Parsoid API which is causing silent failures
-			// when trying to save a page (bug 49187)
-			'msie': [['<=', 10]],
-			// Android 2.x and below "support" CE but don't trigger keyboard input
-			'android': [['<', 3]],
-			// Firefox issues in versions 12 and below (bug 50780)
-			// Wikilink [[./]] bug in Firefox 14 and below (bug 50720)
-			'firefox': [['<=', 14]],
-			// Opera < 12 was not tested and it's userbase is almost nonexistent anyway
-			'opera': [['<', 12]],
-			// Blacklist all versions:
-			'blackberry': null
-		},
+		blacklist: conf.blacklist,
 
 		/**
 		 * Add a plugin module or function.
@@ -319,7 +305,7 @@
 	if ( thisPageIsAvailable ) {
 		$( function () {
 			if ( isViewPage ) {
-				if ( uri.query.veaction === 'edit' ) {
+				if ( init.activateOnPageLoad ) {
 					getTarget().done( function ( target ) {
 						target.activate();
 					} );

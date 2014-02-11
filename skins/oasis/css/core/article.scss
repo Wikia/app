@@ -552,3 +552,8 @@
 	line-height: 1.2em;
 }
 
+// Change overflow on article when VisualEditor is being used
+.ve .WikiaArticle {
+	overflow: visible;
+}
+

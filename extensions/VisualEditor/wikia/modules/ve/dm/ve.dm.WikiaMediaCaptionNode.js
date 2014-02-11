@@ -17,7 +17,7 @@ ve.dm.WikiaMediaCaptionNode = function VeDmWikiaMediaCaptionNode( length, elemen
 
 /* Inheritance */
 
-ve.inheritClass( ve.dm.WikiaMediaCaptionNode, ve.dm.MWImageCaptionNode );
+OO.inheritClass( ve.dm.WikiaMediaCaptionNode, ve.dm.MWImageCaptionNode );
 
 /* Static Properties */
 
