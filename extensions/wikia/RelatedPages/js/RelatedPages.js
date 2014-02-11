@@ -13,7 +13,7 @@ require( [ 'sloth', 'wikia.window', 'jquery' ], function( sloth, w, $ ){
 			isMobileSkin = true;
 			break;
 		case 'oasis':
-			$placeholder = $( '#WikiaArticleFooter' );
+			$placeholder = $( '#RelatedPagesModuleWrapper' );
 			break;
 		case 'monobook':
 			$placeholder = $( '#mw-data-after-content' );

@@ -62,9 +62,9 @@ define( 'videosmodule.views.bottommodule', [
 		// TODO: hard coded title
 		out = Mustache.render( templates.bottomModule, { title: 'Must Watch Videos', thumbnails: thumbHtml } );
 		if ( groupParams.position === 1 ) {
-			this.$el.append( out );
+			this.$el.after( out );
 		} else {
-			this.$el.prepend( out );
+			this.$el.before( out );
 		}
 		this.$el.find( '.videos-module' ).addClass( groupParams.rows > 1 ? 'rows-2' : 'rows-1' );
 	};
