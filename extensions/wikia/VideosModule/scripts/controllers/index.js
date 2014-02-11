@@ -6,23 +6,12 @@ require( [
 	'videosmodule.models.videos'
 ], function( BottomModule, VideoData ) {
 	'use strict';
-	var view,
-		rail = false,
-		bottom = true,
-		verticalOnly = true;
-
-	if ( bottom ) {
-		// instantiate bottom view
-		$( function() {
-			view = new BottomModule( {
-				el: document.getElementById( 'WikiaArticleFooter' ),
-				model: new VideoData( {
-					verticalOnly: verticalOnly
-				} )
-			} );
+	var view;
+	// instantiate bottom view
+	$( function() {
+		view = new BottomModule( {
+			el: document.getElementById( 'WikiaArticleFooter' ),
+			model: new VideoData()
 		} );
-	} else if ( rail ) {
-		// instantiate rail view
-	}
-
+	} );
 } );
