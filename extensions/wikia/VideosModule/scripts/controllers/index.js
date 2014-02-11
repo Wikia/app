@@ -22,7 +22,7 @@ require( [
 			} );
 		} );
 	} else if ( rail ) {
-		// instatiat rail view
+		// instantiate rail view
 	}
 
 } );
