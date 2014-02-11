@@ -59,8 +59,11 @@ define( 'videosmodule.views.bottommodule', [
 			thumbHtml += new TitleThumbnailView( videos[i], { el: 'li' } ).render().el.outerHTML;
 		}
 
-		// TODO: hard coded title
-		out = Mustache.render( templates.bottomModule, { title: 'Must Watch Videos', thumbnails: thumbHtml } );
+		out = Mustache.render( templates.bottomModule, {
+			title: $.msg( 'videosmodule-title-default' ),
+			thumbnails: thumbHtml
+		} );
+
 		if ( groupParams.position === 1 ) {
 			this.$el.append( out );
 		} else {
