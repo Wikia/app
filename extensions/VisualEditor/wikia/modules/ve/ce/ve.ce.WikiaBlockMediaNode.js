@@ -26,6 +26,9 @@ ve.ce.WikiaBlockMediaNode = function VeCeWikiaBlockMediaNode( model, config ) {
 	// Initialize
 	this.rebuild();
 
+	// Events
+	this.model.connect( this, { 'attributeChange': 'onAttributeChange' } );
+
 	// Mixin constructors
 	ve.ce.MWImageNode.call( this, this.$element, this.$image );
 };
@@ -75,7 +78,7 @@ ve.ce.WikiaBlockMediaNode.prototype.createAnchor = function () {
 	return this.$( '<a>' )
 		// Images and videos both have this class
 		.addClass( 'image' )
-		.attr( 'href', this.model.getAttribute( 'href' ) );
+		.attr( 'href', this.getResolvedAttribute( 'href' ) );
 };
 
 /**
@@ -86,7 +89,7 @@ ve.ce.WikiaBlockMediaNode.prototype.createAnchor = function () {
  */
 ve.ce.WikiaBlockMediaNode.prototype.createImage = function () {
 	return this.$( '<img>' )
-		.attr( 'src', this.model.getAttribute( 'src' ) )
+		.attr( 'src', this.getResolvedAttribute( 'src' ) )
 		.attr( 'height', this.model.getAttribute( 'height' ) )
 		.attr( 'width', this.model.getAttribute( 'width' ) );
 };

@@ -95,7 +95,6 @@ class ResourceLoaderStartUpModule extends ResourceLoaderModule {
 			'wgCookiePrefix' => $wgCookiePrefix,
 			'wgResourceLoaderMaxQueryLength' => $wgResourceLoaderMaxQueryLength,
 			'wgCaseSensitiveNamespaces' => $caseSensitiveNamespaces,
-			'wgLegalTitleChars' => Title::convertByteClassToUnicodeClass( Title::legalChars() ),
 			// Wikia - change begin - @author: wladek
 			'wgSassParams' => SassUtil::getSassSettings(),
 			// Wikia - change end

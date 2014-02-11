@@ -136,8 +136,7 @@ $wgResourceModules += array(
 			'wikia-visualeditor-notification-video-preview-not-available',
 		),
 		'dependencies' => array(
-			'ext.visualEditor.core',
-			'wikia.stringhelper',
+			'ext.visualEditor.core'
 		)
 	),
 );
