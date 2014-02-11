@@ -9,11 +9,23 @@
 class VisualEditorWikiaHooks {
 
 	public static function onGetPreferences( $user, &$preferences ) {
+		global $wgEnableRTEExt;
+
 		// Remove core VisualEditor preferences
 		unset(
 			$preferences['visualeditor-enable'],
 			$preferences['visualeditor-betatempdisable']
 		);
+
+		// VOLDEV-35
+		// disabling RTE causes this preference to disappear		
+		if ( !empty( $wgEnableRTEExt ) ) {
+			$preferences['enablerichtext'] = array(
+				'type' => 'toggle',
+				'section' => 'editing/editing-experience',
+				'label-message' => 'enablerichtexteditor',
+			);
+		}
 
 		return true;
 	}
