@@ -18,6 +18,8 @@ class VideosModuleHooks {
 
 	static public function onOutputPageBeforeHTML( OutputPage $out, &$text ) {
 
+		JSMessages::enqueuePackage( 'VideosModule', JSMessages::EXTERNAL );
+
 		$scripts = AssetsManager::getInstance()->getURL( 'videos_module_js' );
 
 		foreach( $scripts as $script ){
