@@ -65,7 +65,6 @@ $spacing: 5px;
 #ssoSep{
 	margin: 20px auto;
 	text-align: center;
-	width: 100%;
 
 	&::before, &::after{
 		border-top: 1px solid $border-color;
@@ -74,7 +73,7 @@ $spacing: 5px;
 		margin: 0 $page-padding;
 		position: relative;
 		top: -5px;
-		width: 90px;
+		width: 85px;
 	}
 }
 
