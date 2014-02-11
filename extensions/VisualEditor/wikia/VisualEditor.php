@@ -44,6 +44,9 @@ $wgResourceModules += array(
 			'mediawiki.util',
 			'user.options'
 		),
+		'messages' => array(
+			'wikia-visualeditor-loading'
+		),
 		'position' => 'top'
 	),
 	'ext.visualEditor.wikiaViewPageTarget' => $wgVisualEditorWikiaResourceTemplate + array(

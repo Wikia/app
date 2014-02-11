@@ -177,14 +177,7 @@ class ArticlesApiController extends WikiaApiController {
 			throw new NotFoundApiException();
 		}
 
-		$this->response->setCacheValidity(
-			self::CLIENT_CACHE_VALIDITY,
-			self::CLIENT_CACHE_VALIDITY,
-			[
-				WikiaResponse::CACHE_TARGET_BROWSER,
-				WikiaResponse::CACHE_TARGET_VARNISH
-			]
-		);
+		$this->response->setCacheValidity(self::CLIENT_CACHE_VALIDITY);
 
 		//if no mainpages were found and deleted we want to always return collection of self::MAX_ITEMS items
 		if ( count( $collection ) > self::MAX_ITEMS ) {
@@ -363,14 +356,7 @@ class ArticlesApiController extends WikiaApiController {
 		$response = $this->getResponse();
 		$response->setValues( [ 'items' => array_slice( $results, 0, $limit ), 'basepath' => $this->wg->Server ] );
 
-		$response->setCacheValidity(
-			self::NEW_ARTICLES_VARNISH_CACHE_EXPIRATION /* 24h */,
-			self::NEW_ARTICLES_VARNISH_CACHE_EXPIRATION /* 24h */,
-			array(
-				WikiaResponse::CACHE_TARGET_BROWSER,
-				WikiaResponse::CACHE_TARGET_VARNISH
-			)
-		);
+		$response->setCacheValidity(self::NEW_ARTICLES_VARNISH_CACHE_EXPIRATION);
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -531,14 +517,7 @@ class ArticlesApiController extends WikiaApiController {
 			throw new NotFoundApiException( 'No members' );
 		}
 
-		$this->response->setCacheValidity(
-			self::CLIENT_CACHE_VALIDITY,
-			self::CLIENT_CACHE_VALIDITY,
-			[
-				WikiaResponse::CACHE_TARGET_BROWSER,
-				WikiaResponse::CACHE_TARGET_VARNISH
-			]
-		);
+		$this->response->setCacheValidity(self::CLIENT_CACHE_VALIDITY);
 
 		wfProfileOut( __METHOD__ );
 	}	
@@ -603,6 +582,7 @@ class ArticlesApiController extends WikiaApiController {
 		$articles = is_array( $articleIds ) ? $articleIds : [ $articleIds ];
 		$ids = [];
 		$collection = [];
+		$titles = [];
 		foreach ( $articles as $i ) {
 			//data is cached on a per-article basis
 			//to avoid one article requiring purging
@@ -660,7 +640,7 @@ class ArticlesApiController extends WikiaApiController {
 					$collection[$id]['comments'] = ( class_exists( 'ArticleCommentList' ) ) ? ArticleCommentList::newFromTitle( $t )->getCountAllNested() : false;
 					//add file data
 					$collection[$id] = array_merge( $collection[ $id ], $fileData );
-
+					$articles[] = $id;
 					$this->wg->Memc->set( self::getCacheKey( $id, self::DETAILS_CACHE_ID ), $collection[$id], 86400 );
 				}
 
@@ -691,7 +671,9 @@ class ArticlesApiController extends WikiaApiController {
 			}
 
 			$details['abstract'] = $snippet;
-			$details = array_merge( $details, $thumbnails[ $id ] );
+			if ( isset( $thumbnails[ $id ] ) ) {
+				$details = array_merge( $details, $thumbnails[ $id ] );
+			}
 		}
 
 		$thumbnails = null;
@@ -743,7 +725,8 @@ class ArticlesApiController extends WikiaApiController {
 				$data = [ 'thumbnail' => null, 'original_dimensions' => null ];
 				if ( isset( $images[ $id ] ) ) {
 					$data['thumbnail'] = $images[$id][0]['url'];
-					$data['original_dimensions'] = $images[$id][0]['original_dimensions'];
+					$data['original_dimensions'] = isset( $images[$id][0]['original_dimensions'] ) ?
+						$images[$id][0]['original_dimensions'] : null;
 				}
 				$result[ $id ] = $data;
 			}
@@ -881,9 +864,7 @@ class ArticlesApiController extends WikiaApiController {
 		$jsonSimple = $jsonFormatService->getSimpleFormatForArticle( $article );
 
 		$response = $this->getResponse();
-		$response->setCacheValidity(self::SIMPLE_JSON_VARNISH_CACHE_EXPIRATION, self::SIMPLE_JSON_VARNISH_CACHE_EXPIRATION,
-			[WikiaResponse::CACHE_TARGET_VARNISH,
-				WikiaResponse::CACHE_TARGET_BROWSER ]);
+		$response->setCacheValidity(self::SIMPLE_JSON_VARNISH_CACHE_EXPIRATION);
 
 		$response->setFormat("json");
 		$response->setData( $jsonSimple );

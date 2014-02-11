@@ -87,10 +87,11 @@ describe("Autocomplete module", function () {
 
 		expect(input.value).toEqual('value');
 
+		fireEvent('touchend', clear);
 		fireEvent('click', clear);
 
 		expect(input.value).toEqual('');
 		expect(list.innerHTML).toEqual('');
-		expect(clear.className).toEqual('hide');
+		expect(clear.parentElement.className).toEqual('hide-clear');
 	});
 });

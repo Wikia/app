@@ -41,13 +41,14 @@ $messages['af'] = array(
 /** Arabic (العربية)
  * @author Achraf94
  * @author Aiman titi
+ * @author Claw eg
  */
 $messages['ar'] = array(
-	'wva-success' => 'صفحة الفيديو [[:$1]] تم إضافتها بنجاح', # Fuzzy
-	'wva-success-replaced' => 'صفحة الفيديو [[:$1]] تم تعويضها بنجاح', # Fuzzy
+	'wva-success' => 'أضيفت صفحة الفيديو [[:$1]] بنجاح',
+	'wva-success-replaced' => 'تم استبدال صفحة الفيديو [[:$1]] بنجاح',
 	'wva-failure' => 'يرجى تزويد المعلومات الصحيحة',
-	'wva-name' => 'أدخل الإسم:', # Fuzzy
-	'wva-url' => 'أدخل العنوان الإلكتروني للفيديو (URL):', # Fuzzy
+	'wva-name' => 'اسم الفيديو:',
+	'wva-url' => 'عنوان URL الفيديو:',
 	'wva-add' => 'أضف',
 	'wva-title' => 'إضافة فيديو بسرعة من العنوان (URL)',
 	'wva-notlogged' => 'يجب أن تكون مسجلا إذا أردت إضافة فيديو',
@@ -60,19 +61,21 @@ $messages['ar'] = array(
  * @author Cekli829
  */
 $messages['az'] = array(
+	'wva-name' => 'Video adı:',
 	'wva-add' => 'Əlavə et',
 );
 
 /** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
  * @author EugeneZelenko
  * @author Jim-by
+ * @author Red Winged Duck
  */
 $messages['be-tarask'] = array(
-	'wva-success' => 'Старонка відэа $1 пасьпяхова дададзеная.', # Fuzzy
-	'wva-success-replaced' => 'Старонка відэа $1 пасьпяхова замененая.', # Fuzzy
+	'wva-success' => 'Старонка відэа [[:$1]] пасьпяхова дададзеная.',
+	'wva-success-replaced' => 'Старонка відэа [[:$1]] пасьпяхова замененая.',
 	'wva-failure' => 'Калі ласка, падайце слушныя парамэтры.',
-	'wva-name' => 'Увядзіце назву:', # Fuzzy
-	'wva-url' => 'Увядзіце URL-адрас:', # Fuzzy
+	'wva-name' => 'Назва відэа:',
+	'wva-url' => 'URL-адрас відэа:',
 	'wva-add' => 'Дадаць',
 	'wva-title' => 'Хуткае даданьне відэа па URL-адрасу',
 	'wva-notlogged' => 'Каб дадаць відэа, Вам неабходна ўвайсьці ў сыстэму альбо зарэгістравацца.',
@@ -431,8 +434,8 @@ $messages['it'] = array(
  * @author Tommy6
  */
 $messages['ja'] = array(
-	'wva-success' => '動画"$1"の追加に成功しました。', # Fuzzy
-	'wva-success-replaced' => '動画"$1"の上書きに成功しました。', # Fuzzy
+	'wva-success' => '動画「[[:$1]]」の追加に成功しました。',
+	'wva-success-replaced' => '動画「[[:$1]]」の上書きに成功しました。',
 	'wva-failure' => '適切なパラメータを入力してください。',
 	'wva-name' => '動画名:',
 	'wva-url' => '動画のURL:',
@@ -621,16 +624,17 @@ $messages['pap'] = array(
 );
 
 /** Polish (polski)
+ * @author Chrumps
  * @author Marcin Łukasz Kiejzik
  * @author Sovq
  * @author Sp5uhe
  */
 $messages['pl'] = array(
-	'wva-success' => 'Strona filmu „$1” została pomyślnie dodana.', # Fuzzy
-	'wva-success-replaced' => 'Strona filmu „$1” została pomyślnie zastąpiona.', # Fuzzy
+	'wva-success' => 'Strona filmu [[$1]] została pomyślnie dodana.', # Fuzzy
+	'wva-success-replaced' => 'Strona filmu [[$1]] została pomyślnie zastąpiona.', # Fuzzy
 	'wva-failure' => 'Podaj prawidłowe parametry.',
-	'wva-name' => 'Wpisz nazwę:', # Fuzzy
-	'wva-url' => 'Podaj URL:', # Fuzzy
+	'wva-name' => 'Nazwa filmu:',
+	'wva-url' => 'URL filmu:',
 	'wva-add' => 'Dodaj',
 	'wva-title' => 'Dodaj film z adresu URL',
 	'wva-notlogged' => 'Dodawanie filmów jest możliwe po zarejestrowaniu i zalogowaniu się.',

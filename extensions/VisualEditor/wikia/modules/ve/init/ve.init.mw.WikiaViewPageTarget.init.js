@@ -23,35 +23,69 @@
 		init, support, getTargetDeferred, userPrefEnabled, $edit, thisPageIsAvailable,
 		plugins = [];
 
+	function indicator( type, hook ) {
+		var timer,
+			$indicator = $( '<div>' ).addClass( 've-indicator visible' ),
+			$content = $( '<div>' ).addClass( 'content' ),
+			$icon = $( '<div>' ).addClass( type ),
+			$message = $( '<p>' )
+				.addClass( 'message' )
+				.text( mw.message( 'wikia-visualeditor-' + type ).plain() );
+
+		$content
+			.append( $icon )
+			.append( $message );
+
+		$indicator
+			.append( $content )
+			.appendTo( $( 'body' ) )
+			.animate( { 'opacity': 1 }, 400 );
+
+		// Display the message if loading is taking awhile
+		timer = setTimeout( function () {
+			$message.slideDown( 400 );
+		}, 3000 );
+
+		// Cleanup indicator when hook is fired
+		mw.hook( hook ).add( function cleanup() {
+			clearTimeout( timer );
+			$indicator.animate( { 'opacity': 0 }, 400, function () {
+				mw.hook( hook ).remove( cleanup );
+				$indicator.remove();
+			} );
+		} );
+	}
+
 	/**
 	 * Use deferreds to avoid loading and instantiating Target multiple times.
 	 * @returns {jQuery.Promise}
 	 */
 	function getTarget() {
 		var loadTargetDeferred;
+
+		indicator( 'loading', 've.activationComplete' );
+
 		if ( !getTargetDeferred ) {
 			getTargetDeferred = $.Deferred();
-			loadTargetDeferred = $.Deferred()
-				.done( function () {
-					//var target = new ve.init.mw.ViewPageTarget();
-					var target = new ve.init.mw.WikiaViewPageTarget();
-					ve.init.mw.targets.push( target );
+			loadTargetDeferred = $.Deferred();
 
-					// Transfer methods
-					//ve.init.mw.ViewPageTarget.prototype.setupSectionEditLinks = init.setupSectionLinks;
-					ve.init.mw.WikiaViewPageTarget.prototype.setupSectionEditLinks = init.setupSectionLinks;
+			$.when(
+				loadTargetDeferred,
+				$.getResources( $.getSassCommonURL( '/extensions/VisualEditor/wikia/VisualEditor.scss' ) )
+			).done( function () {
+				var target = new ve.init.mw.WikiaViewPageTarget();
+				ve.init.mw.targets.push( target );
 
-					// Add plugins
-					target.addPlugins( plugins );
+				// Transfer methods
+				ve.init.mw.WikiaViewPageTarget.prototype.setupSectionEditLinks = init.setupSectionLinks;
 
-					getTargetDeferred.resolve( target );
-				} )
-				.fail( getTargetDeferred.reject );
+				// Add plugins
+				target.addPlugins( plugins );
+
+				getTargetDeferred.resolve( target );
+			} ).fail( getTargetDeferred.reject );
 
 			mw.loader.using( 'ext.visualEditor.wikiaViewPageTarget', loadTargetDeferred.resolve, loadTargetDeferred.reject );
-			$.getResources( [
-				$.getSassCommonURL( '/extensions/VisualEditor/wikia/VisualEditor.scss' )
-			] );
 		}
 		return getTargetDeferred.promise();
 	}

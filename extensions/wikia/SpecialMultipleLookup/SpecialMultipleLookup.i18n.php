@@ -79,10 +79,16 @@ Kontroleer die gegewe IP-adres; u met moontlik \'n invoerfout gemaak.</p>',
 
 /** Arabic (العربية)
  * @author Achraf94
+ * @author Claw eg
  * @author OsamaK
  */
 $messages['ar'] = array(
+	'specialmultiplelookup-desc' => 'يوفر معلومات البحث عن المستخدم على ويكيات متعددة',
+	'multilookup' => 'بحث متعدد',
+	'multilookupstitle' => 'بحث متعدد',
+	'multilookupselectuser' => 'ابحث عن حسابات لنفس عنوان الآيبي على ويكيات متعددة',
 	'multilookupgo' => 'اذهب',
+	'multilookupnotspecify' => 'لم تقم بتحديد عنوان آيبي حتى الآن.',
 	'multilookupnext' => 'التالي',
 	'multilookupprevious' => 'السابق',
 	'multilookupnbrresult' => 'عدد النتائج:',
@@ -91,6 +97,8 @@ $messages['ar'] = array(
 	'multilookupwiki' => 'الويكي',
 	'multilookuplink' => 'رابط المساهمات',
 	'multilookupdetails' => 'شاهد  التفاصيل',
+	'multilookuplistwikiainfo' => 'قائمة الويكيات التي حررها مستخدمون بعنوان الآيبي <b>$1</b>',
+	'multilookupinvaliduser' => '<p class="error">عنوان الآيبي "<b>$1</b>" غير موجود. افحص الآيبي الذي أدخلته للبحث عن أخطاء ممكنة>',
 	'multilookuplastedit' => 'آخر تحرير من عنوان IP هذا:',
 	'multilookupwikidbname' => 'اسم قاعدة البيانات',
 	'multilookupwikiurl' => 'المسار',
@@ -330,6 +338,14 @@ $messages['es'] = array(
 	'multilookuprecordspager' => "Mostrando '''$1''' a '''$2''' de '''$3''' registros.",
 	'right-multilookup' => 'Información de búsqueda de usuarios en múltiples wikis',
 	'action-multilookup' => 'Búsqueda múltiple',
+);
+
+/** Basque (euskara)
+ * @author Subi
+ */
+$messages['eu'] = array(
+	'multilookupnext' => 'hurrengoa',
+	'multilookupprevious' => 'aurrekoa',
 );
 
 /** Persian (فارسی)

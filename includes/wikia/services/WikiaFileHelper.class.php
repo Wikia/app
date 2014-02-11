@@ -185,13 +185,20 @@ class WikiaFileHelper extends Service {
 	 * get html for video info overlay
 	 * @param integer $width
 	 * @param Title|string $title
+	 * @param Boolean $showViews
 	 * @return string
 	 */
-	public static function videoInfoOverlay( $width, $title = null ) {
+	public static function videoInfoOverlay( $width, $title = null, $showViews = false ) {
 		$html = '';
 		if ( $width > 230 && !empty( $title ) ) {
 			$file = self::getFileFromTitle( $title );
 			if ( !empty( $file ) ) {
+				// info
+				$attribs = [
+					"class" => "info-overlay",
+					"style" => "width: {$width}px;"
+				];
+
 				// video title
 				$contentWidth = $width - 60;
 				$videoTitle = $title->getText();
@@ -214,15 +221,12 @@ class WikiaFileHelper extends Service {
 
 				// video views
 				$videoTitle = $title->getDBKey();
-				$views = MediaQueryService::getTotalVideoViewsByTitle( $videoTitle );
-				$content .= self::videoOverlayViews( $views );
-				$content .= '<meta itemprop="interactionCount" content="UserPlays:'.$views.'" />';
-
-				// info
-				$attribs = array(
-					"class" => "info-overlay",
-					"style" => "width: {$width}px;"
-				);
+				if( $showViews ) {
+					$views = MediaQueryService::getTotalVideoViewsByTitle( $videoTitle );
+					$content .= self::videoOverlayViews( $views );
+					$attribs['class'] .= " info-overlay-with-views";
+					$content .= '<meta itemprop="interactionCount" content="UserPlays:'.$views.'" />';
+				}
 
 				$html = Xml::tags( 'span', $attribs, $content );
 			}
@@ -590,6 +594,10 @@ class WikiaFileHelper extends Service {
 
 	/**
 	 * Get file from title (Please be careful when using $force)
+	 *
+	 * Note: this method turns a string $title into an object, affecting the calling code version
+	 * of this variable
+	 *
 	 * @param Title|string $title
 	 * @param bool $force
 	 * @return File|null $file
@@ -616,6 +624,10 @@ class WikiaFileHelper extends Service {
 
 	/**
 	 * Get video file from title (Please be careful when using $force)
+	 *
+	 * Note: this method calls getFileFromTitle which converts a string $title into a Title object.  This
+	 * conversion is propagated up to the calling code.
+	 *
 	 * @param Title|string $title
 	 * @param bool $force
 	 * @return File|null $file

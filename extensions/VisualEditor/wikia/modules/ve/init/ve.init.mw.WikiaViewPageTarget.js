@@ -61,9 +61,7 @@ ve.init.mw.WikiaViewPageTarget.prototype.hidePageContent = function () {
 };
 
 ve.init.mw.WikiaViewPageTarget.prototype.mutePageContent = function () {
-	$( '#mw-content-text, .WikiaArticleCategories' )
-		.addClass( 've-init-mw-viewPageTarget-content' )
-		.fadeTo( 'fast', 0.6 );
+	// Intentionally left empty
 };
 
 ve.init.mw.WikiaViewPageTarget.prototype.onSaveDialogReview = function () {
@@ -120,3 +118,9 @@ ve.init.mw.WikiaViewPageTarget.prototype.updateToolbarSaveButtonState = function
 		ve.track( 'wikia', { 'action': ve.track.actions.ENABLE, 'label': 'button-publish' } );
 	}
 };
+
+ve.init.mw.WikiaViewPageTarget.prototype.onToolbarCancelButtonClick = function () {
+	mw.hook( 've.cancelButton' ).fire();
+	ve.init.mw.ViewPageTarget.prototype.onToolbarCancelButtonClick.call( this );
+};
+

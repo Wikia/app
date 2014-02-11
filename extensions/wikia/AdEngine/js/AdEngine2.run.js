@@ -44,14 +44,14 @@
 		queueForLateAds,
 		adConfigForLateAds;
 
+	// Don't show ads when Sony requests the page
+	window.wgShowAds = window.wgShowAds && !window.navigator.userAgent.match(/sony_tvs/);
+
 	// Don't have SevenOne Media ads on IE8 (or below)
 	window.wgAdDriverUseSevenOneMedia = window.wgAdDriverUseSevenOneMedia && abTest.inGroup('SEVENONEMEDIA_ADS', 'ENABLED');
 
 	// Use PostScribe for ScriptWriter implementation when SevenOne Media ads are enabled
 	window.wgUsePostScribe = window.wgUsePostScribe || window.wgAdDriverUseSevenOneMedia;
-
-	// Enable the new tracking for half of the pages if wgAdDriverUseNewTracking is true
-	window.wgAdDriverUseNewTracking = window.wgAdDriverUseNewTracking && (Math.random() < 0.5);
 
 	slotTracker = SlotTracker(log, tracker);
 
@@ -97,7 +97,8 @@
 		adProviderGpt,
 		adProviderEvolve,
 		adProviderGamePro,
-		adProviderLater
+		adProviderLater,
+		adProviderNull
 	);
 
 	window.wgAfterContentAndJS.push(function () {

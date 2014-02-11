@@ -160,6 +160,9 @@ class SpecialConnect extends SpecialPage {
 		switch ( $par ) {
 		case 'ChooseName':
 			$choice = $wgRequest->getText('wpNameChoice');
+			if ( empty( $this->mEmail ) ) {
+				$this->mEmail = $wgRequest->getText( 'wpEmail' );
+			}
 			if ($wgRequest->getCheck('wpCancel')) {
 				$fb->logout();
 				$this->sendError('fbconnect-cancel', 'fbconnect-canceltext');
@@ -847,6 +850,7 @@ class SpecialConnect extends SpecialPage {
 		<form id="chooseNameForm" action="' . $this->getTitle('ChooseName')->getLocalUrl() . '" method="POST">
 			<fieldset id="mw-fbconnect-choosename">
 				<legend>' . wfMsg('fbconnect-chooselegend') . '</legend>
+				<input type="hidden" name="wpEmail" value="' . FBConnectUser::getOptionFromInfo( 'email', $userinfo ) . '">
 				<table>');
 		// Let them attach to an existing user if $fbConnectOnly allows it
 		if (!$fbConnectOnly) {

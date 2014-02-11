@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Class FilePageHooks
+ */
 class FilePageHooks extends WikiaObject{
 
 	const VIDEO_WIKI = 298117;
@@ -11,8 +14,8 @@ class FilePageHooks extends WikiaObject{
 	 * @param Article $oArticle
 	 * @return bool true
 	 */
-	static public function onArticleFromTitle( &$oTitle, &$oArticle ){
-		if ( ( $oTitle instanceof Title ) && ( $oTitle->getNamespace() == NS_FILE ) ){
+	static public function onArticleFromTitle( &$oTitle, &$oArticle ) {
+		if ( ( $oTitle instanceof Title ) && ( $oTitle->getNamespace() == NS_FILE ) ) {
 			$oArticle = WikiaFileHelper::getMediaPage( $oTitle );
 		}
 
@@ -33,7 +36,7 @@ class FilePageHooks extends WikiaObject{
 		$app = F::app();
 
 		wfProfileIn(__METHOD__);
-		if( $app->wg->Title->getNamespace() == NS_FILE ) {
+		if ( $app->wg->Title->getNamespace() == NS_FILE ) {
 			$assetsManager = AssetsManager::getInstance();
 			$wikiaFilePageJs = 'wikia_file_page_js';
 
@@ -42,7 +45,7 @@ class FilePageHooks extends WikiaObject{
 			}
 
 			// load assets when File Page redesign is enabled
-			if( $app->checkSkin( 'oasis' ) &&  !empty( $wgEnableVideoPageRedesign ) ) {
+			if ( $app->checkSkin( 'oasis' ) &&  !empty( $wgEnableVideoPageRedesign ) ) {
 				$filePageTabbedCss = 'file_page_tabbed_css';
 				$filePageTabbedJs = 'file_page_tabbed_js';
 
@@ -62,13 +65,13 @@ class FilePageHooks extends WikiaObject{
 	/**
 	 * Add assets to mobile file page
 	 *
-	 * @param array $jsHeadPackages
-	 * @param array $jsBodyPackages
+	 * @param array $jsStaticPackages
+	 * @param array $jsExtensionPackages
 	 * @param array $scssPackages
 	 * @return bool
 	 */
-	static public function onWikiaMobileAssetsPackages( Array &$jsStaticPackages, Array &$jsExtensionPackages, Array &$scssPackages ){
-		if( F::app()->wg->Title->getNamespace() == NS_FILE ) {
+	static public function onWikiaMobileAssetsPackages( Array &$jsStaticPackages, Array &$jsExtensionPackages, Array &$scssPackages ) {
+		if ( F::app()->wg->Title->getNamespace() == NS_FILE ) {
 			$jsExtensionPackages[] = 'filepage_js_wikiamobile';
 			$scssPackages[] = 'filepage_scss_wikiamobile';
 		}
@@ -76,12 +79,12 @@ class FilePageHooks extends WikiaObject{
 		return true;
 	}
 
-	/*
+	/**
 	 * Add "replace" button to File pages
 	 * Add "remove" action to MenuButtons on premium video file pages
 	 * This button will remove a video from a wiki but keep it on the Video Wiki.
 	 */
-	static public function onSkinTemplateNavigation($skin, &$tabs) {
+	static public function onSkinTemplateNavigation( $skin, &$tabs ) {
 		global $wgUser;
 
 		$app = F::app();
@@ -112,13 +115,13 @@ class FilePageHooks extends WikiaObject{
 		}
 
 		// Ignore Video Wiki videos beyond this point
-		if( $app->wg->CityId == self::VIDEO_WIKI ) {
+		if ( $app->wg->CityId == self::VIDEO_WIKI ) {
 			return true;
 		}
 
 		if ( WikiaFileHelper::isFileTypeVideo( $title ) ) {
 			$file = wfFindFile( $title );
-			if( !$file->isLocal() ) {
+			if ( !$file->isLocal() ) {
 				// Prevent move tab being shown.
 				unset( $tabs['actions']['move'] );
 			}
@@ -165,7 +168,7 @@ class FilePageHooks extends WikiaObject{
 	 */
 	static public function onGlobalUsageLinksUpdateComplete( &$images ) {
 		$videoFiles = array();
-		foreach( $images as $image ) {
+		foreach ( $images as $image ) {
 			$file = wfFindFile( $image );
 			if ( $file instanceof File && WikiaFileHelper::isFileTypeVideo( $file ) ) {
 				$videoFiles[] = $image;

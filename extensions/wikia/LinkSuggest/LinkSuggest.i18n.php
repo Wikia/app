@@ -193,7 +193,9 @@ $messages['it'] = array(
  * @author Tommy6
  */
 $messages['ja'] = array(
+	'linksuggest-desc' => '編集画面で編集者に対しリンクの提案を行う',
 	'tog-disablelinksuggest' => 'ソースモードでの編集時のリンク補完を使わない',
+	'tog-redirected-from' => '&ndash; $1からのリダイレクト',
 );
 
 /** Khmer (ភាសាខ្មែរ)
@@ -417,7 +419,7 @@ $messages['tt-cyrl'] = array(
  */
 $messages['uk'] = array(
 	'linksuggest-desc' => 'Пропонує редакторам посилання в режимі редагування',
-	'tog-disablelinksuggest' => 'Не показувати пропозицій посилань у режимі Вихідного коду',
+	'tog-disablelinksuggest' => 'Не показувати підказки з посиланнями у режимі вихідного коду',
 	'tog-redirected-from' => '&ndash; перенаправлено з $1',
 );
 
