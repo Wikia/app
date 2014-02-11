@@ -35,7 +35,9 @@ class SpotlightsModel extends WikiaModel {
 		if ( isset( $tipsy[ $cityId ] ) ) {
 			$spotlights = $tipsy[ $cityId ];
 			foreach ( $spotlights as &$spotlight ) {
-				$spotlight[ 'image' ] = $this->getSpotlightImage( $spotlight[ 'url' ] );
+				if ( empty ( $spotlight[ 'image' ] ) ) {
+					$spotlight[ 'image' ] = $this->getSpotlightImage( $spotlight[ 'url' ] );
+				}
 			}
 		}
 
@@ -285,6 +287,24 @@ class SpotlightsModel extends WikiaModel {
 					'image' => '',
 					'text' => 'Game of Thrones Wiki',
 					'subtitle' => ''
+				]
+			],
+			// MediaWiki 119
+			203236 => [
+				0 => [
+					'url' => 'http://muppet.wikia.com',
+					'image' => '/skins/oasis/images/spotlightsABTest/muppets.jpg',
+					'text' => '',
+				],
+				1 => [
+					'url' => 'http://callofduty.wikia.com',
+					'image' => '/skins/oasis/images/spotlightsABTest/CallOfDuty.jpg',
+					'text' => '',
+				],
+				2 => [
+					'url' => 'http://shadowofmordor.wikia.com',
+					'image' => '/skins/oasis/images/spotlightsABTest/ShadowofMordor.jpg',
+					'text' => '',
 				]
 			],
 		];
