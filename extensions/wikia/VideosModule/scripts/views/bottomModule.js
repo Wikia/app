@@ -44,7 +44,7 @@ define( 'videosmodule.views.bottommodule', [
 		}
 
 		out = Mustache.render( templates.bottomModule, {
-			title: $.msg( 'videosmodule-title-must-watch' ),
+			title: $.msg( 'videosmodule-title-default' ),
 			thumbnails: thumbHtml
 		} );
 		this.$el.append( out );

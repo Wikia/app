@@ -46,5 +46,5 @@ $wgExtensionMessagesFiles['VideosModule'] = $dir . '/VideosModule.i18n.php';
 
 // register messages package for JS
 JSMessages::registerPackage('VideosModule', array(
-	'videosmodule-title-must-watch',
+	'videosmodule-title-default',
 ));
