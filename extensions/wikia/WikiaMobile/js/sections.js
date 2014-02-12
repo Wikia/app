@@ -83,10 +83,10 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 	 */
 	function getElementBefore( distFromTop ) {
 		var currentElement = $( '#mw-content-text' ).children().first();
-		var currentOffset = currentElement.height();
+		var currentOffset = currentElement.outerHeight();
 		while( currentElement.next().length != 0 && currentOffset < distFromTop ) {
 			currentElement = currentElement.next();
-			currentOffset += currentElement.height();
+			currentOffset += currentElement.outerHeight();
 		}
 		return currentElement;
 	}
