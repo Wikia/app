@@ -24,6 +24,8 @@ define( 'videosmodule.views.bottomModule', [
 	groupParams = testCase.getGroupParams();
 
 	function VideoModule( options ) {
+		// Note that this.el refers to the DOM element that the videos module should be inserted before or after,
+		// not the wrapper for the videos module. We can update this after the A/B testing is over.
 		this.el = options.el;
 		this.$el = $( options.el );
 		this.model = options.model;
@@ -79,9 +81,9 @@ define( 'videosmodule.views.bottomModule', [
 		$out.find( '.thumbnails' ).append( thumbHtml );
 
 		if ( groupParams.position === 1 ) {
-			this.$el.append( $out );
+			this.$el.after( $out );
 		} else {
-			this.$el.prepend( $out );
+			this.$el.before( $out );
 		}
 		this.$el.find( '.videos-module' ).addClass( groupParams.rows > 1 ? 'rows-2' : 'rows-1' );
 		track();

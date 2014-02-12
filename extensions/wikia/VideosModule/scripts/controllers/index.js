@@ -10,7 +10,7 @@ require( [
 	// instantiate bottom view
 	$( function() {
 		view = new BottomModule( {
-			el: document.getElementById( 'WikiaArticleFooter' ),
+			el: document.getElementById( 'RelatedPagesModuleWrapper' ),
 			model: new VideoData()
 		} );
 	} );
