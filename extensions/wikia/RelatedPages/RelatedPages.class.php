@@ -426,7 +426,9 @@ class RelatedPages {
 	}
 
 	public static function onSkinAfterContent( &$text ){
-		if ( !F::app()->checkSkin( 'wikiamobile' ) ){
+		$skin = RequestContext::getMain()->getSkin()->getSkinName();
+
+		if ( $skin === 'oasis' || $skin === 'monobook' ){
 			$text = '<div id="RelatedPagesModuleWrapper"></div>';
 		}
 
