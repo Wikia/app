@@ -90,10 +90,10 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 	 * @param distFromTop - an int value representing given height in document
 	 * @returns jQuery object or null
 	 */
-	function getElementBefore( distFromTop ) {
+	function getElementBefore ( distFromTop ) {
 		var currentElement = $( '#mw-content-text' ).children().first();
 		var currentOffset = currentElement.outerHeight();
-		while( currentElement.next().length != 0 && currentOffset < distFromTop ) {
+		while ( currentElement.next().length != 0 && currentOffset < distFromTop ) {
 			currentElement = currentElement.next();
 			currentOffset += currentElement.outerHeight();
 		}
