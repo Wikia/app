@@ -53,7 +53,7 @@ require( ['ads', 'sloth', 'jquery', 'JSMessages', 'wikia.window', 'wikia.log', '
 
 	if ( window.wgArticleId ) {
 		if ( showInContent ) {
-			s.getParagraphBefore( 700 ).after( '<div id=wkAdInContent class=ad-in-content />' );
+			s.getElementBefore( minIntroHeight ).after( '<div id=wkAdInContent class=ad-in-content />' );
 			lazyLoadAd( doc.getElementById( 'wkAdInContent' ), 'MOBILE_IN_CONTENT' );
 		}
 
