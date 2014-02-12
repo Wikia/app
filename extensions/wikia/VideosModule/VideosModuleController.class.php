@@ -2,13 +2,17 @@
 
 class VideosModuleController extends WikiaController {
 
+	const VIDEOS_PER_PAGE = 8;
+
 	/**
 	 * VideosModule
 	 * Returns videos to populate the Videos Module. First try and get premium videos
 	 * related to the article page. If that's not enough add premium videos related
 	 * to the local wiki. Finally, if still more or needed, get trending premium
 	 * videos related to the vertical of the wiki.
-	 * @requestParam int articleId
+	 * @requestParam integer articleId (required if verticalonly is false)
+	 * @requestParam integer limit - number of videos shown in the module
+	 * @requestParam string verticalonly [true/false] - show vertical videos only
 	 * @responseParam string $result [ok/error]
 	 * @responseParam string $msg - result message
 	 * @responseParam array $videos - list of videos
@@ -17,32 +21,35 @@ class VideosModuleController extends WikiaController {
 		wfProfileIn( __METHOD__ );
 
 		$articleId = $this->request->getVal( 'articleId', 0 );
+		$showVerticalOnly = ( $this->request->getVal( 'verticalonly' ) == 'true' );
+		$numRequired = $this->request->getVal( 'limit', self::VIDEOS_PER_PAGE );
 
-		if ( !$articleId ) {
-			$this->result = 'error';
-			$this->msg = wfMessage( 'videosmodule-error-no-articleId' )->plain();
-			wfProfileOut(__METHOD__);
-			return;
+		$videos = [];
+		$module = new VideosModule();
+
+		if ( !$showVerticalOnly ) {
+			if ( empty( $articleId ) ) {
+				$this->result = 'error';
+				$this->msg = wfMessage( 'videosmodule-error-no-articleId' )->plain();
+				wfProfileOut( __METHOD__ );
+				return;
+			}
+
+			// get related videos (article related videos and wiki related videos)
+			$videos = $module->getRelatedVideos( $articleId, $numRequired );
 		}
 
-		$helper = new VideosModuleHelper();
-		$articleRelatedVideos = $helper->getArticleRelatedVideos( $articleId );
-		$articleRelatedVideosCount = $articleRelatedVideos['returnedVideoCount'];
-		$videos = $articleRelatedVideos['items'];
-
-		// Add videos from getWikiRelatedVideos if we didn't hit our video count limit
-		if ( $articleRelatedVideosCount < $helper::VIDEO_LIMIT ) {
-			$wikiRelatedVideos = $helper->getWikiRelatedVideos();
-			array_splice( $wikiRelatedVideos, $helper::VIDEO_LIMIT - $articleRelatedVideosCount );
-			// We want these to always be shown in a random order to the user
-			shuffle( $wikiRelatedVideos );
-			$videos = array_merge( $videos,  $wikiRelatedVideos );
+		// get vertical videos
+		$numRequired = $numRequired - count( $videos );
+		if ( $numRequired > 0 ) {
+			$videos = array_merge( $videos, $module->getVerticalVideos( $numRequired ) );
 		}
 
 		$this->result = "ok";
 		$this->msg = '';
-		$this->videos = $videos;
+		$this->videos = $module->getVideosDetail( $videos );
 
 		wfProfileOut( __METHOD__ );
 	}
+
 }
