@@ -32,7 +32,7 @@ $wgAutoloadClasses['VideosModuleHooks'] =  $dir . '/VideosModuleHooks.class.php'
 $wgHooks['OutputPageBeforeHTML'][] = 'VideosModuleHooks::onOutputPageBeforeHTML';
 
 //if ( $wgVideosModuleOnRail ) {
-	$wgHooks['GetRailModuleList'][] = 'VideosModuleHooks::onGetRailModuleList';
+//	$wgHooks['GetRailModuleList'][] = 'VideosModuleHooks::onGetRailModuleList';
 // We'll address whether we'll need this hook after the conclusion of AB testing
 //} else {
 //	array_splice( $wgHooks['OutputPageBeforeHTML'], 0, 0, 'VideosModuleHooks::onOutputPageBeforeHTML' );
