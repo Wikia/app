@@ -62,6 +62,48 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 	lastSection = current();
 
 	/**
+	 * @desc Check if intro is longer than 700px
+	 * @param minHeight - height of intro to compare against
+	 * @returns boolean
+	 */
+	function isIntroLongerThan ( minHeight ) {
+		var introOffset = $( '#mw-content-text' ).offset().top;
+		var referenceOffset = null;
+
+		//Find first h2 and use it's offset
+		for( var i = 0; i < sections.length; i++ ) {
+			if( sections[i].tagName === 'H2' ) {
+				referenceOffset = $( sections[i] ).offset().top;
+				break;
+			}
+		}
+		//If no h2 found, measere offset relative to the end of wkPage
+		if ( !referenceOffset ) {
+			var $wkPage = $( '#wkPage' );
+			referenceOffset = $wkPage.offset().top + $wkPage.height();
+		}
+		return ( referenceOffset - introOffset > minHeight );
+	}
+
+	/**
+	 * @desc If possible, get section under which the ad can be placed (700px down)
+	 * @param distFromTop - an int value representing given height in document
+	 * @returns jQuery object or null
+	 */
+	function getParagraphBefore( distFromTop ) {
+		if ( isIntroLong() ) {
+			var currentElement = $( '#mw-content-text' ).children().first();
+			var currentOffset = currentElement.height();
+			while( currentElement.next().length != 0 && currentOffset < distFromTop ) {
+				currentElement = currentElement.next();
+				currentOffset += currentElement.height();
+			}
+			return currentElement;
+		}
+		return null;
+	}
+
+		/**
 	 * @desc Function that fires at most every 200ms while scrolling\
 	 * @triggers section:changed with a current section refernece and its id
 	 */
@@ -91,6 +133,8 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 			//make sure we're grabbing the latest version
 			return sections = getHeaders();
 		},
+		isIntroLongerThan: isIntroLongerThan,
+		getParagraphBefore: getParagraphBefore,
 		scrollTo: scrollTo,
 		current: current
 	};
