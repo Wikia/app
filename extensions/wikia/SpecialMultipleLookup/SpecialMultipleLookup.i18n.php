@@ -340,6 +340,14 @@ $messages['es'] = array(
 	'action-multilookup' => 'Búsqueda múltiple',
 );
 
+/** Basque (euskara)
+ * @author Subi
+ */
+$messages['eu'] = array(
+	'multilookupnext' => 'hurrengoa',
+	'multilookupprevious' => 'aurrekoa',
+);
+
 /** Persian (فارسی)
  * @author Reza1615
  */

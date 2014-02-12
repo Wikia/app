@@ -6,8 +6,8 @@ class WikiService extends WikiaModel {
 	const TOPUSER_CACHE_VALID = 10800;
 	const TOPUSER_LIMIT = 150;
 
-	const CACHE_VERSION = '4';
-	const MAX_WIKI_RESULTS = 250;
+	const CACHE_VERSION = '5';
+	const MAX_WIKI_RESULTS = 300;
 
 	const FLAG_NEW = 1;
 	const FLAG_HOT = 2;

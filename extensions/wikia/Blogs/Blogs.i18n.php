@@ -1502,6 +1502,7 @@ $messages['et'] = array(
 
 /** Basque (euskara)
  * @author An13sa
+ * @author Subi
  */
 $messages['eu'] = array(
 	'createblogpage' => 'Bloga sortu',
@@ -1510,10 +1511,16 @@ $messages['eu'] = array(
 	'create-blog-listing-matches-calculate' => 'Kalkulatu',
 	'create-blog-listing-sortby-author' => 'Egilea',
 	'blog-defaulttitle' => 'Blogak',
+	'blog-readfullpost' => 'Irakurri gehiago',
+	'blog-writeone' => 'Idatz ezazu bat!',
 	'blog-page' => 'Bloga',
+	'blog-zero-comments' => 'Oraindik ez dago iruzkinik!',
 	'blog-comments' => 'Iruzkinak',
+	'blog-comment-delete' => 'ezabatu',
+	'blog-comment-hide' => 'ezkutatu',
 	'blog-refresh-label' => 'Eguneratu',
 	'blog-comment-sending' => 'Bidaltzen...',
+	'blogs-searchprofile' => 'Blogak',
 );
 
 /** Persian (فارسی)
@@ -4833,7 +4840,7 @@ $messages['sv'] = array(
 	'create-blog-form-info' => 'Bloggar är ett utmärkt sätt att dela med nyheter, åsikter och kreativa saker med samhället.',
 	'create-blog-form-post-title' => 'Blogginläggets rubrik',
 	'create-blog-empty-title-error' => 'Rubrik krävs',
-	'create-blog-empty-post-error' => 'Inläggets kropp är tom',
+	'create-blog-empty-post-error' => 'Inläggets innehåll är tomt',
 	'create-blog-empty-article-log' => 'Skapade artikel för blogglistan',
 	'create-blog-invalid-title-error' => 'Ogiltig rubrik',
 	'create-listing-confirm-info' => 'Kopiera och klistra in följande kod:',
@@ -5256,6 +5263,15 @@ $messages['tly'] = array(
  */
 $messages['tr'] = array(
 	'create-blog-categories-textinput' => 'Yeni kategori ekle',
+	'create-blog-listing-preview' => 'Önizleme',
+	'create-blog-listing-sortby-author' => 'Yazar',
+	'create-blog-listing-sortby-comments' => 'Yorum Sayısı',
+	'blog-defaulttitle' => 'Bloglar',
+	'blog-readfullpost' => 'Devamı',
+	'blog-olderposts' => 'Eski mesajlar',
+	'blog-newerposts' => 'Yeni mesajlar',
+	'blog-nbrcomments' => '{{PLURAL:$1|Bir yorum|$1 yorum}}',
+	'blog-nopostfound' => 'Hiç mesaj bulunamadı.',
 	'blog-empty-user-blog' => 'Bu kullanıcı henüz herhangi bir blog yazısı yazmamıştır!',
 	'blog-added' => 'eklendi',
 	'blog-page' => 'Blog',

@@ -266,6 +266,15 @@ $messages['es'] = array(
 	'error-json-parse' => 'Hubo un problema con los datos devueltos desde nuestros servidores, lo sentimos.\\nInténtalo de nuevo.',
 );
 
+/** Basque (euskara)
+ * @author Subi
+ */
+$messages['eu'] = array(
+	'activityindicator-message' => 'Kargatzen...',
+	'window-category-load-batch' => 'Gehiago',
+	'window-article-button-close' => 'Itxi',
+);
+
 /** Persian (فارسی)
  * @author Reza1615
  */
@@ -863,6 +872,22 @@ $messages['tly'] = array(
 	'window-article-menu-search-label' => 'Нәве',
 	'window-article-menu-cancel-label' => 'Ләғв кардеј',
 	'alert-download-updated-wikis-button-ok' => 'OK',
+);
+
+/** Turkish (Türkçe)
+ * @author Incelemeelemani
+ */
+$messages['tr'] = array(
+	'window-category-load-batch' => 'Daha fazla',
+	'window-article-button-close' => 'Kapat',
+	'window-article-button-back' => 'Geri',
+	'window-article-menu-search-label' => 'Ara',
+	'window-article-menu-dashboard-label' => 'Kılavuz içeriği',
+	'window-article-menu-cancel-label' => 'Vazgeç',
+	'searchview-button-back-list' => 'Listeye geri dön',
+	'searchview-button-back-article' => 'Makaleye geri dön',
+	'searchbar-hint' => 'Aranan %s...',
+	'alert-download-updated-wikis-button-ok' => 'Tamam',
 );
 
 /** Ukrainian (українська)

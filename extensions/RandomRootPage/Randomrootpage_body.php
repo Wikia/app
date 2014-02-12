@@ -5,7 +5,8 @@ class SpecialRandomrootpage extends RandomPage {
 
 	public function __construct() {
 		parent::__construct( 'Randomrootpage' );
-		$this->extra[] = "page_title NOT LIKE '%/%'";
+		$dbr = wfGetDB( DB_SLAVE );
+		$this->extra[] = 'page_title NOT ' . $dbr->buildLike( $dbr->anyString(), '/', $dbr->anyString() );
 	}
 
 	// Don't select redirects
