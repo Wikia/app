@@ -3,13 +3,22 @@ define( 'videosmodule.views.bottommodule', [
 	'videosmodule.views.titlethumbnail',
 	'wikia.mustache',
 	'videosmodule.templates.mustache',
-	'videosmodule.models.abtestbottom'
-], function( sloth, TitleThumbnailView, Mustache, templates, abTest ) {
+	'videosmodule.models.abtestbottom',
+	'wikia.tracker'
+], function( sloth, TitleThumbnailView, Mustache, templates, abTest, Tracker ) {
 	'use strict';
 
 	// Keep AB test variables private
 	var testCase,
-		groupParams;
+		groupParams,
+		track;
+
+	track = Tracker.buildTrackingFunction({
+		category: 'videos-module-bottom',
+		trackingMethod: 'ga',
+		action: Tracker.ACTIONS.IMPRESSION,
+		label: 'module-impression'
+	});
 
 	testCase = abTest();
 	groupParams = testCase.getGroupParams();
@@ -56,7 +65,11 @@ define( 'videosmodule.views.bottommodule', [
 		videos = videos.slice( 0, groupParams.rows > 1 ? 8 : 4 );
 
 		for ( i = 0; i < len; i++ ) {
-			thumbHtml.push( new TitleThumbnailView( videos[i], { el: 'li' } ).render().$el );
+			thumbHtml.push( new TitleThumbnailView( {
+				el: 'li',
+				model: videos[i],
+				idx: i
+			} ).render().$el );
 		}
 
 		$out = $( Mustache.render( templates.bottomModule, {
@@ -71,6 +84,7 @@ define( 'videosmodule.views.bottommodule', [
 			this.$el.prepend( $out );
 		}
 		this.$el.find( '.videos-module' ).addClass( groupParams.rows > 1 ? 'rows-2' : 'rows-1' );
+		track();
 	};
 
 	return VideoModule;

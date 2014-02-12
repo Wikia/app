@@ -1,19 +1,30 @@
 define( 'videosmodule.views.titlethumbnail', [
 	'thumbnails.views.titlethumbnail',
-], function( TitleThumbnail ) {
+	'wikia.tracker'
+], function( TitleThumbnail, Tracker ) {
 	'use strict';
 
-	function VideosModuleThumbnail() {
-		TitleThumbnail.apply( this, arguments );
+	var track = Tracker.buildTrackingFunction( {
+		category: 'videos-module-bottom',
+		trackingMethod: 'ga',
+		action: Tracker.ACTIONS.CLICK,
+		label: 'thumbnail-click',
+	} );
+
+	function VideosModuleThumbnail( config ) {
+		this.idx = config.idx;
+		TitleThumbnail.call( this, config );
 	}
 
 	VideosModuleThumbnail.prototype = Object.create( TitleThumbnail.prototype );
 	VideosModuleThumbnail.prototype.bindEvents = function() {
-		console.log( this.$el );
-		this.$el.on( 'click', 'a', function( evt ) {
-			evt.preventDefault();
-			console.log( evt );
-		});
+		var self = this;
+		this.$el.on( 'mousedown', 'a', function() {
+			track( {
+				value: self.idx
+			} );
+			return true;
+		} );
 	};
 	VideosModuleThumbnail.prototype.render = function() {
 		this.constructor.prototype.render.call( this );

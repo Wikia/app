@@ -4,8 +4,8 @@ define( 'thumbnails.views.titlethumbnail', [
 ], function( templates, Mustache ) {
 	'use strict';
 
-	function TitleView( model, options ) {
-		this.model = model;
+	function TitleView( options ) {
+		this.model = options.model;
 		this.el = document.createElement( options.el || 'div' );
 	}
 
