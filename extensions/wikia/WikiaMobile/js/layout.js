@@ -51,13 +51,13 @@ function ( sections, media, cache, loader, lazyload, $, sloth, topbar ) {
 	//init media
 	media.init( d.getElementsByClassName( 'media' ) );
 
+	var lazyImages = d.getElementsByClassName( 'lazy' );
+
+	lazyload.fixSizes( lazyImages );
+
 	sloth( {
-		on: document.getElementsByClassName( 'lazy' ),
+		on: lazyImages,
 		threshold: 300,
 		callback: lazyload
 	} );
-
-	$(function(){
-		sloth();
-	});
 } );
