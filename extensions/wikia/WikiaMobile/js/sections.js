@@ -67,7 +67,6 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 	 * @returns boolean
 	 */
 	function isIntroLongerThan ( minHeight ) {
-		var infoboxHeight = $('.infobox').height();
 		var introOffset = $( '#mw-content-text' ).offset().top;
 		var referenceOffset = null;
 
@@ -83,7 +82,7 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 			var $wkPage = $( '#wkPage' );
 			referenceOffset = $wkPage.offset().top + $wkPage.height();
 		}
-		return ( referenceOffset - introOffset - infoboxHeight > minHeight );
+		return ( referenceOffset - introOffset > minHeight );
 	}
 
 	/**
@@ -93,8 +92,7 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 	 */
 	function getElementBefore( distFromTop ) {
 		var currentElement = $( '#mw-content-text' ).children().first();
-		var currentOffset = currentElement.height() - $('.infobox').height();
-		;
+		var currentOffset = currentElement.height();
 		while( currentElement.next().length != 0 && currentOffset < distFromTop ) {
 			currentElement = currentElement.next();
 			currentOffset += currentElement.height();
