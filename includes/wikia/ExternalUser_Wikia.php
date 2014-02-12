@@ -203,14 +203,22 @@ class ExternalUser_Wikia extends ExternalUser {
 		return User::newFromRow( $this->mRow );
 	}
 
+	/**
+	 * @param User $User
+	 * @param String $password
+	 * @param String $email
+	 * @param String $realname
+	 *
+	 * @return bool
+	 */
 	protected function addToDatabase( $User, $password, $email, $realname ) {
 		global $wgExternalSharedDB, $wgEnableUserLoginExt;
 		wfProfileIn( __METHOD__ );
 
 		if( wfReadOnly() ){ // Change to wgReadOnlyDbMode if we implement that
-			wfDebug( __METHOD__ . ": Tried to add user to the $wgExternalSharedDB database while in wgReadOnly mode! " . $User->getName() . " (that's bad... fix the calling code)\n" );
+			wfDebug( __METHOD__ . ": Tried to add user to the $wgExternalSharedDB database while in wgReadOnly mode! " . $User->getName() . " [ ". $User->getId() . " ] (that's bad... fix the calling code)\n" );
 		} else {
-			wfDebug( __METHOD__ . ": add user to the $wgExternalSharedDB database: " . $User->getName() . " \n" );
+			wfDebug( __METHOD__ . ": add user to the $wgExternalSharedDB database: " . $User->getName() . " [ ". $User->getId() . " ] \n" );
 
 			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 			$seqVal = $dbw->nextSequenceValue( 'user_user_id_seq' );
@@ -237,6 +245,7 @@ class ExternalUser_Wikia extends ExternalUser {
 				), __METHOD__, array('IGNORE')
 			);
 			$User->mId = $dbw->insertId();
+			$dbw->commit();
 
 			// Clear instance cache other than user table data, which is already accurate
 			$User->clearInstanceCache();
