@@ -16,7 +16,7 @@ define( 'videosmodule.views.bottommodule', [
 
 	function VideoModule( options ) {
 		// Note that this.el refers to the DOM element that the videos module should be inserted before or after,
-		// not the wrapper for the videos module. We can update this after the A/B testing is over.  
+		// not the wrapper for the videos module. We can update this after the A/B testing is over.
 		this.el = options.el;
 		this.$el = $( options.el );
 		this.model = options.model;
@@ -53,6 +53,11 @@ define( 'videosmodule.views.bottommodule', [
 			videos = this.model.data.videos,
 			len = videos.length,
 			thumbHtml = '';
+
+		// If no videos are returned from the server, don't render anything
+		if ( !len ) {
+			return;
+		}
 
 		// AB test set rows shown
 		videos = videos.slice( 0, groupParams.rows > 1 ? 8 : 4 );
