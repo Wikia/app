@@ -298,6 +298,7 @@ $wgAutoloadClasses['SpriteService'] = $IP . '/includes/wikia/services/SpriteServ
 $wgAutoloadClasses['SocialSharingService'] = $IP . '/includes/wikia/services/SocialSharingService.class.php';
 $wgAutoloadClasses['HubService'] = $IP . '/includes/wikia/services/HubService.class.php';
 $wgAutoloadClasses['ImagesService'] = $IP . '/includes/wikia/services/ImagesService.class.php';
+$wgAutoloadClasses['WikiDetailsService'] = $IP . '/includes/wikia/services/WikiDetailsService.class.php';
 $wgAutoloadClasses['WikiService'] = $IP . '/includes/wikia/services/WikiService.class.php';
 $wgAutoloadClasses['DataMartService'] = $IP . '/includes/wikia/services/DataMartService.class.php';
 $wgAutoloadClasses['WAMService'] = $IP . '/includes/wikia/services/WAMService.class.php';
