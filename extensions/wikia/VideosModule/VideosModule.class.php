@@ -76,7 +76,7 @@ class VideosModule extends WikiaModel {
 
 		$params = [
 			'title' => $wikiTitle,
-			'limit' => $this->getVideoLimit(),
+			'limit' => $this->getVideoLimit( self::LIMIT_TRENDING_VIDEOS ),
 		];
 		$videoResults = $this->app->sendRequest( 'WikiaSearchController', 'searchVideosByTitle', $params )->getData();
 
@@ -109,7 +109,7 @@ class VideosModule extends WikiaModel {
 			'controller' => 'VideoHandler',
 			'method'     => 'getVideoList',
 			'sort'       => 'trend',
-			'limit'      => $this->getVideoLimit(),
+			'limit'      => $this->getVideoLimit( self::LIMIT_TRENDING_VIDEOS ),
 			'category'   => $this->getWikiVertical(),
 		];
 
@@ -207,10 +207,10 @@ class VideosModule extends WikiaModel {
 	}
 
 	/**
-	 * Get video limit
+	 * Get video limit (include the number of blacklisted videos)
 	 * @return integer $limit
 	 */
-	public function getVideoLimit( $numRequired = self::LIMIT_TRENDING_VIDEOS ) {
+	protected function getVideoLimit( $numRequired ) {
 		if ( is_null( $this->blacklistCount ) ) {
 			$this->blacklistCount = count( $this->wg->VideosModuleBlackList );
 		}

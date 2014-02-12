@@ -100,7 +100,7 @@ class VideoHandlerController extends WikiaController {
 	}
 
 	/**
-	 * remove video
+	 * Remove video
 	 * @requestParam string title
 	 * @responseParam string result [ok/error]
 	 * @responseParam string msg - result message
@@ -218,7 +218,7 @@ class VideoHandlerController extends WikiaController {
 	}
 
 	/**
-	 * check if the file exists
+	 * Check if the file exists
 	 * @requestParam string fileTitle
 	 * @responseParam boolean $fileExists
 	 */
@@ -289,7 +289,7 @@ class VideoHandlerController extends WikiaController {
 	}
 
 	/**
-	 * Get list of videos
+	 * Get list of videos (controller that provides access to MediaQueryService::getVideoList method)
 	 * @requestParam string sort [recent/popular/trend]
 	 * @requestParam integer limit
 	 * @requestParam integer page
