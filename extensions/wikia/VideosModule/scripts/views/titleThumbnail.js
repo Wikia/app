@@ -1,5 +1,5 @@
-define( 'videosmodule.views.titlethumbnail', [
-	'thumbnails.views.titlethumbnail',
+define( 'videosmodule.views.titleThumbnail', [
+	'thumbnails.views.titleThumbnail',
 	'wikia.tracker'
 ], function( TitleThumbnail, Tracker ) {
 	'use strict';

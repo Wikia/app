@@ -2,7 +2,7 @@
  * Controller/entry point for Videos Module
  */
 require( [
-	'videosmodule.views.bottommodule',
+	'videosmodule.views.bottomModule',
 	'videosmodule.models.videos'
 ], function( BottomModule, VideoData ) {
 	'use strict';

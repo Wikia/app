@@ -1,4 +1,4 @@
-define( 'videosmodule.models.abtestbottom', [
+define( 'videosmodule.models.abTestBottom', [
 ], function() {
 	'use strict';
 

@@ -1,9 +1,9 @@
-define( 'videosmodule.views.bottommodule', [
+define( 'videosmodule.views.bottomModule', [
 	'sloth',
-	'videosmodule.views.titlethumbnail',
+	'videosmodule.views.titleThumbnail',
 	'wikia.mustache',
 	'videosmodule.templates.mustache',
-	'videosmodule.models.abtestbottom',
+	'videosmodule.models.abTestBottom',
 	'wikia.tracker'
 ], function( sloth, TitleThumbnailView, Mustache, templates, abTest, Tracker ) {
 	'use strict';

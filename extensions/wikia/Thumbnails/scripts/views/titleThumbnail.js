@@ -1,4 +1,4 @@
-define( 'thumbnails.views.titlethumbnail', [
+define( 'thumbnails.views.titleThumbnail', [
 	'thumbnails.templates.mustache',
 	'wikia.mustache'
 ], function( templates, Mustache ) {
