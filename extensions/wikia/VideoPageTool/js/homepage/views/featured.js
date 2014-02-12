@@ -78,32 +78,32 @@ define( 'videohomepage.views.featured', [
 			this.slideModels = [];
 
 			_.each( this.$thumbs.find( '.video' ), function( e ) {
-					self.thumbs.push( {
-							$video: $( e )
-					} );
+				self.thumbs.push( {
+					$video: $( e )
+				} );
 			} );
 
 			_.each( this.$bxSlider.children(), function( e, i ) {
-					var $elem,
-							videoKey;
+				var $elem,
+					videoKey;
 
-					$elem = $( e );
-					self.slides.push( {
-							$elem: $elem,
-							$video: $elem.find( '.slide-video' ),
-							$videoThumb: self.thumbs[ i ].$video,
-							$image: $elem.find( '.slide-image' ),
-							idx: i
-					} );
+				$elem = $( e );
+				self.slides.push( {
+					$elem: $elem,
+					$video: $elem.find( '.slide-video' ),
+					$videoThumb: self.thumbs[ i ].$video,
+					$image: $elem.find( '.slide-image' ),
+					idx: i
+				} );
 
-					videoKey = self.thumbs[ i ]
-											.$video.children( 'img' )
-											.attr( 'data-video-key' );
+				videoKey = self.thumbs[ i ]
+					.$video.children( 'img' )
+					.attr( 'data-video-key' );
 
-					self.slideModels.push( {
-							videoKey: videoKey,
-							embedData: null
-					} );
+				self.slideModels.push( {
+					videoKey: videoKey,
+					embedData: null
+				} );
 			} );
 		},
 
@@ -141,7 +141,7 @@ define( 'videohomepage.views.featured', [
 		setHoverTimeout: function() {
 			var self = this;
 			this.timeout = setTimeout( function() {
-					self.$thumbs.slideUp();
+				self.$thumbs.slideUp();
 			}, 300 );
 		},
 
@@ -157,7 +157,7 @@ define( 'videohomepage.views.featured', [
 
 		handleThumbClick: function( e ) {
 			var $thumb,
-					index;
+				index;
 
 			e.preventDefault();
 
@@ -172,7 +172,7 @@ define( 'videohomepage.views.featured', [
 				this.$thumbs.slideUp();
 
 				track( {
-						label: 'featured-thumbnail'
+					label: 'featured-thumbnail'
 				} );
 
 				if ( this.slider.getCurrentSlide() === index ) {

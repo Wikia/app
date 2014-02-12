@@ -20,7 +20,7 @@ define( 'videopageadmin.models.validator', [ 'jquery' ], function( $ ) {
 			this.$form.on( 'submit', $.proxy( this.onSubmit, this ) );
 
 			// If the back end has thrown an error, run the front end validation on page load
-			if( $( '#vpt-form-error' ).length ) {
+			if ( $( '#vpt-form-error' ).length ) {
 				this.formIsValid();
 			}
 		},

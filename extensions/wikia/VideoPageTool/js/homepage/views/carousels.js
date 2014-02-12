@@ -15,7 +15,7 @@ define( 'videohomepage.views.carousels', [
 			this.render();
 		},
 		render: function() {
-			var that = this;
+			var self = this;
 
 			this.collection.each( function( carouselData ) {
 				var carouselView = new CarouselView( {
@@ -23,7 +23,7 @@ define( 'videohomepage.views.carousels', [
 				} );
 
 				// append carousel wrapper DOM to home page
-				that.$el.append( carouselView.$el );
+				self.$el.append( carouselView.$el );
 			} );
 
 			return this;
