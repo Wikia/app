@@ -1,4 +1,5 @@
 CREATE TABLE `wikia_hub_modules` (
+  `city_id` int NOT NULL,
   `lang_code` varchar(8) NOT NULL,
   `vertical_id` tinyint NOT NULL, /* in sync with comscore id (2-gaming, 3-entertainment, 9-lifestyle) */
   `hub_date` date  NOT NULL,
@@ -9,3 +10,4 @@ CREATE TABLE `wikia_hub_modules` (
   `last_edit_timestamp` timestamp,
   PRIMARY KEY ( `lang_code`, `vertical_id`, `hub_date`, `module_id` )
 ) ENGINE=InnoDB;
+CREATE INDEX `wikia_hub_index` ON `wikia_hub_modules` (`city_id`, `hub_date`, `module_id`);
