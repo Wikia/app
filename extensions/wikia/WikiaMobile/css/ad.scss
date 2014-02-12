@@ -35,6 +35,10 @@ $slotTopHeight: 50px;
 
 		border-top: 1px solid $border-color;
 	}
+
+	&.hidden {
+		display: none;
+	}
 }
 
 #wkAdBeforeFooter.show {
