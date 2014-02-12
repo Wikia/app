@@ -308,6 +308,7 @@ class ExternalUser_Wikia extends ExternalUser {
 					__METHOD__,
 					array( 'IGNORE' )
 				);
+				$dbw->commit();
 			} else {
 				$need_update = false;
 				foreach( $row as $field => $value ) {
