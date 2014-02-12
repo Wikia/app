@@ -15,13 +15,13 @@ define( 'lazyload', ['wikia.thumbnailer', 'jquery', 'wikia.window'], function ( 
 		pageWidth = pageContent.offsetWidth;
 	} );
 
-	function onLoad ( img ) {
+	function onLoad ( img, background ) {
 		return function () {
 			var url = this.src;
 			img.className += ' load';
 
 			setTimeout( function () {
-				displayImage( img, url );
+				displayImage( img, url, background );
 			}, 250 );
 		};
 	}
@@ -58,7 +58,7 @@ define( 'lazyload', ['wikia.thumbnailer', 'jquery', 'wikia.window'], function ( 
 			if ( img.complete ) {
 				displayImage( elm, src, background )
 			} else {
-				img.onload = onLoad( elm );
+				img.onload = onLoad( elm, background );
 			}
 		}
 	}
