@@ -67,6 +67,7 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 	 * @returns boolean
 	 */
 	function isIntroLongerThan ( minHeight ) {
+		var infoboxHeight = $('.infobox').height();
 		var introOffset = $( '#mw-content-text' ).offset().top;
 		var referenceOffset = null;
 
@@ -82,7 +83,7 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 			var $wkPage = $( '#wkPage' );
 			referenceOffset = $wkPage.offset().top + $wkPage.height();
 		}
-		return ( referenceOffset - introOffset > minHeight );
+		return ( referenceOffset - introOffset - infoboxHeight > minHeight );
 	}
 
 	/**
@@ -90,17 +91,15 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 	 * @param distFromTop - an int value representing given height in document
 	 * @returns jQuery object or null
 	 */
-	function getParagraphBefore( distFromTop ) {
-		if ( isIntroLong() ) {
-			var currentElement = $( '#mw-content-text' ).children().first();
-			var currentOffset = currentElement.height();
-			while( currentElement.next().length != 0 && currentOffset < distFromTop ) {
-				currentElement = currentElement.next();
-				currentOffset += currentElement.height();
-			}
-			return currentElement;
+	function getElementBefore( distFromTop ) {
+		var currentElement = $( '#mw-content-text' ).children().first();
+		var currentOffset = currentElement.height() - $('.infobox').height();
+		;
+		while( currentElement.next().length != 0 && currentOffset < distFromTop ) {
+			currentElement = currentElement.next();
+			currentOffset += currentElement.height();
 		}
-		return null;
+		return currentElement;
 	}
 
 		/**
@@ -134,7 +133,7 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 			return sections = getHeaders();
 		},
 		isIntroLongerThan: isIntroLongerThan,
-		getParagraphBefore: getParagraphBefore,
+		getElementBefore: getElementBefore,
 		scrollTo: scrollTo,
 		current: current
 	};
