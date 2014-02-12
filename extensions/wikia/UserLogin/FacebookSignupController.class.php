@@ -113,6 +113,9 @@ class FacebookSignupController extends WikiaController {
 		if ($user instanceof User) {
 			$this->userId = $user->getId();
 			$this->userPage = $user->getUserPage()->getFullUrl();
+			// Add new user to log
+			$userLoginHelper = new UserLoginHelper;
+			$userLoginHelper->addNewUserLogEntry( $user );
 		}
 	}
 
