@@ -9,10 +9,11 @@ class WikiDetailsService extends WikiService {
 	const DEFAULT_HEIGHT = null;
 	const DEFAULT_SNIPPET_LENGTH = null;
 	const CACHE_VERSION = 3;
-	const WORDMARK = 'Wiki-wordmark.png';
+	const WORDMARK_URL_SETTING = 'wordmark-image-url';
 	private static $flagsBlacklist = array( 'blocked', 'promoted' );
 
 	protected $keys;
+	protected $themeSettings;
 
 	/**
 	 * @param $wikiId
@@ -154,14 +155,9 @@ class WikiDetailsService extends WikiService {
 	 * @return string
 	 */
 	protected function getWikiWordmarkImage( $id ) {
-		$title = GlobalTitle::newFromText( static::WORDMARK, NS_FILE, $id );
-		if ( $title !== null ) {
-			$file = new GlobalFile( $title );
-			if ( $file !== null && $file->exists() ) {
-				return $file->getUrl();
-			}
-		}
-		return '';
+		$settings = WikiFactory::getVarByName( ThemeSettings::WikiFactorySettings, $id );
+		$values = unserialize( $settings->cv_value );
+		return ( isset( $values[ self::WORDMARK_URL_SETTING ] ) ) ? $values[ self::WORDMARK_URL_SETTING ] : '';
 	}
 
 	/**
