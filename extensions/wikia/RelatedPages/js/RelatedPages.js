@@ -7,17 +7,13 @@ require( [ 'sloth', 'wikia.window', 'jquery' ], function( sloth, w, $ ){
 		articleId = w.wgArticleId,
 		element;
 
-	switch( w.skin ) {
-		case 'wikiamobile':
-			$placeholder = $( '#wkRltdCnt' );
-			isMobileSkin = true;
-			break;
-		case 'oasis':
-			$placeholder = $( '#RelatedPagesModuleWrapper' );
-			break;
-		case 'monobook':
-			$placeholder = $( '#mw-data-after-content' );
-			break;
+	if( w.skin === 'wikiamobile' ) {
+		$placeholder = $( '#wkRltdCnt' );
+		isMobileSkin = true;
+	} else if ( w.skin === 'oasis' || w.skin === 'monobook' ) {
+		$placeholder = $( '#RelatedPagesModuleWrapper' );
+	} else {
+		return;
 	}
 
 	element = $placeholder[0]; // $placeholder[0] because sloth doesn't accept jQuery objects
