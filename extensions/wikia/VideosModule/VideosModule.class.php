@@ -6,33 +6,54 @@ class VideosModule extends WikiaModel {
 	const THUMBNAIL_HEIGHT = 309;
 	// We don't care where else this video has been posted, we just want to display it
 	const POSTED_IN_ARTICLES = 0;
-	const VIDEO_LIMIT = 20;
 	const GET_THUMB = true;
 
+	const LIMIT_TRENDING_VIDEOS = 20;
+
 	protected $blacklistCount = null;	// number of blacklist videos
-	protected $existingVideos = [];		// list of existing vides [ hash => title ]
+	protected $existingVideos = [];		// list of existing vides [ titleKey => true ]
+
+	/**
+	 * Get related videos (article related videos and wiki related videos)
+	 * @param integer $articleId
+	 * @param integer $numRequired - number of videos required
+	 * @return array $videos - list of related videos
+	 */
+	public function getRelatedVideos( $articleId, $numRequired ) {
+		// get article related videos
+		$videos = $this->getArticleRelatedVideos( $articleId, $numRequired );
+
+		// Add videos from getWikiRelatedVideos if we didn't hit our video count limit
+		$numRequired = $numRequired - count( $videos );
+		if ( $numRequired > 0 ) {
+			$videos = array_merge( $videos, $this->getWikiRelatedVideos( $numRequired ) );
+		}
+
+		return $videos;
+	}
 
 	/**
 	 * Use the VideoEmbedToolSearchService to find premium videos related to the current article.
 	 * @param integer $articleId - ID of the article being viewed.
+	 * @param integer $numRequired - number of videos required
 	 * @return array $videos - Premium videos related to article.
 	 */
-	public function getArticleRelatedVideos( $articleId ) {
+	public function getArticleRelatedVideos( $articleId, $numRequired ) {
 		wfProfileIn( __METHOD__ );
 
 		$service = new VideoEmbedToolSearchService();
-		$service->setLimit( $this->getVideoLimit() );
+		$service->setLimit( $this->getVideoLimit( $numRequired ) );
 		$response = $service->getSuggestedVideosByArticleId( $articleId );
 
 		$videos = [];
 		foreach ( $response['items'] as $video ) {
-			if ( count( $this->existingVideos ) >= self::VIDEO_LIMIT ) {
+			if ( count( $videos ) >= $numRequired ) {
 				break;
 			}
 
 			$title = Title::newFromText( $video['title'], NS_FILE );
-			if ( $title instanceof Title && $this->isValidVideo( $title->getDBkey() ) ) {
-				$videos[] = $title->getDBkey();
+			if ( $title instanceof Title && $this->addToList( $videos, $title->getDBkey() ) ) {
+				$this->existingVideos[$title->getDBkey()] = true;
 			}
 		}
 
@@ -44,9 +65,10 @@ class VideosModule extends WikiaModel {
 
 	/**
 	 * Use WikiaSearchController to find premium videos related to the local wiki.
+	 * @param integer $numRequired - number of videos required
 	 * @return array $videos - Premium videos related to the local wiki.
 	 */
-	public function getWikiRelatedVideos() {
+	public function getWikiRelatedVideos( $numRequired ) {
 		wfProfileIn( __METHOD__ );
 
 		// Strip Wiki off the end of the wiki name if it exists
@@ -60,28 +82,25 @@ class VideosModule extends WikiaModel {
 
 		$videos = [];
 		foreach ( $videoResults as $video ) {
-			if ( count( $this->existingVideos ) >= self::VIDEO_LIMIT ) {
+			if ( count( $videos ) >= self::LIMIT_TRENDING_VIDEOS ) {
 				break;
 			}
 
 			$videoTitle = preg_replace( '/.+\/File:/', '', urldecode( $video['url'] ) );
-			if ( $this->isValidVideo( $videoTitle ) ) {
-				$videos[] = $videoTitle;
-			}
+			$this->addToList( $videos, $videoTitle );
 		}
-
-		shuffle( $videos );
 
 		wfProfileOut( __METHOD__ );
 
-		return $videos;
+		return $this->trimVideoList( $videos, $numRequired );
 	}
 
 	/**
 	 * Get videos by category from the wiki
+	 * @param integer $numRequired - number of videos required
 	 * @return array $videos - list of vertical videos (premium videos)
 	 */
-	public function getVerticalVideos() {
+	public function getVerticalVideos( $numRequired ) {
 		wfProfileIn( __METHOD__ );
 
 		$videos = [];
@@ -89,6 +108,7 @@ class VideosModule extends WikiaModel {
 		$params = [
 			'controller' => 'VideoHandler',
 			'method'     => 'getVideoList',
+			'sort'       => 'trend',
 			'limit'      => $this->getVideoLimit(),
 			'category'   => $this->getWikiVertical(),
 		];
@@ -96,21 +116,17 @@ class VideosModule extends WikiaModel {
 		$response = ApiService::foreignCall( $this->wg->WikiaVideoRepoDBName, $params, ApiService::WIKIA );
 		if ( !empty( $response['videos'] ) ) {
 			foreach ( $response['videos'] as $video ) {
-				if ( count( $this->existingVideos ) >= self::VIDEO_LIMIT ) {
+				if ( count( $videos ) >= self::LIMIT_TRENDING_VIDEOS ) {
 					break;
 				}
 
-				if ( $this->isValidVideo( $video['title'] ) ) {
-					$videos[] = $video['title'];
-				}
+				$this->addToList( $videos, $video['title'] );
 			}
 		}
 
-		shuffle( $videos );
-
 		wfProfileOut( __METHOD__ );
 
-		return $videos;
+		return $this->trimVideoList( $videos, $numRequired );
 	}
 
 	/**
@@ -120,11 +136,17 @@ class VideosModule extends WikiaModel {
 	public function getWikiVertical() {
 		wfProfileIn( __METHOD__ );
 
-		$categoryId = WikiFactoryHub::getCategoryId( $this->wg->CityId );
-		$verticalId = HubService::getCanonicalCategoryId( $categoryId );
+		$category = [];
 
-		// get category name
-		$category = WikiFactoryHub::getInstance()->getCategory( $verticalId );
+		$categoryId = WikiFactoryHub::getCategoryId( $this->wg->CityId );
+		if ( !empty( $categoryId ) ) {
+			// get vertical id
+			$verticalId = HubService::getCanonicalCategoryId( $categoryId );
+
+			// get category name
+			$category = WikiFactoryHub::getInstance()->getCategory( $verticalId );
+		}
+
 		$name = empty( $category['name'] ) ? '' : $category['name'];
 
 		wfProfileOut( __METHOD__ );
@@ -168,39 +190,51 @@ class VideosModule extends WikiaModel {
 	}
 
 	/**
-	 * Check for valid video
+	 * Check for valid video and add the video to list
+	 * @param array $videos - list of videos
 	 * @param string $videoTitle - title of the video (DB key)
-	 * @return boolean $isValid
+	 * @return boolean
 	 */
-	public function isValidVideo( $videoTitle ) {
-		wfProfileIn( __METHOD__ );
-
-		$isValid = false;
+	public function addToList( &$videos, $videoTitle ) {
 		if ( !empty( $videoTitle ) && !in_array( $videoTitle, $this->wg->VideosModuleBlackList ) ) {
-			$hash = md5( $videoTitle );
-			if ( !array_key_exists( $hash, $this->existingVideos ) ) {
-				$this->existingVideos[$hash] = $videoTitle;
-				$isValid = true;
+			if ( !array_key_exists( $videoTitle, $this->existingVideos ) ) {
+				$videos[] = $videoTitle;
+
+				return true;
 			}
 		}
 
-		wfProfileOut( __METHOD__ );
-
-		return $isValid;
+		return false;
 	}
 
 	/**
 	 * Get video limit
 	 * @return integer $limit
 	 */
-	public function getVideoLimit() {
+	public function getVideoLimit( $numRequired = self::LIMIT_TRENDING_VIDEOS ) {
 		if ( is_null( $this->blacklistCount ) ) {
 			$this->blacklistCount = count( $this->wg->VideosModuleBlackList );
 		}
 
-		$limit = self::VIDEO_LIMIT + $this->blacklistCount;
+		$limit = $numRequired + $this->blacklistCount;
 
 		return $limit;
+	}
+
+	/**
+	 * Trim randomized list of videos
+	 * @param array $videos
+	 * @param integer $numRequired
+	 * @return array $videos
+	 */
+	protected function trimVideoList( $videos, $numRequired ) {
+		shuffle( $videos );
+		array_splice( $videos, $numRequired );
+		foreach ( $videos as $videoTitle ) {
+			$this->existingVideos[$videoTitle] = true;
+		}
+
+		return $videos;
 	}
 
 }
