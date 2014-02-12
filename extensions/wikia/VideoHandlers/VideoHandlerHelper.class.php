@@ -272,7 +272,7 @@ class VideoHandlerHelper extends WikiaModel {
 
 			$thumbNail = '';
 			if ( $getThumb ) {
-				$thumbNail = $thumb->toHtml( [ 'useTemplate' => true ] );
+				$thumbNail = $thumb->toHtml( [ 'useTemplate' => true, 'fluid' => true ] );
 			}
 
 			// get article list
