@@ -248,7 +248,7 @@ class ExternalUser_Wikia extends ExternalUser {
 				array( 'IGNORE' )
 			);
 			$User->mId = $dbw->insertId();
-			$dbw->commit();
+			$dbw->commit( __METHOD__ );
 
 			// Clear instance cache other than user table data, which is already accurate
 			$User->clearInstanceCache();
@@ -308,7 +308,6 @@ class ExternalUser_Wikia extends ExternalUser {
 					__METHOD__,
 					array( 'IGNORE' )
 				);
-				$dbw->commit();
 			} else {
 				$need_update = false;
 				foreach( $row as $field => $value ) {
@@ -324,9 +323,15 @@ class ExternalUser_Wikia extends ExternalUser {
 						array( 'user_id' => $this->getId() ),
 						__METHOD__
 					);
-					$dbw->commit();
 				}
 			}
+
+			$dbw->commit( __METHOD__ );
+		} else {
+			wfDebug( __METHOD__ . ": Tried to link user to the user from local database while in wgReadOnly mode! Id: $id\n" );
+
+			wfProfileOut( __METHOD__ );
+			return false;
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -382,7 +387,7 @@ class ExternalUser_Wikia extends ExternalUser {
 				),
 				__METHOD__
 			);
-			$dbw->commit();
+			$dbw->commit( __METHOD__ );
 		}
 		wfProfileOut( __METHOD__ );
 	}
@@ -412,7 +417,7 @@ class ExternalUser_Wikia extends ExternalUser {
 					array( 'user_id' => $id ),
 					__METHOD__
 				);
-				$oDB->commit();
+				$oDB->commit( __METHOD__ );
 
 				$wgMemc->delete( $memkey );
 			}
