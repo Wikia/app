@@ -137,6 +137,10 @@ $config['oasis_noads_extensions_js'] = array(
 		// Related Forum Discussion is on all article pages
 		'//extensions/wikia/Forum/js/RelatedForumDiscussion.js',
 		'//extensions/wikia/VideoEmbedTool/js/VET_Loader.js',
+		// Survey for first time editors
+		'//extensions/wikia/EditorSurvey/js/EditorSurvey.js',
+		// Image and video thumbnail mustache templates
+		'//extensions/wikia/Thumbnails/scripts/templates.mustache.js',
 	)
 );
 
@@ -922,25 +926,6 @@ $config['theme_designer_js'] = array(
 	)
 );
 
-/** PhotoPop **/
-$config['photopop'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		'//resources/wikia/modules/cookies.js',
-		'//resources/wikia/modules/querystring.js',
-		'//resources/wikia/modules/log.js',
-		'//resources/wikia/libraries/mustache/mustache.js',
-		'//resources/wikia/libraries/my.class/my.class.js',
-		'//extensions/wikia/PhotoPop/shared/lib/store.js',
-		'//extensions/wikia/PhotoPop/shared/lib/observable.js',
-		'//extensions/wikia/PhotoPop/shared/lib/reqwest.js',
-		'//extensions/wikia/PhotoPop/shared/lib/classlist.js',
-		'//extensions/wikia/PhotoPop/shared/lib/wikia.js',
-		'//extensions/wikia/PhotoPop/shared/lib/require.js',
-		'#group_tracker_js',
-	)
-);
-
 /** MessageWall **/
 $config['wall_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
@@ -1632,3 +1617,18 @@ $config['api_docs_scss'] = array(
 		'//extensions/wikia/ApiDocs/css/ApiDocs.scss',
 	)
 );
+
+$config['videos_module_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis'],
+	'assets' => [
+		'//extensions/wikia/Thumbnails/scripts/templates.mustache.js',
+		'//extensions/wikia/Thumbnails/scripts/views/titleThumbnail.js',
+
+		'//extensions/wikia/VideosModule/scripts/templates.mustache.js',
+		'//extensions/wikia/VideosModule/scripts/models/abtestbottom.js',
+		'//extensions/wikia/VideosModule/scripts/models/videos.js',
+		'//extensions/wikia/VideosModule/scripts/views/bottommodule.js',
+		'//extensions/wikia/VideosModule/scripts/controllers/index.js',
+	]
+];

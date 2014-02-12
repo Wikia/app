@@ -17,7 +17,6 @@ class Track {
 		global $wgStyleVersion, $wgCityId, $wgContLanguageCode, $wgDBname, $wgDBcluster, $wgUser, $wgArticle, $wgTitle, $wgAdServerTest;
 
 		$sep = $for_html ? '&amp;' : '&';
-		$ip = F::app()->wg->Request->getIP();
 
 		$url = Track::BASE_URL.
 			($type ? "/$type" : '').
@@ -30,7 +29,6 @@ class Track {
 			'x='.$wgDBname.$sep.
 			'y='.$wgDBcluster.$sep.
 			'u='.$wgUser->getID().$sep.
-			'ip='.$ip.$sep.
 			'a='.(is_object($wgArticle) ? $wgArticle->getID() : null).$sep.
 			's='.RequestContext::getMain()->getSkin()->getSkinName().
 			($wgTitle && !is_object($wgArticle) ? $sep.'pg='.urlencode($wgTitle->getPrefixedDBkey()) : '').
@@ -48,7 +46,7 @@ class Track {
 	}
 
 	private static function getViewJS ($param=null) {
-		global $wgDevelEnvironment, $wgJsMimeType;
+		global $wgDevelEnvironment;
 
 		// Fake beacon and varnishTime values for development environment
 		if ( !empty( $wgDevelEnvironment ) ) {
@@ -83,6 +81,8 @@ SCRIPT1;
 	}
 
 	public static function event ($event_type, $param=null) {
+		wfProfileIn(__METHOD__);
+
 		$backtrace = debug_backtrace();
 		$class = $backtrace[1]['class'];
 		$func  = $backtrace[1]['function'];
@@ -91,8 +91,10 @@ SCRIPT1;
 
 		$url = Track::getURL('special', urlencode($event_type), $param, false);
 		if (Http::get($url) !== false) {
+			wfProfileOut(__METHOD__);
 			return true;
 		} else {
+			wfProfileOut(__METHOD__);
 			return false;
 		}
 	}

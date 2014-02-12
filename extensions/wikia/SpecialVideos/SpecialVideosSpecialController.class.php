@@ -113,7 +113,8 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 			$pages = Paginator::newFromArray( array_fill( 0, $totalVideos, '' ), SpecialVideosHelper::VIDEOS_PER_PAGE );
 			$pages->setActivePage( $page - 1 );
 
-			$pagination = $pages->getBarHTML( $linkToSpecialPage.'?page=%s&sort='.$sort );
+			$categoryPagination = $category ? "&category=$category" : "";
+			$pagination = $pages->getBarHTML( $linkToSpecialPage.'?page=%s&sort='.$sort.$categoryPagination );
 			// check if we're on the last page
 			if ( $page < $pages->getPagesCount() ) {
 				// we're not so don't show the add video placeholder

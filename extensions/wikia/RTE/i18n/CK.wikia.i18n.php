@@ -329,11 +329,21 @@ $messages['az'] = array(
 	'rte-ck-hoverPreview-comment-title' => 'Şərh',
 	'rte-ck-hoverPreview-delete' => 'sil',
 	'rte-ck-hoverPreview-edit' => 'redaktə',
+	'rte-ck-image-photo' => 'Foto',
 	'rte-ck-link-error-title' => 'Xəta',
 	'rte-ck-link-external-url' => 'URL',
+	'rte-ck-modeSwitch-toSource' => 'Mənbə',
+	'rte-ck-photoGallery-gallery' => 'Qalereya',
 	'rte-ck-signature-label' => 'İmza',
 	'rte-ck-templateDropDown-label' => 'Şablon',
 	'rte-ck-templateEditor-dialog-insert' => 'Yerləşdirmək',
+	'rte-ck-templateEditor-editor-previewButton' => 'Sınaq görüntüsü',
+	'rte-ck-templateEditor-editor-previewTitle' => 'Sınaq görüntüsü',
+	'rte-ck-video-video' => 'Video',
+	'rte-ck-format-tag_h2' => 'Başlıq 2',
+	'rte-ck-format-tag_h3' => 'Başlıq 3',
+	'rte-ck-format-tag_h4' => 'Başlıq 4',
+	'rte-ck-format-tag_h5' => 'Başlıq 5',
 );
 
 /** Belarusian (беларуская)
@@ -1140,6 +1150,16 @@ $messages['es'] = array(
 	'rte-ck-format-tag_h3' => 'Encabezado 3',
 	'rte-ck-format-tag_h4' => 'Encabezado 4',
 	'rte-ck-format-tag_h5' => 'Encabezado 5',
+);
+
+/** Basque (euskara)
+ * @author Subi
+ */
+$messages['eu'] = array(
+	'rte-ck-photoGallery-gallery' => 'Galeria',
+	'rte-ck-video-add' => 'Bideo bat gehitu',
+	'rte-ck-video-video' => 'Bideoa',
+	'rte-ck-video-confirmDeleteTitle' => 'Bideo hau ezabatu?',
 );
 
 /** Persian (فارسی)

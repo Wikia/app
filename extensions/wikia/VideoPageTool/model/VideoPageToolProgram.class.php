@@ -26,6 +26,7 @@ class VideoPageToolProgram extends WikiaModel {
 	protected $publishDate;
 	protected $isPublished = 0;
 	protected $publishedBy;
+	protected $dbw = null;
 
 	protected static $fields = array(
 		'program_id'   => 'programId',
@@ -380,7 +381,7 @@ class VideoPageToolProgram extends WikiaModel {
 			return Status::newFatal( wfMessage( 'videos-error-readonly' )->plain() );
 		}
 
-		$db = wfGetDB( DB_MASTER );
+		$db = $this->getMasterDB();
 
 		$db->insert(
 			'vpt_program',
@@ -418,7 +419,7 @@ class VideoPageToolProgram extends WikiaModel {
 			return Status::newFatal( wfMessage( 'videos-error-readonly' )->plain() );
 		}
 
-		$db = wfGetDB( DB_MASTER );
+		$db = $this->getMasterDB();
 
 		( new WikiaSQL() )
 			->UPDATE( 'vpt_program' )
@@ -472,7 +473,7 @@ class VideoPageToolProgram extends WikiaModel {
 		$this->setIsPublished( true );
 		$this->setPublishedBy( $this->wg->User->getId() );
 
-		$db = wfGetDB( DB_MASTER );
+		$db = $this->getMasterDB();
 		$status = $this->save();
 		$db->commit();
 
@@ -490,7 +491,7 @@ class VideoPageToolProgram extends WikiaModel {
 	public function unpublishProgram() {
 		$this->setIsPublished( false );
 
-		$db = wfGetDB( DB_MASTER );
+		$db = $this->getMasterDB();
 		$status = $this->save();
 		$db->commit();
 
@@ -604,7 +605,7 @@ class VideoPageToolProgram extends WikiaModel {
 			return Status::newFatal( wfMessage( 'videopagetool-error-missing-parameter' )->plain() );
 		}
 
-		$db = wfGetDB( DB_MASTER );
+		$db = $this->getMasterDB();
 
 		$db->begin();
 
@@ -778,12 +779,23 @@ class VideoPageToolProgram extends WikiaModel {
 		wfProfileOut( __METHOD__ );
 	}
 
+	/**
+	 * A simple wrapper around wfGetDB that caches the connection to local master db. Needed mostly for the ease of
+	 * unit testing mocking (as the delete method is called outside the test, in tearDown method)
+	 * @return master database connection
+	 */
+	protected function getMasterDB() {
+		if ( empty( $this->dbw ) ) {
+			$this->dbw = wfGetDB( DB_MASTER );
+		}
+		return $this->dbw;
+	}
+
 	protected function deleteFromDatabase() {
-		$dbw = wfGetDB(DB_MASTER);
 
 		( new WikiaSQL() )
 			->DELETE( 'vpt_program' )
 			->WHERE( 'program_id' )->EQUAL_TO( $this->programId )
-			->run( $dbw );
+			->run( $this->getMasterDB() );
 	}
 }

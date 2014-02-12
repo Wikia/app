@@ -14,7 +14,6 @@ class VideosModuleController extends WikiaController {
 	 * @responseParam array $videos - list of videos
 	 */
 	public function executeIndex() {
-
 		wfProfileIn( __METHOD__ );
 
 		$articleId = $this->request->getVal( 'articleId', 0 );

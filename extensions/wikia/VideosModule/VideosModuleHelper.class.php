@@ -64,7 +64,7 @@ class VideosModuleHelper extends WikiaModel {
 			// normalize json so the key for the url for the video is identical to the key
 			// used in getArticleRelatedVideos
 			$videoDetail['url'] = $videoDetail['fileUrl'];
-			unset($videoDetail['fileUrl']);
+			unset( $videoDetail['fileUrl'] );
 			$videos[] = $videoDetail;
 		}
 
