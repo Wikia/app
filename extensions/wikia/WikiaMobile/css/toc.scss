@@ -9,9 +9,9 @@ $width: 260px;
 /* @noflip */
 .side-menu {
 	position: fixed;
-	right: 0;
+	right: -$width;
 	top: 0;
-	bottom:0;
+	bottom: 0;
 	width: $width;
 	background: $toc-background;
 	z-index: $video-overlay-z-index; //For overlaying Ooyala Videos
@@ -22,16 +22,11 @@ $width: 260px;
 	-moz-transition: -moz-transform .1s ease-out;
 	transition: transform .1s ease-out;
 
-	-webkit-transform: translate($width);
-	-moz-transform: translate($width);
-	-ms-transform: translate($width);
-	transform: translate($width);
-
 	&.active {
-		-webkit-transform: translate(0);
-		-moz-transform: translate(0);
-		-ms-transform: translate(0);
-		transform: translate(0);
+		-webkit-transform: translate(-$width);
+		-moz-transform: translate(-$width);
+		-ms-transform: translate(-$width);
+		transform: translate(-$width);
 
 		z-index: $video-overlay-z-index + 2; //For overlaying Curtain
 	}

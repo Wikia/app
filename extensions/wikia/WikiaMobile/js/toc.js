@@ -11,7 +11,6 @@ function ( sections, window, $, mustache, toc, track, relatedPages ) {
 		$document = $( doc ),
 		$anchors,
 		sideMenuCapable = ( window.Features.positionfixed && window.Features.overflow ),
-		$ol,
 		inited,
 		$toc = $( doc.getElementById( 'wkTOC' ) ),
 		$tocHandle = $( doc.getElementById( 'wkTOCHandle' ) ),
@@ -117,11 +116,9 @@ function ( sections, window, $, mustache, toc, track, relatedPages ) {
 	function renderToc(){
 		$toc.find( '#tocWrapper' ).remove();
 
-		$ol = $toc
+		$anchors = $toc
 			.append( createTocMarkup() )
-			.find( '.level' );
-
-		$anchors = $ol.find( 'li > a' );
+			.find( 'li > a' );
 
 		var wrapper = doc.getElementById( 'tocWrapper' );
 
@@ -222,7 +219,7 @@ function ( sections, window, $, mustache, toc, track, relatedPages ) {
 		tocMarkup = createTocMarkup();
 
 		if ( tocMarkup ) {
-			$ol = $document.find( '#mw-content-text' )
+			$document.find( '#mw-content-text' )
 				.append(
 					'<div class="in-page-toc"><h2>' + $toc.find( 'header' ).text() + '</h2>' + tocMarkup + '</div>'
 				).find('.level');
