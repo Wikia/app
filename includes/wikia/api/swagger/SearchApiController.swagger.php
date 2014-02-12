@@ -91,7 +91,16 @@ use Swagger\Annotations as SWG;
  * 		items="$ref:CrossWikiSearchResult",
  * 		description="Standard container name for element collection (list)"
  * 	)
- * 
+ *
+ * @SWG\Model( id="ExpandedCrossWikiaResultSet" )
+ * 	@SWG\Property(
+ * 		name="items",
+ * 		type="Array",
+ * 		items="$ref:ExpandedWikiaItem",
+ * 		required="true",
+ * 		description="Standard container name for element collection (list)"
+ * 	)
+ *
  * @SWG\Api(
  * 	path="/api/v1/Search/List",
  * 	description="Search local Wikia for given phrase. Should not be used directly on www.wikia.com.",
@@ -224,6 +233,94 @@ use Swagger\Annotations as SWG;
  * 					allowMultiple="false",
  * 					dataType="int",
  * 					defaultValue=""
+ * 				)
+ * 			)
+ * 		)
+ * 	)
+ * )
+ *
+ * @SWG\Api(
+ * 	path="/api/v1/Search/CrossWiki?expand=1",
+ * 	description="Get results for cross-wiki search for submitted query. As a result you get a list of Wikis expanded with detailed data",
+ * 	@SWG\Operations(
+ * 		@SWG\Operation(
+ * 			httpMethod="get",
+ * 			summary="Get results for cross-wiki search",
+ * 			nickname="getCrossWiki",
+ * 			responseClass="ExpandedCrossWikiaResultSet",
+ * 			@SWG\ErrorResponses(
+ * 				@SWG\ErrorResponse( code="400", reason="Query or lang parameters missing" )
+ * 			),
+ * 			@SWG\Parameters(
+ * 				@SWG\Parameter(
+ * 					name="query",
+ * 					description="The query to use for the search",
+ * 					paramType="query",
+ * 					required="true",
+ * 					allowMultiple="false",
+ * 					dataType="string",
+ * 					defaultValue=""
+ * 				),
+ * 				@SWG\Parameter(
+ * 					name="lang",
+ * 					description="The two chars wiki language code, (eg.: en, de, fr)",
+ * 					paramType="query",
+ * 					required="true",
+ * 					allowMultiple="false",
+ * 					dataType="string",
+ * 					defaultValue="en"
+ * 				),
+ * 				@SWG\Parameter(
+ * 					@SWG\AllowableValues(valueType="LIST",values="['newest', 'oldest', 'recently-modified', 'stable', 'most-viewed', 'freshest', 'stalest']"),
+ * 					name="rank",
+ * 					description="The ranking to use in fetching the list of results, one of default, newest, oldest, recently-modified, stable, most-viewed, freshest, stalest",
+ * 					paramType="query",
+ * 					required="false",
+ * 					allowMultiple="false",
+ * 					dataType="string",
+ * 					defaultValue=""
+ * 				),
+ * 				@SWG\Parameter(
+ * 					name="limit",
+ * 					description="The number of items per batch (page)",
+ * 					paramType="query",
+ * 					required="false",
+ * 					allowMultiple="false",
+ * 					dataType="int",
+ * 					defaultValue="25"
+ * 				),
+ * 				@SWG\Parameter(
+ * 					name="batch",
+ * 					description="The batch (page) of results to fetch",
+ * 					paramType="query",
+ * 					required="false",
+ * 					allowMultiple="false",
+ * 					dataType="int",
+ * 					defaultValue=""
+ * 				),
+ * 				@SWG\Parameter(
+ * 					name="height",
+ * 					description="Thumbnail height in pixels",
+ * 					paramType="query",
+ * 					required="false",
+ * 					allowMultiple="false",
+ * 					dataType="int"
+ * 				),
+ * 				@SWG\Parameter(
+ * 					name="width",
+ * 					description="Thumbnail width in pixels",
+ * 					paramType="query",
+ * 					required="false",
+ * 					allowMultiple="false",
+ * 					dataType="int"
+ * 				),
+ * 				@SWG\Parameter(
+ * 					name="snippet",
+ * 					description="Maximum number of words returned in description",
+ * 					paramType="query",
+ * 					required="false",
+ * 					allowMultiple="false",
+ * 					dataType="int"
  * 				)
  * 			)
  * 		)
