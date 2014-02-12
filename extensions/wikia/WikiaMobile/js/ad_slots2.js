@@ -39,6 +39,8 @@ require(
 					) {
 						log( 'Slot seems to be empty: ' + mobileTopLeaderBoard, logLevel, logGroup );
 						hop({method: 'hop'}, 'Null');
+					} else {
+						slot.className += ' show';
 					}
 				}
 			};
