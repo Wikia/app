@@ -188,6 +188,12 @@ use Swagger\Annotations as SWG;
  * 					dataType="string",
  * 					defaultValue=""
  * 				),
+ * 				@SWG\Property(
+ * 					name="hub",
+ * 					type="string",
+ * 					required="false",
+ * 					description="Hub to which wikias belong"
+ * 				),
  * 				@SWG\Parameter(
  * 					name="lang",
  * 					description="The two chars wiki language code, (eg.: en, de, fr)",

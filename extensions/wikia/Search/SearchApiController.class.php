@@ -150,6 +150,7 @@ class SearchApiController extends WikiaApiController {
 			->setLimit( $request->getInt( 'limit', static::CROSS_WIKI_LIMIT ) )
 			->setPage( $request->getVal( 'batch', 1 ) )
 			->setRank( $request->getVal( 'rank', 'default' ) )
+			->setHub( $request->getVal( 'hub', null ) )
 			->setInterWiki( true )
 			->setCommercialUse( $this->hideNonCommercialContent() )
 			->setLanguageCode( $request->getVal( 'lang' ) )
