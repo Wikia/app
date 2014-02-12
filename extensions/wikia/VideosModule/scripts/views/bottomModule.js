@@ -85,7 +85,7 @@ define( 'videosmodule.views.bottomModule', [
 		} else {
 			this.$el.before( $out );
 		}
-		this.$el.find( '.videos-module' ).addClass( groupParams.rows > 1 ? 'rows-2' : 'rows-1' );
+		$( '#videosModule' ).addClass( groupParams.rows > 1 ? 'rows-2' : 'rows-1' );
 		track();
 	};
 

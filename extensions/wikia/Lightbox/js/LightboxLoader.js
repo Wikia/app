@@ -9,6 +9,7 @@ var LightboxLoader = {
 		relatedVideos: [], // Related Video
 		latestPhotos: [], // Latest Photos from DOM
 		wikiPhotos: [], // Back fill of photos from wiki
+		videosModule: [],
 		details: {}, // all media details
 		share: {},
 		to: 0
@@ -33,7 +34,7 @@ var LightboxLoader = {
 			// bugid-64334 and bugid-69047
 			Lightbox.openModal.find('.video-media').children().remove();
 			LightboxLoader.lightboxLoading = false;
-			// Update history api (remove "?file=" from URL)
+			// Update history api (remove '?file=' from URL)
 			Lightbox.updateUrlState(true);
 			// Reset carousel
 			Lightbox.current.thumbs = []; /* global Lightbox */
@@ -60,18 +61,19 @@ var LightboxLoader = {
 			article = $('#WikiaArticle'),
 			videos = $('#RelatedVideosRL'),
 			photos = $('#LatestPhotosModule'),
-			comments = $('#WikiaArticleComments');
+			comments = $('#WikiaArticleComments' ),
+			footer = $('#WikiaArticleFooter');
 
 		// Bind click event to initiate lightbox
-		article.add(photos).add(videos).add(comments)
+		article.add(photos).add(videos).add(comments ).add(footer)
 			.off('.lightbox')
 			.on('click.lightbox', '.lightbox, a.image', function(e) {
-
 				var $this = $(this),
 					$thumb = $this.children('img').first(),
 					fileKey = $thumb.attr('data-image-key') || $thumb.attr('data-video-key'),
 					parent,
-					isVideo;
+					isVideo,
+					trackingInfo;
 
 				if( $this.hasClass('link-internal') || $this.hasClass('link-external') || $thumb.attr('data-shared-help') || $this.hasClass( 'no-lightbox' ) ) {
 					return;
@@ -87,9 +89,11 @@ var LightboxLoader = {
 					parent = photos;
 				} else if($this.closest(comments).length) {
 					parent = comments;
+				} else if($this.closest('#videosModule').length) {
+					parent = $('#videosModule');
 				}
 
-				var trackingInfo = {
+				trackingInfo = {
 					target: $this,
 					parent: parent
 				};
@@ -214,7 +218,7 @@ var LightboxLoader = {
 			width: targetChildImg.width()
 		}, function(json) {
 			var	embedCode = json['videoEmbedCode'],
-				inlineDiv = $('<div class="inline-video"></div>').insertAfter(target.hide());
+				inlineDiv = $('<div class='inline-video'></div>').insertAfter(target.hide());
 
 			require(['wikia.videoBootstrap'], function (VideoBootstrap) {
 				self.videoInstance = new VideoBootstrap(inlineDiv[0], embedCode, clickSource);
@@ -269,7 +273,8 @@ var LightboxLoader = {
 
 	loadFromURL: function() {
 		var fileTitle = window.Wikia.Querystring().getVal('file'),
-			openModal = $('#LightboxModal');
+			openModal = $('#LightboxModal'),
+			trackingInfo;
 
 		// Check if there's a file param in URL
 		if(fileTitle) {
@@ -286,10 +291,10 @@ var LightboxLoader = {
 			// Open new Lightbox
 			} else {
 				// set a fake parent for carouselType
-				var trackingInfo = {
+				trackingInfo = {
 					parent: $('#WikiaArticle'),
 					clickSource: LightboxTracker.clickSource.SHARE
-				}
+				};
 				LightboxLoader.loadLightbox(fileTitle, trackingInfo);
 			}
 		// No file param, if there's an open modal, close it
@@ -305,7 +310,7 @@ var LightboxLoader = {
 	 */
 	handleOldDom: function(type) {
 		if(LightboxLoader.isOldDom === null) {
-			$().log("Send old DOM tracking", "Lightbox");
+			$().log('Send old DOM tracking', 'Lightbox');
 			LightboxTracker.track(Wikia.Tracker.ACTIONS.VIEW, 'old-dom', type, null, 'internal');
 		}
 		LightboxLoader.isOldDom = true;
@@ -313,7 +318,7 @@ var LightboxLoader = {
 
 };
 
-LightboxTracker = {
+var LightboxTracker = {
 	inlineVideoTrackingTimeout: 0,
 	// @param data - any extra params we want to pass to internal tracking
 	// Don't add willy nilly though... check with Jonathan.
@@ -338,7 +343,7 @@ LightboxTracker = {
 		SHARE: 'share',
 		HUBS: 'hubs',
 		OTHER: 'other',
-		TOUCHSTORM: 'touchStorm'
+		VIDEOSMODULE: 'videosModule'
 	}
 };
 

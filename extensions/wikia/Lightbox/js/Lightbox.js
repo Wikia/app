@@ -764,7 +764,8 @@ var Lightbox = {
 	carouselTypes: [
 		'relatedVideos',
 		'articleMedia',
-		'latestPhotos'
+		'latestPhotos',
+		'videosModule'
 	],
 	setUpCarousel: function() {
 
@@ -1058,9 +1059,7 @@ var Lightbox = {
 				thumbArr = cached;
 			} else {
 				var article = $('#WikiaArticle, #WikiaArticleComments'),
-					playButton = Lightbox.thumbPlayButton,
 					keys = [], // array to check for title dupes
-					thumbArr = [],
 					infobox = article.find('.infobox');
 				// Collect images from DOM
 				var thumbs = article.find('img[data-image-name], img[data-video-name]');
@@ -1072,27 +1071,27 @@ var Lightbox = {
 
 				thumbs.each(function() {
 					var $thisThumb = $(this),
-						$thisParent = $thisThumb.parent(),
 						type,
 						title,
 						key,
-						playButton;
+						playButtonSpan,
+						videoName;
 
 					if($thisThumb.closest('.ogg_player').length) {
 						return;
 					}
 
-					var videoName = $thisThumb.attr('data-video-name') || $thisThumb.parent().attr('data-video-name');
+					videoName = $thisThumb.attr('data-video-name') || $thisThumb.parent().attr('data-video-name');
 
 					if(videoName) {
 						type = 'video';
 						title = videoName;
-						key = $thisThumb.attr('data-video-key')
+						key = $thisThumb.attr('data-video-key');
 						playButtonSpan = Lightbox.thumbPlayButton;
 					} else {
 						type = 'image';
 						title = $thisThumb.attr('data-image-name') || $thisThumb.parent().attr('data-image-name');
-						key = $thisThumb.attr('data-image-key')
+						key = $thisThumb.attr('data-image-key');
 						playButtonSpan = '';
 					}
 
@@ -1276,6 +1275,60 @@ var Lightbox = {
 					Lightbox.getMediaThumbs.backfilling = false;
 				}
 			});
+		},
+		videosModule: function(backfill) {
+			var cached = LightboxLoader.cache.videosModule,
+				thumbArr = [],
+				videosModule,
+				// array to check for title dupes
+				keys = [],
+				thumbs;
+
+			if(cached.length) {
+				thumbArr = cached;
+			} else {
+				videosModule = $('#videosModule');
+				// Collect images from DOM
+				thumbs = videosModule.find('img[data-video-name]');
+
+				thumbs.each(function() {
+					var $thisThumb = $(this),
+						type = 'video',
+						title = $thisThumb.attr('data-video-name'),
+						key = $thisThumb.attr('data-video-key' ),
+						playButtonSpan =Lightbox.thumbPlayButton;
+
+					if(key) {
+						// Check for dupes
+						if($.inArray(key, keys) > -1) {
+							return;
+						}
+						keys.push(key);
+
+						thumbArr.push({
+							thumbUrl: Lightbox.thumbParams($thisThumb.data('src') || $thisThumb.attr('src'), type),
+							title: title,
+							key: key,
+							type: type,
+							playButtonSpan: playButtonSpan
+						});
+					}
+				});
+
+				// Fill articleMedia cache
+				LightboxLoader.cache.videosModule = thumbArr;
+
+				// Count backfill items for progress bar
+				if(backfill) {
+					Lightbox.backfillCount += thumbArr.length;
+				}
+
+			}
+
+			// Add thumbs to current lightbox cache
+			Lightbox.current.thumbs = Lightbox.current.thumbs.concat(thumbArr);
+
+			Lightbox.addThumbsToCarousel(thumbArr, backfill);
 		}
 	},
 	addThumbsToCarousel: function(thumbs, backfill) {
@@ -1295,7 +1348,7 @@ var Lightbox = {
 
 		// if carousel is already instantiated, update settings with added thumbnails
 		var container = Lightbox.openModal.carouselContainer;
-		if(typeof container.updateCarouselItems == "function") {
+		if(typeof container.updateCarouselItems == 'function') {
 			container.updateCarouselItems();
 			container.updateCarouselWidth();
 			container.updateCarouselArrows();
@@ -1328,7 +1381,7 @@ var Lightbox = {
 	},
 
 	/**
-	 * @param {Object} params Object containing any combination of "parent" (required) "target" (optional) or "clickSource" (optional)
+	 * @param {Object} params Object containing any combination of 'parent' (required) 'target' (optional) or 'clickSource' (optional)
 	 */
 	getClickSource: function(params) {
 		var parent = params.parent,
@@ -1338,8 +1391,8 @@ var Lightbox = {
 			VPS = LightboxTracker.clickSource,
 
 			// Two vars that basically mean the same thing but are here for legacy purposes
-			carouselType = "",
-			trackingCarouselType = "";
+			carouselType = '',
+			trackingCarouselType = '';
 
 		switch (id) {
 
@@ -1347,36 +1400,36 @@ var Lightbox = {
 			case 'RelatedVideosRL':
 				clickSource = clickSource || VPS.RV;
 
-				carouselType = "relatedVideos";
-				trackingCarouselType = "related-videos";
+				carouselType = 'relatedVideos';
+				trackingCarouselType = 'related-videos';
 				break;
 
 			// Embeded in Article Comments
 			case 'WikiaArticleComments':
 				clickSource = clickSource || VPS.EMBED;
 
-				carouselType = "articleMedia";
-				trackingCarouselType = "article";
+				carouselType = 'articleMedia';
+				trackingCarouselType = 'article';
 				break;
 
 			case 'LatestPhotosModule':
 				clickSource = clickSource || VPS.LP;
 
-				carouselType = "latestPhotos";
-				trackingCarouselType = "latest-photos";
+				carouselType = 'latestPhotos';
+				trackingCarouselType = 'latest-photos';
 				break;
 
-			case 'TouchStormModule':
-				clickSource = clickSource || VPS.TOUCHSTORM;
+			case 'videosModule':
+				clickSource = clickSource || VPS.VIDEOSMODULE;
 
-				carouselType = "touchStorm";
-				trackingCarouselType = "touch-storm";
+				carouselType = 'videosModule';
+				trackingCarouselType = 'videos-module';
 				break;
 
 			case 'WikiaArticle':
 				// Lightbox doesn't care what kind of article page, but clickSource tracking does
-				carouselType = "articleMedia";
-				trackingCarouselType = "article";
+				carouselType = 'articleMedia';
+				trackingCarouselType = 'article';
 
 				if(typeof clickSource != 'undefined') {
 					// Click source is already set so we don't have to look for it.
@@ -1417,8 +1470,8 @@ var Lightbox = {
 			default:
 				clickSource = VPS.OTHER;
 
-				carouselType = "articleMedia";
-				trackingCarouselType = "article";
+				carouselType = 'articleMedia';
+				trackingCarouselType = 'article';
 		}
 
 		return {
