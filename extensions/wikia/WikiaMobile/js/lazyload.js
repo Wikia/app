@@ -56,7 +56,7 @@ define( 'lazyload', ['wikia.thumbnailer', 'jquery', 'wikia.window'], function ( 
 
 			//don't do any animation if image is already loaded
 			if ( img.complete ) {
-				displayImage( elm, src, background )
+				displayImage( elm, src, background );
 			} else {
 				img.onload = onLoad( elm, background );
 			}
