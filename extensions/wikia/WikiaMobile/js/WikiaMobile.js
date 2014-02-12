@@ -19,7 +19,6 @@ require( ['wikia.querystring', require.optional( 'wikia.cookies' ), 'track', 'wi
 
 		event.preventDefault();
 		event.stopPropagation();
-		cookies.set( 'mobilefullsite', 'true' );
 
 		cookies.set( 'useskin', skin, {
 			domain: window.wgCookieDomain,
