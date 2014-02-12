@@ -25,7 +25,7 @@ module.exports = function ( grunt ) {
 			options: {
 				csslintrc: '.csslintrc'
 			},
-			all: ['modules/{syntaxhighlight,ve,ve-mw}/**/*.css', 'wikia/**/*.css'],
+			all: ['modules/{ve,ve-mw}/**/*.css', 'wikia/**/*.css'],
 		},
 		qunit: {
 			ve: 'modules/ve/test/index-phantomjs-tmp.html'

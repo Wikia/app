@@ -5,6 +5,8 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
+/*global mw */
+
 /**
  * Initialization MediaWiki view page target.
  *
