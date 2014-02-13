@@ -40,15 +40,18 @@ Test file needs to match ``*Test.php`` and the class in the file should extend `
 In ```tests``` directory type in ```./php-fast```
 
 **Updating threshold for testsAnnotator**
+
 This number can be found in app/includes/wikia/tests/core/WikiaTestSpeedAnnotator.class.php
 
 **Running testsAnnotator**
+
 To enable testsAnnotator you need to set environment variable to ```1``` and then run full tests suite.
 ````
 ANNOTATE_TEST_SPEED=1 ./php-all
 ````
 
 **Running unit tests on local machine**
+
 We've run phpunit tests locally only on linux machines, requirements:
 * php 5.4+
 * phpunit http://phpunit.de/
