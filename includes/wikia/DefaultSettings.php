@@ -1196,6 +1196,12 @@ $wgEnableJavaScriptErrorLogging = false;
 $wgEnableRHonDesktop = false;
 
 /**
+ * @name $wgEnableRHonMobile
+ * Enables RH- hack on Mobile
+ */
+$wgEnableRHonMobile = false;
+
+/**
  * @name $wgEnableAdEngineExt
  * Enables ad engine
  */
