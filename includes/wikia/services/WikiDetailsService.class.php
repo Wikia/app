@@ -16,10 +16,11 @@ class WikiDetailsService extends WikiService {
 	protected $themeSettings;
 
 	/**
+	 * Returns detailed informations about wiki
 	 * @param $wikiId
-	 * @param int $width
-	 * @param int $height
-	 * @param int $snippet
+	 * @param int $width Wikia image width
+	 * @param int $height Wikia image height
+	 * @param int $snippet Snippet length in number of words
 	 * @return array Wikia detailed data
 	 */
 	public function getWikiDetails( $wikiId, $width = null, $height = null, $snippet = null ) {
@@ -66,9 +67,9 @@ class WikiDetailsService extends WikiService {
 	}
 
 	/**
-	 * @param array $wikiInfo All wikia info
-	 * @param int $width
-	 * @param int $height
+	 * @param array $wikiInfo
+	 * @param int $width Image width
+	 * @param int $height Image height
 	 * @return array
 	 */
 	protected function getImageData( $wikiInfo, $width = null, $height = null ) {
