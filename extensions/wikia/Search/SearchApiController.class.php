@@ -161,6 +161,8 @@ class SearchApiController extends WikiaApiController {
 			->setCommercialUse( $this->hideNonCommercialContent() )
 			->setLanguageCode( $request->getArray( 'lang' ) )
 		;
+		//this will set different boosting
+		$searchConfig->setABTestGroup( 'CrossWikiApi' );
 		return $searchConfig;
 	}
 }
