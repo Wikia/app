@@ -31,10 +31,7 @@ class WikiDetailsService extends WikiService {
 			$factoryData = $this->getFromWikiFactory( $wikiId, $exists );
 			if ( $exists ) {
 				$wikiInfo = array_merge(
-					[
-						'id' => (int) $wikiId,
-						'wordmark' => $this->getWikiWordmarkImage( $wikiId )
-					],
+					[ 'id' => (int) $wikiId, 'wordmark' => $this->getWikiWordmarkImage( $wikiId ) ],
 					$factoryData,
 					$this->getFromService( $wikiId ),
 					$this->getFromWAMService( $wikiId )
@@ -77,10 +74,8 @@ class WikiDetailsService extends WikiService {
 		$crop = ( $width != null || $height != null );
 		$width = ( $width !== null ) ? $width : static::DEFAULT_WIDTH;
 		$height = ( $height !== null ) ? $height : static::DEFAULT_HEIGHT;
-		$imgUrl = '';
 		$imgWidth = null;
 		$imgHeight = null;
-
 		$img = wfFindFile( $imageName );
 		if ( $img instanceof WikiaLocalFile ) {
 			//found on en-corporate wiki
@@ -100,32 +95,18 @@ class WikiDetailsService extends WikiService {
 				$imgHeight = $f->getHeight();
 				if ( $crop ) {
 					$globalTitle = $f->getTitle();
-
 					$imageService = new ImagesService();
-					$response = $imageService->getImageSrc(
-						$globalTitle->getCityId(),
-						$globalTitle->getArticleID(),
-						$width,
-						$height
-					);
+					$response = $imageService->getImageSrc( $globalTitle->getCityId(), $globalTitle->getArticleID(), $width, $height );
 					$imgUrl = $response[ 'src' ];
 				} else {
 					$imgUrl = $f->getUrl();
 				}
 			}
 		}
-
-		if ( $imgUrl ) {
-			return [
-				'image' => $imgUrl,
-				'original_dimensions' => [
-					'width' => $imgWidth,
-					'height' => $imgHeight
-				]
-			];
-		} else {
-			return [ 'image' => '' ];
+		if ( isset( $imgUrl ) ) {
+			return [ 'image' => $imgUrl, 'original_dimensions' => [ 'width' => $imgWidth, 'height' => $imgHeight ] ];
 		}
+		return [ 'image' => '' ];
 	}
 
 	/**
