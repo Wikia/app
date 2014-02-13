@@ -46,8 +46,9 @@ var Lightbox = {
 		Lightbox.current.carouselType = trackingObj.carouselType;
 
 		// Set up tracking
-		var clickSource = trackingObj.clickSource,
-			trackingCarouselType = trackingObj.trackingCarouselType;
+		var clickSource = trackingObj.clickSource;
+
+		Lightbox.current.trackingCarouselType = trackingObj.trackingCarouselType;
 
 		Lightbox.openModal.aggregateViewCount = 0;
 		Lightbox.openModal.clickSource = clickSource;
@@ -82,7 +83,7 @@ var Lightbox = {
 
 		/* tracking after lightbox has fully loaded */
 		var trackingTitle = Lightbox.current.key;
-		LightboxTracker.track(Wikia.Tracker.ACTIONS.IMPRESSION, '', Lightbox.current.placeholderIdx, {title: trackingTitle, 'carousel-type': trackingCarouselType});
+		LightboxTracker.track(Wikia.Tracker.ACTIONS.IMPRESSION, '', Lightbox.current.placeholderIdx, {title: trackingTitle, 'carousel-type': Lightbox.current.trackingCarouselType});
 
 		// attach event handlers
 		Lightbox.bindEvents();
@@ -310,7 +311,16 @@ var Lightbox = {
 				var trackingTitle = Lightbox.current.key; // prevent race conditions from timeout
 				Lightbox.image.trackingTimeout = setTimeout(function() {
 					Lightbox.openModal.aggregateViewCount++;
-					LightboxTracker.track(Wikia.Tracker.ACTIONS.VIEW, 'image', Lightbox.openModal.aggregateViewCount, {title: trackingTitle, clickSource: Lightbox.openModal.clickSource});
+					LightboxTracker.track(
+						Wikia.Tracker.ACTIONS.VIEW,
+						'image',
+						Lightbox.openModal.aggregateViewCount,
+						{
+							title: trackingTitle,
+							clickSource: Lightbox.openModal.clickSource,
+							'carousel-type': Lightbox.current.trackingCarouselType
+						}
+					);
 
 					// Set all future click sources to Lightbox rather than DOM element
 					Lightbox.openModal.clickSource = LightboxTracker.clickSource.LB;
@@ -447,7 +457,17 @@ var Lightbox = {
 			 */
 			Lightbox.video.trackingTimeout = setTimeout(function() {
 				Lightbox.openModal.aggregateViewCount++;
-				LightboxTracker.track(Wikia.Tracker.ACTIONS.VIEW, 'video', Lightbox.openModal.aggregateViewCount, {title: trackingTitle, provider: data.providerName, clickSource: Lightbox.openModal.clickSource});
+				LightboxTracker.track(
+					Wikia.Tracker.ACTIONS.VIEW,
+					'video',
+					Lightbox.openModal.aggregateViewCount,
+					{
+						title: trackingTitle,
+						provider: data.providerName,
+						clickSource: Lightbox.openModal.clickSource,
+						'carousel-type': Lightbox.current.trackingCarouselType
+					}
+				);
 
 				// Set all future click sources to Lightbox rather than DOM element
 				Lightbox.openModal.clickSource = LightboxTracker.clickSource.LB;
