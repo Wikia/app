@@ -27,6 +27,7 @@ require_once( __DIR__ . '/../../includes/wikia/swift/all.php' );
 class MigrateWikisToSwift3 extends Maintenance {
 
 	const THREADS_DEFAULT = 40;
+	const DELAY_DEFAULT = 0;
 
 	const SCRIPT_PATH = '/var/log/migration_queue';
 	const CMD = '/bin/bash -c "SERVER_ID=%d php -ddisplay_errors=1 migrateImagesToSwift_bulk.php %s --conf %s" >> %s 2>&1';
@@ -38,6 +39,8 @@ class MigrateWikisToSwift3 extends Maintenance {
 	private $time = 0;
 
 	private $dc = null;
+	private $dryRun = null;
+	private $noDeletes = null;
 
 	/**
 	 * Set script options
@@ -49,8 +52,11 @@ class MigrateWikisToSwift3 extends Maintenance {
 		$this->addOption( 'all', 'Do not skip top 200 wikis.' );
 		$this->addOption( 'reverse', 'Reversed order' );
 		$this->addOption( 'threads', 'Number of threads (default: 40)' );
+		$this->addOption( 'delay', 'Number of seconds to wait before spawning next process (default: 0)' );
 		$this->addOption( 'debug', 'Enable debug mode' );
-		$this->addOption( 'force', 'Re-run script for migrated Wikis' );
+		$this->addOption( 'force', 'Perform the migration even if $wgEnableSwiftFileBackend = true' );
+		$this->addOption( 'dry-run', 'Perform file uploads but don\'t switch wiki to Swift' );
+		$this->addOption( 'no-deletes', 'Do not remove orphans in ceph' );
 		$this->addOption( 'dc', 'Target datacenter(s), comma-separated list (default: local datacenter)' );
 		$this->mDescription = 'Migrate images for all Wikis';
 	}
@@ -71,13 +77,15 @@ class MigrateWikisToSwift3 extends Maintenance {
 		$limit = $this->getOption( 'limit', -1 );
 		$debug = $this->hasOption( 'debug' );
 		$force = $this->hasOption( 'force' );
-		$wikis = $this->getOption( 'wiki', '' );
+		$wikis = $this->getOption( 'wiki', null );
+		$this->dryRun = $this->hasOption('dry-run');
+		$this->noDeletes = $this->hasOption('no-deletes');
 
-		$this->dc = $this->getOption('dc',$wgWikiaDatacenter);
+		$this->dc = $this->getOption('dc','sjc,res');
 
 		# don't migrate top 200 Wikis
 		$top200Wikis = array();
-		if ( $this->hasOption('all') ) {
+		if ( !$this->hasOption('all') ) {
 			$top200Wikis = DataMartService::getWAM200Wikis();
 
 			if ( count($top200Wikis) != 200 ) {
@@ -96,14 +104,35 @@ class MigrateWikisToSwift3 extends Maintenance {
 			$this->disabled_wikis[$k] = intval($v);
 		}
 
+		$wikiIds = null;
+		if ( $wikis !== null ) {
+			$wikiIds = array();
+			foreach (explode(',',$wikis) as $id) {
+				if ( is_numeric($id) && $id >= 0 ) {
+					$wikiIds[] = $id;
+				}
+			}
+			if ( count($wikiIds) == 0 ) {
+				$wikiIds = null;
+			}
+		}
+
 		$this->db = $this->getDB( DB_SLAVE, array(), $wgExternalSharedDB );
 
 		$order = $this->hasOption('reverse') ? " DESC" : "";
 		$res = $this->db->select(
 			array( 'city_list', 'city_variables' ),
 			array( 'city_id', 'city_dbname' ),
+			array_merge(
 			array(
+				'city_public' => 1,
+			),
+			( !$force ? array(
 				'cv_value is null or cv_value != "b:1;"', // not "wgEnableSwiftBackend == true"
+				) : array() ),
+			( is_array($wikiIds) ? array(
+				'city_id' => $wikiIds,
+				) : array() )
 			),
 			__CLASS__,
 			array_merge(array(
@@ -140,8 +169,9 @@ class MigrateWikisToSwift3 extends Maintenance {
 		}
 
 		$threads = $this->getOption('threads',self::THREADS_DEFAULT);
+		$threadDelay = $this->getOption('delay',self::DELAY_DEFAULT);
 		$this->output( "Using {$threads} threads...\n");
-		$runner = new \Wikia\Swift\Process\Runner($processes,$threads);
+		$runner = new \Wikia\Swift\Process\Runner($processes,$threads,$threadDelay);
 		$runner->run();
 
 		$this->output( sprintf( "\nMigrated %d Wikis in %s\n", $migrated, Wikia::timeDuration( time() - $this->time ) ) );
@@ -149,7 +179,16 @@ class MigrateWikisToSwift3 extends Maintenance {
 	}
 
 	protected function getProcess( $cityId, $dbname ) {
-		$opts = "--dry-run --local --dc={$this->dc} --debug" ;
+		$opts = "--local --diff --debug --threads=30" ;
+		$opts .= " --dc={$this->dc}";
+		if ( $this->dryRun ) {
+			$opts .= " --dry-run";
+		} else {
+			$opts .= " --wait --force";
+		}
+		if ( $this->noDeletes ) {
+			$opts .= " --no-deletes";
+		}
 		$logFile = $this->getLogPath($dbname);
 		$cmd = sprintf( self::CMD, $cityId, $opts, $this->getOption('conf'), $logFile );
 		return new \Wikia\Swift\Process\Process($cmd);

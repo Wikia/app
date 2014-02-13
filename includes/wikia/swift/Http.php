@@ -105,8 +105,8 @@ class HttpRunner {
 						$statusCallback($this);
 					}
 				}
-				$this->log(11,sprintf("select_time=%.5f exec_count=%d info_count=%d added_count=%d\n",
-						$st, $i, $j, $k ));
+//				$this->logTrace(11,sprintf("select_time=%.5f exec_count=%d info_count=%d added_count=%d\n",
+//						$st, $i, $j, $k ));
 			} while ($inactiveFor <= 3 || !empty($this->active) );
 		}
 
