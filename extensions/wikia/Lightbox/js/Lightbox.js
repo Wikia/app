@@ -83,7 +83,15 @@ var Lightbox = {
 
 		/* tracking after lightbox has fully loaded */
 		var trackingTitle = Lightbox.current.key;
-		LightboxTracker.track(Wikia.Tracker.ACTIONS.IMPRESSION, '', Lightbox.current.placeholderIdx, {title: trackingTitle, 'carousel-type': Lightbox.current.trackingCarouselType});
+		LightboxTracker.track(
+			Wikia.Tracker.ACTIONS.IMPRESSION,
+			'',
+			Lightbox.current.placeholderIdx,
+			{
+				title: trackingTitle,
+				'carousel-type': Lightbox.current.trackingCarouselType
+			}
+		);
 
 		// attach event handlers
 		Lightbox.bindEvents();
@@ -141,14 +149,30 @@ var Lightbox = {
 					.click();
 
 				var trackingTitle = Lightbox.current.key;
-				LightboxTracker.track(Wikia.Tracker.ACTIONS.CLICK, 'lightboxShare', null, {title: trackingTitle, type: Lightbox.current.type});
+				LightboxTracker.track(
+					Wikia.Tracker.ACTIONS.CLICK,
+					'lightboxShare',
+					null,
+					{
+						title: trackingTitle,
+						type: Lightbox.current.type
+					}
+				);
 
 				Lightbox.openModal.share.shareUrl = json.shareUrl; // cache shareUrl for email share
 				Lightbox.setupShareEmail();
 
 				Lightbox.openModal.share.find('.social-links').on('click', 'a', function() {
 					var shareType = $(this).attr('class');
-					LightboxTracker.track(Wikia.Tracker.ACTIONS.SHARE, shareType, null, {title: trackingTitle, type: Lightbox.current.type});
+					LightboxTracker.track(
+						Wikia.Tracker.ACTIONS.SHARE,
+						shareType,
+						null,
+						{
+							title: trackingTitle,
+							type: Lightbox.current.type
+						}
+					);
 				});
 
 			});
@@ -1023,7 +1047,15 @@ var Lightbox = {
 					shareEmailForm.find('input[type=text]').val('');
 
 					var trackingTitle = Lightbox.current.key; // prevent race conditions from timeout
-					LightboxTracker.track(Wikia.Tracker.ACTIONS.SHARE, 'email', null, {title: trackingTitle, type: Lightbox.current.type});
+					LightboxTracker.track(
+						Wikia.Tracker.ACTIONS.SHARE,
+						'email',
+						null,
+						{
+							title: trackingTitle,
+							type: Lightbox.current.type
+						}
+					);
 				}
 			});
 		}
