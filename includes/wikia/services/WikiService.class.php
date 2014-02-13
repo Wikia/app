@@ -9,6 +9,9 @@ class WikiService extends WikiaModel {
 	const CACHE_VERSION = '5';
 	const MAX_WIKI_RESULTS = 300;
 
+	const MOST_LINKED_CACHE_TTL = 86400; //24h
+	const MOST_LINKED_LIMIT = 50;
+
 	const FLAG_NEW = 1;
 	const FLAG_HOT = 2;
 	const FLAG_PROMOTED = 4;
@@ -403,6 +406,54 @@ class WikiService extends WikiaModel {
 	}
 
 	/**
+	 * @param int $wikiId
+	 * @return array most linked articles
+	 */
+	public function getMostLinkedPages( $wikiId = 0 ) {
+		wfProfileIn( __METHOD__ );
+
+		$wikiId = ( empty($wikiId) ) ? $this->wg->CityId : $wikiId ;
+		$memKey = $this->getMemcKeyMostLinked( $wikiId );
+		$mostLinked = $this->wg->Memc->get( $memKey );
+
+		if ( $mostLinked === false ) {
+			$mostLinked = [];
+			$dbname = WikiFactory::IDtoDB( $wikiId );
+			if ( !empty( $dbname ) ) {
+				$db = wfGetDB( DB_SLAVE, array(), $dbname );
+			} else {
+				$db = wfGetDB( DB_SLAVE );
+			}
+
+			$res = $db->select(
+				array( 'querycache', 'page' ),
+				array( 'page_id', 'qc_value', 'page_title' ),
+				array(
+					'qc_title = page_title',
+					'qc_namespace = page_namespace',
+					'page_is_redirect = 0',
+					'qc_type' => 'Mostlinked',
+					'qc_namespace' => '0'
+				),
+				__METHOD__,
+				array( 'ORDER BY' => 'qc_value DESC', 'LIMIT' => self::MOST_LINKED_LIMIT  )
+			);
+
+			while ( $row = $db->fetchObject( $res ) ) {
+				$mostLinked[ $row->page_id ] = [ 	"page_id" => $row->page_id,
+													"page_title" => $row->page_title,
+													"backlink_cnt" => $row->qc_value ];
+			}
+
+			$this->wg->Memc->set( $memKey, $mostLinked, self::MOST_LINKED_CACHE_TTL );
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $mostLinked;
+	}
+
+	/**
 	 * @param int wiki id
 	 * @param int avatar size
 	 *
@@ -787,6 +838,10 @@ class WikiService extends WikiaModel {
 
 	protected function getMemcKeyTotalImages( $wikiId ) {
 		return wfSharedMemcKey( 'wiki_total_images', $wikiId );
+	}
+
+	protected function getMemcKeyMostLinked( $wikiId ) {
+		return wfSharedMemcKey( 'wiki_most_linked', $wikiId );
 	}
 
 	public function invalidateCacheTotalImages( $wikiId = 0 ) {
