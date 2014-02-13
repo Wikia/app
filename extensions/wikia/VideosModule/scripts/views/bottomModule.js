@@ -38,25 +38,30 @@ define( 'videosmodule.views.bottomModule', [
 	}
 
 	VideoModule.prototype.init = function() {
+		var self = this;
 		if ( !groupParams ) {
 			// Add tracking for GROUP_I, Control Group
 			return false;
 		}
-		this.model.fetch( groupParams.verticalOnly );
+		this.data = this.model.fetch( groupParams.verticalOnly );
 		// Sloth is a lazy loading service that waits till an element is visisble to load more content
 		sloth( {
 			on: this.el,
 			threshold: 200,
-			callback: $.proxy( this.render, this )
+			callback: function() {
+				self.bindFetchComplete();
+			}
+		} );
+	};
+
+	VideoModule.prototype.bindFetchComplete = function() {
+		var self = this;
+		return this.data.complete( function() {
+			self.render();
 		} );
 	};
 
 	VideoModule.prototype.render = function() {
-		$.when( this.model.fetch() )
-			.done( $.proxy( this.renderWithData, this ) );
-	};
-
-	VideoModule.prototype.renderWithData = function() {
 		var i,
 			$out,
 			videos = this.model.data.videos,
@@ -90,6 +95,7 @@ define( 'videosmodule.views.bottomModule', [
 		} else {
 			this.$el.before( $out );
 		}
+
 		$( '#videosModule' ).addClass( groupParams.rows > 1 ? 'rows-2' : 'rows-1' );
 		track();
 	};

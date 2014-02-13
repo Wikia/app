@@ -176,8 +176,8 @@ class VideosModule extends WikiaModel {
 
 			foreach( $videosDetail as $video ) {
 				$videoList[] = [
-					'title' => $video['fileTitle'],
-					'fileUrl'   => $video['fileUrl'],
+					'title'     => $video['fileTitle'],
+					'url'       => $video['fileUrl'],
 					'thumbnail' => $video['thumbnail'],
 				];
 			}
