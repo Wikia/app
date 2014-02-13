@@ -1,8 +1,11 @@
-/*global Lightbox:true, LightboxTracker:true*/
+/*global Lightbox:true */
 
 (function(window, $){
+'use strict';
 
-var LightboxLoader = {
+var LightboxLoader, LightboxTracker;
+
+LightboxLoader = {
 	// cached thumbnail arrays and detailed info
 	cache: {
 		articleMedia: [], // Article Media
@@ -73,9 +76,16 @@ var LightboxLoader = {
 					fileKey = $thumb.attr('data-image-key') || $thumb.attr('data-video-key'),
 					parent,
 					isVideo,
-					trackingInfo;
+					trackingInfo,
+					$slideshowImg,
+					clickSource;
 
-				if( $this.hasClass('link-internal') || $this.hasClass('link-external') || $thumb.attr('data-shared-help') || $this.hasClass( 'no-lightbox' ) ) {
+				if(
+					$this.hasClass('link-internal') ||
+					$this.hasClass('link-external') ||
+					$thumb.attr('data-shared-help') ||
+					$this.hasClass( 'no-lightbox' )
+				) {
 					return;
 				}
 
@@ -100,12 +110,17 @@ var LightboxLoader = {
 
 				// Handle edge cases
 
-				// Allow links to open lightbox without a thumbnail. The link itself must contain data-image-key. Used in RelatedVideos.
+				// Allow links to open lightbox without a thumbnail. The link itself must contain data-image-key.
+				// Used in RelatedVideos.
 				if($this.hasClass('lightbox-link-to-open')) {
 					fileKey = $this.attr('data-image-key') || $this.attr('data-video-key');
 				// TODO: refactor wikia slideshow
 				} else if($this.hasClass('wikia-slideshow-popout')) {
-					var $slideshowImg = $this.parents('.wikia-slideshow-toolbar').siblings('.wikia-slideshow-images-wrapper').find('li:visible').find('img').first();
+					$slideshowImg = $this.parents('.wikia-slideshow-toolbar')
+						.siblings('.wikia-slideshow-images-wrapper')
+						.find('li:visible')
+						.find('img')
+						.first();
 					fileKey = $slideshowImg.attr('data-image-name') || $slideshowImg.attr('data-video-name');
 				}
 
@@ -124,7 +139,9 @@ var LightboxLoader = {
 				// Display video inline, don't open lightbox
 				isVideo = $this.children('.Wikia-video-play-button').length;
 				if(isVideo && $thumb.width() >= that.videoThumbWidthThreshold && !$this.hasClass('force-lightbox')) {
-					var clickSource = window.wgWikiaHubType ? LightboxTracker.clickSource.HUBS : LightboxTracker.clickSource.EMBED;
+					clickSource = window.wgWikiaHubType ?
+						LightboxTracker.clickSource.HUBS :
+						LightboxTracker.clickSource.EMBED;
 					LightboxLoader.displayInlineVideo($this, $thumb, fileKey, clickSource);
 					return;
 				}
@@ -134,18 +151,24 @@ var LightboxLoader = {
 			});
 
 		// TODO: refactor wikia slideshow (BugId:43483)
-		article.on('click.lightbox', '.wikia-slideshow-images .thumbimage, .wikia-slideshow-images .wikia-slideshow-image', function(e) {
-			e.preventDefault();
-			$(this).closest('.wikia-slideshow-wrapper').find('.wikia-slideshow-popout').click();
-		});
+		article.on(
+			'click.lightbox',
+			'.wikia-slideshow-images .thumbimage, .wikia-slideshow-images .wikia-slideshow-image',
+			function(e) {
+				e.preventDefault();
+				$(this).closest('.wikia-slideshow-wrapper').find('.wikia-slideshow-popout').click();
+			}
+		);
 
 	},
 
 	/**
 	 * @param {String} mediaTitle The name of the file to be loaded in the Lightbox
-	 * @param {Object} trackingInfo Any info we've already gathered for tracking purposes.  Will be fed to Lightbox.getClickSource for processing
+	 * @param {Object} trackingInfo Any info we've already gathered for tracking purposes.
+	 * Will be fed to Lightbox.getClickSource for processing
 	 */
 	loadLightbox: function(mediaTitle, trackingInfo) {
+		var openModal, lightboxParams, deferredList, resources, deferredTemplate;
 		// restore inline videos to default state, because flash players overlaps with modal
 		LightboxLoader.removeInlineVideos();
 		LightboxLoader.lightboxLoading = true;
@@ -154,28 +177,28 @@ var LightboxLoader = {
 		LightboxLoader.pageAds.css('visibility','hidden');
 
 		// Display modal with default dimensions
-		var openModal = $('<div>').makeModal(LightboxLoader.defaults);
+		openModal = $('<div>').makeModal(LightboxLoader.defaults);
 		openModal.find('.modalContent').startThrobbing();
 
-		var lightboxParams = {
+		lightboxParams = {
 			key: mediaTitle,
 			modal: openModal
 		};
 
 		$.extend(lightboxParams, trackingInfo);
 
-		var deferredList = [];
+		deferredList = [];
 		if(!LightboxLoader.assetsLoaded) {
 			deferredList.push($.loadMustache());
 
-			var resources = [
+			resources = [
 				$.getSassCommonURL('/extensions/wikia/Lightbox/css/Lightbox.scss'),
 				window.wgExtensionsPath + '/wikia/Lightbox/js/Lightbox.js'
 			];
 
 			deferredList.push($.getResources(resources));
 
-			var deferredTemplate = $.Deferred();
+			deferredTemplate = $.Deferred();
 			$.nirvana.sendRequest({
 				controller:	'Lightbox',
 				method:		'lightboxModalContent',
@@ -184,7 +207,7 @@ var LightboxLoader = {
 				data: {
 					lightboxVersion: window.wgStyleVersion,
 					userLang: window.wgUserLanguage // just in case user changes language prefs
- 				},
+				},
 				callback: function(html) {
 					LightboxLoader.templateHtml = html;
 					deferredTemplate.resolve();
@@ -194,11 +217,13 @@ var LightboxLoader = {
 			deferredList.push( deferredTemplate );
 		}
 
-		deferredList.push(LightboxLoader.getMediaDetailDeferred({fileTitle: mediaTitle}));	// NOTE: be careful with this, look below where it says LASTINDEX
+		// NOTE: be careful with this, look below where it says LASTINDEX
+		deferredList.push(LightboxLoader.getMediaDetailDeferred({fileTitle: mediaTitle}));
 
 		$.when.apply(this, deferredList).done(function() {
 			LightboxLoader.assetsLoaded = true;
-			Lightbox.initialFileDetail = arguments[arguments.length - 1];	// LASTINDEX: index is last-index due to how deferred resolve works in mulitiple deferred objects
+			// LASTINDEX: index is last-index due to how deferred resolve works in mulitiple deferred objects
+			Lightbox.initialFileDetail = arguments[arguments.length - 1];
 			Lightbox.makeLightbox(lightboxParams);
 		});
 
@@ -217,8 +242,8 @@ var LightboxLoader = {
 			height: targetChildImg.height(),
 			width: targetChildImg.width()
 		}, function(json) {
-			var	embedCode = json['videoEmbedCode'],
-				inlineDiv = $('<div class='inline-video'></div>').insertAfter(target.hide());
+			var	embedCode = json.videoEmbedCode,
+				inlineDiv = $('<div class="inline-video"></div>').insertAfter(target.hide());
 
 			require(['wikia.videoBootstrap'], function (VideoBootstrap) {
 				self.videoInstance = new VideoBootstrap(inlineDiv[0], embedCode, clickSource);
@@ -227,7 +252,16 @@ var LightboxLoader = {
 			// save references for inline video removal later
 			LightboxLoader.inlineVideoLinks = target.add(LightboxLoader.inlineVideoLinks);
 			LightboxTracker.inlineVideoTrackingTimeout = setTimeout(function() {
-				LightboxTracker.track(Wikia.Tracker.ACTIONS.VIEW, 'video-inline', null, {title:json.title, provider: json.providerName, clickSource: clickSource});
+				LightboxTracker.track(
+					Wikia.Tracker.ACTIONS.VIEW,
+					'video-inline',
+					null,
+					{
+						title: json.title,
+						provider: json.providerName,
+						clickSource: clickSource
+					}
+				);
 			}, 1000);
 
 			LightboxLoader.inlineVideoLoading.splice($.inArray(mediaTitle, LightboxLoader.inlineVideoLoading), 1);
@@ -241,7 +275,7 @@ var LightboxLoader = {
 	},
 
 	getMediaDetail: function(mediaParams, callback, nocache) {
-		var title = mediaParams['fileTitle'];
+		var title = mediaParams.fileTitle;
 
 		if(!nocache && LightboxLoader.cache.details[title]) {
 			callback(LightboxLoader.cache.details[title]);
@@ -318,7 +352,7 @@ var LightboxLoader = {
 
 };
 
-var LightboxTracker = {
+LightboxTracker = {
 	inlineVideoTrackingTimeout: 0,
 	// @param data - any extra params we want to pass to internal tracking
 	// Don't add willy nilly though... check with Jonathan.
