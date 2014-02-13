@@ -143,7 +143,9 @@ class WikiaPageType {
 	 * @return bool
 	 */
 	public static function isWikiaHub() {
-		return HubService::isCurrentPageAWikiaHub();
+		global $wgEnableWikiaHubsV3Ext;
+
+		return HubService::isCurrentPageAWikiaHub() || !empty( $wgEnableWikiaHubsV3Ext );
 	}
 
 	/**
@@ -154,7 +156,7 @@ class WikiaPageType {
 	public static function isWikiaHomePage() {
 		global $wgEnableWikiaHomePageExt;
 
-		return !empty( $wgEnableWikiaHomePageExt ) && self::isMainPage();
+		return !empty( $wgEnableWikiaHomePageExt );
 	}
 
 	/**

@@ -352,7 +352,7 @@ class BodyController extends WikiaController {
 				$this->headerModuleAction = 'BlogListing';
 			}
 		// show corporate header on this page?
-		} else if( HubService::isCorporatePage() ) {
+		} else if( WikiaPageType::isCorporatePage() ) {
 			$this->headerModuleName = 'PageHeader';
 
 			if( self::isEditPage() ) {
