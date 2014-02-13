@@ -27,7 +27,7 @@ define(
 				hop({method: 'hop'}, 'Null');
 			}
 
-			wikiaGpt.pushAd(slotname, success, hopToNull, srcName);
+			wikiaGpt.pushAd(slotname, success, (window.wgEnableRHonMobile ? hop : hopToNull), srcName);
 			wikiaGpt.flushAds();
 		}
 
