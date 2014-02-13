@@ -15,6 +15,10 @@ $apiDocs-large-icon-size: 50px;
 		width: $apiDocs-large-icon-size;
 	}
 
+	&.cc {
+		background-image: url("/extensions/wikia/ApiDocs/files/license/cc.png"); /* base64 */
+	}
+
 	&.cc-by {
 		background-image: url("/extensions/wikia/ApiDocs/files/license/cc-by.png"); /* base64 */
 	}
@@ -41,6 +45,10 @@ $apiDocs-large-icon-size: 50px;
 }
 
 a:hover .icon {
+	&.cc {
+		background-image: url("/extensions/wikia/ApiDocs/files/license/cc-dark.png"); /* base64 */
+	}
+
 	&.cc-by {
 		background-image: url("/extensions/wikia/ApiDocs/files/license/cc-by-dark.png"); /* base64 */
 	}
