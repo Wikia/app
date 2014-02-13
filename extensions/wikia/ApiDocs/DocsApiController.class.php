@@ -41,6 +41,7 @@ class DocsApiController extends WikiaController {
 		} else {
 			$licenseWarning = $this->app->renderView("ApiDocsController", "licenseWarning", []);
 			$this->getResponse()->setVal("licenseWarning", $licenseWarning);
+			$this->getResponse()->setVal("bodyData", ' data-disabled="true" ');
 		}
 	}
 
