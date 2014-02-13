@@ -190,10 +190,10 @@ use Swagger\Annotations as SWG;
  * 				),
  * 				@SWG\Parameter(
  * 					name="lang",
- * 					description="The two chars wiki language code, (eg.: en, de, fr)",
+ * 					description="The two chars wiki language code, (eg.: en, de, fr). Handles multiple value",
  * 					paramType="query",
  * 					required="true",
- * 					allowMultiple="false",
+ * 					allowMultiple="true",
  * 					dataType="string",
  * 					defaultValue="en"
  * 				),
