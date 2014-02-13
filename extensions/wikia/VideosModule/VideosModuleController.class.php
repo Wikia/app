@@ -10,9 +10,9 @@ class VideosModuleController extends WikiaController {
 	 * related to the article page. If that's not enough add premium videos related
 	 * to the local wiki. Finally, if still more or needed, get trending premium
 	 * videos related to the vertical of the wiki.
-	 * @requestParam integer articleId (required if verticalonly is false)
+	 * @requestParam integer articleId (required if verticalOnly is false)
 	 * @requestParam integer limit - number of videos shown in the module
-	 * @requestParam string verticalonly [true/false] - show vertical videos only
+	 * @requestParam string verticalOnly [true/false] - show vertical videos only
 	 * @responseParam string $result [ok/error]
 	 * @responseParam string $msg - result message
 	 * @responseParam array $videos - list of videos
@@ -21,7 +21,7 @@ class VideosModuleController extends WikiaController {
 		wfProfileIn( __METHOD__ );
 
 		$articleId = $this->request->getVal( 'articleId', 0 );
-		$showVerticalOnly = ( $this->request->getVal( 'verticalonly' ) == 'true' );
+		$showVerticalOnly = ( $this->request->getVal( 'verticalOnly' ) == 'true' );
 		$numRequired = $this->request->getVal( 'limit', self::VIDEOS_PER_PAGE );
 
 		$videos = [];
