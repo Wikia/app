@@ -164,7 +164,7 @@ class HttpRunner {
 
 }
 
-class SimpleHttpGetReqeuest {
+class SimpleHttpGetRequest {
 	protected $hostnames;
 	protected $url;
 	protected $retryLimit;

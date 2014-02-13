@@ -19,8 +19,8 @@ class Runner {
 		$lastSpawned = 0;
 		while ( !empty($this->queue) || !empty($this->active) ) {
 			while ( !empty($this->queue) && count($this->active) < $this->threads ) {
-				if ( $this->delay !== 0 ) {
-					if ( $lastSpawned + $this->delay >= time() ) {
+				if ( $this->delay != 0 ) {
+					if ( $lastSpawned + $this->delay > time() ) {
 						break;
 					}
 				}

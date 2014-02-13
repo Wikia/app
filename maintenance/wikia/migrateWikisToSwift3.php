@@ -30,8 +30,7 @@ class MigrateWikisToSwift3 extends Maintenance {
 	const DELAY_DEFAULT = 0;
 
 	const SCRIPT_PATH = '/var/log/migration_queue';
-	const CMD = '/bin/bash -c "SERVER_ID=%d php -ddisplay_errors=1 migrateImagesToSwift_bulk.php %s --conf %s" >> %s 2>&1';
-	
+
 	private $disabled_wikis = [ 717284, 298117 ];
 	private $db;
 	
@@ -41,6 +40,7 @@ class MigrateWikisToSwift3 extends Maintenance {
 	private $dc = null;
 	private $dryRun = null;
 	private $noDeletes = null;
+	private $calculateMd5 = null;
 
 	/**
 	 * Set script options
@@ -57,6 +57,7 @@ class MigrateWikisToSwift3 extends Maintenance {
 		$this->addOption( 'force', 'Perform the migration even if $wgEnableSwiftFileBackend = true' );
 		$this->addOption( 'dry-run', 'Perform file uploads but don\'t switch wiki to Swift' );
 		$this->addOption( 'no-deletes', 'Do not remove orphans in ceph' );
+		$this->addOption( 'md5', 'Calculate md5 of files only' );
 		$this->addOption( 'dc', 'Target datacenter(s), comma-separated list (default: local datacenter)' );
 		$this->mDescription = 'Migrate images for all Wikis';
 	}
@@ -80,6 +81,7 @@ class MigrateWikisToSwift3 extends Maintenance {
 		$wikis = $this->getOption( 'wiki', null );
 		$this->dryRun = $this->hasOption('dry-run');
 		$this->noDeletes = $this->hasOption('no-deletes');
+		$this->calculateMd5 = $this->hasOption('md5');
 
 		$this->dc = $this->getOption('dc','sjc,res');
 
@@ -165,11 +167,18 @@ class MigrateWikisToSwift3 extends Maintenance {
 		$this->output( "Building list of processes to run...\n");
 		$processes = array();
 		foreach ( $queue as $id => $dbname ) {
-			$processes[] = $this->getProcess($id,$dbname);
+			if ( $this->calculateMd5 ) {
+				$process = $this->getMd5Process($id,$dbname);
+			} else {
+				$process = $this->getMigrationProcess($id,$dbname);
+			}
+			$processes[] = $process;
 		}
 
 		$threads = $this->getOption('threads',self::THREADS_DEFAULT);
+		$threads = intval($threads);
 		$threadDelay = $this->getOption('delay',self::DELAY_DEFAULT);
+		$threadDelay = intval($threadDelay);
 		$this->output( "Using {$threads} threads...\n");
 		$runner = new \Wikia\Swift\Process\Runner($processes,$threads,$threadDelay);
 		$runner->run();
@@ -178,7 +187,17 @@ class MigrateWikisToSwift3 extends Maintenance {
 		$this->output( "\nDone!\n" );
 	}
 
-	protected function getProcess( $cityId, $dbname ) {
+	const CMD_MD5 = '/bin/bash -c "SERVER_ID=%d php -ddisplay_errors=1 calculateImagesMd5.php %s --conf %s" >> %s 2>&1';
+	protected function getMd5Process( $cityId, $dbname ) {
+		$opts = "--local --debug" ;
+//		$logFile = $this->getLogPath($dbname);
+		$logFile = '/dev/null';
+		$cmd = sprintf( self::CMD_MD5, $cityId, $opts, $this->getOption('conf'), $logFile );
+		return new \Wikia\Swift\Process\Process($cmd);
+	}
+
+	const CMD_MIGRATION = '/bin/bash -c "SERVER_ID=%d php -ddisplay_errors=1 migrateImagesToSwift_bulk.php %s --conf %s" >> %s 2>&1';
+	protected function getMigrationProcess( $cityId, $dbname ) {
 		$opts = "--local --diff --debug --threads=30" ;
 		$opts .= " --dc={$this->dc}";
 		if ( $this->dryRun ) {
@@ -190,7 +209,7 @@ class MigrateWikisToSwift3 extends Maintenance {
 			$opts .= " --no-deletes";
 		}
 		$logFile = $this->getLogPath($dbname);
-		$cmd = sprintf( self::CMD, $cityId, $opts, $this->getOption('conf'), $logFile );
+		$cmd = sprintf( self::CMD_MIGRATION, $cityId, $opts, $this->getOption('conf'), $logFile );
 		return new \Wikia\Swift\Process\Process($cmd);
 	}
 }

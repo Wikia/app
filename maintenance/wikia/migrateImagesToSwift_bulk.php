@@ -43,6 +43,7 @@ class MigrateImagesToSwiftBulk2 extends Maintenance {
 
 	private $shortBucketNameFixed = false;
 
+	private $areUploadsDisabled = false;
 	/** @var \Wikia\Swift\File\Md5Cache $md5Cache */
 	private $md5Cache;
 
@@ -410,6 +411,8 @@ class MigrateImagesToSwiftBulk2 extends Maintenance {
 
 		// block uploads via WikiFactory
 		if (!$isDryRun) {
+			register_shutdown_function(array($this,'unlockWiki'));
+			$this->areUploadsDisabled = true;
 			WikiFactory::setVarByName( 'wgEnableUploads',     $wgCityId, false, self::REASON );
 			WikiFactory::setVarByName( 'wgUploadMaintenance', $wgCityId, true,  self::REASON );
 
@@ -534,6 +537,7 @@ class MigrateImagesToSwiftBulk2 extends Maintenance {
 		// wgEnableUploads = true / wgUploadMaintenance = false (remove values from WF to give them the default value)
 		WikiFactory::removeVarByName( 'wgEnableUploads',     $wgCityId, self::REASON );
 		WikiFactory::removeVarByName( 'wgUploadMaintenance', $wgCityId, self::REASON );
+		$this->areUploadsDisabled = false;
 
 		$this->output( "\nUploads and image operations enabled\n" );
 
@@ -613,6 +617,15 @@ class MigrateImagesToSwiftBulk2 extends Maintenance {
 		}
 
 		$this->logInfo("Finished migration.");
+	}
+
+	public function unlockWiki() {
+		global $wgCityId;
+		if ( $this->areUploadsDisabled ) {
+			WikiFactory::removeVarByName( 'wgEnableUploads',     $wgCityId, self::REASON );
+			WikiFactory::removeVarByName( 'wgUploadMaintenance', $wgCityId, self::REASON );
+			$this->areUploadsDisabled = false;
+		}
 	}
 
 }
