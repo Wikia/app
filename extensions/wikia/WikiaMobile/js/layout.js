@@ -53,7 +53,7 @@ function ( sections, media, cache, loader, lazyload, $, sloth, topbar ) {
 
 	sloth( {
 		on: document.getElementsByClassName( 'lazy' ),
-		threshold: 300,
+		threshold: 400,
 		callback: lazyload
 	} );
 
