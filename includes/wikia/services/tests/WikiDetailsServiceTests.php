@@ -24,7 +24,8 @@ class WikiDetailsServiceTests extends WikiaBaseTest {
 		$this->assertEquals( '', $res );
 		$res = $method->invoke( $wikiDetailService, $text, 1000 );
 		$this->assertEquals( $text, $res );
+		$res = $method->invoke( $wikiDetailService, $text, -1 );
+		$this->assertEquals( '', $res );
 	}
-
 
 }

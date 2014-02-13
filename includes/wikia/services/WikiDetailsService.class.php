@@ -235,6 +235,7 @@ class WikiDetailsService extends WikiService {
 	 */
 	protected function getSnippet( $text, $length = null ) {
 		if ( $length !== null ) {
+			$length = max( $length, 0 );
 			return implode( ' ', array_slice( explode( ' ', $text ), 0, $length ) );
 		}
 		return $text;
