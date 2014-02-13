@@ -377,7 +377,7 @@ LightboxTracker = {
 		SHARE: 'share',
 		HUBS: 'hubs',
 		OTHER: 'other',
-		VIDEOSMODULE: 'videosModule'
+		VIDEOSMODULE: 'bottomVideosModule'
 	}
 };
 
