@@ -100,10 +100,11 @@ class ThumbnailVideoController extends WikiaController {
 			$linkClasses[] = 'hide-play';
 		}
 
+		/** @var Title $title */
 		$title = $file->getTitle();
 
 		// get href for a tag
-		$linkHref = $title->getLocalURL();
+		$linkHref = $title->getFullURL();
 
 		// this is used for video thumbnails on file page history tables to insure you see the older version of a file when thumbnail is clicked.
 		if ( $file instanceof OldLocalFile ) {
