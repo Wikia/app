@@ -16,7 +16,7 @@ class WikiDetailsService extends WikiService {
 	protected $themeSettings;
 
 	/**
-	 * Returns detailed informations about wiki
+	 * Returns detailed information about wiki
 	 * @param $wikiId
 	 * @param int $width Wikia image width
 	 * @param int $height Wikia image height
