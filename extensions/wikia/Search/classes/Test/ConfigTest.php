@@ -1098,7 +1098,7 @@ class ConfigTest extends BaseTest {
 		);
 		$this->assertEquals(
 				$config,
-				$config->setABTestGroup( 'A' )
+				$config->setBoostGroup( 'A' )
 		);
 		$this->assertAttributeEquals(
 				'A',
@@ -1107,7 +1107,7 @@ class ConfigTest extends BaseTest {
 		);
 		$this->assertEquals(
 				'A',
-				$config->getABTestGroup()
+				$config->getBoostGroup()
 		);
 	}
 	
@@ -1134,7 +1134,7 @@ class ConfigTest extends BaseTest {
 	 */
 	public function testGetTestProfileExplicitBase() {
 		$config = new Config;
-		$config->setABTestGroup( 'Base' );
+		$config->setBoostGroup( 'Base' );
 		$this->assertInstanceOf(
 				'Wikia\Search\TestProfile\Base',
 				$config->getTestProfile(),
@@ -1149,7 +1149,7 @@ class ConfigTest extends BaseTest {
 	 */
 	public function testGetTestProfileWithTestGroup() {
 		$config = new Config;
-		$config->setABTestGroup( 'A' );
+		$config->setBoostGroup( 'A' );
 		$this->assertInstanceOf(
 				'Wikia\Search\TestProfile\GroupA',
 				$config->getTestProfile(),
@@ -1163,7 +1163,7 @@ class ConfigTest extends BaseTest {
 	 */
 	public function testGetTestProfileNonexistentTestGroup() {
 		$config = new Config;
-		$config->setABTestGroup( 'THIS_AINT_NO_TEST_GROUP' );
+		$config->setBoostGroup( 'THIS_AINT_NO_TEST_GROUP' );
 		$this->assertInstanceOf(
 				'Wikia\Search\TestProfile\Base',
 				$config->getTestProfile(),

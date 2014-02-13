@@ -127,7 +127,7 @@ class Config
 	 * Null means we aren't participating in a test.
 	 * @var string
 	 */
-	protected $ABTestGroup;
+	protected $boostGroup;
 
 	/**
 	 * Storage for client-configured requested fields
@@ -1044,8 +1044,8 @@ class Config
 	 * @param string $group
 	 * @return Wikia\Search\Config
 	 */
-	public function setABTestGroup( $group ) {
-		$this->ABTestGroup = $group;
+	public function setBoostGroup( $group ) {
+		$this->boostGroup = $group;
 		return $this;
 	}
 
@@ -1054,8 +1054,8 @@ class Config
 	 * Null means that we aren't performing an A/B test right now.
 	 * @return string
 	 */
-	public function getABTestGroup() {
-		return $this->ABTestGroup;
+	public function getBoostGroup() {
+		return $this->boostGroup;
 	}
 
 	/**
@@ -1066,7 +1066,7 @@ class Config
 	protected function initiateTestProfile() {
 		$nsPrefix = '\\Wikia\\Search\\TestProfile\\';
 		$class = "{$nsPrefix}Base";
-		$abTestGroup = $this->getABTestGroup();
+		$abTestGroup = $this->getBoostGroup();
 		if ( $abTestGroup !== null && class_exists( "{$nsPrefix}Group{$abTestGroup}" ) ) {
 			$class = "{$nsPrefix}Group{$abTestGroup}";
 		}

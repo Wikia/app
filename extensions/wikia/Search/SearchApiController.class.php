@@ -162,7 +162,7 @@ class SearchApiController extends WikiaApiController {
 			->setLanguageCode( $request->getArray( 'lang' ) )
 		;
 		//this will set different boosting
-		$searchConfig->setABTestGroup( 'CrossWikiApi' );
+		$searchConfig->setBoostGroup( 'CrossWikiApi' );
 		return $searchConfig;
 	}
 }
