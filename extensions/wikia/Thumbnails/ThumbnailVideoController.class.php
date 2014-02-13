@@ -216,13 +216,19 @@ class ThumbnailVideoController extends WikiaController {
 
 	/**
 	 * Get attributes for mustache template
+	 * Note: wrap attributes in three curly braces to unescape html.
+	 * Ex: {{# attrs }}{{{ . }}} {{/ attrs }}
 	 * @param array $attrs [ array( key => value ) ]
-	 * @return array $attribs [ array( "key='value'" ) ]
+	 * @return array [ array( 'key="value"' ) ]
 	 */
 	protected function getAttribs( $attrs ) {
 		$attribs = [];
 		foreach ( $attrs as $key => $value ) {
-			$attribs[] = "$key='$value'";
+			$str = $key;
+			if ( $value ) {
+				$str .= "=" . '"' . $value . '"';
+			}
+			$attribs[] = $str;
 		}
 
 		return $attribs;
