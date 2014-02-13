@@ -7,6 +7,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'wam-html-title' => 'Wikia Activity Monitor (WAM) - Wikia.com/WAM',
 	'wampage-header' => 'Wam',
 	'wam-Gaming' => 'Video Games',
 	'wam-Entertainment' => 'Entertainment',
@@ -58,6 +59,7 @@ Please contact community support at [mailto:support@wikia-inc.com support@wikia-
 );
 
 $messages['qqq'] = array(
+	'wam-html-title' => 'Title for the WAM pages',
 	'wampage-header' => 'Header of the /wam page on corporate wiki',
 	'wampage-header-faq' => 'Header of the /wam/faq page on corporate wiki',
 	'wampage-content' => 'Content of the /wam page on corporate wiki',
@@ -68,6 +70,7 @@ $messages['qqq'] = array(
 
 
 $messages['fr'] = array(
+	'wam-html-title' => 'Moniteur d\'Activité Wikia (WAM) - fr.wikia.com/WAM',
 	'wampage-header' => 'WAM',
 	'wam-Gaming' => 'Jeux vidéo',
 	'wam-Entertainment' => 'Divertissement',
@@ -119,6 +122,7 @@ Veuillez contacter le support de la communauté via [mailto:support@wikia-inc.co
 );
 
 $messages['de'] = array(
+	'wam-html-title' => 'Wikia Aktivitätsmonitor (WAM) - de.wikia.com/WAM',
 	'wampage-header' => 'Wikia Aktivitätsmonitor (WAM)',
 	'wam-Gaming' => 'Videospiele',
 	'wam-Entertainment' => 'Entertainment',
@@ -177,6 +181,7 @@ Dem Community-Team unter [mailto:support@wikia-inc.com support@wikia-inc.com].',
 );
 
 $messages['es'] = array(
+	'wam-html-title' => 'Monitor de Actividad de Wikia (WAM) - es.wikia.com/WAM',
 	'wampage-header' => 'WAM',
 	'wam-Gaming' => 'Videojuegos',
 	'wam-Entertainment' => 'Entretenimiento',
@@ -229,6 +234,7 @@ Por favor, ponte en contacto con el equipo de soporte comunitario en [mailto:sup
 );
 
 $messages['pl'] = array(
+	'wam-html-title' => 'Wikia Activity Monitor (WAM) - pl.wikia.com/WAM',
 	'wampage-header' => 'WAM',
 	'wam-Gaming' => 'Gry',
 	'wam-Entertainment' => 'Rozrywka',
@@ -274,7 +280,8 @@ WAM aktualizowany jest codziennie, a 5000 najwyżej ocenionych społeczności Wi
 );
 
 $messages['ja'] = array(
-	'wampage-header' => 'Wam',
+	'wam-html-title' => 'ウィキアアクティビティモニター(WAM) - ja.wikia.com/WAM',
+	'wampage-header' => 'WAM',
 	'wam-Gaming' => 'ゲーム',
 	'wam-Entertainment' => 'エンターテイメント',
 	'wam-Lifestyle' => 'ライフスタイル',
