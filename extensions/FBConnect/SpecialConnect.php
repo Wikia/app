@@ -558,6 +558,12 @@ class SpecialConnect extends SpecialPage {
 		//}
 
 		$u->setEmail( $this->mEmail );
+
+		// CONN-421: Auto authenticate user's email on FBConnect
+		if ( $this->mEmail ) {
+			$u->setEmailAuthenticationTimestamp( wfTimestampNow() );
+		}
+
 		$u->setRealName( $this->mRealName );
 		$u->setToken();
 
