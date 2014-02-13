@@ -68,6 +68,11 @@ define( 'videosmodule.views.bottomModule', [
 			len = videos.length,
 			thumbHtml = [];
 
+		// If no videos are returned from the server, don't render anything
+		if ( !len ) {
+			return;
+		}
+
 		// AB test set rows shown
 		videos = videos.slice( 0, groupParams.rows > 1 ? 8 : 4 );
 
@@ -91,7 +96,7 @@ define( 'videosmodule.views.bottomModule', [
 			this.$el.before( $out );
 		}
 
-		this.$el.find( '.videos-module' ).addClass( groupParams.rows > 1 ? 'rows-2' : 'rows-1' );
+		$( '#videosModule' ).addClass( groupParams.rows > 1 ? 'rows-2' : 'rows-1' );
 		track();
 	};
 
