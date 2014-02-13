@@ -513,6 +513,34 @@ class ConfigTest extends BaseTest {
 	}
 
 	/**
+	 * @covers \Wikia\Search\Config::getMainPage
+	 * @covers \Wikia\Search\Config::setMainPage
+	 */
+	public function testSetMainPage() {
+		$config = $this->getMock( '\\Wikia\\Search\\Config', [ 'setMainPage', 'getMainPage' ] );
+
+		$config
+			->expects( $this->once() )
+			->method ( 'getMainPage' )
+			->will   ( $this->returnValue( true ) )
+		;
+		$this->assertEquals(
+			true,
+			$config->getMainPage()
+		);
+		$config
+			->expects( $this->once() )
+			->method ( 'setMainPage' )
+			->with   ( true )
+			->will   ( $this->returnValue( $config ) )
+		;
+		$this->assertEquals(
+			$config,
+			$config->setMainPage( true )
+		);
+	}
+
+	/**
 	 * @covers \Wikia\Search\Config::getSearchProfiles
 	 */
 	public function testGetSearchProfiles() {

@@ -10,6 +10,10 @@ class ArticlesApiController extends WikiaApiController {
 
 	const CACHE_VERSION = 15;
 
+	const POPULAR_ARTICLES_PER_WIKI = 10;
+	const POPULAR_ARTICLES_NAMESPACE = 0;
+	const CACHE_MONTH = 108000;
+
 	const MAX_ITEMS = 250;
 	const ITEMS_PER_BATCH = 25;
 	const TOP_WIKIS_FOR_HUB = 10;
@@ -40,6 +44,7 @@ class ArticlesApiController extends WikiaApiController {
 	const CATEGORY_CACHE_ID = 'category';
 	const ARTICLE_CACHE_ID = 'article';
 	const DETAILS_CACHE_ID = 'details';
+	const POPULAR_CACHE_ID = 'popular';
 	const PAGE_CACHE_ID = 'page';
 	const NEW_ARTICLES_CACHE_ID  = 'new-articles';
 
@@ -887,6 +892,77 @@ class ArticlesApiController extends WikiaApiController {
 
 		$response->setFormat("json");
 		$response->setData( $jsonSimple );
+	}
+
+	public function getPopular() {
+		$limit = $this->getRequest()->getInt( self::PARAMETER_LIMIT, self::POPULAR_ARTICLES_PER_WIKI );
+		if ( $limit < 1 || $limit > self::POPULAR_ARTICLES_PER_WIKI ) {
+			throw new OutOfRangeApiException( self::PARAMETER_LIMIT, 1, self::POPULAR_ARTICLES_PER_WIKI );
+		}
+		$key = self::getCacheKey( '', self::POPULAR_CACHE_ID );
+
+		$result = $this->wg->Memc->get( $key );
+		if ( $result === false ) {
+			$result = $this->getResultFromConfig( $this->getConfigFromRequest() );
+			$this->wg->set( $key, $result, self::CACHE_MONTH );
+		}
+
+		$result = array_slice( $result, 0, $limit );
+
+		$response = $this->getResponse();
+		$response->setValues( [ 'items' => $result ] );
+		$this->response->setVal( 'basepath', $this->wg->Server );
+
+		$response->setCacheValidity(
+			self::CACHE_MONTH,
+			self::CACHE_MONTH,
+			array(
+				WikiaResponse::CACHE_TARGET_BROWSER,
+				WikiaResponse::CACHE_TARGET_VARNISH
+			)
+		);
+
+	}
+
+	/**
+	 * Adds to solr result localUrl from title
+	 * @param Config $searchConfig
+	 * @return array
+	 * @throws NotFoundApiException
+	 */
+	protected function getResultFromConfig( Wikia\Search\Config $searchConfig ) {
+		$responseValues = ( new Factory )->getFromConfig( $searchConfig )->searchAsApi( [ 'pageid' => 'id', 'title' ] );
+
+		if ( empty( $responseValues ) ) {
+			throw new NotFoundApiException();
+		}
+
+		foreach ( $responseValues as &$item ) {
+			$title = Title::newFromID( $item[ 'id' ] );
+			if ( $title instanceof Title ) {
+				$item[ 'url' ] = $title->getLocalURL();
+			}
+		}
+
+		return $responseValues;
+	}
+
+	/**
+	 * Inspects request and sets config accordingly.
+	 * @return Wikia\Search\Config
+	 */
+	protected function getConfigFromRequest() {
+		$request = $this->getRequest();
+		$searchConfig = new Wikia\Search\Config;
+		$searchConfig
+			->setLimit( self::POPULAR_ARTICLES_PER_WIKI )
+			->setRank( \Wikia\Search\Config::RANK_MOST_VIEWED )
+			->setOnWiki( true )
+			->setNamespaces( [ self::POPULAR_ARTICLES_NAMESPACE ] )
+			->setQuery( '*' )
+			->setMainPage(false);
+
+		return $searchConfig;
 	}
 
 	static private function getCacheKey( $name, $type, $params = '' ) {

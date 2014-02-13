@@ -107,6 +107,13 @@ class OnWiki extends AbstractDismax
 			$nsQuery .= ( !empty( $nsQuery ) ? ' OR ' : '' ) . Utilities::valueForField( 'ns', $namespace );
 		}
 		$queryClauses[] = "({$nsQuery})";
+
+		$main = $this->config->getMainPage();
+		if($main !== null)
+		{
+			$queryClauses[] = "(+is_main_page:".($main ? 'true' : 'false').")";
+		}
+
 		return sprintf( '(%s)', implode( ' AND ', $queryClauses ) );
 	}
 	
