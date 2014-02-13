@@ -17,6 +17,9 @@ class SearchApiController extends WikiaApiController {
 
 	const PARAMETER_NAMESPACES = 'namespaces';
 
+	/**
+	 * @var \WikiDetailsService|null
+	 */
 	private $wikiDetailService;
 
 	/**
@@ -177,6 +180,9 @@ class SearchApiController extends WikiaApiController {
 		return $searchConfig;
 	}
 
+	/**
+	 * @return \WikiDetailsService
+	 */
 	protected function getWikiDetailsService() {
 		if ( !isset( $this->wikiDetailService ) ) {
 			$this->wikiDetailService = new WikiDetailsService();
