@@ -110,6 +110,58 @@ class WikiServiceTests extends WikiaBaseTest {
 		$this->assertEquals( $image42Url, $result[42]['image_url'] );
 	}
 
+	public function testGetMostLinkedPages() {
+
+		/* mocking MemCache */
+		$mockCache = $this->getMock( 'MemCachedClientforWiki', array( 'get', 'set' ), array( array() ) );
+
+		$mockCache->expects( $this->any() )
+			->method( 'get' )
+			->will( $this->returnValue( false ) );
+
+		$mockCache->expects( $this->any() )
+			->method( 'set' )
+			->will( $this->returnValue( false ) );
+
+		$this->mockGlobalVariable( 'wgMemc', $mockCache );
+
+		/* Mocking DB response */
+		$row1 = new stdClass();
+		$row1->page_id = 100;
+		$row1->page_title = "Abc Page 1";
+		$row1->backlink_cnt = 10;
+
+		$row2 = new stdClass();
+		$row2->page_id = 200;
+		$row2->page_title = "Abc Page 2";
+		$row2->backlink_cnt = 6;
+
+		$mockDb = $this->getMock('DatabaseMysql', array('select','fetchObject'));
+		$mockDb->expects($this->any())->method('select')->will($this->returnValue(false));
+
+		$mockDb->expects($this->at(1))
+				->method('fetchObject')
+				->will($this->returnValue( $row1 ));
+
+		$mockDb->expects($this->at(2))
+			->method('fetchObject')
+			->will($this->returnValue( $row2 ));
+
+		$mockDb->expects($this->at(3))
+			->method('fetchObject')
+			->will($this->returnValue( null ));
+
+		$this->mockGlobalFunction('wfGetDb', $mockDb);
+
+		$wikiService = new WikiService();
+		$result = $wikiService->getMostLinkedPages();
+		$keys = array_keys( $result );
+		$this->assertEquals( count($keys), 2 );
+		foreach ( $keys as $key ) {
+			$this->assertEquals( $key, $result[$key]['page_id'] );
+		}
+	}
+
 	protected function mockMessage( $text, $callCount = 1 ) {
 		$message = $this->getMock('Message', array('text'), array(), '', false);
 		$message->expects($this->exactly($callCount))
