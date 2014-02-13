@@ -20,7 +20,7 @@ define( 'videosmodule.models.videos', [
 			ret = nirvana.getJson( 'VideosModuleController', 'index', {
 				articleId: this.articleId,
 				// TODO: check for argument for AB testing purposes, not needed in final
-				verticalOnly: verticalOnly ? verticalOnly : this.verticalOnly
+				verticalOnly: typeof verticalOnly !== 'undefined' ? verticalOnly : this.verticalOnly
 			} ).done( function( data ) {
 				self.data = data;
 			} );
