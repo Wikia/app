@@ -138,13 +138,22 @@ class InterWiki extends AbstractDismax
 		foreach ( $excludedWikiIds as $excludedWikiId ) {
 			$widQueries[] = Utilities::valueForField( 'wid',  $excludedWikiId, array( 'negate' => true ) );
 		}
-		$queryClauses= array(
-				'lang_s:'.$this->config->getLanguageCode()
-		);
-
+		$queryClauses = [];
+		$langs = $this->config->getLanguageCode();
+		if ( is_array( $langs ) ) {
+			$langsQuery = [];
+			foreach( $langs as $lang ) {
+				$langsQuery[] = 'lang_s:'.$lang;
+			}
+			if ( !empty( $langsQuery ) ) {
+				$queryClauses = [ sprintf( '(%s)', implode( ' OR ', $langsQuery ) ) ];
+			}
+		} else {
+			$queryClauses = [ 'lang_s:'.$langs ];
+		}
 		$hub = $this->config->getHub();
 		if (! empty( $hub ) ) {
-		    $queryClauses[] = Utilities::valueForField( 'hub', $hub );
+			$queryClauses[] = Utilities::valueForField( 'hub', $hub );
 		}
 		return sprintf( '%s', implode( ' AND ', $queryClauses ) );
 	}

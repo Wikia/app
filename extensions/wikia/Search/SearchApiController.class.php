@@ -159,7 +159,7 @@ class SearchApiController extends WikiaApiController {
 			->setRank( $request->getVal( 'rank', 'default' ) )
 			->setInterWiki( true )
 			->setCommercialUse( $this->hideNonCommercialContent() )
-			->setLanguageCode( $request->getVal( 'lang' ) )
+			->setLanguageCode( $request->getArray( 'lang' ) )
 		;
 		return $searchConfig;
 	}

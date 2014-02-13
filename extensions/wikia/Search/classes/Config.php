@@ -1103,7 +1103,7 @@ class Config
 
 	/**
 	 * Setter for language code
-	 * @param $code string language code to set
+	 * @param string|Array $code language code to set
 	 * @return $this
 	 */
 	public function setLanguageCode( $code ) {
