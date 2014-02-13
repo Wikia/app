@@ -76,7 +76,7 @@ define( 'videosmodule.views.bottomModule', [
 		// AB test set rows shown
 		videos = videos.slice( 0, groupParams.rows > 1 ? 8 : 4 );
 
-		for ( i = 0; i < len; i++ ) {
+		for ( i = 0; i < ( groupParams.rows * 4 ); i++ ) {
 			thumbHtml.push( new TitleThumbnailView( {
 				el: 'li',
 				model: videos[i],
