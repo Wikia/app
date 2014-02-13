@@ -37,7 +37,6 @@ $wgHooks['RecentChange_save']        [] = "Wikia::recentChangesSave";
 $wgHooks['BeforeInitialize']         [] = "Wikia::onBeforeInitializeMemcachePurge";
 //$wgHooks['MediaWikiPerformAction']   [] = "Wikia::onPerformActionNewrelicNameTransaction"; disable to gather different newrelic statistics
 $wgHooks['SkinTemplateOutputPageBeforeExec'][] = "Wikia::onSkinTemplateOutputPageBeforeExec";
-$wgHooks['OutputPageCheckLastModified'][] = 'Wikia::onOutputPageCheckLastModified';
 $wgHooks['UploadVerifyFile']         [] = 'Wikia::onUploadVerifyFile';
 
 # User hooks
@@ -1948,21 +1947,6 @@ class Wikia {
 				array( 'target' => $title->getText() )
 			);
 		}
-		return true;
-	}
-
-	/**
-	 * Force article Last-Modified header to include modification time of app and config repos
-	 *
-	 * @param $modifiedTimes array List of components modification time
-	 * @return true
-	 */
-	public static function onOutputPageCheckLastModified( &$modifiedTimes ) {
-		global $IP, $wgWikiaConfigDirectory;
-
-		$modifiedTimes['wikia_app'] = filemtime("$IP/includes/specials/SpecialVersion.php");
-		$modifiedTimes['wikia_config'] = filemtime("$wgWikiaConfigDirectory/CommonSettings.php");
-
 		return true;
 	}
 
