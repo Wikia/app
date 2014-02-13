@@ -56,7 +56,7 @@
 							addEvent();
 						}, debounce );
 					}
-					console.time('sloth')
+
 					// in IE10 window.scrollY doesn't work
 					// but window.pageYOffset is basically the same
 					// https://developer.mozilla.org/en-US/docs/Web/API/window.scrollY
@@ -71,7 +71,6 @@
 							branches.splice( i, 1 );
 						}
 					}
-					console.timeEnd('sloth')
 				}
 			};
 
