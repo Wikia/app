@@ -30,3 +30,35 @@ $itemPadding: 6px;
 		}
 	}
 }
+
+.related-article {
+	display: block;
+	border-top: 1px solid $border-color;
+	border-bottom: 1px solid $border-color;
+	margin-top: 25px;
+	color: $page-text-color;
+
+	.header {
+		font: {
+			size: 1.2rem;
+			weight: 800;
+		}
+
+		padding: 15px 0;
+	}
+
+	.lazy {
+		border: none;
+		display: block;
+		margin: 0 auto;
+	}
+
+	.loaded {
+		width: auto;
+	}
+
+	.title {
+		padding: 15px 0;
+		line-height: 1.25rem;
+	}
+}
