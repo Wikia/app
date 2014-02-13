@@ -37,8 +37,8 @@ require(
 						$iframe.find( 'body *:not(script)' ).length === 0 ||
 						$iframe.find( 'body img' ).width() <= 1
 					) {
-						log( 'Slot seems to be empty: ' + mobileTopLeaderBoard, logLevel, logGroup );
-						hop({method: 'hop'}, 'Null');
+						log( 'Slot seems to be empty: ' + adSlotName, logLevel, logGroup );
+						hop({method: 'hop'}, 'Next');
 					} else {
 						slot.className += ' show';
 					}
