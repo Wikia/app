@@ -67,8 +67,8 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 	 * @returns boolean
 	 */
 	function isIntroLongerThan ( minHeight ) {
-		var introOffset = $( '#mw-content-text' ).offset().top;
-		var referenceOffset = null;
+		var introOffset = $( '#mw-content-text' ).offset().top,
+			referenceOffset = null;
 
 		//Find first h2 and use it's offset
 		for( var i = 0; i < sections.length; i++ ) {
@@ -90,9 +90,9 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 	 * @param distFromTop - an int value representing given height in document
 	 * @returns jQuery object or null
 	 */
-	function getElementBefore ( distFromTop ) {
-		var currentElement = $( '#mw-content-text' ).children().first();
-		var currentOffset = currentElement.outerHeight();
+	function getElementAt ( distFromTop ) {
+		var currentElement = $( '#mw-content-text' ).children().first(),
+			currentOffset = currentElement.outerHeight();
 		while ( currentElement.next().length != 0 && currentOffset < distFromTop ) {
 			currentElement = currentElement.next();
 			currentOffset += currentElement.outerHeight();
@@ -131,7 +131,7 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 			return sections = getHeaders();
 		},
 		isIntroLongerThan: isIntroLongerThan,
-		getElementBefore: getElementBefore,
+		getElementAt: getElementAt,
 		scrollTo: scrollTo,
 		current: current
 	};
