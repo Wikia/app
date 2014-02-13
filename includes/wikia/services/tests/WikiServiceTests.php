@@ -110,6 +110,9 @@ class WikiServiceTests extends WikiaBaseTest {
 		$this->assertEquals( $image42Url, $result[42]['image_url'] );
 	}
 
+	/**
+	 * @covers WikiService::getMostLinkedPages
+	 */
 	public function testGetMostLinkedPages() {
 
 		/* mocking MemCache */
