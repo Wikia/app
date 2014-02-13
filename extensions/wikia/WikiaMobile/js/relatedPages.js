@@ -7,14 +7,14 @@ require( [ 'wikia.window', 'wikia.nirvana', 'jquery', 'wikia.thumbnailer', 'lazy
 		} ),
 		sectionsLength = sectionsList.length,
 		articleId = window.wgArticleId,
-		testGroup = 'A',// && 'B' && 'C' && 'D',
+		testGroup = 'C',// && 'B' && 'C' && 'D',
 		largeStyle = (['A', 'B'].indexOf( testGroup ) > -1),
 		width = largeStyle ? 280 : 136,
 		height = largeStyle ? 158 : 76,
 		template = function( item ){
 			var header = (['A', 'C'].indexOf( testGroup ) > -1) ? msg( 'wikiamobile-related-article' ) : msg( 'wikiamobile-people-also-read' );
 
-			return '<a href="'+ item.url +'" class="related-article"><div class="header">' +
+			return '<a href="'+ item.url +'" class="related-article ' + ( largeStyle ? 'large' : 'small') + '"><div class="header">' +
 				header +
 				'</div><img class="lazy link" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="' +
 				(item.imgUrl ? thumbnailer.getThumbURL(item.imgUrl, 'image', width, height) : '!!!') +
