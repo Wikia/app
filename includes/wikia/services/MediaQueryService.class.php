@@ -492,8 +492,6 @@ class MediaQueryService extends WikiaService {
 		$db = wfGetDB( DB_SLAVE );
 		$memKey = $this->getMemKeyTotalVideosByCategory( $category );
 
-		$this->clearCacheTotalVideosByCategory( $category );
-
 		$totalViews = (new WikiaSQL())->cache( 60*60*6, $memKey )
 			->SELECT( 'count(video_title) cnt' )
 			->FROM( 'video_info' )
