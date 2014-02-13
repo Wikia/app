@@ -11,6 +11,7 @@ class SpecialVideosHelper extends WikiaModel {
 	const THUMBNAIL_WIDTH = 330;
 	const THUMBNAIL_HEIGHT = 211;
 	const POSTED_IN_ARTICLES = 5;
+	public static $verticalCategoryFilters = [ "Games", "Lifestyle", "Entertainment" ];
 
 	/**
 	 * get list of filter options

@@ -494,7 +494,7 @@ class MediaQueryService extends WikiaService {
 
 		$this->clearCacheTotalVideosByCategory( $category );
 
-		$totalViews = (new WikiaSQL())->cache( 60*60*24, $memKey )
+		$totalViews = (new WikiaSQL())->cache( 60*60*6, $memKey )
 			->SELECT( 'count(video_title) cnt' )
 			->FROM( 'video_info' )
 			->WHERE('removed' )->EQUAL_TO( 0 )
