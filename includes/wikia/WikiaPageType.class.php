@@ -7,10 +7,12 @@ class WikiaPageType {
 	/**
 	 * Get type of page as string
 	 *
-	 * @return string one of home, search, forum, article or extra
+	 * @return string one of corporate, home, search, forum, article or extra
 	 */
 	public static function getPageType() {
-		if (self::isMainPage()) {
+		if (self::isCorporatePage()) {
+			$type = 'corporate';
+		} elseif (self::isMainPage()) {
 			$type = 'home';
 		} elseif (self::isFilePage()) {
 			$type = 'file';
@@ -142,5 +144,25 @@ class WikiaPageType {
 	 */
 	public static function isWikiaHub() {
 		return HubService::isCurrentPageAWikiaHub();
+	}
+
+	/**
+	 * Check if current page is home page
+	 *
+	 * @return bool
+	 */
+	public static function isWikiaHomePage() {
+		global $wgEnableWikiaHomePageExt;
+
+		return !empty( $wgEnableWikiaHomePageExt ) && self::isMainPage();
+	}
+
+	/**
+	 * Check if current page is corporate page
+	 *
+	 * @return bool
+	 */
+	public static function isCorporatePage() {
+		return self::isWikiaHub() || self::isWikiaHomePage();
 	}
 }
