@@ -1093,7 +1093,7 @@ class ConfigTest extends BaseTest {
 	public function testSetGetABTestGroup() {
 		$config = new Config;
 		$this->assertAttributeEmpty(
-				'ABTestGroup',
+				'boostGroup',
 				$config
 		);
 		$this->assertEquals(
@@ -1102,7 +1102,7 @@ class ConfigTest extends BaseTest {
 		);
 		$this->assertAttributeEquals(
 				'A',
-				'ABTestGroup',
+				'boostGroup',
 				$config
 		);
 		$this->assertEquals(
@@ -1118,7 +1118,7 @@ class ConfigTest extends BaseTest {
 	public function testGetTestProfileNotSet() {
 		$config = new Config;
 		$this->assertAttributeEmpty(
-				'ABTestGroup',
+				'boostGroup',
 				$config
 		);
 		$this->assertInstanceOf(
