@@ -8,5 +8,5 @@ CREATE TABLE `wikia_hub_modules` (
   `module_status` tinyint NOT NULL DEFAULT 1, /* in sync with CT statuses: 1-saved, 2-published */
   `last_editor_id` int(11),
   `last_edit_timestamp` timestamp,
-  PRIMARY KEY ( `lang_code`, `vertical_id`, `hub_date`, `module_id` )
+  PRIMARY KEY ( `lang_code`, `vertical_id`, `hub_date`, `module_id`, `city_id` )
 ) ENGINE=InnoDB;
