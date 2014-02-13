@@ -600,16 +600,16 @@ __NOEDITSECTION__",
 );
 
 $messages['ja'] = array(
-	'wikiahome-page-header-heading' => 'クリエイト コラボレート オリジナルで',
-	'wikiahome-page-header-subheading' => 'あなたの知識とお気に入りをシェアしてください',
+	'wikiahome-page-header-heading' => '作成。合作。独創的にする。',
+	'wikiahome-page-header-subheading' => 'あなたの知っていること、好きなことをシェアしよう',
 	'wikiahome-page-header-create-wiki-button' => 'ウィキアを始める',
 	'wikiahome-page-header-create-wiki-button-destination' => 'http://www.wikia.com/Special:CreateWiki?uselang=ja',
 
-	'wikiahome-visualisation-remix-mixitup' => 'ミックスアップ!',
+	'wikiahome-visualisation-remix-mixitup' => 'シャッフル!',
 	'wikiahome-visualisation-remix-mixituptext' => 'いくつものコミュニティーに簡単にアクセスできます。ウィキア内を探求しよう!',
 	'wikiahome-visualisation-remix-button' => 'ミックス',
 
-	'wikiahome-stats-heading' => 'コラボ中です',
+	'wikiahome-stats-heading' => 'コラボ中',
 	'wikiahome-stats-visitors' => '月の訪問者',
 	'wikiahome-stats-visitors-tooltip' => '月の訪問者の数はクオントキャストのグローバル「PEOPLE」スコアで測定しており、その構成はオンラインとモバイルウェブから成り立っています。',
 	'wikiahome-stats-mobile-visitors' => 'ひと月のモバイルからの訪問者',
