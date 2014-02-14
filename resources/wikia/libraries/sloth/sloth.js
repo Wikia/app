@@ -23,7 +23,7 @@
 			wBottom,
 			undef,
 			debounce = (function ( element ) {
-				return element ? parseInt( element.getAttribute( 'data-sloth-debounce' ), 10 ) : 100;
+				return element ? parseInt( element.getAttribute( 'data-sloth-debounce' ), 10 ) : 200;
 			})( context.document.querySelector( 'script[data-sloth-debounce]' ) ),
 			delegate = context.setTimeout,
 			branches = [],
