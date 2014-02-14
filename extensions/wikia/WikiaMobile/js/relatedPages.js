@@ -1,3 +1,9 @@
+/**
+ * Module that handles related pages that are lazy loaded and added at the end of sections
+ * that are longer than 1000px
+ *
+ * there is currently AB Test running with 4 groups
+ */
 require( [ 'wikia.window', 'wikia.nirvana', 'jquery', 'wikia.thumbnailer', 'lazyload', 'sloth', 'JSMessages', 'wikia.mustache' ],
 function( window, nirvana, $, thumbnailer, lazyload, sloth, msg, mustache ) {
 	'use strict';
