@@ -17,13 +17,18 @@ class VideosModuleHooks {
 	}
 
 	static public function onOutputPageBeforeHTML( OutputPage $out, &$text ) {
+		global $wgVideosModuleAssetsLoaded;
 
-		JSMessages::enqueuePackage( 'VideosModule', JSMessages::EXTERNAL );
+		if ( empty( $wgVideosModuleAssetsLoaded ) ) {
+			JSMessages::enqueuePackage( 'VideosModule', JSMessages::EXTERNAL );
 
-		$scripts = AssetsManager::getInstance()->getURL( 'videos_module_js' );
+			$scripts = AssetsManager::getInstance()->getURL( 'videos_module_js' );
 
-		foreach( $scripts as $script ){
-			$out->addScript( "<script src='{$script}'></script>" );
+			foreach( $scripts as $script ){
+				$out->addScript( "<script id='lizzz' src='{$script}'></script>" );
+			}
+
+			$wgVideosModuleAssetsLoaded = true;
 		}
 
 		return true;
