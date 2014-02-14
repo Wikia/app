@@ -119,10 +119,7 @@ class InterWiki extends AbstractDismax
 		if( $this->getConfig()->getCommercialUse() ) {
 			$filterQueries[] = "-( commercial_use_allowed_b:false )";
 		}
-		$hub = $this->getConfig()->getHub();
-		if (! empty( $hub ) ) {
-			$filterQueries[] = Utilities::valueForField( 'hub_s', $hub );
-		}
+		//removed hub query from filter (PLA-1166)
 		return implode( ' AND ', $filterQueries );
 	}
 	
@@ -142,10 +139,28 @@ class InterWiki extends AbstractDismax
 				'lang_s:'.$this->config->getLanguageCode()
 		);
 
+		$this->generateHubQuery($queryClauses);
+		return implode( ' AND ', $queryClauses );
+	}
+
+	protected function generateHubQuery( &$queryArray ) {
 		$hub = $this->config->getHub();
-		if (! empty( $hub ) ) {
-		    $queryClauses[] = Utilities::valueForField( 'hub', $hub );
+		$hub_q = '';
+		if ( !empty( $hub ) ) {
+			if ( !is_array( $hub ) ) {
+				$hub = [ $hub ];
+			}
+
+			foreach ( $hub as $item ) {
+				if ( !$item ) {
+					continue;
+				}
+				$hub_q .= ( $hub_q ? ' OR ' : '' ) . Utilities::valueForField( 'hub_s', $item );
+			}
+
+			if ( $hub_q ) {
+				$queryArray[] =   ' ( ' . $hub_q . ' ) ';
+			}
 		}
-		return sprintf( '%s', implode( ' AND ', $queryClauses ) );
 	}
 }
