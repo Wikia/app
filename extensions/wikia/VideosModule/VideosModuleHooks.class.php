@@ -17,6 +17,8 @@ class VideosModuleHooks {
 	}
 
 	static public function onOutputPageBeforeHTML( OutputPage $out, &$text ) {
+		// On file pages, this hook can be called mulitple times, so we're going to check if the
+		// assets are loaded already before we load them again.
 		global $wgVideosModuleAssetsLoaded;
 
 		if ( empty( $wgVideosModuleAssetsLoaded ) ) {
