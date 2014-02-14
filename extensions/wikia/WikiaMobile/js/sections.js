@@ -81,7 +81,7 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 			nextSection = h2s[section];
 		} else {
 			currentSection = section;
-			nextSection = h2s[ h2s.indexOf( section ) + 1 ];
+			nextSection = h2s[ getId( section ) + 1 ];
 		}
 
 		if ( !nextSection ) {
@@ -139,6 +139,10 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 		}, 200 );
 	}
 
+	function getId( section ){
+		return h2s.indexOf( section );
+	}
+
 	window.addEventListener( 'scroll', onScroll );
 
 	return {
@@ -148,6 +152,7 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 		},
 		isSectionLongerThan: isSectionLongerThan,
 		getElementAt: getElementAt,
+		getId: getId,
 		scrollTo: scrollTo,
 		current: current
 	};
