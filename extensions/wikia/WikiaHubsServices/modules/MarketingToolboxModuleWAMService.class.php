@@ -10,11 +10,6 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 	 * @var MarketingToolboxWAMModel
 	 */
 	protected $model;
-
-	/**
-	 * @var WikiaHubsModel
-	 */
-	protected $hubModel;
 	
 	const MODULE_ID = 10;
 

@@ -132,6 +132,11 @@ class HubService extends Service {
 		return ( self::isCorporatePage() && self::getHubIdForCurrentPage() );
 	}
 
+	// For hubs v3
+	public static function isHubPage() {
+		return ( self::isCorporatePage() && F::app()->wg->EnableWikiaHubsV3Ext );
+	}
+
 	/**
 	 * Check if given city is Wikia corporate city
 	 */

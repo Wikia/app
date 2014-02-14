@@ -21,8 +21,6 @@ class WikiaHubsV3Hooks {
 		if( $model->isHubsPage() && !self::isOffShotPage($title) ) {
 			$hubTimestamp = $model->getTimestampFromSplitDbKey($dbKeyNameSplit);
 
-			$app->wg->SuppressPageHeader = true;
-			$app->wg->SuppressWikiHeader = false;
 			$app->wg->SuppressRail = true;
 			$app->wg->SuppressFooter = true;
 			if (!$app->wg->request->wasPosted()) {

@@ -319,6 +319,9 @@ class BodyController extends WikiaController {
 		// InfoBox - Testing
 		$this->wg->EnableInfoBoxTest = $wgEnableInfoBoxTest;
 		$this->isMainPage = WikiaPageType::isMainPage();
+		$this->isHubPage = HubService::isHubPage();
+
+		$this->displayHeaderButtons = true;
 
 		// Replaces ContentDisplayModule->index()
 		$this->bodytext = $this->app->getSkinTemplateObj()->data['bodytext'];
@@ -361,8 +364,12 @@ class BodyController extends WikiaController {
 				$this->headerModuleAction = 'Corporate';
 			}
 
+			if ( $this->isHubPage ) {
+				$this->displayHeaderButtons = false;
+				$this->headerModuleAction = 'Hubs';
+			}
 			// FIXME: move to separate module
-			if( WikiaPageType::isMainPage() ) {
+			elseif( $this->isMainPage ) {
 				$this->wg->SuppressFooter = true;
 				$this->wg->SuppressArticleCategories = true;
 				$this->wg->SuppressPageHeader = true;
