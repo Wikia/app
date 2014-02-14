@@ -8,7 +8,7 @@ class WallHistoryController extends WallController {
 	
 	public function index() {
 		JSMessages::enqueuePackage('Wall', JSMessages::EXTERNAL);
-		$title = $this->app->wg->Title;
+		$title = $this->getContext()->getTitle();
 		
 		$this->isThreadLevel = $this->request->getVal('threadLevelHistory', false);
 		
@@ -32,7 +32,7 @@ class WallHistoryController extends WallController {
 		
 		if( !($title instanceof Title) || 
 			($this->isThreadLevel && 
-			!in_array(MWNamespace::getSubject($title->getNamespace() ), $this->app->wg->WallNS)) 
+			!in_array(MWNamespace::getSubject($title->getNamespace() ), $this->wg->WallNS)) 
 		) {
 		//paranoia -- why the message is not in DB
 			$this->response->setVal('wallmessageNotFound', true);
@@ -81,17 +81,17 @@ class WallHistoryController extends WallController {
 		}
 			
 		$path = array_merge(array(array(
-			'title' => wfMsg('wall-message-elseswall', array($wallOwnerName)),
+			'title' => wfMessage('wall-message-elseswall', array($wallOwnerName))->text(),
 			'url' => $wallUrl 
 		)), $path); 
 		
 		$this->response->setVal('wallOwnerName', $wallOwnerName);
 
 		if( $this->isThreadLevel ) {
-			$this->response->setVal( 'pageTitle' , wfMsg('wall-thread-history-title'));
+			$this->response->setVal( 'pageTitle' , wfMessage( 'wall-thread-history-title' )->text() );
 			wfRunHooks('WallHistoryThreadHeader', array($title, $wallMessage, &$path, &$this->response, &$this->request));
 		} else {
-			$this->response->setVal( 'pageTitle' , wfMsg('wall-history-title'));
+			$this->response->setVal( 'pageTitle' , wfMessage( 'wall-history-title' )->text() );
 			wfRunHooks('WallHistoryHeader', array($title, &$path, &$this->response, &$this->request));
 		}
 		
@@ -110,20 +110,21 @@ class WallHistoryController extends WallController {
 	private function historyPreExecute() {
 		$this->response->addAsset('wall_history_js');
 		$this->response->addAsset('extensions/wikia/Wall/css/WallHistory.scss');
-		
+
+		$output = $this->getContext()->getOutput();
 		if( $this->isThreadLevel ) {
-			$this->wg->Out->setPageTitle( wfMsg('wall-thread-history-title') );
-			$this->app->wg->SuppressPageHeader = true;
+			$output->setPageTitle( wfMessage( 'wall-thread-history-title' )->text() );
+			$this->wg->SuppressPageHeader = true;
 		} else {
-			$this->wg->Out->setPageTitle( wfMsg('wall-history-title') );
+			$output->setPageTitle( wfMessage( 'wall-history-title' )->text() );
 		}
 		
-		$this->wg->Out->setPageTitleActionText( wfMsg('history_short') );
-		$this->wg->Out->setArticleFlag(false);
-		$this->wg->Out->setArticleRelated(true);
-		$this->wg->Out->setRobotPolicy('noindex,nofollow');
-		$this->wg->Out->setSyndicated(true);
-		$this->wg->Out->setFeedAppendQuery('action=history');
+		$output->setPageTitleActionText( wfMessage( 'history_short' )->text() );
+		$output->setArticleFlag( false );
+		$output->setArticleRelated( true );
+		$output->setRobotPolicy( 'noindex,nofollow' );
+		$output->setSyndicated( true );
+		$output->setFeedAppendQuery( 'action=history' );
 		
 		$this->sortingType = 'history';
 	}
@@ -174,17 +175,17 @@ class WallHistoryController extends WallController {
 			$url = Title::newFromText( $username, $ns )->getFullUrl();
 			
 			if( $user->isAnon() ) {
-				$name = wfMsg('oasis-anon-user');
-				$history[$key]['displayname'] = wfMsg( 'wall-history-username-full', array('$1' => $name, '$2' => $username, '$3' => $url ));
+				$name = wfMessage( 'oasis-anon-user' )->text();
+				$history[$key]['displayname'] = wfMessage( 'wall-history-username-full', array('$1' => $name, '$2' => $username, '$3' => $url ) )->text();
 			} else {
-				$history[$key]['displayname'] = wfMsg( 'wall-history-username-short', array('$1' => $username, '$2' => $url ));
+				$history[$key]['displayname'] = wfMessage( 'wall-history-username-short', array('$1' => $username, '$2' => $url ) )->text();
 			}
 			
 			$history[$key]['authorurl'] = $url;
 			$history[$key]['username'] = $user->getName();
 			$history[$key]['userpage'] = $url;
 			$history[$key]['type'] = $type;
-			$history[$key]['usertimeago'] = $this->wg->Lang->timeanddate($value['event_mw']);
+			$history[$key]['usertimeago'] = $this->getContext()->getLanguage()->timeanddate($value['event_mw']);
 			$history[$key]['reason'] = $value['reason'];
 			$history[$key]['actions'] = array();
 			
@@ -221,27 +222,27 @@ class WallHistoryController extends WallController {
 					
 					$history[$key]['actions'][] = array(
 						'href' => $rev->getTitle()->getLocalUrl($query),
-						'msg' => wfMsg('diff'),
+						'msg' => wfMessage( 'diff' )->text(),
 					);
 				}
 			} else {
 				$msgUrl = $wm->getMessagePageUrl(true);
 				$history[$key]['msgurl'] = $msgUrl;
-				$history[$key]['historyLink'] = Xml::element('a', array('href' => $msgUrl.'?action=history'), wfMsg('wall-history-action-thread-history'));
+				$history[$key]['historyLink'] = Xml::element('a', array('href' => $msgUrl.'?action=history'), wfMessage( 'wall-history-action-thread-history')->text() );
 			}
 			
 			if( ($type == WH_REMOVE && !$wm->isAdminDelete()) || ($type == WH_DELETE && $wm->isAdminDelete()) ) {
-				if( $wm->canRestore($this->app->wg->User) ) {
+				if( $wm->canRestore($this->getContext()->getUser() ) ) {
 					if( $this->isThreadLevel ) {
-						$restoreActionMsg = ($isReply === '1') ? wfMsg('wall-history-action-restore-reply') : wfMsg('wall-history-action-restore-thread');
+						$restoreActionMsg = ($isReply === '1') ? wfMessage( 'wall-history-action-restore-reply' )->text() : wfMessage( 'wall-history-action-restore-thread' )->text();
 					} else {
-						$restoreActionMsg = wfMsg('wall-history-action-restore');
+						$restoreActionMsg = wfMessage( 'wall-history-action-restore' )->text();
 					}
 					
 					$history[$key]['actions'][] = array(
 						'class' => 'message-restore', //TODO: ?
 						'data-id' => $value['page_id'],
-						'data-mode' => 'restore'.($wm->canFastrestore($this->app->wg->User) ? '-fast' : ''),
+						'data-mode' => 'restore'.($wm->canFastrestore( $this->getContext()->getUser() ) ? '-fast' : ''),
 						'href' => '#',
 						'msg' => $restoreActionMsg
 					);
