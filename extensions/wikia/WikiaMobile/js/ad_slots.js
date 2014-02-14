@@ -10,9 +10,9 @@ require( ['ads', 'sloth', 'jquery', 'JSMessages', 'wikia.window', 'wikia.log', '
 		$firstSection = $( 'h2[id]' ).first(),
 		$footer = $( '#wkMainCntFtr' ),
 		firstSectionTop = ( $firstSection.length && $firstSection.offset().top ) || 0,
-		minIntroHeight = 700, //if intro is shorter, then no wkAdInContent
-		showInContent = sections.isSectionLongerThan( 0, minIntroHeight ),
+		showInContent = sections.isSectionLongerThan( 0, MIN_ZEROTH_SECTION_LENGTH ),
 		showBeforeFooter = doc.body.offsetHeight > MIN_PAGE_LENGTH || firstSectionTop < MIN_ZEROTH_SECTION_LENGTH,
+		div,
 		lazyLoadAd = function ( elem, slotName ) {
 			log( 'Lazy load: ' + slotName, logLevel, logGroup );
 
@@ -53,7 +53,14 @@ require( ['ads', 'sloth', 'jquery', 'JSMessages', 'wikia.window', 'wikia.log', '
 
 	if ( window.wgArticleId ) {
 		if ( showInContent ) {
-			sections.getElementAt( minIntroHeight ).after( '<div id=wkAdInContent class=ad-in-content />' );
+			div = '<div id=wkAdInContent class=ad-in-content />';
+
+			if ( Wikia.AbTest.getGroup( 'WIKIAMOBILE_RELATEDPAGES' ) ) {
+				sections.getElementAt( MIN_ZEROTH_SECTION_LENGTH ).after( div );
+			} else {
+				$firstSection.before( div );
+			}
+
 			lazyLoadAd( doc.getElementById( 'wkAdInContent' ), 'MOBILE_IN_CONTENT' );
 		}
 
@@ -62,8 +69,6 @@ require( ['ads', 'sloth', 'jquery', 'JSMessages', 'wikia.window', 'wikia.log', '
 			lazyLoadAd( doc.getElementById( 'wkAdBeforeFooter' ), 'MOBILE_PREFOOTER' );
 		}
 	}
-
-
 
 	sloth();
 } );
