@@ -9,6 +9,7 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 	'use strict';
 
 	var d = window.document,
+		h2s = $( 'h2[id]', d.getElementById( 'wkPage' ) ).toArray(),
 		sections = $( 'h2[id],h3[id],h4[id]', d.getElementById( 'wkPage' ) ).toArray(),
 		l = sections.length,
 		lastSection,
@@ -53,6 +54,54 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 	lastSection = current();
 
 	/**
+	 * @desc Check if intro is longer than 700px
+	 * @param sectionNumber - number of section to measure
+	 * @param minHeight - height of intro to compare against
+	 * @returns boolean
+	 */
+	function isSectionLongerThan ( sectionNumber, minHeight ) {
+		var currentSection,
+			nextSection,
+			topOffset,
+			referenceOffset = null;
+
+		currentSection = h2s[sectionNumber - 1];
+		nextSection = h2s[sectionNumber];
+
+		if ( !nextSection ) {
+			if ( currentSection ){
+				var $wkPage = $( '#wkPage' );
+				referenceOffset = $wkPage.offset().top + $wkPage.height();
+				topOffset = $( currentSection ).offset().top;
+			} else {
+				return false;
+			}
+		} else {
+			topOffset = ( sectionNumber ) ? $( currentSection ).offset().top : $( '#mw-content-text' ).offset().top;
+			referenceOffset = $( nextSection ).offset().top;
+		}
+
+		return ( referenceOffset - topOffset > minHeight );
+	}
+
+	/**
+	 * @desc If possible, get section under which the ad can be placed (700px down)
+	 * @param distFromTop - an int value representing given height in document
+	 * @returns jQuery object or null
+	 */
+	function getElementAt ( distFromTop ) {
+		var currentElement = $( '#mw-content-text' ).children().first(),
+			currentOffset = currentElement.outerHeight();
+
+		while ( currentElement.next().length !== 0 && currentOffset < distFromTop ) {
+			currentElement = currentElement.next();
+			currentOffset += currentElement.outerHeight();
+		}
+
+		return currentElement;
+	}
+
+		/**
 	 * @desc Function that fires at most every 200ms while scrolling\
 	 * @triggers section:changed with a current section refernece and its id
 	 */
@@ -79,6 +128,8 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 
 	return {
 		list: sections,
+		isSectionLongerThan: isSectionLongerThan,
+		getElementAt: getElementAt,
 		scrollTo: scrollTo,
 		current: current
 	};
