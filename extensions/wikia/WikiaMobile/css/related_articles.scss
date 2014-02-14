@@ -1,36 +1,6 @@
 //dependencies
 @import "../../WikiaMobile/css/variables";
 
-$itemHeight: 50px;
-$itemPadding: 6px;
-
-#wkRelPag {
-	ul {
-		margin: 10px 0;
-	}
-
-	li {
-		position: relative;
-		padding-left: 0;
-
-		a {
-			color: inherit;
-			padding: $itemPadding $itemPadding/2 $itemPadding 112px;
-			min-height: 62px;
-
-			img {
-				position: absolute;
-				top: 50%;
-				left: $itemPadding;
-
-				margin-top: -25px;
-
-				pointer-events: none;
-			}
-		}
-	}
-}
-
 .related-article {
 	display: block;
 	border-top: 1px solid $border-color;
@@ -38,6 +8,10 @@ $itemPadding: 6px;
 	padding: 15px 0;
 	margin-top: 25px;
 	color: $page-text-color;
+
+	.trending-articles & {
+		border-top: none;
+	}
 
 	.header {
 		font: {

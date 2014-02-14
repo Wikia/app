@@ -1,14 +1,10 @@
-<section>
-	<h2>{{trendingArticlesHeading}}</h2>
-	<ul class="wkLst artSec open">
+<section class="trending-articles">
+	<h2 id="trendingArticles">{{trendingArticlesHeading}}</h2>
 	{{#trendingArticles}}
-	<li>
-		<a href="{{pageUrl}}" title="{{pageTitle}}" class="related-article small">
-			<img src="{{blankImg}}" data-src="{{imgUrl}}" alt="{{pageTitle}}" width="{{imgWidth}}" height="{{imgHeight}}" class="lazy" />
-			<div class="title">{{pageTitle}}</div>
-		</a>
-	</li>
+	<a href="{{pageUrl}}" title="{{pageTitle}}" class="related-article small">
+		<img src="{{blankImg}}" data-src="{{imgUrl}}" alt="{{pageTitle}}" width="{{imgWidth}}" height="{{imgHeight}}" class="lazy" />
+		<div class="title">{{pageTitle}}</div>
+	</a>
 	{{/trendingArticles}}
-	</ul>
 </section>
 
