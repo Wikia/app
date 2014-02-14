@@ -28,9 +28,9 @@ define( 'lazyload', ['wikia.thumbnailer', 'jquery', 'wikia.window'], function ( 
 
 	function displayImage ( img, url, background ) {
 		if ( background ) {
-			img.style.backgroundImage = 'url(' + url + ')'
+			img.style.backgroundImage = 'url(' + url + ')';
 		} else {
-			img.src = url
+			img.src = url;
 		}
 
 		img.className += ' loaded';
@@ -73,10 +73,10 @@ define( 'lazyload', ['wikia.thumbnailer', 'jquery', 'wikia.window'], function ( 
 		elements = $.makeArray( elements );
 
 		while ( elm = elements[i++] ) {
-			imageWidth = ~~elm.getAttribute( 'width' );
+			imageWidth = parseInt( elm.getAttribute( 'width' ), 10 );
 
 			if ( pageWidth < imageWidth ) {
-				elm.setAttribute( 'height', Math.round( elm.width * (~~elm.getAttribute( 'height' ) / imageWidth) ) );
+				elm.setAttribute( 'height', Math.round( elm.width * ( parseInt( elm.getAttribute( 'height' ) / imageWidth) ), 10 ) );
 			}
 		}
 	};
