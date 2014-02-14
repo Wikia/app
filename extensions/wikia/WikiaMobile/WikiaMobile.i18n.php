@@ -25,6 +25,7 @@ $messages['en'] = array(
 	'wikiamobile-last-edited-on' => 'Last edited on $1',
 	'wikiamobile-last-edited-by' => 'by $1',
 	'wikiamobile-anonymous-edited-by' => 'Anonymous',
+	'wikiamobile-trending-articles-heading' => 'Trending Articles',
 
 	//footer
 	'wikiamobile-footer-link-lifestyle' => '[[w:c:www:Lifestyle|Lifestyle]]',
@@ -59,7 +60,7 @@ you should definitely check this out:
 	'wikiamobile-video-not-friendly' => 'Sorry, this video isn\'t available on mobile.',
 
 	//toc
-	'wikiamobile-toc-header' => 'table of contents',
+	'wikiamobile-toc-header' => 'Table of Contents',
 
 	//ad
 	'wikiamobile-ad-label' => 'advertisement',
@@ -108,6 +109,7 @@ $messages['qqq'] = array(
 {{Identical|By}}',
 	'wikiamobile-anonymous-edited-by' => 'an unknown user.
 {{Identical|Anonymous}}',
+	'wikiamobile-trending-articles-heading' => 'Trending articles section header text',
 	'wikiamobile-footer-link-lifestyle' => 'Interwiki link, please translate only the last parameter after the last "|" if that makes sense',
 	'wikiamobile-footer-link-entertainment' => 'Interwiki link, please translate only the last parameter after the last "|" if that makes sense',
 	'wikiamobile-footer-link-videogames' => 'Interwiki link, please translate only the last parameter after the last "|" if that makes sense',

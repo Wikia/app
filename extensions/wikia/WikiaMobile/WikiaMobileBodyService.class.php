@@ -5,6 +5,7 @@
  * @author Jakub Olek <bukaj.kelo(at)gmail.com>
  * @authore Federico "Lox" Lucignano <federico(at)wikia-inc.com>
  */
+
 class WikiaMobileBodyService extends WikiaService {
 	public function index() {
 		$bodyContent = $this->request->getVal( 'bodyText', '' );
@@ -28,7 +29,7 @@ class WikiaMobileBodyService extends WikiaService {
 		}else{
 			$this->response->setVal( 'pageHeaderContent', '');
 		}
-		$this->response->setVal('bodyContent', $bodyContent);
+		$this->response->setVal( 'bodyContent', $bodyContent );
 
 		$this->response->setVal(
 			'categoryLinks',
@@ -39,7 +40,12 @@ class WikiaMobileBodyService extends WikiaService {
 			)
 		);
 
+		//Render Trending Articles
+		$trendingArticles = $this->sendRequest( 'WikiaMobileTrendingArticlesService', 'index' )->toString();
+
+		$this->response->setVal( 'trendingArticles', $trendingArticles );
 		$this->response->setVal( 'afterBodyContent', $afterBodyHtml );
 		$this->response->setVal( 'afterContentHookText', $afterContentHookText );
+
 	}
 }
