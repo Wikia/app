@@ -5,32 +5,6 @@
  * @author Jakub Olek <bukaj.kelo(at)gmail.com>
  * @authore Federico "Lox" Lucignano <federico(at)wikia-inc.com>
  */
-//quick mock of json to test api ToDo -> remove it before merging!!!!!!!
-class json {
-	public $id;
-	public $title;
-	public $url;
-	public $ns;
-	public $thumbnail;
-	public $originalDimensions;
-	public function __construct(){
-		$this->id = 234;
-		$this->title = 'Rachel Berry';
-		$this->url = '/Rachel_Berry';
-		$this->ns = 0;
-		$this->thumbnail = 'http://static3.wikia.nocookie.net/__cb20140208202628/glee/images/thumb/c/cc/Tumblr_n0p1zdllkm1qe476yo1_500.jpg/200px-0%2C501%2C0%2C500-Tumblr_n0p1zdllkm1qe476yo1_500.jpg';
-		$this->originalDimensions = ['width' => 500, 'height' => 500];
-	}
-}
-
-class myJsonMock {
-	public $items;
-	public function __construct(){
-		$items1 = new json;
-		$items2 = new json;
-		$this->items = array( $items1, $items2 );
-	}
-}
 
 class WikiaMobileBodyService extends WikiaService {
 	public function index() {

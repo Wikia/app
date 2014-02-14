@@ -1,37 +1,57 @@
 <?php
 
+/**
+ * Class WikiaMobileTrendingArticlesService
+ *
+ * Responsible for displaying trending articles in a page
+ */
 class WikiaMobileTrendingArticlesService extends WikiaService {
 	const MAX_TRENDING_ARTICLES = 6;
 	const IMG_HEIGHT = 72;
 	const IMG_WIDTH = 136;
 
+	/**
+	 * Gets data from ArticlesApi and renders it
+	 */
 	public function index(){
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 
 		//fetch Trending Articles
 		try {
-			$trendingArticlesFromApi = F::app()->sendRequest( 'ArticlesApi', 'getTop' )->getData();
+			$trendingArticlesData = F::app()->sendRequest( 'ArticlesApi', 'getTop' )->getData();
 		}
-		catch ( Exception $e ) {
-			//ToDo -> get rid of mock and make it a blank array
-			$trendingArticlesFromApi = new myJsonMock();
-		}
+		catch ( Exception $e ) {}
 
-		//load data from response to template
-		$current = 0;
-		$trendingArticles = [];
-		while ( $current < self::MAX_TRENDING_ARTICLES && !empty( $trendingArticlesFromApi->items[$current] ) ) {
-			$currentItem = $trendingArticlesFromApi->items[$current];
+		if ( !empty( $trendingArticlesData ) ) {
+			$items = array_slice( $trendingArticlesData->items, 0, self::MAX_TRENDING_ARTICLES );
+			//load data from response to template
+			$trendingArticles = [];
 
-			$trendingArticles[$current] = [
-				'url' => $currentItem->url,
-				'title' => $currentItem->title,
-				'imgUrl' => $currentItem->thumbnail,
-				'imgWidth' => self::IMG_WIDTH,
-				'imgHeight' => self::IMG_HEIGHT
-			];
+			foreach( $items as $item ) {
+				$img = $this->app->sendRequest( 'ImageServing', 'getImages', [
+					'ids' => [ $item->id ],
+					'height' => self::IMG_HEIGHT,
+					'width' => self::IMG_WIDTH,
+					'count' => 1
+				] )->getVal( 'result' );
 
-			$current++;
+				$thumbnail = $img[$item->id][0]['url'];
+
+				if ( empty( $thumbnail ) ) {
+					$thumbnail = false;
+				}
+
+				$trendingArticles[] = [
+					'url' => $item->url,
+					'title' => $item->title,
+					'imgUrl' => $thumbnail,
+					'width' => self::IMG_WIDTH,
+					'height' => self::IMG_HEIGHT
+				];
+			}
+
+		} else {
+			$this->skipRendering();
 		}
 
 		$this->response->setVal( 'trendingArticles', $trendingArticles );
