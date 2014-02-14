@@ -95,6 +95,8 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 		$mediaService = new MediaQueryService();
 		if ( $sort == 'premium' ) {
 			$totalVideos = $mediaService->getTotalPremiumVideos();
+		} elseif ( $category ) {
+			$totalVideos = $mediaService->getTotalVideosByCategory( $category );
 		} else {
 			$totalVideos = $mediaService->getTotalVideos();
 		}
