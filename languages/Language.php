@@ -342,6 +342,9 @@ class Language {
 			$this->namespaceNames = self::$dataCache->getItem( $this->mCode, 'namespaceNames' );
 			$validNamespaces = MWNamespace::getCanonicalNamespaces();
 
+			if ($this->namespaceNames == '') {
+				$this->namespaceNames = [];
+			}
 			$this->namespaceNames = $wgExtraNamespaces + $this->namespaceNames + $validNamespaces;
 
 			$this->namespaceNames[NS_PROJECT] = $wgMetaNamespace;

@@ -16,7 +16,7 @@ $wgHubRssFeeds = array(
 );
 
 foreach ( $wgHubRssFeeds as $feed ) {
-	if ( strcmp( $_SERVER['SCRIPT_URL'],  '/rss/'.$feed ) === 0 ) {
+	if ( isset( $_SERVER['SCRIPT_URL'] ) && strcmp( $_SERVER['SCRIPT_URL'],  '/rss/'.$feed ) === 0 ) {
 		/*
 		 * This is used by WebRequest::interpolateTitle to overwrite title in $_GET
 		 * (based on $_SERVER['REQUEST_URI']).
