@@ -6,7 +6,7 @@
  * @authore Federico "Lox" Lucignano <federico(at)wikia-inc.com>
  */
 //quick mock of json to test api ToDo -> remove it before merging!!!!!!!
-class json{
+class json {
 	public $id;
 	public $title;
 	public $url;
@@ -19,16 +19,16 @@ class json{
 		$this->url = '/Rachel_Berry';
 		$this->ns = 0;
 		$this->thumbnail = 'http://static3.wikia.nocookie.net/__cb20140208202628/glee/images/thumb/c/cc/Tumblr_n0p1zdllkm1qe476yo1_500.jpg/200px-0%2C501%2C0%2C500-Tumblr_n0p1zdllkm1qe476yo1_500.jpg';
-		$this->originalDimensions = Array('width' => 136, 'height' => 76);
+		$this->originalDimensions = ['width' => 136, 'height' => 76];
 	}
 }
 
-class myJsonMock{
+class myJsonMock {
 	public $items;
 	public function __construct(){
 		$items1 = new json;
 		$items2 = new json;
-		$this->items = array($items1, $items2);
+		$this->items = array( $items1, $items2 );
 	}
 }
 
@@ -55,7 +55,7 @@ class WikiaMobileBodyService extends WikiaService {
 		}else{
 			$this->response->setVal( 'pageHeaderContent', '');
 		}
-		$this->response->setVal('bodyContent', $bodyContent);
+		$this->response->setVal( 'bodyContent', $bodyContent );
 
 		$this->response->setVal(
 			'categoryLinks',
@@ -83,17 +83,18 @@ class WikiaMobileBodyService extends WikiaService {
 		$imgWidth = 136;
 
 		//fetch Trending Articles
-		try{
+		try {
 			$trendingArticlesFromApi = F::app()->sendRequest( 'ArticlesApi', 'getTop' )->getData();
 		}
-		catch( Exception $e ){
+		catch ( Exception $e ) {
+			//ToDo -> get rid of mock and make it a blank array
 			$trendingArticlesFromApi = new myJsonMock();
 		}
 
 		//load data from response to template
 		$current = 0;
 		$trendingArticles = [];
-		while( $current < $maxTrendingArticles && !empty( $trendingArticlesFromApi->items[$current] ) ){
+		while ( $current < $maxTrendingArticles && !empty( $trendingArticlesFromApi->items[$current] ) ){
 			$currentItem = $trendingArticlesFromApi->items[$current];
 			$trendingArticles[$current] = [
 				'pageUrl' => $currentItem->url,
