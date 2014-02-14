@@ -127,9 +127,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 		$this->flashMessage = FlashMessages::pop();
 
 		$modulesData = $this->toolboxModel->getModulesData(
-			$this->langCode,
-			$this->sectionId,
-			$this->verticalId,
+			$this->getParams(),
 			$this->date,
 			$this->selectedModuleId
 		);
@@ -200,9 +198,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 			$this->retriveDataFromUrl();
 
 			$result = $this->toolboxModel->publish(
-				$this->langCode,
-				$this->sectionId,
-				$this->verticalId,
+				$this->getParams(),
 				$this->date
 			);
 
@@ -213,7 +209,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 				$this->hubUrl = $this->toolboxModel->getHubUrl($this->langCode, $this->verticalId)
 					. '/' . $date->format('Y-m-d');
 				$this->successText = wfMsg('marketing-toolbox-module-publish-success', $this->wg->lang->date($this->date));
-				if( $this->date == $this->toolboxModel->getLastPublishedTimestamp( $this->langCode, $this->sectionId, $this->verticalId, null, true)) {
+				if( $this->date == $this->toolboxModel->getLastPublishedTimestamp( $this->getParams(), null, true)) {
 					$this->purgeWikiaHomepageHubs();
 				}
 			} else {
@@ -294,8 +290,12 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 	}
 
 	protected  function prepareFooterData($langCode, $verticalId, $timestamp) {
+		$params = [
+			'langCode' => $langCode,
+			'verticalId' => $verticalId
+		];
 		$this->footerData = array(
-			'allModulesSaved' => $this->toolboxModel->checkModulesSaved($langCode, $verticalId, $timestamp)
+			'allModulesSaved' => $this->toolboxModel->checkModulesSaved($params, $timestamp)
 		);
 	}
 
@@ -322,11 +322,13 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 	 * @return array
 	 */
 	public function getCalendarData() {
-		$langCode = $this->getVal('langCode');
-		$verticalId = $this->getVal('verticalId');
+		$params = [
+			'langCode' => $this->getVal('langCode'),
+			'verticalId' => $this->getVal('verticalId')
+		];
 		$beginTimestamp = $this->getVal('beginTimestamp', time());
 		$endTimestamp = $this->getVal('endTimestamp', time());
-		$this->calendarData = $this->toolboxModel->getCalendarData($langCode, $verticalId, $beginTimestamp, $endTimestamp);
+		$this->calendarData = $this->toolboxModel->getCalendarData($params, $beginTimestamp, $endTimestamp);
 	}
 
 	/**
@@ -426,7 +428,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 		$this->getHubsServicesHelper()->purgeHubVarnish($this->langCode, $this->verticalId);
 
 		if( $this->selectedModuleId == MarketingToolboxModuleSliderService::MODULE_ID
-			&& $this->date == $this->toolboxModel->getLastPublishedTimestamp( $this->langCode, $this->sectionId, $this->verticalId, null )) {
+			&& $this->date == $this->toolboxModel->getLastPublishedTimestamp( $this->getParams(), null )) {
 				$this->purgeWikiaHomepageHubs();
 		}
 	}
@@ -441,5 +443,13 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 			$this->hubsServicesHelper = new WikiaHubsServicesHelper();
 		}
 		return $this->hubsServicesHelper;
+	}
+
+	private function getParams() {
+		return [
+			'langCode' => $this->langCode,
+			'sectionId' => $this->sectionId,
+			'verticalId' => $this->verticalId
+		];
 	}
 }

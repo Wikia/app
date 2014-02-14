@@ -1,16 +1,15 @@
 <?php
 
-class MarketingToolboxModel extends AbstractMarketingToolboxModel {
+class MarketingToolboxV3Model extends AbstractMarketingToolboxModel {
 
 	public function __construct($app = null) {
 		parent::__construct($app);
 	}
 
-	public function getCalendarData($params, $beginTimestamp, $endTimestamp) {
+	public function getCalendarData($cityId, $beginTimestamp, $endTimestamp) {
 		$sdb = wfGetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
 		$conds = array(
-			'lang_code' => $params['langCode'],
-			'vertical_id' => $params['verticalId'],
+			'city_id' => $cityId,
 		);
 
 		$conds = $sdb->makeList($conds, LIST_AND);
@@ -50,8 +49,8 @@ class MarketingToolboxModel extends AbstractMarketingToolboxModel {
 	 *
 	 * @return array
 	 */
-	public function getModulesData($params, $timestamp, $activeModule = MarketingToolboxModuleSliderService::MODULE_ID) {
-		$moduleList = $this->getModuleList($params, $timestamp);
+	public function getModulesData($cityId, $timestamp, $activeModule = MarketingToolboxModuleSliderService::MODULE_ID) {
+		$moduleList = $this->getModuleList($cityId, $timestamp);
 
 		$modulesData = array(
 			'lastEditor' => null,
@@ -73,7 +72,7 @@ class MarketingToolboxModel extends AbstractMarketingToolboxModel {
 				$modulesData['activeModuleName'] = $this->getModuleName($moduleId);
 			}
 			$module['name'] = $this->getModuleName($moduleId);
-			$module['href'] = $this->getModuleUrl($params, $timestamp, $moduleId);
+			$module['href'] = $this->getModuleUrl($cityId, $timestamp, $moduleId);
 		}
 		$modulesData['moduleList'] = $moduleList;
 
@@ -91,20 +90,20 @@ class MarketingToolboxModel extends AbstractMarketingToolboxModel {
 	 *
 	 * @return array
 	 */
-	public function getPublishedData($params, $timestamp = null, $moduleId = null) {
-		$lastPublishTimestamp = $this->getLastPublishedTimestamp($params, $timestamp);
-		return $this->getModulesDataFromDb($params, $lastPublishTimestamp, $moduleId);
+	public function getPublishedData($cityId, $timestamp = null, $moduleId = null) {
+		$lastPublishTimestamp = $this->getLastPublishedTimestamp($cityId, $verticalId, $timestamp);
+		return $this->getModulesDataFromDb($cityId, $lastPublishTimestamp, $moduleId);
 	}
 
-	public function getModuleUrl($params, $timestamp, $moduleId) {
+	public function getModuleUrl($langCode, $sectionId, $verticalId, $timestamp, $moduleId) {
 		$specialPage = $this->getSpecialPageClass();
 		return $specialPage::getTitleFor('MarketingToolbox', 'editHub')->getLocalURL(
 			array(
 				'moduleId' => $moduleId,
 				'date' => $timestamp,
-				'region' => $params['langCode'],
-				'verticalId' => $params['verticalId'],
-				'sectionId' => $params['sectionId']
+				'region' => $langCode,
+				'verticalId' => $verticalId,
+				'sectionId' => $sectionId
 			)
 		);
 	}
@@ -119,16 +118,16 @@ class MarketingToolboxModel extends AbstractMarketingToolboxModel {
 	 *
 	 * @return array
 	 */
-	protected function getModuleList($params, $timestamp) {
-		$lastPublishTimestamp = $this->getLastPublishedTimestamp($params, $timestamp);
+	protected function getModuleList($cityId, $timestamp) {
+		$lastPublishTimestamp = $this->getLastPublishedTimestamp($cityId, $timestamp);
 
 		if ($lastPublishTimestamp) {
-			$out = $this->getModulesDataFromDb($params, $lastPublishTimestamp);
+			$out = $this->getModulesDataFromDb($cityId, $lastPublishTimestamp);
 		} else {
 			$out = $this->getDefaultModuleList();
 		}
 
-		$actualData = $this->getModulesDataFromDb($params, $timestamp);
+		$actualData = $this->getModulesDataFromDb($cityId, $timestamp);
 		$out = $actualData + $out;
 		ksort($out);
 
@@ -146,8 +145,8 @@ class MarketingToolboxModel extends AbstractMarketingToolboxModel {
 	 * 
 	 * @return array
 	 */
-	public function getModuleDataFromDb($params, $timestamp, $moduleId) {
-		$data = $this->getModulesDataFromDb($params, $timestamp, $moduleId);
+	public function getModuleDataFromDb($cityId, $timestamp, $moduleId) {
+		$data = $this->getModulesDataFromDb($cityId, $timestamp, $moduleId);
 		return isset($data[$moduleId]) ? $data[$moduleId] : array();
 	}
 
@@ -158,15 +157,14 @@ class MarketingToolboxModel extends AbstractMarketingToolboxModel {
 	 * @param int $verticalId
 	 * @param int $timestamp
 	 */
-	public function checkModulesSaved($params, $timestamp) {
+	public function checkModulesSaved($cityId, $timestamp) {
 		$sdb = wfGetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
 
 		$hubDate = date('Y-m-d', $timestamp);
 
 		$fields = array('count(module_id)');
 		$conds = array(
-			'lang_code' => $params['langCode'],
-			'vertical_id' => $params['verticalId'],
+			'city_id' => $cityId,
 			'hub_date' => $hubDate
 		);
 
@@ -187,7 +185,7 @@ class MarketingToolboxModel extends AbstractMarketingToolboxModel {
 	 * 
 	 * @return stdClass (properties: boolean $success, string $errorMsg)
 	 */
-	public function publish($params, $timestamp) {
+	public function publish($cityId, $timestamp) {
 		wfProfileIn(__METHOD__);
 		
 		$results = new stdClass();
@@ -202,11 +200,8 @@ class MarketingToolboxModel extends AbstractMarketingToolboxModel {
 			return $results;
 		}
 		
-		switch($params['sectionId']) {
-			case self::SECTION_HUBS:
-				$this->publishHub($params, $timestamp, $results);
-				break;
-		}
+
+		$this->publishHub($cityId, $timestamp, $results);
 
 		wfProfileOut(__METHOD__);
 		return $results;
@@ -220,9 +215,9 @@ class MarketingToolboxModel extends AbstractMarketingToolboxModel {
 	 * 
 	 * @return stdClass (properties: boolean $success, string $errorMsg)
 	 */
-	protected function publishHub($params, $timestamp, &$results) {
+	protected function publishHub($cityId, $timestamp, &$results) {
 		wfProfileIn(__METHOD__);
-		if( !$this->checkModulesSaved($params, $timestamp) ) {
+		if( !$this->checkModulesSaved($cityId, $timestamp) ) {
 			$results->success = false;
 			$results->errorMsg = wfMsg('marketing-toolbox-module-publish-error-modules-not-saved');
 
@@ -238,8 +233,7 @@ class MarketingToolboxModel extends AbstractMarketingToolboxModel {
 		);
 
 		$conditions = array(
-			'lang_code' => $params['langCode'],
-			'vertical_id' => $params['verticalId'],
+			'city_id' => $cityId,
 			'hub_date' => $hubDate
 		);
 
@@ -253,9 +247,9 @@ class MarketingToolboxModel extends AbstractMarketingToolboxModel {
 			$results->errorMsg = wfMsg('marketing-toolbox-module-publish-error-db-error');
 		}
 
-		$actualPublishedTimestamp = $this->getLastPublishedTimestamp($params);
+		$actualPublishedTimestamp = $this->getLastPublishedTimestamp($cityId);
 		if ($actualPublishedTimestamp < $timestamp && $timestamp < time()) {
-			$this->purgeLastPublishedTimestampCache($params);
+			$this->purgeLastPublishedTimestampCache($cityId);
 		}
 
 		wfProfileOut(__METHOD__);
@@ -272,11 +266,10 @@ class MarketingToolboxModel extends AbstractMarketingToolboxModel {
 	 *
 	 * @return array
 	 */
-	protected function getModulesDataFromDb($params, $timestamp, $moduleId = null) {
+	protected function getModulesDataFromDb($cityId, $timestamp, $moduleId = null) {
 		$sdb = wfGetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
 		$conds = array(
-			'lang_code' => $params['langCode'],
-			'vertical_id' => $params['verticalId'],
+			'city_id' => $cityId,
 			'hub_date' => $sdb->timestamp($timestamp),
 		);
 		
@@ -284,10 +277,9 @@ class MarketingToolboxModel extends AbstractMarketingToolboxModel {
 			$conds['module_id'] = $moduleId; 
 		}
 		
-		$table = $this->getTablesBySectionId($params['sectionId']);
 		$fields = array('module_id', 'module_status', 'module_data', 'last_edit_timestamp', 'last_editor_id');
 
-		$results = $sdb->select($table, $fields, $conds, __METHOD__);
+		$results = $sdb->select(self::HUBS_TABLE_NAME, $fields, $conds, __METHOD__);
 
 		$out = array();
 		while ($row = $sdb->fetchRow($results)) {
@@ -301,8 +293,6 @@ class MarketingToolboxModel extends AbstractMarketingToolboxModel {
 		
 		return $out;
 	}
-
-
 
 	/**
 	 * Save module
@@ -357,7 +347,7 @@ class MarketingToolboxModel extends AbstractMarketingToolboxModel {
 	 *
 	 * @return int timestamp
 	 */
-	public function getLastPublishedTimestamp($params, $timestamp = null, $useMaster = false) {
+	public function getLastPublishedTimestamp($cityId, $timestamp = null, $useMaster = false) {
 		if ($timestamp === null) {
 			$timestamp = time();
 		}
@@ -365,48 +355,43 @@ class MarketingToolboxModel extends AbstractMarketingToolboxModel {
 
 		if ($timestamp == strtotime(self::STRTOTIME_MIDNIGHT)) {
 			$lastPublishedTimestamp = WikiaDataAccess::cache(
-				$this->getMKeyForLastPublishedTimestamp($params, $timestamp),
+				$this->getMKeyForLastPublishedTimestamp($cityId, $timestamp),
 				6 * 60 * 60,
-				function () use ($params, $timestamp, $useMaster) {
-					return $this->getLastPublishedTimestampFromDB($params, $timestamp, $useMaster);
+				function () use ($cityId, $timestamp, $useMaster) {
+					return $this->getLastPublishedTimestampFromDB($cityId, $timestamp, $useMaster);
 				}
 			);
 		} else {
-			$lastPublishedTimestamp = $this->getLastPublishedTimestampFromDB($params, $timestamp, $useMaster);
+			$lastPublishedTimestamp = $this->getLastPublishedTimestampFromDB($cityId, $timestamp, $useMaster);
 		}
 
 		return $lastPublishedTimestamp;
 	}
 
-	public function getLastPublishedTimestampFromDB($params, $timestamp, $useMaster = false) {
+	public function getLastPublishedTimestampFromDB($cityId, $timestamp, $useMaster = false) {
 		$sdb = wfGetDB(
 			($useMaster) ? DB_MASTER : DB_SLAVE,
 			array(),
 			$this->wg->ExternalSharedDB
 		);
 
-		$table = $this->getTablesBySectionId($params['sectionId']);
-
 		$conds = array(
-			'lang_code' => $params['langCode'],
-			'vertical_id' => $params['verticalId'],
+			'city_id' => $cityId,
 			'module_status' => $this->statuses['PUBLISHED']
 		);
 
 		$conds = $sdb->makeList($conds, LIST_AND);
 		$conds .= ' AND hub_date <= ' . $sdb->timestamp($timestamp);
 
-		$result = $sdb->selectField($table, 'unix_timestamp(max(hub_date))', $conds, __METHOD__);
+		$result = $sdb->selectField(self::HUBS_TABLE_NAME, 'unix_timestamp(max(hub_date))', $conds, __METHOD__);
 
 		return $result;
 	}
 
-	protected function getMKeyForLastPublishedTimestamp($params, $timestamp) {
+	protected function getMKeyForLastPublishedTimestamp($cityId, $timestamp) {
 		return wfSharedMemcKey(
 			self::CACHE_KEY,
-			$params['langCode'],
-			$params['sectionId'],
-			$params['verticalId'],
+			$cityId,
 			$timestamp,
 			self::CACHE_KEY_LAST_PUBLISHED_TIMESTAMP
 		);

@@ -11,7 +11,9 @@
 $dir = dirname(__FILE__) . '/';
 $app = F::app();
 
+$wgAutoloadClasses['AbstractMarketingToolboxModel'] =  $dir . 'models/AbstractMarketingToolboxModel.class.php';
 $wgAutoloadClasses['MarketingToolboxModel'] =  $dir . 'models/MarketingToolboxModel.class.php';
+$wgAutoloadClasses['MarketingToolboxV3Model'] =  $dir . 'models/MarketingToolboxV3Model.class.php';
 $wgAutoloadClasses['MarketingToolboxExploreModel'] =  $dir . 'models/MarketingToolboxExploreModel.class.php';
 $wgAutoloadClasses['MarketingToolboxFeaturedvideoModel'] =  $dir . 'models/MarketingToolboxFeaturedvideoModel.class.php';
 $wgAutoloadClasses['MarketingToolboxPollsModel'] =  $dir . 'models/MarketingToolboxPollsModel.class.php';
