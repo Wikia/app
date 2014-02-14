@@ -71,26 +71,24 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 	 */
 	function isSectionLongerThan ( sectionNumber, minHeight ) {
 		var currentSection,
+			nextSection,
 			topOffset,
-			referenceOffset = null,
-			$wkPage;
+			referenceOffset = null;
 
-		if( !h2s[sectionNumber] ) {
-			return false;
-		}
+		currentSection = h2s[sectionNumber - 1];
+		nextSection = h2s[sectionNumber];
 
-		//If zero section, measure against top of the article
-		topOffset = ( sectionNumber ) ? $( currentSection ).offset().top : $( '#mw-content-text' ).offset().top;
-
-		currentSection = h2s[sectionNumber+1]
-		if ( currentSection ) {
-			referenceOffset = $( currentSection ).offset().top;
-		}
-
-		//If next h2 does not exist, compare with bottom of the page
-		else {
-			$wkPage = $( '#wkPage' );
-			referenceOffset = $wkPage.offset().top + $wkPage.height();
+		if ( !nextSection ) {
+			if ( currentSection ){
+				var $wkPage = $( '#wkPage' );
+				referenceOffset = $wkPage.offset().top + $wkPage.height();
+				topOffset = $( currentSection ).offset().top;
+			} else {
+				return false;
+			}
+		} else {
+			topOffset = ( sectionNumber ) ? $( currentSection ).offset().top : $( '#mw-content-text' ).offset().top;
+			referenceOffset = $( nextSection ).offset().top;
 		}
 
 		return ( referenceOffset - topOffset > minHeight );
