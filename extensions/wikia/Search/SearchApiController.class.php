@@ -63,9 +63,6 @@ class SearchApiController extends WikiaApiController {
 		if ( !$this->request->getVal( 'query' ) ) {
 			throw new InvalidParameterApiException( 'query' );
 		}
-		if ( !$this->request->getVal( 'lang' ) ) {
-			throw new InvalidParameterApiException( 'lang' );
-		}
 
 		$resultSet = (new Factory)->getFromConfig( $this->getConfigCrossWiki() )->search();
 		$items = array();
@@ -164,8 +161,10 @@ class SearchApiController extends WikiaApiController {
 			->setRank( $request->getVal( 'rank', 'default' ) )
 			->setInterWiki( true )
 			->setCommercialUse( $this->hideNonCommercialContent() )
-			->setLanguageCode( $lang )
 		;
+		if ( !empty( $lang ) ) {
+			$searchConfig->setLanguageCode( $lang );
+		}
 		//this will set different boosting
 		$searchConfig->setBoostGroup( 'CrossWikiApi' );
 		return $searchConfig;
