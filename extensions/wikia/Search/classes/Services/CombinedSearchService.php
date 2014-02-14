@@ -123,7 +123,7 @@ class CombinedSearchService {
 	 * @return array
 	 */
 	protected function querySolrForArticles($query, $namespaces, $maxArticlesPerWiki, $wikiId, $wikiLang) {
-		$requestedFields = ["title", "url", "id", "score", "pageid", "lang", "wid", "article_quality_i", Utilities::field('html', $wikiLang)];
+		$requestedFields = ["title", "url", "id", "score", "pageid", "lang", "wid", "article_quality_i", "article_type_s" ,Utilities::field('html', $wikiLang)];
 		$searchConfig = new Config;
 		$searchConfig->setQuery($query)
 			->setLimit($maxArticlesPerWiki)
@@ -149,7 +149,10 @@ class CombinedSearchService {
 	 * @return array
 	 */
 	protected function queryPhraseSolrForArticles( $query, $namespaces, $lang, $hubs = null, $minArticleQuality = null ) {
-		$requestedFields = ['title' => Utilities::field('title', $lang), "url", "id", "score", "pageid", "lang", "wid", "article_quality_i", Utilities::field('html', $lang)];
+		$requestedFields = [
+			'title' => Utilities::field( 'title', $lang ), "url", "id", "score", "pageid", "lang", "wid",
+			"article_quality_i", "article_type_s", Utilities::field( 'html', $lang )
+		];
 
 		$config = (new Factory())->getSolariumClientConfig();
 		$client = new \Solarium_Client($config);
@@ -357,6 +360,7 @@ class CombinedSearchService {
 		$outputModel['url'] = $articleInfo['url'];
 		$outputModel['lang'] = $articleInfo['lang'];
 		$outputModel['quality'] = isset( $articleInfo['article_quality_i'] ) ? $articleInfo['article_quality_i'] : null;
+		$outputModel['type'] = isset( $articleInfo['article_type_s'] ) ? $articleInfo['article_type_s'] : null;
 
 		if ( isset($articleInfo[Utilities::field('html', $articleInfo['lang'])]) ) {
 			$fullText = $articleInfo[Utilities::field('html', $articleInfo['lang'])];

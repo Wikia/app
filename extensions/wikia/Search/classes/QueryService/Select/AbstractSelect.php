@@ -150,7 +150,8 @@ abstract class AbstractSelect
 				'categories',
 				'hub',
 				'lang',
-				'article_quality_i'
+				'article_quality_i',
+				'article_type_s'
 			];
 	
 	/**
