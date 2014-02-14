@@ -207,7 +207,7 @@ class ArticlesApiController extends WikiaApiController {
 		} else {
 			foreach ( $mostLinked as $item ) {
 					$title = Title::newFromText( $item['page_title'], NS_MAIN );
-					if ( $title ) {
+					if ( !empty($title) && $title instanceof Title && !$title->isMainPage() ) {
 						$mostLinkedOutput[] = [
 							'id' => $item['page_id'],
 							'title' => $item['page_title'],
