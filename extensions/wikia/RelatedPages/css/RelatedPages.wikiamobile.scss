@@ -61,6 +61,12 @@ $itemPadding: 6px;
 		line-height: 1.25rem;
 	}
 
+	&.large {
+		.title {
+			padding-top: 15px;
+		}
+	}
+
 	&.small {
 		&:after {
 			content: '';
