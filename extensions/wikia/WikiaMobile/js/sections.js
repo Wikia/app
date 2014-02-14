@@ -61,37 +61,24 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 	 */
 	function isSectionLongerThan ( sectionNumber, minHeight ) {
 		var currentSection,
-			level,
-			currentLevel,
 			topOffset,
 			referenceOffset = null,
-			i,
 			$wkPage;
 
 		if( !h2s[sectionNumber] ) {
 			return false;
 		}
 
-		if ( sectionNumber ){
-			currentSection = h2s[sectionNumber];
-			topOffset = $( currentSection ).offset().top;
-			level = parseInt( currentSection.tagName.substring( 1 ), 10 );
-		} else { //intro section
-			topOffset = $( '#mw-content-text' ).offset().top;
-			level = 2; //next H2 terminates intro section
+		//If zero section, measure against top of the article
+		topOffset = ( sectionNumber ) ? $( currentSection ).offset().top : $( '#mw-content-text' ).offset().top;
+
+		currentSection = h2s[sectionNumber+1]
+		if ( currentSection ) {
+			referenceOffset = $( currentSection ).offset().top;
 		}
 
-		for ( i = sectionNumber + 1; i < sections.length; i++ ) {
-			currentLevel = +sections[i].tagName.substring( 1 );
-
-			if ( currentLevel >= level ) {
-				referenceOffset = $( sections[i] ).offset().top;
-				break;
-			}
-		}
-
-		//If no matching sections found, measure offset relative to the end of wkPage
-		if ( !referenceOffset ) {
+		//If next h2 does not exist, compare with bottom of the page
+		else {
 			$wkPage = $( '#wkPage' );
 			referenceOffset = $wkPage.offset().top + $wkPage.height();
 		}
