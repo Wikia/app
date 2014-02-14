@@ -7,20 +7,17 @@ function ( sections, window, $, mustache, toc, track ) {
 	//private
 	var open = 'open',
 		active = 'active',
-		$document = $( window.document ),
+		doc = window.document,
+		$document = $( doc ),
 		$anchors,
-		sideMenuCapable = ( Features.positionfixed && Features.overflow ),
+		sideMenuCapable = ( window.Features.positionfixed && window.Features.overflow ),
 		$ol,
 		inited,
-		$toc = $( '#wkTOC' ),
-		$tocHandle = $( '#wkTOCHandle' ),
+		$toc = $( doc.getElementById( 'wkTOC' ) ),
+		$tocHandle = $( doc.getElementById( 'wkTOCHandle' ) ),
 		tocScroll,
 		inPageToc,
 		tocTemplate;
-
-	if ( sideMenuCapable ) {
-		$toc.addClass( 'side-menu-capable' );
-	}
 
 	/**
 	 * @desc Creates object representing a section
@@ -146,7 +143,7 @@ function ( sections, window, $, mustache, toc, track ) {
 
 			$anchors = $ol.find( 'li > a' );
 
-			var wrapper = document.getElementById( 'tocWrapper' );
+			var wrapper = doc.getElementById( 'tocWrapper' );
 
 			if ( wrapper ) {
 				tocScroll = new window.IScroll( wrapper, {
@@ -210,12 +207,12 @@ function ( sections, window, $, mustache, toc, track ) {
 		tocTemplate = renderToc();
 
 		if ( tocTemplate ) {
-			$ol = $document.find('#mw-content-text')
+			$ol = $document.find( '#mw-content-text' )
 				.append(
 					'<div class="in-page-toc"><h2>' + $toc.find( 'header' ).text() + '</h2>' + tocTemplate + '</div>'
 				).find('.level');
 
-			inPageToc = document.getElementsByClassName('in-page-toc')[0];
+			inPageToc = doc.getElementsByClassName('in-page-toc')[0];
 		} else {
 			$tocHandle.hide();
 		}
