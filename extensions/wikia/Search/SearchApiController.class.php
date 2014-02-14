@@ -16,12 +16,6 @@ class SearchApiController extends WikiaApiController {
 	const PARAMETER_NAMESPACES = 'namespaces';
 
 	/**
-	 * List of hubs to query by
-	 * @var array
-	 */
-	protected $hubNames = [ 'Entertainment', 'Gaming', 'Lifestyle' ];
-
-	/**
 	 * Fetches results for the submitted query
 	 *
 	 * @requestParam string $query The query to use for the search
@@ -70,10 +64,6 @@ class SearchApiController extends WikiaApiController {
 		}
 		if ( !$this->request->getVal( 'lang' ) ) {
 			throw new InvalidParameterApiException( 'lang' );
-		}
-		$hub = $this->request->getVal( 'hub' );
-		if ( $hub && !in_array( $hub, $this->hubNames ) ) {
-			throw new InvalidParameterApiException( 'hub' );
 		}
 
 		$resultSet = (new Factory)->getFromConfig( $this->getConfigCrossWiki() )->search();
@@ -160,7 +150,7 @@ class SearchApiController extends WikiaApiController {
 			->setLimit( $request->getInt( 'limit', static::CROSS_WIKI_LIMIT ) )
 			->setPage( $request->getVal( 'batch', 1 ) )
 			->setRank( $request->getVal( 'rank', 'default' ) )
-			->setHub( $request->getVal( 'hub', null ) )
+			->setHub( $request->getArray( 'hub', null ) )
 			->setInterWiki( true )
 			->setCommercialUse( $this->hideNonCommercialContent() )
 			->setLanguageCode( $request->getVal( 'lang' ) )
