@@ -1,0 +1,133 @@
+/*!
+ * VisualEditor UserInterface WikiaFocusWidget class.
+ */
+
+/* global require */
+
+/**
+ * @class
+ * @extends OO.ui.Widget
+ *
+ * @constructor
+ * @param {ve.ui.Surface} [surface] UI Surface
+ */
+ve.ui.WikiaFocusWidget = function VeUiWikiaFocusWidget( surface ) {
+
+	// Parent constructor
+	OO.ui.Widget.call( this );
+
+	// Properties
+	this.surface = surface;
+	this.spacing = 10;
+	this.$top = this.$( '<div>' ).addClass( 've-ui-wikiaFocusWidget-top' );
+	this.$right = this.$( '<div>' ).addClass( 've-ui-wikiaFocusWidget-right' );
+	this.$bottom = this.$( '<div>' ).addClass( 've-ui-wikiaFocusWidget-bottom' );
+	this.$left = this.$( '<div>' ).addClass( 've-ui-wikiaFocusWidget-left' );
+	this.$body = $( this.getElementDocument() ).find( 'body:first' );
+	this.$window = this.$( this.getElementWindow() );
+	this.$surface = surface.$element;
+	this.$pageHeader = $( '#WikiaPageHeader' );
+	this.$pageHeaderElements = this.$pageHeader.children( ':not( h1 )' );
+	this.$wikiaBarWrapper = $( '#WikiaBarWrapper' );
+	this.$wikiaBarCollapseWrapper = $( '#WikiaBarCollapseWrapper' );
+	this.$wikiaAds = $( '.wikia-ad, #WikiaAdInContentPlaceHolder' );
+	if ( wgEnableWikiaBarExt && !WikiaBar.isWikiaBarHidden() ) {
+		this.showWikiaBar = true;
+	}
+
+	// Events
+	surface.getView().getDocument().getDocumentNode()
+		.connect( this, {
+			'setup': this.onSurfaceSetup,
+			'teardown': this.onSurfaceTeardown
+		} );
+	this.$window
+		.on( {
+			'resize': ve.bind( this.adjustLayout, this ),
+			'scroll': $.throttle( 250, ve.bind( this.adjustLayout, this ) )
+		} );
+	surface.getModel().documentModel
+		.on( 'transact', ve.bind( this.adjustLayout, this ) );
+
+	// Initialization
+	this.$element
+		.addClass( 've-ui-wikiaFocusWidget' )
+		.append( this.$top, this.$right, this.$bottom, this.$left );
+};
+
+/* Inheritance */
+OO.inheritClass( ve.ui.WikiaFocusWidget, OO.ui.Widget );
+
+/* Methods */
+ve.ui.WikiaFocusWidget.prototype.adjustLayout = function() {
+
+	var surfaceOffset = this.$surface.offset(),
+		surfaceEdges = {
+			right: surfaceOffset.left + this.$surface.width(),
+			bottom: surfaceOffset.top + this.$surface.height(),
+			left: surfaceOffset.left
+		},
+		documentDimensions = {
+			height: this.$body.outerHeight(),
+			width: this.$window.width()
+		};
+
+	this.$top
+		.css( {
+			'height': this.$pageHeader.offset().top - this.spacing,
+			'width': documentDimensions.width
+		} );
+	this.$right
+		.css( {
+			'height': documentDimensions.height,
+			'width': documentDimensions.width - surfaceEdges.right - this.spacing
+		} );
+	this.$bottom
+		.css( {
+			'top': surfaceEdges.bottom,
+			'height': documentDimensions.height - surfaceEdges.bottom + this.spacing,
+			'width': documentDimensions.width
+		} );
+	this.$left
+		.css( {
+			'height': documentDimensions.height,
+			'width': surfaceEdges.left - this.spacing
+		} );
+};
+
+ve.ui.WikiaFocusWidget.prototype.onSurfaceSetup = function() {
+	var interval, i = 0;
+
+	this.hideDistractions();
+	this.adjustLayout();
+
+	// Run adjustLayout() a few times while images load, etc
+	this.interval = setInterval( ve.bind( function() {
+		this.adjustLayout();
+		if ( i++ == 2 ){
+			clearInterval( this.interval );
+		}
+	}, this ), 1000 );
+};
+
+ve.ui.WikiaFocusWidget.prototype.onSurfaceTeardown = function() {
+	this.showDistractions();
+};
+
+ve.ui.WikiaFocusWidget.prototype.hideDistractions = function() {
+	if ( wgEnableWikiaBarExt ) {
+		WikiaBar.hide();
+	}
+	// Visibility property - problem with edit button opening when setting display property
+	this.$pageHeaderElements.css( 'visibility', 'hidden' );
+	// Opacity property - Flash ads not hiding with visibility property
+	this.$wikiaAds.css( 'opacity', 0 );
+};
+
+ve.ui.WikiaFocusWidget.prototype.showDistractions = function() {
+	if ( this.showWikiaBar ) {
+		WikiaBar.show();
+	}
+	this.$pageHeaderElements.css( 'visibility', 'visible' );
+	this.$wikiaAds.css( 'opacity', 1 );
+}
