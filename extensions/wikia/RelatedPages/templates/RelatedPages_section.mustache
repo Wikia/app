@@ -1,18 +1,16 @@
 {{^skipRendering}}
-<section id="wkRelPag" class="RelatedPagesModule noprint">
-<h2 id="wkRelPagHead">{{relatedPagesHeading}}</h2>
-<ul {{#mobileSkin}}class="wkLst artSec open"{{/mobileSkin}}>
+<section id=wkRelPag class="RelatedPagesModule noprint">
+<h2 id=wkRelPagHead>{{relatedPagesHeading}}</h2>
+<ul>
 {{#pages}}
 <li>
 <a href="{{url}}" title="{{title}}">
 	{{#imgUrl}}
 	<img src="{{imgUrl}}" alt="{{title}}" width="{{imgWidth}}" height="{{imgHeight}}" />
 	{{/imgUrl}}
-	{{^mobileSkin}}
 	{{#text}}
 	<div class=articleSnippet><p>{{text}}</p></div>
 	{{/text}}
-	{{/mobileSkin}}
 	<span class="more">{{title}}</span>
 </a>
 </li>
