@@ -2,7 +2,7 @@
 	height: 380px;
 	margin-top: 10px;
 	.social-links {
-		float: left;
+		float: right;
 		a {
 			display: block;
 			float: left;
@@ -24,10 +24,6 @@
 		.gplus {
 			background-image: url("/extensions/wikia/WikiaHubsV3/images/gplus.png"); /* base64 */
 		}
-	}
-	div.search {
-		float: right;
-		margin-top: 8px;
 	}
 	.wam-header {
 		height: 52px;

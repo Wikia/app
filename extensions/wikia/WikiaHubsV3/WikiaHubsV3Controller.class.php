@@ -55,10 +55,10 @@ class WikiaHubsV3Controller extends WikiaController {
 			);
 		}
 
-		$this->response->addAsset('wikiahubs_v2');
-		$this->response->addAsset('wikiahubs_v2_modal');
-		$this->response->addAsset('wikiahubs_v2_scss');
-		$this->response->addAsset('wikiahubs_v2_scss_mobile');
+		$this->response->addAsset('wikiahubs_v3');
+		$this->response->addAsset('wikiahubs_v3_modal');
+		$this->response->addAsset('wikiahubs_v3_scss');
+		$this->response->addAsset('wikiahubs_v3_scss_mobile');
 		
 		$this->wg->Out->addJsConfigVars([
 			'wgWikiaHubsVerticalId' => $this->verticalId
