@@ -34,7 +34,7 @@ class VideoInfoHooksHelper {
 				if ( !$file->isLocal() ) {
 					$mediaService->clearCacheTotalPremiumVideos();
 				}
-				if ( !empty( $wgUseVideoVerticalFilters ) ) {
+				if ( !empty( F::app()->wg->UseVideoVerticalFilters ) ) {
 					VideoInfoHooksHelper::clearCategories( $file->getTitle() );
 				}
 			}
@@ -328,7 +328,7 @@ class VideoInfoHooksHelper {
 		$title = $wikiPage->getTitle();
 
 		if ( $title instanceof Title && WikiaFileHelper::isFileTypeVideo( $title ) ) {
-				VideoInfoHooksHelper::clearCategories( $title );
+			VideoInfoHooksHelper::clearCategories( $title );
 		}
 
 		return true;
@@ -347,7 +347,7 @@ class VideoInfoHooksHelper {
 		$title = $article->getTitle();
 
 		if ( $title instanceof Title && WikiaFileHelper::isFileTypeVideo( $title ) ) {
-				VideoInfoHooksHelper::clearCategories( $title );
+			VideoInfoHooksHelper::clearCategories( $title );
 		}
 
 		return true;
@@ -363,7 +363,7 @@ class VideoInfoHooksHelper {
 	public static function onCategorySelectSave( $title, $categories ) {
 
 		if ( $title instanceof Title && WikiaFileHelper::isFileTypeVideo( $title ) ) {
-				VideoInfoHooksHelper::clearCategories( $title );
+			VideoInfoHooksHelper::clearCategories( $title );
 		}
 
 		return true;
