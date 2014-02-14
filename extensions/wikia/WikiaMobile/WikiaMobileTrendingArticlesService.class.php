@@ -16,44 +16,48 @@ class WikiaMobileTrendingArticlesService extends WikiaService {
 	public function index(){
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 
-		//fetch Trending Articles
-		try {
-			$trendingArticlesData = $this->app->sendRequest( 'ArticlesApi', 'getTop' )->getVal( 'items' );
-		}
-		catch ( Exception $e ) {}
+		if ( $this->wg->Request->getVal( 'action', 'view' ) == 'view' && $this->wg->Title->getArticleId() != 0 ) {
+			//fetch Trending Articles
+			try {
+				$trendingArticlesData = $this->app->sendRequest( 'ArticlesApi', 'getTop' )->getVal( 'items' );
+			}
+			catch ( Exception $e ) {}
 
-		if ( !empty( $trendingArticlesData ) ) {
+			if ( !empty( $trendingArticlesData ) ) {
 
-			$items = array_slice( $trendingArticlesData, 0, self::MAX_TRENDING_ARTICLES );
-			//load data from response to template
-			$trendingArticles = [];
+				$items = array_slice( $trendingArticlesData, 0, self::MAX_TRENDING_ARTICLES );
+				//load data from response to template
+				$trendingArticles = [];
 
-			foreach( $items as $item ) {
-				$img = $this->app->sendRequest( 'ImageServing', 'getImages', [
-					'ids' => [ $item['id'] ],
-					'height' => self::IMG_HEIGHT,
-					'width' => self::IMG_WIDTH,
-					'count' => 1
-				] )->getVal( 'result' );
+				foreach( $items as $item ) {
+					$img = $this->app->sendRequest( 'ImageServing', 'getImages', [
+						'ids' => [ $item['id'] ],
+						'height' => self::IMG_HEIGHT,
+						'width' => self::IMG_WIDTH,
+						'count' => 1
+					] )->getVal( 'result' );
 
-				$thumbnail = $img[$item['id']][0]['url'];
+					$thumbnail = $img[$item['id']][0]['url'];
 
-				if ( empty( $thumbnail ) ) {
-					$thumbnail = false;
+					if ( empty( $thumbnail ) ) {
+						$thumbnail = false;
+					}
+
+					$trendingArticles[] = [
+						'url' => $item['url'],
+						'title' => $item['title'],
+						'imgUrl' => $thumbnail,
+						'width' => self::IMG_WIDTH,
+						'height' => self::IMG_HEIGHT
+					];
 				}
 
-				$trendingArticles[] = [
-					'url' => $item['url'],
-					'title' => $item['title'],
-					'imgUrl' => $thumbnail,
-					'width' => self::IMG_WIDTH,
-					'height' => self::IMG_HEIGHT
-				];
+				$this->response->setVal( 'trendingArticles', $trendingArticles );
+				$this->response->setVal( 'blankImg', $this->wg->BlankImgUrl );
+				$this->response->setVal( 'trendingArticlesHeading', wfMessage( 'wikiamobile-trending-articles-heading' )->plain() );
+			} else {
+				$this->skipRendering();
 			}
-
-			$this->response->setVal( 'trendingArticles', $trendingArticles );
-			$this->response->setVal( 'blankImg', $this->wg->BlankImgUrl );
-			$this->response->setVal( 'trendingArticlesHeading', wfMessage( 'wikiamobile-trending-articles-heading' )->plain() );
 		} else {
 			$this->skipRendering();
 		}
