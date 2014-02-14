@@ -12,7 +12,6 @@ class MarketingToolboxV3Model extends AbstractMarketingToolboxModel {
 			'city_id' => $cityId,
 		);
 
-		$conds = $sdb->makeList($conds, LIST_AND);
 		$conds .= ' AND hub_date >= ' . $sdb->timestamp($beginTimestamp)
 			. ' AND hub_date <= ' . $sdb->timestamp($endTimestamp);
 
@@ -91,19 +90,18 @@ class MarketingToolboxV3Model extends AbstractMarketingToolboxModel {
 	 * @return array
 	 */
 	public function getPublishedData($cityId, $timestamp = null, $moduleId = null) {
-		$lastPublishTimestamp = $this->getLastPublishedTimestamp($cityId, $verticalId, $timestamp);
+		$lastPublishTimestamp = $this->getLastPublishedTimestamp($cityId, $timestamp);
 		return $this->getModulesDataFromDb($cityId, $lastPublishTimestamp, $moduleId);
 	}
 
-	public function getModuleUrl($langCode, $sectionId, $verticalId, $timestamp, $moduleId) {
+	// TODO: check is it a propoer way to do this
+	public function getModuleUrl($cityId, $timestamp, $moduleId) {
 		$specialPage = $this->getSpecialPageClass();
 		return $specialPage::getTitleFor('MarketingToolbox', 'editHub')->getLocalURL(
 			array(
 				'moduleId' => $moduleId,
 				'date' => $timestamp,
-				'region' => $langCode,
-				'verticalId' => $verticalId,
-				'sectionId' => $sectionId
+				'cityId' => $cityId,
 			)
 		);
 	}
