@@ -34,7 +34,7 @@ class WikiaMobileTrendingArticlesService extends WikiaService {
 					'width' => self::IMG_WIDTH,
 					'count' => 1
 				] )->getVal( 'result' );
-
+var_dump($item);exit();
 				$thumbnail = $img[$item->id][0]['url'];
 
 				if ( empty( $thumbnail ) ) {
