@@ -59,13 +59,13 @@ Please contact community support at [mailto:support@wikia-inc.com support@wikia-
 );
 
 $messages['qqq'] = array(
-	'wam-html-title' => 'Title for the WAM pages',
-	'wampage-header' => 'Header of the /wam page on corporate wiki',
-	'wampage-header-faq' => 'Header of the /wam/faq page on corporate wiki',
-	'wampage-content' => 'Content of the /wam page on corporate wiki',
-	'wampage-faq' => 'Content of the /wam/faq page on corporate wiki',
-	'wampage-breadcrumb-back-to-wam' => 'Content of an anchor which goes back to WAM page on corporate wiki. There is a "<" sign before this text.',
-	'wam-index-no-results' => 'Information displayed in the table when there are no results found. It contains link to e-mail address of our support team',
+	'wam-html-title' => 'Title for the WAM pages. For information about wam visit http://www.wikia.com/WAM',
+	'wampage-header' => 'Header of the WAM page on corporate wiki. For information about wam visit http://www.wikia.com/WAM',
+	'wampage-header-faq' => 'Header of the FAQ page for WAM page on corporate wiki. For information about wam visit http://www.wikia.com/WAM',
+	'wampage-content' => 'Content of the WAM page on corporate wiki. For information about wam visit http://www.wikia.com/WAM',
+	'wampage-faq' => 'Content of the FAQ page for WAM page on corporate wiki. For information about wam visit http://www.wikia.com/WAM',
+	'wampage-breadcrumb-back-to-wam' => 'Content of an anchor which goes back to WAM page on corporate wiki. There is a "<" sign before this text. For information about wam visit http://www.wikia.com/WAM',
+	'wam-index-no-results' => 'Information displayed in the table when there are no results found. It contains link to e-mail address of our support team. For information about wam visit http://www.wikia.com/WAM',
 );
 
 
