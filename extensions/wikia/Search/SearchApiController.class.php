@@ -19,7 +19,7 @@ class SearchApiController extends WikiaApiController {
 	 * List of hubs to query by
 	 * @var array
 	 */
-	protected $hubNames = [ 'Entertainment', 'Games', 'Lifestyle' ];
+	protected $hubNames = [ 'Entertainment', 'Gaming', 'Lifestyle' ];
 
 	/**
 	 * Fetches results for the submitted query
