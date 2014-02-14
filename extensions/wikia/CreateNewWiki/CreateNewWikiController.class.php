@@ -196,6 +196,15 @@ class CreateNewWikiController extends WikiaController {
 				return;
 			}
 
+			// check if user has confirmed e-mail
+			if ( !$wgUser->isEmailConfirmed() ) {
+				$this->status = 'error';
+				$this->statusMsg = wfMessage( 'cnw-error-unconfirmed-email' )->parse();
+				$this->statusHeader = wfMessage( 'cnw-error-unconfirmed-email-header' )->text();
+				wfProfileOut(__METHOD__);
+				return;
+			}
+
 			// check if user is blocked
 			if ( $wgUser->isBlocked() ) {
 				$this->status = 'error';

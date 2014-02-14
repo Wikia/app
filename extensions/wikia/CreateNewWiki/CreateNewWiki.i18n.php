@@ -83,6 +83,8 @@ $messages['en'] = array(
 	'cnw-error-torblock' => 'Creating wikis via the Tor Network is not allowed.',
 	'cnw-error-bot' => 'We have detected that you may be a bot.  If we made a mistake, please contact us describing that you have been falsely detected as a bot, and we will aid you in creating your wiki: [http://www.wikia.com/Special:Contact/general Contact Us]',
 	'cnw-error-bot-header' => 'You have been detected as a bot',
+	'cnw-error-unconfirmed-email-header' => 'Your e-mail has not been confirmed',
+	'cnw-error-unconfirmed-email' => 'Your e-mail should be confirmed to create a Wiki.',
 );
 
 /** Message documentation (Message documentation)
@@ -167,6 +169,8 @@ Be carefull to keep it short as there are 3 successive balloon tips to display i
 	'cnw-error-anon-user' => 'Error message when anon user tries to create new wiki.',
 	'cnw-error-bot' => 'Message describing you may be a bot and link to contact page',
 	'cnw-error-bot-header' => 'Message header for modal box',
+	'cnw-error-unconfirmed-email-header' => 'Message header for modal box',
+	'cnw-error-unconfirmed-email' => 'Message describing your e-mail has not been confirmed yet therefore you cannot process with Wiki creation',
 );
 
 /** Afrikaans (Afrikaans)
