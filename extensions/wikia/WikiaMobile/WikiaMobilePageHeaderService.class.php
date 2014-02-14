@@ -107,6 +107,7 @@ class  WikiaMobilePageHeaderService extends WikiaService {
 
 		if( $wg->EnableArticleCommentsExt &&
 			in_array( $title->getNamespace(), $wg->ContentNamespaces ) &&
+			!$wg->Title->isMainPage() &&
 			$wg->request->getVal( 'action', 'view' ) == 'view'
 		) {
 			$numberOfComments = ArticleCommentList::newFromTitle( $title )->getCountAllNested();
