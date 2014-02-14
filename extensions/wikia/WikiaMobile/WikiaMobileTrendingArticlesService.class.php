@@ -26,7 +26,7 @@ class WikiaMobileTrendingArticlesService extends WikiaService {
 			$items = array_slice( $trendingArticlesData->items, 0, self::MAX_TRENDING_ARTICLES );
 			//load data from response to template
 			$trendingArticles = [];
-
+			var_dump($items);
 			foreach( $items as $item ) {
 				$img = $this->app->sendRequest( 'ImageServing', 'getImages', [
 					'ids' => [ $item->id ],
@@ -34,7 +34,7 @@ class WikiaMobileTrendingArticlesService extends WikiaService {
 					'width' => self::IMG_WIDTH,
 					'count' => 1
 				] )->getVal( 'result' );
-var_dump($item);exit();
+var_dump($item);
 				$thumbnail = $img[$item->id][0]['url'];
 
 				if ( empty( $thumbnail ) ) {
@@ -49,7 +49,7 @@ var_dump($item);exit();
 					'height' => self::IMG_HEIGHT
 				];
 			}
-
+var_dump($trendingArticles);exit();
 			$this->response->setVal( 'trendingArticles', $trendingArticles );
 			$this->response->setVal( 'blankImg', $this->wg->BlankImgUrl );
 			$this->response->setVal( 'trendingArticlesHeading', wfMessage( 'wikiamobile-trending-articles-heading' )->plain() );
