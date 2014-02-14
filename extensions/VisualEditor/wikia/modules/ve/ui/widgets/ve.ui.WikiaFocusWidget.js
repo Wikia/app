@@ -98,6 +98,7 @@ ve.ui.WikiaFocusWidget.prototype.onSurfaceSetup = function() {
 	var interval, i = 0;
 
 	this.hideDistractions();
+	this.$element.show();
 	this.adjustLayout();
 
 	// Run adjustLayout() a few times while images load, etc
@@ -112,6 +113,7 @@ ve.ui.WikiaFocusWidget.prototype.onSurfaceSetup = function() {
 
 ve.ui.WikiaFocusWidget.prototype.onSurfaceTeardown = function() {
 	this.showDistractions();
+	this.$element.hide();
 };
 
 ve.ui.WikiaFocusWidget.prototype.hideDistractions = function() {
