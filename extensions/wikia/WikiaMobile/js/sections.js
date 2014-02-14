@@ -9,6 +9,7 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 	'use strict';
 
 	var d = window.document,
+		h2s = $( 'h2[id]', d.getElementById( 'wkPage' ) ).toArray(),
 		sections = $( 'h2[id],h3[id],h4[id]', d.getElementById( 'wkPage' ) ).toArray(),
 		l = sections.length,
 		lastSection,
@@ -59,37 +60,42 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 	 * @returns boolean
 	 */
 	function isSectionLongerThan ( sectionNumber, minHeight ) {
-		if( !sections[sectionNumber] ){
-			return false;
-		}
 		var currentSection,
 			level,
 			currentLevel,
 			topOffset,
-			referenceOffset = null;
+			referenceOffset = null,
+			i,
+			$wkPage;
+
+		if( !h2s[sectionNumber] ) {
+			return false;
+		}
 
 		if ( sectionNumber ){
-			currentSection = sections[sectionNumber];
+			currentSection = h2s[sectionNumber];
 			topOffset = $( currentSection ).offset().top;
-			level = +currentSection.tagName.substring( 1 );
+			level = parseInt( currentSection.tagName.substring( 1 ), 10 );
 		} else { //intro section
-			currentSection = -1; //to measure intro section
 			topOffset = $( '#mw-content-text' ).offset().top;
 			level = 2; //next H2 terminates intro section
 		}
 
-		for ( var i = sectionNumber + 1; i < sections.length; i++ ) {
+		for ( i = sectionNumber + 1; i < sections.length; i++ ) {
 			currentLevel = +sections[i].tagName.substring( 1 );
-			if( currentLevel >= level ) {
+
+			if ( currentLevel >= level ) {
 				referenceOffset = $( sections[i] ).offset().top;
 				break;
 			}
 		}
+
 		//If no matching sections found, measure offset relative to the end of wkPage
 		if ( !referenceOffset ) {
-			var $wkPage = $( '#wkPage' );
+			$wkPage = $( '#wkPage' );
 			referenceOffset = $wkPage.offset().top + $wkPage.height();
 		}
+
 		return ( referenceOffset - topOffset > minHeight );
 	}
 
@@ -101,10 +107,12 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 	function getElementAt ( distFromTop ) {
 		var currentElement = $( '#mw-content-text' ).children().first(),
 			currentOffset = currentElement.outerHeight();
+
 		while ( currentElement.next().length !== 0 && currentOffset < distFromTop ) {
 			currentElement = currentElement.next();
 			currentOffset += currentElement.outerHeight();
 		}
+
 		return currentElement;
 	}
 
