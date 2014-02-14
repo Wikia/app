@@ -454,7 +454,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			->setInterWiki               ( $this->isCorporateWiki() )
 			->setVideoSearch             ( $this->getVal( 'videoSearch', false ) )
 			->setFilterQueriesFromCodes  ( $this->getVal( 'filters', array() ) )
-			->setABTestGroup			 ( $this->getVal( 'ab' ) )
+			->setBoostGroup			 ( $this->getVal( 'ab' ) )
 		;
 		$this->setNamespacesFromRequest( $searchConfig, $this->wg->User );
 		if ( substr( $this->getResponse()->getFormat(), 0, 4 ) == 'json' ) {

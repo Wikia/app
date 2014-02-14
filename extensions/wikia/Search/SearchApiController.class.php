@@ -12,6 +12,7 @@ use Wikia\Search\Config, Wikia\Search\QueryService\Factory, Wikia\Search\QuerySe
 class SearchApiController extends WikiaApiController {
 	const ITEMS_PER_BATCH = 25;
 	const CROSS_WIKI_LIMIT = 25;
+	const ALL_LANGUAGES_STR = 'all';
 
 	const PARAMETER_NAMESPACES = 'namespaces';
 
@@ -61,9 +62,6 @@ class SearchApiController extends WikiaApiController {
 	public function getCrossWiki() {
 		if ( !$this->request->getVal( 'query' ) ) {
 			throw new InvalidParameterApiException( 'query' );
-		}
-		if ( !$this->request->getVal( 'lang' ) ) {
-			throw new InvalidParameterApiException( 'lang' );
 		}
 
 		$resultSet = (new Factory)->getFromConfig( $this->getConfigCrossWiki() )->search();
@@ -146,14 +144,22 @@ class SearchApiController extends WikiaApiController {
 	protected function getConfigCrossWiki() {
 		$request = $this->getRequest();
 		$searchConfig = new Wikia\Search\Config;
+		$lang = $request->getArray( 'lang' );
+		if ( in_array( self::ALL_LANGUAGES_STR, $lang ) ) {
+			$lang = [ '*' ];
+		}
 		$searchConfig->setQuery( $request->getVal( 'query', null ) )
 			->setLimit( $request->getInt( 'limit', static::CROSS_WIKI_LIMIT ) )
 			->setPage( $request->getVal( 'batch', 1 ) )
 			->setRank( $request->getVal( 'rank', 'default' ) )
 			->setInterWiki( true )
 			->setCommercialUse( $this->hideNonCommercialContent() )
-			->setLanguageCode( $request->getVal( 'lang' ) )
 		;
+		if ( !empty( $lang ) ) {
+			$searchConfig->setLanguageCode( $lang );
+		}
+		//this will set different boosting
+		$searchConfig->setBoostGroup( 'CrossWikiApi' );
 		return $searchConfig;
 	}
 }

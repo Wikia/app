@@ -431,7 +431,15 @@ abstract class AbstractSelect
 			strtolower( $query ) 
 		);
 		$service = $this->getService();
-		$wikiMatch = $service->getWikiMatchByHost( $domain, $config->getLanguageCode() );
+		$langs = $config->getLanguageCode();
+		$langs = is_array( $langs ) ?: [ $langs ];
+		foreach( $langs as $lang ) {
+			$wikiMatch = $service->getWikiMatchByHost( $domain, $lang );
+			//if found exit, we look only for first match
+			if ( !empty( $wikiMatch ) ) {
+				break;
+			}
+		}
 		if (! empty( $wikiMatch ) && ( $wikiMatch->getId() !== $service->getWikiId() ) &&
 			( !( $config->getCommercialUse() ) ||  (new \LicensedWikisService)->isCommercialUseAllowedById($wikiMatch->getId()) ) ) {
 			$result = $wikiMatch->getResult();
