@@ -73,10 +73,10 @@ define( 'lazyload', ['wikia.thumbnailer', 'jquery', 'wikia.window'], function ( 
 		elements = $.makeArray( elements );
 
 		while ( elm = elements[i++] ) {
-			imageWidth = parseInt( elm.getAttribute( 'width' ), 10 );
+			imageWidth = ~~elm.getAttribute( 'width' );
 
 			if ( pageWidth < imageWidth ) {
-				elm.setAttribute( 'height', Math.round( elm.width * ( parseInt( elm.getAttribute( 'height' ) / imageWidth) ), 10 ) );
+				elm.setAttribute( 'height', Math.round( elm.width * ( ~~elm.getAttribute( 'height' ) / imageWidth) ) );
 			}
 		}
 	};

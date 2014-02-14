@@ -65,18 +65,23 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 
 	/**
 	 * @desc Check if intro is longer than 700px
-	 * @param sectionNumber - number of section to measure
+	 * @param section - number of section or header element to measure
 	 * @param minHeight - height of intro to compare against
 	 * @returns boolean
 	 */
-	function isSectionLongerThan ( sectionNumber, minHeight ) {
+	function isSectionLongerThan ( section, minHeight ) {
 		var currentSection,
 			nextSection,
 			topOffset,
 			referenceOffset = null;
 
-		currentSection = h2s[sectionNumber - 1];
-		nextSection = h2s[sectionNumber];
+		if ( typeof section === 'number' ) {
+			currentSection = h2s[section - 1];
+			nextSection = h2s[section];
+		} else {
+			currentSection = section;
+			nextSection = h2s[ h2s.indexOf( section ) + 1 ];
+		}
 
 		if ( !nextSection ) {
 			if ( currentSection ){
@@ -86,7 +91,7 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 				return false;
 			}
 		} else {
-			topOffset = sectionNumber ? $( currentSection ).offset().top : $( '#mw-content-text' ).offset().top;
+			topOffset = section ? $( currentSection ).offset().top : $( '#mw-content-text' ).offset().top;
 			referenceOffset = $( nextSection ).offset().top;
 		}
 

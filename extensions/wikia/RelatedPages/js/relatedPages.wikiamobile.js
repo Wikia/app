@@ -4,21 +4,21 @@
  *
  * there is currently AB Test running with 4 groups
  */
-require( [ 'wikia.window', 'wikia.nirvana', 'jquery', 'wikia.thumbnailer', 'lazyload', 'sloth', 'JSMessages', 'wikia.mustache' ],
-function( window, nirvana, $, thumbnailer, lazyload, sloth, msg, mustache ) {
+require( [ 'wikia.window', 'wikia.nirvana', 'jquery', 'wikia.thumbnailer', 'lazyload', 'sloth', 'JSMessages', 'wikia.mustache', 'sections' ],
+function( window, nirvana, $, thumbnailer, lazyload, sloth, msg, mustache, sections ) {
 	'use strict';
 
 	var sectionsList,
 		sectionsLength,
 		articleId = window.wgArticleId,
-		testGroup = Wikia.AbTest.getGroup( 'WIKIAMOBILE_RELATEDPAGES' );
+		testGroup = Wikia.AbTest.getGroup( 'WIKIAMOBILE_RELATEDPAGES' ),
+		minSectionLength = 1000;
 
 	if ( articleId && testGroup ) {
 		sectionsList = $.makeArray(
 			window.document.querySelectorAll('#mw-content-text h2[id]:not(:first-of-type):not(:last-of-type)' )
 		).filter( function( section ){
-			//TODO: Filter sections shorter than 1000px
-			return true;
+			return sections.isSectionLongerThan( section, minSectionLength );
 		} );
 		sectionsLength = sectionsList.length;
 
