@@ -27,7 +27,7 @@ class WAMPageArticle extends Article {
 			$action = 'index';
 		}
 
-		$app->wg->Out->setHTMLTitle( wfMessage('wam-html-title')->inContentLanguage()->escaped() );
+		$app->wg->Out->setHTMLTitle( wfMessage('wam-html-title')->inContentLanguage()->text() );
 		
 		$app->wg->Out->addHTML( $app->sendRequest('WAMPageController', $action, $app->wg->request->getValues()) );
 		wfProfileOut(__METHOD__);
