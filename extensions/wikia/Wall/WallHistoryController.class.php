@@ -155,6 +155,9 @@ class WallHistoryController extends WallController {
 	}
 	
 	private function getFormatedHistoryData($history, $threadId = 0) {
+		// VOLDEV-39: Store whether Wall is enabled
+		$ns = $this->wg->EnableWallExt ? NS_WALL : NS_USER_TALK;
+
 		foreach($history as $key => $value) {
 			$type = intval($value['action']);
 			
@@ -168,7 +171,7 @@ class WallHistoryController extends WallController {
 			$user = $value['user'];
 			$username = $user->getName();
 
-			$url = Title::newFromText( $username, $this->wg->EnableWallExt ? NS_USER_WALL : NS_USER_TALK )->getFullUrl();
+			$url = Title::newFromText( $username, $ns )->getFullUrl();
 			
 			if( $user->isAnon() ) {
 				$name = wfMsg('oasis-anon-user');
@@ -203,12 +206,7 @@ class WallHistoryController extends WallController {
 				
 				$msgUser = $wm->getUser();
 
-				// VOLDEV-39: Wall history message edit links should not link to walls when disabled
-				if ( $this->wg->EnableWallExt ) {
-					$history[$key]['msguserurl'] = Title::newFromText( $msgUser->getName(), NS_USER_WALL )->getFullUrl();
-				} else {
-					$history[$key]['msguserurl'] = Title::newFromText( $msgUser->getName(), NS_USER_TALK )->getFullUrl();
-				}
+				$history[$key]['msguserurl'] = Title::newFromText( $msgUser->getName(), $ns )->getFullUrl();
 
 				$history[$key]['msgusername'] = $msgUser->getName();
 			
