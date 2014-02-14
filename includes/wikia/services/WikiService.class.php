@@ -422,29 +422,30 @@ class WikiService extends WikiaModel {
 			if ( !empty( $dbname ) ) {
 				$db = wfGetDB( DB_SLAVE, array(), $dbname );
 			} else {
-				$db = wfGetDB( DB_SLAVE );
+				$db = false;
 			}
 
-			$res = $db->select(
-				array( 'querycache', 'page' ),
-				array( 'page_id', 'qc_value', 'page_title' ),
-				array(
-					'qc_title = page_title',
-					'qc_namespace = page_namespace',
-					'page_is_redirect = 0',
-					'qc_type' => 'Mostlinked',
-					'qc_namespace' => '0'
-				),
-				__METHOD__,
-				array( 'ORDER BY' => 'qc_value DESC', 'LIMIT' => self::MOST_LINKED_LIMIT  )
-			);
+			if ( $db !== false ) {
+				$res = $db->select(
+					array( 'querycache', 'page' ),
+					array( 'page_id', 'qc_value', 'page_title' ),
+					array(
+						'qc_title = page_title',
+						'qc_namespace = page_namespace',
+						'page_is_redirect = 0',
+						'qc_type' => 'Mostlinked',
+						'qc_namespace' => '0'
+					),
+					__METHOD__,
+					array( 'ORDER BY' => 'qc_value DESC', 'LIMIT' => self::MOST_LINKED_LIMIT  )
+				);
 
-			while ( $row = $db->fetchObject( $res ) ) {
-				$mostLinked[ $row->page_id ] = [ 	"page_id" => $row->page_id,
-													"page_title" => $row->page_title,
-													"backlink_cnt" => $row->qc_value ];
+				while ( $row = $db->fetchObject( $res ) ) {
+					$mostLinked[ $row->page_id ] = [ 	"page_id" => $row->page_id,
+														"page_title" => $row->page_title,
+														"backlink_cnt" => $row->qc_value ];
+				}
 			}
-
 			$this->wg->Memc->set( $memKey, $mostLinked, self::MOST_LINKED_CACHE_TTL );
 		}
 
