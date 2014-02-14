@@ -63,7 +63,7 @@ $messages['qqq'] = array(
 	'wampage-header' => 'Header of the WAM page on corporate wiki. For information about WAM visit http://www.wikia.com/WAM',
 	'wampage-header-faq' => 'Header of the FAQ page for WAM page on corporate wiki. For information about WAM visit http://www.wikia.com/WAM',
 	'wampage-content' => 'Content of the WAM page on corporate wiki. For information about WAM visit http://www.wikia.com/WAM',
-	'wampage-faq' => 'Content of the FAQ page for WAM page on corporate wiki. For information about wam visit http://www.wikia.com/WAM',
+	'wampage-faq' => 'Content of the FAQ page for WAM page on corporate wiki. For information about WAM visit http://www.wikia.com/WAM',
 	'wampage-breadcrumb-back-to-wam' => 'Content of an anchor which goes back to WAM page on corporate wiki. There is a "<" sign before this text. For information about WAM visit http://www.wikia.com/WAM',
 	'wam-index-no-results' => 'Information displayed in the table when there are no results found. It contains link to e-mail address of our support team. For information about WAM visit http://www.wikia.com/WAM',
 );
