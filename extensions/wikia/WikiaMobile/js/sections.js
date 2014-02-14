@@ -70,39 +70,24 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 	 */
 	function isSectionLongerThan ( sectionNumber, minHeight ) {
 		var currentSection,
-			level,
-			currentLevel,
+			nextSection,
 			topOffset,
-			referenceOffset = null,
-			i,
-			$wkPage;
+			referenceOffset = null;
 
-		if( !h2s[sectionNumber] ) {
-			return false;
-		}
+		currentSection = h2s[sectionNumber - 1];
+		nextSection = h2s[sectionNumber];
 
-		if ( sectionNumber ){
-			currentSection = h2s[sectionNumber];
-			topOffset = $( currentSection ).offset().top;
-			level = parseInt( currentSection.tagName.substring( 1 ), 10 );
-		} else { //intro section
-			topOffset = $( '#mw-content-text' ).offset().top;
-			level = 2; //next H2 terminates intro section
-		}
-
-		for ( i = sectionNumber + 1; i < sections.length; i++ ) {
-			currentLevel = +sections[i].tagName.substring( 1 );
-
-			if ( currentLevel >= level ) {
-				referenceOffset = $( sections[i] ).offset().top;
-				break;
+		if ( !nextSection ) {
+			if ( currentSection ){
+				var $wkPage = $( '#wkPage' );
+				referenceOffset = $wkPage.offset().top + $wkPage.height();
+				topOffset = $( currentSection ).offset().top;
+			} else {
+				return false;
 			}
-		}
-
-		//If no matching sections found, measure offset relative to the end of wkPage
-		if ( !referenceOffset ) {
-			$wkPage = $( '#wkPage' );
-			referenceOffset = $wkPage.offset().top + $wkPage.height();
+		} else {
+			topOffset = ( sectionNumber ) ? $( currentSection ).offset().top : $( '#mw-content-text' ).offset().top;
+			referenceOffset = $( nextSection ).offset().top;
 		}
 
 		return ( referenceOffset - topOffset > minHeight );
