@@ -15,6 +15,7 @@ function ( sections, media, cache, loader, lazyload, $, sloth, topbar ) {
 		tablesKey = 'wideTables',
 		ttl = 604800, //7days
 		assets,
+		lazyImages,
 		process = function ( res ) {
 			!assets && cache && cache.setVersioned( tablesKey, res, ttl );
 
@@ -51,8 +52,7 @@ function ( sections, media, cache, loader, lazyload, $, sloth, topbar ) {
 	//init media
 	media.init( d.getElementsByClassName( 'media' ) );
 
-	var lazyImages = d.getElementsByClassName( 'lazy' );
-
+	lazyImages = d.getElementsByClassName( 'lazy' );
 	lazyload.fixSizes( lazyImages );
 
 	sloth( {

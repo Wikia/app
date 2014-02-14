@@ -2,17 +2,12 @@ require( [ 'sloth', 'wikia.window', 'jquery' ], function ( sloth, w, $ ) {
 	'use strict';
 
 	var $placeholder,
-		isMobileSkin = false,
 		cacheKey = 'RelatedPagesAssets',
 		articleId = w.wgArticleId,
 		loaded,
 		shouldLoad;
 
 	switch ( w.skin ) {
-		case 'wikiamobile':
-			$placeholder = $( '#wkRltdCnt' );
-			isMobileSkin = true;
-			break;
 		case 'oasis':
 			$placeholder = $( '#WikiaArticleFooter' );
 			break;
@@ -57,8 +52,6 @@ require( [ 'sloth', 'wikia.window', 'jquery' ], function ( sloth, w, $ ) {
 	}
 
 	function load () {
-		var dfd = $.Deferred();
-
 		if ( !loaded && articleId ) {
 			require( [
 				'wikia.mustache',
@@ -78,19 +71,14 @@ require( [ 'sloth', 'wikia.window', 'jquery' ], function ( sloth, w, $ ) {
 						var items = data[0] && data[0].items,
 							pages = items && items[articleId],
 							page,
-							relatedPages = [],
-							artImgPlaceholder = (
-								isMobileSkin ?
-									w.wgCdnRootUrl + '/extensions/wikia/WikiaMobile/images/read_placeholder.png' :
-									''
-							);
+							relatedPages = [];
 
 						if ( pages && pages.length ) {
 							while( ( page = pages.shift() ) ) {
 								relatedPages.push( {
 									url: page.url,
 									title: page.title,
-									imgUrl: ( page.imgUrl ? page.imgUrl : artImgPlaceholder ),
+									imgUrl: page.imgUrl || '',
 									text: page.text
 								} );
 							}
@@ -98,9 +86,8 @@ require( [ 'sloth', 'wikia.window', 'jquery' ], function ( sloth, w, $ ) {
 							$placeholder.prepend(
 								mustache.render( template, {
 									relatedPagesHeading: msg( 'wikiarelatedpages-heading' ),
-									imgWidth: (isMobileSkin ? 100 : 200),
-									imgHeight: (isMobileSkin ? 50 : 100),
-									mobileSkin: isMobileSkin,
+									imgWidth: 200,
+									imgHeight:  100,
 									pages: relatedPages
 								} )
 							)
@@ -117,8 +104,6 @@ require( [ 'sloth', 'wikia.window', 'jquery' ], function ( sloth, w, $ ) {
 									label: 'related-pages'
 								} );
 							} );
-
-							dfd.resolve();
 						}
 					} );
 				}
@@ -126,8 +111,6 @@ require( [ 'sloth', 'wikia.window', 'jquery' ], function ( sloth, w, $ ) {
 
 			loaded = true;
 		}
-
-		return dfd.promise();
 	}
 
 	if ( shouldLoad ) {
@@ -137,24 +120,4 @@ require( [ 'sloth', 'wikia.window', 'jquery' ], function ( sloth, w, $ ) {
 			callback: load
 		} );
 	}
-
-	define( 'relatedPages', function(){
-		return {
-			load: function () {
-				var dfd = $.Deferred();
-
-				if ( shouldLoad ) {
-					sloth( {
-						off: $placeholder
-					} );
-
-					load().done( dfd.resolve );
-				} else {
-					dfd.reject();
-				}
-
-				return dfd.promise();
-			}
-		};
-	});
 } );

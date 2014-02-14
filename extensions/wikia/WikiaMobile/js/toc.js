@@ -1,7 +1,7 @@
 /* globals Features:true */
 //init toc
-require( [ 'sections', 'wikia.window', 'jquery', 'wikia.mustache', 'wikia.toc', 'track', require.optional( 'relatedPages' ) ],
-function ( sections, window, $, mustache, toc, track, relatedPages ) {
+require( [ 'sections', 'wikia.window', 'jquery', 'wikia.mustache', 'wikia.toc', 'track' ],
+function ( sections, window, $, mustache, toc, track ) {
 	'use strict';
 
 	//private
@@ -89,6 +89,7 @@ function ( sections, window, $, mustache, toc, track, relatedPages ) {
 	 * @param event Event
 	 * @param data Data passed from sections evetn
 	 * @param scrollTo weather to scroll to the element used to force it on TOC open
+	 * @param time time in which to scroll to an element
 	 */
 	function onSectionChange ( event, data, scrollTo, time ) {
 		$anchors.removeClass( 'current' );
@@ -155,15 +156,6 @@ function ( sections, window, $, mustache, toc, track, relatedPages ) {
 			} );
 
 			renderToc();
-
-			if ( relatedPages ) {
-				relatedPages
-					.load()
-					.done( function(){
-						renderToc();
-						onSectionChange( null, sections.current()[0], true, 0 );
-					} );
-			}
 
 			inited = true;
 		}
