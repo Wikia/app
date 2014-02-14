@@ -23,6 +23,7 @@ class WikiaMobileTrendingArticlesService extends WikiaService {
 		catch ( Exception $e ) {}
 
 		if ( !empty( $trendingArticlesData ) ) {
+			var_dump($trendingArticlesData->items);
 			$items = array_slice( $trendingArticlesData->items, 0, self::MAX_TRENDING_ARTICLES );
 			//load data from response to template
 			$trendingArticles = [];
