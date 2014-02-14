@@ -58,6 +58,7 @@ class CreateNewWikiController extends WikiaController {
 
 		// export info if user is logged in
 		$this->isUserLoggedIn = $wgUser->isLoggedIn();
+		$this->isUserEmailConfirmed = $wgUser->isEmailConfirmed();
 
 		// remove wikia plus for now for all languages
 		$skipWikiaPlus = true;
