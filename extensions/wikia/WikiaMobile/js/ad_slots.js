@@ -1,4 +1,4 @@
-require( ['ads', 'sloth', 'jquery', 'JSMessages', 'wikia.window', 'wikia.log'], function ( ads, sloth, $, msg, window, log ) {
+require( ['ads', 'sloth', 'jquery', 'JSMessages', 'wikia.window', 'wikia.log', 'sections'], function ( ads, sloth, $, msg, window, log, sections ) {
 	'use strict';
 
 	var MIN_ZEROTH_SECTION_LENGTH = 700,
@@ -10,7 +10,8 @@ require( ['ads', 'sloth', 'jquery', 'JSMessages', 'wikia.window', 'wikia.log'], 
 		$firstSection = $( 'h2[id]' ).first(),
 		$footer = $( '#wkMainCntFtr' ),
 		firstSectionTop = ( $firstSection.length && $firstSection.offset().top ) || 0,
-		showInContent = firstSectionTop > MIN_ZEROTH_SECTION_LENGTH,
+		minIntroHeight = 700, //if intro is shorter, then no wkAdInContent
+		showInContent = sections.isSectionLongerThan( 0, minIntroHeight ),
 		showBeforeFooter = doc.body.offsetHeight > MIN_PAGE_LENGTH || firstSectionTop < MIN_ZEROTH_SECTION_LENGTH,
 		lazyLoadAd = function ( elem, slotName ) {
 			log( 'Lazy load: ' + slotName, logLevel, logGroup );
@@ -52,7 +53,7 @@ require( ['ads', 'sloth', 'jquery', 'JSMessages', 'wikia.window', 'wikia.log'], 
 
 	if ( window.wgArticleId ) {
 		if ( showInContent ) {
-			$firstSection.before( '<div id=wkAdInContent class=ad-in-content />' );
+			sections.getElementAt( minIntroHeight ).after( '<div id=wkAdInContent class=ad-in-content />' );
 			lazyLoadAd( doc.getElementById( 'wkAdInContent' ), 'MOBILE_IN_CONTENT' );
 		}
 

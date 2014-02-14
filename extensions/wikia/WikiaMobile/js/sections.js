@@ -9,6 +9,7 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 	'use strict';
 
 	var d = window.document,
+		h2s = $( 'h2[id]', d.getElementById( 'wkPage' ) ).toArray(),
 		sections = getHeaders(),
 		lastSection,
 		escapeRegExp = /[()\.\+]/g,
@@ -62,6 +63,69 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 	lastSection = current();
 
 	/**
+	 * @desc Check if intro is longer than 700px
+	 * @param sectionNumber - number of section to measure
+	 * @param minHeight - height of intro to compare against
+	 * @returns boolean
+	 */
+	function isSectionLongerThan ( sectionNumber, minHeight ) {
+		var currentSection,
+			level,
+			currentLevel,
+			topOffset,
+			referenceOffset = null,
+			i,
+			$wkPage;
+
+		if( !h2s[sectionNumber] ) {
+			return false;
+		}
+
+		if ( sectionNumber ){
+			currentSection = h2s[sectionNumber];
+			topOffset = $( currentSection ).offset().top;
+			level = parseInt( currentSection.tagName.substring( 1 ), 10 );
+		} else { //intro section
+			topOffset = $( '#mw-content-text' ).offset().top;
+			level = 2; //next H2 terminates intro section
+		}
+
+		for ( i = sectionNumber + 1; i < sections.length; i++ ) {
+			currentLevel = +sections[i].tagName.substring( 1 );
+
+			if ( currentLevel >= level ) {
+				referenceOffset = $( sections[i] ).offset().top;
+				break;
+			}
+		}
+
+		//If no matching sections found, measure offset relative to the end of wkPage
+		if ( !referenceOffset ) {
+			$wkPage = $( '#wkPage' );
+			referenceOffset = $wkPage.offset().top + $wkPage.height();
+		}
+
+		return ( referenceOffset - topOffset > minHeight );
+	}
+
+	/**
+	 * @desc If possible, get section under which the ad can be placed (700px down)
+	 * @param distFromTop - an int value representing given height in document
+	 * @returns jQuery object or null
+	 */
+	function getElementAt ( distFromTop ) {
+		var currentElement = $( '#mw-content-text' ).children().first(),
+			currentOffset = currentElement.outerHeight();
+
+		while ( currentElement.next().length !== 0 && currentOffset < distFromTop ) {
+			currentElement = currentElement.next();
+			currentOffset += currentElement.outerHeight();
+		}
+
+		return currentElement;
+	}
+
+		/**
 	 * @desc Function that fires at most every 200ms while scrolling\
 	 * @triggers section:changed with a current section refernece and its id
 	 */
@@ -91,6 +155,8 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 			//make sure we're grabbing the latest version
 			return sections = getHeaders();
 		},
+		isSectionLongerThan: isSectionLongerThan,
+		getElementAt: getElementAt,
 		scrollTo: scrollTo,
 		current: current
 	};
