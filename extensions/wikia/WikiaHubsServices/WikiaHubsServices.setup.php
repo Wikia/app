@@ -20,6 +20,7 @@ $wgAutoloadClasses['MarketingToolboxSliderModel'] =  $dir . 'models/MarketingToo
 $wgAutoloadClasses['MarketingToolboxFromthecommunityModel'] =  $dir . 'models/MarketingToolboxFromthecommunityModel.class.php';
 $wgAutoloadClasses['MarketingToolboxImageModel'] =  $dir . 'models/MarketingToolboxImageModel.class.php';
 $wgAutoloadClasses['MarketingToolboxWAMModel'] =  $dir . 'models/MarketingToolboxWAMModel.class.php';
+$wgAutoloadClasses['WikiaHubsModel'] =  $dir . 'models/WikiaHubsModel.class.php';
 
 $wgAutoloadClasses['MarketingToolboxModuleService'] =  $dir . 'modules/MarketingToolboxModuleService.class.php';
 $wgAutoloadClasses['MarketingToolboxModuleEditableService'] =  $dir . 'modules/MarketingToolboxModuleEditableService.class.php';

@@ -10,6 +10,11 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 	 * @var MarketingToolboxWAMModel
 	 */
 	protected $model;
+
+	/**
+	 * @var WikiaHubsModel
+	 */
+	protected $hubModel;
 	
 	const MODULE_ID = 10;
 
@@ -251,7 +256,7 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 	}
 
 	public function getWikiaHubsModel() {
-		return new WikiaHubsV2Model();
+		return new WikiaHubsModel();
 	}
 
 	public function render($data) {
