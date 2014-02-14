@@ -9,7 +9,8 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 	'use strict';
 
 	var d = window.document,
-		h2s = $( 'h2[id]', d.getElementById( 'wkPage' ) ).toArray(),
+		$wkPage = $( '#wkPage' ),
+		h2s = $( 'h2[id]', $wkPage ).toArray(),
 		sections = getHeaders(),
 		lastSection,
 		escapeRegExp = /[()\.\+]/g,
@@ -79,14 +80,13 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 
 		if ( !nextSection ) {
 			if ( currentSection ){
-				var $wkPage = $( '#wkPage' );
 				referenceOffset = $wkPage.offset().top + $wkPage.height();
 				topOffset = $( currentSection ).offset().top;
 			} else {
 				return false;
 			}
 		} else {
-			topOffset = ( sectionNumber ) ? $( currentSection ).offset().top : $( '#mw-content-text' ).offset().top;
+			topOffset = sectionNumber ? $( currentSection ).offset().top : $( '#mw-content-text' ).offset().top;
 			referenceOffset = $( nextSection ).offset().top;
 		}
 
