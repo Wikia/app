@@ -1,7 +1,7 @@
 /* globals Features:true */
 //init toc
-require( [ 'sections', 'wikia.window', 'jquery', 'wikia.mustache', 'wikia.toc', 'track' ],
-function ( sections, window, $, mustache, toc, track ) {
+require( [ 'sections', 'wikia.window', 'jquery', 'wikia.mustache', 'wikia.toc', 'track', require.optional( 'relatedPages' ) ],
+function ( sections, window, $, mustache, toc, track, relatedPages ) {
 	'use strict';
 
 	//private
@@ -11,13 +11,12 @@ function ( sections, window, $, mustache, toc, track ) {
 		$document = $( doc ),
 		$anchors,
 		sideMenuCapable = ( window.Features.positionfixed && window.Features.overflow ),
-		$ol,
 		inited,
 		$toc = $( doc.getElementById( 'wkTOC' ) ),
 		$tocHandle = $( doc.getElementById( 'wkTOCHandle' ) ),
 		tocScroll,
 		inPageToc,
-		tocTemplate;
+		tocMarkup;
 
 	/**
 	 * @desc Creates object representing a section
@@ -41,7 +40,7 @@ function ( sections, window, $, mustache, toc, track ) {
 	 * @desc Renders toc for a given page
 	 * @returns HTML String
 	 */
-	function renderToc () {
+	function createTocMarkup () {
 		var ol = '<ol class="toc-list level{{level}}">{{#sections}}{{> lis}}{{/sections}}</ol>',
 			lis = '{{#.}}<li{{#sections.length}} class="has-children{{#firstLevel}}' +
 				' first-children{{/firstLevel}}"{{/sections.length}}>' +
@@ -50,7 +49,7 @@ function ( sections, window, $, mustache, toc, track ) {
 				'{{#sections.length}}{{> ol}}{{/sections.length}}</li>{{/.}}',
 			wrap = '<div id="tocWrapper"><div id="scroller">{{> ol}}</div></div>',
 			tocData = toc.getData(
-				sections.list,
+				sections.list(),
 				createSection
 			);
 
@@ -91,7 +90,7 @@ function ( sections, window, $, mustache, toc, track ) {
 	 * @param data Data passed from sections evetn
 	 * @param scrollTo weather to scroll to the element used to force it on TOC open
 	 */
-	function onSectionChange ( event, data, scrollTo ) {
+	function onSectionChange ( event, data, scrollTo, time ) {
 		$anchors.removeClass( 'current' );
 
 		if ( data && data.id ) {
@@ -109,8 +108,26 @@ function ( sections, window, $, mustache, toc, track ) {
 
 			if ( scrollTo ) {
 				toggleLi( $currentLi, true );
-				tocScroll.scrollToElement( $current[0] );
+				tocScroll.scrollToElement( $current[0], time );
 			}
+		}
+	}
+
+	function renderToc(){
+		$toc.find( '#tocWrapper' ).remove();
+
+		$anchors = $toc
+			.append( createTocMarkup() )
+			.find( 'li > a' );
+
+		var wrapper = doc.getElementById( 'tocWrapper' );
+
+		if ( wrapper ) {
+			tocScroll = new window.IScroll( wrapper, {
+				click: true,
+				scrollY: true,
+				scrollX: false
+			});
 		}
 	}
 
@@ -137,20 +154,15 @@ function ( sections, window, $, mustache, toc, track ) {
 				sections.scrollTo( $a.attr( 'href' ) );
 			} );
 
-			$ol = $toc
-				.append( renderToc() )
-				.find( '.level' );
+			renderToc();
 
-			$anchors = $ol.find( 'li > a' );
-
-			var wrapper = doc.getElementById( 'tocWrapper' );
-
-			if ( wrapper ) {
-				tocScroll = new window.IScroll( wrapper, {
-					click: true,
-					scrollY: true,
-					scrollX: false
-				});
+			if ( relatedPages ) {
+				relatedPages
+					.load()
+					.done( function(){
+						renderToc();
+						onSectionChange( null, sections.current()[0], true, 0 );
+					} );
 			}
 
 			inited = true;
@@ -174,11 +186,11 @@ function ( sections, window, $, mustache, toc, track ) {
 	function onOpen () {
 		$toc.addClass( active );
 		$document.on( 'section:changed', onSectionChange );
+		$.event.trigger( 'curtain:show' );
 
 		init();
 
 		onSectionChange( null, sections.current()[0], true );
-		$.event.trigger( 'curtain:show' );
 
 		track.event( 'newtoc', track.CLICK, {
 			label: 'open'
@@ -204,12 +216,12 @@ function ( sections, window, $, mustache, toc, track ) {
 	$document.on( 'curtain:hidden', onClose );
 
 	if ( !sideMenuCapable ) {
-		tocTemplate = renderToc();
+		tocMarkup = createTocMarkup();
 
-		if ( tocTemplate ) {
-			$ol = $document.find( '#mw-content-text' )
+		if ( tocMarkup ) {
+			$document.find( '#mw-content-text' )
 				.append(
-					'<div class="in-page-toc"><h2>' + $toc.find( 'header' ).text() + '</h2>' + tocTemplate + '</div>'
+					'<div class="in-page-toc"><h2>' + $toc.find( 'header' ).text() + '</h2>' + tocMarkup + '</div>'
 				).find('.level');
 
 			inPageToc = doc.getElementsByClassName('in-page-toc')[0];
