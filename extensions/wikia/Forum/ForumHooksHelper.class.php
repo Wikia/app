@@ -405,7 +405,6 @@ class ForumHooksHelper {
 			// we should prevent replies from being added for purging
 			if ( $wallMessage->isMain() ) {
 				$urls[] = $wallMessage->getMessagePageUrl( true );
-				$urls[] = $wallMessage->getMessagePageUrl( true ) . '?action=history';
 			}
 		}
 		return true;
