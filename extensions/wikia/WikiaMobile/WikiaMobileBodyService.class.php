@@ -19,7 +19,7 @@ class json {
 		$this->url = '/Rachel_Berry';
 		$this->ns = 0;
 		$this->thumbnail = 'http://static3.wikia.nocookie.net/__cb20140208202628/glee/images/thumb/c/cc/Tumblr_n0p1zdllkm1qe476yo1_500.jpg/200px-0%2C501%2C0%2C500-Tumblr_n0p1zdllkm1qe476yo1_500.jpg';
-		$this->originalDimensions = ['width' => 136, 'height' => 76];
+		$this->originalDimensions = ['width' => 500, 'height' => 500];
 	}
 }
 
