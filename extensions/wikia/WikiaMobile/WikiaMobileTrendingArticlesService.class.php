@@ -22,14 +22,11 @@ class WikiaMobileTrendingArticlesService extends WikiaService {
 		}
 		catch ( Exception $e ) {}
 
-		var_dump($trendingArticlesData);
-
-
 		if ( !empty( $trendingArticlesData ) ) {
 			$items = array_slice( $trendingArticlesData->items, 0, self::MAX_TRENDING_ARTICLES );
 			//load data from response to template
 			$trendingArticles = [];
-			var_dump($items);
+
 			foreach( $items as $item ) {
 				$img = $this->app->sendRequest( 'ImageServing', 'getImages', [
 					'ids' => [ $item->id ],
@@ -52,7 +49,7 @@ class WikiaMobileTrendingArticlesService extends WikiaService {
 					'height' => self::IMG_HEIGHT
 				];
 			}
-exit();
+
 			$this->response->setVal( 'trendingArticles', $trendingArticles );
 			$this->response->setVal( 'blankImg', $this->wg->BlankImgUrl );
 			$this->response->setVal( 'trendingArticlesHeading', wfMessage( 'wikiamobile-trending-articles-heading' )->plain() );
