@@ -3351,7 +3351,7 @@ class Title {
 
 		$urls = array(
 			$this->getInternalURL(),
-			$this->getInternalURL( 'action=history' )
+			#$this->getInternalURL( 'action=history' ) # Wikia change - BAC-1157 / history pages are not cached on Varnish
 		);
 
 		// purge variant urls as well
