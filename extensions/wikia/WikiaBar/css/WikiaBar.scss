@@ -335,6 +335,6 @@ body.nowikiabar {
 // Change z-indexes for proper stacking with VisualEditor focus mode
 .ve {
 	.WikiaBarWrapper, .WikiaBarCollapseWrapper {
-		z-index: $zTop + 1;
+		z-index: $zTop + 2;
 	}
 }

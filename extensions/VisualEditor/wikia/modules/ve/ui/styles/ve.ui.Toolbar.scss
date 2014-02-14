@@ -4,7 +4,6 @@
 // Toolbar
 .oo-ui-toolbar {
 	position: relative;
-	z-index: $zTop + 1;
 }
 .oo-ui-toolbar-bar {
 	@include linear-gradient($color-ve-gradient, top, $color-ve-gradient-light, 50%, $color-ve-gradient-dark, 100%);
@@ -24,4 +23,5 @@
 	margin-right: -10px;
 	// Overlap with page header bottom border
 	top: -1px;
+	z-index: $zTop + 3;
 }

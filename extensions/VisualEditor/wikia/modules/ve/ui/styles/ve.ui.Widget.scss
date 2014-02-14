@@ -1,4 +1,5 @@
 @import "skins/oasis/css/core/color";
+@import "skins/oasis/css/core/layout";
 @import "color";
 
 /* Button */
@@ -166,6 +167,7 @@
 	position: absolute;
 	right: 0;
 	top: 0;
+	z-index: $zTop;
 
 	div {
 		background-color: #000;

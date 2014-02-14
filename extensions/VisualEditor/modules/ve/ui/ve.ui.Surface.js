@@ -54,7 +54,7 @@ ve.ui.Surface = function VeUiSurface( dataOrDoc, config, target ) {
 		.append( this.context.$element );
 	this.$globalOverlay
 		.addClass( 've-ui-surface-overlay ve-ui-surface-overlay-global' )
-		.append( this.focus.$element, this.dialogs.$element );
+		.append( this.dialogs.$element );
 
 	// Make instance globally accessible for debugging
 	ve.instances.push( this );
@@ -93,7 +93,7 @@ OO.mixinClass( ve.ui.Surface, OO.EventEmitter );
  */
 ve.ui.Surface.prototype.initialize = function () {
 	this.view.$element.after( this.$localOverlay );
-	this.$( 'body' ).append( this.$globalOverlay );
+	this.$( 'body' ).append( this.focus.$element, this.$globalOverlay );
 
 	this.view.initialize();
 	// By re-asserting the current selection and forcing a poll we force selection to be something
