@@ -10,7 +10,9 @@
 	color: $page-text-color;
 
 	.trending-articles & {
-		border-top: none;
+		border: none;
+		padding: 20px 0 0 0;
+		margin: 0;
 	}
 
 	.header {
