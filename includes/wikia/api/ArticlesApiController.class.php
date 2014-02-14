@@ -220,6 +220,8 @@ class ArticlesApiController extends WikiaApiController {
 
 		$this->response->setVal( 'basepath', $this->wg->Server );
 		$this->response->setVal( 'items', $mostLinkedOutput );
+
+		$this->response->setCacheValidity(self::CLIENT_CACHE_VALIDITY);
 	}
 
 	/**
