@@ -25,7 +25,7 @@ class VideosModuleHooks {
 			$scripts = AssetsManager::getInstance()->getURL( 'videos_module_js' );
 
 			foreach( $scripts as $script ){
-				$out->addScript( "<script id='lizzz' src='{$script}'></script>" );
+				$out->addScript( "<script src='{$script}'></script>" );
 			}
 
 			$wgVideosModuleAssetsLoaded = true;
