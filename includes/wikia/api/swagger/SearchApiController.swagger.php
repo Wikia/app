@@ -191,7 +191,7 @@ use Swagger\Annotations as SWG;
  * 				@SWG\Parameter(
  * 					name="hub",
  * 					paramType="query",
- * 					description="Hub to which wikias belong",
+ * 					description="The name of the vertical (e.g. Gaming, Entertainment, Lifestyle, etc.) to use as a filter",
  * 					required="false",
  * 					allowMultiple="false",
  * 					dataType="string",
