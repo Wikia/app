@@ -48,17 +48,19 @@ define( 'lazyload', ['wikia.thumbnailer', 'jquery', 'wikia.window'], function ( 
 			img = new window.Image();
 			src = elm.getAttribute( 'data-src' );
 
-			if ( elm.className.indexOf( 'getThumb' ) > -1 && !thumbnailer.isThumbUrl( src ) ) {
-				src = thumbnailer.getThumbURL( src, 'nocrop', 660, 330 );
-			}
+			if ( src ) {
+				if ( elm.className.indexOf( 'getThumb' ) > -1 && !thumbnailer.isThumbUrl( src ) ) {
+					src = thumbnailer.getThumbURL( src, 'nocrop', 660, 330 );
+				}
 
-			img.src = src;
+				img.src = src;
 
-			//don't do any animation if image is already loaded
-			if ( img.complete ) {
-				displayImage( elm, src, background );
-			} else {
-				img.onload = onLoad( elm, background );
+				//don't do any animation if image is already loaded
+				if ( img.complete ) {
+					displayImage( elm, src, background );
+				} else {
+					img.onload = onLoad( elm, background );
+				}
 			}
 		}
 	}
