@@ -117,11 +117,10 @@ function( window, nirvana, $, thumbnailer, lazyload, sloth, msg, mustache, secti
 	if ( articleId ) {
 		if ( testGroup ) {
 			sectionsList = $.makeArray(
-				window.document.querySelectorAll('#mw-content-text h2[id]:not(:first-of-type):not(:last-of-type)' )
+				window.document.querySelectorAll('#mw-content-text h2[id]:not(:last-of-type)' )
 			).filter( function( section ){
 				return sections.isSectionLongerThan( section, minSectionLength );
 			} );
-
 			sectionsLength = sectionsList.length;
 
 			$( '.trending-articles' )
