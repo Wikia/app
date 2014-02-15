@@ -1,6 +1,6 @@
 {
 	"requireCurlyBraces": ["if", "else", "for", "while", "do"],
-	"requireSpaceAfterKeywords": ["if", "else", "for", "while", "do", "switch", "case", "catch", "return"],
+	"requireSpaceAfterKeywords": ["if", "else", "for", "while", "do", "switch", "case", "catch", "return", "function"],
 	"requireParenthesesAroundIIFE": true,
 	"requireSpacesInFunctionExpression": {
 		"beforeOpeningCurlyBrace": true
