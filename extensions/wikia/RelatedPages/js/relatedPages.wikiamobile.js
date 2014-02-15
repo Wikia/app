@@ -88,7 +88,8 @@ function( window, nirvana, $, thumbnailer, lazyload, sloth, msg, mustache, secti
 									relatedPagesHeading: msg( 'wikiarelatedpages-heading' ),
 									imgWidth: 100,
 									imgHeight: 50,
-									pages: relatedPages
+									pages: relatedPages,
+									mobileSkin: true
 								} )
 							)
 							.on( 'mousedown', '.RelatedPagesModule a', function ( event ) {
@@ -120,7 +121,13 @@ function( window, nirvana, $, thumbnailer, lazyload, sloth, msg, mustache, secti
 			).filter( function( section ){
 				return sections.isSectionLongerThan( section, minSectionLength );
 			} );
+
 			sectionsLength = sectionsList.length;
+
+			$( '.trending-articles' )
+				.removeClass( 'hide' )
+				.find( 'h2' )
+				.attr( 'id', 'trendingArticles' );
 
 			if ( sectionsLength ) {
 				$( window ).on(' load', function(){
@@ -157,7 +164,8 @@ function( window, nirvana, $, thumbnailer, lazyload, sloth, msg, mustache, secti
 								height +
 								'px" /><div class="title">{{title}}</div></a>',
 							item,
-							imgUrl;
+							imgUrl,
+							next;
 
 						for(; i < l; i++) {
 							item = items[i];
@@ -165,11 +173,15 @@ function( window, nirvana, $, thumbnailer, lazyload, sloth, msg, mustache, secti
 								thumbnailer.getThumbURL( item.imgUrl, 'image', width, height ) :
 								false;
 
-							sectionsList[i].insertAdjacentHTML( 'beforebegin', mustache.render( template, {
-								url: item.url,
-								title: item.title,
-								img: imgUrl
-							} ) );
+							next = sections.getNext( sectionsList[i] );
+
+							if ( next ) {
+								next.insertAdjacentHTML( 'beforebegin', mustache.render( template, {
+									url: item.url,
+									title: item.title,
+									img: imgUrl
+								} ) );
+							}
 						}
 
 						sloth( {
@@ -185,7 +197,7 @@ function( window, nirvana, $, thumbnailer, lazyload, sloth, msg, mustache, secti
 								{
 									method: 'ga',
 									href: this.href,
-									label: 'section_' + ( sections.getId( this.nextSibling ) - 1 )
+									label: 'section_' + ( sections.getId( this.nextSibling ) )
 								},
 								event
 							);
@@ -194,8 +206,6 @@ function( window, nirvana, $, thumbnailer, lazyload, sloth, msg, mustache, secti
 				});
 			}
 		} else {
-			$( '.trending-articles' ).hide();
-
 			if ( shouldLoad ) {
 				sloth( {
 					on: $placeholder,

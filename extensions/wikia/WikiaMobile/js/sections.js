@@ -143,6 +143,12 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 		return h2s.indexOf( section );
 	}
 
+	function getNext( section ) {
+		section = typeof section === 'number' ? section : getId( section );
+
+		return h2s[section + 1];
+	}
+
 	window.addEventListener( 'scroll', onScroll );
 
 	return {
@@ -153,6 +159,7 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 		isSectionLongerThan: isSectionLongerThan,
 		getElementAt: getElementAt,
 		getId: getId,
+		getNext: getNext,
 		scrollTo: scrollTo,
 		current: current
 	};

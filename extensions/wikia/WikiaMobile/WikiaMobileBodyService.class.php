@@ -26,7 +26,7 @@ class WikiaMobileBodyService extends WikiaService {
 		/* Dont show header if user profile page */
 		if( !$this->wg->Title->inNamespace( NS_USER ) ){
 			$this->response->setVal( 'pageHeaderContent', $this->app->renderView( 'WikiaMobilePageHeaderService', 'index' ));
-		}else{
+		} else {
 			$this->response->setVal( 'pageHeaderContent', '');
 		}
 		$this->response->setVal( 'bodyContent', $bodyContent );
