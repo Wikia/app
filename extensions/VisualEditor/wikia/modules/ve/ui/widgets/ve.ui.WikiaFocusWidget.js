@@ -9,7 +9,7 @@
  * @extends OO.ui.Widget
  *
  * @constructor
- * @param {ve.ui.Surface} [surface] UI Surface
+ * @param {ve.ui.Surface} surface UI Surface
  */
 ve.ui.WikiaFocusWidget = function VeUiWikiaFocusWidget( surface ) {
 
@@ -19,6 +19,7 @@ ve.ui.WikiaFocusWidget = function VeUiWikiaFocusWidget( surface ) {
 	// Properties
 	this.surface = surface;
 	this.spacing = 10;
+	this.uniqueLayoutId = 0;
 	this.$top = this.$( '<div>' ).addClass( 've-ui-wikiaFocusWidget-top' );
 	this.$right = this.$( '<div>' ).addClass( 've-ui-wikiaFocusWidget-right' );
 	this.$bottom = this.$( '<div>' ).addClass( 've-ui-wikiaFocusWidget-bottom' );
@@ -31,7 +32,7 @@ ve.ui.WikiaFocusWidget = function VeUiWikiaFocusWidget( surface ) {
 	this.$wikiaBarWrapper = this.$( '#WikiaBarWrapper' );
 	this.$wikiaBarCollapseWrapper = this.$( '#WikiaBarCollapseWrapper' );
 	this.$wikiaAds = this.$( '.wikia-ad, #WikiaAdInContentPlaceHolder' );
-	if ( mw.config.values.wgEnableWikiaBarExt && !mw.config.values.WikiaBar.isWikiaBarHidden() ) {
+	if ( mw.config.get( 'wgEnableWikiaBarExt' ) && !mw.config.get( 'WikiaBar' ).isWikiaBarHidden() ) {
 		this.showWikiaBar = true;
 	}
 
@@ -60,7 +61,13 @@ OO.inheritClass( ve.ui.WikiaFocusWidget, OO.ui.Widget );
 
 /* Methods */
 ve.ui.WikiaFocusWidget.prototype.adjustLayout = function() {
-	var surfaceOffset = this.$surface.offset(),
+	var surfaceOffset, surfaceEdges, documentDimensions,
+		uniqueLayoutId = this.$window.width() * this.$body.outerHeight() * this.surface.$element.height();
+
+	if ( uniqueLayoutId !== this.uniqueLayoutId ) {
+		this.uniqueLayoutId = uniqueLayoutId;
+
+		surfaceOffset = this.$surface.offset(),
 		surfaceEdges = {
 			right: surfaceOffset.left + this.$surface.width(),
 			bottom: surfaceOffset.top + this.$surface.height(),
@@ -71,27 +78,28 @@ ve.ui.WikiaFocusWidget.prototype.adjustLayout = function() {
 			width: this.$window.width()
 		};
 
-	this.$top
-		.css( {
-			'height': this.$pageHeader.offset().top - this.spacing,
-			'width': documentDimensions.width
-		} );
-	this.$right
-		.css( {
-			'height': documentDimensions.height,
-			'width': documentDimensions.width - surfaceEdges.right - this.spacing
-		} );
-	this.$bottom
-		.css( {
-			'top': surfaceEdges.bottom,
-			'height': documentDimensions.height - surfaceEdges.bottom + this.spacing,
-			'width': documentDimensions.width
-		} );
-	this.$left
-		.css( {
-			'height': documentDimensions.height,
-			'width': surfaceEdges.left - this.spacing
-		} );
+		this.$top
+			.css( {
+				'height': this.$pageHeader.offset().top - this.spacing,
+				'width': documentDimensions.width
+			} );
+		this.$right
+			.css( {
+				'height': documentDimensions.height,
+				'width': documentDimensions.width - surfaceEdges.right - this.spacing
+			} );
+		this.$bottom
+			.css( {
+				'top': surfaceEdges.bottom,
+				'height': documentDimensions.height - surfaceEdges.bottom + this.spacing,
+				'width': documentDimensions.width
+			} );
+		this.$left
+			.css( {
+				'height': documentDimensions.height,
+				'width': surfaceEdges.left - this.spacing
+			} );
+	}
 };
 
 ve.ui.WikiaFocusWidget.prototype.onSurfaceSetup = function() {
@@ -102,8 +110,9 @@ ve.ui.WikiaFocusWidget.prototype.onSurfaceSetup = function() {
 
 	// Run adjustLayout() a few times while images load, etc
 	interval = setInterval( ve.bind( function() {
+		this.uniqueLayoutId = 0;
 		this.adjustLayout();
-		if ( i === 2 ){
+		if ( i === 2 ) {
 			clearInterval( interval );
 		}
 		i += 1;
@@ -116,16 +125,17 @@ ve.ui.WikiaFocusWidget.prototype.onSurfaceTeardown = function() {
 };
 
 ve.ui.WikiaFocusWidget.prototype.hideDistractions = function() {
-	if ( mw.config.values.wgEnableWikiaBarExt ) {
-		mw.config.values.WikiaBar.hide();
+	if ( mw.config.get( 'wgEnableWikiaBarExt' ) ) {
+		mw.config.get( 'WikiaBar' ).hide();
 	}
 	// Visibility property - problem with edit button opening when setting display property
 	this.$pageHeaderElements.css( 'visibility', 'hidden' );
 	this.$wikiaAds
 		.each( function() {
-			$( this ).css( {
-				'height': $( this ).height(),
-				'width': $( this ).width()
+			var $ad = $( this );
+			$ad.css( {
+				'height': $ad.height(),
+				'width': $ad.width()
 			} );
 		} )
 		.addClass( 've-hidden-ad' );
@@ -133,7 +143,7 @@ ve.ui.WikiaFocusWidget.prototype.hideDistractions = function() {
 
 ve.ui.WikiaFocusWidget.prototype.showDistractions = function() {
 	if ( this.showWikiaBar ) {
-		mw.config.values.WikiaBar.show();
+		mw.config.get( 'WikiaBar' ).show();
 	}
 	this.$pageHeaderElements.css( 'visibility', 'visible' );
 	this.$wikiaAds

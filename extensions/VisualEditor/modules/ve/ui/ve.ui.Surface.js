@@ -94,11 +94,13 @@ OO.mixinClass( ve.ui.Surface, OO.EventEmitter );
  * This must be called after the surface has been attached to the DOM.
  */
 ve.ui.Surface.prototype.initialize = function () {
+	var $body = this.$( 'body' );
+
 	this.view.$element.after( this.$localOverlay );
 	if ( this.focus ) {
-		this.$( 'body' ).append( this.focus.$element );
+		$body.append( this.focus.$element );
 	}
-	this.$( 'body' ).append( this.$globalOverlay );
+	$body.append( this.$globalOverlay );
 
 	this.view.initialize();
 	// By re-asserting the current selection and forcing a poll we force selection to be something
