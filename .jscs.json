@@ -6,9 +6,6 @@
 		"beforeOpeningRoundBrace": true,
 		"beforeOpeningCurlyBrace": true
 	},
-	"disallowSpacesInFunctionExpression": {
-		"beforeOpeningRoundBrace": true
-	},
 	"requireMultipleVarDecl": true,
 	"disallowEmptyBlocks": true,
 	"disallowSpacesInsideArrayBrackets": true,
@@ -30,8 +27,6 @@
 	"disallowMultipleLineBreaks": true,
 	"validateLineBreaks": "LF",
 	"validateQuoteMarks": "'",
-	"validateIndentation": "\t",
-	"disallowMixedSpacesAndTabs": true,
 	"disallowTrailingWhitespace": true,
 	"disallowKeywordsOnNewLine": ["else"],
 	"requireLineFeedAtFileEnd": true,
