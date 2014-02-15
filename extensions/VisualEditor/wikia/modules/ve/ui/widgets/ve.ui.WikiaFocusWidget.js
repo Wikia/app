@@ -121,8 +121,14 @@ ve.ui.WikiaFocusWidget.prototype.hideDistractions = function() {
 	}
 	// Visibility property - problem with edit button opening when setting display property
 	this.$pageHeaderElements.css( 'visibility', 'hidden' );
-	// Opacity property - Flash ads not hiding with visibility property
-	this.$wikiaAds.css( 'opacity', 0 );
+	this.$wikiaAds
+		.each( function() {
+			$( this ).css( {
+				'height': $( this ).height(),
+				'width': $( this ).width()
+			} );
+		} )
+		.addClass( 've-hidden-ad' );
 };
 
 ve.ui.WikiaFocusWidget.prototype.showDistractions = function() {
@@ -130,5 +136,10 @@ ve.ui.WikiaFocusWidget.prototype.showDistractions = function() {
 		mw.config.values.WikiaBar.show();
 	}
 	this.$pageHeaderElements.css( 'visibility', 'visible' );
-	this.$wikiaAds.css( 'opacity', 1 );
+	this.$wikiaAds
+		.css( {
+			'height': 'auto',
+			'width': 'auto'
+		} )
+		.removeClass( 've-hidden-ad' );
 };

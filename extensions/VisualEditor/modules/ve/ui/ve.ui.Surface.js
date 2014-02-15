@@ -39,7 +39,9 @@ ve.ui.Surface = function VeUiSurface( dataOrDoc, config, target ) {
 	this.triggers = {};
 	this.enabled = true;
 	this.target = target || null;
-	this.focus = new ve.ui.WikiaFocusWidget( this );
+	if ( this.target ) {
+		this.focus = new ve.ui.WikiaFocusWidget( this );
+	}
 
 	// Initialization
 	this.$element
@@ -93,7 +95,7 @@ OO.mixinClass( ve.ui.Surface, OO.EventEmitter );
  */
 ve.ui.Surface.prototype.initialize = function () {
 	this.view.$element.after( this.$localOverlay );
-	if ( this.target ) {
+	if ( this.focus ) {
 		this.$( 'body' ).append( this.focus.$element );
 	}
 	this.$( 'body' ).append( this.$globalOverlay );
