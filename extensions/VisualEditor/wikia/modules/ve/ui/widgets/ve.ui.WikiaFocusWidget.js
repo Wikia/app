@@ -66,13 +66,12 @@ ve.ui.WikiaFocusWidget.prototype.adjustLayout = function() {
 
 	if ( uniqueLayoutId !== this.uniqueLayoutId ) {
 		this.uniqueLayoutId = uniqueLayoutId;
-
-		surfaceOffset = this.$surface.offset(),
+		surfaceOffset = this.$surface.offset();
 		surfaceEdges = {
 			right: surfaceOffset.left + this.$surface.width(),
 			bottom: surfaceOffset.top + this.$surface.height(),
 			left: surfaceOffset.left
-		},
+		};
 		documentDimensions = {
 			height: this.$body.outerHeight(),
 			width: this.$window.width()
