@@ -1,7 +1,7 @@
 {{^skipRendering}}
 <section id=wkRelPag class="RelatedPagesModule noprint">
 <h2 id=wkRelPagHead>{{relatedPagesHeading}}</h2>
-<ul>
+<ul{{#mobileSkin}} class="wkLst artSec open"{{/mobileSkin}}>
 {{#pages}}
 <li>
 <a href="{{url}}" title="{{title}}">
