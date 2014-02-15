@@ -37,7 +37,7 @@ ve.ui.WikiaFocusWidget = function VeUiWikiaFocusWidget( surface ) {
 	}
 
 	// Events
-	surface.getView().getDocument().getDocumentNode()
+	this.surface.getView().getDocument().getDocumentNode()
 		.connect( this, {
 			'setup': this.onSurfaceSetup,
 			'teardown': this.onSurfaceTeardown
@@ -47,7 +47,7 @@ ve.ui.WikiaFocusWidget = function VeUiWikiaFocusWidget( surface ) {
 			'resize': ve.bind( this.adjustLayout, this ),
 			'scroll': $.throttle( 250, ve.bind( this.adjustLayout, this ) )
 		} );
-	surface.getModel().getDocument()
+	this.surface.getModel().getDocument()
 		.on( 'transact', ve.bind( this.adjustLayout, this ) );
 
 	// Initialization
