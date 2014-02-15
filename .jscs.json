@@ -3,7 +3,6 @@
 	"requireSpaceAfterKeywords": ["if", "else", "for", "while", "do", "switch", "case", "catch", "return", "function"],
 	"requireParenthesesAroundIIFE": true,
 	"requireSpacesInFunctionExpression": {
-		"beforeOpeningRoundBrace": true,
 		"beforeOpeningCurlyBrace": true
 	},
 	"requireMultipleVarDecl": true,
