@@ -18,7 +18,7 @@ $dir = dirname( __FILE__ );
 /**
  * classes
  */
-$wgAutoloadClasses[ 'VideosModuleHelper'] =  $dir. '/VideosModuleHelper.class.php' ;
+$wgAutoloadClasses[ 'VideosModule'] =  $dir. '/VideosModule.class.php' ;
 
 /**
  * controllers
@@ -29,14 +29,15 @@ $wgAutoloadClasses['VideosModuleController'] =  $dir . '/VideosModuleController.
  * hooks
  */
 $wgAutoloadClasses['VideosModuleHooks'] =  $dir . '/VideosModuleHooks.class.php';
-
-if ( $wgVideosModuleOnRail ) {
-	$wgHooks['GetRailModuleList'][] = 'VideosModuleHooks::onGetRailModuleList';
-} else {
-	array_splice( $wgHooks['OutputPageBeforeHTML'], 0, 0, 'VideosModuleHooks::onOutputPageBeforeHTML' );
-}
+$wgHooks['OutputPageBeforeHTML'][] = 'VideosModuleHooks::onOutputPageBeforeHTML';
+//$wgHooks['GetRailModuleList'][] = 'VideosModuleHooks::onGetRailModuleList';
 
 /**
  * messages
  */
 $wgExtensionMessagesFiles['VideosModule'] = $dir . '/VideosModule.i18n.php';
+
+// register messages package for JS
+JSMessages::registerPackage('VideosModule', array(
+	'videosmodule-title-default',
+));

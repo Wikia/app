@@ -8,7 +8,7 @@ class WikiaFileHelper extends Service {
 
 	/**
 	 * Checks if given File is video
-	 * @param WikiaLocalFile|Title $file object or Title object eventually
+	 * @param File|Title $file object or Title object eventually
 	 * @return boolean
 	 */
 	public static function isFileTypeVideo( $file ) {
@@ -21,7 +21,7 @@ class WikiaFileHelper extends Service {
 
 	/**
 	 * Check if the file is video
-	 * @param LocalFile $file
+	 * @param File $file
 	 * @return boolean
 	 */
 	public static function isVideoFile( $file ) {
@@ -47,7 +47,7 @@ class WikiaFileHelper extends Service {
 	}
 
 
-	public static function getTitle( $mTitle ){
+	public static function getTitle( $mTitle ) {
 		if ( !( $mTitle instanceof Title ) ) {
 
 			$mTitle = Title::newFromText( $mTitle );
@@ -221,7 +221,7 @@ class WikiaFileHelper extends Service {
 
 				// video views
 				$videoTitle = $title->getDBKey();
-				if( $showViews ) {
+				if ( $showViews ) {
 					$views = MediaQueryService::getTotalVideoViewsByTitle( $videoTitle );
 					$content .= self::videoOverlayViews( $views );
 					$attribs['class'] .= " info-overlay-with-views";
@@ -322,7 +322,7 @@ class WikiaFileHelper extends Service {
 	 * @param string $url
 	 * @return boolean
 	 */
-	public static function isUrlMatchThisWiki($url) {
+	public static function isUrlMatchThisWiki( $url ) {
 		return stripos( $url, F::app()->wg->server ) !== false;
 	}
 
@@ -332,7 +332,7 @@ class WikiaFileHelper extends Service {
 	 * @param string $url
 	 * @return boolean
 	 */
-	public static function isUrlMatchWikiaVideoRepo($url) {
+	public static function isUrlMatchWikiaVideoRepo( $url ) {
 		return stripos( $url, F::app()->wg->wikiaVideoRepoPath ) !== false;
 	}
 
@@ -517,7 +517,7 @@ class WikiaFileHelper extends Service {
 	 * @param bool $force16x9Ratio
 	 * @return string|false
 	 */
-	public static function  getVideoThumbnailHtml( Title $title, $width=150, $height=75, $force16x9Ratio=false ) {
+	public static function getVideoThumbnailHtml( Title $title, $width=150, $height=75, $force16x9Ratio=false ) {
 		$arr = [];
 		self::inflateArrayWithVideoData( $arr, $title, $width, $height, $force16x9Ratio );
 		if ( !empty( $arr['thumbnail'] ) ) {

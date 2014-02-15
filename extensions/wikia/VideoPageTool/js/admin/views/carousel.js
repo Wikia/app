@@ -4,7 +4,7 @@
 define( 'videopageadmin.views.carousel', [
 	'shared.views.owlcarousel',
 	'shared.views.carouselthumb',
-	'templates.mustache'
+	'videopagetool.templates.mustache'
 ], function(
 	OwlCarouselView,
 	CarouselThumbView,

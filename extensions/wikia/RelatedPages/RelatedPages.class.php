@@ -332,7 +332,7 @@ class RelatedPages {
 		wfProfileIn( __METHOD__ );
 
 		$results = WikiaDataAccess::cacheWithLock(
-			( empty( $this->memcKeyPrefix ) ) ? wfMemcKey( __METHOD__) : wfMemcKey( $this->memcKeyPrefix, __METHOD__), 
+			( empty( $this->memcKeyPrefix ) ) ? wfMemcKey( __METHOD__) : wfMemcKey( $this->memcKeyPrefix, __METHOD__),
 			$this->categoryRankCacheTTL * 3600,
 			function () use ( $wgContentNamespaces ) {
 				$db = wfGetDB(DB_SLAVE);
@@ -347,7 +347,7 @@ class RelatedPages {
 					$join_cond = ( count($wgContentNamespaces) == 1)
 								? "page_namespace = " . intval(reset($wgContentNamespaces))
 								: "page_namespace in ( " . $db->makeList( $wgContentNamespaces ) . " )";
-					
+
 					$sql->JOIN('page')->ON("page_id = cl_from AND $join_cond");
 				}
 
@@ -356,7 +356,7 @@ class RelatedPages {
 					$results[$row->cl_to] = $rank;
 					$rank++;
 				});
-				
+
 				return $results;
 			}
 		);
@@ -426,8 +426,10 @@ class RelatedPages {
 	}
 
 	public static function onSkinAfterContent( &$text ){
-		if ( !F::app()->checkSkin( 'wikiamobile' ) ){
-			$text = '<!-- RelatedPages -->';
+		$skin = RequestContext::getMain()->getSkin()->getSkinName();
+
+		if ( $skin === 'oasis' || $skin === 'monobook' ){
+			$text = '<div id="RelatedPagesModuleWrapper"></div>';
 		}
 
 		return true;

@@ -10,8 +10,12 @@
 	display: inline-block;
 	position: relative;
 
-	&.fluid > img {
+	&.fluid {
 		width: 100%;
+
+		> img {
+			width: 100%;
+		}
 	}
 
 	// Background circle
@@ -143,5 +147,11 @@
 		padding: 0px 6px;
 		position: absolute;
 		right: 0;
+	}
+}
+
+.title-thumbnail {
+	.title {
+		font-size: 16px;
 	}
 }

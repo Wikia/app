@@ -40,6 +40,7 @@ $wgHooks['ArticleFromTitle'][] = 'VideoPageToolHooks::onArticleFromTitle';
 $wgHooks['ArticlePurge'][] = 'VideoPageToolHooks::onArticlePurge';
 $wgHooks['CategorySelectSave'][] = 'VideoPageToolHooks::onCategorySelectSave';
 $wgHooks['VideoIngestionComplete'][] = 'VideoPageToolHooks::onVideoIngestionComplete';
+$wgHooks['FileDeleteComplete'][] = 'VideoPageToolHooks::onFileDeleteComplete';
 
 // permissions
 $wgGroupPermissions['*']['videopagetool'] = false;

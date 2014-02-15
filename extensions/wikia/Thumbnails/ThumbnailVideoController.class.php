@@ -1,6 +1,6 @@
 <?php
 
-class VideoThumbnailController extends WikiaController {
+class ThumbnailVideoController extends WikiaController {
 
 	/**
 	 * Thumbnail Template
@@ -63,6 +63,8 @@ class VideoThumbnailController extends WikiaController {
 
 		// use mustache for template
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
+		$this->response->getView()->setTemplatePath( dirname(__FILE__) . '/templates/mustache/thumbnailVideo.mustache' );
+
 
 		// default value
 		$linkAttribs = [];
@@ -98,10 +100,11 @@ class VideoThumbnailController extends WikiaController {
 			$linkClasses[] = 'hide-play';
 		}
 
+		/** @var Title $title */
 		$title = $file->getTitle();
 
 		// get href for a tag
-		$linkHref = $title->getLocalURL();
+		$linkHref = $title->getFullURL();
 
 		// this is used for video thumbnails on file page history tables to insure you see the older version of a file when thumbnail is clicked.
 		if ( $file instanceof OldLocalFile ) {

@@ -12,7 +12,7 @@ class VideoPageToolAssetFeatured extends VideoPageToolAsset {
 	protected $description;
 	protected $altThumbTitle;
 
-	protected $defaultThumbOptions = [
+	public static $defaultThumbOptions = [
 		'noLightbox' => true,
 		'useTemplate' => true,
 		'fluid' => true,
@@ -50,7 +50,7 @@ class VideoPageToolAssetFeatured extends VideoPageToolAsset {
 	public function getAssetData( $thumbOptions = array() ) {
 
 		// Allow defaults to be overridden by options passed into us
-		$thumbOptions = array_merge( $this->defaultThumbOptions, $thumbOptions );
+		$thumbOptions = array_merge( $this::$defaultThumbOptions, $thumbOptions );
 
 		$helper = new VideoPageToolHelper();
 		$data = $helper->getVideoData( $this->title, $this->altThumbTitle, $this->displayTitle, $this->description, $thumbOptions );
