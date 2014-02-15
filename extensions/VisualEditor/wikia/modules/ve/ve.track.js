@@ -8,20 +8,20 @@ require( ['wikia.tracker'], function ( tracker ) {
 	var actions = tracker.ACTIONS,
 		// These are topics used by MediaWiki, consider them reserved. Each topic should be
 		// assigned to a function which will map the data associated with a topic to a format
-		// understood by Wikia.Tracker.
+		// understood by Wikia.Tracker. Keep them alphabetized.
 		mwTopics = {
 			'behavior.lastTransactionTillSaveDialogOpen': function ( data ) {
 				return {
 					'action': actions.OPEN,
 					'label': 'dialog-save',
-					'value': data.duration
+					'value': normalizeDuration( data.duration )
 				};
 			},
 			'behavior.saveDialogClose': function ( data ) {
 				return {
 					'action': actions.CLOSE,
 					'label': 'dialog-save',
-					'value': data.duration
+					'value': normalizeDuration( data.duration )
 				};
 			},
 			'command.execute': function ( data ) {
@@ -29,23 +29,6 @@ require( ['wikia.tracker'], function ( tracker ) {
 					'action': actions.KEYPRESS,
 					'label': 'tool-' + nameToLabel( data.name )
 				};
-			},
-			'Edit': function ( data ) {
-				var params = {
-					'action': actions.CLICK,
-					'category': 'article'
-				};
-
-				switch( data.action ) {
-					case 'edit-link-click':
-						params.label = 've-edit';
-						break;
-					case 'section-edit-link-click':
-						params.label = 've-section-edit';
-						break;
-				}
-
-				return params;
 			},
 			'error.createdocumentfromhtml': function ( data ) {
 				return {
@@ -56,29 +39,29 @@ require( ['wikia.tracker'], function ( tracker ) {
 			'performance.system.activation': function ( data ) {
 				return {
 					'action': actions.IMPRESSION,
-					'label': 'edit-page',
-					'value': data.duration
+					'label': 'edit-page-ready',
+					'value': normalizeDuration( data.duration )
 				};
 			},
 			'performance.user.reviewComplete': function ( data ) {
 				return {
 					'action': actions.SUCCESS,
 					'label': 'dialog-save-review-changes',
-					'value': data.duration
+					'value': normalizeDuration( data.duration )
 				};
 			},
 			'performance.user.reviewError': function ( data ) {
 				return {
 					'action': actions.ERROR,
 					'label': 'dialog-save-review-changes',
-					'value': data.duration
+					'value': normalizeDuration( data.duration )
 				};
 			},
 			'performance.user.saveComplete': function ( data ) {
 				return {
 					'action': actions.SUCCESS,
 					'label': 'publish',
-					'value': data.duration
+					'value': normalizeDuration( data.duration )
 				};
 			},
 			'performance.user.saveError': function ( data, topics ) {
@@ -89,7 +72,7 @@ require( ['wikia.tracker'], function ( tracker ) {
 					'action': actions.ERROR,
 					'label': 'publish-' + data.type,
 					'retries': data.retries,
-					'value': data.duration
+					'value': normalizeDuration( data.duration )
 				};
 			},
 			'tool': function ( data ) {
@@ -131,6 +114,18 @@ require( ['wikia.tracker'], function ( tracker ) {
 	 */
 	function nameToLabel( name ) {
 		return nameToLabelMap[name] || name;
+	}
+
+	/**
+	 * Normalize time durations, for example rounding up or down or limiting
+	 * the number of decimal spaces to keep.
+	 *
+	 * @method
+	 * @param {number} duration Time in milliseconds
+	 * @returns {number} Normalized time in milliseconds
+	 */
+	function normalizeDuration( duration ) {
+		return Math.round( duration );
 	}
 
 	/**
@@ -200,8 +195,8 @@ require( ['wikia.tracker'], function ( tracker ) {
 		mw.hook( 've.activationComplete' ).add( function () {
 			ve.track( 'wikia' , {
 				'action': actions.IMPRESSION,
-				'label': 'edit-page-on-load',
-				'value': ve.now() - window.wgNow.getTime()
+				'label': 'edit-page-ready-from-page-load',
+				'value': normalizeDuration( ve.now() - window.wgNow )
 			} );
 		} );
 	}
@@ -209,5 +204,6 @@ require( ['wikia.tracker'], function ( tracker ) {
 	// Exports
 	ve.track.actions = actions;
 	ve.track.nameToLabel = nameToLabel;
+	ve.track.normalizeDuration = normalizeDuration;
 	ve.trackSubscribeAll( track );
 } );
