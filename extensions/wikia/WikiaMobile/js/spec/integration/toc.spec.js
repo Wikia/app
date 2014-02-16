@@ -5,6 +5,9 @@ describe( "toc module", function () {
 	var sections = {
 			current: function(){
 				return [];
+			},
+			list: function(){
+				return [];
 			}
 		},
 		window = {
