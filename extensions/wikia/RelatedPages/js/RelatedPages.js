@@ -1,7 +1,8 @@
 require( [ 'sloth', 'wikia.window', 'jquery' ], function ( sloth, w, $ ) {
 	'use strict';
 
-	var $placeholder,		cacheKey = 'RelatedPagesAssets',
+	var $placeholder,
+		cacheKey = 'RelatedPagesAssets',
 		articleId = w.wgArticleId,
 		loaded,
 		shouldLoad;

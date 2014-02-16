@@ -12,7 +12,6 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 		$wkPage = $( '#wkPage' ),
 		h2s = $( 'h2[id]', $wkPage ).toArray(),
 		sections = getHeaders(),
-		l = sections.length,
 		lastSection,
 		escapeRegExp = /[()\.\+]/g,
 		offset = 5;
@@ -154,7 +153,9 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 	return {
 		list: function(){
 			//make sure we're grabbing the latest version
-			return sections = getHeaders();
+			sections = getHeaders();
+
+			return sections;
 		},
 		isSectionLongerThan: isSectionLongerThan,
 		getElementAt: getElementAt,
