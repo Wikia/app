@@ -207,23 +207,23 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 		                   ->getMock();
 		
 		$mockConfig
-		    ->expects( $this->once() )
+		    ->expects( $this->any() )
 		    ->method ( 'getHub' )
 		    ->will   ( $this->returnValue( 'Entertainment' ) )
 		;
 		$mockConfig
-		    ->expects( $this->once() )
+		    ->expects( $this->at(0) )
 		    ->method ( 'getLanguageCode' )
 		    ->will   ( $this->returnValue( 'en' ) )
 		;
 		$mockService
-		    ->expects( $this->once() )
+		    ->expects( $this->any() )
 		    ->method ( 'getGlobal' )
 		    ->with   ( 'CrossWikiaSearchExcludedWikis' )
 		    ->will   ( $this->returnValue( array( 123, 321 ) ) )
 		;
 		$mockService
-			->expects( $this->once() )
+			->expects( $this->any() )
 			->method ( 'getWikiId' )
 			->will   ( $this->returnValue( 456 ) )
 		;
@@ -233,5 +233,16 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 				'lang_s:en AND (hub:Entertainment)',
 				$method->invoke( $mockSelect )
 		);
+
+		$mockConfig
+			->expects( $this->at(0) )
+			->method ( 'getLanguageCode' )
+			->will   ( $this->returnValue( ['en', 'de'] ) )
+		;
+		$this->assertEquals(
+			'(lang_s:en OR lang_s:de) AND (hub:Entertainment)',
+			$method->invoke( $mockSelect )
+		);
+
 	}	
 }
