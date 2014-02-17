@@ -12,7 +12,6 @@ class ArticlesApiController extends WikiaApiController {
 
 	const POPULAR_ARTICLES_PER_WIKI = 10;
 	const POPULAR_ARTICLES_NAMESPACE = 0;
-	const CACHE_MONTH = 108000;
 
 	const MAX_ITEMS = 250;
 	const ITEMS_PER_BATCH = 25;
@@ -904,7 +903,7 @@ class ArticlesApiController extends WikiaApiController {
 		$result = $this->wg->Memc->get( $key );
 		if ( $result === false ) {
 			$result = $this->getResultFromConfig( $this->getConfigFromRequest() );
-			$this->wg->set( $key, $result, self::CACHE_MONTH );
+			$this->wg->set( $key, $result, self::CLIENT_CACHE_VALIDITY );
 		}
 
 		$result = array_slice( $result, 0, $limit );
@@ -914,8 +913,8 @@ class ArticlesApiController extends WikiaApiController {
 		$this->response->setVal( 'basepath', $this->wg->Server );
 
 		$response->setCacheValidity(
-			self::CACHE_MONTH,
-			self::CACHE_MONTH,
+			self::CLIENT_CACHE_VALIDITY,
+			self::CLIENT_CACHE_VALIDITY,
 			array(
 				WikiaResponse::CACHE_TARGET_BROWSER,
 				WikiaResponse::CACHE_TARGET_VARNISH

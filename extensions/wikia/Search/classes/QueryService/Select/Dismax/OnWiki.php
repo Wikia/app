@@ -109,9 +109,8 @@ class OnWiki extends AbstractDismax
 		$queryClauses[] = "({$nsQuery})";
 
 		$main = $this->config->getMainPage();
-		if($main !== null)
-		{
-			$queryClauses[] = "(+is_main_page:".($main ? 'true' : 'false').")";
+		if ( $main !== null ) {
+			$queryClauses[ ] = "(+is_main_page:" . ( $main ? 'true' : 'false' ) . ")";
 		}
 
 		return sprintf( '(%s)', implode( ' AND ', $queryClauses ) );
