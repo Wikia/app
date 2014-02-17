@@ -898,7 +898,7 @@ class ArticlesApiController extends WikiaApiController {
 		if ( $limit < 1 || $limit > self::POPULAR_ARTICLES_PER_WIKI ) {
 			throw new OutOfRangeApiException( self::PARAMETER_LIMIT, 1, self::POPULAR_ARTICLES_PER_WIKI );
 		}
-		$key = self::getCacheKey( '', self::POPULAR_CACHE_ID );
+		$key = self::getCacheKey( self::POPULAR_CACHE_ID, '' );
 
 		$result = $this->wg->Memc->get( $key );
 		if ( $result === false ) {
