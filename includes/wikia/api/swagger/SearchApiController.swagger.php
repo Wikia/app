@@ -122,7 +122,7 @@ use Swagger\Annotations as SWG;
  * 		name="type",
  * 		type="string",
  * 		required="false",
- * 		description="Type of article ( book | character | comic_book | location | mini_game | movie | organization | person | tv_episode | tv_season | tv_series | video_game | weapon )"
+ * 		description="Type of article ( book | character | comic_book | location | movie | person | tv_episode | tv_season | tv_series | video_game )"
  *  )
  * @SWG\Model( id="CrossWikiSearchResult" )
  * 	@SWG\Property(
