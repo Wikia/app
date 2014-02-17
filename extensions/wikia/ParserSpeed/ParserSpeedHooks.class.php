@@ -48,6 +48,17 @@ class ParserSpeedHooks {
 			}
 		}
 
+		try {
+			$data = array(
+				'title' => $article->getTitle()->getPrefixedDBkey(),
+				'dbname' => $wgDBname,
+				'parserTime' => $parserOutput->getPerformanceStats('time'),
+				'skin' => RequestContext::getMain()->getSkin()->getSkinName(),
+			);
+			\Wikia\Logger\WikiaLogger::instance()->debug("Parser execution",$data);
+		} catch (Exception $e) {
+		}
+
 		return true;
 	}
 
