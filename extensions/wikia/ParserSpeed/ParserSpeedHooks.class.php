@@ -49,15 +49,14 @@ class ParserSpeedHooks {
 		}
 
 		try {
-			$data = array(
-				'title' => $article->getTitle()->getPrefixedDBkey(),
-				'dbname' => $wgDBname,
-				'parserTime' => $parserOutput->getPerformanceStats('time'),
-				'skin' => RequestContext::getMain()->getSkin()->getSkinName(),
-			);
-			\Wikia\Logger\WikiaLogger::instance()->debug("Parser execution",$data);
-		} catch (Exception $e) {
-		}
+			//Logging parser activity
+			//wiki and article are sent to logstash anyways so no need to repeat them here
+			\Wikia\Logger\WikiaLogger::instance()->debug("Parser execution", [
+				'parser_time'   => $parserOutput->getPerformanceStats('time'),
+				'wikitext_size' => $parserOutput->getPerformanceStats('wikitextSize'),
+				'skin_name'     => RequestContext::getMain()->getSkin()->getSkinName(),
+			]);
+		} catch (Exception $e) {}
 
 		return true;
 	}
