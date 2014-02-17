@@ -38,8 +38,6 @@ class WikiaMobileService extends WikiaService {
 	private function handleAds(){
 		wfProfileIn( __METHOD__ );
 
-		global $wgEnableRHonMobile;
-
 		$topLeaderBoardAd = '';
 
 		$mobileAdService = new WikiaMobileAdService();
@@ -49,8 +47,9 @@ class WikiaMobileService extends WikiaService {
 			$this->jsBodyPackages[] = $useGpt ? 'wikiamobile_ads_gpt_js' : 'wikiamobile_ads_js';
 
 			$this->globalVariables['wgEnableRHonMobile'] = false;
-			if ($useGpt && $wgEnableRHonMobile) {
-				$this->globalVariables['wgEnableRHonMobile'] = $wgEnableRHonMobile;
+
+			if ($useGpt && $this->wg->EnableRHonMobile) {
+				$this->globalVariables['wgEnableRHonMobile'] = $this->wg->EnableRHonMobile;
 			}
 
 			if ( $mobileAdService->shouldShowAds() ) {
