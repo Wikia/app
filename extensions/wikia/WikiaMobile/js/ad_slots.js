@@ -9,7 +9,7 @@ require( ['ads', 'sloth', 'jquery', 'JSMessages', 'wikia.window', 'wikia.log', '
 		$firstSection = $( 'h2[id]' ).first(),
 		$footer = $( '#wkMainCntFtr' ),
 		firstSectionTop = ( $firstSection.length && $firstSection.offset().top ) || 0,
-		shouldShowAds = !navigator.userAgent.match( 'sony_tvs' ), //don't show ads for sony tv devices
+		shouldShowAds = window.navigator.userAgent.indexOf( 'sony_tvs' ) === -1,
 		shouldShowInContent = sections.isSectionLongerThan( 0, MIN_ZEROTH_SECTION_LENGTH ),
 		shouldShowBeforeFooter = doc.body.offsetHeight > MIN_PAGE_LENGTH || firstSectionTop < MIN_ZEROTH_SECTION_LENGTH,
 		div,
@@ -38,8 +38,8 @@ require( ['ads', 'sloth', 'jquery', 'JSMessages', 'wikia.window', 'wikia.log', '
 			} );
 		};
 
-	log( 'Loading slot: MOBILE_TOP_LEADERBOARD', logLevel, logGroup );
 	if( shouldShowAds ) {
+		log( 'Loading slot: MOBILE_TOP_LEADERBOARD', logLevel, logGroup );
 		ads.setupSlot( {
 			name: 'MOBILE_TOP_LEADERBOARD',
 			size: '320x50',
@@ -51,13 +51,8 @@ require( ['ads', 'sloth', 'jquery', 'JSMessages', 'wikia.window', 'wikia.log', '
 				}
 			}
 		} );
-	} else {
-		topAdWrapper.style.height = '0px'; //hide placeholder
-		log( 'Ads blocked by UA', logLevel, logGroup );
-	}
 
-	if ( window.wgArticleId ) {
-		if( shouldShowAds ) {
+		if ( window.wgArticleId ) {
 			if ( shouldShowInContent ) {
 				div = '<div id=wkAdInContent class=ad-in-content />';
 
@@ -74,9 +69,11 @@ require( ['ads', 'sloth', 'jquery', 'JSMessages', 'wikia.window', 'wikia.log', '
 				$footer.after( '<div id=wkAdBeforeFooter class=ad-in-content />' );
 				lazyLoadAd( doc.getElementById( 'wkAdBeforeFooter' ), 'MOBILE_PREFOOTER' );
 			}
-		} else {
-			log( 'Ads blocked by UA', logLevel, logGroup );
 		}
+
+	} else {
+		topAdWrapper.className = 'hide';
+		log( 'Ads blocked by UA', logLevel, logGroup );
 	}
 
 	sloth();
