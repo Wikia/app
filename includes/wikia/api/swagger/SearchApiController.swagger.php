@@ -191,9 +191,9 @@ use Swagger\Annotations as SWG;
  * 				@SWG\Parameter(
  * 					name="hub",
  * 					paramType="query",
- * 					description="The name of the vertical (e.g. Gaming, Entertainment, Lifestyle, etc.) to use as a filter",
+ * 					description="The name of the vertical (e.g. Gaming, Entertainment, Lifestyle, etc.) separated by comma to filter for",
  * 					required="false",
- * 					allowMultiple="false",
+ * 					allowMultiple="true",
  * 					dataType="string",
  * 					defaultValue=""
  * 				),
