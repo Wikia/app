@@ -453,7 +453,85 @@ use Swagger\Annotations as SWG;
  * 		required="true",
  * 		description="Common URL prefix for relative URLs"
  * 	)
- * 
+ *
+ *
+ *   @SWG\Model( id="UnexpandedMostLinked" )
+ * 	@SWG\Property(
+ * 		name="id",
+ * 		type="int",
+ * 		required="true",
+ * 		description="An internal identification number for Article"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="title",
+ * 		type="string",
+ * 		required="true",
+ * 		description="The title of the article"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="url",
+ * 		type="string",
+ * 		required="true",
+ * 		description="The relative URL of the Article. Absolute URL: obtained from combining relative URL with basepath attribute from response."
+ * 	)
+ * 	@SWG\Property(
+ * 		name="ns",
+ * 		type="int",
+ * 		required="true",
+ * 		description="The namespace value of the given article"
+ * 	)
+ *
+ * @SWG\Model( id="ExpandedMostLinked" )
+ * 	@SWG\Property(
+ * 		name="id",
+ * 		type="int",
+ * 		required="true",
+ * 		description="An internal identification number for Article"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="title",
+ * 		type="string",
+ * 		required="true",
+ * 		description="The title of the article"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="url",
+ * 		type="string",
+ * 		required="true",
+ * 		description="The relative URL of the Article. Absolute URL: obtained from combining relative URL with basepath attribute from response."
+ * 	)
+ * 	@SWG\Property(
+ * 		name="ns",
+ * 		type="int",
+ * 		required="true",
+ * 		description="The namespace value of the given article"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="revision",
+ * 		type="Revision",
+ * 		required="true",
+ * 		description="The latest revision for this article"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="comments",
+ * 		type="int",
+ * 		required="true",
+ * 		description="Number of comments on this article"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="type",
+ * 		type="string",
+ * 		required="true",
+ * 		description="The functional type of the document (e.g. article, file, category)"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="abstract",
+ * 		type="string",
+ * 		required="true",
+ * 		description="A snippet of text from the beginning of the article"
+ * 	)
+ *
+ *
  * @SWG\Api(
  * 	path="/api/v1/Articles/Top",
  * 	description="Get the most viewed articles on this wiki",
