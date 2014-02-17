@@ -10,10 +10,17 @@ use Wikia\Search\Config, Wikia\Search\QueryService\Factory, Wikia\Search\QuerySe
  * @subpackage Controller
  */
 class SearchApiController extends WikiaApiController {
+
 	const ITEMS_PER_BATCH = 25;
 	const CROSS_WIKI_LIMIT = 25;
+	const DEFAULT_SNIPPET_LENGTH = null;
 
 	const PARAMETER_NAMESPACES = 'namespaces';
+
+	/**
+	 * @var \WikiDetailsService|null
+	 */
+	private $wikiDetailService;
 
 	/**
 	 * Fetches results for the submitted query
@@ -65,14 +72,23 @@ class SearchApiController extends WikiaApiController {
 		if ( !$this->request->getVal( 'lang' ) ) {
 			throw new InvalidParameterApiException( 'lang' );
 		}
+		$expand = $this->request->getBool( 'expand', false );
+		if ( $expand ) {
+			$params = $this->getDetailsParams();
+		}
 
 		$resultSet = (new Factory)->getFromConfig( $this->getConfigCrossWiki() )->search();
 		$items = array();
 		foreach( $resultSet->getResults() as $result ) {
-			$items[] = array(
-				'id' => (int) $result['id'],
-				'language' => $result['lang_s'],
-			);
+			if ( $expand ) {
+				$items[] = $this->getWikiDetailsService()
+					->getWikiDetails( $result['id'], $params[ 'imageWidth' ], $params[ 'imageHeight' ], $params[ 'length' ] );
+			} else {
+				$items[] = [
+					'id' => (int) $result['id'],
+					'language' => $result['lang_s'],
+				];
+			}
 		}
 
 		$this->response->setVal( 'items', $items );
@@ -155,5 +171,23 @@ class SearchApiController extends WikiaApiController {
 			->setLanguageCode( $request->getVal( 'lang' ) )
 		;
 		return $searchConfig;
+	}
+
+	/**
+	 * @return \WikiDetailsService
+	 */
+	protected function getWikiDetailsService() {
+		if ( !isset( $this->wikiDetailService ) ) {
+			$this->wikiDetailService = new WikiDetailsService();
+		}
+		return $this->wikiDetailService;
+	}
+
+	protected function getDetailsParams() {
+		return [
+			'imageWidth' => $this->request->getVal( 'width', null ),
+			'imageHeight' => $this->request->getVal( 'height', null ),
+			'length' => $this->request->getVal( 'snippet', static::DEFAULT_SNIPPET_LENGTH )
+		];
 	}
 }
