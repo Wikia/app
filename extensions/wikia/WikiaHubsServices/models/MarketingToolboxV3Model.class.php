@@ -23,7 +23,6 @@ class MarketingToolboxV3Model extends AbstractMarketingToolboxModel {
 		$conds .= ' AND hub_date >= ' . $sdb->timestamp($beginTimestamp)
 			. ' AND hub_date <= ' . $sdb->timestamp($endTimestamp);
 
-		$table = $this->getTablesBySectionId(self::SECTION_HUBS);
 		$fields = array('hub_date', 'module_status');
 
 		$options = array(
@@ -33,7 +32,7 @@ class MarketingToolboxV3Model extends AbstractMarketingToolboxModel {
 			)
 		);
 
-		$results = $sdb->select($table, $fields, $conds, __METHOD__, $options);
+		$results = $sdb->select(self::HUBS_TABLE_NAME, $fields, $conds, __METHOD__, $options);
 
 		$out = array();
 		while ($row = $sdb->fetchRow($results)) {
@@ -296,16 +295,17 @@ class MarketingToolboxV3Model extends AbstractMarketingToolboxModel {
 	/**
 	 * Save module
 	 *
-	 * @param string $langCode
-	 * @param int $sectionId
-	 * @param int $verticalId
+	 * @param Array $params
+	 * 			- string $langCode
+	 * 			- int $cityId
+	 * 			- int $verticalId
 	 * @param int $timestamp
 	 * @param int $moduleId
 	 * @param array $data
 	 * @param int $editorId
 	 *
 	 */
-	public function saveModule($langCode, $sectionId, $verticalId, $timestamp, $moduleId, $data, $editorId) {
+	public function saveModule($params, $timestamp, $moduleId, $data, $editorId) {
 		$mdb = wfGetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
 		$sdb = wfGetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
 
@@ -314,23 +314,22 @@ class MarketingToolboxV3Model extends AbstractMarketingToolboxModel {
 			'last_editor_id' => $editorId,
 		);
 
-		$table = $this->getTablesBySectionId($sectionId);
-
 		$conds = array(
-			'lang_code' => $langCode,
-			'vertical_id' => $verticalId,
+			'lang_code' => $params['langCode'],
+			'vertical_id' => $params['verticalId'],
+			'city_id' => $params['cityId'],
 			'module_id' => $moduleId,
 			'hub_date' => $mdb->timestamp($timestamp)
 		);
 
-		$result = $sdb->selectField($table, 'count(1)', $conds, __METHOD__);
+		$result = $sdb->selectField(self::HUBS_TABLE_NAME, 'count(1)', $conds, __METHOD__);
 
 		if ($result) {
-			$mdb->update($table, $updateData, $conds, __METHOD__);
+			$mdb->update(self::HUBS_TABLE_NAME, $updateData, $conds, __METHOD__);
 		} else {
 			$insertData = array_merge($updateData, $conds);
 
-			$mdb->insert($table, $insertData, __METHOD__);
+			$mdb->insert(self::HUBS_TABLE_NAME, $insertData, __METHOD__);
 		}
 
 		$mdb->commit();

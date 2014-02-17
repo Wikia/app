@@ -325,16 +325,17 @@ class MarketingToolboxModel extends AbstractMarketingToolboxModel {
 	/**
 	 * Save module
 	 *
-	 * @param string $langCode
-	 * @param int $sectionId
-	 * @param int $verticalId
+	 * @param Array $params
+	 * 			- string $langCode
+	 * 			- int $sectionId
+	 * 			- int $verticalId
 	 * @param int $timestamp
 	 * @param int $moduleId
 	 * @param array $data
 	 * @param int $editorId
 	 *
 	 */
-	public function saveModule($langCode, $sectionId, $verticalId, $timestamp, $moduleId, $data, $editorId) {
+	public function saveModule($params, $timestamp, $moduleId, $data, $editorId) {
 		$mdb = wfGetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
 		$sdb = wfGetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
 
@@ -343,11 +344,11 @@ class MarketingToolboxModel extends AbstractMarketingToolboxModel {
 			'last_editor_id' => $editorId,
 		);
 
-		$table = $this->getTablesBySectionId($sectionId);
+		$table = $this->getTablesBySectionId($params['sectionId']);
 
 		$conds = array(
-			'lang_code' => $langCode,
-			'vertical_id' => $verticalId,
+			'lang_code' => $params['langCode'],
+			'vertical_id' => $params['verticalId'],
 			'module_id' => $moduleId,
 			'hub_date' => $mdb->timestamp($timestamp)
 		);
@@ -429,5 +430,22 @@ class MarketingToolboxModel extends AbstractMarketingToolboxModel {
 			$timestamp,
 			self::CACHE_KEY_LAST_PUBLISHED_TIMESTAMP
 		);
+	}
+
+	/**
+	 * Get table name by section Id
+	 *
+	 * @param int $sectionId
+	 *
+	 * @return string
+	 */
+	protected function getTablesBySectionId($sectionId) {
+		switch ($sectionId) {
+			case self::SECTION_HUBS:
+				$table = self::HUBS_TABLE_NAME;
+				break;
+		}
+
+		return $table;
 	}
 }

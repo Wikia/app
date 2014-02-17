@@ -1,2 +1,2 @@
-<h1><?=wfMsg('wikiahubs-404-title')?></h1>
-<p><?=wfmsgExt('wikiahubs-404-message', array('parseinline'), $hubUrl)?></p>
+<h1><?=wfMessage('wikiahubs-404-title')->escaped()?></h1>
+<p><?=wfMessage('wikiahubs-404-message', $hubUrl)->parse()?></p>

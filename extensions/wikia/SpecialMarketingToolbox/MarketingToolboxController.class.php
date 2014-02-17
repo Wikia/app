@@ -158,9 +158,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 			$isValid = $form->validate($selectedModuleValues);
 			if ($isValid) {
 				$this->toolboxModel->saveModule(
-					$this->langCode,
-					$this->sectionId,
-					$this->verticalId,
+					$this->getParams(),
 					$this->date,
 					$this->selectedModuleId,
 					$selectedModuleValues,

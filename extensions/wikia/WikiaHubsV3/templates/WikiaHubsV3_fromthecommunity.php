@@ -2,7 +2,7 @@
 	<?= $headline ?>
 	<? if (!F::app()->checkSkin('wikiamobile')): ?>
 		<button id="suggestArticle" class="wikia-button secondary">
-			<?= wfMsg('wikiahubs-from-community-promoted') ?>
+			<?= wfMessage('wikiahubs-from-community-promoted')->escaped() ?>
 		</button>
 	<? endif; ?>
 </h2>
@@ -23,14 +23,13 @@
 			</div>
 			<div class="wikiahubs-ftc-subtitle">
 				<p class="plaintext">
-					<?= wfMsgExt(
+					<?= wfMessage(
 						'wikiahubs-from-community-caption',
-						array('parseinline'),
 						$entry['contributor']['href'],
 						$entry['contributor']['name'],
 						$entry['wikilink']['href'],
 						$entry['wikilink']['anchor']
-					) ?>
+					)->parse() ?>
 				</p>
 			</div>
 			<div class="wikiahubs-ftc-creative">

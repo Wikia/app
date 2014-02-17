@@ -58,14 +58,14 @@ abstract class AbstractMarketingToolboxModel extends WikiaModel {
 		$this->modulesCount = count($this->editableModules);
 
 		$this->sections = array(
-			self::SECTION_HUBS => wfMsg('marketing-toolbox-section-hubs-button')
+			self::SECTION_HUBS => wfMessage('marketing-toolbox-section-hubs-button')
 		);
 
 		$this->verticals = array(
 			self::SECTION_HUBS => array(
-				WikiFactoryHub::CATEGORY_ID_GAMING => wfMsg('marketing-toolbox-section-games-button'),
-				WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT => wfMsg('marketing-toolbox-section-entertainment-button'),
-				WikiFactoryHub::CATEGORY_ID_LIFESTYLE => wfMsg('marketing-toolbox-section-lifestyle-button'),
+				WikiFactoryHub::CATEGORY_ID_GAMING => wfMessage('marketing-toolbox-section-games-button'),
+				WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT => wfMessage('marketing-toolbox-section-entertainment-button'),
+				WikiFactoryHub::CATEGORY_ID_LIFESTYLE => wfMessage('marketing-toolbox-section-lifestyle-button'),
 			)
 		);
 
@@ -97,6 +97,9 @@ abstract class AbstractMarketingToolboxModel extends WikiaModel {
 	abstract public function publish($params, $timestamp);
 
 	abstract protected function publishHub($params, $timestamp, &$results);
+
+	// Save module
+	abstract public function saveModule($params, $timestamp, $moduleId, $data, $editorId);
 
 	// Get data for module list from DB
 	abstract protected function getModulesDataFromDb($params, $timestamp, $moduleId = null);
@@ -139,7 +142,7 @@ abstract class AbstractMarketingToolboxModel extends WikiaModel {
 	}
 	
 	public function getModuleName($moduleId) {
-		return wfMsg('marketing-toolbox-hub-module-' . $this->modules[$moduleId]);
+		return wfMessage('marketing-toolbox-hub-module-' . $this->modules[$moduleId]);
 	}
 
 	public function getNotTranslatedModuleName($moduleId) {
@@ -283,37 +286,6 @@ abstract class AbstractMarketingToolboxModel extends WikiaModel {
 		return $out;
 	}
 
-	public function saveModule($langCode, $sectionId, $verticalId, $timestamp, $moduleId, $data, $editorId) {
-		$mdb = wfGetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
-		$sdb = wfGetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
-
-		$updateData = array(
-			'module_data' => json_encode($data),
-			'last_editor_id' => $editorId,
-		);
-
-		$table = $this->getTablesBySectionId($sectionId);
-
-		$conds = array(
-			'lang_code' => $langCode,
-			'vertical_id' => $verticalId,
-			'module_id' => $moduleId,
-			'hub_date' => $mdb->timestamp($timestamp)
-		);
-
-		$result = $sdb->selectField($table, 'count(1)', $conds, __METHOD__);
-
-		if ($result) {
-			$mdb->update($table, $updateData, $conds, __METHOD__);
-		} else {
-			$insertData = array_merge($updateData, $conds);
-
-			$mdb->insert($table, $insertData, __METHOD__);
-		}
-
-		$mdb->commit();
-	}
-
 	protected function purgeLastPublishedTimestampCache($params) {
 		$this->wg->Memc->delete($this->getMKeyForLastPublishedTimestamp($params, strtotime(self::STRTOTIME_MIDNIGHT)));
 	}
@@ -363,23 +335,6 @@ abstract class AbstractMarketingToolboxModel extends WikiaModel {
 		wfProfileOut(__METHOD__);
 
 		return $fileName;
-	}
-
-	/**
-	 * Get table name by section Id
-	 *
-	 * @param int $sectionId
-	 *
-	 * @return string
-	 */
-	protected function getTablesBySectionId($sectionId) {
-		switch ($sectionId) {
-			case self::SECTION_HUBS:
-				$table = self::HUBS_TABLE_NAME;
-				break;
-		}
-
-		return $table;
 	}
 
 	protected function getSpecialPageClass() {

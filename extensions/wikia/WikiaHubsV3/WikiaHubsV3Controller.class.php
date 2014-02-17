@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Hubs V2 Controller
+ * Hubs V3 Controller
  *
  * @author Bartosz "V" Bentkowski
  * @author Damian Jóźwiak
@@ -14,7 +14,7 @@ class WikiaHubsV3Controller extends WikiaController {
 	const CACHE_VALIDITY_VARNISH = 86400;
 
 	/**
-	 * @var WikiaHubsV3Model
+	 * @var WikiaHubsModel
 	 */
 	protected $model;
 	
@@ -84,8 +84,7 @@ class WikiaHubsV3Controller extends WikiaController {
 	/**
 	 * Render one module with given data
 	 *
-	 * @param string $langCode
-	 * @param int    $verticalId
+	 * @param MarketingToolboxModel $toolboxModel
 	 * @param string $moduleName
 	 * @param array  $moduleData
 	 *
@@ -139,7 +138,7 @@ class WikiaHubsV3Controller extends WikiaController {
 	}
 
 	/**
-	 * @return WikiaHubsV3Model
+	 * @return WikiaHubsModel
 	 */
 	protected function getModel() {
 		if (!$this->model) {
@@ -170,7 +169,7 @@ class WikiaHubsV3Controller extends WikiaController {
 	}
 
 	protected function initModel() {
-		$this->model = new WikiaHubsV3Model();
+		$this->model = new WikiaHubsModel();
 		$this->model->setVertical($this->verticalId);
 	}
 

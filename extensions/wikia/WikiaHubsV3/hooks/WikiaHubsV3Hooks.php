@@ -21,8 +21,6 @@ class WikiaHubsV3Hooks {
 		if( $model->isHubsPage() && !self::isOffShotPage($title) ) {
 			$hubTimestamp = $model->getTimestampFromSplitDbKey($dbKeyNameSplit);
 
-			$app->wg->SuppressRail = true;
-			$app->wg->SuppressFooter = true;
 			if (!$app->wg->request->wasPosted()) {
 				// don't change article object while saving data
 				$article = new WikiaHubsV3Article($title, $model->getHubPageId($dbKeyNameSplit[0]), $hubTimestamp);
@@ -30,7 +28,7 @@ class WikiaHubsV3Hooks {
 		}
 
 		if( $model->isHubsPage() && self::isOffShotPage($title) ) {
-			$hubsModel = new WikiaHubsV3Model();
+			$hubsModel = new WikiaHubsModel();
 			$canonicalHubName = $hubsModel->getCanonicalVerticalName($model->getHubPageId($dbKeyNameSplit[0]));
 			OasisController::addBodyClass('WikiaHubs' . mb_ereg_replace(' ', '', $canonicalHubName));
 

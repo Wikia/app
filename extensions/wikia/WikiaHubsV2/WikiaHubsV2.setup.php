@@ -28,8 +28,8 @@ $wgAutoloadClasses['WikiaHubsV2Hooks'] =  $dir . 'hooks/WikiaHubsV2Hooks.php';
 
 // model classes
 $wgAutoloadClasses['WikiaHubsV2Article'] =  $dir . 'models/WikiaHubsV2Article.class.php';
-$wgAutoloadClasses['WikiaHubsV2Model'] =  $dir . 'models/WikiaHubsV2Model.class.php';
 $wgAutoloadClasses['WikiaHubsV2HooksModel'] =  $dir . 'models/WikiaHubsV2HooksModel.class.php';
+$wgAutoloadClasses['WikiaHubsModel'] =  "{$IP}/extensions/wikia/WikiaHubsServices/models/WikiaHubsModel.class.php";
 
 $wgAutoloadClasses['WikiaHubsV2SuggestModel'] =  $dir . 'models/WikiaHubsV2SuggestModel.class.php';
 
