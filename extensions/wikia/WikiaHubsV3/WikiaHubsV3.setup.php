@@ -34,7 +34,6 @@ $wgAutoloadClasses['WikiaHubsV3HooksModel'] =  $dir . 'models/WikiaHubsV3HooksMo
 $wgAutoloadClasses['WikiaHubsV3SuggestModel'] =  $dir . 'models/WikiaHubsV3SuggestModel.class.php';
 
 $wgAutoloadClasses['WikiaHubsParserHelper'] =  $dir . 'WikiaHubsParserHelper.class.php';
-$wgAutoloadClasses['WikiaHubsApiController'] = "{$IP}/extensions/wikia/WikiaHubsServices/api/WikiaHubsApiController.class.php";
 
 // i18n mapping
 $wgExtensionMessagesFiles['WikiaHubsV3'] = $dir.'WikiaHubsV3.i18n.php';

@@ -37,3 +37,6 @@ $wgAutoloadClasses['MarketingToolboxModulePollsService'] =  $dir . 'modules/Mark
 $wgAutoloadClasses['MarketingToolboxModuleWAMService'] =  $dir . 'modules/MarketingToolboxModuleWAMService.class.php';
 
 $wgAutoloadClasses['WikiaHubsServicesHelper'] =  $dir . 'WikiaHubsServicesHelper.class.php';
+$wgAutoloadClasses['WikiaHubsApiController'] = "{$IP}/extensions/wikia/WikiaHubsServices/api/WikiaHubsApiController.class.php";
+
+$wgWikiaApiControllers['WikiaHubsApiController'] = "{$IP}/extensions/wikia/WikiaHubsServices/api/WikiaHubsApiController.class.php";
