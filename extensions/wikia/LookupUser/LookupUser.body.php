@@ -228,7 +228,7 @@ EOT
 		$name = $user->getName();
 		if( $user->getEmail() ) {
 			$email = $user->getEmail();
-			$email_output = wfMessage( 'lookupuser-email', $email, $name )->text();
+			$email_output = wfMessage( 'lookupuser-email', $email, urlencode( $email ) )->text();
 		} else {
 			$email_output = wfMessage( 'lookupuser-no-email' )->text();
 		}
