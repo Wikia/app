@@ -765,23 +765,6 @@ class ArticlesApiController extends WikiaApiController {
 	}
 
 	/**
-	 * @private
-	 */
-	static function onArticleUpdateCategoryCounts( $this, $added, $deleted ) {
-		foreach ( $added + $deleted as $cat) {
-			WikiaDataAccess::cachePurge( self::getCacheKey( $cat, self::CATEGORY_CACHE_ID ) );
-
-			$param = array(
-				'category' => $cat
-			);
-
-			self::purgeMethods( [['getTop', $param], ['getList', $param]] );
-		}
-
-		return true;
-	}
-
-	/**
 	 * @param $category
 	 * @return array|null|string
 	 */
