@@ -400,12 +400,13 @@ class ForumHooksHelper {
 	public static function onTitleGetSquidURLs( $title, &$urls ) {
 		if ( $title->inNamespace( NS_WIKIA_FORUM_BOARD_THREAD ) ) {
 			$wallMessage = WallMessage::newFromTitle( $title );
-			$urls = array(
-				$wallMessage->getMessagePageUrl(),
-				$wallMessage->getMessagePageUrl() . '?action=history',
-			);
+			$urls = array();
+			// CONN-426: Purge cache only for main thread page. When a reply is added, the main page is also updated so
+			// we should prevent replies from being added for purging
+			if ( $wallMessage->isMain() ) {
+				$urls[] = $wallMessage->getMessagePageUrl( true );
+			}
 		}
-
 		return true;
 	}
 

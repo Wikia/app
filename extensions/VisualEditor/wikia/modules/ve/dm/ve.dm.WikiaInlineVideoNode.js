@@ -17,7 +17,7 @@ ve.dm.WikiaInlineVideoNode = function VeDmWikiaInlineVideoNode( length, element 
 
 /* Inheritance */
 
-ve.inheritClass( ve.dm.WikiaInlineVideoNode, ve.dm.MWInlineImageNode );
+OO.inheritClass( ve.dm.WikiaInlineVideoNode, ve.dm.MWInlineImageNode );
 
 /* Static Properties */
 

@@ -18,7 +18,7 @@ ve.dm.WikiaBlockVideoNode = function VeDmWikiaBlockVideoNode( length, element ) 
 
 /* Inheritance */
 
-ve.inheritClass( ve.dm.WikiaBlockVideoNode, ve.dm.WikiaBlockMediaNode );
+OO.inheritClass( ve.dm.WikiaBlockVideoNode, ve.dm.WikiaBlockMediaNode );
 
 /* Static Properties */
 

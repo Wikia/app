@@ -11,6 +11,7 @@
 				controller: 'SiteWideMessagesController',
 				method: 'getAnonMessages',
 				format: 'html',
+				type: 'GET',
 				data: {
 					hasnotifications: hasNotifications
 				}

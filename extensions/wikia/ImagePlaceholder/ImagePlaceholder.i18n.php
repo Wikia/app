@@ -48,6 +48,13 @@ $messages['ast'] = array(
 	'imgplc-notinhistory' => 'Nun pues amestar una imaxe nel mou historial.',
 );
 
+/** Azerbaijani (azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'imgplc-image' => 'Şəkil',
+);
+
 /** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
  * @author Wizardist
  */

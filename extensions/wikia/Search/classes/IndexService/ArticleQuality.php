@@ -8,8 +8,7 @@ namespace Wikia\Search\IndexService;
  * @package Search
  * @subpackage IndexService
  */
-class ArticleQuality extends AbstractService
-{
+class ArticleQuality extends AbstractService {
 	/**
 	 * Queries the API for article quality
 	 * @see \Wikia\Search\IndexService\AbstractService::execute()

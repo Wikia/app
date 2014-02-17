@@ -36,19 +36,12 @@ var UserLoginFacebook = {
 
 			this.initialized = true;
 			this.loginSetup();
-			this.setupTooltips();
 
 			// load when the login dropdown is shown - see BugId:68955
 			$.loadFacebookAPI();
 
 			this.log( 'init' );
 		}
-	},
-
-	setupTooltips: function() {
-		'use strict';
-
-		$( '.sso-login > a' ).tooltip();
 	},
 
 	loginSetup: function() {
@@ -231,13 +224,6 @@ var UserLoginFacebook = {
 							label: 'facebook-login-modal'
 						} );
 						facebookSignupModal.show();
-
-						// TODO: temporary fix - force repaint
-						// find a way to fix forms on modal rendering issues on chrome
-						// o wait till chrome fixes its rendering bug -
-						// when changing position relative to fixed on <body>
-						$modal.hide().height();
-						$modal.show();
 					} );
 				} );
 			} );

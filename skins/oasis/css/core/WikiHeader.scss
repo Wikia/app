@@ -367,8 +367,8 @@ $WikiNavWidth: $width-outside - 271px;
 		}
 
 		> .contribute:hover {
-			@include linear-gradient(darken($color-secondary-button, 4%), top, darken($color-secondary-button-highlight, 4%), 35%, darken($color-secondary-button, 4%), 65%);
 			background: none;
+			@include linear-gradient(darken($color-secondary-button, 4%), top, darken($color-secondary-button-highlight, 4%), 35%, darken($color-secondary-button, 4%), 65%);
 		}
 
 		.share-button {

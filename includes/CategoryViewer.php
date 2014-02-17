@@ -337,7 +337,7 @@ class CategoryViewer extends ContextSource {
 					$this->addImage( $title, $humanSortkey, $row->page_len, $row->page_is_redirect );
 				} else {
 					# <Wikia>
-					if( wfRunHooks( "CategoryViewer::addPage", array( &$this, &$title, &$row ) ) ) {
+					if( wfRunHooks( "CategoryViewer::addPage", array( &$this, &$title, &$row, $humanSortkey ) ) ) {
 						$this->addPage( $title, $humanSortkey, $row->page_len, $row->page_is_redirect );
 					}
 					# </Wikia>

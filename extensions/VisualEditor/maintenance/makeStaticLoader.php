@@ -73,18 +73,18 @@ class MakeStaticLoader extends Maintenance {
 
 		// Path to /modules/
 		$vePath = $this->getOption( 've-path',
-			$target === 'demo'
+			$target === 'demo' ?
 			// From /demos/ve/index.php
-			? '../../modules'
+			'../../modules' :
 			// From /modules/ve/test/index.html
-			: '../..'
+			'../..'
 		);
 
 		$wgResourceModules['Dependencies'] = array(
 			'scripts' => array(
 				'jquery/jquery.js',
 				'jquery/jquery.client.js',
-				'oojs/oo.js',
+				'oojs/oojs.js',
 				'rangy/rangy-core-1.3.js',
 				'rangy/rangy-position-1.3.js',
 				'unicodejs/unicodejs.js',
@@ -141,24 +141,25 @@ class MakeStaticLoader extends Maintenance {
 			've/init/sa/ve.init.sa.Target.js',
 		) );
 
-		$self = isset( $_SERVER['PHP_SELF'] ) ? $_SERVER['PHP_SELF'] :  ( lcfirst( __CLASS__ ) . '.php' );
+		$self = isset( $_SERVER['PHP_SELF'] ) ? $_SERVER['PHP_SELF'] : ( lcfirst( __CLASS__ ) . '.php' );
 
 		$head = $body = '';
 
 		$modules = array(
 			'Dependencies',
+			'oojs-ui',
 			'ext.visualEditor.base#standalone-init',
 			'ext.visualEditor.core',
 			'jquery.uls.grid',
 			'jquery.uls.data',
 			'jquery.uls.compact',
 			'jquery.uls',
-			'ext.visualEditor.experimental',
+			'ext.visualEditor.language',
 		);
 
 		foreach ( $modules as $module ) {
 			if ( !isset( $wgResourceModules[$module] ) ) {
-				echo "\nError: File group $module\n not found!\n";
+				echo "\nError: Module $module\n not found!\n";
 				exit( 1 );
 			}
 			$registry = $wgResourceModules[$module];

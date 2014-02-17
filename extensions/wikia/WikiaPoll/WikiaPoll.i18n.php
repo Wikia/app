@@ -113,6 +113,7 @@ $messages['ar'] = array(
 $messages['az'] = array(
 	'wikiapoll-question' => '$1?',
 	'wikiapoll-thanks-for-vote' => 'Təşəkkürlər!',
+	'wikiapoll-vote' => 'Səs ver!',
 	'wikiapoll-question-label' => 'Sual',
 	'wikiapoll-cancel-label' => 'Ləğv et',
 	'wikiapoll-publish-label' => 'Naşir',

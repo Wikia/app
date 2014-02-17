@@ -29,11 +29,11 @@ ve.init.sa.Target = function VeInitSaTarget( $container, doc ) {
 	this.toolbar = new ve.ui.TargetToolbar( this, this.surface, { 'shadow': true } );
 
 	// Initialization
-	this.toolbar.$.addClass( 've-init-sa-target-toolbar' );
+	this.toolbar.$element.addClass( 've-init-sa-target-toolbar' );
 	this.toolbar.setup( this.constructor.static.toolbarGroups );
 	this.toolbar.enableFloatable();
 
-	this.$.append( this.toolbar.$, this.surface.$ );
+	this.$element.append( this.toolbar.$element, this.surface.$element );
 
 	this.toolbar.initialize();
 	this.surface.addCommands( this.constructor.static.surfaceCommands );
@@ -42,4 +42,4 @@ ve.init.sa.Target = function VeInitSaTarget( $container, doc ) {
 
 /* Inheritance */
 
-ve.inheritClass( ve.init.sa.Target, ve.init.Target );
+OO.inheritClass( ve.init.sa.Target, ve.init.Target );

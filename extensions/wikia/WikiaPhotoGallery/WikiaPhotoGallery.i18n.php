@@ -519,6 +519,8 @@ $messages['az'] = array(
 	'wikiaPhotoGallery-back' => 'Əvvəlki',
 	'wikiaPhotoGallery-finish' => 'Son',
 	'wikiaPhotoGallery-error-caption' => 'Xəta',
+	'wikiaPhotoGallery-upload-findtitle' => 'Tap',
+	'wikiaPhotoGallery-upload-findbutton' => 'Tap',
 	'wikiaPhotoGallery-upload-error-conflict-insert' => 'Yerləşdirmək',
 	'wikiaPhotoGallery-upload-select-images' => 'Seç',
 	'wikiaPhotoGallery-photooptions-done' => 'Oldu',
@@ -544,6 +546,7 @@ $messages['az'] = array(
 	'wikiaPhotoGallery-preview-bordersize-small' => 'Kiçik',
 	'wikiaPhotoGallery-preview-bordersize-medium' => 'Orta',
 	'wikiaPhotoGallery-preview-bordersize-large' => 'Böyük',
+	'wikiaPhotoGallery-preview-size' => 'Şəklin ölçüsü',
 	'wikiaPhotoGallery-preview-captions-left' => 'Sol',
 	'wikiaPhotoGallery-preview-captions-center' => 'Mərkəz',
 	'wikiaPhotoGallery-preview-captions-right' => 'Sağ',
@@ -556,6 +559,7 @@ $messages['az'] = array(
 	'wikiaPhotoGallery-slideshowpreview-addphoto' => 'Foto əlavə et',
 	'wikiaPhotoGallery-slideshowpreview-position-left' => 'Sol',
 	'wikiaPhotoGallery-slideshowpreview-position-right' => 'Sağ',
+	'wikiaPhotoGallery-sliderpreview-addphoto' => 'Foto əlavə et',
 	'wikiaPhotoGallery-upload-existingtext-onarticle' => 'bu səhifə',
 	'wikiaPhotoGallery-upload-selectbutton' => 'Seç',
 );
@@ -6127,6 +6131,7 @@ $messages['tr'] = array(
  * @author Steve.rusyn
  * @author SteveR
  * @author Ua2004
+ * @author Ата
  * @author Тест
  */
 $messages['uk'] = array(
@@ -6229,7 +6234,7 @@ $messages['uk'] = array(
 	'wikiaPhotoGallery-preview-captions' => 'Підписи',
 	'wikiaPhotoGallery-preview-captions-left' => 'Зліва',
 	'wikiaPhotoGallery-preview-captions-center' => 'По центру',
-	'wikiaPhotoGallery-preview-captions-right' => 'Зправа',
+	'wikiaPhotoGallery-preview-captions-right' => 'Справа',
 	'wikiaPhotoGallery-conflict-title' => 'Виник конфлікт редагування',
 	'wikiaPhotoGallery-conflict-help' => 'Ми покажемо ниже вікітекст, створений вашим редагуванням.
 Для відновлення ваших змін ви можете скопіювати цей текст, натиснувши „$1“ та вставити його у потрібному місці.
@@ -6654,6 +6659,23 @@ $messages['zh-hans'] = array(
  */
 $messages['zh-hant'] = array(
 	'wikiaPhotoGallery-finish' => '完成',
+	'wikiaPhotoGallery-viewmode-addphoto' => '在庫中增加圖片',
+	'wikiaPhotoGallery-edit-summary' => '編輯一個圖庫',
+	'wikiaPhotoGallery-error-caption' => '錯誤',
+	'wikiaPhotoGallery-error-outdated' => '您查看的圖片庫已經被編輯。
+請刷新頁面並再試一次。',
+	'wikiaPhotoGallery-upload-title' => '查找&上傳圖片',
+	'wikiaPhotoGallery-upload-info-choose-list' => '「或」選擇：',
+	'wikiaPhotoGallery-upload-info-images-label' => '此頁面中的圖像',
+	'wikiaPhotoGallery-upload-info-upload' => '「或者」 從您的電腦上傳一張圖片',
+	'wikiaPhotoGallery-upload-info-uploaded-label' => '最新的圖像',
+	'wikiaPhotoGallery-upload-findtitle' => '尋找',
+	'wikiaPhotoGallery-upload-findbutton' => '搜尋',
+	'wikiaPhotoGallery-upload-filestitle-pre' => '最近上傳的檔案',
+	'wikiaPhotoGallery-upload-filestitle-post' => '本維基上的圖片（$1條结果）',
+	'wikiaPhotoGallery-upload-page-next' => '後 8 個',
+	'wikiaPhotoGallery-upload-page-prev' => '前8個',
+	'wikiaPhotoGallery-upload-filesinsert' => '插入這張照片',
 );
 
 /** Chinese (Hong Kong) (中文（香港）‎)

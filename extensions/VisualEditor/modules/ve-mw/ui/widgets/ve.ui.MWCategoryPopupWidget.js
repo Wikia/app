@@ -9,7 +9,7 @@
  * Creates an ve.ui.MWCategoryPopupWidget object.
  *
  * @class
- * @extends ve.ui.PopupWidget
+ * @extends OO.ui.PopupWidget
  *
  * @constructor
  * @param {Object} [config] Configuration options
@@ -19,23 +19,23 @@ ve.ui.MWCategoryPopupWidget = function VeUiMWCategoryPopupWidget ( config ) {
 	config = ve.extendObject( { 'autoClose': true }, config );
 
 	// Parent constructor
-	ve.ui.PopupWidget.call( this, config );
+	OO.ui.PopupWidget.call( this, config );
 
 	// Properties
 	this.category = null;
 	this.origSortkey = null;
 	this.removed = false;
-	this.$title = this.$$( '<label>' );
-	this.$menu = this.$$( '<div>' );
-	this.removeButton = new ve.ui.IconButtonWidget( {
-		'$$': this.$$, 'icon': 'remove', 'title': ve.msg( 'visualeditor-inspector-remove-tooltip' )
+	this.$title = this.$( '<label>' );
+	this.$menu = this.$( '<div>' );
+	this.removeButton = new OO.ui.IconButtonWidget( {
+		'$': this.$, 'icon': 'remove', 'title': ve.msg( 'visualeditor-inspector-remove-tooltip' )
 	} );
-	this.sortKeyInput = new ve.ui.TextInputWidget( { '$$': this.$$ } );
-	this.sortKeyLabel = new ve.ui.InputLabelWidget(
-		{ '$$': this.$$, '$input': this.sortKeyInput, 'label': ve.msg ( 'visualeditor-dialog-meta-categories-sortkey-label' ) }
+	this.sortKeyInput = new OO.ui.TextInputWidget( { '$': this.$ } );
+	this.sortKeyLabel = new OO.ui.InputLabelWidget(
+		{ '$': this.$, '$input': this.sortKeyInput, 'label': ve.msg ( 'visualeditor-dialog-meta-categories-sortkey-label' ) }
 	);
-	this.$sortKeyForm = this.$$( '<form>' ).addClass( 've-ui-mwCategorySortkeyForm' )
-		.append( this.sortKeyLabel.$, this.sortKeyInput.$ );
+	this.$sortKeyForm = this.$( '<form>' ).addClass( 've-ui-mwCategoryPopupWidget-sortKeyForm' )
+		.append( this.sortKeyLabel.$element, this.sortKeyInput.$element );
 
 	// Events
 	this.connect( this, { 'hide': 'onHide' } );
@@ -43,22 +43,24 @@ ve.ui.MWCategoryPopupWidget = function VeUiMWCategoryPopupWidget ( config ) {
 	this.$sortKeyForm.on( 'submit', ve.bind( this.onSortKeySubmit, this ) );
 
 	// Initialization
-	this.$.addClass( 've-ui-mwCategoryPopupMenu' ).hide();
+	this.$element.addClass( 've-ui-mwCategoryPopupWidget' ).hide();
 	this.$title
-		.addClass( 've-ui-mwCategoryPopupTitle ve-ui-icon-tag' )
+		.addClass( 've-ui-mwCategoryPopupWidget-title oo-ui-icon-tag' )
 		.text( ve.msg( 'visualeditor-dialog-meta-categories-category' ) );
-	this.$menu.append(
-		this.$title,
-		this.removeButton.$.addClass( 've-ui-mwCategoryRemoveButton' ),
-		this.$sortKeyForm
-	);
+	this.$menu
+		.addClass( 've-ui-mwCategoryPopupWidget-content' )
+		.append(
+			this.$title,
+			this.removeButton.$element.addClass( 've-ui-mwCategoryPopupWidget-removeButton' ),
+			this.$sortKeyForm
+		);
 	this.$body.append( this.$menu );
-	config.$overlay.append( this.$ );
+	config.$overlay.append( this.$element );
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.ui.MWCategoryPopupWidget, ve.ui.PopupWidget );
+OO.inheritClass( ve.ui.MWCategoryPopupWidget, OO.ui.PopupWidget );
 
 /* Events */
 
@@ -79,10 +81,10 @@ ve.inheritClass( ve.ui.MWCategoryPopupWidget, ve.ui.PopupWidget );
  * Handle category remove events.
  *
  * @method
- * @emits removeCategory
+ * @fires removeCategory
  */
 ve.ui.MWCategoryPopupWidget.prototype.onRemoveCategory = function () {
-	ve.track( {
+	ve.track( 'wikia', {
 		'action': ve.track.actions.CLICK,
 		'label': 'dialog-page-settings-button-remove-category'
 	} );
@@ -96,10 +98,10 @@ ve.ui.MWCategoryPopupWidget.prototype.onRemoveCategory = function () {
  *
  * @method
  * @param {jQuery.Event} e Form submit event
- * @emits updateSortkey
+ * @fires updateSortkey
  */
 ve.ui.MWCategoryPopupWidget.prototype.onSortKeySubmit = function () {
-	ve.track( {
+	ve.track( 'wikia', {
 		'action': ve.track.actions.SUBMIT,
 		'label': 'dialog-page-settings-change-sortkey'
 	} );
@@ -179,13 +181,13 @@ ve.ui.MWCategoryPopupWidget.prototype.setPopup = function ( item ) {
 	// Flip for RTL:
 	if ( this.$container.attr( 'dir' ) === 'rtl' ) {
 		// flip me, I'm a mirror:
-		this.$.css( {
+		this.$element.css( {
 			'right': this.$container.outerWidth( true ) - left,
 			'top': top
 		} );
 	} else {
-		this.$.css( { 'left': left, 'top': top } );
+		this.$element.css( { 'left': left, 'top': top } );
 	}
 
-	this.display( left, top, width, height );
+	this.display( width, height );
 };

@@ -21,7 +21,7 @@ ve.ce.PreformattedNode = function VeCePreformattedNode( model, config ) {
 
 /* Inheritance */
 
-ve.inheritClass( ve.ce.PreformattedNode, ve.ce.ContentBranchNode );
+OO.inheritClass( ve.ce.PreformattedNode, ve.ce.ContentBranchNode );
 
 /* Static Properties */
 

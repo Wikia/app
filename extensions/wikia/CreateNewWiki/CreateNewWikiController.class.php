@@ -58,6 +58,7 @@ class CreateNewWikiController extends WikiaController {
 
 		// export info if user is logged in
 		$this->isUserLoggedIn = $wgUser->isLoggedIn();
+		$this->isUserEmailConfirmed = $wgUser->isEmailConfirmed();
 
 		// remove wikia plus for now for all languages
 		$skipWikiaPlus = true;
@@ -191,6 +192,15 @@ class CreateNewWikiController extends WikiaController {
 				$this->status = 'error';
 				$this->statusMsg = wfMessage( 'cnw-error-anon-user' )->parse();
 				$this->statusHeader = wfMessage( 'cnw-error-anon-user-header' )->text();
+				wfProfileOut(__METHOD__);
+				return;
+			}
+
+			// check if user has confirmed e-mail
+			if ( !$wgUser->isEmailConfirmed() ) {
+				$this->status = 'error';
+				$this->statusMsg = wfMessage( 'cnw-error-unconfirmed-email' )->parse();
+				$this->statusHeader = wfMessage( 'cnw-error-unconfirmed-email-header' )->text();
 				wfProfileOut(__METHOD__);
 				return;
 			}

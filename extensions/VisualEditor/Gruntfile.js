@@ -19,16 +19,16 @@ module.exports = function ( grunt ) {
 		jshint: {
 			options: JSON.parse( grunt.file.read( '.jshintrc' )
 				.replace( /\/\*(?:(?!\*\/)[\s\S])*\*\//g, '' ).replace( /\/\/[^\n\r]*/g, '' ) ),
-			all: ['*.js', 'modules/**/*.js', 'wikia/**/*.js']
+			all: ['*.js', 'modules/{syntaxhighlight,unicodejs,ve,ve-mw}/**/*.js', 'wikia/**/*.js']
 		},
 		csslint: {
 			options: {
 				csslintrc: '.csslintrc'
 			},
-			all: ['modules/ve/**/*.css', 'wikia/**/*.css']
+			all: ['modules/{ve,ve-mw}/**/*.css', 'wikia/**/*.css'],
 		},
 		qunit: {
-			all: ['modules/ve/test/index-phantomjs-tmp.html']
+			ve: 'modules/ve/test/index-phantomjs-tmp.html'
 		},
 		watch: {
 			files: ['<%= jshint.all %>', '<%= csslint.all %>', '.{jshintrc,jshintignore,csslintrc}'],

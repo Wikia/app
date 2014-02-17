@@ -438,6 +438,22 @@ ___________________________________________
 
 ستستمر في تلقي الرسائل الإلكترونية على عنوان بريدك الإلكتروني القديم حتى تقوم بتأكيد هذا العنوان.',
 	'usersignup-reconfirmation-email-signature' => 'فريق ويكيا',
+	'usersignup-reconfirmation-email_body' => 'مرحبًا $2،
+
+من فضلك اضغط على الرابط أدناه لتأكيد تغيير عنوان البريد الإلكتروني على ويكيا.
+
+$3
+
+ستستمر باستقبال رسائل على عنوان بريدك الإلكتروني القديم حتى تأكد هذا العنوان.
+
+فريق ويكيا
+
+
+___________________________________________
+
+للتحقق من آخر الأحداث على ويكيا، قم بزيارة http://community.wikia.com
+
+تريد التحكم بالرسائل الإلكترونية التي تستقبلها؟ اذهب إلى: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-welcome-email-subject' => 'مرحبا بك في ويكيا يا $USERNAME!',
 	'usersignup-welcome-email-greeting' => 'مرحبا يا $USERNAME',
 	'usersignup-welcome-email-heading' => 'نحن سعداء بالترحيب بك في ويكيا و {{SITENAME}}! إليك بعض الأشياء التي يمكنك القيام بها للبدأ.',
@@ -474,6 +490,16 @@ ___________________________________________
 	'usersignup-confirmation-reminder-email-greeting' => 'مرحبا يا $USERNAME',
 	'usersignup-confirmation-reminder-email-signature' => 'فريق ويكيا',
 	'usersignup-facebook-problem' => 'هناك مشكلة في الاتصال مع فيسبوك. الرجاء المحاولة مرة أخرى لاحقاً.',
+);
+
+/** Azerbaijani (azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'usersignup-welcome-email-greeting' => 'Salam $USERNAME',
+	'usersignup-marketing-global-heading' => 'Yarat',
+	'usersignup-account-creation-email-greeting' => 'Salam,',
+	'usersignup-confirmation-reminder-email-greeting' => 'Salam $USERNAME',
 );
 
 /** South Azerbaijani (تورکجه)

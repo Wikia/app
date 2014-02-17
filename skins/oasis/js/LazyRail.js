@@ -77,7 +77,6 @@ $( function () {
 
 					if ( window.wgEnableLightboxExt ) {
 						window.LightboxLoader.init();
-						window.LightboxLoader.loadFromURL();
 					}
 				};
 

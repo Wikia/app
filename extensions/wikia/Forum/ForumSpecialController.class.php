@@ -73,7 +73,7 @@ class ForumSpecialController extends WikiaSpecialPageController {
 		}
 
 		//TODO: keep the varnish cache and do purging on post
-		$this->response->setCacheValidity( 0, 0 );
+		$this->response->setCacheValidity( WikiaResponse::CACHE_DISABLED );
 
 		wfProfileOut( __METHOD__ );
 	}

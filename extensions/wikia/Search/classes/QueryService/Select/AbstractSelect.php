@@ -99,19 +99,19 @@ abstract class AbstractSelect
 	
 	/**
 	 * The field used for highlighting
-	 * @var unknown_type
+	 * @var string
 	 */
 	protected $highlightingField = 'html';
 	
 	/**
 	 * Responsible for storing configuration values for a search.
-	 * @var Wikia\Search\Config
+	 * @var \Wikia\Search\Config
 	 */
 	protected $config;
 	
 	/**
 	 * Responsible for encapsulating logic that interacts with MediaWiki classes.
-	 * @var Wikia\Search\MediaWikiService
+	 * @var \Wikia\Search\MediaWikiService
 	 */
 	protected $service;
 	
@@ -169,7 +169,7 @@ abstract class AbstractSelect
 	 * is prepared and sent. The response, upon receipt, is used to create a ResultSet.
 	 * This is fault-tolerant, and will return an instance of Wikia\Search\ResultSet\EmptySet
 	 * in the event of no results or an internal exception.
-	 * @return Wikia\Search\ResultSet\AbstractResultSet
+	 * @return \Wikia\Search\ResultSet\AbstractResultSet
 	 */
 	public function search() {
 		$this->getMatch();
@@ -178,10 +178,12 @@ abstract class AbstractSelect
 		;
 		return $this->getConfig()->getResults();
 	}
-	
+
 	/**
 	 * Allows us to get an array from search results rather than search result objects.
 	 * @param array $fields allows us to apply a mapping
+	 * @param bool $metadata
+	 * @param string $keyField
 	 * @return array
 	 */
 	public function searchAsApi( $fields = null, $metadata = false, $keyField = null ) {
@@ -209,7 +211,7 @@ abstract class AbstractSelect
 	
 	/**
 	 * Retrieves an existing match, or forces the child class to retrieve a match. 
-	 * @return Ambigous <\Wikia\Search\Match\Article, \Wikia\Search\Match\Wiki, \Wikia\Search\false, boolean>
+	 * @return \Wikia\Search\Match\Article|\Wikia\Search\Match\Wiki|\Wikia\Search\false|boolean
 	 */
 	public function getMatch() {
 		$config = $this->getConfig();
@@ -257,7 +259,7 @@ abstract class AbstractSelect
 	/**
 	 * Registers meta-parameters for the query
 	 * @param Solarium_Query_Select $query
-	 * @return Wikia\Search\QueryService\Select\AbstractSelect
+	 * @return \Wikia\Search\QueryService\Select\AbstractSelect
 	 */
 	protected function registerQueryParams( Solarium_Query_Select $query ) {
 		$config = $this->getConfig();
@@ -280,8 +282,10 @@ abstract class AbstractSelect
 	 */
 	protected function getRequestedFields() {
 		$fields = [];
-		foreach ( array_merge( $this->requestedFields, $this->getConfig()->getRequestedFields() ) as $field ) {
-			$fields[] = Utilities::field( $field );
+		$config = $this->getConfig();
+		$language = $config->getLanguageCode();
+		foreach ( array_merge( $this->requestedFields, $config->getRequestedFields() ) as $field ) {
+			$fields[] = Utilities::field( $field, $language );
 		}
 		return $fields;
 	}
@@ -289,7 +293,7 @@ abstract class AbstractSelect
 	/**
 	 * Configures filter queries to, for instance, prevent duplicate results from PTT, or enable better caching.
 	 * @param Solarium_Query_Select $query
-	 * @return Wikia\Search\QueryService\Select\AbstractSelect
+	 * @return \Wikia\Search\QueryService\Select\AbstractSelect
 	 */
 	protected function registerFilterQueries( Solarium_Query_Select $query ) {
 		$config = $this->getConfig();
@@ -302,7 +306,7 @@ abstract class AbstractSelect
 	/**
 	 * Used to register a filter query based on settings in the config.
 	 * Children can override this method optionally.
-	 * @return Wikia\Search\QueryService\Select\AbstractSelect
+	 * @return \Wikia\Search\QueryService\Select\AbstractSelect
 	 */
 	protected function registerFilterQueryForMatch() {
 		return $this;
@@ -362,7 +366,7 @@ abstract class AbstractSelect
 	/**
 	 * Allows us to re-search for a collated spellcheck
 	 * @param Solarium_Result_Select $result
-	 * @return Ambigous <Solarium_Result_Select, \Solarium_Result_Select_Empty>
+	 * @return Solarium_Result_Select|\Solarium_Result_Select_Empty
 	 */
 	protected function spellcheckResult( Solarium_Result_Select $result ) {
 		// re-search for spellchecked phrase in the absence of results
@@ -397,20 +401,19 @@ abstract class AbstractSelect
 	 * Builds the string used with filter queries based on search config
 	 * @return string
 	 */
-	protected function getFilterQueryString()
-	{
+	protected function getFilterQueryString() {
 		return '';
 	}
 	
 	/**
-	 * @return Wikia\Search\Config
+	 * @return \Wikia\Search\Config
 	 */
 	protected function getConfig() {
 		return $this->config;
 	}
 	
 	/**
-	 * @return Wikia\Search\MediaWikiService
+	 * @return \Wikia\Search\MediaWikiService
 	 */
 	protected function getService() {
 		return $this->service;
@@ -418,7 +421,7 @@ abstract class AbstractSelect
 	
 	/**
 	 * Reusable logic for storing matches on a wiki basis. Used in InterWiki and OnWiki Query Services.
-	 * @return Wikia\Search\Match\Wiki|null
+	 * @return \Wikia\Search\Match\Wiki|null
 	 */
 	protected function extractWikiMatch() {
 		$config = $this->getConfig();
@@ -468,7 +471,7 @@ abstract class AbstractSelect
 	 * @return Solarium_Client
 	 */
 	protected function getClient() {
-		if (! $this->coreSetInClient ) {
+		if ( ! $this->coreSetInClient ) {
 			$this->setCoreInClient();
 		}
 		return $this->client;

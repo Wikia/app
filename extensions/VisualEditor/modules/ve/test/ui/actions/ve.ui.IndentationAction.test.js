@@ -10,8 +10,7 @@ QUnit.module( 've.ui.IndentationAction' );
 /* Tests */
 
 function runIndentationChangeTest( assert, range, method, expectedSelection, expectedData, expectedOriginalData, msg ) {
-	var selection,
-		surface = ve.test.utils.createSurfaceFromHtml( ve.dm.example.isolationHtml ),
+	var surface = ve.test.utils.createSurfaceFromHtml( ve.dm.example.isolationHtml ),
 		indentationAction = new ve.ui.IndentationAction( surface ),
 		data = ve.copy( surface.getModel().getDocument().getFullData() ),
 		originalData = ve.copy( data );
@@ -21,16 +20,16 @@ function runIndentationChangeTest( assert, range, method, expectedSelection, exp
 		expectedOriginalData( originalData );
 	}
 
-	surface.getModel().change( null, range );
+	surface.getModel().setSelection( range );
 	indentationAction[method]();
 
 	assert.deepEqual( surface.getModel().getDocument().getFullData(), data, msg + ': data models match' );
 	assert.deepEqual( surface.getModel().getSelection(), expectedSelection, msg + ': selections match' );
 
-	selection = surface.getModel().undo();
+	surface.getModel().undo();
 
 	assert.deepEqual( surface.getModel().getDocument().getFullData(), originalData, msg + ' (undo): data models match' );
-	assert.deepEqual( selection, range, msg + ' (undo): selections match' );
+	assert.deepEqual( surface.getModel().getSelection(), range, msg + ' (undo): selections match' );
 
 	surface.destroy();
 }
