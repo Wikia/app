@@ -194,25 +194,24 @@ class ArticlesApiController extends WikiaApiController {
 	public function getMostLinked() {
 
 		$expand = $this->request->getBool( static::PARAMETER_EXPAND, false );
+		$nameSpace = NS_MAIN;
 
 		$wikiService = new WikiService();
 		$mostLinked = $wikiService->getMostLinkedPages();
 		$mostLinkedOutput = [];
 
 		if ( $expand ) {
-			$mostLinkedOutput = $this->getArticlesDetails( array_keys( $mostLinked ), [], 0, 0, 0, true );
-			foreach ( $mostLinkedOutput as $i => $item ) {
-				$mostLinkedOutput[$i]['backlink_cnt'] = $mostLinked[ $item['id'] ]['backlink_cnt'];
-			}
+			$params = $this->getDetailsParams();
+			$mostLinkedOutput = $this->getArticlesDetails( array_keys( $mostLinked ), $params[ 'titleKeys' ], $params[ 'width' ], $params[ 'height' ], $params[ 'length' ], true );
 		} else {
 			foreach ( $mostLinked as $item ) {
-					$title = Title::newFromText( $item['page_title'], NS_MAIN );
+					$title = Title::newFromText( $item['page_title'], $nameSpace );
 					if ( !empty($title) && $title instanceof Title && !$title->isMainPage() ) {
 						$mostLinkedOutput[] = [
 							'id' => $item['page_id'],
 							'title' => $item['page_title'],
 							'url' => $title->getLocalURL(),
-							'backlink_cnt' => $item['backlink_cnt']
+							'ns' => $nameSpace
 						];
 					}
 			}

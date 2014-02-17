@@ -476,12 +476,6 @@ use Swagger\Annotations as SWG;
  * 		required="true",
  * 		description="The namespace value of the given article"
  * 	)
- * 	@SWG\Property(
- * 		name="backlink_cnt",
- * 		type="int",
- * 		required="true",
- * 		description="Number of backlinks for the article"
- * 	)
  *
  * @SWG\Model( id="ExpandedMostLinked" )
  * 	@SWG\Property(
@@ -531,12 +525,6 @@ use Swagger\Annotations as SWG;
  * 		type="string",
  * 		required="true",
  * 		description="A snippet of text from the beginning of the article"
- * 	)
- * 	@SWG\Property(
- * 		name="backlink_cnt",
- * 		type="int",
- * 		required="true",
- * 		description="Number of backlinks for the article"
  * 	)
  *
  *
