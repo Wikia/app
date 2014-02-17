@@ -139,12 +139,13 @@ class InterWiki extends AbstractDismax
 				'lang_s:'.$this->config->getLanguageCode()
 		);
 
-		$this->generateHubQuery($queryClauses);
+		$queryClauses = $this->generateHubQuery( $queryClauses );
 		return implode( ' AND ', $queryClauses );
 	}
 
-	protected function generateHubQuery( &$queryArray ) {
-		$hub = $this->config->getHub();
+	protected function generateHubQuery( $queryArray ) {
+		$hub = $this->getConfig()->getHub();
+
 		$hub_q = '';
 		if ( !empty( $hub ) ) {
 			if ( !is_array( $hub ) ) {
@@ -162,5 +163,6 @@ class InterWiki extends AbstractDismax
 				$queryArray[] =   ' ( ' . $hub_q . ' ) ';
 			}
 		}
+		return $queryArray;
 	}
 }

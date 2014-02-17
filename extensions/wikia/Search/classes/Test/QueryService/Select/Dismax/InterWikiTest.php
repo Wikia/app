@@ -168,11 +168,7 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 		                   ->setMethods( array( 'getService' ) )
 		                   ->getMockForAbstractClass();
 		$mockService = $this->getMock( 'Wikia\Search\MediaWikiService', [ 'getWikiId' ] );
-		$mockConfig
-		    ->expects( $this->once() )
-		    ->method ( 'getHub' )
-		    ->will   ( $this->returnValue( 'Entertainment' ) )
-		;
+
 		$mockSelect
 		    ->expects( $this->once() )
 		    ->method ( "getService" )
@@ -186,7 +182,7 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 		$reflspell = new ReflectionMethod( 'Wikia\Search\QueryService\Select\Dismax\InterWiki', 'getFilterQueryString' );
 		$reflspell->setAccessible( true );
 		$this->assertEquals(
-				'articles_i:[50 TO *] AND -id:123 AND (hub_s:Entertainment)',
+				'articles_i:[50 TO *] AND -id:123',
 				$reflspell->invoke( $mockSelect )
 		);
 	}
@@ -195,22 +191,17 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 	 * @covers Wikia\Search\QueryService\Select\Dismax\InterWiki::getQueryClausesString
 	 */
 	public function testGetQueryClausesString() {
-		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getHub', 'getLanguageCode' ) );
+		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getLanguageCode' ) );
 		$mockService = $this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
 		                      ->disableOriginalConstructor()
 		                      ->setMethods( array( 'getGlobal', 'getWikiId' ) )
 		                      ->getMock();
 		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $mockConfig, 'service' => $mockService ) );
 		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\Dismax\InterWiki' )
-		                   ->setConstructorArgs( array( $dc ) )
-		                   ->setMethods( null )
-		                   ->getMock();
-		
-		$mockConfig
-		    ->expects( $this->once() )
-		    ->method ( 'getHub' )
-		    ->will   ( $this->returnValue( 'Entertainment' ) )
-		;
+							->setConstructorArgs( array( $dc ) )
+							->setMethods( [ 'generateHubQuery' ] )
+							->getMock();
+
 		$mockConfig
 		    ->expects( $this->once() )
 		    ->method ( 'getLanguageCode' )
@@ -222,6 +213,16 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 		    ->with   ( 'CrossWikiaSearchExcludedWikis' )
 		    ->will   ( $this->returnValue( array( 123, 321 ) ) )
 		;
+		$mockSelect
+			->expects( $this->once() )
+			->method( 'generateHubQuery' )
+			->will( $this->returnCallback(  function( $param1 ) {
+						$param1[] = ' ( (hub_s:Entertainment) OR (hub_s:Gaming) ) ';
+						return $param1;
+					}
+				)
+			);
+
 		$mockService
 			->expects( $this->once() )
 			->method ( 'getWikiId' )
@@ -229,9 +230,37 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 		;
 		$method = new ReflectionMethod( 'Wikia\Search\QueryService\Select\Dismax\InterWiki', 'getQueryClausesString' );
 		$method->setAccessible( true );
+
 		$this->assertEquals(
-				'lang_s:en AND (hub:Entertainment)',
+				'lang_s:en AND  ( (hub_s:Entertainment) OR (hub_s:Gaming) ) ',
 				$method->invoke( $mockSelect )
 		);
-	}	
+	}
+
+	/**
+	 * @covers Wikia\Search\QueryService\Select\Dismax\InterWiki::generateHubQuery
+	 */
+	public function testGenerateHubQuery() {
+		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getHub', 'getLanguageCode' ) );
+
+		$mockConfig
+			->expects( $this->once() )
+			->method( 'getHub' )
+			->will( $this->returnValue( [ 'Entertainment', 'Gaming' ] ) );
+
+		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\Dismax\InterWiki' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'generateHubQuery', 'getConfig' ] )
+			->getMock();
+
+		$mockSelect->expects( $this->once() )
+			->method( 'getConfig' )
+			->will( $this->returnValue( $mockConfig ) );
+
+		$arr = [ ];
+		$method = new ReflectionMethod( 'Wikia\Search\QueryService\Select\Dismax\InterWiki', 'generateHubQuery' );
+		$method->setAccessible( true );
+		$this->assertEquals( [ ' ( (hub_s:Entertainment) OR (hub_s:Gaming) ) ' ], $method->invokeArgs( $mockSelect, [ $arr ] ) );
+	}
+
 }
