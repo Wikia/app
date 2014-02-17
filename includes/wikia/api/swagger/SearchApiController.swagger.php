@@ -189,6 +189,15 @@ use Swagger\Annotations as SWG;
  * 					defaultValue=""
  * 				),
  * 				@SWG\Parameter(
+ * 					name="hub",
+ * 					paramType="query",
+ * 					description="The name of the vertical (e.g. Gaming, Entertainment, Lifestyle, etc.) to use as a filter",
+ * 					required="false",
+ * 					allowMultiple="false",
+ * 					dataType="string",
+ * 					defaultValue=""
+ * 				),
+ * 				@SWG\Parameter(
  * 					name="lang",
  * 					description="The two chars wiki language code, (eg.: en, de, fr)",
  * 					paramType="query",
