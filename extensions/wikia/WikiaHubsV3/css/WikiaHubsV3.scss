@@ -36,7 +36,7 @@ $wikiahubs-line-height: 16px;
 		padding: 0;
 	}
 	h2 {
-		border-bottom: 4px solid #d8e3e9;
+		border-bottom: 4px solid $color-wikiahome-hubcolor;
 		font-weight: bold;
 		line-height: 23px;
 		margin: 0;
@@ -45,7 +45,7 @@ $wikiahubs-line-height: 16px;
 	.wikiahubs-module {
 		overflow: hidden;
 		h1 {
-			border-bottom: 4px solid #d8e3e9;
+			border-bottom: 4px solid $color-wikiahome-hubcolor;
 			font-weight: bold;
 			font-size: 18px;
 			line-height: 23px;
