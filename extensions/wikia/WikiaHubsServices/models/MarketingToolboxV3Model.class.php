@@ -6,6 +6,14 @@ class MarketingToolboxV3Model extends AbstractMarketingToolboxModel {
 		parent::__construct($app);
 	}
 
+	/**
+	 * Gets modules statuses for given language and vertical between selected dates
+	 *
+	 * @param $cityId
+	 * @param $beginTimestamp
+	 * @param $endTimestamp
+	 * @return array
+	 */
 	public function getCalendarData($cityId, $beginTimestamp, $endTimestamp) {
 		$sdb = wfGetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
 		$conds = array(
@@ -37,12 +45,10 @@ class MarketingToolboxV3Model extends AbstractMarketingToolboxModel {
 	}
 
 	/**
-	 * Get list of modules for selected lang/vertical/date
+	 * Get list of modules for selected hub city id
 	 * applying translation for module name
 	 *
-	 * @param string $langCode
-	 * @param int $sectionId
-	 * @param int $verticalId
+	 * @param int $cityId
 	 * @param int $timestamp
 	 * @param int $activeModule
 	 *
@@ -81,9 +87,7 @@ class MarketingToolboxV3Model extends AbstractMarketingToolboxModel {
 	/**
 	 * Get modules data for last published hub before selected timestamp
 	 *
-	 * @param string $langCode
-	 * @param int    $sectionId
-	 * @param int    $verticalId
+	 * @param int    $cityId
 	 * @param int    $timestamp
 	 * @param int    $moduleId
 	 *
@@ -94,7 +98,14 @@ class MarketingToolboxV3Model extends AbstractMarketingToolboxModel {
 		return $this->getModulesDataFromDb($cityId, $lastPublishTimestamp, $moduleId);
 	}
 
-	// TODO: check is it a propoer way to do this
+	/**
+	 * Get url to edit module page in Marketing Toolbox
+	 *
+	 * @param $cityId
+	 * @param $timestamp
+	 * @param $moduleId
+	 * @return mixed
+	 */
 	public function getModuleUrl($cityId, $timestamp, $moduleId) {
 		$specialPage = $this->getSpecialPageClass();
 		return $specialPage::getTitleFor('MarketingToolbox', 'editHub')->getLocalURL(
@@ -107,11 +118,9 @@ class MarketingToolboxV3Model extends AbstractMarketingToolboxModel {
 	}
 
 	/**
-	 * Get list of modules for selected lang/vertical/timestamp
+	 * Get list of modules for selected hub city id
 	 *
-	 * @param string $langCode
-	 * @param int $sectionId
-	 * @param int $verticalId
+	 * @param int $cityId
 	 * @param int $timestamp
 	 *
 	 * @return array
@@ -136,9 +145,7 @@ class MarketingToolboxV3Model extends AbstractMarketingToolboxModel {
 	 * TODO: confirm this is UNUSED
 	 *
 	 * @param $moduleId
-	 * @param $langCode
-	 * @param $sectionId
-	 * @param $verticalId
+	 * @param $cityId
 	 * @param $timestamp
 	 * 
 	 * @return array
@@ -149,10 +156,9 @@ class MarketingToolboxV3Model extends AbstractMarketingToolboxModel {
 	}
 
 	/**
-	 * Check if all modules in current hub (lang, vertical and date) are filled and saved
+	 * Check if all modules in current hub (city id) are filled and saved
 	 *
-	 * @param string $langCode
-	 * @param int $verticalId
+	 * @param int $cityId
 	 * @param int $timestamp
 	 */
 	public function checkModulesSaved($cityId, $timestamp) {
@@ -174,11 +180,9 @@ class MarketingToolboxV3Model extends AbstractMarketingToolboxModel {
 	}
 
 	/**
-	 * @desc Main method to publish hub page of specific vertical in specific language and on specific day
-	 * 
-	 * @param $langCode
-	 * @param $sectionId
-	 * @param $verticalId
+	 * @desc Main method to publish hub page of specific city id on specific day
+	 *
+	 * @param $cityId
 	 * @param $timestamp
 	 * 
 	 * @return stdClass (properties: boolean $success, string $errorMsg)
@@ -206,8 +210,7 @@ class MarketingToolboxV3Model extends AbstractMarketingToolboxModel {
 	}
 
 	/**
-	 * @param $langCode
-	 * @param $verticalId
+	 * @param $cityId
 	 * @param $timestamp
 	 * @param stdClass $results
 	 * 
@@ -256,9 +259,7 @@ class MarketingToolboxV3Model extends AbstractMarketingToolboxModel {
 	/**
 	 * Get data for module list from DB
 	 *
-	 * @param string $langCode
-	 * @param int $sectionId
-	 * @param int $verticalId
+	 * @param int $cityId
 	 * @param int $timestamp
 	 * @param int $moduleId (optional) returns data only for specified module
 	 *
@@ -338,9 +339,7 @@ class MarketingToolboxV3Model extends AbstractMarketingToolboxModel {
 	/**
 	 * Get last timestamp when vertical was published (before selected timestamp)
 	 *
-	 * @param string $langCode
-	 * @param int $sectionId
-	 * @param int $verticalId
+	 * @param int $cityId
 	 * @param int $timestamp - max timestamp that we should search for published hub
 	 *
 	 * @return int timestamp

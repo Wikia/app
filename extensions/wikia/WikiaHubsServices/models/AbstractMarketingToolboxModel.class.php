@@ -71,27 +71,37 @@ abstract class AbstractMarketingToolboxModel extends WikiaModel {
 
 	}
 
+
+	//Gets modules statuses for given language and vertical between selected dates
 	abstract public function getCalendarData($params, $beginTimestamp, $endTimestamp);
 
+	// Get list of modules
 	abstract public function getModulesData($params, $timestamp, $activeModule);
 
+	// Get modules data for last published hub before selected timestamp
 	abstract public function getPublishedData($params, $timestamp = null, $moduleId = null);
 
+	// Get url to edit module page in Marketing Toolbox
 	abstract public function getModuleUrl($params, $timestamp, $moduleId);
 
+	// Get list of modules for selected
 	abstract protected function getModuleList($params, $timestamp);
 
 	// TODO: confirm this is UNUSED
 	abstract public function getModuleDataFromDb($params, $timestamp, $moduleId);
 
+	// Check if all modules in current hub are filled and saved
 	abstract public function checkModulesSaved($params, $timestamp);
 
+	// Main method to publish hub page on specific day
 	abstract public function publish($params, $timestamp);
 
 	abstract protected function publishHub($params, $timestamp, &$results);
 
+	// Get data for module list from DB
 	abstract protected function getModulesDataFromDb($params, $timestamp, $moduleId = null);
 
+	// Get last timestamp when hub was published (before selected timestamp)
 	abstract public function getLastPublishedTimestamp($params, $timestamp = null, $useMaster = false);
 
 	abstract public function getLastPublishedTimestampFromDB($params, $timestamp, $useMaster = false);

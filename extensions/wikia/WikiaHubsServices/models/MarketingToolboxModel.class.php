@@ -6,6 +6,16 @@ class MarketingToolboxModel extends AbstractMarketingToolboxModel {
 		parent::__construct($app);
 	}
 
+	/**
+	 * Gets modules statuses for given language and vertical between selected dates
+	 *
+	 * @param Array $params contains
+	 * 		- string langCode
+	 * 		- int verticalId
+	 * @param $beginTimestamp
+	 * @param $endTimestamp
+	 * @return array
+	 */
 	public function getCalendarData($params, $beginTimestamp, $endTimestamp) {
 		$sdb = wfGetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
 		$conds = array(
@@ -42,9 +52,10 @@ class MarketingToolboxModel extends AbstractMarketingToolboxModel {
 	 * Get list of modules for selected lang/vertical/date
 	 * applying translation for module name
 	 *
-	 * @param string $langCode
-	 * @param int $sectionId
-	 * @param int $verticalId
+	 * @param Array $params contains
+	 * 		- string langCode
+	 * 		- int sectionId
+	 * 		- int verticalId
 	 * @param int $timestamp
 	 * @param int $activeModule
 	 *
@@ -83,9 +94,10 @@ class MarketingToolboxModel extends AbstractMarketingToolboxModel {
 	/**
 	 * Get modules data for last published hub before selected timestamp
 	 *
-	 * @param string $langCode
-	 * @param int    $sectionId
-	 * @param int    $verticalId
+	 * @param Array $params contains
+	 * 		- string langCode
+	 * 		- int sectionId
+	 * 		- int verticalId
 	 * @param int    $timestamp
 	 * @param int    $moduleId
 	 *
@@ -112,9 +124,10 @@ class MarketingToolboxModel extends AbstractMarketingToolboxModel {
 	/**
 	 * Get list of modules for selected lang/vertical/timestamp
 	 *
-	 * @param string $langCode
-	 * @param int $sectionId
-	 * @param int $verticalId
+	 * @param Array $params contains
+	 * 		- string langCode
+	 * 		- int sectionId
+	 * 		- int verticalId
 	 * @param int $timestamp
 	 *
 	 * @return array
@@ -139,9 +152,10 @@ class MarketingToolboxModel extends AbstractMarketingToolboxModel {
 	 * TODO: confirm this is UNUSED
 	 *
 	 * @param $moduleId
-	 * @param $langCode
-	 * @param $sectionId
-	 * @param $verticalId
+	 * @param Array $params contains
+	 * 		- string langCode
+	 * 		- int sectionId
+	 * 		- int verticalId
 	 * @param $timestamp
 	 * 
 	 * @return array
@@ -154,8 +168,9 @@ class MarketingToolboxModel extends AbstractMarketingToolboxModel {
 	/**
 	 * Check if all modules in current hub (lang, vertical and date) are filled and saved
 	 *
-	 * @param string $langCode
-	 * @param int $verticalId
+	 * @param Array $params contains
+	 * 		- string langCode
+	 * 		- int verticalId
 	 * @param int $timestamp
 	 */
 	public function checkModulesSaved($params, $timestamp) {
@@ -180,9 +195,10 @@ class MarketingToolboxModel extends AbstractMarketingToolboxModel {
 	/**
 	 * @desc Main method to publish hub page of specific vertical in specific language and on specific day
 	 * 
-	 * @param $langCode
-	 * @param $sectionId
-	 * @param $verticalId
+	 * @param Array $params contains
+	 * 		- string langCode
+	 * 		- int sectionId
+	 * 		- int verticalId
 	 * @param $timestamp
 	 * 
 	 * @return stdClass (properties: boolean $success, string $errorMsg)
@@ -213,8 +229,9 @@ class MarketingToolboxModel extends AbstractMarketingToolboxModel {
 	}
 
 	/**
-	 * @param $langCode
-	 * @param $verticalId
+	 * @param Array $params contains
+	 * 		- string langCode
+	 * 		- int verticalId
 	 * @param $timestamp
 	 * @param stdClass $results
 	 * 
@@ -264,9 +281,10 @@ class MarketingToolboxModel extends AbstractMarketingToolboxModel {
 	/**
 	 * Get data for module list from DB
 	 *
-	 * @param string $langCode
-	 * @param int $sectionId
-	 * @param int $verticalId
+	 * @param Array $params contains
+	 * 		- string langCode
+	 * 		- int sectionId
+	 * 		- int verticalId
 	 * @param int $timestamp
 	 * @param int $moduleId (optional) returns data only for specified module
 	 *
@@ -350,9 +368,10 @@ class MarketingToolboxModel extends AbstractMarketingToolboxModel {
 	/**
 	 * Get last timestamp when vertical was published (before selected timestamp)
 	 *
-	 * @param string $langCode
-	 * @param int $sectionId
-	 * @param int $verticalId
+	 * @param Array $params contains
+	 * 		- string langCode
+	 * 		- int sectionId
+	 * 		- int verticalId
 	 * @param int $timestamp - max timestamp that we should search for published hub
 	 *
 	 * @return int timestamp
