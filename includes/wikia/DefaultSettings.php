@@ -1295,6 +1295,12 @@ $wgSFlowHost = 'localhost';
 $wgSFlowPort = 36343;
 $wgSFlowSampling = 1;
 
+/**
+ * Set to true to enable user-to-user e-mail.
+ * This can potentially be abused, as it's hard to track.
+ */
+$wgEnableUserEmail = false;
+
 $wgAutoloadClasses[ 'Wikia\\SFlow'] = "$IP/lib/vendor/SFlow.class.php";
 
 /**
