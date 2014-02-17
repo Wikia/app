@@ -14,9 +14,6 @@ class ReplaceImageServerTest extends WikiaBaseTest {
 
 		$this->mockGlobalVariable('wgCdnStylePath', sprintf('http://slot1.images.wikia.nocookie.net/__cb%s/common', self::DEFAULT_CB));
 		$this->mockGlobalVariable('wgImagesDomainSharding', 'images%s.wikia.nocookie.net');
-
-		$this->mockGlobalVariable('wgAkamaiGlobalVersion', 0);
-		$this->mockGlobalVariable('wgAkamaiLocalVersion', 0);
 	}
 
 	/**
