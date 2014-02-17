@@ -1296,3 +1296,12 @@ $wgSFlowPort = 36343;
 $wgSFlowSampling = 1;
 
 $wgAutoloadClasses[ 'Wikia\\SFlow'] = "$IP/lib/vendor/SFlow.class.php";
+
+/**
+ * Enables ETag globally
+ *
+ * @see http://www.mediawiki.org/wiki/Manual:$wgUseETag
+ *
+ * $wgUseETag is a core MW variable initialized in includes/DefaultSettings.php
+ */
+$wgUseETag = true;
