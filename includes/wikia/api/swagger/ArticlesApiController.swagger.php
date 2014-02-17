@@ -602,11 +602,11 @@ use Swagger\Annotations as SWG;
  * )
  * @SWG\Api(
  * 	path="/api/v1/Articles/Top?expand=1",
- * 	description="Get the most viewed articles for this wiki (expanded results)",
+ * 	description="Get the most viewed articles for this wiki (extended response)",
  * 	@SWG\Operations(
  * 		@SWG\Operation(
  * 			httpMethod="GET",
- * 			summary="Get the most viewed articles for this wiki (expanded results)",
+ * 			summary="Get the most viewed articles for this wiki (extended response)",
  * 			nickname="getTop",
  * 			responseClass="ExpandedArticleResultSet",
  * 			@SWG\ErrorResponses(
@@ -779,11 +779,11 @@ use Swagger\Annotations as SWG;
  * )
  * @SWG\Api(
  * 	path="/api/v1/Articles/List?expand=1",
- * 	description="Get articles list in alphabetical order (expanded results)",
+ * 	description="Get articles list in alphabetical order (extended response)",
  * 	@SWG\Operations(
  * 		@SWG\Operation(
  * 			httpMethod="GET",
- * 			summary="Get articles list in alphabetical order (expanded results)",
+ * 			summary="Get articles list in alphabetical order (extended response)",
  * 			nickname="getList",
  * 			responseClass="ExpandedListArticleResultSet",
  * 			@SWG\ErrorResponses(

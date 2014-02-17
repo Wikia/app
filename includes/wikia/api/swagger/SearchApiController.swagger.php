@@ -245,7 +245,7 @@ use Swagger\Annotations as SWG;
  * 	@SWG\Operations(
  * 		@SWG\Operation(
  * 			httpMethod="get",
- * 			summary="Get results for cross-wiki search",
+ * 			summary="Get results for cross-wiki search (extended response)",
  * 			nickname="getCrossWiki",
  * 			responseClass="ExpandedCrossWikiaResultSet",
  * 			@SWG\ErrorResponses(
