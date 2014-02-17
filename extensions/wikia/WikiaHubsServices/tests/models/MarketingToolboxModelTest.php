@@ -117,9 +117,11 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 		$model->setSpecialPageClass($specialPageMock);
 
 		$url = $model->getModuleUrl(
-			$params['region'],
-			$params['sectionId'],
-			$params['verticalId'],
+			array(
+				'langCode' => $params['region'],
+				'sectionId' => $params['sectionId'],
+				'verticalId' => $params['verticalId']
+			),
 			$params['date'],
 			$params['moduleId']
 		);
@@ -128,10 +130,12 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 	}
 
 	public function testGetModulesDataFromDefault() {
-		$params = array(
-			'langCode' => 'pl',
-			'sectionId' => MarketingToolboxModel::SECTION_HUBS,
-			'verticalId' => WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT,
+		$moduleParams = array(
+			'params' => array(
+				'langCode' => 'pl',
+				'sectionId' => MarketingToolboxModel::SECTION_HUBS,
+				'verticalId' => WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT,
+			),
 			'timestamp' => 789654,
 			'activeModule' => MarketingToolboxModuleWikiaspicksService::MODULE_ID
 		);
@@ -156,10 +160,8 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 		$modelMock->expects($this->once())
 			->method('getModulesDataFromDb')
 			->with(
-			$this->equalTo($params['langCode']),
-			$this->equalTo($params['sectionId']),
-			$this->equalTo($params['verticalId']),
-			$this->equalTo($params['timestamp'])
+			$this->equalTo($moduleParams['params']),
+			$this->equalTo($moduleParams['timestamp'])
 		)
 			->will($this->returnValue(array()));
 
@@ -172,11 +174,9 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 			->will($this->returnValue(0));
 
 		$modulesData = $modelMock->getModulesData(
-			$params['langCode'],
-			$params['sectionId'],
-			$params['verticalId'],
-			$params['timestamp'],
-			$params['activeModule']
+			$moduleParams['params'],
+			$moduleParams['timestamp'],
+			$moduleParams['activeModule']
 		);
 
 		// make assert
@@ -208,10 +208,12 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 	}
 
 	public function testGetModulesDataWithoutDefaults() {
-		$params = array(
-			'langCode' => 'pl',
-			'sectionId' => MarketingToolboxModel::SECTION_HUBS,
-			'verticalId' => WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT,
+		$moduleParams = array(
+			'params' => array(
+				'langCode' => 'pl',
+				'sectionId' => MarketingToolboxModel::SECTION_HUBS,
+				'verticalId' => WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT,
+			),
 			'timestamp' => 789654,
 			'activeModule' => MarketingToolboxModuleWikiaspicksService::MODULE_ID
 		);
@@ -276,19 +278,15 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 		$modelMock->expects($this->at(1))
 			->method('getModulesDataFromDb')
 			->with(
-			$this->equalTo($params['langCode']),
-			$this->equalTo($params['sectionId']),
-			$this->equalTo($params['verticalId']),
+			$this->equalTo($moduleParams['params']),
 			$this->equalTo($lastPublishTimestamp)
 		)
 			->will($this->returnValue($mockedModulesData));
 		$modelMock->expects($this->at(2))
 			->method('getModulesDataFromDb')
 			->with(
-			$this->equalTo($params['langCode']),
-			$this->equalTo($params['sectionId']),
-			$this->equalTo($params['verticalId']),
-			$this->equalTo($params['timestamp'])
+			$this->equalTo($moduleParams['params']),
+			$this->equalTo($moduleParams['timestamp'])
 		)
 			->will($this->returnValue(
 			array()
@@ -308,11 +306,9 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 		$modelMock->setUserClass($userMock);
 
 		$modulesData = $modelMock->getModulesData(
-			$params['langCode'],
-			$params['sectionId'],
-			$params['verticalId'],
-			$params['timestamp'],
-			$params['activeModule']
+			$moduleParams['params'],
+			$moduleParams['timestamp'],
+			$moduleParams['activeModule']
 		);
 
 		// make assert
