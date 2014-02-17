@@ -12,7 +12,7 @@ class WikiaHubsV3SuggestModel extends WikiaModel {
 					'type' => 'text',
 					'name' => 'articleurl',
 					'isRequired' => true,
-					'label' => wfMsg('wikiahubs-suggest-article-what-article'),
+					'label' => wfMessage('wikiahubs-v3-suggest-article-what-article')->escaped(),
 					'value' => '',
 					'attributes' => array(
 						'maxlength' => self::ARTICLEURL_MAXLENGTH
@@ -23,7 +23,7 @@ class WikiaHubsV3SuggestModel extends WikiaModel {
 					'type' => 'textarea',
 					'name' => 'reason',
 					'isRequired' => true,
-					'label' => wfMsg('wikiahubs-suggest-article-reason'),
+					'label' => wfMessage('wikiahubs-v3-suggest-article-reason')->escaped(),
 					'value' => '',
 					'attributes' => array(
 						'maxlength' => self::REASON_MAXLENGTH
@@ -32,8 +32,8 @@ class WikiaHubsV3SuggestModel extends WikiaModel {
 				array(
 					'class' => 'submit-button',
 					'type' => 'custom',
-					'output' => '<button class="wikia-button secondary cancel" >'.wfMsg('wikiahubs-button-cancel').'</button>'.
-						'<button type="submit" class="wikia-button submit" disabled="disabled" >'.wfMsg('wikiahubs-suggest-article-submit-button').'</button>',
+					'output' => '<button class="wikia-button secondary cancel" >'.wfMessage('wikiahubs-v3-button-cancel')->escaped().'</button>'.
+						'<button type="submit" class="wikia-button submit" disabled="disabled" >'.wfMessage('wikiahubs-v3-suggest-article-submit-button')->escaped().'</button>',
 				),
 			),
 		);

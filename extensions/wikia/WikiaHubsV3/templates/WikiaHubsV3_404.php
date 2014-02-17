@@ -1,2 +1,2 @@
-<h1><?=wfMessage('wikiahubs-404-title')->escaped()?></h1>
-<p><?=wfMessage('wikiahubs-404-message', $hubUrl)->parse()?></p>
+<h1><?=wfMessage('wikiahubs-v3-404-title')->escaped()?></h1>
+<p><?=wfMessage('wikiahubs-v3-404-message', $hubUrl)->parse()?></p>

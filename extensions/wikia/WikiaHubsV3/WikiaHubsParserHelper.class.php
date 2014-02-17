@@ -54,7 +54,7 @@ class WikiaHubsParserHelper {
 
 		$data = [];
 
-		$data['header'] = wfMessage('wikiahubs-popular-videos')->text();
+		$data['header'] = wfMessage('wikiahubs-v3-popular-videos')->escaped();
 
 		//use images passed inside <hubspopularvideos> tag
 		$lines = StringUtils::explode("\n", $input);

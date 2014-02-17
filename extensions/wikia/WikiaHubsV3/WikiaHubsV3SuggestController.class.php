@@ -8,7 +8,7 @@ class WikiaHubsV3SuggestController extends WikiaController {
 	}
 
 	public function suggestArticle() {
-		$this->successMessage = wfMessage('wikiahubs-suggest-article-success')->text();
+		$this->successMessage = wfMessage('wikiahubs-v3-suggest-article-success')->escaped();
 		$this->formData = $this->model->getSuggestArticleForm();
 	}
 
