@@ -1070,7 +1070,7 @@ $wgEnableEmail = true;
  * Set to true to enable user-to-user e-mail.
  * This can potentially be abused, as it's hard to track.
  */
-$wgEnableUserEmail = true;
+$wgEnableUserEmail = false;
 
 /**
  * Set to true to put the sending user's email in a Reply-To header
