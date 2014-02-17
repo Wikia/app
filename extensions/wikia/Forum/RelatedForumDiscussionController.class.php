@@ -7,9 +7,7 @@ class RelatedForumDiscussionController extends WikiaController {
 
 	public function index() {
 
-		$messages = $this->getData($this->app->wg->Title->getArticleId());
-
-		unset($messages['lastupdate']);
+		$this->messages = $this->getVal( 'messages' );
 
 		// loading assets in Monobook that would normally load in oasis
 		if($this->app->checkSkin('monobook')) {
@@ -18,36 +16,18 @@ class RelatedForumDiscussionController extends WikiaController {
 			$this->response->addAsset( 'extensions/wikia/Forum/js/RelatedForumDiscussion.js' );
 		}
 
-		$content = '';
+		$title = $this->getContext()->getTitle();
+		$topicTitle = Title::newFromText( $title->getPrefixedText(), NS_WIKIA_FORUM_TOPIC_BOARD );
 
-		// don't render anything if there are no discussions for this article
-		if(empty($messages)) {
-			$content = $this->app->renderView( "RelatedForumDiscussion", "zeroState" );
-		} else {
-			$content = $this->app->renderView( "RelatedForumDiscussion", "relatedForumDiscussion", array('messages' => $messages) );
-		}
-
-		$this->content = $content;
 		// common data
-		$this->sectionHeading = wfMessage( 'forum-related-discussion-heading', $this->wg->Title->getText() )->escaped();
+		$this->sectionHeading = wfMessage( 'forum-related-discussion-heading', $title->getText() )->escaped();
 		$this->newPostButton = wfMessage( 'forum-related-discussion-new-post-button' )->escaped();
-		$topicTitle = Title::newFromText( $this->wg->Title->getPrefixedText(), NS_WIKIA_FORUM_TOPIC_BOARD );
 		$this->newPostUrl = $topicTitle->getFullUrl('openEditor=1');
-		$this->newPostTooltip = wfMessage( 'forum-related-discussion-new-post-tooltip', $this->wg->Title->getText() )->escaped();
+		$this->newPostTooltip = wfMessage( 'forum-related-discussion-new-post-tooltip', $title->getText() )->escaped();
 		$this->blankImgUrl = wfBlankImgUrl();
-	}
 
-	public function relatedForumDiscussion() {
-		$this->messages = $this->getVal('messages');
-
-		// set template data
-		$topicTitle = Title::newFromText( $this->wg->Title->getPrefixedText(), NS_WIKIA_FORUM_TOPIC_BOARD );
 		$this->seeMoreUrl = $topicTitle->getFullUrl();
 		$this->seeMoreText = wfMessage( 'forum-related-discussion-see-more' )->escaped();
-	}
-
-	public function zeroState() {
-		$this->creative = wfMessage( 'forum-related-discussion-zero-state-creative' )->parse();
 	}
 
 	public function checkData() {
@@ -59,7 +39,7 @@ class RelatedForumDiscussionController extends WikiaController {
 			return;
 		}
 
-		$messages = $this->getData($articleId);
+		$messages = $this->app->sendRequest( 'RelatedForumDiscussion', 'getData', array( 'articleId' => $articleId ) )->getData()['data'];
 
 		$timediff = time() - $messages['lastupdate'];
 
@@ -70,7 +50,7 @@ class RelatedForumDiscussionController extends WikiaController {
 
 		if($timediff < 24*60*60) {
 			$this->replace = true;
-			$this->html = $this->app->renderView( "RelatedForumDiscussion", "relatedForumDiscussion", array('messages' => $messages) );
+			$this->html = $this->app->renderView( "RelatedForumDiscussion", "index", array( 'messages' => $messages ) );
 		} else {
 			$this->replace = false;
 			$this->html = '';
@@ -95,11 +75,12 @@ class RelatedForumDiscussionController extends WikiaController {
 		RelatedForumDiscussionController::purgeMethodVariants('checkData', $requestsParams);
 	}
 
-	private function getData($id) {
-		$key = wfMemcKey( __CLASS__, 'getData', $id );
-		return WikiaDataAccess::cache( $key, 24*60*60, function() use ($id) {
+	public function getData() {
+		$articleId = $this->getVal( 'articleId' );
+		$key = wfMemcKey( __CLASS__, 'getData', $articleId );
+		$this->data = WikiaDataAccess::cache( $key, 24*60*60, function() use ( $articleId ) {
 			$wlp = new WallRelatedPages();
-			$messages = $wlp->getArticlesRelatedMessgesSnippet($id, 2, 2 );
+			$messages = $wlp->getArticlesRelatedMessgesSnippet( $articleId, 2, 2 );
 			return $messages;
 		});
 	}

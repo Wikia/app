@@ -337,14 +337,22 @@ class ForumHooksHelper {
 	 * Display Related Discussion (Forum posts) in bottom of article
 	 */
 	static public function onOutputPageBeforeHTML( OutputPage $out, &$text ) {
-		$app = F::App();
-		if ( $out->isArticle() && $app->wg->Title->exists()
-			&& $app->wg->Title->getNamespace() == NS_MAIN && !Wikia::isMainPage()
-			&& $app->wg->Request->getVal( 'diff' ) === null
-			&& $app->wg->Request->getVal( 'action' ) !== 'render'
+		$app = F::app();
+		$title = $out->getTitle();
+		if ( $out->isArticle()
+			&& $title->exists()
+			&& $title->getNamespace() == NS_MAIN
+			&& !$title->isMainPage()
+			&& $out->getRequest()->getVal( 'diff' ) === null
+			&& $out->getRequest()->getVal( 'action' ) !== 'render'
 			&& !( $app->checkSkin( 'wikiamobile' ) )
 		) {
-			$text .= $app->renderView( 'RelatedForumDiscussionController', 'index');
+			// VOLDEV-46: Omit zero-state, only render if there are related forum threads
+			$messages = $app->sendRequest( 'RelatedForumDiscussion', 'getData', array( 'articleId' => $title->getArticleId() ) )->getData()['data'];
+			unset( $messages['lastupdate'] );
+			if ( !empty( $messages ) ) {
+				$text .= $app->renderView( 'RelatedForumDiscussionController', 'index', array( 'messages' => $messages ) );
+			}
 		}
 		return true;
 	}
