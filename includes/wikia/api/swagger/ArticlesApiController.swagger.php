@@ -389,7 +389,7 @@ use Swagger\Annotations as SWG;
  * 		required="true",
  * 		description="Common URL prefix for relative URLs"
  * 	)
- * 
+ *
  * @SWG\Model( id="UnexpandedArticleResultSet" )
  * 	@SWG\Property(
  * 		name="items",
@@ -418,7 +418,116 @@ use Swagger\Annotations as SWG;
  * 		required="true",
  * 		description="Common URL prefix for relative URLs"
  * 	)
- * 
+ *
+ *
+ *  @SWG\Model( id="UnexpandedMostLinkedResultSet" )
+ * 	@SWG\Property(
+ * 		name="items",
+ * 		required="true",
+ * 		type="Array",
+ * 		items="$ref:UnexpandedMostLinked",
+ * 		description="Standard container name for element collection (list)"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="basepath",
+ * 		type="string",
+ * 		required="true",
+ * 		description="Common URL prefix for relative URLs"
+ * 	)
+ *
+ * 	@SWG\Model( id="ExpandedMostLinkedResultSet" )
+ * 	@SWG\Property(
+ * 		name="items",
+ * 		required="true",
+ * 		type="Array",
+ * 		items="$ref:ExpandedMostLinked",
+ * 		description="Standard container name for element collection (list)"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="basepath",
+ * 		type="string",
+ * 		required="true",
+ * 		description="Common URL prefix for relative URLs"
+ * 	)
+ *
+ *
+ *   @SWG\Model( id="UnexpandedMostLinked" )
+ * 	@SWG\Property(
+ * 		name="id",
+ * 		type="int",
+ * 		required="true",
+ * 		description="An internal identification number for Article"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="title",
+ * 		type="string",
+ * 		required="true",
+ * 		description="The title of the article"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="url",
+ * 		type="string",
+ * 		required="true",
+ * 		description="The relative URL of the Article. Absolute URL: obtained from combining relative URL with basepath attribute from response."
+ * 	)
+ * 	@SWG\Property(
+ * 		name="ns",
+ * 		type="int",
+ * 		required="true",
+ * 		description="The namespace value of the given article"
+ * 	)
+ *
+ * @SWG\Model( id="ExpandedMostLinked" )
+ * 	@SWG\Property(
+ * 		name="id",
+ * 		type="int",
+ * 		required="true",
+ * 		description="An internal identification number for Article"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="title",
+ * 		type="string",
+ * 		required="true",
+ * 		description="The title of the article"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="url",
+ * 		type="string",
+ * 		required="true",
+ * 		description="The relative URL of the Article. Absolute URL: obtained from combining relative URL with basepath attribute from response."
+ * 	)
+ * 	@SWG\Property(
+ * 		name="ns",
+ * 		type="int",
+ * 		required="true",
+ * 		description="The namespace value of the given article"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="revision",
+ * 		type="Revision",
+ * 		required="true",
+ * 		description="The latest revision for this article"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="comments",
+ * 		type="int",
+ * 		required="true",
+ * 		description="Number of comments on this article"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="type",
+ * 		type="string",
+ * 		required="true",
+ * 		description="The functional type of the document (e.g. article, file, category)"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="abstract",
+ * 		type="string",
+ * 		required="true",
+ * 		description="A snippet of text from the beginning of the article"
+ * 	)
+ *
+ *
  * @SWG\Api(
  * 	path="/api/v1/Articles/Top",
  * 	description="Get the most viewed articles on this wiki",
@@ -528,7 +637,45 @@ use Swagger\Annotations as SWG;
  * 	)
  * )
  * 
- * 
+ *
+ * @SWG\Api(
+ * 	path="/api/v1/Articles/MostLinked",
+ * 	description="Get the most linked articles on this wiki",
+ * 	@SWG\Operations(
+ * 		@SWG\Operation(
+ * 			httpMethod="GET",
+ * 			summary="Get the most linked articles on this wiki",
+ * 			nickname="getTop",
+ * 			responseClass="UnexpandedMostLinkedResultSet",
+ * 			@SWG\ErrorResponses(
+ * 				@SWG\ErrorResponse( code="400", reason="Invalid parameter or category" ),
+ * 				@SWG\ErrorResponse( code="404", reason="Results not found" )
+ * 			),
+ * 			@SWG\Parameters(
+ * 			)
+ * 		)
+ * 	)
+ * )
+ *
+ *  @SWG\Api(
+ * 	path="/api/v1/Articles/MostLinked?expand=1",
+ * 	description="Get the most linked articles on this wiki (expanded results)",
+ * 	@SWG\Operations(
+ * 		@SWG\Operation(
+ * 			httpMethod="GET",
+ * 			summary="Get the most linked articles on this wiki (expanded results)",
+ * 			nickname="getTop",
+ * 			responseClass="ExpandedMostLinkedResultSet",
+ * 			@SWG\ErrorResponses(
+ * 				@SWG\ErrorResponse( code="400", reason="Invalid parameter or category" ),
+ * 				@SWG\ErrorResponse( code="404", reason="Results not found" )
+ * 			),
+ * 			@SWG\Parameters(
+ * 			)
+ * 		)
+ * 	)
+ * )
+ *
  * @SWG\Api(
  * 	path="/api/v1/Articles/TopByHub",
  * 	description="View the most popular wikis in a given hub. Available only on the www.wikia.com main domain.",

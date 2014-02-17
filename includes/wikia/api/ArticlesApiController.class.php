@@ -191,6 +191,38 @@ class ArticlesApiController extends WikiaApiController {
 		wfProfileOut( __METHOD__ );
 	}
 
+	public function getMostLinked() {
+
+		$expand = $this->request->getBool( static::PARAMETER_EXPAND, false );
+		$nameSpace = NS_MAIN;
+
+		$wikiService = new WikiService();
+		$mostLinked = $wikiService->getMostLinkedPages();
+		$mostLinkedOutput = [];
+
+		if ( $expand ) {
+			$params = $this->getDetailsParams();
+			$mostLinkedOutput = $this->getArticlesDetails( array_keys( $mostLinked ), $params[ 'titleKeys' ], $params[ 'width' ], $params[ 'height' ], $params[ 'length' ], true );
+		} else {
+			foreach ( $mostLinked as $item ) {
+					$title = Title::newFromText( $item['page_title'], $nameSpace );
+					if ( !empty($title) && $title instanceof Title && !$title->isMainPage() ) {
+						$mostLinkedOutput[] = [
+							'id' => $item['page_id'],
+							'title' => $item['page_title'],
+							'url' => $title->getLocalURL(),
+							'ns' => $nameSpace
+						];
+					}
+			}
+		}
+
+		$this->response->setVal( 'basepath', $this->wg->Server );
+		$this->response->setVal( 'items', $mostLinkedOutput );
+
+		$this->response->setCacheValidity(self::CLIENT_CACHE_VALIDITY);
+	}
+
 	/**
 	 * Get the top articles by pageviews for a hub optionally filtering by namespace and/or language,
 	 * available only on the www.wikia.com main domain (see examples)
