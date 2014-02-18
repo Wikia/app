@@ -36,7 +36,7 @@ class Base
 			'headline_txt' => 300,
 			'description' => 250,
 			'categories' => 50,
-			'articles' => 75,
+			'articles_i' => 75,
 			'top_categories' => 150,
 			'top_articles' => 200,
 			'sitename_txt' => 500

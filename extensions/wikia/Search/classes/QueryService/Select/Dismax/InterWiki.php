@@ -119,10 +119,7 @@ class InterWiki extends AbstractDismax
 		if( $this->getConfig()->getCommercialUse() ) {
 			$filterQueries[] = "-( commercial_use_allowed_b:false )";
 		}
-		$hub = $this->getConfig()->getHub();
-		if (! empty( $hub ) ) {
-			$filterQueries[] = Utilities::valueForField( 'hub_s', $hub );
-		}
+		//removed hub query from filter (PLA-1166)
 		return implode( ' AND ', $filterQueries );
 	}
 	
@@ -139,22 +136,30 @@ class InterWiki extends AbstractDismax
 			$widQueries[] = Utilities::valueForField( 'wid',  $excludedWikiId, array( 'negate' => true ) );
 		}
 		$queryClauses = [];
-		$langs = $this->config->getLanguageCode();
-		if ( is_array( $langs ) ) {
-			$langsQuery = [];
-			foreach( $langs as $lang ) {
-				$langsQuery[] = 'lang_s:'.$lang;
+		$config = $this->getConfig();
+		$queryClauses = $this->generateArrayQuery( $queryClauses, 'lang_s',  $config->getLanguageCode() );
+		$queryClauses = $this->generateArrayQuery( $queryClauses, 'hub_s',  $config->getHub() );
+		return implode( ' AND ', $queryClauses );
+	}
+
+	protected function generateArrayQuery( $queryArray, $name, $values  ) {
+		$q = '';
+		if ( !empty( $values ) ) {
+			if ( !is_array( $values ) ) {
+				$values = [ $values ];
 			}
-			if ( !empty( $langsQuery ) ) {
-				$queryClauses = [ sprintf( '(%s)', implode( ' OR ', $langsQuery ) ) ];
+
+			foreach ( $values as $item ) {
+				if ( !$item ) {
+					continue;
+				}
+				$q .= ( $q ? ' OR ' : '' ) . Utilities::valueForField( $name, $item );
 			}
-		} else {
-			$queryClauses = [ 'lang_s:'.$langs ];
+
+			if ( $q ) {
+				$queryArray[] =   ' ( ' . $q . ' ) ';
+			}
 		}
-		$hub = $this->config->getHub();
-		if (! empty( $hub ) ) {
-			$queryClauses[] = Utilities::valueForField( 'hub', $hub );
-		}
-		return sprintf( '%s', implode( ' AND ', $queryClauses ) );
+		return $queryArray;
 	}
 }
