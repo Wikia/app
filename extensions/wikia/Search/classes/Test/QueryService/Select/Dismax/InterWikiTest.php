@@ -191,7 +191,7 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 	 * @covers Wikia\Search\QueryService\Select\Dismax\InterWiki::getQueryClausesString
 	 */
 	public function testGetQueryClausesString() {
-		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getLanguageCode' ) );
+		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getLanguageCode','getHub' ) );
 		$mockService = $this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
 		                      ->disableOriginalConstructor()
 		                      ->setMethods( array( 'getGlobal', 'getWikiId' ) )
@@ -199,25 +199,44 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $mockConfig, 'service' => $mockService ) );
 		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\Dismax\InterWiki' )
 							->setConstructorArgs( array( $dc ) )
-							->setMethods( [ 'generateHubQuery' ] )
+							->setMethods( [ 'getConfig', 'generateArrayQuery' ] )
 							->getMock();
 
 		$mockConfig
-		    ->expects( $this->at( 0 ) )
+		    ->expects( $this->at(0) )
 		    ->method ( 'getLanguageCode' )
-		    ->will   ( $this->returnValue( 'en' ) )
+		    ->will   ( $this->returnValue( 'x1' ) )
+		;
+		$mockConfig
+			->expects( $this->at(1) )
+			->method ( 'getHub' )
+			->will   ( $this->returnValue( 'x2' ) )
 		;
 		$mockService
-		    ->expects( $this->any() )
-		    ->method ( 'getGlobal' )
-		    ->with   ( 'CrossWikiaSearchExcludedWikis' )
-		    ->will   ( $this->returnValue( array( 123, 321 ) ) )
+			->expects( $this->any() )
+			->method ( 'getGlobal' )
+			->with   ( 'CrossWikiaSearchExcludedWikis' )
+			->will   ( $this->returnValue( array( 123, 321 ) ) )
 		;
 		$mockSelect
-			->expects( $this->once() )
-			->method( 'generateHubQuery' )
+			->expects( $this->at(0) )
+			->method ( 'getConfig' )
+			->will   ( $this->returnValue( $mockConfig ) )
+			;
+		$mockSelect
+			->expects( $this->at(1) )
+			->method( 'generateArrayQuery' )
 			->will( $this->returnCallback(  function( $param1 ) {
-						$param1[] = ' ( (hub_s:Entertainment) OR (hub_s:Gaming) ) ';
+						$param1[] = ' ( (aa:AA) OR (bb:BB) ) ';
+						return $param1;
+					}
+				)
+			);
+		$mockSelect
+			->expects( $this->at(2) )
+			->method( 'generateArrayQuery' )
+			->will( $this->returnCallback(  function( $param1 ) {
+						$param1[] = ' ( (cc:CC) OR (dd:DD) ) ';
 						return $param1;
 					}
 				)
@@ -232,47 +251,26 @@ class InterWikiTest extends Wikia\Search\Test\BaseTest {
 		$method->setAccessible( true );
 
 		$this->assertEquals(
-				'lang_s:en AND  ( (hub_s:Entertainment) OR (hub_s:Gaming) ) ',
-				$method->invoke( $mockSelect )
-		);
-
-		$mockConfig
-			->expects( $this->at(0) )
-			->method ( 'getLanguageCode' )
-			->will   ( $this->returnValue( ['en', 'de'] ) )
-		;
-		$this->assertEquals(
-			'(lang_s:en OR lang_s:de) AND (hub:Entertainment)',
+			" ( (aa:AA) OR (bb:BB) )  AND  ( (cc:CC) OR (dd:DD) ) ",
 			$method->invoke( $mockSelect )
 		);
-
 	}	
 	
 
 	/**
-	 * @covers Wikia\Search\QueryService\Select\Dismax\InterWiki::generateHubQuery
+	 * @covers Wikia\Search\QueryService\Select\Dismax\InterWiki::generateArrayQuery
 	 */
-	public function testGenerateHubQuery() {
-		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getHub', 'getLanguageCode' ) );
-
-		$mockConfig
-			->expects( $this->once() )
-			->method( 'getHub' )
-			->will( $this->returnValue( [ 'Entertainment', 'Gaming' ] ) );
+	public function testGenerateArrayQuery() {
 
 		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\Dismax\InterWiki' )
 			->disableOriginalConstructor()
-			->setMethods( [ 'generateHubQuery', 'getConfig' ] )
+			->setMethods( [ 'generateArrayQuery' ] )
 			->getMock();
 
-		$mockSelect->expects( $this->once() )
-			->method( 'getConfig' )
-			->will( $this->returnValue( $mockConfig ) );
-
 		$arr = [ ];
-		$method = new ReflectionMethod( 'Wikia\Search\QueryService\Select\Dismax\InterWiki', 'generateHubQuery' );
+		$method = new ReflectionMethod( 'Wikia\Search\QueryService\Select\Dismax\InterWiki', 'generateArrayQuery' );
 		$method->setAccessible( true );
-		$this->assertEquals( [ ' ( (hub_s:Entertainment) OR (hub_s:Gaming) ) ' ], $method->invokeArgs( $mockSelect, [ $arr ] ) );
+		$this->assertEquals( [ ' ( (hub_s:Entertainment) OR (hub_s:Gaming) ) ' ], $method->invokeArgs( $mockSelect, [ $arr, 'hub_s', ['Entertainment', 'Gaming'] ] ) );
 	}
 
 }

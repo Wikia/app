@@ -172,7 +172,7 @@ use Swagger\Annotations as SWG;
  * 		required="true",
  * 		description="The namespace value of the given article"
  * 	)
- * 
+ *
  * @SWG\Model( id="ExpandedArticle" )
  * 	@SWG\Property(
  * 		name="id",
@@ -232,7 +232,7 @@ use Swagger\Annotations as SWG;
  * 		type="OriginalDimension",
  * 		description="The original dimensions of the thumbnail for the article, if available"
  * 	)
- * 
+ *
  * @SWG\Model( id="Revision" )
  * 	@SWG\Property(
  * 		name="id",
@@ -258,7 +258,7 @@ use Swagger\Annotations as SWG;
  * 		required="true",
  * 		description="The Unix timestamp (in seconds) that the revision was made"
  * 	)
- * 
+ *
  * @SWG\Model( id="OriginalDimension" )
  * 	@SWG\Property(
  * 		name="width",
@@ -636,7 +636,7 @@ use Swagger\Annotations as SWG;
  * 		)
  * 	)
  * )
- * 
+ *
  *
  * @SWG\Api(
  * 	path="/api/v1/Articles/MostLinked",
@@ -650,8 +650,6 @@ use Swagger\Annotations as SWG;
  * 			@SWG\ErrorResponses(
  * 				@SWG\ErrorResponse( code="400", reason="Invalid parameter or category" ),
  * 				@SWG\ErrorResponse( code="404", reason="Results not found" )
- * 			),
- * 			@SWG\Parameters(
  * 			)
  * 		)
  * 	)
@@ -669,8 +667,6 @@ use Swagger\Annotations as SWG;
  * 			@SWG\ErrorResponses(
  * 				@SWG\ErrorResponse( code="400", reason="Invalid parameter or category" ),
  * 				@SWG\ErrorResponse( code="404", reason="Results not found" )
- * 			),
- * 			@SWG\Parameters(
  * 			)
  * 		)
  * 	)
@@ -721,8 +717,8 @@ use Swagger\Annotations as SWG;
  * 		)
  * 	)
  * )
- * 
- * 
+ *
+ *
  * @SWG\Api(
  * 	path="/api/v1/Articles/List",
  * 	description="Get articles list in alphabetical order",
@@ -831,7 +827,7 @@ use Swagger\Annotations as SWG;
  * 		)
  * 	)
  * )
- * 
+ *
  * @SWG\Api(
  * 		path="/api/v1/Articles/Details",
  * 		description="Get top articles for the current wiki",
