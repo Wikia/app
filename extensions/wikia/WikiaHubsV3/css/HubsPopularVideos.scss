@@ -56,7 +56,7 @@ $color-inactive-button: darken($color-secondary-button, 50%);
 	.title-wraper {
 		display: block;
 		width: 100%;
-		border-bottom: 4px solid #D8E3E7;
+		border-bottom: 4px solid $color-wikiahome-hubcolor;
 		line-height: 30px;
 	}
 	.WikiaMediaCarousel {
@@ -74,14 +74,14 @@ $color-inactive-button: darken($color-secondary-button, 50%);
 			margin-top: 10px;
 			left: 623px;
 			.chevron {
-				border-color: transparent transparent transparent $color-buttons;
+				border-color: transparent transparent transparent  $color-wikiahome-hubcolor;
 				border-width: 11px;
 				margin: 35px 4px;
 			}
 			&.left {
 				left: 0;
 				.chevron {
-					border-color: transparent $color-buttons transparent transparent;
+					border-color: transparent $color-wikiahome-hubcolor transparent transparent;
 					margin: 35px -9px;
 				}
 				&.disabled {

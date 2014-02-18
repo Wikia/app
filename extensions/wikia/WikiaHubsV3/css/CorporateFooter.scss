@@ -3,7 +3,9 @@
 		margin-top: 20px;
 		padding: 30px 0 95px 0;
 		border-top: 5px solid #e6e7e8;
-	
+		a .wikia-button {
+			color: $whitecolor;
+		}
 		.grid-1.alpha.cell {
 			margin: 0 5px;
 			font-family: Helvetica,sans-serif;

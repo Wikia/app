@@ -16,8 +16,6 @@ class WikiaHubsV3Hooks {
 		$dbKeyName = $title->getDBKey();
 		$dbKeyNameSplit = explode('/', $dbKeyName);
 
-		//var_dump($model->isHubsPage());die;
-
 		if( $model->isHubsPage() && !self::isOffShotPage($title) ) {
 			$hubTimestamp = $model->getTimestampFromSplitDbKey($dbKeyNameSplit);
 
@@ -28,12 +26,9 @@ class WikiaHubsV3Hooks {
 		}
 
 		if( $model->isHubsPage() && self::isOffShotPage($title) ) {
-			$hubsModel = new WikiaHubsModel();
-			$canonicalHubName = $hubsModel->getCanonicalVerticalName($model->getHubPageId($dbKeyNameSplit[0]));
-			OasisController::addBodyClass('WikiaHubs' . mb_ereg_replace(' ', '', $canonicalHubName));
+			OasisController::addBodyClass('WikiaHubPage');
 
 			$am = AssetsManager::getInstance();
-			$app->wg->Out->addStyle($am->getSassCommonURL('extensions/wikia/WikiaHubsV3/css/WikiaHubsV1/WikiaHubs.scss'));
 			$app->wg->Out->addStyle($am->getSassCommonURL('extensions/wikia/WikiaHubsV3/css/WikiaHubsV3.scss'));
 
 		}

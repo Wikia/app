@@ -2,16 +2,20 @@
 @import "../../../../skins/oasis/css/mixins/clearfix";
 @import "../../../../skins/oasis/css/mixins/gradient";
 @import "../../../../skins/oasis/css/mixins/opacity";
+@import "Colors";
 @import 'Explore';
 @import 'HubsPopularVideos';
 @import 'FeaturedVideo';
 @import 'WikitextModule';
 @import 'CorporateFooter';
-@import 'ColorsPerVertical';
 @import 'SponsoredBox';
 @import 'WamScore';
 
 $wikiahubs-line-height: 16px;
+
+.WikiaArticleCategories {
+	display: none;
+}
 
 .WikiaPageHeader p {
 	display: none;
@@ -20,6 +24,10 @@ $wikiahubs-line-height: 16px;
 .WikiaMainContent {
 	margin-top: 20px;
 	padding-bottom: 70px;
+}
+
+.start-a-wiki {
+	border-left: 1px solid mix($color-header-text, $color-header, 20%);
 }
 
 .WikiaHubs {

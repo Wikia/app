@@ -78,6 +78,21 @@
 		font-size: 16px;
 	}
 }
+
+.WikiaHubsPage {
+	&.wkMobile {
+		.WikiaHubs {
+			h2 {
+				border-left-color: $color-wikiahome-hubcolor;
+				border-bottom: 0;
+			}
+			.title-wrapper {
+				border-bottom: 0;
+			}
+		}
+	}
+}
+
 #wkMainCntFtr {
 	display: none;
 }

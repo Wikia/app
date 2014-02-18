@@ -33,12 +33,14 @@
 		clear: both;
 		padding-top: 10px;
 		.title {
+			border-bottom: 4px solid $color-wikiahome-hubcolor;
 			height: 30px;
 			a {
 				float: right;
 				margin-top: 8px;
 			}
 			img {
+				background-color: $color-wikiahome-hubcolor;
 				background-image: url("/extensions/wikia/WikiaHubsV3/images/headicon.png"); /* base64 */
 				display: block;
 				float: left;
@@ -72,6 +74,7 @@
 			}
 			.rank, .score {
 				font-weight: bold;
+				padding-left: 3px;
 			}
 			.score {
 				img {

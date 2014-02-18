@@ -2,6 +2,7 @@
 
 .wikiahubs-newstabs {
 	.title-wrapper {
+		border-bottom: 4px solid $color-wikiahome-hubcolor;
 		width: 100%;
 		@include clearfix;
 		float: left;
