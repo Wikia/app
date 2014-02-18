@@ -39,7 +39,7 @@ require( ['throbber', 'toast', 'modal', 'track', 'JSMessages', 'lazyload', 'jque
 		view = msg( 'wikiamobile-article-comments-view' ),
 		replies = msg( 'wikiamobile-article-comments-replies' ),
 		postComm = d.getElementsByClassName( 'commFrm' )[0].cloneNode( true),
-		textArea = '.commFrm textarea';
+		textAreaSel = '.commFrm textarea';
 
 	postComm.getElementsByClassName( 'commText' )[0].setAttribute( 'placeholder', postReply );
 
@@ -285,14 +285,14 @@ require( ['throbber', 'toast', 'modal', 'track', 'JSMessages', 'lazyload', 'jque
 		} );
 
 	$( d.body )
-		.on( clickEvent, textArea, function ( event ) {
+		.on( clickEvent, textAreaSel, function ( event ) {
 			if ( !loginRequired( event ) ) {
 				//scroll text area to top of the screen with small padding
 				window.scrollTo( 0, $( event.target ).offset().top - 5 );
 				$( '#wkTOCHandle' ).addClass( 'hide' );
 			}
 		} )
-		.on( 'blur', textArea, function ( event ) {
+		.on( 'blur', textAreaSel, function ( event ) {
 			$( '#wkTOCHandle' ).removeClass( 'hide' );
 		} )
 		.on( 'submit', '.commFrm', post );
