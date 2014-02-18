@@ -79,14 +79,14 @@ class WikiDetailsService extends WikiService {
 		$img = wfFindFile( $imageName );
 		if ( $img instanceof WikiaLocalFile ) {
 			//found on en-corporate wiki
+			$imgWidth = $img->getWidth();
+			$imgHeight = $img->getHeight();
 			if ( $crop ) {
 				//get original image if no cropping
 				$imageServing = new ImageServing( null, $width, $height );
 				$imgUrl = $imageServing->getUrl( $img, $width, $height );
 			} else {
 				$imgUrl = $img->getFullUrl();
-				$imgWidth = $img->getWidth();
-				$imgHeight = $img->getHeight();
 			}
 		} else {
 			$f = $this->findGlobalFileImage( $imageName, $wikiInfo[ 'lang' ], $wikiInfo[ 'id' ] );
