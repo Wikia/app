@@ -3962,6 +3962,13 @@ class Parser {
 	 * @return Mixed|String
 	 */
 	function fetchScaryTemplateMaybeFromCache( $url ) {
+		# wikia start
+		global $wgDisableScaryTemplate;
+		if ( !empty( $wgDisableScaryTemplate )  ) {
+			return "Scary templates transclusion disabled for <$url>";
+		}
+		# wikia end
+
 		global $wgTranscludeCacheExpiry;
 		$dbr = wfGetDB( DB_SLAVE );
 		$tsCond = $dbr->timestamp( time() - $wgTranscludeCacheExpiry );
