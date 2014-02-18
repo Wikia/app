@@ -19,7 +19,6 @@
 	width: 1030px;
 	margin: 0px auto;
 	position: relative;
-	z-index: 30;
 }
 #ad-fullbanner2-outer {
 	position: relative;
@@ -32,7 +31,6 @@
 }
 #ad-skyscraper1-outer {
 	position: absolute;
-	z-index: 1;
 	right: -170px;
 	width: 160px;
 }
