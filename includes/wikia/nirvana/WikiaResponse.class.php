@@ -283,6 +283,9 @@ class WikiaResponse {
 	 * WikiaResponse::CACHE_TARGET_BROWSER and WikiaResponse::CACHE_TARGET_VARNISH
 	 */
 	public function setCacheValidity( $expiryTime = null, $maxAge = null, Array $targets = array() ){
+		/* COMMENT TO REMEMBER WHEN MERGING WITH DEV:
+			This function has changed. Look for all calls and fix them!
+		*/
 		$this->isCaching = true;
 		$targetBrowser = ( in_array( self::CACHE_TARGET_BROWSER, $targets ) );
 		$targetVarnish = ( in_array( self::CACHE_TARGET_VARNISH, $targets ) );

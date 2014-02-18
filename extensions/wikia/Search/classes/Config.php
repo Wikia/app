@@ -173,6 +173,13 @@ class Config
 	protected $commercialUse;
 
 	/**
+	 *  main page policy (true - must be main page, false- must not be mainpage, null - don't check)
+	 * @var bool
+	 */
+	protected $mainPage;
+
+
+	/**
 	 * Minimum article (filter)
 	 * @var int
 	 */
@@ -371,7 +378,6 @@ class Config
 	public function setQuery( $query ) {
 
 		$this->query = new Query( $query );
-
 		$namespace = $this->query->getNamespaceId();
 		if ( $namespace !== null ) {
 			$namespaces = $this->getNamespaces();
@@ -1267,5 +1273,22 @@ class Config
 	 */
 	public function getCommercialUse() {
 		return $this->commercialUse;
+	}
+
+	/**
+	 * Set main page policy (true - must be main page, false- must not be mainpage, null - don't check)
+	 * @param boolean $mainPage
+	 */
+	public function setMainPage($mainPage) {
+		$this->mainPage = $mainPage;
+		return $this;
+	}
+
+	/**
+	 * get main page policy
+	 * @return boolean
+	 */
+	public function getMainPage() {
+		return $this->mainPage;
 	}
 }
