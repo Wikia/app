@@ -18,16 +18,16 @@
 			},
 			render: function() {
 				var oText = this.$el.text(),
-						words = oText.split( ' ' ),
-						len = words.length,
-						i,
-						$spans,
-						lineCount = 0,
-						maxLines = this.settings.maxLines,
-						$tar,
-						spanTop = null,
-						currSpanTop,
-						self;
+					words = oText.split( ' ' ),
+					len = words.length,
+					i,
+					$spans,
+					lineCount = 0,
+					maxLines = this.settings.maxLines,
+					$tar,
+					spanTop = null,
+					currSpanTop,
+					self;
 
 				self = this;
 
