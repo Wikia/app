@@ -23,12 +23,15 @@ var WikiaFullGptHelper = function (log, window, document, adLogicPageLevelParams
 		dataAttribs = {},
 		googletag;
 
-	pageLevelParams.src = 'gpt';
+	function init(paramSlotMap, src) {
 
-	function init(paramSlotMap, remnantCall) {
-		for (var name in paramSlotMap) {
+		var name,
+			isRemnant = src === 'rh' || src === 'rh_mobile';
+
+		for (name in paramSlotMap) {
 			if (paramSlotMap.hasOwnProperty(name)) {
-				slotMap[name + (remnantCall ? '.remnant' : '')] = paramSlotMap[name];
+				paramSlotMap[name].src = src;
+				slotMap[name + (isRemnant ? '.remnant' : '')] = paramSlotMap[name];
 			}
 		}
 	}
@@ -184,7 +187,8 @@ var WikiaFullGptHelper = function (log, window, document, adLogicPageLevelParams
 						// Per-slot targeting keys
 						slotParams = {
 							pos: slotnameReal,
-							loc: slotItem.loc
+							loc: slotItem.loc,
+							src: slotItem.src
 						};
 						for (name in slotParams) {
 							if (slotParams.hasOwnProperty(name)) {

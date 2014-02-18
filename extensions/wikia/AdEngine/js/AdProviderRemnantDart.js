@@ -24,7 +24,7 @@ var AdProviderRemnantDart = function (adTracker, log, slotTweaker, wikiaGpt) {
 			'WIKIA_BAR_BOXAD_1': {'size': '300x250', 'tile': 4, 'loc': 'bottom'}
 		};
 
-	wikiaGpt.init(slotMap, true);
+	wikiaGpt.init(slotMap, 'rh');
 
 	function isAmznOnPage( slotname, slot ) {
 		log( ['isAmznOnPage', slotname], 'debug', logGroup );
