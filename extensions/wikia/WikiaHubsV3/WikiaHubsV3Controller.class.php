@@ -13,6 +13,8 @@ class WikiaHubsV3Controller extends WikiaController {
 	const CACHE_VALIDITY_BROWSER = 86400;
 	const CACHE_VALIDITY_VARNISH = 86400;
 
+	const HUBS_VERSION = 3;
+
 	/**
 	 * @var WikiaHubsModel
 	 */
@@ -25,6 +27,7 @@ class WikiaHubsV3Controller extends WikiaController {
 
 	protected $format;
 	protected $verticalId;
+	protected $cityId;
 
 	public function __construct() {
 		parent::__construct('WikiaHubsV3', '', false);
@@ -97,7 +100,9 @@ class WikiaHubsV3Controller extends WikiaController {
 			$moduleName,
 			$this->wg->ContLang->getCode(),
 			MarketingToolboxModel::SECTION_HUBS,
-			$this->verticalId
+			$this->verticalId,
+			$this->cityId,
+			self::HUBS_VERSION
 		);
 
 		$moduleData = $module->loadData( $toolboxModel, $params );
@@ -164,8 +169,9 @@ class WikiaHubsV3Controller extends WikiaController {
 
 	protected function initVertical() {
 		$this->verticalId = $this->getRequest()->getVal('verticalid', WikiFactoryHub::CATEGORY_ID_GAMING);
-		$this->verticalName = $this->model->getVerticalNameById($this->wg->CityId);
-		$this->canonicalVerticalName = $this->model->getCanonicalVerticalNameById($this->wg->CityId);
+		$this->cityId = $this->wg->CityId;
+		$this->verticalName = $this->model->getVerticalNameById($this->cityId);
+		$this->canonicalVerticalName = $this->model->getCanonicalVerticalNameById($this->cityId);
 	}
 
 	protected function initModel() {
