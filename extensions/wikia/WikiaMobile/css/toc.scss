@@ -52,6 +52,10 @@ $width: 260px;
 	height: $handle-size;
 
 	border-radius: 3px 0 0 3px;
+
+	&.hide {
+		display: none;
+	}
 }
 
 .toc-list {
