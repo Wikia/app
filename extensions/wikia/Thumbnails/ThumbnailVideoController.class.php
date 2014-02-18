@@ -43,9 +43,9 @@ class ThumbnailVideoController extends WikiaController {
 	 * @responseParam array imgAttrs
 	 *	Keys:
 	 *		alt - alt for image
-	 *		data-src - source of image for lazy loading
 	 *		style - style for image
 	 *		itemprop - for RDF metadata
+	 * @responseParam string dataSrc - data-src attribute for image lazy loading
 	 * @responseParam string duration (HH:MM:SS)
 	 * @responseParam array durationAttrs
 	 *	Keys:
@@ -123,11 +123,6 @@ class ThumbnailVideoController extends WikiaController {
 		// get alt for img tag
 		$imgAttribs['alt'] = empty( $options['alt'] ) ? '' : $options['alt'];
 
-		// lazy loading
-		if ( !empty( $options['usePreloading'] ) ) {
-			$imgAttribs['data-src'] = $imgSrc;
-		}
-
 		// set valign for img tag
 		$imgAttribs['style'] = '';
 		if ( !empty( $options['valign'] ) ) {
@@ -178,6 +173,11 @@ class ThumbnailVideoController extends WikiaController {
 			}
 		}
 
+		// data-src attribute in case of lazy loading
+		if ( !empty( $options['usePreloading'] ) ) {
+			$this->dataSrc = $imgSrc;
+		}
+
 		// check fluid
 		if ( empty( $options[ 'fluid' ] ) ) {
 			$this->imgWidth = $width;
@@ -216,7 +216,8 @@ class ThumbnailVideoController extends WikiaController {
 
 	/**
 	 * Get attributes for mustache template
-	 * Note: wrap attributes in three curly braces to unescape html.
+	 * Don't use this for values that need to be escaped.
+	 * Wrap attributes in three curly braces so quote markes don't get escaped.
 	 * Ex: {{# attrs }}{{{ . }}} {{/ attrs }}
 	 * @param array $attrs [ array( key => value ) ]
 	 * @return array [ array( 'key="value"' ) ]
@@ -225,7 +226,7 @@ class ThumbnailVideoController extends WikiaController {
 		$attribs = [];
 		foreach ( $attrs as $key => $value ) {
 			$str = $key;
-			if ( $value ) {
+			if ( !empty( $value ) ) {
 				$str .= "=" . '"' . $value . '"';
 			}
 			$attribs[] = $str;
