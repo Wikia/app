@@ -319,7 +319,7 @@ class BodyController extends WikiaController {
 		// InfoBox - Testing
 		$this->wg->EnableInfoBoxTest = $wgEnableInfoBoxTest;
 		$this->isMainPage = WikiaPageType::isMainPage();
-		$this->isHubPage = HubService::isHubPage();
+		$this->isHubMainPage = HubService::isHubMainPage();
 
 		$this->displayHeaderButtons = true;
 
@@ -364,7 +364,7 @@ class BodyController extends WikiaController {
 				$this->headerModuleAction = 'Corporate';
 			}
 
-			if ( $this->isHubPage ) {
+			if ( $this->isHubMainPage ) {
 				$this->displayHeaderButtons = false;
 				$this->headerModuleAction = 'Hubs';
 			}

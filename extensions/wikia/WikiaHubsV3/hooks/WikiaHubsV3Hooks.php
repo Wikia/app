@@ -11,12 +11,14 @@ class WikiaHubsV3Hooks {
 		wfProfileIn(__METHOD__);
 		$app = F::app();
 
-		$model = new WikiaHubsV3HooksModel();
+		$isHubPage = HubService::isHubPage();
 
-		$dbKeyName = $title->getDBKey();
-		$dbKeyNameSplit = explode('/', $dbKeyName);
+		if( $isHubPage && !self::isOffShotPage($title) ) {
+			$model = new WikiaHubsV3HooksModel();
 
-		if( $model->isHubsPage() && !self::isOffShotPage($title) ) {
+			$dbKeyName = $title->getDBKey();
+			$dbKeyNameSplit = explode('/', $dbKeyName);
+
 			$hubTimestamp = $model->getTimestampFromSplitDbKey($dbKeyNameSplit);
 
 			if (!$app->wg->request->wasPosted()) {
@@ -25,7 +27,7 @@ class WikiaHubsV3Hooks {
 			}
 		}
 
-		if( $model->isHubsPage() && self::isOffShotPage($title) ) {
+		if( $isHubPage && self::isOffShotPage($title) ) {
 			OasisController::addBodyClass('WikiaHubPage');
 
 			$am = AssetsManager::getInstance();
@@ -68,7 +70,7 @@ class WikiaHubsV3Hooks {
 				$dbKeyNameSplit = explode('/', $dbKeyName);
 				$hubName = isset($dbKeyNameSplit[0]) ? $dbKeyNameSplit[0] : null;
 
-				if ( $model->isHubsPage($hubName) && isset($dbKeyNameSplit[1])) {
+				if ( HubService::isHubPage() && isset($dbKeyNameSplit[1])) {
 					$url = $model->getCanonicalHrefForHub($hubName, $url);
 				}
 			}
@@ -97,7 +99,7 @@ class WikiaHubsV3Hooks {
 			$model = new WikiaHubsV3HooksModel();
 			$hubName = isset($dbKeyNameSplit[0]) ? $dbKeyNameSplit[0] : null;
 
-			if( $model->isHubsPage($hubName) && self::isOffShotPage($title) ) {
+			if( HubService::isHubPage() && self::isOffShotPage($title) ) {
 				$parser->setHook('hubspopularvideos', array(new WikiaHubsParserHelper(), 'renderTag'));
 			}
 		}

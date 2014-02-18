@@ -132,7 +132,20 @@ class HubService extends Service {
 		return ( self::isCorporatePage() && self::getHubIdForCurrentPage() );
 	}
 
-	// For hubs v3
+	/**
+	 * Check if current page is hub v3 main page
+	 *
+	 * @return bool
+	 */
+	public static function isHubMainPage() {
+		return ( self::isHubPage() && WikiaPageType::isMainPage() );
+	}
+
+	/**
+	 * Check if current page is hub v3 page
+	 *
+	 * @return bool
+	 */
 	public static function isHubPage() {
 		return ( self::isCorporatePage() && F::app()->wg->EnableWikiaHubsV3Ext );
 	}

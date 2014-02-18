@@ -9,15 +9,6 @@
 
 class WikiaHubsV3HooksModel extends WikiaModel {
 	/**
-	 * @desc Uses $wgWikiaHubsPages array to find out if the page is a hub page
-	 *
-	 * @return bool
-	 */
-	public function isHubsPage() {
-		return $this->app->wg->EnableWikiaHubsV3Ext && WikiaPageType::isMainPage();
-	}
-
-	/**
 	 * @desc Uses flipped $wgWikiaHubsPages array to return comscore id of a hub page
 	 *
 	 * @param String $dbKeyName
