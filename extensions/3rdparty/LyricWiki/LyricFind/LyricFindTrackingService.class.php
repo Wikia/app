@@ -29,6 +29,22 @@ class LyricFindTrackingService extends WikiaService {
 	}
 
 	/**
+	 * Sometimes pages that were marked for removal, may no longer be banned (for instance,
+	 * a licensing deal was reached with rights-owners that didn't have an agreement previously).
+	 * In these cases, this function will change the page-property so that the page is no-longer
+	 * hidden.
+	 *
+	 * @param $pageId int article ID
+	 * @return bool result
+	 */
+	private function markLyricAsNotRemoved($pageId) {
+		$this->wf->SetWikiaPageProp(WPP_LYRICFIND_MARKED_FOR_REMOVAL, $pageId, 0);
+
+		self::log(__METHOD__, "marked page #{$pageId} as no longer removed");
+		return true;
+	}
+
+	/**
 	 * Artist and track name needs to be lowercase and without commas or colons
 	 *
 	 * @param $item string parameter value to be encoded
@@ -118,6 +134,12 @@ class LyricFindTrackingService extends WikiaService {
 				case self::CODE_LRC_IS_AVAILABLE:
 				case self::CODE_LYRIC_IS_INSTRUMENTAL:
 				case self::CODE_LYRIC_IS_AVAILABLE:
+					// LyricFind has reported that the page is okay. If it was banned before, unban it.
+					$removedProp = $this->wf->GetWikiaPageProp(WPP_LYRICFIND_MARKED_FOR_REMOVAL, $this->wg->Title->getArticleID());
+					$isMarkedAsRemoved = (!empty($removedProp));
+					if($isMarkedAsRemoved){
+						$this->markLyricAsNotRemoved($this->wg->Title->getArticleID());
+					}
 					break;
 
 				default:
@@ -144,3 +166,4 @@ class LyricFindTrackingService extends WikiaService {
 		Wikia::log(self::LOG_GROUP . '-WIKIA', false, $method . ': ' . $msg, true /* $force */);
 	}
 }
+
