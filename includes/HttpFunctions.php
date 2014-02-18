@@ -70,7 +70,9 @@ class Http {
 	 * @return string
 	 */
 	public static function get( $url, $timeout = 'default', $options = array() ) {
-		return false; // temporary szpachla-style fix (by macbre)
+		if ( 0 !== strpos( $url, 'http://chat-') ) {
+			return false; // temporary szpachla-style fix (by macbre)
+		}
 
 		$options['timeout'] = $timeout;
 		return Http::request( 'GET', $url, $options );
