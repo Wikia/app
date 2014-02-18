@@ -191,7 +191,7 @@ use Swagger\Annotations as SWG;
  * 				@SWG\Parameter(
  * 					name="hub",
  * 					paramType="query",
- * 					description="The name of the vertical (e.g. Gaming, Entertainment, Lifestyle, etc.) separated by comma to filter for",
+ * 					description="The name of the hub (Gaming, Entertainment, Lifestyle). Separate by comma if more than one provided",
  * 					required="false",
  * 					allowMultiple="true",
  * 					dataType="string",
