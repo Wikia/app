@@ -192,7 +192,7 @@ class LightboxController extends WikiaController {
 		$isPostedIn = empty( $smallerArticleList ) ? false : true;	// Bool to tell mustache to print "posted in" section
 
 		// file details
-		$this->views = wfMsg( 'lightbox-video-views', $this->wg->Lang->formatNum( $data['videoViews'] ) );
+		$this->views = wfMessage( 'lightbox-video-views', $this->wg->Lang->formatNum( $data['videoViews'] ) )->text();
 		$this->title = $title->getDBKey();
 		$this->fileTitle = $title->getText();
 		$this->mediaType = $data['mediaType'];
@@ -202,7 +202,7 @@ class LightboxController extends WikiaController {
 		$this->fileUrl = $data['fileUrl'];
 		$this->rawImageUrl = $data['rawImageUrl'];
 		$this->userThumbUrl = $data['userThumbUrl'];
-		$this->userName = ( User::isIP($data['userName']) ) ? wfMsg( 'oasis-anon-user' ) : $data['userName'] ;
+		$this->userName = ( User::isIP($data['userName']) ) ? wfMessage( 'oasis-anon-user' )->plain() : $data['userName'] ;
 		$this->userPageUrl = $data['userPageUrl'];
 		$this->articles = $articles;
 		$this->isPostedIn = $isPostedIn;
@@ -272,7 +272,8 @@ class LightboxController extends WikiaController {
 				$msgSuffix = '';
 			}
 
-			$linkDescription = wfMsg( 'lightbox-share-description'.$msgSuffix, empty( $articleUrl ) ? $fileTitle : $articleTitleText, $this->wg->Sitename );
+			$msgArticleTitle = empty( $articleUrl ) ? $fileTitle : $articleTitleText;
+			$linkDescription = wfMessage( 'lightbox-share-description'.$msgSuffix, $msgArticleTitle, $this->wg->Sitename )->text();
 
 			$shareNetworks = SocialSharingService::getInstance()->getNetworks( array(
 				'facebook',
@@ -337,8 +338,8 @@ class LightboxController extends WikiaController {
 					$result = UserMailer::send(
 						$to,
 						$sender,
-						wfMsg( 'lightbox-share-email-subject'.$msgSuffix, array( "$1" => $user->getName() ) ),
-						wfMsg( 'lightbox-share-email-body'.$msgSuffix, $shareUrl ),
+						wfMessage( 'lightbox-share-email-subject'.$msgSuffix, array( "$1" => $user->getName() ) )->plain(),
+						wfMessage( 'lightbox-share-email-body'.$msgSuffix, $shareUrl )->text(),
 						null,
 						null,
 						'ImageLightboxShare'
@@ -350,14 +351,14 @@ class LightboxController extends WikiaController {
 					}
 				}
 			} else {
-				$errors[] = wfMsg( 'lightbox-share-email-error-noaddress' );
+				$errors[] = wfMessage( 'lightbox-share-email-error-noaddress' )->plain();
 			}
 		}
 
 		$this->errors = $errors;
 		$this->sent = $sent;
 		$this->notsent = $notsent;
-		$this->successMsg = wfMsgExt( 'lightbox-share-email-ok-content', array( 'parsemag' ), count( $sent ) );
+		$this->successMsg = wfMessage( 'lightbox-share-email-ok-content', count( $sent ) )->text();
 	}
 
 	/**
@@ -406,7 +407,7 @@ class LightboxController extends WikiaController {
 		$totalWikiImages = $imageInfo['totalWikiImages'] + $extra;
 
 		$this->to = $imageInfo['timestamp'];
-		$this->msg = wfMsg( 'lightbox-carousel-more-items', $this->wg->Lang->formatNum( $totalWikiImages ) );
+		$this->msg = wfMessage( 'lightbox-carousel-more-items', $this->wg->Lang->formatNum( $totalWikiImages ) )->text();
 
 		wfProfileOut( __METHOD__ );
 	}
