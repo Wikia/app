@@ -342,6 +342,15 @@ use Swagger\Annotations as SWG;
  * 					defaultValue=""
  * 				),
  * 				@SWG\Parameter(
+ * 					name="hub",
+ * 					paramType="query",
+ * 					description="The name of the hub (Gaming, Entertainment, Lifestyle). Separate by comma if more than one provided",
+ * 					required="false",
+ * 					allowMultiple="true",
+ * 					dataType="string",
+ * 					defaultValue=""
+ * 				),
+ * 				@SWG\Parameter(
  * 					name="lang",
  * 					description="The two chars wiki language code, (eg.: en, de, fr, all (for any language)). Can handles multiple values, on default will use current wikia content language.",
  * 					paramType="query",
