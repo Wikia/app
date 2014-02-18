@@ -21,6 +21,9 @@ class WikiaHubsV3Hooks {
 
 			$hubTimestamp = $model->getTimestampFromSplitDbKey($dbKeyNameSplit);
 
+			$app->wg->SuppressRail = true;
+			$app->wg->SuppressFooter = true;
+
 			if (!$app->wg->request->wasPosted()) {
 				// don't change article object while saving data
 				$article = new WikiaHubsV3Article($title, $model->getHubPageId($dbKeyNameSplit[0]), $hubTimestamp);
