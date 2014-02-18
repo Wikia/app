@@ -96,9 +96,153 @@ use Swagger\Annotations as SWG;
  * 	@SWG\Property(
  * 		name="items",
  * 		type="Array",
- * 		items="$ref:ExpandedWikiaItem",
+ * 		items="$ref:ExpandedCrossWikiaItem",
  * 		required="true",
  * 		description="Standard container name for element collection (list)"
+ * 	)
+ *
+ * @SWG\Model( id="ExpandedCrossWikiaItem" )
+ * 	@SWG\Property(
+ * 		name="id",
+ * 		type="int",
+ * 		required="true",
+ * 		description="An internal identification number for Wikia"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="lang",
+ * 		type="string",
+ * 		required="true",
+ * 		description="Wikia language"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="title",
+ * 		type="string",
+ * 		required="true",
+ * 		description="Wikia title"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="url",
+ * 		type="string",
+ * 		required="true",
+ * 		description="The absolute URL of the Wikia"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="stats",
+ * 		type="WikiaStats",
+ * 		required="true",
+ * 		description="Wikia title"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="topUsers",
+ * 		type="Array",
+ * 		required="true",
+ * 		description="Array with ten top contributors"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="headline",
+ * 		type="string",
+ * 		required="true",
+ * 		description="Wikia headline"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="flags",
+ * 		type="Array",
+ * 		required="true",
+ * 		description="Array with flags"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="desc",
+ * 		type="string",
+ * 		required="true",
+ * 		description="Description about Wikia content"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="image",
+ * 		type="string",
+ * 		required="true",
+ * 		description="The absolute URL of the Wikia image"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="original_dimensions",
+ * 		type="ImageDimensions",
+ * 		required="true",
+ * 		description="Object containing original image dimensions"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="wordmark",
+ * 		type="string",
+ * 		required="true",
+ * 		description="Wiki wordmark image URL, might be empty"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="wam_score",
+ * 		type="float",
+ * 		required="true",
+ * 		description="Wiki WAM score"
+ * 	)
+ *
+ * @SWG\Model( id="WikiaStats" )
+ * 	@SWG\Property(
+ * 		name="edits",
+ * 		type="int",
+ * 		required="true",
+ * 		description="Number of total edits for Wikia"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="articles",
+ * 		type="int",
+ * 		required="true",
+ * 		description="Number of total articles on Wikia"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="pages",
+ * 		type="int",
+ * 		required="true",
+ * 		description="Number of total pages on Wikia"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="users",
+ * 		type="int",
+ * 		required="true",
+ * 		description="Number of total users on Wikia"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="activeUsers",
+ * 		type="int",
+ * 		required="true",
+ * 		description="Number of total active users on Wikia"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="images",
+ * 		type="int",
+ * 		required="true",
+ * 		description="Number of total images on Wikia"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="videos",
+ * 		type="int",
+ * 		required="true",
+ * 		description="Number of total videos on Wikia"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="admins",
+ * 		type="int",
+ * 		required="true",
+ * 		description="Number of total admins on Wikia"
+ * 	)
+ *
+ * @SWG\Model( id="ImageDimensions" )
+ * 	@SWG\Property(
+ * 		name="width",
+ * 		type="int",
+ * 		required="true",
+ * 		description="Original image width"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="height",
+ * 		type="int",
+ * 		required="true",
+ * 		description="Original image height"
  * 	)
  *
  * @SWG\Api(
