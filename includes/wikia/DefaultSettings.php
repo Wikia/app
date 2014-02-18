@@ -123,8 +123,6 @@ $wgWikiaAPIControllers = array();
 include_once( "$IP/lib/vendor/ApiGate/config.php" );
 
 //Wikia API Hooks
-$wgHooks['ArticleUpdateCategoryCounts'][] = 'ArticlesApiController::onArticleUpdateCategoryCounts';
-
 $wgAutoloadClasses[ 'ApiHooks'] =  "{$IP}/includes/wikia/api/ApiHooks.class.php" ;
 
 $wgHooks['WikiFactoryChanged'][] = 'ApiHooks::onWikiFactoryChanged';
