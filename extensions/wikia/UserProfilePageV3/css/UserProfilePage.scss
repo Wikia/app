@@ -91,11 +91,11 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 		@include box-shadow(0px, 2px, 10px, rgba(0,0,0,.25));
 		@include clearfix;
 		background: $color-masthead;
-        // Top radius included to ensure that the top corners are hidden behind the hgroup radius
-        border-bottom-left-radius: $radius-user-profile-masthead;
-        border-bottom-right-radius: $radius-user-profile-masthead;
-        border-top-left-radius: $radius-user-profile-masthead * 2;
-        border-top-right-radius: $radius-user-profile-masthead * 2;
+		// Top radius included to ensure that the top corners are hidden behind the hgroup radius
+		border-bottom-left-radius: $radius-user-profile-masthead;
+		border-bottom-right-radius: $radius-user-profile-masthead;
+		border-top-left-radius: $radius-user-profile-masthead * 2;
+		border-top-right-radius: $radius-user-profile-masthead * 2;
 		margin-left: 165px;
 		margin-bottom: 20px;
 		position: relative;
@@ -112,9 +112,9 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 			width: 320px;
 		}
 		hgroup {
+			@include linear-gradient($color-buttons, top, $color-button-highlight, 0%, $color-buttons, 100%);
 			border-top-left-radius: $radius-user-profile-masthead;
 			border-top-right-radius: $radius-user-profile-masthead;
-			@include linear-gradient($color-buttons, top, $color-button-highlight, 0%, $color-buttons, 100%);
 			color: $color-button-text;
 			overflow: auto;
 			padding: 8px 25px;

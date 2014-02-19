@@ -33,15 +33,14 @@ $separators: mix($color-page-border, $color-page, 50%);
 			.SortingSelected {
 				border-radius: 3px;
 				color: $color-page-border;
-              	cursor: pointer;
-              	display: inline-block;
+				cursor: pointer;
+				display: inline-block;
 				font-weight: bold;
 				line-height: 19px;
 				margin: 1px;
 				padding-left: 10px; padding-right: 10px;
 				vertical-align: center;
 				width: auto;
-
 				&:hover {
 					margin: 0px;
 					color: #3a3a3a;
