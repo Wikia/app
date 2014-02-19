@@ -279,7 +279,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.onSearchCheck = function ( item ) {
 		if ( item.type === 'video' ) {
 			this.addCartItem( new ve.dm.WikiaCartItem( item.title, item.url, item.type, undefined, 'wikia' ) );
 		} else {
-			this.addCartItem( new ve.dm.WikiaCartItem( item.title, item.url, item.type ) );			
+			this.addCartItem( new ve.dm.WikiaCartItem( item.title, item.url, item.type ) );
 		}
 	}
 };

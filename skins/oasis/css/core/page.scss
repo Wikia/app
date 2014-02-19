@@ -44,6 +44,11 @@
 	}
 }
 
+// Change z-indexes for proper stacking with VisualEditor focus mode
+.ve .WikiaPage {
+	z-index: auto;
+}
+
 .WikiaMainContent {
 	float: left;
 	position: relative;
