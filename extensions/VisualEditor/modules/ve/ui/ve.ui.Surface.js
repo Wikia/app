@@ -39,6 +39,9 @@ ve.ui.Surface = function VeUiSurface( dataOrDoc, config, target ) {
 	this.triggers = {};
 	this.enabled = true;
 	this.target = target || null;
+	if ( this.target ) {
+		this.focus = new ve.ui.WikiaFocusWidget( this );
+	}
 
 	// Initialization
 	this.$element
@@ -91,8 +94,13 @@ OO.mixinClass( ve.ui.Surface, OO.EventEmitter );
  * This must be called after the surface has been attached to the DOM.
  */
 ve.ui.Surface.prototype.initialize = function () {
+	var $body = this.$( 'body' );
+
 	this.view.$element.after( this.$localOverlay );
-	this.$( 'body' ).append( this.$globalOverlay );
+	if ( this.focus ) {
+		$body.append( this.focus.$element );
+	}
+	$body.append( this.$globalOverlay );
 
 	this.view.initialize();
 	// By re-asserting the current selection and forcing a poll we force selection to be something
