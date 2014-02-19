@@ -105,9 +105,9 @@ $color-highlight-column: rgba($color-page, 0);
 		right: 10px;
 	}
 	.tab {
-		border-top-right-radius: 5px;
-		border-top-left-radius: 5px;
 		background: $color-admin-tab-inactive;
+		border-top-left-radius: 5px;
+		border-top-right-radius: 5px;
 		color: $color-admin-text;
 		display: block;
 		float: left;
