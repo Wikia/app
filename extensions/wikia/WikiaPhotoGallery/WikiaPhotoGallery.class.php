@@ -203,8 +203,8 @@ class WikiaPhotoGallery extends ImageGallery {
 		$this->mData['params'] = $params;
 
 		// lowercase parameters
-		foreach($params as $key => &$param) {
-			$param = strtolower($param);
+		foreach( $params as $key => &$param ) {
+			$param = strtolower( $param );
 		}
 
 		if( isset($params['id']) ) {

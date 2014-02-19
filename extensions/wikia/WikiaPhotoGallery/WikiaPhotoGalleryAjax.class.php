@@ -166,7 +166,7 @@ class WikiaPhotoGalleryAjax {
 		// decode JSON-encoded gallery data
 		$gallery = json_decode($wgRequest->getVal('gallery'), true);
 
-		$html = WikiaPhotoGalleryHelper::renderGalleryPreview($gallery);
+		$html = WikiaPhotoGalleryHelper::renderGalleryPreview( $gallery );
 
 		wfProfileOut(__METHOD__);
 		return array(
@@ -184,7 +184,7 @@ class WikiaPhotoGalleryAjax {
 		// decode JSON-encoded slideshow data
 		$gallery = json_decode($wgRequest->getVal('gallery'), true);
 
-		$html = WikiaPhotoGalleryHelper::renderSlideshowPreview($gallery);
+		$html = WikiaPhotoGalleryHelper::renderSlideshowPreview( $gallery );
 
 		wfProfileOut(__METHOD__);
 		return array(
