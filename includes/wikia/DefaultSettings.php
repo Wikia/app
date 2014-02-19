@@ -145,11 +145,9 @@ $wgWikiaApiControllers['RelatedPagesApiController'] = "{$IP}/includes/wikia/api/
 $wgWikiaApiControllers['ActivityApiController'] = "{$IP}/includes/wikia/api/ActivityApiController.class.php";
 $wgWikiaApiControllers['UserApiController'] = "{$IP}/includes/wikia/api/UserApiController.class.php";
 $wgWikiaApiControllers['TvApiController'] = "{$IP}/includes/wikia/api/TvApiController.class.php";
-$wgWikiaApiControllers['TestApiController'] = "{$IP}/includes/wikia/api/TestApiController.class.php";
 
-foreach( $wgWikiaApiControllers as $apiControllerName => $apiControllerPath ) {
-	$wgAutoloadClasses[$apiControllerName] = $apiControllerPath;
-}
+//All ApiControllers will have to be in AutoloadClasses
+$wgAutoloadClasses = $wgAutoloadClasses + $wgWikiaApiControllers;
 
 //Wikia Api exceptions classes
 $wgAutoloadClasses[ 'BadRequestApiException'] =  "{$IP}/includes/wikia/api/ApiExceptions.php" ;
