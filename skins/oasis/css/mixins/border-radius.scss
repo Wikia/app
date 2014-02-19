@@ -19,7 +19,3 @@ $radius: 10px;
 @mixin border-radius-sw($radius) {
 	border-bottom-left-radius: $radius;
 }
-
-@mixin clear-border-radius() {
-	border-bottom-left-radius: 0;
-}
