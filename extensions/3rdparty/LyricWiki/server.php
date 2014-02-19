@@ -933,6 +933,14 @@ function getSong($artist, $song="", $doHyphens=true, $ns=NS_MAIN, $isOuterReques
 				$finalName = $page_id = "";
 				$content = lw_getPage($title, $finalName, $debug, $ns, $page_id);
 
+				// LYR-7 - if pages are on LyricFind takedown list, remove their content here.
+				$pageRemovedProp = wfGetWikiaPageProp(WPP_LYRICFIND_MARKED_FOR_REMOVAL, $page_id);
+				if(!empty($pageRemovedProp)){
+					// Overwrite with the same content that normal takedowns used before LF API (this lets the
+					// Community easily update the text since it's a template).
+					$content = "{{gracenote_takedown}}";
+				}
+
 				// Parse the lyrics from the content.
 				$matches = array();
 				if(0<preg_match("/<(gracenotelyrics|lyrics?)>(.*)<.(gracenotelyrics|lyrics?)>/si", $content, $matches) || (0<preg_match("/<(gracenotelyrics|lyrics?)>(.*)/si", $content, $matches))){
