@@ -59,13 +59,11 @@
 			Lightbox.openModal.vbClickSource = clickSource;
 
 			// Check screen height for future interactions
-			Lightbox.shortScreen = ($(window)
-				.height() <
+			Lightbox.shortScreen = ($(window).height() <
 				(LightboxLoader.defaults.height + LightboxLoader.defaults.topOffset));
 
 			// Add template to modal
-			Lightbox.openModal.find(".modalContent")
-				.html(LightboxLoader.templateHtml);
+			Lightbox.openModal.find(".modalContent").html(LightboxLoader.templateHtml);
 
 			// cache re-used DOM elements and templates for this modal instance
 			Lightbox.cacheDOM();
@@ -129,14 +127,12 @@
 		},
 		bindEvents: function () {
 			Lightbox.openModal.on('mousemove.Lightbox', function (evt) {
-				var time = new Date()
-					.getTime();
+				var time = new Date().getTime();
 				if ((time - Lightbox.eventTimers.lastMouseUpdated) > 100) {
 					Lightbox.eventTimers.lastMouseUpdated = time;
 					var target = $(evt.target);
 					Lightbox.showOverlay();
-					if (!(target.closest('.LightboxHeader, .LightboxCarousel'))
-						.exists()) {
+					if (!(target.closest('.LightboxHeader, .LightboxCarousel')).exists()) {
 						Lightbox.hideOverlay();
 					}
 				}
@@ -179,8 +175,7 @@
 
 						Lightbox.openModal.share.find('.social-links')
 							.on('click', 'a', function () {
-								var shareType = $(this)
-									.attr('class');
+								var shareType = $(this).attr('class');
 								LightboxTracker.track(
 									Wikia.Tracker.ACTIONS.SHARE,
 									shareType,
@@ -394,8 +389,7 @@
 			getDimensions: function (imageUrl, callback) {
 				// Get image url from json - preload image
 				// TODO: cache image dimensions so we don't have to preload the image again
-				var image = $('<img id="LightboxPreload" src="' + imageUrl + '" />')
-					.appendTo('body');
+				var image = $('<img id="LightboxPreload" src="' + imageUrl + '" />').appendTo('body');
 
 				// Do calculations
 				image
@@ -406,8 +400,7 @@
 						var image = $(this),
 							topOffset = LightboxLoader.defaults.topOffset,
 							modalMinHeight = LightboxLoader.defaults.height,
-							windowHeight = $(window)
-								.height(),
+							windowHeight = $(window).height(),
 							modalHeight = windowHeight - topOffset * 2,
 							currentModalHeight = Lightbox.openModal.height();
 
@@ -566,8 +559,7 @@
 			},
 			// should user see ads?
 			showAds: function () {
-				return !!(window.wgShowAds && (Geo.getCountryCode() === 'US' || Geo.getCountryCode() === 'GB') && $('#' + this.getSlotName())
-					.length);
+				return !!(window.wgShowAds && (Geo.getCountryCode() === 'US' || Geo.getCountryCode() === 'GB') && $('#' + this.getSlotName()).length);
 			},
 			preloadAds: function () {
 				if (!this.adWasPreloaded) {
@@ -707,8 +699,7 @@
 		},
 		getDefaultTopOffset: function () {
 			var modalHeight = LightboxLoader.defaults.height,
-				windowHeight = $(window)
-					.height(),
+				windowHeight = $(window).height(),
 				topOffset = (windowHeight - modalHeight - 10) / 2;
 
 			return topOffset + $(window)
@@ -771,8 +762,7 @@
 			return modalOptions;
 		},
 		updateMedia: function () {
-			Lightbox.openModal.media.html("")
-				.startThrobbing();
+			Lightbox.openModal.media.html("").startThrobbing();
 
 			// If a video uses a timeout for tracking, clear it
 			if (LightboxLoader.videoInstance) {
@@ -1094,10 +1084,9 @@
 							successMsg = "";
 
 						if (data.errors.length) {
-							$(data.errors)
-								.each(function () {
-									errorMsg += this;
-								})
+							$(data.errors).each(function () {
+								errorMsg += this;
+							})
 						}
 						if (data.sent.length) {
 							successMsg += "Email sent to " + data.sent.join() + ". ";
@@ -1109,8 +1098,7 @@
 						if (successMsg.length) {
 							wikiaForm.showGenericSuccess(successMsg);
 						}
-						shareEmailForm.find('input[type=text]')
-							.val('');
+						shareEmailForm.find('input[type=text]').val('');
 
 						var trackingTitle = Lightbox.current.key; // prevent race conditions from timeout
 						LightboxTracker.track(
@@ -1162,10 +1150,9 @@
 					userLang: window.wgUserLanguage // just in case user changes language prefs
 				},
 				callback: function (html) {
-					$(html)
-						.makeModal({
-							width: 600
-						});
+					$(html).makeModal({
+						width: 600
+					});
 				}
 			});
 		},
