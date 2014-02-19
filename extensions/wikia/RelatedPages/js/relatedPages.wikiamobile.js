@@ -78,7 +78,8 @@ function( window, nirvana, $, thumbnailer, lazyload, sloth, msg, mustache, secti
 							relatedPages.push( {
 								url: page.url,
 								title: page.title,
-								imgUrl: page.imgUrl || '',
+								imgUrl: page.imgUrl || window.wgExtensionsPath +
+									'/wikia/WikiaMobile/images/read_placeholder.png',
 								text: page.text
 							} );
 						}
