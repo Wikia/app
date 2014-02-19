@@ -44,11 +44,11 @@ var WikiaHomePageRemix = function () {
 	this.WIKISETSTACKOFFSET = 2;
 	this.NUMBEROFBATCHESTODOWNLOAD = 5;
 
-	this.COLLECTIONS_LS_KEY = 'WHP_collections';
-	this.COLLECTIONS_LS_VALIDITY = 12; // in hours
 	this.SPONSOR_HERO_IMG_TIMEOUT = 3000;
 	this.SPONSOR_HERO_IMG_CONTAINER_ID = 'WikiaHomePageHeroImage';
 	this.SPONSOR_HERO_IMG_FADE_OUT_TIME = 800;
+	this.SPONSOR_HERO_IMG_VALIDITY = 12; // in hours
+	this.SPONSOR_HERO_IMAGE_STORAGE_KEY = 'WikiaHomePageHeroImageDisplayed';
 
 	this.wikiSetStack = [];
 	this.wikiSetStackIndex = 0;
@@ -479,60 +479,14 @@ WikiaHomePageRemix.prototype = {
 				this.shownCollections[collectionId] = false;
 			}
 		}
-
-		var lsData = $.storage.get(this.COLLECTIONS_LS_KEY);
-		var lsShownCollections;
-		if (lsData) {
-			if ('date' in lsData && 'collections' in lsData) {
-				var tmpDate = new Date();
-				tmpDate.setHours(tmpDate.getHours() - this.COLLECTIONS_LS_VALIDITY);
-				if (new Date(lsData.date) > tmpDate) {
-					lsShownCollections = lsData.collections;
-					if ('remixCount' in lsData) {
-						this.remixCount = lsData.remixCount;
-					}
-				}
-			}
-
-			if (lsShownCollections) {
-				$.extend(this.shownCollections, lsShownCollections);
-			} else {
-				$.storage.set(this.COLLECTIONS_LS_KEY, null);
-			}
-		}
 	},
 
 	icreaseRemixCount: function() {
 		this.remixCount++;
-		this.saveLSData({remixCount: this.remixCount});
 	},
 
 	markCollectionAsShown: function(collectionId) {
 		this.shownCollections[collectionId] = true;
-		this.saveLSData({collectionId: collectionId});
-	},
-
-	saveLSData: function(data) {
-		var lsData = $.storage.get(this.COLLECTIONS_LS_KEY);
-		if (!lsData) {
-			lsData = {};
-		}
-
-		if (!('collections' in lsData)) {
-			lsData.collections = {};
-		}
-		if ('collectionId' in data) {
-			lsData.collections[data.collectionId] = true;
-		}
-		if ('remixCount' in data) {
-			lsData.remixCount = data.remixCount;
-		}
-
-		if (!('date' in lsData)) {
-			lsData.date = new Date();
-		}
-
-		$.storage.set(this.COLLECTIONS_LS_KEY, lsData);
 	},
 
 	getNextCollectionId: function() {
@@ -564,8 +518,8 @@ WikiaHomePageRemix.prototype = {
 		var imgData = collection['sponsor_image'];
 		var img = $('<img />')
 			.attr('alt', imgData['title'])
-			.attr('witdh', imgData['width'])
-			.attr('witdh', imgData['height'])
+			.attr('width', imgData['width'])
+			.attr('height', imgData['height'])
 			.attr('src', imgData['url'])
 			.addClass('sponsor-image-link')
 			.data('collection-id', collection['collection_id']);
@@ -601,11 +555,34 @@ WikiaHomePageRemix.prototype = {
 	},
 	
 	displaySponsorHeroImage: function(collectionId) {
-		if( this.isFirstCollection(collectionId) && !this.heroImageDisplayed ) {
+		'use strict';
+
+		if( this.isFirstCollection(collectionId) && !this.wasHeroImageDisplayed() ) {
 			var heroContainer = this.createHeroImageContainer();
 			$('#visualization').append(heroContainer);
-			this.heroImageDisplayed = true;
+			this.markHeroImageAsDisplayed();
 		}
+	},
+
+	wasHeroImageDisplayed: function() {
+		'use strict';
+
+		var date = $.storage.get( this.SPONSOR_HERO_IMAGE_STORAGE_KEY );
+		if ( date ) {
+			var tmpDate = new Date();
+			tmpDate.setHours( tmpDate.getHours() - this.SPONSOR_HERO_IMG_VALIDITY );
+			if (new Date( date ) > tmpDate) {
+				return true;
+			}
+		}
+
+		return false;
+	},
+
+	markHeroImageAsDisplayed: function() {
+		'use strict';
+
+		$.storage.set( this.SPONSOR_HERO_IMAGE_STORAGE_KEY, new Date() );
 	},
 
 	isFirstCollection: function(collectionId) {
