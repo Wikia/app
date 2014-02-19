@@ -1,3 +1,6 @@
+// TODO: I added a few lifecycle events to this module, that way we can encapsulate logic for
+// appropriate modules in the right rail in their respective code. Using events, we don't have to
+// pollute the logic of loading with how individual modules should respond to loading. 
 $( function () {
 	'use strict';
 	function getParamsFromUrl() {
@@ -22,6 +25,8 @@ $( function () {
 		params = {},
 		lazyLoadingTime;
 
+	// Add lifecycle event for beginning lazy load
+	rail.trigger('beginLoad.rail');
 
 	if ( rail.find( '.loading' ).exists() ) {
 		params = {
@@ -83,12 +88,17 @@ $( function () {
 				if ( data.css.length === 0 ) {
 					loadRailContents( data );
 				} else {
+					// TODO: This seems like an unnessary use of require, this whole module should
+					// be converted into an AMD module and loader should just be added as a dependency
+					// to the define() deps array
 					require( ['wikia.loader'], function ( loader ) {
 						loader( {
 							type: loader.CSS,
 							resources: data.css
 						} ).done( function () {
 							loadRailContents( data );
+							// Lifecycle event for once all content has been loaded
+							rail.trigger('afterLoad.rail');
 						} );
 					} );
 				}

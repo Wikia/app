@@ -1,11 +1,9 @@
-define( 'videosmodule.views.bottomModule', [
+define('videosmodule.views.rail', [
 	'sloth',
 	'videosmodule.views.titleThumbnail',
-	'wikia.mustache',
-	'videosmodule.templates.mustache',
-	'videosmodule.models.abTestBottom',
+	'videosmodule.models.abTestRail',
 	'wikia.tracker'
-], function( sloth, TitleThumbnailView, Mustache, templates, abTest, Tracker ) {
+], function(sloth, TitleThumbnailView, abTest, Tracker) {
 	'use strict';
 
 	// Keep AB test variables private
@@ -23,82 +21,67 @@ define( 'videosmodule.views.bottomModule', [
 	testCase = abTest();
 	groupParams = testCase.getGroupParams();
 
-	function VideoModule( options ) {
+	function VideoModule(options) {
 		// Note that this.el refers to the DOM element that the videos module should be inserted before or after,
 		// not the wrapper for the videos module. We can update this after the A/B testing is over.
 		this.el = options.el;
-		this.$el = $( options.el );
+		this.$el = $(options.el);
 		this.model = options.model;
 		this.articleId = window.wgArticleId;
 
 		// Make sure we're on an article page
-		if ( this.articleId ) {
+		if (this.articleId) {
 			this.init();
 		}
 	}
 
 	VideoModule.prototype.init = function() {
 		var self = this;
-		if ( !groupParams ) {
-			// Add tracking for GROUP_I, Control Group
-			return false;
-		}
-		this.data = this.model.fetch( groupParams.verticalOnly );
+		this.data = this.model.fetch( true );
 		// Sloth is a lazy loading service that waits till an element is visisble to load more content
-		sloth( {
+		sloth({
 			on: this.el,
 			threshold: 200,
 			callback: function() {
 				self.bindFetchComplete();
 			}
-		} );
+		});
 	};
 
 	VideoModule.prototype.bindFetchComplete = function() {
 		var self = this;
-		return this.data.complete( function() {
+		this.data.complete(function() {
 			self.render();
-		} );
+		});
 	};
 
 	VideoModule.prototype.render = function() {
 		var i,
-			$out,
 			videos = this.model.data.videos,
 			len = videos.length,
 			thumbHtml = [];
 
 		// If no videos are returned from the server, don't render anything
-		if ( !len ) {
+		if (!len) {
 			return;
 		}
 
 		// AB test set rows shown
-		videos = videos.slice( 0, groupParams.rows > 1 ? 8 : 4 );
+		videos = videos.slice(0, groupParams.thumbs);
 
-		for ( i = 0; i < ( groupParams.rows * 4 ); i++ ) {
-			thumbHtml.push( new TitleThumbnailView( {
-				el: 'li',
-				model: videos[i],
-				idx: i
-			} ).render().$el );
+		for (i = 0; i < videos.length; i++) {
+			thumbHtml.push(new TitleThumbnailView({
+					el: 'li',
+					model: videos[i],
+					idx: i
+				})
+				.render()
+				.$el);
 		}
 
-		$out = $( Mustache.render( templates.bottomModule, {
-			title: $.msg( 'videosmodule-title-default' )
-		} ) );
-
-		$out.find( '.thumbnails' ).append( thumbHtml );
-
-		if ( groupParams.position === 1 ) {
-			this.$el.after( $out );
-		} else {
-			this.$el.before( $out );
-		}
-
-		$( '#videosModule' ).addClass( groupParams.rows > 1 ? 'rows-2' : 'rows-1' );
+		this.$el.find('.thumbnails').append(thumbHtml);
 		track();
 	};
 
 	return VideoModule;
-} );
+});
